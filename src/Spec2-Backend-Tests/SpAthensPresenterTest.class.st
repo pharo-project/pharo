@@ -1,11 +1,11 @@
 Class {
-	#name : #SpAthensStaticPresenterTest,
+	#name : #SpAthensPresenterTest,
 	#superclass : #SpAbstractWidgetAdapterTest,
 	#category : #'Spec2-Backend-Tests'
 }
 
 { #category : #accessing }
-SpAthensStaticPresenterTest >> circle: aSurface [
+SpAthensPresenterTest >> circle: aSurface [
 	^ aSurface
 		createPath: [ :builder | 
 			builder
@@ -18,18 +18,18 @@ SpAthensStaticPresenterTest >> circle: aSurface [
 ]
 
 { #category : #accessing }
-SpAthensStaticPresenterTest >> classToTest [
-	^ SpAthensStaticPresenter
+SpAthensPresenterTest >> classToTest [
+	^ SpAthensPresenter
 ]
 
 { #category : #accessing }
-SpAthensStaticPresenterTest >> initializeTestedInstance [
+SpAthensPresenterTest >> initializeTestedInstance [
 	presenter drawBlock: [ "nothing to do" ].
 	presenter surfaceExtent: 800@600
 ]
 
 { #category : #accessing }
-SpAthensStaticPresenterTest >> testContextMenu [
+SpAthensPresenterTest >> testContextMenu [
 	| menu changed |
 	
 	self assert: presenter contextMenu isNil.
@@ -43,7 +43,7 @@ SpAthensStaticPresenterTest >> testContextMenu [
 ]
 
 { #category : #accessing }
-SpAthensStaticPresenterTest >> testPresentersBlockReceivesAthensCanvas [
+SpAthensPresenterTest >> testPresentersBlockReceivesAthensCanvas [
 	| receivedCanvas |
 	self presenter drawBlock: [ :canvas | receivedCanvas := canvas ].
 	self adapter redraw.
@@ -55,7 +55,7 @@ SpAthensStaticPresenterTest >> testPresentersBlockReceivesAthensCanvas [
 ]
 
 { #category : #accessing }
-SpAthensStaticPresenterTest >> testSmokeCreates [
+SpAthensPresenterTest >> testSmokeCreates [
 	self presenter .
 	
 ]

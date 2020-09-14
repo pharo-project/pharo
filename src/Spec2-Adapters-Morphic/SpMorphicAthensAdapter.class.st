@@ -1,11 +1,11 @@
 Class {
-	#name : #SpMorphicAthensStaticAdapter,
+	#name : #SpMorphicAthensAdapter,
 	#superclass : #SpAbstractMorphicAdapter,
 	#category : #'Spec2-Adapters-Morphic-Base'
 }
 
 { #category : #factory }
-SpMorphicAthensStaticAdapter >> buildWidget [
+SpMorphicAthensAdapter >> buildWidget [
 	| instance |
 	instance := SpAthensMorph new.
 	self presenter
@@ -21,11 +21,11 @@ SpMorphicAthensStaticAdapter >> buildWidget [
 ]
 
 { #category : #drawing }
-SpMorphicAthensStaticAdapter >> redraw [
+SpMorphicAthensAdapter >> redraw [
 	widget redraw
 ]
 
 { #category : #accessing }
-SpMorphicAthensStaticAdapter >> surface [
+SpMorphicAthensAdapter >> surface [
 	^ widget surface
 ]

@@ -41,7 +41,7 @@ SpMorphicNotebookAdapter >> addPage: aNotebookPage to: aNotebook [
 	aNotebook 
 		addLazyPage: [ self buildContentForPage: aNotebookPage ] 
 		label: (self buildLabelForPage: aNotebookPage)
-		collapsable: aNotebookPage isCloseable.
+		model: aNotebookPage.
 	"Since I do not have the page added, I need to take it from the list. But I know 
 	 this will be the last added :)"
 	aNotebook pages last model: aNotebookPage

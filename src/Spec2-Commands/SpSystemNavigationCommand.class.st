@@ -28,5 +28,5 @@ SpSystemNavigationCommand class >> shortName [
 { #category : #accessing }
 SpSystemNavigationCommand >> selector [
 
-	^ self target asSymbol
+	^ self target trimBoth asSymbol
 ]

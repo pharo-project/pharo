@@ -32,7 +32,7 @@ SpMorphicTreeTableAdapter >> addKeyBindingsTo: aWidget [
 { #category : #factory }
 SpMorphicTreeTableAdapter >> addModelTo: tableMorph [
 
-	self presenter columns do: [ :each | 
+	self columns do: [ :each | 
 		tableMorph addColumn: (self newColumnFrom: each) ].
 	self ensureAtLeastOneColumnIn: tableMorph.
 
@@ -70,10 +70,7 @@ SpMorphicTreeTableAdapter >> addModelTo: tableMorph [
 			ifTrue: [ tableMorph showColumnHeaders ] 
 			ifFalse: [ tableMorph hideColumnHeaders ] ].
 		
-	self presenter whenColumnsChangedDo: [
-		tableMorph columns: #(). 
-		self presenter columns do: [ :each | tableMorph addColumn: (self newColumnFrom: each) ].
-		tableMorph dataSource: self newDataSource ].
+	self registerColumnsChangedEventTo: tableMorph.
 	
 	tableMorph
 		onAnnouncement: FTSelectionChanged
@@ -122,6 +119,12 @@ SpMorphicTreeTableAdapter >> columnCount [
 	^ self widget columns size
 ]
 
+{ #category : #factory }
+SpMorphicTreeTableAdapter >> columns [
+	
+	^ self presenter columns
+]
+
 { #category : #scrolling }
 SpMorphicTreeTableAdapter >> configureScrolling [
 	self presenter verticalAlignment
@@ -142,7 +145,7 @@ SpMorphicTreeTableAdapter >> configureScrolling [
 { #category : #factory }
 SpMorphicTreeTableAdapter >> defaultColumn [
 
-	^ SpStringTableColumn new evaluated: #yourself
+	^ SpStringTableColumn new evaluated: [ :each | each yourself ]
 ]
 
 { #category : #factory }
@@ -194,6 +197,16 @@ SpMorphicTreeTableAdapter >> newDataSource [
 		rootItem: (self rootForItems: self model roots);
 		childrenBlock: [ :data :item | self model childrenFor: data ];
 		yourself
+]
+
+{ #category : #factory }
+SpMorphicTreeTableAdapter >> registerColumnsChangedEventTo: tableMorph [
+	
+	self presenter whenColumnsChangedDo: [
+		tableMorph columns: #(). 
+		self presenter columns do: [ :each | tableMorph addColumn: (self newColumnFrom: each) ].
+		tableMorph dataSource: self newDataSource ].
+
 ]
 
 { #category : #emulating }

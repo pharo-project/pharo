@@ -1,8 +1,5 @@
-"
-A BIChooseMethodUITest is a test class for testing the behavior of BIChooseMethodUI
-"
 Class {
-	#name : #SpChooseMethodUITest,
+	#name : #SpChooseMethodPresenterTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'biChooseMethod'
@@ -11,19 +8,19 @@ Class {
 }
 
 { #category : #running }
-SpChooseMethodUITest >> setUp [
+SpChooseMethodPresenterTest >> setUp [
 	super setUp.
-	biChooseMethod := SpChooseMethodUI new
+	biChooseMethod := SpChooseMethodPresenter new
 ]
 
 { #category : #tests }
-SpChooseMethodUITest >> testClassSideRadioButtonState [
+SpChooseMethodPresenterTest >> testClassSideRadioButtonState [
 	biChooseMethod radioButtonClassSide click.
 	self deny: biChooseMethod isInstanceSideSelected
 ]
 
 { #category : #tests }
-SpChooseMethodUITest >> testClickOnClassSideRadioButtonShouldFillTheMethodList [
+SpChooseMethodPresenterTest >> testClickOnClassSideRadioButtonShouldFillTheMethodList [
 	biChooseMethod packageList selectItem: SpMethodChooserMockClass package.
 	biChooseMethod classList selectItem: SpMethodChooserMockClass.
 	biChooseMethod radioButtonClassSide click.
@@ -34,32 +31,32 @@ SpChooseMethodUITest >> testClickOnClassSideRadioButtonShouldFillTheMethodList [
 ]
 
 { #category : #tests }
-SpChooseMethodUITest >> testInitializeClassListShouldBeSelectTheFistItem [
+SpChooseMethodPresenterTest >> testInitializeClassListShouldBeSelectTheFistItem [
 	self assert: biChooseMethod classList selection selectedIndex equals: 1
 ]
 
 { #category : #tests }
-SpChooseMethodUITest >> testInitializeIsInstanceButtonSelectedShouldBetrue [
+SpChooseMethodPresenterTest >> testInitializeIsInstanceButtonSelectedShouldBetrue [
 	self assert: biChooseMethod isInstanceSideSelected
 ]
 
 { #category : #tests }
-SpChooseMethodUITest >> testInitializeMethodListShouldBeSelectTheFistItem [
+SpChooseMethodPresenterTest >> testInitializeMethodListShouldBeSelectTheFistItem [
 	self assert: biChooseMethod methodList selection selectedIndex equals: 1
 ]
 
 { #category : #tests }
-SpChooseMethodUITest >> testInitializePackageListShouldBeSelectTheFistItem [
+SpChooseMethodPresenterTest >> testInitializePackageListShouldBeSelectTheFistItem [
 	self assert: biChooseMethod packageList selection selectedIndex equals: 1
 ]
 
 { #category : #tests }
-SpChooseMethodUITest >> testInitializeProtocolListShouldSelectedItemSetToAll [
+SpChooseMethodPresenterTest >> testInitializeProtocolListShouldSelectedItemSetToAll [
 	self assert: biChooseMethod selectedProtocol name equals: '-- all --'
 ]
 
 { #category : #tests }
-SpChooseMethodUITest >> testInstanceSideRadioButtonClickIsInstanceButtonShouldbeTrue [
+SpChooseMethodPresenterTest >> testInstanceSideRadioButtonClickIsInstanceButtonShouldbeTrue [
 	biChooseMethod radioButtonClassSide click.
 	self deny: biChooseMethod isInstanceSideSelected.
 	biChooseMethod radioButtonInstanceSide click.
@@ -67,7 +64,7 @@ SpChooseMethodUITest >> testInstanceSideRadioButtonClickIsInstanceButtonShouldbe
 ]
 
 { #category : #tests }
-SpChooseMethodUITest >> testMethodListContentWhenClassSideIsSelected [
+SpChooseMethodPresenterTest >> testMethodListContentWhenClassSideIsSelected [
 	biChooseMethod radioButtonClassSide click.
 	biChooseMethod packageList selectItem: SpMethodChooserMockClass package.
 	biChooseMethod classList selectItem: SpMethodChooserMockClass.
@@ -78,7 +75,7 @@ SpChooseMethodUITest >> testMethodListContentWhenClassSideIsSelected [
 ]
 
 { #category : #tests }
-SpChooseMethodUITest >> testMethodListContentWhenInstanceSideIsSelected [
+SpChooseMethodPresenterTest >> testMethodListContentWhenInstanceSideIsSelected [
 	biChooseMethod radioButtonInstanceSide click.
 	biChooseMethod packageList selectItem: SpMethodChooserMockClass package.
 	biChooseMethod classList selectItem: SpMethodChooserMockClass.
@@ -89,14 +86,14 @@ SpChooseMethodUITest >> testMethodListContentWhenInstanceSideIsSelected [
 ]
 
 { #category : #tests }
-SpChooseMethodUITest >> testSelectAClassShouldDisplayHisProtcolInProtocolList [
+SpChooseMethodPresenterTest >> testSelectAClassShouldDisplayHisProtcolInProtocolList [
 	biChooseMethod packageList selectItem: self class package.
 	biChooseMethod classList selectItem: SpMethodChooserMockClass.
 	self assertCollection: (biChooseMethod protocolList items collect: #name) hasSameElements: #(#'-- all --' #accessing)
 ]
 
 { #category : #tests }
-SpChooseMethodUITest >> testTransmissionFromPackageToClassList [
+SpChooseMethodPresenterTest >> testTransmissionFromPackageToClassList [
 	| package |
 	package := RPackage named: 'TestPackageForSpecTests' asSymbol.
 	biChooseMethod packageList items: {package}.
@@ -106,7 +103,7 @@ SpChooseMethodUITest >> testTransmissionFromPackageToClassList [
 ]
 
 { #category : #tests }
-SpChooseMethodUITest >> testWhenClassSideRadioClickShouldChangeProtocolList [
+SpChooseMethodPresenterTest >> testWhenClassSideRadioClickShouldChangeProtocolList [
 	biChooseMethod packageList selectItem: self class package.
 	biChooseMethod classList selectItem: SpMethodChooserMockClass.
 	biChooseMethod radioButtonClassSide click.
@@ -114,7 +111,7 @@ SpChooseMethodUITest >> testWhenClassSideRadioClickShouldChangeProtocolList [
 ]
 
 { #category : #tests }
-SpChooseMethodUITest >> testWhenSelectAProtocolShouldMethodListOnlyContainsMethodWithSelectedProtocol [
+SpChooseMethodPresenterTest >> testWhenSelectAProtocolShouldMethodListOnlyContainsMethodWithSelectedProtocol [
 	biChooseMethod packageList selectItem: self class package.
 	biChooseMethod classList selectItem: self class.
 	biChooseMethod protocolList selectIndex: ((biChooseMethod protocolList items collect: #name) indexOf: 'running').

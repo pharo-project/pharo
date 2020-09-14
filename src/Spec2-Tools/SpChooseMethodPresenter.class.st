@@ -1,36 +1,35 @@
 "
 I am an UI used to select a method of the system.
  
-I'll display the list of packages of the system, the classes of the selected package and the methods of the selected class , the protocols of selectedClass. 
+I'll display the list of packages of the system, the classes of the selected package and the methods of the selected class, the protocols of selectedClass. 
 
 The user can configure me with an action to execute when the user does the selection. The action will take my instance as parameter to get the package/class/method/protocols selected.
 
-Public API and Key Messages
---------------------
+###Public API and Key Messages
 
-- class>>#openOnAccept: aBlock 		This method will open me in a modal and execute the block as parameter when the user accept.
+- `#openOnAccept:`  This method will open me in a modal and execute the block as parameter when the user accept.
 
-Examples
---------------------
+###Examples
 
-	(self openOnAccept: [ :chooseMethodPresenter | chooseMethodPresenter selectedMethod browse ])
+```
+	(self 
+		openOnAccept: [ :chooseMethodPresenter | chooseMethodPresenter selectedMethod browse ])
 		withWindowDo: [ :w | w title: 'Select a method example' ]
-	
+```
  
-Internal Representation and Key Implementation Points.
---------------------
+### Internal Representation and Key Implementation Points.
 
-    Instance Variables
-	packageList:						<aListPresenter>	A list of the packages of the system.
-	classList:						<aListPresenter>	A list of the classes in the selected package.
-	methodList:						<aListPresenter>	A list of the methods in the selected class.
-	protocolList:               <aListPresenter>  A list of the protocols in the selected class. 
-	radioButtonClassSide:			<aRadioButton>		A radio button to select the class side. 
-	radioButtonInstanceSide:		<aRadioButton>		A radio button to select the instance side.
+Instance Variables
+-	packageList:						<aListPresenter>	A list of the packages of the system.
+-	classList:						<aListPresenter>	A list of the classes in the selected package.
+-	methodList:						<aListPresenter>	A list of the methods in the selected class.
+-	protocolList:               <aListPresenter>  A list of the protocols in the selected class. 
+-	radioButtonClassSide:			<aRadioButton>		A radio button to select the class side. 
+-	radioButtonInstanceSide:		<aRadioButton>		A radio button to select the instance side.
 
 "
 Class {
-	#name : #SpChooseMethodUI,
+	#name : #SpChooseMethodPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'packageList',
@@ -44,7 +43,7 @@ Class {
 }
 
 { #category : #specs }
-SpChooseMethodUI class >> defaultSpec [
+SpChooseMethodPresenter class >> defaultSpec [
 	^ SpPanedLayout newHorizontal
 		position: 25 percent;
 		add: #packageList;
@@ -72,13 +71,13 @@ SpChooseMethodUI class >> defaultSpec [
 ]
 
 { #category : #examples }
-SpChooseMethodUI class >> exampleMethodChooser [
+SpChooseMethodPresenter class >> exampleMethodChooser [
 	<example>
 	(self openOnAccept: [ :chooseMethodPresenter | chooseMethodPresenter selectedMethod browse ]) withWindowDo: [ :w | w title: 'Select a method example' ]
 ]
 
 { #category : #examples }
-SpChooseMethodUI class >> exampleNavigationSystem [
+SpChooseMethodPresenter class >> exampleNavigationSystem [
 	<example>
 	| presenter |
 	presenter := self new.
@@ -87,7 +86,7 @@ SpChooseMethodUI class >> exampleNavigationSystem [
 ]
 
 { #category : #'instance creation' }
-SpChooseMethodUI class >> openOnAccept: aBlock [
+SpChooseMethodPresenter class >> openOnAccept: aBlock [
 	| instance |
 	instance := self new.
 	instance openModalWithSpec.
@@ -96,12 +95,12 @@ SpChooseMethodUI class >> openOnAccept: aBlock [
 ]
 
 { #category : #accessing }
-SpChooseMethodUI >> classList [
+SpChooseMethodPresenter >> classList [
 	^ classList
 ]
 
 { #category : #'initialization - actions' }
-SpChooseMethodUI >> classListAction [
+SpChooseMethodPresenter >> classListAction [
 	classList
 		transmitTo: methodList
 		transform: [ :selectedClass | 
@@ -126,7 +125,7 @@ SpChooseMethodUI >> classListAction [
 ]
 
 { #category : #initialization }
-SpChooseMethodUI >> connectPresenters [
+SpChooseMethodPresenter >> connectPresenters [
 	self packageListAction.
 	self classListAction.
 	self protocolListAction.
@@ -135,7 +134,7 @@ SpChooseMethodUI >> connectPresenters [
 ]
 
 { #category : #'initialization - actions' }
-SpChooseMethodUI >> fillWith: aClass [
+SpChooseMethodPresenter >> fillWith: aClass [
 
 	methodList items: aClass methods.
 	^ protocolList items: (aClass protocols 
@@ -143,7 +142,7 @@ SpChooseMethodUI >> fillWith: aClass [
 ]
 
 { #category : #initialization }
-SpChooseMethodUI >> initializeDialogWindow: aDialog [
+SpChooseMethodPresenter >> initializeDialogWindow: aDialog [
 	super initializeDialogWindow: aDialog.
 	aDialog
 		initialExtent: 600 @ 400;
@@ -152,7 +151,7 @@ SpChooseMethodUI >> initializeDialogWindow: aDialog [
 ]
 
 { #category : #initialization }
-SpChooseMethodUI >> initializePresenters [
+SpChooseMethodPresenter >> initializePresenters [
 	packageList := self newList.
 	classList := self newList.
 	methodList := self newList.
@@ -186,32 +185,32 @@ SpChooseMethodUI >> initializePresenters [
 ]
 
 { #category : #testing }
-SpChooseMethodUI >> isInstanceSideSelected [
+SpChooseMethodPresenter >> isInstanceSideSelected [
 	^ radioButtonInstanceSide state
 ]
 
 { #category : #accessing }
-SpChooseMethodUI >> methodList [
+SpChooseMethodPresenter >> methodList [
 	^ methodList
 ]
 
 { #category : #utilities }
-SpChooseMethodUI >> methodNamed: methodSelector [
+SpChooseMethodPresenter >> methodNamed: methodSelector [
 	^ (self isInstanceSideSelected ifTrue: [ self selectedClass ] ifFalse: [ self selectedClass class ]) methodNamed: methodSelector
 ]
 
 { #category : #utilities }
-SpChooseMethodUI >> methodsFromClass: aClass [
+SpChooseMethodPresenter >> methodsFromClass: aClass [
 	^ (self isInstanceSideSelected ifTrue: [ aClass ] ifFalse: [ aClass class ]) methods asOrderedCollection
 ]
 
 { #category : #accessing }
-SpChooseMethodUI >> packageList [
+SpChooseMethodPresenter >> packageList [
 	^ packageList
 ]
 
 { #category : #'initialization - actions' }
-SpChooseMethodUI >> packageListAction [
+SpChooseMethodPresenter >> packageListAction [
 	packageList
 		transmitTo: classList
 		transform: [ :selectedPackage | 
@@ -222,12 +221,12 @@ SpChooseMethodUI >> packageListAction [
 ]
 
 { #category : #accessing }
-SpChooseMethodUI >> protocolList [
+SpChooseMethodPresenter >> protocolList [
 	^ protocolList
 ]
 
 { #category : #'initialization - actions' }
-SpChooseMethodUI >> protocolListAction [
+SpChooseMethodPresenter >> protocolListAction [
 	protocolList
 		transmitTo: methodList
 		transform: [ :selectedProtocol | 
@@ -240,37 +239,37 @@ SpChooseMethodUI >> protocolListAction [
 ]
 
 { #category : #accessing }
-SpChooseMethodUI >> radioButtonClassSide [
+SpChooseMethodPresenter >> radioButtonClassSide [
 	^ radioButtonClassSide
 ]
 
 { #category : #accessing }
-SpChooseMethodUI >> radioButtonInstanceSide [
+SpChooseMethodPresenter >> radioButtonInstanceSide [
 	^ radioButtonInstanceSide
 ]
 
 { #category : #'initialization - actions' }
-SpChooseMethodUI >> radioButtonsAction [
+SpChooseMethodPresenter >> radioButtonsAction [
 	radioButtonClassSide whenActivatedDo: [ self fillWith: self selectedClass class ].
 	radioButtonInstanceSide whenActivatedDo: [ self fillWith: self selectedClass ]
 ]
 
 { #category : #accessing }
-SpChooseMethodUI >> selectedClass [
+SpChooseMethodPresenter >> selectedClass [
 	^ classList selection selectedItem
 ]
 
 { #category : #accessing }
-SpChooseMethodUI >> selectedMethod [
+SpChooseMethodPresenter >> selectedMethod [
 	^ methodList selectedItem
 ]
 
 { #category : #accessing }
-SpChooseMethodUI >> selectedPackage [
+SpChooseMethodPresenter >> selectedPackage [
 	^ packageList selectedItem
 ]
 
 { #category : #accessing }
-SpChooseMethodUI >> selectedProtocol [
+SpChooseMethodPresenter >> selectedProtocol [
 	^ protocolList selection selectedItem
 ]

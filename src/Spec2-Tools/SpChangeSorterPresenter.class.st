@@ -6,7 +6,7 @@ The DualChangeSorter tool supports manipulation of changes between containers an
 ChangeSorterPresenter new openWithSpec
 "
 Class {
-	#name : #ChangeSorterPresenter,
+	#name : #SpChangeSorterPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'model',
@@ -19,7 +19,7 @@ Class {
 }
 
 { #category : #specs }
-ChangeSorterPresenter class >> defaultSpec [
+SpChangeSorterPresenter class >> defaultSpec [
 	<spec>
 	^ SpPanedLayout newVertical
 		position: 35 percent;
@@ -36,19 +36,19 @@ ChangeSorterPresenter class >> defaultSpec [
 ]
 
 { #category : #specs }
-ChangeSorterPresenter class >> title [
+SpChangeSorterPresenter class >> title [
 	^ 'Change sorter'
 ]
 
 { #category : #'menu - change set' }
-ChangeSorterPresenter >> addPreamble [
+SpChangeSorterPresenter >> addPreamble [
 	self selectedChangeSet ifNil: [ ^ self inform: 'No change set selected' ].
 	self model addPreambleTo: self selectedChangeSet.
 	changesListPresenter setSelectedItem: self selectedChangeSet
 ]
 
 { #category : #'menu - change set' }
-ChangeSorterPresenter >> browseChangeSet [
+SpChangeSorterPresenter >> browseChangeSet [
 	"Open a message list browser on methods in the current change set"
 
 	| messages |
@@ -58,13 +58,13 @@ ChangeSorterPresenter >> browseChangeSet [
 ]
 
 { #category : #'menu - message' }
-ChangeSorterPresenter >> browseImplementorsOfMessages [
+SpChangeSorterPresenter >> browseImplementorsOfMessages [
 
 	self model browseMessagesFrom: self selectedSelector
 ]
 
 { #category : #'menu - message' }
-ChangeSorterPresenter >> browseMethodFull [
+SpChangeSorterPresenter >> browseMethodFull [
 	"Create and schedule a full Browser and then select the current class and message."
 
 	self selectedClass ifNotNil:
@@ -72,13 +72,13 @@ ChangeSorterPresenter >> browseMethodFull [
 ]
 
 { #category : #'menu - message' }
-ChangeSorterPresenter >> browseSendersOfMessages [
+SpChangeSorterPresenter >> browseSendersOfMessages [
 
 	self model browseSendersOfMessagesFrom: self selectedSelector
 ]
 
 { #category : #'menu - message' }
-ChangeSorterPresenter >> browseVersions [
+SpChangeSorterPresenter >> browseVersions [
 	"Create and schedule a changelist browser on the versions of the 
 	selected message."
 	
@@ -89,7 +89,7 @@ ChangeSorterPresenter >> browseVersions [
 ]
 
 { #category : #menu }
-ChangeSorterPresenter >> changeSetMenu [
+SpChangeSorterPresenter >> changeSetMenu [
 	"Set up aMenu to hold commands for the change-set-list pane.  This could be for a single or double changeSorter"
 
 	^ self newMenu
@@ -161,30 +161,30 @@ ChangeSorterPresenter >> changeSetMenu [
 ]
 
 { #category : #api }
-ChangeSorterPresenter >> changeSets [
+SpChangeSorterPresenter >> changeSets [
 
 	^ self changesListPresenter listItems
 ]
 
 { #category : #accessing }
-ChangeSorterPresenter >> changesListPresenter [
+SpChangeSorterPresenter >> changesListPresenter [
 
 	^ changesListPresenter
 ]
 
 { #category : #api }
-ChangeSorterPresenter >> changesMenu: aBlock [
+SpChangeSorterPresenter >> changesMenu: aBlock [
 	changesListPresenter contextMenu: aBlock
 ]
 
 { #category : #api }
-ChangeSorterPresenter >> changesPresenterOn: aShortcut do: aBlock [
+SpChangeSorterPresenter >> changesPresenterOn: aShortcut do: aBlock [
 
 	changesListPresenter bindKeyCombination: aShortcut toAction: aBlock
 ]
 
 { #category : #menu }
-ChangeSorterPresenter >> classMenu [
+SpChangeSorterPresenter >> classMenu [
 	"Fill aMenu with items appropriate for the class list"
 
 	^ self newMenu
@@ -218,7 +218,7 @@ ChangeSorterPresenter >> classMenu [
 ]
 
 { #category : #shortcuts }
-ChangeSorterPresenter >> classShortcuts: event from: aMorph [
+SpChangeSorterPresenter >> classShortcuts: event from: aMorph [
 
 	self selectedClass
 		ifNotNil:[
@@ -228,24 +228,24 @@ ChangeSorterPresenter >> classShortcuts: event from: aMorph [
 ]
 
 { #category : #accessing }
-ChangeSorterPresenter >> classesListPresenter [
+SpChangeSorterPresenter >> classesListPresenter [
 
 	^ classesListPresenter
 ]
 
 { #category : #api }
-ChangeSorterPresenter >> classesMenu: aBlock [
+SpChangeSorterPresenter >> classesMenu: aBlock [
 	classesListPresenter contextMenu: aBlock
 ]
 
 { #category : #api }
-ChangeSorterPresenter >> classesOn: aShortcut do: aBlock [
+SpChangeSorterPresenter >> classesOn: aShortcut do: aBlock [
 
 	classesListPresenter bindKeyCombination: aShortcut toAction: aBlock
 ]
 
 { #category : #initialization }
-ChangeSorterPresenter >> connectPresenters [
+SpChangeSorterPresenter >> connectPresenters [
 	self registerChangeActions.
 	self registerClassActions.
 	self registerSelectorActions.
@@ -255,7 +255,7 @@ ChangeSorterPresenter >> connectPresenters [
 ]
 
 { #category : #private }
-ChangeSorterPresenter >> createRingMethodForRemovedSelector: aSelector inClass: aClass [
+SpChangeSorterPresenter >> createRingMethodForRemovedSelector: aSelector inClass: aClass [
 	"Create RingMethod from the	removealinfo"
 
 	| removalInfo method |
@@ -266,7 +266,7 @@ ChangeSorterPresenter >> createRingMethodForRemovedSelector: aSelector inClass: 
 ]
 
 { #category : #private }
-ChangeSorterPresenter >> createRingMethodForSelector: aSelector inClass: aClass [
+SpChangeSorterPresenter >> createRingMethodForSelector: aSelector inClass: aClass [
 	"Create RingMethod from the class compiledMethod or if it was removed from the
 	removealinfo"
 	(aClass includesSelector: aSelector) ifTrue:[ ^ aClass compiledMethodAt: aSelector].
@@ -274,25 +274,25 @@ ChangeSorterPresenter >> createRingMethodForSelector: aSelector inClass: aClass 
 ]
 
 { #category : #api }
-ChangeSorterPresenter >> currentText [
+SpChangeSorterPresenter >> currentText [
 
 	 ^ textPresenter getText
 ]
 
 { #category : #private }
-ChangeSorterPresenter >> defaultTitle [
+SpChangeSorterPresenter >> defaultTitle [
 	
 	^  'Change Sorter'
 ]
 
 { #category : #'menu - change set' }
-ChangeSorterPresenter >> editPostscript [
+SpChangeSorterPresenter >> editPostscript [
 	self selectedChangeSet ifNil: [ ^ self inform: 'No change set selected' ].
 	self selectedChangeSet editPostscript
 ]
 
 { #category : #shortcuts }
-ChangeSorterPresenter >> ensureKeyBindingsFor: aWidget [
+SpChangeSorterPresenter >> ensureKeyBindingsFor: aWidget [
 
 	super ensureKeyBindingsFor: aWidget.
 	
@@ -302,19 +302,19 @@ ChangeSorterPresenter >> ensureKeyBindingsFor: aWidget [
 ]
 
 { #category : #'menu - change set' }
-ChangeSorterPresenter >> fileOut [
+SpChangeSorterPresenter >> fileOut [
 	self selectedChangeSet ifNil: [ ^ self inform: 'No change set selected' ].
 	self selectedChangeSet fileOut
 ]
 
 { #category : #'menu - class' }
-ChangeSorterPresenter >> fileOutClass [
+SpChangeSorterPresenter >> fileOutClass [
 
 	self model fileOutClass: self selectedClass from: self selectedChangeSet
 ]
 
 { #category : #'menu - message' }
-ChangeSorterPresenter >> fileOutMessage [
+SpChangeSorterPresenter >> fileOutMessage [
 	"Put a description of the selected message on a file"
 
 	self selectedSelector ifNotNil: [:selector |
@@ -323,7 +323,7 @@ ChangeSorterPresenter >> fileOutMessage [
 ]
 
 { #category : #'menu - change set' }
-ChangeSorterPresenter >> findChangeSet [
+SpChangeSorterPresenter >> findChangeSet [
 
 	| set |
 	set := self model findChangeSetIn: self changeSets.
@@ -331,7 +331,7 @@ ChangeSorterPresenter >> findChangeSet [
 ]
 
 { #category : #private }
-ChangeSorterPresenter >> forceChangesListRefresh [
+SpChangeSorterPresenter >> forceChangesListRefresh [
 	| sel |
 	
 	sel := self selectedChangeSet.
@@ -340,7 +340,7 @@ ChangeSorterPresenter >> forceChangesListRefresh [
 ]
 
 { #category : #'menu - class' }
-ChangeSorterPresenter >> forgetClass [
+SpChangeSorterPresenter >> forgetClass [
 	"Remove all mention of this class from the changeSet"
 
 	self okToChange ifFalse: [^ self].
@@ -351,7 +351,7 @@ ChangeSorterPresenter >> forgetClass [
 ]
 
 { #category : #'menu - message' }
-ChangeSorterPresenter >> forgetMessage [
+SpChangeSorterPresenter >> forgetMessage [
 
 	self okToChange ifFalse: [^ self].
 	self selectedSelector ifNotNil: [:selector | 
@@ -364,7 +364,7 @@ ChangeSorterPresenter >> forgetMessage [
 ]
 
 { #category : #initialization }
-ChangeSorterPresenter >> initialize [
+SpChangeSorterPresenter >> initialize [
 	model := ChangeSorterModel new.
 	SystemAnnouncer uniqueInstance weak when: CurrentChangeSetChanged send: #updateTitle to: self.
 	super initialize.
@@ -372,7 +372,7 @@ ChangeSorterPresenter >> initialize [
 ]
 
 { #category : #initialization }
-ChangeSorterPresenter >> initializeAnnouncements [
+SpChangeSorterPresenter >> initializeAnnouncements [
 	SystemAnnouncer uniqueInstance weak 
 		when:
 			ClassAdded , ClassCommented , ClassRecategorized , ClassModifiedClassDefinition , ClassRemoved , ClassRenamed
@@ -383,7 +383,7 @@ ChangeSorterPresenter >> initializeAnnouncements [
 ]
 
 { #category : #initialization }
-ChangeSorterPresenter >> initializePresenters [
+SpChangeSorterPresenter >> initializePresenters [
 	methodsListPresenter := self newList.
 	classesListPresenter := self newList.
 	changesListPresenter := self newList.
@@ -401,14 +401,14 @@ ChangeSorterPresenter >> initializePresenters [
 ]
 
 { #category : #initialization }
-ChangeSorterPresenter >> initializeWindow: aWindowPresenter [
+SpChangeSorterPresenter >> initializeWindow: aWindowPresenter [
 	aWindowPresenter
 		title: self title;
 		initialExtent: 500 @ 350
 ]
 
 { #category : #menu }
-ChangeSorterPresenter >> messageMenu [
+SpChangeSorterPresenter >> messageMenu [
 	"Build a menu with items appropriate for the message list; could be for a single or double changeSorter"
 
 	^ self newMenu
@@ -457,7 +457,7 @@ ChangeSorterPresenter >> messageMenu [
 ]
 
 { #category : #shortcuts }
-ChangeSorterPresenter >> methodShortcuts: event from: aMorph [
+SpChangeSorterPresenter >> methodShortcuts: event from: aMorph [
 
 	self selectedSelector
 		ifNotNil:[
@@ -470,30 +470,30 @@ ChangeSorterPresenter >> methodShortcuts: event from: aMorph [
 ]
 
 { #category : #accessing }
-ChangeSorterPresenter >> methodsListPresenter [
+SpChangeSorterPresenter >> methodsListPresenter [
 
 	^ methodsListPresenter
 ]
 
 { #category : #api }
-ChangeSorterPresenter >> methodsMenu: aBlock [
+SpChangeSorterPresenter >> methodsMenu: aBlock [
 	methodsListPresenter contextMenu: aBlock
 ]
 
 { #category : #api }
-ChangeSorterPresenter >> methodsOn: aShortcut do: aBlock [
+SpChangeSorterPresenter >> methodsOn: aShortcut do: aBlock [
 
 	methodsListPresenter bindKeyCombination: aShortcut toAction: aBlock
 ]
 
 { #category : #accessing }
-ChangeSorterPresenter >> model [
+SpChangeSorterPresenter >> model [
 
 	^ model
 ]
 
 { #category : #'menu - change set' }
-ChangeSorterPresenter >> newSet [
+SpChangeSorterPresenter >> newSet [
 	| aSet |
 	self selectedChangeSet ifNil: [ ^ self inform: 'No change set selected' ].
 	self okToChange ifFalse: [ ^ self ].
@@ -505,7 +505,7 @@ ChangeSorterPresenter >> newSet [
 ]
 
 { #category : #'menu - change set' }
-ChangeSorterPresenter >> openChangeSetBrowser [
+SpChangeSorterPresenter >> openChangeSetBrowser [
 	| cs |
 	self selectedChangeSet ifNil: [ ^ self inform: 'No change set selected' ].
 	cs := self selectedChangeSet ifNil: [ ^ self ].
@@ -513,7 +513,7 @@ ChangeSorterPresenter >> openChangeSetBrowser [
 ]
 
 { #category : #initialization }
-ChangeSorterPresenter >> registerChangeActions [
+SpChangeSorterPresenter >> registerChangeActions [
 	changesListPresenter
 		whenSelectionChangedDo: [ :selection | 
 			self updateTextContents.
@@ -526,7 +526,7 @@ ChangeSorterPresenter >> registerChangeActions [
 ]
 
 { #category : #shortcuts }
-ChangeSorterPresenter >> registerChangeSetShortcuts: aWidget [
+SpChangeSorterPresenter >> registerChangeSetShortcuts: aWidget [
 
 	aWidget bindKeyCombination: PharoShortcuts current browseShortcut toAction: [ self selectedChangeSet ifNotNil:[ self browseChangeSet ]].
 	aWidget bindKeyCombination: $b meta shift toAction: [ self selectedChangeSet ifNotNil:[ self openChangeSetBrowser ]].
@@ -541,7 +541,7 @@ ChangeSorterPresenter >> registerChangeSetShortcuts: aWidget [
 ]
 
 { #category : #initialization }
-ChangeSorterPresenter >> registerClassActions [
+SpChangeSorterPresenter >> registerClassActions [
 	classesListPresenter
 		whenSelectionChangedDo: [ :selection | 
 			self updateTextContents.
@@ -555,7 +555,7 @@ ChangeSorterPresenter >> registerClassActions [
 ]
 
 { #category : #shortcuts }
-ChangeSorterPresenter >> registerClassShortcuts: aWidget [
+SpChangeSorterPresenter >> registerClassShortcuts: aWidget [
 
 	aWidget bindKeyCombination: PharoShortcuts current browseShortcut toAction: [ self selectedClass ifNotNil:[ self browseMethodFull ]].
 	aWidget bindKeyCombination: $d meta toAction: [ self selectedClass ifNotNil:[ self forgetClass ]].
@@ -563,7 +563,7 @@ ChangeSorterPresenter >> registerClassShortcuts: aWidget [
 ]
 
 { #category : #shortcuts }
-ChangeSorterPresenter >> registerMethodShortcuts: aWidget [
+SpChangeSorterPresenter >> registerMethodShortcuts: aWidget [
 
 	aWidget bindKeyCombination: PharoShortcuts current browseShortcut toAction: [ self selectedSelector ifNotNil:[ self browseMethodFull ]].
 	aWidget bindKeyCombination: $d meta toAction: [ self selectedSelector ifNotNil:[ self forgetMessage ]].
@@ -574,12 +574,12 @@ ChangeSorterPresenter >> registerMethodShortcuts: aWidget [
 ]
 
 { #category : #initialization }
-ChangeSorterPresenter >> registerSelectorActions [
+SpChangeSorterPresenter >> registerSelectorActions [
 	methodsListPresenter whenSelectionChangedDo: [ :selection | self updateTextContents ]
 ]
 
 { #category : #'menu - change set' }
-ChangeSorterPresenter >> remove [
+SpChangeSorterPresenter >> remove [
 	"Completely destroy my change set.  Check if it's OK first"
 
 	self okToChange ifFalse: [^ self].
@@ -589,7 +589,7 @@ ChangeSorterPresenter >> remove [
 ]
 
 { #category : #'menu - class' }
-ChangeSorterPresenter >> removeClass [
+SpChangeSorterPresenter >> removeClass [
 	"Remove the selected class from the system, at interactive user request.  Make certain the user really wants to do this, since it is not reversible.  Answer true if removal actually happened."
 
 	(self model removeClass: self selectedClass)
@@ -597,7 +597,7 @@ ChangeSorterPresenter >> removeClass [
 ]
 
 { #category : #'menu - message' }
-ChangeSorterPresenter >> removeMessage [
+SpChangeSorterPresenter >> removeMessage [
 	"Remove the selected message from the system."
 	
 	self okToChange
@@ -612,14 +612,14 @@ ChangeSorterPresenter >> removeMessage [
 ]
 
 { #category : #'menu - change set' }
-ChangeSorterPresenter >> removePostscript [
+SpChangeSorterPresenter >> removePostscript [
 	self selectedChangeSet ifNil: [ ^ self inform: 'No change set selected' ].
 	self model removePostscriptFrom: self selectedChangeSet.
 	changesListPresenter setSelectedItem: self selectedChangeSet
 ]
 
 { #category : #'menu - change set' }
-ChangeSorterPresenter >> removePreamble [
+SpChangeSorterPresenter >> removePreamble [
 	self selectedChangeSet ifNil: [ ^ self inform: 'No change set selected' ].
 	self selectedChangeSet hasPreamble ifFalse: [ ^ self inform: 'Change set has no preamble' ].
 	self selectedChangeSet removePreamble.
@@ -627,7 +627,7 @@ ChangeSorterPresenter >> removePreamble [
 ]
 
 { #category : #'menu - change set' }
-ChangeSorterPresenter >> rename [
+SpChangeSorterPresenter >> rename [
 	| set |
 	self selectedChangeSet ifNil: [ ^ self inform: 'No change set selected' ].
 	set := self model rename: self selectedChangeSet.
@@ -639,47 +639,47 @@ ChangeSorterPresenter >> rename [
 ]
 
 { #category : #api }
-ChangeSorterPresenter >> selectedChangeSet [
+SpChangeSorterPresenter >> selectedChangeSet [
 	^ changesListPresenter selection selectedItem
 ]
 
 { #category : #api }
-ChangeSorterPresenter >> selectedChangeSetIndex [
+SpChangeSorterPresenter >> selectedChangeSetIndex [
 
 	 ^ changesListPresenter selectedIndex
 ]
 
 { #category : #api }
-ChangeSorterPresenter >> selectedClass [
+SpChangeSorterPresenter >> selectedClass [
 	^ classesListPresenter selection selectedItem
 ]
 
 { #category : #api }
-ChangeSorterPresenter >> selectedClassIndex [
+SpChangeSorterPresenter >> selectedClassIndex [
 
 	 ^ classesListPresenter selectedIndex
 ]
 
 { #category : #api }
-ChangeSorterPresenter >> selectedSelector [
+SpChangeSorterPresenter >> selectedSelector [
 	^ methodsListPresenter selection selectedItem
 ]
 
 { #category : #api }
-ChangeSorterPresenter >> selectorsMenu: aBlock [
+SpChangeSorterPresenter >> selectorsMenu: aBlock [
 
 	methodsListPresenter menu: aBlock
 ]
 
 { #category : #'menu - change set' }
-ChangeSorterPresenter >> setCurrentChangeSet [
+SpChangeSorterPresenter >> setCurrentChangeSet [
 	self selectedChangeSet ifNil: [ ^ self inform: 'No change set selected' ].
 	self model setCurrentChangeSet: self selectedChangeSet.
 	self updateWindowTitle
 ]
 
 { #category : #initialization }
-ChangeSorterPresenter >> setFocus [
+SpChangeSorterPresenter >> setFocus [
 
 	self focusOrder
 		add: changesListPresenter;
@@ -689,42 +689,42 @@ ChangeSorterPresenter >> setFocus [
 ]
 
 { #category : #api }
-ChangeSorterPresenter >> setSelectedChangeSet: aChangeSet [
+SpChangeSorterPresenter >> setSelectedChangeSet: aChangeSet [
 
 	 ^ changesListPresenter selectItem: aChangeSet
 ]
 
 { #category : #api }
-ChangeSorterPresenter >> setSelectedChangeSetIndex: anIndex [
+SpChangeSorterPresenter >> setSelectedChangeSetIndex: anIndex [
 
 	 ^ changesListPresenter setSelectedIndex: anIndex
 ]
 
 { #category : #api }
-ChangeSorterPresenter >> setSelectedClass: aClass [
+SpChangeSorterPresenter >> setSelectedClass: aClass [
 
 	 ^ classesListPresenter setSelectedItem: aClass
 ]
 
 { #category : #api }
-ChangeSorterPresenter >> setSelectedClassIndex: anIndex [
+SpChangeSorterPresenter >> setSelectedClassIndex: anIndex [
 
 	 ^ classesListPresenter setSelectedIndex: anIndex
 ]
 
 { #category : #accessing }
-ChangeSorterPresenter >> textPresenter [
+SpChangeSorterPresenter >> textPresenter [
 
 	^ textPresenter
 ]
 
 { #category : #api }
-ChangeSorterPresenter >> title [
+SpChangeSorterPresenter >> title [
 	^ String streamContents: [ :stream | stream << self class title << ' on: ' << self model currentChangeSet name ]
 ]
 
 { #category : #api }
-ChangeSorterPresenter >> updateChangesList [
+SpChangeSorterPresenter >> updateChangesList [
 	| sel |
 	sel := self selectedChangeSet.
 	changesListPresenter items: self model allChanges.
@@ -732,7 +732,7 @@ ChangeSorterPresenter >> updateChangesList [
 ]
 
 { #category : #api }
-ChangeSorterPresenter >> updateClassesList [
+SpChangeSorterPresenter >> updateClassesList [
 	| sel |
 	sel := self selectedClass.
 	self selectedChangeSet
@@ -744,7 +744,7 @@ ChangeSorterPresenter >> updateClassesList [
 ]
 
 { #category : #api }
-ChangeSorterPresenter >> updateClassesListAndMessagesList [
+SpChangeSorterPresenter >> updateClassesListAndMessagesList [
 	| sel |
 	sel := methodsListPresenter selectedItem.
 	self updateClassesList.
@@ -753,7 +753,7 @@ ChangeSorterPresenter >> updateClassesListAndMessagesList [
 ]
 
 { #category : #api }
-ChangeSorterPresenter >> updateMessagesList [
+SpChangeSorterPresenter >> updateMessagesList [
 	| sel |
 	sel := methodsListPresenter selectedItem.
 	
@@ -765,7 +765,7 @@ ChangeSorterPresenter >> updateMessagesList [
 ]
 
 { #category : #private }
-ChangeSorterPresenter >> updateTextContents [
+SpChangeSorterPresenter >> updateTextContents [
 	| text |
 	text := self model setContentsOfChangeSet: self selectedChangeSet forClass: self selectedClass andSelector: self selectedSelector.
 	(text asString lines
@@ -776,11 +776,11 @@ ChangeSorterPresenter >> updateTextContents [
 ]
 
 { #category : #api }
-ChangeSorterPresenter >> updateWindowTitle [
+SpChangeSorterPresenter >> updateWindowTitle [
 	self withWindowDo: [ :window | window title: self title ]
 ]
 
 { #category : #'api-events' }
-ChangeSorterPresenter >> whenChangesListChanges: aBlock [
+SpChangeSorterPresenter >> whenChangesListChanges: aBlock [
 	changesListPresenter whenModelChangedDo: aBlock
 ]
