@@ -1,7 +1,7 @@
 "
 A presenter to display dropdown lists.
 
-I am assume there is a little problem on an empty list, but frankly, who creates an empty drop list ?
+_NOTE: I assume there is a little problem on an empty list, but frankly, who creates an empty drop list?_
 
 "
 Class {

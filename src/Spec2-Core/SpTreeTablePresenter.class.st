@@ -403,7 +403,7 @@ SpTreeTablePresenter >> whenSelectedItemChangedDo: aBlock [
 { #category : #'api-events' }
 SpTreeTablePresenter >> whenSelectionChangedDo: aBlock [ 
 	
-	self selection whenChangedDo: [ aBlock cull: selectionMode selectedItem ]
+	self selection whenChangedDo: [ aBlock cull: selectionMode ]
 ]
 
 { #category : #'api-events' }
