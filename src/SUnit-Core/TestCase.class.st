@@ -297,12 +297,11 @@ TestCase class >> historyAnnouncer [
 
 { #category : #'initialize - event' }
 TestCase class >> initialize [
-	super initialize.
 	SystemAnnouncer uniqueInstance unsubscribe: self.
 	SystemAnnouncer uniqueInstance weak
 		when: MethodAdded, MethodModified, MethodRemoved 
 		send: #methodChanged: 
-		to: self.
+		to: self
 ]
 
 { #category : #testing }
@@ -415,15 +414,8 @@ TestCase class >> lookupHierarchyRoot [
 TestCase class >> methodChanged: anEvent [
 	"Remove the changed method from the known test results."
 	
-	| cls sel |
-	cls := anEvent methodClass.
-	(cls inheritsFrom: TestCase)
-		ifFalse: [^ self].
-	sel := anEvent selector.
-	(sel beginsWith: 'test')
-		ifFalse: [^ self].
-	self classForTestResult removeFromTestHistory: sel in: cls.
-
+	anEvent method isTestMethod ifFalse: [ ^ self ].
+	self classForTestResult removeFromTestHistory: anEvent selector in: anEvent methodClass
 ]
 
 { #category : #testing }
