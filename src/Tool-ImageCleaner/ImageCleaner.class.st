@@ -111,7 +111,9 @@ ImageCleaner >> cleanUpMethods [
 	"Make sure that all methods in use are restarted"
 	<script: 'self new cleanUpMethods'>
 	WeakArray restartFinalizationProcess.
-	
+	MenubarMorph reset.
+	ToolRegistry allSubInstances do: [:each | each resetAnnouncer].
+
 	WorldState 
 		allInstancesDo: [ :ws | ws convertAlarms; cleanStepList].
 		
