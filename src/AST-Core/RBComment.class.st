@@ -45,13 +45,11 @@ RBComment class >> with: aCommentToken [
 
 { #category : #'instance creation' }
 RBComment class >> with: aString at: startPosition [
-	self deprecated:
-		'Should use method with: with a comment token as parameter.'.
-	^ self new
-		  with: aString
-		  from: startPosition
-		  to: startPosition + aString size - 1;
-		  yourself
+
+	^ self with: (RBCommentToken
+			   value: aString
+			   start: startPosition
+			   stop: startPosition + aString size - 1)
 ]
 
 { #category : #comparing }
