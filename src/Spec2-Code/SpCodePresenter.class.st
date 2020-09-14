@@ -2,17 +2,6 @@
 I'm a code (Pharo code) presenter. 
 I will style and provide completion according to the behaviour being edited.
 
-## Examples
-- `SpCodePresenter class>>#example`
-- `SpCodePresenter class>>#exampleOverridingContextMenu`
-
-## Interesting API methods
-
-## Transmissions
-- inputTextPort (default)
-- outputTextChangedPort (default)
-
-See also `SpTextPresenter` and `SpAbstractTextPresenter`
 "
 Class {
 	#name : #SpCodePresenter,
