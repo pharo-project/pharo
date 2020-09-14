@@ -1,35 +1,5 @@
 "
 A base for list presenters, it defines basic functionality common to all lists.
-
-## Interesting API methods
-- `SpAbstractListPresenter>>#activateOnDoubleClick`
-- `SpAbstractListPresenter>>#activateOnSingleClick`
-- `SpAbstractListPresenter>>#beMultipleSelection`
-- `SpAbstractListPresenter>>#beSingleSelection`
-- `SpAbstractListPresenter>>#items:`
-- `SpAbstractListPresenter>>#model`
-- `SpAbstractListPresenter>>#model:`
-- `SpAbstractListPresenter>>#sortingBlock`
-- `SpAbstractListPresenter>>#sortingBlock:`
-- `SpAbstractListPresenter>>#selectAll`
-- `SpAbstractListPresenter>>#selectItem:`
-- `SpAbstractListPresenter>>#selectedItem`
-
-## Events
-- `SpAbstractListPresenter>>#whenActivatedDo:`
-- `SpAbstractListPresenter>>#whenModelChangedDo:`
-- `SpAbstractListPresenter>>#whenSearchEnabledChangedDo:`
-- `SpAbstractListPresenter>>#whenSelectionChangedDo:`
-- `SpAbstractListPresenter>>#whenSelectionModeChangedDo:`
-- `SpAbstractListPresenter>>#whenSortingBlockChangedDo:`
-
-## Transmissions
-
-- inputItemsPort (default)
-- outputActivationPort
-- outputSelectionPort (default)
-
-See also `SpListPresenter`, `SpTablePresenter`, `SpComponentListPresenter`
 "
 Class {
 	#name : #SpAbstractListPresenter,

@@ -2,16 +2,6 @@
 A full width bar for arranging buttons.
 A button bar can be used to provide a consistent layout of buttons throughout your application. 
 
-## Examples
-- `SpButtonBarPresenter class>>#example`
-
-## Interesting API methods
-- `SpButtonBarPresenter>>#add:`
-- `SpButtonBarPresenter>>#items`
-- `SpButtonBarPresenter>>#items:`
-- `SpButtonBarPresenter>>#placeAtEnd`
-- `SpButtonBarPresenter>>#placeAtStart`
-
 "
 Class {
 	#name : #SpButtonBarPresenter,
@@ -27,6 +17,12 @@ Class {
 SpButtonBarPresenter class >> adapterName [
 
 	^ #ButtonBarAdapter
+]
+
+{ #category : #documentation }
+SpButtonBarPresenter class >> documentFactoryMethodSelector [
+
+	^ #newButtonBar
 ]
 
 { #category : #api }

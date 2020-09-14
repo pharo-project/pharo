@@ -1,27 +1,6 @@
 "
 A base for text presenters, it defines basic functionality common to all texts.
 
-## Interesting API methods
-- `SpAbstractTextPresenter>>#cursorPositionIndex`
-- `SpAbstractTextPresenter>>#text`
-- `SpAbstractTextPresenter>>#text:`
-- `SpAbstractTextPresenter>>#selectedText`
-- `SpAbstractTextPresenter>>#selectionInterval`
-- `SpAbstractTextPresenter>>#selectionInterval:`
-
-## Events
-- `SpAbstractTextPresenter>>#whenMenuChangedDo:`
-- `SpAbstractTextPresenter>>#whenPlaceholderChangedDo:`
-- `SpAbstractTextPresenter>>#whenResetDo:`
-- `SpAbstractTextPresenter>>#whenSelectionChangedDo:`
-- `SpAbstractTextPresenter>>#whenSubmitDo:`
-- `SpAbstractTextPresenter>>#whenTextChangedDo:`
-
-## Transmissions
-- inputTextPort (default)
-- outputTextChangedPort (default)
-
-See also `SpTextInputFieldPresenter`, `SpTextPresenter`, `SpNumberInputFieldPresenter`, `SpSearchInputFieldPresenter`, `SpRichTextPresenter`, `SpCodePresenter`
 "
 Class {
 	#name : #SpAbstractTextPresenter,

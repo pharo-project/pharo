@@ -3,14 +3,6 @@ A full width bar designed to present contextual actions.
 It is expected to be displayed below the content and expand horizontally to fill the area.
 This is like the small action bars at the bottom of a list in most mobile apps (or macOS), which shows small icons with actions.
 
-## Examples
-- `SpActionBarPresenter class>>#example`
-
-## Interesting API methods
-- `SpActionBarPresenter>>#add:`
-- `SpActionBarPresenter>>#addLast:`
-- `SpActionBarPresenter>>#items`
-
 "
 Class {
 	#name : #SpActionBarPresenter,
@@ -25,6 +17,12 @@ Class {
 SpActionBarPresenter class >> adapterName [
 
 	^ #ActionBarAdapter
+]
+
+{ #category : #documentation }
+SpActionBarPresenter class >> documentFactoryMethodSelector [
+
+	^ #newActionBar
 ]
 
 { #category : #api }

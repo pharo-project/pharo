@@ -24,12 +24,7 @@ SomePresenter>>#initializeDialogWindow: aDialogPresenter
 		initialExtent: 600@400;
 		title: 'A title'	
 ```
-## Interesting API methods
-- `SpDialogWindowPresenter>>#addButton:do:`
-- `SpDialogWindowPresenter>>#beCancel`
-- `SpDialogWindowPresenter>>#beOk`
 
-See also: `SpWindowPresenter` and `SpModalWindowPresenter`
 "
 Class {
 	#name : #SpDialogWindowPresenter,

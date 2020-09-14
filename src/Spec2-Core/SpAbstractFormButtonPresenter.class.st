@@ -1,24 +1,6 @@
 "
 A base for _form control buttons_ (like radiobuttons or checkboxes).
 
-## Interesting API methods
-
-- `SpAbstractFormButtonPresenter>>#enabled:`
-- `SpAbstractFormButtonPresenter>>#label`
-- `SpAbstractFormButtonPresenter>>#label:`
-- `SpAbstractFormButtonPresenter>>#state`
-- `SpAbstractFormButtonPresenter>>#state:`
-- `SpAbstractFormButtonPresenter>>#toggleState`
-
-## Events
-
--  `SpAbstractFormButtonPresenter>>#whenActivatedDo:`
--  `SpAbstractFormButtonPresenter>>#whenChangedDo:`
--  `SpAbstractFormButtonPresenter>>#whenDeactivatedDo:`
--  `SpAbstractFormButtonPresenter>>#whenLabelChangedDo:`
--  `SpAbstractFormButtonPresenter>>#whenLabelClickableChangedDo:`
-
-
 "
 Class {
 	#name : #SpAbstractFormButtonPresenter,

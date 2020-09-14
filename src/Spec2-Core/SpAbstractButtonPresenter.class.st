@@ -1,19 +1,5 @@
 "
 A base for button presenters, it defines basic functionality common to all buttons.
-
-## Interesting API methods
-
-- `SpAbstractButtonPresenter>>#icon`
-- `SpAbstractButtonPresenter>>#icon:`
-- `SpAbstractButtonPresenter>>#label`
-- `SpAbstractButtonPresenter>>#label:`
-
-## Events
-
-- `SpAbstractButtonPresenter>>#whenIconChangedDo:`
-- `SpAbstractButtonPresenter>>#whenLabelChangedDo:`
-
-See also `SpButtonPresenter`, `SpMenuButtonPresenter`.
 "
 Class {
 	#name : #SpAbstractButtonPresenter,

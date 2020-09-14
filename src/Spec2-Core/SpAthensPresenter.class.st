@@ -2,14 +2,6 @@
 A presenter that contains an athens surface (See `AthensSurface` and `AthensSurfaceExamples class`). 
 Users can draw their own vectorial images  and render them as part of a Spec based application by using this presenter.
 
-## Examples
-- `SpAthensPresenter class>>#example` 
-
-## Interesting API methods
-- `SpAthensPresenter>>#drawBlock:` 
-- `SpAthensPresenter>>#surfaceExtent` 
-- `SpAthensPresenter>>#surfaceExtent:` 
-
 "
 Class {
 	#name : #SpAthensPresenter,
@@ -26,6 +18,12 @@ Class {
 { #category : #specs }
 SpAthensPresenter class >> adapterName [
 	^ #AthensAdapter
+]
+
+{ #category : #documentation }
+SpAthensPresenter class >> documentFactoryMethodSelector [
+
+	^ #newAthens
 ]
 
 { #category : #api }
