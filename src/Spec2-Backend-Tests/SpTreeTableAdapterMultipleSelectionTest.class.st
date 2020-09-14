@@ -45,6 +45,8 @@ SpTreeTableAdapterMultipleSelectionTest >> testSelectPresenterIndexSetsSelectedI
 
 { #category : #'tests-model-to-widget' }
 SpTreeTableAdapterMultipleSelectionTest >> testSelectPresenterItemSetsSelectedIndexInWidget [
+	"There is no selectedIndex in trees (but selectedPath).
+	 This cancels superclass method"
 	
 	self skip
 ]

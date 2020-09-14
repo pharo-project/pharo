@@ -1,8 +1,6 @@
 "
-@@TODO
-
-!! Transmissions
-- #inputMorphPort (default)
+## Transmissions
+- inputMorphPort (default)
 "
 Class {
 	#name : #SpMorphPresenter,
@@ -23,11 +21,6 @@ SpMorphPresenter class >> adapterName [
 SpMorphPresenter >> defaultInputPort [
 
 	^ self inputMorphPort
-]
-
-{ #category : #initialization }
-SpMorphPresenter >> initialize [
-	super initialize.
 ]
 
 { #category : #transmission }

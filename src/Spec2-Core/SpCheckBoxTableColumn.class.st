@@ -3,7 +3,7 @@ Class {
 	#superclass : #SpTableColumn,
 	#instVars : [
 		'onActivation',
-		'onDeactivation'
+		'onDesactivation'
 	],
 	#category : #'Spec2-Core-Widgets-Table'
 }
@@ -29,11 +29,23 @@ SpCheckBoxTableColumn >> onActivation: aBlock [
 { #category : #accessing }
 SpCheckBoxTableColumn >> onDeactivation [
 
-	^ onDeactivation
+	^ onDesactivation
 ]
 
 { #category : #accessing }
 SpCheckBoxTableColumn >> onDeactivation: aBlock [
 
-	onDeactivation := aBlock
+	onDesactivation := aBlock
+]
+
+{ #category : #accessing }
+SpCheckBoxTableColumn >> onDesactivation [
+
+	^ onDesactivation
+]
+
+{ #category : #accessing }
+SpCheckBoxTableColumn >> onDesactivation: aBlock [
+
+	onDesactivation := aBlock
 ]

@@ -223,16 +223,16 @@ SpTextPresenter >> whenWrapWordChangedDo: aBlock [
 	self property: #wrapWord whenChangedDo: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpTextPresenter >> withEditionContextMenu [
 
 	editionContextMenu := true
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpTextPresenter >> withoutEditionContextMenu [
 
-	editionContextMenu := true
+	editionContextMenu := false
 ]
 
 { #category : #accessing }

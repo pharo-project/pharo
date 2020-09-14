@@ -61,7 +61,7 @@ SpMorphicTableAdapter >> addModelTo: tableMorph [
 	
 	self presenter whenItemFilterBlockChangedDo: [ :block | 
 		self updateItemFilterBlockWith: block ].
-	self presenter whenSearchChangedDo: [ 
+	self presenter whenSearchEnabledChangedDo: [ 
 		self updateSearch ].
 	self updateItemFilterBlockWith: self itemFilter
 ]

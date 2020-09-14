@@ -2,11 +2,6 @@
 I'm a code (Pharo code) presenter. 
 I will style and provide completion according to the behaviour being edited.
 
-@@TODO
-
-!! Transmissions
-- #inputTextPort (default)
-- #outputTextChangedPort (default)
 "
 Class {
 	#name : #SpCodePresenter,
@@ -104,19 +99,40 @@ SpCodePresenter class >> codeSelectionActionCommandsGroupWith: presenter [
 
 { #category : #examples }
 SpCodePresenter class >> example [
-	<sampleInstance>
 
 	^ self new
-	 openWithSpec;
-		text:
-			'some method: 42'
+		text: 'some method: 42';
+		openWithSpec
 
+]
+
+{ #category : #examples }
+SpCodePresenter class >> exampleOverridingContextMenu [
+	"This example will show a code presenter, but context menu will be overriden and 
+	 it will show just what is defined in #contextMenu: send"
+	
+	^ self new
+		overridingContextMenu;
+		contextMenu: (SpMenuPresenter new
+			addGroup: [ :group | group addItem: [ :item | 
+				item name: 'Testing' ] ]);
+		text: 'some method: 42';
+		openWithSpec
 ]
 
 { #category : #specs }
 SpCodePresenter class >> title [
 
 	^ 'Code'
+]
+
+{ #category : #api }
+SpCodePresenter >> allowingContextMenu [
+	"Indicates the default context menu should be shown (this is the default behaviour). 
+	 When allowing the code context menu, visible operations will be collected from  `SpPresenter>>#rootCommandsGroup` and `SpTextPresenter>>#editionCommandsGroup`, and what user 
+	 define on `SpAbstractTextPresenter>>contextMenu:` will be appended between those groups."
+	
+	self overrideContextMenu: false
 ]
 
 { #category : #private }
@@ -212,7 +228,7 @@ SpCodePresenter >> contextKeyBindings [
 	^ self buildContextKeyBindingsWith: super contextKeyBindings
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpCodePresenter >> contextMenu [
 	"The code presenter context menu is a compound of two menus: 
 		1) the basic interoperation menu (that includes operations like cut&paste but also do it, 
@@ -282,6 +298,14 @@ SpCodePresenter >> hasBindingThatBeginsWith: aString [
 	^ self interactionModel
 		ifNotNil: [ :im | im hasBindingThatBeginsWith: aString ] 
 		ifNil: [ false ]
+]
+
+{ #category : #testing }
+SpCodePresenter >> hasEditionContextMenu [
+	"Answer if edition context menu is active. 
+	 Edition context menu is available by default, but it can be disabled by calling `SpTextPresenter>>#withoutEditionContextMenu` or `SpCodePresenter>>#overridingContextMenu`"
+
+	^ super hasEditionContextMenu and: [ overrideContextMenu not ]
 ]
 
 { #category : #testing }
@@ -386,13 +410,23 @@ SpCodePresenter >> newContextMenuKeyBindings [
 	^ self rootCommandsGroup asKMCategory
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 SpCodePresenter >> overrideContextMenu: aBoolean [
 	"This property set the type of menu to use: if #overrideContextMenu is false (the default), 
 	 the contextMenu will include code presenter default entries. If #overrideContextMenu is true, 
 	 just what is defined in #contextMenu will be displayed"
 
 	overrideContextMenu := aBoolean
+]
+
+{ #category : #api }
+SpCodePresenter >> overridingContextMenu [
+	"Indicates the context menu should will be overriden. This disabled the default context menu 
+	 which includes all operations that can be executed in the context of code.
+	 When overriding the code context menu, the only visible operations will be the ones you define 
+	 on `SpAbstractTextPresenter>>contextMenu:`"
+	
+	self overrideContextMenu: true
 ]
 
 { #category : #initialization }
@@ -425,7 +459,7 @@ SpCodePresenter >> selectedTextOrLine [
 		selectedText
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 SpCodePresenter >> syntaxHighlight: aBoolean [
 	syntaxHighlight := aBoolean 
 ]

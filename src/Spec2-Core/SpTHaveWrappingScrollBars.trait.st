@@ -2,7 +2,7 @@
 I add ""wrapp by scrollbars"" functionality to add to presenters that can be handled with or without them (like Lists, Tables and Texts areas)
 
 Some backends like Morphic forces the scrollbars in their Tables and Lists. 
-But some others like Gtk3 don't. This option allows you to configure the precence 
+But some others like Gtk3 don't. This traits adds configuration of the precence 
 of scrollbars for platforms who do not have them automatically.
 By default lists/tables will have scrollbars added by default, but you can tune this 
 if your backend of choice supports it.
@@ -19,8 +19,13 @@ Trait {
 	#category : #'Spec2-Core-Widgets-Table'
 }
 
-{ #category : #accessing }
+{ #category : #api }
 SpTHaveWrappingScrollBars >> addScrollBarStyle: aStyle [
+	"Add a style for the scrollbar component. 
+	 In platforms that do not support separation from component and scrollbar (like Morphic), the 
+	 style will be added to the component styles. 
+	 In platforms who supports separation between component and scrollbar (like Gtk3), the style 
+	 will be taken separately."
 
 	scrollBarStyles := scrollBarStyles copyWith: aStyle
 ]
@@ -47,47 +52,58 @@ SpTHaveWrappingScrollBars >> initializeTHaveWrappingScrollBars [
 
 { #category : #testing }
 SpTHaveWrappingScrollBars >> isPropagateNaturalHeight [
+	"Indicate if component propagates natural heigth.
+	 See `SpTHaveWrappingScrollBars>>#propagateNaturalHeight:`"
 
 	^ propagateNaturalHeight ifNil: [ false ]
 ]
 
 { #category : #testing }
 SpTHaveWrappingScrollBars >> isPropagateNaturalWidth [
+	"Indicate if component propagates natural width.
+	 See `SpTHaveWrappingScrollBars>>#propagateNaturalWidth:`"
 
 	^ propagateNaturalWidth ifNil: [ false ]
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpTHaveWrappingScrollBars >> propagateNaturalHeight: aBoolean [
-	"Natural height propagation means that the height of the text presenter will follow the 
-	 height of the text contained"
+	"Indicate when component propagates natural heigth.
+	 Natural height propagation means that the height of the presenter containing both scrollbars and 
+	 another component (tipically a text presenter) will follow the height of such component."
 
 	propagateNaturalHeight := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpTHaveWrappingScrollBars >> propagateNaturalWidth: aBoolean [
-	"Natural width propagation means that the width of the text presenter will follow the 
-	 width of the text contained. 
+	"Indicate when component propagates natural width.
+	 Natural width propagation means that the width of the presenter containing both scrollbars and 
+	 another component (tipically a text presenter) will follow the width of such component.
 	 WARNING: Because of a limitation on how the font rendering works in morphic backend, 
 	 this properly will fail to preserve the correct width if using monospaced fonts."
 
 	propagateNaturalWidth := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpTHaveWrappingScrollBars >> removeScrollBarStyle: aStyle [
 
 	scrollBarStyles := scrollBarStyles copyWithout: aStyle
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpTHaveWrappingScrollBars >> scrollBarStyles [
+	"Answer styles defined for the scrollbar component. 
+	 In platforms that do not support separation from component and scrollbar (like Morphic), the 
+	 style will be added to the component styles. 
+	 In platforms who supports separation between component and scrollbar (like Gtk3), the style 
+	 will be taken separately."
 
 	^ scrollBarStyles ifNil: [ #() ]
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpTHaveWrappingScrollBars >> withScrollBars [
 	"Some backends like Morphic forces the scrollbars in their Tables and Lists. 
 	 But some others like Gtk3 don't. This option allows you to configure the precence 
@@ -99,7 +115,7 @@ SpTHaveWrappingScrollBars >> withScrollBars [
 	wrapScrollBars := true
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpTHaveWrappingScrollBars >> withoutScrollBars [
 	"Some backends like Morphic forces the scrollbars in their Tables and Lists. 
 	 But some others like Gtk3 don't. This option allows you to configure the precence 

@@ -91,6 +91,7 @@ SpCollectionListModel >> items [
 
 { #category : #refreshing }
 SpCollectionListModel >> refreshList [
+
 	self sortingBlock ifNotNil: [ :aSortFunction | collection sort: aSortFunction ]
 ]
 
@@ -135,5 +136,6 @@ SpCollectionListModel >> whenChangedDo: aBlock [
 
 { #category : #events }
 SpCollectionListModel >> whenSortingBlockChangedDo: aBlock [
+
 	self property: #sorting whenChangedDo: aBlock
 ]

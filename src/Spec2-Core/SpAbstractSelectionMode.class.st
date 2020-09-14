@@ -116,6 +116,18 @@ SpAbstractSelectionMode >> selectedIndexes [
 	self subclassResponsibility
 ]
 
+{ #category : #selecting }
+SpAbstractSelectionMode >> selectedItem [ 
+
+	^ self subclassResponsibility
+]
+
+{ #category : #selecting }
+SpAbstractSelectionMode >> selectedItems [
+
+	^ self subclassResponsibility
+]
+
 { #category : #accessing }
 SpAbstractSelectionMode >> selectionHolder [
 	^ self subclassResponsibility

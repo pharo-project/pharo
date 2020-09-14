@@ -1,3 +1,6 @@
+"
+A base for button presenters, it defines basic functionality common to all buttons.
+"
 Class {
 	#name : #SpAbstractButtonPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
@@ -24,16 +27,21 @@ SpAbstractButtonPresenter >> addShortcutTipFor: aCharacter on: aString [
 
 { #category : #api }
 SpAbstractButtonPresenter >> icon [
+	"Answer the icon defined for this button (it can be nil)"
 	^ icon
 ]
 
 { #category : #api }
 SpAbstractButtonPresenter >> icon: anIcon [
+	"Sets the icon to be displayed by the button. 
+	 The icon must be a `Form`"
+
 	icon := anIcon
 ]
 
 { #category : #api }
 SpAbstractButtonPresenter >> iconName: aSymbol [
+
 	self icon: (self iconNamed: aSymbol)
 ]
 
@@ -49,14 +57,18 @@ SpAbstractButtonPresenter >> initialize [
 
 ]
 
-{ #category : #morphic }
+{ #category : #api }
 SpAbstractButtonPresenter >> label [
+	"Answers the label to be shown by the button"
+
 	^ self addShortcutTipFor: label
 ]
 
 { #category : #api }
-SpAbstractButtonPresenter >> label: aStringOrImageMorph [
-	label := aStringOrImageMorph
+SpAbstractButtonPresenter >> label: aString [
+	"Sets the label to be shown by the button."
+
+	label := aString
 ]
 
 { #category : #localization }
@@ -75,13 +87,16 @@ SpAbstractButtonPresenter >> shortcutCharacter [
 
 { #category : #'api-events' }
 SpAbstractButtonPresenter >> whenIconChangedDo: aBlock [
+	"Inform when an icon has been changed (invoking `SpAbstractButtonPresenter>>#icon:`). 
+	 `aBlock` receives zero arguments."
 
 	self property: #icon whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpAbstractButtonPresenter >> whenLabelChangedDo: aBlock [
-	"set a block to perform after that the button has been aclicked, and its action performed"
+	"Inform when a label has been changed (invoking `SpAbstractButtonPresenter>>#label:`). 
+	 `aBlock` receives zero arguments."
 
 	self property: #label whenChangedDo: aBlock
 ]

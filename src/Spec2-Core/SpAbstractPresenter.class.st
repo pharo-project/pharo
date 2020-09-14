@@ -281,6 +281,16 @@ SpAbstractPresenter >> openDialogWithSpec [
 	"Build the widget using the default spec and display it into a dialog. 
 	 Beware: this way will not create a real modal in the sense that the user will keep the focus on other windows. If you want to make the user focus on your dialog only you should use #openModalWithSpec instead."
 	
+	"A typical use of openDialogWithSpec is to configure it with callbackscallbacks: 
+
+open
+	^ self openDialogWithSpec
+		okAction: [ self accept ];
+		cancelAction: [ self cancel ];
+		yourself
+"
+	
+	
 	^ self application 
 		openDialog: self
 		withSpecLayout: self retrieveDefaultSpec
@@ -289,7 +299,7 @@ SpAbstractPresenter >> openDialogWithSpec [
 { #category : #showing }
 SpAbstractPresenter >> openDialogWithSpec: aSelector [
 	"Build the widget using the default spec and display it into a dialog. 
-	 Beware: this way will not create a real modal in the sens that the user will keep the focus on other windows. If you want to make the user focus on your dialog only you should use #openModalWithSpec: instead."
+	 Beware: this way will not create a real modal in the sense that the user will keep the focus on other windows. If you want to make the user focus on your dialog only you should use #openModalWithSpec: instead."
 	
 	^ self application 
 		openDialog: self

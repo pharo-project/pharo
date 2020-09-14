@@ -725,6 +725,12 @@ SpPresenter >> newActionBar [
 ]
 
 { #category : #widgets }
+SpPresenter >> newAthens [
+
+	^ self instantiate: SpAthensPresenter
+]
+
+{ #category : #widgets }
 SpPresenter >> newButton [
 	^ self instantiate: SpButtonPresenter
 ]
@@ -909,6 +915,12 @@ SpPresenter >> newToolbarMenuButton [
 SpPresenter >> newToolbarToggleButton [
 
 	^ self instantiate: SpToolbarToggleButtonPresenter
+]
+
+{ #category : #widgets }
+SpPresenter >> newTree [
+
+	^ self instantiate: SpTreePresenter
 ]
 
 { #category : #widgets }

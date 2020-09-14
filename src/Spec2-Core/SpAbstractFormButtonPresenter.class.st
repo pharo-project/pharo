@@ -1,17 +1,5 @@
 "
-AbstractFormButtonPresenter is an abstract class for button of form (like radiobuttons or checkbox).
-See AbstractWidgetPresenter
-
-self example
-
-I provide the following variables and their accessors
-- activationAction and desactivationAction are actions to perform when I am activeted / desactivated.
-- label is the text displayed near the box.
-- state is a boolean representing if I am activated, it is false by default
-
-I provide the following methods
-- click to simulate a click on me.
-- toggleState to reverse my state.
+A base for _form control buttons_ (like radiobuttons or checkboxes).
 
 "
 Class {
@@ -32,22 +20,22 @@ SpAbstractFormButtonPresenter class >> isAbstract [
 	^ self = SpAbstractFormButtonPresenter
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractFormButtonPresenter >> activationAction: aBlock [
 	"This method is used to set the action to perform when I am activated"
 
 	actionWhenActivated := aBlock
 ]
 
-{ #category : #api }
+{ #category : #simulating }
 SpAbstractFormButtonPresenter >> click [
 	"Simulate a click on the checkbox
-	Used when the checkboc is a list item"
+	Used when the checkbox is a list item"
 
 	self toggleState
 ]
 
-{ #category : #'api-events' }
+{ #category : #TOREMOVE }
 SpAbstractFormButtonPresenter >> deactivationAction: aBlock [
 	"This method is used to set the action to perform when I am deactivated"
 
@@ -56,7 +44,7 @@ SpAbstractFormButtonPresenter >> deactivationAction: aBlock [
 
 { #category : #api }
 SpAbstractFormButtonPresenter >> enabled: aBoolean [
-	"Set if the button is enabled (clickable)"
+	"Set if the button is enabled."
 
 	super enabled: aBoolean.
 	self changed: #enabled.
@@ -78,26 +66,28 @@ SpAbstractFormButtonPresenter >> initialize [
 
 { #category : #api }
 SpAbstractFormButtonPresenter >> label [
+	"Answers the label to be shown by the button"
 
 	^ label
 ]
 
 { #category : #api }
 SpAbstractFormButtonPresenter >> label: aString [
+	"Sets the label to be shown by the button."
 
 	label := aString
 ]
 
 { #category : #api }
 SpAbstractFormButtonPresenter >> labelClickable [
-	"Return true if the label can be clicked to select the checkbox"
+	"Answer if the label can be clicked to select the control button"
 
 	^ labelClickable
 ]
 
 { #category : #api }
 SpAbstractFormButtonPresenter >> labelClickable: aBoolean [
-	"Set if the label can be clicked to select the checkbox"
+	"Set if the label can be clicked to select the control button"
 
 	labelClickable := aBoolean
 ]
@@ -112,36 +102,37 @@ SpAbstractFormButtonPresenter >> localeChanged [
 
 { #category : #api }
 SpAbstractFormButtonPresenter >> state [
-	"Return the current state of the form button"
+	"Answer the current state of the control button"
 
 	^ state
 ]
 
 { #category : #api }
 SpAbstractFormButtonPresenter >> state: aBoolean [
+	"Set the state of the control button."
 
-	self state = aBoolean
-		ifTrue: [
-			"Do not update in case it does not change"
-			^ self ].
+	self state = aBoolean ifTrue: [
+		"Do not update in case it does not change"
+		^ self ].
 	state := aBoolean
 ]
 
 { #category : #api }
 SpAbstractFormButtonPresenter >> toggleState [
-	"Toogle the current state of the checkbox"
+	"Toogle the current state of the control button"
 
 	self state: self state not
 ]
 
 { #category : #'api-events' }
 SpAbstractFormButtonPresenter >> whenActivatedDo: aBlock [
-	"This method is used to propagate the event that I have been activated" 
+	"Informs when the control button has been activated (see `SpAbstractFormButtonPresenter>>#state:`.
+	 `aBlock` receives zero arguments." 
 	
-	self whenChangedDo: [:bool | bool ifTrue: aBlock ]
+	self whenChangedDo: [ :aBoolean | aBoolean ifTrue: aBlock ]
 ]
 
-{ #category : #'api-events' }
+{ #category : #TOREMOVE }
 SpAbstractFormButtonPresenter >> whenActivationActionChangedDo: aBlock [
 	"A block performed when the activation action changed"
 
@@ -150,19 +141,22 @@ SpAbstractFormButtonPresenter >> whenActivationActionChangedDo: aBlock [
 
 { #category : #'api-events' }
 SpAbstractFormButtonPresenter >> whenChangedDo: aBlock [
-	"This method is used to propagate the event that I have changed"
+	"Informs when the control button state has been changed (see `SpAbstractFormButtonPresenter>>#state:`.
+	 `aBlock` receives one argument: 
+	 - `aBoolean`, indicating control state." 
 	
 	self property: #state whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpAbstractFormButtonPresenter >> whenDeactivatedDo: aBlock [
-	"This method is used to propagate the event that I have been deactivated"
+	"Informs when the control button has been deactivated (see `SpAbstractFormButtonPresenter>>#state:`.
+	 `aBlock` receives zero arguments." 
 	
 	self whenChangedDo: [:bool | bool ifFalse: aBlock ]
 ]
 
-{ #category : #'api-events' }
+{ #category : #TOREMOVE }
 SpAbstractFormButtonPresenter >> whenDeactivationActionChangedDo: aBlock [
 	"A block performed when the deactivation action changed"
 
@@ -171,13 +165,16 @@ SpAbstractFormButtonPresenter >> whenDeactivationActionChangedDo: aBlock [
 
 { #category : #'api-events' }
 SpAbstractFormButtonPresenter >> whenLabelChangedDo: aBlock [
+	"Informs when the control button label been changed (see `SpAbstractFormButtonPresenter>>#label:`.
+	 `aBlock` receives zero arguments." 
 
 	self property: #label whenChangedDo: aBlock 
 ]
 
 { #category : #'api-events' }
 SpAbstractFormButtonPresenter >> whenLabelClickableChangedDo: aBlock [
-	"A block performed when the label click is activated or descativated"
+	"Informs when the control button label clickable state has been changed (see `SpAbstractFormButtonPresenter>>#labelClickable:`.
+	 `aBlock` receives zero arguments." 
 
 	self property: #labelClickable whenChangedDo: aBlock
 ]

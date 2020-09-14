@@ -330,8 +330,10 @@ MessageBrowser >> installIconStylerFor: anItem [
 
 	(self isMethodDefinition: anItem)
 		ifFalse: [ ^ self ].
+	
 	IconStyler withStaticStylers 
-		styleText: self textModel withAst: anItem ast.
+		styleText: self textModel 
+		withAst: anItem ast.
 ]
 
 { #category : #private }
