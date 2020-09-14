@@ -81,16 +81,8 @@ RBComment >> hash [
 ]
 
 { #category : #testing }
-RBComment >> intersectsInterval: anInterval [ 
-	"Make comments polymorphic with program nodes for hit detection"
-	
-	^(anInterval first between: self start and: self stop) 
-		or: [ self start between: anInterval first and: anInterval last ]
-]
-
-{ #category : #testing }
 RBComment >> isCommentNode [ 
-	^true.
+	^true
 ]
 
 { #category : #printing }
@@ -101,7 +93,7 @@ RBComment >> printOn: aStream [
 	aStream nextPutAll: '" '.
 ]
 
-{ #category : #accessing }
+{ #category : #enumeration }
 RBComment >> size [
 	^ contents size + 2 "must take into account quotation marks"
 ]
