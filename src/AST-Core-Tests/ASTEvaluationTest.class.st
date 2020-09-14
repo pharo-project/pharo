@@ -23,13 +23,13 @@ ASTEvaluationTest >> testEvaluateForContext [
 	self assert: (node evaluateForContext: thisContext) equals: varForTesting.
 
 	"lets check self, super"
-	node := RBVariableNode named: 'self'.
+	node := RBVariableNode selfNode.
 	self assert: (node evaluateForContext: thisContext) equals: thisContext receiver.
-	node := RBVariableNode named: 'super'.
+	node := RBVariableNode superNode.
 	self assert: (node evaluateForContext: thisContext) equals: thisContext receiver.
 
 	"thisContext is not the thisContext of this method though... it is the context of the evaluating doit"
-	node := RBVariableNode named: 'thisContext'.
+	node := RBVariableNode thisContextNode.
 	self deny: (node evaluateForContext: thisContext) equals: thisContext.	
 
 	"reading ivars works, too"
@@ -43,8 +43,8 @@ ASTEvaluationTest >> testEvaluateForReceiver [
 	receiver := 4@5.
 	node := (receiver class>>#x) variableNodes first.
 	self assert: (node evaluateForReceiver: receiver) equals: 4.
-	node := RBVariableNode named: 'self'.
+	node := RBVariableNode selfNode.
 	self assert: (node evaluateForReceiver: receiver) equals: receiver.
-	node := RBVariableNode named: 'super'.
+	node := RBVariableNode superNode.
 	self assert: (node evaluateForReceiver: receiver) equals: receiver.
 ]

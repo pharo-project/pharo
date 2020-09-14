@@ -16,12 +16,6 @@ OCLiteralVariable class >> isDeprecated [
 	^true
 ]
 
-{ #category : #accessing }
-OCLiteralVariable class >> semanticNodeClass [
-
-	^RBGlobalNode
-]
-
 { #category : #emitting }
 OCLiteralVariable >> emitStore: methodBuilder [
 

@@ -35,6 +35,6 @@ RFClassReification >> genForRBProgramNode [
 { #category : #generate }
 RFClassReification >> generate [
 	^RBMessageNode 
-		receiver: (RBVariableNode named: 'self')
+		receiver: RBVariableNode selfNode
 		selector: #class
 ]

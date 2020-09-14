@@ -93,6 +93,11 @@ Slot class >> slotUsers [
 		select:  [ :class | class slots anySatisfy: [ :slot | slot class == self ] ]
 ]
 
+{ #category : #visiting }
+Slot >> acceptVisitor: aProgramNodeVisitor node: aNode [
+	^ aProgramNodeVisitor visitInstanceVariableNode: aNode
+]
+
 { #category : #'class building' }
 Slot >> asClassVariable [
 	self

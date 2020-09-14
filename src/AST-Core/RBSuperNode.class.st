@@ -24,14 +24,3 @@ RBSuperNode >> initialize [
   super initialize.
   variable := SuperVariable instance
 ]
-
-{ #category : #testing }
-RBSuperNode >> isSelfOrSuper [
-
-	^ true
-]
-
-{ #category : #testing }
-RBSuperNode >> isSuper [
-	^ true
-]

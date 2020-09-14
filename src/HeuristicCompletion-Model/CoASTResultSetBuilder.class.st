@@ -69,7 +69,7 @@ CoASTResultSetBuilder >> parseNode [
 
 	^ node ifNil: [ node := (completionContext isWorkspace
 		ifTrue: [ RBParser parseFaultyExpression: completionContext source ]
-		ifFalse: [ RBParser parseFaultyMethod: completionContext source ])
+		ifFalse: [ RBParser parseFaultyMethod: completionContext source ]) doSemanticAnalysis
 			nodeForOffset: completionContext position ]
 ]
 
@@ -161,6 +161,12 @@ CoASTResultSetBuilder >> visitSequenceNode: aRBSequenceNode [
 CoASTResultSetBuilder >> visitSuperNode: aRBSuperNode [ 
 	
 	^ self visitNode: aRBSuperNode
+]
+
+{ #category : #visiting }
+CoASTResultSetBuilder >> visitTemporaryNode: aRBReturnNode [ 
+	
+	^ self visitNode: aRBReturnNode
 ]
 
 { #category : #visiting }

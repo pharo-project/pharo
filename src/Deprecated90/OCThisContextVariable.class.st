@@ -7,12 +7,6 @@ Class {
 	#category : #'Deprecated90-OpalCompiler-Core'
 }
 
-{ #category : #accessing }
-OCThisContextVariable class >> semanticNodeClass [
-
-	^RBThisContextNode 
-]
-
 { #category : #emitting }
 OCThisContextVariable >> emitValue: methodBuilder [
 

@@ -34,7 +34,7 @@ RFValueReification >> genForInstanceVariableSlot [
 	^ RBMessageNode
 		receiver: (RFLiteralVariableNode value: entity)
 		selector: #read:
-		arguments: {(RBVariableNode named: 'self')}
+		arguments: {RBVariableNode selfNode}
 ]
 
 { #category : #generate }

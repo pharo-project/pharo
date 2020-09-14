@@ -45,11 +45,6 @@ RBParseErrorNode >> acceptVisitor: aProgramNodeVisitor [
 ]
 
 { #category : #converting }
-RBParseErrorNode >> adaptToSemanticNode [
-	" I can't provide more semantics "
-]
-
-{ #category : #converting }
 RBParseErrorNode >> asSyntaxErrorNotification [
 	^SyntaxErrorNotification new
 		setClass: self methodNode methodClass

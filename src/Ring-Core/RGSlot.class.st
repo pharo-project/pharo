@@ -9,6 +9,11 @@ RGSlot >> accept: anInterpreter assign: aValue inNode: aVariableNode [
 	self error: #TBD
 ]
 
+{ #category : #'as yet unclassified' }
+RGSlot >> acceptVisitor: aProgramNodeVisitor node: aNode [ 
+	^ aProgramNodeVisitor visitInstanceVariableNode: aNode
+]
+
 { #category : #'managing container' }
 RGSlot >> addoptToParentStub [
 
