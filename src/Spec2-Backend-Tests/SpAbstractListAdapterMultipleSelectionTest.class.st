@@ -69,6 +69,7 @@ SpAbstractListAdapterMultipleSelectionTest >> testSelectPresenterWithScrollingMa
 
 	"TreeTable presenter does not have the same API, do not run the test"
 	presenter class adapterName = #TreeTableAdapter ifTrue: [ ^ self ].
+	presenter class adapterName = #TreeAdapter ifTrue: [ ^ self ].
 	
 	self flag: 'TODO: remove the following guard clause once scrolling is implemented on SpComponentListPresenter'.
 	presenter class adapterName = #ComponentListAdapter ifTrue: [ ^ self ].
@@ -89,6 +90,7 @@ SpAbstractListAdapterMultipleSelectionTest >> testSelectPresenterWithoutScrollin
 	
 	"TreeTable presenter does not have the same API, do not run the test"
 	presenter class adapterName = #TreeTableAdapter ifTrue: [ ^ self ].
+	presenter class adapterName = #TreeAdapter ifTrue: [ ^ self ].
 	
 	self flag: 'TODO: remove the following guard clause once scrolling is implemented on SpComponentListPresenter'.
 	presenter class adapterName = #ComponentListAdapter ifTrue: [ ^ self ].
