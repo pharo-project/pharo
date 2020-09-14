@@ -17,7 +17,7 @@ TKTServiceManagerTest >> testCannotStartTwoServicesWithSameName [
 	newService step: [ 100 milliSeconds wait ].
 	self should: [ newService start ] raise: Error ]
 		ensure: [ service stop.
-			[ newService stop ] ifError: [  ].
+			[ newService stop ] onErrorDo: [  ].
 			200 milliSeconds wait ]
 ]
 
