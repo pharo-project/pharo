@@ -470,12 +470,6 @@ FileReference >> openWritable: aBoolean [
 	^ filesystem open: path writable: aBoolean
 ]
 
-{ #category : #accessing }
-FileReference >> path [
-	"Return the path internal representation that denotes the receiver in the context of its filesystem. "
-	^ path
-]
-
 { #category : #printing }
 FileReference >> pathString [
 	"Return the full path name of the receiver."

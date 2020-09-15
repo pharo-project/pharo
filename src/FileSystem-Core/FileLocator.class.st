@@ -452,11 +452,6 @@ FileLocator >> origin [
 	^ origin
 ]
 
-{ #category : #accessing }
-FileLocator >> path [
-	^ path
-]
-
 { #category : #printing }
 FileLocator >> printOn: aStream [
 	| fs |
