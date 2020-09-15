@@ -715,6 +715,11 @@ AbstractFileReference >> parentUpTo: aParentDirName [
 ]
 
 { #category : #accessing }
+AbstractFileReference >> path [
+	^ path
+]
+
+{ #category : #accessing }
 AbstractFileReference >> pathSegments [
 	^ self fullPath segments
 ]
