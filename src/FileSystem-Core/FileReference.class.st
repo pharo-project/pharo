@@ -20,8 +20,7 @@ Class {
 	#name : #FileReference,
 	#superclass : #AbstractFileReference,
 	#instVars : [
-		'filesystem',
-		'path'
+		'filesystem'
 	],
 	#category : #'FileSystem-Core-Public'
 }

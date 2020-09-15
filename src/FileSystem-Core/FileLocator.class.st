@@ -35,8 +35,7 @@ Class {
 	#name : #FileLocator,
 	#superclass : #AbstractFileReference,
 	#instVars : [
-		'origin',
-		'path'
+		'origin'
 	],
 	#classVars : [
 		'Resolver'
