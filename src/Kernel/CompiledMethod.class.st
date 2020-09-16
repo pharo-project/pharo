@@ -409,6 +409,12 @@ CompiledMethod >> embeddSourceInTrailer [
 ]
 
 { #category : #accessing }
+CompiledMethod >> endPC [
+	"Answer the index of the last bytecode."
+	^ self trailer endPC
+]
+
+{ #category : #accessing }
 CompiledMethod >> flushCache [
 	"Tell the virtual machine to remove all references to this method from its method lookup caches, and to discard any optimized version 	of the method, if it has any of these.  This must be done whenever a method is modified in place, such as modifying its literals or 	machine code, to reflect the revised code.  c.f. Behavior>>flushCache & Symbol>>flushCache.  Essential.	 See MethodDictionary class 	comment."
 
@@ -1106,6 +1112,12 @@ CompiledMethod >> tags [
 CompiledMethod >> tempNames [
 	"on the level of the compiled method, tempNames includes argument names"
 	^self ast argumentNames, self ast temporaryNames
+]
+
+{ #category : #accessing }
+CompiledMethod >> trailer [
+	"Answer the receiver's trailer"
+	^ CompiledMethodTrailer new method: self
 ]
 
 { #category : #'accessing-tags' }

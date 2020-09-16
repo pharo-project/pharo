@@ -15,6 +15,12 @@ Class {
 	#category : #'Kernel-Methods'
 }
 
+{ #category : #accessing }
+CompiledBlock >> endPC [
+	"Answer the index of the last bytecode."
+	^ self size
+]
+
 { #category : #scanning }
 CompiledBlock >> hasMethodReturn [
 	"Answer whether the receiver has a method-return ('^') in its code."
