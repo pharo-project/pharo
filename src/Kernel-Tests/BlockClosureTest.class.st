@@ -139,6 +139,18 @@ BlockClosureTest >> testCullCullCullCull [
 		equals: 4
 ]
 
+{ #category : #'tests - evaluating' }
+BlockClosureTest >> testHasMethodReturn [
+
+	self assert: [ ^self  ] hasMethodReturn.
+	self deny: [ 1 + 2 ] hasMethodReturn.
+	self deny: [ self printString ] hasMethodReturn.
+	
+	"nested blocks"
+	self assert: [ 1 > 2 ifTrue: [ ^self ] ] hasMethodReturn.
+	self assert: [ #(1) do: [ ^self ] ] hasMethodReturn
+]
+
 { #category : #tests }
 BlockClosureTest >> testNew [
 	self	should: [Context new: 5] raise: Error.

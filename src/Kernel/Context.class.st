@@ -854,7 +854,7 @@ Context >> handleSignal: exception [
 	self evaluateSignal: exception
 ]
 
-{ #category : #query }
+{ #category : #testing }
 Context >> hasContext: aContext [ 
 	"Answer whether aContext is me or one of my senders"
 
@@ -868,12 +868,12 @@ Context >> hasInstVarRef [
 	^self compiledCode hasInstVarRef.
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 Context >> hasMethodReturn [
 	^closureOrNil hasMethodReturn
 ]
 
-{ #category : #controlling }
+{ #category : #testing }
 Context >> hasSender: context [ 
 	"Answer whether the receiver is strictly above context on the stack."
 
@@ -932,19 +932,19 @@ Context >> isBlockContext [
 	^closureOrNil isClosure
 ]
 
-{ #category : #query }
+{ #category : #testing }
 Context >> isBottomContext [
 	"Answer if this is the last context (the first context invoked) in my sender chain"
 
 	^sender isNil
 ]
 
-{ #category : #query }
+{ #category : #testing }
 Context >> isContext [
 	^true
 ]
 
-{ #category : #query }
+{ #category : #testing }
 Context >> isDead [
 	"Has self finished"
 

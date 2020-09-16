@@ -106,6 +106,14 @@ CompiledCode >> addWithAllBlocksInto: collected [
 	^ collected
 ]
 
+{ #category : #accessing }
+CompiledCode >> allBlocksDo: aBlock [
+
+	self literals 
+		select: [ :aLiteral | aLiteral isEmbeddedBlock ] 
+		thenDo: [ :aLiteral | aLiteral withAllBlocksDo: aBlock  ]
+]
+
 { #category : #literals }
 CompiledCode >> allLiterals [
 	"Answer an Array of the literals referenced by the receiver.	
