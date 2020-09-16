@@ -98,6 +98,12 @@ CoASTResultSetBuilder >> visitCascadeNode: aRBCascadeNode [
 ]
 
 { #category : #visiting }
+CoASTResultSetBuilder >> visitGlobalNode: aRBVariableNode [
+
+	^ self visitVariableNode: aRBVariableNode
+]
+
+{ #category : #visiting }
 CoASTResultSetBuilder >> visitLiteralArrayNode: aRBLiteralArrayNode [ 
 
 	^ self visitNode: aRBLiteralArrayNode

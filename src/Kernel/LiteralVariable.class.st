@@ -59,6 +59,12 @@ LiteralVariable >> = anAssociation [
 	^ super = anAssociation and: [value = anAssociation value]
 ]
 
+{ #category : #visiting }
+LiteralVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
+	"to be compatible to the old visitor implementation"
+	^ aProgramNodeVisitor visitGlobalNode: aNode
+]
+
 { #category : #testing }
 LiteralVariable >> analogousCodeTo: anAssociation [
 	^ self = anAssociation
