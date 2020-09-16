@@ -357,10 +357,9 @@ FBDExamples >> exampleCascadeIntoBlockWithTempIntoCascade [
 { #category : #'examples - branches' }
 FBDExamples >> exampleCascadeNested [
 	<sampleInstance>
-	<compilerOptions: #(- #optionReadOnlyLiterals)>
 	| tmp1 tmp2 |
 	tmp1 := 1.
-	tmp2 := #(1 2 3).
+	tmp2 := #(1 2 3) copy.
 	tmp2 at: 2 put: 5.
 	tmp1
 		+ tmp2 size;

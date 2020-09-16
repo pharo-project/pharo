@@ -366,13 +366,12 @@ StringTest >> secondIndex [
 
 { #category : #running }
 StringTest >> setUp [
-	<compilerOptions: #(- #optionReadOnlyLiterals)>
 	super setUp.
 	string := 'Hi, I am a String'.
 	emptyString := ''.
 	subcollection3ElementsSorted := 'bcd'.
 	nonEmpty5ElementsSorted := 'a' , subcollection3ElementsSorted , 'e'.
-	unsortedCollection := 'azsbe'.
+	unsortedCollection := 'azsbe' copy.
 	indexInNonEmptyArray := #(1 3 2 ).
 	arrayWithCharacters := #($a $b $c ).
 	nonEmpty1element := 'a'.
@@ -1832,24 +1831,22 @@ StringTest >> testSubstrings [
 
 { #category : #tests }
 StringTest >> testTranslateToLowercase [
-	<compilerOptions: #(- #optionReadOnlyLiterals)>
 	
-	self assert: 'test this string' translateToLowercase equals: 'test this string'.
-	self assert: ' Test THIS sTRing' translateToLowercase equals: ' test this string'.
-	self assert: '' translateToLowercase equals: ''.
-	self assert: 'ÔÜÖ' translateToLowercase equals: 'ôüö'.
-	self assert: '123éàôüÖẞ' translateToLowercase equals: '123éàôüöẞ'
+	self assert: 'test this string' copy translateToLowercase equals: 'test this string'.
+	self assert: ' Test THIS sTRing' copy translateToLowercase equals: ' test this string'.
+	self assert: '' copy translateToLowercase equals: ''.
+	self assert: 'ÔÜÖ' copy translateToLowercase equals: 'ôüö'.
+	self assert: '123éàôüÖẞ' copy translateToLowercase equals: '123éàôüöẞ'
 ]
 
 { #category : #tests }
 StringTest >> testTranslateToUppercase [
-	<compilerOptions: #(- #optionReadOnlyLiterals)>
 
-	self assert: 'test this string' translateToUppercase equals: 'TEST THIS STRING'.
-	self assert: ' Test THIS sTRing' translateToUppercase equals: ' TEST THIS STRING'.
-	self assert: '' translateToUppercase equals: ''.
-	self assert: 'ÔÜÖ' translateToUppercase equals: 'ÔÜÖ'.
-	self assert: '123éàôüÖẞ' translateToUppercase equals: '123ÉÀÔÜÖẞ'
+	self assert: 'test this string' copy translateToUppercase equals: 'TEST THIS STRING'.
+	self assert: ' Test THIS sTRing' copy translateToUppercase equals: ' TEST THIS STRING'.
+	self assert: '' copy translateToUppercase equals: ''.
+	self assert: 'ÔÜÖ' copy translateToUppercase equals: 'ÔÜÖ'.
+	self assert: '123éàôüÖẞ' copy translateToUppercase equals: '123ÉÀÔÜÖẞ'
 ]
 
 { #category : #'tests - converting' }
