@@ -11,8 +11,8 @@ Class {
 MethodQueryTest >> testReferencedClasses [
 	| refs |
 	refs := (CompiledMethod >> #referencedClasses) referencedClasses.
-	self assertEmpty: refs.
+	self assertCollection: refs hasSameElements: {IdentitySet}.
 
 	refs := thisContext method referencedClasses.
-	self assertCollection: refs hasSameElements: {CompiledMethod}
+	self assertCollection: refs hasSameElements: {CompiledMethod. IdentitySet}
 ]
