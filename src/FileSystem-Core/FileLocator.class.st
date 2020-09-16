@@ -35,8 +35,7 @@ Class {
 	#name : #FileLocator,
 	#superclass : #AbstractFileReference,
 	#instVars : [
-		'origin',
-		'path'
+		'origin'
 	],
 	#classVars : [
 		'Resolver'
@@ -451,11 +450,6 @@ FileLocator >> isRelative [
 { #category : #accessing }
 FileLocator >> origin [
 	^ origin
-]
-
-{ #category : #accessing }
-FileLocator >> path [
-	^ path
 ]
 
 { #category : #printing }
