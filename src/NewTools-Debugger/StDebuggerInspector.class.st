@@ -69,6 +69,7 @@ StDebuggerInspector >> defaultLayoutSpec [
 
 { #category : #updating }
 StDebuggerInspector >> forceRawInspectionUpdate [
+
 	self getRawInspectorPresenterOrNil ifNotNil: [ :inspection | 
 		inspection update ]
 ]
@@ -91,7 +92,7 @@ StDebuggerInspector >> initializePresenters [
 
 	label := self newLabel.
 	inspector := self instantiate: StInspector on: self model.
-	currentLayoutSpec := self defaultLayoutSpec.
+	currentLayoutSpec := self defaultLayoutSpec
 ]
 
 { #category : #accessing }
@@ -219,6 +220,7 @@ StDebuggerInspector >> updateWith: inspectedObject [
 	(oldContext notNil and: [ newContext notNil ]) ifTrue: [ 
 		(oldContext receiver == newContext receiver and: [ 
 			 oldContext selector == newContext selector ]) ifTrue: [ ^ self ] ].
+
 	self saveRawInspectionSelectionForContext: oldContext.
 	self model: (StDebuggerInspectorModel on: inspectedObject).
 	self updateEvaluationPaneReceiver.

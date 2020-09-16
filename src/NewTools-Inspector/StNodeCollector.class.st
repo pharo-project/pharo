@@ -16,14 +16,6 @@ StNodeCollector class >> for: anObject [
 ]
 
 { #category : #building }
-StNodeCollector >> collectContextNodes [
-	^ OrderedCollection
-		with: (StInspectorThisContextNode hostObject: self object context)
-		with: (StInspectorStackTopNode hostObject: self object context)
-		with: (StDebugSessionInspectorNode hostObject: self object session)
-]
-
-{ #category : #building }
 StNodeCollector >> collectNodes [
 
 	^ 
@@ -91,7 +83,7 @@ StNodeCollector >> slotNodes [
 
 { #category : #building }
 StNodeCollector >> tempNodesForContext: aContext [
-	^ aContext tempNames collect: [ :name | 
-		  (StInspectorTempNode hostObject: aContext) tempVariable:
-			  (aContext temporaryVariableNamed: name) ]
+^ aContext astScope allTemps collect: [ :temp |
+(StInspectorTempNode hostObject: aContext) tempVariable: temp]
+
 ]

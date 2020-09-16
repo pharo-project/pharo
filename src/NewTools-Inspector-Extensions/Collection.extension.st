@@ -1,7 +1,7 @@
 Extension { #name : #Collection }
 
 { #category : #'*NewTools-Inspector-Extensions' }
-Collection >> inspectorItems [
+Collection >> inspectionItems [
 	<inspectorPresentationOrder: 0 title: 'Items'> 
 	
 	^ SpTablePresenter new 

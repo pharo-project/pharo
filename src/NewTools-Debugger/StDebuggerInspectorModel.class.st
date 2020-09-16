@@ -9,8 +9,26 @@ Class {
 }
 
 { #category : #accessing }
+StDebuggerInspectorModel >> allInspectorNodes [
+
+	^ self inspectedObject buildInspectorNodes
+]
+
+{ #category : #accessing }
 StDebuggerInspectorModel >> defaultObjectInspectorClass [
 	^StDebuggerRawObjectInspector
+]
+
+{ #category : #initialize }
+StDebuggerInspectorModel >> initialize [
+	super initialize.
+	inspectedObject := StDebuggerContext new
+]
+
+{ #category : #accessing }
+StDebuggerInspectorModel >> inspectedObject [
+
+	^ inspectedObject ifNil: [ inspectedObject := StDebuggerContext new ]
 ]
 
 { #category : #accessing }

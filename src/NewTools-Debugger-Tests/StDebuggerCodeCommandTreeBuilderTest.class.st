@@ -47,9 +47,7 @@ StDebuggerCodeCommandTreeBuilderTest >> testCodeExtensionCommandsClasses [
 	self flag: '#DBG_IMPROVE'.
 	"This test basically reproduce the same code than in the command builder class.
 	Not nice, but at least specifies what commands classes should be returned by the builder."
-	classes := (PragmaCollector
-		filter: [ :prg | prg selector = #codeExtensionDebugCommand: ]) reset
-		collected collect: [ :prg | prg methodClass soleInstance ].
+	classes :=  (Pragma allNamed: #codeExtensionDebugCommand:) collect: [ :prg |  prg methodClass soleInstance ].
 	self
 		assertCollection: builder codeExtensionCommandsClasses
 		equals: classes

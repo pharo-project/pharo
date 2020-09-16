@@ -19,6 +19,10 @@ StDebuggerActionModel class >> on: aDebugSession [
 { #category : #accessing }
 StDebuggerActionModel >> assertEqualsSelectors [
 	^ #(#assert:equals: #assert:closeTo:precision: #assert:closeTo: #assert:identicalTo: #assertCollection:equals: #assertCollection:hasSameElements:)
+	
+"#( #assert:equals: #assert:closeTo:precision:
+	     #assert:closeTo: #assert:identicalTo: #assertCollection:equals:
+	     #assertCollection:hasSameElements: )"
 ]
 
 { #category : #'debug - execution' }

@@ -1,7 +1,7 @@
 Extension { #name : #String }
 
 { #category : #'*NewTools-Inspector-Extensions' }
-String >> inspectorString [
+String >> inspectionString [
 	<inspectorPresentationOrder: 10 title: 'String'>
 	
 	^ SpTextPresenter new

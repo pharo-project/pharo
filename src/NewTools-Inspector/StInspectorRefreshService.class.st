@@ -60,7 +60,7 @@ StInspectorRefreshService >> stepService [
 StInspectorRefreshService >> unregister: anInspector [
 
 	mutex critical: [ 
-		inspectors remove: anInspector.
+		inspectors remove: anInspector ifAbsent: [].
 		inspectors ifEmpty: [ 
 			self stop ] ]
 ]
