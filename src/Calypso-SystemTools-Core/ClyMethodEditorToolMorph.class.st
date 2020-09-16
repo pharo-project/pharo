@@ -138,12 +138,10 @@ ClyMethodEditorToolMorph >> formatTextIfNeeded [
 
 { #category : #'events handling' }
 ClyMethodEditorToolMorph >> getASTFor: aString [
-	| ast |
-	ast := self methodClass compiler
+	^ self methodClass compiler
 		source: aString;
 		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
-		parse.				
-	^ast doSemanticAnalysis
+		parse
 ]
 
 { #category : #initialization }

@@ -17,7 +17,6 @@ RBVariableNodeTest >> testIsDefinedByBlock [
   test.
 	[ :test2 | | test3| test2. test3].
   ^test'.
-	ast doSemanticAnalysis.
 	temps := ast allChildren select: [ :each | each isTemp ].
 	"test is defined by the method"
 	self deny: temps first isDefinedByBlock.
@@ -51,7 +50,6 @@ RBVariableNodeTest >> testIsDefinition [
   test := 2.
   test.
   ^test'.
-	ast doSemanticAnalysis.
 	temps := ast allChildren select: #isTemp.
 	
 	"arguments define variables"

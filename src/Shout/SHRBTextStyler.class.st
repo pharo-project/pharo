@@ -1015,7 +1015,6 @@ SHRBTextStyler >> privateStyle: aText [
 		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
 		requestor: workspace;
 		parse.				
-	ast doSemanticAnalysis.
 	^ self style: aText ast: ast
 ]
 

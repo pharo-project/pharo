@@ -501,6 +501,7 @@ OpalCompiler >> parse [
 		ifTrue: [ self parseExpression ]
 		ifFalse: [ self parseMethod ].
 	ast methodNode compilationContext: self compilationContext.
+	self doSemanticAnalysis.
 	^ast
 ]
 
