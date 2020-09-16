@@ -8,11 +8,11 @@ CompiledMethod >> implementors [
 { #category : #'*System-Support' }
 CompiledMethod >> referencedClasses [
 	"Return classes that are directly referenced by this method. It traverses all the compiled methods to get the classes"
-
-	^ self withAllBlocks flatCollect: [ :aCompiledCode | 
-			aCompiledCode literals
-				select: [ :l | l value isClass ] 
-				thenCollect: [:v | v value ]]
+	| result |
+	result := IdentitySet new.
+	self withAllNestedLiteralsDo: [:each | 
+		each value isClass ifTrue: [ result add: each value ]].
+	^result
 
 
 ]

@@ -94,19 +94,6 @@ CompiledCode >> accessesSlot: aSlot [
 ]
 
 { #category : #accessing }
-CompiledCode >> addWithAllBlocksInto: collected [
-
-	(collected includes: self) ifTrue: [ ^ collected ].
-	collected add: self.
-
-	self literals 
-		select: [ :aLiteral | aLiteral isEmbeddedBlock ] 
-		thenDo: [ :aLiteral | aLiteral addWithAllBlocksInto: collected ].
-		
-	^ collected
-]
-
-{ #category : #accessing }
 CompiledCode >> allBlocksDo: aBlock [
 
 	self literals 
@@ -300,17 +287,16 @@ CompiledCode >> hasSelector: selector specialSelectorIndex: specialOrNil [
 	"Answers true if the method refers to the selector.
 	 If you don't know what's a special selector, use #hasSelector:.
 	 If you do, you may call this method directly to avoid recomputing 
-	 the special selector index all the time.
-	
-	 I traverse the method and all the compiled blocks in the literals"
-
-	
+	 the special selector index all the time.	
+	 I traverse the method and all the compiled blocks in the literals"	
 	(self refersToLiteral: selector) ifTrue: [ ^ true ].
 	"refersToLiteral: traverses all blocks, but only for non-special literals"
 	specialOrNil ifNil: [ ^ false ].
 	"if the selector is special, scan all blocks and myself"
-	^ self withAllBlocks anySatisfy: [ :aCompiledCode | aCompiledCode scanFor:
-			self encoderClass firstSpecialSelectorByte + specialOrNil ]
+	self withAllBlocksDo: [ :aCompiledCode | 
+		(aCompiledCode scanFor: self encoderClass firstSpecialSelectorByte + specialOrNil)
+			ifTrue: [ ^true ] ].
+	^false
 ]
 
 { #category : #accessing }
@@ -926,8 +912,10 @@ CompiledCode >> voidCogVMState [
 
 { #category : #accessing }
 CompiledCode >> withAllBlocks [
-
-	^ self addWithAllBlocksInto: IdentitySet new.
+	| all |
+	all := IdentitySet new.
+	self withAllBlocksDo: [ :each | all add: each ].
+	^all
 ]
 
 { #category : #accessing }
@@ -944,7 +932,7 @@ CompiledCode >> withAllNestedLiteralsDo: aBlockClosure [
 	As a Block or Method can have literals in the nested blocks. 
 	This is used to query all the selectors used in a method for example"
 	
-	self withAllBlocks do: [ :aCompiledCode | 
+	self withAllBlocksDo: [ :aCompiledCode | 
 		aCompiledCode allLiterals do: aBlockClosure ]
 ]
 
