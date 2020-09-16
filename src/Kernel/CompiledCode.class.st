@@ -931,6 +931,14 @@ CompiledCode >> withAllBlocks [
 ]
 
 { #category : #accessing }
+CompiledCode >> withAllBlocksDo: aBlock [ 
+	
+	aBlock value: self.
+	self allBlocksDo: aBlock
+	
+]
+
+{ #category : #accessing }
 CompiledCode >> withAllNestedLiteralsDo: aBlockClosure [ 
 	"This method traverses all the nested literals.
 	As a Block or Method can have literals in the nested blocks. 

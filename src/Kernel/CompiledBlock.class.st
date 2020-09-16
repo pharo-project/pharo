@@ -174,11 +174,3 @@ CompiledBlock >> sourceCode [
 CompiledBlock >> sourcePointer [
 	^self outerCode sourcePointer
 ]
-
-{ #category : #accessing }
-CompiledBlock >> withAllBlocksDo: aBlock [ 
-	
-	aBlock value: self.
-	self allBlocksDo: aBlock
-	
-]
