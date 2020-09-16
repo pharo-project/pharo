@@ -325,7 +325,6 @@ OpalCompiler >> compile [
 	| cm |
 	[ 	[	self parse.
 			self transformDoit.
-			self doSemanticAnalysis. 
 			self callPlugins.  
 		] 	on: ReparseAfterSourceEditing 
 			do: 
@@ -579,5 +578,6 @@ OpalCompiler >> transformDoit [
 		ifNil: [ast asDoit] 
 		ifNotNil: [ast asDoitForContext: context].
 	"we need to set the compilation context in the new method node"
-	^ast compilationContext: self compilationContext
+	ast compilationContext: self compilationContext.
+	self doSemanticAnalysis
 ]
