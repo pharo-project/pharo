@@ -20,8 +20,7 @@ Class {
 	#name : #FileReference,
 	#superclass : #AbstractFileReference,
 	#instVars : [
-		'filesystem',
-		'path'
+		'filesystem'
 	],
 	#category : #'FileSystem-Core-Public'
 }
@@ -469,12 +468,6 @@ FileReference >> numberOfHardLinks [
 { #category : #streams }
 FileReference >> openWritable: aBoolean [ 
 	^ filesystem open: path writable: aBoolean
-]
-
-{ #category : #accessing }
-FileReference >> path [
-	"Return the path internal representation that denotes the receiver in the context of its filesystem. "
-	^ path
 ]
 
 { #category : #printing }

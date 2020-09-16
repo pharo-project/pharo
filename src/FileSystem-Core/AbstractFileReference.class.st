@@ -4,6 +4,9 @@ I am an abstract superclass for FileLocator and FileReference. By implementing m
 Class {
 	#name : #AbstractFileReference,
 	#superclass : #Object,
+	#instVars : [
+		'path'
+	],
 	#category : #'FileSystem-Core-Public'
 }
 
@@ -709,6 +712,11 @@ AbstractFileReference >> parent [
 { #category : #delegated }
 AbstractFileReference >> parentUpTo: aParentDirName [
 	^ self withPath: (self path parentUpTo: aParentDirName)
+]
+
+{ #category : #accessing }
+AbstractFileReference >> path [
+	^ path
 ]
 
 { #category : #accessing }
