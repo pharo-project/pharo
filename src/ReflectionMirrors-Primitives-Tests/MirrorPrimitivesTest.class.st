@@ -71,9 +71,8 @@ MirrorPrimitivesTest >> testChangingFixedFieldOfWeakMessageSend [
 
 { #category : #'tests-fields accessing' }
 MirrorPrimitivesTest >> testChangingGeneralFieldOfArray [
-	<compilerOptions: #(- #optionReadOnlyLiterals)>
 	| object |
-	object := #(10 20).
+	object := #(10 20) copy.
 	
 	MirrorPrimitives fieldOf: object at: 1 put: 100.	
 	self assert: object first equals: 100.
@@ -122,9 +121,8 @@ MirrorPrimitivesTest >> testChangingGeneralFieldOfWeakMessageSend [
 
 { #category : #'tests-fields accessing' }
 MirrorPrimitivesTest >> testChangingIndexableFieldOfArray [
-	<compilerOptions: #(- #optionReadOnlyLiterals)>
 	| object |
-	object := #(10 20).
+	object := #(10 20) copy.
 	
 	MirrorPrimitives indexableFieldOf: object at: 1 put: 100.	
 	self assert: object first equals: 100.
