@@ -933,7 +933,7 @@ CompiledCode >> withAllNestedLiteralsDo: aBlockClosure [
 	This is used to query all the selectors used in a method for example"
 	
 	self withAllBlocksDo: [ :aCompiledCode | 
-		aCompiledCode allLiterals do: aBlockClosure ]
+		aCompiledCode literals do: aBlockClosure ]
 ]
 
 { #category : #scanning }
