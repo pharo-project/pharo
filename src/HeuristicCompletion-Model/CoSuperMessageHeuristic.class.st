@@ -14,7 +14,7 @@ Class {
 CoSuperMessageHeuristic >> appliesForNode: aNode inContext: aContext [
 
 	^ (aNode isMessage
-		and: [ aNode receiver isSuper ])
+		and: [ aNode receiver isSuperVariable ])
 			or: [ aNode isMethod
 				and: [ 
 					"This heuristic is not valid for traits and nil subclasses"

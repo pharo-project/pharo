@@ -128,7 +128,7 @@ ClyAddConditionalBreakpointCommand >> rewriteASTToSimulateExecutionInADifferentC
 		parseExpression: 'ThisContext receiver class superclass'.
 	allMessageNodes
 		do: [ :msgNode | 
-			msgNode receiver isSuper
+			msgNode receiver isSuperVariable
 				ifTrue: [ rewriter
 						replaceTree: msgNode
 						withTree:

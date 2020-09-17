@@ -83,7 +83,7 @@ CoTypeInferencer >> inferFrom: aClass typeGetters: aBoolean [
 CoTypeInferencer >> inferMessageReturn: aRBMessageNode receiverType: type argumentTypes: argumentTypes [
 
 	| lookupClass inferer |
-	lookupClass := aRBMessageNode receiver isSuper
+	lookupClass := aRBMessageNode receiver isSuperVariable
 		ifTrue: [ method methodClass superclass ]
 		ifFalse: [ type ].
 	method := lookupClass lookupSelector: aRBMessageNode selector.

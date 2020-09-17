@@ -13,7 +13,7 @@ Class {
 { #category : #requests }
 CoSelfMessageHeuristic >> appliesForNode: aNode inContext: aContext [
 
-	^ aNode receiver isSelf
+	^ aNode receiver isSelfVariable
 ]
 
 { #category : #requests }
