@@ -56,7 +56,7 @@ HDTestReport class >> runSuite: aTestSuite [
 
 { #category : #private }
 HDTestReport >> beginTestCase: aTestCase runBlock: aBlock [
-	| time |
+	| time internalLog |
 	progressFile
 		nextPutAll: 'starting testcase: ';
 		nextPutAll: aTestCase class name;
@@ -64,7 +64,12 @@ HDTestReport >> beginTestCase: aTestCase runBlock: aBlock [
 		nextPutAll: aTestCase selector;
 		nextPutAll: ' ... ';
 		flush.
-	time := aBlock timeToRun.
+	"The test element must be written after test completion to include a time information about run.
+	Therefore we can't report any error during test directly into the main xml stream.
+	Otherwise any new xml element would be written out of the test node.
+	To allow reporting during test we set a temp log stream 
+	which we append to the main stream at the end of test as part of test element"
+	internalLog := self newLogDuring: [ time := aBlock timeToRun ].
 	stream
 		tab;
 		nextPutAll: '<testcase classname="';
@@ -77,7 +82,8 @@ HDTestReport >> beginTestCase: aTestCase runBlock: aBlock [
 		nextPutAll: '" time="';
 		print: time asMilliSeconds / 1000.0;
 		nextPutAll: '">';
-		lf
+		lf.
+	stream nextPutAll: internalLog
 ]
 
 { #category : #private }
@@ -167,6 +173,17 @@ HDTestReport >> initialize [
 { #category : #initialization }
 HDTestReport >> initializeOn: aTestSuite [
 	suite := aTestSuite
+]
+
+{ #category : #private }
+HDTestReport >> newLogDuring: aBlock [
+
+	| currentStream tempStream |
+	currentStream := stream.
+	stream := tempStream := String new writeStream.
+	aBlock ensure: [ stream := currentStream ].
+	^tempStream contents
+	 
 ]
 
 { #category : #running }
