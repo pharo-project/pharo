@@ -47,7 +47,6 @@ ShortIntegerArray >> at: index [
 
 	<primitive: 143>
 	index isInteger ifTrue: [self errorSubscriptBounds: index].
-	index isNumber ifTrue: [^ self at: index truncated].
 	self errorNonIntegerIndex.
 
 ]
@@ -62,7 +61,6 @@ ShortIntegerArray >> at: index put: value [
 			(index between: 1 and: self size)
 				ifTrue: [ self errorImproperStore ]
 				ifFalse: [ self errorSubscriptBounds: index ] ].
-	index isNumber ifTrue: [ ^ self at: index truncated put: value ].
 	self errorNonIntegerIndex
 ]
 
@@ -76,7 +74,6 @@ ShortIntegerArray >> pvtAt: index [
 	"Private -- for swapping only"
 	<primitive: 143>
 	index isInteger ifTrue: [self errorSubscriptBounds: index].
-	index isNumber ifTrue: [^ self at: index truncated].
 	self errorNonIntegerIndex.
 
 ]
@@ -91,7 +88,6 @@ ShortIntegerArray >> pvtAt: index put: value [
 			(index between: 1 and: self size)
 				ifTrue: [ self errorImproperStore ]
 				ifFalse: [ self errorSubscriptBounds: index ] ].
-	index isNumber ifTrue: [ ^ self at: index truncated put: value ].
 	self errorNonIntegerIndex
 ]
 
