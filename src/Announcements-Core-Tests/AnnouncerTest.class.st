@@ -107,7 +107,7 @@ AnnouncerTest >> testForCIWithBackgroundOnlyError [
 
 { #category : #tests }
 AnnouncerTest >> testForCIWithMainAndBackgroundErrors [
-	[self error: 'backgroundErrorFromAnnouncerTest'] fork. 
+	[self error: 'backgroundErrorFromAnnouncerTest2'] fork. 
 
 	self error: 'mainErrorFromTestWithBackgroundError'
 ]
