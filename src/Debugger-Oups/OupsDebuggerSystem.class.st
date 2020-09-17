@@ -75,6 +75,7 @@ OupsDebuggerSystem >> openDebuggerOnRequest: aDebugRequest [
 
 	<debuggerCompleteToSender>
 	| debuggerOpeningStrategy |
+	aDebugRequest debugSession logStackToFileIfNeeded.
 	self performPreDebugActionsIn: aDebugRequest.
 	self spawnNewUIProcessIfNecessary: aDebugRequest.
 	self ensureExceptionIn: aDebugRequest debugSession.
