@@ -404,11 +404,10 @@ OCASTTranslator >> emitWhileTrue: aMessageNode [
 OCASTTranslator >> initialize [
 
 	methodBuilder := IRBuilder new.
-	effectTranslator := self as: self classForEffect.
-	valueTranslator := self as: self classForValue.
-	effectTranslator instVarNamed: #effectTranslator put: effectTranslator.
-	effectTranslator instVarNamed: #valueTranslator put: valueTranslator.
-	valueTranslator instVarNamed: #valueTranslator put: valueTranslator.
+	effectTranslator := self classForEffect basicNew.
+	valueTranslator := self classForValue basicNew.
+	effectTranslator setFromSimilar: self.
+	valueTranslator setFromSimilar: self.
 
 ]
 
@@ -426,6 +425,28 @@ OCASTTranslator >> isEffectTranslator [
 { #category : #testing }
 OCASTTranslator >> isValueTranslator [
 	^self == valueTranslator
+]
+
+{ #category : #private }
+OCASTTranslator >> privateEffectTranslator [
+	^ effectTranslator
+]
+
+{ #category : #private }
+OCASTTranslator >> privateMethodBuilder [
+	^ methodBuilder
+]
+
+{ #category : #private }
+OCASTTranslator >> privateValueTranslator [
+	^ valueTranslator
+]
+
+{ #category : #initialization }
+OCASTTranslator >> setFromSimilar: aSimilarTranslator [
+	methodBuilder := aSimilarTranslator privateMethodBuilder.
+	effectTranslator := aSimilarTranslator privateEffectTranslator.
+	valueTranslator := aSimilarTranslator privateValueTranslator.
 ]
 
 { #category : #errors }
