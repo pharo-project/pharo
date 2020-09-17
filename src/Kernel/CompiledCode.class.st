@@ -205,9 +205,7 @@ CompiledCode >> encoderClass [
 
 { #category : #accessing }
 CompiledCode >> endPC [
-	"Answer the index of the last bytecode."
-	^ self trailer endPC
-
+	^ self subclassResponsibility
 ]
 
 { #category : #comparing }
@@ -878,13 +876,6 @@ CompiledCode >> timeStamp [
 	"(CompiledMethod compiledMethodAt: #timeStamp) timeStamp"
 
 	^ SourceFiles timeStampAt: self sourcePointer.
-]
-
-{ #category : #accessing }
-CompiledCode >> trailer [
-	"Answer the receiver's trailer"
-	^ CompiledMethodTrailer new method: self
-
 ]
 
 { #category : #testing }
