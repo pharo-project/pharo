@@ -51,8 +51,3 @@ RGSlot >> name: aString [
 	self parent parent announceDefinitionChangeDuring: [ 
 		super name: aString ].
 ]
-
-{ #category : #testing }
-RGSlot >> semanticNodeClass [
-	^RBInstanceVariableNode
-]

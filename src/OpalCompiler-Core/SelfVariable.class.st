@@ -7,12 +7,6 @@ Class {
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
-{ #category : #accessing }
-SelfVariable class >> semanticNodeClass [
-
-	^RBSelfNode 
-]
-
 { #category : #visiting }
 SelfVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 		^ aProgramNodeVisitor visitSelfNode: aNode
