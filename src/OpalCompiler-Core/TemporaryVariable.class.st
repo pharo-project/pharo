@@ -7,12 +7,6 @@ Class {
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
-{ #category : #accessing }
-TemporaryVariable class >> semanticNodeClass [
-
-	^RBTemporaryNode 
-]
-
 { #category : #visiting }
 TemporaryVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitTemporaryNode: aNode

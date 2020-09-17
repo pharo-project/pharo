@@ -7,12 +7,6 @@ Class {
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
-{ #category : #accessing }
-ArgumentVariable class >> semanticNodeClass [
-
-	^RBArgumentNode 
-]
-
 { #category : #visiting }
 ArgumentVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitTemporaryNode: aNode

@@ -101,8 +101,3 @@ RGVariable >> needsFullDefinition [
 	"all but InstanceVariableSlot and ClassVariable need to print the full definition"
 	^true
 ]
-
-{ #category : #testing }
-RGVariable >> semanticNodeClass [
-	^RBVariableNode
-]

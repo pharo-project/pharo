@@ -7,12 +7,6 @@ Class {
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
-{ #category : #accessing }
-SuperVariable class >> semanticNodeClass [
-
-	^RBSuperNode 
-]
-
 { #category : #visiting }
 SuperVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 		^ aProgramNodeVisitor visitSuperNode: aNode

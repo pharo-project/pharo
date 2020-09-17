@@ -15,11 +15,6 @@ OCUndeclaredVariable class >> isDeprecated [
 	^true
 ]
 
-{ #category : #accessing }
-OCUndeclaredVariable class >> semanticNodeClass [
-	^RBVariableNode
-]
-
 { #category : #emitting }
 OCUndeclaredVariable >> emitStore: methodBuilder [
 

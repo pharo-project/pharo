@@ -7,12 +7,6 @@ Class {
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
-{ #category : #accessing }
-ThisContextVariable class >> semanticNodeClass [
-
-	^RBThisContextNode 
-]
-
 { #category : #visiting }
 ThisContextVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitThisContextNode: aNode
