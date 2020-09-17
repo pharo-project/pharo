@@ -62,7 +62,8 @@ FullBlockClosure >> endPC [
 { #category : #scanning }
 FullBlockClosure >> hasMethodReturn [
 	"Answer whether the receiver has a method-return ('^') in its code."
-	^ self compiledBlock hasMethodReturn
+	self withAllBlocksDo: [ :each | each hasMethodReturn ifTrue: [ ^true ] ].
+	^false
 ]
 
 { #category : #accessing }
@@ -297,4 +298,9 @@ FullBlockClosure >> valueWithArguments: anArray [
 		ifFalse: [
 			"Retrying with an array as parameter. As the primitive only supports arrays"
 			^ self valueWithArguments: anArray asArray ]
+]
+
+{ #category : #accessing }
+FullBlockClosure >> withAllBlocksDo: aBlock [
+	self compiledBlock withAllBlocksDo: aBlock
 ]

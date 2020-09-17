@@ -14,11 +14,6 @@ Class {
 	#category : #'Kernel-Methods'
 }
 
-{ #category : #adding }
-CleanBlockClosure >> addWithAllBlocksInto: collected [
-	^self compiledBlock addWithAllBlocksInto: collected
-]
-
 { #category : #accessing }
 CleanBlockClosure >> hasLiteral: aLiteral [
 	^self compiledBlock hasLiteral: aLiteral
