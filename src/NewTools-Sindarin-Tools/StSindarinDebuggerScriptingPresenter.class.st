@@ -79,7 +79,7 @@ StSindarinDebuggerScriptingPresenter >> initializePresenters [
 	self updateCode.
 	self flag: 'Build a generic sindarin script class with sidnarin as an instance var and its instance should be the receiver of the code'.
 	self flag: 'set the doit conetxt of the code to the current selected context'.
-	resultInspection := nil rawInspection.
+	resultInspection := nil inspectionRaw.
 	resultInspection owner: self.
 	self initializeToolbar
 ]

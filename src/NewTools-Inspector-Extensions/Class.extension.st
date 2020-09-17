@@ -1,7 +1,7 @@
 Extension { #name : #Class }
 
 { #category : #'*NewTools-Inspector-Extensions' }
-Class >> allReferencesInspection [
+Class >> inspectionAllReferences [
 	<inspectorPresentationOrder: 20 title: 'All References'>
 	| allReferences allClassesReferencing sortBlock treeTable childrenBlock |
 	
@@ -27,7 +27,7 @@ Class >> allReferencesInspection [
 ]
 
 { #category : #'*NewTools-Inspector-Extensions' }
-Class >> classCommentInspection [
+Class >> inspectionClassComment [
 	"This provides an editable comment of the current class"
 	<inspectorPresentationOrder: 20 title: 'Comment'>
 	
@@ -40,7 +40,7 @@ Class >> classCommentInspection [
 ]
 
 { #category : #'*NewTools-Inspector-Extensions' }
-Class >> classDefinitionInspection [
+Class >> inspectionClassDefinition [
 	"This provides an editable comment of the current class"
 	<inspectorPresentationOrder: 15 title: 'Definition'>
 	

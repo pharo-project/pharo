@@ -131,10 +131,22 @@ StDebuggerTest >> testContextTempVarList [
 	
 	5 timesRepeat: [ dbg stepInto  ].	
 	contextItems := inspectorTable roots.
-	self assert: contextItems first rawValue equals: session shortStack first receiver. "receiver"	
-	self assert: (contextItems second rawValue at: #i) equals: 1.
-	self assert: contextItems third rawValue equals: 1. "stackTop"
-	self assert: contextItems last rawValue equals: dbg currentContext
+	self assert: contextItems size equals: 7. 
+	
+	"First nodes are temps"
+	self assert: (contextItems at: 1) class equals: StDebuggerInspectorTempNode.
+	self assert: (contextItems at: 2) class equals: StDebuggerInspectorTempNode.
+	self assert: (contextItems at: 3) class equals: StDebuggerInspectorTempNode.
+	self assert: (contextItems at: 4) class equals: StDebuggerInspectorTempNode.
+	
+	"receiver inst var"		
+	self assert: (contextItems at: 5) rawValue identicalTo: session shortStack first receiver session.
+	
+	"stackTop"
+	self assert: (contextItems at: 6) rawValue equals: 1.
+	
+	"thisContext"
+	self assert: contextItems last rawValue identicalTo: dbg currentContext
 ]
 
 { #category : #'tests - context inspector' }
@@ -199,6 +211,18 @@ StDebuggerTest >> testInspectorSelfBinding [
 	receiver := dbg inspector model inspectedObject context receiver.
 	self assert: evaluator doItReceiver identicalTo: receiver.
 	self assert: evaluator behavior identicalTo: receiver class
+]
+
+{ #category : #'tests - stack table' }
+StDebuggerTest >> testPrintReceiverClassInContext [
+	|ctx result|
+	ctx := Context sender: nil receiver: Set new method: (Collection>>#add:) arguments: Array new. 
+	result := self debugger printReceiverClassInContext: ctx.
+	self assert: result equals: 'Set (Collection)'.
+	
+	ctx := Context sender: nil receiver: Set new method: (Set>>#add:) arguments: Array new. 
+	result := self debugger printReceiverClassInContext: ctx.
+	self assert: result equals: 'Set'.
 ]
 
 { #category : #'tests - receiver inspector' }
@@ -391,13 +415,13 @@ StDebuggerTest >> testStackTableElementsPrinting [
 	block := [ :a | a ].
 	
 	context := (Context newForMethod: method) setSender: self receiver: self method: method arguments: #(  ).
-	self assert: (classColumn evaluation value: context) equals: self class.
+	self assert: (classColumn evaluation value: context) equals: self class name.
 	self assert: (methodColumn evaluation value: context) equals: method selector.
 	"The following column was removed to experiment a new layout, just keeping the test in case of roolback."
 	"self assert: (senderColumn evaluation value: context) equals: self stDisplayString."
 	
 	context := (Context newForMethod: method) setSender: self receiver: self method: block method arguments: #(  ).
-	self assert: (classColumn evaluation value: context) equals: self class.
+	self assert: (classColumn evaluation value: context) equals: self class name.
 	self assert: (methodColumn evaluation value: context) equals: block sourceNode sourceCode.
 	"The following column was removed to experiment a new layout, just keeping the test in case of roolback."
 	"self assert: (senderColumn evaluation value: context) equals: self stDisplayString."

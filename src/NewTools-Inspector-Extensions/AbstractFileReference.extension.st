@@ -1,7 +1,7 @@
 Extension { #name : #AbstractFileReference }
 
 { #category : #'*NewTools-Inspector-Extensions' }
-AbstractFileReference >> inspectorCompressedItems [
+AbstractFileReference >> inspectionCompressedItems [
 	<inspectorPresentationOrder: 0
 		title: 'Compressed Items' 
 		if: #isCompressedFile>
@@ -41,7 +41,7 @@ AbstractFileReference >> inspectorCompressedItems [
 ]
 
 { #category : #'*NewTools-Inspector-Extensions' }
-AbstractFileReference >> inspectorContents [
+AbstractFileReference >> inspectionContents [
 	<inspectorPresentationOrder: 0 
 		title: 'Contents' 
 		if: #isFile> 
@@ -71,7 +71,7 @@ AbstractFileReference >> inspectorContents [
 ]
 
 { #category : #'*NewTools-Inspector-Extensions' }
-AbstractFileReference >> inspectorFuel [
+AbstractFileReference >> inspectionFuel [
 	<inspectorPresentationOrder: 40
 		title: 'Fuel Header' 
 		if: #isFuel>
@@ -84,7 +84,7 @@ AbstractFileReference >> inspectorFuel [
 ]
 
 { #category : #'*NewTools-Inspector-Extensions' }
-AbstractFileReference >> inspectorGif [
+AbstractFileReference >> inspectionGif [
 	<inspectorPresentationOrder: 0
 		title: 'Picture' 
 		if: #isImageGif>
@@ -95,7 +95,7 @@ AbstractFileReference >> inspectorGif [
 ]
 
 { #category : #'*NewTools-Inspector-Extensions' }
-AbstractFileReference >> inspectorItems [
+AbstractFileReference >> inspectionItems [
 	<inspectorPresentationOrder: 0 
 		title: 'Items' 
 		if: #isDirectory>
@@ -137,7 +137,7 @@ AbstractFileReference >> inspectorItems [
 ]
 
 { #category : #'*NewTools-Inspector-Extensions' }
-AbstractFileReference >> inspectorJpeg [
+AbstractFileReference >> inspectionJpeg [
 	<inspectorPresentationOrder: 0
 		title: 'Picture' 
 		if: #isImageJpeg>
@@ -148,7 +148,7 @@ AbstractFileReference >> inspectorJpeg [
 ]
 
 { #category : #'*NewTools-Inspector-Extensions' }
-AbstractFileReference >> inspectorPng [
+AbstractFileReference >> inspectionPng [
 	<inspectorPresentationOrder: 0
 		title: 'Picture' 
 		if: #isImagePng>
@@ -159,7 +159,7 @@ AbstractFileReference >> inspectorPng [
 ]
 
 { #category : #'*NewTools-Inspector-Extensions' }
-AbstractFileReference >> inspectorStScript [
+AbstractFileReference >> inspectionStScript [
 	<inspectorPresentationOrder: 0 
 		title: 'Script' 
 		if: #isScript>

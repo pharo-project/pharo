@@ -114,6 +114,12 @@ StTestDebuggerProvider >> produceTestFailure [
 ]
 
 { #category : #helpers }
+StTestDebuggerProvider >> session [
+
+	^ session
+]
+
+{ #category : #helpers }
 StTestDebuggerProvider >> sessionFor: aContext [
 	| process |
 	process := Process

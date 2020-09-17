@@ -194,7 +194,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'NewTools' with: [
 			spec 
 				repository: repository;
-				loads: #('Playground' 'Inspector' 'Debugger') ].
+				loads: #('Playground' 'Inspector' 'Debugger' 'SystemReporter') ].
 			
 		spec baseline: 'Microdown' with: [ spec 
 				repository: self packageRepositoryURL ].

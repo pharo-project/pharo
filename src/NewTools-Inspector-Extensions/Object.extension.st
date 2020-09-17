@@ -15,6 +15,13 @@ Object >> defaultObjectInspectorClass [
 ]
 
 { #category : #'*NewTools-Inspector-Extensions' }
+Object >> inspectionMeta [
+	<inspectorPresentationOrder: 999 title: 'Meta'>
+
+	^ StMetaBrowser on: self
+]
+
+{ #category : #'*NewTools-Inspector-Extensions' }
 Object >> inspectionPages [
 	"This is a utility method that collects all presentations for the current object.
 	By default, it simply looks for the #gtInspectorPresentationOrder: pragma.
@@ -26,26 +33,19 @@ Object >> inspectionPages [
 ]
 
 { #category : #'*NewTools-Inspector-Extensions' }
+Object >> inspectionRaw [
+	"This is the most basic presentation showing the state of the object"
+	<inspectorPresentationOrder: -1 title: 'Raw'>
+
+	^ StRawInspection on: self
+]
+
+{ #category : #'*NewTools-Inspector-Extensions' }
 Object >> inspectorNodes [
 	"Answer a list of attributes as nodes"
 	
 	^ (StNodeCollector for: self) collectNodes
 	  
-]
-
-{ #category : #'*NewTools-Inspector-Extensions' }
-Object >> metaInspection [
-	<inspectorPresentationOrder: 999 title: 'Meta'>
-
-	^ StMetaBrowser on: self
-]
-
-{ #category : #'*NewTools-Inspector-Extensions' }
-Object >> rawInspection [
-	"This is the most basic presentation showing the state of the object"
-	<inspectorPresentationOrder: -1 title: 'Raw'>
-
-	^ StRawInspection on: self
 ]
 
 { #category : #'*NewTools-Inspector-Extensions' }

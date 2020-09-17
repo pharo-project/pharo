@@ -5,21 +5,32 @@ Class {
 	#name : #StDebuggerInspectorTempNode,
 	#superclass : #StInspectorTempNode,
 	#instVars : [
-		'label'
+		'variableTag'
 	],
 	#category : #'NewTools-Debugger-Model'
 }
+
+{ #category : #comparing }
+StDebuggerInspectorTempNode >> = anObject [
+
+	"Answer whether the receiver and anObject represent the same object."
+
+	self == anObject ifTrue: [ ^ true ].
+	self class = anObject class ifFalse: [ ^ false ].
+	^ tempVariable = anObject tempVariable and: [ 
+		  hostObject = anObject hostObject1 and: [ variableTag = anObject variableTag ] ]
+]
 
 { #category : #accessing }
 StDebuggerInspectorTempNode >> argVariable: aVariable [
 
 	super tempVariable: aVariable.
-	label := '[arg] ' , tempVariable name
+	variableTag := 'arg'
 ]
 
 { #category : #accessing }
 StDebuggerInspectorTempNode >> children [
-	^ super children reject: [ :node | node key = 'self' ]
+	^ #()
 ]
 
 { #category : #accessing }
@@ -27,14 +38,33 @@ StDebuggerInspectorTempNode >> computeChildrenFromSourceObject [
 	^ self value allInspectorNodes reject: [ :node | node key = 'self' ]
 ]
 
+{ #category : #comparing }
+StDebuggerInspectorTempNode >> hash [
+
+	"Answer an integer value that is related to the identity of the receiver."
+
+	^ tempVariable hash bitXor: (hostObject hash bitXor: variableTag hash)
+]
+
 { #category : #accessing }
-StDebuggerInspectorTempNode >> label [
-	^label
+StDebuggerInspectorTempNode >> hostObject1 [
+	^ hostObject
+]
+
+{ #category : #accessing }
+StDebuggerInspectorTempNode >> tempVariable [
+	^ tempVariable
 ]
 
 { #category : #accessing }
 StDebuggerInspectorTempNode >> tempVariable: aVariable [
 
 	super tempVariable: aVariable.
-	label := tempVariable name
+	variableTag := 'temp'
+]
+
+{ #category : #accessing }
+StDebuggerInspectorTempNode >> variableTag [
+
+	^ variableTag
 ]

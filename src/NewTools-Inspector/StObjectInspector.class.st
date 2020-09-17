@@ -105,7 +105,7 @@ StObjectInspector >> buildToolbar [
 
 	^ self rootCommandsGroup asToolbarPresenterWith: [ :presenter | 
 			presenter 
-				displayMode: self application displayMode;
+				displayMode: self application toolbarDisplayMode;
 				addStyle: 'stToolbar' ]
 ]
 

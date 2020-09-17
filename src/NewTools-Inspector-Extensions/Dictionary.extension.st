@@ -1,7 +1,7 @@
 Extension { #name : #Dictionary }
 
 { #category : #'*NewTools-Inspector-Extensions' }
-Dictionary >> inspectorItems [
+Dictionary >> inspectionItems [
 	<inspectorPresentationOrder: 0 title: 'Items'> 
 	
 	^ SpTablePresenter new 
