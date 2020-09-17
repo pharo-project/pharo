@@ -34,6 +34,11 @@ TDebugger classSide >> availableAutomatically: anObject [
 	availableAutomatically := anObject
 ]
 
+{ #category : #accessing }
+TDebugger classSide >> closeAllDebuggers [
+	^ self explicitRequirement
+]
+
 { #category : #'instance creation' }
 TDebugger classSide >> debugSession: aDebugSession [
 	self explicitRequirement

@@ -6,6 +6,13 @@ Class {
 	#category : #'Debugger-Model-Tests-Core'
 }
 
+{ #category : #accessing }
+TDebuggerTest class >> closeAllDebuggers [
+	"Do nothing. This class is a test class, not a real debugger, so it cannot stay open like real debugger. Therefore, it has nothing to do to 'close all of its debuggers'"
+
+	^ self
+]
+
 { #category : #'instance creation' }
 TDebuggerTest class >> debugSession: aDebugSession [
 	^true
