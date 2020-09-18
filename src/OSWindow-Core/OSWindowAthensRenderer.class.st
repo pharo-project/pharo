@@ -42,6 +42,12 @@ OSWindowAthensRenderer >> initialize [
 	session := Smalltalk session
 ]
 
+{ #category : #'as yet unclassified' }
+OSWindowAthensRenderer >> pixelExtent [
+	self checkSession.
+	^ self athensSurface extent
+]
+
 { #category : #drawing }
 OSWindowAthensRenderer >> prepareForDrawing [
 ]
