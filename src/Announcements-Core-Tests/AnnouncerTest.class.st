@@ -99,9 +99,10 @@ AnnouncerTest >> testAnnouncingReentrant [
 ]
 
 { #category : #tests }
-AnnouncerTest >> testForCIWithBackgroundOnlyError [
-	[self error: 'backgroundErrorFromAnnouncerTest'] fork. 
+AnnouncerTest >> testForCIWhichPassButItIsExpectedFailure [
+	<expectedFailure>
 
+	self assert: true
 	
 ]
 
@@ -110,6 +111,27 @@ AnnouncerTest >> testForCIWithMainAndBackgroundErrors [
 	[self error: 'backgroundErrorFromAnnouncerTest2'] fork. 
 
 	self error: 'mainErrorFromTestWithBackgroundError'
+]
+
+{ #category : #tests }
+AnnouncerTest >> testForCIWithMainAndBackgroundFailures [
+	[self assert: false description: 'backgroundFailureFromAnnouncerTest2'] fork. 
+
+	self assert: false description: 'mainFailureFromTestWithBackgroundFailure'
+]
+
+{ #category : #tests }
+AnnouncerTest >> testForCIWithOnlyBackgroundError [
+	[self error: 'backgroundErrorFromAnnouncerTest'] fork. 
+
+	
+]
+
+{ #category : #tests }
+AnnouncerTest >> testForCIWithOnlyBackgroundFailure [
+	[self assert: false description: 'backgroundFailureFromAnnouncerTest'] fork. 
+
+	
 ]
 
 { #category : #'test - subscribers' }

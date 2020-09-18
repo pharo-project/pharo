@@ -55,38 +55,6 @@ HDTestReport class >> runSuite: aTestSuite [
 ]
 
 { #category : #private }
-HDTestReport >> beginTestCase: aTestCase runBlock: aBlock [
-	| time internalLog |
-	progressFile
-		nextPutAll: 'starting testcase: ';
-		nextPutAll: aTestCase class name;
-		nextPutAll: '>>';
-		nextPutAll: aTestCase selector;
-		nextPutAll: ' ... ';
-		flush.
-	"The test element must be written after test completion to include a time information about run.
-	Therefore we can't report any error during test directly into the main xml stream.
-	Otherwise any new xml element would be written out of the test node.
-	To allow reporting during test we set a temp log stream 
-	which we append to the main stream at the end of test as part of test element"
-	internalLog := self newLogDuring: [ time := aBlock timeToRun ].
-	stream
-		tab;
-		nextPutAll: '<testcase classname="';
-		nextPutAll:
-			(self encode: (self generateTestName: aTestCase));
-		nextPut: $.;
-		nextPutAll: (self encode: aTestCase class name);
-		nextPutAll: '" name="';
-		nextPutAll: (self encode: aTestCase selector);
-		nextPutAll: '" time="';
-		print: time asMilliSeconds / 1000.0;
-		nextPutAll: '">';
-		lf.
-	stream nextPutAll: internalLog
-]
-
-{ #category : #private }
 HDTestReport >> calculateNodeName [
 	| environmentClass name bitString |
 	bitString := Smalltalk vm is32bit
@@ -109,13 +77,6 @@ HDTestReport >> calculateNodeName [
 HDTestReport >> done [
 	"just close the file"
 	[ progressFile close ] on: Error do: []
-]
-
-{ #category : #private }
-HDTestReport >> endTestCase [
-	stream tab; nextPutAll: '</testcase>'; lf.
-	progressFile nextPutAll: 'finished' ; crlf; flush.
-
 ]
 
 { #category : #private }
@@ -160,7 +121,7 @@ HDTestReport >> initialize [
 	suiteTime := 0 asDuration.
 	suitePosition := suiteFailures := suiteErrors := 0.
 	
-	aFile := File named: 'progress.log'.
+	aFile := File named: (FileLocator vmDirectory / 'progress.log') pathString.
 	aFile delete.
 	progressFile := ZnCharacterWriteStream
 			on: (aFile writeStream setToEnd; yourself)
@@ -189,17 +150,62 @@ HDTestReport >> newLogDuring: aBlock [
 { #category : #running }
 HDTestReport >> recordError: anError duringTest: aTestCase [ 
 
-	| stack |
-	aTestCase shouldPass ifTrue: [ self serializeError: anError of: aTestCase ].
+	aTestCase shouldPass ifFalse: [ ^self ].
+	suiteErrors := suiteErrors + 1.
 		
-	stack := self stackTraceString: anError of: aTestCase.
-	self writeError: anError andStack: stack for: aTestCase
+	self serializeError: anError of: aTestCase.		
+	self writeException: anError of: aTestCase asNode: 'error'
 ]
 
 { #category : #running }
-HDTestReport >> recordUnexpectedPass [
+HDTestReport >> recordFailure: aTestFailure duringTest: aTestCase [ 
 
-	self writeFailure: TestFailure new stack: 'Unexpected failure' 
+	aTestCase shouldPass ifFalse: [ ^self ].
+	suiteFailures := suiteFailures + 1.	
+	
+	self serializeError: aTestFailure of: aTestCase.		
+	self writeException: aTestFailure of: aTestCase asNode: 'failure'
+]
+
+{ #category : #running }
+HDTestReport >> recordUnexpectedPassOf: aTestCase [
+
+	self 
+		writeException: (TestFailure new messageText: 'Unexpected failure') 
+		of: aTestCase 
+		asNode: 'failure'
+]
+
+{ #category : #private }
+HDTestReport >> reportTestCase: aTestCase runBlock: aBlock [
+	| time internalLog |
+	progressFile
+		nextPutAll: 'starting testcase: ';
+		nextPutAll: aTestCase class name;
+		nextPutAll: '>>';
+		nextPutAll: aTestCase selector;
+		nextPutAll: ' ... ';
+		flush.
+	"The test element must be written after test completion to include a time information about run.
+	Therefore we can't report any error during test directly into the main xml stream.
+	Otherwise any new xml element would be written out of the test node.
+	To allow reporting during test we set a temp log stream 
+	which we append to the main stream at the end of test as part of test element"
+	internalLog := self newLogDuring: [ time := aBlock timeToRun ].
+	stream
+		tab; nextPutAll: '<testcase classname="';
+		nextPutAll: (self encode: (self generateTestName: aTestCase));
+		nextPut: $.;
+		nextPutAll: (self encode: aTestCase class name);
+		nextPutAll: '" name="';
+		nextPutAll: (self encode: aTestCase selector);
+		nextPutAll: '" time="';
+		print: time asMilliSeconds / 1000.0;
+		nextPutAll: '">';
+		lf.
+	stream nextPutAll: internalLog.
+	stream tab; nextPutAll: '</testcase>'; lf.
+	progressFile nextPutAll: 'finished' ; crlf; flush
 ]
 
 { #category : #running }
@@ -223,14 +229,13 @@ HDTestReport >> runAll [
 { #category : #running }
 HDTestReport >> runCase: aTestCase [
 	self
-		beginTestCase: aTestCase
+		reportTestCase: aTestCase
 		runBlock: [ 
 			[aTestCase runCaseManaged.
-			aTestCase shouldPass ifFalse: [ self recordUnexpectedPass ]] 
+			aTestCase shouldPass ifFalse: [ self recordUnexpectedPassOf: aTestCase ]] 
 				on: Exception - UnhandledError 
 				do: [ :exc | exc recordResultOf: aTestCase inHDTestReport: self ]
-		].			
-	self endTestCase
+		]
 ]
 
 { #category : #running }
@@ -262,7 +267,7 @@ HDTestReport >> setUp [
 
 	fileName := stageName isEmpty ifTrue: [ '' ] ifFalse: [ stageName , '-' ].
 	fileName := fileName , suite name , '-Test.xml'.
-		
+	fileName := (FileLocator vmDirectory / fileName) pathString.
 	aFile := File named: fileName .
 	aFile delete.
 	stream := ZnCharacterWriteStream
@@ -285,12 +290,7 @@ HDTestReport >> setUp [
 
 { #category : #private }
 HDTestReport >> stackTraceString: err of: aTestCase [
-	^ String streamContents: [ :str | 
-		| context |
-		context := err signalerContext.
-		[ context isNil or: [ context receiver == aTestCase and: [ context methodSelector == #runCase ] ] ] whileFalse: [
-			[str print: context; lf.] onErrorDo: [ str nextPutAll: 'PRINTING ERROR'; lf].
-			context := context sender ] ] 
+	^ self newLogDuring: [ self writeExceptionStack: err of: aTestCase ]
 ]
 
 { #category : #accessing }
@@ -350,51 +350,30 @@ HDTestReport >> tearDown [
 ]
 
 { #category : #private }
-HDTestReport >> writeError: anError andStack: aString for: aTestCase [
-	"XML tag is now open"
-	anError
-		ifNotNil: [
-			aTestCase shouldPass ifTrue: [
-				(anError isKindOf: TestFailure)
-					ifTrue: [ self writeFailure: anError stack: aString ]
-					ifFalse: [ self writeError: anError stack: aString ] ] ]
-		ifNil: [
-			aTestCase shouldPass ifFalse: [
-				self writeFailure: TestFailure new stack: 'Unexpected failure' ] ]
-]
-
-{ #category : #private }
-HDTestReport >> writeError: error stack: stack [
-	suiteErrors := suiteErrors + 1.
-	stream tab; tab; nextPutAll: '<error type="'.
-	self writeException: error stack: stack.
-	stream nextPutAll: '</error>'; lf
-]
-
-{ #category : #private }
-HDTestReport >> writeException: error stack: stack [
+HDTestReport >> writeException: anException of: aTestCase asNode: errorNodeName [
 	| encodedErrorName encodedErrorDescription |
-	encodedErrorName := self encode: error class name.
+	stream tab; tab; nextPutAll: '<' ; nextPutAll: errorNodeName; nextPutAll: ' type="'.
+	encodedErrorName := self encode: anException class name.
 	encodedErrorDescription := self
-		encode: (error messageText ifNil: [ error description ]).
+		encode: (anException messageText ifNil: [ anException description ]).
 	stream
 		nextPutAll: encodedErrorName;
-		nextPutAll: '" message="';
-		nextPutAll: encodedErrorDescription;
-		nextPutAll: '">';
-		lf;
-		nextPutAll: encodedErrorName;
-		lf.
+		nextPutAll: '" message="'; 	nextPutAll: encodedErrorDescription; nextPutAll: '">';
+		lf; nextPutAll: encodedErrorName;	lf.
 	encodedErrorDescription ifNotEmpty: [ 
 		stream nextPutAll: encodedErrorDescription;
 		lf ].
-	stream nextPutAll: (self encode: stack)
+	self writeExceptionStack: anException of: aTestCase.
+	stream tab; tab; nextPutAll: '</'; nextPutAll: errorNodeName; nextPutAll: '>'; lf
 ]
 
 { #category : #private }
-HDTestReport >> writeFailure: error stack: stack [
-	suiteFailures := suiteFailures + 1.
-	stream tab; tab; nextPutAll: '<failure type="'.
-	self writeException: error stack: stack.  
-	stream	nextPutAll: '</failure>'; lf
+HDTestReport >> writeExceptionStack: anException of: aTestCase [
+	| context |
+	context := anException signalerContext.
+	[ context isNil or: [ context receiver == aTestCase and: [ context methodSelector == #runCase ]]]
+		whileFalse: [
+			[ stream nextPutAll: (self encode: context printString); lf ] 
+				onErrorDo: [ stream nextPutAll: 'PRINTING ERROR'; lf].
+			context := context sender ]
 ]
