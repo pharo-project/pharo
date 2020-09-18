@@ -590,27 +590,12 @@ RBProgramNode >> isSelector [
 ]
 
 { #category : #testing }
-RBProgramNode >> isSelf [
-	^ false
-]
-
-{ #category : #testing }
-RBProgramNode >> isSelfOrSuper [
-	^ false
-]
-
-{ #category : #testing }
 RBProgramNode >> isSelfVariable [
 	^ false
 ]
 
 { #category : #testing }
 RBProgramNode >> isSequence [
-	^false
-]
-
-{ #category : #testing }
-RBProgramNode >> isSuper [
 	^false
 ]
 

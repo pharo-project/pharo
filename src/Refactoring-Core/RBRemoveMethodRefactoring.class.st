@@ -131,7 +131,7 @@ RBRemoveMethodRefactoring >> justSendsSuper: aSelector [
 				yourself
 			].
 	matcher executeTree: parseTree initialAnswer: Set new.
-	^ ( matcher answer anySatisfy: [ :each | each isSelf not ]) not
+	^ ( matcher answer anySatisfy: [ :each | each isSelfVariable not ]) not
 ]
 
 { #category : #preconditions }

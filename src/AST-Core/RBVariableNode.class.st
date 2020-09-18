@@ -168,16 +168,6 @@ RBVariableNode >> isReservedVariable [
 ]
 
 { #category : #testing }
-RBVariableNode >> isSelf [
-	^ self isSelfVariable
-]
-
-{ #category : #testing }
-RBVariableNode >> isSelfOrSuper [
-	^ variable isSelfOrSuperVariable
-]
-
-{ #category : #testing }
 RBVariableNode >> isSelfOrSuperVariable [
 	^ variable isSelfOrSuperVariable
 ]
@@ -185,11 +175,6 @@ RBVariableNode >> isSelfOrSuperVariable [
 { #category : #testing }
 RBVariableNode >> isSelfVariable [
 	^variable isSelfVariable
-]
-
-{ #category : #testing }
-RBVariableNode >> isSuper [
-	^ self isSuperVariable
 ]
 
 { #category : #testing }
