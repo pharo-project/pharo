@@ -169,9 +169,10 @@ HDTestReport >> recordFailure: aTestFailure duringTest: aTestCase [
 
 { #category : #running }
 HDTestReport >> recordUnexpectedPassOf: aTestCase [
-
+	suiteFailures := suiteFailures + 1.
+	
 	self 
-		writeException: (TestFailure new messageText: 'Unexpected failure') 
+		writeException: (TestFailure new messageText: 'Unexpected pass (test is marked as expected failure)') 
 		of: aTestCase 
 		asNode: 'failure'
 ]
