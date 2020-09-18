@@ -116,6 +116,18 @@ SDL_Renderer >> noRenderTarget [
 ]
 
 { #category : #rendering }
+SDL_Renderer >> outputExtent [
+	| buffer |
+	buffer := ExternalAddress allocate: 8.
+	^ [
+		| result |
+		self getOutputSizeW: buffer h: buffer + 4.
+		result := (buffer unsignedLongAt: 1) @ (buffer unsignedLongAt: 5).
+		result
+	] ensure: [ buffer free ].
+]
+
+{ #category : #rendering }
 SDL_Renderer >> present [
 	^ self ffiCall: #( void SDL_RenderPresent ( self ) )
 ]
