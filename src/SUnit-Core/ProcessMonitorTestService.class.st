@@ -442,6 +442,13 @@ ProcessMonitorTestService >> terminateRunningProcesses [
 ]
 
 { #category : #accessing }
+ProcessMonitorTestService >> testBackgroundFailures [
+	^ testFailures copy 
+		removeKey: executionEnvironment mainTestProcess ifAbsent: [ ];
+		yourself
+]
+
+{ #category : #accessing }
 ProcessMonitorTestService >> testFailures [
 	^ testFailures
 ]

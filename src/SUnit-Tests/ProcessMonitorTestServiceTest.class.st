@@ -289,15 +289,37 @@ ProcessMonitorTestServiceTest >> testFailTestWhenItIsCompletedWithRunningProcess
 ]
 
 { #category : #tests }
-ProcessMonitorTestServiceTest >> testGettingFailuresFromEnvironment [
+ProcessMonitorTestServiceTest >> testGettingBackgroundFailuresFromEnvironment [
+	| mainError backgroundError |
+	mainError := Error new messageText: 'mainProcessError'.
+	backgroundError := Error new messageText: 'backgroundError'.
+	self fork: [ testService recordTestFailure: backgroundError ].
+	testService recordTestFailure: mainError.
+	
+	self assert: executionEnvironment backgroundFailures equals: testService testBackgroundFailures.
+	self assertCollection: executionEnvironment backgroundFailures asSet hasSameElements: {backgroundError}
+]
 
-	self assert: executionEnvironment failures equals: testService testFailures
+{ #category : #tests }
+ProcessMonitorTestServiceTest >> testGettingFailuresFromEnvironment [
+	| mainError backgroundError |
+	mainError := Error new messageText: 'mainProcessError'.
+	backgroundError := Error new messageText: 'backgroundError'.
+	self fork: [ testService recordTestFailure: backgroundError ].
+	testService recordTestFailure: mainError.
+	
+	self assert: executionEnvironment failures equals: testService testFailures.
+	self assertCollection: executionEnvironment failures asSet hasSameElements: {mainError. backgroundError}
 ]
 
 { #category : #tests }
 ProcessMonitorTestServiceTest >> testGettingForkedProcessesFromEnvironment [
 
-	self assert: executionEnvironment forkedProcesses equals: testService forkedProcesses
+	| process |
+	process := self fork: [ ].
+	
+	self assert: executionEnvironment forkedProcesses equals: testService forkedProcesses.
+	self assert: executionEnvironment forkedProcesses asArray equals: {process}
 ]
 
 { #category : #tests }
