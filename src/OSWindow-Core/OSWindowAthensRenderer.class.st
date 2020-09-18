@@ -42,8 +42,10 @@ OSWindowAthensRenderer >> initialize [
 	session := Smalltalk session
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 OSWindowAthensRenderer >> pixelExtent [
+	"The extent of the window may not be in pixels, so we have to ask to the actual
+	drawing surface for its size in pixel. This is specially true under OS X with HiDPI suppport."
 	self checkSession.
 	^ self athensSurface extent
 ]
