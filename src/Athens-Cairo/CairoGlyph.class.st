@@ -1,11 +1,13 @@
 "
-i correspond to cairo_glyph_t structure:
+I correspond to `cairo_glyph_t` structure:
 
+```
 typedef struct {
     unsigned long        index;
     double               x;
     double               y;
 } cairo_glyph_t;
+```
 "
 Class {
 	#name : #CairoGlyph,

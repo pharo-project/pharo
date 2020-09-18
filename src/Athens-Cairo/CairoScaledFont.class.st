@@ -1,7 +1,5 @@
 "
-my instances map to
-cairo_scaled_font_t * 
-data type
+My instances map to `cairo_scaled_font_t *` data type.
 "
 Class {
 	#name : #CairoScaledFont,
