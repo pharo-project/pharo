@@ -324,7 +324,6 @@ OpalCompiler >> compilationContextClass: aClass [
 OpalCompiler >> compile [
 	| cm |
 	[ 	[	self parse.
-			self transformDoit.
 			self callPlugins.  
 		] 	on: ReparseAfterSourceEditing 
 			do: 
@@ -355,6 +354,27 @@ OpalCompiler >> compile: textOrString [
 	^self
 		source: textOrString;
 		compile.
+]
+
+{ #category : #private }
+OpalCompiler >> compileDoit [
+	| cm |
+	[ 
+	self parseDoIt.
+	self transformDoit.
+	self callPlugins.
+	cm := ast generateWithSource ]
+		on: SyntaxErrorNotification
+		do: [ :exception | 
+			self compilationContext requestor
+				ifNotNil: [ 
+					self compilationContext requestor
+						notify: exception errorMessage , ' ->'
+						at: exception location
+						in: exception errorCode.
+					^ self compilationContext failBlock value ]
+				ifNil: [ exception pass ] ].
+	^cm
 ]
 
 { #category : #accessing }
@@ -410,7 +430,7 @@ OpalCompiler >> evaluate [
 	self noPattern: true.
 	self getSourceFromRequestorSelection.
 	self class: (context ifNil: [ receiver class ] ifNotNil: [ context compiledCode methodClass ]).
-	value := receiver withArgs: (context ifNil: [ #() ] ifNotNil: [ {context} ]) executeMethod: self compile.
+	value := receiver withArgs: (context ifNil: [ #() ] ifNotNil: [ {context} ]) executeMethod: self compileDoit.
 	self logDoIt.
 	^ value
 ]
@@ -510,6 +530,12 @@ OpalCompiler >> parse: textOrString [
 	^self
 		source: textOrString;
 		parse
+]
+
+{ #category : #private }
+OpalCompiler >> parseDoIt [
+	"we parse doits without doing name analysis here, it is done in #transformDoit"
+	^ ast := self parseExpression
 ]
 
 { #category : #private }
