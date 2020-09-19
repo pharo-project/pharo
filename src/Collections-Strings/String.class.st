@@ -1863,6 +1863,12 @@ String >> isPatternVariable [
 ]
 
 { #category : #testing }
+String >> isSharedLiteral [
+	"Can this Literal be shared between methods when doing 'ImageCleaner shareLiterals'?"
+	^true
+]
+
+{ #category : #testing }
 String >> isString [
 	^ true
 ]

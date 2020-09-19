@@ -541,6 +541,13 @@ Symbol >> isSelectorSymbol [
 ]
 
 { #category : #testing }
+Symbol >> isSharedLiteral [
+	"Can this Literal be shared between methods when doing 'ImageCleaner shareLiterals'?"
+	"Symbols are shared, but this is done because Symbols are shared system wide, not by the ImageCleaner"
+	^false
+]
+
+{ #category : #testing }
 Symbol >> isSymbol [
 	^ true 
 ]

@@ -212,6 +212,12 @@ ByteArray >> isLiteral [
 	^ self class == ByteArray
 ]
 
+{ #category : #testing }
+ByteArray >> isSharedLiteral [
+	"Can this Literal be shared between methods when doing 'ImageCleaner shareLiterals'?"
+	^self isLiteral
+]
+
 { #category : #'platform independent access' }
 ByteArray >> longAt: index bigEndian: aBool [
 	"Return a 32bit integer quantity starting from the given byte index"

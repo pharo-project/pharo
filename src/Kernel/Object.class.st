@@ -1306,6 +1306,12 @@ Object >> isSelfEvaluating [
 ]
 
 { #category : #testing }
+Object >> isSharedLiteral [
+	"Can this Literal be shared between methods when doing 'ImageCleaner shareLiterals'?"
+	^false
+]
+
+{ #category : #testing }
 Object >> isStream [
 	"Return true if the receiver responds to the stream protocol"
 	^false
