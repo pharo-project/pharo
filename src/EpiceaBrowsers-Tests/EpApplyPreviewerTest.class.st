@@ -166,7 +166,7 @@ EpApplyPreviewerTest >> testCategoryRenameWithPreviousRollback [
 EpApplyPreviewerTest >> testClassAdditionWithClassRemoved [
 	| aClass classDefinition |
 	aClass := classFactory newClass.
-	classDefinition := aClass oldDefinition.
+	classDefinition := aClass definition.
 	self setHeadAsInputEntry.
 
 	aClass removeFromSystem.
@@ -181,13 +181,13 @@ EpApplyPreviewerTest >> testClassAdditionWithInstanceVariablesChanged [
 
 	| aClass classDefinition |
 	aClass := classFactory newClass.
-	classDefinition := aClass oldDefinition.
+	classDefinition := aClass definition.
 	self setHeadAsInputEntry.
 	aClass addInstVarNamed: #x.
 
 	self assertOutputsAnEventWith: [:output | 
 		self assert: output class equals: EpClassModification.
-		self assert: output oldClass definitionSource equals: aClass oldDefinition.
+		self assert: output oldClass definitionSource equals: aClass definition.
 		self assert: output newClass definitionSource equals: classDefinition.
 		]
 
@@ -198,13 +198,13 @@ EpApplyPreviewerTest >> testClassAdditionWithSuperclassChanged [
 
 	| aClass classDefinition |
 	aClass := classFactory newClass.
-	classDefinition := aClass oldDefinition.
+	classDefinition := aClass definition.
 	self setHeadAsInputEntry.
 	aClass superclass: Array.
 
 	self assertOutputsAnEventWith: [:output | 
 		self assert: output class equals: EpClassModification.
-		self assert: output oldClass definitionSource equals: aClass oldDefinition.
+		self assert: output oldClass definitionSource equals: aClass definition.
 		self assert: output newClass definitionSource equals: classDefinition.
 		].
 
@@ -226,7 +226,7 @@ EpApplyPreviewerTest >> testClassRemovalWithClassAdded [
 
 	self assertOutputsAnEventWith: [ :output | 
 		self assert: output class equals: EpClassRemoval.
-		self assert: output behaviorAffected definitionSource equals: aClass oldDefinition ]
+		self assert: output behaviorAffected definitionSource equals: aClass definition ]
 ]
 
 { #category : #tests }
