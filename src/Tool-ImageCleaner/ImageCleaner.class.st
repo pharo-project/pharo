@@ -152,6 +152,12 @@ ImageCleaner >> createLiteralTable [
 	self literalsDo: [ :literal : method | literalTable at: literal put: literal]
 ]
 
+{ #category : #'literal sharing' }
+ImageCleaner >> detroyLiteralTable [
+	"in case someone keeps in instance of ImageCleaner, make sure the table gets GCed"
+	literalTable := nil
+]
+
 { #category : #cleaning }
 ImageCleaner >> examplePackages [
 	^RPackageOrganizer default packageNames select: [ :each | each endsWith: 'Examples' ]
@@ -211,14 +217,14 @@ ImageCleaner >> shareLiterals [
 	self createLiteralTable.
 	self literalsDo: [ :literal :cm |
 			cm literalAt: (cm indexOfLiteral: literal) put: (literalTable at: literal)  ].
-	literalTable := nil.
+	self detroyLiteralTable
 		
 
 ]
 
 { #category : #'literal sharing' }
 ImageCleaner >> statistics [
-	"run this before and after"
+	"run this before and after, this is just there while testing, will be removed"
 	^(CompiledCode allSubInstances flatCollect: #literals) asIdentitySet size
 ]
 
