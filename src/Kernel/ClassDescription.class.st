@@ -705,22 +705,6 @@ ClassDescription >> instanceSide [
 ]
 
 { #category : #printing }
-ClassDescription >> instanceVariablesDottedOn: aStream [
-	"Write my instance variable names separated by spaces on the argument."
-	
-	self localSlots
-		do: [ :each | aStream nextPutAll: each name ]
-		separatedBy: [ aStream space ]
-]
-
-{ #category : #printing }
-ClassDescription >> instanceVariablesDottedString [
-	"Answer a string of my instance variable names separated by spaces."
-
-	^ String streamContents: [ :stream | self instanceVariablesDottedOn: stream ]
-]
-
-{ #category : #printing }
 ClassDescription >> instanceVariablesOn: aStream [
 	"Write my instance variable names separated by spaces on the argument."
 	
@@ -1058,6 +1042,7 @@ ClassDescription >> sharedPoolDottedString [
 ClassDescription >> sharedPoolDottedStringOn: aStream [
 	"Write my shared pools separated by dots on argument, aStream."
 
+	self flag: #toFix. "this is different from the sharedPoolsString because sharedPoolsString handles well the undeclared"
 	self sharedPools do:  [ :p | aStream nextPutAll: p name ] separatedBy: [ aStream nextPutAll: ' . ' ]
 ]
 
