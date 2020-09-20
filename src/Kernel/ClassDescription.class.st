@@ -1031,21 +1031,32 @@ ClassDescription >> sharedPoolsString [
 ]
 
 { #category : #printing }
+ClassDescription >> slotDefinitionOn: aStream [
+	"Write on the arg aStream an executable description of my Slots"
+
+	| useFull |
+	aStream nextPutAll: '{ '.
+	self localSlots
+		do: [ :slot | 
+			aStream nextPutAll: slot definitionString.
+			useFull := slot needsFullDefinition ]
+		separatedBy: [ 
+			aStream nextPutAll: ' . '.
+			useFull ifTrue: [ 
+				aStream
+					cr;
+					tab;
+					tab;
+					tab;
+					tab ] ].
+	aStream nextPutAll: ' }'
+]
+
+{ #category : #printing }
 ClassDescription >> slotDefinitionString [
-	"Answer a string that contains an executable description of my Slots"
-
-	"^self slots ifNotEmpty: [self slots asString] ifEmpty: ['{}']"
+	"Answer a string that represents an executable description of my Slots"
 	
-	^String streamContents: [ :str | | useFull |
-		str nextPutAll: '{ '.
-		self localSlots do: [:slot |
-				str nextPutAll: slot definitionString.
-				useFull := slot needsFullDefinition]				
-			separatedBy: [ 
-				str nextPutAll: ' . '.  
-				useFull ifTrue: [ str cr;tab;tab;tab;tab ]].
-		str nextPutAll: ' }'. ]
-
+	^String streamContents: [ :str | self slotDefinitionOn: str]
 ]
 
 { #category : #slots }
