@@ -207,7 +207,7 @@ ImageCleaner >> removeEmptyPackages [
 { #category : #'literal sharing' }
 ImageCleaner >> shareLiterals [
 	"Experimental Image Shrinker: We go over all methods and replace all the literals that are equal by one copy"
-	"Note: as thse literals can be changed, a bug that was localized could now have a global effect"
+	"Note: as thse literals can be changed, it is adviced to set #optionReadOnlyLiterals to true and recompile the system before using this in production"
 	self createLiteralTable.
 	self literalsDo: [ :literal :cm |
 			cm literalAt: (cm indexOfLiteral: literal) put: (literalTable at: literal)  ].
