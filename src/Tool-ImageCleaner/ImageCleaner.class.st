@@ -167,7 +167,8 @@ ImageCleaner >> literalsDo: aBlock [
 
 	CompiledCode allSubInstancesDo: [ :cm | 
 		cm literals do: [ :literal | 
-			literal isSharedLiteral ifTrue: [ 
+			"Symbols are already shared, we can skip them here"
+			(literal isSharedLiteral and: [literal isSymbol not]) ifTrue: [ 
 				aBlock value: literal value: cm ] ] ]
 ]
 
