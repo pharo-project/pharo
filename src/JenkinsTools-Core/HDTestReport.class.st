@@ -14,7 +14,8 @@ Class {
 		'nodeName',
 		'stageName',
 		'progressFileName',
-		'progressStream'
+		'progressStream',
+		'shouldSerializeError'
 	],
 	#classVars : [
 		'CurrentStageName'
@@ -119,6 +120,7 @@ HDTestReport >> hasFailuresOrErrors [
 HDTestReport >> initialize [
 
 	super initialize.
+	shouldSerializeError := false.
 	suiteTime := 0 asDuration.
 	suitePosition := suiteFailures := suiteErrors := 0.
 	progressFileName := 'progress.log'.
@@ -168,9 +170,9 @@ HDTestReport >> recordError: anError duringTest: aTestCase [
 
 	aTestCase shouldPass ifFalse: [ ^self ].
 	suiteErrors := suiteErrors + 1.
-		
-	self serializeError: anError of: aTestCase.		
-	self writeException: anError of: aTestCase asNode: 'error'
+				
+	self writeError: anError of: aTestCase.
+	self serializeError: anError of: aTestCase.
 ]
 
 { #category : #running }
@@ -178,9 +180,18 @@ HDTestReport >> recordFailure: aTestFailure duringTest: aTestCase [
 
 	aTestCase shouldPass ifFalse: [ ^self ].
 	suiteFailures := suiteFailures + 1.	
-	
-	self serializeError: aTestFailure of: aTestCase.		
-	self writeException: aTestFailure of: aTestCase asNode: 'failure'
+			
+	self writeFailure: aTestFailure of: aTestCase.
+	self serializeError: aTestFailure of: aTestCase.
+]
+
+{ #category : #running }
+HDTestReport >> recordPassOf: aTestCase [
+]
+
+{ #category : #running }
+HDTestReport >> recordSkip: aTestSkip duringTest: aTestCase [ 
+
 ]
 
 { #category : #running }
@@ -249,9 +260,11 @@ HDTestReport >> runCase: aTestCase [
 		reportTestCase: aTestCase
 		runBlock: [ 
 			[aTestCase runCaseManaged.
-			aTestCase shouldPass ifFalse: [ self recordUnexpectedPassOf: aTestCase ]] 
-				on: Exception - UnhandledError
-				do: [ :exc | exc recordResultOf: aTestCase inHDTestReport: self ]
+			aTestCase shouldPass 
+				ifTrue: [ self recordPassOf: aTestCase ]
+				ifFalse: [ self recordUnexpectedPassOf: aTestCase ]
+			] on: Exception do: [ :exc | 
+					exc recordResultOf: aTestCase inHDTestReport: self ]
 		]
 ]
 
@@ -266,7 +279,7 @@ HDTestReport >> runSuite: aTestSuite [
 { #category : #running }
 HDTestReport >> serializeError: error of: aTestCase [
 	"We got an error from a test, let's serialize it so we can properly debug it later on..."
-	
+	self shouldSerializeError ifFalse: [ ^self ].
 	self class environment at: #FuelOutStackDebugAction ifPresent: [ :fuelOutStackDebugAction |
 		| context testCaseMethodContext fileName |
 		context := error signalerContext.
@@ -310,6 +323,16 @@ HDTestReport >> setUp [
 	suite resources do: [ :each |
 		each isAvailable
 			ifFalse: [ each signalInitializationError ] ]
+]
+
+{ #category : #accessing }
+HDTestReport >> shouldSerializeError [
+	^ shouldSerializeError
+]
+
+{ #category : #accessing }
+HDTestReport >> shouldSerializeError: aBoolean [
+	shouldSerializeError := aBoolean.
 ]
 
 { #category : #private }
@@ -374,6 +397,12 @@ HDTestReport >> tearDown [
 ]
 
 { #category : #private }
+HDTestReport >> writeError: anError of: aTestCase [
+
+	self writeException: anError of: aTestCase asNode: 'error'
+]
+
+{ #category : #private }
 HDTestReport >> writeException: anException asNode: errorNodeName using: writeBlock [
 	| encodedErrorName encodedErrorDescription |
 	stream tab; tab; nextPutAll: '<' ; nextPutAll: errorNodeName; nextPutAll: ' type="'.
@@ -409,4 +438,10 @@ HDTestReport >> writeExceptionStack: anException of: aTestCase [
 			[ stream nextPutAll: (self encode: context printString); lf ] 
 				onErrorDo: [ stream nextPutAll: 'PRINTING ERROR'; lf].
 			context := context sender ]
+]
+
+{ #category : #private }
+HDTestReport >> writeFailure: aTestFailure of: aTestCase [
+
+	self writeException: aTestFailure of: aTestCase asNode: 'failure'
 ]

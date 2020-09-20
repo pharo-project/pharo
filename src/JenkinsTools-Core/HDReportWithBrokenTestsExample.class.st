@@ -39,3 +39,15 @@ HDReportWithBrokenTestsExample >> testForCIWithOnlyBackgroundFailure [
 
 	
 ]
+
+{ #category : #tests }
+HDReportWithBrokenTestsExample >> testForCiWhichFails [
+
+	self assert: false description: 'test with assertion failure'
+]
+
+{ #category : #tests }
+HDReportWithBrokenTestsExample >> testForCiWhichPasses [
+
+	self assert: true
+]

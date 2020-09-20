@@ -4,5 +4,5 @@ Extension { #name : #TestFailedByForkedProcess }
 TestFailedByForkedProcess >> recordResultOf: aTestCase inHDTestReport: aHDTestReport [
 	
 	executionEnvironment backgroundFailures do: [ :each | 
-		each recordResultOf: aTestCase inHDTestReport: aHDTestReport]
+		each recordBackgroundFailureOf: aTestCase inHDTestReport: aHDTestReport ]
 ]

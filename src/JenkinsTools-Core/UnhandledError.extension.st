@@ -1,7 +1,7 @@
 Extension { #name : #UnhandledError }
 
 { #category : #'*JenkinsTools-Core' }
-UnhandledError >> recordResultOf: aTestCase inHDTestReport: aHDTestReport [
+UnhandledError >> recordBackgroundFailureOf: aTestCase inHDTestReport: aHDTestReport [
 	
-	exception recordResultOf: aTestCase inHDTestReport: aHDTestReport
+	exception recordBackgroundFailureOf: aTestCase inHDTestReport: aHDTestReport
 ]
