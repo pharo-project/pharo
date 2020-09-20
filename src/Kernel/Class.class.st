@@ -556,7 +556,7 @@ Class >> definitionWithoutSlots [
 	stream
 		crtab;
 		nextPutAll: 'classVariableNames: '.
-	stream classVariablesOn: stream.
+	self classVariablesOn: stream.
 	
 	poolString = '' ifFalse: [ 
 		stream 

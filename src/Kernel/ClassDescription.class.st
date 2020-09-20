@@ -332,9 +332,11 @@ ClassDescription >> classVariablesDottedString [
 ClassDescription >> classVariablesOn: aStream [
 	"Write my class variable names separated by spaces on the argument."
 	
+	aStream nextPut: $'.
 	self classVarNames 
 		do: [ :each | aStream nextPutAll: each ]
-		separatedBy: [ aStream space ]
+		separatedBy: [ aStream space ].
+	aStream nextPut: $'.
 ]
 
 { #category : #printing }
@@ -708,9 +710,11 @@ ClassDescription >> instanceSide [
 ClassDescription >> instanceVariablesOn: aStream [
 	"Write my instance variable names separated by spaces on the argument."
 	
+	aStream nextPut: $'.
 	self localSlots
-		do: [ :each | aStream nextPutAll: each name ]
-		separatedBy: [ aStream space ]
+		do: [ :each | aStream nextPutAll: each name asString]
+		separatedBy: [ aStream space ].
+	aStream nextPut: $'.
 ]
 
 { #category : #printing }
