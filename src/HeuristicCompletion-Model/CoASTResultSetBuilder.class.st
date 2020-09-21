@@ -100,6 +100,11 @@ CoASTResultSetBuilder >> visitCascadeNode: aRBCascadeNode [
 ]
 
 { #category : #visiting }
+CoASTResultSetBuilder >> visitEnglobingErrorNode: aRBVariableNode [ 
+	^ self visitNode: aRBVariableNode
+]
+
+{ #category : #visiting }
 CoASTResultSetBuilder >> visitGlobalNode: aRBVariableNode [
 
 	^ self visitVariableNode: aRBVariableNode
