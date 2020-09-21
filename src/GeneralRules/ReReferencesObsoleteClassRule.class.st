@@ -10,10 +10,9 @@ Class {
 
 { #category : #helpers }
 ReReferencesObsoleteClassRule >> basicCheck: aNode [
- 	^ aNode isVariable 
- 		and: [aNode isGlobalVariable
+ 	^ aNode isGlobalVariable
  			and: [ aNode variable isGlobalClassNameBinding
- 				and: [ aNode variable value isObsolete ] ] ]
+ 				and: [ aNode variable value isObsolete ] ] 
 ]
 
 { #category : #helpers }
