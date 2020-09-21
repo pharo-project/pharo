@@ -81,10 +81,10 @@ PragmaCollector class >> selectors: anArray filter: aBlock [
 
 { #category : #updating }
 PragmaCollector >> addPragma: aPragma [
-	"if aPragma is to be kept, then add it and announce its adding"
-	(self keepPragma: aPragma)
-		ifTrue: [self collected add: aPragma.
-			self announce: (PragmaAdded pragma: aPragma)]
+	"if aPragma is to be kept, then add it and announce"
+	(self keepPragma: aPragma) ifFalse: [ ^ self ].
+	self collected add: aPragma.
+	self announce: (PragmaAdded pragma: aPragma)
 ]
 
 { #category : #'system changes' }
