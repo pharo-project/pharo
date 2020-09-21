@@ -1,10 +1,14 @@
 "
-I am a specialized version for the 'self'
+Deprecated. The design to change the class of RBVariableNode during name analysis was not a good one.
+
+ We now instead annotate all RBVariableNode intances with a Variable object (see the inherirance Hierachy of Variable).
+
+ The visitor dispatches through the variable object now, calling the visit methods that are specialised for the kind of Variable
 "
 Class {
 	#name : #RBSelfNode,
 	#superclass : #RBVariableNode,
-	#category : #'AST-Core-Nodes'
+	#category : #'Deprecated90-AST'
 }
 
 { #category : #'instance creation' }
