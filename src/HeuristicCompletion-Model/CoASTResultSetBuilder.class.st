@@ -67,10 +67,12 @@ CoASTResultSetBuilder >> node: aNode [
 { #category : #'API - building' }
 CoASTResultSetBuilder >> parseNode [
 
-	^ node ifNil: [ node := (completionContext isWorkspace
-		ifTrue: [ RBParser parseFaultyExpression: completionContext source ]
-		ifFalse: [ RBParser parseFaultyMethod: completionContext source ]) doSemanticAnalysis
-			nodeForOffset: completionContext position ]
+	^ node ifNil: [
+		(completionContext completionClass compiler
+			source: completionContext source;
+			noPattern: completionContext isWorkspace; 
+			options: #(+ optionParseErrors + optionSkipSemanticWarnings);
+			parse) doSemanticAnalysis nodeForOffset: completionContext position ] 
 ]
 
 { #category : #visiting }
