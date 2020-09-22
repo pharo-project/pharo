@@ -66,7 +66,7 @@ ClassAnnotationRegistry class >> annotationPragmaName [
 { #category : #'pragma collecting' }
 ClassAnnotationRegistry class >> annotationPragmasIn: aClass do: aBlock [
 
-	Pragma withPragmasIn: aClass do: [ :pragma |
+	aClass pragmasDo: [ :pragma |
 		pragma selector == self annotationPragmaName ifTrue: [aBlock value: pragma]]
 ]
 

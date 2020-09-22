@@ -18,7 +18,7 @@ Pragma class >> gtInspectorAnnotatedMethodsIn: composite [
 			| pragmas |
 			pragmas := OrderedCollection new.
 			Object withAllSubclassesDo: [:each |
-				Pragma withPragmasIn: each do: [:p |
+				 each pragmasDo: [:p |
 					pragmas add: p]].
 			(pragmas groupedBy: #selector) associations sorted: [ :a :b | 
 				a key < b key ]

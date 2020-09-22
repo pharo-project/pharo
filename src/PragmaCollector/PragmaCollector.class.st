@@ -205,9 +205,7 @@ PragmaCollector >> modifiedEventOccurs: anEvent [
 	acceptable pragma in it, then the handler is removed.
 	"
 
-	Pragma
-		withPragmasIn: anEvent methodClass
-		do: [ :pragma | 
+	anEvent methodClass pragmasDo: [ :pragma | 
 			pragma methodSelector = anEvent selector
 				ifTrue: [ (self
 						detect: [ :oldprag | 
