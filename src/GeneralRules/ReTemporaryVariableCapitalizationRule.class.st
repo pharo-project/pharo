@@ -9,7 +9,6 @@ Class {
 
 { #category : #running }
 ReTemporaryVariableCapitalizationRule >> basicCheck: aNode [
-	aNode isVariable ifFalse: [ ^false ].
 	aNode isLocalVariable ifFalse: [ ^false ].
 	aNode isDefinition ifFalse: [ ^false ].
 	^aNode name first isUppercase

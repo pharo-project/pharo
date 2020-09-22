@@ -18,10 +18,9 @@ ReGlobalVariablesUsageRule class >> checksMethod [
 ReGlobalVariablesUsageRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	aMethod ast allChildren
 		select: [ :node |
-			node isVariable and: [ 
-				node variable isGlobalVariable and: [
+				node isGlobalVariable and: [
 					node variable isGlobalClassNameBinding not and: [
-					(self isKnownGlobal: node name) not ] ] ] ] 
+					(self isKnownGlobal: node name) not ] ] ]
 		thenDo: [ :node |
 			aCriticBlock cull: (self
 				createTrivialCritiqueOn: aMethod

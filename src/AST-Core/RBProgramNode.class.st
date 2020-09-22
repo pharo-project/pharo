@@ -449,7 +449,7 @@ RBProgramNode >> isArgument [
 
 { #category : #testing }
 RBProgramNode >> isArgumentVariable [
-	^false
+	^ false
 ]
 
 { #category : #testing }
@@ -473,8 +473,13 @@ RBProgramNode >> isCascade [
 ]
 
 { #category : #testing }
+RBProgramNode >> isClassVariable [
+	^ false
+]
+
+{ #category : #testing }
 RBProgramNode >> isCommentNode [
-	^false.
+	^false
 ]
 
 { #category : #testing }
@@ -507,6 +512,11 @@ RBProgramNode >> isFaulty [
 	^false
 ]
 
+{ #category : #testing }
+RBProgramNode >> isGlobalVariable [
+	^false
+]
+
 { #category : #deprecated }
 RBProgramNode >> isImmediate [
 	^self isImmediateNode
@@ -514,6 +524,11 @@ RBProgramNode >> isImmediate [
 
 { #category : #testing }
 RBProgramNode >> isImmediateNode [
+	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isInstanceVariable [
 	^false
 ]
 
@@ -541,6 +556,16 @@ RBProgramNode >> isLiteralArrayError [
 
 { #category : #testing }
 RBProgramNode >> isLiteralNode [
+	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isLiteralVariable [
+	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isLocalVariable [
 	^false
 ]
 
@@ -580,12 +605,22 @@ RBProgramNode >> isPragmaError [
 ]
 
 { #category : #testing }
+RBProgramNode >> isReservedVariable [
+	^false
+]
+
+{ #category : #testing }
 RBProgramNode >> isReturn [
 	^false
 ]
 
 { #category : #testing }
 RBProgramNode >> isSelector [
+	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isSelfOrSuperVariable [
 	^false
 ]
 
@@ -620,6 +655,11 @@ RBProgramNode >> isThisContextVariable [
 ]
 
 { #category : #testing }
+RBProgramNode >> isUndeclaredVariable [
+	^false
+]
+
+{ #category : #testing }
 RBProgramNode >> isUsed [
 	"Answer true if this node could be used as part of another expression. For example, you could use the 
 	result of this node as a receiver of a message, an argument, the right part of an assignment, or the 
@@ -636,6 +676,11 @@ RBProgramNode >> isValue [
 
 { #category : #testing }
 RBProgramNode >> isVariable [
+	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isWorkspaceVariable [
 	^false
 ]
 
