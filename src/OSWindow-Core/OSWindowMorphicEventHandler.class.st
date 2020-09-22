@@ -8,8 +8,7 @@ Class {
 	#name : #OSWindowMorphicEventHandler,
 	#superclass : #OSWindowEventVisitor,
 	#instVars : [
-		'morphicWorld',
-		'eventQueue'
+		'morphicWorld'
 	],
 	#classVars : [
 		'SimulateMiddleButton',
@@ -149,21 +148,6 @@ OSWindowMorphicEventHandler >> dispatchMorphicEvent: anEvent [
 ]
 
 { #category : #events }
-OSWindowMorphicEventHandler >> enqueue: aMorphicEvent [
-	"Put morphic event into receiver's internal queue. 
-	All events in queue will be processed later, by UI process, once it will get there."
-	
-	self eventQueue nextPut: aMorphicEvent.
-]
-
-{ #category : #accessing }
-OSWindowMorphicEventHandler >> eventQueue [
-	"using lazy-initialize here to deal with bootstrapping issues,
-	since existing instances originally has no queue"
-	^ eventQueue ifNil: [ eventQueue := WaitfreeQueue new ]
-]
-
-{ #category : #events }
 OSWindowMorphicEventHandler >> handleEvent: anEvent [
 	
 	"convert the event to morphic one, and dispatch it whatever..."
@@ -174,11 +158,6 @@ OSWindowMorphicEventHandler >> handleEvent: anEvent [
 		
 	self dispatchMorphicEvent: morphicEvent
 	
-]
-
-{ #category : #initialization }
-OSWindowMorphicEventHandler >> initialize [
-	eventQueue := WaitfreeQueue new.
 ]
 
 { #category : #visiting }
@@ -212,7 +191,7 @@ OSWindowMorphicEventHandler >> visitKeyDownEvent: anEvent [
 		hand:  self activeHand
 		stamp: Time millisecondClockValue.
 	keyEvent scanCode: anEvent scanCode.
-	self enqueue: keyEvent.
+	self dispatchMorphicEvent: keyEvent.
 	
 	"This is for ctrl/alt held alone makes morphic think that null character is good text input"
 	keyEvent keyValue = 0 ifTrue: [ ^ self ]. 

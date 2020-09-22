@@ -31,7 +31,7 @@ SDL_Window class >> finalizeResourceData: aTuple [
 
 { #category : #rendering }
 SDL_Window >> createAcceleratedRenderer [
-	^ self createRenderer: -1 flags: SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED
+	^ self createRenderer: -1 flags: SDL_RENDERER_ACCELERATED
 ]
 
 { #category : #rendering }

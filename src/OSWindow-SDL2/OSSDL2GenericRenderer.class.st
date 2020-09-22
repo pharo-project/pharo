@@ -96,7 +96,11 @@ OSSDL2GenericRenderer >> createTextureAtlasFontCacheFor: font [
 
 { #category : #deleting }
 OSSDL2GenericRenderer >> destroy [
-	renderer destroy
+	(renderer isNotNil and: [renderer isNull not]) ifTrue: [ 
+		renderer destroy
+	].
+	renderer := nil.
+
 ]
 
 { #category : #rendering }

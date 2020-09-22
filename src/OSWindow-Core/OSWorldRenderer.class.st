@@ -79,7 +79,7 @@ OSWorldRenderer >> deactivate [
 { #category : #operations }
 OSWorldRenderer >> deferUpdatesDuring: aBlock [
 
-	self osWindowRenderer deferUpdatesWhile: aBlock
+	self osWindowRenderer ifNotNil: [:renderer | renderer deferUpdatesWhile: aBlock ]
 ]
 
 { #category : #initialization }
@@ -188,7 +188,7 @@ OSWorldRenderer >> initialize [
 
 { #category : #initialization }
 OSWorldRenderer >> osWindowRenderer [
-		
+	osWindow ifNil: [ ^ nil ].
 	^ osWindow renderer ifNil: [
 		osWindow newFormRenderer: display.
 		osWindow renderer

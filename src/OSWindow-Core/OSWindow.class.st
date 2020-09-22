@@ -288,22 +288,22 @@ OSWindow >> minimize [
 
 { #category : #'instance creation' }
 OSWindow >> newAthensRenderer [
-	^ backendWindow newAthensRenderer
+	^ backendWindow ifNotNil: [backendWindow newAthensRenderer]
 ]
 
 { #category : #factory }
 OSWindow >> newFormRenderer: form [
-	^ backendWindow newFormRenderer: form
+	^ backendWindow ifNotNil: [backendWindow newFormRenderer: form]
 ]
 
 { #category : #factory }
 OSWindow >> newGenericRenderer [
-	^ backendWindow newGenericRenderer
+	^ backendWindow ifNotNil: [backendWindow newGenericRenderer]
 ]
 
 { #category : #factory }
 OSWindow >> newOpenGLRenderer [
-	^ backendWindow newOpenGLRenderer
+	^ backendWindow ifNotNil: [backendWindow newOpenGLRenderer]
 ]
 
 { #category : #accessing }

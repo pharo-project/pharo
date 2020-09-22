@@ -115,6 +115,32 @@ WorldState class >> discoveredMenuTitle [
 	^ DesktopMenuTitle ifNil: [DesktopMenuTitle := 'World']
 ]
 
+{ #category : #'drawing cycle' }
+WorldState class >> doDrawCycleWith: aBlock [
+	aBlock ensure: [
+		self doInterCycleWait
+	]
+]
+
+{ #category : #'drawing cycle' }
+WorldState class >> doInterCycleWait [
+	| waitTime newCycleTime |
+	newCycleTime := Time millisecondClockValue.
+	waitTime := self serverMode
+		ifTrue: [ 50 ]
+		ifFalse: [
+			| expectedEndTime lapse |
+			lapse := self interCycleLapse.
+			expectedEndTime := self lastDrawCycleTime + self interCycleLapse.
+			"This minimum is required to prevent freezing the system during startup.
+			The times two in the lapse is to allow some slack due to precision issues."
+			expectedEndTime - newCycleTime min: (lapse*2).
+		].
+	waitTime > 0 ifTrue: [ (Delay forMilliseconds: waitTime) wait ].
+	LastCycleTime := newCycleTime.
+	
+]
+
 { #category : #settings }
 WorldState class >> easySelectingWorld [
 	^ EasySelectingWorld ifNil: [EasySelectingWorld := false]
@@ -143,14 +169,24 @@ WorldState class >> helpOn: aBuilder [
 WorldState class >> initialize [
 	"WorldState initialize"
 
-	MinCycleLapse := 20.		"allows 50 frames per second..."
+	MinCycleLapse := 16.		"allows 60 frames per second..."
 	DeferredUIMessages := nil.
+]
+
+{ #category : #'drawing cycle' }
+WorldState class >> interCycleLapse [
+	^ MinCycleLapse ifNil: [ MinCycleLapse := 16 ]
 ]
 
 { #category : #accessing }
 WorldState class >> lastCycleTime [
 
 	^LastCycleTime
+]
+
+{ #category : #'drawing cycle' }
+WorldState class >> lastDrawCycleTime [
+	^ LastCycleTime ifNil: [ LastCycleTime := Time millisecondClockValue ]
 ]
 
 { #category : #'world menu items' }
@@ -495,21 +531,12 @@ WorldState >> doFullRepaint [
 
 { #category : #'update cycle' }
 WorldState >> doOneCycleFor: aWorld [
-	"Do one cycle of the interaction loop. This method is called repeatedly when the world is running. This is a moderately private method; a better alternative is usually either to wait for events or to check the state of things from #step methods."
-
-	self interCyclePause: MinCycleLapse.
-	self doOneCycleNowFor: aWorld.
-]
-
-{ #category : #'update cycle' }
-WorldState >> doOneCycleNowFor: aWorld [
 	"Immediately do one cycle of the interaction loop.
 	This should not be called directly, but only via doOneCycleFor:"
 
 	self worldRenderer checkForNewScreenSize.
 
 	"process user input events"
-	LastCycleTime := Time millisecondClockValue.
 	self handsDo: [:h |
 		self activeHand: h.
 		h processEvents.
@@ -642,31 +669,6 @@ WorldState >> initialize [
 	lastStepTime := 0.
 	lastAlarmTime := 0.
 
-]
-
-{ #category : #'update cycle' }
-WorldState >> interCyclePause: milliSecs [
-	"delay enough that the previous cycle plus the amount of delay will equal milliSecs.  If the cycle is already expensive, then no delay occurs.  However, if the system is idly waiting for interaction from the user, the method will delay for a proportionally long time and cause the overall CPU usage of Pharo to be low.
-	If self serverMode returns true then, always do a complete delay of 50ms, independant of my argument. This prevents the freezing problem described in Mantis #6581"
-
-	| wait wait2 |
-	wait := self serverMode
-    	ifTrue: [ 50 ]
-    	ifFalse: 
-		[	wait2 := (lastCycleTime notNil and: [CanSurrenderToOS ~~ false]) 
-        		ifFalse: [ 0 ]
-        		ifTrue: [ lastCycleTime + milliSecs - Time millisecondClockValue ].
- 
-      		self flag: 'Issue 14754 - wait2>millisecs is only True for clock rollover. Remove it once delay scheduler is based on microsecondClock - Ben Coman 19.01.2015'.
-      		wait2 > milliSecs 
-        		ifTrue: [ 0 ]
-        		ifFalse: [ wait2 ]. 
-		].
-		
-	wait > 0 ifTrue: [	(Delay forMilliseconds: wait) wait ].
-
-	lastCycleTime := Time millisecondClockValue.
-	CanSurrenderToOS := true.
 ]
 
 { #category : #canvas }
