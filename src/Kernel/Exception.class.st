@@ -372,6 +372,11 @@ Exception >> signalerContext [
 ]
 
 { #category : #accessing }
+Exception >> smartDescription [
+	^self description
+]
+
+{ #category : #accessing }
 Exception >> tag [
 	"Return an exception's tag value."
 

@@ -84,7 +84,7 @@ OSSDL2AthensRenderer >> initializeWindowHandle: aBackendWindow [
 { #category : #drawing }
 OSSDL2AthensRenderer >> prepareForDrawing [
 	mutex critical: [
-		textureExtent ~= backendWindow extent ifTrue: [ self resized ].
+		textureExtent ~= renderer outputExtent ifTrue: [ self resized ].
 	].
 ]
 
@@ -108,7 +108,7 @@ OSSDL2AthensRenderer >> primitiveUpdateRectangle: rectangle externalForm: extern
 OSSDL2AthensRenderer >> resetResources [
 	| extent |
 	self checkSession.
-	extent := backendWindow extent.
+	extent := renderer outputExtent.
 	self createSDLSurfaceWithExtent: extent.
 	athensSurface := AthensCairoSDLSurface fromSDLSurface: sdlSurface.
 	texture := renderer 

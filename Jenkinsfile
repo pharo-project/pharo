@@ -57,15 +57,14 @@ def notifyBuild(status){
   node('unix'){ stage('notify'){
   try{
   
-  //If this is development, we send the email to the bugtracker list
-  //Otherwise, we send it to pharo-dev
-  def toMail = "pharo-bugtracker@lists.gforge.inria.fr"
+  //If this is development, we send the email to the beta list
+  def toMail = "log-ci-beta@lists.pharo.org"
   def buildKind = env.BRANCH_NAME
   if (env.CHANGE_ID != null){
     buildKind = "PR ${env.CHANGE_ID}"
   }
   if( isDevelopmentBranch() ) {
-    toMail = "pharo-dev@lists.pharo.org"
+    toMail = "log-ci@lists.pharo.org"
     buildKind = getPharoVersionFromBranch()
   }
   
