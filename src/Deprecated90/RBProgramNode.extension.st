@@ -43,3 +43,15 @@ RBProgramNode >> methodComments [
 		transformWith: '`@receiver methodComments' -> '`@receiver comments'.
 	^self comments
 ]
+
+{ #category : #'*Deprecated90' }
+RBProgramNode >> parents [
+	"see discussion in https://github.com/pharo-project/pharo/issues/6278"
+		self
+		deprecated: 'Use #withAllParents instead'
+		on: '25 may 2020'
+		in: #Pharo9
+		transformWith: '`@receiver parents' 
+						-> '`@receiver withAllParents'.
+	^self withAllParents
+]
