@@ -176,7 +176,7 @@ SpAbstractListPresenterTest >> testSortingBlock [
 	| count |
 	count := 0.
 	presenter whenSortingBlockChangedDo: [ :sortFunction | count := count + 1 ].
-	presenter items: #(3 8 1 0).
+	presenter items: #(3 8 1 0) copy.
 	presenter sortingBlock: #yourself ascending.
 	self assert: count equals: 1.
 	self assert: (presenter model at: 1) equals: 0
