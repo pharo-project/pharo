@@ -250,9 +250,8 @@ IRTranslator >> visitPushInstVar: instVar [
 IRTranslator >> visitPushLiteral: lit [
 	| literal |
 	literal := lit literal.
-	"During bootstrap script 1, 1 class isImmediateClass answers false, so we 
-	 cannot rely on literal class isImmediateClass here or it breaks the bootstrap."
-	({Character.SmallInteger.SmallFloat64} includes: literal class) ifTrue: [ ^ gen pushLiteral: literal ].
+	"all potentially shared literals are compiled read only"
+	(literal isSharedLiteral) ifFalse: [ ^ gen pushLiteral: literal ].
 	Smalltalk vm supportsWriteBarrier ifFalse: [ ^ gen pushLiteral: literal ].
 	"For symbol we need to set explicitly to writable or read-only. 
 	 Compilation to read-only then back to writable keep the object 

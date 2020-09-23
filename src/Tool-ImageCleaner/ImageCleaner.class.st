@@ -22,6 +22,9 @@ You can use one of my 2 methods:
 Class {
 	#name : #ImageCleaner,
 	#superclass : #Object,
+	#instVars : [
+		'literalTable'
+	],
 	#category : #'Tool-ImageCleaner'
 }
 
@@ -49,6 +52,12 @@ ImageCleaner class >> helpPackages [
 	<script: 'self helpPackages inspect'>
 	
 	^RPackageOrganizer default packageNames select: [ :each | each endsWith: '-Help' ]
+]
+
+{ #category : #'instance creation' }
+ImageCleaner class >> shareLiterals [
+	<script>
+	self new shareLiterals
 ]
 
 { #category : #accessing }
@@ -137,6 +146,18 @@ ImageCleaner >> cleanUpProcesses [
 				terminate ]
 ]
 
+{ #category : #'literal sharing' }
+ImageCleaner >> createLiteralTable [
+	literalTable := Dictionary new.
+	self literalsDo: [ :literal : method | literalTable at: literal put: literal]
+]
+
+{ #category : #'literal sharing' }
+ImageCleaner >> detroyLiteralTable [
+	"in case someone keeps in instance of ImageCleaner, make sure the table gets GCed"
+	literalTable := nil
+]
+
 { #category : #cleaning }
 ImageCleaner >> examplePackages [
 	^RPackageOrganizer default packageNames select: [ :each | each endsWith: 'Examples' ]
@@ -145,6 +166,16 @@ ImageCleaner >> examplePackages [
 { #category : #cleaning }
 ImageCleaner >> helpPackages [
 	^RPackageOrganizer default packageNames select: [ :each | each endsWith: '-Help' ]
+]
+
+{ #category : #'literal sharing' }
+ImageCleaner >> literalsDo: aBlock [
+
+	CompiledCode allSubInstancesDo: [ :cm | 
+		cm literals do: [ :literal | 
+			"Symbols are already shared, we can skip them here"
+			(literal isSharedLiteral and: [literal isSymbol not]) ifTrue: [ 
+				aBlock value: literal value: cm ] ] ]
 ]
 
 { #category : #cleaning }
@@ -177,6 +208,24 @@ ImageCleaner >> removeEmptyPackages [
 	| empty |
 	empty := RPackageOrganizer default packages select: #isEmpty.
 	empty do: #unregister.
+]
+
+{ #category : #'literal sharing' }
+ImageCleaner >> shareLiterals [
+	"Experimental Image Shrinker: We go over all methods and replace all the literals that are equal by one copy"
+	"Note: as thse literals can be changed, it is adviced to set #optionReadOnlyLiterals to true and recompile the system before using this in production"
+	self createLiteralTable.
+	self literalsDo: [ :literal :cm |
+			cm literalAt: (cm indexOfLiteral: literal) put: (literalTable at: literal)  ].
+	self detroyLiteralTable
+		
+
+]
+
+{ #category : #'literal sharing' }
+ImageCleaner >> statistics [
+	"run this before and after, this is just there while testing, will be removed"
+	^(CompiledCode allSubInstances flatCollect: #literals) asIdentitySet size
 ]
 
 { #category : #cleaning }
