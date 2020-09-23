@@ -57,7 +57,7 @@ MailAddressTokenizerTest >> testTokensInUnicode [
 
 	| email tokens tokensCollection |
 
-	email := 'first last <person@company.com>'.
+	email := 'first last <person@company.com>' copy.
 	email
 		at: 3 put: 345 asCharacter;
 		at: 15 put: 345 asCharacter.
@@ -67,12 +67,12 @@ MailAddressTokenizerTest >> testTokensInUnicode [
 	self 
 		assert: tokensCollection
 		equals: {
-			#Atom->('first'
+			#Atom->('first' copy
 				at: 3 put: 345 asCharacter;
 				yourself). 
-			#Atom->'last'. 
+			#Atom->'last' copy. 
 			$<->'<'. 
-			#Atom->('person'
+			#Atom->('person' copy
 				at: 3 put: 345 asCharacter;
 				yourself). 
 			$@->'@'. 
