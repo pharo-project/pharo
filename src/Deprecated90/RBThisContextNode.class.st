@@ -1,10 +1,10 @@
 "
-I represent the specialized variable named 'thisContext'
+Deprecated. See comment of RBTemporaryNode
 "
 Class {
 	#name : #RBThisContextNode,
 	#superclass : #RBVariableNode,
-	#category : #'AST-Core-Nodes'
+	#category : #'Deprecated90-AST'
 }
 
 { #category : #'instance creation' }

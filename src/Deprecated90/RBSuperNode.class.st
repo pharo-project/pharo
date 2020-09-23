@@ -1,10 +1,10 @@
 "
-I am a specialized variable node for 'super'
+Deprecated. See comment of RBTemporaryNode
 "
 Class {
 	#name : #RBSuperNode,
 	#superclass : #RBVariableNode,
-	#category : #'AST-Core-Nodes'
+	#category : #'Deprecated90-AST'
 }
 
 { #category : #'instance creation' }

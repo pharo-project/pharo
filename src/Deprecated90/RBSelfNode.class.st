@@ -1,10 +1,10 @@
 "
-I am a specialized version for the 'self'
+Deprecated. See comment of RBTemporaryNode
 "
 Class {
 	#name : #RBSelfNode,
 	#superclass : #RBVariableNode,
-	#category : #'AST-Core-Nodes'
+	#category : #'Deprecated90-AST'
 }
 
 { #category : #'instance creation' }
