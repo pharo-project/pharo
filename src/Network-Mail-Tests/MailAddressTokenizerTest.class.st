@@ -25,7 +25,7 @@ MailAddressTokenizerTest >> testTokensInLatin [
 
 	| email tokens tokensCollection |
 
-	email := 'first last <person@company.com>'.
+	email := 'first last <person@company.com>' copy.
 	email
 		at: 2 put: 237 asCharacter;
 		at: 14 put: 233 asCharacter.
@@ -35,18 +35,18 @@ MailAddressTokenizerTest >> testTokensInLatin [
 	self 
 		assert: tokensCollection
 		equals: {
-			#Atom->('first'
+			#Atom->('first' copy
 				at: 2 put: 237 asCharacter;
 				yourself). 
-			#Atom->'last'. 
+			#Atom->'last' copy. 
 			$<->'<'. 
-			#Atom->('person'
+			#Atom->('person' copy
 				at: 2 put: 233 asCharacter;
 				yourself). 
 			$@->'@'. 
-			#Atom->'company'. 
+			#Atom->'company' copy. 
 			$.->'.'. 
-			#Atom->'com'. 
+			#Atom->'com' copy. 
 			$>->'>'}
 ]
 

@@ -367,9 +367,9 @@ HiRulerBuilderTest >> testTwoMergedForks [
 	"
 	
 	self buildRulerWith: {
-		#c -> #(a b).
-		#b -> #(a).
-		#a -> #().
+		#c -> #(a b) copy.
+		#b -> #(a) copy.
+		#a -> #() copy.
 	}.
 
 	self assertRulerHasNodes: {
