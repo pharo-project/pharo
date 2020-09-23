@@ -17,7 +17,7 @@ SpAbstractListPresenterTest class >> isAbstract [
 SpAbstractListPresenterTest >> setUp [
 
 	super setUp.
-	presenter items: #(10 20 30).
+	presenter items: #(10 20 30) copy.
 ]
 
 { #category : #'tests-activation' }
