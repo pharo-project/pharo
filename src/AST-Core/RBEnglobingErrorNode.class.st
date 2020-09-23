@@ -54,9 +54,8 @@ RBEnglobingErrorNode class >> error: aToken withNodes: aCollection [
 { #category : #visiting }
 RBEnglobingErrorNode >> acceptVisitor: aVisitor [
 
-	^ [ aVisitor visitEnglobingErrorNode: self ]
-		on: Error
-		do: [super acceptVisitor: aVisitor ].
+	^ aVisitor visitEnglobingErrorNode: self
+
 ]
 
 { #category : #accessing }
@@ -74,7 +73,7 @@ RBEnglobingErrorNode >> content: aCollection [
 	content := aCollection
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RBEnglobingErrorNode >> createValue [
 	self value: (String streamContents: [ :s |
 			content do: [ :each | s nextPutAll: each formattedCode. s nextPutAll: String space. ]])
