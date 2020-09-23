@@ -110,7 +110,7 @@ ImageCleaner >> cleanUpForRelease [
 		cleanUp: true except: #() confirming: false.
 		
 	FreeTypeFontProvider current prepareForRelease.	
-	
+	self shareLiterals.
 	HashedCollection rehashAll.		
 	Author reset
 ]
