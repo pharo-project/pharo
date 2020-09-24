@@ -27,7 +27,7 @@ OCASTTranslatorTest >> compilationContext [
 	| context |
 	context := CompilationContext new
 		encoderClass: self encoder;
-		environment: globals;
+		bindings: globals;
 		interactive: true;
 		yourself.
 	fullblocks ifTrue: [ context setOptions: { #optionFullBlockClosure . optimization } ].
