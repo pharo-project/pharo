@@ -268,7 +268,7 @@ RBBlockNode >> match: aNode inContext: aDictionary [
 
 { #category : #accessing }
 RBBlockNode >> methodOrBlockNode [
-	"^ self"
+	^ self
 ]
 
 { #category : #testing }

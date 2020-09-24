@@ -479,7 +479,7 @@ RBMethodNode >> methodNode [
 
 { #category : #accessing }
 RBMethodNode >> methodOrBlockNode [
-	"^ self"
+	^ self
 ]
 
 { #category : #accessing }
