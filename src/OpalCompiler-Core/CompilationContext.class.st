@@ -328,7 +328,7 @@ CompilationContext class >> optionsDescription [
 	
 	(- optionEmbeddSources         'Embedd sources into CompiledMethod instead of storing in .changes')
 	
-	(+ optionReadOnlyLiterals 			'Compiler sets some literals as read-only')
+	(- optionReadOnlyLiterals 			'Compiler sets literals as read-only')
 	(- optionFullBlockClosure 			'Compiler compiles closure creation to use FullBlockClosure instead of BlockClosure')
 	(- optionCleanBlockClosure 			'Compiler compiles closure creation to use CleanBlockClosure instead of FullBlockClosure for clean blocks. Experimental')
 	(- optionLongIvarAccessBytecodes 	'Specific inst var accesses to Maybe context objects')
