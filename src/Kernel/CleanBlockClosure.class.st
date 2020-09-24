@@ -54,6 +54,12 @@ CleanBlockClosure >> outerCode: aCompiledCode [
 	self compiledBlock outerCode: aCompiledCode
 ]
 
+{ #category : #printing }
+CleanBlockClosure >> printOn: aStream [
+
+	aStream nextPutAll: self sourceNode value sourceCode 
+]
+
 { #category : #scanning }
 CleanBlockClosure >> readsField: varIndex [ 
 	^self compiledBlock readsField: varIndex

@@ -20,7 +20,8 @@ BlockClosureTest >> blockWithNonLocalReturn: resultObject [
 { #category : #running }
 BlockClosureTest >> setUp [
 	super setUp.
-	aBlockContext := [100@100 corner: 200@200].
+	"we reference self to force a full block"
+	aBlockContext := [self . 100@100 corner: 200@200].
 	contextOfaBlockContext := thisContext.
 ]
 
