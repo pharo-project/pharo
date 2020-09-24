@@ -10,7 +10,8 @@ Class {
 	#classVars : [
 		'AllowDropFiles',
 		'CursorOwnerWorld',
-		'ExtraWorldList'
+		'ExtraWorldList',
+		'ExtraWorldListMutex'
 	],
 	#classInstVars : [
 		'displayScaleFactor'
@@ -20,7 +21,10 @@ Class {
 
 { #category : #'extra worlds' }
 WorldMorph class >> addExtraWorld: aWorld [
-	ExtraWorldList := self extraWorldList copyWith: aWorld
+	ExtraWorldListMutex critical: [
+		ExtraWorldList := self extraWorldList copyWith: aWorld
+	]
+
 ]
 
 { #category : #accessing }
@@ -90,13 +94,18 @@ WorldMorph class >> displayScaleFactorSettingsOn: aBuilder [
 
 { #category : #'initialize-release' }
 WorldMorph class >> doOneCycle [
-	self extraWorldList do: [:world |
-		world doOneCycle.
+	WorldState doDrawCycleWith: [
+		| extraWorldsToDraw |
+		extraWorldsToDraw := ExtraWorldListMutex critical: [ self extraWorldList ].
+		extraWorldsToDraw do: [:world |
+			world doOneCycle.
+		].
+
+		(self currentWorld isNotNil and: [(extraWorldsToDraw includes: self currentWorld) not]) ifTrue: [
+			self currentWorld doOneCycle.
+		]
 	].
 
-	(self currentWorld isNotNil and: [(self extraWorldList includes: self currentWorld) not]) ifTrue: [
-		self currentWorld doOneCycle.
-	]
 ]
 
 { #category : #'extra worlds' }
@@ -105,11 +114,17 @@ WorldMorph class >> extraWorldList [
 	^ ExtraWorldList
 ]
 
+{ #category : #'initialize-release' }
+WorldMorph class >> initialize [
+	ExtraWorldListMutex := Semaphore forMutualExclusion.
+]
+
 { #category : #'extra worlds' }
 WorldMorph class >> removeExtraWorld: aWorld [
-	ExtraWorldList := self extraWorldList copyWithout: aWorld.
-	CursorOwnerWorld == aWorld ifTrue: [ CursorOwnerWorld := nil ]
-	
+	ExtraWorldListMutex critical: [
+		ExtraWorldList := self extraWorldList copyWithout: aWorld.
+	].
+	CursorOwnerWorld == aWorld ifTrue: [ CursorOwnerWorld := nil ].	
 ]
 
 { #category : #cursor }
@@ -309,15 +324,13 @@ WorldMorph >> displayWorldSafely [
 
 { #category : #'world state' }
 WorldMorph >> doOneCycle [
-	"see the comment in doOneCycleFor:"
-
-	worldState doOneCycleFor: self
+	self doOneCycleNow
 ]
 
 { #category : #'interaction loop' }
 WorldMorph >> doOneCycleNow [
 	"see the comment in doOneCycleNowFor:"
-	worldState doOneCycleNowFor: self.
+	worldState doOneCycleFor: self.
 
 ]
 

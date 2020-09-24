@@ -113,7 +113,9 @@ OSSDL2BackendWindow >> destroy [
 
 	sdl2Window ifNotNil: [ :validHandle | 
 		OSSDL2Driver current unregisterWindowWithId: validHandle windowID.
-		validHandle destroy ].
+		renderer ifNotNil: [ renderer destroy ].
+		validHandle destroy
+	].
 
 	renderer := nil.
 	sdl2Window := nil.
