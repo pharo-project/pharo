@@ -64,9 +64,7 @@ Pragma class >> allNamed: aSymbol from: aSubClass to: aSuperClass [
 		streamContents: [ :stream | 
 			aSubClass
 				withAllSuperclassesDo: [ :class | 
-					self
-						withPragmasIn: class
-						do: [ :pragma | 
+					class pragmasDo: [ :pragma | 
 							pragma selector = aSymbol
 								ifTrue: [ stream nextPut: pragma ] ].
 					aSuperClass = class
@@ -92,9 +90,9 @@ Pragma class >> allNamed: aSymbol in: aClass [
 	"Answer a collection of all pragmas found in methods of aClass whose selector is aSymbol."
 	
 	^ Array streamContents: [ :stream |
-		self withPragmasIn: aClass do: [ :pragma |
+		 aClass pragmasDo: [ :pragma |
 			pragma selector = aSymbol
-				ifTrue: [ stream nextPut: pragma ] ] ].
+				ifTrue: [ stream nextPut: pragma ] ] ]
 ]
 
 { #category : #finding }
@@ -132,11 +130,6 @@ Pragma class >> selector: aSymbol arguments: anArray [
 		selector: aSymbol;
 		arguments: anArray;
 		yourself
-]
-
-{ #category : #private }
-Pragma class >> withPragmasIn: aClass do: aBlock [
-	aClass methodsDo: [ :method | method pragmasDo: aBlock ]
 ]
 
 { #category : #comparing }

@@ -1359,6 +1359,16 @@ Behavior >> postCopy [
 	self methodDict: self methodDict copy
 ]
 
+{ #category : #queries }
+Behavior >> pragmas [
+	^ self methods flatCollect: [ :method | method pragmas ]
+]
+
+{ #category : #queries }
+Behavior >> pragmasDo: aBlock [
+	self methodsDo: [ :method | method pragmasDo: aBlock ]
+]
+
 { #category : #printing }
 Behavior >> printOn: aStream [ 
 	"Refer to the comment in Object|printOn:." 
