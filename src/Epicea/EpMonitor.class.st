@@ -212,8 +212,8 @@ EpMonitor >> behaviorRemoved: aClassRemovedAnnouncement [
 		"Fix category"
 		classRemoved definitionSource: 
 			(classRemoved definitionSource
-				copyReplaceAll: 'category: ', 'Unclassified' printString
-				with: 'category: ', aClassRemovedAnnouncement categoryName printString).
+				copyReplaceAll: 'package: ', 'Unclassified' printString
+				with: 'package: ', aClassRemovedAnnouncement categoryName printString).
 
 		classRemoved name: aClassRemovedAnnouncement classRemoved originalName.
 		classRemoved category: aClassRemovedAnnouncement categoryName.
