@@ -85,6 +85,11 @@ OSWindowGenericRenderer >> getOrCreateStaticTextureFromForm: from [
 	self subclassResponsibility
 ]
 
+{ #category : #clipping }
+OSWindowGenericRenderer >> pixelExtent [
+	^ backendWindow extent
+]
+
 { #category : #rendering }
 OSWindowGenericRenderer >> present [
 	"This should present the content of an internal draw buffer"

@@ -35,7 +35,7 @@ OSWorldRenderer >> activateCursor: aCursor withMask: maskForm [
 { #category : #initialization }
 OSWorldRenderer >> actualScreenSize [
 
-	^ osWindow ifNil: [ 240@120 ] ifNotNil: [ osWindow extent ]
+	^ self windowExtent
 ]
 
 { #category : #initialization }
@@ -218,6 +218,12 @@ OSWorldRenderer >> windowCloseAction [
 { #category : #accessing }
 OSWorldRenderer >> windowCloseAction: anObject [
 	windowCloseAction := anObject
+]
+
+{ #category : #initialization }
+OSWorldRenderer >> windowExtent [
+
+	^ osWindow ifNil: [ 240@120 ] ifNotNil: [ osWindow extent ]
 ]
 
 { #category : #initialization }
