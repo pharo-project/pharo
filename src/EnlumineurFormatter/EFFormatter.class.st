@@ -2121,7 +2121,6 @@ EFFormatter >> visitLiteralNode: aLiteralNode [
 { #category : #visiting }
 EFFormatter >> visitLiteralVariableNode: aLiteralVariableNode [
 	| binding |
-   self halt. "looks like it is not used. Ask around RBLiteralVariableNode"
 	binding := aLiteralVariableNode binding.
 	self writeString: binding key storeString, ' -> '.
 	aLiteralVariableNode binding value isLiteral
