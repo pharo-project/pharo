@@ -485,6 +485,7 @@ Context >> copyTo: aContext [
 
 	| copy |
 	self == aContext ifTrue: [^ nil].
+	self pc. "this is a workaround, see https://github.com/pharo-project/pharo/issues/2949"
 	copy := self copy.
 	self sender ifNotNil: [
 		copy privSender: (self sender copyTo: aContext)].
