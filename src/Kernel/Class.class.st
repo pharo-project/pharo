@@ -889,7 +889,14 @@ Class >> obsolete [
 
 { #category : #'file in/out' }
 Class >> oldDefinition [
-	"Answer a String that defines the receiver."
+	"Answer a String that defines the receiver in the old format using poolDictionaries and category.
+	e.g,  
+	'Object subclass: #Point
+		instanceVariableNames: ''x y''
+		classVariableNames: ''''
+		poolDictionaries: ''''
+		category: ''Kernel-BasicObjects'''
+	"
 
 	| aStream |
 	aStream := (String new: 800) writeStream.
@@ -1142,7 +1149,7 @@ Class >> sharedPoolsDo: aBlockClosure [
 	self sharedPools do: aBlockClosure
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Class >> sharing: poolString [ 
 	"Set up sharedPools. Answer whether recompilation is advisable."
 	| oldPools |
