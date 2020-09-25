@@ -269,7 +269,7 @@ Metaclass >> obsoleteSubclasses [
 
 { #category : #'file in/out' }
 Metaclass >> oldDefinition [
-	"Refer to the comment in ClassDescription|definition.
+	"Refer to the comment of Class. 
 	 This method is for compatibility with Class>>#oldDefinition"
 
 	^ self definition
