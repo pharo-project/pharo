@@ -25,7 +25,7 @@ HiExamplesTest >> exampleMethods [
 HiExamplesTest >> testAllExamples [
 	| exampleMethods |
 	
-	self timeLimit: 1 minute.
+	self timeLimit: 3 minutes.
 	
 	exampleMethods := self exampleMethods.
 	self deny: exampleMethods isEmpty.
