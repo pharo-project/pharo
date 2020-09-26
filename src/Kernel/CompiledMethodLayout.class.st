@@ -21,3 +21,9 @@ CompiledMethodLayout class >> extending: superLayout scope: aScope host: aClass 
 CompiledMethodLayout >> instanceSpecification [
 	 ^ 24
 ]
+
+{ #category : #accessing }
+CompiledMethodLayout >> kindOfSubclass [
+	"not really true but this is what is shows now"
+	^' variableByteSubclass: '
+]

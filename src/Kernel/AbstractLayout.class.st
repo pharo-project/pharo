@@ -129,6 +129,11 @@ AbstractLayout >> isWeak [
 ]
 
 { #category : #accessing }
+AbstractLayout >> kindOfSubclass [
+	^self subclassResponsibility
+]
+
+{ #category : #accessing }
 AbstractLayout >> resolveSlot: aName [
 	^SlotNotFound signalForName: aName
 ]

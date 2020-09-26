@@ -19,3 +19,8 @@ EphemeronLayout class >> extending: superLayout scope: aScope host: aClass [
 EphemeronLayout >> instanceSpecification [
 	^ 5
 ]
+
+{ #category : #accessing }
+EphemeronLayout >> kindOfSubclass [
+	^' ephemeronSubclass: '
+]

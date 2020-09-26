@@ -28,3 +28,8 @@ DoubleWordLayout >> instanceSpecification [
 DoubleWordLayout >> isDoubleWords [
 	^ true
 ]
+
+{ #category : #accessing }
+DoubleWordLayout >> kindOfSubclass [
+	^' variableDoubleWordSubclass: '
+]

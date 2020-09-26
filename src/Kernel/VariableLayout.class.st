@@ -28,3 +28,8 @@ VariableLayout >> instanceSpecification [
 VariableLayout >> isVariable [
 	^ true
 ]
+
+{ #category : #accessing }
+VariableLayout >> kindOfSubclass [
+	^' variableSubclass: '
+]
