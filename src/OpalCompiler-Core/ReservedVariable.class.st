@@ -4,6 +4,9 @@ I model self, thisContext and super
 Class {
 	#name : #ReservedVariable,
 	#superclass : #Variable,
+	#instVars : [
+		'environment'
+	],
 	#classInstVars : [
 		'instance'
 	],
@@ -44,6 +47,11 @@ ReservedVariable >> emitStore: methodBuilder [
 	self shouldNotImplement
 ]
 
+{ #category : #initialization }
+ReservedVariable >> initialize [
+	environment := Smalltalk globals
+]
+
 { #category : #testing }
 ReservedVariable >> isReservedVariable [
 	^true
@@ -69,7 +77,7 @@ ReservedVariable >> printOn: stream [
 { #category : #queries }
 ReservedVariable >> usingMethods [
 	"first call is very slow as it creates all ASTs"
-	^SystemNavigation new allMethods select: [ : method |
+	^environment allMethods select: [ : method |
 		method ast variableNodes anySatisfy: [ :varNode | varNode variable == self]]
 ]
 

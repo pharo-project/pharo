@@ -9,7 +9,7 @@ Class {
 
 { #category : #visiting }
 SuperVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
-		^ aProgramNodeVisitor visitSuperNode: aNode
+	^ aProgramNodeVisitor visitSuperNode: aNode
 ]
 
 { #category : #emitting }
@@ -39,6 +39,6 @@ SuperVariable >> readInContext: aContext [
 SuperVariable >> usingMethods [
 	"as super is just a push Self, this detects real super sends, not accesses to super which 
 	should never happen"
-	^ SystemNavigation new allMethods select: [ :method | 
+	^ environment allMethods select: [ :method | 
 		  method sendsToSuper ]
 ]

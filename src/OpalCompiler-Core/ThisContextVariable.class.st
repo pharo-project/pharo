@@ -37,6 +37,6 @@ ThisContextVariable >> readInContext: aContext [
 
 { #category : #queries }
 ThisContextVariable >> usingMethods [
-	^ SystemNavigation new allMethods select: [ :method | 
+	^ environment allMethods select: [ :method | 
 		  method readsThisContext ]
 ]
