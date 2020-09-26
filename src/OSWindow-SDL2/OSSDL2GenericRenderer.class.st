@@ -192,6 +192,13 @@ OSSDL2GenericRenderer >> mapColorChannel: colorChannel [
 	^ colorChannel * 255 asInteger min: 255 max: 0
 ]
 
+{ #category : #clipping }
+OSSDL2GenericRenderer >> pixelExtent [
+	^ renderer
+		ifNotNil: [ renderer outputExtent ]
+		ifNil: [ super pixelExtent ]
+]
+
 { #category : #rendering }
 OSSDL2GenericRenderer >> present [
 	renderer present

@@ -51,6 +51,11 @@ OSWindowFormRenderer >> newExtent: newExtent [
 	form setExtent: newExtent depth: form depth
 ]
 
+{ #category : #accessing }
+OSWindowFormRenderer >> pixelExtent [
+	^ form ifNotNil: [ form extent ] ifNil: [ 1@1 ]
+]
+
 { #category : #'morphic integration' }
 OSWindowFormRenderer >> updateAreas: allDamage immediate: forceToScreen [
 	"Force all the damage rects to the screen."

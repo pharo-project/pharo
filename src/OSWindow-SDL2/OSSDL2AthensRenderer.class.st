@@ -201,7 +201,8 @@ OSSDL2AthensRenderer >> updateRectangles: allDamage [
 { #category : #'updating screen' }
 OSSDL2AthensRenderer >> validate [
 	self checkSession.
-	(texture isNil or: [ texture isNull ]) ifTrue: [ ^ false ].	
-	backendWindow extent ~= textureExtent ifTrue: [ ^ false ].
+	(texture isNil or: [ texture isNull ]) ifTrue: [ ^ false ].
+	(renderer isNil or: [ renderer isNull ]) ifTrue: [ ^ false ].
+	renderer outputExtent ~= textureExtent ifTrue: [ ^ false ].
 	^ true
 ]
