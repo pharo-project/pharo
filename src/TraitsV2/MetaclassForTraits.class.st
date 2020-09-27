@@ -52,8 +52,8 @@ MetaclassForTraits >> definition [
 			
 		self localSlots ifNotEmpty: [ 
 				s crtab;
-					nextPutAll: 'slots: ';
-					nextPutAll: self slotDefinitionString]]
+					nextPutAll: 'slots: '.
+				self slotDefinitionsOn: s ] ]
 ]
 
 { #category : #testing }
