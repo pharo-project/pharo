@@ -33,3 +33,8 @@ WeakLayout >> isVariable [
 WeakLayout >> isWeak [
 	^ true
 ]
+
+{ #category : #accessing }
+WeakLayout >> kindOfSubclass [
+	^' weakSubclass: '
+]

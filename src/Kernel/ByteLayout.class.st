@@ -34,3 +34,8 @@ ByteLayout >> instanceSpecification [
 ByteLayout >> isBytes [
 	^ true
 ]
+
+{ #category : #accessing }
+ByteLayout >> kindOfSubclass [
+	^' variableByteSubclass: '
+]

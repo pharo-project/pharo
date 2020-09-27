@@ -31,3 +31,8 @@ ImmediateLayout >> initialize [
 ImmediateLayout >> instanceSpecification [
 	^ 7
 ]
+
+{ #category : #accessing }
+ImmediateLayout >> kindOfSubclass [
+	^' immediateSubclass: '
+]

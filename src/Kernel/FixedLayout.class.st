@@ -28,3 +28,8 @@ FixedLayout >> instanceSpecification [
 FixedLayout >> isFixedLayout [
 	^true
 ]
+
+{ #category : #accessing }
+FixedLayout >> kindOfSubclass [
+	^' subclass: '
+]

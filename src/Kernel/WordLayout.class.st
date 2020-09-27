@@ -34,3 +34,8 @@ WordLayout >> instanceSpecification [
 WordLayout >> isWords [
 	^ true
 ]
+
+{ #category : #accessing }
+WordLayout >> kindOfSubclass [
+	^' variableWordSubclass: '
+]

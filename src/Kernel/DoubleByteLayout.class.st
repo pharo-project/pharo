@@ -34,3 +34,8 @@ DoubleByteLayout >> instanceSpecification [
 DoubleByteLayout >> isDoubleBytes [
 	^ true
 ]
+
+{ #category : #accessing }
+DoubleByteLayout >> kindOfSubclass [
+	^' variableDoubleByteSubclass: '
+]
