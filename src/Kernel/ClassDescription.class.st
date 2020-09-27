@@ -332,11 +332,9 @@ ClassDescription >> classVariablesDottedString [
 ClassDescription >> classVariablesOn: aStream [
 	"Write my class variable names separated by spaces on the argument."
 	
-	aStream nextPut: $'.
 	self classVarNames 
 		do: [ :each | aStream nextPutAll: each ]
-		separatedBy: [ aStream space ].
-	aStream nextPut: $'.
+		separatedBy: [ aStream space ]
 ]
 
 { #category : #printing }
@@ -599,6 +597,62 @@ ClassDescription >> definition [
 	
 ]
 
+{ #category : #printing }
+ClassDescription >> definitionWithoutSlots [
+
+	| stream |
+	stream := (String new: 800) writeStream.
+	superclass
+		ifNotNil: [ stream nextPutAll: superclass name ]
+		ifNil: [ stream nextPutAll: 'ProtoObject' ].
+	
+	stream
+		nextPutAll: self kindOfSubclass;
+		store: self name.
+		
+	self hasTraitComposition ifTrue: [ 
+		stream
+			crtab;
+			nextPutAll: 'uses: ';
+			nextPutAll: self traitCompositionString ].
+	
+	stream
+		crtab;
+		nextPutAll: 'instanceVariableNames: '''.
+	self instanceVariablesOn: stream.
+	stream nextPut: $'.
+	
+	stream
+		crtab;
+		nextPutAll: 'classVariableNames: '''.
+	self classVariablesOn: stream.
+	stream nextPut: $'.
+	
+	self sharedPools isEmpty ifFalse: [ 
+		stream 
+			crtab;
+			nextPutAll: 'poolDictionaries: '''.
+		self sharedPoolsOn: stream.
+		stream nextPut: $' ].
+	
+	stream
+		crtab;
+		nextPutAll: 'package: ';
+		store: self category asString.
+		
+	superclass ifNil: [ 
+		stream
+			nextPutAll: '.';
+			cr.
+		stream 
+			nextPutAll: self name.
+		stream
+			space;
+			nextPutAll: 'superclass: nil' ].
+
+	^ stream contents
+]
+
 { #category : #private }
 ClassDescription >> errorCategoryName [
 	self error: 'Category name must be a String'
@@ -710,11 +764,10 @@ ClassDescription >> instanceSide [
 ClassDescription >> instanceVariablesOn: aStream [
 	"Write my instance variable names separated by spaces on the argument."
 	
-	aStream nextPut: $'.
 	self localSlots
 		do: [ :each | aStream nextPutAll: each name asString]
 		separatedBy: [ aStream space ].
-	aStream nextPut: $'.
+
 ]
 
 { #category : #printing }
@@ -1075,6 +1128,21 @@ ClassDescription >> sharedPoolStringOn: aStream [
 { #category : #'pool variable' }
 ClassDescription >> sharedPools [
 	^ OrderedCollection new
+]
+
+{ #category : #printing }
+ClassDescription >> sharedPoolsOn: aStream [
+	"Answer a string of my shared pool names separated by spaces."
+
+	self sharedPools 
+		do: [ :each |
+				aStream nextPutAll: (self environment 
+					keyAtIdentityValue: each 
+					ifAbsent: [ 
+						each isObsolete
+							ifTrue: [ each name ] "obsolete classes should be visible"
+							ifFalse: [ 'private' ] ]) ] "if class is from different environment, mark it as private"
+			separatedBy: [ aStream space ] 
 ]
 
 { #category : #'pool variable' }

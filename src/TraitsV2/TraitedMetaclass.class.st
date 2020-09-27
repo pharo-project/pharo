@@ -95,8 +95,9 @@ TraitedMetaclass >> definition [
 			ifFalse: [  
 						strm
 							crtab;
-							nextPutAll: 'instanceVariableNames: '.
-						self instanceVariablesOn: strm ]
+							nextPutAll: 'instanceVariableNames: '''.
+						self instanceVariablesOn: strm.
+						strm nextPut: $' ]
 			ifTrue: [ 
 						strm
 							crtab;
