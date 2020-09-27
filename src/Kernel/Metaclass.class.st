@@ -149,8 +149,9 @@ Metaclass >> definitionWithoutSlots [
 		stream print: self.
 		stream
 			crtab;
-			nextPutAll: 'instanceVariableNames: ';
-			store: self instanceVariablesString ]
+			nextPutAll: 'instanceVariableNames: '''.
+		self instanceVariablesOn: stream.
+		stream nextPut: $' ]
 ]
 
 { #category : #accessing }

@@ -550,8 +550,9 @@ Class >> definitionWithoutSlots [
 	
 	stream
 		crtab;
-		nextPutAll: 'instanceVariableNames: '.
+		nextPutAll: 'instanceVariableNames: '''.
 	self instanceVariablesOn: stream.
+	stream nextPut: $'.
 	
 	stream
 		crtab;
