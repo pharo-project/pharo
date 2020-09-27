@@ -16,13 +16,11 @@ ReSendsUnknownMessageToGlobalRule class >> uniqueIdentifierName [
 
 { #category : #running }
 ReSendsUnknownMessageToGlobalRule >> basicCheck: aNode [
-	| messageReceiver |
 	aNode isMessage ifFalse: [ ^ false ].
 
-	messageReceiver := aNode receiver.
-	messageReceiver isVariable ifFalse: [ ^ false ].
-
-	^ ((Smalltalk globals at: messageReceiver name asSymbol ifAbsent: [ ^ false ]) respondsTo: aNode selector) not
+	aNode receiver isLiteralVariable ifFalse: [ ^ false ].
+	aNode receiver isUndeclaredVariable ifTrue: [ ^false ].
+	^ (aNode receiver variable value respondsTo: aNode selector) not
 ]
 
 { #category : #accessing }
