@@ -313,13 +313,35 @@ ClassDescription >> classThatDefinesInstVarNamed: instVarName [
 ]
 
 { #category : #printing }
+ClassDescription >> classVariablesDottedOn: aStream [
+	"Write my class variable names separated by dots on the argument."
+	
+	self classVarNames 
+		do: [ :each | aStream nextPutAll: each ]
+		separatedBy: [ aStream space ]
+]
+
+{ #category : #printing }
+ClassDescription >> classVariablesDottedString [
+	"Answer a string of my class variable names separated by spaces."
+
+	^ String streamContents: [ :stream | self classVariablesDottedOn: stream ]
+]
+
+{ #category : #printing }
+ClassDescription >> classVariablesOn: aStream [
+	"Write my class variable names separated by spaces on the argument."
+	
+	self classVarNames 
+		do: [ :each | aStream nextPutAll: each ]
+		separatedBy: [ aStream space ]
+]
+
+{ #category : #printing }
 ClassDescription >> classVariablesString [
 	"Answer a string of my class variable names separated by spaces."
 
-	^String streamContents: [ :stream | 
-		self classVarNames 
-			do: [ :each | stream nextPutAll: each ]
-			separatedBy: [ stream space ] ]
+	^ String streamContents: [ :stream | self classVariablesOn: stream ]
 ]
 
 { #category : #'accessing class hierarchy' }
@@ -575,6 +597,62 @@ ClassDescription >> definition [
 	
 ]
 
+{ #category : #printing }
+ClassDescription >> definitionWithoutSlots [
+
+	| stream |
+	stream := (String new: 800) writeStream.
+	superclass
+		ifNotNil: [ stream nextPutAll: superclass name ]
+		ifNil: [ stream nextPutAll: 'ProtoObject' ].
+	
+	stream
+		nextPutAll: self kindOfSubclass;
+		store: self name.
+		
+	self hasTraitComposition ifTrue: [ 
+		stream
+			crtab;
+			nextPutAll: 'uses: ';
+			nextPutAll: self traitCompositionString ].
+	
+	stream
+		crtab;
+		nextPutAll: 'instanceVariableNames: '''.
+	self instanceVariablesOn: stream.
+	stream nextPut: $'.
+	
+	stream
+		crtab;
+		nextPutAll: 'classVariableNames: '''.
+	self classVariablesOn: stream.
+	stream nextPut: $'.
+	
+	self sharedPools isEmpty ifFalse: [ 
+		stream 
+			crtab;
+			nextPutAll: 'poolDictionaries: '''.
+		self sharedPoolsOn: stream.
+		stream nextPut: $' ].
+	
+	stream
+		crtab;
+		nextPutAll: 'package: ';
+		store: self category asString.
+		
+	superclass ifNil: [ 
+		stream
+			nextPutAll: '.';
+			cr.
+		stream 
+			nextPutAll: self name.
+		stream
+			space;
+			nextPutAll: 'superclass: nil' ].
+
+	^ stream contents
+]
+
 { #category : #private }
 ClassDescription >> errorCategoryName [
 	self error: 'Category name must be a String'
@@ -683,13 +761,20 @@ ClassDescription >> instanceSide [
 ]
 
 { #category : #printing }
+ClassDescription >> instanceVariablesOn: aStream [
+	"Write my instance variable names separated by spaces on the argument."
+	
+	self localSlots
+		do: [ :each | aStream nextPutAll: each name asString]
+		separatedBy: [ aStream space ].
+
+]
+
+{ #category : #printing }
 ClassDescription >> instanceVariablesString [
 	"Answer a string of my instance variable names separated by spaces."
 
-	^String streamContents: [ :stream |
-		self localSlots
-			do: [ :each | stream nextPutAll: each name ]
-			separatedBy: [ stream space ] ]
+	^ String streamContents: [ :stream | self instanceVariablesOn: stream ]
 ]
 
 { #category : #'accessing parallel hierarchy' }
@@ -1002,6 +1087,22 @@ ClassDescription >> selectorsInProtocol: aName [
 	^ aColl asArray sort
 ]
 
+{ #category : #printing }
+ClassDescription >> sharedPoolDottedString [
+	"Answer a string of my shared pools separated by spaces."
+
+	^String streamContents: [ :stream | 
+		self sharedPoolStringOn: stream ]
+]
+
+{ #category : #printing }
+ClassDescription >> sharedPoolDottedStringOn: aStream [
+	"Write my shared pools separated by dots on argument, aStream."
+
+	self flag: #toFix. "this is different from the sharedPoolsString because sharedPoolsString handles well the undeclared"
+	self sharedPools do:  [ :p | aStream nextPutAll: p name ] separatedBy: [ aStream nextPutAll: ' . ' ]
+]
+
 { #category : #'pool variable' }
 ClassDescription >> sharedPoolOfVarNamed: aString [
 	"Only classes may have shared pools"
@@ -1009,9 +1110,39 @@ ClassDescription >> sharedPoolOfVarNamed: aString [
 	^ nil
 ]
 
+{ #category : #printing }
+ClassDescription >> sharedPoolString [
+	"Answer a string of my shared pools separated by spaces."
+
+	^String streamContents: [ :stream | 
+		self sharedPoolStringOn: stream ]
+]
+
+{ #category : #printing }
+ClassDescription >> sharedPoolStringOn: aStream [
+	"Write my shared pools separated by dots on argument, aStream."
+
+	self sharedPools do:  [ :p | aStream nextPutAll: p name ] separatedBy: [ aStream nextPutAll: ' . ' ]
+]
+
 { #category : #'pool variable' }
 ClassDescription >> sharedPools [
 	^ OrderedCollection new
+]
+
+{ #category : #printing }
+ClassDescription >> sharedPoolsOn: aStream [
+	"Answer a string of my shared pool names separated by spaces."
+
+	self sharedPools 
+		do: [ :each |
+				aStream nextPutAll: (self environment 
+					keyAtIdentityValue: each 
+					ifAbsent: [ 
+						each isObsolete
+							ifTrue: [ each name ] "obsolete classes should be visible"
+							ifFalse: [ 'private' ] ]) ] "if class is from different environment, mark it as private"
+			separatedBy: [ aStream space ] 
 ]
 
 { #category : #'pool variable' }
@@ -1032,20 +1163,31 @@ ClassDescription >> sharedPoolsString [
 
 { #category : #printing }
 ClassDescription >> slotDefinitionString [
-	"Answer a string that contains an executable description of my Slots"
-
-	"^self slots ifNotEmpty: [self slots asString] ifEmpty: ['{}']"
+	"Answer a string that represents an executable description of my Slots"
 	
-	^String streamContents: [ :str | | useFull |
-		str nextPutAll: '{ '.
-		self localSlots do: [:slot |
-				str nextPutAll: slot definitionString.
-				useFull := slot needsFullDefinition]				
-			separatedBy: [ 
-				str nextPutAll: ' . '.  
-				useFull ifTrue: [ str cr;tab;tab;tab;tab ]].
-		str nextPutAll: ' }'. ]
+	^String streamContents: [ :str | self slotDefinitionsOn: str]
+]
 
+{ #category : #printing }
+ClassDescription >> slotDefinitionsOn: aStream [
+	"Write on the arg aStream an executable description of my Slots on the argument, aStream"
+
+	| useFull |
+	aStream nextPutAll: '{ '.
+	self localSlots
+		do: [ :slot | 
+			slot definitionOn: aStream.
+			useFull := slot needsFullDefinition ]
+		separatedBy: [ 
+			aStream nextPutAll: ' . '.
+			useFull ifTrue: [ 
+				aStream
+					cr;
+					tab;
+					tab;
+					tab;
+					tab ] ].
+	aStream nextPutAll: ' }'
 ]
 
 { #category : #slots }

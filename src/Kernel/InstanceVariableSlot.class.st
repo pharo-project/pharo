@@ -36,11 +36,11 @@ InstanceVariableSlot class >> resetIvarSlots [
 ]
 
 { #category : #printing }
-InstanceVariableSlot >> definitionString [
+InstanceVariableSlot >> definitionOn: aStream [
 	"non special globals are defined by the symbol"
 	^self needsFullDefinition
-		ifTrue: [ super definitionString ]
-		ifFalse: [ self name printString ]
+		ifTrue: [ super definitionOn: aStream ]
+		ifFalse: [ self name printOn: aStream ]
 
 ]
 

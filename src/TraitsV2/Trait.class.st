@@ -201,8 +201,9 @@ Trait >> definition [
 			nextPutAll: self traitComposition traitCompositionExpression; 
 			cr.
 		self classLayout visibleSlots ifNotEmpty: [ 
-			s tab; nextPutAll: ' slots: ';
-			nextPutAll: self slotDefinitionString; cr. ].
+			s tab; nextPutAll: ' slots: '.
+			self slotDefinitionsOn: s.
+			s cr ].
 		s tab; nextPutAll: ' package: ';
 			nextPutAll: self category asString printString
 	]

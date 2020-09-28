@@ -95,13 +95,14 @@ TraitedMetaclass >> definition [
 			ifFalse: [  
 						strm
 							crtab;
-							nextPutAll: 'instanceVariableNames: ';
-							store: self instanceVariablesString]
+							nextPutAll: 'instanceVariableNames: '''.
+						self instanceVariablesOn: strm.
+						strm nextPut: $' ]
 			ifTrue: [ 
 						strm
 							crtab;
-							nextPutAll: 'slots: ';
-							nextPutAll: self slotDefinitionString]]
+							nextPutAll: 'slots: '.
+						self slotDefinitionsOn: strm ] ]
 ]
 
 { #category : #initialization }

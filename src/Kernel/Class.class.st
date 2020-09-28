@@ -501,8 +501,8 @@ Class >> definitionWithSlots [
 	
 	stream 
 		crtab; 
-		nextPutAll: 'slots: ';
-		nextPutAll: self slotDefinitionString.
+		nextPutAll: 'slots: '.
+	self slotDefinitionsOn: stream.
 		
 	stream 
 		crtab; 
@@ -541,19 +541,24 @@ Class >> definitionWithoutSlots [
 	stream
 		nextPutAll: self kindOfSubclass;
 		store: self name.
+		
 	self hasTraitComposition ifTrue: [ 
 		stream
 			crtab;
 			nextPutAll: 'uses: ';
 			nextPutAll: self traitCompositionString ].
+	
 	stream
 		crtab;
-		nextPutAll: 'instanceVariableNames: ';
-		store: self instanceVariablesString.
+		nextPutAll: 'instanceVariableNames: '''.
+	self instanceVariablesOn: stream.
+	stream nextPut: $'.
+	
 	stream
 		crtab;
-		nextPutAll: 'classVariableNames: ';
-		store: self classVariablesString.
+		nextPutAll: 'classVariableNames: '''.
+	self classVariablesOn: stream.
+	stream nextPut: $'.
 	
 	poolString = '' ifFalse: [ 
 		stream 
