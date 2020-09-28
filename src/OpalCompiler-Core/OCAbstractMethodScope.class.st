@@ -88,7 +88,7 @@ OCAbstractMethodScope >> copiedVars [
 { #category : #'temp vars - copying' }
 OCAbstractMethodScope >> copyEscapingReads [
 
-	self tempVars
+	self tempVars values 
 		select: [ :each | each isEscapingRead ]
 		thenDo: [ :each | self addCopyingTemp: each ]
 ]
@@ -175,7 +175,7 @@ OCAbstractMethodScope >> methodScope [
 { #category : #'temp vars - vector' }
 OCAbstractMethodScope >> moveEscapingWritesToTempVector [
 
-	self tempVars
+	self tempVars values
 		select: [ :each | each isEscapingWrite ]
 		thenDo: [ :each | self moveToVectorTemp: each ]
 ]
