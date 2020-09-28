@@ -27,3 +27,8 @@ CompiledMethodLayout >> kindOfSubclass [
 	"not really true but this is what is shows now"
 	^' variableByteSubclass: '
 ]
+
+{ #category : #accessing }
+CompiledMethodLayout >> typeOfClass [
+	^#compiledMethod
+]

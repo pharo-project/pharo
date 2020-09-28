@@ -39,3 +39,8 @@ WordLayout >> isWords [
 WordLayout >> kindOfSubclass [
 	^' variableWordSubclass: '
 ]
+
+{ #category : #accessing }
+WordLayout >> typeOfClass [
+	^#words
+]
