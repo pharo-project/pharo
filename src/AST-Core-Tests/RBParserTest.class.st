@@ -994,11 +994,9 @@ RBParserTest >> testMessageWithFaultySelectorIsFaulty [
 { #category : #testIntervals }
 RBParserTest >> testMethodNodeEndAtTheEndOfTheString [
 	| tree |
-	"Expressions have an odd way of handling their stop position. The string is reformated to give a new source corresponding to the method #noMethod.
-	 It seems the method node take this new source into account instead of the original one."
 	tree := (self parserClass parseExpression: 'foo kung foo. 1+2+3. #''alabama''.  ').
 	self assert: tree parent source equals: 'foo kung foo. 1+2+3. #''alabama''.  '.
-	self assert: tree parent stop equals: tree parent newSource size.
+	self assert: tree parent stop equals: tree parent sourceCode size.
 	
 	tree := (self parserClass parseMethod: 'foo kung foo. 1+2+3. #''alabama''.  ').
 	self assert: tree source equals: 'foo kung foo. 1+2+3. #''alabama''.  '.
