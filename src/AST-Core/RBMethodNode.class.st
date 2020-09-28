@@ -708,7 +708,7 @@ RBMethodNode >> statements: aCollection [
 
 { #category : #accessing }
 RBMethodNode >> stop [
-	^(self sourceCode ifNotNil: [self sourceCode] ifNil: [ self formattedCode ]) size
+	^(self sourceCode ifNotNil: [:src | src] ifNil: [ self formattedCode ]) size
 ]
 
 { #category : #accessing }
