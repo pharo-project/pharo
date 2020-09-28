@@ -7,9 +7,7 @@ Class {
 	#name : #KMPragmaKeymapBuilder,
 	#superclass : #Object,
 	#instVars : [
-		'pragmaKeywords',
-		'model',
-		'pragmaCollector'
+		'model'
 	],
 	#classVars : [
 		'UniqueInstace'
@@ -17,17 +15,20 @@ Class {
 	#category : #'Keymapping-Pragmas'
 }
 
-{ #category : #private }
-KMPragmaKeymapBuilder class >> event: anEvent [
-	anEvent method ifNil: [ ^self ].
-	((anEvent method pragmas collect: [:aprag | aprag selector]) includesAnyOf: self pragmas )
-		ifTrue: [ self uniqueInstance reset ]
-]
-
 { #category : #'instance creation' }
 KMPragmaKeymapBuilder class >> initialize [
-	"KMPragmaKeymapBuilder initialize"
-	self uniqueInstance reset.
+	<script>
+	self uniqueInstance reset
+]
+
+{ #category : #private }
+KMPragmaKeymapBuilder class >> methodAnnouncementReceived: anAnnouncement [
+	| method |
+	method := anAnnouncement methodAffected.
+	method ifNil: [ ^self ].
+	method hasPragma ifFalse: [ ^self ].
+	(method pragmas anySatisfy: [:pragma | self pragmas includes: pragma selector] )
+		ifTrue: [ self uniqueInstance reset ]
 ]
 
 { #category : #'instance creation' }
@@ -42,7 +43,7 @@ KMPragmaKeymapBuilder class >> registerInterestToSystemAnnouncement [
 		unsubscribe: self.
 	SystemAnnouncer uniqueInstance weak 
 		when: MethodAdded, MethodModified, MethodRemoved 
-		send: #event: 
+		send: #methodAnnouncementReceived: 
 		to: self.
 ]
 
@@ -66,7 +67,7 @@ KMPragmaKeymapBuilder >> builder [
 KMPragmaKeymapBuilder >> collectRegistrations [
 	| menu |
 	menu := PragmaMenuAndShortcutRegistration model: self.
-	self pragmaCollector
+	self pragmas
 		do: [ :prg | 
 			prg methodClass instanceSide
 				perform: prg methodSelector
@@ -75,13 +76,6 @@ KMPragmaKeymapBuilder >> collectRegistrations [
 						platform: prg arguments;
 						yourself) ].
 	self interpretRegistration: menu
-]
-
-{ #category : #initialization }
-KMPragmaKeymapBuilder >> initialize [
-	super initialize.
-	pragmaKeywords := OrderedCollection new.
-	
 ]
 
 { #category : #private }
@@ -120,40 +114,29 @@ KMPragmaKeymapBuilder >> model: anObject [
 	model := anObject
 ]
 
-{ #category : #'registrations handling' }
-KMPragmaKeymapBuilder >> pragmaCollector [
-	"Return an up-to-date pragmaCollector which contains all pragmas which keyword is self pragmaKeyword"
-
-	^ pragmaCollector
-		ifNil: [ pragmaCollector := PragmaCollector
-				selectors: self pragmaKeywords
-				filter: [ :prg | prg methodSelector numArgs = 1 ].
-			self pragmaKeywords isEmptyOrNil 
-				ifFalse: [ pragmaCollector reset ].
-			pragmaCollector whenChangedSend: #reset to: self.
-			pragmaCollector ]
-]
-
 { #category : #accessing }
 KMPragmaKeymapBuilder >> pragmaKeywords [
-	"Returns the pragmas keyword used to select pragmas (see #pragmaCollector)"
+	"Returns the pragmas keyword used to select pragmas"
 	^  self class pragmas
 ]
 
-{ #category : #initialization }
+{ #category : #'registrations handling' }
+KMPragmaKeymapBuilder >> pragmas [
+
+	"Return all pragmas which keyword is self pragmaKeyword"
+
+	^ (self pragmaKeywords flatCollect: [ :each | Pragma allNamed: each ]) 
+		  select: [ :prg | prg methodSelector numArgs = 1 ]
+]
+
+{ #category : #dependencies }
 KMPragmaKeymapBuilder >> release [
-	self pragmaCollector unsubscribe: self.
-	self pragmaCollector announcer initialize. "Hack because the announcer is not garbage collected."
-	pragmaCollector := nil.
 	model := nil.
-	self releaseActionMap. "we are not sure if we need it"
 	super release.
 	
 ]
 
 { #category : #initialization }
 KMPragmaKeymapBuilder >> reset [
-	pragmaCollector := nil.
-	"KeymapManager default: KeymapManager new."
-	self collectRegistrations.
+	self collectRegistrations
 ]
