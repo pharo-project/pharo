@@ -27,8 +27,6 @@ SHRBTextStylerTest >> style: aText [
 		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
 		requestor: nil;
 		parse.				
-	ast doSemanticAnalysis.
-
 	styler style: aText ast: ast.
 	
 	^ ast

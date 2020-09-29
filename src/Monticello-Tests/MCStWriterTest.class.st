@@ -21,7 +21,7 @@ MCStWriterTest >> assertChunkIsWellFormed: chunk [
 		class: UndefinedObject;
 		noPattern: true;
 		failBlock:  [self assert: false];
-		compile.
+		compileDoit.
 ]
 
 { #category : #asserting }
