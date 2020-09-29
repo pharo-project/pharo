@@ -33,3 +33,8 @@ VariableLayout >> isVariable [
 VariableLayout >> kindOfSubclass [
 	^' variableSubclass: '
 ]
+
+{ #category : #accessing }
+VariableLayout >> typeOfClass [
+	^#variable
+]

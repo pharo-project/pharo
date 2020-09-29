@@ -39,3 +39,8 @@ ByteLayout >> isBytes [
 ByteLayout >> kindOfSubclass [
 	^' variableByteSubclass: '
 ]
+
+{ #category : #accessing }
+ByteLayout >> typeOfClass [
+	^#bytes
+]

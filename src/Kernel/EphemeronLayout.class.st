@@ -24,3 +24,8 @@ EphemeronLayout >> instanceSpecification [
 EphemeronLayout >> kindOfSubclass [
 	^' ephemeronSubclass: '
 ]
+
+{ #category : #accessing }
+EphemeronLayout >> typeOfClass [
+	^#ephemeron
+]
