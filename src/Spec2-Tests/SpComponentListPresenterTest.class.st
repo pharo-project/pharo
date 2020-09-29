@@ -142,7 +142,7 @@ SpComponentListPresenterTest >> testSetSortingBlockBeforeItems [
 	count := 0.
 	presenter whenSortingBlockChangedDo: [ :sortFunction | count := count + 1 ].
 	presenter sortingBlock: [ :each | each label asNumber ] ascending.
-	presenter items: #(3 8 1 0).
+	presenter items: #(3 8 1 0) copy.
 	self assert: count equals: 1.
 	self assert: (presenter model at: 1) label equals: '0'
 ]
@@ -153,7 +153,7 @@ SpComponentListPresenterTest >> testSortingBlock [
 	
 	count := 0.
 	presenter whenSortingBlockChangedDo: [ :sortFunction | count := count + 1 ].
-	presenter items: #(3 8 1 0).
+	presenter items: #(3 8 1 0) copy.
 	presenter sortingBlock: [ :each | each label asNumber ] ascending.
 	self assert: count equals: 1.
 	self assert: (presenter model at: 1) label equals: '0'
