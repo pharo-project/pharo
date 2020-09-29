@@ -3,7 +3,7 @@ A simple CompasableModel to add new packages to the current package dependencies
 It implies to be open from a PDPackageAnalyzerWindowPackageDependencies instance. 
 "
 Class {
-	#name : #DAAddPackageModel,
+	#name : #DAAddPackagePresenter,
 	#superclass : #ComposablePresenter,
 	#instVars : [
 		'packageList',
@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #specs }
-DAAddPackageModel class >> defaultSpec [
+DAAddPackagePresenter class >> defaultSpec [
 	<spec: #default>
 	^ SpecLayout composed
 		newColumn:
@@ -26,7 +26,7 @@ DAAddPackageModel class >> defaultSpec [
 ]
 
 { #category : #protocol }
-DAAddPackageModel >> actionOnAddPackage [
+DAAddPackagePresenter >> actionOnAddPackage [
 	| relationGraph packagesToAdd |
 	buttonAddPackage
 		action: [ 
@@ -43,7 +43,7 @@ DAAddPackageModel >> actionOnAddPackage [
 ]
 
 { #category : #actions }
-DAAddPackageModel >> buildList [
+DAAddPackagePresenter >> buildList [
 	| packagesAdded packagesNotAdded |
 	packagesAdded := self packageAnalyzerTreeModel seenPackagesName.
 	packagesNotAdded := self systemPackages.
@@ -52,22 +52,22 @@ DAAddPackageModel >> buildList [
 ]
 
 { #category : #accessing }
-DAAddPackageModel >> buttonAddPackage [
+DAAddPackagePresenter >> buttonAddPackage [
 	^ buttonAddPackage
 ]
 
 { #category : #api }
-DAAddPackageModel >> initialExtent [
+DAAddPackagePresenter >> initialExtent [
 	^ (600@600)
 ]
 
 { #category : #initialization }
-DAAddPackageModel >> initializePresenter [
+DAAddPackagePresenter >> initializePresenter [
 	self actionOnAddPackage
 ]
 
 { #category : #initialization }
-DAAddPackageModel >> initializeWidgets [
+DAAddPackagePresenter >> initializeWidgets [
 	
 	packageList := self newList
 		multiSelection: true;
@@ -81,37 +81,37 @@ DAAddPackageModel >> initializeWidgets [
 ]
 
 { #category : #'instance creation' }
-DAAddPackageModel >> open [
+DAAddPackagePresenter >> open [
 	^ self openWithSpec
 ]
 
 { #category : #accessing }
-DAAddPackageModel >> packageAnalyzerTreeModel [
+DAAddPackagePresenter >> packageAnalyzerTreeModel [
 	^ packageAnalyzerTreeModel
 ]
 
 { #category : #accessing }
-DAAddPackageModel >> packageAnalyzerTreeModel: aPackageAnalyzerTreeModel [
+DAAddPackagePresenter >> packageAnalyzerTreeModel: aPackageAnalyzerTreeModel [
 	packageAnalyzerTreeModel := aPackageAnalyzerTreeModel.
 	self buildList
 ]
 
 { #category : #accessing }
-DAAddPackageModel >> packageList [
+DAAddPackagePresenter >> packageList [
 	^ packageList
 ]
 
 { #category : #initialization }
-DAAddPackageModel >> selectedItemsFromPackageList [
+DAAddPackagePresenter >> selectedItemsFromPackageList [
 	^ self packageList selectedItems
 ]
 
 { #category : #accessing }
-DAAddPackageModel >> systemPackages [
+DAAddPackagePresenter >> systemPackages [
 	^ (RPackageOrganizer default packages collect: [ :package | package packageName asString ] )asSortedCollection
 ]
 
 { #category : #protocol }
-DAAddPackageModel >> title [
+DAAddPackagePresenter >> title [
 	^ 'Choose packages to add'
 ]

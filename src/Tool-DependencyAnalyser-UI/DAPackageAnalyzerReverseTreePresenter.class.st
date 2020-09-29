@@ -4,8 +4,8 @@ A PDPackageAnalyzerReverseTreeModel shows all users from a set of packages. Also
 The window is initialized with a relation graph of package dependencies, with all the dependencies already compute.
 "
 Class {
-	#name : #DAPackageAnalyzerReverseTreeModel,
-	#superclass : #DAPackageTreeModel,
+	#name : #DAPackageAnalyzerReverseTreePresenter,
+	#superclass : #DAPackageTreePresenter,
 	#instVars : [
 		'relationGraph',
 		'packageLabel'
@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #specs }
-DAPackageAnalyzerReverseTreeModel class >> defaultSpec [
+DAPackageAnalyzerReverseTreePresenter class >> defaultSpec [
 	<spec: #default>
 	^ SpecLayout composed
 		newColumn:
@@ -29,14 +29,14 @@ DAPackageAnalyzerReverseTreeModel class >> defaultSpec [
 ]
 
 { #category : #'instance creation' }
-DAPackageAnalyzerReverseTreeModel class >> onRelationGraph: aRelationGraph [
+DAPackageAnalyzerReverseTreePresenter class >> onRelationGraph: aRelationGraph [
 	^ self new
 		initializeWithRelationGraph: aRelationGraph;
 		yourself
 ]
 
 { #category : #private }
-DAPackageAnalyzerReverseTreeModel >> buildRoots [
+DAPackageAnalyzerReverseTreePresenter >> buildRoots [
 	| collectionOfWrapper |
 	collectionOfWrapper := relationGraph allDependentPackagesFromSeenPackages
 		collect: [ :package | package asDependentPackageWrapperOn: relationGraph ].
@@ -46,7 +46,7 @@ DAPackageAnalyzerReverseTreeModel >> buildRoots [
 ]
 
 { #category : #initialization }
-DAPackageAnalyzerReverseTreeModel >> initializePresenter [
+DAPackageAnalyzerReverseTreePresenter >> initializePresenter [
 	super initializePresenter.
 	
 	tree
@@ -58,20 +58,20 @@ DAPackageAnalyzerReverseTreeModel >> initializePresenter [
 ]
 
 { #category : #initialization }
-DAPackageAnalyzerReverseTreeModel >> initializeWidgets [
+DAPackageAnalyzerReverseTreePresenter >> initializeWidgets [
 	super initializeWidgets.
 	
 	packageLabel := self newLabel label: 'Analysis of packages'.
 ]
 
 { #category : #initialization }
-DAPackageAnalyzerReverseTreeModel >> initializeWithRelationGraph: aRelationGraph [
+DAPackageAnalyzerReverseTreePresenter >> initializeWithRelationGraph: aRelationGraph [
 	relationGraph := aRelationGraph.
 	self buildRoots.
 ]
 
 { #category : #private }
-DAPackageAnalyzerReverseTreeModel >> nodesFor: anItemList [
+DAPackageAnalyzerReverseTreePresenter >> nodesFor: anItemList [
 	^ anItemList collect: 
 		[ :each | 
 		DAReversePackageNode new
@@ -83,28 +83,28 @@ DAPackageAnalyzerReverseTreeModel >> nodesFor: anItemList [
 ]
 
 { #category : #accessing }
-DAPackageAnalyzerReverseTreeModel >> packageLabel [
+DAPackageAnalyzerReverseTreePresenter >> packageLabel [
 	^ packageLabel
 ]
 
 { #category : #actions }
-DAPackageAnalyzerReverseTreeModel >> refresh [
+DAPackageAnalyzerReverseTreePresenter >> refresh [
 		self isOpen ifTrue: [  
 			self relationGraph refreshGraph.
 			self buildRoots].
 ]
 
 { #category : #accessing }
-DAPackageAnalyzerReverseTreeModel >> relationGraph [
+DAPackageAnalyzerReverseTreePresenter >> relationGraph [
 	^ relationGraph
 ]
 
 { #category : #api }
-DAPackageAnalyzerReverseTreeModel >> title [
+DAPackageAnalyzerReverseTreePresenter >> title [
 	^ 'Package Dependencies Reverse Analysis'
 ]
 
 { #category : #private }
-DAPackageAnalyzerReverseTreeModel >> updatePackageLabel [
+DAPackageAnalyzerReverseTreePresenter >> updatePackageLabel [
 	self packageLabel label: 'Analysis of ' , self tree roots size asString , ' package(s)'
 ]
