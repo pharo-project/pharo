@@ -4,7 +4,7 @@ I am an abstract base class for class refactorings.
 All that I provide is the class name, my subclass refactorings are operating on, and a instance creation method
 for setting the class name and an initial namespace model.
 
-RBClassRefactoring model:className: 
+Check method `RBClassRefactoring class>>#model:className:` 
 
 
 "
@@ -23,9 +23,9 @@ RBClassRefactoring class >> className: aName [
 ]
 
 { #category : #'instance creation' }
-RBClassRefactoring class >> model: aRBSmalltalk className: aName [ 
-	^(self new)
-		model: aRBSmalltalk;
+RBClassRefactoring class >> model: aRBModel className: aName [ 
+	^ self new
+		model: aRBModel;
 		className: aName;
 		yourself
 ]
