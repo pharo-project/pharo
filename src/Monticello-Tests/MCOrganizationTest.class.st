@@ -16,7 +16,7 @@ MCOrganizationTest >> testLoadAndUnload [
 { #category : #tests }
 MCOrganizationTest >> testReordering [
 	| dec cats newCats |
-	dec := MCOrganizationDefinition categories: #(A B C).
+	dec := MCOrganizationDefinition categories: #(A B C) copy.
 	cats := #(X Y B Z C A Q).
 	newCats := dec reorderCategories: cats original: #(B C A).
 	self assert: newCats asArray equals: #(X Y A B C Z Q)
@@ -34,7 +34,7 @@ MCOrganizationTest >> testReorderingWithNoCategoriesInVersion [
 { #category : #tests }
 MCOrganizationTest >> testReorderingWithRemovals [
 	| dec cats newCats |
-	dec := MCOrganizationDefinition categories: #(A B C).
+	dec := MCOrganizationDefinition categories: #(A B C) copy.
 	cats := #(X Y B Z C A Q).
 	newCats := dec reorderCategories: cats original: #(Y B C A Q).
 	self assert: newCats asArray equals: #(X A B C Z)

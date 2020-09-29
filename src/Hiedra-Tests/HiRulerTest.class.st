@@ -32,7 +32,7 @@ HiRulerTest >> testTwoMergedForks [
 	"
 
 	| ruler c b a |
-	ruler := HiRuler withValues: #(c b a).
+	ruler := HiRuler withValues: #(c b a) copy.
 
 	c := ruler addNodeFor: #c.
 	a := ruler addNodeFor: #a.
