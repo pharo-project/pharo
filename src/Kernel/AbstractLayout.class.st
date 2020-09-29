@@ -56,11 +56,6 @@ AbstractLayout >> fieldSize [
 	^ 0
 ]
 
-{ #category : #finalization }
-AbstractLayout >> finalize [
-	self allSlotsDo: [ :aSlot | aSlot finalize: self ]
-]
-
 { #category : #testing }
 AbstractLayout >> hasFields [
 	^ false

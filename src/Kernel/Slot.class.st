@@ -189,11 +189,6 @@ Slot >> ensureSlotInitializationFor: aClass [
 	Author useAuthor: 'Generated' during: [ aClass compile: source classified: 'initialization' ]
 ]
 
-{ #category : #finalization }
-Slot >> finalize: layout [
-	"nothing to do here"
-]
-
 { #category : #comparing }
 Slot >> hasSameDefinitionAs: otherSlot [
 
