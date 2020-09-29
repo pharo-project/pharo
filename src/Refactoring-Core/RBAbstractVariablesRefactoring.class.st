@@ -21,9 +21,9 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBAbstractVariablesRefactoring class >> model: aRBSmalltalk abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection [ 
+RBAbstractVariablesRefactoring class >> model: aRBModel abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection [ 
 	^self 
-		model: aRBSmalltalk
+		model: aRBModel
 		abstractVariablesIn: aBRProgramNode
 		from: fromBehavior
 		toAll: behaviorCollection

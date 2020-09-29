@@ -10,16 +10,24 @@ And an option for requesting the new method selector.
 For all selected classes a method implementing the original method is created, and if the original code uses some references to self, a parameter needs to be added to provided the former implementor.
 
 For example, moving the method #isBlack from class Color to its instvar #rgb for the type ""Integer"" creates a method 
+
+
+```
 Integer>>#isBlack
  ^ self = 0
-
+```
 and changes Colors implementation from: 
+```
 Color>>#isBlack
    ^ rgb = 0
-to: 
+```
+
+to:
+
+``` 
 Color>>#isBlack
    ^ rgb isBlack
-
+```
 "
 Class {
 	#name : #RBMoveMethodRefactoring,
