@@ -2,7 +2,7 @@
 A PDPackageTreeModel is an abstract class. It's a the superclass of the two tree model vizualisations (package dependency and cycle detection).
 "
 Class {
-	#name : #DAPackageTreeModel,
+	#name : #DAPackageTreePresenter,
 	#superclass : #ComposablePresenter,
 	#instVars : [
 		'tree',
@@ -14,12 +14,12 @@ Class {
 }
 
 { #category : #private }
-DAPackageTreeModel >> actionOnRefresh [
+DAPackageTreePresenter >> actionOnRefresh [
 	buttonRefresh action: [ self refresh ]
 ]
 
 { #category : #actions }
-DAPackageTreeModel >> addDependenciesOptionsFor: selectedNodes on: menuGroup [
+DAPackageTreePresenter >> addDependenciesOptionsFor: selectedNodes on: menuGroup [
 	| namesOfSelected |
 	(self areClassToDependencyNodes: selectedNodes)
 		ifTrue: [ 
@@ -32,7 +32,7 @@ DAPackageTreeModel >> addDependenciesOptionsFor: selectedNodes on: menuGroup [
 ]
 
 { #category : #actions }
-DAPackageTreeModel >> addPackageOptionsFor: selectedNodes on: menuGroup [
+DAPackageTreePresenter >> addPackageOptionsFor: selectedNodes on: menuGroup [
 	| selectedPackageNames |
 	(self arePackageNodes: selectedNodes)
 		ifTrue: [ 
@@ -52,60 +52,60 @@ DAPackageTreeModel >> addPackageOptionsFor: selectedNodes on: menuGroup [
 ]
 
 { #category : #testing }
-DAPackageTreeModel >> areClassToDependencyNodes: aCollectionOfItem [
+DAPackageTreePresenter >> areClassToDependencyNodes: aCollectionOfItem [
 	^ aCollectionOfItem allSatisfy: [ :node |  node isClassToDependencyNode ].
 ]
 
 { #category : #testing }
-DAPackageTreeModel >> arePackageNodes: aCollectionOfItem [
+DAPackageTreePresenter >> arePackageNodes: aCollectionOfItem [
 	^ aCollectionOfItem allSatisfy: [ :node |  node isPackageNode ].
 ]
 
 { #category : #initialization }
-DAPackageTreeModel >> browseReference [
+DAPackageTreePresenter >> browseReference [
 	self selectedItemFromTree isReferenceNode ifTrue: [ 
 			self selectedItemFromTree browseReference
 		 ]
 ]
 
 { #category : #accessing }
-DAPackageTreeModel >> browser [
+DAPackageTreePresenter >> browser [
 	^ browser
 ]
 
 { #category : #private }
-DAPackageTreeModel >> buildRoots [
+DAPackageTreePresenter >> buildRoots [
 	self subclassResponsibility.
 ]
 
 { #category : #accessing }
-DAPackageTreeModel >> buttonRefresh [
+DAPackageTreePresenter >> buttonRefresh [
 	^ buttonRefresh
 ]
 
 { #category : #actions }
-DAPackageTreeModel >> close [
+DAPackageTreePresenter >> close [
 	open := false.
 	browser windowIsClosing
 ]
 
 { #category : #protocol }
-DAPackageTreeModel >> defaultFormat [
+DAPackageTreePresenter >> defaultFormat [
 	^ #png
 ]
 
 { #category : #testing }
-DAPackageTreeModel >> ifGraphVizAbsent: aBlock [
+DAPackageTreePresenter >> ifGraphVizAbsent: aBlock [
 	Smalltalk at: #GVGraphViz ifAbsent: aBlock
 ]
 
 { #category : #initialization }
-DAPackageTreeModel >> initializePresenter [
+DAPackageTreePresenter >> initializePresenter [
 	self actionOnRefresh
 ]
 
 { #category : #initialization }
-DAPackageTreeModel >> initializeWidgets [
+DAPackageTreePresenter >> initializeWidgets [
 	tree := self newTree
 		multiSelection: true;
 		bindKeyCombination: $b meta toAction: [ self selectedItemFromTree spawnNewBrowser ];
@@ -120,12 +120,12 @@ DAPackageTreeModel >> initializeWidgets [
 ]
 
 { #category : #testing }
-DAPackageTreeModel >> isOpen [
+DAPackageTreePresenter >> isOpen [
 	^ open
 ]
 
 { #category : #actions }
-DAPackageTreeModel >> loadMenuFor: item in: aMenu [
+DAPackageTreePresenter >> loadMenuFor: item in: aMenu [
 	| menuGroup selectedNodes |
 	selectedNodes := self selectedItemsFromTree.
 	menuGroup := MenuGroupPresenter new.
@@ -139,13 +139,13 @@ DAPackageTreeModel >> loadMenuFor: item in: aMenu [
 ]
 
 { #category : #'instance creation' }
-DAPackageTreeModel >> open [
+DAPackageTreePresenter >> open [
 	open := true.
 	^ self openWithSpec 
 ]
 
 { #category : #actions }
-DAPackageTreeModel >> openTreeFor: namesOfSelected [
+DAPackageTreePresenter >> openTreeFor: namesOfSelected [
 	| treeToOpen relationGraph |
 	treeToOpen := TreePresenter new.
 	relationGraph := self tree owner relationGraph.
@@ -163,27 +163,27 @@ DAPackageTreeModel >> openTreeFor: namesOfSelected [
 ]
 
 { #category : #actions }
-DAPackageTreeModel >> refresh [
+DAPackageTreePresenter >> refresh [
 	self subclassResponsibility 
 ]
 
 { #category : #protocol }
-DAPackageTreeModel >> saveGraphAndOpenWith: graphvizGenerator [
+DAPackageTreePresenter >> saveGraphAndOpenWith: graphvizGenerator [
 	graphvizGenerator saveDotFileAndGenerateForType: self defaultFormat.
 	^ graphvizGenerator openWith: self defaultFormat
 ]
 
 { #category : #actions }
-DAPackageTreeModel >> selectedItemFromTree [
+DAPackageTreePresenter >> selectedItemFromTree [
 	^ self tree selectedItem
 ]
 
 { #category : #accessing }
-DAPackageTreeModel >> selectedItemsFromTree [
+DAPackageTreePresenter >> selectedItemsFromTree [
 	^ self tree selectedItems
 ]
 
 { #category : #accessing }
-DAPackageTreeModel >> tree [
+DAPackageTreePresenter >> tree [
 	^ tree
 ]

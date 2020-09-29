@@ -27,12 +27,12 @@ DAPackageAnalyzerPackageDependenciesWindow class >> system [
 
 { #category : #initialization }
 DAPackageAnalyzerPackageDependenciesWindow >> initializeWithPackageNames: aCollection [
-	packageAnalyzerTreeModel := DAPackageAnalyzerTreeModel onPackagesNamed: aCollection.
+	packageAnalyzerTreeModel := DAPackageAnalyzerTreePresenter onPackagesNamed: aCollection.
 	self buildandAddAllMorph 
 ]
 
 { #category : #initialization }
 DAPackageAnalyzerPackageDependenciesWindow >> initializeWithRelationGraph: aRelationGraph [
-	packageAnalyzerTreeModel := DAPackageAnalyzerReverseTreeModel onRelationGraph: aRelationGraph.
+	packageAnalyzerTreeModel := DAPackageAnalyzerReverseTreePresenter onRelationGraph: aRelationGraph.
 	self buildandAddAllMorph 
 ]
