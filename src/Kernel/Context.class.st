@@ -1344,11 +1344,22 @@ Context >> printDetails: stream [
 
 { #category : #printing }
 Context >> printOn: aStream [
+	(closureOrNil isNotNil and: [closureOrNil isClean]) ifTrue: 
+		[ | selector |
+			selector := self selector ifNil: [ self compiledCode defaultSelector ].
+			aStream 
+			 print: closureOrNil;
+			 nextPutAll: ' in ';
+			 nextPutAll: self methodClass name;
+			 nextPutAll: '>>';
+			 nextPutAll: selector.
+			 ^self].
+	
 	self outerContext
 		ifNil:
 			[ | selector class mclass |
-			self compiledCode == nil
-				ifTrue: [ ^ super printOn: aStream ].
+			self compiledCode
+				ifNil: [ ^ super printOn: aStream ].
 			class := self receiver class.
 			mclass := self methodClass.
 			selector := self selector ifNil: [ self compiledCode defaultSelector ].
@@ -1366,7 +1377,8 @@ Context >> printOn: aStream [
 					(self tempAt: 1) selector printOn: aStream ] ]
 		ifNotNil:
 			[ :outerContext | 
-			aStream nextPutAll: closureOrNil printString , ' in '.
+			closureOrNil printOn: aStream.
+			aStream nextPutAll: ' in '.
 			outerContext printOn: aStream ]
 ]
 

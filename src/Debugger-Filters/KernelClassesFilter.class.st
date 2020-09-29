@@ -47,5 +47,9 @@ KernelClassesFilter >> kernelClassesToExclude [
 
 { #category : #testing }
 KernelClassesFilter >> shouldDisplay: aContext [
-	^ (kernelClasses includes: aContext receiver class) not
+	"Clean blocks do not know the receiver, but they statically know the executed method 
+	(which might be in a superclass)"
+	^ aContext receiver 
+		ifNil: [ 	(kernelClasses includes: aContext method methodClass) not ]
+		ifNotNil: [ (kernelClasses includes: aContext receiver class) not ]
 ]
