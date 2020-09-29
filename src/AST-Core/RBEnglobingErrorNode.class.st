@@ -70,7 +70,8 @@ RBEnglobingErrorNode >> content [
 
 { #category : #accessing }
 RBEnglobingErrorNode >> content: aCollection [
-	content := aCollection
+	content := aCollection.
+	aCollection do: [:each | each parent: self ]
 ]
 
 { #category : #initialization }
