@@ -13,6 +13,7 @@ Class {
 { #category : #'tests - testing' }
 ProtoObjectTest >> testFastPointersTo [
 	| myObject myArray myObject2 allObjects |
+	self timeLimit: 1 minute.
 	myObject := Object new.
 	myObject2 := Object new.
 	myArray := {myObject.
