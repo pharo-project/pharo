@@ -67,6 +67,11 @@ Behavior >> evaluate: aString [
 ]
 
 { #category : #'*OpalCompiler-Core' }
+Behavior >> lookupVar: aName [
+	^ self bindingOf: aName
+]
+
+{ #category : #'*OpalCompiler-Core' }
 Behavior >> recompile [
 	self compileAll
 ]

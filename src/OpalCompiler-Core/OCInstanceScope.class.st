@@ -10,6 +10,11 @@ Class {
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
+{ #category : #'instance creation' }
+OCInstanceScope class >> for: aClass [
+	^ self new slots: aClass allSlots; outerScope: aClass; yourself
+]
+
 { #category : #acessing }
 OCInstanceScope >> allTemps [
 	^#()
@@ -48,8 +53,8 @@ OCInstanceScope >> lookupVar: name [
 
 { #category : #lookup }
 OCInstanceScope >> lookupVarForDeclaration: name [
-	"This is a version of #lookupVar: that skips the OCRequestorScope"
-	^ vars at: name ifAbsent: [self outerScope lookupVarForDeclaration: name]
+	"This is a version of #lookupVar: that skips the OCRequestorScope, from here on it is the same as lookupVar:"
+	^ self lookupVar: name
 ]
 
 { #category : #scope }
