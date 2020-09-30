@@ -80,7 +80,6 @@ OCASTCheckerTest >> testExampleSelf [
 OCASTCheckerTest >> testExampleSelfReceiver [
 	| ast |
 	ast := (OCOpalExamples>>#exampleSelfReceiver) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast body statements first receiver isSelfVariable.
 ]
 
@@ -101,7 +100,6 @@ OCASTCheckerTest >> testExampleSuper [
 OCASTCheckerTest >> testExampleSuperReceiver [
 	| ast |
 	ast := (OCOpalExamples>>#exampleSuperReceiver) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast body statements first receiver isSuperVariable
 ]
 
@@ -257,8 +255,7 @@ OCASTCheckerTest >> testSemanticAnalysisOnNonMethodNode [
 	thisContext.
 	(OCOpalExamples >> #exampleReturn42)}
 		do: [ :object | 
-			ast := object sourceNode.
-			ast doSemanticAnalysis ].
+			ast := object sourceNode].
 	#('1' 'true' 'nil' '1 + 2' '^1' '1 + 2. 2 + 3' '#(1 true)' '{ #foo . 1 }' '1+2;+3')
 		do: [ :source | 
 			ast := RBParser parseExpression: source.

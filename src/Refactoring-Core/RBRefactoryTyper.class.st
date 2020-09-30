@@ -169,7 +169,6 @@ RBRefactoryTyper >> executeSearch: searcher [
 					| parseTree |
 					methodName := sel.
 					parseTree := each parseTreeFor: sel.
-					parseTree doSemanticAnalysis.
 					parseTree notNil ifTrue: [searcher executeTree: parseTree]]]
 ]
 
