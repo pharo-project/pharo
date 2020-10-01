@@ -301,6 +301,11 @@ Slot >> readInContext: aContext [
 ]
 
 { #category : #accessing }
+Slot >> scope [
+	^ definingClass
+]
+
+{ #category : #accessing }
 Slot >> scope: aScope [
 	"ignored, subclasses can override to analyze the scope they are to be installed in"
 ]
