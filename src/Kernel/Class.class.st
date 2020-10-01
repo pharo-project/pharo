@@ -1409,6 +1409,36 @@ Class >> variableByteSubclass: t instanceVariableNames: f classVariableNames: d 
 				environment: self environment ]
 ]
 
+{ #category : #'subclass creation - variableByte' }
+Class >> variableDoubleByteSubclass: className instanceVariableNames: instVarNameList  classVariableNames: classVarNames package: cat [
+
+	^ self classInstaller
+		make: [ :builder | 
+			builder
+				superclass: self;
+				name: className;
+				layoutClass: DoubleByteLayout;
+				slots: instVarNameList asSlotCollection;
+				sharedVariablesFromString: classVarNames;
+				category: cat;
+				environment: self environment ]
+]
+
+{ #category : #'subclass creation - variableByte' }
+Class >> variableDoubleWordSubclass: className instanceVariableNames: instVarNameList  classVariableNames: classVarNames package: cat [
+
+	^ self classInstaller
+		make: [ :builder | 
+			builder
+				superclass: self;
+				name: className;
+				layoutClass: DoubleWordLayout;
+				slots: instVarNameList asSlotCollection;
+				sharedVariablesFromString: classVarNames;
+				category: cat;
+				environment: self environment ]
+]
+
 { #category : #'subclass creation - deprecated' }
 Class >> variableSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames category: cat [
 	"Added to allow for a simplified subclass creation experience. "

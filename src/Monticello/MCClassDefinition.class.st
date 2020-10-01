@@ -353,7 +353,7 @@ MCClassDefinition >> kindOfSubclass [
 	type = #immediate ifTrue: [ ^ ' immediateSubclass: ' ].
 	type = #ephemeron ifTrue: [ ^ ' ephemeronSubclass: ' ].
 	"hack to support user defined layouts"
-	(Smalltalk hasClassNamed: type) ifTrue: [ ^type asString].
+	(Smalltalk hasClassNamed: type) ifTrue: [ ^(Smalltalk globals at: type) new kindOfSubclass].
 	self error: 'Unrecognized class type'
 ]
 
