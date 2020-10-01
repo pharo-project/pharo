@@ -356,7 +356,7 @@ MCClassDefinition >> kindOfSubclass [
 	type = #DoubleWordLayout ifTrue: [ ^' variableDoubleWordSubclass: ' ].
 	"hack to support user defined layouts"
 	(Smalltalk hasClassNamed: type) ifTrue: [ ^type asString].
-	self error: 'Unrecognized class type'
+	self error: 'Unrecognized class type', type asString
 ]
 
 { #category : #installing }
