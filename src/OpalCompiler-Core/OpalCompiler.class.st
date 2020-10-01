@@ -322,30 +322,9 @@ OpalCompiler >> compilationContextClass: aClass [
 
 { #category : #'public access' }
 OpalCompiler >> compile [
-	| cm |
-	[ 	[	self parse.
-			self callPlugins.  
-		] 	on: ReparseAfterSourceEditing 
-			do: 
-			[  	:notification | 
-				self source: notification newSource. 
-				notification retry. 
-			]. 
-		cm := compilationContext optionEmbeddSources
-			ifTrue: [ ast generateWithSource ]
-			ifFalse: [ast generate: self compilationContext compiledMethodTrailer   ]
-		
-	]	on: SyntaxErrorNotification 
-		do: [ :exception | 
-			self compilationContext requestor
-                ifNotNil: [
-						self compilationContext requestor 
-							notify: exception errorMessage , ' ->'
-							at: exception location
-							in: exception errorCode.
-                    ^ self compilationContext failBlock value ]
-                ifNil: [ exception pass ]].
-	^cm
+	^compilationContext noPattern 
+		ifTrue: [ self compileDoit ]
+		ifFalse: [ self compileMethod ]
 ]
 
 { #category : #'public access' }
@@ -374,6 +353,34 @@ OpalCompiler >> compileDoit [
 						in: exception errorCode.
 					^ self compilationContext failBlock value ]
 				ifNil: [ exception pass ] ].
+	^cm
+]
+
+{ #category : #'public access' }
+OpalCompiler >> compileMethod [
+	| cm |
+	[ 	[	self parse.
+			self callPlugins.  
+		] 	on: ReparseAfterSourceEditing 
+			do: 
+			[  	:notification | 
+				self source: notification newSource. 
+				notification retry. 
+			]. 
+		cm := compilationContext optionEmbeddSources
+			ifTrue: [ ast generateWithSource ]
+			ifFalse: [ast generate: self compilationContext compiledMethodTrailer   ]
+		
+	]	on: SyntaxErrorNotification 
+		do: [ :exception | 
+			self compilationContext requestor
+                ifNotNil: [
+						self compilationContext requestor 
+							notify: exception errorMessage , ' ->'
+							at: exception location
+							in: exception errorCode.
+                    ^ self compilationContext failBlock value ]
+                ifNil: [ exception pass ]].
 	^cm
 ]
 
