@@ -668,6 +668,14 @@ RGBehavior >> localSelectors [
 	^ self localMethods collect: [ :each | each name ]
 ]
 
+{ #category : #lookup }
+RGBehavior >> lookupVar: aName [
+	^ self layout 
+		resolveSlot: aName asSymbol 
+		ifFound: [:var | var] 
+		ifNone: [self bindingOf: aName]
+]
+
 { #category : #resolving }
 RGBehavior >> makeResolved [
 

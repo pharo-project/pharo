@@ -106,3 +106,8 @@ RGLayout >> isWordLayout [
 
 	^ false
 ]
+
+{ #category : #accessing }
+RGLayout >> resolveSlot: aName ifFound: foundBlock ifNone: exceptionBlock [
+	^exceptionBlock value
+]
