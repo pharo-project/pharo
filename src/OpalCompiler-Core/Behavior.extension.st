@@ -68,7 +68,10 @@ Behavior >> evaluate: aString [
 
 { #category : #'*OpalCompiler-Core' }
 Behavior >> lookupVar: aName [
-	^ self bindingOf: aName
+	^ self classLayout 
+		resolveSlot: aName asSymbol 
+		ifFound: [:var | var] 
+		ifNone: [self bindingOf: aName]
 ]
 
 { #category : #'*OpalCompiler-Core' }

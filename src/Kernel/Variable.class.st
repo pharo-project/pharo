@@ -308,6 +308,11 @@ Variable >> removeProperty: propName ifAbsent: aBlock [
 	^ property
 ]
 
+{ #category : #accessing }
+Variable >> scope [
+	^self subclassResponsibility
+]
+
 { #category : #queries }
 Variable >> usingMethods [
 	self subclassResponsibility

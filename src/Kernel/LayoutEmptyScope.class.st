@@ -39,6 +39,11 @@ LayoutEmptyScope >> flatten [
 ]
 
 { #category : #testing }
+LayoutEmptyScope >> hasBindingThatBeginsWith: aString [
+	^false
+]
+
+{ #category : #testing }
 LayoutEmptyScope >> hasFields [
 	^ false
 ]

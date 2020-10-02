@@ -129,6 +129,14 @@ RGPointerLayout >> removeSlot: anRGSlot [
 		self backend forBehavior removeSlot: anRGSlot from: self ].
 ]
 
+{ #category : #accessing }
+RGPointerLayout >> resolveSlot: aName ifFound: foundBlock ifNone: noneBlock [
+
+	self allSlots do: [ :slot | 
+		slot name == aName ifTrue: [ ^ foundBlock cull: slot ] ].
+	^ noneBlock value
+]
+
 { #category : #'queries - slots' }
 RGPointerLayout >> slots [
 

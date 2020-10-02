@@ -74,6 +74,11 @@ ReservedVariable >> printOn: stream [
 	stream nextPutAll: self name
 ]
 
+{ #category : #accessing }
+ReservedVariable >> scope [
+	^ environment
+]
+
 { #category : #queries }
 ReservedVariable >> usingMethods [
 	"first call is very slow as it creates all ASTs"

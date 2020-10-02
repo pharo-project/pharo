@@ -12,7 +12,7 @@ Class {
 
 { #category : #'instance creation' }
 OCInstanceScope class >> for: aClass [
-	^ self new slots: aClass allSlots; outerScope: aClass; yourself
+	^ self new outerScope: aClass; yourself
 ]
 
 { #category : #acessing }
@@ -67,11 +67,4 @@ OCInstanceScope >> newMethodScope [
 OCInstanceScope >> scopeLevel [
 	"For debugging we print a counter for all scopes, starting from the Method as 1, so we are 0"
 	^ 0
-]
-
-{ #category : #initializing }
-OCInstanceScope >> slots: slotCollection [
-
-	slotCollection do: [ :slot |
-		vars at: slot name put: slot]
 ]
