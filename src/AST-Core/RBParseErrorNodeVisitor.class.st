@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #accessing }
+RBParseErrorNodeVisitor >> visitEnglobingErrorNode: aNode [
+	self visitParseErrorNode: aNode
+]
+
+{ #category : #accessing }
 RBParseErrorNodeVisitor >> visitParseErrorNode: aNode [
 	self visitBlock value: aNode
 ]
