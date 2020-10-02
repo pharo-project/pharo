@@ -474,6 +474,7 @@ RBParser >> parseCascadeMessage [
 { #category : #'private-parsing' }
 RBParser >> parseCascadeMessageWithReceiver: receiver [
 	
+	| errorNode |
 	currentToken isIdentifier 
 		ifTrue: [ ^ self parseUnaryMessageWith: receiver].
 		
@@ -486,7 +487,16 @@ RBParser >> parseCascadeMessageWithReceiver: receiver [
 	currentToken isBinary ifTrue: [ 
 		^ self parseBinaryMessageWith: receiver ].
 	
-	^ self parserError: 'Message expected'
+	"At this point we know this is an invalid cascade.
+	Many things can happen next: it could be a closer parenthesis or bracket, the end of the stream, a non-identifier or an empty cascade.
+	For now, if it is a closer return an empty error node.
+	If it is not a closer, consume it"
+	errorNode := self parserError: 'Cascade message expected'.
+	(currentToken value ~= $.
+		and: [ ('])};' includes: currentToken value) not
+			and: [ currentToken isEOF not ] ] )
+				ifTrue: [ self step ].
+	^ errorNode
 ]
 
 { #category : #'private-classes' }
