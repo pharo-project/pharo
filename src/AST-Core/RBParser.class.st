@@ -1092,7 +1092,7 @@ RBParser >> patchLiteralArrayToken [
 				value: currentToken value asSymbol
 				start: currentToken start
 				stop: currentToken stop
-				source: (source copyFrom: currentToken start to: currentToken stop).
+				source: currentToken value asString.
 ]
 
 { #category : #private }
