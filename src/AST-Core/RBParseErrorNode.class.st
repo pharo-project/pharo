@@ -44,6 +44,13 @@ RBParseErrorNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitParseErrorNode: self
 ]
 
+{ #category : #'as yet unclassified' }
+RBParseErrorNode >> arguments [
+	
+	"A parse error node has no arguments"
+	^ #()
+]
+
 { #category : #converting }
 RBParseErrorNode >> asSyntaxErrorNotification [
 	^SyntaxErrorNotification new
@@ -90,6 +97,12 @@ RBParseErrorNode >> isParseError [
 	^true
 ]
 
+{ #category : #'as yet unclassified' }
+RBParseErrorNode >> isUnary [
+	
+	^ false
+]
+
 { #category : #accessing }
 RBParseErrorNode >> name [
 	"be polymorphic with variable nodes"
@@ -100,6 +113,18 @@ RBParseErrorNode >> name [
 { #category : #testing }
 RBParseErrorNode >> needsParenthesis [
 	^ false
+]
+
+{ #category : #'as yet unclassified' }
+RBParseErrorNode >> selector [
+	"A parse error node has an empty selector"
+	^ #''
+]
+
+{ #category : #'as yet unclassified' }
+RBParseErrorNode >> selectorParts [
+	
+	^ #()
 ]
 
 { #category : #accessing }

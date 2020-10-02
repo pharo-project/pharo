@@ -464,28 +464,29 @@ RBParser >> parseCascadeMessage [
 			newMessage := nil.
 			self step.
 			self saveCommentsDuring:[
-			newMessage := currentToken isIdentifier 
-						ifTrue: [self parseUnaryMessageWith: receiver]
-						ifFalse: 
-							[currentToken isKeyword 
-								ifTrue: [self parseKeywordMessageWith: receiver]
-								ifFalse: 
-									[| temp |
-									currentToken isLiteralToken ifTrue: [self patchNegativeLiteral].
-			"Upon encountering an error in the cascade, it stores an error node as it would store a message node and continues the parsing of the cascade.
-			 This can allow the possibility of fixing the cascade simply by replacing the false node by another."
-									currentToken isBinary ifFalse: 
-										[ temp := self parserError: 'Message expected'.
-										  (currentToken isSpecial and: [currentToken value = $;]) ifFalse: [self step.].
-										  temp.]
-									ifTrue: 
-										[temp := self parseBinaryMessageWith: receiver.
-										 temp == receiver ifTrue: 
-											[ self parserError: 'Message expected']. temp]]]].
-					
+				newMessage := self parseCascadeMessageWithReceiver: receiver ].
+				
 		self addCommentsTo: newMessage.
 		messages add: newMessage].
 	^self cascadeNodeClass messages: messages semicolons: semicolons
+]
+
+{ #category : #'private-parsing' }
+RBParser >> parseCascadeMessageWithReceiver: receiver [
+	
+	currentToken isIdentifier 
+		ifTrue: [ ^ self parseUnaryMessageWith: receiver].
+		
+	currentToken isKeyword 
+		ifTrue: [ ^ self parseKeywordMessageWith: receiver].
+
+	currentToken isLiteralToken ifTrue: [ self patchNegativeLiteral ].
+	"Upon encountering an error in the cascade, it stores an error node as it would store a message node and continues the parsing of the cascade.
+	This can allow the possibility of fixing the cascade simply by replacing the false node by another."
+	currentToken isBinary ifTrue: [ 
+		^ self parseBinaryMessageWith: receiver ].
+	
+	^ self parserError: 'Message expected'
 ]
 
 { #category : #'private-classes' }
