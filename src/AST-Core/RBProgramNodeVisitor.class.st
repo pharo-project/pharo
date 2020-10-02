@@ -170,6 +170,12 @@ RBProgramNodeVisitor >> visitThisContextNode: aThisContextNode [
 ]
 
 { #category : #visiting }
+RBProgramNodeVisitor >> visitUnreachableStatement: anUnreachableStatement [
+	
+	^ self visitEnglobingErrorNode: anUnreachableStatement
+]
+
+{ #category : #visiting }
 RBProgramNodeVisitor >> visitVariableNode: aVariableNode [
 	^ aVariableNode
 ]

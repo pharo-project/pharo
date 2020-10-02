@@ -16,3 +16,9 @@ RBParseErrorNodeVisitor >> visitEnglobingErrorNode: aNode [
 RBParseErrorNodeVisitor >> visitParseErrorNode: aNode [
 	self visitBlock value: aNode
 ]
+
+{ #category : #accessing }
+RBParseErrorNodeVisitor >> visitUnreachableStatement: aNode [
+
+	self visitEnglobingErrorNode: aNode
+]
