@@ -998,40 +998,10 @@ RBParser >> parseStatementList: pragmaBoolean into: sequenceNode until: aBlock [
 
 { #category : #'private-parsing' }
 RBParser >> parseStatements: pragmaBoolean [
-	^ self parseStatements: pragmaBoolean into: self sequenceNodeClass new
-]
-
-{ #category : #'private-parsing' }
-RBParser >> parseStatements: pragmaBoolean into: aSequenceNode [
-	| temps leftBar rightBar errorNode startToken |
-	temps := OrderedCollection new.
-	leftBar := rightBar := nil.
-	currentToken isBinary 
-		ifTrue: 
-			[currentToken value = #| 
-				ifTrue: 
-					[ startToken := currentToken.
-					leftBar := currentToken start.
-					self step.
-					temps := self parseTemps.
-					(currentToken isBinary and: [currentToken value = #|]) 
-						ifFalse: [ errorNode :=  self parseEnglobingError: temps with: startToken errorMessage: '''|'' expected'.
-									 aSequenceNode addFaultyNode: errorNode.
-									 temps := OrderedCollection new.
-									 leftBar := nil.
-								    ]
-						ifTrue: [ rightBar := currentToken start ].
-					self step]
-				ifFalse: 
-					[currentToken value = #'||' 
-						ifTrue: 
-							[rightBar := (leftBar := currentToken start) + 1.
-							self step]]].
-	^self parseStatementList: pragmaBoolean
-		into: (aSequenceNode 
-				leftBar: leftBar
-				temporaries: temps
-				rightBar: rightBar)
+	^ self
+		parseStatements: pragmaBoolean
+		into: self sequenceNodeClass new
+		until: [ false "No extra condition, just until the end of the stream" ]
 ]
 
 { #category : #'private-parsing' }
