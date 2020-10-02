@@ -5,16 +5,6 @@ Class {
 }
 
 { #category : #defaults }
-ErrorNodeStyler >> borderColor [ 
-	^Color red
-]
-
-{ #category : #'for demo' }
-ErrorNodeStyler >> demo [
-	"statements mes; 2; isNil".
-]
-
-{ #category : #defaults }
 ErrorNodeStyler >> highlightColor [
 	^nil
 ]
@@ -38,4 +28,23 @@ ErrorNodeStyler >> segmentMorphClass [
 { #category : #visiting }
 ErrorNodeStyler >> shouldStyleNode: aNode [
 	^ aNode isParseError
+]
+
+{ #category : #visiting }
+ErrorNodeStyler >> visitEnglobingErrorNode: anEnglobingNode [
+
+	| conf |
+	conf := RubConfigurationChange new.
+	conf configurationBlock: [ :text | 
+		| r |
+		r := self segmentMorphClass from: anEnglobingNode stop to: anEnglobingNode stop + 1.
+		text addSegment: r.
+		r label: (self iconLabelBlock: anEnglobingNode).
+		r icon: (self iconFor: anEnglobingNode).
+		r iconBlock: (self iconBlock: anEnglobingNode).
+		r color: self highlightColor.
+		r borderColor: self borderColor ].
+	textModel announce: conf.
+
+	anEnglobingNode content do: [ :each | self visitNode: each ]
 ]
