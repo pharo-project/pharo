@@ -399,7 +399,12 @@ RBParser >> parseBlock [
 	self addCommentsTo: node.		
 	node left: startToken start.
 	node body: self sequenceNodeClass new.
-	(self parseStatements: false into: node body).
+	
+	self
+		parseStatements: false
+		into: node body
+		until: [ currentToken isSpecial
+			and: [ currentToken value = $] ] ].
 	
 	(currentToken isSpecial and: [currentToken value = $]])
 		ifFalse: [ ^ self parseEnglobingError: node body statements with: startToken errorMessage: ''']'' expected'].
@@ -721,7 +726,7 @@ RBParser >> parseMethod [
 		sequenceNode := self sequenceNodeClass new.
 		methodNode body: sequenceNode ].
 	
-	(self parseStatements: true into: methodNode body).
+	self parseStatements: true into: methodNode body until: [ false ].
 		
 	pragmas ifNotNil: [ methodNode pragmas: pragmas ].
 	^methodNode
@@ -857,7 +862,7 @@ RBParser >> parsePrimitiveObject [
 			currentToken value = $( ifTrue: [^self parseParenthesizedExpression].
 			currentToken value = ${ ifTrue: [^self parseArray]].
 	errorNode := self parserError: 'Variable or expression expected'.
-	errorNode isParseError ifFalse: [ self step ]. 
+	self step. 
 	^errorNode.
 ]
 
