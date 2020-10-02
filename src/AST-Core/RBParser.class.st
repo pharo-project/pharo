@@ -1036,6 +1036,17 @@ RBParser >> parseStatements: pragmaBoolean into: aSequenceNode [
 
 { #category : #'private-parsing' }
 RBParser >> parseStatements: pragmaBoolean into: aSequenceNode until: aBlock [
+	
+	self parseTemporariesInto: aSequenceNode.
+	
+	^self
+		parseStatementList: pragmaBoolean
+		into: aSequenceNode
+		until: aBlock
+]
+
+{ #category : #'private-parsing' }
+RBParser >> parseTemporariesInto: aSequenceNode [
 	| temps leftBar rightBar errorNode startToken |
 	temps := OrderedCollection new.
 	leftBar := rightBar := nil.
@@ -1061,11 +1072,7 @@ RBParser >> parseStatements: pragmaBoolean into: aSequenceNode until: aBlock [
 							[rightBar := (leftBar := currentToken start) + 1.
 							self step]]].
 				
-	aSequenceNode leftBar: leftBar temporaries: temps rightBar: rightBar.
-	^self
-		parseStatementList: pragmaBoolean
-		into: aSequenceNode
-		until: aBlock
+	aSequenceNode leftBar: leftBar temporaries: temps rightBar: rightBar
 ]
 
 { #category : #'private-parsing' }
