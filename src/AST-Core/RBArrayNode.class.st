@@ -158,12 +158,6 @@ RBArrayNode >> isFaulty [
 	^self statements anySatisfy: [:each | each isFaulty]
 ]
 
-{ #category : #testing }
-RBArrayNode >> lastIsReturn [
-	statements isEmpty ifTrue:[ ^false ].
-	^statements last lastIsReturn
-]
-
 { #category : #'accessing-token' }
 RBArrayNode >> left [
 	^ left

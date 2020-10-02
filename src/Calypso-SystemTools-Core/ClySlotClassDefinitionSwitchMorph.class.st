@@ -34,13 +34,6 @@ ClySlotClassDefinitionSwitchMorph >> definitionTypeLabel [
 	^ 'Slots'
 ]
 
-{ #category : #operations }
-ClySlotClassDefinitionSwitchMorph >> toggle [
-	Slot showSlotClassDefinition: Slot showSlotClassDefinition not.
-	
-	ownerTool update
-]
-
 { #category : #testing }
 ClySlotClassDefinitionSwitchMorph >> usesSlotBasedDefinition [
 	 

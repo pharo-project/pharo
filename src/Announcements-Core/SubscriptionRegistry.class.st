@@ -52,14 +52,6 @@ SubscriptionRegistry >> deliver: anAnnouncement to: subs startingAt: startIndex 
 				self deliver: anAnnouncement to: subs startingAt: index + 1 ]]
 ]
 
-{ #category : #testing }
-SubscriptionRegistry >> handleSubscriberClass: eventClass [
-	"Return true if the receiver has a callback subscripbed for the event class"
-	^ subscriptions anySatisfy: [ :sub | 
-		(sub subscriber class == eventClass) or: 
-			[ sub subscriber class includesBehavior: eventClass ] ]
-]
-
 { #category : #initialization }
 SubscriptionRegistry >> initialize [
 	monitor := Semaphore forMutualExclusion.

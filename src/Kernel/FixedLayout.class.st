@@ -10,13 +10,6 @@ Class {
 	#category : #'Kernel-Layout'
 }
 
-{ #category : #'instance creation' }
-FixedLayout class >> extending: superLayout scope: aScope host: aClass [
-	^ (superLayout extend: aScope)
-		host: aClass;
-		yourself
-]
-
 { #category : #format }
 FixedLayout >> instanceSpecification [
 	^ self hasFields

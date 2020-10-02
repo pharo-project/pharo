@@ -106,21 +106,9 @@ AthensCairoCanvas >> fill [
 
 ]
 
-{ #category : #'ffi-calls' }
-AthensCairoCanvas >> fillPreserve [
-	^ self ffiCall: #(#void #cairo_fill_preserve #(#self))
-
-	
-]
-
 { #category : #accessing }
 AthensCairoCanvas >> fillRule [
 	^ self ffiCall: #( cairo_fill_rule_t cairo_get_fill_rule ( self ) )
-]
-
-{ #category : #accessing }
-AthensCairoCanvas >> fillRuleEvenOdd [
-	self setFillRule: CAIRO_FILL_RULE_EVEN_ODD
 ]
 
 { #category : #accessing }
@@ -428,14 +416,6 @@ void                cairo_text_extents                  (cairo_t *cr,
 "
 	^ self ffiCall: #( void cairo_text_extents (self, char * utf8String, cairo_text_extents_t * extentsObj) )
 	
-]
-
-{ #category : #'ffi-calls' }
-AthensCairoCanvas >> textPath: anUTF8String [
-	"A drawing operator that generates the shape from a string of UTF-8 characters, rendered according to the current font_face, font_size (font_matrix), and font_options. "
-	
-	^ self ffiCall: #(void cairo_text_path (self, char * anUTF8String ))
-
 ]
 
 { #category : #'path segments visitor' }

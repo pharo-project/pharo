@@ -204,7 +204,11 @@ BaselineOfIDE >> baseline: spec [
   			with: [ spec 
 				repository: 'github://ObjectProfile/Roassal3:v0.9.4/src';
     				loads: #( 'Core' 'Tests') ].
-
+		spec package: 'FluidClassDefinition'.
+			"for now I put it in IDE because there are some dependencies on calypos
+			but this package should be removed once its elements are dispatched in 
+			better places."
+			
 		spec package: 'Pharo-WelcomeHelp' ]
 ]
 

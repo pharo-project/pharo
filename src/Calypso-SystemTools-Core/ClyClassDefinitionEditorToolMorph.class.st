@@ -65,11 +65,6 @@ ClyClassDefinitionEditorToolMorph >> isCommandAvailable: aCommand [
 	^ aCommand canBeExecutedInClassEditor: self
 ]
 
-{ #category : #accessing }
-ClyClassDefinitionEditorToolMorph >> parseClassDefinition [
-	^ CDClassDefinitionParser parse: self editingText
-]
-
 { #category : #'selecting text' }
 ClyClassDefinitionEditorToolMorph >> selectSourceNode: aCDNode [ 
 	textMorph setSelection: aCDNode sourceInterval

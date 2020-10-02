@@ -187,28 +187,6 @@ Trait >> classTrait [
 	^ self class
 ]
 
-{ #category : #'file in/out' }
-Trait >> definition [
-	
-	(self instanceSide name == #Trait) ifTrue: [ ^ super definition ].
-
-	^ String streamContents: [ :s | 
-		s 
-			nextPutAll: 'Trait named: ';
-			nextPutAll:	self name printString;
-			cr; tab; 
-			nextPutAll: ' uses: ';
-			nextPutAll: self traitComposition traitCompositionExpression; 
-			cr.
-		self classLayout visibleSlots ifNotEmpty: [ 
-			s tab; nextPutAll: ' slots: '.
-			self slotDefinitionsOn: s.
-			s cr ].
-		s tab; nextPutAll: ' package: ';
-			nextPutAll: self category asString printString
-	]
-]
-
 { #category : #testing }
 Trait >> isBaseTrait [
 	

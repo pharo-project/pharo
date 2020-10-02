@@ -121,28 +121,6 @@ Metaclass >> classVariables [
 ]
 
 { #category : #'file in/out' }
-Metaclass >> definition [
-	"Refer to the comment in ClassDescription|definition."
-
-	(self slotsNeedFullDefinition or: [ Slot showSlotClassDefinition ]) ifTrue: [ 
-		^ self definitionWithSlots ].
-
-	^ self definitionWithoutSlots
-]
-
-{ #category : #'file in/out' }
-Metaclass >> definitionWithSlots [
-	"Refer to the comment in ClassDescription|definition."
-
-	^ String streamContents: [:stream |
-		stream print: self.
-		stream
-			crtab;
-			nextPutAll: 'slots: '.
-		self slotDefinitionsOn: stream ]
-]
-
-{ #category : #'file in/out' }
 Metaclass >> definitionWithoutSlots [
 
 	^ String streamContents: [:stream |

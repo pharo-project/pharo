@@ -1,8 +1,8 @@
 "
-I am a concrete visitor that reucrsively collects all the commands of a command registry. I'm used by the `CmCommandGroup>>#allCommands` message.
+I am a concrete visitor that revursively collect all the commands of a commands register.
 "
 Class {
-	#name : #CmCommandCollector,
+	#name : #CmCommandsCollector,
 	#superclass : #CmVisitor,
 	#instVars : [
 		'commandsCollected'
@@ -11,18 +11,18 @@ Class {
 }
 
 { #category : #accessing }
-CmCommandCollector >> commandsCollected [
+CmCommandsCollector >> commandsCollected [
 	^ commandsCollected
 ]
 
 { #category : #initialization }
-CmCommandCollector >> initialize [
+CmCommandsCollector >> initialize [
 	super initialize.
 	commandsCollected := OrderedCollection new
 ]
 
 { #category : #visiting }
-CmCommandCollector >> visitCommand: aCmCommand [
+CmCommandsCollector >> visitCommand: aCmCommand [
 	commandsCollected add: aCmCommand.
 	^ aCmCommand
 ]

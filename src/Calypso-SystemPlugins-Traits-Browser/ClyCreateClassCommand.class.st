@@ -33,27 +33,6 @@ ClyCreateClassCommand >> defaultMenuItemName [
 ]
 
 { #category : #execution }
-ClyCreateClassCommand >> execute [
-	| classDefinition p resultTrait |
-	p := package name.
-	classTag ifNotNil: [ p := p , '-' , classTag ].
-	classDefinition := 'Object subclass: #MyClass
-	instanceVariableNames: ''''
-	classVariableNames: ''''
-	package: ''' , p , ''''.
-	classDefinition := UIManager default
-		                   multiLineRequest: 'Define class definition:'
-		                   initialAnswer: classDefinition
-		                   answerHeight: 250.
-	classDefinition isEmptyOrNil ifTrue: [ ^ self ].
-	resultTrait := browser
-		               compileANewClassFrom: classDefinition
-		               notifying: nil
-		               startingFrom: nil.
-	resultTrait ifNotNil: [ browser selectClass: resultTrait ]
-]
-
-{ #category : #execution }
 ClyCreateClassCommand >> prepareFullExecutionInContext: aBrowserContext [
 	super prepareFullExecutionInContext: aBrowserContext.
 	

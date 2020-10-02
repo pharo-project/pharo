@@ -356,21 +356,6 @@ Class >> classVarNames [
 ]
 
 { #category : #'class variables' }
-Class >> classVariableDefinitionString [
-	"Answer a string that evaluates to the definition of the class Variables"
-	
-	^String streamContents: [ :str | | fullDef |
-		str nextPutAll: '{ '.
-		self classVariables do: [:global |
-				str nextPutAll: global definitionString.
-				fullDef := global needsFullDefinition]				
-			separatedBy: [ 
-				str nextPutAll: ' . '.  
-				fullDef ifTrue: [ str cr;tab;tab;tab;tab ]].
-		str nextPutAll: ' }'. ]
-]
-
-{ #category : #'class variables' }
 Class >> classVariableNamed: aString [
 	"Answer the Class Variable"
 

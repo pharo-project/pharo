@@ -65,26 +65,6 @@ ClyClassCreationToolMorph >> classTag: anObject [
 	classTag := anObject
 ]
 
-{ #category : #building }
-ClyClassCreationToolMorph >> classTemplate [
-
-	| template |
-	
-	template := Slot showSlotClassDefinition
-		ifTrue: [ 
-			'Object subclass: #NameOfSubclass
-	slots: {}
-	classVariables: {}
-	package: ''' ]
-		ifFalse: [ 
-			'Object subclass: #NameOfSubclass
-	instanceVariableNames: ''''
-	classVariableNames: ''''
-	package: ''' ].
-
-	^ template , self packageName , '''' 
-]
-
 { #category : #initialization }
 ClyClassCreationToolMorph >> defaultIconName [
 	^#add
