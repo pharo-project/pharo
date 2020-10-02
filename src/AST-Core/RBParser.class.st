@@ -878,53 +878,122 @@ RBParser >> parsePrimitiveValueLiteral [
 ]
 
 { #category : #'private-parsing' }
-RBParser >> parseStatementList: pragmaBoolean into: sequenceNode [ 
-	| statements return periods returnPosition node |
+RBParser >> parseStatementInto: statementList periodList: periods [
+
+	| returnPosition node |
+	"If the current statement starts with ^, parse it as a return + an expression.
+	Otherwise just parse it as an expression.
+	Expressions start with assignments, which have lower precedence"
+	(currentToken isSpecial and: [ currentToken value = $^ ])
+		ifTrue: [ 
+			returnPosition := currentToken start.
+			self step.
+			node := self returnNodeClass
+				        return: returnPosition
+				        value: self parseAssignment ]
+		ifFalse: [ node := self parseAssignment ].
+
+	"At this point we have parsed a full statement.
+	Next we should have the end of the statement
+	  - a dot or
+	  - a scope closer e.g., )]} or
+	  -  or the end of the stream.
+	If it is neither, we should mark our statement as unfinished statement."
+	(currentToken value ~= $. 
+		and: [ ('])}' includes: currentToken value) not
+			and: [ currentToken isEOF not ] ] ) ifTrue: [
+		self parserError: 'End of statement expected'.
+		node := RBUnfinishedStatementErrorNode
+			content: { node }
+			start: node start
+			stop: node stop
+			errorMessage: 'End of statement expected'
+	].
+
+	"Then consume all dots and comments coming after this well formed statement, if there was any"
+	(currentToken isSpecial and: [ currentToken value = $. ]) ifTrue: [ 
+		periods add: currentToken start.
+		self step.
+		self addCommentsTo: node ].
+
+	[ currentToken isSpecial and: [ currentToken value = $. ] ] 
+		whileTrue: [ 
+			periods add: currentToken start.
+			self step ].
+
+	"If the previous node in the statement list is a return node, mark this node as unreachable"
+	
+	(statementList notEmpty and: [ statementList last isReturn ]) ifTrue: [
+		self parserError: 'Unreachable code'.
+		node := RBUnreachableStatementErrorNode
+			content: { node }
+			start: node start
+			stop: node stop
+			errorMessage: 'Unreachable code' ].
+
+	"Commit the statement to the statements list"
+	statementList add: node
+	
+]
+
+{ #category : #'private-parsing' }
+RBParser >> parseStatementList: pragmaBoolean into: sequenceNode [
+
+	| statements return periods |
 	return := false.
 	statements := sequenceNode statements.
 	periods := OrderedCollection new.
+
 	self addCommentsTo: sequenceNode.
-	pragmaBoolean ifTrue: [self parsePragmas].
-	[currentToken isSpecial and: [currentToken value = $.]] whileTrue: 
-		[periods add: currentToken start.
-		self step].
-	[self atEnd 
-		or: [currentToken isSpecial and: ['])}' includes: currentToken value] ]] 
-			whileFalse: [
-				return ifTrue: [ 
-					(self parserError: 'End of statement list encountered') 
-						ifNotNil: [ :errorNode | 
-								statements add: errorNode. 
-								sequenceNode statements: statements.
-								sequenceNode periods: periods.
-								self step.
-								^sequenceNode]
-					].
-				(currentToken isSpecial and: [currentToken value = $^]) 
-					ifTrue: 
-						[returnPosition := currentToken start.
-						self step.
-						node := self returnNodeClass return: returnPosition
-									value: self parseAssignment.
-						statements add: node.
-						return := true]
-					ifFalse: [node := self parseAssignment.
-								statements add: node ].
-				(currentToken isSpecial and: [currentToken value = $.]) 
-					ifTrue: 
-						[periods add: currentToken start.
-						self step.
-						self addCommentsTo: node]
-					ifFalse: [return := true].
-				[currentToken isSpecial and: [currentToken value = $.]] whileTrue: 
-					[periods add: currentToken start.
-					self step]
-				].
-	statements notEmpty ifTrue: [self addCommentsTo: statements last].
+
+	pragmaBoolean ifTrue: [ self parsePragmas ].
+
+	[ currentToken isSpecial and: [ currentToken value = $. ] ] 
+		whileTrue: [ 
+			periods add: currentToken start.
+			self step ].
+
+	[  self atEnd or: [ 
+		currentToken isSpecial and: [ '])}' includes: currentToken value ] ] ] 
+			whileFalse: [ 
+				self parseStatementInto: statements periodList: periods ].
+
+	statements notEmpty ifTrue: [ self addCommentsTo: statements last ].
 	sequenceNode
 		statements: statements;
 		periods: periods.
-	^sequenceNode
+	^ sequenceNode
+]
+
+{ #category : #'private-parsing' }
+RBParser >> parseStatementList: pragmaBoolean into: sequenceNode until: aBlock [
+
+	"Parse a list of statements and set those statetements to a sequence node.
+	Stop parsing when we finish the current scope.
+	Different scopes such as blocks or methods can decide different stop conditions."
+
+	| statements return periods |
+	return := false.
+	statements := sequenceNode statements.
+	periods := OrderedCollection new.
+
+	self addCommentsTo: sequenceNode.
+
+	pragmaBoolean ifTrue: [ self parsePragmas ].
+
+	[ currentToken isSpecial and: [ currentToken value = $. ] ] 
+		whileTrue: [ 
+			periods add: currentToken start.
+			self step ].
+
+	[  self atEnd or: [ aBlock value ] ] whileFalse: [ 
+		self parseStatementInto: statements periodList: periods ].
+
+	statements notEmpty ifTrue: [ self addCommentsTo: statements last ].
+	sequenceNode
+		statements: statements;
+		periods: periods.
+	^ sequenceNode
 ]
 
 { #category : #'private-parsing' }
@@ -963,6 +1032,40 @@ RBParser >> parseStatements: pragmaBoolean into: aSequenceNode [
 				leftBar: leftBar
 				temporaries: temps
 				rightBar: rightBar)
+]
+
+{ #category : #'private-parsing' }
+RBParser >> parseStatements: pragmaBoolean into: aSequenceNode until: aBlock [
+	| temps leftBar rightBar errorNode startToken |
+	temps := OrderedCollection new.
+	leftBar := rightBar := nil.
+	currentToken isBinary 
+		ifTrue: 
+			[currentToken value = #| 
+				ifTrue: 
+					[ startToken := currentToken.
+					leftBar := currentToken start.
+					self step.
+					temps := self parseTemps.
+					(currentToken isBinary and: [currentToken value = #|]) 
+						ifFalse: [ errorNode :=  self parseEnglobingError: temps with: startToken errorMessage: '''|'' expected'.
+									 aSequenceNode addFaultyNode: errorNode.
+									 temps := OrderedCollection new.
+									 leftBar := nil.
+								    ]
+						ifTrue: [ rightBar := currentToken start ].
+					self step]
+				ifFalse: 
+					[currentToken value = #'||' 
+						ifTrue: 
+							[rightBar := (leftBar := currentToken start) + 1.
+							self step]]].
+				
+	aSequenceNode leftBar: leftBar temporaries: temps rightBar: rightBar.
+	^self
+		parseStatementList: pragmaBoolean
+		into: aSequenceNode
+		until: aBlock
 ]
 
 { #category : #'private-parsing' }
