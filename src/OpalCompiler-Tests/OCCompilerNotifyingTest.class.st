@@ -140,7 +140,7 @@ OCCompilerNotifyingTest >> testEmptyCaseStatement [
 { #category : #testing }
 OCCompilerNotifyingTest >> testExpectedExpressionInBraceArray [
 	
-	self setUpForErrorsIn: '{ 1. 2 ` End of statement list encountered ->`3 }'.
+	self setUpForErrorsIn: '{ 1. 2 ` End of statement expected ->`3 }'.
 	self enumerateAllSelections.
 	self setUpForErrorsIn: '{ 1. 2. ` Variable or expression expected ->`| x | x}'.
 	self enumerateAllSelections.
@@ -148,7 +148,7 @@ OCCompilerNotifyingTest >> testExpectedExpressionInBraceArray [
 
 { #category : #testing }
 OCCompilerNotifyingTest >> testExtraneousStatementAfterAReturnInABlock [
-	self setUpForErrorsIn: '[ ^1 ` End of statement list encountered ->`2]'.
+	self setUpForErrorsIn: '[ ^1 ` End of statement expected ->`2]'.
 	self enumerateAllSelections.
 ]
 
@@ -228,14 +228,14 @@ OCCompilerNotifyingTest >> testMissingExpressionAfterAReturn [
 { #category : #testing }
 OCCompilerNotifyingTest >> testMissingMessageAfterACascade [
 	
-	self setUpForErrorsIn: 'nil yourself; ` Message expected ->`^ 2'.
+	self setUpForErrorsIn: 'nil yourself; ` Cascade message expected ->`^ 2'.
 	self enumerateAllSelections
 ]
 
 { #category : #testing }
 OCCompilerNotifyingTest >> testMissingPeriodSeparatorBetweenStatements [
 
-	self setUpForErrorsIn: '1 + 2 ` End of statement list encountered ->`^nil'.
+	self setUpForErrorsIn: '1 + 2 ` End of statement expected ->`^nil'.
 	self enumerateAllSelections.
 ]
 

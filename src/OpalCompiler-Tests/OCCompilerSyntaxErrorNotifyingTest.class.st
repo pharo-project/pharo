@@ -28,8 +28,8 @@ OCCompilerSyntaxErrorNotifyingTest >> enumerateAllSelections [
 			| expectedNotification expectedNotificationLocation |
 			expectedNotification := (expectedErrors at: n) allButFirst allButLast: 3.
 			expectedNotificationLocation := (expectedErrorPositions at: n) - (morph editor startIndex - 1).
-			self assert: expectedNotificationLocation equals: exc location.
-			self assert: expectedNotification equals: exc errorMessage asString.
+			self assert: exc location equals: expectedNotificationLocation.
+			self assert: exc errorMessage asString equals: expectedNotification.
 			exc return: nil]].
 ]
 
