@@ -1170,6 +1170,13 @@ SHRBTextStyler >> visitCascadeNode: aCascadeNode [
 ]
 
 { #category : #visiting }
+SHRBTextStyler >> visitEnglobingErrorNode: anEnglobingErrorNode [
+
+	self addStyle: #invalid from: anEnglobingErrorNode stop to: anEnglobingErrorNode stop + 1.
+	anEnglobingErrorNode content do: [:each | self visitNode: each ]
+]
+
+{ #category : #visiting }
 SHRBTextStyler >> visitLiteralArrayNode: aRBLiteralArrayNode [
 	"In a (valid) byte array all elements are of the same type, style the whole contents
 at once, but for ordinary literal arrays, style every node"

@@ -47,7 +47,11 @@ RBPatternParser >> parsePatternBlock: aClass [
 	node left: position.
 	
 	node body: self sequenceNodeClass new.
-	(self parseStatements: false into: node body).
+	self
+		parseStatements: false
+		into: node body
+		until: [ currentToken isSpecial
+			and: [ currentToken value = $} ] ].
 	
 	(currentToken isSpecial and: [currentToken value = $}]) 
 		ifFalse: [ self addParserError: '''}'' expected' to: node body.

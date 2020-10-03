@@ -6,7 +6,7 @@ Class {
 
 { #category : #defaults }
 SemanticVariableIconStyler >> borderColor [ 
-	^Color red
+	^nil
 ]
 
 { #category : #defaults }

@@ -283,7 +283,7 @@ RBParserTest >> testCascadeWithInvalidSelectorRaisesError [
 	self assert: tree messages second selectorNode equals: (RBSelectorNode value: #repared).
 	
 	self assert: tree messages third isFaulty.
-	self assert: tree messages third errorMessage equals: 'Message expected'.
+	self assert: tree messages third errorMessage equals: 'Cascade message expected'.
 	
 	self assert: tree messages last isMessage.
 	self assert: tree messages last receiver name equals: #faulty.
@@ -307,7 +307,7 @@ RBParserTest >> testCascadeWithMissingSelectorRaisesError [
 	self assert: tree messages second selectorNode equals: (RBSelectorNode value: #repared).
 	
 	self assert: tree messages third isFaulty.
-	self assert: tree messages third errorMessage equals: 'Message expected'.
+	self assert: tree messages third errorMessage equals: 'Cascade message expected'.
 	
 	self assert: tree messages last isMessage.
 	self assert: tree messages last receiver name equals: #faulty.

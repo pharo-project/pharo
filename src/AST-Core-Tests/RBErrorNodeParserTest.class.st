@@ -12,10 +12,7 @@ RBErrorNodeParserTest >> testFaultyBinaryMessageSendArgumentShouldHaveTheCorrect
 	
 	self assert: node isMessage.
 	self assert: node receiver isParseError.
-	self assert: node selector equals: #+.
-	self assert: node arguments first isVariable.
-	self assert: node arguments first name equals: #arg.
-
+	self assert: node selector equals: #arg.
 ]
 
 { #category : #tests }
@@ -24,11 +21,13 @@ RBErrorNodeParserTest >> testFaultyBinaryMessageSendWithLiteralArgumentShouldHav
 	| node |
 	node := self parserClass parseFaultyExpression: '+ 12'.
 	
-	self assert: node isMessage.
-	self assert: node receiver isParseError.
-	self assert: node selector equals: #+.
-	self assert: node arguments first isLiteralNode.
-	self assert: node arguments first value equals: 12.
+	self assert: node isSequence.
+	
+	self assert: node statements first isUnfinishedStatement.
+	self assert: node statements first statement isParseError.
+	
+	self assert: node statements second isLiteralNode.
+	self assert: node statements second value equals: 12.
 
 ]
 
@@ -40,10 +39,7 @@ RBErrorNodeParserTest >> testFaultyMessageSendShouldHaveTheCorrectMessage [
 	
 	self assert: node isMessage.
 	self assert: node receiver isParseError.
-	self assert: node selector equals: #msg:.
-	self assert: node arguments first isVariable.
-	self assert: node arguments first name equals: #arg.
-
+	self assert: node selector equals: #arg.
 ]
 
 { #category : #tests }
@@ -52,11 +48,12 @@ RBErrorNodeParserTest >> testFaultyMessageSendWithLiteralArgumentShouldHaveTheCo
 	| node |
 	node := self parserClass parseFaultyExpression: 'msg: 12'.
 	
-	self assert: node isMessage.
-	self assert: node receiver isParseError.
-	self assert: node selector equals: #msg:.
-	self assert: node arguments first isLiteralNode.
-	self assert: node arguments first value equals: 12.
+	self assert: node isSequence.
+	
+	self assert: node statements first isParseError.
+
+	self assert: node statements second isLiteralNode.
+	self assert: node statements second value equals: 12.
 
 ]
 
@@ -66,20 +63,41 @@ RBErrorNodeParserTest >> testFaultyMessageSendWithSymbolsArgumentShouldHaveTheCo
 	| node |
 	node := self parserClass parseFaultyExpression: 'msg: #lala: and:12'.
 	
-	self assert: node isMessage.
-	self assert: node receiver isParseError.
-	self assert: node selector equals: #msg:and:.
+	self assert: node isSequence.
+	self assert: node statements first isUnfinishedStatement.
+	self assert: node statements first statement isParseError.
 
-	self assert: node arguments first isLiteralNode.
-	self assert: node arguments first value equals: #lala:.
-
-	self assert: node arguments second isLiteralNode.
-	self assert: node arguments second value equals: 12.
+	self assert: node statements second isMessage.
+	self assert: node statements second receiver value equals: #lala:.
+	self assert: node statements second selector equals: #and:.
+	self assert: node statements second arguments first isLiteralNode.
+	self assert: node statements second arguments first value equals: 12.
 
 ]
 
 { #category : #tests }
-RBErrorNodeParserTest >> testFaultyMethodHasAnErrorNodeAndContinueParsing [
+RBErrorNodeParserTest >> testFaultyMethodConsumesEntireStream [
+
+	| parser |
+	parser := self parserClass newFaulty.
+	parser initializeParserWith: 'ret ^ 1 ^ 2'.
+	parser parseMethod.
+	
+	self assert: parser atEnd
+]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyMethodWithSignatureKeepsSignature [
+
+	| node |
+	node := self parserClass parseFaultyMethod: 'ret ^ 1 ^ 2'.
+	
+	self assert: node isMethod.
+	self assert: node selector equals: #ret
+]
+
+{ #category : #tests }
+RBErrorNodeParserTest >> testFaultyMethodWithoutSignatureHasAnErrorNodeAndContinueParsing [
 
 	| node |
 	node := self parserClass parseFaultyMethod: '1 between: 2 and: 3'.
