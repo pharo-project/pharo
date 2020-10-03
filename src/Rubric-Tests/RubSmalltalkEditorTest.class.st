@@ -388,23 +388,6 @@ RubSmalltalkEditorTest >> testBestNodeWithInvalidPlaygroundParsableError [
 ]
 
 { #category : #'tests-bestNodeIn' }
-RubSmalltalkEditorTest >> testBestNodeWithInvalidPlaygroundUnParsableError [
-	
-	self source: 'fallbackBlock := [^self].
-	node := self bestNodeInTextAreaOnError: fallbackBlock.
-	
-	node isMethod ifFalse: [ 
-		node isValue and: [  node isSymbol ]
-		[ node isMessage ] whileFalse: [ false ]].'.
-	
-	self 
-		positionAfter: 'isMessage ]';
-		assertPlaygroundNodeValue: '''fallbackBlock := [ ^ self ] node := self bestNodeInTextAreaOnError: fallbackBlock node isMethod ifFalse:
-	[ node isValue and: [ node isSymbol ] [  node isMessage ]'''.
-
-]
-
-{ #category : #'tests-bestNodeIn' }
 RubSmalltalkEditorTest >> testBestNodeWithValidBinaryOperation [
 	
 	self source: 'testMethod
