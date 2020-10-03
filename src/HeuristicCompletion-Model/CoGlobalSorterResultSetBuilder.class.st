@@ -15,7 +15,6 @@ CoGlobalSorterResultSetBuilder >> parseNode [
 
 	| aNewNode |
 	aNewNode := super parseNode.
-	aNewNode methodNode doSemanticAnalysis.
 	TypingVisitor new visitNode: aNewNode methodNode.
 	^ aNewNode
 ]
