@@ -415,7 +415,7 @@ PluggableSliderMorph >> setValue: newValue [
 	"Propagate throught the model"
 	self model ifNotNil: [
 		self setValueSelector ifNotNil: [:sel |
-			self model perform: sel with: value ]]
+			self model perform: sel with: scaled ]]
 ]
 
 { #category : #accessing }
