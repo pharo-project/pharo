@@ -604,10 +604,7 @@ OpalCompiler >> transformDoit [
 	ast := context 
 		ifNil: [ast asDoit] 
 		ifNotNil: [ast asDoitForContext: context].
-	"re-parse to make sure the ast nodes have correct start and stop information"
-	source := ast formattedCode.
-	ast := self parserClass parseMethod: source.
+	"we need to set the compilation context in the new method node"
 	ast compilationContext: self compilationContext.
 	self doSemanticAnalysis
-
 ]
