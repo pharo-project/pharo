@@ -6,7 +6,7 @@ For further comments read comments of `WordArray`.
 Class {
 	#name : #DoubleWordArray,
 	#superclass : #ArrayedCollection,
-	#type : #DoubleWordLayout,
+	#type : #words,
 	#category : #'Collections-Native-Base'
 }
 
