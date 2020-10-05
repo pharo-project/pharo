@@ -65,6 +65,14 @@ CollectionArithmeticTest >> testAverageWithEmptySet [
 ]
 
 { #category : #tests }
+CollectionArithmeticTest >> testDevision [
+	| collection |
+	collection := #(2 4).
+	self assert: collection / 2 equals: #(1 2).
+	self assert: 10 / #(20) equals: {1/2}
+]
+
+{ #category : #tests }
 CollectionArithmeticTest >> testRunningAverage [
 	| result collection |
 	collection := #(1 1 2 2 3 3).
