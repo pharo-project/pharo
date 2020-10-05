@@ -33,7 +33,7 @@ RBSelectorNode >> = anObject [
 	^ self class = anObject class ifTrue: [ self value = anObject value ] ifFalse: [ false ]
 ]
 
-{ #category : #comparing }
+{ #category : #visiting }
 RBSelectorNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitSelectorNode: self
 ]
@@ -43,22 +43,22 @@ RBSelectorNode >> hash [
 	^ self value hash
 ]
 
-{ #category : #comparing }
+{ #category : #testing }
 RBSelectorNode >> isSelector [
 	^true
 ]
 
-{ #category : #comparing }
+{ #category : #testing }
 RBSelectorNode >> needsParenthesis [
 	^false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RBSelectorNode >> numArgs [ 
-	^value numArgs.
+	^ value numArgs
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #printing }
 RBSelectorNode >> printOn: aStream [
 
 	aStream
@@ -68,17 +68,17 @@ RBSelectorNode >> printOn: aStream [
 		<< ')'
 ]
 
-{ #category : #comparing }
+{ #category : #accessing }
 RBSelectorNode >> start: aPositionsList [
 	start := aPositionsList ifNotNil: [:list| list asIntegerArray ].
 ]
 
-{ #category : #comparing }
+{ #category : #accessing }
 RBSelectorNode >> startWithoutParentheses [
 	^ start
 ]
 
-{ #category : #comparing }
+{ #category : #accessing }
 RBSelectorNode >> stopWithoutParentheses [
 	| temp prev |
 	temp := 0.
@@ -92,12 +92,12 @@ RBSelectorNode >> stopWithoutParentheses [
 	
 ]
 
-{ #category : #comparing }
+{ #category : #accessing }
 RBSelectorNode >> value [
 	^value
 ]
 
-{ #category : #comparing }
+{ #category : #accessing }
 RBSelectorNode >> value: aString [
 	value := aString asSymbol
 ]
