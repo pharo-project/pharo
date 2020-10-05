@@ -120,7 +120,7 @@ SourceFileBufferedReadWriteStreamTest >> testEnsureWrittenPositionFlushesComplet
 SourceFileBufferedReadWriteStreamTest >> testNextPutAllStartingAt [
 	| stringStream |
 
-	stringStream := ReadWriteStream with: ''.
+	stringStream := ReadWriteStream with: '' copy.
 	
 	SourceFileBufferedReadWriteStream on: stringStream do: [ : bufferedStream |
 		bufferedStream sizeBuffer: 8.
@@ -180,7 +180,7 @@ SourceFileBufferedReadWriteStreamTest >> testReadThenWrite [
 	((SystemVersion current major < 7) or: [ SystemVersion current build < 690 ])
 		ifTrue: [ ^ self skip ].
 
-	stringStream := ReadWriteStream with: '0123456789'.
+	stringStream := ReadWriteStream with: '0123456789' copy.
 	stringStream reset.
 	stream := SourceFileBufferedReadWriteStream on: stringStream.
 	stream sizeBuffer: 8.
@@ -223,7 +223,7 @@ SourceFileBufferedReadWriteStreamTest >> testSetAtEnd [
 
 	| stream originalStream|
 
-	stream := SourceFileBufferedReadWriteStream on: (originalStream := ReadWriteStream with: '0123456789').
+	stream := SourceFileBufferedReadWriteStream on: (originalStream := ReadWriteStream with: '0123456789' copy).
 	originalStream reset.
 	
 	stream setToEnd.
@@ -242,7 +242,7 @@ SourceFileBufferedReadWriteStreamTest >> testWriteThenRead [
 	((SystemVersion current major < 7) or: [ SystemVersion current build < 690 ])
 		ifTrue: [ ^ self skip ].
 
-	stringStream := ReadWriteStream with: '0123456789'.
+	stringStream := ReadWriteStream with: '0123456789' copy.
 	stringStream reset.
 	stream := SourceFileBufferedReadWriteStream on: stringStream.
 	stream sizeBuffer: 8.
@@ -261,7 +261,7 @@ SourceFileBufferedReadWriteStreamTest >> testWriteThenRead [
 { #category : #tests }
 SourceFileBufferedReadWriteStreamTest >> testWriting [
 	| stringStream bufferedStream |
-	stringStream := ReadWriteStream with: ''.
+	stringStream := ReadWriteStream with: '' copy.
 
 	bufferedStream := SourceFileBufferedReadWriteStream on: stringStream.
 	0 to: 9 do: [ :each | bufferedStream nextPut: (Character digitValue: each) ].
@@ -274,7 +274,7 @@ SourceFileBufferedReadWriteStreamTest >> testWriting [
 SourceFileBufferedReadWriteStreamTest >> testWritingOverflow [
 	| stringStream bufferedStream |
 	
-	stringStream := ReadWriteStream with: ''.
+	stringStream := ReadWriteStream with: '' copy.
 	bufferedStream := SourceFileBufferedReadWriteStream on: stringStream.
 	bufferedStream sizeBuffer: 8.
 	0 to: 9 do: [ :each | bufferedStream nextPut: (Character digitValue: each) ].
