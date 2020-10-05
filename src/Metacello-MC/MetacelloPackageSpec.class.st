@@ -551,10 +551,13 @@ MetacelloPackageSpec >> repositories: aBlock constructor: aVersionConstructor [
 
 { #category : #querying }
 MetacelloPackageSpec >> repository [
-    self deprecated: 'Use repositories or repositorySpecs'.
-    self repositorySpecs isEmpty
-        ifTrue: [ ^ nil ].
-    ^ self repositorySpecs first
+	self
+		deprecated: 'Use repositories or repositorySpecs'
+		transformWith: '`@rec repository' -> '`@rec repositorySpecs first'.
+	
+	^ self repositorySpecs
+		ifEmpty: [ nil ]
+		ifNotEmpty: [ self repositorySpecs first ].
 ]
 
 { #category : #accessing }

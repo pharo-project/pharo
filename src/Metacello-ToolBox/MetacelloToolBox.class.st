@@ -211,18 +211,19 @@ MetacelloToolBox class >> createBaseline: baselineVersionString for: configurati
 	"
 
     <apiDocumentation>
-    self
-        deprecated:
-            'Use createBaseline:for: repository:requiredProjects:packages:repositories:dependencies:groups: instead'.
-    ^ self
-        createBaseline: baselineVersionString
-        for: configurationBasename
-        repository: repositoryDescription
-        requiredProjects: projectList
-        packages: packageList
-        repositories: #()
-        dependencies: dependencies
-        groups: groups
+	self
+		deprecated: 'Use createBaseline:for:repository:requiredProjects:packages:repositories:dependencies:groups: instead'
+		transformWith: '`@rec createBaseline: `@arg1 for: `@arg2 repository: `@arg3 requiredProjects: `@arg4 packages: `@arg5 dependencies: `@arg6 groups: `@arg7' -> '`@rec createBaseline: `@arg1 for: `@arg2 repository: `@arg3 requiredProjects: `@arg4 packages: `@arg5 repositories: #() dependencies: `@arg6 groups: `@arg7'.
+	
+	^ self
+		createBaseline: baselineVersionString
+		for: configurationBasename
+		repository: repositoryDescription
+		requiredProjects: projectList
+		packages: packageList
+		repositories: #()
+		dependencies: dependencies
+		groups: groups
 ]
 
 { #category : #scripts }

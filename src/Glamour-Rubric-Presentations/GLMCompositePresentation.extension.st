@@ -7,7 +7,10 @@ GLMCompositePresentation >> pharoMethod [
 
 { #category : #'*glamour-rubric-presentations' }
 GLMCompositePresentation >> pharoPlayground [
-	self deprecated: 'Use #pharoScript instead'.
+	self
+		deprecated: 'Use #pharoScript instead'
+		transformWith: '`@rec pharoPlayground' -> '`@rec pharoScript'.
+	
 	^ self custom: GLMPharoScriptPresentation new
 ]
 
@@ -18,6 +21,9 @@ GLMCompositePresentation >> pharoScript [
 
 { #category : #'*glamour-rubric-presentations' }
 GLMCompositePresentation >> rubricText [
-	self deprecated: 'Use #text instead'.
+	self
+		deprecated: 'Use #text instead'
+		transformWith: '`@rec rubricText' -> '`@rec text'.
+	
 	^ self custom: GLMRubricTextPresentation new
 ]

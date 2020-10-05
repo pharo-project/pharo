@@ -379,7 +379,12 @@ FFIStructure class >> structureSize [
 
 { #category : #accessing }
 FFIStructure >> address [
-	self deprecated: 'Use #getHandle' on: '27 October 2015' in: 'Pharo5'. 
+	self
+		deprecated: 'Use #getHandle'
+		on: '27 October 2015'
+		in: 'Pharo5'
+		transformWith: '`@rec address' -> '`@rec getHandle'.
+	
 	^ self getHandle
 ]
 
