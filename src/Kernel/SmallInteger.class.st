@@ -106,10 +106,8 @@ SmallInteger >> / aNumber [
 	No Lookup. See Object documentation whatIsAPrimitive."
 
 	<primitive: 10>
-	aNumber isZero ifTrue: [^(ZeroDivide dividend: self) signal].
-	^(aNumber isMemberOf: SmallInteger)
-		ifTrue: [(Fraction numerator: self denominator: aNumber) reduced]
-		ifFalse: [super / aNumber]
+	aNumber = 0 ifTrue: [^(ZeroDivide dividend: self) signal].
+	^super / aNumber
 ]
 
 { #category : #arithmetic }
