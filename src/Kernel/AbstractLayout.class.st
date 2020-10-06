@@ -126,7 +126,8 @@ AbstractLayout >> isWeak [
 
 { #category : #accessing }
 AbstractLayout >> kindOfSubclass [
-	^self subclassResponsibility
+	"As a fallback we just return a standard class creation substring. This will be called for user 	defined Layouts, for old style class definitions that can not support user defined Layouts"
+	^' subclass: '
 ]
 
 { #category : #accessing }

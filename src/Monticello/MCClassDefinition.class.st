@@ -352,9 +352,11 @@ MCClassDefinition >> kindOfSubclass [
 	type = #compiledMethod ifTrue: [^ ' variableByteSubclass: ' ].
 	type = #immediate ifTrue: [ ^ ' immediateSubclass: ' ].
 	type = #ephemeron ifTrue: [ ^ ' ephemeronSubclass: ' ].
+	type = #DoubleByteLayout ifTrue: [ ^' variableDoubleByteSubclass: ' ].
+	type = #DoubleWordLayout ifTrue: [ ^' variableDoubleWordSubclass: ' ].
 	"hack to support user defined layouts"
 	(Smalltalk hasClassNamed: type) ifTrue: [ ^type asString].
-	self error: 'Unrecognized class type'
+	self error: 'Unrecognized class type', type asString
 ]
 
 { #category : #installing }
