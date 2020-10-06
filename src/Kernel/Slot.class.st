@@ -302,7 +302,7 @@ Slot >> readInContext: aContext [
 
 { #category : #accessing }
 Slot >> scope [
-	^ definingClass
+	^ self owningClass
 ]
 
 { #category : #accessing }

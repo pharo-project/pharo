@@ -79,11 +79,12 @@ TemporaryVariableTest >> testReadTemporaryVariablesMethod [
 
 { #category : #tests }
 TemporaryVariableTest >> testScope [
-	| method |
+	| method variable |
 	method := self class >> #testTemporaryVariablesMethod.
-	self assert: method temporaryVariables first scope isMethodScope
+	self assert: method temporaryVariables first scope isMethodScope.
 	
-
+	variable := method temporaryVariables first.
+	self assert: (variable scope lookupVar: variable name) equals: variable
 ]
 
 { #category : #tests }

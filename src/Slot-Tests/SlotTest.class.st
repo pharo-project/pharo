@@ -99,6 +99,15 @@ SlotTest >> testRemoveProperty [
 ]
 
 { #category : #'tests - misc' }
+SlotTest >> testScope [
+	| variable |
+	variable := self class slotNamed: #ivarForTesting.
+	self assert: variable scope equals: self class.
+	
+	self assert: (variable scope lookupVar: variable name) equals: variable
+]
+
+{ #category : #'tests - misc' }
 SlotTest >> testSlotUsers [
 	self assert: (ToOneRelationSlot slotUsers includes: SlotExampleMovie).
 	self deny: (ToOneRelationSlot slotUsers includes: SlotExamplePerson)

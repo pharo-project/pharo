@@ -33,6 +33,5 @@ GlobalVariable >> isGlobalVariable [
 
 { #category : #accessing }
 GlobalVariable >> scope [
-	"The scope of Globals is Smalltalk globals"
-	^ Smalltalk globals
+	^ self definingClass environment
 ]
