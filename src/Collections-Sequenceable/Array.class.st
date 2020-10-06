@@ -261,15 +261,14 @@ Array >> isLiteral [
 	^self class == Array and: [self allSatisfy: [:each | each isLiteral]]
 ]
 
+{ #category : #testing }
+Array >> isReadOnlyLiteral [
+	^self isLiteral
+]
+
 { #category : #'self evaluating' }
 Array >> isSelfEvaluating [
 	^ (self allSatisfy: [:each | each isSelfEvaluating]) and: [self class == Array]
-]
-
-{ #category : #testing }
-Array >> isSharedLiteral [
-	"Can this Literal be shared between methods when doing 'ImageCleaner shareLiterals'?"
-	^self isLiteral
 ]
 
 { #category : #comparing }
