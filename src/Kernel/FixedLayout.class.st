@@ -7,7 +7,7 @@ Instances of classes using this kind of layout have always the same size.
 Class {
 	#name : #FixedLayout,
 	#superclass : #PointerLayout,
-	#category : #Kernel
+	#category : #'Kernel-Layout'
 }
 
 { #category : #'instance creation' }

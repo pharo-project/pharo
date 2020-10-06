@@ -4,7 +4,7 @@ A layout for ephemeron objects
 Class {
 	#name : #EphemeronLayout,
 	#superclass : #PointerLayout,
-	#category : #Kernel
+	#category : #'Kernel-Layout'
 }
 
 { #category : #'as yet unclassified' }

@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'host'
 	],
-	#category : #Kernel
+	#category : #'Kernel-Layout'
 }
 
 { #category : #description }

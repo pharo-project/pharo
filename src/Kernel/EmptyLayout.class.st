@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'instance'
 	],
-	#category : #Kernel
+	#category : #'Kernel-Layout'
 }
 
 { #category : #'instance creation' }

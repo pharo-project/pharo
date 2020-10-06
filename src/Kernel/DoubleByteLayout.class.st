@@ -4,7 +4,7 @@ I am a raw data layout that holds double bytes (16 bits).
 Class {
 	#name : #DoubleByteLayout,
 	#superclass : #BitsLayout,
-	#category : #Kernel
+	#category : #'Kernel-Layout'
 }
 
 { #category : #'methodsFor:' }

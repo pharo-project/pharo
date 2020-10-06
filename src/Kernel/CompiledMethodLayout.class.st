@@ -7,7 +7,7 @@ See CompiledMethod for more details.
 Class {
 	#name : #CompiledMethodLayout,
 	#superclass : #ObjectLayout,
-	#category : #Kernel
+	#category : #'Kernel-Layout'
 }
 
 { #category : #'instance creation' }

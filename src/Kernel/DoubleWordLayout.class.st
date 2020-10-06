@@ -4,7 +4,7 @@ I am a raw data layout that holds double words (64 bit).
 Class {
 	#name : #DoubleWordLayout,
 	#superclass : #BitsLayout,
-	#category : #Kernel
+	#category : #'Kernel-Layout'
 }
 
 { #category : #'instance creation' }
