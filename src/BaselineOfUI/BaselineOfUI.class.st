@@ -52,7 +52,6 @@ BaselineOfUI >> baseline: spec [
 		spec package: 'StartupPreferences'.		
 		
 		spec package: 'Debugger-Actions'.
-		spec package: 'Debugger-Filters'.
 
 		spec baseline: 'Fuel' with: [
 			spec repository: repository; loads: 'Tools' ].
