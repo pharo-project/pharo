@@ -11,6 +11,12 @@ Class {
 	#category : #'Kernel-Layout'
 }
 
+{ #category : #description }
+AbstractLayout class >> kind [
+	"Return an identifier describing uniquely the layout"
+	^ self subclassResponsibility
+]
+
 { #category : #comparing }
 AbstractLayout >> = other [
 	^ self class = other class

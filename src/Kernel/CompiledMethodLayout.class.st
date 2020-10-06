@@ -17,6 +17,11 @@ CompiledMethodLayout class >> extending: superLayout scope: aScope host: aClass 
 		yourself
 ]
 
+{ #category : #description }
+CompiledMethodLayout class >> kind [ 
+	^ #compiledMethod 
+]
+
 { #category : #format }
 CompiledMethodLayout >> instanceSpecification [
 	 ^ 24

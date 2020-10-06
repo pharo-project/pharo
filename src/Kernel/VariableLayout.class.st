@@ -17,6 +17,11 @@ VariableLayout class >> extending: superLayout scope: aScope host: aClass [
 		yourself
 ]
 
+{ #category : #description }
+VariableLayout class >> kind [ 
+	^ #variable
+]
+
 { #category : #format }
 VariableLayout >> instanceSpecification [
 	^ self hasFields

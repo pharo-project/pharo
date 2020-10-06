@@ -19,6 +19,11 @@ WeakLayout class >> extending: superLayout scope: aScope host: aClass [
 		yourself
 ]
 
+{ #category : #description }
+WeakLayout class >> kind [ 
+	^ #weak
+]
+
 { #category : #format }
 WeakLayout >> instanceSpecification [
 	^ 4

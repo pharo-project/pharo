@@ -16,6 +16,12 @@ ImmediateLayout class >> extending: superLayout scope: aScope host: aClass [
 		yourself
 ]
 
+{ #category : #description }
+ImmediateLayout class >> kind [ 	
+
+	^ #immediate
+]
+
 { #category : #extending }
 ImmediateLayout >> extend: newScope [
 	^ FixedLayout new slotScope: newScope

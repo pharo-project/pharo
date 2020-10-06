@@ -14,6 +14,11 @@ WordLayout class >> extending: superLayout scope: aScope host: aClass [
 		yourself
 ]
 
+{ #category : #description }
+WordLayout class >> kind [ 
+	^ #variableWord
+]
+
 { #category : #accessing }
 WordLayout >> bytesPerSlot [
 	

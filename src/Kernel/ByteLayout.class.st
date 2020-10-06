@@ -14,6 +14,11 @@ ByteLayout class >> extending: superLayout scope: aScope host: aClass [
 		yourself
 ]
 
+{ #category : #description }
+ByteLayout class >> kind [ 
+	^ #variableByte
+]
+
 { #category : #accessing }
 ByteLayout >> bytesPerSlot [
 	

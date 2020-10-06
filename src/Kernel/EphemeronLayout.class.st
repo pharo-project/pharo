@@ -15,6 +15,11 @@ EphemeronLayout class >> extending: superLayout scope: aScope host: aClass [
 		yourself
 ]
 
+{ #category : #description }
+EphemeronLayout class >> kind [ 
+	^ #ephemeron
+]
+
 { #category : #format }
 EphemeronLayout >> instanceSpecification [
 	^ 5
