@@ -353,6 +353,7 @@ OpalCompiler >> compileDoit [
 						in: exception errorCode.
 					^ self compilationContext failBlock value ]
 				ifNil: [ exception pass ] ].
+	ASTCache default at: cm put: ast.
 	^cm
 ]
 

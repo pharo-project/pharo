@@ -17,7 +17,8 @@ Class {
 
 { #category : #'temp vars' }
 OCRequestorScope >> allTemps [
-	^#()
+	"the requestor has the temps defined in the Requestor as WorkspaceVariables"
+	^requestor bindings associations 
 ]
 
 { #category : #accessing }
