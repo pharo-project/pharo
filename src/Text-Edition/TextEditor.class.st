@@ -2928,7 +2928,7 @@ TextEditor >> setSelectorSearch: aStringOrText [
 
 { #category : #'menu declaration' }
 TextEditor >> shiftedMenuKeyword [
-	^ 'textEditorShiftedMenu'
+	^ #textEditorShiftedMenu
 
 ]
 
