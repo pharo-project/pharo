@@ -109,11 +109,6 @@ Collection >> floor [
 ]
 
 { #category : #'*Collections-arithmetic-collectors' }
-Collection >> isZero [
-   ^ false
-]
-
-{ #category : #'*Collections-arithmetic-collectors' }
 Collection >> ln [
 	^self collect: [:each | each ln]
 ]
