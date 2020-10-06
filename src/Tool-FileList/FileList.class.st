@@ -593,7 +593,7 @@ FileList >> fileContentsMenu: aMenu shifted: shifted [
 			for: self reference
 			extraLines: #()].
 
-	aMenu addAllFromPragma: 'fileListContentMenu' target: self.
+	aMenu addAllFromPragma: #fileListContentMenu target: self.
 
 	^ aMenu
 

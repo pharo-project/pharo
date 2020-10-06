@@ -8,6 +8,14 @@ Class {
 }
 
 { #category : #tests }
+CollectionArithmeticTest >> testAdd [
+	| collection |
+	collection := #(1 2 3).
+	self assert: collection + 1 equals: #(2 3 4).
+	self assert: 1 + collection  equals: #(2 3 4)
+]
+
+{ #category : #tests }
 CollectionArithmeticTest >> testAverage [
 	| collection |
 	collection := #(1 2 3).
@@ -54,6 +62,14 @@ CollectionArithmeticTest >> testAverageWithEmptyOrderedCollection [
 { #category : #tests }
 CollectionArithmeticTest >> testAverageWithEmptySet [
 	self should: [ Set new average ] raise: CollectionIsEmpty
+]
+
+{ #category : #tests }
+CollectionArithmeticTest >> testDevision [
+	| collection |
+	collection := #(2 4).
+	self assert: collection / 2 equals: #(1 2).
+	self assert: 10 / #(20) equals: {1/2}
 ]
 
 { #category : #tests }

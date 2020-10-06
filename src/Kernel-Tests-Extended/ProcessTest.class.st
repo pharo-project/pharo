@@ -476,7 +476,7 @@ ProcessTest >> testTerminationShouldProceedAllEnsureBlocksIfSomeWasFailed [
 	process terminate.	
 	Processor yield.
 	self assert: ensureCalled.
-	self assert: unwindError signalerContext exception equals: ensureFailure
+	self assert: unwindError signalerContext sender exception equals: ensureFailure
 ]
 
 { #category : #'tests - termination' }

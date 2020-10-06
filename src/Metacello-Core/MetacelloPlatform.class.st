@@ -392,13 +392,14 @@ MetacelloPlatform >> parentDirectoryOf: aFileHandler [
 
 { #category : #caching }
 MetacelloPlatform >> primeStackCacheFor: cacheName doing: noArgBlock defaultDictionary: aDictionary [
-
-	self deprecated: 'use #primeStackCacheWith:doing:'.
+	self
+		deprecated: 'use #primeStackCacheWith:doing:'
+		transformWith: '`@rec primeStackCacheFor: `@arg1 doing: `@arg2 defaultDictionary: `@arg3' -> '`@rec primeStackCacheWith: `@arg3 doing: `@arg2'.
+	
 	self 
 		useStackCacheDuring: [:dict | | cache |
 			cache := dict at: cacheName ifAbsent: [].
-			cache == nil
-				ifTrue: [ 
+			cache ifNil: [ 
 					cache := Dictionary new.
 					dict at: cacheName put: cache ].
 			^noArgBlock value ] 

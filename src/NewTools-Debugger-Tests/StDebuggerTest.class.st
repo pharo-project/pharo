@@ -483,6 +483,7 @@ StDebuggerTest >> testToolbarDisplayMode [
 { #category : #'tests - toolbar' }
 StDebuggerTest >> testToolbarInDNUContext [
 	|commands|
+	self skip.
 	session clear.
 	session := StTestDebuggerProvider new sessionWithDNUAfterStep.
 

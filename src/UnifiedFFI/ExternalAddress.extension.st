@@ -370,7 +370,12 @@ ExternalAddress >> readArrayOf: aType until: aBlock [
 
 { #category : #'*UnifiedFFI-Deprecated50' }
 ExternalAddress >> registerAsExternalResource [
-	self deprecated: 'Use #autoRelease instead.' on: '2016-01-22' in: #Pharo5.  
+	self
+		deprecated: 'Use #autoRelease instead.'
+		on: '2016-01-22'
+		in: #Pharo5
+		transformWith: '`@rec registerAsExternalResource' -> '`@rec autoRelease'.
+	  
 	^ self class finalizationRegistry add: self
 ]
 
