@@ -104,6 +104,11 @@ TestExecutionEnvironment >> activated [
 	self startWatchDog
 ]
 
+{ #category : #accessing }
+TestExecutionEnvironment >> backgroundFailures [
+	^self processMonitor testBackgroundFailures
+]
+
 { #category : #controlling }
 TestExecutionEnvironment >> cleanUpAfterTest [
 	"Cleanup is performed over all services (enabled and disabled) 

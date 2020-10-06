@@ -8,8 +8,7 @@ Class {
 		'stderr',
 		'stdout',
 		'currentTest',
-		'maxTest',
-		'shouldSerializeError'
+		'maxTest'
 	],
 	#category : #'SUnit-UI-Headless'
 }
@@ -30,36 +29,8 @@ CommandLineTestRunner >> done [
 ]
 
 { #category : #helper }
-CommandLineTestRunner >> handleFailure: anError of: aTestCase [ 
-	(anError isNil or: [aTestCase isExpectedFailure])  ifTrue: [ ^ self ].
-
-	(anError isKindOf: TestFailure)
-		ifTrue: [ 
-			suiteFailures := suiteFailures + 1.
-			self printFailure: anError of: aTestCase ]
-		ifFalse: [ 
-			suiteErrors := suiteErrors + 1.
-			self printError: anError of: aTestCase ].
-	
-	self shouldSerializeError 
-		ifTrue: [ self serializeError: anError of: aTestCase ]
-]
-
-{ #category : #helper }
-CommandLineTestRunner >> handleSkip: aTestSkip of: aTestCase [ 
-	self printSkipOf: aTestCase
-
-]
-
-{ #category : #helper }
 CommandLineTestRunner >> increaseTestCount [
 	currentTest := currentTest + 1.
-]
-
-{ #category : #initialization }
-CommandLineTestRunner >> initialize [
-	super initialize.
-	shouldSerializeError := false.
 ]
 
 { #category : #helper }
@@ -75,30 +46,6 @@ CommandLineTestRunner >> print: longErrorMessage short: shortErrorMessage of: aT
 		ifFalse: [ self stdout << longErrorMessage << cr ]
 ]
 
-{ #category : #helper }
-CommandLineTestRunner >> printError: anError of: aTestCase [ 
-	self
-		print: (self shortStackDescriptionFor: anError)
-		short: ' [ERROR]' 
-		of: aTestCase 
-]
-
-{ #category : #helper }
-CommandLineTestRunner >> printFailure: anError of: aTestCase [ 
-	self
-		print: (self shortStackDescriptionFor: anError)
-		short: ' [FAIL]' 
-		of: aTestCase 
-]
-
-{ #category : #helper }
-CommandLineTestRunner >> printPassOf: aTestCase [
-	self
-		print: nil
-		short: ' [OK]' 
-		of: aTestCase 
-]
-
 { #category : #printing }
 CommandLineTestRunner >> printReport [
 	| cr |
@@ -111,28 +58,32 @@ CommandLineTestRunner >> printReport [
 		<< cr
 ]
 
+{ #category : #printing }
+CommandLineTestRunner >> printTestCase: aTestCase [
+]
+
 { #category : #helper }
-CommandLineTestRunner >> printSkipOf: aTestCase [
+CommandLineTestRunner >> recordPassOf: aTestCase [
+	self
+		print: nil
+		short: ' [OK]' 
+		of: aTestCase 
+]
+
+{ #category : #helper }
+CommandLineTestRunner >> recordSkip: aTestSkip duringTest: aTestCase [ 
 	self 
 		print: nil
 		short: ' [SKIPPED]' 
 		of: aTestCase
 ]
 
-{ #category : #printing }
-CommandLineTestRunner >> printTestCase: aTestCase [
-]
-
 { #category : #running }
-CommandLineTestRunner >> runCase: aTestCase [
+CommandLineTestRunner >> reportTestCase: aTestCase runBlock: aBlock [
+
 	self increaseTestCount.
-	self printTestCase: aTestCase.
-	
-	[[ aTestCase runCaseManaged. 
-		self printPassOf: aTestCase ] 
-		on: Halt , Error, TestFailure
-		do: [ :err | self handleFailure: err of: aTestCase ]]
-		on: TestSkip do: [ :skip| self handleSkip: skip of: aTestCase ]
+	self printTestCase: aTestCase.	
+	aBlock value
 ]
 
 { #category : #running }
@@ -149,16 +100,6 @@ CommandLineTestRunner >> shortStackDescriptionFor: anError [
 			anError signalerContext shortDebugStackOn: s ])
 		copyReplaceAll: String cr
 		with: OSPlatform current lineEnding
-]
-
-{ #category : #accessing }
-CommandLineTestRunner >> shouldSerializeError [
-	^ shouldSerializeError
-]
-
-{ #category : #accessing }
-CommandLineTestRunner >> shouldSerializeError: aBoolean [
-	shouldSerializeError := aBoolean.
 ]
 
 { #category : #accessing }
@@ -179,4 +120,20 @@ CommandLineTestRunner >> stdout [
 { #category : #running }
 CommandLineTestRunner >> tearDown [
 	self printReport
+]
+
+{ #category : #helper }
+CommandLineTestRunner >> writeError: anError of: aTestCase [ 
+	self
+		print: (self shortStackDescriptionFor: anError)
+		short: ' [ERROR]' 
+		of: aTestCase 
+]
+
+{ #category : #helper }
+CommandLineTestRunner >> writeFailure: anError of: aTestCase [ 
+	self
+		print: (self shortStackDescriptionFor: anError)
+		short: ' [FAIL]' 
+		of: aTestCase 
 ]
