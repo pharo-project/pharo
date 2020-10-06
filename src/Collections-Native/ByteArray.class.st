@@ -213,8 +213,7 @@ ByteArray >> isLiteral [
 ]
 
 { #category : #testing }
-ByteArray >> isSharedLiteral [
-	"Can this Literal be shared between methods when doing 'ImageCleaner shareLiterals'?"
+ByteArray >> isReadOnlyLiteral [
 	^self isLiteral
 ]
 

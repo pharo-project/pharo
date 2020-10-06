@@ -1273,6 +1273,12 @@ Object >> isPoint [
 	^ false
 ]
 
+{ #category : #testing }
+Object >> isReadOnlyLiteral [
+	"Literals with a textual representation in the method source are compiled read-only"
+	^false
+]
+
 { #category : #'write barrier' }
 Object >> isReadOnlyObject [
 	"Answer if the receiver is read-only.
@@ -1293,12 +1299,6 @@ Object >> isRectangle [
 { #category : #'self evaluating' }
 Object >> isSelfEvaluating [
 	^ self isLiteral
-]
-
-{ #category : #testing }
-Object >> isSharedLiteral [
-	"Can this Literal be shared between methods when doing 'ImageCleaner shareLiterals'?"
-	^false
 ]
 
 { #category : #testing }

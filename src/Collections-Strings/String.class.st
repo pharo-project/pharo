@@ -1863,8 +1863,7 @@ String >> isPatternVariable [
 ]
 
 { #category : #testing }
-String >> isSharedLiteral [
-	"Can this Literal be shared between methods when doing 'ImageCleaner shareLiterals'?"
+String >> isReadOnlyLiteral [
 	^self isLiteral
 ]
 
