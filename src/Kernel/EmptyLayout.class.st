@@ -7,12 +7,18 @@ Class {
 	#classInstVars : [
 		'instance'
 	],
-	#category : #'Kernel-Layout'
+	#category : #Kernel
 }
 
 { #category : #'instance creation' }
 EmptyLayout class >> instance [
 	^ instance ifNil: [ instance := self new ]
+]
+
+{ #category : #description }
+EmptyLayout class >> kind [ 	
+
+	^ #empty
 ]
 
 { #category : #extending }

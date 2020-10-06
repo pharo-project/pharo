@@ -8,8 +8,14 @@ Class {
 	#instVars : [
 		'host'
 	],
-	#category : #'Kernel-Layout'
+	#category : #Kernel
 }
+
+{ #category : #description }
+AbstractLayout class >> kind [
+	"Return an identifier describing uniquely the layout"
+	^ self subclassResponsibility
+]
 
 { #category : #comparing }
 AbstractLayout >> = other [

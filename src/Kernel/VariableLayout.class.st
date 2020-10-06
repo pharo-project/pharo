@@ -7,7 +7,7 @@ Instances of classes using this kind of layout have only a minimum given size. I
 Class {
 	#name : #VariableLayout,
 	#superclass : #PointerLayout,
-	#category : #'Kernel-Layout'
+	#category : #Kernel
 }
 
 { #category : #'instance creation' }
@@ -15,6 +15,11 @@ VariableLayout class >> extending: superLayout scope: aScope host: aClass [
 	^ (superLayout extendVariable: aScope)
 		host: aClass;
 		yourself
+]
+
+{ #category : #description }
+VariableLayout class >> kind [ 
+	^ #variable
 ]
 
 { #category : #format }

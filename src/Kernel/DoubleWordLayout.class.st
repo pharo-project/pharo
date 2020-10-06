@@ -4,7 +4,7 @@ I am a raw data layout that holds double words (64 bit).
 Class {
 	#name : #DoubleWordLayout,
 	#superclass : #BitsLayout,
-	#category : #'Kernel-Layout'
+	#category : #Kernel
 }
 
 { #category : #'instance creation' }
@@ -12,6 +12,11 @@ DoubleWordLayout class >> extending: superLayout scope: aScope host: aClass [
 	^ superLayout extendDoubleWord
 		host: aClass;
 		yourself
+]
+
+{ #category : #description }
+DoubleWordLayout class >> kind [ 
+	^ #variableDoubleWord
 ]
 
 { #category : #extending }

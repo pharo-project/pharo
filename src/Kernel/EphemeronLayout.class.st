@@ -4,7 +4,7 @@ A layout for ephemeron objects
 Class {
 	#name : #EphemeronLayout,
 	#superclass : #PointerLayout,
-	#category : #'Kernel-Layout'
+	#category : #Kernel
 }
 
 { #category : #'as yet unclassified' }
@@ -13,6 +13,11 @@ EphemeronLayout class >> extending: superLayout scope: aScope host: aClass [
 	^ (superLayout extendEphemeron: aScope)
 		host: aClass;
 		yourself
+]
+
+{ #category : #description }
+EphemeronLayout class >> kind [ 
+	^ #ephemeron
 ]
 
 { #category : #format }

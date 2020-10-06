@@ -7,7 +7,7 @@ See CompiledMethod for more details.
 Class {
 	#name : #CompiledMethodLayout,
 	#superclass : #ObjectLayout,
-	#category : #'Kernel-Layout'
+	#category : #Kernel
 }
 
 { #category : #'instance creation' }
@@ -15,6 +15,11 @@ CompiledMethodLayout class >> extending: superLayout scope: aScope host: aClass 
 	^ superLayout extendCompiledMethod
 		host: aClass;
 		yourself
+]
+
+{ #category : #description }
+CompiledMethodLayout class >> kind [ 
+	^ #compiledMethod 
 ]
 
 { #category : #format }

@@ -4,7 +4,7 @@ I am a raw data layout that holds bytes (8 bits).
 Class {
 	#name : #ByteLayout,
 	#superclass : #BitsLayout,
-	#category : #'Kernel-Layout'
+	#category : #Kernel
 }
 
 { #category : #'instance creation' }
@@ -12,6 +12,11 @@ ByteLayout class >> extending: superLayout scope: aScope host: aClass [
 	^ superLayout extendByte
 		host: aClass;
 		yourself
+]
+
+{ #category : #description }
+ByteLayout class >> kind [ 
+	^ #variableByte
 ]
 
 { #category : #accessing }

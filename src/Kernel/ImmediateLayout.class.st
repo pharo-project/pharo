@@ -6,7 +6,7 @@ SmallIntegers are typically implemented as tagged pointers and thus require a sp
 Class {
 	#name : #ImmediateLayout,
 	#superclass : #ObjectLayout,
-	#category : #'Kernel-Layout'
+	#category : #Kernel
 }
 
 { #category : #'instance creation' }
@@ -14,6 +14,12 @@ ImmediateLayout class >> extending: superLayout scope: aScope host: aClass [
 	^ superLayout extendImmediate
 		host: aClass;
 		yourself
+]
+
+{ #category : #description }
+ImmediateLayout class >> kind [ 	
+
+	^ #immediate
 ]
 
 { #category : #extending }

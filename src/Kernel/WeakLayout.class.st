@@ -9,7 +9,7 @@ References held in the variable part are held weakly and might be nilled out by 
 Class {
 	#name : #WeakLayout,
 	#superclass : #PointerLayout,
-	#category : #'Kernel-Layout'
+	#category : #Kernel
 }
 
 { #category : #'instance creation' }
@@ -17,6 +17,11 @@ WeakLayout class >> extending: superLayout scope: aScope host: aClass [
 	^ (superLayout extendWeak: aScope)
 		host: aClass;
 		yourself
+]
+
+{ #category : #description }
+WeakLayout class >> kind [ 
+	^ #weak
 ]
 
 { #category : #format }

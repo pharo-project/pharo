@@ -7,7 +7,7 @@ Instances of classes using this kind of layout have always the same size.
 Class {
 	#name : #FixedLayout,
 	#superclass : #PointerLayout,
-	#category : #'Kernel-Layout'
+	#category : #Kernel
 }
 
 { #category : #'instance creation' }
@@ -15,6 +15,11 @@ FixedLayout class >> extending: superLayout scope: aScope host: aClass [
 	^ (superLayout extend: aScope)
 		host: aClass;
 		yourself
+]
+
+{ #category : #description }
+FixedLayout class >> kind [ 
+	^ #normal
 ]
 
 { #category : #format }
