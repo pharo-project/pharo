@@ -118,7 +118,7 @@ ClySystemEnvironment >> compileANewClassFrom: aString notifying: aController sta
 	source code is defString. If any errors occur in compilation, notify
 	aController."
 
-	| oldClass class newClassName defTokens keywdIx classCompiler |
+	| oldClass class newClassName defTokens keywdIx classCompiler |	
 	oldClass := aClass.
 	defTokens := aString findTokens: Character separators.
 	((defTokens first = 'Trait' and: [ defTokens second = 'named:' ])
