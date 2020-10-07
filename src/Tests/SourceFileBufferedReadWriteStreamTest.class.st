@@ -120,7 +120,7 @@ SourceFileBufferedReadWriteStreamTest >> testEnsureWrittenPositionFlushesComplet
 SourceFileBufferedReadWriteStreamTest >> testNextPutAllStartingAt [
 	| stringStream |
 
-	stringStream := ReadWriteStream with: '' copy.
+	stringStream := ReadWriteStream with: String new.
 	
 	SourceFileBufferedReadWriteStream on: stringStream do: [ : bufferedStream |
 		bufferedStream sizeBuffer: 8.
@@ -261,7 +261,7 @@ SourceFileBufferedReadWriteStreamTest >> testWriteThenRead [
 { #category : #tests }
 SourceFileBufferedReadWriteStreamTest >> testWriting [
 	| stringStream bufferedStream |
-	stringStream := ReadWriteStream with: '' copy.
+	stringStream := ReadWriteStream with: String new.
 
 	bufferedStream := SourceFileBufferedReadWriteStream on: stringStream.
 	0 to: 9 do: [ :each | bufferedStream nextPut: (Character digitValue: each) ].
@@ -274,7 +274,7 @@ SourceFileBufferedReadWriteStreamTest >> testWriting [
 SourceFileBufferedReadWriteStreamTest >> testWritingOverflow [
 	| stringStream bufferedStream |
 	
-	stringStream := ReadWriteStream with: '' copy.
+	stringStream := ReadWriteStream with: String new.
 	bufferedStream := SourceFileBufferedReadWriteStream on: stringStream.
 	bufferedStream sizeBuffer: 8.
 	0 to: 9 do: [ :each | bufferedStream nextPut: (Character digitValue: each) ].
