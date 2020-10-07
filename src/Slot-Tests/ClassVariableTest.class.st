@@ -90,9 +90,10 @@ ClassVariableTest >> testRemoveProperty [
 
 { #category : #tests }
 ClassVariableTest >> testScope [
-	self
-		assert: (SmalltalkImage classVariableNamed: #CompilerClass) scope
-		equals: SmalltalkImage
+	| variable |
+	variable := SmalltalkImage classVariableNamed: #CompilerClass.
+	self assert: variable scope equals: SmalltalkImage.
+	self assert: (variable scope lookupVar: variable name) equals: variable
 ]
 
 { #category : #'tests  - properties' }

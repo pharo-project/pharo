@@ -51,5 +51,6 @@ GlobalVariableTest >> testRemoveProperty [
 { #category : #'tests  - properties' }
 GlobalVariableTest >> testScope [
 
-	self assert: Object binding scope equals: Object environment
+	self assert: Object binding scope equals: Object environment.
+	self assert: (Object binding scope lookupVar: Object binding name) equals: Object binding.
 ]
