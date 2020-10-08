@@ -44,6 +44,11 @@ RubScrolledTextModel >> bindingOf: aString [
 	^ interactionModel ifNotNil:  [ interactionModel bindingOf: aString  ]
 ]
 
+{ #category : #shout }
+RubScrolledTextModel >> bindings [
+	^ self variableBindings
+]
+
 { #category : #'text managing' }
 RubScrolledTextModel >> canDiscardEdits [
 	^ self hasUnacceptedEdits not
