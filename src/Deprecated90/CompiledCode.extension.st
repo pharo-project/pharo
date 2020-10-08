@@ -1,6 +1,12 @@
 Extension { #name : #CompiledCode }
 
 { #category : #'*Deprecated90' }
+CompiledCode >> debuggerMap [
+	self deprecated: 'use the reflective API directly. See methods of DebuggerMethodMapOpal'.
+	^self compilerClass debuggerMethodMapForMethod: self.
+]
+
+{ #category : #'*Deprecated90' }
 CompiledCode >> literalStrings [
 	
 	| litStrs |

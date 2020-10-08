@@ -1,20 +1,50 @@
-Extension { #name : #DebuggerMethodMapOpal }
+"
+I provide helper methods deadling with
 
-{ #category : #'*Deprecated90' }
+-> pc to text mapping
+-> temporary variables for contexts
+-> reading and setting tempary variables
+
+All methods here habe been moved to Context
+"
+Class {
+	#name : #DebuggerMethodMapOpal,
+	#superclass : #Object,
+	#instVars : [
+		'methodNode'
+	],
+	#category : #'Deprecated90-OpalCompiler-Core'
+}
+
+{ #category : #'instance creation' }
+DebuggerMethodMapOpal class >> forMethod: aMethod [
+	self deprecated: 'use the reflective API directly. See methods of DebuggerMethodMapOpal'.
+	^self new forMethod: aMethod
+	
+				
+]
+
+{ #category : #initialization }
+DebuggerMethodMapOpal >> forMethod: aCompiledMethod [ 
+	self deprecated: 'use the reflective API directly. See methods of DebuggerMethodMapOpal'.
+	methodNode := aCompiledMethod ast
+]
+
+{ #category : #'as yet unclassified' }
 DebuggerMethodMapOpal >> namedTempAt: index in: aContext [
 	"Please access temps by name using #tempNamed: on Context"
 	self deprecated: 'Please access temps by name using #tempNamed: on Context'.
 	^aContext tempNamed: (aContext tempNames at: index)
 ]
 
-{ #category : #'*Deprecated90' }
+{ #category : #'as yet unclassified' }
 DebuggerMethodMapOpal >> namedTempAt: index put: aValue in: aContext [
 	"Please access temps by name using #tempNamed:put:"
 	self deprecated: 'Please access temps by name using #tempNamed:put:'.
 	aContext tempNamed: (aContext tempNames at: index) put: aValue
 ]
 
-{ #category : #'*Deprecated90' }
+{ #category : #'as yet unclassified' }
 DebuggerMethodMapOpal >> rangeForPC: aPC contextIsActiveContext: aBoolean [
 	"please use pcRangeContextIsActive: on Context"
 
@@ -30,7 +60,7 @@ DebuggerMethodMapOpal >> rangeForPC: aPC contextIsActiveContext: aBoolean [
  	^(methodNode sourceNodeForPC: pc) debugHighlightRange
 ]
 
-{ #category : #'*Deprecated90' }
+{ #category : #'as yet unclassified' }
 DebuggerMethodMapOpal >> tempNamed: name in: aContext [
 	"please use #tempNamed: on Context"
 	self deprecated: 'please use #tempNamed: on Context'.
@@ -38,14 +68,14 @@ DebuggerMethodMapOpal >> tempNamed: name in: aContext [
 		
 ]
 
-{ #category : #'*Deprecated90' }
+{ #category : #'as yet unclassified' }
 DebuggerMethodMapOpal >> tempNamed: name in: aContext put: aValue [
 	"please use #tempNamed:put: on Context"
 	self deprecated: 'please use #tempNamed:put: on Context'.
 	aContext tempNamed: name put: aValue
 ]
 
-{ #category : #'*Deprecated90' }
+{ #category : #'as yet unclassified' }
 DebuggerMethodMapOpal >> tempNamesForContext: aContext [
 	"use tempNames on Context"
 	self deprecated: 'use tempNames on Context'.

@@ -16,11 +16,6 @@ InstructionStream >> atEnd [
 ]
 
 { #category : #'*Debugging-Core' }
-InstructionStream >> debuggerMap [
-	^self method debuggerMap
-]
-
-{ #category : #'*Debugging-Core' }
 InstructionStream >> firstByte [
 	"Answer the first byte of the current bytecode."
 

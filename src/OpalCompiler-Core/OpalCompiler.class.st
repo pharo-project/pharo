@@ -91,11 +91,6 @@ OpalCompiler class >> createAndEnableOverlay: aBoolean [
 		ifFalse: [ self stopUsingOverlayForDevelopment   ]
 ]
 
-{ #category : #public }
-OpalCompiler class >> debuggerMethodMapForMethod: aMethod [
-	^ DebuggerMethodMapOpal forMethod: aMethod
-]
-
 { #category : #'old - deprecated' }
 OpalCompiler class >> evaluate: textOrString [
 	self
