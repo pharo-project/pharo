@@ -83,3 +83,99 @@ CollectionTest >> testGroupedByGroupsOrderWithSortedCollectionOfDates [
 		].
 
 ]
+
+{ #category : #test }
+CollectionTest >> testTopologicalSortOnCycleDo [
+
+	"This test stress four small cycles detection."
+
+	self
+		assert: ({ (1 -> 1) } topologicalSortOnCycleDo: [ :cycle | cycle ])
+		equals: { (1 -> 1) }.
+	self
+		assert: ({ 
+				 (1 -> 2).
+				 (2 -> 1) } topologicalSortOnCycleDo: [ :cycle | cycle ])
+		equals: { 
+				(2 -> 1).
+				(1 -> 2) }.
+	self
+		assert: ({ 
+				 (1 -> 2).
+				 (2 -> 3).
+				 (3 -> 1) } topologicalSortOnCycleDo: [ :cycle | cycle ])
+		equals: { 
+				(3 -> 1).
+				(2 -> 3).
+				(1 -> 2) }.
+	self
+		assert: ({ 
+				 (5 -> 1).
+				 (1 -> 2).
+				 (2 -> 3).
+				 (3 -> 5).
+				 (3 -> 4) } topologicalSortOnCycleDo: [ :cycle | cycle ])
+		equals: { 
+				(5 -> 1).
+				(3 -> 5).
+				(2 -> 3).
+				(1 -> 2) }
+]
+
+{ #category : #tests }
+CollectionTest >> testTopologicalSortOnCycleDo1 [
+
+	"The following test is kept from TAOCP by Donald Knuth, Volume 1 page 272."
+
+	self
+		assert: ({ 
+				 (9 -> 2).
+				 (3 -> 7).
+				 (7 -> 5).
+				 (5 -> 8).
+				 (8 -> 6).
+				 (4 -> 6).
+				 (1 -> 3).
+				 (7 -> 4).
+				 (9 -> 5).
+				 (2 -> 8) } topologicalSortOnCycleDo: [ Error signal ])
+		equals: #( 1 9 3 2 7 4 5 8 6 )
+]
+
+{ #category : #tests }
+CollectionTest >> testTopologicalSortOnCycleDo2 [
+
+	"The following test is kept from https://upload.wikimedia.org/wikipedia/commons/0/03/Directed_acyclic_graph_2.svg."
+
+	self
+		assert: ({ 
+				 (1 -> 4).
+				 (2 -> 4).
+				 (2 -> 5).
+				 (3 -> 5).
+				 (3 -> 8).
+				 (4 -> 6).
+				 (4 -> 7).
+				 (4 -> 8).
+				 (5 -> 7) } topologicalSortOnCycleDo: [ Error signal ])
+		equals: #( 1 2 3 4 5 8 6 7 )
+]
+
+{ #category : #tests }
+CollectionTest >> testTopologicalSortOnCycleDo3 [
+
+	| random assocs |
+	random := Random seed: 11.
+	assocs := (1 to: 10000) collect: [ :k | 
+		          | a b |
+		          a := random nextInt: 100.
+		          b := random nextInt: 100.
+		          a -> (a = b
+			           ifTrue: [ b + 1 \\ 100 max: 1 ]
+			           ifFalse: [ b ]) ].
+	self
+		assert: (assocs topologicalSortOnCycleDo: [ :cycle | cycle ])
+		equals: { 
+				(94 -> 100).
+				(100 -> 94) }
+]

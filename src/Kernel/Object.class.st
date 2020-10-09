@@ -1004,6 +1004,16 @@ Object >> hash [
 	^ self identityHash 
 ]
 
+{ #category : #'as yet unclassified' }
+Object >> ignoreBlock: aBlock [
+
+	"I invoke the given block giving myself as argument if it would like to consume me.
+	 Then I return my self."
+
+	aBlock cull: self.
+	^ self
+]
+
 { #category : #evaluating }
 Object >> in: aBlock [
 	"Evaluate the given block with the receiver as its argument."

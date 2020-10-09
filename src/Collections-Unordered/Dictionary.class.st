@@ -145,6 +145,16 @@ Dictionary >> addAll: aKeyedCollection [
 	^aKeyedCollection
 ]
 
+{ #category : #'as yet unclassified' }
+Dictionary >> anyAssociation [
+
+	"I mimic the message `Collection>>#anyone` with respect to associations that I collect."
+
+	self
+		emptyCheck;
+		associationsDo: [ :assoc | ^ assoc ]
+]
+
 { #category : #accessing }
 Dictionary >> associationAt: key [ 
 	"Returns the association for the given key."
