@@ -376,11 +376,6 @@ RBMethodNode >> initialize [
 ]
 
 { #category : #testing }
-RBMethodNode >> isDoIt [
-	^ self selector isDoIt
-]
-
-{ #category : #testing }
 RBMethodNode >> isFaulty [
 	(self arguments anySatisfy: [:each | each isFaulty]) ifTrue:[ ^true].
 	(self pragmas anySatisfy: [:each | each isFaulty]) ifTrue:[ ^true].
