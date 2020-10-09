@@ -982,9 +982,6 @@ RBProgramNode >> source [
 RBProgramNode >> sourceCode [
 
 	| interval |
-	"Doit methods have transformed ASTs, we need to pretty print"
-	self methodNode isDoIt ifTrue: [ ^ self formattedCode ].
-	
 	interval := self sourceInterval.
 	interval ifEmpty: [ ^ '' ].
 	
