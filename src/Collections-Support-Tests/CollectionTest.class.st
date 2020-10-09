@@ -179,3 +179,16 @@ CollectionTest >> testTopologicalSortOnCycleDo3 [
 				(94 -> 100).
 				(100 -> 94) }
 ]
+
+{ #category : #test }
+CollectionTest >> testTopologicalSortOnCycleDo5 [
+
+	"This test stress four small cycles detection."
+
+	self
+		should: [ 
+			{ 
+				(1 -> 2).
+				(4 -> 1) } topologicalSortOnCycleDo: [ :cycle | Error signal ] ]
+		raise: SubscriptOutOfBounds
+]
