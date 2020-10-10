@@ -38,8 +38,10 @@ CoVariableValueMessageHeuristic >> valueOfVariable: aName inContext: completionC
 
 	"In the playground, the binding values comes in the bindings of the requestor.
 	If we find in the requestor a binding with the given name, use it, otherwise ignore it."
-	binding := (completionContext doItRequestor bindingOf: aName)
-		ifNil: [ ^ self ].
 	
+	"We check using hasBindingOf: to not create bindings that are not there"
+	(completionContext doItRequestor hasBindingOf: aName) ifFalse:  [ ^ self ].
+	
+	binding := completionContext doItRequestor bindingOf: aName.
 	^ aBlock value: binding value
 ]
