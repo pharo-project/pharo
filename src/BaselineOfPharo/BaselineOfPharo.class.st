@@ -20,6 +20,9 @@ BaselineOfPharo >> baseline: spec [
 
 		spec package: 'Deprecated90'.
 		spec package: 'Gofer-UI'.
+		
+		spec package: 'FluidClassBuilder'.
+		
 	]
 ]
 
