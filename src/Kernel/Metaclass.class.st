@@ -130,6 +130,12 @@ Metaclass >> definition [
 	^ self definitionWithoutSlots
 ]
 
+{ #category : #fileout }
+Metaclass >> definitionStringFor: aConfiguredPrinter [
+
+	^ aConfiguredPrinter metaclassDefinitionString 
+]
+
 { #category : #'file in/out' }
 Metaclass >> definitionWithSlots [
 	"Refer to the comment in ClassDescription|definition."
@@ -158,6 +164,12 @@ Metaclass >> definitionWithoutSlots [
 Metaclass >> environment [
 
 	^thisClass environment
+]
+
+{ #category : #fileout }
+Metaclass >> expandedDefinitionStringFor: aPrinter [
+
+	^ aPrinter expandedMetaclassDefinitionString
 ]
 
 { #category : #testing }
