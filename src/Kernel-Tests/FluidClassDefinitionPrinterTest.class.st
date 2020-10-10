@@ -1,7 +1,7 @@
 Class {
 	#name : #FluidClassDefinitionPrinterTest,
 	#superclass : #CommonClassDefinitionPrinterTest,
-	#category : #'Kernel-Tests'
+	#category : #'Kernel-Tests-Fluid'
 }
 
 { #category : #helpers }
@@ -18,7 +18,7 @@ FluidClassDefinitionPrinterTest >> forClass: aClass [
 
 ]
 
-{ #category : #helpers }
+{ #category : #running }
 FluidClassDefinitionPrinterTest >> setUp [
 
 	super setUp.

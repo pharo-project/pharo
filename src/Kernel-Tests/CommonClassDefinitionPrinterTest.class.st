@@ -8,17 +8,17 @@ Class {
 	#instVars : [
 		'slotuse'
 	],
-	#category : #'Kernel-Tests'
+	#category : #'Kernel-Tests-Fluid'
 }
 
-{ #category : #'tests - classes' }
+{ #category : #running }
 CommonClassDefinitionPrinterTest >> setUp [ 
 	super setUp.
 	slotuse := ClassDefinitionPrinter showFluidClassDefinition.
 	
 ]
 
-{ #category : #'tests - classes' }
+{ #category : #running }
 CommonClassDefinitionPrinterTest >> tearDown [
 
 	ClassDefinitionPrinter showFluidClassDefinition: slotuse.

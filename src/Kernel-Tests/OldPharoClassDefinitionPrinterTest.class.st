@@ -1,17 +1,17 @@
 Class {
 	#name : #OldPharoClassDefinitionPrinterTest,
 	#superclass : #CommonClassDefinitionPrinterTest,
-	#category : #'Kernel-Tests'
+	#category : #'Kernel-Tests-Fluid'
 }
 
-{ #category : #'instance creation' }
+{ #category : #helpers }
 OldPharoClassDefinitionPrinterTest >> forClass: aClass [
 	^ (OldPharoClassDefinitionPrinter for: aClass) definitionString 
 
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : #running }
 OldPharoClassDefinitionPrinterTest >> setUp [
 
 	super setUp.

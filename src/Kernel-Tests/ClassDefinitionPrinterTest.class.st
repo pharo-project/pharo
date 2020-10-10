@@ -1,7 +1,7 @@
 Class {
 	#name : #ClassDefinitionPrinterTest,
 	#superclass : #CommonClassDefinitionPrinterTest,
-	#category : #'Kernel-Tests'
+	#category : #'Kernel-Tests-Fluid'
 }
 
 { #category : #tests }
