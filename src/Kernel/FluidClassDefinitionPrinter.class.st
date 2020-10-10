@@ -29,12 +29,6 @@ Class {
 	#category : #'Kernel-ClassDefinitionPrinter'
 }
 
-{ #category : #running }
-FluidClassDefinitionPrinter >> classDefinitionParserClass [
-
-	^ CDFluidClassDefinitionParser
-]
-
 { #category : #'definition double dispatch API' }
 FluidClassDefinitionPrinter >> classDefinitionString [
 
