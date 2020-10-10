@@ -26,7 +26,7 @@ ClassDefinitionPrinter < #FluidClassDefinitionPrinter
 Class {
 	#name : #FluidClassDefinitionPrinter,
 	#superclass : #ClassDefinitionPrinter,
-	#category : #Kernel
+	#category : #'Kernel-ClassDefinitionPrinter'
 }
 
 { #category : #running }

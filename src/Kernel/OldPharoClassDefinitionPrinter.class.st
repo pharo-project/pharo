@@ -1,7 +1,7 @@
 Class {
 	#name : #OldPharoClassDefinitionPrinter,
 	#superclass : #ClassDefinitionPrinter,
-	#category : #Kernel
+	#category : #'Kernel-ClassDefinitionPrinter'
 }
 
 { #category : #delegating }

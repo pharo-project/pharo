@@ -1,7 +1,7 @@
 Class {
 	#name : #LegacyClassDefinitionPrinter,
 	#superclass : #ClassDefinitionPrinter,
-	#category : #Kernel
+	#category : #'Kernel-ClassDefinitionPrinter'
 }
 
 { #category : #template }

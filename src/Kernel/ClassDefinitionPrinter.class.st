@@ -61,7 +61,7 @@ Class {
 	#classVars : [
 		'ShowFluidClassDefinition'
 	],
-	#category : #Kernel
+	#category : #'Kernel-ClassDefinitionPrinter'
 }
 
 { #category : #'instance creation' }
