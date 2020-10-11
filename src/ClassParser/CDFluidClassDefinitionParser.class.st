@@ -92,18 +92,6 @@ CDFluidClassDefinitionParser >> handleClassAndSuperclassOf: aNode [
 ]
 
 { #category : #'handling  nodes' }
-CDFluidClassDefinitionParser >> handleClassName: aNode [
-	| className classNode |
-	className := (aNode isVariable
-		ifTrue: [ aNode name ]
-		ifFalse: [ aNode value ]) asSymbol.
-	classNode := self classNameNodeClass new
-		originalNode: aNode;
-		className: className.
-	classDefinition className: className astNode: classNode
-]
-
-{ #category : #'handling  nodes' }
 CDFluidClassDefinitionParser >> handleInstanceVariablesFromNode: aNode [
 	| slots slotNodes instanceVariablesString |
 	instanceVariablesString := aNode value.
@@ -126,12 +114,6 @@ CDFluidClassDefinitionParser >> handleInstanceVariablesFromNode: aNode [
 CDFluidClassDefinitionParser >> handleLayout: aNode [
 
 	classDefinition classKind: aNode binding value kind
-]
-
-{ #category : #accessing }
-CDFluidClassDefinitionParser >> handlePackage: aNode [ 
-	
-	classDefinition packageNameNode: aNode astNode: aNode
 ]
 
 { #category : #'handling  nodes' }

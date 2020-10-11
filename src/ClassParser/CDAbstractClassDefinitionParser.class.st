@@ -34,6 +34,24 @@ CDAbstractClassDefinitionParser >> classNameNodeClass [
 	^ CDClassNameNode
 ]
 
+{ #category : #parsing }
+CDAbstractClassDefinitionParser >> handleClassName: aNode [
+	| className superclassNode |
+	className := (aNode isVariable
+		ifTrue: [ aNode name ]
+		ifFalse: [ aNode value ]) asSymbol.
+	superclassNode := self classNameNodeClass new
+		originalNode: aNode;
+		className: className.
+	classDefinition className: className astNode: superclassNode
+]
+
+{ #category : #accessing }
+CDAbstractClassDefinitionParser >> handlePackage: aNode [ 
+	
+	classDefinition packageNameNode: aNode astNode: aNode
+]
+
 { #category : #testing }
 CDAbstractClassDefinitionParser >> isInstanceSideDefinition: aRBMessageNode [
 	"Based on the Point or Point class structure, returns whether the definition is a class or instance side definition."

@@ -51,28 +51,10 @@ CDClassDefinitionParser >> isInstanceSideDefinition: aRBMessageNode [
 	^ aRBMessageNode receiver isMessage not
 ]
 
-{ #category : #accessing }
-CDClassDefinitionParser >> package: aNode [ 
-	
-	classDefinition packageNameNode: aNode astNode: aNode
-]
-
-{ #category : #parsing }
-CDClassDefinitionParser >> parseClassName: aNode [
-	| className superclassNode |
-	className := (aNode isVariable
-		ifTrue: [ aNode name ]
-		ifFalse: [ aNode value ]) asSymbol.
-	superclassNode := self classNameNodeClass new
-		originalNode: aNode;
-		className: className.
-	classDefinition className: className astNode: superclassNode
-]
-
 { #category : #parsing }
 CDClassDefinitionParser >> parseClassName: aNode withType: aSymbol [
 	
-	self parseClassName: aNode.
+	self handleClassName: aNode.
 	classDefinition classKind: aSymbol
 ]
 
@@ -127,9 +109,9 @@ CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 	aString =	 #classVariableNames:
 		ifTrue: [ ^ self classVariableNames: aNode ].
 	aString =	 #category:
-		ifTrue: [ ^ self package: aNode ].	
+		ifTrue: [ ^ self handlePackage: aNode ].	
 	aString =	 #package:
-		ifTrue: [ ^ self package: aNode ].
+		ifTrue: [ ^ self handlePackage: aNode ].
 	aString =	 #uses:
 		ifTrue: [ ^ self parseTraitDefinitionFromNode: aNode ].
 	aString =	 #poolDictionaries:
@@ -232,7 +214,7 @@ CDClassDefinitionParser >> visitMessageNode: aRBMessageNode [
 
 	(self isInstanceSideDefinition: aRBMessageNode)
 		ifTrue: [ self parseSuperclassNode: aRBMessageNode receiver ]
-		ifFalse: [ self parseClassName: aRBMessageNode receiver receiver ].
+		ifFalse: [ self handleClassName: aRBMessageNode receiver receiver ].
 	
 	aRBMessageNode selectorParts
 		with: aRBMessageNode arguments
