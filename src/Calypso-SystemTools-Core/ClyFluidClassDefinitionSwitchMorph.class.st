@@ -7,7 +7,7 @@ Internal Representation and Key Implementation Points.
 	checkbox:		<CheckboxMorph>
 "
 Class {
-	#name : #ClySlotClassDefinitionSwitchMorph,
+	#name : #ClyFluidClassDefinitionSwitchMorph,
 	#superclass : #ClyStatusBarItemMorph,
 	#instVars : [
 		'checkbox'
@@ -16,7 +16,7 @@ Class {
 }
 
 { #category : #building }
-ClySlotClassDefinitionSwitchMorph >> build [
+ClyFluidClassDefinitionSwitchMorph >> build [
 	
 	checkbox := CheckboxMorph 
 		on: self selected: #usesSlotBasedDefinition changeSelected: #toggle.
@@ -25,24 +25,24 @@ ClySlotClassDefinitionSwitchMorph >> build [
 		labelClickable: true;
 		vResizing: #shrinkWrap;
 		hResizing: #shrinkWrap;
-		setBalloonText:	'You can switch between old and new class definition. New definition is based on slots'.
+		setBalloonText:	'To switch between old and new fluid class definition. The fluid definition will be default in the future'.
 	self addMorph: checkbox
 ]
 
 { #category : #accessing }
-ClySlotClassDefinitionSwitchMorph >> definitionTypeLabel [
-	^ 'Slots'
+ClyFluidClassDefinitionSwitchMorph >> definitionTypeLabel [
+	^ 'Fluid'
 ]
 
-{ #category : #operations }
-ClySlotClassDefinitionSwitchMorph >> toggle [
-	Slot showSlotClassDefinition: Slot showSlotClassDefinition not.
-	
+{ #category : #configure }
+ClyFluidClassDefinitionSwitchMorph >> toggle [
+
+	ClassDefinitionPrinter toggleShowFluidClassDefinition.
 	ownerTool update
 ]
 
-{ #category : #testing }
-ClySlotClassDefinitionSwitchMorph >> usesSlotBasedDefinition [
-	 
-	^ Slot showSlotClassDefinition
+{ #category : #configure }
+ClyFluidClassDefinitionSwitchMorph >> usesSlotBasedDefinition [
+
+	^ ClassDefinitionPrinter showFluidClassDefinition
 ]

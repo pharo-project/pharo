@@ -65,24 +65,10 @@ ClyClassCreationToolMorph >> classTag: anObject [
 	classTag := anObject
 ]
 
-{ #category : #building }
+{ #category : #template }
 ClyClassCreationToolMorph >> classTemplate [
 
-	| template |
-	
-	template := Slot showSlotClassDefinition
-		ifTrue: [ 
-			'Object subclass: #NameOfSubclass
-	slots: {}
-	classVariables: {}
-	package: ''' ]
-		ifFalse: [ 
-			'Object subclass: #NameOfSubclass
-	instanceVariableNames: ''''
-	classVariableNames: ''''
-	package: ''' ].
-
-	^ template , self packageName , '''' 
+	^ ClassDefinitionPrinter new classDefinitionTemplateInPackage:  self packageName 
 ]
 
 { #category : #initialization }
@@ -104,7 +90,7 @@ ClyClassCreationToolMorph >> editingText [
 ClyClassCreationToolMorph >> fillStatusBar [ 
 	super fillStatusBar.
 	
-	statusBar addCommandItem: (ClySlotClassDefinitionSwitchMorph for: self)
+	statusBar addCommandItem: (ClyFluidClassDefinitionSwitchMorph for: self)
 ]
 
 { #category : #testing }

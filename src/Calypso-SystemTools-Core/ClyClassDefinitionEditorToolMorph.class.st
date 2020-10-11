@@ -23,10 +23,10 @@ ClyClassDefinitionEditorToolMorph >> applyChanges [
 	
 ]
 
-{ #category : #contexts }
+{ #category : #'to sort' }
 ClyClassDefinitionEditorToolMorph >> createTextContext [
 	^self selectedSourceNode
-		ifNil: [super createTextContext]
+		ifNil: [ ClyClassDefinitionContext for: self ]
 		ifNotNil: [ :astNode | ClySourceCodeContext for: self selectedNode: astNode]
 ]
 
@@ -47,16 +47,16 @@ ClyClassDefinitionEditorToolMorph >> defaultIconName [
 	^#classIcon
 ]
 
-{ #category : #accessing }
+{ #category : #'to sort' }
 ClyClassDefinitionEditorToolMorph >> editingText [
 	
-	^ editingClass definition
+	^ editingClass definitionString
 ]
 
 { #category : #building }
 ClyClassDefinitionEditorToolMorph >> fillStatusBar [ 
 	super fillStatusBar.
-	statusBar addCommandItem: (ClySlotClassDefinitionSwitchMorph for: self)
+	statusBar addCommandItem: (ClyFluidClassDefinitionSwitchMorph for: self)
 ]
 
 { #category : #testing }
@@ -65,9 +65,9 @@ ClyClassDefinitionEditorToolMorph >> isCommandAvailable: aCommand [
 	^ aCommand canBeExecutedInClassEditor: self
 ]
 
-{ #category : #accessing }
+{ #category : #'to sort' }
 ClyClassDefinitionEditorToolMorph >> parseClassDefinition [
-	^ CDClassDefinitionParser parse: self editingText
+	^ ClassDefinitionPrinter new classDefinitionParserClass parse: self editingText
 ]
 
 { #category : #'selecting text' }
