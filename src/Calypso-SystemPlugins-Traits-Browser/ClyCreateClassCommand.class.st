@@ -32,15 +32,12 @@ ClyCreateClassCommand >> defaultMenuItemName [
 	^'New class'
 ]
 
-{ #category : #execution }
+{ #category : #'command execution' }
 ClyCreateClassCommand >> execute [
 	| classDefinition p resultTrait |
 	p := package name.
 	classTag ifNotNil: [ p := p , '-' , classTag ].
-	classDefinition := 'Object subclass: #MyClass
-	instanceVariableNames: ''''
-	classVariableNames: ''''
-	package: ''' , p , ''''.
+	classDefinition := ClassDefinitionPrinter new classDefinitionTemplateInPackage: p.
 	classDefinition := UIManager default
 		                   multiLineRequest: 'Define class definition:'
 		                   initialAnswer: classDefinition
