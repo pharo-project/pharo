@@ -227,19 +227,6 @@ CDClassDefinitionParser >> parseTraitDefinitionFromNode: aNode [
 	classDefinition traitDefinition: traitComposition.
 ]
 
-{ #category : #internal }
-CDClassDefinitionParser >> setAdequateClassDefinitionFrom: expressionTree [
-	"set a class or metaclass class definition as class definition object."
-	(self isInstanceSideDefinition: expressionTree)
-		ifTrue: [ self beClassDefinition ]
-		ifFalse: [ self beMetaclassDefinition ]
-]
-
-{ #category : #'private class factory' }
-CDClassDefinitionParser >> sharedPoolNodeClass [
-	^ CDSharedPoolNode
-]
-
 { #category : #parsing }
 CDClassDefinitionParser >> visitMessageNode: aRBMessageNode [
 

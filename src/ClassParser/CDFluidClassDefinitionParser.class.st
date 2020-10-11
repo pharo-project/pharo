@@ -326,14 +326,7 @@ CDFluidClassDefinitionParser >> setAdequateClassDefinitionFrom: expressionTree [
 		ifTrue: [ self beTraitDefinition. ^ self ].
 	(self isTraitClassSideDefinition: expressionTree)	
 		ifTrue: [ self beClassSideTraitDefinition. ^ self ].
-	(self isInstanceSideDefinition: expressionTree)
-		ifTrue: [ self beClassDefinition ]
-		ifFalse: [ self beMetaclassDefinition ]
-]
-
-{ #category : #'private class factory' }
-CDFluidClassDefinitionParser >> sharedPoolNodeClass [
-	^ CDSharedPoolNode
+	super setAdequateClassDefinitionFrom: expressionTree
 ]
 
 { #category : #'parsing-internal' }
