@@ -10,7 +10,6 @@ Class {
 	#name : #CDClassDefinitionParser,
 	#superclass : #CDAbstractClassDefinitionParser,
 	#instVars : [
-		'classDefinition',
 		'subclass'
 	],
 	#category : #'ClassParser-Model'
@@ -26,23 +25,6 @@ CDClassDefinitionParser class >> fromASTNode: aNode [
 CDClassDefinitionParser class >> parse: aString [ 
 	
 	^ self new parse: aString
-]
-
-{ #category : #internal }
-CDClassDefinitionParser >> beClassDefinition [
-		
-	classDefinition := CDClassDefinitionNode new
-]
-
-{ #category : #internal }
-CDClassDefinitionParser >> beMetaclassDefinition [
-		
-	classDefinition := CDMetaclassDefinitionNode new
-]
-
-{ #category : #'private class factory' }
-CDClassDefinitionParser >> classNameNodeClass [
-	^ CDClassNameNode
 ]
 
 { #category : #accessing }
@@ -73,16 +55,6 @@ CDClassDefinitionParser >> isInstanceSideDefinition: aRBMessageNode [
 CDClassDefinitionParser >> package: aNode [ 
 	
 	classDefinition packageNameNode: aNode astNode: aNode
-]
-
-{ #category : #'parsing main' }
-CDClassDefinitionParser >> parse: aString [ 
-	
-	| expressionTree |
-	expressionTree := RBParser parseExpression: aString.
-	expressionTree doSemanticAnalysis.
-	
-	^ self parseRootNode: expressionTree
 ]
 
 { #category : #parsing }

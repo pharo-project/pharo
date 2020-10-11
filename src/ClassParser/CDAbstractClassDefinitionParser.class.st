@@ -5,6 +5,9 @@ I'm a common superclass for class definition parsers.
 Class {
 	#name : #CDAbstractClassDefinitionParser,
 	#superclass : #Object,
+	#instVars : [
+		'classDefinition'
+	],
 	#category : #ClassParser
 }
 
