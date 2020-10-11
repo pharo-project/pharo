@@ -549,6 +549,11 @@ TestCase class >> testSelectors [
 	^(self selectors select: [ :each | (each beginsWith: 'test') and: [each numArgs isZero]])
 ]
 
+{ #category : #'as yet unclassified' }
+TestCase class >> whichClassIncludesTestSelector: aSymbol [
+	^self whichClassIncludesSelector: aSymbol
+]
+
 { #category : #dependencies }
 TestCase >> addDependentToHierachy: anObject [ 
 	"an empty method. for Composite compability with TestSuite"
@@ -723,7 +728,7 @@ TestCase >> printTestSelectorOn: aStream [
 	testSelector
 		ifNotNil: [ 
 			| class |
-			class := self class whichClassIncludesSelector: testSelector.
+			class := self class whichClassIncludesTestSelector: testSelector.
 			class ~= self class
 				ifTrue: [ self printTestSelectorDefiningClass: class on: aStream ].
 			aStream
