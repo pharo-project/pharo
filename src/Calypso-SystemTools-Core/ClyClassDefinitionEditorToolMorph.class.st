@@ -26,8 +26,8 @@ ClyClassDefinitionEditorToolMorph >> applyChanges [
 { #category : #'to sort' }
 ClyClassDefinitionEditorToolMorph >> createTextContext [
 	^self selectedSourceNode
-		ifNil: [ ClyClassDefinitionContext for: self ]
-		ifNotNil: [ :astNode | ClySourceCodeContext for: self selectedNode: astNode]
+		ifNil: [ super createTextContext ]
+		ifNotNil: [ :astNode | ClyClassDefinitionContext for: self selectedNode: astNode]
 ]
 
 { #category : #building }
