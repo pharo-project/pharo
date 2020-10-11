@@ -5,11 +5,6 @@ Class {
 }
 
 { #category : #activation }
-ClyExpandClassDefinitionCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isClassSelected 
-]
-
-{ #category : #activation }
 ClyExpandClassDefinitionCommand class >> sourceCodeMenuActivation [
    <classAnnotation>
    ^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.2 for: ClyClassDefinitionContext
