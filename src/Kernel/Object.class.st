@@ -1007,8 +1007,8 @@ Object >> hash [
 { #category : #'as yet unclassified' }
 Object >> ignoreBlock: aBlock [
 
-	"I invoke the given block giving myself as argument if it would like to consume me.
-	 Then I return my self."
+	"I invoke the given block giving myself as argument if it needs to consume me.
+	 Then I return my self discarding the value returned by the given block."
 
 	aBlock cull: self.
 	^ self
