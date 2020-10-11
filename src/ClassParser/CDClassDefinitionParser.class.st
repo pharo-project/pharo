@@ -113,14 +113,6 @@ CDClassDefinitionParser >> parsePoolDictionariesFromNode: aNode [
 ]
 
 { #category : #parsing }
-CDClassDefinitionParser >> parseRootNode: expressionTree [
-	self setAdequateClassDefinitionFrom: expressionTree.
-	classDefinition originalNode: expressionTree.
-	expressionTree acceptVisitor: self.
-	^ classDefinition
-]
-
-{ #category : #parsing }
 CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [ 
 	
 	"We could do this with reflection, or with a dictionary and closures.
