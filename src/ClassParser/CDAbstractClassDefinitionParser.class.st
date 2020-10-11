@@ -46,6 +46,25 @@ CDAbstractClassDefinitionParser >> handleClassName: aNode [
 	classDefinition className: className astNode: superclassNode
 ]
 
+{ #category : #parsing }
+CDAbstractClassDefinitionParser >> handleInstanceVariablesFromNode: aNode [
+	| slots slotNodes instanceVariablesString |
+	instanceVariablesString := aNode value.
+	slots := instanceVariablesString substrings.
+	slotNodes := slots
+		collect: [ :slotName | 
+			| start |
+			start := aNode start
+				+ (instanceVariablesString findString: slotName).
+			self slotNodeClass
+				node: aNode
+				name: slotName
+				slotClassName: #InstanceVariableSlot
+				start: start
+				stop: start + slotName size ].
+	classDefinition slots: slotNodes
+]
+
 { #category : #accessing }
 CDAbstractClassDefinitionParser >> handlePackage: aNode [ 
 	

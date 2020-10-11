@@ -92,25 +92,6 @@ CDFluidClassDefinitionParser >> handleClassAndSuperclassOf: aNode [
 ]
 
 { #category : #'handling  nodes' }
-CDFluidClassDefinitionParser >> handleInstanceVariablesFromNode: aNode [
-	| slots slotNodes instanceVariablesString |
-	instanceVariablesString := aNode value.
-	slots := instanceVariablesString substrings.
-	slotNodes := slots
-		collect: [ :slotName | 
-			| start |
-			start := aNode start
-				+ (instanceVariablesString findString: slotName).
-			self slotNodeClass
-				node: aNode
-				name: slotName
-				slotClassName: #InstanceVariableSlot
-				start: start
-				stop: start + slotName size ].
-	classDefinition slots: slotNodes
-]
-
-{ #category : #'handling  nodes' }
 CDFluidClassDefinitionParser >> handleLayout: aNode [
 
 	classDefinition classKind: aNode binding value kind

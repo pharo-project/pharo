@@ -59,25 +59,6 @@ CDClassDefinitionParser >> parseClassName: aNode withType: aSymbol [
 ]
 
 { #category : #parsing }
-CDClassDefinitionParser >> parseInstanceVariablesFromNode: aNode [
-	| slots slotNodes instanceVariablesString |
-	instanceVariablesString := aNode value.
-	slots := instanceVariablesString substrings.
-	slotNodes := slots
-		collect: [ :slotName | 
-			| start |
-			start := aNode start
-				+ (instanceVariablesString findString: slotName).
-			self slotNodeClass
-				node: aNode
-				name: slotName
-				slotClassName: #InstanceVariableSlot
-				start: start
-				stop: start + slotName size ].
-	classDefinition slots: slotNodes
-]
-
-{ #category : #parsing }
 CDClassDefinitionParser >> parsePoolDictionariesFromNode: aNode [
 	| shareds sharedPoolNodes sharedPoolString |
 	sharedPoolString := aNode value.
@@ -103,7 +84,7 @@ CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 	(#(variableWordSubclass: ephemeronSubclass: weakSubclass: variableByteSubclass: variableSubclass: immediateSubclass: #subclass:) includes: aString)
 		ifTrue: [ ^ self parseClassName: aNode withType: aString  ].
 	aString =	 #instanceVariableNames:
-		ifTrue: [ ^ self parseInstanceVariablesFromNode: aNode ].
+		ifTrue: [ ^ self handleInstanceVariablesFromNode: aNode ].
 	aString =	 #slots:
 		ifTrue: [ ^ self parseSlotsNodesFromArrayNode: aNode ].
 	aString =	 #classVariableNames:
