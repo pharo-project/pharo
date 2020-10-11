@@ -8,7 +8,7 @@ Main public API is
 "
 Class {
 	#name : #CDClassDefinitionParser,
-	#superclass : #Object,
+	#superclass : #CDAbstractClassDefinitionParser,
 	#instVars : [
 		'classDefinition',
 		'subclass'

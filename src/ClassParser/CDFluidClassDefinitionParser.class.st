@@ -45,13 +45,10 @@ In Pharo, a metaclass cannot be created in isolation (yes we can programmaticall
 "
 Class {
 	#name : #CDFluidClassDefinitionParser,
-	#superclass : #Object,
+	#superclass : #CDAbstractClassDefinitionParser,
 	#instVars : [
 		'subclass',
 		'definition'
-	],
-	#classVars : [
-		'On'
 	],
 	#category : #ClassParser
 }
@@ -62,26 +59,10 @@ CDFluidClassDefinitionParser class >> fromASTNode: aNode [
 	^ self new parseRootNode: aNode
 ]
 
-{ #category : #testing }
-CDFluidClassDefinitionParser class >> initialize [
-	"self initialize"
-	self setOn: false
-]
-
-{ #category : #testing }
-CDFluidClassDefinitionParser class >> isOn [ 
-	^ On
-]
-
 { #category : #parsing }
 CDFluidClassDefinitionParser class >> parse: aString [ 
 	
 	^ self new parse: aString
-]
-
-{ #category : #testing }
-CDFluidClassDefinitionParser class >> setOn: aBoolean [
-	On := aBoolean
 ]
 
 { #category : #internal }

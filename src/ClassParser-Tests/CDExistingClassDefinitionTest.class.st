@@ -58,6 +58,7 @@ CDExistingClassDefinitionTest >> testGettingExistingClassNameBinding [
 CDExistingClassDefinitionTest >> testSharedSlotNodeArePolymorphicToRBVariableNodes [
 	
 	| classVarNode |
+		self skip.
 	classVarNode := classDefinition sharedSlotNodes first.
 	
 	self assert: classVarNode isVariable.
