@@ -27,39 +27,8 @@ CDClassDefinitionParser class >> parse: aString [
 	^ self new parse: aString
 ]
 
-{ #category : #accessing }
-CDClassDefinitionParser >> classVariableNames: aNode [ 
-	
-	| slots slotNodes classVariablesString |
-	classVariablesString := aNode value.
-	slots := classVariablesString substrings.
-	slotNodes := slots
-		collect: [ :slotName | | start |
-			start := aNode start + (classVariablesString findString: slotName).
-			CDSharedVariableNode
-				node: aNode
-				name: slotName
-				slotClassName: 'ClassVariableSlot'
-				start: start
-				stop: start + slotName size ].
-	classDefinition sharedSlots: slotNodes
-]
-
-{ #category : #testing }
-CDClassDefinitionParser >> isInstanceSideDefinition: aRBMessageNode [
-	"Based on the Point or Point class structure, returns whether the definition is a class or instance side definition."
-	^ aRBMessageNode receiver isMessage not
-]
-
 { #category : #parsing }
-CDClassDefinitionParser >> parseClassName: aNode withType: aSymbol [
-	
-	self handleClassName: aNode.
-	classDefinition classKind: aSymbol
-]
-
-{ #category : #parsing }
-CDClassDefinitionParser >> parsePoolDictionariesFromNode: aNode [
+CDClassDefinitionParser >> handleSharedPoolsFromNode: aNode [
 	| shareds sharedPoolNodes sharedPoolString |
 	sharedPoolString := aNode value.
 	shareds := sharedPoolString substrings.
@@ -76,6 +45,33 @@ CDClassDefinitionParser >> parsePoolDictionariesFromNode: aNode [
 ]
 
 { #category : #parsing }
+CDClassDefinitionParser >> handleSuperclassNode: aSuperclassNode [
+	| aSuperclassName superclassNode |
+	aSuperclassName := (aSuperclassNode isLiteralNode
+		ifTrue: [ aSuperclassNode value asString ]
+		ifFalse: [ aSuperclassNode name ]) asSymbol.
+	superclassNode := self classNameNodeClass new
+		originalNode: aSuperclassNode;
+		className: aSuperclassName.
+	classDefinition
+		superclassName: aSuperclassName
+		astNode: superclassNode
+]
+
+{ #category : #testing }
+CDClassDefinitionParser >> isInstanceSideDefinition: aRBMessageNode [
+	"Based on the Point or Point class structure, returns whether the definition is a class or instance side definition."
+	^ aRBMessageNode receiver isMessage not
+]
+
+{ #category : #parsing }
+CDClassDefinitionParser >> parseClassName: aNode withType: aSymbol [
+	
+	self handleClassName: aNode.
+	classDefinition classKind: aSymbol
+]
+
+{ #category : #parsing }
 CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [ 
 	
 	"We could do this with reflection, or with a dictionary and closures.
@@ -88,7 +84,7 @@ CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 	aString =	 #slots:
 		ifTrue: [ ^ self parseSlotsNodesFromArrayNode: aNode ].
 	aString =	 #classVariableNames:
-		ifTrue: [ ^ self classVariableNames: aNode ].
+		ifTrue: [ ^ self handleSharedVariableNames: aNode ].
 	aString =	 #category:
 		ifTrue: [ ^ self handlePackage: aNode ].	
 	aString =	 #package:
@@ -96,7 +92,7 @@ CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 	aString =	 #uses:
 		ifTrue: [ ^ self parseTraitDefinitionFromNode: aNode ].
 	aString =	 #poolDictionaries:
-		ifTrue: [ ^ self parsePoolDictionariesFromNode: aNode ].
+		ifTrue: [ ^ self handleSharedPoolsFromNode: aNode ].
 	
 	CDUnrecognizedClassPart new
 		classDefinition: self; 
@@ -105,81 +101,10 @@ CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 ]
 
 { #category : #parsing }
-CDClassDefinitionParser >> parseSlotNode: aRBMessageNode [
-	"what ugly method! Pay attention start and stop should be tested and probably adjusted!"
-
-	"when a slot is just 'inst'"
-	aRBMessageNode isLiteralNode
-		ifTrue: [ | slot |
-			slot := self slotNodeClass
-				node: aRBMessageNode
-				name: aRBMessageNode value
-				slotClassName: #InstanceVariableSlot
-				initializationMessage: self slotInitializationNodeClass new
-				start: aRBMessageNode start
-				stop: aRBMessageNode stop.
-			classDefinition addSlot: slot.
-			^ self ].
-	
-	aRBMessageNode selector = '=>' 
-		ifTrue: [  
-		aRBMessageNode arguments first isMessage
-		
-		ifFalse: [  
-			"when a slot is just 'inst' => InstanceVariableSlot."
-			aRBMessageNode arguments first isGlobalVariable
-				ifTrue: [ | slot |
-					slot := self slotNodeClass
-						node: aRBMessageNode
-						name: aRBMessageNode receiver value
-						slotClassName: aRBMessageNode arguments first name
-						initializationMessage: self slotInitializationNodeClass new
-						start: aRBMessageNode start
-						stop: aRBMessageNode stop.
-						classDefinition addSlot: slot.
-				^ self ].
-				"we will have to do something for example if we have 
-				#x => 2"
-				]
-			ifTrue: [  
-				
-				"when a slot is 'inst' => (InstanceVariableSlot default: 5)."
-				| slot slotDefNode |
-				slotDefNode := aRBMessageNode.
-				slot := self slotNodeClass
-					node: aRBMessageNode
-					name: slotDefNode receiver value
-					slotClassName: slotDefNode arguments first receiver name
-					initializationMessage:
-						(self slotInitializationNodeClass
-							selectorParts: aRBMessageNode arguments first selectorParts
-							argumentParts: aRBMessageNode arguments first arguments)
-					start: aRBMessageNode start
-					stop: aRBMessageNode stop.
-				classDefinition addSlot: slot.
-				^ self ]
-		]
-]
-
-{ #category : #parsing }
 CDClassDefinitionParser >> parseSlotsNodesFromArrayNode: aRBArrayNode [
 	
 	aRBArrayNode statements do: [ :slotStatement |
-		self parseSlotNode: slotStatement ]
-]
-
-{ #category : #parsing }
-CDClassDefinitionParser >> parseSuperclassNode: aSuperclassNode [
-	| aSuperclassName superclassNode |
-	aSuperclassName := (aSuperclassNode isLiteralNode
-		ifTrue: [ aSuperclassNode value asString ]
-		ifFalse: [ aSuperclassNode name ]) asSymbol.
-	superclassNode := self classNameNodeClass new
-		originalNode: aSuperclassNode;
-		className: aSuperclassName.
-	classDefinition
-		superclassName: aSuperclassName
-		astNode: superclassNode
+		self handleSlotNode: slotStatement ]
 ]
 
 { #category : #parsing }
@@ -194,7 +119,7 @@ CDClassDefinitionParser >> parseTraitDefinitionFromNode: aNode [
 CDClassDefinitionParser >> visitMessageNode: aRBMessageNode [
 
 	(self isInstanceSideDefinition: aRBMessageNode)
-		ifTrue: [ self parseSuperclassNode: aRBMessageNode receiver ]
+		ifTrue: [ self handleSuperclassNode: aRBMessageNode receiver ]
 		ifFalse: [ self handleClassName: aRBMessageNode receiver receiver ].
 	
 	aRBMessageNode selectorParts
