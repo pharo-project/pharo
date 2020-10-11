@@ -287,7 +287,6 @@ CDFluidClassDefinitionParser >> parseRootNode: expressionTree [
 	
 	expressionTree extractClassDefinitionFor: self. 
 	classDefinition originalNode: expressionTree.
-	
 	expressionTree acceptVisitor: self.
 	^ classDefinition
 ]
@@ -335,17 +334,6 @@ CDFluidClassDefinitionParser >> setAdequateClassDefinitionFrom: expressionTree [
 { #category : #'private class factory' }
 CDFluidClassDefinitionParser >> sharedPoolNodeClass [
 	^ CDSharedPoolNode
-]
-
-{ #category : #'private class factory' }
-CDFluidClassDefinitionParser >> slotInitializationNodeClass [
-
-	^ RBSlotInitializationNode 
-]
-
-{ #category : #'private class factory' }
-CDFluidClassDefinitionParser >> slotNodeClass [
-	^ CDSlotNode
 ]
 
 { #category : #'parsing-internal' }

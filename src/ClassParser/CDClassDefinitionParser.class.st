@@ -117,7 +117,6 @@ CDClassDefinitionParser >> parseRootNode: expressionTree [
 	self setAdequateClassDefinitionFrom: expressionTree.
 	classDefinition originalNode: expressionTree.
 	expressionTree acceptVisitor: self.
-	"why do we need this double dispatch?"
 	^ classDefinition
 ]
 
@@ -247,17 +246,6 @@ CDClassDefinitionParser >> setAdequateClassDefinitionFrom: expressionTree [
 { #category : #'private class factory' }
 CDClassDefinitionParser >> sharedPoolNodeClass [
 	^ CDSharedPoolNode
-]
-
-{ #category : #'private class factory' }
-CDClassDefinitionParser >> slotInitializationNodeClass [
-
-	^ RBSlotInitializationNode 
-]
-
-{ #category : #'private class factory' }
-CDClassDefinitionParser >> slotNodeClass [
-	^ CDSlotNode
 ]
 
 { #category : #parsing }
