@@ -105,6 +105,12 @@ TraitedMetaclass >> definition [
 						self slotDefinitionsOn: strm ] ]
 ]
 
+{ #category : #fileout }
+TraitedMetaclass >> definitionStringFor: aConfiguredPrinter [
+
+	^ aConfiguredPrinter traitedMetaclassDefinitionString 
+]
+
 { #category : #initialization }
 TraitedMetaclass >> emptyMethodDictionary [
 	^ MethodDictionary new: 64.

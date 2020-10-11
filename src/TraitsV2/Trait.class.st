@@ -209,6 +209,18 @@ Trait >> definition [
 	]
 ]
 
+{ #category : #fileout }
+Trait >> definitionStringFor: aConfiguredPrinter [
+
+	^ aConfiguredPrinter traitDefinitionString
+]
+
+{ #category : #fileout }
+Trait >> expandedDefinitionStringFor: aPrinter [
+
+	^ aPrinter expandedTraitDefinitionString 
+]
+
 { #category : #testing }
 Trait >> isBaseTrait [
 	
