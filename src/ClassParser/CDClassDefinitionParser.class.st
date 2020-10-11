@@ -28,6 +28,13 @@ CDClassDefinitionParser class >> parse: aString [
 ]
 
 { #category : #parsing }
+CDClassDefinitionParser >> handleClassName: aNode withType: aSymbol [
+	
+	self handleClassName: aNode.
+	classDefinition classKind: aSymbol
+]
+
+{ #category : #parsing }
 CDClassDefinitionParser >> handleSharedPoolsFromNode: aNode [
 	| shareds sharedPoolNodes sharedPoolString |
 	sharedPoolString := aNode value.
@@ -58,17 +65,18 @@ CDClassDefinitionParser >> handleSuperclassNode: aSuperclassNode [
 		astNode: superclassNode
 ]
 
+{ #category : #parsing }
+CDClassDefinitionParser >> handleTraitDefinitionFromNode: aNode [
+	
+	| traitComposition |
+	traitComposition := CDTraitCompositionBuilder new buildFrom: aNode.	
+	classDefinition traitDefinition: traitComposition.
+]
+
 { #category : #testing }
 CDClassDefinitionParser >> isInstanceSideDefinition: aRBMessageNode [
 	"Based on the Point or Point class structure, returns whether the definition is a class or instance side definition."
 	^ aRBMessageNode receiver isMessage not
-]
-
-{ #category : #parsing }
-CDClassDefinitionParser >> parseClassName: aNode withType: aSymbol [
-	
-	self handleClassName: aNode.
-	classDefinition classKind: aSymbol
 ]
 
 { #category : #parsing }
@@ -78,11 +86,15 @@ CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 	I chose to use a series of if for readability only."
 	
 	(#(variableWordSubclass: ephemeronSubclass: weakSubclass: variableByteSubclass: variableSubclass: immediateSubclass: #subclass:) includes: aString)
-		ifTrue: [ ^ self parseClassName: aNode withType: aString  ].
+		ifTrue: [ ^ self handleClassName: aNode withType: aString  ].
 	aString =	 #instanceVariableNames:
 		ifTrue: [ ^ self handleInstanceVariablesFromNode: aNode ].
 	aString =	 #slots:
 		ifTrue: [ ^ self handleSlotsNodesFromArrayNode: aNode ].
+	self flag: #todo. 
+	"there is no such definition anymore in a non fluid definition
+	So we should clean also the test CDSlotParserArgumenting. They should use 
+	the fluid parser. Period."
 	aString =	 #classVariableNames:
 		ifTrue: [ ^ self handleSharedVariableNames: aNode ].
 	aString =	 #category:
@@ -90,7 +102,7 @@ CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 	aString =	 #package:
 		ifTrue: [ ^ self handlePackage: aNode ].
 	aString =	 #uses:
-		ifTrue: [ ^ self parseTraitDefinitionFromNode: aNode ].
+		ifTrue: [ ^ self handleTraitDefinitionFromNode: aNode ].
 	aString =	 #poolDictionaries:
 		ifTrue: [ ^ self handleSharedPoolsFromNode: aNode ].
 	
@@ -98,14 +110,6 @@ CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 		classDefinition: self; 
 		unrecognizedPart: aString;
 		signal
-]
-
-{ #category : #parsing }
-CDClassDefinitionParser >> parseTraitDefinitionFromNode: aNode [
-	
-	| traitComposition |
-	traitComposition := CDTraitCompositionBuilder new buildFrom: aNode.	
-	classDefinition traitDefinition: traitComposition.
 ]
 
 { #category : #parsing }

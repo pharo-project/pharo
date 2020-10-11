@@ -6,13 +6,13 @@ I'm parser for the new class syntax.
 
 ```
 Superclass < #MyObject
-		uses: #MyTrait;
-		slots: { #a. #b };
-		sharedVariables: { #A. #B };
-  		tags: {'tag2' . 'Core'} ;
-		layout: VariableLayout; 
-		sharedPools: { #TextConstants } ;
- 		package: #MyPackage
+	uses: #MyTrait;
+	slots: { #a. #b };
+	sharedVariables: { #A. #B };
+	tags: {'tag2' . 'Core'} ;
+	layout: VariableLayout; 
+	sharedPools: { #TextConstants } ;
+	package: #MyPackage
 ```
 Pay attention all the messages should be keyword-based.
 
@@ -20,26 +20,15 @@ The minimal class definition is the following one:
 
 ```
 Superclass < #MyObject
-		package: #MyPackage
+	package: #MyPackage
 ```
 
+For the implementors, we see that we should either handle a simple message composition or a cascade. 
 
-
-### Concerns 
+### Design Concerns 
 Note that sending a message to the superclass is close to subclass: and it lets the class selects 
 a class definition parser if the syntax should be extended. 
 In addition having a binary message makes () unneccessary.
-
-
-### Class side definition 
-In Pharo, a metaclass cannot be created in isolation (yes we can programmatically) so the class side definition is the following one. But we need more investigation on this point.
-
-``` 
-	Point class
-		uses: TraitX;
-		slots: { foo }
-```	
-
 
 
 "
@@ -62,18 +51,6 @@ CDFluidClassDefinitionParser class >> fromASTNode: aNode [
 CDFluidClassDefinitionParser class >> parse: aString [ 
 	
 	^ self new parse: aString
-]
-
-{ #category : #internal }
-CDFluidClassDefinitionParser >> beClassSideTraitDefinition [
-		
-	classDefinition := CDClassSideTraitDefinitionNode new
-]
-
-{ #category : #internal }
-CDFluidClassDefinitionParser >> beTraitDefinition [
-		
-	classDefinition := CDTraitDefinitionNode new
 ]
 
 { #category : #'handling  nodes' }
@@ -150,16 +127,6 @@ CDFluidClassDefinitionParser >> handleTag: aNode [
 	classDefinition tag: (CDClassTagNode new name: aNode value)
 ]
 
-{ #category : #'handling  nodes' }
-CDFluidClassDefinitionParser >> handleTraitUsesFromNode: aNode [
-	
-	| traitComposition |
-
-	aNode isDynamicArray and: [aNode allStatements ifEmpty: [ ^self  ]].
- 	traitComposition := CDTraitCompositionBuilder new buildFrom: aNode.	
-	classDefinition traitDefinition: traitComposition.
-]
-
 { #category : #testing }
 CDFluidClassDefinitionParser >> isInstanceSideDefinition: aRBMessageNode [
 	"Returns whether the definition is a class or instance side definition. Superclass < #myObject. Trait << are handled prior to this method."
@@ -198,7 +165,6 @@ CDFluidClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 	"We could do this with reflection, or with a dictionary and closures.
 	I chose to use a series of if for readability only."
 	
-
 	aString =	 #slots:
 		ifTrue: [ ^ self handleSlotsNodesFromArrayNode: aNode ].
 	aString =	 #sharedVariables: 
@@ -233,6 +199,13 @@ CDFluidClassDefinitionParser >> setAdequateClassDefinitionFrom: expressionTree [
 
 { #category : #'parsing-internal' }
 CDFluidClassDefinitionParser >> visitCascadeNode: aRBCascadeNode [ 
+	"See class comment. Here we handle the cascade version of the class definition."
+	" 
+	Object < #Point
+			uses: TraitX;
+			slots: { #foo };
+			package: ''Kernel-BasicObjects'''
+	"
 	
 	self handleClassAndSuperclassOf: aRBCascadeNode.	
 	aRBCascadeNode messages do: 
@@ -244,21 +217,10 @@ CDFluidClassDefinitionParser >> visitCascadeNode: aRBCascadeNode [
 
 { #category : #'parsing-internal' }
 CDFluidClassDefinitionParser >> visitMessageNode: aRBMessageNode [
-
-	"Object < #Point
-			package: ''Kernel-BasicObjects'''.
-	or 
+	"See class comment. Here we handle the cascade version of the class definition."
+	"
 	Object < #Point
-			uses: TraitX;
-			slots: { foo };
 			package: ''Kernel-BasicObjects'''
-	
-	or 
-	Point class
-		uses: TraitX;
-		slots: { foo }
-		
-	With this one we do not pass via the builder.
 	"		
 
 	self handleClassAndSuperclassOf: aRBMessageNode.

@@ -24,9 +24,21 @@ CDAbstractClassDefinitionParser >> beClassDefinition [
 ]
 
 { #category : #internal }
+CDAbstractClassDefinitionParser >> beClassSideTraitDefinition [
+		
+	classDefinition := CDClassSideTraitDefinitionNode new
+]
+
+{ #category : #internal }
 CDAbstractClassDefinitionParser >> beMetaclassDefinition [
 		
 	classDefinition := CDMetaclassDefinitionNode new
+]
+
+{ #category : #internal }
+CDAbstractClassDefinitionParser >> beTraitDefinition [
+		
+	classDefinition := CDTraitDefinitionNode new
 ]
 
 { #category : #'private class factory' }
@@ -151,6 +163,15 @@ CDAbstractClassDefinitionParser >> handleSlotsNodesFromArrayNode: aRBArrayNode [
 	
 	aRBArrayNode statements do: [ :slotStatement |
 		self handleSlotNode: slotStatement ]
+]
+
+{ #category : #parsing }
+CDAbstractClassDefinitionParser >> handleTraitUsesFromNode: aNode [
+	
+	| traitComposition |
+	aNode isDynamicArray and: [aNode allStatements ifEmpty: [ ^ self ]].
+ 	traitComposition := CDTraitCompositionBuilder new buildFrom: aNode.	
+	classDefinition traitDefinition: traitComposition.
 ]
 
 { #category : #testing }
