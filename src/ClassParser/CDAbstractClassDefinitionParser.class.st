@@ -146,6 +146,13 @@ CDAbstractClassDefinitionParser >> handleSlotNode: aRBMessageNode [
 		]
 ]
 
+{ #category : #parsing }
+CDAbstractClassDefinitionParser >> handleSlotsNodesFromArrayNode: aRBArrayNode [
+	
+	aRBArrayNode statements do: [ :slotStatement |
+		self handleSlotNode: slotStatement ]
+]
+
 { #category : #testing }
 CDAbstractClassDefinitionParser >> isInstanceSideDefinition: aRBMessageNode [
 	"Based on the Point or Point class structure, returns whether the definition is a class or instance side definition."

@@ -82,7 +82,7 @@ CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 	aString =	 #instanceVariableNames:
 		ifTrue: [ ^ self handleInstanceVariablesFromNode: aNode ].
 	aString =	 #slots:
-		ifTrue: [ ^ self parseSlotsNodesFromArrayNode: aNode ].
+		ifTrue: [ ^ self handleSlotsNodesFromArrayNode: aNode ].
 	aString =	 #classVariableNames:
 		ifTrue: [ ^ self handleSharedVariableNames: aNode ].
 	aString =	 #category:
@@ -98,13 +98,6 @@ CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 		classDefinition: self; 
 		unrecognizedPart: aString;
 		signal
-]
-
-{ #category : #parsing }
-CDClassDefinitionParser >> parseSlotsNodesFromArrayNode: aRBArrayNode [
-	
-	aRBArrayNode statements do: [ :slotStatement |
-		self handleSlotNode: slotStatement ]
 ]
 
 { #category : #parsing }

@@ -131,13 +131,6 @@ CDFluidClassDefinitionParser >> handleSharedVariableNames: aNode [
 ]
 
 { #category : #'handling  nodes' }
-CDFluidClassDefinitionParser >> handleSlotsNodesFromArrayNode: aRBArrayNode [
-	
-	aRBArrayNode statements do: [ :slotStatement |
-		self handleSlotNode: slotStatement ]
-]
-
-{ #category : #'handling  nodes' }
 CDFluidClassDefinitionParser >> handleSuperclassNode: aSuperclassNode [
 	| aSuperclassName superclassNode |
 	aSuperclassName := aSuperclassNode isLiteralNode
