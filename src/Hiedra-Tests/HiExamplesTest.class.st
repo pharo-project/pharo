@@ -25,7 +25,8 @@ HiExamplesTest >> exampleMethods [
 HiExamplesTest >> testAllExamples [
 	| exampleMethods |
 	
-	self timeLimit: 3 minutes.
+	"test runs sometimes >3 minutes"
+	self skipOnPharoCITestingEnvironment.
 	
 	exampleMethods := self exampleMethods.
 	self deny: exampleMethods isEmpty.
