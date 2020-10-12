@@ -98,7 +98,7 @@ DrTestsPlugin >> itemsToBeAnalysedFor: packagesSelected [
 
 	^ packagesSelected
 		flatCollect:
-			[ :p | p definedClasses select: [ :c | c allSuperclasses includes: TestCase ] ]
+			[ :p | p definedClasses select: [ :c | c isTestCase ] ]
 ]
 
 { #category : #api }

@@ -209,7 +209,7 @@ DrTests >> initializeButtons [
 
 { #category : #initialization }
 DrTests >> initializeItemsListAndLabel [
-	itemsList := self newFilterableListPresenter..
+	itemsList := self newFilterableListPresenter.
 	itemsList
 		help: 'Select the classes to analyze. Cmd+A or Ctrl+A to select all classes.';
 		sortingBlock: #name ascending;
@@ -255,14 +255,6 @@ DrTests >> initializePresenter [
 ]
 
 { #category : #initialization }
-DrTests >> initializeResultViewsDropList [
-	resultViewsDropList := self newDropList.
-	self resultViewsDropList
-		help: 'Select the different views for results';
-		display: [ :resultTreeView | resultTreeView name ]
-]
-
-{ #category : #initialization }
 DrTests >> initializeResultsTreeAndLabel [
 	resultLabel := self newLabel label: 'Results:'.
 	resultsList := self newTreeTable.
@@ -270,6 +262,14 @@ DrTests >> initializeResultsTreeAndLabel [
 		addColumn: (SpStringTableColumn evaluated: #drTestsName);
 		children: [ :node | node subResults ];
 		contextMenu: [ (self rootCommandsGroup / 'Results tools') beRoot asMenuPresenter ]
+]
+
+{ #category : #initialization }
+DrTests >> initializeResultViewsDropList [
+	resultViewsDropList := self newDropList.
+	self resultViewsDropList
+		help: 'Select the different views for results';
+		display: [ :resultTreeView | resultTreeView name ]
 ]
 
 { #category : #initialization }
@@ -343,6 +343,11 @@ DrTests >> resultSelected [
 	^ self resultsList selectedItem
 ]
 
+{ #category : #'accessing - subwidgets' }
+DrTests >> resultsList [
+	^ resultsList
+]
+
 { #category : #api }
 DrTests >> resultTree: aResultGroup [
 	aResultGroup
@@ -352,11 +357,6 @@ DrTests >> resultTree: aResultGroup [
 { #category : #'accessing - subwidgets' }
 DrTests >> resultViewsDropList [
 	^ resultViewsDropList
-]
-
-{ #category : #'accessing - subwidgets' }
-DrTests >> resultsList [
-	^ resultsList
 ]
 
 { #category : #api }
