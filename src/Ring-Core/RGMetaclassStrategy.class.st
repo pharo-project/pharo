@@ -86,18 +86,11 @@ RGMetaclassStrategy >> definition [
 				crtab;
 				nextPutAll: 'uses: ';
 				print: self traitComposition ].
-		
-		(self owner slotsNeedFullDefinition or: [ Slot showSlotClassDefinition ])
-			ifFalse: [  
-						strm
-							crtab;
-							nextPutAll: 'instanceVariableNames: ';
-							store: self owner instanceVariablesString]
-			ifTrue: [ 
-						strm
-							crtab;
-							nextPutAll: 'slots: ';
-							nextPutAll: self owner slotDefinitionString]]
+		strm
+			crtab;
+			nextPutAll: 'instanceVariableNames: ';
+			store: self owner instanceVariablesString ]
+			
 ]
 
 { #category : #'private - backend access' }

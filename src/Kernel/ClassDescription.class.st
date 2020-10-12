@@ -590,18 +590,21 @@ ClassDescription >> definesSlotNamed: aString [
 ClassDescription >> definition [
 	"Answer a String that defines the receiver."
 
-	(self needsSlotClassDefinition or: [ Slot showSlotClassDefinition ]) ifTrue: [ 
-		^ self definitionWithSlots ].
-	
-	^ self definitionWithoutSlots
-	
+	^ self definitionString
 ]
 
 { #category : #fileout }
 ClassDescription >> definitionPrinter [
 	"Return a configurated printer associated with the current class definition format."
 
-	^ ClassDefinitionPrinter for: self
+	^ self definitionPrinterClass for: self
+]
+
+{ #category : #fileout }
+ClassDescription >> definitionPrinterClass [
+	"Printer class"
+
+	^ ClassDefinitionPrinter
 ]
 
 { #category : #fileout }
@@ -615,62 +618,6 @@ ClassDescription >> definitionString [
 ClassDescription >> definitionStringFor: aConfiguredPrinter [
 
 	^ self subclassResponsibility 
-]
-
-{ #category : #printing }
-ClassDescription >> definitionWithoutSlots [
-
-	| stream |
-	stream := (String new: 800) writeStream.
-	superclass
-		ifNotNil: [ stream nextPutAll: superclass name ]
-		ifNil: [ stream nextPutAll: 'ProtoObject' ].
-	
-	stream
-		nextPutAll: self kindOfSubclass;
-		store: self name.
-		
-	self hasTraitComposition ifTrue: [ 
-		stream
-			crtab;
-			nextPutAll: 'uses: ';
-			nextPutAll: self traitCompositionString ].
-	
-	stream
-		crtab;
-		nextPutAll: 'instanceVariableNames: '''.
-	self instanceVariablesOn: stream.
-	stream nextPut: $'.
-	
-	stream
-		crtab;
-		nextPutAll: 'classVariableNames: '''.
-	self classVariablesOn: stream.
-	stream nextPut: $'.
-	
-	self sharedPools isEmpty ifFalse: [ 
-		stream 
-			crtab;
-			nextPutAll: 'poolDictionaries: '''.
-		self sharedPoolsOn: stream.
-		stream nextPut: $' ].
-	
-	stream
-		crtab;
-		nextPutAll: 'package: ';
-		store: self category asString.
-		
-	superclass ifNil: [ 
-		stream
-			nextPutAll: '.';
-			cr.
-		stream 
-			nextPutAll: self name.
-		stream
-			space;
-			nextPutAll: 'superclass: nil' ].
-
-	^ stream contents
 ]
 
 { #category : #private }

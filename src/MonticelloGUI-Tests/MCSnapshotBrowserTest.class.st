@@ -105,7 +105,8 @@ MCSnapshotBrowserTest >> classAProtocols [
 { #category : #private }
 MCSnapshotBrowserTest >> classAclassDefinitionString [
 
-	^ self mockClassA class definitionWithoutSlots
+	^ (self mockClassA class definitionPrinterClass oldPharo 
+			for: self mockClassA class) definition
 ]
 
 { #category : #simulating }
