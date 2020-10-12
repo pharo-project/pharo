@@ -5,6 +5,6 @@ Class {
 }
 
 { #category : #tests }
-HiSpecExampleTest >> exampleClassToTest [
+HiSpecExampleTest class >> classWithExamplesToTest [
 	^ HiSpecExample
 ]

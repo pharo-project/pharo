@@ -1,8 +1,16 @@
 Class {
 	#name : #HiExamplesTest,
 	#superclass : #TestCase,
+	#instVars : [
+		'example'
+	],
 	#category : #'Hiedra-Tests-Model'
 }
+
+{ #category : #tests }
+HiExamplesTest class >> classWithExamplesToTest [
+	^ self
+]
 
 { #category : #testing }
 HiExamplesTest class >> isAbstract [
@@ -10,30 +18,29 @@ HiExamplesTest class >> isAbstract [
 ]
 
 { #category : #tests }
-HiExamplesTest >> exampleClassToTest [
-	^ self subclassResponsibility
+HiExamplesTest class >> testSelectors [
+
+	^ self classWithExamplesToTest classSide methods 
+			select: [ :each |  (each selector beginsWith: 'example') and: [ each numArgs = 0 ] ]
+			thenCollect: [ :each | each selector ]
+	
+
 ]
 
 { #category : #tests }
-HiExamplesTest >> exampleMethods [
-
-	^ self exampleClassToTest classSide methods select: [ :each | 
-		  (each selector beginsWith: 'example') and: [ each numArgs = 0 ] ]
+HiExamplesTest class >> whichClassIncludesTestSelector: aSymbol [
+	^self classWithExamplesToTest classSide whichClassIncludesSelector: aSymbol
 ]
 
-{ #category : #tests }
-HiExamplesTest >> testAllExamples [
-	| exampleMethods |
+{ #category : #private }
+HiExamplesTest >> performTest [
+	example := self class classWithExamplesToTest perform: testSelector asSymbol
+]
+
+{ #category : #private }
+HiExamplesTest >> tearDown [ 
 	
-	"test runs sometimes >3 minutes"
-	self skipOnPharoCITestingEnvironment.
+	example ifNotNil: [ example close ].
 	
-	exampleMethods := self exampleMethods.
-	self deny: exampleMethods isEmpty.
-	
-	exampleMethods do: [ :each | | anExample |
-		self
-			shouldnt: [ anExample := each methodClass instanceSide perform: each selector ]
-			raise: Error.
-		anExample ifNotNil: [ anExample close ] ]
+	super tearDown
 ]
