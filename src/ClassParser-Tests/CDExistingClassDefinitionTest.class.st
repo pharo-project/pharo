@@ -7,7 +7,7 @@ Class {
 { #category : #helpers }
 CDExistingClassDefinitionTest >> classDefinitionString [
 
-	^ CDClassWithFullDefinitionExample definition 
+	^ (ClassDefinitionPrinter oldPharo for: CDClassWithFullDefinitionExample) definitionString
 ]
 
 { #category : #helpers }
