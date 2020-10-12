@@ -192,3 +192,45 @@ CollectionTest >> testTopologicalSortOnCycleDo5 [
 				(4 -> 1) } topologicalSortOnCycleDo: [ :cycle | Error signal ] ]
 		raise: SubscriptOutOfBounds
 ]
+
+{ #category : #tests }
+CollectionTest >> testTopologicalSortOnCycleDo6 [
+
+	"This test case shows how to iteratively removing edges belonging to cycle
+ 	 yield an acyclic relation."
+
+	| relations random cycles |
+	random := Random seed: 7.
+	relations := (1 to: 1000)
+		             collect: [ :k | 
+			             | a b |
+			             a := random nextInt: 100.
+			             b := random nextInt: 100.
+			             a -> (a = b
+				              ifTrue: [ b + 1 \\ 100 max: 1 ]
+				              ifFalse: [ b ]) ]
+		             as: OrderedCollection.
+
+	cycles := OrderedCollection new.
+	[ 
+	| isAcyclic |
+	isAcyclic := true.
+	relations := relations topologicalSortOnCycleDo: [ :cycle | 
+		             | edge |
+		             isAcyclic := false.
+		             cycles add: cycle.
+		             edge := cycle anyOne.
+		             relations
+			             remove: edge;
+			             yourself ].
+	isAcyclic ] whileFalse.
+
+	self
+		assert: relations
+		equals:
+			#( 60 73 86 94 95 99 100 57 96 90 87 98 82 80 64 1 88 89 84 92 93
+			   15 2 69 97 41 63 67 81 76 7 75 44 68 37 3 65 47 70 66 85 91 71
+			   59 4 62 77 50 58 83 72 46 9 5 56 42 48 11 49 38 6 39 45 8 16 27
+			   78 74 30 79 34 40 20 19 36 14 24 53 35 33 12 25 55 51 26 13 23
+			   21 52 28 17 31 22 18 32 43 29 61 10 54 )
+]
