@@ -37,6 +37,12 @@ CDBehaviorParserTest >> nodeFor: aString [
 ]
 
 { #category : #helpers }
+CDBehaviorParserTest >> parserClass [
+
+	^ CDClassDefinitionParser
+]
+
+{ #category : #helpers }
 CDBehaviorParserTest >> secondInstanceVariableName [
 
 	^ 'second'
@@ -54,7 +60,7 @@ CDBehaviorParserTest >> selectionOf: aText [
 CDBehaviorParserTest >> setUp [
 
 	super setUp.
-	classDefinition := CDClassDefinitionParser parse: self classDefinitionString.
+	classDefinition := self parserClass parse: self classDefinitionString
 ]
 
 { #category : #tests }
