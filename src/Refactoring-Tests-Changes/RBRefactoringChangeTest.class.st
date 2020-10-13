@@ -173,7 +173,7 @@ RBRefactoringChangeTest >> testAddClassTraitPattern [
 	
 	self exampleTraits do: [ :trait |
 		| change |
-		change := changes defineClass: trait classTrait definition.
+		change := changes defineClass: (ClassDefinitionPrinter oldPharo for: trait classTrait) definitionString.
 		self assert: (change isKindOf: RBAddClassTraitChange).
 		self assert: change changeClassName equals: trait name.
 		self universalTestFor: change ]
