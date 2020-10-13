@@ -28,6 +28,12 @@ SpMenuItemPresenter class >> adapterName [
 	^ #MenuItemAdapter
 ]
 
+{ #category : #documentation }
+SpMenuItemPresenter class >> documentExampleCodeSelector [
+
+	^ #exampleShowAtPointer
+]
+
 { #category : #api }
 SpMenuItemPresenter >> action [
 	"Answer the action to be executed when the menu item is selected."

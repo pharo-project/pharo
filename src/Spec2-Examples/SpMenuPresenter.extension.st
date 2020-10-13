@@ -1,7 +1,7 @@
 Extension { #name : #SpMenuPresenter }
 
 { #category : #'*Spec2-Examples' }
-SpMenuPresenter class >> example [
+SpMenuPresenter class >> exampleShowAtPointer [
 
 	^ self new 
 		addItem: [ :item | item name: 'Test 1'; action: [ "Action" ] ];

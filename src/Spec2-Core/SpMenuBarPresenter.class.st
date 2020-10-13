@@ -25,6 +25,12 @@ SpMenuBarPresenter class >> addDocumentExtraSections: aBuilder [
 ]
 
 { #category : #documentation }
+SpMenuBarPresenter class >> documentExampleCodeSelector [
+
+	^ #example
+]
+
+{ #category : #documentation }
 SpMenuBarPresenter class >> documentFactoryMethodSelector [
 
 	^ #newMenuBar

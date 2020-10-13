@@ -34,6 +34,18 @@ SpMenuPresenter class >> addDocumentExtraSections: aBuilder [
 				aBuilder monospace: eachType name ] ] ]	
 ]
 
+{ #category : #documentation }
+SpMenuPresenter class >> documentExampleCodeSelector [
+
+	^ #exampleShowAtPointer
+]
+
+{ #category : #documentation }
+SpMenuPresenter class >> documentFactoryMethodSelector [
+
+	^ #newMenu
+]
+
 { #category : #specs }
 SpMenuPresenter class >> popup [
 	<spec>
