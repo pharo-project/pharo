@@ -1,6 +1,6 @@
 Extension { #name : #SpImagePresenter }
 
-{ #category : #'*Spec2-Examples' }
+{ #category : #'*Spec2-Morphic-Examples' }
 SpImagePresenter class >> example [
 	<sampleInstance>
 
