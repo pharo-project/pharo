@@ -95,7 +95,7 @@ ReflectivityExamples >> exampleGlobalRead [
 	^GlobalForTesting
 ]
 
-{ #category : #examples }
+{ #category : #'examples - optimized' }
 ReflectivityExamples >> exampleIfTrueIfFalse [
 
 	| t |
@@ -184,6 +184,14 @@ ReflectivityExamples >> exampleSendTwoArgs [
 ReflectivityExamples >> exampleTwoSends [
 	3 + 4.
 	^ 2 + 3
+]
+
+{ #category : #'examples - optimized' }
+ReflectivityExamples >> exampleWhileFalse [
+	| t |
+	t := 1.
+	[ t > 10 ] whileFalse: [ t := t + 1].
+	^t
 ]
 
 { #category : #examples }

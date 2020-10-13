@@ -232,6 +232,24 @@ RFASTTranslator >> visitLiteralVariableNode: aLiteralVariableNode [
 ]
 
 { #category : #'visitor-double dispatching' }
+RFASTTranslator >> visitMessageNode: aMessageNode [
+
+	aMessageNode isInlined
+		ifTrue: [ 
+			methodBuilder addLiteral: aMessageNode selector. "so searching for senders will work"
+			self emitPreamble: aMessageNode.
+			self emitMetaLinkBefore: aMessageNode.
+			aMessageNode hasMetalinkInstead
+				ifTrue: [ self emitMetaLinkInstead: aMessageNode ]
+				ifFalse: [ 
+					self
+						perform: (OptimizedMessages at: aMessageNode selector)
+						with: aMessageNode ].
+			self emitMetaLinkAfterNoEnsure: aMessageNode ]
+		ifFalse: [ self emitMessageNode: aMessageNode ]
+]
+
+{ #category : #'visitor-double dispatching' }
 RFASTTranslator >> visitMethodNode: aMethodNode [
 	"I ignore all links when I am primitive as ReflectiveMethod compiles a wrapper"
 	
