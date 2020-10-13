@@ -23,8 +23,7 @@ OldPharoClassDefinitionPrinterTest >> testAlignmentMorphClass [
 
 	self 
 		assert: (self forClass: AlignmentMorph class)  equals: 'AlignmentMorph class
-	uses: TAbleToRotate classTrait
-	instanceVariableNames: '''''
+	uses: TAbleToRotate classTrait'
 ]
 
 { #category : #'tests - classes' }
@@ -140,7 +139,7 @@ OldPharoClassDefinitionPrinterTest >> testSystemAnnouncerClass [
 
 { #category : #'tests - traits' }
 OldPharoClassDefinitionPrinterTest >> testTBehavior [
-
+	"to me this looks strange to have empty uses here when empty instancevariablenames are not displayed."
 	self 
 		assert: (self forClass: TBehavior)  equals: 'Trait named: #TBehavior
 	 uses: {}
@@ -150,16 +149,21 @@ OldPharoClassDefinitionPrinterTest >> testTBehavior [
 { #category : #'tests - traits' }
 OldPharoClassDefinitionPrinterTest >> testTComparableClassTrait [
 
-	self assert: (self forClass: TComparable classTrait) equals: 'TComparable classTrait
-	instanceVariableNames: '''''
+	self assert: (self forClass: TComparable classTrait) equals: 'TComparable classTrait'
 ]
 
 { #category : #'tests - traits' }
 OldPharoClassDefinitionPrinterTest >> testTEventVisitorClassTrait [
 
 	self assert: (self forClass: EpTEventVisitor classTrait) equals: 'EpTEventVisitor classTrait
-	uses: EpTCodeChangeVisitor classTrait
-	instanceVariableNames: '''''
+	uses: EpTCodeChangeVisitor classTrait'
+]
+
+{ #category : #'tests - traits' }
+OldPharoClassDefinitionPrinterTest >> testTSortable [
+
+	self assert: (self forClass: TSortable classTrait) equals: 'TSortable classTrait'
+
 ]
 
 { #category : #'tests - classes' }
@@ -187,8 +191,7 @@ OldPharoClassDefinitionPrinterTest >> testTrait [
 OldPharoClassDefinitionPrinterTest >> testTrait3 [
 
 	self assert: (self forClass: Trait3 classTrait) equals: 'Trait3 classTrait
-	uses: Trait2 classTrait
-	instanceVariableNames: '''''
+	uses: Trait2 classTrait'
 
 ]
 

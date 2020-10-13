@@ -128,9 +128,6 @@ OldPharoClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aString [
 
 { #category : #delegating }
 OldPharoClassDefinitionPrinter >> traitedMetaclassDefinitionString [ 
-	"Next step
-		- some of the methods defined on classe will have to be moved in this class.
-		- refactor to remove duplication with metaclass,...."
 
 	^ String streamContents: [:strm |
 			strm print: forClass.
@@ -139,8 +136,9 @@ OldPharoClassDefinitionPrinter >> traitedMetaclassDefinitionString [
 					crtab;
 					nextPutAll: 'uses: ';
 					print: forClass traitComposition ].
-			strm
-				crtab;
-				nextPutAll: 'instanceVariableNames: ';
-				store: forClass instanceVariablesString ] 
+			forClass instanceVariablesString ifNotEmpty: [ 
+				strm
+					crtab;
+					nextPutAll: 'instanceVariableNames: ';
+					store: forClass instanceVariablesString ] ]
 ]
