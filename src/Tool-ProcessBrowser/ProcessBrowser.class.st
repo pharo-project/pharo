@@ -930,12 +930,6 @@ ProcessBrowser >> processNameList [
 			percent , (self prettyNameForProcess: each) ]
 ]
 
-{ #category : #views }
-ProcessBrowser >> refactor [
-
-	^ NautilusRefactoring model: self
-]
-
 { #category : #'process actions' }
 ProcessBrowser >> resumeProcess [
 	selectedProcess

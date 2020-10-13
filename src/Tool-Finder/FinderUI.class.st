@@ -841,11 +841,6 @@ FinderUI >> packagesSelection: aCollection [
 	self finder packagesSelection: aCollection
 ]
 
-{ #category : #accessing }
-FinderUI >> refactor [
-	^ NautilusRefactoring model: self
-]
-
 { #category : #private }
 FinderUI >> resetEnvironment [
 	self triggerEvent: #resetEnvironment
