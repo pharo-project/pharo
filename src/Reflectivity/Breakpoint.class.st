@@ -267,12 +267,13 @@ Breakpoint >> initialize [
 
 { #category : #install }
 Breakpoint >> install [
+	
 	self class addBreakpoint: self.
 	self isObjectCentric
 		ifTrue: [ self targetInstance link: self link toAST: self node.
 			^ self ].
-	self node link: self link.
-	self setAsNodeProperty
+	self setAsNodeProperty.
+	self node link: self link
 ]
 
 { #category : #testing }
