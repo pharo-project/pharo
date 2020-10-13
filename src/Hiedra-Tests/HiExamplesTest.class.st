@@ -37,10 +37,9 @@ HiExamplesTest >> performTest [
 	example := self class classWithExamplesToTest perform: testSelector asSymbol
 ]
 
-{ #category : #private }
+{ #category : #running }
 HiExamplesTest >> tearDown [ 
 	
 	example ifNotNil: [ example close ].
-	
 	super tearDown
 ]
