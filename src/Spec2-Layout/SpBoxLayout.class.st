@@ -10,35 +10,16 @@ This layout can be created with certain properties:
 "
 Class {
 	#name : #SpBoxLayout,
-	#superclass : #SpExecutableLayout,
+	#superclass : #SpDirectionableLayout,
 	#traits : 'SpTAlignable',
 	#classTraits : 'SpTAlignable classTrait',
 	#instVars : [
-		'direction',
 		'spacing',
 		'borderWidth',
 		'homogeneous'
 	],
 	#category : #'Spec2-Layout-Box'
 }
-
-{ #category : #'instance creation' }
-SpBoxLayout class >> new [ 
-
-	self error: 'Use either #newHorizontal or #newVertical'
-]
-
-{ #category : #'instance creation' }
-SpBoxLayout class >> newHorizontal [ 
-
-	^ super new beHorizontal
-]
-
-{ #category : #'instance creation' }
-SpBoxLayout class >> newVertical [ 
-
-	^ super new beVertical
-]
 
 { #category : #private }
 SpBoxLayout >> adapterName [
@@ -149,22 +130,10 @@ SpBoxLayout >> beHomogeneous [
 	self homogeneous: true
 ]
 
-{ #category : #initialization }
-SpBoxLayout >> beHorizontal [
-
-	direction := SpLayoutDirection horizontal
-]
-
 { #category : #accessing }
 SpBoxLayout >> beNotHomogeneous [
 
 	self homogeneous: false
-]
-
-{ #category : #initialization }
-SpBoxLayout >> beVertical [
-
-	direction := SpLayoutDirection vertical
 ]
 
 { #category : #accessing }

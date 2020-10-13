@@ -4,7 +4,7 @@ My context must be a block that returns a class.
 "
 Class {
 	#name : #SpBrowseClassCommand,
-	#superclass : #SpSystemNavigationCommand,
+	#superclass : #SpSystemSelectionCommand,
 	#category : #'Spec2-Commands-Navigation'
 }
 
@@ -29,6 +29,10 @@ SpBrowseClassCommand class >> shortName [
 
 { #category : #execution }
 SpBrowseClassCommand >> execute [
+	| result |
 
-	self target ifNotNil: [ :aTarget | aTarget browse ]
+	result := self 
+		evaluate: self selectedTextOrLine 
+		ifError: [ :e | ^ self ].
+	self systemNavigation browse: result
 ]

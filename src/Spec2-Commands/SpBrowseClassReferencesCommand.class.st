@@ -3,7 +3,7 @@ Browse all references to the class returned by the evaluation of the context.
 "
 Class {
 	#name : #SpBrowseClassReferencesCommand,
-	#superclass : #SpSystemNavigationCommand,
+	#superclass : #SpSystemSelectionCommand,
 	#category : #'Spec2-Commands-Navigation'
 }
 
@@ -20,9 +20,16 @@ SpBrowseClassReferencesCommand class >> shortName [
 
 { #category : #execution }
 SpBrowseClassReferencesCommand >> execute [
-	| class |
+	| result class |
 
-	class := self target instanceSide.
+	result := self 
+		evaluate: self selectedTextOrLine 
+		ifError: [ :e | ^ self ].
+		
+	(result isClass or: [ result isTrait ])
+		ifFalse: [ result := result class ].
+
+	class := result instanceSide.
 	class isTrait
 		ifTrue: [ self systemNavigation browseAllUsersOfTrait: class ]
 		ifFalse: [ self systemNavigation browseAllCallsOnClass: class ]

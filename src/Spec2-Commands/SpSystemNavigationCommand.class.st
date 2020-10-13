@@ -20,13 +20,33 @@ SpSystemNavigationCommand class >> defaultName [
 	^'Browse ', self shortName 
 ]
 
+{ #category : #documentation }
+SpSystemNavigationCommand class >> documentContextRequiredSelectors [
+
+	^ #(environment)
+]
+
 { #category : #accessing }
 SpSystemNavigationCommand class >> shortName [
 	^self subclassResponsibility 
 ]
 
 { #category : #accessing }
+SpSystemNavigationCommand >> environment [
+
+	^ self context environment
+]
+
+{ #category : #accessing }
 SpSystemNavigationCommand >> selector [
 
 	^ self target trimBoth asSymbol
+]
+
+{ #category : #accessing }
+SpSystemNavigationCommand >> systemNavigation [
+
+	^ self context systemNavigation
+		environment: self environment;
+		yourself
 ]

@@ -7,9 +7,6 @@ The SpMorphicOverlayLayout collaborates with the layout's constraints to decide 
 Class {
 	#name : #SpMorphicOverlayAdapter,
 	#superclass : #SpMorphicLayoutAdapter,
-	#instVars : [
-		'layout'
-	],
 	#category : #'Spec2-Adapters-Morphic-Layout'
 }
 

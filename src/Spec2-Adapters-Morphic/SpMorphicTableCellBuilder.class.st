@@ -101,7 +101,7 @@ SpMorphicTableCellBuilder >> visitCheckboxColumn: aTableColumn [
 
 	aTableColumn onActivation ifNotNil: [ :valuable | 
 		presenter whenActivatedDo: [ valuable cull: self item ] ].
-	aTableColumn onDesactivation ifNotNil: [ :valuable | 
+	aTableColumn onDeactivation ifNotNil: [ :valuable | 
 		presenter whenDeactivatedDo: [ valuable cull: self item ] ].
 
 	morph := presenter buildWithSpec.
@@ -110,6 +110,15 @@ SpMorphicTableCellBuilder >> visitCheckboxColumn: aTableColumn [
 	self 
 		addCellMorph: morph
 		column: aTableColumn 
+]
+
+{ #category : #visiting }
+SpMorphicTableCellBuilder >> visitCompositeColumn: aTableColumn [
+
+	super visitCompositeColumn: aTableColumn.
+	aTableColumn isExpandable ifFalse: [ 
+		cell hResizing: #rigid.
+		cell width: aTableColumn width ]
 ]
 
 { #category : #visiting }
@@ -123,6 +132,28 @@ SpMorphicTableCellBuilder >> visitIndexColumn: aTableColumn [
 
 	self 
 		addCell: self rowIndex 
+		column: aTableColumn
+]
+
+{ #category : #visiting }
+SpMorphicTableCellBuilder >> visitLinkColumn: aTableColumn [
+	| presenter morph |
+	
+	presenter := SpLinkPresenter new
+		addStyle: 'table';
+		label: (aTableColumn readObject: self item);
+		yourself.
+	
+	aTableColumn url 
+		ifNotNil: [ presenter url: (aTableColumn url value: self item) ].
+	aTableColumn action 
+		ifNotNil: [ presenter action: [ aTableColumn action value: self item ] ].
+
+	morph := presenter buildWithSpec.
+	presenter adapter applyStyle: morph.
+
+	self 
+		addCellMorph: morph
 		column: aTableColumn
 ]
 

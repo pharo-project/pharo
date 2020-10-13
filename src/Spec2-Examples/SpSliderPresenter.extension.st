@@ -4,11 +4,10 @@ Extension { #name : #SpSliderPresenter }
 SpSliderPresenter class >> example [
 	<sampleInstance>
 	| slider |
-	slider := self new.
-	slider
+	
+	^ (slider := self new)
 		min: 0;
 		max: 100;
-		whenValueChangedDo: [ :value | slider label: value asString ].
-	slider openWithSpec.
-	^ slider 
+		whenValueChangedDo: [ :value | slider label: value asString ];
+		openWithSpec
 ]

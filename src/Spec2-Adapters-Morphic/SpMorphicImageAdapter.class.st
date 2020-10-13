@@ -7,16 +7,6 @@ Class {
 	#category : #'Spec2-Adapters-Morphic-Base'
 }
 
-{ #category : #initialization }
-SpMorphicImageAdapter >> adapt: aPresenter [
-
-	super adapt: aPresenter.
-	widget
-		on: #click
-		send: #click
-		to: self
-]
-
 { #category : #factory }
 SpMorphicImageAdapter >> buildWidget [
 	| alphaImage |

@@ -1,14 +1,30 @@
 "
-Description
---------------------
+A `SpModalWindowPresenter` is presenter used to describe a **modal** DialogWindow. 
+On the contrary of the `SpDialogWindowPresenter`, it will block the user to focus any other window.
 
-I am a presenter to use a modal. On the contrary of the Dialog presenter, I will block the user to focus any other window.
- 
-Internal Representation and Key Implementation Points.
---------------------
+Usually instances of `SpModalWindowPresenter` are created using the method `SpAbstractPresenter>>#openModalWithSpec`.
 
-    Instance Variables
-	closeOnBackdropClick:		<aBooleanValueHolder>		If this variable is at true, the user will be able to close the dialog and launch the close action by clicking on the backdrop.
+If you want to make the user to show a dialog without blocking the execution of other windows, use `SpAbstractPresenter>>#openDialogWithSpec` instead.
+
+## Usage 
+Tipically, you do not instantiate directly a modal dialog, but you open a presenter as one. Since the program execution will be stopped until dialog is resolved (accepted or cancelled), you can ask for the status after calling it.
+
+```
+dialog := aPresenter openModalWithSpec.
+dialog isOk 
+	ifTrue: [ ""dialog accepted action"" ]
+	ifFalse: [ ""dialof cancelled action "" ]
+```
+
+And to control how the dialog should behave, you define the method `initializeDialogWindow:` in your presenters.
+```
+SomePresenter>>#initializeDialogWindow: aDialogPresenter 
+	super initializeDialogWindow: aDialogPresenter.
+	aDialogPresenter
+		initialExtent: 600@400;
+		title: 'A title';
+		closeOnBackdropClick: true
+```
 "
 Class {
 	#name : #SpModalWindowPresenter,
@@ -25,16 +41,18 @@ SpModalWindowPresenter class >> adapterName [
 	^ #ModalWindowAdapter
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpModalWindowPresenter >> closeOnBackdropClick [
-	"If I am set to true, the user will be able to click on the backdrop to close the modal launching the cancel action."
+	"Answer if the user will be able to click on the backdrop to close the modal 
+	 launching the cancel action."
 	
 	^ closeOnBackdropClick
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpModalWindowPresenter >> closeOnBackdropClick: aBoolean [
-	"If I am set to true, the user will be able to click on the backdrop to close the modal launching the cancel action."
+	"Set when the user will be able to click on the backdrop to close the modal 
+	 launching the cancel action."
 
 	closeOnBackdropClick := aBoolean
 ]

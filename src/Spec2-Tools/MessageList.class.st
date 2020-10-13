@@ -21,7 +21,8 @@ Class {
 		'listModel',
 		'cachedHierarchy',
 		'topologySort',
-		'model'
+		'model',
+		'method'
 	],
 	#category : #'Spec2-Tools-Senders'
 }
@@ -35,31 +36,35 @@ MessageList class >> defaultSpec [
 
 { #category : #actions }
 MessageList >> browseClassRefs [
-	self currentMethod ifNotNil: [ :method | 
-		model browseClassRefsOf: method methodClass ]
+
+	self currentMethod ifNotNil: [ :aMethod | 
+		model browseClassRefsOf: aMethod methodClass ]
 ]
 
 { #category : #actions }
 MessageList >> browseMessages [
-	self currentMethod ifNotNil: [ :method |
-		 model browseMessagesFrom: method selector ]
+	self currentMethod ifNotNil: [ :aMethod |
+		 model browseMessagesFrom: aMethod selector ]
 ]
 
 { #category : #actions }
 MessageList >> browseMethod [
-	self currentMethod ifNotNil: [ :method | method browse ]
+
+	self currentMethod ifNotNil: [ :aMethod | aMethod browse ]
 ]
 
 { #category : #actions }
 MessageList >> browseSendersOfMessage [
-	self currentMethod ifNotNil: [ :method |
-		model browseSendersOfMessagesFrom: method selector ]
+
+	self currentMethod ifNotNil: [ :aMethod |
+		model browseSendersOfMessagesFrom: aMethod selector ]
 ]
 
 { #category : #actions }
 MessageList >> browseVersions [
-	self currentMethod ifNotNil: [ :method |
-		model browseVersionsFrom: method compiledMethod ]
+
+	self currentMethod ifNotNil: [ :aMethod |
+		model browseVersionsFrom: aMethod compiledMethod ]
 ]
 
 { #category : #testing }
@@ -92,6 +97,12 @@ MessageList >> cacheHierarchyForClasses: aCollection [
 { #category : #api }
 MessageList >> contextMenu: aMenuPresenter [
 	listModel contextMenu: aMenuPresenter
+]
+
+{ #category : #private }
+MessageList >> currentMethod [
+
+	^ method
 ]
 
 { #category : #'private-focus' }
@@ -128,7 +139,8 @@ MessageList >> initializePresenters [
 
 { #category : #actions }
 MessageList >> inspectMethod [
-	self currentMethod ifNotNil: [ :m | m inspect ]
+
+	self currentMethod ifNotNil: [ :aMethod | aMethod inspect ]
 ]
 
 { #category : #accessing }
@@ -238,8 +250,9 @@ MessageList >> protocolNameForItem: anItem [
 
 { #category : #actions }
 MessageList >> removeMethods [
-	self currentMethod ifNotNil: [ :method |
-		model removeMethod: method inClass: method methodClass ]
+
+	self currentMethod ifNotNil: [ :aMethod |
+		model removeMethod: aMethod inClass: aMethod methodClass ]
 ]
 
 { #category : #selecting }
@@ -272,6 +285,12 @@ MessageList >> selectedMethod [
 { #category : #accessing }
 MessageList >> selectorOf: anItem [
 	^ anItem selector
+]
+
+{ #category : #initialization }
+MessageList >> setModelBeforeInitialization: aMethod [ 
+
+	method := aMethod
 ]
 
 { #category : #sorting }

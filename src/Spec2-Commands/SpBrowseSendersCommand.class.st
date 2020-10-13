@@ -1,9 +1,10 @@
 "
-I browse all senders of the computed context that is transformed to a selector.
+Browse all senders.
+
 "
 Class {
 	#name : #SpBrowseSendersCommand,
-	#superclass : #SpSystemNavigationCommand,
+	#superclass : #SpSystemSelectionCommand,
 	#category : #'Spec2-Commands-Navigation'
 }
 
@@ -28,6 +29,22 @@ SpBrowseSendersCommand class >> shortName [
 
 { #category : #executing }
 SpBrowseSendersCommand >> execute [
+	| env variableOrClassName |
 
-	self systemNavigation browseAllSendersOf: self selector
+	variableOrClassName := self context selectedTextOrLine trimmed asSymbol.
+	variableOrClassName ifEmpty: [ ^ self ].
+	 
+	env := self context environment.
+	env isBehavior ifTrue: [
+		(env hasSlotNamed: variableOrClassName) ifTrue: [
+		 ^ self systemNavigation browseAllAccessesTo: variableOrClassName from: env ] ].
+
+	(env bindingOf: variableOrClassName) 
+		ifNotNil: [ :ref | ^ self systemNavigation browseAllSendersOf: ref ].
+	
+	"If this is not a class, behave as SpBrowseMethodReferencesCommand"
+	self flag: #TODO. "This thingy waits for Guille's refactor"
+	self systemNavigation browseAllReferencesTo: self selectedSelector
+		
+		
 ]

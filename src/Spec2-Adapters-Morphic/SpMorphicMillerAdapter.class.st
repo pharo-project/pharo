@@ -7,7 +7,6 @@ Class {
 	#name : #SpMorphicMillerAdapter,
 	#superclass : #SpMorphicLayoutAdapter,
 	#instVars : [
-		'layout',
 		'innerWidget',
 		'lastExtent',
 		'lastPageSize',

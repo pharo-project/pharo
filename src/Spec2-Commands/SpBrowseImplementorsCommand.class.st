@@ -1,9 +1,9 @@
 "
-I browse all implementors of the computed context that is transformed to a selector.
+Browse all implementors of the selector found in context.
 "
 Class {
 	#name : #SpBrowseImplementorsCommand,
-	#superclass : #SpSystemNavigationCommand,
+	#superclass : #SpSystemSelectionCommand,
 	#category : #'Spec2-Commands-Navigation'
 }
 
@@ -29,5 +29,6 @@ SpBrowseImplementorsCommand class >> shortName [
 { #category : #executing }
 SpBrowseImplementorsCommand >> execute [
 
-	self systemNavigation browseAllImplementorsOf: self selector
+	self flag: #TODO. "This thingy waits for Guille's refactor"
+	self systemNavigation browseAllImplementorsOf: self selectedSelector
 ]

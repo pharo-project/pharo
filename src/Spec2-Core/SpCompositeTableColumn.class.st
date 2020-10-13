@@ -1,7 +1,27 @@
 "
-I'm a composite column.
-I contain other column definitions to compose a single type of column. 
-Typically, I will compose images and texts (or checkbox and text, as for do a cherry pick).
+A composite column (a column that joins other colums to form a single cell view).
+A `SpCompositeTableColumn` contain other column definitions to compose a single type of column. 
+Typically, it will compose images and texts (or checkbox and text, as for do a cherry pick).
+
+The user does not needs to set an evaluation block for this column (as its value is taken in the composed columns).
+
+
+## Example
+```
+SpCompositeTableColumn new 
+	title: 'My string';
+	addColumn: (SpCompositeTableColumn new
+			title: 'Classes';
+			addColumn: (SpImageTableColumn new
+				width: 20;
+				evaluated: [ :aClass | aClass systemIcon ];
+				yourself);
+			addColumn: (SpStringTableColumn new
+				evaluated: [ :aClass | aClass name ];
+				yourself);
+			yourself);
+	yourself
+```
 "
 Class {
 	#name : #SpCompositeTableColumn,
@@ -62,20 +82,23 @@ SpCompositeTableColumn >> acceptColumnVisitor: aBuilder [
 	^ aBuilder visitCompositeColumn: self
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpCompositeTableColumn >> addAllColumns: aCollection [ 
+	"Add all columns contained in `aCollection` to the composed columns."
 	
 	aCollection do: [ :each | self addColumn: each ]
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpCompositeTableColumn >> addColumn: aTableColumn [ 
+	"Add a column to the composed columns."
 	
 	columns add: aTableColumn
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpCompositeTableColumn >> columns [
+	"Answer the columns composing this composite."
 
 	^ columns
 ]
@@ -90,6 +113,8 @@ SpCompositeTableColumn >> initialize [
 
 { #category : #testing }
 SpCompositeTableColumn >> isComposite [
+	"Answer if this is a composite column. 
+	 For this class, answer will always be true."
 
 	^ true
 ]
