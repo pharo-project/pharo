@@ -194,12 +194,7 @@ Breakpoint class >> removeBreakpoint: aBreakpoint [
 
 { #category : #cleanup }
 Breakpoint class >> removeFrom: aNode [
-	| links breakpointsToRemove |
-	links := OrderedCollection new.
-	links addAll: (aNode beforeLinks select: [ :link | link metaObject = Break]).
-	links addAll: (aNode afterLinks select: [ :link | link metaObject = Break]).
-	breakpointsToRemove := self all select: [ :br | links includes: br link].
-	breakpointsToRemove asSet do: [:breakpoint| breakpoint remove]
+	aNode breakpoints do: [:breakpoint| breakpoint remove]
 ]
 
 { #category : #cleanup }
