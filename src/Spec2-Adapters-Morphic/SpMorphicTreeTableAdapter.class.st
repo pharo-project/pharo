@@ -16,6 +16,19 @@ SpMorphicTreeTableAdapter class >> intercellSpacing [
 	^ 2@0
 ]
 
+{ #category : #factory }
+SpMorphicTreeTableAdapter >> addColumnsFromPresenterTo: tableMorph [
+
+	"I need to ensure first column will have the size required and this is tricky on 
+	 fixed width of column: I need to enlarge that width with the width of the expander."
+	self columns withIndexDo: [ :each :index | | column |
+		column := self newColumnFrom: each.
+		(index = 1 and: [ column width notNil ]) ifTrue: [ 
+			column width: column width + SpMorphicTreeTableDataSource emptyMorph width ]. 
+		tableMorph addColumn: column ].
+			
+]
+
 { #category : #initialization }
 SpMorphicTreeTableAdapter >> addFocusRotationKeyBindings [
 	
@@ -32,8 +45,7 @@ SpMorphicTreeTableAdapter >> addKeyBindingsTo: aWidget [
 { #category : #factory }
 SpMorphicTreeTableAdapter >> addModelTo: tableMorph [
 
-	self columns do: [ :each | 
-		tableMorph addColumn: (self newColumnFrom: each) ].
+	self addColumnsFromPresenterTo: tableMorph.
 	self ensureAtLeastOneColumnIn: tableMorph.
 
 	self presenter selection isMultipleSelection ifTrue: [  
@@ -154,6 +166,28 @@ SpMorphicTreeTableAdapter >> ensureAtLeastOneColumnIn: tableMorph [
 	tableMorph addColumn: (self newColumnFrom: self defaultColumn)
 ]
 
+{ #category : #accessing }
+SpMorphicTreeTableAdapter >> expandPath: anArray [  
+
+	widget dataSource expandPath: anArray
+]
+
+{ #category : #accessing }
+SpMorphicTreeTableAdapter >> expandRoots [
+
+	widget dataSource expandRoots
+]
+
+{ #category : #testing }
+SpMorphicTreeTableAdapter >> isExpanded: anItem [
+	| path |
+	
+	path := widget dataSource 
+		pathOfItem: anItem 
+		root: widget dataSource rootItem.
+	^ (widget dataSource itemAtPath: path) isExpanded
+]
+
 { #category : #testing }
 SpMorphicTreeTableAdapter >> isNonEditableRow: aRow column: aColumn [
 
@@ -232,7 +266,7 @@ SpMorphicTreeTableAdapter >> rootForItems: aCollection [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 SpMorphicTreeTableAdapter >> scrollToSelection [
 	widget ensureVisibleFirstSelection.
 ]

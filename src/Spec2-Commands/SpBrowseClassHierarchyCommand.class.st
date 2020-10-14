@@ -3,7 +3,7 @@ My context must evaluate to a Behavior. I then browse the hierarchy of that beha
 "
 Class {
 	#name : #SpBrowseClassHierarchyCommand,
-	#superclass : #SpSystemNavigationCommand,
+	#superclass : #SpSystemSelectionCommand,
 	#category : #'Spec2-Commands-Navigation'
 }
 
@@ -20,6 +20,12 @@ SpBrowseClassHierarchyCommand class >> shortName [
 
 { #category : #executing }
 SpBrowseClassHierarchyCommand >> execute [
+	| result |
 
-	self systemNavigation browseHierarchy: self target
+	result := self 
+		evaluate: self selectedTextOrLine 
+		ifError: [ :e | ^ self ].
+	(result isClass or: [ result isTrait ])
+		ifFalse: [ result := result class ].
+	self systemNavigation browseHierarchy: result
 ]

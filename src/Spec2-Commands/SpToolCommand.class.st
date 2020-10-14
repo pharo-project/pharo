@@ -12,6 +12,33 @@ Class {
 	#category : #'Spec2-Commands-Presenters'
 }
 
+{ #category : #documentation }
+SpToolCommand class >> addDocumentContextRequiredSelectors: aBuilder [
+	| requiredSelectors |
+
+	requiredSelectors := self documentContextRequiredSelectors. 
+
+	aBuilder newLine.
+	aBuilder header: [ :builder | builder text: 'Required Context API' ] withLevel: 2.	
+	requiredSelectors 
+		ifNotEmpty: [ 
+			aBuilder text: 'To work properly, the context passed to this command has to implement the following vocabulary (See `CmCommand>>#context:`).'.
+			aBuilder newLine.
+			aBuilder unorderedListDuring: [  
+				(requiredSelectors sorted) do: [ :each |
+					aBuilder item: [
+						aBuilder monospace: each ] ] ] ]
+		ifEmpty: [ 
+			aBuilder text: '(No required API is defined)' ]
+]
+
+{ #category : #documentation }
+SpToolCommand class >> buildMicroDownUsing: aBuilder withComment: aString [
+	
+	super buildMicroDownUsing: aBuilder withComment: aString.
+	self addDocumentContextRequiredSelectors: aBuilder
+]
+
 { #category : #defaults }
 SpToolCommand class >> defaultIconName [
 	^nil
@@ -21,6 +48,12 @@ SpToolCommand class >> defaultIconName [
 SpToolCommand class >> defaultShortcutKey [
 
 	^ nil
+]
+
+{ #category : #documentation }
+SpToolCommand class >> documentContextRequiredSelectors [
+
+	^ #()
 ]
 
 { #category : #default }

@@ -5,9 +5,8 @@ In exchange, a paned layout can have just two children.
 "
 Class {
 	#name : #SpPanedLayout,
-	#superclass : #SpExecutableLayout,
+	#superclass : #SpDirectionableLayout,
 	#instVars : [
-		'direction',
 		'position',
 		'firstChild',
 		'secondChild',
@@ -15,24 +14,6 @@ Class {
 	],
 	#category : #'Spec2-Layout-Paned'
 }
-
-{ #category : #'instance creation' }
-SpPanedLayout class >> new [ 
-
-	self error: 'Use one of my siblings'
-]
-
-{ #category : #'instance creation' }
-SpPanedLayout class >> newHorizontal [ 
-
-	^ super new beHorizontal
-]
-
-{ #category : #'instance creation' }
-SpPanedLayout class >> newVertical [ 
-
-	^ super new beVertical
-]
 
 { #category : #private }
 SpPanedLayout >> adapterName [
@@ -91,18 +72,6 @@ SpPanedLayout >> addSecond: aName [
 		add: aName 
 		withConstraints: [ :constraints | ]
 		position: 2
-]
-
-{ #category : #initialization }
-SpPanedLayout >> beHorizontal [
-
-	direction := SpLayoutDirection horizontal
-]
-
-{ #category : #initialization }
-SpPanedLayout >> beVertical [
-
-	direction := SpLayoutDirection vertical
 ]
 
 { #category : #accessing }

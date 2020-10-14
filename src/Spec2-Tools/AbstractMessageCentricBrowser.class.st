@@ -20,6 +20,7 @@ AbstractMessageCentricBrowser >> initialize [
 
 { #category : #initialization }
 AbstractMessageCentricBrowser >> initializePresenters [
+
 	messageList := self instantiate: MessageList.
 	toolbarPresenter := self instantiate: SpMethodToolbar
 ]

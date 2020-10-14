@@ -1,10 +1,12 @@
 "
 A `SpDialogWindowPresenter` is a presenter used to describe a DialogWindow. 
-Pay attention that it will not create a real modal in the sense that the user will keep the focus on other windows.  Usually instance of `SpDialogWindowPresenter` are created using the method `SpPresenter>>#openDialogWithSpec`
+Pay attention that it will not create a real modal in the sense that the user will keep the focus on other windows.
 
-If you want to make the user focus on your dialog only you should use #openModalWithSpec instead.
+Usually instances of `SpDialogWindowPresenter` are created using the method `SpAbstractPresenter>>#openDialogWithSpec`.
 
-Canonical actions should be parameterized using the methods: `cancelAction:` and `okAction:`. 
+If you want to make the user focus on your dialog only you should use `SpAbstractPresenter>>#openModalWithSpec` instead.
+
+Canonical actions should be parameterized using the methods: `SpDialogWindowPresenter>>#cancelAction:` and `SpDialogWindowPresenter>>#okAction:`. 
 
 ## Usage 
 Tipically, you do not instantiate directly a dialog, but you open a presenter as one.
@@ -24,7 +26,6 @@ SomePresenter>>#initializeDialogWindow: aDialogPresenter
 		initialExtent: 600@400;
 		title: 'A title'	
 ```
-
 "
 Class {
 	#name : #SpDialogWindowPresenter,

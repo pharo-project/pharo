@@ -10,8 +10,8 @@ Class {
 { #category : #tests }
 SpStringTableColumnTest >> testIsSortable [
 	|widget|
-	widget := SpStringTableColumn basicNew.
+	widget := SpStringTableColumn new.
 	self assert: widget isSortable.
-	widget isSortable: false.
+	widget beNotSortable.
 	self deny: widget isSortable
 ]

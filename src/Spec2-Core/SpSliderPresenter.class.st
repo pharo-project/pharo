@@ -1,21 +1,5 @@
 "
-A SliderPresenter is a spec presenter for a slider.
-See AbstractWidgetPresenter
-
-self example
-
-I provide the following variables and their accessors
-- max is the maximum of the slide.
-- min is the minimum of the slide.
-- value is the value of the slide, it is between the maximum and the minimum
-- absoluteValue is the value of the slide in a percent of the maximum.
-- label is the label in the background.
-
-I provide the following methods
-- color: to set the background color, it must be called after have displayed the widget.
-
-todo
-- quantum
+A presenter that show a slider.
 
 "
 Class {
@@ -40,6 +24,12 @@ SpSliderPresenter class >> adapterName [
 	^ #SliderAdapter
 ]
 
+{ #category : #documentation }
+SpSliderPresenter class >> documentFactoryMethodSelector [
+
+	^ #newSlider
+]
+
 { #category : #api }
 SpSliderPresenter >> absoluteValue [
 	"Return the position of the slider in a scale between 0 and 1 despite of the min and max value"
@@ -60,16 +50,15 @@ SpSliderPresenter >> absoluteValueToValue: v [
 ]
 
 { #category : #api }
-SpSliderPresenter >> addMark: aText at: aValue [
-	^ self
-		marks:
-			(self marks
-				add:
-					(SpSliderMark new
-						value: aValue;
-						text: aText;
-						yourself);
-				yourself)
+SpSliderPresenter >> addMark: aString at: aValue [
+	"Add the mark `aString` at `aValue` ."
+	
+	^ self marks: (self marks
+		add: (SpSliderMark new
+			value: aValue;
+			text: aString;
+			yourself);
+		yourself)
 ]
 
 { #category : #api }
@@ -125,12 +114,12 @@ SpSliderPresenter >> initialize [
 	self whenLabelChangedDo: [ :v | self changed: #label ]
 ]
 
-{ #category : #api }
+{ #category : #testing }
 SpSliderPresenter >> isHorizontal [
 	^ isHorizontal
 ]
 
-{ #category : #api }
+{ #category : #testing }
 SpSliderPresenter >> isVertical [
 	^ self isHorizontal not
 ]
@@ -235,35 +224,55 @@ SpSliderPresenter >> valueToAbsoluteValue: v [
 
 { #category : #'api-events' }
 SpSliderPresenter >> whenAbsoluteValueChangedDo: aBlock [
-	"Block performed when the absolute value changed"
+	"Inform when absolute value has changed. 
+	 `aBlock` has three optional arguments: 
+	 - new value
+	 - old value
+	 - the announcement triggering this action"
 
 	self property: #absoluteValue whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpSliderPresenter >> whenLabelChangedDo: aBlock [
-	"Block performed when the label changed"
+	"Inform when label has changed. 
+	 `aBlock` has three optional arguments: 
+	 - new value
+	 - old value
+	 - the announcement triggering this action"
 
 	self property: #label whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpSliderPresenter >> whenMarksChangedDo: aBlock [
-	"Block performed when the label changed"
+	"Inform when marks property has changed. 
+	 `aBlock` has three optional arguments: 
+	 - new value
+	 - old value
+	 - the announcement triggering this action"
 
 	self property: #marks whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpSliderPresenter >> whenMaxChangedDo: aBlock [ 
-	"Block performed when the maximum value changed"
+	"Inform when maximum property has changed. 
+	 `aBlock` has three optional arguments: 
+	 - new value
+	 - old value
+	 - the announcement triggering this action"
 
 	self property: #max whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpSliderPresenter >> whenMinChangedDo: aBlock [ 
-	"Block performed when the minimum value changed"
+	"Inform when minimum property has changed. 
+	 `aBlock` has three optional arguments: 
+	 - new value
+	 - old value
+	 - the announcement triggering this action"
 
 	self property: #min whenChangedDo: aBlock
 ]

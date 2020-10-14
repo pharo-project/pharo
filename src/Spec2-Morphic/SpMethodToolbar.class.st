@@ -7,14 +7,14 @@ Class {
 	#name : #SpMethodToolbar,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'#browseModel',
-		'#sendersModel',
-		'#implementorsModel',
-		'#versionModel',
-		'#dropListModel',
-		'#model',
-		'#usersModel',
-		'#method => SpObservableSlot'
+		'browseModel',
+		'sendersModel',
+		'implementorsModel',
+		'versionModel',
+		'dropListModel',
+		'model',
+		'usersModel',
+		'method'
 	],
 	#category : #'Spec2-Morphic-Widgets'
 }
@@ -46,6 +46,7 @@ SpMethodToolbar >> addItemLabeled: aString do: aBlock [
 
 { #category : #private }
 SpMethodToolbar >> browseMethod [
+
 	self method ifNotNil: [ :aMethod | aMethod browse ]
 ]
 
@@ -87,6 +88,7 @@ SpMethodToolbar >> initialize [
 
 { #category : #initialization }
 SpMethodToolbar >> initializePresenters [
+
 	browseModel := self newButton.
 	usersModel := self newButton.
 	sendersModel := self newButton.
@@ -109,6 +111,7 @@ SpMethodToolbar >> method [
 
 { #category : #api }
 SpMethodToolbar >> method: aMethod [
+
 	method := aMethod
 ]
 
@@ -175,6 +178,12 @@ SpMethodToolbar >> setImplementorsModel [
 		action: [ self implementorsMethod ].
 	
 
+]
+
+{ #category : #initialization }
+SpMethodToolbar >> setModelBeforeInitialization: aMethod [
+
+	self method: aMethod
 ]
 
 { #category : #initialization }

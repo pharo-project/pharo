@@ -20,13 +20,35 @@ SpSystemNavigationCommand class >> defaultName [
 	^'Browse ', self shortName 
 ]
 
+{ #category : #documentation }
+SpSystemNavigationCommand class >> documentContextRequiredSelectors [
+	"Using a String and not a Symbol because `RBBrowserEnvironmentTest>>#testMatches` fails 
+	 if answering a symbol (because it detects the referenced selector)"
+
+	^ #('environment')
+]
+
 { #category : #accessing }
 SpSystemNavigationCommand class >> shortName [
 	^self subclassResponsibility 
 ]
 
 { #category : #accessing }
+SpSystemNavigationCommand >> environment [
+
+	^ self context environment
+]
+
+{ #category : #accessing }
 SpSystemNavigationCommand >> selector [
 
 	^ self target trimBoth asSymbol
+]
+
+{ #category : #accessing }
+SpSystemNavigationCommand >> systemNavigation [
+
+	^ self context systemNavigation
+		environment: self environment;
+		yourself
 ]
