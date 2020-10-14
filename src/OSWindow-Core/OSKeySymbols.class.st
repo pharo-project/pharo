@@ -15,55 +15,29 @@ Class {
 		'OSK_7',
 		'OSK_8',
 		'OSK_9',
-		'OSK_AC_BACK',
-		'OSK_AC_BOOKMARKS',
-		'OSK_AC_FORWARD',
-		'OSK_AC_HOME',
-		'OSK_AC_REFRESH',
-		'OSK_AC_SEARCH',
-		'OSK_AC_STOP',
 		'OSK_AGAIN',
-		'OSK_ALTERASE',
 		'OSK_AMPERSAND',
-		'OSK_APPLICATION',
 		'OSK_ASTERISK',
 		'OSK_AT',
-		'OSK_AUDIOMUTE',
-		'OSK_AUDIONEXT',
-		'OSK_AUDIOPLAY',
-		'OSK_AUDIOPREV',
-		'OSK_AUDIOSTOP',
 		'OSK_BACKQUOTE',
 		'OSK_BACKSLASH',
 		'OSK_BACKSPACE',
-		'OSK_BRIGHTNESSDOWN',
-		'OSK_BRIGHTNESSUP',
-		'OSK_CALCULATOR',
 		'OSK_CANCEL',
 		'OSK_CAPSLOCK',
 		'OSK_CARET',
 		'OSK_CLEAR',
-		'OSK_CLEARAGAIN',
 		'OSK_COLON',
 		'OSK_COMMA',
-		'OSK_COMPUTER',
 		'OSK_COPY',
-		'OSK_CRSEL',
-		'OSK_CURRENCYSUBUNIT',
-		'OSK_CURRENCYUNIT',
 		'OSK_CUT',
-		'OSK_DECIMALSEPARATOR',
 		'OSK_DELETE',
-		'OSK_DISPLAYSWITCH',
 		'OSK_DOLLAR',
 		'OSK_DOWN',
-		'OSK_EJECT',
 		'OSK_END',
 		'OSK_EQUALS',
 		'OSK_ESCAPE',
 		'OSK_EXCLAIM',
 		'OSK_EXECUTE',
-		'OSK_EXSEL',
 		'OSK_F1',
 		'OSK_F10',
 		'OSK_F11',
@@ -94,12 +68,7 @@ Class {
 		'OSK_HELP',
 		'OSK_HOME',
 		'OSK_INSERT',
-		'OSK_KBDILLUMDOWN',
-		'OSK_KBDILLUMTOGGLE',
-		'OSK_KBDILLUMUP',
 		'OSK_KP_0',
-		'OSK_KP_00',
-		'OSK_KP_000',
 		'OSK_KP_1',
 		'OSK_KP_2',
 		'OSK_KP_3',
@@ -109,55 +78,13 @@ Class {
 		'OSK_KP_7',
 		'OSK_KP_8',
 		'OSK_KP_9',
-		'OSK_KP_A',
-		'OSK_KP_AMPERSAND',
-		'OSK_KP_AT',
-		'OSK_KP_B',
-		'OSK_KP_BACKSPACE',
-		'OSK_KP_BINARY',
-		'OSK_KP_C',
-		'OSK_KP_CLEAR',
-		'OSK_KP_CLEARENTRY',
-		'OSK_KP_COLON',
-		'OSK_KP_COMMA',
-		'OSK_KP_D',
-		'OSK_KP_DBLAMPERSAND',
-		'OSK_KP_DBLVERTICALBAR',
-		'OSK_KP_DECIMAL',
 		'OSK_KP_DIVIDE',
-		'OSK_KP_E',
 		'OSK_KP_ENTER',
 		'OSK_KP_EQUALS',
-		'OSK_KP_EQUALSAS400',
-		'OSK_KP_EXCLAM',
-		'OSK_KP_F',
-		'OSK_KP_GREATER',
-		'OSK_KP_HASH',
-		'OSK_KP_HEXADECIMAL',
-		'OSK_KP_LEFTBRACE',
-		'OSK_KP_LEFTPAREN',
-		'OSK_KP_LESS',
-		'OSK_KP_MEMADD',
-		'OSK_KP_MEMCLEAR',
-		'OSK_KP_MEMDIVIDE',
-		'OSK_KP_MEMMULTIPLY',
-		'OSK_KP_MEMRECALL',
-		'OSK_KP_MEMSTORE',
-		'OSK_KP_MEMSUBTRACT',
 		'OSK_KP_MINUS',
 		'OSK_KP_MULTIPLY',
-		'OSK_KP_OCTAL',
-		'OSK_KP_PERCENT',
 		'OSK_KP_PERIOD',
 		'OSK_KP_PLUS',
-		'OSK_KP_PLUSMINUS',
-		'OSK_KP_POWER',
-		'OSK_KP_RIGHTBRACE',
-		'OSK_KP_RIGHTPAREN',
-		'OSK_KP_SPACE',
-		'OSK_KP_TAB',
-		'OSK_KP_VERTICALBAR',
-		'OSK_KP_XOR',
 		'OSK_LALT',
 		'OSK_LCTRL',
 		'OSK_LEFT',
@@ -166,15 +93,9 @@ Class {
 		'OSK_LESS',
 		'OSK_LGUI',
 		'OSK_LSHIFT',
-		'OSK_MAIL',
-		'OSK_MEDIASELECT',
 		'OSK_MENU',
 		'OSK_MINUS',
-		'OSK_MODE',
-		'OSK_MUTE',
 		'OSK_NUMLOCKCLEAR',
-		'OSK_OPER',
-		'OSK_OUT',
 		'OSK_PAGEDOWN',
 		'OSK_PAGEUP',
 		'OSK_PASTE',
@@ -182,7 +103,6 @@ Class {
 		'OSK_PERCENT',
 		'OSK_PERIOD',
 		'OSK_PLUS',
-		'OSK_POWER',
 		'OSK_PRINTSCREEN',
 		'OSK_PRIOR',
 		'OSK_QUESTION',
@@ -191,7 +111,6 @@ Class {
 		'OSK_RALT',
 		'OSK_RCTRL',
 		'OSK_RETURN',
-		'OSK_RETURN2',
 		'OSK_RGUI',
 		'OSK_RIGHT',
 		'OSK_RIGHTBRACKET',
@@ -200,21 +119,15 @@ Class {
 		'OSK_SCROLLLOCK',
 		'OSK_SELECT',
 		'OSK_SEMICOLON',
-		'OSK_SEPARATOR',
 		'OSK_SLASH',
-		'OSK_SLEEP',
 		'OSK_SPACE',
 		'OSK_STOP',
 		'OSK_SYSREQ',
 		'OSK_TAB',
-		'OSK_THOUSANDSSEPARATOR',
 		'OSK_UNDERSCORE',
 		'OSK_UNDO',
 		'OSK_UNKNOWN',
 		'OSK_UP',
-		'OSK_VOLUMEDOWN',
-		'OSK_VOLUMEUP',
-		'OSK_WWW',
 		'OSK_a',
 		'OSK_b',
 		'OSK_c',
@@ -242,7 +155,7 @@ Class {
 		'OSK_y',
 		'OSK_z',
 		'OSKeySymbolNameToValueMap',
-		'OSKeySymbolValueToNameMap'
+		'OSKeySymbolValueToKeyboardKeyMap'
 	],
 	#category : #'OSWindow-Core-Events'
 }
@@ -250,50 +163,50 @@ Class {
 { #category : #private }
 OSKeySymbols class >> data [
 	^ #(
-		(16r0000 OSK_UNKNOWN unknown)
+		(16r0000 OSK_UNKNOWN null)
 		(16r000D OSK_RETURN return)
 		(16r001B OSK_ESCAPE escape)
 		(16r0008 OSK_BACKSPACE backspace)
 		(16r0009 OSK_TAB tab)
 		(16r0020 OSK_SPACE space)
-		(16r0021 OSK_EXCLAIM #'!')
-		(16r0022 OSK_QUOTEDBL #'2')
-		(16r0023 OSK_HASH #'#')
-		(16r0025 OSK_PERCENT #'%')
-		(16r0024 OSK_DOLLAR #'$')
-		(16r0026 OSK_AMPERSAND #'&')
-		(16r0027 OSK_QUOTE #'''')
-		(16r0028 OSK_LEFTPAREN #'(')
-		(16r0029 OSK_RIGHTPAREN #')')
-		(16r002A OSK_ASTERISK #'*')
-		(16r002B OSK_PLUS #'+')
-		(16r002C OSK_COMMA #',')	
-		(16r002D OSK_MINUS #'-')
-		(16r002E OSK_PERIOD #'.')
-		(16r002F OSK_SLASH #'/')
-		(16r0030 OSK_0 #'0')	
-		(16r0031 OSK_1 #'1')
-		(16r0032 OSK_2 #'2')
-		(16r0033 OSK_3 #'3')
-		(16r0034 OSK_4 #'4')
-		(16r0035 OSK_5 #'5')
-		(16r0036 OSK_6 #'6')
-		(16r0037 OSK_7 #'7')
-		(16r0038 OSK_8 #'8')
-		(16r0039 OSK_9 #'9')
-		(16r003A OSK_COLON #':')
-		(16r003B OSK_SEMICOLON #';')
-		(16r003C OSK_LESS #'<')
-		(16r003D OSK_EQUALS #'=')
-		(16r003E OSK_GREATER #'>')
-		(16r003F OSK_QUESTION #'?')
-		(16r0040 OSK_AT #'@')		
-		(16r005B OSK_LEFTBRACKET #'[')
-		(16r005C OSK_BACKSLASH #'\')
-		(16r005D OSK_RIGHTBRACKET #']')
-		(16r005E OSK_CARET #'^')
-		(16r005F OSK_UNDERSCORE #'_')
-		(16r0060 OSK_BACKQUOTE #'`')
+		(16r0021 OSK_EXCLAIM exclam)
+		(16r0022 OSK_QUOTEDBL quotedbl)
+		(16r0023 OSK_HASH numbersign)
+		(16r0025 OSK_PERCENT percent)
+		(16r0024 OSK_DOLLAR underscore)
+		(16r0026 OSK_AMPERSAND ampersand)
+		(16r0027 OSK_QUOTE apostrophe)
+		(16r0028 OSK_LEFTPAREN parenleft)
+		(16r0029 OSK_RIGHTPAREN parenright)
+		(16r002A OSK_ASTERISK asterisk)
+		(16r002B OSK_PLUS plus)
+		(16r002C OSK_COMMA comma)	
+		(16r002D OSK_MINUS minus)
+		(16r002E OSK_PERIOD period)
+		(16r002F OSK_SLASH slash)
+		(16r0030 OSK_0 zero)	
+		(16r0031 OSK_1 one)
+		(16r0032 OSK_2 two)
+		(16r0033 OSK_3 three)
+		(16r0034 OSK_4 four)
+		(16r0035 OSK_5 five)
+		(16r0036 OSK_6 six)
+		(16r0037 OSK_7 seven)
+		(16r0038 OSK_8 eight)
+		(16r0039 OSK_9 nine)
+		(16r003A OSK_COLON colon)
+		(16r003B OSK_SEMICOLON semicolon)
+		(16r003C OSK_LESS less)
+		(16r003D OSK_EQUALS equal)
+		(16r003E OSK_GREATER greater)
+		(16r003F OSK_QUESTION question)
+		(16r0040 OSK_AT at)		
+		(16r005B OSK_LEFTBRACKET bracketleft)
+		(16r005C OSK_BACKSLASH backslash)
+		(16r005D OSK_RIGHTBRACKET bracketright)
+		(16r005E OSK_CARET asciicircum)
+		(16r005F OSK_UNDERSCORE underscore)
+		(16r0060 OSK_BACKQUOTE grave)
 		(16r0061 OSK_a a)
 		(16r0062 OSK_b b)
 		(16r0063 OSK_c c)
@@ -320,7 +233,7 @@ OSKeySymbols class >> data [
 		(16r0078 OSK_x x)
 		(16r0079 OSK_y y)
 		(16r007A OSK_z z)
-		(16r40000039 OSK_CAPSLOCK capsLock)
+		(16r40000039 OSK_CAPSLOCK Caps_Lock)
 		(16r4000003A OSK_F1 f1)
 		(16r4000003B OSK_F2 f2)
 		(16r4000003C OSK_F3 f3)
@@ -334,23 +247,23 @@ OSKeySymbols class >> data [
 		(16r40000044 OSK_F11 f11)
 		(16r40000045 OSK_F12 f12)
 		(16r40000046 OSK_PRINTSCREEN printScreen)
-		(16r40000047 OSK_SCROLLLOCK scrollLock)
+		(16r40000047 OSK_SCROLLLOCK scroll_Lock)
 		(16r40000048 OSK_PAUSE pause)
 		(16r40000049 OSK_INSERT insert)
-		(16r4000004A OSK_HOME home)
-		(16r4000004B OSK_PAGEUP pageUp)
+		(16r4000004A OSK_HOME Begin)
+		(16r4000004B OSK_PAGEUP Page_Up)
 		(16r007F OSK_DELETE delete)
 		(16r4000004D OSK_END end)
-		(16r4000004E OSK_PAGEDOWN pageDown)
+		(16r4000004E OSK_PAGEDOWN Page_Down)
 		(16r4000004F OSK_RIGHT right)
 		(16r40000050 OSK_LEFT left)
 		(16r40000051 OSK_DOWN down)
 		(16r40000052 OSK_UP up)
-		(16r40000053 OSK_NUMLOCKCLEAR numLockClear)
+		(16r40000053 OSK_NUMLOCKCLEAR num_lock)
 		(16r40000054 OSK_KP_DIVIDE kp_divide)
 		(16r40000055 OSK_KP_MULTIPLY kp_multiply)
-		(16r40000056 OSK_KP_MINUS kp_minus)
-		(16r40000057 OSK_KP_PLUS kp_plus)
+		(16r40000056 OSK_KP_MINUS KP_Subtract)
+		(16r40000057 OSK_KP_PLUS KP_Add)
 		(16r40000058 OSK_KP_ENTER kp_enter)
 		(16r40000059 OSK_KP_1 kp_1)
 		(16r4000005A OSK_KP_2 kp_2)
@@ -362,10 +275,10 @@ OSKeySymbols class >> data [
 		(16r40000060 OSK_KP_8 kp_8)
 		(16r40000061 OSK_KP_9 kp_9)
 		(16r40000062 OSK_KP_0 kp_0)
-		(16r40000063 OSK_KP_PERIOD kp_period)
-		(16r40000065 OSK_APPLICATION application)
-		(16r40000066 OSK_POWER power)
-		(16r40000067 OSK_KP_EQUALS kp_equals)
+		(16r40000063 OSK_KP_PERIOD KP_Decimal)
+		"(16r40000065 OSK_APPLICATION application)
+		(16r40000066 OSK_POWER power)"
+		(16r40000067 OSK_KP_EQUALS kp_equal)
 		(16r40000068 OSK_F13 f13)
 		(16r40000069 OSK_F14 f14)
 		(16r4000006A OSK_F15 f15)
@@ -382,30 +295,30 @@ OSKeySymbols class >> data [
 		(16r40000075 OSK_HELP help)
 		(16r40000076 OSK_MENU menu)
 		(16r40000077 OSK_SELECT select)
-		(16r40000078 OSK_STOP stop)
-		(16r40000079 OSK_AGAIN again)
+		(16r40000078 OSK_STOP break	)
+		(16r40000079 OSK_AGAIN redo)
 		(16r4000007A OSK_UNDO undo)
 		(16r4000007B OSK_CUT cut)
 		(16r4000007C OSK_COPY copy)
 		(16r4000007D OSK_PASTE paste)
 		(16r4000007E OSK_FIND find)
-		(16r4000007F OSK_MUTE mute)
+		"(16r4000007F OSK_MUTE mute)
 		(16r40000080 OSK_VOLUMEUP volumeup)
 		(16r40000081 OSK_VOLUMEDOWN volumedown)
 		(16r40000085 OSK_KP_COMMA kp_comma)
 		(16r40000086 OSK_KP_EQUALSAS400 kp_equalsas400)
-		(16r40000099 OSK_ALTERASE altErase)
-		(16r4000009A OSK_SYSREQ sysReq)
+		(16r40000099 OSK_ALTERASE altErase)"
+		(16r4000009A OSK_SYSREQ Sys_Req)
 		(16r4000009B OSK_CANCEL cancel)
 		(16r4000009C OSK_CLEAR clear)
 		(16r4000009D OSK_PRIOR prior)
-		(16r4000009E OSK_RETURN2 return2)
+		"(16r4000009E OSK_RETURN2 return2)
 		(16r4000009F OSK_SEPARATOR separator)
 		(16r400000A0 OSK_OUT out)
 		(16r400000A1 OSK_OPER oper)
 		(16r400000A2 OSK_CLEARAGAIN clearagain)
-		(16r400000A3 OSK_CRSEL crsel)
-		(16r400000A4 OSK_EXSEL exsel)
+		(16r400000A3 OSK_CRSEL CursorSelect)
+		(16r400000A4 OSK_EXSEL ExSelect)
 		(16r400000B0 OSK_KP_00 kp_00)
 		(16r400000B1 OSK_KP_000 kp_000)
 		(16r400000B2 OSK_THOUSANDSSEPARATOR thousandsseparator)
@@ -451,16 +364,16 @@ OSKeySymbols class >> data [
 		(16r400000DA OSK_KP_BINARY kp_binary)
 		(16r400000DB OSK_KP_OCTAL kp_octal)
 		(16r400000DC OSK_KP_DECIMAL kp_decimal)
-		(16r400000DD OSK_KP_HEXADECIMAL kp_hexadecimal)
-		(16r400000E0 OSK_LCTRL leftCtrl)
-		(16r400000E1 OSK_LSHIFT leftShift)
-		(16r400000E2 OSK_LALT leftAlt)
-		(16r400000E3 OSK_LGUI leftGui)
-		(16r400000E4 OSK_RCTRL rightCtrl)
-		(16r400000E5 OSK_RSHIFT rightShift)
-		(16r400000E6 OSK_RALT rightAlt)
-		(16r400000E7 OSK_RGUI rightGui)
-		(16r40000101 OSK_MODE mode)
+		(16r400000DD OSK_KP_HEXADECIMAL kp_hexadecimal)"
+		(16r400000E0 OSK_LCTRL Control_L)
+		(16r400000E1 OSK_LSHIFT Shift_L)
+		(16r400000E2 OSK_LALT Alt_L)
+		(16r400000E3 OSK_LGUI Super_L)
+		(16r400000E4 OSK_RCTRL Control_R)
+		(16r400000E5 OSK_RSHIFT Shift_R)
+		(16r400000E6 OSK_RALT Alt_R)
+		(16r400000E7 OSK_RGUI Super_R)
+		"(16r40000101 OSK_MODE mode)
 		(16r40000102 OSK_AUDIONEXT audioNext)
 		(16r40000103 OSK_AUDIOPREV audioPrev)
 		(16r40000104 OSK_AUDIOSTOP audioStop)
@@ -485,7 +398,7 @@ OSKeySymbols class >> data [
 		(16r40000117 OSK_KBDILLUMDOWN kbdIllumDown)
 		(16r40000118 OSK_KBDILLUMUP kbdIllumUp)
 		(16r40000119 OSK_EJECT eject)
-		(16r4000011A OSK_SLEEP sleep)
+		(16r4000011A OSK_SLEEP sleep)"
 	)
 ]
 
@@ -494,18 +407,19 @@ OSKeySymbols class >> initialize [
 	"
 	self initialize
 	"
-	OSKeySymbolValueToNameMap := Dictionary new.
+	OSKeySymbolValueToKeyboardKeyMap := Dictionary new.
 	OSKeySymbolNameToValueMap := Dictionary new.
 	self data do: [ :each |
-		| symbolValue classVarName symbolName|
+		| symbolValue classVarName symbolName keyboardKey |
 		symbolValue := each first.
 		classVarName := each second.
-		symbolName := each third.
+		symbolName := each third asUppercase asSymbol.
+		keyboardKey := KeyboardKey named: symbolName.
 		(self hasClassVarNamed: classVarName) ifFalse: [
 			self addClassVarNamed: classVarName
 		].
 		self classVarNamed: classVarName put: symbolValue.
-		OSKeySymbolValueToNameMap at: symbolValue put: symbolName.
+		OSKeySymbolValueToKeyboardKeyMap at: symbolValue put: keyboardKey.
 		OSKeySymbolNameToValueMap at: symbolName put: symbolValue.
 	].
 
@@ -513,10 +427,10 @@ OSKeySymbols class >> initialize [
 
 { #category : #accessing }
 OSKeySymbols class >> mapKeySymbolNameToValue: keySymbolName [
-	^ OSKeySymbolValueToNameMap at: keySymbolName ifAbsent: [ OSK_UNKNOWN ]
+	^ OSKeySymbolNameToValueMap at: keySymbolName ifAbsent: [ OSK_UNKNOWN ]
 ]
 
 { #category : #accessing }
-OSKeySymbols class >> mapKeySymbolValueToName: keySymbolValue [
-	^ OSKeySymbolValueToNameMap at: keySymbolValue ifAbsent: [ nil ]
+OSKeySymbols class >> mapKeySymbolValueToKeyboardKey: keySymbolValue [
+	^ OSKeySymbolValueToKeyboardKeyMap at: keySymbolValue ifAbsent: [ nil ]
 ]

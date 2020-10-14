@@ -8,7 +8,7 @@ Class {
 		'keyValue',
 		'charCode',
 		'scanCode',
-		'keySymbol'
+		'key'
 	],
 	#category : #'Morphic-Core-Events'
 }
@@ -82,7 +82,12 @@ KeyboardEvent >> isUserInterrupt [
 
 { #category : #keyboard }
 KeyboardEvent >> key [
-	^Smalltalk os keyForValue: keyValue
+	^ key ifNil: [key := Smalltalk os keyForValue: keyValue]
+]
+
+{ #category : #keyboard }
+KeyboardEvent >> key: aKeyboardKey [
+	key := aKeyboardKey
 ]
 
 { #category : #keyboard }
@@ -97,16 +102,6 @@ KeyboardEvent >> keyString [
 	"Answer the string value for this keystroke. This is defined only for keystroke events."
 
 	^ String streamContents: [ :s | self printKeyStringOn: s ]
-]
-
-{ #category : #accessing }
-KeyboardEvent >> keySymbol [
-	^ keySymbol
-]
-
-{ #category : #accessing }
-KeyboardEvent >> keySymbol: anObject [
-	keySymbol := anObject
 ]
 
 { #category : #keyboard }

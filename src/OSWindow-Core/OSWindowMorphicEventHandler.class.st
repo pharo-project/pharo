@@ -192,7 +192,7 @@ OSWindowMorphicEventHandler >> visitKeyDownEvent: anEvent [
 		stamp: Time millisecondClockValue.
 	keyEvent
 		scanCode: anEvent scanCode;
-		keySymbol: (OSKeySymbols mapKeySymbolValueToName: anEvent symbol).
+		key: (OSKeySymbols mapKeySymbolValueToKeyboardKey: anEvent symbol).
 	self dispatchMorphicEvent: keyEvent.
 	
 	"This is for ctrl/alt held alone makes morphic think that null character is good text input"
@@ -236,7 +236,7 @@ OSWindowMorphicEventHandler >> visitKeyUpEvent: anEvent [
 		stamp: Time millisecondClockValue.
 	keyEvent
 		scanCode: anEvent scanCode;
-		keySymbol: (OSKeySymbols mapKeySymbolValueToName: anEvent symbol).
+		key: (OSKeySymbols mapKeySymbolValueToKeyboardKey: anEvent symbol).
 	^ keyEvent
 ]
 
