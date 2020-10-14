@@ -188,9 +188,11 @@ OSWindowMorphicEventHandler >> visitKeyDownEvent: anEvent [
 		position: anEvent position
 		keyValue: (self mapSymbolToKeyValue: anEvent symbol)
 		charCode: (self mapSymbolToKeyValue: anEvent symbol)
-		hand:  self activeHand
+		hand: self activeHand
 		stamp: Time millisecondClockValue.
-	keyEvent scanCode: anEvent scanCode.
+	keyEvent
+		scanCode: anEvent scanCode;
+		keySymbol: (OSKeySymbols mapKeySymbolValueToName: anEvent symbol).
 	self dispatchMorphicEvent: keyEvent.
 	
 	"This is for ctrl/alt held alone makes morphic think that null character is good text input"
@@ -214,7 +216,7 @@ OSWindowMorphicEventHandler >> visitKeyDownEvent: anEvent [
 		position: anEvent position
 		keyValue: (self mapSymbolToKeyValue: anEvent symbol)
 		charCode: (self mapSymbolToKeyValue: anEvent symbol)
-		hand:  morphicWorld activeHand
+		hand: morphicWorld activeHand
 		stamp: Time millisecondClockValue.
 	keyEvent2 scanCode: anEvent scanCode.
 
@@ -230,9 +232,11 @@ OSWindowMorphicEventHandler >> visitKeyUpEvent: anEvent [
 		position: anEvent position
 		keyValue: (self mapSymbolToKeyValue: anEvent symbol)
 		charCode: (self mapSymbolToKeyValue: anEvent symbol)
-		hand:  self activeHand
+		hand: self activeHand
 		stamp: Time millisecondClockValue.
-	keyEvent scanCode: anEvent scanCode.
+	keyEvent
+		scanCode: anEvent scanCode;
+		keySymbol: (OSKeySymbols mapKeySymbolValueToName: anEvent symbol).
 	^ keyEvent
 ]
 

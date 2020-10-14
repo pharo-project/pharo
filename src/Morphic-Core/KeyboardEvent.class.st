@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'keyValue',
 		'charCode',
-		'scanCode'
+		'scanCode',
+		'keySymbol'
 	],
 	#category : #'Morphic-Core-Events'
 }
@@ -96,6 +97,16 @@ KeyboardEvent >> keyString [
 	"Answer the string value for this keystroke. This is defined only for keystroke events."
 
 	^ String streamContents: [ :s | self printKeyStringOn: s ]
+]
+
+{ #category : #accessing }
+KeyboardEvent >> keySymbol [
+	^ keySymbol
+]
+
+{ #category : #accessing }
+KeyboardEvent >> keySymbol: anObject [
+	keySymbol := anObject
 ]
 
 { #category : #keyboard }
