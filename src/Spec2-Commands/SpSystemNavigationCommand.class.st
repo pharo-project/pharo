@@ -22,8 +22,10 @@ SpSystemNavigationCommand class >> defaultName [
 
 { #category : #documentation }
 SpSystemNavigationCommand class >> documentContextRequiredSelectors [
+	"Using a String and not a Symbol because `RBBrowserEnvironmentTest>>#testMatches` fails 
+	 if answering a symbol (because it detects the referenced selector)"
 
-	^ #(environment)
+	^ #('environment')
 ]
 
 { #category : #accessing }
