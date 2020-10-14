@@ -18,7 +18,10 @@ TravisIntegrationHelp class >> introduction [
 		title: 'Introduction to Travis Integration'
 		contents: 
 		(self heading: 'Introduction to Travis Integration'),
-		'Travis is a wunderful continuous integration server. Thanks to SmalltalkCI, it can be easily used with any Pharo application.
+		'Travis is a wonderful continuous integration server. Thanks to SmalltalkCI, it can be easily used with any Pharo application. The benefits of using Travis are the following:
+		- unit tests are executed at each commit. In case a test is failing, Travis sends you a report by email
+		- Each pull request is validated by Travis
+		- An application can be built and its tests can be run for a large range of configuration expressed as a matrix
 
 The example used in this help is Roassal3. 
 
