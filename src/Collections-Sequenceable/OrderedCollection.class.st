@@ -152,17 +152,27 @@ OrderedCollection class >> streamSpecies [
 
 { #category : #adding }
 OrderedCollection >> add: newObject [
-	"Add a new object at the end of the collection"
+	"Add a new object at the end of the collection, and returns the object itself"
 	"((OrderedCollection new add: 42; yourself) add: 43; yourself) asArray >>> #(42 43)"
 	
+	"Add returns the object itself"
+	"(OrderedCollection new add: 42) >>> 42"
+	
+	"You may want to use yourself to return the collection itself"
+	"(OrderedCollection new add: 42; yourself) class >>> OrderedCollection"
+	"(OrderedCollection new add: 42; yourself) size >>> 1"
 	^self addLast: newObject
 ]
 
 { #category : #adding }
 OrderedCollection >> add: newObject after: oldObject [ 
 	"Add the argument, newObject, as an element of the receiver. Put it in 
-	the sequence just succeeding oldObject. Answer newObject."
+	the sequence just succeeding oldObject. Answer newObject.
+	Raises an error if oldObject is not found"
 	
+	"(OrderedCollection new add: 41; add: 42 after: 41; yourself) asArray >>>  #(41 42)"
+	"(OrderedCollection new add: 41; add: 42 after: 41; add: 43 after: 41; yourself) asArray >>>  #(41 43 42)"
+		
 	| index |
 	index := self find: oldObject.
 	self insert: newObject before: index + 1.
@@ -183,6 +193,8 @@ OrderedCollection >> add: newObject before: oldObject [
 	"Add the argument, newObject, as an element of the receiver. Put it in 
 	the sequence just preceding oldObject. Answer newObject."
 	
+	"(OrderedCollection new add: 42; add: 41 before: 42; yourself) asArray >>> #(41 42)"
+	
 	| index |
 	index := self find: oldObject.
 	self insert: newObject before: index.
@@ -200,7 +212,10 @@ OrderedCollection >> add: newObject beforeIndex: index [
 
 { #category : #adding }
 OrderedCollection >> addAll: aCollection [ 
-	"Add each element of aCollection at my end. Answer	aCollection."
+	"Add each element of aCollection at my end. Answer aCollection."
+
+	"(OrderedCollection new addAll: #(41 42); yourself) asArray >>> #(41 42)"
+
 
 	^ self addAllLast: aCollection
 ]
@@ -209,6 +224,8 @@ OrderedCollection >> addAll: aCollection [
 OrderedCollection >> addAllFirst: anOrderedCollection [ 
 	"Add each element of anOrderedCollection at the beginning of the 
 	receiver. Answer anOrderedCollection."
+	
+	"((OrderedCollection new add: 40; addAllFirst: #(41 42); yourself) asArray) >>  #(41 42 40)"
 
 	anOrderedCollection reverseDo: [:each | self addFirst: each].
 	^anOrderedCollection
@@ -486,6 +503,10 @@ OrderedCollection >> find: oldObject [
 { #category : #private }
 OrderedCollection >> growAtFirst [
 	"Add new empty slots to the front of array, while keeping the empty slots at the end."
+	
+	"OrderedCollection new capacity >>> 10"
+	"(OrderedCollection new growAtFirst; capacity) >>> 20"
+	
 
 	| newArray newFirstIndex newLastIndex |
 	newArray := self class arrayType new: (array size * 2 max: 1).
@@ -504,6 +525,9 @@ OrderedCollection >> growAtFirst [
 { #category : #private }
 OrderedCollection >> growAtLast [
 	"Add new empty slots to the end of array, while keeping the empty slots at the front."
+
+	"OrderedCollection new capacity >>> 10"
+	"(OrderedCollection new growAtLast; capacity) >>> 20"
 
 	| newArray |
 	newArray := self class arrayType new: (array size * 2 max: 1).
