@@ -191,19 +191,18 @@ MessageBrowser >> findFirstOccurrenceOf: searchedString in: textToSearchIn [
 MessageBrowser >> handleClassRenamed: anAnnouncement [
 	| items selectedIndex |
 	items := self messages
-		collect: [ :rgMethod | 
+		collect: [ :method | 
 			| interestedClassName interestedClass |
 			interestedClassName := anAnnouncement oldName.
 			interestedClass := anAnnouncement classRenamed.
-			rgMethod isMetaSide
+			method  methodClass isClassSide
 				ifTrue: [ interestedClassName := interestedClassName , ' class'.
 					interestedClass := interestedClass classSide ].
-			rgMethod parentName = interestedClassName
-				ifTrue: [ (interestedClass >> rgMethod selector) asFullRingDefinition ]
-				ifFalse: [ rgMethod ] ].
+			method  class = interestedClassName
+				ifTrue: [ (interestedClass >> method  selector) ]
+				ifFalse: [ method  ] ].
 	selectedIndex := messageList selectedIndex.
-	self messages: items.
-	self setSelectedIndex: selectedIndex
+	self messages: items
 ]
 
 { #category : #announcements }
