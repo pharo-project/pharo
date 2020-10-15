@@ -16,6 +16,7 @@ Class {
 
 { #category : #'instance creation' }
 SycMessageOriginHack class >> of: aMessageDescription [
+
 	^self new 
 		message: aMessageDescription 
 ]
@@ -43,4 +44,10 @@ SycMessageOriginHack >> name [
 { #category : #'hacked methods' }
 SycMessageOriginHack >> parseTreeFor: aSelector [
 	^message
+]
+
+{ #category : #'hacked methods' }
+SycMessageOriginHack >> storeOn: aStream [
+
+	^ message methodClass storeOn: aStream
 ]

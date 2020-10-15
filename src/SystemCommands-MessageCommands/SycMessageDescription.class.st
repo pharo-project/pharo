@@ -90,6 +90,12 @@ SycMessageDescription >> describesSelector: someSelector withArguments: someArgu
 	^selector = someSelector & (argumentNames = someArgumentNames) 
 ]
 
+{ #category : #accessing }
+SycMessageDescription >> methodClass [
+
+	^ contextUser methodClass
+]
+
 { #category : #operations }
 SycMessageDescription >> requestNewSignature [
 	| methodName dialog |
