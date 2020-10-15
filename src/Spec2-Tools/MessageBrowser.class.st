@@ -198,7 +198,7 @@ MessageBrowser >> handleClassRenamed: anAnnouncement [
 			method  methodClass isClassSide
 				ifTrue: [ interestedClassName := interestedClassName , ' class'.
 					interestedClass := interestedClass classSide ].
-			method  class = interestedClassName
+			method methodClass name = interestedClassName
 				ifTrue: [ (interestedClass >> method  selector) ]
 				ifFalse: [ method  ] ].
 	selectedIndex := messageList selectedIndex.
