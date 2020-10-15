@@ -630,6 +630,13 @@ IRBytecodeGenerator >> pushThisContext [
 	encoder genPushThisContext 
 ]
 
+{ #category : #instructions }
+IRBytecodeGenerator >> pushThisProcess [
+
+	stack push.
+	encoder genPushThisProcess.
+]
+
 { #category : #private }
 IRBytecodeGenerator >> quickMethodPrim [
 

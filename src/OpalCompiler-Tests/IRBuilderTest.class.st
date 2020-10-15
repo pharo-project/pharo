@@ -621,6 +621,26 @@ IRBuilderTest >> testPushThisContext [
 	^ iRMethod
 ]
 
+{ #category : #testing }
+IRBuilderTest >> testPushThisProcess [
+	
+	| iRMethod aCompiledMethod |
+	iRMethod := IRBuilder new
+		pushThisProcess;
+		send: #class;
+		returnTop;
+		ir.
+
+	aCompiledMethod := iRMethod compiledMethod.
+	
+	"the bc is only created if we use EncoderForSistaV1"
+	(aCompiledMethod encoderClass  = EncoderForSistaV1) ifFalse: [ ^self skip ].
+	
+	self assert: (aCompiledMethod isKindOf: CompiledMethod).
+	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: Process.
+	^ iRMethod
+]
+
 { #category : #'testing - blocks' }
 IRBuilderTest >> testRemoteTemp [
 	| iRMethod aCompiledMethod |

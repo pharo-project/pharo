@@ -138,6 +138,11 @@ IRInstruction class >> pushThisContext [
 ]
 
 { #category : #'instance creation' }
+IRInstruction class >> pushThisProcess [
+	^ IRPushThisProcess new
+]
+
+{ #category : #'instance creation' }
 IRInstruction class >> returnTop [
 
 	^ IRReturn new

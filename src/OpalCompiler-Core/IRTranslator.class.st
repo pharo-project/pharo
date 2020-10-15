@@ -308,6 +308,11 @@ IRTranslator >> visitPushThisContext: ctxt [
 ]
 
 { #category : #visiting }
+IRTranslator >> visitPushThisProcess: pushThisProcess [
+	gen pushThisProcess
+]
+
+{ #category : #visiting }
 IRTranslator >> visitReturn: ret [
 	
 	gen returnTop
