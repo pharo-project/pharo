@@ -57,10 +57,7 @@ StDebuggerCommandTest >> testCommandsInDNUContext [
 StDebuggerCommandTest >> testCommandsInErrorContext [
 
 	|debugger|
-	self skip.
-	self flag: #DBG_TEST.
-	self flag: 'This test cannot pass until the debug session holds the exception.
-	Waiting for Debugger-Selector integration.'.
+
 	debugger := debuggerProvider debuggerWithErrorContext.
 		
 	"Executable commands relative to context"	
@@ -127,7 +124,7 @@ StDebuggerCommandTest >> testCommandsInMissingClassContext [
 	
 	"Executable commands relative to context"	
 	self assert: (StDefineClassCommand forContext: debugger) canBeExecuted.	
-	self assert: (StDefineMethodCommand forContext: debugger) canBeExecuted.
+	self deny: (StDefineMethodCommand forContext: debugger) canBeExecuted.
 	self assert: (StDefineMissingEntityCommand forContext: debugger) canBeExecuted.  
 	self assert: (StRestartCommand forContext: debugger) canBeExecuted. 
 	self assert: (StReturnValueCommand forContext: debugger) canBeExecuted. 

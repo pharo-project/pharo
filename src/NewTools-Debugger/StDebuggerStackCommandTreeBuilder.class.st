@@ -218,18 +218,14 @@ StDebuggerStackCommandTreeBuilder >> stackMethodCommandsClasses [
 { #category : #commands }
 StDebuggerStackCommandTreeBuilder >> stackMethodNavigationCommands [
 	"Commands to navigate the selected context's method "
-
 	| group |
-	group := (CmCommandGroup named: self stackMethodNavigationGroupName)
-		asSpecGroup.
+
+	group := (CmCommandGroup named: self stackMethodNavigationGroupName) asSpecGroup.
 	group beDisplayedAsGroup.
-	self stackMethodCommandsClasses
-		do: [ :navCmdClass | 
-			group
-				register:
-					(self
-						buildSpecCommand: navCmdClass
-						forContext: stDebuggerInstance stackSelectionMethodContext) ].
+	self stackMethodCommandsClasses do: [ :navCmdClass | 
+		group register: (self
+			buildSpecCommand: navCmdClass
+			forContext: stDebuggerInstance stackSelectionMethodContext) ].
 	^ group
 ]
 

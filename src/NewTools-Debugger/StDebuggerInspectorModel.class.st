@@ -33,5 +33,5 @@ StDebuggerInspectorModel >> inspectedObject [
 
 { #category : #accessing }
 StDebuggerInspectorModel >> labelString [
-	^ 'Receiver in: ' , super labelString
+	^super labelString capitalized
 ]

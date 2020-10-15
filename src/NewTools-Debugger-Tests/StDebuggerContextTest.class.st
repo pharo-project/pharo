@@ -129,7 +129,7 @@ StDebuggerContextTest >> testBuildInspectorNodes [
 	self assertCollection: nodesNames includesAll: #(#a #b).
 
 	"Self"
-	self assertCollection: nodesNames includesAll: #(#instVar).
+	self assertCollection: nodesNames includesAll: #(#self #instVar).
 	
 	"Stacktop"
 	self assertCollection: nodesNames includesAll: #('stackTop').
@@ -138,7 +138,7 @@ StDebuggerContextTest >> testBuildInspectorNodes [
 	self assertCollection: nodesNames includesAll: #('thisContext').	
 	
 	"There is no more elements"
-	self assert: nodesNames size equals: 7
+	self assert: nodesNames size equals: 8
 ]
 
 { #category : #tests }
@@ -173,8 +173,17 @@ StDebuggerContextTest >> testReceiverNodes [
 	nodes := debuggerContext receiverNodes.
 	self assert: nodes size equals: 1.
 	self assert: nodes first key equals: 'instVar'.
-	self assert: nodes first rawValue equals: hostObject instVar.
-	self deny: (nodes anySatisfy: [ :n | n key = 'self' ])
+	self assert: nodes first rawValue equals: hostObject instVar
+]
+
+{ #category : #tests }
+StDebuggerContextTest >> testSelfNodes [
+
+	| node |
+	debuggerContext context: self contextWithTemps.
+	node := debuggerContext selfNode.
+	self assert: node key equals: 'self'.
+	self assert: node rawValue identicalTo: hostObject.
 ]
 
 { #category : #tests }

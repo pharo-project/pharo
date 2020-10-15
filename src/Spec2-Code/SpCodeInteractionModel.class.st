@@ -128,6 +128,12 @@ SpCodeInteractionModel >> selectedClassOrMetaClass [
 ]
 
 { #category : #accessing }
+SpCodeInteractionModel >> text [
+
+	^ self owner text
+]
+
+{ #category : #accessing }
 SpCodeInteractionModel >> variableBindingNames [
 	
 	^ self variableBindings keys

@@ -6,28 +6,75 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'debugger',
-		'session'
+		'session',
+		'contextPredicate',
+		'topContext'
 	],
 	#category : #'NewTools-Debugger-Model'
 }
 
 { #category : #'instance creation' }
 StDebuggerActionModel class >> on: aDebugSession [
-	^ self new session: aDebugSession
+
+	^ self basicNew
+		  session: aDebugSession;
+		  initialize
 ]
 
-{ #category : #accessing }
-StDebuggerActionModel >> assertEqualsSelectors [
-	^ #(#assert:equals: #assert:closeTo:precision: #assert:closeTo: #assert:identicalTo: #assertCollection:equals: #assertCollection:hasSameElements:)
-	
-"#( #assert:equals: #assert:closeTo:precision:
-	     #assert:closeTo: #assert:identicalTo: #assertCollection:equals:
-	     #assertCollection:hasSameElements: )"
+{ #category : #'debug - session' }
+StDebuggerActionModel >> autoClassifyMessage: aMessage inClass: aClass [
+
+	| method |
+	method := aClass lookupSelector: aMessage selector.
+	method protocol = Protocol unclassified ifTrue: [ 
+		MethodClassifier classify: method ]
 ]
 
 { #category : #'debug - execution' }
 StDebuggerActionModel >> clearDebugSession [
 	self session terminate
+]
+
+{ #category : #context }
+StDebuggerActionModel >> computeInitialTopContext [
+
+	topContext := session exception signalContext.
+	topContext ifNil: [ 
+		topContext := self interruptedContext.
+		^ self ].
+	(topContext hasContext: self interruptedContext) ifFalse: [ 
+		topContext := self interruptedContext ]
+]
+
+{ #category : #accessing }
+StDebuggerActionModel >> contextPredicate [
+
+	^ contextPredicate ifNil: [ 
+		  contextPredicate := self updateContextPredicateFor:
+			                      self topContext ]
+]
+
+{ #category : #context }
+StDebuggerActionModel >> contextPredicateFor: aContext [
+
+	| postMortem ex |
+	
+	postMortem := self isContextPostMortem: aContext.
+
+	(self contextSignalsAnException: aContext) ifFalse:[^ self predicateFor: aContext postMortem: postMortem].
+	
+	ex := aContext receiver.
+	((ex isKindOf: TestFailure) ) ifTrue: [ 
+		^ self predicateFor: aContext failure: ex postMortem: postMortem ].
+
+	^ self predicateFor: aContext exception: ex postMortem: postMortem
+]
+
+{ #category : #'debug - predicates' }
+StDebuggerActionModel >> contextSignalsAnException: aContext [
+
+	^ (aContext receiver isKindOf: Exception) and: [ 
+		  aContext selector = #signal ]
 ]
 
 { #category : #'debug - stack' }
@@ -42,10 +89,10 @@ StDebuggerActionModel >> copyStackToClipboard [
 StDebuggerActionModel >> exceptionInContextOrNil: aContext [
 
 	| var ex |
-	self flag: #DBG_REMOVE_NIL_CHECKS.
 	var := aContext temporaryVariableNamed: #exception.
 	var ifNotNil: [ 
 		ex := var readInContext: aContext.
+		self flag: 'When a test fails, the exception is the TestFailure class => why?'.
 		ex isClass ifTrue: [ ^ nil ] ].
 	^ ex
 ]
@@ -57,9 +104,15 @@ StDebuggerActionModel >> fileOutMethod: aMethod [
 
 { #category : #'debug - stack' }
 StDebuggerActionModel >> filterStack: aStack [
-	| context contextsToReject |
+	| context contextsToReject |	
 	context := aStack first.
 	contextsToReject := 0.
+
+	[ 
+	context notNil and: [ context ~~ self referenceContext  ] ] 
+		whileTrue: [ 
+			contextsToReject := contextsToReject + 1.
+			context := context sender ].
 	[ 
 	context notNil and: [ 
 		context method hasPragmaNamed: #debuggerCompleteToSender ] ] 
@@ -73,15 +126,19 @@ StDebuggerActionModel >> filterStack: aStack [
 { #category : #'debug - session' }
 StDebuggerActionModel >> implement: aMessage classified: messageCategory inClass: aClass forContext: aContext [
 
-	| method |
 	self session
 		implement: aMessage
 		classified: messageCategory
 		inClass: aClass
 		forContext: aContext.
-	method := aClass lookupSelector: aMessage selector.
-	method protocol = Protocol unclassified ifTrue: [ 
-		MethodClassifier classify: method ]
+	self autoClassifyMessage: aMessage inClass: aClass.
+	self updateTopContext
+]
+
+{ #category : #initialize }
+StDebuggerActionModel >> initialize [
+	super initialize.
+	self computeInitialTopContext
 ]
 
 { #category : #accessing }
@@ -90,92 +147,86 @@ StDebuggerActionModel >> interruptedContext [
 ]
 
 { #category : #'debug - predicates' }
-StDebuggerActionModel >> isContextSteppable [
-	self flag: 'Too complex: could we reify debugging predicates for more clarity and simplicity?'.
-	self interruptedContext ifNil:[^false].
-	^ (self isInterruptedContextError
-		or: [ self isInterruptedContextATestFailure
-				or: [ self isInterruptedContextPostMortem
-						or: [ self isInterruptedContextDoesNotUnderstand
-								or: [ self isInterruptedContextMissingClassException
-										or: [ self isInterruptedContextSubclassResponsibilityException ] ] ] ] ])
-		not
+StDebuggerActionModel >> isContextAnAssertionFailure [
+
+	^ self contextPredicate isContextAnAssertionFailure
+]
+
+{ #category : #context }
+StDebuggerActionModel >> isContextPostMortem: aContext [
+
+	aContext == topContext ifFalse: [ 
+		^ self session isContextPostMortem: aContext ].
+
+	"If the context is top context, we work on the interrupted context.
+	The top context is not visible from the session"
+	^ self session isContextPostMortem: self interruptedContext
 ]
 
 { #category : #'debug - predicates' }
-StDebuggerActionModel >> isInterruptedContextATestFailure [
-	^ self session isInterruptedContextAnAssertionFailure
+StDebuggerActionModel >> isContextSteppable [
+
+	self interruptedContext ifNil: [ ^ false ].
+	^ self contextPredicate isSteppable
 ]
 
 { #category : #'debug - predicates' }
 StDebuggerActionModel >> isInterruptedContextAnAssertEqualsFailure [
 
-	self flag:
-		'Way too much complex: could we reify debugging predicates for more clarity and simplicity?'.
-	^ self isInterruptedContextATestFailure and: [ 
-		  | variable failure |
-		  variable := self interruptedContext temporaryVariableNamed:
-			              #aStringOrBlock.
-		  variable notNil and: [ 
-			  failure := variable readInContext: self interruptedContext.
-			  failure isString not and: [ 
-				  self assertEqualsSelectors includes:
-					  failure outerContext selector ] ] ]
+	^ self contextPredicate isContextAnAssertionFailure
 ]
 
 { #category : #'debug - predicates' }
 StDebuggerActionModel >> isInterruptedContextDoesNotUnderstand [
-	self flag: #DBG_IMPROVE.
-	self flag: 'maybe move this later in debug session?'.
-	^ self session isInterruptedContextDoesNotUnderstand and: [ 
-		  | context message |
-		  context := self interruptedContext.
-		  message := (context temporaryVariableNamed: #aMessage) 
-			             readInContext: context.
-		  (self interruptedContext receiver respondsTo: message selector) not ]
-]
+	^self contextPredicate isContextDoesNotUnderstand
 
-{ #category : #'debug - predicates' }
-StDebuggerActionModel >> isInterruptedContextError [
-
-	| exception |
-	self flag:
-		'Does not pass yet: we need a secure way of knowing the session was opened from **any** kind of exception'.
-		
-	exception := self interruptedContext temporaryVariableNamed:
-		             #exception.
-	^ exception notNil and: [ 
-		  ((exception readInContext: self interruptedContext) class
-		   = MessageNotUnderstood) not ]
 ]
 
 { #category : #'debug - predicates' }
 StDebuggerActionModel >> isInterruptedContextMissingClassException [
-	^ self isInterruptedContextDoesNotUnderstand
-		and: [  self interruptedContext size >= 2
-		and: [ (self interruptedContext tempAt: 2) class == VariableNotDeclared ]]
+
+	^ self contextPredicate isContextMissingClassException
 ]
 
 { #category : #'debug - predicates' }
 StDebuggerActionModel >> isInterruptedContextPostMortem [
-	^ self session isContextPostMortem: self session interruptedContext
+	^ self contextPredicate isContextPostMortem
 ]
 
 { #category : #'debug - predicates' }
 StDebuggerActionModel >> isInterruptedContextSubclassResponsibilityException [
-	^ self interruptedContext selector == #subclassResponsibility
-	
-		"### Comments says it should not happen, so why keeping the code? Let's experiment
-	and:
-			["	"If we work with an instance of the abstract class (shouldn't normally happen) do not add this action, 
-		as the abstract class alredy contains the the method."
-	"		interruptedContext sender receiver class
-				~~ interruptedContext sender methodClass ]"
+	^ self contextPredicate isContextSubclassResponsibilityException
 ]
 
 { #category : #'debug - stack' }
 StDebuggerActionModel >> peelToFirstLike: aContext [
 	self session peelToFirstLike: aContext
+]
+
+{ #category : #context }
+StDebuggerActionModel >> predicateFor: aContext exception: exception postMortem: isContextPostMortem [
+
+	^ (StDebuggerErrorContextPredicate context: aContext)
+		  exception: exception;
+		  postMortem: isContextPostMortem;
+		  yourself
+]
+
+{ #category : #context }
+StDebuggerActionModel >> predicateFor: aContext failure: testFailure postMortem: isContextPostMortem [
+
+	^ (StDebuggerTestFailureContextPredicate context: aContext)
+		  failure: testFailure;
+		  postMortem: isContextPostMortem;
+		  yourself
+]
+
+{ #category : #context }
+StDebuggerActionModel >> predicateFor: aContext postMortem: isContextPostMortem [
+
+	^ (StDebuggerContextPredicate context: aContext)
+		  postMortem: isContextPostMortem;
+		  yourself
 ]
 
 { #category : #'debug - execution' }
@@ -185,9 +236,19 @@ StDebuggerActionModel >> proceedDebugSession [
 		clear
 ]
 
+{ #category : #context }
+StDebuggerActionModel >> referenceContext [
+	"The reference context is the context that we wish to see in the debugger's stack.
+	It it either the interrupted context if we are in a non-exception case,
+	or the exception's signaler context in all other cases."
+	self contextPredicate contextSignalsException ifFalse:[^self interruptedContext].
+	^topContext receiver signalerContext 
+]
+
 { #category : #'debug - execution' }
 StDebuggerActionModel >> restartContext: aContext [
-	self session restart: aContext
+	self session restart: aContext.
+	self updateTopContext
 ]
 
 { #category : #'debug - execution' }
@@ -198,12 +259,14 @@ StDebuggerActionModel >> returnValueFromExpression: aString fromContext: aContex
 		context: aContext;
 		receiver: aContext receiver;
 		evaluate.
-	self session returnValue: value from: aContext
+	self session returnValue: value from: aContext.
+	self updateTopContext
 ]
 
 { #category : #'debug - execution' }
 StDebuggerActionModel >> runToSelection: aSelectionInterval inContext: aContext [
-	self session runToSelection: aSelectionInterval inContext: aContext
+	self session runToSelection: aSelectionInterval inContext: aContext.
+	self updateTopContext
 ]
 
 { #category : #accessing }
@@ -216,17 +279,48 @@ StDebuggerActionModel >> session: aDebugSession [
 	session := aDebugSession
 ]
 
+{ #category : #context }
+StDebuggerActionModel >> statusStringForContext [
+
+	^ self contextPredicate printDescription
+]
+
 { #category : #'debug - stepping' }
 StDebuggerActionModel >> stepInto: aContext [ 
-	self session stepInto: aContext
+	self session stepInto: aContext.
+	self updateTopContext
 ]
 
 { #category : #'debug - stepping' }
 StDebuggerActionModel >> stepOver: aContext [
-	self session stepOver: aContext
+	self session stepOver: aContext.
+	self updateTopContext
 ]
 
 { #category : #'debug - stepping' }
 StDebuggerActionModel >> stepThrough: aContext [
-	self session stepThrough: aContext
+	self session stepThrough: aContext.
+	self updateTopContext
+]
+
+{ #category : #accessing }
+StDebuggerActionModel >> topContext [
+	^ topContext
+]
+
+{ #category : #context }
+StDebuggerActionModel >> updateContextPredicate [
+	^self updateContextPredicateFor: self topContext
+]
+
+{ #category : #context }
+StDebuggerActionModel >> updateContextPredicateFor: aContext [    
+	contextPredicate := self contextPredicateFor: aContext.
+	^contextPredicate
+]
+
+{ #category : #context }
+StDebuggerActionModel >> updateTopContext [
+
+	topContext := self interruptedContext
 ]
