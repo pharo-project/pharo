@@ -17,7 +17,7 @@ Class {
 
 { #category : #'temp vars' }
 OCRequestorScope >> allTemps [
-	^#()
+	^ requestor bindings associations
 ]
 
 { #category : #accessing }

@@ -338,7 +338,9 @@ OpalCompiler >> compile: textOrString [
 { #category : #private }
 OpalCompiler >> compileDoit [
 	| cm |
-	[ 
+	["We need to first compile with the AST having the text 
+	offset of the original selected code. This way the #location 
+	correct regarding the requestor"
 	self parseDoIt.
 	self transformDoit.
 	self callPlugins.
@@ -353,6 +355,13 @@ OpalCompiler >> compileDoit [
 						in: exception errorCode.
 					^ self compilationContext failBlock value ]
 				ifNil: [ exception pass ] ].
+
+	"We need to rep-parse so that the AST is in sync with the 
+	bytecode to be able to debug the doit. Recompile not needed"
+	ast := RBParser parseMethod: ast formattedCode.
+	ast compilationContext: self compilationContext.
+	self doSemanticAnalysis.
+	ASTCache default at: cm  put: ast. 
 	^cm
 ]
 
