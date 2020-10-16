@@ -82,19 +82,19 @@ RGClassDefinitionTest >> testAsClassDefinitionSourceDefinition [
 	newClass := MOPTestClassC asRingDefinition.
 	self
 		assert: newClass definitionSource 
-		equals:
-			'Object subclass: #MOPTestClassC
+		equals: (ClassDefinitionPrinter fluid for: MOPTestClassC) definitionString.
+			"in OldPharo it was  'Object subclass: #MOPTestClassC
 	uses: Trait2
 	instanceVariableNames: ''''
 	classVariableNames: ''''
-	package: ''Tests-Traits-MOP'''.
+	package: ''Tests-Traits-MOP'''."
 
 	self
 		assert: newClass classSide definitionSource
-		equals:
-			'MOPTestClassC class
+		equals: (ClassDefinitionPrinter fluid for: MOPTestClassC class) definitionString.
+			"in OldPharo it was 'MOPTestClassC class
 	uses: Trait2 classTrait
-	instanceVariableNames: '''''
+	instanceVariableNames: '''''"
 ]
 
 { #category : #testing }

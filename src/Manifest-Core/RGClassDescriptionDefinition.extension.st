@@ -12,5 +12,5 @@ RGClassDescriptionDefinition >> arrayStringForManifest [
 { #category : #'*manifest-core' }
 RGClassDescriptionDefinition class >> manifestReadOn: aArray [
 
-	^ self named:( aArray first)
+	^ self named: aArray first
 ]
