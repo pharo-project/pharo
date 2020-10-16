@@ -388,6 +388,12 @@ IRBuilder >> pushThisContext [
 ]
 
 { #category : #instructions }
+IRBuilder >> pushThisProcess [
+	"This is only supported with EncoderForSistaV1"
+	self add: (IRInstruction pushThisProcess)
+]
+
+{ #category : #instructions }
 IRBuilder >> returnTop [
 
 	self add: IRInstruction returnTop.
