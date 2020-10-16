@@ -22,7 +22,7 @@ BaselineOfPharo >> baseline: spec [
 		spec package: 'Gofer-UI'.
 		
 		spec package: 'FluidClassBuilder'.
-		
+		spec package: 'FluidClassBuilder-Tests' with: [ spec requires: 'FluidClassBuilder' ].
 	]
 ]
 

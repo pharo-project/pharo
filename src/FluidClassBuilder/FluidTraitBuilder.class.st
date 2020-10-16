@@ -58,9 +58,16 @@ FluidTraitBuilder >> name: aString [
 
 { #category : #accessing }
 FluidTraitBuilder >> package: aString [
-	self fillShiftClassBuilder. 
 	packageName := aString.
+	self fillShiftClassBuilder. 
 	
+	
+]
+
+{ #category : #accessing }
+FluidTraitBuilder >> shiftClassBuilder [ 
+
+	^ shiftClassBuilder 
 ]
 
 { #category : #accessing }

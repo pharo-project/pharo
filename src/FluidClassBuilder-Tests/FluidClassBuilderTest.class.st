@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'builder'
 	],
-	#category : #FluidClassBuilder
+	#category : #'FluidClassBuilder-Tests'
 }
 
 { #category : #running }
@@ -86,8 +86,8 @@ FluidClassBuilderTest >> testBuilderSharedVariables [
 { #category : #'tests - gathering' }
 FluidClassBuilderTest >> testBuilderTraits [
 	
-	builder uses: TViewModel.
-	self assert: builder traitsToBuild equals: TViewModel 
+	builder uses: TViewModelMock.
+	self assert: builder traitsToBuild equals: TViewModelMock 
 ]
 
 { #category : #'tests - mandatory' }
