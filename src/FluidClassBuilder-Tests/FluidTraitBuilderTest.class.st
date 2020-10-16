@@ -4,8 +4,17 @@ Class {
 	#instVars : [
 		'builder'
 	],
-	#category : #FluidClassBuilder
+	#category : #'FluidClassBuilder-Tests'
 }
+
+{ #category : #running }
+FluidTraitBuilderTest >> removeFromSystem [
+
+	self class environment at: #TMyClass 
+		ifPresent: [:p | p removeFromSystem: false ]
+		ifAbsent: [  ] .
+	
+]
 
 { #category : #running }
 FluidTraitBuilderTest >> setUp [
@@ -30,6 +39,30 @@ FluidTraitBuilderTest >> testBuildSimplePoint2 [
 ]
 
 { #category : #tests }
+FluidTraitBuilderTest >> testInstallMinimalMockClass [
+
+	| shiftClassBuilder installedClass |
+	self removeFromSystem.
+	[ 
+	builder := self class compilerClass new
+		           evaluate: 'Trait << #TMyClass
+	uses: {};
+	slots: {};
+	tag: '''' ;
+	package: ''MyPackage'''.
+	shiftClassBuilder := builder shiftClassBuilder.
+	ShiftClassInstaller new makeWithBuilder: shiftClassBuilder.
+	
+	installedClass := self class environment at: #TMyClass ifAbsent: [self fail].
+	         
+	self assert: installedClass name equals: #TMyClass.
+	self assert: installedClass isFixed.
+	self assert: installedClass slots isEmpty.
+	self assert: installedClass traitComposition isEmpty ]
+		ensure: [ self removeFromSystem  ]
+]
+
+{ #category : #tests }
 FluidTraitBuilderTest >> testTraitNoSlotsNoUse [
 
 	| trait |
@@ -48,11 +81,11 @@ FluidTraitBuilderTest >> testTraitUse [
 	
 	| trait |
 	builder := Trait << #TPoint3
-		uses: TViewModel;
+		uses: TViewModelMock;
 		package: 'Fake'.
 	trait := builder build.
 	
 	self assert: trait name equals: #TPoint3.
-	self assert: trait traitComposition innerClass equals: TViewModel.
+	self assert: trait traitComposition innerClass equals: TViewModelMock.
 	self assert: trait package packageName equals: '_UnpackagedPackage'
 ]
