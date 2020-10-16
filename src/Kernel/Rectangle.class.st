@@ -49,6 +49,13 @@ Rectangle class >> encompassing: listOfPoints [
 ]
 
 { #category : #'instance creation' }
+Rectangle class >> floatCenter: centerPoint extent: extentPoint [ 
+	"Answer an instance of me whose center is centerPoint and width 
+	by height is extentPoint."
+	^self origin: centerPoint - (extentPoint/2.0) extent: extentPoint
+]
+
+{ #category : #'instance creation' }
 Rectangle class >> left: left right: right top: top bottom: bottom [ 
 	"Answer an instance of me whose left, right, top, and bottom coordinates 
 	are determined by the arguments."
@@ -448,6 +455,12 @@ Rectangle >> flipBy: direction centerAt: aPoint [
 	"Return a copy flipped #vertical or #horizontal, about aPoint."
 	^ (origin flipBy: direction centerAt: aPoint)
 		rectangle: (corner flipBy: direction centerAt: aPoint)
+]
+
+{ #category : #accessing }
+Rectangle >> floatCenter [
+	"Answer the float point at the center of the receiver."
+	^ self topLeft + self bottomRight / 2.0
 ]
 
 { #category : #'truncation and roundoff' }
