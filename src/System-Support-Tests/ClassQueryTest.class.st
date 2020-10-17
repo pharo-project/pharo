@@ -29,8 +29,8 @@ ClassQueryTest >> testReferencedClasses [
 	
 	| refs |
 	refs := Metaclass referencedClasses.
-	self assert: (refs includes: Slot).
+	self assert: (refs includes: OrderedCollection).
 	
 	refs := self class referencedClasses.
-	self assert: (refs includesAll: { Slot. Metaclass })
+	self assert: (refs includesAll: { OrderedCollection. Metaclass })
 ]

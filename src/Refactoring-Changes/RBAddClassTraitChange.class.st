@@ -9,7 +9,7 @@ Class {
 
 { #category : #private }
 RBAddClassTraitChange class >> definitionPatterns [
-	^ #('`traitName classTrait uses: `@traitComposition')
+	^ #('`traitName classTrait uses: `@traitComposition' '`traitName classTrait')
 ]
 
 { #category : #converting }

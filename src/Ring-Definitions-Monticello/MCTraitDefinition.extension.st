@@ -29,16 +29,7 @@ MCTraitDefinition >> classDefinitionString [
 { #category : #'*Ring-Definitions-Monticello' }
 MCTraitDefinition >> printMetaDefinitionOn: stream [
 
-	stream nextPutAll: self className, ' classTrait'; 
-		 crtab;
-		 nextPutAll: 'uses: ';
-		 nextPutAll: self classTraitCompositionString.
-	
-	self classInstanceVariables ifNotEmpty: [  
-		stream
-			cr; tab;
-			nextPutAll: 'slots: '; 
-			nextPutAll: self classSlotDefinitionString
-	].	
+	stream nextPutAll: self className, ' classTrait'.
+	self printDefinitionBodyOn: stream
 
 ]

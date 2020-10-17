@@ -67,19 +67,15 @@ T2PrecedenceCompositionTest >> testPrecedencesAreGeneratedInClassDefinition [
 	c1 := self newClass: #C1 with: #() uses: (t2 + t1 + t3 withPrecedenceOf: t2).
 
 	self
-		assert: c1 definition
+		assert: (ClassDefinitionPrinter oldPharo for: c1) definitionString
 		equals:
-			(Slot showSlotClassDefinition
-				ifFalse: [ 'Object subclass: #C1
+		
+			'Object subclass: #C1
 	uses: (T2 + T1 + T3 withPrecedenceOf: T2)
 	instanceVariableNames: ''''
 	classVariableNames: ''''
-	package: ''TraitsV2-Tests-TestClasses''' ]
-				ifTrue: [ 'Object subclass: #C1
-	uses: (T2 + T1 + T3 withPrecedenceOf: T2)
-	slots: {  }
-	classVariables: {  }
-	package: ''TraitsV2-Tests-TestClasses''' ])
+	package: ''TraitsV2-Tests-TestClasses'''
+				
 ]
 
 { #category : #tests }
@@ -101,19 +97,13 @@ T2PrecedenceCompositionTest >> testPrecedencesAreGeneratedInClassDefinitionWithA
 	c1 := self newClass: #C1 with: #() uses: (t2 + (t1 -- #aSlot) + t3 withPrecedenceOf: t2).
 
 	self
-		assert: c1 definition
-		equals:
-			(Slot showSlotClassDefinition
-				ifFalse: [ 'Object subclass: #C1
+		assert: (ClassDefinitionPrinter oldPharo for: c1) definitionString
+		equals: 'Object subclass: #C1
 	uses: (T2 + (T1 -- #aSlot) + T3 withPrecedenceOf: T2)
 	instanceVariableNames: ''''
 	classVariableNames: ''''
-	package: ''TraitsV2-Tests-TestClasses''' ]
-				ifTrue: [ 'Object subclass: #C1
-	uses: (T2 + (T1 -- #aSlot) + T3 withPrecedenceOf: T2)
-	slots: {  }
-	classVariables: {  }
-	package: ''TraitsV2-Tests-TestClasses''' ])
+	package: ''TraitsV2-Tests-TestClasses''' 
+				
 ]
 
 { #category : #tests }

@@ -107,9 +107,18 @@ OldPharoClassDefinitionPrinter >> traitDefinitionString [
 			nextPutAll: ' uses: ';
 			nextPutAll: forClass traitComposition traitCompositionExpression; 
 			cr.
+		"Important"
+		self flag: #todo.
+		"this class definition should NOT use slots: 
+			either this is a simple slot and we use instance variable names
+			or this is a complex slot and we use the fluid definition.
+			we could have forClass neslotsNeedFullDefinition
+					ifTrue: [ (self class fluid forClass: self) traitDefinitionString ] "
 		forClass classLayout visibleSlots ifNotEmpty: [ 
 			s tab; nextPutAll: ' slots: ';
 			nextPutAll: forClass slotDefinitionString; cr. ].
+		"End of important"
+		
 		s tab; nextPutAll: ' package: ';
 			nextPutAll: forClass category asString printString
 	]
@@ -128,9 +137,6 @@ OldPharoClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aString [
 
 { #category : #delegating }
 OldPharoClassDefinitionPrinter >> traitedMetaclassDefinitionString [ 
-	"Next step
-		- some of the methods defined on classe will have to be moved in this class.
-		- refactor to remove duplication with metaclass,...."
 
 	^ String streamContents: [:strm |
 			strm print: forClass.
@@ -139,8 +145,9 @@ OldPharoClassDefinitionPrinter >> traitedMetaclassDefinitionString [
 					crtab;
 					nextPutAll: 'uses: ';
 					print: forClass traitComposition ].
-			strm
-				crtab;
-				nextPutAll: 'instanceVariableNames: ';
-				store: forClass instanceVariablesString ] 
+			forClass instanceVariablesString ifNotEmpty: [ 
+				strm
+					crtab;
+					nextPutAll: 'instanceVariableNames: ';
+					store: forClass instanceVariablesString ] ]
 ]

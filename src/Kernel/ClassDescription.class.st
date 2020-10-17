@@ -590,11 +590,7 @@ ClassDescription >> definesSlotNamed: aString [
 ClassDescription >> definition [
 	"Answer a String that defines the receiver."
 
-	(self needsSlotClassDefinition or: [ Slot showSlotClassDefinition ]) ifTrue: [ 
-		^ self definitionWithSlots ].
-	
-	^ self definitionWithoutSlots
-	
+	^ self definitionString
 ]
 
 { #category : #fileout }
