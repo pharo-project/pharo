@@ -52,6 +52,101 @@ ObjectTest >> testBecomeForward [
 	self assert: pt1 equals: 100 @ 100
 ]
 
+{ #category : #tests }
+ObjectTest >> testCaseOf [
+	| temp |
+	
+	"Test for Value"
+	#case1 caseOf: {
+		[#case1]->[ temp := 1 ].
+ 		[#case2]->[ temp := 2 ] }.
+	self assert: temp equals: 1.
+	
+	#case2 caseOf: {
+		[#case1]->[ temp := 1 ].
+ 		[#case2]->[ temp := 2 ] }.
+	self assert: temp equals: 2.
+	
+	self should: [ 
+		#case3 caseOf: {
+			[#case1]->[ 1 ].
+ 			[#case2]->[ 2 ] }
+		] raise: Error.
+	
+	"Test for effect"
+	
+	#case1 caseOf: {
+		[#case1]->[ temp := 1 ].
+ 		[#case2]->[ temp := 2 ] }.
+	self assert: temp equals: 1.
+	
+	#case2 caseOf: {
+		[#case1]->[ temp := 1 ].
+ 		[#case2]->[ temp := 2 ] }.
+	self assert: temp equals: 2.
+	
+	self should: [ 
+		#case3 caseOf: {
+			[#case1]->[ 1 ].
+ 			[#case2]->[ 2 ] }
+		] raise: Error
+
+]
+
+{ #category : #tests }
+ObjectTest >> testCaseOfOtherwise [
+	| temp |
+	
+	temp := #case1 
+		caseOf: {
+			[#case1]->[ 1 ].
+ 			[#case2]->[ 2 ] }
+		otherwise: [ 3 ].
+	self assert: temp equals: 1.
+	
+	temp := #case2
+		caseOf: {
+			[#case1]->[ 1 ].
+ 			[#case2]->[ 2 ] }
+		otherwise: [ 3 ].
+	self assert: temp equals: 2.
+	
+	temp := #case3 
+		caseOf: {
+			[#case1]->[ 1 ].
+ 			[#case2]->[ 2 ] }
+		otherwise: [ 3 ].
+	self assert: temp equals: 3.
+	
+	temp := #case4
+		caseOf: { }
+		otherwise: [ 3 ].
+	self assert: temp equals: 3.
+	
+	"Test Effect"
+	
+	#case1 
+		caseOf: {
+			[#case1]->[ temp := 1 ].
+ 			[#case2]->[ temp := 2 ] }
+		otherwise: [ temp := 3 ].
+	self assert: temp equals: 1.
+	
+	#case2
+		caseOf: {
+			[#case1]->[ temp := 1 ].
+ 			[#case2]->[ temp := 2 ] }
+		otherwise: [ temp := 3 ].
+	self assert: temp equals: 2.
+	
+	#case3 
+		caseOf: {
+			[#case1]->[ temp := 1 ].
+ 			[#case2]->[ temp := 2 ] }
+		otherwise: [ temp := 3 ].
+	self assert: temp equals: 3
+]
+
 { #category : #'tests-printing' }
 ObjectTest >> testDisplayString [
 
