@@ -9,7 +9,7 @@ TestCase class >> buildMicroDownUsing: aBuilder withComment: aString [
 		text: aString;
 		newLine;
 		header: [ :b | b text: 'Tests' ] withLevel: 3;
-		text: 'This test suite defines:';
+		text: 'This test suite defines ';
 		text: self allTestSelectors size asString;
 		text: ' test methods.';
 		newLine;
