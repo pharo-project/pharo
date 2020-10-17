@@ -1,5 +1,7 @@
 "
 This pool contains all the platform independent key symbols. They are the same used by SDL2 to avoid having to perform any kind of translation.
+
+The symbolic constants and their mapping to named KeyboardKey	for Morphic consumption are defined in the data method. Some SDL2 constants are omitted because they are rare and they do not have a corresponding mapping in KeyboardKey. One requirement in the initialize method is that all of the named constan have a corresponding mapping in KeyboardKey.
 "
 Class {
 	#name : #OSKeySymbols,
