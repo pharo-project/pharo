@@ -636,9 +636,10 @@ CompilationContext >> prepareForDoIt: aDoItAST inContext: aContext [
 	bindings ifNil: [bindings := Dictionary new ].	
 	ownDoItVars := aDoItAST allDefinedVariables asSet.
 	
-	aContext tempVariables do: [ :temp | 
-		(ownDoItVars includes: temp name) ifFalse: [ 
-			bindings add: (temp asForeignVariableFrom: aContext) ] ]
+	aDoItAST allVariables do: [ :doItVar |
+		(doItVar variable notNil or: [ ownDoItVars includes: doItVar name]) ifFalse: [ 
+			(aContext lookupVar: doItVar name) ifNotNil: [:temp | 
+				bindings add: (temp asForeignVariableFrom: aContext) ] ]]
 ]
 
 { #category : #accessing }

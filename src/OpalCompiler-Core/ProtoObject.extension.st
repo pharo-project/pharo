@@ -4,31 +4,29 @@ Extension { #name : #ProtoObject }
 ProtoObject >> mustBeBooleanCompileExpression: context andCache: cache [
 	"Permits to redefine methods inlined by compiler.
 	Take the ast node corresponding to the mustBeBoolean error, compile it on the fly and executes it as a DoIt. Then resume the execution of the context."
-
-	| sendNode methodNode pc method pcAfterJump |
+	| sendNode unuptimizedNode methodNode pc method pcAfterJump |
 
 	"get the message send node that triggered mustBeBoolean"
 	pc := context pc - 1.
-	sendNode := context sourceNode sourceNodeForPC: pc.
+	sendNode := (context sourceNode sourceNodeForPC: pc).
+	unuptimizedNode := sendNode copy.
 	"Rewrite non-local returns to return to the correct context from send"
 	RBParseTreeRewriter new 
 		replace: '^ ``@value' with: 'ThisContext home return: ``@value';
-		executeTree: sendNode.
+		executeTree: unuptimizedNode.
 	"Build doit node to perform send unoptimized"
-	methodNode := sendNode copy asDoitForContext: context.
+	methodNode := unuptimizedNode asDoitForContext: context.
 	"Disable inlining so the message send will be unoptimized"
 	methodNode compilationContext compilerOptions: #(- optionInlineIf optionInlineAndOr optionInlineWhile).
 	"Generate the method"	
-	OCASTSemanticCleaner clean: methodNode.
-	method := methodNode generate.
+"	OCASTSemanticCleaner clean: methodNode."
+	method := methodNode generateWithSource.
 	"store the pc of the instruction following the send when returning from deoptimized code."
 	pcAfterJump := sendNode irInstruction nextBytecodeOffsetAfterJump.
 	method propertyAt: #mustBeBooleanJump put: pcAfterJump.
 	"cache the method we just created"
 	cache at: pc put: method.
 	^method
-	
-	
 ]
 
 { #category : #'*OpalCompiler-Core' }

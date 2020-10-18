@@ -615,5 +615,6 @@ OpalCompiler >> transformDoit [
 	self compilationContext noPattern ifFalse: [ ^ast ].
 	ast := context 
 		ifNil: [ast asDoit] 
-		ifNotNil: [ ast asDoitForContext: context ]
+		ifNotNil: [ ast asDoitForContext: context ].
+	self doSemanticAnalysis 
 ]

@@ -12,7 +12,7 @@ RBProgramNode >> asDoit [
 	doIt := RBParser parseMethod: methodNode formattedCode.
 	self methodNode ifNotNil: [:myMethod |
 		doIt compilationContext: myMethod compilationContext copy ].
-	doIt doSemanticAnalysis.	
+		
 	^doIt
 ]
 
@@ -31,7 +31,7 @@ RBProgramNode >> asDoitForContext: aContext [
 		doIt compilationContext: myMethod compilationContext copy].
 	doIt methodClass: aContext receiver class.
 	doIt compilationContext prepareForDoIt: doIt inContext: aContext.
-	doIt doSemanticAnalysis.	
+		
 	^doIt
 ]
 
