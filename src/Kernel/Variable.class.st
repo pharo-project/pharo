@@ -68,6 +68,11 @@ Variable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitVariableNode: aNode
 ]
 
+{ #category : #converting }
+Variable >> asForeignVariableFrom: aContext [
+	^ForeignVariable fromContext: aContext variable: self
+]
+
 { #category : #queries }
 Variable >> definingNode [
 	^ nil

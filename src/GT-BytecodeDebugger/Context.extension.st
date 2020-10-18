@@ -2,31 +2,30 @@ Extension { #name : #Context }
 
 { #category : #'*GT-BytecodeDebugger' }
 Context >> gtBytecodeDebuggerRetrieveContextValues [
-	|fieldList displayedTemp slotsSize tempNames |
+	|fieldList displayedTemp slotsSize temps |
 
 	fieldList := OrderedCollection new.
 	displayedTemp := OrderedCollection new.
-	tempNames := self tempNames.
+	temps := self tempVariables.
 	
 	self stackPtr to: 1 by: -1 do: [ :tempIndex ||tempNode|
 		fieldList add:
-			(tempIndex <= tempNames size
+			(tempIndex <= temps size
 				ifTrue: [ 
-					displayedTemp add: (tempNames at: tempIndex).
-					tempNode := GTInspectorContextNamedTempNode 
+					displayedTemp add: (temps at: tempIndex).
+					tempNode := GTInspectorContextTempNode 
 						hostObject: self 
-						tempName: (tempNames at: tempIndex) 
-						tempIndex: tempIndex.
+						temp: (temps at: tempIndex).
 					GTInspectorWrapperNode 
 						hostObject: tempNode
-						label: (tempIndex - 1) asString, ' [', (tempNames at: tempIndex), ']'  ]
+						label: (tempIndex - 1) asString, ' [', (temps at: tempIndex), ']'  ]
 				ifFalse: [
 					 tempNode := GTInspectorContextIndexedTempNode hostObject: self tempIndex: tempIndex.
 					 GTInspectorWrapperNode 
 					 	hostObject: tempNode
 						label: (tempIndex - 1) asString ]) ].
 	
-	(tempNames copy asOrderedCollection removeAll: displayedTemp; yourself) ifNotEmpty: [ :uninitializedTemps |
+	(temps copy asOrderedCollection removeAll: displayedTemp; yourself) ifNotEmpty: [ :uninitializedTemps |
 		uninitializedTemps do: [ :each |
 			GTInspectorDynamicNode hostObject: self label: ('- [', each, ']') value: nil ] ].
 	

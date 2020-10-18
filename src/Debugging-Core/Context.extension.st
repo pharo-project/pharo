@@ -397,6 +397,19 @@ Context >> tempNames [
 ]
 
 { #category : #'*Debugging-Core' }
+Context >> tempVariables [
+	"Answer all the temp names in scope in aContext starting with the home's first local 
+	(the first argument or first temporary if no arguments).
+	
+	These are all the temps that a programmer could access in the context, but keep in mind
+	that as they might not be accesses here. 
+	In addition, even vars that are accessed in this context could be stored
+	in a temp vector, which itself would be a copied temp that has no name..."
+	
+	^ self astScope allTemps
+]
+
+{ #category : #'*Debugging-Core' }
 Context >> temporaryVariableNamed: aName [
 	(self hasTemporaryVariableNamed: aName)
 		ifFalse: [ ^ nil ].

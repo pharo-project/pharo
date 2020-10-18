@@ -621,6 +621,26 @@ CompilationContext >> parserClass: anObject [
 	parserClass := anObject
 ]
 
+{ #category : #copying }
+CompilationContext >> postCopy [ 
+	super postCopy.
+	
+	bindings ifNotNil: [ bindings := bindings copy ]
+]
+
+{ #category : #initialization }
+CompilationContext >> prepareForDoIt: aDoItAST inContext: aContext [
+	"I collect all temps from given aContext which are accessed in given doIt expression.
+	I adopt them as extra bindings to be visible in this expression"
+	| ownDoItVars |
+	bindings ifNil: [bindings := Dictionary new ].	
+	ownDoItVars := aDoItAST allDefinedVariables asSet.
+	
+	aContext tempVariables do: [ :temp | 
+		(ownDoItVars includes: temp name) ifFalse: [ 
+			bindings add: (temp asForeignVariableFrom: aContext) ] ]
+]
+
 { #category : #accessing }
 CompilationContext >> productionEnvironment [
 	^productionEnvironment ifNil: [ ^self environment ]

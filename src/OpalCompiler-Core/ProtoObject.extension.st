@@ -16,8 +16,6 @@ ProtoObject >> mustBeBooleanCompileExpression: context andCache: cache [
 		executeTree: sendNode.
 	"Build doit node to perform send unoptimized"
 	methodNode := sendNode copy asDoitForContext: context.
-	"Keep same compilation context as the sender node's"
-	methodNode compilationContext: sendNode methodNode compilationContext copy.
 	"Disable inlining so the message send will be unoptimized"
 	methodNode compilationContext compilerOptions: #(- optionInlineIf optionInlineAndOr optionInlineWhile).
 	"Generate the method"	

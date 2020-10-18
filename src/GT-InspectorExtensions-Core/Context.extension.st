@@ -11,8 +11,8 @@ Context >> gtInspectorSourceIn: composite [
 { #category : #'*GT-InspectorExtensions-Core' }
 Context >> gtInspectorTempNodes [
 
-	^ (self tempNames withIndexCollect: [ :tempName :tempIndex |
-			GTInspectorContextNamedTempNode hostObject: self tempName: tempName tempIndex: tempIndex ]) .
+	^ self tempVariables collect: [ :temp |
+			GTInspectorContextTempNode hostObject: self temp: temp ]
 ]
 
 { #category : #'*GT-InspectorExtensions-Core' }

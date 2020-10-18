@@ -3,30 +3,36 @@ Extension { #name : #RBProgramNode }
 { #category : #'*OpalCompiler-Core' }
 RBProgramNode >> asDoit [
 	"The VM can only evaluate methods. wrap this ast in a doit MethodNode"
-	| methodNode |
-	
+	| methodNode doIt |
 	methodNode := RBMethodNode 
 		selector: #DoIt
-		body: self asSequenceNode transformLastToReturn.
-	methodNode source: methodNode formattedCode.
-	^methodNode
-	
+		body: self copy asSequenceNode transformLastToReturn.
+	"We need to re-parse so that the AST is in sync with the 
+	bytecode to be able to debug the doit. Recompile not needed"
+	doIt := RBParser parseMethod: methodNode formattedCode.
+	self methodNode ifNotNil: [:myMethod |
+		doIt compilationContext: myMethod compilationContext copy ].
+	doIt doSemanticAnalysis.	
+	^doIt
 ]
 
 { #category : #'*OpalCompiler-Core' }
 RBProgramNode >> asDoitForContext: aContext [
 	"The VM can only evaluate methods. wrap this ast in a doitIn MethodNode to evaluate in a context"
-	| methodNode |
-	
+	| methodNode doIt |
 	methodNode := RBMethodNode 
 		selector: #DoItIn:
 		arguments: { RBVariableNode named: 'ThisContext' } 
-		body: self asSequenceNode transformLastToReturn.
-	
-	methodNode methodClass: aContext receiver class.
-	methodNode rewriteTempsForContext: aContext.
-	methodNode source: methodNode formattedCode.
-	^methodNode
+		body: self copy asSequenceNode transformLastToReturn.
+	"We need to re-parse so that the AST is in sync with the 
+	bytecode to be able to debug the doit. Recompile not needed"
+	doIt := RBParser parseMethod: methodNode formattedCode.
+	self methodNode ifNotNil: [ :myMethod | 
+		doIt compilationContext: myMethod compilationContext copy].
+	doIt methodClass: aContext receiver class.
+	doIt compilationContext prepareForDoIt: doIt inContext: aContext.
+	doIt doSemanticAnalysis.	
+	^doIt
 ]
 
 { #category : #'*OpalCompiler-Core' }
