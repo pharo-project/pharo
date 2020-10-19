@@ -24,7 +24,8 @@ Class {
 { #category : #private }
 RBRemoveClassTransformation class >> cannotRemoveTopLevelClassErrorMesssage [
 
-	^ 'Cannot remove top level class', Character cr asString ,'when it has subclasses'
+	^ 'Cannot remove top level class' , String cr
+	  , 'when it has subclasses'
 ]
 
 { #category : #api }

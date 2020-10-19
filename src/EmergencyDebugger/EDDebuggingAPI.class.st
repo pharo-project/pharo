@@ -101,9 +101,10 @@ EDDebuggingAPI >> displayStackSize [
 
 { #category : #'API - Stack' }
 EDDebuggingAPI >> dumpStack [
+
 	| str |
 	str := String new writeStream.
-	self stack printOn: str delimiter: Character cr asString.
+	self stack printOn: str delimiter: String cr.
 	^ str contents
 ]
 
