@@ -28,6 +28,15 @@ RBProgramNode >> isSuper [
 ]
 
 { #category : #'*Deprecated90' }
+RBProgramNode >> isTemp [
+	self 
+		deprecated: 'Use #isTempVariable instead.' 
+		transformWith: '`@receiver isTemp' -> '`@receiver isTempVariable'.
+
+	^ self isTempVariable
+]
+
+{ #category : #'*Deprecated90' }
 RBProgramNode >> isThisContext [
 	self 
 		deprecated: 'Use #isThisContextVariable instead.' 

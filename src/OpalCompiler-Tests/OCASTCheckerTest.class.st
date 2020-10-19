@@ -58,7 +58,7 @@ OCASTCheckerTest >> testExamplePrimitiveErrorCode [
 	ast := (OCOpalExamples>>#examplePrimitiveErrorCode) parseTree.
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 
-	self assert: (ast scope lookupVar: 'code') isTemp.
+	self assert: (ast scope lookupVar: 'code') isTempVariable.
 
 	
 ]
@@ -302,8 +302,8 @@ OCASTCheckerTest >> testSingleRemoteTempVar [
 	self assert: (ast scope lookupVar: 'index') scope equals: ast scope.
 	self deny: (ast scope lookupVar: 'block') isEscaping.
 	self assert: (ast scope lookupVar: 'theCollection') isEscaping.
-	self assert: (ast scope lookupVar: 'block') isTemp.
-	self assert: (ast scope lookupVar: 'theCollection') isTemp.
+	self assert: (ast scope lookupVar: 'block') isTempVariable.
+	self assert: (ast scope lookupVar: 'theCollection') isTempVariable.
 	self deny: (ast scope lookupVar: 'theCollection') isInstanceVariable.
 	self deny: (ast scope lookupVar: 'index') isInstanceVariable.
 	self deny: (ast scope lookupVar: 'block') isInstanceVariable
@@ -320,7 +320,7 @@ OCASTCheckerTest >> testsingleRemoteTempVarWhileWithTempNotInlined [
 	self assert: (ast scope lookupVar: 'index') isEscaping.
 	self assert: (ast scope lookupVar: 'index') scope equals: ast scope.
 	self deny: (ast scope lookupVar: 'block') isEscaping.
-	self assert: (ast scope lookupVar: 'block') isTemp
+	self assert: (ast scope lookupVar: 'block') isTempVariable
 ]
 
 { #category : #'testing - variables' }
@@ -334,5 +334,5 @@ OCASTCheckerTest >> testsingleRemoteTempVarWrittenAfterClosedOver [
 	self assert: (ast scope lookupVar: 'index') isWrite.
 	self assert: (ast scope lookupVar: 'index') scope equals: ast scope.
 	self deny: (ast scope lookupVar: 'block') isEscaping.
-	self assert: (ast scope lookupVar: 'block') isTemp
+	self assert: (ast scope lookupVar: 'block') isTempVariable
 ]

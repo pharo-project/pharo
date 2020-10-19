@@ -9,8 +9,7 @@ Class {
 
 { #category : #running }
 ReTemporaryNeitherReadNorWrittenRule >> check: aNode forCritiquesDo: aBlock [
-	aNode isVariable ifFalse: [ ^ self ].
-	aNode isTemp ifFalse: [ ^ self ].
+	aNode isTempVariable ifFalse: [ ^ self ].
 	aNode isDefinition ifFalse: [ ^ self ].
 	aNode variable isReferenced ifFalse: [ 
 		aBlock cull: (self critiqueFor: aNode) ]

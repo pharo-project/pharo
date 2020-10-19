@@ -640,7 +640,7 @@ RBProgramNode >> isSuperVariable [
 ]
 
 { #category : #testing }
-RBProgramNode >> isTemp [
+RBProgramNode >> isTempVariable [
 	^ false
 ]
 
@@ -1039,7 +1039,7 @@ RBProgramNode >> superMessages [
 
 { #category : #querying }
 RBProgramNode >> tempVariableReadNodes [
-		^self variableReadNodes select: [:each | each isTemp]
+		^self variableReadNodes select: [:each | each isTempVariable]
 ]
 
 { #category : #accessing }

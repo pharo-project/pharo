@@ -95,7 +95,7 @@ CDSlotNode >> isLiteralVariable [
 ]
 
 { #category : #testing }
-CDSlotNode >> isTemp [
+CDSlotNode >> isTempVariable [
 	"To be polymorphic to RB method nodes"
 	^false
 ]

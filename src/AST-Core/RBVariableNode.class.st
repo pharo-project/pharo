@@ -183,8 +183,8 @@ RBVariableNode >> isSuperVariable [
 ]
 
 { #category : #testing }
-RBVariableNode >> isTemp [
-	^variable isTemp
+RBVariableNode >> isTempVariable [
+	^variable isTempVariable
 ]
 
 { #category : #testing }
