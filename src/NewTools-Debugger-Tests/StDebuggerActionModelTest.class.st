@@ -170,21 +170,6 @@ StDebuggerActionModelTest >> testCopyStackToClipboard [
 StDebuggerActionModelTest >> testCreateMissingMethod [
 ]
 
-{ #category : #'tests - contexts' }
-StDebuggerActionModelTest >> testExceptionInContextOrNil [
-
-	| ex |
-	StTestDebuggerProvider compileMissingClassContextBuilder.
-	ex := debugActionModel exceptionInContextOrNil:
-		      session interruptedContext.
-	self assert: ex isNil.
-	self changeSession:
-		StTestDebuggerProvider new debuggerWithMissingClassContext session.
-	ex := debugActionModel exceptionInContextOrNil:
-		      session interruptedContext.
-	self assert: ex class identicalTo: VariableNotDeclared
-]
-
 { #category : #'tests - actions' }
 StDebuggerActionModelTest >> testFileOutMethod [
 	debugActionModel fileOutMethod: self.

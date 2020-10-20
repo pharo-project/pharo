@@ -779,6 +779,12 @@ SpPresenter >> newDynamicPresentersListIn: accessorSymbol usingBuilder: aDynamic
 ]
 
 { #category : #widgets }
+SpPresenter >> newFilteringList [
+
+	^ self instantiate: SpFilteringListPresenter
+]
+
+{ #category : #widgets }
 SpPresenter >> newLabel [
 	^ self instantiate: SpLabelPresenter
 ]
@@ -786,12 +792,6 @@ SpPresenter >> newLabel [
 { #category : #widgets }
 SpPresenter >> newList [
 	^ self instantiate: SpListPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newListWithFilter [
-
-	^ self instantiate: SpListWithFilterPresenter
 ]
 
 { #category : #widgets }

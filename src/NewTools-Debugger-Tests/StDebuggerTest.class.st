@@ -68,8 +68,60 @@ StDebuggerTest >> tearDown [
 	debugger ifNotNil: [ 
 		debugger close.
 		debugger session ifNotNil: [ :s | s clear ] ].
-	StTestDebuggerProvider removeSelector: #foobar.
+	StTestDebuggerProvider removeSelector: #foobar. 
+	StDebuggerObjectForTests compile: 'haltingMethod self halt. ^self' classified: 'util'.
 	super tearDown
+]
+
+{ #category : #'tests - code pane' }
+StDebuggerTest >> testAcceptCodeChangesForContext [
+
+	| dbg context newSource |
+	dbg := StTestDebuggerProvider new debuggerWithObjectHalting.
+	dbg
+		application: dbg class currentApplication;
+		initialize;
+		buildContextMenus.
+	context := dbg stackTable items first.
+	newSource := 'haltingMethod ^1+1 squared'.	
+	dbg code type: newSource.
+	dbg code update.
+	dbg unsavedCodeChanges at: 4 put: 2.
+	
+	dbg acceptCodeChanges: newSource forContext: context.
+	self assertEmpty: dbg unsavedCodeChanges.
+	self assert: dbg code text equals: newSource
+]
+
+{ #category : #'tests - code pane' }
+StDebuggerTest >> testCancelCodeChangesFor [
+	| dbg firstContext lastContext |
+	dbg := self debuggerOn: session.
+	dbg stepInto; stepInto.
+	firstContext := dbg stackTable items first.	
+	lastContext := dbg stackTable items last.		
+	dbg code type: 'a'.
+	dbg code update.
+	dbg stackTable selectItem: lastContext.
+	
+	self assert: (dbg unsavedCodeChangesFor: firstContext) equals: 'a'.
+	dbg stackTable selectItem: firstContext.
+	
+	dbg code triggerResetAction.
+	self should: [ (dbg unsavedCodeChangesFor: firstContext) ] raise: KeyNotFound.
+	self assert: dbg code text equals: firstContext sourceCode
+	
+	
+]
+
+{ #category : #'tests - code pane' }
+StDebuggerTest >> testClearUnsavedChanges [
+
+	| dbg |
+	dbg := self debuggerOn: session.
+	dbg unsavedCodeChanges at: 4 put: 2.
+	dbg clearUnsavedCodeChanges.
+	self assertEmpty: dbg unsavedCodeChanges
 ]
 
 { #category : #'tests - actions' }
@@ -80,20 +132,33 @@ StDebuggerTest >> testClose [
 
 { #category : #'tests - code pane' }
 StDebuggerTest >> testCodeChangeAfterContextChange [
-	self skip.
-	self flag: #DBG_TEST
+	| dbg firstContext lastContext |
+	dbg := self debuggerOn: session.
+	dbg stepInto; stepInto.
+	firstContext := dbg stackTable items first.	
+	lastContext := dbg stackTable items last.	
+	
+	self assert: dbg code text equals: firstContext sourceCode.
+	dbg stackTable selectItem: lastContext.
+	self assert: dbg code text equals: lastContext sourceCode.
+	dbg stackTable selectItem: firstContext.
+	self assert: dbg code text equals: firstContext sourceCode.
+	
+	self should: [ dbg unsavedCodeChangesFor:  firstContext] raise: KeyNotFound.	
+	self should: [ dbg unsavedCodeChangesFor:  lastContext] raise: KeyNotFound
 ]
 
 { #category : #'tests - code pane' }
-StDebuggerTest >> testCodeModification [
-	self skip.
-	self flag: #DBG_TEST
-]
+StDebuggerTest >> testCodeSelectionAfterStepping [
 
-{ #category : #'tests - code pane' }
-StDebuggerTest >> testCodeSelectionAfterStepOver [
-	self skip.
-	self flag: #DBG_TEST
+	| dbg |
+	dbg := self debuggerOn: session.
+	dbg
+		stepInto;
+		stepInto.
+	self
+		assert: dbg code selectionInterval
+		equals: (session pcRangeForContext: dbg currentContext)
 ]
 
 { #category : #'tests - context inspector' }
@@ -161,7 +226,7 @@ StDebuggerTest >> testContextUnchangedAfterStepOver [
 	currentContext := dbg inspector inspectedObject.
 	"stepping over one time ^self * self (i.e. we are on the return node but still in the same context)"
 	dbg stepOver. 
-	self assert: dbg inspector inspectedObject ==  currentContext
+	self assert: dbg inspector inspectedObject identicalTo:  currentContext
 ]
 
 { #category : #'tests - actions' }
@@ -196,9 +261,24 @@ StDebuggerTest >> testDebuggerApplication [
 ]
 
 { #category : #'tests - code pane' }
-StDebuggerTest >> testDiscardCodeModification [
-	self skip.
-	self flag: #DBG_TEST
+StDebuggerTest >> testDiscardCodeChangesFor [
+	| dbg firstContext lastContext |
+	dbg := self debuggerOn: session.
+	dbg stepInto; stepInto.
+	firstContext := dbg stackTable items first.	
+	lastContext := dbg stackTable items last.		
+	dbg code type: 'a'.
+	dbg code update.
+	dbg stackTable selectItem: lastContext.
+	
+	self assert: (dbg unsavedCodeChangesFor: firstContext) equals: 'a'.
+	dbg stackTable selectItem: firstContext.
+	
+	dbg discardCodeChangesFor: firstContext.	
+	self should: [ (dbg unsavedCodeChangesFor: firstContext) ] raise: KeyNotFound.
+	self assert: dbg code text equals: firstContext sourceCode
+	
+	
 ]
 
 { #category : #'tests - initialization' }
@@ -258,16 +338,6 @@ StDebuggerTest >> testReceiverChangedAfterStepOverAndReturn [
 ]
 
 { #category : #'tests - receiver inspector' }
-StDebuggerTest >> testReceiverInitialRawInspectionSelection [
-]
-
-{ #category : #'tests - receiver inspector' }
-StDebuggerTest >> testReceiverInspectorMenu [
-	self skip.
-	self flag: #DBG_TEST
-]
-
-{ #category : #'tests - receiver inspector' }
 StDebuggerTest >> testReceiverList [
 	| dbg currentReceiver |
 	dbg := self debuggerOn: session.	
@@ -291,6 +361,23 @@ StDebuggerTest >> testReceiverUnchangedAfterStepOver [
 
 ]
 
+{ #category : #'tests - code pane' }
+StDebuggerTest >> testRecordUnsavedCodeChanges [
+	| dbg lastContext |
+	dbg := self debuggerOn: session.
+	dbg stepInto; stepInto.
+	lastContext := dbg stackTable items last.		
+	dbg code type: 'a'.
+	dbg code update.
+	
+	self assert: dbg code text equals: 'a'.
+	self deny: dbg selectedContext sourceCode equals: dbg code text.
+
+	dbg stackTable selectItem: lastContext.
+	self assert: dbg code text equals: lastContext sourceCode.
+	self assert: (dbg unsavedCodeChangesFor: dbg stackTable items first) equals: 'a'
+]
+
 { #category : #'tests - actions' }
 StDebuggerTest >> testRequestClassFrom [
 
@@ -307,12 +394,67 @@ StDebuggerTest >> testRequestProtocolIn [
 		equals: Protocol unclassified
 ]
 
+{ #category : #'tests - session' }
+StDebuggerTest >> testRestartContext [
+
+	| dbg firstContext lastContext |
+	dbg := self debuggerOn: session.
+	dbg stepInto; stepInto.
+	firstContext := dbg stackTable items first.	
+	lastContext := dbg stackTable items last.
+		
+	"We select the last context and we change the code but we do not save.
+	The unsaved code change is kept when we select another context (the first one)"	
+	dbg stackTable selectItem: lastContext.	
+	dbg code type: 'a'.
+	dbg code update.	
+	dbg stackTable selectItem: firstContext.	
+	self assert: (dbg unsavedCodeChangesFor: lastContext) equals: 'a'.	
+		
+	"We select again the last context and restart it:
+	- unsaved code changes are dropped
+	- the restarted context is now the first context of the stack
+	- the code is reset to the source of the restarted context"	
+	dbg stackTable selectItem: lastContext.				
+	dbg restartCurrentContext. 	
+	self assertEmpty: dbg unsavedCodeChanges.
+	self assert: dbg code text equals: lastContext sourceCode.
+	self assert: dbg stackTable items first equals: lastContext
+	
+	
+
+]
+
 { #category : #'tests - raw inspection' }
 StDebuggerTest >> testRestoreReceiverRawInspectionSelection [
+	self skip.
+	self flag: #DBG_TEST
 ]
 
 { #category : #'tests - raw inspection' }
 StDebuggerTest >> testRestoreReceiverRawInspectionSelectionAfterContextChange [
+
+	self skip.
+	self flag: #DBG_TEST
+]
+
+{ #category : #'tests - code pane' }
+StDebuggerTest >> testRestoreUnsavedCodeChanges [
+	| dbg firstContext lastContext |
+	dbg := self debuggerOn: session.
+	dbg stepInto; stepInto.
+	firstContext := dbg stackTable items first.
+	lastContext := dbg stackTable items last.
+	
+	self assert: dbg code text equals: firstContext sourceCode.
+	dbg code type: 'a'.
+	dbg update.
+	
+	dbg stackTable selectItem: lastContext.
+	self assert: dbg code text equals: lastContext sourceCode.
+	
+	dbg stackTable selectItem: firstContext.
+	self assert: dbg code text equals: 'a'
 ]
 
 { #category : #'tests - session' }
@@ -323,16 +465,39 @@ StDebuggerTest >> testReturnEnteredValue [
 
 { #category : #'tests - code pane' }
 StDebuggerTest >> testSaveCodeModification [
+	| dbg context newSource |
+	dbg := StTestDebuggerProvider new debuggerWithObjectHalting.
+	dbg
+		application: dbg class currentApplication;
+		initialize;
+		buildContextMenus.
+	context := dbg stackTable items first.
+	newSource := 'haltingMethod ^1+1 squared'.	
+	dbg code type: newSource.
+	dbg code update.
+	dbg unsavedCodeChanges at: 4 put: 2.
+	
+	dbg code triggerSubmitAction.	
+	self assertEmpty: dbg unsavedCodeChanges.
+	self assert: context sourceCode equals: newSource.
+	self assert: dbg code text equals: context sourceCode
+	
+	
+
+]
+
+{ #category : #'tests - raw inspection' }
+StDebuggerTest >> testSaveReceiverRawInspectionSelection [
+
 	self skip.
 	self flag: #DBG_TEST
 ]
 
 { #category : #'tests - raw inspection' }
-StDebuggerTest >> testSaveReceiverRawInspectionSelection [
-]
-
-{ #category : #'tests - raw inspection' }
 StDebuggerTest >> testSaveReceiverRawInspectionSelectionAfterContextChange [
+
+	self skip.
+	self flag: #DBG_TEST
 ]
 
 { #category : #'tests - stack table' }
@@ -369,12 +534,6 @@ StDebuggerTest >> testSelectLastStackElementWithoutMoreElements [
 	self assert: stackTable items size equals: startingStackSize
 ]
 
-{ #category : #'tests - code pane' }
-StDebuggerTest >> testSelectionMenu [
-	self skip.
-	self flag: #DBG_TEST
-]
-
 { #category : #'tests - stack table' }
 StDebuggerTest >> testStackTableAfterReturn [
 	| dbg stackTableItems stackSizeAfterStepIn |
@@ -402,7 +561,7 @@ StDebuggerTest >> testStackTableAfterStepIn [
 	stackTableItems := dbg stackTable items.
 	self assert: dbg stackTable selection selectedIndex equals: 1.
 	self
-		assert: dbg stackTable selection selectedItem == session shortStack first.
+		assert: dbg stackTable selection selectedItem identicalTo: session shortStack first.
 	self assert: stackTableItems size equals: startingStackSize + 1.
 	self assert: stackTableItems equals: session shortStack
 ]
@@ -412,8 +571,8 @@ StDebuggerTest >> testStackTableElementsPrinting [
 	| columns classColumn methodColumn method block context |
 	self debugger session: session.
 	columns := self initializedDebugger stackTable columns.
-	classColumn := columns first.
-	methodColumn := columns second.
+	classColumn := columns second.
+	methodColumn := columns third.
 	"The following column was removed to experiment a new layout, just keeping the test in case of roolback."
 	"senderColumn := columns third."
 	method := self class >> #testStackTableElementsPrinting.
@@ -472,12 +631,6 @@ StDebuggerTest >> testStackTableWithNewSession [
 ]
 
 { #category : #'tests - toolbar' }
-StDebuggerTest >> testToolbarDependingOnContext [
-	self skip
-
-]
-
-{ #category : #'tests - toolbar' }
 StDebuggerTest >> testToolbarDisplayMode [
 	debugger := self debuggerOn: session.
 	self
@@ -512,9 +665,22 @@ StDebuggerTest >> testToolbarInDNUContext [
 ]
 
 { #category : #'tests - code pane' }
-StDebuggerTest >> testUnauthorizedCodeModification [
-	self skip.
-	self flag: #DBG_TEST
+StDebuggerTest >> testUnsavedCodeChanges [
+	| dbg |
+	dbg := self debuggerOn: session.
+	self assert: dbg unsavedCodeChanges class identicalTo: IdentityDictionary.
+	self assertEmpty: dbg unsavedCodeChanges 
+]
+
+{ #category : #'tests - code pane' }
+StDebuggerTest >> testUnsavedCodeChangesFor [
+	| dbg ctx codeChanges |
+	dbg := self debuggerOn: session.
+	self should: [dbg unsavedCodeChangesFor: dbg currentContext] raise: KeyNotFound.
+	dbg unsavedCodeChanges at: (ctx := Object new) put: (codeChanges := Object new).
+	self assert: (dbg unsavedCodeChangesFor: ctx) identicalTo: codeChanges
+	
+
 ]
 
 { #category : #'tests - receiver inspector' }
@@ -545,4 +711,18 @@ StDebuggerTest >> testUpdateLayoutForContextsIfAssertionFailure [
 		assert: assertionFailure expectedObject
 		equals:
 		((session interruptedContext tempNamed: #aStringOrBlock) at: 1)
+]
+
+{ #category : #'tests - code pane' }
+StDebuggerTest >> testUpdateSourceCodeFor [
+
+	| dbg |
+	dbg := self debuggerOn: session.
+	dbg unsavedCodeChanges at: 4 put: '2'.
+	
+	dbg updateSourceCodeFor: 4.
+	self assert: dbg code text equals: '2'.
+	
+	dbg updateSourceCodeFor: (self class>>#testUpdateSourceCodeFor).
+	self assert: dbg code text equals: (self class>>#testUpdateSourceCodeFor) sourceCode.
 ]

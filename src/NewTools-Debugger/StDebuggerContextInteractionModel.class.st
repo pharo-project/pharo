@@ -54,6 +54,12 @@ StDebuggerContextInteractionModel >> hasBindingOf: aString [
 	^ self doItReceiver hasBindingOf: aString
 ]
 
+{ #category : #testing }
+StDebuggerContextInteractionModel >> hasUnsavedCodeChanges [
+
+	^ context notNil and: [ context sourceCode ~= owner text asString ]
+]
+
 { #category : #accessing }
 StDebuggerContextInteractionModel >> object [
 

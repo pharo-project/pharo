@@ -71,6 +71,21 @@ SpListPresenter >> display: aBlock [
 	display := aBlock
 ]
 
+{ #category : #api }
+SpListPresenter >> displayIcon [
+	"Return the block used to return an icon that will be displayed in the list"
+
+	^ icon
+]
+
+{ #category : #api }
+SpListPresenter >> displayIcon: aBlock [
+	"Set a block which takes an item as argument and returns the icon to display in the list. 
+	 `aBlock` receives one argument"
+
+	icon := aBlock
+]
+
 { #category : #private }
 SpListPresenter >> displayValueAt: anIndex [
 	"Return the effective string that is displayed on the list. 
@@ -96,7 +111,7 @@ SpListPresenter >> hasHeaderTitle [
 SpListPresenter >> hasIcons [
 	"Answer true if the list has an icon provider (See `SpListPresenter>>#icons:`)."
 
-	^ self icons notNil
+	^ self displayIcon notNil
 ]
 
 { #category : #api }
@@ -122,12 +137,18 @@ SpListPresenter >> hideHeaderTitle [
 
 { #category : #'widget API' }
 SpListPresenter >> iconFor: anItem [
-	^ self icons cull: anItem cull: self
+
+	^ self displayIcon 
+		cull: anItem 
+		cull: self
 ]
 
 { #category : #api }
 SpListPresenter >> icons [
 	"Return the block used to return an icon that will be displayed in the list"
+	self 
+		deprecated: 'Use #displayIcon' 
+		transformWith: '`@receiver icons' -> '`@receiver displayIcon'.
 
 	^ icon
 ]
@@ -136,6 +157,9 @@ SpListPresenter >> icons [
 SpListPresenter >> icons: aBlock [
 	"Set a block which takes an item as argument and returns the icon to display in the list. 
 	 `aBlock` receives one argument"
+	self 
+		deprecated: 'Use #displayIcon:' 
+		transformWith: '`@receiver icons: `@arg' -> '`@receiver displayIcon: `@arg'.
 
 	icon := aBlock
 ]

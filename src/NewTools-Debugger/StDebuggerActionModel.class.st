@@ -86,18 +86,6 @@ StDebuggerActionModel >> copyStackToClipboard [
 ]
 
 { #category : #'debug - stack' }
-StDebuggerActionModel >> exceptionInContextOrNil: aContext [
-
-	| var ex |
-	var := aContext temporaryVariableNamed: #exception.
-	var ifNotNil: [ 
-		ex := var readInContext: aContext.
-		self flag: 'When a test fails, the exception is the TestFailure class => why?'.
-		ex isClass ifTrue: [ ^ nil ] ].
-	^ ex
-]
-
-{ #category : #'debug - stack' }
 StDebuggerActionModel >> fileOutMethod: aMethod [
 	aMethod methodClass fileOutMethod: aMethod selector
 ]

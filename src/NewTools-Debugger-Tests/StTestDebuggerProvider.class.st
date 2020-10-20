@@ -83,6 +83,15 @@ StTestDebuggerProvider >> debuggerWithMissingSubclassResponsibilityContext [
 ]
 
 { #category : #helpers }
+StTestDebuggerProvider >> debuggerWithObjectHalting [
+	[ StDebuggerObjectForTests new haltingMethod ]
+		on: Halt
+		do: [ :err | 
+			self sessionFor: err signalerContext exception: err.
+			^ self newDebugger ]
+]
+
+{ #category : #helpers }
 StTestDebuggerProvider >> debuggerWithRunnableContext [
 	[ Halt now ]
 		on: Halt

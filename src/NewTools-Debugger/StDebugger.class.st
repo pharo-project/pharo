@@ -85,7 +85,8 @@ Class {
 		'extensionTools',
 		'extensionToolsNotebook',
 		'toolbarCommandGroup',
-		'debuggerActionModel'
+		'debuggerActionModel',
+		'unsavedCodeChanges'
 	],
 	#classVars : [
 		'ActivateDebuggerExtensions',
@@ -311,6 +312,20 @@ StDebugger class >> usingSpecSelector: aSelector [
 	UsingSpecSelector := StDebuggerSpecSelector on: aSelector
 ]
 
+{ #category : #'presenter - code' }
+StDebugger >> acceptCodeChanges: newSource forContext: aContext [
+
+	"It is wrong here that I have to use code adapter widget.
+	It is expected down in the compilation call chain that the notified requestor answers to textMorph.
+	This is for modifying the source code when declaring temps"
+
+	self
+		recompileMethodTo: newSource
+		inContext: aContext
+		notifying: code adapter widget.
+	self clearUnsavedCodeChanges
+]
+
 { #category : #commands }
 StDebugger >> buildContextMenus [
 	| stackGroup codeCommands debuggerCommandGroup |
@@ -378,6 +393,12 @@ StDebugger >> clearCode [
 		clearInteractionModel;
 		clearSelection;
 		clearContent
+]
+
+{ #category : #'presenter - code' }
+StDebugger >> clearUnsavedCodeChanges [
+
+	unsavedCodeChanges := IdentityDictionary new
 ]
 
 { #category : #opening }
@@ -484,6 +505,14 @@ StDebugger >> debuggerActionModel [
 		ifNil: [ debuggerActionModel := StDebuggerActionModel on: self session]
 ]
 
+{ #category : #'presenter - code' }
+StDebugger >> discardCodeChangesFor: aContext [
+
+	self unsavedCodeChanges removeKey: aContext ifAbsent: [  ].
+	self code text: aContext sourceCode.
+	self update
+]
+
 { #category : #stack }
 StDebugger >> expandStackIfLastItemIsSelected [
 	| selection |
@@ -556,19 +585,13 @@ StDebugger >> initializeBreakpointInspector [
 		on: (StInspectorModel on: nil).
 ]
 
-{ #category : #initialization }
+{ #category : #'presenter - code' }
 StDebugger >> initializeCode [
-	self flag: #DBG.
-	"It is wrong here that I have to use code adapter widget.
-	It is expected down in the compilation call chain that the notified requestor answers to textMorph.
-	This is for modifying the source code when declaring temps"
+
 	code := self newCode.
 	code whenSubmitDo: [ :text | 
-		self
-			recompileMethodTo: text string
-			inContext: self stackTable selection selectedItem
-			notifying: code adapter widget ].
-	code whenResetDo: [ self updateCodeFromContext ]
+		self acceptCodeChanges: text string forContext: self selectedContext ].
+	code whenResetDo: [ self discardCodeChangesFor: self selectedContext ]
 ]
 
 { #category : #extensions }
@@ -634,26 +657,31 @@ StDebugger >> initializeStack [
 
 	stackTable := self newTable.
 	stackTable
-		addColumn: (SpStringTableColumn
-				 title: 'Class'
-				 evaluated: [ :item | self printReceiverClassInContext: item ]);
+		addColumn: ((SpImageTableColumn
+				  title: ''
+				  evaluated: [ :context | self stackIconForContext: context ])
+				 width: 8;
+				 sortFunction: nil;
+				 yourself);
+		addColumn: ((SpStringTableColumn
+				  title: 'Class'
+				  evaluated: [ :item | self printReceiverClassInContext: item ])
+				 sortFunction: nil;
+				 yourself);
 		addColumn:
-			(SpStringTableColumn title: 'Method' evaluated: [ :item | 
-					 | method |
-					 method := item method.
-					 method isCompiledBlock
-						 ifTrue: [ method sourceNode sourceCode ]
-						 ifFalse: [ method selector ] ]). ";
-		addColumn: (SpStringTableColumn
-				 title: 'Context'
-				 evaluated: [ :item | item sender stDisplayString ])"
+			((SpStringTableColumn title: 'Method' evaluated: [ :item | 
+					  | method |
+					  method := item method.
+					  method isCompiledBlock
+						  ifTrue: [ method sourceNode sourceCode ]
+						  ifFalse: [ method selector ] ])
+				 sortFunction: nil;
+				 yourself).
 	stackTable transmitDo: [ :context | 
 		stackTable selection isEmpty ifFalse: [ 
-			self flag: 'The following line is disturbing the context predicate building when opening the debugger on an exception'.
-			"self updatePredicatesForContext: context."
 			self updateInspectorFromContext: context.
 			self updateCodeFromContext: context.
-			self expandStackIfLastItemIsSelected.			
+			self expandStackIfLastItemIsSelected.
 			self updateWindowTitle ] ].
 	stackHeader := self instantiate: StHeaderBar.
 	stackHeader label: 'Stack'
@@ -762,6 +790,17 @@ StDebugger >> recompileMethodTo: aString inContext: aContext notifying: aNotifye
 		notifying: aNotifyer
 ]
 
+{ #category : #'presenter - code' }
+StDebugger >> recordUnsavedCodeChanges [
+
+	|codeInteractionModel codeText|
+	codeInteractionModel := self code interactionModel.
+	codeInteractionModel hasUnsavedCodeChanges ifFalse:[^self].
+	
+	codeText := self code text asString.
+	self unsavedCodeChanges at: codeInteractionModel context put: codeText
+]
+
 { #category : #'updating session' }
 StDebugger >> registerActionsForSession: aSession [
 	self flag: 'Rewrite it'.
@@ -847,7 +886,9 @@ StDebugger >> requestSuperclassOf: aClass to: aSuperclass [
 { #category : #actions }
 StDebugger >> restartCurrentContext [
 
-	self debuggerActionModel restartContext: self currentContext
+	self debuggerActionModel restartContext: self currentContext.
+	self clearUnsavedCodeChanges.
+	self code text: self currentContext sourceCode
 ]
 
 { #category : #actions }
@@ -925,6 +966,13 @@ StDebugger >> showFullStack [
 
 ]
 
+{ #category : #stack }
+StDebugger >> stackIconForContext: context [
+
+	self unsavedCodeChanges at: context ifAbsent: [ ^ nil ].
+	^ self iconNamed: #overlayDirty
+]
+
 { #category : #commands }
 StDebugger >> stackSelectionMethodContext [
 	^ [ stackTable selection selectedItem method ]
@@ -980,6 +1028,18 @@ StDebugger >> toolbar [
 	^ toolbar
 ]
 
+{ #category : #'presenter - code' }
+StDebugger >> unsavedCodeChanges [
+
+	^ unsavedCodeChanges ifNil: [ 
+		  unsavedCodeChanges := IdentityDictionary new ]
+]
+
+{ #category : #'presenter - code' }
+StDebugger >> unsavedCodeChangesFor: aContext [ 
+	^self unsavedCodeChanges at: aContext
+]
+
 { #category : #'system subscriptions' }
 StDebugger >> unsubscribeFromSystemAnnouncer [
 
@@ -998,15 +1058,16 @@ StDebugger >> updateCodeFromContext [
 	self updateCodeFromContext: self currentContext
 ]
 
-{ #category : #'updating widgets' }
+{ #category : #'presenter - code' }
 StDebugger >> updateCodeFromContext: aContext [
 	| selectionInterval |
 
 	aContext ifNil: [ ^ self clearCode ].
-
+	
+	self recordUnsavedCodeChanges.
 	selectionInterval := self session selectedCodeRangeForContext: aContext.
 	aContext sourceCode = self code text 
-		ifFalse: [ self code text: aContext sourceCode ].
+		ifFalse: [ self updateSourceCodeFor: aContext ].
 	self code beForContext: aContext.
 	self code selectionInterval: selectionInterval.
 	
@@ -1081,6 +1142,16 @@ StDebugger >> updateRestart [
 StDebugger >> updateResume [
 
 	
+]
+
+{ #category : #'presenter - code' }
+StDebugger >> updateSourceCodeFor: aContext [
+
+	| codeText |
+	codeText := self unsavedCodeChanges
+		            at: aContext
+		            ifAbsent: [ aContext sourceCode ].
+	self code text: codeText
 ]
 
 { #category : #stack }
