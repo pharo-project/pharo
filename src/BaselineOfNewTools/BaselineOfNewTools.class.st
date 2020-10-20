@@ -54,7 +54,7 @@ BaselineOfNewTools >> baseline: spec [
 			"Debugger Selector"
 			package: 'NewTools-DebuggerSelector' with: [ spec requires: #('NewTools-SpTextPresenterDecorators') ];
 			package: 'NewTools-DebuggerSelector-Tests' with: [ spec requires: #('NewTools-DebuggerSelector') ].
-		
+
 		spec
 			group: 'Core' with: #('NewTools-Core' 'NewTools-Morphic');
 			group: 'Playground' with: #('Core' 'NewTools-Playground');
@@ -70,7 +70,7 @@ BaselineOfNewTools >> baseline: spec [
 				'NewTools-Sindarin-Commands'
 				'NewTools-Debugger-Breakpoints-Tools'
 				'NewTools-Debugger-Tests');
-			group: 'SystemReporter' with: #('Core' 'NewTools-Inspector');
+			group: 'SystemReporter' with: #('Core' 'NewTools-SystemReporter');
 			group: 'FlagBrowser' with: #(
 				'Core' 
 				'NewTools-FlagBrowser' 

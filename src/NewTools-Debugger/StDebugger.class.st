@@ -1197,7 +1197,6 @@ StDebugger >> updateStepThrough [
 { #category : #'updating widgets' }
 StDebugger >> updateToolbar [
 	
-	toolbarCommandGroup ifNil: [ ^ self ].
 	toolbarCommandGroup allCommands do: [ :spCommand | 
 		spCommand updateEnableStatus ]
 ]
