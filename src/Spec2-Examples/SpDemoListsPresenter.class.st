@@ -98,6 +98,7 @@ SpDemoListsPresenter >> iconFor: class [
 
 { #category : #initialization }
 SpDemoListsPresenter >> initializePresenters [
+
 	list1 := self newList.
 	list2 := self newList.
 	list3 := self newList.
@@ -114,7 +115,7 @@ SpDemoListsPresenter >> initializePresenters [
 	list3
 		items: self class environment allClasses;
 		itemFilter: [ :item :string | item asString includesSubstring: string ];
-		icons: [ :elem | self iconFor: elem ].
+		displayIcon: [ :elem | self iconFor: elem ].
 	label label: 'No selection'.
 	multiLabel label: 'No multi selection (from list 2 only)'
 ]

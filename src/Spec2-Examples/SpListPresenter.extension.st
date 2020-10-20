@@ -33,7 +33,7 @@ SpListPresenter class >> exampleWithHeaderTitle [
 SpListPresenter class >> exampleWithIcons [
 	<sampleInstance>
 	^ self new
-		icons: [ :e | self iconNamed: #forwardIcon ];
+		displayIcon: [ :e | self iconNamed: #forwardIcon ];
 		items: (1 to: 10) asArray;
 		openWithSpec;
 		yourself
