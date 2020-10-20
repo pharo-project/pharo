@@ -57,7 +57,7 @@ LzwGifDecoder >> checkCodeSize [
 			bitMask := bitMask + nextAvailableCode ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 LzwGifDecoder >> codeStream: aReadableStream [ 
 	"Set the stream of encoded bytes we will decode
 	to be the internal codeStream. We read off the first
@@ -102,7 +102,7 @@ LzwGifDecoder >> decode [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 LzwGifDecoder >> handleCode: anInteger withPreviousCode: prevInteger on: aWriteStream [
 	"Check for the code in the tables
 	and perform the appropriate LZW action"
@@ -188,12 +188,12 @@ LzwGifDecoder >> initializeTables [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 LzwGifDecoder >> maxCode: anInteger [ 
 	maxCode := anInteger
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 LzwGifDecoder >> minimumCodeSize: anInteger [ 
 	minimumCodeSize := anInteger
 ]
@@ -209,7 +209,7 @@ LzwGifDecoder >> nextByte [
 	^ codeStreamBuffer next.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 LzwGifDecoder >> nextCode [
 	| integer numBitsRead newRemainder shiftAmount byte |
 	"Retrieve the next code of codeSize bits.
@@ -236,7 +236,7 @@ LzwGifDecoder >> nextCode [
 		^ integer + (byte bitShift: shiftAmount) bitAnd: bitMask.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 LzwGifDecoder >> onDecodedBit: aBlock [
 	"This block will be executed once each time a new
 	value is decoded from the stream, with the value
