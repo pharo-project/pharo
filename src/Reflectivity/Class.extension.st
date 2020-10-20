@@ -19,7 +19,7 @@ Class >> link: aMetaLink toClassVariable: aClassVariable [
 Class >> link: aMetaLink toClassVariableNamed: aClassVariableName [
 	self
 		link: aMetaLink
-		toClassVariable: (MetalinkTargetResolver classVariableNamed: aClassVariableName for: self)
+		toClassVariable: (self nonAnonymousClass classVariableNamed: aClassVariableName asSymbol)
 ]
 
 { #category : #'*Reflectivity' }
@@ -29,11 +29,16 @@ Class >> link: aMetaLink toSlot: aSlot [
 
 { #category : #'*Reflectivity' }
 Class >> link: aMetaLink toSlotNamed: aSlotName [
-	self link: aMetaLink toSlot: (MetalinkTargetResolver slotNamed: aSlotName for: self)
+	self link: aMetaLink toSlot: (self nonAnonymousClass slotNamed: aSlotName)
 ]
 
 { #category : #'*Reflectivity' }
 Class >> link: aMetaLink toTemporary: aTempVar [
 	self flag: 'Not sure what it should do. The tests are not passing for this... See method testLinkClassToTempVarNamed'.
 	aTempVar link: aMetaLink
+]
+
+{ #category : #'*Reflectivity' }
+Class >> nonAnonymousClass [
+	^ self
 ]

@@ -159,7 +159,7 @@ MetaLinkInstaller >> install: aMetaLink onNode: aNode forObject: anObject [
 { #category : #permalinks }
 MetaLinkInstaller >> installPermaLink: aPermaLink onClassVarNamed: aClassVarName [
 	| classVar |	
-	classVar := MetalinkTargetResolver classVariableNamed: aClassVarName for: aPermaLink targetObjectOrClass.	
+	classVar := 	aPermaLink targetObjectOrClass nonAnonymousClass classVariableNamed: aClassVarName asSymbol.
 	aPermaLink slotOrVariable: classVar.
 	
 	self registerAndInstallPermaLink: aPermaLink forTarget: classVar
@@ -168,7 +168,7 @@ MetaLinkInstaller >> installPermaLink: aPermaLink onClassVarNamed: aClassVarName
 { #category : #permalinks }
 MetaLinkInstaller >> installPermaLink: aPermaLink onSlotNamed: aSlotName [
 	| slot |
-	slot := MetalinkTargetResolver slotNamed: aSlotName for: aPermaLink targetObjectOrClass.
+	slot := aPermaLink targetObjectOrClass nonAnonymousClass slotNamed: aSlotName.
 	aPermaLink slotOrVariable: slot.
 	
 	self registerAndInstallPermaLink: aPermaLink forTarget: slot
@@ -176,8 +176,10 @@ MetaLinkInstaller >> installPermaLink: aPermaLink onSlotNamed: aSlotName [
 
 { #category : #permalinks }
 MetaLinkInstaller >> installPermaLink: aPermaLink onTempVarNamed: aTempName inMethod: aMethodName [
-	| temp |
-	temp := MetalinkTargetResolver lookupTemporaryNamed: aTempName inMethod: aMethodName for: aPermaLink targetObjectOrClass.
+	| temp method |
+	
+	method := aPermaLink targetObjectOrClass nonAnonymousClass lookupSelector: aMethodName.
+	temp := method temporaryVariableNamed: aTempName.
 
 	aPermaLink slotOrVariable: temp.
 	aPermaLink slotOrVarMethod: temp method.
@@ -282,7 +284,8 @@ MetaLinkInstaller >> nodesForPermaLink: permalink toBeInstalledIn: method [
 	| slotOrVar persistenceType nodes |
 	slotOrVar := permalink slotOrVariable.
 	persistenceType := permalink persistenceType.
-	nodes := MetalinkTargetResolver slotOrVarNodesFor: slotOrVar inMethod: method option: persistenceType.
+	nodes := (slotOrVar accessingNodesFor: persistenceType) asIdentitySet 
+					select: [ :node | node methodNode method = method ].
 	^ nodes select: [ :node | node hasLinks not or: [ (node links includes: permalink link) not ] ]
 ]
 

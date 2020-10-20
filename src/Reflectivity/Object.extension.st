@@ -56,7 +56,7 @@ Object >> link: aMetaLink toClassVariableNamed: aClassVariableName option: optio
 
 { #category : #'*Reflectivity' }
 Object >> link: aMetaLink toMethodNamed: aMethodName [
-	self link: aMetaLink toAST: (MetalinkTargetResolver methodNamed: aMethodName for: self)
+	self link: aMetaLink toAST: (self nonAnonymousClass lookupSelector: aMethodName asSymbol) ast
 ]
 
 { #category : #'*Reflectivity' }
