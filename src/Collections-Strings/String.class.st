@@ -1874,17 +1874,16 @@ String >> isString [
 
 { #category : #testing }
 String >> isValidGlobalName [
-
+	"Answer whether the string receiver can be used as a global name (e.g., name of a class, name of a trait)"
 	self ifEmpty: [ ^ false ].
 	
 	"reserverd default names"
-	self = 'NameOfSubclass' ifTrue: [ ^ false ].
-	self = 'TNameOfTrait' ifTrue: [ ^ false ].
+	(#('NameOfSubclass' 'MyClass' 'TNameOfTrait') includes: self) ifTrue: [ ^ false ].
 	
 	^ (self first isLetter 
-				and: [self first isUppercase]) 
-				and: [ self allSatisfy: [:character | 
-						character isAlphaNumeric or: [ character = $_ ]]]
+				and: [ self first isUppercase]) 
+				and: [ self allSatisfy: [ :character | 
+						character isAlphaNumeric or: [ character = $_ ] ] ]
 ]
 
 { #category : #testing }

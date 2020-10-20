@@ -237,6 +237,13 @@ ClassTest >> testIsInstanceSide [
 	self deny: Point class isInstanceSide
 ]
 
+{ #category : #'tests - class creation' }
+ClassTest >> testIsValidGlobalName [
+	self deny: 'MyClass' isValidGlobalName.
+	self assert: 'MyCoolSubclass' isValidGlobalName.
+	self deny: 'MyCool Subclass' isValidGlobalName.
+]
+
 { #category : #'tests - navigation' }
 ClassTest >> testMethodsReferencingClass [
 	self assert: (ClassTest methodsReferencingClass: (Smalltalk classNamed: #ExampleForTest111)) equals: {(ClassTest >> #testOrdersACollectionOfClassesBySuperclass)}.
@@ -486,5 +493,6 @@ ClassTest >> testclassVariables [
 
 { #category : #'tests - class creation' }
 ClassTest >> unclassifiedCategory [
-	^#Unclassified
+
+	^ #Unclassified
 ]
