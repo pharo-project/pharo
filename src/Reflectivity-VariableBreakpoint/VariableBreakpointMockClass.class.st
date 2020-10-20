@@ -7,8 +7,21 @@ Class {
 	#instVars : [
 		'v1'
 	],
+	#classVars : [
+		'ClassVar'
+	],
 	#category : #'Reflectivity-VariableBreakpoint'
 }
+
+{ #category : #accessing }
+VariableBreakpointMockClass >> classVarRead [
+	^ClassVar
+]
+
+{ #category : #accessing }
+VariableBreakpointMockClass >> classVarWrite [
+	^ClassVar := 1
+]
 
 { #category : #initialization }
 VariableBreakpointMockClass >> initialize [
