@@ -30,7 +30,7 @@ TypingVisitor >> visitAssignmentNode: anAssignmentNode [
 	
 	| variableType |
 	super visitAssignmentNode: anAssignmentNode.
-	anAssignmentNode variable isTemp ifFalse: [ ^self ].
+	anAssignmentNode variable isTempVariable ifFalse: [ ^self ].
    (anAssignmentNode value hasProperty: #type) ifFalse: [ ^self ].
 	variableType := anAssignmentNode value propertyAt: #type.
 	typeStack top at: anAssignmentNode variable name put: variableType.

@@ -188,13 +188,7 @@ Variable >> isSuperVariable [
 ]
 
 { #category : #testing }
-Variable >> isTemp [
-
-	^ false
-]
-
-{ #category : #testing }
-Variable >> isTemporaryVariable [
+Variable >> isTempVariable [
 	^false
 ]
 

@@ -160,7 +160,7 @@ LinkInstallerTest >> testLinkOnTempVar [
 	self assert: link nodes size equals: 2.
 	self assert: (link nodes allSatisfy: [ :node | node isRead ]).
 	self assert: (link nodes allSatisfy: [ :node | node name = #temp ]).
-	self assert: (link nodes allSatisfy: [ :node | node isTemp ]).
+	self assert: (link nodes allSatisfy: [ :node | node isTempVariable ]).
 	link uninstall.
 	self assert: link nodes isEmpty.
 	
@@ -172,7 +172,7 @@ LinkInstallerTest >> testLinkOnTempVar [
 	self assert: link nodes size equals: 2.
 	self assert: (link nodes allSatisfy: [ :node | node isAssignment ]).
 	self assert: (link nodes allSatisfy: [ :node | node variable name = #temp ]).
-	self assert: (link nodes allSatisfy: [ :node | node variable isTemp ]).
+	self assert: (link nodes allSatisfy: [ :node | node variable isTempVariable ]).
 	link uninstall.
 	self assert: link nodes isEmpty.
 	
@@ -201,7 +201,7 @@ LinkInstallerTest >> testLinkOnTempVarForObject [
 	self assert: link nodes size equals: 2.
 	self assert: (link nodes allSatisfy: [ :node | node isRead ]).
 	self assert: (link nodes allSatisfy: [ :node | node name = #temp ]).
-	self assert: (link nodes allSatisfy: [ :node | node isTemp ]).
+	self assert: (link nodes allSatisfy: [ :node | node isTempVariable ]).
 	link uninstall.
 	self assert: link nodes isEmpty.
 	
@@ -213,7 +213,7 @@ LinkInstallerTest >> testLinkOnTempVarForObject [
 	self assert: link nodes size equals: 2.
 	self assert: (link nodes allSatisfy: [ :node | node isAssignment]).
 	self assert: (link nodes allSatisfy: [ :node | node variable name = #temp ]).
-	self assert: (link nodes allSatisfy: [ :node | node variable isTemp ]).
+	self assert: (link nodes allSatisfy: [ :node | node variable isTempVariable ]).
 	link uninstall.
 	self assert: link nodes isEmpty.
 	
