@@ -9,7 +9,8 @@ Class {
 		'name'
 	],
 	#classVars : [
-		'KeyTable',
+		'KeyCodeTable',
+		'KeyNameTable',
 		'MacosVirtualKeyTable',
 		'UnixVirtualKeyTable',
 		'WindowsVirtualKeyTable'
@@ -28,8 +29,10 @@ KeyboardKey class >> initialize [
 
 { #category : #'key table' }
 KeyboardKey class >> initializeKeyTable [
-	KeyTable := Dictionary new.
+	KeyCodeTable := Dictionary new.
+	KeyNameTable := Dictionary new.
 	#(
+		16r0000 Null
 		16r08f6 Function "XK_function"
 		16rff08 BackSpace "XK_BackSpace"
 		16rff09 Tab "XK_Tab"
@@ -46,6 +49,7 @@ KeyboardKey class >> initializeKeyTable [
 		16rff52 Up "XK_Up"
 		16rff53 Right "XK_Right"
 		16rff54 Down "XK_Down"
+		16rff55 Prior "XK_Prior"
 		16rfe03 Level3Shift "XK_ISO_Level3_Shift"
 		16r00a1 ExclamationDown "XK_exclamdown"
 		16r00bf QuestionDown "XK_questiondown"
@@ -227,11 +231,54 @@ KeyboardKey class >> initializeKeyTable [
 		16r005f underscore "XK_underscore"
 		16r0060 grave "XK_grave"
 		"16r0060 quoteleft" "XK_quoteleft"
-		16r007b braceleft "XK_braceleft"
+		16r007b braceleft "XK_braceleft"	
 		16r007c bar "XK_bar"
 		16r007d braceright "XK_braceright"
-		16r007e asciitilde "XK_asciitilde")
-			pairsDo: [ :keyCode :keyname | KeyTable at: keyCode put: (self basicNew withValue: keyCode andName: keyname asUppercase) ].
+		16r007e asciitilde "XK_asciitilde"
+		16rff63 Insert "XK_Insert"
+		16rff7f Num_Lock "XK_Num_Lock"
+		
+		16rffca F13	 "XK_F13"
+		16rffcb F14	 "XK_F14"
+		16rffcc F15	 "XK_F15"
+		16rffcd F16	 "XK_F16"
+		16rffce F17	 "XK_F17"
+		16rffcf F18	 "XK_F18"
+		16rffd0 F19	 "XK_F19"
+		16rffd1 F20	 "XK_F20"
+		16rffd2 F21	 "XK_F21"
+		16rffd3 F22	 "XK_F22"
+		16rffd4 F23	 "XK_F23"
+		16rffd5 F24	 "XK_F24"
+			
+		16rff60 Select "XK_Select"
+		16rff61 Print "XK_Print"
+		16rff62 Execute "XK_Execute"
+		16rff63 Insert "XK_Insert"
+		16rff65 Undo "XK_Undo"
+		16rff66 Redo "XK_Redo"
+		16rff67 Menu "XK_Menu"
+		16rff68 Find "XK_Find"
+		16rff69 Cancel "XK_Cancel"
+		16rff6a Help "XK_Help"
+		16rff6b Break "XK_Break"
+
+		16rff15 Sys_Req "XK_Sys_Req"
+		16rfd1d PrintScreen "XK_3270_PrintScreen"
+		16rfd1b ExSelect "XK_3270_ExSelect"
+		16rfd1c CursorSelect "XK_3270_CursorSelect"
+
+		16r1008FF57 Copy "XF86XK_Copy"
+		16r1008FF58 Cut "XF86XK_Cut"
+		16r1008FF6D Paste "XF86XK_Paste"
+
+		)
+			pairsDo: [ :keyCode :keyname |
+			|key|
+			key := self basicNew withValue: keyCode andName: keyname asUppercase asSymbol.
+			KeyCodeTable at: keyCode put: key.
+			KeyNameTable at: key name put: key.
+		].
 ]
 
 { #category : #macos }
@@ -588,7 +635,7 @@ KeyboardKey class >> named: aString [
 	 (KeyboardKey named: 'SHIFT_L') >>> (KeyboardKey value: 65505)
 	"
 	
-	^ KeyTable detect: [ :keyboardKey | keyboardKey name = aString ]
+	^ KeyNameTable at: aString
 ]
 
 { #category : #unix }
@@ -604,7 +651,7 @@ KeyboardKey class >> unknownKeyName [
 
 { #category : #'instance creation' }
 KeyboardKey class >> value: aKeyValue [
-	^KeyTable at: aKeyValue
+	^KeyCodeTable at: aKeyValue
 ]
 
 { #category : #macos }
