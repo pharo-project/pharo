@@ -191,6 +191,14 @@ MetaLinkInstaller >> installPermaLink: aPermaLink onTempVarNamed: aTempName inMe
 
 ]
 
+{ #category : #permalinks }
+MetaLinkInstaller >> installPermaLink: aPermaLink onVariableNamed: aName [
+	| variable |
+	variable := aPermaLink targetObjectOrClass lookupVar: aName.
+	aPermaLink slotOrVariable: variable.
+	self registerAndInstallPermaLink: aPermaLink forTarget: variable
+]
+
 { #category : #lookup }
 MetaLinkInstaller >> installSuperJumpLinksInMethodNode: node [
 	"Installs a metalink wich provokes a super jump: 

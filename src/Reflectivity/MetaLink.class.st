@@ -289,6 +289,19 @@ MetaLink >> installOnVariable: aVariable [
 	nodes add: aVariable
 ]
 
+{ #category : #'installing - link installer' }
+MetaLink >> installOnVariableNamed: aName for: aClassOrObject option: option instanceSpecific: instanceSpecific [
+
+	| permalink |
+	permalink := self
+		             permaLinkFor: aClassOrObject
+		             option: option
+		             instanceSpecific: instanceSpecific.
+	^ self linkInstaller
+		  installPermaLink: permalink
+		  onVariableNamed: aName
+]
+
 { #category : #installing }
 MetaLink >> invalidate [
 	nodes do: [ :node | node invalidate ]
