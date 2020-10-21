@@ -20,6 +20,28 @@ MethodRepackaged class >> methodRepackaged: aMethod oldPackage: oldPackage newPa
 			yourself.
 ]
 
+{ #category : #testing }
+MethodRepackaged >> affectsClassExtension [
+	^true
+]
+
+{ #category : #testing }
+MethodRepackaged >> affectsClassesExtendedInPackage: aPackage [
+	^(super affectsClassesExtendedInPackage: aPackage)
+		or: [ oldPackage = aPackage ]
+]
+
+{ #category : #testing }
+MethodRepackaged >> affectsMethodsDefinedInPackage: aPackage [
+	^(super affectsMethodsDefinedInPackage: aPackage)
+		or: [ oldPackage = aPackage ]
+]
+
+{ #category : #testing }
+MethodRepackaged >> affectsPackage: aPackage [
+	^newPackage == aPackage or: [ oldPackage == aPackage ]
+]
+
 { #category : #accessing }
 MethodRepackaged >> methodRepackaged [
 	

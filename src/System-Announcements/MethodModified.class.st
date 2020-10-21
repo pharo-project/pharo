@@ -22,6 +22,23 @@ MethodModified class >> methodChangedFrom: oldMethod to: newMethod oldProtocol: 
 		yourself
 ]
 
+{ #category : #testing }
+MethodModified >> affectsMethod: aMethod [
+	^(super affectsMethod: aMethod) or: [oldMethod == aMethod]
+]
+
+{ #category : #testing }
+MethodModified >> affectsMethodsDefinedInPackage: aPackage [
+
+	^(super affectsMethodsDefinedInPackage: aPackage) or: [ 
+		oldMethod package == aPackage ]
+]
+
+{ #category : #testing }
+MethodModified >> affectsMethodsTaggedWith: tagName [
+	^(super affectsMethodsTaggedWith: tagName) or: [ oldProtocol = tagName ]
+]
+
 { #category : #accessing }
 MethodModified >> newMethod [
 

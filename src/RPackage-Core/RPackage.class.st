@@ -810,6 +810,13 @@ RPackage >> includesClassTagNamed: aString [
 ]
 
 { #category : #testing }
+RPackage >> includesClassesAffectedBy: aSystemAnnouncement [
+
+	^(aSystemAnnouncement affectsClassesDefinedInPackage: self)
+		or: [ aSystemAnnouncement affectsClassesExtendedInPackage: self ]
+]
+
+{ #category : #testing }
 RPackage >> includesDefinedSelector: aSelector ofClass: aClass [
 	"Return true if the receiver includes the method of selector aSelector. Only checks methods defined in this package"
 	
@@ -868,6 +875,12 @@ RPackage >> includesMethodCategory: categoryName ofClass: aClass [
 	^ (self isYourClassExtension: categoryName)
 		or: [(self includesClass: aClass)
 				and: [(self isForeignClassExtension: categoryName) not]]
+]
+
+{ #category : #testing }
+RPackage >> includesMethodsAffectedBy: aSystemAnnouncement [
+
+	^aSystemAnnouncement affectsMethodsDefinedInPackage: self
 ]
 
 { #category : #testing }

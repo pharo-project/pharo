@@ -18,6 +18,16 @@ ClassTagAnnouncement class >> in: aPackage tag: aSymbol [
 		tag: aSymbol
 ]
 
+{ #category : #testing }
+ClassTagAnnouncement >> affectsPackage: aPackage [
+	^package == aPackage
+]
+
+{ #category : #testing }
+ClassTagAnnouncement >> affectsPackages [
+	^true
+]
+
 { #category : #accessing }
 ClassTagAnnouncement >> package [
 	^ package

@@ -66,19 +66,6 @@ RPackage >> importClasses: classCollection [
 ]
 
 { #category : #'*Calypso-SystemQueries' }
-RPackage >> includesClassesAffectedBy: aSystemAnnouncement [
-
-	^(aSystemAnnouncement affectsClassesDefinedInPackage: self)
-		or: [ aSystemAnnouncement affectsClassesExtendedInPackage: self ]
-]
-
-{ #category : #'*Calypso-SystemQueries' }
-RPackage >> includesMethodsAffectedBy: aSystemAnnouncement [
-
-	^aSystemAnnouncement affectsMethodsDefinedInPackage: self
-]
-
-{ #category : #'*Calypso-SystemQueries' }
 RPackage >> isAboutPackage: aPackage [
 
 	^self == aPackage
