@@ -464,6 +464,11 @@ AthensCairoSurface >> createLinearGradient: aColorRamp start: aStartPoint stop: 
 	
 ]
 
+{ #category : #paints }
+AthensCairoSurface >> createMeshGradientWithPatches: aListOfMeshPatches [
+	^ AthensCairoMeshGradientPaint createMeshGradientWithPatches: aListOfMeshPatches
+]
+
 { #category : #creation }
 AthensCairoSurface >> createPath: aPathCreatingBlock [
 	^ builder createPath:  aPathCreatingBlock 
