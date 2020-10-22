@@ -322,6 +322,8 @@ StDebuggerActionModelTest >> testIsContextSteppable [
 { #category : #'tests - predicates' }
 StDebuggerActionModelTest >> testIsInterruptedContextAnAssertEqualsFailure [
 
+	self skipOnPharoCITestingEnvironment.
+
 	self changeSession:
 		StTestDebuggerProvider new debuggerWithFailingAssertionContext
 			session.
@@ -330,6 +332,9 @@ StDebuggerActionModelTest >> testIsInterruptedContextAnAssertEqualsFailure [
 
 { #category : #'tests - predicates' }
 StDebuggerActionModelTest >> testIsInterruptedContextDoesNotUnderstand [
+
+	self skipOnPharoCITestingEnvironment.
+
 	self changeSession: StTestDebuggerProvider new debuggerWithDNUContext session.
 	self assert: debugActionModel isInterruptedContextDoesNotUnderstand.
 	StTestDebuggerProvider compile: 'foobar ^self'.
@@ -338,6 +343,9 @@ StDebuggerActionModelTest >> testIsInterruptedContextDoesNotUnderstand [
 
 { #category : #'tests - predicates' }
 StDebuggerActionModelTest >> testIsInterruptedContextMissingClassException [	
+
+	self skipOnPharoCITestingEnvironment.
+
 	StTestDebuggerProvider compileMissingClassContextBuilder.
 	self changeSession: StTestDebuggerProvider new debuggerWithMissingClassContext session.
 	self assert: debugActionModel isInterruptedContextMissingClassException
@@ -345,6 +353,8 @@ StDebuggerActionModelTest >> testIsInterruptedContextMissingClassException [
 
 { #category : #'tests - predicates' }
 StDebuggerActionModelTest >> testIsInterruptedContextPostMortem [
+
+	self skipOnPharoCITestingEnvironment.
 	
 	session resume.
 	self assert: debugActionModel isInterruptedContextPostMortem
@@ -352,6 +362,9 @@ StDebuggerActionModelTest >> testIsInterruptedContextPostMortem [
 
 { #category : #'tests - predicates' }
 StDebuggerActionModelTest >> testIsInterruptedContextSubclassResponsibilityException [
+
+	self skipOnPharoCITestingEnvironment.
+
 	self changeSession: StTestDebuggerProvider new debuggerWithMissingSubclassResponsibilityContext session.
 	self assert: debugActionModel isInterruptedContextSubclassResponsibilityException
 ]
