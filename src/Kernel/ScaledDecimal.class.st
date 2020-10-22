@@ -132,6 +132,11 @@ ScaledDecimal >> isLiteral [
 			(10 raisedTo: scale) \\ denominator = 0]
 ]
 
+{ #category : #testing }
+ScaledDecimal >> isReadOnlyLiteral [
+	^self isLiteral
+]
+
 { #category : #accessing }
 ScaledDecimal >> isSelfEvaluating [
     "Not all scaled decimal are self evaluating, because they print rounded digits."
