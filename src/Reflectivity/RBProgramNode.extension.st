@@ -214,6 +214,11 @@ RBProgramNode >> tagExecuted [
 ]
 
 { #category : #'*Reflectivity' }
+RBProgramNode >> variableValueInContext: aContext [
+	^nil
+]
+
+{ #category : #'*Reflectivity' }
 RBProgramNode >> watch [
 	
 	self hasWatch ifFalse:[^nil].

@@ -9,7 +9,7 @@ Class {
 		'obj4',
 		'observer'
 	],
-	#category : #'Reflectivity-VariableBreakpoint'
+	#category : #'Reflectivity-Tests-Breakpoints'
 }
 
 { #category : #helpers }
