@@ -180,8 +180,10 @@ StDebuggerActionModelTest >> testFileOutMethod [
 
 { #category : #tests }
 StDebuggerActionModelTest >> testFilterDNUStack [
-
 	|stack filteredStack|
+	
+	self skipOnPharoCITestingEnvironment.
+	
 	self changeSession: StTestDebuggerProvider new debuggerWithDNUContext session.
 	stack := OrderedCollection new.
 	
@@ -205,9 +207,10 @@ StDebuggerActionModelTest >> testFilterDNUStack [
 
 { #category : #tests }
 StDebuggerActionModelTest >> testFilterMissingSubclassResponsibilityStack [
-
 	|stack filteredStack|	
 	
+	self skipOnPharoCITestingEnvironment.
+		
 	"We change the stack with an interrupted context that does not contain the <debuggerCompleteToSender> pragma"
 	self changeSession: StTestDebuggerProvider new debuggerWithMissingSubclassResponsibilityContext session.
 	stack := OrderedCollection new.
@@ -226,8 +229,9 @@ StDebuggerActionModelTest >> testFilterMissingSubclassResponsibilityStack [
 
 { #category : #tests }
 StDebuggerActionModelTest >> testFilterStack [
-
 	|stack filteredStack|
+	
+	self skipOnPharoCITestingEnvironment.
 	
 	stack := OrderedCollection new.
 	
