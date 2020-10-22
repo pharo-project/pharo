@@ -40,7 +40,7 @@ void                cairo_font_face_destroy             (cairo_font_face_t *font
 CairoFontFace class >> fromFreetypeFace: aFace [
 	| handle cairoFace |
 	handle := aFace getHandle.
- 	cairoFace := self primFtFace: handle loadFlags: ( LoadNoHinting | LoadTargetLCD | LoadNoAutohint | LoadNoBitmap). 
+ 	cairoFace := self primFtFace: handle loadFlags: 0.
 	
 	^ cairoFace initializeWithFreetypeFace: aFace
 ]
@@ -58,6 +58,8 @@ CairoFontFace class >> primFtFace: aFace loadFlags: flags [
 cairo_font_face_t * cairo_ft_font_face_create_for_ft_face
                                                         (FT_Face face,
                                                          int load_flags);
+
+load_flags: flags to pass to FT_Load_Glyph when loading glyphs from the font. These flags are OR'ed together with the flags derived from the cairo_font_options_t passed to cairo_scaled_font_create(), so only a few values such as FT_LOAD_VERTICAL_LAYOUT, and FT_LOAD_FORCE_AUTOHINT are useful. You should not pass any of the flags affecting the load target, such as FT_LOAD_TARGET_LIGHT.
 "
 	^ self ffiCall: #( CairoFontFace cairo_ft_font_face_create_for_ft_face(void * aFace , int flags )) 
 ]
