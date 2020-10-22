@@ -145,7 +145,9 @@ StDebuggerActionModelTest >> testClearDebugSession [
 
 { #category : #'tests - contexts' }
 StDebuggerActionModelTest >> testComputeInitialTopContext [
-	
+
+	self skipOnPharoCITestingEnvironment.
+
 	self changeSession: StTestDebuggerProvider new debuggerWithMissingSubclassResponsibilityContext session.
 	self assert: debugActionModel topContext identicalTo: session exception signalContext.
 	
@@ -344,8 +346,6 @@ StDebuggerActionModelTest >> testIsInterruptedContextMissingClassException [
 { #category : #'tests - predicates' }
 StDebuggerActionModelTest >> testIsInterruptedContextPostMortem [
 	
-	self skipOnPharoCITestingEnvironment.
-
 	session resume.
 	self assert: debugActionModel isInterruptedContextPostMortem
 ]
