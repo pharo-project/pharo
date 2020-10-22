@@ -286,6 +286,11 @@ Breakpoint >> isObjectCentric [
 	^self targetInstance notNil
 ]
 
+{ #category : #testing }
+Breakpoint >> isVariableBreakpoint [
+	^false
+]
+
 { #category : #accessing }
 Breakpoint >> level [
 	^level

@@ -10,7 +10,7 @@ Class {
 	#classVars : [
 		'ClassVar'
 	],
-	#category : #'Reflectivity-VariableBreakpoint'
+	#category : #'Reflectivity-Tests-Breakpoints'
 }
 
 { #category : #accessing }

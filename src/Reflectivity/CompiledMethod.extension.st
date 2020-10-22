@@ -73,6 +73,15 @@ CompiledMethod >> invalidate [
 ]
 
 { #category : #'*Reflectivity' }
+CompiledMethod >> link: aMetaLink toVariableNamed: vName option: accessStrategy [
+	^ self methodClass
+		link: aMetaLink
+		toTemporaryNamed: vName
+		inMethod: self selector
+		option: accessStrategy
+]
+
+{ #category : #'*Reflectivity' }
 CompiledMethod >> metaLinkOptions [
 	^{
 	#penultimateLiteral -> #( + optionCompileOnLinkInstallation).
@@ -83,6 +92,17 @@ CompiledMethod >> metaLinkOptions [
 	#literalAt: -> #( + optionCompileOnLinkInstallation).
 	#metaLinkOptions -> #( + optionCompileOnLinkInstallation)
 	}
+]
+
+{ #category : #'*Reflectivity' }
+CompiledMethod >> newBreakpointForVariable: aVariableName [
+	^ (self tempNames includes: aVariableName)
+		ifTrue: [ VariableBreakpoint
+				newBreakpointForVariable: aVariableName
+				forMethod: self ]
+		ifFalse: [ VariableBreakpoint
+				newBreakpointForVariable: aVariableName
+				inClass: self methodClass ]
 ]
 
 { #category : #'*Reflectivity' }

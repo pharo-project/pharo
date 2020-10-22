@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'v2'
 	],
-	#category : #'Reflectivity-VariableBreakpoint'
+	#category : #'Reflectivity-Tests-Data'
 }
 
 { #category : #initialize }
