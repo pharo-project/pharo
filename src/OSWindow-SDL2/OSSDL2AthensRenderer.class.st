@@ -9,9 +9,7 @@ Class {
 		'renderer',
 		'pixels',
 		'pitch',
-		'sdlSurface',
 		'textureExtent',
-		'surfaceForm',
 		'mutex'
 	],
 	#pools : [
@@ -37,28 +35,14 @@ OSSDL2AthensRenderer >> athensSurface [
 	^ mutex critical: [super athensSurface]
 ]
 
-{ #category : #private }
-OSSDL2AthensRenderer >> createSDLSurfaceWithExtent: extent [
-	surfaceForm ifNotNil: [ surfaceForm destroySurface ].
-	"createRGBSurfaceForCairoWidth creates the surface with autoRelease."
-	sdlSurface := SDL2 createRGBSurfaceForCairoWidth: extent x height: extent y.
-	surfaceForm := OSSDL2ExternalForm extent: extent depth: 32 bits: sdlSurface pixels.
-]
-
 { #category : #deleting }
 OSSDL2AthensRenderer >> destroy [
 	
 	mutex critical: [
-		(texture isNotNil and: [texture isNull not]) ifTrue: [
-			texture destroy
-		].
+		texture ifNotNil: [ texture destroy ].
 		texture := nil.
-
-		(renderer isNotNil and: [renderer isNull not]) ifTrue: [
-			renderer destroy
-		].
+		renderer ifNotNil: [ renderer destroy ].
 		renderer := nil.
-		sdlSurface := nil.
 	].
 
 	super destroy.
@@ -77,8 +61,18 @@ OSSDL2AthensRenderer >> initializeWindowHandle: aBackendWindow [
 	self initialize.
 	self backendWindow: aBackendWindow.
 	renderer := backendWindow sdl2Window createDefaultRenderer.
-	self resetResources.
+	mutex critical: [ 
+		self resetResources.
+	].
 	
+]
+
+{ #category : #'updating screen' }
+OSSDL2AthensRenderer >> pixelExtent [
+	mutex critical: [
+		(renderer isNil or: [ renderer isNull ]) ifFalse: [ ^ renderer outputExtent ].
+	].
+	^ super pixelExtent
 ]
 
 { #category : #drawing }
@@ -99,18 +93,16 @@ OSSDL2AthensRenderer >> present [
 	]
 ]
 
-{ #category : #private }
-OSSDL2AthensRenderer >> primitiveUpdateRectangle: rectangle externalForm: externalForm [
-	externalForm copy: rectangle from: surfaceForm to: rectangle origin rule: Form over
-]
-
 { #category : #'updating resources' }
 OSSDL2AthensRenderer >> resetResources [
 	| extent |
 	self checkSession.
 	extent := renderer outputExtent.
-	self createSDLSurfaceWithExtent: extent.
-	athensSurface := AthensCairoSDLSurface fromSDLSurface: sdlSurface.
+	athensSurface := AthensCairoSurface extent: extent.
+	texture ifNotNil: [
+		texture destroy.
+		texture := nil.
+	].
 	texture := renderer 
 		createTextureFormat: SDL_PIXELFORMAT_XRGB8888 
 		access: SDL_TEXTUREACCESS_STREAMING 
@@ -136,7 +128,7 @@ OSSDL2AthensRenderer >> surface [
 OSSDL2AthensRenderer >> updateAll [
 	mutex critical: [
 		self validate ifFalse: [ ^ self ].
-		texture updateTexturePixels: sdlSurface pixels pitch: sdlSurface pitch.
+		texture updateTexturePixels: athensSurface getDataPtr pitch: athensSurface stride.
 	]
 ]
 
@@ -201,6 +193,7 @@ OSSDL2AthensRenderer >> updateRectangles: allDamage [
 { #category : #'updating screen' }
 OSSDL2AthensRenderer >> validate [
 	self checkSession.
+	athensSurface ifNil: [ ^ false ].
 	(texture isNil or: [ texture isNull ]) ifTrue: [ ^ false ].
 	(renderer isNil or: [ renderer isNull ]) ifTrue: [ ^ false ].
 	renderer outputExtent ~= textureExtent ifTrue: [ ^ false ].

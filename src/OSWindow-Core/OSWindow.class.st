@@ -165,7 +165,6 @@ OSWindow >> deliverEvent: anEvent [
 	TraceEvents
 		ifTrue: [ self traceCr: anEvent ].
 	eventHandler ifNotNil: [ eventHandler handleEvent: anEvent ].
-	anEvent performDefaultAction
 ]
 
 { #category : #'dispatching events' }
