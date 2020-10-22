@@ -343,6 +343,9 @@ StDebuggerActionModelTest >> testIsInterruptedContextMissingClassException [
 
 { #category : #'tests - predicates' }
 StDebuggerActionModelTest >> testIsInterruptedContextPostMortem [
+	
+	self skipOnPharoCITestingEnvironment.
+
 	session resume.
 	self assert: debugActionModel isInterruptedContextPostMortem
 ]
