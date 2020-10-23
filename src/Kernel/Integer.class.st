@@ -1094,8 +1094,7 @@ Integer >> isPowerOfTwo [
 
 { #category : #testing }
 Integer >> isReadOnlyLiteral [ 
-	"Immediate objects are read-only by design, we can not call #beReadOnlyObject"
-	^ self isLiteral and: [ self class isImmediateClass not ]
+	^ self isLiteral
 ]
 
 { #category : #'system primitives' }

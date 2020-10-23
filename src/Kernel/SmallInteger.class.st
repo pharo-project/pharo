@@ -481,6 +481,12 @@ SmallInteger >> isLarge [
 	^false
 ]
 
+{ #category : #testing }
+SmallInteger >> isReadOnlyLiteral [ 
+	"Immediate objects are read-only by design, we can not call #beReadOnlyObject"
+	^ false
+]
+
 { #category : #'bit manipulation' }
 SmallInteger >> lowBit [
 	" Answer the index of the low order one bit.
