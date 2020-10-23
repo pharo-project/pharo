@@ -1092,6 +1092,12 @@ Integer >> isPowerOfTwo [
 	^ self ~= 0 and: [(self bitAnd: self-1) = 0]
 ]
 
+{ #category : #testing }
+Integer >> isReadOnlyLiteral [ 
+	"Immediate objects are read-only by design, we can not call #beReadOnlyObject"
+	^ self isLiteral and: [ self class isImmediateClass not ]
+]
+
 { #category : #'system primitives' }
 Integer >> lastDigit [
 	"Answer the last digit of the integer base 256.  LargePositiveInteger uses bytes of base two number, and each is a 'digit'."
