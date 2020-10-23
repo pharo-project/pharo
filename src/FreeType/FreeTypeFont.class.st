@@ -296,6 +296,11 @@ FreeTypeFont >> displayUnderlineOn: aDisplayContext from: baselineStartPoint to:
 	self displayLineGlyphOn: aDisplayContext from: s to: e
 ]
 
+{ #category : #emphasis }
+FreeTypeFont >> emphasized: code [
+	"empty stub, see https://github.com/pharo-project/pharo/issues/7550"
+]
+
 { #category : #accessing }
 FreeTypeFont >> face [
 	"Validate, and answer, the receiver's face"
