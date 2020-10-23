@@ -7,49 +7,53 @@ Class {
 	#instVars : [
 		'baseFont'
 	],
-	#category : #'Fonts-Abstract'
+	#category : #'Fonts-Abstract-Base'
 }
 
 { #category : #accessing }
 StubFixedFont >> ascent [
+
 	^ 13
 ]
 
 { #category : #accessing }
 StubFixedFont >> baseFont [
-	^baseFont
+
+	^ baseFont
 ]
 
 { #category : #accessing }
 StubFixedFont >> baseFont: aFont [
+
 	baseFont := aFont
 ]
 
 { #category : #accessing }
 StubFixedFont >> baseKern [
+
 	^ 0
 ]
 
 { #category : #accessing }
 StubFixedFont >> descent [
+
 	^ 4
 ]
 
 { #category : #accessing }
 StubFixedFont >> descentKern [
+
 	^ 0
 ]
 
 { #category : #displaying }
 StubFixedFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta [ 
-	
-	"ignore"
+	"Ignore"
 ]
 
 { #category : #displaying }
 StubFixedFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY [
-
-	"ignore"
+	"Ignore"
 ]
 
 { #category : #accessing }
@@ -59,6 +63,7 @@ StubFixedFont >> emphasized: emph [
 
 { #category : #accessing }
 StubFixedFont >> familyName [
+
 	^ 'Stub Fixed Font'
 ]
 
@@ -70,35 +75,40 @@ StubFixedFont >> familySizeFace [
 
 { #category : #accessing }
 StubFixedFont >> fontSize: aNumber [ 
-	"ignore"
+	"Ignore"
 ]
 
 { #category : #accessing }
 StubFixedFont >> height [
-	^17
+
+	^ 17
 ]
 
 { #category : #displaying }
 StubFixedFont >> installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor [
-	"ignore"
+	"Ignore"
 ]
 
 { #category : #accessing }
 StubFixedFont >> lineGrid [
-	^17
+
+	^ 17
 ]
 
 { #category : #accessing }
 StubFixedFont >> maxAscii [
+
 	^ SmallInteger maxVal
 ]
 
 { #category : #accessing }
 StubFixedFont >> pointSize [
-	^10
+
+	^ 10
 ]
 
 { #category : #measuring }
-StubFixedFont >> widthOf: aCharacter [ 
+StubFixedFont >> widthOf: aCharacter [
+
 	^ 5.4
 ]
