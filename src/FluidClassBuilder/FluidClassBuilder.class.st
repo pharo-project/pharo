@@ -51,7 +51,7 @@ Class {
 		'shiftClassBuilder',
 		'name'
 	],
-	#category : #FluidClassBuilder
+	#category : #'FluidClassBuilder-Base'
 }
 
 { #category : #building }
@@ -62,14 +62,14 @@ FluidClassBuilder >> build [
 
 ]
 
-{ #category : #'accessing mandatory' }
+{ #category : #'accessing - mandatory' }
 FluidClassBuilder >> classNameToBuild [
 	"mandatory"
 	
 	^ classNameToBuild
 ]
 
-{ #category : #'accessing mandatory' }
+{ #category : #'accessing - mandatory' }
 FluidClassBuilder >> classNameToBuild: aSymbol [ 
 	classNameToBuild := aSymbol
 ]
@@ -91,7 +91,7 @@ FluidClassBuilder >> fillShiftClassBuilder [
 	
 	"I could initialize all of them to #() instead of nil but we should check also the parser"
 	
-	layout ifNotNil: [ shiftClassBuilder layoutClass: layout ].
+	layout ifNotNil: [ shiftClassBuilder layoutClass: layout ]
 	
 	
 
@@ -108,46 +108,53 @@ FluidClassBuilder >> layoutToBuild [
 	^ layout 
 ]
 
-{ #category : #'accessing mandatory' }
+{ #category : #'accessing - mandatory' }
 FluidClassBuilder >> package: aString [
 	
 	packageName := aString.
 	self fillShiftClassBuilder 
 ]
 
-{ #category : #'accessing mandatory' }
+{ #category : #'accessing - mandatory' }
 FluidClassBuilder >> packageToBuild [
+
 	^ packageName
 ]
 
 { #category : #accessing }
-FluidClassBuilder >> poolDictionaries: aString [ 
+FluidClassBuilder >> poolDictionaries: aString [
+
 	poolDictionaries := aString
 ]
 
 { #category : #accessing }
 FluidClassBuilder >> poolDictionariesToBuild [
-	^ poolDictionaries 
+
+	^ poolDictionaries
 ]
 
 { #category : #accessing }
-FluidClassBuilder >> sharedPools: aString [ 
+FluidClassBuilder >> sharedPools: aString [
+
 	sharedPools := aString
 ]
 
 { #category : #accessing }
 FluidClassBuilder >> sharedPoolsToBuild [
+
 	^ sharedPools
 ]
 
 { #category : #accessing }
-FluidClassBuilder >> sharedVariables: aCollection [ 
+FluidClassBuilder >> sharedVariables: aCollection [
+
 	sharedVariables := aCollection
 ]
 
 { #category : #accessing }
 FluidClassBuilder >> sharedVariablesToBuild [
-	^ sharedVariables 
+
+	^ sharedVariables
 ]
 
 { #category : #building }
@@ -157,42 +164,49 @@ FluidClassBuilder >> shiftClassBuilder [
 ]
 
 { #category : #accessing }
-FluidClassBuilder >> slots: aCollection [ 
+FluidClassBuilder >> slots: aCollection [
+
 	slotsToBuild := aCollection
 ]
 
 { #category : #accessing }
 FluidClassBuilder >> slotsToBuild [
+
 	^ slotsToBuild
 ]
 
-{ #category : #'accessing mandatory' }
+{ #category : #'accessing - mandatory' }
 FluidClassBuilder >> superclassToBuild [
+
 	^ superclassToBuild
 ]
 
-{ #category : #'accessing mandatory' }
-FluidClassBuilder >> superclassToBuild: aClass [ 
-	
+{ #category : #'accessing - mandatory' }
+FluidClassBuilder >> superclassToBuild: aClass [
+
 	superclassToBuild := aClass
 ]
 
 { #category : #accessing }
-FluidClassBuilder >> tag: aString [ 
+FluidClassBuilder >> tag: aString [
+
 	tagToBuild := aString
 ]
 
 { #category : #accessing }
 FluidClassBuilder >> tagToBuild [
+
 	^ tagToBuild
 ]
 
 { #category : #accessing }
 FluidClassBuilder >> traitsToBuild [
-	^ traitComposition 
+
+	^ traitComposition
 ]
 
 { #category : #accessing }
 FluidClassBuilder >> uses: aTraitComposition [
+
 	traitComposition := aTraitComposition
 ]
