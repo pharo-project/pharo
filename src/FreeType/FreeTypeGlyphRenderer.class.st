@@ -16,9 +16,8 @@ Class {
 
 { #category : #'instance creation' }
 FreeTypeGlyphRenderer class >> current [
-	"
-	FreeTypeGlyphRenderer current
-	"
+	<script: 'self current inspect'>
+
 	^current ifNil:[current := self new]
 ]
 
@@ -29,7 +28,7 @@ FreeTypeGlyphRenderer class >> current: aKindOfFreeTypeGlyphRender [
 
 { #category : #private }
 FreeTypeGlyphRenderer >> convert8To32: aGlyphForm [
-		"convert aGlyphForm from the 8 bit deep form produced by FreeType, where each byte represents the intensity of a single pixel, to a 32 bit deep form" 
+	"Convert aGlyphForm from the 8 bit deep form produced by FreeType, where each byte represents the intensity of a single pixel, to a 32 bit deep form" 
 	| w h s answer rowstart bytes word littleEndian shift v a colorVal |
 
 	bytes := aGlyphForm bits.
@@ -58,7 +57,8 @@ FreeTypeGlyphRenderer >> convert8To32: aGlyphForm [
 
 { #category : #private }
 FreeTypeGlyphRenderer >> convert8to32: aGlyphForm colorValue: foreColorValue [
-	"convert from the 8 bit deep form produced by FreeType, where each byte represents the intensity of a single pixel, to a 32 bit deep form with pixels of color foreColorValue " 
+	"Convert from the 8 bit deep form produced by FreeType, where each byte represents the intensity of a single pixel, to a 32 bit deep form with pixels of color foreColorValue"
+	 
 	| w h s answer rowstart bytes word littleEndian shift v a colorVal foreColorVal foreColorA foreColorR foreColorG foreColorB r g b |
 
 	foreColorVal := foreColorValue.
@@ -117,37 +117,37 @@ FreeTypeGlyphRenderer >> fixBytesForMono: aGlyphForm [
 { #category : #public }
 FreeTypeGlyphRenderer >> glyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub font: aFreeTypeFont [
 
-	| f |
-	f := self 
+	| form |
+	form := self 
 		renderGlyph: aCharacter 
 		depth: (monoBoolean ifTrue:[1] ifFalse:[8]) 
 		subpixelPosition: sub
 		font: aFreeTypeFont.
 	monoBoolean 
 		ifTrue:[
-			f := self fixBytesForMono: f.
-			f := f asFormOfDepth: 8].
-	f := self convert8to32: f colorValue: aColorValue.
-	^f
+			form := self fixBytesForMono: form.
+			form := form asFormOfDepth: 8 ].
+	form := self convert8to32: form colorValue: aColorValue.
+	^form
 	
 ]
 
 { #category : #public }
 FreeTypeGlyphRenderer >> mode41GlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub font: aFreeTypeFont [
 
-	| f |
-	f := self 
+	| form |
+	form := self 
 		renderGlyph: aCharacter 
 		depth: (monoBoolean ifTrue:[1] ifFalse:[8]) 
 		subpixelPosition: sub 
 		font: aFreeTypeFont.
 	monoBoolean 
 		ifTrue:[
-			f := self fixBytesForMono: f.
-			f := f asFormOfDepth: 32]
+			form := self fixBytesForMono: form.
+			form := form asFormOfDepth: 32]
 		ifFalse:[
-			f := self convert8To32: f].
-	^f
+			form := self convert8To32: form ].
+	^form
 ]
 
 { #category : #private }
@@ -214,8 +214,9 @@ FreeTypeGlyphRenderer >> renderGlyph: aCharacter depth: depth subpixelPosition: 
 
 { #category : #public }
 FreeTypeGlyphRenderer >> subGlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub font: aFreeTypeFont [
-	"the default renderer does not support sub-pixel anti-aliasing,
+	"The default renderer does not support sub-pixel anti-aliasing,
 	so answer an ordinary glyph"
+
 	^self mode41GlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub font: aFreeTypeFont
 
 ]
