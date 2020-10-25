@@ -262,7 +262,7 @@ Breakpoint >> enable [
 Breakpoint >> initialize [
 	
 	self class initializeSlots: self.
-	options := #(+ optionCompileOnLinkInstallation + optionAnnounce)
+	options := #(+ optionCompileOnLinkInstallation + optionAnnounce - optionStyler)
 ]
 
 { #category : #install }

@@ -58,6 +58,7 @@ MetaLink class >> defaultOptions [
 	+ optionWeakAfter 						  "do not use #ensure: for #after "
 	- optionAnnounce                    "do we announce adding / removing links? Slow"
 	- argsAsArray                       "pass all arguments in one array. By default off as it adds an array creation"
+	+ optionStyler							  "should the metalink be visualized in the Tools?"
 	)
 ]
 
