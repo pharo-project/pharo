@@ -2,7 +2,8 @@ Extension { #name : #Trait }
 
 { #category : #'*FluidClassBuilder' }
 Trait class >> << aSymbol [
-	^ FluidTraitBuilder new 
-		name: aSymbol;
-		yourself
+
+	^ FluidTraitBuilder new
+		  name: aSymbol;
+		  yourself
 ]

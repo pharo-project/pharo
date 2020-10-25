@@ -1,3 +1,6 @@
+"
+Similar to class `FluidClassBuilder` but for traits
+"
 Class {
 	#name : #FluidTraitBuilder,
 	#superclass : #Object,
@@ -9,7 +12,7 @@ Class {
 		'tagToBuild',
 		'shiftClassBuilder'
 	],
-	#category : #FluidClassBuilder
+	#category : #'FluidClassBuilder-Base'
 }
 
 { #category : #accessing }
@@ -23,8 +26,8 @@ FluidTraitBuilder >> build [
 { #category : #accessing }
 FluidTraitBuilder >> fillShiftClassBuilder [
 
-	shiftClassBuilder  := ShiftClassBuilder new.
-	shiftClassBuilder  buildEnvironment: ShSmalltalkGlobalsEnvironment new. 
+	shiftClassBuilder := ShiftClassBuilder new.
+	shiftClassBuilder buildEnvironment: ShSmalltalkGlobalsEnvironment new. 
 	shiftClassBuilder 
 		name: name;
 		superclass: nil;
@@ -58,10 +61,9 @@ FluidTraitBuilder >> name: aString [
 
 { #category : #accessing }
 FluidTraitBuilder >> package: aString [
+
 	packageName := aString.
-	self fillShiftClassBuilder. 
-	
-	
+	self fillShiftClassBuilder
 ]
 
 { #category : #accessing }
@@ -78,11 +80,13 @@ FluidTraitBuilder >> slots: anArray [
 
 { #category : #accessing }
 FluidTraitBuilder >> tag [
+
 	^ tagToBuild
 ]
 
 { #category : #accessing }
 FluidTraitBuilder >> tag: anObject [
+
 	tagToBuild := anObject
 ]
 
