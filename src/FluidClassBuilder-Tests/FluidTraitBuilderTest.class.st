@@ -4,24 +4,23 @@ Class {
 	#instVars : [
 		'builder'
 	],
-	#category : #'FluidClassBuilder-Tests'
+	#category : #'FluidClassBuilder-Tests-Base'
 }
 
-{ #category : #running }
-FluidTraitBuilderTest >> removeFromSystem [
+{ #category : #'private - cleanup' }
+FluidTraitBuilderTest >> removeTestArtifactsFromSystem [
 
-	self class environment at: #TMyClass 
-		ifPresent: [:p | p removeFromSystem: false ]
-		ifAbsent: [  ] .
-	
+	self class environment
+		at: #TMyClass
+		ifPresent: [ :p | p removeFromSystem: false ]
+		ifAbsent: [ ]
 ]
 
 { #category : #running }
 FluidTraitBuilderTest >> setUp [
-	super setUp.
-	builder := FluidTraitBuilder new 
-	
 
+	super setUp.
+	builder := FluidTraitBuilder new
 ]
 
 { #category : #tests }
@@ -34,7 +33,7 @@ FluidTraitBuilderTest >> testBuildSimplePoint2 [
 	trait := builder build.
 	
 	self assert: trait name equals: #TPoint2.
-	self assert: trait slots size equals: 2.
+	self assert: trait slots size equals: 2
 
 ]
 
@@ -42,7 +41,7 @@ FluidTraitBuilderTest >> testBuildSimplePoint2 [
 FluidTraitBuilderTest >> testInstallMinimalMockClass [
 
 	| shiftClassBuilder installedClass |
-	self removeFromSystem.
+	self removeTestArtifactsFromSystem.
 	[ 
 	builder := self class compilerClass new
 		           evaluate: 'Trait << #TMyClass
@@ -59,7 +58,7 @@ FluidTraitBuilderTest >> testInstallMinimalMockClass [
 	self assert: installedClass isFixed.
 	self assert: installedClass slots isEmpty.
 	self assert: installedClass traitComposition isEmpty ]
-		ensure: [ self removeFromSystem  ]
+		ensure: [ self removeTestArtifactsFromSystem ]
 ]
 
 { #category : #tests }

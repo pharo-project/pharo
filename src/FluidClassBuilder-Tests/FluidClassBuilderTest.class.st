@@ -4,32 +4,32 @@ Class {
 	#instVars : [
 		'builder'
 	],
-	#category : #'FluidClassBuilder-Tests'
+	#category : #'FluidClassBuilder-Tests-Base'
 }
 
-{ #category : #running }
+{ #category : #accessing }
 FluidClassBuilderTest >> builder [ 	
 
 	^  builder
 ]
 
-{ #category : #'tests - mandatory' }
-FluidClassBuilderTest >> removeFromSystem [
+{ #category : #'private - cleanup' }
+FluidClassBuilderTest >> removeTestArtifactsFromSystem [
 
 	self class environment at: #MyClass 
 		ifPresent: [:p | p removeFromSystem: false ]
-		ifAbsent: [  ] .
+		ifAbsent: [ ].
 	
 ]
 
 { #category : #running }
 FluidClassBuilderTest >> setUp [
-	super setUp.
-	builder := FluidClassBuilder new 
-		superclassToBuild: Object;
-		classNameToBuild: #Point33;
-		package: 'FakedPackage'
 
+	super setUp.
+	builder := FluidClassBuilder new
+		           superclassToBuild: Object;
+		           classNameToBuild: #Point33;
+		           package: 'FakedPackage'
 ]
 
 { #category : #'tests - gathering' }
@@ -67,7 +67,7 @@ FluidClassBuilderTest >> testBuilderSharedPools [
 		tag: 'Base';
 		sharedPools: 'TextConstants';
 		package: 'Text-Core'.  
-	self assert: builder sharedPoolsToBuild equals: 'TextConstants'.
+	self assert: builder sharedPoolsToBuild equals: 'TextConstants'
 	
 ]
 
@@ -79,7 +79,7 @@ FluidClassBuilderTest >> testBuilderSharedVariables [
 		sharedVariables: { #NonAsciiMap };
 		package: 'Collections-Strings'.  
 	self assert: builder sharedVariablesToBuild equals: { #NonAsciiMap }.
-	self assert: builder layoutToBuild equals: ByteLayout.
+	self assert: builder layoutToBuild equals: ByteLayout
 	
 ]
 
@@ -103,7 +103,7 @@ FluidClassBuilderTest >> testBuilderWithPackage [
 FluidClassBuilderTest >> testBuilderWithSlots [
 
 	builder slots: { #x . #y }.
-	self assert: builder slotsToBuild equals: { #x . #y }.
+	self assert: builder slotsToBuild equals: { #x . #y }
 
 	
 ]
@@ -112,7 +112,7 @@ FluidClassBuilderTest >> testBuilderWithSlots [
 FluidClassBuilderTest >> testBuilderWithTag [
 
 	builder tag: 'Foo'.
-	self assert: builder tagToBuild equals: 'Foo'.
+	self assert: builder tagToBuild equals: 'Foo'
 
 	
 ]
@@ -166,7 +166,7 @@ FluidClassBuilderTest >> testCreateClassWithFullExpandedDefinitionKeepsTheMinimu
 FluidClassBuilderTest >> testInstallMinimalMockClass [
 
 	| shiftClassBuilder installedClass |
-	self removeFromSystem.
+	self removeTestArtifactsFromSystem.
 	[ 
 	builder := self class compilerClass new
 		           evaluate: 'Object < #MyClass
@@ -189,5 +189,5 @@ FluidClassBuilderTest >> testInstallMinimalMockClass [
 	self assert: installedClass traitComposition isEmpty.
 	self assert: installedClass classVariables isEmpty.
 	self assert: installedClass sharedPools isEmpty]
-		ensure: [ self removeFromSystem  ]
+		ensure: [ self removeTestArtifactsFromSystem ]
 ]
