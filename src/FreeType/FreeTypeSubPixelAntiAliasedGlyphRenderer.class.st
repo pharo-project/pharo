@@ -12,10 +12,8 @@ Class {
 
 { #category : #'class initialization' }
 FreeTypeSubPixelAntiAliasedGlyphRenderer class >> initialize [
-	"
-	self initialize
-	"
-	FreeTypeGlyphRenderer current: self new.
+
+	FreeTypeGlyphRenderer current: self new
 
 ]
 
@@ -167,22 +165,22 @@ FreeTypeSubPixelAntiAliasedGlyphRenderer >> renderStretchedGlyph: aCharacter dep
 { #category : #rendering }
 FreeTypeSubPixelAntiAliasedGlyphRenderer >> subGlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub font: aFreeTypeFont [
 
-	| f |
+	| form |
 	monoBoolean
 		ifFalse:[
-			f := self 
+			form := self 
 				renderStretchedGlyph: aCharacter 
 				depth: 8 
 				subpixelPosition: sub 
 				font: aFreeTypeFont. 
-			f := self filter: f]
+			form := self filter: form]
 		ifTrue:[
-			f := self 
+			form := self 
 				renderGlyph: aCharacter 
 				depth: 1 
 				subpixelPosition: sub 
 				font: aFreeTypeFont.
-			f := self fixBytesForMono: f.					
-			f := f asFormOfDepth: 32].
-	^f
+			form := self fixBytesForMono: form.					
+			form := form asFormOfDepth: 32].
+	^form
 ]
