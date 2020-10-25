@@ -317,6 +317,11 @@ MicroDownParser class >> mathClosingBlockMarkup [
 	^ '&'
 ]
 
+{ #category : #'inline block markups' }
+MicroDownParser class >> mathMarkup [
+	^ self inlineMarkups at: #math
+]
+
 { #category : #'block markups' }
 MicroDownParser class >> mathOpeningBlockMarkup [
 

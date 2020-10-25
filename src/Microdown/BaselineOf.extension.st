@@ -10,7 +10,10 @@ BaselineOf class >> buildMicroDownUsing: aBuilder withComment: aString [
 		header: [ :b | b text: 'Description' ] withLevel: 3;
 		text: aString;
 		newLine;
-		header: [ :b | b text: 'Dependencies' ] withLevel: 3;
-		codeblockTag: 'pharo'
-		withBody: (self instanceSide sourceCodeAt: #baseline:)
+		header: [ :b | b text: 'Dependencies' ] withLevel: 3.
+
+	(self instanceSide includesLocalSelector: #baseline:) 
+		ifTrue: [ aBuilder 
+						codeblockTag: 'pharo'
+						withBody: (self instanceSide sourceCodeAt: #baseline:) ]
 ]

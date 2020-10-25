@@ -1,13 +1,18 @@
 "
-!!! Purpose
-I am a class that provide Pillar codebloc extensions for Latex (and others in the future).
+I should be merged into PRRichTextComposer
 
-That mean you can write latex formulas using a codeblock ==language=latexMath==:
+I am a class that provides Pillar codebloc extensions for Latex (and others in the future).
 
-
-[[[language=latexMath
+```
+&
 \sum_{i=1}^{n} a[i]
-]]]
+&
+```
+
+renders as: 
+&
+\sum_{i=1}^{n} a[i]
+&
 
 "
 Class {
@@ -38,7 +43,10 @@ PRCodeblockStylerExtensions class >> latexExample [
 
 { #category : #styling }
 PRCodeblockStylerExtensions class >> latexMathStylerFor: aString [
-	<codeblockStylerFor:'latexMath'>
+	"<codeblockStylerFor:'latexMath'>
+	
+	this is totally bogus: this method does not return a styler but just an image."
+	
 	| expressionUrl |
 	expressionUrl := 'https://latex.codecogs.com/png.latex?', aString urlEncoded.
 	^self loadExternalImageFromURL: expressionUrl errorText: 'Latex error'.
@@ -47,15 +55,17 @@ PRCodeblockStylerExtensions class >> latexMathStylerFor: aString [
 { #category : #private }
 PRCodeblockStylerExtensions class >> loadExternalImageFromURL: aUrl errorText: errorDesc [
 	"I return a Text instance with an loaded from a url"
-	| anchoredImage|
+	
+	| anchoredImage |
+	self flag: #cleanAndRevisit.
 	anchoredImage := self imageCache 
 		at: aUrl 
 		ifAbsentPut: [ 
 			[ anchoredImage := (String value: 1) asText
-				addAttribute: (TextAnchor new anchoredMorph: (ZnEasy getPng: aUrl)).
+					addAttribute: (TextAnchor new anchoredMorph: (ZnEasy getPng: aUrl)).
 				anchoredImage ] 
 			on: Exception 
-			do: [errorDesc  asText addAttribute: (TextColor red)]
+			do: [ errorDesc asText addAttribute: TextColor red ]
 		].
 	^ anchoredImage 
 ]

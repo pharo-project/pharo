@@ -25,6 +25,12 @@ When the system is online but the request failed I display an uncached placehold
 
 It means that web-based images can be prefilled and Pharo images can be provided preloaded. 
 
+When you want to get all the errors (typically to debug and fix them), you can configure the system to stop capturing errors using 
+
+```
+PRRichTextComposer captureErrors: false
+
+```
 
 
 
@@ -46,11 +52,13 @@ Class {
 		'annotatedParagraphAlignment'
 	],
 	#classVars : [
+		'CaptureErrors',
 		'HeaderFontSizes',
 		'HeaderFonts',
 		'ImageCache',
 		'NotRendering',
-		'OffLine'
+		'OffLine',
+		'Stylers'
 	],
 	#category : #'Pillar-ExporterRichText-Core'
 }
@@ -79,7 +87,19 @@ PRRichTextComposer class >> bulletForLevel: level [
 		ifTrue: [ ^ $- asText ]
 ]
 
-{ #category : #stylers }
+{ #category : #'class initialization' }
+PRRichTextComposer class >> captureErrors [
+	
+	^ CaptureErrors
+]
+
+{ #category : #'class initialization' }
+PRRichTextComposer class >> captureErrors: aBoolean [
+	
+	CaptureErrors := aBoolean
+]
+
+{ #category : #'styler - declaration' }
 PRRichTextComposer class >> codeStylerFor: aString [
 	<codeblockStylerFor: 'Smalltalk'>
 	
@@ -114,15 +134,15 @@ PRRichTextComposer class >> counterFor: counter atLevel: level [
 		ifTrue: [ ^ ($A asInteger + (counter - 1)) asCharacter asText , ')' ]
 ]
 
-{ #category : #stylers }
+{ #category : #'styler - declaration' }
 PRRichTextComposer class >> defaultStyler: aString [
-	<codeblockStylerFor:'default'>
+	<codeblockStylerFor: 'default'>
+	"Pay attention without this one the logic can loop."
 	
-	"By default, render it as code"
-	^self codeStylerFor: aString
+	^ self codeStylerFor: aString
 ]
 
-{ #category : #stylers }
+{ #category : #'styler - declaration' }
 PRRichTextComposer class >> expressionStylerFor: aString [
 	<codeblockStylerFor: 'PharoExpression'>
 	
@@ -165,20 +185,28 @@ PRRichTextComposer class >> initialize [
 	self notRendering: false.
 	self resetCache.
 	self headerFontSizes: #(18 14 12 11 10 10).
+	self initializeStylers.
+	self captureErrors: true.
+]
+
+{ #category : #'class initialization' }
+PRRichTextComposer class >> initializeStylers [
+	"self initializeStylers"
+	Stylers := Dictionary
+		newFromAssociations: ((PragmaCollector
+						filter: [ :prg | prg selector = 'codeblockStylerFor:' ]) reset
+						collected collect: [ :p | p arguments first asLowercase-> p method ])
 ]
 
 { #category : #stylers }
 PRRichTextComposer class >> languageStylerFor: aLanguage [
-	| stylers |
-	stylers := Dictionary
-		newFromAssociations: ((Pragma allNamed: #codeblockStylerFor:) collect: [ :p | 
-			p arguments first -> p method ]).
-	^ stylers
-		at: aLanguage
+
+	^ Stylers
+		at: aLanguage asLowercase
 		ifAbsent: [ self languageStylerFor: 'default' ]
 ]
 
-{ #category : #stylers }
+{ #category : #'styler - declaration' }
 PRRichTextComposer class >> methodStylerFor: aString [
 	<codeblockStylerFor:'PharoMethod'>
 	
@@ -209,9 +237,8 @@ PRRichTextComposer class >> offline [
 { #category : #'class initialization' }
 PRRichTextComposer class >> offline: aBoolean [
 
-	OffLine := aBoolean.
-	aBoolean 
-		ifFalse: [  ] 
+	OffLine := aBoolean
+
 ]
 
 { #category : #settings }
@@ -263,15 +290,15 @@ PRRichTextComposer class >> style: aString asLanguage: aLanguage [
 	"render aString according to the styler named aLanguage"
 	
 	| styler |
-	styler := self languageStylerFor: aLanguage.
+	styler := self languageStylerFor: aLanguage asLowercase.
 	^ styler
 		valueWithReceiver: styler methodClass soleInstance 
 		arguments: (Array with: aString)
 ]
 
-{ #category : #stylers }
+{ #category : #'styler - declaration' }
 PRRichTextComposer class >> textStyler: aString [
-	<codeblockStylerFor:'text'>
+	<codeblockStylerFor: 'text'>
 	
 	^aString asText
 ]
@@ -301,6 +328,17 @@ PRRichTextComposer >> annotatedParagraphColor: aColor [
 	annotatedParagraphColor := aColor
 ]
 
+{ #category : #images }
+PRRichTextComposer >> cachedImageFromUrl: aUrl [
+	
+	^ OffLine 
+		ifFalse: [
+			ImageCache 
+				at: aUrl asString
+				ifAbsentPut: [ self rawImageFrom: aUrl ] ] 
+		ifTrue: [ self imageOffLineFromUrl: aUrl ]
+]
+
 { #category : #initialization }
 PRRichTextComposer >> defaultAnnotatedParagraphColor [
 	^ TextColor blue
@@ -311,32 +349,25 @@ PRRichTextComposer >> defaultSuperscriptColor [
 	^ TextColor blue
 ]
 
-{ #category : #'visiting - document' }
-PRRichTextComposer >> imageFromUrl: aUrl [
-	"next iteration should propose something when OffLine and timeout."
-	
-	^ OffLine 
-		ifFalse: [
-			[ ImageCache 
-				at: aUrl asString
-				ifAbsentPut: [ ZnEasy getPng: aUrl ]] 
-					on: ZnHttpUnsuccessful 
-					do: [ :ex | self imageOffLineFromUrl: aUrl ] ] 
-		ifTrue: [ 
-			"we are off but the image is there so we return it,"
-			self imageOffLineFromUrl: aUrl
-			]
-]
-
-{ #category : #'visiting - document' }
+{ #category : #'images internal' }
 PRRichTextComposer >> imageOffLineFromUrl: aUrl [
-
 	"we are off but the image is there so we return it,"
 	^ ImageCache 
 			at: aUrl asString
 			ifPresent: [ :i | i ]
-			ifAbsent: [ (StringMorph contents: 'In Offline mode! 
-When online, you should see: ' , aUrl asString) imageForm  ]
+			ifAbsent: [ (StringMorph contents: 'The HTTP request got unsuccessful. 
+When you will be online, you should see: ' , aUrl asString) imageForm  ]
+			
+]
+
+{ #category : #'images internal' }
+PRRichTextComposer >> imageUnexpectedContentFromUrl: aUrl [
+	"The request got unexpected content if the image is there so we return it. We do not cache the failing case image form so that we do not polute the cache."
+	
+	^ ImageCache 
+			at: aUrl asString
+			ifPresent: [ :i | i ]
+			ifAbsent: [ (StringMorph contents: 'The HTTP request ', aUrl asString, ' returned an unexpected content.' ) imageForm  ]
 			
 ]
 
@@ -361,6 +392,28 @@ PRRichTextComposer >> monospaceBackgroundColor [
 PRRichTextComposer >> monospaceBackgroundColor: aColor [
 
 	monospaceBackgroundColor := aColor
+]
+
+{ #category : #'images internal' }
+PRRichTextComposer >> rawImageFrom: aURL [
+	| block |
+	self flag: #fixMeOnceNewExceptionIsAvailable.
+	block := [ ZnEasy getImageOfType: (ZnMimeType main: 'image' sub: '*') fromUrl: aURL ].
+	self class captureErrors
+		ifFalse: [ ^ block value ].
+
+	^ [ block
+		on: ZnHttpUnsuccessful 
+		do: [ :ex | self unsuccessfulRequestFromUrl: aURL ]]
+			on: ZnUnexpectedContentType 
+			do: [ :ex | self imageUnexpectedContentFromUrl: aURL ]
+		
+]
+
+{ #category : #'visiting - document' }
+PRRichTextComposer >> renderMathExpression: aString [
+	
+	canvas << (PRCodeblockStylerExtensions latexMathStylerFor: aString)
 ]
 
 { #category : #visiting }
@@ -394,6 +447,16 @@ PRRichTextComposer >> superscriptColor: anObject [
 PRRichTextComposer >> theme [
 
 	^  Smalltalk ui theme
+]
+
+{ #category : #'images internal' }
+PRRichTextComposer >> unsuccessfulRequestFromUrl: aUrl [
+	
+	^ ImageCache 
+			at: aUrl asString
+			ifPresent: [ :i | i ]
+			ifAbsent: [ (StringMorph contents: 'The HTTP request ',  aUrl asString,  ' got unsuccessful.') imageForm  ]
+			
 ]
 
 { #category : #visiting }
@@ -561,7 +624,7 @@ PRRichTextComposer >> visitFigure: aFigure [
 	"for now I cancel the catching of all exceptions because it is a blackhole."
 	"[" 
 	anchoredImage := (String value: 1) asText
-		addAttribute: (TextAnchor new anchoredMorph: (self imageFromUrl: aFigure reference)).
+		addAttribute: (TextAnchor new anchoredMorph: (self cachedImageFromUrl: aFigure reference)).
 		canvas << anchoredImage 
 		"] 
 		on: Exception  
@@ -606,9 +669,25 @@ PRRichTextComposer >> visitListItem: anItem [
 ]
 
 { #category : #'visiting - document' }
+PRRichTextComposer >> visitMathEnvironment:  aPRMathEnvironment [
+	"we could plug some math rendering for Polymath following the implementation of Kasper.
+	See PRCodeblockStylerExtensions"
+	| text |
+	text := aPRMathEnvironment text. 
+	(OffLine | text isNil)
+		ifTrue: [ text 
+						ifNotNil: [ canvas << '&'; cr; << text; << '&']
+						ifNil: [ canvas << '&'; cr; << 'Your math environment is strange its body is nil'; << '&' ] ]
+		ifFalse: [ canvas cr.
+					canvas indentIn: [ self renderMathExpression: text ].
+					 canvas cr ]
+]
+
+{ #category : #'visiting - document' }
 PRRichTextComposer >> visitMathInTextAnnotation: aPRMathInTextAnnotation [ 
 	"we could plug some math rendering for Polymath following the implementation of Kasper.
 	See PRCodeblockStylerExtensions"
+	
 	OffLine 
 		ifTrue: [ canvas << '$', aPRMathInTextAnnotation text, '$' ]
 		ifFalse: [ canvas << (PRCodeblockStylerExtensions latexMathStylerFor: aPRMathInTextAnnotation text)]
@@ -653,6 +732,13 @@ PRRichTextComposer >> visitParagraph: anObject [
 	canvas newLine.
 	super visitParagraph: anObject.
 	canvas newLine.
+]
+
+{ #category : #'visiting - document' }
+PRRichTextComposer >> visitParameters: anObject [
+	"do nothing for now"
+	
+	^ self
 ]
 
 { #category : #'visiting - document' }

@@ -17,3 +17,8 @@ Class {
 PRMathEnvironment >> accept: aVisitor [
 	^ aVisitor visitMathEnvironment: self
 ]
+
+{ #category : #'accessing-parameters' }
+PRMathEnvironment >> text [ 
+	^ self children first text
+]
