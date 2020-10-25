@@ -326,6 +326,22 @@ PRRichTextComposerTest >> testStrikethroughFormat [
 	self skip.
 ]
 
+{ #category : #'tests - stylers' }
+PRRichTextComposerTest >> testStylersAreRegistered [
+
+	| defaultStyler |
+	defaultStyler := (PRRichTextComposer languageStylerFor: 'blblbl').
+	self assert: defaultStyler selector equals: #defaultStyler:.
+]
+
+{ #category : #'tests - stylers' }
+PRRichTextComposerTest >> testStylersForText [
+
+	| defaultStyler |
+	defaultStyler := (PRRichTextComposer languageStylerFor: 'text').
+	self assert: defaultStyler selector equals: #textStyler:.
+]
+
 { #category : #'skipped tests' }
 PRRichTextComposerTest >> testSubscriptFormat [
 	"Test fails: subscript isn't recognized

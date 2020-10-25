@@ -510,6 +510,24 @@ aa'.
 	
 ]
 
+{ #category : #'tests - breaking class comments' }
+MicroDownParserTest >> testRBPatternVariableNode [
+	| paragraph1 paragraph2 paragraph3 |
+	
+	paragraph1 := parser parse: 'The @ character can be combined with the name to match lists of items. If combined with the . character, then it will match a list of statement nodes (0 or more). If used without the . or # character, then it matches anything except for a list of statements. Combining the @ with the # is not supported.'.
+	
+	paragraph2 :=  parser parse: 'Adding another ` in the name will cause the search/replace to look for more matches inside the node that this node matched. This option should not be used for top-level expressions since that would cause infinite recursion (e.g., searching only for "``@anything").
+'.
+	paragraph3 := parser parse: 'Instance Variables:
+	isAnything	<Boolean>	can we match any type of node
+	isList	<Boolean>	can we match a list of items (@)
+	isLiteral	<Boolean>	only match a literal node (#)
+	isStatement	<Boolean>	only match statements (.)
+	recurseInto	<Boolean>	search for more matches in the node we match (`)
+
+'
+]
+
 { #category : #'tests-table' }
 MicroDownParserTest >> testSimpleTable [
 
