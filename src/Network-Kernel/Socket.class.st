@@ -558,7 +558,7 @@ Socket >> connectToHostNamed: hostName port: portNumber [
 Socket >> dataAvailable [
 	"Return true if this socket has unread received data."
 
-	socketHandle == nil ifTrue: [^ false].
+	socketHandle ifNil: [^ false].
 	^ self primSocketReceiveDataAvailable: socketHandle
 
 ]
