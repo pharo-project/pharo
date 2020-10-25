@@ -16,9 +16,6 @@ Class {
 
 { #category : #'class initialization' }
 FreeTypeCacheConstants class >> initialize [
-	"
-	FreeTypeCacheConstants initialize
-	"
 	
 	FreeTypeCacheWidth := 0.
 	FreeTypeCacheGlyph := 100.	"start at 100 and allow room for 64 subpixel positioned glyphs"
