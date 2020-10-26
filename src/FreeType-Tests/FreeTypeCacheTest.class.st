@@ -474,12 +474,12 @@ FreeTypeCacheTest >> testRemoveAllForType [
 
 { #category : #tests }
 FreeTypeCacheTest >> testReport [
-	self assert: fullCache report equals: '100% Full (maximumSize: 400320 , used: 400320)'.
+	self assert: fullCache reportCacheState equals: '100% Full (maximumSize: 400320 , used: 400320)'.
 	fullCache maximumSize: 800640.
-	self assert: fullCache report equals: '50% Full (maximumSize: 800640 , used: 400320)'.
-	self assert: cache report equals: '0% Full (maximumSize: 5120000 , used: 0)'.
+	self assert: fullCache reportCacheState equals: '50% Full (maximumSize: 800640 , used: 400320)'.
+	self assert: cache reportCacheState equals: '0% Full (maximumSize: 5120000 , used: 0)'.
 	cache maximumSize: nil.
-	self assert: cache report equals: '0% Full (maximumSize: nil , used: 0)'
+	self assert: cache reportCacheState equals: '0% Full (maximumSize: nil , used: 0)'
 ]
 
 { #category : #tests }
