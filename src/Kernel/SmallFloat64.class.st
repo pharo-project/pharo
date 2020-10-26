@@ -219,6 +219,12 @@ SmallFloat64 >> identityHash [
 	^ self basicIdentityHash
 ]
 
+{ #category : #testing }
+SmallFloat64 >> isReadOnlyLiteral [ 
+	"Immediate objects are read-only by design, we can not call #beReadOnlyObject"
+	^ false
+]
+
 { #category : #'mathematical functions' }
 SmallFloat64 >> ln [
 	"Answer the natural logarithm of the receiver.
