@@ -9,31 +9,31 @@ To do in the future:
 	- a proper way to load font file and install them to avoid bloating the image with text that represent binary font data in addition to font themselves!!
 "
 Class {
-	#name : #EmbeddedFreeTypeFontFontDescription,
+	#name : #EmbeddedFreeTypeFontDescription,
 	#superclass : #Object,
 	#category : #'EmbeddedFreeType-Base'
 }
 
 { #category : #testing }
-EmbeddedFreeTypeFontFontDescription class >> canBeInstalled [
+EmbeddedFreeTypeFontDescription class >> canBeInstalled [
 	"By default, font can be installed anywhere"
 	^ true
 		
 ]
 
 { #category : #accessing }
-EmbeddedFreeTypeFontFontDescription class >> fontContents [
+EmbeddedFreeTypeFontDescription class >> fontContents [
 	self subclassResponsibility
 
 ]
 
 { #category : #accessing }
-EmbeddedFreeTypeFontFontDescription class >> installAllFontsIn: provider [
+EmbeddedFreeTypeFontDescription class >> installAllFontsIn: provider [
 	self allSubclasses do: [ :each | each installFontsIn: provider ]
 ]
 
 { #category : #accessing }
-EmbeddedFreeTypeFontFontDescription class >> installFontsIn: provider [
+EmbeddedFreeTypeFontDescription class >> installFontsIn: provider [
 	self canBeInstalled ifFalse: [ ^ self ].
 	provider
 		addFromFileContents: self fontContents 
@@ -41,13 +41,13 @@ EmbeddedFreeTypeFontFontDescription class >> installFontsIn: provider [
 ]
 
 { #category : #testing }
-EmbeddedFreeTypeFontFontDescription class >> isAbstract [ 
-	^self name = #EmbeddedFreeTypeFontFontDescription 
+EmbeddedFreeTypeFontDescription class >> isAbstract [ 
+	^self name = #EmbeddedFreeTypeFontDescription 
 	
 ]
 
 { #category : #accessing }
-EmbeddedFreeTypeFontFontDescription class >> originalFileName [
+EmbeddedFreeTypeFontDescription class >> originalFileName [
 	self subclassResponsibility
 
 ]
