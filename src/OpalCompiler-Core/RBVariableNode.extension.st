@@ -2,12 +2,12 @@ Extension { #name : #RBVariableNode }
 
 { #category : #'*opalcompiler-core' }
 RBVariableNode >> binding [
-	^variable
+	^self variable
 ]
 
 { #category : #'*opalcompiler-core' }
 RBVariableNode >> binding: aSemVar [
-	variable := aSemVar
+	self variable: aSemVar
 ]
 
 { #category : #'*opalcompiler-core' }
