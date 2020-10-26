@@ -1740,6 +1740,7 @@ Object >> setIsReadOnlyObject: aBoolean [
 	 Note: Some objects can't be read-only, currently contexts and objects related
 	 to process scheduling (Processor, Process instances, Semaphore instances, ...)"
 	<primitive: 164 error: ec>
+	self class isImmediateClass ifTrue: [ ^true ].
 	^self primitiveFailed
 	
 ]
