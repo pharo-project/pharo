@@ -15,6 +15,7 @@ BaselineOfNewTools >> baseline: spec [
 		spec preLoadDoIt: #'preload:package:'.
 		spec postLoadDoIt: #'postload:package:'.
 
+		self spec: spec.
 		self sindarin: spec.
 
 		spec
@@ -28,7 +29,7 @@ BaselineOfNewTools >> baseline: spec [
 			package: 'NewTools-Debugger' with: [ spec requires: #('NewTools-Inspector' 'NewTools-Debugger-Commands' 'NewTools-Debugger-Extensions' 'NewTools-SpTextPresenterDecorators') ];			
 			package: 'NewTools-Debugger-Commands';
 			package: 'NewTools-Debugger-Extensions';
-			package: 'NewTools-Debugger-Tests' with: [ spec requires: #('NewTools-Debugger') ];
+			"package: 'NewTools-Debugger-Tests' with: [ spec requires: #('NewTools-Debugger') ];"
 			"playground"
 			package: 'NewTools-Playground' with: [ spec requires: #('NewTools-Inspector') ];
 			"browser"
@@ -69,7 +70,7 @@ BaselineOfNewTools >> baseline: spec [
 				'NewTools-Sindarin-Tools'
 				'NewTools-Sindarin-Commands'
 				'NewTools-Debugger-Breakpoints-Tools'
-				'NewTools-Debugger-Tests');
+				"'NewTools-Debugger-Tests'");
 			group: 'SystemReporter' with: #('Core' 'NewTools-SystemReporter');
 			group: 'FlagBrowser' with: #(
 				'Core' 
@@ -86,7 +87,9 @@ BaselineOfNewTools >> baseline: spec [
 				'Playground'
 				'Inspector'
 				'Debugger'
-				"'FlagBrowser'") ]
+				"'FlagBrowser'");
+			"A group for running CI"
+			group: 'CI' with: #('Spec2' 'default') ]
 ]
 
 { #category : #dependencies }
@@ -123,4 +126,11 @@ BaselineOfNewTools >> sindarin: spec [
 			repository: (self packageRepositoryURL 
 				ifEmpty: [ 'github://pharo-spec/ScriptableDebugger' ]);
 			loads: 'Core' ]
+]
+
+{ #category : #dependencies }
+BaselineOfNewTools >> spec: spec [ 
+
+	spec baseline: 'Spec2' with: [ 
+		spec repository: 'github://pharo-spec/Spec' ]
 ]
