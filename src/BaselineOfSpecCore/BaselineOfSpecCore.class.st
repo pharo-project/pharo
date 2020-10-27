@@ -9,7 +9,6 @@ BaselineOfSpecCore >> baseline: spec [
 	<baseline>
 	
 	spec for: #common do: [ 
-		self commander2: spec.
 		self pillar: spec.
 		
 		spec
@@ -18,10 +17,10 @@ BaselineOfSpecCore >> baseline: spec [
 			package: 'Spec2-Layout' with: [ spec requires: #('Spec2-ObservableSlot') ];
 			package: 'Spec2-Core' with: [ spec requires: #('Spec2-ObservableSlot' 'Spec2-Layout') ];
 			package: 'Spec2-CommandLine' with: [ spec requires: #('Spec2-Core') ];
-			package: 'Spec2-Commands' with: [ spec requires: #('Commander2') ];
+			package: 'Spec2-Commands';
 			package: 'Spec2-Transmission' with: [ spec requires: #('Spec2-Core') ];
 			package: 'Spec2-Interactions' with: [ spec requires: #('Spec2-Core') ];
-			package: 'Spec2-Commander2' with: [ spec requires: #('Spec2-Core' 'Spec2-Interactions' 'Commander2') ];
+			package: 'Spec2-Commander2' with: [ spec requires: #('Spec2-Core' 'Spec2-Interactions') ];
 			"Code"
 			package: 'Spec2-Code' with: [ spec requires: #('Spec2-Core' 'Spec2-Commands') ];
 			package: 'Spec2-Code-Commands' with: [ spec requires: #('Spec2-Core' 'Spec2-Commands') ];
@@ -61,26 +60,6 @@ BaselineOfSpecCore >> baseline: spec [
 	spec group: 'BaseTests' with: #('Spec2-Tests' 'SupportTests').
 	
 	spec group: 'default' with: #('Base' 'BaseTests' 'Code' 'CodeTests').
-]
-
-{ #category : #'external projects' }
-BaselineOfSpecCore >> commander2: spec [
-
-	spec
-		baseline: 'Commander2'
-		with: [ 
-			spec repository: 'github://pharo-spec/Commander2:v2.1.x/src'"; loads: #('core' 'ui')" ]
-]
-
-{ #category : #'external projects' }
-BaselineOfSpecCore >> complishon: spec [
-	
-	spec
-		baseline: 'HeuristicCompletion'
-		with: [ 
-			spec 
-				repository: 'github://guillep/complishon';
-				loads: 'HeuristicCompletion-Model' ]
 ]
 
 { #category : #'external projects' }
