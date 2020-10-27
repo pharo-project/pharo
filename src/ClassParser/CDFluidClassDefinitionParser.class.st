@@ -38,7 +38,7 @@ Class {
 	#instVars : [
 		'subclass'
 	],
-	#category : #ClassParser
+	#category : #'ClassParser-Parser'
 }
 
 { #category : #parsing }
@@ -56,6 +56,7 @@ CDFluidClassDefinitionParser class >> parse: aString [
 { #category : #'handling  nodes' }
 CDFluidClassDefinitionParser >> handleClassAndSuperclassOf: aNode [
 
+	"Pay attention that is is important to test first traits because we have the same message to create classes and traits, but traits are sent to Trait."
 	(self isTraitDefinition: aNode receiver)
 		ifTrue: [ self handleClassName: aNode receiver arguments first. ^ self ].
 	(self isTraitClassSideDefinition: aNode receiver)
@@ -147,7 +148,7 @@ CDFluidClassDefinitionParser >> isTraitClassSideDefinition: aRBMessageNode [
 CDFluidClassDefinitionParser >> isTraitDefinition: aRBMessageNode [
 	"Returns whether the definition is a trait definition, i.e., Trait << #Tbehavior."
 
-	^ aRBMessageNode isMessage and: [ aRBMessageNode selector = #<< ]
+	^ aRBMessageNode isMessage and: [ aRBMessageNode receiver name = 'Trait' and: [ aRBMessageNode selector = #<< ]]
 	
 ]
 
