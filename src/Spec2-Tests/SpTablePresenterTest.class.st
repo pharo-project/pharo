@@ -76,7 +76,7 @@ SpTablePresenterTest >> testHideColumnHeadersRaisesOneEventOnly [
 SpTablePresenterTest >> testSelectedItemsReturnsRightElementAfterSortingOfElementsChanged [
 	[ presenter
 		addColumn: (SpStringTableColumn title: ' i ' evaluated: #value);
-		addColumn: (SpStringTableColumn title: ' 1 / i ' evaluated: [ :item | (1 / item) value ]);
+		addColumn: (SpStringTableColumn title: ' 1 / i ' evaluated: [ :item | (1 / item) value ]) beSortable;
 		openWithSpec;
 		selectIndex: 1. "10"
 		
