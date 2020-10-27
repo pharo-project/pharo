@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'packageName'
 	],
-	#category : #ClassParser
+	#category : #'ClassParser-Model'
 }
 
 { #category : #visitor }
