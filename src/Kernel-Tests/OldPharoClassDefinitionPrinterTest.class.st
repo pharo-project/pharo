@@ -22,8 +22,9 @@ OldPharoClassDefinitionPrinterTest >> setUp [
 OldPharoClassDefinitionPrinterTest >> testAlignmentMorphClass [
 
 	self 
-		assert: (self forClass: AlignmentMorph class)  equals: 'AlignmentMorph class
-	uses: TAbleToRotate classTrait'
+		assert: (self forClass: AlignmentMorph class) equals: 'AlignmentMorph class
+	uses: TAbleToRotate classTrait
+	instanceVariableNames: '''''
 ]
 
 { #category : #'tests - classes' }
@@ -149,21 +150,23 @@ OldPharoClassDefinitionPrinterTest >> testTBehavior [
 { #category : #'tests - traits' }
 OldPharoClassDefinitionPrinterTest >> testTComparableClassTrait [
 
-	self assert: (self forClass: TComparable classTrait) equals: 'TComparable classTrait'
+	self assert: (self forClass: TComparable classTrait) equals: 'TComparable classTrait
+	instanceVariableNames: '''''
 ]
 
 { #category : #'tests - traits' }
 OldPharoClassDefinitionPrinterTest >> testTEventVisitorClassTrait [
 
 	self assert: (self forClass: EpTEventVisitor classTrait) equals: 'EpTEventVisitor classTrait
-	uses: EpTCodeChangeVisitor classTrait'
+	uses: EpTCodeChangeVisitor classTrait
+	instanceVariableNames: '''''
 ]
 
 { #category : #'tests - traits' }
 OldPharoClassDefinitionPrinterTest >> testTSortable [
 
-	self assert: (self forClass: TSortable classTrait) equals: 'TSortable classTrait'
-
+	self assert: (self forClass: TSortable classTrait) equals: 'TSortable classTrait
+	instanceVariableNames: '''''
 ]
 
 { #category : #'tests - classes' }
@@ -191,8 +194,8 @@ OldPharoClassDefinitionPrinterTest >> testTrait [
 OldPharoClassDefinitionPrinterTest >> testTrait3 [
 
 	self assert: (self forClass: Trait3 classTrait) equals: 'Trait3 classTrait
-	uses: Trait2 classTrait'
-
+	uses: Trait2 classTrait
+	instanceVariableNames: '''''
 ]
 
 { #category : #'tests - traits' }
