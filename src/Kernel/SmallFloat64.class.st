@@ -220,6 +220,12 @@ SmallFloat64 >> identityHash [
 ]
 
 { #category : #testing }
+SmallFloat64 >> isImmediateObject [
+	"This is needed for the boostrap"
+	^ true
+]
+
+{ #category : #testing }
 SmallFloat64 >> isReadOnlyLiteral [ 
 	"Immediate objects are read-only by design, we can not call #beReadOnlyObject"
 	^ false

@@ -1288,7 +1288,7 @@ Object >> isReadOnlyObject [
 	 An attempt to modify a read-only object in a primitive will cause the
 	 primitive to fail with a #'no modification' error code."
 	<primitive: 163 error: ec>
-	^self class isImmediateClass 
+	^self isImmediateObject
 ]
 
 { #category : #testing }
@@ -1740,7 +1740,7 @@ Object >> setIsReadOnlyObject: aBoolean [
 	 Note: Some objects can't be read-only, currently contexts and objects related
 	 to process scheduling (Processor, Process instances, Semaphore instances, ...)"
 	<primitive: 164 error: ec>
-	self class isImmediateClass ifTrue: [ ^true ].
+	self isImmediateObject ifTrue: [ ^true ].
 	^self primitiveFailed
 	
 ]
