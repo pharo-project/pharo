@@ -47,7 +47,7 @@ CDFluidClassParserTest >> testClassVariables [
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
 	
-	defString := 'Object < #MyObject
+	defString := 'Object << #MyObject
 		sharedVariables: { #A . #B };
 		package: #MyPackage'.
 	def := parser parse: defString.
@@ -61,7 +61,7 @@ CDFluidClassParserTest >> testComplexSlots [
 	| parser defString def slot |
 	parser := self classDefinitionParserClass new.
 	
-	defString := 'Object < #MyObject
+	defString := 'Object << #MyObject
 		slots: { #inst => (InstanceVariableSlot default: 5) };
 		package: #MyPackage'.
 	def := parser parse: defString.
@@ -77,7 +77,7 @@ CDFluidClassParserTest >> testEmptySlots [
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
 	
-	defString := 'Object < #MyObject
+	defString := 'Object << #MyObject
 		slots: {};
 		package: #MyPackage'.
 	def := parser parse: defString.
@@ -91,7 +91,7 @@ CDFluidClassParserTest >> testEphemeronSubclass [
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
 	
-	defString := 'Object < #MyObject
+	defString := 'Object << #MyObject
 		layout: EphemeronLayout;
 		package: #MyPackage'.
 	def := parser parse: defString.
@@ -102,7 +102,7 @@ CDFluidClassParserTest >> testEphemeronSubclass [
 CDFluidClassParserTest >> testInstanceDefinitionIsInstanceSide [
 
 	| def |
-	def := self classDefinitionParserClass parse: 'Object < #Point
+	def := self classDefinitionParserClass parse: 'Object << #Point
 			package: ''Kernel-BasicObjects'''.
 
 	self assert: def isInstanceSideDefinition 
@@ -114,7 +114,7 @@ CDFluidClassParserTest >> testNormalSubclass [
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
 	
-	defString := 'Object < #MyObject
+	defString := 'Object << #MyObject
 		layout: FixedLayout;
 		package: #MyPackage'.
 	def := parser parse: defString.
@@ -127,7 +127,7 @@ CDFluidClassParserTest >> testSharedPools [
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
 	
-	defString := 'Object < #MyObject
+	defString := 'Object << #MyObject
 	   sharedPools: {TextConstants};
 		package: #MyPackage'.
 	
@@ -139,7 +139,7 @@ CDFluidClassParserTest >> testSharedPools [
 CDFluidClassParserTest >> testSimpleDefinition [
 
 	| def |
-	def := self classDefinitionParserClass parse: 'Object < #Point
+	def := self classDefinitionParserClass parse: 'Object << #Point
 			package: ''Kernel-BasicObjects'''.
 			
 	self assert: def className equals: #Point.
@@ -150,7 +150,7 @@ CDFluidClassParserTest >> testSimpleDefinition [
 CDFluidClassParserTest >> testSimpleDefinitionClassNode [
 
 	| def |
-	def := self classDefinitionParserClass parse: 'Object < #Point
+	def := self classDefinitionParserClass parse: 'Object << #Point
 			package: ''Kernel-BasicObjects'''.
 
 	self assert: def classNameNode className equals: #Point.
@@ -175,7 +175,7 @@ CDFluidClassParserTest >> testSimpleDefinitionClassNode [
 CDFluidClassParserTest >> testSimpleDefinitionPackageIsCorrect [
 	
 	| def |
-	def := self classDefinitionParserClass parse: 'Object < #Point
+	def := self classDefinitionParserClass parse: 'Object << #Point
 			package: ''Kernel-BasicObjects'''.
 	self assert: def packageName equals: 'Kernel-BasicObjects'
 ]
@@ -184,7 +184,7 @@ CDFluidClassParserTest >> testSimpleDefinitionPackageIsCorrect [
 CDFluidClassParserTest >> testSimpleDefinitionSuperclassName [
 
 	| def |
-	def := self classDefinitionParserClass parse: 'Object < #Point
+	def := self classDefinitionParserClass parse: 'Object << #Point
 			package: ''Kernel-BasicObjects'''.
 			
 	self assert: def superclassName equals: 'Object'
@@ -197,7 +197,7 @@ CDFluidClassParserTest >> testSimpleSlots [
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
 	
-	defString := 'Object < #MyObject
+	defString := 'Object << #MyObject
 		slots: { #a. #b };
 		package: #MyPackage'.
 	def := parser parse: defString.
@@ -211,7 +211,7 @@ CDFluidClassParserTest >> testTag [
 
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
-	defString := 'Object < #MyObject
+	defString := 'Object << #MyObject
 		tag: ''tag1'';
 		package: #MyPackage'.
 	def := parser parse: defString.
@@ -224,7 +224,7 @@ CDFluidClassParserTest >> testTraitAlias [
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
 	
-	defString := 'Object < #MyObject
+	defString := 'Object << #MyObject
 		uses: MyTrait @ {#foo -> #bar};
 		package: #MyPackage'.
 	
@@ -242,7 +242,7 @@ CDFluidClassParserTest >> testTraitEmpty [
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
 	
-	defString := 'Object < #MyObject
+	defString := 'Object << #MyObject
 		uses: {};
 		package: #MyPackage'.
 		
@@ -256,7 +256,7 @@ CDFluidClassParserTest >> testTraitPlainSimple [
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
 	
-	defString := 'Object < #MyObject
+	defString := 'Object << #MyObject
 		uses: MyTrait;
 		package: #MyPackage'.
 		
@@ -269,7 +269,7 @@ CDFluidClassParserTest >> testTraitSequence [
 
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
-	defString := 'Object < #MyObject
+	defString := 'Object << #MyObject
 		uses: MyTrait + (AnotherTrait - {#selector} @ {#selector1 -> #selector});
 		package: #MyPackage'.
 
@@ -288,7 +288,7 @@ CDFluidClassParserTest >> testTypedSlots [
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
 	
-	defString := 'Object < #MyObject
+	defString := 'Object << #MyObject
 		slots: { #inst => InstanceVariableSlot };
 		package: #MyPackage'.
 	def := parser parse: defString.
@@ -303,7 +303,7 @@ CDFluidClassParserTest >> testVariableByteSubclass [
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
 	
-	defString := 'Object < #MyObject
+	defString := 'Object << #MyObject
 		layout: VariableLayout;
 		package: #MyPackage'.
 	def := parser parse: defString.
@@ -316,7 +316,7 @@ CDFluidClassParserTest >> testVariableSubclass [
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
 	
-	defString := 'Object < #MyObject
+	defString := 'Object << #MyObject
 		layout: VariableLayout;
 		package: #MyPackage'.
 	def := parser parse: defString.
@@ -329,7 +329,7 @@ CDFluidClassParserTest >> testVariableWordSubclass [
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
 	
-	defString := 'Object < #MyObject
+	defString := 'Object << #MyObject
 		layout: WordLayout;
 		package: #MyPackage'.
 	def := parser parse: defString.
@@ -342,7 +342,7 @@ CDFluidClassParserTest >> testWeakSubclass [
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
 	
-	defString := 'Object < #MyObject
+	defString := 'Object << #MyObject
 		layout: WeakLayout;
 		package: #MyPackage'.
 	def := parser parse: defString.

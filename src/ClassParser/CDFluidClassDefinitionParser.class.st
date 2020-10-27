@@ -131,7 +131,7 @@ CDFluidClassDefinitionParser >> handleTag: aNode [
 CDFluidClassDefinitionParser >> isInstanceSideDefinition: aRBMessageNode [
 	"Returns whether the definition is a class or instance side definition. Superclass < #myObject. Trait << are handled prior to this method."
 	
-	^ aRBMessageNode isMessage and: [ aRBMessageNode selector = #< ]
+	^ aRBMessageNode isMessage and: [ aRBMessageNode selector = #<< ]
 	
 ]
 
