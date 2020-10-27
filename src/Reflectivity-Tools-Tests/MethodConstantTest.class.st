@@ -45,13 +45,12 @@ MethodConstantTest >> testAPIFromMessageSendReceiver [
 { #category : #tests }
 MethodConstantTest >> testConstPlaceInTransformedMethod [
 
-	| transformedMethod const constLiteral |
+	| transformedMethod const |
 	const := self constFromReceiverExpression. 
 		
 	transformedMethod := self class >> #constFromReceiverExpression. 
 	
-	constLiteral := transformedMethod literals detect: [ :each | each value == const ].
-	self assert: (constLiteral key includesSubstring: 'meta' caseSensitive: false)
+	self assert: (transformedMethod literals anySatisfy:  [ :each | each == const ])
 ]
 
 { #category : #tests }

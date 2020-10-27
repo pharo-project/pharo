@@ -95,7 +95,7 @@ LiteralVariable >> emitStore: aMethodBuilder [
 		addTemp: tempName;
 		storeTemp: tempName;
 		popTop;
-		pushLiteralVariable: self;
+		pushLiteral: self;
 		pushTemp: tempName;
 		send: #write:
 ]
@@ -103,7 +103,7 @@ LiteralVariable >> emitStore: aMethodBuilder [
 { #category : #'code generation' }
 LiteralVariable >> emitValue: aMethodBuilder [
 	aMethodBuilder
-		pushLiteralVariable: self;
+		pushLiteral: self;
 		send: #read
 ]
 
