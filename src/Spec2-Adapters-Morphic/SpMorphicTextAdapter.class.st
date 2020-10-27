@@ -171,9 +171,3 @@ SpMorphicTextAdapter >> updateExtentPropagationOf: string on: aWidget [
 				yourself) height + 2)" min: self currentWorld height / 3". 
 			aWidget height: height ]
 ]
-
-{ #category : #emulating }
-SpMorphicTextAdapter >> widgetEventReceiver [
-	
-	^ widget
-]
