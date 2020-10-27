@@ -187,6 +187,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'PharoGlamour' with: [ spec repository: repository ].
 		spec baseline: 'PharoGT' with: [ spec repository: repository ].
 		spec baseline: 'HeuristicCompletion' with: [ spec repository: repository ].
+		spec baseline: 'Commander2' with: [ spec repository: repository ].
 		spec baseline: 'Spec2' with: [ 
 			spec 
 				repository: repository;
