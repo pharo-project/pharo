@@ -17,7 +17,12 @@ Class {
 	#instVars : [
 		'editable',
 		'acceptAction',
-		'sortable'
+		'sortable',
+		'colorAction',
+		'backgroundColorAction',
+		'italicAction',
+		'boldAction',
+		'underlineAction'
 	],
 	#category : #'Spec2-Core-Widgets-Table'
 }
@@ -47,6 +52,66 @@ SpStringTableColumn >> beNotEditable [
 	"Set the cell as not editable (this is the default)."
 
 	editable := false
+]
+
+{ #category : #api }
+SpStringTableColumn >> displayBackgroundColor [
+
+	^ backgroundColorAction
+]
+
+{ #category : #api }
+SpStringTableColumn >> displayBackgroundColor: aBlock [
+
+	backgroundColorAction := aBlock
+]
+
+{ #category : #api }
+SpStringTableColumn >> displayBold [
+
+	^ boldAction
+]
+
+{ #category : #api }
+SpStringTableColumn >> displayBold: aBlock [
+
+	boldAction := aBlock
+]
+
+{ #category : #api }
+SpStringTableColumn >> displayColor [
+
+	^ colorAction
+]
+
+{ #category : #api }
+SpStringTableColumn >> displayColor: aBlock [
+
+	colorAction := aBlock
+]
+
+{ #category : #api }
+SpStringTableColumn >> displayItalic [
+
+	^ italicAction
+]
+
+{ #category : #api }
+SpStringTableColumn >> displayItalic: aBlock [
+
+	italicAction := aBlock
+]
+
+{ #category : #api }
+SpStringTableColumn >> displayUnderline [
+
+	^ underlineAction
+]
+
+{ #category : #api }
+SpStringTableColumn >> displayUnderline: aBlock [
+
+	underlineAction := aBlock
 ]
 
 { #category : #initialization }

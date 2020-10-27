@@ -12,7 +12,8 @@ StHaltOnReadCommand class >> defaultDescription [
 
 { #category : #deafult }
 StHaltOnReadCommand class >> defaultIconName [
-	^#image	
+
+	^ #smallObjects
 ]
 
 { #category : #default }

@@ -27,9 +27,6 @@ StInspectorIndexedNode >> = anObject [
 
 { #category : #'as yet unclassified' }
 StInspectorIndexedNode >> debuggerColor [
-
-	self flag: #REMOVE. "Remove this. No point on having it and a horrible way of 
-	accesing colors anyway ;)"
 	^(SHRBTextStyler new attributesFor: #instVar) first color
 ]
 

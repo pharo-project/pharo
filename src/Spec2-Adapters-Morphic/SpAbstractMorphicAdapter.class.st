@@ -40,10 +40,7 @@ SpAbstractMorphicAdapter >> adapt: aPresenter [
 	super adapt: aPresenter.
 	self addSettingsTo: self widget.
 	self addKeyBindingsTo: self widget.
-	self addEventsTo: self widget.
-	self flag: #TODO. "this should be here, but is interfering with old layouts reason why 
-	 I'm moving it to MorphicLayoutAdapter >> #applyStyle:to:"
-	"self applyStyle: self widget."
+	self addEventsTo: self widget
 ]
 
 { #category : #protocol }
@@ -325,7 +322,9 @@ SpAbstractMorphicAdapter >> installEvent: anEvent [
 	"Used when installing events into presenters already built"
 
 	self widgetDo: [ :w |
-		anEvent installOn: self target: w ]
+		anEvent 
+			installOn: self 
+			target: (self eventHandlerReceiver: w) ]
 ]
 
 { #category : #'event installing' }

@@ -6,6 +6,7 @@ Class {
 
 { #category : #deafult }
 StBreakpointCommand class >> defaultIconName [
+
 	^#smallDebug	
 ]
 

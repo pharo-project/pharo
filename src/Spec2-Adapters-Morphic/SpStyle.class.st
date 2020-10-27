@@ -141,6 +141,9 @@ SpStyle class >> defaultStyleSheetData [
 	],
 	.scrollbarPopoverLarge [ 
 		Geometry { #height: 350 } 
+	],
+	.paginator [ 
+		Geometry { #height: 20 }
 	]
 ]
 '	

@@ -1,21 +1,57 @@
+"
+A scroll pane to show a miller column list.
+"
 Class {
 	#name : #MillerScrollPane,
 	#superclass : #GeneralScrollPane,
 	#instVars : [
 		'layoutChangeAction',
-		'updating'
+		'updating',
+		'firstShowingMorph',
+		'keepShowingPage'
 	],
 	#category : #'Spec2-Adapters-Morphic-Layout'
 }
 
+{ #category : #private }
+MillerScrollPane >> basicShowMorph: aMorph [
+
+	scroller offset: aMorph topLeft
+]
+
+{ #category : #scrollbars }
+MillerScrollPane >> hScrollbarShowNever [
+
+	super hScrollbarShowNever.
+	"Since I am showing a scroll bar, I do not need to keep the page."
+	self keepShowingPage: true
+]
+
+{ #category : #scrollbars }
+MillerScrollPane >> hScrollbarShowWhenNeeded [
+
+	super hScrollbarShowWhenNeeded.
+	"Since I am showing a scroll bar, I do not need to keep the page."
+	self keepShowingPage: false
+]
+
 { #category : #initialization }
 MillerScrollPane >> initialize [
-
-	updating := false.	
+	
+	keepShowingPage := false.
+	updating := false.
 	super initialize
 ]
 
-{ #category : #layout }
+{ #category : #private }
+MillerScrollPane >> keepShowingPage: aBoolean [
+
+	keepShowingPage := aBoolean.
+	keepShowingPage ifFalse: [ 
+		firstShowingMorph := nil ]
+]
+
+{ #category : #events }
 MillerScrollPane >> layoutChanged [
 
 	updating ifTrue: [ ^ self ].
@@ -27,8 +63,35 @@ MillerScrollPane >> layoutChanged [
 		updating := false ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #events }
 MillerScrollPane >> onLayoutChange: aBlock [
 
 	layoutChangeAction := aBlock
+]
+
+{ #category : #accessing }
+MillerScrollPane >> showMorph: aMorph [
+	
+	keepShowingPage ifTrue: [ 
+		firstShowingMorph := aMorph ].
+	self basicShowMorph: aMorph
+]
+
+{ #category : #updating }
+MillerScrollPane >> updateScrollbars [
+
+	super updateScrollbars.
+	firstShowingMorph ifNotNil: [ 
+		scroller offset: firstShowingMorph topLeft ]
+]
+
+{ #category : #scrollbars }
+MillerScrollPane >> vScrollbarNeeded [
+	"Return whether the vertical scrollbar is needed."
+
+	self vScrollbar showsAlways ifTrue: [ ^ true ].
+	self vScrollbar showsNever ifTrue: [ ^ false ].	
+ 	keepShowingPage ifNil: [ ^ super vScrollbarNeeded ].
+	
+	^ self scrollTarget height > self innerBounds height
 ]

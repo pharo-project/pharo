@@ -78,11 +78,12 @@ SpTMorphicTableDataSourceCommons >> setHeaderColumnLazyProperties: column [
 	| headerMorph |
 	
 	column isExpandable ifTrue: [ ^ self ].  
+	
 	headerMorph := self headerForColumn: column.
 	headerMorph hResizing = #rigid 
 		ifFalse: [ headerMorph hResizing: #rigid ].
-	headerMorph width = column width 
-		ifFalse: [ headerMorph width: (column width ifNil: [ 0 ]) ]
+	headerMorph width = column model width ifFalse: [ 
+		headerMorph width: (column model width ifNil: [ 0 ]). ]
 ]
 
 { #category : #sorting }

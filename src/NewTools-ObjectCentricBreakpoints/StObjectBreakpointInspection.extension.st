@@ -3,23 +3,19 @@ Extension { #name : #StObjectBreakpointInspection }
 { #category : #'*NewTools-ObjectCentricBreakpoints' }
 StObjectBreakpointInspection class >> browseBreakpointMethodCommandFor: presenter [
 
-	| context cmd |
-	context := [ :ctx | 
-	           ctx methodsWithBreakpoints selection selectedItem
-		           entityToBrowse ].
-	cmd := SpBrowseClassCommand forSpecContext: presenter.
-	cmd decoratedCommand
-		transform: context;
-		name: 'Browse method'.
-	^ cmd
+	^ ((SpBrowseClassCommand forContext: presenter)
+		selector: #doBrowseBreakpointMethod;
+			asSpecCommand)
+			name: 'Browse method';
+			yourself
 ]
 
 { #category : #'*NewTools-ObjectCentricBreakpoints' }
 StObjectBreakpointInspection class >> objectCentricCommandsWith: presenter forRootGroup: aCmCommandsGroup [
 	<extensionCommands>
+	
 	aCmCommandsGroup
-		register: (self removeBreakpointCommandFor: presenter).
-	aCmCommandsGroup
+		register: (self removeBreakpointCommandFor: presenter);
 		register: (self browseBreakpointMethodCommandFor: presenter)
 ]
 

@@ -21,6 +21,5 @@ SpBrowseMethodReferencesCommand class >> shortName [
 { #category : #executing }
 SpBrowseMethodReferencesCommand >> execute [
 
-	self flag: #TODO. "This thingy waits for Guille's refactor"
-	self systemNavigation browseAllReferencesTo: self selectedSelector
+	self context doBrowseMethodReferences
 ]

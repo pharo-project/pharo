@@ -153,25 +153,19 @@ StDebuggerStackCommandTreeBuilder >> stackContextMenuStackEditionsCommands [
 StDebuggerStackCommandTreeBuilder >> stackContextNavigationCommands [
 	"Commands to navigate the context"
 
-	| group |
-	group := (CmCommandGroup named: self stackContextNavigationGroupName)
-		asSpecGroup.
-	group beDisplayedAsGroup.
-	group
-		register:
-			((SpBrowseClassCommand
-				forSpecContext: stDebuggerInstance stackSelectionMethodContext)
-				name: 'method';
-				shortcutKey: nil;
-				yourself).
-	group
-		register:
-			((SpBrowseClassCommand
-				forSpecContext: stDebuggerInstance stackSelectionReceiverClassContext)
+	^ (CmCommandGroup named: self stackContextNavigationGroupName) asSpecGroup
+		beDisplayedAsGroup;
+		register: ((SpBrowseClassCommand forSpecContext: stDebuggerInstance)
+			name: 'method';
+			shortcutKey: nil;
+			yourself);
+		register: (((SpBrowseClassCommand forContext: stDebuggerInstance)
+			selector: #doBrowseReceiverClass;
+			asSpecCommand)
 				name: 'receiver';
 				shortcutKey: nil;
-				yourself).
-	^ group
+				yourself);
+		yourself
 ]
 
 { #category : #accessing }

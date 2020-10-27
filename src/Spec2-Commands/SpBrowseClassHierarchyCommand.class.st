@@ -20,12 +20,6 @@ SpBrowseClassHierarchyCommand class >> shortName [
 
 { #category : #executing }
 SpBrowseClassHierarchyCommand >> execute [
-	| result |
 
-	result := self 
-		evaluate: self selectedTextOrLine 
-		ifError: [ :e | ^ self ].
-	(result isClass or: [ result isTrait ])
-		ifFalse: [ result := result class ].
-	self systemNavigation browseHierarchy: result
+	self context doBrowseHierarchy
 ]

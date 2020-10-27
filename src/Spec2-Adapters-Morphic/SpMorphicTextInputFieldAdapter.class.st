@@ -75,6 +75,12 @@ SpMorphicTextInputFieldAdapter >> entryCompletion [
 ]
 
 { #category : #private }
+SpMorphicTextInputFieldAdapter >> eventHandlerReceiver: aWidget [
+
+	^ aWidget textArea
+]
+
+{ #category : #private }
 SpMorphicTextInputFieldAdapter >> getPlaceholderText [
 
 	^ self presenter placeholder ifNotNil: [ :aString | 

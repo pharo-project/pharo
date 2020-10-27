@@ -326,7 +326,7 @@ StDebugger >> acceptCodeChanges: newSource forContext: aContext [
 	self clearUnsavedCodeChanges
 ]
 
-{ #category : #commands }
+{ #category : #'command support' }
 StDebugger >> buildContextMenus [
 	| stackGroup codeCommands debuggerCommandGroup |
 	debuggerCommandGroup := self rootCommandsGroup.
@@ -350,27 +350,27 @@ StDebugger >> buildContextMenus [
 	code contextMenu: codeCommands beRoot asMenuPresenter
 ]
 
-{ #category : #commands }
+{ #category : #'command support' }
 StDebugger >> canExecuteCreateMissingClassCommand [
 	^ self debuggerActionModel isInterruptedContextMissingClassException
 ]
 
-{ #category : #commands }
+{ #category : #'command support' }
 StDebugger >> canExecuteCreateMissingMethodCommand [
 	^ self debuggerActionModel isInterruptedContextDoesNotUnderstand
 ]
 
-{ #category : #commands }
+{ #category : #'command support' }
 StDebugger >> canExecuteCreateSubclassResponsibilityCommand [
 	^ self debuggerActionModel isInterruptedContextSubclassResponsibilityException
 ]
 
-{ #category : #commands }
+{ #category : #'command support' }
 StDebugger >> canExecuteDebugCommand [
 	^ self debuggerActionModel isContextSteppable
 ]
 
-{ #category : #commands }
+{ #category : #'command support' }
 StDebugger >> canExecuteRestartCommand [
 	^ self debuggerActionModel isInterruptedContextPostMortem not
 ]
@@ -511,6 +511,18 @@ StDebugger >> discardCodeChangesFor: aContext [
 	self unsavedCodeChanges removeKey: aContext ifAbsent: [  ].
 	self code text: aContext sourceCode.
 	self update
+]
+
+{ #category : #commands }
+StDebugger >> doBrowseClass [
+
+	self systemNavigation browse: self stackSelectionMethodContext
+]
+
+{ #category : #commands }
+StDebugger >> doBrowseReceiverClass [
+self halt.
+	self systemNavigation browse: self stackSelectionReceiverClassContext
 ]
 
 { #category : #stack }
@@ -973,22 +985,22 @@ StDebugger >> stackIconForContext: context [
 	^ self iconNamed: #overlayDirty
 ]
 
-{ #category : #commands }
+{ #category : #'command support' }
 StDebugger >> stackSelectionMethodContext [
 	^ [ stackTable selection selectedItem method ]
 ]
 
-{ #category : #commands }
+{ #category : #'command support' }
 StDebugger >> stackSelectionMethodSelectorContext [
 	^[ stackTable selection selectedItem method selector ]
 ]
 
-{ #category : #commands }
+{ #category : #'command support' }
 StDebugger >> stackSelectionReceiverClassContext [
 	^ [ stackTable selection selectedItem receiver class ]
 ]
 
-{ #category : #commands }
+{ #category : #'command support' }
 StDebugger >> stackSelectionReceiverContext [
 	^ [ stackTable selection selectedItem receiver ]
 ]
@@ -1196,9 +1208,9 @@ StDebugger >> updateStepThrough [
 
 { #category : #'updating widgets' }
 StDebugger >> updateToolbar [
-
-	toolbarCommandGroup ifNil: [ ^ self ].	
- 	toolbarCommandGroup allCommands do: [ :spCommand | 
+	
+	toolbarCommandGroup ifNil: [ ^ self ].
+	toolbarCommandGroup allCommands do: [ :spCommand | 
 		spCommand updateEnableStatus ]
 ]
 

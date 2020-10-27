@@ -61,6 +61,25 @@ SpMorphicMillerAdapter >> childrenWidgets [
 	^ innerWidget submorphs
 ]
 
+{ #category : #factory }
+SpMorphicMillerAdapter >> disableHScrollBar [
+	
+	widget hScrollbarShowNever
+]
+
+{ #category : #factory }
+SpMorphicMillerAdapter >> enableHScrollBar [
+	
+	widget hScrollbarShowWhenNeeded
+]
+
+{ #category : #private }
+SpMorphicMillerAdapter >> forceRecalculatePages [
+
+	needRecalculatePages := true.
+	self recalculatePages
+]
+
 { #category : #private }
 SpMorphicMillerAdapter >> initialize [
 
@@ -79,9 +98,15 @@ SpMorphicMillerAdapter >> layout: aLayout [
 		innerWidget borderWidth: aLayout borderWidth.
 		innerWidget cellInset: aLayout spacing.
 		
-		layout whenVisiblePagesChangedDo: [ self recalculatePages ].
+		layout whenVisiblePagesChangedDo: [ self forceRecalculatePages ].
 		
-		widget := self newScrollPaneFor: innerWidget ].
+		widget := self newScrollPaneFor: innerWidget.
+		self presenter hasHorizontalScrollBar 
+			ifFalse: [ self disableHScrollBar ].
+		self presenter whenHorizontalScrollBarChangedDo: [ :show |
+			show 
+				ifTrue: [ self enableHScrollBar ]
+			 	ifFalse: [ widget hScrollbarShowNever ] ] ].
 
 	super layout: aLayout
 ]
@@ -194,9 +219,28 @@ SpMorphicMillerAdapter >> removeSubWidgets [
 	innerWidget removeAllMorphs
 ]
 
+{ #category : #paginator }
+SpMorphicMillerAdapter >> scrollByDeltaPercent: percent [
+	| millerWidth millerDelta |
+	
+	millerWidth := self widget scroller localSubmorphBounds width.
+	millerDelta := millerWidth * (percent / 100).
+	self widget scroller offset: (self widget scroller offset x + millerDelta)@0	
+]
+
 { #category : #private }
 SpMorphicMillerAdapter >> scrollToShowLastPage [
 
-	self widget defer: [ 
-		self widget scrollToShow: (innerWidget submorphs last bounds) ]
+	self widget defer: [ | size firstMorphIndex |
+		size := innerWidget submorphs size.
+		firstMorphIndex := size - self presenter visiblePages + 1. 
+		self widget showMorph: (innerWidget submorphs at: ((firstMorphIndex max: 1) min: size)) ]
+]
+
+{ #category : #accessing }
+SpMorphicMillerAdapter >> selectPage: aNumber [
+
+	self widget defer: [
+		(self childrenWidgets at: aNumber ifAbsent: [ nil ])
+			ifNotNil: [ :aMorph | self widget showMorph: aMorph ] ]
 ]

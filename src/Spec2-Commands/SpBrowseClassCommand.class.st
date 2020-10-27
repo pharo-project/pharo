@@ -5,6 +5,9 @@ My context must be a block that returns a class.
 Class {
 	#name : #SpBrowseClassCommand,
 	#superclass : #SpSystemSelectionCommand,
+	#instVars : [
+		'selector'
+	],
 	#category : #'Spec2-Commands-Navigation'
 }
 
@@ -29,10 +32,18 @@ SpBrowseClassCommand class >> shortName [
 
 { #category : #execution }
 SpBrowseClassCommand >> execute [
-	| result |
 
-	result := self 
-		evaluate: self selectedTextOrLine 
-		ifError: [ :e | ^ self ].
-	self systemNavigation browse: result
+	self context perform: self selector
+]
+
+{ #category : #accessing }
+SpBrowseClassCommand >> selector [
+
+	^ selector ifNil: [ #doBrowseClass ]
+]
+
+{ #category : #accessing }
+SpBrowseClassCommand >> selector: aSelector [
+
+	selector := aSelector
 ]

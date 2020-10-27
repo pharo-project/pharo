@@ -39,6 +39,26 @@ SpTablePresenter class >> exampleWithCompositeColumn [
 ]
 
 { #category : #'*Spec2-Examples' }
+SpTablePresenter class >> exampleWithDecoratedString [
+	
+	^ self new
+		addColumn: (SpImageTableColumn title: 'Icon' evaluated: [ :aClass | aClass systemIcon ]);
+		addColumn: (SpStringTableColumn new 
+			title: 'Name'; 
+			evaluated: [ :aClass | aClass name ];
+			displayColor: [ :aClass | 
+				(aClass name endsWith: 'Test')
+					ifTrue: [ Color green ]
+					ifFalse: [ Smalltalk ui theme textColor ] ];
+			displayItalic: [ :aClass | aClass name includesSubstring: 'abstract' caseSensitive: false ];
+			displayBold: [ :aClass | aClass hasSubclasses ];
+			displayUnderline: [ :aClass | aClass numberOfMethods > 10 ];
+			yourself);
+		items: Smalltalk allClasses;
+		openWithSpec
+]
+
+{ #category : #'*Spec2-Examples' }
 SpTablePresenter class >> exampleWithoutColumnHeaders [
 	<sampleInstance>
 	| example |
