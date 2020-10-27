@@ -55,6 +55,18 @@ SpStringTableColumn >> beNotEditable [
 ]
 
 { #category : #api }
+SpStringTableColumn >> beNotSortable [
+
+	self isSortable: false
+]
+
+{ #category : #api }
+SpStringTableColumn >> beSortable [
+
+	self isSortable: true
+]
+
+{ #category : #api }
 SpStringTableColumn >> displayBackgroundColor [
 
 	^ backgroundColorAction
@@ -119,7 +131,7 @@ SpStringTableColumn >> initialize [
 
 	super initialize.
 	editable := false.
-	sortable := true
+	sortable := false
 ]
 
 { #category : #testing }
@@ -127,6 +139,18 @@ SpStringTableColumn >> isEditable [
 	"Answer true if column has editable cells"
 	
 	^ editable
+]
+
+{ #category : #testing }
+SpStringTableColumn >> isSortable [
+
+	^ sortable
+]
+
+{ #category : #private }
+SpStringTableColumn >> isSortable: aBoolean [ 
+
+	sortable := aBoolean
 ]
 
 { #category : #api }
@@ -137,4 +161,14 @@ SpStringTableColumn >> onAcceptEdition: aBlock [
 		- the string entered while editing"
 
 	acceptAction := aBlock
+]
+
+{ #category : #api }
+SpStringTableColumn >> sortFunction: aBlockOrSortFunction [
+	"Set the sort function to apply to the values of this column in order to sort elements.
+	 `aBlockOrSortFunction` is a block that receives two arguments to compare or an instace of 
+	 `SortFunction`. "
+
+	super sortFunction: aBlockOrSortFunction.
+	self isSortable: aBlockOrSortFunction notNil
 ]
