@@ -15,7 +15,6 @@ BaselineOfNewTools >> baseline: spec [
 		spec preLoadDoIt: #'preload:package:'.
 		spec postLoadDoIt: #'postload:package:'.
 
-		self spec: spec.
 		self sindarin: spec.
 
 		spec
@@ -87,9 +86,7 @@ BaselineOfNewTools >> baseline: spec [
 				'Playground'
 				'Inspector'
 				'Debugger'
-				"'FlagBrowser'");
-			"A group for running CI"
-			group: 'CI' with: #('Spec2' 'default') ]
+				"'FlagBrowser'") ]
 ]
 
 { #category : #dependencies }
@@ -126,11 +123,4 @@ BaselineOfNewTools >> sindarin: spec [
 			repository: (self packageRepositoryURL 
 				ifEmpty: [ 'github://pharo-spec/ScriptableDebugger' ]);
 			loads: 'Core' ]
-]
-
-{ #category : #dependencies }
-BaselineOfNewTools >> spec: spec [ 
-
-	spec baseline: 'Spec2' with: [ 
-		spec repository: 'github://pharo-spec/Spec' ]
 ]
