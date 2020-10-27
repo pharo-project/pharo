@@ -1,10 +1,9 @@
 "
-A styler that highlight with green all executed statement.
-For simplicity we extend from MetaLinkIconStyler
+A styler that highlight with green all executed statement
 "
 Class {
 	#name : #CoverageRubricStyler,
-	#superclass : #MetalinkIconStyler,
+	#superclass : #IconStyler,
 	#category : #'Reflectivity-Examples'
 }
 
@@ -15,4 +14,24 @@ CoverageRubricStyler >> addIconStyle: aNode from: start to: stop [
 	rejectClass := { RBMethodNode . RBSequenceNode }.
 	(rejectClass includes: aNode class) ifTrue: [ ^self ]. "do nothing" 
 	aNode hasBeenExecuted ifTrue: [  super addIconStyle: aNode from: start to: stop]
+]
+
+{ #category : #defaults }
+CoverageRubricStyler >> iconBlock: aNode [
+	^[ aNode inspect]
+]
+
+{ #category : #defaults }
+CoverageRubricStyler >> iconFor: aNode [
+	^ self iconNamed: #arrowUpIcon.
+]
+
+{ #category : #defaults }
+CoverageRubricStyler >> iconLabel: aNode [
+	^ 'Metalink'
+]
+
+{ #category : #testing }
+CoverageRubricStyler >> shouldStyleNode: aNode [
+	^aNode hasMetalink
 ]
