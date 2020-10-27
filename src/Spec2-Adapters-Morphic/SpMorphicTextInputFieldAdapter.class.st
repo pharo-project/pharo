@@ -99,3 +99,9 @@ SpMorphicTextInputFieldAdapter >> text: aString [
 		setText: aString;
 		acceptTextInModel
 ]
+
+{ #category : #emulating }
+SpMorphicTextInputFieldAdapter >> widgetEventReceiver [
+	
+	^ widget
+]
