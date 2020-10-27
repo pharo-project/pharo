@@ -26,7 +26,7 @@ AdditionalBinding >> emitStore: methodBuilder [
 { #category : #'code generation' }
 AdditionalBinding >> emitValue: methodBuilder [
 
-	methodBuilder pushLiteralVariable: self.
+	methodBuilder pushLiteralVariable: self
 ]
 
 { #category : #testing }

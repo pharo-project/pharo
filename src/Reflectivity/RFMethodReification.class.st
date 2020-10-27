@@ -24,6 +24,6 @@ RFMethodReification class >> key [
 { #category : #generate }
 RFMethodReification >> genForRBProgramNode [
 	^RBMessageNode 
-		receiver: (RBMessageNode receiver: (RFLiteralVariableNode value: entity)  selector: #methodNode)
+		receiver: (RBMessageNode receiver: (RBLiteralNode value: entity) selector: #methodNode)
 		selector: #method
 ]

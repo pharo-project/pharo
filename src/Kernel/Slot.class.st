@@ -148,7 +148,7 @@ Slot >> emitStore: aMethodBuilder [
 		storeTemp: tempName;
 		popTop;
 		pushReceiver;
-		pushLiteralVariable: (AdditionalBinding key: #slot value: self);
+		pushLiteral: self;
 		pushTemp: tempName;
 		send: #writeSlot:value:
 ]
@@ -156,7 +156,7 @@ Slot >> emitStore: aMethodBuilder [
 { #category : #'code generation' }
 Slot >> emitValue: aMethodBuilder [
 	aMethodBuilder
-		pushLiteralVariable: (AdditionalBinding key: #slot value: self);
+		pushLiteral: self;
 		pushReceiver;
 		send: #read:
 ]

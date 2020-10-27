@@ -40,7 +40,7 @@ RFOperationReification >> genForRBAssignmentNode [
 		ast := RBParser parseExpression: ('RFGlobalWrite new
 			assignedValue: RFNewValueReificationVar;
 			variable: #toReplace.').
-		ast messages second arguments: {(RFLiteralVariableNode value: entity variable binding)}.
+		ast messages second arguments: {(RBLiteralNode value: entity variable binding)}.
 		^ast].
 	self error: 'not supported'
 ]
@@ -86,7 +86,7 @@ RFOperationReification >> genForRBMethodNode [
 			method: #toReplace;
 			arguments: RFArgumentsReificationVar.'.	
 	
-	ast messages second arguments: {(RFLiteralVariableNode value: entity methodNode method)}.
+	ast messages second arguments: {(RBLiteralNode value: entity methodNode method)}.
 	^ast.
 ]
 
@@ -112,7 +112,7 @@ RFOperationReification >> genForRBVariableNode [
 	entity variable isLiteralVariable ifTrue: [ | ast |	
 			ast := RBParser parseExpression: 'RFGlobalRead new
 				variable: #toReplace'.
-			ast arguments: {(RFLiteralVariableNode value: entity binding)}.
+			ast arguments: {(RBLiteralNode value: entity binding)}.
 
 			^ast. 
 		].

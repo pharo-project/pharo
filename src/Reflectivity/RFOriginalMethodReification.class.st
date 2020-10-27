@@ -21,5 +21,5 @@ RFOriginalMethodReification class >> key [
 
 { #category : #generate }
 RFOriginalMethodReification >> genForRBProgramNode [
-	^RFLiteralVariableNode value: entity methodNode method
+	^RBLiteralNode value: entity methodNode method
 ]

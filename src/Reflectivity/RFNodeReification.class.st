@@ -19,5 +19,5 @@ RFNodeReification class >> key [
 
 { #category : #generate }
 RFNodeReification >> genForRBProgramNode [
-	^RFLiteralVariableNode value: entity
+	^RBLiteralNode value: entity
 ]

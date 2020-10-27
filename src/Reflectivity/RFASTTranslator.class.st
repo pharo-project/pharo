@@ -226,11 +226,6 @@ RFASTTranslator >> visitLiteralNode: aLiteralNode [
 
 ]
 
-{ #category : #reflectivity }
-RFASTTranslator >> visitLiteralVariableNode: aLiteralVariableNode [
-	methodBuilder pushLiteralVariable: aLiteralVariableNode binding
-]
-
 { #category : #'visitor-double dispatching' }
 RFASTTranslator >> visitMessageNode: aMessageNode [
 
