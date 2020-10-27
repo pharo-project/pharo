@@ -145,9 +145,8 @@ OldPharoClassDefinitionPrinter >> traitedMetaclassDefinitionString [
 					crtab;
 					nextPutAll: 'uses: ';
 					print: forClass traitComposition ].
-			forClass instanceVariablesString ifNotEmpty: [ 
 				strm
 					crtab;
 					nextPutAll: 'instanceVariableNames: ';
-					store: forClass instanceVariablesString ] ]
+					store: forClass instanceVariablesString ]
 ]
