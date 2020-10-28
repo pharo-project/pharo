@@ -178,7 +178,7 @@ SpStyleClass >> parent: aStyle [
 SpStyleClass >> printOn: stream [ 
 
 	super printOn: stream.
-	"stream << '(' << self name << ')'"
+	stream << '(' << self name << ')'
 ]
 
 { #category : #accessing }

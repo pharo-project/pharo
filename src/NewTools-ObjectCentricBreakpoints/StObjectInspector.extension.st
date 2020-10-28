@@ -16,9 +16,10 @@ StObjectInspector >> haltInspectedObjectOnWriteAccess [
 ]
 
 { #category : #'*NewTools-ObjectCentricBreakpoints' }
-StObjectInspector class >> objectCentricBreakpointCommandsWith: presenter forRootGroup: aRootCmCommandsGroup [
+StObjectInspector class >> objectCentricBreakpointCommandsWith: aPresenter forRootGroup: aRootCommandsGroup [
 	<extensionCommands>
-	aRootCmCommandsGroup
+	
+	aRootCommandsGroup
 		register: StHaltOnReadCommand forSpec;
 		register: StHaltOnWriteCommand forSpec;
 		register: StHaltOnStateAccessCommand forSpec

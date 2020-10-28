@@ -233,6 +233,12 @@ SpMorphicTreeTableAdapter >> newDataSource [
 		yourself
 ]
 
+{ #category : #updating }
+SpMorphicTreeTableAdapter >> refreshTree [
+
+	self widget refresh
+]
+
 { #category : #factory }
 SpMorphicTreeTableAdapter >> registerColumnsChangedEventTo: tableMorph [
 	
@@ -371,12 +377,12 @@ SpMorphicTreeTableAdapter >> suspendSelectionEventsDuring: aBlock [
 		 subscriptions do: [ :each | registry add: each ] ]
 ]
 
-{ #category : #update }
+{ #category : #updating }
 SpMorphicTreeTableAdapter >> updateMenu [
 	"there is no need to updateMenu here because it will be resolved at the dataSource"
 ]
 
-{ #category : #update }
+{ #category : #updating }
 SpMorphicTreeTableAdapter >> updateSelectionOf: tableMorph [
 	
 	self 

@@ -17,7 +17,12 @@ Class {
 	#instVars : [
 		'editable',
 		'acceptAction',
-		'sortable'
+		'sortable',
+		'colorAction',
+		'backgroundColorAction',
+		'italicAction',
+		'boldAction',
+		'underlineAction'
 	],
 	#category : #'Spec2-Core-Widgets-Table'
 }
@@ -51,16 +56,74 @@ SpStringTableColumn >> beNotEditable [
 
 { #category : #api }
 SpStringTableColumn >> beNotSortable [
-	"Set the colum as not sortable."
 
-	sortable := false
+	self isSortable: false
 ]
 
 { #category : #api }
 SpStringTableColumn >> beSortable [
-	"Set the cell as sortable (this is the default)"
 
-	sortable := true
+	self isSortable: true
+]
+
+{ #category : #api }
+SpStringTableColumn >> displayBackgroundColor [
+
+	^ backgroundColorAction
+]
+
+{ #category : #api }
+SpStringTableColumn >> displayBackgroundColor: aBlock [
+
+	backgroundColorAction := aBlock
+]
+
+{ #category : #api }
+SpStringTableColumn >> displayBold [
+
+	^ boldAction
+]
+
+{ #category : #api }
+SpStringTableColumn >> displayBold: aBlock [
+
+	boldAction := aBlock
+]
+
+{ #category : #api }
+SpStringTableColumn >> displayColor [
+
+	^ colorAction
+]
+
+{ #category : #api }
+SpStringTableColumn >> displayColor: aBlock [
+
+	colorAction := aBlock
+]
+
+{ #category : #api }
+SpStringTableColumn >> displayItalic [
+
+	^ italicAction
+]
+
+{ #category : #api }
+SpStringTableColumn >> displayItalic: aBlock [
+
+	italicAction := aBlock
+]
+
+{ #category : #api }
+SpStringTableColumn >> displayUnderline [
+
+	^ underlineAction
+]
+
+{ #category : #api }
+SpStringTableColumn >> displayUnderline: aBlock [
+
+	underlineAction := aBlock
 ]
 
 { #category : #initialization }
@@ -68,7 +131,7 @@ SpStringTableColumn >> initialize [
 
 	super initialize.
 	editable := false.
-	sortable := true
+	sortable := false
 ]
 
 { #category : #testing }
@@ -80,13 +143,13 @@ SpStringTableColumn >> isEditable [
 
 { #category : #testing }
 SpStringTableColumn >> isSortable [
-	"Answer true if column is sortable"
 
 	^ sortable
 ]
 
 { #category : #private }
 SpStringTableColumn >> isSortable: aBoolean [ 
+
 	sortable := aBoolean
 ]
 
@@ -98,4 +161,14 @@ SpStringTableColumn >> onAcceptEdition: aBlock [
 		- the string entered while editing"
 
 	acceptAction := aBlock
+]
+
+{ #category : #api }
+SpStringTableColumn >> sortFunction: aBlockOrSortFunction [
+	"Set the sort function to apply to the values of this column in order to sort elements.
+	 `aBlockOrSortFunction` is a block that receives two arguments to compare or an instace of 
+	 `SortFunction`. "
+
+	super sortFunction: aBlockOrSortFunction.
+	self isSortable: aBlockOrSortFunction notNil
 ]

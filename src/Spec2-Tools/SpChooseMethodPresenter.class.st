@@ -162,10 +162,10 @@ SpChooseMethodPresenter >> initializePresenters [
 		items: RPackageOrganizer default packages;
 		display: #name;
 		sortingBlock: #name ascending;
-		icons: [ :item | self iconNamed: #package ].
+		displayIcon: [ :item | self iconNamed: #package ].
 	classList
 		sortingBlock: #name ascending;
-		icons: [ :item | self iconNamed: item systemIconName ].
+		displayIcon: [ :item | self iconNamed: item systemIconName ].
 	protocolList
 		display: #name;
 		sortingBlock: #name ascending.

@@ -38,6 +38,12 @@ StDebuggerInspectorTempNode >> computeChildrenFromSourceObject [
 	^ self value allInspectorNodes reject: [ :node | node key = 'self' ]
 ]
 
+{ #category : #'as yet unclassified' }
+StDebuggerInspectorTempNode >> debuggerColor [
+	variableTag = 'arg' ifTrue:[^(SHRBTextStyler new attributesFor: #true) first color].
+	^(SHRBTextStyler new attributesFor: #string) first color
+]
+
 { #category : #comparing }
 StDebuggerInspectorTempNode >> hash [
 

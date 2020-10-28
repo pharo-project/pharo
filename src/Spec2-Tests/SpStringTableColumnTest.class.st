@@ -11,7 +11,9 @@ Class {
 SpStringTableColumnTest >> testIsSortable [
 	|widget|
 	widget := SpStringTableColumn new.
+	self deny: widget isSortable.
+	widget sortFunction: [:a :b|].
 	self assert: widget isSortable.
-	widget beNotSortable.
+	widget sortFunction: nil.
 	self deny: widget isSortable
 ]

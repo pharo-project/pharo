@@ -60,25 +60,21 @@ SpCodePresenter class >> codeAcceptCommandsGroupWith: aPresenter [
 SpCodePresenter class >> codeNavigationCommandsGroupWith: aPresenter [
 	| group |
 	
-	group := (CmCommandGroup named: 'Selection search commands') asSpecGroup.
-	group
+	group := (CmCommandGroup named: 'Selection search commands') asSpecGroup
 		description: 'Search the system from code selection.';
-		beDisplayedAsGroup.
-	group register: (SpBrowseClassCommand new 
-		transform: [ :aContext | aContext findClassFromSelection ];
-		asSpecCommand).	
-
+		beDisplayedAsGroup;
+		yourself.
+		
 	self flag: #TODO. "This looks like a very bad way to do this :P"	
 	{ 
+		SpBrowseClassCommand.		
 		SpBrowseImplementorsCommand.
 		SpBrowseSendersCommand.
 		SpBrowseMethodReferencesCommand.	
 		SpBrowseMethodsContainingStringCommand.
 	 } 
 	do:[ :commandClass | 
-		group register: (commandClass new 
-			transform: [ :aContext | aContext selectedTextOrLine ];
-			asSpecCommand) ].
+		group register: commandClass forSpec ].
 	
 	^ group
 ]
@@ -241,6 +237,87 @@ SpCodePresenter >> contextMenu [
 	^ [ self buildContextMenuWith: super contextMenu ]
 ]
 
+{ #category : #'command support' }
+SpCodePresenter >> doBrowseClass [
+	| result |
+
+	result := self 
+		evaluate: self selectedTextOrLine
+		ifError: [ :e | ^ self ].
+	self systemNavigation browse: result
+]
+
+{ #category : #commands }
+SpCodePresenter >> doBrowseClassReferences [
+	| result class |
+
+	result := self 
+		evaluate: self selectedTextOrLine 
+		ifError: [ :e | ^ self ].
+		
+	(result isClass or: [ result isTrait ])
+		ifFalse: [ result := result class ].
+
+	class := result instanceSide.
+	class isTrait
+		ifTrue: [ self systemNavigation browseAllUsersOfTrait: class ]
+		ifFalse: [ self systemNavigation browseAllCallsOnClass: class ]
+]
+
+{ #category : #commands }
+SpCodePresenter >> doBrowseHierarchy [
+	| result |
+
+	result := self 
+		evaluate: self selectedTextOrLine 
+		ifError: [ :e | ^ self ].
+	(result isClass or: [ result isTrait ])
+		ifFalse: [ result := result class ].
+	self systemNavigation browseHierarchy: result
+]
+
+{ #category : #commands }
+SpCodePresenter >> doBrowseImplementors [
+
+	self flag: #TODO. "This thingy waits for Guille's refactor"
+	self systemNavigation browseAllImplementorsOf: self selectedSelector
+]
+
+{ #category : #commands }
+SpCodePresenter >> doBrowseMethodReferences [
+
+	self flag: #TODO. "This thingy waits for Guille's refactor"
+	self systemNavigation browseAllReferencesTo: self selectedSelector
+]
+
+{ #category : #commands }
+SpCodePresenter >> doBrowseMethodsContainingString [
+	
+	self systemNavigation 
+		browseMethodsWithSourceString: self selectedTextOrLine 
+		matchCase: false
+]
+
+{ #category : #commands }
+SpCodePresenter >> doBrowseSenders [
+	| env variableOrClassName |
+
+	variableOrClassName := self selectedTextOrLine trimmed asSymbol.
+	variableOrClassName ifEmpty: [ ^ self ].
+	 
+	env := self environment.
+	env isBehavior ifTrue: [
+		(env hasSlotNamed: variableOrClassName) ifTrue: [
+		 ^ self systemNavigation browseAllAccessesTo: variableOrClassName from: env ] ].
+
+	(env bindingOf: variableOrClassName) 
+		ifNotNil: [ :ref | ^ self systemNavigation browseAllSendersOf: ref ].
+	
+	"If this is not a class, behave as SpBrowseMethodReferencesCommand"
+	self flag: #TODO. "This thingy waits for Guille's refactor"
+	self systemNavigation browseAllReferencesTo: self selectedSelector
+]
+
 { #category : #'private bindings' }
 SpCodePresenter >> doItContext [
 
@@ -274,6 +351,19 @@ SpCodePresenter >> environment: anEnvironment [
 	"Set system environment to be used in commands"
 	
 	environment := anEnvironment
+]
+
+{ #category : #'command support' }
+SpCodePresenter >> evaluate: aString ifError: aBlock [
+
+	^ [
+		self class compilerClass new
+			environment: self environment;
+			class: UndefinedObject;
+			source: self selectedTextOrLine;
+			evaluate ]
+		on: Error 
+		do: aBlock
 ]
 
 { #category : #accessing }
@@ -463,6 +553,20 @@ SpCodePresenter >> selectedClassOrMetaClass [
 	^ self interactionModel ifNotNil: [ :im | im selectedClassOrMetaClass ]
 ]
 
+{ #category : #'command support' }
+SpCodePresenter >> selectedSelector [
+	| node textSelection |
+	
+	textSelection := self selectedTextOrLine.
+	node := RBParser parseFaultyExpression: textSelection.
+	node nodesDo: [ :n | 
+		n isMessage ifTrue: [ ^ n selector ].
+		n isVariable ifTrue: [ ^ n name ].
+		n isLiteralNode ifTrue: [ ^ n value ] ].
+	"fall back"
+	^ textSelection trimmed asSymbol
+]
+
 { #category : #api }
 SpCodePresenter >> selectedTextOrLine [
 
@@ -476,6 +580,14 @@ SpCodePresenter >> selectedTextOrLine [
 { #category : #private }
 SpCodePresenter >> syntaxHighlight: aBoolean [
 	syntaxHighlight := aBoolean 
+]
+
+{ #category : #'command support' }
+SpCodePresenter >> systemNavigation [
+
+	^ super systemNavigation
+		environment: self environment;
+		yourself
 ]
 
 { #category : #'api-events' }

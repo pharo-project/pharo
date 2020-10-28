@@ -123,6 +123,14 @@ StObjectBreakpointInspection >> disableHaltOrBreakpointFor: haltOrBreakpointItem
 	breakpointController disableHaltOrBreakpointFor: haltOrBreakpointItem
 ]
 
+{ #category : #commands }
+StObjectBreakpointInspection >> doBrowseBreakpointMethod [
+	| entityToBrowse |
+	
+	entityToBrowse := self methodsWithBreakpoints selection selectedItem entityToBrowse.
+	self systemNavigation browse: entityToBrowse.
+]
+
 { #category : #breakpoints }
 StObjectBreakpointInspection >> enableHaltOrBreakpointFor: haltOrBreakpointItem [
 

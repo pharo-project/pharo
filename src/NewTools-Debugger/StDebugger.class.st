@@ -85,7 +85,8 @@ Class {
 		'extensionTools',
 		'extensionToolsNotebook',
 		'toolbarCommandGroup',
-		'debuggerActionModel'
+		'debuggerActionModel',
+		'unsavedCodeChanges'
 	],
 	#classVars : [
 		'ActivateDebuggerExtensions',
@@ -311,7 +312,21 @@ StDebugger class >> usingSpecSelector: aSelector [
 	UsingSpecSelector := StDebuggerSpecSelector on: aSelector
 ]
 
-{ #category : #commands }
+{ #category : #'presenter - code' }
+StDebugger >> acceptCodeChanges: newSource forContext: aContext [
+
+	"It is wrong here that I have to use code adapter widget.
+	It is expected down in the compilation call chain that the notified requestor answers to textMorph.
+	This is for modifying the source code when declaring temps"
+
+	self
+		recompileMethodTo: newSource
+		inContext: aContext
+		notifying: code adapter widget.
+	self clearUnsavedCodeChanges
+]
+
+{ #category : #'command support' }
 StDebugger >> buildContextMenus [
 	| stackGroup codeCommands debuggerCommandGroup |
 	debuggerCommandGroup := self rootCommandsGroup.
@@ -327,7 +342,7 @@ StDebugger >> buildContextMenus [
 	SpToolbarPresenterBuilder new
 		toolbarPresenter: toolbar;
 		visit: toolbarCommandGroup.
-	self updateToolbarDebugActions.
+	self updateToolbar.
 
 	"Code"
 	codeCommands := debuggerCommandGroup
@@ -335,27 +350,27 @@ StDebugger >> buildContextMenus [
 	code contextMenu: codeCommands beRoot asMenuPresenter
 ]
 
-{ #category : #commands }
+{ #category : #'command support' }
 StDebugger >> canExecuteCreateMissingClassCommand [
 	^ self debuggerActionModel isInterruptedContextMissingClassException
 ]
 
-{ #category : #commands }
+{ #category : #'command support' }
 StDebugger >> canExecuteCreateMissingMethodCommand [
 	^ self debuggerActionModel isInterruptedContextDoesNotUnderstand
 ]
 
-{ #category : #commands }
+{ #category : #'command support' }
 StDebugger >> canExecuteCreateSubclassResponsibilityCommand [
 	^ self debuggerActionModel isInterruptedContextSubclassResponsibilityException
 ]
 
-{ #category : #commands }
+{ #category : #'command support' }
 StDebugger >> canExecuteDebugCommand [
 	^ self debuggerActionModel isContextSteppable
 ]
 
-{ #category : #commands }
+{ #category : #'command support' }
 StDebugger >> canExecuteRestartCommand [
 	^ self debuggerActionModel isInterruptedContextPostMortem not
 ]
@@ -378,6 +393,12 @@ StDebugger >> clearCode [
 		clearInteractionModel;
 		clearSelection;
 		clearContent
+]
+
+{ #category : #'presenter - code' }
+StDebugger >> clearUnsavedCodeChanges [
+
+	unsavedCodeChanges := IdentityDictionary new
 ]
 
 { #category : #opening }
@@ -405,19 +426,22 @@ StDebugger >> copyStackToClipboard [
 
 { #category : #actions }
 StDebugger >> createMissingClass [
+
 	| message exception variableNode |
 	self flag: #DBG_MISSINGTEST.
 	message := self interruptedContext tempAt: 1.
 	exception := self interruptedContext tempAt: 2.
 	variableNode := exception variableNode.
-	[ OCUndeclaredVariableWarning new
+	[ 
+	OCUndeclaredVariableWarning new
 		node: variableNode;
-		defineClass: variableNode name ]
-		on: Abort
-		do: [ ^ self ].
+		defineClass: variableNode name.
 	self
 		createMissingMethodFor: message
-		in: self interruptedContext receiver class.
+		in: self interruptedContext receiver class ]
+		on: Abort
+		do: [ ^ self ].
+
 	self debuggerActionModel restartContext: self interruptedContext
 ]
 
@@ -427,11 +451,12 @@ StDebugger >> createMissingMethod [
 	| msg chosenClass |
 	self flag: #DBG_MISSINGTEST.
 	msg := self interruptedContext tempAt: 1.
+	[ 
 	chosenClass := self requestClassFrom:
 		               self interruptedContext receiver class.
-	chosenClass ifNil: [ ^ self ].
-
-	self createMissingMethodFor: msg in: chosenClass
+	self createMissingMethodFor: msg in: chosenClass ]
+		on: Abort
+		do: [ ^ self ]
 ]
 
 { #category : #actions }
@@ -478,6 +503,26 @@ StDebugger >> currentContext [
 StDebugger >> debuggerActionModel [
 	^ debuggerActionModel
 		ifNil: [ debuggerActionModel := StDebuggerActionModel on: self session]
+]
+
+{ #category : #'presenter - code' }
+StDebugger >> discardCodeChangesFor: aContext [
+
+	self unsavedCodeChanges removeKey: aContext ifAbsent: [  ].
+	self code text: aContext sourceCode.
+	self update
+]
+
+{ #category : #commands }
+StDebugger >> doBrowseClass [
+
+	self systemNavigation browse: self stackSelectionMethodContext
+]
+
+{ #category : #commands }
+StDebugger >> doBrowseReceiverClass [
+self halt.
+	self systemNavigation browse: self stackSelectionReceiverClassContext
 ]
 
 { #category : #stack }
@@ -539,6 +584,7 @@ StDebugger >> initialExtent [
 { #category : #initialization }
 StDebugger >> initialize [
 	super initialize.
+	self debuggerActionModel updateContextPredicate.			
 	self setSessionHolderSubscriptions.
 	self forceSessionUpdate.
 	self subscribeToMethodAddedAnnouncement
@@ -551,19 +597,13 @@ StDebugger >> initializeBreakpointInspector [
 		on: (StInspectorModel on: nil).
 ]
 
-{ #category : #initialization }
+{ #category : #'presenter - code' }
 StDebugger >> initializeCode [
-	self flag: #DBG.
-	"It is wrong here that I have to use code adapter widget.
-	It is expected down in the compilation call chain that the notified requestor answers to textMorph.
-	This is for modifying the source code when declaring temps"
+
 	code := self newCode.
 	code whenSubmitDo: [ :text | 
-		self
-			recompileMethodTo: text string
-			inContext: self stackTable selection selectedItem
-			notifying: code adapter widget ].
-	code whenResetDo: [ self updateCodeFromContext ]
+		self acceptCodeChanges: text string forContext: self selectedContext ].
+	code whenResetDo: [ self discardCodeChangesFor: self selectedContext ]
 ]
 
 { #category : #extensions }
@@ -626,26 +666,35 @@ StDebugger >> initializeShortcuts: aWindowPresenter [
 
 { #category : #initialization }
 StDebugger >> initializeStack [
+
 	stackTable := self newTable.
 	stackTable
-		addColumn: (SpStringTableColumn
-				 title: 'Class'
-				 evaluated: [ :item | self printReceiverClassInContext: item ]);
+		addColumn: ((SpImageTableColumn
+				  title: ''
+				  evaluated: [ :context | self stackIconForContext: context ])
+				 width: 8;
+				 sortFunction: nil;
+				 yourself);
+		addColumn: ((SpStringTableColumn
+				  title: 'Class'
+				  evaluated: [ :item | self printReceiverClassInContext: item ])
+				 sortFunction: nil;
+				 yourself);
 		addColumn:
-			(SpStringTableColumn title: 'Method' evaluated: [ :item | 
-					 | method |
-					 method := item method.
-					 method isCompiledBlock
-						 ifTrue: [ method sourceNode sourceCode ]
-						 ifFalse: [ method selector ] ])";
-		addColumn: (SpStringTableColumn
-				 title: 'Context'
-				 evaluated: [ :item | item sender stDisplayString ])".
+			((SpStringTableColumn title: 'Method' evaluated: [ :item | 
+					  | method |
+					  method := item method.
+					  method isCompiledBlock
+						  ifTrue: [ method sourceNode sourceCode ]
+						  ifFalse: [ method selector ] ])
+				 sortFunction: nil;
+				 yourself).
 	stackTable transmitDo: [ :context | 
 		stackTable selection isEmpty ifFalse: [ 
 			self updateInspectorFromContext: context.
 			self updateCodeFromContext: context.
-			self expandStackIfLastItemIsSelected ] ].
+			self expandStackIfLastItemIsSelected.
+			self updateWindowTitle ] ].
 	stackHeader := self instantiate: StHeaderBar.
 	stackHeader label: 'Stack'
 ]
@@ -661,7 +710,7 @@ StDebugger >> initializeWindow: aWindowPresenter [
 
 	super initializeWindow: aWindowPresenter.
 	aWindowPresenter
-		title: self session name;
+		title: self debuggerActionModel statusStringForContext;
 		initialExtent: self initialExtent;
 		whenClosedDo: [ self clear ].
 
@@ -691,12 +740,9 @@ StDebugger >> interruptedProcess [
 ]
 
 { #category : #'accessing context' }
-StDebugger >> newTitleString [
-	(debuggerActionModel exceptionInContextOrNil: self context)
-		ifNotNil: [ :ex | ^ ex description ].
-	^ self context currentNode isHaltNode
-		ifTrue: [ 'Halt' ]
-		ifFalse: [ self context receiver class name , '>>' , self context selector ]
+StDebugger >> newTitle [
+
+	^ self debuggerActionModel statusStringForContext
 ]
 
 { #category : #api }
@@ -756,6 +802,17 @@ StDebugger >> recompileMethodTo: aString inContext: aContext notifying: aNotifye
 		notifying: aNotifyer
 ]
 
+{ #category : #'presenter - code' }
+StDebugger >> recordUnsavedCodeChanges [
+
+	|codeInteractionModel codeText|
+	codeInteractionModel := self code interactionModel.
+	codeInteractionModel hasUnsavedCodeChanges ifFalse:[^self].
+	
+	codeText := self code text asString.
+	self unsavedCodeChanges at: codeInteractionModel context put: codeText
+]
+
 { #category : #'updating session' }
 StDebugger >> registerActionsForSession: aSession [
 	self flag: 'Rewrite it'.
@@ -803,7 +860,7 @@ StDebugger >> requestClassFrom: aClass [
 { #category : #'ui requests' }
 StDebugger >> requestProtocolIn: aClass [
 
-	| entryCompletion applicants |
+	| entryCompletion applicants choice |
 	self class fastTDD ifTrue: [ ^ Protocol unclassified ].
 	applicants := AbstractTool protocolSuggestionsFor: aClass.
 	entryCompletion := EntryCompletion new
@@ -812,12 +869,15 @@ StDebugger >> requestProtocolIn: aClass [
 			                   currText size > 3 and: [ 
 					                   currApplicant asLowercase includesSubstring:
 							                   currText asString asLowercase ] ].
-	^ (UIManager default
-		   request: 'Start typing for suggestions (3 characters minimum)'
-		   initialAnswer: Protocol unclassified
-		   title: 'Choose a protocol'
-		   entryCompletion: entryCompletion) ifEmpty: [ 
-		  Protocol unclassified ]
+
+	choice := (UIManager default
+		           request:
+		           'Start typing for suggestions (3 characters minimum)'
+		           initialAnswer: Protocol unclassified
+		           title: 'Choose a protocol'
+		           entryCompletion: entryCompletion) ifNil: [ Abort signal ].
+
+	^ choice ifEmpty: [ Protocol unclassified ]
 ]
 
 { #category : #'ui requests' }
@@ -829,16 +889,18 @@ StDebugger >> requestSuperclassOf: aClass to: aSuperclass [
 	classes addAll:
 		(aClass traits sort: [ :t1 :t2 | t1 asString < t2 asString ]).
 	classes size = 1 ifTrue: [ ^ classes first ].
-	^ UIManager default
-		  chooseFrom: (classes collect: [ :c | c name ])
-		  values: classes
-		  title: 'Define selector in:'
+	^ (UIManager default
+		   chooseFrom: (classes collect: [ :c | c name ])
+		   values: classes
+		   title: 'Define selector in:') ifNil: [ Abort signal ]
 ]
 
 { #category : #actions }
 StDebugger >> restartCurrentContext [
 
-	self debuggerActionModel restartContext: self currentContext
+	self debuggerActionModel restartContext: self currentContext.
+	self clearUnsavedCodeChanges.
+	self code text: self currentContext sourceCode
 ]
 
 { #category : #actions }
@@ -861,8 +923,11 @@ StDebugger >> runToSelection [
 
 { #category : #actions }
 StDebugger >> selectNextExecutedExpression [
-	self code
-		selectionInterval: (self session pcRangeForContext: self currentContext)
+
+	| sourceNodeExecuted |
+	sourceNodeExecuted := self currentContext sourceNodeExecuted.
+	self code selectionInterval:
+		(sourceNodeExecuted start to: sourceNodeExecuted stop)
 ]
 
 { #category : #stack }
@@ -913,22 +978,29 @@ StDebugger >> showFullStack [
 
 ]
 
-{ #category : #commands }
+{ #category : #stack }
+StDebugger >> stackIconForContext: context [
+
+	self unsavedCodeChanges at: context ifAbsent: [ ^ nil ].
+	^ self iconNamed: #overlayDirty
+]
+
+{ #category : #'command support' }
 StDebugger >> stackSelectionMethodContext [
 	^ [ stackTable selection selectedItem method ]
 ]
 
-{ #category : #commands }
+{ #category : #'command support' }
 StDebugger >> stackSelectionMethodSelectorContext [
 	^[ stackTable selection selectedItem method selector ]
 ]
 
-{ #category : #commands }
+{ #category : #'command support' }
 StDebugger >> stackSelectionReceiverClassContext [
 	^ [ stackTable selection selectedItem receiver class ]
 ]
 
-{ #category : #commands }
+{ #category : #'command support' }
 StDebugger >> stackSelectionReceiverContext [
 	^ [ stackTable selection selectedItem receiver ]
 ]
@@ -958,31 +1030,26 @@ StDebugger >> subscribeToMethodAddedAnnouncement [
 
 	SystemAnnouncer uniqueInstance weak
 		when: MethodAdded
-		send: #updateToolbarDebugActions
+		send: #updateAfterMethodAdded
 		to: self
-]
-
-{ #category : #api }
-StDebugger >> title [
-	^ ((self session isContextPostMortem: self interruptedContext)
-		ifTrue: [ '[PostMortem] ' ]
-		ifFalse: [ '' ]) , self titlePrefixTextForCurrentContext, self currentContext asString
-]
-
-{ #category : #'accessing context' }
-StDebugger >> titlePrefixTextForCurrentContext [
-	self context sender == self currentContext
-		ifTrue: [ (debuggerActionModel exceptionInContextOrNil: self context)
-				ifNotNil: [ :ex | ^ ex description , ' in ' ] ].
-	^ self currentContext currentNode isHaltNode
-		ifTrue: [ 'Halt in ' ]
-		ifFalse: [ '' ]
 ]
 
 { #category : #'accessing widgets' }
 StDebugger >> toolbar [
 
 	^ toolbar
+]
+
+{ #category : #'presenter - code' }
+StDebugger >> unsavedCodeChanges [
+
+	^ unsavedCodeChanges ifNil: [ 
+		  unsavedCodeChanges := IdentityDictionary new ]
+]
+
+{ #category : #'presenter - code' }
+StDebugger >> unsavedCodeChangesFor: aContext [ 
+	^self unsavedCodeChanges at: aContext
 ]
 
 { #category : #'system subscriptions' }
@@ -992,20 +1059,27 @@ StDebugger >> unsubscribeFromSystemAnnouncer [
 ]
 
 { #category : #'updating widgets' }
+StDebugger >> updateAfterMethodAdded [
+	debuggerActionModel updateContextPredicate.
+	self updateToolbar 
+]
+
+{ #category : #'updating widgets' }
 StDebugger >> updateCodeFromContext [
 
 	self updateCodeFromContext: self currentContext
 ]
 
-{ #category : #'updating widgets' }
+{ #category : #'presenter - code' }
 StDebugger >> updateCodeFromContext: aContext [
 	| selectionInterval |
 
 	aContext ifNil: [ ^ self clearCode ].
-
+	
+	self recordUnsavedCodeChanges.
 	selectionInterval := self session selectedCodeRangeForContext: aContext.
 	aContext sourceCode = self code text 
-		ifFalse: [ self code text: aContext sourceCode ].
+		ifFalse: [ self updateSourceCodeFor: aContext ].
 	self code beForContext: aContext.
 	self code selectionInterval: selectionInterval.
 	
@@ -1065,6 +1139,12 @@ StDebugger >> updateInspectorFromContext: aContext [
 	inspector getRawInspectorPresenterOrNil ifNotNil: [ :p | p update ]
 ]
 
+{ #category : #'updating widgets' }
+StDebugger >> updatePredicatesForContext: aContext [
+
+	self debuggerActionModel updateContextPredicate
+]
+
 { #category : #'updating actions' }
 StDebugger >> updateRestart [
 	self updateStep
@@ -1076,21 +1156,34 @@ StDebugger >> updateResume [
 	
 ]
 
+{ #category : #'presenter - code' }
+StDebugger >> updateSourceCodeFor: aContext [
+
+	| codeText |
+	codeText := self unsavedCodeChanges
+		            at: aContext
+		            ifAbsent: [ aContext sourceCode ].
+	self code text: codeText
+]
+
 { #category : #stack }
 StDebugger >> updateStackFromSession: aSession [
 	|stack|
-	stack := (self filterStack: aSession shortStack).
+	stack := (self filterStack: aSession stack).
 	stackTable items: stack.
 	stackTable selectIndex: (self findFirstRelevantStackIndexIn: stack)
 ]
 
 { #category : #'updating actions' }
 StDebugger >> updateStep [
-
+	self flag: #DBG_UPDATE_OF_MODEL_SHOULD_BE_AUTOMATED.
+	debuggerActionModel updateTopContext.
+	debuggerActionModel updateContextPredicate.	
+		
 	self updateStackFromSession: self session.
-	self updateTitle: self newTitleString.
-	self updateExtensionsFrom: self session.
-	self updateToolbarDebugActions.
+	self updateWindowTitle.
+	self updateExtensionsFrom: self session.	
+	self updateToolbar.
 	self flag: #DBG_INSPECTOR_UPDATE_BUG.
 	inspector getRawInspectorPresenterOrNil ifNotNil: [ :p | p update ]
 ]
@@ -1114,14 +1207,15 @@ StDebugger >> updateStepThrough [
 ]
 
 { #category : #'updating widgets' }
-StDebugger >> updateTitle: statusString [
-
-	self withWindowDo: [ :window | window title: statusString ]
+StDebugger >> updateToolbar [
+	
+	toolbarCommandGroup ifNil: [ ^ self ].
+	toolbarCommandGroup allCommands do: [ :spCommand | 
+		spCommand updateEnableStatus ]
 ]
 
 { #category : #'updating widgets' }
-StDebugger >> updateToolbarDebugActions [
+StDebugger >> updateWindowTitle [
 
-	toolbarCommandGroup allCommands do: [ :spCommand | 
-		spCommand updateEnableStatus ]
+	self withWindowDo: [ :window | window title: self newTitle ].
 ]

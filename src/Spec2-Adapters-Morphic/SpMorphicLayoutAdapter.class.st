@@ -10,7 +10,7 @@ Class {
 	#category : #'Spec2-Adapters-Morphic-Layout'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 SpMorphicLayoutAdapter >> adapter [
 	
 	^ nil
@@ -27,7 +27,7 @@ SpMorphicLayoutAdapter >> add: aPresenter constraints: constraints [
 			to: aPanel ]
 ]
 
-{ #category : #adding }
+{ #category : #private }
 SpMorphicLayoutAdapter >> addConstraits: constraints toChild: childMorph [
 
 	self subclassResponsibility
@@ -117,7 +117,7 @@ SpMorphicLayoutAdapter >> isEmpty [
 	^ self children isEmpty
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #protocol }
 SpMorphicLayoutAdapter >> layout: aLayout [
 
 	"Basic apply visibility to the widget.

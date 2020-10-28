@@ -18,7 +18,8 @@ Class {
 		'millerList',
 		'model',
 		'lastPageSelectedTabName',
-		'withHeaderBar'
+		'withHeaderBar',
+		'paginator'
 	],
 	#classVars : [
 		'IndexableDisplayLimit',
@@ -139,12 +140,12 @@ StInspector >> defaultKeyboardFocus [
 { #category : #initialization }
 StInspector >> initializePresenters [
 
-	millerList := self instantiate: SpMillerColumnPresenter.
-	millerList 
+	millerList := self instantiate: SpMillerPaginatorPresenter.
+	millerList millerListPresenter
 		spacing: self spacing;
 		presenterBlock: [ :aModel | self newInspectorFor: aModel ];
 		setRootModel: self model;
-		whenColumnsWillChangeDo: [ :insertIndex | self keepLastPageSelectedTabName ]
+		whenColumnsWillChangeDo: [ self keepLastPageSelectedTabName ]
 ]
 
 { #category : #initialization }
@@ -192,15 +193,16 @@ StInspector >> model: anInspectorModel [
 { #category : #'private factory' }
 StInspector >> newInspectorFor: aModel [
 	| newInspector |
+	
 	newInspector := self
 		instantiate: aModel defaultObjectInspectorClass
 		on: (self toInspectorModel: aModel).
-	millerList pages
-		ifNotEmpty: [ :pages | 
-			newInspector
-				trySelectAnyPageNamed:
-					{lastPageSelectedTabName.
-					pages last selectedPageName} ].
+	
+	millerList pages ifNotEmpty: [ :pages | 
+		newInspector trySelectAnyPageNamed: {
+			lastPageSelectedTabName.
+			pages last selectedPageName } ].
+	
 	^ newInspector
 ]
 
@@ -255,7 +257,7 @@ StInspector >> toInspectorModel: aModel [
 { #category : #'private updating' }
 StInspector >> updateList [
 
-	millerList 
+	millerList millerListPresenter
 		resetTo: 0;
 		setRootModel: self model
 ]
