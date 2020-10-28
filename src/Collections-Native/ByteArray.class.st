@@ -212,11 +212,6 @@ ByteArray >> isLiteral [
 	^ self class == ByteArray
 ]
 
-{ #category : #testing }
-ByteArray >> isReadOnlyLiteral [
-	^self isLiteral
-]
-
 { #category : #'platform independent access' }
 ByteArray >> longAt: index bigEndian: aBool [
 	"Return a 32bit integer quantity starting from the given byte index"

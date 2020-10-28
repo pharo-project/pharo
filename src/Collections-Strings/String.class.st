@@ -1863,11 +1863,6 @@ String >> isPatternVariable [
 ]
 
 { #category : #testing }
-String >> isReadOnlyLiteral [
-	^self isLiteral
-]
-
-{ #category : #testing }
 String >> isString [
 	^ true
 ]

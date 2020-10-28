@@ -919,12 +919,6 @@ Float >> isPowerOfTwo [
 ]
 
 { #category : #testing }
-Float >> isReadOnlyLiteral [ 
-	"Immediate objects are read-only by design, we can not call #beReadOnlyObject"
-	^ self isLiteral
-]
-
-{ #category : #testing }
 Float >> isSelfEvaluating [
     ^true
 ]
