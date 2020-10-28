@@ -41,7 +41,7 @@ FluidClassDefinitionPrinter >> classDefinitionString [
 			  ifNotNil: [ s nextPutAll: forClass superclass name ]
 			  ifNil: [ s nextPutAll: 'nil' ].
 		  s
-			  nextPutAll: ' < #';
+			  nextPutAll: ' << #';
 			  nextPutAll: forClass name;
 			  cr.
 
@@ -64,7 +64,7 @@ FluidClassDefinitionPrinter >> classDefinitionString [
 FluidClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName [
 
 		^ String streamContents: [ :s |
-						s nextPutAll: 'Object < #MyClass'; crtab.
+						s nextPutAll: 'Object << #MyClass'; crtab.
 						s nextPutAll: 'layout: FixedLayout;'; crtab.
 						s nextPutAll: 'uses: {};'; crtab.
 						s nextPutAll: 'slots: {};'; crtab. 
@@ -99,7 +99,7 @@ FluidClassDefinitionPrinter >> expandedClassDefinitionString [
 
 	^ String streamContents: [ :s | 
 		  s
-			  nextPutAll: 'Object < #' , forClass name asSymbol;
+			  nextPutAll: 'Object << #' , forClass name asSymbol;
 			  cr.
 		  self layoutOn: s.
 		  s tab.

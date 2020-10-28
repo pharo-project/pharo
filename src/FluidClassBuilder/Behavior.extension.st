@@ -1,7 +1,7 @@
 Extension { #name : #Behavior }
 
 { #category : #'*FluidClassBuilder' }
-Behavior >> < aString [
+Behavior >> << aString [
 
 	^ FluidClassBuilder new
 		  superclassToBuild: self;
