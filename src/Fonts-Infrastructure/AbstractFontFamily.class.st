@@ -2,17 +2,23 @@
 Abstract font family
 "
 Class {
-	#name : #FontFamilyAbstract,
+	#name : #AbstractFontFamily,
 	#superclass : #Object,
 	#instVars : [
 		'familyName',
 		'members'
 	],
-	#category : #'Fonts-Infrastructure'
+	#category : #'Fonts-Infrastructure-Base'
 }
 
+{ #category : #testing }
+AbstractFontFamily class >> isAbstract [
+
+	 ^self name = #AbstractFontFamily
+]
+
 { #category : #'member lookup' }
-FontFamilyAbstract >> closestMemberWithStretchValue: stretchValue weightValue: weightValue slantValue: slantValue [
+AbstractFontFamily >> closestMemberWithStretchValue: stretchValue weightValue: weightValue slantValue: slantValue [
 	"answer the member that has weight, slant and stretch values that most closely 
 	match those given by stretchValue, weightValue, and slantValue"
 	
@@ -24,28 +30,28 @@ FontFamilyAbstract >> closestMemberWithStretchValue: stretchValue weightValue: w
 ]
 
 { #category : #accessing }
-FontFamilyAbstract >> familyName [
+AbstractFontFamily >> familyName [
 	"Answer the value of familyName"
 
 	^ familyName
 ]
 
 { #category : #accessing }
-FontFamilyAbstract >> familyName: anObject [
+AbstractFontFamily >> familyName: anObject [
 	"Set the value of familyName"
 
 	familyName := anObject
 ]
 
 { #category : #accessing }
-FontFamilyAbstract >> members [
+AbstractFontFamily >> members [
 	"Answer the value of members"
 
 	^ members
 ]
 
 { #category : #printing }
-FontFamilyAbstract >> printOn: aStream [
+AbstractFontFamily >> printOn: aStream [
 	aStream 
 		print: self class name;
 		nextPut: $ ;

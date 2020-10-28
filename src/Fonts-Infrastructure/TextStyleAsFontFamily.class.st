@@ -3,7 +3,7 @@ Text style as font family
 "
 Class {
 	#name : #TextStyleAsFontFamily,
-	#superclass : #FontFamilyAbstract,
+	#superclass : #AbstractFontFamily,
 	#instVars : [
 		'textStyle'
 	],
