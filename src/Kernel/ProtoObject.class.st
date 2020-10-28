@@ -190,6 +190,11 @@ ProtoObject >> instVarsInclude: anObject [
 ]
 
 { #category : #testing }
+ProtoObject >> isImmediateObject [
+	^ self class isImmediateClass
+]
+
+{ #category : #testing }
 ProtoObject >> isNil [
 	"Coerces nil to true and everything else to false."
 

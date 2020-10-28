@@ -477,6 +477,12 @@ SmallInteger >> identityHash [
 ]
 
 { #category : #testing }
+SmallInteger >> isImmediateObject [
+	"This is needed for the boostrap"
+	^ true
+]
+
+{ #category : #testing }
 SmallInteger >> isLarge [
 	^false
 ]
