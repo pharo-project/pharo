@@ -39,7 +39,7 @@ FluidClassDefinitionPrinterTest >> testArray [
 
 	self 
 		assert: (self forClass: Array)
-		equals: 'ArrayedCollection < #Array
+		equals: 'ArrayedCollection << #Array
 	layout: VariableLayout;
 	tag: ''Base'';
 	package: ''Collections-Sequenceable'''
@@ -48,7 +48,7 @@ FluidClassDefinitionPrinterTest >> testArray [
 { #category : #'tests - classes' }
 FluidClassDefinitionPrinterTest >> testByteString [
 
-	self assert: (self forClass: ByteString) equals: 'String < #ByteString
+	self assert: (self forClass: ByteString) equals: 'String << #ByteString
 	layout: ByteLayout;
 	sharedVariables: { #NonAsciiMap };
 	tag: ''Base'';
@@ -58,7 +58,7 @@ FluidClassDefinitionPrinterTest >> testByteString [
 { #category : #'tests - classes' }
 FluidClassDefinitionPrinterTest >> testChronologyConstants [
 	
-	self assert: (self forClass: ChronologyConstants) equals: 'SharedPool < #ChronologyConstants
+	self assert: (self forClass: ChronologyConstants) equals: 'SharedPool << #ChronologyConstants
 	sharedVariables: { #NanosInSecond . #MonthNames . #SecondsInHour . #SecondsInDay . #SqueakEpoch . #NanosInMillisecond . #DayNames . #DaysInMonth . #SecondsInMinute . #MicrosecondsInDay };
 	tag: ''Chronology'';
 	package: ''Kernel'''
@@ -73,7 +73,7 @@ FluidClassDefinitionPrinterTest >> testClassSideDoesNotShowPackage [
 { #category : #'tests - traits' }
 FluidClassDefinitionPrinterTest >> testComplexTrait [
 
-	self assert: (self forClass: MOPTestClassD) equals: 'Object < #MOPTestClassD
+	self assert: (self forClass: MOPTestClassD) equals: 'Object << #MOPTestClassD
 	uses: Trait2 @ {#c3->#c2};
 	tag: ''Traits-MOP'';
 	package: ''Tests''' 
@@ -205,7 +205,7 @@ FluidClassDefinitionPrinterTest >> testFullyExpandedTrait [
 { #category : #'tests - metaclasses' }
 FluidClassDefinitionPrinterTest >> testMetaclass [
 	
-	self assert: (self forClass: Metaclass) equals: 'ClassDescription < #Metaclass
+	self assert: (self forClass: Metaclass) equals: 'ClassDescription << #Metaclass
 	slots: { #thisClass };
 	tag: ''Classes'';
 	package: ''Kernel''' 
@@ -228,7 +228,7 @@ FluidClassDefinitionPrinterTest >> testMetaclassWithTrait [
 { #category : #'tests - traits' }
 FluidClassDefinitionPrinterTest >> testMultiPools [
 
-	self assert: (self forClass: ClassMultiplePoolUser) equals: 'Object < #ClassMultiplePoolUser
+	self assert: (self forClass: ClassMultiplePoolUser) equals: 'Object << #ClassMultiplePoolUser
 	sharedPools: { PoolDefiner . PoolDefiner2 };
 	tag: ''Classes'';
 	package: ''Kernel-Tests''' 
@@ -237,7 +237,7 @@ FluidClassDefinitionPrinterTest >> testMultiPools [
 { #category : #'tests - classes' }
 FluidClassDefinitionPrinterTest >> testPoint [
 	
-	self assert: (self forClass: Point) equals: 'Object < #Point
+	self assert: (self forClass: Point) equals: 'Object << #Point
 	slots: { #x . #y };
 	tag: ''BasicObjects'';
 	package: ''Kernel'''
@@ -249,13 +249,13 @@ FluidClassDefinitionPrinterTest >> testPointMinimalInformation [
 	"I would like to be able to test if I provide too many empty values that
 	the default empty values are just ignored."
 	| class |
-	class := (Object < #CDFluidMock
+	class := (Object << #CDFluidMock
 	slots: {#x . #y};
 	tag: 'BasicObjects';
 	package: 'Kernel') build.
 	"I cannot test the tag because the class is not installed so the package manager
 	does not know the package and the class."
-	self assert: (self forClass: class) equals: 'Object < #CDFluidMock
+	self assert: (self forClass: class) equals: 'Object << #CDFluidMock
 	slots: { #x . #y };
 	package: ''_UnpackagedPackage'''
 	
@@ -264,7 +264,7 @@ FluidClassDefinitionPrinterTest >> testPointMinimalInformation [
 { #category : #'tests - classes' }
 FluidClassDefinitionPrinterTest >> testProtoObject [
 	
-	self assert: (self forClass: ProtoObject) equals: 'nil < #ProtoObject
+	self assert: (self forClass: ProtoObject) equals: 'nil << #ProtoObject
 	tag: ''Objects'';
 	package: ''Kernel''' 
 ]
@@ -327,7 +327,7 @@ FluidClassDefinitionPrinterTest >> testTUses [
 { #category : #'tests - classes' }
 FluidClassDefinitionPrinterTest >> testText [
 
-	self assert: (self forClass: Text) equals: 'ArrayedCollection < #Text
+	self assert: (self forClass: Text) equals: 'ArrayedCollection << #Text
 	slots: { #string . #runs };
 	sharedPools: { TextConstants };
 	tag: ''Base'';
@@ -337,7 +337,7 @@ FluidClassDefinitionPrinterTest >> testText [
 { #category : #'tests - traits' }
 FluidClassDefinitionPrinterTest >> testTrait [
 	
-	self assert: (self forClass: RubScrolledTextModel) equals: 'Object < #RubScrolledTextModel
+	self assert: (self forClass: RubScrolledTextModel) equals: 'Object << #RubScrolledTextModel
 	uses: TViewModel;
 	slots: { #hasUnacceptedEdits . #announcer . #text . #primarySelectionInterval . #interactionModel };
 	tag: ''Editing-Widgets'';

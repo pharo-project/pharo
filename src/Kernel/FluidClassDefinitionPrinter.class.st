@@ -41,7 +41,7 @@ FluidClassDefinitionPrinter >> classDefinitionString [
 			  ifNotNil: [ s nextPutAll: forClass superclass name ]
 			  ifNil: [ s nextPutAll: 'nil' ].
 		  s
-			  nextPutAll: ' < #';
+			  nextPutAll: ' << #';
 			  nextPutAll: forClass name;
 			  cr.
 

@@ -47,7 +47,7 @@ FluidClassBuilderTest >> testBuildLayout [
 FluidClassBuilderTest >> testBuildSimplePoint2 [
 
 	| clas |
-	builder := Object < #Point2.
+	builder := Object << #Point2.
 	builder slots: { #x . #y }.
 	builder package: 'FakedCore'.
 	clas := builder build.
@@ -120,7 +120,7 @@ FluidClassBuilderTest >> testBuilderWithTag [
 { #category : #'tests - mandatory' }
 FluidClassBuilderTest >> testCreateBuilder [
 
-	builder := Object < #Point.
+	builder := Object << #Point.
 	self assert: builder superclassToBuild equals: Object.
 	self assert: builder classNameToBuild equals: #Point.
 	
@@ -129,7 +129,7 @@ FluidClassBuilderTest >> testCreateBuilder [
 { #category : #'tests - mandatory' }
 FluidClassBuilderTest >> testCreateBuilderWithNil [
 
-	builder := nil < #NewProtoObject.
+	builder := nil << #NewProtoObject.
 	self assert: builder superclassToBuild equals: nil.
 	self assert: builder classNameToBuild equals: #NewProtoObject.
 	
@@ -142,7 +142,7 @@ FluidClassBuilderTest >> testCreateClassWithFullExpandedDefinitionKeepsTheMinimu
 
 	| shiftClassBuilder |
 	builder := self class compilerClass new
-		           evaluate: 'Object < #MyClass
+		           evaluate: 'Object << #MyClass
 	layout: FixedLayout;
 	uses: {};
 	slots: {};
@@ -169,7 +169,7 @@ FluidClassBuilderTest >> testInstallMinimalMockClass [
 	self removeTestArtifactsFromSystem.
 	[ 
 	builder := self class compilerClass new
-		           evaluate: 'Object < #MyClass
+		           evaluate: 'Object << #MyClass
 	layout: FixedLayout;
 	uses: {};
 	slots: {};
