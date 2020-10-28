@@ -2,17 +2,23 @@
 Abstract member for a font family
 "
 Class {
-	#name : #FontFamilyMemberAbstract,
+	#name : #AbstractFontFamilyMember,
 	#superclass : #Object,
 	#instVars : [
 		'family',
 		'styleName'
 	],
-	#category : #'Fonts-Infrastructure'
+	#category : #'Fonts-Infrastructure-Base'
 }
 
+{ #category : #testing }
+AbstractFontFamilyMember class >> isAbstract [ 
+
+	^ self name = #AbstractFontFamilyMember
+]
+
 { #category : #converting }
-FontFamilyMemberAbstract >> asLogicalFontOfPointSize: pointSize [
+AbstractFontFamilyMember >> asLogicalFontOfPointSize: pointSize [
 	^LogicalFont
 		familyName: self family familyName 
 		pointSize: pointSize 
@@ -22,12 +28,12 @@ FontFamilyMemberAbstract >> asLogicalFontOfPointSize: pointSize [
 ]
 
 { #category : #comparing }
-FontFamilyMemberAbstract >> closenessVector [
+AbstractFontFamilyMember >> closenessVector [
 	^self closenessVectorForStretch: self stretchValue slant: self slantValue weight: self weightValue
 ]
 
 { #category : #comparing }
-FontFamilyMemberAbstract >> closenessVectorForStretch: stretch slant: slant weight: weight [
+AbstractFontFamilyMember >> closenessVectorForStretch: stretch slant: slant weight: weight [
 	| normalizedSlant |
 	normalizedSlant := slant.
 	normalizedSlant ~= 0 ifTrue:[
@@ -37,17 +43,17 @@ FontFamilyMemberAbstract >> closenessVectorForStretch: stretch slant: slant weig
 ]
 
 { #category : #accessing }
-FontFamilyMemberAbstract >> family [
+AbstractFontFamilyMember >> family [
 	^family
 ]
 
 { #category : #accessing }
-FontFamilyMemberAbstract >> family: aFontFamily [
+AbstractFontFamilyMember >> family: aFontFamily [
 	family := aFontFamily
 ]
 
 { #category : #comparing }
-FontFamilyMemberAbstract >> isCloserMatchThan: otherMember toStretch: inputStretch weight: inputWeight slant: inputSlant [ 
+AbstractFontFamilyMember >> isCloserMatchThan: otherMember toStretch: inputStretch weight: inputWeight slant: inputSlant [ 
 	| inputVector vector otherVector distance otherDistance dotProduct otherDotProduct |
 	
 	inputVector := self closenessVectorForStretch: inputStretch slant: inputSlant weight: inputWeight.
@@ -79,30 +85,30 @@ FontFamilyMemberAbstract >> isCloserMatchThan: otherMember toStretch: inputStret
 ]
 
 { #category : #accessing }
-FontFamilyMemberAbstract >> slantValue [
+AbstractFontFamilyMember >> slantValue [
 	self subclassResponsibility
 ]
 
 { #category : #accessing }
-FontFamilyMemberAbstract >> stretchValue [
+AbstractFontFamilyMember >> stretchValue [
 	self subclassResponsibility
 ]
 
 { #category : #accessing }
-FontFamilyMemberAbstract >> styleName [
+AbstractFontFamilyMember >> styleName [
 	"Answer the value of styleName"
 
 	^ styleName
 ]
 
 { #category : #accessing }
-FontFamilyMemberAbstract >> styleName: anObject [
+AbstractFontFamilyMember >> styleName: anObject [
 	"Set the value of styleName"
 
 	styleName := anObject
 ]
 
 { #category : #accessing }
-FontFamilyMemberAbstract >> weightValue [
+AbstractFontFamilyMember >> weightValue [
 	self subclassResponsibility
 ]
