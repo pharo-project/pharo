@@ -7,12 +7,18 @@ Abstract superClass for fontProviders
 		
 "
 Class {
-	#name : #FontProviderAbstract,
+	#name : #AbstractFontProvider,
 	#superclass : #Object,
-	#category : #'Fonts-Infrastructure'
+	#category : #'Fonts-Infrastructure-Base'
 }
 
+{ #category : #testing }
+AbstractFontProvider class >> isAbstract [
+
+	 ^self name = #AbstractFontProvider
+]
+
 { #category : #accessing }
-FontProviderAbstract >> families [
+AbstractFontProvider >> families [
 	self subclassResponsibility
 ]
