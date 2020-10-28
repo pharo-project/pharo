@@ -112,7 +112,7 @@ FluidClassDefinitionPrinterTest >> testExpandedOnClassWithoutTag [
 
 	self 
 		assert: (self expandedForClass: EncoderForV3)
-		equals:   'Object < #EncoderForV3
+		equals:   'Object << #EncoderForV3
 	layout: FixedLayout;
 	uses: {};
 	slots: {};
@@ -127,7 +127,7 @@ FluidClassDefinitionPrinterTest >> testExpandedPoint [
 
 	self 
 		assert: (self expandedForClass: Point) 
-		equals: 'Object < #Point
+		equals: 'Object << #Point
 	layout: FixedLayout;
 	uses: {};
 	slots: { #x . #y };
@@ -154,7 +154,7 @@ FluidClassDefinitionPrinterTest >> testExpandedTime [
 
 	self 
 		assert: (self expandedForClass: Time)  
-		equals: 'Object < #Time
+		equals: 'Object << #Time
 	layout: FixedLayout;
 	uses: {};
 	slots: { #seconds . #nanos };
@@ -180,7 +180,7 @@ FluidClassDefinitionPrinterTest >> testFullyExpandedSimple [
 
 	self 
 		assert: (FluidClassDefinitionPrinter new classDefinitionTemplateInPackage: 'Kernel') 
-		equals:  'Object < #MyClass
+		equals:  'Object << #MyClass
 	layout: FixedLayout;
 	uses: {};
 	slots: {};
