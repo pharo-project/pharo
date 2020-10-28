@@ -21,6 +21,47 @@ ObjectTest >> testAs [
 	self assert: coll1 identicalTo: coll2
 ]
 
+{ #category : #'tests - write barrier' }
+ObjectTest >> testBeRecursivelyReadOnlyObject [
+
+	| assoc array |
+	assoc := 1 -> (1 -> 2).
+	assoc beRecursivelyReadOnlyObject.
+	self should: [ assoc key: 2 ] raise: ModificationForbidden.
+	self should: [ assoc value key: 2 ] raise: ModificationForbidden.
+	
+	array := #(1 #(1 2)).
+	array beRecursivelyReadOnlyObject.
+	self should: [ array at: 1 put: 2 ] raise: ModificationForbidden.
+	self should: [ array second  at: 1 put: 2 ] raise: ModificationForbidden.
+
+]
+
+{ #category : #'tests - write barrier' }
+ObjectTest >> testBeRecursivelyWritableObject [
+
+	| assoc array |
+	assoc := 1 -> (1 -> 2).
+	assoc beRecursivelyReadOnlyObject.
+	self should: [ assoc key: 2 ] raise: ModificationForbidden.
+	self should: [ assoc value key: 2 ] raise: ModificationForbidden.
+	assoc beRecursivelyWritableObject.
+	assoc key: 2.
+	assoc value key: 2.
+	self assert: assoc key equals: 2.
+	self assert: assoc value key equals: 2.
+	
+	array := #(1 #(1 2)).
+	array beRecursivelyReadOnlyObject.
+	self should: [ array at: 1 put: 2 ] raise: ModificationForbidden.
+	self should: [ array second  at: 1 put: 2 ] raise: ModificationForbidden.
+	array beRecursivelyWritableObject.
+	array at: 1 put: 2.
+	array second at: 1 put: 2.
+	self assert: array first equals: 2.
+	self assert: array second first equals: 2.
+]
+
 { #category : #tests }
 ObjectTest >> testBecome [
 	"this test should that all the variables pointing to an object are pointing now to another one, and all
