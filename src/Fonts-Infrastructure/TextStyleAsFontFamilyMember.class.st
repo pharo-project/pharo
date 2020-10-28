@@ -3,7 +3,7 @@ TextStyleAsFont Family members
 "
 Class {
 	#name : #TextStyleAsFontFamilyMember,
-	#superclass : #FontFamilyMemberAbstract,
+	#superclass : #AbstractFontFamilyMember,
 	#category : #'Fonts-Infrastructure'
 }
 

@@ -3,7 +3,7 @@ FreeType FontFamily member
 "
 Class {
 	#name : #FreeTypeFontFamilyMember,
-	#superclass : #FontFamilyMemberAbstract,
+	#superclass : #AbstractFontFamilyMember,
 	#instVars : [
 		'fileInfo',
 		'stretchName',
