@@ -41,21 +41,6 @@ MetaclassForTraits >> asTraitComposition [
 	^ TaClassCompositionElement for: self
 ]
 
-{ #category : #'file in/out' }
-MetaclassForTraits >> definition [
-	^ String streamContents: [ :s | 
-		s nextPutAll: self instanceSide name;
-			nextPutAll: ' classTrait';
-			cr; tab;
-			nextPutAll: 'uses: ';
-			nextPutAll: composition traitCompositionExpression.
-			
-		self localSlots ifNotEmpty: [ 
-				s crtab;
-					nextPutAll: 'slots: '.
-				self slotDefinitionsOn: s ] ]
-]
-
 { #category : #testing }
 MetaclassForTraits >> isBaseTrait [
 	

@@ -210,6 +210,13 @@ ShiftClassInstaller >> make: aBlock [
 	^self make
 ]
 
+{ #category : #'to sort' }
+ShiftClassInstaller >> makeWithBuilder: aBuilder [
+	
+	builder := aBuilder.
+	^ self make
+]
+
 { #category : #migrating }
 ShiftClassInstaller >> migrateClassTo: newClass [
 	| slotsToMigrate oldClassVariables newClassVariables|

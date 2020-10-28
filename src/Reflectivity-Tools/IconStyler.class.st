@@ -22,7 +22,7 @@ IconStyler class >> withStaticStylers [
 	"
 	
 	^ self new 
-		stylerClasses:  {BreakpointIconStyler. CounterIconStyler. DoOnlyOnceIconStyler. FlagIconStyler. HaltIconStyler. MetaLinkIconStyler. SemanticWarningIconStyler. WatchIconStyler. MetalinkIconStyler. DocCommentIconStyler}; 
+		stylerClasses:  {BreakpointIconStyler. CounterIconStyler. DoOnlyOnceIconStyler. FlagIconStyler. HaltIconStyler. MetaLinkIconStyler. SemanticWarningIconStyler. WatchIconStyler. DocCommentIconStyler}; 
 		yourself
 
 ]

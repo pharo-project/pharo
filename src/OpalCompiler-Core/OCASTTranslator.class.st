@@ -128,7 +128,6 @@ OCASTTranslator >> emitCaseOf: aMessageNode otherwiseBlock: aBlock [
 	| cases assocMessageNode  |
 	
 	cases := aMessageNode arguments first statements.
-	cases ifEmpty: [ self backendError: 'At least one case required' forNode: aMessageNode ].
 	valueTranslator visitNode: aMessageNode receiver.
 	valueTranslator emitAllButLastCases: cases.
 	

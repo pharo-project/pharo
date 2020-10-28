@@ -1276,6 +1276,15 @@ EncoderForSistaV1 >> genPushThisContext [
 ]
 
 { #category : #'bytecode generation' }
+EncoderForSistaV1 >> genPushThisProcess [
+	"82			01010010			Push thisContext, (then e.g. Extend B 1 = push thisProcess)"
+	stream nextPut: 225.
+	stream nextPut: 1.
+	stream nextPut: 82.
+
+]
+
+{ #category : #'bytecode generation' }
 EncoderForSistaV1 >> genReturnReceiver [
 	"88-91		010110 ii			Return Receiver/true/false/nil"
 	stream nextPut: 88

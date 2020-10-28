@@ -10,7 +10,7 @@ Class {
 		'isInstalled',
 		'targetClassOrMethod'
 	],
-	#category : #'Reflectivity-VariableBreakpoint'
+	#category : #'Reflectivity-Breakpoints'
 }
 
 { #category : #private }

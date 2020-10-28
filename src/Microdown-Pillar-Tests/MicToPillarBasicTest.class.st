@@ -26,7 +26,7 @@ MicToPillarBasicTest >> testCodeBlock [
 { #category : #tests }
 MicToPillarBasicTest >> testCodeInText [
 
-	| document pillarDocument |
+	| document |
 	document := self parserClass new parse: 'The method `foo` is fun'.
 	pillarDocument := document asPillar.
 	self assert: pillarDocument children first class equals: PRParagraph.

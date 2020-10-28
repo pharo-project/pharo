@@ -19,8 +19,38 @@ Object >> asMethodConstant [
 ]
 
 { #category : #'*Reflectivity' }
+Object >> haltOnAccess [
+	^ VariableBreakpoint watchVariablesInObject: self
+]
+
+{ #category : #'*Reflectivity' }
+Object >> haltOnAccessTo: aVariableName [
+	^VariableBreakpoint watchVariable: aVariableName inObject: self
+]
+
+{ #category : #'*Reflectivity' }
 Object >> haltOnCallTo: aSelector [
 	^Breakpoint breakOn: aSelector inObject: self
+]
+
+{ #category : #'*Reflectivity' }
+Object >> haltOnRead [
+	^VariableBreakpoint watchVariablesReadsInObject: self
+]
+
+{ #category : #'*Reflectivity' }
+Object >> haltOnReadTo: aVariableName [
+	^VariableBreakpoint watchVariableReads: aVariableName inObject: self
+]
+
+{ #category : #'*Reflectivity' }
+Object >> haltOnWrite [
+	^VariableBreakpoint watchVariablesWritesInObject: self
+]
+
+{ #category : #'*Reflectivity' }
+Object >> haltOnWriteTo: aVariableName [
+	^VariableBreakpoint watchVariableWrites: aVariableName inObject: self
 ]
 
 { #category : #'*Reflectivity' }
@@ -56,7 +86,7 @@ Object >> link: aMetaLink toClassVariableNamed: aClassVariableName option: optio
 
 { #category : #'*Reflectivity' }
 Object >> link: aMetaLink toMethodNamed: aMethodName [
-	self link: aMetaLink toAST: (MetalinkTargetResolver methodNamed: aMethodName for: self)
+	self link: aMetaLink toAST: (self nonAnonymousClass lookupSelector: aMethodName asSymbol) ast
 ]
 
 { #category : #'*Reflectivity' }

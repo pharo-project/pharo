@@ -29,10 +29,6 @@ MetaLinkIconStyler >> iconLabel: aNode [
 
 { #category : #testing }
 MetaLinkIconStyler >> shouldStyleNode: aNode [
-	 aNode hasBreakpoint ifTrue: [ ^ false ].	
 	 ^ aNode hasLinks and: [ 
-		   aNode links anySatisfy: [ :link | 
-			   ({ 
-				    Watch.
-				    ExecutionCounter } includes: link metaObject class) not ] ]
+		   aNode links anySatisfy: [ :link | link hasOption: #optionStyler]]
 ]

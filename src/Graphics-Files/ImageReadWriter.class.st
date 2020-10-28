@@ -119,7 +119,7 @@ ImageReadWriter class >> readerClassFromStream: positionableReadStream [
 			positionableReadStream savingPositionDo: [ 
 				subclass understandsImageFormat: positionableReadStream ] ]
 		ifNone: [ positionableReadStream close.
-			^ self error: 'image format not recognized' ].
+			^ self unrecognizedImageFormatError: 'Image format is not recognized.' ].
 	^ readerClass
 ]
 
@@ -135,6 +135,11 @@ ImageReadWriter class >> understandsImageFormat: aStream [
 	^ [ (self new on: aStream) understandsImageFormat ]
 		on: Error
 		do: [ :ex | ex return: false ]
+]
+
+{ #category : #'image reading/writing' }
+ImageReadWriter class >> unrecognizedImageFormatError: aString [
+    UnrecognizedImageFormatError signal: aString
 ]
 
 { #category : #'image reading/writing' }

@@ -23,7 +23,7 @@ Class {
 	#instVars : [
 		'name'
 	],
-	#category : #ClassParser
+	#category : #'ClassParser-Model'
 }
 
 { #category : #visitor }

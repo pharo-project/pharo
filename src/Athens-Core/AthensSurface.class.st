@@ -87,6 +87,11 @@ AthensSurface >> createLinearGradient: colorRamp start: pt1 stop: pt2 [
 	self shouldNotImplement 
 ]
 
+{ #category : #paints }
+AthensSurface >> createMeshGradientWithPatches: aListOfMeshPatches [ 
+	self subclassResponsibility.
+]
+
 { #category : #paths }
 AthensSurface >> createPath: aPathBuilder [
 	"Create a path from provided path builder instance"

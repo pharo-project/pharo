@@ -477,8 +477,20 @@ SmallInteger >> identityHash [
 ]
 
 { #category : #testing }
+SmallInteger >> isImmediateObject [
+	"This is needed for the boostrap"
+	^ true
+]
+
+{ #category : #testing }
 SmallInteger >> isLarge [
 	^false
+]
+
+{ #category : #testing }
+SmallInteger >> isReadOnlyLiteral [ 
+	"Immediate objects are read-only by design, we can not call #beReadOnlyObject"
+	^ false
 ]
 
 { #category : #'bit manipulation' }

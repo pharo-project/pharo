@@ -1,6 +1,15 @@
 "
-I'm a holder of some samples for Pillar structures.
+I'm a holder of some samples for Pillar structures
 
+&
+\frac{1}{2}
+&
+
+Here we have some text
+
+&
+x ^2 + y^2 = z^2  
+&
 "
 Class {
 	#name : #PRDocumentSample,

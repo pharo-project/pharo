@@ -49,9 +49,9 @@ PRRichTextCanvas >> includeBrush: aBrush in: aBlock [
 
 { #category : #public }
 PRRichTextCanvas >> indentIn: aBlock [ 
-	nesting := nesting +1.
+	nesting := nesting + 1.
 	aBlock value.
-	nesting := nesting -1.
+	nesting := nesting - 1.
 	
 		
 ]

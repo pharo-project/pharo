@@ -209,8 +209,10 @@ MCTraitDefinition >> printDefinitionOn: stream [
 	self instanceVariablesString isEmpty ifFalse: [
 			stream 
 				tab;
-				nextPutAll: 'slots: ';
-		 		nextPutAll: self slotDefinitionString;
+				nextPutAll: 'instanceVariableNames: ';
+				nextPut: $';
+		 		nextPutAll: self instanceVariablesString;
+				nextPut: $';
 				cr ].
 		
 	stream

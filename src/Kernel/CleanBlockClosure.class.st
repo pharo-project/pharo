@@ -5,6 +5,21 @@ This is disabled by default.
 
 If you want to experiment, you can enable the #optionCleanBlockClosure compiler option.
 
+In the current system (with that option disabled), blocks are compiled to instances of CompiledBlock.
+They are stored as literals and we create/push a FullBlockClosure with a special bytecode.
+
+This bytecode thus creates a FullBock at runtime. 
+
+If a block is clean (does not access self, super, outer temps/args, does not return), we can create the block
+at compile time instead. 
+
+CleanBlockClosure is exactly that: a closure created at compile time, it is stored in the literal frame and just
+pushed on the stack.
+
+For debugging, it does implement all needed machinary to read temps (via tempNamed:) just like a FullBlockClosure.
+
+
+Cleanup for later:
 - This should not be a subclass of FullBlock (as it does not need the receiver ivar, for example)
 "
 Class {
