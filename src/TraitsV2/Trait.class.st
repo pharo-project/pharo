@@ -187,26 +187,16 @@ Trait >> classTrait [
 	^ self class
 ]
 
-{ #category : #'file in/out' }
-Trait >> definition [
-	
-	(self instanceSide name == #Trait) ifTrue: [ ^ super definition ].
+{ #category : #fileout }
+Trait >> definitionStringFor: aConfiguredPrinter [
 
-	^ String streamContents: [ :s | 
-		s 
-			nextPutAll: 'Trait named: ';
-			nextPutAll:	self name printString;
-			cr; tab; 
-			nextPutAll: ' uses: ';
-			nextPutAll: self traitComposition traitCompositionExpression; 
-			cr.
-		self classLayout visibleSlots ifNotEmpty: [ 
-			s tab; nextPutAll: ' slots: '.
-			self slotDefinitionsOn: s.
-			s cr ].
-		s tab; nextPutAll: ' package: ';
-			nextPutAll: self category asString printString
-	]
+	^ aConfiguredPrinter traitDefinitionString
+]
+
+{ #category : #fileout }
+Trait >> expandedDefinitionStringFor: aPrinter [
+
+	^ aPrinter expandedTraitDefinitionString 
 ]
 
 { #category : #testing }

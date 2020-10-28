@@ -35,6 +35,6 @@ RFVariableReification >> genForLiteralVariable [
 { #category : #generate }
 RFVariableReification >> genForRBVariableNode [
 	
-	entity isTemp ifTrue: [ ^self error: 'Temps can not be reified yet' ]. 
+	entity isTempVariable ifTrue: [ ^self error: 'Temps can not be reified yet' ]. 
 	^RFLiteralVariableNode value: entity binding
 ]

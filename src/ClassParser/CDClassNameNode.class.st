@@ -41,7 +41,7 @@ CDClassNameNode >> existingClassIfAbsent: aBlock [
 ]
 
 { #category : #testing }
-CDClassNameNode >> isTemp [
+CDClassNameNode >> isTempVariable [
 	"To be polymorphic to RB method nodes"
 	^false
 ]

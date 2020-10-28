@@ -61,6 +61,12 @@ ClyTextEditorToolMorph >> bindingOf: aString [
 	^self selectedClassOrMetaClass bindingOf: aString
 ]
 
+{ #category : #'rubric interaction model' }
+ClyTextEditorToolMorph >> bindings [
+	"no additional bindings provided by the Requestor"
+	^#() asDictionary
+]
+
 { #category : #updating }
 ClyTextEditorToolMorph >> browserContextWasChanged [
 	"We should ignore any notifications during applying changes 

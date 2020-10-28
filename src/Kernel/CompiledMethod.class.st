@@ -7,10 +7,8 @@ CompiledMethod instances can be in two forms:
 
 In addition the execution mechanics, a compiled method have two extra optional literals. The last literal, optional if there are no super sends, is the class in which the method is installed. The last but one literal is either the method's selector or an AdditionalMethodState instance. AdditionalMethodState instances are used to encode additional state to a method, as for example the pragmas.
 
-
-
-
-
+The bytecode encodes the trailer at the end, in most cases it has 4 bytes encoding the sourcer pointer (see CompiledMethodTrailer).
+Thus endPC of a compiled method is not the size of the bytecode, but the size minus the length of the trailer.
 
 "
 Class {
@@ -126,13 +124,7 @@ CompiledMethod class >> handleFailingNewMethod: numberOfBytes header: headerWord
 CompiledMethod class >> headerFlagForEncoder: anEncoderClass [
 	anEncoderClass == PrimaryBytecodeSetEncoderClass ifTrue: [ ^ 0 ].
 	anEncoderClass == SecondaryBytecodeSetEncoderClass ifTrue: [ ^ SmallInteger minVal ].
-	
-	"The following is a hack to support the old compiler... We can remove it once the old compiler is removed"
-	(PrimaryBytecodeSetEncoderClass name endsWith: (anEncoderClass name withoutPrefix: 'Legacy')) ifTrue: [ ^ 0 ].
-	(SecondaryBytecodeSetEncoderClass name endsWith: (anEncoderClass name withoutPrefix: 'Legacy')) ifTrue: [ ^ SmallInteger minVal ].
-	
-	self error: 'The encoder is not one of the two installed bytecode sets'.
-	^ 0
+	self error: 'The encoder is not one of the two installed bytecode sets'
 ]
 
 { #category : #'class initialization' }
@@ -410,7 +402,7 @@ CompiledMethod >> embeddSourceInTrailer [
 
 { #category : #accessing }
 CompiledMethod >> endPC [
-	"Answer the index of the last bytecode."
+	"Answer the index of the last bytecode, as the trailer size varies we have to delegate"
 	^ self trailer endPC
 ]
 

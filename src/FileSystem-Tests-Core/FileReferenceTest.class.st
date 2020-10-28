@@ -100,6 +100,33 @@ FileReferenceTest >> testAsAbsoluteIdentity [
 ]
 
 { #category : #tests }
+FileReferenceTest >> testAsFileLocatorOrReferenceReturnsALocatorWhenStringRefersToAKnownOrigin [
+	| fileRef locator |
+	fileRef := (FileLocator home / 'foo') asFileReference.
+	
+	locator := fileRef asFileLocatorOrReference.
+		
+	self
+		assert: locator origin
+		equals: #home.
+	self
+		assert: locator fullName
+		equals: fileRef fullName.
+]
+
+{ #category : #tests }
+FileReferenceTest >> testAsFileLocatorOrReferenceReturnsAReferenceWhenStringDoesNotReferToAKnownOrigin [
+	| fileRef result |
+	fileRef := '/foo' asFileReference.
+	
+	result := fileRef asFileLocatorOrReference.
+	
+	self
+		assert: result
+		equals: fileRef.
+]
+
+{ #category : #tests }
 FileReferenceTest >> testAsReference [
 	| ref |
 	ref := filesystem * 'plonk'.

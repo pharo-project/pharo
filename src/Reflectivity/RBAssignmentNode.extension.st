@@ -1,6 +1,6 @@
 Extension { #name : #RBAssignmentNode }
 
-{ #category : #'*Reflectivity-VariableBreakpoint' }
+{ #category : #'*Reflectivity' }
 RBAssignmentNode >> variableValueInContext: aContext [
 	^self variable variableValueInContext: aContext
 ]

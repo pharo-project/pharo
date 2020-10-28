@@ -9,7 +9,7 @@ Class {
 		'obj4',
 		'observer'
 	],
-	#category : #'Reflectivity-VariableBreakpoint'
+	#category : #'Reflectivity-Tests-Breakpoints'
 }
 
 { #category : #helpers }
@@ -206,6 +206,49 @@ VariableBreakpointTest >> testBreakpointOnArgument [
 	self assertCollection: wp link nodes asIdentitySet equals: self argNodes asIdentitySet.	
 	self should: [obj1 methodWithTempsAndArg: 42] raise: Break	
 	
+]
+
+{ #category : #'tests - class var breakpoints' }
+VariableBreakpointTest >> testBreakpointOnClassVarAccesses [
+	|method|
+	method := (VariableBreakpointMockClass>> #classVarRead).
+	wp := VariableBreakpoint watchVariable: #ClassVar inClass: VariableBreakpointMockClass.
+	
+	self assertCollection: wp targetVariableNames equals: (OrderedCollection with: #ClassVar).
+	self assert: wp targetClassOrMethod identicalTo: VariableBreakpointMockClass.
+	self assert: wp targetInstance equals: nil.
+	
+	self assertCollection: wp link nodes asIdentitySet equals: (VariableBreakpointMockClass classVariableNamed: #ClassVar) accessingNodes asIdentitySet.
+	self should: [obj1 classVarRead] raise: Break.
+	self should: [obj1 classVarWrite] raise: Break	
+]
+
+{ #category : #'tests - class var breakpoints' }
+VariableBreakpointTest >> testBreakpointOnClassVarReads [
+	|method|
+	method := (VariableBreakpointMockClass>> #classVarRead).
+	wp := VariableBreakpoint watchVariableReads: #ClassVar inClass: VariableBreakpointMockClass.
+	
+	self assertCollection: wp targetVariableNames equals: (OrderedCollection with: #ClassVar).
+	self assert: wp targetClassOrMethod identicalTo: VariableBreakpointMockClass.
+	self assert: wp targetInstance equals: nil.
+	
+	self assertCollection: wp link nodes asIdentitySet equals: (VariableBreakpointMockClass classVariableNamed: #ClassVar) readNodes asIdentitySet.
+	self should: [obj1 classVarRead] raise: Break	
+]
+
+{ #category : #'tests - class var breakpoints' }
+VariableBreakpointTest >> testBreakpointOnClassVarWrites [
+	|method|
+	method := (VariableBreakpointMockClass>> #classVarWrite).
+	wp := VariableBreakpoint watchVariableWrites: #ClassVar inClass: VariableBreakpointMockClass.
+	
+	self assertCollection: wp targetVariableNames equals: (OrderedCollection with: #ClassVar).
+	self assert: wp targetClassOrMethod identicalTo: VariableBreakpointMockClass.
+	self assert: wp targetInstance equals: nil.
+	
+	self assertCollection: wp link nodes asIdentitySet equals: (VariableBreakpointMockClass classVariableNamed: #ClassVar) assignmentNodes asIdentitySet.
+	self should: [obj1 classVarWrite] raise: Break	
 ]
 
 { #category : #'tests - temp var breakpoints' }

@@ -111,6 +111,7 @@ MCClassDefinition >> classInstanceVariables [
 
 { #category : #printing }
 MCClassDefinition >> classInstanceVariablesString [
+
 	^ self stringForVariablesOfType: #isClassInstanceVariable
 ]
 
@@ -407,6 +408,19 @@ MCClassDefinition >> printClassDefinitionOn: stream [
 ]
 
 { #category : #printing }
+MCClassDefinition >> printDefinitionBodyOn: stream [
+
+	self hasClassTraitComposition ifTrue: [
+		stream
+			nextPutAll: 'uses: ';
+			nextPutAll: self classTraitCompositionString;
+			cr; tab ].
+	stream
+		nextPutAll: ' instanceVariableNames: '; 
+		store: self classInstanceVariablesString
+]
+
+{ #category : #printing }
 MCClassDefinition >> printDefinitionOn: stream [
 		stream 
 			nextPutAll: self superclassName;
@@ -438,14 +452,7 @@ MCClassDefinition >> printMetaDefinitionOn: stream [
 	stream 
 		nextPutAll: self className;
 		nextPutAll: ' class'; cr; tab.
-	self hasClassTraitComposition ifTrue: [
-		stream
-			nextPutAll: 'uses: ';
-			nextPutAll: self classTraitCompositionString;
-			cr; tab ].
-	stream
-		nextPutAll: ' instanceVariableNames: '; 
-		store: self classInstanceVariablesString
+	self printDefinitionBodyOn: stream
 ]
 
 { #category : #comparing }

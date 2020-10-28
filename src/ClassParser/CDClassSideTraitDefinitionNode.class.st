@@ -1,5 +1,5 @@
 Class {
 	#name : #CDClassSideTraitDefinitionNode,
 	#superclass : #CDMetaclassDefinitionNode,
-	#category : #ClassParser
+	#category : #'ClassParser-Model'
 }

@@ -17,13 +17,12 @@ BaselineOfReflectivity >> baseline: spec [
 				package: 'Reflectivity-Tools' with: [ spec requires: 'Reflectivity' ];
 				package: 'Reflectivity-Tools-Tests' with: [ spec requires: 'Reflectivity-Tools' ];
 				package: 'Reflectivity-Examples' with: [ spec requires: 'Reflectivity' ];
-				package: 'Reflectivity-Tests' with: [ spec requires: #(Reflectivity 'Reflectivity-Tools') ];
-				package: 'Reflectivity-VariableBreakpoint' with: [ spec requires: 'Reflectivity' ].
+				package: 'Reflectivity-Tests' with: [ spec requires: #(Reflectivity 'Reflectivity-Tools') ].
 		
 		spec
 				group: 'default' with: #('Reflectivity');
 				group: 'tools' with: #('Reflectivity-Tools' 'Reflectivity-Tools-Tests');
-				group: 'tests' with: #('default' 'tools' 'Reflectivity-Tests' 'Reflectivity-Examples' 'Reflectivity-VariableBreakpoint') ]
+				group: 'tests' with: #('default' 'tools' 'Reflectivity-Tests' 'Reflectivity-Examples') ]
 		
 	
 ]

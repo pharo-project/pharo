@@ -91,6 +91,11 @@ BytecodeEncoder >> genPushSpecialLiteral: aLiteral [
 	self subclassResponsibility
 ]
 
+{ #category : #'bytecode generation' }
+BytecodeEncoder >> genPushThisProcess [
+	"only available in Sista BC"
+]
+
 { #category : #accessing }
 BytecodeEncoder >> methodStreamPosition [
 	^stream position
@@ -214,6 +219,11 @@ BytecodeEncoder >> sizePushTemp: tempIndex [
 { #category : #'opcode sizing' }
 BytecodeEncoder >> sizePushThisContext [
 	^self sizeOpcodeSelector: #genPushThisContext withArguments: #()
+]
+
+{ #category : #'opcode sizing' }
+BytecodeEncoder >> sizePushThisProcess [
+	^self sizeOpcodeSelector: #genPushThisProcess withArguments: #()
 ]
 
 { #category : #'opcode sizing' }

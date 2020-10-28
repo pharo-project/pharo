@@ -16,8 +16,8 @@ T2TraitMCDefinitionsTest >> testDefinitionHasCorrectString [
 	definition := t2 asClassDefinition.				
 	definitionString := String streamContents: [ :s | definition printDefinitionOn: s ].
  	
- 	self assert: (definitionString reject: [ :each | each isSeparator]) equals: (t2 definition reject: [ :each | each isSeparator ]).
-
+ 	self assert: (definitionString reject: [ :each | each isSeparator]) equals: 'Traitnamed:#T2uses:T1instanceVariableNames:''#a=>PropertySlot#b=>PropertySlot''package:''TraitsV2-Tests-TestClasses'''
+	"We cannot use the class printer because this is a mix between instancevariableNames and complex slot."
 ]
 
 { #category : #tests }
@@ -29,7 +29,11 @@ T2TraitMCDefinitionsTest >> testDefinitionHasCorrectStringWithoutSlots [
 	definition := t2 asClassDefinition.				
 	definitionString := String streamContents: [ :s | definition printDefinitionOn: s ].
 		
-	self assert: (definitionString reject: [ :each | each isSeparator ]) equals: (t2 definition reject: [ :each | each isSeparator ]).
+	self assert: (definitionString reject: [ :each | each isSeparator ]) equals: 'Traitnamed:#T2uses:T1instanceVariableNames:''ab''package:''TraitsV2-Tests-TestClasses'''
+	
+	
+	"We cannot use ((ClassDefinitionPrinter oldPharo for: t2) definitionString reject: [ :each | each isSeparator ])
+	because slots is still used in the oldPharo printer implementation and this should change."
 
 ]
 
@@ -51,13 +55,15 @@ T2TraitMCDefinitionsTest >> testDefinitionOfClassSideTrait [
 T2TraitMCDefinitionsTest >> testDefinitionOfClassSideTraitHasCorrectString [
 	
 	| t1 definition |
-	
 	t1 := self newTrait: #T1 with: #() uses: #().
 	t1 classTrait uses: {} slots: #(aSlot).
 
 	definition := t1 asClassDefinition.
 	
-	self assert: definition classDefinitionString equals: t1 class definition 
+	self assert: definition classDefinitionString equals: 'T1 classTrait instanceVariableNames: ''aSlot'''
+	
+	"We cannot use the class printer because this is a mix between instancevariableNames and complex slot."
+	"(ClassDefinitionPrinter oldPharo for: t1 class) definitionString "
 
 ]
 
@@ -71,8 +77,7 @@ T2TraitMCDefinitionsTest >> testDefinitionOfClassSideTraitWithSpecialSlotHasCorr
 
 	definition := t1 asClassDefinition.
 	
-	self assert: (definition classDefinitionString reject: [ :each | each isSeparator ]) equals: (t1 class definition reject: [ :each | each isSeparator ])
-
+	self assert: (definition classDefinitionString reject: [ :each | each isSeparator ]) equals: 'T1classTraitinstanceVariableNames:''#aSlot=>WeakSlot'''
 ]
 
 { #category : #tests }

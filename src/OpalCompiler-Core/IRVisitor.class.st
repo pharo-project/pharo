@@ -104,6 +104,10 @@ IRVisitor >> visitPushThisContext: pushThisContext [
 ]
 
 { #category : #visiting }
+IRVisitor >> visitPushThisProcess: pushThisProcess [
+]
+
+{ #category : #visiting }
 IRVisitor >> visitReturn: return [
 ]
 

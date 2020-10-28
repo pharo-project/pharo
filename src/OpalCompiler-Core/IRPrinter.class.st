@@ -211,6 +211,13 @@ IRPrinter >> visitPushThisContext: ctxt [
 ]
 
 { #category : #visiting }
+IRPrinter >> visitPushThisProcess: pushThisProcess [
+
+	stream nextPutAll: 'pushThisProcess'
+
+]
+
+{ #category : #visiting }
 IRPrinter >> visitReturn: ret [
 	
 	stream nextPutAll: 'returnTop'.

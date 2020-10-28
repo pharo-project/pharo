@@ -63,7 +63,7 @@ RGVariable >> isReservedVariable [
 ]
 
 { #category : #testing }
-RGVariable >> isTemp [
+RGVariable >> isTempVariable [
 	^false
 ]
 

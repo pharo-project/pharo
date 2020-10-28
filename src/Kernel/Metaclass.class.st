@@ -120,14 +120,10 @@ Metaclass >> classVariables [
 		ifNotNil: [ :class | class classVariables ]
 ]
 
-{ #category : #'file in/out' }
-Metaclass >> definition [
-	"Refer to the comment in ClassDescription|definition."
+{ #category : #fileout }
+Metaclass >> definitionStringFor: aConfiguredPrinter [
 
-	(self slotsNeedFullDefinition or: [ Slot showSlotClassDefinition ]) ifTrue: [ 
-		^ self definitionWithSlots ].
-
-	^ self definitionWithoutSlots
+	^ aConfiguredPrinter metaclassDefinitionString 
 ]
 
 { #category : #'file in/out' }
@@ -158,6 +154,12 @@ Metaclass >> definitionWithoutSlots [
 Metaclass >> environment [
 
 	^thisClass environment
+]
+
+{ #category : #fileout }
+Metaclass >> expandedDefinitionStringFor: aPrinter [
+
+	^ aPrinter expandedMetaclassDefinitionString
 ]
 
 { #category : #testing }

@@ -473,6 +473,12 @@ Class >> definesClassVariableNamed: aString [
 	^ self classVarNames includes: aString
 ]
 
+{ #category : #fileout }
+Class >> definitionStringFor: aConfiguredPrinter [
+
+	^ aConfiguredPrinter classDefinitionString 
+]
+
 { #category : #'file in/out' }
 Class >> definitionWithSlots [
 	"The class definition with a way to specify slots. Shown when the class defines special Slot"
@@ -660,6 +666,12 @@ Class >> ephemeronSubclass: t instanceVariableNames: f classVariableNames: d poo
 				sharedPools: s;
 				category: cat;
 				environment: self environment ]
+]
+
+{ #category : #fileout }
+Class >> expandedDefinitionStringFor: aPrinter [
+
+	^ aPrinter expandedClassDefinitionString 
 ]
 
 { #category : #private }

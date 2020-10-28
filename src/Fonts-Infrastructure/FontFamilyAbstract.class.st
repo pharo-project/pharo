@@ -20,7 +20,7 @@ FontFamilyAbstract >> closestMemberWithStretchValue: stretchValue weightValue: w
 		a isCloserMatchThan: b 
 			toStretch: stretchValue 
 			weight: weightValue 
-			slant: slantValue]) first. 
+			slant: slantValue]) first
 ]
 
 { #category : #accessing }

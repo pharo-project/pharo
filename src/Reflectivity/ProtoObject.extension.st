@@ -9,6 +9,13 @@ ProtoObject >> metaLinkOptions [
 ]
 
 { #category : #'*Reflectivity' }
+ProtoObject >> nonAnonymousClass [
+	^ self class isAnonymous
+		ifTrue: [ self class superclass ]
+		ifFalse: [ self class ]
+]
+
+{ #category : #'*Reflectivity' }
 ProtoObject >> rFwithArgs: argArray executeMethod: compiledMethod [
 	"Execute compiledMethod against the receiver and args in argArray"
 	"This method is used by reflectivity internally. All meta-links are ignored"
