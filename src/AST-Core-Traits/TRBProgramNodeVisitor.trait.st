@@ -70,10 +70,6 @@ TRBProgramNodeVisitor >> visitLiteralValueNode: aNode [
 	^ self visitLiteralNode: aNode
 ]
 
-{ #category : #'visiting - reflectivity' }
-TRBProgramNodeVisitor >> visitLiteralVariableNode: aNode [
-]
-
 { #category : #visiting }
 TRBProgramNodeVisitor >> visitMessageNode: aMessageNode [ 
 	(aMessageNode isCascaded not or: [aMessageNode isFirstCascaded]) 

@@ -32,15 +32,15 @@ RFValueReification >> genForInstanceVariableSlot [
 	"entity in this case is the binding of the instance variable"
 
 	^ RBMessageNode
-		receiver: (RFLiteralVariableNode value: entity)
+		receiver: (RBLiteralNode value: entity)
 		selector: #read:
 		arguments: {RBVariableNode selfNode}
 ]
 
 { #category : #generate }
 RFValueReification >> genForLiteralVariable [
-	"entity in this case is the binding of the literal variable"
-	^RFLiteralVariableNode value: entity value
+	"entity in this case is the binding of the literal"
+	^RBLiteralNode value: entity value
 ]
 
 { #category : #generate }
@@ -93,7 +93,7 @@ RFValueReification >> genForRBReturnNode [
 RFValueReification >> genForRBVariableNode [
 	entity variable
 		ifNotNil: [ entity variable isLiteralVariable
-				ifTrue: [ ^ RFLiteralVariableNode value: entity binding value ] ].
+				ifTrue: [ ^ RBLiteralNode value: entity binding value ] ].
 	^ RBVariableNode named: entity name
 ]
 
