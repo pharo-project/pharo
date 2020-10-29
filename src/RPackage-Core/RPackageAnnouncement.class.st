@@ -16,6 +16,12 @@ RPackageAnnouncement class >> to: aPackage [
 	^ self new package: aPackage
 ]
 
+{ #category : #testing }
+RPackageAnnouncement >> affectsPackages [
+	 
+	^true
+]
+
 { #category : #accessing }
 RPackageAnnouncement >> package [
 
