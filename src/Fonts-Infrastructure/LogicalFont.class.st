@@ -21,7 +21,7 @@ Class {
 	#classInstVars : [
 		'all'
 	],
-	#category : #'Fonts-Infrastructure'
+	#category : #'Fonts-Infrastructure-Logical'
 }
 
 { #category : #accessing }
@@ -33,45 +33,64 @@ LogicalFont class >> all [
 ]
 
 { #category : #'instance creation' }
-LogicalFont class >> familyName: familyName fallbackFamilyNames: fallbackFamilyNames pointSize: pointSize [ 
-	
-	^self familyName: familyName fallbackFamilyNames: fallbackFamilyNames pointSize: pointSize stretchValue: 5 weightValue: 400 slantValue: 0
+LogicalFont class >> familyName: familyName fallbackFamilyNames: fallbackFamilyNames pointSize: pointSize [
+
+	^ self
+		  familyName: familyName
+		  fallbackFamilyNames: fallbackFamilyNames
+		  pointSize: pointSize
+		  stretchValue: 5
+		  weightValue: 400
+		  slantValue: 0
 ]
 
 { #category : #'instance creation' }
 LogicalFont class >> familyName: familyName fallbackFamilyNames: fallbackFamilyNames pointSize: pointSize stretchValue: stretch weightValue: weight slantValue: slant [
 
 	"^self all asArray"
+
 	"^(self all collect:[:each | each]) asArray"
-	^self all
-		detect:[:each |
-			each familyName = familyName and:[
-			each fallbackFamilyNames = fallbackFamilyNames and:[
-			each pointSize = pointSize and:[
-			each weightValue = weight and:[
-			each stretchValue = stretch and:[
-			each slantValue = slant]]]]]]
-		ifNone:[
-			self  new
-				familyName: familyName; 
-				fallbackFamilyNames: fallbackFamilyNames;
-				pointSize: pointSize; 
-				weightValue:weight;
-				stretchValue: stretch;
-				slantValue: slant;
-				yourself]
+
+	^ self all
+		  detect: [ :each | 
+			  each familyName = familyName and: [ 
+				  each fallbackFamilyNames = fallbackFamilyNames and: [ 
+					  each pointSize = pointSize and: [ 
+						  each weightValue = weight and: [ 
+							  each stretchValue = stretch and: [ each slantValue = slant ] ] ] ] ] ]
+		  ifNone: [ 
+			  self new
+				  familyName: familyName;
+				  fallbackFamilyNames: fallbackFamilyNames;
+				  pointSize: pointSize;
+				  weightValue: weight;
+				  stretchValue: stretch;
+				  slantValue: slant;
+				  yourself ]
 ]
 
 { #category : #'instance creation' }
-LogicalFont class >> familyName: familyName pointSize: pointSize [ 
-	
-	^self familyName: familyName fallbackFamilyNames: nil pointSize: pointSize stretchValue: 5 weightValue: 400 slantValue: 0
+LogicalFont class >> familyName: familyName pointSize: pointSize [
+
+	^ self
+		  familyName: familyName
+		  fallbackFamilyNames: nil
+		  pointSize: pointSize
+		  stretchValue: 5
+		  weightValue: 400
+		  slantValue: 0
 ]
 
 { #category : #'instance creation' }
 LogicalFont class >> familyName: familyName pointSize: pointSize stretchValue: stretch weightValue: weight slantValue: slant [
 
-	^self familyName: familyName fallbackFamilyNames: nil pointSize: pointSize stretchValue: stretch weightValue: weight slantValue: slant
+	^ self
+		  familyName: familyName
+		  fallbackFamilyNames: nil
+		  pointSize: pointSize
+		  stretchValue: stretch
+		  weightValue: weight
+		  slantValue: slant
 ]
 
 { #category : #'class initialization' }
@@ -82,274 +101,326 @@ LogicalFont class >> initialize [
 
 { #category : #'instance creation' }
 LogicalFont class >> new [
-	
-	^self all add: super new
+
+	^ self all add: super new
 ]
 
 { #category : #shutdown }
-LogicalFont class >> shutDown: quitting [ 
+LogicalFont class >> shutDown: quitting [
 
-	self  allSubInstances do: [:i | i clearRealFont].
+	self allSubInstances do: [ :i | i clearRealFont ]
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> slantBackslanted [
-	^2
+
+	^ 2
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> slantBook [
-	^0
+
+	^ 0
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> slantCursive [
-	^1
+
+	^ 1
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> slantInclined [
-	^2
+
+	^ 2
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> slantItalic [
-	^1
+
+	^ 1
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> slantKursiv [
-	^1
+
+	^ 1
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> slantNormal [
-	^0
+
+	^ 0
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> slantOblique [
-	^2
+
+	^ 2
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> slantRegular [
-	^0
+
+	^ 0
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> slantRoman [
-	^0
+
+	^ 0
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> slantSlanted [
-	^2
+
+	^ 2
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> slantUpright [
-	^0
+
+	^ 0
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> squeakSlantItalic [
-	^2
+
+	^ 2
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> squeakStretchCondensed [
-	^8
+
+	^ 8
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> squeakWeightBold [
-	^1
+
+	^ 1
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> stretchCompact [
-	^4
+
+	^ 4
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> stretchCompressed [
-	^2
+
+	^ 2
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> stretchCondensed [
-	^3
+
+	^ 3
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> stretchExpanded [
-	^7
+
+	^ 7
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> stretchExtended [
-	^7
+
+	^ 7
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> stretchExtraCompressed [
-	^1
+
+	^ 1
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> stretchExtraCondensed [
-	^2
+
+	^ 2
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> stretchExtraExpanded [
-	^8
+
+	^ 8
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> stretchExtraExtended [
-	^8
+
+	^ 8
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> stretchNarrow [
-	^4
+
+	^ 4
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> stretchRegular [
-	^5
+
+	^ 5
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> stretchSemiCondensed [
-	^4
+
+	^ 4
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> stretchSemiExpanded [
-	^6
+
+	^ 6
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> stretchSemiExtended [
-	^6
+
+	^ 6
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> stretchUltraCompressed [
-	^1
+
+	^ 1
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> stretchUltraCondensed [
-	^1
+
+	^ 1
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> stretchUltraExpanded [
-	^9
+
+	^ 9
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> stretchUltraExtended [
-	^9
+
+	^ 9
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> stretchWide [
-	^6
+
+	^ 6
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> weightBlack [
-	^900
+
+	^ 900
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> weightBold [
-	^700
+
+	^ 700
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> weightDemi [
-	^600
+
+	^ 600
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> weightDemiBold [
-	^600
+
+	^ 600
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> weightExtraBlack [
-	^950
+
+	^ 950
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> weightExtraBold [
-	^800
+
+	^ 800
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> weightExtraLight [
-	^200
+
+	^ 200
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> weightExtraThin [
-	^100
+
+	^ 100
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> weightHeavy [
-	^900
+
+	^ 900
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> weightLight [
-	^300
+
+	^ 300
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> weightMedium [
-	^500
+
+	^ 500
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> weightNord [
-	^900
+
+	^ 900
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> weightRegular [
-	^400
+
+	^ 400
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> weightSemiBold [
-	^600
+
+	^ 600
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> weightThin [
-	^100
+
+	^ 100
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> weightUltra [
-	^800
+
+	^ 800
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> weightUltraBlack [
-	^950
+
+	^ 950
 ]
 
 { #category : #'emphasis values' }
 LogicalFont class >> weightUltraBold [
-	^800
+
+	^ 800
 ]
 
 { #category : #'emphasis values' }
@@ -359,7 +430,8 @@ LogicalFont class >> weightUltraLight [
 
 { #category : #'emphasis values' }
 LogicalFont class >> weightUltraThin [
-	^100
+
+	^ 100
 ]
 
 { #category : #'forwarded to realFont' }
@@ -802,21 +874,25 @@ LogicalFont >> stretchValue: anObject [
 
 { #category : #metrics }
 LogicalFont >> strikeoutThickness [
+
 	^ self realFont strikeoutThickness
 ]
 
 { #category : #metrics }
 LogicalFont >> strikeoutTop [
+
 	^ self realFont strikeoutTop
 ]
 
 { #category : #metrics }
 LogicalFont >> underlineThickness [
+
 	^ self realFont underlineThickness
 ]
 
 { #category : #metrics }
 LogicalFont >> underlineTop [
+
 	^ self realFont underlineTop
 ]
 
@@ -824,7 +900,7 @@ LogicalFont >> underlineTop [
 LogicalFont >> weightValue [
 	"Answer the value of weightValue"
 
-	^ weightValue ifNil:[weightValue := 400]
+	^ weightValue ifNil: [ weightValue := 400 ]
 ]
 
 { #category : #accessing }
@@ -836,26 +912,34 @@ LogicalFont >> weightValue: anObject [
 
 { #category : #'forwarded to realFont' }
 LogicalFont >> widthAndKernedWidthOfLeft: leftCharacter right: rightCharacterOrNil into: aTwoElementArray [
-	^self realFont widthAndKernedWidthOfLeft: leftCharacter right: rightCharacterOrNil into: aTwoElementArray
+
+	^ self realFont
+		  widthAndKernedWidthOfLeft: leftCharacter
+		  right: rightCharacterOrNil
+		  into: aTwoElementArray
 ]
 
 { #category : #'forwarded to realFont' }
 LogicalFont >> widthOf: anObject [
-	^self realFont widthOf: anObject
+
+	^ self realFont widthOf: anObject
 ]
 
 { #category : #'forwarded to realFont' }
 LogicalFont >> widthOfString: aString [
-	^self realFont widthOfString: aString
+
+	^ self realFont widthOfString: aString
 ]
 
 { #category : #'forwarded to realFont' }
 LogicalFont >> widthOfString: aString from: startIndex to: stopIndex [
-	^self realFont widthOfString: aString from: startIndex to: stopIndex
+
+	^ self realFont widthOfString: aString from: startIndex to: stopIndex
 ]
 
 { #category : #'forwarded to realFont' }
 LogicalFont >> xTable [
 	"Provided only for accelerating text scanning thru primitive 103 - see super."
-	^self realFont xTable
+
+	^ self realFont xTable
 ]

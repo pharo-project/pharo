@@ -7,18 +7,19 @@ Class {
 	#instVars : [
 		'textStyle'
 	],
-	#category : #'Fonts-Infrastructure'
+	#category : #'Fonts-Infrastructure-Derived'
 }
 
 { #category : #accessing }
 TextStyleAsFontFamily >> members [
-	^members ifNil:[
-		members := #('Regular' 'Italic' 'Bold' 'Bold Italic')
-		  collect:[:each | 
-			TextStyleAsFontFamilyMember new 
-				family: self;
-				styleName: each;
-				yourself]]
+
+	^ members ifNil: [ 
+		  members := #( 'Regular' 'Italic' 'Bold' 'Bold Italic' ) collect: [ 
+			             :each | 
+			             TextStyleAsFontFamilyMember new
+				             family: self;
+				             styleName: each;
+				             yourself ] ]
 ]
 
 { #category : #accessing }

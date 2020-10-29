@@ -20,5 +20,6 @@ AbstractFontProvider class >> isAbstract [
 
 { #category : #accessing }
 AbstractFontProvider >> families [
+
 	self subclassResponsibility
 ]
