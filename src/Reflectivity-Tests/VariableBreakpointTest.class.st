@@ -178,6 +178,85 @@ VariableBreakpointTest >> testAllSlotNamesFor [
 		equals: (OrderedCollection with: #v1 with: #v2)
 ]
 
+{ #category : #'tests - object-centric api' }
+VariableBreakpointTest >> testBreakOnAccess [
+	wp := obj2 haltOnAccess.
+	self should: [ obj2 v1 ] raise: Break.
+	self should: [ obj2 v1: 0 ] raise: Break.
+	self should: [ obj2 v2 ] raise: Break.
+	self should: [ obj2 v2: 0 ] raise: Break.
+	self shouldnt: [ obj4 v1 ] raise: Break.
+	self shouldnt: [ obj4 v1: 0 ] raise: Break.
+	self shouldnt: [ obj4 v2 ] raise: Break.
+	self shouldnt: [ obj4 v2: 0 ] raise: Break.
+]
+
+{ #category : #'tests - object-centric api' }
+VariableBreakpointTest >> testBreakOnAccessTo [
+	wp := obj2 haltOnAccessTo: #v1.
+	self should: [ obj2 v1 ] raise: Break.
+	self should: [ obj2 v1: 0 ] raise: Break.
+	self shouldnt: [ obj2 v2 ] raise: Break.
+	self shouldnt: [ obj2 v2: 0 ] raise: Break.
+	self shouldnt: [ obj4 v1 ] raise: Break.
+	self shouldnt: [ obj4 v1: 0 ] raise: Break.
+	self shouldnt: [ obj4 v2 ] raise: Break.
+	self shouldnt: [ obj4 v2: 0 ] raise: Break.
+]
+
+{ #category : #'tests - object-centric api' }
+VariableBreakpointTest >> testBreakOnRead [
+	wp := obj2 haltOnRead.
+	self should: [ obj2 v1 ] raise: Break.
+	self shouldnt: [ obj2 v1: 0 ] raise: Break.
+	self should: [ obj2 v2 ] raise: Break.
+	self shouldnt: [ obj2 v2: 0 ] raise: Break.
+	self shouldnt: [ obj4 v1 ] raise: Break.
+	self shouldnt: [ obj4 v1: 0 ] raise: Break.
+	self shouldnt: [ obj4 v2 ] raise: Break.
+	self shouldnt: [ obj4 v2: 0 ] raise: Break.
+]
+
+{ #category : #'tests - object-centric api' }
+VariableBreakpointTest >> testBreakOnReadTo [
+	wp := obj2 haltOnReadTo: #v1.
+	self should: [ obj2 v1 ] raise: Break.
+	self shouldnt: [ obj2 v1: 0 ] raise: Break.
+	self shouldnt: [ obj2 v2 ] raise: Break.
+	self shouldnt: [ obj2 v2: 0 ] raise: Break.
+	self shouldnt: [ obj4 v1 ] raise: Break.
+	self shouldnt: [ obj4 v1: 0 ] raise: Break.
+	self shouldnt: [ obj4 v2 ] raise: Break.
+	self shouldnt: [ obj4 v2: 0 ] raise: Break.
+]
+
+{ #category : #'tests - object-centric api' }
+VariableBreakpointTest >> testBreakOnWrite [
+	wp := obj2 haltOnWrite.
+	self shouldnt: [ obj2 v1 ] raise: Break.
+	self should: [ obj2 v1: 0 ] raise: Break.
+	self shouldnt: [ obj2 v2 ] raise: Break.
+	self should: [ obj2 v2: 0 ] raise: Break.
+	self shouldnt: [ obj4 v1 ] raise: Break.
+	self shouldnt: [ obj4 v1: 0 ] raise: Break.
+	self shouldnt: [ obj4 v2 ] raise: Break.
+	self shouldnt: [ obj4 v2: 0 ] raise: Break.
+]
+
+{ #category : #'tests - object-centric api' }
+VariableBreakpointTest >> testBreakOnWriteTo [
+
+	wp := obj2 haltOnWriteTo: #v1.
+	self shouldnt: [ obj2 v1 ] raise: Break.
+	self should: [ obj2 v1: 0 ] raise: Break.
+	self shouldnt: [ obj2 v2 ] raise: Break.
+	self shouldnt: [ obj2 v2: 0 ] raise: Break.
+	self shouldnt: [ obj4 v1 ] raise: Break.
+	self shouldnt: [ obj4 v1: 0 ] raise: Break.
+	self shouldnt: [ obj4 v2 ] raise: Break.
+	self shouldnt: [ obj4 v2: 0 ] raise: Break.
+]
+
 { #category : #'tests - temp var breakpoints' }
 VariableBreakpointTest >> testBreakpointOnAllTempAccesses [
 	|method|
@@ -279,85 +358,6 @@ VariableBreakpointTest >> testBreakpointOnTempWrites [
 	self assertCollection: wp link nodes asIdentitySet equals: self tempWriteNodes asIdentitySet.	
 	self should: [obj1 methodWithTempsAndArg: 42] raise: Break	
 	
-]
-
-{ #category : #'tests - object-centric api' }
-VariableBreakpointTest >> testHaltOnAccess [
-	wp := obj2 haltOnAccess.
-	self should: [ obj2 v1 ] raise: Halt.
-	self should: [ obj2 v1: 0 ] raise: Halt.
-	self should: [ obj2 v2 ] raise: Halt.
-	self should: [ obj2 v2: 0 ] raise: Halt.
-	self shouldnt: [ obj4 v1 ] raise: Halt.
-	self shouldnt: [ obj4 v1: 0 ] raise: Halt.
-	self shouldnt: [ obj4 v2 ] raise: Halt.
-	self shouldnt: [ obj4 v2: 0 ] raise: Halt.
-]
-
-{ #category : #'tests - object-centric api' }
-VariableBreakpointTest >> testHaltOnAccessTo [
-	wp := obj2 haltOnAccessTo: #v1.
-	self should: [ obj2 v1 ] raise: Halt.
-	self should: [ obj2 v1: 0 ] raise: Halt.
-	self shouldnt: [ obj2 v2 ] raise: Halt.
-	self shouldnt: [ obj2 v2: 0 ] raise: Halt.
-	self shouldnt: [ obj4 v1 ] raise: Halt.
-	self shouldnt: [ obj4 v1: 0 ] raise: Halt.
-	self shouldnt: [ obj4 v2 ] raise: Halt.
-	self shouldnt: [ obj4 v2: 0 ] raise: Halt.
-]
-
-{ #category : #'tests - object-centric api' }
-VariableBreakpointTest >> testHaltOnRead [
-	wp := obj2 haltOnRead.
-	self should: [ obj2 v1 ] raise: Halt.
-	self shouldnt: [ obj2 v1: 0 ] raise: Halt.
-	self should: [ obj2 v2 ] raise: Halt.
-	self shouldnt: [ obj2 v2: 0 ] raise: Halt.
-	self shouldnt: [ obj4 v1 ] raise: Halt.
-	self shouldnt: [ obj4 v1: 0 ] raise: Halt.
-	self shouldnt: [ obj4 v2 ] raise: Halt.
-	self shouldnt: [ obj4 v2: 0 ] raise: Halt.
-]
-
-{ #category : #'tests - object-centric api' }
-VariableBreakpointTest >> testHaltOnReadTo [
-	wp := obj2 haltOnReadTo: #v1.
-	self should: [ obj2 v1 ] raise: Halt.
-	self shouldnt: [ obj2 v1: 0 ] raise: Halt.
-	self shouldnt: [ obj2 v2 ] raise: Halt.
-	self shouldnt: [ obj2 v2: 0 ] raise: Halt.
-	self shouldnt: [ obj4 v1 ] raise: Halt.
-	self shouldnt: [ obj4 v1: 0 ] raise: Halt.
-	self shouldnt: [ obj4 v2 ] raise: Halt.
-	self shouldnt: [ obj4 v2: 0 ] raise: Halt.
-]
-
-{ #category : #'tests - object-centric api' }
-VariableBreakpointTest >> testHaltOnWrite [
-	wp := obj2 haltOnWrite.
-	self shouldnt: [ obj2 v1 ] raise: Halt.
-	self should: [ obj2 v1: 0 ] raise: Halt.
-	self shouldnt: [ obj2 v2 ] raise: Halt.
-	self should: [ obj2 v2: 0 ] raise: Halt.
-	self shouldnt: [ obj4 v1 ] raise: Halt.
-	self shouldnt: [ obj4 v1: 0 ] raise: Halt.
-	self shouldnt: [ obj4 v2 ] raise: Halt.
-	self shouldnt: [ obj4 v2: 0 ] raise: Halt.
-]
-
-{ #category : #'tests - object-centric api' }
-VariableBreakpointTest >> testHaltOnWriteTo [
-
-	wp := obj2 haltOnWriteTo: #v1.
-	self shouldnt: [ obj2 v1 ] raise: Halt.
-	self should: [ obj2 v1: 0 ] raise: Halt.
-	self shouldnt: [ obj2 v2 ] raise: Halt.
-	self shouldnt: [ obj2 v2: 0 ] raise: Halt.
-	self shouldnt: [ obj4 v1 ] raise: Halt.
-	self shouldnt: [ obj4 v1: 0 ] raise: Halt.
-	self shouldnt: [ obj4 v2 ] raise: Halt.
-	self shouldnt: [ obj4 v2: 0 ] raise: Halt.
 ]
 
 { #category : #'tests - initialization' }
