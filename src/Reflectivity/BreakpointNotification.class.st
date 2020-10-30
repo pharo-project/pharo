@@ -12,6 +12,12 @@ Class {
 	#category : #'Reflectivity-Breakpoints'
 }
 
+{ #category : #testing }
+BreakpointNotification class >> isDeprecated [
+	"Replaed by BreakpointAnnouncement and its subclasses"
+	^ true
+]
+
 { #category : #'instance creation' }
 BreakpointNotification class >> on: aBreakpoint nodes: nodes [
 	^ self new

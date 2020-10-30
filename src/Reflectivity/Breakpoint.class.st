@@ -27,8 +27,7 @@ Class {
 		'enabled'
 	],
 	#classVars : [
-		'AllBreakpoints',
-		'Observers'
+		'AllBreakpoints'
 	],
 	#category : #'Reflectivity-Breakpoints'
 }
@@ -127,40 +126,30 @@ Breakpoint class >> isInstalledIn: aMethod [
 
 { #category : #'observers - experimental' }
 Breakpoint class >> notifyBreakpointAdded: aBreakpoint [
-	| notification |
-	notification := BreakpointAddedNotification
+	| announcement |
+	announcement := BreakpointAdded 
 		on: aBreakpoint
 		nodes: aBreakpoint link nodes.
-	self notifyObservers: notification
+	SystemAnnouncer uniqueInstance announce: announcement
+	
 ]
 
 { #category : #'observers - experimental' }
 Breakpoint class >> notifyBreakpointHit: aBreakpoint inContext: aContext node: node [
-	| notification |
-	notification := BreakpointHitNotification
+	| announcement |
+	announcement := BreakpointHit
 		on: aBreakpoint
 		nodes: {node}.
-	self notifyObservers: notification
+	SystemAnnouncer uniqueInstance announce: announcement
 ]
 
 { #category : #'observers - experimental' }
 Breakpoint class >> notifyBreakpointRemoved: aBreakpoint fromNodes: nodes [
-	| notification |
-	notification := BreakpointRemovedNotification
+	| announcement |
+	announcement := BreakpointRemoved
 		on: aBreakpoint
 		nodes: nodes.
-	self notifyObservers: notification
-]
-
-{ #category : #'observers - experimental' }
-Breakpoint class >> notifyObservers: aNotification [
-	self observers
-		do: [ :observer | observer ifNotNil: [ observer update: aNotification ] ]
-]
-
-{ #category : #'observers - experimental' }
-Breakpoint class >> observers [
-	^Observers ifNil:[Observers := WeakOrderedCollection new]
+	SystemAnnouncer uniqueInstance announce: announcement
 ]
 
 { #category : #'class initialization' }
@@ -175,7 +164,12 @@ Breakpoint class >> registerInterestToSystemAnnouncement [
 
 { #category : #'observers - experimental' }
 Breakpoint class >> registerObserver: anObject [
-	self observers addIfNotPresent: anObject
+	"Do not use this method, it is there for compatibility with old users.
+	Instead, register your object yourself to 'SystemAnnouncer uniqueInstance' like below, but only for the announcements you need"
+	SystemAnnouncer uniqueInstance when: BreakpointAdded send: #update: to: anObject.
+	SystemAnnouncer uniqueInstance when: BreakpointHit send: #update: to: anObject.
+	SystemAnnouncer uniqueInstance when: BreakpointRemoved send: #update: to: anObject.
+	
 ]
 
 { #category : #cleanup }
@@ -207,7 +201,9 @@ Breakpoint class >> removeFromMethod: aMethod [
 
 { #category : #'observers - experimental' }
 Breakpoint class >> unregisterObserver: anObject [
-	self observers remove: anObject
+	"Do not use this method, it is there for compatibility with old users.
+	Instead, unsubscribe yourself from 'SystemAnnouncer uniqueInstance' directly (like shown below)"
+	SystemAnnouncer uniqueInstance unsubscribe: anObject
 ]
 
 { #category : #api }
