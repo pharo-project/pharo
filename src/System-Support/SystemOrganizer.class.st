@@ -109,18 +109,6 @@ SystemOrganizer >> removeCategory: category [
 	^ r
 ]
 
-{ #category : #queries }
-SystemOrganizer >> removeMissingClasses [
-	"Remove any class names that are no longer in the Smalltalk dictionary. Used for cleaning up after garbage collecting user-generated classes."
-
-	"SystemOrganization removeMissingClasses"
- 
-	elementArray copy
-		do: [ :el | 
-			(self environment includesKey: el)
-				ifFalse: [ self removeElement: el ] ]
-]
-
 { #category : #removing }
 SystemOrganizer >> removeSystemCategory: category [
 	"remove all the classes and traits associated with the category"
@@ -151,18 +139,4 @@ SystemOrganizer >> superclassOrder: category [
 	behaviors := (self listAtCategoryNamed: category asSymbol) collect: [ :title | self environment at: title ].
 	classes := behaviors select: [ :each | each isBehavior ].
 	^ Class superclassOrder: classes 
-]
-
-{ #category : #queries }
-SystemOrganizer >> uncommentedClassesIn: categoryName [
-	"SystemOrganization uncommentedClassesIn: 'Morphic*'"
-
-	| classes |
-	classes := OrderedCollection new.
-	self categories
-		withIndexCollect: [ :cat :idx | 
-			(categoryName match: cat)
-				ifTrue: [ classes addAll: (self listAtCategoryNumber: idx) ]
-				ifFalse: [ nil ] ].
-	^ (classes collect: [ :clsName | self environment at: clsName ] thenSelect: [ :cls | cls hasComment not ]) asArray
 ]
