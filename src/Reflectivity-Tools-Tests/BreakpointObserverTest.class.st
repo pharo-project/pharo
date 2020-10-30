@@ -6,7 +6,8 @@ Class {
 		'breakpoint',
 		'cls',
 		'previousBreakpoints',
-		'observer'
+		'observer',
+		'oldSystemAnnouncer'
 	],
 	#category : #'Reflectivity-Tools-Tests'
 }
@@ -26,8 +27,8 @@ BreakpointObserverTest >> setUp [
 
 	super setUp.
 	previousBreakpoints := Breakpoint all copy.
-	oldObservers := Breakpoint observers copy.
-	Breakpoint observers removeAll.
+	oldSystemAnnouncer := SystemAnnouncer uniqueInstance.
+	SystemAnnouncer announcer: nil.
 	cls := self newDummyClass.
 	breakpoint := Breakpoint new.
 	cls compile: 'dummy ^42'.
@@ -40,31 +41,30 @@ BreakpointObserverTest >> setUp [
 { #category : #running }
 BreakpointObserverTest >> tearDown [
 	|pkg|
-	Breakpoint observers removeAll.
-	Breakpoint observers addAll: oldObservers.
 	cls ifNotNil: [ cls isObsolete ifFalse: [ cls removeFromSystem ] ].
 	pkg := 'DummyPackage' asPackageIfAbsent: [ ]. 
 	pkg ifNotNil: [ pkg removeFromSystem ].
 	Breakpoint removeAll.
 	Breakpoint all addAll: previousBreakpoints.
+	SystemAnnouncer announcer: oldSystemAnnouncer.
 	super tearDown
 ]
 
 { #category : #tests }
 BreakpointObserverTest >> testNotifyBreakpointAdded [
-	Breakpoint registerObserver: observer.
+	SystemAnnouncer uniqueInstance when: BreakpointAdded send: #update: to: observer.
 	breakpoint install.
-	self assert: observer tag class equals: BreakpointAddedNotification.
+	self assert: observer tag class equals: BreakpointAdded.
 	self assert: observer tag breakpoint identicalTo: breakpoint.
 	self assertCollection: observer tag nodes equals: { (cls >> #dummy) ast } asSet
 ]
 
 { #category : #tests }
 BreakpointObserverTest >> testNotifyBreakpointHit [
-	Breakpoint registerObserver: observer.
+	SystemAnnouncer uniqueInstance when: BreakpointHit send: #update: to: observer.
 	breakpoint install.
 	self should: [cls new dummy] raise: Break.	
-	self assert: observer tag class equals: BreakpointHitNotification.
+	self assert: observer tag class equals: BreakpointHit.
 	self assert: observer tag breakpoint identicalTo: breakpoint.
 	self assert: observer tag valueOrNil isNil
 	
@@ -73,26 +73,9 @@ BreakpointObserverTest >> testNotifyBreakpointHit [
 { #category : #tests }
 BreakpointObserverTest >> testNotifyBreakpointRemoved [	
 	breakpoint install.
-	Breakpoint registerObserver: observer.
+	SystemAnnouncer uniqueInstance when: BreakpointRemoved send: #update: to: observer.
 	breakpoint remove.
-	self assert: observer tag class equals: BreakpointRemovedNotification.
+	self assert: observer tag class equals: BreakpointRemoved.
 	self assert: observer tag breakpoint identicalTo: breakpoint.
 	self assertCollection: observer tag nodes equals: { (cls >> #dummy) ast } asSet
-]
-
-{ #category : #tests }
-BreakpointObserverTest >> testRegisterObserver [
-	|obs|
-	obs := DummyBreakpointObserver new.
-	Breakpoint registerObserver: obs.
-	self assertCollection: Breakpoint observers includesAll: {obs}
-]
-
-{ #category : #tests }
-BreakpointObserverTest >> testUnregisterObserver [
-	|obs|
-	obs := DummyBreakpointObserver new.
-	Breakpoint registerObserver: obs.
-	Breakpoint unregisterObserver: obs.
-	self assertEmpty: Breakpoint observers
 ]

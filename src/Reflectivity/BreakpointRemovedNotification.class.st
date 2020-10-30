@@ -1,4 +1,6 @@
 "
+DEPRECATED: use BreakpointAnnouncement and its subclasses instead
+
 A trivial breakpoint removed notification. 
 "
 Class {

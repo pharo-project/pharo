@@ -1,4 +1,6 @@
 "
+DEPRECATED: use BreakpointAnnouncement and its subclasses instead
+
 Trivial abtract breakpoint notification.
 I hold the affected breakpoint and a collection of nodes on which it is installed or removed from.
 "
@@ -14,7 +16,7 @@ Class {
 
 { #category : #testing }
 BreakpointNotification class >> isDeprecated [
-	"Replaed by BreakpointAnnouncement and its subclasses"
+	"Replaced by BreakpointAnnouncement and its subclasses"
 	^ true
 ]
 

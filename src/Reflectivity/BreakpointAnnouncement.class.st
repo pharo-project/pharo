@@ -17,6 +17,30 @@ BreakpointAnnouncement class >> on: aBreakpoint nodes: nodes [
 ]
 
 { #category : #accessing }
+BreakpointAnnouncement >> affectsMethod: aMethod [
+
+	^ self link methods anySatisfy: [:each | each compiledMethod == aMethod compiledMethod ]
+]
+
+{ #category : #accessing }
+BreakpointAnnouncement >> affectsMethods [
+	^true
+]
+
+{ #category : #accessing }
+BreakpointAnnouncement >> affectsMethodsDefinedInClass: aClass [
+	^ self link methods
+		anySatisfy: [ :each | each methodClass isNotNil and: [ each origin == aClass ] ]
+]
+
+{ #category : #accessing }
+BreakpointAnnouncement >> affectsMethodsDefinedInPackage: aPackage [
+	^ self link methods
+		anySatisfy:
+			[ :each | each methodClass isNotNil and: [ each package == aPackage ] ]
+]
+
+{ #category : #accessing }
 BreakpointAnnouncement >> breakpoint [
 	^ breakpoint
 ]
@@ -24,6 +48,11 @@ BreakpointAnnouncement >> breakpoint [
 { #category : #accessing }
 BreakpointAnnouncement >> breakpoint: anObject [
 	breakpoint := anObject
+]
+
+{ #category : #accessing }
+BreakpointAnnouncement >> link [
+	^ self breakpoint link
 ]
 
 { #category : #accessing }
