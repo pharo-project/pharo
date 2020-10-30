@@ -55,7 +55,7 @@ ExecutionCounter class >> handleMethodRemoved: anAnnouncement [
 
 { #category : #'class initialization' }
 ExecutionCounter class >> initialize [
-	self registerInsterestToSystemAnnouncement 
+	self registerInterestToSystemAnnouncement 
 ]
 
 { #category : #'instance creation' }
@@ -66,7 +66,7 @@ ExecutionCounter class >> installOn: aRBProgramNode [
 ]
 
 { #category : #'class initialization' }
-ExecutionCounter class >> registerInsterestToSystemAnnouncement [
+ExecutionCounter class >> registerInterestToSystemAnnouncement [
 	<systemEventRegistration>
 
 	SystemAnnouncer uniqueInstance unsubscribe: self.

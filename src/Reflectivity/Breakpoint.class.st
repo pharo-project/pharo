@@ -17,18 +17,18 @@ Class {
 	#name : #Breakpoint,
 	#superclass : #Object,
 	#instVars : [
-		'#condition',
-		'#link',
-		'#node',
-		'#level',
-		'#options',
-		'#targetInstance => WeakSlot',
-		'#oneShot',
-		'#enabled'
+		'condition',
+		'link',
+		'node',
+		'level',
+		'options',
+		'targetInstance',
+		'oneShot',
+		'enabled'
 	],
 	#classVars : [
-		'#AllBreakpoints',
-		'#Observers'
+		'AllBreakpoints',
+		'Observers'
 	],
 	#category : #'Reflectivity-Breakpoints'
 }
@@ -110,7 +110,7 @@ Breakpoint class >> handleMethodRemoved: anAnnouncement [
 
 { #category : #initialization }
 Breakpoint class >> initialize [
-	self registerInsterestToSystemAnnouncement 
+	self registerInterestToSystemAnnouncement 
 ]
 
 { #category : #querying }
@@ -164,7 +164,7 @@ Breakpoint class >> observers [
 ]
 
 { #category : #'class initialization' }
-Breakpoint class >> registerInsterestToSystemAnnouncement [
+Breakpoint class >> registerInterestToSystemAnnouncement [
 	<systemEventRegistration>
 
 	SystemAnnouncer uniqueInstance unsubscribe: self.
