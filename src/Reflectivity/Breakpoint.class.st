@@ -194,12 +194,7 @@ Breakpoint class >> removeBreakpoint: aBreakpoint [
 
 { #category : #cleanup }
 Breakpoint class >> removeFrom: aNode [
-	| links breakpointsToRemove |
-	links := OrderedCollection new.
-	links addAll: (aNode beforeLinks select: [ :link | link metaObject = Break]).
-	links addAll: (aNode afterLinks select: [ :link | link metaObject = Break]).
-	breakpointsToRemove := self all select: [ :br | links includes: br link].
-	breakpointsToRemove asSet do: [:breakpoint| breakpoint remove]
+	aNode breakpoints do: [:breakpoint| breakpoint remove]
 ]
 
 { #category : #cleanup }
@@ -267,17 +262,18 @@ Breakpoint >> enable [
 Breakpoint >> initialize [
 	
 	self class initializeSlots: self.
-	options := #(+ optionCompileOnLinkInstallation + optionAnnounce)
+	options := #(+ optionCompileOnLinkInstallation + optionAnnounce - optionStyler)
 ]
 
 { #category : #install }
 Breakpoint >> install [
+	
 	self class addBreakpoint: self.
 	self isObjectCentric
 		ifTrue: [ self targetInstance link: self link toAST: self node.
 			^ self ].
-	self node link: self link.
-	self setAsNodeProperty
+	self setAsNodeProperty.
+	self node link: self link
 ]
 
 { #category : #testing }
@@ -288,6 +284,11 @@ Breakpoint >> isEnabled [
 { #category : #testing }
 Breakpoint >> isObjectCentric [
 	^self targetInstance notNil
+]
+
+{ #category : #testing }
+Breakpoint >> isVariableBreakpoint [
+	^false
 ]
 
 { #category : #accessing }

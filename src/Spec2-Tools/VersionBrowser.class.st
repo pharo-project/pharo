@@ -51,13 +51,13 @@ VersionBrowser class >> browseVersionsForMethod: aRingMethod [
 
 { #category : #specs }
 VersionBrowser class >> defaultSpec [
+	
 	^ SpPanedLayout newVertical
 		add: #messageList;
-		add:
-			(SpBoxLayout newVertical
-				add: #toolbarPresenter withConstraints: [ :constraints | constraints height: self buttonHeight ];
-				add: #sourcePresenter;
-				yourself);
+		add: (SpBoxLayout newVertical
+			add: #toolbarPresenter expand: false;
+			add: #sourcePresenter;
+			yourself);
 		yourself
 ]
 
@@ -88,7 +88,11 @@ VersionBrowser >> browseImplementors [
 
 { #category : #actions }
 VersionBrowser >> browseSenders [
-	SystemNavigation new browseSendersOf: rgMethod selector name: 'Senders of ' , rgMethod selector autoSelect: rgMethod selector
+
+	self systemNavigation 
+		browseSendersOf: rgMethod selector 
+		name: 'Senders of ', rgMethod selector 
+		autoSelect: rgMethod selector
 ]
 
 { #category : #'instance creation' }
@@ -147,14 +151,16 @@ VersionBrowser >> connectPresenters [
 
 { #category : #initialization }
 VersionBrowser >> initialize [
+
 	isShowingDiff := false.
 	super initialize
 ]
 
 { #category : #initialization }
 VersionBrowser >> initializePresenters [
-	messageList := self instantiate: MessageList.
-	toolbarPresenter := self instantiate: SpMethodToolbar.
+
+	messageList := self instantiate: MessageList on: rgMethod.
+	toolbarPresenter := self instantiate: SpMethodToolbar on: rgMethod.
 
 	messageList
 		topologicSort: false;
@@ -162,9 +168,16 @@ VersionBrowser >> initializePresenters [
 		contextMenu: self messageListMenu.
 
 	toolbarPresenter
-		addItemLabeled: 'Side By Side' do: [ self showDiffMorphWithConverter: (DiffMorphChangeRecordConverter methodReference: self textConverter method referencesList: self changeList) ];
-		addItemLabeled: 'Source' do: [ self showSourceWithConverter: (SourceMethodConverter method: self textConverter method) ];
-		addItemLabeled: 'Diff' do: [ self showSourceWithConverter: (DiffChangeRecordConverter methodReference: self textConverter method referencesList: self changeList) ].
+		addItemLabeled: 'Side By Side' do: [ 
+			self showDiffMorphWithConverter: (DiffMorphChangeRecordConverter 
+				methodReference: self textConverter method 
+				referencesList: self changeList) ];
+		addItemLabeled: 'Source' do: [ 
+			self showSourceWithConverter: (SourceMethodConverter method: self textConverter method) ];
+		addItemLabeled: 'Diff' do: [ 
+			self showSourceWithConverter: (DiffChangeRecordConverter 
+				methodReference: self textConverter method
+				 referencesList: self changeList) ].
 		
 	toolbarPresenter  versionModel
 		label: 'Revert';
@@ -222,6 +235,12 @@ VersionBrowser >> messageListMenu [
 						shortcut: $m meta;
 						action: [ self browseImplementors ] ] ];
 		yourself
+]
+
+{ #category : #accessing }
+VersionBrowser >> method [
+
+	^ rgMethod
 ]
 
 { #category : #'instance creation' }

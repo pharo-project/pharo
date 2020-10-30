@@ -17,7 +17,7 @@ RBVariableNodeTest >> testIsDefinedByBlock [
   test.
 	[ :test2 | | test3| test2. test3].
   ^test'.
-	temps := ast allChildren select: [ :each | each isTemp ].
+	temps := ast allChildren select: [ :each | each isTempVariable ].
 	"test is defined by the method"
 	self deny: temps first isDefinedByBlock.
 	self deny: temps second isDefinedByBlock.
@@ -50,7 +50,7 @@ RBVariableNodeTest >> testIsDefinition [
   test := 2.
   test.
   ^test'.
-	temps := ast allChildren select: #isTemp.
+	temps := ast allChildren select: [:each | each isTempVariable].
 	
 	"arguments define variables"
 	self assert: ast arguments first isDefinition.

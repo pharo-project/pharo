@@ -102,8 +102,8 @@ HookGenerator >> hookFor: aLink [
 		ifTrue: [ self genReification: aLink metaObject for: aLink ]
 		ifFalse: [  
 			(self hasOption: #optionInlineMetaObject for: aLink)
-				ifTrue: [RFLiteralVariableNode value: aLink metaObject]
-				ifFalse: [RBMessageNode receiver: (RFLiteralVariableNode value: aLink)
+				ifTrue: [RBLiteralNode value: aLink metaObject]
+				ifFalse: [RBMessageNode receiver: (RBLiteralNode value: aLink)
 											 selector: #metaObject ]].
 	arguments := self generateArguments: aLink.
 	
@@ -115,7 +115,7 @@ HookGenerator >> hookFor: aLink [
 	(self hasOption: #optionOneShot for: aLink) ifTrue: [			
 			hook := RBSequenceNode statements: {
 				RBMessageNode
-					receiver: (RFLiteralVariableNode value: aLink)
+					receiver: (RBLiteralNode value: aLink)
 					selector: #uninstall.
 				hook }].
 	aLink hasCondition ifTrue: [hook := self wrapCondition: hook link: aLink].
@@ -194,8 +194,8 @@ HookGenerator >> wrapCondition: hook link: aLink [
 	linkBlock := self encloseInBlock: hook asSequenceNode.
 	conditionExpression := RBMessageNode 
 			receiver: ((self hasOption: #optionInlineCondition for: aLink)  
-				ifTrue: [RFLiteralVariableNode value: aLink condition]
-				ifFalse:[RBMessageNode receiver: (RFLiteralVariableNode value: aLink)
+				ifTrue: [RBLiteralNode value: aLink condition]
+				ifFalse:[RBMessageNode receiver: (RBLiteralNode value: aLink)
 											 selector: #condition ])
 			selector: condSelector
 			arguments: condArguments.
@@ -208,7 +208,7 @@ HookGenerator >> wrapCondition: hook link: aLink [
 { #category : #'ast manipulation' }
 HookGenerator >> wrapInContext: hook link: aLink [
 	^RFMessageNode 
-		receiver: (RFLiteralVariableNode value: aLink)
+		receiver: (RBLiteralNode value: aLink)
 		selector: #valueInContext:
 		arguments: {self encloseInBlock: hook}
 ]

@@ -4,10 +4,13 @@ I'm a base adapter for layouts.
 Class {
 	#name : #SpMorphicLayoutAdapter,
 	#superclass : #SpAbstractMorphicAdapter,
+	#instVars : [
+		'layout'
+	],
 	#category : #'Spec2-Adapters-Morphic-Layout'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 SpMorphicLayoutAdapter >> adapter [
 	
 	^ nil
@@ -24,7 +27,7 @@ SpMorphicLayoutAdapter >> add: aPresenter constraints: constraints [
 			to: aPanel ]
 ]
 
-{ #category : #adding }
+{ #category : #private }
 SpMorphicLayoutAdapter >> addConstraits: constraints toChild: childMorph [
 
 	self subclassResponsibility
@@ -35,6 +38,14 @@ SpMorphicLayoutAdapter >> addKeyBindingsTo: aMorph [
 	"This is called before the layout actually exists. 
 	 Skipping it."
 	
+]
+
+{ #category : #private }
+SpMorphicLayoutAdapter >> applyChildrenAlignmentTo: childMorph constraints: constraints [
+	"when it applies (like the case of SpGridLayout), widgets may want to configure alignment 
+	 here."
+	
+	^ childMorph
 ]
 
 { #category : #initialization }
@@ -65,7 +76,13 @@ SpMorphicLayoutAdapter >> buildMorph: aPresenter constraints: constraints [
 
 	childMorph := aPresenter buildWithSpec: constraints spec.
 	self applyStyle: aPresenter to: childMorph.
-	childMorph := self addConstraits: constraints toChild: childMorph.
+	"Add children alignment constraints (if applies)"
+	childMorph := self 
+		applyChildrenAlignmentTo: childMorph 
+		constraints: constraints. 
+	childMorph := self 
+		addConstraits: constraints 
+		toChild: childMorph.
 	
 	^ childMorph
 ]
@@ -100,7 +117,7 @@ SpMorphicLayoutAdapter >> isEmpty [
 	^ self children isEmpty
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #protocol }
 SpMorphicLayoutAdapter >> layout: aLayout [
 
 	"Basic apply visibility to the widget.

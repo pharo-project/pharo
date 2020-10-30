@@ -19,6 +19,28 @@ SpMorphicTableCellBuilder class >> on: aDataSource [
 ]
 
 { #category : #private }
+SpMorphicTableCellBuilder >> addBackgroundColorColumn: aTableColumn item: item toMorph: aMorph [
+
+	aTableColumn displayBackgroundColor ifNotNil: [ :block |
+		(block cull: item) ifNotNil: [ :aColor |
+			aMorph color: aColor ]  ].
+	
+	^ aMorph
+	
+]
+
+{ #category : #private }
+SpMorphicTableCellBuilder >> addBoldColumn: aTableColumn item: item to: content [
+
+	aTableColumn displayItalic ifNotNil: [ :block |
+		(block cull: item) ifTrue: [ 
+			^ content asText addAttribute: TextEmphasis bold ] ].
+	
+	^ content
+	
+]
+
+{ #category : #private }
 SpMorphicTableCellBuilder >> addCell: anObject column: aTableColumn [
 	| morph |
 
@@ -41,7 +63,7 @@ SpMorphicTableCellBuilder >> addCellColumn: aTableColumn [
 { #category : #private }
 SpMorphicTableCellBuilder >> addCellMorph: morph column: aTableColumn [
 
-	aTableColumn isExpandable ifFalse: [ 
+	aTableColumn isExpandable ifFalse: [
 		aTableColumn width: (aTableColumn width 
 			ifNotNil: [ :width | width max: morph width ]
 			ifNil: [ morph width ]).
@@ -51,6 +73,39 @@ SpMorphicTableCellBuilder >> addCellMorph: morph column: aTableColumn [
 			width: aTableColumn width ].
 	
 	cell addMorphBack: morph
+	
+]
+
+{ #category : #private }
+SpMorphicTableCellBuilder >> addColorColumn: aTableColumn item: item to: content [
+
+	aTableColumn displayColor ifNotNil: [ :block |
+		(block cull: item) ifNotNil: [ :aColor |
+			^ content asText addAttribute: (TextColor color: aColor) ]  ].
+	
+	^ content
+	
+]
+
+{ #category : #private }
+SpMorphicTableCellBuilder >> addItalicColumn: aTableColumn item: item to: content [
+
+	aTableColumn displayItalic ifNotNil: [ :block |
+		(block cull: item) ifTrue: [ 
+			^ content asText addAttribute: TextEmphasis italic ] ].
+	
+	^ content
+	
+]
+
+{ #category : #private }
+SpMorphicTableCellBuilder >> addUnderlineColumn: aTableColumn item: item to: content [
+
+	aTableColumn displayUnderline ifNotNil: [ :block |
+		(block cull: item) ifTrue: [ 
+			^ content asText addAttribute: TextEmphasis underlined ] ].
+	
+	^ content
 	
 ]
 
@@ -101,7 +156,7 @@ SpMorphicTableCellBuilder >> visitCheckboxColumn: aTableColumn [
 
 	aTableColumn onActivation ifNotNil: [ :valuable | 
 		presenter whenActivatedDo: [ valuable cull: self item ] ].
-	aTableColumn onDesactivation ifNotNil: [ :valuable | 
+	aTableColumn onDeactivation ifNotNil: [ :valuable | 
 		presenter whenDeactivatedDo: [ valuable cull: self item ] ].
 
 	morph := presenter buildWithSpec.
@@ -110,6 +165,15 @@ SpMorphicTableCellBuilder >> visitCheckboxColumn: aTableColumn [
 	self 
 		addCellMorph: morph
 		column: aTableColumn 
+]
+
+{ #category : #visiting }
+SpMorphicTableCellBuilder >> visitCompositeColumn: aTableColumn [
+
+	super visitCompositeColumn: aTableColumn.
+	aTableColumn isExpandable ifFalse: [ 
+		cell hResizing: #rigid.
+		cell width: aTableColumn width ]
 ]
 
 { #category : #visiting }
@@ -127,7 +191,42 @@ SpMorphicTableCellBuilder >> visitIndexColumn: aTableColumn [
 ]
 
 { #category : #visiting }
-SpMorphicTableCellBuilder >> visitStringColumn: aTableColumn [
+SpMorphicTableCellBuilder >> visitLinkColumn: aTableColumn [
+	| presenter morph |
 	
-	self addCellColumn: aTableColumn
+	presenter := SpLinkPresenter new
+		addStyle: 'table';
+		label: (aTableColumn readObject: self item);
+		yourself.
+	
+	aTableColumn url 
+		ifNotNil: [ presenter url: (aTableColumn url value: self item) ].
+	aTableColumn action 
+		ifNotNil: [ presenter action: [ aTableColumn action value: self item ] ].
+
+	morph := presenter buildWithSpec.
+	presenter adapter applyStyle: morph.
+
+	self 
+		addCellMorph: morph
+		column: aTableColumn
+]
+
+{ #category : #visiting }
+SpMorphicTableCellBuilder >> visitStringColumn: aTableColumn [
+	| content item |
+	
+	item := self item.
+
+	content := aTableColumn readObject: item.
+	"add properties"
+	content := self addColorColumn: aTableColumn item: item to: content.
+	content := self addItalicColumn: aTableColumn item: item to: content.
+	content := self addBoldColumn: aTableColumn item: item to: content.
+	content := self addUnderlineColumn: aTableColumn item: item to: content.
+	"add cell"
+	self addCell: content column: aTableColumn.
+	"add background (this is a special case of properties, since background needs to be 
+	 applied to the cell and not to the text)"
+	self addBackgroundColorColumn: aTableColumn item: item toMorph: cell
 ]

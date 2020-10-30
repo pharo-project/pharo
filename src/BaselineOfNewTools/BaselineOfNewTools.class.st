@@ -28,7 +28,7 @@ BaselineOfNewTools >> baseline: spec [
 			package: 'NewTools-Debugger' with: [ spec requires: #('NewTools-Inspector' 'NewTools-Debugger-Commands' 'NewTools-Debugger-Extensions' 'NewTools-SpTextPresenterDecorators') ];			
 			package: 'NewTools-Debugger-Commands';
 			package: 'NewTools-Debugger-Extensions';
-			package: 'NewTools-Debugger-Tests' with: [ spec requires: #('NewTools-Debugger') ];
+			"package: 'NewTools-Debugger-Tests' with: [ spec requires: #('NewTools-Debugger') ];"
 			"playground"
 			package: 'NewTools-Playground' with: [ spec requires: #('NewTools-Inspector') ];
 			"browser"
@@ -54,7 +54,7 @@ BaselineOfNewTools >> baseline: spec [
 			"Debugger Selector"
 			package: 'NewTools-DebuggerSelector' with: [ spec requires: #('NewTools-SpTextPresenterDecorators') ];
 			package: 'NewTools-DebuggerSelector-Tests' with: [ spec requires: #('NewTools-DebuggerSelector') ].
-		
+
 		spec
 			group: 'Core' with: #('NewTools-Core' 'NewTools-Morphic');
 			group: 'Playground' with: #('Core' 'NewTools-Playground');
@@ -69,8 +69,8 @@ BaselineOfNewTools >> baseline: spec [
 				'NewTools-Sindarin-Tools'
 				'NewTools-Sindarin-Commands'
 				'NewTools-Debugger-Breakpoints-Tools'
-				'NewTools-Debugger-Tests');
-			group: 'SystemReporter' with: #('Core' 'NewTools-Inspector');
+				"'NewTools-Debugger-Tests'");
+			group: 'SystemReporter' with: #('Core' 'NewTools-SystemReporter');
 			group: 'FlagBrowser' with: #(
 				'Core' 
 				'NewTools-FlagBrowser' 
@@ -86,7 +86,20 @@ BaselineOfNewTools >> baseline: spec [
 				'Playground'
 				'Inspector'
 				'Debugger'
-				'FlagBrowser') ]
+				"'FlagBrowser'") ]
+]
+
+{ #category : #dependencies }
+BaselineOfNewTools >> packageRepositoryURL [
+	| url |
+	
+	url := super packageRepositoryURL.
+	url ifEmpty: [ ^ url ].
+	
+	"Verify if I am running in CI"
+	(url includesSubstring: 'pharo-spec') ifTrue: [ ^ '' ].
+	
+	^ url
 ]
 
 { #category : #actions }

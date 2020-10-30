@@ -415,7 +415,7 @@ AthensCairoCanvas >> surface: aCairoSurface [
 	paintTransform := AthensCairoMatrix new.
 	paintMode := AthensCairoPaintMode new canvas: self.
 	
-	self setAA: CAIRO_ANTIALIAS_SUBPIXEL.
+	self setAA: CAIRO_ANTIALIAS_GOOD.
 ]
 
 { #category : #private }

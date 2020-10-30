@@ -219,6 +219,19 @@ BreakpointTest >> testObjectCentricObjectAPI [
 ]
 
 { #category : #tests }
+BreakpointTest >> testRemoveBreakpointWithRemoveFrom [
+	|bp node |
+	cls compile: 'dummy ^42'.
+	self assertEmpty: Breakpoint all.
+	
+	node := (cls >> #dummy) ast.
+	bp := (Breakpoint new node: node) install.
+	self assertCollection: Breakpoint all includesAll: {bp}.
+	Breakpoint removeFrom: node.
+	self assertEmpty: Breakpoint all.
+]
+
+{ #category : #tests }
 BreakpointTest >> testRemoveClassWithBreakpoint [
 	cls compile: 'dummy ^42'.
 	self assertEmpty: Breakpoint all.

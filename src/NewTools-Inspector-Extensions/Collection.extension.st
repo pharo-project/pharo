@@ -4,13 +4,17 @@ Extension { #name : #Collection }
 Collection >> inspectionItems [
 	<inspectorPresentationOrder: 0 title: 'Items'> 
 	
-	^ SpTablePresenter new 
-		addColumn: ((SpIndexTableColumn title: 'Index')
-			sortFunction: #yourself ascending);
-		addColumn: ((SpStringTableColumn 
-			title: 'Value' 
-			evaluated: [ :each | StObjectPrinter asTruncatedTextFrom: each ])
-			sortFunction: #printString ascending);
+	^ SpTablePresenter new
+		addColumn: (SpIndexTableColumn new 
+			title: 'Index';
+			sortFunction: #yourself ascending;
+			beNotExpandable;
+			yourself);
+		addColumn: (SpStringTableColumn new  
+			title: 'Value'; 
+			evaluated: [ :each | StObjectPrinter asTruncatedTextFrom: each ];
+			sortFunction: #printString ascending;
+			yourself);
 		items: self asOrderedCollection;
 		yourself
 ]

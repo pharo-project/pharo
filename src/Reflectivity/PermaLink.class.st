@@ -60,8 +60,8 @@ PermaLink >> persistenceType: anObject [
 ]
 
 { #category : #accessing }
-PermaLink >> slotOrVarClass [
-	^ (MetalinkTargetResolver classFor: slotOrVarClass)
+PermaLink >> slotOrVarClass [ 
+	^ slotOrVarClass nonAnonymousClass
 ]
 
 { #category : #accessing }

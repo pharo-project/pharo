@@ -11,23 +11,3 @@ Class {
 MetalinkIconStyler class >> shouldStyle [
 	^false
 ]
-
-{ #category : #defaults }
-MetalinkIconStyler >> iconBlock: aNode [
-	^[ aNode inspect]
-]
-
-{ #category : #defaults }
-MetalinkIconStyler >> iconFor: aNode [
-	^ self iconNamed: #arrowUpIcon.
-]
-
-{ #category : #defaults }
-MetalinkIconStyler >> iconLabel: aNode [
-	^ 'Metalink'
-]
-
-{ #category : #testing }
-MetalinkIconStyler >> shouldStyleNode: aNode [
-	^aNode hasMetalink
-]

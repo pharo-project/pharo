@@ -243,6 +243,36 @@ FileLocator class >> flushCaches [
 	Resolver flushCaches
 ]
 
+{ #category : #'instance creation' }
+FileLocator class >> fromPath: aPath ifNone: notFoundBlock [
+	"Returns a file locator if aPath is a reference to a supported origin or is a child of an origin.
+	If no locator matches, return the result of the evaluation of notFoundBlock.
+	Locators are sorted so that the deepest matching origin path is returned.
+	Ex: '/Users/me/Documents/foo.txt' will return a locator 
+		with #documents origin (path /Users/me/Documents) and not #home (path /Users/me).
+	Should not be called direcly. Prefer the use of Path or String>>#asFileLocatorOrReference. "
+
+	| locators locatorsPaths |
+	locators := self supportedOrigins
+		collect: [ :origin | self origin: origin ]
+		as: OrderedCollection.
+	locatorsPaths := (locators collect: [ :e | e -> e asPath ]) asDictionary.
+	(locators sort:	[ :a :b | (locatorsPaths at: b) <= (locatorsPaths at: a) ])
+		do: [ :locator | 
+			((locatorsPaths at: locator) = aPath or: [ (locatorsPaths at: locator) containsPath: aPath ])
+				ifTrue: [ ^ locator resolve: (aPath relativeToPath: (locatorsPaths at: locator)) ] ].
+	^ notFoundBlock value
+]
+
+{ #category : #'instance creation' }
+FileLocator class >> fromString: aString ifNone: notFoundBlock [
+	"Returns a file locator if aString converted as path is a reference to a supported origin or is a child of an origin.
+	If no locator matches, return the result of the evaluation of notFoundBlock.
+	Should not be called direcly. Prefer the use of Path or String>>#asFileLocatorOrReference "
+	
+	^ self fromPath: aString asPath ifNone: notFoundBlock
+]
+
 { #category : #origins }
 FileLocator class >> home [
 	^ self origin: #home

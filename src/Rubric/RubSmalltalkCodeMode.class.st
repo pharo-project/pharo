@@ -127,6 +127,11 @@ RubSmalltalkCodeMode >> bindingOf: varName [
 ]
 
 { #category : #shout }
+RubSmalltalkCodeMode >> bindings [
+	^ self model bindings
+]
+
+{ #category : #shout }
 RubSmalltalkCodeMode >> classOrMetaClass: aBehavior [
 	"set the classOrMetaClass in the receiver's styler to aBehavior"
 	classOrMetaclass := aBehavior.

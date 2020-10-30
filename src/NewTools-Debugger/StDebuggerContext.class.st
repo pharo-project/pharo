@@ -39,6 +39,7 @@ StDebuggerContext >> buildInspectorNodes [
 	argsKeys := argsNodes collect: [ :node | node key ].
 	tempsNodes := self temporaryVariablesNodes reject: [ :tempNode | 
 		              argsKeys includes: tempNode key ].
+	nodes add: self selfNode.
 	nodes addAll: argsNodes.
 	nodes addAll: tempsNodes.
 	nodes addAll: self receiverNodes.
@@ -66,7 +67,14 @@ StDebuggerContext >> printOn: aStream [
 { #category : #nodes }
 StDebuggerContext >> receiverNodes [
 
-	^ self context receiver allInspectorNodes reject: [ :node | node key = 'self' ]
+	^ self context receiver allInspectorNodes reject: [ :node | 
+		  node label = 'self' ]
+]
+
+{ #category : #nodes }
+StDebuggerContext >> selfNode [
+
+	^ StInspectorSelfNode hostObject: self context receiver
 ]
 
 { #category : #nodes }

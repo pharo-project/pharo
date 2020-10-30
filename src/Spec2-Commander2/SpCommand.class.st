@@ -92,5 +92,6 @@ SpCommand >> presenter [
 
 { #category : #updating }
 SpCommand >> updateEnableStatus [ 
-    self presenter enabled: self canBeExecuted
+ 	self presenter ifNil: [ ^ self ].   
+	self presenter enabled: self canBeExecuted
 ]

@@ -12,7 +12,6 @@ Class {
 SpMorphicGridAdapter >> addConstraits: constraints toChild: childMorph [
 	"adds constraits by child"
 	
-	
 	childMorph hResizing: #spaceFill.
 	childMorph vResizing: #spaceFill.
 	childMorph 
@@ -23,15 +22,54 @@ SpMorphicGridAdapter >> addConstraits: constraints toChild: childMorph [
 ]
 
 { #category : #private }
+SpMorphicGridAdapter >> applyChildrenAlignmentTo: aWidget constraints: constraints [
+
+	constraints hasAlignment 
+		ifTrue: [ ^ self basicApplyChildrenAlignmentTo: aWidget constraints: constraints ].
+	(layout columnConstraintsAt: constraints column) ifNotNil: [ :axisConstraints |
+		axisConstraints hasAlignment 
+			ifTrue: [ ^ self basicApplyChildrenAlignmentTo: aWidget constraints: axisConstraints ] ].
+	(layout rowConstraintsAt: constraints row) ifNotNil: [ :axisConstraints |
+		axisConstraints hasAlignment 
+			ifTrue: [ ^ self basicApplyChildrenAlignmentTo: aWidget constraints: axisConstraints ] ].
+
+	^ aWidget
+]
+
+{ #category : #private }
 SpMorphicGridAdapter >> basicAdd: aPresenter constraints: constraints to: aPanel [
 	| childMorph |
 
 	childMorph := self 
 		buildMorph: aPresenter 
-		constraints: constraints.	
+		constraints: constraints.
 	aPanel addMorphBack: childMorph.
 		
 	^ childMorph	
+]
+
+{ #category : #private }
+SpMorphicGridAdapter >> basicApplyChildrenAlignmentTo: aWidget constraints: constraints [
+	| alignmentWidget |
+	
+	constraints hasAlignment ifFalse: [ ^ aWidget ].
+	
+	aWidget 
+		changeTableLayout;
+		hResizing: #shrinkWrap; 
+		vResizing: #shrinkWrap.
+	
+	alignmentWidget := Morph new
+		changeTableLayout; 
+		color: Color transparent;
+		addMorphBack: aWidget.
+
+	constraints vAlign ifNotNil: [ :align |
+		alignmentWidget listCentering: align asMorphicAlign ].
+	constraints hAlign ifNotNil: [ :align |
+		alignmentWidget wrapCentering: align asMorphicAlign ].
+		
+	^ alignmentWidget
 ]
 
 { #category : #accessing }
@@ -43,6 +81,8 @@ SpMorphicGridAdapter >> children [
 { #category : #factory }
 SpMorphicGridAdapter >> layout: aLayout [
 	"build of widget was differed up to here (to know what is the direction)"
+
+	layout := aLayout.
 
 	widget ifNil: [ 
 		widget := self newPanel.

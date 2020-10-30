@@ -4,10 +4,10 @@ AbstractFont defines the generic interface that all fonts need to implement.
 Class {
 	#name : #AbstractFont,
 	#superclass : #Object,
-	#category : #'Fonts-Abstract'
+	#category : #'Fonts-Abstract-Base'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #emphasis }
 AbstractFont class >> emphasisStringFor: emphasisCode [
 	"Answer a translated string that represents the attributes given in emphasisCode."
 
@@ -15,12 +15,12 @@ AbstractFont class >> emphasisStringFor: emphasisCode [
 	emphasisCode = 0 ifTrue: [ ^'Normal' translated ].
 
 	emphases := (IdentityDictionary new)
-		at: 1 put: 'Bold' translated;
-		at: 2 put: 'Italic' translated;
-		at: 4 put: 'Underlined' translated;
-		at: 8 put: 'Narrow' translated;
-		at: 16 put: 'StruckOut' translated;
-		yourself.
+						at: 1 put: 'Bold' translated;
+						at: 2 put: 'Italic' translated;
+						at: 4 put: 'Underlined' translated;
+						at: 8 put: 'Narrow' translated;
+						at: 16 put: 'StruckOut' translated;
+						yourself.
 
 	^String streamContents: [ :s | | bit |
 		bit := 1.
@@ -28,14 +28,13 @@ AbstractFont class >> emphasisStringFor: emphasisCode [
 			code := emphasisCode bitAnd: bit.
 			code isZero ifFalse: [ s nextPutAll: (emphases at: code); space ].
 			bit := bit bitShift: 1 ].
-		s position isZero ifFalse: [ s skip: -1 ].
-	]
+		s position isZero ifFalse: [ s skip: -1 ]]
 ]
 
 { #category : #'class initialization' }
 AbstractFont class >> initialize [
 
-  TextStyle addDependent: self.
+	TextStyle addDependent: self
 ]
 
 { #category : #updating }
@@ -101,12 +100,15 @@ AbstractFont >> characterFormAt: aCharacter [
 AbstractFont >> characterRenderingOptimizedFormAt: aCharacter [
 	"This method returns a version of the character form which is optimized for rendering
 	through an accelerated alpha blending equation in the style of the OpenGL glBlendFuncSeparate."
-	^ (self characterFormAt: aCharacter) ifNotNil: [:form | form invertedAndAlphaMultiplied]
+
+	^ (self characterFormAt: aCharacter) 
+			ifNotNil: [:form | form invertedAndAlphaMultiplied]
 ]
 
 { #category : #accessing }
 AbstractFont >> characterToGlyphMap [
 	"Return the character to glyph mapping table. If the table is not provided the character scanner will query the font directly for the width of each individual character."
+	
 	^nil
 ]
 
@@ -118,14 +120,14 @@ AbstractFont >> derivativeFonts [
 { #category : #accessing }
 AbstractFont >> descent [
 
-	self subclassResponsibility.
+	self subclassResponsibility
 
 ]
 
 { #category : #accessing }
 AbstractFont >> descentOf: aCharacter [
 
-	^ self descent.
+	^ self descent
 
 ]
 
@@ -138,19 +140,21 @@ AbstractFont >> displayString: aString on: aDisplayContext from: startIndex to: 
 
 { #category : #displaying }
 AbstractFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY [
-	"Draw the given string from startIndex to stopIndex 
-	at aPoint on the (already prepared) display context."
+	"Draw the given string from startIndex to stopIndex at aPoint on the (already prepared) display context."
+	
 	^self subclassResponsibility
 ]
 
 { #category : #accessing }
 AbstractFont >> familyName [
 	"Answer the name to be used as a key in the TextConstants dictionary."
+	
 	^self subclassResponsibility
 ]
 
 { #category : #testing }
 AbstractFont >> hasSubPixelAntiAliasing [
+
 	^ false
 ]
 
@@ -165,24 +169,27 @@ AbstractFont >> height [
 { #category : #displaying }
 AbstractFont >> installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor [
 	"Install the receiver on the given DisplayContext (either BitBlt or Canvas) for further drawing operations."
-	^self subclassResponsibility
+
+	^ self subclassResponsibility
 ]
 
 { #category : #testing }
 AbstractFont >> isFontSet [
 
-	^ false.
+	^ false
 
 ]
 
 { #category : #accessing }
 AbstractFont >> isRegular [
-	^false
+
+	^ false
 ]
 
 { #category : #testing }
 AbstractFont >> isTTCFont [
-	^false
+
+	^ false
 ]
 
 { #category : #accessing }
@@ -205,7 +212,7 @@ AbstractFont >> pixelsPerInchChanged [
 
 { #category : #accessing }
 AbstractFont >> pointSize [
-	self subclassResponsibility.
+	self subclassResponsibility
 ]
 
 { #category : #caching }
@@ -258,11 +265,12 @@ AbstractFont >> widthOf: aCharacter [
 
 { #category : #measuring }
 AbstractFont >> widthOfString: aString [
+	"
+		TextStyle default defaultFont widthOfString: 'zort' 21
+	"
 	aString ifNil: [^0].
 	^self widthOfString: aString from: 1 to: aString size.
-"
-	TextStyle default defaultFont widthOfString: 'zort' 21
-"
+
 ]
 
 { #category : #measuring }
@@ -278,14 +286,16 @@ AbstractFont >> widthOfString: aString from: firstIndex to: lastIndex [
 
 { #category : #measuring }
 AbstractFont >> widthOfStringOrText: aStringOrText [
-    aStringOrText ifNil: [^0].
+
+    aStringOrText ifNil: [ ^0 ].
     ^aStringOrText isText
-        ifTrue:[self approxWidthOfText: aStringOrText ]
-        ifFalse:[self widthOfString: aStringOrText ] 
+        ifTrue:[ self approxWidthOfText: aStringOrText ]
+        ifFalse:[ self widthOfString: aStringOrText ] 
 ]
 
 { #category : #accessing }
 AbstractFont >> xTable [
 	"Return the xTable for the font. The xTable defines the left x-value for each individual glyph in the receiver. If such a table is not provided, the character scanner will ask the font directly for the appropriate width of each individual character."
+	
 	^nil
 ]

@@ -1,5 +1,5 @@
 "
-! Font property (==SpStyleFont==)
+Font property (`SpStyleFont`)
 
 Font properties control how a component (morph) with font will draw the text.
 I keep this properties: 
@@ -9,22 +9,44 @@ I keep this properties:
 - bold: Font is bold? (boolean, default """"false"""")
 - italic: Font is italic? (boolean, default """"false"""")
 
-!! Usage
-The identifier of font in the stylesheet is ==Font==.
+## Usage
+The identifier of font in the stylesheet is _Font_.
 
-[[[
+```language=Javascript
 Font { 
  	#name: ""Source Sans Pro"",  
 	#size: 12,
 	#bold: false,
 	#italic: false
 }
-]]]
+```
+
+## Predefined fonts
+User can also point to the fonts pre-defined (comming from Settings).
+To do that, is enough to access the property `predefinedFont`, and value can be one of the list: 
+
+- `#default`
+- `#code`
+- `#ballon`
+- `#button`
+- `#halo`
+- `#list`
+- `#menu`
+
+**NOTE:** Using `predefinedFont` will meke any other Font property defined to be ignored.
+
+```language=Javascript
+Font { 
+ 	#predefinedFont: #code
+}
+```
+
 "
 Class {
 	#name : #SpStyleFont,
 	#superclass : #SpStyleProperty,
 	#instVars : [
+		'predefinedFont',
 		'name',
 		'size',
 		'italic',
@@ -121,6 +143,8 @@ SpStyleFont >> color: aColorOrSymbol [
 SpStyleFont >> definedFont [
 	| definedFont |
 
+	self predefinedFont ifNotNil: [ :aSymbol | ^ StandardFonts perform: aSymbol ].
+
 	self withCachedFontDo: [ :aFont | ^ aFont ].
 	
 	definedFont := self calculateDefinedFont.
@@ -162,6 +186,18 @@ SpStyleFont >> name [
 SpStyleFont >> name: aString [
 
 	name := aString
+]
+
+{ #category : #accessing }
+SpStyleFont >> predefinedFont [
+
+	^ predefinedFont
+]
+
+{ #category : #accessing }
+SpStyleFont >> predefinedFont: aSymbol [
+
+	predefinedFont := (aSymbol, 'Font') asSymbol
 ]
 
 { #category : #accessing }

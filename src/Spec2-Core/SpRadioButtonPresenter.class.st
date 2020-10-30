@@ -1,22 +1,5 @@
 "
-A RadioButtonPresenter is a spec presenter for RadioButton.
-See AbstractFormButtonPresenter
-
-self example
-
-! The method privateSetState: is really private and should only be used by RadioButtonGroup or RadioButtonGroupPresenter !
-
-You can also have a look at RadioButtonGroupExample for a full example of how to use them with a group.
-
-I provide more accessors on my super class ValueHolder
-- actionWhenActivatedHolder
-- actionWhenDeactivatedHolder
-- enabledHolder
-- stateHolder
-
-I provide the variable canDeselectByClick and its accessors, it is a boolean representing if the radio can be deselect directly by the user using a click on it.
-
-I specialize state: to use the variable canDeselectByClick.
+A presenter for Radio Buttons.
 "
 Class {
 	#name : #SpRadioButtonPresenter,
@@ -34,19 +17,32 @@ SpRadioButtonPresenter class >> adapterName [
 	^ #RadioButtonAdapter
 ]
 
+{ #category : #documentation }
+SpRadioButtonPresenter class >> documentFactoryMethodSelector [
+
+	^ #newRadioButton
+]
+
 { #category : #specs }
 SpRadioButtonPresenter class >> title [
 
 	^ 'Radio Button'
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpRadioButtonPresenter >> associatedRadioButtons [
+	"Answer the collection of radio buttons associated (grouped) to this one.
+	 See also `SpRadioButtonPresenter>>#associatedRadioButtons:`"
+
 	^ associatedRadioButtons
 ]
 
-{ #category : #'associated buttons' }
+{ #category : #api }
 SpRadioButtonPresenter >> associatedRadioButtons: aCollection [ 
+	"Set the list of radio buttons associated with this one.
+	 By using this, you will be grouping together this radio button along with the ones contained 
+	 in `aCollection`.
+	 You should NOT send this message to all associated radio buttons, the first of them is enough."
 	| allElements |
 	
 	"pass group to all members"	
@@ -64,7 +60,7 @@ SpRadioButtonPresenter >> basicAssociatedRadioButtons: aCollection [
 	associatedRadioButtons := aCollection copyWithout: self
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpRadioButtonPresenter >> initialStateNotSet [
 	"Setting this value to the first radio button will cause the entire group to be unset 
 	 on first display. This will be ignored if sent to other than the own containing the 
@@ -84,12 +80,18 @@ SpRadioButtonPresenter >> initialize [
 
 { #category : #testing }
 SpRadioButtonPresenter >> isInitialStateSet [
+	"Answer if the radio button and its associates start the display with one of the buttons 
+	 set. This is often used when you do not have a default option and you need to require the 
+	 user to expressely pick one choice."
 
 	^ initialStateSet
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpRadioButtonPresenter >> state: aValue [
+	"Set the state `aBoolean` of current radio button. 
+	 Changing the state affect other associated radio buttons by toggling also their state.
+	 See also `SpRadioButtonPresenter>>#associatedRadioButtons:`"
 
 	(aValue not 
 		and: [ associatedRadioButtons noneSatisfy: [ :e | e state ] ])

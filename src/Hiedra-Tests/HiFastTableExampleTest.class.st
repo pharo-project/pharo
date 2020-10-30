@@ -5,6 +5,6 @@ Class {
 }
 
 { #category : #tests }
-HiFastTableExampleTest >> exampleClassToTest [
+HiFastTableExampleTest class >> classWithExamplesToTest [
 	^ HiFastTableExample
 ]

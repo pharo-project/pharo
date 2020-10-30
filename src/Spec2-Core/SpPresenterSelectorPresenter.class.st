@@ -29,6 +29,14 @@ SpPresenterSelectorPresenter >> defaultInputPort [
 	^ self inputModelPort
 ]
 
+{ #category : #'api-focus' }
+SpPresenterSelectorPresenter >> defaultKeyboardFocus [
+
+	^ layout children 
+		ifNotEmpty: [ :children | children first ]
+		ifEmpty: [ super defaultKeyboardFocus ]
+]
+
 { #category : #'defining conditions' }
 SpPresenterSelectorPresenter >> defaultShow: aPresenterOrBlock [
 

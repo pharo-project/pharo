@@ -59,8 +59,9 @@ SpRunCommandLineHandler >> runApplication [
 		ifNone: [ ^ self exitFailure: ('Application {1} not found.' format: { self applicationName }) ].
 	
 	[ 
-		appClass new 
+		appClass basicNew
 			prepareAsStandaloneApplication;
+			initialize;
 			run ] 
 	fork
 ]

@@ -8,7 +8,6 @@ Class {
 	#name : #SpMorphicScrollableAdapter,
 	#superclass : #SpMorphicLayoutAdapter,
 	#instVars : [
-		'layout',
 		'emptyLayoutMarker'
 	],
 	#category : #'Spec2-Adapters-Morphic-Layout'

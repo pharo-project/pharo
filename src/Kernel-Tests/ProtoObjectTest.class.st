@@ -171,6 +171,15 @@ ProtoObjectTest >> testIfNotNilIfNil [
 ]
 
 { #category : #'tests - testing' }
+ProtoObjectTest >> testIsImmediateObject [
+	self deny: Object new isImmediateObject.
+	self deny: Array new isImmediateObject.
+	self assert: 1 isImmediateObject.
+	self assert: 1.2 isImmediateObject.
+	self assert: $a isImmediateObject.
+]
+
+{ #category : #'tests - testing' }
 ProtoObjectTest >> testIsNil [
 
 	self deny: ProtoObject new isNil

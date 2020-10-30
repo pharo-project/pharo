@@ -26,13 +26,7 @@ TemporaryVariable >> definingNode [
 ]
 
 { #category : #testing }
-TemporaryVariable >> isTemp [
-
-	^ true
-]
-
-{ #category : #testing }
-TemporaryVariable >> isTemporaryVariable [
+TemporaryVariable >> isTempVariable [
 
 	^ true
 ]

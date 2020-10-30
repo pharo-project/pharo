@@ -18,5 +18,6 @@ PRMathInTextAnnotation class >> tag [
 
 { #category : #visiting }
 PRMathInTextAnnotation >> accept: aVisitor [
+	
 	^ aVisitor visitMathInTextAnnotation: self
 ]

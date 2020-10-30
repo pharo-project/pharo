@@ -80,11 +80,12 @@ ExternalType class >> char [
 
 { #category : #housekeeping }
 ExternalType class >> cleanupUnusedTypes [
-	"ExternalType cleanupUnusedTypes"
+	<script>
+	
 	| value |
-	StructTypes keys do:[:key|
+	StructTypes keysDo: [:key|
 		value := StructTypes at: key.
-		value == nil ifTrue:[StructTypes removeKey: key ifAbsent:[]]].
+		value ifNil: [ StructTypes removeKey: key ifAbsent:[] ]]
 ]
 
 { #category : #'type constants' }

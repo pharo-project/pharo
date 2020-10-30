@@ -1,6 +1,8 @@
 Class {
 	#name : #SpGridAxisConstraints,
 	#superclass : #Object,
+	#traits : 'SpTAlignable',
+	#classTraits : 'SpTAlignable classTrait',
 	#instVars : [
 		'expand'
 	],

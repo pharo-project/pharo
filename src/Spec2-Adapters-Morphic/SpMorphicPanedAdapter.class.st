@@ -6,7 +6,6 @@ Class {
 	#name : #SpMorphicPanedAdapter,
 	#superclass : #SpMorphicLayoutAdapter,
 	#instVars : [
-		'layout',
 		'children'
 	],
 	#category : #'Spec2-Adapters-Morphic-Layout'

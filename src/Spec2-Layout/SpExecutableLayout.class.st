@@ -147,6 +147,23 @@ SpExecutableLayout >> isSpLayout [
 ]
 
 { #category : #accessing }
+SpExecutableLayout >> parentLayoutOf: aKey [ 
+	"Find a child layout that contains a presenter of given key. Useful if you need to find 
+	 a parent layout of a presenter that you need to replace."
+
+    (self children anySatisfy: [ :each | each = aKey ])
+        ifTrue: [ ^ self ].
+    
+    self children do: [ :each | 
+        each isSpLayout ifTrue: [ 
+            | found | 
+            found := each parentLayoutOf: aKey.
+            found ifNotNil: [ ^ found ] ] ].
+        
+    ^ nil 
+]
+
+{ #category : #accessing }
 SpExecutableLayout >> presenter [
 
 	^ adapter ifNotNil: [ adapter presenter ]
@@ -216,17 +233,14 @@ SpExecutableLayout >> selector: anObject [
 
 { #category : #private }
 SpExecutableLayout >> subpresenterOrLayoutNamed: presenterNameOrLayout of: aPresenter [
+
 	^ aPresenter additionalSubpresentersMap
 		at: presenterNameOrLayout
-		ifAbsent: [ aPresenter presenterAt: presenterNameOrLayout ifAbsent: [ self error: 'No presenter named "' , presenterNameOrLayout , '" was found in ' , aPresenter printString ] ]
-]
-
-{ #category : #accessing }
-SpExecutableLayout >> traversePresentersDo: aBlock [
-
-	self 
-		traversePresentersDo: aBlock 
-		excluding: Set new
+		ifAbsent: [ 
+			aPresenter 
+				presenterAt: presenterNameOrLayout 
+				ifAbsent: [ 
+					self error: 'No presenter named "' , presenterNameOrLayout , '" was found in ' , aPresenter printString ] ]
 ]
 
 { #category : #adding }

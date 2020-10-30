@@ -1,9 +1,10 @@
 "
-I browse all senders of the computed context that is transformed to a selector.
+Browse all senders.
+
 "
 Class {
 	#name : #SpBrowseSendersCommand,
-	#superclass : #SpSystemNavigationCommand,
+	#superclass : #SpSystemSelectionCommand,
 	#category : #'Spec2-Commands-Navigation'
 }
 
@@ -28,6 +29,6 @@ SpBrowseSendersCommand class >> shortName [
 
 { #category : #executing }
 SpBrowseSendersCommand >> execute [
-
-	self systemNavigation browseAllSendersOf: self selector
+	
+	self context doBrowseSenders
 ]

@@ -10,7 +10,7 @@ Trait named: TBehavior
 Class {
 	#name : #CDTraitDefinitionNode,
 	#superclass : #CDClassDefinitionNode,
-	#category : #ClassParser
+	#category : #'ClassParser-Model'
 }
 
 { #category : #visitor }

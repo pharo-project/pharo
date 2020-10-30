@@ -346,6 +346,7 @@ SpPresenter >> bindKeyCombination: aShortcut toAction: aBlock [
 
 { #category : #testing }
 SpPresenter >> canTakeKeyboardFocus [
+	"Answer when the presenter can take keyboard focus."
 
 	^ true
 ]
@@ -775,6 +776,12 @@ SpPresenter >> newDynamicPresentersListIn: accessorSymbol usingBuilder: aDynamic
 	
 	self needRebuild: false.
 	self buildWithSpec
+]
+
+{ #category : #widgets }
+SpPresenter >> newFilteringList [
+
+	^ self instantiate: SpFilteringListPresenter
 ]
 
 { #category : #widgets }

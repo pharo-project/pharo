@@ -71,6 +71,14 @@ Variable >> isSuper [
 ]
 
 { #category : #'*Deprecated90' }
+Variable >> isTemp [
+	self 
+		deprecated: 'Use #isTempVariable instead.' 
+		transformWith: '`@receiver isTemp' -> '`@receiver isTempVariable'.
+	^ self isTempVariable
+]
+
+{ #category : #'*Deprecated90' }
 Variable >> isThisContext [
 	self 
 		deprecated: 'Use #isThisContextVariable instead.' 

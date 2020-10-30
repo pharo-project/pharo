@@ -58,6 +58,7 @@ MetaLink class >> defaultOptions [
 	+ optionWeakAfter 						  "do not use #ensure: for #after "
 	- optionAnnounce                    "do we announce adding / removing links? Slow"
 	- argsAsArray                       "pass all arguments in one array. By default off as it adds an array creation"
+	+ optionStyler							  "should the metalink be visualized in the Tools?"
 	)
 ]
 
@@ -287,6 +288,19 @@ MetaLink >> installOnTempVarNamed: aTempName inMethod: aMethodName for: aClassOr
 { #category : #installing }
 MetaLink >> installOnVariable: aVariable [
 	nodes add: aVariable
+]
+
+{ #category : #'installing - link installer' }
+MetaLink >> installOnVariableNamed: aName for: aClassOrObject option: option instanceSpecific: instanceSpecific [
+
+	| permalink |
+	permalink := self
+		             permaLinkFor: aClassOrObject
+		             option: option
+		             instanceSpecific: instanceSpecific.
+	^ self linkInstaller
+		  installPermaLink: permalink
+		  onVariableNamed: aName
 ]
 
 { #category : #installing }
