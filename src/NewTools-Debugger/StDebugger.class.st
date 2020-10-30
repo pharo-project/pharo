@@ -521,7 +521,7 @@ StDebugger >> doBrowseClass [
 
 { #category : #commands }
 StDebugger >> doBrowseReceiverClass [
-self halt.
+
 	self systemNavigation browse: self stackSelectionReceiverClassContext
 ]
 
