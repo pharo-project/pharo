@@ -16,19 +16,22 @@ Class {
 	#name : #ClyMethodDefinitionProperty,
 	#superclass : #ClyItemDefinitionProperty,
 	#instVars : [
-		'isExtension'
+		'isExtension',
+		'protocol'
 	],
 	#category : #'Calypso-SystemQueries-Properties'
 }
 
 { #category : #'instance creation' }
 ClyMethodDefinitionProperty class >> of: aMethod [
-	| methodPackage methodClass |
+	| methodPackage methodClass methodProtocol |
 	methodPackage := aMethod package.
 	methodClass := aMethod origin.
+	methodProtocol := aMethod protocol.
+	
 	methodPackage ifNil: [ methodPackage := methodClass package ]. "it happens when creation new method in trait. It should be fixed in system"
 	
-	^self package: methodPackage class: methodClass 
+	^ self package: methodPackage class: methodClass protocol: methodProtocol
 ]
 
 { #category : #'instance creation' }
@@ -36,6 +39,15 @@ ClyMethodDefinitionProperty class >> package: aPackage class: aClass [
 	
 	^(super package: aPackage class: aClass)
 		isExtension: aClass package ~~ aPackage
+]
+
+{ #category : #'instance creation' }
+ClyMethodDefinitionProperty class >> package: aPackage class: aClass protocol: aProtocol [
+	
+	^(super package: aPackage class: aClass)
+		isExtension: aClass package ~~ aPackage;
+		protocol: aProtocol;
+		yourself.
 ]
 
 { #category : #accessing }
@@ -49,7 +61,17 @@ ClyMethodDefinitionProperty >> isExtension: anObject [
 ]
 
 { #category : #printing }
+ClyMethodDefinitionProperty >> printDefiningProtocol [
+	^ protocol
+]
+
+{ #category : #printing }
 ClyMethodDefinitionProperty >> printDefinition [
 
 	^self printDefiningClass
+]
+
+{ #category : #accessing }
+ClyMethodDefinitionProperty >> protocol: anObject [
+	protocol := anObject
 ]

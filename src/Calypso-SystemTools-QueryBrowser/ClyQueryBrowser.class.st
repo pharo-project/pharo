@@ -195,8 +195,11 @@ ClyQueryBrowser >> initializeNavigationViews [
 		width: 250;
 		displayItemPropertyBy: [:item | self classNameOf: item].
 	(resultView addColumn: #name) 
-		width: 400;
+		width: 200;
 		displayItemPropertyBy: [:item | self mainNameOf: item].
+	(resultView addColumn: #protocol) 
+		width: 200;
+		displayItemPropertyBy: [:item | self protocolNameOf: item].
 	(resultView addColumn: #package) 
 		width: 50;
 		displayItemPropertyBy: [:item | self packageNameOf: item]
@@ -287,6 +290,11 @@ ClyQueryBrowser >> packageScopeOfSelectedItems [
 ClyQueryBrowser >> prepareInitialState [
 	"no initialization is required.
 	If user do not set up system query I will be just with empty list"
+]
+
+{ #category : #initialization }
+ClyQueryBrowser >> protocolNameOf: aClyBrowserItem [ 
+	^ aClyBrowserItem systemDefinition printDefiningProtocol
 ]
 
 { #category : #accessing }
