@@ -5,7 +5,7 @@ Class {
 		'createdClassesAndTraits',
 		'oldAnnouncer'
 	],
-	#category : #'Tests-Traits'
+	#category : #'TraitsV2-Tests-Tests'
 }
 
 { #category : #testing }

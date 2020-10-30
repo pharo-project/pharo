@@ -1,7 +1,7 @@
 Class {
 	#name : #ClassTraitTest,
 	#superclass : #TraitsTestCase,
-	#category : #'Tests-Traits'
+	#category : #'TraitsV2-Tests-Tests'
 }
 
 { #category : #testing }

@@ -9,7 +9,7 @@ Class {
 		'tc',
 		'td'
 	],
-	#category : #'Tests-Traits'
+	#category : #'TraitsV2-Tests-Tests'
 }
 
 { #category : #accessing }

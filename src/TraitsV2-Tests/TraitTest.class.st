@@ -1,7 +1,7 @@
 Class {
 	#name : #TraitTest,
 	#superclass : #TraitsTestCase,
-	#category : #'Tests-Traits'
+	#category : #'TraitsV2-Tests-Tests'
 }
 
 { #category : #utilities }
@@ -338,7 +338,7 @@ TraitTest >> testPrinting [
 	self assertPrints: self t6 definition
 		like: 'Trait named: #T6
 	uses: T1 + (T2 @ {#m22Alias->#m22})
-	package: ''Tests-Traits'''
+	package: ''TraitsV2-Tests-Tests'''
 ]
 
 { #category : #testing }
