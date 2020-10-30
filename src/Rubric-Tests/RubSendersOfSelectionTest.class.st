@@ -10,43 +10,84 @@ Class {
 	#category : #'Rubric-Tests-Base'
 }
 
-{ #category : #utils }
-RubSendersOfSelectionTest >> caretAfter: aNode [ 
+{ #category : #helpers }
+RubSendersOfSelectionTest >> caretAfter: aNode [
 
-	editingArea selectFrom: aNode stop + 1 to: aNode stop
-
+	self caretAt: aNode stop + 1
 ]
 
-{ #category : #utils }
+{ #category : #helpers }
+RubSendersOfSelectionTest >> caretAt: aPosition [ 
+
+	editingArea selectFrom: aPosition to: aPosition - 1
+]
+
+{ #category : #helpers }
 RubSendersOfSelectionTest >> caretBefore: aNode [ 
 
-	editingArea selectFrom: aNode start to: aNode start - 1.
-
+	self caretAt: aNode start
 ]
 
-{ #category : #utils }
+{ #category : #helpers }
 RubSendersOfSelectionTest >> caretInMiddleOf: aNode [ 
 	
-	editingArea selectFrom: aNode start + 1 to: aNode start.
-
+	self caretAt: aNode start + 1
 ]
 
-{ #category : #tests }
+{ #category : #helpers }
+RubSendersOfSelectionTest >> caretInMiddleOfCascadeMessage: aRBMessageNode [ 
+	
+	self flag: #bug.
+	"The start of a selector node should not be an integer array. That will change in the future and this test will break because of that."
+	^ self caretAt: aRBMessageNode selectorNode start first
+]
+
+{ #category : #helpers }
+RubSendersOfSelectionTest >> messageNodeToTest [
+
+	^ self returnNodeToTest value
+]
+
+{ #category : #'tests - no selection - method signature' }
 RubSendersOfSelectionTest >> method: a zkx: bsq pn: c [
 
-	^ self aMethod: a with: bsq x:c
+	^ self aMethod: a with: (self something: bsq) x:(self perform: #selector)
 ]
 
-{ #category : #tests }
+{ #category : #running }
+RubSendersOfSelectionTest >> methodWithCascade [
+
+	#( 1 2 3 )
+		do: [ :e | e + 1 ];
+		yourself
+]
+
+{ #category : #running }
+RubSendersOfSelectionTest >> methodWithIfTrueIfFalse [
+
+	self isInteger
+		ifTrue: [ 
+			#(1 2) first.
+			self printString ]
+		ifFalse: [ self yourself ]
+]
+
+{ #category : #running }
 RubSendersOfSelectionTest >> methodX:a [
 
 	
 ]
 
-{ #category : #utils }
+{ #category : #helpers }
 RubSendersOfSelectionTest >> open [
 
 	editingArea openInWindow
+]
+
+{ #category : #helpers }
+RubSendersOfSelectionTest >> returnNodeToTest [
+
+	^ ast statements first
 ]
 
 { #category : #running }
@@ -64,7 +105,7 @@ RubSendersOfSelectionTest >> setUp [
 
 ]
 
-{ #category : #utils }
+{ #category : #helpers }
 RubSendersOfSelectionTest >> sourceCodeOf: aMethod [ 
 	
 	sourceCode := aMethod sourceCode.
@@ -72,7 +113,133 @@ RubSendersOfSelectionTest >> sourceCodeOf: aMethod [
 	editingArea updateTextWith: sourceCode asText	.
 ]
 
-{ #category : #tests }
+{ #category : #'tests - no selection - blocks' }
+RubSendersOfSelectionTest >> testCaretAfterFirstMessageInBlock [
+
+	| firstBlock messageInsideBlock |
+	self sourceCodeOf: self class >> #methodWithIfTrueIfFalse.
+	firstBlock := ast statements first arguments first.
+	messageInsideBlock := firstBlock statements first.
+	self caretAfter: messageInsideBlock.
+	
+	self assert: editor selectedSelector equals: messageInsideBlock selector
+]
+
+{ #category : #'tests - no selection - blocks' }
+RubSendersOfSelectionTest >> testCaretAfterLastMessageInBlock [
+
+	| firstBlock messageInsideBlock |
+	self sourceCodeOf: self class >> #methodWithIfTrueIfFalse.
+	firstBlock := ast statements first arguments first.
+	messageInsideBlock := firstBlock statements last.
+	self caretAfter: messageInsideBlock.
+	
+	self assert: editor selectedSelector equals: messageInsideBlock selector
+]
+
+{ #category : #'tests - no selection - blocks' }
+RubSendersOfSelectionTest >> testCaretAfterMessageInBlock [
+
+	| firstBlock messageInsideBlock |
+	self sourceCodeOf: self class >> #methodWithIfTrueIfFalse.
+	firstBlock := ast statements first arguments first.
+	messageInsideBlock := firstBlock statements first.
+	self caretAfter: messageInsideBlock.
+	
+	self assert: editor selectedSelector equals: messageInsideBlock selector
+]
+
+{ #category : #'tests - no selection - message' }
+RubSendersOfSelectionTest >> testCaretAfterNestedMessageReceiverInMiddleOfArgumentName [
+
+	self sourceCodeOf: self class >> #methodWithIfTrueIfFalse.
+	
+	"The argument is a message node, we should match it instead of the parent"
+	self caretAfter: self messageNodeToTest receiver.
+	
+	self assert: editor selectedSelector equals: self messageNodeToTest receiver selector
+]
+
+{ #category : #'tests - no selection - return' }
+RubSendersOfSelectionTest >> testCaretAfterReturnShouldMatchChild [
+
+	self sourceCodeOf: self class >> #method:zkx:pn:.
+	
+	"Caret in middle of should put the caret after the ^"
+	self caretInMiddleOf: self returnNodeToTest.
+	
+	self assert: editor selectedSelector equals: self messageNodeToTest selector
+]
+
+{ #category : #'tests - no selection - blocks' }
+RubSendersOfSelectionTest >> testCaretBeforeMessageInBlock [
+
+	| firstBlock messageInsideBlock |
+	self sourceCodeOf: self class >> #methodWithIfTrueIfFalse.
+	firstBlock := ast statements first arguments first.
+	messageInsideBlock := firstBlock statements first.
+	self caretBefore: messageInsideBlock.
+	
+	self assert: editor selectedSelector equals: messageInsideBlock selector
+]
+
+{ #category : #'tests - no selection - message' }
+RubSendersOfSelectionTest >> testCaretBeforeNestedMessageReceiverInMiddleOfArgumentName [
+
+	self sourceCodeOf: self class >> #methodWithIfTrueIfFalse.
+	
+	"The argument is a message node, we should match it instead of the parent"
+	self caretBefore: self messageNodeToTest receiver.
+	
+	self assert: editor selectedSelector equals: self messageNodeToTest receiver selector
+]
+
+{ #category : #'tests - no selection - return' }
+RubSendersOfSelectionTest >> testCaretBeforeReturnShouldMatchChild [
+
+	self sourceCodeOf: self class >> #method:zkx:pn:.
+	self caretBefore: self returnNodeToTest.
+	
+	self assert: editor selectedSelector equals: self messageNodeToTest selector
+]
+
+{ #category : #'tests - no selection - cascade' }
+RubSendersOfSelectionTest >> testCaretInCascadeFirstMessageShouldMatchFirstMessage [
+
+	| cascade |
+	self sourceCodeOf: self class >> #methodWithCascade.
+	
+	cascade := ast statements first.
+	self caretInMiddleOfCascadeMessage: cascade messages first.
+	
+	self assert: editor selectedSelector equals: cascade messages first selector
+]
+
+{ #category : #'tests - no selection - cascade' }
+RubSendersOfSelectionTest >> testCaretInCascadeReceiverShouldMatchFirstMessage [
+
+	| cascade |
+	self sourceCodeOf: self class >> #methodWithCascade.
+	
+	cascade := ast statements first.
+	self caretInMiddleOf: cascade receiver.
+	
+	self assert: editor selectedSelector equals: cascade messages first selector
+]
+
+{ #category : #'tests - no selection - cascade' }
+RubSendersOfSelectionTest >> testCaretInCascadeSecondMessageShouldMatchSecondMessage [
+
+	| cascade |
+	self sourceCodeOf: self class >> #methodWithCascade.
+	
+	cascade := ast statements first.
+	self caretInMiddleOfCascadeMessage: cascade messages second.
+	
+	self assert: editor selectedSelector equals: cascade messages second selector
+]
+
+{ #category : #'tests - no selection - method signature' }
 RubSendersOfSelectionTest >> testCaretInHeaderAfterArgumentName [
 
 	self sourceCodeOf: self class >> #method:zkx:pn:.
@@ -81,7 +248,7 @@ RubSendersOfSelectionTest >> testCaretInHeaderAfterArgumentName [
 	self assert: editor selectedSelector equals: #method:zkx:pn:
 ]
 
-{ #category : #tests }
+{ #category : #'tests - no selection - method signature' }
 RubSendersOfSelectionTest >> testCaretInHeaderInBeforeArgumentName [
 
 	self sourceCodeOf: self class >> #method:zkx:pn:.
@@ -90,7 +257,7 @@ RubSendersOfSelectionTest >> testCaretInHeaderInBeforeArgumentName [
 	self assert: editor selectedSelector equals: #method:zkx:pn:
 ]
 
-{ #category : #tests }
+{ #category : #'tests - no selection - method signature' }
 RubSendersOfSelectionTest >> testCaretInHeaderInBeforeArgumentWithoutSpaceName [
 
 	self sourceCodeOf: self class >> #methodX:.
@@ -99,7 +266,7 @@ RubSendersOfSelectionTest >> testCaretInHeaderInBeforeArgumentWithoutSpaceName [
 	self assert: editor selectedSelector equals: #methodX:
 ]
 
-{ #category : #tests }
+{ #category : #'tests - no selection - method signature' }
 RubSendersOfSelectionTest >> testCaretInHeaderInMiddleOfArgumentName [
 
 	self sourceCodeOf: self class >> #method:zkx:pn:.
@@ -108,11 +275,96 @@ RubSendersOfSelectionTest >> testCaretInHeaderInMiddleOfArgumentName [
 	self assert: editor selectedSelector equals: #method:zkx:pn:
 ]
 
-{ #category : #tests }
+{ #category : #'tests - no selection - method signature' }
+RubSendersOfSelectionTest >> testCaretInHeaderInMiddleOfMessageSelector [
+
+	self sourceCodeOf: self class >> #method:zkx:pn:.
+	self caretInMiddleOf: self messageNodeToTest.
+
+	self assert: editor selectedSelector equals: self messageNodeToTest selector
+]
+
+{ #category : #'tests - no selection - method signature' }
 RubSendersOfSelectionTest >> testCaretInHeaderInMiddleOfSelectorHeader [
 
 	self sourceCodeOf: self class >> #method:zkx:pn:.
 	self caretInMiddleOf: ast.
 	
 	self assert: editor selectedSelector equals: #method:zkx:pn:
+]
+
+{ #category : #'tests - no selection - message' }
+RubSendersOfSelectionTest >> testCaretInMessageAfterArgumentName [
+
+	self sourceCodeOf: self class >> #method:zkx:pn:.
+	self caretAfter: (self messageNodeToTest arguments at: 1).
+	
+	self assert: editor selectedSelector equals: self messageNodeToTest selector
+]
+
+{ #category : #'tests - no selection - message' }
+RubSendersOfSelectionTest >> testCaretInMessageInBeforeArgumentName [
+
+	self sourceCodeOf: self class >> #method:zkx:pn:.
+	self caretBefore: (self messageNodeToTest arguments at: 1).
+	
+	self assert: editor selectedSelector equals: self messageNodeToTest selector
+]
+
+{ #category : #'tests - no selection - blocks' }
+RubSendersOfSelectionTest >> testCaretInMessageInBlock [
+
+	| firstBlock messageInsideBlock |
+	self sourceCodeOf: self class >> #methodWithIfTrueIfFalse.
+	firstBlock := ast statements first arguments first.
+	messageInsideBlock := firstBlock statements first.
+	self caretInMiddleOf: messageInsideBlock.
+	
+	self assert: editor selectedSelector equals: messageInsideBlock selector
+]
+
+{ #category : #'tests - no selection - message' }
+RubSendersOfSelectionTest >> testCaretInNestedMessageInMiddleOfArgumentName [
+
+	self sourceCodeOf: self class >> #method:zkx:pn:.
+	
+	"The argument is a message node, we should match it instead of the parent"
+	self caretInMiddleOf: (self messageNodeToTest arguments at: 2).
+	
+	self assert: editor selectedSelector equals: self messageNodeToTest arguments second selector
+]
+
+{ #category : #'tests - no selection - message' }
+RubSendersOfSelectionTest >> testCaretInNestedPerformMessageInMiddleOfArgumentName [
+
+	self sourceCodeOf: self class >> #method:zkx:pn:.
+	
+	"The argument is a message node, we should match it instead of the parent"
+	self caretInMiddleOf: self messageNodeToTest arguments third.
+	
+	self assert: editor selectedSelector equals: self messageNodeToTest arguments third selector
+]
+
+{ #category : #'tests - no selection - message' }
+RubSendersOfSelectionTest >> testCaretInSymbol [
+
+	| performSymbolArgumentNode |
+	self sourceCodeOf: self class >> #method:zkx:pn:.
+	
+	"The argument is a message node, we should match it instead of the parent"
+	performSymbolArgumentNode := self messageNodeToTest arguments third arguments first.
+	self caretInMiddleOf: performSymbolArgumentNode.
+	
+	self assert: editor selectedSelector equals: performSymbolArgumentNode value
+]
+
+{ #category : #'tests - no selection - message' }
+RubSendersOfSelectionTest >> testCaretInTheMiddleOfNestedMessageReceiverInMiddleOfArgumentName [
+
+	self sourceCodeOf: self class >> #methodWithIfTrueIfFalse.
+	
+	"The argument is a message node, we should match it instead of the parent"
+	self caretInMiddleOf: self messageNodeToTest receiver.
+	
+	self assert: editor selectedSelector equals: self messageNodeToTest receiver selector
 ]
