@@ -48,7 +48,7 @@ RubSendersOfSelectionTest >> messageNodeToTest [
 	^ self returnNodeToTest value
 ]
 
-{ #category : #'tests - no selection - method signature' }
+{ #category : #running }
 RubSendersOfSelectionTest >> method: a zkx: bsq pn: c [
 
 	^ self aMethod: a with: (self something: bsq) x:(self perform: #selector)
@@ -57,9 +57,9 @@ RubSendersOfSelectionTest >> method: a zkx: bsq pn: c [
 { #category : #running }
 RubSendersOfSelectionTest >> methodWithCascade [
 
-	#( 1 2 3 )
-		do: [ :e | e + 1 ];
-		yourself
+	^ self
+		yourself;
+		asString
 ]
 
 { #category : #running }
@@ -90,6 +90,14 @@ RubSendersOfSelectionTest >> returnNodeToTest [
 	^ ast statements first
 ]
 
+{ #category : #helpers }
+RubSendersOfSelectionTest >> selectedSelector [
+
+	| extractor |
+	extractor := RubSelectionExtractor new.
+	^ extractor extractSelectedSelectorFrom: editor
+]
+
 { #category : #running }
 RubSendersOfSelectionTest >> setUp [ 
 
@@ -102,7 +110,6 @@ RubSendersOfSelectionTest >> setUp [
 		yourself.
 		
 	editor := RubSmalltalkEditor forTextArea: editingArea.
-
 ]
 
 { #category : #helpers }
@@ -122,7 +129,7 @@ RubSendersOfSelectionTest >> testCaretAfterFirstMessageInBlock [
 	messageInsideBlock := firstBlock statements first.
 	self caretAfter: messageInsideBlock.
 	
-	self assert: editor selectedSelector equals: messageInsideBlock selector
+	self assert: self selectedSelector equals: messageInsideBlock selector
 ]
 
 { #category : #'tests - no selection - blocks' }
@@ -134,7 +141,7 @@ RubSendersOfSelectionTest >> testCaretAfterLastMessageInBlock [
 	messageInsideBlock := firstBlock statements last.
 	self caretAfter: messageInsideBlock.
 	
-	self assert: editor selectedSelector equals: messageInsideBlock selector
+	self assert: self selectedSelector equals: messageInsideBlock selector
 ]
 
 { #category : #'tests - no selection - blocks' }
@@ -146,7 +153,7 @@ RubSendersOfSelectionTest >> testCaretAfterMessageInBlock [
 	messageInsideBlock := firstBlock statements first.
 	self caretAfter: messageInsideBlock.
 	
-	self assert: editor selectedSelector equals: messageInsideBlock selector
+	self assert: self selectedSelector equals: messageInsideBlock selector
 ]
 
 { #category : #'tests - no selection - message' }
@@ -157,7 +164,7 @@ RubSendersOfSelectionTest >> testCaretAfterNestedMessageReceiverInMiddleOfArgume
 	"The argument is a message node, we should match it instead of the parent"
 	self caretAfter: self messageNodeToTest receiver.
 	
-	self assert: editor selectedSelector equals: self messageNodeToTest receiver selector
+	self assert: self selectedSelector equals: self messageNodeToTest receiver selector
 ]
 
 { #category : #'tests - no selection - return' }
@@ -168,7 +175,20 @@ RubSendersOfSelectionTest >> testCaretAfterReturnShouldMatchChild [
 	"Caret in middle of should put the caret after the ^"
 	self caretInMiddleOf: self returnNodeToTest.
 	
-	self assert: editor selectedSelector equals: self messageNodeToTest selector
+	self assert: self selectedSelector equals: self messageNodeToTest selector
+]
+
+{ #category : #'tests - no selection - return' }
+RubSendersOfSelectionTest >> testCaretAfterReturnShouldMatchChildCascade [
+
+	| cascade |
+	self sourceCodeOf: self class >> #methodWithCascade.
+	
+	"Caret in middle of should put the caret after the ^"
+	self caretInMiddleOf: self returnNodeToTest.
+	
+	cascade := self returnNodeToTest value.
+	self assert: self selectedSelector equals: cascade messages first selector
 ]
 
 { #category : #'tests - no selection - blocks' }
@@ -180,7 +200,7 @@ RubSendersOfSelectionTest >> testCaretBeforeMessageInBlock [
 	messageInsideBlock := firstBlock statements first.
 	self caretBefore: messageInsideBlock.
 	
-	self assert: editor selectedSelector equals: messageInsideBlock selector
+	self assert: self selectedSelector equals: messageInsideBlock selector
 ]
 
 { #category : #'tests - no selection - message' }
@@ -191,7 +211,7 @@ RubSendersOfSelectionTest >> testCaretBeforeNestedMessageReceiverInMiddleOfArgum
 	"The argument is a message node, we should match it instead of the parent"
 	self caretBefore: self messageNodeToTest receiver.
 	
-	self assert: editor selectedSelector equals: self messageNodeToTest receiver selector
+	self assert: self selectedSelector equals: self messageNodeToTest receiver selector
 ]
 
 { #category : #'tests - no selection - return' }
@@ -200,7 +220,7 @@ RubSendersOfSelectionTest >> testCaretBeforeReturnShouldMatchChild [
 	self sourceCodeOf: self class >> #method:zkx:pn:.
 	self caretBefore: self returnNodeToTest.
 	
-	self assert: editor selectedSelector equals: self messageNodeToTest selector
+	self assert: self selectedSelector equals: self messageNodeToTest selector
 ]
 
 { #category : #'tests - no selection - cascade' }
@@ -209,10 +229,10 @@ RubSendersOfSelectionTest >> testCaretInCascadeFirstMessageShouldMatchFirstMessa
 	| cascade |
 	self sourceCodeOf: self class >> #methodWithCascade.
 	
-	cascade := ast statements first.
+	cascade := ast statements first value.
 	self caretInMiddleOfCascadeMessage: cascade messages first.
 	
-	self assert: editor selectedSelector equals: cascade messages first selector
+	self assert: self selectedSelector equals: cascade messages first selector
 ]
 
 { #category : #'tests - no selection - cascade' }
@@ -221,10 +241,10 @@ RubSendersOfSelectionTest >> testCaretInCascadeReceiverShouldMatchFirstMessage [
 	| cascade |
 	self sourceCodeOf: self class >> #methodWithCascade.
 	
-	cascade := ast statements first.
+	cascade := ast statements first value.
 	self caretInMiddleOf: cascade receiver.
 	
-	self assert: editor selectedSelector equals: cascade messages first selector
+	self assert: self selectedSelector equals: cascade messages first selector
 ]
 
 { #category : #'tests - no selection - cascade' }
@@ -233,19 +253,19 @@ RubSendersOfSelectionTest >> testCaretInCascadeSecondMessageShouldMatchSecondMes
 	| cascade |
 	self sourceCodeOf: self class >> #methodWithCascade.
 	
-	cascade := ast statements first.
+	cascade := ast statements first value.
 	self caretInMiddleOfCascadeMessage: cascade messages second.
 	
-	self assert: editor selectedSelector equals: cascade messages second selector
+	self assert: self selectedSelector equals: cascade messages second selector
 ]
 
 { #category : #'tests - no selection - method signature' }
 RubSendersOfSelectionTest >> testCaretInHeaderAfterArgumentName [
 
 	self sourceCodeOf: self class >> #method:zkx:pn:.
-	
 	self caretAfter: (ast arguments at: 1).
-	self assert: editor selectedSelector equals: #method:zkx:pn:
+	
+	self assert: self selectedSelector equals: #method:zkx:pn:
 ]
 
 { #category : #'tests - no selection - method signature' }
@@ -254,7 +274,7 @@ RubSendersOfSelectionTest >> testCaretInHeaderInBeforeArgumentName [
 	self sourceCodeOf: self class >> #method:zkx:pn:.
 	self caretBefore: (ast arguments at: 1).
 	
-	self assert: editor selectedSelector equals: #method:zkx:pn:
+	self assert: self selectedSelector equals: #method:zkx:pn:
 ]
 
 { #category : #'tests - no selection - method signature' }
@@ -263,7 +283,7 @@ RubSendersOfSelectionTest >> testCaretInHeaderInBeforeArgumentWithoutSpaceName [
 	self sourceCodeOf: self class >> #methodX:.
 	self caretBefore: (ast arguments at: 1).
 	
-	self assert: editor selectedSelector equals: #methodX:
+	self assert: self selectedSelector equals: #methodX:
 ]
 
 { #category : #'tests - no selection - method signature' }
@@ -272,7 +292,7 @@ RubSendersOfSelectionTest >> testCaretInHeaderInMiddleOfArgumentName [
 	self sourceCodeOf: self class >> #method:zkx:pn:.
 	self caretInMiddleOf: (ast arguments at: 2).
 	
-	self assert: editor selectedSelector equals: #method:zkx:pn:
+	self assert: self selectedSelector equals: #method:zkx:pn:
 ]
 
 { #category : #'tests - no selection - method signature' }
@@ -281,7 +301,7 @@ RubSendersOfSelectionTest >> testCaretInHeaderInMiddleOfMessageSelector [
 	self sourceCodeOf: self class >> #method:zkx:pn:.
 	self caretInMiddleOf: self messageNodeToTest.
 
-	self assert: editor selectedSelector equals: self messageNodeToTest selector
+	self assert: self selectedSelector equals: self messageNodeToTest selector
 ]
 
 { #category : #'tests - no selection - method signature' }
@@ -290,7 +310,7 @@ RubSendersOfSelectionTest >> testCaretInHeaderInMiddleOfSelectorHeader [
 	self sourceCodeOf: self class >> #method:zkx:pn:.
 	self caretInMiddleOf: ast.
 	
-	self assert: editor selectedSelector equals: #method:zkx:pn:
+	self assert: self selectedSelector equals: #method:zkx:pn:
 ]
 
 { #category : #'tests - no selection - message' }
@@ -299,7 +319,7 @@ RubSendersOfSelectionTest >> testCaretInMessageAfterArgumentName [
 	self sourceCodeOf: self class >> #method:zkx:pn:.
 	self caretAfter: (self messageNodeToTest arguments at: 1).
 	
-	self assert: editor selectedSelector equals: self messageNodeToTest selector
+	self assert: self selectedSelector equals: self messageNodeToTest selector
 ]
 
 { #category : #'tests - no selection - message' }
@@ -308,7 +328,7 @@ RubSendersOfSelectionTest >> testCaretInMessageInBeforeArgumentName [
 	self sourceCodeOf: self class >> #method:zkx:pn:.
 	self caretBefore: (self messageNodeToTest arguments at: 1).
 	
-	self assert: editor selectedSelector equals: self messageNodeToTest selector
+	self assert: self selectedSelector equals: self messageNodeToTest selector
 ]
 
 { #category : #'tests - no selection - blocks' }
@@ -320,7 +340,7 @@ RubSendersOfSelectionTest >> testCaretInMessageInBlock [
 	messageInsideBlock := firstBlock statements first.
 	self caretInMiddleOf: messageInsideBlock.
 	
-	self assert: editor selectedSelector equals: messageInsideBlock selector
+	self assert: self selectedSelector equals: messageInsideBlock selector
 ]
 
 { #category : #'tests - no selection - message' }
@@ -331,7 +351,7 @@ RubSendersOfSelectionTest >> testCaretInNestedMessageInMiddleOfArgumentName [
 	"The argument is a message node, we should match it instead of the parent"
 	self caretInMiddleOf: (self messageNodeToTest arguments at: 2).
 	
-	self assert: editor selectedSelector equals: self messageNodeToTest arguments second selector
+	self assert: self selectedSelector equals: self messageNodeToTest arguments second selector
 ]
 
 { #category : #'tests - no selection - message' }
@@ -342,7 +362,7 @@ RubSendersOfSelectionTest >> testCaretInNestedPerformMessageInMiddleOfArgumentNa
 	"The argument is a message node, we should match it instead of the parent"
 	self caretInMiddleOf: self messageNodeToTest arguments third.
 	
-	self assert: editor selectedSelector equals: self messageNodeToTest arguments third selector
+	self assert: self selectedSelector equals: self messageNodeToTest arguments third selector
 ]
 
 { #category : #'tests - no selection - message' }
@@ -355,7 +375,7 @@ RubSendersOfSelectionTest >> testCaretInSymbol [
 	performSymbolArgumentNode := self messageNodeToTest arguments third arguments first.
 	self caretInMiddleOf: performSymbolArgumentNode.
 	
-	self assert: editor selectedSelector equals: performSymbolArgumentNode value
+	self assert: self selectedSelector equals: performSymbolArgumentNode value
 ]
 
 { #category : #'tests - no selection - message' }
@@ -366,5 +386,5 @@ RubSendersOfSelectionTest >> testCaretInTheMiddleOfNestedMessageReceiverInMiddle
 	"The argument is a message node, we should match it instead of the parent"
 	self caretInMiddleOf: self messageNodeToTest receiver.
 	
-	self assert: editor selectedSelector equals: self messageNodeToTest receiver selector
+	self assert: self selectedSelector equals: self messageNodeToTest receiver selector
 ]
