@@ -31,6 +31,26 @@ DynamicMessageImplementorTest >> testConflictingArgumentNames [
 ]
 
 { #category : #testing }
+DynamicMessageImplementorTest >> testGenerateBooleanArgumentNameForFalse [
+
+	| messageImplementor sourceCode |		
+	
+	messageImplementor := DynamicMessageImplementor for: (Message selector: #iReceiveABoolean: arguments: #(false)) in: self class.
+	sourceCode := messageImplementor value.
+	self assert: sourceCode withSeparatorsCompacted equals: 'iReceiveABoolean: aBoolean self shouldBeImplemented.' withSeparatorsCompacted
+]
+
+{ #category : #testing }
+DynamicMessageImplementorTest >> testGenerateBooleanArgumentNameForTrue [
+
+	| messageImplementor sourceCode |		
+	
+	messageImplementor := DynamicMessageImplementor for: (Message selector: #iReceiveABoolean: arguments: #(true)) in: self class.
+	sourceCode := messageImplementor value.
+	self assert: sourceCode withSeparatorsCompacted equals: 'iReceiveABoolean: aBoolean self shouldBeImplemented.' withSeparatorsCompacted
+]
+
+{ #category : #testing }
 DynamicMessageImplementorTest >> testGenerateGetter [
 
 	| messageImplementor sourceCode |		
