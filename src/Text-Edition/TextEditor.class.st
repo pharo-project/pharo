@@ -490,7 +490,7 @@ TextEditor class >> textEditorMenuOn: aBuilder [
 		keyText: 'v';
 		selector: #paste;
 		iconName: #smallPasteIcon.
-	(aBuilder item: #'Paste...' translated)
+	(aBuilder item: #'Paste recent' translated)
 		selector: #pasteRecent;
 		iconName: #smallCopyIcon;
 		withSeparatorAfter.
