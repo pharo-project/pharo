@@ -21,15 +21,33 @@ Class {
 	#name : #AbstractStoredSetting,
 	#superclass : #Object,
 	#instVars : [
-		'settingNodeIdentifier'
+		'settingNodeIdentifier',
+		'hasDefaultValue'
 	],
 	#category : #'System-Settings-Core-Persistence-Ston-StoredSettings'
 }
+
+{ #category : #'ston-core' }
+AbstractStoredSetting class >> stonAllInstVarNames [
+
+	^ self allInstVarNames copyWithout: #hasDefaultValue
+]
 
 { #category : #comparing }
 AbstractStoredSetting >> = aStoredSetting [
 	^ self class = aStoredSetting class and: [ 
 		self settingNodeIdentifier = aStoredSetting settingNodeIdentifier ]
+]
+
+{ #category : #accessing }
+AbstractStoredSetting >> hasDefaultValue [
+	^ hasDefaultValue ifNil: [ ^ false ]
+]
+
+{ #category : #accessing }
+AbstractStoredSetting >> hasDefaultValue: aBoolean [ 
+	
+	hasDefaultValue := aBoolean
 ]
 
 { #category : #comparing }

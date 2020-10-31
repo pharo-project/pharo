@@ -154,13 +154,13 @@ DTFilterableListPresenter >> selectAll [
 ]
 
 { #category : #api }
-DTFilterableListPresenter >> selectItems: aBlock [
-	^ self listPresenter selectItems: aBlock
+DTFilterableListPresenter >> selectedItems [
+	^ self listPresenter selectedItems
 ]
 
 { #category : #api }
-DTFilterableListPresenter >> selectedItems [
-	^ self listPresenter selectedItems
+DTFilterableListPresenter >> selectItems: aBlock [
+	^ self listPresenter selectItems: aBlock
 ]
 
 { #category : #api }

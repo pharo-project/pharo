@@ -45,12 +45,17 @@ SettingsStonWriter >> initialize [
 SettingsStonWriter >> store [
 	"Write the stored setting in the stream"
 
+	| filteredStoredSettings |
 	stream ifNil: [ ^ self ].
+	
+	"The settings with default values are not stored"
+	filteredStoredSettings := storedSettings reject: [ :aStoredSetting | aStoredSetting hasDefaultValue ]. 
+
 	STON writer
 		on: stream;
 		prettyPrint: true;
 		asciiOnly: true;
-		nextPut: storedSettings asArray
+		nextPut: filteredStoredSettings asArray
 ]
 
 { #category : #accessing }

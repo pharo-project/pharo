@@ -358,6 +358,16 @@ TestResult >> isPassedFor: class selector: selector [
 	^ self passed anySatisfy: [:testCase | testCase class == class and: [testCase selector == selector]]
 ]
 
+{ #category : #combining }
+TestResult >> mergeWith: aTestResult [
+
+	timeStamp := DateAndTime now.
+	failures addAll: aTestResult failures.
+	errors addAll: aTestResult errors.
+	passed addAll: aTestResult passed.
+	skipped addAll: aTestResult skipped
+]
+
 { #category : #compatibility }
 TestResult >> passed [
 	^ self expectedPasses, self expectedDefects
