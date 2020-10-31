@@ -28,11 +28,6 @@ TextStyleAsFontFamilyMember >> emphasisCode [
 	^answer
 ]
 
-{ #category : #testing }
-TextStyleAsFontFamilyMember >> simulated [ 
-	^false
-]
-
 { #category : #'LogicalFont emphasis' }
 TextStyleAsFontFamilyMember >> slantValue [
 	^(styleName includesSubstring: 'Italic') 
