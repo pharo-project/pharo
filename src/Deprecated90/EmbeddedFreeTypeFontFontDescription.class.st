@@ -1,3 +1,6 @@
+"
+Deprecated class, please use class `EmbeddedFreeTypeFontDescription`
+"
 Class {
 	#name : #EmbeddedFreeTypeFontFontDescription,
 	#superclass : #EmbeddedFreeTypeFontDescription,
@@ -8,6 +11,12 @@ Class {
 EmbeddedFreeTypeFontFontDescription class >> fontContents [
 	self subclassResponsibility
 
+]
+
+{ #category : #testing }
+EmbeddedFreeTypeFontFontDescription class >> isDeprecated [ 
+
+	 ^true
 ]
 
 { #category : #accessing }
