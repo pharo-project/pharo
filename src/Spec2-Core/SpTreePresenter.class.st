@@ -306,6 +306,15 @@ SpTreePresenter >> items: aCollection [
 	self roots: aCollection
 ]
 
+{ #category : #api }
+SpTreePresenter >> refresh [
+	"Forces a refresh of the tree. 
+	 This is useful when some model contents has changed, but we do not want to reset the whole list 
+	 (and losing selections with it)"
+
+	self withAdapterDo: [ :anAdapter | anAdapter refreshTree ]
+]
+
 { #category : #initialization }
 SpTreePresenter >> registerEvents [
 

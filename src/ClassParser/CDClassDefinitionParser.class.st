@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'subclass'
 	],
-	#category : #'ClassParser-Model'
+	#category : #'ClassParser-Parser'
 }
 
 { #category : #parsing }

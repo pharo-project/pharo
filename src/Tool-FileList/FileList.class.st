@@ -78,7 +78,7 @@ FileList class >> contentMenu: aBuilder [
 		keyText: 'v';
 		selector: #paste;
 		iconName: #smallPasteIcon.
-	(aBuilder item: #'Paste...' translated)
+	(aBuilder item: #'Paste Recent' translated)
 		selector: #pasteRecent;
 		iconName: #smallPasteIcon;
 		withSeparatorAfter .

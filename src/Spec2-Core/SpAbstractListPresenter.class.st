@@ -118,16 +118,6 @@ SpAbstractListPresenter >> doubleClickAtIndex: anIndex [
 	self doActivateAtIndex: anIndex
 ]
 
-{ #category : #TOREMOVE }
-SpAbstractListPresenter >> enableItemBeginsWithFilter [
-	self itemFilter: [ :each :pattern | each asLowercase beginsWith: pattern asLowercase ]
-]
-
-{ #category : #TOREMOVE }
-SpAbstractListPresenter >> enableItemSubstringFilter [
-	self itemFilter: [ :each :pattern | each asLowercase includesSubstring: pattern asLowercase ]
-]
-
 { #category : #initialization }
 SpAbstractListPresenter >> initialize [
 
@@ -213,6 +203,16 @@ SpAbstractListPresenter >> listSize [
 	^ self model size
 ]
 
+{ #category : #TOREMOVE }
+SpAbstractListPresenter >> matchBeginOfString [
+	self itemFilter: [ :each :pattern | each asLowercase beginsWith: pattern asLowercase ]
+]
+
+{ #category : #TOREMOVE }
+SpAbstractListPresenter >> matchSubstring [
+	self itemFilter: [ :each :pattern | each asLowercase includesSubstring: pattern asLowercase ]
+]
+
 { #category : #api }
 SpAbstractListPresenter >> model [
 	"Answer the model for this list. 
@@ -235,6 +235,15 @@ SpAbstractListPresenter >> model: aModel [
 SpAbstractListPresenter >> newEmptyModel [
 
 	^ SpCollectionListModel on: #()
+]
+
+{ #category : #api }
+SpAbstractListPresenter >> refresh [
+	"Forces a refresh of the list. 
+	 This is useful when some model contents has changed, but we do not want to reset the whole list 
+	 (and losing selections with it)"
+
+	self withAdapterDo: [ :anAdapter | anAdapter refreshList ]
 ]
 
 { #category : #initialization }

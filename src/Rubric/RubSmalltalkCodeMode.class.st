@@ -103,7 +103,7 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 		selector: #paste;
 		help: nil;
 		iconName: #smallPasteIcon.
-	(aBuilder item: #'Paste...' translated)
+	(aBuilder item: #'Paste Recent' translated)
 		selector: #pasteRecent;
 		help: nil;
 		iconName: #smallCopyIcon;

@@ -24,7 +24,7 @@ SpListPresenterTest >> testHideHeaderTitleUnsetsTitle [
 SpListPresenterTest >> testIconFor [
 	presenter
 		items: #(#add #back #catalog);
-		icons: [ :item | Smalltalk ui icons iconNamed: item asSymbol ].
+		displayIcon: [ :item | Smalltalk ui icons iconNamed: item asSymbol ].
 	self assert: (presenter iconFor: #add) equals: (Smalltalk ui icons iconNamed: #add)
 ]
 
@@ -52,7 +52,7 @@ SpListPresenterTest >> testWhenIconsChangedDo [
 		whenIconsChangedDo: [ :iconBlock | 
 			icon := iconBlock cull: #add.
 			counter := counter + 1 ].
-	presenter icons: [ :item | Smalltalk ui icons iconNamed: item asSymbol ].
+	presenter displayIcon: [ :item | Smalltalk ui icons iconNamed: item asSymbol ].
 	self assert: icon equals: (Smalltalk ui icons iconNamed: #add).
 	self assert: counter equals: 1
 ]

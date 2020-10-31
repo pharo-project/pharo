@@ -20,34 +20,35 @@ StRawInspection >> attributeTable [
 { #category : #'*NewTools-Debugger' }
 StRawInspection >> beForDebugger [
 
-	attributeTable := self newTreeTable
-		                  activateOnSingleClick;
-		                  beResizable;
-		                  contextMenu: [ 
-			                  self rootCommandsGroup asMenuPresenter ];
-		                  yourself.
+	attributeTable := (self instantiate: StDebuggerTreeTablePresenter)
+		activateOnSingleClick;
+		beResizable;
+		contextMenu: [ self rootCommandsGroup asMenuPresenter ];
+		yourself.
+	
 	self addVariableTagColumn.
 	self addVariablesColumn.
-	self addValuesColumn.
+	self addValuesColumn.	
+
 	attributeTable
 		roots: self inspectorNodes;
-		children: [ :node | #(  ) ]
+		children: [ :node | #() ]
 ]
 
 { #category : #'*NewTools-Debugger' }
 StRawInspection >> selectedPageName [
+
 	^'Context'
 ]
 
 { #category : #'*NewTools-Debugger' }
 StRawInspection >> variableTagColumn [
 
-	^ SpCompositeTableColumn new
-		  title: 'tag';
-		  width: 70;
-		  addColumn: (SpStringTableColumn new
-				   evaluated: #variableTag;
-				   yourself);
-		  sortFunction: #variableTag ascending;
-		  yourself
+	^  SpLinkTableColumn new 
+		title: 'Type';
+		width: 70;
+		evaluated: [ :aNode | aNode variableTag ];
+		action: [ :aNode |  attributeTable toggleFilter: aNode variableTag. owner updateHeaderBar. ];
+		sortFunction: #variableTag ascending;
+		yourself
 ]

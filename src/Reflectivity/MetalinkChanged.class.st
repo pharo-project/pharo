@@ -53,6 +53,30 @@ MetalinkChanged >> action: anObject [
 ]
 
 { #category : #testing }
+MetalinkChanged >> affectsMethod: aMethod [
+
+	^link methods anySatisfy: [:each | each compiledMethod == aMethod compiledMethod ]
+]
+
+{ #category : #testing }
+MetalinkChanged >> affectsMethods [
+	^true
+]
+
+{ #category : #testing }
+MetalinkChanged >> affectsMethodsDefinedInClass: aClass [
+	^ link methods
+		anySatisfy: [ :each | each methodClass isNotNil and: [ each origin == aClass ] ]
+]
+
+{ #category : #testing }
+MetalinkChanged >> affectsMethodsDefinedInPackage: aPackage [
+	^ link methods
+		anySatisfy:
+			[ :each | each methodClass isNotNil and: [ each package == aPackage ] ]
+]
+
+{ #category : #testing }
 MetalinkChanged >> isAdd [
 	^action = #add
 ]

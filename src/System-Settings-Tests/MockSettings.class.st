@@ -8,7 +8,8 @@ Class {
 		'cacheDirectory',
 		'booleanMockSetting',
 		'rangeSetting',
-		'defaultDirectoryName'
+		'defaultDirectoryName',
+		'booleanSettingWithDefault'
 	],
 	#category : #'System-Settings-Tests'
 }
@@ -33,6 +34,28 @@ MockSettings class >> booleanSettingNodeOn: aBuilder [
 	<mocksystemsettings>
 	(aBuilder setting: #booleanSetting)
 		label: 'Mock boolean setting'.
+]
+
+{ #category : #settings }
+MockSettings class >> booleanSettingWithDefault [
+
+	^ booleanSettingWithDefault ifNil: [ booleanSettingWithDefault := false ]
+]
+
+{ #category : #settings }
+MockSettings class >> booleanSettingWithDefault: aValue [
+
+	booleanSettingWithDefault := aValue
+]
+
+{ #category : #settings }
+MockSettings class >> booleanSettingWithDefaultNodeOn: aBuilder [
+	<mocksystemsettings>
+	
+	(aBuilder setting: #booleanSettingWithDefault)
+		label: 'Mock boolean setting';
+		default: false;
+		yourself.
 ]
 
 { #category : #accessing }
@@ -70,6 +93,7 @@ MockSettings class >> cleanUp [
 	self rangeSetting: nil.
 	self defaultDirectoryName: nil.
 	self cacheDirectory: nil.
+	self booleanSettingWithDefault: nil
 ]
 
 { #category : #accessing }

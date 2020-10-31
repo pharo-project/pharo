@@ -57,7 +57,7 @@ StSindarinDebuggerPresenter >> initializePresenter [
 				ifNil: [ inspector model: nil.
 					currentNodeSource text: '' ]
 				ifNotNil: [ | node |
-					node := selection selectedItem currentNode.
+					node := selection selectedItem node.
 					inspector model: node.
 					inspector setAttributeTable.
 					currentNodeSource text: node source.

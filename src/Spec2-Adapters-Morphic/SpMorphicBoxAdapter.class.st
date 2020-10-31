@@ -99,23 +99,27 @@ SpMorphicBoxAdapter >> addVerticalPadding: aNumber toMorph: aMorph [
 SpMorphicBoxAdapter >> applyAlignmentTo: aWidget [
 	| alignmentWidget |
 	
-	aWidget 
-		changeTableLayout;
-		hResizing: #shrinkWrap; 
-		vResizing: #shrinkWrap.
+	aWidget changeTableLayout.
 	
 	alignmentWidget := Morph new
+		extent: aWidget extent;
 		changeTableLayout; 
 		color: Color transparent;
 		addMorphBack: widget.
 		
 	layout isVertical 
 		ifTrue: [
+			aWidget 
+				hResizing: #spaceFill; 
+				vResizing: #shrinkWrap.
 			layout vAlign ifNotNil: [ :align |
 				alignmentWidget wrapCentering: align asMorphicAlign ].
 			layout hAlign ifNotNil: [ :align |
 				alignmentWidget listCentering: align asMorphicAlign ] ]
 		ifFalse: [ 
+			aWidget 
+				hResizing: #shrinkWrap; 
+				vResizing: #spaceFill.
 			layout vAlign ifNotNil: [ :align |
 				alignmentWidget listCentering: align asMorphicAlign ].
 			layout hAlign ifNotNil: [ :align |
@@ -222,11 +226,11 @@ SpMorphicBoxAdapter >> newWrapMorph [
 
 { #category : #accessing }
 SpMorphicBoxAdapter >> remove: aPresenter [
-
 	| morph |
+
 	morph := aPresenter adapter widget.	
 	startPanel removeMorph: morph.
-	endPanel removeMorph: morph.
+	endPanel removeMorph: morph
 ]
 
 { #category : #accessing }

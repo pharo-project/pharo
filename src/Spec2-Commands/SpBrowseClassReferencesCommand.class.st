@@ -20,17 +20,6 @@ SpBrowseClassReferencesCommand class >> shortName [
 
 { #category : #execution }
 SpBrowseClassReferencesCommand >> execute [
-	| result class |
 
-	result := self 
-		evaluate: self selectedTextOrLine 
-		ifError: [ :e | ^ self ].
-		
-	(result isClass or: [ result isTrait ])
-		ifFalse: [ result := result class ].
-
-	class := result instanceSide.
-	class isTrait
-		ifTrue: [ self systemNavigation browseAllUsersOfTrait: class ]
-		ifFalse: [ self systemNavigation browseAllCallsOnClass: class ]
+	self context doBrowseClassReferences
 ]

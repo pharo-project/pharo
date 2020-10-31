@@ -3,7 +3,7 @@ FreeType font family
 "
 Class {
 	#name : #FreeTypeFontFamily,
-	#superclass : #FontFamilyAbstract,
+	#superclass : #AbstractFontFamily,
 	#category : #'FreeType-FontManager'
 }
 

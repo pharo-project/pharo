@@ -20,7 +20,7 @@ Or set for example set ballon or default font as following:
 "
 Class {
 	#name : #FreeTypeFontProvider,
-	#superclass : #FontProviderAbstract,
+	#superclass : #AbstractFontProvider,
 	#instVars : [
 		'fileInfos',
 		'fileInfoCache',

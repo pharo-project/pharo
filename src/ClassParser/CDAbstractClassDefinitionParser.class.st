@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'classDefinition'
 	],
-	#category : #ClassParser
+	#category : #'ClassParser-Parser'
 }
 
 { #category : #'instance creation' }

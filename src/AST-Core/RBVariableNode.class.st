@@ -70,9 +70,7 @@ RBVariableNode >> = anObject [
 
 { #category : #visiting }
 RBVariableNode >> acceptVisitor: aProgramNodeVisitor [
-	^variable 
-		ifNil: [aProgramNodeVisitor visitVariableNode: self]
-		ifNotNil: [variable acceptVisitor: aProgramNodeVisitor node: self]
+	^ variable acceptVisitor: aProgramNodeVisitor node: self
 ]
 
 { #category : #matching }
@@ -104,6 +102,7 @@ RBVariableNode >> hash [
 { #category : #initialization }
 RBVariableNode >> initialize [
 	super initialize.
+	variable := UnresolvedVariable instance.
 	name := ''.
 	start := 0
 ]

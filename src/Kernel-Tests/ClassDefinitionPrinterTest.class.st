@@ -11,7 +11,7 @@ ClassDefinitionPrinterTest >> testFluidConfiguration [
 		assert: (ClassDefinitionPrinter fluid
  						for: Array;
 						definitionString)
-		equals: 'ArrayedCollection < #Array
+		equals: 'ArrayedCollection << #Array
 	layout: VariableLayout;
 	tag: ''Base'';
 	package: ''Collections-Sequenceable'''

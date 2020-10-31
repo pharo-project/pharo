@@ -471,6 +471,16 @@ Object >> beReadOnlyObject [
 ]
 
 { #category : #'write barrier' }
+Object >> beRecursivelyReadOnlyObject [
+	^self recursivelySetIsReadOnlyObject: true
+]
+
+{ #category : #'write barrier' }
+Object >> beRecursivelyWritableObject [
+	^self recursivelySetIsReadOnlyObject: false
+]
+
+{ #category : #'write barrier' }
 Object >> beWritableObject [
 	"If the VM supports read-only objects it will not write to read-only objects.
 	 An attempt to write to an instance variable of a read-only object will
@@ -1288,7 +1298,7 @@ Object >> isReadOnlyObject [
 	 An attempt to modify a read-only object in a primitive will cause the
 	 primitive to fail with a #'no modification' error code."
 	<primitive: 163 error: ec>
-	^self class isImmediateClass 
+	^self isImmediateObject
 ]
 
 { #category : #testing }
@@ -1683,6 +1693,34 @@ Object >> readSlotNamed: aName [
 	^(self class slotNamed: aName) read: self
 ]
 
+{ #category : #'write barrier' }
+Object >> recursivelySetIsReadOnlyObject: aBoolean [
+	^self recursivelySetIsReadOnlyObject: aBoolean exceptObjectsIn: IdentitySet new
+]
+
+{ #category : #'write barrier' }
+Object >> recursivelySetIsReadOnlyObject: aBoolean exceptObjectsIn: alreadyDone [
+
+	"Handle self if not already done, and note it as done."
+
+	(alreadyDone includes: self) ifFalse:
+		[	self setIsReadOnlyObject: aBoolean.
+			alreadyDone add: self ].
+
+	"Handle all instance vars of self."
+	self class allSlots do: [ :ivar | 
+		(ivar read: self)
+			recursivelySetIsReadOnlyObject: aBoolean
+			exceptObjectsIn: alreadyDone ].
+	
+	"Handle all indexed elements of self."
+	1 to: self basicSize do: [ :i | 
+		(self basicAt: i)
+			recursivelySetIsReadOnlyObject: aBoolean
+			exceptObjectsIn: alreadyDone ]
+
+]
+
 { #category : #testing }
 Object >> refersToLiteral: aLitteral [
 	^ self literalEqual: aLitteral
@@ -1740,6 +1778,7 @@ Object >> setIsReadOnlyObject: aBoolean [
 	 Note: Some objects can't be read-only, currently contexts and objects related
 	 to process scheduling (Processor, Process instances, Semaphore instances, ...)"
 	<primitive: 164 error: ec>
+	self isImmediateObject ifTrue: [ ^true ].
 	^self primitiveFailed
 	
 ]

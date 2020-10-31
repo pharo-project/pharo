@@ -41,9 +41,10 @@ StInspectorContextNamedTempNode >> label [
 
 { #category : #accessing }
 StInspectorContextNamedTempNode >> rawValue [
+
 	^ [ self hostObject tempNamed: tempName ]
 		  on: SubscriptOutOfBounds
-		  do: [ :err | 'cannot read ' , tempName ]
+		  do: [ :err | self errorMessage ]
 ]
 
 { #category : #accessing }

@@ -12,7 +12,8 @@ StHaltOnWriteCommand class >> defaultDescription [
 
 { #category : #deafult }
 StHaltOnWriteCommand class >> defaultIconName [
-	^#smallLoadProject	
+
+	^ #smallObjects
 ]
 
 { #category : #default }

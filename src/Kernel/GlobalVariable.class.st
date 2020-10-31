@@ -23,7 +23,7 @@ GlobalVariable >> emitStore: methodBuilder [
 
 { #category : #'code generation' }
 GlobalVariable >> emitValue: methodBuilder [
-	methodBuilder pushLiteralVariable: self.
+	methodBuilder pushLiteralVariable: self
 ]
 
 { #category : #testing }

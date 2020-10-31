@@ -1,10 +1,6 @@
 Extension { #name : #RBProgramNodeVisitor }
 
 { #category : #'*Reflectivity' }
-RBProgramNodeVisitor >> visitLiteralVariableNode: aNode [
-]
-
-{ #category : #'*Reflectivity' }
 RBProgramNodeVisitor >> visitStoreIntoTempNode: aNode [
 	^ aNode
 ]

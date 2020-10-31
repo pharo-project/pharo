@@ -148,8 +148,8 @@ SpExecutableLayout >> isSpLayout [
 
 { #category : #accessing }
 SpExecutableLayout >> parentLayoutOf: aKey [ 
-
-	"Find a child layout that contains a presenter of given key. Useful if you need to find a parent layout of a presenter that you need to replace."
+	"Find a child layout that contains a presenter of given key. Useful if you need to find 
+	 a parent layout of a presenter that you need to replace."
 
     (self children anySatisfy: [ :each | each = aKey ])
         ifTrue: [ ^ self ].
@@ -233,9 +233,14 @@ SpExecutableLayout >> selector: anObject [
 
 { #category : #private }
 SpExecutableLayout >> subpresenterOrLayoutNamed: presenterNameOrLayout of: aPresenter [
+
 	^ aPresenter additionalSubpresentersMap
 		at: presenterNameOrLayout
-		ifAbsent: [ aPresenter presenterAt: presenterNameOrLayout ifAbsent: [ self error: 'No presenter named "' , presenterNameOrLayout , '" was found in ' , aPresenter printString ] ]
+		ifAbsent: [ 
+			aPresenter 
+				presenterAt: presenterNameOrLayout 
+				ifAbsent: [ 
+					self error: 'No presenter named "' , presenterNameOrLayout , '" was found in ' , aPresenter printString ] ]
 ]
 
 { #category : #adding }

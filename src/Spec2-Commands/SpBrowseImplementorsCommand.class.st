@@ -29,6 +29,5 @@ SpBrowseImplementorsCommand class >> shortName [
 { #category : #executing }
 SpBrowseImplementorsCommand >> execute [
 
-	self flag: #TODO. "This thingy waits for Guille's refactor"
-	self systemNavigation browseAllImplementorsOf: self selectedSelector
+	self context doBrowseImplementors
 ]
