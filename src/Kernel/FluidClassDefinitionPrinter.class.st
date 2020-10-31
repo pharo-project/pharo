@@ -60,7 +60,7 @@ FluidClassDefinitionPrinter >> classDefinitionString [
 		  self packageOn: s ]
 ]
 
-{ #category : #printing }
+{ #category : #template }
 FluidClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName [
 
 		^ String streamContents: [ :s |
@@ -92,6 +92,28 @@ FluidClassDefinitionPrinter >> classVariableDefinitionsOn: aStream [
 				aStream nextPutAll: '.'.  
 				fullDef ifTrue: [ aStream cr;tab;tab;tab;tab ]].
 		aStream nextPutAll: '}'. ]
+]
+
+{ #category : #template }
+FluidClassDefinitionPrinter >> compactClassDefinitionTemplateInPackage: aPackageName [ 
+	^ String streamContents: [ :s |
+			s nextPutAll: 'Object << #MyClass'; crtab.
+			s nextPutAll: 'slots: {};'; crtab. 
+			s nextPutAll: 'sharedVariables: {};'; crtab.
+			s nextPutAll: 'package: ''', aPackageName, '''' ] 
+]
+
+{ #category : #template }
+FluidClassDefinitionPrinter >> compactTraitDefinitionTemplateInPackage: aPackageName [
+	
+	^ String streamContents: [ :s | 
+		  s
+			  nextPutAll: 'Trait << #TMyTrait';  crtab;
+			  nextPutAll: 'uses: {};'; crtab ;
+			  nextPutAll: 'slots: {};'; crtab ;
+			  nextPutAll: 'package: ''';
+			  nextPutAll: aPackageName;
+			  nextPutAll: '''' ]
 ]
 
 { #category : #'expanded double dispatch API' }
@@ -360,7 +382,7 @@ FluidClassDefinitionPrinter >> traitDefinitionString [
 		]
 ]
 
-{ #category : #printing }
+{ #category : #template }
 FluidClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aPackageName [
 	
 	^ String streamContents: [ :s | 

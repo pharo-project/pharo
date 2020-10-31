@@ -68,7 +68,7 @@ ClyClassCreationToolMorph >> classTag: anObject [
 { #category : #template }
 ClyClassCreationToolMorph >> classTemplate [
 
-	^ ClassDefinitionPrinter new classDefinitionTemplateInPackage:  self packageName 
+	^ ClassDefinitionPrinter new compactClassDefinitionTemplateInPackage:  self packageName 
 ]
 
 { #category : #initialization }
