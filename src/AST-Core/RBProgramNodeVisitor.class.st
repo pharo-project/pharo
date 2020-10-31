@@ -81,7 +81,8 @@ RBProgramNodeVisitor >> visitLiteralValueNode: aRBLiteralValueNode [
 RBProgramNodeVisitor >> visitMessageNode: aMessageNode [
 	(aMessageNode isCascaded not or: [ aMessageNode isFirstCascaded ])
 		ifTrue: [ self visitNode: aMessageNode receiver ].
-	aMessageNode arguments do: [ :each | self visitNode: each ]
+	aMessageNode arguments do: [ :each | self visitNode: each ].
+	self visitNode: aMessageNode selectorNode.
 ]
 
 { #category : #visiting }
@@ -122,6 +123,11 @@ RBProgramNodeVisitor >> visitPragmaNode: aPragmaNode [
 { #category : #visiting }
 RBProgramNodeVisitor >> visitReturnNode: aReturnNode [
 	^ self visitNode: aReturnNode value
+]
+
+{ #category : #visiting }
+RBProgramNodeVisitor >> visitSelectorNode: aSelectorNode [
+	^ aSelectorNode
 ]
 
 { #category : #visiting }

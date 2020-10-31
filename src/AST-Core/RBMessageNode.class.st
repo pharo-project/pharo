@@ -402,7 +402,7 @@ RBMessageNode >> replaceSourceWithMessageNode: aNode [
 
 { #category : #accessing }
 RBMessageNode >> selector [
-	^ [ selector value ] on: Error do: [selector].
+	^ selector value
 ]
 
 { #category : #accessing }
