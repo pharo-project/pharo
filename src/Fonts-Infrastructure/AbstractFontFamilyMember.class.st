@@ -84,6 +84,13 @@ AbstractFontFamilyMember >> isCloserMatchThan: otherMember toStretch: inputStret
 	^false 
 ]
 
+{ #category : #testing }
+AbstractFontFamilyMember >> isSimulatedStyle [
+	"Return false by default, subclasses can override when they simulate the style"
+	
+	 ^false
+]
+
 { #category : #accessing }
 AbstractFontFamilyMember >> slantValue [
 	self subclassResponsibility
