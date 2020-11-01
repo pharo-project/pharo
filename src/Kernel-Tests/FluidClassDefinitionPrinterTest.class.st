@@ -70,6 +70,28 @@ FluidClassDefinitionPrinterTest >> testClassSideDoesNotShowPackage [
 	self assert: (self forClass: MOPTraitTest class) equals: 'MOPTraitTest class'
 ]
 
+{ #category : #'tests - template' }
+FluidClassDefinitionPrinterTest >> testCompactClassTemplate [
+
+	self 
+		assert: (FluidClassDefinitionPrinter new compactClassDefinitionTemplateInPackage: 'Kernel') 
+		equals:  'Object << #MyClass
+	slots: {};
+	sharedVariables: {};
+	package: ''Kernel'''
+		
+]
+
+{ #category : #'tests - template' }
+FluidClassDefinitionPrinterTest >> testCompactTraitFullTemplate [
+
+	self 
+		assert: (FluidClassDefinitionPrinter new compactTraitDefinitionTemplateInPackage: 'TraitsV2') equals: 'Trait << #TMyTrait
+	uses: {};
+	slots: {};
+	package: ''TraitsV2'''
+]
+
 { #category : #'tests - traits' }
 FluidClassDefinitionPrinterTest >> testComplexTrait [
 
@@ -175,8 +197,8 @@ FluidClassDefinitionPrinterTest >> testExpandedTrait3ClassTrait [
 		
 ]
 
-{ #category : #'tests - fully expanded' }
-FluidClassDefinitionPrinterTest >> testFullyExpandedSimple [
+{ #category : #'tests - template' }
+FluidClassDefinitionPrinterTest >> testFullClassTemplate [
 
 	self 
 		assert: (FluidClassDefinitionPrinter new classDefinitionTemplateInPackage: 'Kernel') 
@@ -189,17 +211,6 @@ FluidClassDefinitionPrinterTest >> testFullyExpandedSimple [
 	tag: '''' ;
 	package: ''Kernel'''
 		
-]
-
-{ #category : #'tests - fully expanded' }
-FluidClassDefinitionPrinterTest >> testFullyExpandedTrait [
-
-	self 
-		assert: (FluidClassDefinitionPrinter new traitDefinitionTemplateInPackage: 'TraitsV2') equals: 'Trait << #TMyTrait
-	uses: {};
-	slots: {};
-	tag: '''' ;
-	package: ''TraitsV2'''
 ]
 
 { #category : #'tests - metaclasses' }
@@ -360,4 +371,15 @@ FluidClassDefinitionPrinterTest >> testTrait3AndTag [
 	uses: Trait2;
 	tag: ''Traits-MOP'';
 	package: ''Tests''' 
+]
+
+{ #category : #'tests - template' }
+FluidClassDefinitionPrinterTest >> testTraitFullTemplate [
+
+	self 
+		assert: (FluidClassDefinitionPrinter new traitDefinitionTemplateInPackage: 'TraitsV2') equals: 'Trait << #TMyTrait
+	uses: {};
+	slots: {};
+	tag: '''' ;
+	package: ''TraitsV2'''
 ]

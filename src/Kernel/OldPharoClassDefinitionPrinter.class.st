@@ -70,6 +70,19 @@ OldPharoClassDefinitionPrinter >> classDefinitionTemplateInPackage: aString [
 			s nextPutAll: 'package: ''', aString, '''' ]
 ]
 
+{ #category : #template }
+OldPharoClassDefinitionPrinter >> compactClassDefinitionTemplateInPackage: aString [
+	"there is not compact version..."
+
+	^ self classDefinitionTemplateInPackage: aString
+]
+
+{ #category : #template }
+OldPharoClassDefinitionPrinter >> compactTraitDefinitionTemplateInPackage: aString [
+
+	^ self traitDefinitionTemplateInPackage: aString
+]
+
 { #category : #delegating }
 OldPharoClassDefinitionPrinter >> expandedDefinitionString [
 	"We do not support expanded on old Pharo syntax so we shortcut the double dispatch call."
