@@ -65,6 +65,7 @@ FluidClassDefinitionPrinterTest >> testChronologyConstants [
 	package: ''Kernel'''
 ]
 
+
 { #category : #'tests - expanded' }
 FluidClassDefinitionPrinterTest >> testExpandedEmptyLayoutClass [
 
@@ -121,8 +122,8 @@ FluidClassDefinitionPrinterTest >> testExpandedTime [
 	package: ''Kernel'''
 ]
 
-{ #category : #'tests - fully expanded' }
-FluidClassDefinitionPrinterTest >> testFullyExpandedSimple [
+{ #category : #'tests - template' }
+FluidClassDefinitionPrinterTest >> testFullClassTemplate [
 
 	self 
 		assert: (FluidClassDefinitionPrinter new classDefinitionTemplateInPackage: 'Kernel') 
@@ -200,3 +201,4 @@ FluidClassDefinitionPrinterTest >> testSystemAnnouncerClass [
 	self assert: (self forClass: SystemAnnouncer class) equals: 'SystemAnnouncer class
 	slots: { #announcer }'
 ]
+

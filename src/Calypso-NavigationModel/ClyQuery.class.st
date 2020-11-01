@@ -107,9 +107,6 @@ Class {
 		'requiredResult',
 		'scope'
 	],
-	#classVars : [
-		'ShouldBeProtectedByWriteBarrier'
-	],
 	#category : #'Calypso-NavigationModel-Query'
 }
 
@@ -117,17 +114,6 @@ Class {
 ClyQuery class >> as: aQueryResultClass [
 	^self new 
 		requiredResult: aQueryResultClass
-]
-
-{ #category : #accessing }
-ClyQuery class >> disableWriteBarrierProtection [
-	ShouldBeProtectedByWriteBarrier := false
-]
-
-{ #category : #accessing }
-ClyQuery class >> enableWriteBarrierProtection [
-	Smalltalk vm supportsWriteBarrier ifFalse: [ self error: 'Vm do not support write barrier' ].
-	ShouldBeProtectedByWriteBarrier := true
 ]
 
 { #category : #'merging queries' }
@@ -254,7 +240,6 @@ ClyQuery >> fixStateBeforeExecution [
 	If query needs additional state for execution 
 	it should retrieve it in prepare method which is executed before readonly fix"
 	self prepareStateBeforeExecution.
-	self shouldBeProtectedByWriteBarrier ifFalse: [^self].
 	self beReadOnlyObject.
 	scope beReadOnlyObject
 ]
@@ -377,8 +362,7 @@ ClyQuery >> requiredResult [
 { #category : #accessing }
 ClyQuery >> requiredResult: aQueryResult [
 	requiredResult := aQueryResult.
-	self shouldBeProtectedByWriteBarrier ifTrue: [ 
-		requiredResult beReadOnlyObject ]
+	requiredResult beReadOnlyObject
 ]
 
 { #category : #initialization }
@@ -430,12 +414,6 @@ ClyQuery >> scope: aScope [
 ClyQuery >> semiAsync [
 	^self async 
 		asyncResult: ClySemiAsyncQueryResult new
-]
-
-{ #category : #testing }
-ClyQuery >> shouldBeProtectedByWriteBarrier [
-	^ShouldBeProtectedByWriteBarrier ifNil: [ 
-		ShouldBeProtectedByWriteBarrier := Smalltalk vm supportsWriteBarrier]
 ]
 
 { #category : #composition }

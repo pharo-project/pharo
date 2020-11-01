@@ -40,7 +40,7 @@ StoredSettingsFactory >> fromSettingNodes: aCollectionOfSettingNodes [
 	
 	aCollectionOfSettingNodes 
 		select: [ :eachSettingNode | 
-			eachSettingNode item hasValue and: [ eachSettingNode item hasDefaultValue not ] ] 
+			eachSettingNode item hasValue ] 
 		thenDo: [ :eachSettingNode |
 			(self from: eachSettingNode) ifNotNil: [ :aStoredNode | storedSettings add: aStoredNode ] ].
 	
@@ -143,7 +143,10 @@ StoredSettingsFactory >> visitRelativePath: aRelativePath [
 
 { #category : #visitor }
 StoredSettingsFactory >> visitSettingDeclaration: aSettingDeclaration [ 
+
 	aSettingDeclaration realValue acceptSettings: self.
+
+	storedSetting hasDefaultValue: aSettingDeclaration hasDefaultValue
 	
 ]
 
