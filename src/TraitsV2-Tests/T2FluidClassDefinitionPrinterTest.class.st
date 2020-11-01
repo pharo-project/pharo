@@ -39,6 +39,16 @@ T2FluidClassDefinitionPrinterTest >> testClassSideDoesNotShowPackage [
 	self assert: (self forClass: MOPTraitTest class) equals: 'MOPTraitTest class'
 ]
 
+{ #category : #'tests - template' }
+T2FluidClassDefinitionPrinterTest >> testCompactTraitFullTemplate [ 
+
+	self 
+		assert: (FluidClassDefinitionPrinter new compactTraitDefinitionTemplateInPackage: 'TraitsV2') equals: 'Trait << #TMyTrait
+	uses: {};
+	slots: {};
+	package: ''TraitsV2'''
+]
+
 { #category : #'tests - traits' }
 T2FluidClassDefinitionPrinterTest >> testComplexTrait [
 
@@ -88,8 +98,8 @@ T2FluidClassDefinitionPrinterTest >> testExpandedTrait3ClassTrait [
 		
 ]
 
-{ #category : #'tests - fully expanded' }
-T2FluidClassDefinitionPrinterTest >> testFullyExpandedTrait [
+{ #category : #'tests - template' }
+T2FluidClassDefinitionPrinterTest >> testFullTraitTemplate [
 
 	self 
 		assert: (FluidClassDefinitionPrinter new traitDefinitionTemplateInPackage: 'TraitsV2') equals: 'Trait << #TMyTrait

@@ -65,6 +65,16 @@ FluidClassDefinitionPrinterTest >> testChronologyConstants [
 	package: ''Kernel'''
 ]
 
+{ #category : #'tests - template' }
+FluidClassDefinitionPrinterTest >> testCompactClassTemplate [
+
+	self 
+		assert: (FluidClassDefinitionPrinter new compactClassDefinitionTemplateInPackage: 'Kernel') 
+		equals:  'Object << #MyClass
+	slots: {};
+	sharedVariables: {};
+	package: ''Kernel'''
+]
 
 { #category : #'tests - expanded' }
 FluidClassDefinitionPrinterTest >> testExpandedEmptyLayoutClass [
@@ -201,4 +211,3 @@ FluidClassDefinitionPrinterTest >> testSystemAnnouncerClass [
 	self assert: (self forClass: SystemAnnouncer class) equals: 'SystemAnnouncer class
 	slots: { #announcer }'
 ]
-
