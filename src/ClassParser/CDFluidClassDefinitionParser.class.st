@@ -202,7 +202,7 @@ CDFluidClassDefinitionParser >> setAdequateClassDefinitionFrom: expressionTree [
 CDFluidClassDefinitionParser >> visitCascadeNode: aRBCascadeNode [ 
 	"See class comment. Here we handle the cascade version of the class definition."
 	" 
-	Object < #Point
+	Object << #Point
 			uses: TraitX;
 			slots: { #foo };
 			package: ''Kernel-BasicObjects'''
@@ -220,7 +220,7 @@ CDFluidClassDefinitionParser >> visitCascadeNode: aRBCascadeNode [
 CDFluidClassDefinitionParser >> visitMessageNode: aRBMessageNode [
 	"See class comment. Here we handle the cascade version of the class definition."
 	"
-	Object < #Point
+	Object << #Point
 			package: ''Kernel-BasicObjects'''
 	"		
 
