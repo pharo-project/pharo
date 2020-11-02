@@ -17,17 +17,17 @@ Class {
 	#name : #Breakpoint,
 	#superclass : #Object,
 	#instVars : [
-		'condition',
-		'link',
-		'node',
-		'level',
-		'options',
-		'targetInstance',
-		'oneShot',
-		'enabled'
+		'#condition',
+		'#link',
+		'#node',
+		'#level',
+		'#options',
+		'#targetInstance => WeakSlot',
+		'#oneShot',
+		'#enabled'
 	],
 	#classVars : [
-		'AllBreakpoints'
+		'#AllBreakpoints'
 	],
 	#category : #'Reflectivity-Breakpoints'
 }
