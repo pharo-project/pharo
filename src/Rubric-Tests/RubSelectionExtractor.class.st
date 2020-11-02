@@ -76,28 +76,25 @@ RubSelectionExtractor >> findSelectorFromASTInEditor: anEditor [
 
 	"Try to make a selector out of the current text selection"
 
-	| node start stop source ast originalNode |
+	| node start stop source ast originalNode offset |
 
 	source := anEditor textArea string.	
 	ast := anEditor editingMode parseSource: source.
 
-	anEditor hasSelection
-		ifTrue: [ self notYetImplemented ]
-		ifFalse: [ | offset |
-			"Heuristic: If the previous character is not a separator, take selection one position before.
-			This heuristic is for the cases where the caret (|) is:
-			   |self foo  => the caret is before self, do not move
-			   self foo|  => the caret is before foo, interpret is as if we are in foo.
-				self foo | => the caret is before a space, interpret is as if we are in foo.
+	"Heuristic: If the previous character is not a separator, take selection one position before.
+	This heuristic is for the cases where the caret (|) is:
+	   |self foo  => the caret is before self, do not move
+	   self foo|  => the caret is before foo, interpret is as if we are in foo.
+		self foo | => the caret is before a space, interpret is as if we are in foo.
 
-			This heuristic introduces although an ambiguity when code is not nicely formatted:
-			   self foo:|#bar => Here a user may want foo: or bar.
-			For now we decided to favor foo: to motivate people to indent code correctly"
-			offset := (source at: anEditor textArea startIndex - 1) isSeparator
-				ifTrue: [ 0 ]
-				ifFalse: [ -1 ].
-			start := anEditor textArea startIndex + offset.
-			stop := anEditor textArea stopIndex + offset ].
+	This heuristic introduces although an ambiguity when code is not nicely formatted:
+	   self foo:|#bar => Here a user may want foo: or bar.
+	For now we decided to favor foo: to motivate people to indent code correctly"
+	offset := (source at: anEditor textArea startIndex - 1) isSeparator
+		ifTrue: [ 0 ]
+		ifFalse: [ -1 ].
+	start := anEditor textArea startIndex + offset.
+	stop := anEditor textArea stopIndex + offset.
 	node := ast bestNodeFor: (start to: stop).
 	
 	originalNode := node.
