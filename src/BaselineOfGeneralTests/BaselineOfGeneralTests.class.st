@@ -70,6 +70,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Tool-Finder-Tests';
 			package: 'Tool-Profilers-Tests';
 			package: 'Tool-Workspace-Tests';
+			package: 'Tools-CodeNavigation-Tests';
 			package: 'Tools-Test';
 			package: 'Zinc-Resource-Meta-FileSystem';
 			package: 'Zinc-Resource-Meta-Tests';
