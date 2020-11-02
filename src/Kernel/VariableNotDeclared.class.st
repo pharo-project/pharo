@@ -16,15 +16,6 @@ VariableNotDeclared >> classSymbol [
 ]
 
 { #category : #accessing }
-VariableNotDeclared >> description [
-	"Returns a textual description of the exception, built using the message field if possible. If message is Nil, it uses the superclass description instead (as default)."
-	
-	message ifNil: [^super description].
-
-	^self messageBasedDescription
-]
-
-{ #category : #accessing }
 VariableNotDeclared >> messageBasedDescription [
 	"Returns a textual representation of the exception based on the message field"	
 	self classSymbol printString

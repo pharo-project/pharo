@@ -9,6 +9,7 @@ Class {
 
 { #category : #tests }
 MessageNotUnderstoodTest >> testDescription [
+	"Different descriptions should be returned depending if the ""message"" field is nil or not."
    "Tests that the description method produces a message-based text description of the exception, if the message field is not nil, or it uses the default description text instead if message nil"
 
 	| aMessageNotUnderstood defaultDescription descriptionWithMessage |
@@ -16,7 +17,7 @@ MessageNotUnderstoodTest >> testDescription [
 	"The default description when message is nil"
 	defaultDescription := aMessageNotUnderstood description.
 	aMessageNotUnderstood message: 'aNonNilValue'.
-		"The message-based description. It is a constant in our dummy class overriden accesor."
+	"The message-based description. It is a constant in our dummy class overriden accesor."
 	descriptionWithMessage := aMessageNotUnderstood description.
 	self assert: defaultDescription ~~ descriptionWithMessage
 ]
