@@ -91,6 +91,15 @@ RubSendersOfSelectionTest >> returnNodeToTest [
 ]
 
 { #category : #helpers }
+RubSendersOfSelectionTest >> select: someText [ 
+	
+	sourceCode := someText.
+	editingArea updateTextWith: sourceCode asText.
+	
+	editingArea selectAll
+]
+
+{ #category : #helpers }
 RubSendersOfSelectionTest >> selectedSelector [
 
 	| extractor |
@@ -117,7 +126,7 @@ RubSendersOfSelectionTest >> sourceCodeOf: aMethod [
 	
 	sourceCode := aMethod sourceCode.
 	ast := aMethod ast.
-	editingArea updateTextWith: sourceCode asText	.
+	editingArea updateTextWith: sourceCode asText
 ]
 
 { #category : #'tests - no selection - blocks' }
@@ -387,4 +396,84 @@ RubSendersOfSelectionTest >> testCaretInTheMiddleOfNestedMessageReceiverInMiddle
 	self caretInMiddleOf: self messageNodeToTest receiver.
 	
 	self assert: self selectedSelector equals: self messageNodeToTest receiver selector
+]
+
+{ #category : #'tests - selection' }
+RubSendersOfSelectionTest >> testSelectCascadeFirstMessageShouldMatchFirstMessageSelector [
+
+	self select: 'foo bar: 7; fum'.
+	
+	self assert: self selectedSelector equals: #bar:
+]
+
+{ #category : #'tests - selection' }
+RubSendersOfSelectionTest >> testSelectCascadeFirstMessageWithoutReceiverShouldMatchFirstMessageSelector [
+
+	self select: 'bar: 7; fum'.
+
+	self assert: self selectedSelector equals: #bar:
+]
+
+{ #category : #'tests - selection' }
+RubSendersOfSelectionTest >> testSelectKeywordMessageShouldMatchKeywordSelector [
+
+	self select: 'a foo: 17 bar: (some message: #toto) fum: [ :will | it break ]'.
+	
+	self assert: self selectedSelector equals: #foo:bar:fum:
+]
+
+{ #category : #'tests - selection' }
+RubSendersOfSelectionTest >> testSelectKeywordMessageWithBrokenLastArgumentShouldMatchKeywordSelector [
+
+	self select: 'a foo: 17 bar: (some message: #toto) fum: [ :will | it b'.
+	
+	self assert: self selectedSelector equals: #foo:bar:fum:
+]
+
+{ #category : #'tests - selection' }
+RubSendersOfSelectionTest >> testSelectKeywordMessageWithBrokenMiddleArgumentShouldMatchKeywordSelector [
+
+	self select: 'a foo: 17 bar: (some message: # fum: [ :will | it break ]'.
+	
+	self assert: self selectedSelector equals: #foo:bar:
+]
+
+{ #category : #'tests - selection' }
+RubSendersOfSelectionTest >> testSelectKeywordMessageWithoutReceiverAndComplexArgumentsShouldMatchKeywordSelector [
+
+	self select: 'foo: 17 bar: (some message: #toto) fum: [ :will | it break ]'.
+
+	self assert: self selectedSelector equals: #foo:bar:fum:
+]
+
+{ #category : #'tests - selection' }
+RubSendersOfSelectionTest >> testSelectKeywordMessageWithoutReceiverShouldMatchKeywordSelector [
+
+	self select: 'method: a zkx: bsq pn: c'.
+
+	self assert: self selectedSelector equals: #method:zkx:pn:
+]
+
+{ #category : #'tests - selection' }
+RubSendersOfSelectionTest >> testSelectMultipleStatementsShouldMatchFirstStatement [
+
+	self select: 'foo. second statement'.
+	
+	self assert: self selectedSelector equals: #foo
+]
+
+{ #category : #'tests - selection' }
+RubSendersOfSelectionTest >> testSelectReturnShouldMatchToken [
+
+	self select: '^ foo'.
+	
+	self assert: self selectedSelector equals: #foo
+]
+
+{ #category : #'tests - selection' }
+RubSendersOfSelectionTest >> testSelectTokenShouldMatchToken [
+
+	self select: 'foo'.
+	
+	self assert: self selectedSelector equals: #foo
 ]
