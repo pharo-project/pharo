@@ -102,9 +102,7 @@ RubSendersOfSelectionTest >> select: someText [
 { #category : #helpers }
 RubSendersOfSelectionTest >> selectedSelector [
 
-	| extractor |
-	extractor := RubSelectionExtractor new.
-	^ extractor extractSelectedSelectorFrom: editor
+	^ editor selectedSelector
 ]
 
 { #category : #running }

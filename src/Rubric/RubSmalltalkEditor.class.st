@@ -1048,7 +1048,18 @@ RubSmalltalkEditor >> selectPrecedingIdentifier [
 RubSmalltalkEditor >> selectedSelector [
 	"Try to make a selector out of the current text selection"
 
-	^ self selectedSelectorWithRecursionDepth: 0
+	| extractor |
+	extractor := RubSelectorExtractor new.
+	self hasSelection ifFalse: [ 
+		| source ast |
+
+		source := self textArea string.
+		ast := self editingMode parseSource: source.
+
+		^ extractor extractSelectorFromAST: ast atPosition: self textArea startIndex
+	].
+
+	^ extractor extractSelectorFromSelection: self selection string
 ]
 
 { #category : #'menu messages' }
