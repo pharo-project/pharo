@@ -2,7 +2,7 @@ Class {
 	#name : #MockWithComplexSlot,
 	#superclass : #Object,
 	#instVars : [
-		'#aComplexSlot => PropertySlot'
+		'#aComplexSlot => ObservableSlot'
 	],
 	#category : #'Kernel-Tests-Fluid'
 }
