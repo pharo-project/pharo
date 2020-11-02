@@ -58,7 +58,7 @@ FreeTypeFontFamily >> addSimulatedMembers [
 		oblique := col detect:[:each | each slantValue > 0] ifNone:[]. "oblique or italic"
 		(oblique isNil and:[regular notNil]) 
 			ifTrue:[
-				regular simulated
+				regular isSimulatedStyle
 					ifTrue:[members add: regular asSimulatedBoldOblique]
 					ifFalse:[	members add: regular asSimulatedOblique]]]
 ]
@@ -79,6 +79,6 @@ FreeTypeFontFamily >> memberWithStyleName: aString [
 FreeTypeFontFamily >> rebuildSimulatedMembers [
 	"FOR TESTING ONLY"
 	
-	members := members reject:[:each| each simulated].
+	members := members reject:[:each| each isSimulatedStyle ].
 	self addSimulatedMembers.
 ]

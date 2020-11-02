@@ -138,8 +138,7 @@ MetaLinkInstaller >> initialize [
 	linksRegistry := MetaLinkRegistry new.
 	linkToNodesMapper := MetaLinkNodesMapper new.
 	superJumpLinks := OrderedCollection new.
-
-	SystemAnnouncer uniqueInstance weak when: MetalinkChanged send: #metalinkChanged: to: self.
+	
 	SystemAnnouncer uniqueInstance weak when: MethodModified send: #methodChanged: to: self.
 	SystemAnnouncer uniqueInstance weak when: MethodRemoved send: #methodRemoved: to: self.
 	SystemAnnouncer uniqueInstance weak when: MethodAdded send: #methodAdded: to: self
@@ -244,14 +243,6 @@ MetaLinkInstaller >> linkToNodesMapper [
 { #category : #'accessing - private tests' }
 MetaLinkInstaller >> linksRegistry [
 	^ linksRegistry 
-]
-
-{ #category : #updating }
-MetaLinkInstaller >> metalinkChanged: aMetaLinkChanged [
-	aMetaLinkChanged isRemove
-		ifTrue: [ ^ self propagateLinkRemoval: aMetaLinkChanged link forNode: aMetaLinkChanged node ].
-	aMetaLinkChanged isAdd
-		ifTrue: [ self propagateLinkAddition: aMetaLinkChanged link forNode: aMetaLinkChanged node ]
 ]
 
 { #category : #updating }

@@ -15,6 +15,16 @@ Class {
 	#category : #'NewTools-SystemReporter'
 }
 
+{ #category : #'system menu' }
+StSizeReporter class >> systemReporterMenuOn: aBuilder [ 
+	<worldMenu>
+	
+	(aBuilder item: #'Size Reporter')
+		parent: #System;
+		action: [ self open ];
+		help: 'Reports different numbers on the size of the image.'
+]
+
 { #category : #accessing }
 StSizeReporter >> baselineClassLoc [
 	^ data at: #baselineClassLoc ifAbsent: [ self computeLocs. data at: #baselineClassLoc ]

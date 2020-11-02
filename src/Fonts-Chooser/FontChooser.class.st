@@ -96,7 +96,7 @@ FontChooser >> fontStyleListStrings [
 
 	^ self fontStyleList collect: [:fontFamilyMember | | styleName |
 		styleName := fontFamilyMember styleName.
-		fontFamilyMember simulated
+		fontFamilyMember isSimulatedStyle
 			ifTrue: ['(', styleName, ')']
 			ifFalse: [styleName]].
 ]

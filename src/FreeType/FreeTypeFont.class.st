@@ -545,11 +545,6 @@ FreeTypeFont >> isRegular [
 ]
 
 { #category : #testing }
-FreeTypeFont >> isSimulated [
-	^simulatedEmphasis notNil
-]
-
-{ #category : #testing }
 FreeTypeFont >> isSimulatedBold [
 	^self simulatedEmphasis anyMask: 1
 ]
@@ -562,6 +557,11 @@ FreeTypeFont >> isSimulatedItalic [
 { #category : #testing }
 FreeTypeFont >> isSimulatedRegular [
 	^simulatedEmphasis = 0
+]
+
+{ #category : #testing }
+FreeTypeFont >> isSimulatedStyle [
+	^simulatedEmphasis notNil
 ]
 
 { #category : #testing }
@@ -745,7 +745,7 @@ FreeTypeFont >> simulatedBoldStrength [
 	according to the receiver's simulated emphasis and the face's real emphasis"
 	| bold faceBold |
 	
-	self isSimulated ifFalse:[^0].
+	self isSimulatedStyle ifFalse:[^0].
 	bold := self isSimulatedBold.
 	faceBold := face isBold.
 	(bold and: [faceBold not])
@@ -783,7 +783,7 @@ FreeTypeFont >> simulatedItalicSlant [
 	real emphasis"
 	| italic faceItalic |
 	
-	self isSimulated ifFalse:[^0].
+	self isSimulatedStyle ifFalse:[^0].
 	italic := self isSimulatedItalic.
 	faceItalic := face isItalic.
 	(italic and: [faceItalic not])
