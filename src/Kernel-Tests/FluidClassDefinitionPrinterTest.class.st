@@ -90,15 +90,6 @@ FluidClassDefinitionPrinterTest >> testCompactClassTemplate [
 	package: ''Kernel'''
 ]
 
-{ #category : #'tests - complex slots' }
-FluidClassDefinitionPrinterTest >> testDefinitionWithComplexSlot [
-
-	self assert: (self forClass: MockWithComplexSlot) equals: 'Object << #MockWithComplexSlot
-	slots: { #aComplexSlot => PropertySlot };
-	tag: ''Fluid'';
-	package: ''Kernel-Tests''' 
-]
-
 { #category : #'tests - expanded' }
 FluidClassDefinitionPrinterTest >> testExpandedEmptyLayoutClass [
 
