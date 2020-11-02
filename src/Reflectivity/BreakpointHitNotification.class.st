@@ -1,4 +1,6 @@
 "
+DEPRECATED: use BreakpointAnnouncement and its subclasses instead
+
 I am a notification sent to Breakpoint observers when a breakpoint is hit.
 I can hold a value from the execution context the breakpoint was hit. 
 "

@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'previousBreakpoints',
 		'cls',
-		'oldObservers'
+		'oldObservers',
+		'oldSystemAnnouncer'
 	],
 	#category : #'Reflectivity-Tools-Tests'
 }
@@ -26,8 +27,9 @@ BreakpointTest >> setUp [
 	super setUp.
 	cls := self newDummyClass.
 	previousBreakpoints := Breakpoint all copy.
-	oldObservers := Breakpoint observers copy.
-	Breakpoint observers removeAll.
+	oldSystemAnnouncer := SystemAnnouncer uniqueInstance.
+	SystemAnnouncer announcer: nil.
+	Breakpoint registerInterestToSystemAnnouncement.
 	Breakpoint all removeAll.
 ]
 
@@ -36,8 +38,7 @@ BreakpointTest >> tearDown [
 	| pkg |
 	Breakpoint removeAll.	
 	Breakpoint all addAll: previousBreakpoints.
-	Breakpoint observers removeAll.
-	Breakpoint observers addAll: oldObservers.
+	SystemAnnouncer announcer: oldSystemAnnouncer.
 	cls ifNotNil: [ cls isObsolete ifFalse: [ cls removeFromSystem ] ].
 	pkg := 'DummyPackage' asPackageIfAbsent: [ ]. 
 	pkg ifNotNil: [ pkg removeFromSystem ].

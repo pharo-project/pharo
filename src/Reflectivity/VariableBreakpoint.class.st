@@ -41,12 +41,12 @@ VariableBreakpoint class >> newForClass: aClass [
 
 { #category : #observers }
 VariableBreakpoint class >> notifyBreakpointHit: aBreakpoint inContext: aContext node: node [
-	| notification |	
-	notification := BreakpointHitNotification
+	| announcement |	
+	announcement := BreakpointHit
 		on: aBreakpoint
 		nodes: {node}.
-	notification valueOrNil: (node variableValueInContext: aContext).
-	self notifyObservers: notification
+	announcement valueOrNil: (node variableValueInContext: aContext).
+	SystemAnnouncer uniqueInstance announce: announcement
 ]
 
 { #category : #API }
