@@ -1049,7 +1049,7 @@ RubSmalltalkEditor >> selectedSelector [
 	"Try to make a selector out of the current text selection"
 
 	| extractor |
-	extractor := RubSelectorExtractor new.
+	extractor := CNSelectorExtractor new.
 	self hasSelection ifFalse: [ 
 		| source ast |
 
