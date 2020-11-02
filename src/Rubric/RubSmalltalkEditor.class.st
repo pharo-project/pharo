@@ -1063,35 +1063,6 @@ RubSmalltalkEditor >> selectedSelector [
 ]
 
 { #category : #'menu messages' }
-RubSmalltalkEditor >> selectedSelectorWithRecursionDepth: depth [
-
-	| node selectorFromAst |
-	
-	depth > 1 ifTrue: [ ^ nil ].
-	
-	self hasSelection ifFalse: [ 
-		selectorFromAst := self findSelectorFromAST.
-		^ selectorFromAst 
-			ifNotNil: [ 
-				selectorFromAst ]
-			ifNil: [ 
-				self selectWord.
-				^ self selectedSelectorWithRecursionDepth: depth + 1 ] ].
-	
-	node := RBParser parseFaultyExpression: self selection string.
-	node
-		nodesDo: [ :n | 
-			n isMessage
-				ifTrue: [ ^ n selector ].
-			n isVariable
-				ifTrue: [ ^ n name ].
-			n isLiteralNode
-				ifTrue: [ ^ n value ] ].
-	"fall back"
-	^ self selection string asSymbol
-]
-
-{ #category : #'menu messages' }
 RubSmalltalkEditor >> selectedSymbol [
 	"Return the currently selected symbol, or nil if none.  Spaces, tabs and returns are ignored"
 
