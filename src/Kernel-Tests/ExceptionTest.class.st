@@ -54,9 +54,12 @@ ExceptionTest >> runWithNoHandlers: aBlock [
 
 { #category : #test }
 ExceptionTest >> testDescription [
-
-	self flag: #toImplement.
-	self assert: false
+   |anException|
+	anException := Exception new.
+	self assert: anException description isNotNil.
+	self assert: anException description isString.
+	"If the default exception desciption changes, this test will be broken"
+	self assert: anException description equals: 'Exception'
 ]
 
 { #category : #'tests - exceptiontester' }
