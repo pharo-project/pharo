@@ -1,7 +1,7 @@
 Class {
 	#name : #T2FluidClassDefinitionPrinterTest,
 	#superclass : #T2CommonClassDefinitionPrinterTest,
-	#category : #'TraitsV2-Tests-Base'
+	#category : #'TraitsV2-Tests'
 }
 
 { #category : #helpers }
@@ -33,6 +33,19 @@ T2FluidClassDefinitionPrinterTest >> testAlignmentMorphClass [
 	uses: TAbleToRotate classTrait' 
 ]
 
+{ #category : #'tests - complex slots' }
+T2FluidClassDefinitionPrinterTest >> testClassDefinitionWithComplexSlotShouldBeDisplayedAsFluid [
+
+	ClassDefinitionPrinter showFluidClassDefinition: false.
+	self assert: TMockWithComplexSlot needsSlotClassDefinition.
+
+	self 
+		assert: (self forClass: TMockWithComplexSlot) 
+		equals: 'Trait << #TMockWithComplexSlot
+	slots: { #aComplexSlot => ObservableSlot };
+	package: ''TraitsV2-Tests''' 
+]
+
 { #category : #'tests - metaclasses' }
 T2FluidClassDefinitionPrinterTest >> testClassSideDoesNotShowPackage [
 
@@ -56,6 +69,15 @@ T2FluidClassDefinitionPrinterTest >> testComplexTrait [
 	uses: Trait2 @ {#c3->#c2};
 	tag: ''Traits-MOP'';
 	package: ''Tests''' 
+]
+
+{ #category : #'tests - complex slots' }
+T2FluidClassDefinitionPrinterTest >> testDefinitionWithComplexSlot [
+	"Fluid definition support complex slots."
+	
+	self assert: (self forClass: TMockWithComplexSlot) equals: 'Trait << #TMockWithComplexSlot
+	slots: { #aComplexSlot => ObservableSlot };
+	package: ''TraitsV2-Tests''' 
 ]
 
 { #category : #'tests - expanded' }
@@ -130,7 +152,7 @@ T2FluidClassDefinitionPrinterTest >> testTBehavior [
 
 	self 
 		assert: (self forClass: TBehavior) 
-		equals: 'Trait  << #TBehavior
+		equals: 'Trait << #TBehavior
 	tag: ''Traits'';
 	package: ''TraitsV2-Compatibility'''
 ]
@@ -154,7 +176,7 @@ T2FluidClassDefinitionPrinterTest >> testTSlot [
 	self 
 		assert: (Trait << #TTUses slots: {  #x . #y }; package: 'Fake') build definitionString 
 		equals: 
-	'Trait  << #TTUses
+	'Trait << #TTUses
 	slots: { #x . #y };
 	package: ''_UnpackagedPackage''' 
 ]
@@ -162,7 +184,7 @@ T2FluidClassDefinitionPrinterTest >> testTSlot [
 { #category : #'tests - traits' }
 T2FluidClassDefinitionPrinterTest >> testTUses [
 
-	self assert: (Trait << #TTUses uses: TBehavior; package: 'Fake') build definitionString equals:  'Trait  << #TTUses
+	self assert: (Trait << #TTUses uses: TBehavior; package: 'Fake') build definitionString equals:  'Trait << #TTUses
 	uses: TBehavior;
 	package: ''_UnpackagedPackage'''
 ]
@@ -189,7 +211,7 @@ T2FluidClassDefinitionPrinterTest >> testTrait3AndTag [
 
 	self 
 		assert: (self forClass: Trait3) 
-		equals: 'Trait  << #Trait3
+		equals: 'Trait << #Trait3
 	uses: Trait2;
 	tag: ''Traits-MOP'';
 	package: ''Tests''' 

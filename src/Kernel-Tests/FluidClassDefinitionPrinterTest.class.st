@@ -65,6 +65,19 @@ FluidClassDefinitionPrinterTest >> testChronologyConstants [
 	package: ''Kernel'''
 ]
 
+{ #category : #'tests - complex slots' }
+FluidClassDefinitionPrinterTest >> testClassDefinitionWithComplexSlotShouldBeDisplayedAsFluid [
+
+	ClassDefinitionPrinter showFluidClassDefinition: false.
+	self assert: MockWithComplexSlot needsSlotClassDefinition.
+
+	self 
+		assert: (self forClass: MockWithComplexSlot) 
+		equals: 'Object << #MockWithComplexSlot
+	slots: { #aComplexSlot => ObservableSlot };
+	tag: ''Fluid'';
+	package: ''Kernel-Tests''' 
+]
 
 { #category : #'tests - template' }
 FluidClassDefinitionPrinterTest >> testCompactClassTemplate [
@@ -75,6 +88,16 @@ FluidClassDefinitionPrinterTest >> testCompactClassTemplate [
 	slots: {};
 	sharedVariables: {};
 	package: ''Kernel'''
+]
+
+{ #category : #'tests - complex slots' }
+FluidClassDefinitionPrinterTest >> testDefinitionWithComplexSlot [
+	"Fluid definition support complex slots."
+	
+	self assert: (self forClass: MockWithComplexSlot) equals: 'Object << #MockWithComplexSlot
+	slots: { #aComplexSlot => ObservableSlot };
+	tag: ''Fluid'';
+	package: ''Kernel-Tests''' 
 ]
 
 { #category : #'tests - expanded' }

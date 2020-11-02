@@ -1,7 +1,7 @@
 Class {
 	#name : #T2OldPharoClassDefinitionPrinterTest,
 	#superclass : #T2CommonClassDefinitionPrinterTest,
-	#category : #'TraitsV2-Tests-Base'
+	#category : #'TraitsV2-Tests'
 }
 
 { #category : #helpers }
