@@ -65,19 +65,6 @@ FluidClassDefinitionPrinterTest >> testChronologyConstants [
 	package: ''Kernel'''
 ]
 
-{ #category : #'tests - complex slots' }
-FluidClassDefinitionPrinterTest >> testClassDefinitionWithComplexSlotShouldBeDisplay [
-
-	ClassDefinitionPrinter showFluidClassDefinition: false.
-	self assert: MockWithComplexSlot needsSlotClassDefinition.
-
-	self 
-		assert: (self forClass: MockWithComplexSlot) 
-		equals: 'Object << #MockWithComplexSlot
-	slots: { #aComplexSlot => PropertySlot };
-	tag: ''Fluid'';
-	package: ''Kernel-Tests''' 
-]
 
 { #category : #'tests - template' }
 FluidClassDefinitionPrinterTest >> testCompactClassTemplate [
