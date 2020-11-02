@@ -16,11 +16,18 @@ VariableNotDeclared >> classSymbol [
 ]
 
 { #category : #accessing }
-VariableNotDeclared >> smartDescription [
+VariableNotDeclared >> description [
+	"Returns a textual description of the exception, built using the message field if possible. If message is Nil, it uses the superclass description instead (as default)."
 	
-	message ifNil: [^self description].
+	message ifNil: [^super description].
 
-	^self classSymbol printString
+	^self messageBasedDescription
+]
+
+{ #category : #accessing }
+VariableNotDeclared >> messageBasedDescription [
+	"Returns a textual representation of the exception based on the message field"	
+	self classSymbol printString
 		, ' is missing, and does not understand ', message selector printString
 ]
 

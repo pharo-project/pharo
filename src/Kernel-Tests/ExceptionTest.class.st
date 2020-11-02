@@ -52,6 +52,13 @@ ExceptionTest >> runWithNoHandlers: aBlock [
 	^result
 ]
 
+{ #category : #test }
+ExceptionTest >> testDescription [
+
+	self flag: #toImplement.
+	self assert: false
+]
+
 { #category : #'tests - exceptiontester' }
 ExceptionTest >> testDoubleOuterPass [
 	self assertSuccess: (ExceptionTester new runTest: #doubleOuterPassTest ) 

@@ -19,6 +19,16 @@ MessageNotUnderstood >> defaultAction [
 	super defaultAction.
 ]
 
+{ #category : #accessing }
+MessageNotUnderstood >> description [
+
+	"Returns a textual description of the exception (based on the message instance variable). If message is nil, it returns the superclass description instead."
+	
+	message ifNil: [^super description].
+
+	^ self messageBasedDescription 
+]
+
 { #category : #initialization }
 MessageNotUnderstood >> initialize [
 
@@ -44,6 +54,16 @@ MessageNotUnderstood >> message [
 MessageNotUnderstood >> message: aMessage [
 
 	message := aMessage
+]
+
+{ #category : #accessing }
+MessageNotUnderstood >> messageBasedDescription [
+	"Returns a textual representation of the exception based on the message field"	
+	message lookupClass == UndefinedObject ifTrue: [ 
+		^message selector printString, ' was sent to nil'].
+
+	^'Instance of ', message lookupClass printString
+		, ' did not understand ', message selector printString
 ]
 
 { #category : #accessing }
@@ -76,16 +96,4 @@ MessageNotUnderstood >> receiver [
 MessageNotUnderstood >> receiver: obj [
 
 	receiver := obj
-]
-
-{ #category : #accessing }
-MessageNotUnderstood >> smartDescription [
-	
-	message ifNil: [^self description].
-
-	message lookupClass == UndefinedObject ifTrue: [ 
-		^message selector printString, ' was sent to nil'].
-
-	^'Instance of ', message lookupClass printString
-		, ' did not understand ', message selector printString
 ]
