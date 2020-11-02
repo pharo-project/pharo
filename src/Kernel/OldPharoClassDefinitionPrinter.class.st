@@ -7,46 +7,41 @@ Class {
 { #category : #delegating }
 OldPharoClassDefinitionPrinter >> classDefinitionString [
 
-	| poolString stream |
+	^ forClass needsSlotClassDefinition 
+		ifTrue: [ (ClassDefinitionPrinter fluid for: forClass) classDefinitionString ]
+		ifFalse: [  	| poolString stream |
 	poolString := forClass sharedPoolsString.
 	stream := (String new: 800) writeStream.
 	forClass superclass
 		ifNotNil: [ stream nextPutAll: forClass superclass name ]
 		ifNil: [ stream nextPutAll: 'ProtoObject' ].
-	
 	stream
 		nextPutAll: forClass kindOfSubclass;
-		store: forClass name.
-		
+		store: forClass name.		
 	forClass hasTraitComposition ifTrue: [ 
 		stream
 			crtab;
 			nextPutAll: 'uses: ';
 			nextPutAll: forClass traitCompositionString ].
-	
 	stream
 		crtab;
 		nextPutAll: 'instanceVariableNames: '''.
 	forClass instanceVariablesOn: stream.
 	stream nextPut: $'.
-	
 	stream
 		crtab;
 		nextPutAll: 'classVariableNames: '''.
 	forClass classVariablesOn: stream.
 	stream nextPut: $'.
-	
 	poolString = '' ifFalse: [ 
 		stream 
 			crtab;
 			nextPutAll: 'poolDictionaries: ';
 			store: poolString ].
-	
 	stream
 		crtab;
 		nextPutAll: 'package: ';
 		store: forClass category asString.
-		
 	forClass superclass ifNil: [ 
 		stream
 			nextPutAll: '.';
@@ -56,8 +51,7 @@ OldPharoClassDefinitionPrinter >> classDefinitionString [
 		stream
 			space;
 			nextPutAll: 'superclass: nil' ].
-
-	^ stream contents
+	stream contents ]
 ]
 
 { #category : #template }
