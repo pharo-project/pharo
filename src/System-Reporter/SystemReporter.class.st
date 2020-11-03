@@ -24,7 +24,7 @@ Class {
 		'baselineClassLoc',
 		'imageClassLoc'
 	],
-	#category : #'System-Support-Image'
+	#category : #'System-Reporter'
 }
 
 { #category : #querying }
