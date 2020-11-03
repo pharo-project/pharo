@@ -172,13 +172,14 @@ def bootstrapImage(){
     }
     
       } finally {
-          if(fileExists('bootstrap-cache/PharoDebug.log')){
-              shell "mv bootstrap-cache/PharoDebug.log bootstrap-cache/PharoDebug-bootstrap.log"
-              archiveArtifacts allowEmptyArchive: true, artifacts: "bootstrap-cache/PharoDebug-bootstrap.log", fingerprint: true
+          shell "ls -la"
+          if(fileExists('PharoDebug.log')){
+              shell "mv PharoDebug.log PharoDebug-bootstrap.log"
+              archiveArtifacts allowEmptyArchive: true, artifacts: "PharoDebug-bootstrap.log", fingerprint: true
           }
-          if(fileExists('bootstrap-cache/crash.dmp')){
-              shell "mv crash.dmp bootstrap-cache/crash-bootstrap.dmp"
-              archiveArtifacts allowEmptyArchive: true, artifacts: "bootstrap-cache/crash-bootstrap.dmp", fingerprint: true
+          if(fileExists('crash.dmp')){
+              shell "mv crash.dmp crash-bootstrap.dmp"
+              archiveArtifacts allowEmptyArchive: true, artifacts: "crash-bootstrap.dmp", fingerprint: true
           }
 
         archiveArtifacts artifacts: 'bootstrap-cache/*.zip,bootstrap-cache/*.sources', fingerprint: true
