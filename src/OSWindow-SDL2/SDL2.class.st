@@ -51,6 +51,7 @@ SDL2 class >> clipboardText: text [
 			toStream: stream.
 		stream nextPut: 0 ].
 	
+	encoded pinInMemory.
 	self primClipboardText: encoded
 ]
 
@@ -341,7 +342,7 @@ SDL2 class >> pollEvent: event [
 
 { #category : #clipboard }
 SDL2 class >> primClipboardText [
-	^ self ffiCall: #( ExternalAddress SDL_GetClipboardText ( ) )
+	^ self ffiCall: #(void* SDL_GetClipboardText ( ) )
 ]
 
 { #category : #clipboard }
