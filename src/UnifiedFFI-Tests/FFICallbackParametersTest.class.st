@@ -124,7 +124,7 @@ FFICallbackParametersTest >> testIntegerPointerParameters [
 		ExternalAddress fromAddress: 2.
 		ExternalAddress fromAddress: 3.
 		ExternalAddress fromAddress: 4.
-		'5'.
+		ExternalAddress fromAddress: 5.
 		ExternalAddress fromAddress: 6.}.	
 	
 	callback := FFICallback 
@@ -134,7 +134,7 @@ FFICallbackParametersTest >> testIntegerPointerParameters [
 			self assert: b value equals: 2.
 			self assert: c value equals: 3.
 			self assert: d value equals: 4.
-			self assert: e value equals: '5'.
+			self assert: e value equals: 5.
 			self assert: f value equals: 6.
 		].
 
