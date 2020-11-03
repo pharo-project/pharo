@@ -75,8 +75,11 @@ AthensCairoGradientPaint class >> radialBetween: origin
 AthensCairoGradientPaint >> addColorStopAt: anOffset colored: aColor [
 
 	self
-		primAddColorStopOffset: anOffset R: aColor red G: aColor green B: aColor blue A: aColor alpha
-		
+		primAddColorStopOffset: anOffset asFloat
+		R: aColor red asFloat
+		G: aColor green asFloat
+		B: aColor blue asFloat
+		A: aColor alpha asFloat
 ]
 
 { #category : #initialization }

@@ -303,7 +303,7 @@ AthensCairoSurface class >> ioRegisterSurface: aCairoSurfaceHandle dispatch: sqS
 	otherwise.
 
 "
-	self ffiCall: #(bool ioRegisterSurface(int aCairoSurfaceHandle, void *sqSurfaceDispatchPtr, void *idHolder)) module: #SurfacePlugin
+	self ffiCall: #(bool ioRegisterSurface(long aCairoSurfaceHandle, void *sqSurfaceDispatchPtr, void *idHolder)) module: #SurfacePlugin
 ]
 
 { #category : #private }
@@ -531,12 +531,14 @@ AthensCairoSurface >> fillPath: aPath withSolidColor: aColor [
 AthensCairoSurface >> fillRectangle: aRectangle withSolidColor: aColor [
 
 	self loadSolidColor: aColor.
-	
+
 	currentCanvas
 		newPath;
-		rectangleX: aRectangle left y: aRectangle top width: aRectangle width height: aRectangle height;
+		rectangleX: aRectangle left asFloat
+		y: aRectangle top asFloat
+		width: aRectangle width asFloat
+		height: aRectangle height asFloat;
 		fill
-	
 ]
 
 { #category : #private }

@@ -95,9 +95,7 @@ AthensCairoCanvas >> draw [
 
 { #category : #drawing }
 AthensCairoCanvas >> drawWithAlpha: alpha [
-	^ self ffiCall: #( 
-		void cairo_paint_with_alpha ( self , double alpha)
-	)
+	^ self primDrawWithAlpha: alpha asFloat
 ]
 
 { #category : #private }
@@ -106,21 +104,9 @@ AthensCairoCanvas >> fill [
 
 ]
 
-{ #category : #'ffi-calls' }
-AthensCairoCanvas >> fillPreserve [
-	^ self ffiCall: #(#void #cairo_fill_preserve #(#self))
-
-	
-]
-
 { #category : #accessing }
 AthensCairoCanvas >> fillRule [
 	^ self ffiCall: #( cairo_fill_rule_t cairo_get_fill_rule ( self ) )
-]
-
-{ #category : #accessing }
-AthensCairoCanvas >> fillRuleEvenOdd [
-	self setFillRule: CAIRO_FILL_RULE_EVEN_ODD
 ]
 
 { #category : #accessing }
@@ -164,10 +150,10 @@ AthensCairoCanvas >> loadPath: aPath [
 
 ]
 
-{ #category : #private }
+{ #category : #drawing }
 AthensCairoCanvas >> moveToX: x Y: y [
 	" move command always starts a new contour "
-	^ self ffiCall: #(void cairo_move_to (self, double x, double y ) )
+	^ self primMoveToX: x asFloat Y: y asFloat 
 
 ]
 
@@ -194,6 +180,13 @@ AthensCairoCanvas >> primClip [
 ]
 
 { #category : #private }
+AthensCairoCanvas >> primDrawWithAlpha: alpha [
+	^ self ffiCall: #( 
+		void cairo_paint_with_alpha ( self , double alpha)
+	)
+]
+
+{ #category : #private }
 AthensCairoCanvas >> primGetCurrentPointX: x Y: y [
 	^ self ffiCall: #( void cairo_get_current_point (self, double * x, double * y))
 ]
@@ -204,9 +197,24 @@ AthensCairoCanvas >> primGetSource [
 ]
 
 { #category : #private }
+AthensCairoCanvas >> primMoveToX: x Y: y [
+	" move command always starts a new contour "
+	^ self ffiCall: #(void cairo_move_to (self, double x, double y ) )
+
+]
+
+{ #category : #private }
 AthensCairoCanvas >> primPaint [
 	"A drawing operator that paints the current source everywhere within the current clip region."
 	^ self ffiCall: #(void cairo_paint (self))
+
+]
+
+{ #category : #private }
+AthensCairoCanvas >> primRectangleX: x y: y width: aWidth height: aHeight [
+	^ self ffiCall: #(void cairo_rectangle (self,
+		 double x, double y,
+		 double aWidth, double aHeight) )
 
 ]
 
@@ -245,6 +253,16 @@ AthensCairoCanvas >> primSetDashesLengths: dashesLengths count: dashesCount offs
 ]
 
 { #category : #private }
+AthensCairoCanvas >> primSetFontSize: aSize [
+	"
+	void                cairo_set_font_size                 (cairo_t *cr,
+                                                         double size);
+	"
+	^ self ffiCall: #( void cairo_set_font_size (self , double aSize ))
+
+]
+
+{ #category : #private }
 AthensCairoCanvas >> primSetLineCap: capStyle [
 	^ self ffiCall: #(void cairo_set_line_cap ( self, cairo_line_cap_t capStyle ) )
 ]
@@ -265,6 +283,16 @@ AthensCairoCanvas >> primSetSource: aPattern [
 ]
 
 { #category : #private }
+AthensCairoCanvas >> primSetSourceR: red g: green b: blue a: alpha [
+	^ self ffiCall: #( 
+		void cairo_set_source_rgba ( self ,
+			double red,
+			double green,
+			double blue,
+			double alpha) )
+]
+
+{ #category : #private }
 AthensCairoCanvas >> pushClipRect: aRectangle [
 	self newPath;
 		rectangleX: aRectangle left
@@ -277,10 +305,12 @@ AthensCairoCanvas >> pushClipRect: aRectangle [
 
 { #category : #private }
 AthensCairoCanvas >> rectangleX: x y: y width: aWidth height: aHeight [
-	^ self ffiCall: #(void cairo_rectangle (self,
-		 double x, double y,
-		 double aWidth, double aHeight) )
 
+	^ self
+		  primRectangleX: x asFloat
+		  y: y asFloat
+		  width: aWidth asFloat
+		  height: aHeight asFloat
 ]
 
 { #category : #private }
@@ -335,12 +365,8 @@ void                cairo_set_font_matrix               (cairo_t *cr,
 
 { #category : #private }
 AthensCairoCanvas >> setFontSize: aSize [
-	"
-	void                cairo_set_font_size                 (cairo_t *cr,
-                                                         double size);
-	"
-	^ self ffiCall: #( void cairo_set_font_size (self , double aSize ))
-
+	
+	^ self primSetFontSize: aSize asFloat
 ]
 
 { #category : #private }
@@ -367,12 +393,12 @@ AthensCairoCanvas >> setScaledFont: aFont [
 
 { #category : #private }
 AthensCairoCanvas >> setSourceR: red g: green b: blue a: alpha [
-	^ self ffiCall: #( 
-		void cairo_set_source_rgba ( self ,
-			double red,
-			double green,
-			double blue,
-			double alpha) )
+
+	^ self
+		  primSetSourceR: red asFloat
+		  g: green asFloat
+		  b: blue asFloat
+		  a: alpha asFloat
 ]
 
 { #category : #private }
@@ -428,14 +454,6 @@ void                cairo_text_extents                  (cairo_t *cr,
 "
 	^ self ffiCall: #( void cairo_text_extents (self, char * utf8String, cairo_text_extents_t * extentsObj) )
 	
-]
-
-{ #category : #'ffi-calls' }
-AthensCairoCanvas >> textPath: anUTF8String [
-	"A drawing operator that generates the shape from a string of UTF-8 characters, rendered according to the current font_face, font_size (font_matrix), and font_options. "
-	
-	^ self ffiCall: #(void cairo_text_path (self, char * anUTF8String ))
-
 ]
 
 { #category : #'path segments visitor' }

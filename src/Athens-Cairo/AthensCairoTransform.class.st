@@ -46,11 +46,41 @@ AthensCairoTransform >> moveToX: px Y: py [
 ]
 
 { #category : #primitives }
+AthensCairoTransform >> primRotateByRadians: angle [
+	^ self ffiCall: #(
+		void cairo_rotate (AthensCairoCanvas canvas,
+                                                         double angle))
+
+
+]
+
+{ #category : #primitives }
+AthensCairoTransform >> primScaleX: fx Y: fy [
+	^ self ffiCall: #(
+		void cairo_scale (AthensCairoCanvas canvas,
+                                                         double fx,
+                                                         double fy))
+
+
+]
+
+{ #category : #primitives }
 AthensCairoTransform >> primTransformX: x Y: y [
 	^ self ffiCall: #(
 		void cairo_user_to_device (AthensCairoCanvas canvas,
                                                          NBFloatPtr x,
                                                          NBFloatPtr y) )
+
+]
+
+{ #category : #primitives }
+AthensCairoTransform >> primTranslateX: px Y: py [
+	
+	^ self ffiCall: #(
+		void cairo_translate (AthensCairoCanvas canvas,
+                                                         double px,
+                                                         double py))
+
 
 ]
 
@@ -74,10 +104,8 @@ AthensCairoTransform >> rotateByDegrees: angle [
 
 { #category : #primitives }
 AthensCairoTransform >> rotateByRadians: angle [
-	^ self ffiCall: #(
-		void cairo_rotate (AthensCairoCanvas canvas,
-                                                         double angle))
 
+	^ self primRotateByRadians: angle asFloat
 
 ]
 
@@ -101,14 +129,10 @@ AthensCairoTransform >> scaleBy: aScalarOrPoint [
 
 ]
 
-{ #category : #primitives }
+{ #category : #transformation }
 AthensCairoTransform >> scaleX: fx Y: fy [
-	^ self ffiCall: #(
-		void cairo_scale (AthensCairoCanvas canvas,
-                                                         double fx,
-                                                         double fy))
-
-
+	
+	^ self primScaleX: fx asFloat Y: fy asFloat
 ]
 
 { #category : #'vector-transform' }
@@ -130,10 +154,6 @@ AthensCairoTransform >> translateBy: aPoint [
 
 { #category : #primitives }
 AthensCairoTransform >> translateX: px Y: py [
-	^ self ffiCall: #(
-		void cairo_translate (AthensCairoCanvas canvas,
-                                                         double px,
-                                                         double py))
 
-
+	^ self primTranslateX: px asFloat Y: py asFloat
 ]

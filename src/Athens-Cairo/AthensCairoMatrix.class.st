@@ -151,7 +151,7 @@ AthensCairoMatrix >> primLoadIdentity [
 	^ self ffiCall: #( void cairo_matrix_init_identity (AthensCairoMatrix * self ) )
 ]
 
-{ #category : #transformations }
+{ #category : #private }
 AthensCairoMatrix >> primMultiplyBy: m [
 	^ self ffiCall: #(void   cairo_matrix_multiply
 		(AthensCairoMatrix * self,
@@ -162,8 +162,58 @@ AthensCairoMatrix >> primMultiplyBy: m [
 ]
 
 { #category : #private }
+AthensCairoMatrix >> primRotateByRadians: angle [
+	^ self ffiCall: #(
+		void cairo_matrix_rotate (AthensCairoMatrix *  self,
+                                                         double angle))
+
+
+]
+
+{ #category : #private }
+AthensCairoMatrix >> primScaleX: fx Y: fy [
+	^ self ffiCall: #(
+		void cairo_matrix_scale (AthensCairoMatrix * self,
+                                                         double fx,
+                                                         double fy))
+
+
+]
+
+{ #category : #private }
+AthensCairoMatrix >> primSetRotationInRadians: radians [
+	^ self ffiCall: #( void cairo_matrix_init_rotate (AthensCairoMatrix * self, double  radians))
+
+
+]
+
+{ #category : #private }
+AthensCairoMatrix >> primSetScaleX: x Y: y [
+	^ self ffiCall: #( void cairo_matrix_init_scale (AthensCairoMatrix * self, double  x, double  y))
+
+
+]
+
+{ #category : #private }
+AthensCairoMatrix >> primSetTranslateX: x Y: y [
+	^ self ffiCall: #( void cairo_matrix_init_translate (AthensCairoMatrix * self, double  x, double  y))
+
+
+]
+
+{ #category : #private }
 AthensCairoMatrix >> primTransformX: x Y: y [
 	^ self ffiCall: #( void cairo_matrix_transform_point (AthensCairoMatrix *  self, double * x, double * y))
+
+
+]
+
+{ #category : #private }
+AthensCairoMatrix >> primTranslateX: px Y: py [
+	^ self ffiCall: #(
+		void cairo_matrix_translate (AthensCairoMatrix * self,
+                                                         double px,
+                                                         double py))
 
 
 ]
@@ -186,9 +236,8 @@ AthensCairoMatrix >> rotateByDegrees: angle [
 
 { #category : #transformations }
 AthensCairoMatrix >> rotateByRadians: angle [
-	^ self ffiCall: #(
-		void cairo_matrix_rotate (AthensCairoMatrix *  self,
-                                                         double angle))
+
+	^ self primRotateByRadians: angle asFloat.
 
 
 ]
@@ -206,32 +255,29 @@ AthensCairoMatrix >> scaleBy: factor [
 
 { #category : #transformations }
 AthensCairoMatrix >> scaleX: fx Y: fy [
-	^ self ffiCall: #(
-		void cairo_matrix_scale (AthensCairoMatrix * self,
-                                                         double fx,
-                                                         double fy))
-
-
+	
+	^ self primScaleX: fx asFloat Y: fy asFloat
 ]
 
 { #category : #transformations }
 AthensCairoMatrix >> setRotationInRadians: radians [
-	^ self ffiCall: #( void cairo_matrix_init_rotate (AthensCairoMatrix * self, double  radians))
 
+	^ self primSetRotationInRadians: radians asFloat
 
 ]
 
 { #category : #transformations }
 AthensCairoMatrix >> setScaleX: x Y: y [
-	^ self ffiCall: #( void cairo_matrix_init_scale (AthensCairoMatrix * self, double  x, double  y))
+	
+	^ self primSetScaleX: x asFloat Y: y asFloat
 
 
 ]
 
 { #category : #transformations }
 AthensCairoMatrix >> setTranslateX: x Y: y [
-	^ self ffiCall: #( void cairo_matrix_init_translate (AthensCairoMatrix * self, double  x, double  y))
 
+	^ self primSetTranslateX: x asFloat Y: y asFloat
 
 ]
 
@@ -322,10 +368,8 @@ AthensCairoMatrix >> translateBy: aPoint [
 
 { #category : #transformations }
 AthensCairoMatrix >> translateX: px Y: py [
-	^ self ffiCall: #(
-		void cairo_matrix_translate (AthensCairoMatrix * self,
-                                                         double px,
-                                                         double py))
+
+	^ self primTranslateX: px asFloat Y: py asFloat.
 
 
 ]

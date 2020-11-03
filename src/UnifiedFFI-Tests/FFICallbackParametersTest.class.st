@@ -20,18 +20,7 @@ Class {
 FFICallbackParametersTest >> callCallback: aFFICallback withArgs: aCollection [ 
 
 	self assert: aCollection isArray.
-
-	^ (ExternalLibraryFunction 
-			name: nil
-			module: nil
-			callType: (OSPlatform current ffiCallingConvention = #stdcall ifTrue: [ 1 ] ifFalse: [ 0 ])
-			returnType: aFFICallback functionSpec returnType externalTypeWithArity
-			argumentTypes: (aFFICallback functionSpec arguments collect: [:each | each externalTypeWithArity]))
-				setHandle: (ExternalAddress fromAddress: (aFFICallback thunk address)) ;	
-					invokeWithArguments: aCollection
-	
-
-
+	^ aFFICallback invokeAsFunctionWithArguments: aCollection.
 ]
 
 { #category : #running }
@@ -42,7 +31,7 @@ FFICallbackParametersTest >> testCharacterParameters [
 	
 	callback := FFICallback 
 		signature: #(int (char, char, char, char, char, char))
-		block: [ :a :b :c :d :e :f  | 
+		block: [ :a :b :c :d :e :f  |
 			self assert: a value equals: 1 asCharacter.
 			self assert: b value equals: 2 asCharacter.
 			self assert: c value equals: 3 asCharacter.
@@ -130,7 +119,13 @@ FFICallbackParametersTest >> testIntegerParameters [
 FFICallbackParametersTest >> testIntegerPointerParameters [ 
 	
 	| params |
-	params := (1 to: 6) collect: [ :i | ExternalAddress fromAddress: i ].	
+	params := {
+		ExternalAddress fromAddress: 1.
+		ExternalAddress fromAddress: 2.
+		ExternalAddress fromAddress: 3.
+		ExternalAddress fromAddress: 4.
+		'5'.
+		ExternalAddress fromAddress: 6.}.	
 	
 	callback := FFICallback 
 		signature: #(void (void* a, void* b, int* c, int* d, char* e, float* f))
@@ -139,7 +134,7 @@ FFICallbackParametersTest >> testIntegerPointerParameters [
 			self assert: b value equals: 2.
 			self assert: c value equals: 3.
 			self assert: d value equals: 4.
-			self assert: e value equals: 5.
+			self assert: e value equals: '5'.
 			self assert: f value equals: 6.
 		].
 
