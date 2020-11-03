@@ -65,9 +65,11 @@ FFICallbackParametersTest >> testFloatParameters [
 { #category : #running }
 FFICallbackParametersTest >> testIdentityStruct [ 
 	
-	<expectedFailure>		
+	| param result |
 	
-	| param |
+	"This is ugly, but the tests are not running with Alien callbacks"
+	true ifTrue: [ ^ self skip. ].
+	
 	callback := FFICallback 
 		signature: #(FFITestStructureSmallIntFloatStructure (FFITestStructureSmallIntFloatStructure a))
 		block: [ :a |
@@ -78,21 +80,29 @@ FFICallbackParametersTest >> testIdentityStruct [
 
 			a x: 3.0.
 			a y: 4.
-			a w: 5.0.
-			a z: 7.0. 
+			a w: 6.0.
+			a z: 8.0. 
 						
 			a
 		].
 
-	param := FFITestStructureSmallIntFloatStructure externalNew
+	param := FFITestStructureSmallIntFloatStructure new
 		x: 2.0;
 		y: 3;
 		w: 5.0;
 		z: 7;
-		autoRelease;
 		yourself.
 
-	self assert: (self callCallback: callback withArgs: { param }) equals: param
+	result := self callCallback: callback withArgs: { param }.
+
+	"They are passed and returned by copy, so they should not be the same"	
+	self deny: param equals: result.
+	
+	self assert: result x equals: 3.0. 
+	self assert: result y equals: 4. 
+	self assert: result w equals: 6.0. 
+	self assert: result z equals: 8.0. 
+
 ]
 
 { #category : #running }
