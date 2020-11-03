@@ -28,7 +28,6 @@ BaselineOfTraits class >> corePackages [
 
 { #category : #baselines }
 BaselineOfTraits class >> packagesToExportWithHermes [
-	| groups |
 
 	^ self allPackageNames reject: [ :aPackageName | aPackageName = 'TraitsV2-Tests'].
 ]
