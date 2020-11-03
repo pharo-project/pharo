@@ -1,9 +1,6 @@
 Class {
 	#name : #ReClassVariableNeitherReadNorWrittenRuleTest,
 	#superclass : #ReAbstractRuleTestCase,
-	#instVars : [
-		'aDummyVar'
-	],
 	#category : #'GeneralRules-Tests-Migrated'
 }
 
