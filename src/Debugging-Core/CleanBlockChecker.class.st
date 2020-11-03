@@ -12,6 +12,24 @@ Class {
 	#category : #'Debugging-Core'
 }
 
+{ #category : #validation }
+CleanBlockChecker class >> check: aMethod [
+	^ self new check: aMethod
+]
+
+{ #category : #validation }
+CleanBlockChecker >> check: aMethod [
+	| scanner end |
+	
+	scanner := InstructionStream on: aMethod.
+	end := aMethod endPC.
+
+	[scanner pc <= end] whileTrue: [
+		(self interpretNextInstructionUsing: scanner) ifFalse: [^false].
+	].
+	^true
+]
+
 { #category : #initialization }
 CleanBlockChecker >> interpretNextInstructionUsing: aScanner [ 
 	
