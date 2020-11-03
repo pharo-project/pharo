@@ -285,7 +285,7 @@ PBBootstrap >> generateHermesFiles [
 
 { #category : #'package-names' }
 PBBootstrap >> hermesPackageNames [
-	^ #BaselineOfPharoBootstrap asClass packagesToExportWithHermes , #BaselineOfTraits asClass allPackageNames
+	^ #BaselineOfPharoBootstrap asClass packagesToExportWithHermes , #BaselineOfTraits asClass packagesToExportWithHermes
 ]
 
 { #category : #accessing }
