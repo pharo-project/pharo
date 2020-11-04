@@ -33,7 +33,7 @@ AthensCairoExportSurface class >> createExportingTo: fileName width: width heigh
 
 { #category : #'instance creation' }
 AthensCairoExportSurface class >> extent: anExtent fileName: fileName [
-	^ (self createExportingTo: fileName width: anExtent x height: anExtent y)
+	^ (self createExportingTo: fileName width: anExtent x asFloat height: anExtent y asFloat)
 		initializeWith: anExtent;
 		yourself
 ]

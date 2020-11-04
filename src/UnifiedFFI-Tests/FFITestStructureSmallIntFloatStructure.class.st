@@ -24,6 +24,18 @@ FFITestStructureSmallIntFloatStructure class >> fieldsDesc [
 	)
 ]
 
+{ #category : #comparing }
+FFITestStructureSmallIntFloatStructure >> = another [
+
+	^ (self species = another species) and: [ self getHandle = another getHandle ]
+]
+
+{ #category : #comparing }
+FFITestStructureSmallIntFloatStructure >> hash [
+
+	^ self getHandle hash
+]
+
 { #category : #'accessing structure variables' }
 FFITestStructureSmallIntFloatStructure >> w [
 	"This method was automatically generated"

@@ -130,6 +130,12 @@ FFICallback >> getHandle [
 	^ self thunk
 ]
 
+{ #category : #invoking }
+FFICallback >> invokeAsFunctionWithArguments: aCollection [ 
+
+	^ self backendCallback invokeAsFunctionWithArguments: aCollection
+]
+
 { #category : #private }
 FFICallback >> newParser [ 
 	^ FFIFunctionParser new
@@ -169,7 +175,7 @@ FFICallback >> thunk [
 FFICallback >> valueWithArguments: args [
 
 	^ [ block valueWithArguments: args ]
-		on: Error 
+		on: Exception 
 		fork: [ :e | e debug ]
 		return: [ self returnOnError ]
 ]
