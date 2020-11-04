@@ -26,7 +26,7 @@ ReAbstractRuleTestCase >> myCritiques [
 ReAbstractRuleTestCase >> myCritiquesOnClass: aClass [
 	| critiques |
 	critiques := OrderedCollection new.
-	self subjectUnderTest  new 
+	self subjectUnderTest new 
 		check: aClass forCritiquesDo:[:critique | critiques add: critique].
 	^critiques 
 ]
