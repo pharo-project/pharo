@@ -4,12 +4,11 @@ Class {
 	#category : #'Kernel-ClassDefinitionPrinter'
 }
 
-{ #category : #delegating }
-OldPharoClassDefinitionPrinter >> classDefinitionString [
+{ #category : #internal }
+OldPharoClassDefinitionPrinter >> basicClassDefinitionString [
+	"Pay attention this definition is fragile in presence of complex slots. Use the public API i.e., classDefinitionString"
 
-	^ forClass needsSlotClassDefinition 
-		ifTrue: [ (ClassDefinitionPrinter fluid for: forClass) classDefinitionString ]
-		ifFalse: [  	| poolString stream |
+ 	| poolString stream |
 	poolString := forClass sharedPoolsString.
 	stream := (String new: 800) writeStream.
 	forClass superclass
@@ -51,41 +50,13 @@ OldPharoClassDefinitionPrinter >> classDefinitionString [
 		stream
 			space;
 			nextPutAll: 'superclass: nil' ].
-	stream contents ]
+	^ stream contents
 ]
 
-{ #category : #template }
-OldPharoClassDefinitionPrinter >> classDefinitionTemplateInPackage: aString [
-
-	^ String streamContents: [ :s |
-			s nextPutAll: 'Object subclass: #MyClass' ; crtab.
-			s nextPutAll: 'instanceVariableNames: '''' '; crtab. 
-			s nextPutAll: 'classVariableNames: '''''; crtab.
-			s nextPutAll: 'package: ''', aString, '''' ]
-]
-
-{ #category : #template }
-OldPharoClassDefinitionPrinter >> compactClassDefinitionTemplateInPackage: aString [
-	"there is not compact version..."
-
-	^ self classDefinitionTemplateInPackage: aString
-]
-
-{ #category : #template }
-OldPharoClassDefinitionPrinter >> compactTraitDefinitionTemplateInPackage: aString [
-
-	^ self traitDefinitionTemplateInPackage: aString
-]
-
-{ #category : #delegating }
-OldPharoClassDefinitionPrinter >> expandedDefinitionString [
-	"We do not support expanded on old Pharo syntax so we shortcut the double dispatch call."
-	^ self definitionString 
-]
-
-{ #category : #delegating }
-OldPharoClassDefinitionPrinter >> metaclassDefinitionString [ 
-
+{ #category : #internal }
+OldPharoClassDefinitionPrinter >> basicMetaclassDefinitionString [ 
+	"Pay attention this definition is fragile in presence of complex slots. Use the public API i.e., classDefinitionString"
+	
 	^ String streamContents: [:stream |
 		stream print: forClass.
 		stream
@@ -95,11 +66,9 @@ OldPharoClassDefinitionPrinter >> metaclassDefinitionString [
 		stream nextPut: $' ]
 ]
 
-{ #category : #delegating }
-OldPharoClassDefinitionPrinter >> traitDefinitionString [ 
-	"Next step
-		- some of the methods defined on classe will have to be moved in this class.
-		- refactor to remove duplication with metaclass,...."
+{ #category : #internal }
+OldPharoClassDefinitionPrinter >> basicTraitDefinitionString [ 
+	"Pay attention this definition is fragile in presence of complex slots. Use the public API i.e., classDefinitionString"
 
 	(forClass instanceSide name == #Trait) ifTrue: [ ^ self classDefinitionString ].
 
@@ -128,19 +97,8 @@ OldPharoClassDefinitionPrinter >> traitDefinitionString [
 	]
 ]
 
-{ #category : #template }
-OldPharoClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aString [
-
-	^ String streamContents: [ :s |
-			s nextPutAll: 'Trait named: #TMyTraits
-	 uses: {}
-	 package: '.
-			s nextPutAll: aString ]
- 
-]
-
-{ #category : #delegating }
-OldPharoClassDefinitionPrinter >> traitedMetaclassDefinitionString [ 
+{ #category : #internal }
+OldPharoClassDefinitionPrinter >> basicTraitedMetaclassDefinitionString [ 
 
 	^ String streamContents: [:strm |
 			strm print: forClass.
@@ -153,4 +111,76 @@ OldPharoClassDefinitionPrinter >> traitedMetaclassDefinitionString [
 					crtab;
 					nextPutAll: 'instanceVariableNames: ';
 					store: forClass instanceVariablesString ]
+]
+
+{ #category : #'public API' }
+OldPharoClassDefinitionPrinter >> classDefinitionString [
+
+	^ forClass needsSlotClassDefinition 
+		ifTrue: [ (ClassDefinitionPrinter fluid for: forClass) classDefinitionString ]
+		ifFalse: [ self basicClassDefinitionString ]
+]
+
+{ #category : #template }
+OldPharoClassDefinitionPrinter >> classDefinitionTemplateInPackage: aString [
+
+	^ String streamContents: [ :s |
+			s nextPutAll: 'Object subclass: #MyClass' ; crtab.
+			s nextPutAll: 'instanceVariableNames: '''' '; crtab. 
+			s nextPutAll: 'classVariableNames: '''''; crtab.
+			s nextPutAll: 'package: ''', aString, '''' ]
+]
+
+{ #category : #template }
+OldPharoClassDefinitionPrinter >> compactClassDefinitionTemplateInPackage: aString [
+	"there is not compact version..."
+
+	^ self classDefinitionTemplateInPackage: aString
+]
+
+{ #category : #template }
+OldPharoClassDefinitionPrinter >> compactTraitDefinitionTemplateInPackage: aString [
+
+	^ self traitDefinitionTemplateInPackage: aString
+]
+
+{ #category : #'public API' }
+OldPharoClassDefinitionPrinter >> expandedDefinitionString [
+	"We do not support expanded on old Pharo syntax so we shortcut the double dispatch call."
+	^ self definitionString 
+]
+
+{ #category : #'public API' }
+OldPharoClassDefinitionPrinter >> metaclassDefinitionString [ 
+
+	^ forClass needsSlotClassDefinition 
+		ifTrue: [ (ClassDefinitionPrinter fluid for: forClass) metaclassDefinitionString ]
+		ifFalse: [ self basicMetaclassDefinitionString ]
+]
+
+{ #category : #'public API' }
+OldPharoClassDefinitionPrinter >> traitDefinitionString [ 
+
+	^ forClass needsSlotClassDefinition 
+		ifTrue: [ (ClassDefinitionPrinter fluid for: forClass) traitDefinitionString ]
+		ifFalse: [ self basicTraitDefinitionString ]
+]
+
+{ #category : #template }
+OldPharoClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aString [
+
+	^ String streamContents: [ :s |
+			s nextPutAll: 'Trait named: #TMyTraits
+	 uses: {}
+	 package: '.
+			s nextPutAll: aString ]
+ 
+]
+
+{ #category : #'public API' }
+OldPharoClassDefinitionPrinter >> traitedMetaclassDefinitionString [ 
+
+	^ forClass needsSlotClassDefinition 
+		ifTrue: [ (ClassDefinitionPrinter fluid for: forClass) traitedMetaclassDefinitionString ]
+		ifFalse: [ self basicTraitedMetaclassDefinitionString ]
 ]

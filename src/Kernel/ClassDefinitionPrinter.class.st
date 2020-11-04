@@ -71,7 +71,17 @@ ClassDefinitionPrinter class >> fluid [
 
 { #category : #'instance creation' }
 ClassDefinitionPrinter class >> for: aClass [ 
-	^ self new
+	"Given the current class definition syntax and the need for the class, 
+	return the correct printer. 
+	We only print slots with the fluid class definition."
+	
+	| instance |
+	instance := 
+		(aClass needsSlotClassDefinition 
+			or: [ self showFluidClassDefinition ])
+				ifTrue: [ self fluid ]
+				ifFalse: [ self oldPharo ].
+	^ instance
 		for: aClass; 
 		yourself
 

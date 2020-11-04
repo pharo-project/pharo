@@ -60,7 +60,7 @@ FluidClassDefinitionPrinter >> classDefinitionString [
 		  self packageOn: s ]
 ]
 
-{ #category : #template }
+{ #category : #printing }
 FluidClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName [
 
 		^ String streamContents: [ :s |
@@ -173,7 +173,7 @@ FluidClassDefinitionPrinter >> expandedTraitDefinitionString [
 	^ String streamContents: [ :s |		
 		| tag |
 		s 
-			nextPutAll: 'Trait  << #';
+			nextPutAll: 'Trait << #';
 			nextPutAll: forClass name;
 			cr.
 
@@ -352,7 +352,7 @@ FluidClassDefinitionPrinter >> traitDefinitionString [
 
 	^ String streamContents: [ :s |		
 		s 
-			nextPutAll: 'Trait  << #';
+			nextPutAll: 'Trait << #';
 			nextPutAll: forClass name;
 			cr.
 		
@@ -382,7 +382,7 @@ FluidClassDefinitionPrinter >> traitDefinitionString [
 		]
 ]
 
-{ #category : #template }
+{ #category : #printing }
 FluidClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aPackageName [
 	
 	^ String streamContents: [ :s | 
