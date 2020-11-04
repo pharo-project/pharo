@@ -76,13 +76,13 @@ OSSDL2BackendWindow >> convertButtonState: mouseState modState: modState modifie
 	ralt := (modState bitAnd: KMOD_RALT) ~= 0.
 	gui := (modState bitAnd: KMOD_GUI) ~= 0.
     
-	"Several keyboard layouts use AltGr to enter some symbols. In that case,
-	the AltGr does not play role of a modifer and should be ignored. 
-	As (hopefully) tempral solution, let's ignore all the modifiers if the AltGr is
-	pressed (in this case, SDL adds Ctrl modifiers too).
-	See https://github.com/pharo-project/pharo/issues/4745
-	"
-	ralt ifTrue: [ ^ self ].
+	"The ALT-GR is used to enter special characters, so it should be handled as a keypress.
+	In OSX, both alt keys are used to enter special characters. 
+	This is hack because we need to handle the TextInput event and do not enter text in the 
+	keypress / keydown events."
+	OSPlatform current isMacOSX 
+		ifTrue: [ (alt or: ralt) ifTrue: [ ^ self ] ]
+		ifFalse: [ ralt ifTrue: [ ^ self ] ].
     
 	modifiers leftShift: shift; rightShift: shift;
 		leftCtrl: ctrl; rightCtrl: ctrl;
