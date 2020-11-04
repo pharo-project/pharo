@@ -1206,8 +1206,6 @@ ReflectivityControlTest >> testInsteadVariableReadIvar [
 { #category : #'tests - instead' }
 ReflectivityControlTest >> testInsteadVariableReadTemp [
 	| varNode instance |
-	self skip.
-	"skip for now as #usingMethods of the variable gets confused with instead"
 	varNode := (ReflectivityExamples >> #exampleAssignment) variableReadNodes first.
 	link := MetaLink new
 		metaObject: #context;
