@@ -163,8 +163,8 @@ VariableBreakpoint >> install [
 				toVariableNamed: vName
 				option: self accessStrategy ].
 	isInstalled := true.
+	self setAsNodeProperty.
 	self class addBreakpoint: self.
-	self setAsNodeProperty 
 ]
 
 { #category : #testing }
