@@ -18,7 +18,6 @@ Class {
 		'persistenceType',
 		'isInstanceSpecific',
 		'slotOrVarClass',
-		'slotOrVarMethod',
 		'link'
 	],
 	#category : #'Reflectivity-Installer'
@@ -67,16 +66,6 @@ PermaLink >> slotOrVarClass [
 { #category : #accessing }
 PermaLink >> slotOrVarClass: anObject [
 	slotOrVarClass := anObject
-]
-
-{ #category : #accessing }
-PermaLink >> slotOrVarMethod [
-	^ slotOrVarMethod
-]
-
-{ #category : #accessing }
-PermaLink >> slotOrVarMethod: anObject [
-	slotOrVarMethod := anObject
 ]
 
 { #category : #accessing }
