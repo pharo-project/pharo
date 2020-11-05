@@ -301,7 +301,7 @@ RBParser >> parseArray [
 	self step.
 	node := self arrayNodeClass new.
 	node left: startToken start.
-	self parseStatementList: false  into: node.
+	self parseStatementList: false  into: node untilAnyCloserOf: '}'.
 	(currentToken isSpecial and: [currentToken value = $}]) 
 		ifFalse: [ ^ self parseEnglobingError: node statements with: startToken errorMessage: 'expected }'].
 	node right: currentToken start.
@@ -398,8 +398,7 @@ RBParser >> parseBlock [
 	self
 		parseStatements: false
 		into: node body
-		until: [ currentToken isSpecial
-			and: [ currentToken value = $] ] ].
+		untilAnyCloserOf: ']'.
 	
 	(currentToken isSpecial and: [currentToken value = $]])
 		ifFalse: [ ^ self parseEnglobingError: node body statements with: startToken errorMessage: ''']'' expected'].
@@ -450,24 +449,47 @@ RBParser >> parseCascadeMessage [
 	| node receiver messages semicolons |
 	"Parse of the first message. It can be either unary, binary or keyword."
 	node := self parseKeywordMessage.
+
+	"Quick check if this matches a cascade. If not, return the already parsed node"
 	(currentToken isSpecial and: [ currentToken value = $; ])
-		ifTrue: [ (node isVariable or: [ node hasParentheses ])
-				ifTrue: [ self parserError: 'cascaded message not allowed' ] ].
-	(currentToken isSpecial and: [ currentToken value = $; and: [ node isMessage ] ])
 		ifFalse: [ ^ node ].
-	receiver := node receiver.
+
+	"At this point we know we should create a cascade node."
 	messages := OrderedCollection new: 3.
 	semicolons := OrderedCollection new: 3.
-	messages add: node.
-	[currentToken isSpecial and: [currentToken value = $;]] whileTrue: 
-			[|newMessage| semicolons add: currentToken start.
-			newMessage := nil.
-			self step.
-			self saveCommentsDuring:[
-				newMessage := self parseCascadeMessageWithReceiver: receiver ].
-				
+	
+	"Handle invalid cascade sequences such as:
+	
+	(self foo); bar
+	7; message
+	
+	In this case, the cascade receiver should be an invalid cascade node.
+	"
+	(node isMessage not or: [ node hasParentheses ]) ifTrue: [ 
+		"Cut parsing with an error.
+		If in faulty mode, continue the execution and generate a faulty cascade node."
+		self parserError: 'cascaded message not allowed'.
+		receiver := node := RBInvalidCascadeErrorNode
+			content: { node }
+			start: node start
+			stop: currentToken stop
+			errorMessage: 'End of statement expected'.
+	] ifFalse: [ 
+		receiver := node receiver.
+	 	messages add: node.
+	].
+
+	"Extract the messages following the cascade marker $;"
+	[currentToken isSpecial and: [currentToken value = $;]] whileTrue: [
+		|newMessage|
+		semicolons add: currentToken start.
+		newMessage := nil.
+		self step.
+		self saveCommentsDuring: [
+			newMessage := self parseCascadeMessageWithReceiver: receiver ].
 		self addCommentsTo: newMessage.
-		messages add: newMessage].
+		messages add: newMessage ].
+
 	^self cascadeNodeClass messages: messages semicolons: semicolons
 ]
 
@@ -555,7 +577,7 @@ RBParser >> parseIncompleteExpression: priorStatementsNode [
 	self step.
 	priorStatementsNode statements: statements.
 	^self atEnd ifTrue: [ priorStatementsNode ] 
-				  ifFalse: [ self parseStatementList: false into: priorStatementsNode.
+				  ifFalse: [ self parseStatementList: false into: priorStatementsNode until: [ false "No extra condition, just until the end of the stream" ].
 								self atEnd ifFalse: [ self parseIncompleteExpression: priorStatementsNode ]
 											  ifTrue: [ priorStatementsNode ] ]
 ]
@@ -732,7 +754,7 @@ RBParser >> parseMethod [
 		sequenceNode := self sequenceNodeClass new.
 		methodNode body: sequenceNode ].
 	
-	self parseStatements: true into: methodNode body until: [ false ].
+	self parseStatements: true into: methodNode body untilAnyCloserOf: #().
 		
 	pragmas ifNotNil: [ methodNode pragmas: pragmas ].
 	^methodNode
@@ -868,7 +890,6 @@ RBParser >> parsePrimitiveObject [
 			currentToken value = $( ifTrue: [^self parseParenthesizedExpression].
 			currentToken value = ${ ifTrue: [^self parseArray]].
 	errorNode := self parserError: 'Variable or expression expected'.
-	self step. 
 	^errorNode.
 ]
 
@@ -891,7 +912,12 @@ RBParser >> parsePrimitiveValueLiteral [
 { #category : #'private-parsing' }
 RBParser >> parseStatementInto: statementList periodList: periods [
 
-	| returnPosition node |
+	| returnPosition node startOfStatementToken |
+	
+	"Record the token found at the beginning of the statement.
+	If at the end we did not consume it, consume it and mark it as a bad statement for now"
+	startOfStatementToken := currentToken.
+	
 	"If the current statement starts with ^, parse it as a return + an expression.
 	Otherwise just parse it as an expression.
 	Expressions start with assignments, which have lower precedence"
@@ -943,37 +969,95 @@ RBParser >> parseStatementInto: statementList periodList: periods [
 			errorMessage: 'Unreachable code' ].
 
 	"Commit the statement to the statements list"
-	statementList add: node
+	statementList add: node.
+	
+	"Consume it. This is a hack to get to work"
+	startOfStatementToken = currentToken ifTrue: [ self step ]
 	
 ]
 
 { #category : #'private-parsing' }
-RBParser >> parseStatementList: pragmaBoolean into: sequenceNode [
+RBParser >> parseStatementInto: statementList periodList: periods withAcceptedStatementClosers: aCollectionOfClosers [
 
-	| statements return periods |
-	return := false.
-	statements := sequenceNode statements.
-	periods := OrderedCollection new.
+	"Parse a statement and store it into the statement list.
+	Parse statements as valid only if they end in one of the accepted statement closers provided by the enclosing scope.
+	E.g., if we are parsing a block, a valid closer is ].
+	
+	Put any period found at the end of this statement int the periods collection.
+	"
+	| returnPosition node startOfStatementToken |
+	
+	"Record the token found at the beginning of the statement.
+	If at the end we did not consume it, consume it and mark it as a bad statement for now"
+	startOfStatementToken := currentToken.
+	
+	"If the current statement starts with ^, parse it as a return + an expression.
+	Otherwise just parse it as an expression.
+	Expressions start with assignments, which have lower precedence"
+	(currentToken isSpecial and: [ currentToken value = $^ ])
+		ifTrue: [ 
+			returnPosition := currentToken start.
+			self step.
+			node := self returnNodeClass
+				        return: returnPosition
+				        value: self parseAssignment ]
+		ifFalse: [ node := self parseAssignment ].
+		
+	"If the parsing failed because it did not match anything, consume the current token and continue parsing."
+	startOfStatementToken = currentToken ifTrue: [ self step ].
 
-	self addCommentsTo: sequenceNode.
+	"At this point we have parsed a full statement."
+	"If the statement is followed by closers that do not match the current scope, consume them and produce the corresponding errors wrapping the statement."
+	[(')]}' includes: currentToken value)
+		and: [ (aCollectionOfClosers includes: currentToken value) not ]]
+			whileTrue: [ 
+				node := RBUnfinishedStatementErrorNode
+					content: { node }
+					start: node start
+					stop: currentToken stop
+					errorMessage: 'Missing opener for closer: ', currentToken value asString.
+				self step ].
+	
+	"Next we should have the end of the statement
+	  - a dot or
+	  - an accepted scope closer e.g., )]} or
+	  - or the end of the stream.
+	If it is neither, we should mark our statement as unfinished statement."
+	(currentToken value ~= $. 
+		and: [ (aCollectionOfClosers includes: currentToken value) not
+			and: [ currentToken isEOF not ] ] ) ifTrue: [
+		self parserError: 'End of statement expected'.
+		node := RBUnfinishedStatementErrorNode
+			content: { node }
+			start: node start
+			stop: node stop
+			errorMessage: 'End of statement expected'
+	].
 
-	pragmaBoolean ifTrue: [ self parsePragmas ].
+	"Then consume all dots and comments coming after this well formed statement, if there was any"
+	(currentToken isSpecial and: [ currentToken value = $. ]) ifTrue: [ 
+		periods add: currentToken start.
+		self step.
+		self addCommentsTo: node ].
 
 	[ currentToken isSpecial and: [ currentToken value = $. ] ] 
 		whileTrue: [ 
 			periods add: currentToken start.
 			self step ].
 
-	[  self atEnd or: [ 
-		currentToken isSpecial and: [ '])}' includes: currentToken value ] ] ] 
-			whileFalse: [ 
-				self parseStatementInto: statements periodList: periods ].
+	"If the previous node in the statement list is a return node, mark this node as unreachable"
+	
+	(statementList notEmpty and: [ statementList last isReturn ]) ifTrue: [
+		self parserError: 'Unreachable code'.
+		node := RBUnreachableStatementErrorNode
+			content: { node }
+			start: node start
+			stop: node stop
+			errorMessage: 'Unreachable code' ].
 
-	statements notEmpty ifTrue: [ self addCommentsTo: statements last ].
-	sequenceNode
-		statements: statements;
-		periods: periods.
-	^ sequenceNode
+	"Commit the statement to the statements list"
+	statementList add: node.
+	
 ]
 
 { #category : #'private-parsing' }
@@ -1008,11 +1092,42 @@ RBParser >> parseStatementList: pragmaBoolean into: sequenceNode until: aBlock [
 ]
 
 { #category : #'private-parsing' }
+RBParser >> parseStatementList: pragmaBoolean into: sequenceNode untilAnyCloserOf: aCollectionOfClosers [
+
+	"Parse a list of statements and set those statetements to a sequence node.
+	Stop parsing when we finish the current scope, delimited by a colleciton of closers.
+	Different scopes such as blocks or methods can decide different stop conditions."
+
+	| statements return periods |
+	return := false.
+	statements := sequenceNode statements.
+	periods := OrderedCollection new.
+
+	self addCommentsTo: sequenceNode.
+
+	pragmaBoolean ifTrue: [ self parsePragmas ].
+
+	[ currentToken isSpecial and: [ currentToken value = $. ] ] 
+		whileTrue: [ 
+			periods add: currentToken start.
+			self step ].
+
+	[  self atEnd or: [ aCollectionOfClosers includes: currentToken value ] ] whileFalse: [
+		self parseStatementInto: statements periodList: periods withAcceptedStatementClosers: aCollectionOfClosers ].
+
+	statements notEmpty ifTrue: [ self addCommentsTo: statements last ].
+	sequenceNode
+		statements: statements;
+		periods: periods.
+	^ sequenceNode
+]
+
+{ #category : #'private-parsing' }
 RBParser >> parseStatements: pragmaBoolean [
 	^ self
 		parseStatements: pragmaBoolean
 		into: self sequenceNodeClass new
-		until: [ false "No extra condition, just until the end of the stream" ]
+		untilAnyCloserOf: #()
 ]
 
 { #category : #'private-parsing' }
@@ -1024,6 +1139,17 @@ RBParser >> parseStatements: pragmaBoolean into: aSequenceNode until: aBlock [
 		parseStatementList: pragmaBoolean
 		into: aSequenceNode
 		until: aBlock
+]
+
+{ #category : #'private-parsing' }
+RBParser >> parseStatements: pragmaBoolean into: aSequenceNode untilAnyCloserOf: aCollectionOfClosers [
+	
+	self parseTemporariesInto: aSequenceNode.
+	
+	^self
+		parseStatementList: pragmaBoolean
+		into: aSequenceNode
+		untilAnyCloserOf: aCollectionOfClosers
 ]
 
 { #category : #'private-parsing' }

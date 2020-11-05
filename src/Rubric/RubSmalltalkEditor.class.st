@@ -1048,36 +1048,18 @@ RubSmalltalkEditor >> selectPrecedingIdentifier [
 RubSmalltalkEditor >> selectedSelector [
 	"Try to make a selector out of the current text selection"
 
-	^ self selectedSelectorWithRecursionDepth: 0
-]
-
-{ #category : #'menu messages' }
-RubSmalltalkEditor >> selectedSelectorWithRecursionDepth: depth [
-
-	| node selectorFromAst |
-	
-	depth > 1 ifTrue: [ ^ nil ].
-	
+	| extractor |
+	extractor := CNSelectorExtractor new.
 	self hasSelection ifFalse: [ 
-		selectorFromAst := self findSelectorFromAST.
-		^ selectorFromAst 
-			ifNotNil: [ 
-				selectorFromAst ]
-			ifNil: [ 
-				self selectWord.
-				^ self selectedSelectorWithRecursionDepth: depth + 1 ] ].
-	
-	node := RBParser parseFaultyExpression: self selection string.
-	node
-		nodesDo: [ :n | 
-			n isMessage
-				ifTrue: [ ^ n selector ].
-			n isVariable
-				ifTrue: [ ^ n name ].
-			n isLiteralNode
-				ifTrue: [ ^ n value ] ].
-	"fall back"
-	^ self selection string asSymbol
+		| source ast |
+
+		source := self textArea string.
+		ast := self editingMode parseSource: source.
+
+		^ extractor extractSelectorFromAST: ast atPosition: self textArea startIndex
+	].
+
+	^ extractor extractSelectorFromSelection: self selection string
 ]
 
 { #category : #'menu messages' }
