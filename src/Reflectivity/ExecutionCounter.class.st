@@ -123,7 +123,7 @@ ExecutionCounter >> install [
 	link := MetaLink new 
 				metaObject: self;
 				selector: #increase;
-				options: #(+ optionAnnounce - optionStyler).
+				options: #(+ optionAnnounce).
 	node link: link.
 	self class allCounters at: node put: self.
 ]

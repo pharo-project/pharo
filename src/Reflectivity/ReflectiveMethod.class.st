@@ -163,8 +163,7 @@ ReflectiveMethod >> installCompiledMethod [
 ReflectiveMethod >> installLink: aMetaLink [
 	self increaseLinkCount.
 	(self ast hasOption: #optionCompileOnLinkInstallation for: aMetaLink) 
-		ifTrue: [ self compileAndInstallCompiledMethod ].
-	aMetaLink announceChange
+		ifTrue: [ self compileAndInstallCompiledMethod ]
 ]
 
 { #category : #invalidate }
@@ -256,8 +255,7 @@ ReflectiveMethod >> removeLink: aMetaLink [
 		ifTrue: [ self compileAndInstallCompiledMethod ]
 		ifFalse: [ compiledMethod invalidate ].
 	self decreaseLinkCount.
-	self linkCount = 0 ifTrue: [ self destroyTwin ].
-	aMetaLink announceChange		
+	self linkCount = 0 ifTrue: [ self destroyTwin ]
 ]
 
 { #category : #evaluation }

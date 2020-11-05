@@ -148,7 +148,7 @@ RBProgramNode >> link: aMetaLink [
 	self clearReflectivityAnnotations.
 	self methodNode method installLink: aMetaLink.
 	aMetaLink linkInstaller propagateLinkAddition: aMetaLink forNode: self.
-	SystemAnnouncer uniqueInstance announce: (MetalinkChanged linkAdded: aMetaLink toNode: self)
+	aMetaLink announceInstall: self
 ]
 
 { #category : #'*Reflectivity' }
@@ -202,7 +202,7 @@ RBProgramNode >> removeLink: aMetaLink [
 		ifFalse: [ ^ self ].
 	self methodNode method removeLink: aMetaLink.
 	aMetaLink linkInstaller propagateLinkRemoval: aMetaLink forNode: self.
-	SystemAnnouncer uniqueInstance announce: (MetalinkChanged linkRemoved: aMetaLink fromNode: self)
+	aMetaLink announceRemove: self
 ]
 
 { #category : #'*Reflectivity' }
