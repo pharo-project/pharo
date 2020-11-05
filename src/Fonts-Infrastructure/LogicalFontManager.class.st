@@ -127,11 +127,6 @@ LogicalFontManager >> bestFontFor: aLogicalFont whenFindingAlternativeIgnoreAll:
 
 ]
 
-{ #category : #'as yet unclassified' }
-LogicalFontManager >> identityIncludesFontProvider: aFreeTypeFontProvider [ 
-	^ fontProviders identityIncludes: aFreeTypeFontProvider
-]
-
 { #category : #initialization }
 LogicalFontManager >> initialize [
 	super initialize.
