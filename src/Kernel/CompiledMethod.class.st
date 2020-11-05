@@ -356,6 +356,12 @@ CompiledMethod >> codeForNoSource [
 	 ^(self compiler decompileMethod: self) formattedCode
 ]
 
+{ #category : #testing }
+CompiledMethod >> containsHalt [
+
+	^ self hasProperty: #containsHalt
+]
+
 { #category : #'source code management' }
 CompiledMethod >> copyWithSource: aString [
 	^self copyWithTrailerBytes: (CompiledMethodTrailer new sourceCode: aString) 

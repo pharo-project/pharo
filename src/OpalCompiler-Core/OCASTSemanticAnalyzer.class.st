@@ -202,6 +202,14 @@ OCASTSemanticAnalyzer >> visitInlinedBlockNode: aBlockNode [
 ]
 
 { #category : #visiting }
+OCASTSemanticAnalyzer >> visitMessageNode: aNode [
+
+	super visitMessageNode: aNode.
+	aNode isHaltNode ifTrue: [ 
+		aNode methodNode methodPropertyAt: #containsHalt put: true ]
+]
+
+{ #category : #visiting }
 OCASTSemanticAnalyzer >> visitMethodNode: aMethodNode [
 
 	scope := compilationContext scope newMethodScope. 
