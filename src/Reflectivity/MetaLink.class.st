@@ -58,7 +58,7 @@ MetaLink class >> defaultOptions [
 	+ optionWeakAfter 						  "do not use #ensure: for #after "
 	- optionAnnounce                    "do we announce adding / removing links? Slow"
 	- argsAsArray                       "pass all arguments in one array. By default off as it adds an array creation"
-	+ optionStyler							  "should the metalink be visualized in the Tools?"
+	- optionStyler							  "should the metalink be visualized in the Tools?"
 	)
 ]
 
@@ -94,6 +94,16 @@ MetaLink >> allReifications [
 { #category : #installing }
 MetaLink >> announceChange [
 	self optionAnnounce ifTrue: [SystemAnnouncer uniqueInstance announce: (MetalinkChanged new link: self)]
+]
+
+{ #category : #installing }
+MetaLink >> announceInstall: node [
+	self optionAnnounce ifTrue: [SystemAnnouncer uniqueInstance announce: (MetalinkChanged linkAdded: self toNode: node)]
+]
+
+{ #category : #installing }
+MetaLink >> announceRemove: node [
+	self optionAnnounce ifTrue: [SystemAnnouncer uniqueInstance announce: (MetalinkChanged linkRemoved: self fromNode: node)]
 ]
 
 { #category : #accessing }

@@ -110,7 +110,7 @@ Watch >> install [
 				arguments: #(value);
 				control: #after;
 				condition: [ recording ];
-				option: #(+ optionWeakAfter +optionAnnounce - optionStyler).
+				option: #(+ optionWeakAfter +optionAnnounce).
 	node link: link.
 	self class allWatches at: node put: self.
 ]

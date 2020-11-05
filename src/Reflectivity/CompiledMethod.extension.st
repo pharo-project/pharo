@@ -44,9 +44,7 @@ CompiledMethod >> installLink: aMetaLink [
 	self reflectiveMethod increaseLinkCount.
 	(aMetaLink optionCompileOnLinkInstallation or: [ self isRealPrimitive ])
 		ifTrue: [ self reflectiveMethod compileAndInstallCompiledMethod ]
-		ifFalse: [ self invalidate ].
-	aMetaLink announceChange.
-	
+		ifFalse: [ self invalidate ]
 ]
 
 { #category : #'*Reflectivity' }

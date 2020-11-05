@@ -258,18 +258,17 @@ Breakpoint >> enable [
 Breakpoint >> initialize [
 	
 	self class initializeSlots: self.
-	options := #(+ optionCompileOnLinkInstallation - optionStyler)
+	options := #(+ optionCompileOnLinkInstallation)
 ]
 
 { #category : #install }
 Breakpoint >> install [
-	
-	self class addBreakpoint: self.
+	self setAsNodeProperty.
 	self isObjectCentric
 		ifTrue: [ self targetInstance link: self link toAST: self node.
 			^ self ].
-	self setAsNodeProperty.
-	self node link: self link
+	self node link: self link.
+	self class addBreakpoint: self
 ]
 
 { #category : #testing }
