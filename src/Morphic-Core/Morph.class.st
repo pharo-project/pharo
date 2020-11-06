@@ -1107,6 +1107,31 @@ Morph >> asDraggableMorph [
 	^self
 ]
 
+{ #category : #converting }
+Morph >> asForm [
+	
+	^ self asFormOfSize: self extent
+]
+
+{ #category : #converting }
+Morph >> asFormOfSize: extent [
+	"Answer a new thumbnail for the receiver."
+	| form transform rect |
+
+	rect := self bounds scaledAndCenteredIn: (0@0 extent: extent).
+	form := Form extent: rect extent depth: Display depth.
+	transform := MatrixTransform2x3 withScale: form extent / self extent.
+	form getCanvas
+		transformBy: transform
+		clippingTo: form boundingBox
+		during: [ :canvas | 
+			canvas 
+				translateBy: self topLeft negated 
+				during: [ :translatedCanvas | self fullDrawOn: translatedCanvas ] ]
+		smoothing: 2.
+	^ form
+]
+
 { #category : #creation }
 Morph >> asMorph [
 	^ self
