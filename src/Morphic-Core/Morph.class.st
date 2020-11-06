@@ -1115,7 +1115,7 @@ Morph >> asForm [
 
 { #category : #converting }
 Morph >> asFormOfSize: extent [
-	"Answer a new task thumbnail for the receiver."
+	"Answer a new thumbnail for the receiver."
 	| form transform rect |
 
 	rect := self bounds scaledAndCenteredIn: (0@0 extent: extent).
