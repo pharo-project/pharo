@@ -1116,17 +1116,20 @@ Morph >> asForm [
 { #category : #converting }
 Morph >> asFormOfSize: extent [
 	"Answer a new task thumbnail for the receiver."
-	|f t r|
+	| form transform rect |
 
-	r := self bounds scaledAndCenteredIn: (0@0 extent: extent).
-	f := Form extent: r extent depth: Display depth.
-	t := MatrixTransform2x3 withScale: f extent / self extent.
-	f getCanvas
-		transformBy: t
-		clippingTo: f boundingBox
-		during: [:c | c translateBy: self topLeft negated during: [:ct | self fullDrawOn: ct]]
+	rect := self bounds scaledAndCenteredIn: (0@0 extent: extent).
+	form := Form extent: rect extent depth: Display depth.
+	transform := MatrixTransform2x3 withScale: form extent / self extent.
+	form getCanvas
+		transformBy: transform
+		clippingTo: form boundingBox
+		during: [ :canvas | 
+			canvas 
+				translateBy: self topLeft negated 
+				during: [ :translatedCanvas | self fullDrawOn: translatedCanvas ] ]
 		smoothing: 2.
-	^ f
+	^ form
 ]
 
 { #category : #creation }
