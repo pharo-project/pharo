@@ -106,6 +106,28 @@ ClassDefinitionPrinter class >> oldPharo [
 	^ OldPharoClassDefinitionPrinter basicNew initialize 
 ]
 
+{ #category : #settings }
+ClassDefinitionPrinter class >> settingsOn: aBuilder [
+	"This method could be packaged in a setting kernel related package.
+	For now when the Settings system is not available it will just be deadcode."
+	
+	<systemsettings>
+	(aBuilder setting: #showFluidClassDefinition)
+		parent: #codeBrowsing;
+		default: false;
+		label: 'Use fluid class definition';
+		description: 'If true, the system will display the class definition using a fluid interface e.g., 
+
+Object << #Point
+	slots: { #x . #y };
+	tag: ''BasicObjects'';
+	package: ''Kernel''
+	
+We suggest to use it because it will become the default syntax for Pharo. This new class definition has been designed to control the parameter explosion of the old one. 
+In addition, as soon as you will use slots such as ObservableSlot and more this fluid class definition will be used because the old one is not handling well the slots.';
+		target: self
+]
+
 { #category : #configure }
 ClassDefinitionPrinter class >> showFluidClassDefinition [
 
