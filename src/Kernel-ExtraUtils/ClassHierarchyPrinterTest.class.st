@@ -7,7 +7,7 @@ Class {
 	#category : #'Kernel-ExtraUtils-ForPharo'
 }
 
-{ #category : #tests }
+{ #category : #running }
 ClassHierarchyPrinterTest >> setUp [ 
 	super setUp.
 	printer := ClassHierarchyPrinter new.
