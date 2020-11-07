@@ -40,12 +40,10 @@ FluidClassDefinitionPrinter >> classDefinitionString [
 		  forClass superclass
 			  ifNotNil: [ s nextPutAll: forClass superclass name ]
 			  ifNil: [ s nextPutAll: 'nil' ].
-		  s
-			  nextPutAll: ' << #';
-			  nextPutAll: forClass name;
-			  cr.
-
-		  forClass classLayout isFixedLayout ifFalse: [ self layoutOn: s ].
+			
+		  self msgAndClassNameOn: s.
+		  forClass classLayout isFixedLayout 
+				ifFalse: [ self layoutOn: s ].
 
 		  forClass hasTraitComposition ifTrue: [ 
 			  s tab.
@@ -213,6 +211,14 @@ FluidClassDefinitionPrinter >> expandedTraitDefinitionString [
 ]
 
 { #category : #'elementary operations' }
+FluidClassDefinitionPrinter >> lastSlotsOn: s [
+
+	s crtab.
+	s nextPutAll: 'slots: '.
+	self slotDefinitionsOn: s.
+]
+
+{ #category : #'elementary operations' }
 FluidClassDefinitionPrinter >> layoutOn: s [
 
 	s
@@ -226,29 +232,24 @@ FluidClassDefinitionPrinter >> layoutOn: s [
 { #category : #'definition double dispatch API' }
 FluidClassDefinitionPrinter >> metaclassDefinitionString [ 
 
-	^ String streamContents: [ :s |
-		
+	^ String streamContents: [ :strm |
 		forClass superclass 
-			ifNotNil: [ s nextPutAll: forClass name ]
-			ifNil: [ s nextPutAll: 'ProtoObject ' ].
-		
-		forClass hasTraitComposition ifTrue: [
-			s 
-				crtab; 
-				nextPutAll: 'uses: ';
-				nextPutAll: forClass traitCompositionString ;
-				nextPutAll: ';';
-				cr ].
-		
-		forClass slots ifNotEmpty: 
-			[ 
-				s crtab.
-				s nextPutAll: 'slots: '.
-				forClass slotDefinitionsOn: s ].
-		]
+			ifNotNil: [ strm nextPutAll: forClass name ]
+			ifNil: [ strm nextPutAll: 'ProtoObject ' ].
+		self traitsOn: strm.
+		forClass slots ifNotEmpty: [ self lastSlotsOn: strm ] ]
 ]
 
-{ #category : #'definition double dispatch API' }
+{ #category : #'elementary operations' }
+FluidClassDefinitionPrinter >> msgAndClassNameOn: s [
+
+	s
+		nextPutAll: ' << #';
+		nextPutAll: forClass name;
+		cr
+]
+
+{ #category : #'elementary operations' }
 FluidClassDefinitionPrinter >> packageOn: s [
 
 	s
@@ -348,38 +349,19 @@ FluidClassDefinitionPrinter >> traitCompositionOn: s [
 ]
 
 { #category : #'definition double dispatch API' }
-FluidClassDefinitionPrinter >> traitDefinitionString [ 
+FluidClassDefinitionPrinter >> traitDefinitionString [
 
-	^ String streamContents: [ :s |		
-		s 
-			nextPutAll: 'Trait << #';
-			nextPutAll: forClass name;
-			cr.
-		
-		forClass hasTraitComposition ifTrue: [
-			s 
-				tab; 
-				nextPutAll: 'uses: ';
-				nextPutAll: forClass traitCompositionString ;
-				nextPutAll: ';';
-				cr ].
-		
-		forClass slots ifNotEmpty: [ 
-					s tab.
-					s nextPutAll: 'slots: '.
-					forClass slotDefinitionsOn: s.
-					s nextPutAll: ';'.
-					s cr ].
-				
-		self tagOn: s.
-		
-		s 	
-			tab;
-			nextPutAll: 'package: '; 
-			nextPut: $';
-			nextPutAll: forClass package packageName;
-			nextPut: $'
-		]
+	^ String streamContents: [ :s | 
+			s nextPutAll: 'Trait'.
+			self msgAndClassNameOn: s.
+			forClass hasTraitComposition ifTrue: [ 
+			  s tab.
+			  self traitCompositionOn: s.
+			  s cr ].
+
+		   forClass slots ifNotEmpty: [ self slotsOn: s ].
+			self tagOn: s.
+			self packageOn: s ]
 ]
 
 { #category : #printing }
@@ -410,15 +392,16 @@ FluidClassDefinitionPrinter >> traitedMetaclassDefinitionString [
 	^ String streamContents: 
 		[:strm |
 		strm nextPutAll: forClass name.
-		
-		forClass hasTraitComposition ifTrue: [
-			strm
-				crtab;
-				nextPutAll: 'uses: ';
-				print: forClass traitComposition ].
-		forClass slots ifNotEmpty: [  
-			strm
-				crtab;
-				nextPutAll: 'slots: '.
-			forClass slotDefinitionsOn: strm	]]
+		self traitsOn: strm.
+		forClass slots ifNotEmpty: [ self lastSlotsOn: strm ]]
+]
+
+{ #category : #'elementary operations' }
+FluidClassDefinitionPrinter >> traitsOn: strm [
+	forClass hasTraitComposition ifTrue: [
+		strm 
+			crtab; 
+			nextPutAll: 'uses: ';
+			nextPutAll: forClass traitCompositionString.
+	forClass slots	ifNotEmpty: [ strm nextPutAll: ';'; cr ] ].
 ]
