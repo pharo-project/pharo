@@ -13,7 +13,11 @@ Class {
 { #category : #private }
 RBAddMetaclassChange class >> definitionPatterns [
 	^ #('`className class instanceVariableNames: `#instanceVariableNames'
-		'`className class uses: `@traitComposition instanceVariableNames: `#instanceVariableNames')
+		'`className class uses: `@traitComposition instanceVariableNames: `#instanceVariableNames'
+		'`className class uses: `@traitComposition slots: `#instanceVariableNames'
+		'`className class slots: `#instanceVariableNames'
+		'`className class'
+		)
 ]
 
 { #category : #converting }
