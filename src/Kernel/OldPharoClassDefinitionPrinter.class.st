@@ -172,8 +172,8 @@ OldPharoClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aString [
 	^ String streamContents: [ :s |
 			s nextPutAll: 'Trait named: #TMyTraits
 	 uses: {}
-	 package: '.
-			s nextPutAll: aString ]
+	 package: '''.
+			s nextPutAll: aString; nextPut: $' ]
  
 ]
 
