@@ -45,10 +45,8 @@ FluidClassDefinitionPrinter >> classDefinitionString [
 		  forClass classLayout isFixedLayout 
 				ifFalse: [ self layoutOn: s ].
 
-		  forClass hasTraitComposition ifTrue: [ 
-			  s crtab.
-			  self traitCompositionOn: s ].
-
+			self traitsOn: s.
+			
 		  forClass slots ifNotEmpty: [ self slotsOn: s ].
 		  forClass classVariables ifNotEmpty: [ self sharedVariablesOn: s ].
 		  forClass sharedPools ifNotEmpty: [ self sharedPoolsOn: s ].
