@@ -118,27 +118,24 @@ FluidClassDefinitionPrinter >> compactTraitDefinitionTemplateInPackage: aPackage
 FluidClassDefinitionPrinter >> expandedClassDefinitionString [
 
 	^ String streamContents: [ :s | 
-		  s
-			  nextPutAll: 'Object << #' , forClass name asSymbol;
-			  cr.
-		  self layoutOn: s.
-		  s tab.
-		  forClass hasTraitComposition
-			  ifTrue: [ self traitCompositionOn: s ]
-			  ifFalse: [ s nextPutAll: 'uses: {};' ].
-		  s cr.
-		  self slotsOn: s.
-		  self sharedVariablesOn: s.
-		  forClass hasTraitComposition.
-		  self sharedPoolsOn: s.
+		s nextPutAll: 'Object'.
+		self msgAndClassNameOn: s.
+		self layoutOn: s.
+		s crtab.
+		forClass hasTraitComposition
+			ifTrue: [ self traitCompositionOn: s. ]
+			ifFalse: [ s nextPutAll: 'uses: {};' ].
+		self slotsOn: s.
+		self sharedVariablesOn: s.
+		self sharedPoolsOn: s.
 		
 		(forClass package classTagForClass: forClass) ifNotNil: [ :t |
 			| tag | 
 			tag := t name.
 			tag = forClass package name 
-				ifTrue: [ s tab; nextPutAll: 'tag: '''';'; cr ]
+				ifTrue: [ s crtab; nextPutAll: 'tag: '''';' ]
 				ifFalse: [ self tagOn: s]].
-		  self packageOn: s ]
+			self packageOn: s ]
 ]
 
 { #category : #'expanded double dispatch API' }
@@ -179,7 +176,7 @@ FluidClassDefinitionPrinter >> expandedTraitDefinitionString [
 							ifTrue: [
 								s 
 									nextPutAll: 'uses: ';
-									nextPutAll: forClass traitCompositionString ]
+									nextPutAll: forClass traitCompositionString; nextPutAll: ';' ]
 							ifFalse: [ s nextPutAll: 'uses: {};'].
 						s crtab.
 
@@ -220,13 +217,12 @@ FluidClassDefinitionPrinter >> lastSlotsOn: s [
 
 { #category : #'elementary operations' }
 FluidClassDefinitionPrinter >> layoutOn: s [
-
+	"Layout is always followed by other message ultimately package: so it terminates with ;"
 	s
-		tab;
+		crtab;
 		nextPutAll: 'layout: ';
 		nextPutAll: forClass classLayout class name;
-		nextPutAll: ';';
-		cr
+		nextPutAll: ';'
 ]
 
 { #category : #'definition double dispatch API' }
@@ -245,15 +241,14 @@ FluidClassDefinitionPrinter >> msgAndClassNameOn: s [
 
 	s
 		nextPutAll: ' << #';
-		nextPutAll: forClass name;
-		cr
+		nextPutAll: forClass name
 ]
 
 { #category : #'elementary operations' }
 FluidClassDefinitionPrinter >> packageOn: s [
 
 	s
-		tab;
+		crtab;
 	 	nextPutAll: 'package: ';
 		nextPut: $';
 		nextPutAll: forClass package packageName;
@@ -262,9 +257,9 @@ FluidClassDefinitionPrinter >> packageOn: s [
 
 { #category : #'elementary operations' }
 FluidClassDefinitionPrinter >> sharedPoolsOn: s [
-
+	"shared pool message is always followed by other message ultimately package: so it terminates with ;"
 	s
-		tab;
+		crtab;
 		nextPutAll: 'sharedPools: {'.
 	forClass sharedPools
 		do: [ :p | 
@@ -273,20 +268,18 @@ FluidClassDefinitionPrinter >> sharedPoolsOn: s [
 			s space ]
 		separatedBy: [ s nextPutAll: '.' ].
 	s
-		nextPutAll: '};';
-		cr
+		nextPutAll: '};'
 ]
 
 { #category : #'elementary operations' }
 FluidClassDefinitionPrinter >> sharedVariablesOn: s [
-
+	"shared variable is always followed by other message ultimately package: so it terminates with ;"
 	s
-		tab;
+		crtab;
 		nextPutAll: 'sharedVariables: '.
 	self classVariableDefinitionsOn: s.
 	s  
-		nextPutAll: ';';
-		cr
+		nextPutAll: ';'
 ]
 
 { #category : #'elementary operations' }
@@ -315,12 +308,13 @@ FluidClassDefinitionPrinter >> slotDefinitionsOn: aStream [
 
 { #category : #'elementary operations' }
 FluidClassDefinitionPrinter >> slotsOn: s [
-
-	s tab.
+	"uses: can the last part of a definition so watch out for terminating ;"
+	
+	s crtab.
 	s nextPutAll: 'slots: '.
 	self slotDefinitionsOn: s.
 	s nextPutAll: ';'.
-	s cr
+
 ]
 
 { #category : #'expanded double dispatch API' }
@@ -330,13 +324,12 @@ FluidClassDefinitionPrinter >> tagOn: s [
 	(forClass package classTagForClass: forClass) ifNotNil: [ :t | 
 		tag := t name.
 		tag = forClass package name ifFalse: [ 
-			s tab.
+			s crtab.
 			s
 				nextPutAll: 'tag: ';
 				nextPut: $';
 				nextPutAll: tag asString;
-				nextPutAll: ''';'.
-			s cr ] ]
+				nextPutAll: ''';' ] ]
 ]
 
 { #category : #'expanded double dispatch API' }
@@ -351,17 +344,14 @@ FluidClassDefinitionPrinter >> traitCompositionOn: s [
 { #category : #'definition double dispatch API' }
 FluidClassDefinitionPrinter >> traitDefinitionString [
 
-	^ String streamContents: [ :s | 
-			s nextPutAll: 'Trait'.
-			self msgAndClassNameOn: s.
-			forClass hasTraitComposition ifTrue: [ 
-			  s tab.
-			  self traitCompositionOn: s.
-			  s cr ].
+	^ String streamContents: [ :strm | 
+			strm nextPutAll: 'Trait'.
+			self msgAndClassNameOn: strm.
+			self traitsOn: strm.
 
-		   forClass slots ifNotEmpty: [ self slotsOn: s ].
-			self tagOn: s.
-			self packageOn: s ]
+		   forClass slots ifNotEmpty: [ self slotsOn: strm ].
+			self tagOn: strm.
+			self packageOn: strm ]
 ]
 
 { #category : #printing }
@@ -398,10 +388,11 @@ FluidClassDefinitionPrinter >> traitedMetaclassDefinitionString [
 
 { #category : #'elementary operations' }
 FluidClassDefinitionPrinter >> traitsOn: strm [
+	"uses: can the last part of a definition so watch out for terminating ;"
 	forClass hasTraitComposition ifTrue: [
 		strm 
 			crtab; 
 			nextPutAll: 'uses: ';
 			nextPutAll: forClass traitCompositionString.
-	forClass slots	ifNotEmpty: [ strm nextPutAll: ';'; cr ] ].
+	forClass slots	ifNotEmpty: [ strm nextPutAll: ';' ] ].
 ]
