@@ -119,9 +119,10 @@ FluidClassDefinitionPrinter >> expandedClassDefinitionString [
 		self msgAndClassNameOn: s.
 		self layoutOn: s.
 		s crtab.
+		s nextPutAll: 'uses: '.
 		forClass hasTraitComposition
-			ifTrue: [ self traitCompositionOn: s. ]
-			ifFalse: [ s nextPutAll: 'uses: {};' ].
+			ifTrue: [ s nextPutAll: forClass traitCompositionString ]
+			ifFalse: [ s nextPutAll: '{};' ].
 		self slotsOn: s.
 		self sharedVariablesOn: s.
 		self sharedPoolsOn: s.
@@ -165,9 +166,10 @@ FluidClassDefinitionPrinter >> expandedTraitDefinitionString [
 		self msgAndClassNameOn: forClass name.
 		
 		s crtab.
+		s nextPutAll: 'uses: '.
 		forClass hasTraitComposition
-			ifTrue: [ self traitCompositionOn: s. ]
-			ifFalse: [ s nextPutAll: 'uses: {};' ].
+			ifTrue: [ s nextPutAll: forClass traitCompositionString ]
+			ifFalse: [ s nextPutAll: '{};' ].
 		self slotsOn: s.
 
 		s 	
@@ -331,15 +333,6 @@ FluidClassDefinitionPrinter >> tagOn: s [
 				nextPut: $';
 				nextPutAll: tag asString;
 				nextPutAll: ''';' ] ]
-]
-
-{ #category : #'expanded double dispatch API' }
-FluidClassDefinitionPrinter >> traitCompositionOn: s [
-
-	s
-		nextPutAll: 'uses: ';
-		nextPutAll: forClass traitCompositionString;
-		nextPutAll: ';'
 ]
 
 { #category : #'definition double dispatch API' }
