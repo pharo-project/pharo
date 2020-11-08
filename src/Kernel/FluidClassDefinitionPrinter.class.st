@@ -46,9 +46,8 @@ FluidClassDefinitionPrinter >> classDefinitionString [
 				ifFalse: [ self layoutOn: s ].
 
 		  forClass hasTraitComposition ifTrue: [ 
-			  s tab.
-			  self traitCompositionOn: s.
-			  s cr ].
+			  s crtab.
+			  self traitCompositionOn: s ].
 
 		  forClass slots ifNotEmpty: [ self slotsOn: s ].
 		  forClass classVariables ifNotEmpty: [ self sharedVariablesOn: s ].
@@ -142,24 +141,21 @@ FluidClassDefinitionPrinter >> expandedClassDefinitionString [
 FluidClassDefinitionPrinter >> expandedMetaclassDefinitionString [
 	
 	^ String streamContents: [ :s | 
-						forClass  
-							ifNotNil: [ s nextPutAll: forClass name ]
-							ifNil: [ s nextPutAll: 'ProtoObject ' ].
-						
-						s crtab. 
-						
-						forClass hasTraitComposition 
-							ifTrue: [
-								s 
-									nextPutAll: 'uses: ';
-									nextPutAll: forClass traitCompositionString;
-									nextPutAll: ';']
-							ifFalse: [ s nextPutAll: 'uses: {};'].
-						s crtab.
-
-						s nextPutAll: 'slots: '.
-						self slotDefinitionsOn: s. 
-						]
+		forClass  
+			ifNotNil: [ s nextPutAll: forClass name ]
+			ifNil: [ s nextPutAll: 'ProtoObject ' ].
+		s crtab. 
+		forClass hasTraitComposition 
+			ifTrue: [
+				s 
+					nextPutAll: 'uses: ';
+					nextPutAll: forClass traitCompositionString;
+					nextPutAll: ';']
+			ifFalse: [ s nextPutAll: 'uses: {};'].
+		s crtab.
+		s nextPutAll: 'slots: '.
+		self slotDefinitionsOn: s. 
+		]
 ]
 
 { #category : #'expanded double dispatch API' }
@@ -167,30 +163,25 @@ FluidClassDefinitionPrinter >> expandedTraitDefinitionString [
 	
 	^ String streamContents: [ :s |		
 		| tag |
-		s 
-			nextPutAll: 'Trait << #';
-			nextPutAll: forClass name;
-			cr.
+		s nextPutAll: 'Trait'.
+		self msgAndClassNameOn: forClass name.
+		
+		s crtab.
+		forClass hasTraitComposition
+			ifTrue: [ self traitCompositionOn: s. ]
+			ifFalse: [ s nextPutAll: 'uses: {};' ].
+		self slotsOn: s.
 
-			forClass hasTraitComposition 
-							ifTrue: [
-								s 
-									nextPutAll: 'uses: ';
-									nextPutAll: forClass traitCompositionString; nextPutAll: ';' ]
-							ifFalse: [ s nextPutAll: 'uses: {};'].
-						s crtab.
-
-				s nextPutAll: 'slots: ', forClass slotDefinitionString, ';'; crtab. 
-						s 	
-							nextPutAll: 'sharedVariables: ';
-							nextPutAll: forClass classVariableDefinitionString;
-							nextPutAll: ';'; crtab.
+		s 	
+			nextPutAll: 'sharedVariables: ';
+			nextPutAll: forClass classVariableDefinitionString;
+			nextPutAll: ';'; crtab.
 							
-						s nextPutAll: 'sharedPools: {'.
-						self sharedPoolsOn: s.
-						s nextPutAll: '};' ; crtab.
+		s nextPutAll: 'sharedPools: {'.
+		self sharedPoolsOn: s.
+		s nextPutAll: '};' ; crtab.
 						
-						(forClass package classTagForClass: forClass) ifNotNil: [:t | 
+		(forClass package classTagForClass: forClass) ifNotNil: [:t | 
 							tag := t name.
 							tag = forClass package name
 								ifFalse:  [
@@ -216,6 +207,18 @@ FluidClassDefinitionPrinter >> lastSlotsOn: s [
 ]
 
 { #category : #'elementary operations' }
+FluidClassDefinitionPrinter >> lastTraitsOn: strm [
+	"uses: can the last part of a definition so watch out for terminating ;"
+	
+	forClass hasTraitComposition ifTrue: [
+		strm 
+			crtab; 
+			nextPutAll: 'uses: ';
+			nextPutAll: forClass traitCompositionString.
+	forClass slots	ifNotEmpty: [ strm nextPutAll: ';' ] ].
+]
+
+{ #category : #'elementary operations' }
 FluidClassDefinitionPrinter >> layoutOn: s [
 	"Layout is always followed by other message ultimately package: so it terminates with ;"
 	s
@@ -232,7 +235,7 @@ FluidClassDefinitionPrinter >> metaclassDefinitionString [
 		forClass superclass 
 			ifNotNil: [ strm nextPutAll: forClass name ]
 			ifNil: [ strm nextPutAll: 'ProtoObject ' ].
-		self traitsOn: strm.
+		self lastTraitsOn: strm.
 		forClass slots ifNotEmpty: [ self lastSlotsOn: strm ] ]
 ]
 
@@ -382,17 +385,18 @@ FluidClassDefinitionPrinter >> traitedMetaclassDefinitionString [
 	^ String streamContents: 
 		[:strm |
 		strm nextPutAll: forClass name.
-		self traitsOn: strm.
+		self lastTraitsOn: strm.
 		forClass slots ifNotEmpty: [ self lastSlotsOn: strm ]]
 ]
 
 { #category : #'elementary operations' }
 FluidClassDefinitionPrinter >> traitsOn: strm [
 	"uses: can the last part of a definition so watch out for terminating ;"
+	
 	forClass hasTraitComposition ifTrue: [
 		strm 
 			crtab; 
 			nextPutAll: 'uses: ';
-			nextPutAll: forClass traitCompositionString.
-	forClass slots	ifNotEmpty: [ strm nextPutAll: ';' ] ].
+			nextPutAll: forClass traitCompositionString;
+			nextPutAll: ';' ]
 ]
