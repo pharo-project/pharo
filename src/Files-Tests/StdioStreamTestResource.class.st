@@ -39,16 +39,19 @@ Class {
 
 { #category : #accessing }
 StdioStreamTestResource >> contents [
+
 	^ contents
 ]
 
 { #category : #accessing }
 StdioStreamTestResource >> fileReference [
+
 	^ fileReference
 ]
 
 { #category : #accessing }
 StdioStreamTestResource >> fileStream [
+
 	^ fileStream
 ]
 
@@ -68,7 +71,7 @@ StdioStreamTestResource >> setUp [
 	"NOTE: This makes assumptions about the internal structure of BinaryFileStream.
 	This shouldn't be done in general."
 	handle := fileStream instVarNamed: 'handle'.
-	stdioStream := StdioStream handle: handle file: (File named: #stdio) forWrite: true.
+	stdioStream := StdioStream handle: handle file: (File named: #stdio) forWrite: true
 ]
 
 { #category : #accessing }
@@ -82,5 +85,5 @@ StdioStreamTestResource >> tearDown [
 	
 	stdioStream := nil.
 	fileStream close.
-	fileReference ensureDelete.
+	fileReference ensureDelete
 ]

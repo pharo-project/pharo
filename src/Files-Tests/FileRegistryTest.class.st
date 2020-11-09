@@ -24,5 +24,5 @@ FileRegistryTest >> testRegistryShouldBeCleaned [
 	(File named: 'asd.txt') writeStream.
 	3 timesRepeat: [Smalltalk garbageCollect].
 	
-	self assert: oldSize equals: File registry size.
+	self assert: oldSize equals: File registry size
 ]
