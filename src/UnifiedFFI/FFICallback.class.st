@@ -175,7 +175,7 @@ FFICallback >> thunk [
 FFICallback >> valueWithArguments: args [
 
 	^ [ block valueWithArguments: args ]
-		on: Exception 
+		on: Error 
 		fork: [ :e | e debug ]
 		return: [ self returnOnError ]
 ]
