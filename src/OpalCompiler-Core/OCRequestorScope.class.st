@@ -50,12 +50,6 @@ OCRequestorScope >> lookupVar: name [
 		ifNil: [ outerScope lookupVar: name ]
 ]
 
-{ #category : #lookup }
-OCRequestorScope >> newMethodScope [
-	 
-	^ OCMethodScope new outerScope: (self outerScope: outerScope instanceScope) 
-]
-
 { #category : #accessing }
 OCRequestorScope >> requestor [
 	^ requestor

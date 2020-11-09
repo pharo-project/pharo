@@ -132,8 +132,6 @@ OCASTCheckerTest >> testInstanceVar [
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 	self assert: ast scope isMethodScope.
 	self assertEmpty: ast scope tempVars.
-
-	self assert: ast scope outerScope isInstanceScope.
 	self assert: (ast scope outerScope lookupVar: 'iVar') isInstanceVariable.
 
 	assignment := RBParseTreeSearcher treeMatching: '`var := ``@anything' in: ast.

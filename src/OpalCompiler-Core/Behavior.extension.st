@@ -1,6 +1,11 @@
 Extension { #name : #Behavior }
 
 { #category : #'*OpalCompiler-Core' }
+Behavior >> allTemps [
+	^#()
+]
+
+{ #category : #'*OpalCompiler-Core' }
 Behavior >> compile: code [ 
 	"Compile the argument, code, as source code in the context of the 
 	receiver. Create an error notification if the code can not be compiled. 
@@ -75,6 +80,18 @@ Behavior >> lookupVar: aName [
 ]
 
 { #category : #'*OpalCompiler-Core' }
+Behavior >> lookupVarForDeclaration: name [
+	"This is a version of #lookupVar: that skips the OCRequestorScope, from here on it is the same as lookupVar:"
+	^ self lookupVar: name
+]
+
+{ #category : #'*OpalCompiler-Core' }
+Behavior >> newMethodScope [
+
+	^ OCMethodScope new outerScope: self
+]
+
+{ #category : #'*OpalCompiler-Core' }
 Behavior >> recompile [
 	self compileAll
 ]
@@ -99,4 +116,10 @@ Behavior >> recompile: selector from: oldClass [
 				compile.   "Assume OK after proceed from SyntaxError"
 	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
 	self addSelector: selector withRecompiledMethod: newMethod.
+]
+
+{ #category : #'*OpalCompiler-Core' }
+Behavior >> scopeLevel [
+	"For debugging we print a counter for all scopes, starting from the Method as 1, so we are 0"
+	^ 0
 ]

@@ -23,12 +23,6 @@ OCAbstractScope >> hasTempVector [
 	^ false
 ]
 
-{ #category : #decompiling }
-OCAbstractScope >> instanceScope [
-
-	^self outerScope instanceScope
-]
-
 { #category : #testing }
 OCAbstractScope >> isBlockScope [
 
@@ -37,11 +31,6 @@ OCAbstractScope >> isBlockScope [
 
 { #category : #testing }
 OCAbstractScope >> isInsideOptimizedLoop [
-	^ false
-]
-
-{ #category : #testing }
-OCAbstractScope >> isInstanceScope [
 	^ false
 ]
 
@@ -64,6 +53,12 @@ OCAbstractScope >> lookupVarForDeclaration: name [
 	create that variable. Subclasses override if they do not skip but do a lookup"
 
 	^ self outerScope lookupVarForDeclaration: name
+]
+
+{ #category : #'instance creation' }
+OCAbstractScope >> newMethodScope [
+	 
+	^ OCMethodScope new outerScope: self 
 ]
 
 { #category : #lookup }

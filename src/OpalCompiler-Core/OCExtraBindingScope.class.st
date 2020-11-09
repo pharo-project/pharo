@@ -43,9 +43,3 @@ OCExtraBindingScope >> lookupVar: name [
 		ifNotNil: [ :var | var ]
 		ifNil: [ outerScope lookupVar: name ]
 ]
-
-{ #category : #'instance creation' }
-OCExtraBindingScope >> newMethodScope [
-	 
-	^ OCMethodScope new outerScope: (self outerScope: outerScope instanceScope) 
-]
