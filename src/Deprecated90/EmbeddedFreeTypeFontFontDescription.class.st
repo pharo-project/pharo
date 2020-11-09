@@ -11,7 +11,7 @@ To do in the future:
 Class {
 	#name : #EmbeddedFreeTypeFontFontDescription,
 	#superclass : #Object,
-	#category : #'EmbeddedFreeType-Base'
+	#category : #Deprecated90
 }
 
 { #category : #testing }
@@ -44,6 +44,12 @@ EmbeddedFreeTypeFontFontDescription class >> installFontsIn: provider [
 EmbeddedFreeTypeFontFontDescription class >> isAbstract [ 
 	^self name = #EmbeddedFreeTypeFontFontDescription 
 	
+]
+
+{ #category : #testing }
+EmbeddedFreeTypeFontFontDescription class >> isDeprecated [ 
+
+	 ^true
 ]
 
 { #category : #accessing }
