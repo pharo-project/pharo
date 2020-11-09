@@ -1,5 +1,5 @@
 "
-I am example class with methods which use undeclated variables
+I am example class with methods which use undeclared variables
 "
 Class {
 	#name : #ClyClassWithUndeclares,
