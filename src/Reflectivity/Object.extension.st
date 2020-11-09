@@ -78,7 +78,7 @@ Object >> link: aMetaLink toClassVariableNamed: aClassVariableName [
 { #category : #'*Reflectivity' }
 Object >> link: aMetaLink toClassVariableNamed: aClassVariableName option: option [
 	aMetaLink
-		installOnClassVarNamed: aClassVariableName
+		installOnVariableNamed: aClassVariableName
 		for: self
 		option: option
 		instanceSpecific: self intanceSpecificMetaLinksAvailable
@@ -109,7 +109,7 @@ Object >> link: aMetaLink toSlotNamed: aSlotName [
 { #category : #'*Reflectivity' }
 Object >> link: aMetaLink toSlotNamed: aSlotName option: option [
 	aMetaLink
-		installOnSlotNamed: aSlotName
+		installOnVariableNamed: aSlotName
 		for: self
 		option: option
 		instanceSpecific: self intanceSpecificMetaLinksAvailable

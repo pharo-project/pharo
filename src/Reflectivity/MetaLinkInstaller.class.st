@@ -156,46 +156,9 @@ MetaLinkInstaller >> install: aMetaLink onNode: aNode forObject: anObject [
 ]
 
 { #category : #permalinks }
-MetaLinkInstaller >> installPermaLink: aPermaLink onClassVarNamed: aClassVarName [
-	| classVar |	
-	classVar := 	aPermaLink targetObjectOrClass nonAnonymousClass classVariableNamed: aClassVarName asSymbol.
-	aPermaLink slotOrVariable: classVar.
-	
-	self registerAndInstallPermaLink: aPermaLink forTarget: classVar
-]
-
-{ #category : #permalinks }
-MetaLinkInstaller >> installPermaLink: aPermaLink onSlotNamed: aSlotName [
-	| slot |
-	slot := aPermaLink targetObjectOrClass nonAnonymousClass slotNamed: aSlotName.
-	aPermaLink slotOrVariable: slot.
-	
-	self registerAndInstallPermaLink: aPermaLink forTarget: slot
-]
-
-{ #category : #permalinks }
-MetaLinkInstaller >> installPermaLink: aPermaLink onTempVarNamed: aTempName inMethod: aMethodName [
-	| temp method |
-	
-	method := aPermaLink targetObjectOrClass nonAnonymousClass lookupSelector: aMethodName.
-	temp := method temporaryVariableNamed: aTempName.
-
-	aPermaLink slotOrVariable: temp.
-	aPermaLink slotOrVarMethod: temp method.
-	
-	self registerAndInstallPermaLink: aPermaLink forTarget: temp
-	
-
-
-
-]
-
-{ #category : #permalinks }
-MetaLinkInstaller >> installPermaLink: aPermaLink onVariableNamed: aName [
-	| variable |
-	variable := aPermaLink targetObjectOrClass lookupVar: aName.
-	aPermaLink slotOrVariable: variable.
-	self registerAndInstallPermaLink: aPermaLink forTarget: variable
+MetaLinkInstaller >> installPermaLink: aPermaLink onVariable: aVariable [
+	aPermaLink slotOrVariable: aVariable.
+	self registerAndInstallPermaLink: aPermaLink forTarget: aVariable
 ]
 
 { #category : #lookup }
