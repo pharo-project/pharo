@@ -1112,8 +1112,13 @@ RBParser >> parseStatementList: pragmaBoolean into: sequenceNode untilAnyCloserO
 			periods add: currentToken start.
 			self step ].
 
-	[  self atEnd or: [ aCollectionOfClosers includes: currentToken value ] ] whileFalse: [
-		self parseStatementInto: statements periodList: periods withAcceptedStatementClosers: aCollectionOfClosers ].
+	[ self atEnd or: [ currentToken isSpecial
+		and: [aCollectionOfClosers includes: currentToken value] ] ]
+			whileFalse: [
+				self 
+					parseStatementInto: statements
+					periodList: periods
+					withAcceptedStatementClosers: aCollectionOfClosers ].
 
 	statements notEmpty ifTrue: [ self addCommentsTo: statements last ].
 	sequenceNode

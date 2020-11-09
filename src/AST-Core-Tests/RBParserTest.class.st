@@ -1773,6 +1773,23 @@ RBParserTest >> testReplacingNodes [
 	self assert: tree removeDeadCode equals: (self parserClass parseMethod: '+ q | q b | self ifTrue: [] ifFalse: [b := c]. q := b. {q. b}. ^q')
 ]
 
+{ #category : #tests }
+RBParserTest >> testScopesEnclosingMatchingLiterals [
+	| tree |
+
+	tree := self parserClass parseMethod: 'tmp [ $] ]'.
+	self assert: tree statements first isBlock.
+
+	tree := self parserClass parseMethod: 'tmp ($))'.
+	self assert: tree statements first isLiteralNode.
+	
+	tree := self parserClass parseMethod: 'tmp #( $) )'.
+	self assert: tree statements first isLiteralArray.
+	
+	tree := self parserClass parseMethod: 'tmp { $} }'.
+	self assert: tree statements first isDynamicArray.
+]
+
 { #category : #testSelector }
 RBParserTest >> testSelectorFromMessageIsSelectorNode [
 	| tree |
