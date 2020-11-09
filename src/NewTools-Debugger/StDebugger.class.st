@@ -688,6 +688,11 @@ StDebugger >> initializeStack [
 						  ifTrue: [ method sourceNode sourceCode ]
 						  ifFalse: [ method selector ] ])
 				 sortFunction: nil;
+				 yourself);
+		addColumn:
+			((SpStringTableColumn title: 'Package' evaluated: [ :item | 
+					item method methodClass package name asString])
+				 sortFunction: nil;
 				 yourself).
 	stackTable transmitDo: [ :context | 
 		stackTable selection isEmpty ifFalse: [ 
