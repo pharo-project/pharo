@@ -154,7 +154,7 @@ EmbeddedFreeTypeFontInstaller >> initialize [
 { #category : #accessing }
 EmbeddedFreeTypeFontInstaller >> installAllFontsIn: aProvider [
 	self provider: aProvider.
-	EmbeddedFreeTypeFontFontDescription installAllFontsIn: self.	
+	EmbeddedFreeTypeFontDescription installAllFontsIn: self.	
 	embeddedFileInfoCache valuesDo: [ :eachSet | eachSet do: [ :each | provider addFileInfo: each ] ]
 ]
 
