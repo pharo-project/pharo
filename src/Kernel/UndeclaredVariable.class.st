@@ -37,11 +37,22 @@ UndeclaredVariable >> definingClass [
 { #category : #'code generation' }
 UndeclaredVariable >> emitStore: methodBuilder [
 
+	methodBuilder pushLiteralVariable: VariableNotDeclared binding.
+	methodBuilder pushLiteralVariable: self.
+	methodBuilder send: #signal:.
+	methodBuilder popTop.	
+	
 	methodBuilder storeIntoLiteralVariable: self
 ]
 
 { #category : #'code generation' }
 UndeclaredVariable >> emitValue: methodBuilder [
+	
+	methodBuilder pushLiteralVariable: VariableNotDeclared binding.
+	methodBuilder pushLiteralVariable: self.
+	methodBuilder send: #signal:.
+	methodBuilder popTop.
+	
 	methodBuilder pushLiteralVariable: self
 ]
 
