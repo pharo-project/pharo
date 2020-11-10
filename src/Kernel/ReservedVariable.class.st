@@ -10,7 +10,7 @@ Class {
 	#classInstVars : [
 		'instance'
 	],
-	#category : #'OpalCompiler-Core-Semantics'
+	#category : #'Kernel-Variables'
 }
 
 { #category : #accessing }
