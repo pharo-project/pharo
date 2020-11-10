@@ -154,7 +154,7 @@ OSSDL2BackendWindow >> fetchDPI [
 	(SDL2 getDisplay: displayIndex ddpi: ddpi hdpi: hdpi vdpi: vdpi) = 0 ifFalse: [ ^ false ].
 	
 	newDiagonalDPI := ddpi floatAt: 1.
-	newScreenScaleFactor := newDiagonalDPI / self screenScaleFactorBaseDPI roundTo: 0.1.
+	newScreenScaleFactor := newDiagonalDPI / self screenScaleFactorBaseDPI roundTo: 0.05.
 	(screenScaleFactor closeTo: newScreenScaleFactor) ifTrue: [ ^ false ].
 
 	horizontalDPI := hdpi floatAt: 1.

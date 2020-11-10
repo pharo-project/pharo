@@ -34,8 +34,7 @@ OSWorldRenderer >> activateCursor: aCursor withMask: maskForm [
 
 { #category : #initialization }
 OSWorldRenderer >> actualScreenSize [
-
-	^ self windowExtent
+	^ (self windowExtent / self screenScaleFactor) ceiling max: 1@1
 ]
 
 { #category : #initialization }
@@ -63,9 +62,9 @@ OSWorldRenderer >> clipboardText: aString [
 	osWindow clipboardText: aString asString
 ]
 
-{ #category : #events }
+{ #category : #initialization }
 OSWorldRenderer >> convertWindowMouseEventPosition: aPosition [
-	^ aPosition
+	^ (aPosition / self screenScaleFactor + 0.5) floor
 ]
 
 { #category : #initialization }
@@ -203,6 +202,11 @@ OSWorldRenderer >> pickMostSuitableWindowDriver [
 	^ driver
 ]
 
+{ #category : #initialization }
+OSWorldRenderer >> screenScaleFactor [
+	^ world scaleFactor * self windowScaleFactor
+]
+
 { #category : #operations }
 OSWorldRenderer >> updateDamage: allDamage [
 
@@ -224,6 +228,11 @@ OSWorldRenderer >> windowCloseAction: anObject [
 OSWorldRenderer >> windowExtent [
 
 	^ osWindow ifNil: [ 240@120 ] ifNotNil: [ osWindow extent ]
+]
+
+{ #category : #'scale factor' }
+OSWorldRenderer >> windowScaleFactor [
+	^ osWindow ifNil: [ 1 ] ifNotNil: [ osWindow screenScaleFactor max: 1 ]
 ]
 
 { #category : #initialization }
