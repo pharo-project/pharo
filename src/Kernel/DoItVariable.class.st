@@ -105,13 +105,73 @@ DoItVariable >> emitValue: aMethodBuilder [
 ]
 
 { #category : #testing }
+DoItVariable >> isArgumentVariable [
+	^actualVariable isArgumentVariable
+]
+
+{ #category : #testing }
+DoItVariable >> isClassVariable [
+	^actualVariable isClassVariable 
+]
+
+{ #category : #testing }
+DoItVariable >> isGlobalVariable [
+	^actualVariable isGlobalVariable 
+]
+
+{ #category : #testing }
+DoItVariable >> isInstanceVariable [
+	^actualVariable isInstanceVariable 
+]
+
+{ #category : #testing }
+DoItVariable >> isLiteralVariable [
+	^actualVariable isLiteralVariable
+]
+
+{ #category : #testing }
+DoItVariable >> isLocalVariable [
+	^actualVariable isLocalVariable 
+]
+
+{ #category : #testing }
+DoItVariable >> isReservedVariable [
+	^actualVariable isReservedVariable 
+]
+
+{ #category : #testing }
+DoItVariable >> isSelfVariable [
+	^actualVariable isSelfVariable 
+]
+
+{ #category : #testing }
+DoItVariable >> isSuperVariable [
+	^actualVariable isSuperVariable 
+]
+
+{ #category : #testing }
 DoItVariable >> isTempVariable [
-	^ actualVariable isTempVariable
+	^actualVariable isTempVariable 
+]
+
+{ #category : #testing }
+DoItVariable >> isThisContextVariable [
+	^actualVariable isThisContextVariable 
+]
+
+{ #category : #testing }
+DoItVariable >> isUndeclaredVariable [
+	^actualVariable isUndeclaredVariable 
+]
+
+{ #category : #testing }
+DoItVariable >> isUninitialized [
+	^actualVariable isUninitialized 
 ]
 
 { #category : #testing }
 DoItVariable >> isWorkspaceVariable [
-	^ actualVariable isWorkspaceVariable
+	^actualVariable isWorkspaceVariable 
 ]
 
 { #category : #accessing }
