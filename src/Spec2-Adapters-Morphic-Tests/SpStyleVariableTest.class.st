@@ -32,14 +32,10 @@ SpStyleVariableTest >> testParseColorVariable [
 { #category : #tests }
 SpStyleVariableTest >> testParseFontVariable [
 	| property |
-
-	property := SpStyleVariableSTONReader fromString: 'Font { #name: EnvironmentFont(#default) }'.
-	self assert: property name class equals: SpStyleVariableEnvironmentFont.
-	self assert: property name value equals: StandardFonts defaultFont.	
 	
 	property := SpStyleVariableSTONReader fromString: 'Font { #name: EnvironmentFont(#code) }'.
-	self assert: property name class equals: SpStyleVariableEnvironmentFont.
-	self assert: property name value equals: StandardFonts codeFont.	
+	self assert: property nameVariable class equals: SpStyleVariableEnvironmentFont.
+	self assert: property nameVariable value equals: StandardFonts codeFont.	
 
 ]
 
