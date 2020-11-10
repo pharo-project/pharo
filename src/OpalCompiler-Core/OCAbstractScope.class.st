@@ -55,12 +55,6 @@ OCAbstractScope >> lookupVarForDeclaration: name [
 	^ self outerScope lookupVarForDeclaration: name
 ]
 
-{ #category : #'instance creation' }
-OCAbstractScope >> newMethodScope [
-	 
-	^ OCMethodScope new outerScope: self 
-]
-
 { #category : #lookup }
 OCAbstractScope >> outerScope [
 
