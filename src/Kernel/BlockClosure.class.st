@@ -353,18 +353,10 @@ BlockClosure >> isClean [
 	"Answer if the receiver does not close-over any variables other than globals, and does
 	 not ^-return (does not close over the home context).  Clean blocks are amenable to
 	 being created at compile-time."
-	| scanner end checker |
 	self numCopiedValues > 0 ifTrue:
 		[^false].
 
-	scanner := InstructionStream on: self method.
-	checker := CleanBlockChecker new.
-	end := self method endPC.
-
-	[scanner pc <= end] whileTrue: [
-		(checker interpretNextInstructionUsing: scanner) ifFalse: [^false].
-	].
-	^true
+	^ CleanBlockChecker check: self method
 ]
 
 { #category : #testing }
