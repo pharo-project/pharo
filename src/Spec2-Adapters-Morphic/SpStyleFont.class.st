@@ -252,7 +252,7 @@ SpStyleFont >> mergeWith: otherProperty [
 		ifNotNil: [
 			merged 
 				writeSlotNamed: 'predefinedFont' value: nil;
-				writeSlotNamed: 'name' value: self nameVariable ].
+				writeSlotNamed: 'name' value: (otherProperty readSlotNamed: 'name') ].
 		
 	^ merged
 ]
