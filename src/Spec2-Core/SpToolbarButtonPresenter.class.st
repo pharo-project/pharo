@@ -66,7 +66,8 @@ SpToolbarButtonPresenter >> click [
 
 { #category : #execution }
 SpToolbarButtonPresenter >> execute [
-	self action cull: self
+
+	self withAdapterDo: [ :anAdapter | anAdapter execute ]
 ]
 
 { #category : #api }

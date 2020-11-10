@@ -13,10 +13,10 @@ Class {
 	#name : #SpFilteringListPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'itemFilter',
 		'unfilteredItems',
 		'listPresenter',
-		'filterInputPresenter'
+		'filterInputPresenter',
+		'itemFilterBlock'
 	],
 	#category : #'Spec2-Core-Widgets-Advanced'
 }
@@ -83,18 +83,20 @@ SpFilteringListPresenter >> filterInputPresenter [
 
 { #category : #private }
 SpFilteringListPresenter >> filterListItems: pattern [
-	| filteredItems |
 
+	| filteredItems |
 	unfilteredItems ifNil: [ unfilteredItems := self items ].
+	(unfilteredItems includesAll: self items) ifFalse: [ 
+		unfilteredItems := self items ].
 	pattern ifEmpty: [ 
 		self items: unfilteredItems.
 		^ self ].
-	
-	filteredItems := unfilteredItems select: [ :item |
-		itemFilter 
-			value: (self display value: item)
-			value: pattern ].
-	
+
+	filteredItems := unfilteredItems select: [ :item | 
+		                 itemFilterBlock
+			                 value: (self display value: item)
+			                 value: pattern ].
+
 	self items: filteredItems
 ]
 
@@ -107,7 +109,9 @@ SpFilteringListPresenter >> filterText [
 { #category : #initialization }
 SpFilteringListPresenter >> initializePresenters [
 
-	filterInputPresenter := self newTextInput placeholder: 'Filter...'; yourself.
+	filterInputPresenter := self newTextInput
+		                        placeholder: 'Filter...';
+		                        yourself.
 	listPresenter := self newListToFilter.
 	self matchSubstring
 ]
@@ -115,13 +119,13 @@ SpFilteringListPresenter >> initializePresenters [
 { #category : #private }
 SpFilteringListPresenter >> itemFilter [
 
-	^ itemFilter
+	^ itemFilterBlock
 ]
 
 { #category : #api }
 SpFilteringListPresenter >> itemFilter: aBlock [
 
-	itemFilter := aBlock
+	itemFilterBlock := aBlock
 ]
 
 { #category : #api }
@@ -144,17 +148,15 @@ SpFilteringListPresenter >> listPresenter [
 { #category : #initialization }
 SpFilteringListPresenter >> matchBeginOfString [
 
-	itemFilter := [ :each :pattern | 
+	itemFilterBlock := [ :each :pattern | 
 	              each asLowercase beginsWith: pattern asLowercase ]
 ]
 
 { #category : #initialization }
 SpFilteringListPresenter >> matchSubstring [
 
-	itemFilter := [ :each :pattern | 
-		each 
-			includesSubstring: pattern asLowercase 
-			caseSensitive: false ]
+	itemFilterBlock := [ :each :pattern | 
+	              each asLowercase includesSubstring: pattern asLowercase ]
 ]
 
 { #category : #initialization }

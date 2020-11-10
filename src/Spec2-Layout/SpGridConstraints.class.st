@@ -43,6 +43,12 @@ SpGridConstraints >> columnSpan [
 	^ self span x
 ]
 
+{ #category : #testing }
+SpGridConstraints >> hasAlignment [
+
+	^ self hasVAlign or: [ self hasHAlign ]
+]
+
 { #category : #initialization }
 SpGridConstraints >> initialize [
 

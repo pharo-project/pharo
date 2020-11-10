@@ -13,9 +13,9 @@ Trait {
 
 { #category : #accessing }
 SpTAlignable >> hAlign [
-	"I define the vertical alignment of the widgets in the layout.
+	"I define the horizontal alignment of the widgets in the layout.
 	 aligns can be start, center and end. 
-	 To set this value, you can use vAlignStart, vAlignCenter, vAlignEnd"
+	 To set this value, you can use hAlignStart, hAlignCenter, hAlignEnd"
 
 	^ hAlign
 ]
@@ -48,7 +48,19 @@ SpTAlignable >> hAlignStart [
 { #category : #testing }
 SpTAlignable >> hasAlignment [
 
-	^ vAlign notNil or: [ hAlign notNil ]
+	^ self hasVAlign or: [ self hasHAlign ]
+]
+
+{ #category : #testing }
+SpTAlignable >> hasHAlign [
+
+	^ hAlign notNil
+]
+
+{ #category : #testing }
+SpTAlignable >> hasVAlign [
+
+	^ vAlign notNil
 ]
 
 { #category : #accessing }

@@ -158,6 +158,12 @@ SpBoxLayout >> direction [
 	^ direction
 ]
 
+{ #category : #testing }
+SpBoxLayout >> hasAlignment [
+
+	^ self hasVAlign or: [ self hasHAlign ]
+]
+
 { #category : #private }
 SpBoxLayout >> homogeneous: aBoolean [
 

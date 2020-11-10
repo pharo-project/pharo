@@ -291,9 +291,10 @@ SpMorphicGridLayoutComputation >> layout [
 	^ layout
 ]
 
-{ #category : #private }
+{ #category : #TOREMOVE }
 SpMorphicGridLayoutComputation >> maxWidthOf: aCollection [
 
+	self flag: #REMOVE. "I think noone uses it?"
 	^ (aCollection collect: [ :each | (each valueOfProperty: #style) width ]) max
 ]
 

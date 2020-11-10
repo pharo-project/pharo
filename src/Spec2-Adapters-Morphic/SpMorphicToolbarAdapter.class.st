@@ -35,7 +35,7 @@ SpMorphicToolbarAdapter >> configureItem: itemModel morph: itemMorph toolBar: to
 	
 	itemMorph 
 		font: toolBarMorph toolbarItemFont;
-		width: toolBarMorph toolbarItemSize.
+		minWidth: toolBarMorph displayMode width.
 	
 	toolBarMorph displayMode 
 		configureMorph: itemMorph 

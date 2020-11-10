@@ -72,8 +72,8 @@ MillerScrollPane >> onLayoutChange: aBlock [
 { #category : #accessing }
 MillerScrollPane >> showMorph: aMorph [
 	
-	keepShowingPage ifTrue: [ 
-		firstShowingMorph := aMorph ].
+	keepShowingPage 
+		ifTrue: [ firstShowingMorph := aMorph ].
 	self basicShowMorph: aMorph
 ]
 

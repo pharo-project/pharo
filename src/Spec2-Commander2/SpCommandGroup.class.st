@@ -8,6 +8,9 @@ Basically, I add:
 Class {
 	#name : #SpCommandGroup,
 	#superclass : #CmUICommandGroup,
+	#instVars : [
+		'toolbarPopoverButton'
+	],
 	#category : #'Spec2-Commander2-Core'
 }
 
@@ -74,6 +77,18 @@ SpCommandGroup >> asToolbarPresenterWith: aBlock [
 		toolbarPresenter
 ]
 
+{ #category : #configuring }
+SpCommandGroup >> beToolbarGroup [
+
+	toolbarPopoverButton := false
+]
+
+{ #category : #configuring }
+SpCommandGroup >> beToolbarPopoverButton [
+
+	toolbarPopoverButton := true
+]
+
 { #category : #displaying }
 SpCommandGroup >> displayIn: aMenuPresenter do: aBlock [
 
@@ -83,9 +98,22 @@ SpCommandGroup >> displayIn: aMenuPresenter do: aBlock [
 		do: aBlock
 ]
 
+{ #category : #initialization }
+SpCommandGroup >> initialize [
+
+	super initialize.
+	toolbarPopoverButton := false
+]
+
 { #category : #'shortcuts installation' }
 SpCommandGroup >> installShortcutsIn: aPresenter [ 
 	SpShortcutInstaller new
 		presenter: aPresenter;
 		visit: self
+]
+
+{ #category : #testing }
+SpCommandGroup >> isToolbarPopoverButton [
+
+	^ toolbarPopoverButton
 ]

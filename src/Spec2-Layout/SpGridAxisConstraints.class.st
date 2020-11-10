@@ -32,6 +32,12 @@ SpGridAxisConstraints >> expand: anObject [
 ]
 
 { #category : #testing }
+SpGridAxisConstraints >> hasAlignment [
+
+	^ self hasVAlign or: [ self hasHAlign ]
+]
+
+{ #category : #testing }
 SpGridAxisConstraints >> isExpand [
 
 	^ expand == true

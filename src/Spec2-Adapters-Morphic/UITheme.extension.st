@@ -6,3 +6,9 @@ UITheme >> modalBackdropColor [
 
 	^ Color black alpha: 0.2
 ]
+
+{ #category : #'*Spec2-Adapters-Morphic' }
+UITheme >> popoverButtonColor [
+
+	^ self darkBaseColor
+]

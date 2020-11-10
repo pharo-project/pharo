@@ -2,7 +2,7 @@
 WorkingCopyToolBar new openWithSpec
 "
 Class {
-	#name : #WorkingCopyToolBar,
+	#name : #WorkingCopyToolbar,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'browseButton',
@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #specs }
-WorkingCopyToolBar class >> defaultSpec [ 
+WorkingCopyToolbar class >> defaultSpec [ 
 
 	^ {#SpContainerPresenter.
 			#add: . {{#presenter . #packageButton.} . #layout: .  #(FrameLayout
@@ -45,18 +45,18 @@ WorkingCopyToolBar class >> defaultSpec [
 ]
 
 { #category : #accessing }
-WorkingCopyToolBar >> browseButton [
+WorkingCopyToolbar >> browseButton [
 	^ browseButton
 ]
 
 { #category : #accessing }
-WorkingCopyToolBar >> configButton [
+WorkingCopyToolbar >> configButton [
 	
 	^ configButton
 ]
 
 { #category : #initialization }
-WorkingCopyToolBar >> createPackage [
+WorkingCopyToolbar >> createPackage [
 	| name |
 	name := UIManager default request: 'Name of package:'.
 	name isEmptyOrNil
@@ -66,7 +66,7 @@ WorkingCopyToolBar >> createPackage [
 ]
 
 { #category : #initialization }
-WorkingCopyToolBar >> initializePresenters [
+WorkingCopyToolbar >> initializePresenters [
 
 	browseButton := self newButton.
 	configButton := self newButton.
@@ -79,13 +79,13 @@ WorkingCopyToolBar >> initializePresenters [
 ]
 
 { #category : #accessing }
-WorkingCopyToolBar >> packageButton [
+WorkingCopyToolbar >> packageButton [
 
 	^ packageButton
 ]
 
 { #category : #initialization }
-WorkingCopyToolBar >> setBrowseButton [
+WorkingCopyToolbar >> setBrowseButton [
 
 	browseButton
 		state: false;
@@ -96,7 +96,7 @@ WorkingCopyToolBar >> setBrowseButton [
 ]
 
 { #category : #initialization }
-WorkingCopyToolBar >> setConfigButton [
+WorkingCopyToolbar >> setConfigButton [
 
 	configButton
 		state: false;
@@ -106,7 +106,7 @@ WorkingCopyToolBar >> setConfigButton [
 ]
 
 { #category : #initialization }
-WorkingCopyToolBar >> setPackageButton [
+WorkingCopyToolbar >> setPackageButton [
 
 	packageButton
 		state: false;
@@ -116,7 +116,7 @@ WorkingCopyToolBar >> setPackageButton [
 ]
 
 { #category : #initialization }
-WorkingCopyToolBar >> setSliceButton [
+WorkingCopyToolbar >> setSliceButton [
 	sliceButton := self instantiate: SpButtonPresenter.
 	sliceButton
 		state: false;
@@ -126,7 +126,7 @@ WorkingCopyToolBar >> setSliceButton [
 ]
 
 { #category : #accessing }
-WorkingCopyToolBar >> sliceButton [
+WorkingCopyToolbar >> sliceButton [
 	
 	^ sliceButton
 ]

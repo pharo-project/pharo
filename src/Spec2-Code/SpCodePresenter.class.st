@@ -452,6 +452,13 @@ SpCodePresenter >> initialize [
 ]
 
 { #category : #api }
+SpCodePresenter >> insertErrorPopover: aPresenter atIndex: location [
+
+	self selectionInterval: ((location + 1) to: location).
+	self insertPopoverAfterCurrentSelection: aPresenter style: 'error'.  
+]
+
+{ #category : #api }
 SpCodePresenter >> insertPopover: aPresenter atIndex: location [
 
 	self selectionInterval: ((location + 1) to: location).
@@ -461,8 +468,18 @@ SpCodePresenter >> insertPopover: aPresenter atIndex: location [
 { #category : #api }
 SpCodePresenter >> insertPopoverAfterCurrentSelection: aPresenter [
 
+	self 
+		insertPopoverAfterCurrentSelection: aPresenter
+		style: nil
+]
+
+{ #category : #api }
+SpCodePresenter >> insertPopoverAfterCurrentSelection: aPresenter style: styleName [
+	"Popups a popover with contents `aPresenter` after current text selection. 
+	 It adds `styleName` to the popover style."
+
 	self withAdapterDo: [ :anAdapter |
-		anAdapter insertPopoverAfterCurrentSelection: aPresenter ]
+		anAdapter insertPopoverAfterCurrentSelection: aPresenter style: styleName ]
 ]
 
 { #category : #api }
@@ -470,9 +487,11 @@ SpCodePresenter >> insertPrintPopoverAfterCurrentSelection: anObject [
 	"Inserts a print-it result popover. 
 	 This is for use of SpCodePrintItCommand"
 	
-	self insertPopoverAfterCurrentSelection: (SpCodePopoverPrintPresenter 
-		newCode: self
-		object: anObject)
+	self 
+		insertPopoverAfterCurrentSelection: (SpCodePopoverPrintPresenter 
+			newCode: self
+			object: anObject)
+		style: 'print'
 ]
 
 { #category : #api }
@@ -555,16 +574,8 @@ SpCodePresenter >> selectedClassOrMetaClass [
 
 { #category : #'command support' }
 SpCodePresenter >> selectedSelector [
-	| node textSelection |
 	
-	textSelection := self selectedTextOrLine.
-	node := RBParser parseFaultyExpression: textSelection.
-	node nodesDo: [ :n | 
-		n isMessage ifTrue: [ ^ n selector ].
-		n isVariable ifTrue: [ ^ n name ].
-		n isLiteralNode ifTrue: [ ^ n value ] ].
-	"fall back"
-	^ textSelection trimmed asSymbol
+    ^ CNSelectorExtractor new extractSelectorFromSelection: self selectedTextOrLine
 ]
 
 { #category : #api }

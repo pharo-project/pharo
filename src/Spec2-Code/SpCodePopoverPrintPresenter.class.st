@@ -86,8 +86,6 @@ SpCodePopoverPrintPresenter >> initializePresenters [
 	self initializeText.
 
 	layout := SpBoxLayout newHorizontal
-		spacing: 5;
-		borderWidth: 5;
 		add: text;
 		yourself.
 

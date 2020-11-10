@@ -40,9 +40,9 @@ SpStyleContainer class >> stonName [
 { #category : #operations }
 SpStyleContainer >> applyTo: aMorph [ 
 
-	self borderColor ifNotNil: [ :aColor | aMorph borderColor: aColor ].
-	self borderWidth ifNotNil: [ :aNumber | aMorph borderWidth: aNumber ].
-	self padding ifNotNil: [ :aNumber | aMorph cellInset: aNumber ]
+	self borderColorVariable ifNotNil: [ :aVariable | aMorph borderColor: aVariable valueAsColor ].
+	self borderWidthVariable ifNotNil: [ :aVariable | aMorph borderWidth: aVariable value ].
+	self paddingVariable ifNotNil: [ :aVariable | aMorph cellInset: aVariable value ]
 ]
 
 { #category : #accessing }
@@ -52,35 +52,57 @@ SpStyleContainer >> borderColor [
 	- a named selector: ==#red==
 	- an hex string: =='FF0000'=="
 
-	^ borderColor
+	^ self borderColorVariable value
 ]
 
 { #category : #accessing }
 SpStyleContainer >> borderColor: aColor [
 
-	borderColor := aColor
+	borderColor := aColor asStyleVariable
+]
+
+{ #category : #'accessing variables' }
+SpStyleContainer >> borderColorVariable [
+  "This property can be expressed as 
+	- a STON map: ==Color { #red : 1., #green : 0, #blue : 0, #alpha : 1 }==
+	- a named selector: ==#red==
+	- an hex string: =='FF0000'=="
+
+	^ self toVariable: borderColor
 ]
 
 { #category : #accessing }
 SpStyleContainer >> borderWidth [
 
-	^ borderWidth
+	^ self borderWidthVariable value
 ]
 
 { #category : #accessing }
 SpStyleContainer >> borderWidth: aNumber [
 
-	borderWidth := aNumber
+	borderWidth := aNumber asStyleVariable
+]
+
+{ #category : #'accessing variables' }
+SpStyleContainer >> borderWidthVariable [
+
+	^ self toVariable: borderWidth
 ]
 
 { #category : #accessing }
 SpStyleContainer >> padding [
 
-	^ padding
+	^ self paddingVariable value
 ]
 
 { #category : #accessing }
 SpStyleContainer >> padding: aNumber [
 
-	padding := aNumber
+	padding := aNumber asStyleVariable
+]
+
+{ #category : #'accessing variables' }
+SpStyleContainer >> paddingVariable [
+
+	^ self toVariable: padding
 ]

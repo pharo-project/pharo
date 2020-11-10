@@ -10,7 +10,7 @@ Trait {
 { #category : #accessing }
 SpTMorphicTableDataSourceCommons >> headerColumn: column [
 
-	column id ifNil: [ ^ nil ].
+	(column id isNil and: [ self model isShowingColumnHeaders not ]) ifTrue: [ ^ nil ].
 	^ self headerForColumn: column
 ]
 
@@ -56,7 +56,7 @@ SpTMorphicTableDataSourceCommons >> newHeaderColumn: column [
 	| headerMorph |
 	
 	headerMorph := SpHeaderCellMorph new 
-		addMorph: column id asMorph asReadOnlyMorph;
+		addMorph: (column id ifNil: [ '' ]) asMorph asReadOnlyMorph;
 		yourself.
 		
 	column isSortable ifTrue: [ 
