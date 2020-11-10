@@ -248,7 +248,7 @@ SpStyleFont >> mergeWith: otherProperty [
 	merged := super mergeWith: otherProperty.
 
 	"Ensure predefined font will be overriden even if nil."
-	otherProperty nameVariable 
+	otherProperty name 
 		ifNotNil: [ :aName |
 			merged 
 				writeSlotNamed: 'predefinedFont' value: nil;

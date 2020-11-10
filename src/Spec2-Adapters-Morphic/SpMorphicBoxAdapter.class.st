@@ -136,7 +136,7 @@ SpMorphicBoxAdapter >> basicAdd: aPresenter constraints: constraints to: aPanel 
 	childMorph := self buildMorph: aPresenter constraints: constraints.	
 
 	self applyAlignmentToChild: childMorph.
-	aPanel extent: (aPanel width max: childMorph width)@(aPanel height max: childMorph height).
+	self verifyBoxExtentOf: aPanel withChild: childMorph.
 
 	constraints isPlacedAtStart
 		ifTrue: [ startPanel addMorphBack: childMorph ]
@@ -286,4 +286,14 @@ SpMorphicBoxAdapter >> verifyBoxExtent [
 	(startPanel hasSubmorphs 
 		and: [ endPanel hasSubmorphs ])
 	ifFalse: [ widget extent: 0@0 ]
+]
+
+{ #category : #private }
+SpMorphicBoxAdapter >> verifyBoxExtentOf: aPanel withChild: childMorph [
+	| width height |
+	
+	width := childMorph width + (widget borderWidth * 2).
+	height := childMorph height + (widget borderWidth * 2).
+	
+	aPanel extent: (aPanel width max: width)@(aPanel height max: height)
 ]
