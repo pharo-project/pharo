@@ -249,10 +249,10 @@ SpStyleFont >> mergeWith: otherProperty [
 
 	"Ensure predefined font will be overriden even if nil."
 	otherProperty name 
-		ifNotNil: [ :aName |
+		ifNotNil: [
 			merged 
 				writeSlotNamed: 'predefinedFont' value: nil;
-				writeSlotNamed: 'name' value: aName ].
+				writeSlotNamed: 'name' value: self nameVariable ].
 		
 	^ merged
 ]
@@ -272,7 +272,7 @@ SpStyleFont >> name: aString [
 { #category : #'accessing variables' }
 SpStyleFont >> nameVariable [
 
-	^ name
+	^ self toVariable: name
 ]
 
 { #category : #private }
