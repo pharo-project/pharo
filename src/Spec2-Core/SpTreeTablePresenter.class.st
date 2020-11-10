@@ -198,6 +198,15 @@ SpTreeTablePresenter >> doubleClickAtPath: aPath [
 ]
 
 { #category : #api }
+SpTreeTablePresenter >> expandAll [
+	"Expand all nodes of the tree. 
+	 WARNING: If your tree is big, this operation can be slow."
+
+	self withAdapterPerformOrDefer: [ :anAdapter | 
+		anAdapter expandAll ]
+]
+
+{ #category : #api }
 SpTreeTablePresenter >> expandPath: aPath [
 	"Expand the tree path.
 	`aPath` is the path to expand. A path is an array of node indexes (e.g. #(1 2 3))"

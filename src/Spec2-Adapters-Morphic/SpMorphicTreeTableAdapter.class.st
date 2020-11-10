@@ -167,6 +167,12 @@ SpMorphicTreeTableAdapter >> ensureAtLeastOneColumnIn: tableMorph [
 ]
 
 { #category : #accessing }
+SpMorphicTreeTableAdapter >> expandAll [
+
+	widget dataSource expandAll
+]
+
+{ #category : #accessing }
 SpMorphicTreeTableAdapter >> expandPath: anArray [  
 
 	widget dataSource expandPath: anArray
