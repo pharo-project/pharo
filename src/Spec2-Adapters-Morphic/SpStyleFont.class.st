@@ -167,7 +167,7 @@ SpStyleFont >> color [
 	- a named selector: ==#red==
 	- an hex string: =='FF0000'=="
 
-	^ color
+	^ self colorVariable value
 ]
 
 { #category : #accessing }
@@ -223,7 +223,8 @@ SpStyleFont >> isItalic [
 
 { #category : #accessing }
 SpStyleFont >> italic [
-	^ italic
+
+	^ self italicVariable value
 ]
 
 { #category : #accessing }
@@ -257,7 +258,7 @@ SpStyleFont >> mergeWith: otherProperty [
 { #category : #accessing }
 SpStyleFont >> name [
 
-	^ name
+	^ self nameVariable value
 ]
 
 { #category : #accessing }
@@ -293,7 +294,7 @@ SpStyleFont >> predefinedFont: aSymbol [
 { #category : #accessing }
 SpStyleFont >> size [
 
-	^ size
+	^ self sizeVariable value
 ]
 
 { #category : #accessing }
