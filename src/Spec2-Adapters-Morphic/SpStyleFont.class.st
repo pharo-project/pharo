@@ -152,7 +152,9 @@ SpStyleFont >> calculateFontName [
 { #category : #private }
 SpStyleFont >> calculateFontSize [
 	
-	self sizeVariable ifNotNil: [ ^ self sizeVariable value ].
+	self sizeVariable ifNotNil: [ :aVariable |
+		aVariable value ifNotNil: [ 
+			^ self sizeVariable value ] ].
 	self nameVariable isEnvironmentVariable ifTrue: [ ^ self nameVariable pointSize ].
 	self hasPredefinedFont ifTrue: [ ^ self obtainPredefinedFont pointSize ].
 
@@ -246,11 +248,11 @@ SpStyleFont >> mergeWith: otherProperty [
 	merged := super mergeWith: otherProperty.
 
 	"Ensure predefined font will be overriden even if nil."
-	otherProperty name 
+	otherProperty nameVariable 
 		ifNotNil: [ :aName |
 			merged 
-				predefinedFont: nil;
-				name: aName ].
+				writeSlotNamed: 'predefinedFont' value: nil;
+				writeSlotNamed: 'name' value: aName ].
 		
 	^ merged
 ]
