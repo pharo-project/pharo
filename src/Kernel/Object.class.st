@@ -815,15 +815,15 @@ Object >> enclosedElement [
 { #category : #'error handling' }
 Object >> error [
 	"Throw a generic Error exception."
-
-	^self error: 'Error!'.
+	<debuggerCompleteToSender>
+	^ self error: 'Error!'
 ]
 
 { #category : #'error handling' }
-Object >> error: aString [ 
+Object >> error: aString [
 	"Throw a generic Error exception."
-
-	^Error new signal: aString
+	<debuggerCompleteToSender>
+	^ Error new signal: aString
 ]
 
 { #category : #private }
@@ -863,7 +863,7 @@ Object >> executor [
 { #category : #'error handling' }
 Object >> explicitRequirement [
 	"If one of the superclasses can perform the selector, we execute the method of that class, otherwise, the explicit requirement error is thrown"
-
+	<debuggerCompleteToSender>
 	| originalMethod originalArguments errorBlock originalReceiver callingContext originalSelector |
 	errorBlock := [ ^ self error: 'Explicitly required method' ].
 	callingContext := thisContext sender.
@@ -1460,7 +1460,7 @@ Object >> notNil [
 { #category : #'error handling' }
 Object >> notYetImplemented [
 	"Announce that this message is not yet implemented"
-
+	<debuggerCompleteToSender>
 	NotYetImplemented signalFor: thisContext sender selector
 ]
 
@@ -1468,7 +1468,7 @@ Object >> notYetImplemented [
 Object >> notify: aString [ 
 	"Create and schedule a Notifier with the argument as the message in 
 	order to request confirmation before a process can proceed."
-
+	<debuggerCompleteToSender>
 	Warning signal: aString
 ]
 
@@ -1830,7 +1830,7 @@ Object >> shallowCopy [
 { #category : #'error handling' }
 Object >> shouldBeImplemented [
 	"Announce that this message should be implemented"
-
+	<debuggerCompleteToSender>
 	ShouldBeImplemented signalFor: thisContext sender selector
 ]
 
@@ -1844,7 +1844,7 @@ Object >> shouldBePrintedAsLiteral [
 Object >> shouldNotImplement [
 	"Announce that, although the receiver inherits this message, 
 	it should not implement it."
-
+	<debuggerCompleteToSender>
 	ShouldNotImplement signalFor: thisContext sender selector
 ]
 
@@ -1961,7 +1961,7 @@ Object >> storeString [
 Object >> subclassResponsibility [
 	"This message sets up a framework for the behavior of the class' subclasses.
 	Announce that the subclass should have implemented this message."
-
+	<debuggerCompleteToSender>
 	SubclassResponsibility signalFor: thisContext sender selector
 ]
 
