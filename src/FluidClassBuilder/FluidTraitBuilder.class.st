@@ -32,19 +32,20 @@ FluidTraitBuilder >> fillShiftClassBuilder [
 		name: name;
 		superclass: nil;
 		metaSuperclass: Trait;
-		metaclassClass: MetaclassForTraits.
-	tagToBuild isNil or: [ tagToBuild isEmpty 
-		ifTrue: [ shiftClassBuilder category: packageName ]
-		ifFalse: [ shiftClassBuilder category: packageName, '-',tagToBuild asString ]].
-	slots ifNotNil: [ shiftClassBuilder slots: slots ].
-	shiftClassBuilder	
+		metaclassClass: MetaclassForTraits;
 		sharedVariables: '';
-		sharedPools: '';
-		category: packageName.
+		sharedPools: ''.
+	slots ifNotNil: [ shiftClassBuilder slots: slots ].	
 	uses ifNotNil: [ 
 		shiftClassBuilder traitComposition: uses asTraitComposition.
 		shiftClassBuilder classTraitComposition: uses asTraitComposition classComposition ].
-	shiftClassBuilder classSlots: #()
+	shiftClassBuilder classSlots: #().
+	(tagToBuild isNil or: [ tagToBuild isEmpty ])
+		ifTrue: [ shiftClassBuilder category: packageName ]
+		ifFalse: [ tagToBuild isEmpty 
+						ifFalse: [ shiftClassBuilder category: packageName, '-', tagToBuild asString ]
+						ifTrue: [ shiftClassBuilder category: packageName ]
+		].
 ]
 
 { #category : #accessing }
