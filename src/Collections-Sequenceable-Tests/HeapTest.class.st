@@ -30,7 +30,7 @@ Class {
 		'collectionWith4Elements',
 		'stringCollection'
 	],
-	#category : #'Collections-Tests-Sequenceable'
+	#category : #'Collections-Sequenceable-Tests-Base'
 }
 
 { #category : #requirements }
@@ -64,7 +64,7 @@ HeapTest >> anotherElementOrAssociationNotIn [
 
 { #category : #requirements }
 HeapTest >> collection [
-	^ collectionWith4Elements.
+	^ collectionWith4Elements
 ]
 
 { #category : #requirements }
@@ -124,9 +124,9 @@ HeapTest >> collectionWithElementsToRemove [
 
 { #category : #requirements }
 HeapTest >> collectionWithEqualElements [
-	" return a collecition including atLeast two elements equal"
+	" return a collection including atLeast two elements equal"
 
-^ collectionWithDuplicateElement 
+	^ collectionWithDuplicateElement 
 ]
 
 { #category : #requirements }

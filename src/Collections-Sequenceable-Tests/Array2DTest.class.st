@@ -9,7 +9,7 @@ Class {
 		'matrix2',
 		'matrix23'
 	],
-	#category : #'Collections-Tests-Sequenceable'
+	#category : #'Collections-Sequenceable-Tests-Ordered'
 }
 
 { #category : #running }
