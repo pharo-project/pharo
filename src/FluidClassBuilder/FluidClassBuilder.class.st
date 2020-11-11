@@ -87,10 +87,14 @@ FluidClassBuilder >> fillShiftClassBuilder [
 						ifFalse: [ shiftClassBuilder category: packageName, '-',tagToBuild asString ]
 						ifTrue: [ shiftClassBuilder category: packageName ]
 		].
-	slotsToBuild ifNotNil: [:s | s isEmpty ifFalse: [ shiftClassBuilder slots: slotsToBuild ]].
-	traitComposition ifNotNil: [ :t | t isEmpty ifFalse: [shiftClassBuilder traitComposition: traitComposition ]].
-	sharedVariables ifNotNil: [ :s | s isEmpty ifFalse: [shiftClassBuilder sharedVariables: sharedVariables]].
-	poolDictionaries ifNotNil: [ :p | p isEmpty ifFalse: [shiftClassBuilder sharedPools: poolDictionaries  ]].
+	slotsToBuild 
+		ifNotNil: [:s | s isEmpty ifFalse: [ shiftClassBuilder slots: slotsToBuild ]].
+	traitComposition 
+		ifNotNil: [ :t | t isEmpty ifFalse: [shiftClassBuilder traitComposition: traitComposition ]].
+	sharedVariables 
+		ifNotNil: [ :s | s isEmpty ifFalse: [shiftClassBuilder sharedVariables: sharedVariables]].
+	sharedPools 
+		ifNotNil: [ :p | p isEmpty ifFalse: [shiftClassBuilder sharedPoolsCollectionOfSymbols: sharedPools  ]].
 	
 	"I could initialize all of them to #() instead of nil but we should check also the parser"
 	
@@ -122,18 +126,6 @@ FluidClassBuilder >> package: aString [
 FluidClassBuilder >> packageToBuild [
 
 	^ packageName
-]
-
-{ #category : #accessing }
-FluidClassBuilder >> poolDictionaries: aString [
-
-	poolDictionaries := aString
-]
-
-{ #category : #accessing }
-FluidClassBuilder >> poolDictionariesToBuild [
-
-	^ poolDictionaries
 ]
 
 { #category : #accessing }

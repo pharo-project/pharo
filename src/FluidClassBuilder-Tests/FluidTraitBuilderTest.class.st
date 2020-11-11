@@ -38,6 +38,25 @@ FluidTraitBuilderTest >> testBuildSimplePoint2 [
 ]
 
 { #category : #tests }
+FluidTraitBuilderTest >> testFillShiftClassBuilder [
+
+	| shift |
+	builder := Trait << #TPoint2.
+	builder slots: { #x . #y }.
+	builder uses: {TViewModelMock}.
+	builder tag: 'Mafia'.
+	builder package: 'FakedCore'.
+	builder fillShiftClassBuilder.
+	shift := builder shiftClassBuilder. 
+	self assert: shift name equals: #TPoint2.
+	self assert: shift slots size equals: 2.
+	self assert: shift category equals: 'FakedCore-Mafia'.
+	self flag: #askPablo.
+	"self assert: clas package packageName equals: 'FakedCore'"
+	
+]
+
+{ #category : #tests }
 FluidTraitBuilderTest >> testInstallMinimalMockClass [
 
 	| shiftClassBuilder installedClass |

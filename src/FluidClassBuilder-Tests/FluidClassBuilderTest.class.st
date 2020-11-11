@@ -162,6 +162,28 @@ FluidClassBuilderTest >> testCreateClassWithFullExpandedDefinitionKeepsTheMinimu
 	self assert: shiftClassBuilder layoutDefinition sharedPools isEmpty.
 ]
 
+{ #category : #'tests - build' }
+FluidClassBuilderTest >> testFillShiftClassBuilder [
+
+	| shift |
+	builder := Object << #Point2.
+	builder slots: { #x . #y }.
+	builder sharedVariables: {  #Share1 . #Share2 }.
+	builder sharedPools: { ChronologyConstants }.
+	builder tag: 'Mafia'.
+	builder package: 'FakedCore'.
+	builder fillShiftClassBuilder.
+	shift := builder shiftClassBuilder. 
+	self assert: shift superclass equals: Object.
+	self assert: shift name equals: #Point2.
+	self assert: shift slots size equals: 2.
+	self assert: shift sharedPools equals: {ChronologyConstants}.
+	self assert: shift category equals: 'FakedCore-Mafia'.
+	self flag: #askPablo.
+	"self assert: clas package packageName equals: 'FakedCore'"
+	
+]
+
 { #category : #'tests - mandatory' }
 FluidClassBuilderTest >> testInstallMinimalMockClass [
 
