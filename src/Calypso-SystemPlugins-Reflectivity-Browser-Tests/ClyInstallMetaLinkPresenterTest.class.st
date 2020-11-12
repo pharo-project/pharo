@@ -72,7 +72,7 @@ ClyInstallMetaLinkPresenterTest >> testInstallSelectedMetalinkActionButton [
 	list := presenter metalinkListPresenter.
 	list clickItem: 1.	
 	self deny: self nodeInRealMethod hasLinks.
-	presenter toolbarButtons first execute.
+	presenter toolbarButtons first click.
 	self assert: self nodeInRealMethod hasLinks.
 	self assert: self nodeInRealMethod links asArray first identicalTo: list items first 
 ]
@@ -137,6 +137,6 @@ ClyInstallMetaLinkPresenterTest >> testUninstallSelectedMetalinkActionButton [
 	list := presenter metalinkListPresenter.
 	list clickItem: 1.	
 	self assert: self nodeInRealMethod hasLinks.
-	presenter toolbarButtons first execute.
+	presenter toolbarButtons first click.
 	self deny: self nodeInRealMethod hasLinks
 ]
