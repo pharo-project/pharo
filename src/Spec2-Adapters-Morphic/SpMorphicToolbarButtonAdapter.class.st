@@ -28,7 +28,7 @@ SpMorphicToolbarButtonAdapter >> button [
 { #category : #execution }
 SpMorphicToolbarButtonAdapter >> execute [
 
-	self presenter action cull: self
+	self presenter action cull: self presenter
 ]
 
 { #category : #factory }

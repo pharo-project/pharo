@@ -61,7 +61,7 @@ SpToolbarButtonPresenter >> badge: aString [
 { #category : #simulating }
 SpToolbarButtonPresenter >> click [
 	
-	self execute
+	self action cull: self
 ]
 
 { #category : #execution }
