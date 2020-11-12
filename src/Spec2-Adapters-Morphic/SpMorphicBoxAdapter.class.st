@@ -283,9 +283,8 @@ SpMorphicBoxAdapter >> replace: aPresenter with: otherPresenter withConstraints:
 { #category : #private }
 SpMorphicBoxAdapter >> verifyBoxExtent [
 
-	(startPanel hasSubmorphs 
-		and: [ endPanel hasSubmorphs ])
-	ifFalse: [ widget extent: 0@0 ]
+	(startPanel hasSubmorphs not and: [ endPanel hasSubmorphs not ])
+		ifTrue: [ widget extent: 0@0 ]
 ]
 
 { #category : #private }
