@@ -23,7 +23,7 @@ Class {
 		'collectResult',
 		'collectionOfLargeIntegers'
 	],
-	#category : #'Collections-Tests-Sequenceable'
+	#category : #'Collections-Sequenceable-Tests-Base'
 }
 
 { #category : #requirements }

@@ -27,7 +27,7 @@ Class {
 		'collectionOfString',
 		'stringCollectionSameEndAndBegining'
 	],
-	#category : #'Collections-Tests-Sequenceable'
+	#category : #'Collections-Sequenceable-Tests-Ordered'
 }
 
 { #category : #requirements }

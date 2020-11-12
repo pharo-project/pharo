@@ -154,7 +154,11 @@ OSSDL2BackendWindow >> fetchDPI [
 	(SDL2 getDisplay: displayIndex ddpi: ddpi hdpi: hdpi vdpi: vdpi) = 0 ifFalse: [ ^ false ].
 	
 	newDiagonalDPI := ddpi floatAt: 1.
-	newScreenScaleFactor := newDiagonalDPI / self screenScaleFactorBaseDPI roundTo: 0.1.
+	"Allow automatic scale of factor increments of 5%. We need to
+	round due to precision issues which may result in an almost 1 scale factor, but not exactly one.
+	This has to be at least a divisor of 25% which are normal scale factor increments that are selectable in Windows.
+	"
+	newScreenScaleFactor := newDiagonalDPI / self screenScaleFactorBaseDPI roundTo: 0.05.
 	(screenScaleFactor closeTo: newScreenScaleFactor) ifTrue: [ ^ false ].
 
 	horizontalDPI := hdpi floatAt: 1.
