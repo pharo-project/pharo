@@ -19,6 +19,14 @@ ExternalAddress class >> allocate: byteSize [
 ]
 
 { #category : #'instance creation' }
+ExternalAddress class >> allocate: byteSize bytesDuring: aBlock [
+
+	| address |
+	address := self allocate: byteSize.
+	^ [ aBlock value: address ] ensure: [ address free ]
+]
+
+{ #category : #'instance creation' }
 ExternalAddress class >> gcallocate: byteSize [
 	"Primitive. Allocate an object on the external heap.
 	The external memory will be freed when i am garbage collected.

@@ -152,18 +152,15 @@ OSSDL2GenericRenderer >> fillRectangle: aRectangle [
 
 { #category : #clipping }
 OSSDL2GenericRenderer >> fullClippingExtent [
-	| buffer |
-	buffer := ExternalAddress allocate: 8.
-	^ [
-		| result |
-		renderer getLogicalSizeW: buffer h: buffer + 4.
-		result := (buffer unsignedLongAt: 1) @ (buffer unsignedLongAt: 5).
-		(result x = 0 and: [ result y = 0 ]) ifTrue: [ 
-			renderer getOutputSizeW: buffer h: buffer + 4.
-			result := (buffer unsignedLongAt: 1) @ (buffer unsignedLongAt: 5).
-		].
-		result
-	] ensure: [ buffer free ].
+
+	^ ExternalAddress allocate: 8 bytesDuring: [ :buffer | 
+		  | result |
+		  renderer getLogicalSizeW: buffer h: buffer + 4.
+		  result := (buffer unsignedLongAt: 1) @ (buffer unsignedLongAt: 5).
+		  (result x = 0 and: [ result y = 0 ]) ifTrue: [ 
+			  renderer getOutputSizeW: buffer h: buffer + 4.
+			  result := (buffer unsignedLongAt: 1) @ (buffer unsignedLongAt: 5) ].
+		  result ]
 ]
 
 { #category : #private }

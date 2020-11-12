@@ -134,60 +134,59 @@ OSSDL2AthensRenderer >> updateAll [
 
 { #category : #'updating screen' }
 OSSDL2AthensRenderer >> updateRectangle: aRectangle [
-	| intersection pitchHolder externalForm |
-	mutex critical: [
+
+	| intersection externalForm |
+	mutex critical: [ 
 		self validate ifFalse: [ ^ self ].
 		intersection := aRectangle
-			intersect: (0 @ 0 corner: textureExtent)
-			ifNone: [ ^ self ].
-	
-		pixels := ExternalAddress new.
-		pitchHolder := ExternalAddress allocate: 4.
-		[
-			texture lockPixels: pixels pitch: pitchHolder.
-			pitch := pitchHolder signedLongAt: 1.
-		] ensure: [ pitchHolder free ].
+			                intersect: (0 @ 0 corner: textureExtent)
+			                ifNone: [ ^ self ].
 
-		externalForm := OSSDL2ExternalForm extent: textureExtent depth: 32 bits: pixels.
-		[
-			self primitiveUpdateRectangle: intersection externalForm: externalForm
-		] ensure: [
+		pixels := ExternalAddress new.
+		ExternalAddress allocate: 4 bytesDuring: [ :pitchHolder | 
+			texture lockPixels: pixels pitch: pitchHolder.
+			pitch := pitchHolder signedLongAt: 1 ].
+
+		externalForm := OSSDL2ExternalForm
+			                extent: textureExtent
+			                depth: 32
+			                bits: pixels.
+		[ 
+		self
+			primitiveUpdateRectangle: intersection
+			externalForm: externalForm ] ensure: [ 
 			texture unlock.
-			externalForm destroySurface
-		].
-	]
+			externalForm destroySurface ] ]
 ]
 
 { #category : #'updating screen' }
 OSSDL2AthensRenderer >> updateRectangles: allDamage [
-	| pitchHolder externalForm intersection |
-	mutex critical: [
-		self validate
-			ifFalse: [ ^ self ].
-		
+
+	| externalForm intersection |
+	mutex critical: [ 
+		self validate ifFalse: [ ^ self ].
+
 		pixels := ExternalAddress new.
-		pitchHolder := ExternalAddress allocate: 4.
-		[
+		ExternalAddress allocate: 4 bytesDuring: [ :pitchHolder | 
 			texture lockPixels: pixels pitch: pitchHolder.
-			pitch := pitchHolder signedLongAt: 1.
-		] ensure: [ pitchHolder free ].
-	
-		[
-			externalForm := OSSDL2ExternalForm extent: textureExtent depth: 32 bits: pixels.
-			allDamage do: [ :rectangle |
-				intersection := rectangle
-					intersect: (0 @ 0 corner: backendWindow extent)
-					ifNone: [ nil ].
-		
-				intersection ifNotNil: [
-					self primitiveUpdateRectangle: rectangle externalForm: externalForm.
-				]
-			].
-		] ensure: [
+			pitch := pitchHolder signedLongAt: 1 ].
+
+		[ 
+		externalForm := OSSDL2ExternalForm
+			                extent: textureExtent
+			                depth: 32
+			                bits: pixels.
+		allDamage do: [ :rectangle | 
+			intersection := rectangle
+				                intersect: (0 @ 0 corner: backendWindow extent)
+				                ifNone: [ nil ].
+
+			intersection ifNotNil: [ 
+				self
+					primitiveUpdateRectangle: rectangle
+					externalForm: externalForm ] ] ] ensure: [ 
 			texture unlock.
-			externalForm destroySurface
-		].
-	]
+			externalForm destroySurface ] ]
 ]
 
 { #category : #'updating screen' }
