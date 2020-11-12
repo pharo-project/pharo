@@ -102,6 +102,12 @@ SpAbstractMorphicAdapter >> application [
 ]
 
 { #category : #styling }
+SpAbstractMorphicAdapter >> applyStyle [
+
+	self applyStyle: self widget
+]
+
+{ #category : #styling }
 SpAbstractMorphicAdapter >> applyStyle: morph [
 	"this will apply general properties to the built morph"
 	

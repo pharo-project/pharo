@@ -31,14 +31,19 @@ SpMorphicButtonAdapter >> askBeforeChanging [
 
 { #category : #private }
 SpMorphicButtonAdapter >> buildLabel: text withIcon: icon [
+	| iconLabel |
 
-	icon ifNil: [ ^ (text localizedForPresenter: self presenter)
-			ifNil: [ '' ] ].
+	icon ifNil: [ 
+		^ (text localizedForPresenter: self presenter) ifNil: [ '' ] ].
 	
-	^ IconicListItem 
-		text: text 
-		icon: icon
-
+	iconLabel := IconicListItem new.
+	iconLabel icon: icon.
+	text isEmptyOrNil ifFalse: [ 
+		iconLabel morph: (text asMorph 
+			lock;
+			yourself) ].
+		
+	^ iconLabel
 ]
 
 { #category : #factory }

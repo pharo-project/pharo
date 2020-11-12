@@ -22,7 +22,8 @@ SpFilteringSelectableListPresenter >> display [
 { #category : #api }
 SpFilteringSelectableListPresenter >> display: aBlock [
 
-	displayBlock := aBlock
+	displayBlock := aBlock.
+	listPresenter columns: self listColumns
 ]
 
 { #category : #api }

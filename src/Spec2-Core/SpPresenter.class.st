@@ -453,12 +453,12 @@ SpPresenter >> ensureExtentFor: widget [
 	
 ]
 
-{ #category : #TOMOVE }
+{ #category : #TOREMOVE }
 SpPresenter >> extent [
 	^ extent
 ]
 
-{ #category : #TOMOVE }
+{ #category : #TOREMOVE }
 SpPresenter >> extent: aPoint [
 	^ extent := aPoint
 ]
@@ -915,7 +915,13 @@ SpPresenter >> newToolbarButton [
 { #category : #widgets }
 SpPresenter >> newToolbarMenuButton [
 
-	^ self instantiate: SpToolbarToggleButtonPresenter
+	^ self instantiate: SpToolbarMenuButtonPresenter
+]
+
+{ #category : #widgets }
+SpPresenter >> newToolbarPopoverButton [
+
+	^ self instantiate: SpToolbarPopoverButtonPresenter
 ]
 
 { #category : #widgets }

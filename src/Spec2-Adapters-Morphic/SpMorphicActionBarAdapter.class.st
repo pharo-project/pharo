@@ -21,9 +21,9 @@ SpMorphicActionBarAdapter >> addModelTo: aMorph [
 
 	self flag: #TODO. "Maybe validate they are just buttons inside?"
 	(self model items at: #start ifAbsent: [ #() ]) do: [ :each |
-		aMorph submorphs first addMorphBack: (self buildActionButton: each) ].
+		aMorph addItemLeft: (self buildActionButton: each) ].
 	(self model items at: #end ifAbsent: [ #() ]) reverseDo: [ :each |
-		aMorph submorphs second addMorphBack: (self buildActionButton: each) ]
+		aMorph addItemRight: (self buildActionButton: each) ]
 ]
 
 { #category : #factory }

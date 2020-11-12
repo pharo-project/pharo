@@ -73,7 +73,6 @@ SpMorphicTableCellBuilder >> addCellMorph: morph column: aTableColumn [
 			width: aTableColumn width ].
 	
 	cell addMorphBack: morph
-	
 ]
 
 { #category : #private }
@@ -178,8 +177,21 @@ SpMorphicTableCellBuilder >> visitCompositeColumn: aTableColumn [
 
 { #category : #visiting }
 SpMorphicTableCellBuilder >> visitImageColumn: aTableColumn [
+	| morph imageMorph image |
 	
-	self addCellColumn: aTableColumn
+	image := aTableColumn readObject: self item.
+	image ifNil: [ ^ self ].
+	
+	imageMorph := image asMorph.
+	morph := 	Morph new 
+		color: Color transparent;
+		addMorphBack: imageMorph;
+		extent: imageMorph extent;
+		yourself.
+
+	self 
+		addCellMorph: morph 
+		column: aTableColumn
 ]
 
 { #category : #visiting }

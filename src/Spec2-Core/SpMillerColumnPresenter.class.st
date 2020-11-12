@@ -110,6 +110,16 @@ SpMillerColumnPresenter >> pushModel: aModel [
 	self addPresenter: (self newPresenterFor: aModel)
 ]
 
+{ #category : #api }
+SpMillerColumnPresenter >> removeAllFrom: aPage [
+	"remove all columns starting by this page."
+	| index |
+
+	index := (self pages indexOf: aPage) - 1.
+	self resetTo: index.
+	self selectPage: index
+]
+
 { #category : #private }
 SpMillerColumnPresenter >> resetTo: anIndex [
 	"Remove all presenters up to anIndex.

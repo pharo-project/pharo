@@ -17,12 +17,13 @@ Class {
 { #category : #specs }
 SpKeymapPresenter class >> defaultSpec [
 	<spec>
+
 	^ SpBoxLayout newVertical
-		add:
-			(SpBoxLayout newHorizontal
+		add: (SpBoxLayout newHorizontal
 				add: #filterField;
-				add: #clearFilterButton withConstraints: [ :constraints | constraints width: 25 ])
-			withConstraints: [ :constraints | constraints height: self toolbarHeight ];
+				add: #clearFilterButton expand: false;
+				yourself)
+			expand: false;
 		add: #kmTable;
 		yourself
 ]

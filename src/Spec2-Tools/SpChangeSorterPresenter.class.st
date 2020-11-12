@@ -21,18 +21,18 @@ Class {
 { #category : #specs }
 SpChangeSorterPresenter class >> defaultSpec [
 	<spec>
+	
 	^ SpPanedLayout newVertical
 		position: 35 percent;
-		add:
-			(SpPanedLayout newHorizontal
-				add: #changesListPresenter;
-				add: #classesListPresenter;
-				yourself);
-		add:
-			(SpPanedLayout newVertical
-				add: #methodsListPresenter;
-				add: #textPresenter;
-				yourself)
+		add: (SpPanedLayout newHorizontal
+			add: #changesListPresenter;
+			add: #classesListPresenter;
+			yourself);
+		add: (SpPanedLayout newVertical
+			add: #methodsListPresenter;
+			add: #textPresenter;
+			yourself);
+		yourself
 ]
 
 { #category : #specs }

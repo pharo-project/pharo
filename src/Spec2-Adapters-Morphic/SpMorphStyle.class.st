@@ -70,8 +70,8 @@ SpMorphStyle class >> newStyles: anArray [
 SpMorphStyle >> applyTo: aMorph [ 
 
 	aMorph setProperty: #style toValue: self.
-	self mergedProperties do: [ :each |
-		each applyTo: aMorph ]
+	self mergedProperties 
+		do: [ :each | each applyTo: aMorph ]
 ]
 
 { #category : #'accessing container' }

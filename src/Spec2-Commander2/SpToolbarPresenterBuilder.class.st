@@ -12,6 +12,20 @@ Class {
 	#category : #'Spec2-Commander2-Visitors'
 }
 
+{ #category : #private }
+SpToolbarPresenterBuilder >> addPopoverButtonFrom: aCommandsGroup [
+	| button |
+
+	self toolbarPresenter addItem: ((button := self toolbarPresenter newToolbarPopoverButton) 
+		label: aCommandsGroup name;
+		icon: aCommandsGroup icon;
+		content: [ 
+			self class new
+				visit: aCommandsGroup copy beToolbarGroup;
+				toolbarPresenter ];
+		yourself)	
+]
+
 { #category : #initialization }
 SpToolbarPresenterBuilder >> initialize [
 	super initialize.
@@ -33,4 +47,12 @@ SpToolbarPresenterBuilder >> visitCommand: aCmCommandEntry [
 	aCmCommandEntry positionStrategy
 		addButton: aCmCommandEntry buildPresenter
 		toToolbar: self toolbarPresenter
+]
+
+{ #category : #visiting }
+SpToolbarPresenterBuilder >> visitCommandGroup: aCmCommandsGroup [
+	
+	aCmCommandsGroup isToolbarPopoverButton 
+		ifTrue: [ self addPopoverButtonFrom: aCmCommandsGroup ]
+		ifFalse: [ super visitCommandGroup: aCmCommandsGroup ]
 ]

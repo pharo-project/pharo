@@ -61,7 +61,7 @@ SpPaginatorMorph >> adjustSelectionToClosestPage [
 SpPaginatorMorph >> adjustShownPages [
 	| newShownPages |
 
-	newShownPages := (selectionMorph width / self baseWidth) asInteger.
+	newShownPages := (selectionMorph width / self baseWidth) asInteger max: 1.
 	self numberOfPagesShown = newShownPages 
 		ifFalse: [ self numberOfPagesShown: newShownPages ]
 ]

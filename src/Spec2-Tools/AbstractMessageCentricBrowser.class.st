@@ -27,7 +27,8 @@ AbstractMessageCentricBrowser >> initializePresenters [
 
 { #category : #initialization }
 AbstractMessageCentricBrowser >> initializeWindow: aWindowPresenter [
-	aWindowPresenter initialExtent: (900 min: self currentWorld extent x) @ (550 min: self currentWorld extent y)
+
+	aWindowPresenter initialExtent: RealEstateAgent standardWindowExtent
 ]
 
 { #category : #private }

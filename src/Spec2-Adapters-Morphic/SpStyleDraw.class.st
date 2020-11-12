@@ -38,14 +38,13 @@ SpStyleDraw class >> stonName [
 { #category : #operations }
 SpStyleDraw >> applyTo: aMorph [ 
 
-	self color ifNotNil: [ :aColor | aMorph color: aColor ].
+	self color ifNotNil: [ :aColor | aMorph color: aColor asStyleVariable valueAsColor ].
 	self backgroundColor ifNotNil: [ :aColor |
 		"hack to be able to decorate components that does not understand 
 		 backgroundColor" 
 		(aMorph respondsTo: #backgroundColor:)
-			ifTrue: [ aMorph backgroundColor: aColor ]
-			ifFalse: [ aMorph fillStyle: aColor ] ].
-	
+			ifTrue: [ aMorph backgroundColor: aColor asStyleVariable valueAsColor ]
+			ifFalse: [ aMorph fillStyle: aColor asStyleVariable valueAsColor ] ]
 ]
 
 { #category : #accessing }
@@ -55,13 +54,23 @@ SpStyleDraw >> backgroundColor [
 	- a named selector: ==#red==
 	- an hex string: =='FF0000'=="
 
-	^ backgroundColor
+	^ self backgroundColorVariable value
 ]
 
 { #category : #accessing }
 SpStyleDraw >> backgroundColor: aColorOrSymbol [
 
-	backgroundColor := self toColor: aColorOrSymbol
+	backgroundColor := aColorOrSymbol asStyleVariable
+]
+
+{ #category : #'accessing variables' }
+SpStyleDraw >> backgroundColorVariable [
+  "This property can be expressed as 
+	- a STON map: ==Color { #red : 1., #green : 0, #blue : 0, #alpha : 1 }==
+	- a named selector: ==#red==
+	- an hex string: =='FF0000'=="
+
+	^ self toVariable: backgroundColor
 ]
 
 { #category : #accessing }
@@ -71,11 +80,21 @@ SpStyleDraw >> color [
 	- a named selector: ==#red==
 	- an hex string: =='FF0000'=="
 
-	^ color
+	^ self colorVariable value
 ]
 
 { #category : #accessing }
 SpStyleDraw >> color: aColorOrSymbol [
 
-	color := self toColor: aColorOrSymbol
+	color := aColorOrSymbol asStyleVariable
+]
+
+{ #category : #'accessing variables' }
+SpStyleDraw >> colorVariable [
+  "This property can be expressed as 
+	- a STON map: ==Color { #red : 1., #green : 0, #blue : 0, #alpha : 1 }==
+	- a named selector: ==#red==
+	- an hex string: =='FF0000'=="
+
+	^ self toVariable: color
 ]

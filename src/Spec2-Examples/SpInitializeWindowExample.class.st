@@ -6,7 +6,7 @@ You can choose which one(s) you want to add.
 self show.
 "
 Class {
-	#name : #SpPrepareWindowExample,
+	#name : #SpInitializeWindowExample,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'menu',
@@ -19,21 +19,21 @@ Class {
 }
 
 { #category : #specs }
-SpPrepareWindowExample class >> defaultSpec [
+SpInitializeWindowExample class >> defaultSpec [
 	^ SpBoxLayout newVertical
 		add: #text;
 		yourself
 ]
 
 { #category : #showing }
-SpPrepareWindowExample class >> show [
+SpInitializeWindowExample class >> show [
 	<script>
 
 	self new openWithSpec
 ]
 
 { #category : #'private building' }
-SpPrepareWindowExample >> buildFileMenu [
+SpInitializeWindowExample >> buildFileMenu [
 
 	^ self newMenu
 		addItem: [ :item | item name: 'Push message'; action: [ self pushMessage ] ];
@@ -42,7 +42,7 @@ SpPrepareWindowExample >> buildFileMenu [
 ]
 
 { #category : #'private building' }
-SpPrepareWindowExample >> buildMenuBar [
+SpInitializeWindowExample >> buildMenuBar [
 
 	^ self newMenuBar
 		addGroup: [ :group | group
@@ -50,7 +50,7 @@ SpPrepareWindowExample >> buildMenuBar [
 ]
 
 { #category : #'private building' }
-SpPrepareWindowExample >> buildPopMessageToolBarItem [
+SpInitializeWindowExample >> buildPopMessageToolBarItem [
 		
 	^ SpToolbarButtonPresenter new
 		label: 'Pop';
@@ -61,7 +61,7 @@ SpPrepareWindowExample >> buildPopMessageToolBarItem [
 ]
 
 { #category : #'private building' }
-SpPrepareWindowExample >> buildPushMessageToolBarItem [
+SpInitializeWindowExample >> buildPushMessageToolBarItem [
 		
 	^ SpToolbarButtonPresenter new
 		label: 'Push';
@@ -72,13 +72,13 @@ SpPrepareWindowExample >> buildPushMessageToolBarItem [
 ]
 
 { #category : #'private building' }
-SpPrepareWindowExample >> buildStatusBar [
+SpInitializeWindowExample >> buildStatusBar [
 
 	^ SpStatusBarPresenter new
 ]
 
 { #category : #'private building' }
-SpPrepareWindowExample >> buildToolbar [
+SpInitializeWindowExample >> buildToolbar [
 	
 	^ self newToolbar 
 		addItem: self buildPushMessageToolBarItem;
@@ -88,28 +88,28 @@ SpPrepareWindowExample >> buildToolbar [
 ]
 
 { #category : #api }
-SpPrepareWindowExample >> initialExtent [
+SpInitializeWindowExample >> initialExtent [
  
 	^ 600@400
 ]
 
 { #category : #initialization }
-SpPrepareWindowExample >> initialize [
+SpInitializeWindowExample >> initialize [
 
 	super initialize.
 	count := 0
 ]
 
 { #category : #initialization }
-SpPrepareWindowExample >> initializePresenters [
+SpInitializeWindowExample >> initializePresenters [
 	
-	text := self newText text: 'Implementing #prepareWindow:, you can add a menu, toolbar and statusBar to your component.
+	text := self newText text: 'Implementing #initializeWindow:, you can add a menu, toolbar and statusBar to your component.
 
 BEWARE: This elements will be added just when you will open the presenter as a window or dialog. Otherwise, your component will behave just as another composable presenter.'
 ]
 
 { #category : #initialization }
-SpPrepareWindowExample >> initializeWindow: aWindowPresenter [
+SpInitializeWindowExample >> initializeWindow: aWindowPresenter [
 	"I'm called whenever the component will be displayed in a window (or dialog). 
 	 This is usually attained sending #openWithSpec or #openDialogWithSpec."
 	
@@ -121,32 +121,32 @@ SpPrepareWindowExample >> initializeWindow: aWindowPresenter [
 ]
 
 { #category : #actions }
-SpPrepareWindowExample >> popMessage [
+SpInitializeWindowExample >> popMessage [
 
 	statusBar popMessage
 ]
 
 { #category : #actions }
-SpPrepareWindowExample >> pushMessage [
+SpInitializeWindowExample >> pushMessage [
 	
 	count := count + 1.
 	statusBar pushMessage: ('StatusBar message {1}...' format: { count })
 ]
 
 { #category : #'accessing ui' }
-SpPrepareWindowExample >> text [ 
+SpInitializeWindowExample >> text [ 
 
 	^ text
 ]
 
 { #category : #actions }
-SpPrepareWindowExample >> text: aPresenter [
+SpInitializeWindowExample >> text: aPresenter [
 
 	text := aPresenter
 ]
 
 { #category : #api }
-SpPrepareWindowExample >> title [ 
+SpInitializeWindowExample >> title [ 
 
 	^ 'Example of using #prepareWindow:'
 ]

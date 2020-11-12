@@ -85,7 +85,7 @@ SpCodeInteractionModel >> notify: message at: location in: code [
 
 	currentSelection := self owner selectionInterval.
 	self owner 
-		insertPopover: (SpCodePopoverErrorPresenter 
+		insertErrorPopover: (SpCodePopoverErrorPresenter 
 			newCode: self owner 
 			message: stripMessage) 
 		atIndex: (currentSelection isEmptyOrNil

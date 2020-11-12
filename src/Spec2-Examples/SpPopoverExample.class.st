@@ -32,6 +32,13 @@ SpPopoverExample class >> defaultSpec [
 		yourself
 ]
 
+{ #category : #showing }
+SpPopoverExample class >> open [
+	<script>
+
+	^ self new openWithSpec
+]
+
 { #category : #initialization }
 SpPopoverExample >> initializePresenters [
 

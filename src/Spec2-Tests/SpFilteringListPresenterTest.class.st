@@ -82,17 +82,37 @@ SpFilteringListPresenterTest >> testFilterListItems [
 		             Set.
 		             Dictionary }.
 	listWithFilter items: listItems.
-	listWithFilter applyFilter: 'collection'.
+	listWithFilter filterListItems: 'collection'.
 	self assertCollection: listWithFilter items hasSameElements: { 
 			OrderedCollection.
 			SequenceableCollection }.
-	listWithFilter applyFilter: 'xyz'.
+	listWithFilter filterListItems: 'xyz'.
 	self assertEmpty: listWithFilter items.
-	listWithFilter applyFilter: 'array'.
+	listWithFilter filterListItems: 'array'.
 	self
 		assertCollection: listWithFilter items
 		hasSameElements: { Array }.
-	listWithFilter applyFilter: ''.
+	listWithFilter filterListItems: ''.
+	self
+		assertCollection: listWithFilter items
+		hasSameElements: listItems.
+	listItems := 1 to: 10.
+	listWithFilter items: listItems.
+	listWithFilter filterListItems: 'collection'.
+	self assertEmpty: listWithFilter items.
+	listWithFilter filterListItems: '5'.
+	self assertCollection: listWithFilter items hasSameElements: #( 5 ).
+	listWithFilter filterListItems: ''.
+	self
+		assertCollection: listWithFilter items
+		hasSameElements: listItems.
+	listItems := #( 'a' 'e' 'i' 'o' 'u' ).
+	listWithFilter listPresenter items: listItems.
+	listWithFilter filterListItems: '5'.
+	self assertEmpty: listWithFilter items.
+	listWithFilter filterListItems: 'a'.
+	self assertCollection: listWithFilter items hasSameElements: #( 'a' ).
+	listWithFilter filterListItems: ''.
 	self
 		assertCollection: listWithFilter items
 		hasSameElements: listItems

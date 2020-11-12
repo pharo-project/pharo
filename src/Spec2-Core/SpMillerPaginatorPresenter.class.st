@@ -54,6 +54,13 @@ SpMillerPaginatorPresenter >> paginatorPresenter [
 	^ paginator
 ]
 
+{ #category : #api }
+SpMillerPaginatorPresenter >> removeAllFrom: aPresenter [
+
+	millerList removeAllFrom: aPresenter.
+	self updatePaginator: ((millerList pages size - millerList visiblePages + 1) max: 1)
+]
+
 { #category : #private }
 SpMillerPaginatorPresenter >> updatePaginator: pageSelected [
 
