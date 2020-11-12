@@ -64,7 +64,7 @@ OSWorldRenderer >> clipboardText: aString [
 
 { #category : #initialization }
 OSWorldRenderer >> convertWindowMouseEventPosition: aPosition [
-	^ (aPosition / self screenScaleFactor + 0.5) floor
+	^ (aPosition / self screenScaleFactor) rounded
 ]
 
 { #category : #initialization }
