@@ -260,7 +260,7 @@ Class >> bindingOf: varName [
 	aSymbol := varName asSymbol.
 
 	^ (self innerBindingOf: aSymbol) ifNil: [
-		 self environment bindingOf: aSymbol
+		 self environment lookupVar: aSymbol
 	]
 ]
 

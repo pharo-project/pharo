@@ -23,12 +23,6 @@ OCAbstractScope >> hasTempVector [
 	^ false
 ]
 
-{ #category : #decompiling }
-OCAbstractScope >> instanceScope [
-
-	^self outerScope instanceScope
-]
-
 { #category : #testing }
 OCAbstractScope >> isBlockScope [
 
@@ -37,11 +31,6 @@ OCAbstractScope >> isBlockScope [
 
 { #category : #testing }
 OCAbstractScope >> isInsideOptimizedLoop [
-	^ false
-]
-
-{ #category : #testing }
-OCAbstractScope >> isInstanceScope [
 	^ false
 ]
 
