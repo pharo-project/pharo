@@ -31,7 +31,7 @@ Class {
 		'collectionOfString',
 		'collectionWithSameBeginingEnd'
 	],
-	#category : #'Collections-Tests-Sequenceable'
+	#category : #'Collections-Sequenceable-Tests-Ordered'
 }
 
 { #category : #helpers }
