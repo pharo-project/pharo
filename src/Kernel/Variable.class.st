@@ -69,8 +69,8 @@ Variable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 ]
 
 { #category : #converting }
-Variable >> asForeignVariableFrom: aContext [
-	^ ForeignVariable fromContext: aContext variable: self
+Variable >> asDoItVariableFrom: aContext [
+	^ DoItVariable fromContext: aContext variable: self
 ]
 
 { #category : #queries }
