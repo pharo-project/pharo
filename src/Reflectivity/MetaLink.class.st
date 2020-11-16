@@ -271,40 +271,17 @@ MetaLink >> installOn: aNode [
 	
 ]
 
-{ #category : #'installing - link installer' }
-MetaLink >> installOnClassVarNamed: aClassVarName for: aClassOrObject option: option instanceSpecific: instanceSpecific [
-	| permalink variable |
-
-	permalink := self permaLinkFor: aClassOrObject option: option instanceSpecific: instanceSpecific.
-	variable := permalink targetObjectOrClass nonAnonymousClass lookupVar: aClassVarName.
-	^ self linkInstaller installPermaLink: permalink onVariable: variable
-]
-
-{ #category : #'installing - link installer' }
-MetaLink >> installOnSlotNamed: aSlotName for: aClassOrObject option: option instanceSpecific: instanceSpecific [
-	| permalink variable |
-	permalink := self
-		permaLinkFor: aClassOrObject
-		option: option
-		instanceSpecific: instanceSpecific.
-	variable := permalink targetObjectOrClass nonAnonymousClass lookupVar: aSlotName.
-	^ self linkInstaller installPermaLink: permalink onVariable: variable
-]
-
-{ #category : #'installing - link installer' }
-MetaLink >> installOnTempVarNamed: aTempName inMethod: aMethodName for: aClassOrObject option: option instanceSpecific: instanceSpecific [
-	| permalink method variable |
-	permalink := self permaLinkFor: aClassOrObject option: option instanceSpecific: instanceSpecific.
-	
-	method := permalink targetObjectOrClass nonAnonymousClass lookupSelector: aMethodName.
-	variable := method temporaryVariableNamed: aTempName.
-	
-	^ self linkInstaller installPermaLink: permalink onVariable: variable
-]
-
 { #category : #installing }
 MetaLink >> installOnVariable: aVariable [
 	nodes add: aVariable
+]
+
+{ #category : #'installing - link installer' }
+MetaLink >> installOnVariable: aVariable for: aClassOrObject option: option instanceSpecific: instanceSpecific [
+
+	| permalink |
+	permalink := self permaLinkFor: aClassOrObject option: option instanceSpecific: instanceSpecific.
+	^ self linkInstaller installPermaLink: permalink onVariable: aVariable
 ]
 
 { #category : #'installing - link installer' }

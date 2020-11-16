@@ -72,11 +72,11 @@ CompiledMethod >> invalidate [
 
 { #category : #'*Reflectivity' }
 CompiledMethod >> link: aMetaLink toVariableNamed: vName option: accessStrategy [
-	^ self methodClass
-		link: aMetaLink
-		toTemporaryNamed: vName
-		inMethod: self selector
+	^aMetaLink
+		installOnVariable: (self lookupVar: vName)
+		for: self methodClass
 		option: accessStrategy
+		instanceSpecific: false
 ]
 
 { #category : #'*Reflectivity' }
