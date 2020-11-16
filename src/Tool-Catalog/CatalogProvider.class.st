@@ -88,8 +88,7 @@ CatalogProvider >> retrieveProjects [
 		systemPolicy;
 		beOneShot;
 		timeout: 1;
-		setAcceptEncodingGzip;
-		accept: 'text/json';
+		setAcceptEncodingGzip;		
 		url: CatalogSettings catalogSourceURL;
 		contentReader: [ :entity | STON fromString: entity contents ];
 		get
