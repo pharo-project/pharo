@@ -1,3 +1,6 @@
+"
+This class contains tests for class `ReExcessiveArgumentsRule`
+"
 Class {
 	#name : #ReExcessiveArgumentsRuleTest,
 	#superclass : #ReAbstractRuleTestCase,
