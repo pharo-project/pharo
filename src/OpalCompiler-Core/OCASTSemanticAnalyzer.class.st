@@ -214,15 +214,19 @@ OCASTSemanticAnalyzer >> visitMethodNode: aMethodNode [
 
 { #category : #visiting }
 OCASTSemanticAnalyzer >> visitPragmaNode: aPragmaNode [
+
+	| var |
 	super visitPragmaNode: aPragmaNode.
+	aPragmaNode selector = #compilerOptions: ifTrue: [ 
+		aPragmaNode asPragma sendTo:
+			aPragmaNode methodNode compilationContext ].
 	
-	"we parse compiler options here so the rest of the compilation can react to them"
-	(aPragmaNode selector = #compilerOptions:)
-		ifTrue: [ aPragmaNode asPragma sendTo: aPragmaNode methodNode compilationContext ].
-	
-	"primitives with a primitive error define a variable that can be referenced in the body"
-	aPragmaNode isPrimitiveError ifTrue: [  
-		self declareVariableNode: (RBVariableNode named: (aPragmaNode argumentAt: #error:) value asString) ]
+	"if the pragma is a primitive that defines an error variable, we need to declare a temp
+	for it"	
+	aPragmaNode isPrimitiveError ifFalse: [ ^ self ].
+	var := RBVariableNode named: aPragmaNode primitiveErrorVariableName.
+	self declareVariableNode: var.
+	var variable markWrite
 ]
 
 { #category : #visiting }

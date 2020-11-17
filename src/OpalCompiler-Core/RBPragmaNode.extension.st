@@ -34,3 +34,8 @@ RBPragmaNode >> asPragma [
 RBPragmaNode >> isPrimitiveError [
 	^ #( primitive:error: primitive:module:error: primitive:error:module:) includes: self selector
 ]
+
+{ #category : #'*OpalCompiler-Core' }
+RBPragmaNode >> primitiveErrorVariableName [
+	^(self argumentAt: #error:) value
+]
