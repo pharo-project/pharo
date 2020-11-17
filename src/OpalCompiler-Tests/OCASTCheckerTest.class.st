@@ -58,7 +58,9 @@ OCASTCheckerTest >> testExamplePrimitiveErrorCode [
 	ast := (OCOpalExamples>>#examplePrimitiveErrorCode) parseTree.
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 
-	self assert: (ast scope lookupVar: 'code') isTempVariable.
+	self assert: (ast scope lookupVar: 'code') isLocalVariable.
+	self deny: (ast scope lookupVar: 'code') isUninitialized.
+	
 
 	
 ]
