@@ -175,8 +175,9 @@ ProtoObjectTest >> testIsImmediateObject [
 	self deny: Object new isImmediateObject.
 	self deny: Array new isImmediateObject.
 	self assert: 1 isImmediateObject.
-	self assert: 1.2 isImmediateObject.
-	self assert: $a isImmediateObject.
+	self assert: 1 isImmediateObject equals: 1 class isImmediateClass.
+	self assert: 1.2 isImmediateObject equals: 1.2 class isImmediateClass.
+	self assert: $a isImmediateObject equals: $a class isImmediateClass
 ]
 
 { #category : #'tests - testing' }
