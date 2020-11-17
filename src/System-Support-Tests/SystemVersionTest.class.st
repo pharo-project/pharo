@@ -4,7 +4,7 @@ SUnit tests for SystemVersion.
 Class {
 	#name : #SystemVersionTest,
 	#superclass : #TestCase,
-	#category : #'System-Support-Tests'
+	#category : #'System-Support-Tests-Image'
 }
 
 { #category : #utilities }
@@ -20,7 +20,7 @@ SystemVersionTest >> checkIsCompatibleWithResultOfVersionMessage: aString [
 		assert: (rx subexpression: 2) equals: 'Pharo';
 		assert: (rx subexpression: 3) asNumber > 0;
 		assert: (rx subexpression: 4) asNumber >= 0;
-		assert: (rx subexpression: 5) asNumber >= 0.
+		assert: (rx subexpression: 5) asNumber >= 0
 ]
 
 { #category : #tests }
@@ -49,11 +49,12 @@ SystemVersionTest >> testDottedMajorMinorPatch [
 	 
 	self assert: (SystemVersion fromVersionString: 'RPharo3.7+alpha') dottedMajorMinorPatch equals: '3.7.0'.
 	self assert: (SystemVersion fromVersionString: 'Pharo1.0+ALPHA') dottedMajorMinorPatch equals: '1.0.0'.
-	self assert: (SystemVersion fromVersionString: 'Pharo1.1') dottedMajorMinorPatch equals: '1.1.0'.
+	self assert: (SystemVersion fromVersionString: 'Pharo1.1') dottedMajorMinorPatch equals: '1.1.0'
 ]
 
 { #category : #'tests - instance creation' }
 SystemVersionTest >> testInstanceCreation [
+
 	| version |
 	version := SystemVersion new.
 	self
@@ -71,6 +72,7 @@ SystemVersionTest >> testInstanceCreation [
 
 { #category : #'tests - instance creation' }
 SystemVersionTest >> testInstanceCreationMajorMinor [
+
 	| version |
 	version := SystemVersion major: 6 minor: 1 patch: 199.
 	self
@@ -88,6 +90,7 @@ SystemVersionTest >> testInstanceCreationMajorMinor [
 
 { #category : #'tests - instance creation' }
 SystemVersionTest >> testInstanceCreationMajorMinorSuffix [
+
 	| version |
 	version := SystemVersion
 		major: 7
@@ -109,6 +112,7 @@ SystemVersionTest >> testInstanceCreationMajorMinorSuffix [
 
 { #category : #'tests - instance creation' }
 SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuild [
+
 	| version |
 	version := SystemVersion
 		major: 7
@@ -149,6 +153,7 @@ SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuildCommitHash [
 
 { #category : #'tests - instance creation' }
 SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuildWithoutSuffix [
+
 	| version |
 	version := SystemVersion
 		major: 7
@@ -175,7 +180,7 @@ SystemVersionTest >> testMajorMinorVersion [
 	self assert: (SystemVersion fromVersionString: 'RPharo3.7+alpha') majorMinorVersion equals: 'RPharo3.7.0'.
 	self assert: (SystemVersion fromVersionString: 'Pharo1.0+ALPHA') majorMinorVersion equals: 'Pharo1.0.0'.
 	self assert: (SystemVersion fromVersionString: 'Pharo1.1') majorMinorVersion equals: 'Pharo1.1.0'.
-	self assert: (SystemVersion fromVersionString: 'Pharo1.1.7') majorMinorVersion equals: 'Pharo1.1.7'.
+	self assert: (SystemVersion fromVersionString: 'Pharo1.1.7') majorMinorVersion equals: 'Pharo1.1.7'
 ]
 
 { #category : #tests }
@@ -184,7 +189,7 @@ SystemVersionTest >> testMajorMinorWithSeparatingString [
 	self assert: ((SystemVersion fromVersionString: 'RPharo3.7+alpha') majorMinorPatch: '-') equals: '3-7-0'.
 	self assert: ((SystemVersion fromVersionString: 'Pharo1.0+ALPHA') majorMinorPatch: '') equals: '100'.
 	self assert: ((SystemVersion fromVersionString: 'Pharo1.1') majorMinorPatch: '.') equals: '1.1.0'.
-	self assert: ((SystemVersion fromVersionString: 'Pharo1.1.7') majorMinorPatch: '.') equals: '1.1.7'.
+	self assert: ((SystemVersion fromVersionString: 'Pharo1.1.7') majorMinorPatch: '.') equals: '1.1.7'
 ]
 
 { #category : #'tests - parsing' }
