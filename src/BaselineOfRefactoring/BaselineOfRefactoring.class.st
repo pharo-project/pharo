@@ -23,7 +23,7 @@ BaselineOfRefactoring >> baseline: spec [
 
 			package: 'Refactoring-Help'.
 		spec 
-			group: 'Rules' with: #('SUnit-Rules' 'Kernel-Tests-Rules' 'Polymorph-Widgets-Rules' 'System-Settings-Rules' 'System-Support-Rules' 'Rubric-Rules');
+			group: 'Rules' with: #('SUnit-Rules' 'Kernel-Tests-Rules' 'Polymorph-Widgets-Rules' 'System-Settings-Rules' 'Rubric-Rules');
 			group: 'Tests' with: #('Refactoring-Tests-Core' 'Refactoring-Tests-Changes' 'Refactoring-Tests-Critics' 'Refactoring-Tests-Environment');
 			group: 'Help' with: #('Refactoring-Help');
 			group: 'default' with: #('Rules' 'Tests' 'Help') ]
