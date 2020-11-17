@@ -18,9 +18,11 @@ ReLiteralArrayContainsCommaRule class >> uniqueIdentifierName [
 ReLiteralArrayContainsCommaRule >> basicCheck: aNode [
 
 	aNode isLiteralArray ifFalse: [ ^ false ].
-	"ffiCall: parameters contain , do not warn in this case"
+	
+	"ffiCall: parameters and other UFFI call variants contain a $, so do not warn in this case"
 	(aNode parent parent isMessage and: [ 
-		 aNode parent parent selector == #ffiCall: ]) ifTrue: [ ^ false ].
+		 FFICompilerPlugin ffiCalloutSelectors includes: aNode parent parent selector ]) ifTrue: [ ^ false ].
+	
 	^ aNode value includes: #,
 ]
 
