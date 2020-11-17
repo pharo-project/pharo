@@ -145,6 +145,16 @@ OSSDL2BackendWindow >> extent: newExtent [
 { #category : #private }
 OSSDL2BackendWindow >> fetchDPI [
 	| displayIndex ddpi hdpi vdpi newDiagonalDPI newScreenScaleFactor |
+	"In OS X disable the computation of a DPI based scale factor. These values
+	are completely wrong and we are getting scale factors that are very large
+	even in non-retina display. This workaround does not affect the support for
+	retina display because that is handled by fetching the size of the drawing surface."
+	Smalltalk os isMacOSX ifTrue: [ 
+		diagonalDPI := verticalDPI := horizontalDPI := self screenScaleFactorBaseDPI.
+		screenScaleFactor := 1.0.
+		^ false
+	].
+
 	displayIndex := sdl2Window getDisplayIndex.
 	displayIndex < 0 ifTrue: [ ^ false ].
 	
