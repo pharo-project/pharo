@@ -302,11 +302,21 @@ OSSDL2Driver >> sendEventWithoutWindow: event [
 
 { #category : #'window creation and deletion' }
 OSSDL2Driver >> setGLAttributes: glAttributes [
-"	SDL2 glSetAttribute: SDL_GL_CONTEXT_MAJOR_VERSION value: glAttributes majorVersion.
-	SDL2 glSetAttribute: SDL_GL_CONTEXT_MINOR_VERSION value: glAttributes minorVersion.
-	SDL2 glSetAttribute: SDL_GL_CONTEXT_PROFILE_MASK value: glAttributes profileType.
-"
-
+	glAttributes majorVersion ifNotNil: [ 
+		SDL2 glSetAttribute: SDL_GL_CONTEXT_MAJOR_VERSION value: glAttributes majorVersion.
+	].
+	glAttributes minorVersion ifNotNil: [ 
+		SDL2 glSetAttribute: SDL_GL_CONTEXT_MINOR_VERSION value: glAttributes minorVersion.
+	].
+	glAttributes hasCompatibilityProfile ifTrue: [ 
+		SDL2 glSetAttribute: SDL_GL_CONTEXT_PROFILE_MASK value: SDL_GL_CONTEXT_PROFILE_COMPATIBILITY
+	].
+	glAttributes hasCoreProfile ifTrue: [ 
+		SDL2 glSetAttribute: SDL_GL_CONTEXT_PROFILE_MASK value: SDL_GL_CONTEXT_PROFILE_CORE
+	].
+	glAttributes hasESProfile ifTrue: [ 
+		SDL2 glSetAttribute: SDL_GL_CONTEXT_PROFILE_MASK value: SDL_GL_CONTEXT_PROFILE_ES
+	].
 
 	SDL2 glSetAttribute: SDL_GL_RED_SIZE value: glAttributes redSize.
 	SDL2 glSetAttribute: SDL_GL_BLUE_SIZE value: glAttributes blueSize.
@@ -315,8 +325,7 @@ OSSDL2Driver >> setGLAttributes: glAttributes [
 	SDL2 glSetAttribute: SDL_GL_DEPTH_SIZE value: glAttributes depthSize.
 	SDL2 glSetAttribute: SDL_GL_STENCIL_SIZE value: glAttributes stencilSize.
 	SDL2 glSetAttribute: SDL_GL_DOUBLEBUFFER value: glAttributes doubleBuffer.
-
-	
+	SDL2 glSetAttribute: SDL_GL_FRAMEBUFFER_SRGB_CAPABLE value: glAttributes srgbFramebuffer asBit.
 ]
 
 { #category : #'events-processing' }
