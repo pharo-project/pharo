@@ -517,6 +517,11 @@ RBProgramNode >> isGlobalVariable [
 	^false
 ]
 
+{ #category : #testing }
+RBProgramNode >> isHaltNode [
+	^ false
+]
+
 { #category : #deprecated }
 RBProgramNode >> isImmediate [
 	^self isImmediateNode
