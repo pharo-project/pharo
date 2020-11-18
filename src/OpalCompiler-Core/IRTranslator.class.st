@@ -250,8 +250,8 @@ IRTranslator >> visitPushInstVar: instVar [
 IRTranslator >> visitPushLiteral: lit [
 	| literal |
 	literal := lit literal.
-	(literal isReadOnlyLiteral) ifFalse: [ ^ gen pushLiteral: literal ].
-	Smalltalk vm supportsWriteBarrier ifFalse: [ ^ gen pushLiteral: literal ].
+	"all objects that are not literals we keep writable"
+	literal isLiteral ifFalse: [ ^ gen pushLiteral: literal ].
 	"For symbol we need to set explicitly to writable or read-only. 
 	 Compilation to read-only then back to writable keep the object 
 	 read-only if we don't set it back to writable."
