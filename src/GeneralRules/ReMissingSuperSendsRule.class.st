@@ -1,5 +1,7 @@
 "
-Checks that methods that should always contain a super message send, actually contain a super message send. For example, the postCopy method should always contain a ""super postCopy"". The list of methods that should contain super message sends is in #superMessages.
+Checks that methods who should always contain a super message send, actually contain a super message send. For example, the postCopy method should always contain a ""super postCopy"". 
+
+The list of methods that should contain super message sends is in #superMessages.
 "
 Class {
 	#name : #ReMissingSuperSendsRule,
@@ -21,6 +23,7 @@ ReMissingSuperSendsRule class >> uniqueIdentifierName [
 
 { #category : #running }
 ReMissingSuperSendsRule >> basicCheck: aMethod [
+
 	| definer superMethod |
 	aMethod methodClass isMeta ifTrue: [ ^ false ].
 	(self methodsRequiringSuper includes: aMethod selector) ifFalse: [ ^ false ].
@@ -40,15 +43,19 @@ ReMissingSuperSendsRule >> basicCheck: aMethod [
 
 { #category : #accessing }
 ReMissingSuperSendsRule >> group [
+
 	^ 'Potential Bugs'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ReMissingSuperSendsRule >> methodsRequiringSuper [
-	^#(#release #postCopy #postBuildWith: #preBuildWith: #postOpenWith: #noticeOfWindowClose: #initialize)
+
+	^ #( #release #postCopy #postBuildWith: #preBuildWith: #postOpenWith:
+	     #noticeOfWindowClose: #initialize )
 ]
 
 { #category : #accessing }
 ReMissingSuperSendsRule >> name [
+
 	^ 'Missing super sends in selected methods.'
 ]
