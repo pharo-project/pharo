@@ -1,7 +1,10 @@
+"
+Example for an object that is installed as a compiled method. The VM calls run:with:in:
+"
 Class {
 	#name : #ObjectsAsMethodsExample,
 	#superclass : #AbstractObjectsAsMethod,
-	#category : #'Tests-ObjectsAsMethods'
+	#category : #'Kernel-Tests-Methods'
 }
 
 { #category : #example }

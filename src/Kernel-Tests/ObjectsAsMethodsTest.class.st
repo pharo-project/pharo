@@ -1,7 +1,7 @@
 Class {
 	#name : #ObjectsAsMethodsTest,
 	#superclass : #TestCase,
-	#category : #'Tests-ObjectsAsMethods'
+	#category : #'Kernel-Tests-Methods'
 }
 
 { #category : #running }
