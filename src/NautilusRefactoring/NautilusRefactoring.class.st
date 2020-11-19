@@ -23,12 +23,6 @@ NautilusRefactoring class >> model: model [
 		yourself
 ]
 
-{ #category : #accessing }
-NautilusRefactoring class >> promptOnRefactoring [
-
-	^ PromptOnRefactoring ifNil: [ PromptOnRefactoring := true ]
-]
-
 { #category : #display }
 NautilusRefactoring >> chooseFrom: anArray title: aString lines: aCollection [ 
 	anArray isEmpty
