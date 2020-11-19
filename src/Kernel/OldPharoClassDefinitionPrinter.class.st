@@ -9,8 +9,7 @@ OldPharoClassDefinitionPrinter >> basicClassDefinitionString [
 
 	"Pay attention this definition is fragile in presence of complex slots. Use the public API i.e., classDefinitionString"
 
-	| poolString stream |
-	poolString := forClass sharedPoolsString.
+	| stream |
 	stream := (String new: 800) writeStream.
 	forClass superclass
 		ifNotNil: [ stream nextPutAll: forClass superclass name ]
@@ -21,11 +20,7 @@ OldPharoClassDefinitionPrinter >> basicClassDefinitionString [
 	self traitCompositionOn: stream.
 	self instanceVariablesOn: stream.
 	self classVariablesOn: stream.
-	poolString = '' ifFalse: [ 
-		stream
-			crtab;
-			nextPutAll: 'poolDictionaries: ';
-			store: poolString ].
+	self poolOn: stream.
 	self packageOn: stream.
 	forClass superclass ifNil: [ 
 		stream
@@ -105,7 +100,7 @@ OldPharoClassDefinitionPrinter >> classDefinitionTemplateInPackage: aString [
 			s nextPutAll: 'package: ''', aString, '''' ]
 ]
 
-{ #category : #internal }
+{ #category : #'low-level elements' }
 OldPharoClassDefinitionPrinter >> classVariablesOn: stream [
 
 	stream
@@ -134,7 +129,7 @@ OldPharoClassDefinitionPrinter >> expandedDefinitionString [
 	^ self definitionString 
 ]
 
-{ #category : #internal }
+{ #category : #'low-level elements' }
 OldPharoClassDefinitionPrinter >> instanceVariablesOn: stream [
 
 	stream
@@ -152,7 +147,7 @@ OldPharoClassDefinitionPrinter >> metaclassDefinitionString [
 		ifFalse: [ self basicMetaclassDefinitionString ]
 ]
 
-{ #category : #internal }
+{ #category : #'low-level elements' }
 OldPharoClassDefinitionPrinter >> packageOn: stream [
 
 	stream
@@ -161,7 +156,19 @@ OldPharoClassDefinitionPrinter >> packageOn: stream [
 		store: forClass category asString
 ]
 
-{ #category : #internal }
+{ #category : #'low-level elements' }
+OldPharoClassDefinitionPrinter >> poolOn: stream [
+
+	| poolString |
+	poolString := forClass sharedPoolsString.
+	poolString = '' ifFalse: [ 
+		stream
+			crtab;
+			nextPutAll: 'poolDictionaries: ';
+			store: poolString ]
+]
+
+{ #category : #'low-level elements' }
 OldPharoClassDefinitionPrinter >> traitCompositionOn: stream [
 
 	forClass hasTraitComposition ifTrue: [ 
