@@ -654,10 +654,15 @@ OCASTTranslator >> visitParseErrorNode: anErrorNode [
 
 { #category : #'visitor-double dispatching' }
 OCASTTranslator >> visitPragmaNode: aPragmaNode [
-	methodBuilder addPragma: aPragmaNode asPragma.
-	aPragmaNode isPrimitiveError ifTrue: [
-		methodBuilder storeTemp: (aPragmaNode argumentAt: #error:) value].
 
+	| var |
+	methodBuilder addPragma: aPragmaNode asPragma.
+	
+	"if the pragma is a primitive that defines an error variable, we need to store error value 
+	which is on the stack"
+	aPragmaNode isPrimitiveError ifFalse: [ ^ self ].
+	var := aPragmaNode methodNode scope lookupVar: aPragmaNode primitiveErrorVariableName.
+	var emitStore: methodBuilder.
 ]
 
 { #category : #'visitor-double dispatching' }
