@@ -127,7 +127,7 @@ HaltTest >> testHaltIf [
 HaltTest >> testHaltIfNil [
 	<haltOrBreakpointForTesting>
 
-	self should: [ nil haltIfNil] raise: Halt.
+	self should: [ nil haltIfNil] raise: Halt
 ]
 
 { #category : #tests }
