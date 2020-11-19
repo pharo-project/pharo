@@ -268,11 +268,6 @@ Process >> effectiveProcess [
 ]
 
 { #category : #private }
-Process >> environmentKeyNotFound [ 
-	self error: 'Environment key not found'
-]
-
-{ #category : #private }
 Process >> evaluate: aBlock onBehalfOf: aProcess [
 	"Evaluate aBlock setting effectiveProcess to aProcess.  Used
 	 in the execution simulation machinery to ensure that
