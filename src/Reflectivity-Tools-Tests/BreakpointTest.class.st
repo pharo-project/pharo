@@ -7,7 +7,6 @@ Class {
 	#instVars : [
 		'previousBreakpoints',
 		'cls',
-		'oldObservers',
 		'oldSystemAnnouncer'
 	],
 	#category : #'Reflectivity-Tools-Tests'

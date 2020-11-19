@@ -1,10 +1,6 @@
 Class {
 	#name : #DummyFindReplaceService,
 	#superclass : #FindReplaceService,
-	#instVars : [
-		'dialog',
-		'textAreaHolder'
-	],
 	#category : #'Rubric-Editing-FindReplaceService'
 }
 
@@ -39,13 +35,6 @@ DummyFindReplaceService >> findPolicyChanged [
 DummyFindReplaceService >> findText: aStringOrText [
 	
 	^ false
-]
-
-{ #category : #initialization }
-DummyFindReplaceService >> initialize [
-	super initialize.
-	
-	textAreaHolder := WeakArray new: 1 
 ]
 
 { #category : #services }

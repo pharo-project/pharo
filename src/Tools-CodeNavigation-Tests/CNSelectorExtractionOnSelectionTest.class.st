@@ -2,10 +2,7 @@ Class {
 	#name : #CNSelectorExtractionOnSelectionTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'editor',
-		'editingArea',
-		'sourceCode',
-		'ast'
+		'sourceCode'
 	],
 	#category : #'Tools-CodeNavigation-Tests'
 }
