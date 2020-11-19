@@ -56,7 +56,7 @@ HaltTest >> testContainsHalt [
 	| annonClass |
 	
 	self 
-	deny: (Object >> #halt) containsHalt;
+	assert: (Object >> #halt) containsHalt;
 	deny: (Object >> #haltIfNil) containsHalt;
 	deny: (Halt class >> #once) containsHalt;
 	assert: (self class>> #testHaltIfNil) containsHalt.
