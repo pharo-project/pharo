@@ -13,6 +13,7 @@ MessageNotUnderstoodTest >> testDescription [
 	| defaultDescription messageNotUndestoodDescription |
 	defaultDescription := ''.
 	messageNotUndestoodDescription := ''.
+	"Note that in the following line, the IDE complaints that the method doesn't exists. This is intentional."
 	[ Object aMessageThatDoesntExistsIntentiallyRequested ]
 		on: MessageNotUnderstood
 		do: [ :ex | 

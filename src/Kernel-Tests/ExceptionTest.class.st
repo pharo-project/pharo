@@ -53,6 +53,15 @@ ExceptionTest >> runWithNoHandlers: aBlock [
 ]
 
 { #category : #test }
+ExceptionTest >> testDefaultDescription [
+   "Tests that the description of an Exception, is the defaultDescription"
+   |anException|
+	anException := Exception new.
+	self assert: anException description equals: anException defaultDescription 
+	
+]
+
+{ #category : #test }
 ExceptionTest >> testDescription [
    |anException|
 	anException := Exception new.
