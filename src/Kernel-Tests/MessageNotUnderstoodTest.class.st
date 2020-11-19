@@ -18,5 +18,5 @@ MessageNotUnderstoodTest >> testDescription [
 		do: [ :ex | 
 			defaultDescription := ex defaultDescription.
 			messageNotUndestoodDescription := ex description ].
-	self deny: defaultDescription identicalTo: messageNotUndestoodDescription
+	self deny: defaultDescription equals: messageNotUndestoodDescription
 ]
