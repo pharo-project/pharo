@@ -16,10 +16,14 @@ VariableNotDeclared >> classSymbol [
 ]
 
 { #category : #accessing }
-VariableNotDeclared >> messageBasedDescription [
-	"Returns a textual representation of the exception based on the message field"	
-	self classSymbol printString
-		, ' is missing, and does not understand ', message selector printString
+VariableNotDeclared >> description [
+
+	"Returns a textual description of the exception (based on the message instance variable). If message is nil, it returns the defaultDescription instead."
+
+	message ifNil: [ ^ self defaultDescription ].
+	^ self classSymbol printString
+	  , ' is missing, and does not understand '
+	  , message selector printString
 ]
 
 { #category : #accessing }

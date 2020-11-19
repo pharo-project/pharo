@@ -21,3 +21,13 @@ ManifestKernelTests class >> packageName [
 ManifestKernelTests class >> ruleRBModifiesCollectionRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#ClassHierarchyTest #testSubclassInstVar #false)) #'2019-06-26T12:47:46.581134+02:00') )
 ]
+
+{ #category : #'code-critics' }
+ManifestKernelTests class >> ruleSendsUnknownMessageToGlobalRuleV1FalsePositive [
+	^ #(#(#(#RGMethodDefinition #(#MessageNotUnderstoodTest #testDescription #false)) #'2020-11-19T12:23:16.452486+01:00') )
+]
+
+{ #category : #'code-critics' }
+ManifestKernelTests class >> ruleSentNotImplementedRuleV1FalsePositive [
+	^ #(#(#(#RGMethodDefinition #(#MessageNotUnderstoodTest #testDescription #false)) #'2020-11-19T12:20:20.893593+01:00') )
+]

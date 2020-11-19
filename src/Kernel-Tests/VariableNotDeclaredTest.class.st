@@ -9,15 +9,14 @@ Class {
 
 { #category : #test }
 VariableNotDeclaredTest >> testDescription [
-	"Different descriptions should be returned depending if the ""message"" field is nil or not."
-   "Tests that the description method produces a message-based text description of the exception, if the message field is not nil, or it uses the default description text instead if message nil"
 
-	| aVariableNotDeclared defaultDescription descriptionWithMessage |
-	aVariableNotDeclared := MyVariableNotDeclaredDummy new.
-	"The default description when message is nil"
-	defaultDescription := aVariableNotDeclared description.
-	aVariableNotDeclared message: 'aNonNilValue'.
-		"The message-based description. It is a constant in our dummy class overriden accesor."
-	descriptionWithMessage := aVariableNotDeclared description.
-	self assert: defaultDescription ~~ descriptionWithMessage
+	"Tests that the description of the VariableNotDeclaredTest is not the default of Exception"
+
+	| exception defaultDescription variableNotDeclaredDescription |
+	defaultDescription := ''.
+	variableNotDeclaredDescription := ''.
+	exception:= MyVariableNotDeclaredDummyClassForTest new. 
+	defaultDescription := exception defaultDescription .
+	variableNotDeclaredDescription := exception description .
+	self deny: defaultDescription equals: variableNotDeclaredDescription 
 ]
