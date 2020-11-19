@@ -12,9 +12,6 @@ Class {
 	#instVars : [
 		'model'
 	],
-	#classVars : [
-		'PromptOnRefactoring'
-	],
 	#category : #'NautilusRefactoring-Base'
 }
 
@@ -63,11 +60,6 @@ NautilusRefactoring >> model [
 { #category : #accessing }
 NautilusRefactoring >> model: aNautilusUI [
 	model := aNautilusUI
-]
-
-{ #category : #option }
-NautilusRefactoring >> promptOnRefactoring [
-	^ self class promptOnRefactoring
 ]
 
 { #category : #option }
