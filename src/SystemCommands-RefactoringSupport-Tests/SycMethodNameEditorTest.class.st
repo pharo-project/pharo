@@ -13,9 +13,6 @@ Class {
 	#instVars : [
 		'methodNameEditor'
 	],
-	#classInstVars : [
-		'methodNameEditorWithOneGetter'
-	],
 	#category : #'SystemCommands-RefactoringSupport-Tests'
 }
 
