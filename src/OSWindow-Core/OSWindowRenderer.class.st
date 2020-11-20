@@ -52,6 +52,11 @@ OSWindowRenderer >> onRenderThreadBlocking: aBlock [
 	OSWindowRenderThread enqueueBlockingOperation: aBlock
 ]
 
+{ #category : #clipping }
+OSWindowRenderer >> pixelExtent [
+	^ backendWindow extent
+]
+
 { #category : #'updating screen' }
 OSWindowRenderer >> present [
 	"This should present the changes to the next frame."
