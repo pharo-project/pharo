@@ -20,7 +20,6 @@ Class {
 		'text',
 		'isPreviewVisible',
 		'isShiftPressed',
-		'exceptionHandler',
 		'history',
 		'processorsFilter'
 	],
