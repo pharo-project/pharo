@@ -5,10 +5,6 @@ Executing this change will rename the (global) defined ""oldName"" class to ""ne
 Class {
 	#name : #RBRenameClassChange,
 	#superclass : #RBCompositeRefactoryChange,
-	#instVars : [
-		'oldName',
-		'newName'
-	],
 	#category : #'Refactoring-Changes'
 }
 
