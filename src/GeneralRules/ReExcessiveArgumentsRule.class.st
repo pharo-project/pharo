@@ -30,6 +30,12 @@ ReExcessiveArgumentsRule >> argumentsCount [
 
 { #category : #running }
 ReExcessiveArgumentsRule >> basicCheck: aMethod [
+
+	"If method includes UFFI calls then it is OK to have high number of arguments"
+	(aMethod ast allChildren anySatisfy: [:node | 
+		node isMessage and: [ FFICompilerPlugin ffiCalloutSelectors includes: node selector ]]) 
+				ifTrue: [ ^false ].
+ 
 	^ aMethod numArgs >= self argumentsCount
 ]
 
