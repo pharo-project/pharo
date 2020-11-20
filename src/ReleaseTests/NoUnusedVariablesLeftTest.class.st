@@ -21,10 +21,9 @@ NoUnusedVariablesLeftTest >> tearDown [
 
 { #category : #testing }
 NoUnusedVariablesLeftTest >> testNoUnusedClassVariablesLeft [
-	"Fail if there are methods who have unused temporary variables"
 	| variables classes validExceptions remaining |
 	
-	"turn this on when all ivars are cleaned"
+	"turn this on when all class variables are cleaned"
 	self skip.
 	
 	variables := Smalltalk globals allBehaviors flatCollect: [ :each | each classVariables ].
@@ -41,10 +40,9 @@ NoUnusedVariablesLeftTest >> testNoUnusedClassVariablesLeft [
 
 { #category : #testing }
 NoUnusedVariablesLeftTest >> testNoUnusedInstanceVariablesLeft [
-	"Fail if there are methods who have unused temporary variables"
 	| variables classes validExceptions remaining |
 	
-	"turn this on when all ivars are cleaned"
+	"turn this on when all instance variables are cleaned"
 	self skip.
 	
 	variables := Smalltalk globals allBehaviors flatCollect: [ :each | each instanceVariables ].
