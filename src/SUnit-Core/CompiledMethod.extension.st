@@ -27,5 +27,5 @@ CompiledMethod >> isPassedTest [
 { #category : #'*SUnit-Core' }
 CompiledMethod >> isTestMethod [
 
-	^ self selector isTestSelector and: [self methodClass isTestCase]
+	^ self methodClass isTestCase and: [ self selector isTestSelector ]
 ]
