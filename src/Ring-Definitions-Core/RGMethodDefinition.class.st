@@ -441,7 +441,8 @@ RGMethodDefinition >> isSameRevisionAs: aRGMethodDefinition [
 
 { #category : #'SUnit-support' }
 RGMethodDefinition >> isTestMethod [
-	^ self selector isTestSelector and: [self methodClass isTestCase]
+
+	^ self methodClass isTestCase and: [ self selector isTestSelector ]
 ]
 
 { #category : #'to remove as soon as possible' }
