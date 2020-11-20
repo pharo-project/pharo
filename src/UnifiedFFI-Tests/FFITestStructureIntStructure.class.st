@@ -1,3 +1,6 @@
+"
+A structure containing int values as used by UFFI tests
+"
 Class {
 	#name : #FFITestStructureIntStructure,
 	#superclass : #FFIExternalStructure,
