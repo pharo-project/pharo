@@ -20,6 +20,26 @@ NoUnusedVariablesLeftTest >> tearDown [
 ]
 
 { #category : #testing }
+NoUnusedVariablesLeftTest >> testNoUnusedClassVariablesLeft [
+	"Fail if there are methods who have unused temporary variables"
+	| variables classes validExceptions remaining |
+	
+	"turn this on when all ivars are cleaned"
+	self skip.
+	
+	variables := Smalltalk globals allBehaviors flatCollect: [ :each | each classVariables ].
+	variables := variables reject: [ :each | each isReferenced ].
+	
+	classes := variables collect: [ :each | each definingClass ] as: Set.
+	
+	validExceptions := { }.	
+	
+	remaining := classes asOrderedCollection removeAll: validExceptions; yourself.
+	
+	self assert: classes isEmpty
+]
+
+{ #category : #testing }
 NoUnusedVariablesLeftTest >> testNoUnusedInstanceVariablesLeft [
 	"Fail if there are methods who have unused temporary variables"
 	| variables classes validExceptions remaining |
