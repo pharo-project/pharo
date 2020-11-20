@@ -94,12 +94,10 @@ SystemReporter >> enumerate: aBlock startAt: first on: aStream [
 { #category : #utils }
 SystemReporter >> header: aString on: aStream [
 	aStream
-		withAttribute: TextEmphasis bold
-		do: [ aStream
-				nextPutAll: aString;
-				cr.
-			aString size timesRepeat: [ aStream nextPut: $- ].
-			aStream cr ]
+		nextPutAll: aString;
+		cr.
+	aString size timesRepeat: [ aStream nextPut: $- ].
+	aStream cr
 ]
 
 { #category : #querying }
