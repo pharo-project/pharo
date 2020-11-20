@@ -13,12 +13,6 @@ NoUnusedVariablesLeftTest class >> defaultTimeLimit [
 	^ 2 minute
 ]
 
-{ #category : #running }
-NoUnusedVariablesLeftTest >> tearDown [
-	ASTCache reset.
-	super tearDown
-]
-
 { #category : #testing }
 NoUnusedVariablesLeftTest >> testNoUnusedInstanceVariablesLeft [
 	"Fail if there are methods who have unused temporary variables"
