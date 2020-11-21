@@ -54,11 +54,40 @@ UnixPlatform >> getPwdViaFFI: buffer size: bufferSize [
 
 ]
 
+{ #category : #'testing - linux' }
+UnixPlatform >> isDebian [
+	"Return true if the receiver is Debian"
+	
+	^self isLinuxDistributionWithName: 'Debian'
+]
+
+{ #category : #'testing - linux' }
+UnixPlatform >> isFedora [
+	"Return true if the receiver is Fedora"
+	
+	^self isLinuxDistributionWithName: 'Fedora'
+]
+
 { #category : #testing }
 UnixPlatform >> isLinux [
 	"Some Linux versions return linux, some linux-gnu, ..."
 	
 	^self version beginsWith: 'linux'
+]
+
+{ #category : #'private - testing' }
+UnixPlatform >> isLinuxDistributionWithName: linuxDistributionName [
+	"Check if the installed OS is a Linux with the given name like 'Ubuntu', 'Debian' or 'Fedora'"
+	
+	^self isLinux and: [ 
+		'/etc/os-release' asFileReference contents includesSubstring: linuxDistributionName ]
+]
+
+{ #category : #'testing - linux' }
+UnixPlatform >> isUbuntu [
+	"Return true if the receiver is Ubuntu"
+	
+	^self isLinuxDistributionWithName: 'Ubuntu'
 ]
 
 { #category : #testing }
