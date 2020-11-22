@@ -7,6 +7,13 @@ Class {
 	#category : #'GeneralRules-Tests-Migrated'
 }
 
+{ #category : #accessing }
+ReTestCaseShouldNotUseInitializeRuleTest >> aDummyVar [
+	"Only necessary that ivar does not appear unused"
+	
+	^ aDummyVar
+]
+
 { #category : #running }
 ReTestCaseShouldNotUseInitializeRuleTest >> tearDown [ 
 
