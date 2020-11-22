@@ -18,8 +18,8 @@ RBAddTraitChange class >> definitionPatterns [
 	
 	'Trait << `#traitName package: `#package'
 	'Trait << `#traitName uses: `@traitComposition package: `#package'
-	'Trait << `#traitName slots `@slotDefinition package: `#package'
-	'Trait << `#traitName slots `@slotDefinition package: `#package'
+	'Trait << `#traitName slots: `@slotDefinition package: `#package'
+	'Trait << `#traitName slots: `@slotDefinition package: `#package'
 	 )
 ]
 
