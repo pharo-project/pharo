@@ -9,7 +9,6 @@ Class {
 
 { #category : #private }
 DocCommentIconStyler >> exampleIsFaulty: aNode [
-	<sampleInstance>
 	^ aNode comments
 		anySatisfy: [ :commentNode | commentNode pharoDocCommentNodes anySatisfy: [ :node |
 				node expression expressionCode isFaulty ]]
@@ -34,7 +33,7 @@ DocCommentIconStyler >> iconFor: aNode [
 		ifFalse: [ self iconNamed: #smallInfo ]
 ]
 
-{ #category : #testing }
+{ #category : #defaults }
 DocCommentIconStyler >> iconLabel: aNode [
 	^ (self exampleIsFaulty: aNode)
 		ifTrue: [ 'Faulty Example' ]

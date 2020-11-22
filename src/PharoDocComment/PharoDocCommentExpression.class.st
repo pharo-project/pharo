@@ -24,8 +24,11 @@ PharoDocCommentExpression >> expression [
 
 { #category : #accessing }
 PharoDocCommentExpression >> expressionCode [
-	^ (RBParser parseFaultyExpression: self expression) doSemanticAnalysis; yourself
-	
+
+	^ Smalltalk compiler
+		  source: self expression;
+		  options: #( + optionParseErrors );
+		  parse
 ]
 
 { #category : #accessing }
