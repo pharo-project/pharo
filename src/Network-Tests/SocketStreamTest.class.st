@@ -11,6 +11,12 @@ Class {
 	#category : #'Network-Tests-Kernel'
 }
 
+{ #category : #coverage }
+SocketStreamTest >> classToBeTested [
+	
+	^ SocketStream 
+]
+
 { #category : #running }
 SocketStreamTest >> setUp [
 	| listener clientSocket serverSocket |

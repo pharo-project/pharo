@@ -17,6 +17,12 @@ Class {
 	#category : #'System-Hashing-Tests-SHA256'
 }
 
+{ #category : #coverage }
+SHA256Test >> classToBeTested [
+	
+	^ SHA256 
+]
+
 { #category : #testing }
 SHA256Test >> testFips180Example1 [
 	hash := SHA256 hashMessage: 'abc'.

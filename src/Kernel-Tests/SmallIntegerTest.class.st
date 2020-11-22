@@ -7,6 +7,12 @@ Class {
 	#category : #'Kernel-Tests-Numbers'
 }
 
+{ #category : #coverage }
+SmallIntegerTest >> classToBeTested [
+	
+	^ SmallInteger
+]
+
 { #category : #'tests - Class Methods' }
 SmallIntegerTest >> testBasicNew [
 

@@ -7,6 +7,12 @@ Class {
 	#category : #'Kernel-Tests-Numbers'
 }
 
+{ #category : #coverage }
+ScaledDecimalTest >> classToBeTested [
+	
+	^ ScaledDecimal 
+]
+
 { #category : #tests }
 ScaledDecimalTest >> testAsNumber [
 	"Ensure no loss of precision"

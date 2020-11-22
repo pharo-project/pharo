@@ -75,6 +75,12 @@ OrderedCollectionTest >> anotherValue [
 	^ 66
 ]
 
+{ #category : #coverage }
+OrderedCollectionTest >> classToBeTested [
+	
+	^ OrderedCollection 
+]
+
 { #category : #setup }
 OrderedCollectionTest >> collection [
 

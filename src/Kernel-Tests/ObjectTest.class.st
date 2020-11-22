@@ -7,6 +7,12 @@ Class {
 	#category : #'Kernel-Tests-Objects'
 }
 
+{ #category : #coverage }
+ObjectTest >> classToBeTested [
+	
+	^ Object
+]
+
 { #category : #tests }
 ObjectTest >> testAs [
 	| coll1 coll2 |

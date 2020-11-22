@@ -7,6 +7,12 @@ Class {
 	#category : #'Kernel-Tests-Numbers'
 }
 
+{ #category : #coverage }
+NumberTest >> classToBeTested [
+	
+	^ Number
+]
+
 { #category : #test }
 NumberTest >> testAsInteger [
 	"ensure we keep using truncated in asInteger"

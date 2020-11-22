@@ -7,6 +7,12 @@ Class {
 	#category : #'Kernel-Tests-Objects'
 }
 
+{ #category : #coverage }
+FalseTest >> classToBeTested [
+	
+	^ False
+]
+
 { #category : #'tests - logical operations' }
 FalseTest >> testAND [
 

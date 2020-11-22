@@ -62,6 +62,12 @@ HeapTest >> anotherElementOrAssociationNotIn [
 	^ elementNotIn 
 ]
 
+{ #category : #coverage }
+HeapTest >> classToBeTested [
+	
+	^ Heap
+]
+
 { #category : #requirements }
 HeapTest >> collection [
 	^ collectionWith4Elements

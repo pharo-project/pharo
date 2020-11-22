@@ -40,6 +40,12 @@ SymbolTest >> anotherElementOrAssociationNotIn [
 	^ notIn 
 ]
 
+{ #category : #coverage }
+SymbolTest >> classToBeTested [
+	
+	^ Symbol
+]
+
 { #category : #requirements }
 SymbolTest >> collection [
 
