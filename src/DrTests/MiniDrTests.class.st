@@ -1,8 +1,10 @@
+"
+A minified version of the DrTest tool.
+"
 Class {
 	#name : #MiniDrTests,
 	#superclass : #AbstractDrTestsUI,
 	#instVars : [
-		'resultsList',
 		'pluginResult'
 	],
 	#category : #'DrTests-Spec'
@@ -39,7 +41,7 @@ MiniDrTests >> initializeButtons [
 		icon: (self iconNamed: #smallUpdate);
 		color: (Color gray).
 	switchButton
-		label: 'maxi Dr'
+		label: 'Maximize'
 ]
 
 { #category : #initialization }
