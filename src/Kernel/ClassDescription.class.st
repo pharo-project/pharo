@@ -597,62 +597,6 @@ ClassDescription >> definitionStringFor: aConfiguredPrinter [
 	^ self subclassResponsibility 
 ]
 
-{ #category : #printing }
-ClassDescription >> definitionWithoutSlots [
-
-	| stream |
-	stream := (String new: 800) writeStream.
-	superclass
-		ifNotNil: [ stream nextPutAll: superclass name ]
-		ifNil: [ stream nextPutAll: 'ProtoObject' ].
-	
-	stream
-		nextPutAll: self kindOfSubclass;
-		store: self name.
-		
-	self hasTraitComposition ifTrue: [ 
-		stream
-			crtab;
-			nextPutAll: 'uses: ';
-			nextPutAll: self traitCompositionString ].
-	
-	stream
-		crtab;
-		nextPutAll: 'instanceVariableNames: '''.
-	self instanceVariablesOn: stream.
-	stream nextPut: $'.
-	
-	stream
-		crtab;
-		nextPutAll: 'classVariableNames: '''.
-	self classVariablesOn: stream.
-	stream nextPut: $'.
-	
-	self sharedPools isEmpty ifFalse: [ 
-		stream 
-			crtab;
-			nextPutAll: 'poolDictionaries: '''.
-		self sharedPoolsOn: stream.
-		stream nextPut: $' ].
-	
-	stream
-		crtab;
-		nextPutAll: 'package: ';
-		store: self category asString.
-		
-	superclass ifNil: [ 
-		stream
-			nextPutAll: '.';
-			cr.
-		stream 
-			nextPutAll: self name.
-		stream
-			space;
-			nextPutAll: 'superclass: nil' ].
-
-	^ stream contents
-]
-
 { #category : #private }
 ClassDescription >> errorCategoryName [
 	self error: 'Category name must be a String'
