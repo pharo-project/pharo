@@ -313,22 +313,6 @@ ClassDescription >> classThatDefinesInstVarNamed: instVarName [
 ]
 
 { #category : #printing }
-ClassDescription >> classVariablesDottedOn: aStream [
-	"Write my class variable names separated by dots on the argument."
-	
-	self classVarNames 
-		do: [ :each | aStream nextPutAll: each ]
-		separatedBy: [ aStream space ]
-]
-
-{ #category : #printing }
-ClassDescription >> classVariablesDottedString [
-	"Answer a string of my class variable names separated by spaces."
-
-	^ String streamContents: [ :stream | self classVariablesDottedOn: stream ]
-]
-
-{ #category : #printing }
 ClassDescription >> classVariablesOn: aStream [
 	"Write my class variable names separated by spaces on the argument."
 	
@@ -1114,22 +1098,6 @@ ClassDescription >> selectorsInProtocol: aName [
 	| aColl |
 	aColl := Set withAll: (self organization listAtCategoryNamed: aName).
 	^ aColl asArray sort
-]
-
-{ #category : #printing }
-ClassDescription >> sharedPoolDottedString [
-	"Answer a string of my shared pools separated by spaces."
-
-	^String streamContents: [ :stream | 
-		self sharedPoolStringOn: stream ]
-]
-
-{ #category : #printing }
-ClassDescription >> sharedPoolDottedStringOn: aStream [
-	"Write my shared pools separated by dots on argument, aStream."
-
-	self flag: #toFix. "this is different from the sharedPoolsString because sharedPoolsString handles well the undeclared"
-	self sharedPools do:  [ :p | aStream nextPutAll: p name ] separatedBy: [ aStream nextPutAll: ' . ' ]
 ]
 
 { #category : #'pool variable' }
