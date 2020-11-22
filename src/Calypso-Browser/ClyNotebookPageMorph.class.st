@@ -6,7 +6,6 @@ Class {
 	#name : #ClyNotebookPageMorph,
 	#superclass : #SpNotebookPageMorph,
 	#instVars : [
-		'title',
 		'icon',
 		'labelPresenter',
 		'label',

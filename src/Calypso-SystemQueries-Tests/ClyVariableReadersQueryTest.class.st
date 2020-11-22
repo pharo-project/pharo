@@ -1,9 +1,6 @@
 Class {
 	#name : #ClyVariableReadersQueryTest,
 	#superclass : #ClyVariableReferencesTestCase,
-	#instVars : [
-		'var2'
-	],
 	#category : #'Calypso-SystemQueries-Tests-Queries'
 }
 
