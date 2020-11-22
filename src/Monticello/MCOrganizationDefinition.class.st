@@ -12,7 +12,7 @@ Class {
 
 { #category : #'instance creation' }
 MCOrganizationDefinition class >> categories: aCollection [
-	^ self new aCollection: aCollection
+	^ self new categories: aCollection
 ]
 
 { #category : #comparing }
