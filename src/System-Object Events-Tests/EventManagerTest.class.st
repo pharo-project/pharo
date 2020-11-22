@@ -18,6 +18,12 @@ addArg2: arg2 [
 		add: arg2
 ]
 
+{ #category : #coverage }
+EventManagerTest >> classToBeTested [
+	
+	^ EventManager
+]
+
 { #category : #private }
 EventManagerTest >> getFalse [
 

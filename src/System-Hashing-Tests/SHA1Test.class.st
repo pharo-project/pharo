@@ -13,6 +13,12 @@ Class {
 	#category : #'System-Hashing-Tests-SHA1'
 }
 
+{ #category : #coverage }
+SHA1Test >> classToBeTested [
+	
+	^ SHA1 
+]
+
 { #category : #'testing - examples' }
 SHA1Test >> testEmptyInput [
 

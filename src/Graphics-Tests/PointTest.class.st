@@ -10,7 +10,7 @@ Class {
 { #category : #coverage }
 PointTest >> classToBeTested [
 	
-	^Point
+	^ Point
 ]
 
 { #category : #'tests - arithmetic' }

@@ -10,6 +10,12 @@ Class {
 	#category : #'Kernel-Tests-Objects'
 }
 
+{ #category : #coverage }
+ProtoObjectTest >> classToBeTested [
+	
+	^ ProtoObject
+]
+
 { #category : #'tests - testing' }
 ProtoObjectTest >> testFastPointersTo [
 	| myObject myArray myObject2 allObjects |

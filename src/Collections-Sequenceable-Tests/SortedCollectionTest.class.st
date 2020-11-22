@@ -58,6 +58,12 @@ SortedCollectionTest >> anotherElementOrAssociationNotIn [
 	^ elementNoteIn 
 ]
 
+{ #category : #coverage }
+SortedCollectionTest >> classToBeTested [
+	
+	^ SortedCollection
+]
+
 { #category : #requirements }
 SortedCollectionTest >> collection [
 

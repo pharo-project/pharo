@@ -42,6 +42,12 @@ LargePositiveIntegerTest >> assertSqrtCorrectlyRoundedForExponent: exp [
 		self assert: xp sqrt isFloat].
 ]
 
+{ #category : #coverage }
+LargePositiveIntegerTest >> classToBeTested [
+	
+	^ LargePositiveInteger
+]
+
 { #category : #tests }
 LargePositiveIntegerTest >> testBitShift [
 

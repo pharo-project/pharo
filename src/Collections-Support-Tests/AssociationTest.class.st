@@ -11,6 +11,12 @@ Class {
 	#category : #'Collections-Support-Tests-Associations'
 }
 
+{ #category : #coverage }
+AssociationTest >> classToBeTested [
+	
+	^ Association
+]
+
 { #category : #running }
 AssociationTest >> setUp [
 

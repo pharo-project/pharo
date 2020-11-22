@@ -7,6 +7,12 @@ Class {
 	#category : #'Collections-Strings-Tests-Base'
 }
 
+{ #category : #coverage }
+ByteSymbolTest >> classToBeTested [
+	
+	^ ByteSymbol
+]
+
 { #category : #'tests - creation' }
 ByteSymbolTest >> testAs [
 	| tStr |

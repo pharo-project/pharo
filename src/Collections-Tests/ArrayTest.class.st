@@ -102,6 +102,12 @@ ArrayTest >> assertSameContents: aCollection whenConvertedTo: aClass [
 	self assert: result size equals: aCollection size
 ]
 
+{ #category : #coverage }
+ArrayTest >> classToBeTested [
+	
+	^ Array
+]
+
 { #category : #initialization }
 ArrayTest >> collection [ 
 

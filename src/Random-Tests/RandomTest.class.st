@@ -10,6 +10,12 @@ Class {
 	#category : #'Random-Tests'
 }
 
+{ #category : #coverage }
+RandomTest >> classToBeTested [
+	
+	^ Random
+]
+
 { #category : #running }
 RandomTest >> setUp [
 	super setUp.
