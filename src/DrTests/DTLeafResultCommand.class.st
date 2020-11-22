@@ -7,6 +7,12 @@ Class {
 	#category : #'DrTests-Commands'
 }
 
+{ #category : #testing }
+DTLeafResultCommand class >> isAbstract [ 
+
+	^ self name = #DTLeafResultCommand
+]
+
 { #category : #hooks }
 DTLeafResultCommand >> canBeRun [
 	^ self resultSelected isLeaf

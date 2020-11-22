@@ -63,11 +63,18 @@ DrTests class >> buildItemsListGroupWith: presenterInstance [
 
 { #category : #commands }
 DrTests class >> buildPackageGroupWith: presenterInstance [
-	^ (CmCommandGroup named: 'Package tools') asSpecGroup
-		description: 'Commands related to packages list.';
-		register: (DTPackagesSelectAllCommand forSpec context: presenterInstance);
+	|group|
+	group := (CmCommandGroup named: 'Package tools') asSpecGroup.
+	group description: 'Commands related to packages list.'.
+	
+	DTPackagesCommand allSubclasses do: [:each | 
+		group register: (each forSpec context: presenterInstance) ].
+	
+	^group 
 		beDisplayedAsGroup;
-		yourself
+		yourself 
+		
+		
 ]
 
 { #category : #commands }
@@ -203,7 +210,7 @@ DrTests >> dateAndTimeString [
 DrTests >> initializeButtons [
 	super initializeButtons.
 	switchButton
-		label: 'mini Dr';
+		label: 'Minimize';
 		disable.
 ]
 
@@ -255,6 +262,14 @@ DrTests >> initializePresenter [
 ]
 
 { #category : #initialization }
+DrTests >> initializeResultViewsDropList [
+	resultViewsDropList := self newDropList.
+	self resultViewsDropList
+		help: 'Select the different views for results';
+		display: [ :resultTreeView | resultTreeView name ]
+]
+
+{ #category : #initialization }
 DrTests >> initializeResultsTreeAndLabel [
 	resultLabel := self newLabel label: 'Results:'.
 	resultsList := self newTreeTable.
@@ -262,14 +277,6 @@ DrTests >> initializeResultsTreeAndLabel [
 		addColumn: (SpStringTableColumn evaluated: #drTestsName);
 		children: [ :node | node subResults ];
 		contextMenu: [ (self rootCommandsGroup / 'Results tools') beRoot asMenuPresenter ]
-]
-
-{ #category : #initialization }
-DrTests >> initializeResultViewsDropList [
-	resultViewsDropList := self newDropList.
-	self resultViewsDropList
-		help: 'Select the different views for results';
-		display: [ :resultTreeView | resultTreeView name ]
 ]
 
 { #category : #initialization }
@@ -343,11 +350,6 @@ DrTests >> resultSelected [
 	^ self resultsList selectedItem
 ]
 
-{ #category : #'accessing - subwidgets' }
-DrTests >> resultsList [
-	^ resultsList
-]
-
 { #category : #api }
 DrTests >> resultTree: aResultGroup [
 	aResultGroup
@@ -359,9 +361,19 @@ DrTests >> resultViewsDropList [
 	^ resultViewsDropList
 ]
 
+{ #category : #'accessing - subwidgets' }
+DrTests >> resultsList [
+	^ resultsList
+]
+
 { #category : #api }
-DrTests >> selectAllPackageList [
+DrTests >> selectAllInPackageList [
 	packagesList selectAll
+]
+
+{ #category : #api }
+DrTests >> selectNoneInPackageList [
+	packagesList unselectAll
 ]
 
 { #category : #accessing }

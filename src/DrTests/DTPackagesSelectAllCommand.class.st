@@ -7,13 +7,14 @@ Class {
 	#category : #'DrTests-Commands'
 }
 
-{ #category : #hooks }
-DTPackagesSelectAllCommand >> execute [
-	self drTest selectAllPackageList
+{ #category : #defaults }
+DTPackagesSelectAllCommand class >> defaultName [
+
+	^ 'Select all'
 ]
 
 { #category : #hooks }
-DTPackagesSelectAllCommand >> initialize [
-	super initialize.
-	self name: 'Select all'
+DTPackagesSelectAllCommand >> execute [
+
+	self drTest selectAllInPackageList
 ]
