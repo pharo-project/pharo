@@ -11,8 +11,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-MCOrganizationDefinition class >> categories: anArray [
-	^ self new categories: anArray
+MCOrganizationDefinition class >> categories: aCollection [
+	^ self new aCollection: aCollection
 ]
 
 { #category : #comparing }
@@ -46,13 +46,13 @@ MCOrganizationDefinition >> basicCommonPrefix [
 
 { #category : #accessing }
 MCOrganizationDefinition >> categories [
-	"ensure the categories are sorted alphabetically, so the merge don't take it as a conflict"
 	^ categories
 ]
 
 { #category : #accessing }
-MCOrganizationDefinition >> categories: anArray [
-	categories := anArray sort
+MCOrganizationDefinition >> categories: aCollection [
+	"ensure the categories are sorted alphabetically, so the merge don't take it as a conflict"
+	categories := aCollection sorted asArray
 ]
 
 { #category : #accessing }
