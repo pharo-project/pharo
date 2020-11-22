@@ -76,7 +76,7 @@ SpTransmissionExample >> initializePresenters [
 		transmitTo: code 
 		transform: [ :aClass | 
 			aClass 
-				ifNotNil: [ aClass definitionWithSlots] 
+				ifNotNil: [ aClass definitionString ] 
 				ifNil: [ '' ] ].
 	
 	protocols
