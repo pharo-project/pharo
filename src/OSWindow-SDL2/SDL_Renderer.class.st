@@ -148,6 +148,11 @@ SDL_Renderer >> primGetRendererInfo: info [
 ]
 
 { #category : #rendering }
+SDL_Renderer >> renderTargetSupported [
+	^ self ffiCall: #( bool SDL_RenderTargetSupported ( self ) )
+]
+
+{ #category : #rendering }
 SDL_Renderer >> setClipRect: rect [
 	^ self ffiCall: #( int SDL_RenderSetClipRect ( self , SDL_Rect* rect ) )
 ]

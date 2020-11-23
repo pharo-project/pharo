@@ -7,6 +7,7 @@ Class {
 	#name : #OSWindowRendererTexture,
 	#superclass : #Object,
 	#instVars : [
+		'modificationCount',
 		'userData'
 	],
 	#category : #'OSWindow-Core-Renderer'
@@ -15,6 +16,40 @@ Class {
 { #category : #accessing }
 OSWindowRendererTexture >> extent [
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+OSWindowRendererTexture >> modificationCount [
+	^ modificationCount
+]
+
+{ #category : #accessing }
+OSWindowRendererTexture >> modificationCount: anObject [
+	modificationCount := anObject
+]
+
+{ #category : #'texture manipulation' }
+OSWindowRendererTexture >> uploadAthensSurface: athensSurface [
+]
+
+{ #category : #'texture manipulation' }
+OSWindowRendererTexture >> uploadAthensSurface: anAthensSurface withModificationCount: newModificationCount [
+	(modificationCount isNil or: [ modificationCount < newModificationCount ]) ifTrue: [ 
+		self uploadAthensSurface: anAthensSurface.
+		modificationCount := newModificationCount
+	]
+]
+
+{ #category : #'texture manipulation' }
+OSWindowRendererTexture >> uploadForm: aForm [
+]
+
+{ #category : #'texture manipulation' }
+OSWindowRendererTexture >> uploadForm: aForm withModificationCount: newModificationCount [
+	(modificationCount isNil or: [ modificationCount < newModificationCount ]) ifTrue: [ 
+		self uploadForm: aForm.
+		modificationCount := newModificationCount
+	]
 ]
 
 { #category : #accessing }
