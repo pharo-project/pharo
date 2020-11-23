@@ -95,7 +95,8 @@ PharoDocCommentNode >> expression [
 
 { #category : #accessing }
 PharoDocCommentNode >> expression: anObject [
-	expression := anObject
+	expression := anObject.
+	expression node: self
 ]
 
 { #category : #printing }
@@ -115,7 +116,8 @@ PharoDocCommentNode >> result [
 
 { #category : #accessing }
 PharoDocCommentNode >> result: anObject [
-	result := anObject
+	result := anObject.
+	anObject node: self
 ]
 
 { #category : #accessing }

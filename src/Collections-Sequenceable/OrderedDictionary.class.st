@@ -64,7 +64,7 @@ OrderedDictionary class >> newFrom: anAssociationCollection [
 OrderedDictionary class >> newFromKeys: keys andValues: values [
 	"Create a dictionary from the keys and values arguments which should have the same length."
 	
-	"(self newFromKeys: #(#x #y) andValues: #(3 6)) >>> (self new at: #x put: 3; at: #y put: 6 ;yourself)"
+	"(OrderedDictionary newFromKeys: #(#x #y) andValues: #(3 6)) >>> (OrderedDictionary new at: #x put: 3; at: #y put: 6 ;yourself)"
 	
 	| dict |
 	dict := self new.
