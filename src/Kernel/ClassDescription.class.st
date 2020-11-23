@@ -313,22 +313,6 @@ ClassDescription >> classThatDefinesInstVarNamed: instVarName [
 ]
 
 { #category : #printing }
-ClassDescription >> classVariablesDottedOn: aStream [
-	"Write my class variable names separated by dots on the argument."
-	
-	self classVarNames 
-		do: [ :each | aStream nextPutAll: each ]
-		separatedBy: [ aStream space ]
-]
-
-{ #category : #printing }
-ClassDescription >> classVariablesDottedString [
-	"Answer a string of my class variable names separated by spaces."
-
-	^ String streamContents: [ :stream | self classVariablesDottedOn: stream ]
-]
-
-{ #category : #printing }
 ClassDescription >> classVariablesOn: aStream [
 	"Write my class variable names separated by spaces on the argument."
 	
@@ -611,62 +595,6 @@ ClassDescription >> definitionString [
 ClassDescription >> definitionStringFor: aConfiguredPrinter [
 
 	^ self subclassResponsibility 
-]
-
-{ #category : #printing }
-ClassDescription >> definitionWithoutSlots [
-
-	| stream |
-	stream := (String new: 800) writeStream.
-	superclass
-		ifNotNil: [ stream nextPutAll: superclass name ]
-		ifNil: [ stream nextPutAll: 'ProtoObject' ].
-	
-	stream
-		nextPutAll: self kindOfSubclass;
-		store: self name.
-		
-	self hasTraitComposition ifTrue: [ 
-		stream
-			crtab;
-			nextPutAll: 'uses: ';
-			nextPutAll: self traitCompositionString ].
-	
-	stream
-		crtab;
-		nextPutAll: 'instanceVariableNames: '''.
-	self instanceVariablesOn: stream.
-	stream nextPut: $'.
-	
-	stream
-		crtab;
-		nextPutAll: 'classVariableNames: '''.
-	self classVariablesOn: stream.
-	stream nextPut: $'.
-	
-	self sharedPools isEmpty ifFalse: [ 
-		stream 
-			crtab;
-			nextPutAll: 'poolDictionaries: '''.
-		self sharedPoolsOn: stream.
-		stream nextPut: $' ].
-	
-	stream
-		crtab;
-		nextPutAll: 'package: ';
-		store: self category asString.
-		
-	superclass ifNil: [ 
-		stream
-			nextPutAll: '.';
-			cr.
-		stream 
-			nextPutAll: self name.
-		stream
-			space;
-			nextPutAll: 'superclass: nil' ].
-
-	^ stream contents
 ]
 
 { #category : #private }
@@ -1114,22 +1042,6 @@ ClassDescription >> selectorsInProtocol: aName [
 	| aColl |
 	aColl := Set withAll: (self organization listAtCategoryNamed: aName).
 	^ aColl asArray sort
-]
-
-{ #category : #printing }
-ClassDescription >> sharedPoolDottedString [
-	"Answer a string of my shared pools separated by spaces."
-
-	^String streamContents: [ :stream | 
-		self sharedPoolStringOn: stream ]
-]
-
-{ #category : #printing }
-ClassDescription >> sharedPoolDottedStringOn: aStream [
-	"Write my shared pools separated by dots on argument, aStream."
-
-	self flag: #toFix. "this is different from the sharedPoolsString because sharedPoolsString handles well the undeclared"
-	self sharedPools do:  [ :p | aStream nextPutAll: p name ] separatedBy: [ aStream nextPutAll: ' . ' ]
 ]
 
 { #category : #'pool variable' }

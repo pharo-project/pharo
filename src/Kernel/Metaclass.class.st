@@ -138,18 +138,6 @@ Metaclass >> definitionWithSlots [
 		self slotDefinitionsOn: stream ]
 ]
 
-{ #category : #'file in/out' }
-Metaclass >> definitionWithoutSlots [
-
-	^ String streamContents: [:stream |
-		stream print: self.
-		stream
-			crtab;
-			nextPutAll: 'instanceVariableNames: '''.
-		self instanceVariablesOn: stream.
-		stream nextPut: $' ]
-]
-
 { #category : #accessing }
 Metaclass >> environment [
 
