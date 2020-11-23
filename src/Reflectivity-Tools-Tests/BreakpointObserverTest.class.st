@@ -2,7 +2,6 @@ Class {
 	#name : #BreakpointObserverTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'oldObservers',
 		'breakpoint',
 		'cls',
 		'previousBreakpoints',
