@@ -132,6 +132,7 @@ SessionManager class >> initializedSessionManager [
 
 		registerSystemClassNamed: #Alien atPriority: 60; "System - 60"
 		registerSystemClassNamed: #ExternalObject atPriority: 60; "System - 60"
+		registerSystemClassNamed: #FFIBackend atPriority: 60; "System - 60"
 		registerSystemClassNamed: #FFIMethodRegistry atPriority: 60; "System - 60"
 		registerSystemClassNamed: #FFICallbackThunk atPriority: 60; "System - 60"
 		registerSystemClassNamed: #FileLocator atPriority: 90; "System - 90"

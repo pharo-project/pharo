@@ -13,9 +13,8 @@ Class {
 
 { #category : #'instance creation' }
 ExternalAddress class >> allocate: byteSize [
-	"Primitive. Allocate an object on the external heap."
-	<primitive:'primitiveFFIAllocate' module:'SqueakFFIPrims'>
-	^self primitiveFailed
+	
+	^ FFIBackend current allocate: byteSize
 ]
 
 { #category : #'instance creation' }
@@ -32,8 +31,8 @@ ExternalAddress class >> gcallocate: byteSize [
 
 { #category : #'instance creation' }
 ExternalAddress class >> loadSymbol: moduleSymbol module: module [ 
-	<primitive: 'primitiveLoadSymbolFromModule' module: 'SqueakFFIPrims'>
-	^ self primitiveFailed
+
+	^ FFIBackend current loadSymbol: moduleSymbol module: module 
 ]
 
 { #category : #'instance creation' }
@@ -147,11 +146,8 @@ ExternalAddress >> finalize [
 
 { #category : #initialization }
 ExternalAddress >> free [
-	"Primitive. Free the object pointed to on the external heap.
-	Dangerous - may break your system if the receiver hasn't been
-	allocated by ExternalAddress class>>allocate:. No checks are done."
-	<primitive:'primitiveFFIFree' module:'SqueakFFIPrims'>
-	^self primitiveFailed
+
+	^ FFIBackend current free: self
 ]
 
 { #category : #converting }
