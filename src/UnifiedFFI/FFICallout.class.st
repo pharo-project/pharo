@@ -25,7 +25,6 @@ Class {
 		'methodArgs',
 		'receiver',
 		'method',
-		'resolutionMode',
 		'stringEncodingStrategy'
 	],
 	#classVars : [

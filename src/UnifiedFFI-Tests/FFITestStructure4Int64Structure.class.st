@@ -1,3 +1,6 @@
+"
+A structure containing 4 int64 values as used by UFFI tests
+"
 Class {
 	#name : #FFITestStructure4Int64Structure,
 	#superclass : #FFIExternalStructure,

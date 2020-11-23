@@ -1,3 +1,6 @@
+"
+An external method used by FFI tests
+"
 Class {
 	#name : #FFIExternalObjectForTest,
 	#superclass : #FFIExternalObject,
