@@ -63,7 +63,8 @@ ClyUnimplementedMethodsQuery >> isAffectedByChangedMethod: aMethod [
 ClyUnimplementedMethodsQuery >> isClass: aClass shouldImplement: aSelector [
 
 	| inheritedMethod |
-	aClass isRootInEnvironment ifTrue: [ ^false].
+	aClass isRootInEnvironment ifTrue: [ ^false ].
+	aClass isAbstract ifTrue: [ ^false ].
 	
 	inheritedMethod := aClass superclass lookupSelector: aSelector.
 	inheritedMethod ifNil: [ ^false ].
