@@ -21,9 +21,6 @@ Class {
 	#instVars : [
 		'users'
 	],
-	#classInstVars : [
-		'users'
-	],
 	#category : #'TraitsV2-Base'
 }
 
