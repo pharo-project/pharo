@@ -69,7 +69,7 @@ Clipboard >> chooseRecentClipping [
 		  chooseFrom: (recent collect: [ :txt | 
 				   ((txt asString contractTo: 50)
 					    copyReplaceAll: String cr
-					    with: '\') copyReplaceAll: Character tab asString with: '|' ])
+					    with: '\') copyReplaceAll: String tab with: '|' ])
 		  values: recent
 ]
 
