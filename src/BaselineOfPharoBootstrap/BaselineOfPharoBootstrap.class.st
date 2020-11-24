@@ -153,6 +153,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec group: 'KernelGroup' with: {
 			'FFI-Kernel'.
 			'FFI-Pools'.
+			'FFI-OldFFIBackend'.
 			'Announcements-Core'.
 			'Colors'.
 			'Collections-Abstract'.
