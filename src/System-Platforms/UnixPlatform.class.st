@@ -54,20 +54,6 @@ UnixPlatform >> getPwdViaFFI: buffer size: bufferSize [
 
 ]
 
-{ #category : #'testing - linux' }
-UnixPlatform >> isDebian [
-	"Return true if the receiver is Debian"
-	
-	^self isLinuxDistributionWithName: 'Debian'
-]
-
-{ #category : #'testing - linux' }
-UnixPlatform >> isFedora [
-	"Return true if the receiver is Fedora"
-	
-	^self isLinuxDistributionWithName: 'Fedora'
-]
-
 { #category : #testing }
 UnixPlatform >> isLinux [
 	"Some Linux versions return linux, some linux-gnu, ..."
@@ -75,19 +61,30 @@ UnixPlatform >> isLinux [
 	^self version beginsWith: 'linux'
 ]
 
-{ #category : #'private - testing' }
-UnixPlatform >> isLinuxDistributionWithName: linuxDistributionName [
-	"Check if the installed OS is a Linux with the given name like 'Ubuntu', 'Debian' or 'Fedora'"
+{ #category : #'testing - linux' }
+UnixPlatform >> isLinuxDerivateOf: linuxOperatingSystemID [
+	"Check if the installed OS is a derivate of the given linuxOperatingSystemID.
+	 It returns true if the /etc/os-release file includes an entry ID_LIKE where the given
+	 ID appears in the space separated list."
 	
-	^self isLinux and: [ 
-		'/etc/os-release' asFileReference contents includesSubstring: linuxDistributionName ]
+	| derivateList |
+	derivateList := self linuxIdentificationParameters at: #ID_LIKE ifAbsent: [ ^false ]. 
+	^(derivateList substrings: ' ') 
+			anySatisfy: [:each | each asLowercase = linuxOperatingSystemID asLowercase ]
 ]
 
 { #category : #'testing - linux' }
-UnixPlatform >> isUbuntu [
-	"Return true if the receiver is Ubuntu"
+UnixPlatform >> isLinuxDistributionWithID: linuxOperatingSystemID [
+	"Check if the installed OS is a Linux with the given lowercase ID. One can
+	 check for 'ubuntu', 'fedora', 'opensuse', 'rhel', 'centos' and others. 
 	
-	^self isLinuxDistributionWithName: 'Ubuntu'
+	 A good list is available at: https://gist.github.com/natefoo/814c5bf936922dad97ff
+	"
+	
+	| id |
+	id := self linuxIdentificationParameters at: #ID ifAbsent: [ ^false ]. 
+	^ id asLowercase = linuxOperatingSystemID asLowercase 
+	
 ]
 
 { #category : #testing }
@@ -104,6 +101,21 @@ UnixPlatform >> keyForValue: aKeyValue [
 UnixPlatform >> lineEnding [
 
 	^ String lf
+]
+
+{ #category : #'accessing - linux' }
+UnixPlatform >> linuxIdentificationParameters [
+	"see https://www.freedesktop.org/software/systemd/man/os-release.html"
+
+	| props extractor |
+	props := Dictionary new.
+	self isLinux ifFalse: [ ^props ].
+	extractor := [ '/etc/os-release' asFileReference contents linesDo: [ :each | 
+		props at: (each copyUpTo: $=) asSymbol put: (each copyAfter: $=) ]].
+
+	"Do nothing when it does not exist"
+	[ extractor value ] on: FileDoesNotExistException do: [ self error: 'Only available on modern distributions' ].
+	^ props
 ]
 
 { #category : #accessing }
