@@ -33,3 +33,9 @@ MacOSXPlatform >> family [
 MacOSXPlatform >> isMacOSX [
 	^ true
 ]
+
+{ #category : #testing }
+MacOSXPlatform >> sdlPlatform [
+
+	^ SDLOSXPlatform new
+]
