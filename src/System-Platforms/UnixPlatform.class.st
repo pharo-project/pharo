@@ -114,7 +114,7 @@ UnixPlatform >> linuxIdentificationParameters [
 		props at: (each copyUpTo: $=) asSymbol put: (each copyAfter: $=) ]].
 
 	"Do nothing when it does not exist"
-	[ extractor value ] on: FileDoesNotExistException do: [ self error: 'Only available on modern distributions' ].
+	[ extractor value ] on: FileDoesNotExistException do: [ self error: 'Only available on distributions supporting the linux standard base (LSB)' ].
 	^ props
 ]
 
