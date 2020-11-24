@@ -50,6 +50,15 @@ Trait class >> named: aSymbol [
 ]
 
 { #category : #'instance creation' }
+Trait class >> named: aSymbol package: aString [
+	^ self
+		named: aSymbol
+		uses: {}
+		package: aString
+		env: self environment
+]
+
+{ #category : #'instance creation' }
 Trait class >> named: aSymbol uses: aCompositionOrArray [
 	^ self named: aSymbol uses: aCompositionOrArray package: 'Unclassified'
 ]
