@@ -24,9 +24,11 @@ FFIBackend class >> detectFFIBackend [
 
 { #category : #accessing }
 FFIBackend class >> initialize [
-	SessionManager default
-		registerSystemClassNamed: self name
-		atPriority: 60
+
+	Smalltalk at: #SessionManager ifPresent: [ 
+		SessionManager default
+			registerSystemClassNamed: self name
+			atPriority: 60 ]
 ]
 
 { #category : #testing }
