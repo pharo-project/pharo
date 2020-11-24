@@ -18,3 +18,13 @@ ArgumentVariableTest >> testDeclaringNode [
 	declaringNodeViaVariable := method ast variableReadNodes fifth variable definingNode.
 	self assert: declaringNodeViaVariable equals: declaringNode.
 ]
+
+{ #category : #tests }
+ArgumentVariableTest >> testUsingMethods [
+
+	| method |
+	method := Integer >> #+.
+	self
+		assert: method temporaryVariables first usingMethods first
+		equals: method
+]
