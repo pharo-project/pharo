@@ -10,6 +10,12 @@ Class {
 	#category : #'System-Hashing-Tests-MD5'
 }
 
+{ #category : #coverage }
+MD5Test >> classToBeTested [
+	
+	^ MD5 
+]
+
 { #category : #testing }
 MD5Test >> testEmpty [
 	

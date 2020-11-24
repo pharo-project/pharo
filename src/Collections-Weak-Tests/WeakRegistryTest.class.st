@@ -10,6 +10,12 @@ Class {
 	#category : #'Collections-Weak-Tests-Registration'
 }
 
+{ #category : #coverage }
+WeakRegistryTest >> classToBeTested [
+	
+	^ WeakRegistry 
+]
+
 { #category : #mocketry }
 WeakRegistryTest >> signalMockException [
 	MockExceptionWithPassAction new

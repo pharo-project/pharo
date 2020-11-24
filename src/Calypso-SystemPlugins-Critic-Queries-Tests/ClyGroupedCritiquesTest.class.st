@@ -1,9 +1,6 @@
 Class {
 	#name : #ClyGroupedCritiquesTest,
 	#superclass : #ClyQueryResultTestCase,
-	#instVars : [
-		'critic'
-	],
 	#category : #'Calypso-SystemPlugins-Critic-Queries-Tests'
 }
 

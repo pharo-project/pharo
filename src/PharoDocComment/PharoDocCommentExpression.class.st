@@ -6,7 +6,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'expressionInterval',
-		'source'
+		'source',
+		'node'
 	],
 	#category : #'PharoDocComment-Base'
 }
@@ -14,7 +15,11 @@ Class {
 { #category : #operation }
 PharoDocCommentExpression >> evaluate [
 
-	^ Smalltalk compiler evaluate: self expression
+	^ self methodClass compiler
+		  source: self expression;
+		  noPattern: true;
+		  options: #( + optionParseErrors );
+		  evaluate
 ]
 
 { #category : #accessing }
@@ -24,8 +29,12 @@ PharoDocCommentExpression >> expression [
 
 { #category : #accessing }
 PharoDocCommentExpression >> expressionCode [
-	^ (RBParser parseFaultyExpression: self expression) doSemanticAnalysis; yourself
-	
+
+	^ self methodClass compiler
+		  source: self expression;
+		  noPattern: true;
+		  options: #( + optionParseErrors );
+		  parse
 ]
 
 { #category : #accessing }
@@ -36,6 +45,21 @@ PharoDocCommentExpression >> expressionInterval [
 { #category : #accessing }
 PharoDocCommentExpression >> expressionInterval: anObject [
 	expressionInterval := anObject
+]
+
+{ #category : #operation }
+PharoDocCommentExpression >> methodClass [
+	^ node sourceNode methodNode methodClass
+]
+
+{ #category : #accessing }
+PharoDocCommentExpression >> node [
+	^ node
+]
+
+{ #category : #accessing }
+PharoDocCommentExpression >> node: anObject [
+	node := anObject
 ]
 
 { #category : #printing }

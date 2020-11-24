@@ -1,3 +1,6 @@
+"
+A callback via Alien machinery
+"
 Class {
 	#name : #FFIAlienCallback,
 	#superclass : #Object,

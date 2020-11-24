@@ -10,6 +10,12 @@ Class {
 	#category : #'Kernel-Tests-Objects'
 }
 
+{ #category : #coverage }
+UndefinedObjectTest >> classToBeTested [
+	
+	^ UndefinedObject
+]
+
 { #category : #'tests - class methods' }
 UndefinedObjectTest >> testAllInstances [
 	self assert: UndefinedObject allInstances size = 1 description: 'There should be a single instance of UndefinedObject'.

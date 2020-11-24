@@ -534,63 +534,6 @@ Class >> definitionWithSlots [
 	^ stream contents
 ]
 
-{ #category : #'file in/out' }
-Class >> definitionWithoutSlots [
-
-	| poolString stream |
-	poolString := self sharedPoolsString.
-	stream := (String new: 800) writeStream.
-	superclass
-		ifNotNil: [ stream nextPutAll: superclass name ]
-		ifNil: [ stream nextPutAll: 'ProtoObject' ].
-	
-	stream
-		nextPutAll: self kindOfSubclass;
-		store: self name.
-		
-	self hasTraitComposition ifTrue: [ 
-		stream
-			crtab;
-			nextPutAll: 'uses: ';
-			nextPutAll: self traitCompositionString ].
-	
-	stream
-		crtab;
-		nextPutAll: 'instanceVariableNames: '''.
-	self instanceVariablesOn: stream.
-	stream nextPut: $'.
-	
-	stream
-		crtab;
-		nextPutAll: 'classVariableNames: '''.
-	self classVariablesOn: stream.
-	stream nextPut: $'.
-	
-	poolString = '' ifFalse: [ 
-		stream 
-			crtab;
-			nextPutAll: 'poolDictionaries: ';
-			store: poolString ].
-	
-	stream
-		crtab;
-		nextPutAll: 'package: ';
-		store: self category asString.
-		
-	superclass ifNil: [ 
-		stream
-			nextPutAll: '.';
-			cr.
-		stream 
-			nextPutAll: self name.
-		stream
-			space;
-			nextPutAll: 'superclass: nil' ].
-
-	^ stream contents
-	
-]
-
 { #category : #deprecation }
 Class >> deprecationRefactorings [
 

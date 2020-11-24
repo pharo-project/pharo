@@ -107,7 +107,7 @@ Color class >> colorFrom: parm [
 	"Color colorFrom: #(blue darker) >>> (Color r: 0.011 g: 0.23900000000000002 b: 0.795 alpha: 1.0) "
 	"(Color colorFrom: Color blue darker)>>>(Color r: 0.011 g: 0.23900000000000002 b: 0.795 alpha: 1.0)"
 	"(Color colorFrom: #blue)>>> (Color blue)"
-	"(Color colorFrom: #(0.0 0.0 1.0) >>> (Color blue)"
+	"(Color colorFrom: #(0.0 0.0 1.0)) >>> (Color blue)"
 
 	| aColor firstParm |
 	(parm isKindOf: Color)

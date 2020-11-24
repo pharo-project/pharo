@@ -61,6 +61,12 @@ FloatArrayTest >> anotherValue [
 	^ elementInNonEmpty 
 ]
 
+{ #category : #coverage }
+FloatArrayTest >> classToBeTested [
+	
+	^ FloatArray
+]
+
 { #category : #requirements }
 FloatArrayTest >> collection [
 

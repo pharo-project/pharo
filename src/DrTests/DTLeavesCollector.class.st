@@ -12,7 +12,7 @@ Class {
 	#category : #'DrTests-Visitors'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 DTLeavesCollector class >> collectLeavesOf: aDTTreeNode [
 	^ self new
 		visit: aDTTreeNode;

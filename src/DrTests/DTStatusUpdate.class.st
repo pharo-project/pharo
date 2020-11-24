@@ -12,13 +12,15 @@ Class {
 
 { #category : #'instance creation' }
 DTStatusUpdate class >> message: aString [
+
 	^ self new
-		message: aString;
-		yourself
+		  message: aString;
+		  yourself
 ]
 
 { #category : #accessing }
 DTStatusUpdate >> message [
+
 	^ message
 ]
 

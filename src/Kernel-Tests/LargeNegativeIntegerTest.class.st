@@ -7,6 +7,12 @@ Class {
 	#category : #'Kernel-Tests-Numbers'
 }
 
+{ #category : #coverage }
+LargeNegativeIntegerTest >> classToBeTested [
+	
+	^ LargeNegativeInteger
+]
+
 { #category : #tests }
 LargeNegativeIntegerTest >> testByteAt [
 
