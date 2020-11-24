@@ -226,7 +226,7 @@ OSWorldRenderer >> updateWindowTitle [
 		onWindow: osWindow
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 OSWorldRenderer >> window [
 	
 	^ osWindow 
