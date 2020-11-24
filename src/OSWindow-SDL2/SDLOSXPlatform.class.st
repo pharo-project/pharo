@@ -24,7 +24,7 @@ SDLOSXPlatform >> afterSetWindowTitle: aString onWindow: aOSSDLWindow [
 
 ]
 
-{ #category : #running }
+{ #category : #'ffi-calls' }
 SDLOSXPlatform >> ffiLibraryName [
 
 	^ 'libobjc.dylib'
@@ -39,20 +39,20 @@ SDLOSXPlatform >> initPlatformSpecific [
 	self sendMessage: sel to: cls
 ]
 
-{ #category : #running }
+{ #category : #'utils - objectiveC' }
 SDLOSXPlatform >> lookupClass: aString [
 
 	^ self ffiCall: #(void* objc_lookUpClass(char *aString))
 ]
 
-{ #category : #running }
+{ #category : #'utils - objectiveC' }
 SDLOSXPlatform >> lookupSelector: aString [
 
 	^ self ffiCall: #(void* sel_registerName(const char *aString))
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'utils - objectiveC' }
 SDLOSXPlatform >> nsStringOf: aString [ 
 
 	| class selector encoded param |
@@ -70,7 +70,7 @@ SDLOSXPlatform >> nsStringOf: aString [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'utils - objectiveC' }
 SDLOSXPlatform >> release: aObjCObject [ 
 
 	| releaseSelector |
@@ -79,13 +79,13 @@ SDLOSXPlatform >> release: aObjCObject [
 
 ]
 
-{ #category : #running }
+{ #category : #'utils - objectiveC' }
 SDLOSXPlatform >> sendMessage: sel to: cls [
 
 	^ self ffiCall: #(void* objc_msgSend(void* cls, void* sel))
 ]
 
-{ #category : #running }
+{ #category : #'utils - objectiveC' }
 SDLOSXPlatform >> sendMessage: sel to: rcv with: aParam [
 
 	^ self ffiCall: #(void* objc_msgSend(void* rcv, void* sel, void* aParam))
