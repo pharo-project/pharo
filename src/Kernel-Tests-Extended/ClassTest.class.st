@@ -18,6 +18,12 @@ ClassTest >> categoryNameForTemporaryClasses [
 	^'Dummy-Tests-Class' 
 ]
 
+{ #category : #coverage }
+ClassTest >> classToBeTested [
+	
+	^ Class
+]
+
 { #category : #setup }
 ClassTest >> deleteClass [
 	| cl |

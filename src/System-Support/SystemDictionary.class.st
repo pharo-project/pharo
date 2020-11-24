@@ -26,7 +26,7 @@ Class {
 		'cachedClassNames',
 		'cachedNonClassNames',
 		'cachedBehaviors',
-		'vars'
+		'reservedVariables'
 	],
 	#category : #'System-Support-Utilities'
 }
@@ -281,7 +281,6 @@ SystemDictionary >> hasClassOrTraitNamed: aString [
 { #category : #'dictionary access' }
 SystemDictionary >> lookupVar: name [
 	"Return a var with this name.  Return nil if none found"
-	name isString ifFalse: [ ^nil ].
 	^self reservedVariables at: name ifAbsent: [self bindingOf: name]
 ]
 
@@ -417,7 +416,7 @@ SystemDictionary >> renameClassNamed: oldName as: newName [
 
 { #category : #removing }
 SystemDictionary >> reservedVariables [
-	^vars ifNil: [ vars := ReservedVariable lookupDictionary]
+	^reservedVariables ifNil: [ reservedVariables := ReservedVariable lookupDictionary]
 ]
 
 { #category : #'class and trait names' }

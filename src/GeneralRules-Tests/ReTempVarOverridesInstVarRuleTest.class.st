@@ -13,6 +13,26 @@ Class {
 	#category : #'GeneralRules-Tests-Migrated'
 }
 
+{ #category : #accessing }
+ReTempVarOverridesInstVarRuleTest >> dummy1 [
+	^ dummy1
+]
+
+{ #category : #accessing }
+ReTempVarOverridesInstVarRuleTest >> dummy2 [
+	^ dummy2
+]
+
+{ #category : #accessing }
+ReTempVarOverridesInstVarRuleTest >> dummy3 [
+	^ dummy3
+]
+
+{ #category : #accessing }
+ReTempVarOverridesInstVarRuleTest >> dummy4 [
+	^ dummy4
+]
+
 { #category : #'test-help' }
 ReTempVarOverridesInstVarRuleTest >> sampleMethod: dummy1 [
 	"I override dummy1, dummy2, dummy3  "

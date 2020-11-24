@@ -1,7 +1,12 @@
+"
+This class shows the API that an object needs to implement if it is supposed to be used as a method.
+
+The vm calls run:with:in:, see the subclass for a simple example.
+"
 Class {
 	#name : #AbstractObjectsAsMethod,
 	#superclass : #Object,
-	#category : #'Tests-ObjectsAsMethods'
+	#category : #'Kernel-Tests-Methods'
 }
 
 { #category : #compatibility }

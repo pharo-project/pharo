@@ -4,11 +4,12 @@ SUnit tests for SystemOrganizer
 Class {
 	#name : #SystemOrganizerTest,
 	#superclass : #TestCase,
-	#category : #'System-Support-Tests'
+	#category : #'System-Support-Tests-Image'
 }
 
 { #category : #tests }
 SystemOrganizerTest >> testDefault [
+
 	self assert: SystemOrganizer default identicalTo: self class environment organization
 ]
 
@@ -23,9 +24,8 @@ SystemOrganizerTest >> testDefaultEnvironment [
 SystemOrganizerTest >> testThatExistingPackagenamesDoesNotContainIllegalCharacters [
 	| illegalCharacters | 
 	
-	illegalCharacters := #(  $\ $/ $: $* $? $" $< $> $|  ).
+	illegalCharacters := #( $\ $/ $: $* $? $" $< $> $| ).
 	
 	self class environment organization categories do: [ :aPackageName |
-		self deny: (aPackageName includesAnyOf: illegalCharacters)
-	]
+		self deny: (aPackageName includesAnyOf: illegalCharacters) ]
 ]

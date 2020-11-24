@@ -6,3 +6,9 @@ Class {
 	#superclass : #DTCommand,
 	#category : #'DrTests-Commands'
 }
+
+{ #category : #testing }
+DTPackagesCommand class >> isAbstract [ 
+
+	^ self name = #DTPackagesCommand
+]

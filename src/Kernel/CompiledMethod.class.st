@@ -697,6 +697,11 @@ CompiledMethod >> localReadsSelf [
 	^self isFFIMethod or: [ super localReadsSelf ]
 ]
 
+{ #category : #lookup }
+CompiledMethod >> lookupVar: aString [ 
+	^self ast scope lookupVar: aString
+]
+
 { #category : #private }
 CompiledMethod >> markerOrNil [
 	^ self encoderClass markerOrNilFor: self

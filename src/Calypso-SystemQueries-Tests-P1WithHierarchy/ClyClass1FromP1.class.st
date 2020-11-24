@@ -2,8 +2,8 @@ Class {
 	#name : #ClyClass1FromP1,
 	#superclass : #Object,
 	#instVars : [
-		'instanceSideVar2',
-		'instanceSideVar1'
+		'instanceSideVar1',
+		'instanceSideVar2'
 	],
 	#category : #'Calypso-SystemQueries-Tests-P1WithHierarchy'
 }
@@ -20,6 +20,11 @@ ClyClass1FromP1 >> instanceSideVar1ReaderMethod [
 { #category : #'var accessors' }
 ClyClass1FromP1 >> instanceSideVar1WriterMethod [
 	instanceSideVar1 := #var1Value
+]
+
+{ #category : #accessing }
+ClyClass1FromP1 >> instanceSideVar2 [
+	^ instanceSideVar2
 ]
 
 { #category : #superclassTag1 }

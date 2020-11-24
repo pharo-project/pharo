@@ -4,11 +4,12 @@ Unit tests for queries on classes
 Class {
 	#name : #ClassQueryTest,
 	#superclass : #TestCase,
-	#category : #'System-Support-Tests'
+	#category : #'System-Support-Tests-Base'
 }
 
 { #category : #tests }
 ClassQueryTest >> testAllCallsOn [
+
 	| calls |
 	calls := ClassQueryTest allCallsOn.
 	self assert: calls size equals: 1.

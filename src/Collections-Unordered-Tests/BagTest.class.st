@@ -40,6 +40,12 @@ BagTest >> anotherElementOrAssociationNotIn [
 	^ elementNotIn 
 ]
 
+{ #category : #coverage }
+BagTest >> classToBeTested [
+	
+	^ Bag
+]
+
 { #category : #setup }
 BagTest >> collection [
 

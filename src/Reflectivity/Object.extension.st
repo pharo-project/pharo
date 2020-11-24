@@ -133,10 +133,13 @@ Object >> link: aMetaLink toTemporaryNamed: aTempVarName inMethod: aMethodName [
 
 { #category : #'*Reflectivity' }
 Object >> link: aMetaLink toTemporaryNamed: aTempVarName inMethod: aMethodName option: option [
+	| variable |
+	
+	variable := (self nonAnonymousClass lookupSelector: aMethodName) lookupVar: aTempVarName.
+
 	aMetaLink
-		installOnTempVarNamed: aTempVarName
-		inMethod: aMethodName
+		installOnVariable: variable
 		for: self
 		option: option
-		instanceSpecific: self intanceSpecificMetaLinksAvailable
+		instanceSpecific: true
 ]

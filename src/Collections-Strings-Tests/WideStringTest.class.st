@@ -10,6 +10,12 @@ Class {
 	#category : #'Collections-Strings-Tests-Base'
 }
 
+{ #category : #coverage }
+WideStringTest >> classToBeTested [
+	
+	^  WideString
+]
+
 { #category : #'tests - converting' }
 WideStringTest >> testAsInteger [
 	self assert: '1796exportFixes-tkMX' asWideString asInteger equals: 1796.

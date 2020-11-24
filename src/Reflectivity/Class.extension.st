@@ -41,10 +41,10 @@ Class >> link: aMetaLink toTemporary: aTempVar [
 { #category : #'*Reflectivity' }
 Class >> link: aMetaLink toVariableNamed: vName option: accessStrategy [
 	^aMetaLink
-		installOnVariableNamed: vName
+		installOnVariable: (self lookupVar: vName)
 		for: self
 		option: accessStrategy
-		instanceSpecific: self intanceSpecificMetaLinksAvailable
+		instanceSpecific: false
 ]
 
 { #category : #'*Reflectivity' }

@@ -2,8 +2,6 @@ Class {
 	#name : #CNSelectorExtractionOnPositionTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'editor',
-		'editingArea',
 		'sourceCode',
 		'ast',
 		'position'

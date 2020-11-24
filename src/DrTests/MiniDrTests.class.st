@@ -1,10 +1,9 @@
+"
+A minified version of the DrTest tool.
+"
 Class {
 	#name : #MiniDrTests,
 	#superclass : #AbstractDrTestsUI,
-	#instVars : [
-		'resultsList',
-		'pluginResult'
-	],
 	#category : #'DrTests-Spec'
 }
 
@@ -23,15 +22,17 @@ MiniDrTests class >> defaultSpec [
 
 { #category : #accessing }
 MiniDrTests >> currentPlugin: anObject [
+
 	currentPlugin := anObject
 ]
 
 { #category : #accessing }
 MiniDrTests >> evaluateBackgroundColor [
+
 	^ pluginResult backgroundColor
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 MiniDrTests >> initializeButtons [
 	super initializeButtons.
 	startButton
@@ -39,48 +40,43 @@ MiniDrTests >> initializeButtons [
 		icon: (self iconNamed: #smallUpdate);
 		color: (Color gray).
 	switchButton
-		label: 'maxi Dr'
+		label: 'Maximize'
 ]
 
 { #category : #initialization }
-MiniDrTests >> initializeWidgets [
-	self initializeButtons
-]
-
-{ #category : #accessing }
 MiniDrTests >> initializeWindow: aWindowPresenter [
+
 	super initializeWindow: aWindowPresenter.
 	aWindowPresenter
 		title: self title;
 		initialExtent: 200 @ 200
 ]
 
-{ #category : #accessing }
-MiniDrTests >> pluginResult [
-	^ pluginResult
-]
+{ #category : #'private - actions' }
+MiniDrTests >> switchToDrTest [
 
-{ #category : #accessing }
-MiniDrTests >> pluginResult: anObject [
-	pluginResult := anObject
-]
-
-{ #category : #accessing }
-MiniDrTests >> switchUI [
-	super switchUI.
 	DrTests
 		reloadConfiguration: testsConfiguration
 		withResults: pluginResult
 		andPlugin: currentPlugin
 ]
 
-{ #category : #accessing }
-MiniDrTests >> title [
-	^ 'MiniDrTests - ' , currentPlugin pluginName
+{ #category : #actions }
+MiniDrTests >> switchUI [
+
+	super switchUI.
+	self switchToDrTest
 ]
 
 { #category : #accessing }
+MiniDrTests >> title [
+
+	^ 'MiniDrTests - ' , currentPlugin pluginName
+]
+
+{ #category : #updating }
 MiniDrTests >> updateUI [
+
 	super updateUI.
 	startButton color: self evaluateBackgroundColor.
 	startButton label: pluginResult summarizeInfo.

@@ -7,8 +7,7 @@ Class {
 	#name : #ClapDocumentationFormatter,
 	#superclass : #Object,
 	#instVars : [
-		'stream',
-		'newLineString'
+		'stream'
 	],
 	#category : #'Clap-Core-Documentation'
 }

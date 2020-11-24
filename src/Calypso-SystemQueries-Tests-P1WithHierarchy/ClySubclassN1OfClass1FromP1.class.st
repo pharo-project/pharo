@@ -16,6 +16,18 @@ ClySubclassN1OfClass1FromP1 class >> classSideMethodFromSubclassN1 [
 ClySubclassN1OfClass1FromP1 >> noTagMethod [
 ]
 
+{ #category : #accessing }
+ClySubclassN1OfClass1FromP1 >> subclassN1Var [
+
+	^ subclassN1Var
+]
+
+{ #category : #accessing }
+ClySubclassN1OfClass1FromP1 >> subclassSameVar [
+
+	^ subclassSameVar
+]
+
 { #category : #tag1 }
 ClySubclassN1OfClass1FromP1 >> tag1Method1 [
 ]

@@ -7,6 +7,12 @@ Class {
 	#category : #'DrTests-Commands'
 }
 
+{ #category : #defaults }
+DTResultBrowseCommand class >> defaultName [
+
+	^ 'Browse'
+]
+
 { #category : #testing }
 DTResultBrowseCommand >> canBeExecuted [
 	^ self resultSelected canBeBrowsed
@@ -15,10 +21,4 @@ DTResultBrowseCommand >> canBeExecuted [
 { #category : #hooks }
 DTResultBrowseCommand >> execute [
 	self drTest browseSelectedResult
-]
-
-{ #category : #hooks }
-DTResultBrowseCommand >> initialize [
-	super initialize.
-	self name: 'Browse'
 ]

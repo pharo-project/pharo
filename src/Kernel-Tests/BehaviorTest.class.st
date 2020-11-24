@@ -7,6 +7,12 @@ Class {
 	#category : #'Kernel-Tests-Classes'
 }
 
+{ #category : #coverage }
+BehaviorTest >> classToBeTested [
+	
+	^ Behavior
+]
+
 { #category : #tests }
 BehaviorTest >> sampleMessageWithFirstArgument: firstArgument "This is a comment intended to explain arg1"
    andInterleavedCommentBeforeSecondArgument: secondArgument [

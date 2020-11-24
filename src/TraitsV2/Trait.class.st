@@ -21,9 +21,6 @@ Class {
 	#instVars : [
 		'users'
 	],
-	#classInstVars : [
-		'users'
-	],
 	#category : #'TraitsV2-Base'
 }
 
@@ -47,6 +44,15 @@ Trait class >> configureBuilder: builder withName: aName traitComposition: aTrai
 { #category : #'instance creation' }
 Trait class >> named: aSymbol [
 	^ self named: aSymbol uses: {} package: 'Unclassified'
+]
+
+{ #category : #'instance creation' }
+Trait class >> named: aSymbol package: aString [
+	^ self
+		named: aSymbol
+		uses: {}
+		package: aString
+		env: self environment
 ]
 
 { #category : #'instance creation' }

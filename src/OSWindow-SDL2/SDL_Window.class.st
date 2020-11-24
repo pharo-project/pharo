@@ -87,6 +87,11 @@ SDL_Window >> getWindowSurface [
 	^ self ffiCall: #( SDL_Surface* SDL_GetWindowSurface( self ) )
 ]
 
+{ #category : #accessing }
+SDL_Window >> glGetDrawableSizeW: w h: h [
+	^ self ffiCall: #( void SDL_GL_GetDrawableSize ( self , int* w , int* h ) )
+]
+
 { #category : #'window management' }
 SDL_Window >> hide [
 	^ self ffiCall: #( void SDL_HideWindow( self ) )

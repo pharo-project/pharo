@@ -14,8 +14,3 @@ RBProgramNode >> enableHalts: aBoolean [
 RBProgramNode >> enabledForHaltOrBreakpoint [
 	^self propertyAt: #enabledForHaltOrBreakpoint ifAbsent: [ true ]
 ]
-
-{ #category : #'*NewTools-Debugger-Extensions' }
-RBProgramNode >> isHaltNode [
-	^ false
-]

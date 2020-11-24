@@ -13,7 +13,6 @@ Class {
 		'packageB',
 		'packageC',
 		'packageD',
-		'packageKernelTests',
 		'packageMorphicBase',
 		'packageTextCore'
 	],

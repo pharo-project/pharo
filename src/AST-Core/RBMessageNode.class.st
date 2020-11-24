@@ -172,6 +172,15 @@ RBMessageNode >> isFirstCascaded [
 ]
 
 { #category : #testing }
+RBMessageNode >> isHaltNode [
+
+	^ (#( #halt #halt: #haltIf: #haltOnce #haltIfNil #haltOnCount: ) 
+		   includes: self selector) or: [ 
+		  self receiver isVariable and: [ 
+			  self receiver variable value = Halt ] ]
+]
+
+{ #category : #testing }
 RBMessageNode >> isKeyword [
 	^(self selector indexOf: $:) ~= 0.
 ]

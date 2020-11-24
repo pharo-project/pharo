@@ -36,6 +36,12 @@ IntervalTest >> anotherElementNotIn [
 	^ 42
 ]
 
+{ #category : #coverage }
+IntervalTest >> classToBeTested [
+	
+	^ Interval
+]
+
 { #category : #requirements }
 IntervalTest >> collection [
 	^ nonEmpty

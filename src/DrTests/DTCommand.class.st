@@ -7,6 +7,12 @@ Class {
 	#category : #'DrTests-Commands'
 }
 
+{ #category : #testing }
+DTCommand class >> isAbstract [ 
+
+	^self name = #DTCommand
+]
+
 { #category : #accessing }
 DTCommand >> drTest [
 	^ self context
