@@ -15,6 +15,7 @@ Class {
 { #category : #private }
 RBAddTraitChange class >> definitionPatterns [
 	^ #('Trait named: `#traitName uses: `@traitComposition package: `#package' 'Trait named: `#traitName uses: `@traitComposition slots: `@slotDefinition package: `#package'
+	'Trait named: `#traitName package: `#package'
 	
 	'Trait << `#traitName package: `#package'
 	'Trait << `#traitName uses: `@traitComposition package: `#package'
