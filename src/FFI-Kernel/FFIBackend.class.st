@@ -22,15 +22,6 @@ FFIBackend class >> detectFFIBackend [
 		ifNone: [ ^ NullFFIBackend ]) new
 ]
 
-{ #category : #accessing }
-FFIBackend class >> initialize [
-
-	Smalltalk at: #SessionManager ifPresent: [ 
-		SessionManager default
-			registerSystemClassNamed: self name
-			atPriority: 60 ]
-]
-
 { #category : #testing }
 FFIBackend class >> isAvailable [
 
@@ -43,7 +34,6 @@ FFIBackend class >> startUp: isImageStarting [
 	isImageStarting ifFalse: [ ^ self ].
 	
 	Current := nil.
-	self current.
 ]
 
 { #category : #'instance creation' }
