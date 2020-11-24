@@ -14,12 +14,12 @@ ManifestKernel class >> dependencies [
 
 { #category : #'meta-data - dependency analyser' }
 ManifestKernel class >> ignoredDependencies [
-	^ #('Reflectivity' 'Regex-Core' 'System-VMEvents' 'System-Settings-Core' 'FFI-Kernel' ) 
+	^ #('Reflectivity' 'Regex-Core' 'System-VMEvents' 'System-Settings-Core' 'FFI-Kernel' 'FFI-OldFFIBackend' ) 
 ]
 
 { #category : #'meta-data - dependency analyser' }
 ManifestKernel class >> manuallyResolvedDependencies [
-	^ #(#'System-Settings-Core' #'System-Sources' #'System-Platforms' #'Multilingual-TextConversion' #'Shift-ClassBuilder' #'Regex-Core' #'RPackage-Core' #'Zinc-Character-Encoding-Core' #Reflectivity #'Shift-ClassInstaller' #'FFI-Kernel')
+	^ #(#'System-Settings-Core' #'System-Sources' #'System-Platforms' #'Multilingual-TextConversion' #'Shift-ClassBuilder' #'Regex-Core' #'RPackage-Core' #'Zinc-Character-Encoding-Core' #Reflectivity #'Shift-ClassInstaller' #'FFI-Kernel' #'FFI-OldFFIBackend')
 ]
 
 { #category : #'meta-data' }
