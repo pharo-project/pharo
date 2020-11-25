@@ -76,9 +76,9 @@ BaselineOfNewTools >> baseline: spec [
 				'NewTools-Debugger-Tests');
 			group: 'SystemReporter' with: #('Core' 'NewTools-SystemReporter');
 			group: 'Methods' with: #('Core' 'NewTools-MethodBrowsers');
+			group: 'ChangeSorter' with: #('Core' 'NewTools-ChangeSorter');
 			"Not in the image for the moment, we need a pass on them"
-			"group: 'ChangeSorter' with: #('Core' 'NewTools-ChangeSorter');
-			group: 'KeymapBrowser' with: #('Core' 'NewTools-KeymapBrowser');"
+			group: 'KeymapBrowser' with: #('Core' 'NewTools-KeymapBrowser');
 			group: 'FlagBrowser' with: #(
 				'Core' 
 				'NewTools-FlagBrowser' 
@@ -95,7 +95,7 @@ BaselineOfNewTools >> baseline: spec [
 				'Inspector'
 				'Debugger'
 				'Methods'
-				"'ChangeSorter'"
+				'ChangeSorter'
 				"'KeymapBrowser'"
 				"'FlagBrowser'") ]
 ]
