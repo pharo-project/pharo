@@ -24,7 +24,7 @@ SycRefactoringPreviewTest >> initializeForInitializeTest [
 	| scopeClass scopePackage |
 	scopePackage := SycMockScope content: {'welsh' . 'banane' . 'paix dieu'}.
 	scopeClass := SycMockScope content: {'banane' . 'Tournai Triple'}.
-	sycRefactoringPreview := MockSycRefactoringPreview for: SycRefactoringPreviewMockCommand new scopes: {scopePackage . scopeClass}
+	sycRefactoringPreview := MockSycRefactoringPreviewPresenter for: SycRefactoringPreviewMockCommand new scopes: {scopePackage . scopeClass}
 ]
 
 { #category : #running }
@@ -32,7 +32,7 @@ SycRefactoringPreviewTest >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
 
 	super setUp.
-	sycRefactoringPreview := MockSycRefactoringPreview new
+	sycRefactoringPreview := MockSycRefactoringPreviewPresenter new
 ]
 
 { #category : #tests }

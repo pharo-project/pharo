@@ -29,7 +29,7 @@ Internal Representation and Key Implementation Points.
 	methodName 		 	<RBMethod>						A RBMethodName to ensure the validity of the new name.
 "
 Class {
-	#name : #SycMethodNameEditor,
+	#name : #SycMethodNameEditorPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'selectorInput',
@@ -48,7 +48,7 @@ Class {
 }
 
 { #category : #specs }
-SycMethodNameEditor class >> defaultEditableSpec [
+SycMethodNameEditorPresenter class >> defaultEditableSpec [
 	<spec>
 	^ SpBoxLayout newVertical
 		add:
@@ -92,7 +92,7 @@ SycMethodNameEditor class >> defaultEditableSpec [
 ]
 
 { #category : #specs }
-SycMethodNameEditor class >> defaultSpec [
+SycMethodNameEditorPresenter class >> defaultSpec [
 	^ SpBoxLayout newVertical
 		add:
 			(SpBoxLayout newHorizontal
@@ -123,7 +123,7 @@ SycMethodNameEditor class >> defaultSpec [
 ]
 
 { #category : #example }
-SycMethodNameEditor class >> example2 [
+SycMethodNameEditorPresenter class >> example2 [
 	<script>
 	self
 		openOn:
@@ -133,7 +133,7 @@ SycMethodNameEditor class >> example2 [
 ]
 
 { #category : #specs }
-SycMethodNameEditor class >> openOn: aMethod [
+SycMethodNameEditorPresenter class >> openOn: aMethod [
 	"I take a RBMethodName as parameter and open the refactoring UI in a modal to rename it."
 	|temp|
 	temp := (self on: aMethod).
@@ -143,7 +143,7 @@ SycMethodNameEditor class >> openOn: aMethod [
 ]
 
 { #category : #specs }
-SycMethodNameEditor class >> openOn: aMethod withRefactoring: refactoring [
+SycMethodNameEditorPresenter class >> openOn: aMethod withRefactoring: refactoring [
 	|temp|
 	temp := (self on: aMethod).
 	temp refactoring: refactoring.
@@ -153,7 +153,7 @@ SycMethodNameEditor class >> openOn: aMethod withRefactoring: refactoring [
 ]
 
 { #category : #services }
-SycMethodNameEditor >> alert: aString [
+SycMethodNameEditorPresenter >> alert: aString [
 	"Display a message for the user to read and then dismiss."
 
 	aString isEmptyOrNil
@@ -161,23 +161,23 @@ SycMethodNameEditor >> alert: aString [
 ]
 
 { #category : #accessing }
-SycMethodNameEditor >> argumentsList [
+SycMethodNameEditorPresenter >> argumentsList [
 	^ argumentsList
 ]
 
 { #category : #accessing }
-SycMethodNameEditor >> defaultParameterPlaceholderString [
+SycMethodNameEditorPresenter >> defaultParameterPlaceholderString [
 	"the placeholder string to be used in parameter inputs"
 	^ 'aParameterName'
 ]
 
 { #category : #accessing }
-SycMethodNameEditor >> downButton [
+SycMethodNameEditorPresenter >> downButton [
 	^ downButton
 ]
 
 { #category : #services }
-SycMethodNameEditor >> editParameter [
+SycMethodNameEditorPresenter >> editParameter [
 	| selected newName|
 	newName := editParameter text asSymbol.
 	selected := argumentsList items at: (argumentsList selection selectedIndex).
@@ -190,13 +190,13 @@ SycMethodNameEditor >> editParameter [
 ]
 
 { #category : #accessing }
-SycMethodNameEditor >> editParameterInput [
+SycMethodNameEditorPresenter >> editParameterInput [
 	
 	^ editParameter
 ]
 
 { #category : #services }
-SycMethodNameEditor >> getKeyOf: aValue [
+SycMethodNameEditorPresenter >> getKeyOf: aValue [
 	|keyOfValue|
 	editerArgumentList keysAndValuesDo: [ :key :value | 
 		aValue = value ifTrue: [ keyOfValue := key ] ].
@@ -204,13 +204,13 @@ SycMethodNameEditor >> getKeyOf: aValue [
 ]
 
 { #category : #services }
-SycMethodNameEditor >> getParametersOrder [
+SycMethodNameEditorPresenter >> getParametersOrder [
 	^ argumentsList items collect: [ :each | self getKeyOf: each ]
 	
 ]
 
 { #category : #initialization }
-SycMethodNameEditor >> initializeDialogWindow: aModalPresenter [
+SycMethodNameEditorPresenter >> initializeDialogWindow: aModalPresenter [
 	aModalPresenter
 		closeOnBackdropClick: true;
 		addButton: 'Rename' do: [ :presenter | self renameMethodAndClose: presenter ];
@@ -220,14 +220,14 @@ SycMethodNameEditor >> initializeDialogWindow: aModalPresenter [
 ]
 
 { #category : #services }
-SycMethodNameEditor >> initializeEditerArgumentList [
+SycMethodNameEditorPresenter >> initializeEditerArgumentList [
 	editerArgumentList := Dictionary new.
 	methodName arguments do: [ :each | 
 		editerArgumentList at: each put: each ]
 ]
 
 { #category : #initialization }
-SycMethodNameEditor >> initializePresenter [
+SycMethodNameEditorPresenter >> initializePresenter [
 	selectorInput whenTextChangedDo: [ :text | self updateLabel ].
 	upButton action: [ self pushUpSelectedArgument ].
 	downButton action: [ self pushDownSelectedArgument ].
@@ -247,7 +247,7 @@ SycMethodNameEditor >> initializePresenter [
 ]
 
 { #category : #initialization }
-SycMethodNameEditor >> initializeWidgets [
+SycMethodNameEditorPresenter >> initializeWidgets [
 	selectorInput := self instantiate: SpTextInputFieldPresenter.
 	argumentsList := self newList.
 	previewResult := self newLabel.
@@ -268,7 +268,7 @@ SycMethodNameEditor >> initializeWidgets [
 ]
 
 { #category : #accessing }
-SycMethodNameEditor >> isEditable: aBoolean [ 
+SycMethodNameEditorPresenter >> isEditable: aBoolean [ 
 	isEditable := aBoolean .
 	
 	isEditable ifTrue: [ self buildWithSpecLayout: self class defaultEditableSpec ]
@@ -277,23 +277,23 @@ SycMethodNameEditor >> isEditable: aBoolean [
 ]
 
 { #category : #accessing }
-SycMethodNameEditor >> okButton [
+SycMethodNameEditorPresenter >> okButton [
 	
 	^ okEdit
 ]
 
 { #category : #services }
-SycMethodNameEditor >> okEdit [
+SycMethodNameEditorPresenter >> okEdit [
 	^ okEdit
 ]
 
 { #category : #accessing }
-SycMethodNameEditor >> previewResult [
+SycMethodNameEditorPresenter >> previewResult [
 	^ previewResult
 ]
 
 { #category : #action }
-SycMethodNameEditor >> pushDownSelectedArgument [
+SycMethodNameEditorPresenter >> pushDownSelectedArgument [
 	| selectedIndex |
 	selectedIndex := argumentsList selection selectedIndex.
 	selectedIndex = argumentsList items size
@@ -304,7 +304,7 @@ SycMethodNameEditor >> pushDownSelectedArgument [
 ]
 
 { #category : #action }
-SycMethodNameEditor >> pushUpSelectedArgument [
+SycMethodNameEditorPresenter >> pushUpSelectedArgument [
 	| selectedIndex |
 	selectedIndex := argumentsList selection selectedIndex.
 	selectedIndex = 1
@@ -315,17 +315,17 @@ SycMethodNameEditor >> pushUpSelectedArgument [
 ]
 
 { #category : #services }
-SycMethodNameEditor >> refactoring [
+SycMethodNameEditorPresenter >> refactoring [
 	^ refactoring
 ]
 
 { #category : #services }
-SycMethodNameEditor >> refactoring: anObject [
+SycMethodNameEditorPresenter >> refactoring: anObject [
 	refactoring := anObject 
 ]
 
 { #category : #action }
-SycMethodNameEditor >> renameMethodAndClose: presenter [
+SycMethodNameEditorPresenter >> renameMethodAndClose: presenter [
 	^ self previewResult label = '(invalid)'
 		ifTrue: [ self inform: 'Invalid method name' ]
 		ifFalse: [
@@ -339,22 +339,22 @@ SycMethodNameEditor >> renameMethodAndClose: presenter [
 ]
 
 { #category : #accessing }
-SycMethodNameEditor >> selectorInput [
+SycMethodNameEditorPresenter >> selectorInput [
 	^ selectorInput
 ]
 
 { #category : #'accessing model' }
-SycMethodNameEditor >> setModelBeforeInitialization: aRBMethodName [
+SycMethodNameEditorPresenter >> setModelBeforeInitialization: aRBMethodName [
 	methodName := aRBMethodName
 ]
 
 { #category : #accessing }
-SycMethodNameEditor >> upButton [
+SycMethodNameEditorPresenter >> upButton [
 	^ upButton
 ]
 
 { #category : #services }
-SycMethodNameEditor >> updateEditArgumentInput [
+SycMethodNameEditorPresenter >> updateEditArgumentInput [
 
 	argumentsList selection isEmpty
 		ifTrue: [ 
@@ -371,13 +371,13 @@ SycMethodNameEditor >> updateEditArgumentInput [
 ]
 
 { #category : #services }
-SycMethodNameEditor >> updateItem: selected to: newName [
+SycMethodNameEditorPresenter >> updateItem: selected to: newName [
 	argumentsList items doWithIndex: [ :each :index | 
 		each = selected ifTrue: [ argumentsList items at: index put: newName  ] ]
 ]
 
 { #category : #action }
-SycMethodNameEditor >> updateLabel [
+SycMethodNameEditorPresenter >> updateLabel [
 	"Update the new method name to display to the user when the user change its name or order of the arguments."
 
 	previewResult
@@ -388,7 +388,7 @@ SycMethodNameEditor >> updateLabel [
 ]
 
 { #category : #services }
-SycMethodNameEditor >> validateEditParameter [
+SycMethodNameEditorPresenter >> validateEditParameter [
 	self previewResult label = '(invalid)'
 		ifTrue: [ self alert: 'You can not rename parameters if you have an invalid method name' ]
 		ifFalse: [ [ self editParameter  ]

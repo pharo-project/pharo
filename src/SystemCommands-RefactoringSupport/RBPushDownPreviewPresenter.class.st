@@ -16,7 +16,7 @@ selectedMethods:         <OrderedCollection> A list with selected methods
 refactoring:             <RBRefactoring> A subclass of RBRefactoring (RBPushUpRefactoring, RBPushDownRefactoring) to update according to the view modifications
 "
 Class {
-	#name : #RBPushDownPreview,
+	#name : #RBPushDownPreviewPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'table',
@@ -29,7 +29,7 @@ Class {
 }
 
 { #category : #specs }
-RBPushDownPreview class >> defaultSpec [
+RBPushDownPreviewPresenter class >> defaultSpec [
 	^ SpBoxLayout newVertical
 		add: #label withConstraints: [ :c | c height: self buttonHeight ];
 		add:
@@ -40,19 +40,19 @@ RBPushDownPreview class >> defaultSpec [
 ]
 
 { #category : #examples }
-RBPushDownPreview class >> example [
+RBPushDownPreviewPresenter class >> example [
 	<script>
-	^ (self on: RBPushUpPreview withSelectors: Array new)
+	^ (self on: RBPushUpPreviewPresenter withSelectors: Array new)
 ]
 
 { #category : #examples }
-RBPushDownPreview class >> on: aRefactoring [
+RBPushDownPreviewPresenter class >> on: aRefactoring [
 	^ self new on: aRefactoring;
 		openModalWithSpec
 ]
 
 { #category : #examples }
-RBPushDownPreview class >> on: aClass withSelectors: selectors [
+RBPushDownPreviewPresenter class >> on: aClass withSelectors: selectors [
 	^ self new 
 		on: aClass 
 		withSelectors: selectors asOrderedCollection;
@@ -60,18 +60,18 @@ RBPushDownPreview class >> on: aClass withSelectors: selectors [
 ]
 
 { #category : #specs }
-RBPushDownPreview class >> title [
+RBPushDownPreviewPresenter class >> title [
 
 	^ 'Pull methods down'
 ]
 
 { #category : #subclassresponsibility }
-RBPushDownPreview >> accept [
+RBPushDownPreviewPresenter >> accept [
 	refactoring selectors: (selectedMethods collect: #selector)
 ]
 
 { #category : #'instance creation' }
-RBPushDownPreview >> accept: presenter [
+RBPushDownPreviewPresenter >> accept: presenter [
 	self accept.
 	presenter
 				beOk;
@@ -79,7 +79,7 @@ RBPushDownPreview >> accept: presenter [
 ]
 
 { #category : #initialization }
-RBPushDownPreview >> initializeChangesTree [
+RBPushDownPreviewPresenter >> initializeChangesTree [
 	table addColumn:
 		((SpCheckBoxTableColumn title: ' ' evaluated: [ :aClass | 
 	selectedMethods includes: aClass ])
@@ -92,7 +92,7 @@ RBPushDownPreview >> initializeChangesTree [
 ]
 
 { #category : #'instance creation' }
-RBPushDownPreview >> initializeDialogWindow: aModalPresenter [
+RBPushDownPreviewPresenter >> initializeDialogWindow: aModalPresenter [
 	aModalPresenter
 		addButton: 'Refactor' do: [ :presenter | self accept: presenter ];
 		addButton: 'Cancel' do: [ :presenter | 
@@ -102,7 +102,7 @@ RBPushDownPreview >> initializeDialogWindow: aModalPresenter [
 ]
 
 { #category : #initialization }
-RBPushDownPreview >> initializeWidgets [
+RBPushDownPreviewPresenter >> initializeWidgets [
 	table := self newTable.
 	label := self newLabel.
 	
@@ -111,12 +111,12 @@ RBPushDownPreview >> initializeWidgets [
 ]
 
 { #category : #accessing }
-RBPushDownPreview >> methods [
+RBPushDownPreviewPresenter >> methods [
 	^ class methods sort: [ :a :b | a asString < b asString ]
 ]
 
 { #category : #initialization }
-RBPushDownPreview >> on: aRefactoring [
+RBPushDownPreviewPresenter >> on: aRefactoring [
 	refactoring := aRefactoring.
 	self on: refactoring targetClass realClass 
 		withSelectors: refactoring selectors asOrderedCollection.
@@ -124,7 +124,7 @@ RBPushDownPreview >> on: aRefactoring [
 ]
 
 { #category : #initialization }
-RBPushDownPreview >> on: aClass withSelectors: selectors [
+RBPushDownPreviewPresenter >> on: aClass withSelectors: selectors [
 	class := aClass.
 	label label: self textLabel.
 	selectedMethods := selectors.
@@ -133,6 +133,6 @@ RBPushDownPreview >> on: aClass withSelectors: selectors [
 ]
 
 { #category : #subclassresponsibility }
-RBPushDownPreview >> textLabel [
+RBPushDownPreviewPresenter >> textLabel [
 	^ 'Push methods from ', class name,' down' .
 ]

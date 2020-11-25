@@ -19,7 +19,7 @@ refactoring:          <RBRefactoring> A subclass of RBRefactoring
 
 "
 Class {
-	#name : #RBFindAndReplacePreview,
+	#name : #RBFindAndReplacePreviewPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'changeList',
@@ -33,7 +33,7 @@ Class {
 }
 
 { #category : #specs }
-RBFindAndReplacePreview class >> defaultSpec [
+RBFindAndReplacePreviewPresenter class >> defaultSpec [
 	^ SpBoxLayout newVertical
 		add: #label withConstraints: [ :c | c height: self labelHeight ];
 		add:
@@ -46,32 +46,32 @@ RBFindAndReplacePreview class >> defaultSpec [
 ]
 
 { #category : #specs }
-RBFindAndReplacePreview class >> example [
+RBFindAndReplacePreviewPresenter class >> example [
 	<script>
 	^ (self method: (RBRefactoring >> #convertMethod:for:using: )) 
 ]
 
 { #category : #specs }
-RBFindAndReplacePreview class >> method: aMethod [
+RBFindAndReplacePreviewPresenter class >> method: aMethod [
 	|temp|
 	temp := self new method: aMethod.
 	^ temp openModalWithSpec
 ]
 
 { #category : #specs }
-RBFindAndReplacePreview class >> method: aMethod refactoring: aRef [
+RBFindAndReplacePreviewPresenter class >> method: aMethod refactoring: aRef [
 	|temp|
 	temp := self new method: aMethod; refactoring: aRef.
 	^ temp openModalWithSpec
 ]
 
 { #category : #specs }
-RBFindAndReplacePreview class >> title [
+RBFindAndReplacePreviewPresenter class >> title [
 	^ 'Find and replace'
 ]
 
 { #category : #initialization }
-RBFindAndReplacePreview >> initializeChangeList [
+RBFindAndReplacePreviewPresenter >> initializeChangeList [
 	changeList
 		addColumn:
 			((SpCheckBoxTableColumn title: ' ' evaluated: [ :x | 
@@ -85,7 +85,7 @@ RBFindAndReplacePreview >> initializeChangeList [
 ]
 
 { #category : #initialization }
-RBFindAndReplacePreview >> initializeDialogWindow: aModalPresenter [
+RBFindAndReplacePreviewPresenter >> initializeDialogWindow: aModalPresenter [
 	aModalPresenter
 		addButton: 'Find' do: [ :presenter |
 			refactoring listToFindMatches: selectedRefactorings .
@@ -99,7 +99,7 @@ RBFindAndReplacePreview >> initializeDialogWindow: aModalPresenter [
 ]
 
 { #category : #initialization }
-RBFindAndReplacePreview >> initializeDropList [
+RBFindAndReplacePreviewPresenter >> initializeDropList [
 	dropList addItemLabeled: 'Current class'
 			do: [ method ifNotNil: [|items|
 				items := method origin methods select: [:each | each ~= method].
@@ -115,13 +115,13 @@ RBFindAndReplacePreview >> initializeDropList [
 ]
 
 { #category : #initialization }
-RBFindAndReplacePreview >> initializePresenter [
+RBFindAndReplacePreviewPresenter >> initializePresenter [
 	super initializePresenter.
 	
 ]
 
 { #category : #initialization }
-RBFindAndReplacePreview >> initializeWidgets [
+RBFindAndReplacePreviewPresenter >> initializeWidgets [
 	changeList := self newTable.
 	label := (self newLabel)label: 'Find in:' .
 	dropList := self newDropList.
@@ -132,7 +132,7 @@ RBFindAndReplacePreview >> initializeWidgets [
 ]
 
 { #category : #initialization }
-RBFindAndReplacePreview >> method: aMethod [
+RBFindAndReplacePreviewPresenter >> method: aMethod [
 	method := aMethod.
 	
 	selectedRefactorings := OrderedCollection newFrom: 
@@ -142,6 +142,6 @@ RBFindAndReplacePreview >> method: aMethod [
 ]
 
 { #category : #initialization }
-RBFindAndReplacePreview >> refactoring: ref [
+RBFindAndReplacePreviewPresenter >> refactoring: ref [
 	refactoring := ref
 ]
