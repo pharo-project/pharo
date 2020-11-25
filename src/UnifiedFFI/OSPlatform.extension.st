@@ -47,9 +47,3 @@ OSPlatform >> runCommand: aCommand [
 	
 	^LibC runCommand: aCommand
 ]
-
-{ #category : #'*UnifiedFFI' }
-OSPlatform >> sdlPlatform [
-
-	^ SDLNullPlatform new
-]
