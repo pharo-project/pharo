@@ -56,7 +56,7 @@ HaltTest >> testContainsHalt [
 	| annonClass |
 	
 	self 
-	deny: (Object >> #halt) containsHalt;
+	assert: (Object >> #halt) containsHalt;
 	deny: (Object >> #haltIfNil) containsHalt;
 	deny: (Halt class >> #once) containsHalt;
 	assert: (self class>> #testHaltIfNil) containsHalt.
@@ -127,7 +127,7 @@ HaltTest >> testHaltIf [
 HaltTest >> testHaltIfNil [
 	<haltOrBreakpointForTesting>
 
-	self should: [ nil haltIfNil] raise: Halt.
+	self should: [ nil haltIfNil] raise: Halt
 ]
 
 { #category : #tests }

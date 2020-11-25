@@ -38,7 +38,8 @@ OCASTSemanticAnalyzer >> analyseEscapingWrite: var [
 { #category : #api }
 OCASTSemanticAnalyzer >> analyze: aNode [
 	self visitNode: aNode.
-	OCASTClosureAnalyzer new visitNode: aNode
+	OCASTClosureAnalyzer new visitNode: aNode.
+	OCASTMethodMetadataAnalyser new visitNode: aNode
 ]
 
 { #category : #accessing }
