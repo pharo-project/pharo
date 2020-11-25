@@ -262,9 +262,8 @@ SDL2 class >> initLibrary [
 { #category : #common }
 SDL2 class >> initPlatformSpecific [
 
-	Smalltalk os isMacOSX ifTrue: [  
-		SDLOSXPlatformInitializer new run.	
-	] 
+	OSPlatform current sdlPlatform initPlatformSpecific.
+
 ]
 
 { #category : #common }
