@@ -271,7 +271,7 @@ FFICalloutAPITest >> testCharCall [
 
 { #category : #'tests pointer' }
 FFICalloutAPITest >> testCharPointer [
-	| result first second |
+	| result |
 		
 	result := self 
 		primStr:  'Hello, '
