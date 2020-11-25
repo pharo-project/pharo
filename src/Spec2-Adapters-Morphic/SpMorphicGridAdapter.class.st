@@ -10,7 +10,7 @@ Class {
 
 { #category : #private }
 SpMorphicGridAdapter >> addConstraits: constraints toChild: childMorph [
-	"adds constraits by child"
+	"Adds constraits by child"
 	
 	childMorph hResizing: #spaceFill.
 	childMorph vResizing: #spaceFill.
@@ -38,8 +38,8 @@ SpMorphicGridAdapter >> applyChildrenAlignmentTo: aWidget constraints: constrain
 
 { #category : #private }
 SpMorphicGridAdapter >> basicAdd: aPresenter constraints: constraints to: aPanel [
-	| childMorph |
 
+	| childMorph |
 	childMorph := self 
 		buildMorph: aPresenter 
 		constraints: constraints.
@@ -50,8 +50,8 @@ SpMorphicGridAdapter >> basicAdd: aPresenter constraints: constraints to: aPanel
 
 { #category : #private }
 SpMorphicGridAdapter >> basicApplyChildrenAlignmentTo: aWidget constraints: constraints [
-	| alignmentWidget |
-	
+
+	| alignmentWidget |	
 	constraints hasAlignment ifFalse: [ ^ aWidget ].
 	
 	aWidget 
@@ -80,7 +80,7 @@ SpMorphicGridAdapter >> children [
 
 { #category : #factory }
 SpMorphicGridAdapter >> layout: aLayout [
-	"build of widget was differed up to here (to know what is the direction)"
+	"Build of widget was differed up to here (to know what is the direction)"
 
 	layout := aLayout.
 

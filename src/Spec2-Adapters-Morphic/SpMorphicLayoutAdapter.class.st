@@ -42,7 +42,7 @@ SpMorphicLayoutAdapter >> addKeyBindingsTo: aMorph [
 
 { #category : #private }
 SpMorphicLayoutAdapter >> applyChildrenAlignmentTo: childMorph constraints: constraints [
-	"when it applies (like the case of SpGridLayout), widgets may want to configure alignment 
+	"When it applies (like the case of SpGridLayout), widgets may want to configure alignment 
 	 here."
 	
 	^ childMorph
@@ -50,7 +50,7 @@ SpMorphicLayoutAdapter >> applyChildrenAlignmentTo: childMorph constraints: cons
 
 { #category : #styling }
 SpMorphicLayoutAdapter >> applyStyle: aMorph [
-	"layouts do not have style to apply"
+	"lLayouts do not have style to apply"
 ]
 
 { #category : #factory }
@@ -72,8 +72,8 @@ SpMorphicLayoutAdapter >> basicAdd: aPresenter constraints: constraints to: aPan
 
 { #category : #private }
 SpMorphicLayoutAdapter >> buildMorph: aPresenter constraints: constraints [ 
-	| childMorph |
 
+	| childMorph |
 	childMorph := aPresenter buildWithSpec: constraints spec.
 	self applyStyle: aPresenter to: childMorph.
 	"Add children alignment constraints (if applies)"
@@ -128,23 +128,23 @@ SpMorphicLayoutAdapter >> layout: aLayout [
 { #category : #factory }
 SpMorphicLayoutAdapter >> newPanel [
 
-	^ Morph new 
-		changeTableLayout;
-		hResizing: #spaceFill;
-		vResizing: #spaceFill;
-		color: Color transparent;
-		borderColor: Color transparent;
-		clipSubmorphs: true;
-		beSticky "stop being grabbed";
-		borderWidth: 0;
-		extent: 0@0;
-		yourself
+	^ Morph new
+		  changeTableLayout;
+		  hResizing: #spaceFill;
+		  vResizing: #spaceFill;
+		  color: Color transparent;
+		  borderColor: Color transparent;
+		  clipSubmorphs: true;
+		  "stop being grabbed"beSticky;
+		  borderWidth: 0;
+		  extent: 0 @ 0;
+		  yourself
 ]
 
 { #category : #initialization }
 SpMorphicLayoutAdapter >> replaceLayoutWith: aLayout [ 
-	| oldAdapter |
 
+	| oldAdapter |
 	self widget owner ifNil: [ ^ self ].
 
 	oldAdapter := self.
