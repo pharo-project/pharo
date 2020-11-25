@@ -5,6 +5,14 @@ Class {
 }
 
 { #category : #'testing - variables' }
+OCASTClosureAnalyzerTest >> testArgumentIsRead [
+
+	| ast |
+	ast := (OCOpalExamples >> #exampleWithArgument:) parseTree.
+	self assert: ast arguments first variable usage equals: #read
+]
+
+{ #category : #'testing - variables' }
 OCASTClosureAnalyzerTest >> testBlockArgumentIsArgumentVariable [
 	| ast blockNode |
 	ast := (OCOpalExamples>>#exampleForBlockArgument) parseTree.
