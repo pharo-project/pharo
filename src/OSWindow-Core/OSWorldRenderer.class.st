@@ -102,6 +102,9 @@ OSWorldRenderer >> doActivate [
 	attributes preferableDriver: driver.
 	osWindow := OSWindow createWithAttributes: attributes eventHandler: (OSWindowMorphicEventHandler for: world).
 	
+	OSPlatform current sdlPlatform 
+		afterSetWindowTitle: Smalltalk image imageFile fullName onWindow: osWindow.
+	
 	osWindow focus. 
 	
 	world worldState doFullRepaint.
@@ -212,6 +215,21 @@ OSWorldRenderer >> updateDamage: allDamage [
 
 	"quickly copy altered rects of canvas to Display:"
 	self osWindowRenderer updateAreas: allDamage immediate: false.
+]
+
+{ #category : #activation }
+OSWorldRenderer >> updateWindowTitle [
+
+	osWindow title: Smalltalk imageFile fullName.
+	OSPlatform current sdlPlatform
+		afterSetWindowTitle: Smalltalk imageFile fullName
+		onWindow: osWindow
+]
+
+{ #category : #accessing }
+OSWorldRenderer >> window [
+	
+	^ osWindow 
 ]
 
 { #category : #accessing }

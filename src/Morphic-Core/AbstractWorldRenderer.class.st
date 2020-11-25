@@ -151,7 +151,9 @@ AbstractWorldRenderer class >> stopProfilingRenderingTime [
 { #category : #activation }
 AbstractWorldRenderer >> activate [
 
-	alreadyActivated ifTrue: [ ^ self ].
+	alreadyActivated ifTrue: [ 
+		"Maybe I need to change the title of the window after saving the image"
+		^ self updateWindowTitle ].
 
 	self doActivate.
 	alreadyActivated := true
@@ -284,6 +286,12 @@ AbstractWorldRenderer >> restoreMorphicDisplay [
 AbstractWorldRenderer >> updateDamage: rectangles [
 
 	self subclassResponsibility
+]
+
+{ #category : #activation }
+AbstractWorldRenderer >> updateWindowTitle [
+
+	"I do nothing... maybe my subclasses extend it"
 ]
 
 { #category : #initialization }

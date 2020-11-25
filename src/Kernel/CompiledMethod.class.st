@@ -356,6 +356,12 @@ CompiledMethod >> codeForNoSource [
 	 ^(self compiler decompileMethod: self) formattedCode
 ]
 
+{ #category : #testing }
+CompiledMethod >> containsHalt [
+
+	^ self hasProperty: #containsHalt
+]
+
 { #category : #'source code management' }
 CompiledMethod >> copyWithSource: aString [
 	^self copyWithTrailerBytes: (CompiledMethodTrailer new sourceCode: aString) 
@@ -475,8 +481,11 @@ CompiledMethod >> hasProperties [
 
 { #category : #'accessing-pragmas & properties' }
 CompiledMethod >> hasProperty: aKey [
-	self propertyAt: aKey ifAbsent: [ ^false ].
-	^true.
+
+	| extendedMethodState |
+	^ (extendedMethodState := self penultimateLiteral) isMethodProperties
+		  ifTrue: [  extendedMethodState includesProperty: aKey ]
+		  ifFalse: [ false ]
 ]
 
 { #category : #accessing }

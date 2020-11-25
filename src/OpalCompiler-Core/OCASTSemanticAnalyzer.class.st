@@ -15,6 +15,7 @@ Class {
 
 { #category : #variables }
 OCASTSemanticAnalyzer >> analyseEscapingRead: var [
+	var markRead.
 	(var scope outerNotOptimizedScope ~= scope outerNotOptimizedScope ) ifFalse: [ ^self ].
 	"only escaping when they will end up in different closures"
 	var markEscapingRead.
@@ -37,7 +38,8 @@ OCASTSemanticAnalyzer >> analyseEscapingWrite: var [
 { #category : #api }
 OCASTSemanticAnalyzer >> analyze: aNode [
 	self visitNode: aNode.
-	OCASTClosureAnalyzer new visitNode: aNode
+	OCASTClosureAnalyzer new visitNode: aNode.
+	OCASTMethodMetadataAnalyser new visitNode: aNode
 ]
 
 { #category : #accessing }
@@ -143,7 +145,6 @@ OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> uninitializedVariable: variableNode [
-	variableNode variable markRead.
 	variableNode propertyAt: #semanticWarning put: #unitialized.
 ]
 

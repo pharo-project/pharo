@@ -12,20 +12,18 @@ Class {
 		'activeGreen',
 		'activeBlue',
 		'activeAlpha',
-		'cachedFontCache',
 		'renderTargetTextureCache',
-		'currentRenderTarget'
+		'currentRenderTarget',
+		'textureForObjectCache',
+		'subpixelFontFirstPassBlendMode',
+		'subpixelFontSecondPassBlendMode',
+		'premultipliedCompositeAlphaBlending'
 	],
 	#pools : [
 		'SDL2Constants'
 	],
 	#category : #'OSWindow-SDL2-Rendering'
 }
-
-{ #category : #accessing }
-OSSDL2GenericRenderer >> cachedFontCache [
-	^ cachedFontCache ifNil: [cachedFontCache := WeakKeyDictionary new]
-]
 
 { #category : #rendering }
 OSSDL2GenericRenderer >> clear [
@@ -87,10 +85,13 @@ OSSDL2GenericRenderer >> createStaticTextureFromForm: form [
 	^ self createStaticTextureFromForm: (form asFormOfDepth: 32) 
 ]
 
-{ #category : #private }
-OSSDL2GenericRenderer >> createTextureAtlasFontCacheFor: font [
-	^ OSSDL2TextureAtlasFontCache new
-		initializeWithFont: font renderer: renderer;
+{ #category : #resources }
+OSSDL2GenericRenderer >> createTextureForObjectWithExtent:  anExtent [
+	| texture |
+	texture := renderer createTextureFormat: SDL_PIXELFORMAT_ARGB8888 access: SDL_TEXTUREACCESS_STATIC width: anExtent x height: anExtent y.
+	^ OSSDL2WindowRendererTexture new
+		extent: anExtent copy;
+		handle: texture;
 		yourself
 ]
 
@@ -119,30 +120,15 @@ OSSDL2GenericRenderer >> drawRectangle: aRectangle [
 ]
 
 { #category : #rendering }
-OSSDL2GenericRenderer >> drawString: aString from: startIndex to: stopIndex in: bounds font: font color: color underline: underline underlineColor: underlineColor strikethrough: strikethrough strikethroughColor: strikethroughColor kern: kern [
-	| cachedFont endPoint startPointOffset |
-	font ifNil: [^ self].
-	
-	cachedFont := self getOrCreateCachedFontFor: font.
-	cachedFont ifNil: [ ^ self ].
-	
-	endPoint := cachedFont displayString: aString color: color from: startIndex to: stopIndex at: bounds topLeft kern: kern.
-	
-	startPointOffset := kern @ font ascent.
-	underline ifTrue: [
-		cachedFont displayUnderlineFrom: bounds topLeft + startPointOffset to: endPoint color: color
-	].
-
-	strikethrough ifTrue: [
-		cachedFont displayStrikeoutFrom: bounds topLeft + startPointOffset to: endPoint color: color
-	].
-
-]
-
-{ #category : #rendering }
 OSSDL2GenericRenderer >> drawTexture: texture in: aRectangle [
 	self setupTextureBlendingState: texture handle.
 	renderer copy: texture handle srcRect: nil dstRect: aRectangle asSDLRect
+]
+
+{ #category : #rendering }
+OSSDL2GenericRenderer >> drawTexture: texture rectangle: sourceRectangle in: destRectangle [
+	self setupTextureBlendingState: texture handle.
+	renderer copy: texture handle srcRect: sourceRectangle asSDLRect dstRect: destRectangle asSDLRect
 ]
 
 { #category : #rendering }
@@ -166,11 +152,6 @@ OSSDL2GenericRenderer >> fullClippingExtent [
 	] ensure: [ buffer free ].
 ]
 
-{ #category : #private }
-OSSDL2GenericRenderer >> getOrCreateCachedFontFor: font [
-	^ self cachedFontCache at: font ifAbsentPut: [font createCachedFontForSDL2GenericRenderer: self]
-]
-
 { #category : #resources }
 OSSDL2GenericRenderer >> getOrCreateRenderTargetTextureFor: anObject withExtent: anExtent [
 	| result |
@@ -187,6 +168,27 @@ OSSDL2GenericRenderer >> getOrCreateStaticTextureFromForm: form [
 	^ self staticTextureCache at: form ifAbsentPut: [ self createStaticTextureFromForm: form ]
 ]
 
+{ #category : #resources }
+OSSDL2GenericRenderer >> getOrCreateTextureFor: anObject withExtent: anExtent [
+	| result |
+	result := self textureForObjectCache at: anObject ifAbsentPut: [ self createTextureForObjectWithExtent: anExtent ].
+	result extent ~= anExtent ifTrue: [
+		result := self createTextureForObjectWithExtent: anExtent.
+		self textureForObjectCache at: anObject put: result
+	].
+	^ result
+]
+
+{ #category : #resources }
+OSSDL2GenericRenderer >> getRenderTargetTextureForObjectOrNil: anObject [
+	^ self renderTargetTextureCache at: anObject ifAbsent: [ nil ]
+]
+
+{ #category : #resources }
+OSSDL2GenericRenderer >> getTextureForObjectOrNil: anObject [
+	^ self textureForObjectCache at: anObject ifAbsent: [ nil ]
+]
+
 { #category : #private }
 OSSDL2GenericRenderer >> mapColorChannel: colorChannel [
 	^ colorChannel * 255 asInteger min: 255 max: 0
@@ -197,6 +199,13 @@ OSSDL2GenericRenderer >> pixelExtent [
 	^ renderer
 		ifNotNil: [ renderer outputExtent ]
 		ifNil: [ super pixelExtent ]
+]
+
+{ #category : #'blending mode' }
+OSSDL2GenericRenderer >> premultipliedCompositeAlphaBlending [
+	^ premultipliedCompositeAlphaBlending ifNil: [premultipliedCompositeAlphaBlending :=
+		SDL2 composeCustomBlendMode_srcColorFactor: SDL_BLENDFACTOR_ONE dstColorFactor: SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA colorOperation: SDL_BLENDOPERATION_ADD
+		srcAlphaFactor: SDL_BLENDFACTOR_ONE dstAlphaFactor: SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA alphaOperation: SDL_BLENDOPERATION_ADD ]
 ]
 
 { #category : #rendering }
@@ -228,6 +237,30 @@ OSSDL2GenericRenderer >> staticTextureCache [
 	^ staticTextureCache ifNil: [ staticTextureCache := WeakKeyDictionary new ]
 ]
 
+{ #category : #'blending mode' }
+OSSDL2GenericRenderer >> subpixelFontFirstPassBlendMode [
+	^ subpixelFontFirstPassBlendMode ifNil: [subpixelFontFirstPassBlendMode :=
+		SDL2 composeCustomBlendMode_srcColorFactor: SDL_BLENDFACTOR_ZERO dstColorFactor: SDL_BLENDFACTOR_ONE_MINUS_SRC_COLOR colorOperation: SDL_BLENDOPERATION_ADD
+		srcAlphaFactor: SDL_BLENDFACTOR_ZERO dstAlphaFactor: SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA alphaOperation: SDL_BLENDOPERATION_ADD ]
+]
+
+{ #category : #'blending mode' }
+OSSDL2GenericRenderer >> subpixelFontSecondPassBlendMode [
+	^ subpixelFontSecondPassBlendMode ifNil: [subpixelFontSecondPassBlendMode :=
+		SDL2 composeCustomBlendMode_srcColorFactor: SDL_BLENDFACTOR_ONE dstColorFactor: SDL_BLENDFACTOR_ONE colorOperation: SDL_BLENDOPERATION_ADD
+		srcAlphaFactor: SDL_BLENDFACTOR_ONE dstAlphaFactor: SDL_BLENDFACTOR_ONE alphaOperation: SDL_BLENDOPERATION_ADD ]
+]
+
+{ #category : #testing }
+OSSDL2GenericRenderer >> supportsRenderTargets [
+	^ renderer renderTargetSupported
+]
+
+{ #category : #private }
+OSSDL2GenericRenderer >> textureForObjectCache [
+	^ textureForObjectCache ifNil: [ textureForObjectCache := WeakKeyDictionary new ]
+]
+
 { #category : #rendering }
 OSSDL2GenericRenderer >> useAdditiveColorBlending [
 	self setBlendMode: SDL_BLENDMODE_ADD.
@@ -246,6 +279,21 @@ OSSDL2GenericRenderer >> useModulatingColorBlending [
 { #category : #rendering }
 OSSDL2GenericRenderer >> useNoBlending [
 	self setBlendMode: SDL_BLENDMODE_NONE
+]
+
+{ #category : #rendering }
+OSSDL2GenericRenderer >> usePremultipliedCompositeAlphaBlending [
+	self setBlendMode: self premultipliedCompositeAlphaBlending
+]
+
+{ #category : #'blending mode' }
+OSSDL2GenericRenderer >> useSubpixelFontFirstPassBlending [
+	self setBlendMode: self subpixelFontFirstPassBlendMode
+]
+
+{ #category : #'blending mode' }
+OSSDL2GenericRenderer >> useSubpixelFontSecondPassBlending [
+	self setBlendMode: self subpixelFontSecondPassBlendMode
 ]
 
 { #category : #rendering }

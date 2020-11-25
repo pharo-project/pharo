@@ -52,6 +52,11 @@ OSWindowNullGenericRenderer >> drawTexture: texture in: rectangle [
 ]
 
 { #category : #rendering }
+OSWindowNullGenericRenderer >> drawTexture: texture rectangle: sourceRectangle in: destRectangle [
+	
+]
+
+{ #category : #rendering }
 OSWindowNullGenericRenderer >> fillRectangle: aRectangle [
 	"Do nothing"
 ]
@@ -63,6 +68,21 @@ OSWindowNullGenericRenderer >> getOrCreateRenderTargetTextureFor: anObject withE
 
 { #category : #resources }
 OSWindowNullGenericRenderer >> getOrCreateStaticTextureFromForm: from [
+	^ nil
+]
+
+{ #category : #resources }
+OSWindowNullGenericRenderer >> getOrCreateTextureFor: anObject withExtent: anExtent [
+	^ nil
+]
+
+{ #category : #resources }
+OSWindowNullGenericRenderer >> getRenderTargetTextureForObjectOrNil: anObject [
+	^ nil
+]
+
+{ #category : #resources }
+OSWindowNullGenericRenderer >> getTextureForObjectOrNil: anObject [
 	^ nil
 ]
 
@@ -100,6 +120,20 @@ OSWindowNullGenericRenderer >> useModulatingColorBlending [
 
 { #category : #'blending mode' }
 OSWindowNullGenericRenderer >> useNoBlending [
+]
+
+{ #category : #'blending mode' }
+OSWindowNullGenericRenderer >> usePremultipliedCompositeAlphaBlending [
+]
+
+{ #category : #'blending mode' }
+OSWindowNullGenericRenderer >> useSubpixelFontFirstPassBlending [
+	"Do nothing here"
+]
+
+{ #category : #'blending mode' }
+OSWindowNullGenericRenderer >> useSubpixelFontSecondPassBlending [
+	"Do nothing here"
 ]
 
 { #category : #rendering }
