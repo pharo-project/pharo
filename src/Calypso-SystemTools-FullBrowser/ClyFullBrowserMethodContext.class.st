@@ -2,25 +2,25 @@
 I am a context of selected methods in full browser
 "
 Class {
-	#name : #ClyMethodContextOfFullBrowser,
+	#name : #ClyFullBrowserMethodContext,
 	#superclass : #ClyFullBrowserContext,
 	#category : #'Calypso-SystemTools-FullBrowser-Contexts'
 }
 
 { #category : #'selection strategy' }
-ClyMethodContextOfFullBrowser class >> selectionStrategy [
+ClyFullBrowserMethodContext class >> selectionStrategy [
 	<classAnnotation>
 	
 	^ClyContextSelectionStrategy for: ClyFullBrowser selectionType: ClyMethod
 ]
 
 { #category : #'browser state' }
-ClyMethodContextOfFullBrowser >> restoreBrowserState [
+ClyFullBrowserMethodContext >> restoreBrowserState [
 
 	self browser selectMethod: self lastSelectedMethod
 ]
 
 { #category : #'selection-methods' }
-ClyMethodContextOfFullBrowser >> selectedMethodItems [
+ClyFullBrowserMethodContext >> selectedMethodItems [
 	^selectedItems 
 ]

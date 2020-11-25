@@ -11,14 +11,14 @@ Class {
 ClyRemoveMethodGroupCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 100000 for: ClyMethodGroupContextOfFullBrowser 
+	^CmdContextMenuActivation byRootGroupItemOrder: 100000 for: ClyFullBrowserMethodGroupContext 
 ]
 
 { #category : #activation }
 ClyRemoveMethodGroupCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 	
-	^CmdShortcutActivation removalFor: ClyMethodGroupContextOfFullBrowser
+	^CmdShortcutActivation removalFor: ClyFullBrowserMethodGroupContext
 ]
 
 { #category : #accessing }

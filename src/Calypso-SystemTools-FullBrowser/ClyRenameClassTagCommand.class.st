@@ -30,14 +30,14 @@ ClyRenameClassTagCommand class >> canBeExecutedInContext: aToolContext [
 ClyRenameClassTagCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 1 for: ClyClassGroupContextOfFullBrowser 
+	^CmdContextMenuActivation byRootGroupItemOrder: 1 for: ClyFullBrowserClassGroupContext 
 ]
 
 { #category : #activation }
 ClyRenameClassTagCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 	
-	^CmdShortcutActivation renamingFor: ClyClassGroupContextOfFullBrowser
+	^CmdShortcutActivation renamingFor: ClyFullBrowserClassGroupContext
 ]
 
 { #category : #execution }

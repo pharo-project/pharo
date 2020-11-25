@@ -2,7 +2,7 @@
 I am a global context of full browser
 "
 Class {
-	#name : #ClyGlobalContextOfFullBrowser,
+	#name : #ClyFullBrowserGlobalContext,
 	#superclass : #ClyFullBrowserContext,
 	#category : #'Calypso-SystemTools-FullBrowser-Contexts'
 }

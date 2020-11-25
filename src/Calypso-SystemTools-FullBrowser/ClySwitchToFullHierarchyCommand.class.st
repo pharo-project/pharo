@@ -11,7 +11,7 @@ Class {
 ClySwitchToFullHierarchyCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 	
-	^CmdShortcutActivation by: $h meta for: ClyClassContextOfFullBrowser
+	^CmdShortcutActivation by: $h meta for: ClyFullBrowserClassContext
 ]
 
 { #category : #accessing }
