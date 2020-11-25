@@ -481,8 +481,11 @@ CompiledMethod >> hasProperties [
 
 { #category : #'accessing-pragmas & properties' }
 CompiledMethod >> hasProperty: aKey [
-	self propertyAt: aKey ifAbsent: [ ^false ].
-	^true.
+
+	| extendedMethodState |
+	^ (extendedMethodState := self penultimateLiteral) isMethodProperties
+		  ifTrue: [  extendedMethodState includesProperty: aKey ]
+		  ifFalse: [ false ]
 ]
 
 { #category : #accessing }
