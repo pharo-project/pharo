@@ -32,7 +32,7 @@ SycPushDownMethodCommand >> asRefactorings [
 		pushDown: methods  
 		from: methods first origin.
 	refactoring setOption: #selectorsFromView toUse: [ :ref |
-		dialog := RBPushDownPreview on: ref.
+		dialog := RBPushDownPreviewPresenter on: ref.
 		dialog cancelled ifTrue: [ CmdCommandAborted signal ]].
 	^ OrderedCollection with: refactoring 
 ]
