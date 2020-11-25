@@ -4,12 +4,12 @@ Extension { #name : #ClyMethodCreationToolMorph }
 ClyMethodCreationToolMorph class >> fullBrowserActivation [
 	<classAnnotation>
 	
-	^ClyTabActivationStrategy for: ClyMethodGroupContextOfFullBrowser 
+	^ClyTabActivationStrategy for: ClyFullBrowserMethodGroupContext 
 ]
 
 { #category : #'*Calypso-SystemTools-FullBrowser' }
 ClyMethodCreationToolMorph class >> fullBrowserActivation2 [
 	<classAnnotation>
 	
-	^ClyTabActivationStrategy for: ClyVariableContextOfFullBrowser 
+	^ClyTabActivationStrategy for: ClyFullBrowserVariableContext 
 ]

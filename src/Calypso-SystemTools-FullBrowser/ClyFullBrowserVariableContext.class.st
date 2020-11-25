@@ -2,13 +2,13 @@
 I am a context of selected variables in full browser
 "
 Class {
-	#name : #ClyVariableContextOfFullBrowser,
+	#name : #ClyFullBrowserVariableContext,
 	#superclass : #ClyFullBrowserContext,
 	#category : #'Calypso-SystemTools-FullBrowser-Contexts'
 }
 
 { #category : #'selection strategy' }
-ClyVariableContextOfFullBrowser class >> selectionStrategy [
+ClyFullBrowserVariableContext class >> selectionStrategy [
 	<classAnnotation>
 	
 	^(ClyContextSelectionStrategy for: ClyFullBrowser selectionType: ClyVariableMethodGroup)
@@ -16,28 +16,28 @@ ClyVariableContextOfFullBrowser class >> selectionStrategy [
 ]
 
 { #category : #'selection strategy' }
-ClyVariableContextOfFullBrowser class >> selectionStrategy2 [
+ClyFullBrowserVariableContext class >> selectionStrategy2 [
 	<classAnnotation>
 	
 	^(ClyContextSelectionStrategy for: ClyFullBrowser selectionType: ClyVariable)
 ]
 
 { #category : #'selection-variables' }
-ClyVariableContextOfFullBrowser >> isGlobalVariableSelected [
+ClyFullBrowserVariableContext >> isGlobalVariableSelected [
 	^false
 ]
 
 { #category : #'selection-variables' }
-ClyVariableContextOfFullBrowser >> isVariableSelected [
+ClyFullBrowserVariableContext >> isVariableSelected [
 	^self hasSelectedItems 
 ]
 
 { #category : #'selection-variables' }
-ClyVariableContextOfFullBrowser >> lastSelectedVariable [
+ClyFullBrowserVariableContext >> lastSelectedVariable [
 	^self lastSelectedObject variable
 ]
 
 { #category : #'selection-variables' }
-ClyVariableContextOfFullBrowser >> selectedVariables [
+ClyFullBrowserVariableContext >> selectedVariables [
 	^self selectedObjects collect: [ :each | each variable ]
 ]

@@ -4,5 +4,5 @@ Extension { #name : #SycAddNewMethodTagCommand }
 SycAddNewMethodTagCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 2 for: ClyMethodGroupContextOfFullBrowser 
+	^CmdContextMenuActivation byRootGroupItemOrder: 2 for: ClyFullBrowserMethodGroupContext 
 ]

@@ -2,19 +2,19 @@
 I am a context of selected method groups in full browser
 "
 Class {
-	#name : #ClyMethodGroupContextOfFullBrowser,
+	#name : #ClyFullBrowserMethodGroupContext,
 	#superclass : #ClyFullBrowserContext,
 	#category : #'Calypso-SystemTools-FullBrowser-Contexts'
 }
 
 { #category : #'selection strategy' }
-ClyMethodGroupContextOfFullBrowser class >> selectionStrategy [
+ClyFullBrowserMethodGroupContext class >> selectionStrategy [
 	<classAnnotation>
 	
 	^ClyContextSelectionStrategy for: ClyFullBrowser selectionType: ClyMethodGroup
 ]
 
 { #category : #'selection-method groups' }
-ClyMethodGroupContextOfFullBrowser >> selectedMethodGroupItems [
+ClyFullBrowserMethodGroupContext >> selectedMethodGroupItems [
 	^selectedItems
 ]

@@ -33,7 +33,7 @@ ClyClassSideLinkTableDecorator class >> decorateTableCell: anItemCellMorph of: a
 ClyClassSideLinkTableDecorator class >> methodDecorationStrategy [
 	<classAnnotation>
 	
-	^ClyTableDecorationStrategy for: ClyMethodContextOfFullBrowser 
+	^ClyTableDecorationStrategy for: ClyFullBrowserMethodContext 
 ]
 
 { #category : #decoration }

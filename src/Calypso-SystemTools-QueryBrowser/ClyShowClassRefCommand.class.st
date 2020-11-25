@@ -21,21 +21,21 @@ Class {
 ClyShowClassRefCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyClassContextOfFullBrowser
+	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyFullBrowserClassContext
 ]
 
 { #category : #activation }
 ClyShowClassRefCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 	
-	^CmdShortcutActivation by: $n meta for: ClyClassContextOfFullBrowser
+	^CmdShortcutActivation by: $n meta for: ClyFullBrowserClassContext
 ]
 
 { #category : #activation }
 ClyShowClassRefCommand class >> fullBrowserToolbarActivation [
 	<classAnnotation>
 	
-	^ClyToolbarActivation byItemOf: ClyButtonToolbarGroup for: ClyClassContextOfFullBrowser 
+	^ClyToolbarActivation byItemOf: ClyButtonToolbarGroup for: ClyFullBrowserClassContext 
 ]
 
 { #category : #activation }

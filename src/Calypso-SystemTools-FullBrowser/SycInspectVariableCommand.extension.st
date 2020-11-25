@@ -4,7 +4,7 @@ Extension { #name : #SycInspectVariableCommand }
 SycInspectVariableCommand class >> fullBrowserDoubleClickActivation [
 	<classAnnotation>
 	
-	^(CmdDoubleClickActivation for: ClyVariableContextOfFullBrowser)
+	^(CmdDoubleClickActivation for: ClyFullBrowserVariableContext)
 		priority: 10000
 ]
 
@@ -12,7 +12,7 @@ SycInspectVariableCommand class >> fullBrowserDoubleClickActivation [
 SycInspectVariableCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyVariableContextOfFullBrowser 
+	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyFullBrowserVariableContext 
 ]
 
 { #category : #'*Calypso-SystemTools-FullBrowser' }
@@ -20,6 +20,6 @@ SycInspectVariableCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 	
 	^(CmdShortcutActivation 
-		by: PharoShortcuts current inspectItShortcut for: ClyVariableContextOfFullBrowser)
+		by: PharoShortcuts current inspectItShortcut for: ClyFullBrowserVariableContext)
 			priority: 100000
 ]

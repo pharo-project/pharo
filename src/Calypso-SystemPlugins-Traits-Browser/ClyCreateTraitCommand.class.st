@@ -31,7 +31,7 @@ ClyCreateTraitCommand class >> canBeExecutedInContext: aBrowserContext [
 ClyCreateTraitCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 3 for: ClyClassContextOfFullBrowser 
+	^CmdContextMenuActivation byRootGroupItemOrder: 3 for: ClyFullBrowserClassContext 
 ]
 
 { #category : #accessing }

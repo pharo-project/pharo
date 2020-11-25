@@ -4,12 +4,12 @@ Extension { #name : #SycRemoveVariableCommand }
 SycRemoveVariableCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 10000 for: ClyVariableContextOfFullBrowser 
+	^CmdContextMenuActivation byRootGroupItemOrder: 10000 for: ClyFullBrowserVariableContext 
 ]
 
 { #category : #'*Calypso-SystemTools-FullBrowser' }
 SycRemoveVariableCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 	
-	^CmdShortcutActivation removalFor: ClyVariableContextOfFullBrowser
+	^CmdShortcutActivation removalFor: ClyFullBrowserVariableContext
 ]

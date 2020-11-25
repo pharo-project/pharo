@@ -2,25 +2,25 @@
 I am a context of selected class groups in full browser
 "
 Class {
-	#name : #ClyClassGroupContextOfFullBrowser,
+	#name : #ClyFullBrowserClassGroupContext,
 	#superclass : #ClyFullBrowserContext,
 	#category : #'Calypso-SystemTools-FullBrowser-Contexts'
 }
 
 { #category : #'selection strategy' }
-ClyClassGroupContextOfFullBrowser class >> selectionStrategy [
+ClyFullBrowserClassGroupContext class >> selectionStrategy [
 	<classAnnotation>
 	
 	^ClyContextSelectionStrategy for: ClyFullBrowser selectionType: ClyClassGroup
 ]
 
 { #category : #testing }
-ClyClassGroupContextOfFullBrowser >> isClassGroupSelected [
+ClyFullBrowserClassGroupContext >> isClassGroupSelected [
 	^self hasSelectedItems 
 ]
 
 { #category : #testing }
-ClyClassGroupContextOfFullBrowser >> isClassTagSelected [
+ClyFullBrowserClassGroupContext >> isClassTagSelected [
 	| classGroupClass |
 	self isClassGroupSelected ifFalse: [ ^false ].
 	
@@ -30,28 +30,28 @@ ClyClassGroupContextOfFullBrowser >> isClassTagSelected [
 ]
 
 { #category : #testing }
-ClyClassGroupContextOfFullBrowser >> isPackageSelected [
+ClyFullBrowserClassGroupContext >> isPackageSelected [
 	^tool packageSelection isEmpty not
 ]
 
 { #category : #'selection-class groups' }
-ClyClassGroupContextOfFullBrowser >> lastSelectedClassGroup [
+ClyFullBrowserClassGroupContext >> lastSelectedClassGroup [
 	^self lastSelectedObject
 ]
 
 { #category : #'selection-class groups' }
-ClyClassGroupContextOfFullBrowser >> lastSelectedClassTag [
+ClyFullBrowserClassGroupContext >> lastSelectedClassTag [
 	
 	^self lastSelectedObjectIn: self selectedClassTags 
 ]
 
 { #category : #'selection-class groups' }
-ClyClassGroupContextOfFullBrowser >> selectedClassGroups [
+ClyFullBrowserClassGroupContext >> selectedClassGroups [
 	^self selectedObjects
 ]
 
 { #category : #'selection-class groups' }
-ClyClassGroupContextOfFullBrowser >> selectedClassTags [
+ClyFullBrowserClassGroupContext >> selectedClassTags [
 	
 	^selectedItems 
 		select: [ :each | each type isBasedOnClassTag ] 

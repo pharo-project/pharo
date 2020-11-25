@@ -4,12 +4,12 @@ Extension { #name : #SycCopyClassCommand }
 SycCopyClassCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemFor: ClyClassContextOfFullBrowser 
+	^CmdContextMenuActivation byRootGroupItemFor: ClyFullBrowserClassContext 
 ]
 
 { #category : #'*Calypso-SystemTools-FullBrowser' }
 SycCopyClassCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 	
-	^CmdShortcutActivation by: $c meta for: ClyClassContextOfFullBrowser 
+	^CmdShortcutActivation by: $c meta for: ClyFullBrowserClassContext 
 ]

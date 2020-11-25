@@ -18,7 +18,7 @@ SycAbstractAllInstVarAccessorsCommand class >> browserShortcutActivation [
 SycAbstractAllInstVarAccessorsCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 2.1 for: ClyClassContextOfFullBrowser 
+	^CmdContextMenuActivation byRootGroupItemOrder: 2.1 for: ClyFullBrowserClassContext 
 ]
 
 { #category : #accessing }

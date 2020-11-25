@@ -2,25 +2,25 @@
 I am a context of selected classes in full browser
 "
 Class {
-	#name : #ClyClassContextOfFullBrowser,
+	#name : #ClyFullBrowserClassContext,
 	#superclass : #ClyFullBrowserContext,
 	#category : #'Calypso-SystemTools-FullBrowser-Contexts'
 }
 
 { #category : #'selection strategy' }
-ClyClassContextOfFullBrowser class >> selectionStrategy [
+ClyFullBrowserClassContext class >> selectionStrategy [
 	<classAnnotation>
 	
 	^ClyContextSelectionStrategy for: ClyFullBrowser selectionType: ClyClass
 ]
 
 { #category : #'browser state' }
-ClyClassContextOfFullBrowser >> restoreBrowserState [
+ClyFullBrowserClassContext >> restoreBrowserState [
 
 	self browser selectClass: self lastSelectedClass
 ]
 
 { #category : #'selection-classes' }
-ClyClassContextOfFullBrowser >> selectedClassItems [
+ClyFullBrowserClassContext >> selectedClassItems [
 	^selectedItems
 ]
