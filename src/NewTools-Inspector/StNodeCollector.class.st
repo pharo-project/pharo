@@ -1,3 +1,11 @@
+"
+A tool to collect inspection nodes. 
+It acts on an object.
+
+```
+(StNodeCollector for: anObject) collectNodes.
+```
+"
 Class {
 	#name : #StNodeCollector,
 	#superclass : #Object,

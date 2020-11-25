@@ -86,7 +86,8 @@ Class {
 		'extensionToolsNotebook',
 		'toolbarCommandGroup',
 		'debuggerActionModel',
-		'unsavedCodeChanges'
+		'unsavedCodeChanges',
+		'hasProceeded'
 	],
 	#classVars : [
 		'ActivateDebuggerExtensions',
@@ -377,10 +378,16 @@ StDebugger >> canExecuteRestartCommand [
 
 { #category : #actions }
 StDebugger >> clear [
+	
 	extensionToolsNotebook pages
 		do: [ :page | page activePresenter windowIsClosing ].
 	extensionTools := nil.
 	self removeActionsForSession: self session.
+
+	"If I have been proceeded the window has been closed programmatically and I do not need to do this".
+	hasProceeded 
+		ifTrue: [ ^self ].
+
 	self debuggerActionModel clearDebugSession.
 	self unsubscribeFromSystemAnnouncer
 	
@@ -456,7 +463,9 @@ StDebugger >> createMissingMethod [
 		               self interruptedContext receiver class.
 	self createMissingMethodFor: msg in: chosenClass ]
 		on: Abort
-		do: [ ^ self ]
+		do: [ ^ self ].
+		
+	code takeKeyboardFocus 
 ]
 
 { #category : #actions }
@@ -587,7 +596,9 @@ StDebugger >> initialize [
 	self debuggerActionModel updateContextPredicate.			
 	self setSessionHolderSubscriptions.
 	self forceSessionUpdate.
-	self subscribeToMethodAddedAnnouncement
+	self subscribeToMethodAddedAnnouncement.
+	
+	hasProceeded := false.
 ]
 
 { #category : #initialization }
@@ -689,9 +700,10 @@ StDebugger >> initializeStack [
 						  ifFalse: [ method selector ] ])
 				 sortFunction: nil;
 				 yourself);
-		addColumn:
-			((SpStringTableColumn title: 'Package' evaluated: [ :item | 
-					item method methodClass package name asString])
+		addColumn: ((SpStringTableColumn
+				  title: 'Package'
+				  evaluated: [ :item | 
+					  item method methodClass package name asString ])
 				 sortFunction: nil;
 				 yourself).
 	stackTable transmitDo: [ :context | 
@@ -793,6 +805,8 @@ StDebugger >> printReceiverClassInContext: aContext [
 
 { #category : #actions }
 StDebugger >> proceedDebugSession [ 
+
+	hasProceeded := true.
 	self debuggerActionModel proceedDebugSession.
 	self close
 ]

@@ -88,20 +88,21 @@ StSindarinBytecodeDebuggerPresenter >> toolbarActions [
 
 { #category : #updating }
 StSindarinBytecodeDebuggerPresenter >> updateBytecode [
+
 	| selectionIndex |
 	bytecodeList := self sindarin currentBytecode.
 	currentPC := self sindarin pc.
 	bytecode
 		items: bytecodeList;
-		icons: [ :elem | 
+		displayIcon: [ :elem | 
 			elem offset = currentPC
 				ifTrue: [ Smalltalk iconNamed: #glamorousRight ]
 				ifFalse: [ Smalltalk iconNamed: #blank ] ].
-	bcContextInspection
-		model: (StSindarinBytecodeContextInspectorModel on: self sindarin context).
-	selectionIndex := (currentPC - bytecodeList first offset) + 1.
-	selectionIndex <= bytecodeList size
-		ifTrue: [ bytecode selectIndex: selectionIndex ]
+	bcContextInspection model:
+		(StSindarinBytecodeContextInspectorModel on: self sindarin context).
+	selectionIndex := currentPC - bytecodeList first offset + 1.
+	selectionIndex <= bytecodeList size ifTrue: [ 
+		bytecode selectIndex: selectionIndex ]
 ]
 
 { #category : #updating }

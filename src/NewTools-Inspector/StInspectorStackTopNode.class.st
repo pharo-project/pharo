@@ -1,3 +1,7 @@
+"
+A model for the `top` stack node. 
+This is to be used when debugging.
+"
 Class {
 	#name : #StInspectorStackTopNode,
 	#superclass : #StInspectorNode,

@@ -188,9 +188,9 @@ StDebuggerInspector >> updateEvaluationPaneReceiver [
 	| context evaluator |
 	
 	context := self model inspectedObject context.
-	evaluator := inspector millerList pages first evaluator.
+	"evaluator := inspector millerList pages first evaluator.
 
-	evaluator beForContextReceiver: context
+	evaluator beForContextReceiver: context"
 ]
 
 { #category : #layout }

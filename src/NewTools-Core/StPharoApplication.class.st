@@ -1,6 +1,9 @@
 Class {
 	#name : #StPharoApplication,
 	#superclass : #SpApplication,
+	#instVars : [
+		'iconProvider'
+	],
 	#classVars : [
 		'Current'
 	],
@@ -31,6 +34,24 @@ StPharoApplication class >> startUp: resuming [
 
 	Current ifNil: [ ^ self ].
 	Current startUp: resuming
+]
+
+{ #category : #'accessing resources' }
+StPharoApplication >> iconNamed: aSymbol [
+
+	^ self iconProvider iconNamed: aSymbol
+]
+
+{ #category : #'accessing resources' }
+StPharoApplication >> iconProvider [
+
+	^ iconProvider ifNil: [ iconProvider := StPharoDefaultIconProvider new ]
+]
+
+{ #category : #'accessing resources' }
+StPharoApplication >> iconProvider: anIconProvider [
+	
+	iconProvider := anIconProvider
 ]
 
 { #category : #initialization }

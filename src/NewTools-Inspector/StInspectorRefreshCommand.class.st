@@ -14,20 +14,17 @@ StInspectorRefreshCommand class >> defaultDescription [
 	^ 'Refresh current panel'
 ]
 
-{ #category : #default }
-StInspectorRefreshCommand class >> defaultName [
-	<toolbarInspectCommand: 30>
+{ #category : #initialization }
+StInspectorRefreshCommand class >> defaultIconName [
 
-	^ 'Refresh'
+	^ #glamorousRefresh
 ]
 
-{ #category : #converting }
-StInspectorRefreshCommand >> asSpecCommand [
+{ #category : #default }
+StInspectorRefreshCommand class >> defaultName [
+	<toolbarInspectCommand: 10>
 
-	^ super asSpecCommand 
-		iconName: #glamorousRefresh;
-		beDisplayedOnRightSide;
-		yourself
+	^ 'Refresh'
 ]
 
 { #category : #execution }
