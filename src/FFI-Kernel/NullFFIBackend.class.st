@@ -1,3 +1,6 @@
+"
+I am a null implementation of a FFIBackend
+"
 Class {
 	#name : #NullFFIBackend,
 	#superclass : #FFIBackend,

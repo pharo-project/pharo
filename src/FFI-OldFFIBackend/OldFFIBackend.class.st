@@ -1,3 +1,6 @@
+"
+I am an FFIBackend using SqueakFFI plugin
+"
 Class {
 	#name : #OldFFIBackend,
 	#superclass : #FFIBackend,
