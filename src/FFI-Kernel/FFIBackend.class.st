@@ -45,12 +45,6 @@ FFIBackend >> allocate: byteSize [
 	^self subclassResponsibility
 ]
 
-{ #category : #accessing }
-FFIBackend >> calloutAPIClass [
-	
-	^ FFICalloutAPI 
-]
-
 { #category : #'instance creation' }
 FFIBackend >> free: anExternalAddress [
 
