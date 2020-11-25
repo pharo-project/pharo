@@ -84,6 +84,19 @@ FFICalloutMethodBuilder >> createFFICalloutLiteralFromSpec: functionSpec [
 	^ externalFunction
 ]
 
+{ #category : #'as yet unclassified' }
+FFICalloutMethodBuilder >> extractLibrary [
+	"Obtain the library to use"
+	| ffiLibrary |
+	
+	ffiLibrary := library ifNil: [sender receiver ffiLibrary].	
+	ffiLibrary := ffiLibrary isClass 
+		ifFalse: [ ffiLibrary asFFILibrary ]
+		ifTrue: [ ffiLibrary uniqueInstance ].
+
+	^ ffiLibrary
+]
+
 { #category : #private }
 FFICalloutMethodBuilder >> generate [
 	^ self generateMethodFromSpec: (self parseSignature: self signature)
@@ -115,11 +128,7 @@ FFICalloutMethodBuilder >> generateMethodFromSpec: functionSpec [
 	| ir ffiLibrary properties |
 	functionSpec resolveUsing: self requestor.
 
-	"Obtain the library to use"
-	ffiLibrary := library ifNil: [sender receiver ffiLibrary].	
-	ffiLibrary := ffiLibrary isClass 
-		ifFalse: [ ffiLibrary asFFILibrary ]
-		ifTrue: [ ffiLibrary uniqueInstance ].
+	ffiLibrary := self extractLibrary.
 
 	ir := IRBuilder buildIR: [ :builder | | r |
 		

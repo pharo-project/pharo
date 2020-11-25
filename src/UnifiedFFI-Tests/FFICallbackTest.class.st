@@ -87,6 +87,10 @@ FFICallbackTest >> testCqsortWithByteArray [
 { #category : #tests }
 FFICallbackTest >> testEnumerationReturnValue [
 	| cb returnValue |
+	
+	"This tests is only valid if using the alien callbacks"
+	(FFIBackend current isKindOf: OldFFIBackend) ifFalse: [ ^ self skip].
+	
 	"Issue 19145 - change semantics so that enumerations can be returned
 	from callback without sending #value to it."
 	cb := FFICallback
