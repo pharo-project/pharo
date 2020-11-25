@@ -2,7 +2,7 @@
 I'm a base port.
 "
 Class {
-	#name : #SpPort,
+	#name : #SpAbstractPort,
 	#superclass : #Object,
 	#instVars : [
 		'name',
@@ -12,8 +12,13 @@ Class {
 	#category : #'Spec2-Transmission-Base'
 }
 
+{ #category : #testing }
+SpAbstractPort class >> isAbstract [ 
+	^self name = #SpAbstractPort
+]
+
 { #category : #'instance creation' }
-SpPort class >> newDelegate: aBlock [ 
+SpAbstractPort class >> newDelegate: aBlock [ 
 
 	^ self new 
 		delegateTo: aBlock;
@@ -21,7 +26,7 @@ SpPort class >> newDelegate: aBlock [
 ]
 
 { #category : #'instance creation' }
-SpPort class >> newName: aName [
+SpAbstractPort class >> newName: aName [
 
 	^ self new 
 		name: aName;
@@ -29,7 +34,7 @@ SpPort class >> newName: aName [
 ]
 
 { #category : #'instance creation' }
-SpPort class >> newName: aName delegate: aBlock [ 
+SpAbstractPort class >> newName: aName delegate: aBlock [ 
 
 	^ self new 
 		name: aName;
@@ -38,7 +43,7 @@ SpPort class >> newName: aName delegate: aBlock [
 ]
 
 { #category : #'instance creation' }
-SpPort class >> newPresenter: aPresenter [
+SpAbstractPort class >> newPresenter: aPresenter [
 
 	^ self new 
 		presenter: aPresenter;
@@ -46,19 +51,19 @@ SpPort class >> newPresenter: aPresenter [
 ]
 
 { #category : #accessing }
-SpPort class >> portName [
+SpAbstractPort class >> portName [
 
 	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
-SpPort >> delegateTo: aPresenter [
+SpAbstractPort >> delegateTo: aPresenter [
 
 	delegation := aPresenter
 ]
 
 { #category : #accessing }
-SpPort >> destinationPresenter [
+SpAbstractPort >> destinationPresenter [
 
 	^ delegation 
 		ifNotNil: [ delegation value ]
@@ -66,36 +71,36 @@ SpPort >> destinationPresenter [
 ]
 
 { #category : #testing }
-SpPort >> isInput [ 
+SpAbstractPort >> isInput [ 
 
 	^ false
 ]
 
 { #category : #testing }
-SpPort >> isOutput [
+SpAbstractPort >> isOutput [
 
 	^ false
 ]
 
 { #category : #accessing }
-SpPort >> name [
+SpAbstractPort >> name [
 
 	^ name ifNil: [ self class portName ]
 ]
 
 { #category : #accessing }
-SpPort >> name: anObject [
+SpAbstractPort >> name: anObject [
 	name := anObject
 ]
 
 { #category : #accessing }
-SpPort >> presenter [ 
+SpAbstractPort >> presenter [ 
 
 	^ presenter
 ]
 
 { #category : #accessing }
-SpPort >> presenter: aPresenter [
+SpAbstractPort >> presenter: aPresenter [
 
 	presenter := aPresenter
 ]

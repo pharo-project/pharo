@@ -1,12 +1,17 @@
+"
+I'm a ""print it"" command. 
+I will evalute the selection (or line) of the playground and print the result as string
+"
 Class {
 	#name : #SpCodePrintItCommand,
 	#superclass : #SpCodeSelectionCommand,
-	#category : #'Spec2-Code-Commands'
+	#category : #'Spec2-Code-Commands-Base'
 }
 
 { #category : #defaults }
 SpCodePrintItCommand class >> defaultIconName [
-	^#smallPrintIt
+
+	^ #smallPrintIt
 ]
 
 { #category : #default }

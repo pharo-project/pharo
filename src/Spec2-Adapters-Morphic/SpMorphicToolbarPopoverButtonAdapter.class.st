@@ -1,3 +1,6 @@
+"
+I'm the adapter used to bridge a ToolBarPopoverButton and its morphic representation.
+"
 Class {
 	#name : #SpMorphicToolbarPopoverButtonAdapter,
 	#superclass : #SpMorphicToolbarButtonAdapter,

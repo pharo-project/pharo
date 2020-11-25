@@ -48,7 +48,7 @@ SpMorphicLayoutAdapter >> applyChildrenAlignmentTo: childMorph constraints: cons
 	^ childMorph
 ]
 
-{ #category : #initialization }
+{ #category : #styling }
 SpMorphicLayoutAdapter >> applyStyle: aMorph [
 	"layouts do not have style to apply"
 ]

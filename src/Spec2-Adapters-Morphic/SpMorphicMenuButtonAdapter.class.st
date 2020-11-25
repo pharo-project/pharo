@@ -1,3 +1,6 @@
+"
+Adapter for a menu button
+"
 Class {
 	#name : #SpMorphicMenuButtonAdapter,
 	#superclass : #SpMorphicButtonAdapter,
@@ -57,10 +60,10 @@ SpMorphicMenuButtonAdapter >> icon [
 SpMorphicMenuButtonAdapter >> newButton [
 
 	^ PluggableButtonMorph
-		on: self 
-		getState: nil
-		action:  #action 
-		label: #label 
-		icon: #icon
-		menu: nil
+		  on: self
+		  getState: nil
+		  action: #action
+		  label: #label
+		  icon: #icon
+		  menu: nil
 ]

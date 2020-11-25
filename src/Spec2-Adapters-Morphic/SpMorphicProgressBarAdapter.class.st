@@ -12,18 +12,19 @@ Class {
 
 { #category : #factory }
 SpMorphicProgressBarAdapter >> buildWidget [
+
 	| m p |
 	m := Morph new
-		changeProportionalLayout;
-		hResizing: #spaceFill;
-		vResizing: #spaceFill;
-		yourself.
+		     changeProportionalLayout;
+		     hResizing: #spaceFill;
+		     vResizing: #spaceFill;
+		     yourself.
 
 	p := (self progressBarState progressBarMorph from: 0 to: 1)
-		changeProportionalLayout;
-		hResizing: #spaceFill;
-		vResizing: #spaceFill;
-		yourself.
+		     changeProportionalLayout;
+		     hResizing: #spaceFill;
+		     vResizing: #spaceFill;
+		     yourself.
 
 	self progressBarState customizeMorphicBar: p.
 
@@ -33,5 +34,6 @@ SpMorphicProgressBarAdapter >> buildWidget [
 
 { #category : #accessing }
 SpMorphicProgressBarAdapter >> progressBarState [
+
 	^ self model state
 ]

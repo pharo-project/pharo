@@ -12,7 +12,7 @@ In case no text is selected, the commands will take the text from cursor positio
 Class {
 	#name : #SpCodeSelectionCommand,
 	#superclass : #SpToolCommand,
-	#category : #'Spec2-Code-Commands'
+	#category : #'Spec2-Code-Commands-Base'
 }
 
 { #category : #documentation }
@@ -54,6 +54,13 @@ SpCodeSelectionCommand >> evaluateSelectionAndDo: aBlock [
 	^ self 
 		evaluate: selection 
 		andDo: aBlock
+]
+
+{ #category : #execution }
+SpCodeSelectionCommand >> execute [
+	"Execute the actions that should be done by the command.
+	 This method expect that the context has been put in #context inst. var. if any context is relevant."
+	self subclassResponsibility
 ]
 
 { #category : #accessing }

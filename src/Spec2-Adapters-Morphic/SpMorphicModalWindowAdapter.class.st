@@ -1,7 +1,4 @@
 "
-Description
---------------------
-
 I am a morphic adapter used to show a modal for a ModalWindowPresenter in Morphic.
 "
 Class {
@@ -15,6 +12,7 @@ Class {
 
 { #category : #protocol }
 SpMorphicModalWindowAdapter >> close [
+
 	backdropMorph ifNotNil: #delete.
 	backdropMorph := nil.
 	super close
@@ -22,11 +20,13 @@ SpMorphicModalWindowAdapter >> close [
 
 { #category : #testing }
 SpMorphicModalWindowAdapter >> closeOnBackdropClick [
+
 	^ self model closeOnBackdropClick
 ]
 
 { #category : #'event handling' }
 SpMorphicModalWindowAdapter >> mouseClick: evt onBackdrop: aMorph [
+
 	self closeOnBackdropClick ifFalse: [ ^ self ].
 
 	self model triggerCancelAction.

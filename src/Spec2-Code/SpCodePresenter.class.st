@@ -132,6 +132,18 @@ SpCodePresenter >> allowingContextMenu [
 	self overrideContextMenu: false
 ]
 
+{ #category : #'private commands' }
+SpCodePresenter >> basicBrowseImplementors [
+
+	self systemNavigation browseAllImplementorsOf: self selectedSelector
+]
+
+{ #category : #'private commands' }
+SpCodePresenter >> basicBrowseSenders [
+
+	self systemNavigation browseAllReferencesTo: self selectedSelector
+]
+
 { #category : #private }
 SpCodePresenter >> basicInteractionModel: anObject [
 
@@ -237,7 +249,7 @@ SpCodePresenter >> contextMenu [
 	^ [ self buildContextMenuWith: super contextMenu ]
 ]
 
-{ #category : #'command support' }
+{ #category : #commands }
 SpCodePresenter >> doBrowseClass [
 	| result |
 
@@ -279,15 +291,13 @@ SpCodePresenter >> doBrowseHierarchy [
 { #category : #commands }
 SpCodePresenter >> doBrowseImplementors [
 
-	self flag: #TODO. "This thingy waits for Guille's refactor"
-	self systemNavigation browseAllImplementorsOf: self selectedSelector
+	self basicBrowseImplementors
 ]
 
 { #category : #commands }
 SpCodePresenter >> doBrowseMethodReferences [
 
-	self flag: #TODO. "This thingy waits for Guille's refactor"
-	self systemNavigation browseAllReferencesTo: self selectedSelector
+	self basicBrowseSenders
 ]
 
 { #category : #commands }
@@ -314,8 +324,7 @@ SpCodePresenter >> doBrowseSenders [
 		ifNotNil: [ :ref | ^ self systemNavigation browseAllSendersOf: ref ].
 	
 	"If this is not a class, behave as SpBrowseMethodReferencesCommand"
-	self flag: #TODO. "This thingy waits for Guille's refactor"
-	self systemNavigation browseAllReferencesTo: self selectedSelector
+	self basicBrowseSenders
 ]
 
 { #category : #'private bindings' }
@@ -359,8 +368,10 @@ SpCodePresenter >> evaluate: aString ifError: aBlock [
 	^ [
 		self class compilerClass new
 			environment: self environment;
-			class: UndefinedObject;
-			source: self selectedTextOrLine;
+			source: self selectedTextOrLine readStream;
+			context: self interactionModel doItContext;
+			receiver: self interactionModel doItReceiver;
+			requestor: self interactionModel;
 			evaluate ]
 		on: Error 
 		do: aBlock

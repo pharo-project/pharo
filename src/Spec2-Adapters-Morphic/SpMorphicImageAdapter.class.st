@@ -9,6 +9,7 @@ Class {
 
 { #category : #factory }
 SpMorphicImageAdapter >> buildWidget [
+
 	| alphaImage |
 	alphaImage := AlphaImageMorph new.
 	alphaImage model: self.
@@ -49,12 +50,14 @@ SpMorphicImageAdapter >> image [
 
 { #category : #'widget protocol' }
 SpMorphicImageAdapter >> layoutValue [
+
 	^ self model autoScale
-		ifTrue: [ #scaledAspect ]
-		ifFalse: [ #center ]
+		  ifTrue: [ #scaledAspect ]
+		  ifFalse: [ #center ]
 ]
 
 { #category : #'widget protocol' }
 SpMorphicImageAdapter >> switchAutoscale [
+
 	self widgetDo: [ :w | w layout: self layoutValue ]
 ]

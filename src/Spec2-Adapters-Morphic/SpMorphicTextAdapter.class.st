@@ -1,5 +1,5 @@
 "
-I am the adapter used to bridge a TextPresenter and a PluggableTextMorph
+I am the adapter used to bridge a TextPresenter and a RubScrolledTextMorph for regular text
 "
 Class {
 	#name : #SpMorphicTextAdapter,
@@ -101,8 +101,8 @@ SpMorphicTextAdapter >> eventHandlerReceiver: aWidget [
 
 { #category : #private }
 SpMorphicTextAdapter >> linePositionOf: sel [
+
 	| textLine linePosition |
-	
 	textLine := sel textLine.
 	linePosition := sel stringIndex - textLine first + 1.
 	^ linePosition @ textLine lineNumber
