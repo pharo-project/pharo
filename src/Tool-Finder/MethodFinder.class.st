@@ -19,10 +19,10 @@ Class {
 
 { #category : #'public access' }
 MethodFinder >> findMethodsByExampleInput: inputCollection andExpectedResult: expectedResult [
-	"Search for methods which giving each elements of input returns the corresponding 
-	 elements of outputs."
+	"Search for methods which giving each elements of input returns the corresponding elements of outputs."
 
-	^ (self possibleSolutionsForInput: inputCollection) select: [ :send | send resultIn: expectedResult ].
+	^ (self possibleSolutionsForInput: inputCollection) 
+			select: [ :send | send resultIn: expectedResult ].
 ]
 
 { #category : #'public access' }
@@ -37,7 +37,10 @@ MethodFinder >> possibleSolutionsForInput: inputCollection [
 			foundPermutationSends := (receiver class
 				allSelectorsToTestInMethodFinderWithArity: inputCollection size - 1)
 				collect:
-					[ :method | MethodFinderSend receiver: receiver deepCopy selector: method withArguments: args deepCopy ].
+					[ :method | MethodFinderSend 
+									receiver: receiver deepCopy 
+									selector: method 
+									withArguments: args deepCopy ].
 			sends addAll: foundPermutationSends ].
 	^ sends
 ]
