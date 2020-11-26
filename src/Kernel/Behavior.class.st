@@ -87,16 +87,6 @@ Behavior >> addSelector: selector withMethod: compiledMethod [
 ]
 
 { #category : #'adding/removing methods' }
-Behavior >> addSelector: selector withMethod: compiledMethod notifying: requestor [
-	self
-		deprecated: 'Please use #addSelector:withMethod: instead'
-		transformWith:
-			'`@receiver addSelector: `@statements1 withMethod: `@statements2 notifying: `@statements3'
-		   -> '`@receiver addSelector: `@statements1 withMethod: `@statements2'.
-	^ self addSelector: selector withMethod: compiledMethod
-]
-
-{ #category : #'adding/removing methods' }
 Behavior >> addSelector: selector withRecompiledMethod: compiledMethod [ 
 	^ self addSelectorSilently: selector withMethod: compiledMethod
 ]
@@ -372,16 +362,6 @@ Behavior >> allSuperclassesIncluding: aClass [
 			temp]
 ]
 
-{ #category : #'adding/removing methods' }
-Behavior >> basicAddSelector: selector withMethod: compiledMethod [
-	self
-		deprecated: 'Please use #addSelectorSilently:withMethod: instead'
-		transformWith:
-			'`@receiver basicAddSelector: `@statements1 withMethod: `@statements2'
-		   -> '`@receiver addSelectorSilently: `@statements1 withMethod: `@statements2'.
-	self addSelectorSilently: selector withMethod: compiledMethod
-]
-
 { #category : #'reflective operations' }
 Behavior >> basicIdentityHash [
 	"Answer a 22 bits unsigned SmallInteger, whose value is related to the receiver's identity
@@ -576,18 +556,6 @@ Behavior >> cleanUp: aggressive [
 ]
 
 { #category : #'accessing method dictionary' }
-Behavior >> commentsAt:  selector [
-	self 
-		deprecated: 'use #comments on the method instead' 
-		transformWith: '`@receiver commentsAt: `@argument'
-						-> '(`@receiver compiledMethodAt: `@argument) comments'.
-	
-	^(self compiledMethodAt: selector) comments.
-	
-
-]
-
-{ #category : #'accessing method dictionary' }
 Behavior >> compiledMethodAt: selector [ 
 	"Answer the compiled method associated with the argument, selector (a 
 	Symbol), a message selector in the receiver's method dictionary. If the 
@@ -719,26 +687,6 @@ Behavior >> findOriginMethodOf: aMethod [
 
 	^ aMethod
 
-]
-
-{ #category : #'accessing method dictionary' }
-Behavior >> firstCommentAt:  selector [
-	
-	self 
-		deprecated: 'use #firstComment on the method instead' 
-		transformWith: '`@receiver commentsAt: `@argument'
-						-> '(`@receiver compiledMethodAt: `@argument) firstComment'.
-	
-	^(self compiledMethodAt: selector) firstComment
-]
-
-{ #category : #'accessing method dictionary' }
-Behavior >> firstPrecodeCommentFor:  selector [
-	self 
-		deprecated: 'use #comment on the method' 
-		transformWith: '`@receiver firstPrecodeCommentFor: `@arg' -> '(`@receiver>>`@arg) comment'.
-	^(self>>selector) comment
-	
 ]
 
 { #category : #private }
