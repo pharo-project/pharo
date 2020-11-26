@@ -1,6 +1,6 @@
 Extension { #name : #Object }
 
-{ #category : #'*FFI-Kernel' }
+{ #category : #'*FFI-OldFFIBackend' }
 Object >> externalCallFailed [
 	"Raise an error after a failed call to an external function"
 	| errCode |

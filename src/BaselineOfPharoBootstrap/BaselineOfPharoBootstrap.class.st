@@ -130,6 +130,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		
 		spec package: 'FFI-Kernel'.
 		spec package: 'FFI-Pools'.
+		spec package: 'FFI-OldFFIBackend'.
 		
 		spec package: 'CodeExport'.
 		spec package: 'CodeImport'.
@@ -152,6 +153,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec group: 'KernelGroup' with: {
 			'FFI-Kernel'.
 			'FFI-Pools'.
+			'FFI-OldFFIBackend'.
 			'Announcements-Core'.
 			'Colors'.
 			'Collections-Abstract'.

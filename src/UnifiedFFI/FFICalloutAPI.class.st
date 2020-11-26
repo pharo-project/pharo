@@ -18,7 +18,7 @@ Class {
 
 { #category : #accessing }
 FFICalloutAPI class >> calloutAPIClass [
-	^ CalloutAPIClass ifNil: [ CalloutAPIClass := self defaultCalloutAPIClass ]
+	^ CalloutAPIClass ifNil: [ self defaultCalloutAPIClass ]
 	
 ]
 
@@ -29,7 +29,8 @@ FFICalloutAPI class >> calloutAPIClass: aClass [
 
 { #category : #accessing }
 FFICalloutAPI class >> defaultCalloutAPIClass [
-	^ FFICalloutAPI	
+	
+	^ FFIBackend current calloutAPIClass 
 ]
 
 { #category : #'instance creation' }

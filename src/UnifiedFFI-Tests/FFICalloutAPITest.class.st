@@ -19,7 +19,7 @@ FFICalloutAPITest >> ffiCalloutClass [
 
 { #category : #'primitives atomic' }
 FFICalloutAPITest >> ffiCopyString: aString to: dest [
-	^ self ffiCall: #( String strcpy ( String dest, String aString ) )
+	^ self ffiCall: #( String strcpy ( void* dest, String aString ) )
 ]
 
 { #category : #'primitives atomic' }
@@ -49,7 +49,7 @@ FFICalloutAPITest >> ffiLongLongAbs: number [
 
 { #category : #'primitives constant' }
 FFICalloutAPITest >> ffiTestConstantFormat: format to: buffer [
-	^ self ffiCall: #( int sprintf ( ByteArray buffer, String format, 65, 65, true ) )
+	^ self ffiCall: #( int sprintf ( ByteArray buffer, String format, 65, 65, 1 ) )
 ]
 
 { #category : #'primitives constant' }
@@ -85,7 +85,7 @@ FFICalloutAPITest >> method2 [
 { #category : #'primitives pointer' }
 FFICalloutAPITest >> primFromByteArray: src toExternalAddress: dest size: n [
 	^ self 
-		ffiCall: #( void *memcpy(ExternalAddress dest, ByteArray src, size_t n) )
+		ffiCall: #( void *memcpy(void* dest, ByteArray src, size_t n) )
 		module: LibC
 ]
 
@@ -109,17 +109,6 @@ FFICalloutAPITest >> resetFFIMethods [
 	| ffiMethods |
 	ffiMethods := FFICalloutAPITest methodDict select: [ :method | (method selector beginsWith: 'ffi') or: [method selector beginsWith: 'prim'] ].
 	ffiMethods do: #recompile
-]
-
-{ #category : #running }
-FFICalloutAPITest >> runCase [ 
-	| oldAPIClass |
-	
-	"Ensure I use this class for running the tests"
-	oldAPIClass := FFICalloutAPI calloutAPIClass.
-	[ FFICalloutAPI calloutAPIClass: FFICalloutAPI. 
-	  super runCase ]
-	ensure: [ FFICalloutAPI calloutAPIClass: oldAPIClass ]
 ]
 
 { #category : #running }
@@ -158,7 +147,7 @@ FFICalloutAPITest >> testByteArrayToExternalAddress [
 	
 
 	result := self 
-		primFromByteArray: 'Hello, World' asByteArray  
+		primFromByteArray: ('Hello, World' asByteArray pinInMemory; yourself) 
 		toExternalAddress: (dest := ExternalAddress allocate: 12) autoRelease 
 		size: 12.
 		
@@ -176,7 +165,9 @@ FFICalloutAPITest >> testCallWithAllConstParameter [
 	"
 	| result buffer |
 
-	buffer := ByteArray new: 100. 
+	buffer := (ByteArray new: 100)
+		pinInMemory;
+		yourself. 
 	result := self ffiTestConstantFormat: '%d, %d and %d' to: buffer.
 	self assert: result equals: 12.
 	self assert: (buffer first: result) asString equals: '65, 65 and 1'
@@ -192,7 +183,9 @@ FFICalloutAPITest >> testCallWithConstParameter [
 	"
 	| result buffer |
 
-	buffer := ByteArray new: 100. 
+	buffer := (ByteArray new: 100)
+		pinInMemory; yourself.
+	
 	result := self ffiTestContantFormat: '%d, %d and %d' value: true to: buffer.
 	self assert: result equals: 12.
 	self assert: (buffer first: result) asString equals: '65, 65 and 1'
@@ -279,9 +272,10 @@ FFICalloutAPITest >> testCharCall [
 { #category : #'tests pointer' }
 FFICalloutAPITest >> testCharPointer [
 	| result |
+		
 	result := self 
-		primStr: ('Hello, ' asByteArray copyWith: 0) 
-		cat: ('World' asByteArray copyWith: 0).
+		primStr:  'Hello, '
+		cat: 'World'.
 				
 	self assert: result equals: 'Hello, World'.
 ]
@@ -289,16 +283,20 @@ FFICalloutAPITest >> testCharPointer [
 { #category : #'tests atomic' }
 FFICalloutAPITest >> testDoubleCall [
 	"Test using generic FFI spec"
+
 	| callback result |
+	
+	(FFIBackend current isKindOf: OldFFIBackend) 
+		ifFalse: [ 
+			"Registering callbacks like functions is from the old backend"
+			^ self skip ].
+	
 	callback := FFICallback 
 		signature: #(double (double x)) 
 		block: [ :x | x abs ].
 	FFICallbackFunctionResolution registerCallback: callback as: #DoubleAbsolute.
-	
+		
 	result := self ffiDoubleAbs: 65.
-	self assert: result equals: 65.0.
-	
-	result := self ffiDoubleAbs: 65.0.
 	self assert: result equals: 65.0.
 
 	result := self ffiDoubleAbs: $A.
@@ -313,6 +311,12 @@ FFICalloutAPITest >> testDoubleCall [
 FFICalloutAPITest >> testFloatCall [
 	"Test using generic FFI spec"
 	| callback result |
+
+	(FFIBackend current isKindOf: OldFFIBackend) 
+		ifFalse: [ 
+			"Registering callbacks like functions is from the old backend"
+			^ self skip ].
+
 	callback := FFICallback 
 		signature: #(float (float x)) 
 		block: [ :x | x abs ].
@@ -394,7 +398,9 @@ FFICalloutAPITest >> testPrintString [
 	"Test using generic FFI spec"
 	| result buffer |
 	
-	buffer := ByteArray new: 12.
+	buffer := (ByteArray new: 12)
+			pinInMemory;
+			yourself.
 	result := self ffiCopyString: 'Hello World!' to: buffer.
 	self assert: result equals: 'Hello World!'.
 	self assert: buffer asString equals: 'Hello World!'

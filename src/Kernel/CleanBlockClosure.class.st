@@ -29,6 +29,12 @@ Class {
 	#category : #'Kernel-Methods'
 }
 
+{ #category : #printing }
+CleanBlockClosure >> doPrintOn: aStream [
+
+	aStream nextPutAll: self sourceNode value sourceCode 
+]
+
 { #category : #accessing }
 CleanBlockClosure >> hasLiteral: aLiteral [
 	^self compiledBlock hasLiteral: aLiteral
@@ -67,12 +73,6 @@ CleanBlockClosure >> messages [
 { #category : #accessing }
 CleanBlockClosure >> outerCode: aCompiledCode [
 	self compiledBlock outerCode: aCompiledCode
-]
-
-{ #category : #printing }
-CleanBlockClosure >> printOn: aStream [
-
-	aStream nextPutAll: self sourceNode value sourceCode 
 ]
 
 { #category : #scanning }
