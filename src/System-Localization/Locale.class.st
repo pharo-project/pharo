@@ -62,8 +62,8 @@ Locale class >> currentPlatform [
 
 { #category : #accessing }
 Locale class >> currentPlatform: locale [
-	CurrentPlatform := locale.
-	LanguageEnvironment startUp.
+
+	CurrentPlatform := locale
 
 ]
 
@@ -290,11 +290,6 @@ Locale >> isoLocale [
 	^self isoCountry
 		ifNil: [self isoLanguage]
 		ifNotNil: [self isoLanguage , '-' , self isoCountry]
-]
-
-{ #category : #accessing }
-Locale >> languageEnvironment [
-	^LanguageEnvironment localeID: self localeID
 ]
 
 { #category : #accessing }

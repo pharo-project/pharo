@@ -7,7 +7,7 @@ There may appeaer to be no tests here; that's because this class inherits all of
 Class {
 	#name : #Latin1CharsetTest,
 	#superclass : #AsciiCharsetTest,
-	#category : #'Kernel-Tests-Extended-Charset'
+	#category : #Deprecated90
 }
 
 { #category : #helper }

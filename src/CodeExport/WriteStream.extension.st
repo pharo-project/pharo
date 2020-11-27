@@ -13,10 +13,6 @@ WriteStream >> nextChunkPut: aString [
 			self nextPut: $!. "double it"
 			start := bangIndex + 1 ].
 	self next: string size - start + 1 putAll: string startingAt: start.
-	string includesUnifiedCharacter ifTrue: [
-		self nextPut: $!; nextPutAll: ']lang['.
-		string writeLeadingCharRunsOn: self.
-	].
 	self nextPut: $!. "one extra"
 	self flush
 ]

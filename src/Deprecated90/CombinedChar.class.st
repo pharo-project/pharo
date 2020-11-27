@@ -20,7 +20,7 @@ Class {
 		'Decompositions',
 		'Diacriticals'
 	],
-	#category : #'Kernel-BasicObjects'
+	#category : #Deprecated90
 }
 
 { #category : #testing }

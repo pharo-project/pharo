@@ -147,8 +147,7 @@ CharacterBlockScanner >> endOfRun [
 		[runStopIndex < characterIndex and: [runStopIndex < text size]])
 			or:	[characterIndex == nil and: [lastIndex < line last]]) or: [
 				((lastIndex < line last)
-				and: [((text at: lastIndex) leadingChar ~= (text at: lastIndex+1) leadingChar)
-					and: [lastIndex ~= characterIndex]])])
+				and: [lastIndex ~= characterIndex])])
 		ifTrue:	["We're really at the end of a real run."
 				runLength := text runLengthFor: (lastIndex := lastIndex + 1).
 				lineStop := characterIndex	"scanning for index"

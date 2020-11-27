@@ -514,7 +514,7 @@ FreeTypeFontProvider >> updateFromFile: aFile [
 		
 	(cachedNumFaces notNil and:[ i >= cachedNumFaces ]) ifTrue:[ ^ self ].
 	
-	path := aFile fullName convertToWithConverter: UTF8TextConverter new .
+	path := aFile fullName utf8Encoded asString.
 	[face := FreeTypeFace basicNew filename: path; index:  i.
 	["we use the primNewFaceFromFile:index: method because we want to do this as fast as possible and we don't need the face registered because it will be explicitly destroyed later"
 	face newFaceFromFile: path index: i.

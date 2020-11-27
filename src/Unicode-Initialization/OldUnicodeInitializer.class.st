@@ -1,7 +1,11 @@
-Extension { #name : #ByteTextConverter }
+Class {
+	#name : #OldUnicodeInitializer,
+	#superclass : #Object,
+	#category : #'Unicode-Initialization'
+}
 
-{ #category : #'*Unicode-Initialization' }
-ByteTextConverter class >> generateByteToUnicodeSpec: url [
+{ #category : #parsing }
+OldUnicodeInitializer class >> generateByteToUnicodeSpec: url [
 	"Return the formatted source code for an array mapping 
 	the top 128 byte to unicode values from a Unicode.org url"
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/ISO8859/8859-2.TXT'."
@@ -18,8 +22,8 @@ ByteTextConverter class >> generateByteToUnicodeSpec: url [
 		stream nextPut: $); cr ]
 ]
 
-{ #category : #'*Unicode-Initialization' }
-ByteTextConverter class >> parseUnicodeOrgSpec: url [
+{ #category : #parsing }
+OldUnicodeInitializer class >> parseUnicodeOrgSpec: url [
 	"Parse and return a mapping from byte to unicode values from url."
 	"self parseUnicodeOrgSpec: 'http://unicode.org/Public/MAPPINGS/ISO8859/8859-2.TXT'."
 	
