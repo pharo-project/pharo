@@ -13,7 +13,3 @@ Unicode
 	parseCaseMappingFrom: (ZnCharacterReadStream on: (File named: caseFolding) readStream encoding: 'utf8').
 
 Character characterSet: Unicode.
-
-ByteTextConverter initialize.
-
-CombinedChar parseCompositionMappingFrom: (ZnCharacterReadStream on: (File named: unicodeData) readStream encoding: 'utf8').
