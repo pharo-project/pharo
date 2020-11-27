@@ -55,7 +55,7 @@ ClassDescription >> fileOutMethod: selector [
 	| internalStream |
 	internalStream := (String new: 1000) writeStream.
 	self fileOutMethod: selector on: internalStream.
-	CodeExporter writeSourceCodeFrom: internalStream baseName: (self name , '-' , selector) isSt: true.
+	CodeExporter writeSourceCodeFrom: internalStream baseName: (self name , '-' , (selector copyReplaceAll: ':' with: '..')) isSt: true.
 ]
 
 { #category : #'*CodeExport' }
