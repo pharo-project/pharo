@@ -150,7 +150,7 @@ MorphExtension >> hasProperty: aSymbol [
 	otherProperties ifNil: [^ false].
 	"we do not return in the false block as this would require a full block to be allocated"
 	property := otherProperties at: aSymbol ifAbsent: false.
-	"here can need to explicitly check for false as it is false or some object"
+	"here we need to explicitly check for false as it is false or some object"
 	^property == false 
 		ifTrue: [false]
 		ifFalse: [true ]
