@@ -206,6 +206,20 @@ RPackageTest >> testDemoteToRPackageNamedWithExtension [
 
 ]
 
+{ #category : #'tests - properties' }
+RPackageTest >> testHasProperty [
+	| package testValue |
+	
+	testValue := Date today.
+	package := self class package.
+	
+	package propertyAt: #testKeySelector put: testValue.
+	self	assert: (package hasProperty: #testKeySelector).
+	
+	package removeProperty: #testKeySelector.
+	self deny: (package hasProperty: #testKeySelector).
+]
+
 { #category : #'test-queries' }
 RPackageTest >> testHierarchyRoots [
 	| roots |
