@@ -145,12 +145,9 @@ MorphExtension >> fillStyle: anObject [
 
 { #category : #'accessing - other properties' }
 MorphExtension >> hasProperty: aSymbol [
-
 	"Answer whether the receiver has the property named aSymbol"
 
-	^ otherProperties
-		  ifNil: [ false ]
-		  ifNotNil: [ otherProperties includesKey: aSymbol ]
+	^ otherProperties ifNil: [ false ] ifNotNil: [ : prop | prop includesKey: aSymbol ]
 ]
 
 { #category : #initialization }
