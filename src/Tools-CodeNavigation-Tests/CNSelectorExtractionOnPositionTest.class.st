@@ -364,3 +364,12 @@ CNSelectorExtractionOnPositionTest >> testCaretInTheMiddleOfNestedMessageReceive
 	
 	self assert: self selectedSelector equals: self messageNodeToTest receiver selector
 ]
+
+{ #category : #'tests - no selection - blocks' }
+CNSelectorExtractionOnPositionTest >> testExtractSelectorWithPositionAtFirstCharacterOfMethod [
+
+	self sourceCodeOf: self class >> #methodWithIfTrueIfFalse.
+	self caretAt: 1.
+	
+	self assert: self selectedSelector equals: #methodWithIfTrueIfFalse
+]
