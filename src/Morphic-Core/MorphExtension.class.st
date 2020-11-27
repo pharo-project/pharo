@@ -144,17 +144,13 @@ MorphExtension >> fillStyle: anObject [
 ]
 
 { #category : #'accessing - other properties' }
-MorphExtension >> hasProperty: aSymbol [ 
-	"Answer whether the receiver has the property named aSymbol"
-	| property |
-	otherProperties ifNil: [^ false].
-	"we do not return in the false block as this would require a full block to be allocated"
-	property := otherProperties at: aSymbol ifAbsent: false.
-	"here we need to explicitly check for false as it is false or some object"
-	^property == false 
-		ifTrue: [false]
-		ifFalse: [true ]
+MorphExtension >> hasProperty: aSymbol [
 
+	"Answer whether the receiver has the property named aSymbol"
+
+	^ otherProperties
+		  ifNil: [ false ]
+		  ifNotNil: [ otherProperties includesKey: aSymbol ]
 ]
 
 { #category : #initialization }
