@@ -53,9 +53,12 @@ CNSelectorExtractor >> extractSelectorFromAST: ast atPosition: aPosition [
 	   self foo:|#bar => Here a user may want foo: or bar.
 	For now we decided to favor foo: to motivate people to indent code correctly"
 	| offset position bestNodeAtPosition |
-	offset := (ast sourceCode at: aPosition - 1) isSeparator
-		ifTrue: [ 0 ]
-		ifFalse: [ -1 ].
+	"special case when asking for a selector at the first character of a method"
+	offset := aPosition = 1 ifTrue: [ 0 ]
+		ifFalse: [
+		(ast sourceCode at: aPosition - 1) isSeparator
+			ifTrue: [ 0 ]
+			ifFalse: [ -1 ]].
 
 	position := aPosition + offset.
 	bestNodeAtPosition := ast bestNodeFor: (position to: position).
