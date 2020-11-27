@@ -352,12 +352,6 @@ CompiledMethodTest >> testComparison [
 			self deny: each equals: method2 ]
 ]
 
-{ #category : #'as yet unclassified' }
-CompiledMethodTest >> testCompiledMethodAsString [
-
-	thisContext method asString
-]
-
 { #category : #tests }
 CompiledMethodTest >> testCopy [
 	<pragma: #pragma>
@@ -392,7 +386,7 @@ CompiledMethodTest >> testCopyWithTrailerBytes [
 	copy pragmas do: [ :p | self assert: p method identicalTo: copy ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'tests - comparing' }
 CompiledMethodTest >> testEqualityClassSideMethod [
    	| method1 method2 |
 
@@ -407,7 +401,7 @@ CompiledMethodTest >> testEqualityClassSideMethod [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'tests - comparing' }
 CompiledMethodTest >> testEqualityInstanceSideMethod [
 	| method1 method2 |
 	method1 := TestCase compiler compile: 'aMethod'.
@@ -491,7 +485,7 @@ CompiledMethodTest >> testIsFaulty [
 	self deny: (OCASTTranslator>>#visitParseErrorNode:) isFaulty
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'tests - testing' }
 CompiledMethodTest >> testIsInstalled [
 |  method cls |
 
@@ -506,7 +500,7 @@ CompiledMethodTest >> testIsInstalled [
 		instanceVariableNames: ''
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: self categoryNameForTemporaryClasses.
+		package: self categoryNameForTemporaryClasses.
 	cls compile: 'foo ^ 10'.
 	method := cls >> #foo.
 
@@ -659,7 +653,7 @@ CompiledMethodTest >> testLiterals [
 	self deny: (Object >> #yourself hasLiteral: #yourself)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'tests - accessing' }
 CompiledMethodTest >> testMethodClass [
 	| method cls |
 	method := self class >> #returnTrue.
@@ -673,7 +667,7 @@ CompiledMethodTest >> testMethodClass [
 				instanceVariableNames: ''
 				classVariableNames: ''
 				poolDictionaries: ''
-				category: self categoryNameForTemporaryClasses.
+				package: self categoryNameForTemporaryClasses.
 	cls compile: 'foo ^ 10'.
 	method := cls >> #foo.
 	Smalltalk removeClassNamed: #TUTU.
@@ -776,7 +770,7 @@ CompiledMethodTest >> testReadsSlot [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'tests - accessing' }
 CompiledMethodTest >> testSelector [
 	Author
 		useAuthor: 'TUTU_TEST'
@@ -792,7 +786,7 @@ CompiledMethodTest >> testSelector [
 				instanceVariableNames: ''
 				classVariableNames: ''
 				poolDictionaries: ''
-				category: self categoryNameForTemporaryClasses.
+				package: self categoryNameForTemporaryClasses.
 
 			cls compile: 'foo ^ 10'.
 
