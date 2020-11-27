@@ -210,11 +210,6 @@ Variable >> isUninitialized [
 ]
 
 { #category : #testing }
-Variable >> isUnused [ 
-	^ self isUsed not
-]
-
-{ #category : #testing }
 Variable >> isUsed [ 
 	^ self isReferenced
 ]

@@ -1151,13 +1151,6 @@ Behavior >> isRootInEnvironment [
 ]
 
 { #category : #testing }
-Behavior >> isUnused [
-	"the class is not used. This is client specific, subclasses can override #isUsed"
-
-	^ self isUsed not
-]
-
-{ #category : #testing }
 Behavior >> isUsed [
 	"the class is used somehow. This is client specific, subclasses can override"
 

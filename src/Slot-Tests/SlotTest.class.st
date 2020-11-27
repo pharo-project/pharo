@@ -124,13 +124,6 @@ SlotTest >> testWriteToContext [
 ]
 
 { #category : #'tests - misc' }
-SlotTest >> testisUnused [
-	self deny: InstanceVariableSlot isUnused.
-	self deny: IndexedSlot isUnused. "subclasses are users"
-	self deny: ProcessLocalSlot isUnused. "references count as uses, too"
-]
-
-{ #category : #'tests - misc' }
 SlotTest >> testisUsed [
 	self assert: InstanceVariableSlot isUsed.
 	self assert: IndexedSlot isUsed. "subclasses are users"
