@@ -32,7 +32,7 @@ BaselineOfNewTools >> baseline: spec [
 			package: 'NewTools-Debugger' with: [ spec requires: #('NewTools-Inspector' 'NewTools-Debugger-Commands' 'NewTools-Debugger-Extensions' 'NewTools-SpTextPresenterDecorators') ];			
 			package: 'NewTools-Debugger-Commands';
 			package: 'NewTools-Debugger-Extensions';
-			package: 'NewTools-Debugger-Tests' with: [ spec requires: #('NewTools-Debugger') ];
+			"package: 'NewTools-Debugger-Tests' with: [ spec requires: #('NewTools-Debugger') ];"
 			"playground"
 			package: 'NewTools-Playground' with: [ spec requires: #('NewTools-Inspector') ];
 			"browser"
@@ -73,7 +73,7 @@ BaselineOfNewTools >> baseline: spec [
 				'NewTools-Sindarin-Tools'
 				'NewTools-Sindarin-Commands'
 				'NewTools-Debugger-Breakpoints-Tools'
-				'NewTools-Debugger-Tests');
+				"'NewTools-Debugger-Tests'");
 			group: 'SystemReporter' with: #('Core' 'NewTools-SystemReporter');
 			group: 'Methods' with: #('Core' 'NewTools-MethodBrowsers');
 			group: 'ChangeSorter' with: #('Core' 'NewTools-ChangeSorter');
