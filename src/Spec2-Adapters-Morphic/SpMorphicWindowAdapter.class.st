@@ -35,15 +35,22 @@ SpMorphicWindowAdapter >> addModelItemsToWindowMenu: aMenu [
 ]
 
 { #category : #protocol }
-SpMorphicWindowAdapter >> addPresenterIn: widgetToBuild withSpecLayout: aSpec [
+SpMorphicWindowAdapter >> addPresenterIn: aWindow withSpecLayout: aSpec [
 
-	self model initialPosition 
-		ifNotNil: [ :position | widgetToBuild position: position ].
-	self model initialExtent 
-		ifNotNil: [ :extent | widgetToBuild extent: extent ].
-	self 
-		addContent: (self model presenter buildWithSpecLayout: aSpec) 
-		toWindow: widgetToBuild
+	self presenter initialPosition 
+		ifNotNil: [ :position | aWindow position: position ].
+	self presenter initialExtent 
+		ifNotNil: [ :extent | aWindow extent: extent ].
+	self presenter hasDecorations 
+		ifFalse: [ aWindow removeLabelArea ].
+	self presenter whenDecorationsChangedDo: [ :aBoolean |
+		aBoolean 
+			ifTrue: [ aWindow initializeLabelArea ]
+			ifFalse: [ aWindow removeLabelArea ] ].
+	
+self 
+		addContent: (self presenter presenter buildWithSpecLayout: aSpec) 
+		toWindow: aWindow
 ]
 
 { #category : #'widget API' }
@@ -79,19 +86,20 @@ SpMorphicWindowAdapter >> centered [
 
 	self widgetDo: [ :w | 
 		w
-			fullBounds;
-			position: Display extent - w extent // 2 ]
+			computeFullBounds;
+			position: (self currentWorld extent - w extent) // 2 ]
 ]
 
 { #category : #'widget API' }
 SpMorphicWindowAdapter >> centeredRelativeTo: aWindowPresenter [
-
 	| bounds position |
+
 	self widgetDo: [ :w | 
+		w computeFullBounds.
 		bounds := aWindowPresenter
-			          ifNotNil: [ aWindowPresenter adapter widget bounds ]
-			          ifNil: [ self currentWorld bounds ].
-		position := bounds origin + (bounds extent - w extent // 2).
+			ifNotNil: [ aWindowPresenter adapter widget bounds ]
+			ifNil: [ self currentWorld bounds ].
+		position := bounds origin + ((bounds extent - w extent) // 2).
 		w position: position ]
 ]
 
@@ -181,11 +189,13 @@ SpMorphicWindowAdapter >> okToChange [
 { #category : #protocol }
 SpMorphicWindowAdapter >> open [
 
-	self model isCentered ifTrue: [ self centered ].
-
 	self widget openInWorld.
-	self model initialPosition ifNotNil: [ 
-		self widget position: self model initialPosition ].
+	self presenter initialPosition 
+		ifNotNil: [ :aPosition | self widget position: aPosition ].
+	self presenter isCentered 
+		ifTrue: [ self centered ].
+
+	self presenter presenter takeKeyboardFocus.
 
 	self windowIsOpening
 ]

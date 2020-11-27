@@ -39,8 +39,10 @@ SpMorphicBaseTextAdapter >> addKeyBindingsTo: aMorph [
 
 	super addKeyBindingsTo: aMorph.
 	self 
-		bindKeyCombination: $t meta
-		toAction: [ self showContextMenu ]
+		bindKeyCombination: Character escape asKeyCombination 
+			toAction: [ :target :morph :event | self bubbleUpEvent: event ];
+		bindKeyCombination: $t meta 
+			toAction: [ self showContextMenu ]
 ]
 
 { #category : #accessing }
@@ -59,6 +61,13 @@ SpMorphicBaseTextAdapter >> askBeforeDiscardingEdits [
 SpMorphicBaseTextAdapter >> askBeforeDiscardingEdits: aBoolean [
 
 	self widget askBeforeDiscardingEdits: aBoolean
+]
+
+{ #category : #private }
+SpMorphicBaseTextAdapter >> bubbleUpEvent: anEvent [
+
+	anEvent wasHandled: false.
+	self presenter window adapter widget handleEvent: anEvent
 ]
 
 { #category : #'spec protocol' }
