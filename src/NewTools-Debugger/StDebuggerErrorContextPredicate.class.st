@@ -82,6 +82,6 @@ StDebuggerErrorContextPredicate >> printDescription [
 	self printDescriptionPrefixOn: str.
 	str << ((exception isKindOf: OupsNullException)
 		 ifTrue: [ context printString ]
-		 ifFalse: [ exception smartDescription ]).
+		 ifFalse: [ exception description ]).
 	^ str contents
 ]
