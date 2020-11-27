@@ -60,7 +60,7 @@ Class {
 		'nextIndexAfterLineBreak',
 		'wantsColumnBreaks'
 	],
-	#category : #'Multilingual-Encodings'
+	#category : #'Text-Scanning'
 }
 
 { #category : #testing }

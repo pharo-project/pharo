@@ -133,7 +133,7 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : #'Multilingual-Encodings'
+	#category : #'Text-Scanning'
 }
 
 { #category : #'class initialization' }
