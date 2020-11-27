@@ -93,7 +93,6 @@ PharoBootstrapInitialization class >> initializeFileSystem [
 	(env at: #FileLocator) initialize.
 	(env at: #DiskStore) initialize.
 	(env at: #FileHandle) initialize.
-	(env at: #MultiByteFileStream) initialize.
 	(env at: #File) initialize
 ]
 

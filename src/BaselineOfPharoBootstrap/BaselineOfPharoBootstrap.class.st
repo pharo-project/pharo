@@ -141,7 +141,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		
 		spec package: 'FileSystem-Core'.
 		spec package: 'FileSystem-Disk'.
-		spec package: 'DeprecatedFileStream'.
 
 		spec package: 'SUnit-Core'.
 		spec package: 'SUnit-Tests'.
@@ -222,8 +221,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		
 		spec group: 'FileSystemGroup' with: {
 			'FileSystem-Core'.
-			'FileSystem-Disk'.
-			'DeprecatedFileStream' }.
+			'FileSystem-Disk'}.
 
 		spec group: 'ToLoadByHermes' with: {
 			'AdditionalPackages'.

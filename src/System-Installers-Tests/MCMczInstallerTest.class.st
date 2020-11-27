@@ -87,10 +87,12 @@ MCMczInstallerTest >> testInstallFromFile [
 
 { #category : #tests }
 MCMczInstallerTest >> testInstallFromStream [
-	| stream |
-	stream := RWBinaryOrTextStream on: ByteArray new.
-	MCMczWriter fileOut: expected on: stream.
-	MczInstaller installStream: stream reset.
+
+	| array |
+	array := ByteArray streamContents: [:stream |.
+		MCMczWriter fileOut: expected on: stream.
+	].
+	MczInstaller installStream: array readStream.
 	self assertNoChange.
 	self assertVersionInfoPresent.
 	
