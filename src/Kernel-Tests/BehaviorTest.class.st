@@ -158,9 +158,16 @@ BehaviorTest >> testIsRootInEnvironment [
 ]
 
 { #category : #tests }
+BehaviorTest >> testIsUnused [
+	self deny: Object isUnused.
+	self deny: Object class isUnused
+
+]
+
+{ #category : #tests }
 BehaviorTest >> testIsUsed [
 	self assert: Object isUsed.
-	self assert: Object class isUsed.
+	self assert: Object class isUsed
 
 ]
 

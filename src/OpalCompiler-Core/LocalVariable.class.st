@@ -177,10 +177,9 @@ LocalVariable >> isUninitialized [
 	^ self isWrite not
 ]
 
-{ #category : #'read/write usage' }
+{ #category : #testing }
 LocalVariable >> isUnused [
-	"when the var is never read or written, it is not used.
-	Note: we have a special #arg use which means arguments are never unused"
+	"when the var is never read or written, it is not used"
 	^ usage isNil
 ]
 
