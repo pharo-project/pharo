@@ -432,12 +432,6 @@ DebugSession >> shouldDisplayContext: aContext basedOnFilters: stackFilters [
 	
 ]
 
-{ #category : #context }
-DebugSession >> shouldDisplayOnTopContext: aContext [
-	
-	^ aContext method selector ~= #halt
-]
-
 { #category : #logging }
 DebugSession >> signalDebuggerError: anError [
 
