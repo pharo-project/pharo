@@ -3343,8 +3343,7 @@ Morph >> hasParagraphAnchorString [
 { #category : #'accessing - properties' }
 Morph >> hasProperty: aSymbol [ 
 	"Answer whether the receiver has the property named aSymbol"
-	extension ifNil: [^ false].
-	^extension hasProperty: aSymbol
+	^ extension ifNil: [false] ifNotNil: [:ext | ext hasProperty: aSymbol]
 ]
 
 { #category : #'layout-menu' }

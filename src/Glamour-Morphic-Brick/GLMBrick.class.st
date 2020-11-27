@@ -440,12 +440,6 @@ GLMBrick >> haloClass [
 	^ #GLMHaloBrick
 ]
 
-{ #category : #'private-extension' }
-GLMBrick >> hasProperty: aSymbol [ 
-	
-	^ super hasProperty: aSymbol
-]
-
 { #category : #initialization }
 GLMBrick >> initialize [
 	super initialize.
