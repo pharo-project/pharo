@@ -18,13 +18,13 @@ Class {
 
 { #category : #'instance creation' }
 OSSDL2AthensRenderer class >> for: aWindowHandle [
-	^ self basicNew 
+	^ self basicNew
 		initializeWindowHandle: aWindowHandle;
 		yourself
 ]
 
 { #category : #'instance creation' }
-OSSDL2AthensRenderer class >> new [ 
+OSSDL2AthensRenderer class >> new [
 	self error: 'Use #for:'
 ]
 
@@ -35,7 +35,7 @@ OSSDL2AthensRenderer >> athensSurface [
 
 { #category : #deleting }
 OSSDL2AthensRenderer >> destroy [
-	
+
 	mutex critical: [
 		texture ifNotNil: [ texture destroy ].
 		texture := nil.
@@ -44,19 +44,17 @@ OSSDL2AthensRenderer >> destroy [
 	].
 
 	super destroy.
-	
+
 
 ]
 
 { #category : #private }
 OSSDL2AthensRenderer >> drawTexturePixelsWith: aBlock [
-	| pixels pitchHolder pitch externalForm |
+	| pixels pitch externalForm |
 	pixels := ExternalAddress new.
-	pitchHolder := ExternalAddress allocate: 4.
-	[
+	pitch := ExternalAddress allocate: 4 bytesDuring: [:pitchHolder |
 		texture lockPixels: pixels pitch: pitchHolder.
-		pitch := pitchHolder signedLongAt: 1.
-	] ensure: [ pitchHolder free ].
+		pitchHolder signedLongAt: 1 ].
 
 	externalForm := OSSDL2ExternalForm extent: textureExtent depth: 32 bits: pixels.
 	[
@@ -74,14 +72,14 @@ OSSDL2AthensRenderer >> initialize [
 ]
 
 { #category : #initialization }
-OSSDL2AthensRenderer >> initializeWindowHandle: aBackendWindow [ 
+OSSDL2AthensRenderer >> initializeWindowHandle: aBackendWindow [
 	self initialize.
 	self backendWindow: aBackendWindow.
 	renderer := backendWindow sdl2Window createDefaultRenderer.
-	mutex critical: [ 
+	mutex critical: [
 		self resetResources.
 	].
-	
+
 ]
 
 { #category : #'updating screen' }
@@ -114,7 +112,7 @@ OSSDL2AthensRenderer >> present [
 OSSDL2AthensRenderer >> primitiveUpdateRectangle: rectangle externalForm: externalForm [
 	externalForm getCanvas
 		drawImage: athensSurface asForm at: rectangle origin sourceRect: rectangle
-	
+
 ]
 
 { #category : #'updating resources' }
@@ -127,10 +125,10 @@ OSSDL2AthensRenderer >> resetResources [
 		texture destroy.
 		texture := nil.
 	].
-	texture := renderer 
-		createTextureFormat: SDL_PIXELFORMAT_XRGB8888 
-		access: SDL_TEXTUREACCESS_STREAMING 
-		width: extent x 
+	texture := renderer
+		createTextureFormat: SDL_PIXELFORMAT_XRGB8888
+		access: SDL_TEXTUREACCESS_STREAMING
+		width: extent x
 		height: extent y.
 	textureExtent := extent.
 ]
@@ -152,7 +150,7 @@ OSSDL2AthensRenderer >> surface [
 OSSDL2AthensRenderer >> updateAll [
 	mutex critical: [
 		self validate ifFalse: [ ^ self ].
-		
+
 		self drawTexturePixelsWith: [ :textureForm |
 			self primitiveUpdateRectangle: (0 @ 0 corner: textureExtent) externalForm: textureForm.
 		].
@@ -167,7 +165,7 @@ OSSDL2AthensRenderer >> updateRectangle: aRectangle [
 		intersection := aRectangle
 			intersect: (0 @ 0 corner: textureExtent)
 			ifNone: [ ^ self ].
-	
+
 		self drawTexturePixelsWith: [ :textureForm |
 			self primitiveUpdateRectangle: intersection externalForm: textureForm
 		].
@@ -179,7 +177,7 @@ OSSDL2AthensRenderer >> updateRectangles: allDamage [
 	mutex critical: [
 		| fullBounds |
 		self validate ifFalse: [ ^ self ].
-		
+
 		fullBounds := 0 @ 0 corner: textureExtent.
 		self drawTexturePixelsWith: [ :textureForm |
 			| intersection |
