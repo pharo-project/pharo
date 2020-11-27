@@ -216,10 +216,9 @@ StDebuggerActionModelTest >> testFilterMissingSubclassResponsibilityStack [
 	stack add: (self emptyContextForMethod: (self class>>#method2:)).
 	
 	filteredStack := debugActionModel filterStack: stack copy.
-	self assert: filteredStack size equals: 3.
-	self assert: filteredStack first identicalTo: debugActionModel interruptedContext.
-	self assert: filteredStack second identicalTo: stack fourth.
-	self assert: filteredStack third identicalTo: stack fifth 
+	self assert: filteredStack size equals: 2.
+	self assert: filteredStack first identicalTo: stack fourth.
+	self assert: filteredStack second identicalTo: stack fifth
 ]
 
 { #category : #tests }
