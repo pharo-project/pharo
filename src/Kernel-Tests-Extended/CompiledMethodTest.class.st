@@ -306,6 +306,12 @@ CompiledMethodTest >> testAccessesSlot [
 	
 ]
 
+{ #category : #'tests - converting' }
+CompiledMethodTest >> testAsString [
+
+	self assert: thisContext method asString isString
+]
+
 { #category : #'tests - accessing' }
 CompiledMethodTest >> testBytecode [
 	"The result of this test depends on the used bytecode set. 
