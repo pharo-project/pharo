@@ -44,7 +44,8 @@ MCMockClassA class >> touchCVar [
 ]
 
 { #category : #numeric }
-MCMockClassA >> a [ ^ 'a2'
+MCMockClassA >> a [
+	^ 'a2'
 ]
 
 { #category : #numeric }
