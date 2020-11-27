@@ -538,11 +538,19 @@ OCASTTranslator >> visitCascadeNode: aCascadeNode [
 
 { #category : #'visitor-double dispatching' }
 OCASTTranslator >> visitFullBlockNode: aBlockNode [
+
 	| compiledBlock |
 	compiledBlock := self compilationContext astTranslatorClass new translateFullBlock: aBlockNode.
-	(self compilationContext optionCleanBlockClosure and: [ aBlockNode isClean ])
-		ifTrue: [ methodBuilder pushLiteral: ((CleanBlockClosure new: 0) numArgs: compiledBlock numArgs; compiledBlock: compiledBlock)]
-		ifFalse: [methodBuilder pushFullClosureCompiledBlock: compiledBlock copiedValues: aBlockNode scope inComingCopiedVarNames  ]
+	"For now clean blocks are not enabled (debugger needs more tesing. But for empty blocks we use them already"
+	((self compilationContext optionCleanBlockClosure or: [ aBlockNode body statements isEmpty ]) and: [ aBlockNode isClean ])
+		ifTrue: [ 
+			methodBuilder pushLiteral: ((CleanBlockClosure new: 0)
+					 numArgs: compiledBlock numArgs;
+					 compiledBlock: compiledBlock) ]
+		ifFalse: [ 
+			methodBuilder
+				pushFullClosureCompiledBlock: compiledBlock
+				copiedValues: aBlockNode scope inComingCopiedVarNames ]
 ]
 
 { #category : #'visitor-double dispatching' }
