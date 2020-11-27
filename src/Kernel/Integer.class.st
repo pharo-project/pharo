@@ -568,6 +568,11 @@ Integer >> bitXor: n [
 		length: (self bytesCount max: norm bytesCount)
 ]
 
+{ #category : #'system primitives' }
+Integer >> byteAt: index [
+	self subclassResponsibility
+]
+
 { #category : #private }
 Integer >> bytesCompare: arg [ 
 	"Compare the magnitude of self with that of arg.   
