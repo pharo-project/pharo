@@ -91,18 +91,6 @@ StPlaygroundPagePresenter >> activateOnSingleClick [
 	"For compatibility, playground will not activate on single or double click (but in <meta+g>)"
 ]
 
-{ #category : #'private builder' }
-StPlaygroundPagePresenter >> buildMenu [
-	| menuSpec |
-	
-	menuSpec := (PragmaMenuBuilder 
-		pragmaKeyword: WorldState discoveredMenuPragmaKeyword 
-		model: self)
-		menuSpec.
-	^ menuSpec asMenuBarPresenter
-	
-]
-
 { #category : #accessing }
 StPlaygroundPagePresenter >> contents: aString [
 
