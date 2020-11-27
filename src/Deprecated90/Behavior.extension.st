@@ -1,6 +1,58 @@
 Extension { #name : #Behavior }
 
 { #category : #'*Deprecated90' }
+Behavior >> addSelector: selector withMethod: compiledMethod notifying: requestor [
+	self
+		deprecated: 'Please use #addSelector:withMethod: instead'
+		transformWith:
+			'`@receiver addSelector: `@statements1 withMethod: `@statements2 notifying: `@statements3'
+		   -> '`@receiver addSelector: `@statements1 withMethod: `@statements2'.
+	^ self addSelector: selector withMethod: compiledMethod
+]
+
+{ #category : #'*Deprecated90' }
+Behavior >> basicAddSelector: selector withMethod: compiledMethod [
+	self
+		deprecated: 'Please use #addSelectorSilently:withMethod: instead'
+		transformWith:
+			'`@receiver basicAddSelector: `@statements1 withMethod: `@statements2'
+		   -> '`@receiver addSelectorSilently: `@statements1 withMethod: `@statements2'.
+	self addSelectorSilently: selector withMethod: compiledMethod
+]
+
+{ #category : #'*Deprecated90' }
+Behavior >> commentsAt:  selector [
+	self 
+		deprecated: 'use #comments on the method instead' 
+		transformWith: '`@receiver commentsAt: `@argument'
+						-> '(`@receiver compiledMethodAt: `@argument) comments'.
+	
+	^(self compiledMethodAt: selector) comments.
+	
+
+]
+
+{ #category : #'*Deprecated90' }
+Behavior >> firstCommentAt:  selector [
+	
+	self 
+		deprecated: 'use #firstComment on the method instead' 
+		transformWith: '`@receiver commentsAt: `@argument'
+						-> '(`@receiver compiledMethodAt: `@argument) firstComment'.
+	
+	^(self compiledMethodAt: selector) firstComment
+]
+
+{ #category : #'*Deprecated90' }
+Behavior >> firstPrecodeCommentFor:  selector [
+	self 
+		deprecated: 'use #comment on the method' 
+		transformWith: '`@receiver firstPrecodeCommentFor: `@arg' -> '(`@receiver>>`@arg) comment'.
+	^(self>>selector) comment
+	
+]
+
+{ #category : #'*Deprecated90' }
 Behavior >> precodeCommentOrInheritedCommentFor: selector [ 
 	"Answer a string representing the first comment in the method associated 
 	with selector, considering however only comments that occur before the 
