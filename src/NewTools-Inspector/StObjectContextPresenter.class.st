@@ -88,13 +88,13 @@ StObjectContextPresenter >> initializePresenters [
 { #category : #initialization }
 StObjectContextPresenter >> intializePresentersWithEvaluator [
 	
-	evaluator := self newCode
+	(evaluator := self newCode)
 		beForObject: self model inspectedObject;
 		text: self evaluatorInitialText;
-		contextMenu: [ self evaluatorActions asMenuPresenter ];
-		contextKeyBindings: self evaluatorActions asKMCategory;
-		whenTextChangedDo: [ :aString | self model codeSnippet: aString ];
-		yourself.
+		overridingContextMenu;
+		contextMenu: [ (self menuActionsFor: evaluator) asMenuPresenter ];
+		contextKeyBindings: (self menuActionsFor: evaluator) asKMCategory;
+		whenTextChangedDo: [ :aString | self model codeSnippet: aString ].
 	
 	self layout: (SpPanedLayout newVertical
 		position: 70 percent;
@@ -109,6 +109,20 @@ StObjectContextPresenter >> intializePresentersWithoutEvaluator [
 	self layout: (SpBoxLayout newVertical
 		add: view;
 		yourself)
+]
+
+{ #category : #private }
+StObjectContextPresenter >> menuActionsFor: aCodePresenter [
+	
+	^ CmCommandGroup forSpec
+		beRoot;
+		register: ((CmCommandGroup named: 'Extra') asSpecGroup
+			beDisplayedAsGroup;
+			register: (StEvaluateCommand forSpecContext: self);
+			yourself);
+		register: (aCodePresenter rootCommandsGroup name: 'Code');
+		register: (aCodePresenter editionCommandsGroup name: 'Edition');
+		yourself
 ]
 
 { #category : #'accessing model' }

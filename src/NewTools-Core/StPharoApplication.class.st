@@ -1,3 +1,6 @@
+"
+The application for the Pharo IDE.
+"
 Class {
 	#name : #StPharoApplication,
 	#superclass : #SpApplication,

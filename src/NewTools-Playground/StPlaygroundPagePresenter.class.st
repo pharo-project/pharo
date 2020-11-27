@@ -151,13 +151,13 @@ StPlaygroundPagePresenter >> initializePresenters [
 	self initializeToolbar.
 	self initializeStatusbar.
 
-	text := self newCode
+	(text := self newCode)
 		interactionModel: StPlaygroundInteractionModel new;
 		lineNumbers: self showLineNumbers;
-		contextMenu: [ self menuActions asMenuPresenter ];
-		contextKeyBindings: self menuActions asKMCategory;
-		whenTextChangedDo: [ :aString | page contents: aString ];
-		yourself.
+		overridingContextMenu;
+		contextMenu: [ (self menuActionsFor: text) asMenuPresenter ];
+		contextKeyBindings: (self menuActionsFor: text) asKMCategory;
+		whenTextChangedDo: [ :aString | page contents: aString ].
 		
 	text eventHandler 
 		whenKeyUpDo: [ :event | self updateLineNumber ];
@@ -222,7 +222,7 @@ StPlaygroundPagePresenter >> loadPage: aFileReference [
 ]
 
 { #category : #private }
-StPlaygroundPagePresenter >> menuActions [
+StPlaygroundPagePresenter >> menuActionsFor: aCodePresenter [
 
 	^ CmCommandGroup forSpec
 		beRoot;
@@ -230,6 +230,8 @@ StPlaygroundPagePresenter >> menuActions [
 			beDisplayedAsGroup;
 			register: (StEvaluateCommand forSpecContext: self);
 			yourself);
+		register: (aCodePresenter rootCommandsGroup name: 'Code');
+		register: (aCodePresenter editionCommandsGroup name: 'Edition');
 		register: ((CmCommandGroup named: 'Playground') asSpecGroup
 			register: ((CmCommandGroup named: 'Base options') asSpecGroup
 				beDisplayedAsGroup;
