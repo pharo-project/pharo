@@ -28,6 +28,12 @@ SpCodeDoItCommand class >> defaultShortcutKey [
 		| $d control unix
 ]
 
+{ #category : #accessing }
+SpCodeDoItCommand class >> order [
+
+	^ 10
+]
+
 { #category : #execution }
 SpCodeDoItCommand >> execute [
 	"Treat the current text selection as an expression; evaluate it."

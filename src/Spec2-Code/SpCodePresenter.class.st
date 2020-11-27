@@ -88,8 +88,8 @@ SpCodePresenter class >> codeSelectionActionCommandsGroupWith: presenter [
 		description: 'Actions on code selection.';
 		beDisplayedAsGroup.
 	
-	SpCodeSelectionCommand allSubclassesDo: [ :cmdClass | 
-		group register: (cmdClass forSpecContext: presenter) ].
+	SpCodeSelectionCommand allOrdered 
+		do: [ :cmdClass | group register: (cmdClass forSpecContext: presenter) ].
 	
 	^ group
 ]

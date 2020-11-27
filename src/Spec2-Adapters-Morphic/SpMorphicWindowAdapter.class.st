@@ -194,9 +194,7 @@ SpMorphicWindowAdapter >> open [
 		ifNotNil: [ :aPosition | self widget position: aPosition ].
 	self presenter isCentered 
 		ifTrue: [ self centered ].
-
 	self presenter presenter takeKeyboardFocus.
-
 	self windowIsOpening
 ]
 

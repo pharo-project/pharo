@@ -38,7 +38,8 @@ SpTextPresenter class >> buildEditionCommandsGroupFor: presenterInstance [
 SpTextPresenter class >> buildEditionCommandsGroupWith: presenter forRoot: aCmCommandsGroup [
 
 	aCmCommandsGroup beDisplayedAsGroup.
-	aCmCommandsGroup register: (self textEditionCommandsGroupWith: presenter)
+	aCmCommandsGroup register: (self textSearchCommandsGroupWith: presenter).	
+	aCmCommandsGroup register: (self textEditionCommandsGroupWith: presenter).
 ]
 
 { #category : #documentation }
@@ -56,8 +57,23 @@ SpTextPresenter class >> textEditionCommandsGroupWith: aPresenter [
 		description: 'Edit code selection.';
 		beDisplayedAsGroup.
 	
-	SpTextEditionCommand allSubclassesDo: [ :commandClass | 
-		group register: (commandClass forSpecContext: aPresenter) ].
+	SpTextEditionCommand allOrdered 
+		do: [ :commandClass | group register: (commandClass forSpecContext: aPresenter) ].
+	
+	^ group
+]
+
+{ #category : #commands }
+SpTextPresenter class >> textSearchCommandsGroupWith: aPresenter [
+	| group |
+
+	group := (CmCommandGroup named: 'Search commands') asSpecGroup.
+	group
+		description: 'Search text.';
+		beDisplayedAsGroup.
+	
+	SpTextSearchCommand allOrdered 
+		do: [ :commandClass | group register: (commandClass forSpecContext: aPresenter) ].
 	
 	^ group
 ]
@@ -110,6 +126,42 @@ SpTextPresenter >> cursorPositionIndex: index [
 	 This method will place the cursor in the text index position requested."
 
 	^ self withAdapterDo: [ :anAdapter | anAdapter cursorPositionIndex: index ]
+]
+
+{ #category : #commands }
+SpTextPresenter >> doTextCopy [
+
+	self withAdapterDo: [ :anAdapter | anAdapter copyText ]
+]
+
+{ #category : #commands }
+SpTextPresenter >> doTextCut [
+
+	self withAdapterDo: [ :anAdapter | anAdapter cutText ]
+]
+
+{ #category : #commands }
+SpTextPresenter >> doTextFind [
+
+	self withAdapterDo: [ :anAdapter | anAdapter findText ]
+]
+
+{ #category : #commands }
+SpTextPresenter >> doTextFindNext [
+
+		self withAdapterDo: [ :anAdapter | anAdapter findNextText ]
+]
+
+{ #category : #commands }
+SpTextPresenter >> doTextPaste [
+
+		self withAdapterDo: [ :anAdapter | anAdapter pasteText ]
+]
+
+{ #category : #commands }
+SpTextPresenter >> doTextSelectAndPaste [
+
+	self withAdapterDo: [ :anAdapter | anAdapter selectAndPasteText ]
 ]
 
 { #category : #private }
