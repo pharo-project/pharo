@@ -1,9 +1,6 @@
 Class {
 	#name : #CDTraitParserTest,
 	#superclass : #TestCase,
-	#instVars : [
-		'traitDefinition'
-	],
 	#category : #'ClassParser-Tests'
 }
 
