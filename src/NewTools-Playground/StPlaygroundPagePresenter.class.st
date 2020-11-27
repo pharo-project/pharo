@@ -127,7 +127,7 @@ StPlaygroundPagePresenter >> doEvaluateAndGo [
 			text insertErrorPopover: (SpCodePopoverErrorPresenter 
 				newCode: text 
 				message: e messageText) 
-		atIndex: text selectionInterval end - 1 ].
+		atIndex: text selectionInterval last - 1 ].
 	
 	activationBlock value: (StEvaluatedSelectionModel newValue: value)
 ]

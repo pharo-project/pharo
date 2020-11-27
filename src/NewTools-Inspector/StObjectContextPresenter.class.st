@@ -40,7 +40,7 @@ StObjectContextPresenter >> doEvaluateAndGo [
 			evaluator insertErrorPopover: (SpCodePopoverErrorPresenter 
 				newCode: evaluator 
 				message: e messageText) 
-		atIndex: evaluator selectionInterval end - 1 ].
+		atIndex: evaluator selectionInterval last - 1 ].
 	
 	activationBlock value: (StEvaluatedSelectionModel newValue: value)
 ]
