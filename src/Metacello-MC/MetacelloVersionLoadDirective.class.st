@@ -97,6 +97,7 @@ MetacelloVersionLoadDirective >> loadPreloadDirective: aPreloadDirective [
 	| block |
 	(block :=  aPreloadDirective spec preLoadDoItBlock) ~~ nil
 		ifTrue: [
+			MetacelloNotification signal: ('Evaluating -> ', aPreloadDirective spec label, ' >> ', aPreloadDirective spec preLoadDoIt value asString).
 			aPreloadDirective evaluateSupplyingAnswers: [ block valueWithPossibleArgs: 
 					(Array 
 						with: aPreloadDirective loader 
