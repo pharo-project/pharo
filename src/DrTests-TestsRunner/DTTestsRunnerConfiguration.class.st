@@ -6,7 +6,7 @@ I can be converted as a test suite via #asTestSuite.
 Class {
 	#name : #DTTestsRunnerConfiguration,
 	#superclass : #DTPluginConfiguration,
-	#category : #'DrTests-TestsRunner'
+	#category : #'DrTests-TestsRunner-Base'
 }
 
 { #category : #converting }
