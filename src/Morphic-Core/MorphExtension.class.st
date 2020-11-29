@@ -40,9 +40,10 @@ MorphExtension >> actionMap: anObject [
 
 { #category : #'accessing - other properties' }
 MorphExtension >> assureOtherProperties [
+
 	"creates an otherProperties for the receiver if needed"
-	otherProperties ifNil: [self initializeOtherProperties].
-	^ otherProperties
+
+	^ otherProperties ifNil: [  otherProperties := SmallIdentityDictionary new ]
 ]
 
 { #category : #accessing }
@@ -144,14 +145,13 @@ MorphExtension >> fillStyle: anObject [
 ]
 
 { #category : #'accessing - other properties' }
-MorphExtension >> hasProperty: aSymbol [ 
+MorphExtension >> hasProperty: aSymbol [
+
 	"Answer whether the receiver has the property named aSymbol"
-	| property |
-	otherProperties ifNil: [^ false].
-	property := otherProperties at: aSymbol ifAbsent: [].
-	property ifNil: [^ false].
-	property == false ifTrue: [^ false].
-	^ true
+
+	^ otherProperties
+		  ifNil: [ false ]
+		  ifNotNil: [ :prop | prop includesKey: aSymbol ]
 ]
 
 { #category : #initialization }
@@ -162,12 +162,6 @@ MorphExtension >> initialize [
 	sticky := false.
 
 
-]
-
-{ #category : #'accessing - other properties' }
-MorphExtension >> initializeOtherProperties [
-	"private - initializes the receiver's otherProperties"
-	otherProperties :=  SmallIdentityDictionary new
 ]
 
 { #category : #other }
@@ -366,12 +360,15 @@ MorphExtension >> valueOfProperty: aSymbol [
 ]
 
 { #category : #'accessing - other properties' }
-MorphExtension >> valueOfProperty: aSymbol ifAbsent: aBlock [ 
+MorphExtension >> valueOfProperty: aSymbol ifAbsent: aBlock [
+
 	"if the receiver possesses a property of the given name, answer  
 	its value. If not then evaluate aBlock and answer the result of  
 	this block evaluation"
-	otherProperties ifNil: [^ aBlock value].
-	^ otherProperties at: aSymbol ifAbsent: [^ aBlock value]
+
+	^ otherProperties
+		  ifNotNil: [ :prop | prop at: aSymbol ifAbsent: aBlock ]
+		  ifNil: [ aBlock value ]
 ]
 
 { #category : #'accessing - other properties' }

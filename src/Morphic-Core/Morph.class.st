@@ -3341,10 +3341,13 @@ Morph >> hasParagraphAnchorString [
 ]
 
 { #category : #'accessing - properties' }
-Morph >> hasProperty: aSymbol [ 
+Morph >> hasProperty: aSymbol [
+
 	"Answer whether the receiver has the property named aSymbol"
-	extension ifNil: [^ false].
-	^extension hasProperty: aSymbol
+
+	^ extension
+		  ifNil: [ false ]
+		  ifNotNil: [ :ext | ext hasProperty: aSymbol ]
 ]
 
 { #category : #'layout-menu' }
@@ -6659,9 +6662,11 @@ Morph >> vResizingString: aSymbol [
 ]
 
 { #category : #'accessing - properties' }
-Morph >> valueOfProperty: aSymbol [ 
+Morph >> valueOfProperty: aSymbol [
+
 	"answer the value of the receiver's property named aSymbol"
-	^ extension ifNotNil: [extension valueOfProperty: aSymbol]
+
+	^ extension ifNotNil: [ :ext | ext valueOfProperty: aSymbol ]
 ]
 
 { #category : #'accessing - properties' }
