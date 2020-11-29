@@ -164,6 +164,14 @@ DummyUIManager >> syntaxErrorNotificationDefaultAction: anException [
 ]
 
 { #category : #'default actions' }
+DummyUIManager >> traceCr: aString [
+
+	Smalltalk logStdOutDuring: [:logger |
+		logger nextPutAll: aString;
+				 cr ].
+]
+
+{ #category : #'default actions' }
 DummyUIManager >> unhandledErrorDefaultAction: anException [
 	self traceCr: '*** EXCEPTION ***'.
 	self traceCr: anException.
