@@ -145,7 +145,7 @@ StTestDebuggerProvider >> sessionFor: aContext [
 		           on: process
 		           startedAt: aContext.
 		
-	session exception ifNil: [ session exception: "OupsNull"Exception new ]
+	"session exception ifNil: [ session exception: (OupsNullException new)  ]"
 ]
 
 { #category : #helpers }

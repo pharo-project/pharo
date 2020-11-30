@@ -53,7 +53,7 @@ StDebuggerActionModelTest >> benchmarkFilterStack [
 { #category : #helper }
 StDebuggerActionModelTest >> changeSession: aDebugSession [
 
-	session ifNotNil: [ session terminate].
+	"session ifNotNil: [ session terminate]."
 	session := aDebugSession.
 	debugActionModel := StDebuggerActionModel on: session
 ]
