@@ -171,7 +171,7 @@ BehaviorTest >> testIsRootInEnvironment [
 { #category : #tests }
 BehaviorTest >> testIsUsed [
 	self assert: Object isUsed.
-	self assert: Object class isUsed.
+	self assert: Object class isUsed
 
 ]
 

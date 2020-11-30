@@ -57,7 +57,7 @@ NoUnusedVariablesLeftTest >> testNoUnusedTemporaryVariablesLeft [
 	| found validExceptions remaining |
 	found := SystemNavigation default allMethodsSelect: [ :m | 
 		((m numTemps - m numArgs) > 0) and: [  
-		m ast temporaries anySatisfy: [ :x | x binding isUnused ] ] ].
+		m ast temporaries anySatisfy: [ :x | x binding isUsed not] ] ].
 	
 	"No other exceptions beside the ones mentioned here should be allowed"	
 	validExceptions := { MFClassA>>#method. MFClassB>>#method3. MFClassB>>#method2 . TemporaryVariableTest>>#testIsReferenced }.	

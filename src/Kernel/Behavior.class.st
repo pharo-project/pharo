@@ -1106,7 +1106,7 @@ Behavior >> isRootInEnvironment [
 
 { #category : #testing }
 Behavior >> isUsed [
-	"the class us used somehow. This is client specific, subclasses can override"
+	"the class is used somehow. This is client specific, subclasses can override"
 
 	^ self isReferenced
 ]
