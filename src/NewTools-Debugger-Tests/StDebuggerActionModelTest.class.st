@@ -53,7 +53,7 @@ StDebuggerActionModelTest >> benchmarkFilterStack [
 { #category : #helper }
 StDebuggerActionModelTest >> changeSession: aDebugSession [
 
-	"session ifNotNil: [ session terminate]."
+	session ifNotNil: [ session clear].
 	session := aDebugSession.
 	debugActionModel := StDebuggerActionModel on: session
 ]
@@ -125,9 +125,9 @@ StDebuggerActionModelTest >> setUp [
 { #category : #running }
 StDebuggerActionModelTest >> tearDown [
 
-"	debugger ifNotNil: [ debugger close ].
-	session ifNotNil: [ 
-		session interruptedContext ifNotNil: [ session terminate ] ]."
+	debugger ifNotNil: [ debugger close ].
+	session ifNotNil: [ session clear ].
+	session := nil.
 	StDebuggerUsingSpecSelectorMock removeSelector: #testMethod.
 	StDebuggerUsingSpecSelectorMock removeSelector: #method.
 	StDebuggerUsingSpecSelectorMock removeSelector: #unclassifiedMethod.
