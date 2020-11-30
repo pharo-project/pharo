@@ -91,17 +91,18 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 	Smalltalk at: #Sensor put: InputEventSensor new.
 	InputEventSensor installEventSensorFramework.
 	InputEventSensor installMouseDecodeTable.
+	
+	Stdio stdout nextPutAll: 'Initializing Morphic 3.1...'; lf.
 
 	(Smalltalk at: #Sensor) flushAllButDandDEvents.
 	world handsDo: [:h | h initForEvents].
 	world borderWidth: 0.
+	
+	Stdio stdout nextPutAll: 'Initializing Morphic 3.2...'; lf.
 
-	MorphicCoreUIManager new spawnNewProcess.
 	Display newDepth: 32.
 	world displayWorldSafely.
-	"UIManager default: MorphicCoreUIManager new."
-	world displayWorldSafely.
-	UIManager default uiProcess resume.
+	MorphicCoreUIManager new spawnNewProcess.
 	
 	Stdio stdout nextPutAll: 'Initializing Morphic 4...'; lf.
 
