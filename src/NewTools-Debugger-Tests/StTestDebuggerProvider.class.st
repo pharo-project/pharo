@@ -139,11 +139,12 @@ StTestDebuggerProvider >> sessionFor: aContext [
 	process := Process
 		           forContext: aContext
 		           priority: Processor userInterruptPriority.
-	session := DebugSession
+	^DebugSession new
+"	session := DebugSession
 		           named: 'test session'
 		           on: process
 		           startedAt: aContext.
-	session exception ifNil: [ session exception: OupsNullException new ]
+	session exception ifNil: [ session exception: OupsNullException new ]"
 ]
 
 { #category : #helpers }

@@ -117,14 +117,15 @@ StDebuggerActionModelTest >> setUp [
 	context := process suspendedContext.
 	session := (StTestDebuggerProvider new debuggerWithContext: context)
 		           session.
-	session stepIntoUntil: [ :currentContext | 
-		currentContext method == method ]
+	"session stepIntoUntil: [ :currentContext | 
+		currentContext method == method ]" .
+	debugActionModel := StDebuggerActionModel on: session
 ]
 
 { #category : #running }
 StDebuggerActionModelTest >> tearDown [
 
-"	debugger ifNotNil: [ debugger close ]."
+	debugger ifNotNil: [ debugger close ].
 	session ifNotNil: [ 
 		session interruptedContext ifNotNil: [ session terminate ] ].
 	StDebuggerUsingSpecSelectorMock removeSelector: #testMethod.
