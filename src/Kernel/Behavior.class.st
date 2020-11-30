@@ -805,6 +805,12 @@ Behavior >> hasMethods [
 	^ self methodDict notEmpty
 ]
 
+{ #category : #'accessing-properties' }
+Behavior >> hasProperty: aKey [
+	self propertyAt: aKey ifAbsent: [ ^ false ].
+	^ true
+]
+
 { #category : #'testing method dictionary' }
 Behavior >> hasSelectorReferringTo: literal [
 	"Answer true if any of my methods access the argument as a literal"
@@ -1100,7 +1106,7 @@ Behavior >> isRootInEnvironment [
 
 { #category : #testing }
 Behavior >> isUsed [
-	"the class us used somehow. This is client specific, subclasses can override"
+	"the class is used somehow. This is client specific, subclasses can override"
 
 	^ self isReferenced
 ]

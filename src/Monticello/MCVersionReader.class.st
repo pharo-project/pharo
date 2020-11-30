@@ -16,9 +16,8 @@ Class {
 { #category : #reading }
 MCVersionReader class >> file: fileName streamDo: aBlock [
 	
-	^ FileStream 
-			readOnlyFileNamed: fileName 
-			do: [:file | aBlock value: file]
+	^ fileName asFileReference
+		readStreamDo: [ :file | aBlock value: file]
 ]
 
 { #category : #'actions - file' }

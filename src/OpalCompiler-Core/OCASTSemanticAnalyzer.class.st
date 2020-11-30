@@ -230,8 +230,8 @@ OCASTSemanticAnalyzer >> visitSequenceNode: aSequenceNode [
 	aSequenceNode temporaries do: [ :node | self declareVariableNode: node ].
 	aSequenceNode statements do: [ :each | self visitNode: each ].
 	aSequenceNode temporaries reverseDo: [ :node | 
-			node variable isUnused
-				ifTrue: [ self unusedVariable: node ] ]
+			node variable isUsed
+				ifFalse: [ self unusedVariable: node ] ]
 ]
 
 { #category : #visiting }

@@ -210,6 +210,11 @@ Variable >> isUninitialized [
 ]
 
 { #category : #testing }
+Variable >> isUsed [ 
+	^ self isReferenced
+]
+
+{ #category : #testing }
 Variable >> isWorkspaceVariable [
 	^ false
 ]

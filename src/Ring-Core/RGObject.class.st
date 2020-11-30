@@ -254,11 +254,22 @@ RGObject >> hasProperties [
 ]
 
 { #category : #properties }
-RGObject >> hasPropertyNamed: propertyName [
-	
+RGObject >> hasProperty: propertyName [
+
 	^ self hasProperties
 		ifTrue: [ properties includesKey: propertyName ]	
 		ifFalse:[ false ].
+
+]
+
+{ #category : #properties }
+RGObject >> hasPropertyNamed: propertyName [
+
+	self
+		deprecated: 'Use hasProperty: instead'
+		transformWith: '`@rec hasPropertyNamed: `@arg' -> '`@rec hasProperty: `@arg'.
+
+	^ self hasProperty: propertyName
 
 ]
 
@@ -634,10 +645,10 @@ RGObject >> pvtUnresolvedProperties [
 ]
 
 { #category : #properties }
-RGObject >> removePropertyNamed: propertyName [ 
-	
-	(self hasPropertyNamed: propertyName)
-		ifTrue: [ properties removeKey: propertyName ]
+RGObject >> removePropertyNamed: propertyName [
+
+	(self hasProperty: propertyName) ifTrue: [ 
+		properties removeKey: propertyName ]
 ]
 
 { #category : #accessing }

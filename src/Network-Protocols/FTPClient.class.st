@@ -153,7 +153,7 @@ FTPClient >> get: limit dataInto: dataStream [
 FTPClient >> getData [
 
 	| dataStream |
-	dataStream := RWBinaryOrTextStream on: (String new: 4000).
+	dataStream := (String new: 4000) writeStream.
 	self getDataInto: dataStream.
 	self closeDataSocket.
 	^dataStream contents
@@ -344,13 +344,9 @@ FTPClient >> passive [
 FTPClient >> putFileNamed: filePath as: fileNameOnServer [
 	"FTP a file to the server."
 
-
-	| fileStream |
-	fileStream := FileStream readOnlyFileNamed: filePath.
-	fileStream
-		ifNil: [(FileDoesNotExistException fileName: filePath) signal].
-	self putFileStreamContents: fileStream as: fileNameOnServer
-
+	filePath asFileReference readStreamDo: [ :fileStream |
+		self putFileStreamContents: fileStream as: fileNameOnServer
+	]
 ]
 
 { #category : #protocol }

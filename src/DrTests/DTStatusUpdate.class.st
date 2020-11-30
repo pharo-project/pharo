@@ -1,5 +1,5 @@
 "
-Notify when executing an analisis.
+Notify when executing an analysis.
 "
 Class {
 	#name : #DTStatusUpdate,

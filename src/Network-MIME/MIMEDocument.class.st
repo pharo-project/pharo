@@ -158,7 +158,7 @@ MIMEDocument >> contentStream [
 	contentStream
 		ifNil: [contentStream := contents
 				ifNil: [self contentStreamOnURI]
-				ifNotNil: [(RWBinaryOrTextStream with: self contents) reset]].
+				ifNotNil: [self contents readStream]].
 	^contentStream
 ]
 

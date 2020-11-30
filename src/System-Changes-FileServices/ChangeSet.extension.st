@@ -4,22 +4,21 @@ Extension { #name : #ChangeSet }
 ChangeSet class >> fileIntoNewChangeSet: fullName [
 	"File in all of the contents of the currently selected file, if any, into a new change set." 
 
-	| fn ff |
+	| filename |
 	fullName ifNil: [^ self ].
 	
-	fn := (Smalltalk hasClassNamed: #GZipReadStream) 
+	filename := (Smalltalk hasClassNamed: #GZipReadStream) 
 		ifTrue: [(Smalltalk classNamed:  #GZipReadStream) uncompressedFileName: fullName]
 		ifFalse: [fullName].
-	[ ff := FileStream readOnlyFileNamed: fn.
-	self newChangesFromStream: ff named: (fn  asFileReference basename)]
-		ensure: [ff ifNotNil: [ff close]]
+	filename asFileReference readStreamDo: [ :readStream |
+		self newChangesFromStream: readStream named: filename asFileReference basename ]
 ]
 
 { #category : #'*System-Changes-FileServices' }
 ChangeSet class >> fileReaderServicesForFile: fullName suffix: suffix [
 	<fileService>
 	
-	^ (FileStream isSourceFileSuffix: suffix)
+	^ (#('st' 'cs') includes: suffix)
 		ifTrue: [ self services]
 		ifFalse: [#()]
 ]

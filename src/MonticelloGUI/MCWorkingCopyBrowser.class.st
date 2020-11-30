@@ -469,7 +469,9 @@ MCWorkingCopyBrowser >> inspectWorkingCopy [
 
 { #category : #actions }
 MCWorkingCopyBrowser >> loadRepositories [
-	FileStream fileIn: 'MCRepositories.st'.
+
+
+	CodeImporter evaluateFileNamed: 'MCRepositories.st'.
 	self repositoryListChanged.
 	self changedButtons.
 
@@ -735,7 +737,7 @@ MCWorkingCopyBrowser >> revertPackageMenuSpec [
 { #category : #actions }
 MCWorkingCopyBrowser >> saveRepositories [
 
-	FileStream forceNewFileNamed: 'MCRepositories.st' do: [:f |
+	'MCRepositories.st' asFileReference writeStreamDo: [:f |
 		MCRepositoryGroup default repositoriesDo: [:r |
 			r asCreationTemplate ifNotNil: [:template |
 				f nextPutAll: 'MCRepositoryGroup default addRepository: (', template , ')!'; cr]]]

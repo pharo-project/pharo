@@ -138,8 +138,12 @@ MetacelloPharoCommonPlatform >> downloadBasicFile: url to: outputFileName userna
 	| out err proc errorFileName args |
 	"Make a unique name for the error log and ensure that we can write the files"
 	errorFileName := self downloadErrorFileNameFor: outputFileName.
-	out := FileStream forceNewFileNamed: outputFileName.
-	err := FileStream forceNewFileNamed: errorFileName.
+	out := (outputFileName asFileReference)
+		ensureDelete;
+		writeStream.
+	err := (errorFileName asFileReference)
+		ensureDelete;
+		writeStream.
 	args := username
 		ifNotNil: [ {'-u' . (username , ':' , pass) . '-L' . url} ]
 		ifNil: [ {'-L' . url} ].
@@ -217,8 +221,12 @@ MetacelloPharoCommonPlatform >> extractRepositoryFrom: zipFile to: directory [
 
     | out err proc errorMessage errorFileName |
     errorFileName := self downloadErrorFileNameFor: zipFile.
-    out := FileStream forceNewFileNamed: '/tmp/zip.out'.
-    err := FileStream forceNewFileNamed: errorFileName.
+    out := ('/tmp/zip.out'asFileReference)
+		ensureDelete;
+		writeStream.
+    err := (errorFileName asFileReference)
+		ensureDelete;
+		writeStream.
     errorMessage := ''.
     [ 
     proc := (self class environment at: #OSProcess) thisOSProcess
@@ -235,10 +243,9 @@ MetacelloPharoCommonPlatform >> extractRepositoryFrom: zipFile to: directory [
         ensure: [ 
             out close.
             err close ].
-    FileStream
-        fileNamed: errorFileName
-        do: [ :fileStream | 
-            (errorMessage := fileStream contentsOfEntireFile) notEmpty
+    errorFileName asFileReference
+        binaryReadStreamDo: [ :fileStream | 
+            (errorMessage := fileStream upToEnd) notEmpty
                 ifTrue: [ self error: 'unzip failure: ' , errorMessage printString ]
                 ifFalse: [
                     (self fileHandleOn: '/tmp')
