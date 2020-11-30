@@ -91,9 +91,6 @@ BaselineOfMorphic >> baseline: spec [
 		"Several packages depend on Rubric as a basic Morphic component"
 		spec package: 'Rubric'.
 		
-		spec package: 'Multilingual-OtherLanguages'.
-		spec package: 'Multilingual-TextConverterOtherLanguages'.
-
 		spec package: 'NewValueHolder-Core'.
 
 		spec package: 'Polymorph-Widgets'.
