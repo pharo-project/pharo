@@ -112,7 +112,7 @@ StTestDebuggerProvider >> newDebugger [
 	| debugger |
 	debugger := StDebugger basicNew.
 	debugger session: session.
-	debugger debuggerActionModel updateContextPredicate.
+	"debugger debuggerActionModel updateContextPredicate."
 	^ debugger
 ]
 
@@ -144,8 +144,7 @@ StTestDebuggerProvider >> sessionFor: aContext [
 		           named: 'test session'
 		           on: process
 		           startedAt: aContext.
-	^DebugSession new	"
-	session exception ifNil: [ session exception: OupsNullException new ]"
+	session exception ifNil: [ session exception: OupsNullException new ]
 ]
 
 { #category : #helpers }
