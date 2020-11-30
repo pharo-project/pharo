@@ -110,15 +110,15 @@ StDebuggerActionModelTest >> setResult [
 StDebuggerActionModelTest >> setUp [
 	| method context process |
 	super setUp.
-	method := self class >> #setResult.
+"	method := self class >> #setResult.
 	process := [ method valueWithReceiver: self arguments: #() ]
 		newProcess.
 	context := process suspendedContext.
 	session := (StTestDebuggerProvider new debuggerWithContext: context)
 		session.
-	"session
-		stepIntoUntil: [ :currentContext | currentContext method == method ]."
-	debugActionModel := StDebuggerActionModel on: session
+	session
+		stepIntoUntil: [ :currentContext | currentContext method == method ].
+	debugActionModel := StDebuggerActionModel on: session"
 ]
 
 { #category : #running }
