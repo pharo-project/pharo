@@ -56,6 +56,8 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
+	
+	Stdio stdout nextPutAll: 'Initializing Morphic 1...'; lf.
 
 	IdentityTransform initialize.
 
@@ -71,6 +73,8 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 	Cursor initTarget.
 	EventManager initialize.
 
+	Stdio stdout nextPutAll: 'Initializing Morphic 2...'; lf.
+
 	world := WorldMorph new.
 	world instVarNamed: #worldState put: WorldState new.
 	hand := HandMorph new.
@@ -81,6 +85,8 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 	Smalltalk at: #ActiveWorld put: world.
 
 	world viewBox: Display boundingBox.
+	
+	Stdio stdout nextPutAll: 'Initializing Morphic 3...'; lf.
 
 	Smalltalk at: #Sensor put: InputEventSensor new.
 	InputEventSensor installEventSensorFramework.
@@ -96,6 +102,8 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 	"UIManager default: MorphicCoreUIManager new."
 	world displayWorldSafely.
 	UIManager default uiProcess resume.
+	
+	Stdio stdout nextPutAll: 'Initializing Morphic 4...'; lf.
 
 	world cleanseOtherworldlySteppers.
 	ExternalDropHandler resetRegisteredHandlers.
@@ -103,6 +111,8 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 	Display newDepth: 32.
 
 	(world instVarNamed: #worldState) invalidate.
+	
+	Stdio stdout nextPutAll: 'Initializing Morphic 5...'; lf.
 
 	hand instVarNamed: #targetOffset put: 0@0.
 
@@ -112,6 +122,8 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 	DefaultExternalDropHandler initialize.
 	
 	WorldMorph recompile.
+	
+	Stdio stdout nextPutAll: 'Initializing Morphic 6...'; lf.
 
 	Initialized := true.
 ]
