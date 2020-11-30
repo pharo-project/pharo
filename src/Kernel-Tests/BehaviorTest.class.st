@@ -115,6 +115,17 @@ BehaviorTest >> testHasAbstractMethods [
 	
 ]
 
+{ #category : #'tests - properties' }
+BehaviorTest >> testHasProperty [
+	| testValue |
+	testValue := Date today.
+	self class propertyAt: #testKeySelector put: testValue.
+	self assert: (self class hasProperty: #testKeySelector).
+	
+	self class removeProperty: #testKeySelector.
+	self deny: (self class hasProperty: #testKeySelector)
+]
+
 { #category : #tests }
 BehaviorTest >> testIncludesMethod [
 	self assert: (Object includesMethod: Object>>#halt).

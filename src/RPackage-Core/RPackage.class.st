@@ -735,6 +735,12 @@ RPackage >> extensionsForTag: aRPackageTag [
 		self category: category matches: aRPackageTag categoryName ]
 ]
 
+{ #category : #properties }
+RPackage >> hasProperty: aKey [
+	self propertyAt: aKey ifAbsent: [ ^ false ].
+	^ true
+]
+
 { #category : #accessing }
 RPackage >> hierarchyRoots [
 	"Returns all the hiearchy roots (by opposition to single classes inheriting from class outside the package) of a package"
