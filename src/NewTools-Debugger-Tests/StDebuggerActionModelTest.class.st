@@ -119,7 +119,7 @@ StDebuggerActionModelTest >> setUp [
 		           session.
 	session stepIntoUntil: [ :currentContext | 
 		currentContext method == method ] .
-	debugActionModel := StDebuggerActionModel on: session
+	self changeSession: session
 ]
 
 { #category : #running }
