@@ -114,7 +114,7 @@ StDebuggerActionModelTest >> setUp [
 	process := [ method valueWithReceiver: self arguments: #() ]
 		newProcess.
 	context := process suspendedContext.
-	session := [(StTestDebuggerProvider new debuggerWithContext: context) session] on: Error do: [ nil ]
+	session := [(StTestDebuggerProvider new debuggerWithContext: context) session] on: Error do: [ :err| err crTrace ]
 		.
 "	session
 		stepIntoUntil: [ :currentContext | currentContext method == method ]."
