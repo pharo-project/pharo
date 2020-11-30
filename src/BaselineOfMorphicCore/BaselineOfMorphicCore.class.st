@@ -93,7 +93,7 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 	MorphicCoreUIManager new spawnNewProcess.
 	Display newDepth: 32.
 	world displayWorldSafely.
-	UIManager default: MorphicCoreUIManager new.
+	"UIManager default: MorphicCoreUIManager new."
 	world displayWorldSafely.
 	UIManager default uiProcess resume.
 
