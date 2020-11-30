@@ -61,7 +61,7 @@ rr nextPut: 'Zork'.
 rr close.
 "
 
-	^ self on: (FileStream fileNamed: aString)
+	^ self on: aString asFileReference binaryWriteStream
 ]
 
 { #category : #'instance creation' }
@@ -149,8 +149,10 @@ MCDataStream class >> newFileNamed: aString [
 	rr nextPut: 'Zork'.
 	rr close.
 "
-
-	^ self on: (FileStream newFileNamed: aString)
+	| fileReference |
+	fileReference := aString asFileReference.
+	fileReference exists ifTrue: [ FileExists signalWith: fileReference ].
+	^ self on: fileReference binaryWriteStream
 ]
 
 { #category : #'instance creation' }
@@ -162,10 +164,10 @@ MCDataStream class >> oldFileNamed: aString [
 	^ rr nextAndClose.
 "
 
-	| strm ff |
-	ff := FileStream oldFileOrNoneNamed: aString.
-	ff ifNil: [^ nil].
-	strm := self on: (ff binary).
+	| strm fileReference |
+	fileReference := aString asFileReference.
+	fileReference exists ifFalse: [ ^ nil ].
+	strm := self on: fileReference binaryWriteStream.
 	^ strm
 ]
 
@@ -174,7 +176,6 @@ MCDataStream class >> on: aStream [
 	"Open a new DataStream onto a low-level I/O stream."
 
 	^ self basicNew setStream: aStream
-		"aStream binary is in setStream:"
 
 ]
 
@@ -188,7 +189,14 @@ MCDataStream class >> readOnlyFileNamed:  aString [
 	rr close.
 "
 
-	^ self on: (FileStream readOnlyFileNamed: aString)
+	^ self on: aString asFileReference binaryReadStream
+]
+
+{ #category : #'instance creation' }
+MCDataStream class >> readOnlyFileNamed: fileName do: aBlock [
+	"Returns the result of aBlock."
+	
+	^ self detectFile: [ self readOnlyFileNamed: fileName ] do: aBlock
 ]
 
 { #category : #'initialize-release' }
@@ -218,8 +226,7 @@ MCDataStream class >> registerWriterSelector: aSelector atIndex: anIndex [
 MCDataStream class >> streamedRepresentationOf: anObject [
 
 	| file |
-	file := (RWBinaryOrTextStream on: (ByteArray new: 5000)).
-	file binary.
+	file := (ByteArray new: 5000) writeStream.
 	(self on: file) nextPut: anObject.
 	^file contents
 ]
@@ -228,12 +235,6 @@ MCDataStream class >> streamedRepresentationOf: anObject [
 MCDataStream class >> typeMap [
 	TypeMap ifNil: [ self initializeTypeMap ].
 	^ TypeMap
-]
-
-{ #category : #'instance creation' }
-MCDataStream class >> unStream: aString [
-
-	^(self on: ((RWBinaryOrTextStream with: aString) reset; binary)) next
 ]
 
 { #category : #'initialize-release' }
@@ -513,12 +514,16 @@ MCDataStream >> readNil [
 { #category : #'write and read' }
 MCDataStream >> readString [
 
-	| str |
-	byteStream ascii.
-	str := byteStream nextString.
-	byteStream binary.
-	^ str
+	| length aByteArray |
+	length := byteStream next.		"first byte."
+	length >= 192 ifTrue: [length := length - 192.
+		1 to: 3 do: [:ii | length := length * 256 + byteStream next]].
+	aByteArray := ByteArray new: length.
 
+	byteStream nextInto: aByteArray.
+	
+	"An ascii string..."
+	^ aByteArray asString.
 ]
 
 { #category : #'write and read' }
@@ -565,7 +570,6 @@ MCDataStream >> setCurrentReference: refPosn [
 MCDataStream >> setStream: aStream [
 	"PRIVATE -- Initialization method."
 
-	aStream binary.
 	basePos := aStream position.	"Remember where we start.  Earlier part of file contains a class or method file-in.  Allow that to be edited.  We don't deal in absolute file locations."
 	byteStream := aStream.
 ]
@@ -661,7 +665,15 @@ MCDataStream >> writeNil: anUndefinedObject [
 MCDataStream >> writeString: aString [
 	"PRIVATE -- Write the contents of a String."
 
-	byteStream nextStringPut: aString.
+	| length |
+	(length := aString size) < 192
+		ifTrue: [byteStream nextPut: length]
+		ifFalse: 
+			[byteStream nextPut: (length byteAt: 4)+192.
+			byteStream nextPut: (length byteAt: 3).
+			byteStream nextPut: (length byteAt: 2).
+			byteStream nextPut: (length byteAt: 1)].
+	byteStream nextPutAll: aString asByteArray.
 ]
 
 { #category : #'write and read' }

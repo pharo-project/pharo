@@ -149,7 +149,6 @@ SessionManager class >> initializedSessionManager [
 		registerSystemClassNamed: #Symbol; "System"
 		registerSystemClassNamed: #Locale; "System"
 		registerSystemClassNamed: #WeakArray; "System"
-		registerSystemClassNamed: #FileStream; "System"
 		registerSystemClassNamed: #BasicCommandLineHandler; "System"
 		registerSystemClassNamed: #NonInteractiveTranscript; "System"
 		registerSystemClassNamed: #ASTCache; "System"

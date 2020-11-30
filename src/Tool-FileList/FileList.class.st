@@ -585,7 +585,7 @@ FileList >> fileContentsMenu: aMenu shifted: shifted [
 			[services add: self serviceGetHex].
 		(#(needToGetShiftJIS needToGetEUCJP needToGetCNGB needToGetEUCKR needToGetUTF8) includes: brevityState) ifFalse:
 			[services add: self serviceGetEncodedText].
-		(FileStream sourceFileSuffixes includes: self suffixOfSelectedFile) ifTrue:
+		(#('st' 'cs') includes: self suffixOfSelectedFile) ifTrue:
 			[services addAll: (self itemsForFile: reference)].
 
 		aMenu 
@@ -1229,7 +1229,7 @@ FileList >> readContentsHex: brevity [
 { #category : #'file list' }
 FileList >> readOnlyStream [
 	"Answer a read-only stream on the selected file. For the various stream-reading services."
-	^ FileStream readOnlyFileNamed: self reference fullName
+	^ self reference readStream
 ]
 
 { #category : #accessing }

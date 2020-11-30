@@ -359,6 +359,7 @@ ChangeSet class >> newChanges: aChangeSet withOld: old [
 
 { #category : #services }
 ChangeSet class >> newChangesFromStream: aStream named: aName [
+
 	"File in the code from the stream into a new change set whose
 	name is derived from aName. Leave the 'current change set'
 	unchanged. Return the new change set or nil on failure."
@@ -367,15 +368,11 @@ ChangeSet class >> newChangesFromStream: aStream named: aName [
 	oldChanges := self current.
 	newName := aName withoutPeriodSuffix.
 	newSet := self basicNewChangeSet: newName.
-	[ | newStream |
-	      newSet ifNotNil:[
-			(aStream respondsTo: #converter:) ifFalse: [
-				newStream := MultiByteBinaryOrTextStream with: (aStream contentsOfEntireFile).
-				newStream reset.] ifTrue: [newStream := aStream].
-			self newChanges: newSet.
-			newStream setConverterForCode.
-			CodeImporter evaluateReadStream: newStream readStream].
-	aStream close] ensure: [self newChanges: oldChanges].
+	[
+	newSet ifNotNil: [ 
+		self newChanges: newSet.
+		CodeImporter evaluateReadStream: aStream ]
+	] ensure: [ self newChanges: oldChanges ].
 	^ newSet
 ]
 
@@ -959,8 +956,7 @@ ChangeSet >> fileOutOn: stream [
 	"Write out all the changes the receiver knows about"
 
 	| classList traits classes traitList list |
-	(self isEmpty and: [stream isKindOf: FileStream])
-		ifTrue: [self inform: 'Warning: no changes to file out'].
+	self ifEmpty: [self inform: 'Warning: no changes to file out'].
 		
 	traits := self changedClasses select: [:each | each isTrait].
 	classes := self changedClasses select: [:each | each isBehavior & each isTrait not].
