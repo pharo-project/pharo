@@ -3276,10 +3276,11 @@ Morph >> hasDragAndDropEnabledString [
 
 { #category : #'drop shadows' }
 Morph >> hasDropShadow [
+
 	"answer whether the receiver has DropShadow"
-	^ self
-		valueOfProperty: #hasDropShadow
-		ifAbsent: [false]
+
+	extension ifNil: [ ^ false ].
+	^ self valueOfProperty: #hasDropShadow ifAbsent: false
 ]
 
 { #category : #'drop shadows' }
@@ -6749,8 +6750,7 @@ Morph >> viewBox [
 { #category : #drawing }
 Morph >> visible [
 	"answer whether the receiver is visible"
-	extension ifNil: [^ true].
-	^ extension visible
+	^ extension ifNil: [ true ] ifNotNil: [ :ext | ext visible ]
 ]
 
 { #category : #accessing }
