@@ -10,12 +10,13 @@ RBRemoveClassTest >> resumeOnCannotRemoveTopLevelClassError: error [
 		ifTrue: [ error resume ]
 ]
 
-{ #category : #tests }
+{ #category : #'failure tests' }
 RBRemoveClassTest >> testRaisesRBRefactoringErrorWhenRemovingNonEmptySuperclass [
-	self shouldFail: (RBRemoveClassRefactoring classNames: (Array with: ('RBFoo' , 'LintRuleTest') asSymbol))
+
+	self shouldFail: (RBRemoveClassRefactoring classNames: {#RBTransformationRuleTestData1})
 ]
 
-{ #category : #'failure tests' }
+{ #category : #tests }
 RBRemoveClassTest >> testRemoveAClassAndTheirSubclass [
 	|refactoring|
 	
@@ -36,7 +37,7 @@ RBRemoveClassTest >> testRemoveClassWithReferencesRaisesRBRefactoringError [
 	self shouldFail: (RBRemoveClassRefactoring classNames: #(#RBBasicLintRuleTestData ))
 ]
 
-{ #category : #'failure tests' }
+{ #category : #tests }
 RBRemoveClassTest >> testRemoveClassesWithReferencesBetweenThem [
 	|refactoring|
 	
@@ -48,9 +49,13 @@ RBRemoveClassTest >> testRemoveClassesWithReferencesBetweenThem [
 
 { #category : #tests }
 RBRemoveClassTest >> testRemoveEmptySuperclass [
-	| refactoring |
-	refactoring := RBRemoveClassRefactoring classNames: (Array with: ('RBFoo' , 'LintRuleTestData1') asSymbol).
+	| refactoring classA classB classC |
+	
+	classA := ('RBFoo' , 'LintRuleTestData1') asSymbol.
+	classB := ('RBTransformation' , 'RuleTestData1') asSymbol.
+	classC := #RBLintRuleTestData.
+	refactoring := RBRemoveClassRefactoring classNames: {classA}.
 	self executeRefactoring: refactoring.
-	self assert: (refactoring model classNamed: ('RBFoo' , 'LintRuleTestData1') asSymbol) isNil.
-	self assert: (refactoring model classNamed: ('RBTransformation' , 'RuleTestData1') asSymbol) superclass equals: (refactoring model classNamed: #RBLintRuleTestData)
+	self assert: (refactoring model classNamed: classA) isNil.
+	self assert: (refactoring model classNamed: classB) superclass equals: (refactoring model classNamed: classC)
 ]
