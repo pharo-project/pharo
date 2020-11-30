@@ -53,7 +53,7 @@ StDebuggerActionModelTest >> benchmarkFilterStack [
 { #category : #helper }
 StDebuggerActionModelTest >> changeSession: aDebugSession [
 
-	session terminate.
+	session ifNotNil: [ session terminate].
 	session := aDebugSession.
 	debugActionModel := StDebuggerActionModel on: session
 ]
@@ -108,27 +108,30 @@ StDebuggerActionModelTest >> setResult [
 
 { #category : #running }
 StDebuggerActionModelTest >> setUp [
+
 	| method context process |
 	super setUp.
 	method := self class >> #setResult.
-	process := [ method valueWithReceiver: self arguments: #() ]
-		newProcess.
+	process := [ method valueWithReceiver: self arguments: #(  ) ]
+		           newProcess.
 	context := process suspendedContext.
-	session := [(StTestDebuggerProvider new debuggerWithContext: context) session] on: Error do: [ :err| err crTrace ]
-		.
-"	session
-		stepIntoUntil: [ :currentContext | currentContext method == method ]."
-	debugActionModel := StDebuggerActionModel on: session
+	session := (StTestDebuggerProvider new debuggerWithContext: context)
+		           session.
+	session stepIntoUntil: [ :currentContext | 
+		currentContext method == method ]
 ]
 
 { #category : #running }
 StDebuggerActionModelTest >> tearDown [
-	debugger ifNotNil: [ debugger close].
-	session interruptedContext ifNotNil: [ session terminate ].
+
+"	debugger ifNotNil: [ debugger close ]."
+	session ifNotNil: [ 
+		session interruptedContext ifNotNil: [ session terminate ] ].
 	StDebuggerUsingSpecSelectorMock removeSelector: #testMethod.
 	StDebuggerUsingSpecSelectorMock removeSelector: #method.
 	StDebuggerUsingSpecSelectorMock removeSelector: #unclassifiedMethod.
-	StTestDebuggerProvider removeSelector: #buildDebuggerWithMissingClassContext.
+	StTestDebuggerProvider removeSelector:
+		#buildDebuggerWithMissingClassContext.
 	StTestDebuggerProvider removeSelector: #foobar.
 	super tearDown
 ]
