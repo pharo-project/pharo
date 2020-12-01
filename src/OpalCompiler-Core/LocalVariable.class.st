@@ -29,6 +29,11 @@ LocalVariable >> = aTempVar [
 	
 ]
 
+{ #category : #visiting }
+LocalVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
+	^ aProgramNodeVisitor visitLocalVariableNode: aNode
+]
+
 { #category : #converting }
 LocalVariable >> asString [
 

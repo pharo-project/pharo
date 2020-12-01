@@ -61,8 +61,7 @@ LiteralVariable >> = anAssociation [
 
 { #category : #visiting }
 LiteralVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
-	"to be compatible to the old visitor implementation"
-	^ aProgramNodeVisitor visitGlobalNode: aNode
+	^ aProgramNodeVisitor visitLiteralVariableNode: aNode
 ]
 
 { #category : #testing }
