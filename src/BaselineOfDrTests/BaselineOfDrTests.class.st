@@ -14,10 +14,10 @@ BaselineOfDrTests >> baseline: spec [
 				package: 'DrTests-TestsRunner' with: [ spec requires: #('DrTests') ];
 				package: 'DrTests-TestCoverage' with: [ spec requires: #('DrTests') ];
 				package: 'DrTests-TestsProfiling' with: [ spec requires: #('DrTests') ];
-				package: 'DrTests-Tests' with: [ spec requires: #('DrTests' 'DrTests-TestsRunner' 'DrTests-TestCoverage-MocksForTests') ];
-				package: 'DrTests-TestCoverage-Tests' with: [ spec requires: #('DrTests-TestCoverage' 'DrTests-TestCoverage-MocksForTests') ];
+				package: 'DrTests-Tests' with: [ spec requires: #('DrTests' 'DrTests-TestsRunner' 'DrTests-TestCoverage-Tests-Mocks') ];
+				package: 'DrTests-TestCoverage-Tests' with: [ spec requires: #('DrTests-TestCoverage' 'DrTests-TestCoverage-Tests-Mocks') ];
 				package: 'DrTests-TestsProfiling-Tests' with: [ spec requires: #('DrTests-TestsProfiling') ];
-				package: 'DrTests-TestCoverage-MocksForTests' with: [ spec requires: #('DrTests-TestCoverage') ];
+				package: 'DrTests-TestCoverage-Tests-Mocks' with: [ spec requires: #('DrTests-TestCoverage') ];
 				package: 'DrTests-CommentsToTests' with: [ spec requires: #('DrTests' 'DrTests-TestsRunner') ];
 				package: 'DrTests-CommentsToTests-Tests' with: [ spec requires: #('DrTests-CommentsToTests') ] ]
 ]
