@@ -65,12 +65,16 @@ HaltTest >> testContainsHalt [
 	annonClass 
 	compile: 'm1 self halt';
 	compile: 'm2 self haltIfNil';
-	compile: 'm3 self yourself'.
+	compile: 'm3 self yourself';
+	compile: 'm4 Halt yourself';
+	compile: 'm5 Halt once'.
 	
 	self
 	assert: (annonClass >> #m1) containsHalt;
 	assert: (annonClass >> #m2) containsHalt;
-	deny: (annonClass >> #m3) containsHalt.
+	deny: (annonClass >> #m3) containsHalt;
+	deny: (annonClass >> #m4) containsHalt;
+	assert: (annonClass >> #m5) containsHalt
 	
 	
 ]
