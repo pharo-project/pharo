@@ -4,7 +4,7 @@ I model the fact that a test failed.
 Class {
 	#name : #DTFail,
 	#superclass : #DTTestResultType,
-	#category : #'DrTests-TestsRunner'
+	#category : #'DrTests-TestsRunner-Results'
 }
 
 { #category : #factory }

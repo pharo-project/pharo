@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'testsResult'
 	],
-	#category : #'DrTests-TestsRunner'
+	#category : #'DrTests-TestsRunner-Base'
 }
 
 { #category : #accessing }
