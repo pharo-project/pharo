@@ -754,14 +754,18 @@ CompiledMethod >> penultimateLiteral: anObject [
 
 { #category : #copying }
 CompiledMethod >> postCopy [
-	| penultimateLiteral |
-	(penultimateLiteral := self penultimateLiteral) isMethodProperties ifTrue:
-		[self penultimateLiteral: (penultimateLiteral copy
-									method: self;
-									yourself).
-		 self penultimateLiteral pragmas do:
-			[:p| p method: self]]
 
+	| penultimateLiteral pragmas |
+	(penultimateLiteral := self penultimateLiteral) isMethodProperties 
+		ifFalse: [ ^ self ].
+	
+	pragmas := self pragmas collect: [ :each | each copy ] as: Array.		
+	pragmas do: [ :p | p method: self ].
+	penultimateLiteral := pragmas 
+		ifEmpty: [ penultimateLiteral copy ]
+		ifNotEmpty: [ penultimateLiteral copyWith: (#pragmas -> pragmas) ].
+	self penultimateLiteral: (penultimateLiteral method: self)
+  
 ]
 
 { #category : #'accessing-pragmas & properties' }
@@ -779,17 +783,13 @@ CompiledMethod >> pragmaRefersToLiteral: literal [
 
 { #category : #'accessing-pragmas & properties' }
 CompiledMethod >> pragmas [
-	| selectorOrProperties |
-	^(selectorOrProperties := self penultimateLiteral) isMethodProperties
-		ifTrue: [selectorOrProperties pragmas]
-		ifFalse: [#()]
+	^ self propertyAt: #pragmas ifAbsent: [#() ]
+
 ]
 
 { #category : #'accessing-pragmas & properties' }
 CompiledMethod >> pragmasDo: aBlock [
-	| selectorOrProperties |
-	(selectorOrProperties := self penultimateLiteral) isMethodProperties
-		ifTrue: [selectorOrProperties pragmasDo: aBlock]
+	self pragmas do: aBlock
 ]
 
 { #category : #'debugger support' }

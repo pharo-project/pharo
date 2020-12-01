@@ -107,11 +107,14 @@ IRBytecodeGenerator >> addLiteral: object [
 
 { #category : #private }
 IRBytecodeGenerator >> addPragma: aPragma [
-	properties ifNil: [ properties := AdditionalMethodState new ].
-	properties := properties copyWith: aPragma. 
 
-	
-	
+	properties ifNil: [ properties := AdditionalMethodState new ].
+	properties
+		at: #pragmas
+		ifAbsent: [ properties := properties copyWith: #pragmas -> #(  ) ].
+	properties
+		at: #pragmas
+		put: ((properties at: #pragmas) copyWith: aPragma)
 ]
 
 { #category : #results }
@@ -121,7 +124,7 @@ IRBytecodeGenerator >> addProperties: cm [
 	properties
 		ifNotNil: [ cm penultimateLiteral: properties.
 			properties method: cm.
-			properties pragmas do: [ :each | each method: cm ] ]
+			properties at: #pragmas ifPresent: [ :props | props do: [:each | each method: cm ] ]]
 ]
 
 { #category : #accessing }

@@ -240,21 +240,13 @@ AdditionalMethodState >> postCopy [
 { #category : #accessing }
 AdditionalMethodState >> pragmas [
 	"Return the Pragma objects. Properties are stored as Associations"
-	^ Array new: self basicSize streamContents: [ :pragmaStream | 
-		  1 to: self basicSize do: [ :i | 
-			  | propertyOrPragma "<Association|Pragma>" |
-			  (propertyOrPragma := self basicAt: i) isAssociation ifFalse: [ 
-				  pragmaStream nextPut: propertyOrPragma ] ] ]
+	self at: #pragmas ifPresent: [ :p | ^p  ].
+	^#().
 ]
 
-{ #category : #enumerating }
-AdditionalMethodState >> pragmasDo: aBlock [
-	
-	1 to: self basicSize do: [ :i | 
-		| propertyOrPragma	"<Association|Pragma>" |
-		propertyOrPragma := self basicAt: i.
-		propertyOrPragma isAssociation
-			ifFalse: [ aBlock value: propertyOrPragma ] ]
+{ #category : #accessing }
+AdditionalMethodState >> pragmasDo: a [
+	self pragmas do: a
 ]
 
 { #category : #printing }
