@@ -48,6 +48,13 @@ FluidTraitBuilder >> fillShiftClassBuilder [
 		].
 ]
 
+{ #category : #'as yet unclassified' }
+FluidTraitBuilder >> install [
+	"Install the trait in the system environment"
+	
+	ShiftClassInstaller new makeWithBuilder: shiftClassBuilder 
+]
+
 { #category : #accessing }
 FluidTraitBuilder >> instanceVariables: anArray [
 
