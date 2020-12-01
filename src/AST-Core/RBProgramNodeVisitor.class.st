@@ -197,9 +197,8 @@ RBProgramNodeVisitor >> visitTemporaryNodes: aNodeCollection [
 
 { #category : #'visiting - variables' }
 RBProgramNodeVisitor >> visitTemporaryVariableNode: aNode [
-	"Sent *each time* a temporary node is found"
 
-	^ self visitTemporaryNode: aNode
+	^ self visitLocalVariableNode: aNode
 ]
 
 { #category : #visiting }
