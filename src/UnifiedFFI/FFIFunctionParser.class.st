@@ -293,7 +293,6 @@ FFIFunctionParser >> setOn: aStreamSource [
 	| functionDeclarationArray |
 	functionDeclarationArray := aStreamSource isString ifTrue: [ | node |
 			node := RBParser parseExpression: '#(', aStreamSource, ')'.
-			node isLiteralNode ifFalse: [ self halt ].
 			node evaluate
 		] ifFalse: [ aStreamSource ].
 			
