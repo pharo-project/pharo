@@ -552,6 +552,7 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 		(BaselineOfSpecCore deepPackagesOfGroupNamed: #default),
 		(BaselineOfSpec2 deepPackagesOfGroupNamed: #default),
+		(BaselineOfNewTools deepPackagesOfGroupNamed: 'Methods'),
 		BaselineOfUI allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel packagesOfGroupNamed: #Core) )).
