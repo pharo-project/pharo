@@ -2,8 +2,6 @@ Class {
 	#name : #CoBasicCompletionTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'context',
-		'innerNode',
 		'completionClass',
 		'completionEnvironment'
 	],
