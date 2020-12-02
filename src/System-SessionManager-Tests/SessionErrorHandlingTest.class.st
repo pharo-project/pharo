@@ -28,7 +28,7 @@ SessionErrorHandlingTest >> setUp [
 
 { #category : #tests }
 SessionErrorHandlingTest >> testErrorCaughtAndDefferedIfExceptionSignaledAtStartupWhenStartupUiManagerActive [
-
+	<haltOrBreakpointForTesting>
 	UIManager nonInteractiveDuring: [	manager register: (TestSessionHandler onStartup: [ Halt now ]).	
 		session errorHandler: 
 			(TestStartupUIManager new
@@ -46,7 +46,7 @@ SessionErrorHandlingTest >> testErrorCaughtAndDefferedIfExceptionSignaledAtStart
 { #category : #tests }
 SessionErrorHandlingTest >> testErrorCaughtIfExceptionSignaledAtShutdownWhenDefaultUiManagerActive [
 	"session errorHandler will be TestWorkingSession that will register caught errors"
-
+	<haltOrBreakpointForTesting>
 	manager register: (TestSessionHandler onShutdown: [ Halt now ]).
 
 	"ensure error handled"
@@ -59,6 +59,7 @@ SessionErrorHandlingTest >> testErrorCaughtIfExceptionSignaledAtShutdownWhenDefa
 
 { #category : #tests }
 SessionErrorHandlingTest >> testErrorHandledIfExceptionSignaledAtShutdownWhenStartupUiManagerActive [
+	<haltOrBreakpointForTesting>
 	manager register: (TestSessionHandler onShutdown: [ Halt now ]).	
 	session errorHandler: 
 		(TestStartupUIManager new
@@ -75,6 +76,7 @@ SessionErrorHandlingTest >> testErrorHandledIfExceptionSignaledAtShutdownWhenSta
 
 { #category : #tests }
 SessionErrorHandlingTest >> testErrorHandledIfExceptionSignaledAtStartupWhenDefaultUiManagerActive [
+	<haltOrBreakpointForTesting>
 	"session errorHandler will be TestWorkingSession that will register caught errors"
 
 	manager register: (TestSessionHandler onStartup: [ Halt now ]).
