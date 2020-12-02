@@ -4,9 +4,6 @@ A ManifestBuilderTest is a class to test the behavior of ManifestBuilder
 Class {
 	#name : #BuilderManifestTest,
 	#superclass : #AbstractEnvironmentTestCase,
-	#instVars : [
-		'environment'
-	],
 	#category : #'Manifest-Tests-Base'
 }
 
