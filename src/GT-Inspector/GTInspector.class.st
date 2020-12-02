@@ -273,7 +273,7 @@ GTInspector class >> settingsOn: aBuilder [
 				getSelector: #isGTInspectorEnabled;
 				setSelector: #setGTInspectorEnabledStatus:; 
 				label: 'GTInspector';
-				default: true;
+				default: false;
 		 		description: 'Enable or disable the GTInspector.'.
 			(aBuilder setting: #EnabledStepRefreshStatus)
 				target: self;
