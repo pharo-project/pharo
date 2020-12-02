@@ -125,7 +125,7 @@ StDebuggerActionModelTest >> setUp [
 { #category : #running }
 StDebuggerActionModelTest >> tearDown [
 	debugger ifNotNil: [ debugger close].
-	session interruptedContext ifNotNil: [ session terminate ].
+	session interruptedContext ifNotNil: [ session clear ].
 	session := nil.
 	StDebuggerUsingSpecSelectorMock removeSelector: #testMethod.
 	StDebuggerUsingSpecSelectorMock removeSelector: #method.
