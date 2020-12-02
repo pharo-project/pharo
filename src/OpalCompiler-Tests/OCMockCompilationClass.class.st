@@ -6,3 +6,9 @@ Class {
 	],
 	#category : #'OpalCompiler-Tests-Misc'
 }
+
+{ #category : #accessing }
+OCMockCompilationClass >> collection [
+
+	^ collection
+]
