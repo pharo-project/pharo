@@ -53,7 +53,7 @@ StDebuggerActionModelTest >> benchmarkFilterStack [
 { #category : #helper }
 StDebuggerActionModelTest >> changeSession: aDebugSession [
 
-	session terminate.
+	session clear.
 	session := aDebugSession.
 	debugActionModel := StDebuggerActionModel on: session
 ]
@@ -114,6 +114,7 @@ StDebuggerActionModelTest >> setUp [
 	process := [ method valueWithReceiver: self arguments: #() ]
 		newProcess.
 	context := process suspendedContext.
+	session ifNotNil: [ session clear ].
 	session := (StTestDebuggerProvider new debuggerWithContext: context)
 		session.
 	session
@@ -125,6 +126,7 @@ StDebuggerActionModelTest >> setUp [
 StDebuggerActionModelTest >> tearDown [
 	debugger ifNotNil: [ debugger close].
 	session interruptedContext ifNotNil: [ session terminate ].
+	session := nil.
 	StDebuggerUsingSpecSelectorMock removeSelector: #testMethod.
 	StDebuggerUsingSpecSelectorMock removeSelector: #method.
 	StDebuggerUsingSpecSelectorMock removeSelector: #unclassifiedMethod.
@@ -216,10 +218,9 @@ StDebuggerActionModelTest >> testFilterMissingSubclassResponsibilityStack [
 	stack add: (self emptyContextForMethod: (self class>>#method2:)).
 	
 	filteredStack := debugActionModel filterStack: stack copy.
-	self assert: filteredStack size equals: 3.
-	self assert: filteredStack first identicalTo: debugActionModel interruptedContext.
-	self assert: filteredStack second identicalTo: stack fourth.
-	self assert: filteredStack third identicalTo: stack fifth 
+	self assert: filteredStack size equals: 2.
+	self assert: filteredStack first identicalTo: stack fourth.
+	self assert: filteredStack second identicalTo: stack fifth
 ]
 
 { #category : #tests }
