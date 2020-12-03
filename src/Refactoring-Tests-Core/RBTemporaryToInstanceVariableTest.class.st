@@ -11,6 +11,21 @@ RBTemporaryToInstanceVariableTest >> setUp [
 ]
 
 { #category : #'failure tests' }
+RBTemporaryToInstanceVariableTest >> testHierarchyDefinesVarableNamedAsTemporary [
+	| class |
+	model 
+		defineClass: 'Foo subclass: #Foo1 instanceVariableNames: ''foo'' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
+	class := model classNamed: #Foo.
+	class 
+		compile: 'someMethod | foo | foo := 4. ^foo'
+		classified: #(#accessing).
+	self shouldFail: (RBTemporaryToInstanceVariableRefactoring 
+				class: class
+				selector: #someMethod
+				variable: 'foo')
+]
+
+{ #category : #'failure tests' }
 RBTemporaryToInstanceVariableTest >> testNonExistantName [
 	self
 		shouldFail: (RBTemporaryToInstanceVariableRefactoring 

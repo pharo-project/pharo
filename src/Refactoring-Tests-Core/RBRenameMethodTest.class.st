@@ -57,8 +57,10 @@ RBRenameMethodTest >> testRenamePermuteArgs [
 		permutation: #(2 1 ).
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
-	self assert: (class parseTreeFor: ('rename:' , 'two:') asSymbol) equals: (self parseMethod: 'rename: argumentMethod two: this ^self printString, this, argumentMethod').
-	self assert: (class parseTreeFor: #exampleCall) equals: (self parseMethod: 'exampleCall <sampleInstance> ^self rename: 2 two: 1')
+	self assert: (class parseTreeFor: ('rename:' , 'two:') asSymbol) 
+		equals: (self parseMethod: 'rename: argumentMethod two: this ^self printString, this, argumentMethod').
+	self assert: (class parseTreeFor: #exampleCall) 
+		equals: (self parseMethod: 'exampleCall <sampleInstance> ^self rename: 2 two: 1')
 ]
 
 { #category : #tests }
@@ -112,9 +114,19 @@ RBRenameMethodTest >> testRenameTestMethod1 [
 		permutation: (1 to: 0).
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
-	self assert: (class parseTreeFor: #testMethod2) equals: (self parseMethod: 'testMethod2
+	self assert: (class parseTreeFor: #testMethod2) 
+		equals: (self parseMethod: 'testMethod2
 	^self testMethod2 , ([:each | each testMethod2] value: #(#(#testMethod2) 2 #testMethod2))').
-	self assert: ((refactoring model classNamed: #RBBasicLintRuleTestData) parseTreeFor: #classBlock:) equals: (self parseMethod: 'classBlock: aBlock
+	self assert: ((refactoring model classNamed: #RBBasicLintRuleTestData) parseTreeFor: #classBlock:) 		equals: (self parseMethod: 'classBlock: aBlock
 	classBlock := aBlock testMethod2').
 	self deny: (class directlyDefinesMethod: ('test' , 'Method1') asSymbol)
+]
+
+{ #category : #'failure tests' }
+RBRenameMethodTest >> testWithNonCorrectNumberOfArgs [
+	self shouldFail: (RBRenameMethodRefactoring 
+			renameMethod: #checkClass:
+			in: RBBasicLintRuleTestData
+			to: #checkClass
+			permutation: (1 to: 1))
 ]
