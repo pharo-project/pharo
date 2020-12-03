@@ -361,6 +361,8 @@ OpalCompiler >> compileDoit [
 	ast := RBParser parseMethod: ast formattedCode.
 	ast compilationContext: self compilationContext.
 	self doSemanticAnalysis.
+	"we store the ast in the doit method so that the debugger can read variables from the requestor"
+	cm propertyAt: #ast put: ast.
 	^cm
 ]
 
