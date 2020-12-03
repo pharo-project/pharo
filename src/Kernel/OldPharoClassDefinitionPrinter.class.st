@@ -65,10 +65,9 @@ OldPharoClassDefinitionPrinter >> basicTraitDefinitionString [
 					ifTrue: [ (self class fluid forClass: self) traitDefinitionString ] "
 		  forClass classLayout visibleSlots ifNotEmpty: [ 
 			  s
-				  tab;
-				  nextPutAll: ' slots: ';
-				  nextPutAll: forClass slotDefinitionString;
-				  cr ].
+				  crtab;
+				  nextPutAll: 'slots: ';
+				  nextPutAll: forClass slotDefinitionString ].
 		  "End of important"
 		  self packageOn: s ]
 ]

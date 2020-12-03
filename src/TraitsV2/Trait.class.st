@@ -56,6 +56,16 @@ Trait class >> named: aSymbol package: aString [
 ]
 
 { #category : #'instance creation' }
+Trait class >> named: aName slots: someSlots package: aPackageName [
+
+	^ self named: aName 
+		uses: {} 
+		slots: someSlots 
+		package: aPackageName 
+		env: self environment 
+]
+
+{ #category : #'instance creation' }
 Trait class >> named: aSymbol uses: aCompositionOrArray [
 	^ self named: aSymbol uses: aCompositionOrArray package: 'Unclassified'
 ]
