@@ -48,8 +48,8 @@ SpMorphicButtonAdapter >> buildLabel: text withIcon: icon [
 
 { #category : #factory }
 SpMorphicButtonAdapter >> buildWidget [
-	| button | 
 
+	| button | 
 	button := self newButton.	
 	button 
 		getEnabledSelector: #enabled ;
@@ -75,15 +75,21 @@ SpMorphicButtonAdapter >> buildWidget [
 ]
 
 { #category : #emulating }
-SpMorphicButtonAdapter >> clicked [	
+SpMorphicButtonAdapter >> clicked [
 
 	| evt |
-	evt := MouseButtonEvent new setType: nil position: widget center which: MouseButtonEvent redButton buttons: MouseButtonEvent redButton hand: nil stamp: nil.
+	evt := MouseButtonEvent new
+		       setType: nil
+		       position: widget center
+		       which: MouseButtonEvent redButton
+		       buttons: MouseButtonEvent redButton
+		       hand: nil
+		       stamp: nil.
 
-	(widget handlesMouseDown: evt) ifTrue: [
-		widget mouseDown: evt.
-		widget mouseUp: evt].
-
+	(widget handlesMouseDown: evt) ifTrue: [ 
+		widget 
+			mouseDown: evt;
+			mouseUp: evt ]
 ]
 
 { #category : #'menus support' }
@@ -92,7 +98,8 @@ SpMorphicButtonAdapter >> deleteIfPopUp: evt [
 
 { #category : #'widget API' }
 SpMorphicButtonAdapter >> font [
-	^self model font
+
+	^ self model font
 ]
 
 { #category : #private }
@@ -109,11 +116,13 @@ SpMorphicButtonAdapter >> getLabelText [
 
 { #category : #accessing }
 SpMorphicButtonAdapter >> helpText [
+
 	^ self widget helpText
 ]
 
 { #category : #accessing }
 SpMorphicButtonAdapter >> icon [
+
 	^ widget label icon
 ]
 
@@ -133,58 +142,57 @@ SpMorphicButtonAdapter >> label [
 
 { #category : #'widget API' }
 SpMorphicButtonAdapter >> menu: aMenu [
-	| menuPresenter |
 
+	| menuPresenter |
 	menuPresenter := self model contextMenu.
 	menuPresenter ifNil: [ ^ nil ].
 	^ SpBindings
-		value: self model application adapterBindings
-		during: [ menuPresenter buildWithSpec ]
+		  value: self model application adapterBindings
+		  during: [ menuPresenter buildWithSpec ]
 ]
 
 { #category : #factory }
 SpMorphicButtonAdapter >> newButton [
-	
+
 	^ PluggableButtonMorph
-		on: self 
-		getState: #state 
-		action:  #action 
-		label: #label 
-		menu: #menu:
+		  on: self
+		  getState: #state
+		  action: #action
+		  label: #label
+		  menu: #menu:
 ]
 
 { #category : #factory }
 SpMorphicButtonAdapter >> setWidgetColor: button [
 
-		| normalColorBlock clickedColorBlock |
+	| normalColorBlock clickedColorBlock |
 
-		normalColorBlock := [ :aButton |
-							(aButton valueOfProperty: #noFill ifAbsent: [false]) 
-								ifTrue: [ SolidFillStyle color: Color transparent ]
-								ifFalse: [ SolidFillStyle color: self color ] ].
+	normalColorBlock := [ :aButton |
+			(aButton valueOfProperty: #noFill ifAbsent: [false]) 
+					ifTrue: [ SolidFillStyle color: Color transparent ]
+					ifFalse: [ SolidFillStyle color: self color ] ].
 	
-		clickedColorBlock := [ :aButton | SolidFillStyle color: self color muchDarker ].
-		button theme: ((SpUIThemeDecorator theme: button theme)
+	clickedColorBlock := [ :aButton | SolidFillStyle color: self color muchDarker ].
+	button theme: ((SpUIThemeDecorator theme: button theme)
 							property: #buttonNormalFillStyleFor: returnsValueOf: normalColorBlock;
 							property: #buttonMouseOverFillStyleFor: returnsValueOf: normalColorBlock;
 							property: #buttonPressedFillStyleFor: returnsValueOf: clickedColorBlock;
-							yourself).
-
+							yourself)
 ]
 
 { #category : #'widget API' }
-SpMorphicButtonAdapter >> showSubMenu: aMenu [ 
+SpMorphicButtonAdapter >> showSubMenu: aMenu [
 
 	aMenu menuGroups ifNil: [ ^ self ].
-	 
+
 	subMenuWidget ifNotNil: [ 
 		subMenuWidget delete.
 		subMenuWidget := nil ].
 	subMenuWidget := (SpMorphicMenuAdapter adaptAsPopup: aMenu) widget.
 	subMenuWidget
 		popUpAdjacentTo: { 
-			self widget bounds bottomLeft.
-			self widget bounds bottomRight }
+				self widget bounds bottomLeft.
+				self widget bounds bottomRight }
 		forHand: self widget activeHand
 		from: self widget.
 	subMenuWidget popUpOwner: self
@@ -194,7 +202,7 @@ SpMorphicButtonAdapter >> showSubMenu: aMenu [
 SpMorphicButtonAdapter >> showSubMenuIfPresent [
 
 	self model contextMenu ifNil: [ ^ self ].
-	self showSubMenu: self model contextMenu.
+	self showSubMenu: self model contextMenu
 	
 ]
 
@@ -223,7 +231,6 @@ SpMorphicButtonAdapter >> unscaledInitialExtent [
 ]
 
 { #category : #updating }
-SpMorphicButtonAdapter >> updateMenu [
-	
-	"there is no need to updateMenu here because it will be resolved at #menu:"
+SpMorphicButtonAdapter >> updateMenu [	
+	"There is no need to updateMenu here because it will be resolved at #menu:"
 ]

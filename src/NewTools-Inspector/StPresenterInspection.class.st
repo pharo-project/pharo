@@ -23,6 +23,18 @@ StPresenterInspection class >> for: aPresenter [
 		yourself
 ]
 
+{ #category : #accessing }
+StPresenterInspection >> activateOnDoubleClick [
+
+	self presenter activateOnDoubleClick
+]
+
+{ #category : #accessing }
+StPresenterInspection >> activateOnSingleClick [
+
+	self presenter activateOnSingleClick
+]
+
 { #category : #ports }
 StPresenterInspection >> defaultOutputPort [
 	

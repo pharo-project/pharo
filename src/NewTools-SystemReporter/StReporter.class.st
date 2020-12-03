@@ -129,7 +129,7 @@ StReporter >> initializePresenters [
 	topicList := self newList.
 	topicList beMultipleSelection.
 	topicList display: [ :each | each key ].
-	reportText := self newText.
+	reportText := self newText beNotEditable.
 ]
 
 { #category : #initialization }

@@ -20,9 +20,11 @@ SpMorphicBoxAdapter >> add: aPresenter [
 
 { #category : #private }
 SpMorphicBoxAdapter >> addConstraits: constraints toChild: childMorph [
-	"adds constraits by child"
+	"Adds constraits by child"
 	| theMorph |
-
+	
+	layout isHomogeneous 
+		ifTrue: [ self addHomogeneousToMorph: childMorph ].
 	theMorph := self addPadding: constraints padding toMorph: childMorph.
 	constraints isExpand 
 		ifTrue: [ 
@@ -49,21 +51,39 @@ SpMorphicBoxAdapter >> addConstraits: constraints toChild: childMorph [
 ]
 
 { #category : #private }
-SpMorphicBoxAdapter >> addHorizontalPadding: aNumber toMorph: aMorph [
+SpMorphicBoxAdapter >> addHomogeneousToMorph: aMorph [
 	
+	^ layout direction addHomogeneousToMorph: aMorph into: self
+]
+
+{ #category : #private }
+SpMorphicBoxAdapter >> addHorizontalHomogeneousToMorph: aMorph [
+	| size |
+	
+	self children ifEmpty: [ ^ self ].
+
+	size := (widget width - (layout borderWidth * 2) - (layout spacing * (self children size - 1))) // self children size.
+	aMorph 
+		width: size;
+		minWidth: size
+]
+
+{ #category : #private }
+SpMorphicBoxAdapter >> addHorizontalPadding: aNumber toMorph: aMorph [
+
 	^ self newWrapMorph
-		hResizing: aMorph hResizing;
-		vResizing: aMorph vResizing;
-		width: aMorph width + (aNumber * 2);
-		height: aMorph height;
-		addMorph: (aMorph
-				hResizing: #spaceFill;
-				vResizing: #spaceFill;
-				yourself)
-			fullFrame: (LayoutFrame identity
-				leftOffset: aNumber;
-				rightOffset: aNumber negated);
-		yourself
+		  hResizing: aMorph hResizing;
+		  vResizing: aMorph vResizing;
+		  width: aMorph width + (aNumber * 2);
+		  height: aMorph height;
+		  addMorph: (aMorph
+			   hResizing: #spaceFill;
+			   vResizing: #spaceFill;
+			   yourself)
+		  fullFrame: (LayoutFrame identity
+			   leftOffset: aNumber;
+			   rightOffset: aNumber negated);
+		  yourself
 ]
 
 { #category : #private }
@@ -78,41 +98,53 @@ SpMorphicBoxAdapter >> addPadding: aNumber toMorph: aMorph [
 ]
 
 { #category : #private }
-SpMorphicBoxAdapter >> addVerticalPadding: aNumber toMorph: aMorph [
+SpMorphicBoxAdapter >> addVerticalHomogeneousToMorph: aMorph [
+	| size |
+
+	self children ifEmpty: [ ^ self ].
 	
+	size := (widget height - (layout borderWidth * 2) - (layout spacing * (self children size - 1))) // self children size.
+	aMorph 
+		height: size; 
+		maxHeight: size.
+]
+
+{ #category : #private }
+SpMorphicBoxAdapter >> addVerticalPadding: aNumber toMorph: aMorph [
+
 	^ self newWrapMorph
-		hResizing: aMorph hResizing;
-		vResizing: aMorph vResizing;
-		width: aMorph width;
-		height: aMorph height + (aNumber * 2);
-		addMorph: (aMorph
-				hResizing: #spaceFill;
-				vResizing: #spaceFill;
-				yourself)
-			fullFrame: (LayoutFrame identity
-				topOffset: aNumber;
-				bottomOffset: aNumber negated);
-		yourself
+		  hResizing: aMorph hResizing;
+		  vResizing: aMorph vResizing;
+		  width: aMorph width;
+		  height: aMorph height + (aNumber * 2);
+		  addMorph: (aMorph
+			   hResizing: #spaceFill;
+			   vResizing: #spaceFill;
+			   yourself)
+		  fullFrame: (LayoutFrame identity
+			   topOffset: aNumber;
+			   bottomOffset: aNumber negated);
+		  yourself
 ]
 
 { #category : #private }
 SpMorphicBoxAdapter >> applyAlignmentTo: aWidget [
 
-	layout isVertical 
-		ifTrue: [
-			layout vAlign ifNotNil: [ :align |
+	layout isVertical
+		ifTrue: [ 
+			layout vAlign ifNotNil: [ :align | 
 				startPanel vResizing: #shrinkWrap.
 				aWidget listCentering: align asMorphicAlign ].
-			layout hAlign ifNotNil: [ :align |
+			layout hAlign ifNotNil: [ :align | 
 				startPanel hResizing: #shrinkWrap.
 				aWidget wrapCentering: align asMorphicAlign.
 				aWidget cellPositioning: align asMorphicAlign ] ]
 		ifFalse: [ 
-			layout vAlign ifNotNil: [ :align |
+			layout vAlign ifNotNil: [ :align | 
 				startPanel vResizing: #shrinkWrap.
 				aWidget wrapCentering: align asMorphicAlign.
 				aWidget cellPositioning: align asMorphicAlign ].
-			layout hAlign ifNotNil: [ :align |
+			layout hAlign ifNotNil: [ :align | 
 				startPanel hResizing: #shrinkWrap.
 				aWidget listCentering: align asMorphicAlign ] ].
 
@@ -166,11 +198,11 @@ SpMorphicBoxAdapter >> layout: aLayout [
 		"build of widget was differed up to here (to know what is the direction)"
 		widget := aLayout direction newWidgetOn: self.
 		widget borderWidth: aLayout borderWidth.
-		aLayout hasAlignment ifTrue: [ 
-			widget := self applyAlignmentTo: widget ].
+		aLayout hasAlignment 
+			ifTrue: [ widget := self applyAlignmentTo: widget ].
 		"the spacing needs to be applied to the inner sub-panels"
-		{ startPanel. endPanel } do: [ :each |
-			each cellInset: aLayout spacing ].
+		{ startPanel. endPanel } 
+			do: [ :each | each cellInset: aLayout spacing ].
 		"widget homogeneous: aLayout isHomogeneous" ].
 
 	aLayout whenChildrenAddedDo: [ :ann |
@@ -187,49 +219,48 @@ SpMorphicBoxAdapter >> layout: aLayout [
 { #category : #factory }
 SpMorphicBoxAdapter >> newHorizontal [
 
-	^ self newPanel 
-		listDirection: #leftToRight;
-		addMorphBack: ((startPanel := self newPanel)
-			listDirection: #leftToRight;
-			yourself);
-		addMorphBack: ((endPanel := self newPanel)
-			listDirection: #leftToRight;
-			hResizing: #shrinkWrap;
-			width: 0;
-			yourself);
-		yourself	
+	^ self newPanel
+		  listDirection: #leftToRight;
+		  addMorphBack: ((startPanel := self newPanel)
+				   listDirection: #leftToRight;
+				   yourself);
+		  addMorphBack: ((endPanel := self newPanel)
+				   listDirection: #leftToRight;
+				   hResizing: #shrinkWrap;
+				   width: 0;
+				   yourself);
+		  yourself
 ]
 
 { #category : #factory }
 SpMorphicBoxAdapter >> newVertical [
 
-	^ self newPanel 
-		listDirection: #topToBottom;
-		addMorphBack: ((startPanel := self newPanel)
-			listDirection: #topToBottom;
-			yourself);
-		addMorphBack: ((endPanel := self newPanel)
-			listDirection: #topToBottom;
-			vResizing: #shrinkWrap;
-			height: 0;
-			yourself);
-		yourself	
+	^ self newPanel
+		  listDirection: #topToBottom;
+		  addMorphBack: ((startPanel := self newPanel)
+				   listDirection: #topToBottom;
+				   yourself);
+		  addMorphBack: ((endPanel := self newPanel)
+				   listDirection: #topToBottom;
+				   vResizing: #shrinkWrap;
+				   height: 0;
+				   yourself);
+		  yourself
 ]
 
 { #category : #private }
 SpMorphicBoxAdapter >> newWrapMorph [
 
 	^ Morph new
-		layoutPolicy: ProportionalLayout new;
-		color: Color transparent;
-		borderColor: Color transparent
-		yourself
+		  layoutPolicy: ProportionalLayout new;
+		  color: Color transparent;
+		  borderColor: Color transparent yourself
 ]
 
 { #category : #accessing }
 SpMorphicBoxAdapter >> remove: aPresenter [
-	| morph |
 
+	| morph |
 	morph := aPresenter adapter widget.	
 	startPanel removeMorph: morph.
 	endPanel removeMorph: morph.
@@ -254,8 +285,8 @@ SpMorphicBoxAdapter >> removeSubWidgets [
 
 { #category : #accessing }
 SpMorphicBoxAdapter >> replace: aPresenter with: otherPresenter [
-	| panel oldMorph newMorph |
-	
+
+	| panel oldMorph newMorph |	
 	oldMorph := aPresenter adapter widget.
 	panel := (startPanel submorphs includes: oldMorph)
 		ifTrue: [ startPanel ] 
@@ -269,8 +300,8 @@ SpMorphicBoxAdapter >> replace: aPresenter with: otherPresenter [
 
 { #category : #accessing }
 SpMorphicBoxAdapter >> replace: aPresenter with: otherPresenter withConstraints: constraints [
-	| panel oldMorph newMorph |
-	
+
+	| panel oldMorph newMorph |	
 	oldMorph := aPresenter adapter widget.
 	panel := (startPanel submorphs includes: oldMorph)
 		ifTrue: [ startPanel ] 
@@ -290,9 +321,9 @@ SpMorphicBoxAdapter >> verifyBoxExtent [
 { #category : #private }
 SpMorphicBoxAdapter >> verifyBoxExtentOf: aPanel withChild: childMorph [
 	| width height |
-	
+
 	width := childMorph width + (widget borderWidth * 2).
 	height := childMorph height + (widget borderWidth * 2).
-	
+
 	aPanel extent: (aPanel width max: width)@(aPanel height max: height)
 ]

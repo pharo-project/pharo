@@ -1,7 +1,7 @@
 Class {
 	#name : #SpTableLayout,
 	#superclass : #TableLayout,
-	#category : #'Spec2-Adapters-Morphic-Base'
+	#category : #'Spec2-Adapters-Morphic-Layout'
 }
 
 { #category : #layout }

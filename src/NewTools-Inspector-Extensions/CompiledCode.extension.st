@@ -47,14 +47,18 @@ CompiledCode >> inspectionHeader [
 
 { #category : #'*NewTools-Inspector-Extensions' }
 CompiledCode >> inspectionPragmas [
-	<inspectorPresentationOrder: 30 
-		title: 'Pragmas' 
-		if: '#hasPragmas'> 
+	<inspectorPresentationOrder: 30 title: 'Pragmas'> 
 
 	^ SpListPresenter new
 		items: self pragmas;
 		display: [ :aPragma | aPragma printString ];
 		yourself
+]
+
+{ #category : #'*NewTools-Inspector-Extensions' }
+CompiledCode >> inspectionPragmasContext: aContext [ 
+	
+	aContext active: self hasPragmas
 ]
 
 { #category : #'*NewTools-Inspector-Extensions' }
@@ -69,4 +73,26 @@ CompiledCode >> inspectionSource [
 				name: 'Browse method class'; 
 				action: [ self methodClass browse ] ] ]);
 		yourself
+]
+
+{ #category : #'*NewTools-Inspector-Extensions' }
+CompiledCode >> inspectorNodes [
+	"Answer a list of attributes as nodes"
+	| nodes |
+
+	nodes := OrderedCollection new.
+	nodes addAll: (self literals 
+		collectWithIndex: [ :aLiteral :anIndex | 
+			StInspectorDynamicNode 
+				hostObject: self 
+				label: ('literal', anIndex asString) 
+				value: aLiteral ]).
+	
+	self initialPC to: self size do: [ :index |
+		nodes add: (StInspectorDynamicNode 
+			hostObject: self 
+			label: ('bc ', index asString) 
+			value: (self at: index) ) ] .
+	
+	^ nodes
 ]

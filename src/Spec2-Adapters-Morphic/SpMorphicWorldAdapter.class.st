@@ -31,9 +31,10 @@ SpMorphicWorldAdapter >> centered [
 
 { #category : #private }
 SpMorphicWorldAdapter >> newContainerMorph [
-	^ super newContainerMorph 
-		adoptPaneColor: self theme backgroundColor;
-		yourself
+
+	^ super newContainerMorph
+		  adoptPaneColor: self theme backgroundColor;
+		  yourself
 ]
 
 { #category : #private }

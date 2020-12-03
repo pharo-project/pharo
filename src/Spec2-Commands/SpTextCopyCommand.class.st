@@ -25,5 +25,6 @@ SpTextCopyCommand class >> defaultShortcutKey [
 
 { #category : #execution }
 SpTextCopyCommand >> execute [
-	self editor copySelection
+
+	context doTextCopy
 ]

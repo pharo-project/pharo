@@ -25,5 +25,6 @@ SpTextPasteCommand class >> defaultShortcutKey [
 
 { #category : #execution }
 SpTextPasteCommand >> execute [
-	self editor paste
+
+	context doTextPaste
 ]

@@ -24,10 +24,10 @@ SpMorphicToolbarMenuButtonAdapter >> badge [
 
 { #category : #factory }
 SpMorphicToolbarMenuButtonAdapter >> buildWidget [
-	
-	^ SpMorphicToolbarMenuButtonMorph  
-		newButton: super buildWidget
-		menuButton: self newMenuButton
+
+	^ SpMorphicToolbarMenuButtonMorph
+		  newButton: super buildWidget
+		  menuButton: self newMenuButton
 ]
 
 { #category : #updating }
@@ -79,37 +79,37 @@ SpMorphicToolbarMenuButtonAdapter >> menuIcon [
 SpMorphicToolbarMenuButtonAdapter >> newMenuButton [
 
 	^ IconicButton new
-		target: self;
-		actionSelector: #showMenu;
-		arguments: {};
-		labelGraphic: self menuIcon;
-		color: Color transparent;
-		borderWidth: 0
+		  target: self;
+		  actionSelector: #showMenu;
+		  arguments: {  };
+		  labelGraphic: self menuIcon;
+		  color: Color transparent;
+		  borderWidth: 0
 ]
 
 { #category : #accessing }
 SpMorphicToolbarMenuButtonAdapter >> showMenu [
 
-	self presenter menu ifNotNil: [ :aValuable |
-		aValuable value ifNotNil: [ :aMenu |
+	self presenter menu ifNotNil: [ :aValuable | 
+		aValuable value ifNotNil: [ :aMenu | 
 			aMenu owner: self presenter.
 			self showSubMenu: aMenu ] ].
-	self widget ifNotNil: [ :m | m takeKeyboardFocus ] 
+	self widget ifNotNil: [ :m | m takeKeyboardFocus ]
 ]
 
 { #category : #'widget API' }
-SpMorphicToolbarMenuButtonAdapter >> showSubMenu: aMenu [ 
+SpMorphicToolbarMenuButtonAdapter >> showSubMenu: aMenu [
 
 	aMenu menuGroups ifNil: [ ^ self ].
-	 
+
 	subMenuWidget ifNotNil: [ 
 		subMenuWidget delete.
 		subMenuWidget := nil ].
 	subMenuWidget := (SpMorphicMenuAdapter adaptAsPopup: aMenu) widget.
 	subMenuWidget
 		popUpAdjacentTo: { 
-			self widget bounds bottomLeft.
-			self widget bounds bottomRight }
+				self widget bounds bottomLeft.
+				self widget bounds bottomRight }
 		forHand: self currentWorld activeHand
 		from: self widget.
 	subMenuWidget popUpOwner: self

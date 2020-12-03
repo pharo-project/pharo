@@ -3,6 +3,7 @@ Class {
 	#superclass : #Object,
 	#classVars : [
 		'CodeShowLineNumbers',
+		'InspectorDiveOnSingleClick',
 		'ToolbarDisplayMode'
 	],
 	#category : #'NewTools-Core-Application'
@@ -28,9 +29,28 @@ StPharoSettings class >> defaultCodeShowLineNumbers [
 ]
 
 { #category : #defaults }
+StPharoSettings class >> defaultInspectorDiveOnSingleClick [
+
+	^ true
+]
+
+{ #category : #defaults }
 StPharoSettings class >> defaultToolbarDisplayMode [
 
 	^ SpToolbarDisplayMode modeIconAndLabel
+]
+
+{ #category : #settings }
+StPharoSettings class >> inspectorDiveOnSingleClick [
+
+	^ InspectorDiveOnSingleClick ifNil: [
+		InspectorDiveOnSingleClick := self defaultInspectorDiveOnSingleClick ]
+]
+
+{ #category : #settings }
+StPharoSettings class >> inspectorDiveOnSingleClick: aBoolean [
+
+	InspectorDiveOnSingleClick := aBoolean
 ]
 
 { #category : #settings }

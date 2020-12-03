@@ -286,13 +286,6 @@ SpAbstractMorphicAdapter >> focusPrevious [
 			takeKeyboardFocus ]
 ]
 
-{ #category : #'as yet unclassified' }
-SpAbstractMorphicAdapter >> gtInspectorPreviewIn: composite [
-	<gtInspectorPresentationOrder: 30>
-	
-	self widgetDo: [ :w | w gtInspectorMorphIn: composite ]
-]
-
 { #category : #protocol }
 SpAbstractMorphicAdapter >> hRigid [
 	

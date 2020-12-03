@@ -74,6 +74,12 @@ SpMorphicListAdapter >> buildWidget [
 ]
 
 { #category : #emulating }
+SpMorphicListAdapter >> firstRowIsHeader [ 
+
+	^ self widget container submorphs first class = FTTableHeaderRowMorph
+]
+
+{ #category : #emulating }
 SpMorphicListAdapter >> hasFilter [
 
 	^ self widget hasFilter

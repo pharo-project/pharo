@@ -48,7 +48,10 @@ SpTextFieldExample >> initialExtent [
 
 { #category : #initialization }
 SpTextFieldExample >> initializePresenters [
-	methodBrowser := self instantiate: MessageBrowser.
+
+	self flag: #TODO. "Using reference to suspend a dependency, but is not cool since 
+	it makes a hidden depenency. Instead, we better think another example" 
+	methodBrowser := self instantiate: (self class environment at: #MessageBrowser).
 
 	textField := self newTextInput.
 	textField

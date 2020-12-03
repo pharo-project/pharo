@@ -8,9 +8,7 @@ Announcer >> hasSubscriptions [
 
 { #category : #'*NewTools-Inspector-Extensions' }
 Announcer >> inspectionSubscriptions [
-	<inspectorPresentationOrder: 0 
-		title: 'Subscriptions' 
-		if: #hasSubscriptions>
+	<inspectorPresentationOrder: 0 title: 'Subscriptions'>
 	| table |
 	
 	^ (table := SpTablePresenter new)
@@ -38,4 +36,10 @@ Announcer >> inspectionSubscriptions [
 					table refresh ] ];
 			yourself);
 		yourself
+]
+
+{ #category : #'*NewTools-Inspector-Extensions' }
+Announcer >> inspectionSubscriptionsContext: aContext [ 
+	
+	aContext active: self hasSubscriptions
 ]

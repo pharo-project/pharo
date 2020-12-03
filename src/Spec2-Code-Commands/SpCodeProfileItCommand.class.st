@@ -1,12 +1,17 @@
+"
+I'm a ""profile it"" command. 
+I will evalute the selection (or line) of the playground using a profiler.
+"
 Class {
 	#name : #SpCodeProfileItCommand,
 	#superclass : #SpCodeSelectionCommand,
-	#category : #'Spec2-Code-Commands'
+	#category : #'Spec2-Code-Commands-TODO'
 }
 
 { #category : #defaults }
 SpCodeProfileItCommand class >> defaultIconName [
-	^#smallProfile 
+
+	^ #smallProfile
 ]
 
 { #category : #default }

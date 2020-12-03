@@ -24,7 +24,7 @@ VariableBreakpoint >> printContentsForBreakpointInspection [
 
 	str cr.
 
-	targetVariableNames do: [ :varName | 
+	self targetVariableNames do: [ :varName | 
 		str << varName asString.
 		str << '.'.
 		str space ].
@@ -47,7 +47,7 @@ VariableBreakpoint >> printTargetForBreakpointInspection [
 	str space.
 	str << 'var(s):'.
 	str space.
-	targetVariableNames do: [ :name | 
+	self targetVariableNames do: [ :name | 
 		str nextPutAll: name.
 		str space ].
 	^ str contents

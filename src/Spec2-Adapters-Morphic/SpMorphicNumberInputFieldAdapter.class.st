@@ -11,8 +11,8 @@ Class {
 
 { #category : #factory }
 SpMorphicNumberInputFieldAdapter >> buildWidget [
-	| textMorph iconsContainer |
-	
+
+	| textMorph iconsContainer |	
 	textMorph := super buildWidget.
 	textMorph announcer when: RubKeystroke send: #keystroke: to: self.
 
@@ -26,7 +26,7 @@ SpMorphicNumberInputFieldAdapter >> buildWidget [
 		addMorph: (self newIconButtonAction: #increaseValueOf: with: textMorph iconSelector: #arrowDoubleUpIcon);
 		yourself.
 
-	"With the layout frame I set next it, the arrows will be at the top right of the text morph. We should be able to make it vertically centered but I don't know how to do that with morphs. If someone knows, please do :)"
+	"With the layout frame I set next to it, the arrows will be at the top right of the text morph. We should be able to make it vertically centered but I don't know how to do that with morphs. If someone knows, please do :)"
 	textMorph
 		changeProportionalLayout;
 		addMorph: iconsContainer
@@ -43,6 +43,7 @@ SpMorphicNumberInputFieldAdapter >> buildWidget [
 
 { #category : #actions }
 SpMorphicNumberInputFieldAdapter >> decreaseValueOf: aTextMorph [
+
 	aTextMorph setText: (self decreasedValueFrom: aTextMorph getText)
 ]
 
@@ -76,6 +77,7 @@ SpMorphicNumberInputFieldAdapter >> inBounds: aNumber [
 
 { #category : #actions }
 SpMorphicNumberInputFieldAdapter >> increaseValueOf: aTextMorph [
+
 	aTextMorph setText: (self increasedValueFrom: aTextMorph getText)
 ]
 
@@ -96,6 +98,7 @@ SpMorphicNumberInputFieldAdapter >> increasedValueFrom: aString [
 
 { #category : #'ensure bounds' }
 SpMorphicNumberInputFieldAdapter >> inferiorToMaximum: aNumber [
+
 	^ self model maximum ifNil: [ aNumber ] ifNotNil: [ :max | aNumber min: max ]
 ]
 
@@ -115,15 +118,16 @@ SpMorphicNumberInputFieldAdapter >> keystroke: aRubricEvent [
 
 { #category : #factory }
 SpMorphicNumberInputFieldAdapter >> newIconButtonAction: aSymbol with: textMorph iconSelector: anIconSymbol [
+
 	^ IconicButton new
-		target: self;
-		actionSelector: aSymbol;
-		arguments: {textMorph};
-		labelGraphic: (self iconNamed: anIconSymbol);
-		color: Color transparent;
-		extent: 16 @ 8;
-		borderWidth: 0;
-		yourself
+		  target: self;
+		  actionSelector: aSymbol;
+		  arguments: { textMorph };
+		  labelGraphic: (self iconNamed: anIconSymbol);
+		  color: Color transparent;
+		  extent: 16 @ 8;
+		  borderWidth: 0;
+		  yourself
 ]
 
 { #category : #testing }
@@ -149,5 +153,8 @@ SpMorphicNumberInputFieldAdapter >> shouldAccept: aText [
 
 { #category : #'ensure bounds' }
 SpMorphicNumberInputFieldAdapter >> superiorToMinimum: aNumber [
-	^ self model minimum ifNil: [ aNumber ] ifNotNil: [ :min | aNumber max: min ]
+
+	^ self model minimum
+		  ifNil: [ aNumber ]
+		  ifNotNil: [ :min | aNumber max: min ]
 ]

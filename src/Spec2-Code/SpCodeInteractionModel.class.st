@@ -36,6 +36,14 @@ SpCodeInteractionModel >> bindingOf: aString [
 ]
 
 { #category : #accessing }
+SpCodeInteractionModel >> bindings [
+
+	"no additional bindings provided by the Requestor"
+
+	^ #() asDictionary
+]
+
+{ #category : #accessing }
 SpCodeInteractionModel >> doItContext [
 
 	^ nil

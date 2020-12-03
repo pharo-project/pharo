@@ -47,8 +47,8 @@ SpMorphicMillerAdapter >> addConstraits: constraints toChild: childMorph [
 
 { #category : #private }
 SpMorphicMillerAdapter >> basicAdd: aPresenter constraints: constraints to: aPanel [
-	| childMorph |
 
+	| childMorph |
 	childMorph := self buildMorph: aPresenter constraints: constraints.	
 	aPanel addMorphBack: childMorph.
 	
@@ -83,8 +83,9 @@ SpMorphicMillerAdapter >> forceRecalculatePages [
 { #category : #private }
 SpMorphicMillerAdapter >> initialize [
 
-	needRecalculatePages := false.
-	super initialize
+	super initialize.
+	needRecalculatePages := false
+
 ]
 
 { #category : #factory }
@@ -129,16 +130,16 @@ SpMorphicMillerAdapter >> newPanel [
 
 { #category : #factory }
 SpMorphicMillerAdapter >> newScrollPaneFor: aWidget [
-	
-	^ MillerScrollPane new 
-		changeScrollerTableLayout;
-		hResizing: #spaceFill;
-		vResizing: #spaceFill;
-		color: Color transparent;
-		borderColor: Color transparent;
-		scrollTarget: aWidget;
-		onLayoutChange: [ self recalculatePages ];
-		yourself
+
+	^ MillerScrollPane new
+		  changeScrollerTableLayout;
+		  hResizing: #spaceFill;
+		  vResizing: #spaceFill;
+		  color: Color transparent;
+		  borderColor: Color transparent;
+		  scrollTarget: aWidget;
+		  onLayoutChange: [ self recalculatePages ];
+		  yourself
 ]
 
 { #category : #factory }
@@ -151,8 +152,8 @@ SpMorphicMillerAdapter >> newVertical [
 
 { #category : #private }
 SpMorphicMillerAdapter >> recalculatePageHeights [
-	| newHeight widgets height |
 
+	| newHeight widgets height |
 	height := self widget height.
 	widgets := self childrenWidgets.
 	newHeight := widgets size = 1
@@ -167,8 +168,8 @@ SpMorphicMillerAdapter >> recalculatePageHeights [
 
 { #category : #private }
 SpMorphicMillerAdapter >> recalculatePageWidths [
-	| newWidth widgets width |
 
+	| newWidth widgets width |
 	widgets := self childrenWidgets.
 	width := self widget width.
 	newWidth := widgets size = 1
@@ -199,8 +200,8 @@ SpMorphicMillerAdapter >> recalculatePages [
 
 { #category : #accessing }
 SpMorphicMillerAdapter >> remove: aPresenter [
-	| morph |
 
+	| morph |
 	needRecalculatePages := true.
 	morph := aPresenter adapter widget.	
 	innerWidget removeMorph: morph
@@ -221,8 +222,8 @@ SpMorphicMillerAdapter >> removeSubWidgets [
 
 { #category : #paginator }
 SpMorphicMillerAdapter >> scrollByDeltaPercent: percent [
-	| millerWidth millerDelta |
-	
+
+	| millerWidth millerDelta |	
 	millerWidth := self widget scroller localSubmorphBounds width.
 	millerDelta := millerWidth * (percent / 100).
 	self widget scroller offset: (self widget scroller offset x + millerDelta)@0	

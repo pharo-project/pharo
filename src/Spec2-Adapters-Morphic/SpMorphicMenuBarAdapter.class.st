@@ -1,3 +1,6 @@
+"
+I'm an adapter to provide a menu bar using a ToolDockingBarMorph
+"
 Class {
 	#name : #SpMorphicMenuBarAdapter,
 	#superclass : #SpMorphicBaseMenuAdapter,
@@ -44,22 +47,23 @@ SpMorphicMenuBarAdapter >> adoptMenuItemModel: item accumulator: controls [
 SpMorphicMenuBarAdapter >> buildButtonFor: item [
 
 	^ self theme
-		newButtonIn: widget
-		for: item
-		getState: nil
-		action: #performMenuActionWith:
-		arguments: {widget}
-		getEnabled: #isEnabled
-		label: (IconicListItem text: item name icon: item icon)
-		help: item description
+		  newButtonIn: widget
+		  for: item
+		  getState: nil
+		  action: #performMenuActionWith:
+		  arguments: { widget }
+		  getEnabled: #isEnabled
+		  label: (IconicListItem text: item name icon: item icon)
+		  help: item description
 ]
 
 { #category : #factory }
 SpMorphicMenuBarAdapter >> buildWidget [
+
 	widget := ToolDockingBarMorph new
-		hResizing: #spaceFill;
-		vResizing: #spaceFill;
-		yourself.
+		          hResizing: #spaceFill;
+		          vResizing: #spaceFill;
+		          yourself.
 
 	self menuGroups doWithIndex: [ :aGroup :index | 
 		self adoptMenuGroupModel: aGroup first: index = 1 ].
@@ -76,5 +80,6 @@ SpMorphicMenuBarAdapter >> emptyAccumulator: controls [
 
 { #category : #accessing }
 SpMorphicMenuBarAdapter >> menuGroup [
+
 	^ self presenter menuGroup
 ]

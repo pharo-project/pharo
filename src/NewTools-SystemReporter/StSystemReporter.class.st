@@ -44,8 +44,6 @@ StSystemReporter >> fillTopics [
 		(#Image -> #reportImage:) .
 		(#'Image Parameters' -> #reportImageParameters:).
 		(#'Image Sources' -> #reportSources:).
-		(#'MC Repositories' -> #reportRepositories:).
-		(#'MC Working Copies' -> #reportWorkingCopies:).
 		(#'VM General' -> #reportVM:).
 		(#'VM Options' -> #reportVMOptions:).
 		(#'VM Modules' -> #reportModules:).
@@ -144,12 +142,6 @@ StSystemReporter >> reportOSEnvironment: aStream [
 	env := [ Smalltalk os environment] on: Error do: [ ^self ].
 	env keys asSortedCollection do: [:name |
 		aStream nextPutAll: name; nextPut: $=; nextPutAll: (env at: name); cr ]
-]
-
-{ #category : #'building report' }
-StSystemReporter >> reportRepositories: aStream [
-	self header: 'Monticello Repositories' on: aStream.
-	MCRepositoryGroup default repositories do: [:each | aStream nextPutAll: each description; cr]
 ]
 
 { #category : #'building report' }
@@ -336,14 +328,6 @@ StSystemReporter >> reportWin32VMConfig: aStream [
 	aStream nextPutAll: iniPath; cr; cr.
 	self readContentsSafelyFromFile: iniPath andWriteTo: aStream
 
-]
-
-{ #category : #'building report' }
-StSystemReporter >> reportWorkingCopies: aStream [
-	| list |
-	self header: 'Monticello Working Copies' on: aStream.
-	list := MCWorkingCopy allManagers asSortedCollection: [:a :b | a packageName <= b packageName].
-	list do: [:each | aStream nextPutAll: each description; cr ]
 ]
 
 { #category : #utils }

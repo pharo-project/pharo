@@ -12,7 +12,7 @@ StInspectorBrowseCommand class >> defaultDescription [
 
 { #category : #default }
 StInspectorBrowseCommand class >> defaultName [
-	<toolbarInspectCommand: 10>
+	<toolbarInspectCommand: 30>
 
 	^ 'Browse'
 ]
@@ -22,7 +22,6 @@ StInspectorBrowseCommand >> asSpecCommand [
 
 	^ super asSpecCommand 
 		iconName: #smallSystemBrowser;
-		beDisplayedOnRightSide;
 		yourself
 ]
 

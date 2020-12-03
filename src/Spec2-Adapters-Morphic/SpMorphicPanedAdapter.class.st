@@ -13,11 +13,11 @@ Class {
 
 { #category : #'adding/removing' }
 SpMorphicPanedAdapter >> addConstraits: constraints toChild: childMorph [
-	"adds constraits by child"
-	| theMorph |
+	"Adds constraits by child"
 	
+	| theMorph |	
 	theMorph := childMorph.
-	"keep constraints to layout usage"
+	"Keep constraints to layout usage"
 	theMorph setProperty: #constraints toValue: constraints. 
 	
 	^ theMorph 
@@ -56,8 +56,9 @@ SpMorphicPanedAdapter >> direction [
 
 { #category : #initialization }
 SpMorphicPanedAdapter >> initialize [
+
 	super initialize.
-	children := OrderedCollection new.
+	children := OrderedCollection new
 ]
 
 { #category : #accessing }
@@ -68,6 +69,7 @@ SpMorphicPanedAdapter >> layout [
 
 { #category : #factory }
 SpMorphicPanedAdapter >> layout: aLayout [
+
 	layout := aLayout.
 	widget
 		ifNil: [ widget := aLayout direction newWidgetOn: self.
@@ -122,15 +124,15 @@ SpMorphicPanedAdapter >> removeChild: aPresenter [
 { #category : #private }
 SpMorphicPanedAdapter >> resizingSetSelector [
 
-	^ layout isHorizontal 
-		ifTrue: [ #hResizing: ]
-		ifFalse: [ #vResizing: ]
+	^ layout isHorizontal
+		  ifTrue: [ #hResizing: ]
+		  ifFalse: [ #vResizing: ]
 ]
 
 { #category : #private }
 SpMorphicPanedAdapter >> splitterNewSelector [
 
-	^ layout isHorizontal 
-		ifTrue: [ #newHorizontal ]
-		ifFalse: [ #newVertical ]
+	^ layout isHorizontal
+		  ifTrue: [ #newHorizontal ]
+		  ifFalse: [ #newVertical ]
 ]
