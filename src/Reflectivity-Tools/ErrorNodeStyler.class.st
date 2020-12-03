@@ -48,9 +48,3 @@ ErrorNodeStyler >> visitEnglobingErrorNode: anEnglobingNode [
 
 	anEnglobingNode content do: [ :each | self visitNode: each ]
 ]
-
-{ #category : #visiting }
-ErrorNodeStyler >> visitUnreachableStatement: anUnreachableStatement [
-
-	^ super visitEnglobingErrorNode: anUnreachableStatement
-]
