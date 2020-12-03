@@ -361,7 +361,6 @@ OpalCompiler >> compileDoit [
 	ast := RBParser parseMethod: ast formattedCode.
 	ast compilationContext: self compilationContext.
 	self doSemanticAnalysis.
-	ASTCache default at: cm  put: ast. 
 	^cm
 ]
 
