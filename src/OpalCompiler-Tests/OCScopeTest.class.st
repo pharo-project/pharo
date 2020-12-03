@@ -10,6 +10,18 @@ Class {
 	#category : #'OpalCompiler-Tests-Semantic'
 }
 
+{ #category : #accessing }
+OCScopeTest class >> myClassVarForTesting [
+
+	^MyClassVarForTesting
+]
+
+{ #category : #accessing }
+OCScopeTest >> ivarForTesting [
+
+	^ ivarForTesting
+]
+
 { #category : #tests }
 OCScopeTest >> testHasBindingThatBeginsWithClassVar [
 	self assert: (thisContext astScope hasBindingThatBeginsWith: 'MyClass').
