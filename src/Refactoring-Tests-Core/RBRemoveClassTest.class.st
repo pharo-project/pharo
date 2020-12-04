@@ -12,8 +12,9 @@ RBRemoveClassTest >> resumeOnCannotRemoveTopLevelClassError: error [
 
 { #category : #'failure tests' }
 RBRemoveClassTest >> testRaisesRBRefactoringErrorWhenRemovingNonEmptySuperclass [
-
-	self shouldFail: (RBRemoveClassRefactoring classNames: {#RBTransformationRuleTestData1})
+	|class|
+	class := ('RBTransformation', 'RuleTestData1') asSymbol.
+	self shouldFail: (RBRemoveClassRefactoring classNames: {class})
 ]
 
 { #category : #tests }
