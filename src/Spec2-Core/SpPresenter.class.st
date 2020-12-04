@@ -474,13 +474,13 @@ SpPresenter >> focusOrder: anObject [
 	^ focusOrder := anObject
 ]
 
-{ #category : #'GTInspector-Extensions' }
+{ #category : #'inspector-Extensions' }
 SpPresenter >> gtInspectorPreviewIn: composite [
 	<gtInspectorPresentationOrder: 30>
 	self adapter ifNotNil: [ :w | w gtInspectorPreviewIn: composite ]
 ]
 
-{ #category : #'GTInspector-Extensions' }
+{ #category : #'inspector-Extensions' }
 SpPresenter >> gtInspectorSubPresentersIn: composite [
 	<gtInspectorPresentationOrder: 20>
 	composite tree
@@ -612,6 +612,23 @@ SpPresenter >> initializeWindow: aWindowPresenter [
 		windowIcon: self windowIcon;
 		askOkToClose: self askOkToClose;
 		aboutText: self aboutText
+]
+
+{ #category : #'inspector-Extensions' }
+SpPresenter >> inspectionSubPresenters [
+	<inspectorPresentationOrder: 910 title: 'Subpresenters'>
+	
+	^ SpTreePresenter new
+		roots: self presenters;
+		children: [ :each | each presenters ];
+		expandRoots;
+		yourself
+]
+
+{ #category : #'inspector-Extensions' }
+SpPresenter >> inspectionSubPresentersContext: aContext [
+	
+	aContext active: self presenters notEmpty
 ]
 
 { #category : #'instance creation' }

@@ -1,3 +1,6 @@
+"
+I'm an adapter to provide an action bar (which is represented using an SpToolbarMorph)
+"
 Class {
 	#name : #SpMorphicActionBarAdapter,
 	#superclass : #SpAbstractMorphicAdapter,
@@ -55,13 +58,13 @@ SpMorphicActionBarAdapter >> buildWidget [
 
 { #category : #factory }
 SpMorphicActionBarAdapter >> newPanelMorph [
-	
-	^ Morph new 
-		changeTableLayout;
-		hResizing: #spaceFill;
-		vResizing: #rigid;
-		height: self class defaultHeight;
-		cellInset: self class defaultItemSeparation;
-		color: Color random;
-		yourself
+
+	^ Morph new
+		  changeTableLayout;
+		  hResizing: #spaceFill;
+		  vResizing: #rigid;
+		  height: self class defaultHeight;
+		  cellInset: self class defaultItemSeparation;
+		  color: Color random;
+		  yourself
 ]

@@ -9,13 +9,15 @@ Class {
 
 { #category : #factory }
 SpMorphicTickingWindowAdapter >> buildWidget [
+
 	^ SpTickingSpecWindow new
-			model: self;
-			isResizeable: self isResizeable;
-			yourself
+		  model: self;
+		  isResizeable: self isResizeable;
+		  yourself
 ]
 
 { #category : #stepping }
 SpMorphicTickingWindowAdapter >> step [
+
 	self model step
 ]

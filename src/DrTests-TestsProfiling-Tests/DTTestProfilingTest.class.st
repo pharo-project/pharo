@@ -15,7 +15,7 @@ DTTestProfilingTest >> setUp [
 	super setUp.
 	plugin := DTTestsProfiling  new.
 	package := RPackage organizer
-		packageNamed: 'DrTests-TestCoverage-MocksForTests'.
+		packageNamed: 'DrTests-TestCoverage-Tests-Mocks'.
 	classes := plugin itemsToBeAnalysedFor: {package}.
 	dTconf := DTPluginConfiguration items: classes packages: {package}
 ]

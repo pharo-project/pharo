@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'type'
 	],
-	#category : #'DrTests-TestsRunner'
+	#category : #'DrTests-TestsRunner-Base'
 }
 
 { #category : #'instance creation' }

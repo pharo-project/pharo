@@ -41,7 +41,7 @@ StDebuggerTestFailureContextPredicate >> printDescription [
 	self printDescriptionPrefixOn: str.
 
 	(failure isKindOf: TestFailure) ifTrue: [ 
-		str << failure smartDescription.
+		str << failure description.
 		^ str contents ].
 	(failure isClass and: [ failure includesBehavior: TestFailure ]) 
 		ifTrue: [ 

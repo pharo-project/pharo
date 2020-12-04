@@ -176,8 +176,10 @@ RBMessageNode >> isHaltNode [
 
 	^ (#( #halt #halt: #haltIf: #haltOnce #haltIfNil #haltOnCount: ) 
 		   includes: self selector) or: [ 
-		  self receiver isVariable and: [ 
-			  self receiver variable value = Halt ] ]
+		  self receiver isGlobalVariable and: [ 
+			  self receiver variable value = Halt and: [ 
+				  (Halt class selectorsInCategory: #halting) includes:
+					  self selector ] ] ]
 ]
 
 { #category : #testing }

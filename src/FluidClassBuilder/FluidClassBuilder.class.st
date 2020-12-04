@@ -54,7 +54,8 @@ Class {
 
 { #category : #building }
 FluidClassBuilder >> build [
-	"Return a class"
+	"Return a class that is not installed in the system."
+	
 	^ shiftClassBuilder build 
 
 
@@ -101,6 +102,13 @@ FluidClassBuilder >> fillShiftClassBuilder [
 	
 
 
+]
+
+{ #category : #'as yet unclassified' }
+FluidClassBuilder >> install [
+	"Install the class in the system environment"
+	
+	ShiftClassInstaller new makeWithBuilder: shiftClassBuilder 
 ]
 
 { #category : #accessing }

@@ -179,7 +179,8 @@ ClySystemEnvironment >> defaultClassCompiler [
 
 { #category : #compiling }
 ClySystemEnvironment >> defineNewClassFrom: aString notifying: aController startingFrom: aClass [
-	
+	"Precondition: aString is a fluid class"
+
 	| class classCompiler |
 	"the logic of erasing an existing class will be added back later."
 	aClass
@@ -187,7 +188,7 @@ ClySystemEnvironment >> defineNewClassFrom: aString notifying: aController start
 		ifNotNil: [ classCompiler := aClass superclass subclassDefinerClass new ].
 	[class := classCompiler
 		"for now a super ugly patch"
-		source: 'ShiftClassInstaller new makeWithBuilder: (',  aString,') shiftClassBuilder ';
+		source: '(', aString ,') install';
 		requestor: aController;
 		logged: true;
 		evaluate] on: OCUndeclaredVariableWarning do: [ :ex | 

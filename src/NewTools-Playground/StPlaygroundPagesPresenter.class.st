@@ -59,6 +59,23 @@ StPlaygroundPagesPresenter class >> unselectedMessage [
 	^ 'Select a page to preview it.'
 ]
 
+{ #category : #actions }
+StPlaygroundPagesPresenter >> doLoadPage [
+	
+	self loadSelectedPage
+]
+
+{ #category : #actions }
+StPlaygroundPagesPresenter >> doLoadPageOnNewPlayground [
+	| playground |
+	
+	(playground := StPlayground new) 
+		loadPage: self selectedPage;
+		openWithSpec.
+	self window close.
+	playground takeKeyboardFocus 		
+]
+
 { #category : #initialization }
 StPlaygroundPagesPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 
@@ -77,6 +94,7 @@ StPlaygroundPagesPresenter >> initializePresenters [
 		label: 'Pages';
 		presenter: (pageList := self newComponentList
 			presenters: self pagesAsPresenters;
+			contextMenu: [ self pagesActions asMenuPresenter ];
 			whenActivatedDo: [ self loadSelectedPage ];
 			bindKeyCombination: Character cr asKeyCombination toAction: [ self loadSelectedPage ];
 			yourself).
@@ -123,7 +141,7 @@ StPlaygroundPagesPresenter >> loadPage: aPage [
 { #category : #actions }
 StPlaygroundPagesPresenter >> loadSelectedPage [
 
-	self loadPage: pageList selection selectedItem page
+	self loadPage: self selectedPage
 ]
 
 { #category : #accessing }
@@ -133,6 +151,16 @@ StPlaygroundPagesPresenter >> pages [
 		sorted: [ :a :b | a creationTime > b creationTime ]
 ]
 
+{ #category : #private }
+StPlaygroundPagesPresenter >> pagesActions [
+
+	^ CmCommandGroup forSpec
+		beRoot;
+		register: (StPlaygroundLoadPageCommand forSpecContext: self);
+		register: (StPlaygroundLoadPageOnNewPlaygroundCommand forSpecContext: self);
+		yourself
+]
+
 { #category : #initialization }
 StPlaygroundPagesPresenter >> pagesAsPresenters [
 
@@ -140,6 +168,12 @@ StPlaygroundPagesPresenter >> pagesAsPresenters [
 		self 
 			instantiate: StPlaygroundPageSummaryPresenter
 			on: each  ]
+]
+
+{ #category : #accessing }
+StPlaygroundPagesPresenter >> selectedPage [
+
+	^ pageList selection selectedItem page
 ]
 
 { #category : #'accessing model' }

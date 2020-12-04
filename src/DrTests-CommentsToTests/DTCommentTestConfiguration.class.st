@@ -4,7 +4,7 @@ I know the items to create a testSuite that will be analysed by a DrTestsPlugin.
 Class {
 	#name : #DTCommentTestConfiguration,
 	#superclass : #DTPluginConfiguration,
-	#category : #'DrTests-CommentsToTests'
+	#category : #'DrTests-CommentsToTests-Base'
 }
 
 { #category : #converting }

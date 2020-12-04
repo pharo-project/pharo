@@ -111,14 +111,12 @@ SpRubFindReplaceService >> initialize [
 { #category : #'events handling' }
 SpRubFindReplaceService >> openDialog [
 
-	dialogWindow ifNotNil: [ 
-		dialogWindow close ].
+	dialogWindow ifNotNil: [ dialogWindow close ].
 
-	app := SpApplication new.
-	dialog := SpRubFindReplaceDialog newApplication: app model: self.
+	dialog := SpRubFindReplaceDialog on: self.
 	dialog updateFromModel.
-				
-	dialogWindow := dialog openDialogWithSpec: #defaultSpec.
+
+	dialogWindow := dialog openDialogWithSpec
 ]
 
 { #category : #services }
@@ -190,7 +188,7 @@ SpRubFindReplaceService >> whenFindReplaceWindowRequired: anAnnouncement [
 	self textArea hasSelection
 		ifTrue: [ self findText: self textArea selection ].
 
-	self openDialog.
+	self openDialog
 ]
 
 { #category : #'events handling' }

@@ -7,23 +7,24 @@ Class {
 	#category : #'NewTools-Debugger-Commands'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #default }
 StRunToSelectionCommand class >> defaultDescription [
 	^ 'Execute methods up to the text cursor position and return debugger control.'
 ]
 
-{ #category : #initialization }
+{ #category : #default }
 StRunToSelectionCommand class >> defaultIconName [
-	^ #glamorousRightSide
+
+	^ #debuggerRunToSelection
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #default }
 StRunToSelectionCommand class >> defaultName [
 	<toolbarDebugCommand: 50>
 	^ 'Run to'
 ]
 
-{ #category : #initialization }
+{ #category : #default }
 StRunToSelectionCommand class >> defaultShortcut [
 	^ nil
 ]

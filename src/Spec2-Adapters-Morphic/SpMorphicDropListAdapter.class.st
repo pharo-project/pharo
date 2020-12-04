@@ -12,19 +12,22 @@ SpMorphicDropListAdapter >> buildWidget [
 
 	self model model whenChangedDo: [ 
 		self changed: #getList.
-		self changed: #getIndex  ].
+		self changed: #getIndex ].
 	self model selection whenChangedDo: [ self changed: #getIndex ].
 
 	^ SpDropListMorph new
-		wrapSelector: #wrap:withIndex:;
-		on: self list: #getList selected: #getIndex changeSelected: #setIndex:;
-		hResizing: #spaceFill;
-		vResizing: #spaceFill;
-		dragEnabled: self dragEnabled;
-		dropEnabled: self dropEnabled;
-		enabled: self enabled;
-		setBalloonText: self help;
-		yourself
+		  wrapSelector: #wrap:withIndex:;
+		  on: self
+		  list: #getList
+		  selected: #getIndex
+		  changeSelected: #setIndex:;
+		  hResizing: #spaceFill;
+		  vResizing: #spaceFill;
+		  dragEnabled: self dragEnabled;
+		  dropEnabled: self dropEnabled;
+		  enabled: self enabled;
+		  setBalloonText: self help;
+		  yourself
 ]
 
 { #category : #accessing }
@@ -34,7 +37,7 @@ SpMorphicDropListAdapter >> displayedIcon [
 	^ self widget currentIcon
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 SpMorphicDropListAdapter >> elementAt: index [
 	
 	^ self presenter getList at: index
@@ -66,20 +69,24 @@ SpMorphicDropListAdapter >> selectIndex: anInteger [
 
 { #category : #accessing }
 SpMorphicDropListAdapter >> selectedIndexes [
-	
+
 	| selectedIndex |
 	selectedIndex := self widget getCurrentSelectionIndex.
-	^ selectedIndex = 0 ifTrue: [ #() ] ifFalse: [ { selectedIndex } ]
+	^ selectedIndex = 0
+		  ifTrue: [ #(  ) ]
+		  ifFalse: [ { selectedIndex } ]
 ]
 
 { #category : #'widget API' }
 SpMorphicDropListAdapter >> setIndex: anIndex [
+
 	^ self model selectIndex: anIndex
 ]
 
 { #category : #'widget API' }
 SpMorphicDropListAdapter >> wrapItem: anItem index: anIndex [
+
 	| result |
-	result := self model displayForItem: anItem.	
+	result := self model displayForItem: anItem.
 	^ result asString
 ]

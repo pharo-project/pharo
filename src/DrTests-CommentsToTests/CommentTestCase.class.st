@@ -13,7 +13,7 @@ Class {
 		'classExample',
 		'selectorExample'
 	],
-	#category : #'DrTests-CommentsToTests'
+	#category : #'DrTests-CommentsToTests-Model'
 }
 
 { #category : #'instance creation' }

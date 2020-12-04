@@ -1,3 +1,6 @@
+"
+Spec Adapter to Morphic for a ButtonBarPresenter using a PanelMorph
+"
 Class {
 	#name : #SpMorphicButtonBarAdapter,
 	#superclass : #SpAbstractMorphicAdapter,

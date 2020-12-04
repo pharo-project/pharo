@@ -1,8 +1,17 @@
+"
+I am the adapter used to bridge window presenters and windows or worlds
+"
 Class {
 	#name : #SpAbstractMorphicWindowAdapter,
 	#superclass : #SpAbstractMorphicAdapter,
 	#category : #'Spec2-Adapters-Morphic-Base'
 }
+
+{ #category : #testing }
+SpAbstractMorphicWindowAdapter class >> isAbstract [ 
+
+	^self name = #SpAbstractMorphicWindowAdapter
+]
 
 { #category : #private }
 SpAbstractMorphicWindowAdapter >> add: containerMorph toWindow: aSpecWindow [
@@ -33,8 +42,8 @@ SpAbstractMorphicWindowAdapter >> addContent: aMorph toWindow: aSpecWindow [
 
 { #category : #private }
 SpAbstractMorphicWindowAdapter >> addMenuTo: aMorph [
-	| menuMorph |
 
+	| menuMorph |
 	menuMorph := self model menu buildWithSpec.
 	aMorph addMorphBack: menuMorph.	
 	menuMorph
@@ -44,8 +53,8 @@ SpAbstractMorphicWindowAdapter >> addMenuTo: aMorph [
 
 { #category : #private }
 SpAbstractMorphicWindowAdapter >> addStatusBarTo: aMorph [
-	| statusBarMorph |
 
+	| statusBarMorph |
 	statusBarMorph := self model statusBar buildWithSpec.
 	aMorph addMorphBack: statusBarMorph.	
 	statusBarMorph
@@ -55,10 +64,10 @@ SpAbstractMorphicWindowAdapter >> addStatusBarTo: aMorph [
 
 { #category : #private }
 SpAbstractMorphicWindowAdapter >> addToolbarTo: aMorph [
-	| toolbarMorph |
 
+	| toolbarMorph |
 	toolbarMorph := self presenter toolbar buildWithSpec.
-	aMorph addMorphBack: toolbarMorph.	
+	aMorph addMorphBack: toolbarMorph.
 	toolbarMorph
 		hResizing: #spaceFill;
 		vResizing: #rigid
@@ -66,11 +75,11 @@ SpAbstractMorphicWindowAdapter >> addToolbarTo: aMorph [
 
 { #category : #private }
 SpAbstractMorphicWindowAdapter >> newContainerMorph [
-		
+
 	^ PanelMorph new
-		layoutPolicy: TableLayout new; 
-		hResizing: #spaceFill;
-		vResizing: #spaceFill;		
-		listDirection: #topToBottom; 
-		yourself
+		  layoutPolicy: TableLayout new;
+		  hResizing: #spaceFill;
+		  vResizing: #spaceFill;
+		  listDirection: #topToBottom;
+		  yourself
 ]

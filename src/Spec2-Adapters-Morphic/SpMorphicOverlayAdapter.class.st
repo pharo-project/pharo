@@ -12,11 +12,11 @@ Class {
 
 { #category : #protocol }
 SpMorphicOverlayAdapter >> addConstraits: constraints toChild: childMorph [
-	"adds constraits by child"
+	"Adds constraits by child"
+
 	| theMorph |
-	
 	theMorph := childMorph.
-	"keep constraints to layout usage"
+	"Keep constraints to layout usage"
 	theMorph setProperty: #constraints toValue: constraints. 
 	
 	^ theMorph 
@@ -24,8 +24,8 @@ SpMorphicOverlayAdapter >> addConstraits: constraints toChild: childMorph [
 
 { #category : #protocol }
 SpMorphicOverlayAdapter >> basicAdd: aPresenter constraints: constraints to: aWidget [
-	| childMorph |
 
+	| childMorph |
 	childMorph := self buildMorph: aPresenter constraints: constraints.	
 	aWidget addMorphBack: childMorph.
 	^ childMorph
@@ -39,30 +39,30 @@ SpMorphicOverlayAdapter >> children [
 
 { #category : #protocol }
 SpMorphicOverlayAdapter >> layout: aLayout [
-	widget
-		ifNil: [ widget := PanelMorph new
-				layoutPolicy: SpMorphicOverlayLayout new;
-				hResizing: #spaceFill;
-				vResizing: #spaceFill;
-				color: Color transparent;
-				borderColor: Color transparent;
-				yourself ].
 
-	aLayout whenChildrenAddedDo: [ :ann |
-		self 
+	widget ifNil: [ 
+		widget := PanelMorph new
+			          layoutPolicy: SpMorphicOverlayLayout new;
+			          hResizing: #spaceFill;
+			          vResizing: #spaceFill;
+			          color: Color transparent;
+			          borderColor: Color transparent;
+			          yourself ].
+
+	aLayout whenChildrenAddedDo: [ :ann | 
+		self
 			basicAdd: ann child
-			constraints: (aLayout constraintsFor: ann child) 
+			constraints: (aLayout constraintsFor: ann child)
 			to: widget ].
-		
-	aLayout whenChildrenRemovedDo: [ :ann |
-		self removeChild: ann child ].
+
+	aLayout whenChildrenRemovedDo: [ :ann | self removeChild: ann child ].
 
 	super layout: aLayout
 ]
 
 { #category : #accessing }
 SpMorphicOverlayAdapter >> removeChild: aPresenter [
-	
+
 	| morph |
 	morph := aPresenter adapter widget.
 	widget removeMorph: morph

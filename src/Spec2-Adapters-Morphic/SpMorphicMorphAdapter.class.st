@@ -1,3 +1,6 @@
+"
+I'm a spec adapter for a morph
+"
 Class {
 	#name : #SpMorphicMorphAdapter,
 	#superclass : #SpAbstractMorphicAdapter,

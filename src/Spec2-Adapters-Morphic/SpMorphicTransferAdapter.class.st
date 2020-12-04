@@ -11,10 +11,10 @@ Class {
 SpMorphicTransferAdapter >> buildWidget [
 
 	^ SpTransferMorph new
-		model: self;
-		passenger: self passenger;
-		source: self source;
-		yourself
+		  model: self;
+		  passenger: self passenger;
+		  source: self source;
+		  yourself
 ]
 
 { #category : #'widget API' }

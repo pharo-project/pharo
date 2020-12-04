@@ -17,7 +17,6 @@ Class {
 SpMillerPaginatorPresenter >> initializePresenters [
 
 	self layout: (SpBoxLayout newVertical
-		spacing: 3;
 		add: (millerList := self instantiate: SpMillerColumnPresenter);
 		add: ((paginatorContainerLayout := SpBoxLayout newHorizontal)
 				hAlignCenter; 

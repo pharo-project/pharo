@@ -17,5 +17,6 @@ SpTextSelectAndPasteCommand class >> defaultName [
 
 { #category : #execution }
 SpTextSelectAndPasteCommand >> execute [
-	self editor pasteRecent
+
+	context doTextSelectAndPaste
 ]

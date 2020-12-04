@@ -607,7 +607,7 @@ CompiledMethod >> isInstalled [
 		[:class|
 		self selector ifNotNil:
 			[:selector|
-			^self == (class compiledMethodAt: selector ifAbsent: [])]].
+			^self == (class compiledMethodAt: selector ifAbsent: nil)]].
 	^false
 ]
 

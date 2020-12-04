@@ -1,3 +1,6 @@
+"
+I'm the adapter used to bridge a ToggleButton and its morphic representation.
+"
 Class {
 	#name : #SpMorphicToggleButtonAdapter,
 	#superclass : #SpAbstractMorphicAdapter,
@@ -6,28 +9,31 @@ Class {
 
 { #category : #factory }
 SpMorphicToggleButtonAdapter >> buildWidget [
-	| checkButton |
 
+	| checkButton |
 	checkButton := PluggableToggleButtonMorph
-		on: self 
-		getState: #state
-		action:  #toggleAction:
-		label: #label 
-		menu: nil. 	
-	
-	checkButton 
+		               on: self
+		               getState: #state
+		               action: #toggleAction:
+		               label: #label
+		               menu: nil.
+
+	checkButton
 		icon: self icon;
-		label:	 self getLabelText; 
-		hResizing: #spaceFill; 
-		vResizing: #shrinkWrap; 
+		label: self getLabelText;
+		hResizing: #spaceFill;
+		vResizing: #shrinkWrap;
 		setBalloonText: self getHelpText;
 		getEnabledSelector: #enabled;
 		dragEnabled: self dragEnabled;
 		dropEnabled: self dropEnabled.
-			
-	self presenter whenLabelChangedDo: [ :newLabel | checkButton label: (newLabel ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]) ].
+
+	self presenter whenLabelChangedDo: [ :newLabel | 
+		checkButton label: (newLabel ifNotNil: [ :aString | 
+				 aString localizedForPresenter: self presenter ]) ].
 	self presenter whenIconChangedDo: [ checkButton icon: self icon ].
-	self presenter whenChangedDo: [ checkButton pressed: self model state ].
+	self presenter whenChangedDo: [ 
+		checkButton pressed: self model state ].
 
 	^ checkButton
 ]

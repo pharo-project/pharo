@@ -200,14 +200,18 @@ SpMorphicCodeAdapter >> setEditingModeFor: textArea [
 
 { #category : #private }
 SpMorphicCodeAdapter >> setEditingModeFor: textArea withBehavior: aBehavior forScripting: aBoolean [
-
 	textArea model: self.
 	(aBoolean or: [ aBehavior isNil ]) 
 		ifTrue: [ 
 			textArea beForSmalltalkScripting.
 			textArea editingMode classOrMetaClass: aBehavior ]
 		ifFalse: [
-			textArea beForSmalltalkCodeInClass: aBehavior ]
+			textArea beForSmalltalkCodeInClass: aBehavior ].
+	"Following code should bring correct requestor (a code presenter) with a proper code interaction model into styler to enable a visibility of external variables (like workspace variables)"
+	textArea shoutStyler styler 
+		isForWorkspace: aBoolean;
+		workspace: self presenter.
+	textArea shoutStyler refreshStyling
 ]
 
 { #category : #'widget API' }

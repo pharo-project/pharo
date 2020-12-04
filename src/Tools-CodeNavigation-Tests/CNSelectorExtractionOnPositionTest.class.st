@@ -72,6 +72,12 @@ CNSelectorExtractionOnPositionTest >> methodWithIfTrueIfFalse [
 ]
 
 { #category : #helpers }
+CNSelectorExtractionOnPositionTest >> methodWithSpacesAtTheEnd [
+	"Please do not remove the leading spaces"
+	^ 1 someMessageFollowedBySpaces  
+]
+
+{ #category : #helpers }
 CNSelectorExtractionOnPositionTest >> methodX:a [
 
 	
@@ -165,6 +171,16 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterReturnShouldMatchChildCascad
 	
 	cascade := self returnNodeToTest value.
 	self assert: self selectedSelector equals: cascade messages first selector
+]
+
+{ #category : #'tests - no selection - return' }
+CNSelectorExtractionOnPositionTest >> testCaretAtEndOfMethodShouldMatchMethodNode [
+
+	self sourceCodeOf: self class >> #methodWithSpacesAtTheEnd.
+	
+	self caretAfter: self returnNodeToTest methodNode.
+	
+	self assert: self selectedSelector equals: #methodWithSpacesAtTheEnd
 ]
 
 { #category : #'tests - no selection - blocks' }

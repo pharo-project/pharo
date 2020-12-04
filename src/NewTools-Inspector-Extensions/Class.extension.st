@@ -2,7 +2,7 @@ Extension { #name : #Class }
 
 { #category : #'*NewTools-Inspector-Extensions' }
 Class >> inspectionAllReferences [
-	<inspectorPresentationOrder: 20 title: 'All References'>
+	<inspectorPresentationOrder: 920 title: 'All References'>
 	| allReferences allClassesReferencing sortBlock treeTable childrenBlock |
 	
 	allReferences := SystemNavigation default allReferencesTo: self binding.
@@ -29,7 +29,7 @@ Class >> inspectionAllReferences [
 { #category : #'*NewTools-Inspector-Extensions' }
 Class >> inspectionClassComment [
 	"This provides an editable comment of the current class"
-	<inspectorPresentationOrder: 20 title: 'Comment'>
+	<inspectorPresentationOrder: 920 title: 'Comment'>
 	
 	^ SpTextPresenter new
 		text: self comment;
@@ -42,9 +42,10 @@ Class >> inspectionClassComment [
 { #category : #'*NewTools-Inspector-Extensions' }
 Class >> inspectionClassDefinition [
 	"This provides an editable comment of the current class"
-	<inspectorPresentationOrder: 15 title: 'Definition'>
+	<inspectorPresentationOrder: 915 title: 'Definition'>
 	
 	^ SpCodePresenter new
+		beForScripting;
 		text: self definition;
-		disable
+		beNotEditable
 ]
