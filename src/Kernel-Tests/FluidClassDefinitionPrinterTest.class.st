@@ -114,8 +114,8 @@ FluidClassDefinitionPrinterTest >> testExpandedEmptyLayoutClass [
 FluidClassDefinitionPrinterTest >> testExpandedOnClassWithoutTag [
 
 	self 
-		assert: (self expandedForClass: EncoderForV3)
-		equals:   'Object << #EncoderForV3
+		assert: (self expandedForClass: EncoderForV3PlusClosures)
+		equals:   'Object << #EncoderForV3PlusClosures
 	layout: FixedLayout;
 	uses: {};
 	slots: {};
