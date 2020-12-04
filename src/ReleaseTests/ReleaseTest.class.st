@@ -189,6 +189,26 @@ ReleaseTest >> testManifestNamesAccordingToPackageNames [
 ]
 
 { #category : #tests }
+ReleaseTest >> testMethodsContainNoHalt [
+
+	| methods |
+	methods := SystemNavigation new allMethods select: [ :method | method containsHalt ].
+	"these methods are using halt for testing something"
+	methods := methods reject: [ :method | 
+		           method hasPragmaNamed: #haltOrBreakpointForTesting ].
+	"these methods are implementing halt, we are not interested"
+	methods := methods reject: [ :method | 
+		           method hasPragmaNamed: #debuggerCompleteToSender ].
+
+	"there should be no method left"
+	self assert: methods isEmpty description: [ 
+		String streamContents: [ :stream | 
+			stream
+				nextPutAll: 'Found methods with halt';
+				print: methods ] ]
+]
+
+{ #category : #tests }
 ReleaseTest >> testMethodsWithUnboundGlobals [
 	| methodsWithUnboundGlobals |
 	"Ensure the environment is clean"
