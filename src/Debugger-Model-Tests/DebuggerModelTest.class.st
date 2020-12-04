@@ -24,6 +24,15 @@ DebuggerModelTest >> setUp [
 ]
 
 { #category : #tests }
+DebuggerModelTest >> testClearDebugSession [
+
+	session clear.
+	self assert: session exception equals: nil.
+	self assert: session interruptedContext equals: nil.
+	self assert: session interruptedProcess equals: nil
+]
+
+{ #category : #tests }
 DebuggerModelTest >> testCorrectlyCreateDebugSession [
 
 	self assert: session isNotNil.	
