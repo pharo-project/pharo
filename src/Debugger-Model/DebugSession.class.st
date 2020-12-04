@@ -57,6 +57,7 @@ DebugSession class >> named: aString on: aProcess startedAt: aContext [
 DebugSession >> clear [
 	"If after resuming the process the user does plan to reuse this session with
 	the same process, it should call this method."
+	exception := nil.
 	interruptedProcess := nil.
 	self updateContextTo: nil
 ]
