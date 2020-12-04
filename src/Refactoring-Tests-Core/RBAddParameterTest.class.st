@@ -12,15 +12,17 @@ RBAddParameterTest >> setUp [
 
 { #category : #tests }
 RBAddParameterTest >> testAddParameterForTwoArgumentMessage [
-	| refactoring class |
+	| oldSelector newSelector refactoring class |
+	oldSelector := ('called:' , 'on:') asSymbol.
+	newSelector := #called:bar:on:.
 	refactoring := RBAddParameterRefactoring 
-		addParameterToMethod: ('called:' , 'on:') asSymbol
+		addParameterToMethod: oldSelector
 		in: RBRefactoryTestDataApp
-		newSelector: #called:bar:on:
+		newSelector: newSelector
 		initializer: '#(1.0)'.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
-	self assert: (class parseTreeFor: #called:bar:on:) equals: (self parseMethod: 'called: anObject bar: aBlock on: anObject1
+	self assert: (class parseTreeFor: newSelector) equals: (self parseMethod: 'called: anObject bar: aBlock on: anObject1
 							Transcript
 								show: anObject printString;
 								cr.
@@ -31,56 +33,81 @@ RBAddParameterTest >> testAddParameterForTwoArgumentMessage [
 							self 
 								called: anObject + 1
 								bar: [^anObject] on: #(1.0)').
-	self deny: (class directlyDefinesMethod: ('called:' , 'on:') asSymbol)
+	self deny: (class directlyDefinesMethod: oldSelector)
 ]
 
 { #category : #tests }
 RBAddParameterTest >> testAddParameterThatReferencesGlobalAndLiteral [
-	| refactoring class |
-	refactoring := RBAddParameterRefactoring 
-		addParameterToMethod: ('test' , 'Foo:') asSymbol
-		in: RBRefactoryTestDataApp
-		newSelector: #testFoo:bar:
-		initializer: 'OrderedCollection new: 5'.
+
+	| refactoring class oldSelector newSelector |
+	oldSelector := ('test' , 'Foo:') asSymbol.
+	newSelector := #testFoo:bar:.
+	refactoring := RBAddParameterRefactoring
+		               addParameterToMethod: oldSelector
+		               in: RBRefactoryTestDataApp
+		               newSelector: newSelector
+		               initializer: 'OrderedCollection new: 5'.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
-	self assert: (class parseTreeFor: #testFoo:bar:) equals: (self parseMethod: 'testFoo: anObject bar: anObject1
+	self
+		assert: (class parseTreeFor: newSelector)
+		equals: (self parseMethod: 'testFoo: anObject bar: anObject1
 								^self class + anObject').
-	self assert: (class parseTreeFor: #callFoo) equals: (self parseMethod: 'callFoo ^self testFoo: 5 bar: (OrderedCollection new: 5)').
-	self deny: (class directlyDefinesMethod: ('test' , 'Foo:') asSymbol)
+	self
+		assert: (class parseTreeFor: #callFoo)
+		equals: (self parseMethod:
+				 'callFoo ^self testFoo: 5 bar: (OrderedCollection new: 5)').
+	self deny: (class directlyDefinesMethod: oldSelector)
 ]
 
 { #category : #tests }
 RBAddParameterTest >> testAddParameterThatReferencesModelGlobal [
-	| refactoring class |
-	refactoring := RBAddParameterRefactoring 
-		model: model
-		addParameterToMethod: ('test' , 'Foo:') asSymbol
-		in: RBRefactoryTestDataApp
-		newSelector: #testFoo:bar:
-		initializer: 'Bar new'.
+
+	| refactoring class oldSelector newSelector |
+	oldSelector := ('test' , 'Foo:') asSymbol.
+	newSelector := #testFoo:bar:.
+	refactoring := RBAddParameterRefactoring
+		               model: model
+		               addParameterToMethod: oldSelector
+		               in: RBRefactoryTestDataApp
+		               newSelector: newSelector
+		               initializer: 'Bar new'.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
-	self assert: (class parseTreeFor: #testFoo:bar:) equals: (self parseMethod: 'testFoo: anObject bar: anObject1
+	self
+		assert: (class parseTreeFor: newSelector)
+		equals: (self parseMethod: 'testFoo: anObject bar: anObject1
 								^self class + anObject').
-	self assert: (class parseTreeFor: #callFoo) equals: (self parseMethod: 'callFoo ^self testFoo: 5 bar: (Bar new)').
-	self deny: (class directlyDefinesMethod: ('test' , 'Foo:') asSymbol)
+	self
+		assert: (class parseTreeFor: #callFoo)
+		equals:
+		(self parseMethod: 'callFoo ^self testFoo: 5 bar: (Bar new)').
+	self deny: (class directlyDefinesMethod: oldSelector)
 ]
 
 { #category : #tests }
 RBAddParameterTest >> testAddParameterThatReferencesSelf [
-	| refactoring class |
-	refactoring := RBAddParameterRefactoring 
-		addParameterToMethod: ('test' , 'Foo:') asSymbol
-		in: RBRefactoryTestDataApp
-		newSelector: #testFoo:bar:
-		initializer: 'self printString'.
+
+	| refactoring class oldSelector newSelector |
+	oldSelector := ('test' , 'Foo:') asSymbol.
+	newSelector := #testFoo:bar:.
+	refactoring := RBAddParameterRefactoring
+		               addParameterToMethod: oldSelector
+		               in: RBRefactoryTestDataApp
+		               newSelector: newSelector
+		               initializer: 'self printString'.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
-	self assert: (class parseTreeFor: #testFoo:bar:) equals: (self parseMethod: 'testFoo: anObject bar: anObject1
+	self
+		assert: (class parseTreeFor: newSelector)
+		equals: (self parseMethod: 'testFoo: anObject bar: anObject1
 								^self class + anObject').
-	self assert: (class parseTreeFor: #callFoo) equals: (self parseMethod: 'callFoo ^self testFoo: 5 bar: (self printString)').
-	self deny: (class directlyDefinesMethod: ('test' , 'Foo:') asSymbol)
+	self
+		assert: (class parseTreeFor: #callFoo)
+		equals:
+		(self parseMethod:
+			 'callFoo ^self testFoo: 5 bar: (self printString)').
+	self deny: (class directlyDefinesMethod: oldSelector)
 ]
 
 { #category : #'failure tests' }
@@ -96,6 +123,15 @@ RBAddParameterTest >> testBadInitializationCode [
 				in: RBLintRuleTestData
 				newSelector: #name:
 				initializer: 'foo')
+]
+
+{ #category : #'failure tests' }
+RBAddParameterTest >> testInvalidNumArgsOfNewSelector [
+	self shouldFail: (RBAddParameterRefactoring 
+			addParameterToMethod: #checkSendersAccessTo:
+			in: RBLintRuleTestData
+			newSelector: #checkSendersAccessTo:
+			initializer: 'nil')
 ]
 
 { #category : #'failure tests' }
@@ -153,4 +189,13 @@ RBAddParameterTest >> testPrimitiveMethods [
 				initializer: '1'.
 	self shouldFail: refactoring.
 	
+]
+
+{ #category : #'failure tests' }
+RBAddParameterTest >> testUseExistingNewSelector [
+	self shouldFail: (RBAddParameterRefactoring 
+			addParameterToMethod: #checkSendersAccessTo:
+			in: RBLintRuleTestData
+			newSelector: #safeVariableNameFor:temporaries:
+			initializer: 'nil')
 ]
