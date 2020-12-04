@@ -64,19 +64,19 @@ SpMorphicGridLayoutComputation >> baseRowHeight [
 SpMorphicGridLayoutComputation >> calculateColumnWidths [
 
 	^ layout isColumnHomogeneous
-		ifTrue: [ self calculateHomogeneousColumnWidths ]
-		ifFalse: [ self calculateNotHomogeneousColumnWidths ]
+		  ifTrue: [ self calculateHomogeneousColumnWidths ]
+		  ifFalse: [ self calculateNotHomogeneousColumnWidths ]
 ]
 
 { #category : #'private computation' }
 SpMorphicGridLayoutComputation >> calculateHomogeneousColumnWidths [
-	"columns are homogeneous. 
+	"Columns are homogeneous. 
 	 - width will be bounds width/numColumns UNLESS there is a column with a min width bigger 
 	   than that number.
 	 - if min width > bounds width/numColumns, then all columns becomw width = min width (to 
 		make them homogeneous)"
-	| columnWidth |
-	
+
+	| columnWidth |	
 	columnWidth := 0.
 	morphs do: [ :each | 
 		columnWidth := columnWidth max: (self minWidthOf: each) ].
@@ -86,13 +86,13 @@ SpMorphicGridLayoutComputation >> calculateHomogeneousColumnWidths [
 
 { #category : #'private computation' }
 SpMorphicGridLayoutComputation >> calculateHomogeneousRowHeights [
-	"roes are homogeneous. 
+	"Rows are homogeneous. 
 	 - height will be bounds height/numRows UNLESS there is a row with a min height bigger 
-	   than that number.
+	   than that number
 	 - if min height > bounds height/numRows, then all rows become height = min height (to 
 		make them homogeneous)"
-	| rowHeight |
-	
+
+	| rowHeight |	
 	rowHeight := 0.
 	morphs do: [ :each | 
 		rowHeight := rowHeight max: (self minHeightOf: each) ].
@@ -102,12 +102,12 @@ SpMorphicGridLayoutComputation >> calculateHomogeneousRowHeights [
 
 { #category : #'private computation' }
 SpMorphicGridLayoutComputation >> calculateNotHomogeneousColumnWidths [
-	"column widths are 
+	"Column widths are 
 	 - the max width of cells of that column. EXCEPT if
 	 - the column is expandable, in which case, they will receive the remaining width 
 	   after assigning the others (a minimum if there is no remaining place)"
-	| newColumnWidths expandables |
-	
+
+	| newColumnWidths expandables |	
 	newColumnWidths := Array new: numColumns withAll: 0.
 	
 	"Assign non expandable values"
@@ -136,8 +136,9 @@ SpMorphicGridLayoutComputation >> calculateNotHomogeneousColumnWidths [
 
 { #category : #'private computation' }
 SpMorphicGridLayoutComputation >> calculateNotHomogeneousRowHeights [
-	"column heights are 
-	 - the max height of cells of that row"
+	"Column heights are 
+	 - the max height of cells of that row
+	"
 	| newRowHeights |	
 	
 	newRowHeights := Array new: numRows withAll: 0.
@@ -152,10 +153,10 @@ SpMorphicGridLayoutComputation >> calculateNotHomogeneousRowHeights [
 
 { #category : #'private computation' }
 SpMorphicGridLayoutComputation >> calculateRowHeights [
-		
-	^ layout isRowHomogeneous 
-		ifTrue: [ self calculateHomogeneousRowHeights ]
-		ifFalse: [ self calculateNotHomogeneousRowHeights ]
+
+	^ layout isRowHomogeneous
+		  ifTrue: [ self calculateHomogeneousRowHeights ]
+		  ifFalse: [ self calculateNotHomogeneousRowHeights ]
 ]
 
 { #category : #accessing }
@@ -218,12 +219,13 @@ SpMorphicGridLayoutComputation >> computeMorphs: anArray bounds: aRect [
 
 	morphs := anArray.
 	bounds := aRect.
-	
-	self computeNumberOfRowsAndColumns.
-	self computeWidgetSizes.
-	self computeRowPositions.
-	self computeColumnPositions.
-	self computeCellExtents
+
+	self
+		computeNumberOfRowsAndColumns;
+		computeWidgetSizes;
+		computeRowPositions;
+		computeColumnPositions;
+		computeCellExtents
 ]
 
 { #category : #'private computation' }
@@ -281,8 +283,8 @@ SpMorphicGridLayoutComputation >> isColumnExpandable: colNumber [
 SpMorphicGridLayoutComputation >> isRowExpandable: rowNumber [
 
 	^ (layout rowConstraintsAt: rowNumber)
-		ifNotNil: [ :c | c isExpand ]
-		ifNil: [ false ]
+		  ifNotNil: [ :c | c isExpand ]
+		  ifNil: [ false ]
 ]
 
 { #category : #accessing }

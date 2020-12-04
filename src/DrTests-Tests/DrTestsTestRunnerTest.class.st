@@ -19,7 +19,7 @@ Class {
 DrTestsTestRunnerTest >> setUp [
 	super setUp.
 	package := RPackage organizer
-		packageNamed: 'DrTests-TestCoverage-MocksForTests'.
+		packageNamed: 'DrTests-TestCoverage-Tests-Mocks'.
 	testToReRun := DTCoverageMockTest
 		selector: #testMethod1forMock.
 	testCase := DTCoverageMockTest.

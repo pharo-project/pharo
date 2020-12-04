@@ -60,7 +60,7 @@ SpPaginatorSelectionMorph >> canResizeTo: xNumber direction: direction [
 { #category : #initialization }
 SpPaginatorSelectionMorph >> defaultColor [
 	
-	^ self theme menuSelectionColor alpha: 0.8
+	^ self theme paginatorSelectionColor
 ]
 
 { #category : #'event handling' }

@@ -21,10 +21,12 @@ StRawInspection >> attributeTable [
 StRawInspection >> beForDebugger [
 
 	attributeTable := (self instantiate: StDebuggerTreeTablePresenter)
-		activateOnSingleClick;
 		beResizable;
 		contextMenu: [ self rootCommandsGroup asMenuPresenter ];
 		yourself.
+		
+	StPharoSettings inspectorDiveOnSingleClick 
+		ifTrue: [ attributeTable activateOnSingleClick ].
 	
 	self addVariableTagColumn.
 	self addVariablesColumn.

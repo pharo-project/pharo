@@ -10,23 +10,23 @@ Class {
 { #category : #factory }
 SpMorphicToolbarAdapter >> addModelTo: toolBarMorph [
 
-	toolBarMorph displayMode: self presenter displayMode. 
-	toolBarMorph height: self presenter displayMode height.
-	toolBarMorph setBalloonText: self presenter help.
+	toolBarMorph
+		displayMode: self presenter displayMode;
+		height: self presenter displayMode height;
+		setBalloonText: self presenter help.
 
-	self presenter whenItemsChangeDo: [ 
-		self updateItems: toolBarMorph ].
+	self presenter whenItemsChangeDo: [ self updateItems: toolBarMorph ].
 
 	self updateItems: toolBarMorph
 ]
 
 { #category : #factory }
 SpMorphicToolbarAdapter >> buildWidget [
+
 	| toolBarMorph |
-	
 	toolBarMorph := SpToolbarMorph new.
 	self addModelTo: toolBarMorph.
-	
+
 	^ toolBarMorph
 ]
 

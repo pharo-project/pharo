@@ -5,23 +5,12 @@ Activating one of my items (by clicking or double-clicking on it) shows a miller
 "
 Class {
 	#name : #StDebuggerRawObjectInspector,
-	#superclass : #StObjectInspector,
+	#superclass : #StObjectInspectorPresenter,
 	#instVars : [
 		'raw'
 	],
 	#category : #'NewTools-Debugger-View'
 }
-
-{ #category : #specs }
-StDebuggerRawObjectInspector class >> defaultSpec [
-
-	<spec: #default>
-	^ SpBoxLayout newVertical
-		  add: #header
-		  withConstraints: [ :constraints | constraints height: 22 ];
-		  add: #raw;
-		  yourself
-]
 
 { #category : #specs }
 StDebuggerRawObjectInspector class >> noHeaderSpec [
@@ -32,12 +21,25 @@ StDebuggerRawObjectInspector class >> noHeaderSpec [
 ]
 
 { #category : #initialization }
+StDebuggerRawObjectInspector >> initializeLayout [
+	
+	self layout: (SpBoxLayout newVertical 
+		add: header expand: false fill: false padding: 5;
+		add: raw;
+		yourself).
+
+]
+
+{ #category : #initialization }
 StDebuggerRawObjectInspector >> initializePresenters [
-	super initializePresenters.
+
+
 	raw := self model inspectionRaw.
 	raw beForDebugger.
 	raw owner: self.
-	self addActivationTo: raw
+	self addActivationTo: raw.
+	
+	super initializePresenters
 ]
 
 { #category : #initialization }
@@ -53,13 +55,14 @@ StDebuggerRawObjectInspector >> step [
 
 { #category : #'private updating' }
 StDebuggerRawObjectInspector >> updateHeaderBar [
-
 	| filter |
+
 	super updateHeaderBar.
 	self rawInspectorPageOrNil ifNil: [ ^ self ].
 "	self rawInspectorPageOrNil attributeTable hasActiveFilter ifFalse: [header label: self model labelString. ^ self ]."
 	filter := self rawInspectorPageOrNil attributeTable filter.
-	filter ifNil:[header label: self model labelString. ^self].
-	header label: '(Active filter: ' , filter  , ') '
-		, self model labelString
+	filter ifNil:[ 
+		header label: self model labelString. 
+		^ self].
+	header label: '[Active filter: ', filter, '] ', self model labelString
 ]

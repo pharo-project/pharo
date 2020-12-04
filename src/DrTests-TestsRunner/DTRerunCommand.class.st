@@ -4,7 +4,7 @@ I am the command allowing one to rerun a subparts of the results of a test-run.
 Class {
 	#name : #DTRerunCommand,
 	#superclass : #DTResultCommand,
-	#category : #'DrTests-TestsRunner'
+	#category : #'DrTests-TestsRunner-Commands'
 }
 
 { #category : #hooks }

@@ -29,12 +29,5 @@ StPlaygroundDoItCommand class >> defaultName [
 { #category : #execution }
 StPlaygroundDoItCommand >> execute [ 
 
-	self selectAll.
-	(SpCodeInspectItCommand forContext: context) execute
-]
-
-{ #category : #execution }
-StPlaygroundDoItCommand >> selectAll [
-	
-	context selectAll
+	context doEvaluateAllAndGo
 ]

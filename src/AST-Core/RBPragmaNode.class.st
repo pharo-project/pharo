@@ -68,7 +68,7 @@ RBPragmaNode >> argumentAt: keywordSelector ifAbsent: absentBlock [
 
 { #category : #accessing }
 RBPragmaNode >> arguments [
-	^ arguments ifNil: [ #() ]
+	^ arguments
 ]
 
 { #category : #accessing }

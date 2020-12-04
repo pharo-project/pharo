@@ -1,12 +1,17 @@
+"
+I'm a ""debug it"" command. 
+I will debug the selection (or line) of the playground.
+"
 Class {
 	#name : #SpCodeDebugItCommand,
 	#superclass : #SpCodeSelectionCommand,
-	#category : #'Spec2-Code-Commands'
+	#category : #'Spec2-Code-Commands-Base'
 }
 
 { #category : #defaults }
 SpCodeDebugItCommand class >> defaultIconName [
-	^#smallDebug
+
+	^ #smallDebug
 ]
 
 { #category : #default }
@@ -35,7 +40,7 @@ SpCodeDebugItCommand >> compile: aStream for: anObject in: evalContext [
 		source: aStream;
 		class: methodClass;
 		context: evalContext;
-		requestor: nil;
+		requestor: context; "it should enable a visibility of current tool variables in new debugger"
 		noPattern: true;
 		failBlock: [ ^ nil ];
 		compile
@@ -67,9 +72,9 @@ SpCodeDebugItCommand >> debug: aCompiledMethod receiver: anObject in: evalContex
 	process := [ 
 		aCompiledMethod
 			valueWithReceiver: anObject
-			arguments: (evalContext 
-				ifNotNil: [ { evalContext } ] 
-				ifNil: [ #() ] ) ]
+			arguments: (aCompiledMethod numArgs = 0 
+				ifTrue: [ #() ] 
+				ifFalse: [ { evalContext } ] ) ]
 			newProcess.
 	suspendedContext := process suspendedContext.
 	

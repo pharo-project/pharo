@@ -24,7 +24,8 @@ StDefineMissingEntityCommand class >> defaultDescription [
 
 { #category : #initialization }
 StDefineMissingEntityCommand class >> defaultIconName [
-	^ #changeAdd
+
+	^ #debuggerDefineEntity
 ]
 
 { #category : #accessing }

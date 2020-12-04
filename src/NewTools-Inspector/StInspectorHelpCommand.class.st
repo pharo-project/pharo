@@ -10,18 +10,16 @@ StInspectorHelpCommand class >> defaultDescription [
 	^ 'Open help browser'
 ]
 
+{ #category : #initialization }
+StInspectorHelpCommand class >> defaultIconName [
+
+	^ #glamorousHelp
+]
+
 { #category : #default }
 StInspectorHelpCommand class >> defaultName [
 
 	^ 'Help'
-]
-
-{ #category : #converting }
-StInspectorHelpCommand >> asSpecCommand [
-	
-	^ super asSpecCommand
-		iconName: #glamorousHelp;
-		yourself
 ]
 
 { #category : #execution }

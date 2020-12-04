@@ -57,7 +57,7 @@ CNSelectorExtractor >> extractSelectorFromAST: ast atPosition: aPosition [
 		ifTrue: [ 0 ]
 		ifFalse: [ -1 ].
 
-	position := aPosition + offset.
+	position := (aPosition + offset) min: ast stop.
 	bestNodeAtPosition := ast bestNodeFor: (position to: position).
 	^ self extractSelectorFromNode: bestNodeAtPosition
 ]

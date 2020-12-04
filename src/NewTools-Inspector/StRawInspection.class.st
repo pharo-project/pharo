@@ -31,6 +31,24 @@ StRawInspection class >> defaultSpec [
 		yourself
 ]
 
+{ #category : #accessing }
+StRawInspection class >> label [
+
+	^ 'Raw'
+]
+
+{ #category : #api }
+StRawInspection >> activateOnDoubleClick [
+
+	attributeTable activateOnDoubleClick
+]
+
+{ #category : #api }
+StRawInspection >> activateOnSingleClick [
+
+	attributeTable activateOnSingleClick
+]
+
 { #category : #building }
 StRawInspection >> addValuesColumn [
 
@@ -66,7 +84,6 @@ StRawInspection >> initialize [
 StRawInspection >> initializePresenters [
 
 	attributeTable := self newTreeTable
-		activateOnSingleClick;
 		beResizable;
 		contextMenu: [ self rootCommandsGroup asMenuPresenter ];
 		yourself.

@@ -157,7 +157,7 @@ StObjectBreakpointInspection >> initializePresenters [
 	self configureSourceCodeUpdate.
 	self buildTableData.
 	SystemAnnouncer uniqueInstance weak when: StHaltCacheChanged send: #buildTableData to: self.
-	SystemAnnouncer uniqueInstance weak when: MetalinkChanged send: #buildTableData to: self
+	SystemAnnouncer uniqueInstance weak when: BreakpointAdded send: #buildTableData to: self
 ]
 
 { #category : #initialization }

@@ -10,16 +10,18 @@ Class {
 { #category : #factory }
 SpMorphicDiffAdapter >> buildWidget [
 
-	^ DiffMorph new  
-		on: self ;
-		from: self leftText to: self rightText contextClass: self contextClass;
-		 hResizing:	#spaceFill;
-		vResizing: #spaceFill;
-		setBalloonText: self  help;
-		showOptions: self showOptions;
-		leftLabel: self leftLabel rightLabel: self rightLabel;
-		showOnlyDestination: self showOnlyDestination;
-		yourself
+	^ DiffMorph new
+		  on: self;
+		  from: self leftText
+		  to: self rightText
+		  contextClass: self contextClass;
+		  hResizing: #spaceFill;
+		  vResizing: #spaceFill;
+		  setBalloonText: self help;
+		  showOptions: self showOptions;
+		  leftLabel: self leftLabel rightLabel: self rightLabel;
+		  showOnlyDestination: self showOnlyDestination;
+		  yourself
 ]
 
 { #category : #'widget API' }
@@ -30,8 +32,9 @@ SpMorphicDiffAdapter >> contextClass [
 
 { #category : #'spec protocol' }
 SpMorphicDiffAdapter >> contextClass: aClass [
+
 	self widgetDo: [ :w | 
-		w 
+		w
 			contextClass: aClass;
 			updateText ]
 ]
@@ -84,10 +87,10 @@ SpMorphicDiffAdapter >> rightText [
 
 { #category : #'spec protocol' }
 SpMorphicDiffAdapter >> rightText: aText [
-	self
-		widgetDo: [ :w | 
-			w destTextModel setText: aText.
-			w updateText ]
+
+	self widgetDo: [ :w | 
+		w destTextModel setText: aText.
+		w updateText ]
 ]
 
 { #category : #'spec protocol' }

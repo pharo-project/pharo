@@ -28,21 +28,55 @@ StHeaderBar class >> defaultSpec [
 		yourself
 ]
 
+{ #category : #accessing }
+StHeaderBar >> beCloseable [
+
+	self isCloseable ifTrue: [ ^ self ].
+	self enableCloseDoing: [  ]
+]
+
+{ #category : #accessing }
+StHeaderBar >> beNotCloseable [
+
+	closeButton ifNil: [ ^ self ].
+	
+	layout remove: closeButton.
+	closeButton := nil
+]
+
+{ #category : #private }
+StHeaderBar >> enableCloseDoing: aBlock [
+
+	closeButton := self newButton
+		addStyle: 'small';
+		icon: (self application iconNamed: #glamorousClose);
+		action: aBlock;
+		yourself.
+		
+	layout addLast: closeButton expand: false
+]
+
 { #category : #initialization }
 StHeaderBar >> initializePresenters [
-	self flag: 'Temp hack for headers: removing header styles'.
-	closeButton := self newButton
-		icon: (self application iconNamed: #windowClose);
-		action: [  ];
-		hide;
-		yourself.
-	titleLabel := self newLabel.
-	shortcutLabel := self newLabel
-		addStyle: 'shortcut';
-		yourself.
-	toolbar := self newToolbar.
+
+	self layout: (SpBoxLayout newHorizontal
+		beNotHomogeneous;
+		borderWidth: 3;
+		spacing: 3;
+		add: (titleLabel := self newLabel) expand: false;
+		add: (shortcutLabel := self newLabel) expand: false;
+		addLast: (toolbar := self newToolbar) expand: false;
+		yourself).
+
+	shortcutLabel addStyle: 'shortcut'.
 	"toolbar displayMode: self application toolbarDisplayMode"
 	toolbar beIcons	"is a mini toolbar, items should be... tiny :)"
+]
+
+{ #category : #testing }
+StHeaderBar >> isCloseable [
+
+	^ closeButton notNil
 ]
 
 { #category : #accessing }
@@ -70,4 +104,11 @@ StHeaderBar >> toolbarActions: aCommandGroup [
 	SpToolbarPresenterBuilder new 
 		toolbarPresenter: toolbar;
 		visit: aCommandGroup
+]
+
+{ #category : #events }
+StHeaderBar >> whenClosedDo: aBlock [
+
+	self isCloseable ifFalse: [ self enableCloseDoing: aBlock ].
+	closeButton action: aBlock
 ]

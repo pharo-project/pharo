@@ -14,7 +14,8 @@ StStepIntoCommand class >> defaultDescription [
 
 { #category : #initialization }
 StStepIntoCommand class >> defaultIconName [
-	^ #glamorousInto
+
+	^ #debuggerStepInto
 ]
 
 { #category : #default }

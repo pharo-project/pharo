@@ -77,3 +77,9 @@ SpMorphicTableColumn >> sortableUsing: aSortFunction [
 
 	^ super sortableUsing: (aSortFunction ifNil: [ self defaultSortFunction ])
 ]
+
+{ #category : #accessing }
+SpMorphicTableColumn >> width [
+
+	^ self model width
+]

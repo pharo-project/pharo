@@ -213,3 +213,22 @@ FluidClassBuilderTest >> testInstallMinimalMockClass [
 	self assert: installedClass sharedPools isEmpty]
 		ensure: [ self removeTestArtifactsFromSystem ]
 ]
+
+{ #category : #'tests - build' }
+FluidClassBuilderTest >> testInstallSimplePoint2 [
+
+	[ | pt2Class |
+	self assert: (self class environment at: #Point2 ifAbsent: [ true ]).
+	builder := Object << #Point2.
+	builder slots: { #x . #y }.
+	builder package: 'FakedCore'.
+	builder install.
+	
+	pt2Class := self class environment at: #Point2.
+	self assert: pt2Class superclass equals: Object.
+	self assert: pt2Class name equals: #Point2.
+	self assert: pt2Class slots size equals: 2 ] ensure: [  
+			self class environment removeKey: #Point2 ifAbsent: [self fail]. 
+			self assert: (self class environment at: #Point2 ifAbsent: [ true ])]
+	
+]

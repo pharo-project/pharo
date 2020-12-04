@@ -72,7 +72,7 @@ SpPaginatorPageMorph >> newContentMorph [
 
 	^ Morph new
 		color: Color white;
-		borderColor: Color darkGray;
+		borderColor: self theme borderColor;
 		borderWidth: 1;
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;

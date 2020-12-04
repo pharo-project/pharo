@@ -15,12 +15,12 @@ SpMorphicMenuGroupAdapter >> addKeyBindingsTo: aMorph [
 
 { #category : #private }
 SpMorphicMenuGroupAdapter >> applyVisibility [
-
-	"Do nothing. Morphs implement visible but the widget of this adapter is an ordered collection."
+	"Do nothing. Morphs implement #visible but the widget of this adapter is an ordered collection."
 ]
 
 { #category : #private }
 SpMorphicMenuGroupAdapter >> buildWidget [
+
 	^ self menuItems select: #isVisible thenCollect: #buildWithSpec
 ]
 

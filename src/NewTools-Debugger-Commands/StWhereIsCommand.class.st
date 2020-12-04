@@ -14,7 +14,8 @@ StWhereIsCommand class >> defaultDescription [
 
 { #category : #initialization }
 StWhereIsCommand class >> defaultIconName [
-	^ #glamorousSearch 
+
+	^ #debuggerWhereIs 
 ]
 
 { #category : #default }
