@@ -451,7 +451,7 @@ CharacterScanner >> scanKernableMultibyteCharactersFrom: startIndex to: stopInde
 multibyte characters in a WideString
 a font that does do character-pair kerning via widthAndKernedWidthOfLeft:right:into:"
 
-	| ascii encoding nextDestX floatDestX widthAndKernedWidth nextChar atEndOfRun char |
+	| ascii nextDestX floatDestX widthAndKernedWidth nextChar atEndOfRun char |
 	lastIndex := startIndex.
 	lastIndex > stopIndex ifTrue: [^self handleEndOfRunAt: stopIndex].
 	floatDestX := destX.

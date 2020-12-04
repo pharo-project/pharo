@@ -377,7 +377,7 @@ StrikeFontSet >> displayString: aString on: aBitBlt from: startIndex to: stopInd
 { #category : #displaying }
 StrikeFontSet >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta from: fromFont baselineY: baselineY [
 
-	| destPoint leftX rightX glyphInfo g tag char destY rIndex| 
+	| destPoint leftX rightX glyphInfo g char destY rIndex| 
 	destPoint := aPoint.
 	rIndex := startIndex.
 	glyphInfo := Array new: 5.
