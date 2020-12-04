@@ -86,32 +86,13 @@ ToolRegistry >> doesNotUnderstand: aMessage [
 	tool := tools at: aMessage selector ifAbsent: nil.
 	tool ifNotNil: [ ^ tool value ].
 
-	^ (aMessage selector == #debugger) 
-		ifTrue: [ 
-			Smalltalk 
-				logError: 'No debugger installed to handle debug request.' 
-				inContext: thisContext.
-		
-			nil. "Smalltalk snapshot: false andQuit: true."
-		]
-		ifFalse: [ super doesNotUnderstand: aMessage ]
+	^super doesNotUnderstand: aMessage
 
 ]
 
 { #category : #testing }
 ToolRegistry >> hasToolNamed: aToolName [
 	^ tools includesKey: aToolName 
-]
-
-{ #category : #misc }
-ToolRegistry >> informNoDebugger [
-	(self includes: #uiManager) 
-		ifTrue: [
-			self uiManager inform: 'Cannot open debugger' ]
-		ifFalse: [
-			"If we throw an exception here, this can lead to recursion.
-			Any idea what else we can do here?"
-			Processor activeProcess terminate ]
 ]
 
 { #category : #initialization }
@@ -230,6 +211,7 @@ ToolRegistry >> remove: aName [
 ToolRegistry >> resetAnnouncer [
 
 	"unregister all current weak subscriptions because it can cause a memory leak"
+	announcer ifNil: [ ^self ].
 	announcer subscriptions subscriptions
  		select: [:each | each isKindOf: WeakAnnouncementSubscription] 
 		thenDo: [:each | each weakRegistry remove: each subscriber ifAbsent: []]. 

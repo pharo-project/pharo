@@ -31,14 +31,14 @@ MethodFinderSend >> arguments [
 
 { #category : #accessing }
 MethodFinderSend >> arguments: anObject [
+
 	arguments := anObject
 ]
 
 { #category : #'public access' }
 MethodFinderSend >> evaluate [
-	"comment stating purpose of message"
 	
-	^ receiver perform: selector withArguments: arguments.
+	^ receiver perform: selector withArguments: arguments
 ]
 
 { #category : #printing }
@@ -47,21 +47,20 @@ MethodFinderSend >> printOn: aStream [
 	aStream print: receiver.
 	aStream space.
 	arguments ifEmpty: [^ aStream nextPutAll: selector].
-	arguments with: selector keywords do: [:arg :word |
-
-		aStream nextPutAll: word asString.
-		aStream space.
-		aStream print: arg.
-		aStream space.
-
-	].
+	arguments 
+		with: selector keywords 
+		do: [:arg :word |
+				aStream nextPutAll: word asString.
+				aStream space.
+				aStream print: arg.
+				aStream space ].
 	aStream skip: -1.
 ]
 
 { #category : #accessing }
 MethodFinderSend >> receiver [
 
-	^receiver
+	^ receiver
 ]
 
 { #category : #accessing }
@@ -71,10 +70,9 @@ MethodFinderSend >> receiver: anObject [
 
 { #category : #'public access' }
 MethodFinderSend >> resultIn: expectedResult [
-	"comment stating purpose of message"
 
-	[ [ ^ expectedResult = (receiver perform: selector withArguments: arguments) ]
-		ifError: [ :aString :aReceiver | ^ false ] ]
+	[ [ ^ expectedResult = self evaluate ]
+		onErrorDo: [ :anError | ^ false ] ]
 			on: Deprecation
 			do: [ :depr | ^ false ]
 ]
@@ -82,10 +80,11 @@ MethodFinderSend >> resultIn: expectedResult [
 { #category : #accessing }
 MethodFinderSend >> selector [
 	
-	^selector
+	^ selector
 ]
 
 { #category : #accessing }
 MethodFinderSend >> selector: anObject [
+
 	selector := anObject
 ]

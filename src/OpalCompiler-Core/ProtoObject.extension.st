@@ -41,7 +41,7 @@ ProtoObject >> mustBeBooleanDeOptimizeIn: context [
 
 	| ret cache method |
 
-	cache := context method propertyAt: #mustBeBooleanCache ifAbsentPut: [ IdentityDictionary new ].
+	cache := context compiledCode method propertyAt: #mustBeBooleanCache ifAbsentPut: [ IdentityDictionary new ].
 	"compile a doit method for the unoptimized expression"
 	method := cache at: (context pc - 1) ifAbsent: [self mustBeBooleanCompileExpression: context andCache: cache ].
 	"Execute the generated method with the pc still at the optimzized block so that the lookUp can read variables defined in the optimized block"

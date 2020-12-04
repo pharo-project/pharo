@@ -74,7 +74,7 @@ KMShortcutPrinter >> shortcut: aShortcut [
 KMShortcutPrinter >> shortcutModifiers [
 	| modifiers |
 	
-	modifiers := (shortcut platformModifier asString substrings: '+') collect: #trimBoth.
+	modifiers := (shortcut platformModifier asString substrings: '+') collect: [:each | each trimBoth].
 	"Ensure shift is first"
 	((modifiers includes: 'Shift') 
 		and: [ modifiers first ~= 'Shift' ])

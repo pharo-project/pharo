@@ -20,21 +20,6 @@ SpLabelledTextInput class >> defaultSpec [
 ]
 
 { #category : #'api-shortcuts' }
-SpLabelledTextInput >> acceptBlock: aBlockWithOneArgument [
-	^ self input acceptBlock: aBlockWithOneArgument
-]
-
-{ #category : #'api-shortcuts' }
-SpLabelledTextInput >> acceptOnCR: aBoolean [
-	^ self input acceptOnCR: aBoolean
-]
-
-{ #category : #'api-shortcuts' }
-SpLabelledTextInput >> autoAccept: aBoolean [
-	^ self input autoAccept: aBoolean
-]
-
-{ #category : #'api-shortcuts' }
 SpLabelledTextInput >> beEncrypted [
 	^ self input beEncrypted
 ]
@@ -85,12 +70,20 @@ SpLabelledTextInput >> text: aText [
 	self input text: aText
 ]
 
-{ #category : #'events-shortcuts' }
+{ #category : #'api-events' }
+SpLabelledTextInput >> whenSubmitDo: aBlock [
+
+	self input whenSubmitDo: aBlock
+]
+
+{ #category : #'api-events' }
 SpLabelledTextInput >> whenTextChanged: aBlock [
+
 	self input whenTextChanged: aBlock
 ]
 
-{ #category : #'events-shortcuts' }
+{ #category : #'api-events' }
 SpLabelledTextInput >> whenTextIsAccepted: aBlock [
+
 	self input whenTextIsAccepted: aBlock
 ]

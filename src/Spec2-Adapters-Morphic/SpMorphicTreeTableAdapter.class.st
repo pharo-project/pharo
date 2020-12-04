@@ -16,17 +16,36 @@ SpMorphicTreeTableAdapter class >> intercellSpacing [
 	^ 2@0
 ]
 
+{ #category : #factory }
+SpMorphicTreeTableAdapter >> addColumnsFromPresenterTo: tableMorph [
+
+	"I need to ensure first column will have the size required and this is tricky on 
+	 fixed width of column: I need to enlarge that width with the width of the expander."
+	self columns withIndexDo: [ :each :index | | column |
+		column := self newColumnFrom: each.
+		(index = 1 and: [ column width notNil ]) ifTrue: [ 
+			column width: column width + SpMorphicTreeTableDataSource emptyMorph width ]. 
+		tableMorph addColumn: column ].
+			
+]
+
 { #category : #initialization }
 SpMorphicTreeTableAdapter >> addFocusRotationKeyBindings [
 	
 	^ super addFocusRotationKeyBindings
 ]
 
+{ #category : #initialization }
+SpMorphicTreeTableAdapter >> addKeyBindingsTo: aWidget [
+
+	super addKeyBindingsTo: aWidget.
+	self addContextMenuKeyBindings: aWidget
+]
+
 { #category : #factory }
 SpMorphicTreeTableAdapter >> addModelTo: tableMorph [
 
-	self presenter columns do: [ :each | 
-		tableMorph addColumn: (self newColumnFrom: each) ].
+	self addColumnsFromPresenterTo: tableMorph.
 	self ensureAtLeastOneColumnIn: tableMorph.
 
 	self presenter selection isMultipleSelection ifTrue: [  
@@ -63,10 +82,7 @@ SpMorphicTreeTableAdapter >> addModelTo: tableMorph [
 			ifTrue: [ tableMorph showColumnHeaders ] 
 			ifFalse: [ tableMorph hideColumnHeaders ] ].
 		
-	self presenter whenColumnsChangedDo: [
-		tableMorph columns: #(). 
-		self presenter columns do: [ :each | tableMorph addColumn: (self newColumnFrom: each) ].
-		tableMorph dataSource: self newDataSource ].
+	self registerColumnsChangedEventTo: tableMorph.
 	
 	tableMorph
 		onAnnouncement: FTSelectionChanged
@@ -86,7 +102,10 @@ SpMorphicTreeTableAdapter >> basicSelectionChanged: ann [
 	(ann newSelectedIndexes difference: ann oldSelectedIndexes) ifEmpty: [ ^ self ].
 	
 	selection selectPaths: (ann newSelectedIndexes
-		collect: [ :index | self widget dataSource pathFromIndex: index ])
+		collect: [ :index | self widget dataSource pathFromIndex: index ]).
+		
+	self presenter activatesOnSingleClick ifTrue: [ 
+		self presenter doActivateAtPath: selection selectedPath ]
 ]
 
 { #category : #factory }
@@ -100,6 +119,8 @@ SpMorphicTreeTableAdapter >> buildWidget [
 		yourself.
 
 	self addModelTo: tableMorph.
+	widget := tableMorph.
+	self configureScrolling.
 
 	^ tableMorph
 ]
@@ -111,15 +132,66 @@ SpMorphicTreeTableAdapter >> columnCount [
 ]
 
 { #category : #factory }
+SpMorphicTreeTableAdapter >> columns [
+	
+	^ self presenter columns
+]
+
+{ #category : #scrolling }
+SpMorphicTreeTableAdapter >> configureScrolling [
+	self presenter verticalAlignment
+		whenChangedDo: [ widget
+				scrollToIndex: self presenter verticalAlignment desiredVisibleRow ].
+			
+	self presenter
+		whenDisplayDo: [ widget
+				scrollToIndex: self presenter verticalAlignment desiredVisibleRow.
+			self scrollingChanged ].
+		
+	widget
+		onAnnouncement: FTScrollingChanged
+		send: #scrollingChanged
+		to: self.
+]
+
+{ #category : #factory }
 SpMorphicTreeTableAdapter >> defaultColumn [
 
-	^ SpStringTableColumn new evaluated: #yourself
+	^ SpStringTableColumn new evaluated: [ :each | each yourself ]
 ]
 
 { #category : #factory }
 SpMorphicTreeTableAdapter >> ensureAtLeastOneColumnIn: tableMorph [
 	self model columns ifNotEmpty: [ ^ self ].
 	tableMorph addColumn: (self newColumnFrom: self defaultColumn)
+]
+
+{ #category : #accessing }
+SpMorphicTreeTableAdapter >> expandAll [
+
+	widget dataSource expandAll
+]
+
+{ #category : #accessing }
+SpMorphicTreeTableAdapter >> expandPath: anArray [  
+
+	widget dataSource expandPath: anArray
+]
+
+{ #category : #accessing }
+SpMorphicTreeTableAdapter >> expandRoots [
+
+	widget dataSource expandRoots
+]
+
+{ #category : #testing }
+SpMorphicTreeTableAdapter >> isExpanded: anItem [
+	| path |
+	
+	path := widget dataSource 
+		pathOfItem: anItem 
+		root: widget dataSource rootItem.
+	^ (widget dataSource itemAtPath: path) isExpanded
 ]
 
 { #category : #testing }
@@ -167,6 +239,22 @@ SpMorphicTreeTableAdapter >> newDataSource [
 		yourself
 ]
 
+{ #category : #updating }
+SpMorphicTreeTableAdapter >> refreshTree [
+
+	self widget refresh
+]
+
+{ #category : #factory }
+SpMorphicTreeTableAdapter >> registerColumnsChangedEventTo: tableMorph [
+	
+	self presenter whenColumnsChangedDo: [
+		tableMorph columns: #(). 
+		self presenter columns do: [ :each | tableMorph addColumn: (self newColumnFrom: each) ].
+		tableMorph dataSource: self newDataSource ].
+
+]
+
 { #category : #emulating }
 SpMorphicTreeTableAdapter >> rightClicked [
 	| evt |
@@ -190,6 +278,19 @@ SpMorphicTreeTableAdapter >> rootForItems: aCollection [
 		yourself
 ]
 
+{ #category : #accessing }
+SpMorphicTreeTableAdapter >> scrollToSelection [
+	widget ensureVisibleFirstSelection.
+]
+
+{ #category : #scrolling }
+SpMorphicTreeTableAdapter >> scrollingChanged [
+	widget container updateAllRows.
+	self presenter verticalAlignment
+		firstVisibleRowIndex: widget firstVisibleRowIndex;
+		lastVisibleRowIndex: widget lastVisibleRowIndex
+]
+
 { #category : #selecting }
 SpMorphicTreeTableAdapter >> selectInto: aFTTableMorph paths: aCollectionOfPaths [ 
 	
@@ -204,7 +305,7 @@ SpMorphicTreeTableAdapter >> selectInto: aFTTableMorph paths: aCollectionOfPaths
 	aFTTableMorph refresh.
 	indexes := items collect: [:item | aFTTableMorph dataSource indexOfItem: item].
 
-	aFTTableMorph selectIndexes: indexes.
+	aFTTableMorph selectIndexes: indexes andMakeVisibleIf: false.
 ]
 
 { #category : #accessing }
@@ -251,6 +352,13 @@ SpMorphicTreeTableAdapter >> selectionChanged: ann [
 		self basicSelectionChanged: ann ]
 ]
 
+{ #category : #private }
+SpMorphicTreeTableAdapter >> showContextMenu [
+
+	self widgetDo: [ :w |
+		w showMenuForIndex: { self presenter selection selectedIndex. 1 } ]
+]
+
 { #category : #factory }
 SpMorphicTreeTableAdapter >> strongSelectionChanged: aFTStrongSelectionChanged [
 	self presenter activatesOnDoubleClick
@@ -275,12 +383,12 @@ SpMorphicTreeTableAdapter >> suspendSelectionEventsDuring: aBlock [
 		 subscriptions do: [ :each | registry add: each ] ]
 ]
 
-{ #category : #update }
+{ #category : #updating }
 SpMorphicTreeTableAdapter >> updateMenu [
 	"there is no need to updateMenu here because it will be resolved at the dataSource"
 ]
 
-{ #category : #selection }
+{ #category : #updating }
 SpMorphicTreeTableAdapter >> updateSelectionOf: tableMorph [
 	
 	self 

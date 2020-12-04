@@ -6,39 +6,36 @@ Class {
 
 { #category : #object }
 GTInspectorVariableValuePairsTest >> testArrayPairsEqualLimit [
-	| limit pairs|
-	
+
+	| limit pairs|	
 	limit := 2*GTInspector indexableDisplayLimit.
 	pairs := (1 to: limit) asArray gtInspectorVariableValuePairs.
 	self assert: pairs size equals: limit.
-	(pairs collect: #key) allSatisfy: [ :e | (pairs at: e) = e ].
-	
-	self assert: (pairs collect: #key) equals: (1 to: limit) asOrderedCollection
+	(pairs collect: [:each | each key]) allSatisfy: [ :e | (pairs at: e) = e ].
+	self assert: (pairs collect: [:each | each key]) equals: (1 to: limit) asOrderedCollection
 ]
 
 { #category : #object }
 GTInspectorVariableValuePairsTest >> testArrayPairsLong [
-		| limit pairs |
 	
-	limit := 3*GTInspector indexableDisplayLimit.
+	| limit pairs |
+	limit := 3 * GTInspector indexableDisplayLimit.
 	pairs := (1 to: limit) asArray gtInspectorVariableValuePairs.
 	self assert: pairs size equals: (2 * GTInspector indexableDisplayLimit).
-	(pairs collect: #key) allSatisfy: [ :e | (pairs at: e) = e ].
-	
-	self assert: (pairs collect: #key) equals: ((1 to: GTInspector indexableDisplayLimit ) asOrderedCollection 
+	(pairs collect: [:each | each key]) allSatisfy: [ :e | (pairs at: e) = e ].
+	self assert: (pairs collect: [:each | each key]) equals: ((1 to: GTInspector indexableDisplayLimit ) asOrderedCollection 
 		addAll: (limit - GTInspector indexableDisplayLimit + 1 to: limit) asOrderedCollection; yourself)
 ]
 
 { #category : #object }
 GTInspectorVariableValuePairsTest >> testArrayPairsOverLimit [
-	| limit pairs |
 	
-	limit := 2*GTInspector indexableDisplayLimit + 1.
+	| limit pairs |
+	limit := 2 * GTInspector indexableDisplayLimit + 1.
 	pairs := (1 to: limit) asArray gtInspectorVariableValuePairs.
 	self assert: pairs size equals: (2 * GTInspector indexableDisplayLimit).
-	(pairs collect: #key) allSatisfy: [ :e | (pairs at: e) = e ].
-	
-	self assert: (pairs collect: #key) equals: ((1 to: GTInspector indexableDisplayLimit ) asOrderedCollection 
+	(pairs collect: [:each | each key]) allSatisfy: [ :e | (pairs at: e) = e ].
+	self assert: (pairs collect: [:each | each key]) equals: ((1 to: GTInspector indexableDisplayLimit ) asOrderedCollection 
 		addAll: (limit - GTInspector indexableDisplayLimit + 1 to: limit) asOrderedCollection; yourself).
 ]
 
@@ -48,19 +45,18 @@ GTInspectorVariableValuePairsTest >> testArrayPairsSmall [
 	
 	pairs := (1 to: 10) asArray gtInspectorVariableValuePairs.
 	self assert: pairs size equals: 10.
-	(pairs collect: #key) allSatisfy: [ :e | (pairs at: e) = e ]
+	(pairs collect: [:each | each key]) allSatisfy: [ :e | (pairs at: e) = e ]
 ]
 
 { #category : #object }
 GTInspectorVariableValuePairsTest >> testArrayPairsUnderLimit [
-	| limit pairs|
-	
-	limit := 2*GTInspector indexableDisplayLimit - 1.
+
+	| limit pairs |
+	limit := 2 * GTInspector indexableDisplayLimit - 1.
 	pairs := (1 to: limit) asArray gtInspectorVariableValuePairs.
 	self assert: pairs size equals: limit.
-	(pairs collect: #key) allSatisfy: [ :e | (pairs at: e) = e ].
-	
-	self assert: (pairs collect: #key) equals: (1 to: limit) asOrderedCollection
+	(pairs collect: [:each | each key]) allSatisfy: [ :e | (pairs at: e) = e ].
+	self assert: (pairs collect: [:each | each key]) equals: (1 to: limit) asOrderedCollection
 ]
 
 { #category : #context }

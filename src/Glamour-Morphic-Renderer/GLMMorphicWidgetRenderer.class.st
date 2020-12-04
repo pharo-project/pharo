@@ -51,35 +51,27 @@ GLMMorphicWidgetRenderer >> installKeystrokeActionsOnMorph: aMorph fromPresentat
 
 { #category : #private }
 GLMMorphicWidgetRenderer >> labelActionBrickFor: aPresentation [
-	
-	 ^ aPresentation titleAction 
-		ifNil: [ nil ]
-		ifNotNil: [ :labelAction |
+	^ aPresentation titleAction
+		ifNotNil: [ :labelAction | 
 			((labelAction isAvailableOn: aPresentation) and: [ labelAction hasIcon ])
-				ifTrue: [
-					GLMActionButtonBrick new
+				ifTrue: [ GLMActionButtonBrick new
 						icon: labelAction icon;
 						setBalloonText: labelAction title;
 						action: [ labelAction actOn: aPresentation ] ]
 				ifFalse: [ nil ] ]
-	
 ]
 
 { #category : #private }
 GLMMorphicWidgetRenderer >> labelActionMorphFor: aPresentation [
-	
-	 ^ aPresentation titleAction 
-		ifNil: [ nil ]
-		ifNotNil: [ :labelAction |
+	^ aPresentation titleAction
+		ifNotNil: [ :labelAction | 
 			((labelAction isAvailableOn: aPresentation) and: [ labelAction hasIcon ])
-				ifTrue: [ 
-					MultistateButtonMorph new
+				ifTrue: [ MultistateButtonMorph new
 						extent: labelAction icon extent;
 						activeEnabledOverUpFillStyle: (ImageFillStyle form: labelAction icon);
 						setBalloonText: labelAction title;
 						addUpAction: [ labelAction actOn: aPresentation ] ]
 				ifFalse: [ nil ] ]
-	
 ]
 
 { #category : #private }

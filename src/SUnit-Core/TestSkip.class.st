@@ -14,6 +14,12 @@ TestSkip >> defaultAction [
 ]
 
 { #category : #'exception handling' }
+TestSkip >> manageTestProcessBy: aProcessMonitorTestService [
+	"it is special exception which do not represent the actual test failure.
+	So we just ignoring it"
+]
+
+{ #category : #'exception handling' }
 TestSkip >> sunitAnnounce: aTestCase toResult: aTestResult [
 	aTestResult addSkip: aTestCase.
 ]

@@ -17,15 +17,15 @@ DAMessageSendAnalyzerTest >> setUp [
 DAMessageSendAnalyzerTest >> testShouldFindDependencyWhenUnimplementedCalls [
 	self 
 		assert: analyzer missingMethods size 
-		equals: 2
+		equals: 3
 ]
 
 { #category : #tests }
 DAMessageSendAnalyzerTest >> testShouldGetPotentialMatchForUnimplementedCalls [
 	self 
-		assert: (analyzer missingMethodsWithPotentialMatch values collect: #size)
-		equals: #(0 2).
+		assert: (analyzer missingMethodsWithPotentialMatch values collect: [:each | each size])
+		equals: #(0 2 10).
 	self 
 		assert: (analyzer missingMethodsWithPotentialMatchAfterManuallyResolvedDependenciesAddition values collect: #size)
-		equals: #(0 2)
+		equals: #(0 2 10)
 ]

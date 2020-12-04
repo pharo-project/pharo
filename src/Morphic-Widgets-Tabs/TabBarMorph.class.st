@@ -334,7 +334,7 @@ TabBarMorph >> popUpMenu [
 	| menu |
 	
 	menu := self selectedTab menu.
-	menu popUpAt: menuButton bottomRight forHand: ActiveHand in: self currentWorld
+	menu popUpAt: menuButton bottomRight forHand: self activeHand in: self currentWorld
 ]
 
 { #category : #private }

@@ -24,10 +24,17 @@ SycInlineAllSendersMessageCommand class >> methodContextMenuActivation [
 
 { #category : #execution }
 SycInlineAllSendersMessageCommand >> createRefactoring [
-	|refactoring|
+	| refactoring methodOrigin |
+	
+	"Extract the method origin from the context.
+	The contextUser can be
+	  - a method (if selected from the method list)
+	  - an AST (if selected from the text editor).
+	Ask #method to resolve to the method, and then ask the origin, i.e. the class or trait where it is defined"
+	methodOrigin := originalMessage contextUser method origin.
 	refactoring := RBInlineAllSendersRefactoring
 		sendersOf: originalMessage selector 
-		in: originalMessage contextUser origin.
+		in: methodOrigin.
 	refactoring setOption: #inlineExpression toUse: [ :ref :aString | self confirm: ('Do you want to inline the expression ''<1s>'' in the current method?' expandMacrosWith: aString) ] .
 	^ refactoring 
 ]

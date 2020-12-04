@@ -103,7 +103,7 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 		selector: #paste;
 		help: nil;
 		iconName: #smallPasteIcon.
-	(aBuilder item: #'Paste...' translated)
+	(aBuilder item: #'Paste Recent' translated)
 		selector: #pasteRecent;
 		help: nil;
 		iconName: #smallCopyIcon;
@@ -124,6 +124,11 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 { #category : #shout }
 RubSmalltalkCodeMode >> bindingOf: varName [
 	^ self model bindingOf: varName
+]
+
+{ #category : #shout }
+RubSmalltalkCodeMode >> bindings [
+	^ self model bindings
 ]
 
 { #category : #shout }
@@ -148,12 +153,6 @@ RubSmalltalkCodeMode >> formatMethodCode [
 RubSmalltalkCodeMode >> hasBindingOf: aString [
 	" For the shout styler "
 	^ self model notNil and: [ self model hasBindingOf: aString ]
-]
-
-{ #category : #shout }
-RubSmalltalkCodeMode >> hasBindingThatBeginsWith: aString [ 
-	" For the shout styler "
-	^ self model notNil and: [ self model hasBindingThatBeginsWith: aString ]
 ]
 
 { #category : #parsing }

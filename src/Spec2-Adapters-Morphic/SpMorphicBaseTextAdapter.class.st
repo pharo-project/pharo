@@ -1,3 +1,6 @@
+"
+I'm an abstract superclass for Morphic text adapters
+"
 Class {
 	#name : #SpMorphicBaseTextAdapter,
 	#superclass : #SpAbstractMorphicAdapter,
@@ -9,39 +12,43 @@ Class {
 	#category : #'Spec2-Adapters-Morphic-Base'
 }
 
-{ #category : #'spec protocol' }
-SpMorphicBaseTextAdapter >> accept [
-	"We use RubScrolledTextMorph>>#acceptContents but we keep accept as method name for compatibility"
-	self widgetDo: [ :w | w acceptContents ]
+{ #category : #testing }
+SpMorphicBaseTextAdapter class >> isAbstract [
+
+	^ self name = #SpMorphicBaseTextAdapter
 ]
 
 { #category : #'widget API' }
-SpMorphicBaseTextAdapter >> accept: aText notifying: aNotifyier [
-	| accept |
+SpMorphicBaseTextAdapter >> accept: aString notifying: aNotifyier [
 
-	accept := self presenter acceptBlock 
-		cull: aText 
-		cull: aNotifyier.
-	accept == false ifTrue: [ ^ false ].
-
-	self presenter text: aText copy.
+	self presenter text: aString.
 	"Raise an announcement"
-	self presenter actionPerformed.
 	self presenter changed: #clearUserEdits.
-	
+
 	^ true
 ]
 
 { #category : #accessing }
 SpMorphicBaseTextAdapter >> acceptAllowed [
-	^self widget editingMode acceptAllowed
+
+	^ self widget editingMode acceptAllowed
+]
+
+{ #category : #initialization }
+SpMorphicBaseTextAdapter >> addKeyBindingsTo: aMorph [
+
+	super addKeyBindingsTo: aMorph.
+	self 
+		bindKeyCombination: Character escape asKeyCombination 
+			toAction: [ :target :morph :event | self bubbleUpEvent: event ];
+		bindKeyCombination: $t meta 
+			toAction: [ self showContextMenu ]
 ]
 
 { #category : #accessing }
 SpMorphicBaseTextAdapter >> announcer [
-	^ self model announcer
 
-	
+	^ self model announcer
 ]
 
 { #category : #'widget API' }
@@ -52,23 +59,20 @@ SpMorphicBaseTextAdapter >> askBeforeDiscardingEdits [
 
 { #category : #'spec protocol' }
 SpMorphicBaseTextAdapter >> askBeforeDiscardingEdits: aBoolean [
+
 	self widget askBeforeDiscardingEdits: aBoolean
 ]
 
-{ #category : #'widget API' }
-SpMorphicBaseTextAdapter >> autoAccept [
+{ #category : #private }
+SpMorphicBaseTextAdapter >> bubbleUpEvent: anEvent [
 
-	^ self model autoAccept
-]
-
-{ #category : #'widget API' }
-SpMorphicBaseTextAdapter >> autoAccept: aBoolean [
-
-	^ self model autoAccept: aBoolean
+	anEvent wasHandled: false.
+	self presenter window adapter widget handleEvent: anEvent
 ]
 
 { #category : #'spec protocol' }
 SpMorphicBaseTextAdapter >> canChangeText [
+
 	^ self widget textArea canChangeText
 ]
 
@@ -87,17 +91,24 @@ SpMorphicBaseTextAdapter >> clearUserEditFlag [
 
 { #category : #'widget API' }
 SpMorphicBaseTextAdapter >> codePaneMenu: aMenu shifted: shifted [
-	| menuPresenter |
 
+	| menuPresenter |
 	menuPresenter := self model contextMenu.
 	menuPresenter ifNil: [ ^ nil ].
 	^ SpBindings
-		value: self model application adapterBindings
-		during: [ menuPresenter value buildWithSpec ]
+		  value: self model application adapterBindings
+		  during: [ menuPresenter value buildWithSpec ]
+]
+
+{ #category : #'spec protocol' }
+SpMorphicBaseTextAdapter >> cursorPositionIndex [
+
+	self widgetDo: [ :w | ^ w textArea editor pointIndex ]
 ]
 
 { #category : #'widget API' }
 SpMorphicBaseTextAdapter >> font: aFont [
+
 	self widgetDo: [ :w | w font: aFont ]
 ]
 
@@ -121,22 +132,23 @@ SpMorphicBaseTextAdapter >> hasUnacceptedEdits: aBoolean [
 
 { #category : #'spec protocol' }
 SpMorphicBaseTextAdapter >> insert: aString at: positionIndex [
+
 	| text |
-
 	text := self getText.
-	text := 
-		(text copyFrom: 1 to: positionIndex), 
-		aString, 
-		(text copyFrom: positionIndex + 1 to: text size).
+	text := String streamContents: [ :stream | 
+		        stream << (text copyFrom: 1 to: positionIndex).
+		        stream << aString.
+		        text size > positionIndex ifTrue: [ 
+			        stream << (text copyFrom: positionIndex + 1 to: text size) ] ].
 
-	self model text: text
+	self presenter text: text
 ]
 
 { #category : #'spec protocol' }
 SpMorphicBaseTextAdapter >> notify: errorMessage at: position in: sourceCode [
 
-	self flag: #TOMOVE.
-	self widgetDo: [ :w | w notify: errorMessage at: position in: sourceCode ]
+	self widgetDo: [ :w | 
+		w notify: errorMessage at: position in: sourceCode ]
 ]
 
 { #category : #'spec protocol' }
@@ -149,17 +161,20 @@ SpMorphicBaseTextAdapter >> pendingText [
 SpMorphicBaseTextAdapter >> pendingText: aText [
 
 	self widgetDo: [ :w | 
-		w setText: aText.
-		w hasUnacceptedEdits: true ]
+		w 
+			setText: aText;
+			hasUnacceptedEdits: true ]
 ]
 
 { #category : #'widget API' }
 SpMorphicBaseTextAdapter >> placeholder [
+
 	^ self model placeholder
 ]
 
 { #category : #'widget API' }
 SpMorphicBaseTextAdapter >> placeholder: aText [
+
 	^ self model placeholder: aText
 ]
 
@@ -177,36 +192,44 @@ SpMorphicBaseTextAdapter >> scrollValueChanged: aValue [
 
 { #category : #'spec protocol' }
 SpMorphicBaseTextAdapter >> selectAll [
+
 	self widgetDo: [ :w | w selectAll ]
 ]
 
 { #category : #'spec protocol' }
 SpMorphicBaseTextAdapter >> selectFrom: nodeStart to: nodeStop [
+
 	self widget selectFrom: nodeStart to: nodeStop
 ]
 
 { #category : #'spec protocol' }
 SpMorphicBaseTextAdapter >> selectLine [
 
-	self widgetDo: [ :w |
-		w textArea editor selectLine ]
-
+	self widgetDo: [ :w | w textArea editor selectLine ]
 ]
 
 { #category : #accessing }
 SpMorphicBaseTextAdapter >> selection [
-	
+
 	^ selection
 ]
 
 { #category : #'spec protocol' }
 SpMorphicBaseTextAdapter >> selectionInterval [
-	^ self widget selectionInterval 
+
+	^ self widget selectionInterval
+]
+
+{ #category : #private }
+SpMorphicBaseTextAdapter >> selectionInterval: anInterval [
+
+	self widgetDo: [ :w | 
+		w textArea editor selectFrom: anInterval first to: anInterval last ]
 ]
 
 { #category : #private }
 SpMorphicBaseTextAdapter >> setEditingModeFor: textArea [
-	
+
 	textArea beForPlainText
 ]
 
@@ -218,12 +241,12 @@ SpMorphicBaseTextAdapter >> setHasUnacceptedEdits: aBoolean [
 
 { #category : #'widget API' }
 SpMorphicBaseTextAdapter >> setScrollValue: aValue [
-	self
-		widgetDo: [ :w | 
-			w scrollPane
-				hScrollbarValue: aValue x;
-				vScrollbarValue: aValue y;
-				updateScrollbars ]
+
+	self widgetDo: [ :w | 
+		w scrollPane
+			hScrollbarValue: aValue x;
+			vScrollbarValue: aValue y;
+			updateScrollbars ]
 ]
 
 { #category : #'widget API' }
@@ -236,6 +259,16 @@ SpMorphicBaseTextAdapter >> setSelection: interval [
 SpMorphicBaseTextAdapter >> setSelectionFromModel: aSelection [
 
 	self widget ifNotNil: [ :w | w setSelection: aSelection ]
+]
+
+{ #category : #initialization }
+SpMorphicBaseTextAdapter >> showContextMenu [
+
+	self widgetDo: [ :w | 
+		(w textArea getMenu: false) ifNotNil: [ :menu | 
+			menu
+				invokeAt: w position + w textArea cursor center
+				in: self currentWorld ] ]
 ]
 
 { #category : #'widget API' }

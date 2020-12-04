@@ -18,7 +18,7 @@ Class {
 
 { #category : #accessing }
 FFICalloutAPI class >> calloutAPIClass [
-	^ CalloutAPIClass ifNil: [ CalloutAPIClass := self defaultCalloutAPIClass ]
+	^ CalloutAPIClass ifNil: [ self defaultCalloutAPIClass ]
 	
 ]
 
@@ -29,7 +29,8 @@ FFICalloutAPI class >> calloutAPIClass: aClass [
 
 { #category : #accessing }
 FFICalloutAPI class >> defaultCalloutAPIClass [
-	^ FFICalloutAPI	
+	
+	^ FFIBackend current calloutAPIClass 
 ]
 
 { #category : #'instance creation' }
@@ -90,8 +91,8 @@ FFICalloutAPI >> findUffiEnterContext [
 	pragmaName := #ffiCalloutTranslator.
 	
 	uffiEnterContext := (uFFIEntryPointContext ifNil: [ thisContext ]) findContextSuchThat: [ :ctx |
-		(ctx method hasPragmaNamed: pragmaName)
-			and: [ (ctx sender method hasPragmaNamed: pragmaName) not] ].
+		(ctx compiledCode method hasPragmaNamed: pragmaName)
+			and: [ (ctx sender compiledCode method hasPragmaNamed: pragmaName) not] ].
 	^ uffiEnterContext
 ]
 
@@ -110,9 +111,9 @@ FFICalloutAPI >> function: functionSignature library: moduleNameOrLibrary [
 		selector: sender selector;
 		methodClass: sender methodClass.	"Replace with generated ffi method, but save old one for future use"
 	ffiMethod
-		propertyValueAt: #ffiNonCompiledMethod
+		propertyAt: #ffiNonCompiledMethod
 		put: (sender methodClass methodDict at: sender selector).	"For senders search, one need to keep the selector in the properties"
-	ffiMethod propertyValueAt: #ffiMethodSelector put: ffiMethodSelector.
+	ffiMethod propertyAt: #ffiMethodSelector put: ffiMethodSelector.
 	sender methodClass methodDict at: sender selector put: ffiMethod.	"Register current method as compiled for ffi"
 	FFIMethodRegistry uniqueInstance registerMethod: ffiMethod.	"Resend"
 	sender
@@ -188,5 +189,5 @@ FFICalloutAPI >> uFFIEnterMethodSelector [
 	That is, the selector that was called by client code to invoke uffi.
 	If we got here from a context not controlled by uffi, return nil, as we have found no method"
 	
-	^ self findUffiEnterContext ifNotNil: [ :ctx | ctx method selector ]
+	^ self findUffiEnterContext ifNotNil: [ :ctx | ctx compiledCode method selector ]
 ]

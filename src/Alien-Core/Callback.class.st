@@ -110,13 +110,12 @@ Callback class >> block: aBlock "<BlockContext>" stdcallArgsClass: argsProxyClas
 { #category : #'class initialization' }
 Callback class >> ensureNotifiedAtStartup [
 	"Callback needs to be notified at system startup to clear the ThunkToCallbackMap and determine concreteClass."
-	self ~~ Callback ifTrue: [^self].
-	(Smalltalk classNamed: #SessionManager)
-		ifNotNil: [:sessionManagerClass|
-			sessionManagerClass default
-				registerSystemClassNamed: self name
-				atPriority: 60]
-		ifNil: [Smalltalk addToStartUpList: self after: FFICallbackThunk]
+
+	self ~~ Callback ifTrue: [ ^ self ].
+
+	SessionManager default
+		registerSystemClassNamed: self name
+		atPriority: 60
 ]
 
 { #category : #evaluation }
@@ -220,8 +219,7 @@ Callback >> block: aBlock "<BlockClosure>" thunk: thunkWrapper "<FFICallbackThun
 Callback >> evaluatorForSignature: signature [ "<String|Array>"
 	"Search the methods marked with the signature: primtiive for those that match signature.
 	 signature is typically a literal Array for the function's C signature, e.g. #(int (*)(int, char *))."
-	Pragma withPragmasIn: self class do:
-		[:pragma|
+	 self class pragmasDo: [:pragma|
 		 (pragma key == #signature:
 		  and: [(pragma argumentAt: 1) = signature]) ifTrue:
 			[^pragma method]].

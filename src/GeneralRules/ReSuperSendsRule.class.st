@@ -16,13 +16,9 @@ ReSuperSendsRule class >> uniqueIdentifierName [
 
 { #category : #hooks }
 ReSuperSendsRule >> afterCheck: aNode mappings: mappingDict [
-		
-	aNode methodNode ifNotNil: [ :methNode |
-		methNode compiledMethod ifNotNil: [ :method |
-			method methodClass withAllSubclassesDo: [ :class |
-			 (class includesSelector: aNode selector)
-				ifTrue: [ ^ false ] ]] ].
-	^ true
+
+	^aNode methodNode methodClass withAllSubclasses noneSatisfy: [: class | 
+		class includesSelector: aNode selector ]
 ]
 
 { #category : #accessing }

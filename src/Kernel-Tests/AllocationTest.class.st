@@ -25,7 +25,7 @@ AllocationTest >> testOneGWordAllocation [
 	
 	| sz array failed |
 	"This takes too much time to run"
-	self timeLimit: 1 minute.
+	self timeLimit: 3 minutes.
 	
 	failed := false.
 	sz := 1024*1024*1024.

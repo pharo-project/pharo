@@ -89,7 +89,7 @@ RGElementDefinition class >> basicParseAuthorAliasFrom: aString [
 	"Parse an alias/name of the author from a string that is extracted from a source file. If there is no alias/name we return emtpy string."
 
 	| tokens dateStartIndex unknown |
-	"The following timestamp strings are supported (source: squeak sources archeological survey):
+	"The following timestamp strings are supported:
 		<authorname><date><time>. 
 		<authorname><date>
 		<date><time>
@@ -160,7 +160,7 @@ RGElementDefinition class >> parseTimestampFrom: aString default: anObject [
 	"Parse a date-time from a timestamp-string that is extracted from a source file. If there is no timestamp, or we cannot make sense of it, we return the default value."
 
 	| tokens dateStartIndex unknown |
-	"The following timestamp strings are supported (source: squeak sources archeological survey):
+	"The following timestamp strings are supported:
 		<authorname><date><time>. 
 		<authorname><date>
 		<date><time>

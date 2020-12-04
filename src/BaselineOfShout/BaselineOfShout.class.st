@@ -7,7 +7,15 @@ Class {
 { #category : #baselines }
 BaselineOfShout >> baseline: spec [
 	<baseline>
+	| repository |
+	repository := self packageRepositoryURL.
 	spec for: #'common' do: [
+		
+		spec baseline: 'Traits' with: [ 
+			spec
+				loads: #( 'traits-ast' );
+				repository: repository ].
+					
 		spec 
 			package: 'Shout';
 			package: 'Rubric-Styling';

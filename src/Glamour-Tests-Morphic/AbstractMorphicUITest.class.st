@@ -40,8 +40,8 @@ AbstractMorphicUITest >> waitUntilUIRedrawed [
 	If I am running in the UI process I can directly execute a doOneCycle on the World.
 	If I am in the CI the tests and the UI run in different process. So I should not do a #doOneCycle.
 	If I do it, I am in a race condition!"
-	self isRunningInUIProcess ifTrue: [ 
-		self currentWorld doOneCycle.
+	self isRunningInUIProcess ifTrue: [
+		MorphicRenderLoop new doOneCycle.
 		^ self.	
 	]. 
 

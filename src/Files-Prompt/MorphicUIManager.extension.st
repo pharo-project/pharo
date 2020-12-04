@@ -13,7 +13,7 @@ MorphicUIManager >> fileExistsDefaultAction: anException [
  
 	choice = 1 ifTrue: [
 		file delete.
-		file exists ifTrue:  [ self error: 'Could not delete the old version of that file' ].
+		file ifExists: [ self error: 'Could not delete the old version of that file' ].
 		^ file ].
 
 	choice = 2 ifTrue: [ | newName newFile |

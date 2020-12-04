@@ -3,7 +3,7 @@ Extension { #name : #Context }
 { #category : #'*GT-InspectorExtensions-Core' }
 Context >> gtInspectorSourceIn: composite [
 	<gtInspectorPresentationOrder: 30> 
-	(self method gtInspectorSourceIn: composite)
+	(self compiledCode gtInspectorSourceIn: composite)
 		doItReceiver: [ self receiver ];
 		doItContext: [ self ]
 ]

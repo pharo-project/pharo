@@ -29,14 +29,12 @@ ProcessTest >> testFork [
 
 { #category : #tests }
 ProcessTest >> testForkAtHigherPriority [
-
-	| hasBlockRun block return |
+	| hasBlockRun |
 	hasBlockRun := false.
-	block := [ hasBlockRun := true ].
-	return := block forkAt: Processor activeProcess priority + 1.
-	
+	[ hasBlockRun := true ] forkAt: Processor activeProcess priority + 1.
+
 	"Preempts current process"
-	self assert: hasBlockRun.
+	self assert: hasBlockRun
 ]
 
 { #category : #'tests - exception handlers' }
@@ -183,8 +181,48 @@ ProcessTest >> testInjectingMultipleExceptionHandlersIntoRunningProcess [
 ]
 
 { #category : #tests }
+ProcessTest >> testIsNotSuspendedWhenItIsActiveProcess [
+
+	| semaphore suspended |
+	semaphore := Semaphore new.
+	[ suspended := Processor activeProcess isSuspended. semaphore signal ] fork.
+	semaphore wait.
+	self deny: suspended
+]
+
+{ #category : #tests }
+ProcessTest >> testIsNotSuspendedWhenItIsRunningButNotActiveProcess [
+
+	| semaphore process |
+	semaphore := Semaphore new.
+	process := [ semaphore signal. Processor yield ] fork.
+	semaphore wait.
+	self deny: process isTerminated.
+	self deny: process isSuspended
+]
+
+{ #category : #tests }
+ProcessTest >> testIsNotSuspendedWhenItIsTerminated [
+
+	| semaphore process |
+	semaphore := Semaphore new.
+	process := [ semaphore signal] fork.
+	semaphore wait.
+	self assert: process isTerminated.
+	self deny: process isSuspended
+]
+
+{ #category : #tests }
 ProcessTest >> testIsSelfEvaluating [
 	self assert: Processor printString equals: 'Processor'
+]
+
+{ #category : #tests }
+ProcessTest >> testIsSuspendedWhenItIsNotStartedYet [
+
+	| process |
+	process := [  ] newProcess.
+	self assert: process isSuspended
 ]
 
 { #category : #'tests - termination' }
@@ -233,7 +271,7 @@ ProcessTest >> testIsTerminatingForcedTermination [
 	self assert: terminator identicalTo: process ].
 
 	[ process isTerminated ] whileFalse: [ 50 milliSeconds asDelay wait ].
-	self assert: process isSuspended.
+	self deny: process isSuspended.
 	self assert: process isTerminating.
 	self assert: process isTerminated.
 	self assert: started.
@@ -267,7 +305,7 @@ ProcessTest >> testIsTerminatingForcedTerminationWithoutRunning [
 	self deny: unwound.
 
 	process terminate.
-	self assert: process isSuspended.
+	self deny: process isSuspended.
 	self assert: process isTerminating.
 	self assert: process isTerminated.
 	"The process never ran"
@@ -296,7 +334,7 @@ ProcessTest >> testIsTerminatingNormalTermination [
 	sem signal.
 	self waitForProcessTermination: process.
 	"#terminate will be sent by the process itself after its context has finished (see BlockClosure>>newProcess)"
-	self assert: process isSuspended.
+	self deny: process isSuspended.
 	self assert: process isTerminating.
 	self assert: process isTerminated.
 	self assert: started.
@@ -423,25 +461,22 @@ ProcessTest >> testTerminateActive [
 { #category : #'tests - termination' }
 ProcessTest >> testTerminationShouldProceedAllEnsureBlocksIfSomeWasFailed [
 
-	| ensureCalled process ensureFailure forkedFailures started |
+	| ensureCalled process ensureFailure started unwindError |
 	ensureFailure := Error new messageText: 'signalled inside ensure'.
 	ensureCalled := false.
 	started := false.
 	process := [ 
+		[ 
 		[[started := true. 10 seconds wait] 
 			ensure: [ ensureFailure signal ]]
 				ensure: [ ensureCalled := true ].
+		] on: UnwindError do: [ :err | unwindError := err ]
 	] fork.
 	[started] whileFalse: [ Processor yield ].
 	process terminate.	
 	Processor yield.
 	self assert: ensureCalled.
-	forkedFailures := TestExecutionEnvironment currentFailures.
-	self assert: forkedFailures size equals: 2.
-	self assert: forkedFailures first equals: ensureFailure.
-	self assert: forkedFailures last class equals: UnwindError.
-	self assert: forkedFailures last signalerContext exception equals: ensureFailure.
-	TestExecutionEnvironment resetFailures
+	self assert: unwindError signalerContext sender exception equals: ensureFailure
 ]
 
 { #category : #'tests - termination' }

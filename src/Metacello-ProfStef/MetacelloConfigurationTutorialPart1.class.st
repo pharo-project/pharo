@@ -61,7 +61,7 @@ We can see the spec created for version 0.1 by printing the following expression
 "Note that in creating version ''0.1'' the #common attribute is extracted out.
 
 In addition to #common, there are pre-defined attributes for each of the platforms upon which
-Metacello runs (#pharo, #squeak, #gemstone and #squeakCommon). 
+Metacello runs (#pharo, #gemstone and #squeakCommon). 
 
 #squeakCommon is used for both #pharo and #squeak."
 
@@ -480,15 +480,15 @@ Smalltalk tools browser openOnClass: MetacelloTutorialConfig selector: #baseline
 Smalltalk tools browser openOnClass: MetacelloTutorialConfig selector: #version13:.
 
 "For version 1.3 we are adding a platform specific package ''Example-Platform''. ''Example-Platform''
-requires ''Example-Core''. On GemStone, Pharo and Squeak, a branch of the ''Example-Platform'' package 
-will be loaded: ''Example-Platform.gemstone'', ''Example-Platform.pharo'', ''Example-Platform.squeak'' 
+requires ''Example-Core''. On GemStone and Pharo, a branch of the ''Example-Platform'' package 
+will be loaded: ''Example-Platform.gemstone'' and ''Example-Platform.pharo'' 
 respectively will be loaded. 
 
 Consequently we''ve updated the baselines with #baseline13: to reflect the structural changes and
 #version13: reflects the package versions.
 
 The platform-specific versions and branches are defined in the #for:do: block for the corresponding
-platforms: #gemstone, #pharo, #squeak (in both methods)
+platforms: #gemstone, and #pharo (in both methods)
 
 The result of the following expression will depend on the platform upon which you are running:"
 

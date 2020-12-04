@@ -5,12 +5,9 @@ Class {
 	#name : #DialogItemsChooser,
 	#superclass : #Object,
 	#instVars : [
-		'methodNameUI',
-		'choicesList',
 		'selection',
 		'unselectedItems',
 		'selectedItems',
-		'resultList',
 		'model',
 		'title',
 		'selectedItemsSetterSelector',
@@ -41,35 +38,12 @@ DialogItemsChooser class >> open [
 	^self new open
 ]
 
-{ #category : #accessing }
-DialogItemsChooser >> choicesList [
-	^ choicesList ifNil: [ choicesList := OrderedCollection new ]
-]
-
-{ #category : #accessing }
-DialogItemsChooser >> choicesList: anObject [
-
-	choicesList := anObject
-]
-
 { #category : #initialization }
 DialogItemsChooser >> initialize [
 	super initialize.
 	selection := OrderedCollection new.
 	unselectedItems := OrderedCollection new.
 	selectedItems := OrderedCollection new
-]
-
-{ #category : #accessing }
-DialogItemsChooser >> methodNameUI [
-
-	^ methodNameUI
-]
-
-{ #category : #accessing }
-DialogItemsChooser >> methodNameUI: anObject [
-
-	methodNameUI := anObject
 ]
 
 { #category : #accessing }
@@ -89,16 +63,6 @@ DialogItemsChooser >> open [
 	^(DialogItemsChooserUI on: self)
 			title: self title;
 			openInWorld
-]
-
-{ #category : #accessing }
-DialogItemsChooser >> resultList [
-	^ resultList
-]
-
-{ #category : #accessing }
-DialogItemsChooser >> resultList: aList [
-	resultList := aList
 ]
 
 { #category : #accessing }

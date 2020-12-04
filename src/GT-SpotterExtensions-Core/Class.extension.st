@@ -43,7 +43,7 @@ Class >> spotterMethodsFor: aStep [
 ]
 
 { #category : #'*GT-SpotterExtensions-Core' }
-Class >> spotterPreviewCodeIn: aComposite [
+Class >> spotterPreviewIn: aComposite [
 	<spotterPreview: 10>
 	aComposite pharoMethod
 		title: [self name];
@@ -59,7 +59,7 @@ Class >> spotterReferenceFor: aStep [
 	<spotterOrder: 30>
 	aStep listProcessor
 			title: 'References';
-			allCandidates: [ (SystemNavigation default allReferencesTo: self binding) collect: #compiledMethod ];
+			allCandidates: [ (SystemNavigation default allReferencesTo: self binding) collect: [:each | each compiledMethod ] ];
 			itemName: [ :method | method gtDisplayString ];
 			filter: GTFilterSubstring
 ]

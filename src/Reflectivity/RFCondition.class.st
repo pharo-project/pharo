@@ -68,7 +68,7 @@ RFCondition >> value [
 
 { #category : #accessing }
 RFCondition >> valueSelector [
-	linkCondition numArgs isZero
-		ifTrue: [ ^ #value ]
-		ifFalse: [ ^ #cull: ]
+	^ linkCondition numArgs isZero
+		ifTrue: [ #value ]
+		ifFalse: [ #cull: ]
 ]

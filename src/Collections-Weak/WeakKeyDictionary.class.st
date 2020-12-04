@@ -242,13 +242,12 @@ WeakKeyDictionary >> postCopy [
 	"Must copy the associations, or later store will affect both the
 original and the copy"
 
-	array := array collect: [:assoc |
-				assoc 
-					ifNil: [nil]
-					ifNotNil: [
-						assoc expired 
-							ifTrue: [ WeakKeyAssociation expired]
-							ifFalse: [WeakKeyAssociation key: assoc key value: assoc value]]]
+	array := array
+		collect: [ :assoc | 
+			assoc
+				ifNotNil: [ assoc expired
+						ifTrue: [ WeakKeyAssociation expired ]
+						ifFalse: [ WeakKeyAssociation key: assoc key value: assoc value ] ] ]
 ]
 
 { #category : #private }
@@ -388,19 +387,14 @@ WeakKeyDictionary >> valueAtNewKey: aKey put: anObject atIndex: index declareFro
 ]
 
 { #category : #enumerating }
-WeakKeyDictionary >> valuesDo: aBlock [ 
-	"See comments in Dictionary>>valuesDo:.  The code keeps the key so it's
-	not collected during the evaluation of aBlock"
+WeakKeyDictionary >> valuesDo: aBlock [
+	"See comments in Dictionary>>valuesDo:"
 
-	tally = 0 ifTrue: [ ^self ].
-	1 to: array size do:
-		[ :eachIndex | 
-			| eachAssociation eachKey |
-			eachAssociation := array at: eachIndex.
-			nil == eachAssociation ifFalse:
-				[
-					eachKey := eachAssociation key.
-					aBlock value: eachAssociation value
-				]
-		]
+	tally = 0 ifTrue: [ ^ self ].
+	1 to: array size do: [ :eachIndex | 
+		(array at: eachIndex) ifNotNil: [ :eachAssociation | 
+			| eachKey |
+			"The code keeps the key so it's not collected during the evaluation of aBlock"
+			eachKey := eachAssociation key.
+			aBlock value: eachAssociation value ] ]
 ]

@@ -96,7 +96,7 @@ GZipReadStream class >> unzip: fullFileName to: pathName [
 
 { #category : #'file in/out' }
 GZipReadStream class >> viewContents: fullFileName [
-	"Open the decompressed contents of the .gz file with the given name.  This method is only required for the registering-file-list of Squeak 3.3a and beyond, but does no harm in an earlier system"
+	"Open the decompressed contents of the .gz file with the given name."
 
 	| file |
 	(file := fullFileName asFileReference) binaryReadStreamDo: 

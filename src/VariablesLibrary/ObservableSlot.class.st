@@ -36,7 +36,7 @@ ObservableSlot >> emitStore: aMethodBuilder [
 	"generate bytecode for 'varName value: <stackTop>'"
 
 	| temp |
-	temp := Object new.	"we need a unique Object as a temp name"
+	temp := '0slotTempForStackManipulation'.
 	"We pop the value from the stack into a temp to push it back in the right order"
 	aMethodBuilder addTemp: temp.
 	aMethodBuilder storeTemp: temp.
@@ -58,11 +58,6 @@ ObservableSlot >> emitValue: aMethodBuilder [
 { #category : #initialization }
 ObservableSlot >> initialize: anObject [
 	super write: ObservableValueHolder new to: anObject
-]
-
-{ #category : #testing }
-ObservableSlot >> isObservable [
-	^ true
 ]
 
 { #category : #'meta-object-protocol' }

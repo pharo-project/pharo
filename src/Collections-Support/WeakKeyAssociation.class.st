@@ -36,12 +36,11 @@ WeakKeyAssociation >> < aLookupKey [
 
 { #category : #comparing }
 WeakKeyAssociation >> = aLookupKey [
-
 	"XXX why doesn't this consider the value? mvl"
 
-	self species = aLookupKey species
-		ifTrue: [^self key = aLookupKey key]
-		ifFalse: [^false]
+	^ self species = aLookupKey species
+		ifTrue: [ self key = aLookupKey key ]
+		ifFalse: [ false ]
 ]
 
 { #category : #accessing }
@@ -65,12 +64,6 @@ WeakKeyAssociation >> hash [
 	"Hash is reimplemented because = is implemented."
 
 	^self key hash
-]
-
-{ #category : #testing }
-WeakKeyAssociation >> isVariableBinding [
-	"Return true if I represent a literal variable binding"
-	^true
 ]
 
 { #category : #accessing }

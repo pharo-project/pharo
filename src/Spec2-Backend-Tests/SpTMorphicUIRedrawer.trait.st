@@ -36,7 +36,8 @@ SpTMorphicUIRedrawer >> waitUntilUIRedrawed [
 	If I do it, I am in a race condition!"
 
 	self isRunningInUIProcess
-		ifTrue: [ self currentWorld doOneCycle.
+		ifTrue: [
+			MorphicRenderLoop new doOneCycle.
 			^ self ].
 
 	self currentWorld defer: [ uiWaitingSemaphore ifNotNil: #signal ].

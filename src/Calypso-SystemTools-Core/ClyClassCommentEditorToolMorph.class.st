@@ -22,8 +22,10 @@ ClyClassCommentEditorToolMorph class >> tabOrder [
 { #category : #operations }
 ClyClassCommentEditorToolMorph >> applyChanges [
 
-	self pendingText asString = self editingText asString ifFalse: [
-		editingClass comment: self pendingText stamp: Author changeStamp].
+	self pendingText asString = self editingText asString 
+		ifFalse: [ editingClass 
+						comment: self pendingText 
+						stamp: Author changeStamp].
 
 	^true
 ]
@@ -38,6 +40,12 @@ ClyClassCommentEditorToolMorph >> defaultIconName [
 { #category : #initialization }
 ClyClassCommentEditorToolMorph >> defaultTitle [
 	^'Comment'
+]
+
+{ #category : #accessing }
+ClyClassCommentEditorToolMorph >> editingMode [
+	^ RubSmalltalkCommentMode new
+	
 ]
 
 { #category : #accessing }

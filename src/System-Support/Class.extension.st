@@ -4,5 +4,5 @@ Extension { #name : #Class }
 Class >> allUnreferencedClassVariables [
 	"Answer a list of the names of all the receiver's unreferenced class vars, including those defined in superclasses"
 
-	^ self allClassVariables reject: #isReferenced
+	^ self allClassVariables reject: [ :classVar | classVar isReferenced ]
 ]

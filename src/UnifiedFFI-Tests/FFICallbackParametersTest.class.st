@@ -19,17 +19,8 @@ Class {
 { #category : #executing }
 FFICallbackParametersTest >> callCallback: aFFICallback withArgs: aCollection [ 
 
-	^ (ExternalLibraryFunction 
-			name: nil
-			module: nil
-			callType: (OSPlatform current ffiCallingConvention = #stdcall ifTrue: [ 1 ] ifFalse: [ 0 ])
-			returnType: aFFICallback functionSpec returnType externalTypeWithArity
-			argumentTypes: (aFFICallback functionSpec arguments collect: #externalTypeWithArity))
-				setHandle: (ExternalAddress fromAddress: (aFFICallback thunk address)) ;	
-					invokeWithArguments: aCollection
-	
-
-
+	self assert: aCollection isArray.
+	^ aFFICallback invokeAsFunctionWithArguments: aCollection.
 ]
 
 { #category : #running }
@@ -40,7 +31,7 @@ FFICallbackParametersTest >> testCharacterParameters [
 	
 	callback := FFICallback 
 		signature: #(int (char, char, char, char, char, char))
-		block: [ :a :b :c :d :e :f  | 
+		block: [ :a :b :c :d :e :f  |
 			self assert: a value equals: 1 asCharacter.
 			self assert: b value equals: 2 asCharacter.
 			self assert: c value equals: 3 asCharacter.
@@ -74,9 +65,11 @@ FFICallbackParametersTest >> testFloatParameters [
 { #category : #running }
 FFICallbackParametersTest >> testIdentityStruct [ 
 	
-	<expectedFailure>		
+	| param result |
 	
-	| param |
+	"This is ugly, but the tests are not running with Alien callbacks"
+	true ifTrue: [ ^ self skip. ].
+	
 	callback := FFICallback 
 		signature: #(FFITestStructureSmallIntFloatStructure (FFITestStructureSmallIntFloatStructure a))
 		block: [ :a |
@@ -87,21 +80,29 @@ FFICallbackParametersTest >> testIdentityStruct [
 
 			a x: 3.0.
 			a y: 4.
-			a w: 5.0.
-			a z: 7.0. 
+			a w: 6.0.
+			a z: 8.0. 
 						
 			a
 		].
 
-	param := FFITestStructureSmallIntFloatStructure externalNew
+	param := FFITestStructureSmallIntFloatStructure new
 		x: 2.0;
 		y: 3;
 		w: 5.0;
 		z: 7;
-		autoRelease;
 		yourself.
 
-	self assert: (self callCallback: callback withArgs: { param }) equals: param
+	result := self callCallback: callback withArgs: { param }.
+
+	"They are passed and returned by copy, so they should not be the same"	
+	self deny: param equals: result.
+	
+	self assert: result x equals: 3.0. 
+	self assert: result y equals: 4. 
+	self assert: result w equals: 6.0. 
+	self assert: result z equals: 8.0. 
+
 ]
 
 { #category : #running }
@@ -128,10 +129,16 @@ FFICallbackParametersTest >> testIntegerParameters [
 FFICallbackParametersTest >> testIntegerPointerParameters [ 
 	
 	| params |
-	params := (1 to: 6) collect: [ :i | ExternalAddress fromAddress: i ].	
+	params := {
+		ExternalAddress fromAddress: 1.
+		ExternalAddress fromAddress: 2.
+		ExternalAddress fromAddress: 3.
+		ExternalAddress fromAddress: 4.
+		ExternalAddress fromAddress: 5.
+		ExternalAddress fromAddress: 6.}.	
 	
 	callback := FFICallback 
-		signature: #(void (void* a, void* b, int* c, int* d, char* e, float* f))
+		signature: #(void (void* a, void* b, int* c, int* d, int* e, float* f))
 		block: [ :a :b :c :d :e :f  | 
 			self assert: a value equals: 1.
 			self assert: b value equals: 2.
@@ -228,9 +235,9 @@ FFICallbackParametersTest >> testPassing4DoubleStructureInTheStack [
 
 	param := FFITestStructureDoubleStructure externalNew
 		x: 2.0;
-		y: 3;
+		y: 3.0;
 		w: 5.0;
-		z: 7;
+		z: 7.0;
 		autoRelease;
 		yourself.
 
@@ -299,12 +306,12 @@ FFICallbackParametersTest >> testPassingStructureInTheStack [
 			self assert: a x equals: 2.0. 
 			self assert: a y equals: 3. 
 			self assert: a w equals: 5.0. 
-			self assert: a z equals: 7. 
+			self assert: a z equals: 7.0. 
 
 			a x: 3.0.
 			a y: 4.
 			a w: 5.0.
-			a z: 7. 
+			a z: 7.0. 
 
 			77 
 		].
@@ -313,7 +320,7 @@ FFICallbackParametersTest >> testPassingStructureInTheStack [
 		x: 2.0;
 		y: 3;
 		w: 5.0;
-		z: 7;
+		z: 7.0;
 		autoRelease;
 		yourself.
 		

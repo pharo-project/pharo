@@ -468,7 +468,7 @@ DateTest >> testPreviousByName [
 { #category : #tests }
 DateTest >> testPrintFormat [
 	| printFormat printedDate |
-	printFormat := #(1 2 3 $/ 1 1).
+	printFormat := { 1 . 2 . 3 . $/ . 1 . 1 }.
 	self assert: (january23rd2004 printFormat: printFormat) equals: '23/1/2004'.
 
 	printFormat at: 4 put: $-.
@@ -537,19 +537,18 @@ DateTest >> testPrintOnFormat [
 
 { #category : #tests }
 DateTest >> testReadFrom [
-
-	| s1 s2 s3 s4 s5 | 
+	| s1 s2 s3 s4 s5 |
 	s1 := '2 June 1973' readStream.
 	s2 := '2-JUN-73' readStream.
 	s3 := 'June 2, 1973' readStream.
 	s4 := '6/2/73' readStream.
 	s5 := '2JUN73' readStream.
 
-	self	
-		assert: (self dateClass readFrom: s1) equals: june2nd1973;
-		assert: (self dateClass readFrom: s2) equals: june2nd1973;
-		assert: (self dateClass readFrom: s3) equals: june2nd1973;
-		assert: (self dateClass readFrom: s4) equals: june2nd1973.
+	self assert: (self dateClass readFrom: s1) equals: june2nd1973.
+	self assert: (self dateClass readFrom: s2) equals: june2nd1973.
+	self assert: (self dateClass readFrom: s3) equals: june2nd1973.
+	self assert: (self dateClass readFrom: s4) equals: june2nd1973.
+	self assert: (self dateClass readFrom: s5) equals: june2nd1973
 ]
 
 { #category : #tests }

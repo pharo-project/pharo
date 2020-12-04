@@ -1,10 +1,12 @@
 "
 DoubleByteArrays store 16-bit unsigned Integer values.
+
+For further comments read comments of `WordArray`.
 "
 Class {
 	#name : #DoubleByteArray,
 	#superclass : #ArrayedCollection,
-	#type : #words,
+	#type : #bytes,
 	#category : #'Collections-Native-Base'
 }
 

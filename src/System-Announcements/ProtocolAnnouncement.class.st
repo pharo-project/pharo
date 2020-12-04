@@ -11,6 +11,12 @@ Class {
 	#category : #'System-Announcements-System-Protocols'
 }
 
+{ #category : #testing }
+ProtocolAnnouncement >> affectsMethodTagIn: aClass [
+
+	^self classAffected == aClass
+]
+
 { #category : #accessing }
 ProtocolAnnouncement >> classAffected [
 	^self classReorganized

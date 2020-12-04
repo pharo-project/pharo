@@ -124,7 +124,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testRefactoring [
 						class: #RBNamespace)
 						asRefactoring transform.
 	
-	self assert: refactoring model changes changes size equals: 6.
+	self assert: refactoring model changes changes size equals: 5.
 
 	class := refactoring model classNamed: #RBNamespace.
 	self assert: (class parseTreeFor: #includesGlobal:)
@@ -136,8 +136,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testRefactoring [
 	self assert: (class parseTreeFor: #initialize) 
 		equals: (self parseMethod: 'initialize
 			super initialize.
-			changes := changeFactory compositeRefactoryChange.
-			self environment: RBBrowserEnvironment new.
+			changes := changeFactory compositeRefactoryChange onSystemDictionary: self environment.
 			newClasses := IdentityDictionary new.
 			changedClasses := IdentityDictionary new.
 			removedClasses := Set new.

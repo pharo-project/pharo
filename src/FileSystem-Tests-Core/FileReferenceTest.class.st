@@ -100,6 +100,33 @@ FileReferenceTest >> testAsAbsoluteIdentity [
 ]
 
 { #category : #tests }
+FileReferenceTest >> testAsFileLocatorOrReferenceReturnsALocatorWhenStringRefersToAKnownOrigin [
+	| fileRef locator |
+	fileRef := (FileLocator home / 'foo') asFileReference.
+	
+	locator := fileRef asFileLocatorOrReference.
+		
+	self
+		assert: locator origin
+		equals: #home.
+	self
+		assert: locator fullName
+		equals: fileRef fullName.
+]
+
+{ #category : #tests }
+FileReferenceTest >> testAsFileLocatorOrReferenceReturnsAReferenceWhenStringDoesNotReferToAKnownOrigin [
+	| fileRef result |
+	fileRef := '/foo' asFileReference.
+	
+	result := fileRef asFileLocatorOrReference.
+	
+	self
+		assert: result
+		equals: fileRef.
+]
+
+{ #category : #tests }
 FileReferenceTest >> testAsReference [
 	| ref |
 	ref := filesystem * 'plonk'.
@@ -552,6 +579,39 @@ FileReferenceTest >> testHasFiles [
 	self assert: (ref / 'beta') hasFiles.
 	self deny: (ref / 'beta' / 'gamma') hasFiles ]
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
+]
+
+{ #category : #tests }
+FileReferenceTest >> testIfAbsent [
+	| reference |
+	reference := filesystem / 'plonk'.
+	reference ensureCreateFile.
+	[ reference ifAbsent: [ :file | self fail ].
+	reference delete.
+	self assert: (reference ifAbsent: [ 'plonk' ]) equals: 'plonk' ]
+		ensure: [ reference ensureDelete ]
+]
+
+{ #category : #tests }
+FileReferenceTest >> testIfExists [
+	| reference |
+	reference := filesystem / 'plonk'.
+	reference ensureCreateFile.
+	[ self assert: (reference ifExists: [ :file | file basename ]) equals: 'plonk'.
+	reference delete.
+	reference ifExists: [ :file | self fail ] ]
+		ensure: [ reference ensureDelete ]
+]
+
+{ #category : #tests }
+FileReferenceTest >> testIfExistsIfAbsent [
+	| reference |
+	reference := filesystem / 'plonk'.
+	reference ensureCreateFile.
+	[ self assert: (reference ifExists: [ true ] ifAbsent: [ false ]).
+	reference delete.
+	self assert: (reference ifExists: [ false ] ifAbsent: [ true ]) ]
+		ensure: [ reference ensureDelete ]
 ]
 
 { #category : #tests }
@@ -1183,13 +1243,9 @@ FileReferenceTest >> testWriteStream [
 
 { #category : #tests }
 FileReferenceTest >> testWriteStreamDo [
-	| ref s |
+	| ref |
 	ref := filesystem / 'plonk'.
-	[ ref
-		writeStreamDo: [ :stream | 
-			s := stream.
-			self deny: stream isNil ] ]
-		ensure: [ ref ensureDelete ]
+	[ ref writeStreamDo: [ :stream | self deny: stream isNil ] ] ensure: [ ref ensureDelete ]
 ]
 
 { #category : #tests }
@@ -1204,14 +1260,9 @@ FileReferenceTest >> testWriteStreamDoExists [
 
 { #category : #tests }
 FileReferenceTest >> testWriteStreamDoifPresent [
-	| ref s |
+	| ref |
 	ref := filesystem / 'plonk'.
-	[ ref
-		writeStreamDo: [ :stream | 
-			s := stream.
-			self deny: stream isNil ]
-		ifPresent: [ self signalFailure: 'The file does not exist!' ] ]
-		ensure: [ ref ensureDelete ]
+	[ ref writeStreamDo: [ :stream | self deny: stream isNil ] ifPresent: [ self signalFailure: 'The file does not exist!' ] ] ensure: [ ref ensureDelete ]
 ]
 
 { #category : #tests }

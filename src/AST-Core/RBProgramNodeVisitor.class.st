@@ -46,6 +46,11 @@ RBProgramNodeVisitor >> visitCascadeNode: aCascadeNode [
 ]
 
 { #category : #visiting }
+RBProgramNodeVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
+	anEnglobingErrorNode content do: [ :each | self visitNode: each ].
+]
+
+{ #category : #visiting }
 RBProgramNodeVisitor >> visitGlobalNode: aSelfNode [
 	^ self visitVariableNode: aSelfNode
 ]
@@ -162,6 +167,12 @@ RBProgramNodeVisitor >> visitTemporaryNodes: aNodeCollection [
 { #category : #visiting }
 RBProgramNodeVisitor >> visitThisContextNode: aThisContextNode [
 	^ self visitVariableNode: aThisContextNode
+]
+
+{ #category : #visiting }
+RBProgramNodeVisitor >> visitUnreachableStatement: anUnreachableStatement [
+	
+	^ self visitEnglobingErrorNode: anUnreachableStatement
 ]
 
 { #category : #visiting }

@@ -135,8 +135,8 @@ GLMButtonBrick >> updateStyle [
 	self normalColor: self themer buttonBackgroundColor.
 	self selectedColor: self themer buttonSelectedColor.
 	self pressedColor: self themer buttonPressedColor.
-	self minWidth: self themer buttonMinWidth.
-	self minHeight: self themer buttonMinHeight.
+	self minWidth: self themer buttonMinWidth * self displayScaleFactor.
+	self minHeight: self themer buttonMinHeight * self displayScaleFactor.
 	self doLayoutForce
 	
 ]

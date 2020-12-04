@@ -20,7 +20,7 @@ OSNullWindowDriver class >> isSupported [
 
 { #category : #'window creation' }
 OSNullWindowDriver >> createWindowWithAttributes: anOSWindowAttributes osWindow: osWindow [
-	^ OSNullWindowHandle fromAttributes: anOSWindowAttributes for: osWindow
+	^ OSNullBackendWindow fromAttributes: anOSWindowAttributes for: osWindow
 ]
 
 { #category : #testing }

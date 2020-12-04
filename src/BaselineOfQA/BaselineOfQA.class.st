@@ -26,8 +26,11 @@ BaselineOfQA >> baseline: spec [
 				package: 'GeneralRules-Tests';
 				package: 'Kernel-Rules';
 				package: 'ReleaseTests';
-				package: 'Reflectivity-Tools';
 				package: 'NautilusRefactoring-Tests'.
-					
-			spec baseline: 'Reflectivity' with: [ spec repository: repository ] ]
+			
+			spec baseline: 'Reflectivity' with: [ 
+				spec
+					repository: repository;
+					loads: #( 'tools' ) ]
+			]
 ]

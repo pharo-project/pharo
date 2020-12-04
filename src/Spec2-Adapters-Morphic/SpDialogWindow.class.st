@@ -78,9 +78,7 @@ SpDialogWindow >> setToolbarFrom: aBlock [
 	| newToolbar |
 	
 	newToolbar := aBlock value.
-	self toolbar: newToolbar.
-	self model presenter focusOrder addLast: toolbar.
-	toolbar focusOrder addLast: self model
+	self toolbar: newToolbar
 ]
 
 { #category : #accessing }

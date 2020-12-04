@@ -33,14 +33,6 @@ CompiledMethod >> hasBreakpoint [
 ]
 
 { #category : #'*Reflectivity' }
-CompiledMethod >> hasLinks [
-	self 
-		deprecated: 'use #hasMetaLinks'
-		transformWith:  '`@receiver hasLinks' -> '`@receiver hasMetaLinks'.
-	^self hasMetaLinks
-]
-
-{ #category : #'*Reflectivity' }
 CompiledMethod >> hasMetaLinks [
 	self reflectiveMethod ifNil: [ ^false ].
 	^self reflectiveMethod hasMetaLinks. 
@@ -52,9 +44,7 @@ CompiledMethod >> installLink: aMetaLink [
 	self reflectiveMethod increaseLinkCount.
 	(aMetaLink optionCompileOnLinkInstallation or: [ self isRealPrimitive ])
 		ifTrue: [ self reflectiveMethod compileAndInstallCompiledMethod ]
-		ifFalse: [ self invalidate ].
-	aMetaLink announceChange.
-	
+		ifFalse: [ self invalidate ]
 ]
 
 { #category : #'*Reflectivity' }
@@ -81,6 +71,15 @@ CompiledMethod >> invalidate [
 ]
 
 { #category : #'*Reflectivity' }
+CompiledMethod >> link: aMetaLink toVariableNamed: vName option: accessStrategy [
+	^aMetaLink
+		installOnVariable: (self lookupVar: vName)
+		for: self methodClass
+		option: accessStrategy
+		instanceSpecific: false
+]
+
+{ #category : #'*Reflectivity' }
 CompiledMethod >> metaLinkOptions [
 	^{
 	#penultimateLiteral -> #( + optionCompileOnLinkInstallation).
@@ -91,6 +90,17 @@ CompiledMethod >> metaLinkOptions [
 	#literalAt: -> #( + optionCompileOnLinkInstallation).
 	#metaLinkOptions -> #( + optionCompileOnLinkInstallation)
 	}
+]
+
+{ #category : #'*Reflectivity' }
+CompiledMethod >> newBreakpointForVariable: aVariableName [
+	^ (self tempNames includes: aVariableName)
+		ifTrue: [ VariableBreakpoint
+				newBreakpointForVariable: aVariableName
+				forMethod: self ]
+		ifFalse: [ VariableBreakpoint
+				newBreakpointForVariable: aVariableName
+				inClass: self methodClass ]
 ]
 
 { #category : #'*Reflectivity' }

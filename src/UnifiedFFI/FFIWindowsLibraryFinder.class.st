@@ -12,8 +12,7 @@ FFIWindowsLibraryFinder >> basePaths [
 
 	^ {
 	Smalltalk imageDirectory fullName.
-	Smalltalk vm directory. 
-	}
+	Smalltalk vm directory }
 ]
 
 { #category : #accessing }

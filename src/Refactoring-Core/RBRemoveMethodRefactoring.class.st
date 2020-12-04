@@ -26,7 +26,7 @@ RBRemoveMethodRefactoring class >> removeMethods: selectorCollection from: aClas
 ]
 
 { #category : #preconditions }
-RBRemoveMethodRefactoring >> checkBrowseAllOccurences: anCollectionOfOccurrences [
+RBRemoveMethodRefactoring >> checkBrowseAllOccurrences: anCollectionOfOccurrences [
 	| methods callers |
 	methods := anCollectionOfOccurrences collect: [ :c | c key ] as: Set.
 	callers := anCollectionOfOccurrences collect: [ :v | v value ].
@@ -61,9 +61,9 @@ RBRemoveMethodRefactoring >> checkBrowseOccurrenceOf: selector in: aRBMethod [
 
 { #category : #preconditions }
 RBRemoveMethodRefactoring >> checkBrowseOccurrences: anCollectionOfOccurrences [
-	anCollectionOfOccurrences size = 1
-		ifTrue: [ ^ self checkBrowseOccurrenceOf: anCollectionOfOccurrences first key in: anCollectionOfOccurrences first value ]
-		ifFalse: [ ^ self checkBrowseAllOccurences: anCollectionOfOccurrences ]
+	^ anCollectionOfOccurrences size = 1
+		ifTrue: [ self checkBrowseOccurrenceOf: anCollectionOfOccurrences first key in: anCollectionOfOccurrences first value ]
+		ifFalse: [ self checkBrowseAllOccurrences: anCollectionOfOccurrences ]
 ]
 
 { #category : #preconditions }
@@ -131,7 +131,7 @@ RBRemoveMethodRefactoring >> justSendsSuper: aSelector [
 				yourself
 			].
 	matcher executeTree: parseTree initialAnswer: Set new.
-	^ ( matcher answer anySatisfy: [ :each | each isSelf not ]) not
+	^ ( matcher answer anySatisfy: [ :each | each isSelfVariable not ]) not
 ]
 
 { #category : #preconditions }

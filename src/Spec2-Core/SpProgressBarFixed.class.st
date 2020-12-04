@@ -24,7 +24,7 @@ Class {
 	#instVars : [
 		'#value => SpObservableSlot'
 	],
-	#category : #'Spec2-Core-Widgets-Utils'
+	#category : #'Spec2-Core-Utils'
 }
 
 { #category : #'instance creation' }

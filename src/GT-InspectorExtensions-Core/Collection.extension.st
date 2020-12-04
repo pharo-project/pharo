@@ -24,7 +24,6 @@ Collection >> gtDisplayOn: stream [
 
 { #category : #'*GT-InspectorExtensions-Core' }
 Collection >> gtInspectorItemsIn: composite [
-
 	<gtInspectorPresentationOrder: 0>
 	^ composite fastList
 		title: 'Items';
@@ -39,10 +38,7 @@ Collection >> gtInspectorItemsIn: composite [
 		showOnly: 50;
 		helpMessage: 'Quick selection field. Given your INPUT, it executes: self select: [:each | INPUT ]'."
 			result
-				ifNil: [ nil ]
 				ifNotNil: [ result size = 1
 						ifTrue: [ result anyOne ]
-						ifFalse: [ self species withAll: result ]
-					]
-			]
+						ifFalse: [ self species withAll: result ] ] ]
 ]

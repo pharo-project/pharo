@@ -252,7 +252,7 @@ EpLogBrowserPresenter >> commentSelection [
 
 	| items newCommentOrNil oldComment entryReferences |
 	items := self selectedEntryItems.
-	entryReferences := items collect: #reference.
+	entryReferences := items collect: [:each | each reference].
 	oldComment := items anyOne oldComment.
 		
 	newCommentOrNil := UIManager default
@@ -821,7 +821,7 @@ EpLogBrowserPresenter >> selectedCodeChanges [
 { #category : #'menu - accessing' }
 EpLogBrowserPresenter >> selectedEntries [
 
-	^ self selectedEntryItems collect: #entry
+	^ self selectedEntryItems collect: [:each | each entry]
 ]
 
 { #category : #'menu - accessing' }

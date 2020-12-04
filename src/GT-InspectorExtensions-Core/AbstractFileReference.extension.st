@@ -113,6 +113,9 @@ AbstractFileReference >> gtInspectorItemsIn: composite [
 		when: [ self isDirectory ];
 		selectionAct: [:table | table selection delete. table update] entitled: 'Delete';
 		act: [ :table |
+			self openInOSFileBrowser 
+		 ] icon: GLMUIThemeExtraIcons glamorousNativeBrowser entitled: 'Open in native file browser';
+		act: [ :table |
 			 (UIManager default request: 'New Directory name?' initialAnswer: '') 
 					ifNotNil: [:name | (self / name) ensureCreateDirectory ].
 			 table update

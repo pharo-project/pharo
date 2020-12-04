@@ -8,6 +8,12 @@ Class {
 }
 
 { #category : #accessing }
+GTBytecodeDebugger class >> defaultDebuggerRank [
+
+	^ 2
+]
+
+{ #category : #accessing }
 GTBytecodeDebugger class >> defaultTitle [
 
 	^ 'Bytecode'
@@ -16,19 +22,6 @@ GTBytecodeDebugger class >> defaultTitle [
 { #category : #accessing }
 GTBytecodeDebugger class >> helpClass [
 	^ GTBytecodeDebuggerHelp
-]
-
-{ #category : #'tools registry' }
-GTBytecodeDebugger class >> register [
-
-	self registerToolsOn: Smalltalk tools.
-]
-
-{ #category : #'tools registry' }
-GTBytecodeDebugger class >> registerToolsOn: registry [
-
-	"Add ourselves to registry. See [Smalltalk tools]" 
-	registry registerDebugger: self withRank: 5.
 ]
 
 { #category : #accessing }

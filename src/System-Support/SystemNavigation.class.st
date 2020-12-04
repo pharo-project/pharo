@@ -115,8 +115,8 @@ SystemNavigation >> allMethodsSelect: aBlock [
 	| aCollection |
 	aCollection := OrderedCollection new.
 	self allBehaviorsDo: [:class | 
-		class	selectorsAndMethodsDo: [:sel :m | 
-			(aBlock value: m) ifTrue: [aCollection add: class>>sel]]].
+		class	methodsDo: [:m | 
+			(aBlock value: m) ifTrue: [aCollection add: m]]].
 	^ aCollection
 ]
 
@@ -184,16 +184,6 @@ SystemNavigation >> allReferencesToBinding: aVariablesBinding [
 { #category : #'message sends' }
 SystemNavigation >> allSendersOf: selector [ 
 	^self allReferencesTo: selector
-]
-
-{ #category : #query }
-SystemNavigation >> allSendersToString: aString do: aBlock [
-	"Perform aBlock on all class which send message aString."
-	
-	aString isEmptyOrNil ifTrue: [ ^ self ].
-	aString asSymbol ifNotNil: [ :symbol |
-		self allBehaviorsDo: [ :class | 
-			class withThorougMethodsReferTo: symbol do: aBlock ] ]
 ]
 
 { #category : #query }

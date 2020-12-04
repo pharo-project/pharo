@@ -19,18 +19,20 @@ SpMorphicDialogWindowAdapter >> addPresenterIn: widgetToBuild withSpecLayout: aS
 
 { #category : #factory }
 SpMorphicDialogWindowAdapter >> buildButtonBar [
+
 	| buttonBar |
-	
 	buttonBar := (SpButtonBarPresenter owner: self model) placeAtEnd.
 	self model buttons do: [ :buttonPresenter | 
 		buttonBar add: buttonPresenter ].
-	
+
 	^ buttonBar
 ]
 
 { #category : #factory }
 SpMorphicDialogWindowAdapter >> buildWidget [
+
 	^ SpDialogWindow new
-		model: self model;
-		yourself
+		  model: self model;
+		  in: [ :this | self subscribeToAnnouncements: this ];
+		  yourself
 ]

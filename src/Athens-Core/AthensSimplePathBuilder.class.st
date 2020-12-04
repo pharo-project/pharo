@@ -21,27 +21,27 @@ Class {
 
 { #category : #'path commands' }
 AthensSimplePathBuilder >> absolute [
-	absolute := true.
+	absolute := true
 ]
 
 { #category : #private }
 AthensSimplePathBuilder >> addSegment: aSegment [
 	lastSegment next: aSegment.
-	lastSegment := aSegment.
+	lastSegment := aSegment
  
 ]
 
 { #category : #'path commands' }
 AthensSimplePathBuilder >> ccwArcTo: endPt angle: rot [
 	" angle should be specified in radians "
-	^ self addSegment: (AthensCCWArcSegment new endPoint: (self toAbsolute: endPt) angle: rot).
+	^ self addSegment: (AthensCCWArcSegment new endPoint: (self toAbsolute: endPt) angle: rot)
 
 
 ]
 
 { #category : #'path commands' }
 AthensSimplePathBuilder >> close [
-	"close the current contour"
+	"Close the current contour"	
 	self addSegment: (AthensCloseSegment new point: contourStartPt).
 
 	contourStartPt := nil.
@@ -50,9 +50,7 @@ AthensSimplePathBuilder >> close [
 
 { #category : #'creating path' }
 AthensSimplePathBuilder >> createPath:	aBlock [
-
-		"aBlock value: self ...."	
-
+	"aBlock value: self ...."	
 	aBlock value: self.
 	
 	^ pathStart
@@ -96,7 +94,7 @@ AthensSimplePathBuilder >> curveVia: cp1 to: aPoint [
 
 { #category : #'path commands' }
 AthensSimplePathBuilder >> cwArcTo: endPt angle: rot [
-	" angle should be specified in radians "
+	"Angle should be specified in radians"
 	^ self addSegment: (AthensCWArcSegment new endPoint: (self toAbsolute: endPt) angle: rot).
 
 
@@ -109,6 +107,7 @@ AthensSimplePathBuilder >> initialize [
 	avoiding creating extra move segments.
 	
 	"
+	super initialize.
 	absolute := false.
 	contourStartPt := ZeroPoint.
 	pathStart := lastSegment := (AthensMoveSegment new  point: ZeroPoint).
@@ -124,17 +123,17 @@ AthensSimplePathBuilder >> lineTo: aPoint [
 
 { #category : #'path commands' }
 AthensSimplePathBuilder >> moveTo: aPoint [
-	" move command always starts a new contour "
+	"Move command always starts a new contour "
 	contourStartPt := self toAbsolute: aPoint.
 	
-	"collapse multiple moves to a single one"
+	"Collapse multiple moves to a single one"
 	lastSegment isMove ifTrue: [
 		lastSegment point: contourStartPt.
 		^ self
 	].
 
 	self addSegment: (AthensMoveSegment new point: contourStartPt; reopen: open).
-	open := true.
+	open := true
 ]
 
 { #category : #accessing }
@@ -170,7 +169,7 @@ AthensSimplePathBuilder >> reflectedCurveVia: cp2 to: aPoint [
 
 { #category : #'path commands' }
 AthensSimplePathBuilder >> relative [
-	absolute := false.
+	absolute := false
 ]
 
 { #category : #private }

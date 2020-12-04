@@ -23,7 +23,7 @@ StepOverDebugAction >> defaultKeymap [
 { #category : #accessing }
 StepOverDebugAction >> defaultLabel [
 
-	^ 'Over'
+	^ 'Step over'
 ]
 
 { #category : #accessing }

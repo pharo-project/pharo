@@ -222,7 +222,7 @@ GroupWindowMorph >> update: aSymbol with: anObject [
 		ifTrue: [ |selectedPage|
 				selectedPage := self tabGroup pages at: anObject ifAbsent: [nil].
 				selectedPage ifNotNil: [
-						selectedPage rememberKeyboardFocus: ActiveHand keyboardFocus.
+						selectedPage rememberKeyboardFocus: self activeHand keyboardFocus.
 						self tabGroup page ifNotNil: [self tabGroup page activate].]
 				]
 ]

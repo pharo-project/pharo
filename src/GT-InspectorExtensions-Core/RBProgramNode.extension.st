@@ -16,7 +16,7 @@ RBProgramNode >> gtInspectorSourceCodeIn: composite [
 		title: [ 'Source code' translated ];
 		display: [ self source ];
 		smalltalkClass: [ 
-			self parents first compilationContext ifNotNil: [ :ctx | ctx getClass ] ]; 
+			self withAllParents  first compilationContext ifNotNil: [ :ctx | ctx getClass ] ]; 
 		initialize: [ :presentation | 
 			presentation selectionInterval: self sourceInterval ];
 		when: [ self source notNil ];
@@ -28,9 +28,4 @@ RBProgramNode >> gtInspectorTreeIn: composite [
 	<gtInspectorPresentationOrder: 30> 
 	^ (GTSimpleRBTreeBrowser new treeIn: composite)
 		title: [ 'Tree' translated ]
-]
-
-{ #category : #'*GT-InspectorExtensions-Core' }
-RBProgramNode >> parserClass [
-	^ RBParser
 ]

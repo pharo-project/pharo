@@ -20,32 +20,7 @@ SpNotebookMorph class >> tabCellInset [
 ]
 
 { #category : #adding }
-SpNotebookMorph >> addLazyPage: aBlock label: aStringOrMorph [
-
-	self 
-		addLazyPage: aBlock 
-		label: aStringOrMorph 
-		collapsable: false
-]
-
-{ #category : #adding }
-SpNotebookMorph >> addLazyPage: aBlock label: aStringOrMorph action: anActionMorphOrNil [
-	| newPage label |
-	
-	newPage := SpNotebookPageMorph new.
-	newPage lazyPageMorphCreation: aBlock.
-		
-	label := self 
-		buildLabelFrom: aStringOrMorph 
-		withAction: anActionMorphOrNil.
-	
-	newPage labelMorph: label.
-	
-	self addPage: newPage label: label
-]
-
-{ #category : #adding }
-SpNotebookMorph >> addLazyPage: aBlock label: aStringOrMorph collapsable: aBoolean [
+SpNotebookMorph >> addLazyPage: aBlock label: aStringOrMorph model: aSpNotebookPage [ 
 	| newPage label |
 	
 	newPage := SpNotebookPageMorph new.
@@ -53,8 +28,8 @@ SpNotebookMorph >> addLazyPage: aBlock label: aStringOrMorph collapsable: aBoole
 
 	label := self 
 		buildLabelFrom: aStringOrMorph 
-		withAction: (aBoolean 
-			ifTrue: [ self newCloseButtonFor: newPage ]
+		withAction: (aSpNotebookPage isCloseable
+			ifTrue: [ self newCloseButtonFor: aSpNotebookPage ]
 			ifFalse: [ nil ]).
 	
 	newPage labelMorph: label.
@@ -83,15 +58,10 @@ SpNotebookMorph >> buildLabelFrom: aStringOrMorph withAction: aMorph [
 		ifTrue: [ aStringOrMorph ]
 		ifFalse: [ self buildLabelFrom: aStringOrMorph ].
 	
-	^ aMorph
-		ifNotNil: [ 
-			aMorph vResizing: #spaceFill. 
-			PanelMorph new 
-				addMorphBack: innerLabel;			
-				addMorphBack: aMorph; 
-				yourself ]
-		ifNil: [ 
-			innerLabel ]
+	aMorph ifNotNil: [
+		innerLabel addMorphBack: aMorph ].
+
+	^ innerLabel
 ]
 
 { #category : #testing }
@@ -126,12 +96,13 @@ SpNotebookMorph >> initialize [
 ]
 
 { #category : #factory }
-SpNotebookMorph >> newCloseButtonFor: aPage [
+SpNotebookMorph >> newCloseButtonFor: aSpNotebookPage [
 
-	^ SpButtonPresenter new 
-		icon: (self theme windowCloseForm);
-		action: [ self removePage: aPage ];
-		buildWithSpec
+	^ self theme
+		newCloseControlIn: self
+		for: aSpNotebookPage
+		action: [ aSpNotebookPage removeFromNotebook ]
+		help: 'Close this page' translated
 ]
 
 { #category : #factory }
@@ -250,6 +221,32 @@ SpNotebookMorph >> updatePageIndex: index [
 	self tabSelectorMorph font ifNotNil: [ :aFont |
 		(self tabSelectorMorph tabs at: index) font: aFont ].
 
+	self announcer announce: (SpNotebookPageChanged new
+		page: newPage;
+		oldPage: oldPage;
+		pageIndex: index)
+]
+
+{ #category : #private }
+SpNotebookMorph >> updatePageIndex: index oldIndex: oldSelectedIndex [
+	"Change to the given page index, update the toolbar and send the announcement"
+	| oldPage newPage |
+
+	index = 0 ifTrue: [ ^ self ].
+
+	oldPage := self pages at: oldSelectedIndex.
+	self pageMorph
+		ifNotNil: [ :aPage | self updateContentMorph: aPage with: (self pageAt: index) ]
+		ifNil: [ self contentMorph addMorph: (self pageAt: index) ].
+
+	newPage := self pages at: index.
+	self postAddPage: newPage.
+	self headerMorph layoutChanged.
+	self pageMorph layoutChanged.
+	self adoptPaneColor: (self owner ifNil: [ self ]) paneColor.
+	self tabSelectorMorph font ifNotNil: [ :aFont | 
+		(self tabSelectorMorph tabs at: index) font: aFont ].
+	
 	self announcer announce: (SpNotebookPageChanged new
 		page: newPage;
 		oldPage: oldPage;

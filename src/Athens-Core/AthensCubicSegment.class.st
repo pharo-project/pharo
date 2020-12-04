@@ -31,7 +31,7 @@ AthensCubicSegment >> from: origin
 	
 	via1:= controlPoint.
 	via2 := secondControlPoint.
-	to := destination.
+	to := destination
 ]
 
 { #category : #testing }

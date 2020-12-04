@@ -1,34 +1,11 @@
 "
-I handle one line of text.
-See TextPresenter
-
-self example
-
-You can also have a look at DynamicalPopup for another example.
-
-I handle non source code text, that's why editing shortcuts are not supported (cmd+p just print a p by example).
-
-I provide the following variables and their accessors
-- acceptOnCR is a boolean representing if the key cr trigger an accept action,  it is true by default and must be set before built the widget. (if false it will print a cr).
-- encrypted is a boolean representing if the text appear like stars (it is only an appearance), beDecrypted and beEncrypted are shortcut to set it.
-- entryCompletion is the object used to suggest text while typing, removeEntryCompletion is a shortcut to set it nil.
-- placeholder is the ghost text to display in the text zone.
-
-I provide getters of ValueHolder of my super class actionToPerformHolder and textHolder .
-
-
-todo
-- specializing accept:
-- specializing eventKeyStrokesForNextFocus , eventKeyStrokesForPreviousFocus
-- globalsEntryCompletion
-- specializing isCodeCompletionAllowed
+A presenter to handle a single line of text.
 
 "
 Class {
 	#name : #SpTextInputFieldPresenter,
 	#superclass : #SpAbstractTextPresenter,
 	#instVars : [
-		'#acceptOnCR => SpObservableSlot',
 		'#entryCompletion => SpObservableSlot',
 		'#isPassword => SpObservableSlot',
 		'#maxLength => SpObservableSlot'
@@ -42,38 +19,14 @@ SpTextInputFieldPresenter class >> adapterName [
 	^ #TextInputFieldAdapter
 ]
 
-{ #category : #morphic }
-SpTextInputFieldPresenter >> accept: aText [
-
-	self text: aText.
-	self acceptBlock cull: aText.
-	
-	"Raise an announcement"
-	self actionPerformed.
-	self changed: #clearUserEdits.
-]
-
-{ #category : #api }
-SpTextInputFieldPresenter >> acceptOnCR [
-	"Return true if the text is accepted when the Enter key is stroked"
-
-	^ acceptOnCR
-]
-
-{ #category : #api }
-SpTextInputFieldPresenter >> acceptOnCR: aBoolean [
-	"Set if the text is accepted when the Enter key is stroked or not"
-
-	acceptOnCR := aBoolean
-]
-
 { #category : #api }
 SpTextInputFieldPresenter >> bePassword [
+	"Set this input text as a password editor."
 	
 	self bePassword: true
 ]
 
-{ #category : #api }
+{ #category : #private }
 SpTextInputFieldPresenter >> bePassword: aBoolean [
 	
 	isPassword := aBoolean
@@ -81,6 +34,8 @@ SpTextInputFieldPresenter >> bePassword: aBoolean [
 
 { #category : #api }
 SpTextInputFieldPresenter >> beText [
+	"Set this input text as a text editor."
+
 	self bePassword: false
 ]
 
@@ -98,14 +53,14 @@ SpTextInputFieldPresenter >> entryCompletion: anEntryCompletion [
 	entryCompletion := anEntryCompletion
 ]
 
-{ #category : #focus }
+{ #category : #TOREMOVE }
 SpTextInputFieldPresenter >> eventKeyStrokesForNextFocus [
 	"String describing the keystroke to perform to jump to the next widget"	
 		
 	^ { Character tab asKeyCombination }
 ]
 
-{ #category : #focus }
+{ #category : #TOREMOVE }
 SpTextInputFieldPresenter >> eventKeyStrokesForPreviousFocus [
 	"String describing the keystroke to perform to jump to the previous widget"
 	
@@ -117,24 +72,26 @@ SpTextInputFieldPresenter >> initialize [
 	super initialize.
 
 	maxLength := 0.
-	acceptOnCR := true.
-	isPassword := false.
-	self whenAcceptOnCRChangedDo: [ :bool | self changed: #acceptOnCR: with: {bool} ]
+	isPassword := false
 ]
 
 { #category : #testing }
 SpTextInputFieldPresenter >> isPassword [
+	"Answer true if input field will be shown as a password (hiding characters)."
 	
 	^ isPassword
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpTextInputFieldPresenter >> maxLength [
+	"Answer maximum allowed length (if set)"
+
 	^ maxLength
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpTextInputFieldPresenter >> maxLength: anInteger [ 
+	"Set maximum allowed length."
 	
 	maxLength := anInteger.
 	self updateText.
@@ -147,45 +104,63 @@ SpTextInputFieldPresenter >> removeEntryCompletion [
 	self entryCompletion: nil
 ]
 
-{ #category : #accessing }
-SpTextInputFieldPresenter >> text: aText [
-
+{ #category : #api }
+SpTextInputFieldPresenter >> text: aString [
+	"Set input text contents."
 	| truncatedText |
+
 	truncatedText := self maxLength = 0
-		ifTrue: [ aText ]
-		ifFalse: [ aText first: (self maxLength min: aText size) ].
+		ifTrue: [ aString ]
+		ifFalse: [ aString first: (self maxLength min: aString size) ].
 	super text: truncatedText
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpTextInputFieldPresenter >> updateText [
-
 	"Update text but applying lenght constraints"
+	
 	self text: self text.
 ]
 
 { #category : #'api-events' }
-SpTextInputFieldPresenter >> whenAcceptOnCRChangedDo: aBlock [
-	"aBlock will be performed when acceptOnCR changed"
-
-	self property: #acceptOnCR whenChangedDo: aBlock
-]
-
-{ #category : #'api-events' }
 SpTextInputFieldPresenter >> whenEntryCompletionChangedDo: aBlock [
-	"aBlock will be performed when entryCompletion changed"
+	"Inform when entryCompletion property has changed. 
+	 `aBlock` has three optional arguments: 
+	 - new value
+	 - old value
+	 - the announcement triggering this action"
 
 	self property: #entryCompletion whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpTextInputFieldPresenter >> whenMaxLengthChangedDo: aBlockClosure [ 
+	"Inform when maxLength property has changed. 
+	 `aBlock` has three optional arguments: 
+	 - new value
+	 - old value
+	 - the announcement triggering this action"
 	
 	self property: #maxLength whenChangedDo: aBlockClosure
 ]
 
 { #category : #'api-events' }
 SpTextInputFieldPresenter >> whenPasswordChangedDo: aBlockClosure [ 
+	"Inform when password property has changed. 
+	 `aBlock` has three optional arguments: 
+	 - new value
+	 - old value
+	 - the announcement triggering this action"
 	
 	self property: #isPassword whenChangedDo: aBlockClosure
+]
+
+{ #category : #'api-events' }
+SpTextInputFieldPresenter >> whenSubmitDo: aBlock [
+	"This method will add a 'submit' event to the widget. It will react when user 
+	 presses <meta+s> key (this is for historical reasons), and with enter (cr)."
+
+	self 
+		bindKeyCombination: Character cr asKeyCombination | $s meta 
+		toAction: aBlock
 ]

@@ -21,9 +21,6 @@ Class {
 	#instVars : [
 		'users'
 	],
-	#classInstVars : [
-		'users'
-	],
 	#category : #'TraitsV2-Base'
 }
 
@@ -47,6 +44,15 @@ Trait class >> configureBuilder: builder withName: aName traitComposition: aTrai
 { #category : #'instance creation' }
 Trait class >> named: aSymbol [
 	^ self named: aSymbol uses: {} package: 'Unclassified'
+]
+
+{ #category : #'instance creation' }
+Trait class >> named: aSymbol package: aString [
+	^ self
+		named: aSymbol
+		uses: {}
+		package: aString
+		env: self environment
 ]
 
 { #category : #'instance creation' }
@@ -187,25 +193,16 @@ Trait >> classTrait [
 	^ self class
 ]
 
-{ #category : #'file in/out' }
-Trait >> definition [
-	
-	(self instanceSide name == #Trait) ifTrue: [ ^ super definition ].
+{ #category : #fileout }
+Trait >> definitionStringFor: aConfiguredPrinter [
 
-	^ String streamContents: [ :s | 
-		s 
-			nextPutAll: 'Trait named: ';
-			nextPutAll:	self name printString;
-			cr; tab; 
-			nextPutAll: ' uses: ';
-			nextPutAll: self traitComposition traitCompositionExpression; 
-			cr.
-		self classLayout visibleSlots ifNotEmpty: [ 
-			s tab; nextPutAll: ' slots: ';
-			nextPutAll: self slotDefinitionString; cr. ].
-		s tab; nextPutAll: ' package: ';
-			nextPutAll: self category asString printString
-	]
+	^ aConfiguredPrinter traitDefinitionString
+]
+
+{ #category : #fileout }
+Trait >> expandedDefinitionStringFor: aPrinter [
+
+	^ aPrinter expandedTraitDefinitionString 
 ]
 
 { #category : #testing }

@@ -11,7 +11,7 @@ weakArray at: 1
 "
 Class {
 	#name : #WeakClassVariable,
-	#superclass : #LiteralVariable,
+	#superclass : #ClassVariable,
 	#category : #'VariablesLibrary-ClassVariables'
 }
 
@@ -19,7 +19,7 @@ Class {
 WeakClassVariable >> emitStore: aMethodBuilder [
 	"generate bytecode for 'varname at: 1 put: <stackTop>'"
 	| temp |
-	temp := '0slotTempForStackManipulation'.
+	temp := '0TempForStackManipulation'.
 	"Pop the value to store into a temp to push it back in the right order"
 	aMethodBuilder addTemp: temp.
 	aMethodBuilder storeTemp: temp.

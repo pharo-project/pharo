@@ -105,10 +105,7 @@ MorphicTreeColumnAdapter >> performHeaderAction [
 
 { #category : #'widget API' }
 MorphicTreeColumnAdapter >> performHeaderActionSelector [
-
-	^ self headerAction
-		ifNil: [ nil ]
-		ifNotNil: [ #performHeaderAction ]
+	^ self headerAction ifNotNil: [ #performHeaderAction ]
 ]
 
 { #category : #'widget API' }

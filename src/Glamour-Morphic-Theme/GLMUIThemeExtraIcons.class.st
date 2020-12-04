@@ -131,6 +131,11 @@ GLMUIThemeExtraIcons class >> glamorousMore [
 ]
 
 { #category : #icons }
+GLMUIThemeExtraIcons class >> glamorousNativeBrowser [
+	^ self iconNamed: #smallWindow
+]
+
+{ #category : #icons }
 GLMUIThemeExtraIcons class >> glamorousOpen [
 	^ self iconNamed: #glamorousOpen
 ]

@@ -106,7 +106,7 @@ ClyVariableReferencesQuery >> doesMethod: aMethod useAnyOf: vars [
 { #category : #testing }
 ClyVariableReferencesQuery >> doesMethod: aMethod useVar: aVariable [
 
-	^aVariable isReferencedIn: aMethod
+	^aVariable isAccessedIn: aMethod
 ]
 
 { #category : #comparing }

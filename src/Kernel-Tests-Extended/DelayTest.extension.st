@@ -18,7 +18,6 @@ DelayTest >> testSemaphoreNoTimeout [
 { #category : #'*Kernel-Tests-Extended' }
 DelayTest >> testSemaphoreTimeout [
 	"When we provide our own semaphore for a Delay, it should be used"
-	"See http://bugs.squeak.org/view.php?id=6834"
 	
 	| sem |
 	sem := Semaphore new.

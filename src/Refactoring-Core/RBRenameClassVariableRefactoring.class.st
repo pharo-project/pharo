@@ -60,7 +60,7 @@ RBRenameClassVariableRefactoring >> rename: aVarName to: aName in: aClass [
 { #category : #transforming }
 RBRenameClassVariableRefactoring >> renameReferences [
 	| replacer methods |
-	replacer := RBParseTreeRewriter 
+	replacer := self parseTreeRewriterClass 
 		rename: variableName
 		to: newName
 		handler: 

@@ -1,8 +1,8 @@
 "
 Provides path based access to elements contained in the receiver and any subtrees.
 
-Example:
-
+### Example
+```
 (KeyedTree new
 	at: 1 put: 'One';
 	at: 2 put: 'Two';
@@ -11,6 +11,7 @@ Example:
 					at: $b put: 'Tree-B';
 					yourself);
 	yourself) atPath: #('Tree' $b)
+```
 "
 Class {
 	#name : #KeyedTree,
@@ -121,13 +122,15 @@ KeyedTree >> postCopy [
 		original and the copy.
 	Copy any subtrees too!"
 
-	array := array collect: [:assoc |
-			assoc ifNil: [nil]
-				ifNotNil: [Association
-							key: assoc key
-							value: ((assoc value isKindOf: KeyedTree)
-									ifTrue: [assoc value copy]
-									ifFalse: [assoc value])]]
+	array := array
+		collect: [ :assoc | 
+			assoc
+				ifNotNil: [ Association
+						key: assoc key
+						value:
+							((assoc value isKindOf: KeyedTree)
+								ifTrue: [ assoc value copy ]
+								ifFalse: [ assoc value ]) ] ]
 ]
 
 { #category : #printing }

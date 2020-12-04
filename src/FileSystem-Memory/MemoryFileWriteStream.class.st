@@ -52,7 +52,7 @@ MemoryFileWriteStream >> isBinary [
 { #category : #writing }
 MemoryFileWriteStream >> next: anInteger putAll: aCollection startingAt: anInteger3 [ 
 	
-	stream next: anInteger putAll: aCollection startingAt: anInteger3 
+	self stream next: anInteger putAll: aCollection startingAt: anInteger3 
 ]
 
 { #category : #writing }
@@ -76,13 +76,7 @@ MemoryFileWriteStream >> position: anInteger [
 	as anInteger is within the bounds of the receiver's contents. If it is not, 
 	create an error notification."
 
-	stream position: anInteger
-]
-
-{ #category : #reading }
-MemoryFileWriteStream >> readInto: aCollection startingAt: anInteger count: anInteger3 [ 
-
-	^ stream readInto: aCollection startingAt: anInteger count: anInteger3 
+	self stream position: anInteger
 ]
 
 { #category : #positioning }

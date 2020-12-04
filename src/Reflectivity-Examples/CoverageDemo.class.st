@@ -124,6 +124,7 @@ CoverageDemo >> initializeWidgets [
 { #category : #initialization }
 CoverageDemo >> initializeWindow: aWindowPresenter [
 	aWindowPresenter
+		title: self title;
 		initialExtent: 700 @ 600;
 		whenClosedDo: [ self removeMetalink ]
 ]

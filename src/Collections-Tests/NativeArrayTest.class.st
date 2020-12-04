@@ -92,6 +92,14 @@ NativeArrayTest >> testAtPutExactSizeNumber [
 ]
 
 { #category : #tests }
+NativeArrayTest >> testDoubleArraysHaveCorrectLayout [
+	self skip.
+	"this is broken, work in progress see https://github.com/pharo-project/pharo/issues/5956"
+	self assert: DoubleWordArray classLayout class equals: DoubleWordLayout.
+	self assert: DoubleByteArray classLayout class equals: DoubleByteLayout
+]
+
+{ #category : #tests }
 NativeArrayTest >> testReplaceFromToWithStartingAt [
 	"Makes sure the primitive works correctly with different data structures"
 	self guineaPigHerd do: [ :guineaPig |

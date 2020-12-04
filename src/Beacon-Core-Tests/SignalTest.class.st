@@ -1,7 +1,3 @@
-"
-A SignalTest is xxxxxxxxx.
-
-"
 Class {
 	#name : #SignalTest,
 	#superclass : #TestCase,

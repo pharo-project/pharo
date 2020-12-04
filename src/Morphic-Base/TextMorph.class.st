@@ -14,6 +14,8 @@ If the wrapFlag parameter is true, then text will be wrapped at word boundaries 
 Note that fonts can only be applied to the TextMorph as a whole.  While you can change the size, color, and emphasis of a subsection of the text and have it apply to only that subsection, changing the font changes the font for the entire contents of the TextMorph. 
 
 Still a TextMorph can be composed of several texts of different fonts
+
+```
 | font1 font2 t1 t2 tMorph|
 tMorph := TextMorph new.
 font1 := (TextFontReference toFont: (StrikeFont familyName: 'Atlanta' size: 22)).
@@ -22,7 +24,7 @@ t1 := 'this is font1' asText addAttribute: font1.
 t2 := ' and this is font2' asText addAttribute: font2.
 tMorph contents: (t1,t2).
 tMorph openInHand.
-
+```
 
 Yet to do:
 Make a comprehensive control for the eyedropper, with border width and color, inner color and text color, and margin widths.
@@ -173,15 +175,15 @@ TextMorph >> anchorMorph: aMorph at: aPoint type: anchorType [
 { #category : #drawing }
 TextMorph >> areasRemainingToFill: aRectangle [
 	"Overridden from BorderedMorph to test backgroundColor instead of (text) color."
-	(backgroundColor isNil or: [backgroundColor isTranslucent])
-		ifTrue: [^ Array with: aRectangle].
-	self wantsRoundedCorners
-	ifTrue: [(borderWidth > 0 and: [borderColor isColor and: [borderColor isTranslucent]])
-				ifTrue: [^ aRectangle areasOutside: (self innerBounds intersect: self boundsWithinCorners ifNone: [self error: 'cannot happen' ])]
-				ifFalse: [^ aRectangle areasOutside: self boundsWithinCorners]]
-	ifFalse: [(borderWidth > 0 and: [borderColor isColor and: [borderColor isTranslucent]])
-				ifTrue: [^ aRectangle areasOutside: self innerBounds]
-				ifFalse: [^ aRectangle areasOutside: self bounds]]
+
+	(backgroundColor isNil or: [ backgroundColor isTranslucent ]) ifTrue: [ ^ Array with: aRectangle ].
+	^ self wantsRoundedCorners
+		ifTrue: [ (borderWidth > 0 and: [ borderColor isColor and: [ borderColor isTranslucent ] ])
+				ifTrue: [ aRectangle areasOutside: (self innerBounds intersect: self boundsWithinCorners ifNone: [ self error: 'cannot happen' ]) ]
+				ifFalse: [ aRectangle areasOutside: self boundsWithinCorners ] ]
+		ifFalse: [ (borderWidth > 0 and: [ borderColor isColor and: [ borderColor isTranslucent ] ])
+				ifTrue: [ aRectangle areasOutside: self innerBounds ]
+				ifFalse: [ aRectangle areasOutside: self bounds ] ]
 ]
 
 { #category : #converting }
@@ -1311,7 +1313,7 @@ TextMorph >> paragraph [
 	wrapFlag ifFalse:
 		["Was given huge container at first... now adjust"
 		newParagraph adjustRightX].
-	newParagraph focused: (self currentHand keyboardFocus == self).
+	newParagraph focused: self hasFocus.
 	paragraph := newParagraph.
 	self fit.
 	self removeProperty: #CreatingParagraph.
@@ -1361,14 +1363,11 @@ TextMorph >> predecessorChanged [
 TextMorph >> preferredKeyboardPosition [
 
 	| default rects |
-	default  := (self bounds: self bounds in: self currentWorld) topLeft.
+	default  := super preferredKeyboardPosition.
 	paragraph ifNil: [^ default].
 	rects := paragraph selectionRects.
 	rects size = 0 ifTrue: [^ default].
 	^ rects first topLeft.
-
-	"^ (self bounds: self bounds in: World) topLeft."
-
 ]
 
 { #category : #geometry }

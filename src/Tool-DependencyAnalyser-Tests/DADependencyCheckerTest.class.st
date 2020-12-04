@@ -17,7 +17,7 @@ DADependencyCheckerTest >> setUp [
 DADependencyCheckerTest >> testShouldGetDirectDependencies [
 	self 	
 		assert: (checker dependenciesOf: 'Tool-DependencyAnalyser-Tests-Data')
-		equals: #(#Kernel)
+		equals: #(#Kernel #'Kernel-BytecodeEncoders')
 ]
 
 { #category : #tests }
@@ -28,7 +28,7 @@ DADependencyCheckerTest >> testShouldGetUnresolvedDependencies [
 	
 	self 	
 		assert: result size
-		equals: 1.
+		equals: 2.
 		
 	self assert: ((result at: #collect:as:) includesAll: #(#'GT-Spotter' #'Collections-Abstract')).
 	

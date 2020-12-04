@@ -85,6 +85,12 @@ ClyMethodEditorToolMorph >> chooseClassForNewMethodIfNone: aBlock [
 		on: CmdCommandAborted do: [:err | aBlock value ]
 ]
 
+{ #category : #'events handling' }
+ClyMethodEditorToolMorph >> currentEditedAST [
+
+	^ self getASTFor: self pendingText
+]
+
 { #category : #accessing }
 ClyMethodEditorToolMorph >> editingClass [ 
 	^self methodClass
@@ -128,6 +134,14 @@ ClyMethodEditorToolMorph >> formatTextIfNeeded [
 	
 	textMorph formatSourceCode. 
 	textModel clearUserEdits
+]
+
+{ #category : #'events handling' }
+ClyMethodEditorToolMorph >> getASTFor: aString [
+	^ self methodClass compiler
+		source: aString;
+		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
+		parse
 ]
 
 { #category : #initialization }
@@ -228,6 +242,18 @@ ClyMethodEditorToolMorph >> tagEditingMethod: aMethod [
 { #category : #accessing }
 ClyMethodEditorToolMorph >> tagsAndPackageEditor [
 	^(statusBar findDeeplyA: ClyMethodTagsAndPackageEditorMorph) ifNil: [ CmdCommandAborted signal ]
+]
+
+{ #category : #'events handling' }
+ClyMethodEditorToolMorph >> textChanged: aTextChanged [
+	| ast |
+	super textChanged: aTextChanged.
+	ast := self currentEditedAST.
+	textMorph segments copy do: #delete.
+	IconStyler new
+	   stylerClasses: {ErrorNodeStyler . SemanticMessageIconStyler . SemanticVariableIconStyler }; 
+		styleText: textModel withAst: ast.
+	^ ast
 ]
 
 { #category : #operations }

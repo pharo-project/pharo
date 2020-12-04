@@ -246,6 +246,12 @@ RGMethod >> isFromTrait [
 ]
 
 { #category : #testing }
+RGMethod >> isLiteralMethod [
+	"Ring methods does not know how to detect if they are literal"
+	^ false
+]
+
+{ #category : #testing }
 RGMethod >> isMetaSide [
 
 	^ self parent isMeta

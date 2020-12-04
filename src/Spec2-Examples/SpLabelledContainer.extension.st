@@ -14,7 +14,7 @@ SpLabelledContainer class >> example [
 	| example |
 	example := self abstractExample.
 	self setUpExample: example.
-	example openDialogWithSpec.
+	example openWithSpec.
 	example withWindowDo: [ :window | window title: self name asString , ' example' ].
 	^ example
 ]

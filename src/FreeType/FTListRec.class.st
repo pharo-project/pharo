@@ -1,5 +1,5 @@
 "
-I implement the FT_LIST_REC, I am used as a linked list inside the FT library.
+I implement the `FT_LIST_REC`, I am used as a linked list inside the FT library.
 "
 Class {
 	#name : #FTListRec,

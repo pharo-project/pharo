@@ -9,7 +9,7 @@ CompiledMethodTrailer >> decodeEmbeddedSourceZip [
 
 { #category : #'*Compression-Streams' }
 CompiledMethodTrailer >> decodeZip [
-	"data := <trailer> unzip utf8ToSqueak"
+	"data := <trailer> unzip utf8 to image"
 	
 	| len bytes |
 	len := self decodeLengthField.

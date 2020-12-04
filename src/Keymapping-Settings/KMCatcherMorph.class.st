@@ -143,7 +143,7 @@ KMCatcherMorph >> mouseDown: event [
 	super mouseDown: event.
 	event yellowButtonPressed 
 		ifTrue: [ self showContextMenu ]
-		ifFalse: [ self currentWorld activeHand newKeyboardFocus: self ]
+		ifFalse: [ self activeHand newKeyboardFocus: self ]
 ]
 
 { #category : #accessing }

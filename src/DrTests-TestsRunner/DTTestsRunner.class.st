@@ -4,7 +4,7 @@ I am the plugin implementing test runner for DrTests.
 Class {
 	#name : #DTTestsRunner,
 	#superclass : #DrTestsPlugin,
-	#category : #'DrTests-TestsRunner'
+	#category : #'DrTests-TestsRunner-Base'
 }
 
 { #category : #'api - accessing' }
@@ -36,14 +36,14 @@ DTTestsRunner >> buildConfigurationFrom: aDrTests [
 ]
 
 { #category : #api }
-DTTestsRunner >> buildContextualMenuGroupWith: presenterIntance [
+DTTestsRunner >> buildContextualMenuGroupWith: presenterInstance [
 	^ (CmCommandGroup named: 'TestRunnerResult context menu') asSpecGroup
 		description: 'Commands related to re-run a result.';
 		register:
-			(DTRerunCommand forSpec context: presenterIntance)
+			(DTRerunCommand forSpec context: presenterInstance)
 				beHiddenWhenCantBeRun;
 		register:
-			(DTDebugTestCommand forSpec context: presenterIntance)
+			(DTDebugTestCommand forSpec context: presenterInstance)
 				beHiddenWhenCantBeRun;
 		beDisplayedAsGroup;
 		yourself
@@ -136,14 +136,18 @@ DTTestsRunner >> runSuite: aTestSuite withResult: aResult [
 ]
 
 { #category : #private }
-DTTestsRunner >> runTestSuites: testSuites [ 
-	|result|
+DTTestsRunner >> runTestSuites: testSuites [
+
+	| result |
 	result := TestAsserter classForTestResult new.
-	CurrentExecutionEnvironment runTestsBy: [
+	CurrentExecutionEnvironment runTestsBy: [ 
 		testSuites
-			do: [:testSuite | self runSuite: testSuite withResult: result ]
-			displayingProgress: 'Running Tests'
-	].
+			do: [ :testSuite | 
+				| specificResult |
+				specificResult := testSuite resultClass new.
+				self runSuite: testSuite withResult: specificResult.
+				result mergeWith: specificResult ]
+			displayingProgress: 'Running Tests' ].
 	^ result
 ]
 

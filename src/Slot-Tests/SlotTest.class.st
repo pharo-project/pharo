@@ -14,11 +14,8 @@ Class {
 SlotTest >> testAsSlotCollection [
 	
  	self assert: 'a b' asSlotCollection equals: {#a => InstanceVariableSlot. #b => InstanceVariableSlot}.
-	
 	self assert: ('a _a a_a b b_' asSlotCollection collect: [ :i | i name ]) equals: #(#a #_a #a_a #b #b_) .
-	
 	self should: ['1' asSlotCollection] raise: Error.
-	
 	self should: ['ivarA ivarB i%varD iv2arF' asSlotCollection] raise: Error.
 	self should: ['iva|rG' asSlotCollection] raise: Error
 
@@ -45,13 +42,6 @@ SlotTest >> testIsWrittenInMethod [
 	
 	ivarForTesting := #test.
 	self assert: ((self class slotNamed: #ivarForTesting) isWrittenIn: self class >> testSelector)
-]
-
-{ #category : #'tests - misc' }
-SlotTest >> testNotFoundSlotRaiseExplicitError [
-	"When a slot is not present in the image, we will try to build the slot with nil. In that case we should return an error."
-
-	self should: [ #test => nil ] raise: SlotNotFound
 ]
 
 { #category : #'tests - read/write' }
@@ -83,6 +73,16 @@ SlotTest >> testPropertyAtPut [
 	self assert: ivar properties isNil
 ]
 
+{ #category : #'tests - read/write' }
+SlotTest >> testReadFromContext [ 
+	
+	| slot |
+	ivarForTesting := #testValue.
+	slot := self class slotNamed: #ivarForTesting.
+	
+	self assert: (slot readInContext: thisContext) equals: #testValue
+]
+
 { #category : #'tests - properties' }
 SlotTest >> testRemoveProperty [
 	| ivar | 
@@ -99,9 +99,28 @@ SlotTest >> testRemoveProperty [
 ]
 
 { #category : #'tests - misc' }
+SlotTest >> testScope [
+	| variable |
+	variable := self class slotNamed: #ivarForTesting.
+	self assert: variable scope equals: self class.
+	
+	self assert: (variable scope lookupVar: variable name) equals: variable
+]
+
+{ #category : #'tests - misc' }
 SlotTest >> testSlotUsers [
 	self assert: (ToOneRelationSlot slotUsers includes: SlotExampleMovie).
 	self deny: (ToOneRelationSlot slotUsers includes: SlotExamplePerson)
+]
+
+{ #category : #'tests - read/write' }
+SlotTest >> testWriteToContext [ 
+	
+	| slot |
+	slot := self class slotNamed: #ivarForTesting.
+	slot write: #testValue inContext: thisContext.
+	
+	self assert: ivarForTesting equals: #testValue
 ]
 
 { #category : #'tests - misc' }

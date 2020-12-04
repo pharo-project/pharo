@@ -20,7 +20,7 @@ Author class >> authorSettingOn: aBuilder [
 		order: -100000;
 		parent: #pharoSystem;
 		label: 'Author identification';
-		target: Author uniqueInstance;
+		target: self uniqueInstance;
 		getSelector: #fullNamePerSe;
 		setSelector: #fullName:;
 		notInStyle;
@@ -33,7 +33,7 @@ Author class >> authorSettingOn: aBuilder [
 { #category : #utilities }
 Author class >> changeStamp [ 
 	"Answer a string to be pasted into source code to mark who changed it and when."
-	^ Author fullName , ' ' , Date today mmddyyyy, ' ',
+	^ self fullName , ' ' , Date today mmddyyyy, ' ',
 		((String streamContents: [:s | Time now print24: true on: s]) copyFrom: 1 to: 5)
 ]
 
@@ -41,7 +41,7 @@ Author class >> changeStamp [
 Author class >> changeStampPerSe [
 	"Answer a string to be pasted into source code to mark who changed it and when."
 
-	^ (Author fullNamePerSe ifNil: ['.']) , ' ' , Date today mmddyyyy, ' ',
+	^ (self fullNamePerSe ifNil: ['.']) , ' ' , Date today mmddyyyy, ' ',
 		((String streamContents: [:s | Time now print24: true on: s]) 
 			copyFrom: 1 to: 5)
 ]
@@ -60,17 +60,17 @@ Author class >> fixStamp: changeStamp [
 
 { #category : #convenience }
 Author class >> fullName [
-	^ Author uniqueInstance fullName
+	^ self uniqueInstance fullName
 ]
 
 { #category : #convenience }
 Author class >> fullName: aString [ 
-	^ Author uniqueInstance checkAndSetFullNameWith: aString
+	^ self uniqueInstance checkAndSetFullNameWith: aString
 ]
 
 { #category : #convenience }
 Author class >> fullNamePerSe [
-	^ Author uniqueInstance fullNamePerSe 
+	^ self uniqueInstance fullNamePerSe 
 ]
 
 { #category : #'instance creation' }
@@ -80,13 +80,13 @@ Author class >> new [
 
 { #category : #convenience }
 Author class >> requestFullName [
-	^ Author uniqueInstance requestFullName
+	^ self uniqueInstance requestFullName
 ]
 
 { #category : #initialization }
 Author class >> reset [
 	<script>
-	^ self uniqueInstance reset.
+	^ self uniqueInstance reset
 ]
 
 { #category : #'instance creation' }
@@ -119,7 +119,8 @@ Author >> fullName [
 
 	[fullName isEmptyOrNil] whileTrue: [
 		self requestFullName.
-		(fullName isEmptyOrNil or:[ fullName = 'FirstnameLastname' ]) ifTrue: [fullName := nil. ^'Anonymous']
+		(fullName isEmptyOrNil or:[ fullName = 'FirstnameLastname' ]) 
+				ifTrue: [fullName := nil. ^'Anonymous']
 	].
 	^ fullName
 ]
@@ -149,7 +150,7 @@ Author >> ifUnknownAuthorUse: aString during: aBlock [
 { #category : #initialization }
 Author >> initialize [
 	super initialize.
-	fullName := ''.
+	fullName := ''
 ]
 
 { #category : #'ui-requests' }
@@ -160,9 +161,9 @@ Author >> requestFullName [
 				ifTrue: ['FirstnameLastname']
 				ifFalse: [fullName].
 				
-	(AuthorNameRequest new initialAnswer: initialAnswer) signal ifNotNil: [ :newName | 
-		self checkAndSetFullNameWith: newName 
-	] "nil means that the dialog was cancelled "
+	(AuthorNameRequest new initialAnswer: initialAnswer) signal 
+		ifNotNil: [ :newName | self checkAndSetFullNameWith: newName ] 
+		"nil means that the dialog was cancelled "
 ]
 
 { #category : #initialization }

@@ -22,9 +22,9 @@ MCAncestryTest >> assertCommonAncestorOf: leftName and: rightName is: ancestorNa
 
 { #category : #asserting }
 MCAncestryTest >> assertNamesOf: versionInfoCollection are: nameArray [
+
 	| names |
 	names := versionInfoCollection collect: [ :ea | ea name ].
-
 	self assert: names asArray equals: nameArray
 ]
 

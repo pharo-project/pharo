@@ -171,10 +171,7 @@ MorphicMenuItemAdapter >> state [
 
 { #category : #'widget API' }
 MorphicMenuItemAdapter >> stateSelector [
-
-	^ self state
-		ifNil: [ nil ]
-		ifNotNil: [ #state ]
+	^ self state ifNotNil: [ #state ]
 ]
 
 { #category : #'widget API' }

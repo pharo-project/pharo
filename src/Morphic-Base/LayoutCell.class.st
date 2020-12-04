@@ -28,9 +28,9 @@ Class {
 
 { #category : #accessing }
 LayoutCell >> addExtraSpace: aPoint [
-	extraSpace 
-		ifNil:[extraSpace := aPoint]
-		ifNotNil:[extraSpace := extraSpace + aPoint]
+	extraSpace := extraSpace
+		ifNil: [ aPoint ]
+		ifNotNil: [ extraSpace + aPoint ]
 ]
 
 { #category : #accessing }

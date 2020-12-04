@@ -35,9 +35,25 @@ Association >> analogousCodeTo: anAssociation [
 	^ self = anAssociation
 ]
 
+{ #category : #testing }
+Association >> hasLiteral: aLiteral [
+	^false
+]
+
+{ #category : #'variables-toclean' }
+Association >> isAssociation [
+	^ true
+]
+
 { #category : #'self evaluating' }
 Association >> isSelfEvaluating [
 	^ self class == Association and: [self key isSelfEvaluating and: [self value isSelfEvaluating]]
+]
+
+{ #category : #'variables-toclean' }
+Association >> isVariableBinding [
+	"Can be removed as soon as all bindings are instances of LiteralVariable"
+	^true
 ]
 
 { #category : #accessing }
@@ -54,13 +70,6 @@ Association >> literalEqual: otherLiteral [
 	Variable bindings are literally equals only if identical.
 	This is how variable sharing works, by preserving identity and changing only the value."
 	^self == otherLiteral
-]
-
-{ #category : #testing }
-Association >> needsFullDefinition [
-	"Implemented here so we can use simple Associations as Bindings instead of LiteralVariable
-	subclasses"
-	^false
 ]
 
 { #category : #printing }

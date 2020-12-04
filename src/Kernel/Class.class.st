@@ -115,25 +115,22 @@ Class >> addClassVarNamed: aString [
 ]
 
 { #category : #'class variables' }
-Class >> addClassVariable: aGlobal [
+Class >> addClassVariable: aClassVariable [
 	"Add the argument, aString, as a class variable of the receiver.
 	Signal an error if the first character of aString is not capitalized,
 	or if it is already a variable named in the class."
 	| symbol oldState |
 	oldState := self copyForAnnouncement.
-	symbol := aGlobal name asSymbol.
-	self withAllSubclasses do: 
-		[:subclass | 
+	symbol := aClassVariable name asSymbol.
+	self withAllSubclasses do: [:subclass | 
 		(subclass bindingOf: symbol) ifNotNil:[
 			^ self error: symbol asString 
 				, ' is already used as a variable name in class ' 
 				, subclass name]].
-	(self classPool includesKey: symbol) ifFalse: 
-		["Pick up any refs in Undeclared"
-		self classPool declareVariable: aGlobal from: Undeclared.
-		SystemAnnouncer uniqueInstance 
+	self basicDeclareClassVariable: aClassVariable.
+	SystemAnnouncer uniqueInstance 
 			classDefinitionChangedFrom: oldState to: self;
-			classModificationAppliedTo: self]
+			classModificationAppliedTo: self
 ]
 
 { #category : #'instance variables' }
@@ -216,6 +213,30 @@ Class >> basicCategory: aSymbol [
 	category := aSymbol
 ]
 
+{ #category : #'class variables' }
+Class >> basicDeclareClassVariable: aClassVariable [ 
+	"Add aClassVariable to the receiver. Two cases are handled here: 
+	- When there is exiting variable in class pool and it is an instance of different class
+	- When given variable is registered as undeclared 
+	This method was extracted from existing users and it keeps known issues (therefore a flag):
+	- When a class of a variable is changed we must recompile using methods because new variable can implement specific compilation logic (method bytecode can become different).
+	- Undeclared case requires much more clever logic. Now in that case the class variable will be shared between all classes previously referencing undeclared variable despite on the fact that they do no see a class variables from other classes"
+	self flag: #todo.
+	aClassVariable owningClass: self.
+
+	self classPool associationAt: aClassVariable name ifPresent:  [:existingVar |
+		(existingVar class == aClassVariable class) ifTrue: [^self].
+		"need to take care to migrate existing variables to new global if class if different"
+		aClassVariable write: existingVar read.
+		self classPool removeKey: existingVar name ].
+	"Pick up any refs in Undeclared"
+	Undeclared associationAt: aClassVariable name ifPresent:  [:existingVar |
+		Undeclared removeKey: existingVar name.
+		existingVar becomeForward: aClassVariable
+	].
+	self classPool add: aClassVariable
+]
+
 { #category : #compiling }
 Class >> binding [
    "Answer a binding for the receiver, sharing if possible"
@@ -239,7 +260,7 @@ Class >> bindingOf: varName [
 	aSymbol := varName asSymbol.
 
 	^ (self innerBindingOf: aSymbol) ifNil: [
-		 self environment bindingOf: aSymbol
+		 self environment lookupVar: aSymbol
 	]
 ]
 
@@ -344,7 +365,7 @@ Class >> classVariableDefinitionString [
 				str nextPutAll: global definitionString.
 				fullDef := global needsFullDefinition]				
 			separatedBy: [ 
-				str nextPutAll: '. '.  
+				str nextPutAll: ' . '.  
 				fullDef ifTrue: [ str cr;tab;tab;tab;tab ]].
 		str nextPutAll: ' }'. ]
 ]
@@ -353,7 +374,14 @@ Class >> classVariableDefinitionString [
 Class >> classVariableNamed: aString [
 	"Answer the Class Variable"
 
-	^self classPool associationAt: aString asSymbol ifAbsent: [self error: 'no such class var']
+	^self classVariableNamed: aString ifAbsent: [self error: 'no such class var']
+]
+
+{ #category : #'class variables' }
+Class >> classVariableNamed: aString ifAbsent: absentBlock [
+	"Answer the Class Variable"
+
+	^self classPool associationAt: aString asSymbol ifAbsent: absentBlock
 ]
 
 { #category : #'class variables' }
@@ -361,6 +389,12 @@ Class >> classVariables [
 	"Answer the meta objects of all class variables"
 
 	^self classPool associations
+]
+
+{ #category : #slots }
+Class >> classVariablesNeedFullDefinition [
+
+	^ self classVariables anySatisfy: [ :each | each needsFullDefinition ]
 ]
 
 { #category : #'accessing class hierarchy' }
@@ -403,25 +437,26 @@ Class >> copyForAnnouncement [
 Class >> declareClassVariables: newVars [ 
 	"Declare class variables common to all instances. Answer whether 
 	recompilation is advisable."
-	|  conflicts |
-	
+	|  conflicts newVarNames |	
 	conflicts := false.	
+	newVarNames := newVars collect: [ :each | each name ].
 	"Remove. Warn if vars are removed that are still used"
-	"self flag: something wrong here. put to true and add an ivar to a class"
-	(self classVariables reject: [:x | newVars includes: x]) do: [:var | self removeClassVarNamed: var name interactive: false].
+	(self classVarNames difference: newVarNames) do: [:varName | 
+		self removeClassVarNamed: varName interactive: false].
 	
-	(newVars reject: [:var | self classVariables includes: var]) do: [:var | "adding"
-			"check if new vars defined elsewhere"
-			(self innerBindingOf: var key) 
-				ifNotNil: [(DuplicatedVariableError new) variable: var name;
-						signal: var name , ' is defined elsewhere'.
-					conflicts := true]].
-	newVars notEmpty
-		ifTrue: 
-			[self classPool: self classPool.
-			"in case it was nil"
-			newVars do: [:var | self classPool declareVariable: var from: Undeclared]].
+	(newVarNames difference: self classVarNames) do: [:varName | "adding"
+			"check if new vars are defined elsewhere"
+			(self innerBindingOf: varName) ifNotNil: [:existingVar | 
+				DuplicatedVariableError signalWith: existingVar.
+				conflicts := true]].
+	newVars do: [:var | self basicDeclareClassVariable: var ].
 	^conflicts
+]
+
+{ #category : #'pool variables' }
+Class >> definedVariables [
+	"return all the Variables defined by this class"
+	^self slots, self classVariables
 ]
 
 { #category : #'class variables' }
@@ -438,18 +473,65 @@ Class >> definesClassVariableNamed: aString [
 	^ self classVarNames includes: aString
 ]
 
-{ #category : #accessing }
-Class >> definitionForNautilus [
-	"Answer a String that defines the receiver."
+{ #category : #fileout }
+Class >> definitionStringFor: aConfiguredPrinter [
 
-	self 
-		deprecated: 'Use #definition instead.' 
-		on: '2019-05-14'
-		in: #Pharo8
-		transformWith: '`@receiver definitionForNautilus' 
-						-> '`@receiver definition'.
-						
-	^ self definition
+	^ aConfiguredPrinter classDefinitionString 
+]
+
+{ #category : #'file in/out' }
+Class >> definitionWithSlots [
+	"The class definition with a way to specify slots. Shown when the class defines special Slot"
+	
+	| stream poolString|
+	poolString := self sharedPoolsString.
+
+	stream := (String new: 800) writeStream.
+	superclass 
+		ifNotNil: [stream nextPutAll: superclass name]
+		ifNil: [stream nextPutAll: 'ProtoObject'].
+	stream 
+		nextPutAll: ' subclass: '; 
+		store: self name.
+	self hasTraitComposition ifTrue: [
+		stream 
+			crtab; 
+			nextPutAll: 'uses: ';
+			nextPutAll: self traitCompositionString ].
+			
+	self classLayout isFixedLayout ifFalse: [
+		stream 
+			crtab; 
+			nextPutAll: 'layout: ';
+			nextPutAll: self classLayout class name ].
+	
+	stream 
+		crtab; 
+		nextPutAll: 'slots: '.
+	self slotDefinitionsOn: stream.
+		
+	stream 
+		crtab; 
+		nextPutAll: 'classVariables: ';
+		nextPutAll: self classVariableDefinitionString.
+	
+	poolString = '' ifFalse: [
+		stream 
+			crtab; 
+			nextPutAll: 'poolDictionaries: ';
+			store: poolString ].
+		
+	stream 
+		crtab; 
+		nextPutAll: 'package: ';
+		store: self category asString.
+
+	superclass ifNil: [ 
+		stream nextPutAll: '.'; cr.
+		stream nextPutAll: self name.
+		stream space; nextPutAll: 'superclass: nil'. ].
+
+	^ stream contents
 ]
 
 { #category : #deprecation }
@@ -529,6 +611,12 @@ Class >> ephemeronSubclass: t instanceVariableNames: f classVariableNames: d poo
 				environment: self environment ]
 ]
 
+{ #category : #fileout }
+Class >> expandedDefinitionStringFor: aPrinter [
+
+	^ aPrinter expandedClassDefinitionString 
+]
+
 { #category : #private }
 Class >> getName [
 
@@ -542,6 +630,23 @@ Class >> hasAbstractMethods [
 	^ super hasAbstractMethods or: [ self classSide hasAbstractMethods ]
 ]
 
+{ #category : #compiling }
+Class >> hasBindingThatBeginsWith: aString [
+	"Answer true if the receiver has a binding that begins with aString, false otherwise"
+
+	"First check the slots / instance variabless"
+	(self classLayout hasBindingThatBeginsWith: aString) ifTrue: [^ true].
+
+	"Then look in classVar dictionary"
+	(self classPool hasBindingThatBeginsWith: aString) ifTrue: [ ^true].
+	
+	"Next look in shared pools"
+	(self sharedPools anySatisfy: [:pool | pool hasBindingThatBeginsWith: aString ]) ifTrue: [ ^true].
+	
+	"Last: go to the outer environment"
+	^ self environment hasBindingThatBeginsWith: aString
+]
+
 { #category : #'accessing parallel hierarchy' }
 Class >> hasClassSide [
 	^self classSide notNil.
@@ -551,7 +656,7 @@ Class >> hasClassSide [
 Class >> hasClassVarNamed: aString [
 	"Return whether the receiver has a class variables (shared variables among its class and subclasses) named: aString"
 	
-	^ self classVarNames includes: aString
+	^ self classPool includesKey: aString
 ]
 
 { #category : #'class variables' }
@@ -699,6 +804,13 @@ Class >> name [
 	^ name ifNil: [ super name ]
 ]
 
+{ #category : #slots }
+Class >> needsSlotClassDefinition [
+    "return true if we define something else than InstanceVariableSlots or normal class variables"
+
+    ^ super needsSlotClassDefinition or: [ self classVariablesNeedFullDefinition ]
+]
+
 { #category : #'subclass creation' }
 Class >> newAnonymousSubclass [
 
@@ -738,6 +850,44 @@ Class >> obsolete [
 	self hasClassSide ifTrue: [ self classSide obsolete].
 	self propertyAt: #obsolete put: true.
 	super obsolete.
+]
+
+{ #category : #'file in/out' }
+Class >> oldDefinition [
+	"Answer a String that defines the receiver in the old format using poolDictionaries and category.
+	e.g,  
+	'Object subclass: #Point
+		instanceVariableNames: ''x y''
+		classVariableNames: ''''
+		poolDictionaries: ''''
+		category: ''Kernel-BasicObjects'''
+	"
+
+	| aStream |
+	aStream := (String new: 800) writeStream.
+	superclass 
+		ifNil: [aStream nextPutAll: 'ProtoObject']
+		ifNotNil: [aStream nextPutAll: superclass name].
+	aStream nextPutAll: self kindOfSubclass;
+			store: self name.
+	(self hasTraitComposition) ifTrue: [
+		aStream cr; tab; nextPutAll: 'uses: ';
+			nextPutAll: self traitCompositionString].
+	aStream cr; tab; nextPutAll: 'instanceVariableNames: ';
+			store: self instanceVariablesString.
+	aStream cr; tab; nextPutAll: 'classVariableNames: ';
+			store: self classVariablesString.
+	aStream cr; tab; nextPutAll: 'poolDictionaries: ';
+			store: self sharedPoolsString.
+	aStream cr; tab; nextPutAll: 'category: ';
+			store: self category asString.
+
+	superclass ifNil: [ 
+		aStream nextPutAll: '.'; cr.
+		aStream nextPutAll: self name.
+		aStream space; nextPutAll: 'superclass: nil'. ].
+
+	^ aStream contents
 ]
 
 { #category : #compiling }
@@ -835,9 +985,11 @@ Class >> removeFromSystem: logged [
 	self superclass ifNotNil:
 		["If we have no superclass there's nothing to be remembered"
 		self superclass addObsoleteSubclass: self].
-
+	
+	"we add the class to Undeclared so that if references still exist, they will  be automatically fixed 
+	if this class is loaded again. We do not check if references exist as it is too slow"
+	Undeclared declare: self name asSymbol from: Smalltalk globals.
 	myCategory := self category.
-	self isReferenced ifTrue: [Undeclared declare: self name asSymbol from: Smalltalk globals].
 	self environment forgetClass: self logged: logged.
 	self obsolete.
 	logged ifTrue: [SystemAnnouncer uniqueInstance classRemoved: self fromCategory: myCategory].
@@ -924,7 +1076,7 @@ Class >> setName: aSymbol [
 	name := aSymbol.
 ]
 
-{ #category : #accessing }
+{ #category : #'pool variables' }
 Class >> sharedPoolNames [
 	^ self sharedPools collect: [:ea |
 		ea isObsolete
@@ -938,8 +1090,7 @@ Class >> sharedPoolOfVarNamed: aString [
 
 	^ self sharedPools
 		detect: [ :each | each usesClassVarNamed: aString ]
-		ifNone:
-			[ self superclass ifNil: [ nil ] ifNotNil: [ self superclass sharedPoolOfVarNamed: aString ] ]
+		ifNone: [ self superclass ifNotNil: [ self superclass sharedPoolOfVarNamed: aString ] ]
 ]
 
 { #category : #'pool variables' }
@@ -963,7 +1114,7 @@ Class >> sharedPoolsDo: aBlockClosure [
 	self sharedPools do: aBlockClosure
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Class >> sharing: poolString [ 
 	"Set up sharedPools. Answer whether recompilation is advisable."
 	| oldPools |
@@ -1213,6 +1364,36 @@ Class >> variableByteSubclass: t instanceVariableNames: f classVariableNames: d 
 				slots: f asSlotCollection;
 				sharedVariablesFromString: d;
 				sharedPools: s;
+				category: cat;
+				environment: self environment ]
+]
+
+{ #category : #'subclass creation - variableByte' }
+Class >> variableDoubleByteSubclass: className instanceVariableNames: instVarNameList  classVariableNames: classVarNames package: cat [
+
+	^ self classInstaller
+		make: [ :builder | 
+			builder
+				superclass: self;
+				name: className;
+				layoutClass: DoubleByteLayout;
+				slots: instVarNameList asSlotCollection;
+				sharedVariablesFromString: classVarNames;
+				category: cat;
+				environment: self environment ]
+]
+
+{ #category : #'subclass creation - variableByte' }
+Class >> variableDoubleWordSubclass: className instanceVariableNames: instVarNameList  classVariableNames: classVarNames package: cat [
+
+	^ self classInstaller
+		make: [ :builder | 
+			builder
+				superclass: self;
+				name: className;
+				layoutClass: DoubleWordLayout;
+				slots: instVarNameList asSlotCollection;
+				sharedVariablesFromString: classVarNames;
 				category: cat;
 				environment: self environment ]
 ]

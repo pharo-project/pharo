@@ -1,15 +1,13 @@
 "
-This object is in charge of system notifications.
-It manages the class comment, the class comment stamp and a protocol organizer
+This class manages the class comment and a protocol organizer
 "
 Class {
 	#name : #ClassOrganization,
 	#superclass : #Object,
 	#instVars : [
-		'commentStamp',
 		'protocolOrganizer',
 		'organizedClass',
-		'commentRemoteString'
+		'commentSourcePointer'
 	],
 	#category : #'Kernel-Protocols'
 }
@@ -58,7 +56,7 @@ ClassOrganization >> allProtocols [
 
 { #category : #accessing }
 ClassOrganization >> allProtocolsNames [
-	^ self allProtocols collect: #name
+	^ self allProtocols collect: [:each |each name]
 ]
 
 { #category : #accessing }
@@ -102,14 +100,6 @@ ClassOrganization >> classComment: aString [
 ]
 
 { #category : #'backward compatibility' }
-ClassOrganization >> classComment: aString stamp: aStamp [
-
-	self
-		comment: aString;
-		commentStamp: aStamp
-]
-
-{ #category : #'backward compatibility' }
 ClassOrganization >> classify: aSymbol under: aProtocolName [
 
 	^ self 
@@ -146,37 +136,36 @@ ClassOrganization >> cleanUpCategoriesForClass: aClass [
 { #category : #accessing }
 ClassOrganization >> comment [
 
-	commentRemoteString ifNil: [^ ''].
-	^ commentRemoteString string ifNil: ['']
+	^ commentSourcePointer ifNil: [''] ifNotNil: [:ptr | SourceFiles sourceCodeAt: ptr ]
 ]
 
 { #category : #accessing }
 ClassOrganization >> comment: aString [
-	"Store the comment, aString, associated with the object that refers to the 
-	receiver."
-
-	commentRemoteString := aString isRemoteString
-		ifTrue: [ aString ]
-		ifFalse: [ 
-			aString isEmptyOrNil
-				ifTrue: [ nil ]
-				ifFalse: [ SourceFiles remoteStringForNewString: aString ] ]
+	organizedClass comment: aString
 ]
 
-{ #category : #'backward compatibility' }
-ClassOrganization >> commentRemoteString [
+{ #category : #accessing }
+ClassOrganization >> commentSourcePointer [
+	^ commentSourcePointer
+]
 
-	^ commentRemoteString
+{ #category : #accessing }
+ClassOrganization >> commentSourcePointer: anObject [
+	commentSourcePointer := anObject
 ]
 
 { #category : #accessing }
 ClassOrganization >> commentStamp [
-	^ commentStamp
+
+	^ commentSourcePointer
+		  ifNil: [ '' ]
+		  ifNotNil: [ SourceFiles commentTimeStampAt: commentSourcePointer]
 ]
 
-{ #category : #accessing }
-ClassOrganization >> commentStamp: anObject [
-	commentStamp := anObject
+{ #category : #copying }
+ClassOrganization >> copyFrom: otherOrganization [
+	commentSourcePointer  := otherOrganization commentSourcePointer.
+	otherOrganization protocols do: [ :p | p methodSelectors do: [ :m | protocolOrganizer classify: m inProtocolNamed: p name ] ]
 ]
 
 { #category : #accessing }
@@ -186,7 +175,7 @@ ClassOrganization >> extensionProtocols [
 
 { #category : #testing }
 ClassOrganization >> hasComment [
-	^ self commentRemoteString isNotNil
+	^ commentSourcePointer isNotNil
 ]
 
 { #category : #'backward compatibility' }
@@ -292,9 +281,8 @@ ClassOrganization >> ownCategories [
                                                 eachMethod origin = self subject
                                                                 and: [ eachMethod protocol = eachProtocol name ] ] ]).
                         set ].
-
-        ^ ((self protocolOrganizer protocols collect: #name)
-                copyWithoutAll: (traitsCategories collect: #name)) asArray.
+        ^ ((self protocolOrganizer protocols collect: [:each | each name])
+                copyWithoutAll: (traitsCategories collect: [:each | each name])) asArray.
 ]
 
 { #category : #accessing }

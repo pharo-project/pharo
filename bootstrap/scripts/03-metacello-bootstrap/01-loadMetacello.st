@@ -7,7 +7,6 @@ mcPackages := #(
  'StartupPreferences'
  'ConfigurationCommandLineHandler-Core'
  'PragmaCollector'
- 'Reflectivity'
  'System-FileRegistry'
  'MonticelloConfigurations'
  'Gofer-Core'

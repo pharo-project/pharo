@@ -17,8 +17,10 @@ ClapFlag class >> basicMeaning [
 
 { #category : #'predefined flags' }
 ClapFlag class >> forHelp [
-	^ (self withName: 'help')
+	^ (self id: #helpFlag)
 		description: 'Prints this documentation';
+		canonicalName: 'help';
+		
 		meaning: [ :match |
 			(ClapDocumenter on: (ZnCharacterWriteStream on: match context stdout))
 				explain: match parent specification.
@@ -30,7 +32,7 @@ ClapFlag >> addTo: parentParameter [
 	^ parentParameter addFlag: self
 ]
 
-{ #category : #matching }
+{ #category : #'matching - testing' }
 ClapFlag >> canMatchWith: word [
 	^ word = self shortForm
 		or: [ word = self longForm ]

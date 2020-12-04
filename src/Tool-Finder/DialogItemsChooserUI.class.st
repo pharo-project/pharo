@@ -9,80 +9,16 @@ Class {
 	#instVars : [
 		'dialogItemsChooser',
 		'selectedItems',
-		'selectedItemsModel',
 		'unselectedItems',
-		'unselectedItemsModel',
 		'unselectedItemsSearchingString',
 		'selectedItemsSearchingString',
-		'unselectedItemsTextArea',
-		'selectedItemsTextArea',
-		'unselectedSelection',
 		'selectedSelectionIndex',
 		'selectedSelectionList',
 		'unselectedSelectionList',
 		'unselectedSelectionIndex'
 	],
-	#classVars : [
-		'AlreadySearchedSelectedItemsList',
-		'AlreadySearchedUnselectedItemsList'
-	],
-	#classInstVars : [
-		'alreadySearchedSelectedItemsListMaxSize',
-		'alreadySearchedUnselectedItemsListMaxSize'
-	],
 	#category : #'Tool-Finder-UI'
 }
-
-{ #category : #accessing }
-DialogItemsChooserUI class >> alreadySearchedSelectedItemsListMaxSize [
-
-	^ alreadySearchedSelectedItemsListMaxSize
-]
-
-{ #category : #accessing }
-DialogItemsChooserUI class >> alreadySearchedSelectedItemsListMaxSize: anObject [
-
-	anObject ifNil: [ ^self ].
-	alreadySearchedSelectedItemsListMaxSize := anObject.
-	self allInstancesDo: [:each | each alreadySearchedSelectedItemsListMaxSize: anObject ]
-]
-
-{ #category : #accessing }
-DialogItemsChooserUI class >> alreadySearchedUnselectedItemsListMaxSize [
-
-	^ alreadySearchedUnselectedItemsListMaxSize
-]
-
-{ #category : #accessing }
-DialogItemsChooserUI class >> alreadySearchedUnselectedItemsListMaxSize: anObject [
-
-	anObject ifNil: [ ^self ].
-	alreadySearchedUnselectedItemsListMaxSize := anObject.
-	self allInstancesDo: [:each | each alreadySearchedUnselectedItemsListMaxSize: anObject ]
-]
-
-{ #category : #settings }
-DialogItemsChooserUI class >> dialogItemsChooserSettingsOn: aBuilder [
-	<systemsettings>
-		(aBuilder group: #dialogItemsChooser)
-		target: self;
-		label: 'Items Chooser Dialog Window';
-		parent: #morphic;
-		description: 'Settings related to the Dialog Window for choosing elements among a list';
-			with: [
-				(aBuilder setting: #alreadySearchedUnselectedItemsListMaxSize)
-					default: 15;
-					label: 'Number of the Unselected Items in History'.
-				(aBuilder setting: #alreadySearchedSelectedItemsListMaxSize)
-					default: 15;
-					label: 'Number of the Selected Items in History']
-]
-
-{ #category : #'class initialization' }
-DialogItemsChooserUI class >> initialize [
-	alreadySearchedUnselectedItemsListMaxSize := 15.
-	alreadySearchedSelectedItemsListMaxSize := 15
-]
 
 { #category : #'instance creation' }
 DialogItemsChooserUI class >> on: aDialogItemsChooser [
@@ -157,54 +93,6 @@ DialogItemsChooserUI >> addSelectedItems [
 		changed: #unselectedItemsProbablyRestricted;
 		changed: #hasUnselectedItems;
 		changed: #hasUnselectedSelections
-]
-
-{ #category : #accessing }
-DialogItemsChooserUI >> addToAlreadySearchedSelectedItemsList: aString [
-	self alreadySearchedSelectedItemsList size = self alreadySearchedSelectedItemsListMaxSize
-		ifTrue: [self alreadySearchedSelectedItemsList removeLast ].
-	self alreadySearchedSelectedItemsList addFirst: aString
-]
-
-{ #category : #accessing }
-DialogItemsChooserUI >> addToAlreadySearchedUnselectedItemsList: aString [
-	self alreadySearchedUnselectedItemsList size = self alreadySearchedUnselectedItemsListMaxSize
-		ifTrue: [self alreadySearchedUnselectedItemsList removeLast ].
-	self alreadySearchedUnselectedItemsList addFirst: aString
-]
-
-{ #category : #accessing }
-DialogItemsChooserUI >> alreadySearchedSelectedItemsList [
-	^AlreadySearchedSelectedItemsList ifNil: [ AlreadySearchedSelectedItemsList := OrderedCollection new ]
-]
-
-{ #category : #accessing }
-DialogItemsChooserUI >> alreadySearchedSelectedItemsListMaxSize [
-	^self class alreadySearchedSelectedItemsListMaxSize
-]
-
-{ #category : #accessing }
-DialogItemsChooserUI >> alreadySearchedSelectedItemsListMaxSize: anInteger [
-
-	[ self alreadySearchedSelectedItemsList size > anInteger ]
-		whileTrue: [ self alreadySearchedSelectedItemsList removeLast ]
-]
-
-{ #category : #accessing }
-DialogItemsChooserUI >> alreadySearchedUnselectedItemsList [
-	^AlreadySearchedUnselectedItemsList ifNil: [ AlreadySearchedUnselectedItemsList := OrderedCollection new ]
-]
-
-{ #category : #accessing }
-DialogItemsChooserUI >> alreadySearchedUnselectedItemsListMaxSize [
-	^self class alreadySearchedUnselectedItemsListMaxSize
-]
-
-{ #category : #accessing }
-DialogItemsChooserUI >> alreadySearchedUnselectedItemsListMaxSize: anInteger [
-
-	[ self alreadySearchedUnselectedItemsList size > anInteger ]
-		whileTrue: [ self alreadySearchedUnselectedItemsList removeLast ]
 ]
 
 { #category : #private }
@@ -330,20 +218,11 @@ DialogItemsChooserUI >> buildUnselectedItemsSearchingTextArea: aWindow [
 		help: 'Enter the name of a package' translated
 ]
 
-{ #category : #'buttons creations' }
-DialogItemsChooserUI >> cancelButtonLabel [
-	^'Cancel'
-]
-
-{ #category : #'buttons creations' }
-DialogItemsChooserUI >> cancelButtonState [
-	^false
-]
-
 { #category : #display }
 DialogItemsChooserUI >> centering [
-	self left: ((self currentWorld width / 2) - (self width /2)) rounded.
-	self top: ((self currentWorld height / 2) - (self height /2)) rounded
+
+	self left: ((ActiveWorld width / 2) - (self width /2)) rounded.
+	self top: ((ActiveWorld height / 2) - (self height /2)) rounded
 ]
 
 { #category : #accessing }
@@ -430,29 +309,12 @@ DialogItemsChooserUI >> newContentMorph [
 
 ]
 
-{ #category : #'buttons creations' }
-DialogItemsChooserUI >> okButtonAction [
-	self valid.
-]
+{ #category : #opening }
+DialogItemsChooserUI >> preOpenInWorld: aWorld [
 
-{ #category : #'buttons creations' }
-DialogItemsChooserUI >> okButtonLabel [
-	^'Ok'
-]
-
-{ #category : #'buttons creations' }
-DialogItemsChooserUI >> okButtonState [
-	^false
-]
-
-{ #category : #display }
-DialogItemsChooserUI >> openInWorld [
-
-	super openInWorld.
 	self width: 500.
 	self height: 400.
 	self centering
-
 ]
 
 { #category : #'buttons creations' }
@@ -521,14 +383,6 @@ DialogItemsChooserUI >> removeSelectedItems [
 		changed: #hasUnselectedItems
 ]
 
-{ #category : #private }
-DialogItemsChooserUI >> roots: aTree [
-	aTree == unselectedItemsModel
-		ifTrue: [ ^ self unselectedItemsProbablyRestricted ].
-	aTree == selectedItemsModel
-		ifTrue: [ ^ self selectedItemsProbablyRestricted ]
-]
-
 { #category : #'buttons creations' }
 DialogItemsChooserUI >> searchButtonLabel [
 	^'Search'
@@ -547,18 +401,6 @@ DialogItemsChooserUI >> selectedItems [
 { #category : #accessing }
 DialogItemsChooserUI >> selectedItems: aList [
 	selectedItems := aList.
-]
-
-{ #category : #accessing }
-DialogItemsChooserUI >> selectedItemsModel [
-
-	^ selectedItemsModel
-]
-
-{ #category : #accessing }
-DialogItemsChooserUI >> selectedItemsModel: anObject [
-
-	selectedItemsModel := anObject
 ]
 
 { #category : #private }
@@ -595,18 +437,6 @@ DialogItemsChooserUI >> selectedItemsSearchingString: anObject [
 ]
 
 { #category : #accessing }
-DialogItemsChooserUI >> selectedItemsTextArea [
-
-	^ selectedItemsTextArea
-]
-
-{ #category : #accessing }
-DialogItemsChooserUI >> selectedItemsTextArea: anObject [
-
-	selectedItemsTextArea := anObject
-]
-
-{ #category : #accessing }
 DialogItemsChooserUI >> selectedLabel [
 
 	^ self dialogItemsChooser
@@ -630,8 +460,7 @@ DialogItemsChooserUI >> selectedSelectionAt: index put: aBoolean [
 
 { #category : #selectedList }
 DialogItemsChooserUI >> selectedSelectionIndex [
-	selectedSelectionIndex ifNil: [selectedSelectionIndex := 0].
-	^selectedSelectionIndex
+	^ selectedSelectionIndex ifNil: [selectedSelectionIndex := 0]
 ]
 
 { #category : #selectedList }
@@ -661,18 +490,6 @@ DialogItemsChooserUI >> unselectedItems [
 DialogItemsChooserUI >> unselectedItems: anOrderedCollection [ 
 	
 	unselectedItems := anOrderedCollection.
-]
-
-{ #category : #accessing }
-DialogItemsChooserUI >> unselectedItemsModel [
-
-	^ unselectedItemsModel
-]
-
-{ #category : #accessing }
-DialogItemsChooserUI >> unselectedItemsModel: anObject [
-
-	unselectedItemsModel := anObject
 ]
 
 { #category : #private }
@@ -709,17 +526,6 @@ DialogItemsChooserUI >> unselectedItemsSearchingString: anObject [
 ]
 
 { #category : #accessing }
-DialogItemsChooserUI >> unselectedItemsTextArea [
-	^unselectedItemsTextArea
-]
-
-{ #category : #accessing }
-DialogItemsChooserUI >> unselectedItemsTextArea: anObject [
-
-	unselectedItemsTextArea := anObject
-]
-
-{ #category : #accessing }
 DialogItemsChooserUI >> unselectedLabel [
 
 	^ self dialogItemsChooser
@@ -727,28 +533,10 @@ DialogItemsChooserUI >> unselectedLabel [
 		ifNotNil: [ self dialogItemsChooser unselectedLabel ]
 ]
 
-{ #category : #accessing }
-DialogItemsChooserUI >> unselectedSelection [
-	unselectedSelection ifNil: [unselectedSelection := 0].
-	^unselectedSelection
-]
-
-{ #category : #accessing }
-DialogItemsChooserUI >> unselectedSelection: anObject [
-
-	unselectedSelection := anObject
-]
-
 { #category : #unselectedList }
 DialogItemsChooserUI >> unselectedSelectionAt: index [
 
 	^unselectedSelectionList at: index ifAbsent: [false]
-]
-
-{ #category : #unselectedList }
-DialogItemsChooserUI >> unselectedSelectionAt: index Put: anObject [
-
-	unselectedSelectionList at: index put: anObject
 ]
 
 { #category : #unselectedList }
@@ -761,8 +549,7 @@ DialogItemsChooserUI >> unselectedSelectionAt: index put: aBoolean [
 
 { #category : #unselectedList }
 DialogItemsChooserUI >> unselectedSelectionIndex [
-	unselectedSelectionIndex ifNil: [unselectedSelectionIndex := 0].
-	^unselectedSelectionIndex
+	^unselectedSelectionIndex ifNil: [unselectedSelectionIndex := 0]
 ]
 
 { #category : #unselectedList }

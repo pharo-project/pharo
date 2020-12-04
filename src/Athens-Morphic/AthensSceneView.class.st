@@ -9,6 +9,7 @@ I implement a simple view panning and zooming with mouse drag and mouse-wheel (c
 
 Example1: open scene view, by passing a simple rendering block.
 
+```
 | view |
 view  := AthensSceneView new.
 
@@ -18,15 +19,17 @@ view scene: [:canvas |
 	canvas drawShape: (0@0 corner:120@100)
 ].
 view openInWindow.
+```
 
 Example2: open scene view on imported SVG file (note you need 'Athens-SVG' package loaded):
 
+```
 | view |
 view  := AthensSceneView new.
 view scene: (AthensSVGConverter fromFile: 'lion.svg').
 
 view openInWindow.
-
+```
 "
 Class {
 	#name : #AthensSceneView,

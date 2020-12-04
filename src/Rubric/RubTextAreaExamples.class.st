@@ -87,12 +87,14 @@ RubTextAreaExamples class >> blueTextOnGrayBackgroundWrappedTo400Version2 [
 
 { #category : #examples }
 RubTextAreaExamples class >> centered [
+
 	"self centered"
+
 	<sampleInstance>
 	RubEditingArea new
 		beWrapped;
 		width: 300;
-		updateTextWith: 'AAAAAA' , Character cr asString , 'BBBB';
+		updateTextWith: 'AAAAAA' , String cr , 'BBBB';
 		selectFrom: 5 to: 8;
 		centered;
 		openInWorld
@@ -102,11 +104,6 @@ RubTextAreaExamples class >> centered [
 RubTextAreaExamples class >> hasBindingOf: aString [
 	^ (self bindingOf: aString) notNil
 	
-]
-
-{ #category : #shout }
-RubTextAreaExamples class >> hasBindingThatBeginsWith: aString [
-	^false
 ]
 
 { #category : #accessing }
@@ -203,16 +200,17 @@ RubTextAreaExamples class >> profileSourcesFileViewing [
 
 { #category : #examples }
 RubTextAreaExamples class >> rightFlushed [
+
 	"self rightFlushed"
+
 	<sampleInstance>
-	
 	^ RubEditingArea new
-		beWrapped;
-		width: 300;
-		updateTextWith: 'AAAAAA' , Character cr asString , 'BBBB';
-		rightFlush;
-		openInWorld;
-		yourself
+		  beWrapped;
+		  width: 300;
+		  updateTextWith: 'AAAAAA' , String cr , 'BBBB';
+		  rightFlush;
+		  openInWorld;
+		  yourself
 ]
 
 { #category : #NOcompletion }

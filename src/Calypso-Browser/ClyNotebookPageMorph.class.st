@@ -6,7 +6,6 @@ Class {
 	#name : #ClyNotebookPageMorph,
 	#superclass : #SpNotebookPageMorph,
 	#instVars : [
-		'title',
 		'icon',
 		'labelPresenter',
 		'label',
@@ -36,6 +35,12 @@ ClyNotebookPageMorph >> actions [
 ClyNotebookPageMorph >> actions: aCollection [
 
 	actions := aCollection
+]
+
+{ #category : #'adding-removing' }
+ClyNotebookPageMorph >> addToSelection [
+	
+	owner addToSelection: self
 ]
 
 { #category : #accessing }
@@ -118,6 +123,11 @@ ClyNotebookPageMorph >> onClose: aBlock [
 ClyNotebookPageMorph >> onDoubleClick: aBlock [
 
 	labelPresenter onDoubleClick: aBlock
+]
+
+{ #category : #'adding-removing' }
+ClyNotebookPageMorph >> removeFromSelection [
+	owner removeFromSelection: self
 ]
 
 { #category : #accessing }

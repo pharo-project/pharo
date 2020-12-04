@@ -9,7 +9,7 @@ Class {
 
 { #category : #'plugin interface' }
 RFObjectReification class >> entities [
-	^{RBProgramNode. LiteralVariable. Slot}
+	^{RBProgramNode. Variable}
 ]
 
 { #category : #'plugin interface' }
@@ -19,15 +19,15 @@ RFObjectReification class >> key [
 
 { #category : #generate }
 RFObjectReification >> genForInstanceVariableSlot [
-	^RBVariableNode named: 'self'
+	^RBVariableNode selfNode
 ]
 
 { #category : #generate }
 RFObjectReification >> genForLiteralVariable [
-	^RBVariableNode named: 'self'
+	^RBVariableNode selfNode
 ]
 
 { #category : #generate }
 RFObjectReification >> genForRBProgramNode [
-	^RBVariableNode named: 'self'
+	^RBVariableNode selfNode
 ]

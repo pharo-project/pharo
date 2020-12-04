@@ -285,7 +285,7 @@ SettingBrowser class >> searchedTextList [
 
 { #category : #accessing }
 SettingBrowser class >> settingsKeywords [ 
-	^ ((PragmaCollector new filter: [:prg | prg selector = #settingPragmaProcessor]) reset) collect: [:p | p method selector].
+	^ (Pragma allNamed: #settingPragmaProcessor) collect: [:p | p method selector]
 
 ]
 

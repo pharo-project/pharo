@@ -44,9 +44,7 @@ RGMCTest >> layoutClassesMapping [
 RGMCTest >> testClass: aClass [
 	
 	| mcDef def env|
-	
 	mcDef := 	aClass asClassDefinition.
-		
 	def := mcDef asRGDefinition.
 	env := def environment.
 	
@@ -57,17 +55,14 @@ RGMCTest >> testClass: aClass [
 	self assert: def layout class equals: (self layoutClassesMapping at: aClass classLayout class).
 	
 	def layout isPointerLayout ifTrue: [ 
-		self assert: (def layout slots collect: #name) equals: aClass instVarNames.].
-	self assert: (def metaclass layout slots collect: #name) equals: aClass class instVarNames.	
-	self assert: (def classVariables collect: #name) equals: aClass classVarNames.	
+		self assert: (def layout slots collect: [:each | each name]) equals: aClass instVarNames.].
+	self assert: (def metaclass layout slots collect: [:each | each name]) equals: aClass class instVarNames.	
+	self assert: (def classVariables collect: [:each | each name]) equals: aClass classVarNames.	
 	self assert: (def sharedPoolNames asArray) equals: aClass sharedPoolNames asArray.	
 	
 	"Monticello class definition still use only class categories, packages are unresolved"
 	self assert: (def hasUnresolved: #package).
-	
 	self assert: (def hasResolved: #traitComposition).
-	
 	self compareTraitComposition: aClass traitComposition with: def traitComposition.
 	self compareTraitComposition: aClass class traitComposition with: def metaclass traitComposition.
-	
 ]

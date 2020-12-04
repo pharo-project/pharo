@@ -1,9 +1,8 @@
 "
-This is a text renderer, which pipelining a text command(s) , produced by AthensTextComposer
+This is a text renderer, which pipelining a text command(s), produced by `AthensTextComposer`
 into a concrete calls to canvas.
 
-Its using a glyph renderer instance(s) to draw separate font glyphs on a surface in a most suitable/efficient
-manner for given Athens surface.
+It is using a glyph renderer instance(s) to draw separate font glyphs on a surface in a most suitable/efficient manner for given Athens surface.
 
 "
 Class {
@@ -78,23 +77,19 @@ AthensTextRenderer >> initialize [
 
 { #category : #rendering }
 AthensTextRenderer >> render: aText lines: lines on: aCanvas [
-
 	text := aText.
 	canvas := aCanvas.
-	
-	canvas pathTransform restoreAfter: [
-
-		lines do: [:line | | origY |
+	canvas pathTransform restoreAfter: [ 
+		lines do: [ :line | 
 			currentLine := line.
 			maxAscent := line maxAscent.
 			"set the origin to font's baseline position"
 			canvas pathTransform translateX: 0 Y: maxAscent.
 			"reset advance"
-			advance := 0@0.
+			advance := 0 @ 0.
 			line renderOn: self.
 			"line is rendered, advance vertically by line height"
-			canvas pathTransform translateX: 0 Y: line height * 1.2 - maxAscent.
-		] ]
+			canvas pathTransform translateX: 0 Y: line height * 1.2 - maxAscent ] ]
 ]
 
 { #category : #rendering }

@@ -120,14 +120,10 @@ Metaclass >> classVariables [
 		ifNotNil: [ :class | class classVariables ]
 ]
 
-{ #category : #'file in/out' }
-Metaclass >> definition [
-	"Refer to the comment in ClassDescription|definition."
+{ #category : #fileout }
+Metaclass >> definitionStringFor: aConfiguredPrinter [
 
-	(self slotsNeedFullDefinition or: [ Slot showSlotClassDefinition ]) ifTrue: [ 
-		^ self definitionWithSlots ].
-
-	^ self definitionWithoutSlots
+	^ aConfiguredPrinter metaclassDefinitionString 
 ]
 
 { #category : #'file in/out' }
@@ -138,19 +134,8 @@ Metaclass >> definitionWithSlots [
 		stream print: self.
 		stream
 			crtab;
-			nextPutAll: 'slots: ';
-			nextPutAll: self slotDefinitionString ]
-]
-
-{ #category : #'file in/out' }
-Metaclass >> definitionWithoutSlots [
-
-	^ String streamContents: [:stream |
-		stream print: self.
-		stream
-			crtab;
-			nextPutAll: 'instanceVariableNames: ';
-			store: self instanceVariablesString ]
+			nextPutAll: 'slots: '.
+		self slotDefinitionsOn: stream ]
 ]
 
 { #category : #accessing }
@@ -159,16 +144,21 @@ Metaclass >> environment [
 	^thisClass environment
 ]
 
+{ #category : #fileout }
+Metaclass >> expandedDefinitionStringFor: aPrinter [
+
+	^ aPrinter expandedMetaclassDefinitionString
+]
+
+{ #category : #testing }
+Metaclass >> hasBindingThatBeginsWith: aString [
+	"class and pool vars are accessible from the class side the same as the instance side"
+	^self instanceSide hasBindingThatBeginsWith: aString
+]
+
 { #category : #'accessing parallel hierarchy - deprecated' }
 Metaclass >> hasClassSide [
 	^ false
-]
-
-{ #category : #initialize }
-Metaclass >> initializeFrom: anotherClassTrait [
-	self traitComposition: self traitComposition copyTraitExpression.
-	self methodDict: self methodDict copy.
-	self basicOrganization: self organization copy.
 ]
 
 { #category : #compiling }
@@ -219,6 +209,12 @@ Metaclass >> isObsolete [
 ]
 
 { #category : #testing }
+Metaclass >> isReferenced [
+	"Metaclasses are never directly referenced in code"
+	^false
+]
+
+{ #category : #testing }
 Metaclass >> isSelfEvaluating [
 	^self isObsolete not
 ]
@@ -264,7 +260,7 @@ Metaclass >> obsoleteSubclasses [
 
 { #category : #'file in/out' }
 Metaclass >> oldDefinition [
-	"Refer to the comment in ClassDescription|definition.
+	"Refer to the comment of Class. 
 	 This method is for compatibility with Class>>#oldDefinition"
 
 	^ self definition
@@ -332,8 +328,8 @@ Metaclass >> sourceCodeTemplate [
 	"Answer an expression to be edited and evaluated in order to define 
 	methods in this class or trait."
 
-	^ 'messageSelectorAndArgumentNames
-	"comment stating purpose of class-side message"
+	^ 'methodSelectorAndArgumentNames
+	"comment stating purpose of class-side method"
 	"scope: class-variables  &  class-instance-variables"	
 			
 	| temporary variable names |

@@ -1,27 +1,5 @@
 "
-SpAbstractBasicWidget is an abstract class for basic widgets
-
-I collaborate with
-- ValueHolder to managed some of my variables.
-- ComposablePresenter to manage me with other elements.
-
-I provide the following variables and their accessors
-- enabled is a boolean representing if I am usable or not, it is true by default. It  have also shortcut enable and disable.
-- help is the text displayed in the tooltip.
-- borderWidth, its default value is 0, it must be called after have displayed the widget. 
-- borderColor, its default value is transparent, it must be called after have displayed the widget. 
-
-For the two methods borderWidth and borderColor, notice that some of my subclasses don't display my border
-
-Me and my subclasses provide shortcut hook for my valueHolder, they are named ""when"" followed of the event.
-
-My drag and drop system don't work well.
-
-todo
-- defaultColor
-- color
-- eventKeyStrokesForNextFocus
-
+SpAbstractBasicWidget is an abstract class for basic widgets.
 "
 Class {
 	#name : #SpAbstractWidgetPresenter,
@@ -38,7 +16,8 @@ Class {
 		'#color => SpObservableSlot',
 		'#help => SpObservableSlot',
 		'#enabled => SpObservableSlot',
-		'#styles'
+		'#styles',
+		'#deferredActions'
 	],
 	#category : #'Spec2-Core-Widgets'
 }
@@ -49,10 +28,168 @@ SpAbstractWidgetPresenter class >> adapterName [
 	^ self subclassResponsibility
 ]
 
+{ #category : #documentation }
+SpAbstractWidgetPresenter class >> addDocumentExtraSections: aBuilder [
+	"a hook to add extra sections when needed"
+	
+]
+
+{ #category : #documentation }
+SpAbstractWidgetPresenter class >> addDocumentSection: aBuilder label: label methods: methods [
+	
+	methods ifEmpty: [ ^ self ].
+	
+	aBuilder newLine.
+	aBuilder header: [ :builder | builder text: label ] withLevel: 2.
+	aBuilder unorderedListDuring: [  
+		(methods sorted: #selector ascending) do: [ :each |
+			aBuilder item: [
+				aBuilder monospace: (each methodClass name, '>>#', each selector) ] ] ]
+]
+
+{ #category : #documentation }
+SpAbstractWidgetPresenter class >> addDocumentSectionExampleCode: aBuilder [
+	| exampleCode |
+
+	exampleCode := self documentExampleCode. 
+	exampleCode ifNil: [ ^ self ].
+	
+	aBuilder newLine.
+	aBuilder header: [ :builder | builder text: 'Example code' ] withLevel: 2.
+	aBuilder newLine.
+	aBuilder codeblock: exampleCode
+]
+
+{ #category : #documentation }
+SpAbstractWidgetPresenter class >> addDocumentSectionFactoryMethod: aBuilder [
+	| selector |
+
+	selector := self documentFactoryMethodSelector. 
+	selector ifNil: [ ^ self ].
+	 
+	aBuilder newLine.
+	aBuilder header: [ :builder | builder text: 'Factory method' ] withLevel: 2.
+	aBuilder newLine.
+	aBuilder text: 'You can use '. 
+	aBuilder monospace: self name. 
+	aBuilder text: ' in your presenters by sending '.
+	aBuilder monospace: 'SpPresenter>>#', selector.
+	aBuilder text: '.'
+]
+
+{ #category : #documentation }
+SpAbstractWidgetPresenter class >> addDocumentSectionHierarchy: aBuilder [
+	
+	aBuilder newLine.
+	aBuilder header: [ :builder | builder text: 'Hierarchy' ] withLevel: 2.
+	SpDocumentHierarchyBuilder new
+		builder: aBuilder;
+		filter: [ :eachClass | eachClass package packageName beginsWith: 'Spec2-' ];
+		buildFor: self
+]
+
+{ #category : #documentation }
+SpAbstractWidgetPresenter class >> addDocumentSectionTransmissions: aBuilder [
+	| transmissions defaultInputPort defaultOutputPort |
+	
+	transmissions := self methods select: [ :each | 
+		(each protocol = self documentTransmissionsProtocol) 
+		and: [ (each selector beginsWith: 'default') not ] ].
+	transmissions ifEmpty: [ ^ self ].
+	
+	self methods 
+		detect: [ :each | each selector = #defaultInputPort ]
+		ifFound: [ :aMethod | defaultInputPort := aMethod literals first ].
+	self methods 
+		detect: [ :each | each selector = #defaultOutputPort ]
+		ifFound: [ :aMethod | defaultOutputPort := aMethod literals first ].
+	
+	aBuilder newLine.
+	aBuilder header: [ :builder | builder text: 'Transmissions' ] withLevel: 2.
+	aBuilder unorderedListDuring: [  
+		(transmissions sorted: #selector ascending) do: [ :each |
+			aBuilder item: [
+				aBuilder monospace: (each methodClass name, '>>#', each selector).
+				(each selector = defaultInputPort or: [ each selector = defaultOutputPort  ])
+					ifTrue: [ aBuilder monospace: ' (default)' ] ] ] ]
+]
+
+{ #category : #documentation }
+SpAbstractWidgetPresenter class >> buildMicroDownUsing: aBuilder withComment: aString [
+	
+	super buildMicroDownUsing: aBuilder withComment: aString.
+
+	"Example code"
+	self addDocumentSectionExampleCode: aBuilder.
+	"Factory method"
+	self addDocumentSectionFactoryMethod: aBuilder.
+	"Sections"
+	self documentSections keysAndValuesDo: [ :label :methods |
+		self addDocumentSection: aBuilder label: label methods: methods ].
+	"Hook for extra sections"
+	self addDocumentExtraSections: aBuilder.
+	"Hierarchy"
+	self addDocumentSectionHierarchy: aBuilder.
+	"Transmissions"
+	self addDocumentSectionTransmissions: aBuilder.	
+]
+
 { #category : #specs }
 SpAbstractWidgetPresenter class >> defaultSpec [
 	<spec: #default>
 	^ SpAbstractWidgetLayout for: self adapterName
+]
+
+{ #category : #documentation }
+SpAbstractWidgetPresenter class >> documentExampleCode [
+	| exampleMethod |
+	
+	exampleMethod := self class methods 
+		detect: [ :each | 
+			(each protocol = self documentExamplesProtocol) 
+			and: [ each selector = self documentExampleCodeSelector ] ]
+		ifNone: [ ^ nil ].
+			
+	^ (exampleMethod sourceCode lines 
+		allButFirst 	"Remove method name"
+		reject: [ :each | each trimLeft beginsWith: '<' ]) "Remove pragmas"
+		asStringWithCr
+		trimmed
+]
+
+{ #category : #documentation }
+SpAbstractWidgetPresenter class >> documentExampleCodeSelector [
+	
+	^ #example
+]
+
+{ #category : #documentation }
+SpAbstractWidgetPresenter class >> documentExamplesProtocol [
+	
+	^ #'*Spec2-Examples'
+]
+
+{ #category : #documentation }
+SpAbstractWidgetPresenter class >> documentFactoryMethodSelector [
+
+	^ nil
+]
+
+{ #category : #documentation }
+SpAbstractWidgetPresenter class >> documentSections [
+		
+	^ OrderedDictionary newFromPairs: {
+		'Examples'. self class methods select: [ :each | each protocol = self documentExamplesProtocol ].
+		'API Methods'. self methods select: [ :each | each protocol = #'api' ].
+		'Testing Methods'. self methods select: [ :each | each protocol = #'testing' ].
+		'Events'. self methods select: [ :each | each protocol = #'api-events' ].
+	 }
+]
+
+{ #category : #documentation }
+SpAbstractWidgetPresenter class >> documentTransmissionsProtocol [
+
+	^ #'*Spec2-Transmission'
 ]
 
 { #category : #testing }
@@ -77,46 +214,76 @@ SpAbstractWidgetPresenter >> acceptDroppingMorph: draggedMorph event: event inMo
 
 ]
 
-{ #category : #api }
-SpAbstractWidgetPresenter >> addStyle: aStyle [
+{ #category : #'private-deferring' }
+SpAbstractWidgetPresenter >> addDeferredAction: aBlock [
+	"Deferred actions are one-shot actions, performed during adapter initialization."
 
-	styles := styles copyWith: aStyle
+	deferredActions ifNil: [ deferredActions := #() ].
+	deferredActions := deferredActions copyWith: aBlock
 ]
 
 { #category : #api }
+SpAbstractWidgetPresenter >> addStyle: aStyle [
+	"Add a style-class to a presenter. Styles are defined in the application stylesheet and will 
+	 affect presenters by applying the properties the user adds to the class.
+	 - Styles can just be added to widget presenters (the ones that inherits of *SpAbstractWidgetPresenter*).
+	 - Styles can be added and removed dynamically (see also *SpAbstractWidgetPresenter>>removeStyle:*
+	
+	[[[language=Smalltalk
+	button := self newButton 
+		label: 'Example of style';
+		addStyle: 'myButton';
+		yourself.
+	]]]"
+
+	(styles includes: aStyle) ifTrue: [ ^ self ].
+	styles := styles copyWith: aStyle.
+	self withAdapterDo: [ :anAdapter | anAdapter addStyle: aStyle ]
+]
+
+{ #category : #'private building' }
+SpAbstractWidgetPresenter >> basicBuildAdapterWithSpecLayout: aSpecLayout [
+	| builtAdapter |
+
+	builtAdapter := super basicBuildAdapterWithSpecLayout: aSpecLayout.
+	self processDeferredActions.
+	^ builtAdapter
+]
+
+{ #category : #TOREMOVE }
 SpAbstractWidgetPresenter >> borderColor [
 	"Return the border color"
 
 	^ borderColor
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractWidgetPresenter >> borderColor: aColor [
 	"Set the border width"
 
 	borderColor := aColor
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractWidgetPresenter >> borderWidth [
 	"Return the border width"
 
 	^ borderWidth
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractWidgetPresenter >> borderWidth: anInteger [
 	"Set the border width"
 
 	borderWidth := anInteger
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractWidgetPresenter >> color [
 	^ color
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractWidgetPresenter >> color: aColor [
 	^ color := aColor
 ]
@@ -137,7 +304,7 @@ SpAbstractWidgetPresenter >> defaultTransferFor: passenger from: source [
 
 { #category : #api }
 SpAbstractWidgetPresenter >> disable [
-	"Disable the label"
+	"Disable the presenter"
 	
 	self enabled: false
 ]
@@ -174,27 +341,27 @@ SpAbstractWidgetPresenter >> dropEnabled: aBoolean [
 
 { #category : #api }
 SpAbstractWidgetPresenter >> enable [
-	"Enable the label"
+	"Enable the presenter"
 	
 	self enabled: true
 ]
 
 { #category : #api }
 SpAbstractWidgetPresenter >> enabled: aBooleanOrValuable [
-	"Set if the button is enabled (clickable).
+	"Set if the widget is enabled (clickable or focusable).
 	This can either be a boolean or a block returning a boolean."
 
 	enabled := aBooleanOrValuable
 ]
 
-{ #category : #'api-focus' }
+{ #category : #TOREMOVE }
 SpAbstractWidgetPresenter >> eventKeyStrokesForNextFocus [
 	"String describing the keystroke to perform to jump to the next widget"
 	
 	^ { Character arrowRight asKeyCombination. Character tab asKeyCombination}
 ]
 
-{ #category : #'api-focus' }
+{ #category : #TOREMOVE }
 SpAbstractWidgetPresenter >> eventKeyStrokesForPreviousFocus [
 	"String describing the keystroke to perform to jump to the next widget"
 	
@@ -203,14 +370,14 @@ SpAbstractWidgetPresenter >> eventKeyStrokesForPreviousFocus [
 
 { #category : #api }
 SpAbstractWidgetPresenter >> help [
-	"Return the help string to display as help to the user."
+	"Return the help string to display as help (tooltip) to the user."
 
 	^ help
 ]
 
 { #category : #api }
 SpAbstractWidgetPresenter >> help: aString [
-	"Set a help string to display to the user if he let the mouse over the widget."
+	"Set a help string to display to the user if he let the mouse over the widget (a tooltip)."
 
 	help := aString
 ]
@@ -245,16 +412,42 @@ SpAbstractWidgetPresenter >> initializePresenters [
 	"ignore this method since there is no composition in basic widgets"
 ]
 
-{ #category : #api }
+{ #category : #testing }
 SpAbstractWidgetPresenter >> isEnabled [
+	"Answer if presenter is enabled"
+
 	^ enabled
+]
+
+{ #category : #localization }
+SpAbstractWidgetPresenter >> localeChanged [
+
+	super localeChanged.
+	self forceUpdateSlot: #help
+	
+]
+
+{ #category : #'private-deferring' }
+SpAbstractWidgetPresenter >> processDeferredActions [
+
+	deferredActions ifNil: [ ^ self ].
+	[
+		deferredActions do: [ :eachBlock | eachBlock value ] ]
+	ensure: [ 
+		deferredActions := nil ]
 ]
 
 { #category : #api }
 SpAbstractWidgetPresenter >> removeStyle: aStyle [
 
-	(styles includes: aStyle) ifFalse: [ aStyle ].
-	styles := styles copyWithout: aStyle 
+	(styles includes: aStyle) ifFalse: [ ^ self ].
+	styles := styles copyWithout: aStyle.
+	self withAdapterDo: [ :anAdapter | anAdapter removeStyle: aStyle ]
+]
+
+{ #category : #private }
+SpAbstractWidgetPresenter >> replaceLayoutWith: aLayout [
+	"do nothing, widgets do not have updatable layouts"
 ]
 
 { #category : #api }
@@ -312,14 +505,14 @@ SpAbstractWidgetPresenter >> wantsDroppedMorph: draggedMorph event: anEvent inMo
 	^ self wantDropBlock cull: draggedMorph passenger cull: anEvent cull: source
 ]
 
-{ #category : #'api-events' }
+{ #category : #TOREMOVE }
 SpAbstractWidgetPresenter >> whenBorderColorChangedDo: aBlock [
 	"Set a block to be performed when the brder width changed"
 
 	self property: #borderColor whenChangedDo: aBlock
 ]
 
-{ #category : #'api-events' }
+{ #category : #TOREMOVE }
 SpAbstractWidgetPresenter >> whenBorderWidthChangedDo: aBlock [
 	"Set a block to be performed when the brder width changed"
 
@@ -328,14 +521,30 @@ SpAbstractWidgetPresenter >> whenBorderWidthChangedDo: aBlock [
 
 { #category : #'api-events' }
 SpAbstractWidgetPresenter >> whenEnabledChangedDo: aBlock [
-	"Set a block to performed when the widget is enabled or disabled"
+	"Inform when enabled status has changed. 
+	 `aBlock` has three optional arguments: 
+	 - new value
+	 - old value
+	 - the announcement triggering this action"
 
 	self property: #enabled whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpAbstractWidgetPresenter >> whenHelpChangedDo: aBlock [
-	"Set a block to be performed when the help changed"
+	"Inform when help property has changed. 
+	 `aBlock` has three optional arguments: 
+	 - new value
+	 - old value
+	 - the announcement triggering this action"
 
 	self property: #help whenChangedDo: aBlock
+]
+
+{ #category : #'private-deferring' }
+SpAbstractWidgetPresenter >> withAdapterPerformOrDefer: aBlock [ 
+
+	self adapter 
+		ifNotNil: [ :anAdapter | aBlock value: anAdapter ]
+		ifNil: [ self addDeferredAction: [ aBlock value: self adapter ] ]
 ]

@@ -1,26 +1,45 @@
 Class {
 	#name : #HiExamplesTest,
 	#superclass : #TestCase,
+	#instVars : [
+		'example'
+	],
 	#category : #'Hiedra-Tests-Model'
 }
 
 { #category : #tests }
-HiExamplesTest >> exampleMethods [ 
-	^ (((RPackage organizer packages
-		select: [ :each | each name beginsWith: 'Hiedra' ])
-		flatCollect: #classes)
-		flatCollect: [ :each | each classSide methods ])
-		select: [ :each | 
-			(each selector beginsWith: 'example') and: [ each numArgs = 0 ] ]
+HiExamplesTest class >> classWithExamplesToTest [
+	^ self
+]
+
+{ #category : #testing }
+HiExamplesTest class >> isAbstract [
+	^ self = HiExamplesTest
 ]
 
 { #category : #tests }
-HiExamplesTest >> testAllExamples [
-	| exampleMethods |
-	exampleMethods := self exampleMethods.
-	self deny: exampleMethods isEmpty.
-	exampleMethods do: [ :each | 
-		self
-			shouldnt: [ each methodClass instanceSide perform: each selector ]
-			raise: Error ]
+HiExamplesTest class >> testSelectors [
+
+	^ self classWithExamplesToTest classSide methods 
+			select: [ :each |  (each selector beginsWith: 'example') and: [ each numArgs = 0 ] ]
+			thenCollect: [ :each | each selector ]
+	
+
+]
+
+{ #category : #tests }
+HiExamplesTest class >> whichClassIncludesTestSelector: aSymbol [
+	^self classWithExamplesToTest classSide whichClassIncludesSelector: aSymbol
+]
+
+{ #category : #private }
+HiExamplesTest >> performTest [
+	example := self class classWithExamplesToTest perform: testSelector asSymbol
+]
+
+{ #category : #running }
+HiExamplesTest >> tearDown [ 
+	
+	example ifNotNil: [ example close ].
+	super tearDown
 ]

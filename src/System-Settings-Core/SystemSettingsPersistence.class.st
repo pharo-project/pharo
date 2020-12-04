@@ -192,11 +192,12 @@ SystemSettingsPersistence >> readStream [
 { #category : #storing }
 SystemSettingsPersistence >> removeFileReference [
 	"We have to remove the file before writing new settings."
+
 	| newFileReference |
-	fileReference exists ifFalse: [ ^ self ].
-	newFileReference := (fileReference withExtension: 'old.txt').
+	fileReference ifAbsent: [ ^ self ].
+	newFileReference := fileReference withExtension: 'old.txt'.
 	newFileReference ensureDelete.
-	fileReference copy renameTo: newFileReference basename.
+	fileReference copy renameTo: newFileReference basename
 ]
 
 { #category : #enumerating }

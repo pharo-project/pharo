@@ -95,9 +95,11 @@ SliderInput >> initializePresenter [
 	slider
 		whenValueChangedDo: [ :sliderValue | 
 			| inputValue |
-			inputValue := input text asNumber. " ifNotNil: [ :text | text asNumber ]"
+			inputValue := input text
+				ifEmpty: [ 0 ]
+				ifNotEmpty: [ :text | text asNumber ].
 			sliderValue == inputValue
-				ifFalse: [ input text: sliderValue asString ] ].
+				ifFalse: [ input text: sliderValue asFloat asString ] ].
 	input
 		whenTextChanged: [ :text | 
 			| inputValue |

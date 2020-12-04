@@ -2,7 +2,7 @@ Extension { #name : #Bag }
 
 { #category : #'*STON-Core' }
 Bag class >> fromSton: stonReader [
-	"Read a map representation containing element/occurences pairs"
+	"Read a map representation containing element/occurrences pairs"
 	
 	| bag |
 	bag := self new.
@@ -13,7 +13,7 @@ Bag class >> fromSton: stonReader [
 
 { #category : #'*STON-Core' }
 Bag >> stonOn: stonWriter [
-	"Use a map with element-occurences pairs as representation"
+	"Use a map with element-occurrences pairs as representation"
 
 	stonWriter 
 		writeObject: self 

@@ -3,7 +3,7 @@ Extension { #name : #CmdCommand }
 { #category : #'*SystemCommands-RefactoringSupport' }
 CmdCommand >> confirmRefactoringInContext: aToolContext by: aCommandActivator [
 	| submitDialog |
-	submitDialog := SycRefactoringPreview
+	submitDialog := SycRefactoringPreviewPresenter
 		for: self
 		scopes: aToolContext refactoringScopes.
 	submitDialog existChanges ifTrue:[

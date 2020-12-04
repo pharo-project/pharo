@@ -27,6 +27,7 @@ BaselineOfAthens >> baseline: spec [
 			"Packages"
 			spec
 				package: 'Athens-Core' with: [ spec requires: 'Display' ];
+				package: 'Athens-Core-Tests' with: [ spec requires: 'Athens-Core' ];
 				package: 'Athens-Text' with: [ spec requires: 'Athens-Core' ];
 				package: 'Athens-Balloon' with: [ spec requires: #('Athens-Core' 'Athens-Text') ];
 				package: 'Athens-Morphic' with: [ spec requires: #('Athens-Core' 'Athens-Text' 'Athens-Balloon' 'Athens-Cairo') ];

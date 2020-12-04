@@ -11,7 +11,7 @@ ClyBrowserItemCursorTest >> createQueryResult [
 
 { #category : #running }
 ClyBrowserItemCursorTest >> rawResultItems [
-	^queryResult items collect: #actualObject
+	^queryResult items collect: [ :each | each actualObject ]
 ]
 
 { #category : #tests }
@@ -21,9 +21,9 @@ ClyBrowserItemCursorTest >> testAllItems [
 	allItems := cursor retrieveAll.
 	
 	self assert: allItems equals: queryResult items.
-	unprepared := allItems reject: #isPrepared.
+	unprepared := allItems reject: [:each | each isPrepared].
 	self assert: unprepared isEmpty.
-	self assert: (allItems collect: #position) asArray equals: (1 to: queryResult size) asArray.
+	self assert: (allItems collect: [:each | each position]) asArray equals: (1 to: queryResult size) asArray.
 ]
 
 { #category : #tests }

@@ -26,22 +26,20 @@ Class {
 { #category : #open }
 FontChooser class >> openWithWindowTitle: titleString for: anObject setSelector: setSelector getSelector: getSelector [
 	"FontChooser openWithWindowTitle: 'Choose the Menu Font' for: StandardFonts setSelector: #menuFont: getSelector: #menuFont"
-	
-	| instance windowMorph world |
+
+	| instance windowMorph |
 	instance := self new.
-	instance 
+	instance
 		title: titleString;
 		target: anObject;
 		setSelector: setSelector;
 		getSelector: getSelector.
-	world := self currentWorld.
 	(windowMorph := FontChooserMorph withModel: instance)
-		"position: self currentWorld primaryHand position;"
-		position: ((self currentWorld width-640)/2)@((self currentWorld height-480)/2);
-		extent: 640@480;
+		position: self currentWorld width - 640 / 2 @ (self currentWorld height - 480 / 2);
+		extent: 640 @ 480;
 		open.
-	^windowMorph
- 
+	"position: self currentWorld primaryHand position;"
+	^ windowMorph
 ]
 
 { #category : #'instance creation' }
@@ -98,7 +96,7 @@ FontChooser >> fontStyleListStrings [
 
 	^ self fontStyleList collect: [:fontFamilyMember | | styleName |
 		styleName := fontFamilyMember styleName.
-		fontFamilyMember simulated
+		fontFamilyMember isSimulatedStyle
 			ifTrue: ['(', styleName, ')']
 			ifFalse: [styleName]].
 ]
@@ -261,7 +259,7 @@ FontChooser >> selectedPointSizeIndex: anIndex [
 FontChooser >> setPointSizeListFrom: aFontFamilyMember [
 	| style old new |
 	old := pointSizeList.
-	(aFontFamilyMember isKindOf: FontFamilyMemberAbstract)
+	(aFontFamilyMember isKindOf: AbstractFontFamilyMember)
 		ifTrue:[
 			style := TextStyle named: aFontFamilyMember family familyName.
 			style ifNotNil:[
@@ -282,7 +280,7 @@ FontChooser >> setSelector: selector [
 
 { #category : #action }
 FontChooser >> setStyleValuesFrom: aFont [
-	((aFont isKindOf: LogicalFont) or:[aFont isKindOf: FontFamilyMemberAbstract])
+	((aFont isKindOf: LogicalFont) or:[aFont isKindOf: AbstractFontFamilyMember])
 		ifTrue:[
 			weightValue := aFont weightValue.
 			slantValue := aFont slantValue.

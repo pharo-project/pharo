@@ -6,10 +6,6 @@ true is the object true, while True is the class whose true is the sole instance
 Class {
 	#name : #ReUsesTrueRule,
 	#superclass : #ReAbstractRule,
-	#instVars : [
-		'trueBinding',
-		'falseBinding'
-	],
 	#category : #'GeneralRules-Migrated'
 }
 
@@ -28,11 +24,8 @@ ReUsesTrueRule class >> uniqueIdentifierName [
 { #category : #running }
 ReUsesTrueRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| problemUsages |
-	aMethod methodClass isTrait ifTrue: [ ^ self ].
-	problemUsages := aMethod ast allChildren select: [ :aNode | 
-		                 aNode isVariable and: [ 
-			                 aNode isGlobal and: [ 
-				                 #( True False ) includes: aNode name ] ] ].
+	problemUsages := aMethod ast variableNodes select: [ :aNode | 
+			                 aNode isGlobalVariable and: [ #( True False ) includes: aNode name ] ].
 	problemUsages do: [ :ref | 
 		aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: ref hint: ref name asString)]
 ]
@@ -40,13 +33,6 @@ ReUsesTrueRule >> check: aMethod forCritiquesDo: aCriticBlock [
 { #category : #accessing }
 ReUsesTrueRule >> group [
 	^ 'Bugs'
-]
-
-{ #category : #initialization }
-ReUsesTrueRule >> initialize [
-	super initialize.
-	trueBinding := Smalltalk globals associationAt: #True.
-	falseBinding := Smalltalk globals associationAt: #False
 ]
 
 { #category : #accessing }

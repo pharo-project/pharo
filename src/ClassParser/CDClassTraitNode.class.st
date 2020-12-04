@@ -16,6 +16,11 @@ CDClassTraitNode >> isTraitNode [
 	^ true
 ]
 
+{ #category : #testing }
+CDClassTraitNode >> name [
+	^ name
+]
+
 { #category : #accessing }
 CDClassTraitNode >> name: aString [ 
 	name := aString

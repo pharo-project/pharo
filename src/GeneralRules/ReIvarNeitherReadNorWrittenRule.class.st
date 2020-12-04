@@ -1,5 +1,5 @@
 "
-This smell arises when an instance variable is not both read and written. If an instance variable is only read, the reads can be replaced by nil, since it could not have been assigned a value. If the variable is only written, then it does not need to store the result since it is never used. This check does not work for the data model classes since they use the #instVarAt:put: messages to set instance variables.
+This smell arises when an instance variable is not both read and written. If an instance variable is only read, the reads can be replaced by nil, since it could not have been assigned a value. If the variable is only written, then it does not need to store the result since it is never used.
 "
 Class {
 	#name : #ReIvarNeitherReadNorWrittenRule,
@@ -14,21 +14,9 @@ ReIvarNeitherReadNorWrittenRule class >> checksClass [
 
 { #category : #enumerating }
 ReIvarNeitherReadNorWrittenRule >> check: aClass forCritiquesDo: aCriticBlock [
-	| methods |
-	
-	methods := aClass withAllSubclasses flatCollect: #methods.
-	
 	aClass slots
-		select: [ :slot |
-			| read written |
-			read := written := false.
-			methods noneSatisfy: [ :method |
-				read := read or: [ method readsSlot: slot ].
-				written := written or: [ method writesSlot: slot ].
-				read and: [ written ] ] ]
-		thenDo: [ :slot |
-			aCriticBlock cull:
-				(self critiqueFor: aClass about: slot) ]
+		select: [ :slot | slot isReferenced not ]
+		thenDo: [ :slot | aCriticBlock cull: (self critiqueFor: aClass about: slot) ]
 ]
 
 { #category : #enumerating }

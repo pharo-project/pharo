@@ -23,8 +23,8 @@ Context >> gtConstructDebuggerInspectorIn: composite for: aDebugger [
 
 { #category : #'*GT-Debugger' }
 Context >> gtDebuggerDoItBindings [
-	^ (self method isDoIt and: [ self receiver isNil ]) 
-		ifTrue: [ self method literals select: [ :each | 
+	^ (self compiledCode isDoIt and: [ self receiver isNil ]) 
+		ifTrue: [ self compiledCode literals select: [ :each | 
 			each class = WorkspaceVariable ] ]
 		ifFalse: [ #() ]
 ]

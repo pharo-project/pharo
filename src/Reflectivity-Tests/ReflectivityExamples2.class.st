@@ -10,7 +10,7 @@ Class {
 	#classVars : [
 		'classVar'
 	],
-	#category : #'Reflectivity-Tests'
+	#category : #'Reflectivity-Tests-Data'
 }
 
 { #category : #example }

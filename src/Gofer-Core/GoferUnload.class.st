@@ -32,8 +32,8 @@ GoferUnload >> unload: aWorkingCopy [
 { #category : #unloading }
 GoferUnload >> unloadClasses: aWorkingCopy [
 	aWorkingCopy packageSet methods do: [ :each |
-		(each classIsMeta and: [ each selector = #unload ])
-			ifTrue: [ each actualClass instanceSide unload ] ]
+		(each methodClass isClassSide and: [ each selector = #unload ])
+			ifTrue: [ each methodClass instanceSide unload ] ]
 ]
 
 { #category : #unloading }

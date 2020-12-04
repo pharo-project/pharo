@@ -4,7 +4,9 @@ Using assert:equals: produces better context on rule failure
 Class {
 	#name : #ReAssertEqualSignIntoAssertEqualsRule,
 	#superclass : #ReNodeRewriteRule,
-	#category : #'SUnit-Rules'
+	#traits : 'ReTSUnitGroupedRule',
+	#classTraits : 'ReTSUnitGroupedRule classTrait',
+	#category : #'SUnit-Rules-Base'
 }
 
 { #category : #accessing }
@@ -22,12 +24,6 @@ ReAssertEqualSignIntoAssertEqualsRule >> afterCheck: aNode mappings: mappingDict
 	^ [ aNode methodNode methodClass canUnderstand: #assert:equals: ]
 		on: MessageNotUnderstood "methodNode or methodClass may be nil"
 		do: [ false ]
-]
-
-{ #category : #accessing }
-ReAssertEqualSignIntoAssertEqualsRule >> group [
-
-	^ 'SUnit'
 ]
 
 { #category : #initialization }

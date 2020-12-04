@@ -28,12 +28,12 @@ FTBasicTreeListDataSource class >> exampleBasicInspect: anObject [
 	
 	ds	root: #ROOT->anObject;
 		children: [ :item | item value gtInspectorVariableValuePairs ];
-		sortChildrenBy: [ :a :b | a key name <= b key name ];
+		sortChildrenBy: [ :a :b | a key asString <= b key asString ];
 		display: [ :item :cell | cell addMorphBack: item printString asMorph ];
 		yourself.
 	
 	ft := FTTableMorph new 
-		extent: 600@(self currentWorld clearArea height - 80);
+		extent: 600@500;
 		dataSource: ds.
 	
 	ft openInWindow position: 20@10.
@@ -51,7 +51,7 @@ FTBasicTreeListDataSource class >> exampleInspect: anObject [
 	
 	ds	root: #ROOT->anObject;
 		children: [ :item | item value gtInspectorVariableValuePairs ];
-		sortChildrenBy: [ :a :b | a key name <= b key name ];
+		sortChildrenBy: [ :a :b | a key asString <= b key asString ];
 		display: [ :item :cell | cell 
 			addMorphBack: item value class systemIcon asMorph;
 			addMorphBack: (item key asStringMorph emphasis: 1; yourself);
@@ -62,7 +62,7 @@ FTBasicTreeListDataSource class >> exampleInspect: anObject [
 	ds expand: 1.
 	
 	ft := FTTableMorph new 
-		extent: 800@(self currentWorld clearArea height // 2);
+		extent: 800@500;
 		dataSource: ds.
 	
 	ft openInWindow position: 20@10.
@@ -117,7 +117,7 @@ FTBasicTreeListDataSource class >> exampleStateTree [
 	
 	ds	roots: { #self -> ds } ;
 		children: [ :item | item value gtInspectorVariableValuePairs ];
-		sortChildrenBy: [ :a :b | a key name <= b key name ];
+		sortChildrenBy: [ :a :b | a key asString <= b key asString ];
 		display: [ :item :cell | cell 
 			addMorphBack: item value systemIcon asMorph;
 			addMorphBack: (item key printString asMorph emphasis: 1; yourself);
@@ -128,7 +128,7 @@ FTBasicTreeListDataSource class >> exampleStateTree [
 	ds expand: 3.
 	
 	ft := FTTableMorph new 
-		extent: 600@(self currentWorld clearArea height - 80);
+		extent: 600@500;
 		dataSource: ds.
 	
 	ft openInWindow position: 20@10
@@ -147,7 +147,7 @@ FTBasicTreeListDataSource class >> exampleWorldSubmorphTree [
 		yourself.
 
 	ft := FTTableMorph new 
-		extent: 400@(self currentWorld clearArea height - 80);
+		extent: 400@500;
 		dataSource: ds.
 	
 	ft openInWindow position: 20@10

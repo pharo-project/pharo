@@ -15,7 +15,7 @@ SpecTransferMorph >> initialize [
 
 	super initialize.
 
-	dragHand := ActiveHand
+	dragHand := self activeHand
 ]
 
 { #category : #accessing }

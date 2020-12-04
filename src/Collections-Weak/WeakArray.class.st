@@ -33,7 +33,7 @@ WeakArray class >> addWeakDependent: anObject [
 			FinalizationDependents := FinalizationDependents, (WeakArray new: 10).
 			FinalizationDependents at: index put: anObject.
 		].
-	] ifError:[:msg :rcvr| rcvr error: msg].
+	] ifError: [:err | err signal].
 ]
 
 { #category : #initialization }
@@ -64,7 +64,7 @@ WeakArray class >> removeWeakDependent: anObject [
 				FinalizationDependents at: i put: nil.
 			].
 		].
-	] ifError:[:msg :rcvr| rcvr error: msg].
+	] ifError: [:err | err signal].
 ]
 
 { #category : #accessing }

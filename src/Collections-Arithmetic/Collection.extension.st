@@ -120,6 +120,11 @@ Collection >> log [
 
 { #category : #'*Collections-arithmetic' }
 Collection >> max [
+	"Return the maximum value of the collection
+	
+	Example of use:
+	#(1 5 10 -4) max >>> 10
+	"
 	^ self inject: self anyOne into: [:max :each | max max: each]
 ]
 

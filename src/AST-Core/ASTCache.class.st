@@ -18,6 +18,9 @@ Code that wants to modify the AST without making sure the compiledMethod is in s
 Class {
 	#name : #ASTCache,
 	#superclass : #WeakIdentityKeyDictionary,
+	#classVars : [
+		'CacheMissStrategy'
+	],
 	#classInstVars : [
 		'default'
 	],
@@ -33,6 +36,17 @@ ASTCache class >> announceCacheReset [
 { #category : #accessing }
 ASTCache class >> at: aCompiledMethod [
 	^ self default at: aCompiledMethod
+]
+
+{ #category : #accessing }
+ASTCache class >> cacheMissStrategy [
+	^ CacheMissStrategy
+		ifNil: [ CacheMissStrategy := ASTCacheMissStrategy new ]
+]
+
+{ #category : #accessing }
+ASTCache class >> cacheMissStrategy: aCacheMissStrategy [
+	^ CacheMissStrategy := aCacheMissStrategy
 ]
 
 { #category : #accessing }
@@ -63,10 +77,7 @@ ASTCache class >> shutDown [
 ASTCache >> at: aCompiledMethod [
 	^ self 
 		at: aCompiledMethod
-		ifAbsentPut: [ 
-			aCompiledMethod reflectiveMethod 
-				ifNil: [ aCompiledMethod parseTree doSemanticAnalysisIn: aCompiledMethod methodClass ]
-				ifNotNil: [: rfMethod | rfMethod ast ] ]
+		ifAbsentPut: [ self class cacheMissStrategy getASTFor: aCompiledMethod ]
 ]
 
 { #category : #initialization }

@@ -44,7 +44,28 @@ ContextTest >> testTempNamed [
 ContextTest >> testTempNamedPut [
 	| oneTemp |
 	oneTemp := 1.
-	self assert: (thisContext tempNamed: 'oneTemp') equals: oneTemp.
 	thisContext tempNamed: 'oneTemp' put: 2.
+
 	self assert: (thisContext tempNamed: 'oneTemp') equals: 2
+]
+
+{ #category : #'*Kernel-Tests-WithCompiler' }
+ContextTest >> testTempNamedPutShouldFailGivenNameIsNotTemp [
+	
+	self assert: (self class hasSlotNamed: #expectedFails).	
+	self should: [thisContext tempNamed: #expectedFails put: 0] raise: Error
+]
+
+{ #category : #'*Kernel-Tests-WithCompiler' }
+ContextTest >> testTempNamedPutShouldReturnAssignedValue [
+	| oneTemp |
+	oneTemp := 1.
+	self assert: (thisContext tempNamed: 'oneTemp' put: 2) equals: 2
+]
+
+{ #category : #'*Kernel-Tests-WithCompiler' }
+ContextTest >> testTempNamedShouldFailGivenNameIsNotTemp [
+
+	self assert: (self class hasSlotNamed: #testSelector).
+	self should: [thisContext tempNamed: #testSelector] raise: Error
 ]

@@ -95,7 +95,7 @@ CmdOpenContextMenuCommand >> registerContextMenuItemsFor: aCommandItem withBuild
 	RecursionStopper during: [ 		
 		submenu := self activationStrategy buildMenuInContext: context.		 
 		submenu isActive ifTrue: [ 					
-			super registerContextMenuItemsFor: aCommandItem withBuilder: aBuilder.
+			self doRegisterContextMenuItemsFor: aCommandItem withBuilder: aBuilder.
 			"Registration builder uses #name to bind children to parent"
 			submenu rootGroup name: aCommandItem name.
 			submenu registerContextMenuItemsWithBuilder: aBuilder]		

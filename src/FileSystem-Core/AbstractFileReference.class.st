@@ -4,6 +4,9 @@ I am an abstract superclass for FileLocator and FileReference. By implementing m
 Class {
 	#name : #AbstractFileReference,
 	#superclass : #Object,
+	#instVars : [
+		'path'
+	],
 	#category : #'FileSystem-Core-Public'
 }
 
@@ -224,7 +227,7 @@ AbstractFileReference >> childGeneratorBlock: doBlock matching: patterns [
 
 { #category : #enumerating }
 AbstractFileReference >> childNames [
-	^ self children collect: #basename
+	^ self children collect: [:each | each basename]
 ]
 
 { #category : #enumerating }
@@ -359,13 +362,13 @@ AbstractFileReference >> directoriesMatching: patterns [
 
 { #category : #enumerating }
 AbstractFileReference >> directoryNames [
-	^ self directories collect: #basename
+	^ self directories collect: [:each | each basename]
 ]
 
 { #category : #operations }
 AbstractFileReference >> ensureCreateDirectory [
-	"Verifies that the directory does not exist and only creates if necessary. Do not remove files contained if they exist.Creates the parents if needed"
-	^ self resolve ensureCreateDirectory
+	"Verifies that the directory does not exist and only creates if necessary. Do not remove files contained if they exist. Creates the parents if needed"
+	self resolve ensureCreateDirectory
 ]
 
 { #category : #operations }
@@ -388,17 +391,16 @@ AbstractFileReference >> ensureDelete [
 { #category : #operations }
 AbstractFileReference >> ensureDeleteAll [
 	"Delete this directory and all children of it, and does not raise an error if the file does not exist."
-	
-	self exists ifFalse: [ ^ self  ].
+
+	self ifAbsent: [ ^ self ].
 	self deleteAll
-	
 ]
 
 { #category : #operations }
 AbstractFileReference >> ensureDeleteAllChildren [
 	"delete all children of the receiver and does not raise an error if the receiver does not exist"
-	
-	self exists ifFalse: [ ^ self  ].
+
+	self ifAbsent: [ ^ self ].
 	self deleteAllChildren
 ]
 
@@ -445,7 +447,7 @@ AbstractFileReference >> fileIn [
 
 { #category : #enumerating }
 AbstractFileReference >> fileNames [
-	^ self files collect: #basename
+	^ self files collect: [:each | each basename]
 ]
 
 { #category : #accessing }
@@ -528,6 +530,27 @@ AbstractFileReference >> hash [
 { #category : #accessing }
 AbstractFileReference >> humanReadableSize [
 	^ self size humanReadableSIByteSize
+]
+
+{ #category : #delegated }
+AbstractFileReference >> ifAbsent: aBlock [
+	"Return self, or evaluate the block if I do not exist"
+
+	^ self exists ifTrue: [ self ] ifFalse: [ aBlock cull: self ]
+]
+
+{ #category : #delegated }
+AbstractFileReference >> ifExists: aBlock [
+	"Evaluate the block, unless I do not exist. If the receiver exists, pass it as argument to the block."
+
+	^ self exists ifTrue: [ aBlock cull: self ] ifFalse: [ self ]
+]
+
+{ #category : #delegated }
+AbstractFileReference >> ifExists: aBlock ifAbsent: anotherBlock [
+	"If the receiver exists, pass it as argument to aBlock. Else execute anotherBlock "
+
+	^ self exists ifTrue: [ aBlock cull: self ] ifFalse: [ anotherBlock cull: self ]
 ]
 
 { #category : #testing }
@@ -689,6 +712,11 @@ AbstractFileReference >> parent [
 { #category : #delegated }
 AbstractFileReference >> parentUpTo: aParentDirName [
 	^ self withPath: (self path parentUpTo: aParentDirName)
+]
+
+{ #category : #accessing }
+AbstractFileReference >> path [
+	^ path
 ]
 
 { #category : #accessing }

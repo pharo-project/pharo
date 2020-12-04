@@ -34,21 +34,25 @@ BaselineOfUI >> baseline: spec [
        
 	spec for: #common do: [
 		spec postLoadDoIt: #'postload:package:'.
+		
+		"Loading the debugger model and infrastructure before the UI"		
+		spec package: 'Debugger-Model'.
+		spec package: 'Debugger-Oups'.
 
 		"Load morphic before Spec"
 		spec baseline: 'Morphic' with: [ spec repository: repository ].
-		spec baseline: 'ParametrizedTests' with: [ spec repository: repository ].
-		spec baseline: 'Spec2' with: [ spec repository: repository ].
+		spec baseline: 'Commander2' with: [ spec repository: repository ].
+		spec baseline: 'Spec2' with: [ 
+			spec 
+				repository: repository;
+				loads: #('Base' 'Tests') ].
 		spec baseline: 'Spec' with: [ spec repository: repository ].
 		
 		spec baseline: 'DrTests' with: [ spec repository: repository ].
 
-		spec package: 'StartupPreferences'.
-	
+		spec package: 'StartupPreferences'.		
+		
 		spec package: 'Debugger-Actions'.
-		spec package: 'Debugger-Filters'.
-		spec package: 'Debugger-Model'.
-		spec package: 'Debugging-Settings'.
 
 		spec baseline: 'Fuel' with: [
 			spec repository: repository; loads: 'Tools' ].
@@ -67,7 +71,7 @@ BaselineOfUI >> baseline: spec [
 
 		spec package: 'HelpSystem-Core'.
 
-		spec package: 'Spec2-Inspector'.
+		spec package: 'EyeInspector'.
 	].
 ]
 

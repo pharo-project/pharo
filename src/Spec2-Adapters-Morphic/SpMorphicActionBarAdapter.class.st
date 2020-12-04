@@ -1,3 +1,6 @@
+"
+I'm an adapter to provide an action bar (which is represented using an SpToolbarMorph)
+"
 Class {
 	#name : #SpMorphicActionBarAdapter,
 	#superclass : #SpAbstractMorphicAdapter,
@@ -21,9 +24,9 @@ SpMorphicActionBarAdapter >> addModelTo: aMorph [
 
 	self flag: #TODO. "Maybe validate they are just buttons inside?"
 	(self model items at: #start ifAbsent: [ #() ]) do: [ :each |
-		aMorph submorphs first addMorphBack: (self buildActionButton: each) ].
+		aMorph addItemLeft: (self buildActionButton: each) ].
 	(self model items at: #end ifAbsent: [ #() ]) reverseDo: [ :each |
-		aMorph submorphs second addMorphBack: (self buildActionButton: each) ]
+		aMorph addItemRight: (self buildActionButton: each) ]
 ]
 
 { #category : #factory }
@@ -47,7 +50,7 @@ SpMorphicActionBarAdapter >> buildWidget [
 	
 	"Using a toolbar morph because is more or less the same, it just change 
 	 the kind of elements it can have inside (which are just buttons)"
-	panelMorph := SpToolBarMorph new.
+	panelMorph := SpToolbarMorph new.
 	self addModelTo: panelMorph.
 	
 	^ panelMorph
@@ -55,13 +58,13 @@ SpMorphicActionBarAdapter >> buildWidget [
 
 { #category : #factory }
 SpMorphicActionBarAdapter >> newPanelMorph [
-	
-	^ Morph new 
-		changeTableLayout;
-		hResizing: #spaceFill;
-		vResizing: #rigid;
-		height: self class defaultHeight;
-		cellInset: self class defaultItemSeparation;
-		color: Color random;
-		yourself
+
+	^ Morph new
+		  changeTableLayout;
+		  hResizing: #spaceFill;
+		  vResizing: #rigid;
+		  height: self class defaultHeight;
+		  cellInset: self class defaultItemSeparation;
+		  color: Color random;
+		  yourself
 ]

@@ -4,6 +4,11 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
+{ #category : #accessing }
+RBRenameClassTransformationTest class >> defaultTimeLimit [
+	^30 seconds
+]
+
 { #category : #testing }
 RBRenameClassTransformationTest >> testBadName [
 

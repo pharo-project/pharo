@@ -1,26 +1,19 @@
 "
 I am one of the most common collection. I can grow, and elements can be added sequentially by the user.  
-
-Description 
--------------------
 I am more general than Array; my size grows on demand. I store data inside an Array and remember the first and last index. If I need, I can replace this Array by a larger one.
 
 I am usually used to store an unknown amount of objects. When my contents size will not move, one can send me the #asArray message to get better performances, but I cannot grow anymore (add: and remove: are not supported on Array).
 
-Public API and Key Messages
--------------------	
+### Public API and Key Messages
 
 - #new / #withAll: aCollection / #with: anObject 	are common constructors
-
 - #add: anObject / #at: anIndex put: anObject / #at: anIndex ifAbsentPut: anObject 	allow to add new elements to myself.
-
 - #remove: anObject / #removeIndex: anIndex 	allow to remove an element.
-	
 - #do: aBlock / #collect: aBlock / #select: aBlock / #reject: aBlock 	are common iterators.
 
-Examples
--------------------	
-	
+### Examples	
+
+```	
 	""There is many ways to create an OrderedCollection, here are some:""
 	ordCol := OrderedCollection new.
 	ordCol
@@ -60,14 +53,13 @@ Examples
 	ordCol select: [ :element | element >= $b ].		""returns:  an OrderedCollection($b $c)""
 	ordCol do: [ :element | element inspect ].
 	ordCol asArray		""returns: #($a $b $c)""
-			 
-Internal Representation and Key Implementation Points.
--------------------	
+``` 
 
-    Instance Variables
-	array:			<Array> 		An Array where I store my elements. If I need a bigger one I can remove this one and create a new one.
-	firstIndex:		<Integer> 	The index of my first element.
-	lastIndex:		<Integer> 	The index of my last element.
+###Internal Representation and Key Implementation Points.
+Instance Variables
+- array:			<Array> 		An Array where I store my elements. If I need a bigger one I can remove this one and create a new one.
+- firstIndex:		<Integer> 	The index of my first element.
+- lastIndex:		<Integer> 	The index of my last element.
 
 I store my elements inside an array. This array is AT LEAST of the size of my elements. If someone adds an element and my array is not large enough, I remove it and I create a new one larger with the same elements (usually, the size double).
 "
@@ -160,15 +152,27 @@ OrderedCollection class >> streamSpecies [
 
 { #category : #adding }
 OrderedCollection >> add: newObject [
-
+	"Add a new object at the end of the collection, and returns the object itself"
+	"((OrderedCollection new add: 42; yourself) add: 43; yourself) asArray >>> #(42 43)"
+	
+	"Add returns the object itself"
+	"(OrderedCollection new add: 42) >>> 42"
+	
+	"You may want to use yourself to return the collection itself"
+	"(OrderedCollection new add: 42; yourself) class >>> OrderedCollection"
+	"(OrderedCollection new add: 42; yourself) size >>> 1"
 	^self addLast: newObject
 ]
 
 { #category : #adding }
 OrderedCollection >> add: newObject after: oldObject [ 
 	"Add the argument, newObject, as an element of the receiver. Put it in 
-	the sequence just succeeding oldObject. Answer newObject."
+	the sequence just succeeding oldObject. Answer newObject.
+	Raises an error if oldObject is not found"
 	
+	"(OrderedCollection new add: 41; add: 42 after: 41; yourself) asArray >>>  #(41 42)"
+	"(OrderedCollection new add: 41; add: 42 after: 41; add: 43 after: 41; yourself) asArray >>>  #(41 43 42)"
+		
 	| index |
 	index := self find: oldObject.
 	self insert: newObject before: index + 1.
@@ -189,6 +193,8 @@ OrderedCollection >> add: newObject before: oldObject [
 	"Add the argument, newObject, as an element of the receiver. Put it in 
 	the sequence just preceding oldObject. Answer newObject."
 	
+	"(OrderedCollection new add: 42; add: 41 before: 42; yourself) asArray >>> #(41 42)"
+	
 	| index |
 	index := self find: oldObject.
 	self insert: newObject before: index.
@@ -206,7 +212,10 @@ OrderedCollection >> add: newObject beforeIndex: index [
 
 { #category : #adding }
 OrderedCollection >> addAll: aCollection [ 
-	"Add each element of aCollection at my end. Answer	aCollection."
+	"Add each element of aCollection at my end. Answer aCollection."
+
+	"(OrderedCollection new addAll: #(41 42); yourself) asArray >>> #(41 42)"
+
 
 	^ self addAllLast: aCollection
 ]
@@ -215,6 +224,8 @@ OrderedCollection >> addAll: aCollection [
 OrderedCollection >> addAllFirst: anOrderedCollection [ 
 	"Add each element of anOrderedCollection at the beginning of the 
 	receiver. Answer anOrderedCollection."
+	
+	"((OrderedCollection new add: 40; addAllFirst: #(41 42); yourself) asArray) >>  #(41 42 40)"
 
 	anOrderedCollection reverseDo: [:each | self addFirst: each].
 	^anOrderedCollection
@@ -260,6 +271,12 @@ OrderedCollection >> addLast: newObject [
 
 { #category : #converting }
 OrderedCollection >> asArray [
+	"Convert an OrderedCollection into an Array."
+	"#(a b c) asOrderedCollection asArray >>> #(a b c)"
+	"OrderedCollection new class >>> OrderedCollection"
+	"OrderedCollection new asArray class >>> Array"
+	"(OrderedCollection new add: 42; add: 43; yourself) asArray >>> #(42 43)"
+	
 	^ (Array new: self size) replaceFrom: 1 to: self size with: array startingAt: firstIndex.
 ]
 
@@ -273,7 +290,11 @@ OrderedCollection >> asOrderedCollection [
 { #category : #accessing }
 OrderedCollection >> at: anInteger [
 	"Answer my element at index anInteger. at: is used by a knowledgeable
-	client to access an existing element"
+	client to access an existing element."
+	"((OrderedCollection new add: 34; yourself) at: 1) >>> 34"
+	"(#(40 41 42) asOrderedCollection at: 1) >>> 40"
+	"(#(40 41 42) asOrderedCollection at: 2) >>> 41"
+	"(#(40 41 42) asOrderedCollection at: 3) >>> 42"
 
 	| index |
 	anInteger < 1
@@ -315,6 +336,9 @@ OrderedCollection >> at: anInteger put: anObject [
 OrderedCollection >> capacity [
 	"Answer the current capacity of the receiver."
 
+	"OrderedCollection new capacity >>> 10"
+	"(OrderedCollection new addAll: (1 to: 15); yourself) capacity >>> 20"
+	
 	^ array size
 ]
 
@@ -324,6 +348,9 @@ OrderedCollection >> collect: aBlock [
 	resulting values into a collection that is like me. Answer the new 
 	collection. Override superclass in order to use addLast:, not at:put:."
 
+	"(#(1 2 3) asOrderedCollection collect: [ :v | v * 10 ]) asArray >>> #(10 20 30)"
+	"(#(1 2 3) asOrderedCollection collect: [ :v | 10 ]) asArray >>> #(10 10 10)"
+	
 	| newCollection |
 	newCollection := self species new: self size.
 	firstIndex to: lastIndex do:
@@ -476,6 +503,10 @@ OrderedCollection >> find: oldObject [
 { #category : #private }
 OrderedCollection >> growAtFirst [
 	"Add new empty slots to the front of array, while keeping the empty slots at the end."
+	
+	"OrderedCollection new capacity >>> 10"
+	"(OrderedCollection new growAtFirst; capacity) >>> 20"
+	
 
 	| newArray newFirstIndex newLastIndex |
 	newArray := self class arrayType new: (array size * 2 max: 1).
@@ -494,6 +525,9 @@ OrderedCollection >> growAtFirst [
 { #category : #private }
 OrderedCollection >> growAtLast [
 	"Add new empty slots to the end of array, while keeping the empty slots at the front."
+
+	"OrderedCollection new capacity >>> 10"
+	"(OrderedCollection new growAtLast; capacity) >>> 20"
 
 	| newArray |
 	newArray := self class arrayType new: (array size * 2 max: 1).
@@ -551,6 +585,9 @@ OrderedCollection >> join: aCollection [
 { #category : #private }
 OrderedCollection >> makeRoomAtFirst [
 	"Make some empty slots at the front of the array. If we have more than 50% free space, then just move the elements, so that the first 50% of the slots are free, otherwise add new free slots to the front by growing. Precondition: firstIndex = 1"
+	
+	"#(1 2 3) asOrderedCollection capacity >>> 3"
+	"#(1 2 3) asOrderedCollection makeRoomAtFirst capacity >>> 6"
 	
 	| tally newFirstIndex newLastIndex |
 	tally := self size.
@@ -687,19 +724,21 @@ OrderedCollection >> removeAt: index [
 
 { #category : #removing }
 OrderedCollection >> removeDuplicates [
-	| iterator |
 	"Remove the copies of elements, but keep the same order"
 	
+	"#(7 42 7 42 9) asOrderedCollection removeDuplicates asArray >>> #(7 42 9)"
+	"#(1 2 3) asOrderedCollection removeDuplicates asArray >>> #(1 2 3)"
+
+	| iterator seen |
 	self ifEmpty: [ ^ self ].
 	iterator := 1.
+	seen := Set new.
 	[ iterator <= self size ]
-		whileTrue: [ | each newIndex |
+		whileTrue: [ | each |
 			each := self at: iterator.
-			newIndex := iterator + 1.
-			[ newIndex := (self indexOf: each startingAt: newIndex).
-			newIndex > 0 ]
-				whileTrue: [ self removeAt: newIndex ].
-			iterator := iterator + 1.
+			(seen includes: each)
+				ifTrue: [ self removeAt: iterator ]
+				ifFalse: [ seen add: each. iterator := iterator + 1. ].
 	 ]
 ]
 
@@ -796,13 +835,14 @@ OrderedCollection >> reverseDo: aBlock [
 { #category : #converting }
 OrderedCollection >> reversed [
 	"Answer a copy of the receiver with element order reversed.  "
+	"#(2 3 4 'fred') asOrderedCollection reversed >>> #('fred' 4 3 2) asOrderedCollection"
 	| newCol |
 	newCol := self species new.
 	self reverseDo:
 		[:elem | newCol addLast: elem].
 	^ newCol
 
-"#(2 3 4 'fred') reversed"
+
 ]
 
 { #category : #enumerating }

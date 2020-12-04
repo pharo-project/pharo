@@ -3,7 +3,7 @@ I browse all methods containing a string returned by the computed context.
 "
 Class {
 	#name : #SpBrowseMethodsContainingStringCommand,
-	#superclass : #SpSystemNavigationCommand,
+	#superclass : #SpSystemSelectionCommand,
 	#category : #'Spec2-Commands-Navigation'
 }
 
@@ -20,5 +20,6 @@ SpBrowseMethodsContainingStringCommand class >> shortName [
 
 { #category : #executing }
 SpBrowseMethodsContainingStringCommand >> execute [
-	self systemNavigation browseMethodsWithSourceString: self context matchCase: false
+
+	self context doBrowseMethodsContainingString
 ]

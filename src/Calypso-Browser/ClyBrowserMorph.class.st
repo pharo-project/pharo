@@ -237,7 +237,7 @@ ClyBrowserMorph >> changeStateOf: aQueryView by: aBlock [
 		aQueryView changesWasInitiatedByUser ifTrue: [
 			newTools := OrderedCollection new.	
 			tabManager buildToolsOn: newTools for: aQueryView createSelectionContext.
-			tabManager desiredSelection: (newTools collect: #class)	].
+			tabManager desiredSelection: (newTools collect: [:each | each class])	].
 	]
 ]
 

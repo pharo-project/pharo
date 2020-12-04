@@ -5,32 +5,22 @@ Class {
 	#name : #OCAbstractScope,
 	#superclass : #Object,
 	#instVars : [
-		'outerScope',
-		'node',
-		'children'
+		'outerScope'
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
-{ #category : #initializing }
-OCAbstractScope >> addChild: aScope [
-	self children add: aScope
-]
-
-{ #category : #accessing }
-OCAbstractScope >> children [
-	^children ifNil: [ children := OrderedCollection new ]
+{ #category : #lookup }
+OCAbstractScope >> hasBindingThatBeginsWith: aString [
+	"check weather there are any variables defined that start with aString"
+	^ outerScope
+		ifNil: [ false ]
+		ifNotNil: [ outerScope hasBindingThatBeginsWith: aString ]
 ]
 
 { #category : #testing }
 OCAbstractScope >> hasTempVector [
 	^ false
-]
-
-{ #category : #decompiling }
-OCAbstractScope >> instanceScope [
-
-	^self outerScope instanceScope
 ]
 
 { #category : #testing }
@@ -41,11 +31,6 @@ OCAbstractScope >> isBlockScope [
 
 { #category : #testing }
 OCAbstractScope >> isInsideOptimizedLoop [
-	^ false
-]
-
-{ #category : #testing }
-OCAbstractScope >> isInstanceScope [
 	^ false
 ]
 
@@ -70,17 +55,7 @@ OCAbstractScope >> lookupVarForDeclaration: name [
 	^ self outerScope lookupVarForDeclaration: name
 ]
 
-{ #category : #accessing }
-OCAbstractScope >> node [
-	^node
-]
-
-{ #category : #accessing }
-OCAbstractScope >> node: aNode [
-	node := aNode
-]
-
-{ #category : #levels }
+{ #category : #lookup }
 OCAbstractScope >> outerScope [
 
 	^ outerScope
@@ -89,13 +64,5 @@ OCAbstractScope >> outerScope [
 { #category : #initializing }
 OCAbstractScope >> outerScope: aSemScope [
 
-	outerScope := aSemScope.
-	aSemScope addChild: self. 
-]
-
-{ #category : #levels }
-OCAbstractScope >> scopeLevel [
-
-	outerScope ifNil: [^ 0].
-	^ outerScope scopeLevel + 1
+	outerScope := aSemScope
 ]

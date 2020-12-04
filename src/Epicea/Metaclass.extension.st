@@ -8,7 +8,7 @@ Metaclass >> asEpiceaRingDefinition [
 
 	^ baseClassDefinition withMetaclass classSide 
 		traitCompositionSource: self classSide traitCompositionString;
-		definitionSource: self classSide oldDefinition;
+		definitionSource: self classSide definition;
 		addInstanceVariables: self classSide instVarNames;
 		yourself
 ]

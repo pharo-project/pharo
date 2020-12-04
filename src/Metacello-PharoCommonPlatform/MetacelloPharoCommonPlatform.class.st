@@ -133,34 +133,30 @@ MetacelloPharoCommonPlatform >> do: aBlock displaying: aString [
 
 { #category : #'git-based http repo support' }
 MetacelloPharoCommonPlatform >> downloadBasicFile: url to: outputFileName username: username pass: pass [
-    "download from <url> into <outputFileName>"
+	"download from <url> into <outputFileName>"
 
-    | out err proc errorFileName args |
-    "Make a unique name for the error log and ensure that we can write the files"
-    errorFileName := self downloadErrorFileNameFor: outputFileName.
-    out := FileStream forceNewFileNamed: outputFileName.
-    err := FileStream forceNewFileNamed: errorFileName.
-    args := username 
-      ifNotNil: [ 
-        args := {
-          '-u'.
-          username , ':' , pass. 
-          '-L'.
-          url} ] 
-      ifNil: [
-         args := {
-          '-L'.
-          url}  ].
-    proc := (self class environment at: #OSProcess) thisOSProcess
-        forkJob: '/usr/bin/curl'
-        arguments: args
-        environment: nil
-        descriptors: (Array with: nil with: out with: err).
-     proc ifNil: [ (self class environment at: #OSProcess) noAccessorAvailable ].
-     [ proc isRunning ] whileTrue: [ (Delay forMilliseconds: 100) wait ].
-     out close.
-     err close.
-	^ errorFileName 
+	| out err proc errorFileName args |
+	"Make a unique name for the error log and ensure that we can write the files"
+	errorFileName := self downloadErrorFileNameFor: outputFileName.
+	out := (outputFileName asFileReference)
+		ensureDelete;
+		writeStream.
+	err := (errorFileName asFileReference)
+		ensureDelete;
+		writeStream.
+	args := username
+		ifNotNil: [ {'-u' . (username , ':' , pass) . '-L' . url} ]
+		ifNil: [ {'-L' . url} ].
+	proc := (self class environment at: #OSProcess) thisOSProcess
+		forkJob: '/usr/bin/curl'
+		arguments: args
+		environment: nil
+		descriptors: (Array with: nil with: out with: err).
+	proc ifNil: [ (self class environment at: #OSProcess) noAccessorAvailable ].
+	[ proc isRunning ] whileTrue: [ (Delay forMilliseconds: 100) wait ].
+	out close.
+	err close.
+	^ errorFileName
 ]
 
 { #category : #'github/bitbucket support' }
@@ -225,8 +221,12 @@ MetacelloPharoCommonPlatform >> extractRepositoryFrom: zipFile to: directory [
 
     | out err proc errorMessage errorFileName |
     errorFileName := self downloadErrorFileNameFor: zipFile.
-    out := FileStream forceNewFileNamed: '/tmp/zip.out'.
-    err := FileStream forceNewFileNamed: errorFileName.
+    out := ('/tmp/zip.out'asFileReference)
+		ensureDelete;
+		writeStream.
+    err := (errorFileName asFileReference)
+		ensureDelete;
+		writeStream.
     errorMessage := ''.
     [ 
     proc := (self class environment at: #OSProcess) thisOSProcess
@@ -243,10 +243,9 @@ MetacelloPharoCommonPlatform >> extractRepositoryFrom: zipFile to: directory [
         ensure: [ 
             out close.
             err close ].
-    FileStream
-        fileNamed: errorFileName
-        do: [ :fileStream | 
-            (errorMessage := fileStream contentsOfEntireFile) notEmpty
+    errorFileName asFileReference
+        binaryReadStreamDo: [ :fileStream | 
+            (errorMessage := fileStream upToEnd) notEmpty
                 ifTrue: [ self error: 'unzip failure: ' , errorMessage printString ]
                 ifFalse: [
                     (self fileHandleOn: '/tmp')

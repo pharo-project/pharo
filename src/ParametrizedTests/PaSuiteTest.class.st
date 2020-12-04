@@ -20,10 +20,8 @@ PaSuiteTest >> testCasesHasTheCorrectTests [
 
 	| suite |
 	suite := PaCasesMatrixTest buildSuite.
-
 	"I run the setup to set the parametrized values in the test case"
-	suite tests do: #setUp.
-
+	suite tests do: [:each | each setUp].
 	self 
 		assertCollection: (suite tests collect: [ :each | {each option1. each option2} ])
 		hasSameElements: { { 'a'. 1 }. { 'b'. 2 }. { 'c'. 3 } }
@@ -43,9 +41,7 @@ PaSuiteTest >> testCombinedHasTheCorrectTests [
 
 	| suite |
 	suite := PaCombinedMatrixExampleTest buildSuite.
-	
-	suite tests do: #setUp.
-
+	suite tests do: [:each | each setUp].
 	self 
 		assertCollection: (suite tests collect: [:each | {each option1. each option2. each option3}]) 
 		hasSameElements: {	 { 'a'. 1. 'a'}. { 'a'. 1. 'b'}. 
@@ -66,8 +62,7 @@ PaSuiteTest >> testMatrix3ExampleHasTheCorrectTests [
 
 	| suite |
 	suite := PaMatrix3ExampleTest buildSuite.
-	suite tests do: #setUp.
-
+	suite tests do: [:each | each setUp].
 	self 
 		assertCollection: (suite tests collect: [:each | { each option1. each option2. each option3.} ] ) 
 		hasSameElements: { 
@@ -99,9 +94,7 @@ PaSuiteTest >> testMatrixExampleHasTheCorrectTests [
 
 	| suite |
 	suite := PaMatrixExampleTest buildSuite.
-	suite tests do: #setUp.
-
-
+	suite tests do: [:each | each setUp].
 	self 
 		assertCollection: (suite tests collect: [:each | { each option1. each option2. } ] ) 
 		hasSameElements: { 

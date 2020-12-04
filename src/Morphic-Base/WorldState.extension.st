@@ -24,20 +24,31 @@ WorldState class >> debugWorldMenuOn: aBuilder [
 
 { #category : #'*Morphic-Base' }
 WorldState >> menuBuilder [
-	^ menuBuilder ifNil: [
-		menuBuilder := (PragmaMenuBuilder pragmaKeyword: self discoveredMenuPragmaKeyword model: self)
-				menuSpec;
-				yourself
-	]
+
+	^ (PragmaMenuBuilder
+		   pragmaKeyword: self discoveredMenuPragmaKeyword
+		   model: self)
+		  menuSpec;
+		  yourself
 ]
 
 { #category : #'*Morphic-Base' }
 WorldState class >> startMessageTally [
+
 	(self confirm: 'MessageTally will start now,
 and stop when the cursor goes
 to the top of the screen' translated) 
-		ifTrue: [TimeProfiler spyAllOn: [[self currentWorld activeHand position y > 0] 
-					whileTrue: [self currentWorld doOneCycle]]]
+		ifFalse: [ ^ self ].
+
+	TimeProfiler spyAllOn: [
+		MorphicRenderLoop new doOneCycleWhile: [ 
+			self currentWorld activeHand position y > 0 ] ]
+]
+
+{ #category : #'*Morphic-Base' }
+WorldState >> startMessageTally [
+
+	self class startMessageTally
 ]
 
 { #category : #'*Morphic-Base' }
@@ -61,9 +72,17 @@ WorldState class >> startThenBrowseMessageTally [
 	
 	(self confirm: 'MessageTally the UI process until the
 mouse pointer goes to the top of the screen')
-		ifTrue: [TimeProfiler
-				onBlock: [[self currentWorld activeHand position y > 10]
-						whileTrue: [self currentWorld doOneCycle]]]
+		ifFalse: [ ^ self ].
+
+	TimeProfiler onBlock: [
+		MorphicRenderLoop new doOneCycleWhile: [ 
+			self currentWorld activeHand position y > 10 ] ]
+]
+
+{ #category : #'*Morphic-Base' }
+WorldState >> startThenBrowseMessageTally [
+
+	self class startThenBrowseMessageTally
 ]
 
 { #category : #'*Morphic-Base' }
@@ -72,12 +91,6 @@ WorldState class >> systemOn: aBuilder [
 	(aBuilder item: #System)
 		order: 3.0;
 		with: [
-			(aBuilder item: #'Start profiling all Processes')
-				help: 'Profile all Pharo processes.';
-				action: [ self startMessageTally ].
-			(aBuilder item: #'Start profiling UI ')
-				help: 'Profile the UI process of Pharo.';
-				action: [ self startThenBrowseMessageTally ].
 			(aBuilder item: #'Space left')
 				help: 'Do a garbage collection, and report results about the to the user.';
 				action: [ Smalltalk informSpaceLeftAfterGarbageCollection ].
@@ -114,7 +127,7 @@ WorldState class >> windowsOn: aBuilder [
 				help: 'Fit all open windows as visible in World' translated.
 			(aBuilder item: #'Close all debuggers')
 				help: 'Close all opened debugger in the image.';
-				action: [ Smalltalk tools debugger closeAllDebuggers ].
+				action: [ OupsDebuggerSystem closeAllDebuggers ].
 			(aBuilder item: #'Send top window to back (\)')
 				action: [ SystemWindow sendTopWindowToBack ];
 				help: 'Make the topmost window become the backmost one, and activate the window just beneath it.' translated.

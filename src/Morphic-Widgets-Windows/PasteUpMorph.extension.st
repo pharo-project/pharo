@@ -4,7 +4,7 @@ Extension { #name : #PasteUpMorph }
 PasteUpMorph >> fitAllVisibleWindows [
 	"Fit all windows as visible"
 	|allowedArea|
-	allowedArea := RealEstateAgent maximumUsableAreaInWorld: self currentWorld.
+	allowedArea := RealEstateAgent maximumUsableAreaInWorld: self world.
 	(self  windowsSatisfying: [:w | w isCollapsed not])
 		reverseDo:[:w | 
 			w extent: w initialExtent.  
@@ -19,40 +19,6 @@ PasteUpMorph >> isWindowActive: aSystemWindow [
 	True if the current top window."
 	
 	^self currentWindow == aSystemWindow
-]
-
-{ #category : #'*Morphic-Widgets-Windows' }
-PasteUpMorph >> modalLockTo: aSystemWindow [
-	"Don't lock the world nor the aSystemWindow! Lock the submorphs."
-	
-	|lockStates|
-	
-	lockStates := IdentityDictionary new.
-	"lock all submorphs"
-	self submorphsDo: [:m |
-		lockStates at: m put: m isLocked.
-		m lock].
-	"don't lock the given window"
-	aSystemWindow unlock.
-	lockStates at: aSystemWindow put: aSystemWindow isLocked.
-	
-	self
-		setProperty: #submorphLockStates
-		toValue: lockStates
-]
-
-{ #category : #'*Morphic-Widgets-Windows' }
-PasteUpMorph >> modalUnlockFrom: aSystemWindow [
-	"Don't unlock the world! Unlock the submorphs
-	that were not originally locked."
-	
-	|lockStates|
-	lockStates := self
-		valueOfProperty: #submorphLockStates
-		ifAbsent: [^self].
-	self removeProperty: #submorphLockStates.
-	lockStates keysAndValuesDo: [:m :locked |
-		locked ifFalse: [m unlock]]
 ]
 
 { #category : #'*Morphic-Widgets-Windows' }
@@ -111,16 +77,6 @@ PasteUpMorph >> nextWindow [
 	sys := self systemWindows.
 	sys ifEmpty: [^nil].
 	^sys after: self currentWindow ifAbsent: [sys first]
-]
-
-{ #category : #'*Morphic-Widgets-Windows' }
-PasteUpMorph >> openModal: aSystemWindow [
-	"Open the given window locking the receiver until it is dismissed.
-	Set the pane color to match the current theme.
-	Answer the system window."
-	
-	aSystemWindow setWindowColor: self theme windowColor.
-	^ super openModal: aSystemWindow
 ]
 
 { #category : #'*Morphic-Widgets-Windows' }

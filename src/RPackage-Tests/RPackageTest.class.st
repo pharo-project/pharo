@@ -87,12 +87,13 @@ RPackageTest >> testAllUnsentMessages [
 		compile: 'nonexistingMethodName2 42'.
 		
 	class2
+		compile: 'nonexistingMethodName1 42';
 		compile: 'nonexistingMethodName3 42';
 		compile: 'nonexistingMethodName4 class1 new nonexistingMethodName2'.
 		
 	self assert: package allUnsentMessages size equals: 3.
 	
-	self assert: package allUnsentMessages asSet equals: (#('nonexistingMethodName1' 'nonexistingMethodName3' 'nonexistingMethodName4') collect: #asSymbol) asSet.
+	self assert: package allUnsentMessages equals: (#('nonexistingMethodName1' 'nonexistingMethodName3' 'nonexistingMethodName4') collect: [:each | each asSymbol]) asSet.
 ]
 
 { #category : #tests }
@@ -203,6 +204,20 @@ RPackageTest >> testDemoteToRPackageNamedWithExtension [
 	self assert: ((classOther>>#bar) protocol) equals: '*Test1-TAG1'.
 	self assert: (packageDemoted classes	includesAll: {class. classOther}).
 
+]
+
+{ #category : #'tests - properties' }
+RPackageTest >> testHasProperty [
+	| package testValue |
+	
+	testValue := Date today.
+	package := self class package.
+	
+	package propertyAt: #testKeySelector put: testValue.
+	self	assert: (package hasProperty: #testKeySelector).
+	
+	package removeProperty: #testKeySelector.
+	self deny: (package hasProperty: #testKeySelector).
 ]
 
 { #category : #'test-queries' }

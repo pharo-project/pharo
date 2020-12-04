@@ -15,6 +15,12 @@ Class {
 	#category : #'Kernel-Methods'
 }
 
+{ #category : #accessing }
+CompiledBlock >> endPC [
+	"Answer the index of the last bytecode."
+	^ self size
+]
+
 { #category : #scanning }
 CompiledBlock >> hasMethodReturn [
 	"Answer whether the receiver has a method-return ('^') in its code."
@@ -24,6 +30,12 @@ CompiledBlock >> hasMethodReturn [
 
 { #category : #testing }
 CompiledBlock >> hasPragmaNamed: aSymbol [
+	^ false
+]
+
+{ #category : #properties }
+CompiledBlock >> hasProperty: aString [ 
+	
 	^ false
 ]
 
@@ -59,8 +71,25 @@ CompiledBlock >> isCompiledBlock [
 ]
 
 { #category : #testing }
+CompiledBlock >> isEmbeddedBlock [
+	^ true
+]
+
+{ #category : #testing }
+CompiledBlock >> isInstalled [
+	
+	^ self method isInstalled
+]
+
+{ #category : #testing }
 CompiledBlock >> isTestMethod [
 	^ false
+]
+
+{ #category : #literals }
+CompiledBlock >> literalsToSkip [
+
+	^ 1
 ]
 
 { #category : #accessing }
@@ -81,12 +110,6 @@ CompiledBlock >> methodNode [
 ]
 
 { #category : #accessing }
-CompiledBlock >> numberOfReservedLiterals [
-
-	^ 1
-]
-
-{ #category : #accessing }
 CompiledBlock >> outerCode [
 	"answer the compiled code that I am installed in, or nil if none."
 	^self literalAt: self numLiterals
@@ -95,11 +118,6 @@ CompiledBlock >> outerCode [
 { #category : #accessing }
 CompiledBlock >> outerCode: aCompiledCode [
 	^self literalAt: self numLiterals put: aCompiledCode
-]
-
-{ #category : #accessing }
-CompiledBlock >> penultimateLiteral [
-	^ nil
 ]
 
 { #category : #accessing }
@@ -113,13 +131,22 @@ CompiledBlock >> primitive [
 ]
 
 { #category : #printing }
-CompiledBlock >> printOn: s [
-	s << 'compiledBlock'
+CompiledBlock >> printOn: anStream [
+	
+	anStream 
+		nextPutAll: 'a CompiledBlock: ';
+		nextPutAll: self sourceNode sourceCode 
 ]
 
 { #category : #compatibility }
 CompiledBlock >> properties [
 	^ nil->nil
+]
+
+{ #category : #properties }
+CompiledBlock >> propertyAt: aString [ 
+	
+	^ nil
 ]
 
 { #category : #comparing }

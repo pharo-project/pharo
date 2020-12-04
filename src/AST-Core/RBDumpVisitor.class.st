@@ -82,6 +82,24 @@ RBDumpVisitor >> visitCascadeNode:aCascadeNode [
 ]
 
 { #category : #visiting }
+RBDumpVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
+	stream
+		nextPutAll: anEnglobingErrorNode class name;
+		nextPutAll: ' content: {'.
+	anEnglobingErrorNode content
+		do: [ :each | 
+			each acceptVisitor: self.
+			stream nextPutAll: '. ' ].
+	stream nextPut: $}.
+	stream nextPutAll: ' start: '.
+	anEnglobingErrorNode start printOn: stream.
+	stream nextPutAll: ' stop: '.
+	anEnglobingErrorNode stop printOn: stream.
+	stream nextPutAll: ' errorMessage: '.
+	anEnglobingErrorNode errorMessage printOn: stream.
+]
+
+{ #category : #visiting }
 RBDumpVisitor >> visitLiteralArrayNode: aLiteralArrayNode [
 	stream
 		nextPutAll: aLiteralArrayNode class name;

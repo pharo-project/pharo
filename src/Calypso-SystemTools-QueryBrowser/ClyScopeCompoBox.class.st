@@ -45,7 +45,7 @@ ClyScopeCompoBox >> browser: aMethodBrowser [
 { #category : #initialization }
 ClyScopeCompoBox >> build [
 	dropList := self theme 
-		newDropListIn: World
+		newDropListIn: self
 		for: self 
 		list: #scopeNames
 		getSelected: #currentScopeIndex 

@@ -230,8 +230,7 @@ FileSystem >> copyDirectoryAndDelete: sourcePath to: destination [
 				message: 'not a directory';
 				signal ].
 	"The destination musn't exist yet"
-	destination exists ifTrue: 
-		[ FileAlreadyExistsException signalWith: destination ].
+	destination ifExists: [ FileAlreadyExistsException signalWith: destination ].
 
 	[self copyDirectory: sourcePath toReference: destination] 
 		on: Error 

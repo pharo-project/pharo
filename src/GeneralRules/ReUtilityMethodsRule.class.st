@@ -21,10 +21,13 @@ ReUtilityMethodsRule class >> uniqueIdentifierName [
 
 { #category : #running }
 ReUtilityMethodsRule >> basicCheck: aMethod [
-	^ (aMethod methodClass isMeta or: [ aMethod selector numArgs == 0 or: [ self utilityProtocols includes: aMethod protocol ] ]) not
-		and: [ (self subclassOf: aMethod methodClass overrides: aMethod selector) not
-				and: [ aMethod superMessages isEmpty
-						and: [ aMethod selfMessages isEmpty and: [ aMethod methodClass allInstVarNames , aMethod methodClass allClassVarNames asArray , #('self') noneSatisfy: [ :each | aMethod ast references: each ] ] ] ] ]
+	aMethod methodClass isMeta ifTrue: [ ^false ].
+	aMethod selector isUnary ifTrue: [ ^false ].
+	(self utilityProtocols includes: aMethod protocol) ifTrue: [ ^false ].
+	aMethod isOverridden ifTrue: [ ^ false ].
+   aMethod sendsToSuper ifTrue: [ ^ false ].
+	aMethod selfMessages isEmpty ifFalse: [ ^ false ].
+	^aMethod methodClass definedVariables noneSatisfy: [ :variable | variable isAccessedIn: aMethod ]
 ]
 
 { #category : #accessing }
@@ -38,15 +41,7 @@ ReUtilityMethodsRule >> name [
 ]
 
 { #category : #private }
-ReUtilityMethodsRule >> subclassOf: aClass overrides: aSelector [ 
-	^(aClass subclasses detect: 
-			[:each | 
-			(each includesSelector: aSelector)
-				or: [self subclassOf: each overrides: aSelector]]
-		ifNone: [nil]) notNil
-]
-
-{ #category : #private }
 ReUtilityMethodsRule >> utilityProtocols [
-	^ #('*utilit*')
+	"If a method is defined in one of these protocols, then don't check if its a utility method."
+	^ #('utility' 'visiting' 'visitor')
 ]

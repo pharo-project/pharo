@@ -23,22 +23,26 @@ ClassTreeNodeExample >> childrenItems [
 
 { #category : #menu }
 ClassTreeNodeExample >> classButton [
-	^ ( self theme 
-				newButtonIn: self currentWorld
-				for: self
-				getState: nil
-				action: #browseItem
-				arguments: {}
-				getEnabled: #enabled
-				getLabel: nil
-				help: 'Open a browser on ' translated , self item name)
+	^ (self theme 
+			newButtonIn: self
+			for: self
+			getState: nil
+			action: #browseItem
+			arguments: {}
+			getEnabled: #enabled
+			getLabel: nil
+			help: 'Open a browser on ' translated , self item name)
 				label: (self theme  windowLabelForText: (self item name) , '...');
 				yourself
 ]
 
 { #category : #menu }
 ClassTreeNodeExample >> commentText [
-	^ ( self theme  newTextIn: self currentWorld text: self item comment) unlock; wrapFlag: true; yourself
+
+	^ (self theme newTextIn: self text: self item comment)
+		unlock;
+		wrapFlag: true;
+		yourself
 ]
 
 { #category : #menu }

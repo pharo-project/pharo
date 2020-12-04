@@ -6,6 +6,11 @@ This smell arises when a method is implemented but never sent. If a method is no
 		self deprecated: ''Use bar instead ''. 
 		^ self bar
 		 
+NOTE: the rule updates its data with messages send in new methods, but does not remove messages till the next image startup. The reason is that it would be to slow to re-calculate the data at each method removal.
+
+It can be forced to update by executing:
+
+	ReImplementedNotSentRule reset
 "
 Class {
 	#name : #ReImplementedNotSentRule,
@@ -22,11 +27,9 @@ ReImplementedNotSentRule class >> allMessages [
 
 	^allMessages ifNil: [
 		allMessages := IdentitySet new.
-	
 		Smalltalk globals allBehaviors do: [ :behavior | 
 				behavior methodsDo: [ :method |
-					self forApproxMessagesOf: method do: [ :mes |
-						allMessages add: mes ] ] ].
+						allMessages addAll: method messages ] ].
 		allMessages	]
 ]
 
@@ -37,50 +40,54 @@ ReImplementedNotSentRule class >> checksMethod [
 
 { #category : #cleanup }
 ReImplementedNotSentRule class >> cleanUp [
-
-	allMessages := nil
+	self reset
 ]
 
 { #category : #accessing }
-ReImplementedNotSentRule class >> forApproxMessagesOf: aMethod do: aBlock [
-	"this is so ugly purely for performance reasons"
-	"as oposed to the #messages method of the CompiledCode class
-	this approach is 11 times faster and had 87% precision and
-	100% recall in the standard pharo image upon method creation"
+ReImplementedNotSentRule class >> enabled [
+	^ enabled ifNil: [ enabled := false ]
+]
 
-	"literals are shifted by 1 right (that's why we start from 2"
-	"2 last literalls are method name and class name
-	(that's why we go to num - 1 (had to be -2 but mind the shift))"
-	2 to: aMethod numLiterals - 1 do: [ :i |
-		| l |
-		l := aMethod objectAt: i.
-		"besides symbols literals may be associations for class reffs
-		or other types of the actual literals"
-		l isSymbol ifTrue: [ aBlock value: l ] ]
+{ #category : #accessing }
+ReImplementedNotSentRule class >> enabled: aBoolean [
+	super enabled: aBoolean.
+	self reset.
+	aBoolean 
+		ifTrue: [ self subscribe ]
+		ifFalse: [ self unsubscribe ]
 ]
 
 { #category : #initialization }
 ReImplementedNotSentRule class >> initialize [
-	
-	self subscribe
+	"we do not want to register if the rule is disabled"
+	self enabled ifFalse: [ ^self ].
+	self reset.
+	self subscribe.
+	SessionManager default 
+		registerToolClassNamed: self name
 ]
 
 { #category : #'system announcements' }
 ReImplementedNotSentRule class >> methodAdded: anAnnouncement [
 
-	allMessages := nil
+	self allMessages addAll: anAnnouncement methodAdded messages
 ]
 
 { #category : #'system announcements' }
 ReImplementedNotSentRule class >> methodModified: anAnnouncement [
 
+	self allMessages addAll: anAnnouncement newMethod messages
+]
+
+{ #category : #cleanup }
+ReImplementedNotSentRule class >> reset [
+	<script>
 	allMessages := nil
 ]
 
-{ #category : #'system announcements' }
-ReImplementedNotSentRule class >> methodRemoved: anAnnouncement [
-
-	allMessages := nil
+{ #category : #cleanup }
+ReImplementedNotSentRule class >> shutDown [	
+	self reset
 ]
 
 { #category : #announcement }
@@ -90,7 +97,6 @@ ReImplementedNotSentRule class >> subscribe [
 	
 	SystemAnnouncer uniqueInstance weak
 		when: MethodAdded    send: #methodAdded: to: self;
-		when: MethodRemoved  send: #methodRemoved: to: self;
 		when: MethodModified send: #methodModified: to: self
 ]
 
@@ -104,7 +110,7 @@ ReImplementedNotSentRule class >> uniqueIdentifierName [
 { #category : #announcement }
 ReImplementedNotSentRule class >> unsubscribe [
 
-	SystemAnnouncer uniqueInstance unsubscribe: self.
+	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
 { #category : #running }

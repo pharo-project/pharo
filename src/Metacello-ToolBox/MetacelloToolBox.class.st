@@ -211,18 +211,19 @@ MetacelloToolBox class >> createBaseline: baselineVersionString for: configurati
 	"
 
     <apiDocumentation>
-    self
-        deprecated:
-            'Use createBaseline:for: repository:requiredProjects:packages:repositories:dependencies:groups: instead'.
-    ^ self
-        createBaseline: baselineVersionString
-        for: configurationBasename
-        repository: repositoryDescription
-        requiredProjects: projectList
-        packages: packageList
-        repositories: #()
-        dependencies: dependencies
-        groups: groups
+	self
+		deprecated: 'Use createBaseline:for:repository:requiredProjects:packages:repositories:dependencies:groups: instead'
+		transformWith: '`@rec createBaseline: `@arg1 for: `@arg2 repository: `@arg3 requiredProjects: `@arg4 packages: `@arg5 dependencies: `@arg6 groups: `@arg7' -> '`@rec createBaseline: `@arg1 for: `@arg2 repository: `@arg3 requiredProjects: `@arg4 packages: `@arg5 repositories: #() dependencies: `@arg6 groups: `@arg7'.
+	
+	^ self
+		createBaseline: baselineVersionString
+		for: configurationBasename
+		repository: repositoryDescription
+		requiredProjects: projectList
+		packages: packageList
+		repositories: #()
+		dependencies: dependencies
+		groups: groups
 ]
 
 { #category : #scripts }
@@ -1813,7 +1814,7 @@ MetacelloToolBox >> editVersionSpecsForImport: constructor projectAttributes: pr
                             "no file speced"
                             ((fileSpecified includes: spec name) or: [ encounteredPackageSpecs includes: spec name ])
                                 ifTrue: [ 
-                                    "already specified somewhere else, need to delete this spec from version spec OR we're deleting all but first occurence"
+                                    "already specified somewhere else, need to delete this spec from version spec OR we're deleting all but first occurrence"
                                     packageSpecsToDelete add: spec ]
                                 ifFalse: [ 
                                     "file hasn't been specified, so specify now"
@@ -1823,7 +1824,7 @@ MetacelloToolBox >> editVersionSpecsForImport: constructor projectAttributes: pr
                             "file specified"
                             (fileSpecified occurrencesOf: spec name) > 1
                                 ifTrue: [ 
-                                    "multiple specifications for file ... delete all but first occurence"
+                                    "multiple specifications for file ... delete all but first occurrence"
                                     packageSpecsToDelete add: spec.
                                     fileSpecified remove: spec name ] ] ]
                 groupDo: [ :spec | spec updateForSpawnMethod: spec ].

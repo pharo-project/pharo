@@ -258,12 +258,10 @@ MenuItemMorph >> drawIconOn: aCanvas [
 { #category : #drawing }
 MenuItemMorph >> drawOn: aCanvas [
 	| stringColor |
-	self shouldBeHighlighted
-		ifTrue: [ aCanvas
-				fillRectangle: self bounds
-				fillStyle: self selectionFillStyle.
-			stringColor := self selectionTextColor ]
-		ifFalse: [ stringColor := color ].
+	stringColor := self shouldBeHighlighted
+		ifTrue: [ aCanvas fillRectangle: self bounds fillStyle: self selectionFillStyle.
+			self selectionTextColor ]
+		ifFalse: [ color ].
 	self drawIconOn: aCanvas.
 	aCanvas
 		drawString: self contents

@@ -147,8 +147,9 @@ SelectEntity >> initializeWidgets [
 
 { #category : #api }
 SelectEntity >> possibleEntities [
-	possibleEntities value ifNil: [ ^#() ]
-		ifNotNil: [ ^possibleEntities value value ]
+	^ possibleEntities value
+		ifNil: [ #() ]
+		ifNotNil: #value
 ]
 
 { #category : #api }

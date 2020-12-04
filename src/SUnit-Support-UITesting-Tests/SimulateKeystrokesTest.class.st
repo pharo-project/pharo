@@ -3,8 +3,8 @@ SUnit tests to simulate and test key strokes
 "
 Class {
 	#name : #SimulateKeystrokesTest,
-	#superclass : #UITestCase,
-	#category : #'SUnit-Support-UITesting-Tests'
+	#superclass : #AbstractUITestCase,
+	#category : #'SUnit-Support-UITesting-Tests-Base'
 }
 
 { #category : #tests }
@@ -12,8 +12,8 @@ SimulateKeystrokesTest >> testSimulateCmdKeystroke [
 
 	| ws |
 	ws := Smalltalk tools workspace open.
-	self simulateKeyStrokes: 'var := 3.'.
-	self simulateKeyStroke: $s meta.
+	self simulateKeyStrokes: 'var := 3.' inWorld: ws world.
+	self simulateKeyStroke: $s meta inWorld: ws world.
 	self assert: ws hasUnacceptedEdits equals:false.
 	ws delete.
 ]
@@ -25,7 +25,7 @@ SimulateKeystrokesTest >> testSimulateKeystroke [
 	textMorph := TextMorph new contents: ''; openInWorld.
 	self assert: textMorph canChangeText.
 	textMorph takeKeyboardFocus.
-	self simulateKeyStroke: $s.
+	self simulateKeyStroke: $s inWorld: textMorph world.
 	self assert: textMorph contents asString equals: 's'.
 	textMorph delete.
 ]
@@ -37,7 +37,7 @@ SimulateKeystrokesTest >> testSimulateKeystrokes [
 	textMorph := TextMorph new contents: ''; openInWorld.
 	self assert: textMorph canChangeText.
 	textMorph takeKeyboardFocus.
-	self simulateKeyStrokes: 'hello'.
+	self simulateKeyStrokes: 'hello' inWorld: textMorph world.
 	self assert: textMorph contents asString equals: 'hello'.
 	textMorph delete.
 ]

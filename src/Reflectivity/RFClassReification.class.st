@@ -9,7 +9,7 @@ Class {
 
 { #category : #'plugin interface' }
 RFClassReification class >> entities [
-	^{RBProgramNode. LiteralVariable. Slot}
+	^{RBProgramNode. Variable}
 ]
 
 { #category : #'plugin interface' }
@@ -35,6 +35,6 @@ RFClassReification >> genForRBProgramNode [
 { #category : #generate }
 RFClassReification >> generate [
 	^RBMessageNode 
-		receiver: (RBVariableNode named: 'self')
+		receiver: RBVariableNode selfNode
 		selector: #class
 ]

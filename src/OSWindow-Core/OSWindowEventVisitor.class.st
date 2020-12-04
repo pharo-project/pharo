@@ -11,6 +11,9 @@ Class {
 { #category : #events }
 OSWindowEventVisitor >> handleEvent: anEvent [
 	anEvent accept: self.
+	
+	"By default we perform the event default action after visiting the event. Other event handlers may decide to never perform this default action, or defer it into a separate Pharo process (to avoid race conditions) by overriding this method."
+	anEvent performDefaultAction
 ]
 
 { #category : #visiting }
@@ -132,6 +135,10 @@ OSWindowEventVisitor >> visitWindowMoveEvent: anEvent [
 
 { #category : #visiting }
 OSWindowEventVisitor >> visitWindowResizeEvent: anEvent [
+]
+
+{ #category : #visiting }
+OSWindowEventVisitor >> visitWindowResolutionChangeEvent: anEvent [
 ]
 
 { #category : #visiting }

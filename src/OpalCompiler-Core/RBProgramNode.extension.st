@@ -3,9 +3,14 @@ Extension { #name : #RBProgramNode }
 { #category : #'*OpalCompiler-Core' }
 RBProgramNode >> asDoit [
 	"The VM can only evaluate methods. wrap this ast in a doit MethodNode"
-	^RBMethodNode 
+	| methodNode |
+	
+	methodNode := RBMethodNode 
 		selector: #DoIt
 		body: self asSequenceNode transformLastToReturn.
+	methodNode source: methodNode formattedCode.
+	^methodNode
+	
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -20,9 +25,8 @@ RBProgramNode >> asDoitForContext: aContext [
 	
 	methodNode methodClass: aContext receiver class.
 	methodNode rewriteTempsForContext: aContext.
+	methodNode source: methodNode formattedCode.
 	^methodNode
-		
-	
 ]
 
 { #category : #'*OpalCompiler-Core' }

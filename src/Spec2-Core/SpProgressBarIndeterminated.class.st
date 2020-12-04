@@ -12,7 +12,7 @@ Examples
 Class {
 	#name : #SpProgressBarIndeterminated,
 	#superclass : #SpProgressBarState,
-	#category : #'Spec2-Core-Widgets-Utils'
+	#category : #'Spec2-Core-Utils'
 }
 
 { #category : #'api-events' }

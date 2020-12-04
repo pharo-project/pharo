@@ -1952,14 +1952,13 @@ MorphTreeMorph >> topHeaderBackground: aFillStyle [
 
 { #category : #accessing }
 MorphTreeMorph >> topHeaderHeight [
-	| h |
-	self topHeader 
-		ifNil: [^ 0] 
-		ifNotNil: [:th | 
+	^ self topHeader
+		ifNil: [ 0 ]
+		ifNotNil: [ :th | 
+			| h |
 			h := th borderWidth * 2.
-			self columns do: [:col | h := h max: col height].
-			^ h]
-		
+			self columns do: [ :col | h := h max: col height ].
+			h ]
 ]
 
 { #category : #accessing }

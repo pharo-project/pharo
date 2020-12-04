@@ -52,6 +52,14 @@ HiAbstractRenderer >> rowHeight [
 ]
 
 { #category : #accessing }
+HiAbstractRenderer >> rowWidthAt: rowIndex [
+	"Answer the width in pixels required by a row to be rendered."
+
+	"The +2 represents the left and right margin."
+	^ ((ruler numberOfColumnsAt: rowIndex) + 2) * self cellWidth
+]
+
+{ #category : #accessing }
 HiAbstractRenderer >> rowsInterval [
 	^ rowsInterval
 ]

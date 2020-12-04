@@ -18,6 +18,16 @@ Class {
 	#category : #'Refactoring-Tests-Core-Data'
 }
 
+{ #category : #parsing }
+RBLintRuleTestData class >> parseTreeSearcher [ 
+	^ self parseTreeSearcherClass new
+]
+
+{ #category : #parsing }
+RBLintRuleTestData class >> parseTreeSearcherClass [
+	^ RBParseTreeSearcher 
+]
+
 { #category : #foo }
 RBLintRuleTestData class >> someFooMethod [
 	^ 'does nothing here:)'

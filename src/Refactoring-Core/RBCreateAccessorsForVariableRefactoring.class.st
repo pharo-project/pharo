@@ -3,7 +3,7 @@ I am a refactoring for creating accessors for variables.
 
 I am used by a couple of other refactorings  creating new variables and accessors.
 
-My procondition is that the variable name is defined for this class.
+My precondition is that the variable name is defined for this class.
 "
 Class {
 	#name : #RBCreateAccessorsForVariableRefactoring,
@@ -59,7 +59,7 @@ RBCreateAccessorsForVariableRefactoring >> defineGetterMethod [
 	selector := self safeMethodNameFor: definingClass
 				basedOn: variableName asString.
 	definingClass 
-		compile: ('<1s><r><t>^ <2s>' expandMacrosWith: selector with: variableName)
+		compile: ('<1s><r><r><t>^ <2s>' expandMacrosWith: selector with: variableName)
 		classified: #(#accessing).
 	^selector
 ]
@@ -69,8 +69,8 @@ RBCreateAccessorsForVariableRefactoring >> defineSetterMethod [
 	| selector definingClass string |
 	definingClass := self definingClass.
 	string := self needsReturnForSetter 
-				ifTrue: ['<1s> anObject<r><t>^ <2s> := anObject']
-				ifFalse: ['<1s> anObject<r><t><2s> := anObject'].
+				ifTrue: ['<1s> anObject<r><r><t>^ <2s> := anObject']
+				ifFalse: ['<1s> anObject<r><r><t><2s> := anObject'].
 	selector := self safeMethodNameFor: definingClass
 				basedOn: variableName asString , ':'.
 	definingClass 

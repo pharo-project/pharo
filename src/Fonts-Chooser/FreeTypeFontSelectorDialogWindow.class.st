@@ -1,12 +1,14 @@
 "
 I'm a dialog to select a font. 
 
-Usage example:
+### Usage example:
 
-|fontSelector|
+```
+| fontSelector |
 fontSelector := FreeTypeFontSelectorDialogWindow new.
 UITheme builder openModal: fontSelector.
 fontSelector selectedFont inspect.
+```
 "
 Class {
 	#name : #FreeTypeFontSelectorDialogWindow,

@@ -63,11 +63,10 @@ BaselineOfDisplay >> postload: loader package: packageSpec [
 	self installBitmap.
 
 	display := (Smalltalk classNamed: #DisplayScreen) new.
-	display setExtent: (Smalltalk classNamed: #DisplayScreen) actualScreenSize depth: 2.
+	display setExtent: 0@0 depth: 2.
 	Smalltalk globals at: #Display put: display.
 	display beDisplay.
 
-	Cursor classPool at: #CurrentCursor put: Cursor new.
 	Cursor webLink. "set the webLink cursor shape"
 					
 	Cursor initialize.

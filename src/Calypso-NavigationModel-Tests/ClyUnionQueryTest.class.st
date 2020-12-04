@@ -174,7 +174,7 @@ ClyUnionQueryTest >> testCreationWithSingleSubqueryButAnotherResult [
 ClyUnionQueryTest >> testEmptySubqueriesAreForbidden [
 
 	[query subqueries: {}.
-	self assert: false description: 'empty subqueries should be forbidden'] ifError: [].
+	self assert: false description: 'empty subqueries should be forbidden'] onErrorDo: [].
 ]
 
 { #category : #tests }

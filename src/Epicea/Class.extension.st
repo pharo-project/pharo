@@ -13,13 +13,13 @@ Class >> asEpiceaRingDefinition [
 		addSharedPools: self sharedPoolNames;
 		comment: self organization classComment;
 		stamp: self organization commentStamp;
-		definitionSource: self oldDefinition;
+		definitionSource: self definition;
 		package: (EpPlatform current packageNameFor: self);
 		withMetaclass.
 
 	ring classSide 
 		traitCompositionSource: self classSide traitCompositionString;
-		definitionSource: self classSide oldDefinition;
+		definitionSource: self classSide definition;
 		addInstanceVariables: self classSide instVarNames.  
 
 	^ ring

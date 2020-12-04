@@ -10,7 +10,7 @@ I provide openInstance and openInstance: to open it. These methods make me keep 
 "
 Class {
 	#name : #SpSmokeTest,
-	#superclass : #SpTest,
+	#superclass : #SpSpecTest,
 	#category : #'Spec2-Tests-Utils'
 }
 

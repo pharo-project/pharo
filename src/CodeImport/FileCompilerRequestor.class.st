@@ -45,7 +45,7 @@ FileCompilerRequestor >> initialize [
 
 { #category : #testing }
 FileCompilerRequestor >> interactive [
-	^ interactive
+	^ interactive ifNil: [ false ]
 ]
 
 { #category : #accessing }

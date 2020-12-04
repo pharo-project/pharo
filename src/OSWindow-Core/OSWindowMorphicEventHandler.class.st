@@ -8,10 +8,10 @@ Class {
 	#name : #OSWindowMorphicEventHandler,
 	#superclass : #OSWindowEventVisitor,
 	#instVars : [
-		'morphicWorld',
-		'eventQueue'
+		'morphicWorld'
 	],
 	#classVars : [
+		'SimulateMiddleButton',
 		'SymbolCharacterMapping'
 	],
 	#pools : [
@@ -66,16 +66,44 @@ OSWindowMorphicEventHandler class >> initialize [
 	} pairsDo: [ :key :val | SymbolCharacterMapping at: key put: val charCode ]
 ]
 
+{ #category : #'event testing' }
+OSWindowMorphicEventHandler class >> simulateMiddleClick [ 
+
+	^ SimulateMiddleButton ifNil: [ SimulateMiddleButton := true ]
+]
+
+{ #category : #'event testing' }
+OSWindowMorphicEventHandler class >> simulateMiddleClick: aValue [
+
+	SimulateMiddleButton := aValue
+]
+
+{ #category : #asserting }
+OSWindowMorphicEventHandler class >> simulateMiddleClickSettingOn: aBuilder [
+	<systemsettings>
+	
+	(aBuilder setting: #simulateMiddleClick)
+		target: self;
+		default: true;
+		parent: #morphic;
+		label: 'Simulate Middle Mouse Button';
+		description: 'Sets if we are simulating the middle button by doing Alt + Left button'
+]
+
 { #category : #private }
 OSWindowMorphicEventHandler >> activeHand [
 	^ self morphicWorld activeHand
 ]
 
 { #category : #converting }
-OSWindowMorphicEventHandler >> convertButton: osButton [
-	osButton = 1 ifTrue: [ ^ MouseButtonEvent redButton ].
-	osButton = 2 ifTrue: [ ^ MouseButtonEvent blueButton ].
-	osButton = 3 ifTrue: [ ^ MouseButtonEvent yellowButton ].
+OSWindowMorphicEventHandler >> convertButtonFromEvent: anEvent [
+
+	(self class simulateMiddleClick and: [anEvent button = 1 and: [ anEvent modifiers alt ]])
+		ifTrue: [ ^ MouseButtonEvent blueButton ].
+
+	anEvent button = 1 ifTrue: [ ^ MouseButtonEvent redButton ].
+	anEvent button = 2 ifTrue: [ ^ MouseButtonEvent blueButton ].
+	anEvent button = 3 ifTrue: [ ^ MouseButtonEvent yellowButton ].
 ]
 
 { #category : #converting }
@@ -101,6 +129,12 @@ OSWindowMorphicEventHandler >> convertModifiers: modifiers [
 	^ buttons
 ]
 
+{ #category : #converting }
+OSWindowMorphicEventHandler >> convertPosition: aPosition [
+	morphicWorld ifNil: [ ^ aPosition ].
+	^ morphicWorld worldState worldRenderer convertWindowMouseEventPosition: aPosition
+]
+
 { #category : #events }
 OSWindowMorphicEventHandler >> dispatchMorphicEvent: anEvent [
 	morphicWorld defer: [
@@ -114,21 +148,6 @@ OSWindowMorphicEventHandler >> dispatchMorphicEvent: anEvent [
 ]
 
 { #category : #events }
-OSWindowMorphicEventHandler >> enqueue: aMorphicEvent [
-	"Put morphic event into receiver's internal queue. 
-	All events in queue will be processed later, by UI process, once it will get there."
-	
-	self eventQueue nextPut: aMorphicEvent.
-]
-
-{ #category : #accessing }
-OSWindowMorphicEventHandler >> eventQueue [
-	"using lazy-initialize here to deal with bootstrapping issues,
-	since existing instances originally has no queue"
-	^ eventQueue ifNil: [ eventQueue := WaitfreeQueue new ]
-]
-
-{ #category : #events }
 OSWindowMorphicEventHandler >> handleEvent: anEvent [
 	
 	"convert the event to morphic one, and dispatch it whatever..."
@@ -139,11 +158,6 @@ OSWindowMorphicEventHandler >> handleEvent: anEvent [
 		
 	self dispatchMorphicEvent: morphicEvent
 	
-]
-
-{ #category : #initialization }
-OSWindowMorphicEventHandler >> initialize [
-	eventQueue := WaitfreeQueue new.
 ]
 
 { #category : #visiting }
@@ -174,10 +188,12 @@ OSWindowMorphicEventHandler >> visitKeyDownEvent: anEvent [
 		position: anEvent position
 		keyValue: (self mapSymbolToKeyValue: anEvent symbol)
 		charCode: (self mapSymbolToKeyValue: anEvent symbol)
-		hand:  self activeHand
+		hand: self activeHand
 		stamp: Time millisecondClockValue.
-	keyEvent scanCode: anEvent scanCode.
-	self enqueue: keyEvent.
+	keyEvent
+		scanCode: anEvent scanCode;
+		key: (OSKeySymbols mapKeySymbolValueToKeyboardKey: anEvent symbol).
+	self dispatchMorphicEvent: keyEvent.
 	
 	"This is for ctrl/alt held alone makes morphic think that null character is good text input"
 	keyEvent keyValue = 0 ifTrue: [ ^ self ]. 
@@ -200,7 +216,7 @@ OSWindowMorphicEventHandler >> visitKeyDownEvent: anEvent [
 		position: anEvent position
 		keyValue: (self mapSymbolToKeyValue: anEvent symbol)
 		charCode: (self mapSymbolToKeyValue: anEvent symbol)
-		hand:  morphicWorld activeHand
+		hand: morphicWorld activeHand
 		stamp: Time millisecondClockValue.
 	keyEvent2 scanCode: anEvent scanCode.
 
@@ -216,9 +232,11 @@ OSWindowMorphicEventHandler >> visitKeyUpEvent: anEvent [
 		position: anEvent position
 		keyValue: (self mapSymbolToKeyValue: anEvent symbol)
 		charCode: (self mapSymbolToKeyValue: anEvent symbol)
-		hand:  self activeHand
+		hand: self activeHand
 		stamp: Time millisecondClockValue.
-	keyEvent scanCode: anEvent scanCode.
+	keyEvent
+		scanCode: anEvent scanCode;
+		key: (OSKeySymbols mapKeySymbolValueToKeyboardKey: anEvent symbol).
 	^ keyEvent
 ]
 
@@ -227,7 +245,7 @@ OSWindowMorphicEventHandler >> visitMouseButtonPressEvent: anEvent [
 	anEvent isWheel ifTrue: [ 
 		^ MouseWheelEvent new 
 			setType: #mouseWheel
-			position: anEvent position
+			position: (self convertPosition: anEvent position)
 			direction: anEvent wheelDirection
 			buttons: (self convertModifiers: anEvent modifiers)
 			hand: self activeHand
@@ -235,9 +253,9 @@ OSWindowMorphicEventHandler >> visitMouseButtonPressEvent: anEvent [
 			
 	^ MouseButtonEvent new
 		setType: #mouseDown 
-		position: anEvent position 
-		which: (self convertButton: anEvent button)
-		buttons: (self convertModifiers: anEvent modifiers) | (self convertButton: anEvent button)
+		position: (self convertPosition: anEvent position)
+		which: (self convertButtonFromEvent: anEvent)
+		buttons: (self convertModifiers: anEvent modifiers) | (self convertButtonFromEvent: anEvent)
 		hand: self activeHand
 		stamp: Time millisecondClockValue
 ]
@@ -248,24 +266,24 @@ OSWindowMorphicEventHandler >> visitMouseButtonReleaseEvent: anEvent [
 
 	^ MouseButtonEvent new
 		setType: #mouseUp
-		position: anEvent position 
-		which: (self convertButton: anEvent button)
-		buttons: (self convertModifiers: anEvent modifiers) | (self convertModifiers: anEvent modifiers)
+		position: (self convertPosition: anEvent position)
+		which: (self convertButtonFromEvent: anEvent)
+		buttons: (self convertModifiers: anEvent modifiers)
 		hand: self activeHand
 		stamp: Time millisecondClockValue
 ]
 
 { #category : #visiting }
 OSWindowMorphicEventHandler >> visitMouseMoveEvent: anEvent [
-	| oldPos |
+	| oldPos newPos |
 	oldPos := morphicWorld activeHand ifNil: [ 0@0 ] ifNotNil: [:hand | hand position ].
 	morphicWorld beCursorOwner.
-	
+	newPos := self convertPosition: anEvent position.
 	^ MouseMoveEvent basicNew
 		setType: #mouseMove 
 		startPoint: oldPos
-		endPoint: anEvent position 
-		trail: { oldPos. anEvent position }
+		endPoint: newPos 
+		trail: { oldPos. newPos }
 		buttons: (self convertModifiers: anEvent modifiers)
 		hand: self activeHand
 		stamp: Time millisecondClockValue
@@ -279,7 +297,7 @@ OSWindowMorphicEventHandler >> visitMouseWheelEvent: anEvent [
 	
 	^ MouseWheelEvent new 
 		setType: #mouseWheel
-		position: anEvent position
+		position: (self convertPosition: anEvent position)
 		direction: (vertical > 0 ifTrue: [Character arrowUp] ifFalse: [Character arrowDown])
 		buttons: (self convertModifiers: anEvent modifiers)
 		hand: self activeHand
@@ -343,5 +361,11 @@ OSWindowMorphicEventHandler >> visitWindowDropEvent: anEvent [
 OSWindowMorphicEventHandler >> visitWindowResizeEvent: anEvent [
 
 	"window resized"
+	morphicWorld worldState worldRenderer checkForNewScreenSize.
+]
+
+{ #category : #visiting }
+OSWindowMorphicEventHandler >> visitWindowResolutionChangeEvent: anEvent [
+	"Resolution (dpi) changed. For now just check for a new size."
 	morphicWorld worldState worldRenderer checkForNewScreenSize.
 ]

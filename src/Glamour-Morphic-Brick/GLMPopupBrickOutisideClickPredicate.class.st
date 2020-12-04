@@ -15,3 +15,11 @@ GLMPopupBrickOutisideClickPredicate >> popup: aPopupBrick event: anEvent [
 	^ (anEvent type = #mouseDown) and: [
 		(aPopupBrick isInsideOfPopupBrick: anEvent) not ]
 ]
+
+{ #category : #predicate }
+GLMPopupBrickOutisideClickPredicate >> popupLostFocus: aPopupBrick [
+	"Return true when user clicks outside of a popup brick, false otherwise"
+	<return: #Boolean>
+
+	^ true
+]

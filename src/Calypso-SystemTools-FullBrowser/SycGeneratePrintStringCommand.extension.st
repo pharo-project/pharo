@@ -4,5 +4,5 @@ Extension { #name : #SycGeneratePrintStringCommand }
 SycGeneratePrintStringCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: ClyClassContextOfFullBrowser
+	^CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: ClyFullBrowserClassContext
 ]

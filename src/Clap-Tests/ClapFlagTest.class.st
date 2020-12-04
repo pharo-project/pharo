@@ -11,7 +11,8 @@ ClapFlagTest >> classToTest [
 
 { #category : #tests }
 ClapFlagTest >> testMatchesLongForm [
-	| argv flagName match |
+	| subject argv flagName match |
+	subject := self namedSubject.
 	flagName := '--' , self subjectName.
 	argv := { flagName. #remainder } readStream.
 	
@@ -27,7 +28,8 @@ ClapFlagTest >> testMatchesLongForm [
 
 { #category : #tests }
 ClapFlagTest >> testMatchesShortForm [
-	| argv flagName match |
+	| subject argv flagName match |
+	subject := self namedSubject.
 	flagName := '-' , (self subjectName first: 1).
 	argv := { flagName. #remainder } readStream.
 	
@@ -43,7 +45,8 @@ ClapFlagTest >> testMatchesShortForm [
 
 { #category : #tests }
 ClapFlagTest >> testMismatchesWrongLongForm [
-	| argv badFlag match |
+	| subject argv badFlag match |
+	subject := self namedSubject.
 	badFlag := '--' , self subjectName , 'NOT'.
 	argv := { badFlag } readStream.
 	
@@ -59,7 +62,8 @@ ClapFlagTest >> testMismatchesWrongLongForm [
 
 { #category : #tests }
 ClapFlagTest >> testMismatchesWrongShortForm [
-	| argv badFlag match |
+	| subject argv badFlag match |
+	subject := self namedSubject.
 	badFlag := '-' , (self subjectName first: 1) asUppercase.
 	argv := { badFlag } readStream.
 	

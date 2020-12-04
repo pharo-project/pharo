@@ -38,6 +38,18 @@ SpNotebookAdapterTest >> testRemoveAll [
 ]
 
 { #category : #tests }
+SpNotebookAdapterTest >> testRemoveMiddlePageWhenLastIsSelected [
+
+	presenter addPage: (SpNotebookPage title: 'Mock3' provider: [ SpLabelPresenter new ]).
+	self assert: self adapter numberOfTabs equals: 3.
+	presenter selectPageIndex: 3.
+	self assert: self adapter selectedPageName equals: 'Mock3'.
+	presenter removePageAt: 2.
+	self assert: self adapter numberOfTabs equals: 2.
+	self assert: self adapter selectedPageName equals: 'Mock3'
+]
+
+{ #category : #tests }
 SpNotebookAdapterTest >> testRemovePage [
 	| page |
 	presenter addPage: (page := SpNotebookPage title: 'Mock3' provider: [ SpLabelPresenter new ]).
@@ -48,8 +60,11 @@ SpNotebookAdapterTest >> testRemovePage [
 
 { #category : #tests }
 SpNotebookAdapterTest >> testRemovePageAt [
+
 	presenter addPage: (SpNotebookPage title: 'Mock3' provider: [ SpLabelPresenter new ]).
 	self assert: self adapter numberOfTabs equals: 3.
+	presenter selectPageIndex: 1.
+	self assert: self adapter selectedPageName equals: 'Mock'.
 	presenter removePageAt: 2.
 	self assert: self adapter numberOfTabs equals: 2.
 	self assert: self adapter selectedPageName equals: 'Mock'
@@ -59,4 +74,17 @@ SpNotebookAdapterTest >> testRemovePageAt [
 SpNotebookAdapterTest >> testSelectedPage [
 	presenter selectPageIndex: 2.
 	self assert: self adapter selectedPageName equals: 'Mock2'
+]
+
+{ #category : #tests }
+SpNotebookAdapterTest >> testSelectingPageShouldAnnounceChangeEvent [
+	| change |
+
+	self adapter widget tabSelectorMorph selectedIndex: 1.
+	self adapter widget announcer when: SpNotebookPageChanged do: [ :ann | change := ann ].
+	
+	self adapter widget tabSelectorMorph selectedIndex: 2.
+	
+	self assert: change oldPage model title equals: 'Mock'.
+	self assert: change page model title equals: 'Mock2'
 ]

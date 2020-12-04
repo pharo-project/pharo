@@ -1095,20 +1095,12 @@ ComposablePresenter >> whenWindowChanged: aBlock [
 
 { #category : #accessing }
 ComposablePresenter >> widget [
-
-	^ spec
-		ifNil: [ nil ]
-		ifNotNil: [:s | s instance ]
+	^ spec ifNotNil: [ :s | s instance ]
 ]
 
 { #category : #accessing }
 ComposablePresenter >> window [
-
-	^ window value
-		ifNil: [
-			owner
-				ifNil: [ nil ]
-				ifNotNil: [:o | o window ]]
+	^ window value ifNil: [ owner ifNotNil: [ :o | o window ] ]
 ]
 
 { #category : #api }

@@ -13,10 +13,33 @@ Class {
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
+{ #category : #variables }
+OCASTSemanticAnalyzer >> analyseEscapingRead: var [
+	var markRead.
+	(var scope outerNotOptimizedScope ~= scope outerNotOptimizedScope ) ifFalse: [ ^self ].
+	"only escaping when they will end up in different closures"
+	var markEscapingRead.
+	"if we read a variable in a loop that is a repeated write, it need to be marked as escaping write"	
+	(scope isInsideOptimizedLoop and: [var isRepeatedWrite])
+				ifTrue: [var markEscapingWrite]
+]
+
+{ #category : #variables }
+OCASTSemanticAnalyzer >> analyseEscapingWrite: var [
+	(var scope outerNotOptimizedScope ~= scope outerNotOptimizedScope) 
+	"only escaping when they will end up in different closures"
+			ifTrue: [ var markEscapingWrite].
+	"if we write a variable in a loop, mark it as a repeated Write"	
+	scope isInsideOptimizedLoop
+					ifTrue: [ var markRepeatedWrite ]
+					ifFalse: [ var markWrite ]
+]
+
 { #category : #api }
 OCASTSemanticAnalyzer >> analyze: aNode [
 	self visitNode: aNode.
-	OCASTClosureAnalyzer new visitNode: aNode
+	OCASTClosureAnalyzer new visitNode: aNode.
+	OCASTMethodMetadataAnalyser new visitNode: aNode
 ]
 
 { #category : #accessing }
@@ -36,12 +59,12 @@ OCASTSemanticAnalyzer >> compilationContext: aCompilationContext [
 
 { #category : #variables }
 OCASTSemanticAnalyzer >> declareArgumentNode: aVariableNode [
-	^self declareVariableNode: aVariableNode as: OCArgumentVariable new
+	^self declareVariableNode: aVariableNode as: ArgumentVariable new
 ]
 
 { #category : #variables }
 OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode [
-	^self declareVariableNode: aVariableNode as: OCTempVariable new
+	^self declareVariableNode: aVariableNode as: TemporaryVariable new
 ]
 
 { #category : #variables }
@@ -49,17 +72,11 @@ OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode as: anOCTempVariable
 	| name var |
 	name := aVariableNode name.
 	var := scope lookupVarForDeclaration: name.
-	var
-		ifNotNil: [ 
-			self variable: aVariableNode shadows: var.
-			(var scope ~= scope)
-				ifTrue: [ 
-					"Create new var that shadows outer one"
-					var := scope addTemp: anOCTempVariable withName: name ]
-				]
-		ifNil: [ 
-			"new var"
-			var := scope addTemp: anOCTempVariable withName: name ].
+	var ifNotNil: [ 
+		"Another variable with same name is visible from current scope.
+		Warn about the name clash and if proceed add new temp to shadow existing var" 
+		self variable: aVariableNode shadows: var ].
+	var := scope addTemp: anOCTempVariable withName: name.
 	aVariableNode binding: var.
 	^ var
 ]
@@ -68,10 +85,11 @@ OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode as: anOCTempVariable
 OCASTSemanticAnalyzer >> lookupVariableForRead: aVariableNode [
 
 	| var |
+	
 	var := scope lookupVar: aVariableNode name.
+	
 	var ifNil: [^var].
-	(var isTemp and: [var scope outerNotOptimizedScope ~= scope outerNotOptimizedScope] )  "only escaping when they will end up in different closures"
-		ifTrue: [var markEscapingRead].
+	var isLocalVariable ifTrue: [ self analyseEscapingRead: var].
 	^var
 ]
 
@@ -83,12 +101,9 @@ OCASTSemanticAnalyzer >> lookupVariableForWrite: aVariableNode [
 	var := scope lookupVar: aVariableNode name.
 
 	var ifNil: [^var].
-	var isSpecialVariable ifTrue: [ self storeIntoSpecialVariable: aVariableNode ].
+	var isReservedVariable ifTrue: [ self storeIntoReservedVariable: aVariableNode ].
 	var isWritable ifFalse: [ self storeIntoReadOnlyVariable: aVariableNode ].
-	
-	var isTemp ifTrue: [
-		(var scope outerNotOptimizedScope ~= scope outerNotOptimizedScope) "only escaping when they will end up in different closures"
-			ifTrue: [ var markEscapingWrite]].
+	var isLocalVariable ifTrue: [ self analyseEscapingWrite: var ].
 	^var
 ]
 
@@ -109,9 +124,9 @@ OCASTSemanticAnalyzer >> storeIntoReadOnlyVariable: variableNode [
 ]
 
 { #category : #'error handling' }
-OCASTSemanticAnalyzer >> storeIntoSpecialVariable: variableNode [
+OCASTSemanticAnalyzer >> storeIntoReservedVariable: variableNode [
 	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ self ].
-	^ OCStoreIntoSpecialVariableError new
+	^ OCStoreIntoReservedVariableError new
 		node: variableNode;
 		compilationContext: compilationContext;
 		messageText: 'Cannot store into';
@@ -121,7 +136,7 @@ OCASTSemanticAnalyzer >> storeIntoSpecialVariable: variableNode [
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
 	compilationContext optionSkipSemanticWarnings
-		ifTrue: [ ^OCUndeclaredVariable new name: variableNode name ].
+		ifTrue: [ ^UndeclaredVariable named: variableNode name asSymbol ].
 	^ OCUndeclaredVariableWarning new
 		node: variableNode;
 		compilationContext: compilationContext;
@@ -130,7 +145,6 @@ OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> uninitializedVariable: variableNode [
-	variableNode binding markRead.
 	variableNode propertyAt: #semanticWarning put: #unitialized.
 ]
 
@@ -150,19 +164,16 @@ OCASTSemanticAnalyzer >> variable: variableNode shadows: semVar [
 		signal
 ]
 
-{ #category : #visitor }
+{ #category : #visiting }
 OCASTSemanticAnalyzer >> visitAssignmentNode: anAssignmentNode [
 	| var |
 	self visitNode: anAssignmentNode value.
 	var := (self lookupVariableForWrite: anAssignmentNode variable)
 		ifNil: [ self undeclaredVariable: anAssignmentNode variable ].
-	scope isInsideOptimizedLoop
-		ifTrue: [ var markRepeatedWrite ]
-		ifFalse: [ var markWrite ].
 	anAssignmentNode variable binding: var
 ]
 
-{ #category : #visitor }
+{ #category : #visiting }
 OCASTSemanticAnalyzer >> visitBlockNode: aBlockNode [
 	blockcounter := self blockcounter + 1.
 
@@ -175,8 +186,9 @@ OCASTSemanticAnalyzer >> visitBlockNode: aBlockNode [
 	scope := scope popScope.
 ]
 
-{ #category : #visitor }
+{ #category : #visiting }
 OCASTSemanticAnalyzer >> visitInlinedBlockNode: aBlockNode [
+
 	scope := scope newOptimizedBlockScope: blockcounter.
 	aBlockNode isInlinedLoop ifTrue: [scope markInlinedLoop]. 
 	aBlockNode scope: scope. scope node: aBlockNode.
@@ -185,10 +197,10 @@ OCASTSemanticAnalyzer >> visitInlinedBlockNode: aBlockNode [
 	scope := scope popScope.
 ]
 
-{ #category : #visitor }
+{ #category : #visiting }
 OCASTSemanticAnalyzer >> visitMethodNode: aMethodNode [
 
-	scope := compilationContext scope newMethodScope. 
+	scope := OCMethodScope new outerScope: compilationContext scope.
 	aMethodNode scope: scope.  scope node: aMethodNode.
 	aMethodNode arguments do: [:node | self declareArgumentNode: node ].
 	aMethodNode pragmas do: [:each | self visitNode: each].
@@ -196,39 +208,37 @@ OCASTSemanticAnalyzer >> visitMethodNode: aMethodNode [
 
 ]
 
-{ #category : #visitor }
+{ #category : #visiting }
 OCASTSemanticAnalyzer >> visitPragmaNode: aPragmaNode [
+
+	| varNode |
 	super visitPragmaNode: aPragmaNode.
-	(aPragmaNode selector = #compilerOptions:)
-		ifTrue: [ aPragmaNode asPragma sendTo: aPragmaNode methodNode compilationContext ].
+	aPragmaNode selector = #compilerOptions: ifTrue: [ 
+		aPragmaNode asPragma sendTo:
+			aPragmaNode methodNode compilationContext ].
+	
+	"if the pragma is a primitive that defines an error variable, we need to declare a temp
+	for it"	
+	aPragmaNode isPrimitiveError ifFalse: [ ^ self ].
+	varNode := RBVariableNode named: aPragmaNode primitiveErrorVariableName.
+	self declareVariableNode: varNode as: (PrimitiveErrorVariable node: varNode).
 ]
 
-{ #category : #visitor }
+{ #category : #visiting }
 OCASTSemanticAnalyzer >> visitSequenceNode: aSequenceNode [
 	
 	aSequenceNode temporaries do: [ :node | self declareVariableNode: node ].
-	aSequenceNode parent isMethod
-		ifTrue: [ 
-			aSequenceNode parent pragmas
-				detect: [ :pragma | pragma isPrimitiveError ]
-				ifFound: [ :pragma | 
-					self declareVariableNode: (RBVariableNode named: (pragma argumentAt: #error:) value asString) ] ].
 	aSequenceNode statements do: [ :each | self visitNode: each ].
-	aSequenceNode temporaries
-		reverseDo: [ :node | 
-			node binding isUnused
-				ifTrue: [ self unusedVariable: node ] ]
+	aSequenceNode temporaries reverseDo: [ :node | 
+			node variable isUsed
+				ifFalse: [ self unusedVariable: node ] ]
 ]
 
-{ #category : #visitor }
+{ #category : #visiting }
 OCASTSemanticAnalyzer >> visitVariableNode: aVariableNode [
 	| var |
-	var := (self lookupVariableForRead: aVariableNode) ifNil: [(self undeclaredVariable: aVariableNode)].
-	(var isTemp and: [var isEscaping and: [scope outerScope isInsideOptimizedLoop]])
-		ifTrue: [
-			 "only variables written within the loop needs to be marked as escaping write"
-			var isRepeatedWrite ifTrue: [var markEscapingWrite].
-			var isRead ifTrue: [var markEscapingRead]].
+	var := (self lookupVariableForRead: aVariableNode) 
+		ifNil: [(self undeclaredVariable: aVariableNode)].
 	aVariableNode binding: var.
 	var isUninitialized ifTrue: [self uninitializedVariable: aVariableNode].
 ]

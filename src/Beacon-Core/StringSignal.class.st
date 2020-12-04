@@ -1,9 +1,10 @@
 "
 This is a simple signal that holds a message.
 
-Usage:
+###Usage:
+```
 	(StringSignal emit: 'This is a message') message
-	
+```	
 
 	
 
@@ -26,7 +27,9 @@ StringSignal class >> emit: aString [
 
 { #category : #'instance creation' }
 StringSignal class >> log: aString [
-	self deprecated: 'Should use #emit:'.
+	self 
+		deprecated: 'Should use #emit:' 
+		transformWith: '`@receiver log: `@name' -> '`@receiver emit: `@name'.
 	^ self emit: aString
 ]
 

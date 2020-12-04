@@ -1,3 +1,6 @@
+"
+I'm the adapter used to bridge a ToggleButton and its morphic representation.
+"
 Class {
 	#name : #SpMorphicToggleButtonAdapter,
 	#superclass : #SpAbstractMorphicAdapter,
@@ -6,28 +9,31 @@ Class {
 
 { #category : #factory }
 SpMorphicToggleButtonAdapter >> buildWidget [
-	| checkButton |
 
+	| checkButton |
 	checkButton := PluggableToggleButtonMorph
-		on: self 
-		getState: #state
-		action:  #toggleAction:
-		label: #label 
-		menu: nil. 	
-	
-	checkButton 
+		               on: self
+		               getState: #state
+		               action: #toggleAction:
+		               label: #label
+		               menu: nil.
+
+	checkButton
 		icon: self icon;
-		label:	 self label; 
-		hResizing: #spaceFill; 
-		vResizing: #shrinkWrap; 
-		setBalloonText: self help;
+		label: self getLabelText;
+		hResizing: #spaceFill;
+		vResizing: #shrinkWrap;
+		setBalloonText: self getHelpText;
 		getEnabledSelector: #enabled;
 		dragEnabled: self dragEnabled;
 		dropEnabled: self dropEnabled.
-			
-	self presenter whenLabelChangedDo: [ :newLabel | checkButton label: newLabel ].
+
+	self presenter whenLabelChangedDo: [ :newLabel | 
+		checkButton label: (newLabel ifNotNil: [ :aString | 
+				 aString localizedForPresenter: self presenter ]) ].
 	self presenter whenIconChangedDo: [ checkButton icon: self icon ].
-	self presenter whenChangedDo: [ checkButton pressed: self model state ].
+	self presenter whenChangedDo: [ 
+		checkButton pressed: self model state ].
 
 	^ checkButton
 ]
@@ -37,6 +43,18 @@ SpMorphicToggleButtonAdapter >> clicked [
 	
 	widget performAction.
 	self model state: widget isPressed
+]
+
+{ #category : #private }
+SpMorphicToggleButtonAdapter >> getHelpText [
+
+	^ self presenter help ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
+]
+
+{ #category : #private }
+SpMorphicToggleButtonAdapter >> getLabelText [
+
+	^ self presenter label ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
 ]
 
 { #category : #accessing }
@@ -54,7 +72,7 @@ SpMorphicToggleButtonAdapter >> icon [
 { #category : #'widget API' }
 SpMorphicToggleButtonAdapter >> label [
 	
-	^ self presenter label
+	^ self getLabelText
 ]
 
 { #category : #'widget API' }

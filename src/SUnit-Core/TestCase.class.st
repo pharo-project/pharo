@@ -120,10 +120,8 @@ TestCase class >> buildSuiteFromSelectors [
 ]
 
 { #category : #'accessing comment' }
-TestCase class >> comment [
-	^super hasComment
-		ifTrue: [ super comment ] 
-		ifFalse: ['This class contains tests'].
+TestCase class >> classCommentBlank [
+	^'This class contains tests'
 ]
 
 { #category : #coverage }
@@ -211,12 +209,16 @@ TestCase class >> defaultTimeLimitSecs: aNumber [
 TestCase class >> defaultTimeLimitSettingOn: aBuilder [
 	<systemsettings>
 	
-	(aBuilder setting: #defaultTimeLimitSecs)
-		target: self;
-		parent: #pharoSystem ;
-		default: 10.0;
-		label: 'Default time limit for tests (secs)' ;
-		description: 'Detault time limit in seconds for test execution'
+	(aBuilder group: #sunit)
+		label: 'SUnit';
+		parent: #pharoSystem;
+		description: 'SUnit';
+		with: [  
+			(aBuilder setting: #defaultTimeLimitSecs)
+				target: self;
+				default: 10.0;
+				label: 'Default time limit for tests (secs)' ;
+				description: 'Detault time limit in seconds for test execution']
 ]
 
 { #category : #history }
@@ -295,12 +297,11 @@ TestCase class >> historyAnnouncer [
 
 { #category : #'initialize - event' }
 TestCase class >> initialize [
-	super initialize.
 	SystemAnnouncer uniqueInstance unsubscribe: self.
 	SystemAnnouncer uniqueInstance weak
 		when: MethodAdded, MethodModified, MethodRemoved 
 		send: #methodChanged: 
-		to: self.
+		to: self
 ]
 
 { #category : #testing }
@@ -413,15 +414,8 @@ TestCase class >> lookupHierarchyRoot [
 TestCase class >> methodChanged: anEvent [
 	"Remove the changed method from the known test results."
 	
-	| cls sel |
-	cls := anEvent methodClass.
-	(cls inheritsFrom: TestCase)
-		ifFalse: [^ self].
-	sel := anEvent selector.
-	(sel beginsWith: 'test')
-		ifFalse: [^ self].
-	self classForTestResult removeFromTestHistory: sel in: cls.
-
+	anEvent method isTestMethod ifFalse: [ ^ self ].
+	self classForTestResult removeFromTestHistory: anEvent selector in: anEvent methodClass
 ]
 
 { #category : #testing }
@@ -555,6 +549,11 @@ TestCase class >> testSelectors [
 	^(self selectors select: [ :each | (each beginsWith: 'test') and: [each numArgs isZero]])
 ]
 
+{ #category : #'as yet unclassified' }
+TestCase class >> whichClassIncludesTestSelector: aSymbol [
+	^self whichClassIncludesSelector: aSymbol
+]
+
 { #category : #dependencies }
 TestCase >> addDependentToHierachy: anObject [ 
 	"an empty method. for Composite compability with TestSuite"
@@ -620,6 +619,16 @@ TestCase >> executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionC
  	false] on: anExceptionalEvent
 		do: [:ex | ex return: (ex description includesSubstring: aString) ]
 			
+]
+
+{ #category : #accessing }
+TestCase >> executionEnvironment [
+	^CurrentExecutionEnvironment value
+]
+
+{ #category : #accessing }
+TestCase >> executionProcessMonitor [
+	^self executionEnvironment processMonitor
 ]
 
 { #category : #testing }
@@ -719,7 +728,7 @@ TestCase >> printTestSelectorOn: aStream [
 	testSelector
 		ifNotNil: [ 
 			| class |
-			class := self class whichClassIncludesSelector: testSelector.
+			class := self class whichClassIncludesTestSelector: testSelector.
 			class ~= self class
 				ifTrue: [ self printTestSelectorDefiningClass: class on: aStream ].
 			aStream
@@ -816,5 +825,5 @@ TestCase >> tearDown [
 
 { #category : #accessing }
 TestCase >> timeLimit: aDuration [
-	^TestExecutionEnvironment maxTimeForTest: aDuration
+	^self executionEnvironment maxTimeForTest: aDuration
 ]

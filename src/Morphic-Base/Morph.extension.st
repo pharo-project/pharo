@@ -51,6 +51,15 @@ Morph >> allowsKeymapping: aBoolean [
 ]
 
 { #category : #'*Morphic-Base' }
+Morph >> asText [
+
+	| anchor embedMorphSignal |
+    anchor := TextAnchor new anchoredMorph: self.
+    embedMorphSignal := (Character value: 1) asString. "required by the scanner"
+    ^ Text string: embedMorphSignal attribute: anchor.
+]
+
+{ #category : #'*Morphic-Base' }
 Morph >> assureLayoutProperties [
 	| props |
 	props := self layoutProperties.
@@ -349,7 +358,7 @@ Morph >> justDroppedInto: aMorph event: anEvent [
 
 	"An object launched by certain parts-launcher mechanisms should end up fully visible..."
 	(self hasProperty: #beFullyVisibleAfterDrop) 
-		ifTrue: [aMorph == self currentWorld 
+		ifTrue: [aMorph == self world 
 			ifTrue: [self goHome].
 			self removeProperty: #beFullyVisibleAfterDrop].
 

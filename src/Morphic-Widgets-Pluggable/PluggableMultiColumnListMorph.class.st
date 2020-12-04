@@ -88,7 +88,7 @@ PluggableMultiColumnListMorph >> getListSize [
 { #category : #searching }
 PluggableMultiColumnListMorph >> listForSearching [
 
-	^ super listForSearching collect: #first
+	^ super listForSearching collect: [:each | each first ]
 ]
 
 { #category : #accessing }

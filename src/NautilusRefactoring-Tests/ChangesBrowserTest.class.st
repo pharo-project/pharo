@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'browser'
 	],
-	#category : #'NautilusRefactoring-Tests'
+	#category : #'NautilusRefactoring-Tests-Utilities'
 }
 
 { #category : #running }

@@ -92,7 +92,7 @@ DateAndTime class >> current [
 
 { #category : #'instance creation queries' }
 DateAndTime class >> epoch [
-  "Answer a DateAndTime representing the Squeak epoch: 1 January 1901"
+  "Answer a DateAndTime representing the epoch: 1 January 1901"
 
   ^ (self julianDayNumber: SqueakEpoch) offset: 0.
   
@@ -188,7 +188,7 @@ DateAndTime class >> millisecondClockValue [
 
 { #category : #'instance creation' }
 DateAndTime class >> new [
-	"Answer a DateAndTime representing the Squeak epoch: 1 January 1901"
+	"Answer a DateAndTime representing the epoch: 1 January 1901"
 
 	^ self epoch offset: self localOffset 
 	

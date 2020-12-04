@@ -359,7 +359,8 @@ InstructionStream >> willBlockReturn [
 InstructionStream >> willCreateBlock [
 	"next bytecode is a block creation"
 
-	^ self method encoderClass isCreateBlockAt: pc in: self method
+	^ (self method encoderClass isCreateBlockAt: pc in: self method) or: 
+		[ self method encoderClass isCreateFullBlockAt: pc in: self method]
 ]
 
 { #category : #'*Debugging-Core' }

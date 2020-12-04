@@ -11,8 +11,9 @@ ClapCommandTest >> classToTest [
 
 { #category : #tests }
 ClapCommandTest >> testAddFlag [
-	| flag |
-	flag := ClapFlag withName: 'flag'.
+	| subject flag |
+	subject := self namedSubject.
+	flag := ClapFlag id: #flag.
 	subject add: flag.
 	
 	self assert: (subject flags includes: flag)
@@ -20,8 +21,9 @@ ClapCommandTest >> testAddFlag [
 
 { #category : #tests }
 ClapCommandTest >> testAddSubcommand [
-	| cmd |
-	cmd := ClapCommand withName: 'cmd'.
+	| subject cmd |
+	subject := self namedSubject.
+	cmd := ClapCommand id: #cmd.
 	subject add: cmd.
 	
 	self assert: (subject subcommands includes: cmd)
@@ -29,7 +31,8 @@ ClapCommandTest >> testAddSubcommand [
 
 { #category : #tests }
 ClapCommandTest >> testMatches [
-	| arg argv match |
+	| subject arg argv match |
+	subject := self namedSubject.
 	arg := self subjectName copy.
 	argv := { arg. #remainder } readStream.
 	
@@ -42,21 +45,23 @@ ClapCommandTest >> testMatches [
 
 { #category : #tests }
 ClapCommandTest >> testMatchesWithSingleFlag [
-	| argv match |
-	subject add: (ClapFlag withName: 'bar').
+	| subject argv match |
+	subject := self namedSubject.
+	subject add: (ClapFlag id: #bar).
 	argv := { self subjectName . '--bar' . #remainder } readStream.
 		
 	match := subject matchOn: argv.
 	
 	self deny: match isMismatch.
-	self assert: (match includesMatchNamed: 'bar').
+	self assert: (match includesMatchOf: #bar).
 	self assert: argv next equals: #remainder
 ]
 
 { #category : #tests }
 ClapCommandTest >> testMatchesWithSinglePositional [
-	| argv match |
-	subject add: (ClapPositional withName: 'bar').
+	| subject argv match |
+	subject := self namedSubject.
+	subject add: (ClapPositional id: #bar).
 	argv := { self subjectName copy. 'valueforbar'. #remainder } readStream.
 
 	match := subject matchOn: argv.
@@ -65,30 +70,32 @@ ClapCommandTest >> testMatchesWithSinglePositional [
 	self
 		assert: match word
 		equals: self subjectName.
-	self assert: (match includesMatchNamed: 'bar').
+	self assert: (match includesMatchOf: #bar).
 	self
-		assert: (match atName: 'bar') word
+		assert: (match at: #bar) word
 		equals: 'valueforbar'.
 	self assert: argv next equals: #remainder
 ]
 
 { #category : #tests }
 ClapCommandTest >> testMatchesWithSingleSubcommand [
-	| argv match |
-	subject add: (ClapCommand withName: 'bar').
+	| subject argv match |
+	subject := self namedSubject.
+	subject add: (ClapCommand id: #bar).
 	argv := { self subjectName. 'bar'. #remainder } readStream.
 	
 	match := subject matchOn: argv.
 	
 	self deny: match isMismatch.
-	self assert: (match includesMatchNamed: 'bar').
+	self assert: (match includesMatchOf: #bar).
 	self assert: argv next equals: #remainder
 ]
 
 { #category : #tests }
 ClapCommandTest >> testMatchingStopsAtWrongFlag [
-	| argv badFlag match |
-	subject add: (ClapFlag withName: 'bar').
+	| subject argv badFlag match |
+	subject := self namedSubject.
+	subject add: (ClapFlag id: #bar).
 	badFlag := '--notbar'.
 	argv := { self subjectName. badFlag } readStream.
 
@@ -102,7 +109,8 @@ ClapCommandTest >> testMatchingStopsAtWrongFlag [
 
 { #category : #tests }
 ClapCommandTest >> testMismatchesDifferentAlias [
-	| argv badCommand match |
+	| subject argv badCommand match |
+	subject := self namedSubject.
 	badCommand := self subjectName , 'NOT'.
 	argv := { badCommand } readStream.
 	

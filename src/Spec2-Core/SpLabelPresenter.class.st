@@ -1,22 +1,12 @@
 "
-A LabelPresenter is a spec presenter for Labels.
-See AbstractWidgetPresenter
+A label presenter displays smalls (or medium) amounts of text.
 
-self example
-
-I provide the following variables and their accessors
-- label is the text displayed that I display.
-
-I am specializing defaultColor to change the color of my text.
-
-todo
-- emphasis
+_NOTE: In the future, it should be possible to attach another widget to a label, but for now it is not implemented._
 "
 Class {
 	#name : #SpLabelPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
 	#instVars : [
-		'#emphasis',
 		'#label => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets'
@@ -26,6 +16,12 @@ Class {
 SpLabelPresenter class >> adapterName [
 
 	^ #LabelAdapter
+]
+
+{ #category : #documentation }
+SpLabelPresenter class >> documentFactoryMethodSelector [
+
+	^ #newLabel
 ]
 
 { #category : #specs }
@@ -42,28 +38,9 @@ SpLabelPresenter >> canTakeKeyboardFocus [
 
 { #category : #initialization }
 SpLabelPresenter >> defaultColor [
+
+	self flag: #TOREMOVE. "This needs to be removed"
 	^ self theme textColor
-]
-
-{ #category : #initialization }
-SpLabelPresenter >> defineInputPorts [
-
-	^ { SpLabelPort new }
-]
-
-{ #category : #api }
-SpLabelPresenter >> emphasis [
-	^ emphasis
-]
-
-{ #category : #api }
-SpLabelPresenter >> emphasis: anEmphasis [
-	"accepts a symbol or an array of symbols: #bold, #italic, #underline, #narrow, #struck"
-
-	emphasis := anEmphasis isSymbol
-		ifTrue: [ {anEmphasis} ]
-		ifFalse: [ anEmphasis ].
-	self changed: #emphasis: with: {emphasis}
 ]
 
 { #category : #initialization }
@@ -71,23 +48,38 @@ SpLabelPresenter >> initialize [
 	super initialize.
 
 	label := ''.
-	emphasis := #().
 	self whenLabelChangedDo: [ self changed: #getText ]
 ]
 
 { #category : #api }
 SpLabelPresenter >> label [
+	"Answer the label to be displayed."
+
 	^ label
 ]
 
 { #category : #api }
-SpLabelPresenter >> label: aText [
-	"Set the text of the label"
+SpLabelPresenter >> label: aString [
+	"Set the label to be displayed"
 
-	label := aText
+	label := aString
+]
+
+{ #category : #localization }
+SpLabelPresenter >> localeChanged [
+
+	super localeChanged.
+	self forceUpdateSlot: #label
+		
 ]
 
 { #category : #'api-events' }
-SpLabelPresenter >> whenLabelChangedDo: aValuable [
-	self property: #label whenChangedDo: aValuable
+SpLabelPresenter >> whenLabelChangedDo: aBlock [
+	"Inform when label property has changed. 
+	 `aBlock` has three optional arguments: 
+	 - new value
+	 - old value
+	 - the announcement triggering this action"
+
+	self property: #label whenChangedDo: aBlock
 ]

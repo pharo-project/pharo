@@ -28,7 +28,7 @@ ReProperMethodProtocolNameRule class >> use: valid insteadOf: arrayOfInvalid [
 { #category : #'private - accessing' }
 ReProperMethodProtocolNameRule >> badMethodProtocolNames [
 
-	^self protocolIdiom value collect: #asSymbol
+	^self protocolIdiom value collect: [:each | each asSymbol]
 ]
 
 { #category : #running }

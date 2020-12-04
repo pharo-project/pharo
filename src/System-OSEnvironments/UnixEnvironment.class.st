@@ -154,7 +154,7 @@ UnixEnvironment >> basicGetEnvRawViaFFI: arg1 [
 { #category : #accessing }
 UnixEnvironment >> defaultEncoding [
 
-	^ ZnCharacterEncoder utf8
+	^ OSPlatform current defaultEncoding
 ]
 
 { #category : #private }

@@ -2,10 +2,7 @@ Extension { #name : #Morph }
 
 { #category : #'*Athens-Morphic' }
 Morph >> athensSurface [
-
-	^ owner 
-		ifNil: [  nil ]
-		ifNotNil: [ owner athensSurface  ]
+	^ owner ifNotNil: [ owner athensSurface ]
 ]
 
 { #category : #'*Athens-Morphic' }

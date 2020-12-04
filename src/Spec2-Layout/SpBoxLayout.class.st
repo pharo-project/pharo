@@ -1,48 +1,25 @@
 "
-I'm a layout to show presenters in an ordered box. 
-Box can be horizontal or vertical and presenters will be ordered top to down or left to right following direction decided. 
-The basic message to add presenters is: #add:expand:fill:padding: (see comment there to understand what the arguments can be). 
-To make things easier, I add some basic convenience methods: #add:, #add:expand:
+I am a layout that will arrange presenters in a box, vertically or horizontally.
+My elements can be added at the begining or at the end of the box (see add: and addLast: method families).
+This layout can be created with certain properties: 
 
-Also, I can add presenters aligned to the bottom in case of vertical layouts or right for horizontal layouts.
-
-Example: 
-
-SpBoxLayout new
-	add: 'Some header' expand: false fill: false padding: 5;
-	add: #content;
-	addLast: 'Some footer' expand: false fill: false padding: 5;
-	yourself
+- borderWidth: the border to let empty before placing the presenters. 
+- spacing: the space to let between presenters.
+- homogeneous: if homogeneous, the layout will try to give same space to each presenter included.
+- hAlign/vAlign: how the presenters will be aligned in the layout.
 "
 Class {
 	#name : #SpBoxLayout,
-	#superclass : #SpExecutableLayout,
+	#superclass : #SpDirectionableLayout,
+	#traits : 'SpTAlignable',
+	#classTraits : 'SpTAlignable classTrait',
 	#instVars : [
-		'direction',
 		'spacing',
 		'borderWidth',
 		'homogeneous'
 	],
 	#category : #'Spec2-Layout-Box'
 }
-
-{ #category : #'instance creation' }
-SpBoxLayout class >> new [ 
-
-	self error: 'Use one of my siblings'
-]
-
-{ #category : #'instance creation' }
-SpBoxLayout class >> newHorizontal [ 
-
-	^ super new beHorizontal
-]
-
-{ #category : #'instance creation' }
-SpBoxLayout class >> newVertical [ 
-
-	^ super new beVertical
-]
 
 { #category : #private }
 SpBoxLayout >> adapterName [
@@ -65,6 +42,15 @@ SpBoxLayout >> add: aName expand: shouldExpand [
 		add: aName 
 		withConstraints: [ :constraints | 
 			constraints expand: shouldExpand ]
+]
+
+{ #category : #adding }
+SpBoxLayout >> add: aName expand: shouldExpand fill: shouldFill [
+
+	self add: aName withConstraints: [ :constraints | 
+		constraints
+			expand: shouldExpand;
+			fill: shouldFill ]
 ]
 
 { #category : #adding }
@@ -105,8 +91,7 @@ SpBoxLayout >> add: aPresenter width: anInteger [
 SpBoxLayout >> add: aPresenter withConstraints: aBlock [
 	
 	super add: aPresenter withConstraints: aBlock.
-	adapter ifNotNil: [ :theAdapter |
-		theAdapter add: aPresenter constraints: (children at: aPresenter) ]
+	self announceChildAdded: aPresenter.
 ]
 
 { #category : #adding }
@@ -124,6 +109,17 @@ SpBoxLayout >> addLast: aName expand: shouldExpand [
 		addLast: aName 
 		withConstraints: [ :constraints | 
 			constraints expand: shouldExpand ]
+]
+
+{ #category : #adding }
+SpBoxLayout >> addLast: aName expand: shouldExpand fill: shouldFill [
+
+	self 
+		addLast: aName 
+	   withConstraints: [ :constraints | 
+			constraints
+				expand: shouldExpand;
+				fill: shouldFill ]
 ]
 
 { #category : #adding }
@@ -154,22 +150,10 @@ SpBoxLayout >> beHomogeneous [
 	self homogeneous: true
 ]
 
-{ #category : #initialization }
-SpBoxLayout >> beHorizontal [
-
-	direction := SpLayoutDirection horizontal
-]
-
 { #category : #accessing }
 SpBoxLayout >> beNotHomogeneous [
 
 	self homogeneous: false
-]
-
-{ #category : #initialization }
-SpBoxLayout >> beVertical [
-
-	direction := SpLayoutDirection vertical
 ]
 
 { #category : #accessing }
@@ -228,17 +212,36 @@ SpBoxLayout >> isVertical [
 ]
 
 { #category : #removing }
-SpBoxLayout >> remove: aPresenter [
-
-	children removeKey: aPresenter.
-	adapter ifNotNil: [ :theAdapter | theAdapter remove: aPresenter ]
-]
-
-{ #category : #removing }
 SpBoxLayout >> removeAll [
 
 	children removeAll.
 	adapter ifNotNil: [ :anAdapter | anAdapter removeAll ]
+]
+
+{ #category : #adding }
+SpBoxLayout >> replace: aPresenter with: otherPresenter [
+	"Replace aPresenter with otherPresenter. 
+	 Original constraints will be preserved."
+	
+	self 
+		replace: aPresenter 
+		with: otherPresenter
+		withConstraints: (self constraintsFor: aPresenter)
+]
+
+{ #category : #adding }
+SpBoxLayout >> replace: aPresenter with: otherPresenter withConstraints: constraints [
+	"Replace aPresenter with otherPresenter"
+	
+	children
+		replaceKey: aPresenter
+		with: otherPresenter.
+
+	self withAdapterDo: [ :anAdapter |
+		anAdapter 
+			replace: aPresenter 
+			with: otherPresenter
+			withConstraints: constraints ]
 ]
 
 { #category : #accessing }

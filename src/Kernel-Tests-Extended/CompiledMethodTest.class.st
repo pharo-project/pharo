@@ -271,6 +271,27 @@ CompiledMethodTest >> tearDown [
 	super tearDown
 ]
 
+{ #category : #'tests - instance variable' }
+CompiledMethodTest >> testAccessesField [		
+	| method |
+	method := self class compiledMethodAt: #readX.
+	self assert: (method accessesField: 4).
+	
+	method := self class compiledMethodAt: #readXandY.
+	self assert: (method accessesField: 5).
+	
+	
+	"read is not write"
+	method := self class compiledMethodAt: #writeX.
+	self assert: (method accessesField: 4).
+	
+	method := self class compiledMethodAt: #writeXandY.
+	self assert: (method accessesField: 4).
+	
+	method := self class compiledMethodAt: #writeXandY.
+	self assert: (method accessesField: 5)
+]
+
 { #category : #'tests - slots' }
 CompiledMethodTest >> testAccessesSlot [
 
@@ -283,6 +304,12 @@ CompiledMethodTest >> testAccessesSlot [
 	self assert: ((Point>>#setX:setY:) accessesSlot: (Point slotNamed: #y)).
 	
 	
+]
+
+{ #category : #'tests - converting' }
+CompiledMethodTest >> testAsString [
+
+	self assert: thisContext method asString isString
 ]
 
 { #category : #'tests - accessing' }
@@ -331,12 +358,6 @@ CompiledMethodTest >> testComparison [
 			self deny: each equals: method2 ]
 ]
 
-{ #category : #'as yet unclassified' }
-CompiledMethodTest >> testCompiledMethodAsString [
-
-	thisContext method asString
-]
-
 { #category : #tests }
 CompiledMethodTest >> testCopy [
 	<pragma: #pragma>
@@ -371,7 +392,7 @@ CompiledMethodTest >> testCopyWithTrailerBytes [
 	copy pragmas do: [ :p | self assert: p method identicalTo: copy ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'tests - comparing' }
 CompiledMethodTest >> testEqualityClassSideMethod [
    	| method1 method2 |
 
@@ -386,7 +407,7 @@ CompiledMethodTest >> testEqualityClassSideMethod [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'tests - comparing' }
 CompiledMethodTest >> testEqualityInstanceSideMethod [
 	| method1 method2 |
 	method1 := TestCase compiler compile: 'aMethod'.
@@ -394,6 +415,11 @@ CompiledMethodTest >> testEqualityInstanceSideMethod [
 
 	self assert: (method1 literalAt: method1 numLiterals) identicalTo: (method2 literalAt: method2 numLiterals).
 	self assert: method1 equals: method2
+]
+
+{ #category : #'tests - testing' }
+CompiledMethodTest >> testHasComment [
+	self assert: (CompiledMethod>>#hasComment) hasComment
 ]
 
 { #category : #'tests - instance variable' }
@@ -423,6 +449,17 @@ CompiledMethodTest >> testHasLiteralSuchThat [
 	self assert: (Object >> #halt hasLiteralSuchThat: [ :lit | lit == #now ]).
 ]
 
+{ #category : #'tests - testing' }
+CompiledMethodTest >> testHasPragma [
+
+	| methodWithPragma methodWithOutPragma |
+	methodWithPragma := (SmallInteger >> #+).
+	methodWithOutPragma := thisContext method.
+	
+	self assert: methodWithPragma hasPragma.
+	self deny: methodWithOutPragma hasPragma
+]
+
 { #category : #'tests - abstract' }
 CompiledMethodTest >> testIsAbstract [
 
@@ -443,7 +480,18 @@ CompiledMethodTest >> testIsDeprecated [
 	DeprecatedClassForTest selectorsDo: [ :each | self assert: (DeprecatedClassForTest >> each) isDeprecated ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'tests - testing' }
+CompiledMethodTest >> testIsFaulty [
+	|  cm |
+	cm := OpalCompiler new
+				source: 'method 3+';
+				options: #(+ optionParseErrors +optionEmbeddSources);
+				compile.
+	self assert: cm isFaulty.
+	self deny: (OCASTTranslator>>#visitParseErrorNode:) isFaulty
+]
+
+{ #category : #'tests - testing' }
 CompiledMethodTest >> testIsInstalled [
 |  method cls |
 
@@ -458,7 +506,7 @@ CompiledMethodTest >> testIsInstalled [
 		instanceVariableNames: ''
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: self categoryNameForTemporaryClasses.
+		package: self categoryNameForTemporaryClasses.
 	cls compile: 'foo ^ 10'.
 	method := cls >> #foo.
 
@@ -611,7 +659,7 @@ CompiledMethodTest >> testLiterals [
 	self deny: (Object >> #yourself hasLiteral: #yourself)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'tests - accessing' }
 CompiledMethodTest >> testMethodClass [
 	| method cls |
 	method := self class >> #returnTrue.
@@ -625,11 +673,21 @@ CompiledMethodTest >> testMethodClass [
 				instanceVariableNames: ''
 				classVariableNames: ''
 				poolDictionaries: ''
-				category: self categoryNameForTemporaryClasses.
+				package: self categoryNameForTemporaryClasses.
 	cls compile: 'foo ^ 10'.
 	method := cls >> #foo.
 	Smalltalk removeClassNamed: #TUTU.
 	self assert: method methodClass equals: cls
+]
+
+{ #category : #'tests - comparing' }
+CompiledMethodTest >> testMethodsThatHaveOnlyDifferentSelectorsShouldBeDifferent [
+	| method1 method2 |
+	method1 := TestCase compiler compile: 'aMethod'.
+	method2 := TestCase compiler compile: 'aMethod2'.
+
+	self assert: (method1 literalAt: method1 numLiterals) identicalTo: (method2 literalAt: method2 numLiterals).
+	self deny: method1 equals: method2
 ]
 
 { #category : #'tests - accessing' }
@@ -669,6 +727,20 @@ CompiledMethodTest >> testPerformInSuperclassCanExecutelongMethodWithTemps [
 	self assert: (self perform: #a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15: withArguments: #(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15) inSuperclass: self class) equals: 1
 ]
 
+{ #category : #'tests - pragmas' }
+CompiledMethodTest >> testPragmaAt [
+
+	| method |
+	method := (SmallInteger >> #+) copy.
+	self
+		assert: (method pragmaAt: #primitive:) selector
+		equals: #primitive:.
+	self assert: (method pragmaAt: #hello) equals: nil.
+	method propertyAt: #hello put: true.
+	"Pragmas are not Properties!"
+	self assert: (method pragmaAt: #hello) equals: nil
+]
+
 { #category : #'tests - instance variable' }
 CompiledMethodTest >> testReadsField [		
 	| method |
@@ -704,7 +776,7 @@ CompiledMethodTest >> testReadsSlot [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'tests - accessing' }
 CompiledMethodTest >> testSelector [
 	Author
 		useAuthor: 'TUTU_TEST'
@@ -720,7 +792,7 @@ CompiledMethodTest >> testSelector [
 				instanceVariableNames: ''
 				classVariableNames: ''
 				poolDictionaries: ''
-				category: self categoryNameForTemporaryClasses.
+				package: self categoryNameForTemporaryClasses.
 
 			cls compile: 'foo ^ 10'.
 

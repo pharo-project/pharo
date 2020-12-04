@@ -14,7 +14,7 @@ ClapDocumentationTest >> testHelloShortUsage [
 	
 	self assert: (doc endsWith: OSPlatform current lineEnding).
 	self assert: lines first equals: 'Provides greetings'.
-	self assertEmpty: lines second.
+	self assert: lines second isEmpty.
 	self assert: (lines third beginsWith: 'Usage: hello').
 	self assert: (lines third endsWith: '[<who>]').
 

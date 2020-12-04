@@ -88,7 +88,7 @@ Finder >> computeWithMethodFinder: aString [
 	data := aString trimRight: [ :char | char isSeparator or: [ char = $. ] ].
 
 	[ dataObjects := Smalltalk compiler evaluate: '{' , data , '}' ]
-		on: SyntaxErrorNotification
+		on: SyntaxErrorNotification, RuntimeSyntaxError
 		do: [ :e | 
 			self inform: 'Syntax Error: ' , e errorMessage.
 			^ #() ].	"#( data1 data2 result )"
@@ -338,30 +338,14 @@ Finder >> isSourceSymbol [
 	^self currentSearchMode = #Source
 ]
 
-{ #category : #private }
-Finder >> listFromResult: resultOC [
-	"The argument, resulOC, is of the form #('(data1 op data2)' '(...)'). Answer a sorted array."
-
-	(resultOC first beginsWith: 'no single method') ifTrue: [^ #()].
-	^ resultOC sort: [:a :b | 
-		(a copyFrom: 6 to: a size) < (b copyFrom: 6 to: b size)]
-
-]
-
 { #category : #'private-selector' }
 Finder >> messageSearchBlockFrom: aString [
 	| exactMatch |
-	
 	exactMatch := aString first = $" and: [ aString last = $" ].
-	
-	exactMatch ifFalse: [ 
-		^ [ :method | 
-			method selector includesSubstring: aString caseSensitive: false ]].
-		
-	 ^ (Symbol findInterned: (aString copyFrom: 2 to: aString size - 1))
-		ifNil: [  nil ]
-		ifNotNil: [ :aSymbol | 
-			[ :method | method selector = aSymbol ]]
+
+	exactMatch ifFalse: [ ^ [ :method | method selector includesSubstring: aString caseSensitive: false ] ].
+
+	^ (Symbol findInterned: (aString copyFrom: 2 to: aString size - 1)) ifNotNil: [ :aSymbol | [ :method | method selector = aSymbol ] ]
 ]
 
 { #category : #'private-selector' }
@@ -420,8 +404,8 @@ Finder >> pragmaSearch: aString [
 	byCondition :=  self useRegEx 
 		ifTrue: [[ :pragma | pragma selector matchesRegexIgnoringCase: aString ]]
 		ifFalse: [[ :pragma | pragma selector includesSubstring: aString caseSensitive: false ]].
-				
-	(PragmaCollector filter: byCondition) reset; 
+	
+	(Pragma all select: byCondition)
 		do: [ :pragma |
 			(result at: (pragma selector) ifAbsentPut: OrderedCollection new)				
 				add: pragma method ].

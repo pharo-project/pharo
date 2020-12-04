@@ -78,7 +78,7 @@ FileList class >> contentMenu: aBuilder [
 		keyText: 'v';
 		selector: #paste;
 		iconName: #smallPasteIcon.
-	(aBuilder item: #'Paste...' translated)
+	(aBuilder item: #'Paste Recent' translated)
 		selector: #pasteRecent;
 		iconName: #smallPasteIcon;
 		withSeparatorAfter .
@@ -287,10 +287,7 @@ FileList >> acceptDroppingMorph: aTransferMorph event: evt inMorph: dest [
 		response ifFalse: [ ^false ].
 	].
 
-	aTransferMorph shouldCopy
-		ifTrue: [ oldEntry copyAs: newEntry ]
-		ifFalse: [ oldEntry renameTo: newEntry ].
-
+   oldEntry renameTo: newEntry.
 	self updateFileList; fileListIndex: 0.
 
 	aTransferMorph source model ~= self
@@ -588,7 +585,7 @@ FileList >> fileContentsMenu: aMenu shifted: shifted [
 			[services add: self serviceGetHex].
 		(#(needToGetShiftJIS needToGetEUCJP needToGetCNGB needToGetEUCKR needToGetUTF8) includes: brevityState) ifFalse:
 			[services add: self serviceGetEncodedText].
-		(FileStream sourceFileSuffixes includes: self suffixOfSelectedFile) ifTrue:
+		(#('st' 'cs') includes: self suffixOfSelectedFile) ifTrue:
 			[services addAll: (self itemsForFile: reference)].
 
 		aMenu 
@@ -596,7 +593,7 @@ FileList >> fileContentsMenu: aMenu shifted: shifted [
 			for: self reference
 			extraLines: #()].
 
-	aMenu addAllFromPragma: 'fileListContentMenu' target: self.
+	aMenu addAllFromPragma: #fileListContentMenu target: self.
 
 	^ aMenu
 
@@ -648,11 +645,9 @@ FileList >> fileListIndex: anInteger [
 
 { #category : #'file list menu' }
 FileList >> fileListMenu: aMenu [
-
-	reference
-		ifNil: [^ self noFileSelectedMenu: aMenu]
-		ifNotNil: [^ self fileSelectedMenu: aMenu].
-
+	^ reference
+		ifNil: [ self noFileSelectedMenu: aMenu ]
+		ifNotNil: [ self fileSelectedMenu: aMenu ]
 ]
 
 { #category : #'file list menu' }
@@ -1069,7 +1064,7 @@ FileList >> openImageInWindow [
 	self reference streamWritable: false do: [ :stream|
 		image := Form fromBinaryStream: stream].
 	
-	(self currentWorld drawingClass withForm: image) openInWorld
+	(ImageMorph withForm: image) openInWorld
 ]
 
 { #category : #initialization }
@@ -1234,7 +1229,7 @@ FileList >> readContentsHex: brevity [
 { #category : #'file list' }
 FileList >> readOnlyStream [
 	"Answer a read-only stream on the selected file. For the various stream-reading services."
-	^ FileStream readOnlyFileNamed: self reference fullName
+	^ self reference readStream
 ]
 
 { #category : #accessing }

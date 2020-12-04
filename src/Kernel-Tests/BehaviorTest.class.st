@@ -7,6 +7,12 @@ Class {
 	#category : #'Kernel-Tests-Classes'
 }
 
+{ #category : #coverage }
+BehaviorTest >> classToBeTested [
+	
+	^ Behavior
+]
+
 { #category : #tests }
 BehaviorTest >> sampleMessageWithFirstArgument: firstArgument "This is a comment intended to explain arg1"
    andInterleavedCommentBeforeSecondArgument: secondArgument [
@@ -84,6 +90,14 @@ BehaviorTest >> testBinding [
 	self assert: Object class binding key isNil
 ]
 
+{ #category : #'tests - queries' }
+BehaviorTest >> testDefinedVariables [
+	self assert: Behavior new definedVariables isEmpty.
+	self assert: Point definedVariables equals: Point instanceVariables.
+	self assert: ReservedVariable class definedVariables first name equals: #instance.
+	self assert: (SmalltalkImage definedVariables includes: (SmalltalkImage classVariableNamed: #CompilerClass)).
+]
+
 { #category : #tests }
 BehaviorTest >> testHasAbstractMethods [
 	self deny: Object hasAbstractMethods.
@@ -99,6 +113,17 @@ BehaviorTest >> testHasAbstractMethods [
 	self assert: ObjectLayout class hasAbstractMethods.
 	
 	
+]
+
+{ #category : #'tests - properties' }
+BehaviorTest >> testHasProperty [
+	| testValue |
+	testValue := Date today.
+	self class propertyAt: #testKeySelector put: testValue.
+	self assert: (self class hasProperty: #testKeySelector).
+	
+	self class removeProperty: #testKeySelector.
+	self deny: (self class hasProperty: #testKeySelector)
 ]
 
 { #category : #tests }
@@ -146,7 +171,7 @@ BehaviorTest >> testIsRootInEnvironment [
 { #category : #tests }
 BehaviorTest >> testIsUsed [
 	self assert: Object isUsed.
-	self assert: Object class isUsed.
+	self assert: Object class isUsed
 
 ]
 
@@ -251,8 +276,8 @@ BehaviorTest >> testallSuperclassesIncluding [
 { #category : #tests }
 BehaviorTest >> testsourceCodeTemplateFor [
 	"check for distictive source code templates for class-side and instance-side"
-	self assert: ((Object sourceCodeTemplate) includesSubstring: 'instance-side message'). 
-	self assert: ((Object class sourceCodeTemplate) includesSubstring: 'class-side message') 
+	self assert: ((Object sourceCodeTemplate) includesSubstring: 'instance-side method'). 
+	self assert: ((Object class sourceCodeTemplate) includesSubstring: 'class-side method') 
 ]
 
 { #category : #'tests - queries' }

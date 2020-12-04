@@ -94,7 +94,7 @@ RubParagraph >> click: anEvent for: model controller: editor [
 		(attribute rubActOnClick: anEvent for: target in: self editor: editor) == true 	
 			ifTrue: [ ^ true ]].
 	
-	(action and: [ Cursor currentCursor == Cursor webLink]) 
+	(action and: [ self currentWorld currentCursor == Cursor webLink]) 
 		ifTrue:[ Cursor normal show ].
 	
 	^ action
@@ -443,7 +443,7 @@ RubParagraph >> move: anEvent for: model controller: editor [
 		(attribute actOnMove: anEvent for: target in: self editor: editor) == true 	
 			ifTrue: [ ^ true ]].
 	
-	(action and: [ Cursor currentCursor == Cursor webLink]) 
+	(action and: [ self currentWorld currentCursor == Cursor webLink]) 
 		ifTrue:[ Cursor normal show ].
 	
 	^ action

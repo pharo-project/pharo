@@ -29,7 +29,7 @@ OCASTTranslatorForEffect >> emitIfNotNil: aMessageNode [
 	| args |
 	valueTranslator visitNode: aMessageNode receiver.
 	args := aMessageNode arguments.
-	args first arguments ifNotEmpty: [ args first arguments first binding emitStore: methodBuilder ].
+	args first arguments ifNotEmpty: [ args first arguments first variable emitStore: methodBuilder ].
 	methodBuilder pushLiteral: nil.
 	methodBuilder send: #==.
 	methodBuilder jumpAheadTo: #end if: true.
@@ -80,9 +80,10 @@ OCASTTranslatorForEffect >> visitAssignmentNode: anAssignmentNode [
 
 { #category : #'visitor-double dispatching' }
 OCASTTranslatorForEffect >> visitBlockNode: aBlockNode [ 
-
-	"A block has no side effect, so a block translated for effect just doesn't generate anything" 
-
+	"even though the code is never executed, we generate it to make sure that we 
+	can map bytecode and access temps"
+	super visitBlockNode: aBlockNode.
+	methodBuilder popTop
 ]
 
 { #category : #'visitor-double dispatching' }
@@ -113,8 +114,8 @@ OCASTTranslatorForEffect >> visitSequenceNode: aSequenceNode [
 { #category : #'visitor-double dispatching' }
 OCASTTranslatorForEffect >> visitVariableNode: aVariableNode [
 	"when visiting a variable for effect, we could push it and then pop it, but we do nothing"
-	| binding |
-	binding := aVariableNode binding.
-	(binding isLiteralVariable or: [ binding isUndeclared ])
-		ifTrue: [ methodBuilder addLiteral: binding assoc ]
+	| variable |
+	variable := aVariableNode variable.
+	(variable isLiteralVariable or: [ variable isUndeclaredVariable ])
+		ifTrue: [ methodBuilder addLiteral: variable ]
 ]

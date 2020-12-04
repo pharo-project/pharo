@@ -4,11 +4,12 @@ Unit tests for queries on classes
 Class {
 	#name : #ClassQueryTest,
 	#superclass : #TestCase,
-	#category : #'System-Support-Tests'
+	#category : #'System-Support-Tests-Base'
 }
 
 { #category : #tests }
 ClassQueryTest >> testAllCallsOn [
+
 	| calls |
 	calls := ClassQueryTest allCallsOn.
 	self assert: calls size equals: 1.
@@ -29,8 +30,8 @@ ClassQueryTest >> testReferencedClasses [
 	
 	| refs |
 	refs := Metaclass referencedClasses.
-	self assert: (refs includes: Slot).
+	self assert: (refs includes: OrderedCollection).
 	
 	refs := self class referencedClasses.
-	self assert: (refs includesAll: { Slot. Metaclass })
+	self assert: (refs includesAll: { OrderedCollection. Metaclass })
 ]

@@ -10,9 +10,7 @@ Class {
 	#superclass : #RBCompositeRefactoryChange,
 	#instVars : [
 		'className',
-		'isMeta',
-		'oldName',
-		'newName'
+		'isMeta'
 	],
 	#category : #'Refactoring-Changes'
 }

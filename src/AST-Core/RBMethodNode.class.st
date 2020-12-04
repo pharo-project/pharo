@@ -30,7 +30,8 @@ Class {
 		'pragmas',
 		'replacements',
 		'nodeReplacements',
-		'compilationContext'
+		'compilationContext',
+		'bcToASTCache'
 	],
 	#category : #'AST-Core-Nodes'
 }
@@ -137,6 +138,15 @@ RBMethodNode >> allDefinedVariables [
 RBMethodNode >> allSequenceNodes [
 
 	^ self allChildren select: #isSequence
+]
+
+{ #category : #accessing }
+RBMethodNode >> allStatements [
+	"return the statements including variable definition."
+	^ self temporaries asOrderedCollection copy
+			addAll: super allStatements;
+			yourself
+
 ]
 
 { #category : #accessing }
@@ -285,8 +295,7 @@ RBMethodNode >> decompileString [
 
 { #category : #testing }
 RBMethodNode >> defines: aName [
-^ (arguments anySatisfy: [ :each | each name = aName ])
-
+	^ (arguments anySatisfy: [ :each | each name = aName ])
 		or: [ self pragmas anySatisfy: [ :pragma | pragma defines: aName ] ]
 ]
 
@@ -327,10 +336,8 @@ RBMethodNode >> extractSubtreeWith: aSourceCode [
 
 { #category : #accessing }
 RBMethodNode >> firstPrecodeComment [
-	| comment  | 
 	self comments ifEmpty: [ ^nil ].
-	comment :=  self comments first.
-	^self source copyFrom: comment start to: comment stop.
+	^ self comments first contents
 ]
 
 { #category : #testing }
@@ -342,6 +349,11 @@ RBMethodNode >> hasArgumentNamed: aString [
 RBMethodNode >> hasPragmaNamed: aSymbol [	
 	self pragmaNamed: aSymbol ifAbsent: [ ^ false ].
 	^ true
+]
+
+{ #category : #testing }
+RBMethodNode >> hasTemporaries [
+	^ self temporaries isNotEmpty
 ]
 
 { #category : #testing }
@@ -365,8 +377,8 @@ RBMethodNode >> initialize [
 
 { #category : #testing }
 RBMethodNode >> isFaulty [
-	(self arguments anySatisfy: #isFaulty) ifTrue:[ ^true].
-	(self pragmas anySatisfy: #isFaulty) ifTrue:[ ^true].
+	(self arguments anySatisfy: [:each | each isFaulty]) ifTrue:[ ^true].
+	(self pragmas anySatisfy: [:each | each isFaulty]) ifTrue:[ ^true].
 	^self body isFaulty
 ]
 
@@ -445,8 +457,8 @@ RBMethodNode >> matchPragmas: matchNodes against: pragmaNodes inContext: aDictio
 { #category : #'accessing compiled method' }
 RBMethodNode >> method [
 	"return the method that I have been compiled for"
-	self compilationContext ifNil: [ ^nil ].
-	^self compilationContext getClass >> self selector
+	^self compilationContext ifNotNil: [ :ccntx |
+		 ccntx compiledMethod ifNil: [ccntx getClass >> self selector]]
 ]
 
 { #category : #'accessing compiled method' }
@@ -461,21 +473,13 @@ RBMethodNode >> methodClass: aClass [
 ]
 
 { #category : #accessing }
-RBMethodNode >> methodComments [
-	| methodComments |
-	methodComments := OrderedCollection withAll: self comments.
-	arguments do: [:each | methodComments addAll: each comments].
-	^methodComments asSortedCollection: [:a :b | a start < b start]
-]
-
-{ #category : #accessing }
 RBMethodNode >> methodNode [
 	^self
 ]
 
 { #category : #accessing }
 RBMethodNode >> methodOrBlockNode [
-	"^ self"
+	^ self
 ]
 
 { #category : #accessing }
@@ -487,6 +491,14 @@ RBMethodNode >> newSource [
 { #category : #accessing }
 RBMethodNode >> numArgs [
 	^self selector numArgs
+]
+
+{ #category : #testing }
+RBMethodNode >> offsetIsComment: anOffset [
+	"check is the offset in the source part of a comment"
+
+	^ self allComments
+		anySatisfy: [ :comment | anOffset between: comment start and: comment stop ]
 ]
 
 { #category : #'tree accessing' }
@@ -544,11 +556,6 @@ RBMethodNode >> pragmas [
 RBMethodNode >> pragmas: aCollection [
 	pragmas := aCollection.
 	pragmas do: [ :each | each parent: self ]
-]
-
-{ #category : #accessing }
-RBMethodNode >> primitiveSources [
-	^ self pragmas collect: [ :each | self source copyFrom: each first to: each last ]
 ]
 
 { #category : #printing }
@@ -665,7 +672,7 @@ RBMethodNode >> selectorAndArgumentNames [
 
 { #category : #accessing }
 RBMethodNode >> selectorParts [
-	^ self keywords collect: #asSymbol.
+	^ self keywords collect: [:each | each asSymbol]
 ]
 
 { #category : #accessing }
@@ -701,7 +708,7 @@ RBMethodNode >> statements: aCollection [
 
 { #category : #accessing }
 RBMethodNode >> stop [
-	^ self newSource size
+	^(self sourceCode ifNotNil: [:src | src] ifNil: [ self formattedCode ]) size
 ]
 
 { #category : #accessing }

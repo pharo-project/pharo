@@ -30,9 +30,9 @@ SpTObservable >> property: aName rawValue: anObject [
 ]
 
 { #category : #events }
-SpTObservable >> property: aName whenChangedDo: aBlockClosure [ 
+SpTObservable >> property: aName whenChangedDo: aBlock [ 
 	
 	"Obtain the raw value.
 	We need to access the underlying value holder to subscribe to it"
-	(self observablePropertyNamed: aName) whenChangedDo: aBlockClosure
+	^ (self observablePropertyNamed: aName) whenChangedDo: aBlock
 ]

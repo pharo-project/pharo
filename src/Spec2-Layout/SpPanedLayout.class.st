@@ -5,31 +5,15 @@ In exchange, a paned layout can have just two children.
 "
 Class {
 	#name : #SpPanedLayout,
-	#superclass : #SpExecutableLayout,
+	#superclass : #SpDirectionableLayout,
 	#instVars : [
-		'direction',
-		'position'
+		'position',
+		'firstChild',
+		'secondChild',
+		'childrenByPosition'
 	],
 	#category : #'Spec2-Layout-Paned'
 }
-
-{ #category : #'instance creation' }
-SpPanedLayout class >> new [ 
-
-	self error: 'Use one of my siblings'
-]
-
-{ #category : #'instance creation' }
-SpPanedLayout class >> newHorizontal [ 
-
-	^ super new beHorizontal
-]
-
-{ #category : #'instance creation' }
-SpPanedLayout class >> newVertical [ 
-
-	^ super new beVertical
-]
 
 { #category : #private }
 SpPanedLayout >> adapterName [
@@ -43,32 +27,57 @@ SpPanedLayout >> add: aName [
 	self 
 		add: aName 
 		withConstraints: [ :constraints | ]
+		position: children size + 1
 ]
 
 { #category : #adding }
-SpPanedLayout >> add: aName withConstraints: aBlock [
+SpPanedLayout >> add: aChild withConstraints: aBlock position: aPosition [
+	"Add a child to the layout following the constraints in the block.
+	The position is an integer index (1 or 2) indicating whether the child is first or last in the pane.
+	For a horizontal layout, index 1 means left, index 2 means right.
+	For a vertical layout, index 1 means top, index 2 means bottom."
 	| constraints |
-	
-	children size = 2 ifTrue: [ 
+
+	aPosition > 2 ifTrue: [ 
 		self error: 'You can not add more than two paned presenters.' ].
+
+	(childrenByPosition at: aPosition) ifNotNil: [ :element |
+		self remove: element ].
 
 	constraints := self constraintsClass new.
 	aBlock value: constraints.
+	
+	childrenByPosition at: aPosition put: aChild.
+	
 	children 
-		at: aName 
-		put: constraints
+		at: aChild 
+		put: constraints.
+	
+	self announceChildAdded: aChild.
 ]
 
-{ #category : #initialization }
-SpPanedLayout >> beHorizontal [
+{ #category : #adding }
+SpPanedLayout >> addFirst: aName [
 
-	direction := SpLayoutDirection horizontal
+	self 
+		add: aName 
+		withConstraints: [ :constraints | ]
+		position: 1
 ]
 
-{ #category : #initialization }
-SpPanedLayout >> beVertical [
+{ #category : #adding }
+SpPanedLayout >> addSecond: aName [
 
-	direction := SpLayoutDirection vertical
+	self 
+		add: aName 
+		withConstraints: [ :constraints | ]
+		position: 2
+]
+
+{ #category : #accessing }
+SpPanedLayout >> children [
+
+	^ childrenByPosition reject: #isNil
 ]
 
 { #category : #private }
@@ -87,7 +96,8 @@ SpPanedLayout >> direction [
 SpPanedLayout >> initialize [ 
 
 	super initialize.
-	self position: 50 percent
+	self position: 50 percent.
+	childrenByPosition := Array new: 2
 ]
 
 { #category : #testing }
@@ -114,4 +124,10 @@ SpPanedLayout >> position [
 { #category : #accessing }
 SpPanedLayout >> position: anObject [
 	position := anObject
+]
+
+{ #category : #accessing }
+SpPanedLayout >> presenter [
+
+	^ adapter ifNotNil: [ adapter presenter ]
 ]

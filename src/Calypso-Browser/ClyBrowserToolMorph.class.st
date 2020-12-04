@@ -434,8 +434,10 @@ ClyBrowserToolMorph >> isBuilt [
 ClyBrowserToolMorph >> isCommandAvailable: aCommand [
 	"A double dispatch mechanism to allow tools to validate commands that can be 
 	 executed on it. Subclasses can override me to perform the proper dispatch."
+	"Previous definition was: aCommand canBeExecutedInTool: self but it led to an error 
+	since canBeExecutedInTool: did not exist"
 	
-	^ aCommand canBeExecutedInTool: self
+	^ true
 ]
 
 { #category : #testing }
@@ -449,7 +451,7 @@ ClyBrowserToolMorph >> isExtraSelectionRequested [
 	"Following mouse logic ensures that we are under condition when mouseDown+cmd was produced.
 	(it should be simple #meta modifier. But we don't have it"
 	| lastEvent |
-	lastEvent := ActiveHand lastEvent.
+	lastEvent := (self activeHand ifNil: [ ^ false ])lastEvent.
 	^ lastEvent isMouse and: [ lastEvent isMouseDown 
 		and: [lastEvent commandKeyPressed or: [ lastEvent controlKeyPressed ]]]
 ]
@@ -621,6 +623,5 @@ ClyBrowserToolMorph >> warnUserAboutMyContext [
 { #category : #controlling }
 ClyBrowserToolMorph >> whenReadyDo: aBlock [
 
-	containerTab waitReadyMorphFor: 10 seconds. "There is no other way to ensure async tab is ready"
 	aBlock value: self
 ]

@@ -125,7 +125,8 @@ AthensStrokePaint >> fillPaint: anObject [
 
 { #category : #initialization }
 AthensStrokePaint >> initialize [
-	self setDefaults.
+	super initialize.
+	self setDefaults
 ]
 
 { #category : #'setting join styles' }

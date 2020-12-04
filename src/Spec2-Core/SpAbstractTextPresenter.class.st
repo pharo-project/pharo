@@ -1,3 +1,7 @@
+"
+A base for text presenters, it defines basic functionality common to all texts.
+
+"
 Class {
 	#name : #SpAbstractTextPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
@@ -6,13 +10,11 @@ Class {
 	#instVars : [
 		'#hasUnacceptedEdits => SpObservableSlot',
 		'#selection => SpObservableSlot',
-		'#autoAccept => SpObservableSlot',
 		'#wantsVisualFeedback => SpObservableSlot',
 		'#askBeforeDiscardingEdits => SpObservableSlot',
 		'#text => SpObservableSlot',
 		'#actionToPerform => SpObservableSlot',
 		'#readSelection => SpObservableSlot',
-		'#actionPerformed => SpObservableSlot',
 		'#placeholder => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets'
@@ -23,33 +25,6 @@ SpAbstractTextPresenter class >> isAbstract [
 	^ self = SpAbstractTextPresenter
 ]
 
-{ #category : #api }
-SpAbstractTextPresenter >> accept [
-	"Accep the current pendingtext"
-
-	self changed: #accept with: #().
-
-	"Raise an announcement"
-	self actionPerformed
-]
-
-{ #category : #api }
-SpAbstractTextPresenter >> acceptBlock [
-	"Return the block to perform when the text is accepted.
-	The block must have one argument, which will be the accepted text"
-
-	^ actionToPerform
-]
-
-{ #category : #api }
-SpAbstractTextPresenter >> acceptBlock: aBlockWithOneArgument [
-	"Set the block to perform when the text is accepted.
-	The block must have one argument, which will be the accepted text.
-	The block can return false if the candidate text is to be rejected"
-
-	actionToPerform := aBlockWithOneArgument
-]
-
 { #category : #private }
 SpAbstractTextPresenter >> acceptText: aString [
 	"Used to set the text value comming from the adapter (we do not want to re-send 
@@ -58,38 +33,20 @@ SpAbstractTextPresenter >> acceptText: aString [
 	self property: #text rawValue: aString
 ]
 
-{ #category : #private }
-SpAbstractTextPresenter >> actionPerformed [
-
-	actionPerformed := self text
-]
-
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> askBeforeDiscardingEdits [
 	^ askBeforeDiscardingEdits
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> askBeforeDiscardingEdits: aBoolean [
 	askBeforeDiscardingEdits := aBoolean
 ]
 
 { #category : #api }
-SpAbstractTextPresenter >> autoAccept [
-	"Return true if the text is accepted after ech keystroke"
-
-	^ autoAccept
-]
-
-{ #category : #api }
-SpAbstractTextPresenter >> autoAccept: aBoolean [
-	"Set if the text is accepted after each keystroke or not"
-
-	autoAccept := aBoolean
-]
-
-{ #category : #api }
 SpAbstractTextPresenter >> clearContent [
+	"Clear current presenter contents"
+
 	self text: ''
 ]
 
@@ -100,55 +57,45 @@ SpAbstractTextPresenter >> clearSelection [
 	self selectionInterval: (0 to: 0)
 ]
 
-{ #category : #'undo-redo' }
+{ #category : #api }
 SpAbstractTextPresenter >> clearUndoManager [
+	"Clear undo manager contents"
 
-	self withAdapterDo: #clearUndoManager
+	self flag: #TODO. "Maybe remove?"
+	self withAdapterDo: [ :anAdapter | 
+		anAdapter clearUndoManager ]
+]
+
+{ #category : #api }
+SpAbstractTextPresenter >> cursorPositionIndex [
+	"Answer the index (position in the string) of the cursor (or nil if the cursor is nowhere)"
+	
+	^ self withAdapterDo: [ :anAdapter |
+		anAdapter cursorPositionIndex ]
 ]
 
 { #category : #api }
 SpAbstractTextPresenter >> enabled: aBoolean [
+	"Set if the widget is enabled (clickable or focusable)"
 
 	super enabled: aBoolean.
-	self 
-		changed: #enabled: 
-		with: { aBoolean }
+	self changed: #enabled: with: { aBoolean }
 ]
 
-{ #category : #focus }
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> eventKeyStrokesForNextFocus [
 	"String describing the keystroke to perform to jump to the next widget"
 	^ { Character arrowRight command ctrl asKeyCombination }
 ]
 
-{ #category : #focus }
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> eventKeyStrokesForPreviousFocus [
 	"String describing the keystroke to perform to jump to the previous widget"
 
 	^ { Character arrowLeft command ctrl asKeyCombination }
 ]
 
-{ #category : #private }
-SpAbstractTextPresenter >> getMenu [
-	self flag: #TODO.	"move to menu presenters"
-	^ (PragmaMenuBuilder
-		pragmaKeyword: self textArea editingModeClass menuKeyword
-		model: self adapter) menu
-]
-
-{ #category : #api }
-SpAbstractTextPresenter >> getSelection [
-	"Get the text selection"
-	
-	self 
-		deprecated: 'Use #selection instead.' 
-		transformWith: '`@receiver getSelection' 
-		            -> '`@receiver selection'.
-		
-	^ self selection
-]
-
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> hasEditingConflicts [
 	"Return if the text zone has editing conflicts"
 
@@ -157,21 +104,21 @@ SpAbstractTextPresenter >> hasEditingConflicts [
 		ifNotNil: [:w | w hasEditingConflicts ]
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> hasEditingConflicts: aBoolean [
 	"Set if the text zone has editing conflicts"
 	
 	^ self changed: #hasEditingConflicts: with: { aBoolean }
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> hasUnacceptedEdits [
 	"Return if the text zone has unaccepted edits (orange corner)"
 
 	^ hasUnacceptedEdits
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> hasUnacceptedEdits: aBoolean [
 	"Return if the text zone has unaccepted edits (orange corner)"
 
@@ -186,10 +133,8 @@ SpAbstractTextPresenter >> initialize [
 	placeholder := ''.
 	actionToPerform := [ :txt |  ].
 	readSelection := [ selection ].
-	actionPerformed := ''.
 	hasUnacceptedEdits := false.
 	selection := 1 to: 0.
-	autoAccept := false.
 	wantsVisualFeedback := true.
 	askBeforeDiscardingEdits := true.
 
@@ -198,8 +143,7 @@ SpAbstractTextPresenter >> initialize [
 
 { #category : #api }
 SpAbstractTextPresenter >> insert: aString at: positionIndex [
-	"inserts aString into the text string. 
-	 positionIndex indicates the position index (as in #indexOf) the insertion."
+	"insert `aString` into the text contents at `positionIndex`"
 	
 	self withAdapterDo: [ :anAdapter |
 		anAdapter insert: aString at: positionIndex ]
@@ -207,13 +151,16 @@ SpAbstractTextPresenter >> insert: aString at: positionIndex [
 
 { #category : #api }
 SpAbstractTextPresenter >> insertAndSelectAfterCurrentSelection: aString [
+	"Insert `aString` at the end of current selection and select the inserted text."
 	| selectionInterval |
+
+	self flag: #TODO. "Does this really has to be part of the text api?"
 	selectionInterval := self selectionInterval.
-	self insert: aString at: selectionInterval last + 1.
+	self insert: aString at: selectionInterval last.
 	self selectionInterval: (selectionInterval last + 1 to: selectionInterval last + aString size)
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> isForSmalltalkCode [
 
 	"self 
@@ -224,7 +171,7 @@ SpAbstractTextPresenter >> isForSmalltalkCode [
 	^ false
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> isForSmalltalkCode: aBoolean [
 	
 	"self 
@@ -233,7 +180,15 @@ SpAbstractTextPresenter >> isForSmalltalkCode: aBoolean [
 		in: #Pharo8"
 ]
 
-{ #category : #'api-errors' }
+{ #category : #localization }
+SpAbstractTextPresenter >> localeChanged [
+
+	super localeChanged.
+	self forceUpdateSlot: #placeholder
+	
+]
+
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> notify: errorMessage at: position in: sourceCode [
 
 	self changed: #notify:at:in: with: { errorMessage . position . sourceCode }
@@ -241,34 +196,40 @@ SpAbstractTextPresenter >> notify: errorMessage at: position in: sourceCode [
 
 { #category : #api }
 SpAbstractTextPresenter >> placeholder [
+	"Answer the place holder (also known as ghost text) for this text component."
 
 	^ placeholder
 ]
 
-{ #category : #accessing }
-SpAbstractTextPresenter >> placeholder: aText [
+{ #category : #api }
+SpAbstractTextPresenter >> placeholder: aString [
+	"Set the place holder (also known as ghost text) for this text component."
 
-	placeholder := aText
+	placeholder := aString
 ]
 
 { #category : #private }
 SpAbstractTextPresenter >> rawSelection: anInterval [
+
 	self property: #selection rawValue: anInterval
 ]
 
-{ #category : #api }
+{ #category : #private }
 SpAbstractTextPresenter >> readSelection [
-	^ self readSelectionBlock cull: self text cull: self
+
+	^ self readSelectionBlock 
+		cull: self text 
+		cull: self
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> readSelectionBlock [
 	"Return the block used to calculate the text selection"
 
 	^ readSelection
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> readSelectionBlock: aBlock [
 	"Set the block used to calculate the text selection"
 
@@ -277,105 +238,81 @@ SpAbstractTextPresenter >> readSelectionBlock: aBlock [
 
 { #category : #initialization }
 SpAbstractTextPresenter >> registerEvents [
+
 	self whenTextChangedDo: [ self changed: #getText ].
 	self whenReadSelectionIsChangedDo: [ self changed: #readSelection ].
 	self property: #hasUnacceptedEdits whenChangedDo: [ :bool | self changed: #setHasUnacceptedEdits: with: {bool} ].
 	self property: #selection whenChangedDo: [ :block | self changed: #setSelectionFromModel: with: {block value} ].
-	self whenAutoAcceptChangedDo: [ :bool | self changed: #autoAccept: with: {bool} ].
 	self property: #wantsVisualFeedback whenChangedDo: [ :bool | self changed: #changed with: #() ].
 	self property: #askBeforeDiscardingEdits whenChangedDo: [ :bool | self changed: #askBeforeDiscardingEdits: with: {bool} ]
 ]
 
-{ #category : #api }
+{ #category : #'api-selection' }
 SpAbstractTextPresenter >> selectAll [
+	"Select all text"
 	
 	self changed: #selectAll with: #()
 ]
 
-{ #category : #api }
+{ #category : #'api-selection' }
 SpAbstractTextPresenter >> selectLine [
+	"Select line where the cursor is placed at this moment and answer the resulting selection 
+	(See `SpAbstractTextPresenter>>#selectionInterval`). "
+
 	self withAdapterDo: [ :anAdapter | anAdapter selectLine ].
 	^ self selectionInterval
 ]
 
-{ #category : #NOCompletion }
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> selectedClassOrMetaClass [
 
 	^ self behavior
 ]
 
-{ #category : #api }
+{ #category : #'api-selection' }
 SpAbstractTextPresenter >> selectedText [ 
-	|selectionInterval|
-	selectionInterval := self selectionInterval ifEmpty: [ ^'' ].
-	^self text copyFrom: selectionInterval first to: selectionInterval last
+	"Answer the text contained in selection interval 
+	(See `SpAbstractTextPresenter>>#selectionInterval`)"
+	| selectionInterval |
+	
+	selectionInterval := self selectionInterval.
+	selectionInterval ifEmpty: [ ^ '' ].
+	
+	^ self text asString
+		copyFrom: selectionInterval first 
+		to: selectionInterval last
 ]
 
-{ #category : #api }
-SpAbstractTextPresenter >> selection [
-	self
-		deprecated:
-			'#selection was used to return an interval, and did not convey the correct meaning. Use #selectionInterval instead.'
-		transformWith: '`@receiver selection' -> '`@receiver selectionInterval'.
-	^ self selectionInterval
-]
-
-{ #category : #api }
-SpAbstractTextPresenter >> selection: anInterval [
-	self
-		deprecated:
-			'#selection: was used to set an interval, and did not convey the correct meaning. Use #selectionInterval: instead.'
-		transformWith: '`@receiver selection: `@arg' -> '`@receiver selectionInterval: `@arg'.
-	self selectionInterval: anInterval
-]
-
-{ #category : #api }
+{ #category : #'api-selection' }
 SpAbstractTextPresenter >> selectionInterval [
-	"Get the text selection interval.
-	 I will update the selection from adapter first"
+	"Answer the text selection interval (an interval from start to end)."
 	
 	self withAdapterDo: [ :anAdapter | 
 		self rawSelection: anAdapter selection ].
 	^ selection ifNil: [ ^ 1 to: 0 ]
 ]
 
-{ #category : #api }
+{ #category : #'api-selection' }
 SpAbstractTextPresenter >> selectionInterval: anInterval [
-	"Set the text selection interval without changing the readSelectionBlock"
-
+	"Set the text selection interval.
+	 `anInterval` is an `Interval` from the first character selected to the end."
+	
+	self flag: #REVIEW. "Maybe it should be called #selectInterval:?"
 	selection := anInterval
 ]
 
 { #category : #api }
-SpAbstractTextPresenter >> setSelection: anInterval [
-	"Set the text selection without changing the readSelectionBlock"
-
-	self 
-		deprecated: 'Use #selection: instead.' 
-		transformWith: '`@receiver setSelection: `@statement' 
-		            -> '`@receiver selection: `@statement'.
-
-	self selection: anInterval
-]
-
-{ #category : #api }
 SpAbstractTextPresenter >> text [
+	"Answer current text"
 
 	^ text
 ]
 
 { #category : #api }
-SpAbstractTextPresenter >> text: aText [
-	"Set the text of the text zone"
+SpAbstractTextPresenter >> text: aString [
+	"Set the text of the text presenter"
 
-	text := aText
-]
-
-{ #category : #private }
-SpAbstractTextPresenter >> textArea [
-	
-	self flag: #REMOVEME.
-	^ self adapter widget
+	text := aString
 ]
 
 { #category : #simulating }
@@ -384,17 +321,17 @@ SpAbstractTextPresenter >> type: aString [
 	self text: aString
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> wantsVisualFeedback [
 	^ wantsVisualFeedback
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> wantsVisualFeedback: aBoolean [
 	wantsVisualFeedback := aBoolean
 ]
 
-{ #category : #'api-events' }
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> whenAboutToStyleChangedDo: aBlock [
 	"Set a block to perform when the about to style block changed"
 	
@@ -402,7 +339,7 @@ SpAbstractTextPresenter >> whenAboutToStyleChangedDo: aBlock [
 		aBlock cull: (block value) cull: old cull: announcement cull: anAnnouncer ]
 ]
 
-{ #category : #'api-events' }
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> whenAcceptBlockChangedDo: aBlock [
 	"Set a block to perform when the accept block changed"
 	
@@ -410,19 +347,16 @@ SpAbstractTextPresenter >> whenAcceptBlockChangedDo: aBlock [
 ]
 
 { #category : #'api-events' }
-SpAbstractTextPresenter >> whenAutoAcceptChangedDo: aBlock [
-	"aBlock will be performed when autoAccept changed"
-
-	self property: #autoAccept whenChangedDo: aBlock
-]
-
-{ #category : #'api-events' }
 SpAbstractTextPresenter >> whenPlaceholderChangedDo: aBlock [
+	"Inform when placeholder has been changed (See `SpAbstractTextPresenter>>#placeholder:`).
+	 `aBlock` receives two optional arguments 
+	 - new placeholder
+	 - old placeholder"
 	
 	self property: #placeholder whenChangedDo: aBlock
 ]
 
-{ #category : #'api-events' }
+{ #category : #private }
 SpAbstractTextPresenter >> whenReadSelectionIsChangedDo: aBlock [
 	"Set a block to perform when the read selection block changed"
 
@@ -430,15 +364,39 @@ SpAbstractTextPresenter >> whenReadSelectionIsChangedDo: aBlock [
 ]
 
 { #category : #'api-events' }
-SpAbstractTextPresenter >> whenTextChangedDo: aBlock [
-	"Set a block to perform when the text changed"
+SpAbstractTextPresenter >> whenResetDo: aBlock [
+	"Inform when a 'reset' event is triggered.
+	 It will react when user presses <meta+l> key (this is for historical reasons)."
 
-	self property: #text whenChangedDo: aBlock
+	self 
+		bindKeyCombination: $l meta 
+		toAction: aBlock
 ]
 
 { #category : #'api-events' }
-SpAbstractTextPresenter >> whenTextIsAcceptedDo: aBlock [
-	"Set a block to perform when the text is accepted"
-	
-	self property: #actionPerformed whenChangedDo: aBlock
+SpAbstractTextPresenter >> whenSelectionChangedDo: aBlock [
+	"Inform when selection changed. 
+	 `aBlock` receives two optional arguments 
+	 - new selection
+	 - old selection"
+
+	self property: #selection whenChangedDo: aBlock
+]
+
+{ #category : #'api-events' }
+SpAbstractTextPresenter >> whenSubmitDo: aBlock [
+	"Inform a 'submit' event has been triggered. 
+	 It will react when user presses <meta+s> key (this is for historical reasons) and (in case of text fields) with <cr>."
+
+	self subclassResponsibility
+]
+
+{ #category : #'api-events' }
+SpAbstractTextPresenter >> whenTextChangedDo: aBlock [
+	"Inform when text has been changed (a character has been enter or `SpAbstractTextPresenter>>text:` has been called)
+	 `aBlock` receives two optional arguments 
+	 - new text
+	 - old text"
+
+	self property: #text whenChangedDo: aBlock
 ]

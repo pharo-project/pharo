@@ -107,7 +107,8 @@ Class {
 		'classPackageMapping',
 		'packages',
 		'classExtendingPackagesMapping',
-		'debuggingName'
+		'debuggingName',
+		'packageNames'
 	],
 	#classInstVars : [
 		'default'
@@ -213,6 +214,15 @@ RPackageOrganizer >> addMethod: method [
 	rPackage addMethod: method
 ]
 
+{ #category : #'package-names-cache' }
+RPackageOrganizer >> addPackageNameToCache: aPackageName [
+
+	packageNames ifNil: [ ^ self ].
+	
+	packageNames add: aPackageName
+
+]
+
 { #category : #'system integration' }
 RPackageOrganizer >> announcer [ 
 	^SystemAnnouncer uniqueInstance private
@@ -249,6 +259,9 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 					initializeExtensionsFor: eachBehavior classSide 
 					protocol: eachProtocol ] ]
 		displayingProgress: 'Importing extensions'.
+	
+	"I reset the cache of names"
+	packageNames := nil.
 ]
 
 { #category : #'private registration' }
@@ -263,6 +276,8 @@ RPackageOrganizer >> basicRegisterPackage: aPackage [
 	self flag: #hack. "for decoupling MC"
 	self class environment at: #MCWorkingCopy ifPresent: [ :wc |
 		wc forPackage: ((self class environment at: #MCPackage) named: aPackage name)].
+	
+	self addPackageNameToCache: aPackage name asSymbol.
 	
 	^ aPackage
 ]
@@ -280,6 +295,8 @@ RPackageOrganizer >> basicUnregisterPackage: aPackage [
 	self class environment at: #MCWorkingCopy ifPresent: [ 
 		aPackage mcPackage 
 			ifNotNil: [ :mcPackage | mcPackage workingCopy unregister ]].
+		
+	self removePackageNameFromCache: aPackage name asSymbol
 ]
 
 { #category : #'private registration' }
@@ -288,7 +305,9 @@ RPackageOrganizer >> basicUnregisterPackageNamed: aSymbolName [
 	
 	packages
 		removeKey: aSymbolName asSymbol
-		ifAbsent: [ ]
+		ifAbsent: [ ].
+	
+	self removePackageNameFromCache: aSymbolName asSymbol
 	
 ]
 
@@ -348,7 +367,10 @@ RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
 	
 	package := packages 
 		at: aSymbol asSymbol 
-		ifAbsentPut: [ self packageClass named: aSymbol ].
+		ifAbsentPut: [ 
+			"I add the package to the packageName cache"
+			self addPackageNameToCache: aSymbol asSymbol.
+			self packageClass named: aSymbol ].
 		
 	package extendedClasses do: [ :extendedClass|
 			self registerExtendingPackage: package forClass: extendedClass].
@@ -692,14 +714,16 @@ RPackageOrganizer >> packageNamedIgnoreCase: aSymbol ifAbsent: aBlock [
 	^ aBlock value.
 ]
 
-{ #category : #accessing }
-RPackageOrganizer >> packageNames [
-	^ packages keys
+{ #category : #'package-names-cache' }
+RPackageOrganizer >> packageNames [ 
+
+	^ packageNames ifNil: [ packageNames := packages keys asSortedCollection ]
 ]
 
-{ #category : #accessing }
+{ #category : #'package-names-cache' }
 RPackageOrganizer >> packageNamesDo: aBlock [
-	^ packages keysDo: aBlock
+
+	^ self packageNames do: aBlock
 ]
 
 { #category : #'package access from class' }
@@ -847,6 +871,14 @@ RPackageOrganizer >> registerPackageNamed: aString [
 		ifAbsent: [ (self packageClass named: aString asSymbol) register ]
 ]
 
+{ #category : #'package-names-cache' }
+RPackageOrganizer >> removePackageNameFromCache: aPackageName [
+
+	packageNames ifNil: [ ^ self ].	
+	packageNames remove: aPackageName ifAbsent: [  ]
+
+]
+
 { #category : #'system integration' }
 RPackageOrganizer >> renamePackage: rPackage from: oldName to: newName [ 
 	| classesAndProtocolsToRename |
@@ -854,6 +886,9 @@ RPackageOrganizer >> renamePackage: rPackage from: oldName to: newName [
 	rPackage name: newName. 
 	
 	"we update the organizer"
+	self removePackageNameFromCache: oldName.
+	self addPackageNameToCache: newName.
+	
 	packages 
 		at: newName 
 		put: rPackage.

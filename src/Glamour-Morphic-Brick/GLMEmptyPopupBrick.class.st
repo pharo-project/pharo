@@ -55,7 +55,6 @@ GLMEmptyPopupBrick >> addCloserListener [
 		description: [ 'Closer must not be nil' ].
 	
 	self closer popup: self.
-	self activeHand addEventListener: self closer
 ]
 
 { #category : #accessing }
@@ -188,6 +187,18 @@ GLMEmptyPopupBrick >> foundationBrick [
 		ifFalse: [ self ]
 ]
 
+{ #category : #'events-processing' }
+GLMEmptyPopupBrick >> handlesKeyStroke: anEvent [
+
+	^ true
+]
+
+{ #category : #'events-processing' }
+GLMEmptyPopupBrick >> handlesMouseOver: anEvent [
+
+	^ true
+]
+
 { #category : #initialization }
 GLMEmptyPopupBrick >> initialize [
 	super initialize.
@@ -258,6 +269,26 @@ GLMEmptyPopupBrick >> isInsideOfTriggerBrick: anEvent [
 			anEvent withHandPositionDo: [ :position | ^ aBrick globalBounds containsPoint: position ] ]
 ]
 
+{ #category : #'events-processing' }
+GLMEmptyPopupBrick >> keyStroke: anEvent [
+
+	self closer handleListenEvent: anEvent
+]
+
+{ #category : #'events-processing' }
+GLMEmptyPopupBrick >> keyboardFocusChange: gotFocus [
+
+	super keyboardFocusChange: gotFocus.
+	gotFocus ifFalse: [
+		self closer handleLostFocus ]
+]
+
+{ #category : #'events-processing' }
+GLMEmptyPopupBrick >> mouseLeave: anEvent [
+
+	self closer handleListenEvent: anEvent
+]
+
 { #category : #'instance creation' }
 GLMEmptyPopupBrick >> newContentBrick [
 	^ GLMBandBrick new
@@ -290,6 +321,8 @@ GLMEmptyPopupBrick >> onOpened [
 	"I am send after popup is opened in the world and became visible to the user.
 	Override me to perform additional actions, for example give keyboard or mouse focus
 	to me or any of my content elements"
+	
+	self takeKeyboardFocus
 ]
 
 { #category : #'popup - hooks' }
@@ -367,8 +400,7 @@ GLMEmptyPopupBrick >> openOn: aBrick [
 { #category : #initialization }
 GLMEmptyPopupBrick >> outOfWorld: aWorld [
 	super outOfWorld: aWorld.
-	
-	self unsubscribeListeners
+	self unsubscribeListeners: aWorld
 ]
 
 { #category : #'popup - layout' }
@@ -403,7 +435,6 @@ GLMEmptyPopupBrick >> removeCloserListener [
 		assert: [ self closer isNotNil ]
 		description: [ 'Closer must not be nil' ].
 	
-	self activeHand removeEventListener: self closer.
 	self closer popup: nil
 ]
 
@@ -454,7 +485,7 @@ GLMEmptyPopupBrick >> triggerBrick: aBrick [
 ]
 
 { #category : #'popup - listeners' }
-GLMEmptyPopupBrick >> unsubscribeListeners [
+GLMEmptyPopupBrick >> unsubscribeListeners: anObject [
 
 	self removeCloserListener
 ]

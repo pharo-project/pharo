@@ -1,5 +1,6 @@
 "
-Enlumineur is a replacement of BlueInk pretty printer.
+Enlumineur is a replacement of BlueInk pretty printer (now packaged in pharo-contributions/configurableFormatter).
+
 It was developed by Hugo Lasnier during 6 months internship within RMOD and supervised by S. Ducasse and G. Polito during 2019.
 The code was revisited and cleaned but there are probably more glitches left. 
 
@@ -413,7 +414,7 @@ EFFormatter class >> selectorAndArgumentCombinedMaxSize: anInteger [
 
 { #category : #accessing }
 EFFormatter class >> settingGroup [
-	^ #blueInkEnlumineur
+	^ #Enlumineur
 ]
 
 { #category : #settings }
@@ -654,7 +655,7 @@ EFFormatter class >> settingsNewLinesAfterMethodSignature: aBuilder [
 
 	(aBuilder setting: #numberOfNewLinesAfterMethodSignature)
 		label: 'New lines after method signature';
-		default: 1;
+		default: 2;
 		description: 'To set the number of new lines directly after the method signature.
 When numberOfNewLinesAfterMethodSignature is set to 2 new lines
 
@@ -818,7 +819,7 @@ EFFormatter class >> settingsRetainBlankLinesBetweenStatements: aBuilder [
 
 	(aBuilder setting: #retainBlankLinesBetweenStatements)
 		label: 'Retain blank lines between statements';
-		default: false;
+		default: true;
 		description: 'Keep blank lines which are between statements.
 		
 For example: when set to true the formatter will not change the following: 
@@ -1624,17 +1625,12 @@ EFFormatter >> multiLineMessages: anArray [
 EFFormatter >> needsMethodSignatureOnMultipleLinesFor: aMethodNode [
 	| cpt |
 	cpt := 0.
-	self methodSignatureOnMultipleLines
-		ifTrue:
-			[ 
-			aMethodNode selectorParts
+	^ self methodSignatureOnMultipleLines
+		ifTrue: [ aMethodNode selectorParts
 				with: aMethodNode arguments
-				do:
-					[ :key :arg | 
-					key size + arg name size > self selectorAndArgumentCombinedMaxSize
-						ifTrue: [ cpt := cpt + 1 ] ].
-			^ cpt > 1 ]
-		ifFalse: [ ^ false ]
+				do: [ :key :arg | key size + arg name size > self selectorAndArgumentCombinedMaxSize ifTrue: [ cpt := cpt + 1 ] ].
+			cpt > 1 ]
+		ifFalse: [ false ]
 ]
 
 { #category : #private }
@@ -2089,6 +2085,11 @@ EFFormatter >> visitCascadeNode: aCascadeNode [
 ]
 
 { #category : #visiting }
+EFFormatter >> visitEnglobingErrorNode: aNode [
+	self writeString: aNode value
+]
+
+{ #category : #visiting }
 EFFormatter >> visitLiteralArrayNode: aRBArrayLiteralNode [
 	| brackets current |
 	codeStream nextPut: $#.
@@ -2115,17 +2116,6 @@ EFFormatter >> visitLiteralNode: aLiteralNode [
 	aLiteralNode value isLiteral
 		ifFalse: [ self writeString: '''<an unprintable nonliteral value>''' ]
 		ifTrue: [ self writeString: aLiteralNode sourceText ]
-]
-
-{ #category : #visiting }
-EFFormatter >> visitLiteralVariableNode: aLiteralVariableNode [
-	| binding |
-	self halt. "looks like it is not used. Ask around RBLiteralVariableNode"
-	binding := aLiteralVariableNode binding.
-	self writeString: binding key storeString, ' -> '.
-	aLiteralVariableNode binding value isLiteral
-		ifFalse: [ self writeString: '''<an unprintable nonliteral value>''' ]
-		ifTrue: [ self writeString:  binding value asString ]
 ]
 
 { #category : #visiting }

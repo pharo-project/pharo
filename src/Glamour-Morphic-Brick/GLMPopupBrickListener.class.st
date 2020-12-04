@@ -33,6 +33,14 @@ GLMPopupBrickListener >> handleListenEvent: anEvent [
 		ifFound: [ :aPredicate | self act ]
 ]
 
+{ #category : #'events-processing' }
+GLMPopupBrickListener >> handleLostFocus [
+
+	self predicates
+		detect: [ :aPredicate | aPredicate popupLostFocus: self popup ]
+		ifFound: [ :aPredicate | self act ]
+]
+
 { #category : #initialization }
 GLMPopupBrickListener >> initialize [
 	super initialize.

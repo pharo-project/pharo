@@ -31,8 +31,7 @@ GTSpotterTest >> setUp [
 	super setUp.
 	
 	spotter := GTMockSpotter new
-		exceptionHandler: GTSpotterDebuggingExceptionHandler new;
-		yourself
+
 ]
 
 { #category : #tests }
@@ -46,7 +45,7 @@ GTSpotterTest >> testEmptyTextInput [
 ]
 
 { #category : #tests }
-GTSpotterTest >> testHistorizingTheSameObjectRemovesPreviousOccurences [
+GTSpotterTest >> testHistorizingTheSameObjectRemovesPreviousOccurrences [
 	| history |
 	history := OrderedCollection new.
 	spotter := GTSpotter new history: history.

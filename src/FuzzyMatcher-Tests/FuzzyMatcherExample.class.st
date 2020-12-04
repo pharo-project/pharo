@@ -46,23 +46,23 @@ FuzzyMatcherExample class >> exampleClasses [
 
 	^ self new 
 		pattern: 'mph';
-		elements: (Smalltalk globals allClassesAndTraits collect: #name);
+		elements: (self environment allClassesAndTraits collect: [:each | each name]);
 		open
 ]
 
 { #category : #examples }
 FuzzyMatcherExample class >> examplePackages [
-	<sampleInstance>
+	<example>
 
 	^ self new 
 		pattern: '-st';
-		elements: (RPackage organizer packages collect: #name);
+		elements: (RPackage organizer packages collect: [:each | each name] );
 		open
 ]
 
 { #category : #examples }
 FuzzyMatcherExample class >> exampleSelectors [
-	<sampleInstance>
+	<example>
 
 	^ self new 
 		pattern: '::::::::::';
@@ -109,12 +109,9 @@ FuzzyMatcherExample >> buildMorph [
 { #category : #accessing }
 FuzzyMatcherExample >> elements: aCollection [
 
-	elements := aCollection collect: [ :each | each -> 0 ].
-	
+	elements := aCollection collect: [:each | each -> 0 ].
 	matchedElements := elements.
-	
 	dataSource elements: matchedElements.
-	
 	self update
 	
 ]
@@ -177,7 +174,7 @@ FuzzyMatcherExample >> match: aPattern for: aCollection [
 
 { #category : #opening }
 FuzzyMatcherExample >> open [
-
+	<script: 'self new open'>
 	| window area |
 	
 	window := (self buildMorph openInWindowLabeled: 'Fuzzy Matching Example').
@@ -193,17 +190,15 @@ FuzzyMatcherExample >> open [
 { #category : #accessing }
 FuzzyMatcherExample >> pattern: aString [
 
-	textModel setText: aString.
+	textModel setText: aString
 ]
 
 { #category : #private }
 FuzzyMatcherExample >> setElements: aCollection [
 
-	elements := aCollection collect: [ :each | each -> 0 ].
-	
+	elements := aCollection collect: [:each | each -> 0 ].
 	matchedElements := elements.
-	
-	dataSource elements: matchedElements.
+	dataSource elements: matchedElements
 ]
 
 { #category : #'event handling' }
@@ -231,6 +226,6 @@ FuzzyMatcherExample >> updatePattern: newPattern [
 	stringMorph contents: text.		
 	pattern := newPattern.	
 	dataSource elements: matchedElements.	
-	dataSource table ifNotNil: [ :fastTable | fastTable refresh ].
+	dataSource table ifNotNil: [ :fastTable | fastTable refresh ]
 	
 ]

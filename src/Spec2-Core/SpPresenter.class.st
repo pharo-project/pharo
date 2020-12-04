@@ -95,12 +95,18 @@ Class {
 		'#askOkToClose => SpObservableSlot',
 		'#titleHolder => SpObservableSlot',
 		'#additionalSubpresentersMap',
-		'#layout',
+		'#layout => SpObservableSlot',
 		'#visible => SpObservableSlot',
 		'#extent => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Base'
 }
+
+{ #category : #accessing }
+SpPresenter class >> currentApplication [ 
+
+	^ SpApplication defaultApplication
+]
 
 { #category : #specs }
 SpPresenter class >> defaultSpec [
@@ -171,13 +177,8 @@ SpPresenter class >> newApplication: anApplication owner: anOwningPresenter mode
 { #category : #'instance creation' }
 SpPresenter class >> on: aDomainObject [
 
-	"self 
-		deprecated: 'SpPresenters are instantiated in the context of an application!' 
-		on: '2019-02-26' 
-		in: #Pharo8."
-		
 	^ self 
-		newApplication: SpApplication defaultApplication
+		newApplication: self currentApplication
 		model: aDomainObject 
 ]
 
@@ -218,7 +219,7 @@ SpPresenter >> addAll: aWindow withSpecLayout: aSpec [
 		frame: (0@0 corner: 1@1).
 ]
 
-{ #category : #'window menu' }
+{ #category : #TOREMOVE }
 SpPresenter >> addMenuItemsToWindowMenu: aMenu [
 	"Do nothing"
 ]
@@ -292,7 +293,7 @@ SpPresenter >> application: anApplication [
 	application := anApplication
 ]
 
-{ #category : #'window menu' }
+{ #category : #TOREMOVE }
 SpPresenter >> applyMenuModel: aMenuModel [
 
 	aMenuModel menuGroups do: [ :group |
@@ -327,11 +328,9 @@ SpPresenter >> askOkToClose [
 { #category : #'private building' }
 SpPresenter >> basicBuildAdapterWithSpecLayout: aSpecLayout [
 
-	self flag: #TODO. "We will keep the layout used to build to allow recalculations 
-	 and other operations. But maybe this should be part of the adapter and not the presenter."
-	layout := aSpecLayout.
-	^ super basicBuildAdapterWithSpecLayout: aSpecLayout.
-
+	layout == aSpecLayout 
+		ifFalse: [ layout := aSpecLayout ].
+	^ super basicBuildAdapterWithSpecLayout: aSpecLayout
 ]
 
 { #category : #'api-shortcuts' }
@@ -347,6 +346,7 @@ SpPresenter >> bindKeyCombination: aShortcut toAction: aBlock [
 
 { #category : #testing }
 SpPresenter >> canTakeKeyboardFocus [
+	"Answer when the presenter can take keyboard focus."
 
 	^ true
 ]
@@ -400,6 +400,14 @@ SpPresenter >> createInstanceFor: aClassSymbol [
 	^ self instantiate: class.
 ]
 
+{ #category : #'api-focus' }
+SpPresenter >> defaultKeyboardFocus [
+	"Override this to allow the presenter to re-define the one that will answer the 
+	 takeKeyboardFocus call in composed presenters"
+
+	^ self
+]
+
 { #category : #specs }
 SpPresenter >> defaultSpec [
 
@@ -445,12 +453,12 @@ SpPresenter >> ensureExtentFor: widget [
 	
 ]
 
-{ #category : #TOMOVE }
+{ #category : #TOREMOVE }
 SpPresenter >> extent [
 	^ extent
 ]
 
-{ #category : #TOMOVE }
+{ #category : #TOREMOVE }
 SpPresenter >> extent: aPoint [
 	^ extent := aPoint
 ]
@@ -466,13 +474,13 @@ SpPresenter >> focusOrder: anObject [
 	^ focusOrder := anObject
 ]
 
-{ #category : #'GTInspector-Extensions' }
+{ #category : #'inspector-Extensions' }
 SpPresenter >> gtInspectorPreviewIn: composite [
 	<gtInspectorPresentationOrder: 30>
 	self adapter ifNotNil: [ :w | w gtInspectorPreviewIn: composite ]
 ]
 
-{ #category : #'GTInspector-Extensions' }
+{ #category : #'inspector-Extensions' }
 SpPresenter >> gtInspectorSubPresentersIn: composite [
 	<gtInspectorPresentationOrder: 20>
 	composite tree
@@ -481,6 +489,14 @@ SpPresenter >> gtInspectorSubPresentersIn: composite [
 		display: [ :each | {each} ];
 		children: [ :each | each presenters ];
 		when: [ :each | each presenters isNotEmpty ]
+]
+
+{ #category : #'api-focus' }
+SpPresenter >> hasKeyboardFocus [
+
+	self canTakeKeyboardFocus ifFalse: [ ^ false ].
+	self withAdapterDo: [ :anAdapter | ^ anAdapter hasKeyboardFocus ].
+	^ false
 ]
 
 { #category : #api }
@@ -525,7 +541,12 @@ SpPresenter >> initialize [
 SpPresenter >> initializePresenter [
 	"Now, presenters should implement #connectPresenters instead."
 
-	self property: #extent whenChangedDo: [ :ex | self withAdapterDo: [ :widget | (widget respondsTo: #extent:) ifTrue: [ widget extent: ex ] ] ]
+	self 
+		property: #extent 
+		whenChangedDo: [ :ex | 
+			self withAdapterDo: [ :widget | 
+				(widget respondsTo: #extent:) 
+					ifTrue: [ widget extent: ex ] ] ]
 ]
 
 { #category : #initialization }
@@ -542,7 +563,8 @@ SpPresenter >> initializePresenters [
 { #category : #'initialization - private' }
 SpPresenter >> initializePrivateAnnouncements [
 
-	self property: #titleHolder whenChangedDo: [ self updateTitle ]
+	self property: #titleHolder whenChangedDo: [ self updateTitle ].
+	self property: #layout whenChangedDo: [ :newLayout | self replaceLayoutWith: newLayout ]
 ]
 
 { #category : #'initialization - private' }
@@ -592,6 +614,23 @@ SpPresenter >> initializeWindow: aWindowPresenter [
 		aboutText: self aboutText
 ]
 
+{ #category : #'inspector-Extensions' }
+SpPresenter >> inspectionSubPresenters [
+	<inspectorPresentationOrder: 910 title: 'Subpresenters'>
+	
+	^ SpTreePresenter new
+		roots: self presenters;
+		children: [ :each | each presenters ];
+		expandRoots;
+		yourself
+]
+
+{ #category : #'inspector-Extensions' }
+SpPresenter >> inspectionSubPresentersContext: aContext [
+	
+	aContext active: self presenters notEmpty
+]
+
 { #category : #'instance creation' }
 SpPresenter >> instantiate: aPresenterClass [
 	"Instantiate a SpPresenter subclass and set its instance owner"
@@ -621,7 +660,7 @@ SpPresenter >> instantiatePresenters: aCollectionOfPairs [
 				pairsDo: [ :k :v | self instVarNamed: k asString put: (self createInstanceFor: v) ] ]
 ]
 
-{ #category : #api }
+{ #category : #testing }
 SpPresenter >> isBuilt [
 	^ self isDisplayed
 ]
@@ -656,17 +695,39 @@ SpPresenter >> layout [
 	^ layout
 ]
 
+{ #category : #api }
+SpPresenter >> layout: aLayout [
+
+	layout := aLayout
+]
+
 { #category : #private }
 SpPresenter >> layoutPresenters [
 
 	layout ifNil: [ ^ self presenters ].
 	
 	^ layout deepPresenters
-		select: [ :each | each isSymbol ]
-		thenCollect: [ :each | self presenterAt: each ]
+		select: [ :each | each isSymbol or: [ each isPresenter ] ]
+		thenCollect: [ :each | 
+			each isPresenter 
+				ifTrue: [ each ]
+				ifFalse:[ self presenterAt: each ] ]
 ]
 
-{ #category : #'window menu' }
+{ #category : #accessing }
+SpPresenter >> locale [ 
+
+	^ self application locale
+]
+
+{ #category : #localization }
+SpPresenter >> localeChanged [
+
+	"do nothing here. Override me in subclasses to update strings presented to the users"
+	
+]
+
+{ #category : #TOREMOVE }
 SpPresenter >> neglectMenuModel: aMenuModel [
 
 	aMenuModel menuGroups do: [ :group |
@@ -679,6 +740,12 @@ SpPresenter >> neglectMenuModel: aMenuModel [
 SpPresenter >> newActionBar [
 
 	^ self instantiate: SpActionBarPresenter
+]
+
+{ #category : #widgets }
+SpPresenter >> newAthens [
+
+	^ self instantiate: SpAthensPresenter
 ]
 
 { #category : #widgets }
@@ -695,11 +762,6 @@ SpPresenter >> newButtonBar [
 { #category : #widgets }
 SpPresenter >> newCheckBox [
 	^ self instantiate: SpCheckBoxPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newCode [
-	^ self instantiate: SpCodePresenter
 ]
 
 { #category : #widgets }
@@ -734,18 +796,14 @@ SpPresenter >> newDynamicPresentersListIn: accessorSymbol usingBuilder: aDynamic
 ]
 
 { #category : #widgets }
-SpPresenter >> newImage [
-	^ self instantiate: SpImagePresenter
+SpPresenter >> newFilteringList [
+
+	^ self instantiate: SpFilteringListPresenter
 ]
 
 { #category : #widgets }
 SpPresenter >> newLabel [
 	^ self instantiate: SpLabelPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newLink [
-	^ self instantiate: SpLinkPresenter
 ]
 
 { #category : #widgets }
@@ -770,12 +828,6 @@ SpPresenter >> newMenuButton [
 ]
 
 { #category : #widgets }
-SpPresenter >> newMorph [
-
-	^ self instantiate: SpMorphPresenter
-]
-
-{ #category : #widgets }
 SpPresenter >> newNotebook [
 
 	^ self instantiate: SpNotebookPresenter
@@ -796,6 +848,18 @@ SpPresenter >> newNullPresenter [
 { #category : #widgets }
 SpPresenter >> newNumberInput [
 	^ self instantiate: SpNumberInputFieldPresenter
+]
+
+{ #category : #widgets }
+SpPresenter >> newPopover [
+
+	^ self instantiate: SpPopoverPresenter
+]
+
+{ #category : #widgets }
+SpPresenter >> newPresenterSelector [
+
+	^ self instantiate: SpPresenterSelectorPresenter
 ]
 
 { #category : #widgets }
@@ -854,9 +918,39 @@ SpPresenter >> newToggleButton [
 ]
 
 { #category : #widgets }
-SpPresenter >> newToolBar [
+SpPresenter >> newToolbar [
 
-	^ self instantiate: SpToolBarPresenter
+	^ self instantiate: SpToolbarPresenter
+]
+
+{ #category : #widgets }
+SpPresenter >> newToolbarButton [
+
+	^ self instantiate: SpToolbarButtonPresenter
+]
+
+{ #category : #widgets }
+SpPresenter >> newToolbarMenuButton [
+
+	^ self instantiate: SpToolbarMenuButtonPresenter
+]
+
+{ #category : #widgets }
+SpPresenter >> newToolbarPopoverButton [
+
+	^ self instantiate: SpToolbarPopoverButtonPresenter
+]
+
+{ #category : #widgets }
+SpPresenter >> newToolbarToggleButton [
+
+	^ self instantiate: SpToolbarToggleButtonPresenter
+]
+
+{ #category : #widgets }
+SpPresenter >> newTree [
+
+	^ self instantiate: SpTreePresenter
 ]
 
 { #category : #widgets }
@@ -927,12 +1021,25 @@ SpPresenter >> presentersInFocusOrder [
 			select: [ :each | each isVisible and: [ each canTakeKeyboardFocus ] ] ]
 ]
 
+{ #category : #private }
+SpPresenter >> rebuildLayout [
+
+	self replaceLayoutWith: self layout
+]
+
 { #category : #'api-shortcuts' }
 SpPresenter >> removeKeyCombination: aShortcut [
 
 	self contextKeyBindings removeKey: aShortcut ifAbsent: [ ^ self ].
 	self withAdapterDo: [ :anAdapter | 
 		anAdapter removeKeyCombination: aShortcut ]
+]
+
+{ #category : #private }
+SpPresenter >> replaceLayoutWith: aLayout [
+
+	self withAdapterDo: [ :anAdapter |
+		anAdapter replaceLayoutWith: aLayout ]
 ]
 
 { #category : #'api-window' }
@@ -976,7 +1083,11 @@ SpPresenter >> show [
 
 { #category : #'api-focus' }
 SpPresenter >> takeKeyboardFocus [
+	| focus |
 
+	focus := self defaultKeyboardFocus.
+	focus == self ifFalse: [ ^ focus takeKeyboardFocus ].
+	
 	self withAdapterDo: [ :anAdapter | 
 		anAdapter takeKeyboardFocus ]
 ]
@@ -1050,7 +1161,7 @@ SpPresenter >> update [
 SpPresenter >> updatePresenter [
 ]
 
-{ #category : #api }
+{ #category : #TOMOVE }
 SpPresenter >> updateTitle [
 
 	self flag: #TODO. "To move to WindowPresenter"
@@ -1066,14 +1177,6 @@ SpPresenter >> visibleIf: aValuable [
 { #category : #'api-events' }
 SpPresenter >> whenDisplayDo: aBlockClosure [
 	self announcer when: SpWidgetDisplayed do: aBlockClosure
-]
-
-{ #category : #'api-events' }
-SpPresenter >> whenShortcutsChanged: aBlock [
-	"Set a block to value when the shortcuts block has changed"
-	
-	self deprecated: 'This event does not has sense in Spec2'.
-
 ]
 
 { #category : #'api-events' }

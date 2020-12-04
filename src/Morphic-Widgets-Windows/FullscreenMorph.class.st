@@ -46,31 +46,18 @@ FullscreenMorph >> layoutChanged [
 	self layoutPolicy ifNotNil:[:l | l flushLayoutCache].
 ]
 
-{ #category : #'open/close' }
-FullscreenMorph >> openAsIs [
-	"Open in the current world with the current position and extent."
+{ #category : #initialize }
+FullscreenMorph >> postOpenInWorld: aWorld [
 	
-	^self openAsIsIn: self currentWorld
-
-]
-
-{ #category : #'open/close' }
-FullscreenMorph >> openAsIsIn: aWorld [
-	"Start stepping."
-	
-	aWorld addMorph: self.
-	(self submorphs notEmpty and: [self submorphs first isSystemWindow])
-		ifTrue: [self submorphs first openedFullscreen].
-	aWorld startSteppingSubmorphsOf: self.
-	
-	self announceOpened.
+	(self submorphs notEmpty and: [ self submorphs first isSystemWindow ])
+		ifTrue: [ self submorphs first openedFullscreen ].
+	super postOpenInWorld: aWorld
 ]
 
 { #category : #initialize }
-FullscreenMorph >> openInWorld: aWorld [
-	"Open as is."
-	
-	^self openAsIsIn: aWorld
+FullscreenMorph >> preOpenInWorld: aWorld [
+
+	"Do nothing"
 ]
 
 { #category : #accessing }

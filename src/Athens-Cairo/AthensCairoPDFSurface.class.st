@@ -1,47 +1,22 @@
 "
-i am a concrete implementation of Athens surface which using cairo graphics library for rendering for generating PDF files
-as output.
+I represent an Athens surface that renders into a PDF file using the cairo graphics library.
 
-<currently it is not functional and need more testing and coding>
+For more information, please read the comment of my superclass, which implements behavior that is shared with other surfaces that write to file using the cairo graphics library.
+
+Reference: https://cairographics.org/manual/cairo-PDF-Surfaces.html
+
 "
 Class {
 	#name : #AthensCairoPDFSurface,
-	#superclass : #AthensCairoSurface,
+	#superclass : #AthensCairoExportSurface,
 	#category : #'Athens-Cairo-Surface'
 }
 
 { #category : #private }
-AthensCairoPDFSurface class >> createPDF: fileName width: width_in_points height: height_in_points [
-	^ self ffiCall: #(AthensCairoPDFSurface cairo_pdf_surface_create (String fileName,
-                                                      double width_in_points,
-                                                      double height_in_points) )
+AthensCairoPDFSurface class >> createExportingTo: fileName width: width height: height [
+	^ self ffiCall: #(AthensCairoPDFSurface cairo_pdf_surface_create(
+			String fileName,
+			double width, 
+			double height) )
 
-]
-
-{ #category : #'instance creation' }
-AthensCairoPDFSurface class >> extent: anExtent fileName: fileName [
-
-	^ (self createPDF: fileName width: anExtent x height: anExtent y) initialize
-]
-
-{ #category : #'finalize resources' }
-AthensCairoPDFSurface class >> finalizeResourceData: handle [
-
-	self destroySurfaceHandle: handle.
-
-]
-
-{ #category : #private }
-AthensCairoPDFSurface class >> registerSurface: surface [
-	"do not register my instances with SurfacePlugin"
-]
-
-{ #category : #initialization }
-AthensCairoPDFSurface >> resourceData [
-	^ handle value 
-]
-
-{ #category : #private }
-AthensCairoPDFSurface >> showPage [
-	^ self ffiCall: #( void cairo_surface_show_page (self) )
 ]

@@ -143,7 +143,7 @@ RBMethod >> refersToSymbol: aSymbol [
 		matches: '`#literal'
 			do:
 				[ :node :answer | answer or: [ self literal: node value containsReferenceTo: aSymbol ] ].
-	(RBScanner isSelector: aSymbol)
+	aSymbol isValidSelector
 		ifTrue: [ searcher
 				matches:
 					'`@object '

@@ -64,6 +64,18 @@ ClassVariableTest >> testPropertyAtPut [
 ]
 
 { #category : #'tests  - properties' }
+ClassVariableTest >> testReadingFromContext [
+
+	| classVariable |
+	TestVariable := #testValue.
+	classVariable := self class classVariableNamed: #TestVariable.
+	
+	self
+		assert: (classVariable readInContext: thisContext)
+		equals: #testValue
+]
+
+{ #category : #'tests  - properties' }
 ClassVariableTest >> testRemoveProperty [
 	| classVariable |
 	classVariable := self class classVariableNamed: #TestVariable.
@@ -74,4 +86,22 @@ ClassVariableTest >> testRemoveProperty [
 		assert: (classVariable propertyAt: #testKeySelector)
 		equals: nil.
 	self assert: classVariable properties isNil.
+]
+
+{ #category : #tests }
+ClassVariableTest >> testScope [
+	| variable |
+	variable := SmalltalkImage classVariableNamed: #CompilerClass.
+	self assert: variable scope equals: SmalltalkImage.
+	self assert: (variable scope lookupVar: variable name) equals: variable
+]
+
+{ #category : #'tests  - properties' }
+ClassVariableTest >> testWritingToContext [
+
+	| classVariable |
+	classVariable := self class classVariableNamed: #TestVariable.
+	classVariable write: #testValue inContext: thisContext.
+	
+	self assert: TestVariable equals: #testValue
 ]

@@ -20,14 +20,10 @@ RBAbstractBlockVisitor class >> visit: aTree detect: aBlock [
 
 { #category : #enumerating }
 RBAbstractBlockVisitor class >> visit: aTree detect: aBlock ifNone: anErrorBlock [
-	| result |
-	
-	result := OrderedCollection new.
-	
-	self visit: aTree do: [ :node |
-		(aBlock value: node) ifTrue: [ ^node ] ].
-	
-	^anErrorBlock value
+	self
+		visit: aTree
+		do: [ :node | (aBlock value: node) ifTrue: [ ^ node ] ].
+	^ anErrorBlock value
 ]
 
 { #category : #enumerating }

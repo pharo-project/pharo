@@ -151,6 +151,21 @@ FileDialogWindow >> clearEntryCache [
 		entryCacheDirectory: nil
 ]
 
+{ #category : #actions }
+FileDialogWindow >> confirmDeleteDirectoryEntry: entry [
+	(self proceed: 'Are you sure you wish to delete the\selected directory along with its files?' withCRs translated
+	      title: 'Delete Directory' translated)
+		ifTrue: [ self deleteDirectoryEntry: entry ]
+]
+
+{ #category : #actions }
+FileDialogWindow >> confirmDeleteFileEntry: entry [
+	(self
+		 proceed: 'Are you sure you wish to delete the\file' withCRs translated , ' "' , entry name , '"?'
+		 title: 'Delete File' translated) 
+		ifTrue: [ self deleteFileEntry: entry ]
+]
+
 { #category : #accessing }
 FileDialogWindow >> defaultExtension [
 	"Answer the value of defaultExtension"
@@ -197,28 +212,33 @@ FileDialogWindow >> defaultLabel [
 ]
 
 { #category : #actions }
+FileDialogWindow >> deleteDirectoryEntry: entry [
+	entry asFileReference deleteAll.
+	self
+		clearEntryCache;
+		updateDirectories
+]
+
+{ #category : #actions }
+FileDialogWindow >> deleteFileEntry: entry [
+	entry asFileReference delete.
+	self
+		selectedFileIndex: 0;
+		clearEntryCache;
+		updateFiles 
+]
+
+{ #category : #actions }
 FileDialogWindow >> deleteFileOrDirectory [
+
 	"Delete the selected file or directory."
 
-	|entry|
-	self hasSelectedFileOrDirectory ifFalse: [^self].
+	| entry |
+	self hasSelectedFileOrDirectory ifFalse: [ ^ self ].
 	entry := self selectedFileEntry.
 	entry isDirectory
-		ifTrue: [(self 
-					proceed: 'Are you sure you wish to delete the\selected directory along with its files?' withCRs translated
-					title: 'Delete Directory' translated) ifTrue: [
-						entry asFileReference delete.
-						self
-							clearEntryCache;
-							updateDirectories]]
-		ifFalse: [(self 
-					proceed: 'Are you sure you wish to delete the\file' withCRs translated, ' "', entry name, '"?'
-					title: 'Delete Directory' translated) ifTrue: [
-						entry asFileReference delete.
-						self
-							selectedFileIndex: 0;
-							clearEntryCache;
-							updateFiles]].
+		ifTrue: [ self confirmDeleteDirectoryEntry: entry	 ]
+		ifFalse: [ self confirmDeleteFileEntry: entry ]
 ]
 
 { #category : #private }

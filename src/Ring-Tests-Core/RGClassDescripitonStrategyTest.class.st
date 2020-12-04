@@ -29,7 +29,7 @@ RGClassDescripitonStrategyTest >> testAllSlots [
 	aSuperclass instanceVariables: #(a b c).
 	aSubclass instanceVariables: #(d e f).
 	
-	self assert: (aSubclass allSlots collect: #name) equals: #(a b c d e f).
+	self assert: (aSubclass allSlots collect: [:each | each name]) equals: #(a b c d e f).
 ]
 
 { #category : #tests }

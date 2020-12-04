@@ -40,7 +40,6 @@ BaselineOfIDE >> additionalInitialization [
 	Smalltalk tools register: FileList as: #fileList.
 	Smalltalk tools register: Finder as: #finder.
 	Smalltalk tools register: ProcessBrowser as: #processBrowser.
-	Smalltalk tools register: RecentMessageList as: #recentMessageList.
 	Smalltalk tools register: SyntaxErrorDebugger as: #syntaxErrorDebugger.
 	Smalltalk tools register: TimeProfiler as: #timeProfiler.
 
@@ -49,13 +48,10 @@ BaselineOfIDE >> additionalInitialization [
 
 	PolymorphSystemSettings desktopColor:  Color veryVeryLightGray lighter.
 	SourceCodeFonts setSourceCodeFonts: 10.
-	LogicalFontManager unload.
 	FreeTypeSystemSettings loadFt2Library: true.
 	FreeTypeSettings current monitorType: #LCD.
 	FreeTypeSettings current glyphContrast: 55.
 	
-	CatalogSettings displayCatalogProjectsInSpotter: false.
-
 	RealEstateAgent usedStrategy: #cascadeFor:initialExtent:world:.
 	GrowlMorph position: #bottomLeft.
 	ShortcutReminder enabled: true.
@@ -65,7 +61,7 @@ BaselineOfIDE >> additionalInitialization [
 
 	MCSaveVersionDialog previousMessages add: String new.
 
-	RBProgramNode formatterClass: (self class environment at: #BIConfigurableFormatter ifAbsent: [RBSimpleFormatter]).
+	RBProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [RBSimpleFormatter]).
 
 	Color flushCache.
 	
@@ -85,10 +81,13 @@ BaselineOfIDE >> additionalInitialization [
 	SDL_Event initialize.
 	
 	HiRulerBuilderTest initialize.
-	
+		
 	3 timesRepeat: [
 		Smalltalk garbageCollect.
 		Undeclared removeUnreferencedKeys.].
+	
+	"Making HeuristicCompletion the default completion engine"
+	RubSmalltalkEditor completionEngineClass: CoCompletionEngine.
 	
 	self loadIceberg.	
 	self makeCalypsoDefaultBrowser.
@@ -127,20 +126,22 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'SUnit' with: [ 
 			spec
 				repository: repository;
-				loads: 'Tests' ].
-		
-		spec baseline: 'BlueInk' with: [ 
- 			spec repository: repository; loads: #('Tests') ].				
+				loads: 'Tests' ].				
 
 		spec baseline: 'EnlumineurFormatter' with: [ 
 			spec
 				repository: repository;
-				loads: #( 'Tests' 'UI-Tests' ) ].
+				loads: #( 'Tests' ) ].		
+					
+		spec baseline: 'Reflectivity' with: [ 
+			spec
+				repository: repository;
+				loads: #( 'tests' ) ].
+				
 				
 		spec package: 'Network-Tests'.
 		spec package: 'Network-Mail-Tests'.
 		spec package: 'Gofer-Tests'.
-		spec package: 'System-Hashing-Testing'.
 		spec package: 'Rubric-SpecFindReplaceDialog'.
 		spec baseline: 'Metacello' with: [ 
 			spec
@@ -182,17 +183,45 @@ BaselineOfIDE >> baseline: spec [
 				repository: repository;
 				loads: #( 'FullEnvironment' 'SystemBrowser' 'Tests' ) ].
 		spec baseline: 'Ring' with: [ spec repository: repository ].
+		spec baseline: 'Catalog' with: [ spec repository: repository ].
 		spec baseline: 'PharoGlamour' with: [ spec repository: repository ].
 		spec baseline: 'PharoGT' with: [ spec repository: repository ].
-		spec baseline: 'Catalog' with: [ spec repository: repository ].
-		spec package: 'Pharo-WelcomeHelp' ]
+		spec baseline: 'HeuristicCompletion' with: [ spec repository: repository ].
+		spec baseline: 'Spec2' with: [ 
+			spec 
+				repository: repository;
+				loads: #('Code' 'CodeTests') ].
+		spec baseline: 'NewTools' with: [
+			spec 
+				repository: repository;
+				loads: #(
+					'Playground' 
+					'Inspector' 
+					'Debugger' 
+					'SystemReporter'
+					'ChangeSorter'
+					'Methods') ].
+			
+		spec baseline: 'Microdown' with: [ spec 
+				repository: self packageRepositoryURL ].
+	
+		spec 
+  			baseline: 'Roassal3' 
+  			with: [ spec 
+				repository: 'github://ObjectProfile/Roassal3:v0.9.5/src';
+    				loads: #( 'Core' 'Tests') ].
+		
+		spec package: 'Pharo-WelcomeHelp'.
+		spec package: 'Kernel-ExtraUtils' 
+		
+	]
 ]
 
 { #category : #actions }
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v1.6.5';
+		repository: 'github://pharo-vcs/iceberg:v1.8.5';
 		onConflictUseLoaded;
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.

@@ -54,6 +54,18 @@ RBLiteralValueNode >> copyInContext: aDictionary [
 	^ self class value: self value
 ]
 
+{ #category : #evaluating }
+RBLiteralValueNode >> evaluateForContext: aContext [
+
+	^ value
+]
+
+{ #category : #evaluating }
+RBLiteralValueNode >> evaluateForReceiver: aReceicer [
+
+	^ value
+]
+
 { #category : #accessing }
 RBLiteralValueNode >> sourceText [
 	^ sourceText ifNil: [
@@ -61,7 +73,7 @@ RBLiteralValueNode >> sourceText [
 			value isSymbol
 				ifTrue: [
 					aStream nextPut: $#.
-					((RBScanner isSelector: value) and: [value ~~ #'||']) 
+					((value isValidSelector) and: [value ~~ #'||']) 
 						ifTrue: [aStream nextPutAll: value]
 						ifFalse: [value asString printOn: aStream]]
 				ifFalse: [ 

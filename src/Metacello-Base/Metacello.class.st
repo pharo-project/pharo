@@ -642,11 +642,6 @@ Metacello >> repositoryOverrides: aRepositoryDescriptionCollection [
     self addStatement: #'repositoryOverrides:' args: {aRepositoryDescriptionCollection}
 ]
 
-{ #category : #'api repository shortcuts' }
-Metacello >> saltypickle: projectName [
-    self repository: 'http://squeak.saltypickle.com/' , projectName
-]
-
 { #category : #accessing }
 Metacello >> scriptExecutor [
     ^ (self class scriptExecutorClass: self executorSpec) new

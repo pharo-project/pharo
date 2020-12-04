@@ -219,28 +219,21 @@ OmSessionStore >> resetWithNextStoreName [
 
 { #category : #accessing }
 OmSessionStore >> resetWithStoreNamed: newName [
-
-	| fileReference |
 	"First, ensure file is not already used."
-	fileReference := OmFileStore 
-		fileReferenceForStoreNamed: newName
-		inDirectory: self directory.
-	fileReference exists ifTrue: [
-		FileExists signalWith: fileReference ].
-	
+
+	(OmFileStore fileReferenceForStoreNamed: newName inDirectory: self directory)
+		ifExists: [ :fileReference | FileExists signalWith: fileReference ].
+
 	self directory fileSystem isWritable ifFalse: [ ^ self ].
-	
+
 	"Then, we can proceed."
 	currentSession := Smalltalk session.
 	currentImagePathString := self imagePathString.
-	currentStore := 
-		OmStoreFactory current
-			named: newName
-			inDirectory: self directory ensureCreateDirectory.
+	currentStore := OmStoreFactory current named: newName inDirectory: self directory ensureCreateDirectory.
 	currentStore writingDeferDuration: self writingDeferDuration.
-	
+
 	"Announce"
-	self announcer announce: OmSessionStoreUpdated new.
+	self announcer announce: OmSessionStoreUpdated new
 ]
 
 { #category : #accessing }

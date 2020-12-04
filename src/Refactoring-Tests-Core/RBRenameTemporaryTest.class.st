@@ -8,7 +8,7 @@ Class {
 RBRenameTemporaryTest >> testBadInterval [
 	self
 		shouldFail:
-			(RBRenameTemporaryRefactoring
+			(RBRenameArgumentOrTemporaryRefactoring
 				renameTemporaryFrom: (14 to: 17)
 				to: 'asdf'
 				in: RBRefactoryTestDataApp
@@ -19,25 +19,25 @@ RBRenameTemporaryTest >> testBadInterval [
 RBRenameTemporaryTest >> testBadName [
 	self
 		shouldFail:
-			(RBRenameTemporaryRefactoring
+			(RBRenameArgumentOrTemporaryRefactoring
 				renameTemporaryFrom: (15 to: 19)
 				to: 'name'
 				in: RBLintRuleTestData
 				selector: #openEditor);
 		shouldFail:
-			(RBRenameTemporaryRefactoring
+			(RBRenameArgumentOrTemporaryRefactoring
 				renameTemporaryFrom: (15 to: 19)
 				to: 'rules'
 				in: RBLintRuleTestData
 				selector: #openEditor);
 		shouldFail:
-			(RBRenameTemporaryRefactoring
+			(RBRenameArgumentOrTemporaryRefactoring
 				renameTemporaryFrom: (15 to: 19)
 				to: 'DependentFields'
 				in: RBLintRuleTestData
 				selector: #openEditor);
 		shouldFail:
-			(RBRenameTemporaryRefactoring
+			(RBRenameArgumentOrTemporaryRefactoring
 				renameTemporaryFrom: (15 to: 19)
 				to: 'a b'
 				in: RBLintRuleTestData
@@ -53,12 +53,12 @@ RBRenameTemporaryTest >> testModelBadName [
 		compile: 'aMethod: temp1 ^[| temp2 | temp2 := [:temp3 | temp3 = 5] value: 5. temp2] value'
 		classified: #(#accessing).
 	self
-		shouldFail: (RBRenameTemporaryRefactoring 
+		shouldFail: (RBRenameArgumentOrTemporaryRefactoring 
 					renameTemporaryFrom: (20 to: 24)
 					to: 'temp3'
 					in: class
 					selector: #aMethod:);
-		shouldFail: (RBRenameTemporaryRefactoring 
+		shouldFail: (RBRenameArgumentOrTemporaryRefactoring 
 					renameTemporaryFrom: (20 to: 24)
 					to: 'temp1'
 					in: class
@@ -68,7 +68,7 @@ RBRenameTemporaryTest >> testModelBadName [
 { #category : #tests }
 RBRenameTemporaryTest >> testRenameTemporary [
 	| refactoring |
-	refactoring := RBRenameTemporaryRefactoring
+	refactoring := RBRenameArgumentOrTemporaryRefactoring
 		renameTemporaryFrom: (15 to: 19)
 		to: 'asdf'
 		in: RBLintRuleTestData

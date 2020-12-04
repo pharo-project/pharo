@@ -210,8 +210,13 @@ GTInspector class >> register [
 
 { #category : #'tools registry' }
 GTInspector class >> registerToolsOn: registry [
+	"IMPORTANT: This method is disabled because the bootstrap process initializes tools by traversing
+	 all classes implementing this method in alphabetical order. Since GTInspector is not anymore the 
+	 default playground, we disable its auto-registration in that step. 
+	 Notice that the #register method still works if needed"
+
 	"self registerToolsOn: Smalltalk tools " 
-	registry register: self as: #inspector
+	"registry register: self as: #inspector"
 
 ]
 
@@ -268,7 +273,7 @@ GTInspector class >> settingsOn: aBuilder [
 				getSelector: #isGTInspectorEnabled;
 				setSelector: #setGTInspectorEnabledStatus:; 
 				label: 'GTInspector';
-				default: true;
+				default: false;
 		 		description: 'Enable or disable the GTInspector.'.
 			(aBuilder setting: #EnabledStepRefreshStatus)
 				target: self;

@@ -66,6 +66,20 @@ FFIExternalArrayTest >> testExternalAtPutFloat [
 ]
 
 { #category : #tests }
+FFIExternalArrayTest >> testReadArrayOfUntil [
+	| n interval externalArray |
+	n := 10.
+	interval := 1 to: n.
+	[ externalArray := FFIExternalArray externalNewType: #int size: n.
+	interval do: [ :each | externalArray at: each put: n - each + 1 ].
+	self
+		assert:
+			(externalArray getHandle readArrayOf: #int until: [ :each :i | i > n ])
+		equals: interval reversed ]
+		ensure: [ externalArray free ]
+]
+
+{ #category : #tests }
 FFIExternalArrayTest >> testResolveType [
 	self assert: (FFIExternalArray resolveType: 'int') class equals: FFIInt32.
 	self assert: (FFIExternalArray resolveType: 'String') class equals: FFIExternalString.

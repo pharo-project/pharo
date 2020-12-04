@@ -59,7 +59,7 @@ SpMorphicListAdapter >> buildWidget [
 	self presenter whenModelChangedDo: [ widget refresh ].
 	self presenter whenSelectionChangedDo: [ self refreshWidgetSelection ].
 	self presenter selection whenChangedDo: [ self refreshWidgetSelection ].
-	self presenter whenSearchChangedDo: [ self updateSearch ].
+	self presenter whenSearchEnabledChangedDo: [ self updateSearch ].
 	self refreshWidgetHeaderTitle.
 	self refreshWidgetSelection.
 	self presenter whenItemFilterBlockChangedDo: [ :block | self updateItemFilterBlockWith: block ].
@@ -71,6 +71,12 @@ SpMorphicListAdapter >> buildWidget [
 		toAction: [ self model clickOnSelectedItem ].
 
 	^ widget
+]
+
+{ #category : #emulating }
+SpMorphicListAdapter >> firstRowIsHeader [ 
+
+	^ self widget container submorphs first class = FTTableHeaderRowMorph
 ]
 
 { #category : #emulating }

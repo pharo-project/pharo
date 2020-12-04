@@ -1,6 +1,6 @@
 Class {
 	#name : #SpTreeTablePresenterMultipleSelectionTest,
-	#superclass : #SpTest,
+	#superclass : #SpSpecTest,
 	#category : #'Spec2-Tests-Core-Widgets'
 }
 

@@ -1,6 +1,12 @@
 Extension { #name : #SpLayoutDirectionVertical }
 
 { #category : #'*Spec2-Adapters-Morphic' }
+SpLayoutDirectionVertical >> addHomogeneousToMorph: aMorph into: anAdapter [
+	
+	^ anAdapter addVerticalHomogeneousToMorph: aMorph
+]
+
+{ #category : #'*Spec2-Adapters-Morphic' }
 SpLayoutDirectionVertical >> addPadding: aNumber toMorph: aMorph into: anAdapter [
 
 	^ anAdapter 
@@ -20,7 +26,8 @@ SpLayoutDirectionVertical >> recalculatePages: anAdaptor [
 ]
 
 { #category : #'*Spec2-Adapters-Morphic' }
-SpLayoutDirectionVertical >> setRigidityOfNonExpandedMorph: aMorph [ 
+SpLayoutDirectionVertical >> setRigidityOfNonExpandedMorph: aMorph [
+
 	aMorph 
 		hResizing: #spaceFill; 
 		vResizing: #rigid

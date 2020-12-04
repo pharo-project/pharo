@@ -44,22 +44,6 @@ VTermTestRunner >> print: aLongErrorMesssage short: aShortErrorMesssage of: aTes
 	self stdout << cr
 ]
 
-{ #category : #helper }
-VTermTestRunner >> printError: anError of: aTestCase [ 
-	self stderr red.
-	super printError: anError of: aTestCase
-]
-
-{ #category : #helper }
-VTermTestRunner >> printFailure: anError of: aTestCase [ 
-	self stderr yellow.
-	^ super printFailure: anError of: aTestCase 
-]
-
-{ #category : #helper }
-VTermTestRunner >> printPassOf: aTestCase [
-]
-
 { #category : #printing }
 VTermTestRunner >> printProgress [
 	| string |
@@ -74,4 +58,20 @@ VTermTestRunner >> printTestCase: aTestCase [
 		startOfLine; clearToEnd; green; 
 		print: aTestCase; clear.
 	self printProgress.
+]
+
+{ #category : #helper }
+VTermTestRunner >> recordPassOf: aTestCase [
+]
+
+{ #category : #helper }
+VTermTestRunner >> writeError: anError of: aTestCase [ 
+	self stderr red.
+	super writeError: anError of: aTestCase
+]
+
+{ #category : #helper }
+VTermTestRunner >> writeFailure: anError of: aTestCase [ 
+	self stderr yellow.
+	^ super writeFailure: anError of: aTestCase 
 ]

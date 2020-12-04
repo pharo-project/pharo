@@ -126,6 +126,13 @@ RGClassDescriptionDefinition >> isSameRevisionAs: aRGClassDescriptionDefinition 
 		and:[ self instVarNames sort = aRGClassDescriptionDefinition instVarNames sort ]
 ]
 
+{ #category : #'accessing methods' }
+RGClassDescriptionDefinition >> methodsInProtocol: aString [
+	"Retrieves the methods classified in protocol named aString"
+
+	^methods select: [ :each | each protocol = aString ]
+]
+
 { #category : #organization }
 RGClassDescriptionDefinition >> organization [
 	"Answer the instance of ClassOrganizer that represents the organization 

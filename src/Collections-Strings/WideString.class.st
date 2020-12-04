@@ -115,9 +115,7 @@ WideString >> at: index [
 		ifTrue:
 			[self errorSubscriptBounds: index]
 		ifFalse:
-			[index isNumber
-				ifTrue: [self at: index asInteger]
-				ifFalse: [self errorNonIntegerIndex]]
+			[self errorNonIntegerIndex]
 ]
 
 { #category : #accessing }

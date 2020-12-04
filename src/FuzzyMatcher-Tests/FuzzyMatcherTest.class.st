@@ -12,8 +12,7 @@ FuzzyMatcherTest >> assert: matcher scoreFor: aString equals: aBlockOrNumber [
 
 	matcher match: aString ifScored: [ :score |
 		self assert: score equals: aBlockOrNumber value.
-		^ self	
-	].
+		^ self	 ].
 
 	self error: 'Expected to match: ', aString
 ]
@@ -39,41 +38,37 @@ FuzzyMatcherTest >> testAllMatchingIn [
 FuzzyMatcherTest >> testAssumptions [
 
 	self
-	 	
-		assert: (((1 - 1) * 3) max: -9) 	equals: 0;
-	 	assert: ((2 - 1 - 1) negated) 		equals: 0;
-				
-		assert: ('a' findString: 'a' startingAt: 2 caseSensitive: false) equals: 0.
+		assert: (((1 - 1) * 3) max: -9) equals: 0;
+	 	assert: ((2 - 1 - 1) negated) equals: 0;				
+		assert: ('a' findString: 'a' startingAt: 2 caseSensitive: false) equals: 0
 ]
 
 { #category : #tests }
 FuzzyMatcherTest >> testChangePattern [
 
-	| matcher |
-	
+	| matcher |	
 	matcher := self newMatcher.
 	
 	self 
-	assert: matcher pattern equals: '';
-	assert: (matcher matches: 'abcdefghijkl');
-	assert: (matcher matches: '').
+		assert: matcher pattern equals: '';
+		assert: (matcher matches: 'abcdefghijkl');
+		assert: (matcher matches: '').
 	
 	matcher pattern: 'afg'.
 	
 	self 
-	assert: (matcher matches: 'abcdefghijkl');
-	deny: (matcher matches: '').
+		assert: (matcher matches: 'abcdefghijkl');
+		deny: (matcher matches: '')
 	
 ]
 
 { #category : #tests }
 FuzzyMatcherTest >> testClassSideAPI [
 
-	"if the protocol is changed, so should the class comment"
-	FuzzyMatcher class protocols detect: [ :p | p = #'utilities api' ].
+	"If the protocol is changed, so should the class comment."
+	FuzzyMatcher class protocols detect: [ :p | p = #'utilities - api' ].
 	
-	self 
-	
+	self 	
 		assert: (FuzzyMatcher allMatching: #a in: #(a b ab))
 		equals: #(a ab);
 	
@@ -87,6 +82,7 @@ FuzzyMatcherTest >> testClassSideAPI [
 
 { #category : #tests }
 FuzzyMatcherTest >> testEmptyPattern [
+
 	| matcher |
 	matcher := self newMatcher.
 
@@ -98,32 +94,29 @@ FuzzyMatcherTest >> testEmptyPattern [
 ]
 
 { #category : #tests }
-FuzzyMatcherTest >> testIsSeperator [
+FuzzyMatcherTest >> testIsSeparator [
 
 	| matcher |
-	
 	matcher := self newMatcher.
 	
-	self 
-		assert: 	(matcher isSeperator: $_);
-		assert: 	(matcher isSeperator: $:);
-		deny: 		(matcher isSeperator: $!);
-		deny: 		(matcher isSeperator: $a)
-
+	self
+		assert: (matcher isSeparator: $_);
+		assert: (matcher isSeparator: $:);
+		deny: (matcher isSeparator: $!);
+		deny: (matcher isSeparator: $a)
 ]
 
 { #category : #tests }
 FuzzyMatcherTest >> testMatching [
 
-	| matcher |
-	
+	| matcher |	
 	matcher := self newMatcher.
 	matcher pattern: 'a'.
 	
 	self 
 		assert: (matcher matches: 'a');
 		assert: (matcher matches: String cr, String tab, String lf, String space, 'a');
-		assert: (matcher matches: ',;:_-!"#¤%&/?+\()a').
+		assert: (matcher matches: ',;:_-!"#¤%&/?+\()a')
 		
 ]
 
@@ -189,7 +182,7 @@ FuzzyMatcherTest >> testScoreValues [
 			+ (matcher caseEqualBonus * 2) 
 			+ (matcher unmatchedLetterPenalty * 2)
 			+  matcher indexScore
-		].
+		]
 ]
 
 { #category : #tests }

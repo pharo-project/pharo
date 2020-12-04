@@ -20,6 +20,7 @@ RFReification class >> allKeys [
 
 { #category : #'plugin interface' }
 RFReification class >> entities [
+	"Returns the places (i.e. node classes) where I can be used"
 	^self subclassResponsibility
 ]
 
@@ -45,6 +46,7 @@ RFReification class >> isUsed [
 
 { #category : #'plugin interface' }
 RFReification class >> key [
+	"Returns my 'name'"
 	^self subclassResponsibility
 ]
 

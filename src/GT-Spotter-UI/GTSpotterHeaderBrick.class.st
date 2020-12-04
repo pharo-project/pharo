@@ -6,7 +6,8 @@ Class {
 		'closeButton',
 		'spotterModel',
 		'settingsButton',
-		'helpButton'
+		'helpButton',
+		'spinner'
 	],
 	#category : #'GT-Spotter-UI-Widgets'
 }
@@ -62,6 +63,12 @@ GTSpotterHeaderBrick >> helpButton: aBrick [
 	self addBrickBack: helpButton
 ]
 
+{ #category : #actions }
+GTSpotterHeaderBrick >> hideSpinner [
+
+	spinner hide
+]
+
 { #category : #initialization }
 GTSpotterHeaderBrick >> initialize [
 	super initialize.
@@ -69,6 +76,10 @@ GTSpotterHeaderBrick >> initialize [
 	self searchField: self newSearchField.
 	self class environment at: #GTEventRecorderSettings ifPresent: [
 		self settingsButton: self newSettingsButton ].
+
+	self spinner: self newSpinner.
+	self hideSpinner.
+
 	self helpButton: self newHelpButton.
 	self closeButton: self newCloseButton.
 	
@@ -90,12 +101,22 @@ GTSpotterHeaderBrick >> newHelpButton [
 GTSpotterHeaderBrick >> newSearchField [
 
 	^ GLMRubTextFieldBrick new
+
 ]
 
 { #category : #'instance creation' }
 GTSpotterHeaderBrick >> newSettingsButton [
 
 	^ GLMHintableActionButtonBrick new
+]
+
+{ #category : #'instance creation' }
+GTSpotterHeaderBrick >> newSpinner [
+
+	^ SpSpinnerMorph new 
+		height: 20;
+		width: 20;
+		asBrick
 ]
 
 { #category : #'instance creation' }
@@ -184,6 +205,27 @@ GTSpotterHeaderBrick >> settingsButton: aBrick [
 	self addBrickBack: settingsButton
 ]
 
+{ #category : #actions }
+GTSpotterHeaderBrick >> showSpinner [
+
+	spinner show
+]
+
+{ #category : #accessing }
+GTSpotterHeaderBrick >> spinner: aBrick [
+
+	spinner ifNotNil: [self removeBrick: spinner].
+	spinner := aBrick.
+	
+	spinner
+		vSpaceFill;
+		width: [ :m | m height ];
+		margin: 10;
+		marginLeft: 0.
+		
+	self addBrickBack: spinner
+]
+
 { #category : #accessing }
 GTSpotterHeaderBrick >> spotterModel [
 
@@ -200,4 +242,11 @@ GTSpotterHeaderBrick >> spotterModel: aModel [
 	
 	self spotterModel announcer when: GTSpotterRevealHints send: #onRevealHints to: self.
 	self spotterModel announcer when: GTSpotterHideHints send: #onHideHints to: self.
+]
+
+{ #category : #'event handling' }
+GTSpotterHeaderBrick >> takeKeyboardFocus [
+	
+	searchField morph takeKeyboardFocus
+
 ]

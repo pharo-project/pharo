@@ -7,7 +7,7 @@ There are two subclasses: setting the default value on class creation and lazy i
 "
 Class {
 	#name : #AbstractInitializedClassVariable,
-	#superclass : #LiteralVariable,
+	#superclass : #ClassVariable,
 	#instVars : [
 		'default'
 	],
@@ -17,18 +17,6 @@ Class {
 { #category : #accessing }
 AbstractInitializedClassVariable >> default: anObject [
 	default := anObject
-]
-
-{ #category : #'code generation' }
-AbstractInitializedClassVariable >> emitStore: methodBuilder [
-
-	methodBuilder storeIntoLiteralVariable: self
-]
-
-{ #category : #'code generation' }
-AbstractInitializedClassVariable >> emitValue: methodBuilder [
-
-	methodBuilder pushLiteralVariable: self
 ]
 
 { #category : #printing }

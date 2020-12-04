@@ -24,24 +24,23 @@ RFOperationReification >> genForRBArrayNode [
 
 { #category : #generate }
 RFOperationReification >> genForRBAssignmentNode [
-	entity variable isTemp ifTrue: [  
+	entity variable isLocalVariable ifTrue: [  
 		^RBParser parseExpression: ('RFTempWrite new
 			assignedValue: RFNewValueReificationVar; 
 			context: thisContext;
 			variableName: #{1}.' format: {entity variable name})].
 		
-	entity variable isInstance ifTrue: [  
+	entity variable isInstanceVariable ifTrue: [  
 		^RBParser parseExpression: ('RFSlotWrite new
 			assignedValue: RFNewValueReificationVar; 
 			object: self;
 			variableName: #{1}.' format: {entity variable name})].
 
-	entity variable isGlobal ifTrue: [ | ast |	
+	entity variable variable isLiteralVariable ifTrue: [ | ast |	
 		ast := RBParser parseExpression: ('RFGlobalWrite new
 			assignedValue: RFNewValueReificationVar;
-			environment: #toReplace;
-			variableName: #{1}.' format: {entity variable name}).
-		ast messages second arguments: {(RFLiteralVariableNode value: entity variable binding scope environment)}.
+			variable: #toReplace.').
+		ast messages second arguments: {(RBLiteralNode value: entity variable binding)}.
 		^ast].
 	self error: 'not supported'
 ]
@@ -87,7 +86,7 @@ RFOperationReification >> genForRBMethodNode [
 			method: #toReplace;
 			arguments: RFArgumentsReificationVar.'.	
 	
-	ast messages second arguments: {(RFLiteralVariableNode value: entity methodNode method)}.
+	ast messages second arguments: {(RBLiteralNode value: entity methodNode method)}.
 	^ast.
 ]
 
@@ -100,21 +99,20 @@ RFOperationReification >> genForRBReturnNode [
 
 { #category : #generate }
 RFOperationReification >> genForRBVariableNode [
-	entity isInstance ifTrue: [  
+	entity isInstanceVariable ifTrue: [  
 		^RBParser parseExpression: ('RFSlotRead new 
 			object: self;
 			variableName: #{1}.' format: {entity name})].
 		
-	entity isTemp ifTrue: [
+	entity isLocalVariable ifTrue: [
 		^RBParser parseExpression: ('RFTempRead new 
 			context: thisContext;
 			variableName: #{1}.' format: {entity name})].
 	
-	entity isGlobal ifTrue: [ | ast |	
-			ast := RBParser parseExpression: ('RFGlobalRead new
-				environment: #toReplace;
-				variableName: #{1}.' format: {entity name}).
-			ast messages first arguments: {(RFLiteralVariableNode value: entity binding scope environment)}.
+	entity variable isLiteralVariable ifTrue: [ | ast |	
+			ast := RBParser parseExpression: 'RFGlobalRead new
+				variable: #toReplace'.
+			ast arguments: {(RBLiteralNode value: entity binding)}.
 
 			^ast. 
 		].
@@ -140,7 +138,7 @@ RFOperationReification >> preambleForArray: aNode [
 	(1 to: aNode size) withIndexDo: [:each :index |  
 			| name |
 			name := 'RFArg', index asString, 'RFReification'.
-			arguments add:  (RBTemporaryNode named: name).
+			arguments add:  (RBVariableNode named: name).
 	].
 	preamble addAll: (RBArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: 'RFReifyValueVar').
@@ -172,7 +170,7 @@ RFOperationReification >> preambleForMessage: aNode [
 	(1 to: aNode numArgs) withIndexDo: [:each :index |  
 			| name |
 			name := 'RFArg', index asString, 'RFReification'.
-			arguments add:  (RBTemporaryNode named: name).
+			arguments add:  (RBVariableNode named: name).
 	].
 	preamble addAll: (RBArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: 'RFArgumentsReificationVar').
@@ -184,7 +182,7 @@ RFOperationReification >> preambleForMessage: aNode [
 RFOperationReification >> preambleForMethod: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
-	arguments := aNode argumentNames collect: [ :name | RBTemporaryNode named: name].
+	arguments := aNode argumentNames collect: [ :name | RBVariableNode named: name].
 	preamble addAll: (RBArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: 'RFArgumentsReificationVar').
 	^ preamble 

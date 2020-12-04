@@ -6,31 +6,33 @@ Class {
 	#superclass : #SpPresenter,
 	#instVars : [
 		'hiedraColumnController',
-		'table'
+		'table',
+		'actionBar'
 	],
-	#category : #'Hiedra-Examples'
+	#category : #'Hiedra-Examples-Spec2'
 }
 
 { #category : #specs }
 HiSpecExample class >> defaultSpec [
 	^ SpBoxLayout newVertical
 		add: #table;
+		add: #actionBar withConstraints: [ :constraints | constraints height: self toolbarHeight ];
 		yourself
 ]
 
 { #category : #specs }
 HiSpecExample class >> example2870IcebergCommits [
-	self openExample: #iceberg_v1_5_6
+	^ self openExample: #iceberg_v1_5_6
 ]
 
 { #category : #specs }
 HiSpecExample class >> example493PharoCommits [
-	self openExample: #pharo_v60507
+	^ self openExample: #pharo_v60507
 ]
 
 { #category : #specs }
 HiSpecExample class >> example60RandomCommits [
-	self openExample: #randomlyGenerated
+	^ self openExample: #randomlyGenerated
 ]
 
 { #category : #specs }
@@ -39,14 +41,21 @@ HiSpecExample class >> openExample: selector [
 	| commits |
 	commits := HiExampleCommit perform: selector.
 
-	self new
+	^ self new
 		commits: commits;
 		openWithSpec;
 		withWindowDo: [ :window |
 			window
 				extent: 600 @ 800;
-				title: ('Hiedra in Spec2 with Roassal3 - {1} - {2} elements' format: {selector. commits size}) ].
+				title: ('Hiedra in Spec2 with Roassal3 - {1} - {2} elements' format: {selector. commits size}) ];
+		yourself.
 
+]
+
+{ #category : #windows }
+HiSpecExample >> close [
+	
+	self window close
 ]
 
 { #category : #accessing }
@@ -62,18 +71,53 @@ HiSpecExample >> commits: commits [
 
 	hiedraColumnController reset.
 	
-	"After #reset, we can know the width of the column."
+	"After #reset, we know the desired width for the column."
 	table columns first width: hiedraColumnController rulerWidth.
 ]
 
 { #category : #initialization }
-HiSpecExample >> initializeWidgets [
+HiSpecExample >> forceRefreshHiedra [
+	hiedraColumnController reset.
+	table withAdapterDo: #refreshList.
+]
+
+{ #category : #initialization }
+HiSpecExample >> initializeActionBar [
+
+	| refreshButton inspectButton |
+	refreshButton := self newButton
+		label: 'Redraw';
+		help: 'Refresh the table (and redraw all Hiedra cells with current rendering parameters).';
+		action: [ UIManager default defer: [ self forceRefreshHiedra ] ];
+		yourself.
+	inspectButton := self newButton
+		label: 'Renderer'; 
+		help: ('Inspect the Hiedra renderer, that has the rendering parameters. Press on {1} button to see the effect of any change on the renderer.' format: { refreshButton label });
+		action: [ UIManager default defer: [ hiedraColumnController renderer inspect ] ];
+		yourself.
+
+	actionBar := self newActionBar
+		add: inspectButton;
+		add: refreshButton;
+		yourself.
+
+]
+
+{ #category : #initialization }
+HiSpecExample >> initializePresenters [
+	self initializeTable.
+	self initializeActionBar.
+]
+
+{ #category : #initialization }
+HiSpecExample >> initializeTable [
 	table := self newTable.
 
 	"Configure hiedra controller"
 	hiedraColumnController := HiColumnController new.
 
 	hiedraColumnController renderer
+		linkWidth: 3.5;
 		nodeRadius: 1.5;
 		nodeBorderWidth: 3.0;
 		arrowSize: 0;
@@ -86,6 +130,8 @@ HiSpecExample >> initializeWidgets [
 
 	"Configure columns"
 	table
-		addColumn: (SpImageTableColumn evaluated: [ :item | hiedraColumnController cellMorphAtValue: item ]);
-		addColumn: (SpStringTableColumn evaluated: #comment)
+		addColumn: (SpImageTableColumn evaluated: [ :item |
+			hiedraColumnController cellMorphAtValue: item ]);
+		addColumn: (SpStringTableColumn evaluated: [ :item |
+			item comment ])
 ]

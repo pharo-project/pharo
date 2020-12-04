@@ -32,7 +32,7 @@ GLMPresentStrategy >> presentations [
 	presentations := GLMCompositePresentation new.
 	self presentationsFactory glamourValue: (
 			presentations asGlamorousMultiValue, 
-			(self transmission origins collect: #value )).
+			(self transmission origins collect: [:each | each value] )).
 	^ presentations
 ]
 

@@ -172,6 +172,12 @@ EncoderForV3PlusClosures class >> isCreateBlockAt: pc in: method [
 ]
 
 { #category : #'instruction stream support' }
+EncoderForV3PlusClosures class >> isCreateFullBlockAt: pc in: code [
+	"full blocks not supported"
+	^false
+]
+
+{ #category : #'instruction stream support' }
 EncoderForV3PlusClosures class >> isExtension: byte [
 	"no extension byteocde in this set"
 	^ false
@@ -327,6 +333,24 @@ EncoderForV3PlusClosures class >> prepareMethod: compiledMethod forSimulationWit
 { #category : #'bytecode decoding' }
 EncoderForV3PlusClosures class >> pushNilByte [
 	^ 115
+]
+
+{ #category : #'compiled method support' }
+EncoderForV3PlusClosures class >> readsSelfFor: compiledMethod [
+	"Answer whether compiledMethod reads self"
+	| scanner |
+	scanner := InstructionStream on: compiledMethod.
+	^ scanner scanFor: 
+		[:instr |  instr = 112 ]
+]
+
+{ #category : #'compiled method support' }
+EncoderForV3PlusClosures class >> readsThisContextFor: compiledMethod [
+	"Answer whether compiledMethod reads thisContext"
+	| scanner |
+	scanner := InstructionStream on: compiledMethod.
+	^ scanner scanFor: 
+		[:instr |  instr = 137 ]
 ]
 
 { #category : #'instruction stream support' }

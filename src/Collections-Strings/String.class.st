@@ -35,29 +35,35 @@ String class >> compare: string1 with: string2 collated: order [
 	"Return 1, 2 or 3, if string1 is <, =, or > string2, with the collating order of characters given by the order array."
 
 	| len1 len2 c1 c2 |
-	order ifNil: [
-		len1 := string1 size.
-		len2 := string2 size.
-		1 to: (len1 min: len2) do:[:i |
-			c1 := (string1 basicAt: i).
-			c2 := (string2 basicAt: i).
-			c1 = c2 ifFalse: [c1 < c2 ifTrue: [^ 1] ifFalse: [^ 3]].
-		].
-		len1 = len2 ifTrue: [^ 2].
-		len1 < len2 ifTrue: [^ 1] ifFalse: [^ 3].
-	].
+	order
+		ifNil: [ len1 := string1 size.
+			len2 := string2 size.
+			1 to: (len1 min: len2) do: [ :i | 
+				c1 := string1 basicAt: i.
+				c2 := string2 basicAt: i.
+				c1 = c2
+					ifFalse: [ ^ c1 < c2
+							ifTrue: [ 1 ]
+							ifFalse: [ 3 ] ] ].
+			len1 = len2 ifTrue: [ ^ 2 ].
+			^ len1 < len2
+				ifTrue: [ 1 ]
+				ifFalse: [ 3 ] ].
 	len1 := string1 size.
 	len2 := string2 size.
-	1 to: (len1 min: len2) do:[:i |
-		c1 := (string1 basicAt: i).
-		c2 := (string2 basicAt: i).
-		c1 < 256 ifTrue: [c1 := order at: c1 + 1].
-		c2 < 256 ifTrue: [c2 := order at: c2 + 1].
-		c1 = c2 ifFalse:[c1 < c2 ifTrue: [^ 1] ifFalse: [^ 3]].
-	].
-	len1 = len2 ifTrue: [^ 2].
-	len1 < len2 ifTrue: [^ 1] ifFalse: [^ 3].
-
+	1 to: (len1 min: len2) do: [ :i | 
+		c1 := string1 basicAt: i.
+		c2 := string2 basicAt: i.
+		c1 < 256 ifTrue: [ c1 := order at: c1 + 1 ].
+		c2 < 256 ifTrue: [ c2 := order at: c2 + 1 ].
+		c1 = c2
+			ifFalse: [ ^ c1 < c2
+					ifTrue: [ 1 ]
+					ifFalse: [ 3 ] ] ].
+	len1 = len2 ifTrue: [ ^ 2 ].
+	^ len1 < len2
+		ifTrue: [ 1 ]
+		ifFalse: [ 3 ]
 ]
 
 { #category : #'instance creation' }
@@ -225,7 +231,7 @@ String class >> loremIpsum: size [
 	"self loremIpsum: 2048"
 	
 	| words out |
-	words := (self loremIpsum findTokens: ' ,.') collect: #asLowercase.
+	words := (self loremIpsum findTokens: ' ,.') collect: [:each | each asLowercase].
 	(out := LimitedWriteStream on: (self new: size))
 		limit: size - 2;
 		limitBlock: [
@@ -244,12 +250,12 @@ String class >> loremIpsum: size [
 ]
 
 { #category : #'instance creation' }
-String class >> new: sizeRequested [ 
+String class >> new: sizeRequested [
 	"Return a new instance with the number of indexable variables specified by the argument."
-	
-	self == String 
-		ifTrue:[^ByteString new: sizeRequested]
-		ifFalse:[^self basicNew: sizeRequested]
+
+	^ self == String
+		ifTrue: [ ByteString new: sizeRequested ]
+		ifFalse: [ self basicNew: sizeRequested ]
 ]
 
 { #category : #initialization }
@@ -963,6 +969,17 @@ String >> copyReplaceTokens: oldSubstring with: newSubstring [
 	
 ]
 
+{ #category : #copying }
+String >> copyUpToSubstring: aSubstring [
+
+	aSubstring ifEmpty: [ 
+		"preserve compatiblity with `readStream upToAll:`"
+		^ String new ].
+	
+	^ (self findString: aSubstring)
+		in: [ :index | index > 0 ifTrue: [ self copyFrom: 1 to: index-1 ] ifFalse: [ self ] ]
+]
+
 { #category : #converting }
 String >> correctAgainst: wordList [
 	"Correct the receiver: assume it is a misspelled word and return the (maximum of five) nearest words in the wordList.  Depends on the scoring scheme of alike:"
@@ -1548,6 +1565,11 @@ String >> findWordStart: key startingAt: start [
 	^ ind	"is a word start"
 ]
 
+{ #category : #enumerating }
+String >> flattenOn: aStream [
+		aStream nextPut: self
+]
+
 { #category : #formatting }
 String >> format: collection [
 	"Format the receiver by interpolating elements from collection, as in the following examples:" 
@@ -1660,13 +1682,13 @@ String >> indexOf: aCharacter startingAt: start [
 ]
 
 { #category : #accessing }
-String >> indexOf: aCharacter  startingAt: start  ifAbsent: aBlock [
+String >> indexOf: aCharacter startingAt: start ifAbsent: aBlock [
 	| ans |
-	(aCharacter isCharacter) ifFalse: [ ^ aBlock value ].
-	ans := self class indexOfAscii: aCharacter asciiValue inString: self  startingAt: start.
-	ans = 0
-		ifTrue: [ ^ aBlock value ]
-		ifFalse: [ ^ ans ]
+	aCharacter isCharacter ifFalse: [ ^ aBlock value ].
+	ans := self class indexOfAscii: aCharacter asciiValue inString: self startingAt: start.
+	^ ans = 0
+		ifTrue: [ aBlock value ]
+		ifFalse: [ ans ]
 ]
 
 { #category : #accessing }
@@ -2041,7 +2063,7 @@ String >> match: text [
 	"('foo*baz' match: 'foo23bazo') >>> false"
 	"('foo' match: 'Foo') >>> true"
 	"('foo*baz*zort' match: 'foobazort') >>> false"
-	"('foo*baz*zort' match: 'foobazzort') >>> false"
+	"('foo*baz*zort' match: 'foobazzort') >>> true"
 	"('*foo#zort' match: 'afoo3zortthenfoo3zort') >>> true"
 	"('*foo*zort' match: 'afoodezortorfoo3zort') >>> true"
 
@@ -2049,32 +2071,36 @@ String >> match: text [
 ]
 
 { #category : #'system primitives' }
-String >> numArgs [ 
+String >> numArgs [
 	"Answer either the number of arguments that the receiver would take if considered a selector.  Answer -1 if it couldn't be a selector. It is intended mostly for the assistance of spelling correction."
 
 	| firstChar numColons start ix |
-	self size = 0 ifTrue: [^ -1].
+	self size = 0 ifTrue: [ ^ -1 ].
 	firstChar := self at: 1.
-	(firstChar isLetter or: [ firstChar = $_]) ifTrue:
-		["Fast reject if any chars are non-alphanumeric
+	(firstChar isLetter or: [ firstChar = $_ ])
+		ifTrue: [ "Fast reject if any chars are non-alphanumeric
 		NOTE: fast only for Byte things - Broken for Wide"
-		self class isBytes
-			ifTrue: [(self findSubstring: '~' in: self startingAt: 1 matchTable: Tokenish) > 0 ifTrue: [^ -1]]
-			ifFalse: [2 to: self size do: [:i | (self at: i) tokenish ifFalse: [^ -1]]].
-		"Fast colon count"
-		numColons := 0.  start := 1.
-		[(ix := self indexOf: $: startingAt: start) > 0]
-			whileTrue:
-				[(ix = start or: [(self at: start) isDigit]) ifTrue: [^-1].
-				numColons := numColons + 1.
-				start := ix + 1].
-		numColons = 0 ifTrue: [^ 0].
-		self last = $:
-			ifTrue: [^ numColons]
-			ifFalse: [^ -1]].
+			self class isBytes
+				ifTrue: [ (self
+						findSubstring: '~'
+						in: self
+						startingAt: 1
+						matchTable: Tokenish) > 0 ifTrue: [ ^ -1 ] ]
+				ifFalse: [ 2 to: self size do: [ :i | (self at: i) tokenish ifFalse: [ ^ -1 ] ] ].
+			"Fast colon count"
+			numColons := 0.
+			start := 1.
+			[ (ix := self indexOf: $: startingAt: start) > 0 ]
+				whileTrue: [ (ix = start or: [ (self at: start) isDigit ]) ifTrue: [ ^ -1 ].
+					numColons := numColons + 1.
+					start := ix + 1 ].
+			numColons = 0 ifTrue: [ ^ 0 ].
+			^ self last = $:
+				ifTrue: [ numColons ]
+				ifFalse: [ -1 ] ].
 	"Test case of binary selector, if self allSatisfy: #isSpecial (inlined for speed)"
-	1 to: self size do: [:i | (self at: i) isSpecial ifFalse: [^ -1]].
-	^1
+	1 to: self size do: [ :i | (self at: i) isSpecial ifFalse: [ ^ -1 ] ].
+	^ 1
 ]
 
 { #category : #converting }
@@ -2146,18 +2172,14 @@ String >> putOn: aStream [
 
 { #category : #converting }
 String >> repeat: aNumber [
+	"Returns a new string concatenated by itself repeated n times"
+	"('abc' repeat: 3) >>> 'abcabcabc'"
 
-	"returns a new string concatenated by itself repeated n times
-		'abc' repeat: 3. 'abcabcabc'
-	"
-
-	aNumber < 0 ifTrue: [ self error: 'aNumber cannot be negative' ].
-	
+	aNumber < 0 ifTrue: [ self error: 'aNumber cannot be negative' ].	
 	^ self species 
 		new: self size * aNumber 
 		streamContents: [ :stringStream |
-			1 to: aNumber do: [ :idx | stringStream nextPutAll: self ].
-		]
+			1 to: aNumber do: [ :idx | stringStream nextPutAll: self ] ]
 ]
 
 { #category : #private }
@@ -2670,6 +2692,12 @@ String >> withSeparatorsCompacted [
 String >> withSqueakLineEndings [
 	"Answer a new instance where all occurrences of CRLF and LF are substituted with CR."
 	
+	self
+		deprecated: 'Should use withInternalLineEndings instead'
+		on: '30 October 2020'
+		in: #Pharo9
+		transformWith: '`@rec withSqueakLineEndings' -> '`@rec withInternalLineEndings'.
+	
 	^ self withInternalLineEndings
 ]
 
@@ -2710,15 +2738,17 @@ String >> withoutPrefix: prefix [
 { #category : #'platform conventions' }
 String >> withoutQuoting [
 	"remove the initial and final quote marks (single quote for string, or double quotes for comments), if present (and if matches nesting quotes). Have a look at testWithoutQuoting. If you want to remove single/double quotes not in first and last positions of the strings, have a look at copyWithout: $' "
+
 	"'''h''' withoutQuoting >>> 'h'"
+
 	"' ''h'' ' withoutQuoting >>>  ' ''h'' '"
-	
+
 	| quote |
-	self size < 2 ifTrue: [ ^self ].
+	self size < 2 ifTrue: [ ^ self ].
 	quote := self first.
-	(quote = self last and: [ quote = $' or: [ quote = $" ] ])
-		ifTrue: [ ^self copyFrom: 2 to: self size - 1 ]
-		ifFalse: [ ^self ].
+	^ (quote = self last and: [ quote = $' or: [ quote = $" ] ])
+		ifTrue: [ self copyFrom: 2 to: self size - 1 ]
+		ifFalse: [ self ]
 ]
 
 { #category : #converting }

@@ -3,8 +3,7 @@ HashTableSizes is a helper class, used by hashedCollections to determine sizes f
 
 Public protocol is all class-side:
 
-#goodSizeAtLeast: anInteger 
-  answers a ""good"" integer greater than or equal to the given integer.
+- `#goodSizeAtLeast:` anInteger  answers a ""good"" integer greater than or equal to the given integer.
 
 An integer is not ""good"" as a hash table size if it is any of:
 * Not prime

@@ -4,7 +4,13 @@ I am a refactoring for adding methods to a class.
 My operation will compile a new method to a class in the specified protocol.
 
 You can create an instance with: 
-RBAddMethodRefactoring model:RBNamespace new addMethod:'foo ^ self' toClass:Morph inProtocols:{'test'}.
+
+```
+RBAddMethodRefactoring 
+	model: RBNamespace new 
+	addMethod:'foo ^ self' 
+	toClass:Morph inProtocols:{'test'}.
+```
 
 The method to compile is the full method source (selector, arguments and code).
 

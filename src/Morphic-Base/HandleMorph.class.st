@@ -11,12 +11,12 @@ Class {
 	#category : #'Morphic-Base-Widgets'
 }
 
-{ #category : #initialize }
+{ #category : #iterating }
 HandleMorph >> forEachPointDo: aBlock [
 	pointBlock := aBlock
 ]
 
-{ #category : #initialize }
+{ #category : #iterating }
 HandleMorph >> forEachPointDo: aBlock lastPointDo: otherBlock [
 	pointBlock := aBlock.
 	lastPointBlock := otherBlock
@@ -25,21 +25,22 @@ HandleMorph >> forEachPointDo: aBlock lastPointDo: otherBlock [
 { #category : #initialization }
 HandleMorph >> initialize [
 	"initialize the state of the receiver"
+	
 	super initialize.
-	""
-	self extent: 8 @ 8.
+	self extent: 8 @ 8
 	
 ]
 
 { #category : #'dropping/grabbing' }
 HandleMorph >> justDroppedInto: aMorph event: anEvent [
 	"So that when the hand drops me (into the world) I go away"
-	self removeHalo.
-	lastPointBlock ifNotNil: [lastPointBlock value: self center]. "Probably unnecessary"
-	anEvent hand releaseKeyboardFocus: self.
-	self changed.
-	self delete.
 
+	self removeHalo.
+	lastPointBlock ifNotNil: [ lastPointBlock value: self center ].	"Probably unnecessary"
+	anEvent hand releaseKeyboardFocus: self.
+	self
+		changed;
+		delete
 ]
 
 { #category : #'event handling' }
@@ -69,6 +70,7 @@ HandleMorph >> step [
 { #category : #stepping }
 HandleMorph >> stepTime [
 	"Update every hundredth of a second."
+	
 	^ 10
 
 ]

@@ -46,6 +46,7 @@ MCSortingTest >> sortKeyFor: aDefinition [
 
 { #category : #tests }
 MCSortingTest >> testConsistentSorting [
+
 	| definitions shuffledAndSorted |
 	definitions := {(self methodNamed: #a class: #A meta: false) . (self methodNamed: #a class: #A meta: true).
 	(self methodNamed: #a class: #B meta: false) . (self methodNamed: #b class: #A meta: false) . (self methodNamed: #b class: #B meta: false).

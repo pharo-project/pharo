@@ -1,6 +1,6 @@
 "
 I'm a layout to implement miller lists. 
-Since I am intended to be used dinamically (adding/removing components on demand), I implement just #add: and #remove: related methods.
+Since I am intended to be used dynamically (adding/removing components on demand), I implement just `add:` and `remove:` related methods.
 "
 Class {
 	#name : #SpMillerLayout,
@@ -118,7 +118,9 @@ SpMillerLayout >> isVertical [
 { #category : #removing }
 SpMillerLayout >> remove: aPresenter [
 
-	children removeKey: aPresenter.
+	children 
+		removeKey: aPresenter 
+		ifAbsent: [ self removeBySymbol: aPresenter ].
 	adapter ifNotNil: [ :theAdapter | theAdapter remove: aPresenter ]
 ]
 

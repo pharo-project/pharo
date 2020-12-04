@@ -116,5 +116,7 @@ SlotClassVariableTest >> testWantsInitializationSkipInitializeSlotIfAlreadyInHie
 					yourself } ].
 
 	self assert: class2 slots size equals: 1.
-	self deny: ((class2 >> #initialize) hasLiteral: #initializeSlots:)
+	class2
+		compiledMethodAt: #initialize
+		ifPresent: [ self fail: 'In case the super method already call #initializeSlots:, we don''t want to generate an initialize method' ]
 ]

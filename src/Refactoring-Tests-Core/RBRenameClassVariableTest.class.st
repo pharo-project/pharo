@@ -42,7 +42,7 @@ RBRenameClassVariableTest >> testRenameClassVar [
 			(self
 				parseMethod:
 					'initializeAfterLoad1
-								RSR := RBParseTreeSearcher new.
+								RSR := self parseTreeSearcher.
 								RSR
 									addMethodSearches: #(''`@methodName: `@args | `@temps | self `@methodName: `@args'' ''`@methodName: `@args | `@temps | ^self `@methodName: `@args'')
 											-> [:aNode :answer | true]').

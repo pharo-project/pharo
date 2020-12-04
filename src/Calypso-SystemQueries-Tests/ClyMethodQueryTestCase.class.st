@@ -19,7 +19,7 @@ ClyMethodQueryTestCase >> clyMessageImplementor1 [
 { #category : #running }
 ClyMethodQueryTestCase >> executeQuery [
 	super executeQuery.
-	foundSelectors := (resultItems collect: #selector) sorted asArray.
+	foundSelectors := (resultItems collect: [:each | each selector]) sorted asArray.
 ]
 
 { #category : #running }

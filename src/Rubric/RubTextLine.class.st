@@ -35,12 +35,9 @@ RubTextLine class >> start: startInteger stop: stopInteger internalSpaces: space
 
 { #category : #comparing }
 RubTextLine >> = line [
-
-	self species = line species
-		ifTrue: [^((firstIndex = line first and: [lastIndex = line last])
-				and: [internalSpaces = line internalSpaces])
-				and: [paddingWidth = line paddingWidth]]
-		ifFalse: [^false]
+	^ self species = line species
+		ifTrue: [ ((firstIndex = line first and: [ lastIndex = line last ]) and: [ internalSpaces = line internalSpaces ]) and: [ paddingWidth = line paddingWidth ] ]
+		ifFalse: [ false ]
 ]
 
 { #category : #accessing }
@@ -117,15 +114,15 @@ RubTextLine >> internalSpaces: spacesInteger paddingWidth: padWidthInteger [
 ]
 
 { #category : #scanning }
-RubTextLine >> justifiedPadFor: spaceIndex [ 
+RubTextLine >> justifiedPadFor: spaceIndex [
 	"Compute the width of pad for a given space in a line of justified text."
 
 	| pad |
-	internalSpaces = 0 ifTrue: [^0].
+	internalSpaces = 0 ifTrue: [ ^ 0 ].
 	pad := paddingWidth // internalSpaces.
-	spaceIndex <= (paddingWidth \\ internalSpaces)
-		ifTrue: [^pad + 1]
-		ifFalse: [^pad]
+	^ spaceIndex <= (paddingWidth \\ internalSpaces)
+		ifTrue: [ pad + 1 ]
+		ifFalse: [ pad ]
 ]
 
 { #category : #scanning }
@@ -145,17 +142,17 @@ RubTextLine >> justifiedPadFor: spaceIndex font: aFont [
 ]
 
 { #category : #scanning }
-RubTextLine >> justifiedTabDeltaFor: spaceIndex [ 
+RubTextLine >> justifiedTabDeltaFor: spaceIndex [
 	"Compute the delta for a tab in a line of justified text, so tab falls 
 	somewhere plausible when line is justified."
 
 	| pad extraPad |
-	internalSpaces = 0 ifTrue: [^0].
+	internalSpaces = 0 ifTrue: [ ^ 0 ].
 	pad := paddingWidth // internalSpaces.
 	extraPad := paddingWidth \\ internalSpaces.
-	spaceIndex <= extraPad
-		ifTrue: [^spaceIndex * (pad + 1)]
-		ifFalse: [^extraPad * (pad + 1) + (spaceIndex - extraPad * pad)]
+	^ spaceIndex <= extraPad
+		ifTrue: [ spaceIndex * (pad + 1) ]
+		ifFalse: [ extraPad * (pad + 1) + ((spaceIndex - extraPad) * pad) ]
 ]
 
 { #category : #accessing }

@@ -359,6 +359,7 @@ ChangeSet class >> newChanges: aChangeSet withOld: old [
 
 { #category : #services }
 ChangeSet class >> newChangesFromStream: aStream named: aName [
+
 	"File in the code from the stream into a new change set whose
 	name is derived from aName. Leave the 'current change set'
 	unchanged. Return the new change set or nil on failure."
@@ -367,15 +368,11 @@ ChangeSet class >> newChangesFromStream: aStream named: aName [
 	oldChanges := self current.
 	newName := aName withoutPeriodSuffix.
 	newSet := self basicNewChangeSet: newName.
-	[ | newStream |
-	      newSet ifNotNil:[
-			(aStream respondsTo: #converter:) ifFalse: [
-				newStream := MultiByteBinaryOrTextStream with: (aStream contentsOfEntireFile).
-				newStream reset.] ifTrue: [newStream := aStream].
-			self newChanges: newSet.
-			newStream setConverterForCode.
-			CodeImporter evaluateReadStream: newStream readStream].
-	aStream close] ensure: [self newChanges: oldChanges].
+	[
+	newSet ifNotNil: [ 
+		self newChanges: newSet.
+		CodeImporter evaluateReadStream: aStream ]
+	] ensure: [ self newChanges: oldChanges ].
 	^ newSet
 ]
 
@@ -959,8 +956,7 @@ ChangeSet >> fileOutOn: stream [
 	"Write out all the changes the receiver knows about"
 
 	| classList traits classes traitList list |
-	(self isEmpty and: [stream isKindOf: FileStream])
-		ifTrue: [self inform: 'Warning: no changes to file out'].
+	self ifEmpty: [self inform: 'Warning: no changes to file out'].
 		
 	traits := self changedClasses select: [:each | each isTrait].
 	classes := self changedClasses select: [:each | each isBehavior & each isTrait not].
@@ -1086,16 +1082,11 @@ ChangeSet >> hasPreamble [
 ChangeSet >> hasReportableSlip: aMethod [
 	"Answer whether the receiver contains anything that should be brought 
 	to the attention of the author when filing out. Customize the lists here 
-	to suit your preferences. If slips do not get reported in spite of your 
-	best efforts here, make certain that the Preference 'checkForSlips' is set 
-	to true."
+	to suit your preferences."
 
 	aMethod containsHalt ifTrue: [ ^true ].
-	#(#flag:) do: [ :aLit | (aMethod hasLiteral: aLit) ifTrue: [ ^ true ] ].
-	((aMethod literals 
-		select: #isVariableBinding
-		thenCollect: #key) includes: #Transcript) ifTrue: [ ^true ].
-	^ false
+	(aMethod sendsSelector: #flag:) ifTrue: [ ^ true ].
+	^aMethod readsRef: (Smalltalk globals associationAt: #Transcript)
 ]
 
 { #category : #initialization }
@@ -1206,7 +1197,7 @@ ChangeSet >> methodsWithoutComments [
 		(self methodChangesAtClass: aClass name) associationsDo: 
 				[:mAssoc | (#(remove addedThenRemoved) includes: mAssoc value) ifFalse:
 					[(aClass includesSelector:  mAssoc key) ifTrue:
-						[(aClass firstPrecodeCommentFor: mAssoc key) isEmptyOrNil
+						[(aClass>>mAssoc key) hasComment
 								ifTrue: [slips add: aClass name , ' ' , mAssoc key]]]]].
 	^ slips
 

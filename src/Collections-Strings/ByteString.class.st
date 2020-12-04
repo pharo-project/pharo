@@ -16,24 +16,24 @@ Class {
 ByteString class >> compare: string1 with: string2 collated: order [
 	"Return 1, 2 or 3, if string1 is <, =, or > string2, with the collating order of characters given by the order array."
 
-	| len1 len2 c1 c2 |
 	<primitive: 'primitiveCompareString' module: 'MiscPrimitivePlugin'>
-	
 	<var: #string1 declareC: 'unsigned char *string1'>
 	<var: #string2 declareC: 'unsigned char *string2'>
 	<var: #order declareC: 'unsigned char *order'>
-
+	| len1 len2 c1 c2 |
 	len1 := string1 size.
 	len2 := string2 size.
-	1 to: (len1 min: len2) do:
-		[:i |
+	1 to: (len1 min: len2) do: [ :i | 
 		c1 := order at: (string1 basicAt: i) + 1.
 		c2 := order at: (string2 basicAt: i) + 1.
-		c1 = c2 ifFalse: 
-			[c1 < c2 ifTrue: [^ 1] ifFalse: [^ 3]]].
-	len1 = len2 ifTrue: [^ 2].
-	len1 < len2 ifTrue: [^ 1] ifFalse: [^ 3].
-
+		c1 = c2
+			ifFalse: [ ^ c1 < c2
+					ifTrue: [ 1 ]
+					ifFalse: [ 3 ] ] ].
+	len1 = len2 ifTrue: [ ^ 2 ].
+	^ len1 < len2
+		ifTrue: [ 1 ]
+		ifFalse: [ 3 ]
 ]
 
 { #category : #primitives }
@@ -171,11 +171,15 @@ ByteString >> beginsWith: prefix [
 	"Answer whether the receiver begins with the given prefix string.
 	The comparison is case-sensitive."
 
-
 	"IMPLEMENTATION NOTE:
 	following algorithm is optimized in primitive only in case self and prefix are bytes like.
 	Otherwise, if self is wide, then super outperforms,
 	Otherwise, if prefix is wide, primitive is not correct"
+	
+	"('pharo' beginsWith: '') >>> false"
+	"('pharo' beginsWith: 'pharo-project') >>> false"
+	"('pharo' beginsWith: 'phuro') >>> false"
+	"('pharo' beginsWith: 'pha') >>> true"
 	
 	prefix class isBytes ifFalse: [^super beginsWith: prefix].
 	

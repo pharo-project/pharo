@@ -48,7 +48,7 @@ RPackage >> spotterMonticelloWorkingCopyFor: aStep [
 ]
 
 { #category : #'*GT-SpotterExtensions-Core' }
-RPackage >> spotterPreviewCodeIn: aComposite [
+RPackage >> spotterPreviewIn: aComposite [
 	<spotterPreview: 10>
 	aComposite list
 		title: 'Preview';

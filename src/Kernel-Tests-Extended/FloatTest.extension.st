@@ -428,7 +428,7 @@ FloatTest >> testHugeIntegerCloseTo [
 
 { #category : #'*Kernel-Tests-Extended' }
 FloatTest >> testInfinityCloseTo [
-	"This is a test for bug http://bugs.squeak.org/view.php?id=6729:"
+	"This is a test for bug http://bugs.squeak.org/view.php?id=6729"
 
 	self deny: (Float infinity closeTo: Float infinity negated).
 	self deny: (Float infinity negated closeTo: Float infinity)

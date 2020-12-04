@@ -46,13 +46,10 @@ RxmPredicate >> matchAgainst: aMatcher [
 
 	| original |
 	original := aMatcher currentState.
-	(aMatcher atEnd not 
-		and: [(predicate value: aMatcher next)
-			and: [next matchAgainst: aMatcher]])
-		ifTrue: [^true]
-		ifFalse:
-			[aMatcher restoreState: original.
-			^false]
+	^ (aMatcher atEnd not and: [ (predicate value: aMatcher next) and: [ next matchAgainst: aMatcher ] ])
+		ifTrue: [ true ]
+		ifFalse: [ aMatcher restoreState: original.
+			false ]
 ]
 
 { #category : #initialization }

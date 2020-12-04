@@ -36,14 +36,15 @@ SpMorphicNotebookAdapter >> addModelTo: aNotebook [
 ]
 
 { #category : #factory }
-SpMorphicNotebookAdapter >> addPage: each to: aNotebook [
+SpMorphicNotebookAdapter >> addPage: aNotebookPage to: aNotebook [
 
 	aNotebook 
-		addLazyPage: [ self buildContentForPage: each ] 
-		label: (self buildLabelForPage: each).
+		addLazyPage: [ self buildContentForPage: aNotebookPage ] 
+		label: (self buildLabelForPage: aNotebookPage)
+		model: aNotebookPage.
 	"Since I do not have the page added, I need to take it from the list. But I know 
 	 this will be the last added :)"
-	aNotebook pages last model: each
+	aNotebook pages last model: aNotebookPage
 ]
 
 { #category : #factory }

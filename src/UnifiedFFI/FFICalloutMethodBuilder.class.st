@@ -75,7 +75,7 @@ FFICalloutMethodBuilder >> createFFICalloutLiteralFromSpec: functionSpec [
 		module: self libraryName
 		callType: self callType
 		returnType: functionSpec returnType externalTypeWithArity
-		argumentTypes: (functionSpec arguments collect: #externalTypeWithArity).
+		argumentTypes: (functionSpec arguments collect: [:each | each externalTypeWithArity]).
 	
 	functionResolutionStrategies
 		detect: [ :each | each isApplicableFor: self requestor ]
@@ -84,23 +84,26 @@ FFICalloutMethodBuilder >> createFFICalloutLiteralFromSpec: functionSpec [
 	^ externalFunction
 ]
 
+{ #category : #'as yet unclassified' }
+FFICalloutMethodBuilder >> extractLibrary [
+	"Obtain the library to use"
+	| ffiLibrary |
+	
+	ffiLibrary := library ifNil: [sender receiver ffiLibrary].	
+	ffiLibrary := ffiLibrary isClass 
+		ifFalse: [ ffiLibrary asFFILibrary ]
+		ifTrue: [ ffiLibrary uniqueInstance ].
+
+	^ ffiLibrary
+]
+
 { #category : #private }
 FFICalloutMethodBuilder >> generate [
 	^ self generateMethodFromSpec: (self parseSignature: self signature)
 ]
 
 { #category : #private }
-FFICalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec [
-	| properties |
-	"Copy the properties of the old method"
-	sender methodProperties
-		ifNotNil: [ properties := sender methodProperties copy.
-			properties method: nil.
-			builder properties: properties ].
-
-	builder
-		numArgs: self argumentNames size;
-		addTemps: (self argumentNames copyWith: #result).
+FFICalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec ffiLibrary: ffiLibrary [
 
 	"Builds a method call"
 	"save ffi call as literal"
@@ -122,17 +125,34 @@ FFICalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec [
 
 { #category : #private }
 FFICalloutMethodBuilder >> generateMethodFromSpec: functionSpec [
-	| ir |
+	| ir ffiLibrary properties |
 	functionSpec resolveUsing: self requestor.
-	ir := IRBuilder buildIR: [ :builder | 
-		self generateFFICallout: builder spec: functionSpec ].
+
+	ffiLibrary := self extractLibrary.
+
+	ir := IRBuilder buildIR: [ :builder | | r |
+		
+		"Copy the properties of the old method"
+		sender methodProperties
+			ifNotNil: [ properties := sender methodProperties copy.
+				properties method: nil.
+				builder properties: properties ].
+
+		builder
+			numArgs: self argumentNames size;
+			addTemps: (self argumentNames copyWith: #result).		
+		
+		ffiLibrary preMethodBuildContext: sender builder: builder spec: functionSpec.
+		r := self generateFFICallout: builder spec: functionSpec ffiLibrary: ffiLibrary.
+		ffiLibrary postMethodBuildContext: sender builder: builder spec: functionSpec.
+		r].
 	^ ir generate: self methodTrailer
 ]
 
 { #category : #initialization }
 FFICalloutMethodBuilder >> initialize [
 	super initialize.
-	functionResolutionStrategies := FFIFunctionResolutionStrategy allSubclasses collect: #new
+	functionResolutionStrategies := FFIFunctionResolutionStrategy allSubclasses collect: [:aClass | aClass new]
 		
 ]
 
@@ -165,7 +185,7 @@ FFICalloutMethodBuilder >> libraryName [
 
 { #category : #accessing }
 FFICalloutMethodBuilder >> method [
-	^ self sender method
+	^ self sender compiledCode method
 ]
 
 { #category : #accessing }

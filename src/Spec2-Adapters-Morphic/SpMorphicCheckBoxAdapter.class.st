@@ -16,17 +16,17 @@ SpMorphicCheckBoxAdapter >> buildWidget [
 						selected: #state
 						changeSelected: #state:.
 	checkButton 
-			label:	self label; 
+			label: self getLabelText; 
 			beCheckbox;
 			hResizing: #spaceFill; 
 			vResizing: #shrinkWrap; 
-			setBalloonText: self help;
+			setBalloonText: self getHelpText;
 			getEnabledSelector: #enabled;
 			dragEnabled: self dragEnabled;
 			dropEnabled: self dropEnabled;	
 			labelClickable: self labelClickable.
 			
-	self presenter whenLabelChangedDo: [ :newLabel | checkButton label: newLabel ].
+	self presenter whenLabelChangedDo: [ :newLabel | checkButton label: (newLabel ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]) ].
 	self presenter whenChangedDo: [ checkButton updateSelection ].
 	^ checkButton
 ]
@@ -35,6 +35,18 @@ SpMorphicCheckBoxAdapter >> buildWidget [
 SpMorphicCheckBoxAdapter >> clicked [
 	
 	widget toggleSelected
+]
+
+{ #category : #private }
+SpMorphicCheckBoxAdapter >> getHelpText [
+
+	^ self presenter help ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
+]
+
+{ #category : #private }
+SpMorphicCheckBoxAdapter >> getLabelText [
+
+	^ self presenter label ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
 ]
 
 { #category : #accessing }
@@ -46,7 +58,7 @@ SpMorphicCheckBoxAdapter >> helpText [
 { #category : #'widget API' }
 SpMorphicCheckBoxAdapter >> label [
 	
-	^ self model label
+	^ self getLabelText
 ]
 
 { #category : #'widget API' }

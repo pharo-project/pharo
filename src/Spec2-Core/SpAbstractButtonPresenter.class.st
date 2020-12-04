@@ -1,3 +1,6 @@
+"
+A base for button presenters, it defines basic functionality common to all buttons.
+"
 Class {
 	#name : #SpAbstractButtonPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
@@ -18,33 +21,28 @@ SpAbstractButtonPresenter >> addShortcutTipFor: aString [
 
 { #category : #private }
 SpAbstractButtonPresenter >> addShortcutTipFor: aCharacter on: aString [
-	| index text |
-
-	self flag: #REMOVE. "This is morphic specific"
-	aString ifNil: [ ^ nil ].
-	text := aString asText.
-	aCharacter ifNil: [ ^ text ].
-	index := aString asLowercase indexOf: aCharacter asLowercase.
-	index isZero
-		ifTrue: [ ^ text ].
-
-	^ text
-		addAttribute: TextEmphasis underlined from: index to: index;
-		yourself
+	
+	^ aString withAccentuatedCharacter: aCharacter
 ]
 
 { #category : #api }
 SpAbstractButtonPresenter >> icon [
+	"Answer the icon (an instance of `Form`) defined for this button (it can be nil)"
+
 	^ icon
 ]
 
 { #category : #api }
 SpAbstractButtonPresenter >> icon: anIcon [
+	"Sets the icon to be displayed by the button. 
+	 The icon must be a `Form`"
+
 	icon := anIcon
 ]
 
 { #category : #api }
 SpAbstractButtonPresenter >> iconName: aSymbol [
+
 	self icon: (self iconNamed: aSymbol)
 ]
 
@@ -60,14 +58,26 @@ SpAbstractButtonPresenter >> initialize [
 
 ]
 
-{ #category : #morphic }
+{ #category : #api }
 SpAbstractButtonPresenter >> label [
+	"Answer the label to be shown by the button"
+
 	^ self addShortcutTipFor: label
 ]
 
 { #category : #api }
-SpAbstractButtonPresenter >> label: aStringOrImageMorph [
-	label := aStringOrImageMorph
+SpAbstractButtonPresenter >> label: aString [
+	"Set the label to be shown by the button."
+
+	label := aString
+]
+
+{ #category : #localization }
+SpAbstractButtonPresenter >> localeChanged [
+
+	super localeChanged.
+	self forceUpdateSlot: #label
+	
 ]
 
 { #category : #private }
@@ -78,12 +88,22 @@ SpAbstractButtonPresenter >> shortcutCharacter [
 
 { #category : #'api-events' }
 SpAbstractButtonPresenter >> whenIconChangedDo: aBlock [
+	"Inform when icon property has changed. 
+	 `aBlock` has three optional arguments: 
+	 - new value
+	 - old value
+	 - the announcement triggering this action"
+
 	self property: #icon whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpAbstractButtonPresenter >> whenLabelChangedDo: aBlock [
-	"set a block to perform after that the button has been aclicked, and its action performed"
+	"Inform when label property has changed. 
+	 `aBlock` has three optional arguments: 
+	 - new value
+	 - old value
+	 - the announcement triggering this action"
 
 	self property: #label whenChangedDo: aBlock
 ]

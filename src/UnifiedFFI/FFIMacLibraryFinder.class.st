@@ -19,8 +19,7 @@ FFIMacLibraryFinder >> basePaths [
 	^ {
 	Smalltalk imageDirectory fullName.
 	(Smalltalk vm binary parent / 'Plugins') fullName. 
-	(Smalltalk vm binary parent parent / 'Resources' / 'lib') fullName. 
-	}
+	(Smalltalk vm binary parent parent / 'Resources' / 'lib') fullName }
 ]
 
 { #category : #accessing }

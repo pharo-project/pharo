@@ -32,7 +32,7 @@ RBRefactoryDefinitionChange class >> definition: aString for: aController [
 		class definitionPatterns do: [ :pattern |
 			((RBParser parseRewriteExpression: pattern) match: parseTree inContext: context empty)
 			 	ifTrue: [ ^ class definition: aString for: aController context: context ] ] ].
-	^ self error: 'Invalid definition string'
+	^ self error: 'Invalid definition:', aString
 ]
 
 { #category : #private }
@@ -121,11 +121,10 @@ RBRefactoryDefinitionChange >> namesIn: aString [
 
 { #category : #private }
 RBRefactoryDefinitionChange >> primitiveExecute [
-	definedClass := self definitionClass compiler
-		source: self definition;
-		requestor: self controller;
-		logged: true;
-		evaluate
+
+	definedClass := self definitionClass environment
+		defineClass: self definition
+		withController: self controller
 ]
 
 { #category : #printing }

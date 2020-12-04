@@ -131,18 +131,22 @@ FFIEnumeration class >> at: anItem [
 ]
 
 { #category : #utilities }
-FFIEnumeration class >> buildClassVariables [
-	self enumerationDictionary keysAndValuesDo: [ :eachName :eachValue | 
-		| classBinding enumerationValue |
-		
-		enumerationValue := (self enumClassForName: eachName) basicNew value: eachValue.
-		classBinding := self classPool associationAt: eachName asSymbol ifAbsent: [ nil ].
+FFIEnumeration class >> buildClassVarNamed: aString with: enumerationValue [
+	
+		| classBinding |
+		classBinding := self classVariableNamed: aString ifAbsent: [ nil ].
 		classBinding 
 			ifNotNil: [ classBinding value: enumerationValue ]
 			ifNil: [ 
-				self classPool add: (ClassVariable 
-					key: eachName asSymbol 
-					value: enumerationValue ) ] ]
+				self addClassVariable: (ClassVariable key: aString asSymbol value: enumerationValue) ]
+]
+
+{ #category : #utilities }
+FFIEnumeration class >> buildClassVariables [
+	self enumerationDictionary keysAndValuesDo: [ :eachName :eachValue | 
+		| enumerationValue |	
+		enumerationValue := (self enumClassForName: eachName) basicNew value: eachValue.
+		self buildClassVarNamed: eachName with: enumerationValue ]
 ]
 
 { #category : #utilities }
@@ -250,22 +254,15 @@ FFIEnumeration class >> initialize [
 { #category : #'class initialization' }
 FFIEnumeration class >> initializeEnumeration [
 	| unsigned |
-	
 	unsigned := true.
 	self enumerationDictionary keysAndValuesDo: [ :eachName :eachValue | 
-		| classBinding enumerationValue |
+		| enumerationValue |
 		
 		(unsigned and: [ eachValue < 0 ]) 
 			ifTrue: [ unsigned := false ].
 		
 		enumerationValue := self basicNew value: eachValue.
-		classBinding := self classPool associationAt: eachName asSymbol ifAbsent: [ nil ].
-		classBinding 
-			ifNotNil: [ classBinding value: enumerationValue ]
-			ifNil: [ 
-				self classPool add: (ClassVariable 
-					key: eachName asSymbol 
-					value: enumerationValue ) ] ].
+		self buildClassVarNamed: eachName with: enumerationValue ].
 					
 	representationType := unsigned
 		ifTrue: [ FFIUInt32 new ]

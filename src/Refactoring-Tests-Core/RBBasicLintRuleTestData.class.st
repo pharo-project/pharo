@@ -29,7 +29,7 @@ RBBasicLintRuleTestData class >> classShouldNotOverride [
 { #category : #private }
 RBBasicLintRuleTestData class >> createMatcherFor: codeStrings method: aBoolean [ 
 	| matcher |
-	matcher := RBParseTreeSearcher new.
+	matcher := self parseTreeSearcher.
 	aBoolean
 		ifTrue: [matcher addMethodSearches: codeStrings -> [:aNode :answer | true]]
 		ifFalse: [matcher addSearches: codeStrings -> [:aNode :answer | true]].
@@ -61,7 +61,7 @@ RBBasicLintRuleTestData class >> justSendsSuper [
 	| detector matcher |
 	detector := self new.
 	detector name: 'Method just sends super message'.
-	matcher := RBParseTreeSearcher justSendsSuper.
+	matcher := self parseTreeSearcherClass justSendsSuper.
 	detector methodBlock: 
 			[:context :result | 
 			(context parseTree tag isNil
@@ -104,7 +104,7 @@ RBBasicLintRuleTestData class >> precedence [
 	| detector matcher |
 	detector := self new.
 	detector name: 'Inspect instances of "A + B * C" might be "A + (B * C)"'.
-	matcher := RBParseTreeSearcher new.
+	matcher := self parseTreeSearcher.
 	matcher addSearches: #('``@A + ``@B * ``@C' '``@A - ``@B * ``@C')
 				-> [:aNode :answer | answer or: [aNode receiver parentheses isEmpty]].
 	detector methodBlock: 
@@ -212,14 +212,14 @@ RBBasicLintRuleTestData class >> toDo [
 	| detector matcher |
 	detector := self new.
 	detector name: 'Uses to:do: instead of do:, with:do: or timesRepeat:'.
-	matcher := RBParseTreeSearcher new.
+	matcher := self parseTreeSearcher.
 	matcher
 		addSearch: '1 to: ``@object size do: [:`each | | `@temps | `@.Statements]' -> 
 					[:aNode :answer | 
 					answer or: 
 							[| varName variableMatcher |
 							varName := aNode arguments last arguments first name. "`each"
-							variableMatcher := RBParseTreeSearcher new.
+							variableMatcher := self parseTreeSearcher.
 							variableMatcher addSearch: varName
 										-> [:node :ans | ans and: [node parent isMessage and: [node parent selector == #at:]]].
 							variableMatcher executeTree: aNode arguments last body initialAnswer: true]].
@@ -247,7 +247,7 @@ RBBasicLintRuleTestData class >> utilityMethods [
 					[(self subclassOf: context selectedClass overrides: context selector)
 						ifFalse: 
 							[(context superMessages isEmpty and: [context selfMessages isEmpty]) ifTrue: 
-									[(RBParseTreeSearcher
+									[(self parseTreeSearcherClass
 										references: context selectedClass allInstVarNames
 												, context selectedClass allClassVarNames asArray , #('self')
 										in: context parseTree) isEmpty

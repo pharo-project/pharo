@@ -6,8 +6,3 @@ Class {
 	#superclass : #Object,
 	#category : #'Keymapping-Core-Base'
 }
-
-{ #category : #accessing }
-KMNoKeymap >> shortcut [
-	^ KMNoShortcut new
-]

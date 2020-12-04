@@ -38,7 +38,7 @@ RBExtractMethodTransformation class >> allMethodsInHierarchyOf: aRBClass [
 
 	^ ((aRBClass
 		withAllSuperclassesUntil: Object)
-		flatCollect: [ :class | class allMethods collect: #method ])
+		flatCollect: [ :class | class allMethods collect: [:each | each method] ])
 		reject: #isNil
 ]
 
@@ -146,7 +146,7 @@ RBExtractMethodTransformation >> calculateAssignments [
 RBExtractMethodTransformation >> calculateIfReturnIsNeeded [
 
 	| searcher |
-	searcher := RBParseTreeSearcher new.
+	searcher := self parseTreeSearcher.
 	searcher
 		matches: '^self' do: [:aNode :answer | answer];
 		matches: '^`@anything' do: [:aNode :answer | true].
@@ -288,7 +288,7 @@ RBExtractMethodTransformation >> newMethodName [
 				newAttempt := newSelector isNil.
 				
 				"it's a valid selector"
-				(newSelector isString and: [RBScanner isSelector: newSelector])
+				(newSelector isString and: [newSelector isValidSelector])
 					ifFalse: [ self inform: newSelector asString, ' is not a valid selector.'.
 								  newSelector := nil ].
 					
@@ -335,10 +335,10 @@ RBExtractMethodTransformation >> preconditions [
 				allMethodsInHierarchyOf: self definingClass)
 				reject: [ :m | m selector = selector ].
 			
-			(RBParseTreeSearcher whichMethodIn: searchSpace matches: aSubtree)
+			(self parseTreeSearcherClass whichMethodIn: searchSpace matches: aSubtree)
 				ifNotEmpty: [ :opportunities |
 					self refactoringError: ('<1s> method(s) already implement this code.<n>Do you want to send a message instead?' expandMacrosWith: opportunities size asString)
-					with: [ (RBParseTreeRewriter
+					with: [ (self parseTreeRewriterClass 
 							  replaceCode: aSubtree
 							  byMessageSendTo: opportunities anyOne
 							  in: (self definingClass methodFor: self calculateTree selector))

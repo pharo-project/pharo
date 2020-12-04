@@ -28,7 +28,7 @@ RGPackage >> classesForClassTag: aTag [
 { #category : #'*Calypso-Ring' }
 RGPackage >> extendedClassNames [
 
-	^ self extendedClasses collect: #name
+	^ self extendedClasses collect: [ :each | each name ]
 ]
 
 { #category : #'*Calypso-Ring' }
@@ -40,7 +40,7 @@ RGPackage >> extendsClass: aClass [
 { #category : #'*Calypso-Ring' }
 RGPackage >> extensionSelectorsForClass: aClass [
 
-	^ (self extensionMethods select: [ :each | each parent = aClass ]) collect: #name
+	^ (self extensionMethods select: [ :each | each parent = aClass ]) collect: [:each | each name]
 ]
 
 { #category : #'*Calypso-Ring' }

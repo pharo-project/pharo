@@ -60,8 +60,18 @@ AthensTransform >> getMatrix [
 
 { #category : #transformations }
 AthensTransform >> invert [
-	"i should invert"
+	"I should invert"
 	self subclassResponsibility
+]
+
+{ #category : #testing }
+AthensTransform >> isAffineTransform [
+	^ self subclassResponsibility
+]
+
+{ #category : #testing }
+AthensTransform >> isIdentity [
+	^ self subclassResponsibility
 ]
 
 { #category : #transformations }
@@ -71,13 +81,13 @@ AthensTransform >> loadAffineTransform: anAthenTransform [
 
 { #category : #transformations }
 AthensTransform >> loadIdentity [
-	"load the identity matrix into receiver"
+	"Load the identity matrix into receiver"
 	self subclassResponsibility
 ]
 
 { #category : #transformations }
 AthensTransform >> restoreAfter: aBlock [
-	"i should save the current transform state, evaluate the block, and then restore the saved transform state"
+	"I should save the current transform state, evaluate the block, and then restore the saved transform state"
 	self subclassResponsibility
 ]
 
@@ -108,6 +118,16 @@ AthensTransform >> scaleX: fx Y: fy [
 { #category : #'vector-transform' }
 AthensTransform >> transform: aPoint [ 
 	self subclassResponsibility
+]
+
+{ #category : #transformations }
+AthensTransform >> transformRectangle: aRectangle [
+	^ Rectangle encompassing: {
+		self transform: aRectangle bottomLeft.
+		self transform: aRectangle bottomRight.
+		self transform: aRectangle topLeft.
+		self transform: aRectangle topRight.
+	}
 ]
 
 { #category : #'vector-transform' }

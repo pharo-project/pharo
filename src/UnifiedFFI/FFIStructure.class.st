@@ -379,7 +379,12 @@ FFIStructure class >> structureSize [
 
 { #category : #accessing }
 FFIStructure >> address [
-	self deprecated: 'Use #getHandle' on: '27 October 2015' in: 'Pharo5'. 
+	self
+		deprecated: 'Use #getHandle'
+		on: '27 October 2015'
+		in: 'Pharo5'
+		transformWith: '`@rec address' -> '`@rec getHandle'.
+	
 	^ self getHandle
 ]
 
@@ -393,10 +398,12 @@ FFIStructure >> pointer [
 { #category : #printing }
 FFIStructure >> printOn: aStream [ 
 	"Append to the argument, aStream, the names and values of all the record's variables."
-	aStream nextPutAll: self class name; nextPutAll: ' ( '; cr.
+	super printOn: aStream. 
+
+"	aStream nextPutAll: self class name; nextPutAll: ' ( '; cr.
 	self class fieldSpec fieldNames do: [ :field |
 		aStream nextPutAll: field; nextPut: $:; space; tab.
 			(self perform: field ) printOn: aStream.
 			] separatedBy: [ aStream cr ].
-	aStream cr; nextPut: $)
+	aStream cr; nextPut: $)"
 ]

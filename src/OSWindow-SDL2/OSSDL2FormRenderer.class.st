@@ -8,7 +8,8 @@ Class {
 		'texture',
 		'renderer',
 		'extent',
-		'deferUpdates'
+		'deferUpdates',
+		'mutex'
 	],
 	#pools : [
 		'SDL2Constants'
@@ -31,7 +32,7 @@ OSSDL2FormRenderer >> copyAndPresentTextureRectangle: rectangle [
 
 { #category : #private }
 OSSDL2FormRenderer >> createRenderer [
-	renderer := window handle createDefaultRenderer.
+	renderer := backendWindow sdl2Window createDefaultRenderer.
 
 ]
 
@@ -52,16 +53,22 @@ OSSDL2FormRenderer >> deferUpdatesWhile: aBlock [
 
 { #category : #deleting }
 OSSDL2FormRenderer >> destroy [
-	(texture isNil or: [ renderer isNil ])
-		ifTrue: [ ^ self ].
-	texture destroy.
-	renderer destroy
+	mutex critical: [
+		(texture isNil or: [ renderer isNil ])
+			ifTrue: [ ^ self ].
+		texture destroy.
+		renderer destroy.
+		texture := nil.
+		renderer := nil.
+	]
+
 ]
 
 { #category : #initialization }
 OSSDL2FormRenderer >> initialize [
 	super initialize.
 	deferUpdates := false.
+	mutex := Mutex new.
 ]
 
 { #category : #private }
@@ -72,92 +79,94 @@ OSSDL2FormRenderer >> primitiveUpdateRectangle: rectangle externalForm: external
 
 { #category : #'updating screen' }
 OSSDL2FormRenderer >> updateAll [
-	self validate
-		ifFalse: [ ^ self ].
+	mutex critical: [
+		self validate
+			ifFalse: [ ^ self ].
 	
-	texture updateTexturePixels: form bits pitch: form width * 4.
+		texture updateTexturePixels: form bits pitch: form width * 4.
 	
-	deferUpdates
-		ifTrue: [ ^ self ].
-	renderer copy: texture.
-	renderer present
+		deferUpdates
+			ifTrue: [ ^ self ].
+		renderer copy: texture.
+		renderer present
+	]
 ]
 
 { #category : #'updating screen' }
 OSSDL2FormRenderer >> updateAreas: allDamage immediate: forceToScreen [
-	| pixels pitchHolder pitch intersection updateUnion externalForm |
-	self validate
-		ifFalse: [ ^ self ].
-		
-	pixels := ExternalAddress new.
-	pitchHolder := ExternalAddress allocate: 4.
-	[
-		texture lockPixels: pixels pitch: pitchHolder.
-		pitch := pitchHolder signedLongAt: 1.
-	] ensure: [ pitchHolder free ].
-	
-	updateUnion := nil.
-	[
-		externalForm := OSSDL2ExternalForm extent: extent depth: 32 bits: pixels.
-		allDamage do: [ :rectangle |
+
+	| pixels pitch intersection updateUnion externalForm |
+	mutex critical: [ 
+		self validate ifFalse: [ ^ self ].
+
+		pixels := ExternalAddress new.
+		ExternalAddress allocate: 4 bytesDuring: [ :pitchHolder | 
+			texture lockPixels: pixels pitch: pitchHolder.
+			pitch := pitchHolder signedLongAt: 1 ].
+
+		updateUnion := nil.
+		[ 
+		externalForm := OSSDL2ExternalForm
+			                extent: extent
+			                depth: 32
+			                bits: pixels.
+		allDamage do: [ :rectangle | 
 			intersection := rectangle
-				intersect: (0 @ 0 corner: window extent)
-				ifNone: [ nil ].
-		
-			intersection ifNotNil: [
-				self primitiveUpdateRectangle: rectangle externalForm: externalForm.
-				updateUnion ifNil: [
-					updateUnion := intersection 
-				] ifNotNil: [
-					updateUnion := updateUnion merge: intersection
-				]
-			]
-		].
-	] ensure: [
-		texture unlock.
-		externalForm destroySurface
-	].
+				                intersect: (0 @ 0 corner: backendWindow extent)
+				                ifNone: [ nil ].
 
-	updateUnion ifNotNil: [
-		self copyAndPresentTextureRectangle: updateUnion
-	].
+			intersection ifNotNil: [ 
+				self
+					primitiveUpdateRectangle: rectangle
+					externalForm: externalForm.
+				updateUnion
+					ifNil: [ updateUnion := intersection ]
+					ifNotNil: [ updateUnion := updateUnion merge: intersection ] ] ] ] 
+			ensure: [ 
+				texture unlock.
+				externalForm destroySurface ].
 
-	
+		updateUnion ifNotNil: [ 
+			self copyAndPresentTextureRectangle: updateUnion ] ]
 ]
 
 { #category : #'updating screen' }
 OSSDL2FormRenderer >> updateRectangle: rectangle [
-	| intersection pixels pitch pitchHolder externalForm |
-	intersection := rectangle
-		intersect: (0 @ 0 corner: window extent)
-		ifNone: [ ^ self ].
-	self validate
-		ifFalse: [ ^ self ].
-		
-	pixels := ExternalAddress new.
-	pitchHolder := ExternalAddress allocate: 4.
-	[
-		texture lockPixels: pixels pitch: pitchHolder.
-		pitch := pitchHolder signedLongAt: 1.
-	] ensure: [ pitchHolder free ].
-	
-	[
-		externalForm := OSSDL2ExternalForm extent: extent depth: 32 bits: pixels.
-		self primitiveUpdateRectangle: intersection externalForm: externalForm
-	] ensure: [
-		texture unlock.
-		externalForm destroySurface
-	].
 
-	self copyAndPresentTextureRectangle: intersection.
+	| intersection pixels pitch externalForm |
+	mutex critical: [ 
+		intersection := rectangle
+			                intersect: (0 @ 0 corner: backendWindow extent)
+			                ifNone: [ ^ self ].
+		self validate ifFalse: [ ^ self ].
 
+		pixels := ExternalAddress new.
+		ExternalAddress allocate: 4 bytesDuring: [ :pitchHolder | 
+			texture lockPixels: pixels pitch: pitchHolder.
+			pitch := pitchHolder signedLongAt: 1 ].
+
+		[ 
+		externalForm := OSSDL2ExternalForm
+			                extent: extent
+			                depth: 32
+			                bits: pixels.
+		self
+			primitiveUpdateRectangle: intersection
+			externalForm: externalForm ] ensure: [ 
+			texture unlock.
+			externalForm destroySurface ].
+
+		self copyAndPresentTextureRectangle: intersection ]
 ]
 
 { #category : #private }
 OSSDL2FormRenderer >> useDeferredUpdates [
-	renderer
-		copy: texture;
-		present
+	mutex critical: [ 
+		renderer
+			copy: texture;
+			present
+	]
+
 ]
 
 { #category : #private }

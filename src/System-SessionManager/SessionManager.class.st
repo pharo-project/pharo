@@ -124,7 +124,7 @@ SessionManager class >> initializedSessionManager [
 	| manager |
 	manager := SessionManager new.
 	manager
-		registerSystemClassNamed: #SmallInteger atPriority: 10; "system - 10"
+		registerSystemClassNamed: #SmallInteger atPriority: 10; "System - 10"
 		registerSystemClassNamed: #Delay atPriority: 20; "System - 20"
 		registerSystemClassNamed: #ProcessorScheduler atPriority: 30; "System - 30"
 		registerSystemClassNamed: #InputEventFetcher atPriority: 40; "System - 40" "WARNING: should not be in the list if InputEventSensor is already there"
@@ -132,6 +132,7 @@ SessionManager class >> initializedSessionManager [
 
 		registerSystemClassNamed: #Alien atPriority: 60; "System - 60"
 		registerSystemClassNamed: #ExternalObject atPriority: 60; "System - 60"
+		registerSystemClassNamed: #FFIBackend atPriority: 60; "System - 60"
 		registerSystemClassNamed: #FFIMethodRegistry atPriority: 60; "System - 60"
 		registerSystemClassNamed: #FFICallbackThunk atPriority: 60; "System - 60"
 		registerSystemClassNamed: #FileLocator atPriority: 90; "System - 90"
@@ -148,7 +149,6 @@ SessionManager class >> initializedSessionManager [
 		registerSystemClassNamed: #Symbol; "System"
 		registerSystemClassNamed: #Locale; "System"
 		registerSystemClassNamed: #WeakArray; "System"
-		registerSystemClassNamed: #FileStream; "System"
 		registerSystemClassNamed: #BasicCommandLineHandler; "System"
 		registerSystemClassNamed: #NonInteractiveTranscript; "System"
 		registerSystemClassNamed: #ASTCache; "System"

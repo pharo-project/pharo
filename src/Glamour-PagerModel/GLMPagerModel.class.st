@@ -49,9 +49,10 @@ GLMPagerModel >> convertIndexToValue: anIndex [
 { #category : #private }
 GLMPagerModel >> convertIndexToValue: anIndex with: numberOfPagers [
 	"private"
-	numberOfPagers = self actualNumberOfVisiblePages
-		ifTrue: [ ^ 0 ]
-		ifFalse: [ ^ (anIndex - 1) / (numberOfPagers - self actualNumberOfVisiblePages ) ]
+
+	^ numberOfPagers = self actualNumberOfVisiblePages
+		ifTrue: [ 0 ]
+		ifFalse: [ (anIndex - 1) / (numberOfPagers - self actualNumberOfVisiblePages) ]
 ]
 
 { #category : #scrolling }

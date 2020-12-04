@@ -72,5 +72,7 @@ ExampleClassVariableTest >> testMigrateClassVar [
 	
 	self assert: (aClass hasClassVarNamed: 'ClassVar').
 	self assert: (aClass classVariableNamed: #ClassVar) class equals: ExampleClassVariableWithState.
-	self assert: (aClass classVariableNamed: #ClassVar) read equals: 5
+	self assert: (aClass classVariableNamed: #ClassVar) read equals: 5.
+	self assert: (aClass classVariableNamed: #ClassVar) definingClass equals: aClass.
+	self assert: (aClass classVariableNamed: #ClassVar) owningClass equals: aClass
 ]

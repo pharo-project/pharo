@@ -26,10 +26,10 @@ MCFtpRepository class >> basicFromUrl: aZnUrl [
 MCFtpRepository class >> creationTemplate [
 	^
 'MCFtpRepository
-	host: ''modules.squeakfoundation.org''
+	host: ''modules.blopy.org''
 	directory: ''mc''
-	user: ''squeak''
-	password: ''squeak'''
+	user: ''blop''
+	password: ''pilou'''
 	
 ]
 

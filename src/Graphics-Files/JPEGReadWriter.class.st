@@ -1115,10 +1115,9 @@ JPEGReadWriter >> sampleRangeLimit: aNumber [
 
 { #category : #'huffman encoding' }
 JPEGReadWriter >> scaleAndSignExtend: aNumber inFieldWidth: w [
-
-	aNumber < (1 bitShift: (w - 1))
-		ifTrue: [^aNumber - (1 bitShift: w) + 1]
-		ifFalse: [^aNumber]
+	^ aNumber < (1 bitShift: w - 1)
+		ifTrue: [ aNumber - (1 bitShift: w) + 1 ]
+		ifFalse: [ aNumber ]
 ]
 
 { #category : #dct }

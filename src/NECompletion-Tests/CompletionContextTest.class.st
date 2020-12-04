@@ -19,17 +19,6 @@ CompletionContextTest >> createContextFor: aString at: anInteger [
 ]
 
 { #category : #tests }
-CompletionContextTest >> testExpressionInIncompleteParanthesis [
-	| text context |
-	text := 'testIt
-	1 + (1 si'.
-	context := self 
-		createContextFor: text
-		at: text size.
-	self assert: ((context entries collect: #contents) includes: #sin).
-]
-
-{ #category : #tests }
 CompletionContextTest >> testReceiverArgument [
 	| text context |
 	text := 'testIt: aRectangle
@@ -37,7 +26,7 @@ CompletionContextTest >> testReceiverArgument [
 	context := self 
 		createContextFor: text
 		at: text size.
-	self assert: ((context entries collect: #contents) includes: #printString).
+	self assert: ((context entries collect: [:each | each contents]) includes: #printString).
 	self assert: context title equals: ''.
 	
 	text := 'testIt: rect
@@ -65,23 +54,23 @@ CompletionContextTest >> testReceiverConstant [
 	text := 'testIt
 	15r16 as'.
 	context := self createContextFor: text at: text size.
-	self assert: ((context entries collect: #contents) includes: #as31BitSmallInt).
+	self assert: ((context entries collect: [:each | each contents]) includes: #as31BitSmallInt).
 	
 	text := 'testIt
 	''test'' pre'.
 	context := self createContextFor: text at: text size.
-	self assert: ((context entries collect: #contents) includes: #prefixMatchesRegex:).
+	self assert: ((context entries collect: [:each | each contents]) includes: #prefixMatchesRegex:).
 	
 	text := 'testIt
 	true ifTr'.
 	context := self createContextFor: text at: text size.
-	self assert: ((context entries collect: #contents) includes: #ifTrue:ifFalse:).
+	self assert: ((context entries collect: [:each | each contents]) includes: #ifTrue:ifFalse:).
 	
 	text := 'testIt
 	false  "this is it"
 		xo'.
 	context := self createContextFor: text at: text size.
-	self assert: ((context entries collect: #contents) includes: #xor:).
+	self assert: ((context entries collect: [:each | each contents]) includes: #xor:).
 	
 	text := 'testIt
 	a := [ :test | test * test ] 
@@ -92,27 +81,27 @@ CompletionContextTest >> testReceiverConstant [
 	text := 'testIt
 	$c as'.
 	context := self createContextFor: text at: text size.
-	self assert: ((context entries collect: #contents) includes: #asciiValue).
+	self assert: ((context entries collect: [:each | each contents]) includes: #asciiValue).
 	
 	text := 'testIt
 	#gaga un'.
 	context := self createContextFor: text at: text size.
-	self assert: ((context entries collect: #contents) includes: #uncapitalized).
+	self assert: ((context entries collect: [:each | each contents]) includes: #uncapitalized).
 	
 	text := 'testIt
 	#( 1 2 3) as'.
 	context := self createContextFor: text at: text size.
-	self assert: ((context entries collect: #contents) includes: #asByteArray).
+	self assert: ((context entries collect: [:each | each contents]) includes: #asByteArray).
 	
 	text:='testIt
 	2r1.1e2 ba'.
 	context := self createContextFor: text at: text size.
-	self assert: ((context entries collect: #contents) includes: #basicIdentityHash).
+	self assert: ((context entries collect: [:each | each contents]) includes: #basicIdentityHash).
 	
 	text:='testIt
 	23s32 as'.
 	context := self createContextFor: text at: text size.
-	self assert: ((context entries collect: #contents) includes: #asFraction).
+	self assert: ((context entries collect: [:each | each contents]) includes: #asFraction).
 ]
 
 { #category : #tests }
@@ -131,7 +120,7 @@ CompletionContextTest >> testReceiverGlobalVarNew [
 	text := 'testIt
 	Dictionary new fl'.
 	context := self createContextFor: text at: text size.
-	self assert: ((context entries collect: #contents) includes: #flatCollect:).
+	self assert: ((context entries collect: [:each | each contents]) includes: #flatCollect:).
 ]
 
 { #category : #tests }
@@ -165,5 +154,5 @@ CompletionContextTest >> testTempVariable [
 	ab'.
 	context := self createContextFor: text at: text size.
 	context narrowWith: 'ab'.
-	self assert: ((context entries collect: #contents) includes: #abs)
+	self assert: ((context entries collect: [:each | each contents]) includes: #abs)
 ]

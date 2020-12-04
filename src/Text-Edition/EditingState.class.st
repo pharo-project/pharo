@@ -59,7 +59,7 @@ Class {
 		'lastParenLocation',
 		'mouseDownInterval'
 	],
-	#category : #'Text-Edition'
+	#category : #'Text-Edition-Utilities'
 }
 
 { #category : #'undo-redo' }

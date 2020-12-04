@@ -217,6 +217,17 @@ RGEnvironment >> cleanWithMetaclassNamed: aProposedName [
 	self cleanUnusedUnreferencedPackages.
 ]
 
+{ #category : #'accessing-backend' }
+RGEnvironment >> compileANewClassFrom: aString notifying: aMorph startingFrom: aClass [ 
+	| importer |
+	
+	importer := RGChunkImporter new.
+	importer environment: self environment.
+	importer fileInFrom: (aString, '!') readStream.
+	
+	^ aClass
+]
+
 { #category : #'as yet unclassified' }
 RGEnvironment >> createDefaultEnvironment [
 

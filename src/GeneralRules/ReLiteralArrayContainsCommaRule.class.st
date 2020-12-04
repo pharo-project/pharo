@@ -16,17 +16,14 @@ ReLiteralArrayContainsCommaRule class >> uniqueIdentifierName [
 
 { #category : #running }
 ReLiteralArrayContainsCommaRule >> basicCheck: aNode [
-	^ aNode isLiteralArray and: [ aNode value includes: #, ]
-]
 
-{ #category : #private }
-ReLiteralArrayContainsCommaRule >> doesLiteralArrayContainComma: aLiteral [ 
-	aLiteral class = Array 
-		ifFalse: [ ^ false ].
-	(aLiteral includes: #,)
-		ifTrue: [ ^ true ].
-	^ aLiteral 
-		anySatisfy: [ :each | self doesLiteralArrayContainComma: each ]
+	aNode isLiteralArray ifFalse: [ ^ false ].
+	
+	"ffiCall: parameters and other UFFI call variants contain a $, so do not warn in this case"
+	(aNode parent parent isMessage and: [ 
+		 FFICompilerPlugin ffiCalloutSelectors includes: aNode parent parent selector ]) ifTrue: [ ^ false ].
+	
+	^ aNode value includes: #,
 ]
 
 { #category : #accessing }

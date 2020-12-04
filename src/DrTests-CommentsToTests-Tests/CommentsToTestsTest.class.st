@@ -4,7 +4,7 @@ A DrTestsUITest is a test class for testing the behavior of DrTests-CommentsToTe
 Class {
 	#name : #CommentsToTestsTest,
 	#superclass : #TestCase,
-	#category : #'DrTests-CommentsToTests-Tests'
+	#category : #'DrTests-CommentsToTests-Tests-Base'
 }
 
 { #category : #tests }

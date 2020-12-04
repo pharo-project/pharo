@@ -161,7 +161,7 @@ Workspace >> contents: aString [
 Workspace >> createTextView [
 	| v |
 	v := textModel newScrolledText
-		withRuler: RubWorkspaceBar new;
+		withRuler: RubWorkspaceBarRuler new;
 		beWrapped;
 		yourself.
 	v announcer when: RubTextAccepted send: #whenTextAccepted: to: self.
@@ -196,11 +196,6 @@ Workspace >> fileName: anObject [
 { #category : #'shout bindings' }
 Workspace >> hasBindingOf: aString [ 
 	^bindings includesKey: aString asSymbol
-]
-
-{ #category : #'shout bindings' }
-Workspace >> hasBindingThatBeginsWith: aString [
-	^ bindings keys anySatisfy: [:each | each beginsWith: aString]
 ]
 
 { #category : #initialization }

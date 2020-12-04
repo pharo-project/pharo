@@ -1,5 +1,5 @@
 "
-I Implement the FT_GlyphSlot_Rec, I am the structure where the glyphs are stored when reading from a font.
+I Implement the `FT_GlyphSlot_Rec`, I am the structure where the glyphs are stored when reading from a font.
 "
 Class {
 	#name : #FTGlyphSlotRec,

@@ -17,30 +17,30 @@ Class {
 { #category : #running }
 ClapMatchesTest >> setUp [
 	super setUp.
-	dirFlag := (ClapFlag withName: 'directory')
-		add: (ClapPositional withName: 'DIR');
+	dirFlag := (ClapFlag id: #directory)
+		add: (ClapPositional id: #DIR);
 		yourself.
-	slowFlag := ClapFlag withName: 'slow'.
+	slowFlag := ClapFlag id: #slow.
 	
-	clap := (ClapCommand withName: 'clap')
+	clap := (ClapCommand id: #clap)
 		add: dirFlag;
-		add: ((ClapCommand withName: 'this')
+		add: ((ClapCommand id: #this)
 			add: slowFlag; yourself);
 			yourself;
-		add: ((ClapCommand withName: 'that')
-			add: (ClapFlag withName: 'encore');
-			add: (ClapPositional withName: 'clappee');
+		add: ((ClapCommand id: #that)
+			add: (ClapFlag id: #encore);
+			add: (ClapPositional id: #clappee);
 			yourself);
 		yourself
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ClapMatchesTest >> testFlagAbsentValue [
 	| match flagMatch |
 	slowFlag meaning: [ :flag | flag isMismatch not ].
 	
 	match := clap matchOn: #('clap' 'this') readStream.
-	flagMatch := (match atName: 'this') at: slowFlag.
+	flagMatch := (match at: #this) at: slowFlag.
 
 	self deny: flagMatch isExplicit.
 	self
@@ -50,7 +50,7 @@ ClapMatchesTest >> testFlagAbsentValue [
 
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ClapMatchesTest >> testFlagOmittedValue [
 	| match flagMatch |
 	clap add: slowFlag. "we need another flag to follow the incomplete one"
@@ -62,18 +62,18 @@ ClapMatchesTest >> testFlagOmittedValue [
 	self
 		deny: flagMatch value
 		identicalTo: '--slow'.
-	self deny: (flagMatch atName: 'DIR') isExplicit.
+	self deny: (flagMatch at: #DIR) isExplicit.
 	self assert: (match at: slowFlag) isExplicit.
 
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ClapMatchesTest >> testFlagValue [
 	| match flagMatch |
 	slowFlag meaning: [ :flag | flag isMismatch not ].
 	
 	match := clap match: #('clap' 'this' '--slow').
-	flagMatch := ((match atName: 'this') at: slowFlag).
+	flagMatch := ((match at: #this) at: slowFlag).
 	
 	self assert: flagMatch isExplicit.
 	self
@@ -83,28 +83,28 @@ ClapMatchesTest >> testFlagValue [
 
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ClapMatchesTest >> testMultiplePositional [
 	| match |
-	clap add: ((ClapPositional withName: 'list') multiple: true).
+	clap add: ((ClapPositional id: #list) multiple: true).
 	
 	match := clap match: #('clap' 'foo' 'bar' 'baz' '-d' 'a/b/c').
 	
 	self deny: match isMismatch.
-	self assert: (match includesMatchNamed: 'directory').
-	self assert: (match includesMatchNamed: 'list').
+	self assert: (match includesMatchOf: #directory).
+	self assert: (match includesMatchOf: #list).
 	self
-		assertCollection: (match occurrencesNamed: 'list' collect: #value) asArray
+		assertCollection: (match occurrencesOf: #list collect: #value) asArray
 		equals: #('foo' 'bar' 'baz').
 	self
-		assertCollection: ((match atName: 'list') allOccurrencesCollect: #value) asArray
+		assertCollection: ((match at: #list) allOccurrencesCollect: #value) asArray
 		equals: #('foo' 'bar' 'baz').
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ClapMatchesTest >> testParameterizedFlagValue [
 	| match |
-	dirFlag meaning: [ :flag | Path from: (flag atName: 'DIR') value ].
+	dirFlag meaning: [ :flag | Path from: (flag at: #DIR) value ].
 	
 	match := clap match: #('clap' '--directory' 'foo/bar/baz').
 	
@@ -114,17 +114,17 @@ ClapMatchesTest >> testParameterizedFlagValue [
 
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ClapMatchesTest >> testRootPositionalBeforeSubcommand [
 	| match |
 	match := clap match: #('clap' '--directory' 'foo/bar/baz' 'this').
 	
 	self deny: match isMismatch.
-	self assert: (match includesMatchNamed: 'directory').
-	self assert: (match includesMatchNamed: 'this').
-	self deny: (match includesMatchNamed: 'that').
+	self assert: (match includesMatchOf: #directory).
+	self assert: (match includesMatchOf: #this).
+	self deny: (match includesMatchOf: #that).
 	self
-		assert: ((match atName: 'directory') atName: 'DIR') value
+		assert: ((match at: #directory) at: #DIR) value
 		equals: 'foo/bar/baz'.
 	self
 		assert: (match at: dirFlag) positionalValues asArray
@@ -132,40 +132,40 @@ ClapMatchesTest >> testRootPositionalBeforeSubcommand [
 
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ClapMatchesTest >> testSubcommandAccessing [
 	| match |
 	match := clap match: #('clap' 'this').
 	
 	self deny: match isMismatch.
-	self deny: (match includesMatchNamed: 'directory').
-	self assert: (match includesMatchNamed: 'this').
-	self deny: (match includesMatchNamed: 'that').
-	self deny: (match atName: 'this') isMismatch.
-	self deny: ((match atName: 'this') includesMatchNamed: 'slow').
+	self deny: (match includesMatchOf: #directory).
+	self assert: (match includesMatchOf: #this).
+	self deny: (match includesMatchOf: #that).
+	self deny: (match at: #this) isMismatch.
+	self deny: ((match at: #this) includesMatchOf: #slow).
 	
 	self
-		should: [ match atName: 'this' ifFound: [ Notification signal ] ]
+		should: [ match at: #this ifPresent: [ Notification signal ] ]
 		raise: Notification.
 	self
-		should: [ match atName: 'this' ifFound: [ Notification signal ] ifAbsent: [ self fail ] ]
+		should: [ match at: #this ifPresent: [ Notification signal ] ifAbsent: [ self fail ] ]
 		raise: Notification.
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ClapMatchesTest >> testThis [
 	| match |
 	match := clap match: #('clap' 'this').
 	
 	self deny: match isMismatch.
-	self deny: (match includesMatchNamed: 'directory').
-	self assert: (match includesMatchNamed: 'this').
-	self deny: (match includesMatchNamed: 'that').
-	self deny: (match atName: 'this') isMismatch.
-	self deny: ((match atName: 'this') includesMatchNamed: 'slow')
+	self deny: (match includesMatchOf: #directory).
+	self assert: (match includesMatchOf: #this).
+	self deny: (match includesMatchOf: #that).
+	self deny: (match at: #this) isMismatch.
+	self deny: ((match at: #this) includesMatchOf: #slow)
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ClapMatchesTest >> testWrongCommandMismatches [
 	| match |
 	match := clap match: #('foo' '-d' 'bar/baz/qux' 'this').

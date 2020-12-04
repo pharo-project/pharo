@@ -26,20 +26,22 @@ SpDemoTreeTablePresenter class >> defaultSpec [
 
 { #category : #initialization }
 SpDemoTreeTablePresenter >> initializePresenters [
-	table1 := self newTreeTable.
 
+	table1 := self newTreeTable.
 	table1
-		addColumn:
-			(SpCompositeTableColumn new
-				title: 'Classes';
-				addColumn:
-					((SpImageTableColumn evaluated: #systemIcon)
-						width: 20;
-						yourself);
-				addColumn: (SpStringTableColumn evaluated: #name);
+		addColumn: (SpCompositeTableColumn new
+			title: 'Classes';
+			addColumn: ((SpImageTableColumn evaluated: #systemIcon)
+				width: 20;
 				yourself);
-		addColumn: (SpStringTableColumn title: 'Number of subclasses' evaluated: [ :class | class subclasses size asString ]);
-		addColumn: (SpStringTableColumn title: 'Number of methods' evaluated: [ :class | class methods size asString ]);
+			addColumn: (SpStringTableColumn evaluated: #name);
+			yourself);
+		addColumn: (SpStringTableColumn 
+			title: 'Number of subclasses' 
+			evaluated: [ :class | class subclasses size asString ]);
+		addColumn: (SpStringTableColumn 
+			title: 'Number of methods' 
+			evaluated: [ :class | class methods size asString ]);
 		roots: {Object};
 		children: [ :aClass | aClass subclasses ];
 		beResizable;

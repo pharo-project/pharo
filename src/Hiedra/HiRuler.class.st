@@ -177,6 +177,12 @@ HiRuler >> numberOfColumns [
 ]
 
 { #category : #accessing }
+HiRuler >> numberOfColumnsAt: rowIndex [
+
+	^ (elementsByRow at: rowIndex) size
+]
+
+{ #category : #accessing }
 HiRuler >> numberOfRows [
 
 	^ elementsByRow size

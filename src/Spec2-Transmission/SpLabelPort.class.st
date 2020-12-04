@@ -1,5 +1,10 @@
 "
-I define an incomming transmission to modify the label of alabel presenter.
+! Label Input Port (==SpLabelPort==)
+A """"label input port"""" define an incomming transmission to modify the label of alabel presenter.
+
+The presenter exposing a text input port need to define also the method ==#label:==.
+
+Presenters exposing this port: *class:SpLabelPresenter*.
 "
 Class {
 	#name : #SpLabelPort,

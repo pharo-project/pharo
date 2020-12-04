@@ -428,10 +428,10 @@ RxParser >> piece [
 { #category : #'recursive descent' }
 RxParser >> quantifiedAtom: atom [
 	"Parse a quanitifer expression which can have one of the following forms
-		{<min>,<max>}    match <min> to <max> occurences
+		{<min>,<max>}    match <min> to <max> occurrences
 		{<minmax>}       which is the same as with repeated limits: {<number>,<number>}
-		{<min>,}         match at least <min> occurences
-		{,<max>}         match maximally <max> occurences, which is the same as {0,<max>}"
+		{<min>,}         match at least <min> occurrences
+		{,<max>}         match maximally <max> occurrences, which is the same as {0,<max>}"
 	| min max |
 	self next.
 	lookahead = $,

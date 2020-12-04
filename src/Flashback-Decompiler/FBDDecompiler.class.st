@@ -177,7 +177,7 @@ FBDDecompiler >> decompileThenRecompileClass: aClass [
 { #category : #'data flow instructions' }
 FBDDecompiler >> doDup [
 	| dupTemp |
-	simulatedStack last class == RBTemporaryNode
+	simulatedStack last class == RBVariableNode
 		ifTrue: [ ^ simulatedStack addLast: simulatedStack last ].
 	self incrTempCount.
 	dupTemp := self newTemp.
@@ -219,6 +219,32 @@ FBDDecompiler >> extractBlockWith: copied numArgs: numArgs blockSize: blockSize 
 		arguments: (simulatedStack first: numArgs)
 ]
 
+{ #category : #'closure support' }
+FBDDecompiler >> extractFullBlock: aCompiledBlock numCopied: numCopied [
+
+	| oldInstructionStream oldLoops|
+
+	self
+		initializeStackNumArgs: aCompiledBlock numArgs
+		copied: (self popFromStack: numCopied)
+		numTemps: aCompiledBlock numTemps - aCompiledBlock numArgs - numCopied.
+
+	oldLoops := loopsArray.
+	oldInstructionStream := instructionStream.
+
+	loopsArray := FBDLoopScanner scan: aCompiledBlock.
+	instructionStream := InstructionStream on: aCompiledBlock.
+
+	self interpret: aCompiledBlock endPC.
+
+	instructionStream := oldInstructionStream.
+	loopsArray := oldLoops.
+
+	^ builder
+		codeBlock: currentSequence
+		arguments: (simulatedStack first: aCompiledBlock numArgs)
+]
+
 { #category : #private }
 FBDDecompiler >> generateNativeBoostCallErrorMethodFrom: aCompiledMethod [
 	| seq args |
@@ -226,7 +252,7 @@ FBDDecompiler >> generateNativeBoostCallErrorMethodFrom: aCompiledMethod [
 		statements:
 			{RBMessageNode receiver: (RBVariableNode named: #CannotDecompileNativeBoostCalls) selector: #signal arguments: #()}.
 	args := OrderedCollection new.
-	1 to: aCompiledMethod numArgs do: [ :i | args add: (RBArgumentNode named: 'arg' , i asString) ].
+	1 to: aCompiledMethod numArgs do: [ :i | args add: (RBVariableNode named: 'arg' , i asString) ].
 	^ builder
 		codeMethod: aCompiledMethod selector
 		arguments: args
@@ -460,6 +486,22 @@ FBDDecompiler >> pushActiveContext [
 	simulatedStack addLast: builder codeThisContext 
 ]
 
+{ #category : #'closure support' }
+FBDDecompiler >> pushCleanClosure: aCompiledBlock [
+
+	| savedSimStack savedSequence |
+
+	savedSimStack := simulatedStack.
+	savedSequence := currentSequence.
+
+	simulatedStack addLast: (self
+		extractFullBlock: aCompiledBlock numCopied: 0).
+
+	simulatedStack := savedSimStack.
+	currentSequence := savedSequence.
+
+]
+
 { #category : #'data flow instructions' }
 FBDDecompiler >> pushClosureCopyNumCopiedValues: numCopied numArgs: numArgs blockSize: blockSize [
 	| savedSimStack savedSequence |
@@ -483,7 +525,26 @@ FBDDecompiler >> pushConsArrayWithElements: numElements [
 
 { #category : #'data flow instructions' }
 FBDDecompiler >> pushConstant: value [
+	value isEmbeddedBlock ifTrue: [ ^self pushCleanClosure: value compiledBlock  ].
 	simulatedStack addLast: (builder codeLiteral: value)
+]
+
+{ #category : #'data flow instructions' }
+FBDDecompiler >> pushFullClosure: aCompiledBlock numCopied: numCopied receiverOnStack: receiverOnStack ignoreOuterContext: ignoreOuterContext [ 
+
+	| savedSimStack savedSequence |
+
+	savedSimStack := simulatedStack.
+	savedSequence := currentSequence.
+
+	receiverOnStack ifTrue: [ 1 halt ].
+
+	simulatedStack addLast: (self
+		extractFullBlock: aCompiledBlock numCopied: numCopied).
+
+	simulatedStack := savedSimStack.
+	currentSequence := savedSequence.
+
 ]
 
 { #category : #'data flow instructions' }
@@ -549,7 +610,7 @@ FBDDecompiler >> recompile: selector from: oldClass [
 		compile.	"Assume OK after proceed from SyntaxError"
 	selector == newMethod selector
 		ifFalse: [ self error: 'selector changed!' ].
-	oldClass addSelectorSilently: selector withMethod: newMethod
+	oldClass 	addSelector: selector withRecompiledMethod: newMethod.
 ]
 
 { #category : #'data flow instructions' }

@@ -10,6 +10,29 @@ Class {
 	#category : #'Kernel-Tests-Objects'
 }
 
+{ #category : #coverage }
+ProtoObjectTest >> classToBeTested [
+	
+	^ ProtoObject
+]
+
+{ #category : #'tests - testing' }
+ProtoObjectTest >> testFastPointersTo [
+	| myObject myArray myObject2 allObjects |
+	self timeLimit: 1 minute.
+	myObject := Object new.
+	myObject2 := Object new.
+	myArray := {myObject.
+	myObject2}.
+	allObjects := SystemNavigation default allObjects.
+	self
+		assert: (myObject pointersToAmong: allObjects) asArray
+		equals: {myArray}.
+	self
+		assert: (myObject2 pointersToAmong: allObjects) asArray
+		equals: {myArray}
+]
+
 { #category : #'tests - testing' }
 ProtoObjectTest >> testFlag [
 	ProtoObject new flag: #hallo
@@ -154,6 +177,16 @@ ProtoObjectTest >> testIfNotNilIfNil [
 ]
 
 { #category : #'tests - testing' }
+ProtoObjectTest >> testIsImmediateObject [
+	self deny: Object new isImmediateObject.
+	self deny: Array new isImmediateObject.
+	self assert: 1 isImmediateObject.
+	self assert: 1 isImmediateObject equals: 1 class isImmediateClass.
+	self assert: 1.2 isImmediateObject equals: 1.2 class isImmediateClass.
+	self assert: $a isImmediateObject equals: $a class isImmediateClass
+]
+
+{ #category : #'tests - testing' }
 ProtoObjectTest >> testIsNil [
 
 	self deny: ProtoObject new isNil
@@ -171,9 +204,10 @@ ProtoObjectTest >> testNotTheSame [
 
 { #category : #'tests - testing' }
 ProtoObjectTest >> testPointersTo [
-	| myObject myArray |
+	| myObject myArray pointers |
 	myObject := Object new.
-	self assertEmpty: myObject pointersTo.
+	pointers := myObject pointersTo.
+	self assertEmpty: pointers.
 	myArray := {myObject . myObject}.
 	self assert: myObject pointersTo asArray equals: {myArray}
 ]

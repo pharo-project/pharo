@@ -34,14 +34,11 @@ RBPatternBlockNode >> addArgumentWithNameBasedOn: aString to: aRBBlockNode [
 ]
 
 { #category : #matching }
-RBPatternBlockNode >> constructLookupNodeFor: aString in: aRBBlockNode [ 
-	| argumentNode |
-	argumentNode := RBLiteralNode value: aString.
-	
-	^RBMessageNode 
-		receiver: (RBVariableNode named: 'self')
-		selector: #lookupMatchFor:in:
-		arguments: (Array with: argumentNode with: aRBBlockNode arguments last copy)
+RBPatternBlockNode >> constructLookupNodeFor: aString in: aRBBlockNode [
+	^ RBMessageNode
+		  receiver: RBVariableNode selfNode
+		  selector: #lookupMatchFor:in:
+		  arguments: (Array with: (RBLiteralNode value: aString) with: aRBBlockNode arguments last copy)
 ]
 
 { #category : #matching }

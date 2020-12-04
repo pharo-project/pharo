@@ -1,7 +1,4 @@
 "
-Description
---------------------
-
 I am a morphic adapter used to show a modal for a ModalWindowPresenter in Morphic.
 "
 Class {
@@ -15,17 +12,21 @@ Class {
 
 { #category : #protocol }
 SpMorphicModalWindowAdapter >> close [
+
 	backdropMorph ifNotNil: #delete.
-	backdropMorph := nil
+	backdropMorph := nil.
+	super close
 ]
 
 { #category : #testing }
 SpMorphicModalWindowAdapter >> closeOnBackdropClick [
+
 	^ self model closeOnBackdropClick
 ]
 
 { #category : #'event handling' }
 SpMorphicModalWindowAdapter >> mouseClick: evt onBackdrop: aMorph [
+
 	self closeOnBackdropClick ifFalse: [ ^ self ].
 
 	self model triggerCancelAction.
@@ -35,7 +36,6 @@ SpMorphicModalWindowAdapter >> mouseClick: evt onBackdrop: aMorph [
 
 { #category : #protocol }
 SpMorphicModalWindowAdapter >> open [
-	self model windowIsOpening.
 
 	backdropMorph := FullscreenMorph new
 		color: self theme modalBackdropColor;
@@ -43,9 +43,13 @@ SpMorphicModalWindowAdapter >> open [
 		openInWorld;
 		yourself.
 
-	self widget
-		toggleStickiness;
-		openCenteredInWorld.
-
-	[ self widget world notNil ] whileTrue: [ self widget outermostWorldMorph doOneCycle ]
+	self widget beSticky.
+	self presenter windowIsOpening.
+	"I am copying here what is defined in SystemWindow>>#openModal (but introducing the centered 
+	 check inbetween because #openInWorld will use the RealEstateAgent to position the window 
+	 and we want to (maybe) center it before showing it."
+	self widget openInWorld.
+	self presenter isCentered 
+		ifTrue: [ self centered ].
+	MorphicRenderLoop new doOneCycleWhile: [ self widget isInWorld ]
 ]

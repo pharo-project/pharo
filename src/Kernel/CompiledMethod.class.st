@@ -7,10 +7,8 @@ CompiledMethod instances can be in two forms:
 
 In addition the execution mechanics, a compiled method have two extra optional literals. The last literal, optional if there are no super sends, is the class in which the method is installed. The last but one literal is either the method's selector or an AdditionalMethodState instance. AdditionalMethodState instances are used to encode additional state to a method, as for example the pragmas.
 
-
-
-
-
+The bytecode encodes the trailer at the end, in most cases it has 4 bytes encoding the sourcer pointer (see CompiledMethodTrailer).
+Thus endPC of a compiled method is not the size of the bytecode, but the size minus the length of the trailer.
 
 "
 Class {
@@ -126,13 +124,7 @@ CompiledMethod class >> handleFailingNewMethod: numberOfBytes header: headerWord
 CompiledMethod class >> headerFlagForEncoder: anEncoderClass [
 	anEncoderClass == PrimaryBytecodeSetEncoderClass ifTrue: [ ^ 0 ].
 	anEncoderClass == SecondaryBytecodeSetEncoderClass ifTrue: [ ^ SmallInteger minVal ].
-	
-	"The following is a hack to support the old compiler... We can remove it once the old compiler is removed"
-	(PrimaryBytecodeSetEncoderClass name endsWith: (anEncoderClass name withoutPrefix: 'Legacy')) ifTrue: [ ^ 0 ].
-	(SecondaryBytecodeSetEncoderClass name endsWith: (anEncoderClass name withoutPrefix: 'Legacy')) ifTrue: [ ^ SmallInteger minVal ].
-	
-	self error: 'The encoder is not one of the two installed bytecode sets'.
-	^ 0
+	self error: 'The encoder is not one of the two installed bytecode sets'
 ]
 
 { #category : #'class initialization' }
@@ -331,6 +323,12 @@ CompiledMethod >> argumentNames [
 	^ self propertyAt: #argumentNames ifAbsent: [ super argumentNames ]
 ]
 
+{ #category : #'accessing-pragmas & properties' }
+CompiledMethod >> cachePragmas [
+
+	self pragmas do: [ :pragma | pragma class addToCache: pragma ]
+]
+
 { #category : #'accessing-backward compatible' }
 CompiledMethod >> category [
 	"Please favor protocol instead of category. We want to have method protocol and class package and tag = a category"
@@ -356,6 +354,12 @@ CompiledMethod >> codeForNoSource [
 	Smalltalk hasCompiler ifFalse: [ ^ nil ].
 	
 	 ^(self compiler decompileMethod: self) formattedCode
+]
+
+{ #category : #testing }
+CompiledMethod >> containsHalt [
+
+	^ self hasProperty: #containsHalt
 ]
 
 { #category : #'source code management' }
@@ -400,6 +404,12 @@ CompiledMethod >> embeddSourceInTrailer [
 	self trailer hasSourcePointer ifTrue: [
 		^self becomeForward: (self copyWithSource: self sourceCode)]
 
+]
+
+{ #category : #accessing }
+CompiledMethod >> endPC [
+	"Answer the index of the last bytecode, as the trailer size varies we have to delegate"
+	^ self trailer endPC
 ]
 
 { #category : #accessing }
@@ -448,6 +458,17 @@ CompiledMethod >> getSourceReplacingSelectorWith: newSelector [
 	^newSource
 ]
 
+{ #category : #testing }
+CompiledMethod >> hasComment [
+	"check if this method has a method comment"
+	^self comment isEmptyOrNil not
+]
+
+{ #category : #testing }
+CompiledMethod >> hasPragma [
+	^ self hasProperties and: [self pragmas isNotEmpty]
+]
+
 { #category : #'accessing-pragmas & properties' }
 CompiledMethod >> hasPragmaNamed: aSymbol [
 	^ self pragmas anySatisfy: [ :pragma | pragma selector = aSymbol ]
@@ -460,8 +481,11 @@ CompiledMethod >> hasProperties [
 
 { #category : #'accessing-pragmas & properties' }
 CompiledMethod >> hasProperty: aKey [
-	self propertyAt: aKey ifAbsent: [ ^false ].
-	^true.
+
+	| extendedMethodState |
+	^ (extendedMethodState := self penultimateLiteral) isMethodProperties
+		  ifTrue: [  extendedMethodState includesProperty: aKey ]
+		  ifFalse: [ false ]
 ]
 
 { #category : #accessing }
@@ -558,6 +582,20 @@ CompiledMethod >> isExplicitlyRequired: marker [
 ]
 
 { #category : #testing }
+CompiledMethod >> isFaulty [
+ 	"check if this method was compiled from syntactically wrong code"
+	| ast |
+	"fast pre-check: all methods with syntax errors reference this symbol"
+  	(self refersToLiteral: #signalSyntaxError:) ifFalse: [ ^false].
+	"we have to parse the ast here as #ast does not know that this needs optionParseErrors"
+	ast := self methodClass compiler 
+				source: self sourceCode;
+				options: #(+ optionParseErrors);
+				parse.
+	^ ast isFaulty.
+]
+
+{ #category : #testing }
 CompiledMethod >> isFromTrait [
 	"Return true for methods that have been included from Traits"
 	^ self origin isTrait and: [ self origin ~= self methodClass ]
@@ -569,7 +607,7 @@ CompiledMethod >> isInstalled [
 		[:class|
 		self selector ifNotNil:
 			[:selector|
-			^self == (class compiledMethodAt: selector ifAbsent: [])]].
+			^self == (class compiledMethodAt: selector ifAbsent: nil)]].
 	^false
 ]
 
@@ -617,13 +655,6 @@ CompiledMethod >> isReturnField [
 ]
 
 { #category : #testing }
-CompiledMethod >> isReturnSelf [
-	"Answer whether the receiver is a quick return of self."
-
-	^ self primitive = 256
-]
-
-{ #category : #testing }
 CompiledMethod >> isReturnSpecial [
 	"Answer whether the receiver is a quick return of self or constant."
 
@@ -663,6 +694,23 @@ CompiledMethod >> linesOfCode [
 	^lines
 ]
 
+{ #category : #literals }
+CompiledMethod >> literalsToSkip [
+
+	^ 2
+]
+
+{ #category : #scanning }
+CompiledMethod >> localReadsSelf [
+	"methods that are compiled with FFI have a self in the source but not in the bytecode"
+	^self isFFIMethod or: [ super localReadsSelf ]
+]
+
+{ #category : #lookup }
+CompiledMethod >> lookupVar: aString [ 
+	^self ast scope lookupVar: aString
+]
+
 { #category : #private }
 CompiledMethod >> markerOrNil [
 	^ self encoderClass markerOrNilFor: self
@@ -691,24 +739,6 @@ CompiledMethod >> methodClass: aClass [
 { #category : #accessing }
 CompiledMethod >> name [
 	^ self printString
-]
-
-{ #category : #accessing }
-CompiledMethod >> numberOfReservedLiterals [
-
-	^ 2
-]
-
-{ #category : #accessing }
-CompiledMethod >> origin [
-	^ self methodClass findOriginClassOf: self
-]
-
-{ #category : #accessing }
-CompiledMethod >> originMethod [
-	^ self methodClass findOriginMethodOf: self.
-	
-
 ]
 
 { #category : #private }
@@ -745,11 +775,15 @@ CompiledMethod >> postCopy [
 
 { #category : #'accessing-pragmas & properties' }
 CompiledMethod >> pragmaAt: aKey [
-	"Answer the pragma with selector aKey, or nil if none."
-	| propertiesOrSelector |
-	^(propertiesOrSelector := self penultimateLiteral) isMethodProperties
-		ifTrue: [propertiesOrSelector at: aKey ifAbsent: [nil]]
-		ifFalse: [nil]
+	"Answer the first pragma with selector aKey, or nil if none."
+	^ self pragmas detect: [ :pragma | pragma selector == aKey ] ifNone: nil
+]
+
+{ #category : #literals }
+CompiledMethod >> pragmaRefersToLiteral: literal [
+
+	^ self penultimateLiteral isMethodProperties and: [ 
+		  self pragmas anySatisfy: [ :pragma | pragma refersToLiteral: literal ] ]
 ]
 
 { #category : #'accessing-pragmas & properties' }
@@ -758,6 +792,13 @@ CompiledMethod >> pragmas [
 	^(selectorOrProperties := self penultimateLiteral) isMethodProperties
 		ifTrue: [selectorOrProperties pragmas]
 		ifFalse: [#()]
+]
+
+{ #category : #'accessing-pragmas & properties' }
+CompiledMethod >> pragmasDo: aBlock [
+	| selectorOrProperties |
+	(selectorOrProperties := self penultimateLiteral) isMethodProperties
+		ifTrue: [selectorOrProperties pragmasDo: aBlock]
 ]
 
 { #category : #'debugger support' }
@@ -893,24 +934,6 @@ CompiledMethod >> propertyKeysAndValuesDo: aBlock [
 		[propertiesOrSelector propertyKeysAndValuesDo: aBlock]
 ]
 
-{ #category : #'accessing-properties - compatibility' }
-CompiledMethod >> propertyValueAt: propName [
-	"use the version without ..Value, this methid is retained for compatibility"
-	^self propertyAt: propName
-]
-
-{ #category : #'accessing-properties - compatibility' }
-CompiledMethod >> propertyValueAt: propName ifAbsent: aBlock [
-	"use the version without ..Value, this method is retained for compatibility"
-	^self propertyAt: propName ifAbsent: aBlock
-]
-
-{ #category : #'accessing-properties - compatibility' }
-CompiledMethod >> propertyValueAt: propName put: propValue [
-	"use the version without ..Value, this method is retained for compatibility"
-	^self propertyAt: propName put: propValue
-]
-
 { #category : #accessing }
 CompiledMethod >> protocol [
 	"Return in which protocol (conceptual groups of methods) the receiver is grouped into."
@@ -928,6 +951,13 @@ CompiledMethod >> readsField: varIndex [
 	"Answer whether the receiver loads the instance variable indexed by the argument."
 	self isReturnField ifTrue: [^self returnField = (varIndex - 1)].
 	^ super readsField: varIndex 
+]
+
+{ #category : #literals }
+CompiledMethod >> refersToLiteral: aLiteral [
+	"Answer true if any literal in this method is literal, even if embedded in array structure."
+	
+	^(self pragmaRefersToLiteral: aLiteral) or: [ super refersToLiteral: aLiteral]
 ]
 
 { #category : #initialization }
@@ -1088,6 +1118,12 @@ CompiledMethod >> tags [
 CompiledMethod >> tempNames [
 	"on the level of the compiled method, tempNames includes argument names"
 	^self ast argumentNames, self ast temporaryNames
+]
+
+{ #category : #accessing }
+CompiledMethod >> trailer [
+	"Answer the receiver's trailer"
+	^ CompiledMethodTrailer new method: self
 ]
 
 { #category : #'accessing-tags' }

@@ -26,14 +26,11 @@ BreadthFirstGuide >> show: aReference [
 
 { #category : #showing }
 BreadthFirstGuide >> visitNextEntry: entry [
+	entry ifAbsent: [ ^ nil ].
 
-	entry exists ifFalse: [ ^nil ].
+	entry isFile ifTrue: [ ^ visitor visitFile: entry ].
 
-	entry isFile 
-		ifTrue: [ ^ visitor visitFile: entry ].
-	
 	visitor visitDirectory: entry.
-	
-	(self shouldVisitChildrenOf: entry)
-		ifTrue: [ self pushAll: entry reference entries ].
+
+	(self shouldVisitChildrenOf: entry) ifTrue: [ self pushAll: entry reference entries ]
 ]

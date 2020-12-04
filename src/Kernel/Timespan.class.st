@@ -20,7 +20,7 @@ Timespan class >> current [
 
 { #category : #'instance creation' }
 Timespan class >> new [
-	"Answer a Timespan starting on the Squeak epoch: 1 January 1901"
+	"Answer a Timespan starting on the epoch: 1 January 1901"
 
 	^ self starting: DateAndTime new
 
@@ -100,7 +100,7 @@ Timespan >> asDuration [
 
 { #category : #conversion }
 Timespan >> asSeconds [
- 	"Answer the seconds since the Squeak epoch: 1 January 1901"
+ 	"Answer the seconds since the epoch: 1 January 1901"
  
  	^ start asSeconds
 ]

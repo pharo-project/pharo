@@ -16,7 +16,6 @@ Class {
 		'lastCycleTime',
 		'alarms',
 		'lastAlarmTime',
-		'menuBuilder',
 		'activeHand',
 		'currentCursor',
 		'worldRenderer',
@@ -97,8 +96,7 @@ WorldState class >> desktopMenuPragmaKeyword [
 
 { #category : #settings }
 WorldState class >> desktopMenuPragmaKeyword: aString [
-	DesktopMenuPragmaKeyword := aString.
-	self currentWorld resetWorldMenu.
+	DesktopMenuPragmaKeyword := aString
 
 ]
 
@@ -115,6 +113,32 @@ WorldState class >> discoveredMenuPragmaKeyword [
 { #category : #settings }
 WorldState class >> discoveredMenuTitle [
 	^ DesktopMenuTitle ifNil: [DesktopMenuTitle := 'World']
+]
+
+{ #category : #'drawing cycle' }
+WorldState class >> doDrawCycleWith: aBlock [
+	aBlock ensure: [
+		self doInterCycleWait
+	]
+]
+
+{ #category : #'drawing cycle' }
+WorldState class >> doInterCycleWait [
+	| waitTime newCycleTime |
+	newCycleTime := Time millisecondClockValue.
+	waitTime := self serverMode
+		ifTrue: [ 50 ]
+		ifFalse: [
+			| expectedEndTime lapse |
+			lapse := self interCycleLapse.
+			expectedEndTime := self lastDrawCycleTime + self interCycleLapse.
+			"This minimum is required to prevent freezing the system during startup.
+			The times two in the lapse is to allow some slack due to precision issues."
+			expectedEndTime - newCycleTime min: (lapse*2).
+		].
+	waitTime > 0 ifTrue: [ (Delay forMilliseconds: waitTime) wait ].
+	LastCycleTime := newCycleTime.
+	
 ]
 
 { #category : #settings }
@@ -145,14 +169,24 @@ WorldState class >> helpOn: aBuilder [
 WorldState class >> initialize [
 	"WorldState initialize"
 
-	MinCycleLapse := 20.		"allows 50 frames per second..."
+	MinCycleLapse := 16.		"allows 60 frames per second..."
 	DeferredUIMessages := nil.
+]
+
+{ #category : #'drawing cycle' }
+WorldState class >> interCycleLapse [
+	^ MinCycleLapse ifNil: [ MinCycleLapse := 16 ]
 ]
 
 { #category : #accessing }
 WorldState class >> lastCycleTime [
 
 	^LastCycleTime
+]
+
+{ #category : #'drawing cycle' }
+WorldState class >> lastDrawCycleTime [
+	^ LastCycleTime ifNil: [ LastCycleTime := Time millisecondClockValue ]
 ]
 
 { #category : #'world menu items' }
@@ -292,6 +326,23 @@ WorldState class >> worldMenuSettingOn: aBuilder [
 		description: 'Define whitch pragma should be used to build the world menu. To disable the world menu, leave this input empty.'
 ]
 
+{ #category : #settings }
+WorldState class >> worldStateDebuggingSettingsOn: aBuilder [
+
+	<systemsettings>
+	(aBuilder group: #world)
+		label: 'World state';
+		parent: #debugging;
+		description: 'World state debugging settings';
+		with: [ 
+			(aBuilder setting: #debugShowDamage)
+				label: 'Flash damaged morphic region';
+				target: WorldState;
+				default: false;
+				description:
+					'If true, every changed region of the morphic display will be flashed black before updating.' ]
+]
+
 { #category : #hands }
 WorldState >> activeHand [
 	^ activeHand
@@ -299,7 +350,6 @@ WorldState >> activeHand [
 
 { #category : #hands }
 WorldState >> activeHand: aHand [
-	ActiveHand := aHand.
 	activeHand := aHand
 ]
 
@@ -321,7 +371,7 @@ WorldState >> adjustAlarmTimes: nowTime [
 
 { #category : #stepping }
 WorldState >> adjustWakeupTimes: now [
-	"Fix the wakeup times in my step list. This is necessary when this world has been restarted after a pause, say because some other view had control, after a snapshot, or because the millisecond clock has wrapped around. (The latter is a rare occurence with a 32-bit clock!)"
+	"Fix the wakeup times in my step list. This is necessary when this world has been restarted after a pause, say because some other view had control, after a snapshot, or because the millisecond clock has wrapped around. (The latter is a rare occurrence with a 32-bit clock!)"
 	| deltaTime |
 	deltaTime := now - lastStepTime.
 	stepList do:[:entry| entry scheduledTime: entry scheduledTime + deltaTime].
@@ -331,7 +381,7 @@ WorldState >> adjustWakeupTimes: now [
 
 { #category : #stepping }
 WorldState >> adjustWakeupTimesIfNecessary [
-	"Fix the wakeup times in my step list if necessary. This is needed after a snapshot, after a long pause (say because some other view had control or because the user was selecting from an MVC-style menu) or when the millisecond clock wraps around (a very rare occurence with a 32-bit clock!)."
+	"Fix the wakeup times in my step list if necessary. This is needed after a snapshot, after a long pause (say because some other view had control or because the user was selecting from an MVC-style menu) or when the millisecond clock wraps around (a very rare occurrence with a 32-bit clock!)."
 
 	| now |
 	now := Time millisecondClockValue.
@@ -351,20 +401,6 @@ WorldState >> alarmSortBlock [
 WorldState >> alarms [
 
 	^alarms ifNil: [alarms := Heap sortBlock: self alarmSortBlock]
-]
-
-{ #category : #canvas }
-WorldState >> canvas [
-
-	^ self worldRenderer canvas
-]
-
-{ #category : #canvas }
-WorldState >> canvas: x [ 
-	self worldRenderer canvas: x.
-	damageRecorder 
-		ifNil: [damageRecorder := DamageRecorder new]
-		ifNotNil: [damageRecorder doFullRepaint]
 ]
 
 { #category : #'update cycle' }
@@ -454,17 +490,17 @@ WorldState >> discoveredMenuTitle [
 ]
 
 { #category : #'update cycle' }
-WorldState >> displayWorld: aWorld submorphs: submorphs [
+WorldState >> displayWorld: aWorld [
 	"Update this world's display."
 
-	worldRenderer displayWorldState: self ofWorld: aWorld submorphs: submorphs
+	worldRenderer displayWorldState: self ofWorld: aWorld
 ]
 
 { #category : #'update cycle' }
 WorldState >> displayWorldSafely: aWorld [
 	"Update this world's display and keep track of errors during draw methods."
 
-	[aWorld displayWorld] ifError: [:err :rcvr |
+	[aWorld displayWorld] onErrorDo: [:err |
 		"Handle a drawing error"
 		| errCtx errMorph |
 		errCtx := thisContext.
@@ -474,7 +510,7 @@ WorldState >> displayWorldSafely: aWorld [
 			[errCtx notNil and:[(errCtx receiver isMorph) not]] 
 				whileTrue:[errCtx := errCtx sender].
 			"If we're at the root of the context chain then we have a fatal drawing problem"
-			errCtx ifNil:[^self handleFatalDrawingError: err].
+			errCtx ifNil:[^self handleFatalDrawingError: err description].
 			errMorph := errCtx receiver.
 			"If the morph causing the problem has already the #drawError flag set,
 			then search for the next morph above in the caller chain."
@@ -482,7 +518,7 @@ WorldState >> displayWorldSafely: aWorld [
 		] whileTrue.
 		errMorph setProperty: #errorOnDraw toValue: true.
 		"Install the old error handler, so we can re-raise the error"
-		rcvr error: err.
+		err signal.
 	].
 ]
 
@@ -495,21 +531,12 @@ WorldState >> doFullRepaint [
 
 { #category : #'update cycle' }
 WorldState >> doOneCycleFor: aWorld [
-	"Do one cycle of the interaction loop. This method is called repeatedly when the world is running. This is a moderately private method; a better alternative is usually either to wait for events or to check the state of things from #step methods."
-
-	self interCyclePause: MinCycleLapse.
-	self doOneCycleNowFor: aWorld.
-]
-
-{ #category : #'update cycle' }
-WorldState >> doOneCycleNowFor: aWorld [
 	"Immediately do one cycle of the interaction loop.
 	This should not be called directly, but only via doOneCycleFor:"
 
 	self worldRenderer checkForNewScreenSize.
 
 	"process user input events"
-	LastCycleTime := Time millisecondClockValue.
 	self handsDo: [:h |
 		self activeHand: h.
 		h processEvents.
@@ -521,16 +548,6 @@ WorldState >> doOneCycleNowFor: aWorld [
 
 	aWorld runStepMethods.		"there are currently some variations here"
 	self displayWorldSafely: aWorld.
-]
-
-{ #category : #'update cycle' }
-WorldState >> doOneSubCycleFor: aWorld [
-	"Like doOneCycle, but preserves activeHand."
-
-	| currentHand |
-	currentHand := self activeHand.
-	self doOneCycleFor: aWorld.
-	self activeHand: currentHand.
 ]
 
 { #category : #'update cycle' }
@@ -654,29 +671,12 @@ WorldState >> initialize [
 
 ]
 
-{ #category : #'update cycle' }
-WorldState >> interCyclePause: milliSecs [
-	"delay enough that the previous cycle plus the amount of delay will equal milliSecs.  If the cycle is already expensive, then no delay occurs.  However, if the system is idly waiting for interaction from the user, the method will delay for a proportionally long time and cause the overall CPU usage of Squeak to be low.
-	If self serverMode returns true then, always do a complete delay of 50ms, independant of my argument. This prevents the freezing problem described in Mantis #6581"
-
-	| wait wait2 |
-	wait := self serverMode
-    	ifTrue: [ 50 ]
-    	ifFalse: 
-		[	wait2 := (lastCycleTime notNil and: [CanSurrenderToOS ~~ false]) 
-        		ifFalse: [ 0 ]
-        		ifTrue: [ lastCycleTime + milliSecs - Time millisecondClockValue ].
- 
-      		self flag: 'Issue 14754 - wait2>millisecs is only True for clock rollover. Remove it once delay scheduler is based on microsecondClock - Ben Coman 19.01.2015'.
-      		wait2 > milliSecs 
-        		ifTrue: [ 0 ]
-        		ifFalse: [ wait2 ]. 
-		].
-		
-	wait > 0 ifTrue: [	(Delay forMilliseconds: wait) wait ].
-
-	lastCycleTime := Time millisecondClockValue.
-	CanSurrenderToOS := true.
+{ #category : #canvas }
+WorldState >> invalidate [
+	self worldRenderer invalidate.
+	damageRecorder 
+		ifNil: [damageRecorder := DamageRecorder new]
+		ifNotNil: [damageRecorder doFullRepaint]
 ]
 
 { #category : #hands }
@@ -750,8 +750,6 @@ WorldState >> removeHand: aHandMorph [
 	(hands includes: aHandMorph) ifFalse: [^self].
 	hands := hands copyWithout: aHandMorph.
 	activeHand == aHandMorph ifTrue: [activeHand := nil].
-	ActiveHand == aHandMorph ifTrue: [ActiveHand := nil].
-
 ]
 
 { #category : #canvas }
@@ -759,13 +757,6 @@ WorldState >> resetDamageRecorder [
 
 	damageRecorder reset
 
-]
-
-{ #category : #'worldmenu building' }
-WorldState >> resetWorldMenu [
-	menuBuilder 
-		ifNotNil: [menuBuilder reset.
-			menuBuilder := nil]
 ]
 
 { #category : #stepping }
@@ -878,7 +869,7 @@ WorldState >> viewBox [
 
 { #category : #'worldmenu building' }
 WorldState >> worldMenu [
-	^self  menuBuilder menuEntitled: self discoveredMenuTitle.
+	^self menuBuilder menuEntitled: self discoveredMenuTitle
 ]
 
 { #category : #hands }

@@ -7,7 +7,7 @@ I am always created on some actual variable instance like Slot or ClassVariable:
 My subclasses implement three methods:
 - isAccessibleFrom: aClass
 - isReadIn: aMethod
-- isWrittenIn: aMethod
+- isAccessedIn: aMethod
 
 Internal Representation and Key Implementation Points.
 
@@ -116,6 +116,14 @@ ClyVariable >> hash [
 ]
 
 { #category : #testing }
+ClyVariable >> isAccessedIn: aMethod [
+	
+	(self isAccessibleFrom: aMethod origin)	ifFalse: [ ^false ].
+		
+	^actualVariable isAccessedIn: aMethod
+]
+
+{ #category : #testing }
 ClyVariable >> isAccessibleFrom: aClass [
 	self subclassResponsibility 
 ]
@@ -137,14 +145,6 @@ ClyVariable >> isReadIn: aMethod [
 	(self isAccessibleFrom: aMethod origin)	ifFalse: [ ^false ].
 	
 	^actualVariable isReadIn: aMethod 
-]
-
-{ #category : #testing }
-ClyVariable >> isReferencedIn: aMethod [
-	
-	(self isAccessibleFrom: aMethod origin)	ifFalse: [ ^false ].
-		
-	^(actualVariable isReadIn: aMethod) or: [ actualVariable isWrittenIn: aMethod ]
 ]
 
 { #category : #testing }

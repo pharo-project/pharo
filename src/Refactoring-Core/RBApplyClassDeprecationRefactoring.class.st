@@ -115,7 +115,7 @@ RBApplyClassDeprecationRefactoring >> removeExtensionMethods [
 { #category : #transforming }
 RBApplyClassDeprecationRefactoring >> renameReferences [
 	| replacer |
-	replacer := (RBParseTreeRewriter replaceLiteral: className with: newName)
+	replacer := (self parseTreeRewriterClass replaceLiteral: className with: newName)
 		replace: className with: newName;
 		replaceArgument: newName
 		withValueFrom: [:aNode | 

@@ -279,7 +279,7 @@ ClyDataSourceSelection >> restoreTableSelectionSilently: silentSelection [
 
 	| selectionIndexes |
 	items := items reject: [ :each | each isRemoved ].
-	selectionIndexes := items collect: #globalPosition.
+	selectionIndexes := items collect: [:each | each globalPosition].
 	
 	self 
 		setUpSelectedRows: selectionIndexes 
@@ -347,7 +347,7 @@ ClyDataSourceSelection >> uniformActualObjects [
 	lastItem := self lastSelectedItem.
 	
 	^(items allSatisfy: [:each | each isSameKindAs: lastItem ]) 
-		ifTrue: [ items collect: #actualObject]
+		ifTrue: [ items collect: [:each | each actualObject] ]
 		ifFalse: [{lastItem actualObject}]
 ]
 

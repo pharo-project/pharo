@@ -29,20 +29,7 @@ PopupChoiceDialogWindow class >> chooseFrom: aList lines: lines title: title [
 		model: aList.
 	"World may be not the best choice because a window may want to be in controlaList 
 	this point should be investigated based on UIManager default modalMorph"
-	^(self currentWorld openModal: pd) choice
-]
-
-{ #category : #'instance creation' }
-PopupChoiceDialogWindow class >> chooseIn: aThemedMorph title: title labels: labels values: values lines: lines [
-	"self chooseIn: World title: 'foo is the question'  labels: #('yes' 'no') values: #(true false) lines: #(1 2)"
-	"self chooseIn: World title: 'foo is the question'  labels: #('yes' 'no') values: #(true false) lines: #()"
-	| pd |
-	pd := (self newWithTheme: aThemedMorph theme)
-		title: (title isEmpty ifTrue: ['Choose' translated] ifFalse: [title asString]);
-		labels: labels;
-		lines: (lines ifNil: [#()]);
-		model: values.
-	^(aThemedMorph openModal: pd) choice
+	^pd openModal choice
 ]
 
 { #category : #icons }

@@ -1,21 +1,26 @@
 "
-I combine a filesystem and path, which is sufficient to refer to a concrete file or directory. I provide methods for navigating my filesystem, performing filesystem operations and opening and closing files.  I am the primary mechanism for working with files and directories. 
+I combine a filesystem and path, which is sufficient to refer to a concrete file or directory. I provide methods for navigating my filesystem, performing filesystem operations and opening and closing files. 
+I am the primary mechanism for working with files and directories. 
 
+###Examples
+
+```
 | working |
 working := FileSystem disk workingDirectory.
 working files 
-
+```
+```
 | disk |
 disk := FileSystem disk.
 disk root.                               	""a reference to the root directory""
 disk working.                         	""a reference to the working directory""
+```
 "
 Class {
 	#name : #FileReference,
 	#superclass : #AbstractFileReference,
 	#instVars : [
-		'filesystem',
-		'path'
+		'filesystem'
 	],
 	#category : #'FileSystem-Core-Public'
 }
@@ -94,6 +99,11 @@ FileReference >> asAbsolute [
 	^ self isAbsolute
 		ifTrue: [ self ]
 		ifFalse: [ filesystem referenceTo: (filesystem resolve: path) ]
+]
+
+{ #category : #converting }
+FileReference >> asFileLocatorOrReference [
+	^ self path asFileLocatorOrReference
 ]
 
 { #category : #converting }
@@ -463,12 +473,6 @@ FileReference >> numberOfHardLinks [
 { #category : #streams }
 FileReference >> openWritable: aBoolean [ 
 	^ filesystem open: path writable: aBoolean
-]
-
-{ #category : #accessing }
-FileReference >> path [
-	"Return the path internal representation that denotes the receiver in the context of its filesystem. "
-	^ path
 ]
 
 { #category : #printing }

@@ -34,6 +34,14 @@ BytecodeEncoder class >> isExtension: byte [
 	^self subclassResponsibility
 ]
 
+{ #category : #accessing }
+BytecodeEncoder class >> literalMethodBytecodes [
+	"A literal method is a method that just answers a literal value. 
+	 This is a constant sequence of bytecodes but it changes between enconders"
+
+	^ self subclassResponsibility
+]
+
 { #category : #'bytecode decoding' }
 BytecodeEncoder class >> nonExtensionBytecodeAt: pc in: method [
 	"Answer the actual bytecode at pc in method, skipping past any preceeding extensions."
@@ -83,6 +91,11 @@ BytecodeEncoder >> genPushSpecialLiteral: aLiteral [
 	self subclassResponsibility
 ]
 
+{ #category : #'bytecode generation' }
+BytecodeEncoder >> genPushThisProcess [
+	"only available in Sista BC"
+]
+
 { #category : #accessing }
 BytecodeEncoder >> methodStreamPosition [
 	^stream position
@@ -98,7 +111,7 @@ BytecodeEncoder >> nextPut: aByte [
 { #category : #'bytecode generation' }
 BytecodeEncoder >> outOfRangeError: string index: index range: rangeStart to: rangeEnd [
 	"For now..."
-	^self error: thisContext sender method selector, ' ', string
+	^self error: thisContext sender compiledCode method selector, ' ', string
 				, ' index ', index printString
 				, ' is out of range ', rangeStart printString, ' to ', rangeEnd printString
 ]
@@ -206,6 +219,11 @@ BytecodeEncoder >> sizePushTemp: tempIndex [
 { #category : #'opcode sizing' }
 BytecodeEncoder >> sizePushThisContext [
 	^self sizeOpcodeSelector: #genPushThisContext withArguments: #()
+]
+
+{ #category : #'opcode sizing' }
+BytecodeEncoder >> sizePushThisProcess [
+	^self sizeOpcodeSelector: #genPushThisProcess withArguments: #()
 ]
 
 { #category : #'opcode sizing' }

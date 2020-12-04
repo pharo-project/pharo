@@ -1,7 +1,3 @@
-"
-A WrapperSignalTest is xxxxxxxxx.
-
-"
 Class {
 	#name : #WrapperSignalTest,
 	#superclass : #TestCase,

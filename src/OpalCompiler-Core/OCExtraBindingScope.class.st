@@ -35,27 +35,11 @@ OCExtraBindingScope >> bindings: anObject [
 ]
 
 { #category : #lookup }
-OCExtraBindingScope >> findVariable: aBlock ifNone: aNotFound [
-	outerScope ifNotNil: [
-		^  outerScope findVariable: aBlock ifNone: aNotFound ]
-]
-
-{ #category : #lookup }
 OCExtraBindingScope >> lookupVar: name [
-	name = 'self' ifTrue: [ ^ outerScope lookupVar: name ].
-	name = 'super' ifTrue: [ ^ outerScope lookupVar: name ].
+	"reserved Variables are defined by the instance scope"
+	(ReservedVariable nameIsReserved: name) ifTrue: [ ^ outerScope lookupVar: name ].
 	
-	(bindings bindingOf: name asSymbol)
-		ifNotNil: [ :assoc | 
-			^ OCLiteralVariable new
-				assoc: assoc;
-				scope: self;
-				yourself ].
-	^ outerScope lookupVar: name 
-]
-
-{ #category : #'instance creation' }
-OCExtraBindingScope >> newMethodScope [
-	 
-	^ OCMethodScope new outerScope: (self outerScope: outerScope instanceScope) 
+	^(bindings bindingOf: name asSymbol)
+		ifNotNil: [ :var | var ]
+		ifNil: [ outerScope lookupVar: name ]
 ]

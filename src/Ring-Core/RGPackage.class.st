@@ -59,7 +59,7 @@ RGPackage >> categoryName [
 { #category : #accessing }
 RGPackage >> classNames [
 
-	^ self classes collect: #name
+	^ self classes collect: [ :each | each name ]
 ]
 
 { #category : #accessing }
@@ -137,7 +137,7 @@ RGPackage >> definedBehaviorsDo: aBlock [
 { #category : #accessing }
 RGPackage >> definedClassNames [
 
-	^ self definedClassesOnly collect: #name 
+	^ self definedClassesOnly collect: [ :each | each name ] 
 ]
 
 { #category : #accessing }
@@ -162,7 +162,7 @@ RGPackage >> definedTraits [
 { #category : #accessing }
 RGPackage >> extendedBehaviors [
 	
-	^ ((self extensionMethods collect: #parent) collect: [:behavior |
+	^ ((self extensionMethods collect: [:each | each parent]) collect: [:behavior |
 		behavior isClass 
 			ifTrue: [behavior ]
 			ifFalse: [ behavior baseClass]] as: IdentitySet) asArray
@@ -184,13 +184,13 @@ RGPackage >> extendedClassesAndTraits [
 RGPackage >> extendedSelectors [
 	"Retrieves the names of the methods"
 	
-	^ self extensionMethods collect: #selector
+	^ self extensionMethods collect: [ :each | each selector ]
 ]
 
 { #category : #accessing }
 RGPackage >> extendedTraits [
 	
-	^ (self extensionMethods collect: #parent) select: #isTrait
+	^ (self extensionMethods collect: [:each | each parent]) select: [:each | each isTrait]
 ]
 
 { #category : #accessing }

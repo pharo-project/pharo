@@ -8,14 +8,6 @@ Class {
 }
 
 { #category : #'camp smalltalk' }
-TestFailure >> defaultAction [
-
-	Processor activeProcess
-		debug: self signalerContext
-		title: self description
-]
-
-{ #category : #'camp smalltalk' }
 TestFailure >> isResumable [
 	
 	^ false

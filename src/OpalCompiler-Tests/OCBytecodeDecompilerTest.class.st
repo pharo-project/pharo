@@ -168,8 +168,11 @@ OCBytecodeDecompilerTest >> tearDown [
 { #category : #'tests - blocks' }
 OCBytecodeDecompilerTest >> testBlockWithTemp [
 	| method ir |
-	method := ClassTestCase>>#targetClass.
 	
+	"This test is only valid if there are no FullBlockClosures"
+	CompilationContext optionFullBlockClosure ifTrue: [ ^ self skip].
+	
+	method := ClassTestCase>>#targetClass.
 	ir := method ir.
 	
 	"the block sequence of the block with the temp should not have
@@ -394,7 +397,7 @@ OCBytecodeDecompilerTest >> testLiteralVariableClassVariable [
 { #category : #tests }
 OCBytecodeDecompilerTest >> testLiteralVariableGlobale [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testLiteralVariableGlobale.
+	ir1 := IRBuilderTest new setUp; testLiteralVariableGlobale.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.

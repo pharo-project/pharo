@@ -64,14 +64,12 @@ TraitFileOutTest >> testFileOutCategory [
 	"File out whole system category, delete all classes and traits and then
 	file them in again."
 
-	| file |
 	self timeLimit: 30 seconds.
 	self class environment organization fileOutCategory: self categoryName.
 	self class environment organization removeSystemCategory: self categoryName.
 	self deny: (testingEnvironment keys asSet includesAnyOf: #(#CA #CB #TA #TB #TC #TD)).
-	[ 
-	file := FileStream readOnlyFileNamed: self categoryName , '.st'.
-	file fileIn ] ensure: [ file close ].
+	
+	CodeImporter evaluateFileNamed: (self categoryName , '.st').
 	self assertCollection: testingEnvironment keys asSet includesAll: #(#CA #CB #TA #TB #TC #TD).
 	ta := testingEnvironment at: #TA.
 	self assert: ta traitComposition asString equals:  '((TB + TC) @ {#cc->#c}) - {#c}'.
@@ -87,16 +85,15 @@ TraitFileOutTest >> testFileOutCategory [
 TraitFileOutTest >> testFileOutTrait [
 	"fileOut trait T6, remove it from system and then file it in again"
 
-	| fileName file |
+	| fileName |
 	self t6 compile: 'localMethod: argument ^argument'.
 	self t6 classSide compile: 'localClassSideMethod: argument ^argument'.
 	self t6 fileOut.
 	fileName := self t6 asString , '.st'.
 	self resourceClassesAndTraits remove: self t6.
 	self t6 removeFromSystem.
-	[ 
-	file := FileStream readOnlyFileNamed: fileName.
-	file fileIn ] ensure: [ file close ].
+	
+	CodeImporter evaluateFileNamed: fileName.
 	self assert: (testingEnvironment includesKey: #T6).
 	TraitsResource current t6: (testingEnvironment at: #T6).
 	self resourceClassesAndTraits add: self t6.

@@ -47,14 +47,15 @@ ProcessTerminateBugTest >> testTerminationDuringUnwind [
 ]
 
 { #category : #tests }
-ProcessTerminateBugTest >> testUnwindFromActiveProcess [		
-	| sema process |
+ProcessTerminateBugTest >> testUnwindFromActiveProcess [
+	| sema |
 	sema := Semaphore forMutualExclusion.
-	self assert: (sema isSignaled).
-	process := [ sema critical: 
-						[ self deny: sema isSignaled.
-						Processor activeProcess terminate.]] forkAt: Processor userInterruptPriority.
 	self assert: sema isSignaled.
+	[ 
+	sema critical: [ 
+		self deny: sema isSignaled.
+		Processor activeProcess terminate ] ] forkAt: Processor userInterruptPriority.
+	self assert: sema isSignaled
 ]
 
 { #category : #tests }

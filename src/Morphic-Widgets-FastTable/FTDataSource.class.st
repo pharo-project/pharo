@@ -74,6 +74,12 @@ FTDataSource >> elementAt: rowIndex [
 	self subclassResponsibility
 ]
 
+{ #category : #testing }
+FTDataSource >> hasElementAt: index [ 
+
+	^ self numberOfRows >= index
+]
+
 { #category : #accessing }
 FTDataSource >> headerColumn: column [
 	"Answers a cell who will be the header of a column"

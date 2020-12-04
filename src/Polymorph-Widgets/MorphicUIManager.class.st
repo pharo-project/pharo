@@ -26,17 +26,26 @@ MorphicUIManager class >> isActiveManager [
 { #category : #testing }
 MorphicUIManager class >> isValidForCurrentSystemConfiguration [
 
-	^ Smalltalk isHeadless not or: [ Smalltalk isHeadless and: [ CommandLineArguments new hasOption: 'interactive'  ] ]
+	^ Smalltalk isHeadless not 
+		or: [ 
+			Smalltalk isHeadless 
+			and: [ Smalltalk isInteractiveGraphic ] ]
+]
+
+{ #category : #'ui process' }
+MorphicUIManager class >> uiProcess [ 
+
+	^ UIProcess
 ]
 
 { #category : #private }
 MorphicUIManager >> activate [
 
-	World worldState worldRenderer: (AbstractWorldRenderer detectCorrectOneforWorld: World).
-	Cursor currentCursor: Cursor currentCursor.
+	self currentWorld worldState worldRenderer: (AbstractWorldRenderer detectCorrectOneforWorld: self currentWorld).
+	self currentWorld currentCursor: self currentWorld currentCursor.
 		
-	WorldMorph currentWorld ifNotNil: [:world | world restoreMorphicDisplay].
-	WorldMorph extraWorldList do: #restoreMorphicDisplay.
+	self currentWorld ifNotNil: [:world | world restoreMorphicDisplay].
+	WorldMorph extraWorldList do: [:each | each restoreMorphicDisplay].
 
 	activeTranscript 
 		ifNil: [
@@ -277,34 +286,16 @@ MorphicUIManager >> deactivate [
 	self triggerEvent: #aboutToLeaveWorld.
 	WorldMorph extraWorldList do: [:world | world triggerEvent: #aboutToLeaveWorld ].	
 	
-	World worldState worldRenderer: (NullWorldRenderer forWorld: World).
+	self currentWorld worldState worldRenderer: (NullWorldRenderer forWorld: self currentWorld).
 ]
 
 { #category : #debug }
 MorphicUIManager >> debugProcess: process context: context label: title fullView: bool notification: notificationString [
-	"Open a notifier in response to an error, halt, or notify. A notifier view
-	just shows a short view of the sender stack and provides a menu that
-	lets the user open a full debugger."
 
-	| debugSession |
-
-	debugSession := process newDebugSessionNamed: title startedAt: context.
-	
-	debugSession logStackToFileIfNeeded.
-	debugSession isAboutUIProcess ifTrue: [ 
-		DefaultExecutionEnvironment beActiveDuring: [self spawnNewProcess]].
-		
-	self defer:	[ 
-			"schedule debugger in deferred UI message to address
-			redraw problems after opening a debugger e.g. from
-			the testrunner."
-		[ Smalltalk tools debugger 
-				openOn: debugSession withFullView: bool andNotification: notificationString.
-		] on: Error do: [ :ex | 	debugSession signalDebuggerError: ex] 
-	].
-
-	process suspend.
-
+	(OupsDebugRequest newForContext: context)
+		process: process;
+		label: title;
+		submit
 ]
 
 { #category : #'ui process' }
@@ -366,14 +357,23 @@ MorphicUIManager >> fontFromUser: priorFont [
 	^ StrikeFont fromUser: priorFont allowKeyboard: true
 ]
 
+{ #category : #'handle debug requests' }
+MorphicUIManager >> handleDebugRequest: aDebugRequest [
+	<debuggerCompleteToSender>
+	OupsDebuggerSystem new openDebuggerOnRequest: aDebugRequest
+]
+
 { #category : #'error handling' }
 MorphicUIManager >> handleError: anError log: shouldLog [
+	shouldLog
+		ifTrue: [ self logError: anError ].
+	(OupsDebugRequest newForException: anError) submit.
+]
 
-	shouldLog ifTrue: [ self logError: anError ].
-	self debugProcess: Processor activeProcess  
-		context: anError signalerContext
-		label: anError description 
-		fullView: false
+{ #category : #'handle debug requests' }
+MorphicUIManager >> handleWarningDebugRequest: aWarningDebugRequest [
+	<debuggerCompleteToSender>
+	OupsDebuggerSystem new openDebuggerOnRequest: aWarningDebugRequest
 ]
 
 { #category : #'ui requests' }
@@ -428,32 +428,25 @@ Here are some suggestions:
 
 { #category : #debug }
 MorphicUIManager >> lowSpaceWatcherDefaultAction: theInterruptedProcess [
-	"Create a Notifier on the active scheduling process with the given label."
-	| preemptedProcess projectProcess debugSession |
-	ActiveHand ifNotNil:[ActiveHand interrupted].
-	ActiveWorld := self currentWorld. "reinstall active globals"
-	ActiveHand := self currentWorld primaryHand.
-	ActiveHand interrupted. "make sure this one's interrupted too"
-	ActiveEvent := nil.
 
-	projectProcess := self uiProcess.	"we still need the accessor for a while"
-	preemptedProcess := theInterruptedProcess ifNil: [Processor preemptedProcess].
+	"Create a Notifier on the active scheduling process with the given label."
+
+	| preemptedProcess projectProcess |
+	ActiveWorld := self currentWorld. "reinstall active globals"
+	self currentWorld primaryHand interrupted.
+
+	projectProcess := self uiProcess. "we still need the accessor for a while"
+	preemptedProcess := theInterruptedProcess ifNil: [ 
+		                    Processor preemptedProcess ].
 	"Only debug preempted process if its priority is >= projectProcess' priority"
-	preemptedProcess priority < projectProcess priority 
-		ifTrue:[preemptedProcess := projectProcess].
+	preemptedProcess priority < projectProcess priority ifTrue: [ 
+		preemptedProcess := projectProcess ].
 	preemptedProcess suspend.
-	
-	debugSession := preemptedProcess 
-		newDebugSessionNamed: 'Space is low' 
-		startedAt: preemptedProcess suspendedContext.		
-	debugSession logStackToFileIfNeeded.
-	debugSession isAboutUIProcess ifTrue: [ 
-		DefaultExecutionEnvironment beActiveDuring: [self spawnNewProcess]].
-	
-	Smalltalk tools debugger 
-		openOn: debugSession 
-		withFullView: false 
-		andNotification: self lowSpaceWarningMessage
+
+	(OupsDebugRequest newForContext: preemptedProcess suspendedContext)
+		process: preemptedProcess;
+		label: 'Space is low';
+		submit
 ]
 
 { #category : #'ui requests' }
@@ -467,7 +460,7 @@ MorphicUIManager >> merge: merger informing: aString [
 	window := mergeMorph newWindow
 		title: aString;
 		yourself.
-	self modalMorph openModal: window.
+	window openModal.
 	^ mergeMorph merged
 ]
 
@@ -568,7 +561,7 @@ MorphicUIManager >> onPrimitiveError: aString [
 					20
 						timesRepeat: [context == nil
 								ifFalse: [s cr; print: (context := context sender)]]].
-	Transcripter askForEmergencyEvaluatorOrExitWithText: message.
+	Stdio stderr << message.
 	"init hands and redisplay" 
 	self currentWorld install
 
@@ -595,14 +588,6 @@ MorphicUIManager >> openComparisonFrom: targetMethodSource
 	difference := diffBuilder buildDisplayPatch.
 	self edit: difference label: aLabel.
 				
-]
-
-{ #category : #private }
-MorphicUIManager >> openModal: aSystemWindow [ 
-	"Open the given window at an available position with modality.
-	Answer the system window."
-	
-	^self modalMorph openModal: aSystemWindow
 ]
 
 { #category : #private }
@@ -732,7 +717,7 @@ MorphicUIManager >> showWaitCursorWhile: aBlock [
 MorphicUIManager >> spawnNewProcess [
 
 	UIProcess := [
-		[WorldMorph doOneCycle.  Processor yield.  false] whileFalse: [].
+		MorphicRenderLoop new doOneCycleWhile: [ true ]
 	] newProcess priority: Processor userSchedulingPriority.
 	UIProcess name: 'Morphic UI Process'.
 	UIProcess resume
@@ -779,18 +764,11 @@ MorphicUIManager >> unhandledErrorDefaultAction: anException [
 	anException debug
 ]
 
-{ #category : #'ui requests' }
+{ #category : #'handle debug requests' }
 MorphicUIManager >> warningDefaultAction: anException [
+	"The user should be notified of the occurrence of an exceptional occurrence and given an option of continuing or aborting the computation. The description of the occurrence should include any text specified as the argument of the #signal: message."
 
-"The user should be notified of the occurrence of an exceptional occurrence and given an option of continuing or aborting the computation. The description of the occurrence should include any text specified as the argument of the #signal: message."
-	UIManager default
-				debugProcess: Processor activeProcess
-				context: anException signalerContext
-				label: 'Warning'
-				fullView: false 
-				notification: anException messageText, '\\Select Proceed to continue, or close this window to cancel the operation.' withCRs.
-				
-	anException resume.
+	(OupsWarningRequest newForException: anException) submit
 ]
 
 { #category : #'global state' }

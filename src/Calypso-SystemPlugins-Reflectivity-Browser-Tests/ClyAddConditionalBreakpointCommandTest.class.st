@@ -18,7 +18,7 @@ ClyAddConditionalBreakpointCommandTest >> testMessageSend_conditionBlockProducer
 		equals:
 			(self parserClass
 				parseMethod:
-					'conditionBlockGenerator ^[ :ThisContext | Breakpoint checkBreakConditionValue: ((ThisContext lookupSymbol: #val) msg: (ThisContext lookupSymbol: #arg))]')
+					'conditionBlockGenerator ^[ :ThisContext | Breakpoint checkBreakConditionValue: ((ThisContext readVariableNamed: #val) msg: (ThisContext readVariableNamed: #arg))]')
 ]
 
 { #category : #tests }
@@ -66,7 +66,7 @@ ClyAddConditionalBreakpointCommandTest >> testSuperSendWithArgs_conditionBlockPr
 		equals:
 			(self parserClass
 				parseMethod:
-					'conditionBlockGenerator ^[ :ThisContext | Breakpoint checkBreakConditionValue: (ThisContext receiver perform: #foo:bar: withArguments: {ThisContext lookupSymbol: #arg1. ThisContext lookupSymbol: #arg2.} inSuperclass: ThisContext receiver class superclass)]')
+					'conditionBlockGenerator ^[ :ThisContext | Breakpoint checkBreakConditionValue: (ThisContext receiver perform: #foo:bar: withArguments: {ThisContext readVariableNamed: #arg1. ThisContext readVariableNamed: #arg2.} inSuperclass: ThisContext receiver class superclass)]')
 ]
 
 { #category : #tests }
@@ -78,7 +78,7 @@ ClyAddConditionalBreakpointCommandTest >> testVariableLookup_conditionBlockProdu
 		equals:
 			(self parserClass
 				parseMethod:
-					'conditionBlockGenerator ^[ :ThisContext | Breakpoint checkBreakConditionValue: (ThisContext lookupSymbol: #var)]')
+					'conditionBlockGenerator ^[ :ThisContext | Breakpoint checkBreakConditionValue: (ThisContext readVariableNamed: #var)]')
 ]
 
 { #category : #tests }
@@ -90,7 +90,7 @@ ClyAddConditionalBreakpointCommandTest >> testVariableNamedThisContext_condition
 		equals:
 			(self parserClass
 				parseMethod:
-					'conditionBlockGenerator ^[ :ThisContext | Breakpoint checkBreakConditionValue: (ThisContext lookupSymbol: #ThisContext)]')
+					'conditionBlockGenerator ^[ :ThisContext | Breakpoint checkBreakConditionValue: (ThisContext readVariableNamed: #ThisContext)]')
 ]
 
 { #category : #tests }

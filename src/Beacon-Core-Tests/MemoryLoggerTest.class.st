@@ -1,13 +1,6 @@
-"
-A MemoryLoggerTest is xxxxxxxxx.
-
-"
 Class {
 	#name : #MemoryLoggerTest,
 	#superclass : #TestCase,
-	#classInstVars : [
-		'previousRecordings'
-	],
 	#category : #'Beacon-Core-Tests-Tests'
 }
 

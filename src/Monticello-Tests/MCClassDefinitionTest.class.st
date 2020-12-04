@@ -29,13 +29,6 @@ MCClassDefinitionTest >> classAComment [
 	^ self class classAComment
 ]
 
-{ #category : #private }
-MCClassDefinitionTest >> creationMessage [
-	^ MessageSend
-		receiver: MCClassDefinition
-		selector: #name:superclassName:category:instVarNames:classVarNames:poolDictionaryNames:classInstVarNames:type:comment:commentStamp:
-]
-
 { #category : #running }
 MCClassDefinitionTest >> setUp [
 	super setUp.
@@ -109,9 +102,13 @@ MCClassDefinitionTest >> testEquals [
 { #category : #tests }
 MCClassDefinitionTest >> testEqualsSensitivity [
 	| message a b defA args defB |
-	message := self creationMessage.
-	a := #(ClassA SuperA CategoryA #(iVarA) #(CVarA) #(PoolA) #(ciVarA) typeA 'A comment' 'A').
-	b := #(ClassB SuperB CategoryB #(iVarB) #(CVarB) #(PoolB) #(ciVarB) typeB 'B comment' 'B').
+	
+	message := MessageSend 
+		receiver: MCClassDefinition 
+		selector:#name:superclassName:traitComposition:classTraitComposition:category:instVarNames:classVarNames:poolDictionaryNames:classInstVarNames:type:comment:commentStamp:.
+	
+	a := #(ClassA SuperA '{}' '{}' CategoryA #(iVarA) #(CVarA) #(PoolA) #(ciVarA) typeA 'A comment' 'A').
+	b := #(ClassB SuperB 'T' 'T classTrait' CategoryB #(iVarB) #(CVarB) #(PoolB) #(ciVarB) typeB 'B comment' 'B').
 
 	defA := message valueWithArguments: a.
 	1 to: 8 do: [ :index | 

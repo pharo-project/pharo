@@ -7,16 +7,22 @@ Class {
 	#name : #OSWindowRenderer,
 	#superclass : #Object,
 	#instVars : [
-		'window',
-		'lastExposeTime'
+		'lastExposeTime',
+		'backendWindow'
 	],
 	#category : #'OSWindow-Core-Renderer'
 }
 
+{ #category : #accessing }
+OSWindowRenderer >> backendWindow: anObject [
+	
+	backendWindow := anObject
+]
+
 { #category : #deleting }
 OSWindowRenderer >> destroy [
 	"Called when the window associated with the renderer is destroyed"
-	window := nil.
+	backendWindow := nil.
 ]
 
 { #category : #'updating screen' }
@@ -44,6 +50,11 @@ OSWindowRenderer >> onRenderThread: aBlock [
 { #category : #'as yet unclassified' }
 OSWindowRenderer >> onRenderThreadBlocking: aBlock [
 	OSWindowRenderThread enqueueBlockingOperation: aBlock
+]
+
+{ #category : #clipping }
+OSWindowRenderer >> pixelExtent [
+	^ backendWindow extent
 ]
 
 { #category : #'updating screen' }
@@ -74,16 +85,4 @@ OSWindowRenderer >> updateRectangle: rectangle [
 { #category : #'updating screen' }
 OSWindowRenderer >> updateRectangles: aCollectionOfRectangles [
 	aCollectionOfRectangles do: [ :rectangle | self updateRectangle: rectangle ]
-]
-
-{ #category : #accessing }
-OSWindowRenderer >> window [
-	
-	^ window
-]
-
-{ #category : #accessing }
-OSWindowRenderer >> window: anObject [
-	
-	window := anObject
 ]

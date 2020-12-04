@@ -15,9 +15,11 @@ ClapCommandLineHandler class >> commandName [
 { #category : #activation }
 ClapCommandLineHandler >> activate [
 	[
-		ClapContext withPragmaCommands beObeyingExits
-			activateWith: self arguments
-			onExit: [ :exit | self handleExit: exit ]
+		ClapContext withPragmaCommands
+			beObeyingExits;
+			setStdio: Stdio;
+			arguments: self arguments;
+			executeToExit: [ :exit | self handleExit: exit ]
 	]
 	forkAt: Processor userSchedulingPriority
 	named: 'Clap commandline handler process'

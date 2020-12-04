@@ -2,7 +2,8 @@ Extension { #name : #AthensCanvas }
 
 { #category : #'*Athens-Morphic' }
 AthensCanvas >> asCanvasWrapper [
-	^  AthensCanvasWrapper on: self
+
+	^AthensCanvasWrapper on: self
 ]
 
 { #category : #'*Athens-Morphic' }

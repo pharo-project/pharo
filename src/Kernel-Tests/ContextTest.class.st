@@ -38,7 +38,8 @@ ContextTest class >> contextWithTempForTesting [
 
 { #category : #helper }
 ContextTest class >> createBlock [
-	^ [ thisContext ].
+	"we reference self to force a full block"
+	^ [ self . thisContext ]
 ]
 
 { #category : #helper }

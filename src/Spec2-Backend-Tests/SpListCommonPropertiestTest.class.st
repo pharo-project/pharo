@@ -28,7 +28,7 @@ SpListCommonPropertiestTest >> testChangingFromSingleToMultipleSelection [
 { #category : #tests }
 SpListCommonPropertiestTest >> testEnablingFilteringUpdateOpenedList [
 	self deny: self adapter hasFilter.
-	presenter enableItemSubstringFilter.
+	presenter matchSubstring.
 	self assert: self adapter hasFilter.
 	presenter itemFilter: nil.
 	self deny: self adapter hasFilter
@@ -98,6 +98,20 @@ SpListCommonPropertiestTest >> testScrollUpToPreviousIndexScrollsTopToIndex [
 	presenter verticalAlignment desiredVisibleRow: 50.
 
 	self assert: presenter verticalAlignment firstVisibleRowIndex equals: 50
+]
+
+{ #category : #tests }
+SpListCommonPropertiestTest >> testSelectingANotVisibleItemDoesNotScroll [
+	| verticalAlignment visibleItems |
+	presenter items: (1 to: 500).
+	verticalAlignment := presenter verticalAlignment.
+	self openInstance.
+	visibleItems := verticalAlignment firstVisibleRowIndex to: verticalAlignment lastVisibleRowIndex.
+	presenter selectItem: 400.
+
+	self 
+		assert: (verticalAlignment firstVisibleRowIndex to: verticalAlignment lastVisibleRowIndex) 
+		equals: visibleItems
 ]
 
 { #category : #tests }

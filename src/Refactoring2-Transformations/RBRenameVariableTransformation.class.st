@@ -127,7 +127,7 @@ RBRenameVariableTransformation >> rename: aVariableName to: aNewVariableName cla
 RBRenameVariableTransformation >> renameReferences [
 
 	| replacer subclasses |
-	replacer := RBParseTreeRewriter 
+	replacer := self parseTreeRewriterClass 
 				rename: variableName
 				to: newVariableName
 				handler: [ self refactoringError: ('<1s> is already defined as a method

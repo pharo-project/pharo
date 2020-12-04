@@ -56,5 +56,5 @@ ExampleSlotWithState >> read: anObject [
 
 { #category : #'meta-object-protocol' }
 ExampleSlotWithState >> write: aValue to: anObject [
-	value := aValue
+	^value := aValue
 ]

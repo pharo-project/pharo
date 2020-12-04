@@ -75,6 +75,15 @@ IRReconstructor >> pushClosureCopyCopiedValues: copiedValuesNames args: args jum
 ]
 
 { #category : #instructions }
+IRReconstructor >> pushFullClosureCompiledBlock: compiledBlock copiedValues: copiedValues [
+	| anInstruction |
+	anInstruction := super pushFullClosureCompiledBlock: compiledBlock copiedValues: copiedValues.
+
+	anInstruction copiedValues withIndexDo: [ :aValue :index |
+		self rememberReference: anInstruction -> index to: aValue in: closureCopiedValues ]
+]
+
+{ #category : #instructions }
 IRReconstructor >> pushRemoteTemp: name inVector: nameOfVector [
 	| anInstruction |
 	anInstruction := super pushRemoteTemp: name inVector: nameOfVector.
@@ -104,8 +113,7 @@ IRReconstructor >> remapTemp: aTemp toRemote: aRemote [
 		do: [ :aClosureAndIndex | |closure index|
 			closure := aClosureAndIndex key.
 			index := aClosureAndIndex value.
-			closure copiedValues at: index put: aRemote.
-			closure tempMap at: aRemote put: (closure tempMap removeKey: aTemp).
+			closure remapCopiedValueAt: index oldOne: aTemp newOne: aRemote.
 			self rememberReference: aClosureAndIndex to: aRemote in: closureCopiedValues. ].
 ]
 

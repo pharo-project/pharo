@@ -51,7 +51,7 @@ ClyClassEditorToolMorph >> attachToSystem [
 ClyClassEditorToolMorph >> belongsToCurrentBrowserContext [
 
 	^(browser isClassSelected: editingClass)
-		or: [ ^browser isClassSelected: editingClass instanceSide ]
+		or: [ browser isClassSelected: editingClass instanceSide ]
 ]
 
 { #category : #testing }
@@ -77,8 +77,8 @@ ClyClassEditorToolMorph >> editingClass: anObject [
 
 { #category : #testing }
 ClyClassEditorToolMorph >> isSimilarTo: anotherBrowserTool [
-	(super isSimilarTo: anotherBrowserTool) ifFalse: [ ^false ].
-	
+
+	(super isSimilarTo: anotherBrowserTool) ifFalse: [ ^false ].	
 	^editingClass = anotherBrowserTool editingClass
 ]
 
@@ -94,7 +94,7 @@ ClyClassEditorToolMorph >> selectedClassOrMetaClass [
 
 { #category : #initialization }
 ClyClassEditorToolMorph >> setUpModelFromContext [
-	super setUpModelFromContext.
 
+	super setUpModelFromContext.
 	editingClass := context lastSelectedClass
 ]

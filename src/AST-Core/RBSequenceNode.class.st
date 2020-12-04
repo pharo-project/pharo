@@ -176,7 +176,7 @@ RBSequenceNode >> addSelfReturn [
 	| node |
 	self lastIsReturn
 		ifTrue: [ ^ self statements last ].
-	node := RBReturnNode value: (RBSelfNode new).
+	node := RBReturnNode value: RBVariableNode selfNode.
 	^ self addNode: node
 ]
 
@@ -199,6 +199,14 @@ RBSequenceNode >> allDefinedVariables [
 	^(self temporaryNames asOrderedCollection)
 		addAll: super allDefinedVariables;
 		yourself
+]
+
+{ #category : #accessing }
+RBSequenceNode >> allStatements [
+	^ statements asOrderedCollection copy
+			addAll: super allStatements;
+			yourself
+
 ]
 
 { #category : #accessing }
@@ -264,6 +272,12 @@ RBSequenceNode >> equalTo: anObject withMapping: aDictionary [
 ]
 
 { #category : #testing }
+RBSequenceNode >> hasTemporaries [
+
+	^ temporaries isNotEmpty
+]
+
+{ #category : #testing }
 RBSequenceNode >> hasTemporaryNamed: aString [
 
 	^ temporaries anySatisfy: [ :temp | temp name = aString ]
@@ -285,12 +299,12 @@ RBSequenceNode >> indexOfNode: aNode [
 { #category : #initialization }
 RBSequenceNode >> initialize [
 	super initialize.
-	periods := statements := temporaries := #()
+	periods := statements := temporaries := OrderedCollection new.
 ]
 
 { #category : #testing }
 RBSequenceNode >> isFaulty [
-	^self statements anySatisfy: #isFaulty
+	^self statements anySatisfy: [:each | each isFaulty]
 ]
 
 { #category : #testing }
@@ -342,16 +356,6 @@ RBSequenceNode >> match: aNode inContext: aDictionary [
 					matchList: statements
 					against: aNode statements
 					inContext: aDictionary]
-]
-
-{ #category : #accessing }
-RBSequenceNode >> methodComments [
-	| methodComments |
-	methodComments := OrderedCollection withAll: self comments.
-	temporaries do: [:each | methodComments addAll: each comments].
-	(parent notNil and: [parent isBlock]) 
-		ifTrue: [parent arguments do: [:each | methodComments addAll: each comments]].
-	^methodComments asSortedCollection: [:a :b | a start < b start]
 ]
 
 { #category : #'accessing-token' }

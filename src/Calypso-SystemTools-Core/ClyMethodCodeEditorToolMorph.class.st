@@ -53,7 +53,8 @@ ClyMethodCodeEditorToolMorph >> applyDecorations [
 	"literal methods do not need ot be stylized and this is an operation that can take 
 	 a lot of time, we will skip it when it is the case"
 	editingMethod isLiteralMethod ifFalse: [ 
-		IconStyler styleText: textModel withAst: editingMethod astForStylingInCalypso ].	
+		IconStyler withStaticStylers  
+			styleText: textModel withAst: editingMethod astForStylingInCalypso ].	
 	textMorph hasUnacceptedEdits: hasEdits.
 	
 	super applyDecorations.

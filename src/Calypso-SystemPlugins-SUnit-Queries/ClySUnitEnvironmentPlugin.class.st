@@ -47,6 +47,11 @@ ClySUnitEnvironmentPlugin >> decorateBrowserItem: anItem ofClass: aClass [
 ]
 
 { #category : #'item decoration' }
+ClySUnitEnvironmentPlugin >> decorateBrowserItem: anItem ofClassGroup: aClassGroup [
+	self decorateBrowserItem: anItem ofPackage: aClassGroup
+]
+
+{ #category : #'item decoration' }
 ClySUnitEnvironmentPlugin >> decorateBrowserItem: anItem ofMethod: aMethod [
 
 	(self isTestMethod: aMethod) ifFalse: [ ^self ].

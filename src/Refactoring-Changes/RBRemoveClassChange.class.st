@@ -14,7 +14,10 @@ RBRemoveClassChange class >> remove: aClass [
 
 { #category : #'instance creation' }
 RBRemoveClassChange class >> removeClassName: aSymbol [
-	^ self new changeClassName: aSymbol
+	^ self basicNew onSystemDictionary: self environment; 
+			changeClassName: aSymbol;
+			initialize
+			
 ]
 
 { #category : #converting }
@@ -41,6 +44,13 @@ RBRemoveClassChange >> changeClass: aBehavior [
 { #category : #printing }
 RBRemoveClassChange >> changeString [
 	^ 'Remove ' , self displayClassName
+]
+
+{ #category : #printing }
+RBRemoveClassChange >> initialize [ 
+	super initialize.
+	onSystemDictionary ifNil: [ onSystemDictionary := Smalltalk globals ].
+	changeFactory := RBRefactoryChangeManager changeFactory
 ]
 
 { #category : #private }

@@ -52,7 +52,8 @@ Class {
 		'callbackContext',
 		'currentStackOffset',
 		'extractedArguments',
-		'returnValueHolder'
+		'returnValueHolder',
+		'nextArgumentIndex'
 	],
 	#category : #'UnifiedFFI-Callbacks'
 }
@@ -65,6 +66,13 @@ FFICallbackArgumentReader class >> forCallback: aCallback inContext: aCallbackCo
 		callback: aCallback;
 		initialize;
 		yourself.
+]
+
+{ #category : #accessing }
+FFICallbackArgumentReader >> addArgument: anArgument [
+
+	extractedArguments at: nextArgumentIndex put: anArgument.
+	nextArgumentIndex := nextArgumentIndex + 1 
 ]
 
 { #category : #accessing }
@@ -136,7 +144,7 @@ FFICallbackArgumentReader >> extractArguments [
 { #category : #extracting }
 FFICallbackArgumentReader >> extractCharacterType [
 
-	extractedArguments add: self basicExtractUnsignedInteger asCharacter
+	self addArgument: self basicExtractUnsignedInteger asCharacter
 ]
 
 { #category : #extracting }
@@ -148,7 +156,7 @@ FFICallbackArgumentReader >> extractDouble [
 	baseAddressToRead := pair first.
 	offsetOfBaseAddress := pair second.
 
-	extractedArguments add: (type handle: baseAddressToRead at: offsetOfBaseAddress).
+	self addArgument: (type handle: baseAddressToRead at: offsetOfBaseAddress).
 
 ]
 
@@ -160,7 +168,7 @@ FFICallbackArgumentReader >> extractExternalString: type [
 	baseAddressToRead := pair first.
 	offsetOfBaseAddress := pair second.
 
-	extractedArguments add: (type handle: baseAddressToRead at: offsetOfBaseAddress).
+	self addArgument: (type handle: baseAddressToRead at: offsetOfBaseAddress).
 ]
 
 { #category : #extracting }
@@ -172,13 +180,13 @@ FFICallbackArgumentReader >> extractFloat [
 	baseAddressToRead := pair first.
 	offsetOfBaseAddress := pair second.
 
-	extractedArguments add: (type handle: baseAddressToRead at: offsetOfBaseAddress).
+	self addArgument: (type handle: baseAddressToRead at: offsetOfBaseAddress).
 ]
 
 { #category : #extracting }
 FFICallbackArgumentReader >> extractIntegerType [
 
-	extractedArguments add: self basicExtractInteger
+	self addArgument: self basicExtractInteger
 ]
 
 { #category : #extracting }
@@ -197,7 +205,7 @@ FFICallbackArgumentReader >> extractPointerOfType: aType [
 	baseAddressToRead := pair first.
 	offsetOfBaseAddress := pair second.
 
-	extractedArguments add: (aType handle: baseAddressToRead at: offsetOfBaseAddress).
+	self addArgument: (aType handle: baseAddressToRead at: offsetOfBaseAddress).
 
 ]
 
@@ -210,7 +218,7 @@ FFICallbackArgumentReader >> extractStructType: type [
 	baseAddressToRead := pair first.
 	offsetOfBaseAddress := pair second.
 
-	extractedArguments add: (type handle: baseAddressToRead at: offsetOfBaseAddress).
+	self addArgument: (type handle: baseAddressToRead at: offsetOfBaseAddress).
 ]
 
 { #category : #initialization }
@@ -221,7 +229,8 @@ FFICallbackArgumentReader >> initialize [
 	super initialize.
 
 	currentStackOffset := 1.
-	extractedArguments := OrderedCollection new.
+	extractedArguments := Array new: callback functionSpec arguments size.
+	nextArgumentIndex := 1.
 	
 	"If the function returns an struct by copy there is a hidden parameter with a pointer storing it".
 	returnType := callback functionSpec returnType resolvedType.

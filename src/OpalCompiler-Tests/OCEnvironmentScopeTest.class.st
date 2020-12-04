@@ -4,25 +4,28 @@ tests related to environment
 Class {
 	#name : #OCEnvironmentScopeTest,
 	#superclass : #TestCase,
-	#instVars : [
-		'oldSystemAnnouncer'
-	],
 	#category : #'OpalCompiler-Tests-Semantic'
 }
 
 { #category : #'tests - environment' }
 OCEnvironmentScopeTest >> testCompileWithEnvironment [
+	"testing compiling with environments other then Smalltalk globals. Note: the class in the environment has to point to the environment. And we have to compile for a class in the environment"
+
+
 	| environment method return | 
 	environment := SystemDictionary new.
-	environment at: #MyClass put: Point.
-	method := Smalltalk compiler 
+	environment at: #MyClass put: Point copy.
+	(environment at: #MyClass) environment: environment.
+	method := OpalCompiler new
 					environment: environment;
+					class: (environment at: #MyClass);
 					compile: 'tt ^MyClass'.
 	return := method valueWithReceiver: nil arguments: #().
-	self assert: return equals: Point.
+	self assert: return name equals: 'Point'.
 	"I d not know about anything else"
-	method := Smalltalk compiler 
+	method := OpalCompiler new
 					environment: environment;
+					class: (environment at: #MyClass);
 					compile: 'tt ^Object'.
 	return := method valueWithReceiver: nil arguments: #().
 	self assert: return equals: nil.
@@ -39,11 +42,4 @@ OCEnvironmentScopeTest >> testCompileWithProductionEnvironment [
 	self assert: method class equals: MyCompiledMethodForTesting.			
 	return := method valueWithReceiver: nil arguments: #().
 	self assert: return equals: 3.
-]
-
-{ #category : #'tests - environment' }
-OCEnvironmentScopeTest >> testCreateEnvironmentScope [
-	| new |
-	new := OCEnvironmentScope for: Smalltalk globals.
-	self assert: ((new lookupVar: #Object) isKindOf: OCLiteralVariable).
 ]

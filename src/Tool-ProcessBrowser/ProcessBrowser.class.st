@@ -69,10 +69,11 @@ Class {
 
 { #category : #initialization }
 ProcessBrowser class >> cleanUp [
- "Remove terminated processes from my suspended list"
-
-       self suspendedProcesses keysDo: [:ea |
-               ea isTerminated ifTrue: [self suspendedProcesses removeKey: ea]]
+ 	"Remove terminated processes from my suspended list"
+	<script>
+	
+	self suspendedProcesses keysDo: [:ea |
+		ea isTerminated ifTrue: [self suspendedProcesses removeKey: ea]]
 ]
 
 { #category : #'process control' }
@@ -140,7 +141,6 @@ ProcessBrowser class >> dumpTallyOnTranscript: tally [
 
 { #category : #initialization }
 ProcessBrowser class >> initialize [
-	"ProcessBrowser initialize"
 	SuspendedProcesses ifNil: [ SuspendedProcesses := IdentityDictionary new ].
 	self registerWellKnownProcesses
 ]
@@ -154,11 +154,11 @@ ProcessBrowser class >> isUIProcess: aProcess [
 ProcessBrowser class >> menuCommandOn: aBuilder [ 
 	<worldMenu> 
 	(aBuilder item: #'Process Browser')
-		parent: #System;
-		order: 0;
+		parent: #Tools;
+		order: 705;
 		action:[ self open ];
 		help: 'Provides a view of all of the processes (threads) executing in Smalltalk.';
-		icon: self taskbarIcon.
+		icon: self taskbarIcon
 ]
 
 { #category : #'process control' }
@@ -176,10 +176,33 @@ ProcessBrowser class >> nameAndRulesFor: aProcess [
 
 { #category : #'instance creation' }
 ProcessBrowser class >> open [
-	"ProcessBrowser open"
 	"Create and schedule a ProcessBrowser."
+	<script>
+	
 	Smalltalk garbageCollect.
 	^ self new build
+]
+
+{ #category : #settings }
+ProcessBrowser class >> processBrowserSettingsOn: aBuilder [
+
+	<systemsettings>
+	(aBuilder group: #processBrowser)
+		label: 'Process browser';
+		parent: #tools;
+		description: 'Process browser settings';
+		with: [ 
+			(aBuilder setting: #cpuWatcherEnabled)
+				label: 'Process browser monitors CPU usage';
+				target: CPUWatcher;
+				default: false;
+				description: 'If true, Pharo processes will be monitored for CPU usage. If they take too much CPU, you will get a notification menu that will allow you to debug, resume, or terminate the process' .
+				
+			(aBuilder setting: #pigFinding)
+				label: 'Find the most CPU demanding processes';
+				target: CPUWatcher;
+				default: false;
+				description: 'Try to identify CPU demanding processes during CPU monitoring and offer their termination'  ]
 ]
 
 { #category : #'tools registry' }
@@ -233,11 +256,6 @@ ProcessBrowser class >> registerWellKnownProcesses [
 	self
 		registerWellKnownProcess: [ UIManager default uiProcess ]
 		label: nil
-		allowStop: false
-		allowDebug: false.
-	self
-		registerWellKnownProcess: [ Smalltalk globals at: #SoundPlayer ifPresent: [ :sp | sp playerProcess ] ]
-		label: 'the Sound Player'
 		allowStop: false
 		allowDebug: false.
 	self
@@ -295,7 +313,7 @@ ProcessBrowser class >> suspendedProcesses [
 	"Answer a collection of processes that my instances have suspended.  
 	This is so that they don't get garbage collected."
 	^ SuspendedProcesses
-		ifNil: [SuspendedProcesses := IdentityDictionary new]
+		ifNil: [ SuspendedProcesses := IdentityDictionary new ]
 ]
 
 { #category : #'CPU utilization' }
@@ -335,7 +353,7 @@ ProcessBrowser class >> terminateProcess: aProcess [
 			removeKey: aProcess
 			ifAbsent: [].
 		aProcess terminate
-	].
+	]
 
 ]
 
@@ -788,7 +806,7 @@ ProcessBrowser >> methodText [
 						ifNil: ['']
 						ifNotNil: [| pcRange | 
 							methodText := [ selectedContext sourceCode ]
-								ifError: [ 'error getting method text' ].
+								onErrorDo: [ 'error getting method text' ].
 							pcRange := self pcRange.
 							methodText asText
 								addAttribute: TextColor red
@@ -910,12 +928,6 @@ ProcessBrowser >> processNameList [
 				ifNotNil: [ (((tally occurrencesOf: each) * 100.0 / tally size roundTo: 1) asString padLeftTo: 2) , '% ' ]
 				ifNil: [ '' ].
 			percent , (self prettyNameForProcess: each) ]
-]
-
-{ #category : #views }
-ProcessBrowser >> refactor [
-
-	^ NautilusRefactoring model: self
 ]
 
 { #category : #'process actions' }
@@ -1114,7 +1126,7 @@ ProcessBrowser >> text [
 ProcessBrowser >> toggleAutoUpdate [
 	self isAutoUpdating
 		ifTrue: [ self stopAutoUpdate ]
-		ifFalse: [ self startAutoUpdate ].
+		ifFalse: [ self startAutoUpdate ]
 
 ]
 

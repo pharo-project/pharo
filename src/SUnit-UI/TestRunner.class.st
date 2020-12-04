@@ -41,14 +41,14 @@ Class {
 { #category : #'world menu' }
 TestRunner class >> menuCommandOn: aBuilder [
 	<worldMenu>
+	
 	(aBuilder item: #'Test Runner')
 		parent: #Tools;
 		action: [ Smalltalk tools openTestRunner ];
 		order: 20;
 		keyText: 'o, u';
 		help: 'Let you run and debug SUnit tests.';
-		icon: self taskbarIcon.
-	aBuilder withSeparatorAfter	
+		icon: self taskbarIcon
 ]
 
 { #category : #'instance creation' }
@@ -621,7 +621,6 @@ TestRunner >> findClassesForPackages: aCollection [
 			((Smalltalk organization listAtCategoryNamed: category) 
 				collect: [ :each | Smalltalk globals at: each ])
 				select: [ :each | each includesBehavior: self baseClass ] ].
-
 	^ items asSet
 ]
 

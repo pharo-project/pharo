@@ -146,7 +146,7 @@ RBTransformationRuleTestData class >> guardClause [
 
 { #category : #'class initialization' }
 RBTransformationRuleTestData class >> initializeAfterLoad1 [
-	RecursiveSelfRule := RBParseTreeSearcher new.
+	RecursiveSelfRule := self parseTreeSearcher.
 	RecursiveSelfRule
 		addMethodSearches: #('`@methodName: `@args | `@temps | self `@methodName: `@args' '`@methodName: `@args | `@temps | ^self `@methodName: `@args')
 				-> [:aNode :answer | true]

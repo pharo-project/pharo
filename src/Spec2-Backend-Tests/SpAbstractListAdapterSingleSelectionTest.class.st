@@ -20,6 +20,13 @@ SpAbstractListAdapterSingleSelectionTest >> initializeTestedInstance [
 
 ]
 
+{ #category : #running }
+SpAbstractListAdapterSingleSelectionTest >> tearDown [ 
+
+	presenter delete.
+	super tearDown
+]
+
 { #category : #'tests-model-to-widget' }
 SpAbstractListAdapterSingleSelectionTest >> testSelectManyIndexesKeepsLastSelectionInWidget [
 	presenter selectIndex: 1.
@@ -43,6 +50,49 @@ SpAbstractListAdapterSingleSelectionTest >> testSelectPresenterIndexSetsSelected
 SpAbstractListAdapterSingleSelectionTest >> testSelectPresenterItemSetsSelectedIndexInWidget [
 	presenter selectItem: 20.
 	self assert: (self adapter selectedIndexes includes: 2)
+]
+
+{ #category : #'tests-model-to-widget' }
+SpAbstractListAdapterSingleSelectionTest >> testSelectPresenterWithScrollingMakeSelectedItemVisible [
+	| visibleItems |
+
+	"TreeTable presenter does not have the same API, do not run the test"
+	presenter class adapterName = #TreeTableAdapter ifTrue: [ ^ self ].
+	
+	self flag: 'TODO: remove the following guard clause once scrolling is implemented on SpComponentListPresenter'.
+	presenter class adapterName = #ComponentListAdapter ifTrue: [ ^ self ].
+	
+	presenter
+		items: (1 to: 200);
+		selectIndex: 150 scrollToSelection: true;
+		openWithSpec.
+		
+	visibleItems := presenter verticalAlignment firstVisibleRowIndex to: presenter verticalAlignment lastVisibleRowIndex.
+		
+	self assert: (visibleItems includes: presenter selection selectedIndex)
+]
+
+{ #category : #'tests-model-to-widget' }
+SpAbstractListAdapterSingleSelectionTest >> testSelectPresenterWithoutScrollingDoesNotScroll [
+	| visibleItems verticalAlignment |
+	
+	"TreeTable presenter does not have the same API, do not run the test"
+	presenter class adapterName = #TreeTableAdapter ifTrue: [ ^ self ].
+	
+	self flag: 'TODO: remove the following guard clause once scrolling is implemented on SpComponentListPresenter'.
+	presenter class adapterName = #ComponentListAdapter ifTrue: [ ^ self ].
+	
+	presenter 
+		items: (1 to: 200);
+		openWithSpec.
+	verticalAlignment := presenter verticalAlignment.		
+	visibleItems := verticalAlignment firstVisibleRowIndex to: verticalAlignment lastVisibleRowIndex.
+	
+	presenter selectIndex: 150 scrollToSelection: false.
+			
+	self 
+		assert: (verticalAlignment firstVisibleRowIndex to: verticalAlignment lastVisibleRowIndex) 
+		equals: visibleItems
 ]
 
 { #category : #'tests-widget-to-model' }

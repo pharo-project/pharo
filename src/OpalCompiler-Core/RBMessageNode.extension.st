@@ -2,13 +2,12 @@ Extension { #name : #RBMessageNode }
 
 { #category : #'*opalcompiler-core' }
 RBMessageNode >> isInlineAndOr [
+
 	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineAndOr ifFalse: [ ^false ]]. 
 	self receiver isBlock ifTrue: [^ false].
 	self isCascaded ifTrue: [^ false].
 	(#(and: or:) includes: self selector) ifFalse: [^ false].
-	(self arguments allSatisfy: [ :each | each isBlock ])  ifFalse: [^ false].
-	(self arguments allSatisfy: [ :each | each arguments isEmpty ]) ifFalse: [^ false ].
-	^ true
+	^self arguments allSatisfy: [ :each |  each isBlock and: [each arguments isEmpty ]]
 ]
 
 { #category : #'*opalcompiler-core' }
@@ -19,6 +18,7 @@ RBMessageNode >> isInlineCase [
 	self arguments size = 2 ifTrue: [  "otherwise block"
 		self arguments last isBlock ifFalse: [^ false]].
 	self arguments first isDynamicArray ifFalse: [^ false].
+	self arguments first statements ifEmpty: [^ false].
 	self arguments first statements do: [:assoc |
 		(assoc isMessage and: [assoc selector == #->]) ifFalse: [^ false].
 		assoc receiver isBlock ifFalse: [^ false].
@@ -30,15 +30,13 @@ RBMessageNode >> isInlineCase [
 
 { #category : #'*opalcompiler-core' }
 RBMessageNode >> isInlineIf [
-	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineIf ifFalse: [ ^false ]]. 
-	self receiver isBlock ifTrue: [^ false].
-	self isCascaded ifTrue: [^ false].
-	(#(ifTrue: ifFalse: ifTrue:ifFalse: ifFalse:ifTrue:) includes: self selector) ifFalse: [^ false].
-	self arguments do: [:node | node isBlock ifFalse: [^ false]].
-	self arguments do: [:block | block arguments isEmpty ifFalse: [^ false
-		]
-	].
-	^ true
+
+	self methodCompilationContextOrNil ifNotNil: [ :c | 
+		c optionInlineIf ifFalse: [ ^ false ] ].
+	self receiver isBlock ifTrue: [ ^ false ].
+	self isCascaded ifTrue: [ ^ false ].
+	(#( #ifTrue: #ifFalse: #ifTrue:ifFalse: #ifFalse:ifTrue: ) includes: self selector) ifFalse: [ ^ false ].
+	^ self arguments allSatisfy: [ :node | node isBlock and: [ node arguments isEmpty ]]
 ]
 
 { #category : #'*opalcompiler-core' }

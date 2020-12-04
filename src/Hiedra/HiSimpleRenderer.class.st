@@ -1,11 +1,15 @@
 "
-I render a Hiedra visualization (HiRuler) in a Form using Athens. The nodes and links of the ruler will occupy the cells of a grid in the Athens canvas. 
+I render a Hiedra visualization (HiRuler) in a Form using Athens. The nodes and links of the ruler will occupy the cells of an imaginary grid in the Athens canvas. 
 
 Decisions to render the ruler:
 
 * All nodes have the same appearance (radius, color, etc.).
 * All links have the same appearance (width, color, etc.).
 * All cells have same dimensions (width and height).
+
+The #accessing methods provide a way to customize the renderization.
+
+IMPORTANT: The #rowHeight is only rendering parameter that HAS NO DEFAULT VALUE and the user must set it with the pixel height of rows (an integer number).
 
 "
 Class {
@@ -120,16 +124,19 @@ HiSimpleRenderer >> athensPathForAscendingLink: aHiLink on: athensCanvas [
 		fragmentStart := (self cellCenterFor: aHiLink target rulerPoint) + nodeConnectionYOffset.
 		athensPathBuilder absolute; moveTo: fragmentStart.
 
+		"The arrow (if enabled) is connected to target node"
 		self addArrowInto: athensPathBuilder descending: false.
 
 		"Add all fragments except last (in reversed order)"
 		aHiLink intermediatePoints reverseDo: [ :rulerPoint | 
-			| fragmentEnd |
+			| fragmentEnd offset |
 			fragmentEnd := self cellCenterFor: rulerPoint.
+			offset := fragmentStart x > fragmentEnd x
+				ifTrue: [ linkWidth negated ] ifFalse: [ linkWidth ].
 			self
 				addLinkFragmentFrom: fragmentStart
 				to: fragmentEnd
-				intermediateY: (self cellOriginFor: rulerPoint) y
+				intermediateY: (self cellOriginFor: rulerPoint) y + offset
 				into: athensPathBuilder.
 			fragmentStart := fragmentEnd
 			].
@@ -151,29 +158,32 @@ HiSimpleRenderer >> athensPathForDescendingLink: aHiLink on: athensCanvas [
 		| nodeConnectionYOffset fragmentStart |
 		nodeConnectionYOffset := self nodeBottomRelativeConnectionPoint.
 
-		"Start of first fragment (that connects BELOW of the origin node)"
+		"Start of first fragment (that connects at BOTTOM of the origin node)"
 		fragmentStart := (self cellCenterFor: aHiLink origin rulerPoint) + nodeConnectionYOffset.
 		athensPathBuilder absolute; moveTo: fragmentStart.
 
 		"Add all fragments except last"
 		aHiLink intermediatePoints do: [ :rulerPoint |
-			| fragmentEnd |
+			| fragmentEnd offset |
 			fragmentEnd := self cellCenterFor: rulerPoint.
+			offset := fragmentStart x > fragmentEnd x
+				ifTrue: [ linkWidth negated ] ifFalse: [ linkWidth ].
 			self
 				addLinkFragmentFrom: fragmentStart
 				to: fragmentEnd
-				intermediateY: (self cellOriginFor: rulerPoint) y
+				intermediateY: (self cellOriginFor: rulerPoint) y + offset
 				into: athensPathBuilder.
 			fragmentStart := fragmentEnd
 			].
 
-		"Add last fragment (that connects ABOVE of the target node)"
+		"Add last fragment (that connects at TOP of the target node)"
 		self
 			addLinkFragmentFrom: fragmentStart
 			to: (self cellCenterFor: aHiLink target rulerPoint) - nodeConnectionYOffset
 			intermediateY: (self cellOriginFor: aHiLink target rulerPoint) y
 			into: athensPathBuilder.
 
+		"The arrow (if enabled) is connected to target node"
 		self addArrowInto: athensPathBuilder descending: true.
 		]
 ]
@@ -239,8 +249,8 @@ HiSimpleRenderer >> colorStrategy [
 ]
 
 { #category : #accessing }
-HiSimpleRenderer >> colorStrategy: anObject [
-	colorStrategy := anObject
+HiSimpleRenderer >> colorStrategy: aHiColorStrategy [
+	colorStrategy := aHiColorStrategy
 ]
 
 { #category : #rendering }
@@ -256,17 +266,16 @@ HiSimpleRenderer >> initialize [
 
 	self useWheelColorStrategy.
 
-	nodeRadio := 2.2.
-	nodeBorderWidth := 1.75.
+	nodeRadio := 3.0.
+	nodeBorderWidth := 1.1.
 	nodeConnectionOffset := 0.
 
-	linkWidth := nodeBorderWidth.
+	linkWidth := 1.3.
 	linkDashes := #().
 	linkCurveAngle := 45 degreesToRadians.
 
 	arrowSize := linkWidth * 0.75.
 
-	"Important: the user must set the height of rows (integers worked better than a floats)"
 	cellWidth := linkWidth * 3
 ]
 
@@ -343,9 +352,9 @@ HiSimpleRenderer >> nodeBottomRelativeConnectionPoint [
 ]
 
 { #category : #accessing }
-HiSimpleRenderer >> nodeColor: anObject [
+HiSimpleRenderer >> nodeColor: aColor [
 	self useUniformColorStrategy.
-	colorStrategy nodeColor: anObject
+	colorStrategy nodeColor: aColor
 ]
 
 { #category : #accessing }
@@ -425,8 +434,11 @@ HiSimpleRenderer >> rowHeight [
 ]
 
 { #category : #accessing }
-HiSimpleRenderer >> rowHeight: aNumber [
-	rowHeight := aNumber
+HiSimpleRenderer >> rowHeight: anInteger [
+	"Set the pixel height for rows (an integer number).
+	Note this assumes there is a unique height for all rows."
+
+	rowHeight := anInteger
 ]
 
 { #category : #accessing }

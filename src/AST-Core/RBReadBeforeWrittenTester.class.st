@@ -188,7 +188,7 @@ RBReadBeforeWrittenTester >> visitBlockNode: aBlockNode [
 
 { #category : #visiting }
 RBReadBeforeWrittenTester >> visitMessageNode: aMessageNode [ 
-	((#(#whileTrue: #whileFalse: #whileTrue #whileFalse) 
+	((#(#whileTrue: #whileFalse: #whileTrue #whileFalse #whileNil:) 
 		includes: aMessageNode selector) and: [aMessageNode receiver isBlock]) 
 		ifTrue: [self executeTree: aMessageNode receiver body]
 		ifFalse: 

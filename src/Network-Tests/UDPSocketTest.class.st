@@ -1,11 +1,6 @@
 Class {
 	#name : #UDPSocketTest,
 	#superclass : #TestCase,
-	#instVars : [
-		'listenerSocket',
-		'clientSocket',
-		'serverSocket'
-	],
 	#category : #'Network-Tests-Kernel'
 }
 

@@ -322,8 +322,8 @@ MorphTreeModel >> openDialogWindowIn: aWindow title: aTitle [
 { #category : #dialog }
 MorphTreeModel >> openDialogWindowIn: aWindow title: aTitle selectedtems: aCollection [ 
 	| dialog |
-	dialog := self dialogWindowIn:  aWindow title: aTitle selectedtems: aCollection.
-	aWindow openModal: dialog.
+	dialog := self dialogWindowIn: aWindow title: aTitle selectedtems: aCollection.
+	dialog openModal.
 	^ dialog cancelled ifFalse: [self selectedItems]
 
 ]

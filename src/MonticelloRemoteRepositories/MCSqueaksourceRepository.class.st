@@ -40,6 +40,6 @@ MCSqueaksourceRepository >> includesFileNamed: aString [
 
 { #category : #interface }
 MCSqueaksourceRepository >> includesVersionNamed: aString [
-	"directly do a filename check since squeaksource only stores mcz"
+	"directly do a filename check since the server only stores mcz"
 	^ self includesFileNamed: aString, '.mcz'
 ]

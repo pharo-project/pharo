@@ -24,29 +24,30 @@ AthensPathBuilder class >> initialize [
 
 { #category : #'path commands' }
 AthensPathBuilder >> absolute [
-	"next commands will use absolute coordinates for all segment points"
+	"Next commands will use absolute coordinates for all segment points"
+	
 	self subclassResponsibility
 ]
 
 { #category : #'path commands' }
 AthensPathBuilder >> ccwArcTo: endPt angle: rot [
-	" Add a counter-clockwise arc segment, starting from current path endpoint and
+	"Add a counter-clockwise arc segment, starting from current path endpoint and
 	ending at andPt. Angle should be specified in radians "
 	
-
 	self subclassResponsibility
 ]
 
 { #category : #'path commands' }
 AthensPathBuilder >> close [
-	"close the current path controur"
+	"Close the current path controur"
+	
 	self subclassResponsibility 
 ]
 
 { #category : #'creating path' }
 AthensPathBuilder >> createPath:	aBlock [
-
-		"aBlock value: self ...."	
+	"aBlock value: self ...."	
+	
 	self subclassResponsibility 
 ]
 
@@ -61,7 +62,6 @@ AthensPathBuilder >> curveVia: cp1 and: cp2 to: aPoint [
 
 { #category : #'path commands' }
 AthensPathBuilder >> curveVia: cp1 to: aPoint [
-
 	"Add a quadric bezier curve,
 	starting from current path endpoint, using control point cp1, 
 	and ending at aPoint "
@@ -71,7 +71,7 @@ AthensPathBuilder >> curveVia: cp1 to: aPoint [
 
 { #category : #'path commands' }
 AthensPathBuilder >> cwArcTo: endPt angle: rot [
-	" Add a clockwise arc segment, starting from current path endpoint and
+	"Add a clockwise arc segment, starting from current path endpoint and
 	ending at andPt. Angle should be specified in radians "
 	
 
@@ -80,14 +80,14 @@ AthensPathBuilder >> cwArcTo: endPt angle: rot [
 
 { #category : #'path commands' }
 AthensPathBuilder >> lineTo: aPoint [
-	"add a line segment, starting from current path endpoint to aPoint"
+	"Add a line segment, starting from current path endpoint to aPoint"
 	
 	self subclassResponsibility
 ]
 
 { #category : #'path commands' }
 AthensPathBuilder >> moveTo: aPoint [
-	" move command always starts a new contour "
+	"Move command always starts a new contour "
 	self subclassResponsibility
 ]
 
@@ -102,13 +102,14 @@ AthensPathBuilder >> reflectedCurveVia: cp2 to: aPoint [
 
 { #category : #'path commands' }
 AthensPathBuilder >> relative [
-
-	"next commands will use relative coordinates for all segment points"
+	"Next commands will use relative coordinates for all segment points"
+	
 	self subclassResponsibility
 ]
 
 { #category : #'path commands' }
 AthensPathBuilder >> string: aString font: aFont [
 	"Adds closed paths for the string to the current path"
+	
 	self subclassResponsibility
 ]

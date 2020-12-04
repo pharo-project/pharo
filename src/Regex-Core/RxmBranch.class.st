@@ -41,11 +41,27 @@ RxmBranch >> initialize [
 
 { #category : #matching }
 RxmBranch >> matchAgainst: aMatcher [
-	"Match either `next' or `alternative'. Fail if the alternative is nil."
+	"Match the longest match of `next' or `alternative'. Fail the alternative if the alternative is nil."
 
-	^(next matchAgainst: aMatcher)
-		or: [alternative notNil
-			and: [alternative matchAgainst: aMatcher]]
+	| original firstMatch firstMatchPos |
+
+	original := aMatcher currentState.
+	(next matchAgainst: aMatcher)
+		ifFalse: [^alternative notNil and: [alternative matchAgainst: aMatcher]].
+	alternative ifNil: [^true].
+	firstMatch := aMatcher currentState.
+	firstMatchPos := aMatcher position.
+	aMatcher restoreState: original.
+	(alternative matchAgainst: aMatcher)
+		ifFalse: [
+			aMatcher restoreState: firstMatch.
+			^true].
+	firstMatchPos >= aMatcher position
+		ifTrue: [
+			aMatcher restoreState: firstMatch.
+			^true].
+	^true			
+
 ]
 
 { #category : #building }

@@ -225,7 +225,7 @@ ZipFileMember >> unzipTimestamp: dosTimestampInteger [
 
 	^ [ DateAndTime fromDosTimestamp: dosTimestampInteger ]
 		on: Error
-		do: [ "Assume we're dealing with the old, incorrect Squeak format"
+		do: [ "Assume we're dealing with the old, incorrect format"
 			DateAndTime fromSeconds: 2492992800 + dosTimestampInteger ]
 ]
 

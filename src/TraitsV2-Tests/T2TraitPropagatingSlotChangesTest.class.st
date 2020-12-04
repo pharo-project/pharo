@@ -4,7 +4,7 @@ Unit test for correct propogation of slot changes for traits
 Class {
 	#name : #T2TraitPropagatingSlotChangesTest,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests-Base'
+	#category : #'TraitsV2-Tests'
 }
 
 { #category : #tests }
@@ -21,7 +21,7 @@ T2TraitPropagatingSlotChangesTest >> testAddingSlotToTrait [
 
 	self assert: c1 classLayout slotScope parentScope identicalTo: c1 superclass classLayout slotScope.
 	self assert: c1 class classLayout slotScope parentScope identicalTo: c1 class superclass classLayout slotScope.
-	self assertCollection: (c1 allSlots collect: #name) hasSameElements: #(aSlot)
+	self assertCollection: (c1 allSlots collect: [:each | each name]) hasSameElements: #(aSlot)
 ]
 
 { #category : #tests }
@@ -32,7 +32,7 @@ T2TraitPropagatingSlotChangesTest >> testRemovingSlotToTrait [
 
 	self assert: c1 classLayout slotScope parentScope identicalTo: c1 superclass classLayout slotScope.
 	self assert: c1 class classLayout slotScope parentScope identicalTo: c1 class superclass classLayout slotScope.
-	self assertCollection: (c1 allSlots collect: #name) hasSameElements: #(aSlot).
+	self assertCollection: (c1 allSlots collect: [:each | each name]) hasSameElements: #(aSlot).
 
 	t1 := self newTrait: #T1 with: #() uses: {}.
 

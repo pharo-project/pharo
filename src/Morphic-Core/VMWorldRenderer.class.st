@@ -6,7 +6,8 @@ Class {
 	#superclass : #AbstractWorldRenderer,
 	#instVars : [
 		'display',
-		'canvas'
+		'canvas',
+		'deferredUpdateMode'
 	],
 	#category : #'Morphic-Core-Worlds'
 }
@@ -94,48 +95,20 @@ VMWorldRenderer >> deferUpdates: aValue [
 ]
 
 { #category : #operations }
-VMWorldRenderer >> displayWorldState: aWorldState ofWorld: aWorld submorphs: submorphs [
-	"Update this world's display."
+VMWorldRenderer >> deferUpdatesDuring: aBlock [
 
-	| deferredUpdateMode handsToDraw allDamage |
-	submorphs do: [ :m | m fullBounds ].	"force re-layout if needed"
-
-	aWorldState checkIfUpdateNeeded
-		ifFalse: [ ^ self ].	"display is already up-to-date"
-
-	deferredUpdateMode := self doDeferredUpdatingFor: aWorld.
-	deferredUpdateMode
-		ifFalse: [ self assuredCanvas ].
-
-	self canvas
-		ifNotNil: [ 
-			self canvas
-				roundCornersOf: aWorld
-				during: [ | worldDamageRects handDamageRects |
-					worldDamageRects := aWorldState drawWorld: aWorld submorphs: submorphs invalidAreasOn: self canvas.	"repair world's damage on canvas"
-					"self handsDo:[:h| h noticeDamageRects: worldDamageRects]."
-					handsToDraw := aWorldState selectHandsToDrawForDamage: worldDamageRects.
-					handDamageRects := handsToDraw collect: [ :h | h savePatchFrom: self canvas ].
-					allDamage := worldDamageRects , handDamageRects.
-					handsToDraw reverseDo: [ :h | "draw hands onto world canvas" self canvas fullDrawMorph: h ] ] ].
-	"*make this true to flash damaged areas for testing*"
-
-	aWorldState class debugShowDamage
-		ifTrue: [ aWorld flashRects: allDamage color: Color black ].
-
-	"Check that the canvas is not already freed when we want to finish it"
-	self canvas ifNotNil: [ :c | c finish ].
-
-	"quickly copy altered rects of canvas to Display:"
-	deferredUpdateMode
-		ifTrue: [ self forceDamageToScreen: allDamage ]
-		ifFalse: [ self canvas showAt: aWorld viewBox origin invalidRects: allDamage ].
-
-	handsToDraw do: [ :h | h restoreSavedPatchOn: self canvas ].	"restore world canvas under hands"
+	| previousDeferredUpdateMode |
+	previousDeferredUpdateMode := deferredUpdateMode.
+	[deferredUpdateMode := (self doDeferredUpdatingFor: world)
+		ifTrue: [ VMDisplayDeferredUpdateMode new ]
+		ifFalse: [ self assuredCanvas. VMDisplayDirectUpdateMode new ].
 	
-	self
-		deferUpdates: false;
-		forceDisplayUpdate
+	aBlock value
+	
+	] ensure: [ 
+		deferredUpdateMode := previousDeferredUpdateMode.
+		self deferUpdates: false.
+		self forceDisplayUpdate ]
 ]
 
 { #category : #activation }
@@ -171,6 +144,14 @@ VMWorldRenderer >> doDeferredUpdatingFor: aWorld [
 ]
 
 { #category : #operations }
+VMWorldRenderer >> drawDuring: aBlock [
+	
+	self canvas ifNotNil: [ 
+		aBlock value: self canvas.
+	]
+]
+
+{ #category : #operations }
 VMWorldRenderer >> forceDamageToScreen: allDamage [
 
 	^ Display forceDamageToScreen: allDamage.
@@ -202,6 +183,22 @@ VMWorldRenderer >> icon: aForm [
 	
 	DisplayScreen hostWindowIcon: path.
 	"
+]
+
+{ #category : #rendering }
+VMWorldRenderer >> invalidate [
+
+	self canvas: nil
+]
+
+{ #category : #operations }
+VMWorldRenderer >> updateDamage: allDamage [
+	
+	"quickly copy altered rects of canvas to Display:"
+	deferredUpdateMode
+		updateDamage: allDamage
+		ofWorld: world
+		onRenderer: self.
 ]
 
 { #category : #'display box access' }

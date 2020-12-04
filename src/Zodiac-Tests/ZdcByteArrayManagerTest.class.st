@@ -7,7 +7,7 @@ Class {
 	#category : #'Zodiac-Tests'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 ZdcByteArrayManagerTest >> testClearing [
 	| byteArrayManager one two |
 	byteArrayManager := ZdcByteArrayManager new.
@@ -20,7 +20,7 @@ ZdcByteArrayManagerTest >> testClearing [
 	self assert: two equals: (ByteArray new: 10)
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ZdcByteArrayManagerTest >> testSimple [
 	| byteArrayManager byteArray |
 	byteArrayManager := ZdcByteArrayManager new.

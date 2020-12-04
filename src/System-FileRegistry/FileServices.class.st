@@ -22,7 +22,7 @@ FileServices class >> itemsForDirectory: aFileDirectory [
 
 	| services |
 	services := OrderedCollection new.
-	(PragmaCollector filter: [ :pragma | pragma selector = 'directoryService' ]) reset
+	(Pragma allNamed: #directoryService)
 		do: [ :each | services addAll: (each methodClass soleInstance perform: each methodSelector with: aFileDirectory) ].
 	^ services
 ]
@@ -34,8 +34,7 @@ FileServices class >> itemsForFile: fullName [
 	| services suffix |
 	suffix := self suffixOf: fullName.
 	services := OrderedCollection new.
-	(PragmaCollector filter: [ :pragma | pragma selector = 'fileService' ])
-		reset
+	(Pragma allNamed: #fileService)
 		do: [ :each | 
 			services
 				addAll:

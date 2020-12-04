@@ -1,15 +1,17 @@
 Class {
 	#name : #ClapParameterTest,
 	#superclass : #TestCase,
-	#instVars : [
-		'subject'
-	],
 	#category : #'Clap-Tests-Unit'
 }
 
 { #category : #testing }
 ClapParameterTest class >> isAbstract [
-	^ self == ClapParameterTest
+	^ self = ClapParameterTest
+]
+
+{ #category : #testing }
+ClapParameterTest class >> shouldInheritSelectors [
+	^ true
 ]
 
 { #category : #accessing }
@@ -17,13 +19,12 @@ ClapParameterTest >> classToTest [
 	^ self subclassResponsibility
 ]
 
-{ #category : #running }
-ClapParameterTest >> setUp [
-	super setUp.
-	subject := self classToTest withName: self subjectName
+{ #category : #'tests - fixture' }
+ClapParameterTest >> namedSubject [
+	^ self classToTest id: self subjectName asSymbol
 ]
 
-{ #category : #running }
+{ #category : #'tests - fixture' }
 ClapParameterTest >> subjectName [
 	^ 'foo'
 ]
@@ -31,13 +32,21 @@ ClapParameterTest >> subjectName [
 { #category : #tests }
 ClapParameterTest >> testCanonicalName [
 	self
-		assert: subject canonicalName
-		equals: self subjectName
+		assert: self namedSubject canonicalName
+		equals: self subjectName asString
+]
+
+{ #category : #tests }
+ClapParameterTest >> testIdentifierDerivedFromCanonicalName [
+	self
+		assert: self namedSubject identifier
+		equals: self subjectName asSymbol
 ]
 
 { #category : #tests }
 ClapParameterTest >> testMismatchesAtEnd [
-	| argv match |
+	| subject argv match |
+	subject := self namedSubject.
 	argv := #() readStream.
 	
 	match := subject matchOn: argv.
@@ -46,4 +55,18 @@ ClapParameterTest >> testMismatchesAtEnd [
 	self
 		assert: match specification
 		identicalTo: subject
+]
+
+{ #category : #tests }
+ClapParameterTest >> testSubjectIdentifier [
+	| subject |
+	subject := self classToTest id: #subjectId.
+	subject canonicalName: self subjectName.
+	
+	self
+		assert: subject identifier
+		equals: #subjectId.
+	self
+		assert: subject canonicalName
+		equals: self subjectName
 ]

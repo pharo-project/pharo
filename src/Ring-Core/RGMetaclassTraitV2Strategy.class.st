@@ -72,7 +72,7 @@ RGMetaclassTraitV2Strategy >> definition [
 			nextPutAll: 'uses: ';
 			nextPutAll: self owner traitCompositionString.
 		(self owner slots size > 0) ifTrue: [ 
-			(self owner usesSpecialSlot or: [ Slot showSlotClassDefinition ])
+			(self owner slotsNeedFullDefinition or: [ ClassDefinitionPrinter showFluidClassDefinition ])
 				ifFalse: [  
 							stream
 								crtab;

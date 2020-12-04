@@ -7,7 +7,6 @@ Class {
 	#name : #SpMorphicMillerAdapter,
 	#superclass : #SpMorphicLayoutAdapter,
 	#instVars : [
-		'layout',
 		'innerWidget',
 		'lastExtent',
 		'lastPageSize',
@@ -27,9 +26,10 @@ SpMorphicMillerAdapter >> add: aPresenter constraints: constraints [
 
 	self widget ifNil: [ ^ self ].
 
+	aPresenter owner: self model. 
 	needRecalculatePages := true.
 	self 
-		basicAdd: aPresenter 
+		basicAdd: aPresenter
 		constraints: constraints 
 		to: innerWidget.
 	self scrollToShowLastPage
@@ -47,8 +47,8 @@ SpMorphicMillerAdapter >> addConstraits: constraints toChild: childMorph [
 
 { #category : #private }
 SpMorphicMillerAdapter >> basicAdd: aPresenter constraints: constraints to: aPanel [
-	| childMorph |
 
+	| childMorph |
 	childMorph := self buildMorph: aPresenter constraints: constraints.	
 	aPanel addMorphBack: childMorph.
 	
@@ -61,11 +61,31 @@ SpMorphicMillerAdapter >> childrenWidgets [
 	^ innerWidget submorphs
 ]
 
+{ #category : #factory }
+SpMorphicMillerAdapter >> disableHScrollBar [
+	
+	widget hScrollbarShowNever
+]
+
+{ #category : #factory }
+SpMorphicMillerAdapter >> enableHScrollBar [
+	
+	widget hScrollbarShowWhenNeeded
+]
+
+{ #category : #private }
+SpMorphicMillerAdapter >> forceRecalculatePages [
+
+	needRecalculatePages := true.
+	self recalculatePages
+]
+
 { #category : #private }
 SpMorphicMillerAdapter >> initialize [
 
-	needRecalculatePages := false.
-	super initialize
+	super initialize.
+	needRecalculatePages := false
+
 ]
 
 { #category : #factory }
@@ -79,9 +99,15 @@ SpMorphicMillerAdapter >> layout: aLayout [
 		innerWidget borderWidth: aLayout borderWidth.
 		innerWidget cellInset: aLayout spacing.
 		
-		layout whenVisiblePagesChangedDo: [ self recalculatePages ].
+		layout whenVisiblePagesChangedDo: [ self forceRecalculatePages ].
 		
-		widget := self newScrollPaneFor: innerWidget ].
+		widget := self newScrollPaneFor: innerWidget.
+		self presenter hasHorizontalScrollBar 
+			ifFalse: [ self disableHScrollBar ].
+		self presenter whenHorizontalScrollBarChangedDo: [ :show |
+			show 
+				ifTrue: [ self enableHScrollBar ]
+			 	ifFalse: [ widget hScrollbarShowNever ] ] ].
 
 	super layout: aLayout
 ]
@@ -104,16 +130,16 @@ SpMorphicMillerAdapter >> newPanel [
 
 { #category : #factory }
 SpMorphicMillerAdapter >> newScrollPaneFor: aWidget [
-	
-	^ MillerScrollPane new 
-		changeScrollerTableLayout;
-		hResizing: #spaceFill;
-		vResizing: #spaceFill;
-		color: Color transparent;
-		borderColor: Color transparent;
-		scrollTarget: aWidget;
-		onLayoutChange: [ self recalculatePages ];
-		yourself
+
+	^ MillerScrollPane new
+		  changeScrollerTableLayout;
+		  hResizing: #spaceFill;
+		  vResizing: #spaceFill;
+		  color: Color transparent;
+		  borderColor: Color transparent;
+		  scrollTarget: aWidget;
+		  onLayoutChange: [ self recalculatePages ];
+		  yourself
 ]
 
 { #category : #factory }
@@ -126,8 +152,8 @@ SpMorphicMillerAdapter >> newVertical [
 
 { #category : #private }
 SpMorphicMillerAdapter >> recalculatePageHeights [
-	| newHeight widgets height |
 
+	| newHeight widgets height |
 	height := self widget height.
 	widgets := self childrenWidgets.
 	newHeight := widgets size = 1
@@ -142,8 +168,8 @@ SpMorphicMillerAdapter >> recalculatePageHeights [
 
 { #category : #private }
 SpMorphicMillerAdapter >> recalculatePageWidths [
-	| newWidth widgets width |
 
+	| newWidth widgets width |
 	widgets := self childrenWidgets.
 	width := self widget width.
 	newWidth := widgets size = 1
@@ -174,8 +200,8 @@ SpMorphicMillerAdapter >> recalculatePages [
 
 { #category : #accessing }
 SpMorphicMillerAdapter >> remove: aPresenter [
-	| morph |
 
+	| morph |
 	needRecalculatePages := true.
 	morph := aPresenter adapter widget.	
 	innerWidget removeMorph: morph
@@ -194,9 +220,28 @@ SpMorphicMillerAdapter >> removeSubWidgets [
 	innerWidget removeAllMorphs
 ]
 
+{ #category : #paginator }
+SpMorphicMillerAdapter >> scrollByDeltaPercent: percent [
+
+	| millerWidth millerDelta |	
+	millerWidth := self widget scroller localSubmorphBounds width.
+	millerDelta := millerWidth * (percent / 100).
+	self widget scroller offset: (self widget scroller offset x + millerDelta)@0	
+]
+
 { #category : #private }
 SpMorphicMillerAdapter >> scrollToShowLastPage [
 
-	self widget defer: [ 
-		self widget scrollToShow: (innerWidget submorphs last bounds) ]
+	self widget defer: [ | size firstMorphIndex |
+		size := innerWidget submorphs size.
+		firstMorphIndex := size - self presenter visiblePages + 1. 
+		self widget showMorph: (innerWidget submorphs at: ((firstMorphIndex max: 1) min: size)) ]
+]
+
+{ #category : #accessing }
+SpMorphicMillerAdapter >> selectPage: aNumber [
+
+	self widget defer: [
+		(self childrenWidgets at: aNumber ifAbsent: [ nil ])
+			ifNotNil: [ :aMorph | self widget showMorph: aMorph ] ]
 ]

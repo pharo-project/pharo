@@ -23,7 +23,6 @@ Class {
 		'labelArea',
 		'expandBox',
 		'embeddable',
-		'menuBuilder',
 		'isResizeable'
 	],
 	#classVars : [
@@ -178,101 +177,67 @@ SystemWindow class >> buildWindowTilingShortcutsOn: aBuilder [
 	(aBuilder shortcut: #windowTopLeft)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowTopLeftShortcut
-		do: [ :target | 
-			| max |
-			max := RealEstateAgent maximumUsableArea.
-			target bounds: (max topLeft corner: max center)]
+		do: [ :target | target tileTopLeft]
 		description: 'Move the window to the top left corner of the display'.
 
 	(aBuilder shortcut: #windowLeft)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowLeftShortcut
-		do: [ :target | 
-			| max |
-			max := RealEstateAgent maximumUsableArea.
-			target bounds: (max topLeft corner: max bottomCenter)]
+		do: [ :target | target tileLeft ]
 		description: 'Move the window to the left half of the display'.
 	
 	(aBuilder shortcut: #windowBottomLeft)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowBottomLeftShortcut
-		do: [ :target | 
-			| max |
-			max := RealEstateAgent maximumUsableArea.
-			target bounds: (max leftCenter corner: max bottomCenter)]
+		do: [ :target | target tileBottomLeft ]
 		description: 'Move the window to the bottom left corner of the display'.
 
 	(aBuilder shortcut: #windowTop)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowTopShortcut
-		do: [ :target | 
-			| max |
-			max := RealEstateAgent maximumUsableArea.
-			target bounds: (max topLeft corner: max rightCenter)]
+		do: [ :target | target tileTop ]
 		description: 'Move the window to the top half of the display'.
 
 	(aBuilder shortcut: #windowTopRight)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowTopRightShortcut
-		do: [ :target | 
-			| max |
-			max := RealEstateAgent maximumUsableArea.
-			target bounds: (max topCenter corner: max rightCenter)]
+		do: [ :target | target tileTopRight ]
 		description: 'Move the window to the top right corner of the display'.
 
 	(aBuilder shortcut: #windowRight)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowRightShortcut
-		do: [ :target | 
-			| max |
-			max := RealEstateAgent maximumUsableArea.
-			target bounds: (max topCenter corner: max corner)]
+		do: [ :target | target tileRight ]
 		description: 'Move the window to the right half of the display'.
 
 	(aBuilder shortcut: #windowRightBottom)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowRightBottomShortcut
-		do: [ :target | 
-			| max |
-			max := RealEstateAgent maximumUsableArea.
-			target bounds: (max center corner: max corner)]
+		do: [ :target | target tileBottomRight ]
 		description: 'Move the window to the right bottom corner of the display'.
 
 	(aBuilder shortcut: #windowBottom)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowBottomShortcut
-		do: [ :target | 
-			| max |
-			max := RealEstateAgent maximumUsableArea.
-			target bounds: (max leftCenter corner: max corner)]
+		do: [ :target | target tileBottom ]
 		description: 'Move the window to the bottom half of the display'.
 
 	(aBuilder shortcut: #windowMaximize)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowMaximizeShortcut
-		do: [ :target | 
-			| max |
-			max := RealEstateAgent maximumUsableArea.
-			target bounds: max]
+		do: [ :target | target tileFull ]
 		description: 'Maximize the window'.
 
 	(aBuilder shortcut: #windowMinimize)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowMinimizeShortcut
-		do: [ :target | 
-			| max |
-			max := RealEstateAgent maximumUsableArea.
-			target minimize]
+		do: [ :target | target minimize]
 		description: 'Miminimze the window'.
 
 	(aBuilder shortcut: #windowCenter)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowCenterShortcut
-		do: [ :target | 
-			| max initial |
-			max := RealEstateAgent maximumUsableArea.
-			initial :=  target initialExtent.
-			target bounds: ((max center - (initial/2)) extent: initial )]
+		do: [ :target | target tileCenter]
 		description: 'Center the window with a default extent'.
 
 ]
@@ -407,6 +372,89 @@ SystemWindow class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
 	^#smallWindowIcon
+]
+
+{ #category : #'menu items - tiling' }
+SystemWindow class >> tilingMenuItemsOn: aBuilder [
+
+	<windowMenu>
+		
+	(aBuilder item: #tileLeft)
+		action: [ :target | target tileLeft ];
+		label: 'Left';
+		parent: #Tile;
+		icon: (self iconNamed: #blank); 
+		order: 1;
+		help: 'Move the window to the left half of the display'.
+
+	(aBuilder item: #tileRight)
+		action: [ :target | target tileRight ];
+		label: 'Right';
+		parent: #Tile;
+		help: 'Move the window to the right half of the display'.
+
+	(aBuilder item: #tileTop)
+		action: [ :target | target tileTop ];
+		label: 'Top';
+		parent: #Tile;
+		help: 'Move the window to the top half of the display'.
+
+	(aBuilder item: #tileBottom)
+		action: [ :target | target tileBottom ];
+		label: 'Bottom';
+		parent: #Tile;
+		help: 'Move the window to the bottom half of the display'.
+
+	(aBuilder item: #tileTopLeft)
+		action: [ :target | target tileTopLeft ];
+		label: 'Top left';
+		parent: #Tile;
+		help: 'Move the window to the top left corner of the display'.
+		
+	(aBuilder item: #tileTopRight)
+		action: [ :target | target tileTopRight ];
+		label: 'Top right';
+		parent: #Tile;
+		help: 'Move the window to the top right corner of the display'.
+
+	(aBuilder item: #tileBottomLeft)
+		action: [ :target | target tileBottomLeft ];
+		label: 'Bottom left';
+		parent: #Tile;
+		help: 'Move the window to the bottom left corner of the display'.
+
+	(aBuilder item: #tileBottomRight)
+		action: [ :target | target tileBottomRight ];
+		label: 'Bottom right';
+		parent: #Tile;
+		help: 'Move the window to the right bottom corner of the display'.
+
+	(aBuilder item: #tileFull)
+		action: [ :target | target tileFull ];
+		label: 'Full';
+		parent: #Tile;
+		help: 'Maximize the window'.
+
+	(aBuilder item: #tileCenter)
+		action: [ :target | target tileCenter ];
+		label: 'Center';
+		parent: #Tile;
+		help: 'Center the window with a default extent'.
+
+
+
+
+
+
+]
+
+{ #category : #'menu items - tiling' }
+SystemWindow class >> tilingMenuOn: aBuilder [
+
+	<windowMenu>
+
+	(aBuilder item: #Tile)
+		order: 10.5.
 ]
 
 { #category : #'top window' }
@@ -628,6 +676,16 @@ SystemWindow >> announceDeActivated [
 			window: self; 
 			yourself
 	).
+]
+
+{ #category : #announcement }
+SystemWindow >> announceOpened [
+
+	super announceOpened.
+	self currentWorld announcer
+		announce: (WindowOpened new
+						window: self;
+						yourself).
 ]
 
 { #category : #initialization }
@@ -1042,11 +1100,9 @@ SystemWindow >> fullscreenMargin [
 SystemWindow >> getBoundsWithFlex [
 	"Return the lastest bounds rectangle with origin forced to global coordinates"
 
-	self isFlexed
-		ifTrue: [^ ((owner transform localPointToGlobal: bounds topLeft)
-										extent: bounds extent)]
-		ifFalse: [^ self bounds].
-
+	^ self isFlexed
+		ifTrue: [ (owner transform localPointToGlobal: bounds topLeft) extent: bounds extent ]
+		ifFalse: [ self bounds ]
 ]
 
 { #category : #'resize/collapse' }
@@ -1121,7 +1177,7 @@ SystemWindow >> icon [
 SystemWindow >> initialExtent [
 	^ (self model respondsTo: #initialExtent)
 		ifTrue: [self model initialExtent]
-		ifFalse: [RealEstateAgent standardWindowExtent]
+		ifFalse: [ self extent ]
 ]
 
 { #category : #initialization }
@@ -1277,10 +1333,9 @@ SystemWindow >> maximumExtent: aPoint [
 { #category : #api }
 SystemWindow >> menu [
 
-	| aMenu |
-	aMenu := MenuMorph new.
-	self windowMenuOn: aMenu.
-	^ aMenu
+	^(PragmaMenuBuilder 
+		pragmaKeyword: self discoveredMenuPragmaKeyword 
+		model: self) menu
 ]
 
 { #category : #'resize/collapse' }
@@ -1327,6 +1382,45 @@ SystemWindow >> minimizeOrRestore [
 
 	windowEvent window: self.
 	self announce: windowEvent.
+]
+
+{ #category : #'modal-windows' }
+SystemWindow >> modalChild [
+	"Answer the modal child of the receiver, if any."
+
+	^self valueOfProperty: #modalChild
+]
+
+{ #category : #'modal-windows' }
+SystemWindow >> modalLockTo: aSystemWindow [
+	"Lock the receiver as a modal owner of the given window."
+
+	aSystemWindow setProperty: #modalOwner toValue: self.
+	self setProperty: #modalChild toValue: aSystemWindow.
+	
+	closeBox ifNotNil: [ 
+		self setProperty: #preModalCloseEnabled toValue: closeBox enabled.
+		closeBox enabled: false
+	].
+
+]
+
+{ #category : #'modal-windows' }
+SystemWindow >> modalOwner [
+	"Answer the modal owner of the receiver, if any."
+
+	^self valueOfProperty: #modalOwner
+]
+
+{ #category : #'modal-windows' }
+SystemWindow >> modalUnlockFrom: aSystemWindow [
+	"Unlock the receiver as a modal owner of the given window."
+
+	aSystemWindow removeProperty: #modalOwner.
+	self removeProperty: #modalChild.
+	closeBox ifNotNil: [:cl | cl enabled: (self valueOfProperty: #preModalCloseEnabled ifAbsent: [true])].
+	self removeProperty: #preModalCloseEnabled.
+	self activate
 ]
 
 { #category : #events }
@@ -1418,57 +1512,25 @@ SystemWindow >> offerWindowMenu [
 ]
 
 { #category : #'open/close' }
-SystemWindow >> openAsIs [
-	^self openAsIsIn: self currentWorld
-
-]
-
-{ #category : #'open/close' }
-SystemWindow >> openAsIsIn: aWorld [
-	"This msg and its callees result in the window being activeOnlyOnTop.
-	Play the open sound if the preference is enabled."
-	
-	self playOpenSound.
-	aWorld addMorph: self.
-	self activate.
-	aWorld startSteppingSubmorphsOf: self.
-	
-	self announceOpened.
-	
-	self currentWorld announcer 
-		announce: (WindowOpened new
-						window: self;
-						yourself).
-
-]
-
-{ #category : #'open/close' }
-SystemWindow >> openInWorld: aWorld [
-	"This msg and its callees result in the window being activeOnlyOnTop"
-	self bounds: (RealEstateAgent initialFrameFor: self world: aWorld).
-	^self openAsIsIn: aWorld.
-
-]
-
-{ #category : #'open/close' }
-SystemWindow >> openInWorld: aWorld extent: extent [
-	"This msg and its callees result in the window being activeOnlyOnTop"
-	self position: (RealEstateAgent initialFrameFor: self initialExtent: extent world: aWorld) topLeft; extent: extent.
-	^self openAsIsIn: aWorld
-]
-
-{ #category : #'open/close' }
-SystemWindow >> openInWorldExtent: extent [
-	"This msg and its callees result in the window being activeOnlyOnTop"
-
-	self openInWorld: self currentWorld extent: extent
-]
-
-{ #category : #'open/close' }
 SystemWindow >> openModal [
-
 	self openInWorld.
-	self theme runModal: self.
+	MorphicRenderLoop new doOneCycleWhile: [ self isInWorld ]
+]
+
+{ #category : #'*Morphic-Widgets-Windows' }
+SystemWindow >> openModal: aSystemWindow [
+	"Open the given window locking the receiver until it is dismissed.
+	Answer the system window.
+	Restore the original keyboard focus when closed."
+
+	| keyboardFocus |
+	
+	keyboardFocus := self activeHand keyboardFocus.
+	self modalLockTo: aSystemWindow.
+	[ aSystemWindow openModal ] ensure: [
+		self modalUnlockFrom: aSystemWindow.
+		self activeHand newKeyboardFocus: keyboardFocus ].
+	^aSystemWindow
 ]
 
 { #category : #panes }
@@ -1562,6 +1624,23 @@ SystemWindow >> positionSubmorphs [
 		[:aMorph | aMorph positionSubmorphs]
 ]
 
+{ #category : #opening }
+SystemWindow >> postOpenInWorld: aWorld [
+
+	self activate.
+	super postOpenInWorld: aWorld
+]
+
+{ #category : #opening }
+SystemWindow >> preOpenInWorld: aWorld [
+	"This msg and its callees result in the window being activeOnlyOnTop"
+	self bounds: (RealEstateAgent
+		initialFrameFor: self
+		initialExtent: self initialExtent
+		world: aWorld).
+	self playOpenSound.
+]
+
 { #category : #printing }
 SystemWindow >> printOn: aStream [
 
@@ -1575,7 +1654,7 @@ SystemWindow >> privateBePassive [
 	self isInWorld ifFalse: [ ^self ].
 	
 	self 
-	rememberKeyboardFocus: ActiveHand keyboardFocus;
+	rememberKeyboardFocus: self activeHand keyboardFocus;
 	passivate;
 	announceDeActivated
 
@@ -1944,49 +2023,4 @@ SystemWindow >> wantsYellowButtonMenu [
 { #category : #label }
 SystemWindow >> widthOfFullLabelText [
 	^StandardFonts windowTitleFont widthOfString: labelString
-]
-
-{ #category : #'menu items' }
-SystemWindow >> windowMenuOn: aMenuMorph [
-
-	| closableLabel draggableLabel maximizeLabel |
-	
-	(aMenuMorph add: #Close target: self selector: #closeBoxHit iconName: #windowCloseForm)
-		enabled: self allowedToClose.
-		
-	aMenuMorph addSeparator.	
-	
-	aMenuMorph add: #About target: self selector: #showAbout iconName: #smallHelpIcon.
-	aMenuMorph addSeparator.	
-
-	aMenuMorph add: #'Change title' target: self selector: #relabel.
-	aMenuMorph add: #'Copy title' target: self selector: #copyTitle.
-	aMenuMorph addSeparator.	
-
-	aMenuMorph add: #'Send to back' target: self selector: #sendToBack.
-	aMenuMorph add: #'Make next-to-topmost' target: self selector: #makeSecondTopmost.
-	aMenuMorph addSeparator.	
-
-	aMenuMorph add: #'Create window group' target: self selector: #createWindowGroup.
-	aMenuMorph addSeparator.	
-
-	closableLabel := self mustNotClose
-		ifFalse: [ #'Make unclosable' ]
-		ifTrue: [ #'Make closable' ].
-
-	aMenuMorph add: closableLabel target: self selector: closableLabel asCamelCase uncapitalized.
-
-	draggableLabel := self isSticky
-		ifTrue: [ #'Make draggable' ]
-		ifFalse: [ #'Make undraggable' ].
-
-	aMenuMorph add: draggableLabel target: self selector: #toggleStickiness.
-	aMenuMorph addSeparator.	
-
-	maximizeLabel := self isMaximized
-		ifTrue: [ #Restore ]
-		ifFalse: [ #Maximize ].
-
-	aMenuMorph add: maximizeLabel target: self selector: #expandBoxHit iconName: #windowMaximizeForm.
-
 ]

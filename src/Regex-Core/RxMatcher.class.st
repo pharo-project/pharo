@@ -217,30 +217,29 @@ RxMatcher >> copyStream: aStream to: writeStream translatingMatchesUsing: aBlock
 { #category : #privileged }
 RxMatcher >> currentState [
 	"Answer an opaque object that can later be used to restore the
-	matcher's state (for backtracking)."
-
-	| origPosition |
+	matcher's state (for backtracking)"
+	
+	| origPosition origMarkerPositions |
+	
 	origPosition := stream position.
-	^	[stream position: origPosition]
+	origMarkerPositions := markerPositions collect: [ :collection | collection copy ].
+	^[ stream position: origPosition.
+		markerPositions := origMarkerPositions ]
 ]
 
 { #category : #private }
 RxMatcher >> hookBranchOf: regexNode onto: endMarker [
-
 	"Private - Recurse down the chain of regexes starting at
 	regexNode, compiling their branches and hooking their tails 
 	to the endMarker node."
 
 	| rest |
-
-	rest := regexNode regex
-		ifNil: [ nil ]
-		ifNotNil: [ self hookBranchOf: regexNode regex onto: endMarker ].
+	rest := regexNode regex ifNotNil: [ self hookBranchOf: regexNode regex onto: endMarker ].
 	^ RxmBranch new
 		next:
-			( ( regexNode branch dispatchTo: self )
+			((regexNode branch dispatchTo: self)
 				pointTailTo: endMarker;
-				yourself );
+				yourself);
 		alternative: rest;
 		yourself
 ]
@@ -359,7 +358,7 @@ RxMatcher >> markerPositionAt: anIndex add: position [
 { #category : #accessing }
 RxMatcher >> matches: aString [
 	"Match against a string. Return true if the complete String matches.
-	If you want to search for occurences anywhere in the String see #search:"
+	If you want to search for occurrences anywhere in the String see #search:"
 
 	^self matchesStream: aString readStream
 ]

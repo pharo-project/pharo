@@ -65,6 +65,11 @@ ClapExpression >> isMatch [
 ]
 
 { #category : #testing }
+ClapExpression >> isMatchOf: identifierOrSpec [
+	^ identifierOrSpec identifiesClapParameter: self specification
+]
+
+{ #category : #testing }
 ClapExpression >> isMismatch [
 	^ self
 		ifMatch: [ false ]

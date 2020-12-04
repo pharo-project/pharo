@@ -95,6 +95,11 @@ MethodMapTest >> testDeadContextSourceNode [
 ]
 
 { #category : #'testing - temp access' }
+MethodMapTest >> testExampleAccessOuterFromCleanBlock [
+	self assert: (self compileAndRunExample: #exampleAccessOuterFromCleanBlock) equals: 1
+]
+
+{ #category : #'testing - temp access' }
 MethodMapTest >> testExampleSimpleTemp [
 	self assert: (self compileAndRunExample: #exampleSimpleTemp) equals: 1
 ]
@@ -193,12 +198,16 @@ MethodMapTest >> testPrimitiveMethodSourceNodeAtInitialPC [
 
 { #category : #'testing - temp access' }
 MethodMapTest >> testTempNamedTempCopyingNestedBlock [
-	self assert: (self compileAndRunExample:  #exampleTempNamedTempCopyingNestedBlock) equals: 1.
+	self
+		assert: (self compileAndRunExample: #exampleTempNamedTempCopyingNestedBlock)
+		equals: 1
 ]
 
 { #category : #'testing - temp access' }
-MethodMapTest >> testTempNamedTempCopyingNestedBlockPROBLEM [
-	self assert:  (self compileAndRunExample:  #exampleTempNamedTempCopyingNestedBlockPROBLEM) equals: 1.
+MethodMapTest >> testTempNamedTempCopyingNestedBlock2 [
+	self
+		assert: (self compileAndRunExample: #exampleTempNamedTempCopyingNestedBlock2)
+		equals: 1
 ]
 
 { #category : #'testing - ast mapping' }

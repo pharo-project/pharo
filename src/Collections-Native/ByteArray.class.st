@@ -1,6 +1,7 @@
 "
 I represent an ArrayedCollection whose elements are integers between 0 and 255.
 
+For further comments read comments of `WordArray`.
 "
 Class {
 	#name : #ByteArray,
@@ -60,7 +61,7 @@ ByteArray >> asString [
 	^ (String new: self size) replaceFrom: 1 to: self size with: self
 ]
 
-{ #category : #accessing }
+{ #category : #converting }
 ByteArray >> asWideString [
 
 	^ WideString fromByteArray: self.

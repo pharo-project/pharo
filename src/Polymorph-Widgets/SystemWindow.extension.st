@@ -950,46 +950,6 @@ SystemWindow >> minimize [
 ]
 
 { #category : #'*Polymorph-Widgets' }
-SystemWindow >> modalChild [
-	"Answer the modal child of the receiver, if any."
-
-	^self valueOfProperty: #modalChild
-]
-
-{ #category : #'*Polymorph-Widgets' }
-SystemWindow >> modalLockTo: aSystemWindow [
-	"Lock the receiver as a modal owner of the given window."
-
-	aSystemWindow
-		setProperty: #modalOwner toValue: self.
-	self setProperty: #modalChild toValue: aSystemWindow.
-	
-	closeBox ifNotNil: [ 
-		self setProperty: #preModalCloseEnabled toValue: closeBox enabled.
-		closeBox enabled: false
-	].
-
-]
-
-{ #category : #'*Polymorph-Widgets' }
-SystemWindow >> modalOwner [
-	"Answer the modal owner of the receiver, if any."
-
-	^self valueOfProperty: #modalOwner
-]
-
-{ #category : #'*Polymorph-Widgets' }
-SystemWindow >> modalUnlockFrom: aSystemWindow [
-	"Unlock the receiver as a modal owner of the given window."
-
-	aSystemWindow removeProperty: #modalOwner.
-	self removeProperty: #modalChild.
-	closeBox ifNotNil: [:cl | cl enabled: (self valueOfProperty: #preModalCloseEnabled ifAbsent: [true])].
-	self removeProperty: #preModalCloseEnabled.
-	self activate
-]
-
-{ #category : #'*Polymorph-Widgets' }
 SystemWindow >> model: anObject [
 	"Set the model."
 	
@@ -1053,18 +1013,6 @@ SystemWindow >> nextMorphInWindow [
 
 	^self hasSubmorphs
 		ifTrue: [self submorphs first]
-]
-
-{ #category : #'*Polymorph-Widgets' }
-SystemWindow >> openModal: aSystemWindow [
-	"Open the given window locking the receiver until it is dismissed.
-	Set the pane color to match the receiver.
-	Answer the system window."
-	
-	aSystemWindow
-		theme: self theme;
-		setWindowColor: self paneColor.
-	^super openModal: aSystemWindow
 ]
 
 { #category : #'*Polymorph-Widgets' }

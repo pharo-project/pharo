@@ -65,6 +65,24 @@ ClyBrowserMorph >> confirmUnusedClasses: classes [
 ]
 
 { #category : #'*Calypso-SystemTools-Core' }
+ClyBrowserMorph >> confirmUnusedClassesExceptInheritance: classes [
+	
+	| refQuery noUsers answer users |
+	
+	refQuery := ClyClassReferencesQuery toAny: classes from: self systemScope.	
+	"we need to exclude both the class and instance side of the class"
+	noUsers := self confirmEmptySystemQuery: refQuery excluding: (classes flatCollect: [ :each | { each . each classSide } ]).
+	
+	users := (classes flatCollect: [:each | each users]) copyWithoutAll: classes.
+	users ifNotEmpty: [ 
+		noUsers := false.
+		answer := UIManager default confirm: 'There are users of trait. Show them?'. 
+		answer ifTrue: [ self spawnQueryBrowserOn: (ClyConstantQuery returning: users) ]].
+	
+	^noUsers
+]
+
+{ #category : #'*Calypso-SystemTools-Core' }
 ClyBrowserMorph >> confirmUnusedVariables: variables [
 	
 	| refQuery |
@@ -112,7 +130,7 @@ ClyBrowserMorph >> requestRemoveMethodStrategyFor: methods [
 		ifFalse: ['The message #{1} has {2} sender{3}' format: {selectors anyOne. senderCount. plural}].	
 			
 	result := UIManager default 
-		chooseFrom: (strategies collect: #userRequestString) values: strategies title: caption.
+		chooseFrom: (strategies collect: [:each | each userRequestString]) values: strategies title: caption.
 		
 	^result ifNil: [ SycNotRemoveMethodStrategy new ]
 ]

@@ -1,3 +1,6 @@
+"
+A structure containing double values as used by UFFI tests
+"
 Class {
 	#name : #FFITestStructureDoubleStructure,
 	#superclass : #FFIExternalStructure,

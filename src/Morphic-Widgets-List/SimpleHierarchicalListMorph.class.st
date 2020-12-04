@@ -384,9 +384,7 @@ SimpleHierarchicalListMorph >> columns: anArray [
 { #category : #initialization }
 SimpleHierarchicalListMorph >> currentlyExpanded [
 
-	^(scroller submorphs select: [ :each | each isExpanded]) collect: [ :each |
-		each complexContents
-	].
+	^(scroller submorphs select: [ :each | each isExpanded]) collect: [ :each | each complexContents]
 	
 ]
 

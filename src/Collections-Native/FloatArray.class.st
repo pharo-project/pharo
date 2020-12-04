@@ -1,5 +1,7 @@
 "
 FloatArrays store 32bit IEEE floating point numbers.
+
+For further comments read comments of `WordArray`.
 "
 Class {
 	#name : #FloatArray,

@@ -216,7 +216,7 @@ IRSequence >> last [
 { #category : #printing }
 IRSequence >> longPrintOn: stream [
 
-	[IRPrinterV2 new
+	[IRPrinter new
 		stream: stream;
 		visitNode: self
 	] onDNU: #orderNumber do: [:ex | ex resume: ex receiver]
@@ -372,11 +372,6 @@ IRSequence >> successorSequences [
 
 	sequence isEmpty ifTrue: [^ #()].
 	^ sequence last successorSequences
-]
-
-{ #category : #accessing }
-IRSequence >> tempVectorNamed: aSymbol [
-	^sequence detect: [:irNode | irNode isTempVector and: [irNode name = aSymbol]].
 ]
 
 { #category : #'successor sequences' }

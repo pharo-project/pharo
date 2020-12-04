@@ -11,3 +11,9 @@ Class {
 	#superclass : #Object,
 	#category : #'NECompletion-Model'
 }
+
+{ #category : #testing }
+AbstractCompletionEngine >> hasCompletionContext [
+
+	self subclassResponsibility
+]

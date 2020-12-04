@@ -24,12 +24,6 @@ MetacelloDictionaryRepositoryTest >> configurationRepository [
 ]
 
 { #category : #running }
-MetacelloDictionaryRepositoryTest >> defaultTimeout [
-	"I don't want no stkinkin' timeouts"
-	^60000
-]
-
-{ #category : #running }
 MetacelloDictionaryRepositoryTest >> doSilently [
 
 	^true

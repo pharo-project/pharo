@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'headerBrick',
 		'dropDownBrick',
-		'spotterModel'
+		'spotterModel',
+		'helpBrick'
 	],
 	#category : #'GT-Spotter-UI-Widgets'
 }
@@ -22,8 +23,11 @@ GTSpotterContentsBrick >> dropDownBrick: aBrick [
 	dropDownBrick morph pagerModel: self spotterModel pagerModel.
 	self themer spotterThemer dropDownPaneStyleFor: dropDownBrick.
 	
-	self addBrickBack: dropDownBrick
+	self addBrickBack: dropDownBrick.
 	"aBrick openInWindow"
+	self helpBrick: self newHelpBrick
+
+
 ]
 
 { #category : #accessing }
@@ -40,6 +44,17 @@ GTSpotterContentsBrick >> headerBrick: aBrick [
 	self themer spotterThemer headerStyleFor: headerBrick.
 	
 	self addBrickBack: headerBrick
+]
+
+{ #category : #accessing }
+GTSpotterContentsBrick >> helpBrick: aBrick [
+	
+	helpBrick ifNotNil: [self removeBrick: helpBrick].
+	helpBrick := aBrick.
+	
+	self themer spotterThemer helpWidgetStyleFor: helpBrick.
+	
+	self addBrickBack: helpBrick
 ]
 
 { #category : #initialization }
@@ -66,6 +81,16 @@ GTSpotterContentsBrick >> newDropDownMorph [
 GTSpotterContentsBrick >> newHeaderBrick [
 
 	^ GTSpotterHeaderBrick new
+]
+
+{ #category : #'instance creation' }
+GTSpotterContentsBrick >> newHelpBrick [
+
+	^ GTSpotterHelpBrick new
+			spotter: spotterModel;
+			yourself
+		
+
 ]
 
 { #category : #'events-processing' }
@@ -105,4 +130,10 @@ GTSpotterContentsBrick >> spotterModel: aModel [
 	spotterModel steps isEmpty ifFalse: [ spotterModel currentStep hasCandidates ifTrue: [ self showDropDownPane ] ].
 
 	spotterModel announcer when: GTSpotterStepAdded send: #onStepAdded to: self.
+]
+
+{ #category : #'events-processing' }
+GTSpotterContentsBrick >> takeKeyboardFocus [
+
+	self headerBrick takeKeyboardFocus
 ]

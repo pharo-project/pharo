@@ -3,14 +3,14 @@ Extension { #name : #ClyCompositeScope }
 { #category : #'*Calypso-SystemQueries' }
 ClyCompositeScope >> asInheritedScope [
 	| newSubscopes |
-	newSubscopes := subscopes collect: [ :each | each asInheritedScope  ].
+	newSubscopes := subscopes collect: [ :each | each asInheritedScope ].
 	^ClyCompositeScope on: newSubscopes in: environment named: ClyClassScope inheritedScopeName
 ]
 
 { #category : #'*Calypso-SystemQueries' }
 ClyCompositeScope >> asInheritingScope [
 	| newSubscopes |
-	newSubscopes := subscopes collect: [ :each | each asInheritingScope  ].
+	newSubscopes := subscopes collect: [ :each | each asInheritingScope ].
 	^ClyCompositeScope on: newSubscopes in: environment named: ClyClassScope inheritingScopeName
 ]
 
@@ -31,8 +31,8 @@ ClyCompositeScope >> asLocalClassScope [
 { #category : #'*Calypso-SystemQueries' }
 ClyCompositeScope >> asRBEnvironment [
 	| env |
-	env := subscopes first asRBEnvironment.
-	subscopes allButFirstDo: [:each | env := env | each asRBEnvironment  ].
+	subscopes do: [:each | 
+		env := env ifNil: [ each asRBEnvironment ] ifNotNil: [ env | each asRBEnvironment ]].
 	^env
 ]
 
@@ -59,7 +59,6 @@ ClyCompositeScope >> packagesDo: aBlock [
 { #category : #'*Calypso-SystemQueries' }
 ClyCompositeScope >> withMetaLevel: aScopeClass [ 
 	| newSubscopes |
-	newSubscopes := subscopes collect: [ :each | 
-		each withMetaLevel: aScopeClass ].
+	newSubscopes := subscopes collect: [ :each | each withMetaLevel: aScopeClass ].
 	^ClyCompositeScope on: newSubscopes in: environment named: name
 ]

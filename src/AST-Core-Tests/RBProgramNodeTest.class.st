@@ -16,6 +16,37 @@ RBProgramNodeTest class >> packageNamesUnderTest [
 ]
 
 { #category : #accessing }
+RBProgramNodeTest >> getAllNodesFromAST [
+	| methodText |
+	methodText :=
+	'toto
+		"First comment"
+		| temp varaibles |
+		"Second comment"
+		assignement := " Third comment " #node. 
+		"Fourth comment"
+		message "Fifth comment", ''node''.
+		"Sixth comment" cascade node; nodeux "Seventh comment"; notrois.
+		^ "return" nil
+		'.
+	^ RBParser parseMethod: methodText.
+]
+
+{ #category : #accessing }
+RBProgramNodeTest >> getMethodString [
+	^'toto
+		"First comment"
+		| temp varaibles |
+		"Second comment"
+		assignement := " Third comment " #node. 
+		"Fourth comment"
+		message "Fifth comment", ''node''.
+		"Sixth comment" cascade node; nodeux "Seventh comment"; notrois.
+		^ "return" nil
+		'.
+]
+
+{ #category : #accessing }
 RBProgramNodeTest >> node [
 	^ node ifNil: [ node := RBProgramNode new ]
 ]
@@ -170,11 +201,268 @@ RBProgramNodeTest >> testAddTemporaryNamed [
 	self assert: tree temporaries last equals: variable
 ]
 
+{ #category : #'tests - accessing' }
+RBProgramNodeTest >> testAllComments [
+	"Testing the AST comments objects. I am the first comment to be found in this test"
+	self
+		assert: (RBProgramNodeTest >> #testAllComments) ast allComments first contents
+		equals: 'Testing the AST comments objects. I am the first comment to be found in this test'.
+	"Next test assumes this comment it's not a string like in #testComments..."
+	self 
+		assert: (RBProgramNodeTest >> #testAllComments) ast allComments second isString
+		equals: false
+]
+
+{ #category : #tests }
+RBProgramNodeTest >> testAllParents [
+	"check that we get all parents of a program node"
+
+	| me parentsOf7 |
+	[ :a | a + 7 ].
+	me := self class >> #testAllParents.
+	parentsOf7 := (me ast allChildren select: [ :n | 
+		               n isLiteralNode and: [ n value = 7 ] ]) first
+		              allParents.
+	self assert: parentsOf7 last selector equals: #+.
+	self assert: parentsOf7 first equals: me ast
+]
+
+{ #category : #tests }
+RBProgramNodeTest >> testAllStatementsAssignment [
+	| tree  |
+	tree := self parserClass parseMethod: 
+			'methodName
+				
+				x := 33'.
+
+	self assert: tree allStatements size equals: 1.
+]
+
+{ #category : #tests }
+RBProgramNodeTest >> testAllStatementsBlockWithReturn [
+	| tree |
+	tree := self parserClass parseMethod: 
+			'methodName
+				^ [ ^ self ] '.
+	self assert: tree allStatements size equals: 2
+ 
+]
+
+{ #category : #tests }
+RBProgramNodeTest >> testAllStatementsBlockWithTemps [
+	| tree |
+	tree := self parserClass parseMethod: 
+			'methodName
+				^ [ | tmp | tmp := 88 ] '.
+	self assert: tree allStatements size equals: 3.
+ 
+]
+
+{ #category : #tests }
+RBProgramNodeTest >> testAllStatementsDynamicArray [
+	| tree |
+	tree := self parserClass parseMethod: 
+			'methodName
+				
+				{ 1 . self send1 . self send2} '.
+
+	self assert: tree allStatements size equals: 4.
+]
+
+{ #category : #tests }
+RBProgramNodeTest >> testAllStatementsReturns [
+	| tree stats |
+	tree := self parserClass parseMethod: 
+			'methodName
+				^ self '.
+	stats := tree allStatements.
+	self assert: stats size equals: 1
+]
+
+{ #category : #tests }
+RBProgramNodeTest >> testAllStatementsReturnsMultiple [
+	| tree stats |
+	tree := self parserClass parseMethod: 
+			'methodName
+				1 ifTrue: [ ^ self ].
+				^ self '.
+	stats := tree allStatements.
+	self assert: stats size equals: 3
+ 
+]
+
+{ #category : #tests }
+RBProgramNodeTest >> testAllStatementsSimpleBlock [
+	| tree stats |
+	tree := self parserClass parseMethod: 
+			'methodName
+				^ [ 8 + 4 ] '.
+	stats := tree allStatements.
+	self assert: stats size equals: 2
+]
+
+{ #category : #tests }
+RBProgramNodeTest >> testAllStatementsTemps [
+	| tree stats |
+	tree := self parserClass parseMethod: 
+			'methodName
+				| tmp1 tmp2 |
+				tmp1 + tmp2'.
+	stats := tree allStatements.
+	self assert: stats size equals: 3
+]
+
+{ #category : #tests }
+RBProgramNodeTest >> testAllStatementsTwoMessages [
+	| tree stats |
+	tree := self parserClass parseMethod: 
+			'methodName
+				
+				1 send1 send2'.
+	stats := tree allStatements.
+	self assert: stats size equals: 1.
+]
+
+{ #category : #'tests-bestNodeFor' }
+RBProgramNodeTest >> testBestNodeFirstTempsAndFirstCommentGivesVariableNode [
+	| ast string start |
+	string := '"First comment"'.
+	start := self getMethodString findString: string.
+	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size + 6).
+	self assert: ast isVariable.
+]
+
+{ #category : #'tests-bestNodeFor' }
+RBProgramNodeTest >> testBestNodeForCommentInbetweenStatements [
+	| ast string start |
+	string := '"Fourth comment"'.
+	start := self getMethodString findString: string.
+	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	self assert: ast isCommentNode.
+	self assert: ast contents equals: 'Fourth comment'.
+]
+
+{ #category : #'tests-bestNodeFor' }
+RBProgramNodeTest >> testBestNodeForCommentInsideACascadeNodeOnMessageNode [
+	| ast string start |
+	string := '"Seventh comment"'.
+	start := self getMethodString findString: string.
+	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	self assert: ast isCommentNode.
+	self assert: ast contents equals: 'Seventh comment'.
+]
+
+{ #category : #'tests-bestNodeFor' }
+RBProgramNodeTest >> testBestNodeForCommentInsideACascadeNodeOnReceiver [
+	| ast string start |
+	string := '"Sixth comment"'.
+	start := self getMethodString findString: string.
+	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	self assert: ast isCommentNode.
+	self assert: ast contents equals: 'Sixth comment'.
+]
+
+{ #category : #'tests-bestNodeFor' }
+RBProgramNodeTest >> testBestNodeForCommentInsideAssignementNode [
+	| ast string start |
+	string := '" Third comment "'.
+	start := self getMethodString findString: string.
+	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	self assert: ast isCommentNode.
+	self assert: ast contents equals: ' Third comment '.
+]
+
+{ #category : #'tests-bestNodeFor' }
+RBProgramNodeTest >> testBestNodeForCommentInsideMessageNode [
+	| ast string start |
+	string := '"Fifth comment"'.
+	start := self getMethodString findString: string.
+	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	self assert: ast isCommentNode.
+	self assert: ast contents equals: 'Fifth comment'.
+]
+
+{ #category : #'tests-bestNodeFor' }
+RBProgramNodeTest >> testBestNodeForCommentInsideMethodNode [
+	| ast string start |
+	string := '"First comment"'.
+	start := self getMethodString findString: string.
+	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	self assert: ast isCommentNode.
+	self assert: ast contents equals: 'First comment'.
+]
+
+{ #category : #'tests-bestNodeFor' }
+RBProgramNodeTest >> testBestNodeForCommentInsideReturnNode [
+	| ast string start |
+	string := '"return"'.
+	start := self getMethodString findString: string.
+	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	self assert: ast isCommentNode.
+	self assert: ast contents equals: 'return'.
+]
+
+{ #category : #'tests-bestNodeFor' }
+RBProgramNodeTest >> testBestNodeForCommentInsideSequenceNode [
+	| ast string start |
+	string := '"Second comment"'.
+	start := self getMethodString findString: string.
+	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	self assert: ast isCommentNode.
+	self assert: ast contents equals: 'Second comment'.
+]
+
+{ #category : #'tests-bestNodeFor' }
+RBProgramNodeTest >> testBestNodeInsideAssignementGivesSelectedValue [
+	| ast string start |
+	string := '#node'.
+	start := self getMethodString findString: string.
+	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	self assert: ast isLiteralNode.
+	self assert: ast value equals: #node.
+]
+
+{ #category : #'tests-bestNodeFor' }
+RBProgramNodeTest >> testBestNodeInsideAssignementGivesSelectedVariable [
+	| ast string start |
+	string := 'assignement'.
+	start := self getMethodString findString: string.
+	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	self assert: ast isVariable.
+	self assert: ast name equals: 'assignement'.
+]
+
+{ #category : #'tests-bestNodeFor' }
+RBProgramNodeTest >> testBestNodeWithMethodSelectorGivesCommentNode [
+	| ast string start |
+	string := '"First comment"'.
+	start := self getMethodString findString: string.
+	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (1 to: start + string size - 1).
+	self assert: ast isCommentNode.
+]
+
 { #category : #'testing-properties' }
 RBProgramNodeTest >> testHasProperty [
 	self deny: (self node hasProperty: #foo).
 	self node propertyAt: #foo put: 123.
 	self assert: (self node hasProperty: #foo)
+]
+
+{ #category : #tests }
+RBProgramNodeTest >> testNumberOfSentMessages [
+	| tree messages |
+	tree := self parserClass parseMethod: 
+			'methodName
+				| temp |
+				1 send1 send2; send3.
+				temp := [:each | {4 send4} send5].
+				temp send6.
+				0 ifTrue: [ 1 ]'.
+	messages := tree sentMessages.
+	self assert: messages size equals: 7.
+	"we count ifTrue:"
+	1 to: 6 do:
+		[ :i | self assert: (messages includes: ('send' , i printString) asSymbol) ]
 ]
 
 { #category : #'testing-properties' }
@@ -255,7 +543,7 @@ RBProgramNodeTest >> testReplaceLiteralArray1 [
 	| tree |
 	tree := self parseMethod: 'run "1" #(1 2 3) "2"'.
 	tree body statements first replaceWith: (self parseExpression: '#[1 2 3]').
-	self assert: tree newSource equals: 'run "1" #[1 2 3] "2"'.
+	self assert: tree newSource equals: 'run "1" #[ 1 2 3 ] "2"'.
 	tree := self parseMethod: 'run "1" #(1 2 3) "2"'.
 	tree body statements first replaceWith: (self parseExpression: '123').
 	self assert: tree newSource equals: 'run "1" 123 "2"'
@@ -266,7 +554,7 @@ RBProgramNodeTest >> testReplaceLiteralArray2 [
 	| tree |
 	tree := self parseMethod: 'run "1" #[1 2 3] "2"'.
 	tree body statements first replaceWith: (self parseExpression: '#(1 2 3)').
-	self assert: tree newSource equals: 'run "1" #(1 2 3) "2"'.
+	self assert: tree newSource equals: 'run "1" #( 1 2 3 ) "2"'.
 	tree := self parseMethod: 'run "1" #[1 2 3] "2"'.
 	tree body statements first replaceWith: (self parseExpression: '123').
 	self assert: tree newSource equals: 'run "1" 123 "2"'
@@ -420,4 +708,18 @@ RBProgramNodeTest >> testSetCommentsToNil [
 
 	self node comments: nil.
 	self assert: self node comments equals: #()
+]
+
+{ #category : #tests }
+RBProgramNodeTest >> testWithAllParents [
+	"check that we get all parents of a program node, and me"
+
+	| me parentsOf7 |
+	[ :a | a + 7 ].
+	me := self class >> #testAllParents.
+	parentsOf7 := (me ast allChildren select: [ :n | 
+		               n isLiteralNode and: [ n value = 7 ] ]) first
+		              withAllParents.
+	self assert: parentsOf7 last value equals: 7.
+	self assert: parentsOf7 first equals: me ast
 ]

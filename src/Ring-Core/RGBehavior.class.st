@@ -432,12 +432,6 @@ RGBehavior >> defaultTraitComposition [
 	^ self defaultTraitCompositionStubIn: self.
 ]
 
-{ #category : #'accessing - definition' }
-RGBehavior >> definitionForNautilus [
-
-	^ self definition
-]
-
 { #category : #'queries - methods' }
 RGBehavior >> ensureLocalMethodNamed: aSymbol [
 
@@ -551,6 +545,13 @@ RGBehavior >> initializeUnresolved [
 
 ]
 
+{ #category : #'queries - testing' }
+RGBehavior >> isAccessedIn: anRGMethod [
+	^ (anRGMethod ast variableNodes select: [ :each | 
+		   each isGlobalVariable ]) anySatisfy: [ :each | 
+		  each name = self name ]
+]
+
 { #category : #testing }
 RGBehavior >> isBehavior [
 
@@ -597,12 +598,6 @@ RGBehavior >> isImmediateClass [
 RGBehavior >> isPointers [
 
 	^ self isBits not
-]
-
-{ #category : #'queries - testing' }
-RGBehavior >> isReferencedIn: anRGMethod [ 
-
-	^ (anRGMethod ast variableNodes select: #isGlobal) anySatisfy: [ :each | each name = self name ] 
 ]
 
 { #category : #'queries - testing' }
@@ -670,7 +665,23 @@ RGBehavior >> localMethodsSet [
 { #category : #'queries - methods' }
 RGBehavior >> localSelectors [
 
-	^ self localMethods collect: #name
+	^ self localMethods collect: [ :each | each name ]
+]
+
+{ #category : #lookup }
+RGBehavior >> lookupVar: aName [
+	^ self layout 
+		resolveSlot: aName asSymbol 
+		ifFound: [:var | var] 
+		ifNone: [self bindingOf: aName]
+]
+
+{ #category : #lookup }
+RGBehavior >> lookupVarForDeclaration: aName [
+
+	"This is a version of #lookupVar: that skips the OCRequestorScope, from here on it is the same as lookupVar:"
+
+	^ self lookupVar: aName
 ]
 
 { #category : #resolving }
@@ -738,7 +749,7 @@ RGBehavior >> name: aString [
 	
 	oldName := self name.
 	
-	subclassesWithOldDefinitions := (self subclasses reject: #isMeta) collect: [ :each | 
+	subclassesWithOldDefinitions := (self subclasses reject: [:each | each isMeta]) collect: [ :each | 
 		each -> each copyForBehaviorDefinition ].
 	
 	self announceDefinitionChangeDuring: [ 
@@ -1019,7 +1030,7 @@ RGBehavior >> removeProtocol: aSymbol [
 { #category : #'queries - methods' }
 RGBehavior >> selectors [
 
-	^ self methods collect: #name
+	^ self methods collect: [ :each | each name ]
 ]
 
 { #category : #'accessing - definition' }
@@ -1043,9 +1054,9 @@ RGBehavior >> slotDefinitionString [
 		str nextPutAll: '{ '.
 		self slots do: [:slot |
 				str nextPutAll: slot definitionString.
-				special := slot isSpecial]				
+				special := slot needsFullDefinition]				
 			separatedBy: [ 
-				str nextPutAll: '. '.  
+				str nextPutAll: ' . '.  
 				special ifTrue: [ str cr;tab;tab;tab;tab ]].
 		str nextPutAll: ' }'. ]
 
@@ -1055,6 +1066,12 @@ RGBehavior >> slotDefinitionString [
 RGBehavior >> slots [		
 		
 	^ self layout slots 
+]
+
+{ #category : #slots }
+RGBehavior >> slotsNeedFullDefinition [
+	"return true if we define something else than InstanceVariableSlots"
+	^self slots anySatisfy: [ :each | each needsFullDefinition ]
 ]
 
 { #category : #'accessing class hierarchy' }
@@ -1172,7 +1189,7 @@ RGBehavior >> unresolveName [
 	
 	oldName := self name.
 	
-	subclassesWithOldDefinitions := (self subclasses reject: #isMeta) collect: [ :each | 
+	subclassesWithOldDefinitions := (self subclasses reject: [:each | each isMeta]) collect: [ :each | 
 		each -> each copyForBehaviorDefinition ].
 	
 	self announceDefinitionChangeDuring: [ 
@@ -1205,8 +1222,7 @@ RGBehavior >> usedTraits [
 	^ self traitComposition usedTraits
 ]
 
-{ #category : #slots }
-RGBehavior >> usesSpecialSlot [
-	"return true if we define something else than InstanceVariableSlots"
-	^self slots anySatisfy: [ :each | each isSpecial ]
+{ #category : #accessing }
+RGBehavior >> users [
+	^ #()
 ]

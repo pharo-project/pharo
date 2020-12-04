@@ -3,7 +3,10 @@ Extension { #name : #SpButtonPresenter }
 { #category : #'*Spec2-Examples' }
 SpButtonPresenter class >> example [
 	<sampleInstance>
+	
 	^ self new
-		openWithSpec;
-		label: 'Click me'
+		icon: (self iconNamed: #smallOk);
+		label: 'Click me!';
+		action: [ 'Clicked!' crTrace ];
+		openWithSpec
 ]

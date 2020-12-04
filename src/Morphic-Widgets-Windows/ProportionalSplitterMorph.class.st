@@ -137,7 +137,7 @@ ProportionalSplitterMorph >> initialize [
 
 { #category : #testing }
 ProportionalSplitterMorph >> isCursorOverHandle [
-	^ self class showSplitterHandles not or: [self handleRect containsPoint: ActiveHand cursorPoint]
+	^ self class showSplitterHandles not or: [self handleRect containsPoint: self activeHand cursorPoint]
 ]
 
 { #category : #accessing }

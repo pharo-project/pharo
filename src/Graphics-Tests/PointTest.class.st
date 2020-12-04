@@ -10,7 +10,7 @@ Class {
 { #category : #coverage }
 PointTest >> classToBeTested [
 	
-	^Point
+	^ Point
 ]
 
 { #category : #'tests - arithmetic' }
@@ -149,6 +149,19 @@ PointTest >> testCloseTo [
 	self assert: (x@y closeTo: (0.00001@0.00001))
 ]
 
+{ #category : #'tests - testing' }
+PointTest >> testCloseToWithPrecision [
+
+	| x y |
+	x := 0.105.
+	y := 0.11.
+
+	self assert: (x closeTo: 0.1 precision: 0.1).
+	self assert: (y closeTo: 0.1 precision: 0.1).
+	
+	self assert: (x@y closeTo: (0.1@0.1) precision: 0.1)
+]
+
 { #category : #'tests - point functions' }
 PointTest >> testCrossProduct [
 	self assert: (0 @ 0 crossProduct: 0 @ 0) equals: 0.
@@ -273,7 +286,6 @@ PointTest >> testIsPoint [
 	self deny: 1 isPoint. 
 	self deny: -1 isPoint. 
 	'Test on a random class'.
-	self deny: KernelClassesFilter new isPoint.
 	self deny: Object new isPoint.
 	self assert: Point new isPoint.
 	self assert: (0 @ 0) isPoint.

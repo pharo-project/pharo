@@ -43,10 +43,10 @@ Class {
 	#name : #OSWindow,
 	#superclass : #Object,
 	#instVars : [
-		'handle',
 		'initialAttributes',
 		'eventHandler',
-		'currentCursor'
+		'currentCursor',
+		'backendWindow'
 	],
 	#classVars : [
 		'TraceEvents',
@@ -80,6 +80,12 @@ OSWindow class >> finalizeResourceData: windowHandle [
 	windowHandle destroy.
 ]
 
+{ #category : #initialization }
+OSWindow class >> initialize [ 
+
+	self traceEvents: false
+]
+
 { #category : #'instance creation' }
 OSWindow class >> new [
 	^ self createWithAttributes: OSWindowAttributes new
@@ -93,6 +99,11 @@ OSWindow class >> newWithNullDriver [
 { #category : #tracing }
 OSWindow class >> traceEvents: aBoolean [
 	TraceEvents := aBoolean
+]
+
+{ #category : #accessing }
+OSWindow >> backendWindow [
+	^ backendWindow
 ]
 
 { #category : #accessing }
@@ -123,7 +134,7 @@ OSWindow >> captureMouse [
 { #category : #private }
 OSWindow >> checkIsValid [
 
-	(handle isNil or: [ handle isValid not ]) ifTrue: [ self invalidHandle ].
+	(backendWindow isNil or: [ backendWindow isValid not ]) ifTrue: [ self invalidHandle ].
 ]
 
 { #category : #'clipboard handling' }
@@ -138,30 +149,29 @@ OSWindow >> clipboardText: aString [
 
 { #category : #private }
 OSWindow >> createWindow [
-	handle ifNotNil: [ self error: 'The window is already created.' ].
+	backendWindow ifNotNil: [ self error: 'The window is already created.' ].
 	
-	handle := initialAttributes createWindowHandleFor: self.
-	handle isValid ifTrue: [ 
+	backendWindow := initialAttributes createWindowHandleFor: self.
+	backendWindow isValid ifTrue: [ 
 		"Handle here points to an OSWindowHandle, its #handle message has the real 
 		 external resource. This is a bit confusing, but is better like this :)"
-		handle prepareExternalResourceForAutoRelease ]
+		backendWindow prepareExternalResourceForAutoRelease ]
 ]
 
 { #category : #'dispatching events' }
 OSWindow >> deliverEvent: anEvent [
 	"TODO..."
 
-	TraceEvents == true
+	TraceEvents
 		ifTrue: [ self traceCr: anEvent ].
 	eventHandler ifNotNil: [ eventHandler handleEvent: anEvent ].
-	anEvent performDefaultAction
 ]
 
 { #category : #'dispatching events' }
 OSWindow >> deliverGlobalEvent: aGlobalEvent [
 	"TODO..."
 
-	TraceEvents == true
+	TraceEvents
 		ifTrue: [ self traceCr: aGlobalEvent ].
 	eventHandler ifNotNil: [ eventHandler handleEvent: aGlobalEvent ]
 ]
@@ -169,8 +179,13 @@ OSWindow >> deliverGlobalEvent: aGlobalEvent [
 { #category : #private }
 OSWindow >> destroy [
 	self validHandle destroy.
-	handle := nil.
+	backendWindow := nil.
 	eventHandler := nil.
+]
+
+{ #category : #accessing }
+OSWindow >> diagonalDPI [
+	^ self validHandle diagonalDPI
 ]
 
 { #category : #accessing }
@@ -211,15 +226,15 @@ OSWindow >> getFlags [
 	^ self validHandle getFlags
 ]
 
-{ #category : #accessing }
-OSWindow >> handle [
-	^ handle
-]
-
 { #category : #visibility }
 OSWindow >> hide [
 	self checkIsValid .
-	handle hide
+	backendWindow hide
+]
+
+{ #category : #accessing }
+OSWindow >> horizontalDPI [
+	^ self validHandle horizontalDPI
 ]
 
 { #category : #accessing }
@@ -250,12 +265,12 @@ OSWindow >> isTextInputActive [
 
 { #category : #testing }
 OSWindow >> isValid [
-	 ^ handle notNil and: [ handle isValid ]
+	 ^ backendWindow notNil and: [ backendWindow isValid ]
 ]
 
 { #category : #testing }
 OSWindow >> isVisible [
-	^ self isValid and: [handle isVisible]
+	^ self isValid and: [backendWindow isVisible]
 ]
 
 { #category : #'window management' }
@@ -272,22 +287,22 @@ OSWindow >> minimize [
 
 { #category : #'instance creation' }
 OSWindow >> newAthensRenderer [
-	^ handle newAthensRenderer
+	^ backendWindow ifNotNil: [backendWindow newAthensRenderer]
 ]
 
 { #category : #factory }
 OSWindow >> newFormRenderer: form [
-	^ handle newFormRenderer: form
+	^ backendWindow ifNotNil: [backendWindow newFormRenderer: form]
 ]
 
 { #category : #factory }
 OSWindow >> newGenericRenderer [
-	^ handle newGenericRenderer
+	^ backendWindow ifNotNil: [backendWindow newGenericRenderer]
 ]
 
 { #category : #factory }
 OSWindow >> newOpenGLRenderer [
-	^ handle newOpenGLRenderer
+	^ backendWindow ifNotNil: [backendWindow newOpenGLRenderer]
 ]
 
 { #category : #accessing }
@@ -307,7 +322,7 @@ OSWindow >> position: newPosition [
 
 { #category : #'event handling' }
 OSWindow >> processPendingEvents [
-	handle processPendingEvents
+	backendWindow processPendingEvents
 ]
 
 { #category : #'mouse capture' }
@@ -317,12 +332,12 @@ OSWindow >> releaseMouse [
 
 { #category : #accessing }
 OSWindow >> renderer [
-	^ handle renderer
+	^ backendWindow renderer
 ]
 
 { #category : #accessing }
 OSWindow >> renderer: aRenderer [
-	handle renderer: aRenderer
+	backendWindow renderer: aRenderer
 ]
 
 { #category : #accessing }
@@ -341,6 +356,16 @@ OSWindow >> restore [
 	self validHandle restore.
 ]
 
+{ #category : #accessing }
+OSWindow >> screenScaleFactor [
+	^ self validHandle screenScaleFactor
+]
+
+{ #category : #accessing }
+OSWindow >> screenScaleFactorBaseDPI [
+	^ self validHandle screenScaleFactorBaseDPI
+]
+
 { #category : #'window management' }
 OSWindow >> setDraggableArea: aRectangle [
 
@@ -350,7 +375,7 @@ OSWindow >> setDraggableArea: aRectangle [
 { #category : #private }
 OSWindow >> setJustCreatedHandle: aHandle [
 	"This method is to be called by a driver that needs to create the window in a critical section to prevent a race condition where some events such as expose could be missed."
-	handle := aHandle
+	backendWindow := aHandle
 ]
 
 { #category : #accessing }
@@ -371,7 +396,7 @@ OSWindow >> setMouseCursor: cursor mask: mask [
 { #category : #visibility }
 OSWindow >> show [
 	self checkIsValid .
-	handle show
+	backendWindow show
 ]
 
 { #category : #'text input' }
@@ -416,7 +441,12 @@ OSWindow >> toggleBorderOn [
 { #category : #private }
 OSWindow >> validHandle [
 	self checkIsValid.
-	^ handle
+	^ backendWindow
+]
+
+{ #category : #accessing }
+OSWindow >> verticalDPI [
+	^ self validHandle verticalDPI
 ]
 
 { #category : #accessing }

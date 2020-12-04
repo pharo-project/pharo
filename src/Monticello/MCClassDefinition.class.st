@@ -19,85 +19,26 @@ Class {
 }
 
 { #category : #obsolete }
-MCClassDefinition class >> name: nameString
-superclassName: superclassString
-category: categoryString 
-instVarNames: ivarArray
-classVarNames: cvarArray
-poolDictionaryNames: poolArray
-classInstVarNames: civarArray
-comment: commentString [
-	^ self	name: nameString
-			superclassName: superclassString
-			category: categoryString 
-			instVarNames: ivarArray
-			classVarNames: cvarArray
-			poolDictionaryNames: poolArray
-			classInstVarNames: civarArray
-			type: #normal
-			comment: commentString
+MCClassDefinition class >> name: nameString superclassName: superclassString category: categoryString instVarNames: ivarArray comment: commentString [
 
-]
-
-{ #category : #obsolete }
-MCClassDefinition class >> name: nameString
-superclassName: superclassString
-category: categoryString 
-instVarNames: ivarArray
-classVarNames: cvarArray
-poolDictionaryNames: poolArray
-classInstVarNames: civarArray
-type: typeSymbol
-comment: commentString [
-	^ self 
+	^ self
 		name: nameString
-		superclassName: superclassString
-		category: categoryString 
-		instVarNames: ivarArray
-		classVarNames: cvarArray
-		poolDictionaryNames: poolArray
-		classInstVarNames: civarArray
-		type: typeSymbol
-		comment: commentString
-		commentStamp: nil
-]
-
-{ #category : #'instance creation' }
-MCClassDefinition class >> name: nameString superclassName: superclassString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray type: typeSymbol comment: commentString commentStamp: stampString [
-	^ self new
-		initializeWithName: nameString
 		superclassName: superclassString
 		traitComposition: '{}'
 		classTraitComposition: '{}'
 		category: categoryString
 		instVarNames: ivarArray
-		classVarNames: cvarArray
-		poolDictionaryNames: poolArray
-		classInstVarNames: civarArray
-		type: typeSymbol
+		classVarNames: ''
+		poolDictionaryNames: ''
+		classInstVarNames: ''
+		type: #normal
 		comment: commentString
-		commentStamp: stampString
-]
-
-{ #category : #obsolete }
-MCClassDefinition class >> name: nameString
-superclassName: superclassString
-category: categoryString 
-instVarNames: ivarArray
-comment: commentString [
-	^ self	name: nameString
-			superclassName: superclassString
-			category: categoryString 
-			instVarNames: ivarArray
-			classVarNames: #()
-			poolDictionaryNames: #()
-			classInstVarNames: #()
-			comment: commentString
-
+		commentStamp: nil
 ]
 
 { #category : #'instance creation' }
 MCClassDefinition class >> name: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray type: typeSymbol comment: commentString commentStamp: stampString [
+
 	^ self new
 		initializeWithName: nameString
 		superclassName: superclassString
@@ -170,6 +111,7 @@ MCClassDefinition >> classInstanceVariables [
 
 { #category : #printing }
 MCClassDefinition >> classInstanceVariablesString [
+
 	^ self stringForVariablesOfType: #isClassInstanceVariable
 ]
 
@@ -248,6 +190,19 @@ MCClassDefinition >> createClass [
 				environment: superClass environment ] ]
 		on: Warning , DuplicatedVariableError
 		do: [ :ex | ex resume ]
+]
+
+{ #category : #installing }
+MCClassDefinition >> createVariableFromString: aString [
+	^[ Smalltalk compiler evaluate: aString ] 
+		on: Error 
+		do: [ 
+			"if an error happens, we parse the slot definition to an ast.
+			and create a UndefinedSlot"
+			| ast slotName |
+			ast := RBParser parseExpression: aString. 
+			slotName := ast receiver value. 
+			UndefinedSlot named: slotName ast: ast  ]
 ]
 
 { #category : #initializing }
@@ -398,9 +353,11 @@ MCClassDefinition >> kindOfSubclass [
 	type = #compiledMethod ifTrue: [^ ' variableByteSubclass: ' ].
 	type = #immediate ifTrue: [ ^ ' immediateSubclass: ' ].
 	type = #ephemeron ifTrue: [ ^ ' ephemeronSubclass: ' ].
+	type = #DoubleByteLayout ifTrue: [ ^' variableDoubleByteSubclass: ' ].
+	type = #DoubleWordLayout ifTrue: [ ^' variableDoubleWordSubclass: ' ].
 	"hack to support user defined layouts"
 	(Smalltalk hasClassNamed: type) ifTrue: [ ^type asString].
-	self error: 'Unrecognized class type'
+	self error: 'Unrecognized class type', type asString
 ]
 
 { #category : #installing }
@@ -451,6 +408,19 @@ MCClassDefinition >> printClassDefinitionOn: stream [
 ]
 
 { #category : #printing }
+MCClassDefinition >> printDefinitionBodyOn: stream [
+
+	self hasClassTraitComposition ifTrue: [
+		stream
+			nextPutAll: 'uses: ';
+			nextPutAll: self classTraitCompositionString;
+			cr; tab ].
+	stream
+		nextPutAll: ' instanceVariableNames: '; 
+		store: self classInstanceVariablesString
+]
+
+{ #category : #printing }
 MCClassDefinition >> printDefinitionOn: stream [
 		stream 
 			nextPutAll: self superclassName;
@@ -482,14 +452,7 @@ MCClassDefinition >> printMetaDefinitionOn: stream [
 	stream 
 		nextPutAll: self className;
 		nextPutAll: ' class'; cr; tab.
-	self hasClassTraitComposition ifTrue: [
-		stream
-			nextPutAll: 'uses: ';
-			nextPutAll: self classTraitCompositionString;
-			cr; tab ].
-	stream
-		nextPutAll: ' instanceVariableNames: '; 
-		store: self classInstanceVariablesString
+	self printDefinitionBodyOn: stream
 ]
 
 { #category : #comparing }
@@ -616,6 +579,7 @@ MCClassDefinition >> variables [
 { #category : #installing }
 MCClassDefinition >> variablesOfType: aSymbol [
 	"version for complex vars, { definition . definition }"
-	^(((self selectVariables: aSymbol) collect: [:each | Smalltalk compiler evaluate: each])) asArray.
-		
+	^(self selectVariables: aSymbol) 
+		collect: [:each | self createVariableFromString: each]
+		as: Array
 ]

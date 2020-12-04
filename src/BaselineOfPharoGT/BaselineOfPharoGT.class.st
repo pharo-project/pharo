@@ -19,6 +19,7 @@ BaselineOfPharoGT >> baseline: spec [
 			package: 'GT-Spotter';
 			package: 'GT-Spotter-UI';
 			package: 'GT-SpotterExtensions-Core';
+			package: 'GT-Spotter-Processors';
 			package: 'GT-Debugger';
 			package: 'GT-BytecodeDebugger';
 			package: 'GT-SUnitDebugger';
@@ -26,29 +27,20 @@ BaselineOfPharoGT >> baseline: spec [
 			package: 'GT-Tests-Inspector';
 			package: 'GT-Tests-Playground';
 			package: 'GT-Tests-Spotter';
+			package: 'GT-Tests-Spotter-Processors';
 			package: 'Calypso-SystemPlugins-Spotter'.
 			
 		spec 
 			group: 'Core' with: #('OpalCompiler-Tools' 	'GT-Inspector' 	'GT-InspectorExtensions-Core'
-				'GT-Playground'	'GT-Spotter'	'GT-Spotter-UI'	'GT-SpotterExtensions-Core'
+				'GT-Playground'	'GT-Spotter'	'GT-Spotter-UI'	'GT-SpotterExtensions-Core' 'GT-Spotter-Processors'
 				'GT-Debugger' 'GT-BytecodeDebugger'	'GT-SUnitDebugger' 'Calypso-SystemPlugins-Spotter');
 			group: 'Tests' with: #('GT-Tests-Debugger' 	'GT-Tests-Inspector' 	'GT-Tests-Playground' 
-				'GT-Tests-Spotter');
+				'GT-Tests-Spotter' 'GT-Tests-Spotter-Processors');
 			group: 'default' with: #('Core' 'Tests') ]
 ]
 
 { #category : #baselines }
 BaselineOfPharoGT >> postload: loader package: packageSpec [
-
-	Smalltalk tools register: GTGenericStackDebugger as: #debugger.	
-		
-	self class environment at: #GTGenericStackDebugger ifPresent: [
-	  Smalltalk tools register: GTGenericStackDebugger as: #debugger.
-	  Smalltalk tools registeredDebuggersWithRanks.
-	  Smalltalk tools debuggers add: ((self class environment at: #GTGenericStackDebugger)->3).
-	  Smalltalk tools debuggers add: ((self class environment at: #GTSUnitDebugger)->70).
-	  Smalltalk tools debuggers add: ((self class environment at: #GTBytecodeDebugger)->5).].
-
 	  
 	self class environment at: #GTPlayground ifPresent: [:playground | 
 	  Smalltalk tools register: playground as: #workspace.].

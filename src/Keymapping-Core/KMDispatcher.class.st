@@ -129,7 +129,7 @@ KMDispatcher >> dispatch: anEventBuffer inCategories: categories [
 KMDispatcher >> dispatchKeystroke: aKeyEvent [
 
 	| chain |
-	KMLog log: aKeyEvent .
+	KMLog log: aKeyEvent.
 
 	KMBuffer uniqueInstance addEvent: aKeyEvent.
 

@@ -29,7 +29,6 @@ CompiledMethod >> banLevelCandidates [
 
 { #category : #'*renraku' }
 CompiledMethod >> critiques [
-	<eProperty>
 	| critiques |
 	
 	critiques := ReCriticEngine critiquesOf: self.
@@ -38,13 +37,6 @@ CompiledMethod >> critiques [
 		(ReCriticEngine nodeCritiquesOf: self).
 	
 	^ critiques
-]
-
-{ #category : #'*renraku' }
-CompiledMethod >> glmCritiqueSourceIn: composite [
-
-	^ self gtInspectorSourceIn: composite
-	
 ]
 
 { #category : #'*renraku' }

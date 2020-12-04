@@ -19,7 +19,7 @@ RBVariableNode >> completionEntries: offset [
 	| methodNode lookupClass |
 	methodNode := self methodNode.
 	lookupClass := methodNode compilationContext getClass.
-	(self isDefinition or: [self isArgument])
+	self isDefinition
 		ifTrue: [ ^ self possibleSelectorEntries ].
 	
 	^ Array streamContents: [ :str | 

@@ -634,7 +634,7 @@ MailMessage >> parseParts [
 
 	"If this is not multipart, store an empty collection"
 
-	| parseStream msgStream messages separator |
+	| parseStream msgStream messages separator currentLine |
 	self body isMultipart
 		ifFalse: [ parts := #().
 			^ self ].
@@ -647,23 +647,29 @@ MailMessage >> parseParts [
 			^ self ].
 	separator := '--' , separator trimRight.
 	parseStream := self bodyText readStream.
-	msgStream := LimitingLineStreamWrapper
-		on: parseStream
-		delimiter: separator.
-	msgStream
-		limitingBlock: [ :aLine | 
-			aLine trimRight = separator
-				or: [ "Match the separator" aLine trimRight = (separator , '--') ] ].	"or the final separator with --"
+	msgStream := ZnFastLineReader on: parseStream.
 
 	"Throw away everything up to and including the first separator"
-	msgStream upToEnd.
-	msgStream skipThisLine.
+	currentLine := ''.
+	[ currentLine trimRight = separator or: [ "Match the separator" currentLine trimRight = (separator , '--') ] ]
+		whileFalse: [ currentLine := msgStream nextLine ].
+
+	"Skip the separator"
+	currentLine := msgStream nextLine.
 
 	"Extract each of the multi-parts as strings"
 	messages := OrderedCollection new.
-	[ parseStream atEnd ]
-		whileFalse: [ messages add: msgStream upToEnd.
-			msgStream skipThisLine ].
+	[ parseStream atEnd ] whileFalse: [ | message |
+		message := String streamContents: [ :stream |
+			[ currentLine trimRight = separator or: [ "Match the separator" currentLine trimRight = (separator , '--') ] ]
+				whileFalse: [
+					stream nextPutAll: currentLine.
+					currentLine := msgStream nextLine ].
+		].
+		messages add: msgStream message.
+		"Skip the separator"
+		currentLine := msgStream nextLine
+	].
 	parts := messages collect: [ :e | MailMessage from: e ]
 ]
 
@@ -865,7 +871,7 @@ MailMessage >> text [
 MailMessage >> time [
 	| dateField |
 	dateField := (self fieldNamed: 'date' ifAbsent: [ ^0 ]) mainValue.
-	^ [self timeFrom: dateField] ifError: [Date today asSeconds].
+	^ [self timeFrom: dateField] onErrorDo: [Date today asSeconds].
 
 ]
 
@@ -931,5 +937,5 @@ MailMessage >> viewImageInBody [
 	| stream image |
 	stream := self body contentStream.
 	image := Form fromBinaryStream: stream.
-	(self currentWorld drawingClass withForm: image) openInWorld
+	(ImageMorph withForm: image) openInWorld
 ]

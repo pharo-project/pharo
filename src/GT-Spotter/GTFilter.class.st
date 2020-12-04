@@ -90,12 +90,6 @@ GTFilter >> defaultStreamed [
 	^ true
 ]
 
-{ #category : #'private-model' }
-GTFilter >> exceptionHandler [
-	self flag: 'Bloc -> overrides doesNotUnderstand discarding the current exception context'.
-	^ GTCurrentSpotterExceptionHandler value ifNil: [ self context exceptionHandler ]
-]
-
 { #category : #accessing }
 GTFilter >> filteredItems [
 	^ filteredItems
@@ -173,11 +167,6 @@ GTFilter >> value: aSpotterContext [
 	polymorphic with BlockClosure>>value:. I return the list of
 	filtered items."
 	
-	^ [ [ self applyFilterInContext: aSpotterContext ]
-		on: Error
-		do: [ :exception | 
-			self exceptionHandler 
-				handleException: exception 
-				do: [ self applyFilterInContext: aSpotterContext error: exception ] ] ] 
+	^ [ self applyFilterInContext: aSpotterContext ]
 		ensure: [ context := nil " release the context after search is completed " ] 
 ]

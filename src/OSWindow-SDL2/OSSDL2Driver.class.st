@@ -76,7 +76,7 @@ OSSDL2Driver >> convertEvent: sdlEvent [
 
 { #category : #'window creation and deletion' }
 OSSDL2Driver >> createWindowWithAttributes: attributes osWindow: osWindow [
-	| flags handle window glAttributes x y |
+	| flags handle aBackendWindow glAttributes x y |
 	
 	flags := attributes visible ifTrue: [ SDL_WINDOW_SHOWN ] ifFalse: [ SDL_WINDOW_HIDDEN ].
 	attributes fullscreen ifTrue: [ flags := flags | SDL_WINDOW_FULLSCREEN_DESKTOP ].
@@ -115,14 +115,14 @@ OSSDL2Driver >> createWindowWithAttributes: attributes osWindow: osWindow [
 			height: attributes height 
 			flags: flags.
 		
-		window := OSSDL2WindowHandle newWithHandle: handle attributes: attributes.
-		window osWindow: osWindow.
-		self registerWindow: window.
+		aBackendWindow := OSSDL2BackendWindow newWithHandle: handle attributes: attributes.
+		aBackendWindow osWindow: osWindow.
+		self registerWindow: aBackendWindow.
 		
 		"The OSWindow handle has to be set inside of this critical section to avoid losing some events such as expose."
-		osWindow setJustCreatedHandle: window.
+		osWindow setJustCreatedHandle: aBackendWindow.
 	].
-	^ window
+	^ aBackendWindow
 ]
 
 { #category : #'events-processing' }
@@ -284,8 +284,8 @@ OSSDL2Driver >> registerGlobalListener: globalListener [
 ]
 
 { #category : #'window creation and deletion' }
-OSSDL2Driver >> registerWindow: window [
-	WindowMap at: window handle windowID put: window
+OSSDL2Driver >> registerWindow: aBackendWindow [
+	WindowMap at: aBackendWindow sdl2Window windowID put: aBackendWindow
 ]
 
 { #category : #'global events' }
@@ -302,11 +302,21 @@ OSSDL2Driver >> sendEventWithoutWindow: event [
 
 { #category : #'window creation and deletion' }
 OSSDL2Driver >> setGLAttributes: glAttributes [
-"	SDL2 glSetAttribute: SDL_GL_CONTEXT_MAJOR_VERSION value: glAttributes majorVersion.
-	SDL2 glSetAttribute: SDL_GL_CONTEXT_MINOR_VERSION value: glAttributes minorVersion.
-	SDL2 glSetAttribute: SDL_GL_CONTEXT_PROFILE_MASK value: glAttributes profileType.
-"
-
+	glAttributes majorVersion ifNotNil: [ 
+		SDL2 glSetAttribute: SDL_GL_CONTEXT_MAJOR_VERSION value: glAttributes majorVersion.
+	].
+	glAttributes minorVersion ifNotNil: [ 
+		SDL2 glSetAttribute: SDL_GL_CONTEXT_MINOR_VERSION value: glAttributes minorVersion.
+	].
+	glAttributes hasCompatibilityProfile ifTrue: [ 
+		SDL2 glSetAttribute: SDL_GL_CONTEXT_PROFILE_MASK value: SDL_GL_CONTEXT_PROFILE_COMPATIBILITY
+	].
+	glAttributes hasCoreProfile ifTrue: [ 
+		SDL2 glSetAttribute: SDL_GL_CONTEXT_PROFILE_MASK value: SDL_GL_CONTEXT_PROFILE_CORE
+	].
+	glAttributes hasESProfile ifTrue: [ 
+		SDL2 glSetAttribute: SDL_GL_CONTEXT_PROFILE_MASK value: SDL_GL_CONTEXT_PROFILE_ES
+	].
 
 	SDL2 glSetAttribute: SDL_GL_RED_SIZE value: glAttributes redSize.
 	SDL2 glSetAttribute: SDL_GL_BLUE_SIZE value: glAttributes blueSize.
@@ -315,8 +325,7 @@ OSSDL2Driver >> setGLAttributes: glAttributes [
 	SDL2 glSetAttribute: SDL_GL_DEPTH_SIZE value: glAttributes depthSize.
 	SDL2 glSetAttribute: SDL_GL_STENCIL_SIZE value: glAttributes stencilSize.
 	SDL2 glSetAttribute: SDL_GL_DOUBLEBUFFER value: glAttributes doubleBuffer.
-
-	
+	SDL2 glSetAttribute: SDL_GL_FRAMEBUFFER_SRGB_CAPABLE value: glAttributes srgbFramebuffer asBit.
 ]
 
 { #category : #'events-processing' }

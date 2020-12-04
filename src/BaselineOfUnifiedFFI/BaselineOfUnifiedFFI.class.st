@@ -1,15 +1,3 @@
-"
-This baseline is used to generate Pharo images from the local clone of pharo-project/pharo repository. 
-
-Depends on:
-- BaselineOfDisplay
-
-Load type: 
-- linear
-
-Installs:
-- UnifiedFFI
-"
 Class {
 	#name : #BaselineOfUnifiedFFI,
 	#superclass : #BaselineOf,

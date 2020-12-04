@@ -7,7 +7,8 @@ Class {
 		'setValueSelector',
 		'sliderShadow',
 		'sliderColor',
-		'descending'
+		'descending',
+		'dragging'
 	],
 	#category : #'Morphic-Widgets-Scrolling'
 }
@@ -64,6 +65,16 @@ Slider >> descending: aBoolean [
 	self value: value
 ]
 
+{ #category : #access }
+Slider >> dragging [
+	^ dragging.
+]
+
+{ #category : #access }
+Slider >> dragging: aBoolean [
+	dragging := aBoolean.
+]
+
 { #category : #geometry }
 Slider >> extent: newExtent [
 	newExtent = bounds extent ifTrue: [^ self].
@@ -80,6 +91,7 @@ Slider >> initialize [
 	super initialize.
 	value := 0.0.
 	descending := false.
+	dragging := false.
 	self initializeSlider
 ]
 
@@ -107,24 +119,42 @@ Slider >> initializeSlider [
 ]
 
 { #category : #'other events' }
-Slider >> mouseDownInSlider: event [ 
-
-	slider borderStyle style == #raised
-		ifTrue: [slider borderColor: #inset].
+Slider >> mouseDownInSlider: event [
+	"When mouse down I start dragging, and change the border colors and show a shadow
+	on the original position."
+	
+	"If already dragging don't update."
+	"Be aware that this situation is difficult to reproduce, but you can if start dragging
+	and the use a key combination to change the selected OS Windows (not morphic) without
+	releasing the mouse and finally make a mousedown in the slider again."
+	dragging ifTrue:[^self].
+	
+	slider borderColor: #inset.
 	
 	sliderShadow color: self sliderShadowColor.
 	sliderShadow cornerStyle: slider cornerStyle.
 	sliderShadow bounds: slider bounds.
-	sliderShadow show
+	sliderShadow show.
+	
+	self dragging: true
 ]
 
 { #category : #'other events' }
-Slider >> mouseUpInSlider: event [ 
-
-	slider borderStyle style == #inset
-		ifTrue: [slider borderColor: #raised].
+Slider >> mouseUpInSlider: event [
+	"When mouse up, the dragging ends and the color is reseted to it's orignal
+	value and the shadow of original position is hidden."
 	
-	sliderShadow hide
+	"If it's not dragging, there's nothing to do."
+	"To reproduce this, press mouse down outside the slider, then move to
+	the slider and release the mouse."
+	
+	dragging ifFalse:[^self].
+
+	slider borderColor: #raised.
+				
+	sliderShadow hide.
+	
+	self dragging: false.
 ]
 
 { #category : #access }
@@ -140,20 +170,27 @@ Slider >> roomToMove [
 { #category : #scrolling }
 Slider >> scrollAbsolute: event [
 	| r p |
+	"If I'm not dragging I will do nothing."
+	self dragging ifFalse: [ ^ self ].
+
 	r := self roomToMove.
 	bounds isWide
-		ifTrue: [r width = 0 ifTrue: [^ self]]
-		ifFalse: [r height = 0 ifTrue: [^ self]].
+		ifTrue: [ r width = 0
+				ifTrue: [ ^ self ] ]
+		ifFalse: [ r height = 0
+				ifTrue: [ ^ self ] ].
 	p := event targetPoint adhereTo: r.
 	self descending
-		ifFalse:
-			[self setValue: (bounds isWide 
-				ifTrue: [(p x - r left) asFloat / r width]
-				ifFalse: [(p y - r top) asFloat / r height])]
-		ifTrue:
-			[self setValue: (bounds isWide
-				ifTrue: [(r right - p x) asFloat / r width]
-				ifFalse:	[(r bottom - p y) asFloat / r height])]
+		ifFalse: [ self
+				setValue:
+					(bounds isWide
+						ifTrue: [ (p x - r left) asFloat / r width ]
+						ifFalse: [ (p y - r top) asFloat / r height ]) ]
+		ifTrue: [ self
+				setValue:
+					(bounds isWide
+						ifTrue: [ (r right - p x) asFloat / r width ]
+						ifFalse: [ (r bottom - p y) asFloat / r height ]) ]
 ]
 
 { #category : #initialization }
@@ -190,6 +227,63 @@ Slider >> setValueSelector: aSymbol [
 	"Directly set the selector to make more flexible."
 	
 	setValueSelector := aSymbol
+]
+
+{ #category : #'event testing' }
+Slider >> simulateScrollAbsolute: aPointStart to: aPointEnd [
+	"Simulates a mouse moving from a given point to a destinationpoint"
+	| event |
+	event := MouseMoveEvent  new 
+		setType: #mouseMove  
+		startPoint: aPointStart 
+		endPoint: aPointEnd 
+		trail: nil
+		buttons: 0
+		hand: self currentHand
+		stamp: 0.
+	self scrollAbsolute:  event
+]
+
+{ #category : #'event testing' }
+Slider >> simulateSliderMiddleMouseDown [
+	"Simulate mouse button down with the left button (red button for left, blue for middle, yellow for right) into the Slider"
+
+	slider simulateMouseDownWith: MouseEvent blueButton
+]
+
+{ #category : #'event testing' }
+Slider >> simulateSliderMiddleMouseUp [
+	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right) into the Slider"
+
+	slider simulateMouseUpWith: MouseEvent blueButton
+]
+
+{ #category : #'event testing' }
+Slider >> simulateSliderMouseDown [
+	"Simulate mouse button down with the left button (red button for left, blue for middle, yellow for right) into the Slider"
+
+	slider simulateMouseDownWith: MouseEvent redButton
+]
+
+{ #category : #'event testing' }
+Slider >> simulateSliderMouseUp [
+	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right) into the Slider"
+
+	slider simulateMouseUpWith: MouseEvent redButton
+]
+
+{ #category : #'event testing' }
+Slider >> simulateSliderRightMouseDown [
+	"Simulate mouse button down with the left button (red button for left, blue for middle, yellow for right) into the Slider"
+
+	slider simulateMouseDownWith: MouseEvent yellowButton
+]
+
+{ #category : #'event testing' }
+Slider >> simulateSliderRightMouseUp [
+	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right) into the Slider"
+
+	slider simulateMouseUpWith: MouseEvent yellowButton
 ]
 
 { #category : #access }

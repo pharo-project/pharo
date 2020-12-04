@@ -153,7 +153,7 @@ AthensCairoPathBuilder >> createPath: aBlock [
 	endPoint := ZeroPoint.
 	
 	"set the implicit path origin"
-	self moveToX: 0 Y: 0.
+	self moveToX: 0.0 Y: 0.0.
 		
 	aBlock value: self.
 	
@@ -203,15 +203,14 @@ The two control points for the cubic are:
 
 { #category : #private }
 AthensCairoPathBuilder >> curveViaX: x1 Y: y1 viaX: x2 Y: y2 toX: x3 Y: y3 [
-	^ self ffiCall: #(void cairo_curve_to(AthensCairoCanvas context,
-                                                         double x1,
-                                                         double y1,
-                                                         double x2,
-                                                         double y2,
-                                                         double x3,
-                                                         double y3))
 
-
+	^ self
+		  primCurveViaX: x1 asFloat
+		  Y: y1 asFloat
+		  viaX: x2 asFloat
+		  Y: y2 asFloat
+		  toX: x3 asFloat
+		  Y: y3 asFloat
 ]
 
 { #category : #'path commands' }
@@ -280,6 +279,19 @@ AthensCairoPathBuilder >> moveToX: x Y: y [
 { #category : #private }
 AthensCairoPathBuilder >> newPath [
  ^ self ffiCall: #( void cairo_new_path ( AthensCairoCanvas context ) )
+]
+
+{ #category : #private }
+AthensCairoPathBuilder >> primCurveViaX: x1 Y: y1 viaX: x2 Y: y2 toX: x3 Y: y3 [
+	^ self ffiCall: #(void cairo_curve_to(AthensCairoCanvas context,
+                                                         double x1,
+                                                         double y1,
+                                                         double x2,
+                                                         double y2,
+                                                         double x3,
+                                                         double y3))
+
+
 ]
 
 { #category : #'path commands' }

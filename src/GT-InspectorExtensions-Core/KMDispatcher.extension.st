@@ -3,7 +3,7 @@ Extension { #name : #KMDispatcher }
 { #category : #'*GT-InspectorExtensions-Core' }
 KMDispatcher >> gtAllKeyCategoryPairs [
 
-	^ ((self targets collect: #category)
+	^ ((self targets collect: [:each | each category])
 			add: self directKeymaps;
 			yourself)
 			flatCollect: [ :category | 

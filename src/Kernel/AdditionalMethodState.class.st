@@ -71,7 +71,7 @@ AdditionalMethodState >> at: aKey ifAbsent: aBlock [
 		[:i |
 		| propertyOrPragma "<Association|Pragma>" |
 		(propertyOrPragma := self basicAt: i) key == aKey ifTrue:
-			[^propertyOrPragma isVariableBinding
+			[^propertyOrPragma isAssociation
 				ifTrue: [propertyOrPragma value]
 				ifFalse: [propertyOrPragma]]].
 	^aBlock value
@@ -86,7 +86,7 @@ AdditionalMethodState >> at: aKey ifAbsentPut: aBlock [
 		[:i |
 		| propertyOrPragma "<Association|Pragma>" |
 		(propertyOrPragma := self basicAt: i) key == aKey ifTrue:
-			[^propertyOrPragma isVariableBinding
+			[^propertyOrPragma isAssociation
 				ifTrue: [propertyOrPragma value]
 				ifFalse: [propertyOrPragma]]].
 	^method propertyAt: aKey put: aBlock value
@@ -109,7 +109,7 @@ AdditionalMethodState >> at: aKey put: aValue [
                | propertyOrPragma "<Association|Pragma>" |
                (propertyOrPragma := self basicAt: i) key == aKey ifTrue: [
                        keyAlreadyExists := true.
-                       propertyOrPragma isVariableBinding
+                       propertyOrPragma isAssociation
                                ifTrue: [propertyOrPragma value: aValue]
                                ifFalse: [self basicAt: i put: aValue]]].
 
@@ -158,46 +158,6 @@ AdditionalMethodState >> copyWithout: aPropertyOrPragma [ "<Association|Pragma>"
 ]
 
 { #category : #testing }
-AdditionalMethodState >> hasAtLeastTheSamePropertiesAs: aMethodProperties [
-	"Answer if the recever has at least the same properties as the argument.
-	 N.B. The receiver may have additional properties and still answer true."
-	aMethodProperties keysAndValuesDo:
-		[:k :v|
-		(v isKindOf: Pragma)
-			"ifTrue: [Pragmas have already been checked]"
-			ifFalse: [
-				(self includes: k->v) ifFalse: [^false]]].
-	^true
-]
-
-{ #category : #testing }
-AdditionalMethodState >> hasLiteralSuchThat: aBlock [
-	"Answer true if litBlock returns true for any literal in this array, even if embedded in further array structure.
-	 This method is only intended for private use by CompiledMethod hasLiteralSuchThat:"
-	1 to: self basicSize do: [:i |
-		| propertyOrPragma "<Association|Pragma>" |
-		propertyOrPragma := self basicAt: i.
-		(propertyOrPragma isVariableBinding
-			ifTrue: [(aBlock value: propertyOrPragma key)
-					or: [(aBlock value: propertyOrPragma value)
-					or: [propertyOrPragma value isArray
-						and: [propertyOrPragma value hasLiteralSuchThat: aBlock]]]]
-			ifFalse: [propertyOrPragma hasLiteralSuchThat: aBlock]) ifTrue:
-			[^true]].
-	^false
-]
-
-{ #category : #testing }
-AdditionalMethodState >> hasLiteralThorough: aLiteral [
-	self 
-		deprecated: 'Use #refersToLiteral: instead.' 
-		on: '31 January 2020'
-		in: #Pharo9
-		transformWith: '`@receiver hasLiteralThorough: `@arg' -> '`@receiver refersToLiteral: `@arg'.
-	^ self refersToLiteral: aLiteral
-]
-
-{ #category : #testing }
 AdditionalMethodState >> includes: aPropertyOrPragma [ "<Association|Pragma>"
 	"Test if the property or pragma is present."
 
@@ -226,7 +186,7 @@ AdditionalMethodState >> includesProperty: aKey [
 	1 to: self basicSize do: [:i |
 		| propertyOrPragma "<Association|Pragma>" |
 		propertyOrPragma := self basicAt: i.
-		(propertyOrPragma isVariableBinding
+		(propertyOrPragma isAssociation
 		 and: [propertyOrPragma key == aKey]) ifTrue:
 			[^true]].
 	^false
@@ -248,7 +208,7 @@ AdditionalMethodState >> keysAndValuesDo: aBlock [
 
 	1 to: self basicSize do: [:i |
 		| propertyOrPragma "<Association|Pragma>" |
-		(propertyOrPragma := self basicAt: i) isVariableBinding
+		(propertyOrPragma := self basicAt: i) isAssociation
 			ifTrue: [aBlock value: propertyOrPragma key value: propertyOrPragma value]
 			ifFalse: [aBlock value: propertyOrPragma selector value: propertyOrPragma]]
 ]
@@ -277,26 +237,24 @@ AdditionalMethodState >> postCopy [
 		[:i| self basicAt: i put: (self basicAt: i) shallowCopy]
 ]
 
+{ #category : #accessing }
+AdditionalMethodState >> pragmas [
+	"Return the Pragma objects. Properties are stored as Associations"
+	^ Array new: self basicSize streamContents: [ :pragmaStream | 
+		  1 to: self basicSize do: [ :i | 
+			  | propertyOrPragma "<Association|Pragma>" |
+			  (propertyOrPragma := self basicAt: i) isAssociation ifFalse: [ 
+				  pragmaStream nextPut: propertyOrPragma ] ] ]
+]
+
 { #category : #enumerating }
-AdditionalMethodState >> pragmaDo: aBlock [
+AdditionalMethodState >> pragmasDo: aBlock [
 	
 	1 to: self basicSize do: [ :i | 
 		| propertyOrPragma	"<Association|Pragma>" |
 		propertyOrPragma := self basicAt: i.
-		propertyOrPragma isVariableBinding
+		propertyOrPragma isAssociation
 			ifFalse: [ aBlock value: propertyOrPragma ] ]
-]
-
-{ #category : #accessing }
-AdditionalMethodState >> pragmas [
-	"Answer the raw messages comprising my pragmas."
-	| pragmaStream |
-	pragmaStream := WriteStream on: (Array new: self basicSize).
-	1 to: self basicSize do: [:i |
-		| propertyOrPragma "<Association|Message>" |
-		(propertyOrPragma := self basicAt: i) isVariableBinding ifFalse:
-			[pragmaStream nextPut: propertyOrPragma]].
-	^pragmaStream contents
 ]
 
 { #category : #printing }
@@ -312,7 +270,7 @@ AdditionalMethodState >> properties [
 	propertyStream := WriteStream on: (Array new: self basicSize * 2).
 	1 to: self basicSize do: [:i |
 		| propertyOrPragma "<Association|Pragma>" |
-		(propertyOrPragma := self basicAt: i) isVariableBinding ifTrue:
+		(propertyOrPragma := self basicAt: i) isAssociation ifTrue:
 			[propertyStream nextPut: propertyOrPragma key; nextPut: propertyOrPragma value]].
 	^IdentityDictionary newFromPairs: propertyStream contents
 ]
@@ -331,7 +289,7 @@ AdditionalMethodState >> propertyAt: aKey ifAbsent: aBlock [
 	1 to: self basicSize do: [:i |
 		| propertyOrPragma "<Association|Pragma>" |
 		propertyOrPragma := self basicAt: i.
-		(propertyOrPragma isVariableBinding
+		(propertyOrPragma isAssociation
 		 and: [propertyOrPragma key == aKey]) ifTrue:
 			[^propertyOrPragma value]].
 	^aBlock value
@@ -343,7 +301,7 @@ AdditionalMethodState >> propertyKeysAndValuesDo: aBlock [
 
 	1 to: self basicSize do: [:i |
 		| propertyOrPragma "<Association|Pragma>" |
-		(propertyOrPragma := self basicAt: i) isVariableBinding ifTrue:
+		(propertyOrPragma := self basicAt: i) isAssociation ifTrue:
 			[aBlock value: propertyOrPragma key value: propertyOrPragma value]]
 ]
 
@@ -360,14 +318,6 @@ AdditionalMethodState >> propertyValueAt: aKey ifAbsent: aBlock [
 	^self propertyAt: aKey ifAbsent: aBlock
 ]
 
-{ #category : #testing }
-AdditionalMethodState >> refersToLiteral: literal [
-	"Answer true if any literal in these properties is literal, even if embedded in array structure."
-	1 to: self basicSize do: [:i |
-		((self basicAt: i) hasLiteral: literal) ifTrue: [^true]].
-	^false
-]
-
 { #category : #properties }
 AdditionalMethodState >> removeKey: aKey [
 	"Remove the property with aKey. Answer the property or raise an error if aKey isn't found."
@@ -382,7 +332,7 @@ AdditionalMethodState >> removeKey: aKey ifAbsent: aBlock [
 	1 to: self basicSize do: [:i |
 		| propertyOrPragma "<Association|Pragma>" |
 		propertyOrPragma := self basicAt: i.
-		(propertyOrPragma isVariableBinding
+		(propertyOrPragma isAssociation
 				ifTrue: [propertyOrPragma key]
 				ifFalse: [propertyOrPragma selector])
 			== aKey ifTrue:
@@ -405,6 +355,6 @@ AdditionalMethodState >> setMethod: aMethod [
 	method := aMethod.
 	1 to: self basicSize do: [ :i | 
 		| propertyOrPragma	"<Association|Pragma>" |
-		(propertyOrPragma := self basicAt: i) isVariableBinding
+		(propertyOrPragma := self basicAt: i) isAssociation
 			ifFalse: [ propertyOrPragma method: aMethod ] ]
 ]

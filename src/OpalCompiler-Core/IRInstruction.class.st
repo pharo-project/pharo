@@ -138,6 +138,11 @@ IRInstruction class >> pushThisContext [
 ]
 
 { #category : #'instance creation' }
+IRInstruction class >> pushThisProcess [
+	^ IRPushThisProcess new
+]
+
+{ #category : #'instance creation' }
 IRInstruction class >> returnTop [
 
 	^ IRReturn new
@@ -350,7 +355,7 @@ IRInstruction >> nonBodySuccessorSequences [
 
 { #category : #printing }
 IRInstruction >> printOn: aStream [
-	IRPrinterV2 new
+	IRPrinter new
 			stream: aStream;
 			visitNode: self
 ]

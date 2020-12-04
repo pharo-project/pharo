@@ -30,7 +30,7 @@ SycCategorizeAllUnclassifiedMethodsCommand >> execute [
 
 { #category : #execution }
 SycCategorizeAllUnclassifiedMethodsCommand >> prepareFullExecutionInContext: aToolContext [
+
 	super prepareFullExecutionInContext: aToolContext.
-	
 	classes := classes collect: [:each | aToolContext currentMetaLevelOf: each]
 ]

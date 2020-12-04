@@ -122,11 +122,12 @@ CompositionScanner >> composeFrom: startIndex inRectangle: lineRectangle
 { #category : #scanning }
 CompositionScanner >> computeDefaultLineHeight [
 	"Compute the default line height for a potentially empty text"
-	rightMargin notNil
-		ifTrue: [lastIndex := 1.
+
+	^ rightMargin notNil
+		ifTrue: [ lastIndex := 1.
 			self setFont.
-			^ lineHeight + textStyle leading]
-		ifFalse: [^textStyle lineGrid]
+			lineHeight + textStyle leading ]
+		ifFalse: [ textStyle lineGrid ]
 ]
 
 { #category : #'stop conditions' }
@@ -178,16 +179,15 @@ CompositionScanner >> endOfRun [
 	false."
 
 	| runLength |
-	lastIndex = text size
-	ifTrue:	[line stop: lastIndex.
+	^ lastIndex = text size
+		ifTrue: [ line stop: lastIndex.
 			spaceX := destX.
 			line paddingWidth: rightMargin - destX.
-			^true]
-	ifFalse:	[runLength := (text runLengthFor: (lastIndex := lastIndex + 1)).
+			true ]
+		ifFalse: [ runLength := text runLengthFor: (lastIndex := lastIndex + 1).
 			runStopIndex := lastIndex + (runLength - 1).
 			self setStopConditions.
-			^false]
-
+			false ]
 ]
 
 { #category : #initialization }

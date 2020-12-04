@@ -50,7 +50,7 @@ ReReturnsBooleanAndOtherRule >> checkIfNodeIsBool: node [
 
 { #category : #private }
 ReReturnsBooleanAndOtherRule >> checkIfNodeIsNotBool: node [
-	^ node isSelf or:
+	^ node isSelfVariable or:
 		[ node isLiteralNode and: [ (#(true false) includes: node value) not ] ]
 ]
 

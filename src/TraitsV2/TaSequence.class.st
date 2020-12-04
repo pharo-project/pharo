@@ -106,7 +106,7 @@ TaSequence >> changesSourceCode: aSelector [
 
 { #category : #accessing }
 TaSequence >> classComposition [
-	^ self class withAll: (members collect:#classComposition)
+	^ self class withAll: (members collect: [:each | each classComposition])
 ]
 
 { #category : #accessing }
@@ -117,7 +117,7 @@ TaSequence >> compiledMethodAt: aSelector [
 
 { #category : #copying }
 TaSequence >> copyTraitExpression [
-	^ self class withAll: (members collect:#copyTraitExpression)
+	^ self class withAll: (members collect: [:each | each copyTraitExpression])
 ]
 
 { #category : #copying }
@@ -195,7 +195,7 @@ TaSequence >> methods [
 
 { #category : #accessing }
 TaSequence >> name [
-	^ '_' join: (members collect:#name) 
+	^ '_' join: (members collect: [:each | each name]) 
 ]
 
 { #category : #querying }
@@ -284,7 +284,7 @@ TaSequence >> traitCompositionExpression [
 		ifTrue: [ ^ '{}' ].
 
 	^ {members first traitCompositionExpression}
-		, (members allButFirst collect: #traitCompositionExpressionWithParens) joinUsing: ' + '
+		, (members allButFirst collect: [:each | each traitCompositionExpressionWithParens]) joinUsing: ' + '
 ]
 
 { #category : #querying }

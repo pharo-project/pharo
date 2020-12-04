@@ -51,7 +51,23 @@ SDL2 class >> clipboardText: text [
 			toStream: stream.
 		stream nextPut: 0 ].
 	
+	encoded pinInMemory.
 	self primClipboardText: encoded
+]
+
+{ #category : #audio }
+SDL2 class >> closeAudioDevice: dev [
+	^ self ffiCall: #( void SDL_CloseAudioDevice(SDL_AudioDeviceID dev) )
+]
+
+{ #category : #video }
+SDL2 class >> composeCustomBlendMode_srcColorFactor: srcColorFactor dstColorFactor: dstColorFactor colorOperation: colorOperation srcAlphaFactor: srcAlphaFactor dstAlphaFactor: dstAlphaFactor alphaOperation: alphaOperation [
+	^ self ffiCall: #(SDL_BlendMode SDL_ComposeCustomBlendMode(SDL_BlendFactor srcColorFactor,
+                                                                 SDL_BlendFactor dstColorFactor,
+                                                                 SDL_BlendOperation colorOperation,
+                                                                 SDL_BlendFactor srcAlphaFactor,
+                                                                 SDL_BlendFactor dstAlphaFactor,
+                                                                 SDL_BlendOperation alphaOperation))
 ]
 
 { #category : #cursor }
@@ -108,7 +124,7 @@ SDL2 class >> findSDL2 [
 	'SDL2.dll'					"Windows"
 	) do: [ :eachName | 
 		[ (self checkLibraryName: eachName) ifTrue: [ ^ eachName ] ] 
-		ifError: [nil] ].
+		onErrorDo: [nil] ].
 	self error: 'Failed to find SDL2 library.'
 ]
 
@@ -127,9 +143,29 @@ SDL2 class >> gameControllerOpen: deviceIndex [
 	^ self ffiCall: #( SDL_GameController SDL_GameControllerOpen ( int deviceIndex ) )
 ]
 
+{ #category : #audio }
+SDL2 class >> getAudioDeviceName: index isCapture: isCapture [
+	^ self ffiCall: #( char* SDL_GetAudioDeviceName(int index, int isCapture) ) options: #( optStringEncodingUtf8 ).
+]
+
+{ #category : #video }
+SDL2 class >> getDisplay: displayIndex ddpi: ddpi hdpi: hdpi vdpi: vdpi [
+	^ self ffiCall: #( int SDL_GetDisplayDPI(int displayIndex, float* ddpi, float* hdpi, float* vdpi))
+]
+
 { #category : #'error handling' }
 SDL2 class >> getErrorMessage [
 	^ self ffiCall: #( String SDL_GetError ( void ) )
+]
+
+{ #category : #audio }
+SDL2 class >> getNumAudioDevices: isCapture [
+	^ self ffiCall: #( int SDL_GetNumAudioDevices(int isCapture) )
+]
+
+{ #category : #audio }
+SDL2 class >> getQueuedAudioSize: dev [
+	^ self ffiCall: #( Uint32 SDL_GetQueuedAudioSize(SDL_AudioDeviceID dev) )
 ]
 
 { #category : #common }
@@ -144,12 +180,10 @@ SDL2 class >> glCreateContext: window [
 
 { #category : #opengl }
 SDL2 class >> glGetAttribute: attr [
-	| value result |
-   value := ExternalAddress allocate: 4.
-	self glGetAttribute: attr into: value.
-	result := value nbUInt32AtOffset: 0.
-	value free.
-	^result
+
+	^ ExternalAddress allocate: 4 bytesDuring: [ :value | 
+		  self glGetAttribute: attr into: value.
+		  value nbUInt32AtOffset: 0 ]
 ]
 
 { #category : #opengl }
@@ -183,6 +217,12 @@ SDL2 class >> init: flags [
 ]
 
 { #category : #common }
+SDL2 class >> initAudio [
+	self initLibrary;
+		 initSubSystem: SDL_INIT_AUDIO
+]
+
+{ #category : #common }
 SDL2 class >> initEverything [
 	self initLibrary;
 		 initSubSystem: SDL_INIT_EVERYTHING
@@ -208,8 +248,11 @@ SDL2 class >> initLibrary [
 	
 	self initPlatformSpecific.
 	
-	self setHint: SDL_HINT_VIDEO_ALLOW_SCREENSAVER value: '1'.
-	self setHint: SDL_HINT_NO_SIGNAL_HANDLERS value: '1'.
+	self
+		setHint: SDL_HINT_VIDEO_ALLOW_SCREENSAVER value: '1';
+		setHint: SDL_HINT_NO_SIGNAL_HANDLERS value: '1';
+		setHint: SDL_HINT_RENDER_SCALE_QUALITY value: '1'.
+		
 	self init: SDL_INIT_NOPARACHUTE.
 	Session := Smalltalk session.
 ]
@@ -217,9 +260,8 @@ SDL2 class >> initLibrary [
 { #category : #common }
 SDL2 class >> initPlatformSpecific [
 
-	Smalltalk os isMacOSX ifTrue: [  
-		SDLOSXPlatformInitializer new run.	
-	] 
+	OSPlatform current sdlPlatform initPlatformSpecific.
+
 ]
 
 { #category : #common }
@@ -236,7 +278,7 @@ SDL2 class >> initVideo [
 { #category : #common }
 SDL2 class >> isAvailable [
 	^ [ (ExternalAddress loadSymbol: 'SDL_Init' from: SDL2 moduleName) notNil ] 	
-		ifError: [ false ]
+		onErrorDo: [ false ]
 ]
 
 { #category : #'game controller' }
@@ -283,6 +325,16 @@ SDL2 class >> numberOfJoysticks [
 	^ self ffiCall: #( int SDL_NumJoysticks() )
 ]
 
+{ #category : #audio }
+SDL2 class >> openAudioDevice: device isCapture: isCapture desired: desired obtained: obtained allowedChanges: allowedChanges [
+	^ self ffiCall: #( SDL_AudioDeviceID SDL_OpenAudioDevice(void* device, int isCapture, SDL_AudioSpec* desired, SDL_AudioSpec* obtained, int allowedChanges) )
+]
+
+{ #category : #audio }
+SDL2 class >> pauseAudioDevice: dev pauseOn: pauseOn [
+	^ self ffiCall: #( void SDL_PauseAudioDevice(SDL_AudioDeviceID dev, int pauseOn) )
+]
+
 { #category : #event }
 SDL2 class >> pollEvent: event [
 	^ self ffiCall: #( int SDL_PollEvent ( SDL_Event event ) )
@@ -290,7 +342,7 @@ SDL2 class >> pollEvent: event [
 
 { #category : #clipboard }
 SDL2 class >> primClipboardText [
-	^ self ffiCall: #( ExternalAddress SDL_GetClipboardText ( ) )
+	^ self ffiCall: #(void* SDL_GetClipboardText ( ) )
 ]
 
 { #category : #clipboard }
@@ -305,6 +357,11 @@ SDL2 class >> primCreateRGBSurfaceForCairoWidth: width height: height [
 	^ self ffiCall: #( SDL_Surface* SDL_CreateRGBSurface 
 						( 0 , int width , int height , 32 ,
 						  16r00FF0000 , 16r0000FF00 , 16r000000FF , 0 ) )
+]
+
+{ #category : #audio }
+SDL2 class >> queueAudio: dev data: data len: len [
+	^ self ffiCall: #( int SDL_QueueAudio(SDL_AudioDeviceID dev, void* data, Uint32 len) )
 ]
 
 { #category : #common }

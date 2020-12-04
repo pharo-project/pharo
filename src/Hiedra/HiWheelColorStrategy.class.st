@@ -42,7 +42,9 @@ HiWheelColorStrategy >> defaultColorWheel [
 	| referenceColor |
 	referenceColor := Smalltalk ui theme textColor.
 
+	"Little workaround: The wheel is being reversed to avoid having red at first (it's a color associated with danger)"
 	^ (Color wheel: self defaultColorWheelSize saturation: 0.95 brightness: 0.95)
+		reversed
 		collect: [ :each | each mixed: 0.75 with: referenceColor ]
 ]
 

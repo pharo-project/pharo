@@ -1,11 +1,11 @@
 "
-i am a concrete implementation of Athens surface which using cairo graphics library for rendering.
+I am a concrete implementation of Athens surface which using cairo graphics library for rendering.
 
 Cairo library, by itself can have multiple surface types.
 This class uses image surface (a bitmap located in system memory) and maps to cairo_image_surface_t* C type.
 
 **NOTE**
-As a workaround of bitblt bug, the actual Cairo surfaces, created internally is with 1 extra pixel higher than requested. This is, however completely hidden from users.
+As a workaround of a bug in bitblt, the Cairo surfaces are created internally with 1 extra pixel higher than requested. However, this is hidden for users.
 "
 Class {
 	#name : #AthensCairoSurface,
@@ -128,8 +128,7 @@ AthensCairoSurface class >> createShowSurfaceFn [
 	int showSurface(sqIntptr_t handle, int x, int y, int w, int h);
 		Display the contents of the surface on the actual screen.
 
-		If ioShowSurface() is called the surface in question represents
-		a Squeak DisplayScreen.
+		If ioShowSurface() is called the surface in question represents a DisplayScreen.
 
 	"
 	^ nil
@@ -186,6 +185,8 @@ AthensCairoSurface class >> extent: anExtent format: aFormat [
 
 { #category : #'finalize resources' }
 AthensCairoSurface class >> finalizeResourceData: data [
+	"Finalize external state"
+
 	| handle id contextHandle |
 	handle := data first.
 	id := data second.
@@ -217,27 +218,19 @@ AthensCairoSurface class >> findSurface: surfaceId [
 { #category : #'instance creation' }
 AthensCairoSurface class >> fromForm: aForm [
 	| form surface newBits |
-	
 	form := aForm unhibernate; asFormOfDepth: 32.
 	surface := self extent: aForm extent.
-	
 	"we should convert form bits with premultiplied alpha"
-	
-	newBits := form bits collect:[:pixel |
+	newBits := form bits collect: [:pixel |
 		| alpha r g b|
 		alpha := (pixel >> 24) / 255.
-		
 		r := ( (pixel bitAnd: 255) * alpha ) asInteger.
 		g := ( (pixel >>8 bitAnd: 255) * alpha ) asInteger.
 		b := ( (pixel >>16 bitAnd: 255) * alpha ) asInteger.
-		
 		(pixel bitAnd: 16rFF000000) + (b<<16) + (g<<8) + r
 		].
-	
 	LibC memCopy: newBits to: surface getDataPtr getHandle size: (form width * form height *4).
-	
 	surface markDirty.
-
 	^ surface.
 ]
 
@@ -310,7 +303,7 @@ AthensCairoSurface class >> ioRegisterSurface: aCairoSurfaceHandle dispatch: sqS
 	otherwise.
 
 "
-	self ffiCall: #(bool ioRegisterSurface(int aCairoSurfaceHandle, void *sqSurfaceDispatchPtr, void *idHolder)) module: #SurfacePlugin
+	self ffiCall: #(bool ioRegisterSurface(long aCairoSurfaceHandle, void *sqSurfaceDispatchPtr, void *idHolder)) module: #SurfacePlugin
 ]
 
 { #category : #private }
@@ -471,6 +464,11 @@ AthensCairoSurface >> createLinearGradient: aColorRamp start: aStartPoint stop: 
 	
 ]
 
+{ #category : #paints }
+AthensCairoSurface >> createMeshGradientWithPatches: aListOfMeshPatches [
+	^ AthensCairoMeshGradientPaint createMeshGradientWithPatches: aListOfMeshPatches
+]
+
 { #category : #creation }
 AthensCairoSurface >> createPath: aPathCreatingBlock [
 	^ builder createPath:  aPathCreatingBlock 
@@ -538,12 +536,19 @@ AthensCairoSurface >> fillPath: aPath withSolidColor: aColor [
 AthensCairoSurface >> fillRectangle: aRectangle withSolidColor: aColor [
 
 	self loadSolidColor: aColor.
-	
+
 	currentCanvas
 		newPath;
-		rectangleX: aRectangle left y: aRectangle top width: aRectangle width height: aRectangle height;
+		rectangleX: aRectangle left asFloat
+		y: aRectangle top asFloat
+		width: aRectangle width asFloat
+		height: aRectangle height asFloat;
 		fill
-	
+]
+
+{ #category : #private }
+AthensCairoSurface >> finish [
+	^ self ffiCall: #( void cairo_surface_finish (self) )
 ]
 
 { #category : #private }
@@ -669,6 +674,11 @@ AthensCairoSurface >> privateHeight [
 { #category : #initialization }
 AthensCairoSurface >> resourceData [
 	^ { handle value. id. context handle }
+]
+
+{ #category : #private }
+AthensCairoSurface >> showPage [
+	^ self ffiCall: #( void cairo_surface_show_page (self) )
 ]
 
 { #category : #accessing }

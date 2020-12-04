@@ -93,6 +93,13 @@ RBProgramNode >> allChildren [
 ]
 
 { #category : #accessing }
+RBProgramNode >> allComments [
+	"Answer a collection of objects representing the comments in the method. Return an empty collection if the method's source code does not contain a comment."
+
+	^ self allChildren flatCollect: [:el| el comments]
+]
+
+{ #category : #accessing }
 RBProgramNode >> allDefinedVariables [
 	| children |
 	children := self children.
@@ -102,6 +109,28 @@ RBProgramNode >> allDefinedVariables [
 			[:vars :each | 
 			vars
 				addAll: each allDefinedVariables;
+				yourself]
+]
+
+{ #category : #accessing }
+RBProgramNode >> allParents [
+	"return all my parents. 
+	See discussion in issue https://github.com/pharo-project/pharo/issues/6278"
+	^ parent 
+		ifNil: [ OrderedCollection new ]
+		ifNotNil: [ parent withAllParents ]
+]
+
+{ #category : #accessing }
+RBProgramNode >> allStatements [
+	| children |
+	children := self children.
+	children isEmpty ifTrue: [^#()].
+	^children inject: OrderedCollection new
+		into: 
+			[:vars :each | 
+			vars
+				addAll: each allStatements;
 				yourself]
 ]
 
@@ -148,12 +177,10 @@ RBProgramNode >> assigns: aVariableName [
 
 { #category : #querying }
 RBProgramNode >> bestNodeFor: anInterval [ 
-
-	| selectedChildren |
-	
-	anInterval ifNil: [ ^ nil ].
-	
-	(self intersectsInterval: anInterval) ifFalse: [^nil].
+	| selectedChildren selectedComments |
+	anInterval ifNil: [^nil ].
+	selectedComments := self getCommentsFor: anInterval.
+	(self intersectsInterval: anInterval) ifFalse: [^selectedComments ifNil: [ nil ] ifNotNil: [ selectedComments size = 1 ifTrue: [ selectedComments first ] ifFalse: [ nil ] ] ].
 	(self containedBy: anInterval) ifTrue: [^self].
 	
 	selectedChildren := self children select: [:each | 
@@ -162,7 +189,9 @@ RBProgramNode >> bestNodeFor: anInterval [
 
 	^ selectedChildren size = 1 
 		ifTrue: [ selectedChildren first bestNodeFor: anInterval ]
-		ifFalse: [ self ]
+		ifFalse: [ (selectedChildren isEmpty and: [ selectedComments size = 1 ])
+							ifTrue: [ selectedComments first ]
+							ifFalse: [ self ] ]
 ]
 
 { #category : #querying }
@@ -343,6 +372,23 @@ RBProgramNode >> formatterClass [
 	^ self class formatterClass
 ]
 
+{ #category : #querying }
+RBProgramNode >> getCommentsFor: anInterval [
+	| selectedComments |
+	selectedComments := OrderedCollection new.
+	self nodesDo: 
+		[ :each | 
+			| comments | 
+			comments := each comments select: 
+				[ :com | com intersectsInterval: anInterval ]. 
+	"This precaution is taken to deal with cascades multiple visit of the receiver."
+			(selectedComments isNotEmpty 
+				and: [ comments isNotEmpty 
+				and: [ comments last = selectedComments last ]]) 
+					ifFalse: [selectedComments addAll: comments ] ].
+	^ selectedComments
+]
+
 { #category : #testing }
 RBProgramNode >> hasComments [
 	"Answer whether the receiver as comments"
@@ -373,17 +419,17 @@ RBProgramNode >> hashForCollection: aCollection [
 
 { #category : #querying }
 RBProgramNode >> instanceVariableNodes [
-		^self variableNodes select: [:each | each isInstance]
+		^self variableNodes select: [:each | each isInstanceVariable]
 ]
 
 { #category : #querying }
 RBProgramNode >> instanceVariableReadNodes [
-		^self variableReadNodes select: [:each | each isInstance]
+		^self variableReadNodes select: [:each | each isInstanceVariable]
 ]
 
 { #category : #querying }
 RBProgramNode >> instanceVariableWriteNodes [
-		^self variableWriteNodes select: [:each | each isInstance]
+		^self variableWriteNodes select: [:each | each isInstanceVariable]
 ]
 
 { #category : #testing }
@@ -394,6 +440,20 @@ RBProgramNode >> intersectsInterval: anInterval [
 
 { #category : #testing }
 RBProgramNode >> isArgument [
+	self 
+		deprecated: 'Use #isArgumentVariable instead.' 
+		transformWith: '`@receiver isArgument' -> '`@receiver isArgumentVariable'.
+	
+	^ self isArgumentVariable
+]
+
+{ #category : #testing }
+RBProgramNode >> isArgumentVariable [
+	^ false
+]
+
+{ #category : #testing }
+RBProgramNode >> isArrayError [
 	^false
 ]
 
@@ -403,14 +463,22 @@ RBProgramNode >> isAssignment [
 ]
 
 { #category : #testing }
-RBProgramNode >> isBlockVar [
-	"true if a variable node is defined by a block"
-
-	^ false
+RBProgramNode >> isBlockError [
+	^false
 ]
 
 { #category : #testing }
 RBProgramNode >> isCascade [
+	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isClassVariable [
+	^ false
+]
+
+{ #category : #testing }
+RBProgramNode >> isCommentNode [
 	^false
 ]
 
@@ -427,6 +495,11 @@ RBProgramNode >> isDynamicArray [
 ]
 
 { #category : #testing }
+RBProgramNode >> isEnglobingError [
+	^false
+]
+
+{ #category : #testing }
 RBProgramNode >> isEvaluatedFirst [
 	"Return true if we are the first thing evaluated in this statement."
 
@@ -439,6 +512,16 @@ RBProgramNode >> isFaulty [
 	^false
 ]
 
+{ #category : #testing }
+RBProgramNode >> isGlobalVariable [
+	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isHaltNode [
+	^ false
+]
+
 { #category : #deprecated }
 RBProgramNode >> isImmediate [
 	^self isImmediateNode
@@ -446,6 +529,11 @@ RBProgramNode >> isImmediate [
 
 { #category : #testing }
 RBProgramNode >> isImmediateNode [
+	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isInstanceVariable [
 	^false
 ]
 
@@ -467,7 +555,22 @@ RBProgramNode >> isLiteralArray [
 ]
 
 { #category : #testing }
+RBProgramNode >> isLiteralArrayError [
+	^false
+]
+
+{ #category : #testing }
 RBProgramNode >> isLiteralNode [
+	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isLiteralVariable [
+	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isLocalVariable [
 	^false
 ]
 
@@ -478,6 +581,11 @@ RBProgramNode >> isMessage [
 
 { #category : #testing }
 RBProgramNode >> isMethod [
+	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isParenthesesError [
 	^false
 ]
 
@@ -497,17 +605,32 @@ RBProgramNode >> isPragma [
 ]
 
 { #category : #testing }
+RBProgramNode >> isPragmaError [
+	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isReservedVariable [
+	^false
+]
+
+{ #category : #testing }
 RBProgramNode >> isReturn [
 	^false
 ]
 
 { #category : #testing }
-RBProgramNode >> isSelf [
-	^ false
+RBProgramNode >> isSelector [
+	^false
 ]
 
 { #category : #testing }
-RBProgramNode >> isSelfOrSuper [
+RBProgramNode >> isSelfOrSuperVariable [
+	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isSelfVariable [
 	^ false
 ]
 
@@ -517,13 +640,33 @@ RBProgramNode >> isSequence [
 ]
 
 { #category : #testing }
-RBProgramNode >> isSuper [
+RBProgramNode >> isSuperVariable [
 	^false
 ]
 
 { #category : #testing }
-RBProgramNode >> isTemp [
+RBProgramNode >> isTempVariable [
 	^ false
+]
+
+{ #category : #testing }
+RBProgramNode >> isTemporariesError [
+	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isThisContextVariable [
+	^ false
+]
+
+{ #category : #testing }
+RBProgramNode >> isUndeclaredVariable [
+	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isUnfinishedStatement [
+	^false
 ]
 
 { #category : #testing }
@@ -543,6 +686,11 @@ RBProgramNode >> isValue [
 
 { #category : #testing }
 RBProgramNode >> isVariable [
+	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isWorkspaceVariable [
 	^false
 ]
 
@@ -622,11 +770,6 @@ RBProgramNode >> matchList: matchNodes index: matchIndex against: programNodes i
 ]
 
 { #category : #accessing }
-RBProgramNode >> methodComments [
-	^self comments
-]
-
-{ #category : #accessing }
 RBProgramNode >> methodNode [
 	^parent ifNotNil: [parent methodNode]
 ]
@@ -668,14 +811,9 @@ RBProgramNode >> parent: aRBProgramNode [
 	parent := aRBProgramNode
 ]
 
-{ #category : #accessing }
-RBProgramNode >> parents [
-	^ parent 
-		ifNil: [ OrderedCollection with: self ]
-		ifNotNil: [ 
-			parent parents
-				addLast: self;
-				yourself ]
+{ #category : #hook }
+RBProgramNode >> parserClass [
+	^ RBParser
 ]
 
 { #category : #copying }
@@ -911,7 +1049,7 @@ RBProgramNode >> superMessages [
 
 { #category : #querying }
 RBProgramNode >> tempVariableReadNodes [
-		^self variableReadNodes select: [:each | each isTemp]
+		^self variableReadNodes select: [:each | each isTempVariable]
 ]
 
 { #category : #accessing }
@@ -957,4 +1095,16 @@ RBProgramNode >> whoDefines: aName [
 	^(self defines: aName) 
 		ifTrue: [self]
 		ifFalse: [parent notNil ifTrue: [parent whoDefines: aName] ifFalse: [nil]]
+]
+
+{ #category : #accessing }
+RBProgramNode >> withAllParents [
+	"return me and all my parents. Topmost parent first, me last
+	See discussion in issue https://github.com/pharo-project/pharo/issues/6278"
+	^ parent 
+		ifNil: [ OrderedCollection with: self ]
+		ifNotNil: [ 
+			parent withAllParents 
+				addLast: self;
+				yourself ]
 ]

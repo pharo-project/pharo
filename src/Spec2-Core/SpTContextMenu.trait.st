@@ -11,22 +11,39 @@ Trait {
 	#category : #'Spec2-Core-Base'
 }
 
-{ #category : #accessing }
+{ #category : #api }
 SpTContextMenu >> contextMenu [
+	"Answer context menu or nil if there is none defined.
+	 Context menu can be an instace of `SpMenuPresenter` or a block (that will answer eventually an 
+	 instance of `SpMenuPresenter` aswell. 
+	 If your context menu is defined through a block it means is dynamic, and it will be evaluated 
+	 each time the context menu is invoked."
 
 	^ contextMenu
 ]
 
-{ #category : #accessing }
-SpTContextMenu >> contextMenu: aValuable [
-	"Set the block used to define a context menu for the presenter"
+{ #category : #api }
+SpTContextMenu >> contextMenu: aValuableOrMenuPresenter [
+	"Set the context menu.
+	 Context menu can be an instace of `SpMenuPresenter` or a block (that will answer eventually an 
+	 instance of `SpMenuPresenter` aswell. 
+	 If your context menu is defined through a block it means is dynamic, and it will be evaluated 
+	 each time the context menu is invoked."
 
-	contextMenu := aValuable
+	contextMenu := aValuableOrMenuPresenter
+]
+
+{ #category : #initialization }
+SpTContextMenu >> initialize [
+	
+	self class initializeSlots: self.
+	super initialize.
 ]
 
 { #category : #'api-events' }
 SpTContextMenu >> whenMenuChangedDo: aBlock [
-	"Set a block to value when the menu block has changed"
+	"Inform when menu definition changed. 
+	 `aBlock` receives zero arguments."
 
 	self property: #contextMenu whenChangedDo: aBlock
 ]

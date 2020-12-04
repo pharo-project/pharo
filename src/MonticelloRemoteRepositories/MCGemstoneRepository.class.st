@@ -24,6 +24,6 @@ MCGemstoneRepository class >> isResponsibleFor: aUrl [
 
 { #category : #interface }
 MCGemstoneRepository >> includesVersionNamed: aString [
-	"directly do a filename check since squeaksource only stores mcz"
+	"directly do a filename check since the server only stores mcz"
 	^ self includesFileNamed: aString, '.mcz'
 ]

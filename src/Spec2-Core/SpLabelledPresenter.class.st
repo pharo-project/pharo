@@ -49,8 +49,8 @@ SpLabelledPresenter >> description: aString [
 	aString ifNil: [ ^ self ].
 	
 	descriptionPresenter := self newLabel
+		addStyle: 'italic';
 		label: aString;
-		emphasis: #italic;
 		yourself
 ]
 

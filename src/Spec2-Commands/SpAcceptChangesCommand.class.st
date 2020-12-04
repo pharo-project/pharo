@@ -18,5 +18,5 @@ SpAcceptChangesCommand class >> defaultName [
 { #category : #execution }
 SpAcceptChangesCommand >> execute [
 
-	self context accept
+	self context triggerSubmitAction
 ]

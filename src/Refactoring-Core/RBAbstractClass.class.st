@@ -405,21 +405,14 @@ RBAbstractClass >> isMeta [
 
 { #category : #'method accessing' }
 RBAbstractClass >> methodFor: aSelector [
-
 	^ self newMethods
 		at: aSelector
 		ifAbsent: [ | compiledMethod class |
-
-			( self hasRemoved: aSelector )
-				ifTrue: [ ^ nil ].
+			(self hasRemoved: aSelector) ifTrue: [ ^ nil ].
 			class := self realClass.
 			class ifNil: [ ^ nil ].
 			compiledMethod := class compiledMethodAt: aSelector ifAbsent: [ nil ].
-			compiledMethod
-				ifNil: [ nil ]
-				ifNotNil:
-					[ modelFactory rbMethod for: self fromMethod: compiledMethod andSelector: aSelector ]
-			]
+			compiledMethod ifNotNil: [ modelFactory rbMethod for: self fromMethod: compiledMethod andSelector: aSelector ] ]
 ]
 
 { #category : #accessing }
@@ -700,35 +693,26 @@ RBAbstractClass >> whichSelectorsReferToSymbol: aSymbol [
 
 { #category : #'variable accessing' }
 RBAbstractClass >> whoDefinesClassVariable: aString [
-
 	| sprClass |
-
-	( self directlyDefinesClassVariable: aString )
-		ifTrue: [ ^ self ].
+	(self directlyDefinesClassVariable: aString) ifTrue: [ ^ self ].
 	sprClass := self superclass.
-	^ sprClass ifNil: [ nil ] ifNotNil: [ sprClass whoDefinesClassVariable: aString ]
+	^ sprClass ifNotNil: [ sprClass whoDefinesClassVariable: aString ]
 ]
 
 { #category : #'variable accessing' }
 RBAbstractClass >> whoDefinesInstanceVariable: aString [
-
 	| sprClass |
-
-	( self directlyDefinesInstanceVariable: aString )
-		ifTrue: [ ^ self ].
+	(self directlyDefinesInstanceVariable: aString) ifTrue: [ ^ self ].
 	sprClass := self superclass.
-	^ sprClass ifNil: [ nil ] ifNotNil: [ sprClass whoDefinesInstanceVariable: aString ]
+	^ sprClass ifNotNil: [ sprClass whoDefinesInstanceVariable: aString ]
 ]
 
 { #category : #'method accessing' }
 RBAbstractClass >> whoDefinesMethod: aSelector [
-
 	| sprClass |
-
-	( self directlyDefinesMethod: aSelector )
-		ifTrue: [ ^ self ].
+	(self directlyDefinesMethod: aSelector) ifTrue: [ ^ self ].
 	sprClass := self superclass.
-	^ sprClass ifNil: [ nil ] ifNotNil: [ sprClass whoDefinesMethod: aSelector ]
+	^ sprClass ifNotNil: [ sprClass whoDefinesMethod: aSelector ]
 ]
 
 { #category : #accessing }

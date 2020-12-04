@@ -12,19 +12,24 @@ Class {
 	#category : #'Kernel-Exceptions'
 }
 
-{ #category : #handling }
-MessageNotUnderstood >> debug [
-	"open a debugger on myself"
-	Processor activeProcess 
-		debug: self signalerContext
-		title: self smartDescription
-]
-
 { #category : #accessing }
 MessageNotUnderstood >> defaultAction [
 
 	reachedDefaultHandler := true.
 	super defaultAction.
+]
+
+{ #category : #accessing }
+MessageNotUnderstood >> description [
+
+	"Returns a textual description of the exception (based on the message instance variable). If message is nil, it returns the defaultDescription instead."
+
+	message ifNil: [ ^ self defaultDescription ].
+	message lookupClass == UndefinedObject ifTrue: [ 
+		^ message selector printString , ' was sent to nil' ].
+
+	^ 'Instance of ' , message lookupClass printString
+	  , ' did not understand ' , message selector printString
 ]
 
 { #category : #initialization }
@@ -84,16 +89,4 @@ MessageNotUnderstood >> receiver [
 MessageNotUnderstood >> receiver: obj [
 
 	receiver := obj
-]
-
-{ #category : #accessing }
-MessageNotUnderstood >> smartDescription [
-	
-	message ifNil: [^self description].
-
-	message lookupClass == UndefinedObject ifTrue: [ 
-		^message selector printString, ' was sent to nil'].
-
-	^'Instance of ', message lookupClass printString
-		, ' did not understand ', message selector printString
 ]

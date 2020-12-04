@@ -188,11 +188,11 @@ MethodClassifier >> classifyAll: aCollectionOfMethods [
 
 { #category : #'classification-rules' }
 MethodClassifier >> classifyByKnownKeywordSuffix: aMethod [
-	(self protocolForKnownKeywordSuffixOfSelector: aMethod selector)
-		ifNil: [ ^ false ]
+	^ (self protocolForKnownKeywordSuffixOfSelector: aMethod selector)
+		ifNil: [ false ]
 		ifNotNil: [ :protocol | 
 			aMethod protocol: protocol.
-			^ true ]
+			true ]
 ]
 
 { #category : #'classification-rules' }
@@ -207,11 +207,11 @@ MethodClassifier >> classifyByKnownPragma: aMethod [
 
 { #category : #'classification-rules' }
 MethodClassifier >> classifyByKnownPrefix: aMethod [
-	(self protocolForKnownPrefixOfSelector: aMethod selector)
-		ifNil: [ ^ false ]
+	^ (self protocolForKnownPrefixOfSelector: aMethod selector)
+		ifNil: [ false ]
 		ifNotNil: [ :protocol | 
 			aMethod protocol: protocol.
-			^ true ]
+			true ]
 ]
 
 { #category : #'classification-rules' }

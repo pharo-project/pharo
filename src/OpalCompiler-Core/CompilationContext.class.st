@@ -21,6 +21,7 @@ Class {
 		'class',
 		'logged',
 		'interactive',
+		'compiledMethod',
 		'options',
 		'environment',
 		'productionEnvironment',
@@ -76,7 +77,7 @@ CompilationContext class >> cleanOptionString: string [
 ]
 
 { #category : #options }
-CompilationContext class >> compilerSpecificSettingsOn: aBuilder [
+CompilationContext class >> compilerSettingsOn: aBuilder [
 	self optionsDescription withIndexDo: [ :description :index |
 		| optionStringCleaned option |
 		option := description second.
@@ -122,6 +123,16 @@ CompilationContext class >> initialize [
 	"Note: we don't set-up here DefaultOptions since it requires other class-side methods, and that's messed up."
 	DefaultTransformationPlugins := OrderedCollection new.
 	BytecodeBackend := EncoderForV3PlusClosures.
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionCleanBlockClosure [
+	^ self readDefaultOption: #optionCleanBlockClosure
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionCleanBlockClosure: aBoolean [
+	^ self writeDefaultOption: #optionCleanBlockClosure value: aBoolean
 ]
 
 { #category : #'options - settings API' }
@@ -268,14 +279,22 @@ CompilationContext class >> optionParseErrors: aBoolean [
 ]
 
 { #category : #'options - settings API' }
+CompilationContext class >> optionParseErrorsNonInteractiveOnly [
+	^ self readDefaultOption: #optionParseErrorsNonInteractiveOnly
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionParseErrorsNonInteractiveOnly: aBoolean [
+	^ self writeDefaultOption: #optionParseErrorsNonInteractiveOnly value: aBoolean
+]
+
+{ #category : #'options - settings API' }
 CompilationContext class >> optionReadOnlyLiterals [
 	^ self readDefaultOption: #optionReadOnlyLiterals
 ]
 
 { #category : #'options - settings API' }
 CompilationContext class >> optionReadOnlyLiterals: aBoolean [
-	(aBoolean and: [ Smalltalk vm supportsWriteBarrier not]) ifTrue: [ ^ OCReadOnlyVMWarning signal ].
-	
 	^ self writeDefaultOption: #optionReadOnlyLiterals value: aBoolean
 ]
 
@@ -309,11 +328,13 @@ CompilationContext class >> optionsDescription [
 	
 	(- optionEmbeddSources         'Embedd sources into CompiledMethod instead of storing in .changes')
 	
-	(- optionReadOnlyLiterals 			'Compiler sets literals as read-only')
+	(+ optionReadOnlyLiterals 			'Compiler sets some literals as read-only')
 	(- optionFullBlockClosure 			'Compiler compiles closure creation to use FullBlockClosure instead of BlockClosure')
+	(- optionCleanBlockClosure 			'Compiler compiles closure creation to use CleanBlockClosure instead of FullBlockClosure for clean blocks. Experimental')
 	(- optionLongIvarAccessBytecodes 	'Specific inst var accesses to Maybe context objects')
 	(+ optionOptimizeIR 					'Rewrite jumps in bytecode in a slightly more efficient way')
-	(- optionParseErrors 					'Parse syntactically wrong code')
+	(- optionParseErrors 					'Parse syntactically wrong code (interactive and non-interactive')
+	(- optionParseErrorsNonInteractiveOnly 	'Parse syntactically wrong code in non-interactive mode only')
 	(- optionSkipSemanticWarnings 		'Do not warn about semantic problems (e.g. undeclared vars). Used for syntax highlight parsing')
 		
 	) 
@@ -364,9 +385,9 @@ CompilationContext >> bindings [
 { #category : #accessing }
 CompilationContext >> bindings: aCollectionOfAssociations [
 	"bindings are LiteralVariables, not simple Associations.
-	This method receives any collection with bindings inside and converts it to a dictionary of AdditionalBindings"
+	This method receives any collection with Associations or Variables inside and converts those to AdditionalBindings"
 	bindings := (aCollectionOfAssociations asDictionary associations
-		collect: [ :each | AdditionalBinding key: each key value: each value ]) asDictionary
+		collect: [ :each | (each isAssociation ifTrue: [ AdditionalBinding key: each key value: each value ] ifFalse: [each])]) asDictionary
 ]
 
 { #category : #accessing }
@@ -385,6 +406,16 @@ CompilationContext >> class: anObject [
 ]
 
 { #category : #accessing }
+CompilationContext >> compiledMethod [
+	^ compiledMethod
+]
+
+{ #category : #accessing }
+CompilationContext >> compiledMethod: anObject [
+	compiledMethod := anObject
+]
+
+{ #category : #accessing }
 CompilationContext >> compiledMethodTrailer [
 	^ compiledMethodTrailer ifNil: [ compiledMethodTrailer := CompiledMethodTrailer empty ]
 ]
@@ -397,15 +428,6 @@ CompilationContext >> compiledMethodTrailer: anObject [
 { #category : #options }
 CompilationContext >> compilerOptions: anArray [
 	self parseOptions: anArray
-]
-
-{ #category : #options }
-CompilationContext >> doesNotUnderstand: message [
-
-	(message selector isUnary and: [ message selector beginsWith: 'opt'] )
-		ifTrue: [ ^ options includes: message selector ].
-		
-	^ super doesNotUnderstand: message
 ]
 
 { #category : #accessing }
@@ -477,6 +499,12 @@ CompilationContext >> noPattern [
 { #category : #accessing }
 CompilationContext >> noPattern: anObject [
 	noPattern := anObject
+]
+
+{ #category : #options }
+CompilationContext >> optionCleanBlockClosure [
+	^ options includes: #optionCleanBlockClosure
+
 ]
 
 { #category : #options }
@@ -563,6 +591,11 @@ CompilationContext >> optionParseErrors [
 ]
 
 { #category : #options }
+CompilationContext >> optionParseErrorsNonInteractiveOnly [
+	^ options includes: #optionParseErrorsNonInteractiveOnly
+]
+
+{ #category : #options }
 CompilationContext >> optionReadOnlyLiterals [
 	^ options includes: #optionReadOnlyLiterals
 
@@ -623,7 +656,7 @@ CompilationContext >> requestorScopeClass: anObject [
 CompilationContext >> scope [
 	| newScope |
 
-	newScope := (OCEnvironmentScope for: self environment) newClassScope: self getClass.
+	newScope := self getClass.
 	requestor ifNotNil: [
 		"the requestor is allowed to manage variables, the workspace is using it to auto-define vars"  
 		newScope := (self requestorScopeClass new

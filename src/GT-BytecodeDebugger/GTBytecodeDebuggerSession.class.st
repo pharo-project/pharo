@@ -33,7 +33,7 @@ GTBytecodeDebuggerSession >> symbolicBytecodeForCurrentPCFrom: aContext [
 	| pc |
 	
 	pc := aContext pc.
-	^ aContext method symbolicBytecodes 
+	^ aContext compiledCode symbolicBytecodes 
 		detect: [ :each | each offset = pc ]
 		ifNone: [ nil ]
 ]

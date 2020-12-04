@@ -3,38 +3,33 @@ I report release and version information about the image and VM, in various form
 "
 Class {
 	#name : #ClapPharoVersion,
-	#superclass : #Object,
-	#instVars : [
-		'stream'
-	],
+	#superclass : #ClapPharoApplication,
 	#category : #'Clap-Commands-Pharo'
 }
-
-{ #category : #'instance creation' }
-ClapPharoVersion class >> showVersionsNamed: formatNames [
-	self new
-		showVersionsNamed: formatNames
-]
 
 { #category : #'command line' }
 ClapPharoVersion class >> version [
 	<commandline>
-	^ (ClapCommand withName: 'version')
+	^ (ClapCommand id: #version)
 		description: 'Displays version information, in various formats';
 		add: ClapFlag forHelp;
-		add: ((ClapFlag withName: 'full') description: 'Full image version (default format)');
-		add: ((ClapFlag withName: 'release') description: 'Major.minor alpha/stable');
-		add: ((ClapFlag withName: 'numeric') description: '5-digit sequential integration number');
-		add: ((ClapFlag withName: 'hash') description: 'Integration commit hash');
-		add: ((ClapFlag withName: 'vm') description: 'VM build and version');
-		add: ((ClapFlag withName: 'license') description: 'Licensing and copyright');
-		meaning: [ :args | | formats |
-			args atName: 'help' ifFound: [ :help |
+		add: ((ClapFlag id: #full) description: 'Full image version (default format)');
+		add: ((ClapFlag id: #release) description: 'Major.minor alpha/stable');
+		add: ((ClapFlag id: #numeric) description: '5-digit sequential integration number');
+		add: ((ClapFlag id: #hash) description: 'Integration commit hash');
+		add: ((ClapFlag id: #vm) description: 'VM build and version');
+		add: ((ClapFlag id: #license) description: 'Licensing and copyright');
+		meaning: [ :args |
+			args at: #helpFlag ifPresent: [ :help |
 				help value; exitSuccess ].
 			args validateAll.
 
-			formats := args flags collect: [ :each | each specification canonicalName asSymbol ].
-			self showVersionsNamed: (formats ifEmpty: [ #(full) ]) ]
+			(self with: args) execute ]
+]
+
+{ #category : #execution }
+ClapPharoVersion >> execute [
+	self showVersionsNamed: self formats
 ]
 
 { #category : #accessing }
@@ -47,6 +42,13 @@ ClapPharoVersion >> formatStringFor: formatName [
 	^ self perform: (self formatSelectorFor: formatName)
 ]
 
+{ #category : #accessing }
+ClapPharoVersion >> formats [
+	^ (arguments flags
+		collect: [ :each | each specification canonicalName asSymbol ])
+		ifEmpty: [ #(full) ]
+]
+
 { #category : #'version strings' }
 ClapPharoVersion >> fullVersionString [
 	^ SystemVersion current imageVersionString
@@ -55,11 +57,6 @@ ClapPharoVersion >> fullVersionString [
 { #category : #'version strings' }
 ClapPharoVersion >> hashVersionString [
 	^ SystemVersion current commitHash
-]
-
-{ #category : #initialization }
-ClapPharoVersion >> initialize [
-	stream := VTermOutputDriver stdout
 ]
 
 { #category : #'version strings' }
@@ -78,16 +75,12 @@ ClapPharoVersion >> releaseVersionString [
 ]
 
 { #category : #printing }
-ClapPharoVersion >> showVersionNamed: formatName [
-	stream
-		nextPutAll: (self formatStringFor: formatName);
-		lf
-]
-
-{ #category : #printing }
 ClapPharoVersion >> showVersionsNamed: formatNames [
-	formatNames do: [ :each | self showVersionNamed: each ].
-	stream flush
+	| out |
+	out := self context stdout.
+	formatNames do: [ :each | 
+		out nextPutAll: (self formatStringFor: each); lf ].
+	out flush
 ]
 
 { #category : #'version strings' }

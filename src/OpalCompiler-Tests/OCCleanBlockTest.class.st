@@ -10,6 +10,7 @@ Class {
 { #category : #tests }
 OCCleanBlockTest >> testBlockIsClean [
 	self assert: [  ] sourceNode isClean.
+	self assert: [ thisContext ] sourceNode isClean.
 	self assert: [ 1 + 2 ] sourceNode isClean.
 	self assert: [ :a | a + 2 ] sourceNode isClean.
 	self assert: [ :a :b | a + b + 3 ] sourceNode isClean.

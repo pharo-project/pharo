@@ -20,7 +20,7 @@ FileTest >> testCheckExistenceOfExistingFileThrowsException [
 	| file |
 	file := File named: 'asd.txt'.
 	file writeStream close.
-	self should: [file checkDoesNotExist] raise: FileAlreadyExistsException.
+	self should: [file checkDoesNotExist] raise: FileAlreadyExistsException
 ]
 
 { #category : #tests }
@@ -50,7 +50,7 @@ FileTest >> testFileExists [
 	file := File named: 'asd.txt'.
 	file writeStream close.
 	self assert: file exists.
-	file delete.
+	file delete
 ]
 
 { #category : #tests }
@@ -60,7 +60,7 @@ FileTest >> testOpenFileForReadDoesNotDeleteExistingFile [
 	(File named: 'asd.txt') writeStreamDo: [ :stream | stream nextPutAll: 'aaa' ].
 
 	size := (File named: 'asd.txt') size.
-	self assert: size equals: 3.
+	self assert: size equals: 3
 ]
 
 { #category : #tests }
@@ -70,7 +70,7 @@ FileTest >> testOpeningFileNormallyDoesNotDeleteExistingFile [
 	(File named: 'asd.txt') writeStreamDo: [ :stream | stream nextPutAll: 'aaa' ].
 
 	size := (File named: 'asd.txt') size.
-	self assert: size equals: 3.
+	self assert: size equals: 3
 ]
 
 { #category : #tests }
@@ -79,7 +79,7 @@ FileTest >> testOpeningFileObjectCreatesFile [
 	(File named: 'asd.txt') writeStream close.
 	"Our File implementation should not cache anything.
 	This test is based on this assumption."
-	self assert: (File named: 'asd.txt') exists.
+	self assert: (File named: 'asd.txt') exists
 ]
 
 { #category : #tests }

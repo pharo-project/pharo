@@ -4,7 +4,10 @@ My context must be a block that returns a class.
 "
 Class {
 	#name : #SpBrowseClassCommand,
-	#superclass : #SpSystemNavigationCommand,
+	#superclass : #SpSystemSelectionCommand,
+	#instVars : [
+		'selector'
+	],
 	#category : #'Spec2-Commands-Navigation'
 }
 
@@ -29,5 +32,18 @@ SpBrowseClassCommand class >> shortName [
 
 { #category : #execution }
 SpBrowseClassCommand >> execute [
-	self context ifNotNil: [ :ctx | ctx browse ]
+
+	self context perform: self selector
+]
+
+{ #category : #accessing }
+SpBrowseClassCommand >> selector [
+
+	^ selector ifNil: [ #doBrowseClass ]
+]
+
+{ #category : #accessing }
+SpBrowseClassCommand >> selector: aSelector [
+
+	selector := aSelector
 ]

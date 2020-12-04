@@ -1233,7 +1233,6 @@ PluggableButtonMorph >> target [
 
 { #category : #updating }
 PluggableButtonMorph >> themeChanged [
-	"Set the border style to thin gray in the case of going to StandardSqueak."
 
 	self
 		layoutInset: (self theme buttonLabelInsetFor: self);

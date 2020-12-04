@@ -28,14 +28,14 @@ HelpBrowserTest >> testDefaultHelpBrowser [
 
 { #category : #testing }
 HelpBrowserTest >> testDefaultHelpBrowserIsReplacable [
-	| current replacement instance |
+	| current replacement |
 	"save the one that is registered"
 	current := self defaultTestClass defaultHelpBrowser.
 	replacement := AdvancedHelpBrowserDummy.
-	[ self defaultTestClass defaultHelpBrowser: replacement.
+	[ 
+	self defaultTestClass defaultHelpBrowser: replacement.
 	self assert: self defaultTestClass defaultHelpBrowser identicalTo: replacement.
-	instance := self defaultTestClass open ]
-		ensure: [ self defaultTestClass defaultHelpBrowser: current ]
+	self defaultTestClass open ] ensure: [ self defaultTestClass defaultHelpBrowser: current ]
 ]
 
 { #category : #testing }

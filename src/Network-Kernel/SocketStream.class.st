@@ -437,8 +437,8 @@ SocketStream >> next: requestedCount into: collection startingAt: startIndex [
 	| readCount |
 	readCount := self readInto: collection startingAt: startIndex count: requestedCount.
 	^ readCount = requestedCount
-		ifTrue: [ ^ collection ]
-		ifFalse: [ ^ collection copyFrom: 1 to: startIndex + readCount - 1 ]
+		ifTrue: [ collection ]
+		ifFalse: [ collection copyFrom: 1 to: startIndex + readCount - 1 ]
 ]
 
 { #category : #'stream out' }

@@ -5,13 +5,20 @@ Class {
 }
 
 { #category : #'testing - variables' }
+OCASTClosureAnalyzerTest >> testArgumentIsRead [
+
+	| ast |
+	ast := (OCOpalExamples >> #exampleWithArgument:) parseTree.
+	self assert: ast arguments first variable usage equals: #read
+]
+
+{ #category : #'testing - variables' }
 OCASTClosureAnalyzerTest >> testBlockArgumentIsArgumentVariable [
 	| ast blockNode |
 	ast := (OCOpalExamples>>#exampleForBlockArgument) parseTree.
-	ast doSemanticAnalysis.
 	blockNode := ast body statements first value.
 	self assert: blockNode arguments notEmpty.
-	self assert: blockNode arguments first isArgument
+	self assert: blockNode arguments first isArgumentVariable
 	
 ]
 
@@ -19,7 +26,6 @@ OCASTClosureAnalyzerTest >> testBlockArgumentIsArgumentVariable [
 OCASTClosureAnalyzerTest >> testDoubleRemoteAnidatedBlocks [
 	| ast scopes |
 	ast := (OCOpalExamples >> #doubleRemoteAnidatedBlocks) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 	self assert: ast scope tempVars size equals: 0.
 	self assert: ast scope tempVector size equals: 2.
@@ -36,7 +42,6 @@ OCASTClosureAnalyzerTest >> testDoubleRemoteAnidatedBlocks [
 OCASTClosureAnalyzerTest >> testExampleBlockArgument [
 	| ast blockScope blockScope2 |
 	ast := (OCOpalExamples >> #exampleBlockArgument) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 	self assert: ast scope tempVars size equals: 3.
 	self assert: ast scope tempVector size equals: 0.
@@ -68,10 +73,9 @@ OCASTClosureAnalyzerTest >> testExampleBlockArgument [
 OCASTClosureAnalyzerTest >> testExampleSimpleBlockLocalIf [
 	| ast  assignment var |
 	ast := (OCOpalExamples>>#exampleSimpleBlockLocalIf) parseTree.
-	ast doSemanticAnalysis.
 
 	assignment := RBParseTreeSearcher treeMatching: '`var := ``@anything' in: ast. 	
-	var := assignment variable binding.
+	var := assignment variable variable.
 	self assert: var isWrite.
 	self deny: var isEscaping.
 ]
@@ -80,7 +84,6 @@ OCASTClosureAnalyzerTest >> testExampleSimpleBlockLocalIf [
 OCASTClosureAnalyzerTest >> testExampleSimpleBlockLocalWhile [
 	| ast scopes |
 	ast := (OCOpalExamples >> #exampleSimpleBlockLocalWhile) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 
 	self assert: ast scope tempVars size equals: 0.
@@ -92,7 +95,7 @@ OCASTClosureAnalyzerTest >> testExampleSimpleBlockLocalWhile [
 	self assert: scopes second tempVars size equals: 1.
 	self assert: scopes second tempVector size equals: 0.
 	self deny: (scopes second lookupVar: 'b') isRemote.
-	self assert: (scopes second lookupVar: 'b') isArg.
+	self assert: (scopes second lookupVar: 'b') isArgumentVariable.
 	self deny: (scopes fourth lookupVar: 'hallo') isRemote
 ]
 
@@ -100,7 +103,6 @@ OCASTClosureAnalyzerTest >> testExampleSimpleBlockLocalWhile [
 OCASTClosureAnalyzerTest >> testExampleSimpleBlockNested [
 	| ast scopes |
 	ast := (OCOpalExamples >> #exampleSimpleBlockNested) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 
 	self assert: ast scope tempVars size equals: 2.
@@ -123,7 +125,6 @@ OCASTClosureAnalyzerTest >> testExampleSimpleBlockNested [
 OCASTClosureAnalyzerTest >> testExampleWhileModificationBefore [
 	| ast |
 	ast := (OCOpalExamples >> #exampleWhileModificationBefore) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 	self assert: ast scope tempVars size equals: 0.
 	self assert: ast scope tempVector size equals: 1.
@@ -139,7 +140,6 @@ only needs to copy the tempvars. No write -> no indirection vector."
 
 	| ast |
 	ast := (OCOpalExamples >> #exampleWhileNoModification) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 	self assert: ast scope tempVars size equals: 3.
 	self assert: ast scope tempVector size equals: 0.
@@ -153,10 +153,9 @@ only needs to copy the tempvars. No write -> no indirection vector."
 OCASTClosureAnalyzerTest >> testInlinedBlockArgumentIsArgumentVariable [
 	| ast blockNode |
 	ast := (OCOpalExamples>>#exampleForInlinedBlockArgument) parseTree.
-	ast doSemanticAnalysis.
 	blockNode := ast body statements first arguments first.
 	self assert: blockNode arguments notEmpty.
-	self assert: blockNode arguments first isArgument
+	self assert: blockNode arguments first isArgumentVariable
 	
 ]
 
@@ -164,9 +163,8 @@ OCASTClosureAnalyzerTest >> testInlinedBlockArgumentIsArgumentVariable [
 OCASTClosureAnalyzerTest >> testMethodArgumentIsArgumentVariable [
 	| ast |
 	ast := (OCOpalExamples>>#exampleWithArgument:) parseTree.
-	ast doSemanticAnalysis .
 	self assert: ast arguments notEmpty.
-	self assert: ast arguments first isArgument
+	self assert: ast arguments first isArgumentVariable
 	
 ]
 
@@ -174,7 +172,6 @@ OCASTClosureAnalyzerTest >> testMethodArgumentIsArgumentVariable [
 OCASTClosureAnalyzerTest >> testNestedBlocksRemoteInBlockCase1 [
 	| ast scopes |
 	ast := (OCOpalExamples >> #nestedBlocksRemoteInBlockCase1) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 
 	self assert: ast scope tempVars size equals: 1.
@@ -193,7 +190,6 @@ OCASTClosureAnalyzerTest >> testNestedBlocksRemoteInBlockCase1 [
 OCASTClosureAnalyzerTest >> testNestedBlocksRemoteInBlockCase2 [
 	| ast scopes |
 	ast := (OCOpalExamples >> #nestedBlocksRemoteInBlockCase2) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 
 	self assert: ast scope tempVars size equals: 1.
@@ -221,7 +217,6 @@ OCASTClosureAnalyzerTest >> testNestedBlocksRemoteInBlockCase2 [
 OCASTClosureAnalyzerTest >> testNestedBlocksRemoteInBlockCase3 [
 	| ast scopes |
 	ast := (OCOpalExamples >> #nestedBlocksRemoteInBlockCase3) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 
 	self assert: ast scope tempVars size equals: 0.
@@ -249,7 +244,6 @@ OCASTClosureAnalyzerTest >> testNestedBlocksRemoteInBlockCase3 [
 OCASTClosureAnalyzerTest >> testNoRemoteBlockArgument [
 	| ast |
 	ast := (OCOpalExamples >> #noRemoteBlockArgument) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 	self assert: ast scope tempVars size equals: 3.
 
@@ -262,7 +256,6 @@ OCASTClosureAnalyzerTest >> testNoRemoteBlockArgument [
 OCASTClosureAnalyzerTest >> testNoRemoteReadInBlock [
 	| ast |
 	ast := (OCOpalExamples >> #noRemoteReadInBlock) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 	self assert: ast scope tempVars size equals: 1.
 	self assert: ast scope tempVector size equals: 0.
@@ -274,7 +267,6 @@ OCASTClosureAnalyzerTest >> testNoRemoteReadInBlock [
 OCASTClosureAnalyzerTest >> testNoRemoteReadNestedBlocks [
 	| ast scopes |
 	ast := (OCOpalExamples >> #noRemoteReadNestedBlocks) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 	self assert: ast scope tempVars size equals: 0.
 	self assert: ast scope tempVector size equals: 0.
@@ -289,7 +281,6 @@ OCASTClosureAnalyzerTest >> testNoRemoteReadNestedBlocks [
 OCASTClosureAnalyzerTest >> testOptimizedBlockReadInBlock [
 	| ast |
 	ast := (OCOpalExamples >> #optimizedBlockReadInBlock) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 
 	self assert: ast scope tempVars size equals: 1.
@@ -301,7 +292,6 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockReadInBlock [
 OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInBlock [
 	| ast |
 	ast := (OCOpalExamples >> #optimizedBlockWriteInBlock) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 
 	self assert: ast scope tempVars size equals: 1.
@@ -313,7 +303,6 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInBlock [
 OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlock [
 	| ast |
 	ast := (OCOpalExamples >> #optimizedBlockWriteInNestedBlock) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 
 	self assert: ast scope tempVars size equals: 0.
@@ -325,7 +314,6 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlock [
 OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlockCase2 [
 	| ast |
 	ast := (OCOpalExamples >> #optimizedBlockWriteInNestedBlockCase2) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 
 	self assert: ast scope tempVars size equals: 1.
@@ -338,7 +326,6 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlockCase2 [
 OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlockCase3 [
 	| ast scopes |
 	ast := (OCOpalExamples >> #optimizedBlockWriteInNestedBlockCase3) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 
 	self assert: ast scope tempVars size equals: 0.
@@ -358,13 +345,12 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlockCase3 [
 OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlockCase4 [
 	| ast scopes |
 	ast := (OCOpalExamples >> #optimizedBlockWriteInNestedBlockCase4) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 
 	self assert: ast scope tempVars size equals: 0.
 	self assert: ast scope tempVector size equals: 1.
 	self assert: (ast scope lookupVar: 't1') isRemote.
-	self assert: ast scope copiedVars size equals: 1.	"Is this correct, I think that the copied vars should be empty."
+	self assert: ast scope copiedVars size equals: 1.	 "this one copying var is the tempVector"
 
 	scopes := (OCScopesCollector new visitNode: ast) scopes.
 	self assert: scopes second tempVars size equals: 0.
@@ -377,7 +363,6 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlockCase4 [
 OCASTClosureAnalyzerTest >> testOptimizedBlockWrittenAfterClosedOverCase1 [
 	| ast scopes |
 	ast := (OCOpalExamples >> #optimizedBlockWrittenAfterClosedOverCase1) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 
 	self assert: ast scope tempVars size equals: 1.
@@ -389,7 +374,7 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWrittenAfterClosedOverCase1 [
 	self assert: scopes third tempVector size equals: 1.
 
 	self deny: (scopes third lookupVar: 'index') isRemote.
-	"problem: as block is optimized, this var does not need to be remote"
+	"as we are in an optimized loop, the var is considered a remote write"
 	self assert: (scopes third tempVector at: 'temp') isRemote
 ]
 
@@ -397,7 +382,6 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWrittenAfterClosedOverCase1 [
 OCASTClosureAnalyzerTest >> testOptimizedBlockWrittenAfterClosedOverCase2 [
 	| ast scopes |
 	ast := (OCOpalExamples >> #optimizedBlockWrittenAfterClosedOverCase2) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 
 	self assert: ast scope tempVars size equals: 1.
@@ -412,7 +396,6 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWrittenAfterClosedOverCase2 [
 OCASTClosureAnalyzerTest >> testSingleRemoteDifferentBlocksSameArgumentName [
 	| ast |
 	ast := (OCOpalExamples >> #singleRemoteDifferentBlocksSameArgumentName) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 	self assert: ast scope tempVars size equals: 2.
 	self assert: ast scope tempVector size equals: 1.
@@ -426,7 +409,6 @@ OCASTClosureAnalyzerTest >> testSingleRemoteDifferentBlocksSameArgumentName [
 OCASTClosureAnalyzerTest >> testSingleRemoteMethodArgument [
 	| ast |
 	ast := (OCOpalExamples >> #singleRemoteMethodArgument) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 	self assert: ast scope tempVars size equals: 1.
 	self assert: ast scope tempVector size equals: 1.
@@ -439,7 +421,6 @@ OCASTClosureAnalyzerTest >> testSingleRemoteMethodArgument [
 OCASTClosureAnalyzerTest >> testSingleRemoteReadNestedBlocks [
 	| ast |
 	ast := (OCOpalExamples >> #singleRemoteReadNestedBlocks) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 	self assert: ast scope tempVars size equals: 0.
 	self assert: ast scope tempVector size equals: 1.
@@ -451,15 +432,14 @@ OCASTClosureAnalyzerTest >> testSingleRemoteReadNestedBlocks [
 OCASTClosureAnalyzerTest >> testSingleRemoteTempVar [
 	| ast |
 	ast := (OCOpalExamples >> #singleRemoteTempVar) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 	self assert: ast scope tempVars size equals: 2.
 	self assert: ast scope tempVector size equals: 1.
 
 	self assert: (ast scope lookupVar: 'index') isRemote.
-	self assert: (ast scope lookupVar: 'index') definingScope equals: ast scope.
+	self assert: (ast scope lookupVar: 'index') scope equals: ast scope.
 	self deny: (ast scope lookupVar: 'block') isRemote.
-	self deny: (ast scope lookupVar: 'collection') isRemote
+	self deny: (ast scope lookupVar: 'theCollection') isRemote
 ]
 
 { #category : #'testing - variables' }
@@ -476,15 +456,13 @@ t1 := 1.
 [ t2 := t1 +  1.0 ] value.
 
 ^t2'.
-	ast doSemanticAnalysis.
-	self assert: ast temporaries second binding class equals: OCVectorTempVariable
+	self assert: ast temporaries second variable class equals: OCVectorTempVariable
 ]
 
 { #category : #'tests - special cases' }
 OCASTClosureAnalyzerTest >> testWrittenAfterClosedOver [
 	| ast |
 	ast := (OCOpalExamples >> #writtenAfterClosedOver) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 	self assert: ast scope tempVars size equals: 0.
 	self assert: ast scope tempVector size equals: 1.
@@ -496,13 +474,12 @@ OCASTClosureAnalyzerTest >> testWrittenAfterClosedOver [
 OCASTClosureAnalyzerTest >> testsingleRemoteTempVarWhileWithTempNotInlined [
 	| ast |
 	ast := (OCOpalExamples >> #exampleWhileWithTempNotInlined) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 	self assert: ast scope tempVars size equals: 1.
 	self assert: ast scope tempVector size equals: 1.
 
 	self assert: (ast scope lookupVar: 'index') isRemote.
-	self assert: (ast scope lookupVar: 'index') definingScope equals: ast scope.
+	self assert: (ast scope lookupVar: 'index') scope equals: ast scope.
 	self deny: (ast scope lookupVar: 'block') isRemote
 ]
 
@@ -510,12 +487,11 @@ OCASTClosureAnalyzerTest >> testsingleRemoteTempVarWhileWithTempNotInlined [
 OCASTClosureAnalyzerTest >> testsingleRemoteTempVarWrittenAfterClosedOver [
 	| ast |
 	ast := (OCOpalExamples >> #singleRemoteTempVarWrittenAfterClosedOver) parseTree.
-	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
 	self assert: ast scope tempVars size equals: 1.
 	self assert: ast scope tempVector size equals: 1.
 
 	self assert: (ast scope lookupVar: 'index') isRemote.
-	self assert: (ast scope lookupVar: 'index') definingScope equals: ast scope.
+	self assert: (ast scope lookupVar: 'index') scope equals: ast scope.
 	self deny: (ast scope lookupVar: 'block') isRemote
 ]

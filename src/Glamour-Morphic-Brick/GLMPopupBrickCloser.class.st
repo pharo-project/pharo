@@ -9,5 +9,5 @@ Class {
 
 { #category : #action }
 GLMPopupBrickCloser >> act [
-	self popup close
+	self popup ifNotNil: [ :thePopup | thePopup close ]
 ]

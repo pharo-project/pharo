@@ -66,7 +66,7 @@ DrTestsPlugin >> buildConfigurationFrom: aDrTests [
 ]
 
 { #category : #api }
-DrTestsPlugin >> buildContextualMenuGroupWith: presenterIntance [
+DrTestsPlugin >> buildContextualMenuGroupWith: presenterInstance [
 	^ CmCommandGroup new
 ]
 
@@ -98,7 +98,7 @@ DrTestsPlugin >> itemsToBeAnalysedFor: packagesSelected [
 
 	^ packagesSelected
 		flatCollect:
-			[ :p | p definedClasses select: [ :c | c allSuperclasses includes: TestCase ] ]
+			[ :p | p definedClasses select: [ :c | c isTestCase ] ]
 ]
 
 { #category : #api }
@@ -139,21 +139,13 @@ DrTestsPlugin >> resultButtonHelp [
 
 { #category : #accessing }
 DrTestsPlugin >> resultTreeViews [
-	"Return result tree views available.
-	 This method might signal a deprecation exception in case it found an old pragma BUT the method itself is
-	 NOT deprecated. Do not remove it.
-	 The code generating the deprecation exception will be removed once we decide to totally remove the old pragmas support.
-	"
-	| pragmas oldPragmas |
+	"Return result tree views available."
+	
+	| pragmas |
 	pragmas := Pragma allNamed: self pragmaForResultTrees in: self pluginResultClass.
-	"Note The two following statements need to be removed once the old pragmas are gone."
-	oldPragmas := Pragma allNamed: self oldPragmaForResultTrees in: self pluginResultClass.
-	oldPragmas ifNotEmpty: [ self deprecated: ('Your code still use the old pragma to declare a tree view. Please update it to use the new pragma described in {1}>>#pragmaForResultTrees' format: { self className }) ].
+
 	^ ((pragmas sorted: [ :p | p argumentAt: 2 ] asSortFunction) collect: [ :pragma |
-		DTResultTreeView name: (pragma argumentAt: 1) blockToExtractViewFromResult: pragma methodSelector ]) ,
-	"Note: The following code need to be removed once the old pragmas are gone."
-	(oldPragmas collect: [ :pragma |
-		DTResultTreeView name: (pragma argumentAt: 1) blockToExtractViewFromResult: pragma methodSelector ])
+		DTResultTreeView name: (pragma argumentAt: 1) blockToExtractViewFromResult: pragma methodSelector ]) 
 ]
 
 { #category : #api }

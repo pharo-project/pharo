@@ -29,12 +29,12 @@ DTPluginConfiguration class >> items: aCollectionOfClasses packages: aCollection
 
 { #category : #converting }
 DTPluginConfiguration >> asTestSuite [
-	|testSuite|
-	testSuite := TestSuite new.
+	| suite |
+	suite := TestSuite new.
 	self items
 		reject: #isAbstract
-		thenDo: [ :s | testSuite addTest: s suite ].
-	^ testSuite
+		thenDo: [ :s | suite addTest: s suite ].
+	^ suite
 ]
 
 { #category : #'as yet unclassified' }

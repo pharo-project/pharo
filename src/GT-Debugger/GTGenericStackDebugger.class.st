@@ -5,6 +5,8 @@ I am a browser that provides Smalltalk debugging functionality.
 Class {
 	#name : #GTGenericStackDebugger,
 	#superclass : #GTMoldableDebugger,
+	#traits : 'TDebugger',
+	#classTraits : 'TDebugger classTrait',
 	#instVars : [
 		'cache'
 	],
@@ -23,6 +25,19 @@ GTGenericStackDebugger class >> closeAllDebuggers [
 
 	(SystemWindow allSubInstances select: [ :w | w model isKindOf: GTGenericStackDebugger ]) do: [ :w | w delete ].
 	GTSpecPreDebugPresenter allInstances do: #close
+]
+
+{ #category : #'instance creation' }
+GTGenericStackDebugger class >> debugSession: aDebugSession [
+	| debugger |
+   debugger := self on: (self spanNewSessionFrom: aDebugSession).
+   debugger openWithFullView
+]
+
+{ #category : #accessing }
+GTGenericStackDebugger class >> defaultDebuggerRank [
+
+	^ 3
 ]
 
 { #category : #'settings api' }
@@ -86,12 +101,6 @@ GTGenericStackDebugger class >> filterNilSelectors: aBoolean [
 	self flag: 'just for backward compatibility'
 ]
 
-{ #category : #testing }
-GTGenericStackDebugger class >> handlesContext: aContext [
-
-	^ true
-]
-
 { #category : #accessing }
 GTGenericStackDebugger class >> helpClass [
 
@@ -118,36 +127,10 @@ GTGenericStackDebugger class >> logFileName: newName [
 	LogFileName := newName
 ]
 
-{ #category : #'tools registry' }
-GTGenericStackDebugger class >> register [
-
-	self registerToolsOn: Smalltalk tools.
-	self registerExtraToolsOn: Smalltalk tools.
-
-]
-
-{ #category : #'tools registry' }
-GTGenericStackDebugger class >> registerExtraToolsOn: registry [
-	"This adds self in the list of tools that appears in the small debugger"
-	registry registerDebugger: self withRank: 3.
-]
-
-{ #category : #'tools registry' }
-GTGenericStackDebugger class >> registerToolsOn: registry [
-	registry register: self as: #debugger.
-
-]
-
 { #category : #accessing }
 GTGenericStackDebugger class >> sessionClass [
 
 	^ DebugSession 
-]
-
-{ #category : #'settings api' }
-GTGenericStackDebugger class >> stackWidgetClass [
-	self flag: 'horrible hack not to break the setting browser'.
-	^ self
 ]
 
 { #category : #accessing }
@@ -231,6 +214,16 @@ GTGenericStackDebugger >> debuggingActionsPragmas [
 GTGenericStackDebugger >> filteredStack [
 
 	^ (self session stackOfSize: 50 ) select: [ :aContext | (aContext method hasPragmaNamed: #debuggerCompleteToSender) not ]
+]
+
+{ #category : #'printing/formatting' }
+GTGenericStackDebugger >> formatMethodPackageForContext: aContext [ 
+
+	^ Text 
+		string: (aContext method package 
+			ifNil: ['-'] 
+			ifNotNil: [ :aPackage | aPackage name  ])
+		attributes: (self textAttributesForStackEntry: aContext) 
 ]
 
 { #category : #'printing/formatting' }
@@ -533,7 +526,8 @@ GTGenericStackDebugger >> stackWidgetIn: composite [
 			evaluated: [ :aContext | self formatStackMethodColumnForContext: aContext ];
 		column: 'Other' 
 			evaluated: [ :aContext | self formatStackExtraColumnForContext: aContext ];
-		hideHeader
+		column: 'Package' 
+			evaluated: [ :aContext | self formatMethodPackageForContext: aContext ]
 ]
 
 { #category : #'printing/formatting' }

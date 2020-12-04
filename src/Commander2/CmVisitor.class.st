@@ -1,9 +1,7 @@
 "
 I am the implementation of the visitor design pattern for commands and commands group.
-
-I am abstract, my subclasses should at least implement #visitLtCommand:.
-
-I define default behaviour for visiting a commands groups.
+I am abstract, my subclasses should at least implement `#visitCommand:`.
+I define default behaviour for visiting a command group.
 "
 Class {
 	#name : #CmVisitor,

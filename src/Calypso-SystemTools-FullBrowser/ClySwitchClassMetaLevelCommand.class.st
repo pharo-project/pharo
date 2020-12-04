@@ -24,7 +24,7 @@ ClySwitchClassMetaLevelCommand class >> fullBrowserToolbarActivation [
 	^ClyToolbarActivation 
 		byItemOf: ClyMetaLevelToolbarGroup 
 		order: self toolbarOrder 
-		for: ClyClassContextOfFullBrowser 
+		for: ClyFullBrowserClassContext 
 ]
 
 { #category : #testing }

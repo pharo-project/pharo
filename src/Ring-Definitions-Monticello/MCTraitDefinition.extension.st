@@ -27,33 +27,9 @@ MCTraitDefinition >> classDefinitionString [
 ]
 
 { #category : #'*Ring-Definitions-Monticello' }
-MCTraitDefinition >> classTraitCompositionString [
-	^self traitComposition 
-		ifNil: [ '{}' ]
-		ifNotNil: [ :source| | tokens tcs |
-			tcs := ''.
-			tokens := source parseLiterals.
-			tokens do:[ :each| 
-				each first isUppercase 
-					ifTrue: [ tcs := tcs, each, ' classTrait + ' ] ].
-			tcs isEmpty 
-				ifTrue: [ '{}' ]
-				ifFalse:[ tcs copyFrom: 1 to: tcs size - 3 ] ]
-]
-
-{ #category : #'*Ring-Definitions-Monticello' }
 MCTraitDefinition >> printMetaDefinitionOn: stream [
 
-	stream nextPutAll: self className, ' classTrait'; 
-		 crtab;
-		 nextPutAll: 'uses: ';
-		 nextPutAll: self classTraitCompositionString.
-	
-	self classInstanceVariables ifNotEmpty: [  
-		stream
-			cr; tab;
-			nextPutAll: 'slots: '; 
-			nextPutAll: self classSlotDefinitionString
-	].	
+	stream nextPutAll: self className, ' classTrait'.
+	self printDefinitionBodyOn: stream
 
 ]

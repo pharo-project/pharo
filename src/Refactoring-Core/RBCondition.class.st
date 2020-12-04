@@ -58,7 +58,7 @@ RBCondition class >> checkInstanceVariableName: aName in: aClass [
 RBCondition class >> checkMethodName: aString [
 	"Return whether the argument aName is can represent a selector"
 	
-	^ aString isString and: [ RBScanner isSelector: aString ]
+	^ aString isString and: [ aString isValidSelector ]
 ]
 
 { #category : #utilities }
@@ -66,7 +66,7 @@ RBCondition class >> checkMethodName: aString in: aClass [
 	"Return whether the argument aName is can represent a selector"
 	"You probably look for checkMethodName: since the second argument is ignored"
 	
-	^aString isString and: [ RBScanner isSelector: aString ]
+	^aString isString and: [ aString isValidSelector ]
 ]
 
 { #category : #'instance creation' }
@@ -183,7 +183,7 @@ RBCondition class >> hasSubclasses: aClass [
 RBCondition class >> hasSubclasses: aClass excluding: classList [ 
 	^self new
 		type: (Array with: #hasSubclasses with: aClass)
-		block: [ ((aClass subclasses collect: #name) copyWithoutAll: classList) isNotEmpty ]
+		block: [ ((aClass subclasses collect: [:each | each name]) copyWithoutAll: classList) isNotEmpty ]
 		errorString: aClass printString , ' has <1?:no >subclasses'
 ]
 
@@ -259,7 +259,7 @@ RBCondition class >> isEmptyClass: anObject [
 { #category : #'instance creation' }
 RBCondition class >> isGlobal: aString in: aRBSmalltalk [ 
 	^self new 
-		type: (Array with: #isGlobal with: aString)
+		type: (Array with: #isLiteralVariable with: aString)
 		block: [aRBSmalltalk includesGlobal: aString asSymbol]
 		errorString: aString , ' is <1?:not >a class or global variable'
 ]

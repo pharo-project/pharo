@@ -6,35 +6,36 @@ Class {
 	#name : #SpMorphicPanedAdapter,
 	#superclass : #SpMorphicLayoutAdapter,
 	#instVars : [
-		'layout'
+		'children'
 	],
 	#category : #'Spec2-Adapters-Morphic-Layout'
 }
 
-{ #category : #private }
+{ #category : #'adding/removing' }
 SpMorphicPanedAdapter >> addConstraits: constraints toChild: childMorph [
-	"adds constraits by child"
-	| theMorph |
+	"Adds constraits by child"
 	
+	| theMorph |	
 	theMorph := childMorph.
-	"keep constraints to layout usage"
+	"Keep constraints to layout usage"
 	theMorph setProperty: #constraints toValue: constraints. 
 	
 	^ theMorph 
 ]
 
-{ #category : #private }
+{ #category : #'adding/removing' }
 SpMorphicPanedAdapter >> addSplitterIn: aPanel for: childMorph [
 
 	aPanel submorphs size = 1 ifFalse: [ ^ self ].
 	aPanel addMorphBack: self direction newSplitter
 ]
 
-{ #category : #private }
+{ #category : #'adding/removing' }
 SpMorphicPanedAdapter >> basicAdd: aPresenter constraints: constraints to: aPanel [
 	| childMorph |
 
 	childMorph := self buildMorph: aPresenter constraints: constraints.	
+	children add: childMorph.
 	aPanel addMorphBack: childMorph.
 	self addSplitterIn: aPanel for: childMorph.
 	
@@ -42,9 +43,22 @@ SpMorphicPanedAdapter >> basicAdd: aPresenter constraints: constraints to: aPane
 ]
 
 { #category : #accessing }
+SpMorphicPanedAdapter >> children [
+
+	^ children
+]
+
+{ #category : #accessing }
 SpMorphicPanedAdapter >> direction [
 
 	^ self layout direction
+]
+
+{ #category : #initialization }
+SpMorphicPanedAdapter >> initialize [
+
+	super initialize.
+	children := OrderedCollection new
 ]
 
 { #category : #accessing }
@@ -55,11 +69,21 @@ SpMorphicPanedAdapter >> layout [
 
 { #category : #factory }
 SpMorphicPanedAdapter >> layout: aLayout [
+
 	layout := aLayout.
 	widget
 		ifNil: [ widget := aLayout direction newWidgetOn: self.
 			widget layoutPolicy position: aLayout position.
 			self selector: self splitterNewSelector ].
+
+	layout whenChildrenAddedDo: [ :ann |
+		self 
+			basicAdd: ann child
+			constraints: (layout constraintsFor: ann child) 
+			to: widget ].
+		
+	layout whenChildrenRemovedDo: [ :ann |
+		self removeChild: ann child ].
 
 	super layout: aLayout
 ]
@@ -88,18 +112,27 @@ SpMorphicPanedAdapter >> newVertical [
 		yourself	
 ]
 
+{ #category : #'adding/removing' }
+SpMorphicPanedAdapter >> removeChild: aPresenter [
+	
+	| morph |
+	morph := aPresenter adapter widget.
+	children remove: morph.
+	widget removeMorph: morph
+]
+
 { #category : #private }
 SpMorphicPanedAdapter >> resizingSetSelector [
 
-	^ layout isHorizontal 
-		ifTrue: [ #hResizing: ]
-		ifFalse: [ #vResizing: ]
+	^ layout isHorizontal
+		  ifTrue: [ #hResizing: ]
+		  ifFalse: [ #vResizing: ]
 ]
 
 { #category : #private }
 SpMorphicPanedAdapter >> splitterNewSelector [
 
-	^ layout isHorizontal 
-		ifTrue: [ #newHorizontal ]
-		ifFalse: [ #newVertical ]
+	^ layout isHorizontal
+		  ifTrue: [ #newHorizontal ]
+		  ifFalse: [ #newVertical ]
 ]

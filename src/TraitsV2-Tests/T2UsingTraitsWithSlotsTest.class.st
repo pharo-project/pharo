@@ -1,7 +1,7 @@
 Class {
 	#name : #T2UsingTraitsWithSlotsTest,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests-Base'
+	#category : #'TraitsV2-Tests'
 }
 
 { #category : #tests }
@@ -16,6 +16,6 @@ T2UsingTraitsWithSlotsTest >> testRedefinitionKeepsSlots [
 
 	c1 addSlot: #d.
 
-	self assertCollection: (c1 localSlots collect: #name) hasSameElements: {#d}.
+	self assertCollection: (c1 localSlots collect: [:each | each name]) hasSameElements: {#d}.
 	self assertEmpty: c1 class localSlots
 ]

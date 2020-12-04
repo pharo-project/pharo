@@ -7,6 +7,12 @@ Object >> asPresenter [
 ]
 
 { #category : #'*Spec2-Core' }
+Object >> isPresenter [
+
+	^ false
+]
+
+{ #category : #'*Spec2-Core' }
 Object >> isSpAnnouncingObject [
 
 	^ false

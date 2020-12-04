@@ -40,7 +40,6 @@ AthensPaintMode >> atop [
 
 { #category : #capabilities }
 AthensPaintMode >> availableModes [
-
 	"Answer a collection of paint mode names, currently supported by backend. 
 	Different backends may support different sets of paint modes.
 	
@@ -190,8 +189,7 @@ AthensPaintMode >> overlay [
 
 { #category : #convenience }
 AthensPaintMode >> restoreAfter: aBlock [
-
-	"restore current paint mode after evaluating a block"
+	"Restore current paint mode after evaluating a block"
 	
 	self subclassResponsibility
 ]

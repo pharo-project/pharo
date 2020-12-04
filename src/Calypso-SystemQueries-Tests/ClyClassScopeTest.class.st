@@ -91,12 +91,11 @@ ClyClassScopeTest >> testMethodGroupsEnumeration [
 
 { #category : #tests }
 ClyClassScopeTest >> testMethodsEnumeration [
+
 	| expected |
 	scope := ClyClassScope of: ClyClass1FromP1.
-	
 	scope methodsDo: [ :each | result add: each selector ].
-	
-	expected := ClyClass1FromP1 localMethods collect: #selector.
+	expected := ClyClass1FromP1 localMethods collect: [:each | each selector].
 	self assert: result sorted asArray equals: expected sorted asArray
 ]
 

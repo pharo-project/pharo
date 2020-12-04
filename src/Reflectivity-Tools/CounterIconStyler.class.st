@@ -4,7 +4,7 @@ I am rendering ExecutionCounters in the editor.
 Class {
 	#name : #CounterIconStyler,
 	#superclass : #IconStyler,
-	#category : #'Reflectivity-Tools-Watchpoints'
+	#category : #'Reflectivity-Tools-Watches'
 }
 
 { #category : #defaults }

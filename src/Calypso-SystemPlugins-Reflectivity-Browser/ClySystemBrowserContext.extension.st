@@ -13,7 +13,7 @@ ClySystemBrowserContext >> isSelectedItemHasExecutionCounter [
 ]
 
 { #category : #'*Calypso-SystemPlugins-Reflectivity-Browser' }
-ClySystemBrowserContext >> isSelectedItemHasWatchpoint [
+ClySystemBrowserContext >> isSelectedItemHasWatch [
 	^selectedItems anySatisfy: [ :each | 
-		each isMarkedWith: ClyMethodWithWatchpointTag ]
+		each isMarkedWith: ClyMethodWithWatchTag ]
 ]

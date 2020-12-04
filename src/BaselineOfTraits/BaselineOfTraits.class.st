@@ -27,6 +27,12 @@ BaselineOfTraits class >> corePackages [
 ]
 
 { #category : #baselines }
+BaselineOfTraits class >> packagesToExportWithHermes [
+
+	^ self allPackageNames reject: [ :aPackageName | aPackageName = 'TraitsV2-Tests'].
+]
+
+{ #category : #baselines }
 BaselineOfTraits >> baseline: spec [
 	<baseline>
 
@@ -48,11 +54,13 @@ BaselineOfTraits >> baseline: spec [
 					
 		spec group: 'traits-in-kernel' with: #(
 					'Kernel-Traits'
-					'AST-Core-Traits'
 					'Collections-Abstract-Traits'
 					'Transcript-Core-Traits'
 					'CodeImport-Traits'
 					'CodeExport-Traits' ).
+
+		spec group: 'traits-ast' with: #(
+					'AST-Core-Traits' ).
 					
 		spec group: 'compatibility' with: #('TraitsV2-Compatibility').
 		
@@ -62,3 +70,4 @@ BaselineOfTraits >> baseline: spec [
 	 ].		
 
 ]
+

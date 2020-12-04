@@ -46,9 +46,9 @@ MethodChangeRecord >> methodInfoFromRemoval [
 	and the category in which it was defined (so it can be put back there if
 	re-accepted from a version browser)."
 
-	(changeType == #remove or: [changeType == #addedThenRemoved])
-		ifTrue: [^ infoFromRemoval]
-		ifFalse: [^ nil]
+	^ (changeType == #remove or: [ changeType == #addedThenRemoved ])
+		ifTrue: [ infoFromRemoval ]
+		ifFalse: [ nil ]
 ]
 
 { #category : #'all changes' }

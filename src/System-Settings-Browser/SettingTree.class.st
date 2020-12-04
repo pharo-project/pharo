@@ -31,10 +31,11 @@ SettingTree class >> acceptableKeywords: aCollectionOfStrings [
 
 { #category : #accessing }
 SettingTree >> acceptableKeywords: keywords [
-	self collector filter: [:prg | prg methodClass isMeta and: [keywords includes: prg selector]].
+	self collector 
+		selectors: keywords;
+		filter: [:prg | prg methodClass isMeta].
 	nodeList := nil.
-	self collector reset.
-
+	self collector reset
 ]
 
 { #category : #checking }

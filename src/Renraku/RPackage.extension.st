@@ -28,8 +28,6 @@ RPackage >> banLevelCandidates [
 
 { #category : #'*renraku' }
 RPackage >> critiques [
-	<eProperty>
-	
 	^ ReCriticEngine critiquesOf: self
 ]
 

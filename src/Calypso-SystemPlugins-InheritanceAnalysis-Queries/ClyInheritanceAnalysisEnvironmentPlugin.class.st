@@ -88,7 +88,7 @@ ClyInheritanceAnalysisEnvironmentPlugin >> checkClassIsAbstract: aClass [
 { #category : #'method groups' }
 ClyInheritanceAnalysisEnvironmentPlugin >> collectMethodGroupProviders [
 	^{ClyAbstractMethodGroupProvider. ClyOverridingMethodGroupProvider. ClyOverriddenMethodGroupProvider. ClyRequiredMethodGroupProvider}
-		collect: [ :each | each new]
+		collect: [ :each | each new ]
 ]
 
 { #category : #'item decoration' }

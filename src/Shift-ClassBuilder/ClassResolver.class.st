@@ -14,7 +14,5 @@ ClassResolver >> resolve: aCDClassDefinitionNode [
 
 { #category : #resolving }
 ClassResolver >> resolve: aClassName inEnv: anEnvironment [
-	(anEnvironment classNamed: aClassName) 
-		ifNotNil:[:class|^class]
-		ifNil:[^self resolve: aClassName].
+	^ (anEnvironment classNamed: aClassName) ifNil: [ self resolve: aClassName ]
 ]

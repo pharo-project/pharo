@@ -7,11 +7,8 @@ Class {
 	#instVars : [
 		'texture',
 		'renderer',
-		'pixels',
-		'pitch',
-		'sdlSurface',
 		'textureExtent',
-		'surfaceForm'
+		'mutex'
 	],
 	#pools : [
 		'SDL2Constants'
@@ -21,149 +18,185 @@ Class {
 
 { #category : #'instance creation' }
 OSSDL2AthensRenderer class >> for: aWindowHandle [
-	^ self basicNew 
+	^ self basicNew
 		initializeWindowHandle: aWindowHandle;
 		yourself
 ]
 
 { #category : #'instance creation' }
-OSSDL2AthensRenderer class >> new [ 
+OSSDL2AthensRenderer class >> new [
 	self error: 'Use #for:'
 ]
 
-{ #category : #private }
-OSSDL2AthensRenderer >> createSDLSurfaceWithExtent: extent [
-	surfaceForm ifNotNil: [ surfaceForm destroySurface ].
-	"createRGBSurfaceForCairoWidth creates the surface with autoRelease."
-	sdlSurface := SDL2 createRGBSurfaceForCairoWidth: extent x height: extent y.
-	surfaceForm := OSSDL2ExternalForm extent: extent depth: 32 bits: sdlSurface pixels.
+{ #category : #accessing }
+OSSDL2AthensRenderer >> athensSurface [
+	^ mutex critical: [super athensSurface]
 ]
 
 { #category : #deleting }
 OSSDL2AthensRenderer >> destroy [
-	
+
+	mutex critical: [
+		texture ifNotNil: [ texture destroy ].
+		texture := nil.
+		renderer ifNotNil: [ renderer destroy ].
+		renderer := nil.
+	].
+
 	super destroy.
-	sdlSurface := nil.
-	texture := nil.
-	renderer := nil.
+
+
+]
+
+{ #category : #private }
+OSSDL2AthensRenderer >> drawTexturePixelsWith: aBlock [
+	| pixels pitch externalForm |
+	pixels := ExternalAddress new.
+	pitch := ExternalAddress allocate: 4 bytesDuring: [:pitchHolder |
+		texture lockPixels: pixels pitch: pitchHolder.
+		pitchHolder signedLongAt: 1 ].
+
+	externalForm := OSSDL2ExternalForm extent: textureExtent depth: 32 bits: pixels.
+	[
+		aBlock value: externalForm
+	] ensure: [
+		texture unlock.
+		externalForm destroySurface
+	].
 ]
 
 { #category : #initialization }
-OSSDL2AthensRenderer >> initializeWindowHandle: aWindowHandle [ 
+OSSDL2AthensRenderer >> initialize [
+	super initialize.
+	mutex := Mutex new.
+]
+
+{ #category : #initialization }
+OSSDL2AthensRenderer >> initializeWindowHandle: aBackendWindow [
 	self initialize.
-	self window: aWindowHandle.
-	renderer := window handle createDefaultRenderer.
-	self resetResources.
-	
-		
+	self backendWindow: aBackendWindow.
+	renderer := backendWindow sdl2Window createDefaultRenderer.
+	mutex critical: [
+		self resetResources.
+	].
+
+]
+
+{ #category : #'updating screen' }
+OSSDL2AthensRenderer >> pixelExtent [
+	mutex critical: [
+		(renderer isNil or: [ renderer isNull ]) ifFalse: [ ^ renderer outputExtent ].
+	].
+	^ super pixelExtent
 ]
 
 { #category : #drawing }
 OSSDL2AthensRenderer >> prepareForDrawing [
-	textureExtent ~= window extent ifTrue: [ self resized ].
+	mutex critical: [
+		textureExtent ~= renderer outputExtent ifTrue: [ self resized ].
+	].
 ]
 
 { #category : #'updating screen' }
 OSSDL2AthensRenderer >> present [
-	self validate ifFalse: [ ^ self ].
-	renderer
-		clear;
-		copy: texture;
-		present
+	mutex critical: [
+		self validate ifFalse: [ ^ self ].
+		renderer
+			clear;
+			copy: texture;
+			present
+	]
 ]
 
 { #category : #private }
 OSSDL2AthensRenderer >> primitiveUpdateRectangle: rectangle externalForm: externalForm [
-	externalForm copy: rectangle from: surfaceForm to: rectangle origin rule: Form over
+	externalForm getCanvas
+		drawImage: athensSurface asForm at: rectangle origin sourceRect: rectangle
+
 ]
 
 { #category : #'updating resources' }
 OSSDL2AthensRenderer >> resetResources [
 	| extent |
 	self checkSession.
-	extent := self window extent.
-	self createSDLSurfaceWithExtent: extent.
-	athensSurface := AthensCairoSDLSurface fromSDLSurface: sdlSurface.
-	texture := renderer 
-		createTextureFormat: SDL_PIXELFORMAT_XRGB8888 
-		access: SDL_TEXTUREACCESS_STREAMING 
-		width: extent x 
+	extent := renderer outputExtent.
+	athensSurface := AthensCairoSurface extent: extent.
+	texture ifNotNil: [
+		texture destroy.
+		texture := nil.
+	].
+	texture := renderer
+		createTextureFormat: SDL_PIXELFORMAT_XRGB8888
+		access: SDL_TEXTUREACCESS_STREAMING
+		width: extent x
 		height: extent y.
 	textureExtent := extent.
 ]
 
 { #category : #'updating screen' }
 OSSDL2AthensRenderer >> resized [
-	self resetResources.
-	super resized
+	mutex critical: [
+		self resetResources.
+		super resized
+	]
+]
+
+{ #category : #accessing }
+OSSDL2AthensRenderer >> surface [
+	^ mutex critical: [super surface]
 ]
 
 { #category : #'updating screen' }
 OSSDL2AthensRenderer >> updateAll [
-	self validate ifFalse: [ ^ self ].
-	texture updateTexturePixels: sdlSurface pixels pitch: sdlSurface pitch.
+	mutex critical: [
+		self validate ifFalse: [ ^ self ].
+
+		self drawTexturePixelsWith: [ :textureForm |
+			self primitiveUpdateRectangle: (0 @ 0 corner: textureExtent) externalForm: textureForm.
+		].
+	]
 ]
 
 { #category : #'updating screen' }
 OSSDL2AthensRenderer >> updateRectangle: aRectangle [
-	| intersection pitchHolder externalForm |
-	self validate ifFalse: [ ^ self ].
-	intersection := aRectangle
-		intersect: (0 @ 0 corner: textureExtent)
-		ifNone: [ ^ self ].
-	
-	pixels := ExternalAddress new.
-	pitchHolder := ExternalAddress allocate: 4.
-	[
-		texture lockPixels: pixels pitch: pitchHolder.
-		pitch := pitchHolder signedLongAt: 1.
-	] ensure: [ pitchHolder free ].
+	mutex critical: [
+		| intersection |
+		self validate ifFalse: [ ^ self ].
+		intersection := aRectangle
+			intersect: (0 @ 0 corner: textureExtent)
+			ifNone: [ ^ self ].
 
-	externalForm := OSSDL2ExternalForm extent: textureExtent depth: 32 bits: pixels.
-	[
-		self primitiveUpdateRectangle: intersection externalForm: externalForm
-	] ensure: [
-		texture unlock.
-		externalForm destroySurface
-	].
-
+		self drawTexturePixelsWith: [ :textureForm |
+			self primitiveUpdateRectangle: intersection externalForm: textureForm
+		].
+	]
 ]
 
 { #category : #'updating screen' }
 OSSDL2AthensRenderer >> updateRectangles: allDamage [
-	| pitchHolder externalForm intersection |
-	self validate
-		ifFalse: [ ^ self ].
-		
-	pixels := ExternalAddress new.
-	pitchHolder := ExternalAddress allocate: 4.
-	[
-		texture lockPixels: pixels pitch: pitchHolder.
-		pitch := pitchHolder signedLongAt: 1.
-	] ensure: [ pitchHolder free ].
-	
-	[
-		externalForm := OSSDL2ExternalForm extent: textureExtent depth: 32 bits: pixels.
-		allDamage do: [ :rectangle |
-			intersection := rectangle
-				intersect: (0 @ 0 corner: window extent)
-				ifNone: [ nil ].
-		
-			intersection ifNotNil: [
-				self primitiveUpdateRectangle: rectangle externalForm: externalForm.
-			]
-		].
-	] ensure: [
-		texture unlock.
-		externalForm destroySurface
-	].
+	mutex critical: [
+		| fullBounds |
+		self validate ifFalse: [ ^ self ].
 
+		fullBounds := 0 @ 0 corner: textureExtent.
+		self drawTexturePixelsWith: [ :textureForm |
+			| intersection |
+			allDamage do: [ :rectangle |
+				intersection := rectangle intersect: fullBounds ifNone: [ nil ].
+				intersection ifNotNil: [
+					self primitiveUpdateRectangle: rectangle externalForm: textureForm.
+				]
+			].
+		].
+	]
 ]
 
 { #category : #'updating screen' }
 OSSDL2AthensRenderer >> validate [
 	self checkSession.
-	(texture isNil or: [ texture isNull ]) ifTrue: [ ^ false ].	
-	window extent ~= textureExtent ifTrue: [ ^ false ].
+	athensSurface ifNil: [ ^ false ].
+	(texture isNil or: [ texture isNull ]) ifTrue: [ ^ false ].
+	(renderer isNil or: [ renderer isNull ]) ifTrue: [ ^ false ].
+	renderer outputExtent ~= textureExtent ifTrue: [ ^ false ].
 	^ true
 ]

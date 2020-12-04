@@ -19,13 +19,13 @@ Class {
 { #category : #'world menu' }
 CmdWorldMenuRegistration class >> createCommandContext [
 
-	^CmdWorldMenuContext for: World
+	^CmdWorldMenuContext for: self currentWorld
 ]
 
 { #category : #'world menu' }
 CmdWorldMenuRegistration class >> enableWorldShortcuts [
 	<script>
-	CmdKMDispatcher attachedTo: World withCommandsFrom: self
+	CmdKMDispatcher attachedTo: self currentWorld withCommandsFrom: self
 ]
 
 { #category : #'world menu' }

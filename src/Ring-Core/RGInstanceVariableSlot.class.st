@@ -5,7 +5,9 @@ Class {
 }
 
 { #category : #testing }
-RGInstanceVariableSlot >> isSpecial [
+RGInstanceVariableSlot >> needsFullDefinition [
+	"I am just a backward compatible ivar slot and can use simple definitions.
+	 Note: my subclasses need full definitions"
 
-	^ false
+	^ self class ~= RGInstanceVariableSlot
 ]

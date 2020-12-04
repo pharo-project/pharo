@@ -68,7 +68,7 @@ RBPragmaNode >> argumentAt: keywordSelector ifAbsent: absentBlock [
 
 { #category : #accessing }
 RBPragmaNode >> arguments [
-	^ arguments ifNil: [ #() ]
+	^ arguments
 ]
 
 { #category : #accessing }
@@ -127,7 +127,7 @@ RBPragmaNode >> isBinary [
 
 { #category : #testing }
 RBPragmaNode >> isFaulty [
-	^self arguments anySatisfy: #isFaulty
+	^self arguments anySatisfy: [:each | each isFaulty]
 ]
 
 { #category : #testing }

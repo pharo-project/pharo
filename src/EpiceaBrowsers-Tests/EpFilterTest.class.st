@@ -15,25 +15,9 @@ EpFilterTest >> classAddition [
 	^ self entryWith: (EpClassAddition class: Object)
 ]
 
-{ #category : #resources }
-EpFilterTest >> diverseEvents [
-	^ {
-		self classAddition.
-		self expressionEvaluation.
-		self methodAddition.
-		self redo.
-		self refactoring.
-		}
-]
-
 { #category : #running }
 EpFilterTest >> entryWith: anEvent [
 	^ OmEntry content: anEvent
-]
-
-{ #category : #resources }
-EpFilterTest >> expressionEvaluation [
-	^ self entryWith: (EpExpressionEvaluation expression: '42')
 ]
 
 { #category : #resources }

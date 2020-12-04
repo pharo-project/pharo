@@ -7,7 +7,7 @@ Class {
 		'link',
 		'node'
 	],
-	#category : #'Reflectivity-Tests'
+	#category : #'Reflectivity-Tests-Base'
 }
 
 { #category : #'tests - material' }

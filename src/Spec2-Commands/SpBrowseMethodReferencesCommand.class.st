@@ -3,7 +3,7 @@ I browse all references to the computed context that is transformed to a symbol.
 "
 Class {
 	#name : #SpBrowseMethodReferencesCommand,
-	#superclass : #SpSystemNavigationCommand,
+	#superclass : #SpSystemSelectionCommand,
 	#category : #'Spec2-Commands-Navigation'
 }
 
@@ -20,5 +20,6 @@ SpBrowseMethodReferencesCommand class >> shortName [
 
 { #category : #executing }
 SpBrowseMethodReferencesCommand >> execute [
-	self systemNavigation browseAllReferencesTo: self selector
+
+	self context doBrowseMethodReferences
 ]

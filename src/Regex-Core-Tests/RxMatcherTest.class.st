@@ -1207,6 +1207,25 @@ RxMatcherTest >> testStringCopyWithRegexMatchesTranslatedUsing [
 			'X' ]) equals: 'aaXcc'
 ]
 
+{ #category : #tests }
+RxMatcherTest >> testStringGreedyMatchesRegex [
+
+	self assert: ('199' matchesRegex: '([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])').
+	self assert: ('25' matchesRegex: '([0-9]|[1-9][0-9])').
+	self assert: ('25' matchesRegex: '([1-9][0-9]|[0-9])').
+	self assert: ('25' matchesRegex: '(\d\d|\d)').
+	self assert: ('25' matchesRegex: '(\d|\d\d)').
+	self assert: ('bb' matchesRegex: '([a-z]|[b-z][a-z])').
+	self assert: ('b' matchesRegex: '([b-z][a-z]|[a-z])').
+	self assert: ('15' matchesRegex: '[1-9]|1[0-9]').
+	self assert: ('b' matchesRegex: '(b|bb)').
+	self assert: ('b' matchesRegex: '(bb|b)').
+	self assert: ('fooABCD' matchesRegex: '.*(ABCD|BC)').
+	self assert: ('fooBC' matchesRegex: '.*(ABCD|BC)').
+	self assert: ('fooB' matchesRegex: '.*(ABC|B)').
+	self assert: ('fooABC' matchesRegex: '.*(ABC|B)').	
+]
+
 { #category : #'testing-extensions' }
 RxMatcherTest >> testStringMatchesRegex [
 	self deny: ('aabbcc' matchesRegex: 'a+').

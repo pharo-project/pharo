@@ -125,6 +125,23 @@ FLDecoder >> nextEncodedInt32 [
 ]
 
 { #category : #decoding }
+FLDecoder >> nextEncodedInt64 [
+	| n firstDigit |
+	n := firstDigit := stream next.
+	n := (n bitShift: 8) + stream next.
+	n := (n bitShift: 8) + stream next.
+	n := (n bitShift: 8) + stream next.
+	n := (n bitShift: 8) + stream next.
+	n := (n bitShift: 8) + stream next.
+	n := (n bitShift: 8) + stream next.
+	n := (n bitShift: 8) + stream next.	
+
+	firstDigit >= 128 ifTrue: [n := -16r10000000000000000 + n].  "decode negative 32-bit integer"
+	^ n
+
+]
+
+{ #category : #decoding }
 FLDecoder >> nextEncodedPositiveInteger [
 	"Read a 32-bit signed integer from the next 4 bytes"
 	| s |

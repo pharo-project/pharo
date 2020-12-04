@@ -18,7 +18,7 @@ SystemSettingLauncher >> defaultIcon [
 { #category : #accessing }
 SystemSettingLauncher >> inputWidget [
 	^ (self theme
-		newButtonIn: self currentWorld
+		newButtonIn: self
 		for: self
 		getState: nil
 		action: #launch
@@ -28,7 +28,7 @@ SystemSettingLauncher >> inputWidget [
 		help: self description)
 		label:
 			(self theme
-				newRowIn: self currentWorld
+				newRowIn: self
 				for:
 					{(AlphaImageMorph new
 						image: (self iconNamed: #smallRedoIcon)).

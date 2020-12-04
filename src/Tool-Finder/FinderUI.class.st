@@ -257,37 +257,6 @@ FinderUI >> allClassesButtonState [
 	^ false
 ]
 
-{ #category : #private }
-FinderUI >> autoSelection [
-	| aString firstIndex interval string size |
-
-	(self searchingString isEmpty or: [ self useRegEx] )
-		ifTrue: [^ 0 to:0 ].
-	
-	self isSourceSymbol ifFalse: [^ 0 to: 0].
-		
-	aString := self sourceTextModel getString asLowercase.
-	
-	aString = self defaultExplanation asLowercase
-		ifTrue: [ ^ 0 to: 0].
-	
-	string := self searchingString asLowercase.
-	(string includes: $*)
-		ifTrue: [| list lastIndex|
-			list := string substrings: '*'.
-			firstIndex := aString findString: list first.
-			lastIndex := (aString findString: list last startingAt: firstIndex) + list last size - 1.
-			interval := firstIndex to: lastIndex ]
-		ifFalse: [
-			firstIndex := aString findString: string.
-			size := string size.
-			interval := firstIndex to: (firstIndex + size - 1) ].
-		
-	^ firstIndex = 0 
-		ifTrue: [ 0 to:0 ]
-		ifFalse: [ interval ]
-]
-
 { #category : #'buttons behavior' }
 FinderUI >> browseButtonAction [
 
@@ -316,12 +285,6 @@ FinderUI >> buildAllClassesButton [
 			getState: #allClassesButtonState 
 			action: #allClassesButtonAction 
 			label: #allClassesButtonLabel
-]
-
-{ #category : #'items creation' }
-FinderUI >> buildAllTextArea [
-	self buildSearchingTextArea.
-	self buildSourceTextArea
 ]
 
 { #category : #'items creation' }
@@ -436,15 +399,16 @@ FinderUI >> buildSearchButton [
 
 { #category : #'items creation' }
 FinderUI >> buildSearchModeDropListIn: aWindow [
-			^(self theme 
-				newDropListIn: aWindow
-				for:self				
-				list: #searchModesList
-				getSelected: #currentSearchMode
-				setSelected: #currentSearchMode:
-				getEnabled: nil
-				useIndex: false 
-				help: self searchModeHelpText) hResizing: #rigid; width: 120; yourself
+	
+	^ (self theme 
+		newDropListIn: aWindow
+		for:self				
+		list: #searchModesList
+		getSelected: #currentSearchMode
+		setSelected: #currentSearchMode:
+		getEnabled: nil
+		useIndex: false 
+		help: self searchModeHelpText) hResizing: #rigid; width: 120; yourself
 
 ]
 
@@ -531,8 +495,8 @@ FinderUI >> compileSource: aString notifying: aController [
 { #category : #private }
 FinderUI >> constructPackagesSet [
 	| result |
-	result := (self environment packages collect: #name)
-		difference: (self packagesSelection packages collect: #name).
+	result := (self environment packages collect: [:each | each name])
+		difference: (self packagesSelection packages collect: [:each | each name]).
 	^ result asSet asSortedCollection: [ :a :b | a < b ]
 ]
 
@@ -840,19 +804,9 @@ FinderUI >> packagesSelection: aCollection [
 	self finder packagesSelection: aCollection
 ]
 
-{ #category : #accessing }
-FinderUI >> refactor [
-	^ NautilusRefactoring model: self
-]
-
 { #category : #private }
 FinderUI >> resetEnvironment [
 	self triggerEvent: #resetEnvironment
-]
-
-{ #category : #private }
-FinderUI >> resetSearchedTextList [
-	self searchedTextList removeAll
 ]
 
 { #category : #'tree behavior' }
@@ -1058,11 +1012,6 @@ FinderUI >> updateSourceCode [
 { #category : #private }
 FinderUI >> useRegEx [
 	^ self finder useRegEx
-]
-
-{ #category : #'items creation' }
-FinderUI >> useRegExCheckbox [
-	^ useRegExCheckbox ifNil: [ self buildRegExChooser ]
 ]
 
 { #category : #'buttons behavior' }

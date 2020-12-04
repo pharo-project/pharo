@@ -37,7 +37,7 @@ Class {
 	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #cleaning }
 RBRefactoring class >> cleanUp [
 	"RefactoringOptions holds on to blocks, we should make sure to recreate them so the block references the current method"
 	self initializeRefactoringOptions.
@@ -265,6 +265,16 @@ RBRefactoring >> options [
 { #category : #accessing }
 RBRefactoring >> options: aDictionary [ 
 	options := aDictionary
+]
+
+{ #category : #parsing }
+RBRefactoring >> parseTreeRewriter [
+	^ self parseTreeRewriterClass new
+]
+
+{ #category : #parsing }
+RBRefactoring >> parseTreeRewriterClass [
+	^ RBParseTreeRewriter
 ]
 
 { #category : #utilities }

@@ -12,9 +12,14 @@ Class {
 
 { #category : #'accessing - good' }
 RBSmalllintTestObject >> abstractUnaryAccessingMethodWithoutReturn [
-	"shouldn't trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
+	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	self subclassResponsibility
+]
+
+{ #category : #methods }
+RBSmalllintTestObject >> anySatisfy [
+	^((1 to: 10) detect: [:each | each > 2] ifNone: [nil]) isNil
 ]
 
 { #category : #methods }
@@ -80,6 +85,11 @@ RBSmalllintTestObject >> collectSelectNotUsed [
 ]
 
 { #category : #methods }
+RBSmalllintTestObject >> collectionAtCollectionSize [
+	^self at: self size
+]
+
+{ #category : #methods }
 RBSmalllintTestObject >> collectionMessagesToExternalObject [
 	self someObject collection remove: 10
 ]
@@ -99,11 +109,6 @@ RBSmalllintTestObject >> collectionProtocol [
 { #category : #methods }
 RBSmalllintTestObject >> consistencyCheck [
 	^(1 to: 10) size > 0
-]
-
-{ #category : #methods }
-RBSmalllintTestObject >> contains [
-	^((1 to: 10) detect: [:each | each > 2] ifNone: [nil]) isNil
 ]
 
 { #category : #methods }
@@ -192,6 +197,7 @@ RBSmalllintTestObject >> guardingClause [
 
 { #category : #methods }
 RBSmalllintTestObject >> haltClassMentioned [
+	<haltOrBreakpointForTesting>
 	Halt now
 ]
 
@@ -226,6 +232,11 @@ RBSmalllintTestObject >> literalArrayCharacters [
 { #category : #methods }
 RBSmalllintTestObject >> literalArrayContainsComma [
 	^ #(#,)
+]
+
+{ #category : #'accessing - bad' }
+RBSmalllintTestObject >> literalArrayContainsSuspiciousTrueFalseOrNil [
+	^#(#nil)
 ]
 
 { #category : #methods }
@@ -306,7 +317,7 @@ RBSmalllintTestObject >> noMoveDefinition [
 
 { #category : #'accessing - good' }
 RBSmalllintTestObject >> nonUnaryAccessingBranchingStatementMethodWithoutReturn: anObject [
-	"shouldn't trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
+	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	self value isString
 		ifTrue: [ self value ]
@@ -315,14 +326,14 @@ RBSmalllintTestObject >> nonUnaryAccessingBranchingStatementMethodWithoutReturn:
 
 { #category : #'accessing - good' }
 RBSmalllintTestObject >> nonUnaryAccessingMessageStatementMethodWithoutReturn: anObject [
-	"shouldn't trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
+	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	self value
 ]
 
 { #category : #'accessing - good' }
 RBSmalllintTestObject >> nonUnaryAccessingMethodWithoutReturn: anObject [
-	"shouldn't trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
+	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	
 ]
@@ -476,16 +487,16 @@ RBSmalllintTestObject >> transcriptMentioned [
 
 { #category : #'accessing - good' }
 RBSmalllintTestObject >> unaryAccessingBranchingStatementMethodWithReturn [
-	"shouldn't trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
+	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
-	self value isString
-		ifTrue: [ ^ self value ]
-		ifFalse: [ ^ '' ]
+	^ self value isString
+		ifTrue: [ self value ]
+		ifFalse: [ '' ]
 ]
 
 { #category : #'accessing - bad' }
 RBSmalllintTestObject >> unaryAccessingBranchingStatementMethodWithoutReturn [
-	"should trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
+	"should trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	self value isString
 		ifTrue: [ self value ]
@@ -494,35 +505,35 @@ RBSmalllintTestObject >> unaryAccessingBranchingStatementMethodWithoutReturn [
 
 { #category : #'accessing - good' }
 RBSmalllintTestObject >> unaryAccessingMessageStatementMethodWithReturn [
-	"shouldn't trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
+	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	^ self value
 ]
 
 { #category : #'accessing - bad' }
 RBSmalllintTestObject >> unaryAccessingMessageStatementMethodWithoutReturn [
-	"should trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
+	"should trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	self value
 ]
 
 { #category : #'accessing - good' }
 RBSmalllintTestObject >> unaryAccessingMethodWithReturn [
-	"shouldn't trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
+	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	^ self
 ]
 
 { #category : #'accessing - bad' }
 RBSmalllintTestObject >> unaryAccessingMethodWithoutReturn [
-	"should trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
+	"should trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	
 ]
 
 { #category : #'non-accessing' }
 RBSmalllintTestObject >> unaryNonAccessingBranchingStatementMethodWithoutReturn [
-	"shouldn't trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
+	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	self value isString
 		ifTrue: [ self value ]
@@ -531,14 +542,14 @@ RBSmalllintTestObject >> unaryNonAccessingBranchingStatementMethodWithoutReturn 
 
 { #category : #'non-accessing' }
 RBSmalllintTestObject >> unaryNonAccessingMessageStatementMethodWithoutReturn [
-	"shouldn't trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
+	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	self value
 ]
 
 { #category : #'non-accessing' }
 RBSmalllintTestObject >> unaryNonAccessingMethodWithoutReturn [
-	"shouldn't trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
+	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	
 ]

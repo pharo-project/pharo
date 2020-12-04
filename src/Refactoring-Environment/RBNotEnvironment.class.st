@@ -33,10 +33,11 @@ RBNotEnvironment >> includesPackage: aRPackage [
 ]
 
 { #category : #testing }
-RBNotEnvironment >> includesProtocol: aProtocol in: aClass [ 
-	^(aClass organization protocolOrganizer getProtocolNamed: aProtocol ifNone: [ ^ false ])
-		methods anySatisfy: [ :selector | 
-			self includesSelector: selector in: aClass ]
+RBNotEnvironment >> includesProtocol: aProtocol in: aClass [
+	^ (aClass organization protocolOrganizer
+		getProtocolNamed: aProtocol
+		ifNone: [ ^ false ]) methodSelectors
+		anySatisfy: [ :selector | self includesSelector: selector in: aClass ]
 ]
 
 { #category : #testing }

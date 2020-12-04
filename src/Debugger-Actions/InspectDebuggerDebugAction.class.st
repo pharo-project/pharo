@@ -1,3 +1,6 @@
+"
+Inspect the debugger
+"
 Class {
 	#name : #InspectDebuggerDebugAction,
 	#superclass : #DebugAction,
@@ -21,7 +24,7 @@ InspectDebuggerDebugAction >> defaultOrder [
 
 { #category : #accessing }
 InspectDebuggerDebugAction >> executeAction [ 
-	self debugger inspect.
+	self debugger inspect
 ]
 
 { #category : #accessing }

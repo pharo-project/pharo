@@ -105,7 +105,7 @@ OpalCompilerTest >> testCompilerUsingFullBlockClosureHasBlockAsLiteral [
 
   	method := compiler compile: 'test #(1 2 3) do: [:e | e + 1]'.
 
-  	self assert: method literals second isCompiledBlock 
+  	self assert: method literals second isEmbeddedBlock 
 ]
 
 { #category : #'tests - bindings' }

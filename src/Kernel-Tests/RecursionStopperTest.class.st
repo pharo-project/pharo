@@ -11,6 +11,14 @@ Class {
 	#category : #'Kernel-Tests-Processes'
 }
 
+{ #category : #running }
+RecursionStopperTest class >> defaultTimeLimit [
+	"Those tests are supposed to be fast. 
+	But with broken RecursionStopper they will hang the image.
+	Therefore this small allowed time for tests to fail quickly if they are broken"
+	^100 milliSeconds 
+]
+
 { #category : #accessing }
 RecursionStopperTest >> mixedMethod [
 
@@ -58,7 +66,7 @@ RecursionStopperTest >> testMixedMethod [
 
 	| result |
 
-	self should: [ result := self mixedMethod ] notTakeMoreThanMilliseconds: 3.
+	result := self mixedMethod.
 	
 	self assert: result equals: 2
 ]
@@ -74,7 +82,7 @@ RecursionStopperTest >> testNoRecursion [
 { #category : #tests }
 RecursionStopperTest >> testWithRecursion [
 
-	self should: [ self recursion ] notTakeMoreThanMilliseconds: 3.
+	self recursion
 ]
 
 { #category : #accessing }

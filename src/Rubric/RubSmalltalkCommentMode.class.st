@@ -39,3 +39,15 @@ RubSmalltalkCommentMode >> formatMethodCode [
 RubSmalltalkCommentMode >> isCompletionEnabled [
 	^ false
 ]
+
+{ #category : #parsing }
+RubSmalltalkCommentMode >> parseExpression: aString [ 
+	
+	^ RBParser parseFaultyExpression: aString
+]
+
+{ #category : #parsing }
+RubSmalltalkCommentMode >> parseSource: aString [ 
+
+	^ RBParser parseFaultyExpression: aString
+]

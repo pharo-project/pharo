@@ -19,14 +19,14 @@ RFSenderReification class >> key [
 
 { #category : #generate }
 RFSenderReification >> genForRBMessageNode [
-	^RBVariableNode named: 'self'
+	^RBVariableNode selfNode
 ]
 
 { #category : #generate }
 RFSenderReification >> genForRBMethodNode [
 	^RBMessageNode 
 		receiver: (RBMessageNode 
-			receiver: (RBVariableNode named: 'thisContext')
+			receiver: RBVariableNode thisContextNode
 			selector: #sender)
 		selector: #receiver.
 		

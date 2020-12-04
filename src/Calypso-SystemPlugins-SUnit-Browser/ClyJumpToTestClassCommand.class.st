@@ -28,14 +28,14 @@ Class {
 ClyJumpToTestClassCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^ CmdContextMenuActivation for: ClyClassContextOfFullBrowser
+	^ CmdContextMenuActivation for: ClyFullBrowserClassContext
 ]
 
 { #category : #activation }
 ClyJumpToTestClassCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 	
-	^ CmdShortcutActivation by: $g meta, $j meta for: ClyClassContextOfFullBrowser
+	^ CmdShortcutActivation by: $g meta, $j meta for: ClyFullBrowserClassContext
 ]
 
 { #category : #accessing }

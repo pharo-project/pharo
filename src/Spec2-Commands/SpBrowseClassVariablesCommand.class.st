@@ -19,6 +19,7 @@ SpBrowseClassVariablesCommand class >> shortName [
 ]
 
 { #category : #executing }
-SpBrowseClassVariablesCommand >> execute [	
-	self systemNavigation browseClassVariables: self context
+SpBrowseClassVariablesCommand >> execute [
+
+	self systemNavigation browseClassVariables: self target
 ]

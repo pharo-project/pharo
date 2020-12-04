@@ -31,29 +31,32 @@ MalLongestPathTest >> testIsCompletedInSimpleGraph [
 MalLongestPathTest >> testLeafNodesInSimpleGraph [
 	MalGraphFixture simpleGraph: longestPath.
 	longestPath computeLeafNodes.
-	self assert: (longestPath leafNodes collect: #model) equals: #($c) asOrderedCollection
+	self assert: (longestPath leafNodes collect: [:each | each model]) equals: #($c) asOrderedCollection
 ]
 
 { #category : #tests }
 MalLongestPathTest >> testRootNodesInSimpleGraph [
+
 	MalGraphFixture simpleGraph: longestPath.
 	longestPath computeRootNodes.
-	self assert: (longestPath rootNodes collect: #model) equals: #($a $d) asOrderedCollection
+	self assert: (longestPath rootNodes collect: [:each | each model]) equals: #($a $d) asOrderedCollection
 ]
 
 { #category : #tests }
 MalLongestPathTest >> testRootNodesInWithoutCyclesMediumGraph [
+
 	MalGraphFixture withoutCyclesMediumGraph: longestPath.
 	longestPath computeRootNodes.
-	self assert: (longestPath rootNodes collect: #model) equals: #($a $b) asOrderedCollection
+	self assert: (longestPath rootNodes collect: [:each | each model]) equals: #($a $b) asOrderedCollection
 ]
 
 { #category : #tests }
 MalLongestPathTest >> testRootNodesRankIsZeroInSimpleGraph [
+
 	MalGraphFixture simpleGraph: longestPath.
 	longestPath initializeRootNodes.
-	self assert: (longestPath rootNodes collect: #model) equals: #($a $d) asOrderedCollection.
-	self assert: (longestPath rootNodes collect: #pathWeight) equals: #(0 0) asOrderedCollection
+	self assert: (longestPath rootNodes collect: [:each | each model]) equals: #($a $d) asOrderedCollection.
+	self assert: (longestPath rootNodes collect: [:each | each pathWeight]) equals: #(0 0) asOrderedCollection
 ]
 
 { #category : #tests }

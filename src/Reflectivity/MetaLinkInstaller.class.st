@@ -138,8 +138,7 @@ MetaLinkInstaller >> initialize [
 	linksRegistry := MetaLinkRegistry new.
 	linkToNodesMapper := MetaLinkNodesMapper new.
 	superJumpLinks := OrderedCollection new.
-
-	SystemAnnouncer uniqueInstance weak when: MetalinkChanged send: #metalinkChanged: to: self.
+	
 	SystemAnnouncer uniqueInstance weak when: MethodModified send: #methodChanged: to: self.
 	SystemAnnouncer uniqueInstance weak when: MethodRemoved send: #methodRemoved: to: self.
 	SystemAnnouncer uniqueInstance weak when: MethodAdded send: #methodAdded: to: self
@@ -157,36 +156,9 @@ MetaLinkInstaller >> install: aMetaLink onNode: aNode forObject: anObject [
 ]
 
 { #category : #permalinks }
-MetaLinkInstaller >> installPermaLink: aPermaLink onClassVarNamed: aClassVarName [
-	| classVar |	
-	classVar := MetalinkTargetResolver classVariableNamed: aClassVarName for: aPermaLink targetObjectOrClass.	
-	aPermaLink slotOrVariable: classVar.
-	
-	self registerAndInstallPermaLink: aPermaLink forTarget: classVar
-]
-
-{ #category : #permalinks }
-MetaLinkInstaller >> installPermaLink: aPermaLink onSlotNamed: aSlotName [
-	| slot |
-	slot := MetalinkTargetResolver slotNamed: aSlotName for: aPermaLink targetObjectOrClass.
-	aPermaLink slotOrVariable: slot.
-	
-	self registerAndInstallPermaLink: aPermaLink forTarget: slot
-]
-
-{ #category : #permalinks }
-MetaLinkInstaller >> installPermaLink: aPermaLink onTempVarNamed: aTempName inMethod: aMethodName [
-	| temp |
-	temp := MetalinkTargetResolver lookupTemporaryNamed: aTempName inMethod: aMethodName for: aPermaLink targetObjectOrClass.
-
-	aPermaLink slotOrVariable: temp.
-	aPermaLink slotOrVarMethod: temp method.
-	
-	self registerAndInstallPermaLink: aPermaLink forTarget: temp
-	
-
-
-
+MetaLinkInstaller >> installPermaLink: aPermaLink onVariable: aVariable [
+	aPermaLink slotOrVariable: aVariable.
+	self registerAndInstallPermaLink: aPermaLink forTarget: aVariable
 ]
 
 { #category : #lookup }
@@ -196,7 +168,7 @@ MetaLinkInstaller >> installSuperJumpLinksInMethodNode: node [
 	instead of starting the lookup in the super class (wich is the original class of the object),
 	the lookup is started in the super super class (which is the intented superclass)."
 
-	(node allChildren select: [ :n | n isSuper ])
+	(node allChildren select: [ :n | n isSuperVariable ])
 		do: [ :superNode | 
 			| messageSendNode superSuperClass link |
 			messageSendNode := superNode parent.
@@ -237,14 +209,6 @@ MetaLinkInstaller >> linksRegistry [
 ]
 
 { #category : #updating }
-MetaLinkInstaller >> metalinkChanged: aMetaLinkChanged [
-	aMetaLinkChanged isRemove
-		ifTrue: [ ^ self propagateLinkRemoval: aMetaLinkChanged link forNode: aMetaLinkChanged node ].
-	aMetaLinkChanged isAdd
-		ifTrue: [ self propagateLinkAddition: aMetaLinkChanged link forNode: aMetaLinkChanged node ]
-]
-
-{ #category : #updating }
 MetaLinkInstaller >> methodAdded: aMethodAdded [
 	self reinstallPermaLinksForMethod: aMethodAdded methodAdded
 ]
@@ -282,7 +246,8 @@ MetaLinkInstaller >> nodesForPermaLink: permalink toBeInstalledIn: method [
 	| slotOrVar persistenceType nodes |
 	slotOrVar := permalink slotOrVariable.
 	persistenceType := permalink persistenceType.
-	nodes := MetalinkTargetResolver slotOrVarNodesFor: slotOrVar inMethod: method option: persistenceType.
+	nodes := (slotOrVar accessingNodesFor: persistenceType) asIdentitySet 
+					select: [ :node | node methodNode method = method ].
 	^ nodes select: [ :node | node hasLinks not or: [ (node links includes: permalink link) not ] ]
 ]
 
@@ -323,7 +288,7 @@ MetaLinkInstaller >> registerAndInstallPermaLink: aPermaLink forTarget: aSlotOrV
 		
 	linksRegistry registerPermaLink: aPermaLink.
 	
-	nodes := MetalinkTargetResolver resolveASTLookupFor: aSlotOrVar option: aPermaLink persistenceType.
+	nodes := (aSlotOrVar accessingNodesFor: aPermaLink persistenceType) asIdentitySet.
 	aPermaLink targetObjectOrClass link: aPermaLink link toNodes: nodes
 ]
 
@@ -334,7 +299,8 @@ MetaLinkInstaller >> reinstallPermaLink: permalink onNode: node [
 	permalink isInstanceSpecific
 		ifFalse: [ node link: link.
 			^ self ].
-	instances := (linksRegistry objectsForLink: link) select: [ :i | i class superclass = permalink slotOrVarClass ].
+	instances := (linksRegistry objectsForLink: link)
+		select: [ :i | i originalClass = permalink slotOrVarClass ].
 	instances do: [ :instance | node link: link forObject: instance ]
 ]
 

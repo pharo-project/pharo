@@ -66,7 +66,7 @@ ZipEncoder >> nextBits: nBits put: value [
 ]
 
 { #category : #accessing }
-ZipEncoder >> nextBytePut: anObject [ 
+ZipEncoder >> nextBytePut: anObject [
 	"Primitive. Insert the argument at the next position in the Stream
 	represented by the receiver. Fail if the collection of this stream is not an
 	Array or a String. Fail if the stream is positioned at its end, or if the
@@ -74,11 +74,10 @@ ZipEncoder >> nextBytePut: anObject [
 	of the right type for the collection. Optional. See Object documentation
 	whatIsAPrimitive."
 
-	position >= writeLimit
-		ifTrue: [^ self pastEndPut: anObject]
-		ifFalse: 
-			[position := position + 1.
-			^collection byteAt: position put: anObject]
+	^ position >= writeLimit
+		ifTrue: [ self pastEndPut: anObject ]
+		ifFalse: [ position := position + 1.
+			collection byteAt: position put: anObject ]
 ]
 
 { #category : #initialization }

@@ -2,14 +2,14 @@
 I manage tabs in the browser.
 Any tab in browser is represented by ClyBrowserTool subclasses.
 And my responsibility is to show all appropriate tools which are relevant to the current browser context (state). 
-#updateTools method is doing that. 
+`#updateTools` method is doing that. 
 
 The logic is simple: 
 When selection (browser context) is changed then browser collects new tools which should be opened in that new browser state. 
 Then it removes all old tools and open all new tools. 
 But there is special case when new collected tool is already opened. In that case such new tool will be not used. And existing tool will be not removed. So it will stay opened.
 
-I use #isSimilarTo: tab method to detect that new collected tool is already opened (the browser already shows similar tool).
+I use `#isSimilarTo:` tab method to detect that new collected tool is already opened (the browser already shows similar tool).
 By default #isSimilarTo: simply checks the class of given tool. My subclases should redefine it when they include extra state because otherwise new tool instance will never replace old one (browser will think that it is already opened).
 
 There are cases when existing tools are not closed when selection is changed. For example when method editor is dirty and you select another method.
@@ -30,11 +30,13 @@ Every time user selects new item in the table the browser collects tools which a
 
 So at the end I always select tab with most activation priority which exists in desiredSelection list.
 
-By default activationPriority is equal to #tabOrder which defines general order between tabs.
+By default activationPriority is equal to `#tabOrder` which defines general order between tabs.
 
 My instances are created on the browser: 
 
+```
 	ClyTabManager of: aBrowser
+```	
 "
 Class {
 	#name : #ClyNotebookManager,
@@ -91,22 +93,16 @@ ClyNotebookManager >> addTool: aBrowserTool [
 
 { #category : #updating }
 ClyNotebookManager >> basicUpdateTools [
-	| newTools selectedTools currentTools needsNewSelection selectedIndex |
+		| newTools needsNewSelection selectedTools currentTools |
+		newTools := OrderedCollection new.	
+		browser navigationContextsDo: [ :each | self buildToolsOn: newTools for: each].
+		needsNewSelection := self requiresNewDesiredSelection.
+		selectedTools := self selectedTools.
+		currentTools := tools copy.
 
-	newTools := OrderedCollection new.
-	selectedIndex := self tabMorph selectedPageIndex.	
-	browser navigationContextsDo: [ :each | self buildToolsOn: newTools for: each ].
-	needsNewSelection := self requiresNewDesiredSelection.
-	selectedTools := self selectedTools.
-	currentTools := tools copy.
-	self updateTabsWith: newTools.
-	(needsNewSelection or: [ tools ~= currentTools ]) ifTrue: [ 
-		self restoreSelectedTools: selectedTools.
-		"if we are still in same tab, but we needs to restore tools, we need also to 
-		 force the refresh of the current tab (because sending #selectPageIndex: will 
-		 not refresh it."
-		selectedIndex = self tabMorph selectedPageIndex 
-			ifTrue: [ self tabMorph updatePageIndex: selectedIndex ] ]
+		self updateTabsWith: newTools.
+		(needsNewSelection or: [ tools ~= currentTools ]) 
+			ifTrue: [ self restoreSelectedTools: selectedTools].
 ]
 
 { #category : #accessing }
@@ -271,7 +267,7 @@ ClyNotebookManager >> restoreSelectedTools: selectedTools [
 		ifFalse: [ 
 			"To allow multiple selected tabs by cmd+click on table"
 			mainTool isExtraSelectionRequested 
-				ifTrue: [ extraTools add: mainTool ] ].
+				ifTrue: [ extraTools := extraTools copyWith: mainTool ] ].
 	(tools copyWithout: mainTool) do: [ :currentTool | 
 		"Generally if previously selected extra tab is found in new tools then it should be selected.
 		Other tools should be deselected"

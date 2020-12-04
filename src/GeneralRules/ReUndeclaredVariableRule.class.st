@@ -9,7 +9,7 @@ Class {
 
 { #category : #running }
 ReUndeclaredVariableRule >> basicCheck: aNode [
-	^ aNode isVariable and: [ aNode isUndeclared ]
+	^ aNode isVariable and: [ aNode isUndeclaredVariable ]
 ]
 
 { #category : #helpers }

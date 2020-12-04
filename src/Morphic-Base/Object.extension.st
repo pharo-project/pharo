@@ -25,14 +25,7 @@ Object >> asDraggableMorph [
 Object >> asMorph [
 	"Open a morph, as best one can, on the receiver"
 
-	^ self asStringMorph
-
-	"
-234 asMorph.
-(MenuIcons tinyMenuIcon) asMorph.
-'fred' asMorph.
-"
-
+	^ self asStringMorph 
 
 ]
 
@@ -55,14 +48,14 @@ Object >> asTextMorph [
 { #category : #'*Morphic-Base' }
 Object >> currentEvent [
 	"Answer the current Morphic event.  This method never returns nil."
-	^ActiveEvent ifNil:[self currentHand lastEvent]
+	^ self currentHand lastEvent
 ]
 
 { #category : #'*Morphic-Base' }
 Object >> currentHand [
 	"Return a usable HandMorph -- the one associated with the object's current environment.  This method will always return a hand, even if it has to conjure one up as a last resort.  If a particular hand is actually handling events at the moment (such as a remote hand or a ghost hand), it will be returned."
 
-	^ActiveHand ifNil: [ self currentWorld primaryHand ]
+	^ self currentWorld primaryHand
 ]
 
 { #category : #'*Morphic-Base' }

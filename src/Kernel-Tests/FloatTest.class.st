@@ -252,8 +252,7 @@ FloatTest >> testNaN2 [
 	On a big-endian machine (PowerPC), Float nan is 16r7FF80000 16r00000000. Changing
 	the bit pattern of the first word of a NaN produces another value that is still
 	considered equal to NaN. This test should work on both little endian and big
-	endian machines. However, it is not guaranteed to work on future 64 bit versions
-	of Squeak, for which Float may have different internal representations."
+	endian machines. However, it is not guaranteed to work on future 64 bit versions, for which Float may have different internal representations."
 
 	| nan1 nan2 |
 	nan1 := Float nan copy.

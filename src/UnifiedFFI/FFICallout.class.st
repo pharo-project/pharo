@@ -25,7 +25,6 @@ Class {
 		'methodArgs',
 		'receiver',
 		'method',
-		'resolutionMode',
 		'stringEncodingStrategy'
 	],
 	#classVars : [
@@ -400,9 +399,9 @@ FFICallout >> resolveUntypedArgument: anArgument [
 { #category : #accessing }
 FFICallout >> sender: aSenderContext [
 	| nArgs |
-	self requestor: aSenderContext method methodClass.
-	nArgs := aSenderContext method numArgs.
-	methodArgs := aSenderContext method argumentNames.
+	self requestor: aSenderContext compiledCode method methodClass.
+	nArgs := aSenderContext compiledCode method numArgs.
+	methodArgs := aSenderContext compiledCode method argumentNames.
 	self receiver: aSenderContext receiver.
 	self assert: (methodArgs size = nArgs).
 

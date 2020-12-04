@@ -80,7 +80,7 @@ OCPragmaTest >> testDoublePragma [
 ]
 
 { #category : #testing }
-OCPragmaTest >> testIsPrimitve [
+OCPragmaTest >> testIsPrimitive [
 	| aRBMethode |
 
 	aRBMethode := OpalCompiler new parse: self methodPrimitive.

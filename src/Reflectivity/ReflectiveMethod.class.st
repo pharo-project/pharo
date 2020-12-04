@@ -13,7 +13,6 @@ Class {
 	#type : #variable,
 	#instVars : [
 		'ast',
-		'class',
 		'compiledMethod',
 		'linkCount'
 	],
@@ -48,7 +47,6 @@ ReflectiveMethod >> compiledMethod [
 ReflectiveMethod >> compiledMethod: aCompiledMethod [
 
 	compiledMethod := aCompiledMethod.
-	class := aCompiledMethod methodClass.
 	ast := compiledMethod ast
 ]
 
@@ -94,9 +92,9 @@ ReflectiveMethod >> generatePrimitiveWrapper [
 	wrappedMethod := ast generate: compiledMethod trailer.
 	
 	send := RBMessageNode
-		receiver: RBSelfNode new
+		receiver: RBVariableNode selfNode
 		selector:  #rFwithArgs:executeMethod:
-		arguments: {RBArrayNode statements: ast arguments . (RFLiteralVariableNode value: wrappedMethod)}.
+		arguments: {RBArrayNode statements: ast arguments . (RBLiteralNode value: wrappedMethod)}.
 	
 	assignmentNode := RBAssignmentNode 
 		variable: (RBVariableNode named: #RFReifyValueVar)
@@ -165,16 +163,13 @@ ReflectiveMethod >> installCompiledMethod [
 ReflectiveMethod >> installLink: aMetaLink [
 	self increaseLinkCount.
 	(self ast hasOption: #optionCompileOnLinkInstallation for: aMetaLink) 
-		ifTrue: [ self compileAndInstallCompiledMethod ].
-	aMetaLink announceChange
+		ifTrue: [ self compileAndInstallCompiledMethod ]
 ]
 
 { #category : #invalidate }
 ReflectiveMethod >> installMethod: aMethod [
-	| selector |
-	selector := aMethod selector.
-	"add to method dictionary."
-	class methodDict at: selector put: aMethod.
+	"add to method dictionary"
+	ast methodClass methodDict at: aMethod selector put: aMethod
 ]
 
 { #category : #invalidate }
@@ -230,7 +225,7 @@ ReflectiveMethod >> printOn: aStream [
 	"Overrides method inherited from the byte arrayed collection."
 
 	aStream 
-		print: class; 
+		print: ast methodClass; 
 		nextPutAll: '>>'; 
 		store: self selector; 
 		nextPutAll: ' (ReflectiveMethod)'.
@@ -245,6 +240,7 @@ ReflectiveMethod >> recompileAST [
 		astTranslatorClass: RFASTTranslator.
 	ast doSemanticAnalysis. "force semantic analysis"
 	compiledMethod := ast generate: compiledMethod trailer.
+	ast compilationContext compiledMethod: compiledMethod.
 	compiledMethod reflectiveMethod: self.
 ]
 
@@ -259,8 +255,7 @@ ReflectiveMethod >> removeLink: aMetaLink [
 		ifTrue: [ self compileAndInstallCompiledMethod ]
 		ifFalse: [ compiledMethod invalidate ].
 	self decreaseLinkCount.
-	self linkCount = 0 ifTrue: [ self destroyTwin ].
-	aMetaLink announceChange		
+	self linkCount = 0 ifTrue: [ self destroyTwin ]
 ]
 
 { #category : #evaluation }
@@ -322,9 +317,9 @@ ReflectiveMethod >> spotterMethodClassFor: aStep [
 ]
 
 { #category : #spotter }
-ReflectiveMethod >> spotterPreviewCodeIn: aComposite [
+ReflectiveMethod >> spotterPreviewIn: aComposite [
 	<spotterPreview: 10>
-	self compiledMethod spotterPreviewCodeIn: aComposite
+	self compiledMethod spotterPreviewIn: aComposite
 ]
 
 { #category : #spotter }

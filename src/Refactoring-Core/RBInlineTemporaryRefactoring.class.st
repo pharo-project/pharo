@@ -75,7 +75,7 @@ RBInlineTemporaryRefactoring >> replaceAssignment [
 { #category : #transforming }
 RBInlineTemporaryRefactoring >> replaceReferences [
 	| rewriter |
-	rewriter := RBParseTreeRewriter new.
+	rewriter := self parseTreeRewriter.
 	rewriter replaceTree: assignmentNode variable
 		withTree: assignmentNode value.
 	definingNode removeTemporaryNamed: assignmentNode variable name.

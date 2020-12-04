@@ -36,7 +36,7 @@ SpMorphicAdapterTestCase >> initializeTestedInstance [
 SpMorphicAdapterTestCase >> openInstance [
 
 	window ifNil: [ window := presenter openWithSpec ].
-	self currentWorld doOneCycle.
+	MorphicRenderLoop new doOneCycle.
 ]
 
 { #category : #private }
@@ -77,6 +77,6 @@ SpMorphicAdapterTestCase >> widget [
 	The action should have been correctly configured before
 	depending on the spec initialization strategy"
 	self openInstance.
-	self currentWorld doOneCycle.
+	MorphicRenderLoop new doOneCycle.
 	^ self adapter widget
 ]

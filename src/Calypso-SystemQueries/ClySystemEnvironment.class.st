@@ -66,6 +66,11 @@ ClySystemEnvironment >> asGlobalScopeIn: aNavigationEnvironment [
 	^ClySystemEnvironmentScope of: self in: aNavigationEnvironment named: name
 ]
 
+{ #category : #converting }
+ClySystemEnvironment >> asRBEnvironment [
+	^ self environment asRBEnvironment
+]
+
 { #category : #'class management' }
 ClySystemEnvironment >> bindingOf: aSymbol [
 	^globals bindingOf: aSymbol
@@ -105,7 +110,7 @@ ClySystemEnvironment >> classes [
 	^ globals allClassesAndTraits
 ]
 
-{ #category : #'class compilation' }
+{ #category : #compiling }
 ClySystemEnvironment >> compileANewClassFrom: aString notifying: aController startingFrom: aClass [
 	" Copied from Browser "
 
@@ -114,6 +119,10 @@ ClySystemEnvironment >> compileANewClassFrom: aString notifying: aController sta
 	aController."
 
 	| oldClass class newClassName defTokens keywdIx classCompiler |
+	"for now make it work!"
+	ClassDefinitionPrinter showFluidClassDefinition
+		ifTrue: [ ^ self defineNewClassFrom: aString notifying: aController  startingFrom: aClass ].
+	self flag: #todo. "What horrible horrible logic."
 	oldClass := aClass.
 	defTokens := aString findTokens: Character separators.
 	((defTokens first = 'Trait' and: [ defTokens second = 'named:' ])
@@ -148,7 +157,9 @@ Is this really what you want to do?') asText
 		source: aString;
 		requestor: aController;
 		logged: true;
-		evaluate] on: OCUndeclaredVariableWarning do: [ 
+		evaluate] on: OCUndeclaredVariableWarning do: [ :ex | 
+			"we are only interested in class definitions"
+			ex compilationContext noPattern ifFalse: [ex pass ].
  			"Undeclared Vars should not lead to the standard dialog to define them but instead should not accept"
  			self inform: 'Undeclared Variable in Class Definition' . ^nil ].
 	^ class isBehavior
@@ -166,9 +177,38 @@ ClySystemEnvironment >> defaultClassCompiler [
 	^self class compiler
 ]
 
+{ #category : #compiling }
+ClySystemEnvironment >> defineNewClassFrom: aString notifying: aController startingFrom: aClass [
+	"Precondition: aString is a fluid class"
+
+	| class classCompiler |
+	"the logic of erasing an existing class will be added back later."
+	aClass
+		ifNil: [ classCompiler := self defaultClassCompiler ]
+		ifNotNil: [ classCompiler := aClass superclass subclassDefinerClass new ].
+	[class := classCompiler
+		"for now a super ugly patch"
+		source: '(', aString ,') install';
+		requestor: aController;
+		logged: true;
+		evaluate] on: OCUndeclaredVariableWarning do: [ :ex | 
+			"we are only interested in class definitions"
+			ex compilationContext noPattern ifFalse: [ex pass ].
+ 			"Undeclared Vars should not lead to the standard dialog to define them but instead should not accept"
+ 			self inform: 'Undeclared Variable in Class Definition' . ^nil ].
+	^ class isBehavior
+		ifTrue: [ class ]
+		ifFalse: [ nil ]
+]
+
 { #category : #'package management' }
 ClySystemEnvironment >> ensureExistAndRegisterPackageNamed: packageName [
 	^packageOrganizer ensureExistAndRegisterPackageNamed: packageName
+]
+
+{ #category : #accessing }
+ClySystemEnvironment >> environment [
+	^ RBBrowserEnvironment new
 ]
 
 { #category : #accessing }

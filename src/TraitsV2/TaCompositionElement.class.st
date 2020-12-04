@@ -83,8 +83,8 @@ TaCompositionElement >> dealiasSelector: oldSelector [
 	"Usefule to dealias the initialize selector. Used mostly with stateful Talents"
 
 	^ oldSelector = self initializeSelectorForMe
-		ifTrue: [ ^ #initializeTalent ]
-		ifFalse: [ ^ oldSelector ]
+		ifTrue: [ #initializeTalent ]
+		ifFalse: [ oldSelector ]
 ]
 
 { #category : #comparing }
@@ -140,7 +140,7 @@ TaCompositionElement >> selectors [
 	" I get all the selectors of the methods in this talent, if there is a #initializeTalent selector I rename it to #initializeTalent_NameOfTalent"
 
 	| originals |
-	originals := self methods collect: #selector.
+	originals := self methods collect: [:each | each selector].
 	^ (originals includes: #initializeTalent)
 		ifTrue: [ (originals reject: [ :e | e = #initializeTalent ]) copyWith: self initializeSelectorForMe ]
 		ifFalse: [ originals ]

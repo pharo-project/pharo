@@ -10,7 +10,13 @@ Class {
 	#category : #'Polymorph-Widgets-Announcements'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
+ExpanderMorphAnnouncement class >> isAbstract [ 
+
+	 ^self == ExpanderMorphAnnouncement
+]
+
+{ #category : #'instance creation' }
 ExpanderMorphAnnouncement class >> on: anExpanderMorph [
 	"Answer a new announcement for the given expander."
 

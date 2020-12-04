@@ -10,9 +10,6 @@ Internal Representation and Key Implementation Points.
 Class {
 	#name : #ClyCriticContext,
 	#superclass : #ClyBrowserContext,
-	#instVars : [
-		'analyzedObject'
-	],
 	#category : #'Calypso-SystemPlugins-Critic-Browser'
 }
 

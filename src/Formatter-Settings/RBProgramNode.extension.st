@@ -23,7 +23,7 @@ RBProgramNode class >> settingsOn: aBuilder [
 		domainValues: self formatters; 
 		label: 'Default Formatter';
 		order: 0;
-		default: (Smalltalk at: #BIConfigurableFormatter);
+		default: (Smalltalk at: #EFFormatter);
 		description: 'To set the default code formatter.';
 		parent: #codeFormatters
 ]

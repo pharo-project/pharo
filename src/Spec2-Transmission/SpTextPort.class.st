@@ -1,5 +1,10 @@
 "
-I define an incomming transmission to modify the text of a text style presenter (input fields or text areas).
+! Text Input Port (==SpTextPort==)
+A """"text input port"""" define an incomming transmission to modify the text of a text presenter (input fields or text areas).
+
+The presenter exposing a text input port need to define also the method ==#text:==.
+
+Presenters exposing this port: *class:SpAbstractTextPresenter* subclasses.
 "
 Class {
 	#name : #SpTextPort,

@@ -13,6 +13,13 @@ Class {
 	#category : #'OpalCompiler-Tests-Source'
 }
 
+{ #category : #accessing }
+OCSourceCode2BytecodeTest class >> classVar [
+
+	 ^ClassVar
+
+]
+
 { #category : #compiling }
 OCSourceCode2BytecodeTest >> compile2method: sourceStream [ 
 			"Compile code without logging the source in the changes file"
@@ -21,6 +28,12 @@ OCSourceCode2BytecodeTest >> compile2method: sourceStream [
 						class: self class;			
 						compile.
 		
+]
+
+{ #category : #accessing }
+OCSourceCode2BytecodeTest >> instVar [
+
+	^ instVar
 ]
 
 { #category : #tests }
@@ -610,6 +623,9 @@ OCSourceCode2BytecodeTest >> testReturnReceiver [
 { #category : #tests }
 OCSourceCode2BytecodeTest >> testReturnTopFromBlock [
 	| selector method scanner |
+	
+	"Only Valid if we have inlined closures in the method"
+	CompilationContext optionFullBlockClosure ifTrue: [ ^ self skip ].
 	
 	selector := (method := self compile2method: 'returnTopFromBlock |ia| ^[ia]') selector.
 	scanner := InstructionStream on: method.

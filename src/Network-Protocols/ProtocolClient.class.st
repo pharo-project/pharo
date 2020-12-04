@@ -43,14 +43,12 @@ ProtocolClient class >> openOnHostNamed: hostName [
 
 	| i |
 	i := hostName indexOf: $:.
-	i = 0 ifTrue: [
-			^self openOnHostNamed: hostName port: self defaultPortNumber]
-		ifFalse: [
-			| s p | 
+	^ i = 0
+		ifTrue: [ self openOnHostNamed: hostName port: self defaultPortNumber ]
+		ifFalse: [ | s p |
 			s := hostName truncateTo: i - 1.
 			p := (hostName copyFrom: i + 1 to: hostName size) asInteger.
-			^self openOnHostNamed: s port: p]
-	
+			self openOnHostNamed: s port: p ]
 ]
 
 { #category : #'instance creation' }

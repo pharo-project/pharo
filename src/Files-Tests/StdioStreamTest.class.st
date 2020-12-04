@@ -98,7 +98,7 @@ StdioStreamTest >> testChangePosition [
 	stream := self stdioStream.
 	stream position: 5.
 	self assert: stream position equals: 5.
-	self assert: stream next equals: $5 asciiValue.
+	self assert: stream next equals: $5 asciiValue
 ]
 
 { #category : #tests }
@@ -114,14 +114,14 @@ StdioStreamTest >> testPeek [
 
 	stream := self stdioStream.
 	self assert: stream peek equals: $0 asciiValue.
-	self assert: stream peek equals: stream next.
+	self assert: stream peek equals: stream next
 ]
 
 { #category : #tests }
 StdioStreamTest >> testPosition [
 	"The shared stream should be put back to the start for each test"
 	
-	self assert: self stdioStream position equals: 0.
+	self assert: self stdioStream position equals: 0
 ]
 
 { #category : #tests }

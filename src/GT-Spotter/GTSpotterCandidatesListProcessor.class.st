@@ -17,37 +17,8 @@ Class {
 		'keyBinding',
 		'sortBlock'
 	],
-	#classVars : [
-		'DefaultItemsLimit'
-	],
-	#category : #'GT-Spotter-Processors'
+	#category : #'GT-Spotter-Pragma-Based-Processors'
 }
-
-{ #category : #'accessing-defaults' }
-GTSpotterCandidatesListProcessor class >> defaultItemsLimit [
-
-	^ DefaultItemsLimit ifNil: [ DefaultItemsLimit := 25 ]
-]
-
-{ #category : #'accessing-defaults' }
-GTSpotterCandidatesListProcessor class >> defaultItemsLimit: aValue [
-
-	DefaultItemsLimit := aValue
-]
-
-{ #category : #'accessing-defaults' }
-GTSpotterCandidatesListProcessor class >> settingsOn: aBuilder [
-	<systemsettings>
-
-	(aBuilder setting: #defaultItemsLimit)
-		target: self;
-		parent: #gtspotter;
-		label: 'Number of results per category';
-		default: 25;
-		order: 100;
-		description:
-			'Number of results per category to show in Spotter'
-]
 
 { #category : #accessing }
 GTSpotterCandidatesListProcessor >> actLogic [

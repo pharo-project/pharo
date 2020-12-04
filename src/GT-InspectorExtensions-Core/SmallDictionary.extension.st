@@ -2,7 +2,6 @@ Extension { #name : #SmallDictionary }
 
 { #category : #'*GT-InspectorExtensions-Core' }
 SmallDictionary >> gtInspectorItemsIn: composite [
-
 	^ composite fastTable
 		title: 'Items';
 		display: [ self associations ];
@@ -16,22 +15,16 @@ SmallDictionary >> gtInspectorItemsIn: composite [
 		column: 'Value' evaluated: [ :each | GTObjectPrinter asTruncatedTextFrom: each value ];
 		selectionAct: [ :table | 
 			table rawSelection do: [ :assoc | self removeKey: assoc key ].
-			table update
-			]
+			table update ]
 			entitled: 'Remove item(s)';
-		selectionPopulate: #selection
-			entitled: 'Open key'
-			with: [ :table | ( table rawSelection collect: #key ) gtInspectorInterestingObject ];
+		selectionPopulate: #selection entitled: 'Open key' with: [ :table | (table rawSelection collect: [:each | each key]) gtInspectorInterestingObject ];
 		beMultiple;
 		send: [ :selection | 
 			"withSmalltalkSearch;
 		showOnly: 50;
 		helpMessage: 'Quick selection field. Given your INPUT, it executes: self select: [:each | INPUT ]'"
 			selection
-				ifNil: [ nil ]
 				ifNotNil: [ selection size = 1
 						ifTrue: [ selection anyOne value ]
-						ifFalse: [ selection collect: #value ]
-					]
-			]
+						ifFalse: [ selection collect: #value ] ] ]
 ]

@@ -1,5 +1,17 @@
 "
 Checks that all temporaries are assigned before they are used. This can help find possible paths through the code where a variable might be unassigned when it is used.
+
+The rule detects, for example, when the assignment is done in a block that might not be executed. 
+
+exampleMethod
+	| temp |
+	self doSomething: [ temp := 1].
+	^temp.
+
+As the rule can not know about the semantics of the method doSomething:, it assumes the block will not
+be exected.
+
+NOTE: This rule detects *many* false positives.
 "
 Class {
 	#name : #ReTempsReadBeforeWrittenRule,
@@ -31,5 +43,5 @@ ReTempsReadBeforeWrittenRule >> group [
 
 { #category : #accessing }
 ReTempsReadBeforeWrittenRule >> name [
-	^ 'Temporaries read before written'
+	^ 'Temporaries may be read before written'
 ]

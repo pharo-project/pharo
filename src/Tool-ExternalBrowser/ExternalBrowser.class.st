@@ -116,7 +116,7 @@ ExternalBrowser >> classesOfPackage: aPackage [
 	| theClasses |
 	theClasses := aPackage classes.
 	^ self showClassSide state
-		ifTrue: [ theClasses collect: #classSide ]
+		ifTrue: [ theClasses collect: [:each | each classSide] ]
 		ifFalse: [ theClasses ]
 ]
 
@@ -284,7 +284,7 @@ ExternalBrowser >> selectorsOfProtocol: aProtocol [
 		ifFalse: [ self classes selectedItem ]
 		ifTrue: [ self classes selectedItem classSide ].
 	^ (theSelectedClass 
-		methodsInProtocol: self protocols selectedItem) collect: #selector
+		methodsInProtocol: self protocols selectedItem) collect: [:each | each selector]
 ]
 
 { #category : #'structure accessing' }

@@ -435,7 +435,7 @@ RPackage >> classNamesForClassTag: aSymbol [
 
 { #category : #'class tags' }
 RPackage >> classTagCategoryNames [
-	^ (Set with: self packageName), (self classTags collect: #categoryName).
+	^ (Set with: self packageName), (self classTags collect: [:each | each categoryName]).
 ]
 
 { #category : #'class tags' }
@@ -732,7 +732,13 @@ RPackage >> extensionsForTag: aRPackageTag [
 
 	^ self extensionMethods select: [ :extensionMethod | | category |
 		category := extensionMethod protocol allButFirst.
-		self category:  category matches: aRPackageTag categoryName ]
+		self category: category matches: aRPackageTag categoryName ]
+]
+
+{ #category : #properties }
+RPackage >> hasProperty: aKey [
+	self propertyAt: aKey ifAbsent: [ ^ false ].
+	^ true
 ]
 
 { #category : #accessing }
@@ -810,6 +816,13 @@ RPackage >> includesClassTagNamed: aString [
 ]
 
 { #category : #testing }
+RPackage >> includesClassesAffectedBy: aSystemAnnouncement [
+
+	^(aSystemAnnouncement affectsClassesDefinedInPackage: self)
+		or: [ aSystemAnnouncement affectsClassesExtendedInPackage: self ]
+]
+
+{ #category : #testing }
 RPackage >> includesDefinedSelector: aSelector ofClass: aClass [
 	"Return true if the receiver includes the method of selector aSelector. Only checks methods defined in this package"
 	
@@ -868,6 +881,12 @@ RPackage >> includesMethodCategory: categoryName ofClass: aClass [
 	^ (self isYourClassExtension: categoryName)
 		or: [(self includesClass: aClass)
 				and: [(self isForeignClassExtension: categoryName) not]]
+]
+
+{ #category : #testing }
+RPackage >> includesMethodsAffectedBy: aSystemAnnouncement [
+
+	^aSystemAnnouncement affectsMethodsDefinedInPackage: self
 ]
 
 { #category : #testing }
@@ -1403,7 +1422,7 @@ RPackage >> renameTo: aSymbol [
 	newName := aSymbol asSymbol.
 	repositoryGroup := self mcPackage workingCopy repositoryGroup.
 	self organizer validatePackageDoesNotExist: aSymbol.
-	oldCategoryNames := (self classTags collect: #categoryName as: Set)
+	oldCategoryNames := (self classTags collect: [:each | each categoryName] as: Set)
 		add: self name;
 		difference: {newName}.
 	self name: aSymbol.

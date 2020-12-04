@@ -28,7 +28,6 @@ ClassDescription >> banLevelCandidates [
 
 { #category : #'*renraku' }
 ClassDescription >> critiques [
-	<eProperty>
 	^ ReCriticEngine critiquesOf: self
 ]
 

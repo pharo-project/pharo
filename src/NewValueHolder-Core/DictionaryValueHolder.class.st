@@ -42,6 +42,12 @@ DictionaryValueHolder >> doesNotUnderstand: aMessage [
 		ifFalse: [ super doesNotUnderstand: aMessage ]
 ]
 
+{ #category : #private }
+DictionaryValueHolder >> errorKeyNotFound: aKey [
+
+	KeyNotFound signalFor: aKey
+]
+
 { #category : #protocol }
 DictionaryValueHolder >> fillFrom: aCollection with: aBlock [
 	"Evaluate aBlock with each of aCollections's elements as the argument.  

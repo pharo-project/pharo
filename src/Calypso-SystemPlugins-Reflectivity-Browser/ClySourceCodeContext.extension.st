@@ -11,6 +11,6 @@ ClySourceCodeContext >> isSelectedItemHasExecutionCounter [
 ]
 
 { #category : #'*Calypso-SystemPlugins-Reflectivity-Browser' }
-ClySourceCodeContext >> isSelectedItemHasWatchpoint [
-	^selectedSourceNode hasWatchpoint
+ClySourceCodeContext >> isSelectedItemHasWatch [
+	^selectedSourceNode hasWatch
 ]

@@ -45,7 +45,7 @@ SpApplicationBackend >> adapterBindingsClass [
 SpApplicationBackend >> initialize [
 
 	super initialize.
-	adapterBindings := self adapterBindingsClass new
+	self resetAdapterBindings
 ]
 
 { #category : #accessing }
@@ -72,6 +72,12 @@ SpApplicationBackend >> notifyError: aSpecNotification [
 SpApplicationBackend >> notifyInfo: aSpecNotification [
 
 	self subclassResponsibility
+]
+
+{ #category : #initialization }
+SpApplicationBackend >> resetAdapterBindings [
+
+	adapterBindings := self adapterBindingsClass new
 ]
 
 { #category : #'ui dialogs' }

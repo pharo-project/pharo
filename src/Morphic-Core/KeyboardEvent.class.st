@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'keyValue',
 		'charCode',
-		'scanCode'
+		'scanCode',
+		'key'
 	],
 	#category : #'Morphic-Core-Events'
 }
@@ -81,7 +82,12 @@ KeyboardEvent >> isUserInterrupt [
 
 { #category : #keyboard }
 KeyboardEvent >> key [
-	^Smalltalk os keyForValue: keyValue
+	^ key ifNil: [key := Smalltalk os keyForValue: keyValue]
+]
+
+{ #category : #keyboard }
+KeyboardEvent >> key: aKeyboardKey [
+	key := aKeyboardKey
 ]
 
 { #category : #keyboard }

@@ -12,7 +12,7 @@ Class {
 		'head',
 		'tail'
 	],
-	#category : #'Collections-DoubleLinkedList'
+	#category : #'Collections-DoubleLinkedList-Base'
 }
 
 { #category : #adding }
@@ -123,14 +123,22 @@ DoubleLinkedList >> do: block [
 
 { #category : #private }
 DoubleLinkedList >> emptyCheck [
+
 	self isEmpty
 		ifTrue: [ CollectionIsEmpty signalWith: self ]
 ]
 
+{ #category : #private }
+DoubleLinkedList >> errorEmptyCollection [
+	"Signal a CollectionIsEmpty exception"
+	
+	CollectionIsEmpty signalWith: self 
+]
+
 { #category : #accessing }
 DoubleLinkedList >> first [
-	"Returnt the first element that I hold, also known as my head value.
-	Signal a CollectionIsEmpty excpetion when I am empty."
+	"Return the first element that I hold, also known as my head value.
+	Signal a CollectionIsEmpty exception when I am empty."
 	
 	self emptyCheck.
 	^ head value
@@ -138,7 +146,7 @@ DoubleLinkedList >> first [
 
 { #category : #accessing }
 DoubleLinkedList >> firstLink [
-	"Returnt the first link that I hold, also known as my head.
+	"Return the first link that I hold, also known as my head.
 	Signal a CollectionIsEmpty excpetion when I am empty."
 	
 	self emptyCheck.
@@ -163,7 +171,7 @@ DoubleLinkedList >> isEmpty [
 
 { #category : #accessing }
 DoubleLinkedList >> last [
-	"Returnt the last element that I hold, also known as my tail value.
+	"Return the last element that I hold, also known as my tail value.
 	Signal a CollectionIsEmpty excpetion when I am empty."
 	
 	self emptyCheck.
@@ -172,7 +180,7 @@ DoubleLinkedList >> last [
 
 { #category : #accessing }
 DoubleLinkedList >> lastLink [
-	"Returnt the last link that I hold, also known as my tail.
+	"Return the last link that I hold, also known as my tail.
 	Signal a CollectionIsEmpty excpetion when I am empty."
 	
 	self emptyCheck.
@@ -214,7 +222,7 @@ DoubleLinkedList >> removeAll [
 { #category : #removing }
 DoubleLinkedList >> removeFirst [
 	"Remove my first element.
-	Signal a CollectionIsEmpty excpetion when I am empty.
+	Signal a CollectionIsEmpty exception when I am empty.
 	Return the removed internal link."
 	
 	| link |
@@ -231,7 +239,7 @@ DoubleLinkedList >> removeFirst [
 { #category : #removing }
 DoubleLinkedList >> removeLast [
 	"Remove my last element.
-	Signal a CollectionIsEmpty excpetion when I am empty.
+	Signal a CollectionIsEmpty exception when I am empty.
 	Return the removed internal link."
 
 	| link |

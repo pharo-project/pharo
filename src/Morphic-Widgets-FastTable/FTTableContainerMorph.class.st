@@ -437,17 +437,18 @@ FTTableContainerMorph >> updateExposedRows [
 	columnWidths := self calculateColumnWidths.
 
 	exposedRows := SmallDictionary new.
-	startIndex to: ((startIndex + visibleRows - 1) min: self table numberOfRows) do: [ :rowIndex | 
-		| row |
-		row := FTTableRowMorph table: self table.
-		(self exposedColumnsRange: columnWidths) do: [ :columnIndex | | cell |
-			cell := (self table dataSource 
-				cellColumn: (columns at: columnIndex)
-				row: rowIndex).  
-			cell width: (columnWidths at: columnIndex).
-			row addMorphBack: cell ].
-		row privateOwner: self.
-		exposedRows at: rowIndex put: row ]
+	startIndex to: (startIndex + visibleRows - 1) do: [ :rowIndex | 
+		(self table dataSource hasElementAt: rowIndex) ifTrue: [ 
+			| row |
+			row := FTTableRowMorph table: self table.
+			(self exposedColumnsRange: columnWidths) do: [ :columnIndex | | cell |
+				cell := (self table dataSource 
+					cellColumn: (columns at: columnIndex)
+					row: rowIndex).  
+				cell width: (columnWidths at: columnIndex).
+				row addMorphBack: cell ].
+			row privateOwner: self.
+			exposedRows at: rowIndex put: row ] ]
 ]
 
 { #category : #updating }

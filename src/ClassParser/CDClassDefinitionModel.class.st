@@ -1,8 +1,10 @@
 "
-| code |
-code := Point definitionForNautilus.
+I'm a simple object holding a code piece.
 
-TextModel new
+```
+| code |
+code := Point definition.
+CDClassDefinitionModel new
 	text: code;
 	title: 'Test';
 	beForCode;
@@ -10,6 +12,7 @@ TextModel new
 	aboutToStyle: true;
 	owner: (CDClassDefinitionModel new code: code);
 	openWithSpec
+```
 "
 Class {
 	#name : #CDClassDefinitionModel,

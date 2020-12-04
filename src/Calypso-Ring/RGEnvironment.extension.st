@@ -26,6 +26,15 @@ RGEnvironment >> at: aSymbol [
 ]
 
 { #category : #'*Calypso-Ring' }
+RGEnvironment >> at: aString ifAbsent: aBlockClosure [ 
+	| association |
+	association := self bindingOf: aString.
+	^ association 
+		ifNotNil: [ association value ]
+		ifNil: aBlockClosure
+]
+
+{ #category : #'*Calypso-Ring' }
 RGEnvironment >> bindings [
 
 	"TODO:"
@@ -66,10 +75,23 @@ RGEnvironment >> browseAs: browserTitleString [
 ]
 
 { #category : #'*Calypso-Ring' }
+RGEnvironment >> classNamed: aString [ 
+	| association |
+	association := self bindingOf: aString.
+	^ association ifNotNil: [ association value ]
+		ifNil: [ self error: 'Class "', aString, '" not found' ] 
+]
+
+{ #category : #'*Calypso-Ring' }
 RGEnvironment >> classNames [
 
-	"TODO:"
-	^ self allClasses collect: #name.
+	^ self allClasses collect: [ :each | each name ].
+]
+
+{ #category : #'*Calypso-Ring' }
+RGEnvironment >> defineClass: aString withController: anObject [ 
+	^ self compileANewClassFrom: aString notifying: nil startingFrom: nil
+
 ]
 
 { #category : #'*Calypso-Ring' }
@@ -77,4 +99,9 @@ RGEnvironment >> nonClassNames [
 
 	"TODO:"
 	^ #()
+]
+
+{ #category : #'*Calypso-Ring' }
+RGEnvironment >> systemDictionary [
+	^ self
 ]

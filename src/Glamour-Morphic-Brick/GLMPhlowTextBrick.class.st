@@ -47,6 +47,11 @@ GLMPhlowTextBrick >> installEntity [
 	
 ]
 
+{ #category : #menus }
+GLMPhlowTextBrick >> menu [
+	^ nil
+]
+
 { #category : #'instance creation' }
 GLMPhlowTextBrick >> newTextBrick [
 

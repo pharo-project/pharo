@@ -9,31 +9,35 @@ supplied the same literal expression.
 
 For example, a method foo: anArg
 
+```
 foo: anArg
 	anArg doSomething.
+```
 
 and all senders supply the same argument: 	     
 
+```
 method1
 	anObject foo: 'text'.
 
 method2
 	anObject foo: 'text'.
-	
+```	
 the method argument can be inlined:
 
+```
 foo
  | anArg |
  anArg := 'text'.
 	anArg doSomething.
+```
 
 and the callers just call the method without any arguments:
+
+```
 method1
 	anObject foo.
-
-method1
-	anObject foo.
-
+```
 "
 Class {
 	#name : #RBInlineParameterRefactoring,

@@ -65,6 +65,12 @@ SpCollectionListModel >> collection: anObject [
 		newValue: collection)
 ]
 
+{ #category : #testing }
+SpCollectionListModel >> hasElementAt: index [
+
+	^ self size >= index
+]
+
 { #category : #accessing }
 SpCollectionListModel >> indexOf: anIndex ifAbsent: aBlock [
 
@@ -85,7 +91,8 @@ SpCollectionListModel >> items [
 
 { #category : #refreshing }
 SpCollectionListModel >> refreshList [
-	self sortingBlock ifNotNil: [ :aSortFunction | collection sort: aSortFunction ]
+
+	self sortingBlock ifNotNil: [ :aSortFunction | collection := collection sorted: aSortFunction ]
 ]
 
 { #category : #collection }
@@ -129,5 +136,6 @@ SpCollectionListModel >> whenChangedDo: aBlock [
 
 { #category : #events }
 SpCollectionListModel >> whenSortingBlockChangedDo: aBlock [
+
 	self property: #sorting whenChangedDo: aBlock
 ]

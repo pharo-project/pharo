@@ -15,7 +15,6 @@ CompiledMethod >> isBigLiteralMethod [
 
 { #category : #'*Calypso-SystemQueries' }
 CompiledMethod >> isLiteralMethod [
-	"#[32 124] means pushConstant: x, returnTop" 
 
-	^ self bytecode = #[32 124]
+	^ self bytecode = self encoderClass literalMethodBytecodes
 ]

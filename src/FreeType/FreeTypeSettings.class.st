@@ -222,15 +222,17 @@ FreeTypeSettings >> hintingSymbol [
 { #category : #accessing }
 FreeTypeSettings >> hintingSymbol: aSymbol [
 	"#Full, #Light, #Normal or #None"
+
 	monoHinting := aSymbol = #Full.
 	lightHinting := aSymbol = #Light.
-	hinting := monoHinting or:[lightHinting or:[aSymbol = #Normal]].
+	hinting := monoHinting or: [ lightHinting or: [ aSymbol = #Normal ] ].
 	FreeTypeCache current removeAll.
-	FreeTypeFont allSubInstances do:[:each | each clearCachedMetrics].
-	Paragraph allSubInstances do:[:each | each composeAll].
-	self currentWorld restoreMorphicDisplay.
-
-
+	FreeTypeFont allSubInstances do:[:each | each clearCachedMetrics ].
+	
+	self flag: #DEPENDENCY. "This is a hidden dependency on morphic :("
+	self class environment 
+		at: #Paragraph
+		ifPresent: [ :aClass | aClass refreshAllCompositions ]
 ]
 
 { #category : #accessing }

@@ -26,8 +26,7 @@ ReConsistencyCheckRule >> initialize [
 		'`@object size == 0'
 		'`@object size = 0'
 		'`@object size > 0'
-		'`@object size >= 1'
-		'`@collection at: `@collection size' )
+		'`@object size >= 1')
 		
 ]
 

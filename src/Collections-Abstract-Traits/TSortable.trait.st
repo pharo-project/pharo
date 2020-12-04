@@ -9,7 +9,7 @@ To get the behavior I define, my users should implement:
 "
 Trait {
 	#name : #TSortable,
-	#category : #'Collections-Abstract-Traits'
+	#category : #'Collections-Abstract-Traits-Base'
 }
 
 { #category : #sorting }

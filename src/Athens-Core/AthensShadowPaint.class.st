@@ -74,8 +74,7 @@ AthensShadowPaint >> color: aColor [
 
 { #category : #initialization }
 AthensShadowPaint >> initialize [
-	super initialize.
-	
+	super initialize.	
 	self setDefaults
 ]
 

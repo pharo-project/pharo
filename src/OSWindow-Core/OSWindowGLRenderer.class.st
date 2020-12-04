@@ -18,7 +18,7 @@ OSWindowGLRenderer >> asCurrentDo: aBlock [
 
 { #category : #'context activation' }
 OSWindowGLRenderer >> asCurrentDo: aBlock ifFailure: aFailureBlock [
-	^ self withWindow: window do: aBlock ifFailure: aFailureBlock
+	^ self withWindow: backendWindow do: aBlock ifFailure: aFailureBlock
 ]
 
 { #category : #misc }
@@ -29,7 +29,7 @@ OSWindowGLRenderer >> getProcAddress: procName [
 
 { #category : #misc }
 OSWindowGLRenderer >> makeCurrent [
-	^ self makeCurrent: window
+	^ self makeCurrent: backendWindow
 ]
 
 { #category : #misc }
@@ -39,7 +39,7 @@ OSWindowGLRenderer >> makeCurrent: aWindow [
 
 { #category : #misc }
 OSWindowGLRenderer >> swapBuffers [
-	^ self swapBuffers: window
+	^ self swapBuffers: backendWindow
 ]
 
 { #category : #misc }

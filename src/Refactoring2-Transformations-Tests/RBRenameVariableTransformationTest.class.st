@@ -20,7 +20,7 @@ RBRenameVariableTransformationTest >> testClassVariable [
 	self assert: (class theMetaClass parseTreeFor: #initializeAfterLoad1) 
 		  equals: (self parseMethod: 
 				'initializeAfterLoad1
-					RSR := RBParseTreeSearcher new.
+					RSR := self parseTreeSearcher.
 					RSR addMethodSearches: #(''`@methodName: `@args | `@temps | self `@methodName: `@args'' ''`@methodName: `@args | `@temps | ^self `@methodName: `@args'')
 						-> [:aNode :answer | true]').
 	self assert: (class theMetaClass parseTreeFor: #nuke) 

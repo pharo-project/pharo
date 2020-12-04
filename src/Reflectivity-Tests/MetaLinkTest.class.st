@@ -4,7 +4,7 @@ Tests for MetaLink
 Class {
 	#name : #MetaLinkTest,
 	#superclass : #TestCase,
-	#category : #'Reflectivity-Tests'
+	#category : #'Reflectivity-Tests-Base'
 }
 
 { #category : #'tests - misc' }
@@ -36,7 +36,7 @@ MetaLinkTest >> testConditionLink [
 ]
 
 { #category : #'tests - simple' }
-MetaLinkTest >> testCotrolInstead [
+MetaLinkTest >> testControlInstead [
 	| link |
 	link := MetaLink new
 		metaObject: [ 1 + 2 ];
@@ -48,7 +48,7 @@ MetaLinkTest >> testCotrolInstead [
 ]
 
 { #category : #'tests - simple' }
-MetaLinkTest >> testCotrolLink [
+MetaLinkTest >> testControlLink [
 	| link |
 	link := MetaLink new
 		metaObject: [ 1 + 2 ];

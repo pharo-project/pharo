@@ -10,16 +10,24 @@ And an option for requesting the new method selector.
 For all selected classes a method implementing the original method is created, and if the original code uses some references to self, a parameter needs to be added to provided the former implementor.
 
 For example, moving the method #isBlack from class Color to its instvar #rgb for the type ""Integer"" creates a method 
+
+
+```
 Integer>>#isBlack
  ^ self = 0
-
+```
 and changes Colors implementation from: 
+```
 Color>>#isBlack
    ^ rgb = 0
-to: 
+```
+
+to:
+
+``` 
 Color>>#isBlack
    ^ rgb isBlack
-
+```
 "
 Class {
 	#name : #RBMoveMethodRefactoring,
@@ -131,18 +139,16 @@ RBMoveMethodRefactoring >> checkTemporaryVariableNames [
 { #category : #transforming }
 RBMoveMethodRefactoring >> compileDelegatorMethod [
 	| statementNode delegatorNode tree |
-	delegatorNode := RBMessageNode 
-				receiver: (RBVariableNode named: variable)
-				selector: parseTree selector
-				keywordsPositions: parseTree keywordsPositions
-				arguments: (parseTree argumentNames collect: 
-							[:each | 
-							RBVariableNode 
-								named: (each = selfVariableName ifTrue: ['self'] ifFalse: [each])]).
-	self hasOnlySelfReturns 
-		ifFalse: [delegatorNode := RBReturnNode value: delegatorNode].
-	statementNode := RBSequenceNode temporaries: #()
-				statements: (Array with: delegatorNode).
+	delegatorNode := RBMessageNode
+		                 receiver: (RBVariableNode named: variable)
+		                 selector: parseTree selector
+		                 keywordsPositions: parseTree keywordsPositions
+		                 arguments: (parseTree argumentNames collect: [ :each | 
+				                  each = selfVariableName
+					                  ifTrue: [ RBVariableNode selfNode ]
+					                  ifFalse: [ RBVariableNode named: each ] ]).
+	self hasOnlySelfReturns ifFalse: [ delegatorNode := RBReturnNode value: delegatorNode ].
+	statementNode := RBSequenceNode temporaries: #(  ) statements: (Array with: delegatorNode).
 	(tree := class parseTreeFor: selector) body: statementNode.
 	class compileTree: tree
 ]
@@ -342,7 +348,7 @@ RBMoveMethodRefactoring >> removeArgument [
 RBMoveMethodRefactoring >> replaceSelfReferences [
 	| replacer |
 	self needsToReplaceSelfReferences ifTrue: [
-		replacer := RBParseTreeRewriter new.
+		replacer := self parseTreeRewriter.
 		replacer replace: 'self' with: selfVariableName.
 		self hasOnlySelfReturns ifTrue: 
 			[replacer replace: '^self' with: '^self'].
@@ -353,7 +359,7 @@ RBMoveMethodRefactoring >> replaceSelfReferences [
 { #category : #transforming }
 RBMoveMethodRefactoring >> replaceVariableReferences [
 	| replacer |
-	replacer := RBParseTreeRewriter new.
+	replacer := self parseTreeRewriter.
 	replacer replace: variable with: 'self'.
 	replacer executeTree: parseTree.
 	parseTree := replacer tree

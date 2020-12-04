@@ -1,3 +1,12 @@
+"
+I am the constraints that can be applied to a presenter placed into a box layout.
+I can define: 
+
+- expand: the widget will expand to take all the space the layout wants to give it.
+- fill: the widget will fill the space taken (this property just has sense if expand=false)
+- padding: the padding let before the next presenter.
+- width/height: fixed width and height to take. 
+"
 Class {
 	#name : #SpBoxConstraints,
 	#superclass : #SpLayoutConstraints,
@@ -63,12 +72,12 @@ SpBoxConstraints >> height [
 ]
 
 { #category : #accessing }
-SpBoxConstraints >> height: anObject [
+SpBoxConstraints >> height: aNumber [
 	"height of component.
 	 this just has sense in the case of expand=false"
 
 	self expand: false.
-	height := anObject
+	height := aNumber
 ]
 
 { #category : #initialization }

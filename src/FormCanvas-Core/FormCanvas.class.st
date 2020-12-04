@@ -166,7 +166,7 @@ FormCanvas >> drawOval: r color: c borderWidth: borderWidth borderColor: borderC
 		fill: c
 		borderWidth: borderWidth
 		borderColor: borderColor
-		transform: transform.
+		transform: self transform.
 ]
 
 { #category : #'drawing-polygons' }
@@ -178,12 +178,14 @@ FormCanvas >> drawPolygon: vertices color: aColor borderWidth: bw borderColor: b
 { #category : #'drawing-polygons' }
 FormCanvas >> drawPolygon: vertices fillStyle: aFillStyle borderWidth: borderWidth borderColor: borderColor [
 
-	self ensuredEngine
+	| canvasCopy |
+	canvasCopy := (FormCanvas on: form) setOrigin: origin clipRect: clipRect.
+	canvasCopy ensuredEngine
 		drawPolygon: (vertices copyWith: vertices first) asArray
 		fill: aFillStyle
 		borderWidth: borderWidth
 		borderColor: borderColor
-		transform: transform.
+		transform: self transform.
 ]
 
 { #category : #'private - balloon engine' }
@@ -195,7 +197,7 @@ FormCanvas >> drawRectangle: r color: c borderWidth: borderWidth borderColor: bo
 		fill: c
 		borderWidth: borderWidth
 		borderColor: borderColor
-		transform: transform.
+		transform: self transform.
 ]
 
 { #category : #'drawing-text' }
@@ -273,7 +275,7 @@ FormCanvas >> ensuredEngine [
 		engine deferred: false.
 		engine].
 	engine colorTransform: colorTransform.
-	engine edgeTransform: (transform ifNil: [MatrixTransform2x3 identity]).
+	engine edgeTransform: self transform.
 	^engine
 ]
 
@@ -369,7 +371,10 @@ FormCanvas >> flush [
 
 { #category : #other }
 FormCanvas >> flushDisplay [
-		Display deferUpdates: false; forceDisplayUpdate.
+	
+	Display
+		deferUpdates: false;
+		forceDisplayUpdate.
 ]
 
 { #category : #other }
@@ -533,7 +538,7 @@ FormCanvas >> privateWarp: aForm transform: aTransform at: extraOffset sourceRec
 	| globalRect sourceQuad warp tfm |
 	tfm := aTransform.
 	globalRect := tfm localBoundsToGlobal: sourceRect.
-	sourceQuad := (tfm sourceQuadFor: globalRect) collect:[:p| p - sourceRect topLeft].
+	sourceQuad := (tfm sourceQuadFor: globalRect) collect: [:p| p - sourceRect topLeft].
 	extraOffset ifNotNil:[globalRect := globalRect translateBy: extraOffset].
      warp := (WarpBlt toForm: port destForm)
                 combinationRule: Form paint;
@@ -701,6 +706,12 @@ FormCanvas >> stencil: stencilForm at: aPoint sourceRect: sourceRect color: aCol
 	port stencil: stencilForm
 		at: aPoint + origin
 		sourceRect: sourceRect.
+]
+
+{ #category : #'private - balloon engine' }
+FormCanvas >> transform [
+
+	^ (transform ifNil: [MatrixTransform2x3 identity])
 ]
 
 { #category : #'drawing-support' }

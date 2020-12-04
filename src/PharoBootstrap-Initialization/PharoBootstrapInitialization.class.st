@@ -62,8 +62,7 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	RPackage initialize.
 	Behavior initialize.
 
-	UIManager classVarNamed: 'Default' put: NonInteractiveUIManager new.
-	UIManager default activate.
+	UIManager default: NonInteractiveUIManager new.	 
 
 	Smalltalk sourceFileVersionString: 'PharoV60'.
 	(Smalltalk class classVariableNamed: 'LastImagePath') value: Smalltalk imagePath. "set the default value"
@@ -94,7 +93,6 @@ PharoBootstrapInitialization class >> initializeFileSystem [
 	(env at: #FileLocator) initialize.
 	(env at: #DiskStore) initialize.
 	(env at: #FileHandle) initialize.
-	(env at: #MultiByteFileStream) initialize.
 	(env at: #File) initialize
 ]
 

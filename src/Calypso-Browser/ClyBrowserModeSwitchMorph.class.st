@@ -37,7 +37,7 @@ ClyBrowserModeSwitchMorph >> beBoldIfActive [
 { #category : #accessing }
 ClyBrowserModeSwitchMorph >> build [
 	radioButton := self theme 
-		newRadioButtonIn: World 
+		newRadioButtonIn: self
 		for: self 
 		getSelected: #isModeActive 
 		setSelected: #toggleMode:

@@ -17,7 +17,7 @@ RBClassTransformation >> className [
 
 	^ className ifNil: [ 
 		UIManager default
-			chooseOrRequestFrom: (self environment allClasses collect: #name)
+			chooseOrRequestFrom: (self environment allClasses collect: [:each | each name])
 			title: 'Class name was not defined to perform ', self class baseClass name,
 					 '. Please select a class to resume this transformation.' ]
 ]
@@ -50,11 +50,6 @@ RBClassTransformation >> environment: anObject [
 RBClassTransformation >> initialize [ 
 	super initialize.
 	environment := Smalltalk globals
-]
-
-{ #category : #preconditions }
-RBClassTransformation >> parseTreeRewriterClass [
-	^ RBParseTreeRewriter
 ]
 
 { #category : #executing }

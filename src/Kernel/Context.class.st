@@ -281,7 +281,7 @@ Context >> arguments [
 	"returns the arguments of a message invocation"
 	
 	| arguments numargs |
-	numargs :=  self method numArgs.
+	numargs :=  self compiledCode numArgs.
 	arguments := Array new: numargs.
 	1 to: numargs do: [ :i | arguments at: i put: (self tempAt: i) ].
 	^ arguments
@@ -336,9 +336,7 @@ Context >> basicAt: index [
 	<primitive: 210>
 	index isInteger ifTrue:
 		[self errorSubscriptBounds: index].
-	index isNumber
-		ifTrue: [^self at: index asInteger]
-		ifFalse: [self errorNonIntegerIndex]
+	self errorNonIntegerIndex
 ]
 
 { #category : #accessing }
@@ -352,9 +350,7 @@ Context >> basicAt: index put: value [
 	<primitive: 211>
 	index isInteger ifTrue:
 		[self errorSubscriptBounds: index].
-	index isNumber
-		ifTrue: [^self at: index asInteger put: value]
-		ifFalse: [self errorNonIntegerIndex]
+	self errorNonIntegerIndex
 ]
 
 { #category : #accessing }
@@ -406,12 +402,12 @@ Context >> canHandleSignal: exception [
 
 { #category : #'private-exceptions' }
 Context >> cannotReturn: result [
+
 	closureOrNil ifNotNil: [ 
-		^BlockCannotReturn result: result from: self home].
-	Processor activeProcess 
-		debug: thisContext 
-		title: 'computation has been terminated'
-	
+		^ BlockCannotReturn result: result from: self home ].
+	UIManager default
+		requestDebuggerOpeningNamed: 'computation has been terminated'
+		inContext: thisContext
 ]
 
 { #category : #private }
@@ -452,10 +448,16 @@ Context >> closureCopy: numArgs copiedValues: anArray [
 ]
 
 { #category : #accessing }
+Context >> compiledCode [
+
+	^method
+]
+
+{ #category : #accessing }
 Context >> contextClass [
 "The context class of a message send should be the one of the method to be evaluated, because if that method has some super sends, the method lookup won't work as expected'"
 
-	^self method methodClass
+	^self compiledCode methodClass
 ]
 
 { #category : #'debugger access' }
@@ -483,6 +485,7 @@ Context >> copyTo: aContext [
 
 	| copy |
 	self == aContext ifTrue: [^ nil].
+	self pc. "this is a workaround, see https://github.com/pharo-project/pharo/issues/2949"
 	copy := self copy.
 	self sender ifNotNil: [
 		copy privSender: (self sender copyTo: aContext)].
@@ -657,7 +660,7 @@ Context >> doPrimitive: primitiveIndex method: meth receiver: aReceiver args: ar
 { #category : #private }
 Context >> endPC [
 	^closureOrNil
-		ifNil:	[self method endPC]
+		ifNil:	[self compiledCode endPC]
 		ifNotNil: [closureOrNil endPC]
 ]
 
@@ -836,7 +839,7 @@ Context >> findSimilarSender [
 	"Return the closest sender with the same method, return nil if none found"
 
 	^ self sender findContextSuchThat: [ :context | 
-		context method == method ]
+		context compiledCode == method ]
 ]
 
 { #category : #'private-exceptions' }
@@ -848,7 +851,7 @@ Context >> handleSignal: exception [
 	self evaluateSignal: exception
 ]
 
-{ #category : #query }
+{ #category : #testing }
 Context >> hasContext: aContext [ 
 	"Answer whether aContext is me or one of my senders"
 
@@ -859,15 +862,15 @@ Context >> hasContext: aContext [
 Context >> hasInstVarRef [
 	"Answer whether the receiver references an instance variable."
 
-	^self method hasInstVarRef.
+	^self compiledCode hasInstVarRef.
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 Context >> hasMethodReturn [
 	^closureOrNil hasMethodReturn
 ]
 
-{ #category : #controlling }
+{ #category : #testing }
 Context >> hasSender: context [ 
 	"Answer whether the receiver is strictly above context on the stack."
 
@@ -881,6 +884,11 @@ Context >> hasSender: context [
 				ifTrue: [^true].
 			senderContext := senderContext sender].
 	^false
+]
+
+{ #category : #testing }
+Context >> hasTemporaryVariableNamed: aName [
+	^ self tempNames includes: aName
 ]
 
 { #category : #accessing }
@@ -921,19 +929,19 @@ Context >> isBlockContext [
 	^closureOrNil isClosure
 ]
 
-{ #category : #query }
+{ #category : #testing }
 Context >> isBottomContext [
 	"Answer if this is the last context (the first context invoked) in my sender chain"
 
 	^sender isNil
 ]
 
-{ #category : #query }
+{ #category : #testing }
 Context >> isContext [
 	^true
 ]
 
-{ #category : #query }
+{ #category : #testing }
 Context >> isDead [
 	"Has self finished"
 
@@ -1031,6 +1039,10 @@ Context >> longStack [
 
 { #category : #accessing }
 Context >> method [
+	"self
+		deprecated: 'Should use compiledCode since it can be CompiledMethod or a CompiledBlock'
+		transformWith: '`@receiver method' 
+						-> '`@receiver compiledCode'."
 
 	^method
 ]
@@ -1039,12 +1051,12 @@ Context >> method [
 Context >> methodClass [ 
 	"Answer the class in which the receiver's method was found."
 	
-	^self method methodClass ifNil:[self receiver class].
+	^self compiledCode methodClass ifNil:[self receiver class].
 ]
 
 { #category : #accessing }
 Context >> methodNode [
-	^ self method methodNode.
+	^ self compiledCode methodNode.
 ]
 
 { #category : #accessing }
@@ -1071,7 +1083,7 @@ Context >> methodReturnTop [
 
 { #category : #accessing }
 Context >> methodSelector [
-	^ self method selector
+	^ self compiledCode selector
 ]
 
 { #category : #'private-exceptions' }
@@ -1218,9 +1230,9 @@ Context >> objectSize: anObject [
 { #category : #accessing }
 Context >> outerContext [
 	"Answer the context within which the receiver is nested."
-
+	
 	^closureOrNil ifNotNil:
-		[closureOrNil outerContext]
+		[closureOrNil outerContext ifNil: ["if the outer is nil, this is a CleanBlock" self sender]]
 ]
 
 { #category : #accessing }
@@ -1314,32 +1326,43 @@ Context >> printDetails: stream [
 	stream cr.
 	stream tab; nextPutAll: 'Receiver: '.
 	errorMessage := '<<error during printing>>'.
-	stream nextPutAll: ([receiver printStringLimitedTo: 90] ifError: [errorMessage]).
+	stream nextPutAll: ([receiver printStringLimitedTo: 90] onErrorDo: [errorMessage]).
 
 	stream cr; tab; nextPutAll: 'Arguments and temporary variables: '; cr.
 	string := [(self tempsAndValuesLimitedTo: 80 indent: 2) 
-				padRightTo:1 with: $x] ifError: [errorMessage].
+				padRightTo:1 with: $x] onErrorDo: [errorMessage].
 	stream nextPutAll: (string allButLast).
 
 	stream cr; tab; nextPutAll: 'Receiver''s instance variables: '; cr.
 	receiver class allInstVarNames isEmpty ifTrue: [ 
-		stream nextPutAll: ([receiver printStringLimitedTo: 90] ifError: [ errorMessage ]).
+		stream nextPutAll: ([receiver printStringLimitedTo: 90] onErrorDo: [ errorMessage ]).
 	] ifFalse: [
-		[receiver longPrintOn: stream limitedTo: 80 indent: 2] ifError: [ stream nextPutAll: errorMessage ].
+		[receiver longPrintOn: stream limitedTo: 80 indent: 2] onErrorDo: [ stream nextPutAll: errorMessage ].
 	].
 	stream cr
 ]
 
 { #category : #printing }
 Context >> printOn: aStream [
+	(closureOrNil isNotNil and: [closureOrNil isClean]) ifTrue: 
+		[ | selector |
+			selector := self selector ifNil: [ self compiledCode defaultSelector ].
+			aStream 
+			 print: closureOrNil;
+			 nextPutAll: ' in ';
+			 nextPutAll: self methodClass name;
+			 nextPutAll: '>>';
+			 nextPutAll: selector.
+			 ^self].
+	
 	self outerContext
 		ifNil:
 			[ | selector class mclass |
-			self method == nil
-				ifTrue: [ ^ super printOn: aStream ].
+			self compiledCode
+				ifNil: [ ^ super printOn: aStream ].
 			class := self receiver class.
 			mclass := self methodClass.
-			selector := self selector ifNil: [ self method defaultSelector ].
+			selector := self selector ifNil: [ self compiledCode defaultSelector ].
 			aStream nextPutAll: class name.
 			mclass == class
 				ifFalse:
@@ -1354,7 +1377,8 @@ Context >> printOn: aStream [
 					(self tempAt: 1) selector printOn: aStream ] ]
 		ifNotNil:
 			[ :outerContext | 
-			aStream nextPutAll: closureOrNil printString , ' in '.
+			closureOrNil printOn: aStream.
+			aStream nextPutAll: ' in '.
 			outerContext printOn: aStream ]
 ]
 
@@ -1364,9 +1388,10 @@ Context >> privRefresh [
 	 closureOrNil
 		ifNotNil:
 			[pc := closureOrNil startpc.
-			self stackp: closureOrNil numArgs + closureOrNil numCopiedValues.
+			self stackp: closureOrNil initialStackPointer.
 			1 to: closureOrNil numCopiedValues do:
-				[:i | self tempAt: closureOrNil numArgs + i put: (closureOrNil at: i)]]
+				[:i | self tempAt: closureOrNil numArgs + i put: (closureOrNil at: i)].
+			closureOrNil clearTemporariesOn: self]
 		ifNil:
 			[pc := method initialPC.
 			self stackp: method numTemps.
@@ -1733,7 +1758,7 @@ Context >> secondFromBottom [
 Context >> selector [
 	"Answer the selector of the method that created the receiver."
 
-	^self method selector ifNil: [self method defaultSelector].
+	^self compiledCode selector ifNil: [self compiledCode defaultSelector].
 ]
 
 { #category : #controlling }
@@ -1769,7 +1794,7 @@ Context >> send: selector to: aReceiver with: arguments super: superFlag [
 
 	| class aMethod value context |
 	class := superFlag
-			ifTrue: [(self method literalAt: self method numLiterals) value superclass]
+			ifTrue: [(self compiledCode literalAt: self compiledCode numLiterals) value superclass]
 			ifFalse: [self objectClass: aReceiver].
 	aMethod := class lookupSelector: selector.
 	aMethod == nil
@@ -1799,7 +1824,7 @@ Context >> send: selector to: aReceiver with: arguments super: superFlag [
 	
 	"check if activated method handles the error code (a first bytecode will be store into temp)"
 	"long store temp" 
-	 (context method at: context pc ) = 129 
+	 (context compiledCode at: context pc ) = 129 
 		ifTrue: [ context at: context stackPtr put: value last ].
 	^ context
 ]
@@ -1898,7 +1923,7 @@ Context >> size [
 
 { #category : #'debugger access' }
 Context >> sourceCode [
-	^self method sourceCode.
+	^self compiledCode sourceCode.
 ]
 
 { #category : #'debugger access' }
@@ -1951,7 +1976,7 @@ Context >> stackp: newStackp [
 { #category : #private }
 Context >> startpc [
 	^closureOrNil
-		ifNil:	[self method initialPC]
+		ifNil:	[self compiledCode initialPC]
 		ifNotNil: [closureOrNil startpc]
 ]
 
@@ -2148,6 +2173,22 @@ Context >> unwindComplete: aBoolean [
 	"unwindContext only. access temporaries from BlockClosure>>#ensure: and BlockClosure>>#ifCurtailed:"
 	self tempAt: 2 put: aBoolean
 
+]
+
+{ #category : #'private-exceptions' }
+Context >> unwindForTermination [
+	"Unwind to execute pending ensure:/ifCurtailed: blocks before terminating active process.
+	It assumes that self belongs to the active process. "
+	| unwindContext unwindBlock |
+	unwindContext := self.
+	[ unwindContext := unwindContext findNextUnwindContextUpTo: nil.
+	unwindContext isNil ] whileFalse: [ 
+		unwindContext unwindComplete ifNil: [ 
+			"N.B. Unlike Context>>unwindTo: we do not set complete (tempAt: 2) to true."
+			unwindBlock := unwindContext unwindBlock.
+			self terminateTo: unwindContext.
+			unwindBlock value ]].
+	self terminateTo: nil
 ]
 
 { #category : #'private-exceptions' }

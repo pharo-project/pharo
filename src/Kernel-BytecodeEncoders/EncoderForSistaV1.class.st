@@ -486,6 +486,15 @@ EncoderForSistaV1 class >> isCreateFullBlock: compiledBlock code: code at: pc [
 ]
 
 { #category : #'instruction stream support' }
+EncoderForSistaV1 class >> isCreateFullBlockAt: pc in: code [
+	^ self
+		  extensionsAt: pc
+		  in: code
+		  into: [ :extA :extB :nExtBytes | 
+		  (code at: pc + nExtBytes) = 16rF9 ]
+]
+
+{ #category : #'instruction stream support' }
 EncoderForSistaV1 class >> isExtension: bytecode [
 	"Answer if the bytecode is an extension bytecode, i.e. one that extends
 	 the range of the following bytecode."
@@ -639,6 +648,13 @@ EncoderForSistaV1 class >> literalIndexOfBytecodeAt: pc in: aCompiledMethod [
 	^nil
 ]
 
+{ #category : #accessing }
+EncoderForSistaV1 class >> literalMethodBytecodes [
+	"#[32 92] means pushConstant: x, returnTop" 
+	
+	^ #[32 92] 
+]
+
 { #category : #'compiled method support' }
 EncoderForSistaV1 class >> markerOrNilFor: aMethod [
 	"What is a marker method?  It is method with body like 
@@ -777,6 +793,24 @@ EncoderForSistaV1 class >> prepareMethod: compiledMethod forSimulationWith: numA
 { #category : #'bytecode decoding' }
 EncoderForSistaV1 class >> pushNilByte [
 	^ 79
+]
+
+{ #category : #'compiled method support' }
+EncoderForSistaV1 class >> readsSelfFor: compiledMethod [
+	"Answer whether compiledMethod reads self"
+	| scanner |
+	scanner := InstructionStream on: compiledMethod.
+	^ scanner scanFor: 
+		[:instr |  instr = 76 or: [ instr = 88 ] ]
+]
+
+{ #category : #'instruction stream support' }
+EncoderForSistaV1 class >> readsThisContextFor: compiledMethod [
+	"Answer whether compiledMethod reads thisContext"
+	| scanner |
+	scanner := InstructionStream on: compiledMethod.
+	^ scanner scanFor: 
+		[:instr |  instr = 82 ]
 ]
 
 { #category : #'bytecode decoding' }
@@ -1239,6 +1273,15 @@ EncoderForSistaV1 >> genPushTemp: tempIndex [
 EncoderForSistaV1 >> genPushThisContext [
 	"82			01010010			Push thisContext, (then e.g. Extend B 1 = push thisProcess)"
 	stream nextPut: 82
+]
+
+{ #category : #'bytecode generation' }
+EncoderForSistaV1 >> genPushThisProcess [
+	"82			01010010			Push thisContext, (then e.g. Extend B 1 = push thisProcess)"
+	stream nextPut: 225.
+	stream nextPut: 1.
+	stream nextPut: 82.
+
 ]
 
 { #category : #'bytecode generation' }

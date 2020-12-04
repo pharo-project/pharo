@@ -1,6 +1,6 @@
 "
 Hermes is a tool to binary serialize/deserialize behavior.
-It uses the basic elements in the bootstraped image, so it can be used to load code in a really small image.
+It uses the basic elements in the bootstrapped image, so it can be used to load code in a really small image.
 
 Basically it contains the packages: 
 

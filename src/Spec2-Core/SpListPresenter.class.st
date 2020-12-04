@@ -1,42 +1,14 @@
 "
-A ListPresenter is an applicative presenter which handle a basic list.
-See AbstractWidgetPresenter
+A `SpListPresenter` is presenter which handles a basic list displaying information about a domain list. 
+For example a list presenter will display the name of a list of contacts. It refines the API of `SpAbstractListPresenter` that is shared with `SpComponentListPresenter` (which is a list of presenters) and `SpTablePresenter` (which is a list with multiple columns in a sense). 
 
-self example
-self exampleMultipleSelection
-self exampleWithHeaderTitle
-self exampleWithIcons
+### Design point
+There are two design points worth notice:
 
-You can also have a look at ExampleListPresenter >> exampleRegisteredColor and ListSelectionPresenter for more examples.
-
-I provide the following variables and their accessors
-- backgroundColorBlock should convert an item in the color in the background in the line of this item.
-- displayBlock should convert an item in something that can be displayed in a list, use asStringOrText by default.
-- filteringBlock should convert an item in a boolean representing if the item will be displayed, initialize with self defaultFilteringBlock.
-- multiSelection is a boolean representing if several items can be selected in the same time, it have shortcut beMultipleSelection and beSingleSelection.
-- sortingBlock should convert two items in a boolean representing if the first item must be place before the second, initialize with self defaultSortingBlock.
-
-Blocks should be set before items.
-
-I provide the following methods
-- items: to set the list with the elements of the collection in parameter
-- getIndex is the getter of the index of the selected item or the last selected item.
-- getList is the getter of the list.
-- listSize is the number of items.
-
-
-todo
-- allowToSelect
-- autoDeselect
-- menu
-- listItems
-- clickOnSelectedItem
-- getSelectionStateFor:
-- listElementAt:ifAbsent:
-- refresh ...
-- select ... , setSelected ...
-- updateList
-
+A list presenter has a strategy that encapsulates specific API and action related to selection (how to select, how many items can be selected, currently selected items...). Such strategy is accessed via the `selection` message. It returns an instance of subclasses of `SpAbstractSelectionMode`: `SpMultipleSelectionMode` and `SpSingleSelectionMode`. 
+It means many fonctionality related to the selection (selected items, multiple items, ....) are defined in the API of the mode and not of the main class.
+ 
+A list presenter does not offer the possibility to add one item in isolation instead you should use the `items:` setter to set the full list domain object. The responsibility to manage the items displayed by a list presenter is not the one of that list presenter but its users e.g, the presenter you will write and that instantiates and uses the list presenter. This is normal since there is no way that the list presenter could track changes into the domain object representing the list items.
 "
 Class {
 	#name : #SpListPresenter,
@@ -76,94 +48,118 @@ SpListPresenter >> clickOnSelectedItem [
 
 { #category : #api }
 SpListPresenter >> display [
+	"Answer the display block that will transform the objects from `SpAbstractListPresenter>>#model` into a
+	 displayable string."
 
 	^ display
 ]
 
 { #category : #api }
 SpListPresenter >> display: aBlock [
+	"Set the block that will be applied on each of the list items. 
+	 The result of the block will be used to display the item on the screen.
+	 `aBlock` receives one argument.
+	 Here is the typical example:
+
+	 initializePresenters
+   		...
+   		fontFamilyList := self newList.
+		fontFamilyList display: [ :fontFamily | fontFamily familyName ]
+   		...
+	 "
 
 	display := aBlock
 ]
 
 { #category : #api }
-SpListPresenter >> displayBlock [
-	"Return the one argument block used to wrap your domain specific items.
-	The block should return something that can be displayed in a list - like a String or a Text"
-	self
-		deprecated: 'Please use #display instead'
-		transformWith: '`@receiver displayBlock' 
-						-> '`@receiver display'.
-	^ display
+SpListPresenter >> displayIcon [
+	"Return the block used to return an icon that will be displayed in the list"
+
+	^ icon
 ]
 
 { #category : #api }
-SpListPresenter >> displayBlock: aBlock [
-	"Set the one argument block used to wrap your domain specific items.
-	The block should return something that can be displayed in a list - like a String or a Text"
+SpListPresenter >> displayIcon: aBlock [
+	"Set a block which takes an item as argument and returns the icon to display in the list. 
+	 `aBlock` receives one argument"
 
-	"Return the one argument block used to wrap your domain specific items.
-	The block should return something that can be displayed in a list - like a String or a Text"
-	self
-		deprecated: 'Please use #display: instead'
-		transformWith: '`@receiver displayBlock: `@arg' 
-						-> '`@receiver display: `@arg'.
-
-	display := aBlock
+	icon := aBlock
 ]
 
-{ #category : #'adapter-api' }
+{ #category : #private }
 SpListPresenter >> displayValueAt: anIndex [
-	^ self displayValueOf: (model at: anIndex)
+	"Return the effective string that is displayed on the list. 
+	Note that it is different from the item, because often an item is an object whose only a facette (e.g., name) is displayed. In such case displayValueAt: return the string of the displayed facette"
+
+	^ self displayValueFor: (model at: anIndex)
 ]
 
-{ #category : #'adapter-api' }
-SpListPresenter >> displayValueOf: anObject [
+{ #category : #private }
+SpListPresenter >> displayValueFor: anObject [
 
 	^ self display value: anObject
 ]
 
 { #category : #testing }
 SpListPresenter >> hasHeaderTitle [
+	"Answer true if the list has a title (See `SpListPresenter>>#headerTitle:`)."
+
 	^ headerTitle isEmptyOrNil not
 ]
 
 { #category : #testing }
 SpListPresenter >> hasIcons [
+	"Answer true if the list has an icon provider (See `SpListPresenter>>#icons:`)."
 
-	^ self icons notNil
+	^ self displayIcon notNil
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpListPresenter >> headerTitle [
+	"Answer the header title."
+
 	^ headerTitle
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpListPresenter >> headerTitle: aString [
+	"Set the header title."
+
 	headerTitle := aString
 ]
 
 { #category : #api }
 SpListPresenter >> hideHeaderTitle [
+	"Hide list header."
+
 	headerTitle := nil
 ]
 
 { #category : #'widget API' }
 SpListPresenter >> iconFor: anItem [
-	^ self icons cull: anItem cull: self
+
+	^ self displayIcon 
+		cull: anItem 
+		cull: self
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpListPresenter >> icons [
-	"Return the block which takes an item as argument and returns the icon to display in the list"
+	"Return the block used to return an icon that will be displayed in the list"
+	self 
+		deprecated: 'Use #displayIcon' 
+		transformWith: '`@receiver icons' -> '`@receiver displayIcon'.
 
 	^ icon
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpListPresenter >> icons: aBlock [
-	"Set a block which takes an item as argument and returns the icon to display in the list"
+	"Set a block which takes an item as argument and returns the icon to display in the list. 
+	 `aBlock` receives one argument"
+	self 
+		deprecated: 'Use #displayIcon:' 
+		transformWith: '`@receiver icons: `@arg' -> '`@receiver displayIcon: `@arg'.
 
 	icon := aBlock
 ]
@@ -187,9 +183,15 @@ SpListPresenter >> prepareForFilteredDataSourceWith: items [
 SpListPresenter >> registerEvents [
 	super registerEvents.
 	"Do not use whenAutoDeselectChangedDo: to avoid the deprecation warning."
-	self property: #autoDeselect whenChangedDo: [ :aBoolean | self changed: #autoDeselect: with: {aBoolean} ].
-	self whenDisplayBlockChangedDo: [ self withAdapterDo: #refreshWidgetList ].
-	self property: #headerTitle whenChangedDo: [ self withAdapterDo: #refreshWidgetHeaderTitle ]
+	self 
+		property: #autoDeselect 
+		whenChangedDo: [ :aBoolean | self changed: #autoDeselect: with: {aBoolean} ].
+	self whenDisplayChangedDo: [ 
+		self withAdapterDo: [ :anAdapter | anAdapter refreshWidgetList ] ].
+	self 
+		property: #headerTitle 
+		whenChangedDo: [ 
+			self withAdapterDo: [ :anAdapter | anAdapter refreshWidgetHeaderTitle ] ]
 ]
 
 { #category : #private }
@@ -197,7 +199,7 @@ SpListPresenter >> resetListSelection [
 	self selectIndex: 0
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpListPresenter >> resetSortingBlock [
 	"Reset the sortering block with the default value which consists in not sorting"
 
@@ -206,19 +208,32 @@ SpListPresenter >> resetSortingBlock [
 
 { #category : #api }
 SpListPresenter >> updateList [
+	"Update the list re taking the list defined in `SpAbstractListPresenter>>#model` and filling the list with 
+	 them (this is useful when the list contained changed internally (like adding element to a collection, etc.). 
+	 Sending this message will reset any existing selection."
 
-	self withAdapterDo: #refreshWidgetList.
+	self withAdapterDo: [ :anAdapter | anAdapter refreshWidgetList ].
 	self unselectAll
 ]
 
 { #category : #'api-events' }
-SpListPresenter >> whenDisplayBlockChangedDo: aBlock [
-	"Set a block to value when the filtering block has changed"
+SpListPresenter >> whenDisplayChangedDo: aBlock [
+	"Inform when the display block has changed.
+ 	 `aBlock` has three optional arguments: 
+	 - new value
+	 - old value
+	 - the announcement triggering this action"
 
 	self property: #display whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpListPresenter >> whenIconsChangedDo: aBlock [
+	"Inform when the icons block has changed.
+ 	 `aBlock` has three optional arguments: 
+	 - new value
+	 - old value
+	 - the announcement triggering this action"
+
 	self property: #icon whenChangedDo: aBlock
 ]

@@ -63,28 +63,14 @@ ReRuleManager class >> default [
 { #category : #helpers }
 ReRuleManager class >> defaultRules [
 	^ self visibleRuleClasses
-			reject: [ :ruleClass |
-				"lint rules suck again…"
-				((ruleClass inheritsFrom: ReAbstractRule) and: [ ruleClass enabled not ]) or: [ 
-				self excludedRuleNames includes: ruleClass name ] ] 
-			thenCollect: #new
-]
-
-{ #category : #helpers }
-ReRuleManager class >> excludedRuleNames [
-	"here rules can be excluded, but it is better to implement #enabled on the rule to return false to disable it. Do not forget to call #reset on this class after changing this method!"
-	^ #()
+			select: [ :ruleClass | ruleClass enabled ] 
+			thenCollect: [:ruleClass | ruleClass new]
 ]
 
 { #category : #'class initialization' }
 ReRuleManager class >> initialize [
-	self allInstances do: [ :inst |
-		self flag: 'remove in future. this is just to stop
-		            the announcements from choaking old instances'.
-		SystemAnnouncer uniqueInstance unsubscribe: inst ].
-
 	self reset.
-	self subscribe.
+	self subscribe
 ]
 
 { #category : #'instance creation' }
@@ -181,14 +167,13 @@ ReRuleManager class >> ruleToggleSettingsOn: aBuilder [
 		parent: #qualityAssistant;
 		with: [ 
 			(self visibleRuleClasses sorted: [ :a :b | a name < b name ])
-				select: [ :rule | rule inheritsFrom: ReAbstractRule ] "because lint rules don't have #enabled"
-				thenDo: [ :rule | 
+				do: [ :rule | 
 					| inst |
 					inst := rule new.
 					(aBuilder setting: rule enabledSettingID)
 					selector: #enabled;
 					target: rule;
-					default: true;
+					default: rule enabled;
 					label: inst name;
 					description: inst rationale ] ]
 ]
@@ -209,18 +194,14 @@ ReRuleManager class >> rulesProfile: aSelector [
 { #category : #acccessing }
 ReRuleManager class >> setBeginnerProfile [
 
-	self visibleRuleClasses 
-		select: [ :rule | rule inheritsFrom: ReAbstractRule ] "because lint rules don't have #enabled"
-		thenDo: [ :rule | rule enabled: rule isBeginnerRule ].
+	self visibleRuleClasses do: [ :rule | rule enabled: rule isBeginnerRule ].
 	self reset
 ]
 
 { #category : #acccessing }
 ReRuleManager class >> setDefaultProfile [
 
-	self visibleRuleClasses 
-		select: [ :rule | rule inheritsFrom: ReAbstractRule ] "because lint rules don't have #enabled"
-		thenDo: [ :rule | rule enabled: rule isDefaultRule ].
+	self visibleRuleClasses do: [ :rule | rule enabled: rule isDefaultRule ].
 	self reset
 ]
 
@@ -259,29 +240,16 @@ ReRuleManager class >> unsubscribe [
 ]
 
 { #category : #utilities }
-ReRuleManager class >> visibleLintRuleClasses [
-
-	^ RBLintRule withAllSubclasses select: #isVisible
-]
-
-{ #category : #utilities }
 ReRuleManager class >> visibleRuleClasses [
 
-	^ (ReAbstractRule withAllSubclasses select: #isVisible)
-	"remove this in the future ->", self visibleLintRuleClasses
+	^ (ReAbstractRule withAllSubclasses select: [:each | each isVisible])
+	"remove this in the future ->", RBLintRule withAllSubclasses select: [:each | each isVisible]
 ]
 
 { #category : #accessing }
 ReRuleManager >> allRules [
 
 	^ rules
-]
-
-{ #category : #'announcement handling' }
-ReRuleManager >> classAdded: aClassAddedAnnouncement [ 
-
-	(aClassAddedAnnouncement classAdded isKindOf: RBLintRule) 
-		ifTrue: [ self reset ] 
 ]
 
 { #category : #accessing }

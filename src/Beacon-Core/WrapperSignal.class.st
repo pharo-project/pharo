@@ -1,10 +1,12 @@
 "
 This signal is useful to log an arbitrary object.
 
-Example:
-	TranscriptLogger new runDuring: [
-		42 asBeaconSignal emit.
-	]. 
+### Example:
+
+```
+TranscriptLogger new 
+   runDuring: [ 42 asBeaconSignal emit ]
+```	
 "
 Class {
 	#name : #WrapperSignal,
@@ -22,7 +24,9 @@ WrapperSignal class >> emit: aTargetObject [
 
 { #category : #'instance creation' }
 WrapperSignal class >> log: aTargetObject [
-	self deprecated: 'Should use #emit:'.
+	self 
+		deprecated: 'Should use #emit:' 
+		transformWith: '`@receiver log: `@name' -> '`@receiver emit: `@name'.
 	^ self emit: aTargetObject 
 ]
 

@@ -11,14 +11,14 @@ Class {
 ClyRemoveMethodGroupCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 100000 for: ClyMethodGroupContextOfFullBrowser 
+	^CmdContextMenuActivation byRootGroupItemOrder: 100000 for: ClyFullBrowserMethodGroupContext 
 ]
 
 { #category : #activation }
 ClyRemoveMethodGroupCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 	
-	^CmdShortcutActivation removalFor: ClyMethodGroupContextOfFullBrowser
+	^CmdShortcutActivation removalFor: ClyFullBrowserMethodGroupContext
 ]
 
 { #category : #accessing }
@@ -42,7 +42,7 @@ ClyRemoveMethodGroupCommand >> prepareFullExecutionInContext: aToolContext [
 	| tagsString confirmed |
 	super prepareFullExecutionInContext: aToolContext.
 	
-	tagsString := ', ' join: (methodGroups collect: #name).
+	tagsString := ', ' join: (methodGroups collect: [:each | each name]).
 	(methodGroups anySatisfy: [ :each | each methodsSize > 0])
 		ifTrue: [
 			confirmed := UIManager default 

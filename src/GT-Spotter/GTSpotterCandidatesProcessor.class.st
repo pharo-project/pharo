@@ -3,12 +3,12 @@ This processor adds the ability of computing and caching all possible candidates
 "
 Class {
 	#name : #GTSpotterCandidatesProcessor,
-	#superclass : #GTSpotterProcessor,
+	#superclass : #GTSpotterPragmaBasedProcessor,
 	#instVars : [
 		'origin',
 		'allCandidates'
 	],
-	#category : #'GT-Spotter-Processors'
+	#category : #'GT-Spotter-Pragma-Based-Processors'
 }
 
 { #category : #'instance creation' }

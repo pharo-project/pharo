@@ -61,6 +61,7 @@ ClyActiveBreakpointsQuery >> selectsMethod: aMethod [
 	(aMethod hasBreakpoint or: [ aMethod containsHalt ]) ifFalse: [ ^false ].
 	"If the method contains halts or breakpoints and we are not exclude halts for testing, we show it"
 	(self excludesHaltsForTesting) ifFalse: [ ^true. ].
-	"If we are excluding methods with halts for testing, we show the method if it has not been marked as containing halts for tests"
-	^ (aMethod hasPragmaNamed: #haltOrBreakpointForTesting) not.
+	"If we are excluding methods with halts for testing, we show the method if it has not been marked as containing halts for tests or those that implement halts (e.g. Object>>#halt)"
+	^ ((aMethod hasPragmaNamed: #haltOrBreakpointForTesting) 
+		or: [(aMethod hasPragmaNamed: #debuggerCompleteToSender)]) not.
 ]

@@ -21,6 +21,12 @@ CompletionEngineTest >> allSmartCharacters [
 	^ self allSelfClosingCharacters , { '||'. '<>' }
 ]
 
+{ #category : #'as yet unclassified' }
+CompletionEngineTest >> interactionModel [
+	
+	^ nil
+]
+
 { #category : #'tests-keyboard' }
 CompletionEngineTest >> keyboardEventFor: char [
 
@@ -28,7 +34,7 @@ CompletionEngineTest >> keyboardEventFor: char [
 	event := KeyboardEvent new.
 	event 
 		setType: #keystroke
-		buttons: nil
+		buttons: 0
 		position:  0@0
 		keyValue: char asciiValue 
 		charCode: char asciiValue
@@ -36,6 +42,31 @@ CompletionEngineTest >> keyboardEventFor: char [
 		stamp: Time now.
 		
 	^event
+]
+
+{ #category : #'tests-keyboard' }
+CompletionEngineTest >> keyboardEventFor: char useCommand: command [
+
+	| event modifier |
+	event := KeyboardEvent new.
+	modifier := 0.
+	command ifTrue: [ modifier := modifier + 64].
+	event 
+		setType: #keystroke
+		buttons: modifier
+		position:  0@0
+		keyValue: char asciiValue 
+		charCode: char asciiValue
+		hand: nil 
+		stamp: Time now.
+		
+	^event
+]
+
+{ #category : #running }
+CompletionEngineTest >> newCompletionEngine [
+	
+	^ CompletionEngine new
 ]
 
 { #category : #'tests-keyboard' }
@@ -53,6 +84,12 @@ CompletionEngineTest >> selectFrom: start to: stop [
 	editor selectFrom: start to: stop
 ]
 
+{ #category : #'as yet unclassified' }
+CompletionEngineTest >> selectedClassOrMetaClass [
+	
+	^ nil
+]
+
 { #category : #'tests-keyboard' }
 CompletionEngineTest >> setEditorText: aString [
 	editor selectAll; addString:  aString 
@@ -63,16 +100,99 @@ CompletionEngineTest >> setEditorText: aString [
 CompletionEngineTest >> setUp [
 	super setUp.
 	
-	editor := RubTextEditor forTextArea: RubTextFieldArea new.
-	controller := CompletionEngine new.
-	controller setEditor: editor
+	editor := RubSmalltalkEditor forTextArea: RubEditingArea new beForSmalltalkCode.
+	controller := self newCompletionEngine.
+	controller setEditor: editor.
+	editor completionEngine: controller.
+	editor textArea model: self.
 ]
 
 { #category : #running }
 CompletionEngineTest >> tearDown [
-	controller := nil.
-	editor := nil.
+	
+	controller closeMenu.
+	editor textArea delete.
 	super tearDown
+]
+
+{ #category : #'test-interaction' }
+CompletionEngineTest >> testReplaceTokenAfterMovingCaretToMiddleOfWordWithFollowingWordsReplacesEntireWord [
+
+	"If the caret is at the end of a word, replace the entire word"
+	
+	| text |
+	text := 'self mEthOdThatDoesNotExist something that follows'.
+	
+	self
+		setEditorText: text;
+		selectAt: 'self mEthOdThatDoesNotExist' size + 1.
+	
+	editor textArea openInWorld.
+	controller openMenu.
+
+	controller context replaceTokenInEditorWith: 'toto'.
+	
+	self assert: editor text equals: 'self toto something that follows'
+]
+
+{ #category : #'test-interaction' }
+CompletionEngineTest >> testReplaceTokenWithCaretInTheMiddleOfWordReplacesEntireWord [
+
+	"If the caret is at the end of a word, replace the entire word"
+	
+	| text |
+	text := 'self mEthOdThatDoesNotExist'.
+	self
+		setEditorText: text;
+		selectAt: 'self mEthOdThatDoes' size + 1.
+	
+	editor textArea openInWorld.
+	controller openMenu.
+
+	controller context replaceTokenInEditorWith: 'toto'.
+	
+	self assert: editor text equals: 'self toto'
+]
+
+{ #category : #'test-interaction' }
+CompletionEngineTest >> testReplaceTokenWithCaretInTheMiddleOfWordWithFollowingWordsReplacesEntireWord [
+
+	"If the caret is at the end of a word, replace the entire word"
+	
+	| text |
+	text := 'self mEthOdThatDoesNotExist something that follows'.
+	
+	self
+		setEditorText: text;
+		selectAt: 'self mEthOdThatDoes' size + 1.
+	
+	editor textArea openInWorld.
+	controller openMenu.
+	editor keystroke: (self keyboardEventFor: Character arrowLeft).
+	editor keystroke: (self keyboardEventFor: Character arrowLeft).
+
+	controller context replaceTokenInEditorWith: 'toto'.
+	
+	self assert: editor text asString equals: 'self toto something that follows'
+]
+
+{ #category : #'test-interaction' }
+CompletionEngineTest >> testReplaceTokenWithCaretOnEndOfWordReplacesEntireWord [
+
+	"If the caret is at the end of a word, replace the entire word"
+	
+	| text |
+	text := 'self mEthOdThatDoesNotExist'.
+	self
+		setEditorText: text;
+		selectAt: text size + 1.
+	
+	editor textArea openInWorld.
+	controller openMenu.
+
+	controller context replaceTokenInEditorWith: 'toto'.
+	
+	self assert: editor text equals: 'self toto'
 ]
 
 { #category : #'tests-keyboard' }

@@ -1,35 +1,35 @@
 "
-I am a root of hierarchy of method groups.
+I am the root of the method group hierarchy.
 
-Any method group is created on method query:
+ method group is created on a method query:
 
-	ClyMethodGroup named: 'some group' on: aMetodQuery
+	ClyMethodGroup named: 'some group' on: aMethodQuery
 
-Method query can be also composite but it should return methods.
+A method query can also be a composite, and should return methods in any case.
 
-Also method group can be expanded to subgroups using subgroupsQuery. You can specify it in another instance creation method: 
+Also, a method group can be expanded into subgroups using subgroupsQuery, which you can specify using this other instance creation method: 
 
 	ClyMethodGroup named: 'some group' on: aMethodQuery withSubgroupsFrom: aQuery	
 
-And there are additional constructors to specify priority of group:
+There are additional constructors to specify the group's priority:
 
 	ClyMethodGroup named: 'some group' priority: 20 on: aMethodQuery.
 	ClyMethodGroup named: 'some group' priority: 20 on: aMethodQuery withSubgroupsFrom: aQuery
 
-All groups are sorted by priority and name in the browser. Larger priority value put group to the top of list.
+In the browser, groups are sorted by descending priority and then by name.
 
 I provide several methods to implement various commands: 
 
 - importMethod: aMethod
-It supposed to modify given aMethod in the way that it will become the part of the group.
+It is supposed to modify aMethod, making it part of the group.
 
 - importMethods: methods 
-It imports multiple methods
+Same as above, but for multiple methods
 		 
 - removeWithMethods
 It removes all methods and should ensure that groups will be removed too which is true for all virtual groups.
 
-And I provide method #includesMethod: which is used in the browser to highlight groups which contains selected methods.
+And I provide #includesMethod:, which is used in the browser to highlight groups which contains selected method(s).
 
 Internal Representation and Key Implementation Points.
 

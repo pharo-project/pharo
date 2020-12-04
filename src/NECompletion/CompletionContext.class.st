@@ -127,7 +127,6 @@ CompletionContext >> parseSource [
 		noPattern: self isWorkspace;
 		options: #(+ optionParseErrors + optionSkipSemanticWarnings);
 		parse.
-	ast doSemanticAnalysis.
 	TypingVisitor new visitNode: ast
 ]
 

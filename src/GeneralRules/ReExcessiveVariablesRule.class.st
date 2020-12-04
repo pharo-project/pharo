@@ -23,7 +23,9 @@ ReExcessiveVariablesRule class >> uniqueIdentifierName [
 
 { #category : #running }
 ReExcessiveVariablesRule >> basicCheck: aClass [
-	^ aClass instVarNames size >= self variablesCount or: [ aClass classVarNames size >= self variablesCount ]
+	^ aClass instVarNames size >= self variablesCount or: [ 
+		"Shared pools are just there to define vars, so it is ok for them to have a lot"
+		(aClass instanceSide isPool not) and: [aClass classVarNames size >= self variablesCount ]]
 ]
 
 { #category : #accessing }

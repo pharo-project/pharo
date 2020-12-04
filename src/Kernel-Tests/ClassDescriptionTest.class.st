@@ -10,6 +10,12 @@ Class {
 	#category : #'Kernel-Tests-Classes'
 }
 
+{ #category : #coverage }
+ClassDescriptionTest >> classToBeTested [
+	
+	^ ClassDescription 
+]
+
 { #category : #tests }
 ClassDescriptionTest >> testAllMethodCategoriesIntegratedThrough [
 	"If this test fails, it may be because method protocols are sorted in #allMethodCategoriesIntegratedThrough. Take care that if the protocols of the class under test are already sorted, you won't see any problem."
@@ -90,62 +96,6 @@ ClassDescriptionTest >> testclassThatDefinesInstVarNamed [
 	self assert: (Class classThatDefinesInstVarNamed: 'methodDict') equals: Behavior.
 	self assert: (Point classThatDefinesInstVarNamed: 'methodDict') equals: nil.
 	
-]
-
-{ #category : #'tests - slots' }
-ClassDescriptionTest >> testprintHierarchy [
-	| expected result |
-	expected := '
-ProtoObject #()
-	Object #()
-
-		ExampleForTest1 #()
-			ExampleForTest11 #()
-				ExampleForTest111 #()
-				ExampleForTest112 #()
-			ExampleForTest12 #()'.
-	result := ExampleForTest1 printHierarchy.
-	self assert: result equals: expected
-]
-
-{ #category : #'tests - slots' }
-ClassDescriptionTest >> testprintSubclassesOnLevelFilterA [
-	| expected result stream |
-	expected := '
-	ExampleForTest1 #()
-		ExampleForTest11 #()
-			ExampleForTest112 #()'.
-	result := String new: expected size.
-	stream := ReadWriteStream on: result.
-	ExampleForTest1 printSubclassesOn: stream level: 1 filter: {ExampleForTest1. ExampleForTest11. ExampleForTest112}.
-	self assert: result equals: expected
-]
-
-{ #category : #'tests - slots' }
-ClassDescriptionTest >> testprintSubclassesOnLevelFilterB [
-	| expected result stream |
-	expected := '
-	ExampleForTest1 #()
-		ExampleForTest12 #()'.
-	result := String new: expected size.
-	stream := ReadWriteStream on: result.
-	ExampleForTest1 printSubclassesOn: stream level: 1 filter: { ExampleForTest1. ExampleForTest12. ExampleForTest112 }.
-	self assert: result equals: expected
-]
-
-{ #category : #'tests - slots' }
-ClassDescriptionTest >> testprintSubclassesOnLevelFilterNil [
-	| expected result stream |
-	expected := '
-	ExampleForTest1 #()
-		ExampleForTest11 #()
-			ExampleForTest111 #()
-			ExampleForTest112 #()
-		ExampleForTest12 #()'.
-	result := String new: expected size.
-	stream := ReadWriteStream on: result.
-	ExampleForTest1 printSubclassesOn: stream level: 1 filter: nil.
-	self assert: result equals: expected
 ]
 
 { #category : #'tests - instance variables' }

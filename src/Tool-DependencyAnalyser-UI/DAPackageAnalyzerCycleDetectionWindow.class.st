@@ -40,13 +40,13 @@ DAPackageAnalyzerCycleDetectionWindow >> initializeWithFilter: aCollection [
 
 { #category : #'initialization-union' }
 DAPackageAnalyzerCycleDetectionWindow >> initializeWithPackageNames: aCollection [
-	packageAnalyzerTreeModel  := DAPackageCycleDetectionTreeModel  onPackagesNamed: aCollection.
+	packageAnalyzerTreeModel  := DAPackageCycleDetectionTreePresenter  onPackagesNamed: aCollection.
 	self buildandAddAllMorph 
 ]
 
 { #category : #'initialization-filter' }
 DAPackageAnalyzerCycleDetectionWindow >> initializeWithSystemCycles [
-	packageAnalyzerTreeModel := DAPackageCycleDetectionTreeModel system.
+	packageAnalyzerTreeModel := DAPackageCycleDetectionTreePresenter system.
 ]
 
 { #category : #update }

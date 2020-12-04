@@ -22,7 +22,7 @@ SycRemoveHierarchyMethodCommand class >> methodContextMenuActivation [
 SycRemoveHierarchyMethodCommand >> asRefactorings [
 	| refactoring |
 	refactoring :=  RBRemoveHierarchyMethodRefactoring  
-		removeMethods: (methods collect: #selector) 
+		removeMethods: (methods collect: [:each | each selector]) 
 		from: methods first origin.
 	^ OrderedCollection with: refactoring 
 ]

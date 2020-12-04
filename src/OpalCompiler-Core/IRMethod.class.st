@@ -159,16 +159,6 @@ IRMethod >> forceLongForm [
 		
 ]
 
-{ #category : #debugging }
-IRMethod >> fullBlockInstructionForPC: aPC [
-	| pc |
-	"For a given PC, the actual instruction may start N bytes ahead."
-	pc := aPC.
-	[ pc >= 0 ] whileTrue: [ 
-		(self firstInstructionMatching: [:ir | ir bytecodeOffset = pc ]) ifNotNil: [:it |^it].
-		pc := pc - 1 ].
-]
-
 { #category : #translating }
 IRMethod >> generate [
 	^self generate: CompiledMethodTrailer empty
@@ -178,7 +168,7 @@ IRMethod >> generate [
 IRMethod >> generate: trailer [
 	
 	| irTranslator |
-   irTranslator := IRTranslatorV2 context: compilationContext trailer: trailer.
+   irTranslator := IRTranslator context: compilationContext trailer: trailer.
 	irTranslator 
 		visitNode: self;
 		pragmas: pragmas.
@@ -196,7 +186,7 @@ IRMethod >> generate: trailer [
 { #category : #translating }
 IRMethod >> generateBlock: trailer withScope: scope [
 	| irTranslator |
-      irTranslator := IRTranslatorV2 context: compilationContext trailer: trailer.
+      irTranslator := IRTranslator context: compilationContext trailer: trailer.
 	irTranslator 
 		pushOuterVectors: scope;
 		visitNode: self;
@@ -219,21 +209,6 @@ IRMethod >> initialize [
 	pragmas := OrderedCollection new.
 	additionalLiterals := OCLiteralSet new.
 	numArgs := 0.
-]
-
-{ #category : #debugging }
-IRMethod >> instructionForPC: aPC [
-	| initialPC pc |
-	"generates the compiledMethod and optimize the ir. 
-	Removes the side-effect of optimizing the IR while looking for instruction, 
-	which results in incorrect found instruction"
-	initialPC := self compiledMethod initialPC.
-	"For a given PC, the actual instruction may start N bytes ahead."
-	pc := aPC.
-	[ pc >= initialPC ] whileTrue: [ 
-		(self firstInstructionMatching: [:ir | ir bytecodeOffset = pc ]) ifNotNil: [:it |^it].
-		pc := pc - 1 ].
-	^self "if we not found anything then this method is our target instruction"
 ]
 
 { #category : #decompiling }
@@ -274,7 +249,7 @@ IRMethod >> isSend [
 { #category : #printing }
 IRMethod >> longPrintOn: stream [
 
-	IRPrinterV2 new
+	IRPrinter new
 		stream: stream;
 		visitNode: self
 ]
@@ -376,9 +351,4 @@ IRMethod >> tempKeys [
 { #category : #accessing }
 IRMethod >> tempMap [
 	^ tempMap
-]
-
-{ #category : #enumerating }
-IRMethod >> tempVectorNamed: aName [
-	^startSequence tempVectorNamed: aName
 ]

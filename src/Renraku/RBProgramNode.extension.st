@@ -24,15 +24,7 @@ RBProgramNode >> banLevelCandidates [
 
 { #category : #'*renraku' }
 RBProgramNode >> critiques [
-	<eProperty>
-
 	^ ReCriticEngine critiquesOf: self
-]
-
-{ #category : #'*renraku' }
-RBProgramNode >> glmCritiqueSourceIn: aGLMCompositePresentation [ 
-	
-	^ self gtInspectorSourceCodeIn: aGLMCompositePresentation
 ]
 
 { #category : #'*renraku' }

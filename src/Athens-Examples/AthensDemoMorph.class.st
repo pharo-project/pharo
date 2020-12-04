@@ -16,7 +16,7 @@ Class {
 		'pharoLogo',
 		'esugBallon'
 	],
-	#category : #'Athens-Examples-Demos'
+	#category : #'Athens-Examples-Morphic'
 }
 
 { #category : #utilities }

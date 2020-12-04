@@ -10,6 +10,12 @@ Class {
 	#category : #'Kernel-Tests-Processes'
 }
 
+{ #category : #coverage }
+SemaphoreTest >> classToBeTested [
+	
+	^ Semaphore
+]
+
 { #category : #private }
 SemaphoreTest >> criticalError [
 	Processor activeProcess terminate
@@ -44,7 +50,7 @@ SemaphoreTest >> testCritical [
 SemaphoreTest >> testCriticalIfError [
 	| lock |
 	lock := Semaphore forMutualExclusion.
-	[lock critical: [self criticalError ifError:[]]] forkAt: Processor userInterruptPriority.
+	[lock critical: [self criticalError onErrorDo:[]]] forkAt: Processor userInterruptPriority.
 	self assert: lock isSignaled
 ]
 

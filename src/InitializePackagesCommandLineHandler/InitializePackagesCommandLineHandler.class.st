@@ -84,6 +84,10 @@ InitializePackagesCommandLineHandler >> initializeProtocolsFrom: aFileName [
 				ifTrue: [(Smalltalk classOrTraitNamed: items first) classSide]
 				ifFalse: [Smalltalk classOrTraitNamed: items first].
 			selector := items third asSymbol.
+
+			class ifNil: [ 
+				self error: ('Could not found class: ', items first printString , ' for selector: ', selector printString) ].			
+
 			(class selectors includes: selector)
 				ifTrue: [class organization classify: selector under: items fourth]]].
 ]

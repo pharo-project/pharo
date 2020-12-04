@@ -73,35 +73,6 @@ Alien class >> dataSize [ "^<Integer>"
 	^self subclassResponsibility
 ]
 
-{ #category : #'class initialization' }
-Alien class >> ensureInSpecialObjectsArray [
-	"Alien must be in the specialObjectsArray to enable the Newsqueak FFI.  Because of
-	 the bootstrap the specialObjectsArray may already have been partially initialized with
-	 the callback selector and to be large enough (as part of loading immutability), but
-	 it will be missing Alien until Alien is loaded.  So check if the specialObjectsArray is
-	 of the expected size before recreating and slam Alien in if the specialObjectsArray
-	 is already large enough."
-
-	| index |
-	self ~~ Alien ifTrue: [^self].
-
-	index := 53.
-	((self environment includesKey: #VMObjectIndices)
-	 and: [((Smalltalk at: #VMObjectIndices) classPool at: #ClassAlien ifAbsent: []) ~= (index - 1)]) ifTrue:
-		[self error: 'index probably wrong'].
-
-	Smalltalk specialObjectsArray size < index ifTrue:
-		[Smalltalk recreateSpecialObjectsArray].
-	
-	(Smalltalk specialObjectsArray size < index
-	 or: [(Smalltalk specialObjectsArray at: index) ~~ nil
-		and: [(Smalltalk specialObjectsArray at: index) ~~ self]]) ifTrue:
-		[self error: 'SystemDictionary>>recreateSpecialObjectsArray appears incompatible'].
-
-	(Smalltalk specialObjectsArray at: index) ifNil:
-		[Smalltalk specialObjectsArray at: index put: self]
-]
-
 { #category : #libraries }
 Alien class >> ensureLoaded: aLibraryName [ "<String> ^<Alien>"
 	^LoadedLibraries
@@ -121,12 +92,10 @@ Alien class >> ensureNotifiedAtStartup [
 	"Alien needs to be notified at system startup to clear the LoadedLibraries table
 	and otherwise sanitise Aliens with dangling pointers."
 	self ~~ Alien ifTrue: [^self].
-	(Smalltalk classNamed: #SessionManager)
-		ifNotNil: [:sessionManagerClass|
-			sessionManagerClass default
-				registerSystemClassNamed: self name
-				atPriority: 60]
-		ifNil: [Smalltalk addToStartUpList: self after: Delay]
+
+	SessionManager default
+		registerSystemClassNamed: self name
+		atPriority: 60
 ]
 
 { #category : #examples }
@@ -199,8 +168,13 @@ Alien class >> initialize [
 		[GCMallocedAliens := AlienWeakTable newForOwner: self].
 	WordSize := Smalltalk wordSize.
 	lifoCallbackSemaphore := Semaphore new.
-	self ensureInSpecialObjectsArray.
-	self ensureNotifiedAtStartup
+
+	self ensureNotifiedAtStartup.
+	
+	(Smalltalk specialObjectsArray at: 53) ifNil:
+		[Smalltalk specialObjectsArray at: 53 put: Alien].
+	(Smalltalk specialObjectsArray at: 55) ifNil:
+		[Smalltalk specialObjectsArray at: 55 put: UnsafeAlien]	
 ]
 
 { #category : #callbacks }
@@ -246,14 +220,14 @@ Alien class >> libcName [
 	| platform |
 	platform := SmalltalkImage current platformName.
 	platform = 'Mac OS' ifTrue:
-		[^SmalltalkImage current osVersion asInteger >= 1070
+		[^SmalltalkImage current os version asInteger >= 1070
 			ifTrue: ['libobjc.dylib']
 			ifFalse:
-				[SmalltalkImage current osVersion asInteger >= 1050
+				[SmalltalkImage current os version asInteger >= 1050
 					ifTrue: ['libgcc_s.1.dylib']
 					ifFalse: ['libc.dylib']]].
 	platform = 'unix' ifTrue:
-		[SmalltalkImage current osVersion = 'linux-gnu' ifTrue:
+		[SmalltalkImage current os version = 'linux-gnu' ifTrue:
 			[^'libc.so.6'].
 		 ^'libc.so'].
 	platform = 'Win32' ifTrue:

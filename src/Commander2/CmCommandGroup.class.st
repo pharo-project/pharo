@@ -36,7 +36,7 @@ CmCommandGroup class >> named: aString [
 { #category : #accessing }
 CmCommandGroup >> allCommands [
 	| visitor |
-	visitor := CmCommandsCollector new.
+	visitor := CmCommandCollector new.
 	self acceptVisitor: visitor.
 	^ visitor commandsCollected
 ]

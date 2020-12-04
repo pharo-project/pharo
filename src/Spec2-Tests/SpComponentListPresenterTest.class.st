@@ -120,6 +120,21 @@ SpComponentListPresenterTest >> testSelectAll [
 		equals: #('10' '20' '30')
 ]
 
+{ #category : #tests }
+SpComponentListPresenterTest >> testSelectedItemsSortedByIndex [
+
+	presenter beMultipleSelection.
+	presenter 
+		selectIndex: 3;
+		selectIndex: 1.
+	self 
+		assert: (presenter selection selectedItems collect: #label as: Array)
+		equals: #('30' '10'). 
+	self 
+		assert: (presenter selection selectedItemsSortedByIndex collect: #label as: Array)
+		equals: #('10' '30')
+]
+
 { #category : #'tests-smoke' }
 SpComponentListPresenterTest >> testSetSortingBlockBeforeItems [
 	| count |

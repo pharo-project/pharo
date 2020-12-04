@@ -40,11 +40,9 @@ ClyDebugBrokenCritiqueCommand >> defaultMenuItemName [
 ]
 
 { #category : #execution }
-ClyDebugBrokenCritiqueCommand >> execute [ 
+ClyDebugBrokenCritiqueCommand >> execute [
 
-	UIManager default
-			debugProcess: Processor activeProcess 
-			context: critique stack
-			label: critique message 
-			fullView: true
+	(OupsDebugRequest newForContext: critique stack)
+		label: critique message;
+		submit
 ]

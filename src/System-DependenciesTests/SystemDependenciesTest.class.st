@@ -58,9 +58,8 @@ SystemDependenciesTest >> externalDependendiesOf: packagesCollection [
 SystemDependenciesTest >> knownBasicToolsDependencies [
 
 	"ideally this list should be empty"	
-	self flag: #todo. "The Deprecated80 dependency should soon vanish. This is just the time we finish Spec migration."
-	^ #('AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' "Those are added for the development of Spec2 and should probably be removed"
-	#'Athens-Morphic' #NautilusRefactoring #'Refactoring-Critics' #'Reflectivity-Tools' #Shout 'ParametrizedTests' 'Deprecated80')
+	^ #('AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' 
+	#'Athens-Morphic' #'Refactoring-Critics' #'Reflectivity' #'Reflectivity-Tools' #Shout 'ParametrizedTests' 'HeuristicCompletion-Model' #VariablesLibrary)
 ]
 
 { #category : #'known dependencies' }
@@ -84,8 +83,7 @@ SystemDependenciesTest >> knownIDEDependencies [
 
 	"ideally this list should be empty"	
 	
-	self flag: #todo. "The Deprecated80 dependency should soon vanish. This is just the time we finish Spec migration."
-	^ #(Deprecated80)
+	^ #()
 ]
 
 { #category : #'known dependencies' }
@@ -101,15 +99,15 @@ SystemDependenciesTest >> knownMorphicCoreDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Keymapping-KeyCombinations' #'Morphic-Base' #'Morphic-Widgets-Windows' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Clipboard')
+	^ #(#'Keymapping-KeyCombinations' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Clipboard')
 ]
 
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownMorphicDependencies [
 	"ideally this list should be empty"
 
-	^ #(#'Fonts-Chooser' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #Shout #'Spec-Core' "Spec-Core should be removed later." #'Spec2-Core' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers'
-	#'Athens-Morphic' 	"Rubric has a dependency on It" )
+	^ #(#'Fonts-Chooser' #'Refactoring-Critics' #'Refactoring-Environment' #Shout #'Spec-Core' "Spec-Core should be removed later." #'Spec2-Core' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers'
+	#'Athens-Morphic' #'Tools-CodeNavigation' "Rubric has a dependency on It" 'Debugger-Oups' 'Debugger-Model')
 ]
 
 { #category : #'known dependencies' }
@@ -125,7 +123,7 @@ SystemDependenciesTest >> knownSUnitKernelDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'FileSystem-Core' #'System-Changes' #'AST-Core')
+	^ #(#'FileSystem-Core')
 ]
 
 { #category : #'known dependencies' }
@@ -133,7 +131,6 @@ SystemDependenciesTest >> knownSpec2Dependencies [
 	
 	^ #(
 		'WebBrowser-Core' "Spec's Link adapter"
-		'Keymapping-Settings' "Spec's KeymapBrowser example tool"
 		)
 ]
 
@@ -150,9 +147,8 @@ SystemDependenciesTest >> knownUIDependencies [
 
 	"ideally this list should be empty"	
 
-	self flag: #todo. "The Deprecated80 dependency should soon vanish. This is just the time we finish Spec migration."
-	^ #('AST-Core-Tests'  'Athens-Cairo' 'Athens-Core' "Those are added for the development of Spec2 and should probably be removed"
-	#'Athens-Morphic' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers' 'Deprecated80')
+	^ #('AST-Core-Tests'  'Athens-Cairo' 'Athens-Core' 
+	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers' #'HeuristicCompletion-Model' 'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation')
 ]
 
 { #category : #utilities }
@@ -177,14 +173,14 @@ SystemDependenciesTest >> metacelloPackageNames [
 
 { #category : #accessing }
 SystemDependenciesTest >> packagesOfGroupNamed: aGroupName on: aBaseline [ 
-
 	| allMembers allPackagesInBaseline packages groups |
-	allMembers := aBaseline version groups detect: [ :g | g name = aGroupName ].
-	allPackagesInBaseline := aBaseline version packages collect: #name.
 	
+	allMembers := aBaseline version groups 
+		detect: [ :g | g name = aGroupName ]
+		ifNone: [ ^#() ].
+	allPackagesInBaseline := aBaseline version packages collect: [:each | each name].
 	packages := allMembers includes select: [ :aName | allPackagesInBaseline includes: aName ].
 	groups := allMembers includes reject: [ :aName | allPackagesInBaseline includes: aName ].
-		
 	^ packages , (groups flatCollect: [:aInnerGroupName | self packagesOfGroupNamed: aInnerGroupName on: aBaseline ]).
 
 ]
@@ -209,8 +205,10 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfUI name }, BaselineOfUI allPackageNames,
 		{ BaselineOfSpec name }, BaselineOfSpec allPackageNames,
 		{ BaselineOfCommander2 name }, (BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
-		{ BaselineOfSpec2 name }, BaselineOfSpec2 allPackageNames,
+		{ BaselineOfSpecCore name }, (BaselineOfSpecCore deepPackagesOfGroupNamed: #default),
+		{ BaselineOfSpec2 name }, (BaselineOfSpec2 deepPackagesOfGroupNamed: #default),
 		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames,
+		{ BaselineOfNewTools name }, (BaselineOfNewTools deepPackagesOfGroupNamed: 'Methods'),
 		{ BaselineOfFuel name }, (BaselineOfFuel packagesOfGroupNamed: #Core) ).
 	
 	self assertCollection: dependencies hasSameElements: self knownBasicToolsDependencies.
@@ -281,7 +279,6 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfMorphicCore.
 	BaselineOfSlot.
 	BaselineOfSpec.
-	BaselineOfSpec2.
 	BaselineOfParametrizedTests.
 	BaselineOfSUnit.
 	BaselineOfTraits.
@@ -312,12 +309,16 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfGeneralHelp.
 	BaselineOfShout.
 	BaselineOfKernelTests.
+	BaselineOfHeuristicCompletion.
 	BaselineOfFuel.
 	 } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
 
+	packages := packages ,  { BaselineOfSpecCore name }, (self packagesOfGroupNamed: 'default' on: BaselineOfSpecCore ).
+	packages := packages ,  { BaselineOfSpec2 name }, (self packagesOfGroupNamed: 'default' on: BaselineOfSpec2 ).
+	packages := packages ,  { BaselineOfNewTools name }, (self packagesOfGroupNamed: 'Methods' on: BaselineOfNewTools ).
 	packages := packages ,  { BaselineOfCommander name} , (self packagesOfGroupNamed: 'default' on: BaselineOfCommander).
 	packages := packages ,  { BaselineOfCommander2 name} , (self packagesOfGroupNamed: 'default' on: BaselineOfCommander2).
-	packages := packages , { BaselineOfIceberg name. BaselineOfLibGit name. BaselineOfCalypso name}.
+	packages := packages ,  { BaselineOfIceberg name. BaselineOfLibGit name. BaselineOfCalypso name}.
 
 	packages := packages ,  (self packagesOfGroupNamed: 'FullEnvironment' on: BaselineOfCalypso ).
 	packages := packages ,  (self packagesOfGroupNamed: 'SystemBrowser' on: BaselineOfCalypso ).
@@ -325,10 +326,10 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	packages := packages ,  (self packagesOfGroupNamed: 'CoreEnvironment' on: BaselineOfCalypso ).
 	packages := packages ,  #('Calypso-SystemTools-Core').
 	packages := packages ,  (BaselineOfMetacello packagesOfGroupNamed: 'Tests').
-	
 
 	packages := packages ,  (self packagesOfGroupNamed: 'default' on: BaselineOfIceberg ).
 	packages := packages ,  (self packagesOfGroupNamed: 'default' on: BaselineOfLibGit ).
+	packages := packages ,  #('TaskIt').
 
 	dependencies := self externalDependendiesOf: packages.
 	self assertCollection: dependencies hasSameElements: self knownIDEDependencies
@@ -469,6 +470,7 @@ SystemDependenciesTest >> testExternalSUnitKernelDependencies [
 	self longTestCase.
 	
 	dependencies := self externalDependendiesOf: (
+		BaselineOfPharoBootstrap compilerPackageNames,
 		BaselineOfTraits corePackages,
 		BaselineOfPharoBootstrap kernelPackageNames,
 		BaselineOfPharoBootstrap multilingualPackageNames,
@@ -501,7 +503,8 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 
 		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 		
-		BaselineOfSpec2 allPackageNames,
+		(BaselineOfSpecCore deepPackagesOfGroupNamed: #default),
+		(BaselineOfSpec2 deepPackagesOfGroupNamed: #default),
 	
 		"Tests"
 		BaselineOfSUnit defaultPackageNames,
@@ -547,7 +550,9 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		BaselineOfMorphic allPackageNames,
 		BaselineOfSpec allPackageNames,
 		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
-		BaselineOfSpec2 allPackageNames,
+		(BaselineOfSpecCore deepPackagesOfGroupNamed: #default),
+		(BaselineOfSpec2 deepPackagesOfGroupNamed: #default),
+		(BaselineOfNewTools deepPackagesOfGroupNamed: 'Methods'),
 		BaselineOfUI allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel packagesOfGroupNamed: #Core) )).

@@ -10,7 +10,7 @@ Class {
 { #category : #execution }
 SycRealizeClassCommand >> asRefactorings [
 	
-	^classes collect: [ :each | 	RBRealizeClassRefactoring className: each]
+	^classes collect: [ :each | RBRealizeClassRefactoring className: each]
 ]
 
 { #category : #accessing }

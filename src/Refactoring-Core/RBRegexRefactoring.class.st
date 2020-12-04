@@ -8,7 +8,7 @@ I have no special precondition.
 
 Here is a sample of a script that will change of the YK* classes of package PrefixOfPackageNames* into ZG*.
 
-[[[ 
+```
 | pkgPrefix newClassPrefix env model |
 pkgPrefix := 'PrefixOfPackageNames'.
 newClassPrefix := 'ZG'.
@@ -20,8 +20,10 @@ RBClassRegexRefactoring new
 	renameClasses; 					""Here I just want a rename no copy""
 	replace: '^YK(.*)$' with: newClassPrefix,'$1';
   execute.
-]]]
+```
 
+- ==renameClasses== renames the classes in place
+- ==copyclasses== copies the classes (pay attention we are not sure that it is fully working)
 
 
 

@@ -9,5 +9,5 @@ Class {
 
 { #category : #'meta-data - dependency analyser' }
 ManifestNECompletion class >> manuallyResolvedDependencies [
-	^ #(#'Tool-Registry' #'OpalCompiler-Core' #'System-Settings-Browser' #'Polymorph-Widgets' #'Keymapping-KeyCombinations' #'Tool-Base' #'Text-Core' #'Collections-Abstract')
+	^ #(#'Tool-Registry' #'OpalCompiler-Core' #'Tool-Base' #'Text-Core' #'Collections-Abstract')
 ]

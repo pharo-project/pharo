@@ -62,7 +62,7 @@ GLMTreeMorphNodeModel >> contents [
 { #category : #accessing }
 GLMTreeMorphNodeModel >> displayText [
 	^ (UITheme current 
-		newTextIn: self currentWorld
+		newTextIn: self
 		text: (self containerTree glamourPresentation formatedDisplayValueOf: self item))
 			backgroundColor: self textBackgroundColor;
 			yourself
@@ -77,7 +77,7 @@ GLMTreeMorphNodeModel >> elementColumn [
 		addAll: (self tagMorphsFrom: self containerTree glamourPresentation);
 		yourself.
 	
-	^ (UITheme current newRowIn: self currentWorld for: rowElements).
+	^ (UITheme current newRowIn: self for: rowElements).
 ]
 
 { #category : #testing }
@@ -230,7 +230,7 @@ GLMTreeMorphNodeModel >> rowMorphForColumn: aGlamourColumn [
 		add: contentMorph;
 		addAll: tagMorphs;
 		yourself.			
-	^ (UITheme current newRowIn: self currentWorld for: rowElements)
+	^ (UITheme current newRowIn: self for: rowElements)
 ]
 
 { #category : #actions }

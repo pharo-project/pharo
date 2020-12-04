@@ -55,11 +55,6 @@ GLMSmalltalkCodeModel >> hasBindingOf: aSymbol [
 ]
 
 { #category : #accessing }
-GLMSmalltalkCodeModel >> hasBindingThatBeginsWith: aString [
-	^ self variableBindings keys anySatisfy: [:each | each beginsWith: aString]
-]
-
-{ #category : #accessing }
 GLMSmalltalkCodeModel >> highlightSmalltalk [
 	^ highlightSmalltalk
 ]

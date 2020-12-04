@@ -19,12 +19,12 @@ RFReceiverReification class >> key [
 
 { #category : #generate }
 RFReceiverReification >> genForRBMessageNode [
-	^RBTemporaryNode named: #RFReceiverReificationVar.
+	^RBVariableNode named: #RFReceiverReificationVar.
 ]
 
 { #category : #generate }
 RFReceiverReification >> genForRBMethodNode [
-	^RBVariableNode named: 'self'
+	^RBVariableNode selfNode
 	
 ]
 
@@ -43,7 +43,7 @@ RFReceiverReification >> preambleForMessage: aNode [
 		(1 to: aNode numArgs) withIndexDo: [:each :index |  
 			| name |
 			name := 'RFArg', index asString, 'RFReification'.
-			preamble add:  (RBTemporaryNode named: name).
+			preamble add:  (RBVariableNode named: name).
 	].
 
 	^ preamble

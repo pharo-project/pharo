@@ -7,7 +7,7 @@ Class {
 { #category : #helpers }
 CDExistingClassDefinitionTest >> classDefinitionString [
 
-	^ CDClassWithFullDefinitionExample definition 
+	^ (ClassDefinitionPrinter oldPharo for: CDClassWithFullDefinitionExample) definitionString
 ]
 
 { #category : #helpers }
@@ -34,7 +34,7 @@ CDExistingClassDefinitionTest >> testClassNameNodeIsPolymorphicToRBVariableNode 
 	| nameNode |
 	nameNode := classDefinition classNameNode.
 	self assert: nameNode isVariable. "It is polymorphic to class reference nodes in method sources"
-	self deny: nameNode isTemp
+	self deny: nameNode isTempVariable
 ]
 
 { #category : #helpers }
@@ -51,23 +51,23 @@ CDExistingClassDefinitionTest >> testGettingExistingClassNameBinding [
 	| binding |
 	binding := classDefinition classNameNode binding.
 	
-	self assert: binding class equals: OCLiteralVariable. "to be compatible to bindings in RB nodes".
-	self assert: binding assoc equals: CDClassWithFullDefinitionExample binding
+	self assert: binding identicalTo: CDClassWithFullDefinitionExample binding
 ]
 
 { #category : #helpers }
 CDExistingClassDefinitionTest >> testSharedSlotNodeArePolymorphicToRBVariableNodes [
 	
 	| classVarNode |
+		self skip.
 	classVarNode := classDefinition sharedSlotNodes first.
 	
 	self assert: classVarNode isVariable.
-	self deny: classVarNode isTemp.
+	self deny: classVarNode isTempVariable.
 	self deny: classVarNode isGlobalVariable.
 	self assert: classVarNode isClassVariable.
-	self deny: classVarNode isInstance.
-	self deny: classVarNode isLiteralVariable.
-	self deny: classVarNode isUndeclared.
+	self deny: classVarNode isInstanceVariable.
+	self assert: classVarNode isLiteralVariable.
+	self deny: classVarNode isUndeclaredVariable.
 ]
 
 { #category : #helpers }
@@ -76,12 +76,12 @@ CDExistingClassDefinitionTest >> testSlotNodeArePolymorphicToRBVariableNodes [
 	| slotNode |
 	slotNode := classDefinition slotNodes first.
 	self assert: slotNode isVariable.
-	self deny: slotNode isTemp.
+	self deny: slotNode isTempVariable.
 	self deny: slotNode isGlobalVariable.
 	self deny: slotNode isClassVariable.
-	self assert: slotNode isInstance.
+	self assert: slotNode isInstanceVariable.
 	self deny: slotNode isLiteralVariable.
-	self deny: slotNode isUndeclared.
+	self deny: slotNode isUndeclaredVariable.
 ]
 
 { #category : #helpers }

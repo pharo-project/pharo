@@ -191,7 +191,7 @@ FontChooserMorph >> languageIndex: anIndex [
 { #category : #'interface building' }
 FontChooserMorph >> languages [
 	
-	^ self pangrams collect: #key
+	^ self pangrams collect: [:each | each key]
 ]
 
 { #category : #'interface building' }
@@ -365,7 +365,7 @@ FontChooserMorph >> okButtonClicked [
 { #category : #'open/close' }
 FontChooserMorph >> open [
 
-	^ self createWindow openAsIsIn: self currentWorld.
+	^ self createWindow openInWorld.
 ]
 
 { #category : #'interface building' }

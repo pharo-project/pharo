@@ -178,7 +178,7 @@ WriteStream >> next: anInteger putAll: aCollection startingAt: startIndex [
 ]
 
 { #category : #accessing }
-WriteStream >> nextPut: anObject [ 
+WriteStream >> nextPut: anObject [
 	"Primitive. Insert the argument at the next position in the Stream
 	represented by the receiver. Fail if the collection of this stream is not an
 	Array or a String. Fail if the stream is positioned at its end, or if the
@@ -186,11 +186,10 @@ WriteStream >> nextPut: anObject [
 	of the right type for the collection. Optional. See Object documentation
 	whatIsAPrimitive."
 
-	position >= writeLimit
-		ifTrue: [^ self pastEndPut: anObject]
-		ifFalse: 
-			[position := position + 1.
-			^collection at: position put: anObject]
+	^ position >= writeLimit
+		ifTrue: [ self pastEndPut: anObject ]
+		ifFalse: [ position := position + 1.
+			collection at: position put: anObject ]
 ]
 
 { #category : #accessing }

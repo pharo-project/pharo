@@ -3,22 +3,29 @@ Extension { #name : #BaselineOf }
 { #category : #'*Metacello-PharoExtensions' }
 BaselineOf class >> allPackageNames [
 	
-	^ self version packages collect: #name
+	^ self version packages collect: [:each | each name]
 ]
 
 { #category : #'*Metacello-PharoExtensions' }
 BaselineOf class >> deepPackagesOfGroupNamed: aName [
 	"Traverses the group tree to collect packages"
-	| allGroups group |
-	
-	allGroups := self version groups.
-	group := allGroups detect: [ :eachGroup | eachGroup name = aName ].
+	| allGroups projects group |
 
+	allGroups := self version groups.
+	projects := Array streamContents: [ :stream |
+		self version spec
+			specListProjectDo: [ :each | stream nextPut: each ] 
+			packageDo: [ :each | ] 
+			groupDo: [  :each | ] ].
+	group := allGroups detect: [ :eachGroup | eachGroup name = aName ].
 	^ (group includes
 		collect: [ :each | 
 			(allGroups anySatisfy: [ :eachGroup | eachGroup name = each ])
 				ifTrue: [ self deepPackagesOfGroupNamed: each ]
-				ifFalse: [ { each } ] ])
+				ifFalse: [
+					(projects noneSatisfy: [ :eachProject | eachProject name = each ]) 
+						ifTrue: [ { each } ]
+						ifFalse: [ #() ] ] ])
 		flattened
 ]
 

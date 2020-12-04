@@ -148,11 +148,13 @@ MetacelloGenericProjectSpec >> repositories: aBlock constructor: aVersionConstru
 
 { #category : #querying }
 MetacelloGenericProjectSpec >> repository [
-    | specs |
-    self deprecated: 'Use repositories or repositorySpecs'.
-    (specs := self repositorySpecs) isEmpty
-        ifTrue: [ ^ nil ].
-    ^ specs first
+	self
+		deprecated: 'Use repositories or repositorySpecs'
+		transformWith: '`@rec repository' -> '`@rec repositorySpecs first'.
+
+	^ self repositorySpecs
+		ifEmpty: [ nil ]
+		ifNotEmpty: [ self repositorySpecs first ]
 ]
 
 { #category : #accessing }

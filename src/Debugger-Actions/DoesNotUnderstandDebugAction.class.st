@@ -20,16 +20,6 @@ DoesNotUnderstandDebugAction >> appliesToDebugger: aDebugger [
 ]
 
 { #category : #private }
-DoesNotUnderstandDebugAction >> askForCategoryIn: aClass default: aString [
-	| categoryName |
-	categoryName := AbstractTool requestProtocolNameFor: aClass initialAnswer: aString.
-	categoryName ifNil: [^aString].
-	^ categoryName isEmptyOrNil 
-		ifTrue: [^ aString] 
-		ifFalse: [ categoryName ]
-]
-
-{ #category : #private }
 DoesNotUnderstandDebugAction >> askForSuperclassOf: aClass toImplement: aSelector ifCancel: cancelBlock [
 	| classes chosenClassIndex |
 	classes := aClass withAllSuperclasses addAll: (aClass traits sort: [ :t1 :t2 | t1 asString < t2 asString ]); yourself.
@@ -95,7 +85,8 @@ DoesNotUnderstandDebugAction >> executeAction [
 		askForSuperclassOf: self interruptedContext receiver class
 		toImplement: msg selector
 		ifCancel: [^self].
-	msgCategory := (self askForCategoryIn: chosenClass default: 'as yet unclassified').
+	"we do not ask for the category here as it breaks flow"
+	msgCategory := 'as yet unclassified'.
 	self  session
 		implement: msg 
 		classified: msgCategory 

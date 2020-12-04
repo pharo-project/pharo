@@ -146,17 +146,14 @@ FLHookedSubstitutionTest >> testProxyInsideObjectByTarget [
 
 { #category : #tests }
 FLHookedSubstitutionTest >> testSubstituteByItself [
-
-	| aRecursiveClass result | 
-	aRecursiveClass := (self newSubclassOf: Object instanceVariableNames: '' classVariableNames: '') 
-		duringTestCompileSilently: 'fuelAccept: aMapper  
+	| aRecursiveClass |
+	aRecursiveClass := (self newSubclassOf: Object instanceVariableNames: '' classVariableNames: '')
+		                   duringTestCompileSilently: 'fuelAccept: aMapper  
 			^aMapper 
 				visitSubstitution: self by: self 
 				onRecursionDo: [super fuelAccept: aMapper]';
-		yourself.
-
-	result := self resultOfSerializeAndMaterialize: aRecursiveClass new.	
-	
+		                   yourself.
+	self resultOfSerializeAndMaterialize: aRecursiveClass new
 	"self flag: #todo." "Should test that it doesn't enter in loop."
 ]
 

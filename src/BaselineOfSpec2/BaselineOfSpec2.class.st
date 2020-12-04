@@ -7,71 +7,53 @@ Class {
 { #category : #baseline }
 BaselineOfSpec2 >> baseline: spec [
 	<baseline>
-	spec
-		for: #common
-		do: [ self commander2: spec.
-
-			"Packages"
-			spec
-				package: 'Spec2-Core' with: [ spec requires: #('Spec2-Layout' 'Spec2-Transmission' 'Spec2-Commands') ];
-				package: 'Spec2-CommandLine' with: [ spec requires: #('Spec2-Core') ];
-				"package: 'Spec2-Help';"
-				package: 'Spec2-Commands' with: [ spec requires: #('Commander2') ];
-				package: 'Spec2-Deprecated' with: [ spec requires: #('Spec2-Tests' 'Spec2-Adapters-Morphic' 'Spec2-Commander2') ];
-				package: 'Spec2-ObservableSlot';
-				package: 'Spec2-Layout' with: [ spec requires: #('Spec2-ObservableSlot') ];
-				package: 'Spec2-Transmission';
-				package: 'Spec2-Adapters-Morphic' with: [ spec requires: #('Spec2-Core') ];
-				package: 'Spec2-Adapters-Stub' with: [ spec requires: #('Spec2-Core') ];
-				package: 'Spec2-Examples';
-				package: 'Spec2-Interactions' with: [ spec requires: #('Spec2-Core') ];
-				package: 'Spec2-Commander2' with: [ spec requires: #('Spec2-Core' 'Spec2-Interactions' 'Commander2') ];
-				package: 'Spec2-Commander2-Tests' with: [ spec requires: #('Spec2-Commander2') ];
-				package: 'Spec2-Commander2-ContactBook' with: [ spec requires: #('Spec2-Commander2') ];
-				package: 'Spec2-Commander2-ContactBook-Extensions' with: [ spec requires: #('Spec2-Commander2-ContactBook') ];
-				package: 'Spec2-Tests' with: [ spec requires: #('Spec2-Examples') ];
-				package: 'Spec2-Morphic-Backend-Tests' with: [ spec requires: #('Spec2-Adapters-Morphic') ];
-				package: 'Spec2-Backend-Tests' with: [ spec requires: #('Spec2-Adapters-Morphic') ];
-				package: 'Spec2-Adapters-Morphic-Tests' with: [ spec requires: #('Spec2-Tests' 'Spec2-Backend-Tests') ]].
-
-	spec
-		for: #'pharo7.x'
-		do: [ "Dependencies for Pharo7"
-			self parametrizedTests: spec.
-
-			spec
-				baseline: 'Commander'
-				with: [ spec
-						repository: 'github://pharo-ide/Commander:v0.8.1/src';
-						loads: #('Commander-Spec2-Compatibility') ].
-
-			spec
-				package: 'Spec2-Pharo7To8Compatibility';
-				package: 'Spec2-Backend-Tests' with: [ spec requires: #('ParametrizedTests' 'Spec2-Adapters-Morphic') ];
-				package: 'Spec2-Morphic-Backend-Tests' with: [ spec requires: #('ParametrizedTests' 'Spec2-Adapters-Morphic') ];
-				package: 'Spec2-Tests' with: [ spec requires: #('Spec2-Examples' 'ParametrizedTests') ] ].
-	spec
-		for: #('pharo8.x' 'pharo9.x')
-		do: [ spec
-				package: 'Spec2-Tools' with: [ spec requires: #('Spec2-Core') ];
-				package: 'Spec2-Tools-Tests' with: [ spec requires: #('Spec2-Tests' 'Spec2-Tools') ];
-				package: 'Spec2-Examples' with: [ spec requires: #('Spec2-Tools') ];
-				package: 'Spec2-Deprecated-Tools' with: [ spec requires: #('Spec2-Deprecated' 'Spec2-Tools') ] ]
+	
+	spec for: #common do: [ 
+		self spec: spec.
+		
+		spec postLoadDoIt: #postLoad.
+		
+		spec
+			"Core"
+			package: 'Spec2-Adapters-Morphic' with: [ spec requires: #('SpecCore') ];
+			package: 'Spec2-Code-Morphic' with: [ spec requires: #('Spec2-Adapters-Morphic') ];
+			package: 'Spec2-Morphic' with: [ spec requires: #('Spec2-Adapters-Morphic') ];
+			"Tests"
+			package: 'Spec2-Morphic-Examples' with: [ spec requires: #('Spec2-Morphic') ];
+			package: 'Spec2-Backend-Tests' with: [ spec requires: #('Spec2-Adapters-Morphic') ];
+			package: 'Spec2-Morphic-Backend-Tests' with: [ spec requires: #('Spec2-Adapters-Morphic' 'Spec2-Backend-Tests') ];
+			package: 'Spec2-Adapters-Morphic-Tests' with: [ spec requires: #('Spec2-Backend-Tests') ];
+			package: 'Spec2-Morphic-Tests' with: [ spec requires: #('Spec2-Morphic' 'Spec2-Backend-Tests') ];
+			package: 'Spec2-Code-Backend-Tests' with: [ spec requires: #('Spec2-Backend-Tests') ] ].
+	
+	spec group: 'Core' with: #('SpecCore' 'Spec2-Morphic' 'Spec2-Adapters-Morphic').
+	spec group: 'Code' with: #('Core' 'Spec2-Code-Morphic').
+	spec group: 'CodeTests' with: #('Code' 'Spec2-Code-Backend-Tests').
+	spec group: 'Support' with: #('Core' 'Spec2-Morphic-Examples').
+	spec group: 'Tests' with: #(
+		'SpecCore'
+		'Core' 
+		'Spec2-Morphic-Tests' 
+		'Spec2-Morphic-Backend-Tests' 
+		'Spec2-Backend-Tests'
+		'Spec2-Adapters-Morphic-Tests').
+	spec group: 'Base' with: #(
+		'SpecCore'
+		'Core'
+		'Support').
+		
+	spec group: 'default' with: #('Base' 'Code' 'Tests' 'CodeTests').
 ]
 
-{ #category : #dependencies }
-BaselineOfSpec2 >> commander2: spec [
-	spec
-		baseline: 'Commander2'
-		with: [ spec repository: 'github://pharo-spec/Commander2:v2.1.x/src' ]
+{ #category : #script }
+BaselineOfSpec2 >> postLoad [
+
+	self flag: #REMOVE. "This is a temporal hack to ensure the style is taken the new variables way."
+	(self class environment at: #SpStyle) reset.
+		
 ]
 
-{ #category : #dependencies }
-BaselineOfSpec2 >> parametrizedTests: spec [
-	spec baseline: 'ParametrizedTests' with: [ spec repository: 'github://tesonep/ParametrizedTests/src' ]
-]
-
-{ #category : #accessing }
+{ #category : #acccessing }
 BaselineOfSpec2 >> project [
 	"Atomic loading is needed for Spec because we are moving classes of package and it breaks their subclasses. 
 	
@@ -80,9 +62,27 @@ BaselineOfSpec2 >> project [
 «The problem with Obsolete classes is that classes with subclasses were moved from Spec-Core to Spec-Deprecated80. 
 
 When updating Spec it will first load Spec-Core. This will delete the class and its subclasses will be migrated to an obsolete superclass. 
-Then Spec-Deprecated80 is loaded but it does not migrate the subclasses of the obsolete class to it. (Apparently there is an intern working on that Pablo told me).»"
+Then Spec-Deprecated80 is loaded but it does not migrate the subclasses of the obsolete class to it. (Apparently there is an intern working on that Pablo told me).»
 
-	^ super project
-		loadType: #atomic;
-		yourself
+We need to use atomic loading only during update of existing Spec upgrade"
+
+	^self class environment at: #SpPresenter 
+		ifPresent: [
+			super project
+				loadType: #atomic;
+				yourself ] 
+		ifAbsent: [ 		
+			super project
+				loadType: #linear;
+				yourself  ]
+
+	 
+]
+
+{ #category : #'external projects' }
+BaselineOfSpec2 >> spec: spec [
+
+	spec baseline: 'SpecCore' with: [ 
+		spec repository: (self packageRepositoryURL 
+			ifEmpty: [ 'github://pharo-spec/Spec' ]) ]
 ]

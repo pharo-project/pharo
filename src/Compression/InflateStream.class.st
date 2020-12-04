@@ -93,9 +93,10 @@ InflateStream >> atEnd [
 { #category : #'bit access' }
 InflateStream >> bitPosition [
 	"Return the current bit position of the source"
-	sourceStream == nil
-		ifTrue:[^sourcePos * 8 + bitPos]
-		ifFalse:[^sourceStream position + sourcePos * 8 + bitPos]
+
+	^ sourceStream == nil
+		ifTrue: [ sourcePos * 8 + bitPos ]
+		ifFalse: [ (sourceStream position + sourcePos) * 8 + bitPos ]
 ]
 
 { #category : #'open/close' }
@@ -355,7 +356,7 @@ InflateStream >> huffmanTableFrom: aCollection mappedBy: valueMap [
 	| counts  values table minBits maxBits |
 	minBits := MaxBits + 1.
 	maxBits := 0.
-	"Count the occurences of each code length and compute minBits and maxBits"
+	"Count the occurrences of each code length and compute minBits and maxBits"
 	counts := Array new: MaxBits+1.
 	counts atAllPut: 0.
 	aCollection do:[:length| 
@@ -441,9 +442,9 @@ InflateStream >> next [
 	"Answer the next decompressed object in the Stream represented by the
 	receiver."
 
-	position >= readLimit
-		ifTrue: [^self pastEndRead]
-		ifFalse: [^collection at: (position := position + 1)]
+	^ position >= readLimit
+		ifTrue: [ self pastEndRead ]
+		ifFalse: [ collection at: (position := position + 1) ]
 ]
 
 { #category : #accessing }

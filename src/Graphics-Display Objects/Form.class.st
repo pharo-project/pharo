@@ -182,12 +182,10 @@ Form class >> fromDisplay: aRectangle [
 Form class >> fromDisplay: aRectangle using: oldForm [
 	"Like fromDisplay: only if oldForm is the right size, copy into it and answer it instead."
 
-	((oldForm ~~ nil) and: [oldForm extent = aRectangle extent])
-		ifTrue:
-			[oldForm fromDisplay: aRectangle.
-			 ^ oldForm]
-		ifFalse:
-			[^ self fromDisplay: aRectangle]
+	^ (oldForm ~~ nil and: [ oldForm extent = aRectangle extent ])
+		ifTrue: [ oldForm fromDisplay: aRectangle.
+			oldForm ]
+		ifFalse: [ self fromDisplay: aRectangle ]
 ]
 
 { #category : #'instance creation' }
@@ -275,6 +273,15 @@ Form class >> under [
 Form >> allocateForm: extentPoint [
 	"Allocate a new form which is similar to the receiver and can be used for accelerated blts"
 	^Form extent: extentPoint depth: self nativeDepth
+]
+
+{ #category : #converting }
+Form >> alphaMultiplied [
+	^ (self asFormOfDepth: 32) collectColors: [ :c |
+		| a |
+		a := c alpha.
+		Color r: c red * a g: c green * a b: c blue * a alpha: a
+	]
 ]
 
 { #category : #converting }
@@ -371,9 +378,10 @@ Form >> asSourceForm [
 { #category : #'color mapping' }
 Form >> balancedPatternFor: aColor [
 	"Return the pixel word for representing the given color on the receiver"
-	self hasNonStandardPalette
-		ifTrue:[ ^ self bitPatternFor: aColor]
-		ifFalse:[^ self balancedPatternFor: aColor depth: self depth]
+
+	^ self hasNonStandardPalette
+		ifTrue: [ self bitPatternFor: aColor ]
+		ifFalse: [ self balancedPatternFor: aColor depth: self depth ]
 ]
 
 { #category : #'color mapping' }
@@ -452,10 +460,11 @@ Form >> balancedPatternFor: aColor depth: aDepth [
 { #category : #'color mapping' }
 Form >> bitPatternFor: aColor [
 	"Return the pixel word for representing the given color on the receiver"
-	aColor isColor ifFalse:[^aColor bitPatternForDepth: self depth].
-	self hasNonStandardPalette
-		ifTrue:[^Bitmap with: (self pixelWordFor: aColor)]
-		ifFalse:[^aColor bitPatternForDepth: self depth]
+
+	aColor isColor ifFalse: [ ^ aColor bitPatternForDepth: self depth ].
+	^ self hasNonStandardPalette
+		ifTrue: [ Bitmap with: (self pixelWordFor: aColor) ]
+		ifFalse: [ aColor bitPatternForDepth: self depth ]
 ]
 
 { #category : #filling }
@@ -483,7 +492,7 @@ Form >> bits: aBitmap [
 { #category : #accessing }
 Form >> bitsSize [
 	| pixPerWord |
-	depth == nil ifTrue: [depth := 1].
+	depth ifNil: [ depth := 1 ].
 	pixPerWord := 32 // self depth.
 	^ width + pixPerWord - 1 // pixPerWord * height
 ]
@@ -628,7 +637,8 @@ Form >> colorReduced [
 { #category : #'color mapping' }
 Form >> colormapFromARGB [
 	"Return a ColorMap mapping from canonical ARGB space into the receiver.
-	Note: This version is optimized for Squeak forms."
+	Note: This version is optimized for image forms."
+	
 	| map nBits |
 	self hasNonStandardPalette 
 		ifTrue:[^ColorMap mappingFromARGB: self rgbaBitMasks].
@@ -663,9 +673,10 @@ Form >> colormapFromARGB [
 { #category : #'color mapping' }
 Form >> colormapIfNeededFor: destForm [
 	"Return a ColorMap mapping from the receiver to destForm."
-	(self hasNonStandardPalette or:[destForm hasNonStandardPalette]) 
-		ifTrue:[^self colormapFromARGB mappingTo: destForm colormapFromARGB]
-		ifFalse:[^self colormapIfNeededForDepth: destForm depth]
+
+	^ (self hasNonStandardPalette or: [ destForm hasNonStandardPalette ])
+		ifTrue: [ self colormapFromARGB mappingTo: destForm colormapFromARGB ]
+		ifFalse: [ self colormapIfNeededForDepth: destForm depth ]
 ]
 
 { #category : #'color mapping' }
@@ -959,8 +970,8 @@ Form >> displayScaledOn: aForm [
 { #category : #accessing }
 Form >> displayScreen [
 	"Return the display screen the receiver is allocated on. 
-	Forms in general are Squeak internal and not allocated on any particular display."
-	^nil
+	Forms in general are internal and not allocated on any particular display."
+	^ nil
 ]
 
 { #category : #analyzing }
@@ -1369,7 +1380,7 @@ Form >> hasBeenModified: aBool [
 Form >> hasNonStandardPalette [
 	"Return true if the receiver has a non-standard palette.
 	Non-standard means that RGBA components may be located
-	at positions differing from the standard Squeak RGBA layout
+	at positions differing from the standard Pharo RGBA layout
 	at the receiver's depth."
 	^false
 ]
@@ -1430,6 +1441,15 @@ Form >> innerPixelRectFor: pv orNot: not [
 	^ ((xTally findFirst: [:t | t>0]) - 1) @ ((yTally findFirst: [:t | t>0]) - 1)
 		corner:
 			(xTally findLast: [:t | t>0])@(yTally findLast: [:t | t>0])
+]
+
+{ #category : #converting }
+Form >> invertedAndAlphaMultiplied [
+	^ (self asFormOfDepth: 32) collectColors: [ :c |
+		| a |
+		a := c alpha.
+		Color r: (1.0 - c red) * a g: (1.0 - c green) * a b: (1.0 - c blue) * a alpha: a
+	]
 ]
 
 { #category : #testing }
@@ -1836,21 +1856,22 @@ Form >> pixelValueAt: aPoint put: pixelValue [
 { #category : #'color mapping' }
 Form >> pixelValueFor: aColor [
 	"Return the pixel word for representing the given color on the receiver"
-	self hasNonStandardPalette
-		ifTrue:[^self colormapFromARGB mapPixel: (aColor pixelValueForDepth: 32)]
-		ifFalse:[^aColor pixelValueForDepth: self depth]
+
+	^ self hasNonStandardPalette
+		ifTrue: [ self colormapFromARGB mapPixel: (aColor pixelValueForDepth: 32) ]
+		ifFalse: [ aColor pixelValueForDepth: self depth ]
 ]
 
 { #category : #'color mapping' }
 Form >> pixelWordFor: aColor [
 	"Return the pixel word for representing the given color on the receiver"
+
 	| basicPattern |
-	self hasNonStandardPalette 
-		ifFalse:[^aColor pixelWordForDepth: self depth].
+	self hasNonStandardPalette ifFalse: [ ^ aColor pixelWordForDepth: self depth ].
 	basicPattern := self pixelValueFor: aColor.
-	self depth = 32 
-		ifTrue:[^basicPattern]
-		ifFalse:[^aColor pixelWordFor: self depth filledWith: basicPattern]
+	^ self depth = 32
+		ifTrue: [ basicPattern ]
+		ifFalse: [ aColor pixelWordFor: self depth filledWith: basicPattern ]
 ]
 
 { #category : #other }
@@ -2558,6 +2579,20 @@ Form >> wipeImage: otherImage at: topLeft delta: delta clippingBox: clipBox [
 		[:i | i <= nSteps
 			ifTrue: [wipeRect translateBy: (delta* (i-1))]
 			ifFalse: [nil]]
+]
+
+{ #category : #converting }
+Form >> withAlphaExtractedFromSubpixelRendering [
+	^ (self asFormOfDepth: 32) collectColors: [ :c |
+		| r g b a|
+		r := c red.
+		g := c green.
+		b := c blue.
+		a := c alpha.
+		a := ((r max: g) max: b) * a.
+		
+		Color r: r g: g b: b alpha: a
+	]
 ]
 
 { #category : #'file in/out' }

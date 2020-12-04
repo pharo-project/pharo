@@ -113,7 +113,8 @@ Class {
 		'shouldRestoreSelection',
 		'highlighting',
 		'changesWasInitiatedByUser',
-		'navigationSelector'
+		'navigationSelector',
+		'dataSourceClass'
 	],
 	#category : #'Calypso-Browser-Table'
 }
@@ -235,6 +236,16 @@ ClyQueryViewMorph >> dataSource: aDataSource [
 	]
 ]
 
+{ #category : #accessing }
+ClyQueryViewMorph >> dataSourceClass [
+	^ dataSourceClass ifNil: [ ClyCollapsedDataSource ]
+]
+
+{ #category : #accessing }
+ClyQueryViewMorph >> dataSourceClass: aClass [
+	dataSourceClass := aClass
+]
+
 { #category : #controlling }
 ClyQueryViewMorph >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [
 	| context |
@@ -275,6 +286,11 @@ ClyQueryViewMorph >> dropPassenger: aPassanger at: aDataSourceItem [
 	context := self createSelectionContextOf: aDataSourceItem asSelection.
 	
 	^aPassanger dropInContext: context
+]
+
+{ #category : #controlling }
+ClyQueryViewMorph >> enableCollapsingOfPreexpandedItems [
+	dataSourceClass := ClyExpandedDataSource.
 ]
 
 { #category : #controlling }
@@ -684,7 +700,7 @@ ClyQueryViewMorph >> showQuery: aQuery [
 
 	| dataSource |
 	self initiateUIChangeBy: [ 
-		dataSource := ClyCollapsedDataSource on: aQuery.
+		dataSource := self dataSourceClass on: aQuery.
 		self dataSource: dataSource.
 		self ensureSelectedItemIfNeeded].
 ]

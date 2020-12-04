@@ -3,7 +3,7 @@ A test for AthensCairoMatrix
 "
 Class {
 	#name : #AthensCairoMatrixTest,
-	#superclass : #TestCase,
+	#superclass : #AthensTransformTest,
 	#category : #'Athens-Cairo-Tests-Transforms'
 }
 
@@ -22,4 +22,9 @@ AthensCairoMatrixTest >> testInverted [
 	| m |
 	m := AthensCairoMatrix new.
 	self assert: m getHandle ~~ m inverted getHandle
+]
+
+{ #category : #tests }
+AthensCairoMatrixTest >> transformClass [
+	^ AthensCairoMatrix
 ]

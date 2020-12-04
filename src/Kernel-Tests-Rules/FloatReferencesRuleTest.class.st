@@ -26,7 +26,7 @@ FloatReferencesRuleTest >> testBasicCheck [
 	| testMethod |
 	testMethod := testClass >> (testClass compile: 'testMethod BoxedFloat64').
 	
-	self assert: (FloatReferencesRule new basicCheck: testMethod ast)
+	self assert: (FloatReferencesRule new basicCheck: testMethod ast body statements first )
 	 
 ]
 
@@ -36,7 +36,7 @@ FloatReferencesRuleTest >> testBasicCheck1 [
 	| testMethod |
 	testMethod := testClass >> (testClass compile: 'testMethod SmallFloat64').  
 	
-	self assert: (FloatReferencesRule new basicCheck: testMethod ast)
+	self assert: (FloatReferencesRule new basicCheck: testMethod ast body statements first)
 	 
 ]
 

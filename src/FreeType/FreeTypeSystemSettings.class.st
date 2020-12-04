@@ -97,7 +97,7 @@ o NONE: use the original glyph shapes without snapping their features to pixel b
 { #category : #settings }
 FreeTypeSystemSettings class >> ft2LibraryVersion [
 	^ Smalltalk ui theme 
-		newLabelIn: self currentWorld 
+		newLabelIn: self 
 		for: self 
 		label: 'Available version: ', FT2Version current asString 
 		getEnabled: nil.

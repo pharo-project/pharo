@@ -207,9 +207,12 @@ PBClassLoader >> initializeClassPool: aClassName [
 
 	| definition class classPool classVariableBindings |
 	definition := systemDefinition classNamed: aClassName.
+	class := environment at: aClassName.
+
 	classVariableBindings := definition classVarNames collect: [ :each | | classVar |
 		classVar := (self classNamed: #ClassVariable) basicNew.
-		classVar instanceVariableAtIndex: 1 put: (each asLiteralInObjectSpace: builder objectSpace) ].
+		classVar instanceVariableAtIndex: 1 put: (each asLiteralInObjectSpace: builder objectSpace).
+		classVar instanceVariableAtIndex: 3 put: class "initialize owningClass" ].
 	
 	class := environment at: aClassName.
 	classPool := builder bootstrapInterpreter

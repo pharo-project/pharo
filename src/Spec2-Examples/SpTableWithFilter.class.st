@@ -26,8 +26,7 @@ SpTableWithFilter >> initializePresenters [
 			addColumn: (SpStringTableColumn evaluated: #name);
 			yourself);
 		items: Smalltalk allClassesAndTraits;
-		itemFilter: [ :each :pattern | 
-			each crTrace.
+		itemFilter: [ :each :pattern |
 			each asLowercase includesSubstring: pattern asLowercase ];
 		yourself
 ]

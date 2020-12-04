@@ -21,19 +21,9 @@ SpLabelledDropList class >> defaultSpec [
 
 { #category : #'api-shortcuts' }
 SpLabelledDropList >> display: aBlock [
-
+	"aBlock (a one argument block) will be applied on each of the list items and the result of the block will be used to display the item on the screen."
+	
 	^ self dropList display: aBlock
-]
-
-{ #category : #'api-shortcuts' }
-SpLabelledDropList >> displayBlock: aBlock [
-
-	self
-		deprecated: 'Please use #display: instead'
-		transformWith: '`@receiver displayBlock: `@arg' 
-						-> '`@receiver display: `@arg'.
-
-	^self dropList display: aBlock
 ]
 
 { #category : #accessing }

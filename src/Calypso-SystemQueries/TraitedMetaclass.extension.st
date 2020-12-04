@@ -9,7 +9,7 @@ TraitedMetaclass >> tagsForAllMethods [
 	allProtocols := self organization protocols 
 		reject: [ :each | each name = Protocol unclassified | each isExtensionProtocol ].
 
-	selectors := self visibleMethods collect: #selector.
+	selectors := self visibleMethods collect: [ :each | each selector ].
 
 	^ allProtocols
 		select: [ :protocol | 

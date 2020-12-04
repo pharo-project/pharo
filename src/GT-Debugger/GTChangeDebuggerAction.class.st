@@ -22,16 +22,16 @@ GTChangeDebuggerAction class >> changeDebuggerActionsForContext: aContext exclud
 ]
 
 { #category : #accessing }
-GTChangeDebuggerAction class >> debuggersForContext: aContext excluding: aDebugger [ 
+GTChangeDebuggerAction class >> debuggersForContext: aContext excluding: aDebugger [
+
 	"Ungly check to make sure the debugger will work until everything is in the image"
-	(Smalltalk tools respondsTo: #debuggersForContext:) 
-		ifTrue: [ ^ (Smalltalk tools debuggersForContext: aContext) reverse
-			remove: aDebugger class ifAbsent: [ ];
-			yourself]
-		ifFalse: [ ^ OrderedCollection new ]
+
+	^ DebuggerSettings availableDebuggers reverse
+		  remove: aDebugger class ifAbsent: [  ];
+		  yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 GTChangeDebuggerAction class >> gtChangeDebuggerActionsFor: aDebugger [
 	<gtDebuggingAction>
 	
@@ -44,7 +44,7 @@ GTChangeDebuggerAction class >> gtChangeDebuggerActionsFor: aDebugger [
 GTChangeDebuggerAction >> debuggerClass: aClass [
 
 	debuggerClass := aClass.
-	self label: debuggerClass defaultTitle.
+	self label: 'Debugger'
 ]
 
 { #category : #initialization }

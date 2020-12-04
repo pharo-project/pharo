@@ -9,26 +9,9 @@ Class {
 
 { #category : #running }
 ReTemporaryVariableCapitalizationRule >> basicCheck: aNode [
-	^ (self checkIsVariableWithParent: aNode) and: [ ((self checkIsArgumentDefinition: aNode) or: [ self checkIsTempDefinition: aNode ]) and: [ aNode name first isUppercase ] ]
-]
-
-{ #category : #'running-helpers' }
-ReTemporaryVariableCapitalizationRule >> checkIsArgumentDefinition: aNode [
-
-	^ aNode isArgument and: [ aNode parent isMethod ]
-]
-
-{ #category : #'running-helpers' }
-ReTemporaryVariableCapitalizationRule >> checkIsTempDefinition: aNode [
-
-	^ aNode isTemp and: [ aNode parent isSequence ]
-]
-
-{ #category : #'running-helpers' }
-ReTemporaryVariableCapitalizationRule >> checkIsVariableWithParent: aNode [
-
-	^ aNode isVariable and: [
-	  aNode parent isNotNil ]
+	aNode isLocalVariable ifFalse: [ ^false ].
+	aNode isDefinition ifFalse: [ ^false ].
+	^aNode name first isUppercase
 ]
 
 { #category : #helpers }
@@ -42,7 +25,7 @@ ReTemporaryVariableCapitalizationRule >> critiqueFor: aNode [
 	crit	
 		tinyHint: aNode name;
 		refactoring: (
-			RBRenameTemporaryRefactoring
+			RBRenameArgumentOrTemporaryRefactoring
 				renameTemporaryFrom: aNode sourceInterval
 				to: aNode name uncapitalized
 				in: aNode methodNode methodClass

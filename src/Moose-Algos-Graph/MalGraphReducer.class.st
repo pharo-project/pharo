@@ -44,7 +44,7 @@ MalGraphReducer >> mergeNodesInCircuit: aNodeList [
 	sortedNodes := aNodeList sort: [ :one :other | one model < other model ].
 	circuitNodes add: (self nodeClass new
 		mergedNodes: sortedNodes;
-		model: (sortedNodes collect: #model);
+		model: (sortedNodes collect: [:each | each model]);
 		nextNodes: (self nextNodesFor: sortedNodes);
 		previousNodes: (self previousNodesFor: sortedNodes);
 		yourself)

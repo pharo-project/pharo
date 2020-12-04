@@ -314,10 +314,9 @@ Interval >> printOn: aStream [
 Interval >> rangeIncludes: aNumber [
 	"Return true if the number lies in the interval between start and stop."
 
-	step >= 0
-		ifTrue: [^ aNumber between: start and: stop]
-		ifFalse: [^ aNumber between: stop and: start]
-
+	^ step >= 0
+		ifTrue: [ aNumber between: start and: stop ]
+		ifFalse: [ aNumber between: stop and: start ]
 ]
 
 { #category : #removing }
@@ -360,13 +359,13 @@ Interval >> shuffled [
 Interval >> size [
 	"Answer how many elements the receiver contains."
 
-	step < 0
-		ifTrue: [start < stop
-				ifTrue: [^ 0]
-				ifFalse: [^ stop - start // step + 1]]
-		ifFalse: [stop < start
-				ifTrue: [^ 0]
-				ifFalse: [^ stop - start // step + 1]]
+	^ step < 0
+		ifTrue: [ start < stop
+				ifTrue: [ 0 ]
+				ifFalse: [ (stop - start) // step + 1 ] ]
+		ifFalse: [ stop < start
+				ifTrue: [ 0 ]
+				ifFalse: [ (stop - start) // step + 1 ] ]
 ]
 
 { #category : #sorting }

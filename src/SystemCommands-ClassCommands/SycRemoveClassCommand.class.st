@@ -10,7 +10,7 @@ Class {
 { #category : #execution }
 SycRemoveClassCommand >> asRefactorings [
 
-	^{RBRemoveClassRefactoring classNames: (classes collect: #name)}
+	^{RBRemoveClassRefactoring classNames: (classes collect: [:each | each name])}
 ]
 
 { #category : #execution }

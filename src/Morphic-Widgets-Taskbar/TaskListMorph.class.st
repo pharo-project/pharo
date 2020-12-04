@@ -87,6 +87,13 @@ TaskListMorph >> defaultPreviewExtent [
 	^(320@320) scaledByDisplayScaleFactor
 ]
 
+{ #category : #'open/close' }
+TaskListMorph >> doOpenInWorld: aWorld [
+	"Update the layout after opening."
+
+	aWorld addMorphCentered: self
+]
+
 { #category : #running }
 TaskListMorph >> done [
 	"Close the tasklist and make the active task current."
@@ -195,24 +202,25 @@ TaskListMorph >> newTasksMorph [
 ]
 
 { #category : #'open/close' }
-TaskListMorph >> openAsIs [
-	"Open in the world."
-	
-	self openAsIsIn: self currentWorld
+TaskListMorph >> openInWorld: aWorld [
+
+	super openInWorld: aWorld.	
+	self wantsKeyboardFocus
+		ifTrue: [self takeKeyboardFocus]
 ]
 
 { #category : #'open/close' }
-TaskListMorph >> openAsIsIn: aWorld [
+TaskListMorph >> postOpenInWorld: aWorld [
 	"Update the layout after opening."
 
-	aWorld addMorphCentered: self.
 	self allMorphs do: [:m | m layoutChanged].
-	aWorld startSteppingSubmorphsOf: self.
-	
-	self announceOpened.
-	
-	self wantsKeyboardFocus
-		ifTrue: [self takeKeyboardFocus]
+	super postOpenInWorld: aWorld
+]
+
+{ #category : #'open/close' }
+TaskListMorph >> preOpenInWorld: aWorld [
+
+	"Do nothing"
 ]
 
 { #category : #accessing }

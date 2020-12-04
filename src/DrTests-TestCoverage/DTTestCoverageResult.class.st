@@ -25,7 +25,7 @@ DTTestCoverageResult >> buildTreeForUI [
 				yourself).
 			(DTTreeNode new
 				name: 'Uncovered methods';
-				subResults: (self methodList collect: #asResultForDrTest);
+				subResults: (self methodList collect: [:each | each asResultForDrTest]);
 				yourself)}
 ]
 

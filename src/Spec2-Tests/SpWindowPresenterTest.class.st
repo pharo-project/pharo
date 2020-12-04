@@ -1,6 +1,6 @@
 Class {
 	#name : #SpWindowPresenterTest,
-	#superclass : #SpTest,
+	#superclass : #SpSpecTest,
 	#category : #'Spec2-Tests-Core'
 }
 
@@ -34,6 +34,17 @@ SpWindowPresenterTest >> testIsClosed [
 	self deny: presenter isClosed.
 	presenter close.
 	self assert: presenter isClosed
+]
+
+{ #category : #tests }
+SpWindowPresenterTest >> testIsTopWindow [
+
+	self deny: presenter isTopWindow.
+	self openInstance.
+	presenter takeKeyboardFocus.
+	self assert: presenter isTopWindow.
+	presenter close.
+	self deny: presenter isTopWindow
 ]
 
 { #category : #tests }

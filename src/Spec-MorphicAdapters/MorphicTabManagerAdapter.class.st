@@ -4,9 +4,6 @@ I am the adpater used to bridge a TabManagerPresenter and a TabManager
 Class {
 	#name : #MorphicTabManagerAdapter,
 	#superclass : #AbstractMorphicAdapter,
-	#instVars : [
-		'isClosedHolder'
-	],
 	#category : #'Spec-MorphicAdapters-Base'
 }
 

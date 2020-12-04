@@ -19,10 +19,10 @@ RFIndexReification class >> key [
 
 { #category : #generate }
 RFIndexReification >> genForRBAssignmentNode [
-	^entity variable binding slot index asLiteralNode
+	^entity variable binding index asLiteralNode
 ]
 
 { #category : #generate }
 RFIndexReification >> genForRBVariableNode [
-	^entity binding slot index asLiteralNode
+	^entity binding index asLiteralNode
 ]

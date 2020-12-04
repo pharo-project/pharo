@@ -15,9 +15,7 @@ ReImageRuleBaner class >> ban: aCritique [
 		of: aCritique sourceAnchor entity
 		bannedOn: self.
 
-	(aCritique rule isKindOf: ReAbstractRule)
-		ifTrue: [
-			aCritique rule class enabled: false ]
+	aCritique rule class enabled: false
 ]
 
 { #category : #properties }

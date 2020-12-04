@@ -190,6 +190,11 @@ ProtoObject >> instVarsInclude: anObject [
 ]
 
 { #category : #testing }
+ProtoObject >> isImmediateObject [
+	^ self class isImmediateClass
+]
+
+{ #category : #testing }
 ProtoObject >> isNil [
 	"Coerces nil to true and everything else to false."
 
@@ -274,18 +279,33 @@ ProtoObject >> pointersTo [
 ]
 
 { #category : #'pointing to' }
+ProtoObject >> pointersToAmong: aCollectionOfObjects [
+	"Meant to be used as: 
+	Smalltalk garbageCollect.
+	objs := SystemNavigation default allObjects.
+	anyObject pointersToAmong: objs.
+	otherObject pointersToAmong: objs.
+	
+	Avoid multiple calls to allObjects Primitive and multiple gcs.
+	"
+
+	^ self pointersToExcept: #() among: aCollectionOfObjects
+]
+
+{ #category : #'pointing to' }
 ProtoObject >> pointersToExcept: objectsToExclude [
 	"Find all objects in the system that hold a pointer to me, excluding those listed"
-	| c pointers objectsToAlwaysExclude |
+	| c pointers objectsToAlwaysExclude closure|
 	Smalltalk garbageCollect.
 	pointers := OrderedCollection new.
-
-	SystemNavigation default allObjectsDo: [ :e | (e pointsTo: self) ifTrue: [ pointers add: e ]  ].
+	closure := [ :e | (e pointsTo: self) ifTrue: [ pointers add: e ]  ].
+	SystemNavigation default allObjectsDo: closure.
 
 	objectsToAlwaysExclude := {
 		thisContext.
 		thisContext sender.
 		thisContext sender sender.
+		closure.
 		objectsToExclude.
 	}.
 	c := thisContext.
@@ -293,6 +313,29 @@ ProtoObject >> pointersToExcept: objectsToExclude [
 		(ea == thisContext sender) or: [ "warning: this expression is dependent on closure structure of this method"
 			(objectsToAlwaysExclude identityIncludes: ea)
 				or: [objectsToExclude identityIncludes: ea ]] ]) asArray
+]
+
+{ #category : #'pointing to' }
+ProtoObject >> pointersToExcept: objectsToExclude among: aCollectionOfObjects [
+	"Find all objects in the system that hold a pointer to me, excluding those listed.
+	This method is meant to be a faster solution if used several times on several objects rather than calling the GC multiples times.
+	See pointersToExcept: for usage.
+	"
+
+	| pointers objectsToAlwaysExclude |
+	pointers := OrderedCollection new.
+	pointers := aCollectionOfObjects select: [ :e | e pointsTo: self ].
+	objectsToAlwaysExclude := {thisContext.
+	thisContext sender.
+	thisContext sender sender.
+	objectsToExclude}.
+	^ (pointers
+		removeAllSuchThat: [ :ea | 
+			ea == thisContext sender
+				or:
+					[ "warning: this expression is dependent on closure structure of this method"
+					(objectsToAlwaysExclude identityIncludes: ea)
+						or: [ objectsToExclude identityIncludes: ea ] ] ]) asArray
 ]
 
 { #category : #'pointing to' }

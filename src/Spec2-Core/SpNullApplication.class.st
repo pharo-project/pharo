@@ -12,5 +12,7 @@ Class {
 SpNullApplication class >> reset [
 	<script>
 	
+	DefaultApplication ifNotNil: [ 
+		DefaultApplication reset ].
 	DefaultApplication := nil
 ]

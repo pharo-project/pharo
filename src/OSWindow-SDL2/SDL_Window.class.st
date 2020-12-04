@@ -30,6 +30,11 @@ SDL_Window class >> finalizeResourceData: aTuple [
 ]
 
 { #category : #rendering }
+SDL_Window >> createAcceleratedRenderer [
+	^ self createRenderer: -1 flags: SDL_RENDERER_ACCELERATED
+]
+
+{ #category : #rendering }
 SDL_Window >> createDefaultRenderer [
 	^ self createRenderer: -1 flags: 0
 ]
@@ -50,6 +55,11 @@ SDL_Window >> destroy [
 { #category : #accessing }
 SDL_Window >> fullscreen: flags [
 	^ self ffiCall: #( int SDL_SetWindowFullscreen ( self , Uint32 flags ) )
+]
+
+{ #category : #accessing }
+SDL_Window >> getDisplayIndex [
+	^ self ffiCall: #( int SDL_GetWindowDisplayIndex ( self ) )
 ]
 
 { #category : #surface }
@@ -75,6 +85,11 @@ SDL_Window >> getWMInfo: infos [
 { #category : #surface }
 SDL_Window >> getWindowSurface [
 	^ self ffiCall: #( SDL_Surface* SDL_GetWindowSurface( self ) )
+]
+
+{ #category : #accessing }
+SDL_Window >> glGetDrawableSizeW: w h: h [
+	^ self ffiCall: #( void SDL_GL_GetDrawableSize ( self , int* w , int* h ) )
 ]
 
 { #category : #'window management' }

@@ -478,12 +478,6 @@ Path >> pathString [
 ]
 
 { #category : #printing }
-Path >> printOn: aStream [ 
-	self printOn: aStream delimiter: self delimiter.
-
-]
-
-{ #category : #printing }
 Path >> printOn: aStream delimiter: aCharacter [
 	(1 to: self size)
 		do: [:index | aStream nextPutAll: (self at: index)]

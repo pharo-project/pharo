@@ -19,6 +19,12 @@ OSWindowFormRenderer >> deferUpdatesWhile: aBlock [
 	aBlock value
 ]
 
+{ #category : #accessing }
+OSWindowFormRenderer >> drawDuring: aBlock [
+
+	aBlock value: self getCanvas
+]
+
 { #category : #'morphic integration' }
 OSWindowFormRenderer >> forceDisplayUpdate [
 ]
@@ -43,6 +49,11 @@ OSWindowFormRenderer >> getCanvas [
 { #category : #size }
 OSWindowFormRenderer >> newExtent: newExtent [
 	form setExtent: newExtent depth: form depth
+]
+
+{ #category : #accessing }
+OSWindowFormRenderer >> pixelExtent [
+	^ form ifNotNil: [ form extent ] ifNil: [ 1@1 ]
 ]
 
 { #category : #'morphic integration' }

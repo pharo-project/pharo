@@ -20,14 +20,14 @@ SimpleGridNodeExample >> age: anInteger [
 
 { #category : #'accessing - morphs' }
 SimpleGridNodeExample >> ageMorph [
-	^ ( self theme  
-				newTextEntryIn: self currentWorld
-				for: self 
-				get: #age
-				set: #age:
-				class: Integer
-				getEnabled: nil
-				help: nil) color: Color transparent
+	^ (self theme  
+		newTextEntryIn: self
+		for: self 
+		get: #age
+		set: #age:
+		class: Integer
+		getEnabled: nil
+		help: nil) color: Color transparent
 ]
 
 { #category : #accessing }
@@ -43,14 +43,14 @@ SimpleGridNodeExample >> firstName: aString [
 
 { #category : #'accessing - morphs' }
 SimpleGridNodeExample >> firstNameMorph [
-	^ ( self theme  
-				newTextEntryIn: self currentWorld
-				for: self 
-				get: #firstName
-				set: #firstName:
-				class: String
-				getEnabled: nil
-				help: nil) color: Color transparent
+	^ (self theme  
+		newTextEntryIn: self
+		for: self 
+		get: #firstName
+		set: #firstName:
+		class: String
+		getEnabled: nil
+		help: nil) color: Color transparent
 ]
 
 { #category : #accessing }
@@ -67,7 +67,7 @@ SimpleGridNodeExample >> married: aBoolean [
 { #category : #'accessing - morphs' }
 SimpleGridNodeExample >> marriedMorph [
 	^ ( self theme  
-			newCheckboxIn: self currentWorld
+			newCheckboxIn: self
 			for: self 
 			getSelected: #married
 			setSelected: #married:
@@ -89,12 +89,12 @@ SimpleGridNodeExample >> secondName: aString [
 
 { #category : #'accessing - morphs' }
 SimpleGridNodeExample >> secondNameMorph [
-	^ ( self theme  
-				newTextEntryIn: self currentWorld
-				for: self 
-				get: #secondName
-				set: #secondName:
-				class: String
-				getEnabled: nil
-				help: nil) color: Color transparent
+	^ (self theme  
+		newTextEntryIn: self
+		for: self 
+		get: #secondName
+		set: #secondName:
+		class: String
+		getEnabled: nil
+		help: nil) color: Color transparent
 ]

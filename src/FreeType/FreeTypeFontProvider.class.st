@@ -20,7 +20,7 @@ Or set for example set ballon or default font as following:
 "
 Class {
 	#name : #FreeTypeFontProvider,
-	#superclass : #FontProviderAbstract,
+	#superclass : #AbstractFontProvider,
 	#instVars : [
 		'fileInfos',
 		'fileInfoCache',
@@ -48,19 +48,16 @@ FreeTypeFontProvider class >> current [
 ]
 
 { #category : #'class initialization' }
-FreeTypeFontProvider class >> initialize [
-	"
-	self initialize
-	"
-	"ensure that other classes have also been initialized by forcefully initializing them now.
-	It then does not matter which order they are initialized in during the package load"
+FreeTypeFontProvider class >> initialize [	 
+	"Ensure that other classes have also been initialized by forcefully initializing them now.
+	 It then does not matter which order they are initialized in during the package load"
 	FT2Constants initialize.
 	FreeTypeCache initialize.
 	FreeTypeCacheConstants initialize.
 	FreeTypeSettings initialize.
 	
 	current := nil.
-	self current. "this creates an instance of me, and updates from the system"
+	self current "this creates an instance of me, and updates from the system"
 ]
 
 { #category : #'extra fonts registration' }
@@ -279,33 +276,41 @@ FreeTypeFontProvider >> getWindowsFontFolderPath [
 	| externalLibraryClass externalTypeClass fun buff |
 	externalLibraryClass := Smalltalk globals at: #ExternalLibraryFunction ifAbsent: [  ].
 	externalTypeClass := Smalltalk globals at: #ExternalType ifAbsent: [  ].
-	(externalLibraryClass isNil or: [ externalTypeClass isNil ])
-		ifTrue: [ ^ self guessWindowsFontFolderPath ].
+	(externalLibraryClass isNil or: [ externalTypeClass isNil ]) ifTrue: [ ^ self guessWindowsFontFolderPath ].
 	fun := externalLibraryClass
-		name: 'SHGetFolderPathA'
-		module: 'shfolder.dll'
-		callType: 1
-		returnType: externalTypeClass long
-		argumentTypes:
-			{(externalTypeClass long).
-			(externalTypeClass long).
-			(externalTypeClass long).
-			(externalTypeClass long).
-			(externalTypeClass char asPointerType)}.
+		       name: 'SHGetFolderPathA'
+		       module: 'shfolder.dll'
+		       callType: 1
+		       returnType: externalTypeClass long
+		       argumentTypes: { 
+				       externalTypeClass long.
+				       externalTypeClass long.
+				       externalTypeClass long.
+				       externalTypeClass long.
+				       externalTypeClass char asPointerType }.
 	buff := ByteArray new: 1024.
 	[ 
-	| r |
-	r := fun
+	fun
 		invokeWith: 0
 		with: 16r0014
 		with: 0
 		with: 0
-		with: buff	"CSIDL_FONTS" ]
+		with: buff "CSIDL_FONTS" ]
 		on: Error
-		do: [ :e | 
-			"will get error if ffiplugin is missing"
-			^ self guessWindowsFontFolderPath ].
+		do: [ :e | "will get error if ffiplugin is missing" ^ self guessWindowsFontFolderPath ].
 	^ (buff copyFrom: 1 to: (buff indexOf: 0) - 1) asString
+]
+
+{ #category : #'file paths' }
+FreeTypeFontProvider >> getWindowsLocalPaths [
+	
+	"This values should be read from the repository in the key 
+	HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Fonts
+	However, things happened and we don't have support of the registry in the base image.
+	So this is the best alternative... or not...??  "
+
+	^ {(FileLocator home / 'AppData' / 'Local' / 'Microsoft' / 'Windows' / 'Fonts').
+	(FileLocator home / 'AppData' / 'Roaming' / 'Microsoft' / 'Windows' / 'Fonts')}
 ]
 
 { #category : #'file paths' }
@@ -324,6 +329,11 @@ FreeTypeFontProvider >> guessWindowsFontFolderPath [
 	
 		 	
 			
+]
+
+{ #category : #'file paths' }
+FreeTypeFontProvider >> imageRelativeFontFolder [
+  ^SmalltalkImage current imageDirectory asFileReference / 'Fonts'
 ]
 
 { #category : #initialization }
@@ -368,11 +378,11 @@ FreeTypeFontProvider >> platformAbsoluteDirectories [
 	^ {}
 ]
 
-{ #category : #'file paths' }
+{ #category : #'font families' }
 FreeTypeFontProvider >> platformImageRelativeDirectories [
 	
 	| directory |
-	directory :=  Smalltalk imagePath asFileReference / 'Fonts'.
+	directory := self imageRelativeFontFolder.
 	directory exists
 		ifTrue: [ ^ { directory } ].
 	^ #()
@@ -384,6 +394,17 @@ FreeTypeFontProvider >> platformVMRelativeDirectories [
   directory := Smalltalk vm directory asFileReference / 'Fonts'.
   directory exists ifTrue: [ ^{directory} ].
   ^#()
+]
+
+{ #category : #'loading and updating' }
+FreeTypeFontProvider >> prepareForRelease [
+
+	"When releasing an image, we should only include the embedded fonts"
+
+	self initialize.
+	self updateEmbeddedFreeTypeFonts
+
+
 ]
 
 { #category : #'loading and updating' }
@@ -439,12 +460,9 @@ FreeTypeFontProvider >> updateEmbeddedFreeTypeFonts [
 
 { #category : #'loading and updating' }
 FreeTypeFontProvider >> updateFileCacheInfo [
-	fileInfoCache values 
-		do:[ :col |
-			col copy do:[:each | | dir |
-				dir := each absolutePath asFileReference.
-				dir exists ifFalse: [ col remove: each ]]]
-		displayingProgress: [ 'Updating cached file info' ].
+	fileInfoCache values
+		do: [ :col | col copy do: [ :each | each absolutePath asFileReference ifAbsent: [ col remove: each ] ] ]
+		displayingProgress: [ 'Updating cached file info' ]
 ]
 
 { #category : #'loading and updating' }
@@ -541,18 +559,15 @@ FreeTypeFontProvider >> updateFromFile: aFile [
 
 { #category : #'loading and updating' }
 FreeTypeFontProvider >> updateFromSystem [
-	| i |
-	i := 0.
 	self prepareForUpdating.
-	'FreeType' displayProgressFrom: 0 to: 3 during:[ :mainBar |
+	'FreeType' displayProgressFrom: 0 to: 3 during: [ :mainBar | 
 		self updateFileCacheInfo.
 		mainBar current: 1.
 		self updateFontsFromSystem.
 		mainBar current: 2.
 		self updateAvailableFontFamilies.
 		mainBar current: 3 ].
-	LogicalFont allInstances do:[:each | each clearRealFont]. "in case they have a bad one"
-			
+	LogicalFont allInstances do: [ :each | "in case they have a bad one" each clearRealFont ]
 ]
 
 { #category : #'loading and updating' }
@@ -574,11 +589,20 @@ FreeTypeFontProvider >> validCachedInfoFor: aFile index: i [
 
 { #category : #'file paths' }
 FreeTypeFontProvider >> winFontDirectories [
-	| directory |
-	directory := self getWindowsFontFolderPath.
-	directory ifNil: [ ^ #() ].
-	directory := directory asFileReference.
-	directory exists 
-		ifTrue: [ ^ { directory }].
-	^ #()
+	| results |
+	
+	results := OrderedCollection new.
+	
+	self getWindowsFontFolderPath
+		ifNotNil: [ :aString | | directory |
+				directory := aString asFileReference.
+				directory exists 
+					ifTrue: [ results add: directory ]].
+	
+	self getWindowsLocalPaths
+		do: [ :directory | 
+				directory exists 
+					ifTrue: [ results add: directory ]].
+		
+	^ results
 ]

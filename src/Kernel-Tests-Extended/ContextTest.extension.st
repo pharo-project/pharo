@@ -29,15 +29,15 @@ ContextTest >> testJump [
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
-ContextTest >> testLookupSymbol [
+ContextTest >> testReadVariableNamed [
 	|localVar|
 	localVar := 2.
 	instVarForTestLookupSymbol := 3.
 	classVarForTestLookupSymbol := 4.
-	self assert: (thisContext lookupSymbol: #localVar) equals: 2.
-	self assert: (thisContext lookupSymbol: #instVarForTestLookupSymbol) equals: 3.
-	self assert: (thisContext lookupSymbol: #classVarForTestLookupSymbol) equals: 4.
-	self assert: (thisContext lookupSymbol: #Smalltalk) equals: Smalltalk.
+	self assert: (thisContext readVariableNamed: #localVar) equals: 2.
+	self assert: (thisContext readVariableNamed: #instVarForTestLookupSymbol) equals: 3.
+	self assert: (thisContext readVariableNamed: #classVarForTestLookupSymbol) equals: 4.
+	self assert: (thisContext readVariableNamed: #Smalltalk) equals: Smalltalk.
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
@@ -54,4 +54,18 @@ ContextTest >> testSourceNodeExecutedWhenContextIsJustAtStartpc [
 	context := Context sender: thisContext receiver: self method: self class >> testSelector arguments: #().
 	sourceNode := context sourceNodeExecuted.
 	self assert: sourceNode equals: (self class >> testSelector) ast sendNodes first receiver
+]
+
+{ #category : #'*Kernel-Tests-Extended' }
+ContextTest >> testWriteVariableNamedValue [
+	|localVar|
+	localVar := 2.
+	instVarForTestLookupSymbol := 3.
+	classVarForTestLookupSymbol := 4.
+	thisContext writeVariableNamed: #localVar value: #changed1.
+	self assert: (thisContext readVariableNamed: #localVar) equals: #changed1.
+	thisContext writeVariableNamed: #instVarForTestLookupSymbol value: #changed2.
+	self assert: (thisContext readVariableNamed: #instVarForTestLookupSymbol) equals: #changed2.
+	thisContext writeVariableNamed: #classVarForTestLookupSymbol value: #changed3.
+	self assert: (thisContext readVariableNamed: #classVarForTestLookupSymbol) equals: #changed3
 ]

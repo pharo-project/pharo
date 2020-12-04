@@ -306,7 +306,7 @@ RGReadOnlyImageBackend >> realPackageFor: anRGPackage [
 { #category : #resolving }
 RGReadOnlyImageBackend >> resolvedPropertiesFor: anRGObject [
 
-	^ anRGObject pvtResolvableProperties collect: #key
+	^ anRGObject pvtResolvableProperties collect: [:each | each key]
 ]
 
 { #category : #class }

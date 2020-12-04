@@ -14,7 +14,7 @@ Class {
 		'findStartIndex',
 		'isRegex'
 	],
-	#category : #'Text-Edition'
+	#category : #'Text-Edition-Services'
 }
 
 { #category : #'instance creation' }

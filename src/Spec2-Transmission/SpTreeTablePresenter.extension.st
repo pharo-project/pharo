@@ -1,16 +1,31 @@
 Extension { #name : #SpTreeTablePresenter }
 
 { #category : #'*Spec2-Transmission' }
-SpTreeTablePresenter >> defineInputPorts [ 
+SpTreeTablePresenter >> defaultInputPort [
 
-	^ { SpRootsPresenterPort new }
+	^ self inputRootsPort
 ]
 
 { #category : #'*Spec2-Transmission' }
-SpTreeTablePresenter >> defineOutputPorts [ 
+SpTreeTablePresenter >> defaultOutputPort [
 
-	^ { 
-	SpSelectionPort new.
-	SpActivationPort new 
-	}
+	^ self outputSelectionPort
+]
+
+{ #category : #'*Spec2-Transmission' }
+SpTreeTablePresenter >> inputRootsPort [
+
+	^ SpRootsPort newPresenter: self
+]
+
+{ #category : #'*Spec2-Transmission' }
+SpTreeTablePresenter >> outputActivationPort [
+	
+	^ SpActivationPort newPresenter: self
+]
+
+{ #category : #'*Spec2-Transmission' }
+SpTreeTablePresenter >> outputSelectionPort [
+	
+	^ SpSelectionPort newPresenter: self
 ]

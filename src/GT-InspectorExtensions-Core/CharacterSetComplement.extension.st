@@ -2,7 +2,6 @@ Extension { #name : #CharacterSetComplement }
 
 { #category : #'*GT-InspectorExtensions-Core' }
 CharacterSetComplement >> gtInspectorItemsIn: composite [
-
 	"The default set is huge, inspect the Absent list, which is typically a manageable size"
 
 	^ composite fastList
@@ -15,10 +14,7 @@ CharacterSetComplement >> gtInspectorItemsIn: composite [
 		showOnly: 50;
 		helpMessage: 'Quick selection field. Given your INPUT, it executes: self select: [:each | INPUT ]'."
 			result
-				ifNil: [ nil ]
 				ifNotNil: [ result size = 1
 						ifTrue: [ result anyOne ]
-						ifFalse: [ self species withAll: result ]
-					]
-			]
+						ifFalse: [ self species withAll: result ] ] ]
 ]

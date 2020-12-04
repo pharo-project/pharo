@@ -14,7 +14,7 @@ Class {
 
 { #category : #'method groups' }
 ClyReflectiveEnvironmentPlugin >> collectMethodGroupProviders [
-	^{ClyBreakpointMethodGroupProvider new. ClyMethodCounterGroupProvider new. ClyWatchpointMethodGroupProvider new}
+	^{ClyBreakpointMethodGroupProvider new. ClyMethodCounterGroupProvider new. ClyWatchMethodGroupProvider new}
 ]
 
 { #category : #'item decoration' }
@@ -25,8 +25,8 @@ ClyReflectiveEnvironmentPlugin >> decorateBrowserItem: anItem ofMethod: aMethod 
 
 	(self doesMethodHasExecutionCounter: aMethod) 
 		ifTrue: [ anItem markWith: ClyMethodWithExecutionCounterTag ].
-	(self doesMethodHasWatchpoint: aMethod) 
-		ifTrue: [ anItem markWith: ClyMethodWithWatchpointTag ]
+	(self doesMethodHasWatch: aMethod) 
+		ifTrue: [ anItem markWith: ClyMethodWithWatchTag ]
 ]
 
 { #category : #'item decoration' }
@@ -43,9 +43,9 @@ ClyReflectiveEnvironmentPlugin >> doesMethodHasExecutionCounter: aMethod [
 ]
 
 { #category : #'item decoration' }
-ClyReflectiveEnvironmentPlugin >> doesMethodHasWatchpoint: aMethod [
+ClyReflectiveEnvironmentPlugin >> doesMethodHasWatch: aMethod [
 
-	^self doesAnyManager: Watchpoint allWatchpoints belongsTo: aMethod
+	^self doesAnyManager: Watch allWatches belongsTo: aMethod
 ]
 
 { #category : #'item decoration' }

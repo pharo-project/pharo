@@ -16,7 +16,7 @@ Class {
 		'forwardButton',
 		'demo'
 	],
-	#category : #'Athens-Examples-Demos'
+	#category : #'Athens-Examples-Spec'
 }
 
 { #category : #specs }

@@ -83,6 +83,8 @@ MCTestCase >> mockClass: className super: superclassName [
 	^ MCClassDefinition
 		name:  className
 		superclassName:  superclassName
+		traitComposition: '{}'
+		classTraitComposition: '{}'
 		category: self mockCategoryName
 		instVarNames: #()
 		classVarNames: #()
@@ -232,6 +234,7 @@ MCTestCase >> runCase [
 
 { #category : #mocks }
 MCTestCase >> treeFrom: anArray [
+
 	| name id |
 	name := anArray first.
 	id := '00000000-0000-0000-0000-0000000000', (name asString size = 1 ifTrue: [name asString, '0'] ifFalse: [name asString]).

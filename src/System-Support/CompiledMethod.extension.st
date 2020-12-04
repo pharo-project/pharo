@@ -7,11 +7,14 @@ CompiledMethod >> implementors [
 
 { #category : #'*System-Support' }
 CompiledMethod >> referencedClasses [
-	"Return classes that are directly referenced by this method"
+	"Return classes that are directly referenced by this method. It traverses all the compiled methods to get the classes"
+	| result |
+	result := IdentitySet new.
+	self withAllNestedLiteralsDo: [:each | 
+		each value isClass ifTrue: [ result add: each value ]].
+	^result
 
-	^ self literals
-		select: [ :l | l value isClass ] 
-		thenCollect: [:v | v value ].
+
 ]
 
 { #category : #'*System-Support' }

@@ -186,10 +186,22 @@ CommandLineUIManager >> exitFailure [
 	
 ]
 
+{ #category : #'handle debug requests' }
+CommandLineUIManager >> handleDebugRequest: aDebugRequest [
+	
+	self unhandledErrorDefaultAction: aDebugRequest exception
+]
+
 { #category : #'error handling' }
 CommandLineUIManager >> handleError: anError log: shouldLog [
 
 	shouldLog ifTrue: [ self logError: anError ].
+]
+
+{ #category : #'handle debug requests' }
+CommandLineUIManager >> handleWarningDebugRequest: aWarningDebugRequest [
+	
+	self warningDefaultAction: aWarningDebugRequest exception
 ]
 
 { #category : #accessing }

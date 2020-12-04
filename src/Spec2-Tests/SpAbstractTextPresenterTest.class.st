@@ -71,3 +71,28 @@ SpAbstractTextPresenterTest >> testSelectAll [
 	presenter selectAll.
 	self assert: presenter selectionInterval equals: (1 to: 15)
 ]
+
+{ #category : #tests }
+SpAbstractTextPresenterTest >> testWhenSubmitDo [
+	| submitted |
+
+	submitted := false.
+	presenter whenSubmitDo: [ :aString | submitted := true ].
+	
+	self openInstance.
+	
+	self textInputAdapter
+		keyPressed: $s asciiValue 
+		shift: false
+		meta: true 
+		control: false 
+		option: false.
+		
+	self assert: submitted
+]
+
+{ #category : #private }
+SpAbstractTextPresenterTest >> textInputAdapter [
+	
+	^ presenter adapter
+]

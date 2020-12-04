@@ -17,7 +17,6 @@ BaselineOfMetacello >> baseline: spec [
 			package: 'StartupPreferences';
 			package: 'ConfigurationCommandLineHandler-Core';
 			package: 'PragmaCollector';
-			package: 'Reflectivity';
 			package: 'System-FileRegistry';
 			package: 'MonticelloConfigurations';
 			package: 'Gofer-Core';
@@ -48,7 +47,7 @@ BaselineOfMetacello >> baseline: spec [
 			package: 'Metacello-Gitlab-Tests'.
 
 		spec 
-			group: 'Core' with: #('ScriptingExtensions' 'System-FileRegistry' 'FileSystem-Memory' 'Regex-Core' 'StartupPreferences' 'ConfigurationCommandLineHandler-Core' 'PragmaCollector' 'Reflectivity' 'System-FileRegistry' 'MonticelloConfigurations' 'Gofer-Core' 'Metacello-Base' 'Metacello-Core' 'MonticelloFileTree-Core' 'Metacello-MC' 'Metacello-PharoCommonPlatform' 'MonticelloFileTree-FileSystem-Utilities' 'STON-Core' 'Metacello-GitBasedRepository' 'Metacello-GitHub' 'Metacello-Gitlab' 'Metacello-Bitbucket' 'Metacello-Platform' 'Metacello-ToolBox' 'Metacello-PharoExtensions' 'MetacelloCommandLineHandler-Core');
+			group: 'Core' with: #('ScriptingExtensions' 'System-FileRegistry' 'FileSystem-Memory' 'Regex-Core' 'StartupPreferences' 'ConfigurationCommandLineHandler-Core' 'PragmaCollector' 'System-FileRegistry' 'MonticelloConfigurations' 'Gofer-Core' 'Metacello-Base' 'Metacello-Core' 'MonticelloFileTree-Core' 'Metacello-MC' 'Metacello-PharoCommonPlatform' 'MonticelloFileTree-FileSystem-Utilities' 'STON-Core' 'Metacello-GitBasedRepository' 'Metacello-GitHub' 'Metacello-Gitlab' 'Metacello-Bitbucket' 'Metacello-Platform' 'Metacello-ToolBox' 'Metacello-PharoExtensions' 'MetacelloCommandLineHandler-Core');
 			group: 'Tests' with: #( 'Metacello-TestsMCResources' 'Metacello-TestsCore' 'Metacello-TestsCommonMC' 'Metacello-TestsMC' 'Metacello-TestsMCCore' 'Metacello-TestsPlatform' 'Metacello-TestsReference' 'Metacello-Gitlab-Tests');
 			group: 'default' with: #('Core') ]			
 			

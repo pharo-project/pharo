@@ -367,39 +367,26 @@ MorphTreeListManager >> isSelectionUpdateFromView [
 { #category : #'keyboard managing' }
 MorphTreeListManager >> keyStroke: anEvent [
 	| char args |
+	char := anEvent keyValue asCharacter.
 
-	char := anEvent keyValue asCharacter. 
-
-	(self arrowEvent: anEvent key: char)
-		ifTrue: [ ^ true ].
+	(self arrowEvent: anEvent key: char) ifTrue: [ ^ true ].
 
 	char = Character cr
-		ifTrue: [ 
-			self selectSearchedElement. 
+		ifTrue: [ self selectSearchedElement.
 			^ true ].
-		
-	anEvent anyModifierKeyPressed 
-		ifFalse: [
-			self basicKeyPressed: char.
-			^ true].
 
-	self keystrokeActionSelector 
-		ifNil: [ ^ false].
-		
+	anEvent anyModifierKeyPressed
+		ifFalse: [ self basicKeyPressed: char.
+			^ true ].
+
+	self keystrokeActionSelector ifNil: [ ^ false ].
+
 	args := self keystrokeActionSelector numArgs.
-	(args = 0 or: [args > 2]) 
-		ifTrue: [^ self error: 'The keystrokeActionSelector must be a 1- or 2-keyword symbol']
-		ifFalse: [
-			^ args = 1 
-				ifTrue: [
-					self listModel 
-						perform: self keystrokeActionSelector 
-						with: anEvent]
-				ifFalse: [
-					self listModel 
-						perform: self keystrokeActionSelector
-						with: anEvent 
-						with: self]]
+	^ (args = 0 or: [ args > 2 ])
+		ifTrue: [ self error: 'The keystrokeActionSelector must be a 1- or 2-keyword symbol' ]
+		ifFalse: [ args = 1
+				ifTrue: [ self listModel perform: self keystrokeActionSelector with: anEvent ]
+				ifFalse: [ self listModel perform: self keystrokeActionSelector with: anEvent with: self ] ]
 ]
 
 { #category : #accessing }
@@ -720,13 +707,11 @@ MorphTreeListManager >> selectMorph: aNodeMorph multiple: withMultipleSelection 
 MorphTreeListManager >> selectMorph: aNodeMorph multiple: withMultipleSelection clickedTheCheckBox: checkBox [
 
 	| path mult |
-
 	checkBox
 		ifFalse: [ self lastClickedMorph: aNodeMorph ].
 	aNodeMorph
 		ifNil: [ self emptySelection.
-			^ nil
-			].
+				^ nil ].
 	aNodeMorph selected
 		ifTrue: [ withMultipleSelection
 				ifTrue: [ self removeFromSelection: aNodeMorph ]

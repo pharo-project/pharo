@@ -71,17 +71,22 @@ RelationSlot >> checkValue: aValue [
 
 { #category : #'code generation' }
 RelationSlot >> emitStore: aMethodBuilder [
-	"copy of #emitStore from Slot as my superclass has overriden it"
+	"This bytecode does the following: 
+		self updateOld: (self read: anObject) new: newValue in: anObject.
+		super write: newValue to: anObject
+	"
 	| tempName |
 	tempName := '0slotTempForStackManipulation'.
 	aMethodBuilder
 		addTemp: tempName;
 		storeTemp: tempName;
 		popTop;
-		pushReceiver;
-		pushLiteralVariable: (AdditionalBinding key: #slot value: self);
+ 		pushLiteral: self;
+		pushInstVar: index;
 		pushTemp: tempName;
-		send: #writeSlot:value:
+		pushReceiver;
+		send: #updateOld:new:in:;
+		storeInstVar: index
 ]
 
 { #category : #testing }

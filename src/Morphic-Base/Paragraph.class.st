@@ -105,6 +105,16 @@ Paragraph class >> insertionPointColor: aColor [
 	InsertionPointColor := aColor
 ]
 
+{ #category : #refreshing }
+Paragraph class >> refreshAllCompositions [
+	"This method will re-compose all paragraphs in system. 
+	 This is potentially an expensive operation (and is used just in one case: when you change the 
+	 hinitng of a font through settings. See FreeTypeSettings>>hintingSymbol:"
+
+	self allSubInstances do: [ :each | each composeAll ].
+	self currentWorld restoreMorphicDisplay
+]
+
 { #category : #editing }
 Paragraph >> actionAttributesUnder: aClickPoint event: anEvent do: aBlock [
 	| startBlock |
@@ -261,7 +271,7 @@ Paragraph >> click: anEvent for: model controller: editor [
 		(attribute actOnClick: anEvent for: target in: self editor: editor) == true 	
 			ifTrue: [ ^ true ]].
 	
-	(action and: [ Cursor currentCursor == Cursor webLink]) 
+	(action and: [ self currentWorld currentCursor == Cursor webLink]) 
 		ifTrue:[ Cursor normal show ].
 	
 	^ action
@@ -645,7 +655,7 @@ Paragraph >> move: anEvent for: model controller: editor [
 		(attribute actOnMove: anEvent for: target in: self editor: editor) == true 	
 			ifTrue: [ ^ true ]].
 	
-	(action and: [ Cursor currentCursor == Cursor webLink]) 
+	(action and: [ self currentWorld currentCursor == Cursor webLink]) 
 		ifTrue:[ Cursor normal show ].
 	
 	^ action

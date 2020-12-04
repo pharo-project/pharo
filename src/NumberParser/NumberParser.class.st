@@ -537,19 +537,17 @@ NumberParser >> readScaleWithDefaultNumberOfDigits: anInteger [
 	A letter s followed by another letter is not considered as a scale specification, because it could be part of a message."
 
 	scale := 0.
-	sourceStream atEnd
-		ifTrue: [ ^ false ].
-	(sourceStream peekFor: $s)
-		ifFalse: [ ^ false ].
+	sourceStream atEnd ifTrue: [ ^ false ].
+	(sourceStream peekFor: $s) ifFalse: [ ^ false ].
 	scale := self nextUnsignedIntegerOrNilBase: 10.
 	scale
-		ifNil: [ 
-			scale := anInteger.
-			(sourceStream peek ifNil: [ false ] ifNotNil: [ :nextChar | nextChar isLetter ])
-				ifTrue: [ 
-					sourceStream skip: -1.	"ungobble the s"
-					^ false ]
-				ifFalse: [ ^ true ] ].
+		ifNil: [ scale := anInteger.
+			^ (sourceStream peek
+				ifNil: [ false ]
+				ifNotNil: [ :nextChar | nextChar isLetter ])
+				ifTrue: [ sourceStream skip: -1.	"ungobble the s"
+					false ]
+				ifFalse: [ true ] ].
 	^ true
 ]
 

@@ -1,15 +1,15 @@
 "
 I manage tabs in the browser.
-Any tab in browser is represented by ClyBrowserTool subclasses.
+Any tab in browser is represented by `ClyBrowserTool` subclasses.
 And my responsibility is to show all appropriate tools which are relevant to the current browser context (state). 
-#updateTools method is doing that. 
+`#updateTools` method is doing that. 
 
 The logic is simple: 
 When selection (browser context) is changed then browser collects new tools which should be opened in that new browser state. 
 Then it removes all old tools and open all new tools. 
 But there is special case when new collected tool is already opened. In that case such new tool will be not used. And existing tool will be not removed. So it will stay opened.
 
-I use #isSimilarTo: tab method to detect that new collected tool is already opened (the browser already shows similar tool).
+I use `#isSimilarTo:` tab method to detect that new collected tool is already opened (the browser already shows similar tool).
 By default #isSimilarTo: simply checks the class of given tool. My subclases should redefine it when they include extra state because otherwise new tool instance will never replace old one (browser will think that it is already opened).
 
 There are cases when existing tools are not closed when selection is changed. For example when method editor is dirty and you select another method.
@@ -30,7 +30,7 @@ Every time user selects new item in the table the browser collects tools which a
 
 So at the end I always select tab with most activation priority which exists in desiredSelection list.
 
-By default activationPriority is equal to #tabOrder which defines general order between tabs.
+By default activationPriority is equal to `#tabOrder` which defines general order between tabs.
 
 My instances are created on the browser: 
 

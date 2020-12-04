@@ -117,7 +117,9 @@ GTPlayground class >> menuCommandOn: aBuilder [
 		order: 10;
 		keyText: 'o, w';
 		help: 'A window used as a scratchpad area where fragments of Pharo code can be entered, stored, edited, and evaluated.';
-		icon: (self iconNamed: #workspaceIcon)
+		icon: (self iconNamed: #workspaceIcon).
+	
+	aBuilder withSeparatorAfter	
 ]
 
 { #category : #'instance creation' }
@@ -213,14 +215,19 @@ GTPlayground class >> preferredWidth: aWidth [
 { #category : #'tools registry' }
 GTPlayground class >> register [
 
-	self registerToolsOn: Smalltalk tools
+	Smalltalk tools register: self as: #workspace
 ]
 
 { #category : #'tools registry' }
 GTPlayground class >> registerToolsOn: registry [
 	"Add ourselves to registry. See [Smalltalk tools]"
+	"IMPORTANT: This method is disabled because the bootstrap process initializes tools by traversing
+	 all classes implementing this method in alphabetical order. Since GTPlayground is not anymore the 
+	 default playground, we disable its auto-registration in that step. 
+	 Notice that the #register method still works if needed"
+	
 	"self registerToolsOn: Smalltalk tools" 
-	registry register: self as: #workspace
+	"registry register: self as: #workspace"
 
 ]
 
@@ -264,11 +271,10 @@ GTPlayground class >> settingsOn: aBuilder [
 		getSelector: #isGTPlaygroundEnabled;
 		setSelector: #setGTPlaygroundEnabledStatus:; 
 		label: 'GTPlayground';
-		default: true;
+		default: false;
 		description: 'Enable or disable the GTPlayground.'.
 	(aBuilder setting: #cacheDirectory)
 		parent: #gt;
-		default: true;
 		type: #Directory;
 		default: GTPlayBook defaultCacheDirectory;
 		target: GTPlayBook;

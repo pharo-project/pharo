@@ -1,6 +1,7 @@
 "
-I am a specific text field used to search.
-I display an additional ""clear"" icon.
+A text field used to search.
+It displays an additional ""clear"" icon.
+
 "
 Class {
 	#name : #SpSearchInputFieldPresenter,
@@ -12,14 +13,4 @@ Class {
 SpSearchInputFieldPresenter class >> adapterName [
 
 	^ #SearchInputFieldAdapter
-]
-
-{ #category : #example }
-SpSearchInputFieldPresenter class >> example [
-	<sampleInstance>
-	
-	^ self new
-		extent: 300 @ 25;
-		openWithSpec;
-		placeholder: 'Search...'
 ]

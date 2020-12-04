@@ -1,12 +1,17 @@
 Class {
 	#name : #RGSlot,
-	#superclass : #RGElement,
+	#superclass : #RGVariable,
 	#category : #'Ring-Core-Kernel'
 }
 
 { #category : #bootstrap }
 RGSlot >> accept: anInterpreter assign: aValue inNode: aVariableNode [
 	self error: #TBD
+]
+
+{ #category : #'as yet unclassified' }
+RGSlot >> acceptVisitor: aProgramNodeVisitor node: aNode [ 
+	^ aProgramNodeVisitor visitInstanceVariableNode: aNode
 ]
 
 { #category : #'managing container' }
@@ -29,14 +34,13 @@ RGSlot >> definitionString [
 		aStream nextPutAll: '#'; nextPutAll: self name]
 ]
 
-{ #category : #'testing types' }
-RGSlot >> isSlot [
-
+{ #category : #testing }
+RGSlot >> isInstanceVariable [
 	^ true
 ]
 
-{ #category : #testing }
-RGSlot >> isSpecial [
+{ #category : #'testing types' }
+RGSlot >> isSlot [
 
 	^ true
 ]

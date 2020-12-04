@@ -28,7 +28,7 @@ Class {
 		'shiftCmdActions',
 		'defaultFindReplaceServiceClass'
 	],
-	#category : #'Text-Edition'
+	#category : #'Text-Edition-Editor'
 }
 
 { #category : #settings }
@@ -490,7 +490,7 @@ TextEditor class >> textEditorMenuOn: aBuilder [
 		keyText: 'v';
 		selector: #paste;
 		iconName: #smallPasteIcon.
-	(aBuilder item: #'Paste...' translated)
+	(aBuilder item: #'Paste recent' translated)
 		selector: #pasteRecent;
 		iconName: #smallCopyIcon;
 		withSeparatorAfter.
@@ -1652,14 +1652,14 @@ TextEditor >> findAndSelect: aRegex startingAt: anIndex searchBackwards: searchB
 	oldSelectionInterval := self selectionInterval.
 	self selectInvisiblyFrom: anIndex to: anIndex - 1.
 	where :=  searchBackwards
-		ifTrue: [self findAndSelectPreviousOccurenceOf: aRegex]
-		ifFalse: [self findAndSelectNextOccurenceOf: aRegex].
+		ifTrue: [self findAndSelectPreviousOccurrenceOf: aRegex]
+		ifFalse: [self findAndSelectNextOccurrenceOf: aRegex].
 	where ifNil: [self selectInterval: oldSelectionInterval].
 	^ where
 ]
 
 { #category : #'find-select' }
-TextEditor >> findAndSelectNextOccurenceOf: aRegex [
+TextEditor >> findAndSelectNextOccurrenceOf: aRegex [
 	| where |
 	where := self findNext: aRegex startingAt: self stopIndex.
 	where ifNotNil: [self selectInterval: where].
@@ -1668,7 +1668,7 @@ TextEditor >> findAndSelectNextOccurenceOf: aRegex [
 ]
 
 { #category : #'find-select' }
-TextEditor >> findAndSelectPreviousOccurenceOf: aRegex [
+TextEditor >> findAndSelectPreviousOccurrenceOf: aRegex [
 
 	| where |
 
@@ -2292,7 +2292,7 @@ TextEditor >> offerFontMenu: aKeyboardEvent [
 { #category : #deprecated }
 TextEditor >> offerMenuFromEsc: aKeyboardEvent [
 	"The escape key was hit while the receiver has the keyboard focus; take action"
- 	ActiveEvent shiftPressed 
+ 	morph activeHand lastEvent shiftPressed 
 		ifFalse: [ self raiseContextMenu: aKeyboardEvent].
 	^ false 	
 ]
@@ -2375,13 +2375,11 @@ TextEditor >> performCmdActionsWith: aKeyboardEvent shifted: aBoolean return: re
 TextEditor >> pluggableYellowButtonActivity: shiftKeyState [
 	"Invoke the model's popup menu."
 
-	| menu |
-	(menu := self getPluggableYellowButtonMenu: shiftKeyState)
-		ifNil: [
-			^ false]
-		ifNotNil: [
+	^ (self getPluggableYellowButtonMenu: shiftKeyState)
+		ifNil: [ false ]
+		ifNotNil: [ :menu | 
 			menu invokeOn: model orSendTo: self.
-			^ true]
+			true ]
 ]
 
 { #category : #'accessing-selection' }
@@ -2447,7 +2445,7 @@ TextEditor >> processKeyStroke: aKeyboardEvent [
 TextEditor >> raiseContextMenu: aKeyboardEvent [
 
 	(morph respondsTo: #editView)
-		ifTrue: [ ^ morph editView yellowButtonActivity: ActiveEvent shiftPressed].
+		ifTrue: [ ^ morph editView yellowButtonActivity: morph activeHand lastEvent shiftPressed].
 	^ true
 ]
 
@@ -2930,7 +2928,7 @@ TextEditor >> setSelectorSearch: aStringOrText [
 
 { #category : #'menu declaration' }
 TextEditor >> shiftedMenuKeyword [
-	^ 'textEditorShiftedMenu'
+	^ #textEditorShiftedMenu
 
 ]
 

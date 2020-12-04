@@ -9,7 +9,6 @@ Class {
 	#instVars : [
 		'systemAnnouncer',
 		'log',
-		'testAnnouncer',
 		'entryReferenceByEvent',
 		'jobAnnouncer',
 		'announcer',
@@ -51,6 +50,11 @@ EpMonitor class >> hasCurrent [
 	^ current isNotNil
 ]
 
+{ #category : #'class initialization' }
+EpMonitor class >> initialize [
+	SessionManager default registerToolClassNamed: self name
+]
+
 { #category : #accessing }
 EpMonitor class >> logsDirectory [
 	self flag: #pharoFixMe.	"The base locator could have a wrong fileSystem"
@@ -90,6 +94,16 @@ EpMonitor class >> restart [
 
 	self reset.
 	self current enable.
+]
+
+{ #category : #'system startup' }
+EpMonitor class >> shutDown: isImageQuitting [
+	(isImageQuitting not
+		and: [ self hasCurrent
+		and: [ self current isEnabled ] ])
+			ifTrue: [
+				self current sessionSnapshot.
+				self current sessionStore flush. ]
 ]
 
 { #category : #private }
@@ -197,8 +211,8 @@ EpMonitor >> behaviorRemoved: aClassRemovedAnnouncement [
 		"Fix category"
 		classRemoved definitionSource: 
 			(classRemoved definitionSource
-				copyReplaceAll: 'category: ', 'Unclassified' printString
-				with: 'category: ', aClassRemovedAnnouncement categoryName printString).
+				copyReplaceAll: 'package: ', 'Unclassified' printString
+				with: 'package: ', aClassRemovedAnnouncement categoryName printString).
 
 		classRemoved name: aClassRemovedAnnouncement classRemoved originalName.
 		classRemoved category: aClassRemovedAnnouncement categoryName.
@@ -334,7 +348,7 @@ EpMonitor >> disable [
 
 	self sessionStore flush.
 
-	{ systemAnnouncer. testAnnouncer. jobAnnouncer }
+	{ systemAnnouncer. jobAnnouncer }
 		do: [ :each | each ifNotNil: [ :a | a unsubscribe: self ] ].
 
 	self announceMonitorStateUpdated.
@@ -361,7 +375,6 @@ EpMonitor >> enable [
 	
 	self isEnabled ifFalse: [ 			
 		self subscribeToSystemAnnouncer.
-		self subscribeToTestAnnouncer.
 		self subscribeToJobAnnouncer. ].
 
 	self announceMonitorStateUpdated.
@@ -397,7 +410,6 @@ EpMonitor >> initializeWithLog: aLog [
 
 	log := aLog.
 	systemAnnouncer := SystemAnnouncer uniqueInstance.
-	testAnnouncer := TestCase historyAnnouncer.
 	jobAnnouncer := Job jobAnnouncer.
 	
 	entryReferenceByEvent := IdentityDictionary new.
@@ -549,14 +561,6 @@ EpMonitor >> sessionStore [
 	^ self log store
 ]
 
-{ #category : #'announcement handling' }
-EpMonitor >> snapshotDone: aSnapshotDone [
-	"Log the event, but only the original save (read SnapshotDone comment)."
-
-	aSnapshotDone isNewImage
-		ifFalse: [ self sessionSnapshot ]
-]
-
 { #category : #private }
 EpMonitor >> subscribeToJobAnnouncer [
 
@@ -588,7 +592,6 @@ EpMonitor >> subscribeToSystemAnnouncer [
 		ClassRenamed -> #classRenamed:.
 		ClassCommented -> #classCommented:.
 		MethodRecategorized -> #methodRecategorized:.
-		SnapshotDone -> #snapshotDone:.
 		
 	} do: [ :pair |
 		systemAnnouncer weak
@@ -596,16 +599,6 @@ EpMonitor >> subscribeToSystemAnnouncer [
 			send: pair value 
 			to: self ].
 
-]
-
-{ #category : #private }
-EpMonitor >> subscribeToTestAnnouncer [
-	"Hook method. Overriden in EpiceaSUnit."
-]
-
-{ #category : #accessing }
-EpMonitor >> testAnnouncer [
-	^ testAnnouncer
 ]
 
 { #category : #private }

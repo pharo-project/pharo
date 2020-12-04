@@ -647,6 +647,12 @@ Character >> isFormatOther [
 	^ self characterSet isFormatOther: self
 ]
 
+{ #category : #testing }
+Character >> isImmediateObject [
+	"This is needed for the boostrap"
+	^ true
+]
+
 { #category : #'testing unicode' }
 Character >> isInitialQuote [
 	"Return whether the receiver is https://www.compart.com/en/unicode/category/Pi"

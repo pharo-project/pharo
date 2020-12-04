@@ -9,11 +9,10 @@ Class {
 	#category : #'GT-SUnitDebugger'
 }
 
-{ #category : #testing }
-GTSUnitDebugger class >> availableAutomatically [
-	"Should this debugger be taken into account when looking for a debugger to handle an exception."
-	
-	^ true
+{ #category : #accessing }
+GTSUnitDebugger class >> defaultDebuggerRank [
+
+	^ 8
 ]
 
 { #category : #accessing }
@@ -38,19 +37,6 @@ GTSUnitDebugger class >> helpClass [
 { #category : #testing }
 GTSUnitDebugger class >> lookupStackSize [
 	^ 512
-]
-
-{ #category : #'tools registry' }
-GTSUnitDebugger class >> register [
-
-	self registerToolsOn: Smalltalk tools.
-]
-
-{ #category : #'tools registry' }
-GTSUnitDebugger class >> registerToolsOn: registry [
-
-	"Add ourselves to registry. See [Smalltalk tools]" 
-	registry registerDebugger: self withRank: 70.
 ]
 
 { #category : #accessing }

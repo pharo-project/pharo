@@ -53,7 +53,7 @@ ThemeIcons class >> baseUrl [
 { #category : #settings }
 ThemeIcons class >> createFetchButtonUpdating: listMorph [
 	^ (Smalltalk ui theme 
-		newButtonIn: self currentWorld
+		newButtonIn: self
 		for: self
 		getState: nil 
 		action: nil
@@ -71,7 +71,7 @@ ThemeIcons class >> createFetchButtonUpdating: listMorph [
 { #category : #settings }
 ThemeIcons class >> createIconPackList [
 	^ (Smalltalk ui theme 
-		newDropListIn: self currentWorld
+		newDropListIn: Morph new
 		for: self
 		list: #availablePacks
 		getSelected: #current
@@ -89,7 +89,7 @@ ThemeIcons class >> createIconPackList [
 ThemeIcons class >> createSettingRow [
 	| list |
 	^ Smalltalk ui theme 
-		newRowIn: self currentWorld 
+		newRowIn: self 
 		for: {
 			list := self createIconPackList.
 			self createFetchButtonUpdating: list }
@@ -105,9 +105,6 @@ ThemeIcons class >> current [
 ThemeIcons class >> current: aPack [
 	aPack hasIcons ifFalse: [ aPack loadIconsFromUrl ].
 	Current := aPack.
-	"Polymorph depends on Morphic, so coupling with WorldState is ok, the problem is with 
-	 other tools (like Nautilus), that may need to refresh its icon caches"
-	self currentWorld resetWorldMenu.
 	SystemAnnouncer uniqueInstance announce: IconSetChanged
 ]
 

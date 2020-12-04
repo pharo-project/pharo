@@ -87,7 +87,7 @@ PharoBootstrapRule >> bootstrapPackages [
 
 { #category : #accessing }
 PharoBootstrapRule >> collectionsPackages [
-	^ (CollectionsAssembly parts collect: #key)
+	^ (CollectionsAssembly parts collect: [:part| part key])
 		reject: [ :each | each = #'Collections-Atomic' ]
 ]
 

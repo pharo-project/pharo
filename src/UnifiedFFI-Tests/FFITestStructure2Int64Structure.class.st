@@ -1,3 +1,6 @@
+"
+A structure containing 2 int64 values as used by UFFI tests
+"
 Class {
 	#name : #FFITestStructure2Int64Structure,
 	#superclass : #FFIExternalStructure,

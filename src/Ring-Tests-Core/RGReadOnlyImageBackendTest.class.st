@@ -57,7 +57,7 @@ RGReadOnlyImageBackendTest >> testBehaviorLocalMethods [
 	self assert: (point ask localMethods 
 		allSatisfy: [:each | each isKindOf: RGMethod]).
 	selectors := point ask localMethods collect: [ :each | each ask selector ].
-	self assert: (selectors allSatisfy: #isSymbol).
+	self assert: (selectors allSatisfy: [:each | each isSymbol]).
 	self assert: selectors asSortedCollection equals: Point localSelectors asSortedCollection.
 	
 	
@@ -222,10 +222,8 @@ RGReadOnlyImageBackendTest >> testMethod [
 
 	method := Point >> #x asRingMinimalDefinitionIn: env.
 
-	method author notEmpty.
-	method time > DateAndTime new.
-	method time <= DateAndTime now.
-
+	self assert: method author notEmpty.
+	self assert: (method time <= DateAndTime now).
 	self assert: method selector equals: #x.
 	self assert: (method package isRGObject and: [ method package isPackage ]).
 	self assert: method package name equals: 'Kernel'.

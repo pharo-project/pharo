@@ -194,16 +194,14 @@ GLMScrollPaneBrick >> initialize [
 
 	self useVerticalLinearLayout.
 	self band: self newBand.
-	self verticalScrollbar: self newVerticalScrollbar.	
-	"initializes listener for mouse wheel scroll on windows vm"
-	self initializeListeners
+	self verticalScrollbar: self newVerticalScrollbar.
 ]
 
 { #category : #initialization }
 GLMScrollPaneBrick >> initializeListeners [
 
 	"using the most general event subscribtion for all events spawned by the hand"
-	self activeHand addEventListener: self.
+	self activeHand ifNotNil: [ :hand | hand addEventListener: self ].
 ]
 
 { #category : #'scrollpane-testing' }
@@ -326,8 +324,7 @@ GLMScrollPaneBrick >> onThemerChanged [
 { #category : #initialization }
 GLMScrollPaneBrick >> outOfWorld: aWorld [
 	super outOfWorld: aWorld.
-	
-	self unsubscribeListeners
+	self unsubscribeListeners: aWorld
 ]
 
 { #category : #'private-scrolling' }
@@ -466,9 +463,9 @@ GLMScrollPaneBrick >> scrollpaneBackgroundColor: aColor [
 ]
 
 { #category : #initialization }
-GLMScrollPaneBrick >> unsubscribeListeners [
+GLMScrollPaneBrick >> unsubscribeListeners: aWorld [
 
-	self activeHand removeEventListener: self
+	self currentWorld activeHand removeEventListener: self
 ]
 
 { #category : #'scrollpane-updating' }

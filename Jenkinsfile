@@ -57,15 +57,14 @@ def notifyBuild(status){
   node('unix'){ stage('notify'){
   try{
   
-  //If this is development, we send the email to the bugtracker list
-  //Otherwise, we send it to pharo-dev
-  def toMail = "pharo-bugtracker@lists.gforge.inria.fr"
+  //If this is development, we send the email to the beta list
+  def toMail = "log-ci-beta@lists.pharo.org"
   def buildKind = env.BRANCH_NAME
   if (env.CHANGE_ID != null){
     buildKind = "PR ${env.CHANGE_ID}"
   }
   if( isDevelopmentBranch() ) {
-    toMail = "pharo-dev@lists.pharo.org"
+    toMail = "log-ci@lists.pharo.org"
     buildKind = getPharoVersionFromBranch()
   }
   
@@ -173,6 +172,16 @@ def bootstrapImage(){
     }
     
       } finally {
+          shell "ls -la"
+          if(fileExists('PharoDebug.log')){
+              shell "mv PharoDebug.log PharoDebug-bootstrap.log"
+              archiveArtifacts allowEmptyArchive: true, artifacts: "PharoDebug-bootstrap.log", fingerprint: true
+          }
+          if(fileExists('crash.dmp')){
+              shell "mv crash.dmp crash-bootstrap.dmp"
+              archiveArtifacts allowEmptyArchive: true, artifacts: "crash-bootstrap.dmp", fingerprint: true
+          }
+
         archiveArtifacts artifacts: 'bootstrap-cache/*.zip,bootstrap-cache/*.sources', fingerprint: true
         cleanWs()
       }
@@ -242,13 +251,16 @@ try{
       for (platf in platforms) {
         // Need to bind the label variable before the closure - can't do 'for (label in labels)'
         def platform = platf
-        testers["${platform}-${architecture}"] = {
-          node(platform) { stage("Tests-${platform}-${architecture}") {
-            timeout(35) {
-              runTests(architecture)
-              runTests(architecture, "Kernel")
+        // Disabling the test of OSX 32bits
+        if(platf != 'osx' || arch != '32'){
+            testers["${platform}-${architecture}"] = {
+              node(platform) { stage("Tests-${platform}-${architecture}") {
+                timeout(35) {
+                  runTests(architecture)
+                  runTests(architecture, "Kernel")
+                }
+              }}
             }
-          }}
         }
       }
     }

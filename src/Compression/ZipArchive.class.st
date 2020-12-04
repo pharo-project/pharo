@@ -81,7 +81,7 @@ ZipArchive class >> findEndOfCentralDirectoryFrom: stream [
 		ifFalse: [0]
 ]
 
-{ #category : #'file format' }
+{ #category : #'testing - file format' }
 ZipArchive class >> isZipArchive: file [
 	"Answer whether the given file represents a valid zip file. The argument file can be a String, FileReference or an open binary read stream.
 	
