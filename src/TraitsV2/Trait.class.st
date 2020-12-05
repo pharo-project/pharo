@@ -245,12 +245,6 @@ Trait >> notifyOfRecategorizedSelector: selector from: oldCategory to: newCatego
 	self traitUsers do: [ :e | e recategorizeSelector: selector from: oldCategory to: newCategory ].
 ]
 
-{ #category : #'file in/out' }
-Trait >> oldDefinition [
-
-	^ self definition
-]
-
 { #category : #'accessing method dictionary' }
 Trait >> rebuildMethodDictionary [
 	"I extend the behavior in TraitedMetaclass propagating the changes to my users"
