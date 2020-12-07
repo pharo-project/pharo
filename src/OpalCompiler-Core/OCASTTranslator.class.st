@@ -293,7 +293,7 @@ OCASTTranslator >> emitTimesRepeat: aMessageNode [
 	
 	limitEmit := [valueTranslator visitNode: limit].
 	"if the limit is not just a literal or a non-writable variable, make a temp store it there"
-	(limit isLiteralNode or: [limit isVariable and: [limit isWritable not]]) ifFalse: [
+	(limit isLiteralNode or: [limit isVariable and: [limit variable isWritable not]]) ifFalse: [
 		valueTranslator visitNode: limit.
 		methodBuilder addTemp: #'0limit'.
 		methodBuilder storeTemp: #'0limit'.
