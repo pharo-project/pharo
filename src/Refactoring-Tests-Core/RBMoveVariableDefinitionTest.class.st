@@ -4,6 +4,16 @@ Class {
 	#category : #'Refactoring-Tests-Core'
 }
 
+{ #category : #'failure tests' }
+RBMoveVariableDefinitionTest >> testInvalidSelector [
+	self
+		shouldFail:
+			(RBMoveVariableDefinitionRefactoring
+				bindTight: (21 to: 24)
+				in: RBRefactoryTestDataApp
+				selector: #caller3)
+]
+
 { #category : #tests }
 RBMoveVariableDefinitionTest >> testMoveDefinition [
 	| refactoring |
@@ -47,7 +57,7 @@ RBMoveVariableDefinitionTest >> testMoveDefinitionIntoBlockThatIsAReceiverOfACas
 									yourself')
 ]
 
-{ #category : #tests }
+{ #category : #'failure tests' }
 RBMoveVariableDefinitionTest >> testNoMoveDefinition [
 	self
 		shouldFail:
@@ -57,7 +67,7 @@ RBMoveVariableDefinitionTest >> testNoMoveDefinition [
 				selector: #noMoveDefinition)
 ]
 
-{ #category : #tests }
+{ #category : #'failure tests' }
 RBMoveVariableDefinitionTest >> testNonExistantName [
 	self
 		shouldFail:

@@ -10,13 +10,26 @@ Class {
 		'foo1'
 	],
 	#classVars : [
-		'Foo1'
+		'Foo1',
+		'Name1'
 	],
 	#pools : [
 		'TextConstants'
 	],
 	#category : #'Refactoring-Tests-Core-Data'
 }
+
+{ #category : #accessing }
+RBLintRuleTestData class >> name1 [
+
+	^ Name1
+]
+
+{ #category : #accessing }
+RBLintRuleTestData class >> name1: anObject [
+
+	Name1 := anObject
+]
 
 { #category : #parsing }
 RBLintRuleTestData class >> parseTreeSearcher [ 

@@ -7,10 +7,11 @@ Class {
 { #category : #tests }
 ExampleSlotWithStateTest >> testExampleClassSide [
 	" can we install a slot on the class side?"
+	| slot |
 	aClass := self make: [ :builder | builder classSlots: {#slot1 =>ExampleSlotWithState}].
 
-	self assert: (aClass class hasSlotNamed: #slot1).
-	self assert: aClass class slotDefinitionString equals:  '{ #slot1 => ExampleSlotWithState }'
+	slot := aClass class slotNamed: #slot1.
+	self assert: slot class equals: ExampleSlotWithState
 ]
 
 { #category : #tests }

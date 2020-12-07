@@ -9,7 +9,7 @@ Class {
 
 { #category : #visiting }
 TemporaryVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
-	^ aProgramNodeVisitor visitTemporaryNode: aNode
+	^ aProgramNodeVisitor visitTemporaryVariableNode: aNode
 ]
 
 { #category : #queries }

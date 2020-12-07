@@ -33,28 +33,19 @@ RBAddClassTest >> testAddClass [
 ]
 
 { #category : #'failure tests' }
-RBAddClassTest >> testExistingName [
+RBAddClassTest >> testEmptyCategory [
+	self shouldFail: (RBAddClassRefactoring 
+		addClass: #FooTest
+		superclass: RBRefactoringTest
+		subclasses: (Array with: self class)
+		category: #'').
+]
+
+{ #category : #'failure tests' }
+RBAddClassTest >> testExistingClassName [
 	self shouldFail: (RBAddClassRefactoring 
 				addClass: #Object
 				superclass: self class
-				subclasses: #()
-				category: #'Refactory-Testing')
-]
-
-{ #category : #'failure tests' }
-RBAddClassTest >> testInvalidSubclass [
-	self shouldFail: (RBAddClassRefactoring 
-			addClass: #Foo
-			superclass: RBCompositeLintRuleTestData
-			subclasses: (Array with: RBBasicLintRuleTestData)
-			category: #'Refactory-Tesing')
-]
-
-{ #category : #'failure tests' }
-RBAddClassTest >> testMetaClassFailure [
-	self shouldFail: (RBAddClassRefactoring 
-				addClass: #Foo
-				superclass: self class class
 				subclasses: #()
 				category: #'Refactory-Testing')
 ]
@@ -83,7 +74,7 @@ RBAddClassTest >> testModelAddClass [
 ]
 
 { #category : #'failure tests' }
-RBAddClassTest >> testModelExistingName [
+RBAddClassTest >> testModelExistingClassName [
 	| refactoring |
 	refactoring := RBAddClassRefactoring 
 				model: model
@@ -95,7 +86,7 @@ RBAddClassTest >> testModelExistingName [
 ]
 
 { #category : #'failure tests' }
-RBAddClassTest >> testModelInvalidSubclass [
+RBAddClassTest >> testModelNonImmediateSubclassOfSuperclass [
 	| refactoring |
 	refactoring := RBAddClassRefactoring 
 				model: model
@@ -104,4 +95,40 @@ RBAddClassTest >> testModelInvalidSubclass [
 				subclasses: (Array with: (model classNamed: #Bar))
 				category: #'Refactory-Tesing'.
 	self shouldFail: refactoring
+]
+
+{ #category : #'failure tests' }
+RBAddClassTest >> testNonImmediateSubclassOfSuperclass [
+	self shouldFail: (RBAddClassRefactoring 
+			addClass: #Foo
+			superclass: RBCompositeLintRuleTestData
+			subclasses: (Array with: RBBasicLintRuleTestData)
+			category: #'Refactory-Tesing')
+]
+
+{ #category : #'failure tests' }
+RBAddClassTest >> testNonSymbolCategory [
+	self shouldFail: (RBAddClassRefactoring 
+		addClass: #FooTest
+		superclass: RBRefactoringTest
+		subclasses: (Array with: self class)
+		category: 'Refactory-Testing').
+]
+
+{ #category : #'failure tests' }
+RBAddClassTest >> testSubclassIsMetaslass [
+	self shouldFail: (RBAddClassRefactoring 
+			addClass: #Foo
+			superclass: RBLintRuleTestData
+			subclasses: (Array with: RBCompositeLintRuleTestData class)
+			category: #'Refactory-Tesing')
+]
+
+{ #category : #'failure tests' }
+RBAddClassTest >> testSuperclassIsMetaclass [
+	self shouldFail: (RBAddClassRefactoring 
+				addClass: #Foo
+				superclass: self class class
+				subclasses: #()
+				category: #'Refactory-Testing')
 ]

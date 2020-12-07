@@ -1,25 +1,25 @@
 Class {
-	#name : #OldPharoClassDefinitionPrinterTest,
+	#name : #AbstractOldPrinterTest,
 	#superclass : #CommonClassDefinitionPrinterTest,
 	#category : #'Kernel-Tests-Fluid'
 }
 
 { #category : #helpers }
-OldPharoClassDefinitionPrinterTest >> forClass: aClass [
+AbstractOldPrinterTest >> forClass: aClass [
 	^ (OldPharoClassDefinitionPrinter for: aClass) definitionString 
 
 
 ]
 
 { #category : #running }
-OldPharoClassDefinitionPrinterTest >> setUp [
+AbstractOldPrinterTest >> setUp [
 
 	super setUp.
 	ClassDefinitionPrinter showFluidClassDefinition: false
 ]
 
 { #category : #'tests - classes' }
-OldPharoClassDefinitionPrinterTest >> testArray [
+AbstractOldPrinterTest >> testArray [
 
 	self 
 		assert: (self forClass: Array) 
@@ -30,7 +30,7 @@ OldPharoClassDefinitionPrinterTest >> testArray [
 ]
 
 { #category : #'tests - classes' }
-OldPharoClassDefinitionPrinterTest >> testArrayedCollectionWithPoolDictionary [
+AbstractOldPrinterTest >> testArrayedCollectionWithPoolDictionary [
 
 	self assert: (self forClass: ExampleForTestWithSharedPool) equals: 'ArrayedCollection subclass: #ExampleForTestWithSharedPool
 	instanceVariableNames: ''aSlot anotherSlot''
@@ -40,7 +40,7 @@ OldPharoClassDefinitionPrinterTest >> testArrayedCollectionWithPoolDictionary [
 ]
 
 { #category : #'tests - classes' }
-OldPharoClassDefinitionPrinterTest >> testByteString [
+AbstractOldPrinterTest >> testByteString [
 
 	self 
 		assert: (self forClass: ByteString) 
@@ -51,7 +51,7 @@ OldPharoClassDefinitionPrinterTest >> testByteString [
 ]
 
 { #category : #'tests - classes' }
-OldPharoClassDefinitionPrinterTest >> testChronologyConstants [
+AbstractOldPrinterTest >> testChronologyConstants [
 	
 	self 
 		assert: (self forClass: ChronologyConstants) 
@@ -62,14 +62,14 @@ OldPharoClassDefinitionPrinterTest >> testChronologyConstants [
 ]
 
 { #category : #'tests - metaclasses' }
-OldPharoClassDefinitionPrinterTest >> testClassSideDoesNotShowPackage [
+AbstractOldPrinterTest >> testClassSideDoesNotShowPackage [
 
 	self assert: (self forClass: ContextTest class) equals: 'ContextTest class
 	instanceVariableNames: '''''
 ]
 
 { #category : #'tests - metaclasses' }
-OldPharoClassDefinitionPrinterTest >> testMetaclass [
+AbstractOldPrinterTest >> testMetaclass [
 	
 	self assert: (self forClass: Metaclass) equals:  'ClassDescription subclass: #Metaclass
 	instanceVariableNames: ''thisClass''
@@ -78,7 +78,7 @@ OldPharoClassDefinitionPrinterTest >> testMetaclass [
 ]
 
 { #category : #'tests - metaclasses' }
-OldPharoClassDefinitionPrinterTest >> testMetaclassClass [
+AbstractOldPrinterTest >> testMetaclassClass [
 	
 	self 
 		assert: (self forClass: Metaclass class) 
@@ -87,7 +87,7 @@ OldPharoClassDefinitionPrinterTest >> testMetaclassClass [
 ]
 
 { #category : #'tests - classes' }
-OldPharoClassDefinitionPrinterTest >> testPoint [
+AbstractOldPrinterTest >> testPoint [
 
 	self 
 		assert: (self forClass: Point) 
@@ -98,7 +98,7 @@ OldPharoClassDefinitionPrinterTest >> testPoint [
 ]
 
 { #category : #'tests - classes' }
-OldPharoClassDefinitionPrinterTest >> testProtoObject [
+AbstractOldPrinterTest >> testProtoObject [
 	
 	self assert: (self forClass: ProtoObject) equals: 'ProtoObject subclass: #ProtoObject
 	instanceVariableNames: ''''
@@ -110,7 +110,7 @@ ProtoObject superclass: nil'
 ]
 
 { #category : #'tests - metaclasses' }
-OldPharoClassDefinitionPrinterTest >> testSystemAnnouncerClass [
+AbstractOldPrinterTest >> testSystemAnnouncerClass [
 	
 	self 
 		assert: (self forClass: SystemAnnouncer class) 

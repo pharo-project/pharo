@@ -9,7 +9,7 @@ RGSlot >> accept: anInterpreter assign: aValue inNode: aVariableNode [
 	self error: #TBD
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #visiting }
 RGSlot >> acceptVisitor: aProgramNodeVisitor node: aNode [ 
 	^ aProgramNodeVisitor visitInstanceVariableNode: aNode
 ]

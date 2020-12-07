@@ -573,7 +573,9 @@ ClassDescription >> definesSlotNamed: aString [
 { #category : #'file in/out' }
 ClassDescription >> definition [
 	"Answer a String that defines the receiver."
-
+	self
+		deprecated: #definition
+		transformWith: '`@receiver definition' -> '`@receiver definitionString'.
 	^ self definitionString
 ]
 
@@ -588,7 +590,7 @@ ClassDescription >> definitionPrinter [
 ClassDescription >> definitionString [
 	"Return the string of the class definition, each of my subclass may tell the printer how to printer it. A kind of double dispatch since we have multiple printers and multiple entities to be printed."
 
-	^ self definitionStringFor: self definitionPrinter
+	^ self definitionPrinter definitionString
 ]
 
 { #category : #fileout }
@@ -938,6 +940,14 @@ ClassDescription >> obsolete [
 	super obsolete.
 ]
 
+{ #category : #'file in/out' }
+ClassDescription >> oldDefinition [
+	
+	^ ClassDefinitionPrinter legacy
+		for: self;
+		definitionString
+]
+
 { #category : #organization }
 ClassDescription >> organization [
 	"Answer the instance of ClassOrganizer that represents the organization 
@@ -1100,35 +1110,6 @@ ClassDescription >> sharedPoolsString [
 							ifTrue: [ each name ] "obsolete classes should be visible"
 							ifFalse: [ 'private' ] ]) ] "if class is from different environment, mark it as private"
 			separatedBy: [ stream space ] ]
-]
-
-{ #category : #printing }
-ClassDescription >> slotDefinitionString [
-	"Answer a string that represents an executable description of my Slots"
-	
-	^String streamContents: [ :str | self slotDefinitionsOn: str]
-]
-
-{ #category : #printing }
-ClassDescription >> slotDefinitionsOn: aStream [
-	"Write on the arg aStream an executable description of my Slots on the argument, aStream"
-
-	| useFull |
-	aStream nextPutAll: '{ '.
-	self localSlots
-		do: [ :slot | 
-			slot definitionOn: aStream.
-			useFull := slot needsFullDefinition ]
-		separatedBy: [ 
-			aStream nextPutAll: ' . '.
-			useFull ifTrue: [ 
-				aStream
-					cr;
-					tab;
-					tab;
-					tab;
-					tab ] ].
-	aStream nextPutAll: ' }'
 ]
 
 { #category : #slots }

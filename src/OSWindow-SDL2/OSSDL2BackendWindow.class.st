@@ -9,7 +9,6 @@ Class {
 	#instVars : [
 		'currentCursor',
 		'iconSurface',
-		'lastKeyboardFocus',
 		'sdl2Window',
 		'screenScaleFactor',
 		'horizontalDPI',

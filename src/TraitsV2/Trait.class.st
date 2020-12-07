@@ -238,17 +238,17 @@ Trait >> isTraitExclusion [
 	^ false
 ]
 
+{ #category : #testing }
+Trait >> isUsed [
+
+	^ super isUsed or: [ self traitUsers notEmpty ]
+]
+
 { #category : #'organization updating' }
 Trait >> notifyOfRecategorizedSelector: selector from: oldCategory to: newCategory [
 	"When there is a recategorization of a selector, I propagate the changes to my users"
 	super notifyOfRecategorizedSelector: selector from: oldCategory to: newCategory.
 	self traitUsers do: [ :e | e recategorizeSelector: selector from: oldCategory to: newCategory ].
-]
-
-{ #category : #'file in/out' }
-Trait >> oldDefinition [
-
-	^ self definition
 ]
 
 { #category : #'accessing method dictionary' }
