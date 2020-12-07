@@ -21,7 +21,7 @@ PrimitiveErrorVariable class >> node: aVariableNode [
 
 { #category : #visiting }
 PrimitiveErrorVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
-	^ aProgramNodeVisitor visitTemporaryNode: aNode
+	^ aProgramNodeVisitor visitTemporaryVariableNode: aNode
 ]
 
 { #category : #queries }
