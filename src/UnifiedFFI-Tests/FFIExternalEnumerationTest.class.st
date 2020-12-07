@@ -15,14 +15,14 @@ FFIExternalEnumerationTest >> enumClass [
 { #category : #primitives }
 FFIExternalEnumerationTest >> ffiTestCall: enumValue format: format to: buffer [
 	^ self 
-		ffiCall: #( int sprintf ( ByteArray buffer, String format, FFITestEnumeration enumValue ) )
+		ffiCall: #( int sprintf ( void* buffer, String format, FFITestEnumeration enumValue ) )
 		module: LibC
 ]
 
 { #category : #primitives }
 FFIExternalEnumerationTest >> ffiTestReturn: aNumber format: format to: buffer [
 	^ self 
-		ffiCall: #( FFITestEnumeration sprintf ( ByteArray buffer, String format, int aNumber ) )
+		ffiCall: #( FFITestEnumeration sprintf ( void* buffer, String format, int aNumber ) )
 		module: LibC
 ]
 

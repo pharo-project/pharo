@@ -4,5 +4,5 @@ Extension { #name : #SycAddSubclassCommand }
 SycAddSubclassCommand class >> fullBrowserTabActivation [
 	<classAnnotation>
 	
-	^ClyBrowserTabCommandActivation for: ClyClassContextOfFullBrowser 
+	^ClyBrowserTabCommandActivation for: ClyFullBrowserClassContext 
 ]

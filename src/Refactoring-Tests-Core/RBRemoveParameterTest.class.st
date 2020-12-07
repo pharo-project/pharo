@@ -31,6 +31,20 @@ RBRemoveParameterTest >> testPrimitiveMethods [
 	self shouldFail: refactoring
 ]
 
+{ #category : #'failure tests' }
+RBRemoveParameterTest >> testReferenceArgument [
+	| refactoring |
+	(model classNamed: #Object) 
+		compile: 'methWith: arg1 ^ arg1 * 8'
+		classified: #(#accessing).
+	refactoring := RBRemoveParameterRefactoring 
+				model: model
+				removeParameter: 'arg1'
+				in: Object
+				selector: #methWith:.
+	self shouldFail: refactoring
+]
+
 { #category : #tests }
 RBRemoveParameterTest >> testRemoveParameter [
 	| refactoring class |

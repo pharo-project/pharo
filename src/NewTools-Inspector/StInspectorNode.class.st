@@ -1,3 +1,15 @@
+"
+I model an attribute of an object in the `StInspector`. I am used in the Raw presentation of an Object. My main responsibility is to associate a variable name of a host object with its value. 
+
+Public API and Key Messages
+
+- hostObject return the object (host) holding the  attribute that I represent;
+- label return a string label of the attribute, which may be an instance variable name or a dynamically generated name for dynamic attributes;
+- value return the value  of the attribute; catches any errors and returns nil;
+- rawValue return the value of the attribute without any catch for errors;
+- key return an object used as unique key to identify an attribute, it may be an integer for indexed variables or a string for dynamic ones.
+
+"
 Class {
 	#name : #StInspectorNode,
 	#superclass : #Object,
@@ -20,6 +32,12 @@ StInspectorNode >> = anObject [
 	self == anObject ifTrue: [ ^ true ].
 	self class = anObject class ifFalse: [ ^ false ].
 	^ hostObject == anObject hostObject
+]
+
+{ #category : #converting }
+StInspectorNode >> asInspectorModel [
+
+	^ StInspectorModel on: self rawValue
 ]
 
 { #category : #accessing }

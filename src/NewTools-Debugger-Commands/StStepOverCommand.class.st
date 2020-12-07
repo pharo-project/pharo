@@ -14,7 +14,8 @@ StStepOverCommand class >> defaultDescription [
 
 { #category : #initialization }
 StStepOverCommand class >> defaultIconName [
-	^ #glamorousOver
+
+	^ #debuggerStepOver
 ]
 
 { #category : #accessing }

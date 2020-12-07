@@ -105,8 +105,8 @@ LocalVariable >> initialize [
 
 { #category : #testing }
 LocalVariable >> isAccessedIn: aMethod [
-	self isUnused ifTrue: [ ^ false ].
-	^ aMethod == self method
+
+	^ self isUsed and: [ aMethod == self method ]
 ]
 
 { #category : #testing }
@@ -151,7 +151,7 @@ LocalVariable >> isRead [
 
 { #category : #testing }
 LocalVariable >> isReferenced [
-	^ self isUnused not
+	^ self isUsed
 ]
 
 { #category : #testing }
@@ -182,11 +182,10 @@ LocalVariable >> isUninitialized [
 	^ self isWrite not
 ]
 
-{ #category : #'read/write usage' }
-LocalVariable >> isUnused [
-	"when the var is never read or written, it is not used.
-	Note: we have a special #arg use which means arguments are never unused"
-	^ usage isNil
+{ #category : #testing }
+LocalVariable >> isUsed [
+	"when the var is never read or written, it is not used"
+	^ usage isNotNil
 ]
 
 { #category : #'read/write usage' }
@@ -291,8 +290,8 @@ LocalVariable >> usage: anObject [
 
 { #category : #queries }
 LocalVariable >> usingMethods [
-	self isUnused ifTrue: [ ^#() ].
-	^{self method}
+
+	^ self isUsed ifTrue: [ { self method } ] ifFalse: [ #(  ) ]
 ]
 
 { #category : #debugging }

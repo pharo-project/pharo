@@ -180,12 +180,10 @@ SDL2 class >> glCreateContext: window [
 
 { #category : #opengl }
 SDL2 class >> glGetAttribute: attr [
-	| value result |
-   value := ExternalAddress allocate: 4.
-	self glGetAttribute: attr into: value.
-	result := value nbUInt32AtOffset: 0.
-	value free.
-	^result
+
+	^ ExternalAddress allocate: 4 bytesDuring: [ :value | 
+		  self glGetAttribute: attr into: value.
+		  value nbUInt32AtOffset: 0 ]
 ]
 
 { #category : #opengl }
@@ -262,9 +260,8 @@ SDL2 class >> initLibrary [
 { #category : #common }
 SDL2 class >> initPlatformSpecific [
 
-	Smalltalk os isMacOSX ifTrue: [  
-		SDLOSXPlatformInitializer new run.	
-	] 
+	OSPlatform current sdlPlatform initPlatformSpecific.
+
 ]
 
 { #category : #common }

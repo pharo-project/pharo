@@ -21,6 +21,10 @@ BaselineOfNewTools >> baseline: spec [
 			package: 'NewTools-Core';
 			package: 'NewTools-Morphic';
 			package: 'NewTools-Gtk';
+			"Basic tools (inherited from Spec)"
+			package: 'NewTools-MethodBrowsers';
+			package: 'NewTools-ChangeSorter';
+			package: 'NewTools-KeymapBrowser';
 			"inspector"
 			package: 'NewTools-Inspector' with: [ spec requires: #('NewTools-Inspector-Extensions') ];
 			package: 'NewTools-Inspector-Extensions' with: [ spec requires: #('NewTools-Core') ];
@@ -71,6 +75,10 @@ BaselineOfNewTools >> baseline: spec [
 				'NewTools-Debugger-Breakpoints-Tools'
 				"'NewTools-Debugger-Tests'");
 			group: 'SystemReporter' with: #('Core' 'NewTools-SystemReporter');
+			group: 'Methods' with: #('Core' 'NewTools-MethodBrowsers');
+			group: 'ChangeSorter' with: #('Core' 'NewTools-ChangeSorter');
+			"Not in the image for the moment, we need a pass on them"
+			group: 'KeymapBrowser' with: #('Core' 'NewTools-KeymapBrowser');
 			group: 'FlagBrowser' with: #(
 				'Core' 
 				'NewTools-FlagBrowser' 
@@ -86,6 +94,9 @@ BaselineOfNewTools >> baseline: spec [
 				'Playground'
 				'Inspector'
 				'Debugger'
+				'Methods'
+				'ChangeSorter'
+				"'KeymapBrowser'"
 				"'FlagBrowser'") ]
 ]
 
@@ -123,4 +134,11 @@ BaselineOfNewTools >> sindarin: spec [
 			repository: (self packageRepositoryURL 
 				ifEmpty: [ 'github://pharo-spec/ScriptableDebugger' ]);
 			loads: 'Core' ]
+]
+
+{ #category : #dependencies }
+BaselineOfNewTools >> spec: spec [ 
+
+	spec baseline: 'Spec2' with: [ 
+		spec repository: 'github://pharo-spec/Spec' ]
 ]

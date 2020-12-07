@@ -58,7 +58,7 @@ ClyMoveClassToGroupCommand class >> fullBrowserDragAndDropActivation3 [
 ClyMoveClassToGroupCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 	
-	^CmdShortcutActivation by: $m meta, $c meta for: ClyClassContextOfFullBrowser 
+	^CmdShortcutActivation by: $m meta, $c meta for: ClyFullBrowserClassContext 
 ]
 
 { #category : #accessing }

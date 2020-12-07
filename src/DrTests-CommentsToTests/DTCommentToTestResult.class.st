@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'testsResult'
 	],
-	#category : #'DrTests-CommentsToTests'
+	#category : #'DrTests-CommentsToTests-Base'
 }
 
 { #category : #accessing }

@@ -190,6 +190,11 @@ BlockClosure >> cull: firstArg cull: secondArg cull: thirdArg cull: fourthArg [
 	
 ]
 
+{ #category : #printing }
+BlockClosure >> doPrintOn: aStream [
+	aStream nextPutAll: self sourceNode sourceCode 
+]
+
 { #category : #controlling }
 BlockClosure >> doWhileFalse: conditionBlock [
 	"Evaluate the receiver once, then again as long the value of conditionBlock is false."
@@ -548,7 +553,12 @@ BlockClosure >> outerContext: aContext startpc: aStartpc numArgs: argCount copie
 
 { #category : #printing }
 BlockClosure >> printOn: aStream [
-	aStream nextPutAll: self sourceNode sourceCode 
+		
+	[self doPrintOn: aStream] 
+		onErrorDo: [ aStream 
+				nextPutAll: '<Error printing blockClosure in: ';
+				print: self method;
+				nextPutAll: ' >' ]
 ]
 
 { #category : #accessing }

@@ -537,7 +537,7 @@ FBDDecompiler >> pushFullClosure: aCompiledBlock numCopied: numCopied receiverOn
 	savedSimStack := simulatedStack.
 	savedSequence := currentSequence.
 
-	receiverOnStack ifTrue: [ 1 halt ].
+	receiverOnStack ifTrue: [ self error: 'not yet supported, please open issue' ].
 
 	simulatedStack addLast: (self
 		extractFullBlock: aCompiledBlock numCopied: numCopied).

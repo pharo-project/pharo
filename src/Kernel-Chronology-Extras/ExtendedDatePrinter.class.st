@@ -17,7 +17,7 @@ ExtendedDatePrinter >> printDate: aDate format: formatArray on: aStream [
 	
 		items: 1=day 2=month 3=year will appear in the order given, 
 	
-		separated by sep which is eaither an ascii code or character. 
+		separated by sep which is either an ASCII code or character. 
 	
 		monthFmt: 1=09 2=Sep 3=September 
 	

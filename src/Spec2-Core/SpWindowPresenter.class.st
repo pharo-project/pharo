@@ -32,7 +32,8 @@ Class {
 		'#isClosed => SpObservableSlot',
 		'#toolbar => SpObservableSlot',
 		'#statusbar => SpObservableSlot',
-		'#window => SpObservableSlot'
+		'#window => SpObservableSlot',
+		'#decorations => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Support'
 }
@@ -179,15 +180,17 @@ SpWindowPresenter >> centered [
 SpWindowPresenter >> centeredRelativeTo: aWindowPresenter [
 	"Prepare the window to be centered to another window"
 
-	self changed: #centeredRelativeTo: with: { aWindowPresenter }
+	self withAdapterPerformOrDefer: [ :anAdapter |
+		anAdapter centeredRelativeTo: aWindowPresenter ]
 ]
 
 { #category : #api }
 SpWindowPresenter >> centeredRelativeToTopWindow [
 	"Prepare the window to be centered to top window (the window that is currently active)"
 
-	self application topWindow 
+	self application topWindow
 		ifNotNil: [ :aWindow | self centeredRelativeTo: aWindow ]
+		ifNil: [ self centered ]
 ]
 
 { #category : #api }
@@ -218,6 +221,13 @@ SpWindowPresenter >> delete [
 SpWindowPresenter >> giveFocusToNextFrom: aModel [ 
 
 	^ self presenter giveFocusToNextFrom: aModel
+]
+
+{ #category : #testing }
+SpWindowPresenter >> hasDecorations [
+	"Answer if window has decorations (header bar and buttons)"
+
+	^ decorations
 ]
 
 { #category : #testing }
@@ -290,6 +300,7 @@ SpWindowPresenter >> initialize [
 	isResizeable := true.
 	centered := false.
 	askOkToClose := true.
+	decorations := true.
 
 	"presenter whenChangedDo: [ :m | self updateTitle ]."
 	self property: #titleHolder whenChangedDo: [ :m | self changed: #title: with: {m} ].
@@ -567,6 +578,17 @@ SpWindowPresenter >> whenClosedDo: aBlock [
 ]
 
 { #category : #'api-events' }
+SpWindowPresenter >> whenDecorationsChangedDo: aBlock [
+	"Inform when decorations property has changed. 
+	 `aBlock` has three optional arguments: 
+	 - new value
+	 - old value
+	 - the announcement triggering this action"
+
+	self property: #decorations whenChangedDo: aBlock
+]
+
+{ #category : #'api-events' }
 SpWindowPresenter >> whenOpenedDo: aBlock [
 	"Inform when window is opened. 
 	 `aBlock` receives zero arguments."
@@ -633,4 +655,18 @@ SpWindowPresenter >> windowIsClosing [
 { #category : #updating }
 SpWindowPresenter >> windowIsOpening [
 	isClosed := false
+]
+
+{ #category : #api }
+SpWindowPresenter >> withDecorations [
+	"Add decorations on window (header bar and buttons)"
+	
+	decorations := true
+]
+
+{ #category : #api }
+SpWindowPresenter >> withoutDecorations [
+	"Remove decorations on window (header bar and buttons)"
+	
+	decorations := false
 ]

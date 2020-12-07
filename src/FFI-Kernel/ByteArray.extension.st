@@ -82,25 +82,34 @@ ByteArray >> doubleAt: byteIndex put: value [
 { #category : #'*FFI-Kernel' }
 ByteArray >> float32AtOffset: zeroBasedOffset [
 	<primitive: 613>
-	^ self oldFFIPrimFloat32At: zeroBasedOffset + 1
+
+	^ FFIBackend current on: self float32At: zeroBasedOffset + 1
 ]
 
 { #category : #'*FFI-Kernel' }
 ByteArray >> float32AtOffset: zeroBasedOffset put: value [
 	<primitive: 628>
-	^ self oldFFIPrimFloat32At: zeroBasedOffset + 1 put: value
+	
+	^ FFIBackend current on: self float32At: zeroBasedOffset + 1 put: value
+
 ]
 
 { #category : #'*FFI-Kernel' }
 ByteArray >> float64AtOffset: zeroBasedOffset [
 	<primitive: 614>
-	^ self oldFFIPrimFloat64At: zeroBasedOffset + 1
+	
+	^ FFIBackend current on: self float64At: zeroBasedOffset + 1
+
 ]
 
 { #category : #'*FFI-Kernel' }
 ByteArray >> float64AtOffset: zeroBasedOffset put: value [
+
 	<primitive: 629>
-	^ self oldFFIPrimFloat64At: zeroBasedOffset + 1 put: value
+	^ FFIBackend current
+		  on: self
+		  float64At: zeroBasedOffset + 1
+		  put: value
 ]
 
 { #category : #'*FFI-Kernel' }
@@ -163,21 +172,23 @@ ByteArray >> int8AtOffset: zeroBasedOffset put: value [
 
 { #category : #'*FFI-Kernel' }
 ByteArray >> integerAt: byteOffset put: value size: nBytes signed: aBoolean [
-	"Primitive. Store the given value as integer of nBytes size
-	in the receiver. Fail if the value is out of range.
-	Note: This primitive will access memory in the outer space if
-	invoked from ExternalAddress."
-	<primitive: 'primitiveFFIIntegerAtPut' module:'SqueakFFIPrims'>
-	^self primitiveFailed
+
+	^ FFIBackend current
+		  integerOfObject: self
+		  at: byteOffset
+		  put: value
+		  size: nBytes
+		  signed: aBoolean
 ]
 
 { #category : #'*FFI-Kernel' }
 ByteArray >> integerAt: byteOffset size: nBytes signed: aBoolean [
-	"Primitive. Return an integer of nBytes size from the receiver.
-	Note: This primitive will access memory in the outer space if
-	invoked from ExternalAddress."
-	<primitive: 'primitiveFFIIntegerAt' module:'SqueakFFIPrims'>
-	^self primitiveFailed
+
+	^ FFIBackend current
+		  integerOfObject: self
+		  at: byteOffset
+		  size: nBytes
+		  signed: aBoolean
 ]
 
 { #category : #'*FFI-Kernel' }
@@ -212,34 +223,6 @@ ByteArray >> longPointerAt: byteIndex put: value [
 		[:i|
 		self unsignedByteAt: byteIndex+i-1 put: (value basicAt: i)].
 	^value
-]
-
-{ #category : #'*FFI-Kernel' }
-ByteArray >> oldFFIPrimFloat32At: byteOffset [
-	<primitive:'primitiveFFIFloatAt' module:'SqueakFFIPrims'>
-	^self primitiveFailed
-]
-
-{ #category : #'*FFI-Kernel' }
-ByteArray >> oldFFIPrimFloat32At: byteOffset put: value [
-	<primitive:'primitiveFFIFloatAtPut' module:'SqueakFFIPrims'>
-	self isReadOnlyObject 
-		ifTrue: [ ^ self modificationForbiddenFor: #oldFFIPrimFloat32At:put: index: byteOffset value: value ].
-	^self primitiveFailed
-]
-
-{ #category : #'*FFI-Kernel' }
-ByteArray >> oldFFIPrimFloat64At: byteOffset [
-	<primitive:'primitiveFFIDoubleAt' module:'SqueakFFIPrims'>
-	^self primitiveFailed
-]
-
-{ #category : #'*FFI-Kernel' }
-ByteArray >> oldFFIPrimFloat64At: byteOffset put: value [
-	<primitive:'primitiveFFIDoubleAtPut' module:'SqueakFFIPrims'>
-	self isReadOnlyObject 
-		ifTrue: [ ^ self modificationForbiddenFor: #oldFFIPrimFloat64At:put: index: byteOffset value: value ].
-	^self primitiveFailed
 ]
 
 { #category : #'*FFI-Kernel' }

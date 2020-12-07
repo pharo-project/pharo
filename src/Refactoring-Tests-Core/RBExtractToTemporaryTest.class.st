@@ -92,6 +92,15 @@ RBExtractToTemporaryTest >> testExtractToTemporaryWithDuplicates [
 ]
 
 { #category : #'failure tests' }
+RBExtractToTemporaryTest >> testNoValidNameOfTemp [
+	self shouldFail: (RBExtractToTemporaryRefactoring 
+			extract: (51 to: 60)
+			to: 'collection'
+			from: #modifiesCollection
+			in: RBRefactoryTestDataApp)
+]
+
+{ #category : #'failure tests' }
 RBExtractToTemporaryTest >> testNonExistantSelector [
 	self shouldFail: (RBExtractToTemporaryRefactoring 
 			extract: (14 to: 23)

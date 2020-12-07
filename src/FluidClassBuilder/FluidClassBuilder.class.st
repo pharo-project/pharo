@@ -1,33 +1,31 @@
 "
-I'm a builder to create class definition using a fluid interface. In the future I should be removed 
-and a shiftClassBuilder should be used instead.
+I'm a builder to create class definition using a fluid interface. For now I'm just wrapping a shiftClassBuilder.  In the future I should be removed and a shiftClassBuilder should be used instead.
 
-I'm created by the message `<` as in 
-
-```
-Object < #Point
-```
-
-My build process happens when I resolve the message #package: as in 
+I'm created by the message `<<` as in 
 
 ```
-Object < #Point 
+Object << #Point
+```
+
+My build process happens when I resolve the message `package:` as in 
+
+```
+Object << #Point 
 	slots: { #x . #y };
 	tag: 'Basics';
 	package: 'Kernel'
 ```	
 
-Now this is not totally true. This expression creates a shiftClassBuilder.
-And we should send build to the fluidclassbuilder to actually kick the building.
+Now this is not totally true. This expression creates a `ShiftClassBuilder`.
+And we should send `build` to the fluidclassbuilder to actually kick the building.
  
-	
 The mandatory information (name, superclass, package) are systematically passed to the builder.
 Others are checked first and when available passed. 	
 	
-### To install a class (to be used later)
+### To install a class
 
 ```
-ShiftClassInstaller new makeWithBuilder: (Object < #Point33 
+ShiftClassInstaller new makeWithBuilder: (Object << #Point33 
  slots: { #x . #y };
  tag: 'Basics';
  package: 'Kernel') shiftClassBuilder	
@@ -56,7 +54,8 @@ Class {
 
 { #category : #building }
 FluidClassBuilder >> build [
-
+	"Return a class that is not installed in the system."
+	
 	^ shiftClassBuilder build 
 
 
@@ -103,6 +102,13 @@ FluidClassBuilder >> fillShiftClassBuilder [
 	
 
 
+]
+
+{ #category : #'as yet unclassified' }
+FluidClassBuilder >> install [
+	"Install the class in the system environment"
+	
+	ShiftClassInstaller new makeWithBuilder: shiftClassBuilder 
 ]
 
 { #category : #accessing }

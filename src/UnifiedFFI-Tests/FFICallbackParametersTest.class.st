@@ -138,7 +138,7 @@ FFICallbackParametersTest >> testIntegerPointerParameters [
 		ExternalAddress fromAddress: 6.}.	
 	
 	callback := FFICallback 
-		signature: #(void (void* a, void* b, int* c, int* d, char* e, float* f))
+		signature: #(void (void* a, void* b, int* c, int* d, int* e, float* f))
 		block: [ :a :b :c :d :e :f  | 
 			self assert: a value equals: 1.
 			self assert: b value equals: 2.
@@ -235,9 +235,9 @@ FFICallbackParametersTest >> testPassing4DoubleStructureInTheStack [
 
 	param := FFITestStructureDoubleStructure externalNew
 		x: 2.0;
-		y: 3;
+		y: 3.0;
 		w: 5.0;
-		z: 7;
+		z: 7.0;
 		autoRelease;
 		yourself.
 
@@ -306,12 +306,12 @@ FFICallbackParametersTest >> testPassingStructureInTheStack [
 			self assert: a x equals: 2.0. 
 			self assert: a y equals: 3. 
 			self assert: a w equals: 5.0. 
-			self assert: a z equals: 7. 
+			self assert: a z equals: 7.0. 
 
 			a x: 3.0.
 			a y: 4.
 			a w: 5.0.
-			a z: 7. 
+			a z: 7.0. 
 
 			77 
 		].
@@ -320,7 +320,7 @@ FFICallbackParametersTest >> testPassingStructureInTheStack [
 		x: 2.0;
 		y: 3;
 		w: 5.0;
-		z: 7;
+		z: 7.0;
 		autoRelease;
 		yourself.
 		

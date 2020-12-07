@@ -36,7 +36,7 @@ SycMethodNameEditorTest >> methodNamedFor: aSymbol [
 { #category : #running }
 SycMethodNameEditorTest >> setUp [
 	super setUp.
-	methodNameEditor := SycMethodNameEditor on: (self methodNamedFor: #a:b:c:)
+	methodNameEditor := SycMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:)
 ]
 
 { #category : #running }
@@ -184,13 +184,13 @@ SycMethodNameEditorTest >> testInitialArgumentListHasNoSelection [
 
 { #category : #'tests - initial state' }
 SycMethodNameEditorTest >> testInitialButtonDownIsDisable [
-	methodNameEditor := SycMethodNameEditor on: (self methodNamedFor: #a).
+	methodNameEditor := SycMethodNameEditorPresenter on: (self methodNamedFor: #a).
 	self deny: methodNameEditor downButton isEnabled
 ]
 
 { #category : #'tests - initial state' }
 SycMethodNameEditorTest >> testInitialButtonUpIsDisable [
-	methodNameEditor := SycMethodNameEditor on: (self methodNamedFor: #a).
+	methodNameEditor := SycMethodNameEditorPresenter on: (self methodNamedFor: #a).
 	self deny: methodNameEditor upButton isEnabled
 ]
 

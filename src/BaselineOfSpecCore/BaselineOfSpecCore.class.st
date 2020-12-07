@@ -29,9 +29,6 @@ BaselineOfSpecCore >> baseline: spec [
 			package: 'Spec2-Commander2-Tests' with: [ spec requires: #('Spec2-Commander2') ];
 			package: 'Spec2-Tests' with: [ spec requires: #('Spec2-Examples') ];
 			package: 'Spec2-Code-Tests' with: [ spec requires: #('Spec2-Tests' 'Spec2-Code') ];
-			"Tools -> This needs to be moved to NewTools"
-			package: 'Spec2-Tools' with: [ spec requires: #('Spec2-Core') ];
-			package: 'Spec2-Tools-Tests' with: [ spec requires: #('Spec2-Tests' 'Spec2-Tools') ];
 			"Examples"
 			package: 'Spec2-Examples';
 			package: 'Spec2-Commander2-ContactBook' with: [ spec requires: #('Spec2-Commander2') ];
@@ -52,9 +49,9 @@ BaselineOfSpecCore >> baseline: spec [
 		'Spec2-Commander2' ).
 	spec group: 'Code' with: #('Core' 'Spec2-Code-Commands' 'Spec2-Code').
 	spec group: 'CodeTests' with: #('Spec2-Code-Tests').
-	spec group: 'Support' with: #('Core' 'Spec2-Examples' 'Spec2-Tools' ).
+	spec group: 'Support' with: #('Core' 'Spec2-Examples').
 	spec group: 'Tests' with: #('Core' 'Spec2-Tests' 	'Spec2-Commander2-Tests').
-	spec group: 'SupportTests' with: #('Support' 'Spec2-Tools-Tests').
+	spec group: 'SupportTests' with: #('Support').
 	spec group: 'Pillar' with: #('Spec2-Pillar' ).
 	spec group: 'Base' with: #('Core' 'Support').
 	spec group: 'BaseTests' with: #('Spec2-Tests' 'SupportTests').

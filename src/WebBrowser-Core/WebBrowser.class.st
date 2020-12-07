@@ -19,6 +19,15 @@ WebBrowser class >> isForCurrentSystem [
 	^self subclassResponsibility 
 ]
 
+{ #category : #testing }
+WebBrowser class >> isUsed [
+	"all my subclasses are used by me"
+	
+	^self name = #WebBrowser
+		ifTrue: [ super isUsed ]
+		ifFalse: [ true ]
+]
+
 { #category : #private }
 WebBrowser class >> openNativeWebBrowserOn: aURL [
 

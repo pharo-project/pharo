@@ -28,3 +28,9 @@ FFITestObject >> c [
 
 	 ^c
 ]
+
+{ #category : #'library path' }
+FFITestObject >> ffiLibraryName [ 
+	
+	^ 'testLibrary'
+]

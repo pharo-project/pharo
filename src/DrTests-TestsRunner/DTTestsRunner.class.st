@@ -4,7 +4,7 @@ I am the plugin implementing test runner for DrTests.
 Class {
 	#name : #DTTestsRunner,
 	#superclass : #DrTestsPlugin,
-	#category : #'DrTests-TestsRunner'
+	#category : #'DrTests-TestsRunner-Base'
 }
 
 { #category : #'api - accessing' }

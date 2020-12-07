@@ -15,11 +15,11 @@ Class {
 
 { #category : #protocol }
 SpMorphicScrollableAdapter >> addConstraits: constraints toChild: childMorph [
-	"adds constraits by child"
-	| theMorph |
+	"Adds constraits by child"
 	
+	| theMorph |	
 	theMorph := childMorph.
-	"keep constraints to layout usage"
+	"Keep constraints to layout usage"
 	theMorph setProperty: #constraints toValue: constraints. 
 	
 	^ theMorph 
@@ -27,8 +27,8 @@ SpMorphicScrollableAdapter >> addConstraits: constraints toChild: childMorph [
 
 { #category : #protocol }
 SpMorphicScrollableAdapter >> basicAdd: aPresenter constraints: constraints to: aPanel [
-	| childMorph |
 
+	| childMorph |
 	childMorph := self buildMorph: aPresenter constraints: constraints.	
 	
 	childMorph 
@@ -51,34 +51,27 @@ SpMorphicScrollableAdapter >> children [
 { #category : #protocol }
 SpMorphicScrollableAdapter >> layout: aLayout [
 
-	emptyLayoutMarker := PanelMorph new 
-		hResizing: #spaceFill;
-		vResizing: #spaceFill;
-		yourself.
-	widget ifNil: [
+	emptyLayoutMarker := PanelMorph new
+		                     hResizing: #spaceFill;
+		                     vResizing: #spaceFill;
+		                     yourself.
+	widget ifNil: [ 
 		widget := GeneralScrollPane new
-			changeScrollerTableLayout;
-			hResizing: #spaceFill;
-			vResizing: #spaceFill;
-			color: Color transparent;
-			borderColor: Color transparent;
-			scrollTarget: emptyLayoutMarker;
-			yourself ].
+			          changeScrollerTableLayout;
+			          hResizing: #spaceFill;
+			          vResizing: #spaceFill;
+			          color: Color transparent;
+			          borderColor: Color transparent;
+			          scrollTarget: emptyLayoutMarker;
+			          yourself ].
 
 	aLayout child ifNotNil: [ 
-		self 
-			basicAdd: aLayout child
-			constraints: (aLayout constraintsFor: aLayout child)
-			to: widget ].
+		self basicAdd: aLayout child constraints: (aLayout constraintsFor: aLayout child) to: widget ].
 
-	aLayout whenChildrenAddedDo: [ :ann |
-		self 
-			basicAdd: ann child
-			constraints: (aLayout constraintsFor: ann child) 
-			to: widget ].
-		
-	aLayout whenChildrenRemovedDo: [ :ann |
-		self removeChild: ann child ].
+	aLayout whenChildrenAddedDo: [ :ann | 
+		self basicAdd: ann child constraints: (aLayout constraintsFor: ann child) to: widget ].
+
+	aLayout whenChildrenRemovedDo: [ :ann | self removeChild: ann child ].
 
 	super layout: aLayout
 ]

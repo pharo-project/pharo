@@ -72,6 +72,7 @@ SpFilteringSelectableListPresenter >> newListToFilter [
 	| table |
 	
 	table := self newTable. 
+	table hideColumnHeaders.
 	table columns: self listColumns.
 	^ table
 ]

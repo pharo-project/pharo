@@ -11,6 +11,8 @@ BaselineOfSpec2 >> baseline: spec [
 	spec for: #common do: [ 
 		self spec: spec.
 		
+		spec postLoadDoIt: #postLoad.
+		
 		spec
 			"Core"
 			package: 'Spec2-Adapters-Morphic' with: [ spec requires: #('SpecCore') ];
@@ -41,6 +43,14 @@ BaselineOfSpec2 >> baseline: spec [
 		'Support').
 		
 	spec group: 'default' with: #('Base' 'Code' 'Tests' 'CodeTests').
+]
+
+{ #category : #script }
+BaselineOfSpec2 >> postLoad [
+
+	self flag: #REMOVE. "This is a temporal hack to ensure the style is taken the new variables way."
+	(self class environment at: #SpStyle) reset.
+		
 ]
 
 { #category : #acccessing }

@@ -40,6 +40,15 @@ StPlaygroundPage class >> pageExtension [
 	^ 'ph'
 ]
 
+{ #category : #'inspector compatibility' }
+StPlaygroundPage >> asInspectorModel [
+	"Since the playground can be the starting point of an inspection (using <meta+g>), the 
+	 playground page (which is the model of a playground) needs to behave as a valid starting point. 
+	 This method declares the page as a valid inspector model."
+
+	^ self
+]
+
 { #category : #accessing }
 StPlaygroundPage >> baseDirectory [
 	
@@ -88,6 +97,15 @@ StPlaygroundPage >> creationTimeForFileName [
 	^ (self creationTime asString 
 		copyReplaceAll: ':' with: '-') 
 		copyReplaceAll: '.' with: '-'
+]
+
+{ #category : #'inspector compatibility' }
+StPlaygroundPage >> defaultObjectInspectorClass [
+	"Since the playground can be the starting point of an inspection (using <meta+g>), the 
+	 playground page (which is the model of a playground) needs to behave as a valid starting point. 
+	 This method declares answer the presenter to use in the inspection miller list."
+
+	^ StPlaygroundPagePresenter
 ]
 
 { #category : #accessing }

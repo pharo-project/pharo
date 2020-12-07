@@ -14,7 +14,7 @@ StProceedCommand class >> defaultDescription [
 
 { #category : #initialization }
 StProceedCommand class >> defaultIconName [
-	^ #glamorousGo
+	^ #debuggerProceed
 ]
 
 { #category : #default }

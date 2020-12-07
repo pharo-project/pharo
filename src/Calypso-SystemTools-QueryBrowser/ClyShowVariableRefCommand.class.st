@@ -21,14 +21,14 @@ Class {
 ClyShowVariableRefCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup order: 2000 for: ClyVariableContextOfFullBrowser 
+	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup order: 2000 for: ClyFullBrowserVariableContext 
 ]
 
 { #category : #activation }
 ClyShowVariableRefCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 	
-	^CmdShortcutActivation by: $n meta for: ClyVariableContextOfFullBrowser
+	^CmdShortcutActivation by: $n meta for: ClyFullBrowserVariableContext
 ]
 
 { #category : #activation }

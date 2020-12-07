@@ -4,6 +4,18 @@ Class {
 	#category : #'NewTools-Inspector-Command'
 }
 
+{ #category : #initialization }
+StInspectorCommand class >> defaultIconName [
+
+	^ nil
+]
+
+{ #category : #default }
+StInspectorCommand class >> defaultShortcutKey [
+
+	^ nil
+]
+
 { #category : #'instance creation' }
 StInspectorCommand class >> toolbarCommandsFor: inspector [
 
@@ -16,6 +28,24 @@ StInspectorCommand class >> toolbarCommandsFor: inspector [
 StInspectorCommand >> appliesTo: anInspector [
 
 	^ true
+]
+
+{ #category : #converting }
+StInspectorCommand >> asSpecCommand [
+	| command |
+	
+	command := super asSpecCommand.
+	self shortcutKey ifNotNil: [ :key | command shortcutKey: key ].
+	self defaultIconName
+		ifNotNil: [ :iconName | command iconName: iconName ].
+	
+	^ command
+]
+
+{ #category : #converting }
+StInspectorCommand >> defaultIconName [
+
+	^ self class defaultIconName
 ]
 
 { #category : #initialization }
@@ -45,4 +75,10 @@ StInspectorCommand >> model [
 StInspectorCommand >> owner [ 
 	
 	^ self context owner
+]
+
+{ #category : #converting }
+StInspectorCommand >> shortcutKey [
+
+	^ self class defaultShortcutKey
 ]

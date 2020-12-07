@@ -18,7 +18,7 @@ ClyBreakOnVariableCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	^ CmdContextMenuActivation
 		byItemOf: ClyDebuggingMenuGroup
-		for: ClyVariableContextOfFullBrowser
+		for: ClyFullBrowserVariableContext
 ]
 
 { #category : #testing }

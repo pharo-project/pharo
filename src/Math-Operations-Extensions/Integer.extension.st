@@ -29,7 +29,8 @@ Integer >> asWords [
 ]
 
 { #category : #'*Math-Operations-Extensions' }
-Integer >> benchFib [  "Handy send-heavy benchmark"
+Integer >> benchFib [  
+	"Handy send-heavy benchmark"
 	"(result // seconds to run) = approx calls per second"
 	" | r t |
 	  t := Time millisecondsToRun: [r := 26 benchFib].
@@ -439,7 +440,7 @@ Integer >> primeFactors [
 { #category : #'*Math-Operations-Extensions' }
 Integer >> primeFactorsOn: aStream [
 	"Recursively calculate the primefactors of myself and put the factors into the given stream"
-	self = 1 
+	self = 1 | self isZero
 		ifTrue: [ ^ self ].
 		
 	self even ifTrue: [

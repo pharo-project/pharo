@@ -81,6 +81,24 @@ FluidTraitBuilderTest >> testInstallMinimalMockClass [
 ]
 
 { #category : #tests }
+FluidTraitBuilderTest >> testInstallSimplePoint2 [
+
+	[ | trait |
+	self assert: (self class environment at: #TPoint2 ifAbsent: [ true ]).
+	
+	builder := Trait << #TPoint2
+					slots: { #x . #y };
+					package: 'FakedCore'.
+	builder install.
+	trait := self class environment at: #TPoint2. 
+	self assert: trait name equals: #TPoint2.
+	self assert: trait slots size equals: 2 ] ensure: [  
+			self class environment removeKey: #TPoint2 ifAbsent: [self fail]. 
+			self assert: (self class environment at: #TPoint2 ifAbsent: [ true ])]
+
+]
+
+{ #category : #tests }
 FluidTraitBuilderTest >> testTraitNoSlotsNoUse [
 
 	| trait |

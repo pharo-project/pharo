@@ -77,7 +77,12 @@ SpDemoNotebookPresenter >> objectClassPage [
 	^ (SpNotebookPage 
 		title: 'Object class' 
 		icon: (self iconNamed: #nautilusIcon) 
-		provider: [ MessageBrowser new messages: Object methods ])
+		provider: [
+			self flag: #TODO. "Using reference to suspend a dependency, but is not cool since 
+			it makes a hidden depenency. Instead, we better think another example" 
+			(self class environment at: #MessageBrowser) new 
+				messages: Object methods;
+				yourself ])
 		beCloseable;
 		yourself
 ]

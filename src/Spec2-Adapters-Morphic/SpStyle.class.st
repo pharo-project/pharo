@@ -93,7 +93,7 @@ SpStyle class >> defaultStyleSheetData [
 		.showIcon [ Geometry { #width: 25 } ]
 	],
 	.toolbar [ 
-		Geometry { #hResizing: true },
+		Geometry { #height: Reset, #hResizing: true },
 		.icons [ Geometry { #height: 30 } ],
 		.iconsAndLabel [ Geometry { #height: 45 } ]
 	],

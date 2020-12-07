@@ -8,14 +8,14 @@ Class {
 SycRemoveClassKeepingSubclassesCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 10001 for: ClyClassContextOfFullBrowser 
+	^CmdContextMenuActivation byRootGroupItemOrder: 10001 for: ClyFullBrowserClassContext 
 ]
 
 { #category : #activation }
 SycRemoveClassKeepingSubclassesCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 	
-	^CmdShortcutActivation removalFor: ClyClassContextOfFullBrowser 
+	^CmdShortcutActivation removalFor: ClyFullBrowserClassContext 
 ]
 
 { #category : #converting }

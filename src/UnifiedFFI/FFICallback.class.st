@@ -152,6 +152,12 @@ FFICallback >> returnOnError [
 
 ]
 
+{ #category : #private }
+FFICallback >> shouldDebugExceptions [
+
+	^ true
+]
+
 { #category : #initialization }
 FFICallback >> signature: signature block: aBlock [
 	| parser |
@@ -175,7 +181,8 @@ FFICallback >> thunk [
 FFICallback >> valueWithArguments: args [
 
 	^ [ block valueWithArguments: args ]
-		on: Error 
-		fork: [ :e | e debug ]
-		return: [ self returnOnError ]
+		on: Error
+		fork: [ :e | 
+			self shouldDebugExceptions ifTrue: [ e debug ] ]
+		return: [ self returnOnError ].
 ]

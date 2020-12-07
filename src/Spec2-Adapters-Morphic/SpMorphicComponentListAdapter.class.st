@@ -41,7 +41,7 @@ SpMorphicComponentListAdapter >> children [
 		cell submorphs first ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 SpMorphicComponentListAdapter >> elementAt: index [ 
 	
 	^ self widget dataSource elementAt: index

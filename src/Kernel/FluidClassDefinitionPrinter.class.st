@@ -286,6 +286,13 @@ FluidClassDefinitionPrinter >> sharedVariablesOn: s [
 ]
 
 { #category : #'elementary operations' }
+FluidClassDefinitionPrinter >> slotDefinitionString [
+	"Answer a string that represents an executable description of my Slots"
+	
+	^String streamContents: [ :str | self slotDefinitionsOn: str]
+]
+
+{ #category : #'elementary operations' }
 FluidClassDefinitionPrinter >> slotDefinitionsOn: aStream [
 	"Write on the arg aStream an executable description of my Slots"
 

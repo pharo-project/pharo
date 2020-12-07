@@ -19,43 +19,47 @@ Class {
 SpPanedResizerMorph class >> exampleHorizontal [
 	<example>
 	
-	(PanelMorph new 
-		layoutPolicy: SpMorphicPanedLayout new;
-		listDirection: #leftToRight;
-		addMorphBack: (Morph new 
-			color: Color red;
-			vResizing: #spaceFill;
-			hResizing: #spaceFill;
-			yourself);
-		addMorphBack: self newHorizontal;
-		addMorphBack: (Morph new 
-			color: Color blue;
-			hResizing: #spaceFill;
-			vResizing: #spaceFill;
-			yourself);
-		openInWindow)
-		extent: 500@500
+	(PanelMorph new
+		 layoutPolicy: SpMorphicPanedLayout new;
+		 listDirection: #leftToRight;
+		 addMorphBack: (Morph new
+				  color: Color red;
+				  vResizing: #spaceFill;
+				  hResizing: #spaceFill;
+				  yourself);
+		 addMorphBack: self newHorizontal;
+		 addMorphBack: (Morph new
+				  color: Color blue;
+				  hResizing: #spaceFill;
+				  vResizing: #spaceFill;
+				  yourself);
+		 openInWindow) extent: 500 @ 500
 ]
 
 { #category : #examples }
 SpPanedResizerMorph class >> exampleVertical [
 	<example>
 	
-	(PanelMorph new 
-		layoutPolicy: SpMorphicPanedLayout new;
-		addMorphBack: (Morph new 
-			color: Color red;
-			vResizing: #spaceFill;
-			hResizing: #spaceFill;
-			yourself);
-		addMorphBack: self newVertical;
-		addMorphBack: (Morph new 
-			color: Color blue;
-			vResizing: #spaceFill;
-			hResizing: #spaceFill;
-			yourself);
-		openInWindow)
-		extent: 500@500
+	(PanelMorph new
+		 layoutPolicy: SpMorphicPanedLayout new;
+		 addMorphBack: (Morph new
+				  color: Color red;
+				  vResizing: #spaceFill;
+				  hResizing: #spaceFill;
+				  yourself);
+		 addMorphBack: self newVertical;
+		 addMorphBack: (Morph new
+				  color: Color blue;
+				  vResizing: #spaceFill;
+				  hResizing: #spaceFill;
+				  yourself);
+		 openInWindow) extent: 500 @ 500
+]
+
+{ #category : #testing }
+SpPanedResizerMorph class >> isAbstract [ 
+
+	 ^ self name = #SpPanedResizerMorph
 ]
 
 { #category : #'instance creation' }
@@ -114,13 +118,13 @@ SpPanedResizerMorph >> edgeName [
 { #category : #initialization }
 SpPanedResizerMorph >> initialize [
 	"Initialize the receiver."
-	
+
 	super initialize.
 	self
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		setLayoutSizing;
-		extent: self defaultWidth @ self defaultHeight		
+		extent: self defaultWidth @ self defaultHeight
 ]
 
 { #category : #testing }
@@ -145,13 +149,14 @@ SpPanedResizerMorph >> mouseDown: anEvent [
 { #category : #'event handling' }
 SpPanedResizerMorph >> mouseMove: anEvent [
 	"Track the mouse for resizing."
-	
-	self target ifNil: [ ^ self ] .
-	
-	self setTargetLayoutSizing.
-	self resetLayoutPosition.
-	self positionPoint: (anEvent cursorPoint - lastMouse).
-	self setTargetBounds
+
+	self target ifNil: [ ^ self ].
+
+	self
+		setTargetLayoutSizing;
+		resetLayoutPosition;
+		positionPoint: anEvent cursorPoint - lastMouse;
+		setTargetBounds
 ]
 
 { #category : #'event handling' }
@@ -193,7 +198,7 @@ SpPanedResizerMorph >> pressedFillStyle [
 
 { #category : #private }
 SpPanedResizerMorph >> resetLayoutPosition [
-	"since we are going to move the split bar, layout position (if any) needs to be reseted".
+	"Since we are going to move the split bar, layout position (if any) needs to be reseted"
 	
 	self owner layoutPolicy resetPosition
 ]

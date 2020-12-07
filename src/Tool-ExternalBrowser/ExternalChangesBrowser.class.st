@@ -67,8 +67,8 @@ ExternalChangesBrowser class >> fileReaderServicesForFile: fullName suffix: suff
 	<fileService>
 	| services |
 	services := OrderedCollection new.
-	(FileStream isSourceFileSuffix: suffix) | 
-	(FileStream isChangesFileSuffix: suffix) | (suffix = '*')
+	(ExternalBrowser sourceFileSuffixes includes: suffix) |
+	('changes' = suffix) | (suffix = '*')
 		ifTrue: [ services add: self serviceBrowseCSOrSTFile ].
 	^services
 ]

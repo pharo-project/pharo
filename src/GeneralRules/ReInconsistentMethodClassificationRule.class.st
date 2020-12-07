@@ -26,8 +26,8 @@ ReInconsistentMethodClassificationRule >> check: aMethod forCritiquesDo: aCritiq
 	| ownerProtocol |
 	ownerProtocol := aMethod protocol.
 	ownerProtocol ifNil: [ ^ self ].
-	(ownerProtocol == #'as yet unclassified' or: [ 
-	 ownerProtocol first = $*	 ]) ifTrue: [ ^ self ].
+	((#('as yet unclassified' 'deprecation') includes: ownerProtocol)
+				or: [ ownerProtocol first = $*	 ]) ifTrue: [ ^ self ].
 	
 	aMethod methodClass superclass ifNotNil: [ :superclass |
 			(superclass lookupSelector: aMethod selector) ifNotNil: [ :superMethod |

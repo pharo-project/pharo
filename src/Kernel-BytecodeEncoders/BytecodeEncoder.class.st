@@ -322,15 +322,3 @@ BytecodeEncoder >> streamToMethod: aCompiledMethod [
 	stream := WriteStream with: aCompiledMethod.
 	stream position: aCompiledMethod initialPC - 1
 ]
-
-{ #category : #testing }
-BytecodeEncoder >> supportsClosureOpcodes [
-	"Answer if the receiver supports the
-		genPushNewArray:/genPushConsArray:
-		genPushRemoteTemp:inVectorAt:
-		genStoreRemoteTemp:inVectorAt:
-		genStorePopRemoteTemp:inVectorAt:
-		genPushClosureCopyCopiedValues:numArgs:jumpSize:
-	 opcodes"
-	^false
-]

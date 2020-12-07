@@ -35,7 +35,7 @@ NautilusRefactoring >> chooseFrom: anArray title: aString lines: aCollection [
 { #category : #display }
 NautilusRefactoring >> handleMethodNameRequest: aMethodName in: ref [
 	|dialog|
-	dialog := SycMethodNameEditor openOn: aMethodName withRefactoring: ref.
+	dialog := SycMethodNameEditorPresenter openOn: aMethodName withRefactoring: ref.
 	dialog cancelled ifTrue: [  CmdCommandAborted signal ].
 	^ aMethodName
 ]

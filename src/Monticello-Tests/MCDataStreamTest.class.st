@@ -18,7 +18,7 @@ MCDataStreamTest >> testFileNamed [
 	"When"
 	[  MCDataStream fileNamed: fileName do: [ :streamType | streamType nextPut: testString ].
 	"Then"
-	 MCDataStream fileNamed: fileName do: [ :streamType | self assert: streamType next equals: testString ] ]
+	 MCDataStream readOnlyFileNamed: fileName do: [ :streamType | self assert: streamType next equals: testString ] ]
 		ensure: [ (FileSystem disk workingDirectory / fileName) ensureDelete ]
 ]
 

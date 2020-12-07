@@ -52,9 +52,8 @@ T2OldPharoClassDefinitionPrinterTest >> testMultiPools [
 T2OldPharoClassDefinitionPrinterTest >> testTBehavior [
 	"to me this looks strange to have empty uses here when empty instancevariablenames are not displayed."
 	self 
-		assert: (self forClass: TBehavior)  equals: 'Trait named: #TBehavior
-	 uses: {}
-	 package: ''TraitsV2-Compatibility-Traits'''
+		assert: (self forClass: TBehavior)  equals:  'Trait named: #TBehavior
+	package: ''TraitsV2-Compatibility-Traits'''
 ]
 
 { #category : #'tests - traits' }
@@ -103,7 +102,8 @@ T2OldPharoClassDefinitionPrinterTest >> testTrait3AndTag [
 
 	self 
 		assert: (self forClass: Trait3) 
-		equals: 'Trait named: #Trait3
-	 uses: Trait2
-	 package: ''Tests-Traits-MOP''' 
+		equals: 
+ 'Trait named: #Trait3
+	uses: Trait2
+	package: ''Tests-Traits-MOP'''	
 ]

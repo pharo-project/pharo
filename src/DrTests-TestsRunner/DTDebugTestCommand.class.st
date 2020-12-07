@@ -4,7 +4,7 @@ I am the command allowing one to debug a failing test.
 Class {
 	#name : #DTDebugTestCommand,
 	#superclass : #DTLeafResultCommand,
-	#category : #'DrTests-TestsRunner'
+	#category : #'DrTests-TestsRunner-Commands'
 }
 
 { #category : #hooks }

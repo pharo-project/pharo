@@ -75,7 +75,7 @@ SpFilteringListPresenter >> displayIcon: aBlock [
 	self listPresenter displayIcon: aBlock
 ]
 
-{ #category : #api }
+{ #category : #accessing }
 SpFilteringListPresenter >> filterInputPresenter [
 
 	^ filterInputPresenter
@@ -140,7 +140,7 @@ SpFilteringListPresenter >> items: aCollection [
 	listPresenter items: aCollection
 ]
 
-{ #category : #api }
+{ #category : #accessing }
 SpFilteringListPresenter >> listPresenter [
 	^ listPresenter
 ]
@@ -163,4 +163,16 @@ SpFilteringListPresenter >> matchSubstring [
 SpFilteringListPresenter >> newListToFilter [
 	
 	^ self newList
+]
+
+{ #category : #api }
+SpFilteringListPresenter >> selectItem: anObject [
+	
+	listPresenter selectItem: anObject
+]
+
+{ #category : #api }
+SpFilteringListPresenter >> selectedItem [
+	
+	^ listPresenter selectedItem
 ]

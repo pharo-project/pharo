@@ -14,7 +14,8 @@ StReturnValueCommand class >> defaultDescription [
 
 { #category : #initialization }
 StReturnValueCommand class >> defaultIconName [
-	^ #refresh
+
+	^ #debuggerReturn
 ]
 
 { #category : #accessing }

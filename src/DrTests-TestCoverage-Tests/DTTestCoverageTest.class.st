@@ -3,33 +3,36 @@ Class {
 	#superclass : #TestCase,
 	#instVars : [
 		'plugin',
-		'dTconf',
-		'package'
+		'package',
+		'pluginConfiguration'
 	],
 	#category : #'DrTests-TestCoverage-Tests'
 }
 
 { #category : #running }
 DTTestCoverageTest >> setUp [
+
 	super setUp.
 	package := RPackage organizer
-		packageNamed: 'DrTests-TestCoverage-MocksForTests'.
+		packageNamed: 'DrTests-TestCoverage-Tests-Mocks'.
 	"The test classes are in the same package as classes under test."
-	dTconf := DTPluginConfiguration items: {package} packages: {package}.
+	pluginConfiguration := DTPluginConfiguration items: {package} packages: {package}.
 	plugin := DTTestCoverage new
 ]
 
 { #category : #running }
 DTTestCoverageTest >> testCoveragePercentForMock [
+
 	| result |
-	result := plugin runForConfiguration: dTconf.
+	result := plugin runForConfiguration: pluginConfiguration.
 	self assert: result percent class equals: ScaledDecimal
 ]
 
 { #category : #running }
 DTTestCoverageTest >> testCoverageResultIsAnInstanceOfDTTestCoverageResult [
+
 	| result |
-	result := plugin runForConfiguration: dTconf.
+	result := plugin runForConfiguration: pluginConfiguration.
 	self assert: result class equals: DTTestCoverageResult
 ]
 
@@ -47,8 +50,9 @@ DTTestCoverageTest >> testDTTestCoverageResultAsResultForDrTests [
 
 { #category : #running }
 DTTestCoverageTest >> testDTTestCoverageResultBuildTreeForUIContainsNodes [
+
 	| resultTree |
-	resultTree := (plugin runForConfiguration: dTconf) buildTreeForUI.
+	resultTree := (plugin runForConfiguration: pluginConfiguration) buildTreeForUI.
 	self
 		assert:
 			(resultTree subResults
@@ -57,15 +61,17 @@ DTTestCoverageTest >> testDTTestCoverageResultBuildTreeForUIContainsNodes [
 
 { #category : #running }
 DTTestCoverageTest >> testDTTestCoverageResultHas2Nodes [
+
 	| resultTree |
-	resultTree := (plugin runForConfiguration: dTconf) buildTreeForUI.
+	resultTree := (plugin runForConfiguration: pluginConfiguration) buildTreeForUI.
 	self assert: resultTree subResults size equals: 2
 ]
 
 { #category : #running }
 DTTestCoverageTest >> testDTTestCoverageResultTheFirstNodeIsPercent [
+
 	| resultTree |
-	resultTree := (plugin runForConfiguration: dTconf) buildTreeForUI.
+	resultTree := (plugin runForConfiguration: pluginConfiguration) buildTreeForUI.
 	self
 		assert:
 			((resultTree subResults at: 1) name
@@ -74,8 +80,9 @@ DTTestCoverageTest >> testDTTestCoverageResultTheFirstNodeIsPercent [
 
 { #category : #running }
 DTTestCoverageTest >> testDTTestCoverageResultTheSecondNodeSubResultsAreLeafs [
+
 	| resultTree leafs |
-	resultTree := (plugin runForConfiguration: dTconf) buildTreeForUI.
+	resultTree := (plugin runForConfiguration: pluginConfiguration) buildTreeForUI.
 	leafs := resultTree subResults at: 2.
 	self
 		assert: (leafs subResults allSatisfy: #isLeaf )
@@ -93,8 +100,9 @@ DTTestCoverageTest >> testItemsAvailableInTestCoveragePlugin [
 
 { #category : #running }
 DTTestCoverageTest >> testNotExecutedMethodList [
+
 	| result notExecutedMethodList |
-	result := plugin runForConfiguration: dTconf.
+	result := plugin runForConfiguration: pluginConfiguration.
 	notExecutedMethodList := {(MockForCoverage >> #method2ForMock:)}.
 	self
 		assert:

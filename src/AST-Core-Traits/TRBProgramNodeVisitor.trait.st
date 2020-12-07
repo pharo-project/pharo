@@ -51,9 +51,14 @@ TRBProgramNodeVisitor >> visitCascadeNode: aCascadeNode [
 ]
 
 { #category : #visiting }
-TRBProgramNodeVisitor >> visitClassVariableNode: aNode [
 
+TRBProgramNodeVisitor >> visitClassVariableNode: aNode [
 	^ self visitLiteralVariableNode: aNode
+]
+
+{ #category : #visiting }
+TRBProgramNodeVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
+	anEnglobingErrorNode content do: [ :each | self visitNode: each ]
 ]
 
 { #category : #visiting }
@@ -81,7 +86,7 @@ TRBProgramNodeVisitor >> visitLiteralArrayNode: aRBLiteralArrayNode [
 TRBProgramNodeVisitor >> visitLiteralNode: aLiteralNode [
 ]
 
-{ #category : #'visiting - reflectivity' }
+{ #category : #visiting }
 TRBProgramNodeVisitor >> visitLiteralValueNode: aNode [
 	"Redirect the message by default to #visitLiteralNode: for retrocompatibility (pharo 8)"
 
@@ -208,6 +213,12 @@ TRBProgramNodeVisitor >> visitTemporaryVariableNode: aNode [
 { #category : #visiting }
 TRBProgramNodeVisitor >> visitThisContextNode: aThisContextNode [
 	^ self visitVariableNode: aThisContextNode
+]
+
+{ #category : #visiting }
+TRBProgramNodeVisitor >> visitUnreachableStatement: anUnreachableStatement [
+	
+	^ self visitEnglobingErrorNode: anUnreachableStatement
 ]
 
 { #category : #visiting }

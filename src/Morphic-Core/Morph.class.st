@@ -1146,8 +1146,7 @@ Morph >> asReadOnlyMorph [
 { #category : #'accessing - extension' }
 Morph >> assureExtension [
 	"creates an extension for the receiver if needed"
-	extension ifNil: [self initializeExtension].
-	^ extension
+	^ extension ifNil: [extension := MorphExtension new]
 ]
 
 { #category : #'halos and balloon help' }
@@ -1212,9 +1211,8 @@ Morph >> balloonText [
 	construct the text, for economy's sake, such as model phrases in 
 	a Viewer"
 
-	extension ifNil: [^nil].
-	^extension balloonText ifNotNil: [:text | 
-				text asString withNoLineLongerThan: self theme settings maxBalloonHelpLineLength]
+	^ extension ifNotNil: [:ext | ext balloonText ifNotNil: [:text | 
+				text asString withNoLineLongerThan: self theme settings maxBalloonHelpLineLength]]
 ]
 
 { #category : #theme }
@@ -1297,8 +1295,9 @@ Morph >> borderColor [
 { #category : #accessing }
 Morph >> borderStyle [
 
-	extension ifNil: [^BorderStyle default trackColorFrom: self].
-	^(extension borderStyle ifNil: [BorderStyle default]) trackColorFrom: self
+	^ extension 
+		ifNil: [BorderStyle default trackColorFrom: self]
+		ifNotNil: [:ext | (ext borderStyle ifNil: [BorderStyle default]) trackColorFrom: self]
 ]
 
 { #category : #accessing }
@@ -1570,9 +1569,7 @@ Morph >> canDrawBorder: aBorderStyle [
 { #category : #'layout-properties' }
 Morph >> cellInset [
 	"Layout specific. This property specifies an extra inset for each cell in the layout."
-	| props |
-	props := self layoutProperties.
-	^props ifNil:[0] ifNotNil:[props cellInset].
+	^ self layoutProperties ifNil:[0] ifNotNil: [:props | props cellInset]
 ]
 
 { #category : #'layout-properties' }
@@ -3276,10 +3273,12 @@ Morph >> hasDragAndDropEnabledString [
 
 { #category : #'drop shadows' }
 Morph >> hasDropShadow [
+
 	"answer whether the receiver has DropShadow"
-	^ self
-		valueOfProperty: #hasDropShadow
-		ifAbsent: [false]
+
+	^ extension
+		  ifNil: [ false ]
+		  ifNotNil: [ :ext | ext valueOfProperty: #hasDropShadow ifAbsent: false ]
 ]
 
 { #category : #'drop shadows' }
@@ -3341,10 +3340,13 @@ Morph >> hasParagraphAnchorString [
 ]
 
 { #category : #'accessing - properties' }
-Morph >> hasProperty: aSymbol [ 
+Morph >> hasProperty: aSymbol [
+
 	"Answer whether the receiver has the property named aSymbol"
-	extension ifNil: [^ false].
-	^extension hasProperty: aSymbol
+
+	^ extension
+		  ifNil: [ false ]
+		  ifNotNil: [ :ext | ext hasProperty: aSymbol ]
 ]
 
 { #category : #'layout-menu' }
@@ -6659,9 +6661,11 @@ Morph >> vResizingString: aSymbol [
 ]
 
 { #category : #'accessing - properties' }
-Morph >> valueOfProperty: aSymbol [ 
+Morph >> valueOfProperty: aSymbol [
+
 	"answer the value of the receiver's property named aSymbol"
-	^ extension ifNotNil: [extension valueOfProperty: aSymbol]
+
+	^ extension ifNotNil: [ :ext | ext valueOfProperty: aSymbol ]
 ]
 
 { #category : #'accessing - properties' }
@@ -6749,8 +6753,7 @@ Morph >> viewBox [
 { #category : #drawing }
 Morph >> visible [
 	"answer whether the receiver is visible"
-	extension ifNil: [^ true].
-	^ extension visible
+	^ extension ifNil: [ true ] ifNotNil: [ :ext | ext visible ]
 ]
 
 { #category : #accessing }

@@ -6,3 +6,9 @@ Object >> inspectionBreakpoints [
 
 	^ StObjectBreakpointInspection on: self
 ]
+
+{ #category : #'*NewTools-Debugger-Breakpoints-Tools' }
+Object >> inspectionBreakpointsContext: aContext [
+
+	aContext withoutEvaluator
+]

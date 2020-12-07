@@ -33,6 +33,12 @@ FFICalloutMethodBuilderTestContext >> compiledMethod [
 	^ self
 ]
 
+{ #category : #'as yet unclassified' }
+FFICalloutMethodBuilderTestContext >> ffiLibrary [ 
+
+	^ LibC
+]
+
 { #category : #accessing }
 FFICalloutMethodBuilderTestContext >> method [
 	^ self
@@ -53,6 +59,11 @@ FFICalloutMethodBuilderTestContext >> methodProperties [
 	"stub"
 
 	^ nil
+]
+
+{ #category : #'as yet unclassified' }
+FFICalloutMethodBuilderTestContext >> receiver [
+	^ self
 ]
 
 { #category : #accessing }

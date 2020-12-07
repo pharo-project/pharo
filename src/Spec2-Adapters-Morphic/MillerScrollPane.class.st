@@ -37,10 +37,16 @@ MillerScrollPane >> hScrollbarShowWhenNeeded [
 
 { #category : #initialization }
 MillerScrollPane >> initialize [
-	
-	keepShowingPage := false.
+
+	super initialize.
 	updating := false.
-	super initialize
+	keepShowingPage := false
+]
+
+{ #category : #testing }
+MillerScrollPane >> isUpdating [
+
+	^ updating ifNil: [ updating := false ]
 ]
 
 { #category : #private }
@@ -54,12 +60,11 @@ MillerScrollPane >> keepShowingPage: aBoolean [
 { #category : #events }
 MillerScrollPane >> layoutChanged [
 
-	updating ifTrue: [ ^ self ].
+	self isUpdating ifTrue: [ ^ self ].
 	updating := true.
-	[
-		super layoutChanged.
-		layoutChangeAction ifNotNil: [ layoutChangeAction value ] ]
-	ensure: [ 
+	[ 
+	super layoutChanged.
+	layoutChangeAction ifNotNil: [ layoutChangeAction value ] ] ensure: [ 
 		updating := false ]
 ]
 

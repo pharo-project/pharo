@@ -9,9 +9,15 @@ See: *class:SpLabelPort*,*class:SpListItemsPort*, *class:SpModelPort*, *class:Sp
 "
 Class {
 	#name : #SpInputPort,
-	#superclass : #SpPort,
+	#superclass : #SpAbstractPort,
 	#category : #'Spec2-Transmission-Base'
 }
+
+{ #category : #testing }
+SpInputPort class >> isAbstract [
+
+	^ self name = #SpInputPort
+]
 
 { #category : #'handling transmission' }
 SpInputPort >> incomingTransmission: anObject from: outPort [

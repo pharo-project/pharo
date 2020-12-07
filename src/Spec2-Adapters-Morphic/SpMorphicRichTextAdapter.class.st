@@ -1,3 +1,6 @@
+"
+I am the adapter used to bridge a TextPresenter and a RubScrolledTextMorph for rich text
+"
 Class {
 	#name : #SpMorphicRichTextAdapter,
 	#superclass : #SpMorphicTextAdapter,
@@ -14,11 +17,11 @@ SpMorphicRichTextAdapter >> applyTextStyle [
 
 { #category : #factory }
 SpMorphicRichTextAdapter >> buildWidget [
+
 	| newWidget |
-	
 	newWidget := super buildWidget.
 	self presenter whenTextStylerChangedDo: [ self applyTextStyle ].
-	
+
 	^ newWidget
 ]
 

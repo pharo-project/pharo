@@ -12,6 +12,16 @@ Class {
 }
 
 { #category : #'code-critics' }
+ManifestSpec2AdaptersMorphic class >> ruleCollectionMessagesToExternalObjectRuleV1FalsePositive [
+	^ #(#(#(#RGMethodDefinition #(#SpMorphicButtonBarAdapter #addModelTo: #false)) #'2020-11-13T23:10:31.921402+01:00') )
+]
+
+{ #category : #'code-critics' }
+ManifestSpec2AdaptersMorphic class >> ruleCollectionProtocolRuleV1FalsePositive [
+	^ #(#(#(#RGMethodDefinition #(#SpMorphicDialogWindowAdapter #buildButtonBar #false)) #'2020-11-13T22:08:25.752583+01:00') #(#(#RGMethodDefinition #(#SpMorphicButtonBarAdapter #addModelTo: #false)) #'2020-11-13T23:10:24.35015+01:00') )
+]
+
+{ #category : #'code-critics' }
 ManifestSpec2AdaptersMorphic class >> ruleGTExampleNotDefinedRuleV1FalsePositive [
 	^ #(#(#(#RGClassDefinition #(#SpAbstractMorphicAdapter)) #'2016-07-01T15:56:13.367433+02:00') )
 ]
@@ -19,4 +29,9 @@ ManifestSpec2AdaptersMorphic class >> ruleGTExampleNotDefinedRuleV1FalsePositive
 { #category : #'code-critics' }
 ManifestSpec2AdaptersMorphic class >> ruleRBOverridesDeprecatedMethodRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#SpMorphicMenuItemAdapter #name #false)) #'2016-07-01T15:56:13.381999+02:00') )
+]
+
+{ #category : #'code-critics' }
+ManifestSpec2AdaptersMorphic class >> ruleUtilityMethodsRuleV1FalsePositive [
+	^ #(#(#(#RGMethodDefinition #(#SpMorphicTextAdapter #setWrapWord:to: #false)) #'2020-11-13T22:40:20.610215+01:00') )
 ]

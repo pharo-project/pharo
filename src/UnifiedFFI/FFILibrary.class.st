@@ -83,6 +83,14 @@ FFILibrary >> options [
 	^ self class options
 ]
 
+{ #category : #'extension - hooks' }
+FFILibrary >> postMethodBuildContext: sender builder: builder spec: functionSpec [
+]
+
+{ #category : #'extension - hooks' }
+FFILibrary >> preMethodBuildContext: sender builder: builder spec: functionSpec [
+]
+
 { #category : #accessing }
 FFILibrary >> uniqueInstance [
 	

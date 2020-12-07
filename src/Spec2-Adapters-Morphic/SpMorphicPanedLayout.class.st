@@ -86,12 +86,12 @@ SpMorphicPanedLayout >> position: anObject [
 
 { #category : #accessing }
 SpMorphicPanedLayout >> preservePositionProportionOn: layoutedMorph [
-	| referenceMorph |
 
+	| referenceMorph |
 	referenceMorph := layoutedMorph submorphs first.
 	position := self isHorizontal
-		ifTrue: [ (referenceMorph width * 100/ layoutedMorph width) asInteger percent ]
-		ifFalse: [ (referenceMorph height * 100/ layoutedMorph height) asInteger percent ]
+		            ifTrue: [ (referenceMorph width * 100 / layoutedMorph width) asInteger percent ]
+		            ifFalse: [ (referenceMorph height * 100 / layoutedMorph height) asInteger percent ]
 ]
 
 { #category : #accessing }
@@ -101,9 +101,9 @@ SpMorphicPanedLayout >> resetPosition [
 ]
 
 { #category : #private }
-SpMorphicPanedLayout >> widthPositionIn: aPoint [ 
+SpMorphicPanedLayout >> widthPositionIn: aPoint [
 
-	^ self position < 1 
-		ifTrue: [ (aPoint x * self position) asInteger ]
-		ifFalse: [ self position ]
+	^ self position < 1
+		  ifTrue: [ (aPoint x * self position) asInteger ]
+		  ifFalse: [ self position ]
 ]

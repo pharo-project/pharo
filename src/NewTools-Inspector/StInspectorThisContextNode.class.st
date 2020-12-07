@@ -1,3 +1,7 @@
+"
+A model for the `thisContext` variable.
+This is to be used when debugging.
+"
 Class {
 	#name : #StInspectorThisContextNode,
 	#superclass : #StInspectorSelfNode,

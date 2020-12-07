@@ -197,6 +197,7 @@ RBSmalllintTestObject >> guardingClause [
 
 { #category : #methods }
 RBSmalllintTestObject >> haltClassMentioned [
+	<haltOrBreakpointForTesting>
 	Halt now
 ]
 

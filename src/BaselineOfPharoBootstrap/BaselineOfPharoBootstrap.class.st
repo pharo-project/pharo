@@ -130,6 +130,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		
 		spec package: 'FFI-Kernel'.
 		spec package: 'FFI-Pools'.
+		spec package: 'FFI-OldFFIBackend'.
 		
 		spec package: 'CodeExport'.
 		spec package: 'CodeImport'.
@@ -140,7 +141,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		
 		spec package: 'FileSystem-Core'.
 		spec package: 'FileSystem-Disk'.
-		spec package: 'DeprecatedFileStream'.
 
 		spec package: 'SUnit-Core'.
 		spec package: 'SUnit-Tests'.
@@ -152,6 +152,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec group: 'KernelGroup' with: {
 			'FFI-Kernel'.
 			'FFI-Pools'.
+			'FFI-OldFFIBackend'.
 			'Announcements-Core'.
 			'Colors'.
 			'Collections-Abstract'.
@@ -220,8 +221,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		
 		spec group: 'FileSystemGroup' with: {
 			'FileSystem-Core'.
-			'FileSystem-Disk'.
-			'DeprecatedFileStream' }.
+			'FileSystem-Disk'}.
 
 		spec group: 'ToLoadByHermes' with: {
 			'AdditionalPackages'.

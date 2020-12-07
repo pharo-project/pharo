@@ -57,6 +57,7 @@ DebugSession class >> named: aString on: aProcess startedAt: aContext [
 DebugSession >> clear [
 	"If after resuming the process the user does plan to reuse this session with
 	the same process, it should call this method."
+	exception := nil.
 	interruptedProcess := nil.
 	self updateContextTo: nil
 ]
@@ -430,12 +431,6 @@ DebugSession >> shouldDisplayContext: aContext basedOnFilters: stackFilters [
 		
 	^stackFilters allSatisfy: [ :aFilter | aFilter shouldDisplay: aContext ]
 	
-]
-
-{ #category : #context }
-DebugSession >> shouldDisplayOnTopContext: aContext [
-	
-	^ aContext method selector ~= #halt
 ]
 
 { #category : #logging }
