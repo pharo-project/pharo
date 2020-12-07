@@ -75,6 +75,12 @@ CoASTResultSetBuilder >> parseNode [
 			parse) nodeForOffset: completionContext position ] 
 ]
 
+{ #category : #'as yet unclassified' }
+CoASTResultSetBuilder >> visitArgumentVariableNode: anArgumentNode [
+
+	^ self visitTemporaryNode: anArgumentNode
+]
+
 { #category : #visiting }
 CoASTResultSetBuilder >> visitArrayNode: aRBArrayNode [ 
 	
@@ -97,6 +103,12 @@ CoASTResultSetBuilder >> visitBlockNode: aRBBlockNode [
 CoASTResultSetBuilder >> visitCascadeNode: aRBCascadeNode [ 
 
 	^ self visitNode: aRBCascadeNode
+]
+
+{ #category : #'as yet unclassified' }
+CoASTResultSetBuilder >> visitClassVariableNode: aRBVariableNode [
+
+	^ self visitGlobalNode: aRBVariableNode
 ]
 
 { #category : #visiting }
@@ -125,6 +137,11 @@ CoASTResultSetBuilder >> visitLiteralArrayNode: aRBLiteralArrayNode [
 CoASTResultSetBuilder >> visitLiteralValueNode: aRBLiteralValueNode [ 
 	
 	^ self visitNode: aRBLiteralValueNode
+]
+
+{ #category : #'as yet unclassified' }
+CoASTResultSetBuilder >> visitLiteralVariableNode: aRBVariableNode [
+	^ self visitGlobalNode: aRBVariableNode
 ]
 
 { #category : #visiting }
@@ -185,6 +202,12 @@ CoASTResultSetBuilder >> visitSuperNode: aRBSuperNode [
 CoASTResultSetBuilder >> visitTemporaryNode: aRBReturnNode [ 
 	
 	^ self visitNode: aRBReturnNode
+]
+
+{ #category : #'as yet unclassified' }
+CoASTResultSetBuilder >> visitTemporaryVariableNode: anArgumentNode [
+
+	^ self visitTemporaryNode: anArgumentNode
 ]
 
 { #category : #visiting }

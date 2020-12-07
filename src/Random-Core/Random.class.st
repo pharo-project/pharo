@@ -107,6 +107,12 @@ Random >> next: anInteger into: anArray [
 ]
 
 { #category : #accessing }
+Random >> nextBetween: lowerBound and: higherBound [
+	"Answer a random float number from the range [lowerBound, higherBound)"
+	^ lowerBound + (self next * (higherBound - lowerBound))
+]
+
+{ #category : #accessing }
 Random >> nextInt: anInteger [
 	"Answer a random integer in the interval [1, anInteger].
 	Handle large numbers too (for cryptography)."
@@ -115,6 +121,12 @@ Random >> nextInt: anInteger [
 	anInteger asFloat isInfinite "are we outside the range of float? - use fraction"
 		ifTrue: [^(self privateNextValue asFraction * anInteger) truncated + 1].
 	^ (self privateNextValue * anInteger) truncated + 1
+]
+
+{ #category : #accessing }
+Random >> nextIntBetween: lowerBound and: higherBound [
+	"Answer a random integer number from the inclusive range [lowerBound, higherBound]"
+	^ lowerBound + (self nextInt: (higherBound - lowerBound + 1)) - 1
 ]
 
 { #category : #private }

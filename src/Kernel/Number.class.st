@@ -252,6 +252,11 @@ Number >> adaptToInteger: rcvr andSend: selector [
 	^ self subclassResponsibility
 ]
 
+{ #category : #adding }
+Number >> addAssignToFloatArray: aFloatArray [
+	^ aFloatArray primAddScalar: self asFloat
+]
+
 { #category : #'*Kernel-Chronology' }
 Number >> asDuration [
  

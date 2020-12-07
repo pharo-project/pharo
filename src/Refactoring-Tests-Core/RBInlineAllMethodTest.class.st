@@ -4,6 +4,35 @@ Class {
 	#category : #'Refactoring-Tests-Core'
 }
 
+{ #category : #'failure tests' }
+RBInlineAllMethodTest >> testInlineMethodCanNotUnderstandSelectorInClass [
+	| refactoring |
+	refactoring := RBInlineAllSendersRefactoring 
+		sendersOf: #caller3
+		in: RBRefactoryTestDataApp.
+	self shouldFail: refactoring.
+]
+
+{ #category : #tests }
+RBInlineAllMethodTest >> testInlineMethodWithMultipleArgs [
+	| class |
+	model := RBClassModelFactory rbNamespace new.
+	class := model classNamed: self class name.
+	class
+		compile: 'foo: arg1 bar: arg2 ^ arg1 + arg2' classified: #(#accessing);
+		compile: 'exampleInline | x | x := 3 + (self foo: a bar: b). ^ (self foo: 5 bar: 7)' 
+		classified: #(#accessing).
+	self executeRefactoring: (RBInlineAllSendersRefactoring 
+				model: model
+				sendersOf: #foo:bar:
+				in: class).
+	self assert: (class parseTreeFor: #exampleInline) 
+			equals: (self parseMethod: 'exampleInline
+	| x |
+	x := 3 + (a + b).
+	^ 5 + 7').
+]
+
 { #category : #tests }
 RBInlineAllMethodTest >> testInlineMethodWithMultipleSendersInMethod [
 	| refactoring |

@@ -56,20 +56,11 @@ OldPharoClassDefinitionPrinter >> basicTraitDefinitionString [
 			  nextPutAll: 'Trait named: ';
 			  nextPutAll: forClass name printString.
 		  self traitCompositionOn: s.
-		  "Important"
-		  self flag: #todo.
-		  "this class definition should NOT use slots: 
-			either this is a simple slot and we use instance variable names
-			or this is a complex slot and we use the fluid definition.
-			we could have forClass neslotsNeedFullDefinition
-					ifTrue: [ (self class fluid forClass: self) traitDefinitionString ] "
+
 		  forClass classLayout visibleSlots ifNotEmpty: [ 
-			  s
-				  tab;
-				  nextPutAll: ' slots: ';
-				  nextPutAll: forClass slotDefinitionString;
-				  cr ].
-		  "End of important"
+			  self error:
+				  'Invalid Printer for stateful traits. Please detect and use a more modern printer' ].
+
 		  self packageOn: s ]
 ]
 

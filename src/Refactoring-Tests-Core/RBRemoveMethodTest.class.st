@@ -35,6 +35,13 @@ RBRemoveMethodTest >> testRemoveMethod [
 ]
 
 { #category : #'failure tests' }
+RBRemoveMethodTest >> testRemoveNonExistingMethod [
+	self shouldFail: (RBRemoveMethodRefactoring 
+			removeMethods: #(#nonExistingMethod )
+			from: RBBasicLintRuleTestData)
+]
+
+{ #category : #'failure tests' }
 RBRemoveMethodTest >> testRemoveReferenced [
 	self shouldFail: (RBRemoveMethodRefactoring 
 			removeMethods: #(#checkClass: )

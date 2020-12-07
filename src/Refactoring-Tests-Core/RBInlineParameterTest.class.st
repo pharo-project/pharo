@@ -5,6 +5,14 @@ Class {
 }
 
 { #category : #'failure tests' }
+RBInlineParameterTest >> testInlineArgsWhitoutSameLiteral [
+	self shouldFail: (RBInlineParameterRefactoring 
+			inlineParameter: 'aSymbol'
+			in: RBRefactoryTestDataApp
+			selector: ('inline' , 'Bar:') asSymbol)
+]
+
+{ #category : #'failure tests' }
 RBInlineParameterTest >> testInlineBlockFailure [
 	self shouldFail: (RBInlineParameterRefactoring 
 			inlineParameter: 'aBlock'

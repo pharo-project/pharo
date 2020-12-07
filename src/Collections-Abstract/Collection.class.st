@@ -172,6 +172,12 @@ Collection >> addAll: aCollection [
 ]
 
 { #category : #adding }
+Collection >> addAssignToFloatArray: aFloatArray [
+	1 to: aFloatArray size do: [ :i | aFloatArray at: i put: (aFloatArray at: i) + (self at: i) ].
+	^ aFloatArray
+]
+
+{ #category : #adding }
 Collection >> addIfNotPresent: anObject [
 	"Include anObject as one of the receiver's elements, but only if there
 	is no such element already. Anwser anObject."

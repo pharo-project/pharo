@@ -19,9 +19,7 @@ FloatArray >> + anObject [
 
 { #category : #'*Collections-arithmetic' }
 FloatArray >> += anObject [
-	^anObject isNumber
-		ifTrue:[self primAddScalar: anObject asFloat]
-		ifFalse:[self primAddArray: anObject]
+	^ anObject addAssignToFloatArray: self
 ]
 
 { #category : #'*Collections-arithmetic' }

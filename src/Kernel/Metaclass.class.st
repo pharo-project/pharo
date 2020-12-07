@@ -126,18 +126,6 @@ Metaclass >> definitionStringFor: aConfiguredPrinter [
 	^ aConfiguredPrinter metaclassDefinitionString 
 ]
 
-{ #category : #'file in/out' }
-Metaclass >> definitionWithSlots [
-	"Refer to the comment in ClassDescription|definition."
-
-	^ String streamContents: [:stream |
-		stream print: self.
-		stream
-			crtab;
-			nextPutAll: 'slots: '.
-		self slotDefinitionsOn: stream ]
-]
-
 { #category : #accessing }
 Metaclass >> environment [
 
@@ -256,14 +244,6 @@ Metaclass >> obsoleteSubclasses [
 
 	self isMetaclassOfClassOrNil ifTrue: [ ^ #() ].
 	^ self instanceSide obsoleteSubclasses collect: [ :aSubclass | aSubclass classSide ]
-]
-
-{ #category : #'file in/out' }
-Metaclass >> oldDefinition [
-	"Refer to the comment of Class. 
-	 This method is for compatibility with Class>>#oldDefinition"
-
-	^ self definition
 ]
 
 { #category : #compiling }

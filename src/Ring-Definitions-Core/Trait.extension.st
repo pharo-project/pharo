@@ -2,24 +2,25 @@ Extension { #name : #Trait }
 
 { #category : #'*Ring-Definitions-Core' }
 Trait >> asRingDefinition [
+
 	"A triat is converted to a ring class. Only the receiver is converted.
 	Methods, superclasses, subclasses are not generated"
 
 	| ring |
-	ring:= (RGTraitDefinition named: self name)
-		category: self category;
-		superclassName: #Trait;  
-		traitCompositionSource: self traitCompositionString;
-		comment: self organization classComment;
-		stamp: self organization commentStamp;
-		definitionSource: self definition;
-		withMetaclass.
-		
-	ring classSide 
-		traitCompositionSource: self classSide traitCompositionString;
-		definitionSource: self classSide definition.
+	ring := (RGTraitDefinition named: self name)
+		        category: self category;
+		        superclassName: #Trait;
+		        traitCompositionSource: self traitCompositionString;
+		        comment: self organization classComment;
+		        stamp: self organization commentStamp;
+		        definitionSource: self definitionString;
+		        withMetaclass.
 
-	^ring
+	ring classSide
+		traitCompositionSource: self classSide traitCompositionString;
+		definitionSource: self classSide definitionString.
+
+	^ ring
 ]
 
 { #category : #'*Ring-Definitions-Core' }

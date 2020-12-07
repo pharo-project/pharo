@@ -900,14 +900,6 @@ EncoderForSistaV1 class >> superSendScanBlockUsing: scanner [
 	^[:instr | instr = 235]
 ]
 
-{ #category : #'compiled method support' }
-EncoderForSistaV1 class >> supportsClosures [
-	"Answer if the instruction set supports closures (contains
-	 closure creation and indirect temp access bytecodes)."
-
-	^true
-]
-
 { #category : #'bytecode decoding' }
 EncoderForSistaV1 class >> unusedBytecode [
 	"Answer the opcode of a single-byte unused bytecode, if it exists in the encoder's bytecode set, or nil if not."
@@ -1588,9 +1580,4 @@ EncoderForSistaV1 >> sizePushFullClosure: compiledBlockLiteralIndex numCopied: n
 { #category : #'special literal encodings' }
 EncoderForSistaV1 >> sizePushFullClosure: compiledBlockLiteralIndex numCopied: numCopied receiverOnStack: rcvrOnStack ignoreOuterContext: ignoreOuterContext [
 	^self sizeOpcodeSelector: #genPushFullClosure:numCopied:receiverOnStack:ignoreOuterContext: withArguments: {compiledBlockLiteralIndex.numCopied.rcvrOnStack.ignoreOuterContext} 
-]
-
-{ #category : #'bytecode generation' }
-EncoderForSistaV1 >> supportsClosureOpcodes [
-	^true
 ]

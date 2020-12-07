@@ -22,6 +22,11 @@ FloatArray >> = aFloatArray [
 	^ true
 ]
 
+{ #category : #adding }
+FloatArray >> addAssignToFloatArray: aFloatArray [
+	^ self primAddArray: aFloatArray
+]
+
 { #category : #converting }
 FloatArray >> asFloatArray [
 	^self

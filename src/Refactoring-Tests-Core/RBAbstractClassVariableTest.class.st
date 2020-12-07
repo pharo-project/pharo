@@ -46,6 +46,13 @@ RBAbstractClassVariableTest >> testInheritedName [
 ]
 
 { #category : #'failure tests' }
+RBAbstractClassVariableTest >> testInvalidClass [
+	self shouldFail: (RBAbstractClassVariableRefactoring 
+			variable: #DependentsFields
+			class: Object)
+]
+
+{ #category : #'failure tests' }
 RBAbstractClassVariableTest >> testMetaClassFailure [
 	self shouldFail: (RBAbstractClassVariableRefactoring 
 			variable: #RecursiveSelfRule

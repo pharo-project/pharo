@@ -45,9 +45,21 @@ CDTraitCompositionBuilder >> visitGlobalNode: aRBGlobalNode [
 ]
 
 { #category : #visiting }
+CDTraitCompositionBuilder >> visitGlobalVariableNode: aRBGlobalNode [ 
+	
+	^self visitVariableNode: aRBGlobalNode
+]
+
+{ #category : #visiting }
 CDTraitCompositionBuilder >> visitLiteralNode: aRBLiteralValueNode [ 
 	
 	^ aRBLiteralValueNode value
+]
+
+{ #category : #visiting }
+CDTraitCompositionBuilder >> visitLiteralVariableNode: aRBGlobalNode [ 
+	
+	^self visitVariableNode: aRBGlobalNode
 ]
 
 { #category : #visiting }

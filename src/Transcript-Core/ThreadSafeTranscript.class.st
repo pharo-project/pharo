@@ -263,3 +263,9 @@ ThreadSafeTranscript >> title [
 
 	^ 'Transcript'
 ]
+
+{ #category : #'as yet unclassified' }
+ThreadSafeTranscript >> variableBindings [
+
+	^ Dictionary new
+]

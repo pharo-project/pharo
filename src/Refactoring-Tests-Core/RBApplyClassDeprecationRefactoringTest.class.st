@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : #'failure tests' }
 RBApplyClassDeprecationRefactoringTest >> testBadName [
 	self
 		shouldFail: (RBApplyClassDeprecationRefactoring 
@@ -15,7 +15,7 @@ RBApplyClassDeprecationRefactoringTest >> testBadName [
 				to: #'Ob ject')
 ]
 
-{ #category : #tests }
+{ #category : #'failure tests' }
 RBApplyClassDeprecationRefactoringTest >> testMetaClassFailure [
 	self 
 		shouldFail: (RBApplyClassDeprecationRefactoring rename: self class class to: #Foo)
