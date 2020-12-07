@@ -6,9 +6,8 @@ Class {
 
 { #category : #testing }
 EmbeddedFreeTypeFontDescription class >> canBeInstalled [
-	"By default, font can be installed anywhere"
-	^ true
-		
+	"By default, concrete font descriptions can be installed anywhere"
+	^ self isAbstract not
 ]
 
 { #category : #accessing }
