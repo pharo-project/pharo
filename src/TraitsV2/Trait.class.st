@@ -238,6 +238,12 @@ Trait >> isTraitExclusion [
 	^ false
 ]
 
+{ #category : #testing }
+Trait >> isUsed [
+
+	^ super isUsed or: [ self traitUsers notEmpty ]
+]
+
 { #category : #'organization updating' }
 Trait >> notifyOfRecategorizedSelector: selector from: oldCategory to: newCategory [
 	"When there is a recategorization of a selector, I propagate the changes to my users"
