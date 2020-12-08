@@ -87,7 +87,7 @@ Class {
 		'toolbarCommandGroup',
 		'debuggerActionModel',
 		'unsavedCodeChanges',
-		'hasProceeded'
+		'programmaticallyClosed'
 	],
 	#classVars : [
 		'ActivateDebuggerExtensions',
@@ -385,7 +385,7 @@ StDebugger >> clear [
 	self removeActionsForSession: self session.
 
 	"If I have been proceeded the window has been closed programmatically and I do not need to do this".
-	hasProceeded 
+	programmaticallyClosed 
 		ifTrue: [ ^self ].
 
 	self debuggerActionModel clearDebugSession.
@@ -598,7 +598,7 @@ StDebugger >> initialize [
 	self forceSessionUpdate.
 	self subscribeToMethodAddedAnnouncement.
 	
-	hasProceeded := false.
+	programmaticallyClosed := false.
 ]
 
 { #category : #initialization }
@@ -806,7 +806,7 @@ StDebugger >> printReceiverClassInContext: aContext [
 { #category : #actions }
 StDebugger >> proceedDebugSession [ 
 
-	hasProceeded := true.
+	programmaticallyClosed := true.
 	self debuggerActionModel proceedDebugSession.
 	self close
 ]
