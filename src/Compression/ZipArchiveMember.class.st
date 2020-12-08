@@ -142,7 +142,7 @@ ZipArchiveMember >> centralDirectoryHeaderSize [
 
 	| systemFileName systemFileComment systemCdExtraField |
 	systemFileName := fileName asVmPathName.
-	systemFileComment := fileComment convertToSystemString.
+	systemFileComment := fileComment utf8Encoded.
 	systemCdExtraField := cdExtraField.
 	^ 46 + systemFileName size + systemCdExtraField size + systemFileComment size
 
@@ -701,7 +701,7 @@ ZipArchiveMember >> writeCentralDirectoryFileHeaderTo: aStream [
 
 	| systemFileName systemFileComment systemCdExtraField endianStream |
 	systemFileName := fileName asVmPathName.
-	systemFileComment := fileComment convertToSystemString.
+	systemFileComment := fileComment utf8Encoded.
 	systemCdExtraField := cdExtraField.
 	aStream nextPutAll: CentralDirectoryFileHeaderSignature.
 	
@@ -733,7 +733,7 @@ ZipArchiveMember >> writeCentralDirectoryFileHeaderTo: aStream [
 
 	aStream nextPutAll: systemFileName asByteArray.
 	aStream nextPutAll: systemCdExtraField asByteArray.
-	aStream nextPutAll: systemFileComment asByteArray
+	aStream nextPutAll: systemFileComment
 ]
 
 { #category : #'private-writing' }

@@ -16,7 +16,7 @@ StObjectInspectorPresenter >> haltInspectedObjectOnWriteAccess [
 ]
 
 { #category : #'*NewTools-ObjectCentricBreakpoints' }
-StObjectInspectorPresenter class >> objectCentricBreakpointCommandsWith: aPresenter forRootGroup: aRootCommandsGroup [
+StObjectInspectorPresenter classSide >> objectCentricBreakpointCommandsWith: aPresenter forRootGroup: aRootCommandsGroup [
 	<extensionCommands>
 	
 	aRootCommandsGroup 

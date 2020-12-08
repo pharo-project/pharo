@@ -133,7 +133,7 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : #'Text-Scanning-Base'
+	#category : #'Text-Scanning'
 }
 
 { #category : #'class initialization' }
@@ -266,6 +266,14 @@ CharacterScanner >> initialize [
 	destX := destY := leftMargin := 0.
 ]
 
+{ #category : #'as yet unclassified' }
+CharacterScanner >> isBreakableAt: index in: sourceString in: encodingClass [
+"check with the encoding whether the character at index is a breakable character.
+Only the JISX0208 & JapaneseEnvironments  ever return true, so only the scanJapaneseCharacters... method calls this"
+	^ encodingClass isBreakableAt: index in: sourceString.
+
+]
+
 { #category : #private }
 CharacterScanner >> leadingTab [
 	"return true if only tabs lie to the left"
@@ -326,6 +334,32 @@ CharacterScanner >> scanCharactersFrom: startIndex to: stopIndex in: sourceStrin
 { #category : #scanning }
 CharacterScanner >> scanCharactersFrom: startIndex to: stopIndex in: sourceString rightX: rightX stopConditions: stops kern: kernDelta [ 
 	^sourceString scanCharactersFrom: startIndex to: stopIndex with: self rightX: rightX font: font
+]
+
+{ #category : #'as yet unclassified' }
+CharacterScanner >> scanJapaneseCharactersFrom: startIndex to: stopIndex in: sourceString rightX: rightX [ 
+"this is a scanning method for
+multibyte Japanese characters in a WideString - hence the isBreakable:in:in:
+a font that does not do character-pair kerning "
+
+	| ascii encoding nextDestX char charset |
+	lastIndex := startIndex.
+	lastIndex > stopIndex ifTrue: [^self handleEndOfRunAt: stopIndex].
+	charset := EncodedCharSet charsetAt: 0.
+	[lastIndex <= stopIndex] whileTrue: [
+		char := sourceString at: lastIndex.
+		ascii := char charCode.
+		(encoding = 0 and: [ascii < 256 and:[(stopConditions at: ascii + 1) ~~ nil]]) 
+			ifTrue: [^ stopConditions at: ascii + 1].
+		(self isBreakableAt: lastIndex in: sourceString in: charset)
+			ifTrue: [	self registerBreakableIndex].
+		nextDestX := destX + (font widthOf: char).
+		nextDestX > rightX
+			ifTrue: [^#crossedX].
+		destX := nextDestX + kern.
+		lastIndex := lastIndex + 1.
+	].
+	^self handleEndOfRunAt: stopIndex
 ]
 
 { #category : #scanning }
@@ -391,18 +425,14 @@ CharacterScanner >> scanKernableMultibyteCharactersFrom: startIndex to: stopInde
 multibyte characters in a WideString
 a font that does do character-pair kerning via widthAndKernedWidthOfLeft:right:into:"
 
-	| ascii encoding nextDestX startEncoding floatDestX widthAndKernedWidth nextChar atEndOfRun char |
+	| ascii nextDestX floatDestX widthAndKernedWidth nextChar atEndOfRun char |
 	lastIndex := startIndex.
 	lastIndex > stopIndex ifTrue: [^self handleEndOfRunAt: stopIndex].
-	startEncoding := (sourceString at: startIndex) leadingChar.
 	floatDestX := destX.
 	widthAndKernedWidth := Array new: 2.
 	atEndOfRun := false.
 	[lastIndex <= stopIndex] whileTrue: [
 		char := sourceString at: lastIndex.
-		encoding := char leadingChar.
-		encoding ~= startEncoding
-			ifTrue: [lastIndex := lastIndex - 1. ^#endOfRun].
 		ascii := char charCode.
 		(ascii < 256 and: [(stopConditions at: ascii + 1) ~~ nil])
 			ifTrue: [^ stopConditions at: ascii + 1].
@@ -437,14 +467,10 @@ CharacterScanner >> scanMultibyteCharactersFrom: startIndex to: stopIndex in: so
 "this is a scanning method for
 multibyte characters in a WideString
 a font that does not do character-pair kerning"
-	| char ascii encoding nextDestX startEncoding |
+	| char ascii nextDestX |
 	lastIndex := startIndex.
-	startEncoding := (sourceString at: startIndex) leadingChar.
 	[lastIndex <= stopIndex] whileTrue: [
 		char := sourceString at: lastIndex.
-		encoding := char leadingChar.
-		encoding ~= startEncoding
-			ifTrue: [lastIndex := lastIndex - 1. ^#endOfRun].
 		ascii := char charCode.
 		(ascii < 256 and: [(stopConditions at: ascii + 1) ~~ nil])
 			ifTrue: [^ stopConditions at: ascii + 1].

@@ -40,8 +40,6 @@ PharoBootstrapRule >> bootstrapPackages [
 	#Kernel
 	#Monticello
 	#'Multilingual-Encodings'
-	#'Multilingual-Languages'
-	#'Multilingual-TextConversion'
 	#'Network-UUID'
 	#'OpalCompiler-Core'
 	#'Random-Core'

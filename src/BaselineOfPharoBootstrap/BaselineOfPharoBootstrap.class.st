@@ -98,9 +98,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 
 		spec package: 'Math-Operations-Extensions'.
 
-		spec package: 'Multilingual-Languages'.
 		spec package: 'Multilingual-Encodings'.
-		spec package: 'Multilingual-TextConversion'.
 
 		spec package: 'Network-UUID'.
 		
@@ -204,9 +202,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		}.
 
 		spec group: 'MultilingualGroup' with: {
-			'Multilingual-Languages'.
-			'Multilingual-Encodings'.
-			'Multilingual-TextConversion'}.
+			'Multilingual-Encodings' }.
 
 		spec group: 'CompilerGroup' with: {
 			'AST-Core'.

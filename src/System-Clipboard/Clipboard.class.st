@@ -82,23 +82,22 @@ Clipboard >> clipboardText [
 	(string isEmpty
 			or: [string = contents asString])
 		ifTrue: [^ contents].
-	decodedString := string convertFromWithConverter: UTF8TextConverter new.
-	decodedString := decodedString replaceAll: 10 asCharacter with: 13 asCharacter.
+	decodedString := string asByteArray utf8Decoded.
+	decodedString := decodedString replaceAll: Character lf with: Character cr.
 	^ decodedString = contents asString
 		ifTrue: [contents]
-		ifFalse: [decodedString asText].
-
+		ifFalse: [decodedString asText]
 ]
 
 { #category : #accessing }
-Clipboard >> clipboardText: text [ 
+Clipboard >> clipboardText: text [
 
-        | string |
-        string := text asString.
-        self noteRecentClipping: text asText copyWithoutExternalReferences.
-        contents := text asText copyWithoutExternalReferences.
-        string := string convertToWithConverter: UTF8TextConverter new.
-        self primitiveClipboardText: string.
+	| string |
+	string := text asString.
+	self noteRecentClipping: text asText copyWithoutExternalReferences.
+	contents := text asText copyWithoutExternalReferences.
+	string := string utf8Encoded.
+	self primitiveClipboardText: string
 ]
 
 { #category : #initialization }

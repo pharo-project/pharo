@@ -1388,7 +1388,7 @@ String >> findString: key startingAt: start caseSensitive: caseSensitive [
 						matchTable: CaseInsensitiveOrder]]
 ]
 
-{ #category : #'system primitives' }
+{ #category : #comparing }
 String >> findSubstring: key in: body startingAt: start matchTable: matchTable [
 	"Answer the index in the string body at which the substring key first occurs, at or beyond start.  The match is determined using matchTable, which can be used to effect, eg, case-insensitive matches.  If no match is found, zero will be returned."
 	| index c1 c2 |
@@ -1934,18 +1934,6 @@ String >> lastSpacePosition [
 	self size to: 1 by: -1 do:
 		[:i | ((self at: i) isSeparator) ifTrue: [^ i]].
 	^ 0
-
-]
-
-{ #category : #accessing }
-String >> leadingCharRunLengthAt: index [
-
-	| leadingChar |
-	leadingChar := (self at: index) leadingChar.
-	index to: self size do: [:i |
-		(self at: i) leadingChar ~= leadingChar ifTrue: [^ i - index].
-	].
-	^ self size - index + 1.
 
 ]
 
@@ -2790,33 +2778,4 @@ String >> wordBefore: anIndex [
 				copyFrom: sep + 1
 				to: anIndex ]
 		ifFalse: [ String new ]
-]
-
-{ #category : #encoding }
-String >> writeLeadingCharRunsOn: stream [
-
-	| runLength runValues runStart leadingChar |
-	self isEmpty ifTrue: [^ self].
-
-	runLength := OrderedCollection new.
-	runValues := OrderedCollection new.
-	runStart := 1.
-	leadingChar := (self at: runStart) leadingChar.
-	2 to: self size do: [:index |
-		(self at: index) leadingChar = leadingChar ifFalse: [
-			runValues add: leadingChar.
-			runLength add: (index - runStart).
-			leadingChar := (self at: index) leadingChar.
-			runStart := index.
-		].
-	].
-	runValues add: (self last) leadingChar.
-	runLength add: self size + 1 -  runStart.
-
-	stream nextPut: $(.
-	runLength do: [:rr | rr printOn: stream. stream space].
-	stream skip: -1; nextPut: $).
-	runValues do: [:vv | vv printOn: stream. stream nextPut: $,].
-	stream skip: -1
-
 ]

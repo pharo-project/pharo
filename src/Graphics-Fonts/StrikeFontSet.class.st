@@ -180,7 +180,7 @@ StrikeFontSet >> bonk: glyphForm with: bonkForm at: j [
 StrikeFontSet >> characterFormAt: character [ 
 
 	| encoding ascii xTable leftX rightX |
-	encoding := character leadingChar + 1.
+	encoding := 1.
 	ascii := character charCode.
 	(ascii < (fontArray at: encoding) minAscii or: [ascii > (fontArray at: encoding) maxAscii])
 		ifTrue: [ascii := (fontArray at: encoding) maxAscii].
@@ -195,7 +195,7 @@ StrikeFontSet >> characterFormAt: character [
 StrikeFontSet >> characterFormAt: character put: characterForm [ 
 
 	| ascii leftX rightX widthDif newGlyphs encoding xTable glyphs |
-	encoding := character leadingChar + 1.
+	encoding := 1.
 	ascii := character charCode.
 	ascii < (fontArray at: encoding) minAscii ifTrue: [
 		^ self error: 'Cant store characters below min ascii'
@@ -245,10 +245,9 @@ StrikeFontSet >> characters: anInterval in: sourceString displayAt: aPoint clipp
 
 	^anInterval inject: aPoint into: 
 		[:destPoint :i |
-		| f xTable leftX noFont sourceRect encoding ascii rightX |
-		encoding := (sourceString at: i) leadingChar + 1.
+		| f xTable leftX noFont sourceRect ascii rightX |
 		noFont := false.
-		f := [fontArray at: encoding]
+		f := [fontArray at: 1 "encoding"]
 			on: Exception do: [:ex | nil].
 		f ifNil: [noFont := true. f := fontArray at: 1].
 		ascii := (noFont ifTrue: [$?] ifFalse: [sourceString at: i]) charCode.
@@ -378,14 +377,13 @@ StrikeFontSet >> displayString: aString on: aBitBlt from: startIndex to: stopInd
 { #category : #displaying }
 StrikeFontSet >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta from: fromFont baselineY: baselineY [
 
-	| destPoint leftX rightX glyphInfo g tag char destY rIndex| 
+	| destPoint leftX rightX glyphInfo g char destY rIndex| 
 	destPoint := aPoint.
 	rIndex := startIndex.
-	tag := (aString at: rIndex) leadingChar.
 	glyphInfo := Array new: 5.
 	[rIndex <= stopIndex] whileTrue: [
 		char := aString at: rIndex.
-		((fromFont hasGlyphOf: char) or: [char leadingChar ~= tag]) ifTrue: [^ Array with: rIndex with: destPoint].
+		(fromFont hasGlyphOf: char) ifTrue: [^ Array with: rIndex with: destPoint].
 		self glyphInfoOf: char into: glyphInfo.
 		g := glyphInfo at: 1.
 		leftX := glyphInfo at: 2.
@@ -503,7 +501,7 @@ StrikeFontSet >> fontOf: aCharacter [
 StrikeFontSet >> fontOf: aCharacter ifAbsent: aBlock [
 	"Answer the actual font to use for aCharacter"
 	| encoding font |
-	encoding := aCharacter leadingChar + 1.
+	encoding := 1.
 	encoding <= fontArray size 
 		ifTrue:[font := fontArray at: encoding].
 	font ifNil:[^aBlock value].
@@ -514,7 +512,7 @@ StrikeFontSet >> fontOf: aCharacter ifAbsent: aBlock [
 { #category : #private }
 StrikeFontSet >> glyphInfoOf: aCharacter into: glyphInfoArray [
 	| index f code leftX |
-	index := aCharacter leadingChar + 1.
+	index := 1.
 	fontArray size < index
 		ifTrue: [ ^ self questionGlyphInfoInto: glyphInfoArray ].
 	(f := fontArray at: index) ifNil: [ ^ self questionGlyphInfoInto: glyphInfoArray ].

@@ -208,8 +208,3 @@ AsciiCharset class >> toUppercase: aCharacter [
 	^ Character
 		value: aCharacter asciiValue - $a asInteger + $A asInteger
 ]
-
-{ #category : #'character classification' }
-AsciiCharset class >> ucsTable [
-	^ Latin1 ucsTable 
-]

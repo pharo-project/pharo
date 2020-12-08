@@ -12,10 +12,10 @@ Class {
 
 { #category : #encoding }
 FilePathEncoder class >> decode: aString [
-	^ aString convertFromWithConverter: LanguageEnvironment defaultFileNameConverter.
+	^ aString utf8Decoded
 ]
 
 { #category : #encoding }
 FilePathEncoder class >> encode: pathString [
-	^ pathString convertToWithConverter: LanguageEnvironment defaultFileNameConverter.
+	^ pathString utf8Encoded
 ]

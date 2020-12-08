@@ -185,19 +185,6 @@ Character class >> insert [
 	^ self value: 5
 ]
 
-{ #category : #'instance creation' }
-Character class >> leadingChar: leadChar code: code [
-
-	code >= 16r400000 ifTrue: [
-		self error: 'code is out of range'.
-	].
-	leadChar >= 256 ifTrue: [
-		self error: 'lead is out of range'.
-	].
-	code < 256 ifTrue: [ ^self value: code ].
-	^self value: (leadChar bitShift: 22) + code
-]
-
 { #category : #'accessing untypeable characters' }
 Character class >> lf [
 	"Answer the Character representing a linefeed."
@@ -380,18 +367,8 @@ Character >> asSymbol [
 
 { #category : #converting }
 Character >> asUnicode [
-	| table charset value |
-	self leadingChar = 0
-		ifTrue: [ ^ self asInteger ].
-	charset := self characterSet.
-	charset isCharset
-		ifFalse: [ ^ self charCode ].
-	table := charset ucsTable.
-	table ifNil: [ ^ 65533 ].
-	value := table at: self charCode + 1.
-	value = -1
-		ifTrue: [ ^ 65533 ].
-	^ value
+
+	^ self asInteger
 ]
 
 { #category : #converting }
@@ -826,11 +803,6 @@ Character >> isVowel [
 	lower case."
 
 	^'AEIOU' includes: self asUppercase
-]
-
-{ #category : #accessing }
-Character >> leadingChar [
-	^ (self asInteger bitAnd: 1069547520) bitShift: -22
 ]
 
 { #category : #converting }

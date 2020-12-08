@@ -479,26 +479,6 @@ HandMorph >> generateKeyboardEvent: evtBuf [
 	keyValue := evtBuf third. 
 	charCode := evtBuf sixth.
 
-	type = #keystroke
-		ifTrue: [combinedChar
-			ifNil: [
-				| peekedEvent |
-				peekedEvent := Sensor peekEvent.
-				(peekedEvent notNil
-					and: [peekedEvent fourth = EventKeyDown])
-					ifTrue: [
-						(CombinedChar isCompositionCharacter: charCode)
-							ifTrue: [
-								combinedChar := CombinedChar new.
-								combinedChar simpleAdd: charCode asCharacter.
-								(combinedChar combinesWith: peekedEvent third asCharacter)
-									ifTrue: [^nil].
-								]]]
-			ifNotNil: [
-				(combinedChar simpleAdd: charCode asCharacter)
-					ifTrue: [charCode := combinedChar combined charCode].
-				combinedChar := nil]].
-
 	"This piece of code handles the creation of scrolling events. When a scroll is done by the user, the VM forwards a keystroke event with the up/down key. So we reconvert it to a MouseWheelEvent in that case."
 	(type = #keystroke 
 	 and: [(buttons anyMask: 16) 

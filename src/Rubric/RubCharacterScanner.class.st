@@ -102,8 +102,6 @@ RubCharacterScanner >> basicScanCharactersFrom: startIndex to: stopIndex in: sou
 			ascii := char asciiValue.
 			
 			(ascii < stops size and: [(stops at: ascii + 1) notNil]) ifTrue: [^ stops at: ascii + 1].
-			(self isBreakableAt: lastIndex in: sourceString in: Latin1Environment) 
-				ifTrue: [ self registerBreakableIndex ].
 			"Note: The following is querying the font about the width
 			since the primitive may have failed due to a non-trivial
 			mapping of characters to glyphs or a non-existing xTable."
@@ -270,8 +268,7 @@ RubCharacterScanner >> registerBreakableIndex [
 
 { #category : #scanning }
 RubCharacterScanner >> scanCharactersFrom: startIndex to: stopIndex in: sourceString rightX: rightX stopConditions: stops kern: kernDelta [
-	| startEncoding selector |
-	
+
 	sourceString isByteString
 		ifTrue: [ ^ self 
 					basicScanCharactersFrom: startIndex 
@@ -287,72 +284,28 @@ RubCharacterScanner >> scanCharactersFrom: startIndex to: stopIndex in: sourceSt
 		ifTrue: [ 
 			lastIndex := stopIndex.
 			^ stops endOfRun ].
-	
-	startEncoding := (sourceString at: startIndex) leadingChar.
-	selector := (EncodedCharSet charsetAt: startEncoding) scanSelector.
 
-	^ self 
-		perform: selector 
-		withArguments: (Array 
-							with: startIndex 
-							with: stopIndex 
-							with: sourceString 
-							with: rightX 
-							with: stops 
-							with: kernDelta).
+	^ self
+		scanMultiCharactersFrom: startIndex
+		to: stopIndex
+		in: sourceString
+		rightX: rightX
+		stopConditions: stops
+		kern: kernDelta.
 
 	
 
-]
-
-{ #category : #'scanner methods' }
-RubCharacterScanner >> scanJapaneseCharactersFrom: startIndex to: stopIndex in: sourceString rightX: rightX stopConditions: stops kern: kernDelta [
-
-	| ascii encoding f nextDestX maxAscii startEncoding |
-	lastIndex := startIndex.
-	lastIndex > stopIndex ifTrue: [lastIndex := stopIndex. ^ stops endOfRun].
-	startEncoding := (sourceString at: startIndex) leadingChar.
-	font ifNil: [font := TextStyle defaultFont fontArray at: 1].
-	font isFontSet ifTrue: [
-		f := [font fontArray at: startEncoding + 1]
-			on: Exception do: [:ex | nil].
-		f ifNil: [ f := font fontArray at: 1].
-		maxAscii := f maxAscii.
-		"xTable := f xTable.
-		maxAscii := xTable size - 2."
-		spaceWidth := f widthOf: Character space.
-	] ifFalse: [
-		maxAscii := font maxAscii.
-	].
-	[lastIndex <= stopIndex] whileTrue: [
-		"self halt."
-		encoding := (sourceString at: lastIndex) leadingChar.
-		encoding ~= startEncoding ifTrue: [lastIndex := lastIndex - 1. ^ stops endOfRun].
-		ascii := (sourceString at: lastIndex) charCode.
-		ascii > maxAscii ifTrue: [ascii := maxAscii].
-		(encoding = 0 and: [ascii < stops size and: [(stops at: ascii + 1) ~~ nil]]) ifTrue: [^ stops at: ascii + 1].
-		(self isBreakableAt: lastIndex in: sourceString in: (EncodedCharSet charsetAt: encoding)) ifTrue: [
-			self registerBreakableIndex.
-		].
-		nextDestX := destX + (font widthOf: (sourceString at: lastIndex)).
-		nextDestX > rightX ifTrue: [firstDestX ~= destX ifTrue: [^ stops crossedX]].
-		destX := nextDestX + kernDelta.
-		lastIndex := lastIndex + 1.
-	].
-	lastIndex := stopIndex.
-	^ stops endOfRun
 ]
 
 { #category : #scanning }
 RubCharacterScanner >> scanMultiCharactersFrom: startIndex to: stopIndex in: sourceString rightX: rightX stopConditions: stops kern: kernDelta [
 
-	| ascii encoding f nextDestX maxAscii startEncoding floatDestX widthAndKernedWidth nextChar atEndOfRun |
+	| ascii f nextDestX maxAscii floatDestX widthAndKernedWidth nextChar atEndOfRun |
 	lastIndex := startIndex.
 	lastIndex > stopIndex ifTrue: [lastIndex := stopIndex. ^ stops endOfRun].
-	startEncoding := (sourceString at: startIndex) leadingChar.
 	font ifNil: [font := TextStyle defaultFont fontArray at: 1].
 	font isFontSet ifTrue: [
-		f := [font fontArray at: startEncoding + 1]
+		f := [font fontArray at: 1]
 			on: Exception do: [:ex | nil].
 		f ifNil: [ f := font fontArray at: 1].
 		maxAscii := f maxAscii.
@@ -364,14 +317,10 @@ RubCharacterScanner >> scanMultiCharactersFrom: startIndex to: stopIndex in: sou
 	widthAndKernedWidth := Array new: 2.
 	atEndOfRun := false.
 	[lastIndex <= stopIndex] whileTrue: [
-		encoding := (sourceString at: lastIndex) leadingChar.
-		encoding ~= startEncoding ifTrue: [lastIndex := lastIndex - 1. ^ stops endOfRun].
 		ascii := (sourceString at: lastIndex) charCode.
 		ascii > maxAscii ifTrue: [ascii := maxAscii].
-		(encoding = 0 and: [ascii < stops size and: [(stops at: ascii + 1) ~~ nil]]) ifTrue: [^ stops at: ascii + 1].
-		(self isBreakableAt: lastIndex in: sourceString in: Latin1Environment) ifTrue: [
-			self registerBreakableIndex.
-		].
+		(ascii < stops size and: [(stops at: ascii + 1) ~~ nil])
+			ifTrue: [^ stops at: ascii + 1].
 		nextChar := (lastIndex + 1 <= stopIndex) 
 			ifTrue:[sourceString at: lastIndex + 1]
 			ifFalse:[
@@ -480,9 +429,6 @@ RubCharacterScanner >> textColor: ignored [
 
 { #category : #'multilingual scanning' }
 RubCharacterScanner >> widthOf: char inFont: aFont [
-	^ aFont
-		widthOf:
-			((char isMemberOf: CombinedChar)
-				ifTrue: [ char base ]
-				ifFalse: [ char ])
+
+	^ aFont widthOf: char
 ]
