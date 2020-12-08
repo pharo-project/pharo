@@ -1,5 +1,21 @@
 "
-Used to measure test coverage for Hudson reports
+Used to measure test coverage for Hudson reports. It uses methods-as-objects approach.
+
+You may use it do find methods that are not called in your package with code like this:
+
+```language=Pharo&caption=Beautiful
+| methods wrappers |
+methods := 'My Package' asPackage methods.
+wrappers := methods collect: [ :each | HDTestCoverage on: each ].
+wrappers do: [ :each | each install ].
+
+""open the application here""
+	
+wrappers do: [ :each | each uninstall ].
+wrappers := wrappers reject: [:each | each hasRun].
+(wrappers collect: [:each | each reference]) inspect.
+```
+
 "
 Class {
 	#name : #HDTestCoverage,
