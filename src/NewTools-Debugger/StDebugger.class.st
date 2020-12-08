@@ -87,7 +87,7 @@ Class {
 		'toolbarCommandGroup',
 		'debuggerActionModel',
 		'unsavedCodeChanges',
-		'hasProceeded'
+		'programmaticallyClosed'
 	],
 	#classVars : [
 		'ActivateDebuggerExtensions',
@@ -378,19 +378,16 @@ StDebugger >> canExecuteRestartCommand [
 
 { #category : #actions }
 StDebugger >> clear [
-	
-	extensionToolsNotebook pages
-		do: [ :page | page activePresenter windowIsClosing ].
+
+	extensionToolsNotebook pages do: [ :page | 
+		page activePresenter windowIsClosing ].
 	extensionTools := nil.
+	self unsubscribeFromSystemAnnouncer.
 	self removeActionsForSession: self session.
 
-	"If I have been proceeded the window has been closed programmatically and I do not need to do this".
-	hasProceeded 
-		ifTrue: [ ^self ].
-
-	self debuggerActionModel clearDebugSession.
-	self unsubscribeFromSystemAnnouncer
-	
+	"When we programmatically close the window, we do not need to terminate the session as it was already cleared"
+	programmaticallyClosed ifTrue: [ ^ self ].
+	debuggerActionModel clearDebugSession
 ]
 
 { #category : #'updating widgets' }
@@ -410,8 +407,10 @@ StDebugger >> clearUnsavedCodeChanges [
 
 { #category : #opening }
 StDebugger >> close [
-	self unsubscribeFromSystemAnnouncer.
-	self withWindowDo: #close
+
+	programmaticallyClosed := true.
+	[ self withWindowDo: #close ] ensure: [ 
+		self debuggerActionModel clearDebugSession ]
 ]
 
 { #category : #'accessing widgets' }
@@ -598,7 +597,7 @@ StDebugger >> initialize [
 	self forceSessionUpdate.
 	self subscribeToMethodAddedAnnouncement.
 	
-	hasProceeded := false.
+	programmaticallyClosed := false.
 ]
 
 { #category : #initialization }
@@ -804,9 +803,9 @@ StDebugger >> printReceiverClassInContext: aContext [
 ]
 
 { #category : #actions }
-StDebugger >> proceedDebugSession [ 
+StDebugger >> proceedDebugSession [
 
-	hasProceeded := true.
+	self removeActionsForSession: self session.
 	self debuggerActionModel proceedDebugSession.
 	self close
 ]
