@@ -42,7 +42,7 @@ HDCoverageReport >> generateDataOn: aStream [
 	self
 		generateType: 'class' indent: 3
 		total: (items := (packages flatCollect: [ :each | each classes ]) asSet) size
-		actual: ((covered collect: [ :each | each actualClass instanceSide ]) asSet
+		actual: ((covered collect: [ :each | each methodClass instanceSide ]) asSet
 			count: [ :each | items includes: each ])
 		on: aStream.
 	self
@@ -71,7 +71,7 @@ HDCoverageReport >> generatePackage: aPackage class: aClass on: aStream [
 	self
 		generateType: 'class' indent: 5
 		total: 1
-		actual: ((covered anySatisfy: [ :each | each actualClass instanceSide = aClass ])
+		actual: ((covered anySatisfy: [ :each | each methodClass instanceSide = aClass ])
 			ifTrue: [ 1 ] ifFalse: [ 0 ])
 		on: aStream.
 	self
@@ -102,7 +102,7 @@ HDCoverageReport >> generatePackage: aPackage on: aStream [
 	self
 		generateType: 'class' indent: 4
 		total: (items := aPackage classes asSet) size
-		actual: ((covered collect: [ :each | each actualClass instanceSide ]) asSet
+		actual: ((covered collect: [ :each | each methodClass instanceSide ]) asSet
 			count: [ :each | items includes: each ])
 		on: aStream.
 	self
