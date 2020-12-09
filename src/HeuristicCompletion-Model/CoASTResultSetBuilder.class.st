@@ -124,7 +124,7 @@ CoASTResultSetBuilder >> visitGlobalVariableNode: aRBVariableNode [
 
 { #category : #visiting }
 CoASTResultSetBuilder >> visitInstanceVariableNode: aRBVariableNode [ 
-	^ self visitNode: aRBVariableNode
+	^ self visitVariableNode: aRBVariableNode
 ]
 
 { #category : #visiting }
