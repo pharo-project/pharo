@@ -5,7 +5,7 @@ Read comment of MicroDownParser.
 Class {
 	#name : #BaselineOfMicrodown,
 	#superclass : #BaselineOf,
-	#category : #BaselineOfMicrodown
+	#category : #'BaselineOfMicrodown-Base'
 }
 
 { #category : #baselines }

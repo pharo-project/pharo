@@ -7,7 +7,7 @@ Metacello new
 Class {
 	#name : #BaselineOfEnlumineurFormatter,
 	#superclass : #BaselineOf,
-	#category : #BaselineOfEnlumineurFormatter
+	#category : #'BaselineOfEnlumineurFormatter-Base'
 }
 
 { #category : #baselines }
