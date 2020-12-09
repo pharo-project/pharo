@@ -78,7 +78,7 @@ SycMethodNameEditorTest >> testButtonDownClickShouldSelectionIndexBeDecremented 
 ]
 
 { #category : #'tests - up/down buttons' }
-SycMethodNameEditorTest >> testButtonDownClickWhitoutSelectOption [
+SycMethodNameEditorTest >> testButtonDownClickWithoutSelectOption [
 	| arrayBeforeClick arrayAfterClick elt1 elt2 |
 	arrayBeforeClick := methodNameEditor argumentsList items.
 	methodNameEditor downButton click.
@@ -117,7 +117,7 @@ SycMethodNameEditorTest >> testButtonUpClickShouldSelectionIndexBeDecremented [
 ]
 
 { #category : #'tests - up/down buttons' }
-SycMethodNameEditorTest >> testButtonUpClickWhitoutSelectOption [
+SycMethodNameEditorTest >> testButtonUpClickWithoutSelectOption [
 	self assert: methodNameEditor argumentsList items asArray equals: #(a b c).
 	methodNameEditor downButton click.
 	self assert: methodNameEditor argumentsList items asArray equals: #(b a c)
