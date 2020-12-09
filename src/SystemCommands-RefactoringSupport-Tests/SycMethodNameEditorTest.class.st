@@ -78,6 +78,23 @@ SycMethodNameEditorTest >> testButtonDownClickShouldSelectionIndexBeDecremented 
 ]
 
 { #category : #'tests - up/down buttons' }
+SycMethodNameEditorTest >> testButtonDownClickWhitoutSelectOption [
+	| arrayBeforeClick arrayAfterClick elt1 elt2 |
+	arrayBeforeClick := methodNameEditor argumentsList items.
+	methodNameEditor downButton click.
+	arrayAfterClick := methodNameEditor argumentsList items.
+	elt2 := arrayAfterClick at: 2.
+	elt1 := arrayAfterClick at: 1.
+	self
+		assert: arrayBeforeClick
+		equals:
+			(arrayAfterClick
+				at: 1 put: elt2;
+				at: 2 put: elt1;
+				yourself)
+]
+
+{ #category : #'tests - up/down buttons' }
 SycMethodNameEditorTest >> testButtonUpClickShouldModifiedArgumentsList [
 	methodNameEditor argumentsList selectIndex: 2.
 	self assert: methodNameEditor argumentsList items asArray equals: #(a b c).
@@ -97,6 +114,13 @@ SycMethodNameEditorTest >> testButtonUpClickShouldSelectionIndexBeDecremented [
 	methodNameEditor argumentsList selectIndex: 2.
 	methodNameEditor upButton click.
 	self assert: methodNameEditor argumentsList selection selectedIndex equals: 1
+]
+
+{ #category : #'tests - up/down buttons' }
+SycMethodNameEditorTest >> testButtonUpClickWhitoutSelectOption [
+	self assert: methodNameEditor argumentsList items asArray equals: #(a b c).
+	methodNameEditor downButton click.
+	self assert: methodNameEditor argumentsList items asArray equals: #(b a c)
 ]
 
 { #category : #tests }
@@ -177,9 +201,9 @@ SycMethodNameEditorTest >> testEditParameterShouldHaveGhostText [
 ]
 
 { #category : #'tests - initial state' }
-SycMethodNameEditorTest >> testInitialArgumentListHasNoSelection [
+SycMethodNameEditorTest >> testInitialArgumentListAutoSelection [
 	
-	self assert: methodNameEditor argumentsList selection isEmpty
+	self assert: methodNameEditor argumentsList selection selectedIndexes equals: #(1)
 ]
 
 { #category : #'tests - initial state' }
@@ -197,7 +221,7 @@ SycMethodNameEditorTest >> testInitialButtonUpIsDisable [
 { #category : #'tests - initial state' }
 SycMethodNameEditorTest >> testInitialOKButtonIsNotEnabled [
 	
-	self deny: methodNameEditor okButton isEnabled
+	self assert: methodNameEditor okButton isEnabled
 ]
 
 { #category : #'tests - argument selection' }
