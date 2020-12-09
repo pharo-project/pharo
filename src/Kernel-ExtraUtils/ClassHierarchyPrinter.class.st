@@ -172,7 +172,12 @@ ClassHierarchyPrinter >> printClass: aClass [
 	stream tab: index.
 	stream nextPutAll: aClass name.
 	aClass instVarNames ifNotEmpty: [ :vars | 
-		showState ifTrue: [ stream space; print: aClass instVarNames ] ].
+		showState ifTrue: [ stream space. 
+								stream nextPutAll: '( '.
+								aClass instVarNames
+									do: [ :iv | stream nextPutAll:  iv asString ]
+									separatedBy: [ stream space ].
+								stream  nextPutAll: ' )' ] ].
 	stream cr
 ]
 
