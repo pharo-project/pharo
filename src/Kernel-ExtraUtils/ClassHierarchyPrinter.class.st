@@ -61,6 +61,24 @@ produces
 	RBSlotInitializationNode
 '
 ```	
+	
+Another nice example is the following one which prints a package roots by roots.
+
+```
+String streamContents: [ :st |  
+	| printer |
+	printer := ClassHierarchyPrinter new.
+	printer doNotShowSuperclasses.
+	printer on: st.	
+	((SortedCollection sortBlock: [ :a :b | a name < b name ])
+		addAll: (RPackageOrganizer default packageNamed: 'Refactoring-Core') roots)
+			do: [ :each | 
+				printer forClass: each. 
+				printer print.
+				printer resetLevel]]
+```
+
+
 
 "
 Class {
@@ -113,7 +131,7 @@ ClassHierarchyPrinter >> initialize [
 	super initialize.
 	excludedClasses := #().
 	limitedToClasses := #().
-	index := 0.
+	self resetLevel.
 	showSuperclasses := true.
 	showState := true.
 	self initializeStream
@@ -153,7 +171,13 @@ ClassHierarchyPrinter >> printClass: aClass [
 	"Print a single line in the printout."
 	stream tab: index.
 	stream nextPutAll: aClass name.
-	showState ifTrue: [ stream space; print: aClass instVarNames ].
+	aClass instVarNames ifNotEmpty: [ :vars | 
+		showState ifTrue: [ stream space. 
+								stream nextPutAll: '( '.
+								aClass instVarNames
+									do: [ :iv | stream nextPutAll:  iv asString ]
+									separatedBy: [ stream space ].
+								stream  nextPutAll: ' )' ] ].
 	stream cr
 ]
 
@@ -192,6 +216,11 @@ ClassHierarchyPrinter >> printSuperclasses [
 			self printClass: aClass.
 			index := index + 1 ].
 	stream cr.	"to spot the requested class."
+]
+
+{ #category : #initialization }
+ClassHierarchyPrinter >> resetLevel [ 
+	index := 0.
 ]
 
 { #category : #configuration }
