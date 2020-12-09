@@ -192,7 +192,7 @@ EpApplyPreviewerTest >> testClassAdditionWithInstanceVariablesChanged [
 		self assert: output class equals: EpClassModification.
 		self
 			assert: output oldClass definitionSource
-			equals: aClass definition.
+			equals: aClass definitionString.
 		self
 			assert: output newClass definitionSource
 			equals: classDefinition ]
