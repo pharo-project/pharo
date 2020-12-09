@@ -87,7 +87,7 @@ DelayBenchmark >> generateDelayProcesses: numberConcurrent priority: priority ma
 	sampleDurations := Array new: 1000.  
 	1 to: sampleDurations size do:
 	[  	:index | 
-		sampleDurations at: index put: (randomGenerator nextInt: maxDuration).
+		sampleDurations at: index put: (randomGenerator nextInteger: maxDuration).
 	].
 	sampleIndex := 0.
 

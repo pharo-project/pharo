@@ -13,9 +13,9 @@ RGBSlidersTest >> classToTest [
 RGBSlidersTest >> testColor [
 	| random red green blue |
 	random := Random new.
-	red := random nextInt: 255.
-	green := random nextInt: 255.
-	blue := random nextInt: 255.
+	red := random nextInteger: 255.
+	green := random nextInteger: 255.
+	blue := random nextInteger: 255.
 
 	testedInstance redSlider value: red.
 	testedInstance greenSlider value: green.

@@ -49,6 +49,6 @@ SharedRandom >> next: anInteger into: anArray [
 ]
 
 { #category : #accessing }
-SharedRandom >> nextInt: anInteger [
-    ^ mutex critical: [ super nextInt: anInteger ].
+SharedRandom >> nextInteger: anInteger [
+    ^ mutex critical: [ super nextInteger: anInteger ].
 ]

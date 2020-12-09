@@ -72,19 +72,19 @@ RandomTest >> testNextBetweenAnd [
 ]
 
 { #category : #tests }
-RandomTest >> testNextInt [
+RandomTest >> testNextInteger [
 	| int |
-	int := gen nextInt: 256.
+	int := gen nextInteger: 256.
 	self assert: int isInteger.
 	self assert: (int between: 1 and: 256)
 ]
 
 { #category : #tests }
-RandomTest >> testNextIntBetweenAnd [
+RandomTest >> testNextIntegerBetweenAnd [
 	
 	10000 timesRepeat: [ 
 		| next | 
-		next := gen nextIntBetween: -3 and: 5.
+		next := gen nextIntegerBetween: -3 and: 5.
 		self assert: next isInteger.
 		self assert: (next between: -3 and: 5) ].
 ]

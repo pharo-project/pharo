@@ -48,7 +48,7 @@ Stdio class >> createStdioFileFor: moniker [
 		do:
 			[ "HACK: if the image is opened a second time windows barks about the already opened locked file"
 			 self createWriteStreamBlock
-				cull: moniker asString , '_' , (Random new nextInt: SmallInteger maxVal) asString ]
+				cull: moniker asString , '_' , (Random new nextInteger: SmallInteger maxVal) asString ]
 	 ] on: FileException do: [ NullStream new ] 
 ]
 
