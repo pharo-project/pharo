@@ -20,6 +20,8 @@ ReSendsUnknownMessageToGlobalRule >> basicCheck: aNode [
 
 	aNode receiver isLiteralVariable ifFalse: [ ^ false ].
 	aNode receiver isUndeclaredVariable ifTrue: [ ^false ].
+	aNode receiver isClassVariable ifTrue: [ ^false ].
+	
 	^ (aNode receiver variable value respondsTo: aNode selector) not
 ]
 
