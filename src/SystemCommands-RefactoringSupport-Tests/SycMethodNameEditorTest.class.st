@@ -47,20 +47,13 @@ SycMethodNameEditorTest >> tearDown [
 
 { #category : #'tests - up/down buttons' }
 SycMethodNameEditorTest >> testButtonDownClickShouldModifiedArgumentsList [
-	| arrayBeforeClick arrayAfterClick elt1 elt2 |
+	| arrayBeforeClick arrayAfterClick |
 	methodNameEditor argumentsList selectIndex: 2.
 	arrayBeforeClick := methodNameEditor argumentsList items.
+	self assert: arrayBeforeClick asArray equals: #(a b c).
 	methodNameEditor downButton click.
 	arrayAfterClick := methodNameEditor argumentsList items.
-	elt2 := arrayAfterClick at: 2.
-	elt1 := arrayAfterClick at: 1.
-	self
-		assert: arrayBeforeClick
-		equals:
-			(arrayAfterClick
-				at: 1 put: elt2;
-				at: 2 put: elt1;
-				yourself)
+	self assert: arrayAfterClick asArray equals: #(a c b).
 ]
 
 { #category : #'tests - up/down buttons' }
@@ -79,19 +72,12 @@ SycMethodNameEditorTest >> testButtonDownClickShouldSelectionIndexBeDecremented 
 
 { #category : #'tests - up/down buttons' }
 SycMethodNameEditorTest >> testButtonDownClickWithoutSelectOption [
-	| arrayBeforeClick arrayAfterClick elt1 elt2 |
+	| arrayBeforeClick arrayAfterClick |
 	arrayBeforeClick := methodNameEditor argumentsList items.
+	self assert: arrayBeforeClick asArray equals: #(a b c).
 	methodNameEditor downButton click.
 	arrayAfterClick := methodNameEditor argumentsList items.
-	elt2 := arrayAfterClick at: 2.
-	elt1 := arrayAfterClick at: 1.
-	self
-		assert: arrayBeforeClick
-		equals:
-			(arrayAfterClick
-				at: 1 put: elt2;
-				at: 2 put: elt1;
-				yourself)
+	self assert: arrayAfterClick asArray equals: #(b a c).
 ]
 
 { #category : #'tests - up/down buttons' }
