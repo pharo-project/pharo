@@ -86,11 +86,11 @@ ClassHierarchyPrinterTest >> testPrintFullHierarchyOfRectangle [
 	printer forClass: Rectangle. 
 	self 
 		assert: printer print  
-		equals: 'ProtoObject #()
-	Object #()
+		equals: 'ProtoObject
+	Object
 
-		Rectangle #(#origin #corner)
-			CharacterBlock #(#stringIndex #text #textLine)
+		Rectangle ( origin corner )
+			CharacterBlock ( stringIndex text textLine )
 '
 ]
 
@@ -101,10 +101,10 @@ ClassHierarchyPrinterTest >> testPrintHierarchyOfPoint [
 	self 
 		assert: printer print 
 		equals:
-'ProtoObject #()
-	Object #()
+'ProtoObject
+	Object
 
-		Point #(#x #y)
+		Point ( x y )
 '
 ]
 
@@ -132,7 +132,7 @@ ClassHierarchyPrinterTest >> testPrintHierarchyOfPointNoSuperclasses [
 		doNotShowSuperclasses.
 	self 
 		assert: printer print 
-		equals: 'Point #(#x #y)
+		equals: 'Point ( x y )
 '
 ]
 
@@ -143,11 +143,11 @@ ClassHierarchyPrinterTest >> testPrintHierarchyOfRectangle [
 	self 
 		assert: printer print 
 		equals:
-'ProtoObject #()
-	Object #()
+'ProtoObject
+	Object
 
-		Rectangle #(#origin #corner)
-			CharacterBlock #(#stringIndex #text #textLine)
+		Rectangle ( origin corner )
+			CharacterBlock ( stringIndex text textLine )
 '
 ]
 
@@ -160,8 +160,8 @@ ClassHierarchyPrinterTest >> testPrintHierarchyOfRectangleNoSuperclasses [
 	self 
 		assert: printer print 
 		equals:
-'Rectangle #(#origin #corner)
-	CharacterBlock #(#stringIndex #text #textLine)
+'Rectangle ( origin corner )
+	CharacterBlock ( stringIndex text textLine )
 '
 ]
 
@@ -173,9 +173,9 @@ ClassHierarchyPrinterTest >> testPrintHierarchyOfRectangleWithFilteredClasses [
 	self 
 		assert: printer print 
 		equals: 
-'ProtoObject #()
-	Object #()
+'ProtoObject
+	Object
 
-		Rectangle #(#origin #corner)
+		Rectangle ( origin corner )
 '
 ]
