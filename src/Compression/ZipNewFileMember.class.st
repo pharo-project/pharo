@@ -23,11 +23,17 @@ ZipNewFileMember >> close [
 ]
 
 { #category : #initialization }
+ZipNewFileMember >> endRead [
+	
+	super endRead.
+	self close
+]
+
+{ #category : #initialization }
 ZipNewFileMember >> from: aFileReference [
 
 	| entry |
 	"Now get the size, attributes, and timestamps, and see if the file exists"
-	stream := aFileReference binaryReadStream.
 	self localFileName: (externalFileName := aFileReference path pathString).
 	entry := aFileReference entry.
 	compressedSize := uncompressedSize := entry size.
@@ -48,14 +54,8 @@ ZipNewFileMember >> initialize [
 
 { #category : #private }
 ZipNewFileMember >> readRawChunk: n [
+	stream ifNil: [ stream := externalFileName asFileReference binaryReadStream ].
 	^stream next: n
-]
-
-{ #category : #'private-writing' }
-ZipNewFileMember >> rewindData [
-	super rewindData.
-	readDataRemaining := stream size.
-	stream position: 0.
 ]
 
 { #category : #testing }
