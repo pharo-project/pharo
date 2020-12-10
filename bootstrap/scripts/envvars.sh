@@ -54,7 +54,7 @@ fi
 # The architecture of the VM and image used to execute the bootstrap process
 if [ -z ${BOOTSTRAPPER_ARCH+x} ]
 then
-    BOOTSTRAPPER_ARCH=32
+    BOOTSTRAPPER_ARCH=64
 fi
 export BOOTSTRAPPER_ARCH
 
