@@ -50,6 +50,13 @@ else
     VM="${BOOTSTRAP_VMTARGET}/pharo --headless"
 fi
 
+# This is the VM used to bootstrap, i.e. the target VM
+if [ -z ${BOOTSTRAPPER_ARCH+x} ]
+then
+    BOOTSTRAPPER_ARCH=32
+fi
+export BOOTSTRAPPER_ARCH
+
 # Flags to run the image
 IMAGE_FLAGS="--no-default-preferences"
 
