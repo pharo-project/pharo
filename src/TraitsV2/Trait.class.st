@@ -67,6 +67,16 @@ Trait class >> named: aSymbol [
 ]
 
 { #category : #'old pharo 8 syntax' }
+Trait class >> named: aName instanceVariableNames: aString package: aPackageName [
+
+	^ self named: aName 
+		uses: {} 
+		instanceVariableNames: aString 
+		package: aPackageName 
+		env: self environment 
+]
+
+{ #category : #'old pharo 8 syntax' }
 Trait class >> named: aSymbol package: aString [
 	^ self
 		named: aSymbol
