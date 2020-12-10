@@ -47,7 +47,7 @@ Class >> spotterPreviewIn: aComposite [
 	<spotterPreview: 10>
 	aComposite pharoMethod
 		title: [self name];
-		display: #definition;
+		display: [:each | each definitionString];
 		smalltalkClass: [ nil ];
 		entity: self.
 		
