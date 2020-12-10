@@ -101,7 +101,7 @@ Path class >> extensionDelimiter [
 Path class >> from: aString [
 	"Answer an instance of the receiver with the supplied path using the default delimiter"
 
-	^ self from: aString delimiter: self delimeter
+	^ self from: aString delimiter: self delimiter
 ]
 
 { #category : #'instance creation' }
@@ -179,7 +179,7 @@ Path class >> with: aString [
 	This should only be sent to one of the concrete subclasses, e.g. AbsolutePath and RelativePath"
 	| inst parsedCollection |
 
-	parsedCollection := self delimeter split: aString.
+	parsedCollection := self delimiter split: aString.
 	parsedCollection := self removeRedundantSegments: parsedCollection.
 	inst := self new: parsedCollection size.
 	parsedCollection withIndexDo: [:segment :index |
@@ -195,7 +195,7 @@ Path class >> withAll: aCollection [
 
 	parsedCollection := OrderedCollection new: (aCollection size max: 10).
 	aCollection do: [ :each |
-		parsedCollection addAll: (self delimeter split: each) ].
+		parsedCollection addAll: (self delimiter split: each) ].
 	parsedCollection := self removeRedundantSegments: parsedCollection.
 	inst := self new: parsedCollection size.
 	parsedCollection withIndexDo: [:segment :index |
