@@ -25,6 +25,23 @@ Class {
 }
 
 { #category : #private }
+Trait class >> configureBuilder: builder withName: aName traitComposition: aTraitCompositionOrCollection instanceVariableNames: aString packageName: aPackageName [
+
+	^ builder
+		name: aName;
+		superclass: nil;
+		metaSuperclass: self;
+		metaclassClass: MetaclassForTraits;
+		slots: aString asSlotCollection;
+		sharedVariables: '';
+		sharedPools: '';
+		category: aPackageName;
+		traitComposition: aTraitCompositionOrCollection asTraitComposition;
+		classTraitComposition: aTraitCompositionOrCollection asTraitComposition classComposition;
+		classSlots: #()
+]
+
+{ #category : #private }
 Trait class >> configureBuilder: builder withName: aName traitComposition: aTraitCompositionOrCollection slots: someSlots packageName: aPackageName [
 
 	^ builder
