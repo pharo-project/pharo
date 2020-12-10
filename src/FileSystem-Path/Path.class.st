@@ -79,8 +79,12 @@ Path class >> canonicalizeElements: aCollection [
 
 { #category : #encodings }
 Path class >> delimeter [
-	"Method name incorrectly spelled"
-	
+	self
+		deprecated: 'Should use delimiter instead'
+		on: '10 December 2020'
+		in: #Pharo9
+		transformWith: '`@rec delimeter' -> '`@rec delimiter'.
+
 	^ self delimiter
 ]
 
