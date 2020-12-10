@@ -136,5 +136,6 @@ T2OldPharoClassDefinitionPrinterTest >> testTrait3AndTag [
 		equals: 
  'Trait named: #Trait3
 	uses: Trait2
+	instanceVariableNames: ''''
 	package: ''Tests-Traits-MOP'''	
 ]
