@@ -26,7 +26,10 @@ Class {
 
 { #category : #private }
 Trait class >> configureBuilder: builder withName: aName traitComposition: aTraitCompositionOrCollection instanceVariableNames: aString packageName: aPackageName [
-
+	"this method should be removed when we will redesign with Pablo the APi to use the builder
+	Because now I cannot simply test that named:uses:instanceVariableNames:... is working.
+	"
+	self flag: #revisit. 
 	^ builder
 		name: aName;
 		superclass: nil;
@@ -58,12 +61,12 @@ Trait class >> configureBuilder: builder withName: aName traitComposition: aTrai
 		classSlots: #()
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'old pharo 8 syntax' }
 Trait class >> named: aSymbol [
 	^ self named: aSymbol uses: {} package: 'Unclassified'
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'old pharo 8 syntax' }
 Trait class >> named: aSymbol package: aString [
 	^ self
 		named: aSymbol
@@ -72,7 +75,7 @@ Trait class >> named: aSymbol package: aString [
 		env: self environment
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'old pharo 8 syntax' }
 Trait class >> named: aSymbol uses: aCompositionOrArray [
 	^ self named: aSymbol uses: aCompositionOrArray package: 'Unclassified'
 ]
@@ -96,7 +99,33 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection category: aStrin
 		env: anEnvironment
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'old pharo 8 syntax' }
+Trait class >> named: aName uses: aTraitCompositionOrCollection instanceVariableNames: aString package: aPackageName [
+
+	^ self named: aName 
+		uses: aTraitCompositionOrCollection 
+		instanceVariableNames: aString 
+		package: aPackageName 
+		env: self environment 
+]
+
+{ #category : #'old pharo 8 syntax' }
+Trait class >> named: aName uses: aTraitCompositionOrCollection instanceVariableNames: aString package: aPackageName env: anEnvironment [
+	| trait |
+	trait := self classInstaller
+		make: [ :builder | 
+			self
+				configureBuilder: builder
+				withName: aName
+				traitComposition: aTraitCompositionOrCollection
+				slots: aString asSlotCollection
+				packageName: aPackageName ].
+	self assert: [ trait class class = MetaclassForTraits ].
+	self assert: [ trait class superclass = Trait ].
+	^ trait
+]
+
+{ #category : #'old pharo 8 syntax' }
 Trait class >> named: aSymbol uses: aTraitCompositionOrCollection package: aString [
 	^ self
 		named: aSymbol
@@ -105,7 +134,7 @@ Trait class >> named: aSymbol uses: aTraitCompositionOrCollection package: aStri
 		env: self environment
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection package: aString env: anEnvironment [
 	^ self
 		named: aName
@@ -132,7 +161,7 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots
 	^ self named: aName uses: aTraitCompositionOrCollection slots: someSlots package: aCategory env: anEnvironment 
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots package: aPackageName [
 
 	^ self named: aName 
@@ -142,7 +171,7 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots
 		env: self environment 
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots package: aPackageName env: anEnvironment [
 	| trait |
 	trait := self classInstaller
