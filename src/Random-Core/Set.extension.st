@@ -9,7 +9,7 @@ Set >> atRandom: aGenerator [
 	| index |
 
 	self emptyCheck.
-	index := aGenerator nextInt: array size.
+	index := aGenerator nextInteger: array size.
 	[ (array at: index) isNil ] whileTrue: [ index := index \\ array size + 1 ].
 	^ array at: index.
 ]

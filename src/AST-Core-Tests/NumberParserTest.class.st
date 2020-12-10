@@ -165,8 +165,8 @@ NumberParserTest >> testFloatPrintString [
 	"printing a Float in base other than 10 is broken if lowercase digits are allowed"
 	bases := self areLowercaseDigitsAllowed ifTrue: [ #(10) ] ifFalse: [ #(2 8 10 16) ].
 	100
-		timesRepeat: [ f basicAt: 1 put: (r nextInt: 16r100000000) - 1.
-			f basicAt: 2 put: (r nextInt: 16r100000000) - 1.
+		timesRepeat: [ f basicAt: 1 put: (r nextInteger: 16r100000000) - 1.
+			f basicAt: 2 put: (r nextInteger: 16r100000000) - 1.
 			bases
 				do: [ :base | 
 					| str |
@@ -179,8 +179,8 @@ NumberParserTest >> testFloatPrintString [
 					self assert: (NumberParser parse: str contents) equals: f ] ].
 	"test big num near infinity"
 	10
-		timesRepeat: [ f basicAt: 1 put: 16r7FE00000 + ((r nextInt: 16r100000) - 1).
-			f basicAt: 2 put: (r nextInt: 16r100000000) - 1.
+		timesRepeat: [ f basicAt: 1 put: 16r7FE00000 + ((r nextInteger: 16r100000) - 1).
+			f basicAt: 2 put: (r nextInteger: 16r100000000) - 1.
 			bases
 				do: [ :base | 
 					| str |
@@ -193,8 +193,8 @@ NumberParserTest >> testFloatPrintString [
 					self assert: (NumberParser parse: str contents) equals: f ] ].
 	"test infinitesimal (gradual underflow)"
 	10
-		timesRepeat: [ f basicAt: 1 put: 0 + ((r nextInt: 16r100000) - 1).
-			f basicAt: 2 put: (r nextInt: 16r100000000) - 1.
+		timesRepeat: [ f basicAt: 1 put: 0 + ((r nextInteger: 16r100000) - 1).
+			f basicAt: 2 put: (r nextInteger: 16r100000000) - 1.
 			bases
 				do: [ :base | 
 					| str |
