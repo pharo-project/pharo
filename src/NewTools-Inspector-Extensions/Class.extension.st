@@ -46,6 +46,6 @@ Class >> inspectionClassDefinition [
 	
 	^ SpCodePresenter new
 		beForScripting;
-		text: self definition;
+		text: self definitionString;
 		beNotEditable
 ]
