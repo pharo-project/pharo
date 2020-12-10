@@ -37,7 +37,7 @@ ReClassNotCategorizedRule >> group [
 { #category : #accessing }
 ReClassNotCategorizedRule >> name [
 
-	^ 'Uncategorized class - missing class tag for classification'
+	^ 'Uncategorized class - missing class tag'
 ]
 
 { #category : #accessing }
