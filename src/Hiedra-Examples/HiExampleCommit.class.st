@@ -24126,7 +24126,7 @@ HiExampleCommit class >> randomlyGenerated [
 		self new
 			id: value;
 			comment: 'Randomly Connected Element #', value asString;
-			parentIds: ((values copyWithout: value) intersection: { random nextInt: values max });
+			parentIds: ((values copyWithout: value) intersection: { random nextInteger: values max });
 			yourself
 		]) reversed
 ]

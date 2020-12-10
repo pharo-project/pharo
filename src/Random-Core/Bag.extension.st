@@ -9,7 +9,7 @@ Bag >> atRandom: aGenerator [
 
 	| index |
  	self emptyCheck.
- 	index := aGenerator nextInt: self size.
+ 	index := aGenerator nextInteger: self size.
  	"overwritten to use a faster enumeration"
  	self doWithOccurrences: [ :key :count | 
  		(index := index - count) <= 0 ifTrue: [ ^key ] ]
