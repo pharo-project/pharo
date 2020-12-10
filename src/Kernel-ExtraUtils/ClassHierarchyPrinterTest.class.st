@@ -14,6 +14,23 @@ ClassHierarchyPrinterTest >> setUp [
 ]
 
 { #category : #tests }
+ClassHierarchyPrinterTest >> testOnlyFreeText [
+
+	printer 
+		nextPutAll: 'Start';
+		cr;
+		tab;
+		nextPutAll: 'Tabbed';
+		cr;
+		nextPutAll: 'End'.
+		
+		
+	self assert: printer print equals: 'Start
+	Tabbed
+End'
+]
+
+{ #category : #tests }
 ClassHierarchyPrinterTest >> testOnlyRBASTNodes [
 
 	printer 

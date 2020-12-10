@@ -112,6 +112,11 @@ ClyItemDefinitionProperty >> printDefiningClass [
 		ifFalse: [ definingClassItem name, ' class']
 ]
 
+{ #category : #printing }
+ClyItemDefinitionProperty >> printDefiningProtocol [
+	^ 'no protocol'
+]
+
 { #category : #'printing items' }
 ClyItemDefinitionProperty >> printDefinition [
 

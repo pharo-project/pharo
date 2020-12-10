@@ -8,5 +8,5 @@ SequenceableCollection >> atRandom: aGenerator [
 	because only you use the generator.  Causes an error if self has no 
 	elements."
 
-	^ self at: (aGenerator nextInt: self size)
+	^ self at: (aGenerator nextInteger: self size)
 ]

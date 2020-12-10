@@ -26,6 +26,6 @@ Collection >> atRandom: aGenerator [
 	| rand |
 
 	self emptyCheck.
-	rand := aGenerator nextInt: self size.
+	rand := aGenerator nextInteger: self size.
 	self withIndexDo: [:each :index | index = rand ifTrue: [^each]]
 ]
