@@ -4,11 +4,12 @@ Critique is an object that binds an entity with a rule that is violated by that 
 Class {
 	#name : #RenrakuCritiqueHelp,
 	#superclass : #RenrakuHelp,
-	#category : #'Renraku-Help'
+	#category : #'Renraku-Help-Critique'
 }
 
 { #category : #accessing }
 RenrakuCritiqueHelp class >> bookDescription [
+
 	^ 'Critique is an object that binds an entity with a rule that is violated by that entity. The critique describes a specific violation, and may provide a solutions to fix it.'
 ]
 
@@ -21,5 +22,5 @@ RenrakuCritiqueHelp class >> bookName [
 { #category : #accessing }
 RenrakuCritiqueHelp class >> pages [
 
-	^ #(RenrakuCritiqueDesignHelp RenrakuCritiqueExamplesHelp)
+	^ #( RenrakuCritiqueDesignHelp RenrakuCritiqueExamplesHelp )
 ]

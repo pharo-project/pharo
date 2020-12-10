@@ -13,15 +13,16 @@ Critique is an object that binds an entity with a rule that is violated by that 
 Class {
 	#name : #RenrakuHelp,
 	#superclass : #CustomHelp,
-	#category : #'Renraku-Help'
+	#category : #'Renraku-Help-Base'
 }
 
 { #category : #accessing }
 RenrakuHelp class >> bookDescription [
+
 	^ 'Renraku is a framework for defining and processing quality rules. The framework operates with three main concepts: entities, rules and critiques.
 
 !! Entities
-Entities are not a part of Renraku, but Renraku is validating entities. Theoretically entity can be any object, but in practice we mostly focus on code entities such as methods, classes, packages, AST nodes.
+Entities are not a part of Renraku, but Renraku is validating entities. Theoretically any object can be an entity, but in practice we mostly focus on code entities such as methods, classes, packages, AST nodes.
 
 !! Rules
 Rules are the objects that describe constraints about entities. A rule can check an entity and produce critiques that describe the violations of the entity according to the rule.
@@ -32,7 +33,8 @@ Critique is an object that binds an entity with a rule that is violated by that 
 
 { #category : #accessing }
 RenrakuHelp class >> bookName [
-	    ^'Renraku Quality Rules'
+
+	^ 'Renraku Quality Rules'
 ]
 
 { #category : #accessing }
@@ -40,21 +42,22 @@ RenrakuHelp class >> pages [
 	^#(RenrakuRuleHelp)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utilities }
 RenrakuHelp class >> readInHelpBrowser [
+	<script>
 
 	^ HelpBrowser openOn: (
-		HelpTopic new
-			addSubtopic: self asHelpTopic;
-			yourself)
+			HelpTopic new
+				addSubtopic: self asHelpTopic;
+				yourself)
 ]
 
 { #category : #private }
 RenrakuHelp class >> topicForClass: aClass [
 
 	^ ClassAPIHelpBuilder new
-		addMethodsWithoutComment: false;
-		rootToBuildFrom: aClass;
-		build;
-		topicToBuild
+		  addMethodsWithoutComment: false;
+		  rootToBuildFrom: aClass;
+		  build;
+		  topicToBuild
 ]
