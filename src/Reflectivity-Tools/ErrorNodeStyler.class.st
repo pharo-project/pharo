@@ -51,6 +51,6 @@ ErrorNodeStyler >> visitEnglobingErrorNode: anEnglobingNode [
 
 { #category : #visiting }
 ErrorNodeStyler >> visitUnreachableStatement: anUnreachableStatement [
-
+	"self overrides visitEnglobingErrorNode:"
 	^ super visitEnglobingErrorNode: anUnreachableStatement
 ]

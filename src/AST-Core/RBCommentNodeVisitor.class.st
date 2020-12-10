@@ -11,7 +11,7 @@ Class {
 	#category : #'AST-Core-Visitors'
 }
 
-{ #category : #accessing }
+{ #category : #visiting }
 RBCommentNodeVisitor >> visitNode: aNode [
 	aNode comments ifNotEmpty: [ :commentNodes |
 		commentNodes do: [ :commentNode |
