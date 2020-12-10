@@ -47,20 +47,13 @@ SycMethodNameEditorTest >> tearDown [
 
 { #category : #'tests - up/down buttons' }
 SycMethodNameEditorTest >> testButtonDownClickShouldModifiedArgumentsList [
-	| arrayBeforeClick arrayAfterClick elt1 elt2 |
+	| arrayBeforeClick arrayAfterClick |
 	methodNameEditor argumentsList selectIndex: 2.
 	arrayBeforeClick := methodNameEditor argumentsList items.
+	self assert: arrayBeforeClick asArray equals: #(a b c).
 	methodNameEditor downButton click.
 	arrayAfterClick := methodNameEditor argumentsList items.
-	elt2 := arrayAfterClick at: 2.
-	elt1 := arrayAfterClick at: 1.
-	self
-		assert: arrayBeforeClick
-		equals:
-			(arrayAfterClick
-				at: 1 put: elt2;
-				at: 2 put: elt1;
-				yourself)
+	self assert: arrayAfterClick asArray equals: #(a c b).
 ]
 
 { #category : #'tests - up/down buttons' }
@@ -75,6 +68,16 @@ SycMethodNameEditorTest >> testButtonDownClickShouldSelectionIndexBeDecremented 
 	methodNameEditor argumentsList selectIndex: 1.
 	methodNameEditor downButton click.
 	self assert: methodNameEditor argumentsList selection selectedIndex equals: 2
+]
+
+{ #category : #'tests - up/down buttons' }
+SycMethodNameEditorTest >> testButtonDownClickWithoutSelectOption [
+	| arrayBeforeClick arrayAfterClick |
+	arrayBeforeClick := methodNameEditor argumentsList items.
+	self assert: arrayBeforeClick asArray equals: #(a b c).
+	methodNameEditor downButton click.
+	arrayAfterClick := methodNameEditor argumentsList items.
+	self assert: arrayAfterClick asArray equals: #(b a c).
 ]
 
 { #category : #'tests - up/down buttons' }
@@ -97,6 +100,13 @@ SycMethodNameEditorTest >> testButtonUpClickShouldSelectionIndexBeDecremented [
 	methodNameEditor argumentsList selectIndex: 2.
 	methodNameEditor upButton click.
 	self assert: methodNameEditor argumentsList selection selectedIndex equals: 1
+]
+
+{ #category : #'tests - up/down buttons' }
+SycMethodNameEditorTest >> testButtonUpClickWithoutSelectOption [
+	self assert: methodNameEditor argumentsList items asArray equals: #(a b c).
+	methodNameEditor downButton click.
+	self assert: methodNameEditor argumentsList items asArray equals: #(b a c)
 ]
 
 { #category : #tests }
@@ -177,9 +187,9 @@ SycMethodNameEditorTest >> testEditParameterShouldHaveGhostText [
 ]
 
 { #category : #'tests - initial state' }
-SycMethodNameEditorTest >> testInitialArgumentListHasNoSelection [
+SycMethodNameEditorTest >> testInitialArgumentListAutoSelection [
 	
-	self assert: methodNameEditor argumentsList selection isEmpty
+	self assert: methodNameEditor argumentsList selection selectedIndexes equals: #(1)
 ]
 
 { #category : #'tests - initial state' }
@@ -197,7 +207,7 @@ SycMethodNameEditorTest >> testInitialButtonUpIsDisable [
 { #category : #'tests - initial state' }
 SycMethodNameEditorTest >> testInitialOKButtonIsNotEnabled [
 	
-	self deny: methodNameEditor okButton isEnabled
+	self assert: methodNameEditor okButton isEnabled
 ]
 
 { #category : #'tests - argument selection' }
