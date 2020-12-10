@@ -1,11 +1,11 @@
 Class {
-	#name : #ClassDefinitionPrinterTest,
+	#name : #ClassDefinitionPrinterConfigurationTest,
 	#superclass : #CommonClassDefinitionPrinterTest,
 	#category : #'Kernel-Tests-Fluid'
 }
 
 { #category : #tests }
-ClassDefinitionPrinterTest >> testFluidConfiguration [
+ClassDefinitionPrinterConfigurationTest >> testFluidConfiguration [
 
 	self 
 		assert: (ClassDefinitionPrinter fluid
@@ -18,7 +18,7 @@ ClassDefinitionPrinterTest >> testFluidConfiguration [
 ]
 
 { #category : #tests }
-ClassDefinitionPrinterTest >> testLegacyPharoConfiguration [
+ClassDefinitionPrinterConfigurationTest >> testLegacyPharoConfiguration [
 
 	self 
 		assert: (ClassDefinitionPrinter legacy
@@ -32,7 +32,7 @@ ClassDefinitionPrinterTest >> testLegacyPharoConfiguration [
 ]
 
 { #category : #tests }
-ClassDefinitionPrinterTest >> testOldPharoConfiguration [
+ClassDefinitionPrinterConfigurationTest >> testOldPharoConfiguration [
 
 	self 
 		assert: (ClassDefinitionPrinter oldPharo
@@ -45,7 +45,7 @@ ClassDefinitionPrinterTest >> testOldPharoConfiguration [
 ]
 
 { #category : #tests }
-ClassDefinitionPrinterTest >> testToggleIsWorking [
+ClassDefinitionPrinterConfigurationTest >> testToggleIsWorking [
 
 	| value |
 	value := ClassDefinitionPrinter showFluidClassDefinition.
