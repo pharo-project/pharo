@@ -298,7 +298,7 @@ ShiftClassBuilder >> fillFor: aClass [
 		layoutClass: aClass classLayout class;
 		slots: aClass localSlots;
 		classSlots: aClass class localSlots;
-		sharedVariables: aClass classVariables;
+		sharedVariablesFromString: aClass classVariablesString;
 		sharedPools: aClass sharedPoolsString;
 		category: aClass category;
 		environment: aClass environment;
