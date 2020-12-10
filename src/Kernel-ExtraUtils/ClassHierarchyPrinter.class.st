@@ -61,6 +61,7 @@ produces
 	RBSlotInitializationNode
 '
 ```	
+### Some nice examples
 	
 Another nice example is the following one which prints a package roots by roots.
 
@@ -78,6 +79,30 @@ String streamContents: [ :st |
 				printer resetLevel]]
 ```
 
+Now to print according to tags:
+
+```
+| p roots |
+p := (RPackageOrganizer default packageNamed: 'MenuRegistration').
+roots := p roots. 
+String streamContents: [ :st |  
+	| printer |
+	printer := ClassHierarchyPrinter new.
+	printer doNotShowSuperclasses.
+	printer on: st.    
+	p classTags do: [ :aTag | 
+		| rootsPerTag |
+		printer 
+			nextPutAll: 'Tag: ', aTag name ; 
+			cr;
+			nextPutAll: '==================================='; cr.
+		  rootsPerTag := (p classesForClassTag: aTag name) select: [ :each | roots includes: each ].
+        rootsPerTag
+             do: [ :each | 
+                    printer forClass: each. 
+                    printer print.
+                    printer resetLevel]]]
+```
 
 
 "
@@ -101,6 +126,11 @@ Class {
 ClassHierarchyPrinter class >> forClass: aClass [
 
 	^ self new forClass: aClass; yourself
+]
+
+{ #category : #'public API' }
+ClassHierarchyPrinter >> cr [
+	stream cr
 ]
 
 { #category : #configuration }
@@ -150,6 +180,11 @@ ClassHierarchyPrinter >> limitedToClasses: aCollection [
 ]
 
 { #category : #'public API' }
+ClassHierarchyPrinter >> nextPutAll: aString [
+	stream nextPutAll: aString
+]
+
+{ #category : #'public API' }
 ClassHierarchyPrinter >> on: aStream [
 
 	stream := aStream
@@ -160,9 +195,10 @@ ClassHierarchyPrinter >> print [
 	"Answer a description containing the names and instance variable names 
 	of all of the subclasses and superclasses of the class."
 	
-	showSuperclasses 
-		ifTrue: [ self printSuperclasses ].
-	self printSubclassesOf: theClass.
+	theClass ifNotNil: [ 
+		showSuperclasses 
+			ifTrue: [ self printSuperclasses ].
+			self printSubclassesOf: theClass ].
 	^ stream contents
 ]
 
@@ -197,7 +233,7 @@ ClassHierarchyPrinter >> printSubclassesOf: aClass [
 	self printClass: aClass.
 	aClass == Class
 		ifTrue: [ stream
-				tab: level + 1;
+				tab: index + 1;
 				nextPutAll: '[ ... all the Metaclasses ... ]'.
 			^ self ].
 	sortedSubclasses := aClass subclasses
@@ -227,4 +263,9 @@ ClassHierarchyPrinter >> resetLevel [
 ClassHierarchyPrinter >> showSuperclasses [
 
 	showSuperclasses := true
+]
+
+{ #category : #'public API' }
+ClassHierarchyPrinter >> tab [
+	stream tab
 ]
