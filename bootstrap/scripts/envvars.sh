@@ -15,6 +15,7 @@
 # - BOOTSTRAP_VMTARGET		# Location of the target VM
 #				  This can be set when a custom VM is to be 
 #				  used during bootstrap.
+# - BOOTSTRAPPER_ARCH   # The architecture of the VM and image used to execute the bootstrap process
 #
 if [ -z ${BUILD_NUMBER+x} ]
 then
@@ -50,7 +51,7 @@ else
     VM="${BOOTSTRAP_VMTARGET}/pharo --headless"
 fi
 
-# This is the VM used to bootstrap, i.e. the target VM
+# The architecture of the VM and image used to execute the bootstrap process
 if [ -z ${BOOTSTRAPPER_ARCH+x} ]
 then
     BOOTSTRAPPER_ARCH=32
