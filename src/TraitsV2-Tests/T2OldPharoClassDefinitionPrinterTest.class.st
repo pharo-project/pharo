@@ -28,6 +28,19 @@ T2OldPharoClassDefinitionPrinterTest >> testAlignmentMorphClass [
 ]
 
 { #category : #'tests - traits' }
+T2OldPharoClassDefinitionPrinterTest >> testClassDefinitionWithComplexSlotShouldBeDisplayedAsFluid [
+
+	ClassDefinitionPrinter showFluidClassDefinition: false.
+	self assert: TMockWithComplexSlot needsSlotClassDefinition.
+
+	self 
+		assert: (self forClass: TMockWithComplexSlot) 
+		equals: 'Trait << #TMockWithComplexSlot
+	slots: { #aComplexSlot => ObservableSlot };
+	package: ''TraitsV2-Tests''' 
+]
+
+{ #category : #'tests - traits' }
 T2OldPharoClassDefinitionPrinterTest >> testComplexTrait [
 
 	self assert: (self forClass: MOPTestClassD) equals: 'Object subclass: #MOPTestClassD
@@ -69,6 +82,23 @@ T2OldPharoClassDefinitionPrinterTest >> testTEventVisitorClassTrait [
 	self assert: (self forClass: EpTEventVisitor classTrait) equals: 'EpTEventVisitor classTrait
 	uses: EpTCodeChangeVisitor classTrait
 	instanceVariableNames: '''''
+]
+
+{ #category : #'tests - traits' }
+T2OldPharoClassDefinitionPrinterTest >> testTMockWithUseAndSlot [
+
+	ClassDefinitionPrinter showFluidClassDefinition: false.
+	self deny: TMockWithUseAndSlot needsSlotClassDefinition.
+	"if the slot would be complex automatically the class def would switch to the fluid one
+	So the test really test that the class creation API of the old syntax is correct. 
+	Even if we should push for using the fluid one."
+
+	self 
+		assert: (self forClass: TMockWithUseAndSlot) 
+		equals: 'Trait named: #TMockWithUseAndSlot
+	uses: Trait3
+	instanceVariableNames: ''aSlot''
+	package: ''TraitsV2-Tests''' 
 ]
 
 { #category : #'tests - traits' }
