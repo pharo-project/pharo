@@ -7,14 +7,16 @@ Class {
 	#superclass : #ZipArchiveMember,
 	#instVars : [
 		'externalFileName',
-		'stream'
+		'stream',
+		'reference'
 	],
 	#category : #'Compression-Archives'
 }
 
 { #category : #'instance creation' }
 ZipNewFileMember class >> newFromFile: aFileReference [
-	^(self new) from: aFileReference
+
+	^ self new from: aFileReference
 ]
 
 { #category : #initialization }
@@ -34,7 +36,8 @@ ZipNewFileMember >> from: aFileReference [
 
 	| entry |
 	"Now get the size, attributes, and timestamps, and see if the file exists"
-	self localFileName: (externalFileName := aFileReference path pathString).
+	self localFileName: (externalFileName := aFileReference fullName).
+	reference := aFileReference.
 	entry := aFileReference entry.
 	compressedSize := uncompressedSize := entry size.
 	desiredCompressionMethod := compressedSize > 0 ifTrue: [ CompressionDeflated ] ifFalse: [ CompressionStored ].
@@ -54,7 +57,7 @@ ZipNewFileMember >> initialize [
 
 { #category : #private }
 ZipNewFileMember >> readRawChunk: n [
-	stream ifNil: [ stream := externalFileName asFileReference binaryReadStream ].
+	stream ifNil: [ stream := reference binaryReadStream ].
 	^stream next: n
 ]
 
