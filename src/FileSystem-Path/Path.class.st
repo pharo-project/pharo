@@ -79,8 +79,15 @@ Path class >> canonicalizeElements: aCollection [
 
 { #category : #encodings }
 Path class >> delimeter [
-	"Internal path delimeter"
+	"Method name incorrectly spelled"
 	
+	^ self delimiter
+]
+
+{ #category : #encodings }
+Path class >> delimiter [
+	"Internal path delimiter"
+
 	^$/
 ]
 
