@@ -25,6 +25,12 @@ Class {
 }
 
 { #category : #testing }
+ReNodeMatchRule class >> isAbstract [ 
+
+	 ^ self = ReNodeMatchRule
+]
+
+{ #category : #testing }
 ReNodeMatchRule class >> isVisible [
 
 	^ self name ~= #ReNodeMatchRule
