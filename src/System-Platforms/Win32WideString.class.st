@@ -61,6 +61,7 @@ Win32WideString >> asString [
 
 	codepage := 65001.
 	out := ByteArray new: (self size * 4) + 1.
+	out pinInMemory.
 
 	r := OSPlatform current
 		wideCharacterToMultiByteCodepage: codepage
