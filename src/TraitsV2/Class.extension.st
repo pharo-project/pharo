@@ -246,14 +246,14 @@ Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray slots: slotDef
 
 { #category : #'*TraitsV2' }
 Class >> usesTrait: aTrait [
-	"Returns whether self is among the users of aTrait. Note that this will return false if aTrait is used by a superclass of self and not self itself. If you want to get true in this case, use #usesTraitTransitively:"
-	^ aTrait users includes: self
+	"Returns whether self or one of its superclasses are among the users of aTrait"
+	^ aTrait users includesAny: self withAllSuperclasses
 ]
 
 { #category : #'*TraitsV2' }
-Class >> usesTraitTransitively: aTrait [
-	"Returns whether self or one of its superclasses are among the users of aTrait"
-	^ aTrait users includesAny: self withAllSuperclasses
+Class >> usesTraitLocally: aTrait [
+	"Returns whether self is among the users of aTrait. Note that this will return false if aTrait is used by a superclass of self and not self itself. If you want to get true in this case, use #usesTrait:"
+	^ aTrait users includes: self
 ]
 
 { #category : #'*TraitsV2' }
