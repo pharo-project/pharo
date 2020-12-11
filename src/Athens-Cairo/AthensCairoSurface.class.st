@@ -303,7 +303,7 @@ AthensCairoSurface class >> ioRegisterSurface: aCairoSurfaceHandle dispatch: sqS
 	otherwise.
 
 "
-	self ffiCall: #(bool ioRegisterSurface(long aCairoSurfaceHandle, void *sqSurfaceDispatchPtr, void *idHolder)) module: #SurfacePlugin
+	self ffiCall: #(bool ioRegisterSurface(uint64 aCairoSurfaceHandle, void *sqSurfaceDispatchPtr, void *idHolder)) module: #SurfacePlugin
 ]
 
 { #category : #private }
