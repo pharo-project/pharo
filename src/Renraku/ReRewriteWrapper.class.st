@@ -7,6 +7,12 @@ Class {
 	#category : #'Renraku-Rules-Rewrite'
 }
 
+{ #category : #testing }
+ReRewriteWrapper class >> isAbstract [ 
+
+	 ^ self = ReRewriteWrapper
+]
+
 { #category : #actions }
 ReRewriteWrapper >> rewriten: aNode with: aMap [
 

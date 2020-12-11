@@ -14,6 +14,12 @@ ReNodeBasedRule class >> checksNode [
 ]
 
 { #category : #testing }
+ReNodeBasedRule class >> isAbstract [ 
+
+	 ^ self = ReNodeBasedRule
+]
+
+{ #category : #testing }
 ReNodeBasedRule class >> isVisible [
 
 	^ self name ~=  #ReNodeBasedRule
