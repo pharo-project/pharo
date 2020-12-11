@@ -30,17 +30,11 @@ WinPlatform >> currentWorkingDirectoryPath [
 	^ self currentWorkingDirectoryPathWithBufferSize: self defaultMaximumPathLength
 ]
 
-{ #category : #accessing }
-WinPlatform >> currentWorkingDirectoryPathWithBuffer: aByteString [
-	"<primitive: 'primitiveGetCurrentWorkingDirectory' module: '' error: ec>"
-	
-	^ (self getPwdViaFFI: aByteString size: aByteString byteSize) 
-		ifNil:[ self error:'Insufficient buffer size to read current working directory: ' , aByteString size asString]
-]
-
 { #category : #'working-directory' }
 WinPlatform >> currentWorkingDirectoryPathWithBufferSize: aBufferSize [
 	| buffer |
+	<primitive: 'primitiveGetCurrentWorkingDirectory' module: '' error: ec>
+
 	buffer := Win32WideString new: aBufferSize.
 	self currentWorkingDirectoryPathWithBuffer: buffer.
 	^ buffer asString
@@ -151,31 +145,5 @@ WinPlatform >> virtualKey: virtualKeyCode [
 { #category : #'string-manipulation' }
 WinPlatform >> wideCharacterToMultiByteCodepage: codepage flags: flags input: input inputLen: inputLen output: output outputLen: outputLen [
 
-	"To be independent on UnifiedFFI package, we must use low-level FFI call. The following code is based on this FFI call:
-
-	^self ffiCall: #(int WideCharToMultiByte(uint codepage, ulong flags, Win32WideString input, int inputLen, String output, int outputLen, 0, 0 ))"
-
-	^(ExternalLibraryFunction
-		name: 'WideCharToMultiByte'
-		module: 'Kernel32'
-		callType: 0
-		returnType: ExternalType signedLong
-		argumentTypes:
-			{ExternalType unsignedLong.
-			ExternalType unsignedLong.
-			ExternalType void asPointerType.
-			ExternalType signedLong.
-			ExternalType char asPointerType.
-			ExternalType signedLong.
-			ExternalType unsignedLong.
-			ExternalType unsignedLong.})
-		invokeWithArguments:
-			{codepage.
-			flags.
-			input getHandle.
-			inputLen.
-			output.
-			outputLen.
-			0.
-			0}
+	^self ffiCall: #(int WideCharToMultiByte(uint codepage, ulong flags, Win32WideString input, int inputLen, ByteArray output, int outputLen, int 0, int 0))
 ]
