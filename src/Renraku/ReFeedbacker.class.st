@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #actions }
-ReFeedbacker class >> feedback: aComment positive: aBoolean About: aReCritic [ 
+ReFeedbacker class >> feedback: aComment positive: aBoolean about: aReCritic [ 
 	[ 
 	ZnClient new
 		beOneShot;
@@ -34,15 +34,15 @@ ReFeedbacker class >> feedback: aComment positive: aBoolean About: aReCritic [
 ]
 
 { #category : #actions }
-ReFeedbacker class >> negativeFeedback: aComment About: aReCritic [
+ReFeedbacker class >> negativeFeedback: aComment about: aReCritic [
 	
-	^ self feedback: aComment positive: false About: aReCritic
+	^ self feedback: aComment positive: false about: aReCritic
 ]
 
 { #category : #actions }
-ReFeedbacker class >> positiveFeedback: aComment About: aReCritic [
+ReFeedbacker class >> positiveFeedback: aComment about: aReCritic [
 	
-	^ self feedback: aComment positive: true About: aReCritic
+	^ self feedback: aComment positive: true about: aReCritic
 ]
 
 { #category : #properties }
