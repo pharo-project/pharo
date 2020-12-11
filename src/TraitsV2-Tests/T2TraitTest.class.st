@@ -92,6 +92,19 @@ T2TraitTest >> testClassTraits [
 ]
 
 { #category : #tests }
+T2TraitTest >> testClassUsesTrait [
+	| t1 superclass subclass |
+	t1 := self newTrait: #T1 with: {}.
+	superclass := self newClass: #Superclass with:#() uses: t1.
+	subclass := self newClass: #Subclass superclass: superclass with: #() uses: {}.
+	
+	self assert: (superclass usesTrait: t1).
+	self assert: (superclass usesTraitLocally: t1).
+	self assert: (subclass usesTrait: t1).
+	self assert: (subclass usesTraitLocally: t1) not.
+]
+
+{ #category : #tests }
 T2TraitTest >> testClassUsingTraitsDoesNotHaveUsers [
 	| t1 aClass |
 
