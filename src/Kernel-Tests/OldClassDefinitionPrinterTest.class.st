@@ -1,25 +1,25 @@
 Class {
-	#name : #AbstractOldPrinterTest,
+	#name : #OldClassDefinitionPrinterTest,
 	#superclass : #CommonClassDefinitionPrinterTest,
 	#category : #'Kernel-Tests-Fluid'
 }
 
 { #category : #helpers }
-AbstractOldPrinterTest >> forClass: aClass [
+OldClassDefinitionPrinterTest >> forClass: aClass [
 	^ (OldPharoClassDefinitionPrinter for: aClass) definitionString 
 
 
 ]
 
 { #category : #running }
-AbstractOldPrinterTest >> setUp [
+OldClassDefinitionPrinterTest >> setUp [
 
 	super setUp.
 	ClassDefinitionPrinter showFluidClassDefinition: false
 ]
 
 { #category : #'tests - classes' }
-AbstractOldPrinterTest >> testArray [
+OldClassDefinitionPrinterTest >> testArray [
 
 	self 
 		assert: (self forClass: Array) 
@@ -30,7 +30,7 @@ AbstractOldPrinterTest >> testArray [
 ]
 
 { #category : #'tests - classes' }
-AbstractOldPrinterTest >> testArrayedCollectionWithPoolDictionary [
+OldClassDefinitionPrinterTest >> testArrayedCollectionWithPoolDictionary [
 
 	self assert: (self forClass: ExampleForTestWithSharedPool) equals: 'ArrayedCollection subclass: #ExampleForTestWithSharedPool
 	instanceVariableNames: ''aSlot anotherSlot''
@@ -40,7 +40,7 @@ AbstractOldPrinterTest >> testArrayedCollectionWithPoolDictionary [
 ]
 
 { #category : #'tests - classes' }
-AbstractOldPrinterTest >> testByteString [
+OldClassDefinitionPrinterTest >> testByteString [
 
 	self 
 		assert: (self forClass: ByteString) 
@@ -51,7 +51,7 @@ AbstractOldPrinterTest >> testByteString [
 ]
 
 { #category : #'tests - classes' }
-AbstractOldPrinterTest >> testChronologyConstants [
+OldClassDefinitionPrinterTest >> testChronologyConstants [
 	
 	self 
 		assert: (self forClass: ChronologyConstants) 
@@ -62,14 +62,14 @@ AbstractOldPrinterTest >> testChronologyConstants [
 ]
 
 { #category : #'tests - metaclasses' }
-AbstractOldPrinterTest >> testClassSideDoesNotShowPackage [
+OldClassDefinitionPrinterTest >> testClassSideDoesNotShowPackage [
 
 	self assert: (self forClass: ContextTest class) equals: 'ContextTest class
 	instanceVariableNames: '''''
 ]
 
 { #category : #'tests - metaclasses' }
-AbstractOldPrinterTest >> testMetaclass [
+OldClassDefinitionPrinterTest >> testMetaclass [
 	
 	self assert: (self forClass: Metaclass) equals:  'ClassDescription subclass: #Metaclass
 	instanceVariableNames: ''thisClass''
@@ -78,7 +78,7 @@ AbstractOldPrinterTest >> testMetaclass [
 ]
 
 { #category : #'tests - metaclasses' }
-AbstractOldPrinterTest >> testMetaclassClass [
+OldClassDefinitionPrinterTest >> testMetaclassClass [
 	
 	self 
 		assert: (self forClass: Metaclass class) 
@@ -87,7 +87,7 @@ AbstractOldPrinterTest >> testMetaclassClass [
 ]
 
 { #category : #'tests - classes' }
-AbstractOldPrinterTest >> testPoint [
+OldClassDefinitionPrinterTest >> testPoint [
 
 	self 
 		assert: (self forClass: Point) 
@@ -98,7 +98,7 @@ AbstractOldPrinterTest >> testPoint [
 ]
 
 { #category : #'tests - classes' }
-AbstractOldPrinterTest >> testProtoObject [
+OldClassDefinitionPrinterTest >> testProtoObject [
 	
 	self assert: (self forClass: ProtoObject) equals: 'ProtoObject subclass: #ProtoObject
 	instanceVariableNames: ''''
@@ -110,7 +110,7 @@ ProtoObject superclass: nil'
 ]
 
 { #category : #'tests - metaclasses' }
-AbstractOldPrinterTest >> testSystemAnnouncerClass [
+OldClassDefinitionPrinterTest >> testSystemAnnouncerClass [
 	
 	self 
 		assert: (self forClass: SystemAnnouncer class) 
