@@ -15,6 +15,7 @@ Class {
 		'changeFactory'
 	],
 	#classVars : [
+		'Counter',
 		'Instance',
 		'UndoSize'
 	],
@@ -24,6 +25,11 @@ Class {
 { #category : #'change-factory' }
 RBRefactoryChangeManager class >> changeFactory [
 	^ self instance changeFactory
+]
+
+{ #category : #'class initialization' }
+RBRefactoryChangeManager class >> counter [
+	^ Counter ifNil: [ Counter := 0 ]
 ]
 
 { #category : #'class initialization' }
@@ -42,10 +48,21 @@ RBRefactoryChangeManager class >> new [
 	^ self shouldNotImplement
 ]
 
+{ #category : #actions }
+RBRefactoryChangeManager class >> nextCounter [
+	Counter := self counter + 1.
+	^ self counter
+]
+
 { #category : #public }
 RBRefactoryChangeManager class >> nuke [
 	Instance notNil ifTrue: [ Instance release ].
 	Instance := nil
+]
+
+{ #category : #actions }
+RBRefactoryChangeManager class >> resetCounter [
+	Counter := nil.
 ]
 
 { #category : #settings }
@@ -100,7 +117,8 @@ RBRefactoryChangeManager >> changeFactory [
 RBRefactoryChangeManager >> clearUndoRedoList [
 	undo := Stack new.
 	redo := OrderedCollection new.
-	undoPointers := Stack new
+	undoPointers := Stack new.
+	self class resetCounter.
 ]
 
 { #category : #initialization }
