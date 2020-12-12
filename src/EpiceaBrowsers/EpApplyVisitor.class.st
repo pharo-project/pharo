@@ -55,10 +55,15 @@ EpApplyVisitor >> visitCategoryRename: aChange [
 
 { #category : #visitor }
 EpApplyVisitor >> visitClassAddition: aClassCreation [
-
-	self compiler
-		evaluate: aClassCreation classAdded definitionSource;
-		evaluate: aClassCreation classAdded classSide definitionSource.
+	"this is a hack for the moment. Because fluid class definition return a builder and not the old syntax."
+	
+	('*<<*' match: aClassCreation classAdded definitionSource )
+		ifTrue: [ 
+			(self compiler evaluate: aClassCreation classAdded definitionSource) install.
+			(self compiler evaluate: aClassCreation classAdded classSide definitionSource) install ]
+		ifFalse: [self compiler
+			evaluate: aClassCreation classAdded definitionSource;
+			evaluate: aClassCreation classAdded classSide definitionSource ]
 ]
 
 { #category : #visitor }
