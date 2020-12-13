@@ -49,7 +49,7 @@ Class {
 		'stringCollectionWithSameBeginingAnEnd',
 		'collectionOfFloat'
 	],
-	#category : #'Collections-Tests-Arrayed'
+	#category : #'Collections-Sequenceable-Tests-Base'
 }
 
 { #category : #helpers }
