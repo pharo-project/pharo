@@ -344,7 +344,7 @@ TraitTest >> testPrinting [
 { #category : #testing }
 TraitTest >> testPrintingClassSide [
 	
-	self assertPrints: self t6 classSide definition like: 'T6 classTrait
+	self assertPrints: self t6 classSide definitionString like: 'T6 classTrait
 	uses: T1 classTrait + T2 classTrait
 	instanceVariableNames: '''''
 ]
