@@ -355,7 +355,7 @@ SycMethodNameEditorPresenter >> upButton [
 
 { #category : #services }
 SycMethodNameEditorPresenter >> updateEditArgumentInput [
-
+	(argumentsList listSize > 0) ifTrue: [ argumentsList selectIndex: 1].
 	argumentsList selection isEmpty
 		ifTrue: [ 
 			editParameter

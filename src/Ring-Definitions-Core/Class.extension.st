@@ -54,12 +54,12 @@ Class >> asRingDefinition [
 		addSharedPools: self sharedPoolNames;
 		comment: self organization classComment;
 		stamp: self organization commentStamp;
-		definitionSource: self definition;
+		definitionSource: self definitionString;
 		package: self package asRingDefinition;
 		withMetaclass.
 	ring classSide 
 		traitCompositionSource: self classSide traitCompositionString;
-		definitionSource: self classSide definition;
+		definitionSource: self classSide definitionString;
 		addInstanceVariables: self classSide instVarNames.  
 	^ ring
 ]

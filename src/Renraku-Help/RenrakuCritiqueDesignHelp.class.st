@@ -4,7 +4,7 @@ This book contains explanations of the design behind critiques
 Class {
 	#name : #RenrakuCritiqueDesignHelp,
 	#superclass : #RenrakuCritiqueHelp,
-	#category : #'Renraku-Help'
+	#category : #'Renraku-Help-Critique'
 }
 
 { #category : #pages }
@@ -74,7 +74,7 @@ ReAbstractCritique inherits from ReProperty which represents an external propert
 { #category : #accessing }
 RenrakuCritiqueDesignHelp class >> pages [
 
-	^ #(hierarchy rule entity autofix actions actionRef)
+	^ #( hierarchy rule entity autofix actions actionRef )
 ]
 
 { #category : #pages }

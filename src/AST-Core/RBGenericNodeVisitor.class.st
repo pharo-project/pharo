@@ -7,7 +7,7 @@ Class {
 	#category : #'AST-Core-Visitors'
 }
 
-{ #category : #accessing }
+{ #category : #visiting }
 RBGenericNodeVisitor >> visitNode: aNode [
 	super visitNode: aNode.
 	self visitBlock value: aNode

@@ -75,10 +75,10 @@ CoASTResultSetBuilder >> parseNode [
 			parse) nodeForOffset: completionContext position ] 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #visiting }
 CoASTResultSetBuilder >> visitArgumentVariableNode: anArgumentNode [
 
-	^ self visitTemporaryNode: anArgumentNode
+	^ self visitVariableNode: anArgumentNode
 ]
 
 { #category : #visiting }
@@ -105,10 +105,10 @@ CoASTResultSetBuilder >> visitCascadeNode: aRBCascadeNode [
 	^ self visitNode: aRBCascadeNode
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #visiting }
 CoASTResultSetBuilder >> visitClassVariableNode: aRBVariableNode [
 
-	^ self visitGlobalNode: aRBVariableNode
+	^ self visitVariableNode: aRBVariableNode
 ]
 
 { #category : #visiting }
@@ -117,14 +117,14 @@ CoASTResultSetBuilder >> visitEnglobingErrorNode: aRBVariableNode [
 ]
 
 { #category : #visiting }
-CoASTResultSetBuilder >> visitGlobalNode: aRBVariableNode [
+CoASTResultSetBuilder >> visitGlobalVariableNode: aRBVariableNode [
 
 	^ self visitVariableNode: aRBVariableNode
 ]
 
 { #category : #visiting }
 CoASTResultSetBuilder >> visitInstanceVariableNode: aRBVariableNode [ 
-	^ self visitNode: aRBVariableNode
+	^ self visitVariableNode: aRBVariableNode
 ]
 
 { #category : #visiting }
@@ -139,9 +139,9 @@ CoASTResultSetBuilder >> visitLiteralValueNode: aRBLiteralValueNode [
 	^ self visitNode: aRBLiteralValueNode
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #visiting }
 CoASTResultSetBuilder >> visitLiteralVariableNode: aRBVariableNode [
-	^ self visitGlobalNode: aRBVariableNode
+	^ self visitVariableNode: aRBVariableNode
 ]
 
 { #category : #visiting }
@@ -199,15 +199,9 @@ CoASTResultSetBuilder >> visitSuperNode: aRBSuperNode [
 ]
 
 { #category : #visiting }
-CoASTResultSetBuilder >> visitTemporaryNode: aRBReturnNode [ 
-	
-	^ self visitNode: aRBReturnNode
-]
-
-{ #category : #'as yet unclassified' }
 CoASTResultSetBuilder >> visitTemporaryVariableNode: anArgumentNode [
 
-	^ self visitTemporaryNode: anArgumentNode
+	^ self visitVariableNode: anArgumentNode
 ]
 
 { #category : #visiting }

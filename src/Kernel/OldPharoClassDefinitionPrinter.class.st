@@ -56,11 +56,7 @@ OldPharoClassDefinitionPrinter >> basicTraitDefinitionString [
 			  nextPutAll: 'Trait named: ';
 			  nextPutAll: forClass name printString.
 		  self traitCompositionOn: s.
-
-		  forClass classLayout visibleSlots ifNotEmpty: [ 
-			  self error:
-				  'Invalid Printer for stateful traits. Please detect and use a more modern printer' ].
-
+		  self instanceVariablesOn: s.
 		  self packageOn: s ]
 ]
 

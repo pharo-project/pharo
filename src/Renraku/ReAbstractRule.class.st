@@ -39,27 +39,31 @@ Class {
 	#category : #'Renraku-Rules'
 }
 
-{ #category : #'testing-interest' }
+{ #category : #'testing - interest' }
 ReAbstractRule class >> checksClass [
-
+	"Not checking a class by default - but subclasses should return true when the receiver rule checks on class level."
+	
 	^ false
 ]
 
-{ #category : #'testing-interest' }
+{ #category : #'testing - interest' }
 ReAbstractRule class >> checksMethod [
-
+	"Not checking a method by default - but subclasses should return true when the receiver rule checks on method level."
+	
 	^ false
 ]
 
-{ #category : #'testing-interest' }
+{ #category : #'testing - interest' }
 ReAbstractRule class >> checksNode [
-
+	"Not checking a node by default - but subclasses should return true when the receiver rule checks on AST node level."
+	
 	^ false
 ]
 
-{ #category : #'testing-interest' }
+{ #category : #'testing - interest' }
 ReAbstractRule class >> checksPackage [
-
+	"Not checking a package by default - but subclasses should return true when the receiver rule checks on package level."
+	
 	^ false
 ]
 
@@ -71,6 +75,7 @@ ReAbstractRule class >> enabled [
 
 { #category : #accessing }
 ReAbstractRule class >> enabled: aBoolean [
+
 	enabled := aBoolean.
 	ReRuleManager reset
 ]
@@ -84,22 +89,32 @@ ReAbstractRule class >> enabledSettingID [
 { #category : #manifest }
 ReAbstractRule class >> identifierMinorVersionNumber [
 	"This number identifies the version of the rule definition. Each time the rule is updated and its changes invalidates previous false positives identification (and as such should be reassessed by developers) the number should be increased."
+
 	^ 1
+]
+
+{ #category : #testing }
+ReAbstractRule class >> isAbstract [
+
+	^ self = ReAbstractRule
 ]
 
 { #category : #manifest }
 ReAbstractRule class >> isBeginnerRule [
+
 	^ false
 ]
 
 { #category : #manifest }
 ReAbstractRule class >> isDefaultRule [
+
 	^ true
 ]
 
 { #category : #testing }
 ReAbstractRule class >> isUsed [
 	"all my sublasses are used"
+	
 	^self name = 'ReAbstractRule'
 		ifTrue: [ super isUsed ]
 		ifFalse: [ true ]
@@ -134,13 +149,13 @@ ReAbstractRule class >> uniqueIdentifierNumber [
 { #category : #helpers }
 ReAbstractRule >> anchorFor: anEntity [
 
-	^ ReSourceAnchor
-			entity: anEntity
+	^ ReSourceAnchor entity: anEntity
 ]
 
 { #category : #running }
 ReAbstractRule >> basicCheck: anEntity [
 	"If you end here, you should most likely implement this in a subclass"
+	
 	^ self shouldBeImplemented  
 ]
 
@@ -149,7 +164,9 @@ ReAbstractRule >> check: anEntity [
 
 	| critiques |
 	critiques := OrderedCollection new.
-	self check: anEntity forCritiquesDo: [ :critique | critiques add: critique ].
+	self
+		check: anEntity
+		forCritiquesDo: [ :critique | critiques add: critique ].
 	^ critiques
 ]
 
@@ -157,34 +174,39 @@ ReAbstractRule >> check: anEntity [
 ReAbstractRule >> check: anEntity forCritiquesDo: aCriticBlock [
 	"Accepts an entity and a block which could be evaluated for each detected critique
 	aCriticBlock may accept one argument: the critique object"
+	
 	(self basicCheck: anEntity)
 		ifTrue: [ aCriticBlock cull: (self critiqueFor: anEntity) ]
 ]
 
 { #category : #running }
 ReAbstractRule >> check: anEntity forCritiquesDo: aCriticBlock ifNone: alternativeBlock [
+
 	| encounteredCritique |
-	
 	encounteredCritique := false.
 
-	self check: anEntity forCritiquesDo: [ :crit |
+	self check: anEntity forCritiquesDo: [ :crit | 
 		encounteredCritique := true.
 		aCriticBlock cull: crit ].
-	
+
 	encounteredCritique ifFalse: alternativeBlock
 ]
 
 { #category : #running }
 ReAbstractRule >> check: anEntity ifNoCritiques: alternativeBlock [
+
 	| critiques |
-	
 	critiques := OrderedCollection new.
-	self check: anEntity forCritiquesDo: [ :critique | critiques add: critique ] ifNone: alternativeBlock.
+	self
+		check: anEntity
+		forCritiquesDo: [ :critique | critiques add: critique ]
+		ifNone: alternativeBlock.
 	^ critiques
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utilities }
 ReAbstractRule >> createTrivialCritiqueOn: method intervalOf: node hint: hint [
+
 	^ ReTrivialCritique
 		  withAnchor:
 		  (ReIntervalSourceAnchor
@@ -204,6 +226,7 @@ ReAbstractRule >> critiqueFor: anEntity [
 
 { #category : #accessing }
 ReAbstractRule >> group [
+
 	^ 'Unclassified rules'
 ]
 
@@ -215,14 +238,15 @@ ReAbstractRule >> isComposite [
 
 { #category : #testing }
 ReAbstractRule >> isRewriteRule [
-	^false
+
+	^ false
 ]
 
 { #category : #accessing }
 ReAbstractRule >> name [
 	"Answer a human readable name of the rule."
 
-	self subclassResponsibility
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }

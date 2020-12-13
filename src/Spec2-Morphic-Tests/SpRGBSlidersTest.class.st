@@ -13,9 +13,9 @@ SpRGBSlidersTest >> classToTest [
 SpRGBSlidersTest >> testColor [
 	| random red green blue |
 	random := Random new.
-	red := random nextInt: 255.
-	green := random nextInt: 255.
-	blue := random nextInt: 255.
+	red := random nextInteger: 255.
+	green := random nextInteger: 255.
+	blue := random nextInteger: 255.
 	
 	presenter redSlider value: red.
 	presenter greenSlider value: green.

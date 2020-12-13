@@ -7,18 +7,12 @@ Class {
 	#category : #'AST-Core-Visitors'
 }
 
-{ #category : #accessing }
+{ #category : #visiting }
 RBParseErrorNodeVisitor >> visitEnglobingErrorNode: aNode [
 	self visitParseErrorNode: aNode
 ]
 
-{ #category : #accessing }
+{ #category : #visiting }
 RBParseErrorNodeVisitor >> visitParseErrorNode: aNode [
 	self visitBlock value: aNode
-]
-
-{ #category : #accessing }
-RBParseErrorNodeVisitor >> visitUnreachableStatement: aNode [
-
-	self visitEnglobingErrorNode: aNode
 ]
