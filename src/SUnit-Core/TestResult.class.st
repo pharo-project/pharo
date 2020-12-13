@@ -139,7 +139,7 @@ TestResult class >> signalFailureWith: aString [
 
 { #category : #exceptions }
 TestResult class >> skip [
-	^ SkippingTest
+	^ TestSkipped
 ]
 
 { #category : #history }
