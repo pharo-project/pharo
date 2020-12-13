@@ -24,7 +24,7 @@ echo "Prepare icons"
 mkdir icon-packs
 cd icon-packs
 # update the commit hash as soon as you need a new version of the icons to be loaded
-wget --progress=dot:mega https://github.com/pharo-project/pharo-icon-packs/archive/v1.0.0-idea11.zip -O idea11.zip
+wget --progress=dot:mega https://github.com/pharo-project/pharo-icon-packs/archive/v1.0.1-idea11.zip -O idea11.zip
 cd ..
 cd ..
 
