@@ -54,7 +54,7 @@ ReBasicScenarioExceptionStrategyTest >> validationScenario [
 			ReExceptionStrategy current
 				handle: er
 				about: self
-				forProppertiesDo: [ :prop |
+				forPropertiesDo: [ :prop |
 					critiques add: prop ] ].
 			
 	^ critiques
