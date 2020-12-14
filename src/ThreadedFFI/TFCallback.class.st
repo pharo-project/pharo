@@ -17,6 +17,8 @@ Class {
 { #category : #finalization }
 TFCallback class >> finalizeResourceData: aCallbackDataHandler [
 
+	aCallbackDataHandler isNull ifTrue: [ ^ self ].
+	
 	self primUnregister: aCallbackDataHandler.
 	aCallbackDataHandler beNull
 ]
