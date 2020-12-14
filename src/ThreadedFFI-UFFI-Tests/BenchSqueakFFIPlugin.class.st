@@ -1,0 +1,26 @@
+Class {
+	#name : #BenchSqueakFFIPlugin,
+	#superclass : #Object,
+	#category : #'ThreadedFFI-UFFI-Tests-Benchs'
+}
+
+{ #category : #'as yet unclassified' }
+BenchSqueakFFIPlugin >> doCallWith: aFloat another: aDouble [
+
+	^ self ffiCall: #(float sumAFloatAndADouble(float aFloat, double aDouble))
+]
+
+{ #category : #accessing }
+BenchSqueakFFIPlugin >> ffiLibraryName [
+
+	^ 'libTestLibrary.dylib'
+]
+
+{ #category : #'as yet unclassified' }
+BenchSqueakFFIPlugin >> runCall [
+
+	| return | 
+
+	^ [ return := self doCallWith: 1.0 another: 2.0.
+		 self assert: return = 3.0 ] bench
+]
