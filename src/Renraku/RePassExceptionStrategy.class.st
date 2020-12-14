@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #'error handling' }
-RePassExceptionStrategy class >> handle: anException about: anEntity forProppertiesDo: aBlock [
+RePassExceptionStrategy class >> handle: anException about: anEntity forPropertiesDo: aBlock [
 
 	anException pass
 ]
