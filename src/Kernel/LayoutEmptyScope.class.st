@@ -19,10 +19,6 @@ LayoutEmptyScope class >> instance [
 LayoutEmptyScope >> allSlotsDo: aBlock [
 ]
 
-{ #category : #enumerating }
-LayoutEmptyScope >> allSlotsReverseDo: aBlock [
-]
-
 { #category : #accessing }
 LayoutEmptyScope >> allVisibleSlots [
 	^ OrderedCollection new
@@ -66,9 +62,4 @@ LayoutEmptyScope >> ownFieldSize [
 { #category : #accessing }
 LayoutEmptyScope >> visibleSlots [
 	^ #()
-]
-
-{ #category : #enumerating }
-LayoutEmptyScope >> withParentScopesDo: aBlock [
-	aBlock value: self.
 ]

@@ -17,11 +17,6 @@ LayoutAbstractScope >> allSlotsDo: aBlock [
 	self subclassResponsibility
 ]
 
-{ #category : #enumerating }
-LayoutAbstractScope >> allSlotsReverseDo: aBlock [
-	self subclassResponsibility
-]
-
 { #category : #extending }
 LayoutAbstractScope >> extend [
 	^ self extend: { }
@@ -108,11 +103,6 @@ LayoutAbstractScope >> ownFieldSize [
 	self subclassResponsibility
 ]
 
-{ #category : #reshaping }
-LayoutAbstractScope >> rebase: originalScope to: newScope [
-	self error: 'Should not happen'
-]
-
 { #category : #accessing }
 LayoutAbstractScope >> resolveSlot: aName [
 	^ self 
@@ -135,10 +125,5 @@ LayoutAbstractScope >> visibleSlotNames [
 
 { #category : #accessing }
 LayoutAbstractScope >> visibleSlots [
-	self subclassResponsibility
-]
-
-{ #category : #enumerating }
-LayoutAbstractScope >> withParentScopesDo: aBlock [
 	self subclassResponsibility
 ]
