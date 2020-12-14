@@ -49,6 +49,11 @@ TFCallbackQueue class >> uniqueInstance [
 	^ UniqueInstance ifNil: [ UniqueInstance := self new ]
 ]
 
+{ #category : #accessing }
+TFCallbackQueue >> callbackProcess [
+	^ callbackProcess
+]
+
 { #category : #operations }
 TFCallbackQueue >> executeCallback: aCallbackInvocation [
 	

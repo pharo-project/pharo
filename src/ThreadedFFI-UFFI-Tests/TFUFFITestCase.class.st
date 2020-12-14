@@ -36,5 +36,5 @@ TFUFFITestCase >> tearDown [
 	"I have to reset the FFI callout methods to be recompiled using the test runner"
 	self class withAllSuperclassesDo: [:each | FFIMethodRegistry uniqueInstance resetSingleClass: each].
 
-	^ super tearDown
+	super tearDown
 ]

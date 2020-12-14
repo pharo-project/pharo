@@ -65,10 +65,10 @@ TFUFFICallbackTest >> sumInt:a andInt: b [
 
 { #category : #running }
 TFUFFICallbackTest >> tearDown [
-
-	super tearDown.
 	
 	self ffiLibrary uniqueInstance runner exceptionHandler: oldExceptionHandler.
+	super tearDown.
+
 ]
 
 { #category : #tests }
