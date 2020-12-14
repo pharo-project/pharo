@@ -1,3 +1,6 @@
+"
+I am a simple benchmark class to test the TFFISameThread scheme
+"
 Class {
 	#name : #BenchTFFISameThread,
 	#superclass : #Object,

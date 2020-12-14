@@ -1,3 +1,7 @@
+"
+I am a test callback exception handler.
+I keep the exception so it can be asserted in the test.
+"
 Class {
 	#name : #TFTestCallbackExceptionHandler,
 	#superclass : #Object,

@@ -1,3 +1,6 @@
+"
+I extend TFIntType to support Characters.
+"
 Class {
 	#name : #TFCharType,
 	#superclass : #TFIntType,

@@ -1,3 +1,6 @@
+"
+I am an abstract callback using TFFI. Used by tests
+"
 Class {
 	#name : #TFUFFIAbstractCallback,
 	#superclass : #FFICallback,

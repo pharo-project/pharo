@@ -1,3 +1,7 @@
+"
+I am an abstract class with the common behavior of the TFTypes.
+A TFType knows how to marshall / unmarshall in a normal call and in a callback.
+"
 Class {
 	#name : #TFAbstractType,
 	#superclass : #FFIExternalReference,

@@ -1,3 +1,7 @@
+"
+I am an struct used for testing.
+I am the inner struct of a bigger one.
+"
 Class {
 	#name : #TFInnerTestStruct,
 	#superclass : #FFIExternalStructure,

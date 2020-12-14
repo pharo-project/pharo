@@ -1,3 +1,6 @@
+"
+I am the FFI backend implemented by using TFFI
+"
 Class {
 	#name : #TFFIBackend,
 	#superclass : #FFIBackend,

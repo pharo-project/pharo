@@ -1,3 +1,6 @@
+"
+I am a simple class to benchmark the old squeak FFI implementation
+"
 Class {
 	#name : #BenchSqueakFFIPlugin,
 	#superclass : #Object,

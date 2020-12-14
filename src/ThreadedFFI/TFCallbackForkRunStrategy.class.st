@@ -1,3 +1,6 @@
+"
+I am a simple strategy to run the callbacks in a new process every time.
+"
 Class {
 	#name : #TFCallbackForkRunStrategy,
 	#superclass : #Object,

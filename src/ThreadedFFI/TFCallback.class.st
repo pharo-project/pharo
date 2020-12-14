@@ -1,3 +1,6 @@
+"
+I am the Backend implementation of callbacks for UFFI. I use TFFI as a backend
+"
 Class {
 	#name : #TFCallback,
 	#superclass : #FFIExternalReference,

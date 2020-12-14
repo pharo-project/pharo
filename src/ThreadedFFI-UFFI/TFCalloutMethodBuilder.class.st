@@ -1,3 +1,6 @@
+"
+I override some methods to correctly generate TFFI methods when using UFFI.
+"
 Class {
 	#name : #TFCalloutMethodBuilder,
 	#superclass : #FFICalloutMethodBuilder,

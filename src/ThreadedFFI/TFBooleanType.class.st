@@ -1,3 +1,6 @@
+"
+I know how to handle the booleans when stored in a int8
+"
 Class {
 	#name : #TFBooleanType,
 	#superclass : #TFDerivedType,

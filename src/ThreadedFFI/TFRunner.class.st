@@ -1,3 +1,8 @@
+"
+When executing a callout or a callback the invocation pass all through a runner.
+There are different kinds of runners.
+Each has different policies to run the FFI calls and callbacks.
+"
 Class {
 	#name : #TFRunner,
 	#superclass : #FFIExternalReference,

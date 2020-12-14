@@ -1,3 +1,6 @@
+"
+I am a point like structure used for test
+"
 Class {
 	#name : #TFPointTestStruct,
 	#superclass : #FFIExternalStructure,

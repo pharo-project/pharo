@@ -1,3 +1,7 @@
+"
+I am a pointer to an Struct. I know how to reconstruct the struct from the received pointer and how to extract the pointer.
+The pointer maybe is in the heap of Pharo (it is a ByteArray)
+"
 Class {
 	#name : #TFPointerToStructType,
 	#superclass : #TFDerivedType,

@@ -1,3 +1,6 @@
+"
+TFFI supports complex types. I am the representation of those. I have a basic type and I handle the marshalling delegating to the basic type and doing the little adjustements needed for me.
+"
 Class {
 	#name : #TFDerivedType,
 	#superclass : #Object,

@@ -1,3 +1,6 @@
+"
+I am an struct with another inside.
+"
 Class {
 	#name : #TFNestedTestStruct,
 	#superclass : #FFIExternalStructure,

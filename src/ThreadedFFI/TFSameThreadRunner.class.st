@@ -1,3 +1,7 @@
+"
+I run the callouts in the same thread of the VM.
+This runner blocks the current execution of the VM to run the callout.
+"
 Class {
 	#name : #TFSameThreadRunner,
 	#superclass : #TFRunner,

@@ -1,3 +1,6 @@
+"
+I am a failing callback with default value for test usage only
+"
 Class {
 	#name : #TFUFFIFailingCallbackWithDefault,
 	#superclass : #TFUFFIAbstractCallback,

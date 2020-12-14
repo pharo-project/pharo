@@ -1,3 +1,7 @@
+"
+I represent the callback invocation.
+I have information about the activation of a given callback.
+"
 Class {
 	#name : #TFCallbackInvocation,
 	#superclass : #FFIExternalObject,

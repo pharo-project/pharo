@@ -1,3 +1,6 @@
+"
+I am a test structure fill with longs
+"
 Class {
 	#name : #TFLongTestStruct,
 	#superclass : #FFIExternalStructure,

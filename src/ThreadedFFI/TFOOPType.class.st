@@ -1,3 +1,7 @@
+"
+I know how to handle the case when we want to send a Pharo object to the FFI.
+
+"
 Class {
 	#name : #TFOOPType,
 	#superclass : #TFDerivedType,

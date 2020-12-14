@@ -1,3 +1,7 @@
+"
+I run the callouts and callbacks in the main thread of the process.
+It can be or not the VM thread. It depends how the VM has been started.
+"
 Class {
 	#name : #TFMainThreadRunner,
 	#superclass : #TFRunner,

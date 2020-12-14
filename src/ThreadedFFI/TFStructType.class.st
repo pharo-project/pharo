@@ -1,3 +1,6 @@
+"
+I know how to handle the marshalling and unmarshalling of structs.
+"
 Class {
 	#name : #TFStructType,
 	#superclass : #TFAbstractType,

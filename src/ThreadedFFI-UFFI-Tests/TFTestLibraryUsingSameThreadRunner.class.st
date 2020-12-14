@@ -1,3 +1,6 @@
+"
+I am a test library using the SameThread runner
+"
 Class {
 	#name : #TFTestLibraryUsingSameThreadRunner,
 	#superclass : #FFILibrary,

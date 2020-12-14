@@ -1,3 +1,6 @@
+"
+I am a TFCalloutAPI implementation that overrides the builder to use the one needed to generate TFFI code
+"
 Class {
 	#name : #TFCalloutAPI,
 	#superclass : #FFICalloutAPI,

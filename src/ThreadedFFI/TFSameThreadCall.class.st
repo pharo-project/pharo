@@ -1,3 +1,6 @@
+"
+I implement a Callout for the TFSameThreadRunner
+"
 Class {
 	#name : #TFSameThreadCall,
 	#superclass : #Object,

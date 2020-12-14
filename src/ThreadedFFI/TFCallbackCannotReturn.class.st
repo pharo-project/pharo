@@ -1,3 +1,6 @@
+"
+I am an error produced when the callback cannot return correctly.
+"
 Class {
 	#name : #TFCallbackCannotReturn,
 	#superclass : #Error,

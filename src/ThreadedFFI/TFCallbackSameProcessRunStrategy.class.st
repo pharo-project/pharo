@@ -1,3 +1,6 @@
+"
+I am a simple strategy to run the callbacks always in the same process.
+"
 Class {
 	#name : #TFCallbackSameProcessRunStrategy,
 	#superclass : #TFCallbackForkRunStrategy,

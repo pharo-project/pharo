@@ -1,3 +1,7 @@
+"
+I have some primitives used when using objects in FFI calls.
+I have them here, because they are really unsafe and never should be called directly.
+"
 Class {
 	#name : #PointerUtils,
 	#superclass : #Object,

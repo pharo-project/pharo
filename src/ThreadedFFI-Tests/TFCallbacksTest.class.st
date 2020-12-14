@@ -30,7 +30,7 @@ TFCallbacksTest >> newTestCallbackDoing: aBlock [
 		runner: runner.
 ]
 
-{ #category : #tests }
+{ #category : #running }
 TFCallbacksTest >> setUp [
 
 	super setUp.
@@ -39,7 +39,7 @@ TFCallbacksTest >> setUp [
 	runner exceptionHandler: TFTestCallbackExceptionHandler new
 ]
 
-{ #category : #tests }
+{ #category : #running }
 TFCallbacksTest >> tearDown [ 
 
 	runner exceptionHandler: oldExceptionHandler.

@@ -1,3 +1,6 @@
+"
+I am a test library using a worker runner
+"
 Class {
 	#name : #TFTestLibraryUsingWorker,
 	#superclass : #TFTestLibraryUsingSameThreadRunner,
