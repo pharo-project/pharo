@@ -170,14 +170,18 @@ ChangeSetClassChangesTest >> testChangeClassCategory [
 		poolDictionaries: ''
 		package: 'DeleteMe-1'.
 	saveClassDefinition := (testingEnvironment classNamed: #JunkClass) oldDefinition.
-	self assert: saveClassDefinition equals: (ChangeSet current fatDefForClass: (testingEnvironment classNamed: #JunkClass)).	"Redefine the class, changing only the class category"
+	self 
+		assert: saveClassDefinition 
+		equals: (ChangeSet current fatDefForClass: (testingEnvironment classNamed: #JunkClass)).	"Redefine the class, changing only the class category"
 	Object
 		subclass: #JunkClass
 		instanceVariableNames: 'zzz'
 		classVariableNames: ''
 		poolDictionaries: ''
 		package: 'DeleteMe-2'.	"Assert that the class definition has changed"
-	self deny: (self isDefinition: (testingEnvironment classNamed: #JunkClass) definition equivalentTo: saveClassDefinition).
+	self 
+		deny: (self isDefinition: (testingEnvironment classNamed: #JunkClass) definitionString
+		equivalentTo: saveClassDefinition).
 	self
 		deny:
 			(self
@@ -208,7 +212,7 @@ ChangeSetClassChangesTest >> testChangeClassCategoryAddsNewChangeRecord [
 	"At the start of this test, JunkClass should not exist, and there should be
 	no change records pertaining to it in the change set."
 
-	self deny: (Smalltalk hasClassNamed: 'JunkClass').
+	self deny: (self class environment hasClassNamed: 'JunkClass').
 	self assert: (ChangeSet current changeRecorderFor: (testingEnvironment classNamed: #JunkClass)) thisName equals: 'nil'.	"Remove bogus change records created as side effect of preceding assert"
 	ChangeSet current removeClassChanges: 'nil'.	"Define a class and save its definition"
 	Object
