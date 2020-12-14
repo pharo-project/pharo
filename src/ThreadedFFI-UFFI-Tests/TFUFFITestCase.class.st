@@ -31,12 +31,6 @@ TFUFFITestCase >> ffiLibrary: anObject [
 ]
 
 { #category : #running }
-TFUFFITestCase >> runCaseManaged [
-
-	super runCase
-]
-
-{ #category : #running }
 TFUFFITestCase >> tearDown [
 
 	"I have to reset the FFI callout methods to be recompiled using the test runner"

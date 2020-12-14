@@ -24,12 +24,6 @@ TFTestCase >> libraryPath [
 	self error: 'Unsupported Platform'
 ]
 
-{ #category : #running }
-TFTestCase >> runCaseManaged [
-
-	super runCase
-]
-
 { #category : #accessing }
 TFTestCase >> runner [
 	^ runner
