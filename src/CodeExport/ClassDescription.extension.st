@@ -71,7 +71,7 @@ ClassDescription >> fileOutMethod: selector on: aStream [
 ClassDescription >> fileOutOn: aFileStream [
 	"File a description of the receiver on aFileStream."
 
-	aFileStream nextChunkPut: self definition.
+	aFileStream nextChunkPut: self definitionString.
 	self organization putCommentOnFile: aFileStream forClass: self.
 	self organization categories 
 		do: [ :heading | self fileOutLocalMethodsInCategory: heading on: aFileStream ]
