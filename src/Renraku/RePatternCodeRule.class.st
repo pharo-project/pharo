@@ -8,6 +8,12 @@ Class {
 }
 
 { #category : #testing }
+RePatternCodeRule class >> isAbstract [ 
+
+	 ^ self = RePatternCodeRule
+]
+
+{ #category : #testing }
 RePatternCodeRule class >> isVisible [
 	
 	^ self name ~=  #RePatternCodeRule

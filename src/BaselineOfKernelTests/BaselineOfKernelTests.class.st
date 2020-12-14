@@ -40,6 +40,5 @@ BaselineOfKernelTests >> baseline: spec [
 			package: 	'System-OSEnvironments-Tests';
 			package: 	'Zinc-Character-Encoding-Tests' ;
 			package: 	'System-Platforms-Tests';
-			package: 	'Text-Tests'	;
-			package: 	'Multilingual-Tests' ]
+			package: 	'Text-Tests' ]
 ]

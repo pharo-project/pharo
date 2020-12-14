@@ -62,7 +62,7 @@ MCMczReader >> contentStreamForMember: member [
 
 { #category : #parsing }
 MCMczReader >> contentsForMember: member [
-	^[(member contentStreamFromEncoding: 'utf8') contents] on: ZnInvalidUTF8, UTF8InvalidText
+	^[(member contentStreamFromEncoding: 'utf8') contents] on: ZnInvalidUTF8
 		do: [:exc | 
 			"Case of legacy encoding, presumably it is latin-1.
 			But if contents starts with a null character, it might be a case of WideString encoded in UTF-32BE"

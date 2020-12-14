@@ -13,6 +13,12 @@ Class {
 	#category : #'Renraku-Tests'
 }
 
+{ #category : #testing }
+RenrakuBaseTestCase class >> isAbstract [
+
+	^ self = RenrakuBaseTestCase
+]
+
 { #category : #running }
 RenrakuBaseTestCase >> setUp [
 	super setUp.

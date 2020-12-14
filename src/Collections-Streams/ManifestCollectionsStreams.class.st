@@ -9,7 +9,7 @@ Class {
 
 { #category : #'meta-data' }
 ManifestCollectionsStreams class >> dependencies [
-	^ #(#'Collections-Strings' #'Multilingual-TextConversion' #'Collections-Support' #'Collections-Sequenceable' #Kernel #'Collections-Native')
+	^ #(#'Collections-Strings' #'Collections-Support' #'Collections-Sequenceable' #Kernel #'Collections-Native')
 ]
 
 { #category : #'meta-data - dependency analyser' }

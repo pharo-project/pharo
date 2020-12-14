@@ -17,11 +17,11 @@ Class {
 { #category : #public }
 EpLogBrowserOperationFactory >> applyCodeChanges [
 	"Note: This method is intended to be used from EpLogBrowser's preview mode, where the code changes were previously transformed at #newApplyPreviewLog."
-
+	
 	self
 		trigger: [ 
 			self entries do: [:each |
-				self handleErrorDuring: [ 
+				self handleErrorDuring: [
 					each content applyCodeChange ]]] 
 		with: self newApplyEvent
 ]

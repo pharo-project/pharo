@@ -188,6 +188,14 @@ RunArray >> = otherArray [
 ]
 
 { #category : #adding }
+RunArray >> add: newObject [ 
+	"Include newObject as one of the receiver's elements. Answer newObject. 
+	ArrayedCollections cannot respond to this message."
+
+	^ self addLast: newObject
+]
+
+{ #category : #adding }
 RunArray >> add: newObject withOccurrences: anInteger [
 	"Add value as the last element of the receiver, the given number of times"
 	anInteger <= 0 ifTrue: [ ^self ].

@@ -101,7 +101,7 @@ DisplayScreen class >> hostWindowSize: aPoint [
 DisplayScreen class >> hostWindowTitle: aString [ 
 	self 
 		primitiveWindowTitle: self hostWindowIndex 
-		string: (UTF8TextConverter default convertFromSystemString: aString)
+		string: aString utf8Encoded
 ]
 
 { #category : #'initialize-release' }

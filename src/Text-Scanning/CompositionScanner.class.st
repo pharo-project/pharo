@@ -60,7 +60,7 @@ Class {
 		'nextIndexAfterLineBreak',
 		'wantsColumnBreaks'
 	],
-	#category : #'Text-Scanning-Base'
+	#category : #'Text-Scanning'
 }
 
 { #category : #testing }
@@ -210,6 +210,18 @@ CompositionScanner >> placeEmbeddedObject: anchoredMorph [
 	baseline := baseline max: anchoredMorph height.
 	lineHeight := baseline + descent.
 	^ true
+]
+
+{ #category : #'as yet unclassified' }
+CompositionScanner >> registerBreakableIndex [
+	"Record left x and character index of the line-wrappable point. 
+	Used for wrap-around in eastern Asian languages."
+
+	spaceX := destX.
+	lineHeightAtSpace := lineHeight.
+	baselineAtSpace := baseline.
+	spaceIndex := lastIndex.
+	lastBreakIsNotASpace := true.
 ]
 
 { #category : #accessing }

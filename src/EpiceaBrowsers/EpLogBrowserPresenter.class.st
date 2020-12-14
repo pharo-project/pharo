@@ -113,7 +113,7 @@ EpLogBrowserPresenter >> applyAllChangesAndCloseWindow [
 
 { #category : #'menu - operations' }
 EpLogBrowserPresenter >> applyChangesIn: entries [
-
+	
 	entries ifEmpty: [ ^ self inform: 'No code changes to apply' ].
 
 	EpLogBrowserOperationFactory new

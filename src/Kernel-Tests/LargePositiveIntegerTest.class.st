@@ -132,8 +132,8 @@ LargePositiveIntegerTest >> testReciprocalModulo [
 	r := Random seed: 46912151.
 	4691
 		timesRepeat: [ | a b c t |
-			a := (r nextInt: large) + 1.
-			b := (r nextInt: large) + 1.
+			a := (r nextInteger: large) + 1.
+			b := (r nextInteger: large) + 1.
 			a > b
 				ifTrue: [ t := a.
 					a := b.

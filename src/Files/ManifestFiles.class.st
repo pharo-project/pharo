@@ -9,7 +9,7 @@ Class {
 
 { #category : #'meta-data - dependency analyser' }
 ManifestFiles class >> manuallyResolvedDependencies [
-	^ #(#'System-Support' #'Zinc-Character-Encoding-Core' #'FileSystem-Core' #'Multilingual-TextConversion' #'Collections-Abstract' #'System-Platforms')
+	^ #(#'System-Support' #'Zinc-Character-Encoding-Core' #'FileSystem-Core' #'Collections-Abstract' #'System-Platforms')
 ]
 
 { #category : #'code-critics' }

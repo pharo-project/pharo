@@ -393,7 +393,7 @@ FloatTest >> testFractionAsFloat [
 	r := Random new seed: 1234567.
 	m := (2 raisedTo: 54) - 1.
 	200 timesRepeat: [
-		frac := ((r nextInt: m) * (r nextInt: m) + 1) / ((r nextInt: m) * (r nextInt: m) + 1).
+		frac := ((r nextInteger: m) * (r nextInteger: m) + 1) / ((r nextInteger: m) * (r nextInteger: m) + 1).
 		err := (frac - frac asFloat asTrueFraction) * frac reciprocal * (1 bitShift: 52).
 		self assert: err < (1/2)].
 	

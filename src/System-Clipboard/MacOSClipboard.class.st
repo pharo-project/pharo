@@ -12,7 +12,7 @@ MacOSClipboard >> addUF8StringClipboardData: aString [
 	| ba  |
 
 	self clearClipboard.
-	ba := aString convertToWithConverter: (UTF8TextConverter new).
+	ba := aString utf8Encoded.
 	self addClipboardData: ba dataFormat: 'public.utf8-plain-text'
 
 ]

@@ -292,7 +292,8 @@ OCASTTranslator >> emitTimesRepeat: aMessageNode [
 	block := aMessageNode arguments last.
 	
 	limitEmit := [valueTranslator visitNode: limit].
-	limit isLiteral | limit isSelfVariable | limit isSuperVariable ifFalse: [
+	"if the limit is not just a literal or a non-writable variable, make a temp store it there"
+	(limit isLiteralNode or: [limit isVariable and: [limit variable isWritable not]]) ifFalse: [
 		valueTranslator visitNode: limit.
 		methodBuilder addTemp: #'0limit'.
 		methodBuilder storeTemp: #'0limit'.
@@ -348,7 +349,8 @@ OCASTTranslator >> emitToDo: aMessageNode step: step [
 	iterator := block arguments first variable.
 	
 	limitEmit := [valueTranslator visitNode: limit].
-	limit isLiteralNode | limit isSelfVariable | limit isSuperVariable | limit isArgumentVariable ifFalse: [
+	"if the limit is not just a literal or a non-writable variable, make a temp store it there"
+	(limit isLiteralNode or: [limit isVariable and: [limit variable isWritable not]]) ifFalse: [
 		valueTranslator visitNode: limit.
 		methodBuilder addTemp: ('0limit_', iterator name).
 		methodBuilder storeTemp: ('0limit_', iterator name).

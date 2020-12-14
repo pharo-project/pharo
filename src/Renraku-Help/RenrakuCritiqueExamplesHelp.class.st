@@ -4,13 +4,13 @@ In the topics of this book You will find references to the concrete critiques im
 Class {
 	#name : #RenrakuCritiqueExamplesHelp,
 	#superclass : #RenrakuCritiqueHelp,
-	#category : #'Renraku-Help'
+	#category : #'Renraku-Help-Critique'
 }
 
 { #category : #accessing }
 RenrakuCritiqueExamplesHelp class >> bookDescription [
 
-	^ 'In the topics of this book You will find references to the concrete critiques implementations. For more please browse the subclasses of ReAbstractCritique'
+	^ 'In the topics of this book you will find references to the concrete critiques implementations. For more please browse the subclasses of ReAbstractCritique'
 ]
 
 { #category : #accessing }

@@ -148,7 +148,7 @@ FT2FFILibrary >> unixLibraryName [
 
 { #category : #'accessing platform' }
 FT2FFILibrary >> win32LibraryName [
-	#('libfreetype.dll' 'libfreetype-6.dll') 
+	#('freetype.dll' 'libfreetype.dll' 'libfreetype-6.dll') 
 		detect: [ :each | (FileLocator vmDirectory / each) exists ]
 		ifFound: [ :each | ^ each ].
 	

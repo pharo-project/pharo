@@ -1,12 +1,6 @@
 Extension { #name : #String }
 
 { #category : #'*compression' }
-String >> convertToSystemString [
-
-	^LanguageEnvironment defaultSystemConverter convertToSystemString: self
-]
-
-{ #category : #'*compression' }
 String >> lastIndexOfPKSignature: aSignature [
 	"Answer the last index in me where aSignature (4 bytes long) occurs, or 0 if not found"
 	| a b c d |

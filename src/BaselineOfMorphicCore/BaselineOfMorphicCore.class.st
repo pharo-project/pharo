@@ -56,7 +56,7 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
-
+	
 	IdentityTransform initialize.
 
 	EventSensorConstants initialize.
@@ -85,18 +85,15 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 	Smalltalk at: #Sensor put: InputEventSensor new.
 	InputEventSensor installEventSensorFramework.
 	InputEventSensor installMouseDecodeTable.
-
+	
 	(Smalltalk at: #Sensor) flushAllButDandDEvents.
 	world handsDo: [:h | h initForEvents].
 	world borderWidth: 0.
-
-	MorphicCoreUIManager new spawnNewProcess.
+	
 	Display newDepth: 32.
 	world displayWorldSafely.
-	UIManager default: MorphicCoreUIManager new.
-	world displayWorldSafely.
-	UIManager default uiProcess resume.
-
+	MorphicCoreUIManager new spawnNewProcess.
+	
 	world cleanseOtherworldlySteppers.
 	ExternalDropHandler resetRegisteredHandlers.
 

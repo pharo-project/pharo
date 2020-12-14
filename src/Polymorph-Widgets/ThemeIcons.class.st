@@ -148,6 +148,13 @@ ThemeIcons class >> named: aString [
 	^ self new name: aString
 ]
 
+{ #category : #'instance creation' }
+ThemeIcons class >> reset [
+	<script>
+	
+	Current := nil
+]
+
 { #category : #settings }
 ThemeIcons class >> settingsOn: aBuilder [ 
 	<systemsettings>

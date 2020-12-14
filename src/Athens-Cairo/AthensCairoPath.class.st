@@ -12,12 +12,12 @@ Class {
 { #category : #'instance creation' }
 AthensCairoPath class >> finalizeResourceData: aHandle [
 
-	self primDestroyPath: aHandle value 
+	self primDestroyPath: aHandle 
 ]
 
 { #category : #'instance creation' }
 AthensCairoPath class >> primDestroyPath: aHandle [
-	^ self ffiCall: #(void cairo_path_destroy ( ulong aHandle ))
+	^ self ffiCall: #(void cairo_path_destroy ( void* aHandle ))
 
 ]
 

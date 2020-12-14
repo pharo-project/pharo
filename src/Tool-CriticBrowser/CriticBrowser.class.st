@@ -75,7 +75,8 @@ CriticBrowser class >> icon [
 
 { #category : #'instance creation' }
 CriticBrowser class >> open [
-
+	<script>
+	
 	| env rules |
 	rules :=  RBCompositeLintRule allGoodRules rules.
 	env := RBBrowserEnvironment default.
@@ -84,7 +85,8 @@ CriticBrowser class >> open [
 
 { #category : #menu }
 CriticBrowser class >> openOnCurrentWorkingConfiguration [
-
+	<script>
+	
 	CriticWorkingConfiguration exists
 		ifTrue: [ ResetWindow new openWithSpec ]
 		ifFalse: [ SelectPackageBrowser open]
