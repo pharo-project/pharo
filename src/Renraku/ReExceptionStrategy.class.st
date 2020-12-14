@@ -1,5 +1,5 @@
 "
-The subclasses of this class define how Renraku should handle exceptions signallied by analyzers
+The subclasses of this class define how Renraku should handle exceptions signalled by analyzers
 "
 Class {
 	#name : #ReExceptionStrategy,
