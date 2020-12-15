@@ -43,6 +43,14 @@ OSSDL2Driver class >> isVMDisplayUsingSDL2 [
 	^ false
 ]
 
+{ #category : #events }
+OSSDL2Driver >> afterSetWindowTitle: windowTitle onWindow: osWindow [
+	
+	OSPlatform current sdlPlatform 
+		afterSetWindowTitle: windowTitle onWindow: osWindow.	
+
+]
+
 { #category : #private }
 OSSDL2Driver >> closeRemovedController: index [
 	"TODO: What should I do here?"
