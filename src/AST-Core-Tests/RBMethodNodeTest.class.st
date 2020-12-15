@@ -171,6 +171,16 @@ RBMethodNodeTest >> testIsPrimitive [
 ]
 
 { #category : #tests }
+RBMethodNodeTest >> testMethodClass [
+	| ast |
+	ast :=  (OrderedCollection>>#do:) ast.
+	self assert: ast methodClass equals: OrderedCollection.
+	"if we create an AST, the class should be nil"
+	ast := RBMethodNode selector: #tt body: RBSelectorNode new. 
+	self assert: ast methodClass equals: nil
+]
+
+{ #category : #tests }
 RBMethodNodeTest >> testMethodsHasTemporaries [
 
 	| tree |
