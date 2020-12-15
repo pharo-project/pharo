@@ -189,15 +189,14 @@ MCTraitDefinition >> printDefinitionOn: stream [
 
 { #category : #comparing }
 MCTraitDefinition >> requirements [
-	"Assuming that traits in a composition can be identified by
-	testing for the first character beeing an uppercase character
-	(and thus not a special character such as {, # etc.)"
 
-	| tokens traitNames |
-	self hasTraitComposition ifFalse: [ ^Array new ].
-	tokens := traitComposition parseLiterals.
-	traitNames := tokens select: [:each | each first isUppercase].
-	^traitNames asArray
+	self hasTraitComposition
+		ifFalse: [ ^ Array new ].
+
+	^ (((RBParser parseExpression: self traitCompositionString)
+		allChildren select: [ :e | e isVariable ])
+		collect: [ :e | e name ]
+		as: Set) asArray
 ]
 
 { #category : #printing }
