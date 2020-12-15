@@ -1,16 +1,16 @@
 Class {
-	#name : #OCStaticCompilerPluginTest,
+	#name : #OCStaticASTCompilerPluginTest,
 	#superclass : #TestCase,
 	#category : #'OpalCompiler-Tests-Plugins'
 }
 
 { #category : #tests }
-OCStaticCompilerPluginTest >> testClassWithPluginEnabled [
+OCStaticASTCompilerPluginTest >> testClassWithPluginEnabled [
 	self assert: ASTTransformExamplePluginActive new example42 equals: 'meaning of life'
 ]
 
 { #category : #tests }
-OCStaticCompilerPluginTest >> testCreateAndUseStaticCompilerPlugin [
+OCStaticASTCompilerPluginTest >> testCreateAndUseStaticCompilerPlugin [
 	| result plugin |
 	plugin := ASTPluginMeaningOfLife new.
 					
@@ -23,13 +23,13 @@ OCStaticCompilerPluginTest >> testCreateAndUseStaticCompilerPlugin [
 ]
 
 { #category : #tests }
-OCStaticCompilerPluginTest >> testIsAbstract [ 
+OCStaticASTCompilerPluginTest >> testIsAbstract [ 
 
-	self assert: OCStaticCompilerPlugin isAbstract 
+	self assert: OCStaticASTCompilerPlugin isAbstract 
 ]
 
 { #category : #tests }
-OCStaticCompilerPluginTest >> testTransform [
+OCStaticASTCompilerPluginTest >> testTransform [
 	| ast |
 	ast := (OCOpalExamples >> #exampleReturn42) ast copy.
 	self assert: ast body statements first value value equals: 42.

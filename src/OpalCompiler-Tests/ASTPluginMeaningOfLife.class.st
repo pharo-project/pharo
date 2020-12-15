@@ -5,7 +5,7 @@ I replace 42 with a  'meaning of life'.
 "
 Class {
 	#name : #ASTPluginMeaningOfLife,
-	#superclass : #OCStaticCompilerPlugin,
+	#superclass : #OCStaticASTCompilerPlugin,
 	#category : #'OpalCompiler-Tests-Plugins'
 }
 

@@ -4,8 +4,8 @@ I am an abtract superclass for AST based compiler plugins providing a static tra
 
 "
 Class {
-	#name : #OCStaticCompilerPlugin,
-	#superclass : #OCCompilerPlugin,
+	#name : #OCStaticASTCompilerPlugin,
+	#superclass : #OCASTCompilerPlugin,
 	#instVars : [
 		'ast'
 	],
@@ -13,32 +13,32 @@ Class {
 }
 
 { #category : #testing }
-OCStaticCompilerPlugin class >> isAbstract [ 
+OCStaticASTCompilerPlugin class >> isAbstract [ 
 
-	^ self = OCStaticCompilerPlugin 
+	^ self = OCStaticASTCompilerPlugin 
 ]
 
 { #category : #'instance creation' }
-OCStaticCompilerPlugin class >> transform: anAST [
+OCStaticASTCompilerPlugin class >> transform: anAST [
 	"Return a new instance of the receiver transforming the given AST"
 	
 	^self new transform: anAST
 ]
 
 { #category : #accessing }
-OCStaticCompilerPlugin >> ast: anAST [
+OCStaticASTCompilerPlugin >> ast: anAST [
 	ast := anAST
 ]
 
 { #category : #utilities }
-OCStaticCompilerPlugin >> copyAST [
+OCStaticASTCompilerPlugin >> copyAST [
 	"Utility method to make a copy of the AST before manipulating it"
 	
 	ast := ast copy
 ]
 
 { #category : #'private - transforming' }
-OCStaticCompilerPlugin >> transform [
+OCStaticASTCompilerPlugin >> transform [
 	"Subclasses override this method to actually provide the AST transformation. 
 	 IMPORTANT: If you modify the AST, make sure to copy it before using #copyAST!"
 	
@@ -46,7 +46,7 @@ OCStaticCompilerPlugin >> transform [
 ]
 
 { #category : #transforming }
-OCStaticCompilerPlugin >> transform: anAST [
+OCStaticASTCompilerPlugin >> transform: anAST [
 	ast := anAST.
 	self transform.
 	^ast

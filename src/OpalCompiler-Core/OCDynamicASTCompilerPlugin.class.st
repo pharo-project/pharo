@@ -1,5 +1,5 @@
 "
-Look at the `OCCompilerPlugin` class comment for information about compiler plugins.
+Look at the `OCASTCompilerPlugin` class comment for information about compiler plugins.
 
 I allow the dynamic creation of compiler plugins.
 
@@ -12,11 +12,11 @@ You can then add the new plugin to an OpalCompiler instance with OpalCompiler>>a
 - aBlock must be a block of the form [ :ast | do something to ast ] that returns the modified ast.
 - aPriority is the priority the created plugin should have
 
-Check out my test class (`OCDynamicCompilerPluginTest`) for a usage example.
+Check out my test class (`OCASTDynamicCompilerPluginTest`) for a usage example.
 "
 Class {
-	#name : #OCDynamicCompilerPlugin,
-	#superclass : #OCCompilerPlugin,
+	#name : #OCDynamicASTCompilerPlugin,
+	#superclass : #OCASTCompilerPlugin,
 	#instVars : [
 		'priority',
 		'transformBlock'
@@ -25,7 +25,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-OCDynamicCompilerPlugin class >> newFromTransformBlock: aBlock [
+OCDynamicASTCompilerPlugin class >> newFromTransformBlock: aBlock [
 	"Return a new instance of the receiver using the given AST transformation block and default priority."
 
 	^ self new
@@ -34,7 +34,7 @@ OCDynamicCompilerPlugin class >> newFromTransformBlock: aBlock [
 ]
 
 { #category : #'instance creation' }
-OCDynamicCompilerPlugin class >> newFromTransformBlock: aBlock andPriority: aPriority [
+OCDynamicASTCompilerPlugin class >> newFromTransformBlock: aBlock andPriority: aPriority [
 	"Return a new instance of the receiver using the given AST transformation block and the given priority."
 
 	^ (self newFromTransformBlock: aBlock)
@@ -43,33 +43,33 @@ OCDynamicCompilerPlugin class >> newFromTransformBlock: aBlock andPriority: aPri
 ]
 
 { #category : #initialization }
-OCDynamicCompilerPlugin >> initialize [
+OCDynamicASTCompilerPlugin >> initialize [
 
 	super initialize.
 	self priority: self class defaultPriority 
 ]
 
 { #category : #accessing }
-OCDynamicCompilerPlugin >> priority [
+OCDynamicASTCompilerPlugin >> priority [
 	^ priority
 ]
 
 { #category : #accessing }
-OCDynamicCompilerPlugin >> priority: anObject [
+OCDynamicASTCompilerPlugin >> priority: anObject [
 	priority := anObject
 ]
 
 { #category : #transforming }
-OCDynamicCompilerPlugin >> transform: ast [
+OCDynamicASTCompilerPlugin >> transform: ast [
 	^ transformBlock value: ast copy
 ]
 
 { #category : #accessing }
-OCDynamicCompilerPlugin >> transformBlock [
+OCDynamicASTCompilerPlugin >> transformBlock [
 	^ transformBlock
 ]
 
 { #category : #accessing }
-OCDynamicCompilerPlugin >> transformBlock: anObject [
+OCDynamicASTCompilerPlugin >> transformBlock: anObject [
 	transformBlock := anObject
 ]

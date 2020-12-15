@@ -20,31 +20,31 @@ They are sorted by #priority and handed the AST without making a copy (as plugin
 IMPORTANT: If you modify the AST, you have to make a copy before!
 "
 Class {
-	#name : #OCCompilerPlugin,
+	#name : #OCASTCompilerPlugin,
 	#superclass : #Object,
 	#category : #'OpalCompiler-Core-Plugins'
 }
 
 { #category : #'accessing - defaults' }
-OCCompilerPlugin class >> defaultPriority [
+OCASTCompilerPlugin class >> defaultPriority [
 	"Use a high priority by default (a priority of 0 would be used by Reflectivity to be the last)"
 	
 	^ 100 
 ]
 
 { #category : #testing }
-OCCompilerPlugin class >> isAbstract [ 
+OCASTCompilerPlugin class >> isAbstract [ 
 
-	 ^ self = OCCompilerPlugin
+	 ^ self = OCASTCompilerPlugin
 ]
 
 { #category : #accessing }
-OCCompilerPlugin >> priority [
+OCASTCompilerPlugin >> priority [
 	^self class defaultPriority
 ]
 
 { #category : #transforming }
-OCCompilerPlugin >> transform: ast [
+OCASTCompilerPlugin >> transform: ast [
 	
 	self subclassResponsibility
 ]
