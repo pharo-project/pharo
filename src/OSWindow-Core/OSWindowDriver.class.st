@@ -108,6 +108,11 @@ OSWindowDriver class >> shutDown: quitting [
 		ifTrue: [ ActiveWorld := nil ]
 ]
 
+{ #category : #events }
+OSWindowDriver >> afterSetWindowTitle: windowTitle onWindow: osWindow [.	
+
+]
+
 { #category : #'window creation' }
 OSWindowDriver >> createWindowWithAttributes: anOSWindowAttributes osWindow: osWindow [
 	self subclassResponsibility
