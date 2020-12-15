@@ -32,15 +32,9 @@ DropFilesEvent >> fileNames: anObject [
 { #category : #dispatching }
 DropFilesEvent >> requestDropReference: i [
 
-	| fileName |
-
-	fileNames ifNil: [ 
-		"The file names are not stored in the event, they need to be obtained by a VM primitive"
-		^ FileReference requestDropReference: i ].
-	
-	"The event already knows the files (case of events transformed from OSWindow events)"
+	| fileName |	
 	fileName := self fileNames at: i.
-	^ (FilePathEncoder decode: fileName) asFileReference
+	^ fileName asFileReference
 
 
 ]
