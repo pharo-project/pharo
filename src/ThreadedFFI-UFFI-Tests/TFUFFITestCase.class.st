@@ -31,6 +31,15 @@ TFUFFITestCase >> ffiLibrary: anObject [
 ]
 
 { #category : #running }
+TFUFFITestCase >> runCaseManaged [ 
+	
+	"Skipping in running on an old VM"
+	TFFIBackend isAvailable ifFalse: [ ^ self skip ].
+	
+	super runCaseManaged.
+]
+
+{ #category : #running }
 TFUFFITestCase >> tearDown [
 
 	"I have to reset the FFI callout methods to be recompiled using the test runner"

@@ -24,6 +24,15 @@ TFTestCase >> libraryPath [
 	self error: 'Unsupported Platform'
 ]
 
+{ #category : #running }
+TFTestCase >> runCaseManaged [ 
+	
+	"Skipping in running on an old VM"
+	TFFIBackend isAvailable ifFalse: [ ^ self skip ].
+	
+	super runCaseManaged.
+]
+
 { #category : #accessing }
 TFTestCase >> runner [
 	^ runner
