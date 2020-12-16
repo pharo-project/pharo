@@ -125,6 +125,13 @@ MCSaveVersionDialog >> setDefaultFocus [
 		takeKeyboardFocus
 ]
 
+{ #category : #'morphic ui' }
+MCSaveVersionDialog >> textMorph: aMorph [
+	"here the text field is not used for code editing"
+ 	^(super textMorph: aMorph) beForPlainText
+
+]
+
 { #category : #accessing }
 MCSaveVersionDialog >> versionName [
 	^ name

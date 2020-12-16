@@ -10,6 +10,11 @@ Class {
 	#category : #'Fuel-Tests-Core-Base'
 }
 
+{ #category : #testing }
+FLBasicSerializationTest class >> shouldInheritSelectors [ 
+	^true
+]
+
 { #category : #failures }
 FLBasicSerializationTest >> expectedFailures [
 	^ #(testConsiderCustomWideSymbolGlobal testWideStringGlobal testWideStringClassName)
@@ -122,6 +127,13 @@ FLBasicSerializationTest >> testClassSideCompiledMethod [
 	
 	self assertSerializationIdentityOf: FLGlobalSendMock class >> #newInstanceToSerialize
 
+]
+
+{ #category : #'tests-collections-Pharo1.3' }
+FLBasicSerializationTest >> testCollectionElement [
+	(Smalltalk classNamed: #CollectionElement) ifNil: [ self skip ].
+	
+	self assertSerializationEqualityOf: ((Smalltalk classNamed: #CollectionElement) with: 3)
 ]
 
 { #category : #tests }
@@ -688,21 +700,16 @@ FLBasicSerializationTest >> testSet [
 ]
 
 { #category : #'tests-collections-Pharo1.3' }
-FLBasicSerializationTest >> testSetElement [
-
-	self assertSerializationEqualityOf: (CollectionElement with: 3)
+FLBasicSerializationTest >> testSetWithCollectionElement [
+	(Smalltalk classNamed: #CollectionElement) ifNil: [ self skip ].
+	
+	self assertSerializationEqualityOf: (Set with: ((Smalltalk classNamed: #CollectionElement) with: 3))
 ]
 
 { #category : #'tests-collections-Pharo1.3' }
 FLBasicSerializationTest >> testSetWithNil [
 
 	self assertSerializationEqualityOf: (Set with: nil)
-]
-
-{ #category : #'tests-collections-Pharo1.3' }
-FLBasicSerializationTest >> testSetWithSetElement [
-
-	self assertSerializationEqualityOf: (Set with: (CollectionElement with: 3))
 ]
 
 { #category : #tests }

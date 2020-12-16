@@ -25,7 +25,7 @@ BaselineOfPharoBootstrapProcess >> baseline: spec [
 		spec
 			 package: 'Pharo30Bootstrap'.
 		spec baseline: 'Ring2' with: [ spec
-			repository: 'github://carolahp/Ring2:master/src';
+			repository: 'github://carolahp/Ring2:v1.2.2/src';
   			loads: 'bootstrap' ].  			
 ]
 ]

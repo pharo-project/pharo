@@ -41,7 +41,7 @@ RBVariableNode >> completionToken: offset [
 
 { #category : #'*NECompletion' }
 RBVariableNode >> entriesSpecialVariables [
-	^ #('self' 'super' 'thisContext' )
+	^ #('self' 'super' 'thisContext' 'nil' 'false' 'true')
 			select: [ :each | each beginsWith: self name ]
 			thenCollect: [ :each | NECSpecialVariableEntry contents: each node: self ]
 ]

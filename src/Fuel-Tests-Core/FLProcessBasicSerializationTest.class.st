@@ -1,16 +1,21 @@
 Class {
-	#name : #FLProcessSerializationTest,
+	#name : #FLProcessBasicSerializationTest,
 	#superclass : #FLBasicSerializationTest,
 	#category : #'Fuel-Tests-Core-Base'
 }
 
+{ #category : #accessing }
+FLProcessBasicSerializationTest class >> defaultTimeLimit [
+	^ 1 minute
+]
+
 { #category : #running }
-FLProcessSerializationTest >> setUpSerializer [
+FLProcessBasicSerializationTest >> setUpSerializer [
 	^ serializer := FLDelayedSerializerMock newDefault
 ]
 
 { #category : #tests }
-FLProcessSerializationTest >> testSerializingShortDelay [
+FLProcessBasicSerializationTest >> testSerializingShortDelay [
 	| process |
 	process := [ 2 timesRepeat: [ | d |
 		d := Delay forMilliseconds: 50.

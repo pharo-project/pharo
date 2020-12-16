@@ -151,7 +151,12 @@ ClassTest >> testClassSide [
 ClassTest >> testCommonSuperclassWith [
 	self assert: (OrderedCollection commonSuperclassWith: Array) equals: SequenceableCollection.
 	self assert: (OrderedCollection commonSuperclassWith: OrderedCollection) equals: SequenceableCollection.
-	self assert: (ProtoObject commonSuperclassWith: Object) equals: nil
+	"if the reveiver is the common superclass, return it"
+ 	self assert: (ProtoObject commonSuperclassWith: Object) equals: ProtoObject.
+ 	"but the other way this is not true"
+ 	self assert: (Object commonSuperclassWith: ProtoObject) equals: nil.
+ 	"as nil is the terminator of the hierarchy, we have to support it"
+ 	self assert: (nil commonSuperclassWith: ProtoObject) equals: nil
 ]
 
 { #category : #tests }

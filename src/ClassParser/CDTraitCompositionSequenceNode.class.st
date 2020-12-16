@@ -33,3 +33,12 @@ CDTraitCompositionSequenceNode >> toString [
 	^ res	
 	
 ]
+
+{ #category : #precedence }
+CDTraitCompositionSequenceNode >> withPrecedenceOf: aCDTraitNode [
+
+	^ CDTraitPrecedenceCompositionNode new
+		sequence: sequence;
+		preferedTrait: aCDTraitNode;
+		yourself
+]

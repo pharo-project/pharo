@@ -365,10 +365,11 @@ Class >> classVariables [
 
 { #category : #'accessing class hierarchy' }
 Class >> commonSuperclassWith: aClass [
+	"return the next common superclass between me and aClass. If I am the superclass of aClass, that is me"
 
-	^ self allSuperclasses detect: [ :class | (aClass allSuperclasses includes: class) ] ifNone: nil
-
-	
+	^ self withAllSuperclasses
+		detect: [ :class | aClass allSuperclasses includes: class ]
+		ifNone: nil
 ]
 
 { #category : #compiling }
