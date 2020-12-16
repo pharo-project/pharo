@@ -24,10 +24,14 @@ SycAbstractAllInstVarAccessorsCommand class >> fullBrowserMenuActivation [
 { #category : #accessing }
 SycAbstractAllInstVarAccessorsCommand >> asRefactorings [
 
-	| refactorings |
+	| refactorings model |
+	model := ( RBClassModelFactory rbNamespace onEnvironment: RBBrowserEnvironment new )
+				name: self printString;
+				yourself.
 	refactorings := classes flatCollect: [:eachClass |
 		eachClass	 slots collect: [:var | 
-			var createRefactoring: RBAbstractInstanceVariableRefactoring for: eachClass]].
+				RBAbstractInstanceVariableRefactoring
+					model: model variable: var name class:eachClass ]].
 	^ refactorings
 ]
 
@@ -49,7 +53,7 @@ SycAbstractAllInstVarAccessorsCommand >> execute [
 
 { #category : #testing }
 SycAbstractAllInstVarAccessorsCommand >> isComplexRefactoring [
-	^true
+	^false
 ]
 
 { #category : #testing }
