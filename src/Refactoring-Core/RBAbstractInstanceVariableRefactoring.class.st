@@ -22,7 +22,7 @@ RBAbstractInstanceVariableRefactoring >> abstractReferences [
 				getter: self accessorsRefactoring getterMethod
 				setter: self accessorsRefactoring setterMethod.
 	self 
-		convertClasses: (self model classFor: class) withAllSubclasses
+		convertClasses: class withAllSubclasses
 		select: 
 			[:aClass | 
 			(aClass whichSelectorsReferToInstanceVariable: variableName) reject: 
