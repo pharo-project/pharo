@@ -115,7 +115,7 @@ FluidClassDefinitionPrinterTest >> testExpandedOnClassWithoutTag [
 
 	self 
 		assert: (self expandedForClass: EncoderForV3PlusClosures)
-		equals:   'Object << #EncoderForV3PlusClosures
+		equals:   'BytecodeEncoder << #EncoderForV3PlusClosures
 	layout: FixedLayout;
 	uses: {};
 	slots: {};
@@ -146,7 +146,7 @@ FluidClassDefinitionPrinterTest >> testExpandedTime [
 
 	self 
 		assert: (self expandedForClass: Time)  
-		equals: 'Object << #Time
+		equals: 'Magnitude << #Time
 	layout: FixedLayout;
 	uses: {};
 	slots: { #seconds . #nanos };

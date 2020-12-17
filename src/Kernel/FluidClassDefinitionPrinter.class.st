@@ -115,7 +115,7 @@ FluidClassDefinitionPrinter >> compactTraitDefinitionTemplateInPackage: aPackage
 FluidClassDefinitionPrinter >> expandedClassDefinitionString [
 
 	^ String streamContents: [ :s | 
-		s nextPutAll: 'Object'.
+		s nextPutAll: forClass superclass name.
 		self msgAndClassNameOn: s.
 		self layoutOn: s.
 		s crtab.
