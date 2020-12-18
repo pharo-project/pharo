@@ -50,7 +50,7 @@ FLDebuggerStackSerializer class >> serializeContext: aContext toFileNamed: aFile
 ]
 
 { #category : #serializing }
-FLDebuggerStackSerializer >> serializeStack: aStack interruptedContext: interruptedContext [
+FLDebuggerStackSerializer >> serializeStackFromContext: interruptedContext [
 
 	| date fileName |
 	date := DateAndTime now.
@@ -66,5 +66,5 @@ FLDebuggerStackSerializer >> serializeStack: aStack interruptedContext: interrup
 		            s print: date second.
 		            s << '.fuel' ].
 
-	self class serializeContext: aStack toFileNamed: fileName
+	self class serializeContext: interruptedContext toFileNamed: fileName
 ]
