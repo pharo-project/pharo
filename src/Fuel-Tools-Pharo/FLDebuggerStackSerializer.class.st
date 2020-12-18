@@ -4,6 +4,9 @@ Serializes a debugger stack using fuel.
 Class {
 	#name : #FLDebuggerStackSerializer,
 	#superclass : #Object,
+	#instVars : [
+		'fileName'
+	],
 	#category : #'Fuel-Tools-Pharo-Debugger'
 }
 
@@ -50,21 +53,31 @@ FLDebuggerStackSerializer class >> serializeContext: aContext toFileNamed: aFile
 ]
 
 { #category : #serializing }
-FLDebuggerStackSerializer >> serializeStackFromContext: interruptedContext [
+FLDebuggerStackSerializer >> buildFileNameForContext: aContext [
 
-	| date fileName |
+	| date |
 	date := DateAndTime now.
-
 	fileName := String streamContents: [ :s | 
 		            s << 'Debugger-Stack-'.
-		            s << interruptedContext receiver class instanceSide name.
+		            s << aContext receiver class instanceSide name.
 		            s << '-'.
 		            date printYMDOn: s.
 		            s << '-'.
 		            s print: date hour24.
 		            s print: date minute.
 		            s print: date second.
-		            s << '.fuel' ].
+		            s << '.fuel' ]
+]
 
+{ #category : #accessing }
+FLDebuggerStackSerializer >> fileName [
+
+	^ fileName
+]
+
+{ #category : #serializing }
+FLDebuggerStackSerializer >> serializeStackFromContext: interruptedContext [
+	
+	self buildFileNameForContext: interruptedContext.
 	self class serializeContext: interruptedContext toFileNamed: fileName
 ]
