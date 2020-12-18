@@ -17,8 +17,7 @@ Class {
 	#instVars : [
 		'maxSize',
 		'currentCompletionIndex',
-		'updateSelector',
-		'keystrokeSelector'
+		'updateSelector'
 	],
 	#category : #'Polymorph-Widgets-Base'
 }
@@ -80,51 +79,9 @@ SearchMorph >> initialize [
 ]
 
 { #category : #'event handling' }
-SearchMorph >> keyStroke: event [
-
-	keystrokeSelector ifNotNil: [ 
-		(self keystrokeAction: event) ifTrue: [ ^ self ] ].
-	
-	^ super keyStroke: event
-]
-
-{ #category : #'event handling' }
 SearchMorph >> keyStroke: event fromMorph: morph [
 
-	keystrokeSelector ifNotNil: [ 
-		^ self keystrokeAction: event ].
-	
 	^ false
-]
-
-{ #category : #'event handling' }
-SearchMorph >> keystrokeAction: event [ 
-	| args returnValue |
-	keystrokeSelector ifNil: [ ^ nil ].
-	args := keystrokeSelector numArgs.
-	args = 1 ifTrue: [returnValue := model perform: keystrokeSelector with: event].
-	args = 2 
-		ifTrue: 
-			[returnValue := model 
-				perform: keystrokeSelector
-				with: event
-				with: self].
-	returnValue ifNotNil: [
-			^ returnValue = true ].
-	
-	self error: 'keystrokeSelector must be a 1- or 2-keyword symbol'.
-	^ false
-]
-
-{ #category : #accessing }
-SearchMorph >> keystrokeSelector [
-	^ keystrokeSelector
-]
-
-{ #category : #accessing }
-SearchMorph >> keystrokeSelector: aSymbol [
-	keystrokeSelector := aSymbol.
-
 ]
 
 { #category : #accessing }

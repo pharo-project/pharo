@@ -270,6 +270,12 @@ GLMEmptyPopupBrick >> isInsideOfTriggerBrick: anEvent [
 ]
 
 { #category : #'events-processing' }
+GLMEmptyPopupBrick >> keyDown: anEvent [
+
+	self closer handleListenEvent: anEvent
+]
+
+{ #category : #'events-processing' }
 GLMEmptyPopupBrick >> keyStroke: anEvent [
 
 	self closer handleListenEvent: anEvent

@@ -1116,7 +1116,14 @@ RubAbstractTextArea >> isReadOnly [
 { #category : #'event handling' }
 RubAbstractTextArea >> keyDown: anEvent [
 	"Handle a keystroke event."
-		
+	anEvent hand anyButtonPressed
+		ifTrue: [ ^ self ].
+	self scrollPane
+		ifNotNil: [ :sp | 
+			(sp scrollByKeyboard: anEvent)
+				ifTrue: [ ^ self ] ].
+	anEvent isUserInterrupt
+		ifTrue: [ ^ self ].
 	self handleEdit: [ self editor keyDown: anEvent ].
 	self scrollSelectionIntoView: nil
 ]
@@ -1126,14 +1133,7 @@ RubAbstractTextArea >> keyStroke: anEvent [
 	"Handle a keystroke event."
 	anEvent hand anyButtonPressed
 		ifTrue: [ ^ self ].
-	self scrollPane
-		ifNotNil: [ :sp | 
-			(sp scrollByKeyboard: anEvent)
-				ifTrue: [ ^ self ] ].
-	anEvent isUserInterrupt
-		ifTrue: [ ^ self ].
-	self
-		handleEdit: [ self editor keystroke: anEvent ].
+	self handleEdit: [ self editor keystroke: anEvent ].
 	self scrollSelectionIntoView: nil
 ]
 

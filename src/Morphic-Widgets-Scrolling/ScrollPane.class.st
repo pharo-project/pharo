@@ -604,11 +604,19 @@ ScrollPane >> itemFromPoint: aPoint [
 ]
 
 { #category : #'event handling' }
-ScrollPane >> keyStroke: evt [
+ScrollPane >> keyDown: evt [
 	"If pane is not empty, pass the event to the last submorph,
 	assuming it is the most appropriate recipient (!)"
 
 	(self scrollByKeyboard: evt) ifTrue: [^self].
+	scroller submorphs last keyDown: evt
+]
+
+{ #category : #'event handling' }
+ScrollPane >> keyStroke: evt [
+	"If pane is not empty, pass the event to the last submorph,
+	assuming it is the most appropriate recipient (!)"
+
 	scroller submorphs last keyStroke: evt
 ]
 
