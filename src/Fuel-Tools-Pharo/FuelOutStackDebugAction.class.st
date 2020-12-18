@@ -42,19 +42,9 @@ FuelOutStackDebugAction class >> encodeDebugInformationOn: aSerializer [
 ]
 
 { #category : #serialization }
-FuelOutStackDebugAction class >> serializeTestFailureContext: aContext toFileNamed: aFilename [
+FuelOutStackDebugAction class >> serializeTestFailureContext: aContext [
 
-	| serializer |
-	serializer := FLSerializer newDefault.
-	self encodeDebugInformationOn: serializer.
-	serializer addPostMaterializationAction: [ :materialization | 
-		(OupsDebugRequest newForContext: materialization root)
-			process: Processor activeProcess;
-			label: 'External stack';
-			submit ].
-
-	serializer serialize: aContext toFileNamed: aFilename
-	" use the sender context, generally the current context is not interesting"
+	FLDebuggerStackSerializer new serializeStackFromContext: aContext
 ]
 
 { #category : #accessing }
@@ -72,7 +62,7 @@ FuelOutStackDebugAction >> defaultOrder [
 { #category : #actions }
 FuelOutStackDebugAction >> executeAction [
 
-	self serializeStack
+	self class serializeTestFailureContext: self interruptedContext copyStack
 ]
 
 { #category : #accessing }
@@ -84,25 +74,4 @@ FuelOutStackDebugAction >> help [
 FuelOutStackDebugAction >> id [
 
 	^ #fuelOutStack
-]
-
-{ #category : #actions }
-FuelOutStackDebugAction >> serializeStack [
-	| date fileName |
-	"Serialize a portion of the current stack trace using fuel.."
-	date := DateAndTime now.
-	
-	fileName := String streamContents: [ :s|
-		s 
-			<< 'Debugger-Stack-';
-			<< self interruptedContext receiver class instanceSide name;
-			<< '-'.
-		date printYMDOn: s.
-		s 
-			<< '-'; print: date hour24; print: date minute; print: date second;
-			<< '.fuel'].
-
-	self class
-		serializeTestFailureContext: self interruptedContext copyStack		
-		toFileNamed: fileName
 ]
