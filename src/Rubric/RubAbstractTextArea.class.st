@@ -1124,7 +1124,7 @@ RubAbstractTextArea >> keyDown: anEvent [
 { #category : #'event handling' }
 RubAbstractTextArea >> keyStroke: anEvent [
 	"Handle a keystroke event."
- 	anEvent hand anyButtonPressed
+	anEvent hand anyButtonPressed
 		ifTrue: [ ^ self ].
 	self scrollPane
 		ifNotNil: [ :sp | 
