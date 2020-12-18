@@ -18,14 +18,6 @@ NullTaskList class >> in: world [
 		yourself.
 ]
 
-{ #category : #'event handling' }
-NullTaskList >> handleEvent: aKeyboardEvent [ 
-
-	aKeyboardEvent isWindowNavigation ifFalse: [ ^ false ].
-	world theme openTaskListIn: world from: aKeyboardEvent.
-	^ true.
-]
-
 { #category : #private }
 NullTaskList >> world: aWorldMorph [ 
 
