@@ -225,13 +225,17 @@ ClassFactoryForTestCase >> newSubclassOf: aClass
 	category: category [
 
 	| newClass |
-	newClass := aClass 
-		subclass: self newClassName 
-		uses: aTraitComposition
-		instanceVariableNames: ivNamesString 
-		classVariableNames: classVarsString 
-		poolDictionaries: poolNamesString 
-		category: (self packageName, '-', category) asSymbol.
+			
+	newClass := self class classInstaller make: [ :aBuilder | 
+		aBuilder 
+			name: self newClassName;
+			superclass: aClass;
+			traitComposition: aTraitComposition asTraitComposition;
+			slots: ivNamesString asSlotCollection;
+			sharedVariablesFromString: classVarsString;
+			sharedPools: poolNamesString;
+			package: (self packageName, '-', category) asSymbol ].	
+		
 	self createdClasses add: newClass.
 	^ newClass
 ]
@@ -330,42 +334,29 @@ ClassFactoryForTestCase >> silentlyNewSubclassOf: aClass
 	classVariableNames:  classVarsString 
 	category: category [
 
-	| newClass |
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		newClass := aClass 
-			subclass: self newClassName 
-			instanceVariableNames: ivNamesString 
-			classVariableNames: classVarsString 
-			poolDictionaries: '' 
-			category: (self packageName, '-', category) asSymbol.
-	].
+	^ self 
+		silentlyNewSubclassOf: aClass 
+		instanceVariableNames: ivNamesString
+		classVariableNames: classVarsString
+		package: (self packageName, '-', category) asSymbol.
 
-	self createdClasses add: newClass.
-	createdSilently add: newClass.
-	^ newClass
-	
+
 ]
 
 { #category : #'creating - silently' }
 ClassFactoryForTestCase >> silentlyNewSubclassOf: aClass 
-	instanceVariableNames: ivNamesString
-	classVariableNames: classVarsString
+	instanceVariableNames: ivNamesString 
+	classVariableNames: classVarsString 
 	package: packageName [
 
-	|  newClass |
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		newClass := aClass 
-			subclass: self newClassName 
-			instanceVariableNames: ivNamesString 
-			classVariableNames: classVarsString 
-			poolDictionaries: '' 
-			category: packageName asSymbol.
-	].
-
-	self createdClasses add: newClass.
-	createdSilently add: newClass.
-	^ newClass
-	
+	SystemAnnouncer uniqueInstance suspendAllWhile: [ 
+		^ self
+			  newSubclassOf: aClass
+			  uses: #(  )
+			  instanceVariableNames: ivNamesString
+			  classVariableNames: classVarsString
+			  poolDictionaries: ''
+			  category: packageName ]
 ]
 
 { #category : #creating }

@@ -29,11 +29,12 @@ RenrakuBaseTestCase >> setUp [
 { #category : #running }
 RenrakuBaseTestCase >> setupScreamerRule [
 
-	ScreamerRule := ReAbstractRule
-		subclass: #ReScreamerRuleForTesting
-		instanceVariableNames: ''
-		classVariableNames: ''
-		package: testPackage name.
+	ScreamerRule := self class classInstaller make: [ :aClassBuilder | 
+		aClassBuilder 
+			name: #ReScreamerRuleForTesting;
+			superclass: ReAbstractRule;
+			package: testPackage name ].
+
 		
 	ScreamerRule class
 		compile: 'checksMethod ^ true';

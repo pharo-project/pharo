@@ -40,7 +40,10 @@ MCPackageManagerTest >> testClassAdded [
 	self assert: package1 mcWorkingCopy modified not.
 	self assert: package2 mcWorkingCopy modified not.
 	
-	Object subclass: 'A', UUID new asString36 instanceVariableNames: '' classVariableNames: '' category: package2 name.
+	self class classInstaller make: [ :aBuilder | 
+			aBuilder 
+				name: ('A' , UUID new asString36) asSymbol;
+				package: package2 name].
 	
 	self assert: package1 mcWorkingCopy modified not.
 	self assert: package2 mcWorkingCopy modified
@@ -51,7 +54,10 @@ MCPackageManagerTest >> testClassRemoved [
 	
 	| class |
 
-	class := Object subclass: 'A', UUID new asString36 instanceVariableNames: '' classVariableNames: '' category: package2 name.
+	class := self class classInstaller make: [ :aBuilder | 
+			aBuilder 
+				name: ('A' , UUID new asString36) asSymbol;
+				package: package2 name].
 	
 	package1 mcWorkingCopy modified: false.
 	package2 mcWorkingCopy modified: false.
