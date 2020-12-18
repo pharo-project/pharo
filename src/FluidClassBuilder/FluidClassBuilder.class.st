@@ -104,14 +104,14 @@ FluidClassBuilder >> fillShiftClassBuilder [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #building }
 FluidClassBuilder >> install [
 	"Install the class in the system environment"
 	
 	ShiftClassInstaller new makeWithBuilder: shiftClassBuilder 
 ]
 
-{ #category : #accessing }
+{ #category : #API }
 FluidClassBuilder >> layout: aClass [ 
 	layout := aClass
 ]
@@ -121,7 +121,7 @@ FluidClassBuilder >> layoutToBuild [
 	^ layout 
 ]
 
-{ #category : #'accessing - mandatory' }
+{ #category : #API }
 FluidClassBuilder >> package: aString [
 	
 	packageName := aString.
@@ -134,7 +134,7 @@ FluidClassBuilder >> packageToBuild [
 	^ packageName
 ]
 
-{ #category : #accessing }
+{ #category : #API }
 FluidClassBuilder >> sharedPools: aString [
 
 	sharedPools := aString
@@ -146,7 +146,7 @@ FluidClassBuilder >> sharedPoolsToBuild [
 	^ sharedPools
 ]
 
-{ #category : #accessing }
+{ #category : #API }
 FluidClassBuilder >> sharedVariables: aCollection [
 
 	sharedVariables := aCollection
@@ -164,7 +164,7 @@ FluidClassBuilder >> shiftClassBuilder [
 	^ shiftClassBuilder 
 ]
 
-{ #category : #accessing }
+{ #category : #API }
 FluidClassBuilder >> slots: aCollection [
 
 	slotsToBuild := aCollection
@@ -188,7 +188,7 @@ FluidClassBuilder >> superclassToBuild: aClass [
 	superclassToBuild := aClass
 ]
 
-{ #category : #accessing }
+{ #category : #API }
 FluidClassBuilder >> tag: aString [
 
 	tagToBuild := aString
@@ -206,7 +206,7 @@ FluidClassBuilder >> traitsToBuild [
 	^ traitComposition
 ]
 
-{ #category : #accessing }
+{ #category : #API }
 FluidClassBuilder >> uses: aTraitComposition [
 
 	traitComposition := aTraitComposition
