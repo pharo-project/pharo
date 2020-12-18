@@ -57,7 +57,8 @@ BaselineOfNewTools >> baseline: spec [
 			"package: 'NewTools-Sindarin-ProcessInspector' with: [ spec requires: #('NewTools-Sindarin-Commands' 'Sindarin') ];"
 			"Debugger Selector"
 			package: 'NewTools-DebuggerSelector' with: [ spec requires: #('NewTools-SpTextPresenterDecorators') ];
-			package: 'NewTools-DebuggerSelector-Tests' with: [ spec requires: #('NewTools-DebuggerSelector') ].
+			package: 'NewTools-DebuggerSelector-Tests' with: [ spec requires: #('NewTools-DebuggerSelector') ];
+			package: 'NewTools-Debugger-Fuel'.
 
 		spec
 			group: 'Core' with: #('NewTools-Core' 'NewTools-Morphic');
@@ -73,11 +74,12 @@ BaselineOfNewTools >> baseline: spec [
 				'NewTools-Sindarin-Tools'
 				'NewTools-Sindarin-Commands'
 				'NewTools-Debugger-Breakpoints-Tools'
-				"'NewTools-Debugger-Tests'");
+				"'NewTools-Debugger-Tests'"
+				'NewTools-Debugger-Fuel');
 			group: 'SystemReporter' with: #('Core' 'NewTools-SystemReporter');
 			group: 'Methods' with: #('Core' 'NewTools-MethodBrowsers');
-			group: 'ChangeSorter' with: #('Core' 'NewTools-ChangeSorter');
 			"Not in the image for the moment, we need a pass on them"
+			group: 'ChangeSorter' with: #('Core' 'NewTools-ChangeSorter');
 			group: 'KeymapBrowser' with: #('Core' 'NewTools-KeymapBrowser');
 			group: 'FlagBrowser' with: #(
 				'Core' 
@@ -95,9 +97,11 @@ BaselineOfNewTools >> baseline: spec [
 				'Inspector'
 				'Debugger'
 				'Methods'
-				'ChangeSorter'
+				"'ChangeSorter'"
 				"'KeymapBrowser'"
-				"'FlagBrowser'") ]
+				"'FlagBrowser'");
+			"A group for running CI"
+			group: 'CI' with: #('Spec2' 'default') ]
 ]
 
 { #category : #dependencies }
