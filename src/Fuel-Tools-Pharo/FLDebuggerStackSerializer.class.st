@@ -4,7 +4,7 @@ Serializes a debugger stack using fuel.
 Class {
 	#name : #FLDebuggerStackSerializer,
 	#superclass : #Object,
-	#category : #'Fuel-Tools-Pharo'
+	#category : #'Fuel-Tools-Pharo-Debugger'
 }
 
 { #category : #serializing }
@@ -36,16 +36,15 @@ FLDebuggerStackSerializer class >> encodeDebugInformationOn: aSerializer [
 ]
 
 { #category : #serializing }
-FLDebuggerStackSerializer class >> serializeContext: aContext toFile: aFilename [
+FLDebuggerStackSerializer class >> serializeContext: aContext toFileNamed: aFilename [
 
 	| serializer |
 	serializer := FLSerializer newDefault.
 	self encodeDebugInformationOn: serializer.
 	serializer addPostMaterializationAction: [ :materialization | 
-		(OupsDebugRequest newForContext: materialization root)
-			process: Processor activeProcess;
-			label: 'External stack';
-			submit ].
+		FLDebuggerStackMaterialization new
+			interruptedContext: materialization root;
+			signal ].
 
 	serializer serialize: aContext toFileNamed: aFilename
 ]
@@ -67,5 +66,5 @@ FLDebuggerStackSerializer >> serializeStack: aStack interruptedContext: interrup
 		            s print: date second.
 		            s << '.fuel' ].
 
-	self class serializeContext: aStack toFile: fileName
+	self class serializeContext: aStack toFileNamed: fileName
 ]
