@@ -1215,6 +1215,18 @@ RPackageOrganizer >> systemProtocolRemovedActionFrom: ann [
 	
 ]
 
+{ #category : #accessing }
+RPackageOrganizer >> testPackageNames [
+	
+	^ packages keys select: [:nameSymbol | (self packageNamed: nameSymbol) isTestPackage]
+]
+
+{ #category : #accessing }
+RPackageOrganizer >> testPackages [
+	
+	^ packages values select: #isTestPackage
+]
+
 { #category : #initialization }
 RPackageOrganizer >> unregister [
 	SystemAnnouncer uniqueInstance unsubscribe: self.

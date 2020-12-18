@@ -21,6 +21,12 @@ RPackageTestCase >> allManagers [
 ]
 
 { #category : #utilities }
+RPackageTestCase >> createMockTestPackages [
+
+	^ self namesOfMockTestPackages collect: [:pName | self createNewPackageNamed: pName]
+]
+
+{ #category : #utilities }
 RPackageTestCase >> createNewClassNamed: aName [
 	^ self createNewClassNamed: aName inCategory: 'RPackageTest'
 ]
@@ -89,6 +95,13 @@ RPackageTestCase >> initializeAnnouncers [
 	oldSystemAnnouncer := SystemAnnouncer uniqueInstance.
 
 	SystemAnnouncer announcer: (announcerForTest := SystemAnnouncer new).
+]
+
+{ #category : #utilities }
+RPackageTestCase >> namesOfMockTestPackages [
+	
+	^ #( 'MockPackage-Tests' 'MockPackage-tests' 'MockPackage' 'MockPackage-Tests-Package')
+
 ]
 
 { #category : #accessing }
