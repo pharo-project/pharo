@@ -5,7 +5,6 @@ Class {
 	#name : #MorphTreeListManager,
 	#superclass : #Object,
 	#instVars : [
-		'keystrokeActionSelector',
 		'multipleSelection',
 		'autoMultiSelection',
 		'potentialDropMorph',
@@ -23,7 +22,9 @@ Class {
 		'autoTargetMorph',
 		'selectedMorphList',
 		'removeOnlyLastSelected',
-		'doubleClickSelector'
+		'doubleClickSelector',
+		'keyDownActionSelector',
+		'keystrokeActionSelector'
 	],
 	#category : #'Morphic-Widgets-Tree'
 }
@@ -362,6 +363,37 @@ MorphTreeListManager >> isMultiple [
 { #category : #'selection change' }
 MorphTreeListManager >> isSelectionUpdateFromView [
 	^ isSelectionUpdateFromView ifNil: [isSelectionUpdateFromView := false] 
+]
+
+{ #category : #'keyboard managing' }
+MorphTreeListManager >> keyDown: anEvent [
+	| char args |
+	char := anEvent keyValue asCharacter.
+
+	(self arrowEvent: anEvent key: char) ifTrue: [ ^ true ].
+
+	char = Character cr
+		ifTrue: [ self selectSearchedElement.
+			^ true ].
+
+	anEvent anyModifierKeyPressed
+		ifFalse: [ self basicKeyPressed: char.
+			^ true ].
+		
+	keyDownActionSelector ifNil: [ ^ false ].
+
+	args := keyDownActionSelector numArgs.
+	^ (args = 0 or: [ args > 2 ])
+		ifTrue: [ self error: 'The keyDownActionSelector must be a 1- or 2-keyword symbol' ]
+		ifFalse: [ args = 1
+				ifTrue: [ self listModel perform: keyDownActionSelector with: anEvent ]
+				ifFalse: [ self listModel perform: keyDownActionSelector with: anEvent with: self ] ]
+]
+
+{ #category : #'keyboard managing' }
+MorphTreeListManager >> keyDownActionSelector: aSelector [
+
+	keyDownActionSelector := aSelector
 ]
 
 { #category : #'keyboard managing' }
