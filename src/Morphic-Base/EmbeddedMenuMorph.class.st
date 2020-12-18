@@ -45,10 +45,11 @@ EmbeddedMenuMorph >> handlesKeyboard: evt [
 ]
 
 { #category : #events }
-EmbeddedMenuMorph >> keyStroke: evt [
+EmbeddedMenuMorph >> keyDown: evt [
 	"Handle tabbing and arrows and cr/space."
 
 	| char selectable |
+	self inform: 'toto'.
 	(self navigationKey: evt) ifTrue: [ ^ self ].
 	char := evt keyCharacter.
 	char = Character space
