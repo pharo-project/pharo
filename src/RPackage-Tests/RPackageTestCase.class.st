@@ -67,9 +67,12 @@ RPackageTestCase >> createNewTraitNamed: aName [
 RPackageTestCase >> createNewTraitNamed: aName inCategory: cat [
 	
 	| cls |
-	cls := Trait named: aName
-			uses: {}
-			category: cat.
+	cls := self class classInstaller make: [ :aBuilder |
+		aBuilder 
+			name: aName;
+			package:  cat;
+			beTrait ].					
+
 	createdClasses add: cls.
 	createdCategories add: cat.
 	^ cls

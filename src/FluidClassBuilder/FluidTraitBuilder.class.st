@@ -30,11 +30,10 @@ FluidTraitBuilder >> fillShiftClassBuilder [
 	shiftClassBuilder buildEnvironment: ShSmalltalkGlobalsEnvironment new. 
 	shiftClassBuilder 
 		name: name;
-		superclass: nil;
-		metaSuperclass: Trait;
-		metaclassClass: MetaclassForTraits;
+		beTrait;
 		sharedVariables: '';
 		sharedPools: ''.
+		
 	slots ifNotNil: [ shiftClassBuilder slots: slots ].	
 	uses ifNotNil: [ 
 		shiftClassBuilder traitComposition: uses asTraitComposition.
