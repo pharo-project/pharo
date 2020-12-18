@@ -47,11 +47,11 @@ FinderClassNode >> childrenItems [
 ]
 
 { #category : #'event handling' }
-FinderClassNode >> keyStroke: anEvent [
+FinderClassNode >> keyDown: anEvent [
 	(anEvent controlKeyPressed or: [ anEvent commandKeyPressed ]) ifFalse: [ ^ false ].
 	anEvent keyCharacter == $h ifTrue: [ ^ self browseHierarchy ].
 	anEvent keyCharacter == $N ifTrue: [ ^ self browseReferences ].
-	^ super keyStroke: anEvent
+	^ super keyDown: anEvent
 ]
 
 { #category : #'event handling' }
