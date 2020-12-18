@@ -1172,11 +1172,6 @@ MorphTreeMorph >> keyboardFocusChange: aBoolean [
 	self focusChanged
 ]
 
-{ #category : #accessing }
-MorphTreeMorph >> keystrokeActionSelector: aSelector [
-	self listManager keystrokeActionSelector: aSelector
-]
-
 { #category : #'column handling' }
 MorphTreeMorph >> lastColumnBounded [
 	"Return true if the last column can be resized with a resizer"

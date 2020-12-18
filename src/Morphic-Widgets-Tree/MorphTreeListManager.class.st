@@ -23,8 +23,7 @@ Class {
 		'selectedMorphList',
 		'removeOnlyLastSelected',
 		'doubleClickSelector',
-		'keyDownActionSelector',
-		'keystrokeActionSelector'
+		'keyDownActionSelector'
 	],
 	#category : #'Morphic-Widgets-Tree'
 }
@@ -419,18 +418,6 @@ MorphTreeListManager >> keyStroke: anEvent [
 		ifFalse: [ args = 1
 				ifTrue: [ self listModel perform: self keystrokeActionSelector with: anEvent ]
 				ifFalse: [ self listModel perform: self keystrokeActionSelector with: anEvent with: self ] ]
-]
-
-{ #category : #accessing }
-MorphTreeListManager >> keystrokeActionSelector [
-
-	^ keystrokeActionSelector
-]
-
-{ #category : #accessing }
-MorphTreeListManager >> keystrokeActionSelector: aSelectorOrBlock [
-
-	keystrokeActionSelector := aSelectorOrBlock
 ]
 
 { #category : #accessing }
