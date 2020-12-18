@@ -42,7 +42,6 @@ GLMMorphicExpanderRenderer >> renderWithTree: aBrowser [
 	treeMorph
 		makeLastColumnUnbounded;
 		getMenuSelector: #menu:shifted:;
-		keystrokeActionSelector: #keyStroke:from:;
 		cornerStyle: treeMorph preferredCornerStyle;
 		borderStyle: (BorderStyle inset width: 1);
 		hResizing: #spaceFill;
