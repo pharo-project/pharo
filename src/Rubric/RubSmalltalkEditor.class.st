@@ -351,6 +351,17 @@ RubSmalltalkEditor >> compileSelectionFor: anObject in: evalContext [
 ]
 
 { #category : #'completion engine' }
+RubSmalltalkEditor >> completionAround: aBlock keyDown: anEvent [
+	"I'm a editor for Smalltalk, so, do completion around"
+	
+	self isCompletionEnabled ifFalse: [  ^aBlock value ].
+	
+	(completionEngine handleKeyDownBefore: anEvent editor: self) ifTrue:  [^ self ].
+	
+	aBlock value
+]
+
+{ #category : #'completion engine' }
 RubSmalltalkEditor >> completionAround: aBlock keyStroke: anEvent [
 	"I'm a editor for Smalltalk, so, do completion around"
 	
@@ -833,6 +844,13 @@ RubSmalltalkEditor >> jumpToNextKeywordOfIt: isForwardJump [
 		selection: self textArea selectionInterval
 		searchingForward: isForwardJump
 		ifFound: [ :foundIndex | self selectFrom: foundIndex + 1 to: foundIndex ]
+]
+
+{ #category : #'typing support' }
+RubSmalltalkEditor >> keyDown: aKeyboardEvent [
+
+	self completionAround: [super keyDown: aKeyboardEvent ] keyDown: aKeyboardEvent
+	
 ]
 
 { #category : #'typing support' }
