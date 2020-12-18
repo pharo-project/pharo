@@ -48,18 +48,9 @@ EmbeddedMenuMorph >> handlesKeyboard: evt [
 EmbeddedMenuMorph >> keyDown: evt [
 	"Handle tabbing and arrows and cr/space."
 
-	| char selectable |
-	self inform: 'toto'.
+	| char |
 	(self navigationKey: evt) ifTrue: [ ^ self ].
 	char := evt keyCharacter.
-	char = Character space
-		ifTrue: [ selectedItem
-				ifNotNil: [ ^ selectedItem hasSubMenu
-						ifTrue: [ evt hand newMouseFocus: selectedItem subMenu.
-							selectedItem subMenu takeKeyboardFocus ]
-						ifFalse: [ selectedItem invokeWithEvent: evt ] ].
-			(selectable := self items) size = 1 ifTrue: [ ^ selectable first invokeWithEvent: evt ].
-			^ self ].
 	(char = Character arrowLeft or: [ char = Character arrowRight ])
 		ifTrue: [ (selectedItem notNil and: [ selectedItem hasSubMenu ])
 				ifTrue: [ evt hand newMouseFocus: selectedItem subMenu.
@@ -80,6 +71,23 @@ EmbeddedMenuMorph >> keyboardFocusChange: aBoolean [
 		ifTrue: [(self ownerThatIsA: GeneralScrollPane) ifNotNil: [:sp |
 					sp scrollToShow: self bounds]]
 		ifFalse: [self selectItem: nil event: nil]
+]
+
+{ #category : #events }
+EmbeddedMenuMorph >> keystroke: evt [
+	"Handle tabbing and arrows and cr/space."
+
+	| char selectable |
+	char := evt keyCharacter.
+	char = Character space
+		ifTrue: [ selectedItem
+				ifNotNil: [ ^ selectedItem hasSubMenu
+						ifTrue: [ evt hand newMouseFocus: selectedItem subMenu.
+							selectedItem subMenu takeKeyboardFocus ]
+						ifFalse: [ selectedItem invokeWithEvent: evt ] ].
+			(selectable := self items) size = 1 ifTrue: [ ^ selectable first invokeWithEvent: evt ].
+			^ true ].
+	^ false
 ]
 
 { #category : #'keyboard control' }
