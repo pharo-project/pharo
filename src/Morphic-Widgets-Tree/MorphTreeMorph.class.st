@@ -1156,14 +1156,6 @@ MorphTreeMorph >> keyDownActionSelector: aSelector [
 	self listManager keyDownActionSelector: aSelector
 ]
 
-{ #category : #'events-processing' }
-MorphTreeMorph >> keyStroke: event [ 
-	"Process potential command keys."
-	(self navigationKey: event) ifTrue: [^true].
-	(self scrollByKeyboard: event) ifTrue: [^true].
-	^ self listManager keyStroke: event
-]
-
 { #category : #'event handling' }
 MorphTreeMorph >> keyboardFocusChange: aBoolean [
 	"The message is sent to a morph when its keyboard focus changes.
