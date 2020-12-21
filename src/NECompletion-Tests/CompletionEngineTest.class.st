@@ -157,8 +157,8 @@ CompletionEngineTest >> testReplaceTokenWithCaretInTheMiddleOfWordWithFollowingW
 	
 	editor textArea openInWorld.
 	controller openMenu.
-	editor keystroke: (self keyboardEventFor: Character arrowLeft).
-	editor keystroke: (self keyboardEventFor: Character arrowLeft).
+	editor keyDown: (self keyboardEventFor: Character arrowLeft).
+	editor keyDown: (self keyboardEventFor: Character arrowLeft).
 
 	controller context replaceTokenInEditorWith: 'toto'.
 	
