@@ -31,6 +31,17 @@ RBErrorNodeParserTest >> testFaultyBinaryMessageSendWithLiteralArgumentShouldHav
 ]
 
 { #category : #tests }
+RBErrorNodeParserTest >> testFaultyCascade [
+
+	| node |
+	node := self parserClass parseFaultyExpression: '; ]'.
+	
+	self assert: node isUnfinishedStatement.
+	self assert: node children first isCascade.
+	self assert: node children first messages first isParseError.
+]
+
+{ #category : #tests }
 RBErrorNodeParserTest >> testFaultyMessageSendShouldHaveTheCorrectMessage [
 
 	| node |

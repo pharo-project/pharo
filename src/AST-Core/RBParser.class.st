@@ -522,20 +522,11 @@ RBParser >> parseCascadeMessageWithReceiver: receiver [
 ]
 
 { #category : #'private-classes' }
-RBParser >> parseEnglobingError: aCollection with: aToken [
-	| firstParse |
-	firstParse := self parserError: aToken value asString, ' counterpart missing'.
-	^[firstParse isParseError
-		ifTrue: [ self englobingErrorNodeClass error: aToken withNodes: aCollection ]
-		ifFalse: [ firstParse ]] on: Error do: [ firstParse ].
-]
-
-{ #category : #'private-classes' }
 RBParser >> parseEnglobingError: aCollection with: aToken errorMessage: anErrorMessage [
 	| firstParse |
 	firstParse := self parserError: anErrorMessage.
 	^[firstParse isParseError
-		ifTrue: [ self englobingErrorNodeClass error: aToken withNodes: aCollection ]
+		ifTrue: [ (self englobingErrorNodeClass error: aToken withNodes: aCollection) value: aToken value asString ]
 		ifFalse: [ firstParse ]] on: Error do: [ firstParse ].
 ]
 

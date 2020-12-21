@@ -19,15 +19,10 @@ RBLiteralByteArrayErrorNode class >> error: aToken withNodes: aCollection [
 	"If the collection is empty, there is only the token in the error."
 	^aCollection isEmpty
 		ifTrue: [ self new content: aCollection; start: aToken start; stop: aToken stop; errorMessage: ''']'' expected' ]
-		ifFalse: [ self new content: aCollection; start: aToken start; stop: aCollection last stop; errorMessage: ''']'' expected'; createValue ]
+		ifFalse: [ self new content: aCollection; start: aToken start; stop: aCollection last stop; errorMessage: ''']'' expected' ]
 ]
 
 { #category : #testing }
 RBLiteralByteArrayErrorNode >> isLiteralByteArrayError [
 	^true
-]
-
-{ #category : #testing }
-RBLiteralByteArrayErrorNode >> value [
-	^  '#[ ', super value 
 ]

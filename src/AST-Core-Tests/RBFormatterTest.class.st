@@ -86,10 +86,9 @@ RBFormatterTest >> testParseError [
 RBFormatterTest >> testParseError2 [
 	| inputSource errorNode |
 	"parse error nodes should have the faulty code"
-	inputSource := '( 1 + 2 '.
+	inputSource := '( 1 + 2'.
    errorNode := self parseFaultyExpression: inputSource.
 	self assert: errorNode source equals: errorNode formattedCode
-
 ]
 
 { #category : #testing }
