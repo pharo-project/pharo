@@ -3798,6 +3798,7 @@ Morph >> keepsTransform [
 { #category : #'event handling' }
 Morph >> keyDown: anEvent [
 	"Handle a key down event. The default response is to do nothing."
+	^ false
 ]
 
 { #category : #'event handling' }
@@ -3809,6 +3810,7 @@ Morph >> keyStroke: anEvent [
 { #category : #'event handling' }
 Morph >> keyUp: anEvent [
 	"Handle a key up event. The default response is to do nothing."
+	^ false
 ]
 
 { #category : #'event handling' }
