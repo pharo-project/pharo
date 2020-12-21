@@ -181,7 +181,6 @@ PopupChoiceDialogWindow >> keyDown: anEvent [
 	self inform: anEvent keyCharacter printString.
 	anEvent keyCharacter = Character backspace
 		ifTrue: [
-			self haltOnce.
 			self filter ifNotEmpty: [self filter: self filter allButLast].
 			^ true].
 	anEvent keyCharacter = Character arrowUp ifTrue: [self selectLastEnabledItem. ^true].
