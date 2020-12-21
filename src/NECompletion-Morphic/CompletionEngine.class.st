@@ -146,11 +146,10 @@ CompletionEngine >> handleKeyDownBefore: aKeyboardEvent editor: anEditor [
 			editor isCaretBehindChar
 				ifFalse: [ self closeMenu ].
 			^ false ].
-	(controlKeyPressed not & aKeyboardEvent commandKeyPressed not
-		and: [ aKeyboardEvent keyCharacter isCompletionCharacter ])
-		ifFalse: [ 
+	(controlKeyPressed or: [ commandKeyPressed ])
+		ifTrue: [ 
 			self closeMenu.
-			^ keyCharacter isCompletionCharacter not ].
+			^ true ].
 	^ false
 ]
 

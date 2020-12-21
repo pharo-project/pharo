@@ -30,18 +30,7 @@ CompletionEngineTest >> interactionModel [
 { #category : #'tests-keyboard' }
 CompletionEngineTest >> keyboardEventFor: char [
 
-	| event |
-	event := KeyboardEvent new.
-	event 
-		setType: #keystroke
-		buttons: 0
-		position:  0@0
-		keyValue: char asciiValue 
-		charCode: char asciiValue
-		hand: nil 
-		stamp: Time now.
-		
-	^event
+	^ self keyboardEventFor: char useCommand: false
 ]
 
 { #category : #'tests-keyboard' }
@@ -52,7 +41,7 @@ CompletionEngineTest >> keyboardEventFor: char useCommand: command [
 	modifier := 0.
 	command ifTrue: [ modifier := modifier + 64].
 	event 
-		setType: #keystroke
+		setType: #keyDown
 		buttons: modifier
 		position:  0@0
 		keyValue: char asciiValue 
