@@ -85,6 +85,14 @@ FTFunction >> isExplicit [
 ]
 
 { #category : #'event handling' }
+FTFunction >> keyDown: anEvent [
+	"If the widget is implicit this method will be call if the user want to communicate with the widget."
+
+	"Do not handle the event by default"
+	^ false
+]
+
+{ #category : #'event handling' }
 FTFunction >> keyStroke: anEvent [
 	"If the widget is implicit this method will be call if the user want to communicate with the widget."
 
