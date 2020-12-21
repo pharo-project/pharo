@@ -1494,7 +1494,7 @@ RubTextEditor >> isTextEditor [
 
 { #category : #'typing support' }
 RubTextEditor >> keyDown: aKeyboardEvent [
-
+	textArea announce: ((RubKeystroke with: aKeyboardEvent) morph: self).
 	(self dispatch: aKeyboardEvent) ifTrue: [
 		self doneTyping.
 		self storeSelectionInText ]
