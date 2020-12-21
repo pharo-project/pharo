@@ -10,7 +10,7 @@ Class {
 { #category : #running }
 MCSnapshotTest >> createSnapshotWithClassWithClassSideTraits [
 
-	| t1 t2 c1 |
+	| t1 t2 |
 	
 	RPackageOrganizer default registerPackageNamed: 'Monticello-Snapshot-Mock'.
 	
