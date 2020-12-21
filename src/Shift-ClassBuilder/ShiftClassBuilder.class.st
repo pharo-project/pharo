@@ -501,18 +501,6 @@ ShiftClassBuilder >> superclassResolver: asuperclassResolver [
 	superclassResolver:= asuperclassResolver
 ]
 
-{ #category : #accessing }
-ShiftClassBuilder >> traitComposition [
-	^ extensibleProperties at: #traitComposition ifAbsent: {}
-]
-
-{ #category : #accessing }
-ShiftClassBuilder >> traitComposition: aValue [
-	
-	self classTraitComposition: aValue classComposition.
-	^ extensibleProperties at: #traitComposition put: aValue
-]
-
 { #category : #building }
 ShiftClassBuilder >> tryToFillOldClass [
 	oldClass ifNotNil: [ ^self ].

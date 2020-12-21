@@ -325,7 +325,7 @@ EpCodeChangeIntegrationTest >> testRemoveTraitFromComposition [
 			self class classInstaller make: [ :aBuilder | 
 				aBuilder 
 					name: aClass name;
-					traitComposition: {} asTraitComposition;
+					traitComposition: {};
 					package: aClass category]] 
 		raise: MessageNotUnderstood
 	
