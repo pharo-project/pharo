@@ -70,7 +70,6 @@ Class {
 		'activeDelay',
 		'suspendSemaphore',
 		'timingSemaphore',
-		'debug',
 		'delayToStart',
 		'delayToStop'
 	],
