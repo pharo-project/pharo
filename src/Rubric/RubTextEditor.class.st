@@ -612,6 +612,7 @@ RubTextEditor >> crWithIndent: aKeyboardEvent [
 		char = $] ifTrue: [tabCount := tabCount - 1]].
 	 "Now inject CR with tabCount tabs"
 	self addString: (String streamContents: [ :strm | strm crtab: tabCount ]).
+	self unselect.
 	^ false
 ]
 
@@ -795,6 +796,7 @@ RubTextEditor >> defaultCommandKeymapping [
 	(Character arrowLeft -> #cursorLeft:).
 	(Character arrowRight -> #cursorRight:).
 	(Character arrowUp -> #cursorUp:).
+	(Character tab -> #tab:).
 	(Character arrowDown -> #cursorDown:).
 	(Character space -> #selectWord:).
 	(Character delete -> #forwardDelete:) } do: [ :assoc | 
@@ -851,11 +853,10 @@ RubTextEditor >> dispatch: aKeyboardEvent [
 	"Carry out the action associated with this character, if any.
 	Type-ahead is passed so some routines can flush or use it."
 
-	| return |
-	return := [ :val | ^ val ].
-	self dispatchEnterOn: aKeyboardEvent return: return.
-	self dispatchCommandOn: aKeyboardEvent return: return.
-	^ self normalCharacter: aKeyboardEvent
+	self
+		dispatchCommandOn: aKeyboardEvent
+		return: [ :val | ^ val ].
+	^ false
 ]
 
 { #category : #'typing support' }
@@ -875,19 +876,6 @@ RubTextEditor >> dispatchCommandOn: aKeyboardEvent return: return [
 	aKeyboardEvent controlKeyPressed
 		ifTrue: [ ^ self performCmdActionsWith: aKeyboardEvent shifted: true return: return ].
 	^ false
-]
-
-{ #category : #'typing support' }
-RubTextEditor >> dispatchEnterOn: aKeyboardEvent return: aBlock [
-	aKeyboardEvent keyValue = Character cr asciiValue
-		ifFalse: [ ^ false ].
-	aKeyboardEvent controlKeyPressed
-		ifTrue: [ aBlock value: (self normalCharacter: aKeyboardEvent) ].
-	aKeyboardEvent shiftPressed
-		ifTrue: [ aBlock value: (self lf: aKeyboardEvent) ].
-	aKeyboardEvent commandKeyPressed
-		ifTrue: [ aBlock value: (self crlf: aKeyboardEvent) ].
-	aBlock value: (self crWithIndent: aKeyboardEvent)
 ]
 
 { #category : #'typing/selecting keys' }
@@ -1505,13 +1493,17 @@ RubTextEditor >> isTextEditor [
 ]
 
 { #category : #'typing support' }
+RubTextEditor >> keyDown: aKeyboardEvent [
+	textArea announce: ((RubKeystroke with: aKeyboardEvent) morph: self).
+	(self dispatch: aKeyboardEvent) ifTrue: [
+		self doneTyping.
+		self storeSelectionInText ]
+]
+
+{ #category : #'typing support' }
 RubTextEditor >> keystroke: aKeyboardEvent [
 	textArea announce: ((RubKeystroke with: aKeyboardEvent) morph: self).
-	(self dispatch: aKeyboardEvent)
-		ifTrue: [ "If not a normal character"
-			self doneTyping.
-			self storeSelectionInText.
-			^ self ].
+	self normalCharacter: aKeyboardEvent.
 	"normal character"
 	self openTypeIn.
 	self hasSelection
@@ -2403,8 +2395,10 @@ as if shift-command were also being pressed"
 	3	"enter"
 	4	"end"
 	8	"backspace"
+	9	"tab"
 	11	"page up"
 	12	"page down"
+	13 "cr"
 	27	"escape"
 	28	"left arrow"
 	29	"right arrow"
@@ -2481,6 +2475,15 @@ RubTextEditor >> swapChars: aKeyboardEvent [
 	self replaceSelectionWith: (Text string: aString reversed attributes: self emphasisHere).
 	self selectAt: currentSelection + 1.
 	^ true
+]
+
+{ #category : #'typing/selecting keys' }
+RubTextEditor >> tab: aKeyboardEvent [
+	"Append a line feed character to the stream of characters."
+
+	self addString: String tab.
+	self unselect.
+	^false
 ]
 
 { #category : #accessing }

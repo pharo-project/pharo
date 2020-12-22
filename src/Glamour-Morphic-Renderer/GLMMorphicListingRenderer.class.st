@@ -101,7 +101,6 @@ GLMMorphicListingRenderer >> treeMorphFor: tmpTreeModel and: aPresentation [
 		makeLastColumnUnbounded;
 		doubleClickSelector: #onDoubleClick;
 		getMenuSelector: #menu:shifted:;
-		keystrokeActionSelector: #keyStroke:from:;
 		columnInset: 3;
 		rowInset: 1;
 		cornerStyle: tmpTreeMorph preferredCornerStyle;

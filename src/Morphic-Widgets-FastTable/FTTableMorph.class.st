@@ -681,6 +681,20 @@ FTTableMorph >> isYellowButtonReallyPressed: anEvent [
 ]
 
 { #category : #'event handling' }
+FTTableMorph >> keyDown: event [
+	self flag: #pharoTodo. "If the function is explicit this should be redirect to the function widget."
+	((super keyDown: event) or: [ self navigationKey: event ])
+		ifTrue: [ ^ true ].
+		
+	^ self keyDownSearch: event
+]
+
+{ #category : #'event handling' }
+FTTableMorph >> keyDownSearch: event [
+	^ function keyDown: event
+]
+
+{ #category : #'event handling' }
 FTTableMorph >> keyStroke: event [
 	self flag: #pharoTodo. "If the function is explicit this should be redirect to the function widget."
 	((super keyStroke: event) or: [ self navigationKey: event ])

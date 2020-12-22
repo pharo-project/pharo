@@ -375,16 +375,21 @@ DropListMorph >> initialize [
 ]
 
 { #category : #'event handling' }
-DropListMorph >> keyStroke: event [
-	"Pass on to the list."
-	| indexToSelect |
+DropListMorph >> keyDown: event [
 	
 	event keyCharacter = Character escape ifTrue: [ self hideList ].
 	(self navigationKey: event) ifTrue: [^self].
 	
 	event keyCharacter == Character cr
 		ifTrue: [ ^ self listSelectionIndex: self listSelectionIndex ].
-		
+
+	^ false
+]
+
+{ #category : #'event handling' }
+DropListMorph >> keyStroke: event [
+	"Pass on to the list."
+	| indexToSelect |
 	indexToSelect := self listMorph keyStroke: event.
 	
 	"If the returned value is not an integer, do not handle it"

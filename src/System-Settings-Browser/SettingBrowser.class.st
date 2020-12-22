@@ -521,7 +521,7 @@ SettingBrowser >> isRendered [
 ]
 
 { #category : #menu }
-SettingBrowser >> keyStroke: anEvent from: aTreeMorph [
+SettingBrowser >> keyDown: anEvent from: aTreeMorph [
 	| c |
 	c := anEvent keyCharacter.
 	c = $a
@@ -529,7 +529,7 @@ SettingBrowser >> keyStroke: anEvent from: aTreeMorph [
 	c = $A
 		ifTrue: [^ self collapseAll]. 
 	self selectedNode
-		ifNotNil: [:current | current keyStroke: anEvent from: aTreeMorph.
+		ifNotNil: [:current | current keyDown: anEvent from: aTreeMorph.
 			current settingDeclaration hasDefault
 				ifTrue: [c = $d
 						ifTrue: [^ self menuSetToDefault: current]].
@@ -851,7 +851,7 @@ SettingBrowser >> treeMorphIn: aMorph [
 	| treeMorph |
 	treeMorph := (self treeMorphClass on: self)
 		getMenuSelector: #menu:shifted:;
-		keystrokeActionSelector: #keyStroke:from:;
+		keyDownActionSelector: #keyDown:from:;
 		columns: {
 			MorphTreeColumn new startWidth: 300; rowMorphGetSelector: #labelMorphFor:; yourself.
 			MorphTreeColumn new rowMorphGetSelector: #inputMorphFor:;yourself

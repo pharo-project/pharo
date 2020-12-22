@@ -5,7 +5,6 @@ Class {
 	#name : #MorphTreeListManager,
 	#superclass : #Object,
 	#instVars : [
-		'keystrokeActionSelector',
 		'multipleSelection',
 		'autoMultiSelection',
 		'potentialDropMorph',
@@ -23,7 +22,8 @@ Class {
 		'autoTargetMorph',
 		'selectedMorphList',
 		'removeOnlyLastSelected',
-		'doubleClickSelector'
+		'doubleClickSelector',
+		'keyDownActionSelector'
 	],
 	#category : #'Morphic-Widgets-Tree'
 }
@@ -365,7 +365,7 @@ MorphTreeListManager >> isSelectionUpdateFromView [
 ]
 
 { #category : #'keyboard managing' }
-MorphTreeListManager >> keyStroke: anEvent [
+MorphTreeListManager >> keyDown: anEvent [
 	| char args |
 	char := anEvent keyValue asCharacter.
 
@@ -378,27 +378,21 @@ MorphTreeListManager >> keyStroke: anEvent [
 	anEvent anyModifierKeyPressed
 		ifFalse: [ self basicKeyPressed: char.
 			^ true ].
+		
+	keyDownActionSelector ifNil: [ ^ false ].
 
-	self keystrokeActionSelector ifNil: [ ^ false ].
-
-	args := self keystrokeActionSelector numArgs.
+	args := keyDownActionSelector numArgs.
 	^ (args = 0 or: [ args > 2 ])
-		ifTrue: [ self error: 'The keystrokeActionSelector must be a 1- or 2-keyword symbol' ]
+		ifTrue: [ self error: 'The keyDownActionSelector must be a 1- or 2-keyword symbol' ]
 		ifFalse: [ args = 1
-				ifTrue: [ self listModel perform: self keystrokeActionSelector with: anEvent ]
-				ifFalse: [ self listModel perform: self keystrokeActionSelector with: anEvent with: self ] ]
+				ifTrue: [ self listModel perform: keyDownActionSelector with: anEvent ]
+				ifFalse: [ self listModel perform: keyDownActionSelector with: anEvent with: self ] ]
 ]
 
-{ #category : #accessing }
-MorphTreeListManager >> keystrokeActionSelector [
+{ #category : #'keyboard managing' }
+MorphTreeListManager >> keyDownActionSelector: aSelector [
 
-	^ keystrokeActionSelector
-]
-
-{ #category : #accessing }
-MorphTreeListManager >> keystrokeActionSelector: aSelectorOrBlock [
-
-	keystrokeActionSelector := aSelectorOrBlock
+	keyDownActionSelector := aSelector
 ]
 
 { #category : #accessing }
