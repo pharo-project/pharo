@@ -31,12 +31,6 @@ RBSelectorNode class >> value: aString keywordPositions: keywordPositions [
 		yourself
 ]
 
-{ #category : #accessing }
-RBSelectorNode class >> value: aString start: anInteger [
-	^ self new value: aString ;
-	           start: anInteger.
-]
-
 { #category : #comparing }
 RBSelectorNode >> = anObject [ 
 	self == anObject ifTrue: [^true].
@@ -94,11 +88,6 @@ RBSelectorNode >> printOn: aStream [
 		<< '('
 		<< value asString
 		<< ')'
-]
-
-{ #category : #accessing }
-RBSelectorNode >> start: aPositionsList [
-	keywordPositions := aPositionsList ifNotNil: [:list| list asIntegerArray ].
 ]
 
 { #category : #accessing }
