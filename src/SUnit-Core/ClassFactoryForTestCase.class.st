@@ -274,11 +274,14 @@ ClassFactoryForTestCase >> newTraitName [
 { #category : #creating }
 ClassFactoryForTestCase >> newTraitNamed: aTraitName uses: aTraitComposition tag: aTag [
 	
-	| newTrait |
-	newTrait := Trait 
-					named: aTraitName
-					uses: aTraitComposition 
-					package: (self packageName, '-', aTag) asSymbol.
+	| newTrait |					
+	newTrait := self class classInstaller make: [ :aBuilder |
+		aBuilder 
+			name: aTraitName;
+			traitComposition: aTraitComposition asTraitComposition;
+			package: (self packageName, '-', aTag) asSymbol;
+			beTrait ].					
+					
 	self createdTraits add: newTrait.
 	^ newTrait
 ]

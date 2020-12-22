@@ -100,10 +100,14 @@ TraitsTestCase >> createClassNamed: aSymbol superclass: aClass uses: aTraitCompo
 { #category : #utilities }
 TraitsTestCase >> createTraitNamed: aSymbol uses: aTraitComposition [
 	| trait |
-	trait := Trait
-		named: aSymbol
-		uses: aTraitComposition
-		package: self categoryName.
+
+	trait := self class classInstaller make: [ :aBuilder |
+		aBuilder 
+			name: aSymbol;
+			traitComposition: aTraitComposition asTraitComposition;
+			package: self categoryName;
+			beTrait ].			
+
 	self createdClassesAndTraits add: trait.
 	^trait
 ]

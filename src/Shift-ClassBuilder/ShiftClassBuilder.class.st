@@ -429,6 +429,12 @@ ShiftClassBuilder >> oldMetaclass [
 	^ oldMetaclass
 ]
 
+{ #category : #accessing }
+ShiftClassBuilder >> package: anObject [
+	
+	self category: anObject
+]
+
 { #category : #changes }
 ShiftClassBuilder >> propagateChangesTo: anotherBuilder [
 	changes do: [ :e | e propagateToSubclasses: anotherBuilder ]
@@ -522,6 +528,8 @@ ShiftClassBuilder >> traitComposition [
 
 { #category : #accessing }
 ShiftClassBuilder >> traitComposition: aValue [
+
+	self classTraitComposition: aValue asTraitComposition classComposition.
 	^ extensibleProperties at: #traitComposition put: aValue
 ]
 
