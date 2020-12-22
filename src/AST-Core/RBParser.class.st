@@ -340,12 +340,14 @@ RBParser >> parseBinaryMessage [
 { #category : #'private-parsing' }
 RBParser >> parseBinaryMessageWith: aNode [ 
 	| binaryNode |
-	binaryNode := self selectorNodeClass value: currentToken value start: (Array with: currentToken start).
+	binaryNode := self selectorNodeClass
+		value: currentToken value
+		keywordPositions: (Array with: currentToken start).
 	self step.
 	^self messageNodeClass 
 		receiver: aNode
 		selector:  binaryNode
-		keywordsPositions: binaryNode start
+		keywordsPositions: binaryNode keywordPositions
 		arguments: (Array with: self parseUnaryMessage)
 ]
 
@@ -592,7 +594,7 @@ RBParser >> parseKeywordMessageWith: node [
 			self step.
 			args add: self parseBinaryMessage.
 			isKeyword := true].
-	selector start: keywordsStartPositions.
+	selector keywordPositions: keywordsStartPositions.
 	^isKeyword
 		ifTrue: 
 			[self messageNodeClass 
@@ -1201,12 +1203,12 @@ RBParser >> parseUnaryMessage [
 { #category : #'private-parsing' }
 RBParser >> parseUnaryMessageWith: aNode [ 
 	| selector |
-	selector := self selectorNodeClass value: currentToken value start: (Array with: currentToken start).
+	selector := self selectorNodeClass value: currentToken value keywordPositions: (Array with: currentToken start).
 	self step.
 	^self messageNodeClass
 		receiver: aNode
 		selector:  selector
-		keywordsPositions: selector start
+		keywordsPositions: selector keywordPositions
 		arguments: #()
 ]
 
