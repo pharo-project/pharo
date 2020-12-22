@@ -1,7 +1,7 @@
 Class {
 	#name : #RBRefactoringBrowserTest,
 	#superclass : #AbstractEnvironmentTestCase,
-	#category : #'Refactoring-Tests-Core'
+	#category : #'Refactoring-Tests-Core-Base'
 }
 
 { #category : #testing }
