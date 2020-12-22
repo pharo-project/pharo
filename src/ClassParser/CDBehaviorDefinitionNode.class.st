@@ -26,6 +26,12 @@ CDBehaviorDefinitionNode >> classDefinitionNode [
 	^self
 ]
 
+{ #category : #testing }
+CDBehaviorDefinitionNode >> classKind [
+
+	^ classKind
+]
+
 { #category : #accessing }
 CDBehaviorDefinitionNode >> classKind: aString [ 
 	classKind := aString
@@ -72,6 +78,12 @@ CDBehaviorDefinitionNode >> classNameNode: aNode astNode: astNode [
 CDBehaviorDefinitionNode >> existingClassIfAbsent: aBlock [
 
 	^self classNameNode existingClassIfAbsent: aBlock
+]
+
+{ #category : #testing }
+CDBehaviorDefinitionNode >> hasTraitComposition [
+	
+	^ traitDefinition isNotNil
 ]
 
 { #category : #initialization }
@@ -140,6 +152,16 @@ CDBehaviorDefinitionNode >> slots: aCollection [
 	slotNodes := aCollection.
 	aCollection do: [ :each | self addChild: each ]
 	
+]
+
+{ #category : #testing }
+CDBehaviorDefinitionNode >> tokens [
+	^ tokens
+]
+
+{ #category : #testing }
+CDBehaviorDefinitionNode >> tokens: aCollection [ 
+	tokens := aCollection
 ]
 
 { #category : #accessing }

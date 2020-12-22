@@ -47,12 +47,12 @@ OSWindowGenericRenderer >> drawRectangle: aRectangle [
 ]
 
 { #category : #rendering }
-OSWindowGenericRenderer >> drawString: aString from: firstIndex to: lastIndex in: bounds font: font color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc kern: kern [
+OSWindowGenericRenderer >> drawTexture: texture in: rectangle [
 	self subclassResponsibility
 ]
 
 { #category : #rendering }
-OSWindowGenericRenderer >> drawTexture: texture in: rectangle [
+OSWindowGenericRenderer >> drawTexture: texture rectangle: sourceRectangle in: destRectangle [
 	self subclassResponsibility
 ]
 
@@ -85,9 +85,22 @@ OSWindowGenericRenderer >> getOrCreateStaticTextureFromForm: from [
 	self subclassResponsibility
 ]
 
-{ #category : #clipping }
-OSWindowGenericRenderer >> pixelExtent [
-	^ backendWindow extent
+{ #category : #resources }
+OSWindowGenericRenderer >> getOrCreateTextureFor: anObject withExtent: anExtent [
+	"This gets or creates a cached texture corresponding to an an abstract object used as a key."
+	self subclassResponsibility
+]
+
+{ #category : #resources }
+OSWindowGenericRenderer >> getRenderTargetTextureForObjectOrNil: anObject [
+	"This gets or creates a cached render target texture corresponding to an an abstract object used as a key."
+	self subclassResponsibility
+]
+
+{ #category : #resources }
+OSWindowGenericRenderer >> getTextureForObjectOrNil: anObject [
+	"This gets or creates a cached render target texture corresponding to an an abstract object used as a key."
+	self subclassResponsibility
 ]
 
 { #category : #rendering }
@@ -104,6 +117,12 @@ OSWindowGenericRenderer >> scene [
 { #category : #accessing }
 OSWindowGenericRenderer >> scene: anObject [
 	scene := anObject
+]
+
+{ #category : #testing }
+OSWindowGenericRenderer >> supportsRenderTargets [
+	"This method tells on whether the renderer support rendering into a texture or not."
+	^ false
 ]
 
 { #category : #'updating screen' }
@@ -138,6 +157,21 @@ OSWindowGenericRenderer >> useModulatingColorBlending [
 
 { #category : #'blending mode' }
 OSWindowGenericRenderer >> useNoBlending [
+	self subclassResponsibility
+]
+
+{ #category : #'blending mode' }
+OSWindowGenericRenderer >> usePremultipliedCompositeAlphaBlending [
+	self subclassResponsibility
+]
+
+{ #category : #'blending mode' }
+OSWindowGenericRenderer >> useSubpixelFontFirstPassBlending [
+	self subclassResponsibility
+]
+
+{ #category : #'blending mode' }
+OSWindowGenericRenderer >> useSubpixelFontSecondPassBlending [
 	self subclassResponsibility
 ]
 

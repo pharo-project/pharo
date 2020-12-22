@@ -20,7 +20,7 @@ Or set for example set ballon or default font as following:
 "
 Class {
 	#name : #FreeTypeFontProvider,
-	#superclass : #FontProviderAbstract,
+	#superclass : #AbstractFontProvider,
 	#instVars : [
 		'fileInfos',
 		'fileInfoCache',
@@ -48,19 +48,16 @@ FreeTypeFontProvider class >> current [
 ]
 
 { #category : #'class initialization' }
-FreeTypeFontProvider class >> initialize [
-	"
-	self initialize
-	"
-	"ensure that other classes have also been initialized by forcefully initializing them now.
-	It then does not matter which order they are initialized in during the package load"
+FreeTypeFontProvider class >> initialize [	 
+	"Ensure that other classes have also been initialized by forcefully initializing them now.
+	 It then does not matter which order they are initialized in during the package load"
 	FT2Constants initialize.
 	FreeTypeCache initialize.
 	FreeTypeCacheConstants initialize.
 	FreeTypeSettings initialize.
 	
 	current := nil.
-	self current. "this creates an instance of me, and updates from the system"
+	self current "this creates an instance of me, and updates from the system"
 ]
 
 { #category : #'extra fonts registration' }
@@ -517,7 +514,7 @@ FreeTypeFontProvider >> updateFromFile: aFile [
 		
 	(cachedNumFaces notNil and:[ i >= cachedNumFaces ]) ifTrue:[ ^ self ].
 	
-	path := aFile fullName convertToWithConverter: UTF8TextConverter new .
+	path := aFile fullName utf8Encoded asString.
 	[face := FreeTypeFace basicNew filename: path; index:  i.
 	["we use the primNewFaceFromFile:index: method because we want to do this as fast as possible and we don't need the face registered because it will be explicitly destroyed later"
 	face newFaceFromFile: path index: i.

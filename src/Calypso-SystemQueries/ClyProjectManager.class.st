@@ -6,9 +6,6 @@ Project and package are represented by classes ClyManagedProject and ClyManagedP
 Class {
 	#name : #ClyProjectManager,
 	#superclass : #Object,
-	#instVars : [
-		'systemEnvironment'
-	],
 	#category : #'Calypso-SystemQueries-Domain'
 }
 

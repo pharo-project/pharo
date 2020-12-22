@@ -15,6 +15,7 @@ Class {
 
 { #category : #variables }
 OCASTSemanticAnalyzer >> analyseEscapingRead: var [
+	var markRead.
 	(var scope outerNotOptimizedScope ~= scope outerNotOptimizedScope ) ifFalse: [ ^self ].
 	"only escaping when they will end up in different closures"
 	var markEscapingRead.
@@ -37,7 +38,8 @@ OCASTSemanticAnalyzer >> analyseEscapingWrite: var [
 { #category : #api }
 OCASTSemanticAnalyzer >> analyze: aNode [
 	self visitNode: aNode.
-	OCASTClosureAnalyzer new visitNode: aNode
+	OCASTClosureAnalyzer new visitNode: aNode.
+	OCASTMethodMetadataAnalyser new visitNode: aNode
 ]
 
 { #category : #accessing }
@@ -143,7 +145,6 @@ OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> uninitializedVariable: variableNode [
-	variableNode variable markRead.
 	variableNode propertyAt: #semanticWarning put: #unitialized.
 ]
 
@@ -186,11 +187,6 @@ OCASTSemanticAnalyzer >> visitBlockNode: aBlockNode [
 ]
 
 { #category : #visiting }
-OCASTSemanticAnalyzer >> visitEnglobingErrorNode: anEnglobingError [
-	anEnglobingError content do: [ :each | self visitNode: each ]
-]
-
-{ #category : #visiting }
 OCASTSemanticAnalyzer >> visitInlinedBlockNode: aBlockNode [
 
 	scope := scope newOptimizedBlockScope: blockcounter.
@@ -204,7 +200,7 @@ OCASTSemanticAnalyzer >> visitInlinedBlockNode: aBlockNode [
 { #category : #visiting }
 OCASTSemanticAnalyzer >> visitMethodNode: aMethodNode [
 
-	scope := compilationContext scope newMethodScope. 
+	scope := OCMethodScope new outerScope: compilationContext scope.
 	aMethodNode scope: scope.  scope node: aMethodNode.
 	aMethodNode arguments do: [:node | self declareArgumentNode: node ].
 	aMethodNode pragmas do: [:each | self visitNode: each].
@@ -214,15 +210,18 @@ OCASTSemanticAnalyzer >> visitMethodNode: aMethodNode [
 
 { #category : #visiting }
 OCASTSemanticAnalyzer >> visitPragmaNode: aPragmaNode [
+
+	| varNode |
 	super visitPragmaNode: aPragmaNode.
+	aPragmaNode selector = #compilerOptions: ifTrue: [ 
+		aPragmaNode asPragma sendTo:
+			aPragmaNode methodNode compilationContext ].
 	
-	"we parse compiler options here so the rest of the compilation can react to them"
-	(aPragmaNode selector = #compilerOptions:)
-		ifTrue: [ aPragmaNode asPragma sendTo: aPragmaNode methodNode compilationContext ].
-	
-	"primitives with a primitive error define a variable that can be referenced in the body"
-	aPragmaNode isPrimitiveError ifTrue: [  
-		self declareVariableNode: (RBVariableNode named: (aPragmaNode argumentAt: #error:) value asString) ]
+	"if the pragma is a primitive that defines an error variable, we need to declare a temp
+	for it"	
+	aPragmaNode isPrimitiveError ifFalse: [ ^ self ].
+	varNode := RBVariableNode named: aPragmaNode primitiveErrorVariableName.
+	self declareVariableNode: varNode as: (PrimitiveErrorVariable node: varNode).
 ]
 
 { #category : #visiting }
@@ -231,8 +230,8 @@ OCASTSemanticAnalyzer >> visitSequenceNode: aSequenceNode [
 	aSequenceNode temporaries do: [ :node | self declareVariableNode: node ].
 	aSequenceNode statements do: [ :each | self visitNode: each ].
 	aSequenceNode temporaries reverseDo: [ :node | 
-			node variable isUnused
-				ifTrue: [ self unusedVariable: node ] ]
+			node variable isUsed
+				ifFalse: [ self unusedVariable: node ] ]
 ]
 
 { #category : #visiting }

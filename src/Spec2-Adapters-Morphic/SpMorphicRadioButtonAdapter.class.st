@@ -9,8 +9,8 @@ Class {
 
 { #category : #factory }
 SpMorphicRadioButtonAdapter >> buildWidget [
-	| radioButton |
 
+	| radioButton |
 	self presenter isInitialStateSet ifFalse: [ 
 		"initial state is false, set all associated buttons to false too"
 		self presenter property: #state rawValue: false.

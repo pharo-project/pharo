@@ -14,7 +14,8 @@ StCopyStackToClipboardCommand class >> defaultDescription [
 
 { #category : #initialization }
 StCopyStackToClipboardCommand class >> defaultIconName [
-	^ #smallCopy
+
+	^ #debuggerCopyStack
 ]
 
 { #category : #initialization }

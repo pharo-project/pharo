@@ -91,6 +91,11 @@ BytecodeEncoder >> genPushSpecialLiteral: aLiteral [
 	self subclassResponsibility
 ]
 
+{ #category : #'bytecode generation' }
+BytecodeEncoder >> genPushThisProcess [
+	"only available in Sista BC"
+]
+
 { #category : #accessing }
 BytecodeEncoder >> methodStreamPosition [
 	^stream position
@@ -217,6 +222,11 @@ BytecodeEncoder >> sizePushThisContext [
 ]
 
 { #category : #'opcode sizing' }
+BytecodeEncoder >> sizePushThisProcess [
+	^self sizeOpcodeSelector: #genPushThisProcess withArguments: #()
+]
+
+{ #category : #'opcode sizing' }
 BytecodeEncoder >> sizeReturnReceiver [
 	^self sizeOpcodeSelector: #genReturnReceiver withArguments: #()
 ]
@@ -311,16 +321,4 @@ BytecodeEncoder >> stream: s [
 BytecodeEncoder >> streamToMethod: aCompiledMethod [
 	stream := WriteStream with: aCompiledMethod.
 	stream position: aCompiledMethod initialPC - 1
-]
-
-{ #category : #testing }
-BytecodeEncoder >> supportsClosureOpcodes [
-	"Answer if the receiver supports the
-		genPushNewArray:/genPushConsArray:
-		genPushRemoteTemp:inVectorAt:
-		genStoreRemoteTemp:inVectorAt:
-		genStorePopRemoteTemp:inVectorAt:
-		genPushClosureCopyCopiedValues:numArgs:jumpSize:
-	 opcodes"
-	^false
 ]

@@ -20,22 +20,25 @@ Class {
 	#classInstVars : [
 		'current'
 	],
-	#category : #'Fonts-Infrastructure'
+	#category : #'Fonts-Infrastructure-Logical'
 }
 
 { #category : #accessing }
 LogicalFontManager class >> current [
-	"
-	current := nil.
-	self current
-	"
-	^current ifNil:[current := self defaultCurrent]
+ 	
+	^current ifNil: [current := self defaultCurrent ]
 ]
 
 { #category : #'instance creation' }
 LogicalFontManager class >> defaultCurrent [
 	^self new
 
+]
+
+{ #category : #'class initialization' }
+LogicalFontManager class >> reset [
+
+	current := nil
 ]
 
 { #category : #accessing }

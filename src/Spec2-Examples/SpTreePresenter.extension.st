@@ -7,8 +7,32 @@ SpTreePresenter class >> example [
 	^ self new
 		roots: { Object };
 		children: [ :aClass | aClass subclasses ];
-		icon: [ :aClass | aClass systemIcon ];
+		displayIcon: [ :aClass | aClass systemIcon ];
 		display: [ :aClass | aClass name ];
+		openWithSpec
+]
+
+{ #category : #'*Spec2-Examples' }
+SpTreePresenter class >> exampleExpandPath [
+	
+	^ self new
+		roots: { Object };
+		children: [ :aClass | aClass subclasses ];
+		displayIcon: [ :aClass | aClass systemIcon ];
+		display: [ :aClass | aClass name ];
+		expandPath: #(1 1 3); "Object/Exception/Notification"
+		openWithSpec
+]
+
+{ #category : #'*Spec2-Examples' }
+SpTreePresenter class >> exampleExpandRoots [
+	
+	^ self new
+		roots: { Object };
+		children: [ :aClass | aClass subclasses ];
+		displayIcon: [ :aClass | aClass systemIcon ];
+		display: [ :aClass | aClass name ];
+		expandRoots;
 		openWithSpec
 ]
 
@@ -20,7 +44,7 @@ SpTreePresenter class >> exampleWithContextMenu [
 	^ (tree := self new)
 		roots: { Object };
 		children: [ :aClass | aClass subclasses ];
-		icon: [ :aClass | aClass systemIcon ];
+		displayIcon: [ :aClass | aClass systemIcon ];
 		display: [ :aClass | aClass name ];
 		contextMenu: [
 			SpMenuPresenter new 

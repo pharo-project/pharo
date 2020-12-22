@@ -8,16 +8,6 @@ Class {
 }
 
 { #category : #methods }
-ClyClassWithHalts >> methodWithHalts1 [
-	self halt
-]
-
-{ #category : #methods }
-ClyClassWithHalts >> methodWithHalts2 [
-	self halt
-]
-
-{ #category : #methods }
 ClyClassWithHalts >> methodWithoutHalts [
 
 	self printString

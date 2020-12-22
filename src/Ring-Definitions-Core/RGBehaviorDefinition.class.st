@@ -458,7 +458,7 @@ RGBehaviorDefinition >> selectors [
 
 { #category : #compatibility }
 RGBehaviorDefinition >> soleInstance [
-	"to be depracated in the future"
+	"to be deprecated in the future"
 	
 	^self instanceSide
 ]

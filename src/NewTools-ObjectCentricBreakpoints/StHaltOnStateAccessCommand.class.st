@@ -12,7 +12,8 @@ StHaltOnStateAccessCommand class >> defaultDescription [
 
 { #category : #deafult }
 StHaltOnStateAccessCommand class >> defaultIconName [
-	^#remotesManagerEditRemote
+
+	^ #smallObjects
 ]
 
 { #category : #default }

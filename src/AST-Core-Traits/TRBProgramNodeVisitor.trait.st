@@ -19,6 +19,12 @@ TRBProgramNodeVisitor >> visitArgumentNodes: aNodeCollection [
 ]
 
 { #category : #visiting }
+TRBProgramNodeVisitor >> visitArgumentVariableNode: anArgumentNode [
+
+	^ self visitLocalVariableNode: anArgumentNode
+]
+
+{ #category : #visiting }
 TRBProgramNodeVisitor >> visitArrayNode: anArrayNode [ 
 
 	anArrayNode children do: [:each | self visitNode: each]
@@ -45,8 +51,25 @@ TRBProgramNodeVisitor >> visitCascadeNode: aCascadeNode [
 ]
 
 { #category : #visiting }
+
+TRBProgramNodeVisitor >> visitClassVariableNode: aNode [
+	^ self visitLiteralVariableNode: aNode
+]
+
+{ #category : #visiting }
+TRBProgramNodeVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
+	anEnglobingErrorNode content do: [ :each | self visitNode: each ]
+]
+
+{ #category : #visiting }
 TRBProgramNodeVisitor >> visitGlobalNode: aSelfNode [
 	^ self visitVariableNode: aSelfNode
+]
+
+{ #category : #visiting }
+TRBProgramNodeVisitor >> visitGlobalVariableNode: aNode [
+
+	^ self visitLiteralVariableNode: aNode
 ]
 
 { #category : #visiting }
@@ -63,15 +86,24 @@ TRBProgramNodeVisitor >> visitLiteralArrayNode: aRBLiteralArrayNode [
 TRBProgramNodeVisitor >> visitLiteralNode: aLiteralNode [
 ]
 
-{ #category : #'visiting - reflectivity' }
+{ #category : #visiting }
 TRBProgramNodeVisitor >> visitLiteralValueNode: aNode [
 	"Redirect the message by default to #visitLiteralNode: for retrocompatibility (pharo 8)"
 
 	^ self visitLiteralNode: aNode
 ]
 
-{ #category : #'visiting - reflectivity' }
+{ #category : #visiting }
 TRBProgramNodeVisitor >> visitLiteralVariableNode: aNode [
+	"to be backward compatible, we visit for Gloabls here (there used to be no difference)"
+
+	^ self visitGlobalNode: aNode
+]
+
+{ #category : #visiting }
+TRBProgramNodeVisitor >> visitLocalVariableNode: aNode [
+	"call visitTemporaryNode: for backward compatibility"
+	^ self visitTemporaryNode: aNode
 ]
 
 { #category : #visiting }
@@ -173,8 +205,20 @@ TRBProgramNodeVisitor >> visitTemporaryNodes: aNodeCollection [
 ]
 
 { #category : #visiting }
+TRBProgramNodeVisitor >> visitTemporaryVariableNode: aNode [
+	
+	^ self visitLocalVariableNode: aNode
+]
+
+{ #category : #visiting }
 TRBProgramNodeVisitor >> visitThisContextNode: aThisContextNode [
 	^ self visitVariableNode: aThisContextNode
+]
+
+{ #category : #visiting }
+TRBProgramNodeVisitor >> visitUnreachableStatement: anUnreachableStatement [
+	
+	^ self visitEnglobingErrorNode: anUnreachableStatement
 ]
 
 { #category : #visiting }

@@ -31,7 +31,7 @@ ClyCreateTraitCommand class >> canBeExecutedInContext: aBrowserContext [
 ClyCreateTraitCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 3 for: ClyClassContextOfFullBrowser 
+	^CmdContextMenuActivation byRootGroupItemOrder: 3 for: ClyFullBrowserClassContext 
 ]
 
 { #category : #accessing }
@@ -44,14 +44,12 @@ ClyCreateTraitCommand >> defaultMenuItemName [
 	^'New trait'
 ]
 
-{ #category : #execution }
+{ #category : #'command execution' }
 ClyCreateTraitCommand >> execute [
 	| traitDefinition category resultTrait |
 	category := package name.
 	classTag ifNotNil: [ category := category , '-' , classTag ].
-	traitDefinition := 'Trait named: #TNameOfTrait
-	uses: {}
-	package: ''' , category , ''''.
+	traitDefinition := ClassDefinitionPrinter new traitDefinitionTemplateInPackage: category.
 	traitDefinition := UIManager default
 		                   multiLineRequest: 'Define trait definition:'
 		                   initialAnswer: traitDefinition

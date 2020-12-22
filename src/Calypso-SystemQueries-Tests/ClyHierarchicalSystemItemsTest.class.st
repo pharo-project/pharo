@@ -47,8 +47,8 @@ ClyHierarchicalSystemItemsTest >> testFillingWithSuperclassAndSubclassMethods [
 	queryResult fillWith: ClyClass1FromP1 localMethods, ClySubclassN1OfClass1FromP1 localMethods.
 
 	self 
-		assertItems: #(#instanceSideVar1ReaderMethod 0 #instanceSideVar1WriterMethod 0
+		assertItems: #(#instanceSideVar1ReaderMethod 0 #instanceSideVar1WriterMethod 0 #instanceSideVar2 0 
 			#superclassTag1Method 0 #tag1Method1 0 
-			#noTagMethod 1 tag1Method1 1 tag1Method2 1 tag2Method1 1) 		
+			#noTagMethod 1 #subclassN1Var 1 #subclassSameVar 1 #tag1Method1 1 #tag1Method2 1 #tag2Method1 1 ) 		
 		withValue: [ :each | each name ]
 ]

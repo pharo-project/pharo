@@ -1,27 +1,7 @@
 "
-I am a simple presenter describing a menu.
-See AbstractWidgetPresenter
-
-I only contains a list of menu groups (MenuGroupPresenter). Each group is separated by a splitter.
-
-I provide the following variables and their accessors
-- addGroup: use the block in parameter to initialize a new group, then add it in my collection.
-- addMenuGroup: add the group in parameter in my collection.
-- menuGroups getter of my collection.
-
-
-todo
-- addAllFromPragma:target:
-- applyTo: activate the shortcut of the items of my groups.
-- autoRefresh
-- buildWithSpecAsPopup
-- fromSpec:
-- icon
-- neglect:
-- openWithSpecAt:
-- printOn:
-- title , addTitle:
-
+I presenter to describe  a menu.
+A menu presenter contains groups of menu items (having one unique group by default, to simplify building simple menus).
+A menu presenter is included in presenters that implement the `#contextMenu:` (See below) method, but it can also be invoked by calling `SpMenuPresenter>>#openWithSpecAt:`
 "
 Class {
 	#name : #SpMenuPresenter,
@@ -43,6 +23,29 @@ SpMenuPresenter class >> adapterName [
 	^ #MenuAdapter
 ]
 
+{ #category : #documentation }
+SpMenuPresenter class >> addDocumentExtraSections: aBuilder [
+
+	aBuilder newLine.
+	aBuilder header: [ :builder | builder text: 'Presenters implementing `#contextMenu:`' ] withLevel: 2.
+	aBuilder unorderedListDuring: [ 
+		(SpTContextMenu users sorted: #name ascending) do: [ :eachType | 
+			aBuilder item: [
+				aBuilder monospace: eachType name ] ] ]	
+]
+
+{ #category : #documentation }
+SpMenuPresenter class >> documentExampleCodeSelector [
+
+	^ #exampleShowAtPointer
+]
+
+{ #category : #documentation }
+SpMenuPresenter class >> documentFactoryMethodSelector [
+
+	^ #newMenu
+]
+
 { #category : #specs }
 SpMenuPresenter class >> popup [
 	<spec>
@@ -61,10 +64,10 @@ SpMenuPresenter >> addAllFromPragma: pragma target: target [
 
 { #category : #api }
 SpMenuPresenter >> addGroup: aBlock [
-	"Create a group of items in case you want a multi group menu.
-	In case of a single group menu you can use #addItem: directly."
-
+	"Add a group of items. 
+	 If you do not want a multiple-group menu, you can use `SpMenuPresenter>>#addItem:` instead."
 	| group |
+
 	group := self instantiate: SpMenuGroupPresenter.
 	aBlock value: group.
 	self addMenuGroup: group
@@ -72,8 +75,9 @@ SpMenuPresenter >> addGroup: aBlock [
 
 { #category : #api }
 SpMenuPresenter >> addItem: aBlock [
-	"Add an item to the menu. When the menu group has not been specified previously, add the item in a default group.
-	For managing yourself groups, check #addGroup:"
+	"Add an item to the menu. When the menu group has not been specified previously, add the 
+	 item in a default group.
+	 For adding multiple groups, see `SpMenuPresenter>>#addGroup:`"
 
 	self defaultGroup addItem: aBlock
 ]
@@ -87,18 +91,18 @@ SpMenuPresenter >> addMenuGroup: aMenuGroup [
 		ifNotNil: [ aMenuGroup autoRefresh: self autoRefresh ]
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpMenuPresenter >> applyTo: aModel [
 
 	aModel applyMenuModel: self
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpMenuPresenter >> autoRefresh [
 	^ autoRefresh
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpMenuPresenter >> autoRefresh: aBoolean [
 	autoRefresh := aBoolean
 ]
@@ -154,7 +158,7 @@ SpMenuPresenter >> icon: anIcon [
 	icon := anIcon
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpMenuPresenter >> iconName: aSymbol [
 	self icon: (self iconNamed: aSymbol)
 ]

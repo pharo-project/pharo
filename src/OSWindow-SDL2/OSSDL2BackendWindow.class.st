@@ -9,7 +9,6 @@ Class {
 	#instVars : [
 		'currentCursor',
 		'iconSurface',
-		'lastKeyboardFocus',
 		'sdl2Window',
 		'screenScaleFactor',
 		'horizontalDPI',
@@ -75,15 +74,7 @@ OSSDL2BackendWindow >> convertButtonState: mouseState modState: modState modifie
 	alt := (modState bitAnd: KMOD_LALT) ~= 0.
 	ralt := (modState bitAnd: KMOD_RALT) ~= 0.
 	gui := (modState bitAnd: KMOD_GUI) ~= 0.
-    
-	"Several keyboard layouts use AltGr to enter some symbols. In that case,
-	the AltGr does not play role of a modifer and should be ignored. 
-	As (hopefully) tempral solution, let's ignore all the modifiers if the AltGr is
-	pressed (in this case, SDL adds Ctrl modifiers too).
-	See https://github.com/pharo-project/pharo/issues/4745
-	"
-	ralt ifTrue: [ ^ self ].
-    
+
 	modifiers leftShift: shift; rightShift: shift;
 		leftCtrl: ctrl; rightCtrl: ctrl;
 		leftAlt: alt; rightAlt: ralt;
@@ -145,6 +136,16 @@ OSSDL2BackendWindow >> extent: newExtent [
 { #category : #private }
 OSSDL2BackendWindow >> fetchDPI [
 	| displayIndex ddpi hdpi vdpi newDiagonalDPI newScreenScaleFactor |
+	"In OS X disable the computation of a DPI based scale factor. These values
+	are completely wrong and we are getting scale factors that are very large
+	even in non-retina display. This workaround does not affect the support for
+	retina display because that is handled by fetching the size of the drawing surface."
+	Smalltalk os isMacOSX ifTrue: [ 
+		diagonalDPI := verticalDPI := horizontalDPI := self screenScaleFactorBaseDPI.
+		screenScaleFactor := 1.0.
+		^ false
+	].
+
 	displayIndex := sdl2Window getDisplayIndex.
 	displayIndex < 0 ifTrue: [ ^ false ].
 	
@@ -154,7 +155,11 @@ OSSDL2BackendWindow >> fetchDPI [
 	(SDL2 getDisplay: displayIndex ddpi: ddpi hdpi: hdpi vdpi: vdpi) = 0 ifFalse: [ ^ false ].
 	
 	newDiagonalDPI := ddpi floatAt: 1.
-	newScreenScaleFactor := newDiagonalDPI / self screenScaleFactorBaseDPI roundTo: 0.1.
+	"Allow automatic scale of factor increments of 5%. We need to
+	round due to precision issues which may result in an almost 1 scale factor, but not exactly one.
+	This has to be at least a divisor of 25% which are normal scale factor increments that are selectable in Windows.
+	"
+	newScreenScaleFactor := newDiagonalDPI / self screenScaleFactorBaseDPI roundTo: 0.05.
 	(screenScaleFactor closeTo: newScreenScaleFactor) ifTrue: [ ^ false ].
 
 	horizontalDPI := hdpi floatAt: 1.
@@ -555,8 +560,6 @@ OSSDL2BackendWindow >> visitTextInputEvent: event [
 	osEvent := OSTextInputEvent for: osWindow.
 	osEvent text: (ZnUTF8Encoder new decodeBytes: event text);
 			position: self mousePosition.
-			
-	self convertButtonState: SDL2 mouseState modState: SDL2 modState modifiers: osEvent modifiers.
 	^ osEvent deliver
 ]
 

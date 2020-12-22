@@ -194,7 +194,13 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'NewTools' with: [
 			spec 
 				repository: repository;
-				loads: #('Playground' 'Inspector' 'Debugger' 'SystemReporter') ].
+				loads: #(
+					'Playground' 
+					'Inspector' 
+					'Debugger' 
+					'SystemReporter'
+					'ChangeSorter'
+					'Methods') ].
 			
 		spec baseline: 'Microdown' with: [ spec 
 				repository: self packageRepositoryURL ].
@@ -202,17 +208,26 @@ BaselineOfIDE >> baseline: spec [
 		spec 
   			baseline: 'Roassal3' 
   			with: [ spec 
-				repository: 'github://ObjectProfile/Roassal3:v0.9.4/src';
+				repository: 'github://ObjectProfile/Roassal3:v0.9.5/src';
     				loads: #( 'Core' 'Tests') ].
 
-		spec package: 'Pharo-WelcomeHelp' ]
+		spec 
+  			baseline: 'ThreadedFFI' 
+  			with: [ spec 
+				repository: repository ].
+
+		
+		spec package: 'Pharo-WelcomeHelp'.
+		spec package: 'Kernel-ExtraUtils' 
+		
+	]
 ]
 
 { #category : #actions }
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v1.8.3';
+		repository: 'github://pharo-vcs/iceberg:v1.8.5';
 		onConflictUseLoaded;
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.

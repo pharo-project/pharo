@@ -92,7 +92,7 @@ SpCollectionListModel >> items [
 { #category : #refreshing }
 SpCollectionListModel >> refreshList [
 
-	self sortingBlock ifNotNil: [ :aSortFunction | collection sort: aSortFunction ]
+	self sortingBlock ifNotNil: [ :aSortFunction | collection := collection sorted: aSortFunction ]
 ]
 
 { #category : #collection }

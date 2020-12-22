@@ -1,7 +1,7 @@
 Class {
 	#name : #RBExtractToTemporaryTest,
 	#superclass : #RBRefactoringTest,
-	#category : #'Refactoring-Tests-Core'
+	#category : #'Refactoring-Tests-Core-Refactorings'
 }
 
 { #category : #'failure tests' }
@@ -89,6 +89,15 @@ RBExtractToTemporaryTest >> testExtractToTemporaryWithDuplicates [
 	result2 := temp.
 	answer := result1 + result2 + temp.
 	^ answer')
+]
+
+{ #category : #'failure tests' }
+RBExtractToTemporaryTest >> testNoValidNameOfTemp [
+	self shouldFail: (RBExtractToTemporaryRefactoring 
+			extract: (51 to: 60)
+			to: 'collection'
+			from: #modifiesCollection
+			in: RBRefactoryTestDataApp)
 ]
 
 { #category : #'failure tests' }

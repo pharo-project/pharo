@@ -78,31 +78,10 @@ TraitedMetaclass >> baseLocalMethods: anObject [
 	baseLocalMethods := anObject
 ]
 
-{ #category : #'file in/out' }
-TraitedMetaclass >> definition [
-	"Refer to the comment in ClassDescription|definition."
+{ #category : #fileout }
+TraitedMetaclass >> definitionStringFor: aConfiguredPrinter [
 
-	^ String streamContents: 
-		[:strm |
-		strm print: self.
-		self hasTraitComposition ifTrue: [
-			strm
-				crtab;
-				nextPutAll: 'uses: ';
-				print: self traitComposition ].
-		
-		(self slotsNeedFullDefinition or: [ Slot showSlotClassDefinition ])
-			ifFalse: [  
-						strm
-							crtab;
-							nextPutAll: 'instanceVariableNames: '''.
-						self instanceVariablesOn: strm.
-						strm nextPut: $' ]
-			ifTrue: [ 
-						strm
-							crtab;
-							nextPutAll: 'slots: '.
-						self slotDefinitionsOn: strm ] ]
+	^ aConfiguredPrinter traitedMetaclassDefinitionString 
 ]
 
 { #category : #initialization }

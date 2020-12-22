@@ -18,14 +18,23 @@ Class {
 		'millerList',
 		'model',
 		'lastPageSelectedTabName',
-		'withHeaderBar'
+		'withHeaderBar',
+		'paginator'
 	],
 	#classVars : [
-		'IndexableDisplayLimit',
-		'PreferredExtent'
+		'IndexableDisplayLimit'
+	],
+	#classInstVars : [
+		'preferredExtent'
 	],
 	#category : #'NewTools-Inspector-View'
 }
+
+{ #category : #accessing }
+StInspector class >> defaultPreferredExtent [
+
+	^ 700@500
+]
 
 { #category : #accessing }
 StInspector class >> defaultSpacing [
@@ -58,6 +67,12 @@ StInspector class >> indexableDisplayLimit [
 StInspector class >> indexableDisplayLimit: aNumber [
 
 	IndexableDisplayLimit := aNumber
+]
+
+{ #category : #'class initialization' }
+StInspector class >> initialize [
+
+	self register
 ]
 
 { #category : #'instance creation' }
@@ -100,13 +115,13 @@ StInspector class >> openOn: anObject [
 { #category : #accessing }
 StInspector class >> preferredExtent [
 	
-	^ PreferredExtent ifNil: [ PreferredExtent := 600@400 ]
+	^ preferredExtent ifNil: [ preferredExtent := self defaultPreferredExtent ]
 ]
 
 { #category : #accessing }
 StInspector class >> preferredExtent: aPoint [
 	
-	PreferredExtent := aPoint
+	preferredExtent := aPoint
 ]
 
 { #category : #'tools registry' }
@@ -136,15 +151,39 @@ StInspector >> defaultKeyboardFocus [
 		ifEmpty: [ self ]
 ]
 
+{ #category : #'accessing snippets' }
+StInspector >> evaluatorSnippetFor: anObject [
+	"Answer code snippets used in inspector"
+
+	^ self evaluatorSnippets 
+		at: anObject class
+		ifAbsent: [ '' ]
+]
+
+{ #category : #'accessing snippets' }
+StInspector >> evaluatorSnippetFor: anObject value: aString [
+	"Answer code snippets used in inspector"
+
+	^ self evaluatorSnippets 
+		at: anObject class
+		put: aString
+]
+
+{ #category : #accessing }
+StInspector >> firstPage [
+
+	^ millerList pages first
+]
+
 { #category : #initialization }
 StInspector >> initializePresenters [
 
-	millerList := self instantiate: SpMillerColumnPresenter.
-	millerList 
+	millerList := self instantiate: SpMillerPaginatorPresenter.
+	millerList millerListPresenter
 		spacing: self spacing;
 		presenterBlock: [ :aModel | self newInspectorFor: aModel ];
 		setRootModel: self model;
-		whenColumnsWillChangeDo: [ :insertIndex | self keepLastPageSelectedTabName ]
+		whenColumnsWillChangeDo: [ self keepLastPageSelectedTabName ]
 ]
 
 { #category : #initialization }
@@ -152,13 +191,14 @@ StInspector >> initializeWindow: aWindowPresenter [
 
 	super initializeWindow: aWindowPresenter.
 	aWindowPresenter 
-		title: self model windowTitle;
+		title: self windowTitle;
+		windowIcon: self windowIcon;
 		initialExtent: self class preferredExtent;
 		whenOpenedDo: [ 
 			self startStepping.
 			self takeKeyboardFocus ];
 		whenClosedDo: [ self stopStepping ];
-		whenResizingDo: [ :ann | self class preferredExtent: ann newSize ]
+		whenResizingDo: [ :ann | self preferredExtent: ann newSize ]
 ]
 
 { #category : #transmission }
@@ -173,6 +213,11 @@ StInspector >> keepLastPageSelectedTabName [
 	lastPageSelectedTabName := millerList pages 
 		ifNotEmpty: [ :pages | pages last selectedPageName ]
 		ifEmpty: [ nil ]
+]
+
+{ #category : #accessing }
+StInspector >> millerList [
+	^millerList
 ]
 
 { #category : #accessing }
@@ -192,16 +237,32 @@ StInspector >> model: anInspectorModel [
 { #category : #'private factory' }
 StInspector >> newInspectorFor: aModel [
 	| newInspector |
+	
 	newInspector := self
 		instantiate: aModel defaultObjectInspectorClass
-		on: (self toInspectorModel: aModel).
-	millerList pages
-		ifNotEmpty: [ :pages | 
-			newInspector
-				trySelectAnyPageNamed:
-					{lastPageSelectedTabName.
-					pages last selectedPageName} ].
+		on: aModel asInspectorModel.
+	StPharoSettings inspectorDiveOnSingleClick 
+		ifTrue: [ newInspector activateOnSingleClick ].
+	
+	millerList pages ifNotEmpty: [ :pages | 
+		newInspector 
+			"prepare to close"
+			whenClosedDo: [ millerList removeAllFrom: newInspector  ];
+			"select last shown page (or default)"
+			trySelectAnyPageWithName: { 
+				lastPageSelectedTabName. 
+				pages last selectedPageName } ].
+		
 	^ newInspector
+]
+
+{ #category : #private }
+StInspector >> preferredExtent: aSize [
+
+	(self window isMaximized 
+		or: [ self window isMinimized ])
+		ifTrue: [ ^ self ].
+	self class preferredExtent: aSize
 ]
 
 { #category : #private }
@@ -241,21 +302,10 @@ StInspector >> stopStepping [
 	StInspectorRefreshService uniqueInstance unregister: self
 ]
 
-{ #category : #private }
-StInspector >> toInspectorModel: aModel [
-
-	self flag: #HACK. "I do not like to use this, but I really do not want to add a double 
-	dispatch to solve this problem :("
-	(aModel isKindOf: StInspectorModel) ifTrue: [ ^ aModel ].
-	(aModel isKindOf: StInspectorNode) ifTrue: [ ^ StInspectorModel on: aModel rawValue ].
-
-	^ StInspectorModel on: aModel
-]
-
 { #category : #'private updating' }
 StInspector >> updateList [
 
-	millerList 
+	millerList millerListPresenter
 		resetTo: 0;
 		setRootModel: self model
 ]
@@ -266,6 +316,18 @@ StInspector >> updateTitle [
 	self isRoot ifFalse: [ ^ self ].
 	self withWindowDo: [ :window | 
 		window title: self title ].
+]
+
+{ #category : #initialization }
+StInspector >> windowIcon [
+	
+	^ self application iconNamed: #smallInspectIt
+]
+
+{ #category : #initialization }
+StInspector >> windowTitle [
+
+	^ self model windowTitle
 ]
 
 { #category : #accessing }

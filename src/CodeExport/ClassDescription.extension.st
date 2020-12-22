@@ -3,13 +3,7 @@ Extension { #name : #ClassDescription }
 { #category : #'*CodeExport' }
 ClassDescription >> fileOutCategory: catName [ 
 
-	| internalStream |
-	internalStream := (String new: 1000) writeStream.
-	internalStream header; timeStamp.
-	self fileOutCategory: catName on: internalStream.
-	internalStream trailer.
-
-	^ CodeExporter writeSourceCodeFrom: internalStream baseName: (self name , '-' , catName) isSt: true.
+	self organization fileOutCategory: catName 
 ]
 
 { #category : #'*CodeExport' }
@@ -61,7 +55,7 @@ ClassDescription >> fileOutMethod: selector [
 	| internalStream |
 	internalStream := (String new: 1000) writeStream.
 	self fileOutMethod: selector on: internalStream.
-	CodeExporter writeSourceCodeFrom: internalStream baseName: (self name , '-' , (selector copyReplaceAll: ':' with: '')) isSt: true.
+	CodeExporter writeSourceCodeFrom: internalStream baseName: (self name , '-' , (selector copyReplaceAll: ':' with: '..')) isSt: true.
 ]
 
 { #category : #'*CodeExport' }
@@ -77,7 +71,7 @@ ClassDescription >> fileOutMethod: selector on: aStream [
 ClassDescription >> fileOutOn: aFileStream [
 	"File a description of the receiver on aFileStream."
 
-	aFileStream nextChunkPut: self definition.
+	aFileStream nextChunkPut: self definitionString.
 	self organization putCommentOnFile: aFileStream forClass: self.
 	self organization categories 
 		do: [ :heading | self fileOutLocalMethodsInCategory: heading on: aFileStream ]

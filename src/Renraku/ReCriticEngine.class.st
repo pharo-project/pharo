@@ -66,7 +66,7 @@ ReCriticEngine >> critiquesOf: anEntity [
 				ReExceptionStrategy current
 					handle: er
 					about: anEntity
-					forProppertiesDo: [ :prop |
+					forPropertiesDo: [ :prop |
 						critiques add: prop ] ].
 			Processor yield ].
 	
@@ -129,7 +129,7 @@ ReCriticEngine >> nodeCritiquesOf: aMethod [
 				ReExceptionStrategy current
 					handle: er
 					about: aMethod
-					forProppertiesDo: [ :prop |
+					forPropertiesDo: [ :prop |
 						critiques add: prop ] ].
 			Processor yield ] ].
 	

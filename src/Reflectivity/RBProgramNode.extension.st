@@ -147,7 +147,8 @@ RBProgramNode >> link: aMetaLink [
 	aMetaLink installOn: self.
 	self clearReflectivityAnnotations.
 	self methodNode method installLink: aMetaLink.
-	SystemAnnouncer uniqueInstance announce: (MetalinkChanged linkAdded: aMetaLink toNode: self)
+	aMetaLink linkInstaller propagateLinkAddition: aMetaLink forNode: self.
+	aMetaLink announceInstall: self
 ]
 
 { #category : #'*Reflectivity' }
@@ -200,7 +201,8 @@ RBProgramNode >> removeLink: aMetaLink [
 	(self methodNode methodClass methodDict includesKey: self methodNode selector)
 		ifFalse: [ ^ self ].
 	self methodNode method removeLink: aMetaLink.
-	SystemAnnouncer uniqueInstance announce: (MetalinkChanged linkRemoved: aMetaLink fromNode: self)
+	aMetaLink linkInstaller propagateLinkRemoval: aMetaLink forNode: self.
+	aMetaLink announceRemove: self
 ]
 
 { #category : #'*Reflectivity' }
@@ -211,6 +213,11 @@ RBProgramNode >> removeLink: aMetaLink forObject: anObject [
 { #category : #'*Reflectivity' }
 RBProgramNode >> tagExecuted [
 	^self propertyAt: #tagExecuted put: true 
+]
+
+{ #category : #'*Reflectivity' }
+RBProgramNode >> variableValueInContext: aContext [
+	^nil
 ]
 
 { #category : #'*Reflectivity' }

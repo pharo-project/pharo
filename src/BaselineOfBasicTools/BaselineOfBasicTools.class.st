@@ -62,7 +62,6 @@ BaselineOfBasicTools >> baseline: spec [
 		
 		spec package: 'Tool-ProcessBrowser'.
 		spec package: 'Tool-Profilers'.
-		spec package: 'Tool-SystemReporter'.
 		spec package: 'NECompletion'.
 		spec package: 'NECompletion-Morphic'.
 		spec package: 'NECompletion-Preferences'.
@@ -88,6 +87,7 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Monticello-OldDataStreamCompatibility'.
 		spec package: 'MonticelloFileServices'.
 		spec package: 'Spec2-Help'.
+		spec package: 'Tools-CodeNavigation'.
 		spec package: 'Tool-Diff'.
 		spec package: 'Tool-FileList'.
 		spec package: 'Tool-Finder'.

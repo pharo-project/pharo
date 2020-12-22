@@ -1,7 +1,7 @@
 Class {
 	#name : #RBCreateAccessorsForVariableTest,
 	#superclass : #RBRefactoringTest,
-	#category : #'Refactoring-Tests-Core'
+	#category : #'Refactoring-Tests-Core-Refactorings'
 }
 
 { #category : #running }
@@ -11,13 +11,29 @@ RBCreateAccessorsForVariableTest >> setUp [
 ]
 
 { #category : #tests }
+RBCreateAccessorsForVariableTest >> testExistingClassVariableAccessors [
+	| refactoring |
+	refactoring := RBCreateAccessorsForVariableRefactoring 
+							variable: 'Name1' 
+							class: RBLintRuleTestData 
+							classVariable: true.
+	self executeRefactoring: refactoring.
+	self assertEmpty: refactoring changes changes.
+	self assert: refactoring setterMethod identicalTo: #name1:.
+	self assert: refactoring getterMethod identicalTo: #name1
+]
+
+{ #category : #tests }
 RBCreateAccessorsForVariableTest >> testExistingInstanceVariableAccessors [
-	| ref |
-	ref := RBCreateAccessorsForVariableRefactoring variable: 'name' class: RBLintRuleTestData classVariable: false.
-	self executeRefactoring: ref.
-	self assertEmpty: ref changes changes.
-	self assert: ref setterMethod identicalTo: #name:.
-	self assert: ref getterMethod identicalTo: #name
+	| refactoring |
+	refactoring := RBCreateAccessorsForVariableRefactoring 
+							variable: 'name' 
+							class: RBLintRuleTestData 
+							classVariable: false.
+	self executeRefactoring: refactoring.
+	self assertEmpty: refactoring changes changes.
+	self assert: refactoring setterMethod identicalTo: #name:.
+	self assert: refactoring getterMethod identicalTo: #name
 ]
 
 { #category : #tests }

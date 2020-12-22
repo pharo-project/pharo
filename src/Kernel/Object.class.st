@@ -471,6 +471,16 @@ Object >> beReadOnlyObject [
 ]
 
 { #category : #'write barrier' }
+Object >> beRecursivelyReadOnlyObject [
+	^self recursivelySetIsReadOnlyObject: true
+]
+
+{ #category : #'write barrier' }
+Object >> beRecursivelyWritableObject [
+	^self recursivelySetIsReadOnlyObject: false
+]
+
+{ #category : #'write barrier' }
 Object >> beWritableObject [
 	"If the VM supports read-only objects it will not write to read-only objects.
 	 An attempt to write to an instance variable of a read-only object will
@@ -805,15 +815,15 @@ Object >> enclosedElement [
 { #category : #'error handling' }
 Object >> error [
 	"Throw a generic Error exception."
-
-	^self error: 'Error!'.
+	<debuggerCompleteToSender>
+	^ self error: 'Error!'
 ]
 
 { #category : #'error handling' }
-Object >> error: aString [ 
+Object >> error: aString [
 	"Throw a generic Error exception."
-
-	^Error new signal: aString
+	<debuggerCompleteToSender>
+	^ Error new signal: aString
 ]
 
 { #category : #private }
@@ -853,7 +863,7 @@ Object >> executor [
 { #category : #'error handling' }
 Object >> explicitRequirement [
 	"If one of the superclasses can perform the selector, we execute the method of that class, otherwise, the explicit requirement error is thrown"
-
+	<debuggerCompleteToSender>
 	| originalMethod originalArguments errorBlock originalReceiver callingContext originalSelector |
 	errorBlock := [ ^ self error: 'Explicitly required method' ].
 	callingContext := thisContext sender.
@@ -1273,12 +1283,6 @@ Object >> isPoint [
 	^ false
 ]
 
-{ #category : #testing }
-Object >> isReadOnlyLiteral [
-	"Literals with a textual representation in the method source are compiled read-only"
-	^false
-]
-
 { #category : #'write barrier' }
 Object >> isReadOnlyObject [
 	"Answer if the receiver is read-only.
@@ -1288,7 +1292,7 @@ Object >> isReadOnlyObject [
 	 An attempt to modify a read-only object in a primitive will cause the
 	 primitive to fail with a #'no modification' error code."
 	<primitive: 163 error: ec>
-	^self class isImmediateClass 
+	^self isImmediateObject
 ]
 
 { #category : #testing }
@@ -1450,7 +1454,7 @@ Object >> notNil [
 { #category : #'error handling' }
 Object >> notYetImplemented [
 	"Announce that this message is not yet implemented"
-
+	<debuggerCompleteToSender>
 	NotYetImplemented signalFor: thisContext sender selector
 ]
 
@@ -1458,7 +1462,7 @@ Object >> notYetImplemented [
 Object >> notify: aString [ 
 	"Create and schedule a Notifier with the argument as the message in 
 	order to request confirmation before a process can proceed."
-
+	<debuggerCompleteToSender>
 	Warning signal: aString
 ]
 
@@ -1683,6 +1687,34 @@ Object >> readSlotNamed: aName [
 	^(self class slotNamed: aName) read: self
 ]
 
+{ #category : #'write barrier' }
+Object >> recursivelySetIsReadOnlyObject: aBoolean [
+	^self recursivelySetIsReadOnlyObject: aBoolean exceptObjectsIn: IdentitySet new
+]
+
+{ #category : #'write barrier' }
+Object >> recursivelySetIsReadOnlyObject: aBoolean exceptObjectsIn: alreadyDone [
+
+	"Handle self if not already done, and note it as done."
+
+	(alreadyDone includes: self) ifFalse:
+		[	self setIsReadOnlyObject: aBoolean.
+			alreadyDone add: self ].
+
+	"Handle all instance vars of self."
+	self class allSlots do: [ :ivar | 
+		(ivar read: self)
+			recursivelySetIsReadOnlyObject: aBoolean
+			exceptObjectsIn: alreadyDone ].
+	
+	"Handle all indexed elements of self."
+	1 to: self basicSize do: [ :i | 
+		(self basicAt: i)
+			recursivelySetIsReadOnlyObject: aBoolean
+			exceptObjectsIn: alreadyDone ]
+
+]
+
 { #category : #testing }
 Object >> refersToLiteral: aLitteral [
 	^ self literalEqual: aLitteral
@@ -1740,6 +1772,7 @@ Object >> setIsReadOnlyObject: aBoolean [
 	 Note: Some objects can't be read-only, currently contexts and objects related
 	 to process scheduling (Processor, Process instances, Semaphore instances, ...)"
 	<primitive: 164 error: ec>
+	self isImmediateObject ifTrue: [ ^true ].
 	^self primitiveFailed
 	
 ]
@@ -1791,7 +1824,7 @@ Object >> shallowCopy [
 { #category : #'error handling' }
 Object >> shouldBeImplemented [
 	"Announce that this message should be implemented"
-
+	<debuggerCompleteToSender>
 	ShouldBeImplemented signalFor: thisContext sender selector
 ]
 
@@ -1805,7 +1838,7 @@ Object >> shouldBePrintedAsLiteral [
 Object >> shouldNotImplement [
 	"Announce that, although the receiver inherits this message, 
 	it should not implement it."
-
+	<debuggerCompleteToSender>
 	ShouldNotImplement signalFor: thisContext sender selector
 ]
 
@@ -1922,7 +1955,7 @@ Object >> storeString [
 Object >> subclassResponsibility [
 	"This message sets up a framework for the behavior of the class' subclasses.
 	Announce that the subclass should have implemented this message."
-
+	<debuggerCompleteToSender>
 	SubclassResponsibility signalFor: thisContext sender selector
 ]
 

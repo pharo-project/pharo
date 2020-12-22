@@ -23,17 +23,11 @@ RBParenthesesErrorNode class >> error: aToken withNodes: aCollection [
 		ifTrue: [ ^self new content: aCollection; start: aToken start; stop: aToken stop; errorMessage: message ].
 	"If the collection is not empty, we have to sort where the node begins and where it ends."
 	^message = ''')'' expected'
-		ifTrue: [ self new content: aCollection; start: aToken start; stop: aCollection last stop; errorMessage: message; createValue ]
-		ifFalse: [ self new content: aCollection; start: aCollection first start; stop: aToken stop; errorMessage: message; createValue ]
+		ifTrue: [ self new content: aCollection; start: aToken start; stop: aCollection last stop; errorMessage: message ]
+		ifFalse: [ self new content: aCollection; start: aCollection first start; stop: aToken stop; errorMessage: message ]
 ]
 
 { #category : #testing }
 RBParenthesesErrorNode >> isParenthesesError [
 	^true
-]
-
-{ #category : #testing }
-RBParenthesesErrorNode >> value [
-	^  self errorMessage = '''('' expected' ifTrue: [ super value, ')' ] 
-														ifFalse: [ '( ', super value ] 
 ]

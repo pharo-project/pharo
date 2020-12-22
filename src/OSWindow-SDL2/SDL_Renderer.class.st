@@ -117,14 +117,10 @@ SDL_Renderer >> noRenderTarget [
 
 { #category : #rendering }
 SDL_Renderer >> outputExtent [
-	| buffer |
-	buffer := ExternalAddress allocate: 8.
-	^ [
-		| result |
-		self getOutputSizeW: buffer h: buffer + 4.
-		result := (buffer unsignedLongAt: 1) @ (buffer unsignedLongAt: 5).
-		result
-	] ensure: [ buffer free ].
+
+	^ ExternalAddress allocate: 8 bytesDuring: [ :buffer | 
+		  self getOutputSizeW: buffer h: buffer + 4.
+		  (buffer unsignedLongAt: 1) @ (buffer unsignedLongAt: 5) ]
 ]
 
 { #category : #rendering }
@@ -145,6 +141,11 @@ SDL_Renderer >> primDestroy [
 { #category : #private }
 SDL_Renderer >> primGetRendererInfo: info [
 	^ self ffiCall: #( int SDL_GetRendererInfo (self, SDL_RendererInfo* info) )
+]
+
+{ #category : #rendering }
+SDL_Renderer >> renderTargetSupported [
+	^ self ffiCall: #( bool SDL_RenderTargetSupported ( self ) )
 ]
 
 { #category : #rendering }

@@ -10,20 +10,17 @@ StInspectorInspectSelectedCommand class >> defaultDescription [
 	^ 'Inspect this instance'
 ]
 
+{ #category : #initialization }
+StInspectorInspectSelectedCommand class >> defaultIconName [
+
+	^ #smallInspectIt
+]
+
 { #category : #default }
 StInspectorInspectSelectedCommand class >> defaultName [
 	<toolbarInspectCommand: 20>
 
 	^ 'Inspect'
-]
-
-{ #category : #converting }
-StInspectorInspectSelectedCommand >> asSpecCommand [
-
-	^ super asSpecCommand 
-		iconName: #smallInspectIt;
-		beDisplayedOnRightSide;
-		yourself
 ]
 
 { #category : #execution }

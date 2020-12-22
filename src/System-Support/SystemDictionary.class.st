@@ -25,7 +25,8 @@ Class {
 	#instVars : [
 		'cachedClassNames',
 		'cachedNonClassNames',
-		'cachedBehaviors'
+		'cachedBehaviors',
+		'reservedVariables'
 	],
 	#category : #'System-Support-Utilities'
 }
@@ -235,9 +236,11 @@ SystemDictionary >> forgetClass: aClass logged: aBool [
 
 { #category : #testing }
 SystemDictionary >> hasBindingThatBeginsWith: aString [
+
 	"Use the cached class and non-class names for better performance."
 
 	| name searchBlock |
+	(self reservedVariables hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
 	searchBlock := [ :element |
 		(element beginsWith: aString)
 			ifTrue: [ 0 ]
@@ -273,6 +276,12 @@ SystemDictionary >> hasClassOrTraitNamed: aString [
 		hasInterned: aString 
 		ifTrue:  [:aSymbol | ^ (self at: aSymbol ifAbsent: [nil]) isClassOrTrait].
 	^ false
+]
+
+{ #category : #'dictionary access' }
+SystemDictionary >> lookupVar: name [
+	"Return a var with this name.  Return nil if none found"
+	^self reservedVariables at: name ifAbsent: [self bindingOf: name]
 ]
 
 { #category : #'system attributes' }
@@ -403,6 +412,11 @@ SystemDictionary >> renameClassNamed: oldName as: newName [
 			SystemNotification signal: 'Class-rename for ' , oldName , ' ignored because ' , oldName , ' does not exist.'.
 			^ self ].
 	oldClass rename: newName
+]
+
+{ #category : #removing }
+SystemDictionary >> reservedVariables [
+	^reservedVariables ifNil: [ reservedVariables := ReservedVariable lookupDictionary]
 ]
 
 { #category : #'class and trait names' }

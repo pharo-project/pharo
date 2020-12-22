@@ -13,6 +13,12 @@ FractionTest >> assert: a classAndValueEquals: b [
 	self assert: a equals: b
 ]
 
+{ #category : #coverage }
+FractionTest >> classToBeTested [
+	
+	^ Fraction
+]
+
 { #category : #'tests - conversions' }
 FractionTest >> testAsLargerPowerOfTwo [
 

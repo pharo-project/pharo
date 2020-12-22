@@ -10,6 +10,12 @@ Class {
 	#category : #'Renraku-Tests'
 }
 
+{ #category : #testing }
+ReExceptionStrategyBaseTest class >> isAbstract [
+
+	^ self = ReExceptionStrategyBaseTest
+]
+
 { #category : #helpers }
 ReExceptionStrategyBaseTest >> errorMessage [
 

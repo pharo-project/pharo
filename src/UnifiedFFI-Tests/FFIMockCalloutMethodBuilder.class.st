@@ -23,6 +23,12 @@ FFIMockCalloutMethodBuilder >> doing: aBlockClosure [
 	block := aBlockClosure
 ]
 
+{ #category : #compatibility }
+FFIMockCalloutMethodBuilder >> extractLibrary [
+
+	^ LibC uniqueInstance
+]
+
 { #category : #'type-resolution' }
 FFIMockCalloutMethodBuilder >> ffiBindingOf: aString [ 
 	

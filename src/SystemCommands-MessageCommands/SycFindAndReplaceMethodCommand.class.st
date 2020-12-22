@@ -42,7 +42,7 @@ SycFindAndReplaceMethodCommand >> execute [
 	refactoring :=  RBFindAndReplaceMethodRefactoring 
 		find: originalMessage contextUser.
 	refactoring setOption: #listToSearch toUse: [ :met :ref |
-		dialog := RBFindAndReplacePreview method: met refactoring: ref.
+		dialog := RBFindAndReplacePreviewPresenter method: met refactoring: ref.
 		dialog cancelled ifTrue: [ CmdCommandAborted signal ].
 		ref].
 	refactoring transform

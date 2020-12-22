@@ -40,10 +40,7 @@ SpAbstractMorphicAdapter >> adapt: aPresenter [
 	super adapt: aPresenter.
 	self addSettingsTo: self widget.
 	self addKeyBindingsTo: self widget.
-	self addEventsTo: self widget.
-	self flag: #TODO. "this should be here, but is interfering with old layouts reason why 
-	 I'm moving it to MorphicLayoutAdapter >> #applyStyle:to:"
-	"self applyStyle: self widget."
+	self addEventsTo: self widget
 ]
 
 { #category : #protocol }
@@ -102,6 +99,12 @@ SpAbstractMorphicAdapter >> addStyle: aStyle [
 SpAbstractMorphicAdapter >> application [ 
 
 	^ self presenter application
+]
+
+{ #category : #styling }
+SpAbstractMorphicAdapter >> applyStyle [
+
+	self applyStyle: self widget
 ]
 
 { #category : #styling }
@@ -283,13 +286,6 @@ SpAbstractMorphicAdapter >> focusPrevious [
 			takeKeyboardFocus ]
 ]
 
-{ #category : #'as yet unclassified' }
-SpAbstractMorphicAdapter >> gtInspectorPreviewIn: composite [
-	<gtInspectorPresentationOrder: 30>
-	
-	self widgetDo: [ :w | w gtInspectorMorphIn: composite ]
-]
-
 { #category : #protocol }
 SpAbstractMorphicAdapter >> hRigid [
 	
@@ -325,7 +321,9 @@ SpAbstractMorphicAdapter >> installEvent: anEvent [
 	"Used when installing events into presenters already built"
 
 	self widgetDo: [ :w |
-		anEvent installOn: self target: w ]
+		anEvent 
+			installOn: self 
+			target: (self eventHandlerReceiver: w) ]
 ]
 
 { #category : #'event installing' }
@@ -417,6 +415,36 @@ SpAbstractMorphicAdapter >> isMorphicAdapter [
 SpAbstractMorphicAdapter >> isVisible [
 	
 	^ widget visible
+]
+
+{ #category : #emulating }
+SpAbstractMorphicAdapter >> keyDown: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
+	| evt modifiers |
+	
+	modifiers := 0.
+	shiftBoolean ifTrue: [ modifiers := modifiers | 8 ].
+	metaBoolean ifTrue: [ modifiers := modifiers |
+		(Smalltalk os isWin32 | Smalltalk os isUnix
+			ifTrue: [ 2r00010000 ]
+			ifFalse: [ 2r01000000 ]) ].
+	controlBoolean ifTrue: [ modifiers := modifiers | 2r00010000 ].
+	optionBoolean ifTrue: [ modifiers := modifiers |
+		(Smalltalk os isWin32 | Smalltalk os isUnix
+			ifTrue: [ 2r01000000 ]
+			ifFalse: [ 2r00100000 ]) ].
+	
+	evt := KeyboardEvent new
+		setType: #keyDown
+		buttons: modifiers
+		position: self widget position + (1 @ 1)
+		keyValue: keyCode
+		charCode: keyCode
+		hand: self currentWorld activeHand
+		stamp: Time millisecondClockValue.
+
+	evt sentTo: self widgetEventReceiver.
+	"Some time to allow things to happen?"
+	10 milliSeconds wait
 ]
 
 { #category : #emulating }

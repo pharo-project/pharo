@@ -11,10 +11,10 @@ Class {
 SpMorphicContainerAdapter >> buildWidget [
 
 	^ PanelMorph new
-		changeProportionalLayout;
-		vResizing: #spaceFill;
-		hResizing: #spaceFill;
-		yourself
+		  changeProportionalLayout;
+		  vResizing: #spaceFill;
+		  hResizing: #spaceFill;
+		  yourself
 ]
 
 { #category : #protocol }

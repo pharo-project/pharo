@@ -5,7 +5,7 @@ Class {
 		'badgeFont',
 		'badgeSelector'
 	],
-	#category : #'Spec2-Adapters-Morphic'
+	#category : #'Spec2-Adapters-Morphic-Toolbar'
 }
 
 { #category : #accessing }

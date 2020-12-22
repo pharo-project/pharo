@@ -11,8 +11,7 @@ Class {
 	#name : #DTTestsProfilingResult,
 	#superclass : #DTPluginResult,
 	#instVars : [
-		'testsResult',
-		'timeData'
+		'testsResult'
 	],
 	#category : #'DrTests-TestsProfiling'
 }

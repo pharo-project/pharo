@@ -119,13 +119,15 @@ EpApplyPreviewer >> visitClassChange: aChange [
 
 	self
 		behaviorNamed: aChange behaviorAffectedName
-		ifPresent: [ :aClass |
-			^ aClass definition = aChange behaviorAffected definition
-				ifTrue: [ #() ]
-				ifFalse: [ { EpClassModification oldClass: aClass newClass: aChange behaviorAffected } ]
-			].
-	
-	^ { EpClassAddition class: aChange behaviorAffected }
+		ifPresent: [ :aClass | 
+			^ aClass definitionString = aChange behaviorAffected definition
+				  ifTrue: [ #(  ) ]
+				  ifFalse: [ 
+					  { (EpClassModification
+						   oldClass: aClass
+						   newClass: aChange behaviorAffected) } ] ].
+
+	^ { (EpClassAddition class: aChange behaviorAffected) }
 ]
 
 { #category : #visitor }

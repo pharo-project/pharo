@@ -44,6 +44,28 @@ OSSDL2ExternalForm >> destroySurface [
 	].
 ]
 
+{ #category : #'old - ffi backend support' }
+OSSDL2ExternalForm >> oldPrimCreateManualSurfaceWidth: aWidth height: aHeight rowPitch: rowPitch depth: aDepth isMSB: isMSB [
+	<primitive: 'primitiveCreateManualSurface' module: 'SqueakFFIPrims'>
+	self primitiveFailed
+
+]
+
+{ #category : #'old - ffi backend support' }
+OSSDL2ExternalForm >> oldPrimDestroyManualSurface: surfaceID [
+	<primitive: 'primitiveDestroyManualSurface' module: 'SqueakFFIPrims'>
+	self primitiveFailed
+
+]
+
+{ #category : #'old - ffi backend support' }
+OSSDL2ExternalForm >> oldPrimManualSurface: surfaceID setPointer: aPointer [
+	"The 'surfaceID' is a handle returned by #primitiveCreateManualSurface from SurfacePlugin. The pointer is a 32-bit unsigned integer that SurfacePlugin casts to a void*."
+	<primitive: 'primitiveSetManualSurfacePointer' module: 'SqueakFFIPrims'>
+	self primitiveFailed
+
+]
+
 { #category : #accessing }
 OSSDL2ExternalForm >> pointer [
 	^pointer
@@ -51,23 +73,25 @@ OSSDL2ExternalForm >> pointer [
 
 { #category : #primitives }
 OSSDL2ExternalForm >> primCreateManualSurfaceWidth: aWidth height: aHeight rowPitch: rowPitch depth: aDepth isMSB: isMSB [
-	<primitive: 'primitiveCreateManualSurface' module: 'SqueakFFIPrims'>
-	self primitiveFailed
+	<primitive: 'primitiveCreateManualSurface' module: 'SurfacePlugin'>
+	
+	^ self oldPrimCreateManualSurfaceWidth: aWidth height: aHeight rowPitch: rowPitch depth: aDepth isMSB: isMSB
 
 ]
 
 { #category : #primitives }
 OSSDL2ExternalForm >> primDestroyManualSurface: surfaceID [
-	<primitive: 'primitiveDestroyManualSurface' module: 'SqueakFFIPrims'>
-	self primitiveFailed
+	<primitive: 'primitiveDestroyManualSurface' module: 'SurfacePlugin'>
 
+	^ self oldPrimDestroyManualSurface: surfaceID
 ]
 
 { #category : #primitives }
 OSSDL2ExternalForm >> primManualSurface: surfaceID setPointer: aPointer [
 	"The 'surfaceID' is a handle returned by #primitiveCreateManualSurface from SurfacePlugin. The pointer is a 32-bit unsigned integer that SurfacePlugin casts to a void*."
-	<primitive: 'primitiveSetManualSurfacePointer' module: 'SqueakFFIPrims'>
-	self primitiveFailed
+	<primitive: 'primitiveSetManualSurfacePointer' module: 'SurfacePlugin'>
+
+	^ self oldPrimManualSurface: surfaceID setPointer: aPointer
 
 ]
 

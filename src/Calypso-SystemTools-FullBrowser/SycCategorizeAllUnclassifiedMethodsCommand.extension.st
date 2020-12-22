@@ -4,5 +4,5 @@ Extension { #name : #SycCategorizeAllUnclassifiedMethodsCommand }
 SycCategorizeAllUnclassifiedMethodsCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 10000 for: ClyMethodGroupContextOfFullBrowser 
+	^CmdContextMenuActivation byRootGroupItemOrder: 10000 for: ClyFullBrowserMethodGroupContext 
 ]

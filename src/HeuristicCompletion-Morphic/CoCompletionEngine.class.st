@@ -56,6 +56,7 @@ CoCompletionEngine >> initialize [
 { #category : #accessing }
 CoCompletionEngine >> variableBindingNames [
 
-	self doItRequestor ifNil: [ ^ #() ].
-	^ self doItRequestor model variableBindings keys
+	^ self doItRequestor 
+		ifNil: [ #() ]
+		ifNotNil: [ :requestor | requestor model variableBindings keys ]
 ]

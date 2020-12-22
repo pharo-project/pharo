@@ -65,7 +65,7 @@ LibC >> currentProcessId [
 LibC >> fgetc: stream [
 	"Get character from stream."
 	 
-	 ^self ffiCall: #(int* fgetc(ExternalAddress* stream))
+	 ^self ffiCall: #(int* fgetc(void* stream))
 ]
 
 { #category : #'private - accessing' }
@@ -91,8 +91,8 @@ LibC >> pipe: command mode: mode [
 	"Initiate pipe streams to or from a process."
 
 	^self ffiCall: (Smalltalk os isWindows
-							ifTrue:  [ #(ExternalAddress* _popen(char* command, char* mode)) ]
-							ifFalse: [ #(ExternalAddress* popen(char* command, char* mode)) ])
+							ifTrue:  [ #(void* _popen(char* command, char* mode)) ]
+							ifFalse: [ #(void* popen(char* command, char* mode)) ])
 
 	
 			 
@@ -103,8 +103,8 @@ LibC >> pipeClose: stream [
 	"Close the given pipe stream."
 
 	^self ffiCall: (Smalltalk os isWindows
-							ifTrue: [ #(int* _pclose(ExternalAddress* stream)) ]
-							ifFalse: [ #(int* pclose(ExternalAddress* stream)) ])
+							ifTrue: [ #(int* _pclose(void* stream)) ]
+							ifFalse: [ #(int* pclose(void* stream)) ])
 ]
 
 { #category : #'process actions' }

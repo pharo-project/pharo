@@ -1,7 +1,7 @@
 Class {
 	#name : #T2TraitChangesTest,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests-Tests'
+	#category : #'TraitsV2-Tests'
 }
 
 { #category : #tests }
@@ -48,4 +48,18 @@ T2TraitChangesTest >> testUpdatingTheSameTraitDoesNotProduceChanges [
 	builder compareWithOldClass.
 	
 	self assertEmpty: builder changes.
+]
+
+{ #category : #tests }
+T2TraitChangesTest >> testconfigureBuilderWithNameTraitCompositionInstanceVariableNamesPackageName [
+	
+	| builder | 
+		
+	builder := ShiftClassBuilder new.
+	builder buildEnvironment: ShSmalltalkGlobalsEnvironment new.
+	Trait configureBuilder: builder withName: #T1 traitComposition: {} instanceVariableNames: 'a b'  packageName: 'TraitsV2-Tests-TestClasses'.
+				
+	self assert: builder slots size equals: 2.
+	self assert: builder slots first name equals: 'a'.
+	self assert: builder slots second name equals: 'b'.
 ]

@@ -1,5 +1,5 @@
 "
-I am the adapter used to bridge a TextPresenter and a PluggableTextMorph
+I am the adapter used to bridge a TextPresenter and a RubScrolledTextMorph for regular text
 "
 Class {
 	#name : #SpMorphicTextAdapter,
@@ -66,17 +66,23 @@ SpMorphicTextAdapter >> buildWidget [
 
 { #category : #'widget API' }
 SpMorphicTextAdapter >> codePaneMenu: aMenu shifted: shifted [
-	| menuPresenter |
 
+	| menuPresenter |
 	menuPresenter := self model contextMenu value
-		ifNotNil: [ :contextMenu | contextMenu ]
-		ifNil: [ SpMenuPresenter new ].
+		                 ifNotNil: [ :contextMenu | contextMenu ]
+		                 ifNil: [ SpMenuPresenter new ].
 	self presenter hasEditionContextMenu ifTrue: [ 
-		self presenter editionContextMenu menuGroups do: [ :each |
+		self presenter editionContextMenu menuGroups do: [ :each | 
 			menuPresenter addMenuGroup: each ] ].
 	^ SpBindings
-		value: self model application adapterBindings
-		during: [ menuPresenter buildWithSpec ]
+		  value: self model application adapterBindings
+		  during: [ menuPresenter value buildWithSpec ]
+]
+
+{ #category : #commands }
+SpMorphicTextAdapter >> copyText [
+
+	self editor copySelection
 ]
 
 { #category : #'widget API' }
@@ -93,19 +99,49 @@ SpMorphicTextAdapter >> cursorPositionIndex: index [
 	self widgetDo: [ :w | ^ w textArea editor pointIndex: index ]
 ]
 
+{ #category : #commands }
+SpMorphicTextAdapter >> cutText [
+
+	self editor cut
+]
+
+{ #category : #private }
+SpMorphicTextAdapter >> editor [
+
+	^ widget textArea editor
+]
+
 { #category : #private }
 SpMorphicTextAdapter >> eventHandlerReceiver: aWidget [
 
 	^ aWidget textArea
 ]
 
+{ #category : #commands }
+SpMorphicTextAdapter >> findNextText [
+
+	self editor findAgain
+]
+
+{ #category : #commands }
+SpMorphicTextAdapter >> findText [
+
+	self editor find
+]
+
 { #category : #private }
 SpMorphicTextAdapter >> linePositionOf: sel [
+
 	| textLine linePosition |
-	
 	textLine := sel textLine.
 	linePosition := sel stringIndex - textLine first + 1.
 	^ linePosition @ textLine lineNumber
+]
+
+{ #category : #commands }
+SpMorphicTextAdapter >> pasteText [
+
+	self editor paste
 ]
 
 { #category : #styling }
@@ -113,6 +149,12 @@ SpMorphicTextAdapter >> presenterStyles [
 	"The presenters in the style"
 
 	^ self presenter scrollBarStyles, self presenter styles 
+]
+
+{ #category : #commands }
+SpMorphicTextAdapter >> selectAndPasteText [
+
+	self editor pasteRecent
 ]
 
 { #category : #private }

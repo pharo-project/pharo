@@ -10,6 +10,12 @@ Class {
 	#category : #'Kernel-Tests-Classes'
 }
 
+{ #category : #coverage }
+ClassDescriptionTest >> classToBeTested [
+	
+	^ ClassDescription 
+]
+
 { #category : #tests }
 ClassDescriptionTest >> testAllMethodCategoriesIntegratedThrough [
 	"If this test fails, it may be because method protocols are sorted in #allMethodCategoriesIntegratedThrough. Take care that if the protocols of the class under test are already sorted, you won't see any problem."

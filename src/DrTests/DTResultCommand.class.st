@@ -7,6 +7,12 @@ Class {
 	#category : #'DrTests-Commands'
 }
 
+{ #category : #testing }
+DTResultCommand class >> isAbstract [ 
+
+	^ self name = #DTResultCommand
+]
+
 { #category : #hooks }
 DTResultCommand >> resultSelected [
 	^ self drTest resultSelected

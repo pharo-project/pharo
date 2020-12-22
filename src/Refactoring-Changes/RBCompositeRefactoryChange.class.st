@@ -9,7 +9,9 @@ Class {
 	#name : #RBCompositeRefactoryChange,
 	#superclass : #RBRefactoryChange,
 	#instVars : [
-		'changes'
+		'changes',
+		'newName',
+		'oldName'
 	],
 	#category : #'Refactoring-Changes'
 }
@@ -52,6 +54,11 @@ RBCompositeRefactoryChange >> addInstanceVariable: variableName to: aClass [
 { #category : #'refactory-changes' }
 RBCompositeRefactoryChange >> addPool: aPoolVariable to: aClass [ 
 	^ self addChange: (changeFactory addPoolVariable: aPoolVariable to: aClass)
+]
+
+{ #category : #accessing }
+RBCompositeRefactoryChange >> changeClass [
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -125,6 +132,16 @@ RBCompositeRefactoryChange >> hash [
 RBCompositeRefactoryChange >> initialize [
 	super initialize.
 	changes := OrderedCollection new
+]
+
+{ #category : #accessing }
+RBCompositeRefactoryChange >> newName [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+RBCompositeRefactoryChange >> oldName [
+	^ self subclassResponsibility
 ]
 
 { #category : #copying }

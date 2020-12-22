@@ -98,7 +98,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 "
 Class {
 	#name : #SourceCodeProRegular,
-	#superclass : #EmbeddedFreeTypeFontFontDescription,
+	#superclass : #EmbeddedFreeTypeFontDescription,
 	#category : #'EmbeddedFreeType-Fonts'
 }
 

@@ -5,7 +5,7 @@ I create tests from executable comments and run these tests.
 Class {
 	#name : #DTCommentToTest,
 	#superclass : #DrTestsPlugin,
-	#category : #'DrTests-CommentsToTests'
+	#category : #'DrTests-CommentsToTests-Base'
 }
 
 { #category : #'api - accessing' }

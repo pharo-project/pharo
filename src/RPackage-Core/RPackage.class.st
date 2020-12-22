@@ -735,6 +735,12 @@ RPackage >> extensionsForTag: aRPackageTag [
 		self category: category matches: aRPackageTag categoryName ]
 ]
 
+{ #category : #properties }
+RPackage >> hasProperty: aKey [
+	self propertyAt: aKey ifAbsent: [ ^ false ].
+	^ true
+]
+
 { #category : #accessing }
 RPackage >> hierarchyRoots [
 	"Returns all the hiearchy roots (by opposition to single classes inheriting from class outside the package) of a package"
@@ -810,6 +816,13 @@ RPackage >> includesClassTagNamed: aString [
 ]
 
 { #category : #testing }
+RPackage >> includesClassesAffectedBy: aSystemAnnouncement [
+
+	^(aSystemAnnouncement affectsClassesDefinedInPackage: self)
+		or: [ aSystemAnnouncement affectsClassesExtendedInPackage: self ]
+]
+
+{ #category : #testing }
 RPackage >> includesDefinedSelector: aSelector ofClass: aClass [
 	"Return true if the receiver includes the method of selector aSelector. Only checks methods defined in this package"
 	
@@ -868,6 +881,12 @@ RPackage >> includesMethodCategory: categoryName ofClass: aClass [
 	^ (self isYourClassExtension: categoryName)
 		or: [(self includesClass: aClass)
 				and: [(self isForeignClassExtension: categoryName) not]]
+]
+
+{ #category : #testing }
+RPackage >> includesMethodsAffectedBy: aSystemAnnouncement [
+
+	^aSystemAnnouncement affectsMethodsDefinedInPackage: self
 ]
 
 { #category : #testing }
@@ -936,6 +955,19 @@ RPackage >> isEmpty [
 { #category : #'system compatibility' }
 RPackage >> isForeignClassExtension: categoryName [
 	^ categoryName first = $* and: [(self isYourClassExtension: categoryName) not]
+]
+
+{ #category : #testing }
+RPackage >> isTestPackage [
+	"1. Test package ends with suffix -Tests. Suffix is case sensitive.
+	 2. Or test package contains '-Tests-' in middle.
+	Some examples: "
+	"(RPackage named: 'MockPackage-Tests') isTestPackage >>> true"
+	"(RPackage named: 'MockPackage-tests') isTestPackage >>> false"
+	"(RPackage named: 'MockPackage') isTestPackage >>> false"
+	"(RPackage named: 'MockPackage-Tests-Package') isTestPackage >>> true"
+	
+	^ (self name endsWith: '-Tests') or: [self name includesSubstring: '-Tests-']
 ]
 
 { #category : #'system compatibility' }
@@ -1487,7 +1519,7 @@ RPackage >> tagsForClasses [
 	"Any class could be tagged for user purpose.
 	Now we implement it on top of RPackageTag"
 	
-	^self classTags reject: #isRoot thenCollect: #name
+	^self classTags reject: [:each | each isRoot] thenCollect: [:each | each name]
 ]
 
 { #category : #private }

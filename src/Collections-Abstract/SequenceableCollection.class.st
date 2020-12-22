@@ -2080,7 +2080,7 @@ SequenceableCollection >> shuffleBy: aRandom [
 	"#(1 2 3 4 5) shuffleBy: (Random seed: 42) >>> #(2 5 4 3 1)"
 
 	self size to: 2 by: -1 do: [ :i | 
-		self swap: i with: (aRandom nextInt: i) ]
+		self swap: i with: (aRandom nextInteger: i) ]
 ]
 
 { #category : #copying }

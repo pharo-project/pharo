@@ -1773,6 +1773,23 @@ RBParserTest >> testReplacingNodes [
 	self assert: tree removeDeadCode equals: (self parserClass parseMethod: '+ q | q b | self ifTrue: [] ifFalse: [b := c]. q := b. {q. b}. ^q')
 ]
 
+{ #category : #tests }
+RBParserTest >> testScopesEnclosingMatchingLiterals [
+	| tree |
+
+	tree := self parserClass parseMethod: 'tmp [ $] ]'.
+	self assert: tree statements first isBlock.
+
+	tree := self parserClass parseMethod: 'tmp ($))'.
+	self assert: tree statements first isLiteralNode.
+	
+	tree := self parserClass parseMethod: 'tmp #( $) )'.
+	self assert: tree statements first isLiteralArray.
+	
+	tree := self parserClass parseMethod: 'tmp { $} }'.
+	self assert: tree statements first isDynamicArray.
+]
+
 { #category : #testSelector }
 RBParserTest >> testSelectorFromMessageIsSelectorNode [
 	| tree |
@@ -1904,7 +1921,7 @@ RBParserTest >> testUnclosedArrayErrorNodeContainsRightValue [
 	| tree |
 	tree := self parseFaultyExpression: '{ faulty parentheses message node'.
 	self assert: tree isParseError.
-	self assert: tree value equals: '{ faulty parentheses message node '
+	self assert: tree formattedCode equals: '{ faulty parentheses message node'
 ]
 
 { #category : #'error testing' }
@@ -1912,7 +1929,7 @@ RBParserTest >> testUnclosedBracketErrorNodeContainsRightValue [
 	| tree |
 	tree := self parseFaultyExpression: '[ faulty parentheses message node'.
 	self assert: tree isEnglobingError.
-	self assert: tree value equals: '[ faulty parentheses message node '
+	self assert: tree formattedCode equals: '[ faulty parentheses message node'
 ]
 
 { #category : #'error testing' }
@@ -1920,7 +1937,7 @@ RBParserTest >> testUnclosedParenthesesErrorNodeContainsRightValue [
 	| tree |
 	tree := self parseFaultyExpression: '( faulty parentheses message node'.
 	self assert: tree isEnglobingError.
-	self assert: tree value equals: '( faulty parentheses message node '
+	self assert: tree formattedCode equals: '( faulty parentheses message node'
 ]
 
 { #category : #'garbage tests' }
@@ -1934,7 +1951,7 @@ RBParserTest >> testUnclosedTemporariesErrorNodeContainsRightValue [
 	| tree |
 	tree := self parseFaultyExpression: '| faulty temporaries'.
 	self assert: tree isEnglobingError.
-	self assert: tree value equals: '| faulty temporaries '
+	self assert: tree formattedCode equals: '| faulty temporaries'
 ]
 
 { #category : #private }

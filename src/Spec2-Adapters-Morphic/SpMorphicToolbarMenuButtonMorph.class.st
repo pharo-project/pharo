@@ -1,3 +1,6 @@
+"
+Morphic implementation of a ToolBarMenuButton
+"
 Class {
 	#name : #SpMorphicToolbarMenuButtonMorph,
 	#superclass : #Morph,
@@ -27,25 +30,24 @@ SpMorphicToolbarMenuButtonMorph >> button [
 { #category : #configuring }
 SpMorphicToolbarMenuButtonMorph >> configureWith: aMode item: aButton [
 
-	"transmit to button"
+	"Transmit to button"
 	self button
 		configureWith: aMode 
 		item: aButton
 ]
 
 { #category : #accessing }
-SpMorphicToolbarMenuButtonMorph >> font: aFont [ 
-	
-	self submorphs do: [ :each |
-		(each respondsTo: #font:) ifTrue: [ 
-			each font: aFont ] ]
+SpMorphicToolbarMenuButtonMorph >> font: aFont [
+
+	self submorphs do: [ :each | 
+		(each respondsTo: #font:) ifTrue: [ each font: aFont ] ]
 ]
 
 { #category : #initialization }
 SpMorphicToolbarMenuButtonMorph >> initialize [
 
 	super initialize.
-	self 
+	self
 		changeTableLayout;
 		listDirection: #leftToRight;
 		hResizing: #shrinkWrap;
@@ -61,9 +63,9 @@ SpMorphicToolbarMenuButtonMorph >> initialize [
 SpMorphicToolbarMenuButtonMorph >> initializeButton: aButtonMorph menuButton: aMenuButton [
 
 	self initialize.
-	self addMorphBack: (aButtonMorph 
-		hResizing: #shrinkWrap;
-		yourself).
+	self addMorphBack: (aButtonMorph
+			 hResizing: #shrinkWrap;
+			 yourself).
 	self addMorphBack: aMenuButton
 ]
 

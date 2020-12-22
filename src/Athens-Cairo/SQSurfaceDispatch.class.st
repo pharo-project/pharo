@@ -86,7 +86,7 @@ SQSurfaceDispatch >> getSurfaceFormatFn: aCallback [
 	getSurfaceFormatFn := aCallback.
 	handle 
 		pointerAt: OFFSET_GETSURFACEFORMATFN 
-		put: (ExternalAddress fromAddress: aCallback thunk address)
+		put: aCallback thunk asExternalAddress
 ]
 
 { #category : #initialization }
@@ -109,7 +109,7 @@ SQSurfaceDispatch >> lockSurfaceFn: aCallback [
 	lockSurfaceFn := aCallback.
 	handle 
 		pointerAt: OFFSET_LOCKSURFACEFN 
-		put: (ExternalAddress fromAddress: aCallback thunk address)
+		put: aCallback thunk asExternalAddress
 ]
 
 { #category : #'accessing structure variables' }
@@ -149,7 +149,7 @@ SQSurfaceDispatch >> showSurfaceFn: aCallbackOrNil [
 	handle 
 		pointerAt: OFFSET_SHOWSURFACEFN 
 		put: (aCallbackOrNil 
-			ifNotNil: [ ExternalAddress fromAddress: aCallbackOrNil thunk address ]
+			ifNotNil: [ aCallbackOrNil thunk asExternalAddress ]
 			ifNil: [ ExternalAddress null ])
 ]
 
@@ -166,6 +166,6 @@ SQSurfaceDispatch >> unlockSurfaceFn: aCallbackOrNil [
 	handle 
 		pointerAt: OFFSET_UNLOCKSURFACEFN 
 		put: (aCallbackOrNil 
-			ifNotNil: [ ExternalAddress fromAddress: aCallbackOrNil thunk address ]
+			ifNotNil: [ aCallbackOrNil thunk asExternalAddress ]
 			ifNil: [ ExternalAddress null ])
 ]

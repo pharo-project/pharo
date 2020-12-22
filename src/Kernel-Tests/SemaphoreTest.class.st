@@ -10,6 +10,12 @@ Class {
 	#category : #'Kernel-Tests-Processes'
 }
 
+{ #category : #coverage }
+SemaphoreTest >> classToBeTested [
+	
+	^ Semaphore
+]
+
 { #category : #private }
 SemaphoreTest >> criticalError [
 	Processor activeProcess terminate

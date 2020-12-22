@@ -18,6 +18,11 @@ Class {
 	#category : #'Kernel-Variables'
 }
 
+{ #category : #visiting }
+ClassVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
+	^ aProgramNodeVisitor visitClassVariableNode: aNode
+]
+
 { #category : #accessing }
 ClassVariable >> definingClass [
 	"if a Variable is from a Trait is installed in a class, we store the orginal class of the trait here"
@@ -49,7 +54,7 @@ ClassVariable >> emitStore: methodBuilder [
 { #category : #'code generation' }
 ClassVariable >> emitValue: methodBuilder [
 
-	methodBuilder pushLiteralVariable: self.
+	methodBuilder pushLiteralVariable: self
 ]
 
 { #category : #testing }

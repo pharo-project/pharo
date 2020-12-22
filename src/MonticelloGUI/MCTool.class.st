@@ -382,7 +382,6 @@ MCTool >> treeMorph: listSymbol selection: selectionSymbol menu: menuSymbol [
 		selected: selectionSymbol
 		changeSelected: (selectionSymbol, ':') asSymbol
 		menu: menuSymbol
-		keystroke: nil
 ]
 
 { #category : #'morphic ui' }

@@ -23,11 +23,11 @@ ClyClassDefinitionEditorToolMorph >> applyChanges [
 	
 ]
 
-{ #category : #contexts }
+{ #category : #'to sort' }
 ClyClassDefinitionEditorToolMorph >> createTextContext [
 	^self selectedSourceNode
-		ifNil: [super createTextContext]
-		ifNotNil: [ :astNode | ClySourceCodeContext for: self selectedNode: astNode]
+		ifNil: [ super createTextContext ]
+		ifNotNil: [ :astNode | ClyClassDefinitionContext for: self selectedNode: astNode]
 ]
 
 { #category : #building }
@@ -47,16 +47,16 @@ ClyClassDefinitionEditorToolMorph >> defaultIconName [
 	^#classIcon
 ]
 
-{ #category : #accessing }
+{ #category : #'to sort' }
 ClyClassDefinitionEditorToolMorph >> editingText [
 	
-	^ editingClass definition
+	^ editingClass definitionString
 ]
 
 { #category : #building }
 ClyClassDefinitionEditorToolMorph >> fillStatusBar [ 
 	super fillStatusBar.
-	statusBar addCommandItem: (ClySlotClassDefinitionSwitchMorph for: self)
+	statusBar addCommandItem: (ClyFluidClassDefinitionSwitchMorph for: self)
 ]
 
 { #category : #testing }
@@ -65,9 +65,12 @@ ClyClassDefinitionEditorToolMorph >> isCommandAvailable: aCommand [
 	^ aCommand canBeExecutedInClassEditor: self
 ]
 
-{ #category : #accessing }
+{ #category : #'to sort' }
 ClyClassDefinitionEditorToolMorph >> parseClassDefinition [
-	^ CDClassDefinitionParser parse: self editingText
+
+	self editingClass needsSlotClassDefinition 
+		ifTrue: [ ^ ClassDefinitionPrinter fluid classDefinitionParserClass parse: self editingText].
+	^ ClassDefinitionPrinter new classDefinitionParserClass parse: self editingText
 ]
 
 { #category : #'selecting text' }

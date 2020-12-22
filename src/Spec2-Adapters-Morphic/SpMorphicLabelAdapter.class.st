@@ -10,7 +10,7 @@ Class {
 	#category : #'Spec2-Adapters-Morphic-Base'
 }
 
-{ #category : #initialization }
+{ #category : #styling }
 SpMorphicLabelAdapter >> applyStyle: aMorph [
 
 	aMorph fitContents.
@@ -19,6 +19,7 @@ SpMorphicLabelAdapter >> applyStyle: aMorph [
 
 { #category : #factory }
 SpMorphicLabelAdapter >> buildWidget [
+
 	| label |
 	label := LabelMorph new model: self.
 	label
@@ -30,7 +31,7 @@ SpMorphicLabelAdapter >> buildWidget [
 		dropEnabled: self dropEnabled;
 		setBalloonText: self getHelpText;
 		setProperty: #minWidth toValue: 3. "3 is the default value of StringMorph. We do not want the default value of LabelMorph that is the min width of the content..."
-		
+
 	^ label
 ]
 

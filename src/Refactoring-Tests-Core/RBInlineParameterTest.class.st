@@ -1,8 +1,16 @@
 Class {
 	#name : #RBInlineParameterTest,
 	#superclass : #RBRefactoringTest,
-	#category : #'Refactoring-Tests-Core'
+	#category : #'Refactoring-Tests-Core-Refactorings'
 }
+
+{ #category : #'failure tests' }
+RBInlineParameterTest >> testInlineArgsWhitoutSameLiteral [
+	self shouldFail: (RBInlineParameterRefactoring 
+			inlineParameter: 'aSymbol'
+			in: RBRefactoryTestDataApp
+			selector: ('inline' , 'Bar:') asSymbol)
+]
 
 { #category : #'failure tests' }
 RBInlineParameterTest >> testInlineBlockFailure [

@@ -89,26 +89,31 @@ UndefinedObject >> deepCopy [
 
 { #category : #'reflective operations' }
 UndefinedObject >> doesNotUnderstand: aMessage [
-	<debuggerCompleteToSender>
-	"Handle the fact that there was an attempt to send the given message to an Undeclared variable (nil), hence the receiver does not understand this message (typically #new)."
-	"Testing: (3 activeProcess)"
 
+	"Handle the fact that there was an attempt to send the given message to an Undeclared variable (nil), hence the receiver does not understand this message (typically #new)."
+
+	"Testing: (nil activeProcess)"
+
+	<debuggerCompleteToSender>
 	| exception resumeValue node |
-	
-	(node := self findUndeclaredVariableIn: thisContext sender sourceNodeExecuted) ifNil: [ 
-		 ^super doesNotUnderstand: aMessage ].
-				
+	[ 
+	node := self findUndeclaredVariableIn:
+		        thisContext sender sourceNodeExecuted ] onErrorDo: [ :ex | 
+				"This is ugly, but we have a dependency with Opal compiler and 
+				it should be extracted. If there is a failure during the bootstrap, this
+				dependency produces an infinite loop"
+		 ].
+	node ifNil: [ ^ super doesNotUnderstand: aMessage ].
+
 	(exception := VariableNotDeclared new)
-			message: aMessage;
-			variableNode: node;
-			receiver: self.
-			
+		message: aMessage;
+		variableNode: node;
+		receiver: self.
+
 	resumeValue := exception signal.
 	^ exception reachedDefaultHandler
-			ifTrue: [ aMessage sentTo: self ]
-			ifFalse: [ resumeValue ] .
-			
-	
+		  ifTrue: [ aMessage sentTo: self ]
+		  ifFalse: [ resumeValue ]
 ]
 
 { #category : #'class hierarchy' }

@@ -303,7 +303,7 @@ AthensCairoSurface class >> ioRegisterSurface: aCairoSurfaceHandle dispatch: sqS
 	otherwise.
 
 "
-	self ffiCall: #(bool ioRegisterSurface(int aCairoSurfaceHandle, void *sqSurfaceDispatchPtr, void *idHolder)) module: #SurfacePlugin
+	self ffiCall: #(bool ioRegisterSurface(void* aCairoSurfaceHandle, void *sqSurfaceDispatchPtr, void *idHolder)) module: #SurfacePlugin
 ]
 
 { #category : #private }
@@ -366,7 +366,7 @@ AthensCairoSurface class >> registerSurface: anAthensCairoSurface [
 	self checkSession.
 
 	id := ByteArray new: 4.
-	address := anAthensCairoSurface handle value.
+	address := anAthensCairoSurface getHandle.
 	(self ioRegisterSurface: address dispatch: dispatch surfaceId: id)
 		ifFalse: [ self error: 'Unable to register surface with SurfacePlugin' ].
 	id := id signedLongAt: 1.
@@ -464,6 +464,11 @@ AthensCairoSurface >> createLinearGradient: aColorRamp start: aStartPoint stop: 
 	
 ]
 
+{ #category : #paints }
+AthensCairoSurface >> createMeshGradientWithPatches: aListOfMeshPatches [
+	^ AthensCairoMeshGradientPaint createMeshGradientWithPatches: aListOfMeshPatches
+]
+
 { #category : #creation }
 AthensCairoSurface >> createPath: aPathCreatingBlock [
 	^ builder createPath:  aPathCreatingBlock 
@@ -531,12 +536,14 @@ AthensCairoSurface >> fillPath: aPath withSolidColor: aColor [
 AthensCairoSurface >> fillRectangle: aRectangle withSolidColor: aColor [
 
 	self loadSolidColor: aColor.
-	
+
 	currentCanvas
 		newPath;
-		rectangleX: aRectangle left y: aRectangle top width: aRectangle width height: aRectangle height;
+		rectangleX: aRectangle left asFloat
+		y: aRectangle top asFloat
+		width: aRectangle width asFloat
+		height: aRectangle height asFloat;
 		fill
-	
 ]
 
 { #category : #private }
@@ -576,6 +583,12 @@ AthensCairoSurface >> getFreetypeFontRendererFor: aFreetypeFont [
 	"answer the same instance, just reset it's font and advance"
 	
 	^ ftFontRenderer font: aFreetypeFont; advance: 0@0; yourself
+]
+
+{ #category : #'as yet unclassified' }
+AthensCairoSurface >> getHandle [
+	
+	^ handle
 ]
 
 { #category : #'text support' }

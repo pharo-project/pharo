@@ -231,6 +231,11 @@ RBRefactoryTestDataApp >> ifTrueReturns [
 	^false
 ]
 
+{ #category : #test }
+RBRefactoryTestDataApp >> inlineBar: aSymbol [
+	^aSymbol isSymbol
+]
+
 { #category : #inline }
 RBRefactoryTestDataApp >> inlineComponent [
 	| a |
@@ -487,6 +492,16 @@ RBRefactoryTestDataApp >> searchingLiteral [
 { #category : #test }
 RBRefactoryTestDataApp >> selectorNotReferenced [
 	^self selectorNotReferenced + 4
+]
+
+{ #category : #test }
+RBRefactoryTestDataApp >> sendInlineBar [
+	^ self inlineBar: #example1
+]
+
+{ #category : #test }
+RBRefactoryTestDataApp >> sendInlineBar2 [
+	^ self inlineBar: 'example2'
 ]
 
 { #category : #test }

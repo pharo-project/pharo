@@ -10,6 +10,12 @@ Class {
 	#category : #'Kernel-Tests-Objects'
 }
 
+{ #category : #coverage }
+ProtoObjectTest >> classToBeTested [
+	
+	^ ProtoObject
+]
+
 { #category : #'tests - testing' }
 ProtoObjectTest >> testFastPointersTo [
 	| myObject myArray myObject2 allObjects |
@@ -168,6 +174,16 @@ ProtoObjectTest >> testIfNotNilIfNil [
 	self assert: (object ifNotNil: block ifNil: [ false ]) identicalTo: returnValue.
 	block := [ :o | returnValue ].
 	self assert: (object ifNotNil: block ifNil: [ false ]) identicalTo: returnValue
+]
+
+{ #category : #'tests - testing' }
+ProtoObjectTest >> testIsImmediateObject [
+	self deny: Object new isImmediateObject.
+	self deny: Array new isImmediateObject.
+	self assert: 1 isImmediateObject.
+	self assert: 1 isImmediateObject equals: 1 class isImmediateClass.
+	self assert: 1.2 isImmediateObject equals: 1.2 class isImmediateClass.
+	self assert: $a isImmediateObject equals: $a class isImmediateClass
 ]
 
 { #category : #'tests - testing' }

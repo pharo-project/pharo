@@ -1,3 +1,6 @@
+"
+A callback via Alien machinery
+"
 Class {
 	#name : #FFIAlienCallback,
 	#superclass : #Object,
@@ -47,6 +50,20 @@ FFIAlienCallback >> frontendCallback: anObject [
 	frontendCallback := anObject.
 	
 	self register
+]
+
+{ #category : #invoking }
+FFIAlienCallback >> invokeAsFunctionWithArguments: aCollection [ 
+
+	^ (ExternalLibraryFunction 
+			name: nil
+			module: nil
+			callType: (OSPlatform current ffiCallingConvention = #stdcall ifTrue: [ 1 ] ifFalse: [ 0 ])
+			returnType: self frontendCallback functionSpec returnType externalTypeWithArity
+			argumentTypes: (self frontendCallback functionSpec arguments collect: [:each | each externalTypeWithArity]))
+				setHandle: (ExternalAddress fromAddress: (self frontendCallback thunk address)) ;	
+					invokeWithArguments: aCollection
+
 ]
 
 { #category : #registering }

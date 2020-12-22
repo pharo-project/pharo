@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'previousBreakpoints',
 		'cls',
-		'oldObservers'
+		'oldSystemAnnouncer'
 	],
 	#category : #'Reflectivity-Tools-Tests'
 }
@@ -26,8 +26,9 @@ BreakpointTest >> setUp [
 	super setUp.
 	cls := self newDummyClass.
 	previousBreakpoints := Breakpoint all copy.
-	oldObservers := Breakpoint observers copy.
-	Breakpoint observers removeAll.
+	oldSystemAnnouncer := SystemAnnouncer uniqueInstance.
+	SystemAnnouncer announcer: nil.
+	Breakpoint registerInterestToSystemAnnouncement.
 	Breakpoint all removeAll.
 ]
 
@@ -36,8 +37,7 @@ BreakpointTest >> tearDown [
 	| pkg |
 	Breakpoint removeAll.	
 	Breakpoint all addAll: previousBreakpoints.
-	Breakpoint observers removeAll.
-	Breakpoint observers addAll: oldObservers.
+	SystemAnnouncer announcer: oldSystemAnnouncer.
 	cls ifNotNil: [ cls isObsolete ifFalse: [ cls removeFromSystem ] ].
 	pkg := 'DummyPackage' asPackageIfAbsent: [ ]. 
 	pkg ifNotNil: [ pkg removeFromSystem ].
@@ -216,6 +216,19 @@ BreakpointTest >> testObjectCentricObjectAPI [
 	
 	self should: [object1 exampleAssignment] raise: Break.
 	self shouldnt: [object2 exampleAssignment] raise: Break
+]
+
+{ #category : #tests }
+BreakpointTest >> testRemoveBreakpointWithRemoveFrom [
+	|bp node |
+	cls compile: 'dummy ^42'.
+	self assertEmpty: Breakpoint all.
+	
+	node := (cls >> #dummy) ast.
+	bp := (Breakpoint new node: node) install.
+	self assertCollection: Breakpoint all includesAll: {bp}.
+	Breakpoint removeFrom: node.
+	self assertEmpty: Breakpoint all.
 ]
 
 { #category : #tests }

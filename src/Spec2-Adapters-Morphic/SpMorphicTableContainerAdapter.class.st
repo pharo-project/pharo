@@ -10,17 +10,20 @@ Class {
 
 { #category : #factory }
 SpMorphicTableContainerAdapter >> buildWidget [
+
 	^ PanelMorph new
-		layoutPolicy: TableLayout new;
-		vResizing: #spaceFill;
-		hResizing: #spaceFill;
-		yourself
+		  layoutPolicy: TableLayout new;
+		  vResizing: #spaceFill;
+		  hResizing: #spaceFill;
+		  yourself
 ]
 
 { #category : #protocol }
 SpMorphicTableContainerAdapter >> height: aNumber [
-	self vRigid.
-	self widgetDo: [ :w | w height: aNumber ].
+
+	self 
+		vRigid;
+		widgetDo: [ :w | w height: aNumber ]
 ]
 
 { #category : #protocol }
@@ -32,21 +35,26 @@ SpMorphicTableContainerAdapter >> isRedrawable [
 
 { #category : #protocol }
 SpMorphicTableContainerAdapter >> layoutProperties: props [
+
 	self widgetDo: [ :w | w layoutProperties: props ]
 ]
 
 { #category : #protocol }
 SpMorphicTableContainerAdapter >> minHeight: aNumber [
+
 	self widgetDo: [ :w | w minHeight: aNumber ]
 ]
 
 { #category : #protocol }
 SpMorphicTableContainerAdapter >> minWidth: aNumber [
+
 	self widgetDo: [ :w | w minWidth: aNumber ]
 ]
 
 { #category : #protocol }
 SpMorphicTableContainerAdapter >> width: aNumber [
-	self hRigid.
-	self widgetDo: [ :w | w width: aNumber ].
+
+	self
+		hRigid;
+		widgetDo: [ :w | w width: aNumber ]
 ]

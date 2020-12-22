@@ -1,39 +1,43 @@
 "
+## Description
 I'm an object in charge of import source files.  I know a format object that knows how to parse the files, and I import the parsed results into the image.
 
 I handle doIts normally, but some special cases like class organization, class comment or methods are handled via a double dispatch (See my method extensions for that).
+I read code from chunk format. The chunk format is a code format where elements are delimited by exclamation marks. Exclamation mark represents events of compilation (chunk that was being read from input stream is now  evaluated/compiled). 
 
-=-=-=- How to use me -=-=-=
+Each code element is preceded by some kind of annotation that says what kind of element it is / how it should be read.
+For example, the annotation:  
+``` 
+CodeImportTestCaseTestClass #methodsFor: ''some protocol'' #stamp: ''GuillermoPolito 5/2/2012 13:35
+```  
+says that the thing that follows is a method for the class CodeImportTestCaseTestClass, its protocol, and some other metadata like the last modification stamp.
+A chunk can then contain:
+- a method
+- a class comment
+- a ""package organization"" which is like a package definition, 
+- an arbitrary ""doIt"" expression. 
+- The definition of classes are integrated within arbitrary expressions.
+
+## How to use me
 
 If you want to fileIn the code -aka compile/evaluate it:
-
-CodeImporter evaluateReadStream: '2+2!' readStream.
-
-or
-
-CodeImporter evaluateString: '2+2!'
-
-or
-
-CodeImporter evaluateFileNamed: 'something.st'
-
-or
-
-CodeImporter evaluateFileStream: (FileStream readOnlyFileNamed: 'something.st')
+`CodeImporter evaluateReadStream: '2+2!' readStream.`  
+or  
+`CodeImporter evaluateString: '2+2!'`  
+or  
+`CodeImporter evaluateFileNamed: 'something.st'`  
+or  
+`CodeImporter evaluateFileStream: (FileStream readOnlyFileNamed: 'something.st')`  
 
 Now, you can also generate a model of code declarations inside a file by just creating an instance:
-
-CodeImporter fileStream: (FileStream readOnlyFileNamed: 'something.st').
-
-And then query me sending the message
-
-#codeDeclarations
+`CodeImporter fileStream: (FileStream readOnlyFileNamed: 'something.st').`  
+And then query me sending the message `#codeDeclarations`
 
 Instances of me can be created through 
-#fromString:
-#readStream:
-#fileNamed:
-#fileStream:
+`#fromString:`  
+`#readStream:`  
+`#fileNamed:`  
+`#fileStream:`  
 "
 Class {
 	#name : #CodeImporter,
@@ -183,19 +187,6 @@ CodeImporter >> requestor: anObject [
 
 { #category : #fileHandling }
 CodeImporter >> selectTextConverterForCode [
-	self flag: #pharoFixMe.  "This should not be here probably."
-	
-	"We need to see the first three bytes in order to see the origin of the file"
-	readStream binary.
-	((readStream next: 3) = #[ 16rEF 16rBB 16rBF ]) ifTrue: [
-		readStream converter: UTF8TextConverter new
-	] ifFalse: [
-		readStream converter: MacRomanTextConverter new.
-	].
 
-	"we restore the position to the start of the file again"
-	readStream position: 0.
-	
-	"We put the file in text mode for the file in"
-	readStream text.
+	readStream text
 ]

@@ -7,6 +7,12 @@ Class {
 	#category : #'Kernel-Tests-Objects'
 }
 
+{ #category : #coverage }
+WeakMessageSendTest >> classToBeTested [
+	
+	^ WeakMessageSend 
+]
+
 { #category : #tests }
 WeakMessageSendTest >> testCollectArguments [
 

@@ -7,9 +7,15 @@ Class {
 	#category : #'Spec2-Adapters-Morphic-Base'
 }
 
+{ #category : #testing }
+SpMorphicBaseMenuAdapter class >> isAbstract [
+
+	^ self name = #SpMorphicBaseMenuAdapter
+]
+
 { #category : #initialization }
 SpMorphicBaseMenuAdapter >> addKeyBindingsTo: aMorph [
-	"This does not has keybindings"
+	"This does not have keybindings"
 ]
 
 { #category : #private }

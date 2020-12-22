@@ -4,5 +4,5 @@ Extension { #name : #SycRemoveEmptyMethodTagsCommand }
 SycRemoveEmptyMethodTagsCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 10001 for: ClyMethodGroupContextOfFullBrowser 
+	^CmdContextMenuActivation byRootGroupItemOrder: 10001 for: ClyFullBrowserMethodGroupContext 
 ]

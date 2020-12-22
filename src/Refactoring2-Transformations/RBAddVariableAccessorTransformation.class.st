@@ -37,7 +37,7 @@ RBAddVariableAccessorTransformation >> defineGetterMethod [
 	| selector |
 	selector := self safeMethodNameFor: self definingClass basedOn: variableName asString.
 	self definingClass 
-		compile: ('<1s><r><t>^ <2s>' expandMacrosWith: selector with: variableName)
+		compile: ('<1s><r><r><t>^ <2s>' expandMacrosWith: selector with: variableName)
 		classified: #(#accessing).
 	^ selector
 ]
@@ -46,7 +46,7 @@ RBAddVariableAccessorTransformation >> defineGetterMethod [
 RBAddVariableAccessorTransformation >> defineSetterMethod [
 
 	| selector sourceCode |
-	sourceCode := '<1s> anObject<r><t><2s> := anObject'.
+	sourceCode := '<1s> anObject<r><r><t><2s> := anObject'.
 	selector := self safeMethodNameFor: self definingClass basedOn: variableName asString , ':'.
 	self definingClass 
 		compile: (sourceCode expandMacrosWith: selector with: variableName)

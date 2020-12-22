@@ -16,12 +16,14 @@ VariableNotDeclared >> classSymbol [
 ]
 
 { #category : #accessing }
-VariableNotDeclared >> smartDescription [
-	
-	message ifNil: [^self description].
+VariableNotDeclared >> description [
 
-	^self classSymbol printString
-		, ' is missing, and does not understand ', message selector printString
+	"Returns a textual description of the exception (based on the message instance variable). If message is nil, it returns the defaultDescription instead."
+
+	message ifNil: [ ^ self defaultDescription ].
+	^ self classSymbol printString
+	  , ' is missing, and does not understand '
+	  , message selector printString
 ]
 
 { #category : #accessing }

@@ -16,3 +16,10 @@ Symbol >> asTestSelector [
 	
 	^ (#test, (((self copyReplaceAll: ':' with: ' ') substrings collect: #capitalized) joinUsing: '')) asSymbol
 ]
+
+{ #category : #'*SUnit-Core' }
+Symbol >> isTestSelector [
+
+	^ self isUnary and: [ 
+		  (self beginsWith: 'test') or: [ self beginsWith: 'should' ] ]
+]

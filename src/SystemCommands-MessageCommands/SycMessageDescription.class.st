@@ -90,11 +90,17 @@ SycMessageDescription >> describesSelector: someSelector withArguments: someArgu
 	^selector = someSelector & (argumentNames = someArgumentNames) 
 ]
 
+{ #category : #accessing }
+SycMessageDescription >> methodClass [
+
+	^ contextUser methodClass
+]
+
 { #category : #operations }
 SycMessageDescription >> requestNewSignature [
 	| methodName dialog |
 	methodName := RBMethodName selector: selector arguments: argumentNames copy.
-	dialog := SycMethodNameEditor openOn: methodName.
+	dialog := SycMethodNameEditorPresenter openOn: methodName.
 	dialog cancelled ifTrue: [  CmdCommandAborted signal ].
 	
 	selector = methodName selector & (argumentNames = methodName arguments)

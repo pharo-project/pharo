@@ -56,6 +56,29 @@ ZipArchiveTest >> testAddNonExistentFile [
 ]
 
 { #category : #tests }
+ZipArchiveTest >> testArchiveWithThousandFilesShouldWork [
+	
+	"Smoke test showing that we can create zip archives with up to 1000 elements.
+	This test was created as a regression test. Previous implementations were leaking files and reaching the open file limits from the operating system."
+	
+	| dir theZip |
+	dir := (FileLocator temp / 'testfiles') ensureCreateDirectory.
+	[
+		1 to: 1000 do: [ :i | 
+			(dir / ('test-' , i asString))
+				writeStreamDo: [ :stream | stream nextPutAll: 'file contents' ];
+				yourself ].
+		
+		theZip := ZipArchive new.
+		dir children do: [ :eachFile | theZip addFile: eachFile resolve ].
+		theZip writeToFile: FileLocator temp / 'result.zip'.	
+		theZip close.
+	] ensure: [ 
+		dir ensureDeleteAll.
+		(FileLocator temp / 'result.zip') ensureDelete. ]
+]
+
+{ #category : #tests }
 ZipArchiveTest >> testCanUnzipFromFileName [
 	| nestedFileToZip |
 	nestedFileToZip := (subdir / '_test-zip-file.txt')

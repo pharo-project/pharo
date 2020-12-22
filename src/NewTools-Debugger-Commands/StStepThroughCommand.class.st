@@ -14,7 +14,8 @@ StStepThroughCommand class >> defaultDescription [
 
 { #category : #initialization }
 StStepThroughCommand class >> defaultIconName [
-	^ #glamorousThrough 
+
+	^ #debuggerStepThrough 
 ]
 
 { #category : #default }

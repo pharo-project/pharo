@@ -61,8 +61,7 @@ LiteralVariable >> = anAssociation [
 
 { #category : #visiting }
 LiteralVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
-	"to be compatible to the old visitor implementation"
-	^ aProgramNodeVisitor visitGlobalNode: aNode
+	^ aProgramNodeVisitor visitLiteralVariableNode: aNode
 ]
 
 { #category : #testing }
@@ -95,7 +94,7 @@ LiteralVariable >> emitStore: aMethodBuilder [
 		addTemp: tempName;
 		storeTemp: tempName;
 		popTop;
-		pushLiteralVariable: (AdditionalBinding key: #global value: self);
+		pushLiteral: self;
 		pushTemp: tempName;
 		send: #write:
 ]
@@ -103,7 +102,7 @@ LiteralVariable >> emitStore: aMethodBuilder [
 { #category : #'code generation' }
 LiteralVariable >> emitValue: aMethodBuilder [
 	aMethodBuilder
-		pushLiteralVariable: (AdditionalBinding key: #global value: self);
+		pushLiteral: self;
 		send: #read
 ]
 

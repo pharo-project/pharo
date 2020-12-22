@@ -123,6 +123,14 @@ StObjectBreakpointInspection >> disableHaltOrBreakpointFor: haltOrBreakpointItem
 	breakpointController disableHaltOrBreakpointFor: haltOrBreakpointItem
 ]
 
+{ #category : #commands }
+StObjectBreakpointInspection >> doBrowseBreakpointMethod [
+	| entityToBrowse |
+	
+	entityToBrowse := self methodsWithBreakpoints selection selectedItem entityToBrowse.
+	self systemNavigation browse: entityToBrowse.
+]
+
 { #category : #breakpoints }
 StObjectBreakpointInspection >> enableHaltOrBreakpointFor: haltOrBreakpointItem [
 
@@ -149,7 +157,7 @@ StObjectBreakpointInspection >> initializePresenters [
 	self configureSourceCodeUpdate.
 	self buildTableData.
 	SystemAnnouncer uniqueInstance weak when: StHaltCacheChanged send: #buildTableData to: self.
-	SystemAnnouncer uniqueInstance weak when: MetalinkChanged send: #buildTableData to: self
+	SystemAnnouncer uniqueInstance weak when: BreakpointAdded send: #buildTableData to: self
 ]
 
 { #category : #initialization }

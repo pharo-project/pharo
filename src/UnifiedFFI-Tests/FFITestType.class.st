@@ -1,3 +1,6 @@
+"
+An example external type used in tests
+"
 Class {
 	#name : #FFITestType,
 	#superclass : #FFIExternalType,

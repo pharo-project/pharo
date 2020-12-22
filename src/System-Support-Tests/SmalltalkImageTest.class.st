@@ -4,19 +4,21 @@ Tests for SmalltalkImage
 Class {
 	#name : #SmalltalkImageTest,
 	#superclass : #TestCase,
-	#category : #'System-Support-Tests'
+	#category : #'System-Support-Tests-Image'
 }
 
-{ #category : #'tests-arguments' }
+{ #category : #'tests - arguments' }
 SmalltalkImageTest >> testAtIfPresentIfAbsent [
+
 	| image |
 	image := SmalltalkImage current.
 	self assert: (image at: self class name asSymbol ifPresent: [ :c | true ] ifAbsent: [ false ]).
 	self deny: (image at: #ImprobableClassNameForTest124029 ifPresent: [ :c | true ] ifAbsent: [ false ])
 ]
 
-{ #category : #'tests-arguments' }
+{ #category : #'tests - arguments' }
 SmalltalkImageTest >> testExtractAllKinds [
+
 	| args extract keys |
 	args := #('ArgWithoutMinus1' '-ArgWithMinus1' 'ArgWithoutMinus2' 'ArgWithoutMinus3' '-ArgWithMinus2').
 	extract := SmalltalkImage current extractMinusParametersFrom: args.
@@ -31,8 +33,9 @@ SmalltalkImageTest >> testExtractAllKinds [
 	self assertEmpty: (extract at: #ArgWithMinus2)
 ]
 
-{ #category : #'tests-arguments' }
+{ #category : #'tests - arguments' }
 SmalltalkImageTest >> testExtractEmpty [
+
 	| args extract |
 	args := #().
 	extract := SmalltalkImage current extractMinusParametersFrom: args.
@@ -40,8 +43,9 @@ SmalltalkImageTest >> testExtractEmpty [
 	self assertEmpty: extract
 ]
 
-{ #category : #'tests-arguments' }
+{ #category : #'tests - arguments' }
 SmalltalkImageTest >> testExtractNil [
+
 	| args extract |
 	args := nil.
 	extract := SmalltalkImage current extractMinusParametersFrom: args.
@@ -49,8 +53,9 @@ SmalltalkImageTest >> testExtractNil [
 	self assertEmpty: extract
 ]
 
-{ #category : #'tests-arguments' }
+{ #category : #'tests - arguments' }
 SmalltalkImageTest >> testExtractOneArgNoMinus [
+
 	| args extract |
 	args := #('ArgNoMinus').
 	extract := SmalltalkImage current extractMinusParametersFrom: args.
@@ -60,8 +65,9 @@ SmalltalkImageTest >> testExtractOneArgNoMinus [
 	self assert: (extract at: #*) equals: args
 ]
 
-{ #category : #'tests-arguments' }
+{ #category : #'tests - arguments' }
 SmalltalkImageTest >> testExtractOneArgWithMinus [
+
 	| args extract |
 	args := #('-ArgWithMinus').
 	extract := SmalltalkImage current extractMinusParametersFrom: args.
@@ -71,8 +77,9 @@ SmalltalkImageTest >> testExtractOneArgWithMinus [
 	self assertEmpty: (extract at: #ArgWithMinus)
 ]
 
-{ #category : #'tests-arguments' }
+{ #category : #'tests - arguments' }
 SmalltalkImageTest >> testExtractOneArgWithMinusThenArgsWithout [
+
 	| args extract |
 	args := #('-ArgWithMinus' 'ArgWithoutMinus1' 'ArgWithoutMinus2').
 	extract := SmalltalkImage current extractMinusParametersFrom: args.
@@ -82,8 +89,9 @@ SmalltalkImageTest >> testExtractOneArgWithMinusThenArgsWithout [
 	self assert: (extract at: #ArgWithMinus) equals: #('ArgWithoutMinus1' 'ArgWithoutMinus2')
 ]
 
-{ #category : #'tests-arguments' }
+{ #category : #'tests - arguments' }
 SmalltalkImageTest >> testExtractTwoArgsWithAndWithoutMinus [
+
 	| args extract keys |
 	args := #('ArgWithoutMinus' '-ArgWithMinus').
 	extract := SmalltalkImage current extractMinusParametersFrom: args.
@@ -96,7 +104,7 @@ SmalltalkImageTest >> testExtractTwoArgsWithAndWithoutMinus [
 	self assertEmpty: (extract at: #ArgWithMinus)
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 SmalltalkImageTest >> testOpenLog [
 	"It must be possible to write to the log even when the log file can''t be created."
 
@@ -104,12 +112,13 @@ SmalltalkImageTest >> testOpenLog [
 	self writeToLogWithFileNamed: 'file.log'.
 
 	"Other cases where a file with the given name can not be created."
-	self writeToLogWithFileNamed: ''.
-	self writeToLogWithFileNamed: '.'.
+	self 
+		writeToLogWithFileNamed: '';
+		writeToLogWithFileNamed: '.'
 
 ]
 
-{ #category : #helpers }
+{ #category : #utilities }
 SmalltalkImageTest >> writeToLogWithFileNamed: filename [
 	| oldLogFileName |
 	oldLogFileName := Smalltalk logFileName.

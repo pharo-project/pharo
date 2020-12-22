@@ -1,6 +1,6 @@
 "
-I am a popover content presenter. 
-All popovers contents need to extent me (to get some functionalies)
+A popover content presenter. 
+All popovers contents need to extent this presenter (to get some functionalies).
 "
 Class {
 	#name : #SpPopoverContentPresenter,

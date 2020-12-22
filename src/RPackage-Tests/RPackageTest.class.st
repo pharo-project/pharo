@@ -206,6 +206,20 @@ RPackageTest >> testDemoteToRPackageNamedWithExtension [
 
 ]
 
+{ #category : #'tests - properties' }
+RPackageTest >> testHasProperty [
+	| package testValue |
+	
+	testValue := Date today.
+	package := self class package.
+	
+	package propertyAt: #testKeySelector put: testValue.
+	self	assert: (package hasProperty: #testKeySelector).
+	
+	package removeProperty: #testKeySelector.
+	self deny: (package hasProperty: #testKeySelector).
+]
+
 { #category : #'test-queries' }
 RPackageTest >> testHierarchyRoots [
 	| roots |
@@ -213,6 +227,26 @@ RPackageTest >> testHierarchyRoots [
 	roots := roots collect: [ :each | each name ].
 	#(RPackageTestCase)
 		do: [ :each | roots includes: each ]
+]
+
+{ #category : #test }
+RPackageTest >> testIsTestPackage [
+
+	|packages |
+	packages := self createMockTestPackages.
+	"Happy case: test package 'MockPackage-Tests' must contain -Tests suffix."
+	self assert: packages first isTestPackage equals: true.
+	
+	"Package 'MockPackage-tests' is not test package, since it has lowercase suffix."
+	self assert: packages second isTestPackage  equals: false.
+	
+	"Happy case: regular package 'MockPackage' without -Tests suffix is not a test package."
+	self assert: packages third isTestPackage  equals: false.
+
+	"Package 'MockPackage-Tests-Package' containting -Tests- in middle, so it is test package."
+	self assert: packages fourth isTestPackage equals: true.
+	
+	"cleanup of inst.vars should be done in tearDown"
 ]
 
 { #category : #'tests-MC' }

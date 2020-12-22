@@ -67,11 +67,11 @@ FinderMethodNode >> isSingle [
 ]
 
 { #category : #'event handling' }
-FinderMethodNode >> keyStroke: anEvent [
+FinderMethodNode >> keyDown: anEvent [
 	(anEvent controlKeyPressed or: [ anEvent commandKeyPressed ]) ifFalse: [ ^ false ].
 	anEvent keyCharacter == $n ifTrue: [ ^ self browseSenders ].
 	anEvent keyCharacter == $m ifTrue: [ ^ self browseImplementors ].
-	^ super keyStroke: anEvent
+	^ super keyDown: anEvent
 ]
 
 { #category : #'event handling' }

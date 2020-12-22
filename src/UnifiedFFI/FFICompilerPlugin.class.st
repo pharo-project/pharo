@@ -37,41 +37,6 @@ Class {
 	#category : #'UnifiedFFI-Base'
 }
 
-{ #category : #adding }
-FFICompilerPlugin class >> addFFICalloutSelector: aString [ 
-	FFICalloutSelectors add: aString
-]
-
-{ #category : #adding }
-FFICompilerPlugin class >> addFFICalloutSelectorFromPragma: aPragma [
-	self addFFICalloutSelector: aPragma methodSelector.
-	self recompileSendersOf: aPragma method
-]
-
-{ #category : #'private - defaults' }
-FFICompilerPlugin class >> defaultFFICalloutSelectors [
-	"FFI uses UFFI and NB for the time being"
-	
-	^ self defaultUFFICalloutSelectors, self defaultNativeBoostCalloutSelectors 
-]
-
-{ #category : #'private - defaults' }
-FFICompilerPlugin class >> defaultNativeBoostCalloutSelectors [
-	"Return the default callout selectors used by old NativeBoost"
-
-	^ #(nbCall: #nbCall:module: #nbCall:options: #nbCall:module:options:)
-]
-
-{ #category : #'private - defaults' }
-FFICompilerPlugin class >> defaultUFFICalloutSelectors [
-	"Return the default callout selectors used by UFFI"
-	
-	^ #(ffiCall: 
-		 ffiCall:module: 
-		 ffiCall:options: 
-		 ffiCall:module:options:)
-]
-
 { #category : #accessing }
 FFICompilerPlugin class >> ffiCalloutSelectors [
 	<script: 'self ffiCalloutSelectors inspect'>
@@ -84,20 +49,14 @@ FFICompilerPlugin class >> initialize [
 
 	self 
 		initializeFFICalloutSelectors;
-		initializeFFICalloutSelectorsListUpdate;
+		recompileSenders;
 		install
 ]
 
-{ #category : #'private - initialization' }
+{ #category : #private }
 FFICompilerPlugin class >> initializeFFICalloutSelectors [
 
-	FFICalloutSelectors := IdentitySet withAll: self defaultFFICalloutSelectors
-]
-
-{ #category : #'private - initialization' }
-FFICompilerPlugin class >> initializeFFICalloutSelectorsListUpdate [
-
-	(Pragma allNamed: #ffiCalloutTranslator) do: [ :pragma | self addFFICalloutSelectorFromPragma: pragma ]
+	FFICalloutSelectors := (Pragma allNamed: #ffiCalloutTranslator) collect: [ :pragma | pragma method selector ] as: IdentitySet
 ]
 
 { #category : #installation }
@@ -106,7 +65,7 @@ FFICompilerPlugin class >> install [
 	(CompilationContext defaultTransformationPlugins includes: self)
 		ifTrue: [ ^ self ].
 	CompilationContext addDefaultTransformationPlugin: self.
-	self recompileSenders
+	self recompileSenders.
 ]
 
 { #category : #private }
@@ -117,17 +76,7 @@ FFICompilerPlugin class >> priority [
 { #category : #private }
 FFICompilerPlugin class >> recompileSenders [
 
-	(Pragma allNamed: #ffiCalloutTranslator) do: [ :pragma | self recompileSendersOf: pragma method ]
-]
-
-{ #category : #private }
-FFICompilerPlugin class >> recompileSendersOf: aCompiledMethod [
-	aCompiledMethod senders do: [ :sender | sender recompile ]
-]
-
-{ #category : #removing }
-FFICompilerPlugin class >> removeFFICalloutSelector: aString [
-	FFICalloutSelectors remove: aString ifAbsent: [  ]
+	self ffiCalloutSelectors do: [ :selector | selector senders do: [ :sender | sender recompile ] ]
 ]
 
 { #category : #installation }

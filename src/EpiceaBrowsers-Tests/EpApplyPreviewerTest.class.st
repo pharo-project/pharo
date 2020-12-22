@@ -164,16 +164,19 @@ EpApplyPreviewerTest >> testCategoryRenameWithPreviousRollback [
 
 { #category : #tests }
 EpApplyPreviewerTest >> testClassAdditionWithClassRemoved [
+
 	| aClass classDefinition |
 	aClass := classFactory newClass.
-	classDefinition := aClass definition.
+	classDefinition := aClass definitionString.
 	self setHeadAsInputEntry.
 
 	aClass removeFromSystem.
 
 	self assertOutputsAnEventWith: [ :output | 
 		self assert: output class equals: EpClassAddition.
-		self assert: output behaviorAffected definitionSource equals: classDefinition ]
+		self
+			assert: output behaviorAffected definitionSource
+			equals: classDefinition ]
 ]
 
 { #category : #tests }
@@ -181,16 +184,18 @@ EpApplyPreviewerTest >> testClassAdditionWithInstanceVariablesChanged [
 
 	| aClass classDefinition |
 	aClass := classFactory newClass.
-	classDefinition := aClass definition.
+	classDefinition := aClass definitionString.
 	self setHeadAsInputEntry.
 	aClass addInstVarNamed: #x.
 
-	self assertOutputsAnEventWith: [:output | 
+	self assertOutputsAnEventWith: [ :output | 
 		self assert: output class equals: EpClassModification.
-		self assert: output oldClass definitionSource equals: aClass definition.
-		self assert: output newClass definitionSource equals: classDefinition.
-		]
-
+		self
+			assert: output oldClass definitionSource
+			equals: aClass definitionString.
+		self
+			assert: output newClass definitionSource
+			equals: classDefinition ]
 ]
 
 { #category : #tests }
@@ -198,22 +203,25 @@ EpApplyPreviewerTest >> testClassAdditionWithSuperclassChanged [
 
 	| aClass classDefinition |
 	aClass := classFactory newClass.
-	classDefinition := aClass definition.
+	classDefinition := aClass definitionString.
 	self setHeadAsInputEntry.
 	aClass superclass: Array.
 
-	self assertOutputsAnEventWith: [:output | 
+	self assertOutputsAnEventWith: [ :output | 
 		self assert: output class equals: EpClassModification.
-		self assert: output oldClass definitionSource equals: aClass definition.
-		self assert: output newClass definitionSource equals: classDefinition.
-		].
+		self
+			assert: output oldClass definitionSource
+			equals: aClass definitionString.
+		self
+			assert: output newClass definitionSource
+			equals: classDefinition ].
 
-	aClass superclass: Object. "Restore original superclass else something in hierarchy stays wrong (and ClassHierarchyTest>>testSubclassInstVar fails)"
-
+	aClass superclass: Object "Restore original superclass else something in hierarchy stays wrong (and ClassHierarchyTest>>testSubclassInstVar fails)"
 ]
 
 { #category : #tests }
 EpApplyPreviewerTest >> testClassRemovalWithClassAdded [
+
 	| aClass className |
 	aClass := classFactory newClass.
 	className := aClass name.
@@ -226,7 +234,9 @@ EpApplyPreviewerTest >> testClassRemovalWithClassAdded [
 
 	self assertOutputsAnEventWith: [ :output | 
 		self assert: output class equals: EpClassRemoval.
-		self assert: output behaviorAffected definitionSource equals: aClass definition ]
+		self
+			assert: output behaviorAffected definitionSource
+			equals: aClass definitionString ]
 ]
 
 { #category : #tests }
@@ -630,15 +640,16 @@ EpApplyPreviewerTest >> testTraitAdditionWithTraitRemoved [
 
 	| aTrait traitDefinition |
 	aTrait := classFactory newTrait.
-	traitDefinition := aTrait definition.
+	traitDefinition := aTrait definitionString.
 	self setHeadAsInputEntry.
 
 	aTrait removeFromSystem.
 
-	self assertOutputsAnEventWith: [:output | 
+	self assertOutputsAnEventWith: [ :output | 
 		self assert: output class equals: EpTraitAddition.
-		self assert: output behaviorAffected definitionSource equals: traitDefinition.
-		]
+		self
+			assert: output behaviorAffected definitionSource
+			equals: traitDefinition ]
 ]
 
 { #category : #tests }
@@ -654,16 +665,16 @@ EpApplyPreviewerTest >> testTraitRemovalWithTraitAdded [
 	| aTrait traitName traitDefinition |
 	aTrait := classFactory newTrait.
 	traitName := aTrait name.
-	traitDefinition := aTrait definition.
+	traitDefinition := aTrait definitionString.
 	aTrait removeFromSystem.
 	self setHeadAsInputEntry.
 
 	aTrait := classFactory newTrait.
 	aTrait rename: traitName.
 
-	self assertOutputsAnEventWith: [:output | 
+	self assertOutputsAnEventWith: [ :output | 
 		self assert: output class equals: EpTraitRemoval.
-		self assert: output behaviorAffected definitionSource equals: traitDefinition.
-		]
-
+		self
+			assert: output behaviorAffected definitionSource
+			equals: traitDefinition ]
 ]

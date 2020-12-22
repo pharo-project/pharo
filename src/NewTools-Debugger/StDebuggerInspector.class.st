@@ -76,8 +76,7 @@ StDebuggerInspector >> forceRawInspectionUpdate [
 
 { #category : #private }
 StDebuggerInspector >> getRawInspectorPresenterOrNil [
-	^ inspector millerList pages first rawInspectorPageOrNil
-		  activePresenter
+	^ inspector millerList pages first rawInspectorPageOrNil activePresenter
 ]
 
 { #category : #private }
@@ -186,12 +185,11 @@ StDebuggerInspector >> step [
 
 { #category : #updating }
 StDebuggerInspector >> updateEvaluationPaneReceiver [
-	| context evaluator |
+	"| context evaluator |
 	
 	context := self model inspectedObject context.
-	evaluator := inspector millerList presenters first evaluator.
-
-	evaluator beForContextReceiver: context
+	evaluator := inspector millerList pages first evaluator.
+	evaluator beForContextReceiver: context"
 ]
 
 { #category : #layout }

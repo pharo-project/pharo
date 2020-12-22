@@ -30,17 +30,11 @@ WinPlatform >> currentWorkingDirectoryPath [
 	^ self currentWorkingDirectoryPathWithBufferSize: self defaultMaximumPathLength
 ]
 
-{ #category : #accessing }
-WinPlatform >> currentWorkingDirectoryPathWithBuffer: aByteString [
-	"<primitive: 'primitiveGetCurrentWorkingDirectory' module: '' error: ec>"
-	
-	^ (self getPwdViaFFI: aByteString size: aByteString byteSize) 
-		ifNil:[ self error:'Insufficient buffer size to read current working directory: ' , aByteString size asString]
-]
-
 { #category : #'working-directory' }
 WinPlatform >> currentWorkingDirectoryPathWithBufferSize: aBufferSize [
 	| buffer |
+	<primitive: 'primitiveGetCurrentWorkingDirectory' module: '' error: ec>
+
 	buffer := Win32WideString new: aBufferSize.
 	self currentWorkingDirectoryPathWithBuffer: buffer.
 	^ buffer asString
@@ -82,7 +76,9 @@ WinPlatform >> getEnvironmentVariable: lpName into: lpBuffer size: nSize [
 WinPlatform >> getPwdViaFFI: buffer size: bufferSize [
 	"This method calls the Standard C Library getcwd() function. The name of the argument (arg1) should fit decompiled version. This method is used in getting the current working directory. getcwd is preffered over pwd because getcwd takes care of re-initialization of environment variables, whereas pwd needs implict re- initialization.
 	
-	We use FFI-Kernel for this because this is required for bootstrapping, and we ensure minimal dependencies."
+	This method should be removed, as we should delegate to the VM
+	
+	We use FFI-OldFFIBackend for this because this is required for bootstrapping, and we ensure minimal dependencies."
 	^ (ExternalLibraryFunction 
 			name: '_wgetcwd'
 			module: 'msvcrt.dll'
@@ -149,31 +145,5 @@ WinPlatform >> virtualKey: virtualKeyCode [
 { #category : #'string-manipulation' }
 WinPlatform >> wideCharacterToMultiByteCodepage: codepage flags: flags input: input inputLen: inputLen output: output outputLen: outputLen [
 
-	"To be independent on UnifiedFFI package, we must use low-level FFI call. The following code is based on this FFI call:
-
-	^self ffiCall: #(int WideCharToMultiByte(uint codepage, ulong flags, Win32WideString input, int inputLen, String output, int outputLen, 0, 0 ))"
-
-	^(ExternalLibraryFunction
-		name: 'WideCharToMultiByte'
-		module: 'Kernel32'
-		callType: 0
-		returnType: ExternalType signedLong
-		argumentTypes:
-			{ExternalType unsignedLong.
-			ExternalType unsignedLong.
-			ExternalType void asPointerType.
-			ExternalType signedLong.
-			ExternalType char asPointerType.
-			ExternalType signedLong.
-			ExternalType unsignedLong.
-			ExternalType unsignedLong.})
-		invokeWithArguments:
-			{codepage.
-			flags.
-			input getHandle.
-			inputLen.
-			output.
-			outputLen.
-			0.
-			0}
+	^self ffiCall: #(int WideCharToMultiByte(uint codepage, ulong flags, Win32WideString input, int inputLen, ByteArray output, int outputLen, int 0, int 0))
 ]

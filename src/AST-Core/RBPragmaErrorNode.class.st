@@ -18,15 +18,10 @@ RBPragmaErrorNode class >> error: aToken withNodes: aCollection [
 	"If the collection is empty, there is only the token in the error."
 	^aCollection isEmpty
 		ifTrue: [ self new content: aCollection; start: aToken start; stop: aToken stop; errorMessage: '''>'' expected' ]
-		ifFalse: [ self new content: aCollection; start: aToken start; stop: aCollection last stop; errorMessage: '''>'' expected'; createValue ]
+		ifFalse: [ self new content: aCollection; start: aToken start; stop: aCollection last stop; errorMessage: '''>'' expected' ]
 ]
 
 { #category : #testing }
 RBPragmaErrorNode >> isPragmaError [
 	^true
-]
-
-{ #category : #testing }
-RBPragmaErrorNode >> value [
-	^   '< ', super value 
 ]

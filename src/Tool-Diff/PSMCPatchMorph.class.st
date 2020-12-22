@@ -277,8 +277,7 @@ PSMCPatchMorph >> newChangeTreeMorph [
 		list: #changes
 		selected: #selectedChangeWrapper
 		changeSelected: #selectedChangeWrapper:)
-		getMenuSelector: #changesMenu:;
-		keystrokeActionSelector: #changeTreeKey:
+		getMenuSelector: #changesMenu:
 ]
 
 { #category : #private }

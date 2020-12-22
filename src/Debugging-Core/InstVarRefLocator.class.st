@@ -14,6 +14,23 @@ Class {
 	#category : #'Debugging-Core'
 }
 
+{ #category : #validation }
+InstVarRefLocator class >> check: aMethod [
+	^ self new check: aMethod
+]
+
+{ #category : #validation }
+InstVarRefLocator >> check: aMethod [
+	| scanner end |
+	scanner := InstructionStream on: aMethod.
+	end := aMethod endPC.
+
+	[scanner pc <= end] whileTrue: [
+		(self interpretNextInstructionUsing: scanner) ifTrue: [^true].
+	].
+	^false
+]
+
 { #category : #initialization }
 InstVarRefLocator >> interpretNextInstructionUsing: aScanner [ 
 	

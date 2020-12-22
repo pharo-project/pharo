@@ -5,9 +5,6 @@ I show the time that takes execute the test and the result of the tests.
 Class {
 	#name : #DTTestsProfiling,
 	#superclass : #DrTestsPlugin,
-	#instVars : [
-		'dataTestTime'
-	],
 	#category : #'DrTests-TestsProfiling'
 }
 

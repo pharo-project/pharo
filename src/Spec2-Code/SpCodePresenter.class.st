@@ -12,7 +12,8 @@ Class {
 		'#interactionModel => SpObservableSlot',
 		'#overrideContextMenu',
 		'#submitBlock',
-		'#resetBlock'
+		'#resetBlock',
+		'#environment'
 	],
 	#category : #'Spec2-Code'
 }
@@ -59,25 +60,21 @@ SpCodePresenter class >> codeAcceptCommandsGroupWith: aPresenter [
 SpCodePresenter class >> codeNavigationCommandsGroupWith: aPresenter [
 	| group |
 	
-	group := (CmCommandGroup named: 'Selection search commands') asSpecGroup.
-	group
+	group := (CmCommandGroup named: 'Selection search commands') asSpecGroup
 		description: 'Search the system from code selection.';
-		beDisplayedAsGroup.
-	group register: (SpBrowseClassCommand new 
-		transform: [ :aContext | aContext findClassFromSelection ];
-		asSpecCommand).	
-
+		beDisplayedAsGroup;
+		yourself.
+		
 	self flag: #TODO. "This looks like a very bad way to do this :P"	
 	{ 
+		SpBrowseClassCommand.		
 		SpBrowseImplementorsCommand.
 		SpBrowseSendersCommand.
 		SpBrowseMethodReferencesCommand.	
 		SpBrowseMethodsContainingStringCommand.
 	 } 
 	do:[ :commandClass | 
-		group register: (commandClass new 
-			transform: [ :aContext | aContext selectedTextOrLine ];
-			asSpecCommand) ].
+		group register: commandClass forSpec ].
 	
 	^ group
 ]
@@ -91,8 +88,8 @@ SpCodePresenter class >> codeSelectionActionCommandsGroupWith: presenter [
 		description: 'Actions on code selection.';
 		beDisplayedAsGroup.
 	
-	SpCodeSelectionCommand allSubclassesDo: [ :cmdClass | 
-		group register: (cmdClass forSpecContext: presenter) ].
+	SpCodeSelectionCommand allOrdered 
+		do: [ :cmdClass | group register: (cmdClass forSpecContext: presenter) ].
 	
 	^ group
 ]
@@ -133,6 +130,18 @@ SpCodePresenter >> allowingContextMenu [
 	 define on `SpAbstractTextPresenter>>contextMenu:` will be appended between those groups."
 	
 	self overrideContextMenu: false
+]
+
+{ #category : #'private commands' }
+SpCodePresenter >> basicBrowseImplementors [
+
+	self systemNavigation browseAllImplementorsOf: self selectedSelector
+]
+
+{ #category : #'private commands' }
+SpCodePresenter >> basicBrowseSenders [
+
+	self systemNavigation browseAllReferencesTo: self selectedSelector
 ]
 
 { #category : #private }
@@ -240,6 +249,84 @@ SpCodePresenter >> contextMenu [
 	^ [ self buildContextMenuWith: super contextMenu ]
 ]
 
+{ #category : #commands }
+SpCodePresenter >> doBrowseClass [
+	| result |
+
+	result := self 
+		evaluate: self selectedTextOrLine
+		ifError: [ :e | ^ self ].
+	self systemNavigation browse: result
+]
+
+{ #category : #commands }
+SpCodePresenter >> doBrowseClassReferences [
+	| result class |
+
+	result := self 
+		evaluate: self selectedTextOrLine 
+		ifError: [ :e | ^ self ].
+		
+	(result isClass or: [ result isTrait ])
+		ifFalse: [ result := result class ].
+
+	class := result instanceSide.
+	class isTrait
+		ifTrue: [ self systemNavigation browseAllUsersOfTrait: class ]
+		ifFalse: [ self systemNavigation browseAllCallsOnClass: class ]
+]
+
+{ #category : #commands }
+SpCodePresenter >> doBrowseHierarchy [
+	| result |
+
+	result := self 
+		evaluate: self selectedTextOrLine 
+		ifError: [ :e | ^ self ].
+	(result isClass or: [ result isTrait ])
+		ifFalse: [ result := result class ].
+	self systemNavigation browseHierarchy: result
+]
+
+{ #category : #commands }
+SpCodePresenter >> doBrowseImplementors [
+
+	self basicBrowseImplementors
+]
+
+{ #category : #commands }
+SpCodePresenter >> doBrowseMethodReferences [
+
+	self basicBrowseSenders
+]
+
+{ #category : #commands }
+SpCodePresenter >> doBrowseMethodsContainingString [
+	
+	self systemNavigation 
+		browseMethodsWithSourceString: self selectedTextOrLine 
+		matchCase: false
+]
+
+{ #category : #commands }
+SpCodePresenter >> doBrowseSenders [
+	| env variableOrClassName |
+
+	variableOrClassName := self selectedTextOrLine trimmed asSymbol.
+	variableOrClassName ifEmpty: [ ^ self ].
+	 
+	env := self environment.
+	env isBehavior ifTrue: [
+		(env hasSlotNamed: variableOrClassName) ifTrue: [
+		 ^ self systemNavigation browseAllAccessesTo: variableOrClassName from: env ] ].
+
+	(env bindingOf: variableOrClassName) 
+		ifNotNil: [ :ref | ^ self systemNavigation browseAllSendersOf: ref ].
+	
+	"If this is not a class, behave as SpBrowseMethodReferencesCommand"
+	self basicBrowseSenders
+]
+
 { #category : #'private bindings' }
 SpCodePresenter >> doItContext [
 
@@ -260,6 +347,34 @@ SpCodePresenter >> doItReceiver [
 { #category : #'private bindings' }
 SpCodePresenter >> doItReceiver: anObject [
 
+]
+
+{ #category : #'command support' }
+SpCodePresenter >> environment [
+
+	^ environment ifNil: [ self class environment ]
+]
+
+{ #category : #'command support' }
+SpCodePresenter >> environment: anEnvironment [
+	"Set system environment to be used in commands"
+	
+	environment := anEnvironment
+]
+
+{ #category : #'command support' }
+SpCodePresenter >> evaluate: aString ifError: aBlock [
+
+	^ [
+		self class compilerClass new
+			environment: self environment;
+			source: self selectedTextOrLine readStream;
+			context: self interactionModel doItContext;
+			receiver: self interactionModel doItReceiver;
+			requestor: self interactionModel;
+			evaluate ]
+		on: Error 
+		do: aBlock
 ]
 
 { #category : #accessing }
@@ -300,7 +415,7 @@ SpCodePresenter >> hasBindingThatBeginsWith: aString [
 		ifNil: [ false ]
 ]
 
-{ #category : #testing }
+{ #category : #'private testing' }
 SpCodePresenter >> hasEditionContextMenu [
 	"Answer if edition context menu is active. 
 	 Edition context menu is available by default, but it can be disabled by calling `SpTextPresenter>>#withoutEditionContextMenu` or `SpCodePresenter>>#overridingContextMenu`"
@@ -348,6 +463,13 @@ SpCodePresenter >> initialize [
 ]
 
 { #category : #api }
+SpCodePresenter >> insertErrorPopover: aPresenter atIndex: location [
+
+	self selectionInterval: ((location + 1) to: location).
+	self insertPopoverAfterCurrentSelection: aPresenter style: 'error'.  
+]
+
+{ #category : #api }
 SpCodePresenter >> insertPopover: aPresenter atIndex: location [
 
 	self selectionInterval: ((location + 1) to: location).
@@ -357,8 +479,18 @@ SpCodePresenter >> insertPopover: aPresenter atIndex: location [
 { #category : #api }
 SpCodePresenter >> insertPopoverAfterCurrentSelection: aPresenter [
 
+	self 
+		insertPopoverAfterCurrentSelection: aPresenter
+		style: nil
+]
+
+{ #category : #api }
+SpCodePresenter >> insertPopoverAfterCurrentSelection: aPresenter style: styleName [
+	"Popups a popover with contents `aPresenter` after current text selection. 
+	 It adds `styleName` to the popover style."
+
 	self withAdapterDo: [ :anAdapter |
-		anAdapter insertPopoverAfterCurrentSelection: aPresenter ]
+		anAdapter insertPopoverAfterCurrentSelection: aPresenter style: styleName ]
 ]
 
 { #category : #api }
@@ -366,9 +498,11 @@ SpCodePresenter >> insertPrintPopoverAfterCurrentSelection: anObject [
 	"Inserts a print-it result popover. 
 	 This is for use of SpCodePrintItCommand"
 	
-	self insertPopoverAfterCurrentSelection: (SpCodePopoverPrintPresenter 
-		newCode: self
-		object: anObject)
+	self 
+		insertPopoverAfterCurrentSelection: (SpCodePopoverPrintPresenter 
+			newCode: self
+			object: anObject)
+		style: 'print'
 ]
 
 { #category : #api }
@@ -449,6 +583,12 @@ SpCodePresenter >> selectedClassOrMetaClass [
 	^ self interactionModel ifNotNil: [ :im | im selectedClassOrMetaClass ]
 ]
 
+{ #category : #'command support' }
+SpCodePresenter >> selectedSelector [
+	
+    ^ CNSelectorExtractor new extractSelectorFromSelection: self selectedTextOrLine
+]
+
 { #category : #api }
 SpCodePresenter >> selectedTextOrLine [
 
@@ -462,6 +602,14 @@ SpCodePresenter >> selectedTextOrLine [
 { #category : #private }
 SpCodePresenter >> syntaxHighlight: aBoolean [
 	syntaxHighlight := aBoolean 
+]
+
+{ #category : #'command support' }
+SpCodePresenter >> systemNavigation [
+
+	^ super systemNavigation
+		environment: self environment;
+		yourself
 ]
 
 { #category : #'api-events' }

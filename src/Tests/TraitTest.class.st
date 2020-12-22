@@ -335,18 +335,18 @@ origin of Tr2>>foo is Tr1"
 { #category : #testing }
 TraitTest >> testPrinting [
 
-	self assertPrints: self t6 definition
-		like: 'Trait named: #T6
+	self assertPrints: self t6 definitionString like: 'Trait named: #T6
 	uses: T1 + (T2 @ {#m22Alias->#m22})
+	instanceVariableNames:''''
 	package: ''Tests-Traits'''
 ]
 
 { #category : #testing }
 TraitTest >> testPrintingClassSide [
 	
-	self assertPrints: self t6 classSide definition
-		like: 'T6 classTrait
-	uses: T1 classTrait + T2 classTrait'
+	self assertPrints: self t6 classSide definitionString like: 'T6 classTrait
+	uses: T1 classTrait + T2 classTrait
+	instanceVariableNames: '''''
 ]
 
 { #category : #testing }

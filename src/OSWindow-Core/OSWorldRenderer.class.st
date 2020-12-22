@@ -34,8 +34,7 @@ OSWorldRenderer >> activateCursor: aCursor withMask: maskForm [
 
 { #category : #initialization }
 OSWorldRenderer >> actualScreenSize [
-
-	^ self windowExtent
+	^ (self windowExtent / self screenScaleFactor) ceiling max: 1@1
 ]
 
 { #category : #initialization }
@@ -63,9 +62,9 @@ OSWorldRenderer >> clipboardText: aString [
 	osWindow clipboardText: aString asString
 ]
 
-{ #category : #events }
+{ #category : #initialization }
 OSWorldRenderer >> convertWindowMouseEventPosition: aPosition [
-	^ aPosition
+	^ (aPosition / self screenScaleFactor) rounded
 ]
 
 { #category : #initialization }
@@ -103,6 +102,8 @@ OSWorldRenderer >> doActivate [
 	attributes preferableDriver: driver.
 	osWindow := OSWindow createWithAttributes: attributes eventHandler: (OSWindowMorphicEventHandler for: world).
 	
+	driver afterSetWindowTitle: Smalltalk image imageFile fullName onWindow: osWindow.
+		
 	osWindow focus. 
 	
 	world worldState doFullRepaint.
@@ -203,11 +204,31 @@ OSWorldRenderer >> pickMostSuitableWindowDriver [
 	^ driver
 ]
 
+{ #category : #initialization }
+OSWorldRenderer >> screenScaleFactor [
+	^ world scaleFactor * self windowScaleFactor
+]
+
 { #category : #operations }
 OSWorldRenderer >> updateDamage: allDamage [
 
 	"quickly copy altered rects of canvas to Display:"
 	self osWindowRenderer updateAreas: allDamage immediate: false.
+]
+
+{ #category : #activation }
+OSWorldRenderer >> updateWindowTitle [
+
+	osWindow title: Smalltalk imageFile fullName.
+	driver
+		afterSetWindowTitle: Smalltalk imageFile fullName
+		onWindow: osWindow
+]
+
+{ #category : #accessing }
+OSWorldRenderer >> window [
+	
+	^ osWindow 
 ]
 
 { #category : #accessing }
@@ -224,6 +245,11 @@ OSWorldRenderer >> windowCloseAction: anObject [
 OSWorldRenderer >> windowExtent [
 
 	^ osWindow ifNil: [ 240@120 ] ifNotNil: [ osWindow extent ]
+]
+
+{ #category : #'scale factor' }
+OSWorldRenderer >> windowScaleFactor [
+	^ osWindow ifNil: [ 1 ] ifNotNil: [ osWindow screenScaleFactor max: 1 ]
 ]
 
 { #category : #initialization }

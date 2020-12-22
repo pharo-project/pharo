@@ -10,6 +10,12 @@ Class {
 	#category : #'Random-Tests'
 }
 
+{ #category : #coverage }
+RandomTest >> classToBeTested [
+	
+	^ Random
+]
+
 { #category : #running }
 RandomTest >> setUp [
 	super setUp.
@@ -56,11 +62,31 @@ RandomTest >> testNext [
 ]
 
 { #category : #tests }
-RandomTest >> testNextInt [
+RandomTest >> testNextBetweenAnd [
+	
+	10000 timesRepeat: [ 
+		| next | 
+		next := gen nextBetween: -10 and: 5.
+		self assert: (next >= -10).
+		self assert: (next < 5) ].
+]
+
+{ #category : #tests }
+RandomTest >> testNextInteger [
 	| int |
-	int := gen nextInt: 256.
+	int := gen nextInteger: 256.
 	self assert: int isInteger.
 	self assert: (int between: 1 and: 256)
+]
+
+{ #category : #tests }
+RandomTest >> testNextIntegerBetweenAnd [
+	
+	10000 timesRepeat: [ 
+		| next | 
+		next := gen nextIntegerBetween: -3 and: 5.
+		self assert: next isInteger.
+		self assert: (next between: -3 and: 5) ].
 ]
 
 { #category : #tests }

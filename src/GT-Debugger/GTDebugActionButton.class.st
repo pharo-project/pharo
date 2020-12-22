@@ -34,9 +34,11 @@ GTDebugActionButton >> initialize [
 { #category : #updating }
 GTDebugActionButton >> update [
 
-	self debugAction ifNotNil:  [ :aDebugAction | 
+	self debugAction ifNotNil: [ :aDebugAction | 
 		self label: aDebugAction label.
-		self help: aDebugAction help, Character tab asString, (aDebugAction keymap ifNil: [ '' ] ifNotNil: [ :k | k   printString]).
+		self help: aDebugAction help , String tab
+			,
+			(aDebugAction keymap ifNil: [ '' ] ifNotNil: [ :k | k printString ]).
 		self icon: aDebugAction icon.
 		self enabled: aDebugAction enabled.
 		self state: false.

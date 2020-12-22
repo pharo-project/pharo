@@ -1,3 +1,6 @@
+"
+I am the adapter used to bridge to MenuMorph
+"
 Class {
 	#name : #SpMorphicMenuAdapter,
 	#superclass : #SpMorphicBaseMenuAdapter,
@@ -6,9 +9,10 @@ Class {
 
 { #category : #'instance creation' }
 SpMorphicMenuAdapter class >> adaptAsPopup: aPresenter [
+
 	^ self new
-		adaptAsPopup: aPresenter;
-		yourself
+		  adaptAsPopup: aPresenter;
+		  yourself
 ]
 
 { #category : #initialization }
@@ -16,7 +20,7 @@ SpMorphicMenuAdapter >> adaptAsPopup: aPresenter [
 
 	model := aPresenter.
 	aPresenter addDependent: self.
-	widget := self buildWidgetPopup.
+	widget := self buildWidgetPopup
 ]
 
 { #category : #private }

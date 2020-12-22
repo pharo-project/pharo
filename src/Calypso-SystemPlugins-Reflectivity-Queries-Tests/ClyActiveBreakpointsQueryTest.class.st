@@ -24,14 +24,15 @@ ClyActiveBreakpointsQueryTest >> installBreakpointInto: aMethod [
 ClyActiveBreakpointsQueryTest >> setUp [
 	super setUp.
 	
-	installedBreakpoints := OrderedCollection new
+	installedBreakpoints := OrderedCollection new.
+	ClyClassWithHalts compile: 'methodWithHalts1 self halt'
 ]
 
 { #category : #running }
 ClyActiveBreakpointsQueryTest >> tearDown [
 	installedBreakpoints do: [ :each | each remove ].
 	installedBreakpoints removeAll.
-	
+	ClyClassWithHalts removeSelector: #methodWithHalts1.
 	super tearDown
 ]
 

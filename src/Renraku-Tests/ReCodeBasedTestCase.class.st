@@ -12,6 +12,12 @@ Class {
 	#category : #'Renraku-Tests'
 }
 
+{ #category : #testing }
+ReCodeBasedTestCase class >> isAbstract [
+
+	^ self = ReCodeBasedTestCase
+]
+
 { #category : #running }
 ReCodeBasedTestCase >> setUp [
 	super setUp.

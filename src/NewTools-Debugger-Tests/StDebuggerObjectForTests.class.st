@@ -10,6 +10,10 @@ Class {
 	#category : #'NewTools-Debugger-Tests-Utils'
 }
 
+{ #category : #util }
+StDebuggerObjectForTests >> haltingMethod [ self halt. ^self
+]
+
 { #category : #initialization }
 StDebuggerObjectForTests >> initialize [ 
 	instVar := 0

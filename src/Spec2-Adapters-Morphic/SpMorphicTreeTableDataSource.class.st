@@ -37,7 +37,10 @@ SpMorphicTreeTableDataSource >> allShownItems [
 
 { #category : #accessing }
 SpMorphicTreeTableDataSource >> buttonFor: item [
-	^ (self shouldDisplayExpandableArrowFor: item) ifTrue: [ item generateButton ] ifFalse: [ self class emptyMorph ]
+
+	^ (self shouldDisplayExpandableArrowFor: item) 
+		ifTrue: [ item generateButton ] 
+		ifFalse: [ self class emptyMorph ]
 ]
 
 { #category : #accessing }
@@ -63,6 +66,24 @@ SpMorphicTreeTableDataSource >> cellColumn: column row: rowIndex [
 SpMorphicTreeTableDataSource >> cellIndentFor: item [ 
 
 	^ item depth * 16
+]
+
+{ #category : #'as yet unclassified' }
+SpMorphicTreeTableDataSource >> expandPath: anArray [
+
+	self expandPath: anArray root: self rootItem children
+]
+
+{ #category : #'as yet unclassified' }
+SpMorphicTreeTableDataSource >> expandPath: anArray root: nodes [ 
+	| node |
+	
+	anArray ifEmpty: [ ^ self ].
+	nodes ifEmpty: [ ^ self ].
+
+	node := nodes at: anArray first.
+	node expand.
+	self expandPath: anArray allButFirst root: node children
 ]
 
 { #category : #paths }
@@ -111,11 +132,28 @@ SpMorphicTreeTableDataSource >> pathFromIndex: anInteger [
 	| item |
 	
 	item := self allShownItems at: anInteger ifAbsent: [ ^ #() ].
-	^ self pathOfItem: item root: rootItem
+	^ self pathOfNode: item root: rootItem
 ]
 
 { #category : #accessing }
-SpMorphicTreeTableDataSource >> pathOfItem: anItem root: aRoot [ 
+SpMorphicTreeTableDataSource >> pathOfItem: anItem root: aNode [
+	"Looks for the path of an item (contained in a node)"
+	
+	aNode isExpanded ifFalse: [ ^#() ].
+	
+	aNode children 
+		detect: [ :each | each data = anItem ]
+		ifFound: [ :childNode | ^ { aNode children indexOf: childNode } ].
+		
+	aNode children withIndexDo: [ :aChild :index | | aSubPath |
+		aSubPath := self pathOfItem: anItem root: aChild.
+		aSubPath ifNotEmpty: [ ^ { index } , aSubPath ] ].
+	
+	^ #()
+]
+
+{ #category : #accessing }
+SpMorphicTreeTableDataSource >> pathOfNode: anItem root: aRoot [ 
 	
 	aRoot isExpanded ifFalse: [ ^#() ].
 	
@@ -123,7 +161,7 @@ SpMorphicTreeTableDataSource >> pathOfItem: anItem root: aRoot [
 		ifTrue: [ ^ { aRoot children indexOf: anItem } ].
 		
 	aRoot children withIndexDo: [ :aChild :index | | aSubPath |
-		aSubPath := self pathOfItem: anItem root: aChild.
+		aSubPath := self pathOfNode: anItem root: aChild.
 		aSubPath ifNotEmpty: [ ^ { index } , aSubPath ] ].
 	
 	^ #().

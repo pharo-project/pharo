@@ -1,10 +1,10 @@
 Class {
 	#name : #RBReplaceMethodTest,
 	#superclass : #RBRefactoringTest,
-	#category : #'Refactoring-Tests-Core'
+	#category : #'Refactoring-Tests-Core-Refactorings'
 }
 
-{ #category : #tests }
+{ #category : #'failure tests' }
 RBReplaceMethodTest >> testNotUnderstandNewSelector [
 	self shouldFail: (RBReplaceMethodRefactoring 
 			replaceCallMethod: #checkClass:
@@ -13,7 +13,7 @@ RBReplaceMethodTest >> testNotUnderstandNewSelector [
 			permutation: (1 to: 1))
 ]
 
-{ #category : #tests }
+{ #category : #'failure tests' }
 RBReplaceMethodTest >> testNotUnderstandSelector [
 	self shouldFail: (RBReplaceMethodRefactoring 
 			replaceCallMethod: #checkClass123:
@@ -41,7 +41,7 @@ RBReplaceMethodTest >> testReplaceMethod [
 	self assert: count equals: (model allReferencesTo: #anInstVar:) size
 ]
 
-{ #category : #tests }
+{ #category : #'failure tests' }
 RBReplaceMethodTest >> testSelectorsNotHaveSameNumberOfArgs [
 	self shouldFail: (RBReplaceMethodRefactoring 
 			replaceCallMethod: #checkClass:

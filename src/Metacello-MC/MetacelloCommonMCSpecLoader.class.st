@@ -165,6 +165,10 @@ MetacelloCommonMCSpecLoader >> loadPackageDirective: aPackageLoadDirective gofer
 			goferLoad execute.
 			MetacelloPlatform current clearCurrentVersionCache	"mcLoader postLoad: packageSpec"
 			].
+			MetacelloNotification signal:
+					'Loading -> ' , resolvedReference name , ' --- '
+						, aPackageLoadDirective repository repositoryDescription , ' --- '
+						, resolvedReference repository description.
 			( answers := packageSpec answers ) notEmpty
 				ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
 				ifFalse: [ loadBlock value ].

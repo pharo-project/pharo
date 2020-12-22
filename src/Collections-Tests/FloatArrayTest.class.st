@@ -61,6 +61,12 @@ FloatArrayTest >> anotherValue [
 	^ elementInNonEmpty 
 ]
 
+{ #category : #coverage }
+FloatArrayTest >> classToBeTested [
+	
+	^ FloatArray
+]
+
 { #category : #requirements }
 FloatArrayTest >> collection [
 
@@ -441,6 +447,58 @@ FloatArrayTest >> testFloatArrayPluginPrimitiveAtPut [
 		with: Float infinity negated
 		with: Float negativeZero
 		with: Float nan) do: [ :e | self assert: ((FloatArray with: e) basicAt: 1) equals: e asIEEE32BitWord ]
+]
+
+{ #category : #tests }
+FloatArrayTest >> testSumWithFloatScalar [
+	| floatArray scalar expectedResult actualResult |
+	
+	floatArray := #(1 2) asFloatArray.
+	scalar := 0.1.
+	
+	expectedResult := #(1.1 2.1) asFloatArray.
+	actualResult := floatArray + scalar.
+	
+	self assert: actualResult equals: expectedResult.
+]
+
+{ #category : #tests }
+FloatArrayTest >> testSumWithIntegerArray [
+	| floatArray integerArray expectedResult actualResult |
+	
+	floatArray := #(1 2) asFloatArray.
+	integerArray := #(3 4) asIntegerArray.
+	
+	expectedResult := #(4 6) asFloatArray.
+	actualResult := floatArray + integerArray.
+	
+	self assert: actualResult equals: expectedResult.
+]
+
+{ #category : #tests }
+FloatArrayTest >> testSumWithIntegerScalar [
+	| floatArray scalar expectedResult actualResult |
+	
+	floatArray := #(1 2) asFloatArray.
+	scalar := 3.
+	
+	expectedResult := #(4 5) asFloatArray.
+	actualResult := floatArray + scalar.
+	
+	self assert: actualResult equals: expectedResult.
+]
+
+{ #category : #tests }
+FloatArrayTest >> testSumWithOrderedCollection [
+	| floatArray collection expectedResult actualResult |
+	
+	floatArray := #(1 2) asFloatArray.
+	collection := #(3 4) asOrderedCollection.
+	
+	expectedResult := #(4 6) asFloatArray.
+	actualResult := floatArray + collection.
+	
+	self assert: actualResult equals: expectedResult.
 ]
 
 { #category : #requirements }

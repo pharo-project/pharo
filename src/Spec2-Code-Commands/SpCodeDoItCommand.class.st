@@ -5,12 +5,13 @@ I will execute the selection (or line) of the playground.
 Class {
 	#name : #SpCodeDoItCommand,
 	#superclass : #SpCodeSelectionCommand,
-	#category : #'Spec2-Code-Commands'
+	#category : #'Spec2-Code-Commands-Base'
 }
 
 { #category : #defaults }
 SpCodeDoItCommand class >> defaultIconName [
-	^#smallDoIt 
+
+	^ #smallDoIt
 ]
 
 { #category : #default }
@@ -25,6 +26,12 @@ SpCodeDoItCommand class >> defaultShortcutKey [
 	^ $d command mac 
 		| $d control win 
 		| $d control unix
+]
+
+{ #category : #accessing }
+SpCodeDoItCommand class >> order [
+
+	^ 10
 ]
 
 { #category : #execution }

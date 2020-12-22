@@ -12,28 +12,28 @@ FreeTypeCacheLinkedList >> add: link after: otherLink [
 	"Add otherLink  after link in the list. Answer aLink."
 
 	| savedLink |
-
 	savedLink := otherLink nextLink.
 	otherLink nextLink: link.
-	link nextLink:  savedLink.
-	savedLink ifNotNil: [savedLink previousLink: link].
+	link nextLink: savedLink.
+	savedLink ifNotNil: [ savedLink previousLink: link ].
 	link previousLink: otherLink.
-	^link.
+	^link
 	
 	
 ]
 
 { #category : #adding }
 FreeTypeCacheLinkedList >> add: link before: otherLink [
+
 	| savedLink |
-	firstLink == otherLink ifTrue: [^ self addFirst: link].
+	firstLink == otherLink ifTrue: [ ^self addFirst: link ].
 	otherLink 
 		ifNotNil:[
 			savedLink := otherLink previousLink.
 			link nextLink: otherLink.
 			link previousLink: savedLink.
 			otherLink previousLink: link.
-			savedLink ifNotNil: [savedLink nextLink: link]].
+			savedLink ifNotNil: [ savedLink nextLink: link ]].
 	^ self errorNotFound: otherLink
 ]
 
@@ -42,10 +42,10 @@ FreeTypeCacheLinkedList >> addFirst: aLink [
 	"Add aLink to the beginning of the receiver's list. Answer aLink."
 
 	self isEmpty 
-		ifTrue: [^lastLink :=firstLink := aLink].
+		ifTrue: [ ^lastLink :=firstLink := aLink ].
 	aLink nextLink: firstLink.
 	aLink previousLink: nil.
-	firstLink ifNotNil: [firstLink previousLink: aLink].
+	firstLink ifNotNil: [ firstLink previousLink: aLink ].
 	firstLink := aLink.
 	^aLink
 ]
@@ -55,10 +55,10 @@ FreeTypeCacheLinkedList >> addLast: aLink [
 	"Add aLink to the end of the receiver's list. Answer aLink."
 
 	self isEmpty 
-		ifTrue: [^firstLink := lastLink := aLink].
+		ifTrue: [ ^firstLink := lastLink := aLink ].
 	aLink previousLink: lastLink.
 	aLink nextLink: nil.
-	lastLink ifNotNil: [lastLink nextLink: aLink].
+	lastLink ifNotNil: [ lastLink nextLink: aLink ].
 	lastLink := aLink.
 	^aLink
 ]
@@ -88,8 +88,8 @@ FreeTypeCacheLinkedList >> remove: aLink ifAbsent: aBlock [
 
 	prev := aLink previousLink.
 	next := aLink nextLink.
-	prev == nil ifFalse: [prev nextLink: next].
-	next == nil ifFalse: [next previousLink: prev].
+	prev ifNotNil: [prev nextLink: next].
+	next ifNotNil: [next previousLink: prev].
 	aLink == firstLink ifTrue:[firstLink := next].
 	aLink == lastLink ifTrue:[lastLink := prev].
 	aLink nextLink: nil.
@@ -112,9 +112,9 @@ FreeTypeCacheLinkedList >> removeFirst [
 			oldLink nextLink: nil.
 			^oldLink].
 	firstLink := oldLink nextLink.
-	firstLink == nil 
-		ifTrue:[firstLink := lastLink := nil]
-		ifFalse:[firstLink previousLink: nil].
+	firstLink 
+		ifNil: [firstLink := lastLink := nil]
+		ifNotNil: [firstLink previousLink: nil].
 	oldLink nextLink: nil.
 	^oldLink
 ]
@@ -134,9 +134,9 @@ FreeTypeCacheLinkedList >> removeLast [
 			oldLink previousLink: nil.
 			^oldLink].
 	lastLink := oldLink previousLink.
-	lastLink == nil 
-		ifTrue:[firstLink := lastLink := nil]
-		ifFalse:[lastLink nextLink: nil].
+	lastLink 
+		ifNil: [firstLink := lastLink := nil]
+		ifNotNil:[lastLink nextLink: nil].
 	oldLink previousLink: nil.
 	^oldLink
 ]

@@ -1,7 +1,7 @@
 Class {
 	#name : #RBRemoveHierarchyMethodTest,
 	#superclass : #RBRefactoringTest,
-	#category : #'Refactoring-Tests-Core'
+	#category : #'Refactoring-Tests-Core-Refactorings'
 }
 
 { #category : #tests }
@@ -20,14 +20,14 @@ RBRemoveHierarchyMethodTest >> testRemoveMethod [
 	self deny: ((refactoring model classNamed: #RBSharedPoolForTestData2) directlyDefinesMethod: selectors first)
 ]
 
-{ #category : #tests }
+{ #category : #'failure tests' }
 RBRemoveHierarchyMethodTest >> testRemoveNonExistantMethod [
 	self shouldFail: (RBRemoveHierarchyMethodRefactoring 
 			removeMethods: #(#msg7 )
 			from: RBBasicLintRuleTestData)
 ]
 
-{ #category : #tests }
+{ #category : #'failure tests' }
 RBRemoveHierarchyMethodTest >> testRemoveReferenced [
 	self shouldFail: (RBRemoveHierarchyMethodRefactoring 
 			removeMethods: #(#msg1 )

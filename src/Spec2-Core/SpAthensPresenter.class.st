@@ -63,12 +63,22 @@ SpAthensPresenter >> surfaceExtent: anExtent [
 
 { #category : #'api-events' }
 SpAthensPresenter >> whenDrawBlockChangedDo: aBlock [
+	"Inform when drawBlock has changed. 
+	 `aBlock` has three optional arguments: 
+	 - new value
+	 - old value
+	 - the announcement triggering this action"
 
 	self property: #drawBlock whenChangedDo: aBlock 
 ]
 
 { #category : #'api-events' }
 SpAthensPresenter >> whenExtentChangedDo: aBlock [
+	"Inform when the Athens surface extent has changed. 
+	 `aBlock` has three optional arguments: 
+	 - new value
+	 - old value
+	 - the announcement triggering this action"
 
 	self property: #surfaceExtent whenChangedDo: aBlock 
 ]

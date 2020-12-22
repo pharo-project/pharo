@@ -143,7 +143,7 @@ SettingNode >> isStored [
 ]
 
 { #category : #menu }
-SettingNode >> keyStroke: anEvent from: aTreeMorph [
+SettingNode >> keyDown: anEvent from: aTreeMorph [
 	| c |
 	c := anEvent keyCharacter.
 	c = $b

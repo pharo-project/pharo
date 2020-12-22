@@ -96,7 +96,7 @@ FontChooser >> fontStyleListStrings [
 
 	^ self fontStyleList collect: [:fontFamilyMember | | styleName |
 		styleName := fontFamilyMember styleName.
-		fontFamilyMember simulated
+		fontFamilyMember isSimulatedStyle
 			ifTrue: ['(', styleName, ')']
 			ifFalse: [styleName]].
 ]
@@ -259,7 +259,7 @@ FontChooser >> selectedPointSizeIndex: anIndex [
 FontChooser >> setPointSizeListFrom: aFontFamilyMember [
 	| style old new |
 	old := pointSizeList.
-	(aFontFamilyMember isKindOf: FontFamilyMemberAbstract)
+	(aFontFamilyMember isKindOf: AbstractFontFamilyMember)
 		ifTrue:[
 			style := TextStyle named: aFontFamilyMember family familyName.
 			style ifNotNil:[
@@ -280,7 +280,7 @@ FontChooser >> setSelector: selector [
 
 { #category : #action }
 FontChooser >> setStyleValuesFrom: aFont [
-	((aFont isKindOf: LogicalFont) or:[aFont isKindOf: FontFamilyMemberAbstract])
+	((aFont isKindOf: LogicalFont) or:[aFont isKindOf: AbstractFontFamilyMember])
 		ifTrue:[
 			weightValue := aFont weightValue.
 			slantValue := aFont slantValue.

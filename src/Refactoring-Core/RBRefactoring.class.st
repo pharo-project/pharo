@@ -223,7 +223,9 @@ RBRefactoring >> defaultEnvironment [
 { #category : #transforming }
 RBRefactoring >> execute [
 	self primitiveExecute.
-	RBRefactoryChangeManager instance performChange: self changes; addUndoPointer: 1
+	RBRefactoryChangeManager instance 
+		performChange: self changes; 
+		addUndoPointer: (RBRefactoryChangeManager nextCounter)
 ]
 
 { #category : #transforming }

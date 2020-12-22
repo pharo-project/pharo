@@ -79,7 +79,8 @@ ReleaseTest >> knownProcesses [
 		MorphicUIManager uiProcess.
 		CurrentExecutionEnvironment value watchDogProcess.
 		Delay schedulingProcess.
-		TKTWatchDog onDuty pharoProcess } asSet
+		TKTWatchDog onDuty pharoProcess.
+		TFCallbackQueue uniqueInstance callbackProcess } asSet
 ]
 
 { #category : #tests }
@@ -186,6 +187,26 @@ ReleaseTest >> testManifestNamesAccordingToPackageNames [
 	
 	actualManifestNames do: [:each |
 		 self assert: (expectedManifestNames includes: each)] 
+]
+
+{ #category : #tests }
+ReleaseTest >> testMethodsContainNoHalt [
+
+	| methods |
+	methods := SystemNavigation new allMethods select: [ :method | method containsHalt ].
+	"these methods are using halt for testing something"
+	methods := methods reject: [ :method | 
+		           method hasPragmaNamed: #haltOrBreakpointForTesting ].
+	"these methods are implementing halt, we are not interested"
+	methods := methods reject: [ :method | 
+		           method hasPragmaNamed: #debuggerCompleteToSender ].
+
+	"there should be no method left"
+	self assert: methods isEmpty description: [ 
+		String streamContents: [ :stream | 
+			stream
+				nextPutAll: 'Found methods with halt';
+				print: methods ] ]
 ]
 
 { #category : #tests }

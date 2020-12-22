@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'modelFactory'
 	],
-	#category : #'Refactoring-Tests-Core'
+	#category : #'Refactoring-Tests-Core-Base'
 }
 
 { #category : #running }

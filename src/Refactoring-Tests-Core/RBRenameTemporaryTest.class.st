@@ -1,7 +1,7 @@
 Class {
 	#name : #RBRenameTemporaryTest,
 	#superclass : #RBRefactoringTest,
-	#category : #'Refactoring-Tests-Core'
+	#category : #'Refactoring-Tests-Core-Refactorings'
 }
 
 { #category : #'failure tests' }
@@ -10,6 +10,20 @@ RBRenameTemporaryTest >> testBadInterval [
 		shouldFail:
 			(RBRenameArgumentOrTemporaryRefactoring
 				renameTemporaryFrom: (14 to: 17)
+				to: 'asdf'
+				in: RBRefactoryTestDataApp
+				selector: #testMethod).
+	self
+		shouldFail:
+			(RBRenameArgumentOrTemporaryRefactoring
+				renameTemporaryFrom: (17 to: 14)
+				to: 'asdf'
+				in: RBRefactoryTestDataApp
+				selector: #testMethod).
+	self
+		shouldFail:
+			(RBRenameArgumentOrTemporaryRefactoring
+				renameTemporaryFrom: (19 to: 24)
 				to: 'asdf'
 				in: RBRefactoryTestDataApp
 				selector: #testMethod)
@@ -63,6 +77,20 @@ RBRenameTemporaryTest >> testModelBadName [
 					to: 'temp1'
 					in: class
 					selector: #aMethod:)
+]
+
+{ #category : #tests }
+RBRenameTemporaryTest >> testRenameArg [
+	| refactoring |
+	refactoring := RBRenameArgumentOrTemporaryRefactoring
+		renameTemporaryFrom: (7 to: 13)
+		to: 'asdf'
+		in: RBLintRuleTestData
+		selector: #name:.
+	self executeRefactoring: refactoring.
+
+	self assert: ((refactoring model classNamed: #RBLintRuleTestData) parseTreeFor: #name:) equals: (self parseMethod: 'name: asdf 
+	name := asdf')
 ]
 
 { #category : #tests }

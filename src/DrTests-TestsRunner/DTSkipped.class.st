@@ -4,7 +4,7 @@ I model the fact that a test was skipped.
 Class {
 	#name : #DTSkipped,
 	#superclass : #DTTestResultType,
-	#category : #'DrTests-TestsRunner'
+	#category : #'DrTests-TestsRunner-Results'
 }
 
 { #category : #factory }

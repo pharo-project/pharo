@@ -33,5 +33,11 @@ SpMorphicTableColumnVisitor >> visitIndexColumn: aTableColumn [
 ]
 
 { #category : #visiting }
+SpMorphicTableColumnVisitor >> visitLinkColumn: aTableColumn [
+
+	self visitStringColumn: aTableColumn
+]
+
+{ #category : #visiting }
 SpMorphicTableColumnVisitor >> visitStringColumn: aTableColumn [
 ]

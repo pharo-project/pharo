@@ -203,6 +203,8 @@ PRVisitor >> visitParameterValue: anObject [
 
 { #category : #'visiting-parameters' }
 PRVisitor >> visitParameters: anObject [
+	"To me this cannot work since an object is a dictionary and not a document group
+	I let it for now because I do not have all pillar loaded but I'm suspicious."
 	^ self visitDocumentGroup: anObject 
 ]
 

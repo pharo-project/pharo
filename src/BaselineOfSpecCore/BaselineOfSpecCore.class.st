@@ -9,7 +9,6 @@ BaselineOfSpecCore >> baseline: spec [
 	<baseline>
 	
 	spec for: #common do: [ 
-		self commander2: spec.
 		self pillar: spec.
 		
 		spec
@@ -18,10 +17,10 @@ BaselineOfSpecCore >> baseline: spec [
 			package: 'Spec2-Layout' with: [ spec requires: #('Spec2-ObservableSlot') ];
 			package: 'Spec2-Core' with: [ spec requires: #('Spec2-ObservableSlot' 'Spec2-Layout') ];
 			package: 'Spec2-CommandLine' with: [ spec requires: #('Spec2-Core') ];
-			package: 'Spec2-Commands' with: [ spec requires: #('Commander2') ];
+			package: 'Spec2-Commands';
 			package: 'Spec2-Transmission' with: [ spec requires: #('Spec2-Core') ];
 			package: 'Spec2-Interactions' with: [ spec requires: #('Spec2-Core') ];
-			package: 'Spec2-Commander2' with: [ spec requires: #('Spec2-Core' 'Spec2-Interactions' 'Commander2') ];
+			package: 'Spec2-Commander2' with: [ spec requires: #('Spec2-Core' 'Spec2-Interactions') ];
 			"Code"
 			package: 'Spec2-Code' with: [ spec requires: #('Spec2-Core' 'Spec2-Commands') ];
 			package: 'Spec2-Code-Commands' with: [ spec requires: #('Spec2-Core' 'Spec2-Commands') ];
@@ -30,9 +29,6 @@ BaselineOfSpecCore >> baseline: spec [
 			package: 'Spec2-Commander2-Tests' with: [ spec requires: #('Spec2-Commander2') ];
 			package: 'Spec2-Tests' with: [ spec requires: #('Spec2-Examples') ];
 			package: 'Spec2-Code-Tests' with: [ spec requires: #('Spec2-Tests' 'Spec2-Code') ];
-			"Tools -> This needs to be moved to NewTools"
-			package: 'Spec2-Tools' with: [ spec requires: #('Spec2-Core') ];
-			package: 'Spec2-Tools-Tests' with: [ spec requires: #('Spec2-Tests' 'Spec2-Tools') ];
 			"Examples"
 			package: 'Spec2-Examples';
 			package: 'Spec2-Commander2-ContactBook' with: [ spec requires: #('Spec2-Commander2') ];
@@ -53,34 +49,14 @@ BaselineOfSpecCore >> baseline: spec [
 		'Spec2-Commander2' ).
 	spec group: 'Code' with: #('Core' 'Spec2-Code-Commands' 'Spec2-Code').
 	spec group: 'CodeTests' with: #('Spec2-Code-Tests').
-	spec group: 'Support' with: #('Core' 'Spec2-Examples' 'Spec2-Tools' ).
+	spec group: 'Support' with: #('Core' 'Spec2-Examples').
 	spec group: 'Tests' with: #('Core' 'Spec2-Tests' 	'Spec2-Commander2-Tests').
-	spec group: 'SupportTests' with: #('Support' 'Spec2-Tools-Tests').
+	spec group: 'SupportTests' with: #('Support').
 	spec group: 'Pillar' with: #('Spec2-Pillar' ).
 	spec group: 'Base' with: #('Core' 'Support').
 	spec group: 'BaseTests' with: #('Spec2-Tests' 'SupportTests').
 	
 	spec group: 'default' with: #('Base' 'BaseTests' 'Code' 'CodeTests').
-]
-
-{ #category : #'external projects' }
-BaselineOfSpecCore >> commander2: spec [
-
-	spec
-		baseline: 'Commander2'
-		with: [ 
-			spec repository: self packageRepositoryURL ]
-]
-
-{ #category : #'external projects' }
-BaselineOfSpecCore >> complishon: spec [
-	
-	spec
-		baseline: 'HeuristicCompletion'
-		with: [ 
-			spec 
-				repository: 'github://guillep/complishon';
-				loads: 'HeuristicCompletion-Model' ]
 ]
 
 { #category : #'external projects' }

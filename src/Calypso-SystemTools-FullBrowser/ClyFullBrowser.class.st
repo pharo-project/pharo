@@ -284,7 +284,7 @@ ClyFullBrowser >> compileANewClassFrom: aString notifying: aController startingF
 
 { #category : #'accessing context' }
 ClyFullBrowser >> createCommandContext [
-	^ClyGlobalContextOfFullBrowser for: self
+	^ClyFullBrowserGlobalContext for: self
 ]
 
 { #category : #'accessing context' }

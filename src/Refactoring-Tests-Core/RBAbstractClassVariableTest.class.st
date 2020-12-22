@@ -1,7 +1,7 @@
 Class {
 	#name : #RBAbstractClassVariableTest,
 	#superclass : #RBRefactoringTest,
-	#category : #'Refactoring-Tests-Core'
+	#category : #'Refactoring-Tests-Core-Refactorings'
 }
 
 { #category : #running }
@@ -43,6 +43,13 @@ RBAbstractClassVariableTest >> testInheritedName [
 	self shouldFail: (RBAbstractClassVariableRefactoring 
 			variable: #DependentsFields
 			class: RBBasicLintRuleTestData)
+]
+
+{ #category : #'failure tests' }
+RBAbstractClassVariableTest >> testInvalidClass [
+	self shouldFail: (RBAbstractClassVariableRefactoring 
+			variable: #DependentsFields
+			class: Object)
 ]
 
 { #category : #'failure tests' }

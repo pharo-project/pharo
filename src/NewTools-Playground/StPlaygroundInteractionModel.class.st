@@ -1,14 +1,21 @@
 Class {
 	#name : #StPlaygroundInteractionModel,
 	#superclass : #SpCodeScriptingInteractionModel,
-	#category : #'NewTools-Playground-View'
+	#category : #'NewTools-Playground-Model'
 }
 
 { #category : #binding }
 StPlaygroundInteractionModel >> addBinding: aBinding [
 
 	(self isGlobalVariable: aBinding key) ifTrue: [ ^ self ].
+	bindings ifNil: [ bindings := Dictionary new ].
 	bindings add: aBinding
+]
+
+{ #category : #binding }
+StPlaygroundInteractionModel >> addBindings: aCollection [
+
+	aCollection do: [ :each | self addBinding: each ]
 ]
 
 { #category : #accessing }

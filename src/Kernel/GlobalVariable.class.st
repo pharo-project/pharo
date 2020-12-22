@@ -9,6 +9,11 @@ Class {
 	#category : #'Kernel-Variables'
 }
 
+{ #category : #visiting }
+GlobalVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
+	^ aProgramNodeVisitor visitGlobalVariableNode: aNode
+]
+
 { #category : #queries }
 GlobalVariable >> definingClass [
 	"The class defining the variable. For Globals, return nil"
@@ -23,7 +28,7 @@ GlobalVariable >> emitStore: methodBuilder [
 
 { #category : #'code generation' }
 GlobalVariable >> emitValue: methodBuilder [
-	methodBuilder pushLiteralVariable: self.
+	methodBuilder pushLiteralVariable: self
 ]
 
 { #category : #testing }

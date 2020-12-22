@@ -22,9 +22,6 @@ Class {
 		'scheduler',
 		'suspendedDelaysHeap'
 	],
-	#classVars : [
-		'DebugMe'
-	],
 	#category : #'Kernel-Tests-Delays'
 }
 
@@ -38,13 +35,6 @@ DelayBasicSchedulerMicrosecondTickerTest >> classForTicker [
 	^ DelayMicrosecondTickerSimulation
 ]
 
-{ #category : #tests }
-DelayBasicSchedulerMicrosecondTickerTest >> setDebugOnOff [
-	"highlight and evaluate either of the following lines as needed" 
-		DebugMe := true.
-		DebugMe := false.
-]
-
 { #category : #running }
 DelayBasicSchedulerMicrosecondTickerTest >> setUp [
 	"Event loop priority takes So it takes priority over following code"
@@ -53,18 +43,6 @@ DelayBasicSchedulerMicrosecondTickerTest >> setUp [
 	suspendedDelaysHeap := self classForScheduler defaultSuspendedDelaysHeap.
 	scheduler := self classForScheduler onTicker: ticker suspendedDelaysHeap: suspendedDelaysHeap.
 	scheduler startTimerEventLoopPriority: Processor activePriority + 1. "So its slightly above normal priority of tests"
-	DebugMe ifNil: [ DebugMe := false ]. 
-	scheduler debug: DebugMe.
-
-]
-
-{ #category : #running }
-DelayBasicSchedulerMicrosecondTickerTest >> tearDown [
-"	scheduler debug: false."
-	scheduler debug: false.
-	super tearDown.
-	"scheduler stopTimerEventLoop."
-
 ]
 
 { #category : #tests }

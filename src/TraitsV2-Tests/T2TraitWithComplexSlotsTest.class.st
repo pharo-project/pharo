@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'slotClass'
 	],
-	#category : #'TraitsV2-Tests-Base'
+	#category : #'TraitsV2-Tests'
 }
 
 { #category : #'instance creation' }

@@ -16,7 +16,8 @@ StDebuggerInspectorModel >> allInspectorNodes [
 
 { #category : #accessing }
 StDebuggerInspectorModel >> defaultObjectInspectorClass [
-	^StDebuggerRawObjectInspector
+
+	^ StDebuggerRawObjectInspector
 ]
 
 { #category : #initialize }
@@ -33,5 +34,5 @@ StDebuggerInspectorModel >> inspectedObject [
 
 { #category : #accessing }
 StDebuggerInspectorModel >> labelString [
-	^ 'Receiver in: ' , super labelString
+	^super labelString capitalized
 ]

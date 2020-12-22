@@ -128,7 +128,6 @@ OCASTTranslator >> emitCaseOf: aMessageNode otherwiseBlock: aBlock [
 	| cases assocMessageNode  |
 	
 	cases := aMessageNode arguments first statements.
-	cases ifEmpty: [ self backendError: 'At least one case required' forNode: aMessageNode ].
 	valueTranslator visitNode: aMessageNode receiver.
 	valueTranslator emitAllButLastCases: cases.
 	
@@ -293,7 +292,8 @@ OCASTTranslator >> emitTimesRepeat: aMessageNode [
 	block := aMessageNode arguments last.
 	
 	limitEmit := [valueTranslator visitNode: limit].
-	limit isLiteral | limit isSelfVariable | limit isSuperVariable ifFalse: [
+	"if the limit is not just a literal or a non-writable variable, make a temp store it there"
+	(limit isLiteralNode or: [limit isVariable and: [limit variable isWritable not]]) ifFalse: [
 		valueTranslator visitNode: limit.
 		methodBuilder addTemp: #'0limit'.
 		methodBuilder storeTemp: #'0limit'.
@@ -349,7 +349,8 @@ OCASTTranslator >> emitToDo: aMessageNode step: step [
 	iterator := block arguments first variable.
 	
 	limitEmit := [valueTranslator visitNode: limit].
-	limit isLiteralNode | limit isSelfVariable | limit isSuperVariable | limit isArgumentVariable ifFalse: [
+	"if the limit is not just a literal or a non-writable variable, make a temp store it there"
+	(limit isLiteralNode or: [limit isVariable and: [limit variable isWritable not]]) ifFalse: [
 		valueTranslator visitNode: limit.
 		methodBuilder addTemp: ('0limit_', iterator name).
 		methodBuilder storeTemp: ('0limit_', iterator name).
@@ -655,10 +656,15 @@ OCASTTranslator >> visitParseErrorNode: anErrorNode [
 
 { #category : #'visitor-double dispatching' }
 OCASTTranslator >> visitPragmaNode: aPragmaNode [
-	methodBuilder addPragma: aPragmaNode asPragma.
-	aPragmaNode isPrimitiveError ifTrue: [
-		methodBuilder storeTemp: (aPragmaNode argumentAt: #error:) value].
 
+	| var |
+	methodBuilder addPragma: aPragmaNode asPragma.
+	
+	"if the pragma is a primitive that defines an error variable, we need to store error value 
+	which is on the stack"
+	aPragmaNode isPrimitiveError ifFalse: [ ^ self ].
+	var := aPragmaNode methodNode scope lookupVar: aPragmaNode primitiveErrorVariableName.
+	var emitStore: methodBuilder.
 ]
 
 { #category : #'visitor-double dispatching' }

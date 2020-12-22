@@ -1,5 +1,4 @@
 "
-! The Playground
 It is useful to explore ideas or learn something before writing it to a more definitive place.
 In older versions of Pharo, this tool was known as Workspace.
 
@@ -47,18 +46,12 @@ See *class:StPlaygroundPagesPresenter*
 "
 Class {
 	#name : #StPlayground,
-	#superclass : #StPresenter,
+	#superclass : #StInspector,
 	#instVars : [
-		'text',
-		'statusBar',
-		'bindings',
-		'lineLabel',
-		'toggleLineNumberButton',
 		'page'
 	],
 	#classVars : [
-		'CacheDirectory',
-		'PreferredExtent'
+		'CacheDirectory'
 	],
 	#category : #'NewTools-Playground-View'
 }
@@ -86,20 +79,6 @@ StPlayground class >> defaultCacheDirectory [
 StPlayground class >> defaultExtent [
 
 	^ 600@400
-]
-
-{ #category : #accessing }
-StPlayground class >> defaultShowLineNumbers [
-
-	^ true
-]
-
-{ #category : #specs }
-StPlayground class >> defaultSpec [
-
-	^ SpBoxLayout newVertical
-		add: #text;
-		yourself
 ]
 
 { #category : #accessing }
@@ -131,18 +110,6 @@ StPlayground class >> openContents: aString [
 		openWithSpec
 ]
 
-{ #category : #private }
-StPlayground class >> preferredExtent [
-
-	^ PreferredExtent ifNil: [ PreferredExtent := self defaultExtent ]
-]
-
-{ #category : #private }
-StPlayground class >> preferredExtent: aPoint [
-
-	PreferredExtent := aPoint
-]
-
 { #category : #'tools registry' }
 StPlayground class >> register [
 	"Add ourselves to registry. See [Smalltalk tools]" 
@@ -159,216 +126,33 @@ StPlayground class >> registerToolsOn: registry [
 
 ]
 
-{ #category : #'private builder' }
-StPlayground >> buildMenu [
-	| menuSpec |
-	
-	menuSpec := (PragmaMenuBuilder 
-		pragmaKeyword: WorldState discoveredMenuPragmaKeyword 
-		model: self)
-		menuSpec.
-	^ menuSpec asMenuBarPresenter
-	
-]
-
-{ #category : #'private builder' }
-StPlayground >> buildStatusBar [ 
-	| newStatusBar |
-
-	(newStatusBar := SpPresenter new)
-		layout: (SpBoxLayout newHorizontal
-			borderWidth: 3;
-			add: (lineLabel := newStatusBar newLabel) expand: false;
-			addLast: (toggleLineNumberButton := newStatusBar newToggleButton) expand: false;
-			yourself).
-
-	lineLabel addStyle: 'dim'.
-	self updateLineNumber.
-	toggleLineNumberButton
-		label: (StShowLineNumbersCommand iconLabelFor: self showLineNumbers);
-		help: StShowLineNumbersCommand defaultDescription;
-		state: self showLineNumbers;
-		whenChangedDo: [ :state | self showLineNumbers: state ].
-
-	^ newStatusBar
-]
-
-{ #category : #'private builder' }
-StPlayground >> buildToolbar [
-
-	^ self toolbarActions 
-		asToolbarPresenterWith: [ :presenter | 
-			presenter 
-				displayMode: self application toolbarDisplayMode;
-				addStyle: 'stToolbar' ]
-]
-
-{ #category : #accessing }
-StPlayground >> contents: aString [
-
-	text text: aString
-]
-
 { #category : #'api-focus' }
 StPlayground >> defaultKeyboardFocus [
 
-	^ text
+	^ self firstPage
 ]
 
 { #category : #initialization }
 StPlayground >> initialize [
 
-	page := StPlaygroundPage new.
-	super initialize
-]
-
-{ #category : #initialization }
-StPlayground >> initializePresenters [
-	
-	text := self newCode
-		interactionModel: StPlaygroundInteractionModel new;
-		lineNumbers: self showLineNumbers;
-		contextMenu: [ self menuActions asMenuPresenter ];
-		contextKeyBindings: self menuActions asKMCategory;
-		whenTextChangedDo: [ :aString | page contents: aString ];
-		yourself.
-		
-	text eventHandler 
-		whenKeyUpDo: [ :event | self updateLineNumber ];
-		whenMouseUpDo: [ :event | self updateLineNumber ];
-		"before taking focus position will be nil, ensure I have the correct one"
-		whenFocusReceivedDo: [ self updateLineNumber ].
-		
-	self updatePresenter
-]
-
-{ #category : #initialization }
-StPlayground >> initializeWindow: aWindowPresenter [
-
-	super initializeWindow: aWindowPresenter.
-	aWindowPresenter 
-		title: self class defaultTitle;
-		initialExtent: self class preferredExtent;
-		windowIcon: self windowIcon;
-		toolbar: self buildToolbar;
-		statusBar: (statusBar := self buildStatusBar);
-		whenResizingDo: [ :ann | self preferredExtent: ann newSize ];
-		whenOpenedDo: [ text takeKeyboardFocus ]
-
-]
-
-{ #category : #accessing }
-StPlayground >> interactionModel [
-
-	^ text interactionModel
+	self setModelBeforeInitialization: StPlaygroundPage new.
+	super initialize.
 ]
 
 { #category : #actions }
 StPlayground >> loadPage: aFileReference [
 
-	page := StPlaygroundPage fromReference: aFileReference.
-	text text: page contents
-]
-
-{ #category : #private }
-StPlayground >> menuActions [
-
-	^ CmCommandGroup forSpec
-		beRoot;
-		register: ((CmCommandGroup named: 'Playground') asSpecGroup
-			register: ((CmCommandGroup named: 'Base options') asSpecGroup
-				beDisplayedAsGroup;
-				register: (StPlaygroundPublishCommand forSpecContext: self);
-				register: (StPlaygroundBindingsCommand forSpecContext: self);
-				register: (StPlaygroundPagesCommand forSpecContext: self);
-				yourself);
-			register: ((CmCommandGroup named: 'Miscelaneous options') asSpecGroup
-				beDisplayedAsGroup;
-				register: (StShowLineNumbersCommand forSpecContext: self);
-				yourself);
-			yourself);
-		yourself
-]
-
-{ #category : #accessing }
-StPlayground >> page [
-
-	^ page
-]
-
-{ #category : #private }
-StPlayground >> preferredExtent: aSize [
-
-	(self window isMaximized 
-		or: [ self window isMinimized ])
-		ifTrue: [ ^ self ].
-	self class preferredExtent: aSize
-]
-
-{ #category : #accessing }
-StPlayground >> selectAll [
-	
-	^ text selectAll
-]
-
-{ #category : #accessing }
-StPlayground >> selectedTextOrLine [
-	
-	^ text selectedTextOrLine
-]
-
-{ #category : #private }
-StPlayground >> showLineNumbers [
-
-	^ StPharoSettings codeShowLineNumbers
-]
-
-{ #category : #'private actions' }
-StPlayground >> showLineNumbers: aBoolean [
-
-	StPharoSettings codeShowLineNumbers: aBoolean.
-	text lineNumbers: aBoolean.
-	toggleLineNumberButton label: (StShowLineNumbersCommand iconLabelFor: self showLineNumbers)
-]
-
-{ #category : #actions }
-StPlayground >> toggleShowLineNumbers [
-
-	self showLineNumbers: self showLineNumbers not
-]
-
-{ #category : #'private builder' }
-StPlayground >> toolbarActions [
-
-	^ CmCommandGroup forSpec
-		register: (CmCommandGroup forSpec
-			register: (StPlaygroundDoItCommand forSpecContext: self);
-			register: (StPlaygroundPublishCommand forSpecContext: self);
-			register: (StPlaygroundBindingsCommand forSpecContext: self);
-			register: (StPlaygroundPagesCommand forSpecContext: self);
-			yourself);
-		yourself
-]
-
-{ #category : #'private updating' }
-StPlayground >> updateLineNumber [
-	| pos |
-	
-	lineLabel ifNil: [ ^ self ].	
-	pos := text cursorPosition.
-	lineLabel label: (pos 
-		ifNotNil: [ ('Line: {1}:{2}' format: { pos y. pos x }) ]
-		ifNil: [ '' ])
-]
-
-{ #category : #'private updating' }
-StPlayground >> updatePresenter [
-
-	self updateLineNumber
+	self firstPage loadPage: aFileReference
 ]
 
 { #category : #initialization }
 StPlayground >> windowIcon [
 	
 	^ self application iconNamed: #workspace
+]
+
+{ #category : #initialization }
+StPlayground >> windowTitle [
+
+	^ self class defaultTitle
 ]

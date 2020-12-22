@@ -7,12 +7,13 @@ Class {
 	#category : #'Files-Tests-Streams'
 }
 
-{ #category : #running }
+{ #category : #private }
 BinaryFileStreamTest >> fileStreamForFileNamed: fileName [
+
 	^ (File named: fileName) writeStream
 ]
 
-{ #category : #running }
+{ #category : #private }
 BinaryFileStreamTest >> killTestFile [
 
 	(File named: 'testFile') exists
@@ -54,7 +55,7 @@ BinaryFileStreamTest >> testFileWithSomeBytesSizeIsNotZero [
 	file nextPutAll: #[1 2 3].
 	self assert: file position equals: 4.
 	file nextPut: 1.
-	self assert: file position equals: 5.
+	self assert: file position equals: 5
 ]
 
 { #category : #testing }
@@ -63,11 +64,12 @@ BinaryFileStreamTest >> testFullFileIsAtEnd [
 	| file |
 	file := self fileStreamForFileNamed: 'testFile'.
 	file nextPut: 1.
-	self assert: file atEnd.
+	self assert: file atEnd
 ]
 
 { #category : #testing }
 BinaryFileStreamTest >> testOpenFile [
+
 	self fileStreamForFileNamed: 'testFile'.
 
 	self assert: (File named: 'testFile') exists
@@ -86,7 +88,7 @@ BinaryFileStreamTest >> testPeekDoesNotAdvanceTheStream [
 	file := self fileStreamForFileNamed: 'testFile'.
 	self assert: file position equals: 0.
 	self assert: file peek equals: file peek.
-	self assert: file position equals: 0.
+	self assert: file position equals: 0
 ]
 
 { #category : #testing }
@@ -99,7 +101,7 @@ BinaryFileStreamTest >> testReadFullFileIsAtEnd [
 	
 	file := self fileStreamForFileNamed: 'testFile'.
 	file next.
-	self assert: file atEnd.
+	self assert: file atEnd
 ]
 
 { #category : #testing }
@@ -113,7 +115,7 @@ BinaryFileStreamTest >> testReadLessThanAvailableYieldsJustRead [
 	file close.
 	
 	file := self fileStreamForFileNamed: 'testFile'.
-	self assert: (file next:2) equals: #[1 2].
+	self assert: (file next:2) equals: #[1 2]
 ]
 
 { #category : #testing }
@@ -128,7 +130,7 @@ BinaryFileStreamTest >> testReadMoreThanAvailableYieldsOnlyAvailable [
 	file close.
 	
 	file := self fileStreamForFileNamed: 'testFile'.
-	self assert: (file next:2) equals: #[1].
+	self assert: (file next:2) equals: #[1]
 ]
 
 { #category : #testing }
@@ -141,7 +143,7 @@ BinaryFileStreamTest >> testReadMultipleBytes [
 	file close.
 
 	file := self fileStreamForFileNamed: 'testFile'.
-	self assert: (file next: 2) equals: #[1 2].
+	self assert: (file next: 2) equals: #[1 2]
 ]
 
 { #category : #testing }
@@ -149,7 +151,7 @@ BinaryFileStreamTest >> testReadWhenNothingAvailableYieldsNil [
 	
 	| file |
 	file := self fileStreamForFileNamed: 'testFile'.
-	self assert: file next equals: nil.
+	self assert: file next equals: nil
 ]
 
 { #category : #testing }
@@ -164,7 +166,7 @@ BinaryFileStreamTest >> testSkipLecture [
 	
 	file := self fileStreamForFileNamed: 'testFile'.
 	file skip: 2.
-	self assert: file next equals: 3.
+	self assert: file next equals: 3
 ]
 
 { #category : #testing }
@@ -177,7 +179,7 @@ BinaryFileStreamTest >> testWriteMultipleBytes [
 
 	file := self fileStreamForFileNamed: 'testFile'.
 	self assert: file next equals: 1.
-	self assert: file next equals: 2.
+	self assert: file next equals: 2
 ]
 
 { #category : #testing }
@@ -189,7 +191,7 @@ BinaryFileStreamTest >> testWriteReadInt [
 	file close.
 
 	file := self fileStreamForFileNamed: 'testFile'.
-	self assert: file next equals: 1.
+	self assert: file next equals: 1
 ]
 
 { #category : #testing }
@@ -198,5 +200,5 @@ BinaryFileStreamTest >> testWriteToClosedFileFails [
 	| fileStream |
 	fileStream := self fileStreamForFileNamed: 'testFile'.
 	fileStream close.
-	self should: [ fileStream wrappedStream nextPut: 1 ] raise: Error.
+	self should: [ fileStream wrappedStream nextPut: 1 ] raise: Error
 ]

@@ -1,3 +1,6 @@
+"
+I'm a morphic adapter to provide a search input field
+"
 Class {
 	#name : #SpMorphicSearchInputFieldAdapter,
 	#superclass : #SpMorphicTextInputFieldAdapter,
@@ -41,7 +44,7 @@ SpMorphicSearchInputFieldAdapter >> buildWidget [
 	^ textMorph
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 SpMorphicSearchInputFieldAdapter >> clearText [
 
 	self widgetDo: [ :w | w setTextWith: '' ] 

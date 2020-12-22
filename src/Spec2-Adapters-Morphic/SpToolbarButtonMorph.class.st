@@ -8,7 +8,7 @@ Class {
 		'badgeFont',
 		'badgeSelector'
 	],
-	#category : #'Spec2-Adapters-Morphic'
+	#category : #'Spec2-Adapters-Morphic-Toolbar'
 }
 
 { #category : #accessing }
@@ -105,9 +105,8 @@ SpToolbarButtonMorph >> hasBadge [
 
 { #category : #style }
 SpToolbarButtonMorph >> mouseOverBorderStyle [
-	^ BorderStyle simple
-		width: 0;
-		baseColor: Color transparent
+
+	^ self normalBorderStyle
 ]
 
 { #category : #accessing }
@@ -122,12 +121,12 @@ SpToolbarButtonMorph >> newBadgeFont [
 
 { #category : #style }
 SpToolbarButtonMorph >> normalBorderStyle [
-	^ BorderStyle simple
-		width: 0;
-		baseColor: Color transparent
+
+	^ BorderStyle width: 0 color: Color transparent
 ]
 
 { #category : #style }
 SpToolbarButtonMorph >> normalFillStyle [
+
 	^ Color transparent
 ]

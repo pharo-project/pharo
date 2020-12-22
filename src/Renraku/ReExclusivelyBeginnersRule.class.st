@@ -9,6 +9,12 @@ Class {
 	#category : #'Renraku-Rules'
 }
 
+{ #category : #testing }
+ReExclusivelyBeginnersRule class >> isAbstract [
+
+	 ^ self = ReExclusivelyBeginnersRule
+]
+
 { #category : #manifest }
 ReExclusivelyBeginnersRule class >> isBeginnerRule [
 	^ true

@@ -25,5 +25,6 @@ SpTextCutCommand class >> defaultShortcutKey [
 
 { #category : #execution }
 SpTextCutCommand >> execute [
-	self editor cut
+
+	context doTextCut
 ]

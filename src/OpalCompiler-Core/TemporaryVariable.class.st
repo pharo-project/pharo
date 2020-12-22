@@ -9,30 +9,18 @@ Class {
 
 { #category : #visiting }
 TemporaryVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
-	^ aProgramNodeVisitor visitTemporaryNode: aNode
+	^ aProgramNodeVisitor visitTemporaryVariableNode: aNode
 ]
 
 { #category : #queries }
 TemporaryVariable >> definingNode [
 	^ scope node temporaries 
 		detect: [ :each | each name = name ]
-		ifNone: [ 
-			" ugly workaround to support temps defined by primitives"
-			| pragma |
-			pragma := scope node methodNode pragmas detect: [ :each | each isPrimitiveError ].
-			pragma ifNil: [ ^nil ].
-			^ RBVariableNode named: (pragma argumentAt: #error:) value asString
-			]
+		ifNone: [ nil ]
 ]
 
 { #category : #testing }
-TemporaryVariable >> isTemp [
-
-	^ true
-]
-
-{ #category : #testing }
-TemporaryVariable >> isTemporaryVariable [
+TemporaryVariable >> isTempVariable [
 
 	^ true
 ]

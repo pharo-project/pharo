@@ -2,10 +2,12 @@ Class {
 	#name : #SpDocumentHierarchyBuilder,
 	#superclass : #Object,
 	#instVars : [
+		'topClass',
 		'flattenTree',
 		'builder',
 		'filterBlock',
-		'class'
+		'class',
+		'fromClass'
 	],
 	#category : #'Spec2-Core-Utils'
 }
@@ -84,7 +86,7 @@ SpDocumentHierarchyBuilder >> buildFor: aClass [
 	self fillTreeOf: aClass.
 	self 
 		addLevel: 0
-		from: SpAbstractPresenter
+		from: self fromClass
 ]
 
 { #category : #building }
@@ -143,6 +145,18 @@ SpDocumentHierarchyBuilder >> filter: aBlock [
 	filterBlock := aBlock
 ]
 
+{ #category : #accessing }
+SpDocumentHierarchyBuilder >> fromClass [
+
+	 ^  fromClass ifNil: [ SpAbstractPresenter ]
+]
+
+{ #category : #accessing }
+SpDocumentHierarchyBuilder >> fromClass: aClass [
+
+	fromClass := aClass
+]
+
 { #category : #testing }
 SpDocumentHierarchyBuilder >> isPassingThrough: aClass topLevel: topClass [
 	| superclasses |
@@ -157,5 +171,11 @@ SpDocumentHierarchyBuilder >> isPassingThrough: aClass topLevel: topClass [
 { #category : #accessing }
 SpDocumentHierarchyBuilder >> topClass [
 
-	^ Model
+	^ topClass ifNil: [ self fromClass superclass ]
+]
+
+{ #category : #accessing }
+SpDocumentHierarchyBuilder >> topClass: aClass [
+
+	topClass := aClass
 ]

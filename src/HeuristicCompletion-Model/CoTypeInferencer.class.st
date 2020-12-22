@@ -4,7 +4,7 @@ That is, I infer a method up to a certain level of the callgraph.
 "
 Class {
 	#name : #CoTypeInferencer,
-	#superclass : #Object,
+	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
 		'returnType',
 		'variables',

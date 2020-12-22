@@ -183,12 +183,6 @@ CompiledCode >> comment [
 	^ self ast firstPrecodeComment
 ]
 
-{ #category : #testing }
-CompiledCode >> containsHalt [
-
-	^ self sendsAnySelectorOf: #( halt halt: haltIf: haltIfNil haltOnCount: haltOnce)
-]
-
 { #category : #'source code management' }
 CompiledCode >> definition [
 	"Polymorphic to class definition"
@@ -693,24 +687,6 @@ CompiledCode >> readsThisContext [
 	"Answer whether compiledMethod reads thisContext, look into embedded blocks, too"
 	self localReadsThisContext ifTrue: [ ^ true ].
 	^ self innerCompiledBlocksAnySatisfy: [ :cb | cb readsThisContext]
-]
-
-{ #category : #accessing }
-CompiledCode >> referredInstVars [
-	| allInstVarNames instVarNames |
-	allInstVarNames := self methodClass allInstVarNames.
-	self isReturnField ifTrue:
-		[^Set with: (allInstVarNames at: self returnField + 1)].
-	instVarNames := Set new.
-	self abstractBytecodeMessagesDo:
-		[:msg|
-		(#(#popIntoReceiverVariable:
-		    #pushReceiverVariable:
-		    #storeIntoReceiverVariable:) includes: msg selector) ifTrue:
-			[instVarNames add: (allInstVarNames at: msg argument + 1)]].
-	^instVarNames
-
-	"Dictionary fromPairs: (Point selectors collect: [:s| { s. (Point >> s) referredInstVars}])".
 ]
 
 { #category : #testing }

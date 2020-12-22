@@ -1,7 +1,7 @@
 Class {
 	#name : #RBRemoveClassKeepingSubclassesTest,
 	#superclass : #RBRefactoringTest,
-	#category : #'Refactoring-Tests-Core'
+	#category : #'Refactoring-Tests-Core-Refactorings'
 }
 
 { #category : #tests }
@@ -11,16 +11,19 @@ RBRemoveClassKeepingSubclassesTest >> testRemoveClassWithReferencesRaisesRBRefac
 
 { #category : #tests }
 RBRemoveClassKeepingSubclassesTest >> testRemoveNotEmptySuperclass [
-	| refactoring class |
-	refactoring := RBRemoveClassKeepingSubclassesRefactoring classNames: (Array with: ('RBTransformation' , 'RuleTestData1') asSymbol).
-	class := refactoring model classNamed: ('RBTransformation' , 'RuleTestData2') asSymbol.
+
+	| refactoring class removedClass subclass |
+	
+	removedClass := ('RBTransformation' , 'RuleTestData1') asSymbol.
+	subclass := ('RBTransformation' , 'RuleTestData2') asSymbol.
+	refactoring := RBRemoveClassKeepingSubclassesRefactoring classNames:
+		               { removedClass }. 
+	class := refactoring model classNamed: subclass.
 	self deny: (class directlyDefinesMethod: #foo).
 	self executeRefactoring: refactoring.
-	self assert: (refactoring model classNamed: ('RBTransformation' , 'RuleTestData1') asSymbol) isNil.
-	self assert: (refactoring model classNamed: ('RBTransformation', 'RuleTestData2') 
-	asSymbol) superclass equals: (refactoring model classNamed: #RBFooLintRuleTestData1).
-	class := refactoring model classNamed: ('RBTransformation', 'RuleTestData2') 
-	asSymbol.
-	self assert: (class directlyDefinesMethod: #foo).
-	
+	self assert: (refactoring model classNamed: removedClass) isNil.
+	self
+		assert: class superclass
+		equals: (refactoring model classNamed: #RBFooLintRuleTestData1).
+	self assert: (class directlyDefinesMethod: #foo)
 ]

@@ -639,20 +639,23 @@ UIManager >> request: aStringOrText initialAnswer: defaultAnswer title: aTitle e
 UIManager >> requestDebuggerOpeningFor: anException [
 
 	<debuggerCompleteToSender>
+	Smalltalk logError: anException printString inContext: anException signalerContext.	
+	
 	self class environment
 		at: #OupsDebugRequest
 		ifPresent: [ :requestClass | 
 			(requestClass newForException: anException) submit.
 			^ self ].
-	Smalltalk
-		logError: anException printString
-		inContext: anException signalerContext
+
 ]
 
 { #category : #'debug requests' }
 UIManager >> requestDebuggerOpeningForProcess: aProcess named: title inContext: aContext [
 
 	<debuggerCompleteToSender>
+
+	Smalltalk logError: aContext printString inContext: aContext.
+	
 	self class environment
 		at: #OupsDebugRequest
 		ifPresent: [ :requestClass | 
@@ -661,26 +664,30 @@ UIManager >> requestDebuggerOpeningForProcess: aProcess named: title inContext: 
 				label: title;
 				submit.
 			^ self ].
-	Smalltalk logError: aContext printString inContext: aContext
+
 ]
 
 { #category : #'debug requests' }
 UIManager >> requestDebuggerOpeningForWarning: aWarning [
 
 	<debuggerCompleteToSender>
+	
+	Smalltalk logError: aWarning printString inContext: aWarning signalerContext.	
+	
 	self class environment
 		at: #OupsWarningRequest
 		ifPresent: [ :requestClass | 
 			(requestClass newForException:  aWarning)			
 				submit.
 			^ self ].
-	Smalltalk logError: aWarning printString inContext: aWarning signalerContext 
 ]
 
 { #category : #'debug requests' }
 UIManager >> requestDebuggerOpeningNamed: title inContext: aContext [
 
 	<debuggerCompleteToSender>
+	Smalltalk logError: aContext printString inContext: aContext.	
+
 	self class environment
 		at: #OupsDebugRequest
 		ifPresent: [ :requestClass | 
@@ -688,7 +695,6 @@ UIManager >> requestDebuggerOpeningNamed: title inContext: aContext [
 				label: title;
 				submit.
 			^ self ].
-	Smalltalk logError: aContext printString inContext: aContext
 ]
 
 { #category : #'ui requests' }

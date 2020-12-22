@@ -17,8 +17,7 @@ Class {
 
 { #category : #'temp vars' }
 OCRequestorScope >> allTemps [
-	"the requestor has the temps defined in the Requestor as WorkspaceVariables"
-	^requestor bindings associations 
+	^#()
 ]
 
 { #category : #accessing }
@@ -37,6 +36,9 @@ OCRequestorScope >> lookupVar: name [
 	"reserved Variables are defined by the instance scope"
 	(ReservedVariable nameIsReserved: name) ifTrue: [ ^ outerScope lookupVar: name ].
 	
+	"generated temps (e.g. for limits in to:do: should not create bindings"
+	name first = $0 ifTrue: [ ^ outerScope lookupVar: name ].
+	
 	"We do not want to auto define bindings for unknown Globals"
 	(name isString and: [name first isUppercase]) ifTrue: [ ^ outerScope lookupVar: name].
 	
@@ -49,12 +51,6 @@ OCRequestorScope >> lookupVar: name [
 	^(requestor bindingOf: name)
 		ifNotNil: [ :var | var ]
 		ifNil: [ outerScope lookupVar: name ]
-]
-
-{ #category : #lookup }
-OCRequestorScope >> newMethodScope [
-	 
-	^ OCMethodScope new outerScope: (self outerScope: outerScope instanceScope) 
 ]
 
 { #category : #accessing }

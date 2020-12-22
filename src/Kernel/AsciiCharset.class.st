@@ -199,17 +199,12 @@ AsciiCharset class >> toLowercase: aCharacter [
 
 { #category : #casing }
 AsciiCharset class >> toUppercase: aCharacter [
-	"(AsciiCharset new toUppercase: $a) >>> $A.
-	(AsciiCharset new toUppercase: $A) >>> $A.
-	(AsciiCharset new toUppercase: $!) >>> $!"
+	"(AsciiCharset toUppercase: $a) >>> $A.
+	(AsciiCharset toUppercase: $A) >>> $A.
+	(AsciiCharset toUppercase: $!) >>> $!"
 
 	(aCharacter between: $a and: $z)
 		ifFalse: [ ^ aCharacter ].
 	^ Character
 		value: aCharacter asciiValue - $a asInteger + $A asInteger
-]
-
-{ #category : #'character classification' }
-AsciiCharset class >> ucsTable [
-	^ Latin1 ucsTable 
 ]

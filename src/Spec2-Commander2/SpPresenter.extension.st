@@ -10,17 +10,23 @@ SpPresenter class >> buildCommandsGroupWith: presenter forRoot: aCmCommandsGroup
 ]
 
 { #category : #'*Spec2-Commander2' }
-SpPresenter class >> buildRootCommandsGroupFor: presenterInstance [
-	| rootCommandGroup |
-	rootCommandGroup := CmCommandGroup forSpec beRoot.
-	"Register default commands."
-	self buildCommandsGroupWith: presenterInstance forRoot: rootCommandGroup.
+SpPresenter class >> buildExtensionCommandsWith: aPresenter forRoot: rootCommandGroup [
 	
-	"Register extension commands."
 	(Pragma allNamed: #extensionCommands in: self class) do: [ :pragma | 
 		(self 
 			perform: pragma methodSelector 
-			withArguments: { presenterInstance . rootCommandGroup }) ].
+			withArguments: { aPresenter . rootCommandGroup }) ]
+]
+
+{ #category : #'*Spec2-Commander2' }
+SpPresenter class >> buildRootCommandsGroupFor: aPresenter [
+	| rootCommandGroup |
+	
+	rootCommandGroup := CmCommandGroup forSpec beRoot.
+	"Register default commands."
+	self buildCommandsGroupWith: aPresenter forRoot: rootCommandGroup.
+	"Register extension commands."
+	self buildExtensionCommandsWith: aPresenter forRoot: rootCommandGroup.
 	
 	^ rootCommandGroup
 ]

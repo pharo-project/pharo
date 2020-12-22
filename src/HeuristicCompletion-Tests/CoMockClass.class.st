@@ -6,7 +6,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'instanceVariables',
-		'selectors',
 		'classVariables',
 		'superclass',
 		'methodDictionary',

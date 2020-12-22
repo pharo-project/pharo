@@ -76,6 +76,12 @@ CoASTResultSetBuilder >> parseNode [
 ]
 
 { #category : #visiting }
+CoASTResultSetBuilder >> visitArgumentVariableNode: anArgumentNode [
+
+	^ self visitVariableNode: anArgumentNode
+]
+
+{ #category : #visiting }
 CoASTResultSetBuilder >> visitArrayNode: aRBArrayNode [ 
 	
 	^ self visitNode: aRBArrayNode
@@ -100,19 +106,25 @@ CoASTResultSetBuilder >> visitCascadeNode: aRBCascadeNode [
 ]
 
 { #category : #visiting }
+CoASTResultSetBuilder >> visitClassVariableNode: aRBVariableNode [
+
+	^ self visitVariableNode: aRBVariableNode
+]
+
+{ #category : #visiting }
 CoASTResultSetBuilder >> visitEnglobingErrorNode: aRBVariableNode [ 
 	^ self visitNode: aRBVariableNode
 ]
 
 { #category : #visiting }
-CoASTResultSetBuilder >> visitGlobalNode: aRBVariableNode [
+CoASTResultSetBuilder >> visitGlobalVariableNode: aRBVariableNode [
 
 	^ self visitVariableNode: aRBVariableNode
 ]
 
 { #category : #visiting }
 CoASTResultSetBuilder >> visitInstanceVariableNode: aRBVariableNode [ 
-	^ self visitNode: aRBVariableNode
+	^ self visitVariableNode: aRBVariableNode
 ]
 
 { #category : #visiting }
@@ -125,6 +137,11 @@ CoASTResultSetBuilder >> visitLiteralArrayNode: aRBLiteralArrayNode [
 CoASTResultSetBuilder >> visitLiteralValueNode: aRBLiteralValueNode [ 
 	
 	^ self visitNode: aRBLiteralValueNode
+]
+
+{ #category : #visiting }
+CoASTResultSetBuilder >> visitLiteralVariableNode: aRBVariableNode [
+	^ self visitVariableNode: aRBVariableNode
 ]
 
 { #category : #visiting }
@@ -182,9 +199,9 @@ CoASTResultSetBuilder >> visitSuperNode: aRBSuperNode [
 ]
 
 { #category : #visiting }
-CoASTResultSetBuilder >> visitTemporaryNode: aRBReturnNode [ 
-	
-	^ self visitNode: aRBReturnNode
+CoASTResultSetBuilder >> visitTemporaryVariableNode: anArgumentNode [
+
+	^ self visitVariableNode: anArgumentNode
 ]
 
 { #category : #visiting }

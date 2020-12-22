@@ -4,9 +4,6 @@ I am a critique that will propose to the user to remove a method.
 Class {
 	#name : #ReRemoveMethodCritique,
 	#superclass : #ReAbstractCritique,
-	#instVars : [
-		'selector'
-	],
 	#category : #'Renraku-Critiques'
 }
 

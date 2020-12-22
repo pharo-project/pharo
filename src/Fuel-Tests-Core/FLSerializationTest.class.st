@@ -282,12 +282,6 @@ FLSerializationTest >> traitNamePrefix [
 ]
 
 { #category : #'stream-strategies' }
-FLSerializationTest >> useBinaryFileStream [
-
-	streamFactory := FLFileStreamStrategy newWithBinaryFileStream
-]
-
-{ #category : #'stream-strategies' }
 FLSerializationTest >> useGzipInMemoryStream [
 
 	streamFactory := FLGZipStrategy newWithTarget: FLByteArrayStreamStrategy new
@@ -303,18 +297,6 @@ FLSerializationTest >> useInMemorySerializationStream [
 FLSerializationTest >> useMemoryStream [
 
 	streamFactory := FLMultiByteStreamStrategy new
-]
-
-{ #category : #'stream-strategies' }
-FLSerializationTest >> useMultiByteFileStream [
-
-	streamFactory := FLFileStreamStrategy newWithMultiByteFileStream
-]
-
-{ #category : #'stream-strategies' }
-FLSerializationTest >> useStandardFileStream [
-
-	streamFactory := FLFileStreamStrategy newWithStandardFileStream
 ]
 
 { #category : #'class-factory' }

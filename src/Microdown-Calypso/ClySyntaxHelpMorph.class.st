@@ -56,24 +56,23 @@ ClySyntaxHelpMorph >> label [
 
 { #category : #building }
 ClySyntaxHelpMorph >> rawMicrodownSyntax [
-	"should use the textual builder!!!"
+
 	^ '
+#Microdown is quite cool
 
-*** 
-Horizontal 
-*** 
-
-#Header
-
+Here is some code 
 
 ```language=Pharo&caption=Beautiful&label=Fig1
    1000 factorial / 999 factorial
 ```
 
+Here is a figure and a link: [http://pharo.org](http://pharo.org).
+
 ![Pharologo](https://files.pharo.org/media/logo/logo.png|size=80&caption=Our great figure.)
 
-A link: [http://pharo.org](http://pharo.org)
 
+
+Here is a list:
 - item 1
   1. sub item 1 
   3. sub item 2
@@ -82,10 +81,10 @@ A link: [http://pharo.org](http://pharo.org)
 
 **Bold**, _italic_, `monospace`
 
-In Pharo hyperlinks to: 
-- class `Point`, 
-- method `Point class`, `Point>>#setX:setY:`, and 
-- package `#’Microdown-Tests’ (for packages).
+In Pharo, Microdown supports hyperlinks to: 
+- classes e.g., `Point`, 
+- methodes e.g., `Point class`, `Point>>#setX:setY:`, and 
+- packages e.g., `#''Microdown-Tests'' (for packages).
 
 You can edit this file clicking on `ClySyntaxHelpMorph>>#rawMicrodownSyntax`.
 '
@@ -98,5 +97,5 @@ ClySyntaxHelpMorph >> syntax [
 	
 	"^ 'The Pharo in image version offers: header, paragraph, codeblock, lists, hyperlinks and many format (bold, monospace, italic, links, .... A larger version is available for books.', String cr, 'The following is rendered below.' asText, String cr asText, String cr asText, self rawMicrodownSyntax, String cr asText, (MicroDownParser asText: self rawMicrodownSyntax )"
 	
-	^ ('The Pharo in image version offers: header, paragraph, codeblock, lists, hyperlinks and many format (bold, monospace, italic, links, .... A larger version is available for books.', String cr, 'The following is rendered below.', String cr, String cr, self rawMicrodownSyntax, String cr) asText, ([MicroDownParser asText: self rawMicrodownSyntax ] on: MicParsingError, MessageNotUnderstood  do: [ '' ])
+	^ (([MicroDownParser asText: self rawMicrodownSyntax ] on: MicParsingError, MessageNotUnderstood  do: [ '''' ]) , 'The Pharo in image version offers: header, paragraph, codeblock, lists, hyperlinks and many format (bold, monospace, italic, links, .... A larger version is available for books.', String cr, 'Here is the corresponding text in Microdown.', String cr, String cr, self rawMicrodownSyntax, String cr) asText
 ]

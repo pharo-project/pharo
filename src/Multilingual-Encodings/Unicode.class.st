@@ -712,6 +712,22 @@ Unicode class >> isTitlecaseLetter: char [
 	^ (GeneralCategory at: index) = Lt
 ]
 
+{ #category : #'as yet unclassified' }
+Unicode class >> isTraditionalChinese: code [
+
+	^ false.
+
+]
+
+{ #category : #'as yet unclassified' }
+Unicode class >> isUnifiedKanji: code [
+	^ ((((code between: 16r2E80 and: 16rA4CF)
+		or: [ code between: 16rF900 and: 16rFAFF ])
+			or: [ code between: 16rFE30 and: 16rFE4F ]) 
+				or: [ code between: 16rFF00 and: 16rFFEF ])
+					or: [ code between: 16r20000 and: 16r2FA1F ]
+]
+
 { #category : #'character classification' }
 Unicode class >> isUppercase: char [ 
 	| index |
@@ -871,11 +887,6 @@ Unicode class >> toUppercaseString: aWideString [
 		(ToUpper at: e charCode ifAbsent: [nil])
 			ifNil: [e]
 			ifNotNil: [:up | self value: up]]
-]
-
-{ #category : #'character classification' }
-Unicode class >> ucsTable [
-	^ Latin1 ucsTable 
 ]
 
 { #category : #'instance creation' }

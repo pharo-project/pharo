@@ -3,8 +3,7 @@ Class {
 	#superclass : #ClyQueryResultTestCase,
 	#instVars : [
 		'cursor',
-		'items',
-		'actualObjects'
+		'items'
 	],
 	#category : #'Calypso-NavigationModel-Tests'
 }

@@ -67,23 +67,22 @@ Slot class >> isUsed [
 
 { #category : #settings }
 Slot class >> showSlotClassDefinition [
-	^slotClassDefinition ifNil: [ slotClassDefinition := false ]
+	self 
+		deprecated: 'Do not use Slot class directly use ClassDefinitionPrinter' 
+		transformWith:
+	'Slot showSlotClassDefinition' -> 'ClassDefinitionPrinter showFluidClassDefinition'.
+	^ ClassDefinitionPrinter showFluidClassDefinition
+
 ]
 
 { #category : #settings }
 Slot class >> showSlotClassDefinition: aBoolean [
-	slotClassDefinition := aBoolean
-]
+	self 
+		deprecated: 'Do not use Slot class directly use ClassDefinitionPrinter' 
+		transformWith:
+	'Slot showSlotClassDefinition: @val' -> 'ClassDefinitionPrinter showFluidClassDefinition: @val'.
+	ClassDefinitionPrinter showFluidClassDefinition: aBoolean
 
-{ #category : #settings }
-Slot class >> slotSetting: aBuilder [ 
-	<systemsettings>
-	(aBuilder setting: #showSlotClassDefinition) 
-		label: 'Class Template with Slots';
-		default: false;
-		description: 'If checked then browsers show always the slot class definition';
-		parent: #codeBrowsing; 
-		target: self
 ]
 
 { #category : #testing }
@@ -148,7 +147,7 @@ Slot >> emitStore: aMethodBuilder [
 		storeTemp: tempName;
 		popTop;
 		pushReceiver;
-		pushLiteralVariable: (AdditionalBinding key: #slot value: self);
+		pushLiteral: self;
 		pushTemp: tempName;
 		send: #writeSlot:value:
 ]
@@ -156,7 +155,7 @@ Slot >> emitStore: aMethodBuilder [
 { #category : #'code generation' }
 Slot >> emitValue: aMethodBuilder [
 	aMethodBuilder
-		pushLiteralVariable: (AdditionalBinding key: #slot value: self);
+		pushLiteral: self;
 		pushReceiver;
 		send: #read:
 ]
@@ -302,7 +301,7 @@ Slot >> readInContext: aContext [
 
 { #category : #accessing }
 Slot >> scope [
-	^ definingClass
+	^ self owningClass
 ]
 
 { #category : #accessing }

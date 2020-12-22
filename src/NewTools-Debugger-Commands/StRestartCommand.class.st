@@ -14,7 +14,8 @@ StRestartCommand class >> defaultDescription [
 
 { #category : #initialization }
 StRestartCommand class >> defaultIconName [
-	^ #glamorousRestart
+
+	^ #debuggerRestart
 ]
 
 { #category : #default }

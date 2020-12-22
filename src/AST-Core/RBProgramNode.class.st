@@ -517,6 +517,11 @@ RBProgramNode >> isGlobalVariable [
 	^false
 ]
 
+{ #category : #testing }
+RBProgramNode >> isHaltNode [
+	^ false
+]
+
 { #category : #deprecated }
 RBProgramNode >> isImmediate [
 	^self isImmediateNode
@@ -640,7 +645,7 @@ RBProgramNode >> isSuperVariable [
 ]
 
 { #category : #testing }
-RBProgramNode >> isTemp [
+RBProgramNode >> isTempVariable [
 	^ false
 ]
 
@@ -656,6 +661,11 @@ RBProgramNode >> isThisContextVariable [
 
 { #category : #testing }
 RBProgramNode >> isUndeclaredVariable [
+	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isUnfinishedStatement [
 	^false
 ]
 
@@ -982,9 +992,6 @@ RBProgramNode >> source [
 RBProgramNode >> sourceCode [
 
 	| interval |
-	"Doit methods have transformed ASTs, we need to pretty print"
-	self methodNode isDoIt ifTrue: [ ^ self formattedCode ].
-	
 	interval := self sourceInterval.
 	interval ifEmpty: [ ^ '' ].
 	
@@ -1042,7 +1049,7 @@ RBProgramNode >> superMessages [
 
 { #category : #querying }
 RBProgramNode >> tempVariableReadNodes [
-		^self variableReadNodes select: [:each | each isTemp]
+		^self variableReadNodes select: [:each | each isTempVariable]
 ]
 
 { #category : #accessing }

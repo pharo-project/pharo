@@ -4,7 +4,7 @@ Unit test for trait handling
 Class {
 	#name : #T2TraitTest,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests-Base'
+	#category : #'TraitsV2-Tests'
 }
 
 { #category : #tests }
@@ -89,6 +89,19 @@ T2TraitTest >> testClassTraits [
 	
 	self assert: aClass anAlias equals: 21.
 	self assert: aClass aSelector equals: 21.
+]
+
+{ #category : #tests }
+T2TraitTest >> testClassUsesTrait [
+	| t1 superclass subclass |
+	t1 := self newTrait: #T1 with: {}.
+	superclass := self newClass: #Superclass with:#() uses: t1.
+	subclass := self newClass: #Subclass superclass: superclass with: #() uses: {}.
+	
+	self assert: (superclass usesTrait: t1).
+	self assert: (superclass usesTraitLocally: t1).
+	self assert: (subclass usesTrait: t1).
+	self assert: (subclass usesTraitLocally: t1) not.
 ]
 
 { #category : #tests }

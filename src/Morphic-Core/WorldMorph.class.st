@@ -509,6 +509,11 @@ WorldMorph >> runStepMethods [
 
 ]
 
+{ #category : #accessing }
+WorldMorph >> scaleFactor: newScaleFactor [
+	self setProperty: #scaleFactor toValue: newScaleFactor
+]
+
 { #category : #stepping }
 WorldMorph >> startStepping: aMorph at: scheduledTime selector: aSelector arguments: args stepTime: stepTime [
 	worldState startStepping: aMorph at: scheduledTime selector: aSelector arguments: args stepTime: stepTime.

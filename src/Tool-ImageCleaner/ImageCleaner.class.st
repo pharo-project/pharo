@@ -62,11 +62,11 @@ ImageCleaner class >> shareLiterals [
 
 { #category : #accessing }
 ImageCleaner class >> testPackages [
+
 	<script: 'self testPackages inspect'>
-	
-	^ (RPackageOrganizer default packageNames
-		select: [ :each | (each endsWith: '-Tests') or: [ each includesSubstring: '-Tests-' ] ])
-		copyWithout: 'ReleaseTests'
+	"All test packages to wipe out, except ReleeaseTests package."
+	^ RPackageOrganizer default testPackageNames copyWithout:
+		  'ReleaseTests'
 ]
 
 { #category : #api }
@@ -174,8 +174,8 @@ ImageCleaner >> literalsDo: aBlock [
 	CompiledCode allSubInstancesDo: [ :cm | 
 		cm literals do: [ :literal | 
 			"Symbols are already shared, we can skip them here"
-			(literal isReadOnlyLiteral and: [literal isSymbol not]) ifTrue: [ 
-				aBlock value: literal value: cm ] ] ]
+			(literal isLiteral and: [literal isSymbol not and: [literal isImmediateObject not]]) 
+				ifTrue: [ aBlock value: literal value: cm ] ] ]
 ]
 
 { #category : #cleaning }
@@ -230,7 +230,6 @@ ImageCleaner >> statistics [
 
 { #category : #cleaning }
 ImageCleaner >> testPackages [
-	^ (RPackageOrganizer default packageNames
-		select: [ :each | (each endsWith: '-Tests') or: [ each includesSubstring: '-Tests-' ] ])
-		copyWithout: 'ReleaseTests'
+
+	^ self class testPackages 
 ]

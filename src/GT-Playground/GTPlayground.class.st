@@ -117,7 +117,9 @@ GTPlayground class >> menuCommandOn: aBuilder [
 		order: 10;
 		keyText: 'o, w';
 		help: 'A window used as a scratchpad area where fragments of Pharo code can be entered, stored, edited, and evaluated.';
-		icon: (self iconNamed: #workspaceIcon)
+		icon: (self iconNamed: #workspaceIcon).
+	
+	aBuilder withSeparatorAfter	
 ]
 
 { #category : #'instance creation' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #RBRemoveMethodTest,
 	#superclass : #RBRefactoringTest,
-	#category : #'Refactoring-Tests-Core'
+	#category : #'Refactoring-Tests-Core-Refactorings'
 }
 
 { #category : #tests }
@@ -32,6 +32,13 @@ RBRemoveMethodTest >> testRemoveMethod [
 	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) directlyDefinesMethod: selectors first).
 	self executeRefactoring: refactoring.
 	self deny: ((refactoring model classNamed: #RBRefactoryTestDataApp) directlyDefinesMethod: selectors first)
+]
+
+{ #category : #'failure tests' }
+RBRemoveMethodTest >> testRemoveNonExistingMethod [
+	self shouldFail: (RBRemoveMethodRefactoring 
+			removeMethods: #(#nonExistingMethod )
+			from: RBBasicLintRuleTestData)
 ]
 
 { #category : #'failure tests' }

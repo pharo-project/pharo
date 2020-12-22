@@ -113,7 +113,7 @@ SpMorphicCodeAdapter >> hasSyntaxHighlightEnabled [
 ]
 
 { #category : #'widget API' }
-SpMorphicCodeAdapter >> insertPopoverAfterCurrentSelection: aPresenter [
+SpMorphicCodeAdapter >> insertPopoverAfterCurrentSelection: aPresenter style: styleName [
 	| popover pos |
 
 	self widgetDo: [ :w |
@@ -121,12 +121,15 @@ SpMorphicCodeAdapter >> insertPopoverAfterCurrentSelection: aPresenter [
 		popover := self presenter newPopover
 			bePositionRight;
 			presenter: aPresenter;
-			buildWithSpec;
 			yourself.
+			
+		styleName ifNotNil: [ 
+			popover addStyle: styleName ].
+		popover buildWithSpec.
 	
 		pos := self computeOriginFor: w.
-		"(16@ -5) is a magic number to position correctly the popover"
-		popover popupPointingTo: (pos corner: (pos + (16@ -5))).
+		"(20@0) is a magic number to position correctly the popover"
+		popover popupPointingTo: (pos corner: (pos + (20@0))).
 		popover takeKeyboardFocus ]
 ]
 
@@ -197,14 +200,18 @@ SpMorphicCodeAdapter >> setEditingModeFor: textArea [
 
 { #category : #private }
 SpMorphicCodeAdapter >> setEditingModeFor: textArea withBehavior: aBehavior forScripting: aBoolean [
-
 	textArea model: self.
 	(aBoolean or: [ aBehavior isNil ]) 
 		ifTrue: [ 
 			textArea beForSmalltalkScripting.
 			textArea editingMode classOrMetaClass: aBehavior ]
 		ifFalse: [
-			textArea beForSmalltalkCodeInClass: aBehavior ]
+			textArea beForSmalltalkCodeInClass: aBehavior ].
+	"Following code should bring correct requestor (a code presenter) with a proper code interaction model into styler to enable a visibility of external variables (like workspace variables)"
+	textArea shoutStyler styler 
+		isForWorkspace: aBoolean;
+		workspace: self presenter.
+	textArea shoutStyler refreshStyling
 ]
 
 { #category : #'widget API' }

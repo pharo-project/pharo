@@ -17,6 +17,7 @@ Class {
 
 { #category : #specs }
 DTFilterableListPresenter class >> defaultSpec [
+
 	^ SpBoxLayout newVertical
 		add: #labelPresenter withConstraints: [ :constraints | constraints height: self labelHeight ];
 		add: #listPresenter;
@@ -26,31 +27,37 @@ DTFilterableListPresenter class >> defaultSpec [
 
 { #category : #accessing }
 DTFilterableListPresenter >> allItems [
+
 	^ initialItems
 ]
 
-{ #category : #api }
+{ #category : #accessing }
 DTFilterableListPresenter >> beEmpty [
+
 	self items: #()
 ]
 
-{ #category : #api }
+{ #category : #accessing }
 DTFilterableListPresenter >> beMultipleSelection [
+
 	^ self listPresenter beMultipleSelection
 ]
 
-{ #category : #api }
+{ #category : #accessing }
 DTFilterableListPresenter >> beSingleSelection [
+
 	^ self listPresenter beSingleSelection
 ]
 
-{ #category : #api }
+{ #category : #accessing }
 DTFilterableListPresenter >> contextMenu: aBlock [
+
 	^ self listPresenter contextMenu: aBlock
 ]
 
-{ #category : #api }
+{ #category : #accessing }
 DTFilterableListPresenter >> displayBlock: aBlock [
+
 	^ self listPresenter display: aBlock
 ]
 
@@ -74,6 +81,7 @@ DTFilterableListPresenter >> filterList [
 
 { #category : #accessing }
 DTFilterableListPresenter >> filterStrings [
+
 	^ (self filterTextInput text splitOn: $|)
 		reject: #isEmpty
 		thenCollect: [ :pattern | pattern , '*' ]
@@ -81,27 +89,32 @@ DTFilterableListPresenter >> filterStrings [
 
 { #category : #accessing }
 DTFilterableListPresenter >> filterTextInput [
+
 	^ filterTextInput
 ]
 
 { #category : #accessing }
 DTFilterableListPresenter >> help [
+
 	^ labelPresenter help
 ]
 
 { #category : #accessing }
 DTFilterableListPresenter >> help: aString [
+
 	labelPresenter help: aString
 ]
 
 { #category : #initialization }
 DTFilterableListPresenter >> initialize [
-	initialItems := #().
+
 	super initialize.
+	initialItems := #().
 ]
 
 { #category : #initialization }
 DTFilterableListPresenter >> initializeWidgets [
+
 	labelPresenter := self newLabel.
 	listPresenter := self newList.
 	filterTextInput := self newTextInput
@@ -113,72 +126,86 @@ DTFilterableListPresenter >> initializeWidgets [
 
 { #category : #accessing }
 DTFilterableListPresenter >> items [
+
 	^ self visibleItems
 ]
 
-{ #category : #api }
+{ #category : #accessing }
 DTFilterableListPresenter >> items: items [
+
 	initialItems := items.
 	self listPresenter items: items
 ]
 
 { #category : #accessing }
 DTFilterableListPresenter >> label [
+
 	^ labelPresenter label
 ]
 
 { #category : #accessing }
 DTFilterableListPresenter >> label: aString [
+
 	labelPresenter label: aString
 ]
 
 { #category : #accessing }
 DTFilterableListPresenter >> labelPresenter [
+
 	^ labelPresenter
 ]
 
 { #category : #accessing }
 DTFilterableListPresenter >> listPresenter [
+
 	^ listPresenter
 ]
 
-{ #category : #api }
+{ #category : #actions }
 DTFilterableListPresenter >> resetFilter [
+
 	self filterTextInput text: ''.
 	self listPresenter items: initialItems.
 ]
 
-{ #category : #api }
+{ #category : #actions }
 DTFilterableListPresenter >> selectAll [
+
 	^ self listPresenter selectAll
 ]
 
-{ #category : #api }
+{ #category : #accessing }
 DTFilterableListPresenter >> selectItems: aBlock [
+
 	^ self listPresenter selectItems: aBlock
 ]
 
-{ #category : #api }
+{ #category : #accessing }
 DTFilterableListPresenter >> selectedItems [
+
 	^ self listPresenter selectedItems
 ]
 
-{ #category : #api }
+{ #category : #accessing }
 DTFilterableListPresenter >> sortingBlock: aBlock [
+
 	^ self listPresenter sortingBlock: aBlock
 ]
 
-{ #category : #api }
+{ #category : #actions }
 DTFilterableListPresenter >> unselectAll [
+
 	^ self listPresenter unselectAll
 ]
 
 { #category : #accessing }
 DTFilterableListPresenter >> visibleItems [
+
 	^ self listPresenter items
 ]
 
-{ #category : #api }
+{ #category : #events }
 DTFilterableListPresenter >> whenSelectionChangedDo: aBlock [
+
 	^ self listPresenter whenSelectionChangedDo: aBlock
 ]

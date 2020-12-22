@@ -6,7 +6,7 @@ The method #methodWithCascades is not called, it is just a ""test data"" method 
 Class {
 	#name : #RBSplitCascadeRefactoringTest,
 	#superclass : #RBRefactoringTest,
-	#category : #'Refactoring-Tests-Core'
+	#category : #'Refactoring-Tests-Core-Refactorings'
 }
 
 { #category : #data }
@@ -15,6 +15,24 @@ RBSplitCascadeRefactoringTest >> methodWithCascades [
 	a := Object new initialize; asString.
 	^ a
 	
+]
+
+{ #category : #'failure tests' }
+RBSplitCascadeRefactoringTest >> testMethodWithoutCascade [
+	self
+		shouldFail: (RBSplitCascadeRefactoring
+		split: (54 to: 55)
+		from: #anInstVar:
+		in: RBBasicLintRuleTestData)
+]
+
+{ #category : #'failure tests' }
+RBSplitCascadeRefactoringTest >> testNonExistantSelectorName [
+	self
+		shouldFail: (RBSplitCascadeRefactoring
+		split: (54 to: 55)
+		from: #foo
+		in: self class)
 ]
 
 { #category : #tests }

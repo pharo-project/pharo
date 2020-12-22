@@ -12,6 +12,34 @@ RunArrayTest >> testANewRunArrayIsEmpty [
 	self assertEmpty: RunArray new
 ]
 
+{ #category : #'tests - adding' }
+RunArrayTest >> testAdd [
+
+	| run |
+	run := RunArray new. 
+	self assert: run size equals: 0.
+	
+	run add: $A.
+	self assert: run size equals: 1.
+	run add: $A.
+	self assert: run size equals: 2.
+	run add: $B.
+	self assert: run size equals: 3.
+]
+
+{ #category : #'tests - adding' }
+RunArrayTest >> testAddAddsAsLastElement [
+
+	| run |
+	run := RunArray new. 
+	self assert: run size equals: 0.
+	
+	run add: $A.
+	run add: $A.
+	run add: $B.
+	self assert: (run at: 3) equals: $B
+]
+
 { #category : #'tests - accessing' }
 RunArrayTest >> testAt [
 	

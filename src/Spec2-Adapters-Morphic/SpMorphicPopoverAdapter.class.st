@@ -1,3 +1,6 @@
+"
+I'm the adapter used to bridge a Popover and its morphic representation.
+"
 Class {
 	#name : #SpMorphicPopoverAdapter,
 	#superclass : #SpAbstractMorphicAdapter,
@@ -37,6 +40,12 @@ SpMorphicPopoverAdapter >> buildWidget [
 	^ panelMorph
 ]
 
+{ #category : #factory }
+SpMorphicPopoverAdapter >> contentPresenter [
+	
+	^ self presenter presenter
+]
+
 { #category : #api }
 SpMorphicPopoverAdapter >> dismiss [ 
 
@@ -46,20 +55,25 @@ SpMorphicPopoverAdapter >> dismiss [
 { #category : #api }
 SpMorphicPopoverAdapter >> popup [
 
-	self widgetDo: [ :w | w popup ]
+	self widgetDo: [ :w | 
+		self applyStyle: w.
+		w popup ]
 ]
 
 { #category : #api }
 SpMorphicPopoverAdapter >> popupPointingTo: aRectangle [
 
-	self widgetDo: [ :w | 
+	self widgetDo: [ :w |
+		self applyStyle: w.
 		w popupPointingTo: aRectangle ]
 ]
 
 { #category : #factory }
 SpMorphicPopoverAdapter >> presenterWidget [
 
-	^ self presenter presenter buildWithSpec
+	self contentPresenter buildWithSpec.
+	self contentPresenter adapter applyStyle.
+	^ self contentPresenter adapter widget
 ]
 
 { #category : #factory }

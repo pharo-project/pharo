@@ -34,8 +34,6 @@ ErrorNodeStyler >> shouldStyleNode: aNode [
 ErrorNodeStyler >> visitEnglobingErrorNode: anEnglobingNode [
 
 	| conf |
-	(anEnglobingNode isKindOf: RBUnreachableStatementErrorNode)
-		ifTrue: [ self haltOnce ].
 	conf := RubConfigurationChange new.
 	conf configurationBlock: [ :text | 
 		| r |
@@ -53,6 +51,6 @@ ErrorNodeStyler >> visitEnglobingErrorNode: anEnglobingNode [
 
 { #category : #visiting }
 ErrorNodeStyler >> visitUnreachableStatement: anUnreachableStatement [
-
+	"self overrides visitEnglobingErrorNode:"
 	^ super visitEnglobingErrorNode: anUnreachableStatement
 ]

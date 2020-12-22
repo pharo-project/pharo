@@ -52,6 +52,25 @@ ExceptionTest >> runWithNoHandlers: aBlock [
 	^result
 ]
 
+{ #category : #test }
+ExceptionTest >> testDefaultDescription [
+   "Tests that the description of an Exception, is the defaultDescription"
+   |anException|
+	anException := Exception new.
+	self assert: anException description equals: anException defaultDescription 
+	
+]
+
+{ #category : #test }
+ExceptionTest >> testDescription [
+   |anException|
+	anException := Exception new.
+	self assert: anException description isNotNil.
+	self assert: anException description isString.
+	"If the default exception desciption changes, this test will be broken"
+	self assert: anException description equals: 'Exception'
+]
+
 { #category : #'tests - exceptiontester' }
 ExceptionTest >> testDoubleOuterPass [
 	self assertSuccess: (ExceptionTester new runTest: #doubleOuterPassTest ) 

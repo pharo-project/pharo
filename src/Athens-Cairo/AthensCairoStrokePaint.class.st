@@ -94,7 +94,7 @@ AthensCairoStrokePaint >> prepareForDrawingOn: aCanvas [
 		loadOnCairoCanvas: aCanvas.
 	
 	aCanvas
-		primSetLineWidth: width;
+		primSetLineWidth: width asFloat;
 		primSetLineJoin: joinStyle;
 		primSetLineCap: capStyle.
 	

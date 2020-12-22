@@ -27,7 +27,6 @@ Class {
 		'contentsColor'
 	],
 	#classVars : [
-		'DefaultBackgroundColor',
 		'Position',
 		'Type'
 	],

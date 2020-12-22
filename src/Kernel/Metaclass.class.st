@@ -120,44 +120,22 @@ Metaclass >> classVariables [
 		ifNotNil: [ :class | class classVariables ]
 ]
 
-{ #category : #'file in/out' }
-Metaclass >> definition [
-	"Refer to the comment in ClassDescription|definition."
+{ #category : #fileout }
+Metaclass >> definitionStringFor: aConfiguredPrinter [
 
-	(self slotsNeedFullDefinition or: [ Slot showSlotClassDefinition ]) ifTrue: [ 
-		^ self definitionWithSlots ].
-
-	^ self definitionWithoutSlots
-]
-
-{ #category : #'file in/out' }
-Metaclass >> definitionWithSlots [
-	"Refer to the comment in ClassDescription|definition."
-
-	^ String streamContents: [:stream |
-		stream print: self.
-		stream
-			crtab;
-			nextPutAll: 'slots: '.
-		self slotDefinitionsOn: stream ]
-]
-
-{ #category : #'file in/out' }
-Metaclass >> definitionWithoutSlots [
-
-	^ String streamContents: [:stream |
-		stream print: self.
-		stream
-			crtab;
-			nextPutAll: 'instanceVariableNames: '''.
-		self instanceVariablesOn: stream.
-		stream nextPut: $' ]
+	^ aConfiguredPrinter metaclassDefinitionString 
 ]
 
 { #category : #accessing }
 Metaclass >> environment [
 
 	^thisClass environment
+]
+
+{ #category : #fileout }
+Metaclass >> expandedDefinitionStringFor: aPrinter [
+
+	^ aPrinter expandedMetaclassDefinitionString
 ]
 
 { #category : #testing }
@@ -266,14 +244,6 @@ Metaclass >> obsoleteSubclasses [
 
 	self isMetaclassOfClassOrNil ifTrue: [ ^ #() ].
 	^ self instanceSide obsoleteSubclasses collect: [ :aSubclass | aSubclass classSide ]
-]
-
-{ #category : #'file in/out' }
-Metaclass >> oldDefinition [
-	"Refer to the comment of Class. 
-	 This method is for compatibility with Class>>#oldDefinition"
-
-	^ self definition
 ]
 
 { #category : #compiling }

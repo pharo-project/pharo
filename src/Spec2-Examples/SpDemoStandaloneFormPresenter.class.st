@@ -67,11 +67,11 @@ SpDemoStandaloneFormPresenter class >> defaultSpec [
 				add: 'Items:' at: 1 @ 10;
 				add: #itemsInput at: 2 @ 10;
 				yourself);
-		add:
-			(SpBoxLayout newHorizontal
+		add: (SpBoxLayout newHorizontal
 				add: #submitButton;
 				add: #restoreButton;
-				yourself);
+				yourself)
+			expand: false;
 		yourself
 ]
 
@@ -195,8 +195,7 @@ SpDemoStandaloneFormPresenter >> initializePresenters [
 	scaleInput := self newSlider.
 
 	passwordLabel := self newLabel label: 'password:'.
-	passwordInput := self newTextInput
-		bePassword.
+	passwordInput := self newTextInput bePassword.
 	checkboxLabel := self newLabel label: 'remember me'.
 	checkboxInput := self newCheckBox state: true.
 
@@ -207,7 +206,9 @@ SpDemoStandaloneFormPresenter >> initializePresenters [
 	maleButton := self newRadioButton label: 'male'.
 	femaleButton := self newRadioButton label: 'female'.
 	maleButton associatedRadioButtons: {femaleButton}.
-	genderButtons := Dictionary newFrom: {(#male -> maleButton) . (#female -> femaleButton)}.
+	genderButtons := Dictionary newFrom: {
+		(#male -> maleButton). 
+		(#female -> femaleButton)}.
 
 	genderLabel := self newLabel label: 'gender:'.
 	itemsLabel := self newLabel label: 'items:'.
@@ -216,16 +217,7 @@ SpDemoStandaloneFormPresenter >> initializePresenters [
 	itemsInput items: self model items.
 
 	submitButton := self newButton label: 'Submit'.
-	restoreButton := self newButton label: 'Restore'.
-
-	self focusOrder
-		add: nameTextInput;
-		add: surnameTextInput;
-		add: number1Input;
-		add: number2Input;
-		add: scaleInput;
-		add: passwordInput;
-		add: checkboxInput
+	restoreButton := self newButton label: 'Restore'
 ]
 
 { #category : #accessing }

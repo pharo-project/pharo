@@ -1,12 +1,17 @@
+"
+I'm an ""inspect it"" command. 
+I will execute the selection (or line) of the playground and inspect the result.
+"
 Class {
 	#name : #SpCodeInspectItCommand,
 	#superclass : #SpCodeSelectionCommand,
-	#category : #'Spec2-Code-Commands'
+	#category : #'Spec2-Code-Commands-Base'
 }
 
 { #category : #defaults }
 SpCodeInspectItCommand class >> defaultIconName [
-	^#smallInspectIt
+
+	^ #smallInspectIt
 ]
 
 { #category : #default }
@@ -31,7 +36,7 @@ SpCodeInspectItCommand >> execute [
 		self inspectObject: result ]
 ]
 
-{ #category : #execution }
+{ #category : #'private - actions' }
 SpCodeInspectItCommand >> inspectObject: anObject [
 
 	anObject inspect

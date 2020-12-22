@@ -1,6 +1,7 @@
 Class {
 	#name : #SpOverlayConstraints,
 	#superclass : #SpLayoutConstraints,
+	#traits : 'SpTAlignable',
 	#instVars : [
 		'overlay'
 	],

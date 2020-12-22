@@ -144,7 +144,6 @@ RBMethodNode >> owningScope [
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> primitiveFromPragma [
-	pragmas ifNil: [ ^ IRPrimitive null ].
 	^ pragmas
 		detect: [ :each | each isPrimitive ]
 		ifFound: [ :aPragmaPrimitive | aPragmaPrimitive asIRPrimitive ]
@@ -161,8 +160,8 @@ RBMethodNode >> rewriteTempsForContext: aContext [
 			(contextOnlyTemps includes: tempName)
 				ifTrue:
 					[ rewriter
-						replace: tempName , ' := ``@object' with: 'ThisContext tempNamed: ', tempName asString printString  , ' put: ``@object';
-						replace: tempName with: 'ThisContext tempNamed: ' , tempName asString printString ] ].
+						replace: tempName , ' := ``@object' with: 'ThisContext writeVariableNamed: ', tempName asString printString  , ' value: ``@object';
+						replace: tempName with: 'ThisContext readVariableNamed: ' , tempName asString printString ] ].
 	^ rewriter
 		executeTree: self;
 		tree

@@ -18,6 +18,12 @@ ClassTest >> categoryNameForTemporaryClasses [
 	^'Dummy-Tests-Class' 
 ]
 
+{ #category : #coverage }
+ClassTest >> classToBeTested [
+	
+	^ Class
+]
+
 { #category : #setup }
 ClassTest >> deleteClass [
 	| cl |
@@ -145,6 +151,72 @@ ClassTest >> testClassSide [
 
 	self assert: Point classSide equals: Point class. 
 	self assert: Point class classSide equals: Point class. 
+]
+
+{ #category : #tests }
+ClassTest >> testClassVariableEntanglement [ 
+	| firstClassName firstClass secondClassName secondClass thirdClassName thirdClass |
+
+	firstClassName := 'MyFirstClass'.
+	firstClass := Object subclass: firstClassName
+		instanceVariableNames: ''
+		classVariableNames: 'MyVar'
+		package: self categoryNameForTemporaryClasses.
+	[ 
+
+		firstClass class compile: 'myVar
+	^ MyVar'.
+		firstClass class compile: 'myVar: anObject
+	MyVar := anObject'.
+
+		secondClassName := 'MySecondClass'.
+		secondClass := Object subclass: secondClassName
+			instanceVariableNames: ''
+			classVariableNames: 'MyVar'
+			package: self categoryNameForTemporaryClasses.
+		[ 
+
+			secondClass class compile: 'myVar
+	^ MyVar'.
+			secondClass class compile: 'myVar: anObject
+		MyVar := anObject'.
+
+			thirdClassName := 'MyThirdClass'.
+			thirdClass := secondClass duplicateClassWithNewName: thirdClassName.
+			[ 
+
+				self assert: firstClass myVar equals: nil.
+				self assert: secondClass myVar equals: nil.
+				self assert: thirdClass myVar equals: nil.
+	
+				firstClass myVar: 123.
+				self assert: firstClass myVar equals: 123.
+				self assert: secondClass myVar equals: nil.
+				self assert: thirdClass myVar equals: nil.
+
+				secondClass myVar: 456.
+				self assert: firstClass myVar equals: 123.
+				self assert: secondClass myVar equals: 456.
+				self assert: thirdClass myVar equals: nil.
+
+				thirdClass myVar: 789.
+				self assert: firstClass myVar equals: 123.
+				self assert: secondClass myVar equals: 456.
+				self assert: thirdClass myVar equals: 789.
+
+			 ] ensure: [ 
+				thirdClass 
+					removeFromChanges;
+					removeFromSystemUnlogged ].
+		 ] ensure: [ 
+			secondClass 
+				removeFromChanges;
+				removeFromSystemUnlogged ].
+	 ] ensure: [ 
+		firstClass 
+			removeFromChanges;
+			removeFromSystemUnlogged ].
+
 ]
 
 { #category : #tests }

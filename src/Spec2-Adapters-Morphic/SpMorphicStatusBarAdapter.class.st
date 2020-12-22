@@ -31,19 +31,19 @@ SpMorphicStatusBarAdapter >> addModelTo: aMorph [
 
 { #category : #factory }
 SpMorphicStatusBarAdapter >> buildWidget [
+
 	| panelMorph |
-	
-	panelMorph := PanelMorph new 
-		changeTableLayout;
-		listDirection: #leftToRight;
-		hResizing: #spaceFill;
-		vResizing: #spaceFill;
-		cellInset: self class defaultItemSeparation;
-		height: self class defaultHeight;
-		yourself.
+	panelMorph := PanelMorph new
+		              changeTableLayout;
+		              listDirection: #leftToRight;
+		              hResizing: #spaceFill;
+		              vResizing: #spaceFill;
+		              cellInset: self class defaultItemSeparation;
+		              height: self class defaultHeight;
+		              yourself.
 
 	self addModelTo: panelMorph.
-	
+
 	^ panelMorph
 ]
 
@@ -63,15 +63,13 @@ SpMorphicStatusBarAdapter >> popMessage [
 
 { #category : #private }
 SpMorphicStatusBarAdapter >> popMessageFrom: aMorph [
-	| message |
 
+	| message |
 	pushedMessages ifEmpty: [ ^ self ].
 	pushedMessages removeLast.
-	message := pushedMessages 
-		ifNotEmpty: #last
-		ifEmpty: [ '' ].
-			
-	aMorph 
+	message := pushedMessages ifNotEmpty: #last ifEmpty: [ '' ].
+
+	aMorph
 		removeAllMorphs;
 		addMorph: message asStringMorph
 ]

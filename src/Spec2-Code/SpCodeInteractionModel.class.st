@@ -36,6 +36,14 @@ SpCodeInteractionModel >> bindingOf: aString [
 ]
 
 { #category : #accessing }
+SpCodeInteractionModel >> bindings [
+
+	"no additional bindings provided by the Requestor"
+
+	^ #() asDictionary
+]
+
+{ #category : #accessing }
 SpCodeInteractionModel >> doItContext [
 
 	^ nil
@@ -85,7 +93,7 @@ SpCodeInteractionModel >> notify: message at: location in: code [
 
 	currentSelection := self owner selectionInterval.
 	self owner 
-		insertPopover: (SpCodePopoverErrorPresenter 
+		insertErrorPopover: (SpCodePopoverErrorPresenter 
 			newCode: self owner 
 			message: stripMessage) 
 		atIndex: (currentSelection isEmptyOrNil
@@ -125,6 +133,12 @@ SpCodeInteractionModel >> selectedClass [
 SpCodeInteractionModel >> selectedClassOrMetaClass [
 
 	^ self behavior
+]
+
+{ #category : #accessing }
+SpCodeInteractionModel >> text [
+
+	^ self owner text
 ]
 
 { #category : #accessing }

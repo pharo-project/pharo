@@ -41,8 +41,8 @@ ExternalClipboard >> clipboardText [
 	bytes := self primReadClipboardData: clipboard format: 'public.utf8-plain-text'.
 	bytes
 		ifNil: [^super clipboardText].
-	decodedString := bytes asString convertFromWithConverter: UTF8TextConverter new.
-	decodedString := decodedString replaceAll: 10 asCharacter with: 13 asCharacter.
+	decodedString := bytes utf8Decoded.
+	decodedString := decodedString replaceAll: Character lf with: Character cr.
 	^decodedString = contents asString
 		ifTrue: [contents]
 		ifFalse: [decodedString asText].
@@ -56,7 +56,7 @@ ExternalClipboard >> clipboardText: text [
 	string := text asString.
 	self noteRecentClipping: text asText copyWithoutExternalReferences.
 	contents := text asText copyWithoutExternalReferences.
-	data := (string convertToWithConverter: UTF8TextConverter new) asByteArray.
+	data := string utf8Encoded.
 	clipboard = 0 ifTrue: 
 		[^super clipboardText: text].
 	self clearClipboard.

@@ -81,6 +81,7 @@ StDebuggerToolCommandTreeBuilderTest >> setUp [
 		named: 'test session'
 		on: process
 		startedAt: context.
+	session exception: OupsNullException new.
 	debugger := StDebugger basicNew
 		application: StDebugger currentApplication;
 		session: session;

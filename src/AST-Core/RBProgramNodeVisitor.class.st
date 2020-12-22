@@ -23,6 +23,12 @@ RBProgramNodeVisitor >> visitArgumentNodes: aNodeCollection [
 	^ aNodeCollection do: [ :each | self visitArgumentNode: each ]
 ]
 
+{ #category : #'visiting - variables' }
+RBProgramNodeVisitor >> visitArgumentVariableNode: anArgumentNode [
+
+	^ self visitLocalVariableNode: anArgumentNode
+]
+
 { #category : #visiting }
 RBProgramNodeVisitor >> visitArrayNode: anArrayNode [
 	anArrayNode children do: [ :each | self visitNode: each ]
@@ -45,6 +51,12 @@ RBProgramNodeVisitor >> visitCascadeNode: aCascadeNode [
 	aCascadeNode messages do: [ :each | self visitNode: each ]
 ]
 
+{ #category : #'visiting - variables' }
+RBProgramNodeVisitor >> visitClassVariableNode: aNode [
+
+	^ self visitLiteralVariableNode: aNode
+]
+
 { #category : #visiting }
 RBProgramNodeVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
 	anEnglobingErrorNode content do: [ :each | self visitNode: each ].
@@ -53,6 +65,12 @@ RBProgramNodeVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
 { #category : #visiting }
 RBProgramNodeVisitor >> visitGlobalNode: aSelfNode [
 	^ self visitVariableNode: aSelfNode
+]
+
+{ #category : #'visiting - variables' }
+RBProgramNodeVisitor >> visitGlobalVariableNode: aNode [
+
+	^ self visitLiteralVariableNode: aNode
 ]
 
 { #category : #visiting }
@@ -75,6 +93,19 @@ RBProgramNodeVisitor >> visitLiteralValueNode: aRBLiteralValueNode [
 	"Redirect the message by default to #visitLiteralNode: for retrocompatibility (pharo 8)"
 
 	^ self visitLiteralNode: aRBLiteralValueNode
+]
+
+{ #category : #'visiting - variables' }
+RBProgramNodeVisitor >> visitLiteralVariableNode: aNode [
+	"to be backward compatible, we visit for Gloabls here (there used to be no difference)"
+
+	^ self visitGlobalNode: aNode
+]
+
+{ #category : #visiting }
+RBProgramNodeVisitor >> visitLocalVariableNode: aNode [
+	"call visitTemporaryNode: for backward compatibility"
+	^ self visitTemporaryNode: aNode
 ]
 
 { #category : #visiting }
@@ -162,6 +193,12 @@ RBProgramNodeVisitor >> visitTemporaryNodes: aNodeCollection [
 
 	^ aNodeCollection
 		do: [ :each | self visitTemporaryDeclarationNode: each ]
+]
+
+{ #category : #'visiting - variables' }
+RBProgramNodeVisitor >> visitTemporaryVariableNode: aNode [
+
+	^ self visitLocalVariableNode: aNode
 ]
 
 { #category : #visiting }

@@ -219,6 +219,12 @@ SmallFloat64 >> identityHash [
 	^ self basicIdentityHash
 ]
 
+{ #category : #testing }
+SmallFloat64 >> isImmediateObject [
+	"This is needed for the boostrap"
+	^ true
+]
+
 { #category : #'mathematical functions' }
 SmallFloat64 >> ln [
 	"Answer the natural logarithm of the receiver.

@@ -64,6 +64,14 @@ StDebuggerCommand >> appliesTo: aDebugger [
 	^ aDebugger canExecuteDebugCommand
 ]
 
+{ #category : #converting }
+StDebuggerCommand >> asSpecCommand [
+	
+	^ super asSpecCommand
+		iconProvider: StPharoApplication current iconProvider;
+		yourself
+]
+
 { #category : #accessing }
 StDebuggerCommand >> canBeExecuted [
 	^ self appliesTo: self debugger

@@ -126,6 +126,16 @@ Exception >> defaultAction [
 	self raiseUnhandledError
 ]
 
+{ #category : #default }
+Exception >> defaultDescription [
+	"Return a textual description of the exception."
+
+	^ String streamContents: [ :stream | | mt |
+		stream << self class name.
+		(mt := self messageText) isEmptyOrNil
+			ifFalse: [ stream << ': ' << mt ] ]
+]
+
 { #category : #private }
 Exception >> defaultResumeValue [
 	"Answer the value that by default should be returned if the exception is resumed"
@@ -142,12 +152,12 @@ Exception >> defaultReturnValue [
 
 { #category : #accessing }
 Exception >> description [
-	"Return a textual description of the exception."
 
-	^ String streamContents: [ :stream | | mt |
-		stream << self class name.
-		(mt := self messageText) isEmptyOrNil
-			ifFalse: [ stream << ': ' << mt ] ]
+	"Returns a textual description of the exception."
+
+	"Must be overriden to return a specialized description "
+
+	^ self defaultDescription
 ]
 
 { #category : #handling }
@@ -333,12 +343,6 @@ Exception >> signal: signalerText [
 	^ self signal
 ]
 
-{ #category : #accessing }
-Exception >> signalContext [
-
-	^ signalContext
-]
-
 { #category : #signaling }
 Exception >> signalIn: context [
 	"Ask ContextHandlers in the sender chain starting at the given context to handle this signal. 
@@ -375,11 +379,6 @@ Exception >> signalerContext [
 	^ signalContext findContextSuchThat: [ :context |
 		(context receiver == self 
 		or: [ context receiver == self class ]) not ]
-]
-
-{ #category : #accessing }
-Exception >> smartDescription [
-	^self description
 ]
 
 { #category : #accessing }

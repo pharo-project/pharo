@@ -18,6 +18,38 @@ SpPresenterFocusOrderTest >> focusedPresenter [
 ]
 
 { #category : #emulating }
+SpPresenterFocusOrderTest >> keyDown: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
+	| evt modifiers widget |
+	
+	widget := self focusedPresenter adapter widget.
+	
+	modifiers := 0.
+	shiftBoolean ifTrue: [ modifiers := modifiers | 8 ].
+	metaBoolean ifTrue: [ modifiers := modifiers |
+		(Smalltalk os isWin32 | Smalltalk os isUnix
+			ifTrue: [ 2r00010000 ]
+			ifFalse: [ 2r01000000 ]) ].
+	controlBoolean ifTrue: [ modifiers := modifiers | 2r00010000 ].
+	optionBoolean ifTrue: [ modifiers := modifiers |
+		(Smalltalk os isWin32 | Smalltalk os isUnix
+			ifTrue: [ 2r01000000 ]
+			ifFalse: [ 2r00100000 ]) ].
+	
+	evt := KeyboardEvent new
+		setType: #keyDown
+		buttons: modifiers
+		position: widget position + (1 @ 1)
+		keyValue: keyCode
+		charCode: keyCode
+		hand: self currentWorld activeHand
+		stamp: Time millisecondClockValue.
+
+	evt sentTo: widget.
+	"Some time to allow things to happen?"
+	10 milliSeconds wait
+]
+
+{ #category : #emulating }
 SpPresenterFocusOrderTest >> keyPressed: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
 	| evt modifiers widget |
 	
@@ -53,7 +85,7 @@ SpPresenterFocusOrderTest >> keyPressed: keyCode shift: shiftBoolean meta: metaB
 SpPresenterFocusOrderTest >> pressShiftTab [
 
 	self 
-		keyPressed: Character tab asciiValue
+		keyDown: Character tab asciiValue
 		shift: true
 		meta: false
 		control: false
@@ -65,7 +97,7 @@ SpPresenterFocusOrderTest >> pressShiftTab [
 SpPresenterFocusOrderTest >> pressTab [
 
 	self 
-		keyPressed: Character tab asciiValue
+		keyDown: Character tab asciiValue
 		shift: false
 		meta: false
 		control: false

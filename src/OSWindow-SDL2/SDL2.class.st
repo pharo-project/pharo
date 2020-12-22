@@ -51,6 +51,7 @@ SDL2 class >> clipboardText: text [
 			toStream: stream.
 		stream nextPut: 0 ].
 	
+	encoded pinInMemory.
 	self primClipboardText: encoded
 ]
 
@@ -179,12 +180,10 @@ SDL2 class >> glCreateContext: window [
 
 { #category : #opengl }
 SDL2 class >> glGetAttribute: attr [
-	| value result |
-   value := ExternalAddress allocate: 4.
-	self glGetAttribute: attr into: value.
-	result := value nbUInt32AtOffset: 0.
-	value free.
-	^result
+
+	^ ExternalAddress allocate: 4 bytesDuring: [ :value | 
+		  self glGetAttribute: attr into: value.
+		  value nbUInt32AtOffset: 0 ]
 ]
 
 { #category : #opengl }
@@ -249,8 +248,11 @@ SDL2 class >> initLibrary [
 	
 	self initPlatformSpecific.
 	
-	self setHint: SDL_HINT_VIDEO_ALLOW_SCREENSAVER value: '1'.
-	self setHint: SDL_HINT_NO_SIGNAL_HANDLERS value: '1'.
+	self
+		setHint: SDL_HINT_VIDEO_ALLOW_SCREENSAVER value: '1';
+		setHint: SDL_HINT_NO_SIGNAL_HANDLERS value: '1';
+		setHint: SDL_HINT_RENDER_SCALE_QUALITY value: '1'.
+		
 	self init: SDL_INIT_NOPARACHUTE.
 	Session := Smalltalk session.
 ]
@@ -258,9 +260,8 @@ SDL2 class >> initLibrary [
 { #category : #common }
 SDL2 class >> initPlatformSpecific [
 
-	Smalltalk os isMacOSX ifTrue: [  
-		SDLOSXPlatformInitializer new run.	
-	] 
+	OSPlatform current sdlPlatform initPlatformSpecific.
+
 ]
 
 { #category : #common }
@@ -341,7 +342,7 @@ SDL2 class >> pollEvent: event [
 
 { #category : #clipboard }
 SDL2 class >> primClipboardText [
-	^ self ffiCall: #( ExternalAddress SDL_GetClipboardText ( ) )
+	^ self ffiCall: #(void* SDL_GetClipboardText ( ) )
 ]
 
 { #category : #clipboard }

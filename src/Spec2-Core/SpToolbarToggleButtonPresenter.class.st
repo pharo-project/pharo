@@ -1,5 +1,7 @@
 "
-A toggle button which is either selected or unselected
+A presenter to display a toggle button in a `SpToolbarPresenter`.
+A toggle button is a button that can be activated (toggled) or deactivated (untoggled).
+
 "
 Class {
 	#name : #SpToolbarToggleButtonPresenter,
@@ -16,15 +18,23 @@ SpToolbarToggleButtonPresenter class >> adapterName [
 	^ #ToolbarToggleButtonAdapter
 ]
 
-{ #category : #selection }
+{ #category : #documentation }
+SpToolbarToggleButtonPresenter class >> documentFactoryMethodSelector [
+
+	^ #newToolbarToggleButton
+]
+
+{ #category : #api }
 SpToolbarToggleButtonPresenter >> beSelected [
+	"Set the status of the button to 'selected' (toggled)"
 	
 	self setSelection: true
 ]
 
-{ #category : #selection }
+{ #category : #api }
 SpToolbarToggleButtonPresenter >> beUnselected [
-	
+	"Set the status of the button to 'unselected' (untoggled)"
+
 	self setSelection: false
 ]
 
@@ -50,15 +60,16 @@ SpToolbarToggleButtonPresenter >> isSelected [
 	^ selected
 ]
 
-{ #category : #selection }
+{ #category : #private }
 SpToolbarToggleButtonPresenter >> setSelection: aBoolean [
 
 	selected := aBoolean.
 	self changed: #isSelected
 ]
 
-{ #category : #selection }
+{ #category : #api }
 SpToolbarToggleButtonPresenter >> toggle [
+	"Toggles the status of the button"
 	
 	self setSelection: selected not
 ]
@@ -74,22 +85,31 @@ SpToolbarToggleButtonPresenter >> whenChangedDo: aBlock [
 				ifFalse: [ aBlock cull: newSelectedValue cull: oldSelectedValue ] ]
 ]
 
-{ #category : #'api - events' }
+{ #category : #'api-events' }
 SpToolbarToggleButtonPresenter >> whenSelectedDo: aBlock [
+	"Inform when the button has been selected. 
+	 `aBlock` receives zero arguments."
+
 	self whenChangedDo: [ :newSelectedValue | 
-			newSelectedValue
-				ifTrue: [ aBlock value ] ]
+		newSelectedValue ifTrue: [ aBlock value ] ]
 ]
 
-{ #category : #'api - events' }
+{ #category : #'api-events' }
 SpToolbarToggleButtonPresenter >> whenToggledDo: aBlock [ 
+	"Inform when the button has been toggles. 
+	 `aBlock` has three optional arguments: 
+	 - new value
+	 - old value
+	 - the announcement triggering this action"
 
 	self property: #selected whenChangedDo: aBlock 
 ]
 
-{ #category : #'api - events' }
+{ #category : #'api-events' }
 SpToolbarToggleButtonPresenter >> whenUnselectedDo: aBlock [
+	"Inform when the button has been unselected. 
+	 `aBlock` receives zero arguments."
+
 	self whenChangedDo: [ :newSelectedValue | 
-			newSelectedValue
-				ifFalse: [ aBlock value ] ]
+		newSelectedValue ifFalse: [ aBlock value ] ]
 ]

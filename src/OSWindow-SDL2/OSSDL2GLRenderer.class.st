@@ -68,6 +68,17 @@ OSSDL2GLRenderer >> makeCurrent: aBackendWindow [
 	^ (SDL2 glMakeCurrent: windowHandle context: context) == 0
 ]
 
+{ #category : #clipping }
+OSSDL2GLRenderer >> pixelExtent [
+	| w h |
+	backendWindow ifNil: [ ^ super pixelExtent ].
+	
+	w := ByteArray new: 4.
+	h := ByteArray new: 4.
+	backendWindow sdl2Window glGetDrawableSizeW: w h: h.
+	^ (w signedLongAt: 1) @ (h signedLongAt: 1)
+]
+
 { #category : #misc }
 OSSDL2GLRenderer >> swapBuffers: aWindow [
 	self checkThread.

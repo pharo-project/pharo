@@ -83,6 +83,7 @@ MetacelloVersionLoadDirective >> loadPostloadDirective: aPostloadDirective [
 	| block |
 	(block :=  aPostloadDirective spec postLoadDoItBlock) ~~ nil
 		ifTrue: [
+			MetacelloNotification signal: ('Evaluating -> ', aPostloadDirective spec label, ' >> ', aPostloadDirective spec postLoadDoIt value asString).
 			aPostloadDirective evaluateSupplyingAnswers: [ block valueWithPossibleArgs: 
 					(Array 
 						with: aPostloadDirective loader 
@@ -96,6 +97,7 @@ MetacelloVersionLoadDirective >> loadPreloadDirective: aPreloadDirective [
 	| block |
 	(block :=  aPreloadDirective spec preLoadDoItBlock) ~~ nil
 		ifTrue: [
+			MetacelloNotification signal: ('Evaluating -> ', aPreloadDirective spec label, ' >> ', aPreloadDirective spec preLoadDoIt value asString).
 			aPreloadDirective evaluateSupplyingAnswers: [ block valueWithPossibleArgs: 
 					(Array 
 						with: aPreloadDirective loader 

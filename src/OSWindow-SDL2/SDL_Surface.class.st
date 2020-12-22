@@ -44,7 +44,7 @@ SDL_Surface class >> fieldsDesc [
 
 { #category : #finalization }
 SDL_Surface class >> finalizeResourceData: aHandle [
-	aHandle isNull ifTrue: [ ^ self ].
+	(aHandle isNull or: [aHandle isExternalAddress not]) ifTrue: [ ^ self ].
 	self freeSurface: aHandle.
 	aHandle beNull
 ]
@@ -62,6 +62,16 @@ SDL_Surface >> SDL_LockSurface: aSurface [
 { #category : #'pixel accessing' }
 SDL_Surface >> SDL_UnlockSurface: aSurface [
 	^ self ffiCall: #( int SDL_UnlockSurface( SDL_Surface* aSurface ) )
+]
+
+{ #category : #'external resource management' }
+SDL_Surface >> autoRelease [
+	"Some SDL2 structures need specialised free functions. Use the same autoRelease functionality
+	as FFIExternalReference to achieve this.
+
+	Note, subclasses should implement #resourceData
+	and #finalizeResourceData: on class side"
+	FFIExternalResourceManager addResource: self
 ]
 
 { #category : #'accessing structure variables' }
@@ -98,6 +108,13 @@ SDL_Surface >> format [
 SDL_Surface >> format: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_FORMAT put: anObject getHandle.
+]
+
+{ #category : #finalization }
+SDL_Surface >> freeSurface [
+	(handle isNull or: [handle isExternalAddress not]) ifTrue: [ ^ self ].
+	self primFree: handle.
+	handle beNull
 ]
 
 { #category : #'accessing structure variables' }
@@ -182,6 +199,11 @@ SDL_Surface >> pixels: anObject [
 	handle pointerAt: OFFSET_PIXELS put: anObject getHandle.
 ]
 
+{ #category : #finalization }
+SDL_Surface >> primFree: surfacePointer [
+	^ self ffiCall: #( void SDL_FreeSurface ( void* surfacePointer) )
+]
+
 { #category : #'accessing structure variables' }
 SDL_Surface >> refcount [
 	"This method was automatically generated"
@@ -192,6 +214,11 @@ SDL_Surface >> refcount [
 SDL_Surface >> refcount: anObject [
 	"This method was automatically generated"
 	handle signedLongAt: OFFSET_REFCOUNT put: anObject
+]
+
+{ #category : #'external resource management' }
+SDL_Surface >> resourceData [
+	^ self getHandle
 ]
 
 { #category : #'pixel accessing' }

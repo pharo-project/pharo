@@ -63,7 +63,18 @@ RGVariable >> isReservedVariable [
 ]
 
 { #category : #testing }
-RGVariable >> isTemp [
+RGVariable >> isSpecial [
+	^ self
+		deprecated: 'Please use #needsFullDefinition instead '
+		on: '03/11/2020'
+		in: #Pharo8
+		transformWith: '`@receiver isSpecial' 
+						-> '`@receiver needsFullDefinition'.
+
+]
+
+{ #category : #testing }
+RGVariable >> isTempVariable [
 	^false
 ]
 

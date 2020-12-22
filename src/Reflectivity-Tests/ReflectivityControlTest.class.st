@@ -114,6 +114,23 @@ ReflectivityControlTest >> testAfterBlockOptimizedIfTrue [
 ]
 
 { #category : #'tests - after' }
+ReflectivityControlTest >> testAfterBlockOptimizedWhileFalseSend [
+	| sendNode |
+	sendNode := (ReflectivityExamples >> #exampleWhileFalse) ast sendNodes first.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec;
+		control: #after.
+	sendNode link: link.
+	self assert: sendNode hasMetalinkAfter.
+	self assert: (ReflectivityExamples >> #exampleWhileFalse) class equals: ReflectiveMethod.
+	self assert: tag isNil.
+	self assert: ReflectivityExamples new exampleWhileFalse equals: 11.
+	self assert: tag equals: 'yes'.
+	self assert: (ReflectivityExamples >> #exampleWhileFalse) class equals: CompiledMethod
+]
+
+{ #category : #'tests - after' }
 ReflectivityControlTest >> testAfterBlockSequence [
 	| sequence |
 	sequence := (ReflectivityExamples >> #exampleBlock) ast statements first value receiver body.
@@ -1189,8 +1206,6 @@ ReflectivityControlTest >> testInsteadVariableReadIvar [
 { #category : #'tests - instead' }
 ReflectivityControlTest >> testInsteadVariableReadTemp [
 	| varNode instance |
-	self skip.
-	"skip for now as #usingMethods of the variable gets confused with instead"
 	varNode := (ReflectivityExamples >> #exampleAssignment) variableReadNodes first.
 	link := MetaLink new
 		metaObject: #context;

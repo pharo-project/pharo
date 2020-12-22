@@ -23,7 +23,6 @@ Class {
 		'labelArea',
 		'expandBox',
 		'embeddable',
-		'menuBuilder',
 		'isResizeable'
 	],
 	#classVars : [

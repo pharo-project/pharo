@@ -27,8 +27,7 @@ Class {
 		'#enabled'
 	],
 	#classVars : [
-		'#AllBreakpoints',
-		'#Observers'
+		'#AllBreakpoints'
 	],
 	#category : #'Reflectivity-Breakpoints'
 }
@@ -110,7 +109,7 @@ Breakpoint class >> handleMethodRemoved: anAnnouncement [
 
 { #category : #initialization }
 Breakpoint class >> initialize [
-	self registerInsterestToSystemAnnouncement 
+	self registerInterestToSystemAnnouncement 
 ]
 
 { #category : #querying }
@@ -127,44 +126,34 @@ Breakpoint class >> isInstalledIn: aMethod [
 
 { #category : #'observers - experimental' }
 Breakpoint class >> notifyBreakpointAdded: aBreakpoint [
-	| notification |
-	notification := BreakpointAddedNotification
+	| announcement |
+	announcement := BreakpointAdded 
 		on: aBreakpoint
 		nodes: aBreakpoint link nodes.
-	self notifyObservers: notification
+	SystemAnnouncer uniqueInstance announce: announcement
+	
 ]
 
 { #category : #'observers - experimental' }
 Breakpoint class >> notifyBreakpointHit: aBreakpoint inContext: aContext node: node [
-	| notification |
-	notification := BreakpointHitNotification
+	| announcement |
+	announcement := BreakpointHit
 		on: aBreakpoint
 		nodes: {node}.
-	self notifyObservers: notification
+	SystemAnnouncer uniqueInstance announce: announcement
 ]
 
 { #category : #'observers - experimental' }
 Breakpoint class >> notifyBreakpointRemoved: aBreakpoint fromNodes: nodes [
-	| notification |
-	notification := BreakpointRemovedNotification
+	| announcement |
+	announcement := BreakpointRemoved
 		on: aBreakpoint
 		nodes: nodes.
-	self notifyObservers: notification
-]
-
-{ #category : #'observers - experimental' }
-Breakpoint class >> notifyObservers: aNotification [
-	self observers
-		do: [ :observer | observer ifNotNil: [ observer update: aNotification ] ]
-]
-
-{ #category : #'observers - experimental' }
-Breakpoint class >> observers [
-	^Observers ifNil:[Observers := WeakOrderedCollection new]
+	SystemAnnouncer uniqueInstance announce: announcement
 ]
 
 { #category : #'class initialization' }
-Breakpoint class >> registerInsterestToSystemAnnouncement [
+Breakpoint class >> registerInterestToSystemAnnouncement [
 	<systemEventRegistration>
 
 	SystemAnnouncer uniqueInstance unsubscribe: self.
@@ -175,7 +164,12 @@ Breakpoint class >> registerInsterestToSystemAnnouncement [
 
 { #category : #'observers - experimental' }
 Breakpoint class >> registerObserver: anObject [
-	self observers addIfNotPresent: anObject
+	"Do not use this method, it is there for compatibility with old users.
+	Instead, register your object yourself to 'SystemAnnouncer uniqueInstance' like below, but only for the announcements you need"
+	SystemAnnouncer uniqueInstance when: BreakpointAdded send: #update: to: anObject.
+	SystemAnnouncer uniqueInstance when: BreakpointHit send: #update: to: anObject.
+	SystemAnnouncer uniqueInstance when: BreakpointRemoved send: #update: to: anObject.
+	
 ]
 
 { #category : #cleanup }
@@ -194,12 +188,7 @@ Breakpoint class >> removeBreakpoint: aBreakpoint [
 
 { #category : #cleanup }
 Breakpoint class >> removeFrom: aNode [
-	| links breakpointsToRemove |
-	links := OrderedCollection new.
-	links addAll: (aNode beforeLinks select: [ :link | link metaObject = Break]).
-	links addAll: (aNode afterLinks select: [ :link | link metaObject = Break]).
-	breakpointsToRemove := self all select: [ :br | links includes: br link].
-	breakpointsToRemove asSet do: [:breakpoint| breakpoint remove]
+	aNode breakpoints do: [:breakpoint| breakpoint remove]
 ]
 
 { #category : #cleanup }
@@ -212,7 +201,9 @@ Breakpoint class >> removeFromMethod: aMethod [
 
 { #category : #'observers - experimental' }
 Breakpoint class >> unregisterObserver: anObject [
-	self observers remove: anObject
+	"Do not use this method, it is there for compatibility with old users.
+	Instead, unsubscribe yourself from 'SystemAnnouncer uniqueInstance' directly (like shown below)"
+	SystemAnnouncer uniqueInstance unsubscribe: anObject
 ]
 
 { #category : #api }
@@ -267,17 +258,18 @@ Breakpoint >> enable [
 Breakpoint >> initialize [
 	
 	self class initializeSlots: self.
-	options := #(+ optionCompileOnLinkInstallation + optionAnnounce)
+	options := #(+ optionCompileOnLinkInstallation)
 ]
 
 { #category : #install }
 Breakpoint >> install [
-	self class addBreakpoint: self.
+	self setAsNodeProperty.
 	self isObjectCentric
 		ifTrue: [ self targetInstance link: self link toAST: self node.
+			self class addBreakpoint: self.
 			^ self ].
 	self node link: self link.
-	self setAsNodeProperty
+	self class addBreakpoint: self 
 ]
 
 { #category : #testing }
@@ -288,6 +280,11 @@ Breakpoint >> isEnabled [
 { #category : #testing }
 Breakpoint >> isObjectCentric [
 	^self targetInstance notNil
+]
+
+{ #category : #testing }
+Breakpoint >> isVariableBreakpoint [
+	^false
 ]
 
 { #category : #accessing }

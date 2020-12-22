@@ -11,6 +11,12 @@ Class {
 	#category : #'Kernel-Tests-Objects'
 }
 
+{ #category : #coverage }
+BooleanTest >> classToBeTested [
+	
+	^ Boolean
+]
+
 { #category : #'tests - instance creation' }
 BooleanTest >> testNew [
 

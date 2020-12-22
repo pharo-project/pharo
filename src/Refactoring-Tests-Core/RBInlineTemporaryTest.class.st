@@ -1,7 +1,7 @@
 Class {
 	#name : #RBInlineTemporaryTest,
 	#superclass : #RBRefactoringTest,
-	#category : #'Refactoring-Tests-Core'
+	#category : #'Refactoring-Tests-Core-Refactorings'
 }
 
 { #category : #tests }
@@ -20,7 +20,7 @@ RBInlineTemporaryTest >> testInlineTemporary [
 													bar')
 ]
 
-{ #category : #tests }
+{ #category : #'failure tests' }
 RBInlineTemporaryTest >> testInlineTemporaryBadInterval [
 	self
 		shouldFail:
@@ -30,7 +30,7 @@ RBInlineTemporaryTest >> testInlineTemporaryBadInterval [
 				in: RBRefactoryTestDataApp)
 ]
 
-{ #category : #tests }
+{ #category : #'failure tests' }
 RBInlineTemporaryTest >> testInlineTemporaryMutlipleAssignment [
 	self
 		shouldFail:
@@ -40,7 +40,7 @@ RBInlineTemporaryTest >> testInlineTemporaryMutlipleAssignment [
 				in: RBRefactoryTestDataApp)
 ]
 
-{ #category : #tests }
+{ #category : #'failure tests' }
 RBInlineTemporaryTest >> testInlineTemporaryReadBeforeWritten [
 	self
 		shouldFail:

@@ -1,7 +1,6 @@
 "
-I'm a presenter to create a menu button (a button who exposes a menu instead having an action) 
+A presenter to create a menu button (a button who exposes a menu instead having an action) 
 
-self example
 "
 Class {
 	#name : #SpMenuButtonPresenter,
@@ -18,21 +17,10 @@ SpMenuButtonPresenter class >> adapterName [
 	^ #MenuButtonAdapter
 ]
 
-{ #category : #example }
-SpMenuButtonPresenter class >> example [
-	| menuButton loremIpsumWords |
+{ #category : #documentation }
+SpMenuButtonPresenter class >> documentFactoryMethodSelector [
 
-	loremIpsumWords := String loremIpsum substrings.
-	menuButton := SpMenuButtonPresenter new 
-		menu: [ SpMenuPresenter new
-			addGroup: [ :group | group
-				addItem: [ :item | item name: '1: ', loremIpsumWords atRandom ];
-				addItem: [ :item | item name: '2: ', loremIpsumWords atRandom ];
-				addItem: [ :item | item name: '3: ', loremIpsumWords atRandom ] ];
-			yourself ];
-		yourself.
-		
-	menuButton openWithSpec
+	^ #newMenuButton
 ]
 
 { #category : #specs }
@@ -48,18 +36,26 @@ SpMenuButtonPresenter >> initialize [
 
 { #category : #api }
 SpMenuButtonPresenter >> menu [
+	"Answer the menu (an instance of `SpMenuPresenter` or a block) to show."
 
 	^ menu
 ]
 
 { #category : #api }
 SpMenuButtonPresenter >> menu: aValuable [
+	"Set the menu to show. 
+	 `aValuable` can be an instance of `SpMenuPresenter` or a block to allow dynamic behavior."
 
 	menu := aValuable
 ]
 
 { #category : #'api-events' }
 SpMenuButtonPresenter >> whenMenuChangedDo: aBlock [
+	"Inform when menu  property has changed. 
+	 `aBlock` has three optional arguments: 
+	 - new value
+	 - old value
+	 - the announcement triggering this action"
 
 	self property: #menu whenChangedDo: aBlock
 ]

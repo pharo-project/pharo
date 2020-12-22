@@ -42,5 +42,6 @@ CairoLibrary >> unixLibraryName [
 
 { #category : #'accessing platform' }
 CairoLibrary >> win32LibraryName [ 
-	^ 'libcairo-2.dll'
+	
+	^ FFIWindowsLibraryFinder findAnyLibrary: #('cairo.dll' 'libcairo-2.dll')	
 ]
