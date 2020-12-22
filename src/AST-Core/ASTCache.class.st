@@ -75,9 +75,12 @@ ASTCache class >> shutDown [
 
 { #category : #accessing }
 ASTCache >> at: aCompiledMethod [
-	^ self 
-		at: aCompiledMethod
-		ifAbsentPut: [ self class cacheMissStrategy getASTFor: aCompiledMethod ]
+	"for doit methods, the ast is stored in the method propery"
+	^ aCompiledMethod propertyAt: #ast ifAbsent: [ 
+		  self
+			  at: aCompiledMethod
+			  ifAbsentPut: [ 
+			  self class cacheMissStrategy getASTFor: aCompiledMethod ] ]
 ]
 
 { #category : #initialization }
