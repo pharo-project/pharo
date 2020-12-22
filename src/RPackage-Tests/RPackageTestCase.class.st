@@ -21,6 +21,12 @@ RPackageTestCase >> allManagers [
 ]
 
 { #category : #utilities }
+RPackageTestCase >> createMockTestPackages [
+
+	^ self namesOfMockTestPackages collect: [:pName | self createNewPackageNamed: pName]
+]
+
+{ #category : #utilities }
 RPackageTestCase >> createNewClassNamed: aName [
 	^ self createNewClassNamed: aName inCategory: 'RPackageTest'
 ]
@@ -67,9 +73,12 @@ RPackageTestCase >> createNewTraitNamed: aName [
 RPackageTestCase >> createNewTraitNamed: aName inCategory: cat [
 	
 	| cls |
-	cls := Trait named: aName
-			uses: {}
-			category: cat.
+	cls := self class classInstaller make: [ :aBuilder |
+		aBuilder 
+			name: aName;
+			package:  cat;
+			beTrait ].					
+
 	createdClasses add: cls.
 	createdCategories add: cat.
 	^ cls
@@ -89,6 +98,13 @@ RPackageTestCase >> initializeAnnouncers [
 	oldSystemAnnouncer := SystemAnnouncer uniqueInstance.
 
 	SystemAnnouncer announcer: (announcerForTest := SystemAnnouncer new).
+]
+
+{ #category : #utilities }
+RPackageTestCase >> namesOfMockTestPackages [
+	
+	^ #( 'MockPackage-Tests' 'MockPackage-tests' 'MockPackage' 'MockPackage-Tests-Package')
+
 ]
 
 { #category : #accessing }

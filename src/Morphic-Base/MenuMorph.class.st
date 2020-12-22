@@ -943,18 +943,10 @@ MenuMorph >> justDroppedInto: aMorph event: evt [
 ]
 
 { #category : #events }
-MenuMorph >> keyStroke: evt [
+MenuMorph >> keyDown: evt [
 	"Handle keboard item matching."
 
-	| matchString char asc selectable help |
-	help := self theme builder newBalloonHelp: 'Enter text to\narrow selection down\to matching items ' withCRs for: self corner: #topLeft.
-	help popUpForHand: self activeHand.
-	(self rootMenu hasProperty: #hasUsedKeyboard)
-		ifFalse: [ self rootMenu setProperty: #hasUsedKeyboard toValue: true.
-			self changed ].
-	(evt commandKeyPressed and: [ self commandKeyHandler notNil ])
-		ifTrue: [ self commandKeyHandler commandKeyTypedIntoMenu: evt.
-			^ self deleteIfPopUp: evt ].
+	| matchString char asc selectable |
 	char := evt keyCharacter.
 	asc := char asciiValue.
 	char = Character cr
@@ -999,9 +991,34 @@ MenuMorph >> keyStroke: evt [
 		ifTrue: [ matchString := matchString allButLast.
 			self recordFiltering: matchString.
 			self displayFiltered: evt ].
+]
+
+{ #category : #events }
+MenuMorph >> keyStroke: evt [
+	"Handle keboard item matching."
+
+	| matchString char asc help |
+	help := self theme builder newBalloonHelp: 'Enter text to\narrow selection down\to matching items ' withCRs for: self corner: #topLeft.
+	help popUpForHand: self activeHand.
+
+	(self rootMenu hasProperty: #hasUsedKeyboard)
+		ifFalse: [ self rootMenu setProperty: #hasUsedKeyboard toValue: true.
+			self changed ].
+
+	(evt commandKeyPressed and: [ self commandKeyHandler notNil ])
+		ifTrue: [ self commandKeyHandler commandKeyTypedIntoMenu: evt.
+			^ self deleteIfPopUp: evt ].
+
+	char := evt keyCharacter.
+	asc := char asciiValue.
+
+	"If we reach this point, it means that we are editing the filter associated to each menu. "
+	"In case ther eis no filter associated to the menu, we simply create one"
+	matchString := self valueOfProperty: #matchString ifAbsentPut: [ String new ].
 
 	"No need to go further if the character is not alphanumeric, i.e., not useful for filtering"
 	char isAlphaNumeric ifFalse: [ ^ self ].
+
 	matchString := matchString , char asString.
 	self recordFiltering: matchString.
 	self displayFiltered: evt

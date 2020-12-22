@@ -26,22 +26,13 @@ Class {
 
 { #category : #private }
 Trait class >> configureBuilder: builder withName: aName traitComposition: aTraitCompositionOrCollection instanceVariableNames: aString packageName: aPackageName [
-	"this method should be removed when we will redesign with Pablo the APi to use the builder
-	Because now I cannot simply test that named:uses:instanceVariableNames:... is working.
-	"
-	self flag: #revisit. 
-	^ builder
-		name: aName;
-		superclass: nil;
-		metaSuperclass: self;
-		metaclassClass: MetaclassForTraits;
-		slots: aString asSlotCollection;
-		sharedVariables: '';
-		sharedPools: '';
-		category: aPackageName;
-		traitComposition: aTraitCompositionOrCollection asTraitComposition;
-		classTraitComposition: aTraitCompositionOrCollection asTraitComposition classComposition;
-		classSlots: #()
+
+	^ self
+		  configureBuilder: builder
+		  withName: aName
+		  traitComposition: aTraitCompositionOrCollection
+		  slots: aString asSlotCollection
+		  packageName: aPackageName
 ]
 
 { #category : #private }
@@ -49,9 +40,7 @@ Trait class >> configureBuilder: builder withName: aName traitComposition: aTrai
 
 	^ builder
 		name: aName;
-		superclass: nil;
-		metaSuperclass: self;
-		metaclassClass: MetaclassForTraits;
+		beTrait;
 		slots: someSlots;
 		sharedVariables: '';
 		sharedPools: '';

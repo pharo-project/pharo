@@ -57,7 +57,14 @@ T2AbstractTest >> newTrait: aName with: slots uses: aComposition [
 { #category : #'instance creation' }
 T2AbstractTest >> newTrait: aName with: slots uses: aComposition category: category [
 	| class |
-	class := Trait named: aName uses: aComposition slots: slots package: category  env: self class environment. 
+	class := self class classInstaller make: [ :aBuilder |
+		aBuilder 
+			name: aName;
+			traitComposition: aComposition asTraitComposition;
+			slots: slots;
+			package: category;
+			beTrait ].			
+	
 	createdClasses add:class.
 	
 	^class.

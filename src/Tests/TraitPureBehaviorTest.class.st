@@ -179,7 +179,14 @@ TraitPureBehaviorTest >> testOwnMethodsTakePrecedenceOverTraitsMethods [
 	trait compile: 'm11 ^999'.
 	self assert: trait methodDict size equals: 1.
 	self assert: (trait methodDict at: #m11) sourceCode equals: 'm11 ^999'.
-	Trait named: #T uses: self t1 package: self class category.
+
+	self class classInstaller make: [ :aBuilder |
+		aBuilder 
+			name: #T;
+			traitComposition: self t1 asTraitComposition;
+			package: self class category;
+			beTrait ].			
+
 	self assert: trait methodDict size equals: 3.
 	self assert: (trait selectors asSet includesAll: #(#m11 #m12 #m13)).
 	self assert: (trait methodDict at: #m11) sourceCode equals: 'm11 ^999'.
@@ -238,11 +245,23 @@ TraitPureBehaviorTest >> testPropagationWhenTraitCompositionModifications [
 	self assert: self c2 methodDict size equals: 9.	"2 + (3+(3+2))-1"
 
 	"removing methods"
-	Trait named: #T5 uses: self t1 + self t2 - {#m21 . #m22} package: self class category.
+	self class classInstaller make: [ :aBuilder |
+		aBuilder 
+			name: #T5;
+			traitComposition: self t1 + self t2 - {#m21 . #m22};
+			package: self class category;
+			beTrait ].
+
 	self assert: self c2 methodDict size equals: 7.
 
 	"adding methods"
-	Trait named: #T2 uses: self t3 package: self class category.
+	self class classInstaller make: [ :aBuilder |
+		aBuilder 
+			name: #T2;
+			traitComposition: self t3 asTraitComposition;
+			package: self class category;
+			beTrait ].
+
 	self assert: self c2 methodDict size equals: 10.
 	self assert: (self c2 selectors asSet includesAll: #(#m31 #m32 #m33))
 ]

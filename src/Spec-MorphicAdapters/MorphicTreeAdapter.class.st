@@ -45,7 +45,6 @@ MorphicTreeAdapter >> buildWidget [
 		columnInset: self columnInset;
 		iconBlock: self iconBlock;
 		rowInset: self rowInset;
-		keystrokeActionSelector: #keyStroke:;
 		multiSelection: self multiSelection;
 		autoMultiSelection: self autoMultiSelection;
 		removeOnlyLastSelected: self selectOnlyLastHighlighted;

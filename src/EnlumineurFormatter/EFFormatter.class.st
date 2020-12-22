@@ -2086,7 +2086,10 @@ EFFormatter >> visitCascadeNode: aCascadeNode [
 
 { #category : #visiting }
 EFFormatter >> visitEnglobingErrorNode: aNode [
-	self writeString: aNode value
+	self writeString: aNode value.
+	aNode children do: [ :e |
+		codeStream space.
+		self visitNode: e ]
 ]
 
 { #category : #visiting }

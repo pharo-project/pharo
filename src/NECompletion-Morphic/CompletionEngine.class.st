@@ -100,19 +100,7 @@ CompletionEngine >> editor [
 ]
 
 { #category : #keyboard }
-CompletionEngine >> handleKeystrokeAfter: aKeyboardEvent editor: aParagraphEditor [ 
-	(aParagraphEditor isNil or: [ self isMenuOpen not ])
-		ifTrue: [ ^ self ].
-		
-	aParagraphEditor atCompletionPosition 
-		ifFalse: [ ^ self closeMenu ].
-	
-	context narrowWith: aParagraphEditor wordAtCaret.
-	menuMorph refreshSelection.
-]
-
-{ #category : #keyboard }
-CompletionEngine >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
+CompletionEngine >> handleKeyDownBefore: aKeyboardEvent editor: anEditor [
 	"I return a boolean. 
 	true when I have handled the event and no futher processing is needed by the caller.
 	
@@ -124,8 +112,7 @@ CompletionEngine >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 	controlKeyPressed := aKeyboardEvent controlKeyPressed.
 	commandKeyPressed := aKeyboardEvent commandKeyPressed.
 	
-	self isMenuOpen
-		ifFalse: [ ^ self handleKeystrokeWithoutMenu: aKeyboardEvent ].
+	self isMenuOpen ifFalse: [ ^ false ].
 	
 	(keyCharacter = Character arrowLeft or: [ keyCharacter = Character arrowRight ])
 		ifTrue: [ "just move the caret" ^ false ].
@@ -159,6 +146,41 @@ CompletionEngine >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 			editor isCaretBehindChar
 				ifFalse: [ self closeMenu ].
 			^ false ].
+	(controlKeyPressed or: [ commandKeyPressed ])
+		ifTrue: [ 
+			self closeMenu.
+			^ true ].
+	^ false
+]
+
+{ #category : #keyboard }
+CompletionEngine >> handleKeystrokeAfter: aKeyboardEvent editor: aParagraphEditor [ 
+	(aParagraphEditor isNil or: [ self isMenuOpen not ])
+		ifTrue: [ ^ self ].
+		
+	aParagraphEditor atCompletionPosition 
+		ifFalse: [ ^ self closeMenu ].
+	
+	context narrowWith: aParagraphEditor wordAtCaret.
+	menuMorph refreshSelection.
+]
+
+{ #category : #keyboard }
+CompletionEngine >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
+	"I return a boolean. 
+	true when I have handled the event and no futher processing is needed by the caller.
+	
+	This method would be cleaner if splitted."
+
+	| keyCharacter controlKeyPressed commandKeyPressed |
+	self setEditor: anEditor.
+	keyCharacter := aKeyboardEvent keyCharacter.
+	controlKeyPressed := aKeyboardEvent controlKeyPressed.
+	commandKeyPressed := aKeyboardEvent commandKeyPressed.
+	
+	self isMenuOpen
+		ifFalse: [ ^ self handleKeystrokeWithoutMenu: aKeyboardEvent ].
+	
 	(controlKeyPressed not & aKeyboardEvent commandKeyPressed not
 		and: [ aKeyboardEvent keyCharacter isCompletionCharacter ])
 		ifFalse: [ 

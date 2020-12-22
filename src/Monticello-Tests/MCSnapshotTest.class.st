@@ -14,8 +14,17 @@ MCSnapshotTest >> createSnapshotWithClassWithClassSideTraits [
 	
 	RPackageOrganizer default registerPackageNamed: 'Monticello-Snapshot-Mock'.
 	
-	t1 := Trait named: #T1 uses: {} package: 'Monticello-Snapshot-Mock'.
-	t2 := Trait named: #T2 uses: {} package: 'Monticello-Snapshot-Mock'.	
+	t1 := self class classInstaller make: [ :aBuilder |
+		aBuilder 
+			name: #T1;
+			package:  'Monticello-Snapshot-Mock';
+			beTrait ].					
+
+	t2 := self class classInstaller make: [ :aBuilder |
+		aBuilder 
+			name: #T2;
+			package:  'Monticello-Snapshot-Mock';
+			beTrait ].					
 
 	self class classInstaller make: [ :aBuilder | 
 			aBuilder 
@@ -33,12 +42,27 @@ MCSnapshotTest >> createSnapshotWithTraitWithClassSideTraits [
 	| t1 t2 t3 |
 	
 	RPackageOrganizer default registerPackageNamed: 'Monticello-Snapshot-Mock'.
-	
-	t1 := Trait named: #T1 uses: {} package: 'Monticello-Snapshot-Mock'.
-	t2 := Trait named: #T2 uses: {} package: 'Monticello-Snapshot-Mock'.	
-	t3 := Trait named: #T3 uses: t1 + t2 package: 'Monticello-Snapshot-Mock'.
-	t3 classTrait traitComposition: (t1 classTrait + t2 classTrait - #m1).
-	
+
+	t1 := self class classInstaller make: [ :aBuilder |
+		aBuilder 
+			name: #T1;
+			package:  'Monticello-Snapshot-Mock';
+			beTrait ].					
+
+	t2 := self class classInstaller make: [ :aBuilder |
+		aBuilder 
+			name: #T2;
+			package:  'Monticello-Snapshot-Mock';
+			beTrait ].					
+
+	t3 := self class classInstaller make: [ :aBuilder |
+		aBuilder 
+			name: #T3;
+			traitComposition: t1 + t2;
+			classTraitComposition: (t1 classTrait + t2 classTrait - #m1);
+			package:  'Monticello-Snapshot-Mock';
+			beTrait ].					
+
 	^ (MCWorkingCopy forPackage: (MCPackage new name: 'Monticello-Snapshot-Mock')) snapshot. 
 ]
 

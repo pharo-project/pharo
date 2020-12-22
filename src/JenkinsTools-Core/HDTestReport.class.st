@@ -278,21 +278,25 @@ HDTestReport >> runSuite: aTestSuite [
 
 { #category : #running }
 HDTestReport >> serializeError: error of: aTestCase [
+
 	"We got an error from a test, let's serialize it so we can properly debug it later on..."
-	self shouldSerializeError ifFalse: [ ^self ].
-	self class environment at: #FuelOutStackDebugAction ifPresent: [ :fuelOutStackDebugAction |
-		| context testCaseMethodContext fileName |
-		context := error signalerContext.
-		testCaseMethodContext := context findContextSuchThat: [ :ctx| 
-			ctx receiver == aTestCase and: [ ctx methodSelector == #performTest ]].
-		context := context copyTo: testCaseMethodContext.
-		
-		[fileName := self fuelFileNameForNextErrorDuring: aTestCase.
-		fuelOutStackDebugAction serializeTestFailureContext: context sender toFileNamed: fileName	] 
-			on: Error do: [:err| "simply continue..." ]
-	].
 
+	self shouldSerializeError ifFalse: [ ^ self ].
+	self class environment
+		at: #FuelOutStackDebugAction
+		ifPresent: [ :fuelOutStackDebugAction | 
+			| context testCaseMethodContext fileName |
+			context := error signalerContext.
+			testCaseMethodContext := context findContextSuchThat: [ :ctx | 
+				                         ctx receiver == aTestCase and: [ 
+					                         ctx methodSelector == #performTest ] ].
+			context := context copyTo: testCaseMethodContext.
 
+			[ 
+			fileName := self fuelFileNameForNextErrorDuring: aTestCase.
+			fuelOutStackDebugAction serializeTestFailureContext: context sender ]
+				on: Error
+				do: [ :err | "simply continue..." ] ]
 ]
 
 { #category : #running }

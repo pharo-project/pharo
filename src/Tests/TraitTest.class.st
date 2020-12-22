@@ -16,7 +16,13 @@ TraitTest >> createClassUsing: aTrait [
 { #category : #utilities }
 TraitTest >> createTrait [
 	| trait |
-	trait := Trait named: #ATraitForTests uses: {} package: 'AAA'.
+
+	trait := self class classInstaller make: [ :aBuilder |
+		aBuilder 
+			name: #ATraitForTests;
+			package: 'AAA';
+			beTrait ].
+
 	trait compile: 'm1 ^1' classified: 'test'.
 	^ trait
 ]
@@ -82,7 +88,13 @@ TraitTest >> testErrorClassCreation [
     | tmpCategory trait aSubclass aClass |
 	
     tmpCategory := 'TemporaryGeneratedClasses'.
-    trait := Trait named: #TMyTrait uses: {} package: tmpCategory.
+
+	 trait := self class classInstaller make: [ :aBuilder |
+		aBuilder 
+			name: #TMyTrait;
+			package: tmpCategory;
+			beTrait ].
+
     
     [ 
 		aClass := self class classInstaller make: [ :aClassBuilder | 
@@ -236,7 +248,13 @@ TraitTest >> testExplicitRequirementWithSuperclassImplementatiosAlwaysReturnsThe
 TraitTest >> testForbidInstantiation [
 	| tmpCategory trait |
 	tmpCategory := 'TemporaryGeneratedClasses'.
-	trait := Trait named: #TMyTrait uses: {} package: tmpCategory.
+
+	trait := self class classInstaller make: [ :aBuilder |
+		aBuilder 
+			name: #TMyTrait;
+			package: tmpCategory;
+			beTrait ].
+
 	self should: [ trait basicNew ] raise: Error 
 ]
 

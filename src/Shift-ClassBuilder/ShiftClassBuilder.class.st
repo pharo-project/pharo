@@ -432,7 +432,7 @@ ShiftClassBuilder >> oldMetaclass [
 { #category : #accessing }
 ShiftClassBuilder >> package: anObject [
 	
-	self category: anObject 
+	self category: anObject
 ]
 
 { #category : #changes }
@@ -451,8 +451,23 @@ ShiftClassBuilder >> propertyAt: aKey put: aValue [
 ]
 
 { #category : #accessing }
+ShiftClassBuilder >> sharedPools [
+	^ self layoutDefinition sharedPools
+]
+
+{ #category : #accessing }
 ShiftClassBuilder >> sharedPools: aString [
 	self layoutDefinition sharedPools: ((aString substrings: ' ') collect: [:e | e asSymbol])
+]
+
+{ #category : #accessing }
+ShiftClassBuilder >> sharedPoolsCollectionOfSymbols: aCol [
+	self layoutDefinition sharedPools: aCol
+]
+
+{ #category : #accessing }
+ShiftClassBuilder >> sharedVariables [
+	^ self layoutDefinition sharedVariables
 ]
 
 { #category : #accessing }
@@ -468,6 +483,11 @@ ShiftClassBuilder >> sharedVariablesFromString: aStringOrArray [
                 x isSymbol
                     ifTrue: [ x => ClassVariable ]
                     ifFalse: [ self error: 'Shared variables can only be String or an array of Symbols' ] ] ])
+]
+
+{ #category : #accessing }
+ShiftClassBuilder >> slots [
+	^ self layoutDefinition slots
 ]
 
 { #category : #accessing }

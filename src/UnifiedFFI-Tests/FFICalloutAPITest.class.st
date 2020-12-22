@@ -70,18 +70,6 @@ FFICalloutAPITest >> method1 [
 	^ object instVarAt: index.
 ]
 
-{ #category : #accessing }
-FFICalloutAPITest >> method2 [
-	| result tmpResult |
-	
-	result := self call: {1. 2. 3. 4}.
-	tmpResult := result.
-	result := FFICalloutObjectForTest basicNew.
-	result instVarAt: 1 put: tmpResult.	
-	^ result 
-	
-]
-
 { #category : #'primitives pointer' }
 FFICalloutAPITest >> primFromByteArray: src toExternalAddress: dest size: n [
 	^ self 

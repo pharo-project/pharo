@@ -35,7 +35,7 @@ CoCompletionEngineTest >> testAdvanceWordDoesNotCloseCompletionContext [
 	controller openMenu.
 	
 	"This is the current shortcut of the completion engine... Cmd+right for all platforms"
-	editor keystroke: (self keyboardEventFor: Character arrowRight useCommand: true).
+	editor keyDown: (self keyboardEventFor: Character arrowRight useCommand: true).
 	
 	self assert: controller hasCompletionContext.
 ]
@@ -53,7 +53,7 @@ CoCompletionEngineTest >> testAdvanceWordGoesToNextWord [
 	controller openMenu.
 	
 	"This is the current shortcut of the completion engine... Cmd+right for all platforms"
-	editor keystroke: (self keyboardEventFor: Character arrowRight useCommand: true).
+	editor keyDown: (self keyboardEventFor: Character arrowRight useCommand: true).
 	
 	self assert: editor caret equals: text size - 'toto' size.
 ]
@@ -106,7 +106,7 @@ CoCompletionEngineTest >> testEndGoesToEndOfLine [
 	editor textArea openInWorld.
 	controller openMenu.
 	
-	editor keystroke: (self keyboardEventFor: Character end).
+	editor keyDown: (self keyboardEventFor: Character end).
 	
 	self assert: editor caret equals: text size + 1
 ]
@@ -140,7 +140,7 @@ CoCompletionEngineTest >> testHomeGoesToStartOfLine [
 	editor textArea openInWorld.
 	controller openMenu.
 	
-	editor keystroke: (self keyboardEventFor: Character home).
+	editor keyDown: (self keyboardEventFor: Character home).
 	
 	self assert: editor caret equals: 1
 ]
@@ -171,7 +171,7 @@ CoCompletionEngineTest >> testLeftWithoutResultsBroadensSelection [
 	editor textArea openInWorld.
 	controller openMenu.
 	
-	editor keystroke: (self keyboardEventFor: Character arrowLeft).
+	editor keyDown: (self keyboardEventFor: Character arrowLeft).
 	
 	self assert: controller context completionToken equals: 'mEthOdThatDoesNotExis'
 ]
@@ -189,7 +189,7 @@ CoCompletionEngineTest >> testLeftWithoutResultsDoesNotCloseContext [
 	controller openMenu.
 	firstContext := controller context.
 	
-	editor keystroke: (self keyboardEventFor: Character arrowLeft).
+	editor keyDown: (self keyboardEventFor: Character arrowLeft).
 	
 	self assert: controller context equals: firstContext
 ]
@@ -240,7 +240,7 @@ CoCompletionEngineTest >> testPreviousWordGoesToPreviousWord [
 	controller openMenu.
 	
 	"This is the current shortcut of the completion engine... Cmd+left for all platforms"
-	editor keystroke: (self keyboardEventFor: Character arrowLeft useCommand: true).
+	editor keyDown: (self keyboardEventFor: Character arrowLeft useCommand: true).
 	
 	self assert: editor caret equals: text size - 'toto' size + 1.
 ]

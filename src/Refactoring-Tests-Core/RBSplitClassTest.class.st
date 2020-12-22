@@ -1,7 +1,7 @@
 Class {
 	#name : #RBSplitClassTest,
 	#superclass : #RBRefactoringTest,
-	#category : #'Refactoring-Tests-Core'
+	#category : #'Refactoring-Tests-Core-Refactorings'
 }
 
 { #category : #'failure tests' }
