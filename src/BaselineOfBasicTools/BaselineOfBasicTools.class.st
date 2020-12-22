@@ -62,6 +62,7 @@ BaselineOfBasicTools >> baseline: spec [
 		
 		spec package: 'Tool-ProcessBrowser'.
 		spec package: 'Tool-Profilers'.
+		spec package: 'System-Reporter'.
 		spec package: 'NECompletion'.
 		spec package: 'NECompletion-Morphic'.
 		spec package: 'NECompletion-Preferences'.
