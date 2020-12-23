@@ -91,7 +91,8 @@ TestCommandLineHandler >> informResults: results [
 				results sum: #suitePassing.
 				results sum: #suiteFailures.
 				results sum: #suiteErrors })
-		<< OSPlatform current lineEnding
+		<< OSPlatform current lineEnding;
+		flush
 ]
 
 { #category : #accessing }

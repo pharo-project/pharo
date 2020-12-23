@@ -24,15 +24,6 @@ ClassHierarchyTest class >> fixSlotScope [
           ifFalse: [ Smalltalk at: e name ]) removeInstVarNamed: ivName ]
 ]
 
-{ #category : #fixing }
-ClassHierarchyTest class >> fixSubclasses [
-	"Fix all the missing subclasses"
-	"ClassHierarchyTest fixSubclasses "
-	SystemNavigation new allClassesDo: [ :cls|
-		(cls superclass subclasses includes: cls)
-			ifFalse: [ cls superclass addSubclass: cls ]]
-]
-
 { #category : #tests }
 ClassHierarchyTest >> testObjectFormatInstSize [
 	| offending |

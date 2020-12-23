@@ -24,13 +24,13 @@ TraitPureBehaviorTest >> testChangeSuperclass [
 
 	"change superclass of C2 from C1 to X"
 	newSuperclass := self createClassNamed: #X superclass: Object uses: {}.
-	newSuperclass
-		subclass: self c2 name
-		uses: self c2 traitComposition
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		category: self c2 category.
+
+	self class classInstaller make: [ :aBuilder |
+		aBuilder name: self c2 name;
+			superclass: newSuperclass;
+			traitComposition: self c2 traitComposition asTraitComposition;
+			package: self c2 category ].		
+
 
 	self assert: self c2 superclass identicalTo: newSuperclass.
 
@@ -47,14 +47,12 @@ TraitPureBehaviorTest >> testChangeSuperclass [
 	self assert: self c2 selectors sorted equals: #(bar foo m12 m13 m21 m22 m51 m52 m53).
 	self assert: self c2 localSelectors sorted equals: #(bar foo m51).
 
-	"change superclass of C2 back to C1"
-	self c1
-		subclass: self c2 name
-		uses: self c2 traitComposition
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		category: self c2 category.
+	"change superclass of C2 back to C1"		
+	self class classInstaller make: [ :aBuilder |
+		aBuilder name: self c2 name;
+			superclass: self c1;
+			traitComposition: self c2 traitComposition asTraitComposition;
+			package: self c2 category ].		
 
 	self assert: aC2 m51 equals: 19.
 	self assert: self c2 superclass identicalTo: self c1.

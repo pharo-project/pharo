@@ -259,10 +259,13 @@ FFICalloutAPITest >> testCharCall [
 
 { #category : #'tests pointer' }
 FFICalloutAPITest >> testCharPointer [
-	| result |
+	| result buffer |
+	
+	buffer := ByteArray new: 512.
+	buffer writeString: 'Hello, '.
 		
 	result := self 
-		primStr:  'Hello, '
+		primStr:  buffer
 		cat: 'World'.
 				
 	self assert: result equals: 'Hello, World'.

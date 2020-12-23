@@ -9,11 +9,11 @@ FLPharoPlatform class >> addNativeBoostComponents [
 	self environment
 		at: #NBExternalHandle
 		ifPresent: [ :handle | ^ self ].
-		
-	Object variableByteSubclass: #NBExternalHandle
-		instanceVariableNames: ''
-		classVariableNames: ''
-		category: self hacksCategoryName
+
+	self class classInstaller make: [ :aBuilder | 
+		aBuilder 
+			name: #NBExternalHandle;
+			package: self hacksCategoryName].
 ]
 
 { #category : #testing }
@@ -21,12 +21,12 @@ FLPharoPlatform class >> addPackageManifest [
 	self environment
 		at: #PackageManifest
 		ifPresent: [ ^ self ].
-	
-	Object subclass: #PackageManifest
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		category: self hacksCategoryName
+
+	self class classInstaller make: [ :aBuilder | 
+		aBuilder 
+			name: #PackageManifest;
+			package: self hacksCategoryName].
+
 ]
 
 { #category : #'private-hacks' }

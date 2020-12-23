@@ -129,23 +129,12 @@ RPackageMCSynchronisationTest >> createMethodNamed: methodName inClassSideOfClas
 RPackageMCSynchronisationTest >> createNewClassNamed: aName [
 	
 	| cls |
-	cls := Object subclass: aName
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		category: 'RPackageTest'.
-	^ cls
-]
 
-{ #category : #private }
-RPackageMCSynchronisationTest >> createNewClassNamed: aName inCategory: aCategoryName [
-	
-	| cls |
-	cls := Object subclass: aName asSymbol
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		category: aCategoryName.
+	cls := self class classInstaller make: [ :aClassBuilder | 
+		aClassBuilder 
+			name: aName;
+			package: 'RPackageTest' ].
+
 	^ cls
 ]
 

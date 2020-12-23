@@ -86,13 +86,13 @@ TraitsTestCase >> categoryName [
 { #category : #utilities }
 TraitsTestCase >> createClassNamed: aSymbol superclass: aClass uses: aTraitComposition [
 	| class |
-	class := aClass
-		subclass: aSymbol
-		uses: aTraitComposition
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''		
-		category: self categoryName.
+			
+	class := self class classInstaller make: [ :aBuilder |
+		aBuilder name: aSymbol;
+			superclass: aClass;
+			traitComposition: aTraitComposition asTraitComposition;
+			package: self categoryName ].		
+		
 	self createdClassesAndTraits add: class.
 	^class
 ]

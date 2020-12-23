@@ -10,7 +10,7 @@ Class {
 { #category : #running }
 MCSnapshotTest >> createSnapshotWithClassWithClassSideTraits [
 
-	| t1 t2 c1 |
+	| t1 t2 |
 	
 	RPackageOrganizer default registerPackageNamed: 'Monticello-Snapshot-Mock'.
 	
@@ -26,15 +26,13 @@ MCSnapshotTest >> createSnapshotWithClassWithClassSideTraits [
 			package:  'Monticello-Snapshot-Mock';
 			beTrait ].					
 
-	c1 := Object 
-		subclass: #C1 
-		uses: t1 + t2 
-		slots: #() 
-		classVariables: #() 
-		package: 'Monticello-Snapshot-Mock'.
+	self class classInstaller make: [ :aBuilder | 
+			aBuilder 
+				name: #C1;
+				traitComposition: t1 + t2;
+				classTraitComposition: (t1 classTrait + t2 classTrait - #m1);
+				package: 'Monticello-Snapshot-Mock'].
 
-	c1 class traitComposition: (t1 classTrait + t2 classTrait - #m1).
-	
 	^ (MCWorkingCopy forPackage: (MCPackage new name: 'Monticello-Snapshot-Mock')) snapshot. 
 ]
 

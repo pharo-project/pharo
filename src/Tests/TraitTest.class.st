@@ -6,13 +6,11 @@ Class {
 
 { #category : #utilities }
 TraitTest >> createClassUsing: aTrait [
-	^ Object
-		subclass: #AClassForTests
-		uses: aTrait
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		category: 'AAA'
+	
+	^ self class classInstaller make: [ :aBuilder |
+		aBuilder name: #AClassForTests;
+			traitComposition: aTrait asTraitComposition;
+			package: 'AAA' ].
 ]
 
 { #category : #utilities }
@@ -98,28 +96,29 @@ TraitTest >> testErrorClassCreation [
 			beTrait ].
 
     
-    [ aClass := nil
-        subclass: #AClass
-        instanceVariableNames: ''
-        classVariableNames: ''
-        poolDictionaries: ''
-        category: tmpCategory.    
+    [ 
+		aClass := self class classInstaller make: [ :aClassBuilder | 
+			aClassBuilder 
+				name: #AClass;
+				superclass: nil;
+				package: tmpCategory ].
+
 	"----------------"
-    aSubclass := aClass
-        subclass: #AClass2
-        uses: trait
-        instanceVariableNames: ''
-        classVariableNames: ''
-        poolDictionaries: ''
-        category: tmpCategory.    
+		aSubclass := self class classInstaller make: [ :aClassBuilder | 
+			aClassBuilder 
+				name: #AClass2;
+				traitComposition: trait asTraitComposition;
+				superclass: aClass;
+				package: tmpCategory ].
+ 
 	"----------------"
+
     "Change the superclass of AClass"
-    Object
-        subclass: #AClass
-        instanceVariableNames: ''
-        classVariableNames: ''
-        poolDictionaries: ''
-        category: tmpCategory.
+		aClass := self class classInstaller make: [ :aClassBuilder | 
+			aClassBuilder 
+				name: #AClass;
+				superclass: Object;
+				package: tmpCategory ].
         
     self assert: trait traitUsers asArray equals: {aSubclass}.
     self assert: aSubclass traits asArray equals: {trait}. 

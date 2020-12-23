@@ -322,12 +322,11 @@ EpCodeChangeIntegrationTest >> testRemoveTraitFromComposition [
 	aClass := classFactory newClassUsing: TSizeTest.
 	self 
 		shouldnt: [ 
-			aClass superclass 
-				subclass: aClass name 
-				uses: {} asTraitComposition 
-				instanceVariableNames: ''
-				classVariableNames: ''
-				category: aClass category ] 
+			self class classInstaller make: [ :aBuilder | 
+				aBuilder 
+					name: aClass name;
+					traitComposition: {};
+					package: aClass category]] 
 		raise: MessageNotUnderstood
 	
 ]

@@ -194,11 +194,10 @@ FFIEnumeration class >> enumClassForName: aName [
 	^ self allSubclasses
 		detect: [ :each | each name = className ]
 		ifNone: [ 
-			self 
-				subclass: className 
-				slots: {  } 
-				classVariables: {  } 
-				package: self category ]
+			self class classInstaller make: [ :aBuilder | 
+				aBuilder 
+					name: className;
+					package: self category ]]
 ]
 
 { #category : #'enum declaration' }

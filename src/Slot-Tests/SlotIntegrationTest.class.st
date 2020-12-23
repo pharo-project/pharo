@@ -274,36 +274,31 @@ SlotIntegrationTest >> testReshapeClassPropagatesToDeepHierarchyClassInterface [
 
 	"level 1"
 
-	aClass := Object
-		subclass: self aClassName
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		category: self aCategory.
+	aClass := self class classInstaller make: [ :aClassBuilder | 
+		aClassBuilder 
+			name: self aClassName;
+			package: self aCategory ].
 
 	self assertEmpty: aClass subclasses.
 	aClass classLayout checkIntegrity.
 
-	"level 2"
-	anotherClass := aClass
-		subclass: self anotherClassName
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		category: self aCategory.
+	anotherClass := self class classInstaller make: [ :aClassBuilder | 
+		aClassBuilder 
+			name: self anotherClassName;
+			superclass: aClass;
+			package: self aCategory ].
 
 	self assert: aClass subclasses equals: {anotherClass}.
 	self assertEmpty: anotherClass subclasses.
 	aClass classLayout checkIntegrity.
 	anotherClass classLayout checkIntegrity.
 
-	"level 3"
-	yetAnotherClass := anotherClass
-		subclass: self yetAnotherClassName
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		category: self aCategory.
+	yetAnotherClass := self class classInstaller make: [ :aClassBuilder | 
+		aClassBuilder 
+			name: self yetAnotherClassName;
+			superclass: anotherClass;
+			package: self aCategory ].
+
 
 	self assert: aClass subclasses equals: {anotherClass}.
 	self assert: anotherClass subclasses equals: {yetAnotherClass}.
@@ -330,12 +325,11 @@ SlotIntegrationTest >> testReshapeClassPropagatesToDeepHierarchyClassInterface [
 	yetYetAnotherClass classLayout checkIntegrity.
 
 	"reshape level 1"
-	aClass := Object
-		subclass: self aClassName
-		instanceVariableNames: 'x'
-		classVariableNames: ''
-		poolDictionaries: ''
-		category: self aCategory.
+	aClass := self class classInstaller make: [ :aClassBuilder | 
+		aClassBuilder 
+			name: self aClassName;
+			slots: 'x' asSlotCollection;
+			package: self aCategory ].
 
 	self assert: aClass instVarNames equals: #(x).
 	aClass classLayout checkIntegrity.
@@ -346,27 +340,23 @@ SlotIntegrationTest >> testReshapeClassPropagatesToDeepHierarchyClassInterface [
 
 { #category : #tests }
 SlotIntegrationTest >> testReshapeClassWithClassSlot [
-	
-	aClass := 
-		Object 
-			subclass: self aClassName 
-			instanceVariableNames: '' 
-			classVariableNames: '' 
-			poolDictionaries: ''
-			category: self aCategory.	
+					
+	aClass := self class classInstaller make: [ :aClassBuilder | 
+		aClassBuilder 
+			name: self aClassName;
+			package: self aCategory ].		
+				
 	aClass class 
 		instanceVariableNames: #x.
 	
 	self assert: aClass class instVarNames equals: #(x).
 	
-	aClass := 
-		Object 
-			subclass: self aClassName 
-			instanceVariableNames: 'a' 
-			classVariableNames: '' 
-			poolDictionaries: ''
-			category: self aCategory.	
-
+	aClass := self class classInstaller make: [ :aClassBuilder | 
+		aClassBuilder 
+			name: self aClassName;
+			slots: 'x' asSlotCollection;
+			package: self aCategory ].	
+			
 	self assert: aClass class instVarNames equals: #(x).
 ]
 

@@ -35,11 +35,11 @@ RPackageTestCase >> createNewClassNamed: aName [
 RPackageTestCase >> createNewClassNamed: aName inCategory: cat [
 	
 	| cls |
-	cls := Object subclass: aName
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		category: cat.
+	cls := self class classInstaller make: [ :aClassBuilder | 
+		aClassBuilder 
+			name: aName;
+			package: cat ].
+
 	createdClasses add: cls.
 	createdCategories add: cat.
 	^ cls

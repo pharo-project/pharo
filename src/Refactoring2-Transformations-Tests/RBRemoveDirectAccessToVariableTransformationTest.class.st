@@ -124,7 +124,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testRefactoring [
 						class: #RBNamespace)
 						asRefactoring transform.
 	
-	self assert: refactoring model changes changes size equals: 5.
+	self assert: refactoring model changes changes size equals: 4.
 
 	class := refactoring model classNamed: #RBNamespace.
 	self assert: (class parseTreeFor: #includesGlobal:)
