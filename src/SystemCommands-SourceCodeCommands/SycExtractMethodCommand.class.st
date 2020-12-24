@@ -32,7 +32,9 @@ SycExtractMethodCommand >> execute [
 
 	| selectedInterval dialog refactoring|
 	selectedInterval := selectedTextInterval ifEmpty: [ sourceNode sourceInterval ].
-	refactoring := RBExtractMethodRefactoring	
+	"refactoring := RBExtractMethodRefactoring	
+		extract: selectedInterval from: method selector in: method origin."
+	refactoring := RBExtractMethodAndOcurrences	
 		extract: selectedInterval from: method selector in: method origin.
 	self setUpOptionToUseExistingMethodDuring: refactoring.
 	self setUpOptionToOverrideExistingMethodDuring: refactoring.
@@ -47,12 +49,12 @@ SycExtractMethodCommand >> execute [
 { #category : #private }
 SycExtractMethodCommand >> executeRefactoring: refactoring [
 
-	NautilusRefactoring new refactoringOptions: refactoring.
+	"NautilusRefactoring new refactoringOptions: refactoring.
 	[ refactoring execute.
 	self findOcurrences: refactoring] 
 	on: RBRefactoringError 
 	do: [ :e | UIManager default alert: e messageText ].
-	
+	"super executeRefactoring: refactoring
 ]
 
 { #category : #execution }
