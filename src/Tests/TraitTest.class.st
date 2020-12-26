@@ -352,7 +352,7 @@ origin of Tr2>>foo is Tr1"
 { #category : #testing }
 TraitTest >> testPrinting [
 
-	self assertPrints: self t6 definitionString like: 'Trait named: #T6
+	self assertPrints: (ClassDefinitionPrinter oldPharo for: self t6) definitionString like: 'Trait named: #T6
 	uses: T1 + (T2 @ {#m22Alias->#m22})
 	instanceVariableNames:''''
 	package: ''Tests-Traits'''
@@ -361,9 +361,11 @@ TraitTest >> testPrinting [
 { #category : #testing }
 TraitTest >> testPrintingClassSide [
 	
-	self assertPrints: self t6 classSide definitionString like: 'T6 classTrait
+	self 
+		assertPrints: (ClassDefinitionPrinter oldPharo for: self t6 classSide) definitionString like: 'T6 classTrait
 	uses: T1 classTrait + T2 classTrait
 	instanceVariableNames: '''''
+
 ]
 
 { #category : #testing }
