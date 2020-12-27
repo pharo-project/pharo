@@ -204,32 +204,36 @@ WorldState class >> pharoItemsOn: aBuilder [
 		label: 'Pharo';
 		icon: ((self iconNamed: #pharo) scaledToSize: 16 @ 16);
 		order: 0;
-		with: [ (aBuilder item: #Save)
-				target: self;
-				selector: #saveSession;
-				help: 'Save the current version of the image on disk.';
-				order: 2;
-				keyText: 'S';
-				iconName: #smallSaveIcon.
-			(aBuilder item: #'Save as...')
-				target: self;
-				selector: #saveAs;
-				help: 'Save the current version of the image on disk under a new name.';
-				order: 3;
-				iconName: #smallSaveAsIcon.
-			(aBuilder item: #'Save and quit')
-				target: self;
-				selector: #saveAndQuit;
-				help: 'Save the current image on disk, and quit Pharo.';
-				order: 4;
-				iconName: #smallQuitIcon;
-				withSeparatorAfter. 
-			(aBuilder item: #Quit)
-				target: self;
-				selector: #quitSession;
-				help: 'Quit Pharo without saving the image on disk.';
-				order: 5;
-				iconName: #smallQuitIcon ]
+		with: [
+			(aBuilder group: #Saving)
+				order: 98;
+				with: [
+					(aBuilder item: #Save)
+						target: self;
+						selector: #saveSession;
+						help: 'Save the current version of the image on disk.';
+						order: 1;
+						keyText: 'S';
+						iconName: #smallSaveIcon.
+					(aBuilder item: #'Save as...')
+						target: self;
+						selector: #saveAs;
+						help: 'Save the current version of the image on disk under a new name.';
+						order: 2;
+						iconName: #smallSaveAsIcon.
+					(aBuilder item: #'Save and quit')
+						target: self;
+						selector: #saveAndQuit;
+						help: 'Save the current image on disk, and quit Pharo.';
+						order: 3;
+						iconName: #smallQuitIcon.
+					aBuilder	withSeparatorAfter ]. 
+				(aBuilder item: #Quit)
+					target: self;
+					selector: #quitSession;
+					help: 'Quit Pharo without saving the image on disk.';
+					order: 99;
+					iconName: #smallQuitIcon ]
 ]
 
 { #category : #'world menu items' }
