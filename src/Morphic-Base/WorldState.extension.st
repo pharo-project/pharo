@@ -15,7 +15,7 @@ WorldState >> addAlarm: aSelector withArguments: argArray for: aTarget at: sched
 WorldState class >> debugWorldMenuOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Debugging)
-		order: 3.5;
+		order: 50;
 		with: [ (aBuilder item: #'Enable all break/inspect once')
 				order: 0;
 				help: 'Reset the break/inspect once. Once restarted, the first break once encountered will stop the execution.';
@@ -89,7 +89,7 @@ WorldState >> startThenBrowseMessageTally [
 WorldState class >> systemOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #System)
-		order: 3.0;
+		order: 80;
 		with: [
 			(aBuilder item: #'Space left')
 				help: 'Do a garbage collection, and report results about the to the user.';
@@ -114,7 +114,7 @@ WorldState class >> systemOn: aBuilder [
 WorldState class >> windowsOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Windows)
-		order: 4.0;
+		order: 90;
 		with: [ (aBuilder item: #'Collapse all windows')
 				action: [ self currentWorld collapseAll ];
 				help: 'Reduce all open windows to collapsed forms that only show titles' translated.
