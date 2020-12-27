@@ -30,14 +30,13 @@ SpDualChangeSorterPresenter class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	
 	(aBuilder group: #SystemChanges)
-		parent: #Tools;
-		order: 410;
+		parent: #Changes;
+		order: 2;
 		with: [ 
 			(aBuilder item: #'Change Sorter')
 				action: [ self open ];
 				help: 'Examine the different change set of the image.';
-				icon: self taskbarIcon ].
-	aBuilder withSeparatorAfter
+				icon: self taskbarIcon ]
 ]
 
 { #category : #opening }

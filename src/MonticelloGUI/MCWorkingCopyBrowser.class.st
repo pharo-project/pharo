@@ -32,9 +32,9 @@ Class {
 MCWorkingCopyBrowser class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'Monticello Browser')
-		parent: #Tools;
+		parent: #Versioning;
 		action: [ Smalltalk tools openMonticelloBrowser ];
-		order: 60;
+		order: 2;
 		keyText: 'o, p';
 		help: 'Source code versionning system to manage Smalltalk code.';
 		icon: Smalltalk tools monticelloBrowser taskbarIcon

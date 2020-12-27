@@ -131,6 +131,23 @@ WorldState class >> systemOn: aBuilder [
 ]
 
 { #category : #'*Morphic-Base' }
+WorldState class >> vcsWorldMenuOn: aBuilder [
+	<worldMenu>
+	(aBuilder item: #VCS)
+		order: 20;
+		help: 'Version control tools';
+		with: [ 
+			(aBuilder group: #Versioning)
+				order: 1;
+				withSeparatorAfter.
+			(aBuilder group: #Packaging)
+				order: 2;
+				withSeparatorAfter.
+			(aBuilder group: #Changes)
+				order: 3 ]
+]
+
+{ #category : #'*Morphic-Base' }
 WorldState class >> windowsOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Windows)
