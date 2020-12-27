@@ -114,10 +114,9 @@ Class {
 		'excludedClasses',
 		'limitedToClasses',
 		'stream',
-		'level',
-		'index',
 		'showSuperclasses',
-		'showState'
+		'showState',
+		'level'
 	],
 	#category : #'Kernel-ExtraUtils-ForPharo'
 }
@@ -205,7 +204,7 @@ ClassHierarchyPrinter >> print [
 { #category : #printing }
 ClassHierarchyPrinter >> printClass: aClass [
 	"Print a single line in the printout."
-	stream tab: index.
+	stream tab: level.
 	stream nextPutAll: aClass name.
 	aClass instVarNames ifNotEmpty: [ :vars | 
 		showState ifTrue: [ stream space. 
@@ -233,15 +232,15 @@ ClassHierarchyPrinter >> printSubclassesOf: aClass [
 	self printClass: aClass.
 	aClass == Class
 		ifTrue: [ stream
-				tab: index + 1;
+				tab: level + 1;
 				nextPutAll: '[ ... all the Metaclasses ... ]'.
 			^ self ].
 	sortedSubclasses := aClass subclasses
 		asSortedCollection: [ :c1 :c2 | c1 name <= c2 name ].
 	sortedSubclasses do: [ :subclass | 
-			index := index + 1.
+			level := level + 1.
 			self printSubclassesOf: subclass.
-			index := index - 1 ]
+			level := level - 1 ]
 ]
 
 { #category : #printing }
@@ -250,13 +249,13 @@ ClassHierarchyPrinter >> printSuperclasses [
 	theClass allSuperclasses
 		reverseDo: [ :aClass | 
 			self printClass: aClass.
-			index := index + 1 ].
+			level := level + 1 ].
 	stream cr.	"to spot the requested class."
 ]
 
 { #category : #initialization }
 ClassHierarchyPrinter >> resetLevel [ 
-	index := 0.
+	level := 0.
 ]
 
 { #category : #configuration }
