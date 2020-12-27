@@ -12,6 +12,26 @@ WorldState >> addAlarm: aSelector withArguments: argArray for: aTarget at: sched
 ]
 
 { #category : #'*Morphic-Base' }
+WorldState class >> codeWorldMenuOn: aBuilder [
+	<worldMenu>
+	(aBuilder item: #Develop)
+		order: 10;
+		help: 'Tools to develop in Pharo.';
+		with: [ 
+			(aBuilder group: #Browsing)
+				order: 1;
+				withSeparatorAfter.
+			(aBuilder group: #InputOutput)
+				order: 2;
+				withSeparatorAfter.
+			(aBuilder group: #Testing)
+				order: 3;
+				withSeparatorAfter.
+			(aBuilder group: #Searching)
+				order: 4]
+]
+
+{ #category : #'*Morphic-Base' }
 WorldState class >> debugWorldMenuOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Debugging)
@@ -67,6 +87,12 @@ WorldState >> startStepping: aMorph at: scheduledTime selector: aSelector argume
 ]
 
 { #category : #'*Morphic-Base' }
+WorldState >> startThenBrowseMessageTally [
+
+	self class startThenBrowseMessageTally
+]
+
+{ #category : #'*Morphic-Base' }
 WorldState class >> startThenBrowseMessageTally [
 	"Tally only the UI process"
 	
@@ -77,12 +103,6 @@ mouse pointer goes to the top of the screen')
 	TimeProfiler onBlock: [
 		MorphicRenderLoop new doOneCycleWhile: [ 
 			self currentWorld activeHand position y > 10 ] ]
-]
-
-{ #category : #'*Morphic-Base' }
-WorldState >> startThenBrowseMessageTally [
-
-	self class startThenBrowseMessageTally
 ]
 
 { #category : #'*Morphic-Base' }

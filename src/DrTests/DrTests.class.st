@@ -145,9 +145,9 @@ DrTests class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	
 	(aBuilder item: #'Dr Test')
-		parent: #Tools;
+		parent: #Testing;
 		action: [ self open ];
-		order: 21;
+		order: 2;
 		"keyText: 'o, u';" "Note: Removed the shortcut to not clash with SUnitRunner keybinding."
 		help: 'Let you run and debug SUnit tests.';
 		icon: self taskbarIcon;
