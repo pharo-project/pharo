@@ -9,9 +9,6 @@ Main public API is
 Class {
 	#name : #CDClassDefinitionParser,
 	#superclass : #CDAbstractClassDefinitionParser,
-	#instVars : [
-		'subclass'
-	],
 	#category : #'ClassParser-Parser'
 }
 

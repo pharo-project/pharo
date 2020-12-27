@@ -5,8 +5,6 @@ Class {
 	#name : #NECTestClass,
 	#superclass : #NECTestSuperClass,
 	#instVars : [
-		'third',
-		'fourth',
 		'typeSuggestingParameter',
 		'messageSend',
 		'messageSend2',

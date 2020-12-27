@@ -15,3 +15,14 @@ Class {
 	],
 	#category : #'ClassParser-Tests'
 }
+
+{ #category : #accessing }
+CDClassWithFullDefinitionExample class >> accessingVariables [ 
+	classSideVar1 := classSideVar2 := 33
+]
+
+{ #category : #accessing }
+CDClassWithFullDefinitionExample >> accessingVariables [
+
+	instVar1 := instVar2
+]

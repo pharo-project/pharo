@@ -6,7 +6,6 @@ Class {
 	#superclass : #ListPresenter,
 	#instVars : [
 		'iconHolder',
-		'displayBlock',
 		'handlesDoubleClick',
 		'doubleClick',
 		'columns'

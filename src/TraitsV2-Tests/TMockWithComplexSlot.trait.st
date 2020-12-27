@@ -11,4 +11,5 @@ TMockWithComplexSlot >> initialize [
 	
 	self class initializeSlots: self.
 	super initialize.
+	aComplexSlot := 33
 ]

@@ -4,9 +4,6 @@ SUnit tests for class DynamicMessageImplementor
 Class {
 	#name : #DynamicMessageImplementorTest,
 	#superclass : #TestCase,
-	#instVars : [
-		'instVar'
-	],
 	#category : #'Debugger-Model-Tests-Core'
 }
 

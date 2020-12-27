@@ -13,3 +13,9 @@ Class {
 	],
 	#category : #'Kernel-Tests-Classes'
 }
+
+{ #category : #'as yet unclassified' }
+ExampleForTestWithSharedPool >> accessVariables [
+
+	aSlot := anotherSlot := 33
+]
