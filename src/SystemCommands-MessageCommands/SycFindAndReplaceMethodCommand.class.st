@@ -46,14 +46,6 @@ SycFindAndReplaceMethodCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycFindAndReplaceMethodCommand >> execute [
-	"|dialog refactoring|
-	refactoring :=  RBFindAndReplaceMethodRefactoring 
-		find: originalMessage contextUser.
-	refactoring setOption: #listToSearch toUse: [ :met :ref |
-		dialog := RBFindAndReplacePreviewPresenter method: met refactoring: ref.
-		dialog cancelled ifTrue: [ CmdCommandAborted signal ].
-		ref].
-	refactoring transform"
 	self executeRefactorings 
 ]
 
