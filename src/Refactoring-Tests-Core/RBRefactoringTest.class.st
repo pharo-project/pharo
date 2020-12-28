@@ -216,7 +216,7 @@ RBRefactoringTest >> extractMethodTestData [
 	#(#MyClassC #(
 		#('methodWithArg: anArg
 			(currentChar isLetter) and: [anArg isDecimal]
-			ifTrue: [^ self]
+			ifTrue: [^ self].
 			^ nil' #tests)))) 
 		do: [:each | 
 			| class |

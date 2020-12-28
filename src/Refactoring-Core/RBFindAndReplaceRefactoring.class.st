@@ -19,6 +19,16 @@ RBFindAndReplaceRefactoring class >> find: aMethod of: aClass inAllHierarchy: aB
 		yourself
 ]
 
+{ #category : #'as yet unclassified' }
+RBFindAndReplaceRefactoring class >> model: aModel find: aMethod of: aClass inAllHierarchy: aBoolean [
+	^ (self new)
+		model: aModel; 
+		find: aMethod 
+		of: aClass
+		inAllHierarchy: aBoolean;
+		yourself
+]
+
 { #category : #accessing }
 RBFindAndReplaceRefactoring >> argumentsOf: aDictionary [
 	|args limit|
@@ -54,7 +64,7 @@ RBFindAndReplaceRefactoring >> extract: ocurrence of: aMethod [
 	[|refactoring |
 	refactoring := self extractMethodRefactoring. 
 	refactoring model: self model.
-	refactoring 	extract: ocurrence key from: aMethod selector in: aMethod modelClass realClass.
+	refactoring 	extract: ocurrence key from: aMethod selector in: aMethod modelClass.
 	refactoring setOption: #existingSelector toUse:  [ :ref | 
 			ref parameters: (self argumentsOf: ocurrence value).
 			self method selector].

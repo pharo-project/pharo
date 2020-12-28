@@ -60,10 +60,11 @@ RBExtractMethodAndOcurrences >> findImplementorOf: aSelector [
 RBExtractMethodAndOcurrences >> findOcurrencesOf: aSelector [
 	|refactoring|
 	(self findImplementorOf: aSelector) ifTrue: [
-		refactoring := RBFindAndReplaceRefactoring find: aSelector
+		refactoring := RBFindAndReplaceRefactoring 
+			model: self model 
+			find: aSelector
 			of: class
 			inAllHierarchy: true.
-		refactoring model: self model.
 		self performComponentRefactoring: refactoring.]
 	ifFalse: [ self refactoringWarning: aSelector , ' is not a valid selector name.' ]
 ]

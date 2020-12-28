@@ -17,6 +17,7 @@ RBExtractMethodAndOcurrencesTest >> testBadInterval [
 	self
 		shouldFail:
 			(RBExtractMethodAndOcurrences 
+				model: model
 				extract: (127 to: 136)
 				from: #myMethod
 				in:  class)
@@ -24,14 +25,16 @@ RBExtractMethodAndOcurrencesTest >> testBadInterval [
 
 { #category : #tests }
 RBExtractMethodAndOcurrencesTest >> testExample [
-	"|class refactoring|
-	class := model classNamed: #MyClassA.
-	refactoring := (RBExtractMethodAndOcurrences 
+	|class refactoring|"
+	class := model classNamed: #MyClassA."
+	refactoring := (RBExtractMethodAndOcurrences
+				model: model 
 				extract: (282 to: 302)
 				from: #myMethod
-				in:  class).
-				self setupMethodNameFor: refactoring toReturn: #exapleee.
-				self executeRefactoring: refactoring .
-				self halt.
-				model changes"
+				in:  (model classNamed: #MyClassA)).
+	self setupMethodNameFor: refactoring toReturn: #exapleee.
+	self halt.
+	self executeRefactoring: refactoring .
+	self halt.
+	model changes
 ]
