@@ -76,7 +76,7 @@ GLMTabSelectorBrick >> handlesKeyboard: evt [
 ]
 
 { #category : #'event handling' }
-GLMTabSelectorBrick >> keyStroke: event [ 
+GLMTabSelectorBrick >> keyDown: event [ 
 	"Process keys navigation and space to toggle."
 
 	(self navigationKey: event) ifTrue: [ ^ self ].

@@ -2887,6 +2887,11 @@ Morph >> handleKeyDown: anEvent [
 	"System level event handling."
 	
 	anEvent wasHandled ifTrue:[ ^ self ].
+	
+	self shortcutsHandler ifNotNil: [:handler | 
+		handler handleKeystroke: anEvent inMorph: self.
+		anEvent wasHandled ifTrue: [^ self]].
+	
 	(self handlesKeyDown: anEvent) ifFalse:[ ^ self ].
 	anEvent wasHandled: true.
 	self keyDown: anEvent.
@@ -2910,11 +2915,6 @@ Morph >> handleKeystroke: anEvent [
 	
 	anEvent wasHandled
 		ifTrue: [^ self].
-	
-	self shortcutsHandler ifNotNil: [:handler | 
-		handler handleKeystroke: anEvent inMorph: self.
-		anEvent wasHandled ifTrue: [^ self]].
-	
 	(self handlesKeyStroke: anEvent)
 		ifFalse: [^ self].
 	anEvent wasHandled: true.
@@ -3798,6 +3798,7 @@ Morph >> keepsTransform [
 { #category : #'event handling' }
 Morph >> keyDown: anEvent [
 	"Handle a key down event. The default response is to do nothing."
+	^ false
 ]
 
 { #category : #'event handling' }
@@ -3809,6 +3810,7 @@ Morph >> keyStroke: anEvent [
 { #category : #'event handling' }
 Morph >> keyUp: anEvent [
 	"Handle a key up event. The default response is to do nothing."
+	^ false
 ]
 
 { #category : #'event handling' }

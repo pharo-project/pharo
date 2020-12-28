@@ -23,8 +23,17 @@ T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots uses: aCom
 
 { #category : #'instance creation' }
 T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots uses: aComposition category: category [
+	
 	| class |
-	class := aSuperclass subclass: aName uses: aComposition slots: slots classVariables: #() poolDictionaries: '' category: category. 
+
+	class := self class classInstaller make: [ :aClassBuilder | 
+		aClassBuilder 
+			name: aName;
+			superclass: aSuperclass;
+			slots: slots;
+			traitComposition: aComposition asTraitComposition;
+			package: category ].
+	
 	createdClasses add:class.
 	
 	^class.
@@ -48,7 +57,14 @@ T2AbstractTest >> newTrait: aName with: slots uses: aComposition [
 { #category : #'instance creation' }
 T2AbstractTest >> newTrait: aName with: slots uses: aComposition category: category [
 	| class |
-	class := Trait named: aName uses: aComposition slots: slots package: category  env: self class environment. 
+	class := self class classInstaller make: [ :aBuilder |
+		aBuilder 
+			name: aName;
+			traitComposition: aComposition asTraitComposition;
+			slots: slots;
+			package: category;
+			beTrait ].			
+	
 	createdClasses add:class.
 	
 	^class.

@@ -549,7 +549,7 @@ DockingBarMorph >> justDroppedInto: aMorph event: anEvent [
 ]
 
 { #category : #'events-processing' }
-DockingBarMorph >> keyStroke: anEvent [
+DockingBarMorph >> keyDown: anEvent [
 	"Handle menu navigation"
 	
 	"Left arrow key"
@@ -558,7 +558,7 @@ DockingBarMorph >> keyStroke: anEvent [
 	anEvent keyValue = 29 ifTrue: [ self moveSelectionRight: 1 event: anEvent ].
 	"Bottom key"
 	anEvent keyValue = 31 ifTrue: [ (selectedItem ifNotNil: [ selectedItem subMenu ifNotNil: [ :subMenu | subMenu activateFromKeyboard: anEvent ] ] )].
-	^ super keyStroke: anEvent
+	^ super keyDown: anEvent
 ]
 
 { #category : #'wiw support' }

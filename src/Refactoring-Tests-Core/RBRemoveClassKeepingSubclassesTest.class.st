@@ -1,7 +1,7 @@
 Class {
 	#name : #RBRemoveClassKeepingSubclassesTest,
 	#superclass : #RBRefactoringTest,
-	#category : #'Refactoring-Tests-Core'
+	#category : #'Refactoring-Tests-Core-Refactorings'
 }
 
 { #category : #tests }

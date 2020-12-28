@@ -283,9 +283,8 @@ TimeProfiler >> initialExtent [
 ]
 
 { #category : #'UI specific' }
-TimeProfiler >> keyStroke: anEvent from: aTreeMorph [ 
-	self selectedNode ifNotNil: [:current | current keyStroke: anEvent from: aTreeMorph ].
-
+TimeProfiler >> keyDown: anEvent from: aTreeMorph [ 
+	self selectedNode ifNotNil: [:current | current keyDown: anEvent from: aTreeMorph ]
 ]
 
 { #category : #'accessing-computed' }
@@ -778,7 +777,7 @@ TimeProfiler >> treeMorph [
 		columnInset: 4;
 		autoDeselection: true;
 		getMenuSelector:#menu:shifted:;
-		keystrokeActionSelector: #keyStroke:from:;
+		keyDownActionSelector: #keyDown:from:;
 		treeLineWidth: 1;
 		treeLineDashes: {5. 1};
 		lineColorBlock: [:node | {Color gray. Color orange. Color brown. Color magenta. Color blue} at: ((node level \\ 5) + 1)];

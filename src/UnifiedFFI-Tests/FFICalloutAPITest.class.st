@@ -70,18 +70,6 @@ FFICalloutAPITest >> method1 [
 	^ object instVarAt: index.
 ]
 
-{ #category : #accessing }
-FFICalloutAPITest >> method2 [
-	| result tmpResult |
-	
-	result := self call: {1. 2. 3. 4}.
-	tmpResult := result.
-	result := FFICalloutObjectForTest basicNew.
-	result instVarAt: 1 put: tmpResult.	
-	^ result 
-	
-]
-
 { #category : #'primitives pointer' }
 FFICalloutAPITest >> primFromByteArray: src toExternalAddress: dest size: n [
 	^ self 
@@ -271,10 +259,13 @@ FFICalloutAPITest >> testCharCall [
 
 { #category : #'tests pointer' }
 FFICalloutAPITest >> testCharPointer [
-	| result |
+	| result buffer |
+	
+	buffer := ByteArray new: 512.
+	buffer writeString: 'Hello, '.
 		
 	result := self 
-		primStr:  'Hello, '
+		primStr:  buffer
 		cat: 'World'.
 				
 	self assert: result equals: 'Hello, World'.

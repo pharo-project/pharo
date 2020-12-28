@@ -815,9 +815,9 @@ SystemWindow >> justDroppedInto: aMorph event: anEvent [
 ]
 
 { #category : #'*Polymorph-Widgets' }
-SystemWindow >> keyStroke: evt [
+SystemWindow >> keyDown: evt [
 	"Check for close window."
-	super keyStroke: evt.
+	super keyDown: evt.
 	(self navigationKey: evt) ifTrue: [^true].
 	^false
 ]

@@ -8,6 +8,24 @@ Class {
 }
 
 { #category : #testing }
+UTF8TextConverterTest >> testLeadingChar [
+
+	| leading hiraA hiraO hiraAO converter |
+	leading := (Smalltalk classNamed: #JapaneseEnvironment) leadingChar.
+	hiraA := (Character leadingChar: leading code: 12354) asString. "HIRAGANA LETTER A"
+	hiraO := (Character leadingChar: leading code: 12362) asString. "HIRAGANA LETTER O"
+	hiraAO := hiraA , hiraO.
+	
+	converter := [ :arg | String
+		streamContents: [ :stream | 
+			(UTF8TextConverter new) nextPutAll: arg toStream: stream. ] ].
+	
+	self assert: (converter value: hiraA) asByteArray equals: #[227 129 130].
+	self assert: (converter value: hiraO) asByteArray equals: #[227 129 138].
+	self assert: (converter value: hiraAO) asByteArray equals: #[227 129 130 227 129 138]
+]
+
+{ #category : #testing }
 UTF8TextConverterTest >> testNextPutAllStartingAt [
 	"Test that non-ascii ByteString characters are converted correctly when using next:putAll:startingAt:"
 

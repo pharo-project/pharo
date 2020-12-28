@@ -115,9 +115,9 @@ RGClassDescripitonStrategyTest >> testCreationByParent [
 { #category : #tests }
 RGClassDescripitonStrategyTest >> testCreationByUnnamed [
 
-	| anRGBehavior parent |
+	| anRGBehavior |
 	
-	anRGBehavior := RGClass parent: parent.
+	anRGBehavior := RGClass unnamed.
 	self checkBasicPropertiesOf: anRGBehavior.
 	self assert: (anRGBehavior hasResolvedName) not.
 

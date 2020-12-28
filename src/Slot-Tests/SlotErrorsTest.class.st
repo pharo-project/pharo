@@ -236,12 +236,11 @@ SlotErrorsTest >> testUndeclareSlotFixWhenSlotIsLoaded [
 	slot write: 1 to: instance.
 	self assert: (slot read: instance) equals: nil.
 
-	PropertySlot  
-		subclass: self anotherClassName
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		package: self aCategory.
+	self class classInstaller make: [ :aClassBuilder | 
+		aClassBuilder 
+			name: self anotherClassName;
+			superclass: PropertySlot;
+			package: self aCategory ].
 	
 	self assert: (slot read: instance) equals: nil.
 	

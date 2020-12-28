@@ -55,21 +55,6 @@ TreeListMorph >> insertNewMorphs: morphList [
 	^super insertNewMorphs: morphList
 ]
 
-{ #category : #accessing }
-TreeListMorph >> keystrokeActionSelector [
-	"Answer the selector of the message to send to the model when a keystroke occurs."
-
-	^keystrokeActionSelector
-]
-
-{ #category : #accessing }
-TreeListMorph >> keystrokeActionSelector: aSymbol [
-	"Set the selector of the message to send to the model when a keystroke occurs.
-	One or two arguments... 1 for character, 2 for character and sender (self)."
-
-	keystrokeActionSelector := aSymbol
-]
-
 { #category : #private }
 TreeListMorph >> layoutBounds: aRectangle [
 	"Set the bounds for laying out children of the receiver.

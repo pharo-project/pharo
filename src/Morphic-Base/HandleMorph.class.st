@@ -44,7 +44,7 @@ HandleMorph >> justDroppedInto: aMorph event: anEvent [
 ]
 
 { #category : #'event handling' }
-HandleMorph >> keyStroke: evt [
+HandleMorph >> keyDown: evt [
 	"Check for cursor keys"
 
 	| keyValue |

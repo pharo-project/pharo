@@ -34,7 +34,7 @@ RBProgramNode >> asSequenceNode [
 	^RBSequenceNode statements: {self} 
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 RBProgramNode >> doSemanticAnalysis [
 	self methodNode ifNil: [ ^self ].
 	^ self methodNode doSemanticAnalysis.

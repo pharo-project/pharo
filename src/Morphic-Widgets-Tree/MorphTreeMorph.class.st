@@ -1143,11 +1143,17 @@ MorphTreeMorph >> itemStringGetter: aValuable [
 ]
 
 { #category : #'events-processing' }
-MorphTreeMorph >> keyStroke: event [ 
+MorphTreeMorph >> keyDown: event [ 
 	"Process potential command keys."
 	(self navigationKey: event) ifTrue: [^true].
 	(self scrollByKeyboard: event) ifTrue: [^true].
-	^ self listManager keyStroke: event
+	^ self listManager keyDown: event
+]
+
+{ #category : #'as yet unclassified' }
+MorphTreeMorph >> keyDownActionSelector: aSelector [
+
+	self listManager keyDownActionSelector: aSelector
 ]
 
 { #category : #'event handling' }
@@ -1156,11 +1162,6 @@ MorphTreeMorph >> keyboardFocusChange: aBoolean [
 	Update for focus feedback."
 	super keyboardFocusChange: aBoolean.
 	self focusChanged
-]
-
-{ #category : #accessing }
-MorphTreeMorph >> keystrokeActionSelector: aSelector [
-	self listManager keystrokeActionSelector: aSelector
 ]
 
 { #category : #'column handling' }

@@ -79,7 +79,8 @@ ReleaseTest >> knownProcesses [
 		MorphicUIManager uiProcess.
 		CurrentExecutionEnvironment value watchDogProcess.
 		Delay schedulingProcess.
-		TKTWatchDog onDuty pharoProcess } asSet
+		TKTWatchDog onDuty pharoProcess.
+		TFCallbackQueue uniqueInstance callbackProcess } asSet
 ]
 
 { #category : #tests }

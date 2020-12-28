@@ -23,14 +23,19 @@ ClassFactoryWithOrganization class >> newWithOrganization: aSystemOrganizer [
 ClassFactoryWithOrganization >> deletePackage [
 	| categoriesMatchString |
 	categoriesMatchString := self packageName, '-*'.
-	self organization removeCategoriesMatching: categoriesMatchString ; 
+	self organization 
+		removeCategoriesMatching: categoriesMatchString ; 
 		removeEmptyCategories
 	
 ]
 
 { #category : #creating }
-ClassFactoryWithOrganization >> newClassNamed: aString subclassOf: aClass instanceVariableNames: ivNamesString classVariableNames:  classVarsString [ 
-	^self 
+ClassFactoryWithOrganization >> newClassNamed: aString 
+	subclassOf: aClass 
+	instanceVariableNames: ivNamesString 
+	classVariableNames:  classVarsString [ 
+	
+	^ self 
 		newClassNamed: aString
 		subclassOf: aClass 
 		instanceVariableNames: ivNamesString 
@@ -39,7 +44,12 @@ ClassFactoryWithOrganization >> newClassNamed: aString subclassOf: aClass instan
 ]
 
 { #category : #creating }
-ClassFactoryWithOrganization >> newClassNamed: aString subclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString category: category [
+ClassFactoryWithOrganization >> newClassNamed: aString 
+	subclassOf: aClass 
+	instanceVariableNames: ivNamesString 
+	classVariableNames: classVarsString 
+	category: category [
+
 	| newClass |
 	newClass := aClass classInstaller
 		make: [ :builder | 
@@ -57,16 +67,23 @@ ClassFactoryWithOrganization >> newClassNamed: aString subclassOf: aClass instan
 ]
 
 { #category : #creating }
-ClassFactoryWithOrganization >> newSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames:  classVarsString [ 
-	^self 
+ClassFactoryWithOrganization >> newSubclassOf: aClass 
+	instanceVariableNames: ivNamesString 
+	classVariableNames: classVarsString [ 
+	
+	^ self 
 		newSubclassOf: aClass 
 		instanceVariableNames: ivNamesString 
 		classVariableNames: classVarsString 
-		category:  (self packageName, '-', self defaultTagPostfix) asSymbol.
+		category:  (self packageName, '-', self defaultTagPostfix) asSymbol
 ]
 
 { #category : #creating }
-ClassFactoryWithOrganization >> newSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString category: category [
+ClassFactoryWithOrganization >> newSubclassOf: aClass 
+	instanceVariableNames: ivNamesString 
+	classVariableNames: classVarsString 
+	category: category [
+	
 	| newClass |
 	newClass := aClass classInstaller
 		make: [ :builder | 
@@ -85,7 +102,7 @@ ClassFactoryWithOrganization >> newSubclassOf: aClass instanceVariableNames: ivN
 
 { #category : #accessing }
 ClassFactoryWithOrganization >> organization [
-	^organization
+	^ organization
 ]
 
 { #category : #accessing }

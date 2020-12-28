@@ -25,7 +25,11 @@ ClassOrganizationTest >> runCase [
 { #category : #running }
 ClassOrganizationTest >> setUp [ 
 	super setUp.
-	class := Object subclass: #ClassForTests instanceVariableNames: '' classVariableNames: '' category: 'ClassOrganizer-Tests'.
+	
+	class := self class classInstaller make: [ :aBuilder | 
+		aBuilder name: #ClassForTests;
+		package: 'ClassOrganizer-Tests' ].
+	
 	organization := ClassOrganization forClass: class.
 	organization addCategory: 'empty'.
 	organization addCategory: 'one'.

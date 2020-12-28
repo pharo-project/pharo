@@ -63,11 +63,12 @@ TClyGenerateTestClass >> testClassFor: inputClass [
 		ifAbsent: [
 			(self isValidClass: inputClass) ifFalse: [ ClyInvalidClassForTestClassGeneration signalFor: inputClass ].
 			self systemEnvironment ensureExistAndRegisterPackageNamed: inputClass package name asString , '-Tests'.
-			resultClass := TestCase
-				subclass: className
-				instanceVariableNames: ''
-				classVariableNames: ''
-				package: (self newTestClassCategoryFor: inputClass).
+			
+			resultClass := self class classInstaller make: [ :aBuilder |
+				aBuilder name: className;
+					superclass: TestCase;
+					package: (self newTestClassCategoryFor: inputClass) ].
+
 			self addNewCommentForTestClass: resultClass basedOn: inputClass ].
 	^ resultClass
 ]

@@ -100,8 +100,8 @@ RBMethodNode >> addNode: aNode [
 { #category : #'adding/removing' }
 RBMethodNode >> addPragma: aPragmaNode [
 
-	pragmas ifNil: [ self pragmas: OrderedCollection new ].
-	pragmas add: aPragmaNode
+	pragmas := pragmas copyWith: aPragmaNode.
+	aPragmaNode parent: self
 ]
 
 { #category : #replacing }
@@ -368,6 +368,7 @@ RBMethodNode >> hash [
 
 { #category : #initialization }
 RBMethodNode >> initialize [
+	pragmas := #().
 	replacements := SortedCollection sortBlock: 
 					[:a :b | 
 					a startPosition < b startPosition 
@@ -463,7 +464,8 @@ RBMethodNode >> method [
 
 { #category : #'accessing compiled method' }
 RBMethodNode >> methodClass [
-	^self compilationContext getClass 
+
+	^ self compilationContext ifNotNil: [ :ctxt | ctxt getClass ]
 ]
 
 { #category : #'accessing compiled method' }
@@ -549,7 +551,7 @@ RBMethodNode >> pragmaNamed: aSymbol ifPresent: presentBlock ifAbsent: absentBlo
 
 { #category : #accessing }
 RBMethodNode >> pragmas [
-	^ pragmas ifNil: [ #() ]
+	^ pragmas
 ]
 
 { #category : #accessing }
@@ -594,7 +596,7 @@ RBMethodNode >> reformatSource [
 { #category : #'adding/removing' }
 RBMethodNode >> removePragma: aPragmaNode [
 
-	pragmas remove: aPragmaNode ifAbsent: [ ]
+	pragmas := pragmas copyWithout: aPragmaNode
 ]
 
 { #category : #'adding/removing' }
