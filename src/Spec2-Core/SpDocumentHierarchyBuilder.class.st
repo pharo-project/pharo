@@ -158,10 +158,10 @@ SpDocumentHierarchyBuilder >> fromClass: aClass [
 ]
 
 { #category : #testing }
-SpDocumentHierarchyBuilder >> isPassingThrough: aClass topLevel: topClass [
+SpDocumentHierarchyBuilder >> isPassingThrough: aClass topLevel: topClassLocal [
 	| superclasses |
 	
-	superclasses := flattenTree at: topClass superclass ifAbsent: [ #() ].
+	superclasses := flattenTree at: topClassLocal superclass ifAbsent: [ #() ].
 	superclasses size <= 1 ifFalse: [ 
 		^ (superclasses indexOf: topClass) < superclasses size ].
 	
