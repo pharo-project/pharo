@@ -176,6 +176,10 @@ RBFindAndReplaceRefactoring >> replaceArgumentsByPattern: sourceCode [
 	
 ]
 
+{ #category : #printing }
+RBFindAndReplaceRefactoring >> storeOn: aStream [
+]
+
 { #category : #preconditions }
 RBFindAndReplaceRefactoring >> transform [
 	|classes|

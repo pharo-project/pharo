@@ -215,7 +215,7 @@ RBRefactoringTest >> extractMethodTestData [
 			aStream nextPut: $).' #tests)))
 	#(#MyClassC #(
 		#('methodWithArg: anArg
-			(currentChar isLetter) and: [anArg isDecimal]
+			(currentChar isLetter and: [anArg isDecimal])
 			ifTrue: [^ self].
 			^ nil' #tests)))) 
 		do: [:each | 
