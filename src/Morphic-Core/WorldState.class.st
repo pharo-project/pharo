@@ -285,7 +285,7 @@ WorldState class >> screenShotCommandOn: aBuilder [
 	(aBuilder item: #Screenshot)
 		parent: #System;
 		target: self currentWorld;
-		order: 501;
+		order: 99;
 		selector: #makeAScreenshot;
 		label: 'Screenshot';
 		help: 'Take a screenshot';
