@@ -158,6 +158,15 @@ WorldState class >> helpOn: aBuilder [
 		order: 99;
 		help: 'Some help tools on Pharo.';
 		with: [
+			(aBuilder group: #HelpBrowser)
+				order: 1;
+				withSeparatorAfter.
+			(aBuilder group: #PharoHelp)
+				order: 2;
+				withSeparatorAfter.
+			(aBuilder group: #SpecHelp)
+				order: 3;
+				withSeparatorAfter.
 			(aBuilder item: #'About...')
 				order: 99;
 				iconName: #smallInfo;
