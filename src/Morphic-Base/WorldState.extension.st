@@ -114,7 +114,7 @@ mouse pointer goes to the top of the screen')
 WorldState class >> systemOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #System)
-		order: 80;
+		order: 70;
 		with: [
 			(aBuilder group: #SystemTools)
 				order: 1;

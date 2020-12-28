@@ -11,7 +11,7 @@ Class {
 AbstractTool class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Tools)
-		order: 20;
+		order: 80;
 		target: self;
 		help: 'Set of tools to get a better Pharo experience.';
 		with: [ (aBuilder item: #'Undo last refactoring')
