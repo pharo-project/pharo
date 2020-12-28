@@ -156,12 +156,13 @@ RBFindAndReplaceRefactoring >> nodesOf: methodNode [
 RBFindAndReplaceRefactoring >> preconditions [ 
 
 	| condition |
-	condition := replacesAllHierarchy 
+	condition :=(RBCondition definesSelector: selector in: class) 
+		& (replacesAllHierarchy 
 		ifFalse: [ RBCondition empty ] 
 		ifTrue: [ class allSubclasses 
 						inject: RBCondition empty
 						into: [ :cond :aClass | 
-							cond & (RBCondition definesSelector: selector in: aClass) not] ].
+							cond & (RBCondition definesSelector: selector in: aClass) not] ]).
 	^condition
 ]
 
