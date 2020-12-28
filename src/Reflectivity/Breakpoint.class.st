@@ -83,8 +83,8 @@ Breakpoint class >> cleanUp [
 Breakpoint class >> debugWorldMenuOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'Remove all Breakpoints')
-		parent: #Debugging;
-		order: 0;
+		parent: #Breakpoints;
+		order: 2;
 		help: 'Remove all the breakpoints of the image.';
 		action: [ Breakpoint removeAll ]
 ]

@@ -16,8 +16,8 @@ ClyBrowseBreakpointsCommand class >> worldMenuOn: aBuilder [
 	| command |
 	command := self new.
 	(aBuilder item: command defaultMenuItemName)
-		parent: #Debugging;
-		order: 0;
+		parent: #Breakpoints;
+		order: 1;
 		icon: command defaultMenuIcon;
 		help: command description;
 		action: [ command execute ]

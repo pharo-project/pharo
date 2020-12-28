@@ -34,12 +34,17 @@ WorldState class >> codeWorldMenuOn: aBuilder [
 { #category : #'*Morphic-Base' }
 WorldState class >> debugWorldMenuOn: aBuilder [
 	<worldMenu>
-	(aBuilder item: #Debugging)
+	(aBuilder item: #Debug)
 		order: 50;
-		with: [ (aBuilder item: #'Enable all break/inspect once')
-				order: 0;
-				help: 'Reset the break/inspect once. Once restarted, the first break once encountered will stop the execution.';
-				action: [ Halt resetOnce ]]
+		with: [
+			(aBuilder group: #Breakpoints)
+				order: 1;
+				withSeparatorAfter.
+			(aBuilder group: #Profiling)
+				order: 2;
+				withSeparatorAfter.
+			(aBuilder group: #Counters)
+				order: 3]
 ]
 
 { #category : #'*Morphic-Base' }
