@@ -478,6 +478,22 @@ CompiledCode >> literalsDo: aBlock [
 		[:index | aBlock value: (self literalAt: index)]
 ]
 
+{ #category : #accessing }
+CompiledCode >> literalsEvenTheOnesInTheInnerBlocks [
+
+	| literals numberLiterals |
+	literals := OrderedCollection new:
+		            (numberLiterals := self numLiterals
+		                               - self literalsToSkip).
+	1 to: numberLiterals do: [ :index | 
+		| lit |
+		lit := self literalAt: index.
+		lit isEmbeddedBlock
+			ifTrue: [ literals addAll: lit literalsEvenTheOnesInTheInnerBlocks ]
+			ifFalse: [ literals addLast: lit ] ].
+	^ literals asArray
+]
+
 { #category : #literals }
 CompiledCode >> literalsToSkip [
 
