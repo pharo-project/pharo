@@ -1,6 +1,6 @@
 Extension { #name : #Behavior }
 
-{ #category : #'*ast-core' }
+{ #category : #'*AST-Core' }
 Behavior >> parseTreeFor: aSymbol [	
 	^ (self compiledMethodAt: aSymbol) parseTree
 ]
