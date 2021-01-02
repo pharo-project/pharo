@@ -430,6 +430,31 @@ Integer >> nthRootTruncated: aPositiveInteger [
 ]
 
 { #category : #'*Math-Operations-Extensions' }
+Integer >> numberOfCombinationsTaken: k [
+	"Return the number of combinations of (self) elements taken k at a time. 
+	It is calculated as C(n,k) = n! / (k! (n-k)!) 
+	For 6 numberOfCombinationsTaken: 3, this is 6*5*4 / (1*2*3)"
+	
+	"6 numberOfCombinationsTaken: 3 >>> 20"
+
+	| numerator denominator |
+	k < 0 ifTrue: [^ 0].
+	k > self ifTrue: [^ 0].
+	
+	numerator := 1.
+	
+	self to: (k max: self-k) + 1 by: -1 do: [ :factor |
+		numerator := numerator * factor ].
+	
+	denominator := 1.
+	
+	1 to: (k min: self-k) do: [ :factor |
+		denominator := denominator * factor ].
+	
+	^ numerator // denominator
+]
+
+{ #category : #'*Math-Operations-Extensions' }
 Integer >> primeFactors [
 	"Return all primeFactors of myself"
 	"( 106260 primeFactors fold: [ :a :b | a * b ]) = 106260"
@@ -674,17 +699,12 @@ Integer >> sqrtFloor [
 ]
 
 { #category : #'*Math-Operations-Extensions' }
-Integer >> take: kk [
-	"Return the number of combinations of (self) elements taken kk at a time.  
-	For 6 take 3, this is 6*5*4 / (1*2*3).  Zero outside of Pascal's triangle.  Use a trick to go faster."
-	" 6 take: 3  "
+Integer >> take: aNumberOfTimes [
+	"Return the number of combinations of (self) elements taken aNumberOfTimes at a time"
 
-	| num denom |
-	kk < 0 ifTrue: [^ 0].
-	kk > self ifTrue: [^ 0].
-	num := 1.
-	self to: (kk max: self-kk) + 1 by: -1 do: [:factor | num := num * factor].
-	denom := 1.
-	1 to: (kk min: self-kk) do: [:factor | denom := denom * factor].
-	^ num // denom
+	self
+		deprecated: 'This method was renamed to #numberOfCombinationsTaken:'
+		transformWith: '`@rec take: `@arg' -> '`@rec numberOfCombinationsTaken: `@arg'.
+		
+	^ self numberOfCombinationsTaken: aNumberOfTimes
 ]
