@@ -7,7 +7,8 @@ Class {
 	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'factory',
-		'changeSet'
+		'oldChangeSet',
+		'newChangeSetName'
 	],
 	#category : #'Tests-System'
 }
@@ -42,16 +43,17 @@ ChangeSetClassChangesTest >> denyDefinition: actualString equivalentTo: expected
 ChangeSetClassChangesTest >> setUp [
 
 	super setUp.
-	changeSet := ChangeSet current.
+	oldChangeSet := ChangeSet current.
 	ChangeSet newChanges: (ChangeSet newTestChangeSet).
+	newChangeSetName := ChangeSet current name.
 	factory := ClassFactoryForTestCase new.
 ]
 
 { #category : #running }
 ChangeSetClassChangesTest >> tearDown [
 	factory cleanUp.
-	ChangeSet newChanges: changeSet.
-	ChangeSet removeChangeSetsNamedSuchThat: [ :each | each beginsWith: 'Test' ].
+	ChangeSet newChanges: oldChangeSet.
+	ChangeSet removeChangeSetsNamedSuchThat: [ :each | each = newChangeSetName ].
 	super tearDown
 ]
 
