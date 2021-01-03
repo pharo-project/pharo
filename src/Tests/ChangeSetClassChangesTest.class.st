@@ -43,14 +43,15 @@ ChangeSetClassChangesTest >> setUp [
 
 	super setUp.
 	changeSet := ChangeSet current.
-	ChangeSet resetCurrentToNewUnnamedChangeSet.
+	ChangeSet newChanges: (ChangeSet newTestChangeSet).
 	factory := ClassFactoryForTestCase new.
 ]
 
 { #category : #running }
 ChangeSetClassChangesTest >> tearDown [
 	factory cleanUp.
-	ChangeSet newChanges:	changeSet.
+	ChangeSet newChanges: changeSet.
+	ChangeSet removeChangeSetsNamedSuchThat: [ :each | each beginsWith: 'Test' ].
 	super tearDown
 ]
 
