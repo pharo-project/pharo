@@ -449,14 +449,22 @@ RPackageOrganizer >> hasPackageForProtocol: aProtocolName inClass: aClass [
 { #category : #'system integration' }
 RPackageOrganizer >> hasPackageMatchingExtensionName: anExtensionName [
 
-	(self hasPackageExactlyMatchingExtensionName: anExtensionName)
-		ifTrue: [ ^true ].
-		
+	(self hasPackageExactlyMatchingExtensionName: anExtensionName) 
+		ifTrue: [ ^ true ].
+
 	packages keysDo: [ :aSymbol | 
-		(anExtensionName beginsWithEmpty: aSymbol, '-' caseSensitive: false)
-			ifTrue: [ ^ true]].
+		| aSymbolIndex aMinusIndex hasPrefix |
+		"we avoid string concatenation and check directly"
+		aSymbolIndex := anExtensionName
+			                findString: aSymbol
+			                startingAt: 1
+			                caseSensitive: false.
+		aMinusIndex := aSymbolIndex + aSymbol size.
+		hasPrefix := aSymbolIndex > 0 and: [ 
+			             aMinusIndex <= anExtensionName size and: [ 
+				             (anExtensionName at: aMinusIndex) = $- ] ].
+		hasPrefix ifTrue: [ ^ true ] ].
 	^ false
-	
 ]
 
 { #category : #testing }
