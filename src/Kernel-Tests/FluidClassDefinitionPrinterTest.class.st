@@ -40,7 +40,6 @@ FluidClassDefinitionPrinterTest >> testArray [
 FluidClassDefinitionPrinterTest >> testArrayedCollectionWithPoolDictionary [
 
 	self assert: (self forClass: ExampleForTestWithSharedPool) equals: 'ArrayedCollection << #ExampleForTestWithSharedPool
-	slots: { #aSlot . #anotherSlot };
 	sharedPools: { ChronologyConstants };
 	tag: ''Classes'';
 	package: ''Kernel-Tests''' 
