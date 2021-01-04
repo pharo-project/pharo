@@ -121,6 +121,7 @@ ListDialogWindow >> buildSearchMorph [
 			acceptSelector: #searchAccept:;
 			updateSelector: #searchUpdate:;
 			searchList: self class searchList;
+			keystrokeSelector: #searchKeystroke:
 			yourself.	
 	
 ]
