@@ -42,5 +42,5 @@ RBAccessorClassRefactoring >> refactorings [
 
 { #category : #transforming }
 RBAccessorClassRefactoring >> transform [
-	self refactorings do: [ :each | self performComponentRefactoring: each ]
+	self refactorings do: [ :each | self performCompositeRefactoring: each ]
 ]

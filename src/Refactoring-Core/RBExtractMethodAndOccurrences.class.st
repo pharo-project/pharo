@@ -42,7 +42,7 @@ RBExtractMethodAndOccurrences >> extractMethod [
 				extract: extractionInterval
 				from: selector
 				in: class.
-	self performComponentRefactoring: refactoring.
+	self performCompositeRefactoring: refactoring.
 	^ refactoring newExtractedSelector
 ]
 
@@ -65,7 +65,7 @@ RBExtractMethodAndOccurrences >> findOccurrencesOf: aSelector [
 			find: aSelector
 			of: class
 			inAllHierarchy: true.
-		self performComponentRefactoring: refactoring.]
+		self performCompositeRefactoring: refactoring.]
 	ifFalse: [ self refactoringWarning: aSelector , ' is not a valid selector name.' ]
 ]
 

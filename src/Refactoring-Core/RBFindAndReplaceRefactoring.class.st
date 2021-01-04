@@ -68,7 +68,7 @@ RBFindAndReplaceRefactoring >> extract: occurrence of: aMethod [
 	refactoring setOption: #existingSelector toUse:  [ :ref | 
 			ref parameters: (self argumentsOf: occurrence value).
 			self method selector].
-	self performComponentRefactoring: refactoring ] on: Exception do: [ :e | e ]
+	self performCompositeRefactoring: refactoring ] on: Exception do: [ :e | e ]
 ]
 
 { #category : #accessing }
@@ -186,6 +186,14 @@ RBFindAndReplaceRefactoring >> replaceArgumentsByPattern: sourceCode [
 
 { #category : #printing }
 RBFindAndReplaceRefactoring >> storeOn: aStream [
+	aStream nextPut: $(.
+	self class storeOn: aStream.
+	aStream nextPutAll: ' find: #';
+		nextPutAll: selector;
+		nextPutAll: ' of: #';
+		nextPutAll: class name;
+		nextPutAll: ' inAllHierarchy: '.
+	replacesAllHierarchy storeOn: aStream.
 ]
 
 { #category : #preconditions }

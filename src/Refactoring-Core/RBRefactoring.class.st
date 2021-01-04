@@ -300,7 +300,7 @@ RBRefactoring >> parserClass [
 ]
 
 { #category : #transforming }
-RBRefactoring >> performComponentRefactoring: aRefactoring [ 
+RBRefactoring >> performCompositeRefactoring: aRefactoring [ 
 	aRefactoring copyOptionsFrom: self options.
 	aRefactoring primitiveExecute
 ]

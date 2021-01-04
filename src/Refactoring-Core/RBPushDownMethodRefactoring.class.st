@@ -52,7 +52,7 @@ RBPushDownMethodRefactoring >> pushDown: aSelector [
 				forMethod: (class parseTreeFor: aSelector)
 				fromClass: class
 				toClasses: class subclasses.
-	self performComponentRefactoring: refactoring.
+	self performCompositeRefactoring: refactoring.
 	class subclasses do: 
 			[:each | 
 			(each directlyDefinesMethod: aSelector) 

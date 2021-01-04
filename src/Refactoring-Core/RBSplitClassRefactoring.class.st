@@ -70,7 +70,7 @@ RBSplitClassRefactoring >> abstractReferenceTo: each [
 				variable: each
 				class: newClass
 				classVariable: false.
-	self performComponentRefactoring: accessorRef.
+	self performCompositeRefactoring: accessorRef.
 	getterMethod := accessorRef getterMethod.
 	setterMethod := accessorRef setterMethod.
 	replacer := self parseTreeRewriterClass 
@@ -82,7 +82,7 @@ RBSplitClassRefactoring >> abstractReferenceTo: each [
 		convertClasses: class withAllSubclasses
 		select: [:aClass | aClass whichSelectorsReferToInstanceVariable: each]
 		using: replacer.
-	self performComponentRefactoring: (RBRemoveInstanceVariableRefactoring 
+	self performCompositeRefactoring: (RBRemoveInstanceVariableRefactoring 
 				remove: each
 				from: class)
 ]
@@ -94,7 +94,7 @@ RBSplitClassRefactoring >> abstractVariableReferences [
 
 { #category : #'private-transforming' }
 RBSplitClassRefactoring >> addClass [
-	self performComponentRefactoring: (RBAddClassRefactoring 
+	self performCompositeRefactoring: (RBAddClassRefactoring 
 				model: self model
 				addClass: newClassName
 				superclass: Object
@@ -107,7 +107,7 @@ RBSplitClassRefactoring >> addClass [
 RBSplitClassRefactoring >> addInstanceVariables [
 	instanceVariables do: 
 			[:each | 
-			self performComponentRefactoring: (RBAddInstanceVariableRefactoring 
+			self performCompositeRefactoring: (RBAddInstanceVariableRefactoring 
 						model: self model
 						variable: each
 						class: newClass)]
@@ -130,7 +130,7 @@ RBSplitClassRefactoring >> createNewClass [
 
 { #category : #transforming }
 RBSplitClassRefactoring >> createReference [
-	self performComponentRefactoring: (RBAddInstanceVariableRefactoring 
+	self performCompositeRefactoring: (RBAddInstanceVariableRefactoring 
 				variable: referenceVariableName
 				class: class)
 ]
