@@ -16,11 +16,6 @@ SpMorphicLayoutAdapter >> adapter [
 	^ nil
 ]
 
-{ #category : #factory }
-SpMorphicLayoutAdapter >> adapterWasBuilt [
-	"hook to add after-build opeations (for example, initial status, etc.)"
-]
-
 { #category : #accessing }
 SpMorphicLayoutAdapter >> add: aPresenter constraints: constraints [
  

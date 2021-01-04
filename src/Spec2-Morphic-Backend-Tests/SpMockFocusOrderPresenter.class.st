@@ -19,10 +19,28 @@ SpMockFocusOrderPresenter class >> defaultSpec [
 		yourself
 ]
 
+{ #category : #accessing }
+SpMockFocusOrderPresenter >> firstPresenter [
+
+	^ firstPresenter
+]
+
 { #category : #initialization }
 SpMockFocusOrderPresenter >> initializePresenters [
 
 	firstPresenter := self newButton label: 'First'.
 	secondPresenter := self newButton label: 'Second'.
 	thirdPresenter := self newButton label: 'Third'
+]
+
+{ #category : #accessing }
+SpMockFocusOrderPresenter >> secondPresenter [
+
+	^ secondPresenter
+]
+
+{ #category : #accessing }
+SpMockFocusOrderPresenter >> thirdPresenter [
+
+	^ thirdPresenter
 ]

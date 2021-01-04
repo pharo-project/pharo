@@ -22,7 +22,6 @@ SpPresenterFocusOrderTest >> keyPressed: keyCode shift: shiftBoolean meta: metaB
 	| evt modifiers widget |
 	
 	widget := self focusedPresenter adapter widget.
-	
 	modifiers := 0.
 	shiftBoolean ifTrue: [ modifiers := modifiers | 8 ].
 	metaBoolean ifTrue: [ modifiers := modifiers |
@@ -36,7 +35,7 @@ SpPresenterFocusOrderTest >> keyPressed: keyCode shift: shiftBoolean meta: metaB
 			ifFalse: [ 2r00100000 ]) ].
 	
 	evt := KeyboardEvent new
-		setType: #keystroke
+		setType: #keyDown
 		buttons: modifiers
 		position: widget position + (1 @ 1)
 		keyValue: keyCode
@@ -101,23 +100,23 @@ SpPresenterFocusOrderTest >> testCustomFocusOrder [
 
 	mock := SpMockFocusOrderPresenter new.
 	mock focusOrder 
-		add: (mock presenterAt: #thirdPresenter);
-		add: (mock presenterAt: #firstPresenter);
-		add: (mock presenterAt: #secondPresenter).
+		add: (mock thirdPresenter);
+		add: (mock firstPresenter);
+		add: (mock secondPresenter).
 	mock openWithSpec.
 	
 	"Focus third"
 	self takeKeyboardFocus: mock.
-	self assert: (mock presenterAt: #thirdPresenter) equals: self focusedPresenter.
+	self assert: (mock thirdPresenter) equals: self focusedPresenter.
 	"Focus first"
 	self pressTab.
-	self assert: (mock presenterAt: #firstPresenter) equals: self focusedPresenter.
+	self assert: (mock firstPresenter) equals: self focusedPresenter.
 	"Focus second"
 	self pressTab.
-	self assert: (mock presenterAt: #secondPresenter) equals: self focusedPresenter.
+	self assert: (mock secondPresenter) equals: self focusedPresenter.
 	"Focus third again"
 	self pressTab.
-	self assert: (mock presenterAt: #thirdPresenter) equals: self focusedPresenter
+	self assert: (mock thirdPresenter) equals: self focusedPresenter
 ]
 
 { #category : #tests }

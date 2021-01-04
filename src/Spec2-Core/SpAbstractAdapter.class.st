@@ -68,6 +68,11 @@ SpAbstractAdapter >> adapt: aPresenter [
 	widget := self buildWidget
 ]
 
+{ #category : #factory }
+SpAbstractAdapter >> adapterWasBuilt [
+	"hook to add after-build opeations (for example, initial status, etc.)"
+]
+
 { #category : #protocol }
 SpAbstractAdapter >> add: aWidget [
 
