@@ -25,14 +25,12 @@ Class {
 		'savedPatch',
 		'lastEventBuffer',
 		'lastKeyScanCode',
-		'combinedChar',
 		'captureBlock',
 		'recentModifiers',
 		'pendingEventQueue'
 	],
 	#classVars : [
 		'DoubleClickTime',
-		'EventSource',
 		'EventStats',
 		'NormalCursor',
 		'PasteBuffer',
