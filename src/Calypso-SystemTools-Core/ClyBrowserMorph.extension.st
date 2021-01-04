@@ -106,9 +106,49 @@ ClyBrowserMorph >> decorateMethodEditor: aMethodEditor [
 ]
 
 { #category : #'*Calypso-SystemTools-Core' }
+ClyBrowserMorph >> hasReferencesToClasses: classes [
+	
+	| query references |
+	
+	query := (ClyClassReferencesQuery toAny: classes from: self systemScope).
+	references := query execute.	
+	^(references notEmpty and: [
+		((references items collect: [:each | each origin])
+			difference: (classes flatCollect: [ :each | { each . each classSide } ])) notEmpty])
+]
+
+{ #category : #'*Calypso-SystemTools-Core' }
 ClyBrowserMorph >> isMethodSelected: aMethod [
 
 	^self methodSelection includesActualObject: aMethod
+]
+
+{ #category : #'*Calypso-SystemTools-Core' }
+ClyBrowserMorph >> requestRemoveClassStrategyFor: classes [
+
+	 | hasReferences hasSubclasses hasUsers result strategies |
+	 hasReferences := self hasReferencesToClasses: classes.
+	 hasSubclasses := ((classes flatCollect: [ :each | each subclasses ]) 
+		                   copyWithoutAll: classes) notEmpty.
+	 hasUsers := ((classes flatCollect: [ :each | each users ]) 
+		              copyWithoutAll: classes) notEmpty.
+
+	 hasReferences | hasSubclasses | hasUsers ifFalse: [ 
+		 ^ SycSilentlyRemoveClassStrategy new ].
+
+	 strategies := SycRemoveClassStrategy
+		               createAllForBrowser: self
+		               references: hasReferences
+		               subclasses: hasSubclasses
+		               users: hasUsers.
+
+	 result := UIManager default
+		           chooseFrom:
+		           (strategies collect: [ :each | each userRequestString ])
+		           values: strategies
+		           title: 'Class has references, subclasses, or users'.
+
+	 ^ result ifNil: [ SycNotRemoveClassStrategy new ]
 ]
 
 { #category : #'*Calypso-SystemTools-Core' }

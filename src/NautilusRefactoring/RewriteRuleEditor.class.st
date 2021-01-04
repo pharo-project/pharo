@@ -27,6 +27,7 @@ RewriteRuleEditor class >> defaultSpec [
 			expand: true fill: true padding: 5;
 		add: (SpBoxLayout newVertical 
 			add: #helpText expand: true fill: true padding: 18;
+			addLast: #searchButton;
 			addLast: #replaceButton)
 			expand: false fill: false padding: 0;
 		yourself	
