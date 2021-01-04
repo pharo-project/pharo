@@ -13,10 +13,7 @@ Class {
 		'function',
 		'semaphore',
 		'arguments',
-		'returnHolder',
-		'returnAddress',
 		'parameterArray',
-		'parameterAddress',
 		'index'
 	],
 	#category : #'ThreadedFFI-Base'
