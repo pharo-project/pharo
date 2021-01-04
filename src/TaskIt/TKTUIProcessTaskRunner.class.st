@@ -1,9 +1,6 @@
 Class {
 	#name : #TKTUIProcessTaskRunner,
 	#superclass : #TKTRunner,
-	#instVars : [
-		'process'
-	],
 	#category : #'TaskIt-Kernel'
 }
 
