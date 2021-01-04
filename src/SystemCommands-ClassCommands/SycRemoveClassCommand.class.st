@@ -13,7 +13,13 @@ Class {
 { #category : #execution }
 SycRemoveClassCommand >> asRefactorings [
 
-	^{RBRemoveClassRefactoring classNames: (classes collect: [:each | each name])}
+	^self asRefactoringsOfClass: RBRemoveClassRefactoring
+]
+
+{ #category : #execution }
+SycRemoveClassCommand >> asRefactoringsOfClass: aClass [
+
+	^{aClass classNames: (classes collect: [:each | each name])}
 ]
 
 { #category : #execution }
@@ -43,6 +49,12 @@ SycRemoveClassCommand >> defaultMenuItemName [
 SycRemoveClassCommand >> execute [
 
 	removeStrategy execute: self.
+]
+
+{ #category : #execution }
+SycRemoveClassCommand >> executeRefactoringsAs: aClass [
+
+	(self asRefactoringsOfClass: aClass) do: [ :each | each execute ]
 ]
 
 { #category : #testing }
