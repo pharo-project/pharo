@@ -59,12 +59,12 @@ OCASTSemanticAnalyzer >> compilationContext: aCompilationContext [
 
 { #category : #variables }
 OCASTSemanticAnalyzer >> declareArgumentNode: aVariableNode [
-	^self declareVariableNode: aVariableNode as: ArgumentVariable new
+	^self declareVariableNode: aVariableNode as: (ArgumentVariable named: aVariableNode name) 
 ]
 
 { #category : #variables }
-OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode [
-	^self declareVariableNode: aVariableNode as: TemporaryVariable new
+OCASTSemanticAnalyzer >> declareTemporaryNode: aVariableNode [
+	^self declareVariableNode: aVariableNode as: (TemporaryVariable named: aVariableNode name)
 ]
 
 { #category : #variables }
@@ -76,7 +76,7 @@ OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode as: anOCTempVariable
 		"Another variable with same name is visible from current scope.
 		Warn about the name clash and if proceed add new temp to shadow existing var" 
 		self variable: aVariableNode shadows: var ].
-	var := scope addTemp: anOCTempVariable withName: name.
+	var := scope addTemp: anOCTempVariable.
 	aVariableNode binding: var.
 	^ var
 ]
@@ -227,7 +227,7 @@ OCASTSemanticAnalyzer >> visitPragmaNode: aPragmaNode [
 { #category : #visiting }
 OCASTSemanticAnalyzer >> visitSequenceNode: aSequenceNode [
 	
-	aSequenceNode temporaries do: [ :node | self declareVariableNode: node ].
+	aSequenceNode temporaries do: [ :node | self declareTemporaryNode: node ].
 	aSequenceNode statements do: [ :each | self visitNode: each ].
 	aSequenceNode temporaries reverseDo: [ :node | 
 			node variable isUsed
