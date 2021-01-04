@@ -102,7 +102,7 @@ RBFindAndReplaceRefactoring >> findOccurrencesIn: aMethod [
             each first < each last
                 ifTrue: [ 
 	self matchNodes do: [ :matchNode | matchNode
-                      match: (RBPatternParser parseExpression: (sourceCode copyFrom: each first to: each last ))
+                      match: (self patternParserClass parseExpression: (sourceCode copyFrom: each first to: each last ))
                       onSuccess: [ :map |
 	self extract: ((each first to: each last) -> map) 
 	of: aMethod.
@@ -131,10 +131,10 @@ RBFindAndReplaceRefactoring >> matchNodes [
 		sourceCode := self replaceArgumentsByPattern: node newSource .
 		sourceCode := sourceCode copyFrom: (self method ast body statements first start + visitor difference) to: sourceCode size.
 		matchNodes := OrderedCollection new.
-		matchNodes add: (RBPatternParser parseExpression: sourceCode).
+		matchNodes add: (self patternParserClass parseExpression: sourceCode).
 		node lastIsReturn ifTrue: [  node hasMultipleReturns 
 		ifFalse: [ sourceCode := sourceCode copyReplaceAll: '^' with:  ''.
-		matchNodes add: (RBPatternParser parseExpression: sourceCode) ] ].
+		matchNodes add: (self patternParserClass parseExpression: sourceCode) ] ].
 		matchNodes]
 ]
 
@@ -150,6 +150,11 @@ RBFindAndReplaceRefactoring >> nodesOf: methodNode [
 	node := methodNode copy.
 	node acceptVisitor: visitor.
 	^ visitor combinations 
+]
+
+{ #category : #accessing }
+RBFindAndReplaceRefactoring >> patternParserClass [
+	^ RBPatternParser 
 ]
 
 { #category : #preconditions }
@@ -173,10 +178,8 @@ RBFindAndReplaceRefactoring >> preconditions [
 { #category : #accessing }
 RBFindAndReplaceRefactoring >> replaceArgumentsByPattern: sourceCode [ 
 	|newSource|
-	
 	newSource := sourceCode copyWithRegex: 'tempMatch*' matchesReplacedWith: '`@tempMatch' .
 	newSource := newSource copyWithRegex: 'argMatch*' matchesReplacedWith: '`@argMatch'.
-	
 	^ newSource 
 	
 ]
