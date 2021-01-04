@@ -1,3 +1,8 @@
+"
+I am a refactoring for find occurrences of a method in owner class and in all hierarchy if apply.
+
+My precondition verifies that the method exists in specified class, and if occurrences are searched in hierarchy this method should not overwritten in hierarchy.
+"
 Class {
 	#name : #RBFindAndReplaceRefactoring,
 	#superclass : #RBMethodRefactoring,
@@ -31,6 +36,8 @@ RBFindAndReplaceRefactoring class >> model: aModel find: aMethod of: aClass inAl
 
 { #category : #accessing }
 RBFindAndReplaceRefactoring >> argumentsOf: aDictionary [
+	"Return the arguments values of a method ocurrence"
+	
 	|args limit|
 	limit := self method ast arguments size - 1.
 	args := OrderedCollection new.
@@ -60,14 +67,14 @@ RBFindAndReplaceRefactoring >> copyOptionsFrom: aDictionary [
 ]
 
 { #category : #accessing }
-RBFindAndReplaceRefactoring >> extract: occurrence of: aMethod [
+RBFindAndReplaceRefactoring >> extract: occurrence of: rbMethod [
 	[|refactoring |
 	refactoring := self extractMethodRefactoring. 
 	refactoring model: self model.
-	refactoring 	extract: occurrence key from: aMethod selector in: aMethod modelClass.
+	refactoring 	extract: occurrence key from: rbMethod selector in: rbMethod modelClass.
 	refactoring setOption: #existingSelector toUse:  [ :ref | 
 			ref parameters: (self argumentsOf: occurrence value).
-			self method selector].
+			selector].
 	self performCompositeRefactoring: refactoring ] on: Exception do: [ :e | e ]
 ]
 
@@ -88,15 +95,15 @@ RBFindAndReplaceRefactoring >> find: aSelector of: aClass inAllHierarchy: aBoole
 ]
 
 { #category : #accessing }
-RBFindAndReplaceRefactoring >> findAndReplaceOccurrencesIn: aMethod [ 
-	self findOccurrencesIn: aMethod
+RBFindAndReplaceRefactoring >> findAndReplaceOccurrencesIn: rbMethod [ 
+	self findOccurrencesIn: rbMethod
 ]
 
 { #category : #accessing }
-RBFindAndReplaceRefactoring >> findOccurrencesIn: aMethod [
+RBFindAndReplaceRefactoring >> findOccurrencesIn: rbMethod [
 	|methodNode sourceCode flag |
 	flag := false.
-	methodNode := aMethod ast.
+	methodNode := rbMethod ast.
 	sourceCode := methodNode sourceCode.
 	(self nodesOf: methodNode) do: [ :each |
             each first < each last
@@ -105,20 +112,20 @@ RBFindAndReplaceRefactoring >> findOccurrencesIn: aMethod [
                       match: (self patternParserClass parseExpression: (sourceCode copyFrom: each first to: each last ))
                       onSuccess: [ :map |
 	self extract: ((each first to: each last) -> map) 
-	of: aMethod.
+	of: rbMethod.
 	flag := true. ]
                       onFailure: [  ] .
-						flag ifTrue: [ self findOccurrencesIn: (aMethod modelClass methodFor: aMethod selector).
+						flag ifTrue: [ self findOccurrencesIn: (rbMethod modelClass methodFor: rbMethod selector).
 							^ self]]]]. 
 	methodNode body nodesDo: [ :node |
 		self matchNodes do: [ :matchNode | matchNode
                       match: node
                       onSuccess: [ :map |
 	self extract: ((node start to: node stop) -> map) 
-	of: aMethod.
+	of: rbMethod.
 	flag := true.]
                       onFailure: [  ] .
-						flag ifTrue: [ self findOccurrencesIn: (aMethod modelClass methodFor: aMethod selector).
+						flag ifTrue: [ self findOccurrencesIn: (rbMethod modelClass methodFor: rbMethod selector).
 							^ self]]].
 ]
 
@@ -194,6 +201,7 @@ RBFindAndReplaceRefactoring >> storeOn: aStream [
 		nextPutAll: class name;
 		nextPutAll: ' inAllHierarchy: '.
 	replacesAllHierarchy storeOn: aStream.
+	aStream nextPut: $).
 ]
 
 { #category : #preconditions }
@@ -201,7 +209,7 @@ RBFindAndReplaceRefactoring >> transform [
 	|classes|
 	
 	classes :=replacesAllHierarchy ifFalse: [ { class } ] ifTrue: [ class withAllSubclasses ].
-	classes do: [ :cls | (cls selectors copyWithout: selector) do: [ :sel | |aMethod|
-		aMethod := cls methodFor: sel.
-		self findAndReplaceOccurrencesIn: aMethod] ]
+	classes do: [ :cls | (cls selectors copyWithout: selector) do: [ :sel | |rbMethod|
+		rbMethod := cls methodFor: sel.
+		self findAndReplaceOccurrencesIn: rbMethod] ]
 ]

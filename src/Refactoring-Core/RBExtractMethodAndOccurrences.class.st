@@ -1,3 +1,8 @@
+"
+I am a refactoring for creating a method from a code fragment and then find all occurrences of code fragment in its class and its hierarchy if apply.
+
+You can select an interval of some code in a method and call this refactoring to create a new method implementing that code and replace the code by calling this method instead. Then find occurrences of extracted method in all class methods and replace the duplicated code by calling extracted method istead.
+"
 Class {
 	#name : #RBExtractMethodAndOccurrences,
 	#superclass : #RBMethodRefactoring,
