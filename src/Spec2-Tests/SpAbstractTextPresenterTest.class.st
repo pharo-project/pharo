@@ -82,7 +82,7 @@ SpAbstractTextPresenterTest >> testWhenSubmitDo [
 	self openInstance.
 	
 	self textInputAdapter
-		keyDown: $s asciiValue 
+		keyPressed: $s asciiValue 
 		shift: false
 		meta: true 
 		control: false 

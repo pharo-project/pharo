@@ -172,12 +172,6 @@ SpAbstractAdapter >> replaceLayoutWith: aLayout [
 	
 ]
 
-{ #category : #emulating }
-SpAbstractAdapter >> rightClicked [
-
-	self subclassResponsibility
-]
-
 { #category : #accessing }
 SpAbstractAdapter >> selector [
 	
@@ -188,6 +182,12 @@ SpAbstractAdapter >> selector [
 SpAbstractAdapter >> selector: anObject [
 	
 	selector := anObject
+]
+
+{ #category : #emulating }
+SpAbstractAdapter >> sendRightClickEvent [
+
+	self subclassResponsibility
 ]
 
 { #category : #updating }

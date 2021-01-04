@@ -115,5 +115,12 @@ SpSingleSelectionMode >> unselectIndex: anInteger [
 
 { #category : #'api-events' }
 SpSingleSelectionMode >> whenChangedDo: aBlock [
-	self property: #selectedIndex whenChangedDo: [ aBlock cull: self ]
+
+	self whenSelectedIndexChangedDo: [ aBlock cull: self ]
+]
+
+{ #category : #'api-events' }
+SpSingleSelectionMode >> whenSelectedIndexChangedDo: aBlock [
+
+	self property: #selectedIndex whenChangedDo: aBlock
 ]

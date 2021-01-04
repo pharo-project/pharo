@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #protocol }
-SpMorphicScrollableAdapter >> addConstraits: constraints toChild: childMorph [
+SpMorphicScrollableAdapter >> addConstraints: constraints toChild: childMorph [
 	"Adds constraits by child"
 	
 	| theMorph |	
