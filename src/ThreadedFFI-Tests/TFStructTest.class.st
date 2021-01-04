@@ -21,7 +21,7 @@ TFStructTest >> longStructSize [
 { #category : #tests }
 TFStructTest >> pointSize [
 
-	^ TFWorker default
+	^ self runner
 		invokeFunction:
 			(TFExternalFunction
 				name: 'sizeOfPoint'

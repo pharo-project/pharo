@@ -38,6 +38,7 @@ TFRunner >> doInitialize [
 
 	callbackInvocationStack := Stack new.
 	stackProtect := Semaphore forMutualExclusion.
+	semaphorePool ifNotNil: [ semaphorePool release ].
 	semaphorePool := self newSemaphorePool
 ]
 
@@ -99,8 +100,9 @@ TFRunner >> invokeFunction: aTFExternalFunction withArguments: aCollection [
 TFRunner >> newSemaphorePool [
 
 	^ TFPool
-		newProvider: [ TFExternalSemaphore new ] 
+		newProvider: (MessageSend receiver: TFExternalSemaphore selector: #new) 
 		size: self semaphorePoolSize
+		releaseBlock: #release "This is ugly... but do not change it to a block, if you change it to a block it will have a reference to self. Creating a loop in the references and leaking memory"
 ]
 
 { #category : #private }
@@ -114,6 +116,10 @@ TFRunner >> primitivePerformWorkerCall: aTFExternalFunction
 
 { #category : #executing }
 TFRunner >> release [ 
+	
+	semaphorePool ifNotNil: [ 
+		semaphorePool release.
+		semaphorePool := nil ].
 	
 	handle beNull.
 	"If the stack is not initialized it means this worker was never used for callbacks"
