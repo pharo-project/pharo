@@ -1,9 +1,6 @@
 Class {
 	#name : #PRCodeSemanticActionTest,
 	#superclass : #TestCase,
-	#instVars : [
-		'sample'
-	],
 	#category : #'Pillar-ExporterRichText-Tests'
 }
 
