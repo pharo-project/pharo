@@ -220,6 +220,11 @@ RBRefactoring >> defaultEnvironment [
 	^RBBrowserEnvironment new
 ]
 
+{ #category : #utilities }
+RBRefactoring >> emptyCondition [
+	^ RBCondition empty
+]
+
 { #category : #transforming }
 RBRefactoring >> execute [
 	self primitiveExecute.

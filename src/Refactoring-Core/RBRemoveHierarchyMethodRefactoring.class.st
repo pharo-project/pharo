@@ -45,9 +45,10 @@ RBRemoveHierarchyMethodRefactoring >> deleteSelectors [
 ]
 
 { #category : #transforming }
-RBRemoveHierarchyMethodRefactoring >> preconditions [ 
-	^(selectors inject: RBCondition empty
-		into: [ :cond :selector | cond & (RBCondition definesSelector: selector in: class)])
+RBRemoveHierarchyMethodRefactoring >> preconditions [
+
+	^ selectors inject: self emptyCondition into: [ :cond :selector | 
+		  cond & (RBCondition definesSelector: selector in: class) ]
 ]
 
 { #category : #removing }

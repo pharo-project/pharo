@@ -25,9 +25,10 @@ Class {
 
 { #category : #preconditions }
 RBAccessorClassRefactoring >> preconditions [
+
 	^ self refactorings
-		inject: RBCondition empty
-		into: [ :result :each | result & each preconditions ]
+		  inject: self emptyCondition
+		  into: [ :result :each | result & each preconditions ]
 ]
 
 { #category : #accessing }

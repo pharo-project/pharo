@@ -1,5 +1,5 @@
 Class {
-	#name : #RBExtractMethodAndOcurrences,
+	#name : #RBExtractMethodAndOccurrences,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
 		'extractionInterval',
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBExtractMethodAndOcurrences class >> extract: anInterval from: aSelector in: aClass [ 
+RBExtractMethodAndOccurrences class >> extract: anInterval from: aSelector in: aClass [ 
 	^self new
 		extract: anInterval
 		from: aSelector
@@ -18,7 +18,7 @@ RBExtractMethodAndOcurrences class >> extract: anInterval from: aSelector in: aC
 ]
 
 { #category : #'instance creation' }
-RBExtractMethodAndOcurrences class >> model: aRBSmalltalk extract: anInterval from: aSelector in: aClass [ 
+RBExtractMethodAndOccurrences class >> model: aRBSmalltalk extract: anInterval from: aSelector in: aClass [ 
 	^(self new)
 		model: aRBSmalltalk;
 		extract: anInterval
@@ -28,14 +28,14 @@ RBExtractMethodAndOcurrences class >> model: aRBSmalltalk extract: anInterval fr
 ]
 
 { #category : #'instance creation' }
-RBExtractMethodAndOcurrences >> extract: anInterval from: aSelector in: aClass [ 
+RBExtractMethodAndOccurrences >> extract: anInterval from: aSelector in: aClass [ 
 	class := self classObjectFor: aClass.
 	selector := aSelector.
 	extractionInterval := anInterval
 ]
 
 { #category : #transforming }
-RBExtractMethodAndOcurrences >> extractMethod [
+RBExtractMethodAndOccurrences >> extractMethod [
 	| refactoring |
 	refactoring := RBExtractMethodRefactoring 
 				model: self model
@@ -47,7 +47,7 @@ RBExtractMethodAndOcurrences >> extractMethod [
 ]
 
 { #category : #transforming }
-RBExtractMethodAndOcurrences >> findImplementorOf: aSelector [
+RBExtractMethodAndOccurrences >> findImplementorOf: aSelector [
 	(class directlyDefinesMethod: aSelector) ifTrue: [ ^ true ].
 	class superclass ifNotNil: [
 		class := class superclass.
@@ -57,7 +57,7 @@ RBExtractMethodAndOcurrences >> findImplementorOf: aSelector [
 ]
 
 { #category : #transforming }
-RBExtractMethodAndOcurrences >> findOcurrencesOf: aSelector [
+RBExtractMethodAndOccurrences >> findOccurrencesOf: aSelector [
 	|refactoring|
 	(self findImplementorOf: aSelector) ifTrue: [
 		refactoring := RBFindAndReplaceRefactoring 
@@ -70,12 +70,13 @@ RBExtractMethodAndOcurrences >> findOcurrencesOf: aSelector [
 ]
 
 { #category : #preconditions }
-RBExtractMethodAndOcurrences >> preconditions [
-	^RBCondition empty
+RBExtractMethodAndOccurrences >> preconditions [
+
+	^ self emptyCondition
 ]
 
-{ #category : #'as yet unclassified' }
-RBExtractMethodAndOcurrences >> storeOn: aStream [ 
+{ #category : #printing }
+RBExtractMethodAndOccurrences >> storeOn: aStream [ 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' extract: '.
@@ -89,8 +90,8 @@ RBExtractMethodAndOcurrences >> storeOn: aStream [
 ]
 
 { #category : #transforming }
-RBExtractMethodAndOcurrences >> transform [ 
+RBExtractMethodAndOccurrences >> transform [ 
 	| newExtractedSelector |
 	newExtractedSelector := self extractMethod.
-	self findOcurrencesOf: newExtractedSelector.
+	self findOccurrencesOf: newExtractedSelector.
 ]

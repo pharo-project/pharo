@@ -167,7 +167,8 @@ RBAbstractVariablesRefactoring >> parseTree [
 
 { #category : #preconditions }
 RBAbstractVariablesRefactoring >> preconditions [
-	^RBCondition empty
+
+	^ self emptyCondition
 ]
 
 { #category : #transforming }

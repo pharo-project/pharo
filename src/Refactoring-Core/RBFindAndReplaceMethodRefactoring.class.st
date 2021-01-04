@@ -98,7 +98,7 @@ RBFindAndReplaceMethodRefactoring >> extractMethodRefactoring [
 ]
 
 { #category : #'find-replace' }
-RBFindAndReplaceMethodRefactoring >> findAndReplaceOcurrencesIn: aMethod [ 
+RBFindAndReplaceMethodRefactoring >> findAndReplaceOccurrencesIn: aMethod [ 
 	|ocurrences|
 	ocurrences := self findOcurrencesIn: aMethod selector of: aMethod origin. 
 	ocurrences ifNotEmpty: [ 
@@ -107,9 +107,9 @@ RBFindAndReplaceMethodRefactoring >> findAndReplaceOcurrencesIn: aMethod [
 ]
 
 { #category : #'find-replace' }
-RBFindAndReplaceMethodRefactoring >> findOcurrencesIn: aList [
+RBFindAndReplaceMethodRefactoring >> findOccurrencesIn: aList [
 	aList do: [ :aMethod | positionIndex := 1.
-			 			[ self findAndReplaceOcurrencesIn: aMethod]
+			 			[ self findAndReplaceOccurrencesIn: aMethod]
 						on: Exception 
 						do: [ :e | e messageText isEmptyOrNil
 							ifFalse: [ UIManager default alert: e messageText ] ] 
@@ -137,7 +137,7 @@ RBFindAndReplaceMethodRefactoring >> findOcurrencesIn: aMethod of: aClass [
 RBFindAndReplaceMethodRefactoring >> findOcurrencesInClasses [
 	listToFindMatches do: [ :aClass | 
 		[(self preconditionsOf: aClass) check.
-		  self findOcurrencesIn: aClass methods ]
+		  self findOccurrencesIn: aClass methods ]
 						on: Exception 
 						do: [ :e | e messageText isEmptyOrNil
 							ifFalse: [ UIManager default alert: e messageText ] ] ]
@@ -232,7 +232,7 @@ RBFindAndReplaceMethodRefactoring >> replaceOcurrences: ocurrences on: aMethod [
 			replaceAllAction: [ :presenter | replaceAll := true. presenter beOk; close ]; open.
 			dialog cancelled ifFalse: [ ocurrencesSize := ocurrencesSize - 1 ].
 		 ].
-	ocurrencesSize >= positionIndex ifTrue: [ self findAndReplaceOcurrencesIn: aMethod ] ]
+	ocurrencesSize >= positionIndex ifTrue: [ self findAndReplaceOccurrencesIn: aMethod ] ]
 ]
 
 { #category : #transforming }
@@ -240,5 +240,5 @@ RBFindAndReplaceMethodRefactoring >> transform [
 	replaceAll := false.
 	listToFindMatches ifNil: [ (self options at: #listToSearch) value: method value: self  ].
 	listToFindMatches first isClass ifTrue: [ self findOcurrencesInClasses ]
-	ifFalse: [ self findOcurrencesIn: listToFindMatches ]
+	ifFalse: [ self findOccurrencesIn: listToFindMatches ]
 ]

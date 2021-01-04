@@ -33,7 +33,7 @@ SycExtractMethodCommand >> execute [
 	| selectedInterval refactoring |
 	selectedInterval := selectedTextInterval ifEmpty: [ 
 		                    sourceNode sourceInterval ].
-	refactoring := RBExtractMethodAndOcurrences
+	refactoring := RBExtractMethodAndOccurrences
 		               extract: selectedInterval
 		               from: method selector
 		               in: method origin.

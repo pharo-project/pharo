@@ -134,9 +134,13 @@ RBGenerateEqualHashRefactoring >> compileHash [
 
 { #category : #preconditions }
 RBGenerateEqualHashRefactoring >> preconditions [
+
 	^ variables
-		inject: RBCondition empty
-		into: [ :condition :variable | condition & (RBCondition definesInstanceVariable: variable in: self theClass) ]
+		  inject: self emptyCondition
+		  into: [ :condition :variable | 
+			  condition
+			  &
+			  (RBCondition definesInstanceVariable: variable in: self theClass) ]
 ]
 
 { #category : #accessing }

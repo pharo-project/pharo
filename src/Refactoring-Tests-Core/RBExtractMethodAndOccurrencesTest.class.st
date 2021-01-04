@@ -1,22 +1,22 @@
 Class {
-	#name : #RBExtractMethodAndOcurrencesTest,
+	#name : #RBExtractMethodAndOccurrencesTest,
 	#superclass : #RBRefactoringTest,
 	#category : #'Refactoring-Tests-Core'
 }
 
 { #category : #running }
-RBExtractMethodAndOcurrencesTest >> setUp [ 
+RBExtractMethodAndOccurrencesTest >> setUp [ 
 	super setUp.
 	model := self extractMethodTestData.
 ]
 
 { #category : #'failure tests' }
-RBExtractMethodAndOcurrencesTest >> testBadInterval [
+RBExtractMethodAndOccurrencesTest >> testBadInterval [
 	|class|
 	class := model classNamed: #MyClassA.
 	self
 		shouldFail:
-			(RBExtractMethodAndOcurrences 
+			(RBExtractMethodAndOccurrences 
 				model: model
 				extract: (127 to: 136)
 				from: #myMethod
@@ -24,10 +24,10 @@ RBExtractMethodAndOcurrencesTest >> testBadInterval [
 ]
 
 { #category : #tests }
-RBExtractMethodAndOcurrencesTest >> testExtractMethodWithArgsAndOcurrences [
+RBExtractMethodAndOccurrencesTest >> testExtractMethodWithArgsAndOcurrences [
 	|class refactoring|
 	class := model classNamed: #MyClassA.
-	refactoring := RBExtractMethodAndOcurrences
+	refactoring := RBExtractMethodAndOccurrences
 				model: model 
 				extract: (114 to: 231)
 				from: #displayName
@@ -57,10 +57,10 @@ RBExtractMethodAndOcurrencesTest >> testExtractMethodWithArgsAndOcurrences [
 ]
 
 { #category : #tests }
-RBExtractMethodAndOcurrencesTest >> testExtractSimpleMethodAndOcurrences [
+RBExtractMethodAndOccurrencesTest >> testExtractSimpleMethodAndOcurrences [
 	|class refactoring|
 	class := model classNamed: #MyClassA.
-	refactoring := RBExtractMethodAndOcurrences
+	refactoring := RBExtractMethodAndOccurrences
 				model: model 
 				extract: (282 to: 302)
 				from: #myMethod

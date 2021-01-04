@@ -10,7 +10,7 @@ Class {
 	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RBFindAndReplaceRefactoring class >> find: aMethod of: aClass inAllHierarchy: aBoolean [
 	^ self new 
 		find: aMethod 
@@ -19,9 +19,9 @@ RBFindAndReplaceRefactoring class >> find: aMethod of: aClass inAllHierarchy: aB
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RBFindAndReplaceRefactoring class >> model: aModel find: aMethod of: aClass inAllHierarchy: aBoolean [
-	^ (self new)
+	^ self new
 		model: aModel; 
 		find: aMethod 
 		of: aClass
@@ -60,13 +60,13 @@ RBFindAndReplaceRefactoring >> copyOptionsFrom: aDictionary [
 ]
 
 { #category : #accessing }
-RBFindAndReplaceRefactoring >> extract: ocurrence of: aMethod [
+RBFindAndReplaceRefactoring >> extract: occurrence of: aMethod [
 	[|refactoring |
 	refactoring := self extractMethodRefactoring. 
 	refactoring model: self model.
-	refactoring 	extract: ocurrence key from: aMethod selector in: aMethod modelClass.
+	refactoring 	extract: occurrence key from: aMethod selector in: aMethod modelClass.
 	refactoring setOption: #existingSelector toUse:  [ :ref | 
-			ref parameters: (self argumentsOf: ocurrence value).
+			ref parameters: (self argumentsOf: occurrence value).
 			self method selector].
 	self performComponentRefactoring: refactoring ] on: Exception do: [ :e | e ]
 ]
@@ -88,12 +88,12 @@ RBFindAndReplaceRefactoring >> find: aSelector of: aClass inAllHierarchy: aBoole
 ]
 
 { #category : #accessing }
-RBFindAndReplaceRefactoring >> findAndReplaceOcurrencesIn: aMethod [ 
-	self findOcurrencesIn: aMethod
+RBFindAndReplaceRefactoring >> findAndReplaceOccurrencesIn: aMethod [ 
+	self findOccurrencesIn: aMethod
 ]
 
 { #category : #accessing }
-RBFindAndReplaceRefactoring >> findOcurrencesIn: aMethod [
+RBFindAndReplaceRefactoring >> findOccurrencesIn: aMethod [
 	|methodNode sourceCode flag |
 	flag := false.
 	methodNode := aMethod ast.
@@ -108,7 +108,7 @@ RBFindAndReplaceRefactoring >> findOcurrencesIn: aMethod [
 	of: aMethod.
 	flag := true. ]
                       onFailure: [  ] .
-						flag ifTrue: [ self findOcurrencesIn: (aMethod modelClass methodFor: aMethod selector).
+						flag ifTrue: [ self findOccurrencesIn: (aMethod modelClass methodFor: aMethod selector).
 							^ self]]]]. 
 	methodNode body nodesDo: [ :node |
 		self matchNodes do: [ :matchNode | matchNode
@@ -118,7 +118,7 @@ RBFindAndReplaceRefactoring >> findOcurrencesIn: aMethod [
 	of: aMethod.
 	flag := true.]
                       onFailure: [  ] .
-						flag ifTrue: [ self findOcurrencesIn: (aMethod modelClass methodFor: aMethod selector).
+						flag ifTrue: [ self findOccurrencesIn: (aMethod modelClass methodFor: aMethod selector).
 							^ self]]].
 ]
 
@@ -144,26 +144,30 @@ RBFindAndReplaceRefactoring >> method [
 ]
 
 { #category : #accessing }
-RBFindAndReplaceRefactoring >> nodesOf: methodNode [ 
+RBFindAndReplaceRefactoring >> nodesOf: methodNode [
 	|visitor node|
 	visitor := RBCombinatorVisitor new.
-	node := methodNode copy .
+	node := methodNode copy.
 	node acceptVisitor: visitor.
 	^ visitor combinations 
 ]
 
 { #category : #preconditions }
-RBFindAndReplaceRefactoring >> preconditions [ 
+RBFindAndReplaceRefactoring >> preconditions [
 
 	| condition |
-	condition :=(RBCondition definesSelector: selector in: class) 
-		& (replacesAllHierarchy 
-		ifFalse: [ RBCondition empty ] 
-		ifTrue: [ class allSubclasses 
-						inject: RBCondition empty
-						into: [ :cond :aClass | 
-							cond & (RBCondition definesSelector: selector in: aClass) not] ]).
-	^condition
+	condition := (RBCondition definesSelector: selector in: class)
+	             & (replacesAllHierarchy
+			              ifFalse: [ self emptyCondition ]
+			              ifTrue: [ 
+				              class allSubclasses
+					              inject: self emptyCondition
+					              into: [ :cond :aClass | 
+						              cond
+						              &
+						              (RBCondition definesSelector: selector in: aClass)
+							              not ] ]).
+	^ condition
 ]
 
 { #category : #accessing }
@@ -188,5 +192,5 @@ RBFindAndReplaceRefactoring >> transform [
 	classes :=replacesAllHierarchy ifFalse: [ { class } ] ifTrue: [ class withAllSubclasses ].
 	classes do: [ :cls | (cls selectors copyWithout: selector) do: [ :sel | |aMethod|
 		aMethod := cls methodFor: sel.
-		self findAndReplaceOcurrencesIn: aMethod] ]
+		self findAndReplaceOccurrencesIn: aMethod] ]
 ]
