@@ -667,9 +667,16 @@ RPackageOrganizer >> packageMatchingExtensionName: anExtensionName [
 	
 	"if no package was found, we try to find one matching the begining of the name specified"
 	tmpPackageName := ''.
-	packages keysDo: [:aSymbol |
-		(anExtensionName beginsWithEmpty: (aSymbol asString, '-') caseSensitive: false)
-			ifTrue: [
+	packages keysDo: [:aSymbol | | aSymbolIndex aMinusIndex hasPrefix |
+		aSymbolIndex := anExtensionName
+			                findString: aSymbol
+			                startingAt: 1
+			                caseSensitive: false.
+		aMinusIndex := aSymbolIndex + aSymbol size.
+		hasPrefix := aSymbolIndex > 0 and: [ 
+			             aMinusIndex <= anExtensionName size and: [ 
+				             (anExtensionName at: aMinusIndex) = $- ] ].
+		hasPrefix ifTrue: [ 
 				"we keep the longest package name found"
 				(aSymbol size > tmpPackageName size) 
 					ifTrue: [ tmpPackageName := aSymbol ]]].
