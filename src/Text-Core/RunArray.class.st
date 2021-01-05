@@ -761,6 +761,16 @@ RunArray >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
+{ #category : #enumerating }
+RunArray >> sum: aBlock [
+	"Only loop on runs"
+	| sum |
+	sum := 0.
+	self runsAndValuesDo: [:run :value | 
+		sum := (aBlock value: value) * run + sum].
+	^ sum
+]
+
 { #category : #private }
 RunArray >> values [
 	"Answer the values in the receiver."
