@@ -8,6 +8,12 @@ Class {
 }
 
 { #category : #marshalling }
+TFCharType >> emitMarshallFromPrimitive: builder [
+	
+	builder send: #asCharacter
+]
+
+{ #category : #marshalling }
 TFCharType >> marshallFromPrimitive: aValue [
 	
 	^ aValue asCharacter
