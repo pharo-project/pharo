@@ -434,7 +434,7 @@ SpAbstractMorphicAdapter >> keyPressed: keyCode shift: shiftBoolean meta: metaBo
 			ifFalse: [ 2r00100000 ]) ].
 	
 	evt := KeyboardEvent new
-		setType: #keystroke
+		setType: #keyDown
 		buttons: modifiers
 		position: self widget position + (1 @ 1)
 		keyValue: keyCode
