@@ -18,7 +18,19 @@ SpPresenterFocusOrderTest >> focusedPresenter [
 ]
 
 { #category : #emulating }
-SpPresenterFocusOrderTest >> keyPressed: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
+SpPresenterFocusOrderTest >> keyDown: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
+	
+	^ self 
+		keyEvent: #keyDown
+		code: keyCode 
+		shift: shiftBoolean 
+		meta: metaBoolean 
+		control: controlBoolean 
+		option: optionBoolean
+]
+
+{ #category : #emulating }
+SpPresenterFocusOrderTest >> keyEvent: type code: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
 	| evt modifiers widget |
 	
 	widget := self focusedPresenter adapter widget.
@@ -35,7 +47,7 @@ SpPresenterFocusOrderTest >> keyPressed: keyCode shift: shiftBoolean meta: metaB
 			ifFalse: [ 2r00100000 ]) ].
 	
 	evt := KeyboardEvent new
-		setType: #keystroke
+		setType: type
 		buttons: modifiers
 		position: widget position + (1 @ 1)
 		keyValue: keyCode
@@ -49,10 +61,22 @@ SpPresenterFocusOrderTest >> keyPressed: keyCode shift: shiftBoolean meta: metaB
 ]
 
 { #category : #emulating }
+SpPresenterFocusOrderTest >> keyPressed: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
+	
+	^ self 
+		keyEvent: #keystroke 
+		code: keyCode 
+		shift: shiftBoolean 
+		meta: metaBoolean 
+		control: controlBoolean 
+		option: optionBoolean
+]
+
+{ #category : #emulating }
 SpPresenterFocusOrderTest >> pressShiftTab [
 
 	self 
-		keyPressed: Character tab asciiValue
+		keyDown: Character tab asciiValue
 		shift: true
 		meta: false
 		control: false
@@ -64,7 +88,7 @@ SpPresenterFocusOrderTest >> pressShiftTab [
 SpPresenterFocusOrderTest >> pressTab [
 
 	self 
-		keyPressed: Character tab asciiValue
+		keyDown: Character tab asciiValue
 		shift: false
 		meta: false
 		control: false
