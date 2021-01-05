@@ -6,8 +6,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'defaultKeymappingIndex',
-		'textArea',
-		'findReplaceService'
+		'textArea'
 	],
 	#category : #'Rubric-Editing-Core'
 }
