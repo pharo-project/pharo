@@ -29,9 +29,6 @@ Class {
 		'owningClass',
 		'definingClass'
 	],
-	#classInstVars : [
-		'slotClassDefinition'
-	],
 	#category : #'Kernel-Variables'
 }
 

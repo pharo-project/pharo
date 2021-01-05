@@ -12,9 +12,6 @@ Class {
 		'ast',
 		'classIsRebuild'
 	],
-	#classInstVars : [
-		'undeclaredSlots'
-	],
 	#category : #'Kernel-Variables'
 }
 
