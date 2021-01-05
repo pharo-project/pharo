@@ -11,9 +11,6 @@ Class {
 		'private',
 		'storedAnnouncements'
 	],
-	#classInstVars : [
-		'announcer'
-	],
 	#category : #'Ring-Core-Announcements'
 }
 
