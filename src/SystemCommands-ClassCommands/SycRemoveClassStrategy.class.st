@@ -19,7 +19,7 @@ SycRemoveClassStrategy class >> canExecuteWithReferences: hasReferences subclass
 ]
 
 { #category : #'instance creation' }
-SycRemoveClassStrategy class >> createAllForBrowser: aBrowser references: hasReferences subclasses: hasSubclasses users: hasUsers [
+SycRemoveClassStrategy class >> createForBrowser: aBrowser references: hasReferences subclasses: hasSubclasses users: hasUsers [
 
 	| strategies |
 	strategies := SortedCollection sortBlock: #orderForBrowser ascending.
