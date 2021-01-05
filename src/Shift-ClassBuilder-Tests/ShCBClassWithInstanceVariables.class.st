@@ -9,3 +9,9 @@ Class {
 	],
 	#category : #'Shift-ClassBuilder-Tests-TestClasses'
 }
+
+{ #category : #accessing }
+ShCBClassWithInstanceVariables >> inheritedSlot [
+
+	^ inheritedSlot
+]
