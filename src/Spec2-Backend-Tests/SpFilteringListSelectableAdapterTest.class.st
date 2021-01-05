@@ -34,6 +34,8 @@ SpFilteringListSelectableAdapterTest >> testClickOnRowTogglesSelection [
 { #category : #tests }
 SpFilteringListSelectableAdapterTest >> testClickOnRowWithShiftSelectsRange [
 
+	self skipOnPharoCITestingEnvironment.
+
 	presenter items: { 
 		OrderedCollection.
 		Array.
@@ -50,6 +52,8 @@ SpFilteringListSelectableAdapterTest >> testClickOnRowWithShiftSelectsRange [
 
 { #category : #tests }
 SpFilteringListSelectableAdapterTest >> testClickOnRowWithShiftSelectsRangeReversed [
+
+	self skipOnPharoCITestingEnvironment.
 
 	presenter items: { 
 		OrderedCollection.
