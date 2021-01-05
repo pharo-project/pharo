@@ -208,7 +208,9 @@ MCPackageLoader >> sorterForItems: aCollection [
 
 { #category : #private }
 MCPackageLoader >> tryToLoad: aDefinition [
-	[aDefinition addMethodAdditionTo: methodAdditions] on: Error do: [errorDefinitions add: aDefinition].
+	"no need to load class definitions again"
+	aDefinition isClassDefinition ifTrue: [ ^ self ].
+	[aDefinition addMethodAdditionTo: methodAdditions] on: Error do: [errorDefinitions add: aDefinition]
 ]
 
 { #category : #public }
