@@ -418,7 +418,19 @@ SpAbstractMorphicAdapter >> isVisible [
 ]
 
 { #category : #emulating }
-SpAbstractMorphicAdapter >> keyPressed: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
+SpAbstractMorphicAdapter >> keyDown: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
+	
+	^ self 
+		keyEvent: #keyDown
+		code: keyCode 
+		shift: shiftBoolean 
+		meta: metaBoolean 
+		control: controlBoolean 
+		option: optionBoolean
+]
+
+{ #category : #emulating }
+SpAbstractMorphicAdapter >> keyEvent: type code: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
 	| evt modifiers |
 	
 	modifiers := 0.
@@ -434,7 +446,7 @@ SpAbstractMorphicAdapter >> keyPressed: keyCode shift: shiftBoolean meta: metaBo
 			ifFalse: [ 2r00100000 ]) ].
 	
 	evt := KeyboardEvent new
-		setType: #keyDown
+		setType: type
 		buttons: modifiers
 		position: self widget position + (1 @ 1)
 		keyValue: keyCode
@@ -445,6 +457,18 @@ SpAbstractMorphicAdapter >> keyPressed: keyCode shift: shiftBoolean meta: metaBo
 	evt sentTo: self widgetEventReceiver.
 	"Some time to allow things to happen?"
 	10 milliSeconds wait
+]
+
+{ #category : #emulating }
+SpAbstractMorphicAdapter >> keyPressed: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
+	
+	^ self 
+		keyEvent: #keystroke
+		code: keyCode 
+		shift: shiftBoolean 
+		meta: metaBoolean 
+		control: controlBoolean 
+		option: optionBoolean
 ]
 
 { #category : #protocol }

@@ -35,7 +35,7 @@ SpPresenterFocusOrderTest >> keyPressed: keyCode shift: shiftBoolean meta: metaB
 			ifFalse: [ 2r00100000 ]) ].
 	
 	evt := KeyboardEvent new
-		setType: #keyDown
+		setType: #keystroke
 		buttons: modifiers
 		position: widget position + (1 @ 1)
 		keyValue: keyCode
