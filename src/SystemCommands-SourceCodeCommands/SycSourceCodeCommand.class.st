@@ -33,6 +33,8 @@ SycSourceCodeCommand class >> method: aMethod node: aRBProgramNode [
 SycSourceCodeCommand >> executeRefactoring: refactoring [
 
 	NautilusRefactoring new refactoringOptions: refactoring.
+	"self halt."
+	"refactoring options inspect."
 	[ refactoring execute ] on: RBRefactoringError do: [ :e | UIManager default alert: e messageText ].
 ]
 
