@@ -17,11 +17,11 @@ Virtual breakpoints were introduced because due to technical limitations, normal
 Class {
 	#name : #SindarinDebugger,
 	#superclass : #Object,
+	#traits : 'TDebugger',
+	#classTraits : 'TDebugger classTrait',
 	#instVars : [
 		'process',
 		'stepHooks',
-		'nodeMapForMethod',
-		'debugStarted',
 		'sindarinSession',
 		'blockToDebug'
 	],
@@ -40,6 +40,25 @@ SindarinDebugger class >> debug: aBlock [
 	"Creates an execution of aBlock and returns an instance of ScriptableDebugger attached to this execution"
 	^ self new debug: aBlock
 
+]
+
+{ #category : #'instance creation' }
+SindarinDebugger class >> debugSession: aDebugSession [
+
+	| debugger exception |
+	debugger := self attachTo: aDebugSession.
+	
+	exception := aDebugSession exception.
+	exception class == SindarinPointcutException ifFalse: [ 
+		aDebugSession resume; clear; terminate.
+		^ self ].
+	
+	"Stepping to return to the context requesting the execution of a Sindarin script"
+	debugger step.
+	debugger step.
+	exception script executeWith: debugger.
+	aDebugSession resume; clear; terminate
+	
 ]
 
 { #category : #'graphical debugger' }
@@ -86,8 +105,7 @@ SindarinDebugger >> attachTo: aDebugSession [
 
 	sindarinSession := aDebugSession asSindarinDebugSession.
 	process := aDebugSession interruptedProcess.
-	sindarinSession deactivateEventTriggering.
-	debugStarted := true
+	sindarinSession deactivateEventTriggering
 ]
 
 { #category : #astAndAstMapping }
@@ -107,7 +125,7 @@ SindarinDebugger >> contextIsAboutToSignalException: aContext [
 	"Returns whether aContext is about to execute a message-send of selector #signal to an instance of the Exception class (or one of its subclasses)"
 
 	| node |
-	node := (self nodeMapForMethod: aContext method) nodeForPC: aContext pc.
+	node := aContext method methodNode bcToASTCache nodeForPC: aContext pc.
 	node isMessage
 		ifFalse: [ ^ false ].
 	node selector = #signal
@@ -158,7 +176,7 @@ SindarinDebugger >> continue [
 			^ #breakpoint ]
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 SindarinDebugger >> currentBytecode [
 	^ self context method symbolicBytecodes
 ]
@@ -191,7 +209,6 @@ SindarinDebugger >> debug: aBlock [
 	sindarinSession deactivateEventTriggering.
 	[ self selector = #newProcess ] whileFalse: [ self step ].	"Step the process to get out of the on:do: context added at the bottom of its stack"
 	[ self selector = #newProcess ] whileTrue: [ self step ].	"Step the process so that it leaves BlockClosure>>#newProcess and enters the block for which a process was created"
-	debugStarted := true
 ]
 
 { #category : #accessing }
@@ -209,8 +226,7 @@ SindarinDebugger >> hasSignalledUnhandledException [
 
 { #category : #initialization }
 SindarinDebugger >> initialize [
-	stepHooks := OrderedCollection new.
-	debugStarted := false
+	stepHooks := OrderedCollection new
 ]
 
 { #category : #private }
@@ -321,13 +337,7 @@ SindarinDebugger >> method [
 SindarinDebugger >> node [
 	"Returns the AST node about to be executed by the top context of the execution"
 
-	debugStarted
-		ifFalse:
-			[ "Until the debug session is started, node is returned using the unoptimized version" "Sindarin starts by executing controlled steps to exit the caller code (e.g. tests)
-		before entering the actual debugged code, and we do not want to cache nodes for the 
-		caller code." ^ self context method sourceNodeForPC: self context pc ].
-	"Once the hand is given to the tool or user, we start caching nodes for better performance"
-	^ self nodeMap nodeForPC: self context pc
+	^ self context sourceNodeExecuted
 ]
 
 { #category : #astAndAstMapping }
@@ -335,22 +345,6 @@ SindarinDebugger >> nodeForContext: aContext [
 	"Returns the AST node about to be executed by the top context of the execution"
 
 	^ aContext method sourceNodeForPC: aContext pc
-]
-
-{ #category : #astAndAstMapping }
-SindarinDebugger >> nodeMap [
-	^ self nodeMapForMethod: self context method
-]
-
-{ #category : #astAndAstMapping }
-SindarinDebugger >> nodeMapForMethod: aCompiledMethod [
-	nodeMapForMethod ifNil: [ nodeMapForMethod := Dictionary new ].
-	^ (nodeMapForMethod
-		at: aCompiledMethod methodClass name
-		ifAbsentPut: [ Dictionary new ])
-		at: aCompiledMethod selector
-		ifAbsentPut: [ SindarinBytecodeToASTCache
-				generateForCompiledMethod: aCompiledMethod ]
 ]
 
 { #category : #'graphical debugger' }
@@ -397,6 +391,17 @@ SindarinDebugger >> restart [
 	"Resets this debugger on a new execution of the block passed as argument to the initial call to #debug:"
 	self initialize.
 	self debug: blockToDebug.
+]
+
+{ #category : #'stepping -  auto' }
+SindarinDebugger >> resume [
+
+	sindarinSession resumeAndClear
+]
+
+{ #category : #scripts }
+SindarinDebugger >> run: aSindarinScript [
+	aSindarinScript executeWith: self
 ]
 
 { #category : #stackAccessHelpers }
@@ -619,13 +624,6 @@ SindarinDebugger >> stepUntil: aBlock [
 	"Steps the execution until aBlock evaluates to true"
 
 	aBlock whileFalse: [ self step ]
-]
-
-{ #category : #stackAccessHelpers }
-SindarinDebugger >> temporaries [
-	"Returns the temporary variables of the current stack-frame."
-	self flag: 'Should not be called temporaries because it is a dictionary key->values and not variables'.
-	^ self context temporaries
 ]
 
 { #category : #stackAccessHelpers }

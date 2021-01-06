@@ -17,7 +17,7 @@ StDebuggerInspectorTest >> setUp [
 
 { #category : #running }
 StDebuggerInspectorTest >> tearDown [
-	session ifNotNil:[session terminate].
+	session ifNotNil:[session clear].
 	super tearDown
 ]
 

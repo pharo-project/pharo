@@ -194,6 +194,6 @@ StTestDebuggerProvider >> sessionWithDNUAfterStep [
 
 { #category : #helpers }
 StTestDebuggerProvider >> terminate [ 
-	session ifNotNil:[session terminate].
+	session ifNotNil:[session clear].
 	session := nil
 ]

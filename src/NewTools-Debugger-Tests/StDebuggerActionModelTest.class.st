@@ -53,7 +53,7 @@ StDebuggerActionModelTest >> benchmarkFilterStack [
 { #category : #helper }
 StDebuggerActionModelTest >> changeSession: aDebugSession [
 
-	session terminate.
+	session clear.
 	session := aDebugSession.
 	debugActionModel := StDebuggerActionModel on: session
 ]
@@ -114,6 +114,7 @@ StDebuggerActionModelTest >> setUp [
 	process := [ method valueWithReceiver: self arguments: #() ]
 		newProcess.
 	context := process suspendedContext.
+	session ifNotNil: [ session clear ].
 	session := (StTestDebuggerProvider new debuggerWithContext: context)
 		session.
 	session
@@ -124,7 +125,8 @@ StDebuggerActionModelTest >> setUp [
 { #category : #running }
 StDebuggerActionModelTest >> tearDown [
 	debugger ifNotNil: [ debugger close].
-	session interruptedContext ifNotNil: [ session terminate ].
+	session ifNotNil: [ session clear ].
+	session := nil.
 	StDebuggerUsingSpecSelectorMock removeSelector: #testMethod.
 	StDebuggerUsingSpecSelectorMock removeSelector: #method.
 	StDebuggerUsingSpecSelectorMock removeSelector: #unclassifiedMethod.
