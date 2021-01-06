@@ -38,7 +38,7 @@ SpFilteringSelectableListPresenter class >> exampleWithInitializedFilterAndSelet
 	example items: RBBrowserEnvironment default classes asArray.
 	example displayIcon: [ :aClass | aClass systemIcon ].
 	example applyFilter: 'SpFiltering'.
-	example selectedItems: { SpFilteringListPresenter. SpFilteringSelectableListPresenter }.
+	example selectItems: { SpFilteringListPresenter. SpFilteringSelectableListPresenter }.
 	example openWithSpec title:
 		self name asString , ' example with filter'.
 

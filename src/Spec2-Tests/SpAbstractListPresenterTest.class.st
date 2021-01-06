@@ -41,7 +41,7 @@ SpAbstractListPresenterTest >> testActivationOnDoubleClickShouldNotActivateOnCli
 	activatedItem := nil.
 	presenter
 		activateOnDoubleClick;
-		whenActivatedDo: [ :selection  | activatedItem := selection selectionItem ].
+		whenActivatedDo: [ :selection  | activatedItem := selection selectedItem ].
 	
 	presenter clickAtIndex: 1.
 	

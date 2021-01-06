@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #protocol }
-SpMorphicOverlayAdapter >> addConstraits: constraints toChild: childMorph [
+SpMorphicOverlayAdapter >> addConstraints: constraints toChild: childMorph [
 	"Adds constraits by child"
 
 	| theMorph |

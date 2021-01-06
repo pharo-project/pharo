@@ -58,6 +58,12 @@ SpFilteringListPresenter >> connectPresenters [
 ]
 
 { #category : #api }
+SpFilteringListPresenter >> contextMenu: aValuable [
+ 
+	self listPresenter contextMenu: aValuable
+]
+
+{ #category : #api }
 SpFilteringListPresenter >> display [ 
 
 	^ self listPresenter display

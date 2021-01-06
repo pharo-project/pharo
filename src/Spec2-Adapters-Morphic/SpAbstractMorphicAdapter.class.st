@@ -419,6 +419,18 @@ SpAbstractMorphicAdapter >> isVisible [
 
 { #category : #emulating }
 SpAbstractMorphicAdapter >> keyDown: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
+	
+	^ self 
+		keyEvent: #keyDown
+		code: keyCode 
+		shift: shiftBoolean 
+		meta: metaBoolean 
+		control: controlBoolean 
+		option: optionBoolean
+]
+
+{ #category : #emulating }
+SpAbstractMorphicAdapter >> keyEvent: type code: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
 	| evt modifiers |
 	
 	modifiers := 0.
@@ -434,7 +446,7 @@ SpAbstractMorphicAdapter >> keyDown: keyCode shift: shiftBoolean meta: metaBoole
 			ifFalse: [ 2r00100000 ]) ].
 	
 	evt := KeyboardEvent new
-		setType: #keyDown
+		setType: type
 		buttons: modifiers
 		position: self widget position + (1 @ 1)
 		keyValue: keyCode
@@ -449,32 +461,14 @@ SpAbstractMorphicAdapter >> keyDown: keyCode shift: shiftBoolean meta: metaBoole
 
 { #category : #emulating }
 SpAbstractMorphicAdapter >> keyPressed: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
-	| evt modifiers |
 	
-	modifiers := 0.
-	shiftBoolean ifTrue: [ modifiers := modifiers | 8 ].
-	metaBoolean ifTrue: [ modifiers := modifiers |
-		(Smalltalk os isWin32 | Smalltalk os isUnix
-			ifTrue: [ 2r00010000 ]
-			ifFalse: [ 2r01000000 ]) ].
-	controlBoolean ifTrue: [ modifiers := modifiers | 2r00010000 ].
-	optionBoolean ifTrue: [ modifiers := modifiers |
-		(Smalltalk os isWin32 | Smalltalk os isUnix
-			ifTrue: [ 2r01000000 ]
-			ifFalse: [ 2r00100000 ]) ].
-	
-	evt := KeyboardEvent new
-		setType: #keystroke
-		buttons: modifiers
-		position: self widget position + (1 @ 1)
-		keyValue: keyCode
-		charCode: keyCode
-		hand: self currentWorld activeHand
-		stamp: Time millisecondClockValue.
-
-	evt sentTo: self widgetEventReceiver.
-	"Some time to allow things to happen?"
-	10 milliSeconds wait
+	^ self 
+		keyEvent: #keystroke
+		code: keyCode 
+		shift: shiftBoolean 
+		meta: metaBoolean 
+		control: controlBoolean 
+		option: optionBoolean
 ]
 
 { #category : #protocol }
@@ -511,7 +505,24 @@ SpAbstractMorphicAdapter >> removeSubWidgets [
 ]
 
 { #category : #emulating }
-SpAbstractMorphicAdapter >> rightClicked [
+SpAbstractMorphicAdapter >> sendClickEvent [
+	| evt |
+
+	evt := MouseButtonEvent new 
+		setType: nil 
+		position: widget center 
+		which: MouseButtonEvent redButton 
+		buttons: MouseButtonEvent redButton 
+		hand: nil 
+		stamp: nil.
+
+	(widget handlesMouseDown: evt) ifTrue: [
+		widget handleMouseDown: evt.
+		widget handleMouseUp: evt ]
+]
+
+{ #category : #emulating }
+SpAbstractMorphicAdapter >> sendRightClickEvent [
 	| evt |
 
 	evt := MouseButtonEvent new 

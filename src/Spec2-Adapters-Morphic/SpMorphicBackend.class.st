@@ -25,6 +25,12 @@ SpMorphicBackend >> defer: aBlock [
 	UIManager default defer: aBlock
 ]
 
+{ #category : #'deferred message' }
+SpMorphicBackend >> forceDefer: aBlock [
+
+	UIManager default defer: aBlock
+]
+
 { #category : #'private - notifying' }
 SpMorphicBackend >> notifyError: aSpecNotification [
 

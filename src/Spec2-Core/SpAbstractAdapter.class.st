@@ -68,6 +68,11 @@ SpAbstractAdapter >> adapt: aPresenter [
 	widget := self buildWidget
 ]
 
+{ #category : #factory }
+SpAbstractAdapter >> adapterWasBuilt [
+	"hook to add after-build opeations (for example, initial status, etc.)"
+]
+
 { #category : #protocol }
 SpAbstractAdapter >> add: aWidget [
 
@@ -172,12 +177,6 @@ SpAbstractAdapter >> replaceLayoutWith: aLayout [
 	
 ]
 
-{ #category : #emulating }
-SpAbstractAdapter >> rightClicked [
-
-	self subclassResponsibility
-]
-
 { #category : #accessing }
 SpAbstractAdapter >> selector [
 	
@@ -188,6 +187,12 @@ SpAbstractAdapter >> selector [
 SpAbstractAdapter >> selector: anObject [
 	
 	selector := anObject
+]
+
+{ #category : #emulating }
+SpAbstractAdapter >> sendRightClickEvent [
+
+	self subclassResponsibility
 ]
 
 { #category : #updating }

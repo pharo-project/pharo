@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #'adding/removing' }
-SpMorphicPanedAdapter >> addConstraits: constraints toChild: childMorph [
+SpMorphicPanedAdapter >> addConstraints: constraints toChild: childMorph [
 	"Adds constraits by child"
 	
 	| theMorph |	

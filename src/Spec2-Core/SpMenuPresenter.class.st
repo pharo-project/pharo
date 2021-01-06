@@ -1,5 +1,5 @@
 "
-I presenter to describe  a menu.
+A presenter to describe a menu.
 A menu presenter contains groups of menu items (having one unique group by default, to simplify building simple menus).
 A menu presenter is included in presenters that implement the `#contextMenu:` (See below) method, but it can also be invoked by calling `SpMenuPresenter>>#openWithSpecAt:`
 "
@@ -121,10 +121,11 @@ SpMenuPresenter >> canTakeKeyboardFocus [
 
 { #category : #accessing }
 SpMenuPresenter >> defaultGroup [
-	^ defaultGroup
-		ifNil: [ defaultGroup := self instantiate: SpMenuGroupPresenter.
-			self addMenuGroup: defaultGroup.
-			defaultGroup ]
+
+	^ defaultGroup ifNil: [ 
+		defaultGroup := self instantiate: SpMenuGroupPresenter.
+		self addMenuGroup: defaultGroup.
+		defaultGroup ]
 ]
 
 { #category : #'api-building' }
@@ -200,7 +201,14 @@ SpMenuPresenter >> neglect: aModel [
 SpMenuPresenter >> openWithSpecAt: aPosition [
 
 	self buildWithSpecAsPopup.
-	self changed: #openAt: with: { aPosition }
+	self withAdapterDo: [ :anAdapter | anAdapter openAt: aPosition ]
+]
+
+{ #category : #api }
+SpMenuPresenter >> openWithSpecAtPointer [
+
+	self buildWithSpecAsPopup.
+	self withAdapterDo: [ :anAdapter | anAdapter openAtPointer ]
 ]
 
 { #category : #printing }
