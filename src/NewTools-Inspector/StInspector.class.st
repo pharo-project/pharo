@@ -194,9 +194,9 @@ StInspector >> initializeWindow: aWindowPresenter [
 		title: self windowTitle;
 		windowIcon: self windowIcon;
 		initialExtent: self class preferredExtent;
-		whenOpenedDo: [ 
-			self startStepping.
-			self takeKeyboardFocus ];
+		whenOpenedDo: [ self takeKeyboardFocus ];
+		whenFocusReceivedDo: [ self startStepping ];
+		whenFocusLostDo: [ self stopStepping ];
 		whenClosedDo: [ self stopStepping ];
 		whenResizingDo: [ :ann | self preferredExtent: ann newSize ]
 ]
@@ -285,7 +285,7 @@ StInspector >> spacing [
 
 { #category : #'private stepping' }
 StInspector >> startStepping [
-	
+
 	StInspectorRefreshService uniqueInstance register: self
 ]
 

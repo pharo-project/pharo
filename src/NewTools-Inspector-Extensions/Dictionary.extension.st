@@ -1,10 +1,10 @@
 Extension { #name : #Dictionary }
 
 { #category : #'*NewTools-Inspector-Extensions' }
-Dictionary >> inspectionItems [
+Dictionary >> inspectionItems: aBuilder [
 	<inspectorPresentationOrder: 0 title: 'Items'> 
 	
-	^ SpTablePresenter new 
+	^ aBuilder newTable 
 		addColumn: (SpStringTableColumn 
 			title: 'Key'
 			evaluated: [ :each | StObjectPrinter asTruncatedTextFrom: each key ]);

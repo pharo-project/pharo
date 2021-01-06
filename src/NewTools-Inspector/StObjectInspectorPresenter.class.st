@@ -133,9 +133,11 @@ StObjectInspectorPresenter >> defaultInputPort [
 { #category : #'api-focus' }
 StObjectInspectorPresenter >> defaultKeyboardFocus [
 
-	^ views pages 
-		ifNotEmpty: [ :pages | pages first activePresenter ] 
-		ifEmpty: [ self ]
+	views pages ifNotEmpty: [ :pages | 
+		pages first activePresenter 
+			ifNotNil: [ :aPresenter | ^ aPresenter ] ].
+		
+	^ self
 ]
 
 { #category : #accessing }

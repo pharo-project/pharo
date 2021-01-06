@@ -22,7 +22,8 @@ StDebuggerContextInteractionModel >> behavior [
 { #category : #binding }
 StDebuggerContextInteractionModel >> bindingOf: aString [
 
-	^ self doItReceiver bindingOf: aString
+	^ (context lookupVar: aString) ifNotNil: [ :var | 
+		  var asDoItVariableFrom: context ]
 ]
 
 { #category : #accessing }
@@ -51,7 +52,7 @@ StDebuggerContextInteractionModel >> doItReceiver [
 { #category : #testing }
 StDebuggerContextInteractionModel >> hasBindingOf: aString [
 
-	^ self doItReceiver hasBindingOf: aString
+	^ (context lookupVar: aString) notNil
 ]
 
 { #category : #testing }
