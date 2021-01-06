@@ -183,6 +183,15 @@ ClassFactoryForTestCase >> newClassUsing: aTraitComposition [
 ]
 
 { #category : #creating }
+ClassFactoryForTestCase >> newSubclassOf: aClass [
+
+	^ self 
+		newSubclassOf: aClass
+		instanceVariableNames: ''
+		classVariableNames: ''
+]
+
+{ #category : #creating }
 ClassFactoryForTestCase >> newSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString [
 
 	^ self 

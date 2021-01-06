@@ -106,9 +106,9 @@ ClyBrowserMorph >> isMethodSelected: aMethod [
 ]
 
 { #category : #'*Calypso-SystemTools-Core' }
-ClyBrowserMorph >> requestRemoveClassStrategyFor: classes [
+ClyBrowserMorph >> removeClassStrategiesFor: classes [
 
-	 | hasReferences hasSubclasses hasUsers result strategies |
+	 | hasReferences hasSubclasses hasUsers |
 	 hasReferences := self hasReferencesToClasses: classes.
 	 hasSubclasses := ((classes flatCollect: [ :each | each subclasses ]) 
 		                   copyWithoutAll: classes) notEmpty.
@@ -116,21 +116,30 @@ ClyBrowserMorph >> requestRemoveClassStrategyFor: classes [
 		              copyWithoutAll: classes) notEmpty.
 
 	 hasReferences | hasSubclasses | hasUsers ifFalse: [ 
-		 ^ SycSilentlyRemoveClassStrategy new ].
+		 ^ {SycSilentlyRemoveClassStrategy new} ].
 
-	 strategies := SycRemoveClassStrategy
-		               createAllForBrowser: self
-		               references: hasReferences
-		               subclasses: hasSubclasses
-		               users: hasUsers.
+	 ^SycRemoveClassStrategy
+			createForBrowser: self
+		   references: hasReferences
+		   subclasses: hasSubclasses
+		   users: hasUsers.
+]
 
-	 result := UIManager default
+{ #category : #'*Calypso-SystemTools-Core' }
+ClyBrowserMorph >> requestRemoveClassStrategyFor: classes [
+	| result strategies |
+
+	strategies := self removeClassStrategiesFor: classes.
+	
+	strategies size = 1 ifTrue: [ ^strategies first ].
+
+	result := UIManager default
 		           chooseFrom:
 		           (strategies collect: [ :each | each userRequestString ])
 		           values: strategies
 		           title: 'Class has references, subclasses, or users'.
 
-	 ^ result ifNil: [ SycNotRemoveClassStrategy new ]
+	^ result ifNil: [ SycNotRemoveClassStrategy new ]
 ]
 
 { #category : #'*Calypso-SystemTools-Core' }
