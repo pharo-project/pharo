@@ -1,13 +1,17 @@
-Extension { #name : #ClyBrowserMorphTest }
+Class {
+	#name : #ClyBrowserMorphTest,
+	#superclass : #TestCase,
+	#category : #'Calypso-SystemTools-Core-Tests'
+}
 
-{ #category : #'*Calypso-SystemTools-Core-Tests' }
+{ #category : #tests }
 ClyBrowserMorphTest >> testHasReferencesToClass [
 	| browser |
 	browser := ClyFullBrowser onDefaultEnvironment.
 	self assert: (browser hasReferencesToClasses: { ClyFullBrowser })
 ]
 
-{ #category : #'*Calypso-SystemTools-Core-Tests' }
+{ #category : #tests }
 ClyBrowserMorphTest >> testRequestRemoveClassStrategyForParentClass [
 	| browser strategies |
 	browser := ClyFullBrowser onDefaultEnvironment.
@@ -19,7 +23,7 @@ ClyBrowserMorphTest >> testRequestRemoveClassStrategyForParentClass [
 	
 ]
 
-{ #category : #'*Calypso-SystemTools-Core-Tests' }
+{ #category : #tests }
 ClyBrowserMorphTest >> testRequestRemoveClassStrategyForReferencedClass [
 	| browser strategies |
 	browser := ClyFullBrowser onDefaultEnvironment.
@@ -31,7 +35,7 @@ ClyBrowserMorphTest >> testRequestRemoveClassStrategyForReferencedClass [
 	
 ]
 
-{ #category : #'*Calypso-SystemTools-Core-Tests' }
+{ #category : #tests }
 ClyBrowserMorphTest >> testRequestRemoveClassStrategyForUnreferencedClass [
 	| browser class strategies |
 	browser := ClyFullBrowser onDefaultEnvironment.
@@ -42,7 +46,7 @@ ClyBrowserMorphTest >> testRequestRemoveClassStrategyForUnreferencedClass [
 	
 ]
 
-{ #category : #'*Calypso-SystemTools-Core-Tests' }
+{ #category : #tests }
 ClyBrowserMorphTest >> testRequestRemoveClassStrategyForUsedTrait [
 	| browser strategies |
 	browser := ClyFullBrowser onDefaultEnvironment.
