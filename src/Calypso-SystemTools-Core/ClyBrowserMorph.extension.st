@@ -90,13 +90,7 @@ ClyBrowserMorph >> decorateMethodEditor: aMethodEditor [
 { #category : #'*Calypso-SystemTools-Core' }
 ClyBrowserMorph >> hasReferencesToClasses: classes [
 	
-	| query references |
-	
-	query := (ClyClassReferencesQuery toAny: classes from: self systemScope).
-	references := query execute.	
-	^(references notEmpty and: [
-		((references items collect: [:each | each origin])
-			difference: (classes flatCollect: [ :each | { each . each classSide } ])) notEmpty])
+	^((ClyClassExternalReferencesQuery toAny: classes from: self systemScope) execute) notEmpty
 ]
 
 { #category : #'*Calypso-SystemTools-Core' }
@@ -108,21 +102,9 @@ ClyBrowserMorph >> isMethodSelected: aMethod [
 { #category : #'*Calypso-SystemTools-Core' }
 ClyBrowserMorph >> removeClassStrategiesFor: classes [
 
-	 | hasReferences hasSubclasses hasUsers |
-	 hasReferences := self hasReferencesToClasses: classes.
-	 hasSubclasses := ((classes flatCollect: [ :each | each subclasses ]) 
-		                   copyWithoutAll: classes) notEmpty.
-	 hasUsers := ((classes flatCollect: [ :each | each users ]) 
-		              copyWithoutAll: classes) notEmpty.
-
-	 hasReferences | hasSubclasses | hasUsers ifFalse: [ 
-		 ^ {SycSilentlyRemoveClassStrategy new} ].
-
 	 ^SycRemoveClassStrategy
 			createForBrowser: self
-		   references: hasReferences
-		   subclasses: hasSubclasses
-		   users: hasUsers.
+		   classes: classes
 ]
 
 { #category : #'*Calypso-SystemTools-Core' }
