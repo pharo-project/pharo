@@ -31,11 +31,6 @@ StNodeCollector >> collectNodes [
 	self slotNodes
 ]
 
-{ #category : #building }
-StNodeCollector >> collectTempsNodes [
-	^self tempNodesForContext: object context
-]
-
 { #category : #private }
 StNodeCollector >> indexedNodes [
 	| nodes indexableDisplayLimit top bottom topLimit bottomLimit |
@@ -91,7 +86,7 @@ StNodeCollector >> slotNodes [
 
 { #category : #building }
 StNodeCollector >> tempNodesForContext: aContext [
-^ aContext astScope allTemps collect: [ :temp |
-(StInspectorTempNode hostObject: aContext) tempVariable: temp]
 
+	^ aContext astScope allTemps collect: [ :temp | 
+		  (StInspectorTempNode hostObject: aContext) tempVariable: temp ]
 ]
