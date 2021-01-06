@@ -5,7 +5,6 @@ Class {
 	#name : #SycExtractMethodCommand,
 	#superclass : #SycSourceCodeCommand,
 	#instVars : [
-		'selectedTextInterval',
 		'interaction'
 	],
 	#category : #'SystemCommands-SourceCodeCommands'
