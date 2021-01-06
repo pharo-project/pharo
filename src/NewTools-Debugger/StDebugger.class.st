@@ -1252,3 +1252,20 @@ StDebugger >> updateWindowTitle [
 
 	self withWindowDo: [ :window | window title: self newTitle ].
 ]
+
+{ #category : #'ui requests' }
+StDebugger >> warning: aString for: aPresenter [
+
+	self newPopover
+		addStyle: 'error';
+		relativeTo: aPresenter;
+		position: SpPopoverPosition top;
+		presenter: (SpPresenter new
+				 layout: (SpBoxLayout newVertical
+						  borderWidth: 2;
+						  spacing: 0;
+						  add: (self newLabel label: aString);
+						  yourself);
+				 yourself);
+		popup
+]

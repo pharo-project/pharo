@@ -16,7 +16,7 @@ SindarinStepToNextCallInClassCommand class >> defaultDescription [
 SindarinStepToNextCallInClassCommand class >> defaultName [
 	<toolbarExtensionDebugCommand: 50>
 	<codeExtensionDebugCommand: 50>
-	^ '[Exp.] Step until next call in class'
+	^ 'Next call in class'
 ]
 
 { #category : #predicates }

@@ -16,7 +16,6 @@ StDebuggerCodeCommandTreeBuilderTest >> testCodeDebugCommands [
 	|codeCommandClasses|
 	codeCommandClasses := OrderedCollection new.
 	codeCommandClasses addAll: builder codeExecutionControlCommandsClasses.
-	codeCommandClasses addAll: builder codeExtensionCommandsClasses.
 	self
 		assertCommandGroup: builder codeDebugCommands
 		hasSameCommands: codeCommandClasses
@@ -39,18 +38,6 @@ StDebuggerCodeCommandTreeBuilderTest >> testCodeExecutionControlCommandsClasses 
 	self
 		assertCollection: builder codeExecutionControlCommandsClasses
 		equals: {StRunToSelectionCommand}
-]
-
-{ #category : #tests }
-StDebuggerCodeCommandTreeBuilderTest >> testCodeExtensionCommandsClasses [
-	| classes |
-	self flag: '#DBG_IMPROVE'.
-	"This test basically reproduce the same code than in the command builder class.
-	Not nice, but at least specifies what commands classes should be returned by the builder."
-	classes :=  (Pragma allNamed: #codeExtensionDebugCommand:) collect: [ :prg |  prg methodClass soleInstance ].
-	self
-		assertCollection: builder codeExtensionCommandsClasses
-		equals: classes
 ]
 
 { #category : #tests }

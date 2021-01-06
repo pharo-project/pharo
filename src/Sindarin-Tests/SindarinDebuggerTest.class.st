@@ -300,6 +300,49 @@ SindarinDebuggerTest >> testContinueUntilTheEnd [
 		onTimeout: [ "^^^ Setup code for the timeout" self assert: false description: 'Test timed out' ]
 ]
 
+{ #category : #'tests - execution predicates' }
+SindarinDebuggerTest >> testIsAboutToInstantiateClass [
+
+	|debugger session|
+	debugger := SindarinDebugger new.
+	session := SindarinDebugSessionMock new.
+	debugger sindarinSession: session.
+	
+	session isMessage: false.	
+	self deny: debugger isAboutToInstantiateClass.
+	
+	session isMessage: true.
+	session receiver: Object new.
+	session selector: #yourself.
+	self deny: debugger isAboutToInstantiateClass.
+	
+	session receiver: Object new.
+	session selector: #toto.
+	self deny: debugger isAboutToInstantiateClass.
+	
+	session receiver: Behavior new.
+	session selector: #basicNew.
+	self assert: debugger isAboutToInstantiateClass.
+	
+	session selector: #basicNew:.
+	self assert: debugger isAboutToInstantiateClass.
+	
+	session selector: #adoptInstance:.
+	self assert: debugger isAboutToInstantiateClass.
+	
+	session receiver: Object new.
+	session selector: #clone.
+	self assert: debugger isAboutToInstantiateClass.
+	
+	session selector: #copyFrom:.
+	self assert: debugger isAboutToInstantiateClass.
+	
+	session receiver: CompiledCode.
+	session selector: #newMethod:header:.
+	self assert: debugger isAboutToInstantiateClass
+	
+]
+
 { #category : #tests }
 SindarinDebuggerTest >> testIsExecutionFinished [
 	| scdbg |
