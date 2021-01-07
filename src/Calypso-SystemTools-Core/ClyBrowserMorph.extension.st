@@ -1,18 +1,6 @@
 Extension { #name : #ClyBrowserMorph }
 
 { #category : #'*Calypso-SystemTools-Core' }
-ClyBrowserMorph >> allowSilentlyRemoveMethods: methods whichHaveSenders: senders [
-
-	| singleSender sendersCount |
-	sendersCount := senders size.
-	sendersCount = 0 ifTrue: [ ^true].
-	methods size = 1 & (sendersCount = 1) ifFalse: [^false].
-	 
-	singleSender := senders itemAt: 1.
-	^singleSender == methods first
-]
-
-{ #category : #'*Calypso-SystemTools-Core' }
 ClyBrowserMorph >> confirmEmptySystemQuery: aQuery [
 	
 	| showResult result |
@@ -118,24 +106,19 @@ ClyBrowserMorph >> requestRemoveClassStrategyFor: classes [
 
 { #category : #'*Calypso-SystemTools-Core' }
 ClyBrowserMorph >> requestRemoveMethodStrategyFor: methods [
-	| selectors result strategies caption  senders senderCount plural |
+	| selectors result strategies title |
 	
 	selectors := (methods collect: [ :each | each selector ] as: IdentitySet) asArray.	
 	
-	senders := (ClyMessageSendersQuery ofAny: selectors from: self systemScope) execute.
-	(self allowSilentlyRemoveMethods: methods whichHaveSenders: senders)
-		ifTrue: [ ^SycSilentlyRemoveMethodStrategy new ].
-
-	strategies := SycRemoveMethodStrategy createAllForBrowser: self.
-	senderCount := senders size.
-	plural := '' asPluralBasedOn: senderCount.
+	strategies := SycRemoveMethodStrategy createForBrowser: self methods: methods.
+	strategies size = 1 ifTrue: [ ^strategies first ].
 	
-	caption := selectors size > 1 
-		ifTrue: [ 'There are {1} sender{2}' format: {senderCount. plural}]
-		ifFalse: ['The message #{1} has {2} sender{3}' format: {selectors anyOne. senderCount. plural}].	
+	title := selectors size > 1 
+		ifTrue: [ 'Methods have senders']
+		ifFalse: ['Method #{1} has sender{s' format: {selectors anyOne}].	
 			
 	result := UIManager default 
-		chooseFrom: (strategies collect: [:each | each userRequestString]) values: strategies title: caption.
+		chooseFrom: (strategies collect: [:each | each userRequestString]) values: strategies title: title.
 		
 	^result ifNil: [ SycNotRemoveMethodStrategy new ]
 ]
