@@ -93,6 +93,7 @@ StTestDebuggerProvider >> debuggerWithObjectHalting [
 
 { #category : #helpers }
 StTestDebuggerProvider >> debuggerWithRunnableContext [
+<haltOrBreakpointForTesting>
 	[ Halt now ]
 		on: Halt
 		do: [ :err | 

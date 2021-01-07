@@ -69,7 +69,7 @@ StDebuggerTest >> tearDown [
 		debugger close.
 		debugger session ifNotNil: [ :s | s clear ] ].
 	StTestDebuggerProvider removeSelector: #foobar. 
-	StDebuggerObjectForTests compile: 'haltingMethod self halt. ^self' classified: 'util'.
+	StDebuggerObjectForTests compile: 'haltingMethod <haltOrBreakpointForTesting> self halt. ^self' classified: 'util'.
 	super tearDown
 ]
 

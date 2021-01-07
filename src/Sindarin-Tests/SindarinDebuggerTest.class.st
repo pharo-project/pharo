@@ -197,6 +197,7 @@ SindarinDebuggerTest >> helperMethodReturnWithException [
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethodReturnWithHalt [
+	<haltOrBreakpointForTesting>
 	| a |
 	a := 0.
 	self halt.

@@ -81,6 +81,7 @@ StDebuggerActionModelTest >> method1: i [
 
 { #category : #helper }
 StDebuggerActionModelTest >> method2: i [
+	<haltOrBreakpointForTesting>
 	i = 9999 ifTrue: [ self halt. ^i ].
 	^self method1: i+1
 ]
