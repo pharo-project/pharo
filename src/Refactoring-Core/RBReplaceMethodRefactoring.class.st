@@ -60,7 +60,7 @@ RBReplaceMethodRefactoring >> haveSameNumberOfArgs [
 		ifFalse: [ self refactoringFailure: 'The new selector does not have the same number of parameters.']
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 RBReplaceMethodRefactoring >> numberOfArgs: aSymbol [
 	^ (aSymbol asString splitOn: ':' ) size
 ]
@@ -84,7 +84,7 @@ RBReplaceMethodRefactoring >> preconditions [
 		true])
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RBReplaceMethodRefactoring >> replaceCallMethod: aSelector in: aClass to: newSel permutation: aMap [
 	oldSelector := aSelector asSymbol.
 	newSelector := newSel asSymbol.
@@ -92,7 +92,7 @@ RBReplaceMethodRefactoring >> replaceCallMethod: aSelector in: aClass to: newSel
 	permutation := aMap.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RBReplaceMethodRefactoring >> replaceCallMethod: aSelector in: aClass to: newSel permutation: aMap inAllClasses: aBoolean [
 	oldSelector := aSelector asSymbol.
 	newSelector := newSel asSymbol.
@@ -101,7 +101,7 @@ RBReplaceMethodRefactoring >> replaceCallMethod: aSelector in: aClass to: newSel
 	replaceInAllClasses := aBoolean.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RBReplaceMethodRefactoring >> replaceInAllClasses [
 	^ replaceInAllClasses ifNil: [ replaceInAllClasses := false ]
 ]
