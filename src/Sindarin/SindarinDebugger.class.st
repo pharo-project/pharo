@@ -45,12 +45,13 @@ SindarinDebugger class >> debug: aBlock [
 { #category : #'instance creation' }
 SindarinDebugger class >> debugSession: aDebugSession [
 
-	| debugger exception |
+	| debugger exception sindarinPointCutExceptionClass |
 	debugger := self attachTo: aDebugSession.
 	
 	exception := aDebugSession exception.
-	exception class == SindarinPointcutException ifFalse: [ 
-		aDebugSession resume; clear; terminate.
+	sindarinPointCutExceptionClass := Smalltalk at: #SindarinPointcutException ifAbsent:[nil].
+	exception class == sindarinPointCutExceptionClass ifFalse: [ 
+		aDebugSession resume; clear.
 		^ self ].
 	
 	"Stepping to return to the context requesting the execution of a Sindarin script"
