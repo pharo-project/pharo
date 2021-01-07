@@ -85,7 +85,7 @@ KMSingleKeyCombination >> modifier [
 
 { #category : #accessing }
 KMSingleKeyCombination >> name [
-	^ self key asString
+	^ self key name
 ]
 
 { #category : #'accessing platform' }

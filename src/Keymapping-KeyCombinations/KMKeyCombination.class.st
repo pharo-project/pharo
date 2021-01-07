@@ -128,7 +128,7 @@ KMKeyCombination >> platformModifier [
 KMKeyCombination >> prettyPrintOn: aStream [
 
 	aStream << self shortcut modifier symbol.
-	self shortcut character printOn: aStream
+	self shortcut character name printOn: aStream
 ]
 
 { #category : #printing }

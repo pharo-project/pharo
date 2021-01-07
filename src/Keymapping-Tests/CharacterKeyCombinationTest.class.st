@@ -8,7 +8,7 @@ Class {
 CharacterKeyCombinationTest >> testLowercaseKeyCombination [
 	| combination |
 	combination := $a asKeyCombination.
-	self assert: combination key equals: $a.
+	self assert: combination key equals: KeyboardKey A.
 	self assert: combination modifier equals: KMNoModifier new.
 ]
 
@@ -16,6 +16,6 @@ CharacterKeyCombinationTest >> testLowercaseKeyCombination [
 CharacterKeyCombinationTest >> testUppercaseKeyCombination [
 	| combination |
 	combination := $A asKeyCombination.
-	self assert: combination key equals: $a.
+	self assert: combination key equals: KeyboardKey A.
 	self assert: combination modifier equals: KMModifier shift.
 ]
