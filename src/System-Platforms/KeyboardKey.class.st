@@ -179,6 +179,23 @@ KeyboardKey class >> fromCharacter: aCharacter [
 	^ self keyFromCharacterTable at: aCharacter ifAbsent: [ self named: aCharacter asString asUppercase ]
 ]
 
+{ #category : #'instance creation' }
+KeyboardKey class >> fromCharacter: aCharacter ifNone: aBlock [
+	"For backwards compatibility mainly.
+	Return the key that should correspond to some character.
+	Handle normal ascii characters and special control keys only (enter, tab space...)
+	
+	 (KeyboardKey fromCharacter: $a) >>> KeyboardKey A
+	"
+	
+	^ self keyFromCharacterTable
+		at: aCharacter 
+		ifAbsent: [ 
+			self
+				named: aCharacter asString asUppercase
+				ifNone: aBlock ]
+]
+
 { #category : #'class initialization' }
 KeyboardKey class >> initialize [
 	self
@@ -863,6 +880,16 @@ KeyboardKey class >> named: aString [
 	"
 	
 	^ KeyNameTable at: aString
+]
+
+{ #category : #'instance creation' }
+KeyboardKey class >> named: aString ifNone: aBlock [
+	"Returns the instance of myself having aString as name.
+	
+	 (KeyboardKey named: 'SHIFT_L') >>> (KeyboardKey value: 65505)
+	"
+	
+	^ KeyNameTable at: aString ifAbsent: aBlock
 ]
 
 { #category : #accessing }
