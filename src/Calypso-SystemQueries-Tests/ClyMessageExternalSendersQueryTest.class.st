@@ -13,7 +13,12 @@ ClyMessageExternalSendersQueryTest >> createQuery [
 
 { #category : #running }
 ClyMessageExternalSendersQueryTest >> referencedSelector [
-	^#referencedSelector
+	^#selfReferencingSelector
+]
+
+{ #category : #running }
+ClyMessageExternalSendersQueryTest >> selfReferencingSelector [
+	^#selfReferencingSelector
 ]
 
 { #category : #tests }
@@ -21,5 +26,5 @@ ClyMessageExternalSendersQueryTest >> testFromSystemScope [
 	
 	self queryFromScope: ClySystemEnvironmentScope of: ClySystemEnvironment currentImage.	
 	
-	self assert: foundSelectors isEmpty
+	self deny: (foundSelectors includes: 'selfReferencingSelector' asSymbol)
 ]
