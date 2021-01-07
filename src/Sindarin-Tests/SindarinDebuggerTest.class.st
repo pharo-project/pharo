@@ -321,24 +321,24 @@ SindarinDebuggerTest >> testIsAboutToInstantiateClass [
 	self deny: debugger isAboutToInstantiateClass.
 	
 	session receiver: Behavior new.
-	session selector: #basicNew.
+	session selector: #basicNew. "Primitive 70"
 	self assert: debugger isAboutToInstantiateClass.
 	
-	session selector: #basicNew:.
+	session selector: #basicNew:. "Primitive 71"
 	self assert: debugger isAboutToInstantiateClass.
 	
-	session selector: #adoptInstance:.
+	session selector: #adoptInstance:. "Primitive 160"
 	self assert: debugger isAboutToInstantiateClass.
 	
 	session receiver: Object new.
-	session selector: #clone.
+	session selector: #clone. "Primitive 148"
 	self assert: debugger isAboutToInstantiateClass.
 	
-	session selector: #copyFrom:.
+	session selector: #copyFrom:. "Primitive 148"
 	self assert: debugger isAboutToInstantiateClass.
 	
 	session receiver: CompiledCode.
-	session selector: #newMethod:header:.
+	session selector: #newMethod:header:. "Primitive 79"
 	self assert: debugger isAboutToInstantiateClass
 	
 ]

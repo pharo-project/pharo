@@ -236,9 +236,8 @@ SindarinDebugger >> instanceCreationPrimitives [
 	/* 71 */ primitiveNewWithArg,
 	/* 79 */ primitiveNewMethod,
 	/* 148 */ primitiveClone,
-	/* 160 */ primitiveAdoptInstance,
-	/* 168 */ primitiveCopyObject"
-	^#(70 71 79 148 160 168)
+	/* 160 */ primitiveAdoptInstance"
+	^#(70 71 79 148 160)
 ]
 
 { #category : #'execution predicates' }
