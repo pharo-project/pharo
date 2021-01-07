@@ -87,16 +87,16 @@ StDebuggerContextTest >> testArgsPriorityOverTempsWhenDuplicates [
 StDebuggerContextTest >> testArgumentsNodes [
 	|nodes| 
 	debuggerContext context: self contextWithArgs.
-	nodes := debuggerContext argumentsNodes.	
+	nodes := debuggerContext temporaryVariablesNodes select: [ :tempNode | tempNode tempVariable isArgumentVariable ]..	
 	self assert: nodes size equals: 2.
 	self assert: nodes first key equals: 'i'.
 	self assert: nodes first variableTag equals: 'arg'.
 	self assert: nodes first rawValue equals: 4.
-	self assert: nodes first class equals: StDebuggerInspectorTempNode.
+	self assert: nodes first class equals: StInspectorTempNode.
 	self assert: nodes second key equals: 'j'.
 	self assert: nodes second variableTag equals: 'arg'.
 	self assert: nodes second rawValue equals: 2.
-	self assert: nodes second class equals: StDebuggerInspectorTempNode.
+	self assert: nodes second class equals: StInspectorTempNode.
 	self deny: (nodes anySatisfy: [:n| n key = 'self'])
 ]
 
@@ -205,11 +205,11 @@ StDebuggerContextTest >> testTemporaryVariablesNodes [
 	self assert: nodes first key equals: 'a'.
 	self assert: nodes first variableTag equals: 'temp'.	
 	self assert: nodes first rawValue equals: 0.
-	self assert: nodes first class equals: StDebuggerInspectorTempNode.
+	self assert: nodes first tempVariable isTempVariable.
 	self assert: nodes second key equals: 'b'.
 	self assert: nodes second variableTag equals: 'temp'.	
 	self assert: nodes second rawValue equals: nil.
-	self assert: nodes second class equals: StDebuggerInspectorTempNode.
+	self assert: nodes first tempVariable isTempVariable.
 	self deny: (nodes anySatisfy: [:n| n key = 'self'])
 ]
 

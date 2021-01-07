@@ -202,10 +202,10 @@ StDebuggerTest >> testContextTempVarList [
 	self assert: (contextItems at: 1) class equals: StInspectorSelfNode.	
 	
 	"Next nodes are temps"
-	self assert: (contextItems at: 2) class equals: StDebuggerInspectorTempNode.
-	self assert: (contextItems at: 3) class equals: StDebuggerInspectorTempNode.
-	self assert: (contextItems at: 4) class equals: StDebuggerInspectorTempNode.
-	self assert: (contextItems at: 5) class equals: StDebuggerInspectorTempNode.
+	self assert: (contextItems at: 2) tempVariable isTempVariable.
+	self assert: (contextItems at: 3) tempVariable isTempVariable.
+	self assert: (contextItems at: 4) tempVariable isTempVariable.
+	self assert: (contextItems at: 5) tempVariable isTempVariable.
 	
 	"receiver"	
 	self assert: (contextItems at: 6) rawValue identicalTo: session shortStack first receiver session.
