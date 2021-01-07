@@ -18,6 +18,154 @@ Class {
 	#category : #'System-Platforms-Utilities'
 }
 
+{ #category : #accessing }
+KeyboardKey class >> A [
+	^ self named: 'A'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> B [
+	^ self named: 'B'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> C [
+	^ self named: 'C'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> D [
+	^ self named: 'D'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> E [
+	^ self named: 'E'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> F [
+	^ self named: 'F'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> G [
+	^ self named: 'G'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> H [
+	^ self named: 'H'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> I [
+	^ self named: 'I'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> J [
+	^ self named: 'J'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> K [
+	^ self named: 'K'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> L [
+	^ self named: 'L'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> M [
+	^ self named: 'M'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> N [
+	^ self named: 'N'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> O [
+	^ self named: 'O'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> P [
+	^ self named: 'P'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> Q [
+	^ self named: 'Q'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> R [
+	^ self named: 'R'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> S [
+	^ self named: 'S'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> T [
+	^ self named: 'T'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> U [
+	^ self named: 'U'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> V [
+	^ self named: 'V'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> W [
+	^ self named: 'W'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> X [
+	^ self named: 'X'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> Y [
+	^ self named: 'Y'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> Z [
+	^ self named: 'Z'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> backspace [
+
+	^ self named: 'BACKSPACE'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> down [
+
+	^ self named: 'DOWN'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> enter [
+
+	^ self named: 'RETURN'
+]
+
 { #category : #'class initialization' }
 KeyboardKey class >> initialize [
 	self
@@ -289,7 +437,7 @@ KeyboardKey class >> initializeMacOSVirtualKeyTable [
 		at: 16r24 put: (self value: 16rff0d); " kVK_Return                    = 0x24"
 		at: 16r30 put: (self value: 16rff09); "  kVK_Tab                       = 0x30"
 		at: 16r31 put: (self value: 16rff80); "  kVK_Space                     = 0x31"
-		at: 16r33 put: (self value: 16rffff); "  kVK_Delete                    = 0x33"
+		at: 16r33 put: (self value: 16rFF08); "  kVK_Backspace                 = 0x33 "
 		at: 16r35 put: (self value: 16rff1b); "  kVK_Escape                    = 0x35"
 		at: 16r37 put: (self value: 16rffe7); "  kVK_Command                   = 0x37"
 		at: 16r38 put: (self value: 16rffe1); "  kVK_Shift                     = 0x38"
@@ -622,6 +770,42 @@ KeyboardKey class >> initializeWindowsVirtualKeyTable [
 		at: 16r69 put: (self value: 16rffb9) "  kVK_ANSI_Keypad9              = 0x5C"
 ]
 
+{ #category : #accessing }
+KeyboardKey class >> keypadDown [
+
+	^ self named: 'KP_DOWN'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> keypadEnter [
+
+	^ self named: 'KP_ENTER'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> keypadLeft [
+
+	^ self named: 'KP_LEFT'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> keypadRight [
+
+	^ self named: 'KP_RIGHT'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> keypadUp [
+
+	^ self named: 'KP_UP'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> left [
+
+	^ self named: 'LEFT'
+]
+
 { #category : #macos }
 KeyboardKey class >> macOSVirtualKeyTable [
 	MacosVirtualKeyTable ifNil: [ self initializeMacOSVirtualKeyTable. ].
@@ -638,6 +822,18 @@ KeyboardKey class >> named: aString [
 	^ KeyNameTable at: aString
 ]
 
+{ #category : #accessing }
+KeyboardKey class >> right [
+
+	^ self named: 'RIGHT'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> tab [
+
+	^ self named: 'TAB'
+]
+
 { #category : #unix }
 KeyboardKey class >> unixVirtualKeyTable [
 	UnixVirtualKeyTable ifNil: [ self initializeUnixVirtualKeyTable. ].
@@ -647,6 +843,12 @@ KeyboardKey class >> unixVirtualKeyTable [
 { #category : #unknownKeys }
 KeyboardKey class >> unknownKeyName [
 	^#Unknown
+]
+
+{ #category : #accessing }
+KeyboardKey class >> up [
+
+	^ self named: 'UP'
 ]
 
 { #category : #'instance creation' }
