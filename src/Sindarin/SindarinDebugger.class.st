@@ -35,6 +35,11 @@ SindarinDebugger class >> attachTo: aDebugSession [
 
 ]
 
+{ #category : #accessing }
+SindarinDebugger class >> closeAllDebuggers [
+	self allInstances do:[:dbg| self flag: 'Sindarin => what should sindarin do while closing?']
+]
+
 { #category : #start }
 SindarinDebugger class >> debug: aBlock [
 	"Creates an execution of aBlock and returns an instance of ScriptableDebugger attached to this execution"
