@@ -589,7 +589,7 @@ SindarinDebugger >> step: anInt [
 	anInt timesRepeat: [ self step ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'stepping - echo' }
 SindarinDebugger >> stepBatchAndReturnNodeHashAndStackSize [
 	"For EchoDebugger"
 	| nodesHashAndStackSize count |
