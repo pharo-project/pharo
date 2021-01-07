@@ -287,16 +287,6 @@ StDebuggerTest >> testFastTDD [
 	self deny: self debuggerClass fastTDD
 ]
 
-{ #category : #'tests - receiver inspector' }
-StDebuggerTest >> testInspectorSelfBinding [
-	| dbg evaluator receiver |
-	dbg := self debuggerOn: session.
-	evaluator := (dbg inspector instVarNamed: #inspector) millerList pages first evaluator.
-	receiver := dbg inspector model inspectedObject context receiver.
-	self assert: evaluator doItReceiver identicalTo: receiver.
-	self assert: evaluator behavior identicalTo: receiver class
-]
-
 { #category : #'tests - stack table' }
 StDebuggerTest >> testPrintReceiverClassInContext [
 	|ctx result|
