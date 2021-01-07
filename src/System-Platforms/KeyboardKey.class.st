@@ -10,6 +10,7 @@ Class {
 	],
 	#classVars : [
 		'KeyCodeTable',
+		'KeyFromCharacterTable',
 		'KeyNameTable',
 		'MacosVirtualKeyTable',
 		'UnixVirtualKeyTable',
@@ -166,13 +167,48 @@ KeyboardKey class >> enter [
 	^ self named: 'RETURN'
 ]
 
+{ #category : #'instance creation' }
+KeyboardKey class >> fromCharacter: aCharacter [
+	"For backwards compatibility mainly.
+	Return the key that should correspond to some character.
+	Handle normal ascii characters and special control keys only (enter, tab space...)
+	
+	 (KeyboardKey fromCharacter: $a) >>> KeyboardKey A
+	"
+	
+	^ self keyFromCharacterTable at: aCharacter ifAbsent: [ self named: aCharacter asString asUppercase ]
+]
+
 { #category : #'class initialization' }
 KeyboardKey class >> initialize [
 	self
 		initializeKeyTable;
 		initializeMacOSVirtualKeyTable;
 		initializeUnixVirtualKeyTable;
-		initializeWindowsVirtualKeyTable
+		initializeWindowsVirtualKeyTable;
+		initializeKeyFromCharacterCompatibilityTable
+]
+
+{ #category : #'key table' }
+KeyboardKey class >> initializeKeyFromCharacterCompatibilityTable [
+	KeyFromCharacterTable := Dictionary new.
+	{ 
+		Character backspace 	. #Backspace "XK_BackSpace".
+		Character tab 			. #Tab "XK_Tab".
+		Character cr 			. #Return "XK_Return".
+		Character escape		. #Escape "XK_Escape".
+		Character home			. #Home "XK_Home".
+		Character arrowLeft 	. #Left "XK_Left".
+		Character arrowUp 		. #Up "XK_Up".
+		Character arrowRight 	. #Right "XK_Right".
+		Character arrowDown 	. #Down "XK_Down".
+		Character pageUp 		. #Page_Up "XK_Page_Up".
+		Character pageDown 	. #Page_Down "XK_Page_Down".
+		Character end 			. #End "XK_End".
+		Character space 		. #Space "XK_Space".
+		$/ 							. #SLASH}
+			pairsDo: [ :character :keyname |
+				KeyFromCharacterTable at: character put: (self named: keyname asUppercase) ].
 ]
 
 { #category : #'key table' }
@@ -768,6 +804,13 @@ KeyboardKey class >> initializeWindowsVirtualKeyTable [
 		at: 16r67 put: (self value: 16rffb7); "  kVK_ANSI_Keypad7              = 0x59"
 		at: 16r68 put: (self value: 16rffb8); "  kVK_ANSI_Keypad8              = 0x5B"
 		at: 16r69 put: (self value: 16rffb9) "  kVK_ANSI_Keypad9              = 0x5C"
+]
+
+{ #category : #'instance creation' }
+KeyboardKey class >> keyFromCharacterTable [
+
+	KeyFromCharacterTable ifNil: [ self initializeKeyFromCharacterCompatibilityTable ].
+	^ KeyFromCharacterTable
 ]
 
 { #category : #accessing }
