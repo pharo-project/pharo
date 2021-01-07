@@ -156,15 +156,63 @@ KeyboardKey class >> backspace [
 ]
 
 { #category : #accessing }
+KeyboardKey class >> braceLeft [
+	
+	^ self named: 'BRACELEFT'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> bracketLeft [
+	
+	^ self named: 'BRACKETLEFT'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> comma [
+	
+	^ self named: 'COMMA'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> delete [
+
+	^ self named: 'DELETE'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> doubleQuote [
+
+	^ self named: 'QUOTEDBL'
+]
+
+{ #category : #accessing }
 KeyboardKey class >> down [
 
 	^ self named: 'DOWN'
 ]
 
 { #category : #accessing }
+KeyboardKey class >> end [
+	
+	^ self named: 'END'
+]
+
+{ #category : #accessing }
 KeyboardKey class >> enter [
 
 	^ self named: 'RETURN'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> equal [
+
+	^ self named: 'EQUAL'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> escape [
+
+	^ self named: 'ESCAPE'
 ]
 
 { #category : #'instance creation' }
@@ -194,6 +242,12 @@ KeyboardKey class >> fromCharacter: aCharacter ifNone: aBlock [
 			self
 				named: aCharacter asString asUppercase
 				ifNone: aBlock ]
+]
+
+{ #category : #accessing }
+KeyboardKey class >> home [
+	
+	^ self named: 'HOME'
 ]
 
 { #category : #'class initialization' }
@@ -866,10 +920,22 @@ KeyboardKey class >> left [
 	^ self named: 'LEFT'
 ]
 
+{ #category : #accessing }
+KeyboardKey class >> lessThan [
+
+	^ self named: 'LESS'
+]
+
 { #category : #macos }
 KeyboardKey class >> macOSVirtualKeyTable [
 	MacosVirtualKeyTable ifNil: [ self initializeMacOSVirtualKeyTable. ].
 	^MacosVirtualKeyTable
+]
+
+{ #category : #accessing }
+KeyboardKey class >> minus [
+	
+	^ self named: 'MINUS'
 ]
 
 { #category : #'instance creation' }
@@ -893,9 +959,39 @@ KeyboardKey class >> named: aString ifNone: aBlock [
 ]
 
 { #category : #accessing }
+KeyboardKey class >> pageDown [
+
+	^ self named: 'PAGE_DOWN'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> pageUp [
+	
+	^ self named: 'PAGE_UP'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> parenthesisLeft [
+	
+	^ self named: 'PARENLEFT'
+]
+
+{ #category : #accessing }
 KeyboardKey class >> right [
 
 	^ self named: 'RIGHT'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> singleQuote [
+
+	^ self named: 'APOSTROPHE'
+]
+
+{ #category : #accessing }
+KeyboardKey class >> space [
+
+	^ self named: 'SPACE'
 ]
 
 { #category : #accessing }
