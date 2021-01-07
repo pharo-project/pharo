@@ -27,6 +27,9 @@ BaselineOfSystemCommands >> baseline: spec [
 				package: #'SystemCommands-MethodCommands'
 					with:
 						[ spec requires: #('Commander' #'SystemCommands-RefactoringSupport') ];
+				package: #'SystemCommands-MethodCommands-Tests'
+					with:
+						[ spec requires: #('SystemCommands-MethodCommands') ];
 				package: #'SystemCommands-PackageCommands'
 					with: [ spec requires: #('Commander') ];
 				package: #'SystemCommands-SourceCodeCommands'
