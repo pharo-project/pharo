@@ -365,16 +365,16 @@ KeyboardKey class >> initializeKeyTable [
 		16r002d minus "XK_minus"
 		16r002e period "XK_period"
 		16r002f slash "XK_slash"
-		16r0030 zero "XK_0"
-		16r0031 one "XK_1"
-		16r0032 two "XK_2"
-		16r0033 three "XK_3"
-		16r0034 four "XK_4"
-		16r0035 five "XK_5"
-		16r0036 six "XK_6"
-		16r0037 seven "XK_7"
-		16r0038 eight "XK_8"
-		16r0039 nine "XK_9"
+		16r0030 0 "XK_0"
+		16r0031 1 "XK_1"
+		16r0032 2 "XK_2"
+		16r0033 3 "XK_3"
+		16r0034 4 "XK_4"
+		16r0035 5 "XK_5"
+		16r0036 6 "XK_6"
+		16r0037 7 "XK_7"
+		16r0038 8 "XK_8"
+		16r0039 9 "XK_9"
 		16r003a colon "XK_colon"
 		16r003b semicolon "XK_semicolon"
 		16r003c less "XK_less"
@@ -459,7 +459,7 @@ KeyboardKey class >> initializeKeyTable [
 		)
 			pairsDo: [ :keyCode :keyname |
 			|key|
-			key := self basicNew withValue: keyCode andName: keyname asUppercase asSymbol.
+			key := self basicNew withValue: keyCode andName: keyname asString asUppercase asSymbol.
 			KeyCodeTable at: keyCode put: key.
 			KeyNameTable at: key name put: key.
 		].

@@ -24,14 +24,7 @@ KMSingleKeyCombination class >> from: aCharacterOrInteger [
 	| aCharacter |
 	aCharacter := aCharacterOrInteger asCharacter.
 	
-	KMUntypeableSingleKeyCombination 
-		ifSpecialKey: aCharacter do: [ :keyCombination | ^ keyCombination ]. 
-	KMNamedCharKeyCombination
-		ifSpecialKey: aCharacter do: [ :keyCombination | ^ keyCombination ]. 
-		
-	^ self new
-		key: aCharacter;
-		yourself
+	^ (KeyboardKey fromCharacter: aCharacter) asKeyCombination
 ]
 
 { #category : #accessing }
@@ -56,7 +49,7 @@ KMSingleKeyCombination class >> specialKeys [
 
 { #category : #comparing }
 KMSingleKeyCombination >> = aShortcut [
-	^ super = aShortcut and: [ aShortcut key sameAs: key ]
+	^ super = aShortcut and: [ aShortcut key = key ]
 ]
 
 { #category : #comparing }
