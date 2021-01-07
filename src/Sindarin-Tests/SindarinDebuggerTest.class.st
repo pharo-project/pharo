@@ -350,10 +350,7 @@ SindarinDebuggerTest >> testIsAboutToInstantiateClass [
 	session receiver: Object new.
 	session selector: #clone. "Primitive 148"
 	self assert: debugger isAboutToInstantiateClass.
-	
-	session selector: #copyFrom:. "Primitive 148"
-	self assert: debugger isAboutToInstantiateClass.
-	
+		
 	session receiver: CompiledCode.
 	session selector: #newMethod:header:. "Primitive 79"
 	self assert: debugger isAboutToInstantiateClass

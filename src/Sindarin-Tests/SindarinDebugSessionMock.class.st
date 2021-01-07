@@ -13,6 +13,11 @@ Class {
 }
 
 { #category : #accessing }
+SindarinDebugSessionMock >> context [
+	 ^self
+]
+
+{ #category : #accessing }
 SindarinDebugSessionMock >> debugSession [
 	 ^self
 ]
@@ -31,6 +36,16 @@ SindarinDebugSessionMock >> isMessage [
 SindarinDebugSessionMock >> isMessage: anObject [
 
 	isMessage := anObject
+]
+
+{ #category : #accessing }
+SindarinDebugSessionMock >> method [
+	 ^self
+]
+
+{ #category : #accessing }
+SindarinDebugSessionMock >> pc [
+	 ^self
 ]
 
 { #category : #accessing }
@@ -57,5 +72,10 @@ SindarinDebugSessionMock >> selector: anObject [
 
 { #category : #accessing }
 SindarinDebugSessionMock >> sourceNodeExecuted [
+	 ^self
+]
+
+{ #category : #accessing }
+SindarinDebugSessionMock >> sourceNodeForPC: pc [
 	 ^self
 ]
