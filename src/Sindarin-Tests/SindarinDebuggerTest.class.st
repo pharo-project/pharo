@@ -187,6 +187,22 @@ SindarinDebuggerTest >> helperMethodReturn: bool [
 	^ 2
 ]
 
+{ #category : #helpers }
+SindarinDebuggerTest >> helperMethodReturnWithException [
+	| a |
+	a := 0.
+	1/0.
+	^a + 1
+]
+
+{ #category : #helpers }
+SindarinDebuggerTest >> helperMethodReturnWithHalt [
+	| a |
+	a := 0.
+	self halt.
+	^ a + 1
+]
+
 { #category : #running }
 SindarinDebuggerTest >> runCaseManaged [
 	^ self runCase
@@ -736,6 +752,31 @@ SindarinDebuggerTest >> testStepToReturn [
 	self assert: dbg node isReturn.
 	self assert: dbg topStack equals: 2
 	
+]
+
+{ #category : #'tests - step return' }
+SindarinDebuggerTest >> testStepToReturnWithException [
+	| dbg |
+	"First return node"
+	dbg := SindarinDebugger debug: [ self helperMethodReturnWithException ].
+	dbg stepToMethodEntry.
+	dbg stepToReturn.
+	
+	self deny: dbg receiver class identicalTo: Exception.
+	self assert: dbg method equals: (Exception >> #signal)
+]
+
+{ #category : #'tests - step return' }
+SindarinDebuggerTest >> testStepToReturnWithHalt [
+	| dbg |
+	"First return node"
+	dbg := SindarinDebugger debug: [ self helperMethodReturnWithHalt ].
+	dbg stepToMethodEntry.
+	dbg stepToReturn.
+	
+	self assert: dbg context willReturn.
+	self assert: dbg node parent isReturn.
+	self assert: dbg topStack equals: 1
 ]
 
 { #category : #tests }

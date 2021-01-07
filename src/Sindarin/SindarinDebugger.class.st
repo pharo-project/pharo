@@ -645,7 +645,10 @@ SindarinDebugger >> stepToMethodEntry [
 
 { #category : #'stepping - steps' }
 SindarinDebugger >> stepToReturn [
-	[ self context willReturn ] whileFalse: [self debugSession stepThrough]
+
+	[ 
+	self context willReturn or: [ self hasSignalledUnhandledException ] ] 
+		whileFalse: [ self debugSession stepOver ]
 ]
 
 { #category : #'stepping - steps' }
