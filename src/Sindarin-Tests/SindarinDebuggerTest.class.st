@@ -535,6 +535,7 @@ SindarinDebuggerTest >> testSkip [
 { #category : #'tests - skipping' }
 SindarinDebuggerTest >> testSkipThroughNode [
 	| dbg realExecPC realValueOfA targetExecNode realExecTopStack nodeAfterSkipThrough |
+	self skipOnPharoCITestingEnvironment.
 	dbg := SindarinDebugger
 		debug: [ self helperMethod1  ].
 	dbg step; stepOver; stepOver.	
@@ -561,6 +562,7 @@ SindarinDebuggerTest >> testSkipThroughNode [
 { #category : #'tests - skipping' }
 SindarinDebuggerTest >> testSkipToPC [
 	| dbg realExecPC realValueOfA realExecNode realExecTopStack |
+	self skipOnPharoCITestingEnvironment.
 	dbg := SindarinDebugger
 		debug: [ self helperMethod1  ].
 	dbg step; stepOver; stepOver.
@@ -583,6 +585,7 @@ SindarinDebuggerTest >> testSkipToPC [
 { #category : #'tests - skipping' }
 SindarinDebuggerTest >> testSkipUpToNode [
 	| dbg realExecPC realValueOfA realExecNode realExecTopStack |
+	self skipOnPharoCITestingEnvironment.
 	dbg := SindarinDebugger
 		debug: [ self helperMethod1  ].
 	dbg step; stepOver; stepOver.
@@ -605,6 +608,7 @@ SindarinDebuggerTest >> testSkipUpToNode [
 { #category : #'tests - skipping' }
 SindarinDebuggerTest >> testSkipWith [
 	| a p scdbg |
+	self skipOnPharoCITestingEnvironment.
 	a := 1.
 	scdbg := SindarinDebugger
 		debug: [ a := 2.
@@ -801,7 +805,7 @@ SindarinDebuggerTest >> testskipUpToNodeSkipTargetNode [
 	Variations of these two params are tested by testSkipUpToNode and testSkipThroughNode.
 	The following just test the remaining aspect of that API, that is we do not skip through a return node."
 	| dbg returnNode |	
-
+	self skipOnPharoCITestingEnvironment.
 	dbg := SindarinDebugger
 		debug: [ self helperMethod1  ].
 		
