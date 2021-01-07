@@ -147,13 +147,13 @@ StDebuggerActionModelTest >> testClearDebugSession [
 
 { #category : #'tests - contexts' }
 StDebuggerActionModelTest >> testComputeInitialTopContext [
-	
+	|newSession|
 	self changeSession: StTestDebuggerProvider new debuggerWithMissingSubclassResponsibilityContext session.
 	self assert: debugActionModel topContext identicalTo: session exception signalContext.
 	
-	session := StTestDebuggerProvider new debuggerWithMissingSubclassResponsibilityContext session.
-	session restart: session interruptedContext sender.	
-	self changeSession: session.
+	newSession := StTestDebuggerProvider new debuggerWithMissingSubclassResponsibilityContext session.
+	newSession restart: newSession interruptedContext sender.	
+	self changeSession: newSession.
 	self assert: debugActionModel topContext identicalTo: session interruptedContext
 	
 ]
