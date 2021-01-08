@@ -464,7 +464,6 @@ HandMorph >> generateKeyboardEvent: evtBuf [
 	"Generate the appropriate mouse event for the given raw event buffer"
 
 	| buttons modifiers type pressType stamp charCode keyValue keyEvent |
-	evtBuf traceCr.
 	stamp := evtBuf second.
 	stamp = 0 ifTrue: [stamp := Time millisecondClockValue].
 	pressType := evtBuf fourth.
