@@ -797,8 +797,12 @@ RubTextEditor >> defaultCommandKeymapping [
 	(KeyboardKey left -> #cursorLeft:).
 	(KeyboardKey right -> #cursorRight:).
 	(KeyboardKey up -> #cursorUp:).
-	(KeyboardKey tab -> #tab:).
 	(KeyboardKey down -> #cursorDown:).
+	(KeyboardKey keypadLeft -> #cursorLeft:).
+	(KeyboardKey keypadRight -> #cursorRight:).
+	(KeyboardKey keypadUp -> #cursorUp:).
+	(KeyboardKey keypadDown -> #cursorDown:).
+	(KeyboardKey tab -> #tab:).
 	(KeyboardKey delete -> #forwardDelete:) } do: [ :assoc | 
 		cmdMap at: assoc key  put: assoc value ].
 	"I am not convinced the following smart characters are used - see NecPreferences>>smartCharactersMapping"
