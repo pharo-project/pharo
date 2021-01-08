@@ -1,3 +1,7 @@
+"
+This class contains tests.
+They are part of the baseline for GeneralTests
+"
 Class {
 	#name : #PRCodeSemanticActionTest,
 	#superclass : #TestCase,

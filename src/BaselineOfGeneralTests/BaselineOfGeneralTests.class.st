@@ -49,7 +49,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Morphic-Widgets-FastTable-Tests';
 			package: 'NECompletion-Tests';
 			package: 'NewValueHolder-Tests';
-			package: 'Pillar-ExporterRichText-Tests';
+			package: 'Pillar-ExporterRichText-Tests'; 
 			package: 'ProfStef-Tests';
 			package: 'Regex-Core-Tests';
 			package: 'Ring-Definitions-Tests-Monticello';
