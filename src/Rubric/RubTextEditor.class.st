@@ -807,7 +807,7 @@ RubTextEditor >> defaultCommandKeymapping [
 	"I am not convinced the following smart characters are used - see NecPreferences>>smartCharactersMapping"
 	{ KeyboardKey parenthesisLeft . KeyboardKey bracketLeft . KeyboardKey braceLeft .
 		KeyboardKey singleQuote . KeyboardKey doubleQuote . KeyboardKey lessThan } 
-			do: [ :key | cmdMap at: key put: #enclose: ].
+			do: [ :key | cmdMap at: key put: #encloseWith: ].
 	^ cmdMap
 ]
 
