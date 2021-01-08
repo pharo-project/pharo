@@ -801,7 +801,7 @@ RubTextEditor >> defaultCommandKeymapping [
 	(Character delete -> #forwardDelete:) } do: [ :assoc | 
 		cmdMap at: assoc key asciiValue + 1 put: assoc value ].
 	"I am not convinced the following smart characters are used - see NecPreferences>>smartCharactersMapping"
-	'([{''"<' do: [ :char | cmdMap at: char asciiValue + 1 put: #enclose: ].
+	'([{''"<' do: [ :char | cmdMap at: char asciiValue + 1 put: #encloseWith: ].
 	cmdMap at: $, asciiValue + 1 put: #shiftEnclose:.
 	'0123456789-=' do: [ :char | cmdMap at: char asciiValue + 1 put: #changeEmphasis: ].
 	^ cmdMap
