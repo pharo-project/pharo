@@ -54,7 +54,7 @@ SpPresenterFocusOrderTest >> keyEvent: type code: keyCode shift: shiftBoolean me
 		charCode: 0
 		hand: self currentWorld activeHand
 		stamp: Time millisecondClockValue.
-	evt key: key.
+	evt key: (KeyboardKey fromCharacter: keyCode asCharacter).
 	evt sentTo: widget.
 	"Some time to allow things to happen?"
 	10 milliSeconds wait
@@ -88,7 +88,7 @@ SpPresenterFocusOrderTest >> pressShiftTab [
 SpPresenterFocusOrderTest >> pressTab [
 
 	self 
-		keyDown: KeyboardKey tab
+		keyDown: Character tab asciiValue
 		shift: false
 		meta: false
 		control: false

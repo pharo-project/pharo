@@ -20,7 +20,7 @@ SpTextAdapterTest >> testKeyBindings [
 		toAction: [ handled := true ].
 
 	self adapter 
-		keyDown: KeyboardKey X
+		keyDown: $x
 		shift: false 
 		meta: true
 		control: false
