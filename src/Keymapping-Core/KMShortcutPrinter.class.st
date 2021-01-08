@@ -53,7 +53,7 @@ KMShortcutPrinter >> genericSpecialCharacter: char [
 
 	char = KeyboardKey enter ifTrue: [ ^ 'Enter' ].
 	char = (KeyboardKey fromCharacter: Character space) ifTrue: [ ^ 'Space' ].
-	^ char	 asUppercase
+	^ char	 name
 ]
 
 { #category : #visiting }
