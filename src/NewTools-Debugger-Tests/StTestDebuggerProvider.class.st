@@ -93,6 +93,7 @@ StTestDebuggerProvider >> debuggerWithObjectHalting [
 
 { #category : #helpers }
 StTestDebuggerProvider >> debuggerWithRunnableContext [
+<haltOrBreakpointForTesting>
 	[ Halt now ]
 		on: Halt
 		do: [ :err | 
@@ -194,6 +195,6 @@ StTestDebuggerProvider >> sessionWithDNUAfterStep [
 
 { #category : #helpers }
 StTestDebuggerProvider >> terminate [ 
-	session ifNotNil:[session terminate].
+	session ifNotNil:[session clear].
 	session := nil
 ]
