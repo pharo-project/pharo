@@ -497,6 +497,7 @@ HandMorph >> generateKeyboardEvent: evtBuf [
 
    "If charCode is not single-byte, we definately have Unicode input. Zero keyValue to avoid garbage values from som VMs."
    self flag: #pharoFixMe. "I need to look at the windows vm side, to see why this keyvalue is generated in the first place".
+
    (charCode notNil and:[charCode > 255]) ifTrue: [keyValue:=0].
 	keyEvent := KeyboardEvent new
 		setType: type
@@ -508,6 +509,11 @@ HandMorph >> generateKeyboardEvent: evtBuf [
 			ifFalse: [ self mapSymbolToKeyValue: keyValue ])
 		hand: self
 		stamp: stamp.
+	
+	"If a modifier key is pressed the keystroke event is handled by #visitMouseDownEvent:"
+	(type == #keystroke and: [ keyEvent commandKeyPressed ])
+		ifTrue: [ ^ #invalid ].
+	
 	keyEvent scanCode: lastKeyScanCode.
 	^keyEvent
 
