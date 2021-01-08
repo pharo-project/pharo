@@ -1458,7 +1458,8 @@ RubTextEditor >> keyDown: aKeyboardEvent [
 	textArea announce: ((RubKeystroke with: aKeyboardEvent) morph: self).
 	(self dispatch: aKeyboardEvent) ifTrue: [
 		self doneTyping.
-		self storeSelectionInText ]
+		self storeSelectionInText.
+		textArea scrollSelectionIntoView: nil ]
 ]
 
 { #category : #'typing support' }

@@ -1121,7 +1121,6 @@ RubAbstractTextArea >> keyDown: anEvent [
 	anEvent isUserInterrupt
 		ifTrue: [ ^ self ].
 	self handleEdit: [ self editor keyDown: anEvent ].
-	self scrollSelectionIntoView: nil
 ]
 
 { #category : #'event handling' }
