@@ -18,7 +18,7 @@ SpPresenterFocusOrderTest >> focusedPresenter [
 ]
 
 { #category : #emulating }
-SpPresenterFocusOrderTest >> keyDown: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
+SpPresenterFocusOrderTest >> keyDown: key shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
 	| evt modifiers widget |
 	
 	widget := self focusedPresenter adapter widget.
@@ -39,11 +39,11 @@ SpPresenterFocusOrderTest >> keyDown: keyCode shift: shiftBoolean meta: metaBool
 		setType: #keyDown
 		buttons: modifiers
 		position: widget position + (1 @ 1)
-		keyValue: keyCode
-		charCode: keyCode
+		keyValue: 0
+		charCode: 0
 		hand: self currentWorld activeHand
 		stamp: Time millisecondClockValue.
-
+	evt key: key.
 	evt sentTo: widget.
 	"Some time to allow things to happen?"
 	10 milliSeconds wait
@@ -97,7 +97,7 @@ SpPresenterFocusOrderTest >> pressShiftTab [
 SpPresenterFocusOrderTest >> pressTab [
 
 	self 
-		keyDown: Character tab asciiValue
+		keyDown: KeyboardKey tab
 		shift: false
 		meta: false
 		control: false
