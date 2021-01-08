@@ -2,7 +2,6 @@ Class {
 	#name : #CDClassDefinitionNode,
 	#superclass : #CDBehaviorDefinitionNode,
 	#instVars : [
-		'subclass',
 		'sharedSlotNodes',
 		'superclassNameNode',
 		'packageNameNode',

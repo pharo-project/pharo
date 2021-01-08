@@ -39,7 +39,7 @@ SpWindow >> announceWillClose [
 SpWindow >> close [ 
 
 	self announceWillClose.
-	^ super close
+	super close.
 ]
 
 { #category : #'open/close' }

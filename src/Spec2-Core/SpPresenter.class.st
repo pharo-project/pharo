@@ -86,10 +86,11 @@ It possible to define more than one method to give the possibility to use anothe
 Class {
 	#name : #SpPresenter,
 	#superclass : #SpAbstractPresenter,
+	#traits : 'SpTPresenterBuilder',
 	#instVars : [
 		'#application',
 		'#focusOrder',
-		'#contextKeyBindings',
+		'#contextKeyBindings => SpObservableSlot',
 		'#windowIcon => SpObservableSlot',
 		'#aboutText => SpObservableSlot',
 		'#askOkToClose => SpObservableSlot',
@@ -632,18 +633,6 @@ SpPresenter >> inspectionSubPresentersContext: aContext [
 ]
 
 { #category : #'instance creation' }
-SpPresenter >> instantiate: aPresenterClass [
-	"Instantiate a SpPresenter subclass and set its instance owner"
-	^ aPresenterClass owner: self
-]
-
-{ #category : #'instance creation' }
-SpPresenter >> instantiate: aPresenterClass on: aModel [
-	"Instantiate a SpPresenter subclass and set its instance owner and model"
-	^ aPresenterClass owner: self on: aModel
-]
-
-{ #category : #'instance creation' }
 SpPresenter >> instantiatePresenters: aCollectionOfPairs [
 	"instantiatePresenters: is legacy code in SpPresenter and must not be used. It will be deprecated and removed."
 
@@ -734,229 +723,6 @@ SpPresenter >> neglectMenuModel: aMenuModel [
 		group menuItems do: [ :item |
 			item shortcut ifNotNil: [ :shortcut | self removeKeyCombination: shortcut ].
 			item subMenu ifNotNil: [ :subMenu | subMenu neglect: self	] ] ]
-]
-
-{ #category : #widgets }
-SpPresenter >> newActionBar [
-
-	^ self instantiate: SpActionBarPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newAthens [
-
-	^ self instantiate: SpAthensPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newButton [
-	^ self instantiate: SpButtonPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newButtonBar [
-
-	^ self instantiate: SpButtonBarPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newCheckBox [
-	^ self instantiate: SpCheckBoxPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newComponentList [
-	^ self instantiate: SpComponentListPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newDiff [
-	^ self instantiate: SpDiffPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newDropList [
-	^ self instantiate: SpDropListPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newDynamicPresentersListIn: accessorSymbol usingBuilder: aDynamicPresentersListBuilder [
-	|mutatorSymbol newDynamicPresenter |
-	mutatorSymbol := (accessorSymbol , ':') asSymbol.
-	(self perform: accessorSymbol)
-		ifNotNil: [ :dynamicPresenter | dynamicPresenter owner: nil ].
-	newDynamicPresenter := aDynamicPresentersListBuilder build.
-	
-	self perform: mutatorSymbol with: newDynamicPresenter.
-	
-	newDynamicPresenter owner: self.
-	
-	self needRebuild: false.
-	self buildWithSpec
-]
-
-{ #category : #widgets }
-SpPresenter >> newFilteringList [
-
-	^ self instantiate: SpFilteringListPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newLabel [
-	^ self instantiate: SpLabelPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newList [
-	^ self instantiate: SpListPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newMenu [
-	^ self instantiate: SpMenuPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newMenuBar [
-	^ self instantiate: SpMenuBarPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newMenuButton [
-
-	^ self instantiate: SpMenuButtonPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newNotebook [
-
-	^ self instantiate: SpNotebookPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newNotebookPage [
-
-	self flag: #TODO. "NotebookPage needs to be a Presenter?"
-	^ SpNotebookPage new
-]
-
-{ #category : #widgets }
-SpPresenter >> newNullPresenter [
-	^ self instantiate: SpNullPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newNumberInput [
-	^ self instantiate: SpNumberInputFieldPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newPopover [
-
-	^ self instantiate: SpPopoverPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newPresenterSelector [
-
-	^ self instantiate: SpPresenterSelectorPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newProgressBar [
-	^ self instantiate: SpProgressBarPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newRadioButton [
-	^ self instantiate: SpRadioButtonPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newRichText [
-
-	^ self instantiate: SpRichTextPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newSearchInput [
-
-	^ self instantiate: SpSearchInputFieldPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newSlider [
-	^ self instantiate: SpSliderPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newStatusBar [
-
-	^ self instantiate: SpStatusBarPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newTable [
-
-	^ self instantiate: SpTablePresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newText [
-	^ self instantiate: SpTextPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newTextInput [
-	^ self instantiate: SpTextInputFieldPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newToggleButton [
-
-	^ self instantiate: SpToggleButtonPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newToolbar [
-
-	^ self instantiate: SpToolbarPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newToolbarButton [
-
-	^ self instantiate: SpToolbarButtonPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newToolbarMenuButton [
-
-	^ self instantiate: SpToolbarMenuButtonPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newToolbarPopoverButton [
-
-	^ self instantiate: SpToolbarPopoverButtonPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newToolbarToggleButton [
-
-	^ self instantiate: SpToolbarToggleButtonPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newTree [
-
-	^ self instantiate: SpTreePresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newTreeTable [
-
-	^ self instantiate: SpTreeTablePresenter
 ]
 
 { #category : #private }
@@ -1085,7 +851,7 @@ SpPresenter >> show [
 SpPresenter >> takeKeyboardFocus [
 	| focus |
 
-	focus := self defaultKeyboardFocus.
+	focus := self defaultKeyboardFocus ifNil: [ self ].
 	focus == self ifFalse: [ ^ focus takeKeyboardFocus ].
 	
 	self withAdapterDo: [ :anAdapter | 
@@ -1175,8 +941,15 @@ SpPresenter >> visibleIf: aValuable [
 ]
 
 { #category : #'api-events' }
-SpPresenter >> whenDisplayDo: aBlockClosure [
-	self announcer when: SpWidgetDisplayed do: aBlockClosure
+SpPresenter >> whenContextKeyBindingsChangedDo: aBlock [
+	
+	self property: #contextKeyBindings whenChangedDo: aBlock
+]
+
+{ #category : #'api-events' }
+SpPresenter >> whenDisplayDo: aBlock [
+
+	self announcer when: SpWidgetDisplayed do: aBlock
 ]
 
 { #category : #'api-events' }

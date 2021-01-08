@@ -25,5 +25,5 @@ TFDoubleType >> readValue: anExternalAddress offset: offset [
 { #category : #writing }
 TFDoubleType >> write: aNumber into: anExternalAddress [ 
 
-	anExternalAddress doubleAt: 1 put: aNumber
+	anExternalAddress doubleAt: 1 put: aNumber asFloat
 ]

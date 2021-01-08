@@ -19,7 +19,7 @@ SpMorphicBoxAdapter >> add: aPresenter [
 ]
 
 { #category : #private }
-SpMorphicBoxAdapter >> addConstraits: constraints toChild: childMorph [
+SpMorphicBoxAdapter >> addConstraints: constraints toChild: childMorph [
 	"Adds constraits by child"
 	| theMorph |
 	

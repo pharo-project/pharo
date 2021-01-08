@@ -18,11 +18,22 @@ SpPresenterFocusOrderTest >> focusedPresenter [
 ]
 
 { #category : #emulating }
-SpPresenterFocusOrderTest >> keyDown: key shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
+SpPresenterFocusOrderTest >> keyDown: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
+	
+	^ self 
+		keyEvent: #keyDown
+		code: keyCode 
+		shift: shiftBoolean 
+		meta: metaBoolean 
+		control: controlBoolean 
+		option: optionBoolean
+]
+
+{ #category : #emulating }
+SpPresenterFocusOrderTest >> keyEvent: type code: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
 	| evt modifiers widget |
 	
 	widget := self focusedPresenter adapter widget.
-	
 	modifiers := 0.
 	shiftBoolean ifTrue: [ modifiers := modifiers | 8 ].
 	metaBoolean ifTrue: [ modifiers := modifiers |
@@ -36,7 +47,7 @@ SpPresenterFocusOrderTest >> keyDown: key shift: shiftBoolean meta: metaBoolean 
 			ifFalse: [ 2r00100000 ]) ].
 	
 	evt := KeyboardEvent new
-		setType: #keyDown
+		setType: type
 		buttons: modifiers
 		position: widget position + (1 @ 1)
 		keyValue: 0
@@ -51,34 +62,14 @@ SpPresenterFocusOrderTest >> keyDown: key shift: shiftBoolean meta: metaBoolean 
 
 { #category : #emulating }
 SpPresenterFocusOrderTest >> keyPressed: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
-	| evt modifiers widget |
 	
-	widget := self focusedPresenter adapter widget.
-	
-	modifiers := 0.
-	shiftBoolean ifTrue: [ modifiers := modifiers | 8 ].
-	metaBoolean ifTrue: [ modifiers := modifiers |
-		(Smalltalk os isWin32 | Smalltalk os isUnix
-			ifTrue: [ 2r00010000 ]
-			ifFalse: [ 2r01000000 ]) ].
-	controlBoolean ifTrue: [ modifiers := modifiers | 2r00010000 ].
-	optionBoolean ifTrue: [ modifiers := modifiers |
-		(Smalltalk os isWin32 | Smalltalk os isUnix
-			ifTrue: [ 2r01000000 ]
-			ifFalse: [ 2r00100000 ]) ].
-	
-	evt := KeyboardEvent new
-		setType: #keystroke
-		buttons: modifiers
-		position: widget position + (1 @ 1)
-		keyValue: keyCode
-		charCode: keyCode
-		hand: self currentWorld activeHand
-		stamp: Time millisecondClockValue.
-
-	evt sentTo: widget.
-	"Some time to allow things to happen?"
-	10 milliSeconds wait
+	^ self 
+		keyEvent: #keystroke 
+		code: keyCode 
+		shift: shiftBoolean 
+		meta: metaBoolean 
+		control: controlBoolean 
+		option: optionBoolean
 ]
 
 { #category : #emulating }
@@ -133,23 +124,23 @@ SpPresenterFocusOrderTest >> testCustomFocusOrder [
 
 	mock := SpMockFocusOrderPresenter new.
 	mock focusOrder 
-		add: (mock presenterAt: #thirdPresenter);
-		add: (mock presenterAt: #firstPresenter);
-		add: (mock presenterAt: #secondPresenter).
+		add: (mock thirdPresenter);
+		add: (mock firstPresenter);
+		add: (mock secondPresenter).
 	mock openWithSpec.
 	
 	"Focus third"
 	self takeKeyboardFocus: mock.
-	self assert: (mock presenterAt: #thirdPresenter) equals: self focusedPresenter.
+	self assert: (mock thirdPresenter) equals: self focusedPresenter.
 	"Focus first"
 	self pressTab.
-	self assert: (mock presenterAt: #firstPresenter) equals: self focusedPresenter.
+	self assert: (mock firstPresenter) equals: self focusedPresenter.
 	"Focus second"
 	self pressTab.
-	self assert: (mock presenterAt: #secondPresenter) equals: self focusedPresenter.
+	self assert: (mock secondPresenter) equals: self focusedPresenter.
 	"Focus third again"
 	self pressTab.
-	self assert: (mock presenterAt: #thirdPresenter) equals: self focusedPresenter
+	self assert: (mock thirdPresenter) equals: self focusedPresenter
 ]
 
 { #category : #tests }
