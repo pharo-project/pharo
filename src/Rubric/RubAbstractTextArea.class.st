@@ -956,14 +956,6 @@ RubAbstractTextArea >> handleKeystroke: anEvent [
 
 	anEvent wasHandled
 		ifTrue: [^ self].
-	self allowsKeymapping
-		ifTrue: [ self dispatchKeystrokeForEvent: anEvent ] .
-	anEvent wasHandled
-		ifTrue: [
-			"We need to check for completion here because otherwise it will try to handle the keystroke, 
-			even if it was already processed."
-			self completionPostAction.
-			^ self].
 	(self handlesKeyStroke: anEvent)
 		ifFalse: [^ self].
 	self keyStroke: anEvent.
