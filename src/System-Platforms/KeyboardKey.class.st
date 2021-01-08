@@ -277,7 +277,9 @@ KeyboardKey class >> initializeKeyFromCharacterCompatibilityTable [
 		Character pageDown 	. #Page_Down "XK_Page_Down".
 		Character end 			. #End "XK_End".
 		Character space 		. #Space "XK_Space".
-		$/ 							. #SLASH}
+		$/ 							. #SLASH.
+		$] 							. #BRACKETLEFT.
+		$[ 							. #BRACKETRIGHT.}
 			pairsDo: [ :character :keyname |
 				KeyFromCharacterTable at: character put: (self named: keyname asUppercase) ].
 ]
