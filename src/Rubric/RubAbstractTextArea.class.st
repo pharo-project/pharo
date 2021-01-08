@@ -1108,7 +1108,7 @@ RubAbstractTextArea >> isReadOnly [
 { #category : #'event handling' }
 RubAbstractTextArea >> keyDown: anEvent [
 	"Handle a keystroke event."
-	anEvent keyCharacter = Character cr
+	anEvent key = KeyboardKey enter
 		ifTrue: [ self handleReturnKey
 				ifTrue: [ ^ self ] ].
 

@@ -1055,6 +1055,30 @@ KeyboardKey class >> windowsVirtualKeyTable [
 ]
 
 { #category : #testing }
+KeyboardKey >> isArrowDown [
+
+	^ {KeyboardKey down . KeyboardKey keypadDown} includes: self
+]
+
+{ #category : #testing }
+KeyboardKey >> isArrowLeft [
+
+	^ {KeyboardKey left . KeyboardKey keypadLeft} includes: self
+]
+
+{ #category : #testing }
+KeyboardKey >> isArrowRight [
+
+	^ {KeyboardKey right . KeyboardKey keypadRight} includes: self
+]
+
+{ #category : #testing }
+KeyboardKey >> isArrowUp [
+
+	^ {KeyboardKey up . KeyboardKey keypadUp} includes: self
+]
+
+{ #category : #testing }
 KeyboardKey >> isUnkownKey [
 	 ^self name == self class unknownKeyName
 ]
