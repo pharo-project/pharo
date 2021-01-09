@@ -14,7 +14,7 @@ SycRemoveMethodStrategy class >> createAllForBrowser: aBrowser [
 ]
 
 { #category : #'*Calypso-SystemTools-Core' }
-SycRemoveMethodStrategy class >> createForBrowser: aBrowser methods: aCollection [
+SycRemoveMethodStrategy class >> createAllForMethods: aCollection browser: aBrowser [
 
 	| selectors senders |
 	selectors := (aCollection collect: [ :each | each selector ] as: IdentitySet) asArray.	

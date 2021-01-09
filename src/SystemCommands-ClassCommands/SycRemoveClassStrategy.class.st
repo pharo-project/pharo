@@ -19,7 +19,7 @@ SycRemoveClassStrategy class >> canExecuteWithReferences: hasReferences subclass
 ]
 
 { #category : #'instance creation' }
-SycRemoveClassStrategy class >> createForBrowser: aBrowser classes: aCollection [
+SycRemoveClassStrategy class >> createAllForClasses: aCollection browser: aBrowser [
 
 	| hasReferences hasSubclasses hasUsers |
 	hasReferences := (ClyClassExternalReferencesQuery
@@ -35,14 +35,14 @@ SycRemoveClassStrategy class >> createForBrowser: aBrowser classes: aCollection 
 		^ { SycSilentlyRemoveClassStrategy new } ].
 
 	^ self
-		  createForBrowser: aBrowser
-		  references: hasReferences
+		  createAllHavingReferences: hasReferences
 		  subclasses: hasSubclasses
 		  users: hasUsers
+		  forBrowser: aBrowser
 ]
 
 { #category : #'instance creation' }
-SycRemoveClassStrategy class >> createForBrowser: aBrowser references: hasReferences subclasses: hasSubclasses users: hasUsers [
+SycRemoveClassStrategy class >> createAllHavingReferences: hasReferences subclasses: hasSubclasses users: hasUsers forBrowser: aBrowser [
 
 	| strategies |
 	strategies := SortedCollection sortBlock: #orderForBrowser ascending.

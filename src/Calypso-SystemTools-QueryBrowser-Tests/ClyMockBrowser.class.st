@@ -1,5 +1,5 @@
 Class {
-	#name : #MockClyBrowser,
+	#name : #ClyMockBrowser,
 	#superclass : #Object,
 	#instVars : [
 		'hasSpawned',
@@ -9,25 +9,25 @@ Class {
 }
 
 { #category : #testing }
-MockClyBrowser >> hasSpawnedQueryBrowser [
+ClyMockBrowser >> hasSpawnedQueryBrowser [
 
 	^hasSpawned 
 ]
 
 { #category : #testing }
-MockClyBrowser >> hasSpawnedQueryBrowserOn: aCollection [
+ClyMockBrowser >> hasSpawnedQueryBrowserOn: aCollection [
 
 	^hasSpawned and: [ elements resultItems asArray = aCollection asArray ]
 ]
 
 { #category : #initialization }
-MockClyBrowser >> initialize [
+ClyMockBrowser >> initialize [
 
 	hasSpawned := false
 ]
 
 { #category : #mocking }
-MockClyBrowser >> spawnQueryBrowserOn: aCollection [
+ClyMockBrowser >> spawnQueryBrowserOn: aCollection [
 
 	hasSpawned := true.
 	elements := aCollection

@@ -30,8 +30,8 @@ SycRemoveClassStrategyTest >> testCreateStrategiesForParentClass [
 	| browser strategies |
 	browser := ClyFullBrowser onDefaultEnvironment.
 	strategies := SycRemoveClassStrategy
-		              createForBrowser: browser
-		              classes: { ClyBrowserMorph }.
+		              createAllForClasses: { ClyBrowserMorph }
+		              browser: browser.
 	self
 		assert: strategies size > 2;
 		assert: (strategies anySatisfy: [ :each | 
@@ -49,8 +49,8 @@ SycRemoveClassStrategyTest >> testCreateStrategiesForReferencedClass [
 	| browser strategies |
 	browser := ClyFullBrowser onDefaultEnvironment.
 	strategies := SycRemoveClassStrategy
-		              createForBrowser: browser
-		              classes: { ClyFullBrowser }.
+		              createAllForClasses: { ClyFullBrowser }
+		              browser: browser.
 	self
 		assert: strategies size equals: 2;
 		assert: strategies first userRequestString
@@ -67,8 +67,8 @@ SycRemoveClassStrategyTest >> testCreateStrategiesForRemovableClass [
 	browser := ClyFullBrowser onDefaultEnvironment.
 	class := factory newClass.
 	strategies := SycRemoveClassStrategy
-		              createForBrowser: browser
-		              classes: { class }.
+		              createAllForClasses: { class }
+		              browser: browser.
 	self
 		assert: strategies size equals: 1;
 		assert: strategies first userRequestString
@@ -81,8 +81,8 @@ SycRemoveClassStrategyTest >> testCreateStrategiesForUsedTrait [
 	| browser strategies |
 	browser := ClyFullBrowser onDefaultEnvironment.
 	strategies := SycRemoveClassStrategy
-		              createForBrowser: browser
-		              classes: { TRBProgramNodeVisitor }.
+		              createAllForClasses: { TRBProgramNodeVisitor }
+		              browser: browser.
 	self
 		assert: strategies size > 2;
 		assert: (strategies anySatisfy: [ :each | 

@@ -22,13 +22,23 @@ SycRemoveMethodStrategyTest >> testCreateStrategiesForReferencedMethod [
 
 	| browser methods strategies |
 	browser := ClyFullBrowser onDefaultEnvironment.
-	methods := { self class >> #referencedMethod }.
-	strategies := SycRemoveMethodStrategy createForBrowser: browser methods: methods.
+	methods := { (self class >> #referencedMethod) }.
+	strategies := SycRemoveMethodStrategy
+		              createAllForMethods: methods
+		              browser: browser.
 	self
-		assert: (strategies anySatisfy: [ :each | each userRequestString = SycSilentlyRemoveMethodStrategy new userRequestString  ]);
-		assert: (strategies anySatisfy: [ :each | each userRequestString = ClyRemoveAndShowSendersMethodStrategy new userRequestString  ]);
-		assert: (strategies anySatisfy: [ :each | each userRequestString = ClyNotRemoveAndShowSendersMethodStrategy new userRequestString  ]);
-		assert: (strategies anySatisfy: [ :each | each userRequestString = SycNotRemoveMethodStrategy new userRequestString  ])
+		assert: (strategies anySatisfy: [ :each | 
+					 each userRequestString
+					 = SycSilentlyRemoveMethodStrategy new userRequestString ]);
+		assert: (strategies anySatisfy: [ :each | 
+					 each userRequestString
+					 = ClyRemoveAndShowSendersMethodStrategy new userRequestString ]);
+		assert: (strategies anySatisfy: [ :each | 
+					 each userRequestString
+					 = ClyNotRemoveAndShowSendersMethodStrategy new userRequestString ]);
+		assert: (strategies anySatisfy: [ :each | 
+					 each userRequestString
+					 = SycNotRemoveMethodStrategy new userRequestString ])
 ]
 
 { #category : #tests }
@@ -36,8 +46,12 @@ SycRemoveMethodStrategyTest >> testCreateStrategiesForRemovableMethod [
 
 	| browser methods strategies |
 	browser := ClyFullBrowser onDefaultEnvironment.
-	methods := { self class >> #referencingMethod }.
-	strategies := SycRemoveMethodStrategy createForBrowser: browser methods: methods.
+	methods := { (self class >> #referencingMethod) }.
+	strategies := SycRemoveMethodStrategy
+		              createAllForMethods: methods
+		              browser: browser.
 	self assert: strategies size equals: 1.
-	self assert: strategies first userRequestString equals: SycSilentlyRemoveMethodStrategy new userRequestString  
+	self
+		assert: strategies first userRequestString
+		equals: SycSilentlyRemoveMethodStrategy new userRequestString
 ]

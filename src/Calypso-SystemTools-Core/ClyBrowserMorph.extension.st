@@ -86,14 +86,14 @@ ClyBrowserMorph >> requestRemoveClassStrategyFor: classes [
 
 	| result strategies title |
 	strategies := SycRemoveClassStrategy
-		              createForBrowser: self
-		              classes: classes.
+		              createAllForClasses: classes
+		              browser: self.
 
-	strategies size = 1 ifTrue: [ ^ strategies first ].
-	
+	strategies size = 1 ifTrue: [ ^ strategies anyOne ].
+
 	title := classes size = 1
-		ifTrue: [ 'Class has references, subclasses, or users' ]
-		ifFalse: [ 'Classes have references, subclasses, or users' ].
+		         ifTrue: [ 'Class has references, subclasses, or users' ]
+		         ifFalse: [ 'Classes have references, subclasses, or users' ].
 
 	result := UIManager default
 		          chooseFrom:
@@ -106,19 +106,27 @@ ClyBrowserMorph >> requestRemoveClassStrategyFor: classes [
 
 { #category : #'*Calypso-SystemTools-Core' }
 ClyBrowserMorph >> requestRemoveMethodStrategyFor: methods [
+
 	| selectors result strategies title |
-	
-	selectors := (methods collect: [ :each | each selector ] as: IdentitySet) asArray.	
-	
-	strategies := SycRemoveMethodStrategy createForBrowser: self methods: methods.
-	strategies size = 1 ifTrue: [ ^strategies first ].
-	
-	title := selectors size > 1 
-		ifTrue: [ 'Methods have senders']
-		ifFalse: ['Method #{1} has sender{s' format: {selectors anyOne}].	
-			
-	result := UIManager default 
-		chooseFrom: (strategies collect: [:each | each userRequestString]) values: strategies title: title.
-		
-	^result ifNil: [ SycNotRemoveMethodStrategy new ]
+	selectors := (methods
+		              collect: [ :each | each selector ]
+		              as: IdentitySet) asArray.
+
+	strategies := SycRemoveMethodStrategy
+		              createAllForMethods: methods
+		              browser: self.
+	strategies size = 1 ifTrue: [ ^ strategies anyOne ].
+
+	title := selectors size > 1
+		         ifTrue: [ 'Methods have senders' ]
+		         ifFalse: [ 
+		         'Method #{1} has sender{s' format: { selectors anyOne } ].
+
+	result := UIManager default
+		          chooseFrom:
+		          (strategies collect: [ :each | each userRequestString ])
+		          values: strategies
+		          title: title.
+
+	^ result ifNil: [ SycNotRemoveMethodStrategy new ]
 ]
