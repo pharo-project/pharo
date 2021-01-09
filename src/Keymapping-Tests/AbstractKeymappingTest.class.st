@@ -65,6 +65,7 @@ AbstractKeymappingTest >> eventKey: character alt: useAlt ctrl: useCtrl command:
 		charCode: code
 		hand: nil 
 		stamp: Time now.
+	event key: (KeyboardKey fromCharacter: character).
 	^ event 	
 ]
 
