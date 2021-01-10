@@ -87,7 +87,24 @@ FluidClassBuilderTest >> testBuilderSharedVariables [
 FluidClassBuilderTest >> testBuilderTraits [
 	
 	builder uses: TViewModelMock.
-	self assert: builder traitsToBuild equals: TViewModelMock 
+	self assert: builder traitsToBuild equals: TViewModelMock.
+	self shouldnt: [ builder fillShiftClassBuilder ] raise: MessageNotUnderstood 
+]
+
+{ #category : #'tests - gathering' }
+FluidClassBuilderTest >> testBuilderTraitsClass [
+	
+	builder uses: TViewModelMock class.
+	self assert: builder traitsToBuild equals: TViewModelMock class.
+	self shouldnt: [ builder fillShiftClassBuilder ] raise: MessageNotUnderstood 
+]
+
+{ #category : #'tests - gathering' }
+FluidClassBuilderTest >> testBuilderTraitsWithComposition [
+	
+	builder uses: TViewModelMock + TMockWithComplexSlot.
+	self assert: builder traitsToBuild equals: TViewModelMock + TMockWithComplexSlot.
+	self shouldnt: [ builder fillShiftClassBuilder ] raise: MessageNotUnderstood 
 ]
 
 { #category : #'tests - mandatory' }
