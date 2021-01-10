@@ -102,8 +102,8 @@ FluidClassBuilderTest >> testBuilderTraitsClass [
 { #category : #'tests - gathering' }
 FluidClassBuilderTest >> testBuilderTraitsWithComposition [
 	
-	builder uses: TViewModelMock + TMockWithComplexSlot.
-	self assert: builder traitsToBuild equals: TViewModelMock + TMockWithComplexSlot.
+	builder uses: TViewModelMock + TViewModelMock2.
+	self assert: builder traitsToBuild equals: TViewModelMock + TViewModelMock2.
 	self shouldnt: [ builder fillShiftClassBuilder ] raise: MessageNotUnderstood 
 ]
 

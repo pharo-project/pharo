@@ -942,8 +942,8 @@ RubTextEditor >> encloseWith: aMatchingPair [
 	stopIndex := self stopIndex.
 	oldSelection := self selection.
 	
-	left := aMatchingPair key.
-	right := aMatchingPair value.
+	left := Character value: aMatchingPair key value.
+	right := Character value: aMatchingPair value value.
 	text := self text.
 	((startIndex > 1 and: [stopIndex <= text size])
 			and: [ (text at: startIndex-1) = left and: [(text at: stopIndex) = right]])
