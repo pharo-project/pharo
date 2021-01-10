@@ -46,8 +46,9 @@ FluidClassDefinitionPrinter >> classDefinitionString [
 				ifFalse: [ self layoutOn: s ].
 
 			self traitsOn: s.
-			
-		  forClass slots ifNotEmpty: [ self slotsOn: s ].
+			self class displayEmptySlots 
+				ifTrue: [ self slotsOn: s ]
+		  		ifFalse: [forClass slots ifNotEmpty: [ self slotsOn: s ]].
 		  forClass classVariables ifNotEmpty: [ self sharedVariablesOn: s ].
 		  forClass sharedPools ifNotEmpty: [ self sharedPoolsOn: s ].
 
