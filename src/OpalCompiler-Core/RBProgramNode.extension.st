@@ -1,6 +1,25 @@
 Extension { #name : #RBProgramNode }
 
 { #category : #'*OpalCompiler-Core' }
+RBProgramNode >> asDoItForContext: aContext [
+	"The VM can only evaluate methods. wrap this ast in a doItIn: MethodNode to evaluate in a context"
+	| methodNode |
+	self flag: #todo.
+	"With new DoItVariable machinery this logic can be simplified by ommiting ThisContext argument:
+		- all locals are transparently visible from doIt methods.
+	The simplification requires changes in NewTools to expect no arg doIt method.
+	So for now we keep it for compatibility"	
+	methodNode := RBMethodNode 
+		selector: #DoItIn:
+		arguments: { RBVariableNode named: 'ThisContext' } 
+		body: self asSequenceNode transformLastToReturn.
+	
+	methodNode methodClass: aContext receiver class.
+	methodNode source: methodNode formattedCode.
+	^methodNode
+]
+
+{ #category : #'*OpalCompiler-Core' }
 RBProgramNode >> asDoit [
 	"The VM can only evaluate methods. wrap this ast in a doit MethodNode"
 	| methodNode |
@@ -14,10 +33,13 @@ RBProgramNode >> asDoit [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-RBProgramNode >> asDoitForContext: aContext [
-	"The VM can only evaluate methods. wrap this ast in a doitIn MethodNode to evaluate in a context"
-	| methodNode |
-	
+RBProgramNode >> asReflectiveDoItForContext: aContext [
+	"The VM can only evaluate methods. wrap this ast in a doitIn MethodNode to evaluate in a context.
+	The reflective logic here is how locals from the original context are accessed from DoIt method.
+	All locals are rewritted using following reflection calls:
+			- ThisContext readVariableNamed: #tempName.
+			- ThisContext writeVariableNamed: #tempName value: aValue"
+	| 	methodNode |	
 	methodNode := RBMethodNode 
 		selector: #DoItIn:
 		arguments: { RBVariableNode named: 'ThisContext' } 

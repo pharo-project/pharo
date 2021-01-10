@@ -620,7 +620,7 @@ OpalCompiler >> transformDoit [
 		
 	ast := context 
 		ifNil: [ast asDoit] 
-		ifNotNil: [ast asDoitForContext: context].
+		ifNotNil: [ast asDoItForContext: context].
 	"we need to set the compilation context in the new method node"
 	ast compilationContext: self compilationContext.
 	context ifNotNil: [ast methodClass: context receiver class].
