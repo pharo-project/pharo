@@ -21,6 +21,12 @@ ClassDefinitionPrinter < #FluidClassDefinitionPrinter
 	package: 'FluidClassDefinition'
 ```
 
+You can also configure it to display empty slots.
+
+``` 
+ClassDefinitionPrinter displayEmptySlots: true
+```
+
 
 "
 Class {
@@ -295,26 +301,38 @@ FluidClassDefinitionPrinter >> slotDefinitionString [
 
 { #category : #'elementary operations' }
 FluidClassDefinitionPrinter >> slotDefinitionsOn: aStream [
-	"Write on the arg aStream an executable description of my Slots"
+	"If the class has many instance variable print one slot per line, do the same for complex slots."
 
-	| useFull |
+	| oneSlotPerLine localSlots |
+	"We could have the heuristics based on the sum of the slot name character length."
+	oneSlotPerLine := false.
+	localSlots := forClass localSlots.
+	( localSlots size > 8 or: [ localSlots anySatisfy: [ :s | s needsFullDefinition ]]) 
+		ifTrue: [ localSlots size = 1 ifFalse: [ oneSlotPerLine := true ] ].
 	aStream nextPutAll: '{'.
-	forClass localSlots
+	"To start aligned really nice when we have two complex slots"
+	oneSlotPerLine ifTrue: [ 
+		self slotShiftOn: aStream ].
+	localSlots
 		do: [ :slot | 
 			aStream space.
 			aStream nextPutAll: slot definitionString.
-			useFull := slot needsFullDefinition.
+			oneSlotPerLine := slot needsFullDefinition | oneSlotPerLine.
 			aStream space ]
 		separatedBy: [ 
 			aStream nextPutAll: '.'.
-			useFull ifTrue: [ 
-				aStream
-					cr;
-					tab;
-					tab;
-					tab;
-					tab ] ].
+			oneSlotPerLine ifTrue: [ self slotShiftOn: aStream ] ].
 	aStream nextPutAll: '}'
+]
+
+{ #category : #'elementary operations' }
+FluidClassDefinitionPrinter >> slotShiftOn: aStream [
+
+	aStream
+		cr;
+		tab;
+		tab;
+		tab
 ]
 
 { #category : #'elementary operations' }

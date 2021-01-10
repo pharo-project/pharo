@@ -8,7 +8,7 @@ ClassDefinitionPrinter
 	By default this ithe one we want to use. 
 
 ```	
-ClassDefinitionPrinter useFluid.
+ClassDefinitionPrinter showFluidClassDefinition.
 
 (ClassDefinitionPrinter for: Array) definitionString
 ```
