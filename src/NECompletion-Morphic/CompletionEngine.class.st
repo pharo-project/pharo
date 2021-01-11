@@ -112,6 +112,15 @@ CompletionEngine >> handleKeyDownBefore: aKeyboardEvent editor: anEditor [
 	controlKeyPressed := aKeyboardEvent controlKeyPressed.
 	commandKeyPressed := aKeyboardEvent commandKeyPressed.
 	
+	(NECPreferences popupShowWithShortcut matches: {aKeyboardEvent})
+		 ifTrue: [
+			self openMenu.
+			^true ].
+	
+	key = KeyboardKey backspace
+		ifTrue: [ 
+			self smartBackspace ifTrue: [ ^ true ]].	
+	
 	self isMenuOpen ifFalse: [ ^ false ].
 	
 	({ KeyboardKey left . KeyboardKey right.
@@ -178,6 +187,9 @@ CompletionEngine >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 	keyCharacter := aKeyboardEvent keyCharacter.
 	controlKeyPressed := aKeyboardEvent controlKeyPressed.
 	
+	self editor atCompletionPosition ifFalse: [ 
+		^ (self smartInputWithEvent: aKeyboardEvent ) notNil ].	
+	
 	self isMenuOpen
 		ifFalse: [ ^ self handleKeystrokeWithoutMenu: aKeyboardEvent ].
 	
@@ -192,18 +204,7 @@ CompletionEngine >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 CompletionEngine >> handleKeystrokeWithoutMenu: aKeyboardEvent [
 	"I handle resetting the completion menu, and I return true when I handle an event."
 	
-	self editor atCompletionPosition ifFalse: [ 
-		^ (self smartInputWithEvent: aKeyboardEvent ) notNil ].	
-	
 	self stopCompletionDelay.
-
-	(NECPreferences popupShowWithShortcut matches: {aKeyboardEvent})
-		 ifTrue: [
-			self openMenu.
-			^true ].
-		
-	(self smartInputWithEvent: aKeyboardEvent )
-		ifNotNil: [ ^true ].
 
 	NECPreferences popupShowAutomatic ifTrue: [
 		(aKeyboardEvent anyModifierKeyPressed not 
