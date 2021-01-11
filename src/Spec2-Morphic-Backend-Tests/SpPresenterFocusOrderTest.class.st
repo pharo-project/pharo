@@ -50,11 +50,11 @@ SpPresenterFocusOrderTest >> keyEvent: type code: keyCode shift: shiftBoolean me
 		setType: type
 		buttons: modifiers
 		position: widget position + (1 @ 1)
-		keyValue: keyCode
-		charCode: keyCode
+		keyValue: 0
+		charCode: 0
 		hand: self currentWorld activeHand
 		stamp: Time millisecondClockValue.
-
+	evt key: (KeyboardKey fromCharacter: keyCode asCharacter).
 	evt sentTo: widget.
 	"Some time to allow things to happen?"
 	10 milliSeconds wait

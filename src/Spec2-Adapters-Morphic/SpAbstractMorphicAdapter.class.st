@@ -453,7 +453,7 @@ SpAbstractMorphicAdapter >> keyEvent: type code: keyCode shift: shiftBoolean met
 		charCode: keyCode
 		hand: self currentWorld activeHand
 		stamp: Time millisecondClockValue.
-
+	evt key: (KeyboardKey fromCharacter: keyCode asCharacter).
 	evt sentTo: self widgetEventReceiver.
 	"Some time to allow things to happen?"
 	10 milliSeconds wait
