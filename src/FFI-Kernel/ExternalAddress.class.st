@@ -162,12 +162,12 @@ ExternalAddress >> free [
 ExternalAddress >> fromCString [
 	| index aByte |
 
-	^ (OrderedCollection streamContents: [ :aStream |
+	^ (ByteArray streamContents: [ :aStream |
 			index := 1.
 			[(aByte := self unsignedByteAt: index) = 0] 
 				whileFalse: [
 					aStream nextPut: aByte.
-					index := index + 1]]) asByteArray utf8Decoded
+					index := index + 1]]) utf8Decoded
 
 ]
 
