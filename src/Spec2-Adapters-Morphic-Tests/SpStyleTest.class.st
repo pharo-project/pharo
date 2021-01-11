@@ -19,8 +19,7 @@ SpStyleTest >> testParsingAStyleIsNotAffectedByExistingClass [
 
 	| aStylesheet |
 
-	aClass := self class classInstaller make: [ :aClassBuilder | aClassBuilder name: #Font ].	
-	
+	aClass := Object subclass: #Font.
 	aStylesheet := SpStyle createDefaultStyleSheet.
 	
 	self assert: aStylesheet styles isNotEmpty

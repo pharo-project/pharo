@@ -16,3 +16,8 @@ SindarinCommand class >> forSpecContext: anObject [
 		context: anObject;
 		yourself
 ]
+
+{ #category : #accessing }
+SindarinCommand >> debuggerPresenter [
+	^self context
+]

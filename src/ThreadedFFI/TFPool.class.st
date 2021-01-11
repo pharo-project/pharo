@@ -10,17 +10,18 @@ Class {
 		'elements',
 		'provider',
 		'initialSize',
-		'pointer'
+		'pointer',
+		'releaseBlock'
 	],
 	#category : #'ThreadedFFI-Base'
 }
 
 { #category : #'instance creation' }
-TFPool class >> newProvider: aBlock size: aNumber [
+TFPool class >> newProvider: aBlock size: aNumber releaseBlock: aReleaseBlock [
 
 	^ self basicNew 
-	initializeProvider: aBlock size: aNumber;
-	yourself
+		initializeProvider: aBlock size: aNumber releaseBlock: aReleaseBlock;
+		yourself
 ]
 
 { #category : #accessing }
@@ -49,11 +50,12 @@ TFPool >> initialize [
 ]
 
 { #category : #initialization }
-TFPool >> initializeProvider: aBlock size: aNumber [
+TFPool >> initializeProvider: aBlock size: aNumber releaseBlock: aReleaseBlock [
 
 	self initialize.
 	provider := aBlock.
 	initialSize := aNumber.
+	releaseBlock := aReleaseBlock.
 	pointer := 1.
 	elements := self populate: (Array new: initialSize)
 ]
@@ -86,6 +88,16 @@ TFPool >> printOn: stream [
 	stream << '(' << self size printString << ' elements)'
 ]
 
+{ #category : #initialization }
+TFPool >> release [
+
+	super release.
+
+	releaseBlock ifNotNil: [ elements do: releaseBlock ].
+	elements := nil.
+
+]
+
 { #category : #accessing }
 TFPool >> returnOne: anObject [
 
@@ -94,7 +106,8 @@ TFPool >> returnOne: anObject [
 		index := pointer - 1. 
 		index > 0 ifFalse: [ 
 			"This can happen if a new session starts in middle of a call."
-			'Returning an object but pool is full' crTrace. 
+			'Returning an object but pool is full' crTrace.
+			releaseBlock value:anObject. 
 			^ self  ]. 
 		elements at: index put: anObject.
 		pointer := index ]

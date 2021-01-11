@@ -452,13 +452,17 @@ CompiledCode >> literalAt: index put: value [
 
 { #category : #literals }
 CompiledCode >> literals [
+
 	"Answer an Array of the literals referenced by the receiver.	
 	 Exclude superclass + selector/properties"
+
 	| literals numberLiterals |
-	literals := Array new: (numberLiterals := self numLiterals - self literalsToSkip).
-	1 to: numberLiterals do: [:index |
-		literals at: index put: (self objectAt: index + 1)].
-	^literals
+	literals := Array new:
+		            (numberLiterals := self numLiterals
+		                               - self literalsToSkip).
+	1 to: numberLiterals do: [ :index | 
+	literals at: index put: (self literalAt: index) ].
+	^ literals
 ]
 
 { #category : #literals }
@@ -472,6 +476,22 @@ CompiledCode >> literalsDo: aBlock [
 	"Evaluate aBlock for each of the literals referenced by the receiver."
 	1 to: self numLiterals - self literalsToSkip do:
 		[:index | aBlock value: (self literalAt: index)]
+]
+
+{ #category : #accessing }
+CompiledCode >> literalsEvenTheOnesInTheInnerBlocks [
+
+	| literals numberLiterals |
+	literals := OrderedCollection new:
+		            (numberLiterals := self numLiterals
+		                               - self literalsToSkip).
+	1 to: numberLiterals do: [ :index | 
+		| lit |
+		lit := self literalAt: index.
+		lit isEmbeddedBlock
+			ifTrue: [ literals addAll: lit literalsEvenTheOnesInTheInnerBlocks ]
+			ifFalse: [ literals addLast: lit ] ].
+	^ literals asArray
 ]
 
 { #category : #literals }

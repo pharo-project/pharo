@@ -5,7 +5,6 @@ Class {
 	#name : #FLDebuggerStackMaterialization,
 	#superclass : #Exception,
 	#instVars : [
-		'stack',
 		'interruptedContext'
 	],
 	#category : #'Fuel-Tools-Pharo-Debugger'

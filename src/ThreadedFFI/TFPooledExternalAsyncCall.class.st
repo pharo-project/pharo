@@ -29,8 +29,9 @@ TFPooledExternalAsyncCall >> executeOn: aRunner [
 			self doExecuteOn: aRunner ]
 		ensure: [
 			self cleanUp.
-			semaphore reset.
-			aRunner semaphorePool returnOne: semaphore ]
+			semaphore ifNotNil: [  
+				semaphore reset.
+				aRunner semaphorePool returnOne: semaphore] ]
 ]
 
 { #category : #initialization }

@@ -4,7 +4,7 @@ I contain table rows, but opposite to my parent, I calculate my row heights allo
 Class {
 	#name : #FTTableContainerRowNotHomogeneousMorph,
 	#superclass : #FTTableContainerMorph,
-	#category : #'Morphic-Widgets-FastTable'
+	#category : #'Morphic-Widgets-FastTable-Base'
 }
 
 { #category : #private }

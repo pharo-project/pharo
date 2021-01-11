@@ -19,9 +19,17 @@ SpExecutableLayout >> adapterName [
 { #category : #accessing }
 SpExecutableLayout >> add: aName withConstraints: aBlock [
 	| constraints |
+
 	constraints := self constraintsClass new.
 	aBlock value: constraints.
 	children at: aName put: constraints
+]
+
+{ #category : #announcing }
+SpExecutableLayout >> announce: anAnnouncement [
+
+	announcer ifNil: [ ^ self ].
+	announcer announce: anAnnouncement
 ]
 
 { #category : #private }
@@ -31,7 +39,7 @@ SpExecutableLayout >> announceChildAdded: aChildPresenter [
 		self announcer announce: (SpChildrenAdded new
 			parent: self presenter;
 			child: aChildPresenter;
-			yourself)].
+			yourself) ]
 ]
 
 { #category : #private }
@@ -44,7 +52,7 @@ SpExecutableLayout >> announceChildRemoved: aChildPresenter [
 			yourself)].
 ]
 
-{ #category : #adding }
+{ #category : #announcing }
 SpExecutableLayout >> announcer [
 
 	^ announcer ifNil: [ announcer := Announcer new ]
@@ -87,6 +95,8 @@ SpExecutableLayout >> buildAdapterFor: aPresenter bindings: bindings [
 				presenter: aPresenter 
 				bindings: bindings) 
 			constraints: constraints ].
+		
+	adapter adapterWasBuilt.
 
 	^ adapter
 ]
@@ -243,7 +253,7 @@ SpExecutableLayout >> subpresenterOrLayoutNamed: presenterNameOrLayout of: aPres
 					self error: 'No presenter named "' , presenterNameOrLayout , '" was found in ' , aPresenter printString ] ]
 ]
 
-{ #category : #adding }
+{ #category : #events }
 SpExecutableLayout >> whenChildrenAddedDo: aBlock [
 
 	self announcer
@@ -251,7 +261,7 @@ SpExecutableLayout >> whenChildrenAddedDo: aBlock [
 		do: aBlock
 ]
 
-{ #category : #adding }
+{ #category : #events }
 SpExecutableLayout >> whenChildrenRemovedDo: aBlock [
 
 	self announcer

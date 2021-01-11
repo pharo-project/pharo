@@ -18,7 +18,6 @@ Class {
 	#superclass : #MicAbstractMicrodownTextualBuilder,
 	#instVars : [
 		'prefixStack',
-		'i',
 		'currentLevel'
 	],
 	#category : #'Microdown-Parser'

@@ -195,13 +195,13 @@ Morph >> navigationKey: event [
 	
 	event isUserInterrupt ifTrue: [ ^ true ].
 
-	(event keyCharacter = Character escape and: [
+	(event key = KeyboardKey escape and: [
 			event anyModifierKeyPressed]) ifTrue: [
 		^ self yellowButtonActivity: false ].
 	
 	self window ifNotNil: [:win |
-		(win handlesKeyStroke: event) ifTrue: [
-			(win keyStroke: event) ifTrue: [^true]]].
+		(win handlesKeyDown: event) ifTrue: [
+			(win keyDown: event) ifTrue: [^true]]].
 	
 	^false
 ]

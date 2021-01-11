@@ -27,7 +27,7 @@ KMKeyCombination class >> fromKeyboardEvent: evt [
 	shift := evt shiftPressed.
 	alt := evt altKeyPressed.
 	(shift | command | control | alt)
-		ifFalse: [^ KMSingleKeyCombination from: evt modifiedCharacter ].
+		ifFalse: [^ evt key asKeyCombination ].
 	modifier := KMNoShortcut new.
 	control
 		ifTrue: [ modifier := modifier + KMModifier ctrl ].
@@ -37,7 +37,7 @@ KMKeyCombination class >> fromKeyboardEvent: evt [
 		ifTrue: [ modifier := modifier + KMModifier shift ].
 	alt
 		ifTrue: [ modifier := modifier + KMModifier alt ].
-	^ modifier + evt modifiedCharacter
+	^ modifier + evt key asKeyCombination
 ]
 
 { #category : #combining }
@@ -128,7 +128,7 @@ KMKeyCombination >> platformModifier [
 KMKeyCombination >> prettyPrintOn: aStream [
 
 	aStream << self shortcut modifier symbol.
-	self shortcut character printOn: aStream
+	self shortcut character name printOn: aStream
 ]
 
 { #category : #printing }

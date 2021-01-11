@@ -11,6 +11,24 @@ SpFilteringListSelectablePresenterTest >> classToTest [
 ]
 
 { #category : #tests }
+SpFilteringListSelectablePresenterTest >> testSelectItemAccumulatesSelections [
+
+	listWithFilter items: { 
+		OrderedCollection.
+		Array.
+		SequenceableCollection.
+		Set.
+		Dictionary }.
+
+	listWithFilter selectItem: Set.
+	listWithFilter selectItem: Array.
+	
+	self 
+		assert: listWithFilter selectedItems
+		equals: { Array. Set }
+]
+
+{ #category : #tests }
 SpFilteringListSelectablePresenterTest >> testSelectedItemsOrderedBasedOnList [
 
 	listWithFilter items: { 
@@ -20,7 +38,7 @@ SpFilteringListSelectablePresenterTest >> testSelectedItemsOrderedBasedOnList [
 		Set.
 		Dictionary }.
 
-	listWithFilter selectedItems: { Set. Array }.
+	listWithFilter selectItems: { Set. Array }.
 	
 	self 
 		assert: listWithFilter selectedItems

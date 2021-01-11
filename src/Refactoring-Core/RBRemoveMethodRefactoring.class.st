@@ -136,11 +136,14 @@ RBRemoveMethodRefactoring >> justSendsSuper: aSelector [
 
 { #category : #preconditions }
 RBRemoveMethodRefactoring >> preconditions [
-	^(selectors inject: RBCondition empty
-		into: [:cond :each | cond & (RBCondition definesSelector: each in: class)]) 
-			& (RBCondition withBlock: 
-						[self checkSuperMethods.
-						true])
+
+	^ (selectors
+		   inject: self emptyCondition
+		   into: [ :cond :each | 
+		   cond & (RBCondition definesSelector: each in: class) ])
+	  & (RBCondition withBlock: [ 
+			   self checkSuperMethods.
+			   true ])
 ]
 
 { #category : #initialization }

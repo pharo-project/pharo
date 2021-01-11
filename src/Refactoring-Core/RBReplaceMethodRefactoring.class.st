@@ -8,6 +8,9 @@ All senders of this method are changed by the other
 Class {
 	#name : #RBReplaceMethodRefactoring,
 	#superclass : #RBChangeMethodNameRefactoring,
+	#instVars : [
+		'replaceInAllClasses'
+	],
 	#category : #'Refactoring-Core-Refactorings'
 }
 
@@ -22,12 +25,33 @@ RBReplaceMethodRefactoring class >> model: aRBSmalltalk replaceMethod: aSelector
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
+RBReplaceMethodRefactoring class >> model: aRBSmalltalk replaceMethod: aSelector in: aClass to: newSelector permutation: aMap inAllClasses: aBoolean [
+	^ self new
+		model: aRBSmalltalk;
+		replaceCallMethod: aSelector
+			in: aClass
+			to: newSelector
+			permutation: aMap
+			inAllClasses: aBoolean;
+		yourself
+]
+
+{ #category : #'instance creation' }
 RBReplaceMethodRefactoring class >> replaceCallMethod: aSelector in: aClass to: newSelector permutation: aMap [ 
 	^self new replaceCallMethod: aSelector
 		in: aClass
 		to: newSelector
 		permutation: aMap
+]
+
+{ #category : #'instance creation' }
+RBReplaceMethodRefactoring class >> replaceCallMethod: aSelector in: aClass to: newSelector permutation: aMap inAllClasses: aBoolean [
+	^self new replaceCallMethod: aSelector
+		in: aClass
+		to: newSelector
+		permutation: aMap
+		inAllClasses: aBoolean
 ]
 
 { #category : #transforming }
@@ -36,7 +60,7 @@ RBReplaceMethodRefactoring >> haveSameNumberOfArgs [
 		ifFalse: [ self refactoringFailure: 'The new selector does not have the same number of parameters.']
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 RBReplaceMethodRefactoring >> numberOfArgs: aSymbol [
 	^ (aSymbol asString splitOn: ':' ) size
 ]
@@ -50,7 +74,9 @@ RBReplaceMethodRefactoring >> preconditions [
 	
 	^ conditions & (RBCondition withBlock: 
 		[ |senders|
-		senders := self model allReferencesTo: oldSelector.
+		senders := self replaceInAllClasses 
+			ifTrue: [ self model allReferencesTo: oldSelector ]
+			ifFalse: [ self model allReferencesTo: oldSelector in: {class} ].
 		senders size > 1 
 			ifTrue: 
 				[self refactoringWarning: ('This will modify all <1p> senders.' 
@@ -58,15 +84,31 @@ RBReplaceMethodRefactoring >> preconditions [
 		true])
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 RBReplaceMethodRefactoring >> replaceCallMethod: aSelector in: aClass to: newSel permutation: aMap [
 	oldSelector := aSelector asSymbol.
 	newSelector := newSel asSymbol.
 	class := self classObjectFor: aClass.
-	permutation := aMap
+	permutation := aMap.
+]
+
+{ #category : #initialization }
+RBReplaceMethodRefactoring >> replaceCallMethod: aSelector in: aClass to: newSel permutation: aMap inAllClasses: aBoolean [
+	oldSelector := aSelector asSymbol.
+	newSelector := newSel asSymbol.
+	class := self classObjectFor: aClass.
+	permutation := aMap.
+	replaceInAllClasses := aBoolean.
+]
+
+{ #category : #accessing }
+RBReplaceMethodRefactoring >> replaceInAllClasses [
+	^ replaceInAllClasses ifNil: [ replaceInAllClasses := false ]
 ]
 
 { #category : #transforming }
 RBReplaceMethodRefactoring >> transform [
-	self renameMessageSends
+	self replaceInAllClasses 
+		ifTrue: [ self renameMessageSends ]
+		ifFalse: [ self renameMessageSendsIn: {class} ]
 ]

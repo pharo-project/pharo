@@ -32,11 +32,8 @@ StDebuggerActionModel >> autoClassifyMessage: aMessage inClass: aClass [
 
 { #category : #'debug - execution' }
 StDebuggerActionModel >> clearDebugSession [
-
 	contextPredicate := nil.
-	self session
-		terminate;
-		clear
+	self session terminate; clear
 ]
 
 { #category : #context }

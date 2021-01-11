@@ -73,6 +73,14 @@ SindarinDebugSession >> refreshAttachedDebugger [
 ]
 
 { #category : #'debugging actions' }
+SindarinDebugSession >> resumeAndClear [
+
+	self debugSession
+		resume;
+		clear
+]
+
+{ #category : #'debugging actions' }
 SindarinDebugSession >> stepInto: aContext [
 	"Should not step more a process that is terminating, otherwise the image will get locked."
 	self flag: 'Why the image gets locked? Please investigate.'.

@@ -36,7 +36,7 @@ T2OldPharoClassDefinitionPrinterTest >> testClassDefinitionWithComplexSlotShould
 	self 
 		assert: (self forClass: TMockWithComplexSlot) 
 		equals: 'Trait << #TMockWithComplexSlot
-	slots: { #aComplexSlot => ObservableSlot };
+	slots: { #complexSlot => ObservableSlot };
 	package: ''TraitsV2-Tests''' 
 ]
 
@@ -98,7 +98,7 @@ T2OldPharoClassDefinitionPrinterTest >> testTMockWithUseAndSlot [
 		assert: (self forClass: TMockWithUseAndSlot) 
 		equals: 'Trait named: #TMockWithUseAndSlot
 	uses: Trait3
-	instanceVariableNames: ''aSlot''
+	instanceVariableNames: ''simpleSlot''
 	package: ''TraitsV2-Tests''' 
 ]
 

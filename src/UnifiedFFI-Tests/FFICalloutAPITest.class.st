@@ -87,7 +87,7 @@ FFICalloutAPITest >> primMemMoveFrom: src to: dest size: n [
 { #category : #'primitives pointer' }
 FFICalloutAPITest >> primStr: aString cat: otherString [  
 	^ self 
-		ffiCall: #( char *strcat ( char *aString, char *otherString ) )
+		ffiCall: #( char *strcat ( void *aString, void *otherString ) )
 		module: LibC
 
 ]

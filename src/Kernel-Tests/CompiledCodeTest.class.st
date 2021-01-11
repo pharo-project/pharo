@@ -170,6 +170,36 @@ CompiledCodeTest >> testHasSelectorSpecialSelectorIndex [
 ]
 
 { #category : #'tests-literals' }
+CompiledCodeTest >> testLiteralsDoNotConsiderTheInnerBlockLiterals [
+
+	"Bug or feature , I do not know..."
+
+	| method block |
+	method := self class compiler compile: 'method 
+		<pragma: #pragma>
+		test := 1+2.
+		Class.
+		self doIt: [ 
+		test := 1 - 2.
+		test := #(arrayInBlock).
+		Object.
+		self name ].
+		^#(#array) '.
+	block := (self class compiler evaluate: '[ 
+		test := 1 - 2.
+		test := #(arrayInBlock).
+		Object.
+		self name ]') compiledBlock.
+	self assertCollection: method literals equals: { 
+			2.
+			(UndeclaredVariable key: #test value: nil).
+			block.
+			#doIt:.
+			#( #array ).
+			(GlobalVariable key: #Class value: Class) }
+]
+
+{ #category : #'tests-literals' }
 CompiledCodeTest >> testLiteralsDoesNotContainMethodClass [
 	
 	self
@@ -182,6 +212,37 @@ CompiledCodeTest >> testLiteralsDoesNotContainMethodClass [
 CompiledCodeTest >> testLiteralsDoesNotContainMethodName [
 
 	self deny: (self compiledMethod1 refersToLiteral: #method1)
+]
+
+{ #category : #'tests-literals' }
+CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerBlocks [
+	"The behavior is different than literals. Bug or feature?"
+	| method |
+	method := self class compiler compile: 'method 
+		<pragma: #pragma>
+		test := 1+2.
+		Class.
+		self doIt: [ 
+		test := 1 - 2.
+		test := #(arrayInBlock).
+		Object.
+		self name ].
+		^#(#array) '.
+	"Can remove the test if the assertion is failing"
+	self deny: method literalsEvenTheOnesInTheInnerBlocks equals: method literals.
+	self
+		assertCollection: method literalsEvenTheOnesInTheInnerBlocks
+		equals: { 
+				2.
+				(UndeclaredVariable key: #test value: nil).
+				2.
+				(UndeclaredVariable key: #test value: nil).
+				#( #arrayInBlock ).
+				#name.
+				(GlobalVariable key: #Object value: Object).
+				#doIt:.
+				#( #array ).
+				(GlobalVariable key: #Class value: Class) }
 ]
 
 { #category : #'tests - scanning' }

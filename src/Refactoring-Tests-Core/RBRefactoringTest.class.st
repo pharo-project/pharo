@@ -138,6 +138,97 @@ m
 ]
 
 { #category : #private }
+RBRefactoringTest >> extractMethodTestData [
+	| newModel classEnvironment classes |
+	classes := #(#MyClassA #MyClassB #MyClassC) 
+		inject: OrderedCollection new 
+		into: [ :sum :each | 
+			testingEnvironment at: each ifPresent: [ :class | 
+				sum add: class; add: class class ].
+			sum ].
+	classEnvironment := RBClassEnvironment classes: classes.
+	newModel := RBClassModelFactory rbNamespace onEnvironment: classEnvironment not.
+	newModel name: 'Test'.
+	
+	#('Object subclass: #MyClassA
+		instanceVariableNames: ''instVarName1 instVarName2''
+		classVariableNames: ''ClassVarName1 ClassVarName2 ''
+		poolDictionaries: ''''
+		category: ''Testing'' '
+	'MyClassA subclass: #MyClassB
+		instanceVariableNames: ''''
+		classVariableNames: ''''
+		poolDictionaries: ''''
+		category: ''Testing'' '
+	'MyClassB subclass: #MyClassC
+		instanceVariableNames: ''''
+		classVariableNames: ''''
+		poolDictionaries: ''''
+		category: ''Testing'' '
+	) do: [ :each | 
+		newModel defineClass: each ].
+	
+	#(#(#MyClassA #(
+		#('bar
+			^ self' #tests)
+		#('name
+			^ ''SomeString''' #tests)
+		#('methodWithArg: anArg
+			^ anArg not' #tests) 
+		#('problemCount
+			^ 435' #tests)
+		#('string: aString stream: aStream
+			nil')
+		#('myMethod
+			| token |
+			token := (String new: 100) writeStream.
+			[ currentChar isLetter ] whileTrue: [ 
+				token nextPut: currentChar.
+				self methodWithArg: currentChar isLetter.
+				self bar ].
+			currentChar isLetter.
+			$3 isLetter.
+	 		currentChar isLetter.
+			token :=  currentChar isLetter.
+			token := ( currentChar isLetter) example.
+			^ token contents' #tests)
+		#('displayName
+			| nameStream string|
+			string := self name.
+			nameStream := WriteStream on: (String new: 64).
+		nameStream nextPutAll: string;
+			nextPutAll: '' (''.
+		self problemCount printOn: nameStream.
+		nameStream nextPut: $).
+		^nameStream contents' #tests)))
+	#(#MyClassB #(
+		#('someMethod
+			^ instVarName2 := 3' #tests)
+		#('exampleMethod
+			^ (currentChar isLetter) not' #tests) 
+		#('anotherMethod
+			|aStream|
+			aStream := WriteStream on: (String new: 128).
+			aStream nextPutAll: ''dfgdf'';
+				nextPutAll: '' (''.
+			self problemCount printOn: aStream.
+			aStream nextPut: $).' #tests)))
+	#(#MyClassC #(
+		#('methodWithArg: anArg
+			(currentChar isLetter and: [anArg isDecimal])
+			ifTrue: [^ self].
+			^ nil' #tests)))) 
+		do: [:each | 
+			| class |
+			class := newModel classNamed: each first.
+			each last do: [ :methodPair | 
+				class 
+					compile: methodPair first
+					classified: methodPair last]].
+	^ newModel
+]
+
+{ #category : #private }
 RBRefactoringTest >> inlineMethodTestData [
 ^ '
 | m |
