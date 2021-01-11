@@ -77,7 +77,10 @@ padding 	- extra space in pixels to put between this child and its neighbors, ov
 
 { #category : #adding }
 SpBoxLayout >> add: aPresenter height: anInteger [ 
-	self add: aPresenter withConstraints: [:constraints | constraints height: anInteger ].
+
+	self 
+		add: aPresenter 
+		withConstraints: [ :constraints | constraints height: anInteger ].
 ]
 
 { #category : #adding }

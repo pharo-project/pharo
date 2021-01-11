@@ -27,5 +27,5 @@ RBAddPoolVariableChange >> changeString [
 
 { #category : #private }
 RBAddPoolVariableChange >> changeSymbol [
-	^ #addSharedPool:
+	^ #addSharedPoolNamed:
 ]

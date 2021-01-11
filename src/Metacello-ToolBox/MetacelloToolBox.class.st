@@ -1530,12 +1530,13 @@ MetacelloToolBox >> baselineNamed: baseName [
     ifFalse: [ 
       "Create the configuration class"
       self ensureMetacello.
-      BaselineOf
-        subclass: baselineName asSymbol
-        instanceVariableNames: ''
-        classVariableNames: ''
-        poolDictionaries: ''
-        category: baselineName.
+
+		self class classInstaller make: [ :aBuilder | 
+			aBuilder 
+				name: baselineName asSymbol;
+				superclass: BaselineOf;
+				package: baselineName].
+
       MetacelloPlatform current registerPackageNamed: baselineName.
       (MetacelloPlatform current globalNamed: baselineName asSymbol)
         compile: 'baseline: spec <baseline>'

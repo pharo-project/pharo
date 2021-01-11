@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #'error handling' }
-ReIgnoreExceptionStrategy class >> handle: anException about: anEntity forProppertiesDo: aBlock [
+ReIgnoreExceptionStrategy class >> handle: anException about: anEntity forPropertiesDo: aBlock [
 
 	"do nothing"
 ]

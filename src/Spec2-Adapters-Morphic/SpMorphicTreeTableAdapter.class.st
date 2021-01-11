@@ -255,21 +255,6 @@ SpMorphicTreeTableAdapter >> registerColumnsChangedEventTo: tableMorph [
 
 ]
 
-{ #category : #emulating }
-SpMorphicTreeTableAdapter >> rightClicked [
-	| evt |
-
-	evt := MouseButtonEvent new 
-		setType: nil 
-		position: widget center 
-		which: MouseButtonEvent yellowButton 
-		buttons: MouseButtonEvent yellowButton 
-		hand: nil 
-		stamp: nil.
-	
-	self widget click: evt
-]
-
 { #category : #private }
 SpMorphicTreeTableAdapter >> rootForItems: aCollection [
 
@@ -350,6 +335,21 @@ SpMorphicTreeTableAdapter >> selectionChanged: ann [
 
 	self suspendSelectionEventsDuring: [ 
 		self basicSelectionChanged: ann ]
+]
+
+{ #category : #emulating }
+SpMorphicTreeTableAdapter >> sendRightClickEvent [
+	| evt |
+
+	evt := MouseButtonEvent new 
+		setType: nil 
+		position: widget center 
+		which: MouseButtonEvent yellowButton 
+		buttons: MouseButtonEvent yellowButton 
+		hand: nil 
+		stamp: nil.
+	
+	self widget click: evt
 ]
 
 { #category : #private }

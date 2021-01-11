@@ -145,6 +145,12 @@ StObjectContextPresenter >> setModelBeforeInitialization: aModel [
 	model := aModel
 ]
 
+{ #category : #stepping }
+StObjectContextPresenter >> step [
+
+	view step
+]
+
 { #category : #'api-events' }
 StObjectContextPresenter >> whenActivatedDo: aBlock [
 

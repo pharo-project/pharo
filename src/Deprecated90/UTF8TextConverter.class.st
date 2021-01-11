@@ -87,7 +87,7 @@ UTF8TextConverter >> nextPut: aCharacter toStream: aStream [
 
 	"leadingChar > 3 ifTrue: [^ aStream]."
 
-	ucs2code := aCharacter asUnicode.
+	ucs2code := aCharacter asUnicodeForTextConverter.
 	ucs2code ifNil: [^ aStream].
 
 	nBytes := ucs2code highBit + 3 // 5.

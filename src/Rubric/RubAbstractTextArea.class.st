@@ -956,14 +956,6 @@ RubAbstractTextArea >> handleKeystroke: anEvent [
 
 	anEvent wasHandled
 		ifTrue: [^ self].
-	self allowsKeymapping
-		ifTrue: [ self dispatchKeystrokeForEvent: anEvent ] .
-	anEvent wasHandled
-		ifTrue: [
-			"We need to check for completion here because otherwise it will try to handle the keystroke, 
-			even if it was already processed."
-			self completionPostAction.
-			^ self].
 	(self handlesKeyStroke: anEvent)
 		ifFalse: [^ self].
 	self keyStroke: anEvent.
@@ -1114,12 +1106,12 @@ RubAbstractTextArea >> isReadOnly [
 ]
 
 { #category : #'event handling' }
-RubAbstractTextArea >> keyStroke: anEvent [
+RubAbstractTextArea >> keyDown: anEvent [
 	"Handle a keystroke event."
-
-	anEvent keyCharacter = Character cr
+	anEvent key = KeyboardKey enter
 		ifTrue: [ self handleReturnKey
 				ifTrue: [ ^ self ] ].
+
 	anEvent hand anyButtonPressed
 		ifTrue: [ ^ self ].
 	self scrollPane
@@ -1128,8 +1120,15 @@ RubAbstractTextArea >> keyStroke: anEvent [
 				ifTrue: [ ^ self ] ].
 	anEvent isUserInterrupt
 		ifTrue: [ ^ self ].
-	self
-		handleEdit: [ self editor keystroke: anEvent ].
+	self handleEdit: [ self editor keyDown: anEvent ].
+]
+
+{ #category : #'event handling' }
+RubAbstractTextArea >> keyStroke: anEvent [
+	"Handle a keystroke event."
+	anEvent hand anyButtonPressed
+		ifTrue: [ ^ self ].
+	self handleEdit: [ self editor keystroke: anEvent ].
 	self scrollSelectionIntoView: nil
 ]
 

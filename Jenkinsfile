@@ -45,6 +45,11 @@ def runTests(architecture, prefix=''){
             shell "mv crash.dmp crash-${env.STAGE_NAME}${prefix}.dmp"
             archiveArtifacts allowEmptyArchive: true, artifacts: "crash-${env.STAGE_NAME}${prefix}.dmp", fingerprint: true
         }
+        if(fileExists('progress.log')){
+            shell "mv progress.log progress-${env.STAGE_NAME}${prefix}.log"
+            shell "cat progress-${env.STAGE_NAME}${prefix}.log"
+            archiveArtifacts allowEmptyArchive: true, artifacts: "progress-${env.STAGE_NAME}${prefix}.log", fingerprint: true
+        }
     }
   }
 }

@@ -168,21 +168,6 @@ SpMorphicListAdapter >> refreshWidgetSelection [
 	^ self widget refresh
 ]
 
-{ #category : #emulating }
-SpMorphicListAdapter >> rightClicked [
-	| evt |
-
-	evt := MouseButtonEvent new 
-		setType: nil 
-		position: widget center 
-		which: MouseButtonEvent yellowButton 
-		buttons: MouseButtonEvent yellowButton 
-		hand: nil 
-		stamp: nil.
-	
-	self widget click: evt
-]
-
 { #category : #selecting }
 SpMorphicListAdapter >> selectIndex: anInteger [ 
 	
@@ -216,6 +201,26 @@ SpMorphicListAdapter >> selectionChanged: ann [
 		ifTrue: [ self presenter doActivateAtIndex: diff last ].
 	ann newSelectedIndexes ifNotEmpty: [ ^ self ].
 	self presenter selection unselectAll
+]
+
+{ #category : #emulating }
+SpMorphicListAdapter >> sendRightClickEvent [
+	| evt |
+
+	evt := MouseButtonEvent new 
+		setType: nil 
+		position: widget center 
+		which: MouseButtonEvent yellowButton 
+		buttons: MouseButtonEvent yellowButton 
+		hand: nil 
+		stamp: nil.
+	
+	"Sending directly to #click: because that's what it was being tested, but this 
+	 is a a weird way to make the call. Usually the parent method should have work, 
+	 but since it was using mouseDown:/mouseUp: instead handleMouseDown:/handleMouseUp:
+	 the event was not arriving. This is not fixed, but we do not want to introduce 
+	 a regression here, so we let it like that :)"
+	self widget click: evt
 ]
 
 { #category : #events }

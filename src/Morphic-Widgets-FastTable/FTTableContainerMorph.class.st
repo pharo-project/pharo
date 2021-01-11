@@ -36,7 +36,7 @@ Class {
 		'exposedRows',
 		'startColumnIndex'
 	],
-	#category : #'Morphic-Widgets-FastTable'
+	#category : #'Morphic-Widgets-FastTable-Base'
 }
 
 { #category : #accessing }

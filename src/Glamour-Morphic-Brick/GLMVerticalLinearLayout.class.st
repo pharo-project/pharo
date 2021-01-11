@@ -52,7 +52,7 @@ GLMVerticalLinearLayout >> asString [
 { #category : #height }
 GLMVerticalLinearLayout >> heightChildrenDependency: aBrick [
 	"returns the height of aBrick when it depends on children"
-	^ aBrick paddingTop + aBrick paddingBottom + ((self nonFloatSubbricks: aBrick) detectSum: [ :each | each outerBounds height ])
+	^ aBrick paddingTop + aBrick paddingBottom + ((self nonFloatSubbricks: aBrick) sum: [ :each | each outerBounds height ])
 ]
 
 { #category : #width }

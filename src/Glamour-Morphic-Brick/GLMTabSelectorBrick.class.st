@@ -76,14 +76,16 @@ GLMTabSelectorBrick >> handlesKeyboard: evt [
 ]
 
 { #category : #'event handling' }
-GLMTabSelectorBrick >> keyStroke: event [ 
+GLMTabSelectorBrick >> keyDown: event [ 
 	"Process keys navigation and space to toggle."
 
 	(self navigationKey: event) ifTrue: [ ^ self ].
-	event keyCharacter = Character arrowLeft
-		ifTrue: [ self selectPreviousTab ].
-	event keyCharacter = Character arrowRight
-		ifTrue: [ self selectNextTab ]
+	({KeyboardKey left . KeyboardKey keypadLeft}
+		includes: event key)
+			ifTrue: [ self selectPreviousTab ].
+	({KeyboardKey right . KeyboardKey keypadRight}
+		includes: event key)
+			ifTrue: [ self selectNextTab ]
 ]
 
 { #category : #'event handling' }

@@ -25,11 +25,10 @@ AssemblyManifest class >> manifestClassComment [
 { #category : #'instance creation' }
 AssemblyManifest class >> newNamed: aString category: aCategoryName [
 	| assemblyClass |
-	assemblyClass := self subclass: aString asSymbol
-			instanceVariableNames: ''
-			classVariableNames: ''
-			poolDictionaries: ''
-			category: aCategoryName.
+	assemblyClass := self class classInstaller make: [ :aClassBuilder | 
+		aClassBuilder name: aString asSymbol;
+		package: aCategoryName ].
+
 	assemblyClass comment: self manifestClassComment.
 	^ assemblyClass
 ]

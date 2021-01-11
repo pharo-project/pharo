@@ -1,19 +1,19 @@
 Extension { #name : #String }
 
-{ #category : #'*filesystem-core-converting' }
+{ #category : #'*Filesystem-Core-converting' }
 String >> asFileLocatorOrReference [
 
 	^ FileLocator fromString: self ifNone: [ self asFileReference ]
 
 ]
 
-{ #category : #'*filesystem-core-converting' }
+{ #category : #'*Filesystem-Core-converting' }
 String >> asFileReference [
 
 	^ FileSystem disk referenceTo: self
 ]
 
-{ #category : #'*filesystem-core-converting' }
+{ #category : #'*Filesystem-Core-converting' }
 String >> asPath [
 	"convert myself to a path"
 	"Examples:
@@ -24,12 +24,12 @@ String >> asPath [
 	^ FileSystem disk resolve: self
 ]
 
-{ #category : #'*filesystem-core-converting' }
+{ #category : #'*Filesystem-Core-converting' }
 String >> asPathWith: anObject [ 
 	^ anObject pathFromString: self
 ]
 
-{ #category : #'*filesystem-core-converting' }
+{ #category : #'*Filesystem-Core-converting' }
 String >> asResolvedBy: aFileSystem [
 	^ aFileSystem resolveString: self
 ]

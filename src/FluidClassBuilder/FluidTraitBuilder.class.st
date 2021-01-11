@@ -15,7 +15,7 @@ Class {
 	#category : #'FluidClassBuilder-Base'
 }
 
-{ #category : #accessing }
+{ #category : #building }
 FluidTraitBuilder >> build [
 
 	^ shiftClassBuilder build 
@@ -30,11 +30,10 @@ FluidTraitBuilder >> fillShiftClassBuilder [
 	shiftClassBuilder buildEnvironment: ShSmalltalkGlobalsEnvironment new. 
 	shiftClassBuilder 
 		name: name;
-		superclass: nil;
-		metaSuperclass: Trait;
-		metaclassClass: MetaclassForTraits;
+		beTrait;
 		sharedVariables: '';
 		sharedPools: ''.
+		
 	slots ifNotNil: [ shiftClassBuilder slots: slots ].	
 	uses ifNotNil: [ 
 		shiftClassBuilder traitComposition: uses asTraitComposition.
@@ -48,7 +47,7 @@ FluidTraitBuilder >> fillShiftClassBuilder [
 		].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #building }
 FluidTraitBuilder >> install [
 	"Install the trait in the system environment"
 	
@@ -57,30 +56,31 @@ FluidTraitBuilder >> install [
 
 { #category : #accessing }
 FluidTraitBuilder >> instanceVariables: anArray [
-
+	"Pay attention this is not part of the fluid interface -- this method should not probably removed."
+	
 	slots := anArray
 ]
 
-{ #category : #accessing }
+{ #category : #API }
 FluidTraitBuilder >> name: aString [
 
 	name := aString
 ]
 
-{ #category : #accessing }
+{ #category : #API }
 FluidTraitBuilder >> package: aString [
 
 	packageName := aString.
 	self fillShiftClassBuilder
 ]
 
-{ #category : #accessing }
+{ #category : #building }
 FluidTraitBuilder >> shiftClassBuilder [ 
 
 	^ shiftClassBuilder 
 ]
 
-{ #category : #accessing }
+{ #category : #API }
 FluidTraitBuilder >> slots: anArray [
 
 	slots := anArray
@@ -92,13 +92,13 @@ FluidTraitBuilder >> tag [
 	^ tagToBuild
 ]
 
-{ #category : #accessing }
+{ #category : #API }
 FluidTraitBuilder >> tag: anObject [
 
 	tagToBuild := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #API }
 FluidTraitBuilder >> uses: anArray [
 
 	uses := anArray

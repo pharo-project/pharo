@@ -38,7 +38,7 @@ CNSelectorExtractionOnPositionTest >> caretInMiddleOfCascadeMessage: aRBMessageN
 	
 	self flag: #bug.
 	"The start of a selector node should not be an integer array. That will change in the future and this test will break because of that."
-	^ self caretAt: aRBMessageNode selectorNode start first
+	^ self caretAt: aRBMessageNode selectorNode start
 ]
 
 { #category : #helpers }

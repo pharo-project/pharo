@@ -9,7 +9,6 @@ Class {
 		'menuBlockHolder',
 		'rootsHolder',
 		'selectionHolder',
-		'selectedItem',
 		'autoMultiSelection',
 		'columnInset',
 		'doubleClick',

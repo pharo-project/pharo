@@ -78,13 +78,19 @@ FTFilterFunction >> initializeFilter [
 ]
 
 { #category : #'event handling' }
+FTFilterFunction >> keyDown: anEvent [
+	self isExplicit ifTrue: [ ^false ].
+	
+	"If the user escape after a search, he want the full data source again so we reinitialize the table."
+	(anEvent keyCharacter = Character escape and: [ initialDataSource isNotNil ])
+		ifTrue: [ ^ self reinitializeTable ].
+	^ false
+]
+
+{ #category : #'event handling' }
 FTFilterFunction >> keyStroke: anEvent [
 	self isExplicit ifTrue: [ ^false ].
 	
-	(anEvent keyCharacter = Character escape and: [ initialDataSource isNotNil ])
-		ifTrue: [ ^ self reinitializeTable ].	"If the user escape after a search, he want the full data source again so we reinitialize the table."
-	(anEvent anyModifierKeyPressed or: [ anEvent keyCharacter isAlphaNumeric not ])
-		ifTrue: [ ^ false ].
 	self showFilterFieldFromKeystrokeEvent: anEvent.
 	^ true
 ]

@@ -398,6 +398,34 @@ RPackageOrganizerTest >> testSilentlyRenameCategoryToBe [
 ]
 
 { #category : #tests }
+RPackageOrganizerTest >> testTestPackageNames [
+
+	| packages |
+	packages := self createMockTestPackages.
+	packages do: [:aPackage | self packageOrganizer registerPackage: aPackage].
+	
+	"Only 2 mock package names are test packages:  'MockPackage-Tests' 'MockPackage-Tests-Package'"
+	self assert: self packageOrganizer testPackageNames size equals: 2.
+	
+	"Names of test packages are symbols."
+	self assert: (self packageOrganizer testPackageNames allSatisfy: #isSymbol) equals: true.
+]
+
+{ #category : #tests }
+RPackageOrganizerTest >> testTestPackages [
+
+	| packages |
+	packages := self createMockTestPackages.
+	packages do: [:aPackage | self packageOrganizer registerPackage: aPackage].
+	
+	"Only 2 mock packages are test packages:  'MockPackage-Tests' 'MockPackage-Tests-Package'."
+	self assert: self packageOrganizer testPackages size equals: 2.
+	
+	"all items from resulting collection are test packages."
+	self assert: (self packageOrganizer testPackages allSatisfy: #isTestPackage) equals: true.
+]
+
+{ #category : #tests }
 RPackageOrganizerTest >> testUnregisterBasedOnNames [
 	| p1 p2 p3 |
 	p1 := self createNewPackageNamed: 'P1'.

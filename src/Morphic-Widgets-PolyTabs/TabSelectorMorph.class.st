@@ -231,7 +231,7 @@ TabSelectorMorph >> initializeShortcuts: aKMDispatcher [
 ]
 
 { #category : #'event handling' }
-TabSelectorMorph >> keyStroke: event [ 
+TabSelectorMorph >> keyDown: event [ 
 	"Process keys navigation and space to toggle."
 
 	(self navigationKey: event) ifTrue: [^self].

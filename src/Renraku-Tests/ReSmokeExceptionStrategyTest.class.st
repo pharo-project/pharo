@@ -11,11 +11,12 @@ Class {
 ReSmokeExceptionStrategyTest >> setUp [
 	super setUp.
 
-	brokenRule := ReAbstractRule
-		subclass: #ReBrokenRuleForTesting
-		instanceVariableNames: ''
-		classVariableNames: ''
-		package: RPackage defaultPackageName.
+	brokenRule := self class classInstaller make: [ :aClassBuilder | 
+		aClassBuilder 
+			name: #ReBrokenRuleForTesting;
+			superclass: ReAbstractRule;
+			package: self class category ].
+
 		
 	brokenRule class
 		compile: 'checksMethod ^ true'.

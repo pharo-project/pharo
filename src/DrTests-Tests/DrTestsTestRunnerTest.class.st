@@ -71,8 +71,8 @@ DrTestsTestRunnerTest >> testRunResultIsDTTestRunnerResult [
 { #category : #tests }
 DrTestsTestRunnerTest >> testSelectedPackagesContainTestCases [
 
-	self assert: (plugin packagesAvailableForAnalysis allSatisfy: [ :package |
-		package definedClasses anySatisfy: [ :class |
+	self assert: (plugin packagesAvailableForAnalysis allSatisfy: [ :pkg |
+		pkg definedClasses anySatisfy: [ :class |
 			class isTestCase ] ])
 ]
 

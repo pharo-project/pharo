@@ -6,12 +6,5 @@ A promise is registered and kept up to the end of the computation and applicatio
 Class {
 	#name : #TKTPromise,
 	#superclass : #Object,
-	#instVars : [
-		'result',
-		'valueSemaphore',
-		'resultCallbacks',
-		'exceptionCallbacks',
-		'runner'
-	],
 	#category : #'TaskIt-Futures'
 }

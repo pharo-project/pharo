@@ -171,16 +171,6 @@ PluggableTreeMorph >> isDraggableNode: node [
 	^true
 ]
 
-{ #category : #accessing }
-PluggableTreeMorph >> keystrokeActionSelector [
-	^keystrokeActionSelector
-]
-
-{ #category : #accessing }
-PluggableTreeMorph >> keystrokeActionSelector: aSymbol [
-	keystrokeActionSelector := aSymbol
-]
-
 { #category : #'node access' }
 PluggableTreeMorph >> printNode: node [
 	getLabelSelector ifNil:[^node item printString].

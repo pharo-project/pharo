@@ -75,11 +75,16 @@ MCTraitDefinition >> classSlotDefinitionString [
 { #category : #installing }
 MCTraitDefinition >> createClass [
 	| trait |
-	trait := Trait
-		named: name
-		uses: (Smalltalk compiler evaluate: self traitCompositionString)
-		slots: self instanceVariables
-		package: category.
+	
+	trait := self class classInstaller make: [ :aBuilder |
+		aBuilder 
+			name: name;
+			traitComposition: (Smalltalk compiler evaluate: self traitCompositionString);
+			slots: self instanceVariables;
+			package:  category;
+			beTrait ].					
+
+
 	trait ifNotNil: [
 		trait classComment: comment stamp: commentStamp.
 		self classInstanceVariables ifNotEmpty: [

@@ -12,8 +12,7 @@ Collection >> spotterItemsFor: aStep [
 		items: [ self collect: [ :each | each asSpotterCandidateLink value] as: OrderedCollection ];
 		itemName: processor itemName;
 		itemIcon: processor itemIcon;
-		actLogic: processor actLogic;
-		itemFilterName: processor itemFilterName;
+		actLogic: processor actLogic; 
 		filter: processor filter gtListFilter;
 		wantsToDisplayOnEmptyQuery: true
 ]

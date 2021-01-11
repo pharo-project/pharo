@@ -19,12 +19,7 @@ export VM=${2-vm}
 export ARCHITECTURE=${3-32}
 export RETRY_REMAINING=${4-3}
 
-#Zero conf does not have yet an url get.pharo.org/32/... This explain why we need to use a condition to get a Pharo 32 or 64 bits.
-if [ $ARCHITECTURE = 32 ]; then
-  wget --quiet -O - get.pharo.org/${VM}${PHARO} | bash
-else
-  wget --quiet -O - get.pharo.org/$ARCHITECTURE/${VM}${PHARO} | bash
-fi
+wget --quiet -O - get.pharo.org/$ARCHITECTURE/${VM}${PHARO} | bash
 
 #If the exit of the previous command is not 0 (sucess), retry after cleaning
 if [ $? -eq 0 ]

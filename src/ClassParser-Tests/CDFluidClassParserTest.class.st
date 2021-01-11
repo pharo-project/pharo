@@ -1,9 +1,6 @@
 Class {
 	#name : #CDFluidClassParserTest,
 	#superclass : #TestCase,
-	#instVars : [
-		'classDefinition'
-	],
 	#category : #'ClassParser-Tests'
 }
 

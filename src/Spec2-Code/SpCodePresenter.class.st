@@ -94,6 +94,12 @@ SpCodePresenter class >> codeSelectionActionCommandsGroupWith: presenter [
 	^ group
 ]
 
+{ #category : #documentation }
+SpCodePresenter class >> documentFactoryMethodSelector [
+
+	^ #newCode
+]
+
 { #category : #examples }
 SpCodePresenter class >> example [
 

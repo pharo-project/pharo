@@ -58,7 +58,6 @@ Class {
 		'debugAPI',
 		'actions',
 		'actionsDescriptions',
-		'selectedMethod',
 		'shortStack',
 		'shortStackIndex',
 		'error',

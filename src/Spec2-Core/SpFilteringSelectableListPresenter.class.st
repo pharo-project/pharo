@@ -8,7 +8,8 @@ Class {
 		'selectColumn',
 		'displayBlock',
 		'displayIconBlock',
-		'selectedItems'
+		'selectedItems',
+		'previousSelectedIndex'
 	],
 	#category : #'Spec2-Core-Widgets-Advanced'
 }
@@ -47,7 +48,19 @@ SpFilteringSelectableListPresenter >> initializePresenters [
 	super initializePresenters.
 	listPresenter 
 		bindKeyCombination: Character space 
-		toAction: [ self toggleSelection ]
+		toAction: [ self toggleSelection ].
+		
+	listPresenter selection whenSelectedIndexChangedDo: [ :newIndex :prevIndex | 
+		previousSelectedIndex := prevIndex ]. 
+		
+	listPresenter eventHandler whenMouseDownDo: [ :event | 
+		event shiftPressed
+			ifTrue: [ 
+				self 
+					selectFrom: previousSelectedIndex
+					to: listPresenter selection selectedIndex ]
+			ifFalse: [ 
+				self toggleSelection ] ]
 ]
 
 { #category : #private }
@@ -77,16 +90,32 @@ SpFilteringSelectableListPresenter >> newListToFilter [
 	^ table
 ]
 
+{ #category : #private }
+SpFilteringSelectableListPresenter >> selectFrom: fromIndex to: toIndex [
+
+	selectedItems addAll: (fromIndex < toIndex
+		ifTrue: [ listPresenter items copyFrom: fromIndex to: toIndex ]
+		ifFalse:[ listPresenter items copyFrom: toIndex to: fromIndex ]).
+	listPresenter refresh
+]
+
+{ #category : #api }
+SpFilteringSelectableListPresenter >> selectItem: anObject [
+
+	self selectItems: (self selectedItems copyWith: anObject).
+	listPresenter selectItem: anObject
+]
+
+{ #category : #api }
+SpFilteringSelectableListPresenter >> selectItems: aCollection [
+
+	selectedItems := aCollection asSet
+]
+
 { #category : #api }
 SpFilteringSelectableListPresenter >> selectedItems [
 
 	^ selectedItems sorted: [ :a :b | (self items indexOf: a) < (self items indexOf: b) ]
-]
-
-{ #category : #api }
-SpFilteringSelectableListPresenter >> selectedItems: aCollection [
-
-	selectedItems := aCollection asSet
 ]
 
 { #category : #private }

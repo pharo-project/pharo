@@ -100,6 +100,61 @@ CompletionEngine >> editor [
 ]
 
 { #category : #keyboard }
+CompletionEngine >> handleKeyDownBefore: aKeyboardEvent editor: anEditor [
+	"I return a boolean. 
+	true when I have handled the event and no futher processing is needed by the caller.
+	
+	This method would be cleaner if splitted."
+
+	| key controlKeyPressed commandKeyPressed |
+	self setEditor: anEditor.
+	key := aKeyboardEvent key.
+	controlKeyPressed := aKeyboardEvent controlKeyPressed.
+	commandKeyPressed := aKeyboardEvent commandKeyPressed.
+	
+	self isMenuOpen ifFalse: [ ^ false ].
+	
+	({ KeyboardKey left . KeyboardKey right.
+		KeyboardKey keypadLeft . KeyboardKey keypadRight }
+			includes: key) ifTrue: [ "just move the caret" ^ false ].
+	
+	({ KeyboardKey up . KeyboardKey keypadUp } includes: key)
+		ifTrue: [ 
+			menuMorph moveUp.
+			^ true ].
+	({ KeyboardKey down . KeyboardKey keypadDown } includes: key)
+		ifTrue: [ 
+			menuMorph moveDown.
+			^ true ].
+	(key = KeyboardKey pageUp)
+		ifTrue: [ 
+			menuMorph pageUp.
+			^ true ].
+	(key = KeyboardKey pageDown)
+		ifTrue: [ 
+			menuMorph pageDown.
+			^ true ].
+	(key = KeyboardKey enter and: [ NECPreferences useEnterToAccept ])
+		ifTrue: [ 
+			menuMorph insertSelected
+				ifTrue: [ ^ true ] ].
+	key = KeyboardKey tab
+		ifTrue: [ 
+			menuMorph insertSelected
+						ifTrue: [ ^ true ] ].
+	key = KeyboardKey backspace
+		ifTrue: [ 
+			editor isCaretBehindChar
+				ifFalse: [ self closeMenu ].
+			^ false ].
+	(controlKeyPressed or: [ commandKeyPressed or: [ key = KeyboardKey escape ] ])
+		ifTrue: [ 
+			self closeMenu.
+			^ true ].
+	^ false
+]
+
+{ #category : #keyboard }
 CompletionEngine >> handleKeystrokeAfter: aKeyboardEvent editor: aParagraphEditor [ 
 	(aParagraphEditor isNil or: [ self isMenuOpen not ])
 		ifTrue: [ ^ self ].
@@ -118,49 +173,15 @@ CompletionEngine >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 	
 	This method would be cleaner if splitted."
 
-	| keyCharacter controlKeyPressed commandKeyPressed |
+	| keyCharacter controlKeyPressed |
 	self setEditor: anEditor.
 	keyCharacter := aKeyboardEvent keyCharacter.
 	controlKeyPressed := aKeyboardEvent controlKeyPressed.
-	commandKeyPressed := aKeyboardEvent commandKeyPressed.
 	
 	self isMenuOpen
 		ifFalse: [ ^ self handleKeystrokeWithoutMenu: aKeyboardEvent ].
 	
-	(keyCharacter = Character arrowLeft or: [ keyCharacter = Character arrowRight ])
-		ifTrue: [ "just move the caret" ^ false ].
-	
-	keyCharacter = Character arrowUp
-		ifTrue: [ 
-			menuMorph moveUp.
-			^ true ].
-	keyCharacter = Character arrowDown
-		ifTrue: [ 
-			menuMorph moveDown.
-			^ true ].
-	keyCharacter = Character pageUp
-		ifTrue: [ 
-			menuMorph pageUp.
-			^ true ].
-	keyCharacter = Character pageDown
-		ifTrue: [ 
-			menuMorph pageDown.
-			^ true ].
-	(keyCharacter = Character cr and: [ NECPreferences useEnterToAccept ])
-		ifTrue: [ 
-			menuMorph insertSelected
-				ifTrue: [ ^ true ] ].
-	keyCharacter = Character tab
-		ifTrue: [ 
-			menuMorph insertSelected
-						ifTrue: [ ^ true ] ].
-	keyCharacter = Character backspace
-		ifTrue: [ 
-			editor isCaretBehindChar
-				ifFalse: [ self closeMenu ].
-			^ false ].
-	(controlKeyPressed not & aKeyboardEvent commandKeyPressed not
-		and: [ aKeyboardEvent keyCharacter isCompletionCharacter ])
+	(controlKeyPressed not and: [ aKeyboardEvent keyCharacter isCompletionCharacter ])
 		ifFalse: [ 
 			self closeMenu.
 			^ keyCharacter = Character escape ].

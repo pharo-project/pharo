@@ -12,7 +12,7 @@ PharoSyntaxTutorial >> basicTypesArray [
 	^ Lesson
 title: 'Basic types: Array' 
 lesson: 
-'"Literal arrays are created at parse time:"
+'"Literal arrays are created at parse time and are read-only:"
 
 #(1 2 3).
 
@@ -22,7 +22,10 @@ lesson:
 
 #(1 2 3) first.
 
-#(''hello'' ''World'') at: 2 put: ''Pharo''; yourself.
+#(''hello'' ''World'') at: 2.
+
+"You can modify a copy"
+#(''hello'' ''World'') copy at: 2 put: ''Pharo''; yourself.
 
 ProfStef next.'
 ]

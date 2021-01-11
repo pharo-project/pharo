@@ -89,6 +89,12 @@ SpMenuItemPresenter >> fromSpec: aSpec [
 		action: aSpec action
 ]
 
+{ #category : #testing }
+SpMenuItemPresenter >> hasShortcut [
+
+	^ self shortcut notNil
+]
+
 { #category : #api }
 SpMenuItemPresenter >> icon [
 	"Answer the icon to be shown with the menu item."

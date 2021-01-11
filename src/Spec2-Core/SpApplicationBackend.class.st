@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'adapterBindings'
 	],
-	#category : #'Spec2-Core-Base'
+	#category : #'Spec2-Core-Support'
 }
 
 { #category : #accessing }

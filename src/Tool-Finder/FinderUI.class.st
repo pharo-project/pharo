@@ -552,10 +552,9 @@ FinderUI >> defaultTreeMorph [
 			hResizing: #spaceFill;
 			vResizing: #spaceFill;
 			resizerWidth: 0;
-			columnInset: 0; 
+			columnInset: 0;
 			rowInset: 2; 
-			keystrokeActionSelector: #keyStroke:;
-			"preferedPaneColor: Color white;"
+			keyDownActionSelector: #keyDown:;
 			multiSelection: self multiSelection;
 			autoMultiSelection: self autoMultiSelection;
 			isCheckList: self isCheckList;
@@ -754,9 +753,9 @@ FinderUI >> isSourceSymbol [
 	^self finder isSourceSymbol
 ]
 
-{ #category : #'events handling' }
-FinderUI >> keyStroke: event [
-	self selectedNode ifNotNil: [:node | node keyStroke: event]
+{ #category : #private }
+FinderUI >> keyDown: event [
+	self selectedNode ifNotNil: [:node | node keyDown: event]
 ]
 
 { #category : #private }

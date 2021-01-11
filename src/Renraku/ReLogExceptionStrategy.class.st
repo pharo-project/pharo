@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #'error handling' }
-ReLogExceptionStrategy class >> handle: anException about: anEntity forProppertiesDo: aBlock [
+ReLogExceptionStrategy class >> handle: anException about: anEntity forPropertiesDo: aBlock [
 
 	aBlock value: (
 		ReExceptionProperty

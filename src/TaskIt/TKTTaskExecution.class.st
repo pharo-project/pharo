@@ -8,8 +8,6 @@ Class {
 		'runner',
 		'task',
 		'executionProcess',
-		'isRunning',
-		'cancelled',
 		'state'
 	],
 	#category : #'TaskIt-Kernel'

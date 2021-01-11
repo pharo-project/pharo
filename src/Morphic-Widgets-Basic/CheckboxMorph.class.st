@@ -215,10 +215,16 @@ CheckboxMorph >> isSelected [
 ]
 
 { #category : #'event handling' }
-CheckboxMorph >> keyStroke: event [ 
+CheckboxMorph >> keyDown: event [ 
 	"Process keys navigation and space to toggle."
 	
-	(self navigationKey: event) ifTrue: [^self].
+	(self navigationKey: event) ifTrue: [^true].
+	^ false
+]
+
+{ #category : #'event handling' }
+CheckboxMorph >> keyStroke: event [ 
+	"Process keys navigation and space to toggle."
 	event keyCharacter = Character space
 		ifTrue: [self toggleSelected]
 ]

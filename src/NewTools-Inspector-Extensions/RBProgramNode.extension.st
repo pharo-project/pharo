@@ -6,6 +6,7 @@ RBProgramNode >> inspectionASTDump [
 
 	^ SpCodePresenter new 
 		text: (RBParser parseExpression: self dump) formattedCode; 
+		beForScripting; "this is an expression"
 		yourself
 ]
 
@@ -14,8 +15,8 @@ RBProgramNode >> inspectionSourceCode [
 	<inspectorPresentationOrder: 30 title: 'Source code'>
 
 	^ SpCodePresenter new 
-		beForBehavior: (self withAllParents  first compilationContext ifNotNil: [ :ctx | ctx getClass ]);
-		text: self source;
+		beForBehavior: self methodNode methodClass;
+		text: (self source ifNil: [self formattedCode]);
 		selectionInterval: self sourceInterval;
 		yourself
 ]

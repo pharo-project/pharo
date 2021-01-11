@@ -342,7 +342,6 @@ OpalCompiler >> compileDoit [
 	offset of the original selected code. This way the #location 
 	will be correct regarding the requestor"
 	self parseDoIt.
-	self transformDoit.
 	self callPlugins.
 	cm := ast generateWithSource ]
 		on: SyntaxErrorNotification
@@ -361,7 +360,8 @@ OpalCompiler >> compileDoit [
 	ast := RBParser parseMethod: ast formattedCode.
 	ast compilationContext: self compilationContext.
 	self doSemanticAnalysis.
-	ASTCache default at: cm  put: ast. 
+	"we store the ast in the doit method so that the debugger can read variables from the requestor"
+	cm propertyAt: #ast put: ast.
 	^cm
 ]
 
@@ -551,7 +551,8 @@ OpalCompiler >> parse: textOrString [
 { #category : #private }
 OpalCompiler >> parseDoIt [
 	"we parse doits without doing name analysis here, it is done in #transformDoit"
-	^ ast := self parseExpression
+	ast := self parseExpression.
+	^self transformDoit
 ]
 
 { #category : #private }
@@ -616,10 +617,13 @@ OpalCompiler >> source: aString [
 OpalCompiler >> transformDoit [
 	"if we compile an expression, we wrap it in a method here"
 	self compilationContext noPattern ifFalse: [ ^ast ].
+		
 	ast := context 
 		ifNil: [ast asDoit] 
 		ifNotNil: [ast asDoitForContext: context].
 	"we need to set the compilation context in the new method node"
 	ast compilationContext: self compilationContext.
-	self doSemanticAnalysis
+	context ifNotNil: [ast methodClass: context receiver class].
+	self doSemanticAnalysis.
+	^ast
 ]

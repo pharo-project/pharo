@@ -12,7 +12,7 @@ Class {
 		'leftColumn',
 		'rightColumn'
 	],
-	#category : #'Morphic-Widgets-FastTable'
+	#category : #'Morphic-Widgets-FastTable-Base'
 }
 
 { #category : #'instance creation' }

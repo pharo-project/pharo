@@ -66,10 +66,11 @@ StDebuggerTest >> tearDown [
 	session clear.
 	self debuggerClass fastTDD: oldFastTDD.
 	debugger ifNotNil: [ 
+		debugger unsubscribeFromSystemAnnouncer.
 		debugger close.
 		debugger session ifNotNil: [ :s | s clear ] ].
 	StTestDebuggerProvider removeSelector: #foobar. 
-	StDebuggerObjectForTests compile: 'haltingMethod self halt. ^self' classified: 'util'.
+	StDebuggerObjectForTests compile: 'haltingMethod <haltOrBreakpointForTesting> self halt. ^self' classified: 'util'.
 	super tearDown
 ]
 
@@ -126,7 +127,16 @@ StDebuggerTest >> testClearUnsavedChanges [
 
 { #category : #'tests - actions' }
 StDebuggerTest >> testClose [
-	(self debuggerOn: session) close.
+	|windowPresenter|
+	windowPresenter := SpWindowPresenter new.
+	windowPresenter windowIsOpening.
+	debugger := (self debuggerOn: session).	
+	windowPresenter presenter: debugger.	
+	debugger initializeWindow: windowPresenter.
+	
+	"We trigger the closing from the presenter instead of the debugger itself,
+	because the window is not really open so the debugger will not close through debugger close."
+	windowPresenter windowClosed.	
 	self deny: (SystemAnnouncer uniqueInstance hasSubscriber: debugger)
 ]
 
@@ -202,10 +212,10 @@ StDebuggerTest >> testContextTempVarList [
 	self assert: (contextItems at: 1) class equals: StInspectorSelfNode.	
 	
 	"Next nodes are temps"
-	self assert: (contextItems at: 2) class equals: StDebuggerInspectorTempNode.
-	self assert: (contextItems at: 3) class equals: StDebuggerInspectorTempNode.
-	self assert: (contextItems at: 4) class equals: StDebuggerInspectorTempNode.
-	self assert: (contextItems at: 5) class equals: StDebuggerInspectorTempNode.
+	self assert: (contextItems at: 2) tempVariable isTempVariable.
+	self assert: (contextItems at: 3) tempVariable isTempVariable.
+	self assert: (contextItems at: 4) tempVariable isTempVariable.
+	self assert: (contextItems at: 5) tempVariable isTempVariable.
 	
 	"receiver"	
 	self assert: (contextItems at: 6) rawValue identicalTo: session shortStack first receiver session.
@@ -285,16 +295,6 @@ StDebuggerTest >> testDiscardCodeChangesFor [
 StDebuggerTest >> testFastTDD [
 	self debuggerClass fastTDD: nil.
 	self deny: self debuggerClass fastTDD
-]
-
-{ #category : #'tests - receiver inspector' }
-StDebuggerTest >> testInspectorSelfBinding [
-	| dbg evaluator receiver |
-	dbg := self debuggerOn: session.
-	evaluator := (dbg inspector instVarNamed: #inspector) millerList pages first evaluator.
-	receiver := dbg inspector model inspectedObject context receiver.
-	self assert: evaluator doItReceiver identicalTo: receiver.
-	self assert: evaluator behavior identicalTo: receiver class
 ]
 
 { #category : #'tests - stack table' }

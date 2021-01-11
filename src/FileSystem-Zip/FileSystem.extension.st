@@ -1,6 +1,6 @@
 Extension { #name : #FileSystem }
 
-{ #category : #'*filesystem-zip' }
+{ #category : #'*Filesystem-Zip' }
 FileSystem class >> zip: aReference [
 	^ self store: (ZipStore reference: aReference)
 ]

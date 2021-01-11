@@ -12,6 +12,6 @@ GLMPopupBrickEscPredicate >> popup: aPopupBrick event: anEvent [
 	"Return true when user presses escape key, false otherwise"
 	<return: #Boolean>
 
-	^ (anEvent type == #keystroke) and: [ 
-			anEvent keyCharacter = Character escape ]
+	^ anEvent isKeyboard and: [
+		anEvent keyCharacter = Character escape ]
 ]

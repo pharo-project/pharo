@@ -74,15 +74,7 @@ OSSDL2BackendWindow >> convertButtonState: mouseState modState: modState modifie
 	alt := (modState bitAnd: KMOD_LALT) ~= 0.
 	ralt := (modState bitAnd: KMOD_RALT) ~= 0.
 	gui := (modState bitAnd: KMOD_GUI) ~= 0.
-    
-	"The ALT-GR is used to enter special characters, so it should be handled as a keypress.
-	In OSX, both alt keys are used to enter special characters. 
-	This is hack because we need to handle the TextInput event and do not enter text in the 
-	keypress / keydown events."
-	OSPlatform current isMacOSX 
-		ifTrue: [ (alt or: ralt) ifTrue: [ ^ self ] ]
-		ifFalse: [ ralt ifTrue: [ ^ self ] ].
-    
+
 	modifiers leftShift: shift; rightShift: shift;
 		leftCtrl: ctrl; rightCtrl: ctrl;
 		leftAlt: alt; rightAlt: ralt;
@@ -568,8 +560,6 @@ OSSDL2BackendWindow >> visitTextInputEvent: event [
 	osEvent := OSTextInputEvent for: osWindow.
 	osEvent text: (ZnUTF8Encoder new decodeBytes: event text);
 			position: self mousePosition.
-			
-	self convertButtonState: SDL2 mouseState modState: SDL2 modState modifiers: osEvent modifiers.
 	^ osEvent deliver
 ]
 

@@ -2094,13 +2094,13 @@ Form >> reducedPaletteOfSize: nColors [
 			[cts isEmpty] whileFalse:
 				[top := cts detectMax: [:a | a value].
 				cluster := cts select: [:a | (a key diff: top key) < dist].
-				s nextPut: top key -> (cluster detectSum: [:a | a value]).
+				s nextPut: top key -> (cluster sum: [:a | a value]).
 				cts := cts copyWithoutAll: cluster]].
 		palette size = nColors or: [delta < 0.001]]
 		whileFalse:
-			[palette size > nColors
-				ifTrue: [dist := dist + delta]
-				ifFalse: [dist := dist - delta].
+			[dist := palette size > nColors
+				ifTrue: [dist + delta]
+				ifFalse: [dist - delta].
 			delta := delta / 2].
 	^ palette collect: [:a | a key]
 
