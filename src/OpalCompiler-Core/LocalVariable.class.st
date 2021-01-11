@@ -36,7 +36,7 @@ LocalVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 
 { #category : #'read/write usage' }
 LocalVariable >> analyzeRead: aVariableNode by: aSemanticAnalyzer [
-	super analyzeRead: aVariableNode by: self.
+	super analyzeRead: aVariableNode by: aSemanticAnalyzer.
 
 	aSemanticAnalyzer analyzeLocalVariableRead: self
 ]
