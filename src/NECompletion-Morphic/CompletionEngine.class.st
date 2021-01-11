@@ -106,47 +106,48 @@ CompletionEngine >> handleKeyDownBefore: aKeyboardEvent editor: anEditor [
 	
 	This method would be cleaner if splitted."
 
-	| keyCharacter controlKeyPressed commandKeyPressed |
+	| key controlKeyPressed commandKeyPressed |
 	self setEditor: anEditor.
-	keyCharacter := aKeyboardEvent keyCharacter.
+	key := aKeyboardEvent key.
 	controlKeyPressed := aKeyboardEvent controlKeyPressed.
 	commandKeyPressed := aKeyboardEvent commandKeyPressed.
 	
 	self isMenuOpen ifFalse: [ ^ false ].
 	
-	(keyCharacter = Character arrowLeft or: [ keyCharacter = Character arrowRight ])
-		ifTrue: [ "just move the caret" ^ false ].
+	({ KeyboardKey left . KeyboardKey right.
+		KeyboardKey keypadLeft . KeyboardKey keypadRight }
+			includes: key) ifTrue: [ "just move the caret" ^ false ].
 	
-	keyCharacter = Character arrowUp
+	({ KeyboardKey up . KeyboardKey keypadUp } includes: key)
 		ifTrue: [ 
 			menuMorph moveUp.
 			^ true ].
-	keyCharacter = Character arrowDown
+	({ KeyboardKey down . KeyboardKey keypadDown } includes: key)
 		ifTrue: [ 
 			menuMorph moveDown.
 			^ true ].
-	keyCharacter = Character pageUp
+	(key = KeyboardKey pageUp)
 		ifTrue: [ 
 			menuMorph pageUp.
 			^ true ].
-	keyCharacter = Character pageDown
+	(key = KeyboardKey pageDown)
 		ifTrue: [ 
 			menuMorph pageDown.
 			^ true ].
-	(keyCharacter = Character cr and: [ NECPreferences useEnterToAccept ])
+	(key = KeyboardKey enter and: [ NECPreferences useEnterToAccept ])
 		ifTrue: [ 
 			menuMorph insertSelected
 				ifTrue: [ ^ true ] ].
-	keyCharacter = Character tab
+	key = KeyboardKey tab
 		ifTrue: [ 
 			menuMorph insertSelected
 						ifTrue: [ ^ true ] ].
-	keyCharacter = Character backspace
+	key = KeyboardKey backspace
 		ifTrue: [ 
 			editor isCaretBehindChar
 				ifFalse: [ self closeMenu ].
 			^ false ].
-	(controlKeyPressed or: [ commandKeyPressed ])
+	(controlKeyPressed or: [ commandKeyPressed or: [ key = KeyboardKey escape ] ])
 		ifTrue: [ 
 			self closeMenu.
 			^ true ].
@@ -172,17 +173,15 @@ CompletionEngine >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 	
 	This method would be cleaner if splitted."
 
-	| keyCharacter controlKeyPressed commandKeyPressed |
+	| keyCharacter controlKeyPressed |
 	self setEditor: anEditor.
 	keyCharacter := aKeyboardEvent keyCharacter.
 	controlKeyPressed := aKeyboardEvent controlKeyPressed.
-	commandKeyPressed := aKeyboardEvent commandKeyPressed.
 	
 	self isMenuOpen
 		ifFalse: [ ^ self handleKeystrokeWithoutMenu: aKeyboardEvent ].
 	
-	(controlKeyPressed not & aKeyboardEvent commandKeyPressed not
-		and: [ aKeyboardEvent keyCharacter isCompletionCharacter ])
+	(controlKeyPressed not and: [ aKeyboardEvent keyCharacter isCompletionCharacter ])
 		ifFalse: [ 
 			self closeMenu.
 			^ keyCharacter = Character escape ].

@@ -11,7 +11,8 @@ Class {
 
 { #category : #preconditions }
 RBPrettyPrintCodeRefactoring >> preconditions [
-	^ RBCondition empty
+
+	^ self emptyCondition
 ]
 
 { #category : #transforming }

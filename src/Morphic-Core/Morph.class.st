@@ -2915,6 +2915,7 @@ Morph >> handleKeystroke: anEvent [
 	
 	anEvent wasHandled
 		ifTrue: [^ self].
+	
 	(self handlesKeyStroke: anEvent)
 		ifFalse: [^ self].
 	anEvent wasHandled: true.

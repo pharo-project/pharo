@@ -248,7 +248,7 @@ StDebuggerStackCommandTreeBuilderTest >> testStackMethodNavigationCommands [
 	self
 		assertCommandGroup: builder stackMethodNavigationCommands
 		hasSameCommands: builder stackMethodCommandsClasses
-		withContext: debugger stackTable selection selectedItem method
+		withContext: debugger stackTable selection selectedItem home method
 		displayStrategy: CmUIDisplayAsGroup
 ]
 

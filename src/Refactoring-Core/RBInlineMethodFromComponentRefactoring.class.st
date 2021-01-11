@@ -19,7 +19,7 @@ RBInlineMethodFromComponentRefactoring >> abstractVariableReferences [
 				abstractVariablesIn: inlineParseTree
 				from: inlineClass
 				toAll: (Array with: class).
-	self performComponentRefactoring: refactoring.
+	self performCompositeRefactoring: refactoring.
 	inlineParseTree := refactoring parseTree
 ]
 

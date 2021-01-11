@@ -73,7 +73,8 @@ RBRegexRefactoring >> initialize [
 
 { #category : #preconditions }
 RBRegexRefactoring >> preconditions [
-	^ RBCondition empty
+
+	^ self emptyCondition
 ]
 
 { #category : #searching }

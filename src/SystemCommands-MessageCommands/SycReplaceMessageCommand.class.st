@@ -25,6 +25,7 @@ SycReplaceMessageCommand >> createRefactoring [
 		in: originalMessage contextUser origin
 		to: newSelector
 		permutation: (1 to: originalMessage argumentNames size)
+		inAllClasses: self replaceInAllClasses
 ]
 
 { #category : #accessing }
@@ -50,4 +51,9 @@ SycReplaceMessageCommand >> prepareFullExecutionInContext: aToolContext [
 		request: 'Update senders of ', originalMessage selector, ' with:' initialAnswer: originalMessage selector title: 'Replace senders of method'.
 		
 	newSelector isEmptyOrNil | (newSelector = originalMessage selector) ifTrue: [ CmdCommandAborted signal]
+]
+
+{ #category : #execution }
+SycReplaceMessageCommand >> replaceInAllClasses [
+	^ self confirm: 'Do you want replace senders of method in all classes?'
 ]

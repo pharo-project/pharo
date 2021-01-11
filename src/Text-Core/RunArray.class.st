@@ -444,16 +444,6 @@ RunArray >> detectMin: aBlock [
 ]
 
 { #category : #enumerating }
-RunArray >> detectSum: aBlock [
-	"Only loop on runs"
-	| sum |
-	sum := 0.
-	self runsAndValuesDo: [:run :value | 
-		sum := (aBlock value: value) * run + sum].
-	^ sum
-]
-
-{ #category : #enumerating }
 RunArray >> do: aBlock [
 	"This is refined for speed"
 	
@@ -759,6 +749,16 @@ RunArray >> storeOn: aStream [
 	aStream nextPutAll: ' values: '.
 	values storeOn: aStream.
 	aStream nextPut: $)
+]
+
+{ #category : #enumerating }
+RunArray >> sum: aBlock [
+	"Only loop on runs"
+	| sum |
+	sum := 0.
+	self runsAndValuesDo: [:run :value | 
+		sum := (aBlock value: value) * run + sum].
+	^ sum
 ]
 
 { #category : #private }

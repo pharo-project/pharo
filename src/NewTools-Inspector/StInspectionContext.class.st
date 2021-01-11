@@ -47,7 +47,11 @@ StInspectionContext >> beInactive [
 
 { #category : #accessing }
 StInspectionContext >> contextMethodSelector [
+	| selector |
 
+	selector := self methodSelectorNeedsBuilder
+		ifTrue: [ self methodSelector allButLast ]
+		ifFalse: [ self methodSelector ].
 	^ (self methodSelector, 'Context:') asSymbol
 ]
 
@@ -100,6 +104,7 @@ StInspectionContext >> isActive [
 
 { #category : #accessing }
 StInspectionContext >> methodSelector [
+
 	^ methodSelector
 ]
 
@@ -109,12 +114,29 @@ StInspectionContext >> methodSelector: aSelector [
 	methodSelector := aSelector
 ]
 
+{ #category : #'private testing' }
+StInspectionContext >> methodSelectorNeedsBuilder [
+
+	^ self methodSelector last = $:
+]
+
 { #category : #factory }
 StInspectionContext >> newInspectionView [
+	| presenter |
 
-	^ (self inspectedObject perform: self methodSelector) asInspection
+	presenter := self methodSelectorNeedsBuilder 
+		ifTrue: [ self inspectedObject perform: self methodSelector with: self newPresenterBuilder ]
+		ifFalse: [ self inspectedObject perform: self methodSelector ].
+	 
+	^ presenter asInspection
 		context: self;
 		yourself
+]
+
+{ #category : #'private factory' }
+StInspectionContext >> newPresenterBuilder [
+
+	^ SpPresenterBuilder new
 ]
 
 { #category : #accessing }

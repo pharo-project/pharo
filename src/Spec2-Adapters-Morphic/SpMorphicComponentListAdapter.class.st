@@ -80,21 +80,6 @@ SpMorphicComponentListAdapter >> refreshWidgetSelection [
 	self refreshList
 ]
 
-{ #category : #emulating }
-SpMorphicComponentListAdapter >> rightClicked [
-	| evt |
-
-	evt := MouseButtonEvent new 
-		setType: nil 
-		position: widget center 
-		which: MouseButtonEvent yellowButton 
-		buttons: MouseButtonEvent yellowButton 
-		hand: nil 
-		stamp: nil.
-	
-	self widget click: evt
-]
-
 { #category : #accessing }
 SpMorphicComponentListAdapter >> rows [
 	| tableContainer |
@@ -133,6 +118,21 @@ SpMorphicComponentListAdapter >> selectionChanged: ann [
 	
 	ann newSelectedIndexes ifNotEmpty: [ ^ self ].
 	self presenter selection unselectAll
+]
+
+{ #category : #emulating }
+SpMorphicComponentListAdapter >> sendRightClickEvent [
+	| evt |
+
+	evt := MouseButtonEvent new 
+		setType: nil 
+		position: widget center 
+		which: MouseButtonEvent yellowButton 
+		buttons: MouseButtonEvent yellowButton 
+		hand: nil 
+		stamp: nil.
+	
+	self widget click: evt
 ]
 
 { #category : #private }
