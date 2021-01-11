@@ -464,10 +464,6 @@ CompletionEngine >> smartInputWithEvent: anEvent [
 	self smartCharacters 
 		ifFalse: [ ^ nil ].
 	
-	anEvent keyCharacter = Character backspace
-		ifTrue: [ self smartBackspace ifTrue: [ ^ true ]].
-		
-	
 	^ self smartCharacterWithEvent: anEvent
 ]
 
