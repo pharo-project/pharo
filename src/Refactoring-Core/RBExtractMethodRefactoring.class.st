@@ -122,22 +122,6 @@ RBExtractMethodRefactoring >> checkTemporaries [
 ]
 
 { #category : #transforming }
-RBExtractMethodRefactoring >> compiledMethod [
-	^ self compiledMethodIn: class realClass
-]
-
-{ #category : #transforming }
-RBExtractMethodRefactoring >> compiledMethodIn: aClass [
-	^ [ aClass >> newExtractedSelector ]
-	on: Exception 
-	do: [ |aSuperClass|
-		aSuperClass := aClass superclass.
-		aSuperClass 
-			ifNil: [ ^ nil ]
-			ifNotNil: [ self compiledMethodIn: aSuperClass ]]
-]
-
-{ #category : #transforming }
 RBExtractMethodRefactoring >> createTemporariesInExtractedMethodFor: assigned [ 
 	assigned do: [:each | extractedParseTree body addTemporaryNamed: each]
 ]
@@ -414,7 +398,7 @@ RBExtractMethodRefactoring >> reorderParametersToMatch: aSelector [
 RBExtractMethodRefactoring >> requestExistingSelector [ 
 	^ [(self options at: #existingSelector) value: self]
 			on: Exception 
-			do: [ nil ]
+			do: [ :e | nil ]
 ]
 
 { #category : #printing }
