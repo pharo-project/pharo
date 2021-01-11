@@ -159,6 +159,19 @@ ExternalAddress >> free [
 ]
 
 { #category : #converting }
+ExternalAddress >> fromCString [
+	| index aByte |
+
+	^ (OrderedCollection streamContents: [ :aStream |
+			index := 1.
+			[(aByte := self unsignedByteAt: index) = 0] 
+				whileFalse: [
+					aStream nextPut: aByte.
+					index := index + 1]]) asByteArray utf8Decoded
+
+]
+
+{ #category : #converting }
 ExternalAddress >> fromInteger: address [
 	"set my handle to point at address."
 	"Do we really need this? bf 2/21/2001 23:48"

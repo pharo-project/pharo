@@ -1522,6 +1522,17 @@ RPackage >> tagsForClasses [
 	^self classTags reject: [:each | each isRoot] thenCollect: [:each | each name]
 ]
 
+{ #category : #testing }
+RPackage >> testSuite [
+
+	| suite |
+	
+	suite := TestSuite named: self packageName.
+	suite addTests: ((self classes select: #isTestCase) flatCollect: [:aTestClass | aTestClass suite tests]).
+	
+	^ suite 
+]
+
 { #category : #private }
 RPackage >> toTagName: aSymbol [
 	^ (aSymbol beginsWith: self name, '-')
