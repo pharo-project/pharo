@@ -84,8 +84,8 @@ BasicCommandLineHandler class >> startUp: isImageStarting [
 { #category : #activation }
 BasicCommandLineHandler >> activate [
 
-	self firstArgument = '--interactive'
-		ifTrue: [ self copySubcommand ].
+	commandLine := commandLine class withArguments: (commandLine arguments 
+					reject: [ :each | each = '--interactive' ]).	
 
 	[ [ self handleArgument: self firstArgument ]
 		on: Exit
