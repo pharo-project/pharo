@@ -1,6 +1,6 @@
 Class {
-	#name : #RBSourceCodeInteraction,
-	#superclass : #RBAbstractInteraction,
+	#name : #RBSourceCodeDriver,
+	#superclass : #RBAbstractDriver,
 	#instVars : [
 		'method',
 		'sourceNode'
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #updating }
-RBSourceCodeInteraction >> chooseFrom: anArray title: aString lines: aCollection [ 
+RBSourceCodeDriver >> chooseFrom: anArray title: aString lines: aCollection [ 
 	anArray isEmpty
 		ifTrue: [ ^ nil ].
 	anArray size = 1
@@ -18,7 +18,7 @@ RBSourceCodeInteraction >> chooseFrom: anArray title: aString lines: aCollection
 ]
 
 { #category : #actions }
-RBSourceCodeInteraction >> executeRefactoring [ 
+RBSourceCodeDriver >> executeRefactoring [ 
 	[|refactoring|
 	self prepareFullExecution.
 	refactoring := self asRefactorings.
@@ -29,7 +29,7 @@ RBSourceCodeInteraction >> executeRefactoring [
 ]
 
 { #category : #updating }
-RBSourceCodeInteraction >> handleMethodNameRequest: aMethodName in: ref [
+RBSourceCodeDriver >> handleMethodNameRequest: aMethodName in: ref [
 	|dialog|
 	dialog := SycMethodNameEditorPresenter openOn: aMethodName withRefactoring: ref.
 	dialog cancelled ifTrue: [  CmdCommandAborted signal ].
@@ -37,24 +37,24 @@ RBSourceCodeInteraction >> handleMethodNameRequest: aMethodName in: ref [
 ]
 
 { #category : #updating }
-RBSourceCodeInteraction >> handleWarning: anException [
+RBSourceCodeDriver >> handleWarning: anException [
 	self inform: anException messageText.
 	anException resume
 ]
 
 { #category : #accessing }
-RBSourceCodeInteraction >> method [
+RBSourceCodeDriver >> method [
 	^ method ifNil: [ method := context lastSelectedMethod ].
 ]
 
 { #category : #accessing }
-RBSourceCodeInteraction >> prepareFullExecution [
+RBSourceCodeDriver >> prepareFullExecution [
 	self method.
 	self sourceNode.
 ]
 
 { #category : #updating }
-RBSourceCodeInteraction >> refactoringOptions: aRefactoring [
+RBSourceCodeDriver >> refactoringOptions: aRefactoring [
 	aRefactoring
 		setOption: #implementorToInline
 		toUse: [ :ref :imps | self requestImplementorToInline: imps ];
@@ -77,12 +77,12 @@ RBSourceCodeInteraction >> refactoringOptions: aRefactoring [
 ]
 
 { #category : #updating }
-RBSourceCodeInteraction >> request: aString [
+RBSourceCodeDriver >> request: aString [
 	^ self request: aString initialAnswer: ''
 ]
 
 { #category : #updating }
-RBSourceCodeInteraction >> request: requestString initialAnswer: initialAnswerString [
+RBSourceCodeDriver >> request: requestString initialAnswer: initialAnswerString [
 	| answer |
 	answer := UIManager default request: requestString initialAnswer: initialAnswerString.
 	answer isEmptyOrNil ifTrue:  [ RefactoringAborted signal ].
@@ -90,22 +90,22 @@ RBSourceCodeInteraction >> request: requestString initialAnswer: initialAnswerSt
 ]
 
 { #category : #updating }
-RBSourceCodeInteraction >> requestImplementorToInline: imps [
+RBSourceCodeDriver >> requestImplementorToInline: imps [
 	^ self chooseFrom: imps title: 'Choose the class that should provide the implementation.' lines:#()
 ]
 
 { #category : #updating }
-RBSourceCodeInteraction >> requestMethodNameFor: aMethodName in: ref [
+RBSourceCodeDriver >> requestMethodNameFor: aMethodName in: ref [
 	^ self handleMethodNameRequest: aMethodName in: ref
 ]
 
 { #category : #updating }
-RBSourceCodeInteraction >> requestSelfArgumentName [
+RBSourceCodeDriver >> requestSelfArgumentName [
 	^ self request: 'Enter name for argument to refer to "self" in extracted method'
 ]
 
 { #category : #updating }
-RBSourceCodeInteraction >> selectVariableToMoveMethodTo: aSelector class: aClass [
+RBSourceCodeDriver >> selectVariableToMoveMethodTo: aSelector class: aClass [
 
 	| parseTree nameList |
 
@@ -123,7 +123,7 @@ RBSourceCodeInteraction >> selectVariableToMoveMethodTo: aSelector class: aClass
 ]
 
 { #category : #updating }
-RBSourceCodeInteraction >> selectVariableTypesFrom: aCollectionOfTypes selected: aSelectedCollection for: aRefactoring [
+RBSourceCodeDriver >> selectVariableTypesFrom: aCollectionOfTypes selected: aSelectedCollection for: aRefactoring [
 	| stream result |
 	stream := WriteStream on: String new.
 	aCollectionOfTypes do: [ :each | stream nextPutAll: each name ] separatedBy: [ stream cr ].
@@ -139,27 +139,27 @@ RBSourceCodeInteraction >> selectVariableTypesFrom: aCollectionOfTypes selected:
 ]
 
 { #category : #updating }
-RBSourceCodeInteraction >> shouldExtractAssignmentTo: aString [
+RBSourceCodeDriver >> shouldExtractAssignmentTo: aString [
 	^ self confirm: ('Do you want to extract the assignment of <1s> at the end of selection?' expandMacrosWith: aString)
 ]
 
 { #category : #updating }
-RBSourceCodeInteraction >> shouldInlineExpression: aString [
+RBSourceCodeDriver >> shouldInlineExpression: aString [
 	^ self confirm: ('Do you want to inline the expression ''<1s>'' in the current method?' expandMacrosWith: aString)
 ]
 
 { #category : #updating }
-RBSourceCodeInteraction >> shouldOverride: aSelector in: aClass [ 
+RBSourceCodeDriver >> shouldOverride: aSelector in: aClass [ 
 	^ self confirm: ('<1s> is already defined in the <2p> hierarchy. Extracting it to an existing selector may change behavior. Do you wish to use <1s> anyway?' expandMacrosWith: aSelector with: aClass)
 ]
 
 { #category : #updating }
-RBSourceCodeInteraction >> shouldUseExistingMethod: aMethodName [
+RBSourceCodeDriver >> shouldUseExistingMethod: aMethodName [
 	"for now we always want to use the existing method."
 	^ true
 ]
 
 { #category : #accessing }
-RBSourceCodeInteraction >> sourceNode [
+RBSourceCodeDriver >> sourceNode [
 	^ sourceNode ifNil: [ sourceNode := context lastSelectedSourceNode ].
 ]

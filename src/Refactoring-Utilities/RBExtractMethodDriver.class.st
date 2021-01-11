@@ -1,6 +1,6 @@
 Class {
-	#name : #RBExtractMethodInteraction,
-	#superclass : #RBSourceCodeInteraction,
+	#name : #RBExtractMethodDriver,
+	#superclass : #RBSourceCodeDriver,
 	#instVars : [
 		'selectedTextInterval',
 		'refactoring'
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #accessing }
-RBExtractMethodInteraction >> asRefactorings [
+RBExtractMethodDriver >> asRefactorings [
 	refactoring := RBExtractMethodRefactoring
 		extract: self selectedTextInterval
 	   from: method selector
@@ -18,7 +18,7 @@ RBExtractMethodInteraction >> asRefactorings [
 ]
 
 { #category : #actions }
-RBExtractMethodInteraction >> executeRefactoring [ 
+RBExtractMethodDriver >> executeRefactoring [ 
 	super executeRefactoring.
 	self findOccurrencesInWholeClass 
 		ifTrue: [ 
@@ -27,19 +27,19 @@ RBExtractMethodInteraction >> executeRefactoring [
 ]
 
 { #category : #actions }
-RBExtractMethodInteraction >> findOccurrencesInAllHierarchy [
+RBExtractMethodDriver >> findOccurrencesInAllHierarchy [
 	^ self confirm: 'Do you want find occurrences in all',
 		 String cr, ' class hierarchy?'
 ]
 
 { #category : #actions }
-RBExtractMethodInteraction >> findOccurrencesInWholeClass [
+RBExtractMethodDriver >> findOccurrencesInWholeClass [
 	^ self confirm: 'Do you want to search for the occurrences',
 		 String cr, ' of the extracted method in the whole class?'
 ]
 
 { #category : #actions }
-RBExtractMethodInteraction >> findOccurrencesOf: aSelector [
+RBExtractMethodDriver >> findOccurrencesOf: aSelector [
 	refactoring := RBFindAndReplaceRefactoring
 			find: aSelector
 			of: method origin
@@ -48,12 +48,12 @@ RBExtractMethodInteraction >> findOccurrencesOf: aSelector [
 ]
 
 { #category : #accessing }
-RBExtractMethodInteraction >> prepareFullExecution [
+RBExtractMethodDriver >> prepareFullExecution [
 	super prepareFullExecution.
 	self selectedTextInterval
 ]
 
 { #category : #accessing }
-RBExtractMethodInteraction >> selectedTextInterval [
+RBExtractMethodDriver >> selectedTextInterval [
 	^ selectedTextInterval ifNil: [ selectedTextInterval := context selectedTextInterval ]
 ]

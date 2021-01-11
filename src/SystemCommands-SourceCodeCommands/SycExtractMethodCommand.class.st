@@ -34,7 +34,7 @@ SycExtractMethodCommand >> execute [
 
 { #category : #accessing }
 SycExtractMethodCommand >> interaction [
-	^ interaction ifNil: [ interaction := RBExtractMethodInteraction new ]
+	^ interaction ifNil: [ interaction := RBExtractMethodDriver new ]
 ]
 
 { #category : #execution }
