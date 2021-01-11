@@ -96,7 +96,7 @@ FluidClassBuilderTest >> testBuilderTraitsClass [
 	
 	builder uses: TViewModelMock class.
 	self assert: builder traitsToBuild equals: TViewModelMock class.
-	self shouldnt: [ builder fillShiftClassBuilder ] raise: MessageNotUnderstood 
+	builder fillShiftClassBuilder 
 ]
 
 { #category : #'tests - gathering' }
