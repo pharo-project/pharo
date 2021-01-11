@@ -104,7 +104,7 @@ FluidClassBuilderTest >> testBuilderTraitsWithComposition [
 	
 	builder uses: TViewModelMock + TViewModelMock2.
 	self assert: builder traitsToBuild equals: TViewModelMock + TViewModelMock2.
-	self shouldnt: [ builder fillShiftClassBuilder ] raise: MessageNotUnderstood 
+	builder fillShiftClassBuilder
 ]
 
 { #category : #'tests - mandatory' }
