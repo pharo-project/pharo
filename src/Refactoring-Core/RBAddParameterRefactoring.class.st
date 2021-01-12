@@ -30,6 +30,15 @@ RBAddParameterRefactoring class >> addParameterToMethod: aSelector in: aClass ne
 ]
 
 { #category : #'instance creation' }
+RBAddParameterRefactoring class >> addParameterToMethod: aSelector in: aClass newSelector: newSelector permutation: aColl initializer: init [ 
+	^self new addParameterToMethod: aSelector
+		in: aClass
+		newSelector: newSelector
+		permutation: aColl
+		initializer: init
+]
+
+{ #category : #'instance creation' }
 RBAddParameterRefactoring class >> model: aRBSmalltalk addParameterToMethod: aSelector in: aClass newSelector: newSelector initializer: init [ 
 	^(self new)
 		model: aRBSmalltalk;
@@ -47,6 +56,16 @@ RBAddParameterRefactoring >> addParameterToMethod: aSelector in: aClass newSelec
 		in: aClass
 		to: newSel
 		permutation: (1 to: newSel numArgs).
+	initializer := init
+]
+
+{ #category : #initialization }
+RBAddParameterRefactoring >> addParameterToMethod: aSelector in: aClass newSelector: newSel permutation: aColl initializer: init [ 
+	self 
+		renameMethod: aSelector
+		in: aClass
+		to: newSel
+		permutation: aColl.
 	initializer := init
 ]
 
@@ -83,13 +102,9 @@ RBAddParameterRefactoring >> checkVariableReferencesIn: aParseTree [
 
 { #category : #private }
 RBAddParameterRefactoring >> modifyImplementorParseTree: parseTree in: aClass [ 
-	| name newArg allTempVars |
-	allTempVars := parseTree allDefinedVariables.
-	name := self safeVariableNameFor: aClass temporaries: allTempVars.
-	newArg := RBVariableNode named: name.
 	parseTree 
 		renameSelector: newSelector
-		andArguments: parseTree arguments , (Array with: newArg)
+		andArguments: (permutation value collect: [:e | RBVariableNode named: e ])
 ]
 
 { #category : #preconditions }
@@ -108,11 +123,11 @@ RBAddParameterRefactoring >> newSelectorString [
 	| stream keywords |
 	stream := WriteStream on: String new.
 	keywords := newSelector keywords.
-	1 to: keywords size
-		do: 
-			[:i | 
-			stream nextPutAll: (keywords at: i).
-			i == keywords size 
+	permutation key
+		doWithIndex: 
+			[:each :index | 
+			stream nextPutAll: (keywords at: index).
+			each == 0
 				ifTrue: 
 					[stream
 						nextPut: $(;
@@ -121,7 +136,7 @@ RBAddParameterRefactoring >> newSelectorString [
 				ifFalse: 
 					[stream
 						nextPutAll: ' ``@arg';
-						nextPutAll: i printString].
+						nextPutAll: each printString].
 			stream nextPut: $ ].
 	^stream contents
 ]
