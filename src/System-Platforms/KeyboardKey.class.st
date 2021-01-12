@@ -1,5 +1,32 @@
 "
-I represent a keyboard Key. I am mapped from the platform specific keycodes into a common keycode base, by using my class side methods.
+I represent a keyboard Key, I am independent from the text issued from myself.
+That is, when you press e.g., the combination Alt + A, you get the Character å (as in ""an instance of Character"") in a text event, but in the KeyDown/Up events you get an instance of the myself, the KeyboardKey A (see section Keys vs Characters below).
+
+# Implementation details
+
+I keep a flyweight of Keys that can be accessed by id or name.
+
+```
+KeyboardKey value: anID.
+KeyboardKey named: 'RETURN'.
+```
+
+The ID of a key corresponds to the keycodes in Unix's X11 key mapping.
+Such ID was chosen because Unix X11 is a super set of the keys supported in Win32 and Cocoa.
+
+Internally I also keep a mapping between Win32 and Cocoa keycodes to X11's keycodes.
+See my class side:
+```
+valueForWindowsPlatform:
+valueForUnixPlatform:
+valueForMacOSXPlatform:
+```
+
+# Keys vs Characters
+
+KeyboardKeys and characters do not have a 1 to 1 mapping. Be careful that keys and Characters do not represent the same thing, specially when we are outside of the english alphabet. In such cases, a Key like E could trigger a Character like e or € depending on the configured keyboard layout and key combinations done. This is specially trickier in asian alphabets.
+
+For backwards compatibility, I provide a helper method that tries to do a mapping in the direction Character -> key (see fromCharacter:) but should be used sparingly and it will be deprecated in the future.
 "
 Class {
 	#name : #KeyboardKey,
