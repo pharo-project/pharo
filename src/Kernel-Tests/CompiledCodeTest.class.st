@@ -172,8 +172,6 @@ CompiledCodeTest >> testHasSelectorSpecialSelectorIndex [
 { #category : #'tests-literals' }
 CompiledCodeTest >> testLiteralsDoNotConsiderTheInnerBlockLiterals [
 
-	"Bug or feature , I do not know..."
-
 	| method block |
 	method := self class compiler compile: 'method 
 		<pragma: #pragma>
@@ -216,7 +214,7 @@ CompiledCodeTest >> testLiteralsDoesNotContainMethodName [
 
 { #category : #'tests-literals' }
 CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerBlocks [
-	"The behavior is different than literals. Bug or feature?"
+	"The behavior is different than literals"
 	| method |
 	method := self class compiler compile: 'method 
 		<pragma: #pragma>
@@ -228,7 +226,7 @@ CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerBlocks [
 		Object.
 		self name ].
 		^#(#array) '.
-	"Can remove the test if the assertion is failing"
+	"Next assertion is expected: literals have a different behavior more close to the system"
 	self deny: method literalsEvenTheOnesInTheInnerBlocks equals: method literals.
 	self
 		assertCollection: method literalsEvenTheOnesInTheInnerBlocks
@@ -243,6 +241,23 @@ CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerBlocks [
 				#doIt:.
 				#( #array ).
 				(GlobalVariable key: #Class value: Class) }
+]
+
+{ #category : #'tests-literals' }
+CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerCleanBlocks [
+
+	"The behavior is different than literals"
+
+	| method |
+	method := self class compiler compile:
+		          'exampleAccessOuterFromCleanBlock 
+	<compilerOptions: #(+ optionCleanBlockClosure)>
+	| b |
+	b := 1. 
+	^[ thisContext tempNamed: ''b'' ] value'.
+	self
+		assertCollection: method literalsEvenTheOnesInTheInnerBlocks
+		equals: #( 'b' #tempNamed: )
 ]
 
 { #category : #'tests - scanning' }
