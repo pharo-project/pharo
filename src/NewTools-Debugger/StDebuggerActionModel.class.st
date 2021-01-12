@@ -187,9 +187,10 @@ StDebuggerActionModel >> isInterruptedContextSubclassResponsibilityException [
 	^ self contextPredicate isContextSubclassResponsibilityException
 ]
 
-{ #category : #'debug - stack' }
+{ #category : #'debug - execution' }
 StDebuggerActionModel >> peelToFirstLike: aContext [
-	self session peelToFirstLike: aContext
+	self session peelToFirstLike: aContext.
+	self updateTopContext
 ]
 
 { #category : #context }
