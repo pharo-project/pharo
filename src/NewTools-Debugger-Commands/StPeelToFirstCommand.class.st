@@ -34,5 +34,5 @@ StPeelToFirstCommand >> appliesTo: aDebugger [
 
 { #category : #actions }
 StPeelToFirstCommand >> execute [
-	self debugger copyStackToClipboard
+	self debugger peelToFirstLike: self debugger currentContext
 ]

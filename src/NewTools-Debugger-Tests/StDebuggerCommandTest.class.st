@@ -290,13 +290,13 @@ StDebuggerCommandTest >> testStFileOutMethodCommandExecution [
 
 { #category : #'tests - execution' }
 StDebuggerCommandTest >> testStPeelToFirstCommandExecution [
-	"Generated 5 June 2020"
+	
 	|debugger command|
 	debugger := StDummyDebuggerPresenter new.
 	command := StPeelToFirstCommand forContext: debugger.
-	"StPeelToFirstCommand command calls the #copyStackToClipboard action interface of the debugger object"
+	"StCopyStackToClipboardCommand command calls the #copyStackToClipboard action interface of the debugger object"
 	command execute.
-	self assert: debugger tag equals: #copyStackToClipboard
+	self assert: debugger tag equals: #peelToFirstLike:
 ]
 
 { #category : #'tests - execution' }

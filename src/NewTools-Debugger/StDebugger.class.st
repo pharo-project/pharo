@@ -802,6 +802,14 @@ StDebugger >> openWithNotification: notificationString [
 	self openWithFullView
 ]
 
+{ #category : #actions }
+StDebugger >> peelToFirstLike: aContext [
+
+	self debuggerActionModel peelToFirstLike: aContext.
+	self clearUnsavedCodeChanges.
+	self code text: self currentContext sourceCode
+]
+
 { #category : #printing }
 StDebugger >> printReceiverClassInContext: aContext [
 
