@@ -10,6 +10,11 @@ Class {
 	#category : #'Morphic-Core-Support'
 }
 
+{ #category : #cleanup }
+MorphicCoreUIManager class >> restartMethods [
+   UIProcess ifNotNil: [self default spawnNewProcess ]
+]
+
 { #category : #'ui requests' }
 MorphicCoreUIManager >> currentWorld [
 
