@@ -92,6 +92,16 @@ StTestDebuggerProvider >> debuggerWithObjectHalting [
 ]
 
 { #category : #helpers }
+StTestDebuggerProvider >> debuggerWithRecursiveContext [
+
+	| debugger |
+	debugger := self debuggerWithContext:
+		            [ self recursiveMethodCall ] asContext.
+
+	^ debugger
+]
+
+{ #category : #helpers }
 StTestDebuggerProvider >> debuggerWithRunnableContext [
 <haltOrBreakpointForTesting>
 	[ Halt now ]
@@ -99,6 +109,16 @@ StTestDebuggerProvider >> debuggerWithRunnableContext [
 		do: [ :err | 
 			self sessionFor: err signalerContext exception: err.
 			^ self newDebugger ]
+]
+
+{ #category : #helpers }
+StTestDebuggerProvider >> intermediateRecursiveMethodCall [
+
+	"Dummy assignment to avoid the test session to step to the next interesting bytecode (= next return)"
+
+	| a |
+	a := 0.
+	^ self recursiveMethodCall
 ]
 
 { #category : #helpers }
@@ -125,6 +145,16 @@ StTestDebuggerProvider >> produceAssertionFailure [
 { #category : #helpers }
 StTestDebuggerProvider >> produceTestFailure [
 	TestCase new fail
+]
+
+{ #category : #helpers }
+StTestDebuggerProvider >> recursiveMethodCall [
+
+	"Dummy assignment to avoid the test session to step to the next interesting bytecode (= next return)"
+
+	| a |
+	a := 0.
+	^ self intermediateRecursiveMethodCall
 ]
 
 { #category : #helpers }
