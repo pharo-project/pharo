@@ -88,6 +88,11 @@ MenubarMorph class >> reset [
 	self open.
 ]
 
+{ #category : #cleanup }
+MenubarMorph class >> restartMethods [
+   self reset
+]
+
 { #category : #accessing }
 MenubarMorph class >> showMenubar [
 	^ ShowMenubar
