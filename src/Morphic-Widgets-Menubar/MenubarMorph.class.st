@@ -28,11 +28,16 @@ Class {
 }
 
 { #category : #'instance creation' }
+MenubarMorph class >> allMenubarsInWorld [
+
+	^ self currentWorld submorphs select: [ :e | 
+		  e isKindOf: MenubarMorph ]
+]
+
+{ #category : #'instance creation' }
 MenubarMorph class >> closeAll [
 
-	self currentWorld submorphs
-		select: [ :e | e isKindOf: MenubarMorph ]
-		thenDo: [ :e | e delete ].
+	self allMenubarsInWorld do: [ :e | e delete ]
 ]
 
 { #category : #'instance creation' }
@@ -90,7 +95,10 @@ MenubarMorph class >> reset [
 
 { #category : #cleanup }
 MenubarMorph class >> restartMethods [
-   self reset
+
+	self allMenubarsInWorld do: [ :mb | 
+		mb menuBarItems:
+			self currentWorld worldState menuBuilder menuSpec items ]
 ]
 
 { #category : #accessing }
