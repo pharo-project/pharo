@@ -1123,19 +1123,18 @@ StDebugger >> updateCodeFromContext: aContext [
 	aContext sourceCode = self code text 
 		ifFalse: [ self updateSourceCodeFor: aContext ].
 	self code beForContext: aContext.
-	self code selectionInterval: selectionInterval.
+	"self code selectionInterval: selectionInterval."
 	
-	self flag: #DBG, 'the following leaves highlighted text everywhere when the code pane is not updated.'
-	"self
+	self
 		updateCodeTextSegmentDecoratorsIn: aContext
-		forInterval: selectionInterval."
+		forInterval: selectionInterval.
 	
 ]
 
 { #category : #'updating widgets' }
 StDebugger >> updateCodeTextSegmentDecoratorsIn: aContext forInterval: selectionInterval [
-	self flag: #DBG, 'this is temporarily removed for NewTools integration into Pharo 9. We need better support for this.'
-	"self code removeAllTextSegmentDecorations."
+	
+	self code removeAllTextSegmentDecorations.
 	
 	"This decorates the receiver and the next node with an underline"
 	"self code
@@ -1146,13 +1145,13 @@ StDebugger >> updateCodeTextSegmentDecoratorsIn: aContext forInterval: selection
 				yourself)."
 				
 	"This decorates the next executing node"
-	"self code
+	self code
 		addTextSegmentDecoration:
 			(SpTextPresenterDecorator new
 				highlightColor: (Color orange alpha: 0.5);
 				underlineColor: (Color white alpha: 0);
 				interval: (selectionInterval first to: selectionInterval last + 1);
-				yourself)."
+				yourself)
 				
 			"	icon: (self iconNamed: #warning);
 				iconBlock: [ :n | n inspect ];
