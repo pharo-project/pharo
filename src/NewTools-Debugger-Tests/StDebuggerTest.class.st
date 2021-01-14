@@ -159,6 +159,31 @@ StDebuggerTest >> testCodeChangeAfterContextChange [
 ]
 
 { #category : #'tests - code pane' }
+StDebuggerTest >> testCodeSelectionAfterRestart [
+
+	| dbg adapter segments highlightSegment pcRangeForContext |
+	dbg := self debuggerOn: session.
+	adapter := SpMorphicCodeAdapter new.
+	adapter adapt: dbg code.	
+	dbg code adapter: adapter.
+	dbg code adapter buildWidget.	
+	dbg
+		stepInto;
+		stepInto.
+	dbg restartCurrentContext.
+	
+	pcRangeForContext := (session pcRangeForContext: dbg currentContext).
+	segments := dbg code adapter widget segments.
+	self assert: segments size equals: 1.
+	highlightSegment := segments first.	
+	
+	self
+		assert:  (highlightSegment firstIndex to: highlightSegment lastIndex)
+		equals: (pcRangeForContext first to: pcRangeForContext last + 1)
+	"The pc range is highlighted with an additionnal index to encompass the full text of the node (why?)"
+]
+
+{ #category : #'tests - code pane' }
 StDebuggerTest >> testCodeSelectionAfterStepping [
 
 	| dbg adapter segments highlightSegment pcRangeForContext |
@@ -306,6 +331,28 @@ StDebuggerTest >> testDiscardCodeChangesFor [
 StDebuggerTest >> testFastTDD [
 	self debuggerClass fastTDD: nil.
 	self deny: self debuggerClass fastTDD
+]
+
+{ #category : #'tests - code pane' }
+StDebuggerTest >> testInitialCodeSelectionAfterStepping [
+
+	| dbg adapter segments highlightSegment pcRangeForContext |
+	dbg := self debuggerOn: session.
+	adapter := SpMorphicCodeAdapter new.
+	adapter adapt: dbg code.	
+	dbg code adapter: adapter.
+	dbg code adapter buildWidget.
+	dbg stackTable selectItem: dbg stackTable items first.		
+	
+	pcRangeForContext := (session pcRangeForContext: dbg currentContext).
+	segments := dbg code adapter widget segments.
+	self assert: segments size equals: 1.
+	highlightSegment := segments first.	
+	
+	self
+		assert:  (highlightSegment firstIndex to: highlightSegment lastIndex)
+		equals: (pcRangeForContext first to: pcRangeForContext last + 1)
+	"The pc range is highlighted with an additionnal index to encompass the full text of the node (why?)"
 ]
 
 { #category : #'tests - stack table' }

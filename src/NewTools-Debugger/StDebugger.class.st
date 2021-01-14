@@ -942,7 +942,7 @@ StDebugger >> restartCurrentContext [
 
 	self debuggerActionModel restartContext: self currentContext.
 	self clearUnsavedCodeChanges.
-	self code text: self currentContext sourceCode
+	self updateCodeFromContext
 ]
 
 { #category : #actions }
@@ -1123,7 +1123,6 @@ StDebugger >> updateCodeFromContext: aContext [
 	aContext sourceCode = self code text 
 		ifFalse: [ self updateSourceCodeFor: aContext ].
 	self code beForContext: aContext.
-	"self code selectionInterval: selectionInterval."
 	
 	self
 		updateCodeTextSegmentDecoratorsIn: aContext
