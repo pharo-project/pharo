@@ -57,6 +57,15 @@ StTestDebuggerProvider >> debuggerWithFailingAssertionContext [
 ]
 
 { #category : #helpers }
+StTestDebuggerProvider >> debuggerWithFailingShouldntRaiseContext [
+	[ self produceShouldntRaiseFailure ]
+		on: TestFailure
+		do: [ :err | 
+			self sessionFor: err signalerContext exception: err.
+			^ self newDebugger ]
+]
+
+{ #category : #helpers }
 StTestDebuggerProvider >> debuggerWithFailingTestContext [
 	[ self produceTestFailure ]
 		on: TestFailure
@@ -140,6 +149,11 @@ StTestDebuggerProvider >> newDebugger [
 { #category : #helpers }
 StTestDebuggerProvider >> produceAssertionFailure [
 	TestCase new assert: 4 equals: 2
+]
+
+{ #category : #helpers }
+StTestDebuggerProvider >> produceShouldntRaiseFailure [
+	TestCase new shouldnt: [ 1/0 ] raise: ZeroDivide
 ]
 
 { #category : #helpers }
