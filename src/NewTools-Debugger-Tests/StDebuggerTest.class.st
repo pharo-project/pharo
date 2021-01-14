@@ -161,14 +161,25 @@ StDebuggerTest >> testCodeChangeAfterContextChange [
 { #category : #'tests - code pane' }
 StDebuggerTest >> testCodeSelectionAfterStepping [
 
-	| dbg |
+	| dbg adapter segments highlightSegment pcRangeForContext |
 	dbg := self debuggerOn: session.
+	adapter := SpMorphicCodeAdapter new.
+	adapter adapt: dbg code.	
+	dbg code adapter: adapter.
+	dbg code adapter buildWidget.	
 	dbg
 		stepInto;
 		stepInto.
+	
+	pcRangeForContext := (session pcRangeForContext: dbg currentContext).
+	segments := dbg code adapter widget segments.
+	self assert: segments size equals: 1.
+	highlightSegment := segments first.	
+	
 	self
-		assert: dbg code selectionInterval
-		equals: (session pcRangeForContext: dbg currentContext)
+		assert:  (highlightSegment firstIndex to: highlightSegment lastIndex)
+		equals: (pcRangeForContext first to: pcRangeForContext last + 1)
+	"The pc range is highlighted with an additionnal index to encompass the full text of the node (why?)"
 ]
 
 { #category : #'tests - context inspector' }
