@@ -29,7 +29,7 @@ Class {
 
 { #category : #'instance creation' }
 MenubarMorph class >> closeAll [
-
+	<script>
 	self currentWorld submorphs
 		select: [ :e | e isKindOf: MenubarMorph ]
 		thenDo: [ :e | e delete ].
@@ -72,12 +72,7 @@ MenubarMorph class >> methodAnnouncementReceived: anAnnouncement [
 { #category : #'instance creation' }
 MenubarMorph class >> open [
 	<script>
-	
-	self showMenubar ifFalse: [ ^ self ].
-
-	self new
-		menuBarItems: self currentWorld worldState menuBuilder menuSpec items;
-		open.
+	self showMenubar ifTrue: [ self new open ]
 ]
 
 { #category : #initialization }
@@ -120,6 +115,13 @@ MenubarMorph >> drawSubmenuMarkerOn: aCanvas [
 	"Nothing"
 ]
 
+{ #category : #accessing }
+MenubarMorph >> initMenuBarItems [
+	^ (PragmaMenuBuilder
+		   pragmaKeyword: WorldState discoveredMenuPragmaKeyword
+		   model: self) menuSpec items
+]
+
 { #category : #initialization }
 MenubarMorph >> initialize [
 	super initialize.
@@ -133,7 +135,7 @@ MenubarMorph >> isMenubar [
 
 { #category : #accessing }
 MenubarMorph >> menuBarItems [
-	^ menuBarItems
+	^ menuBarItems ifNil: [ self initMenuBarItems ]
 ]
 
 { #category : #accessing }
@@ -160,6 +162,8 @@ MenubarMorph >> open [
 				keyText: each keyText.
 			each separator
 				ifTrue: [ self addSeparator ] ].
+	"we do not want to hold on to the items (e.g. Pragmas)"
+	menuBarItems := nil.
 	self
 		adhereToTop;
 		openInWorld
