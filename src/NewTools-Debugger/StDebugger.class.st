@@ -942,6 +942,7 @@ StDebugger >> restartCurrentContext [
 
 	self debuggerActionModel restartContext: self currentContext.
 	self clearUnsavedCodeChanges.
+	self code text: self currentContext sourceCode.
 	self updateCodeFromContext
 ]
 
