@@ -373,7 +373,15 @@ StDebugger >> canExecuteDebugCommand [
 
 { #category : #'command support' }
 StDebugger >> canExecuteRestartCommand [
-	^ self debuggerActionModel isInterruptedContextPostMortem not
+
+	^ (self debuggerActionModel isInterruptedContextPostMortem or: [ 
+		   self debuggerActionModel isInterruptedContextDead ]) not
+]
+
+{ #category : #'command support' }
+StDebugger >> canExecuteReturnCommand [
+
+	^ self debuggerActionModel isInterruptedContextDead not
 ]
 
 { #category : #actions }
