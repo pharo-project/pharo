@@ -191,11 +191,10 @@ PRRichTextComposer class >> initialize [
 
 { #category : #'class initialization' }
 PRRichTextComposer class >> initializeStylers [
-	"self initializeStylers"
+	<script>
 	Stylers := Dictionary
-		newFromAssociations: ((PragmaCollector
-						filter: [ :prg | prg selector = 'codeblockStylerFor:' ]) reset
-						collected collect: [ :p | p arguments first asLowercase-> p method ])
+		newFromAssociations: ((Pragma allNamed: #codeblockStylerFor:) 
+		collect: [ :p | p arguments first asLowercase-> p method ])
 ]
 
 { #category : #stylers }
@@ -283,6 +282,11 @@ PRRichTextComposer class >> putOnline [
 PRRichTextComposer class >> resetCache [
 
 	ImageCache := Dictionary new
+]
+
+{ #category : #cleanup }
+PRRichTextComposer class >> restartMethods [
+    self initializeStylers
 ]
 
 { #category : #stylers }
