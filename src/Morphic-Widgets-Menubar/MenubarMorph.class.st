@@ -28,11 +28,14 @@ Class {
 }
 
 { #category : #'instance creation' }
+MenubarMorph class >> allMenubarsInWorld [
+	^ self currentWorld submorphs select: [ :e | e isKindOf: self ]
+]
+
+{ #category : #'instance creation' }
 MenubarMorph class >> closeAll [
 	<script>
-	self currentWorld submorphs
-		select: [ :e | e isKindOf: MenubarMorph ]
-		thenDo: [ :e | e delete ].
+	self allMenubarsInWorld do: [ :e | e delete ]
 ]
 
 { #category : #'instance creation' }
@@ -83,6 +86,11 @@ MenubarMorph class >> reset [
 	self open.
 ]
 
+{ #category : #cleanup }
+MenubarMorph class >> restartMethods [
+	self allMenubarsInWorld do: [ :e | e reset ]
+]
+
 { #category : #accessing }
 MenubarMorph class >> showMenubar [
 	^ ShowMenubar
@@ -92,6 +100,23 @@ MenubarMorph class >> showMenubar [
 MenubarMorph class >> showMenubar: aBoolean [
 	ShowMenubar := aBoolean.
 	self reset
+]
+
+{ #category : #construction }
+MenubarMorph >> addMenuEntries [
+	self menuBarItems
+		do: [ :each | 
+			self
+				add: each label
+				icon: each icon
+				help: each help
+				subMenu: (each subMenu ifNotNil: #asMenubarMenuMorph)
+				action: each action
+				keyText: each keyText.
+			each separator
+				ifTrue: [ self addSeparator ] ].
+	"we do not want to hold on to the items (e.g. Pragmas)"
+	menuBarItems := nil.
 ]
 
 { #category : #construction }
@@ -115,7 +140,7 @@ MenubarMorph >> drawSubmenuMarkerOn: aCanvas [
 	"Nothing"
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 MenubarMorph >> initMenuBarItems [
 	^ (PragmaMenuBuilder
 		   pragmaKeyword: WorldState discoveredMenuPragmaKeyword
@@ -151,20 +176,8 @@ MenubarMorph >> newMenuItem [
 
 { #category : #accessing }
 MenubarMorph >> open [
-	self menuBarItems
-		do: [ :each | 
-			self
-				add: each label
-				icon: each icon
-				help: each help
-				subMenu: (each subMenu ifNotNil: #asMenubarMenuMorph)
-				action: each action
-				keyText: each keyText.
-			each separator
-				ifTrue: [ self addSeparator ] ].
-	"we do not want to hold on to the items (e.g. Pragmas)"
-	menuBarItems := nil.
 	self
+		addMenuEntries;
 		adhereToTop;
 		openInWorld
 ]
@@ -179,6 +192,12 @@ MenubarMorph >> rejectsEvent: anEvent [
 { #category : #accessing }
 MenubarMorph >> repelsMorph: aMorph event: ev [
 	^ true
+]
+
+{ #category : #construction }
+MenubarMorph >> reset [
+	self submorphs do: [ :each | each delete ].
+	self menuBarItems.
 ]
 
 { #category : #initialization }
