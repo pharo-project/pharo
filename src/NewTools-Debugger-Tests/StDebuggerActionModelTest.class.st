@@ -329,6 +329,12 @@ StDebuggerActionModelTest >> testIsInterruptedContextAnAssertEqualsFailure [
 ]
 
 { #category : #'tests - predicates' }
+StDebuggerActionModelTest >> testIsInterruptedContextDead [
+	session interruptedContext pc: nil.
+	self assert: debugActionModel isInterruptedContextDead
+]
+
+{ #category : #'tests - predicates' }
 StDebuggerActionModelTest >> testIsInterruptedContextDoesNotUnderstand [
 	self changeSession: StTestDebuggerProvider new debuggerWithDNUContext session.
 	self assert: debugActionModel isInterruptedContextDoesNotUnderstand.

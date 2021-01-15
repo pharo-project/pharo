@@ -49,6 +49,11 @@ StDebuggerContextPredicate >> isContextAnAssertionFailure [
 ]
 
 { #category : #predicates }
+StDebuggerContextPredicate >> isContextDead [
+	^context isDead
+]
+
+{ #category : #predicates }
 StDebuggerContextPredicate >> isContextDoesNotUnderstand [
 	^false
 ]
@@ -70,7 +75,8 @@ StDebuggerContextPredicate >> isContextSubclassResponsibilityException [
 
 { #category : #predicates }
 StDebuggerContextPredicate >> isSteppable [
-	^self isContextPostMortem not
+
+	^ self isContextPostMortem not and: [ self isContextDead not ]
 ]
 
 { #category : #accessing }

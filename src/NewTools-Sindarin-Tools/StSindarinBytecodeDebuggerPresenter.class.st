@@ -108,5 +108,6 @@ StSindarinBytecodeDebuggerPresenter >> updateBytecode [
 { #category : #updating }
 StSindarinBytecodeDebuggerPresenter >> updatePresenter [
 	super updatePresenter.
+	self debugger interruptedContext isDead ifTrue:[ ^self ].
 	self updateBytecode
 ]

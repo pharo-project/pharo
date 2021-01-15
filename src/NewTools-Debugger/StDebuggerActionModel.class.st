@@ -166,6 +166,11 @@ StDebuggerActionModel >> isInterruptedContextAnAssertEqualsFailure [
 ]
 
 { #category : #'debug - predicates' }
+StDebuggerActionModel >> isInterruptedContextDead [
+	^ self contextPredicate isContextDead
+]
+
+{ #category : #'debug - predicates' }
 StDebuggerActionModel >> isInterruptedContextDoesNotUnderstand [
 	^self contextPredicate isContextDoesNotUnderstand
 
