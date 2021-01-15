@@ -20,6 +20,11 @@ WriteBarrierTest class >> initialize [
 	ContextInstance := Context sender: nil receiver: self new method: self >> #alwaysWritableObjects arguments: #()
 ]
 
+{ #category : #cleanup }
+WriteBarrierTest class >> restartMethods [
+   self initialize
+]
+
 { #category : #'guinea pigs' }
 WriteBarrierTest >> alwaysReadOnlyObjects [
 	"Immediates are always immutable"
