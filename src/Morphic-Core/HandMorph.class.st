@@ -508,8 +508,10 @@ HandMorph >> generateKeyboardEvent: evtBuf [
 		stamp: stamp.
 	
 	"If a modifier key is pressed the keystroke event is handled by #visitMouseDownEvent:"
-	(type == #keystroke and: [ keyEvent commandKeyPressed ])
-		ifTrue: [ ^ #invalid ].
+	(type == #keystroke
+		and: [ keyEvent commandKeyPressed
+			or: [ keyEvent controlKeyPressed ] ])
+				ifTrue: [ ^ #invalid ].
 	
 	keyEvent scanCode: lastKeyScanCode.
 	^keyEvent
