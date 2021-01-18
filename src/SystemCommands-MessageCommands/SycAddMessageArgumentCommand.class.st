@@ -47,7 +47,7 @@ SycAddMessageArgumentCommand >> createRefactoring [
 		addParameterToMethod: originalMessage selector
 		in: (SycMessageOriginHack of: originalMessage) "look at SycMessageOriginHack comment"
 		newSelector: newSelector selector
-		permutation: (permutation -> newSelector argumentNames)
+		permutation: permutation
 		initializer: argumentDefaultValue
 ]
 

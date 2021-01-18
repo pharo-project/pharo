@@ -49,6 +49,18 @@ RBAddParameterRefactoring class >> model: aRBSmalltalk addParameterToMethod: aSe
 		yourself
 ]
 
+{ #category : #'instance creation' }
+RBAddParameterRefactoring class >> model: aRBSmalltalk addParameterToMethod: aSelector in: aClass newSelector: newSelector permutation: aColl initializer: init [ 
+	^(self new)
+		model: aRBSmalltalk;
+		addParameterToMethod: aSelector
+			in: aClass
+			newSelector: newSelector
+			permutation: aColl 
+			initializer: init;
+		yourself
+]
+
 { #category : #initialization }
 RBAddParameterRefactoring >> addParameterToMethod: aSelector in: aClass newSelector: newSel initializer: init [ 
 	self 
@@ -101,10 +113,15 @@ RBAddParameterRefactoring >> checkVariableReferencesIn: aParseTree [
 ]
 
 { #category : #private }
-RBAddParameterRefactoring >> modifyImplementorParseTree: parseTree in: aClass [ 
+RBAddParameterRefactoring >> modifyImplementorParseTree: parseTree in: aClass [
+	|argName|
+	argName := self safeVariableNameFor: aClass 
+		temporaries: (parseTree temporaryNames, parseTree argumentNames).
 	parseTree 
 		renameSelector: newSelector
-		andArguments: (permutation value collect: [:e | RBVariableNode named: e ])
+		andArguments: ((permutation 
+			collect: [ :e | parseTree argumentNames at: e ifAbsent: [ argName asString ] ]) 
+				collect: [:e | RBVariableNode named: e ])
 ]
 
 { #category : #preconditions }
@@ -123,7 +140,7 @@ RBAddParameterRefactoring >> newSelectorString [
 	| stream keywords |
 	stream := WriteStream on: String new.
 	keywords := newSelector keywords.
-	permutation key
+	permutation
 		doWithIndex: 
 			[:each :index | 
 			stream nextPutAll: (keywords at: index).
@@ -154,15 +171,15 @@ RBAddParameterRefactoring >> parseTreeRewriter [
 
 { #category : #private }
 RBAddParameterRefactoring >> safeVariableNameFor: aClass temporaries: allTempVars [ 
-	| baseString i newString |
+	| baseString index newString |
 	newString := baseString := 'anObject'.
-	i := 0.
+	index := 0.
 	
 	[(allTempVars includes: newString) 
 		or: [aClass definesInstanceVariable: newString]] 
 			whileTrue: 
-				[i := i + 1.
-				newString := baseString , i printString].
+				[index := index + 1.
+				newString := baseString , index printString].
 	^newString
 ]
 

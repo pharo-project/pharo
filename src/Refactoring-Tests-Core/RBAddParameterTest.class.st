@@ -19,10 +19,11 @@ RBAddParameterTest >> testAddParameterForTwoArgumentMessage [
 		addParameterToMethod: oldSelector
 		in: RBRefactoryTestDataApp
 		newSelector: newSelector
+		permutation: #(1 0 2)
 		initializer: '#(1.0)'.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
-	self assert: (class parseTreeFor: newSelector) equals: (self parseMethod: 'called: anObject bar: aBlock on: anObject1
+	self assert: (class parseTreeFor: newSelector) equals: (self parseMethod: 'called: anObject bar: anObject1 on: aBlock
 							Transcript
 								show: anObject printString;
 								cr.
@@ -32,7 +33,7 @@ RBAddParameterTest >> testAddParameterForTwoArgumentMessage [
 							anObject := 5.
 							self 
 								called: anObject + 1
-								bar: [^anObject] on: #(1.0)').
+								bar: #(1.0) on: [^anObject]').
 	self deny: (class directlyDefinesMethod: oldSelector)
 ]
 
@@ -46,6 +47,7 @@ RBAddParameterTest >> testAddParameterThatReferencesGlobalAndLiteral [
 		               addParameterToMethod: oldSelector
 		               in: RBRefactoryTestDataApp
 		               newSelector: newSelector
+						   permutation: #(1 0)
 		               initializer: 'OrderedCollection new: 5'.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
@@ -71,6 +73,7 @@ RBAddParameterTest >> testAddParameterThatReferencesModelGlobal [
 		               addParameterToMethod: oldSelector
 		               in: RBRefactoryTestDataApp
 		               newSelector: newSelector
+							permutation: #(1 0)
 		               initializer: 'Bar new'.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
@@ -95,6 +98,7 @@ RBAddParameterTest >> testAddParameterThatReferencesSelf [
 		               addParameterToMethod: oldSelector
 		               in: RBRefactoryTestDataApp
 		               newSelector: newSelector
+							permutation: #(1 0)
 		               initializer: 'self printString'.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
