@@ -77,7 +77,7 @@ SycExtractMethodCommand >> setUpOptionToSearchInHierarchyDuring: refactoring [
 	refactoring setOption: #searchInAllHierarchy toUse:  [ 
 		UIManager default 
 			confirm: 'Do you want to search occurrences in all hierarchy?'
-			label: 'Warninig']. 	
+			label: 'Warning']. 	
 ]
 
 { #category : #execution }
