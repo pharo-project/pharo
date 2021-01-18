@@ -429,6 +429,12 @@ ShiftClassBuilder >> oldMetaclass [
 	^ oldMetaclass
 ]
 
+{ #category : #accessing }
+ShiftClassBuilder >> package: anObject [
+	
+	self category: anObject
+]
+
 { #category : #changes }
 ShiftClassBuilder >> propagateChangesTo: anotherBuilder [
 	changes do: [ :e | e propagateToSubclasses: anotherBuilder ]
@@ -513,16 +519,6 @@ ShiftClassBuilder >> superclassName: anObject [
 { #category : #accessing }
 ShiftClassBuilder >> superclassResolver: asuperclassResolver [
 	superclassResolver:= asuperclassResolver
-]
-
-{ #category : #accessing }
-ShiftClassBuilder >> traitComposition [
-	^ extensibleProperties at: #traitComposition ifAbsent: {}
-]
-
-{ #category : #accessing }
-ShiftClassBuilder >> traitComposition: aValue [
-	^ extensibleProperties at: #traitComposition put: aValue
 ]
 
 { #category : #building }

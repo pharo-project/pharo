@@ -4,8 +4,7 @@ Class {
 	#instVars : [
 		'label',
 		'isClosed',
-		'body',
-		'firstLine'
+		'body'
 	],
 	#category : #'Microdown-Model'
 }

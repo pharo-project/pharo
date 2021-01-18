@@ -43,11 +43,9 @@ Class {
 		'packageName',
 		'layout',
 		'sharedVariables',
-		'poolDictionaries',
 		'traitComposition',
 		'sharedPools',
-		'shiftClassBuilder',
-		'name'
+		'shiftClassBuilder'
 	],
 	#category : #'FluidClassBuilder-Base'
 }

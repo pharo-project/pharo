@@ -17,7 +17,7 @@ StDebuggerInspectorTest >> setUp [
 
 { #category : #running }
 StDebuggerInspectorTest >> tearDown [
-	session ifNotNil:[session terminate].
+	session ifNotNil:[session clear].
 	super tearDown
 ]
 
@@ -70,6 +70,21 @@ StDebuggerInspectorTest >> testUpdateLayoutForContextsWithAssertionFailure [
 	self
 		assert: assertionFailure expectedObject
 		equals: ((session interruptedContext tempNamed: #aStringOrBlock) at: 1)
+]
+
+{ #category : #tests }
+StDebuggerInspectorTest >> testUpdateLayoutForContextsWithShouldntRaiseFailure [
+	| debugger assertionFailure |
+	debugger := StTestDebuggerProvider new debuggerWithFailingShouldntRaiseContext.
+	session := debugger session.
+	inspector
+		updateLayoutForContexts: session interruptedContext
+		isAssertionFailure: true.
+	assertionFailure := inspector assertionFailure.
+	self
+		deny: inspector currentLayoutSpec
+		equals: inspector assertionLayoutSpec.
+	
 ]
 
 { #category : #tests }

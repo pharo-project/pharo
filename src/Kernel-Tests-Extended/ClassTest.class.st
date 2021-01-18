@@ -60,11 +60,12 @@ ClassTest >> setUp [
 	className := #TUTU.
 	testEnvironment:= Smalltalk globals.
 	self deleteClass.
-	Object subclass: className
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		category: self categoryNameForTemporaryClasses
+	
+	self class classInstaller make: [ :aBuilder |
+		aBuilder 
+			name: className;
+			package: self categoryNameForTemporaryClasses]
+
 ]
 
 { #category : #running }
@@ -158,10 +159,13 @@ ClassTest >> testClassVariableEntanglement [
 	| firstClassName firstClass secondClassName secondClass thirdClassName thirdClass |
 
 	firstClassName := 'MyFirstClass'.
-	firstClass := Object subclass: firstClassName
-		instanceVariableNames: ''
-		classVariableNames: 'MyVar'
-		package: self categoryNameForTemporaryClasses.
+
+	firstClass := self class classInstaller make: [ :aBuilder |
+		aBuilder 
+			name: firstClassName;
+			sharedVariablesFromString: 'MyVar';
+			package: self categoryNameForTemporaryClasses ].
+		
 	[ 
 
 		firstClass class compile: 'myVar
@@ -170,10 +174,13 @@ ClassTest >> testClassVariableEntanglement [
 	MyVar := anObject'.
 
 		secondClassName := 'MySecondClass'.
-		secondClass := Object subclass: secondClassName
-			instanceVariableNames: ''
-			classVariableNames: 'MyVar'
-			package: self categoryNameForTemporaryClasses.
+
+		secondClass := self class classInstaller make: [ :aBuilder |
+			aBuilder 
+				name: secondClassName;
+				sharedVariablesFromString: 'MyVar';
+				package: self categoryNameForTemporaryClasses ].
+			
 		[ 
 
 			secondClass class compile: 'myVar
@@ -258,7 +265,11 @@ ClassTest >> testHasBindingThatBeginsWith [
 	self assert: (SmalltalkImage hasBindingThatBeginsWith: 'Object').
 	
 	"Pools are looked up, too"
-	self assert: (TimeZone hasBindingThatBeginsWith: 'DaysInMo')
+	self assert: (TimeZone hasBindingThatBeginsWith: 'DaysInMo').
+	
+	"CompiledMethodLayout works, too"
+	self deny: (CompiledMethod hasBindingThatBeginsWith: 'Compiler').
+
 ]
 
 { #category : #'tests - access' }
@@ -466,7 +477,8 @@ ClassTest >> testSubclass [
 	(testEnvironment includesKey: #SubclassExample) ifTrue: [ (testEnvironment at: #SubclassExample) removeFromSystem ].
 
 	self deny: (testEnvironment includesKey: #SubclassExample).
-	cls := Object subclass: #SubclassExample.
+	cls := self class classInstaller make: [ :aBuilder | aBuilder name: #SubclassExample ].
+	
 	self assert: (testEnvironment includesKey: #SubclassExample).
 
 	self assert: (testEnvironment at: #SubclassExample) identicalTo: cls.
@@ -482,7 +494,12 @@ ClassTest >> testSubclassInstanceVariableNames [
 	(testEnvironment includesKey: #SubclassExample) ifTrue: [ (testEnvironment at: #SubclassExample) removeFromSystem ].
 
 	self deny: (testEnvironment includesKey: #SubclassExample).
-	cls := Object subclass: #SubclassExample instanceVariableNames: 'x y'.
+
+	cls := self class classInstaller make: [ :aBuilder | 
+		aBuilder 
+			name: #SubclassExample;
+			slots: 'x y' asSlotCollection].
+
 	self assert: (testEnvironment includesKey: #SubclassExample).
 
 	self assert: (testEnvironment at: #SubclassExample) identicalTo: cls.

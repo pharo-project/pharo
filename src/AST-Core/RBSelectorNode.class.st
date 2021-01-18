@@ -11,20 +11,24 @@ Class {
 	#superclass : #RBValueNode,
 	#instVars : [
 		'value',
-		'start'
+		'keywordPositions'
 	],
 	#category : #'AST-Core-Nodes'
 }
 
 { #category : #accessing }
 RBSelectorNode class >> value: aString [
-	^ self value: aString start: #(0)
+
+	^ self value: aString keywordPositions: #(0)
 ]
 
 { #category : #accessing }
-RBSelectorNode class >> value: aString start: anInteger [
-	^ self new value: aString ;
-	           start: anInteger.
+RBSelectorNode class >> value: aString keywordPositions: keywordPositions [
+
+	^ self new
+		value: aString;
+	 	keywordPositions: keywordPositions;
+		yourself
 ]
 
 { #category : #comparing }
@@ -48,6 +52,24 @@ RBSelectorNode >> isSelector [
 	^true
 ]
 
+{ #category : #accessing }
+RBSelectorNode >> keywordPositions [
+
+	^ keywordPositions
+]
+
+{ #category : #accessing }
+RBSelectorNode >> keywordPositions: positions [
+
+	keywordPositions := positions
+]
+
+{ #category : #accessing }
+RBSelectorNode >> keywords [
+
+	^ value keywords
+]
+
 { #category : #testing }
 RBSelectorNode >> needsParenthesis [
 	^false
@@ -69,27 +91,14 @@ RBSelectorNode >> printOn: aStream [
 ]
 
 { #category : #accessing }
-RBSelectorNode >> start: aPositionsList [
-	start := aPositionsList ifNotNil: [:list| list asIntegerArray ].
-]
-
-{ #category : #accessing }
 RBSelectorNode >> startWithoutParentheses [
-	^ start
+	^ keywordPositions first
 ]
 
 { #category : #accessing }
 RBSelectorNode >> stopWithoutParentheses [
-	| temp prev |
-	temp := 0.
-	^ (start collect: [ :each | prev := temp. 
-							 temp := value 
-								findString: ':' 
-								startingAt: prev+1. 
-							 temp=0 
-								ifFalse: [each + temp - prev -1 ] 
-								ifTrue: [each + value size - 1]]) asIntegerArray.
 	
+	^ self keywordPositions last + self keywords last size
 ]
 
 { #category : #accessing }

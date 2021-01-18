@@ -39,7 +39,7 @@ AthensCompositeStrokePaint >> fromBorderStyles: borders on: anAthensCanvas [
 AthensCompositeStrokePaint >> fromDashedBorderStyle: border on: anAthensCanvas [
 	| allDashLength offset width |
 	width := border width.
-	allDashLength := border dashLengths detectSum: #yourself.
+	allDashLength := border dashLengths sum: #yourself.
 	offset := 0.
 	strokePaints := border dashColors
 		collectWithIndex: [ :c :i | 

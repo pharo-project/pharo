@@ -145,6 +145,18 @@ StPlayground >> loadPage: aFileReference [
 	self firstPage loadPage: aFileReference
 ]
 
+{ #category : #'private stepping' }
+StPlayground >> startStepping [
+	
+	"A playground does not steps"
+]
+
+{ #category : #'private stepping' }
+StPlayground >> stopStepping [
+	
+	"A playground does not steps"
+]
+
 { #category : #initialization }
 StPlayground >> windowIcon [
 	

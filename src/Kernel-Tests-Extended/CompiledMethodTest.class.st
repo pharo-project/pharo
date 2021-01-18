@@ -502,11 +502,11 @@ CompiledMethodTest >> testIsInstalled [
 
 	Smalltalk removeClassNamed: #TUTU.
 
-	cls := Object subclass: #TUTU
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		package: self categoryNameForTemporaryClasses.
+	cls := self class classInstaller make: [ :aBuilder | 
+		aBuilder 
+			name: #TUTU;
+			package: self categoryNameForTemporaryClasses].
+
 	cls compile: 'foo ^ 10'.
 	method := cls >> #foo.
 
@@ -668,12 +668,12 @@ CompiledMethodTest >> testMethodClass [
 	old: #unknown
 	new semantics: return Absolete class"
 	Smalltalk removeClassNamed: #TUTU.
-	cls := Object
-				subclass: #TUTU
-				instanceVariableNames: ''
-				classVariableNames: ''
-				poolDictionaries: ''
-				package: self categoryNameForTemporaryClasses.
+
+	cls := self class classInstaller make: [ :aBuilder | 
+		aBuilder 
+			name: #TUTU;
+			package: self categoryNameForTemporaryClasses].
+
 	cls compile: 'foo ^ 10'.
 	method := cls >> #foo.
 	Smalltalk removeClassNamed: #TUTU.
@@ -787,12 +787,10 @@ CompiledMethodTest >> testSelector [
 			"now make an orphaned method. new semantics: return corrent name"
 			Smalltalk removeClassNamed: #TUTU.
 
-			cls := Object
-				subclass: #TUTU
-				instanceVariableNames: ''
-				classVariableNames: ''
-				poolDictionaries: ''
-				package: self categoryNameForTemporaryClasses.
+			cls := self class classInstaller make: [ :aBuilder | 
+				aBuilder 
+					name: #TUTU;
+					package: self categoryNameForTemporaryClasses].
 
 			cls compile: 'foo ^ 10'.
 

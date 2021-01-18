@@ -63,6 +63,12 @@ AbstractLayout >> fieldSize [
 ]
 
 { #category : #testing }
+AbstractLayout >> hasBindingThatBeginsWith: aString [
+	"Answer true if there is a Slot that begins with aString, false otherwise"
+	^false
+]
+
+{ #category : #testing }
 AbstractLayout >> hasFields [
 	^ false
 ]

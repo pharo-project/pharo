@@ -34,7 +34,7 @@ RBProtectInstanceVariableRefactoring >> getterSetterMethods [
 { #category : #transforming }
 RBProtectInstanceVariableRefactoring >> inline: aSelector [ 
 	self onError: 
-			[self performComponentRefactoring: (RBInlineAllSendersRefactoring 
+			[self performCompositeRefactoring: (RBInlineAllSendersRefactoring 
 						model: self model
 						sendersOf: aSelector
 						in: class)]

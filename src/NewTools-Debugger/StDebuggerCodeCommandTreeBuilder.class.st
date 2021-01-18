@@ -47,10 +47,6 @@ StDebuggerCodeCommandTreeBuilder >> codeDebugCommands [
 		do: [ :cmdClass | 
 			group
 				register: (self buildSpecCommand: cmdClass forContext: stDebuggerInstance) ].
-	self codeExtensionCommandsClasses
-		do: [ :cmdClass | 
-			group
-				register: (self buildSpecCommand: cmdClass forContext: stDebuggerInstance) ].
 	^ group
 ]
 
@@ -67,9 +63,4 @@ StDebuggerCodeCommandTreeBuilder >> codeDebugCommandsGroupName [
 { #category : #'accessing - commands classes' }
 StDebuggerCodeCommandTreeBuilder >> codeExecutionControlCommandsClasses [
 	^ {StRunToSelectionCommand}
-]
-
-{ #category : #'accessing - commands classes' }
-StDebuggerCodeCommandTreeBuilder >> codeExtensionCommandsClasses [
-	^ (Pragma allNamed: #codeExtensionDebugCommand:)  collect: [ :prg | prg methodClass soleInstance ]
 ]

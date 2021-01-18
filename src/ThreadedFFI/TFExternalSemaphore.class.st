@@ -34,6 +34,14 @@ TFExternalSemaphore >> initialize [
 ]
 
 { #category : #initialization }
+TFExternalSemaphore >> release [
+
+	super release.
+	Smalltalk unregisterExternalObject: semaphore.
+
+]
+
+{ #category : #initialization }
 TFExternalSemaphore >> reset [
 
 	semaphore consumeAllSignals

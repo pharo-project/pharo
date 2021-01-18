@@ -48,12 +48,11 @@ MissingClassError >> className: aString [
 { #category : #actions }
 MissingClassError >> defineClass [
 
-	Smalltalk compiler evaluate: 
-		self superclassName,  ' subclass: #', className, 
-	' instanceVariableNames: ''''
-	classVariableNames: ''''
-	poolDictionaries: ''''
-	category: ''Stub-Classes'''
+	self class classInstaller make: [ :aBuilder | 
+		aBuilder
+			name: className asSymbol;
+			superclassName: self superclassName;
+			package: 'Stub-Classes' ]
 ]
 
 { #category : #testing }

@@ -112,7 +112,7 @@ SpAbstractPresenter >> application [
 	^ self owner application
 ]
 
-{ #category : #accessing }
+{ #category : #TOREMOVE }
 SpAbstractPresenter >> autoAccept: aBoolean [
 ]
 
@@ -195,6 +195,12 @@ SpAbstractPresenter >> eventHandler [
 SpAbstractPresenter >> forceUpdateSlot: aSymbol [
 
 	^ (self rawValueHolderNamed: aSymbol) valueChanged
+]
+
+{ #category : #testing }
+SpAbstractPresenter >> hasAdapter [
+
+	^ adapter notNil
 ]
 
 { #category : #testing }

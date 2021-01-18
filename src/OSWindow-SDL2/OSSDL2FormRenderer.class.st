@@ -112,7 +112,7 @@ OSSDL2FormRenderer >> updateAreas: allDamage immediate: forceToScreen [
 			                bits: pixels.
 		allDamage do: [ :rectangle | 
 			intersection := rectangle
-				                intersect: (0 @ 0 corner: backendWindow extent)
+				                intersect: (0 @ 0 corner: extent)
 				                ifNone: [ nil ].
 
 			intersection ifNotNil: [ 

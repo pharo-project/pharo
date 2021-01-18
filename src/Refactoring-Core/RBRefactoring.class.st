@@ -155,6 +155,17 @@ RBRefactoring >> classObjectFor: anObject [
 ]
 
 { #category : #support }
+RBRefactoring >> convertAllReferencesTo: aSymbol of: classes using: searchReplacer [ 
+	(self model allReferencesTo: aSymbol in: classes)
+		do: 
+			[:method | 
+			self 
+				convertMethod: method selector
+				for: method modelClass
+				using: searchReplacer]
+]
+
+{ #category : #support }
 RBRefactoring >> convertAllReferencesTo: aSymbol using: searchReplacer [ 
 	self model allReferencesTo: aSymbol
 		do: 
@@ -210,14 +221,21 @@ RBRefactoring >> copyOptionsFrom: aDictionary [
 		ifTrue: [^self options: aDictionary copy].
 	dict keysAndValuesDo: 
 			[:key :value | 
-			value == (self class refactoringOptions at: key) 
-				ifTrue: [dict at: key put: (aDictionary at: key)]].
+			value == (self class refactoringOptions at: key ifAbsent: [nil]) 
+				ifTrue: [ dict at: key put: (aDictionary at: key) ]].
+	(aDictionary keys difference: dict keys) do: 
+		[ :e | dict at: e put: (aDictionary at: e) ].
 	self options: dict
 ]
 
 { #category : #transforming }
 RBRefactoring >> defaultEnvironment [
 	^RBBrowserEnvironment new
+]
+
+{ #category : #utilities }
+RBRefactoring >> emptyCondition [
+	^ RBCondition empty
 ]
 
 { #category : #transforming }
@@ -295,7 +313,7 @@ RBRefactoring >> parserClass [
 ]
 
 { #category : #transforming }
-RBRefactoring >> performComponentRefactoring: aRefactoring [ 
+RBRefactoring >> performCompositeRefactoring: aRefactoring [ 
 	aRefactoring copyOptionsFrom: self options.
 	aRefactoring primitiveExecute
 ]

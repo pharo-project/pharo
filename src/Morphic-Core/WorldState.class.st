@@ -13,7 +13,6 @@ Class {
 		'stepList',
 		'lastStepTime',
 		'lastStepMessage',
-		'lastCycleTime',
 		'alarms',
 		'lastAlarmTime',
 		'activeHand',

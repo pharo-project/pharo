@@ -66,6 +66,11 @@ CleanBlockClosure >> isEmbeddedBlock [
 ]
 
 { #category : #accessing }
+CleanBlockClosure >> literalsEvenTheOnesInTheInnerBlocks [
+	^self compiledBlock literalsEvenTheOnesInTheInnerBlocks
+]
+
+{ #category : #accessing }
 CleanBlockClosure >> messages [ 
 	^self compiledBlock messages
 ]

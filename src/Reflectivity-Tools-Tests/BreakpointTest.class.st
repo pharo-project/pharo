@@ -14,11 +14,11 @@ Class {
 
 { #category : #utilities }
 BreakpointTest >> newDummyClass [
-	^ Object
-		subclass: #DummyClassForBreakpoint
-		instanceVariableNames: ''
-		classVariableNames: ''
-		package: 'DummyPackage'
+
+	^ self class classInstaller make: [ :aBuilder | 
+		  aBuilder
+			  name: #DummyClassForBreakpoint;
+			  package: 'DummyPackage' ]
 ]
 
 { #category : #running }

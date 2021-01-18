@@ -1580,6 +1580,21 @@ SmalltalkImage >> renameClassNamed: oldName as: newName [
 	^ globals renameClassNamed: oldName as: newName
 ]
 
+{ #category : #cleanup }
+SmalltalkImage >> restartMethods [
+
+	"Clean up. Long running loops or stored closures can lead to methods that are out if sync with the recompiled code"
+
+	| classes |
+	"Find all classes implementing #restartMethods"
+	classes := self allClasses select: [ :aClass | 
+		           aClass class includesSelector: #restartMethods ].
+	"Arrange classes in superclass order, superclasses before subclasses"
+	classes := Class superclassOrder: classes.
+	"Run the cleanup code"
+	classes do: [ :aClass | aClass restartMethods ]
+]
+
 { #category : #saving }
 SmalltalkImage >> saveAs [
 	"Put up the 'saveAs' prompt, obtain a name, and save the image  under that new name."

@@ -29,14 +29,17 @@ RBPushDownMethodRefactoring class >> pushDown: selectorCollection from: aClass [
 
 { #category : #preconditions }
 RBPushDownMethodRefactoring >> preconditions [
+
 	| condition |
 	self requestSelectors.
-	condition := selectors 
-		inject: RBCondition empty
-		into: [ :cond :each | 
-			cond & (RBCondition definesSelector: each in: class) 
-				& (RBCondition subclassesOf: class referToSelector: each) not].
-	^condition & (RBCondition isAbstractClass: class)
+	condition := selectors
+		             inject: self emptyCondition
+		             into: [ :cond :each | 
+			             cond & (RBCondition definesSelector: each in: class)
+			             &
+			             (RBCondition subclassesOf: class referToSelector: each)
+				             not ].
+	^ condition & (RBCondition isAbstractClass: class)
 ]
 
 { #category : #transforming }
@@ -49,7 +52,7 @@ RBPushDownMethodRefactoring >> pushDown: aSelector [
 				forMethod: (class parseTreeFor: aSelector)
 				fromClass: class
 				toClasses: class subclasses.
-	self performComponentRefactoring: refactoring.
+	self performCompositeRefactoring: refactoring.
 	class subclasses do: 
 			[:each | 
 			(each directlyDefinesMethod: aSelector) 

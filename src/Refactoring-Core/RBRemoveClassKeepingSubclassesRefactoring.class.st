@@ -33,19 +33,16 @@ RBRemoveClassKeepingSubclassesRefactoring >> initialize [
 
 { #category : #preconditions }
 RBRemoveClassKeepingSubclassesRefactoring >> preconditions [
-	^ classNames
-		inject: RBCondition empty
-		into: [ :sum :each | 
-			| aClassOrTrait |
 
-			aClassOrTrait := self model classNamed: each asSymbol.
-			aClassOrTrait ifNil: [ self refactoringFailure: 'No such class or trait' ].
-			sum
-				&
-					( ( self preconditionIsNotMetaclass: aClassOrTrait ) & ( self preconditionHasNoReferences: each )
-						"& ( self preconditionEmptyOrHasNoSubclasses: aClassOrTrait )"
-						& ( self preconditionHasNoUsers: aClassOrTrait ) )
-			]
+	^ classNames inject: self emptyCondition into: [ :sum :each | 
+		  | aClassOrTrait |
+		  aClassOrTrait := self model classNamed: each asSymbol.
+		  aClassOrTrait ifNil: [ 
+			  self refactoringFailure: 'No such class or trait' ].
+		  sum & ((self preconditionIsNotMetaclass: aClassOrTrait)
+		   & (self preconditionHasNoReferences: each)
+		   & (self preconditionHasNoUsers: aClassOrTrait))
+		  "& ( self preconditionEmptyOrHasNoSubclasses: aClassOrTrait )" ]
 ]
 
 { #category : #preconditions }

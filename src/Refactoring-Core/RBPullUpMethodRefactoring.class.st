@@ -202,7 +202,7 @@ RBPullUpMethodRefactoring >> copyDownMethod: aSelector [
 				forMethod: (superclassDefiner parseTreeFor: aSelector)
 				fromClass: superclassDefiner
 				toClasses: subclasses.
-	self performComponentRefactoring: refactoring.
+	self performCompositeRefactoring: refactoring.
 	subclasses do: [:each | each compile: oldSource classified: oldProtocol]
 ]
 
@@ -234,7 +234,7 @@ RBPullUpMethodRefactoring >> pullUp: aSelector [
 				forMethod: (class parseTreeFor: aSelector)
 				fromClass: class
 				toClasses: (Array with: targetSuperclass).
-	self performComponentRefactoring: refactoring.
+	self performCompositeRefactoring: refactoring.
 	targetSuperclass compile: source
 		classified: (class protocolsFor: aSelector)
 ]

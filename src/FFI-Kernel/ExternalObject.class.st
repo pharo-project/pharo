@@ -39,6 +39,12 @@ ExternalObject class >> installSubclasses [
 	self withAllSubclassesDo:[:cls| cls install].
 ]
 
+{ #category : #'instance creation' }
+ExternalObject class >> null [
+	
+	^ self fromHandle: (ExternalAddress null).
+]
+
 { #category : #'system startup' }
 ExternalObject class >> startUp: resuming [
 	"The system is coming up. If it is on a new platform, clear out the existing handles."

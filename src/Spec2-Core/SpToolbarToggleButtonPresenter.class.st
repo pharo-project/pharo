@@ -60,6 +60,12 @@ SpToolbarToggleButtonPresenter >> isSelected [
 	^ selected
 ]
 
+{ #category : #api }
+SpToolbarToggleButtonPresenter >> selected: aBoolean [
+
+	self setSelection: aBoolean
+]
+
 { #category : #private }
 SpToolbarToggleButtonPresenter >> setSelection: aBoolean [
 

@@ -112,6 +112,7 @@ RBProgramNodeVisitor >> visitLocalVariableNode: aNode [
 RBProgramNodeVisitor >> visitMessageNode: aMessageNode [
 	(aMessageNode isCascaded not or: [ aMessageNode isFirstCascaded ])
 		ifTrue: [ self visitNode: aMessageNode receiver ].
+	self visitNode: aMessageNode selectorNode.
 	aMessageNode arguments do: [ :each | self visitNode: each ]
 ]
 
@@ -153,6 +154,11 @@ RBProgramNodeVisitor >> visitPragmaNode: aPragmaNode [
 { #category : #visiting }
 RBProgramNodeVisitor >> visitReturnNode: aReturnNode [
 	^ self visitNode: aReturnNode value
+]
+
+{ #category : #visiting }
+RBProgramNodeVisitor >> visitSelectorNode: aSelectorNode [
+	
 ]
 
 { #category : #visiting }

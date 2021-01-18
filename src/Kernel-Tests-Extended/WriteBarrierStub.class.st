@@ -38,3 +38,51 @@ WriteBarrierStub >> var10: anObject [
 WriteBarrierStub >> var1: anObject [
 	var1 := anObject
 ]
+
+{ #category : #accessing }
+WriteBarrierStub >> var2 [
+
+	^ var2
+]
+
+{ #category : #accessing }
+WriteBarrierStub >> var3 [
+
+	^ var3
+]
+
+{ #category : #accessing }
+WriteBarrierStub >> var4 [
+
+	^ var4
+]
+
+{ #category : #accessing }
+WriteBarrierStub >> var5 [
+
+	^ var5
+]
+
+{ #category : #accessing }
+WriteBarrierStub >> var6 [
+
+	^ var6
+]
+
+{ #category : #accessing }
+WriteBarrierStub >> var7 [
+
+	^ var7
+]
+
+{ #category : #accessing }
+WriteBarrierStub >> var8 [
+
+	^ var8
+]
+
+{ #category : #accessing }
+WriteBarrierStub >> var9 [
+
+	^ var9
+]

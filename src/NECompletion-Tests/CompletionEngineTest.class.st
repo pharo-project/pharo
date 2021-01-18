@@ -48,7 +48,7 @@ CompletionEngineTest >> keyboardEventFor: char useCommand: command [
 		charCode: char asciiValue
 		hand: nil 
 		stamp: Time now.
-		
+	event key: (KeyboardKey fromCharacter: char).
 	^event
 ]
 

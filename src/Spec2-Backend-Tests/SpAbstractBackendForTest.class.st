@@ -10,7 +10,7 @@ SpAbstractBackendForTest >> emulateClick: mouseButtonCode onTest: anAdapterTest 
 	anAdapterTest openInstance.
 
 	MouseButtonEvent yellowButton = mouseButtonCode 
-		ifTrue: [ anAdapterTest adapter rightClicked ].
+		ifTrue: [ anAdapterTest adapter sendRightClickEvent ].
 
 	MouseButtonEvent redButton = mouseButtonCode 
 		ifTrue: [ anAdapterTest adapter clicked ].

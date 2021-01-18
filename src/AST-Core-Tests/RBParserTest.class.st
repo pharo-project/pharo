@@ -1954,6 +1954,27 @@ RBParserTest >> testUnclosedTemporariesErrorNodeContainsRightValue [
 	self assert: tree formattedCode equals: '| faulty temporaries'
 ]
 
+{ #category : #'error testing' }
+RBParserTest >> testUnfinishedStatementWithLeadingBracesRaisesError [
+
+	self should: [(self parserClass parseExpression: '[]}')] 
+		  raise: SyntaxErrorNotification
+]
+
+{ #category : #'error testing' }
+RBParserTest >> testUnfinishedStatementWithLeadingBracketRaisesError [
+
+	self should: [(self parserClass parseExpression: '[]]')] 
+		  raise: SyntaxErrorNotification.
+]
+
+{ #category : #'error testing' }
+RBParserTest >> testUnfinishedStatementWithLeadingParenthesisRaisesError [
+
+	self should: [(self parserClass parseExpression: '[])')] 
+		  raise: SyntaxErrorNotification.
+]
+
 { #category : #private }
 RBParserTest >> treeWithEverything [
 	^ self parserClass

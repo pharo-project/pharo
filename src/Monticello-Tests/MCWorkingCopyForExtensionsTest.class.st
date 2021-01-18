@@ -26,10 +26,10 @@ MCWorkingCopyForExtensionsTest >> testAddingExtensionMethodNotMatchingPackage [
 	RPackageOrganizer default createPackageNamed: 'ATestPackage'.
 	RPackageOrganizer default createPackageNamed: 'AnotherTestPackage'.
 
-	aClass := Object subclass: #ATestClass  
-		instanceVariableNames:''
-		classVariableNames: ''
-		package: 'AnotherTestPackage'.  
+	aClass := self class classInstaller make: [ :aBuilder | 
+		aBuilder 
+			name: #ATestClass;
+			package: 'AnotherTestPackage'].
 
 	aClass compile: 'testingMethod ^ 42 ' classified: '*atestpackage-something-else'.
 	
