@@ -753,8 +753,15 @@ KeyboardKey class >> initializeUnixVirtualKeyTable [
 		at: $w asciiValue put: (self value: 16r57); "  kVK_ANSI_W                  = 0x0D"
 		at: $x asciiValue put: (self value: 16r58); "  kVK_ANSI_X                  = 0x07"
 		at: $y asciiValue put: (self value: 16r59); "  kVK_ANSI_Y                  = 0x10"
-		at: $z asciiValue put: (self value: 16r5a); "  kVK_ANSI_Z                  = 0x06"
+		at: $z asciiValue put: (self value: 16r5a). "  kVK_ANSI_Z                  = 0x06"
+	
+	"Map also uppercase letters.
+	Old VM events use the ascii value of characters in linux to refer to keys.
+	Work it around by making lowercase and uppercase letters both refer to the same key"
+	($A to: $Z) do: [ :c |
+		UnixVirtualKeyTable at: c asciiValue put: (UnixVirtualKeyTable at: c asLowercase asciiValue) ].
 		
+	UnixVirtualKeyTable
 		at: $0 asciiValue put: (self value: 16r30); "  kVK_ANSI_0                  = 0x1D"
 		at: $1 asciiValue put: (self value: 16r31); "  kVK_ANSI_1                  = 0x12"
 		at: $2 asciiValue put: (self value: 16r32); "  kVK_ANSI_2                  = 0x13"
