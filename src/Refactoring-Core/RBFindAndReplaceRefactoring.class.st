@@ -117,6 +117,7 @@ RBFindAndReplaceRefactoring >> findOccurrencesIn: rbMethod [
 
 { #category : #initialization }
 RBFindAndReplaceRefactoring >> initialize [ 
+	super initialize.
 	occurrences := 0.
 ]
 
