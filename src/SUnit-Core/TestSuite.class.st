@@ -23,6 +23,15 @@ TestSuite class >> named: aString [
 		yourself
 ]
 
+{ #category : #composing }
+TestSuite >> , aTestSuite [ 
+
+		^ TestSuite new
+			addTests: self tests;
+			addTests: aTestSuite tests;
+			yourself
+]
+
 { #category : #dependencies }
 TestSuite >> addDependentToHierachy: anObject [
 	self addDependent: anObject.
