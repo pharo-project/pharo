@@ -121,11 +121,13 @@ RBAddParameterTest >> testBadInitializationCode [
 				addParameterToMethod: #name
 				in: RBLintRuleTestData
 				newSelector: #name:
+				permutation: #(0)
 				initializer: 'foo:');
 		shouldFail: (RBAddParameterRefactoring 
 				addParameterToMethod: #name
 				in: RBLintRuleTestData
 				newSelector: #name:
+				permutation: #(0)
 				initializer: 'foo')
 ]
 
@@ -135,6 +137,7 @@ RBAddParameterTest >> testInvalidNumArgsOfNewSelector [
 			addParameterToMethod: #checkSendersAccessTo:
 			in: RBLintRuleTestData
 			newSelector: #checkSendersAccessTo:
+			permutation: #(0)
 			initializer: 'nil')
 ]
 
@@ -147,6 +150,7 @@ RBAddParameterTest >> testModelBadInitializationCode [
 		addParameterToMethod: #name1
 		in: RBLintRuleTestData
 		newSelector: #name1:
+		permutation: #(0) 
 		initializer: 'AddParameterRefactoring new'.
 	self shouldFail: refactoring
 ]
@@ -160,6 +164,7 @@ RBAddParameterTest >> testModelNonExistantName [
 		addParameterToMethod: #name
 		in: RBLintRuleTestData
 		newSelector: #nameNew:
+		permutation: #(0)
 		initializer: 'nil'.
 	self shouldFail: refactoring
 ]
@@ -170,6 +175,7 @@ RBAddParameterTest >> testNonExistantName [
 			addParameterToMethod: #name1
 			in: RBLintRuleTestData
 			newSelector: #name1:
+			permutation: #(0)
 			initializer: 'nil')
 ]
 
@@ -184,12 +190,14 @@ RBAddParameterTest >> testPrimitiveMethods [
 				addParameterToMethod: #foo
 				in: Object
 				newSelector: #foo123124321s:
+				permutation: #(0)
 				initializer: '1'.
 	self shouldFail: refactoring.
 	refactoring := RBAddParameterRefactoring 
 				addParameterToMethod: #at:
 				in: Object
 				newSelector: #at:foo:
+				permutation: #(1 0)
 				initializer: '1'.
 	self shouldFail: refactoring.
 	
@@ -201,5 +209,6 @@ RBAddParameterTest >> testUseExistingNewSelector [
 			addParameterToMethod: #checkSendersAccessTo:
 			in: RBLintRuleTestData
 			newSelector: #safeVariableNameFor:temporaries:
+			permutation: #(1 0)
 			initializer: 'nil')
 ]

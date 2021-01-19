@@ -22,31 +22,12 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBAddParameterRefactoring class >> addParameterToMethod: aSelector in: aClass newSelector: newSelector initializer: init [ 
-	^self new addParameterToMethod: aSelector
-		in: aClass
-		newSelector: newSelector
-		initializer: init
-]
-
-{ #category : #'instance creation' }
 RBAddParameterRefactoring class >> addParameterToMethod: aSelector in: aClass newSelector: newSelector permutation: aColl initializer: init [ 
 	^self new addParameterToMethod: aSelector
 		in: aClass
 		newSelector: newSelector
 		permutation: aColl
 		initializer: init
-]
-
-{ #category : #'instance creation' }
-RBAddParameterRefactoring class >> model: aRBSmalltalk addParameterToMethod: aSelector in: aClass newSelector: newSelector initializer: init [ 
-	^ self new
-		model: aRBSmalltalk;
-		addParameterToMethod: aSelector
-		in: aClass
-		newSelector: newSelector
-		initializer: init;
-		yourself
 ]
 
 { #category : #'instance creation' }
@@ -59,16 +40,6 @@ RBAddParameterRefactoring class >> model: aRBSmalltalk addParameterToMethod: aSe
 		permutation: aColl 
 		initializer: init;
 		yourself
-]
-
-{ #category : #initialization }
-RBAddParameterRefactoring >> addParameterToMethod: aSelector in: aClass newSelector: newSel initializer: init [ 
-	self 
-		renameMethod: aSelector
-		in: aClass
-		to: newSel
-		permutation: (1 to: newSel numArgs).
-	initializer := init
 ]
 
 { #category : #initialization }
