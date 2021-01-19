@@ -40,24 +40,24 @@ RBAddParameterRefactoring class >> addParameterToMethod: aSelector in: aClass ne
 
 { #category : #'instance creation' }
 RBAddParameterRefactoring class >> model: aRBSmalltalk addParameterToMethod: aSelector in: aClass newSelector: newSelector initializer: init [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		addParameterToMethod: aSelector
-			in: aClass
-			newSelector: newSelector
-			initializer: init;
+		in: aClass
+		newSelector: newSelector
+		initializer: init;
 		yourself
 ]
 
 { #category : #'instance creation' }
 RBAddParameterRefactoring class >> model: aRBSmalltalk addParameterToMethod: aSelector in: aClass newSelector: newSelector permutation: aColl initializer: init [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		addParameterToMethod: aSelector
-			in: aClass
-			newSelector: newSelector
-			permutation: aColl 
-			initializer: init;
+		in: aClass
+		newSelector: newSelector
+		permutation: aColl 
+		initializer: init;
 		yourself
 ]
 
@@ -205,6 +205,8 @@ RBAddParameterRefactoring >> storeOn: aStream [
 	aStream
 		nextPutAll: ' newSelector: #';
 		nextPutAll: newSelector;
+		nextPutAll: ' permutation: ';
+		nextPutAll: permutation asString;
 		nextPutAll: ' initializer: ''';
 		nextPutAll: initializer;
 		nextPutAll: ''')'

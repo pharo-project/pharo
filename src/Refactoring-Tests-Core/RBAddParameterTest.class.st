@@ -44,11 +44,11 @@ RBAddParameterTest >> testAddParameterThatReferencesGlobalAndLiteral [
 	oldSelector := ('test' , 'Foo:') asSymbol.
 	newSelector := #testFoo:bar:.
 	refactoring := RBAddParameterRefactoring
-		               addParameterToMethod: oldSelector
-		               in: RBRefactoryTestDataApp
-		               newSelector: newSelector
-						   permutation: #(1 0)
-		               initializer: 'OrderedCollection new: 5'.
+		addParameterToMethod: oldSelector
+		in: RBRefactoryTestDataApp
+		newSelector: newSelector
+		permutation: #(1 0)
+		initializer: 'OrderedCollection new: 5'.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self
@@ -69,12 +69,12 @@ RBAddParameterTest >> testAddParameterThatReferencesModelGlobal [
 	oldSelector := ('test' , 'Foo:') asSymbol.
 	newSelector := #testFoo:bar:.
 	refactoring := RBAddParameterRefactoring
-		               model: model
-		               addParameterToMethod: oldSelector
-		               in: RBRefactoryTestDataApp
-		               newSelector: newSelector
-							permutation: #(1 0)
-		               initializer: 'Bar new'.
+		model: model
+		addParameterToMethod: oldSelector
+		in: RBRefactoryTestDataApp
+		newSelector: newSelector
+		permutation: #(1 0)
+		initializer: 'Bar new'.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self
@@ -95,11 +95,11 @@ RBAddParameterTest >> testAddParameterThatReferencesSelf [
 	oldSelector := ('test' , 'Foo:') asSymbol.
 	newSelector := #testFoo:bar:.
 	refactoring := RBAddParameterRefactoring
-		               addParameterToMethod: oldSelector
-		               in: RBRefactoryTestDataApp
-		               newSelector: newSelector
-							permutation: #(1 0)
-		               initializer: 'self printString'.
+		addParameterToMethod: oldSelector
+		in: RBRefactoryTestDataApp
+		newSelector: newSelector
+		permutation: #(1 0)
+		initializer: 'self printString'.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self
