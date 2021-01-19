@@ -18,7 +18,8 @@ Class {
 	#name : #SycChangeMessageSignatureCommand,
 	#superclass : #CmdCommand,
 	#instVars : [
-		'originalMessage'
+		'originalMessage',
+		'class'
 	],
 	#category : #'SystemCommands-MessageCommands'
 }
@@ -43,6 +44,12 @@ SycChangeMessageSignatureCommand >> applyResultInContext: aToolContext [
 { #category : #execution }
 SycChangeMessageSignatureCommand >> asRefactorings [
 	^{self createRefactoring}
+]
+
+{ #category : #accessing }
+SycChangeMessageSignatureCommand >> class: anObject [
+
+	class := anObject
 ]
 
 { #category : #execution }
@@ -74,8 +81,9 @@ SycChangeMessageSignatureCommand >> originalMessage: anObject [
 { #category : #execution }
 SycChangeMessageSignatureCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-
-	originalMessage := aToolContext lastSelectedMessage
+	
+	originalMessage := aToolContext lastSelectedMessage.
+	class := aToolContext lastSelectedMethod origin.
 ]
 
 { #category : #execution }

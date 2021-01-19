@@ -172,7 +172,7 @@ ClySourceCodeContext >> selectedClasses [
 
 { #category : #selection }
 ClySourceCodeContext >> selectedMessage [
-	^SycMessageDescription ofMessageNode: self selectedSourceNode
+	^RBMethodName ofMessageNode: self selectedSourceNode
 ]
 
 { #category : #selection }

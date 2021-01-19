@@ -22,6 +22,18 @@ Class {
 }
 
 { #category : #'instance creation' }
+RBMethodName class >> ofMessageNode: astMessageNode [
+	^ self selector: astMessageNode selector
+		arguments: (astMessageNode arguments collect: [:each | each formattedCode])
+]
+
+{ #category : #'instance creation' }
+RBMethodName class >> ofMethod: aMethod [
+	^ self selector: aMethod selector
+		arguments: aMethod argumentNames
+]
+
+{ #category : #'instance creation' }
 RBMethodName class >> selector: aSymbol arguments: stringCollection [ 
 	^ self new 
 			selector: aSymbol;
@@ -38,6 +50,12 @@ RBMethodName >> arguments [
 RBMethodName >> arguments: nameCollection [ 
 	arguments := nameCollection.
 	self changed: #arguments
+]
+
+{ #category : #operations }
+RBMethodName >> computeArgumentPermutationsFor: modifiedMethodName [
+	^modifiedMethodName arguments 
+		collect: [ :each | arguments indexOf: each ]
 ]
 
 { #category : #testing }

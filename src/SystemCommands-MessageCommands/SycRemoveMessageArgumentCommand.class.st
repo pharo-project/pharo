@@ -19,7 +19,7 @@ Class {
 { #category : #testing }
 SycRemoveMessageArgumentCommand class >> canBeExecutedInContext: aToolContext [
 	^(super canBeExecutedInContext: aToolContext)
-		and: [ aToolContext lastSelectedMessage argumentNames notEmpty]
+		and: [ aToolContext lastSelectedMessage arguments notEmpty]
 ]
 
 { #category : #activation }
@@ -47,7 +47,7 @@ SycRemoveMessageArgumentCommand >> createRefactoring [
 
 	^RBRemoveParameterRefactoring
 		removeParameter: argumentName
-		in: (SycMessageOriginHack of: originalMessage) "look at SycMessageOriginHack comment"
+		in: class
 		selector: originalMessage selector
 ]
 

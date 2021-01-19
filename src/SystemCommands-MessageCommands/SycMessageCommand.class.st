@@ -31,7 +31,7 @@ SycMessageCommand class >> for: messages [
 
 { #category : #'instance creation' }
 SycMessageCommand class >> forMethods: methods [
-	^self for: (methods collect: [:each | SycMessageDescription ofMethod: each])
+	^self for: (methods collect: [:each | RBMethodName ofMethod: each])
 ]
 
 { #category : #testing }

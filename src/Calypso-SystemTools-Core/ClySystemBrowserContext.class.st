@@ -136,7 +136,7 @@ ClySystemBrowserContext >> lastSelectedClass [
 
 { #category : #'selection-messages' }
 ClySystemBrowserContext >> lastSelectedMessage [
-	^SycMessageDescription ofMethod: self lastSelectedMethod
+	^RBMethodName ofMethod: self lastSelectedMethod
 ]
 
 { #category : #'selection-methods' }
@@ -243,7 +243,7 @@ ClySystemBrowserContext >> selectedClasses [
 
 { #category : #'selection-messages' }
 ClySystemBrowserContext >> selectedMessages [
-	^self selectedMethods collect: [ :each | SycMessageDescription ofMethod: each ]
+	^self selectedMethods collect: [ :each | RBMethodName ofMethod: each ]
 ]
 
 { #category : #'selection-methods' }

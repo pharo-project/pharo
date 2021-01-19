@@ -10,6 +10,7 @@ SycRefactoringStoreOnTest >> testRemoveMessageArgumentCommandIsProperlyStoreOn [
 	| refactorings |
 	refactorings := SycRemoveMessageArgumentCommand new
 		originalMessage: (MockTreeTableItem >> #title:) ast;
+		class: MockTreeTableItem;
 		argumentName: 'anObject';
 		asRefactorings.
 	
@@ -26,8 +27,9 @@ SycRefactoringStoreOnTest >> testSSycRenameMessageCommandIsProperlyStoreOn [
 	node := (MockTreeTableItem >> #title:) ast.
 	
 	refactorings := SycRenameMessageCommand new
-		originalMessage: (SycMessageDescription ofMessageNode: node);
-		newSignature: (SycMessageDescription ofMessageNode: node) ;
+		originalMessage: (RBMethodName ofMessageNode: node);
+		newSignature: (RBMethodName ofMessageNode: node);
+		class: MockTreeTableItem;
 		asRefactorings.
 	
 	self 
@@ -43,6 +45,7 @@ SycRefactoringStoreOnTest >> testSycAddMessageArgumentCommandIsProperlyStoreOn [
 		originalMessage: (MockTreeTableItem >> #title:) ast;
 		newSelector: #title:lala:;
 		argumentDefaultValue: 'nil';
+		class: MockTreeTableItem;
 		asRefactorings.
 	
 	self 

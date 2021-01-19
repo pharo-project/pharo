@@ -22,9 +22,9 @@ SycReplaceMessageCommand >> createRefactoring [
 
 	^ RBReplaceMethodRefactoring
 		replaceCallMethod: originalMessage selector 
-		in: originalMessage contextUser origin
+		in: class
 		to: newSelector
-		permutation: (1 to: originalMessage argumentNames size)
+		permutation: (1 to: originalMessage arguments size)
 		inAllClasses: self replaceInAllClasses
 ]
 

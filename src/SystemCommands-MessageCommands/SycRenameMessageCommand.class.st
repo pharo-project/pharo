@@ -18,10 +18,9 @@ Class {
 
 { #category : #execution }
 SycRenameMessageCommand >> createRefactoring [
-
 	^ RBRenameMethodRefactoring
 		renameMethod: originalMessage selector 
-		in: (SycMessageOriginHack of: originalMessage) "look at SycMessageOriginHack comment"
+		in: class
 		to: newSignature selector 
 		permutation: (originalMessage computeArgumentPermutationsFor: newSignature) 
 ]
@@ -51,8 +50,22 @@ SycRenameMessageCommand >> newSignature: anObject [
 SycRenameMessageCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
-	newSignature := originalMessage requestNewSignature.
+	newSignature := self requestNewMethodName.
 	
+
+]
+
+{ #category : #execution }
+SycRenameMessageCommand >> requestNewMethodName [
+	| copyMethodName dialog |
+	copyMethodName := originalMessage copy.
+	dialog := SycMethodNameEditorPresenter openOn: copyMethodName.
+	dialog cancelled ifTrue: [  CmdCommandAborted signal ].
+	copyMethodName selector = originalMessage selector & 
+		(copyMethodName arguments = originalMessage arguments)
+			ifTrue: [ CmdCommandAborted signal].		
+				
+	^ RBMethodName selector: copyMethodName selector arguments: copyMethodName arguments
 
 ]
 
