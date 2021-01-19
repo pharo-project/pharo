@@ -488,8 +488,9 @@ HandMorph >> generateKeyboardEvent: evtBuf [
 					hand: self
 					stamp: stamp].
 
-	"All ascii symbols (tab, cr...) should be managed as keydown and ignored as text"	
-	(type = #keystroke and: [ charCode asCharacter < Character space ])
+	"All control keys (tab, cr...) should be managed as keydown and ignored as text"	
+	(type = #keystroke and: [
+		charCode <= 31 or: [ (127 to: 159) includes: charCode ]])
 		ifTrue: [ ^ #invalid ].
 
    "If charCode is not single-byte, we definately have Unicode input. Zero keyValue to avoid garbage values from som VMs."
