@@ -329,6 +329,12 @@ StDebuggerActionModelTest >> testIsInterruptedContextAnAssertEqualsFailure [
 ]
 
 { #category : #'tests - predicates' }
+StDebuggerActionModelTest >> testIsInterruptedContextDead [
+	session interruptedContext pc: nil.
+	self assert: debugActionModel isInterruptedContextDead
+]
+
+{ #category : #'tests - predicates' }
 StDebuggerActionModelTest >> testIsInterruptedContextDoesNotUnderstand [
 	self changeSession: StTestDebuggerProvider new debuggerWithDNUContext session.
 	self assert: debugActionModel isInterruptedContextDoesNotUnderstand.
@@ -357,8 +363,31 @@ StDebuggerActionModelTest >> testIsInterruptedContextSubclassResponsibilityExcep
 
 { #category : #'tests - actions' }
 StDebuggerActionModelTest >> testPeelToFirstLike [
-	self skip.
-	self flag: #DBG_TEST
+
+	| firstCaller |
+	
+	self changeSession:
+		StTestDebuggerProvider new debuggerWithRecursiveContext session.
+		
+	session stepInto.
+	session stepInto.
+	
+	firstCaller := session stack first.	
+	session stepInto.
+	session stepInto.
+	session stepInto.
+	session stepInto.
+	debugActionModel updateTopContext.
+	
+	"Explaining the context"
+	self deny: session stack first method identicalTo: session stack second method.
+	self assert: session stack first method identicalTo: session stack third method.	
+	self assert: debugActionModel topContext identicalTo: session stack first.
+		
+	"The peel to first like the first context should pop contexts until the session is back to the first recursive sender down in the stack"
+	debugActionModel peelToFirstLike: firstCaller.
+	self assert: session interruptedContext identicalTo: firstCaller.
+	self assert: debugActionModel topContext identicalTo: firstCaller
 ]
 
 { #category : #'tests - actions' }

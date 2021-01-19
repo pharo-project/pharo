@@ -265,7 +265,11 @@ ClassTest >> testHasBindingThatBeginsWith [
 	self assert: (SmalltalkImage hasBindingThatBeginsWith: 'Object').
 	
 	"Pools are looked up, too"
-	self assert: (TimeZone hasBindingThatBeginsWith: 'DaysInMo')
+	self assert: (TimeZone hasBindingThatBeginsWith: 'DaysInMo').
+	
+	"CompiledMethodLayout works, too"
+	self deny: (CompiledMethod hasBindingThatBeginsWith: 'Compiler').
+
 ]
 
 { #category : #'tests - access' }

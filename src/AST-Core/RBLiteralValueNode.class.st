@@ -40,8 +40,9 @@ RBLiteralValueNode class >> value: aValue start: aPosition stop: anotherPosition
 { #category : #comparing }
 RBLiteralValueNode >> = anObject [ 
 	^ super = anObject 
-		and: [ self value = anObject value 
-		and: [ self value species = anObject value species ] ]
+		and: [ self value = anObject value
+		and: [ self value class = anObject value class 
+		and: [ self value species = anObject value species ] ] ]
 ]
 
 { #category : #visiting }

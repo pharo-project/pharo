@@ -166,6 +166,11 @@ StDebuggerActionModel >> isInterruptedContextAnAssertEqualsFailure [
 ]
 
 { #category : #'debug - predicates' }
+StDebuggerActionModel >> isInterruptedContextDead [
+	^ self contextPredicate isContextDead
+]
+
+{ #category : #'debug - predicates' }
 StDebuggerActionModel >> isInterruptedContextDoesNotUnderstand [
 	^self contextPredicate isContextDoesNotUnderstand
 
@@ -187,9 +192,10 @@ StDebuggerActionModel >> isInterruptedContextSubclassResponsibilityException [
 	^ self contextPredicate isContextSubclassResponsibilityException
 ]
 
-{ #category : #'debug - stack' }
+{ #category : #'debug - execution' }
 StDebuggerActionModel >> peelToFirstLike: aContext [
-	self session peelToFirstLike: aContext
+	self session peelToFirstLike: aContext.
+	self updateTopContext
 ]
 
 { #category : #context }
