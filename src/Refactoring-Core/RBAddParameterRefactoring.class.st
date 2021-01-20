@@ -22,31 +22,33 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBAddParameterRefactoring class >> addParameterToMethod: aSelector in: aClass newSelector: newSelector initializer: init [ 
+RBAddParameterRefactoring class >> addParameterToMethod: aSelector in: aClass newSelector: newSelector permutation: aColl initializer: init [ 
 	^self new addParameterToMethod: aSelector
 		in: aClass
 		newSelector: newSelector
+		permutation: aColl
 		initializer: init
 ]
 
 { #category : #'instance creation' }
-RBAddParameterRefactoring class >> model: aRBSmalltalk addParameterToMethod: aSelector in: aClass newSelector: newSelector initializer: init [ 
-	^(self new)
+RBAddParameterRefactoring class >> model: aRBSmalltalk addParameterToMethod: aSelector in: aClass newSelector: newSelector permutation: aColl initializer: init [ 
+	^ self new
 		model: aRBSmalltalk;
 		addParameterToMethod: aSelector
-			in: aClass
-			newSelector: newSelector
-			initializer: init;
+		in: aClass
+		newSelector: newSelector
+		permutation: aColl 
+		initializer: init;
 		yourself
 ]
 
 { #category : #initialization }
-RBAddParameterRefactoring >> addParameterToMethod: aSelector in: aClass newSelector: newSel initializer: init [ 
+RBAddParameterRefactoring >> addParameterToMethod: aSelector in: aClass newSelector: newSel permutation: aColl initializer: init [ 
 	self 
 		renameMethod: aSelector
 		in: aClass
 		to: newSel
-		permutation: (1 to: newSel numArgs).
+		permutation: aColl.
 	initializer := init
 ]
 
@@ -82,14 +84,15 @@ RBAddParameterRefactoring >> checkVariableReferencesIn: aParseTree [
 ]
 
 { #category : #private }
-RBAddParameterRefactoring >> modifyImplementorParseTree: parseTree in: aClass [ 
-	| name newArg allTempVars |
-	allTempVars := parseTree allDefinedVariables.
-	name := self safeVariableNameFor: aClass temporaries: allTempVars.
-	newArg := RBVariableNode named: name.
+RBAddParameterRefactoring >> modifyImplementorParseTree: parseTree in: aClass [
+	|argName|
+	argName := self safeVariableNameFor: aClass 
+		temporaries: (parseTree temporaryNames, parseTree argumentNames).
 	parseTree 
 		renameSelector: newSelector
-		andArguments: parseTree arguments , (Array with: newArg)
+		andArguments: ((permutation 
+			collect: [ :e | parseTree argumentNames at: e ifAbsent: [ argName asString ] ]) 
+				collect: [:e | RBVariableNode named: e ])
 ]
 
 { #category : #preconditions }
@@ -108,11 +111,11 @@ RBAddParameterRefactoring >> newSelectorString [
 	| stream keywords |
 	stream := WriteStream on: String new.
 	keywords := newSelector keywords.
-	1 to: keywords size
-		do: 
-			[:i | 
-			stream nextPutAll: (keywords at: i).
-			i == keywords size 
+	permutation
+		doWithIndex: 
+			[:each :index | 
+			stream nextPutAll: (keywords at: index).
+			each == 0
 				ifTrue: 
 					[stream
 						nextPut: $(;
@@ -121,7 +124,7 @@ RBAddParameterRefactoring >> newSelectorString [
 				ifFalse: 
 					[stream
 						nextPutAll: ' ``@arg';
-						nextPutAll: i printString].
+						nextPutAll: each printString].
 			stream nextPut: $ ].
 	^stream contents
 ]
@@ -139,15 +142,15 @@ RBAddParameterRefactoring >> parseTreeRewriter [
 
 { #category : #private }
 RBAddParameterRefactoring >> safeVariableNameFor: aClass temporaries: allTempVars [ 
-	| baseString i newString |
+	| baseString index newString |
 	newString := baseString := 'anObject'.
-	i := 0.
+	index := 0.
 	
 	[(allTempVars includes: newString) 
 		or: [aClass definesInstanceVariable: newString]] 
 			whileTrue: 
-				[i := i + 1.
-				newString := baseString , i printString].
+				[index := index + 1.
+				newString := baseString , index printString].
 	^newString
 ]
 
@@ -173,6 +176,8 @@ RBAddParameterRefactoring >> storeOn: aStream [
 	aStream
 		nextPutAll: ' newSelector: #';
 		nextPutAll: newSelector;
+		nextPutAll: ' permutation: ';
+		nextPutAll: permutation asString;
 		nextPutAll: ' initializer: ''';
 		nextPutAll: initializer;
 		nextPutAll: ''')'
