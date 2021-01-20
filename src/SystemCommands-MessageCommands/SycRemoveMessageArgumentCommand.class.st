@@ -64,16 +64,17 @@ SycRemoveMessageArgumentCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycRemoveMessageArgumentCommand >> prepareFullExecutionInContext: aToolContext [
+	| parseTree |
 	super prepareFullExecutionInContext: aToolContext.
-	
-	argumentName := originalMessage argumentNames size = 1 
-		ifTrue: [ originalMessage argumentNames first]
+	parseTree := class parseTreeFor: originalMessage selector.
+	argumentName := originalMessage arguments size = 1 
+		ifTrue: [ parseTree argumentNames first]
 		ifFalse: [ UIManager default
-						chooseFrom: originalMessage argumentNames 
-						values: originalMessage argumentNames 
+						chooseFrom: parseTree argumentNames 
+						values: parseTree argumentNames 
 						message: 'Choose an argument to remove:'].
 					
-	(originalMessage argumentNames includes: argumentName) 
+	(parseTree argumentNames includes: argumentName) 
 		ifFalse: [ CmdCommandAborted signal ].
 ]
 
