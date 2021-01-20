@@ -206,16 +206,16 @@ RBCompositeRefactoryChange >> renameChangesForClass: oldClassName to: newClassNa
 ]
 
 { #category : #'refactory-changes' }
-RBCompositeRefactoryChange >> renameClass: class to: newName [ 
-	^ self addChange: (changeFactory renameClass: class to: newName)
+RBCompositeRefactoryChange >> renameClass: class to: newNameLocal [ 
+	^ self addChange: (changeFactory renameClass: class to: newNameLocal)
 ]
 
 { #category : #'refactory-changes' }
-RBCompositeRefactoryChange >> renameClassVariable: oldName to: newName in: aClass [
-	^ self addChange: (changeFactory renameClassVariable: oldName to: newName in: aClass)
+RBCompositeRefactoryChange >> renameClassVariable: oldNameLocal to: newNameLocal in: aClass [
+	^ self addChange: (changeFactory renameClassVariable: oldNameLocal to: newNameLocal in: aClass)
 ]
 
 { #category : #'refactory-changes' }
-RBCompositeRefactoryChange >> renameInstanceVariable: oldName to: newName in: aClass [
-	^ self addChange: (changeFactory renameInstanceVariable: oldName to: newName in: aClass)
+RBCompositeRefactoryChange >> renameInstanceVariable: oldNameLocal to: newNameLocal in: aClass [
+	^ self addChange: (changeFactory renameInstanceVariable: oldNameLocal to: newNameLocal in: aClass)
 ]

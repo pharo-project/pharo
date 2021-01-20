@@ -18,3 +18,21 @@ Class {
 	],
 	#category : #MonticelloMocks
 }
+
+{ #category : #accessing }
+MCMockClassB class >> cVar [
+
+	^ CVar
+]
+
+{ #category : #accessing }
+MCMockClassB class >> ciVar [
+
+	^ ciVar
+]
+
+{ #category : #accessing }
+MCMockClassB >> ivarb [
+
+	^ ivarb
+]

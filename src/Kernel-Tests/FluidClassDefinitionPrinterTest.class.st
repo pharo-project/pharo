@@ -40,7 +40,6 @@ FluidClassDefinitionPrinterTest >> testArray [
 FluidClassDefinitionPrinterTest >> testArrayedCollectionWithPoolDictionary [
 
 	self assert: (self forClass: ExampleForTestWithSharedPool) equals: 'ArrayedCollection << #ExampleForTestWithSharedPool
-	slots: { #aSlot . #anotherSlot };
 	sharedPools: { ChronologyConstants };
 	tag: ''Classes'';
 	package: ''Kernel-Tests''' 
@@ -100,6 +99,36 @@ FluidClassDefinitionPrinterTest >> testDefinitionWithComplexSlot [
 	package: ''Kernel-Tests''' 
 ]
 
+{ #category : #'tests - unnecessary values' }
+FluidClassDefinitionPrinterTest >> testDisplayEmptySlots [
+	"I would like to be able to test if I provide too many empty values that
+	the default empty values are just ignored."
+	| class |
+	ClassDefinitionPrinter displayEmptySlots: true.
+	class := (Object << #CDFluidMock
+	slots: {};
+	tag: 'BasicObjects';
+	package: 'Kernel') build.
+	self assert: (self forClass: class) equals: 'Object << #CDFluidMock
+	slots: {};
+	package: ''_UnpackagedPackage'''
+	
+]
+
+{ #category : #'tests - unnecessary values' }
+FluidClassDefinitionPrinterTest >> testDoesNotDisplayEmptySlots [
+
+	| class |
+	ClassDefinitionPrinter displayEmptySlots: false.
+	class := (Object << #CDFluidMock
+	slots: {};
+	tag: 'BasicObjects';
+	package: 'Kernel') build.
+	self assert: (self forClass: class) equals: 'Object << #CDFluidMock
+	package: ''_UnpackagedPackage'''
+	
+]
+
 { #category : #'tests - expanded' }
 FluidClassDefinitionPrinterTest >> testExpandedEmptyLayoutClass [
 
@@ -115,7 +144,7 @@ FluidClassDefinitionPrinterTest >> testExpandedOnClassWithoutTag [
 
 	self 
 		assert: (self expandedForClass: EncoderForV3PlusClosures)
-		equals:   'Object << #EncoderForV3PlusClosures
+		equals:   'BytecodeEncoder << #EncoderForV3PlusClosures
 	layout: FixedLayout;
 	uses: {};
 	slots: {};
@@ -146,7 +175,7 @@ FluidClassDefinitionPrinterTest >> testExpandedTime [
 
 	self 
 		assert: (self expandedForClass: Time)  
-		equals: 'Object << #Time
+		equals: 'Magnitude << #Time
 	layout: FixedLayout;
 	uses: {};
 	slots: { #seconds . #nanos };

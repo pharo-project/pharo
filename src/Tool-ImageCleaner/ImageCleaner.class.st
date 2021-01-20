@@ -62,11 +62,11 @@ ImageCleaner class >> shareLiterals [
 
 { #category : #accessing }
 ImageCleaner class >> testPackages [
+
 	<script: 'self testPackages inspect'>
-	
-	^ (RPackageOrganizer default packageNames
-		select: [ :each | (each endsWith: '-Tests') or: [ each includesSubstring: '-Tests-' ] ])
-		copyWithout: 'ReleaseTests'
+	"All test packages to wipe out, except ReleeaseTests package."
+	^ RPackageOrganizer default testPackageNames copyWithout:
+		  'ReleaseTests'
 ]
 
 { #category : #api }
@@ -127,6 +127,8 @@ ImageCleaner >> cleanUpMethods [
 		
 	ProcessBrowser initialize.
 	Delay restartTimerEventLoop.
+	"We are moving all the restart code to the classes"
+	Smalltalk restartMethods.
 ]
 
 { #category : #cleaning }
@@ -230,7 +232,6 @@ ImageCleaner >> statistics [
 
 { #category : #cleaning }
 ImageCleaner >> testPackages [
-	^ (RPackageOrganizer default packageNames
-		select: [ :each | (each endsWith: '-Tests') or: [ each includesSubstring: '-Tests-' ] ])
-		copyWithout: 'ReleaseTests'
+
+	^ self class testPackages 
 ]

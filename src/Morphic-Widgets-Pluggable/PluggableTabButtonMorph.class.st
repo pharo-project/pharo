@@ -164,10 +164,10 @@ PluggableTabButtonMorph >> innerExtent: aPoint [
 ]
 
 { #category : #event }
-PluggableTabButtonMorph >> keyStroke: event [
+PluggableTabButtonMorph >> keyDown: event [
 
 	(self navigationKey: event) ifTrue: [^self].
-	super keyStroke: event
+	super keyDown: event
 ]
 
 { #category : #access }

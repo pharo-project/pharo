@@ -202,7 +202,7 @@ TransferMorph >> justDroppedInto: targetMorph event: anEvent [
 ]
 
 { #category : #'event handling' }
-TransferMorph >> keyStroke: evt [
+TransferMorph >> keyDown: evt [
 	"Abort the drag on an escape"
 	evt keyCharacter ~= Character escape ifTrue: [ ^self ].
 	self delete.

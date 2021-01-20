@@ -35,9 +35,6 @@ In addition having a binary message makes () unneccessary.
 Class {
 	#name : #CDFluidClassDefinitionParser,
 	#superclass : #CDAbstractClassDefinitionParser,
-	#instVars : [
-		'subclass'
-	],
 	#category : #'ClassParser-Parser'
 }
 

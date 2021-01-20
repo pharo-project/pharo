@@ -8,7 +8,7 @@ ClassDefinitionPrinter
 	By default this ithe one we want to use. 
 
 ```	
-ClassDefinitionPrinter useFluid.
+ClassDefinitionPrinter showFluidClassDefinition.
 
 (ClassDefinitionPrinter for: Array) definitionString
 ```
@@ -59,10 +59,23 @@ Class {
 		'forClass'
 	],
 	#classVars : [
+		'DisplayEmptySlots',
 		'ShowFluidClassDefinition'
 	],
 	#category : #'Kernel-ClassDefinitionPrinter'
 }
+
+{ #category : #configure }
+ClassDefinitionPrinter class >> displayEmptySlots [
+
+	^ DisplayEmptySlots ifNil: [ DisplayEmptySlots := false ]
+]
+
+{ #category : #configure }
+ClassDefinitionPrinter class >> displayEmptySlots: aBoolean [
+
+	DisplayEmptySlots := aBoolean
+]
 
 { #category : #'instance creation' }
 ClassDefinitionPrinter class >> fluid [ 
@@ -125,7 +138,20 @@ Object << #Point
 	
 We suggest to use it because it will become the default syntax for Pharo. This new class definition has been designed to control the parameter explosion of the old one. 
 In addition, as soon as you will use slots such as ObservableSlot and more this fluid class definition will be used because the old one is not handling well the slots.';
-		target: self
+		target: self.
+		
+	(aBuilder setting: #displayEmptySlots)
+		parent: #codeBrowsing;
+		default: false;
+		label: 'Display empty slots';
+		description: 'If true, the system will display the slots even if they are empty e.g., 
+
+Object << #Faked
+	slots: { };
+	tag: ''BasicObjects'';
+	package: ''Kernel''
+	';
+		target: self.
 ]
 
 { #category : #configure }

@@ -4,7 +4,7 @@ Extension { #name : #Class }
 Class >> definitionForSpotter [
 	| str |
 	str := WriteStream on: String new.
-	str nextPutAll: self definition.
+	str nextPutAll: self definitionString.
 	str cr; cr.
 	str nextPut: $".
 	str nextPutAll: 'Hierarchy: '.
@@ -47,7 +47,7 @@ Class >> spotterPreviewIn: aComposite [
 	<spotterPreview: 10>
 	aComposite pharoMethod
 		title: [self name];
-		display: #definition;
+		display: [:each | each definitionString];
 		smalltalkClass: [ nil ];
 		entity: self.
 		

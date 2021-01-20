@@ -137,10 +137,7 @@ PopupChoiceDialogWindow >> filter: aString [
 	(self choiceMenus ifNil: [^self]) do: [:embeddedMenu |
 		embeddedMenu selectItem: nil event: nil]. "clear selection in other menus"
 	self choiceMenus do: [:embeddedMenu | 
-		embeddedMenu selectMatch: self filter asLowercase].
-	self filterMorph hasKeyboardFocus ifFalse: [
-		self activeHand newKeyboardFocus: self filterMorph.
-		self filterMorph selectFrom: filter size + 1 to: filter size + 1 ]
+		embeddedMenu selectMatch: self filter asLowercase]
 ]
 
 { #category : #accessing }
@@ -162,16 +159,7 @@ PopupChoiceDialogWindow >> handlesKeyboard: evt [
 	"True when either the filter morph doesn't have the focus and the key
 	is a text key or backspace or no menus have the focus and is up or down arrow."
 	
-	^(super handlesKeyboard: evt) or: [
-		(self choiceMenus anySatisfy: [:m | m hasKeyboardFocus])
-			ifTrue: [evt keyCharacter = Character backspace
-						or: [evt keyCharacter > Character space
-						or: [evt keyCharacter = Character cr
-						or: [evt keyCharacter = Character arrowLeft
-						or: [evt keyCharacter = Character arrowRight]]]]]
-			ifFalse: [evt keyCharacter = Character arrowUp
-						or: [evt keyCharacter = Character arrowDown
-						or: [self filterMorph hasKeyboardFocus not]]]]
+	^ true
 ]
 
 { #category : #initialization }
@@ -187,22 +175,34 @@ PopupChoiceDialogWindow >> initialize [
 ]
 
 { #category : #'event handling' }
+PopupChoiceDialogWindow >> keyDown: anEvent [
+	"Look for a matching item?"
+	
+	(super keyDown: anEvent)
+		ifTrue: [ ^ true ].
+	
+	(anEvent key = KeyboardKey enter) 
+		ifTrue: [ ^self processEnter: anEvent ].
+	anEvent key = KeyboardKey backspace
+		ifTrue: [
+			self filter ifNotEmpty: [self filter: self filter allButLast].
+			^ true].
+
+	anEvent key isArrowUp ifTrue: [self selectLastEnabledItem. ^true].
+	anEvent key isArrowDown ifTrue: [self selectFirstEnabledItem. ^true].
+	anEvent key isArrowLeft ifTrue: [self switchToPreviousColumn. ^true].
+	anEvent key isArrowRight ifTrue: [self switchToNextColumn. ^true].
+	^false
+]
+
+{ #category : #'event handling' }
 PopupChoiceDialogWindow >> keyStroke: anEvent [
 	"Look for a matching item?"
 	(super keyStroke: anEvent) ifTrue: [^true].
-	anEvent keyCharacter = Character backspace
-		ifTrue: [self filter ifNotEmpty: [self filter: self filter allButLast]].
-	anEvent keyCharacter = Character arrowUp ifTrue: [self selectLastEnabledItem. ^true].
-	anEvent keyCharacter = Character arrowDown ifTrue: [self selectFirstEnabledItem. ^true].
-	anEvent keyCharacter = Character arrowLeft ifTrue: [self switchToPreviousColumn. ^true].
-	anEvent keyCharacter = Character arrowRight ifTrue: [self switchToNextColumn. ^true].
-	(anEvent keyCharacter ~= Character cr and: [
-		anEvent keyCharacter < Character space]) ifTrue: [^false]. "ignore pageup/down etc."
-	(anEvent keyCharacter = Character space or: [ anEvent keyCharacter = Character cr]) 
+	anEvent keyCharacter = Character space 
 		ifTrue: [ ^self processEnter: anEvent ].
-	anEvent keyCharacter = Character backspace ifFalse: [
-		self filter: self filter, anEvent keyCharacter asString].
-	^false
+	self filter: self filter, anEvent keyCharacter asString.
+	^true
 ]
 
 { #category : #accessing }

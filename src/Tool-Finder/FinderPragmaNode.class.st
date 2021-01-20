@@ -50,11 +50,11 @@ FinderPragmaNode >> inspectItem [
 ]
 
 { #category : #'event handling' }
-FinderPragmaNode >> keyStroke: anEvent [
+FinderPragmaNode >> keyDown: anEvent [
 	(anEvent controlKeyPressed or: [ anEvent commandKeyPressed ]) ifFalse: [ ^ false ].
 	anEvent keyCharacter == $h ifTrue: [ ^ self browseHierarchy ].
 	anEvent keyCharacter == $N ifTrue: [ ^ self browseReferences ].
-	^ super keyStroke: anEvent
+	^ super keyDown: anEvent
 ]
 
 { #category : #'event handling' }

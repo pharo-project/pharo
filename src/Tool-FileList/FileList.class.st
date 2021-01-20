@@ -904,8 +904,7 @@ FileList >> morphicDirectoryTreePaneFiltered: aSymbol [
 		list: aSymbol
 		selected: #selectedDirectory
 		changeSelected: #selectedDirectory:
-		menu: #volumeMenu:
-		keystroke: nil)
+		menu: #volumeMenu:)
 			autoDeselect: false;
 			enableDrag: false;
 			enableDrop: true;

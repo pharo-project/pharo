@@ -6,8 +6,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'defaultKeymappingIndex',
-		'textArea',
-		'findReplaceService'
+		'textArea'
 	],
 	#category : #'Rubric-Editing-Core'
 }
@@ -520,6 +519,7 @@ RubTextEditor >> closingDelimiters [
 
 { #category : #keymapping }
 RubTextEditor >> cmdActions [
+	
 	^ self defaultKeymappingIndex at: #command
 ]
 
@@ -612,6 +612,7 @@ RubTextEditor >> crWithIndent: aKeyboardEvent [
 		char = $] ifTrue: [tabCount := tabCount - 1]].
 	 "Now inject CR with tabCount tabs"
 	self addString: (String streamContents: [ :strm | strm crtab: tabCount ]).
+	self unselect.
 	^ false
 ]
 
@@ -784,60 +785,31 @@ RubTextEditor >> cut: aKeyboardEvent [
 RubTextEditor >> defaultCommandKeymapping [
 	| cmdMap |
 		
-	cmdMap := Array new: 256 withAll: #noop:.	"use temp in case of a crash"
-	{(Character home -> #cursorHome:).
-	(Character end -> #cursorEnd:).
-	(Character backspace -> #backspace:).
-	(Character pageUp -> #cursorPageUp:).
-	(Character newPage -> #cursorPageDown:).
-	(Character cr -> #crWithIndent:).
-	(Character escape -> #escape:).
-	(Character arrowLeft -> #cursorLeft:).
-	(Character arrowRight -> #cursorRight:).
-	(Character arrowUp -> #cursorUp:).
-	(Character arrowDown -> #cursorDown:).
-	(Character space -> #selectWord:).
-	(Character delete -> #forwardDelete:) } do: [ :assoc | 
-		cmdMap at: assoc key asciiValue + 1 put: assoc value ].
-	"I am not convinced the following smart characters are used - see NecPreferences>>smartCharactersMapping"
-	'([{''"<' do: [ :char | cmdMap at: char asciiValue + 1 put: #enclose: ].
-	cmdMap at: $, asciiValue + 1 put: #shiftEnclose:.
-	'0123456789-=' do: [ :char | cmdMap at: char asciiValue + 1 put: #changeEmphasis: ].
+	cmdMap := Dictionary new.
+	{(KeyboardKey home -> #cursorHome:).
+	(KeyboardKey end -> #cursorEnd:).
+	(KeyboardKey backspace -> #backspace:).
+	(KeyboardKey pageUp -> #cursorPageUp:).
+	(KeyboardKey pageDown -> #cursorPageDown:).
+	(KeyboardKey enter -> #crWithIndent:).
+	(KeyboardKey escape -> #escape:).
+	(KeyboardKey left -> #cursorLeft:).
+	(KeyboardKey right -> #cursorRight:).
+	(KeyboardKey up -> #cursorUp:).
+	(KeyboardKey down -> #cursorDown:).
+	(KeyboardKey keypadLeft -> #cursorLeft:).
+	(KeyboardKey keypadRight -> #cursorRight:).
+	(KeyboardKey keypadUp -> #cursorUp:).
+	(KeyboardKey keypadDown -> #cursorDown:).
+	(KeyboardKey tab -> #tab:).
+	(KeyboardKey delete -> #forwardDelete:) } do: [ :assoc | 
+		cmdMap at: assoc key  put: assoc value ].
 	^ cmdMap
 ]
 
 { #category : #keymapping }
 RubTextEditor >> defaultKeymappingIndex [
 	^defaultKeymappingIndex ifNil: [ defaultKeymappingIndex := self newDefaultKeymappingIndex ]
-]
-
-{ #category : #keymapping }
-RubTextEditor >> defaultShiftCommandKeymapping [
-	"Initialize the shift-command-key (or control-key) shortcut table."
-
-	| cmdMap |
-	cmdMap := Array new: 256 withAll: #noop:.	"use temp in case of a crash"
-	{(Character home -> #cursorHome:).
-	(Character end -> #cursorEnd:).
-	(Character backspace -> #forwardDelete:).
-	(Character pageUp -> #cursorPageUp:).
-	(Character newPage -> #cursorPageDown:).
-	(Character cr -> #crWithIndent:).
-	(Character escape -> #offerMenuFromEsc:).
-	(Character arrowLeft -> #cursorLeft:).
-	(Character arrowRight -> #cursorRight:).
-	(Character arrowUp -> #cursorUp:).
-	(Character arrowDown -> #cursorDown:).
-	(Character space -> #selectWord:).
-	(Character delete -> #forwardDelete:)}
-		do: [ :assoc | 
-			| char symbol |
-			char := assoc key.
-			symbol := assoc value.
-			cmdMap at: char asciiValue + 1 put: symbol	"plain keys" ].
-	"Note: Command key overrides shift key, so, for example, cmd-shift-9 produces $9 not $("	"({< and double-quote"	"Note: Must use cmd-9 or ctrl-9 to get '()' since cmd-shift-9 is a Mac FKey command."
-	'9[,''' do: [ :char | cmdMap at: char asciiValue + 1 put: #shiftEnclose: ].
-	^ cmdMap
 ]
 
 { #category : #'accessing-selection' }
@@ -851,43 +823,16 @@ RubTextEditor >> dispatch: aKeyboardEvent [
 	"Carry out the action associated with this character, if any.
 	Type-ahead is passed so some routines can flush or use it."
 
-	| return |
-	return := [ :val | ^ val ].
-	self dispatchEnterOn: aKeyboardEvent return: return.
-	self dispatchCommandOn: aKeyboardEvent return: return.
-	^ self normalCharacter: aKeyboardEvent
-]
-
-{ #category : #'typing support' }
-RubTextEditor >> dispatchCommandOn: aKeyboardEvent return: return [
-	| asciiValue  |
-	asciiValue := aKeyboardEvent keyValue.	
-	"Special keys overwrite crtl+key combinations - at least on Windows. To resolve this
-	conflict, assume that keys other than cursor keys aren't used together with Crtl."
-	((self specialShiftCmdKeys includes: asciiValue) and: [ asciiValue < 27 ])
-		ifTrue: [ ^ self performCmdActionsWith: aKeyboardEvent shifted: aKeyboardEvent controlKeyPressed return: return ].	
-	
-	"backspace, and escape keys (ascii 8 and 27) are command keys"
-	(aKeyboardEvent commandKeyPressed or: [ self specialShiftCmdKeys includes: asciiValue ])
-		ifTrue: [ ^ self performCmdActionsWith: aKeyboardEvent shifted: aKeyboardEvent shiftPressed return: return ].	
-			
-	"the control key can be used to invoke shift-cmd shortcuts"
-	aKeyboardEvent controlKeyPressed
-		ifTrue: [ ^ self performCmdActionsWith: aKeyboardEvent shifted: true return: return ].
+	self
+		dispatchCommandOn: aKeyboardEvent
+		return: [ :val | ^ val ].
 	^ false
 ]
 
 { #category : #'typing support' }
-RubTextEditor >> dispatchEnterOn: aKeyboardEvent return: aBlock [
-	aKeyboardEvent keyValue = Character cr asciiValue
-		ifFalse: [ ^ false ].
-	aKeyboardEvent controlKeyPressed
-		ifTrue: [ aBlock value: (self normalCharacter: aKeyboardEvent) ].
-	aKeyboardEvent shiftPressed
-		ifTrue: [ aBlock value: (self lf: aKeyboardEvent) ].
-	aKeyboardEvent commandKeyPressed
-		ifTrue: [ aBlock value: (self crlf: aKeyboardEvent) ].
-	aBlock value: (self crWithIndent: aKeyboardEvent)
+RubTextEditor >> dispatchCommandOn: aKeyboardEvent return: return [
+
+	^ self performCmdActionsWith: aKeyboardEvent shifted: aKeyboardEvent shiftPressed return: return
 ]
 
 { #category : #'typing/selecting keys' }
@@ -953,34 +898,6 @@ RubTextEditor >> emphasisChoices [
 { #category : #accessing }
 RubTextEditor >> emphasisHere [
 	^ textArea emphasisHere
-]
-
-{ #category : #'editing keys' }
-RubTextEditor >> enclose: aKeyboardEvent [
-	"Insert or remove bracket characters around the current selection."
-
-	| left right startIndex stopIndex oldSelection which text |
-	self deprecated: '***** should be using #encloseWith: and extracting values from NECController>>smartCharactersMapping*****'.
-	self closeTypeIn.
-	startIndex := self startIndex.
-	stopIndex := self stopIndex.
-	oldSelection := self selection.
-	which := '([<{"''' indexOf: aKeyboardEvent keyCharacter ifAbsent: [ ^true ].
-	left := '([<{"''' at: which.
-	right := ')]>}"''' at: which.
-	text := self text.
-	((startIndex > 1 and: [stopIndex <= text size])
-			and: [ (text at: startIndex-1) = left and: [(text at: stopIndex) = right]])
-		ifTrue: [
-			"already enclosed; strip off brackets"
-			self selectFrom: startIndex-1 to: stopIndex.
-			self replaceSelectionWith: oldSelection]
-		ifFalse: [
-			"not enclosed; enclose by matching brackets"
-			self replaceSelectionWith:
-				(Text string: (String with: left), oldSelection string, (String with: right) attributes: self emphasisHere).
-			self selectFrom: startIndex+1 to: stopIndex].
-	^true
 ]
 
 { #category : #'editing keys' }
@@ -1505,13 +1422,18 @@ RubTextEditor >> isTextEditor [
 ]
 
 { #category : #'typing support' }
+RubTextEditor >> keyDown: aKeyboardEvent [
+	textArea announce: ((RubKeystroke with: aKeyboardEvent) morph: self).
+	(self dispatch: aKeyboardEvent) ifTrue: [
+		self doneTyping.
+		self storeSelectionInText.
+		textArea scrollSelectionIntoView: nil ]
+]
+
+{ #category : #'typing support' }
 RubTextEditor >> keystroke: aKeyboardEvent [
 	textArea announce: ((RubKeystroke with: aKeyboardEvent) morph: self).
-	(self dispatch: aKeyboardEvent)
-		ifTrue: [ "If not a normal character"
-			self doneTyping.
-			self storeSelectionInText.
-			^ self ].
+	self normalCharacter: aKeyboardEvent.
 	"normal character"
 	self openTypeIn.
 	self hasSelection
@@ -1679,7 +1601,6 @@ RubTextEditor >> nestingForPaste: aString with: aCharacter [
 RubTextEditor >> newDefaultKeymappingIndex [
 	defaultKeymappingIndex := IdentityDictionary new.
 	defaultKeymappingIndex at: #command put: self defaultCommandKeymapping.
-	defaultKeymappingIndex at: #shiftCommand put: self defaultShiftCommandKeymapping.
 	^ defaultKeymappingIndex 
 ]
 
@@ -1824,14 +1745,11 @@ RubTextEditor >> pasteRecent [
 
 { #category : #'typing support' }
 RubTextEditor >> performCmdActionsWith: aKeyboardEvent shifted: aBoolean return: return [
-	| asciiValue actions action|
-	asciiValue := aKeyboardEvent keyValue + 1.
-	actions := aBoolean
-				ifTrue: [self  shiftCmdActions]
-				ifFalse: [self  cmdActions].
-	action := (actions at: asciiValue).
-	action == #noop: ifTrue: [ ^ false ].
-	return value: ( self perform: action with: aKeyboardEvent).
+	| key actions action|
+	key := aKeyboardEvent key.
+	actions := self cmdActions.
+	action := (actions at: key ifAbsent: [ ^ false ]).
+	return value: (self perform: action with: aKeyboardEvent).
 ]
 
 { #category : #'accessing-selection' }
@@ -2350,11 +2268,6 @@ RubTextEditor >> setSelectorSearch: aStringOrText [
 	^ true
 ]
 
-{ #category : #keymapping }
-RubTextEditor >> shiftCmdActions [
-	^self defaultKeymappingIndex at: #shiftCommand 
-]
-
 { #category : #'editing keys' }
 RubTextEditor >> shiftEnclose: aKeyboardEvent [
 	"Insert or remove bracket characters around the current selection."
@@ -2403,8 +2316,10 @@ as if shift-command were also being pressed"
 	3	"enter"
 	4	"end"
 	8	"backspace"
+	9	"tab"
 	11	"page up"
 	12	"page down"
+	13 "cr"
 	27	"escape"
 	28	"left arrow"
 	29	"right arrow"
@@ -2481,6 +2396,15 @@ RubTextEditor >> swapChars: aKeyboardEvent [
 	self replaceSelectionWith: (Text string: aString reversed attributes: self emphasisHere).
 	self selectAt: currentSelection + 1.
 	^ true
+]
+
+{ #category : #'typing/selecting keys' }
+RubTextEditor >> tab: aKeyboardEvent [
+	"Append a line feed character to the stream of characters."
+
+	self addString: String tab.
+	self unselect.
+	^false
 ]
 
 { #category : #accessing }

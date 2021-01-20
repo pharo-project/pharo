@@ -1054,6 +1054,21 @@ TextMorph >> justified [
 ]
 
 { #category : #'event handling' }
+TextMorph >> keyDown: evt [
+
+	evt keyValue = 13
+		ifTrue: [ | action |
+			action := self crAction.
+			action ifNotNil: [
+				"Note: Code below assumes that this was some 
+				input field reacting on CR. Break the keyboard 
+				focus so that the receiver can be safely deleted."
+				evt hand newKeyboardFocus: nil.
+				^ action value]].
+	^ super keyDown: evt
+]
+
+{ #category : #'event handling' }
 TextMorph >> keyStroke: evt [
 	"Handle a keystroke event."
 

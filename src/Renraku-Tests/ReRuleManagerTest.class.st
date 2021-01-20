@@ -12,13 +12,13 @@ ReRuleManagerTest >> testClassAdded [
 	ReRuleManager reset.
 	
 	rulesCount := ReRuleManager default nodeRules size.
-	
-	rule := ReNodeMatchRule 
-		subclass: #ReRuleManagerTestingRule
-		instanceVariableNames: ''
-		classVariableNames: ''
-		category: testPackage name.
-		
+
+	rule := self class classInstaller make: [ :aClassBuilder | 
+		aClassBuilder 
+			name: #ReRuleManagerTestingRule;
+			superclass: ReNodeMatchRule;
+			package: testPackage name ].
+			
 	rule compile: 'name ^ ''test'''.
 
 	self
@@ -37,11 +37,12 @@ ReRuleManagerTest >> testClassRemoved [
 
 	| rule |
 	
-	rule := ReAbstractRule 
-		subclass: #ReRuleManagerTestingRule
-		instanceVariableNames: ''
-		classVariableNames: ''
-		category: testPackage name.
+	rule := self class classInstaller make: [ :aClassBuilder | 
+		aClassBuilder 
+			name: #ReRuleManagerTestingRule;
+			superclass: ReAbstractRule;
+			package: testPackage name ].
+
 	rule class
 		compile: 'checksMethod ^ true'.
 		

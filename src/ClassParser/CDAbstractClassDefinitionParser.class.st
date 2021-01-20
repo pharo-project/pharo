@@ -184,7 +184,9 @@ CDAbstractClassDefinitionParser >> isInstanceSideDefinition: aRBMessageNode [
 CDAbstractClassDefinitionParser >> parse: aString [
 	| expressionTree |
 	expressionTree := self parserClass parseExpression: aString.
-	expressionTree doSemanticAnalysis.
+	[expressionTree doSemanticAnalysis] 
+		on: OCUndeclaredVariableWarning 
+		do: [ :ex | ex resume: ex declareUndefined ].
 	^ self parseRootNode: expressionTree
 ]
 

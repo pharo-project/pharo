@@ -340,12 +340,14 @@ RBParser >> parseBinaryMessage [
 { #category : #'private-parsing' }
 RBParser >> parseBinaryMessageWith: aNode [ 
 	| binaryNode |
-	binaryNode := self selectorNodeClass value: currentToken value start: (Array with: currentToken start).
+	binaryNode := self selectorNodeClass
+		value: currentToken value
+		keywordPositions: (Array with: currentToken start).
 	self step.
 	^self messageNodeClass 
 		receiver: aNode
 		selector:  binaryNode
-		keywordsPositions: binaryNode start
+		keywordsPositions: binaryNode keywordPositions
 		arguments: (Array with: self parseUnaryMessage)
 ]
 
@@ -522,20 +524,11 @@ RBParser >> parseCascadeMessageWithReceiver: receiver [
 ]
 
 { #category : #'private-classes' }
-RBParser >> parseEnglobingError: aCollection with: aToken [
-	| firstParse |
-	firstParse := self parserError: aToken value asString, ' counterpart missing'.
-	^[firstParse isParseError
-		ifTrue: [ self englobingErrorNodeClass error: aToken withNodes: aCollection ]
-		ifFalse: [ firstParse ]] on: Error do: [ firstParse ].
-]
-
-{ #category : #'private-classes' }
 RBParser >> parseEnglobingError: aCollection with: aToken errorMessage: anErrorMessage [
 	| firstParse |
 	firstParse := self parserError: anErrorMessage.
 	^[firstParse isParseError
-		ifTrue: [ self englobingErrorNodeClass error: aToken withNodes: aCollection ]
+		ifTrue: [ (self englobingErrorNodeClass error: aToken withNodes: aCollection) value: aToken value asString ]
 		ifFalse: [ firstParse ]] on: Error do: [ firstParse ].
 ]
 
@@ -601,7 +594,7 @@ RBParser >> parseKeywordMessageWith: node [
 			self step.
 			args add: self parseBinaryMessage.
 			isKeyword := true].
-	selector start: keywordsStartPositions.
+	selector keywordPositions: keywordsStartPositions.
 	^isKeyword
 		ifTrue: 
 			[self messageNodeClass 
@@ -1010,7 +1003,8 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 	"If the statement is followed by closers that do not match the current scope, consume them and produce the corresponding errors wrapping the statement."
 	[(')]}' includes: currentToken value)
 		and: [ (aCollectionOfClosers includes: currentToken value) not ]]
-			whileTrue: [ 
+			whileTrue: [
+				self parserError: 'Missing opener for closer: ', currentToken value asString.
 				node := RBUnfinishedStatementErrorNode
 					content: { node }
 					start: node start
@@ -1210,12 +1204,12 @@ RBParser >> parseUnaryMessage [
 { #category : #'private-parsing' }
 RBParser >> parseUnaryMessageWith: aNode [ 
 	| selector |
-	selector := self selectorNodeClass value: currentToken value start: (Array with: currentToken start).
+	selector := self selectorNodeClass value: currentToken value keywordPositions: (Array with: currentToken start).
 	self step.
 	^self messageNodeClass
 		receiver: aNode
 		selector:  selector
-		keywordsPositions: selector start
+		keywordsPositions: selector keywordPositions
 		arguments: #()
 ]
 

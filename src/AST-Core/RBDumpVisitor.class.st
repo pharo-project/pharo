@@ -84,6 +84,7 @@ RBDumpVisitor >> visitCascadeNode:aCascadeNode [
 { #category : #visiting }
 RBDumpVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
 	stream
+		nextPutAll: '(';
 		nextPutAll: anEnglobingErrorNode class name;
 		nextPutAll: ' content: {'.
 	anEnglobingErrorNode content
@@ -97,6 +98,9 @@ RBDumpVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
 	anEnglobingErrorNode stop printOn: stream.
 	stream nextPutAll: ' errorMessage: '.
 	anEnglobingErrorNode errorMessage printOn: stream.
+	stream
+		nextPutAll: ') value: ';
+		nextPutAll: anEnglobingErrorNode value printString.
 ]
 
 { #category : #visiting }

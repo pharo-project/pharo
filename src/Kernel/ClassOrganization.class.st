@@ -208,12 +208,6 @@ ClassOrganization >> listAtCategoryNamed: aName [
 	^ (self protocolOrganizer methodsInProtocolNamed: aName) asArray
 ]
 
-{ #category : #'backward compatibility' }
-ClassOrganization >> listAtCategoryNumber: aSmallInteger [ 
-	
-	^ (protocolOrganizer allProtocols at: aSmallInteger ifAbsent: [ ^ {} ]) methods asArray
-]
-
 { #category : #notifications }
 ClassOrganization >> notifyOfAddedCategory: protocolName [
 	

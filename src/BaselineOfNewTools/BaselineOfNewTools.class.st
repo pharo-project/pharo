@@ -32,7 +32,7 @@ BaselineOfNewTools >> baseline: spec [
 			package: 'NewTools-Debugger' with: [ spec requires: #('NewTools-Inspector' 'NewTools-Debugger-Commands' 'NewTools-Debugger-Extensions' 'NewTools-SpTextPresenterDecorators') ];			
 			package: 'NewTools-Debugger-Commands';
 			package: 'NewTools-Debugger-Extensions';
-			"package: 'NewTools-Debugger-Tests' with: [ spec requires: #('NewTools-Debugger') ];"
+			package: 'NewTools-Debugger-Tests' with: [ spec requires: #('NewTools-Debugger') ];
 			"playground"
 			package: 'NewTools-Playground' with: [ spec requires: #('NewTools-Inspector') ];
 			"browser"
@@ -53,11 +53,13 @@ BaselineOfNewTools >> baseline: spec [
 			package: 'NewTools-ObjectCentricBreakpoints';			
 			"Sindarin"
 			package: 'NewTools-Sindarin-Commands';
+			package: 'NewTools-Sindarin-Commands-Tests' with: [  spec requires: #('NewTools-Sindarin-Commands' 'Sindarin') ];
 			package: 'NewTools-Sindarin-Tools' with: [ spec requires: #('NewTools-Sindarin-Commands' 'Sindarin') ];
 			"package: 'NewTools-Sindarin-ProcessInspector' with: [ spec requires: #('NewTools-Sindarin-Commands' 'Sindarin') ];"
 			"Debugger Selector"
 			package: 'NewTools-DebuggerSelector' with: [ spec requires: #('NewTools-SpTextPresenterDecorators') ];
-			package: 'NewTools-DebuggerSelector-Tests' with: [ spec requires: #('NewTools-DebuggerSelector') ].
+			package: 'NewTools-DebuggerSelector-Tests' with: [ spec requires: #('NewTools-DebuggerSelector') ];
+			package: 'NewTools-Debugger-Fuel'.
 
 		spec
 			group: 'Core' with: #('NewTools-Core' 'NewTools-Morphic');
@@ -72,12 +74,14 @@ BaselineOfNewTools >> baseline: spec [
 				'NewTools-ObjectCentricBreakpoints'
 				'NewTools-Sindarin-Tools'
 				'NewTools-Sindarin-Commands'
+				'NewTools-Sindarin-Commands-Tests'
 				'NewTools-Debugger-Breakpoints-Tools'
-				"'NewTools-Debugger-Tests'");
+				'NewTools-Debugger-Tests'
+				'NewTools-Debugger-Fuel');
 			group: 'SystemReporter' with: #('Core' 'NewTools-SystemReporter');
 			group: 'Methods' with: #('Core' 'NewTools-MethodBrowsers');
-			group: 'ChangeSorter' with: #('Core' 'NewTools-ChangeSorter');
 			"Not in the image for the moment, we need a pass on them"
+			group: 'ChangeSorter' with: #('Core' 'NewTools-ChangeSorter');
 			group: 'KeymapBrowser' with: #('Core' 'NewTools-KeymapBrowser');
 			group: 'FlagBrowser' with: #(
 				'Core' 
@@ -95,9 +99,11 @@ BaselineOfNewTools >> baseline: spec [
 				'Inspector'
 				'Debugger'
 				'Methods'
-				'ChangeSorter'
+				"'ChangeSorter'"
 				"'KeymapBrowser'"
-				"'FlagBrowser'") ]
+				"'FlagBrowser'");
+			"A group for running CI"
+			group: 'CI' with: #('Spec2' 'default') ]
 ]
 
 { #category : #dependencies }

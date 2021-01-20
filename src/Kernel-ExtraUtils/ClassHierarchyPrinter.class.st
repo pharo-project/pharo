@@ -114,7 +114,6 @@ Class {
 		'excludedClasses',
 		'limitedToClasses',
 		'stream',
-		'level',
 		'index',
 		'showSuperclasses',
 		'showState'

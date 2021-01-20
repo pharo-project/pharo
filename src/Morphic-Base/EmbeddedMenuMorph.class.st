@@ -45,29 +45,45 @@ EmbeddedMenuMorph >> handlesKeyboard: evt [
 ]
 
 { #category : #events }
-EmbeddedMenuMorph >> keyStroke: evt [
+EmbeddedMenuMorph >> keyDown: evt [
 	"Handle tabbing and arrows and cr/space."
 
-	| char selectable |
-	(self navigationKey: evt) ifTrue: [ ^ self ].
-	char := evt keyCharacter.
-	char = Character space
-		ifTrue: [ selectedItem
-				ifNotNil: [ ^ selectedItem hasSubMenu
-						ifTrue: [ evt hand newMouseFocus: selectedItem subMenu.
-							selectedItem subMenu takeKeyboardFocus ]
-						ifFalse: [ selectedItem invokeWithEvent: evt ] ].
-			(selectable := self items) size = 1 ifTrue: [ ^ selectable first invokeWithEvent: evt ].
-			^ self ].
-	(char = Character arrowLeft or: [ char = Character arrowRight ])
+	| key |
+		
+	key := evt key.
+	(key isArrowLeft or: [ key isArrowRight ])
 		ifTrue: [ (selectedItem notNil and: [ selectedItem hasSubMenu ])
 				ifTrue: [ evt hand newMouseFocus: selectedItem subMenu.
 					selectedItem subMenu moveSelectionDown: 1 event: evt.
 					^ evt hand newKeyboardFocus: selectedItem subMenu ] ].
-	char = Character arrowUp ifTrue: [ ^ self moveSelectionDown: -1 event: evt ].	"up arrow key"
-	char = Character arrowDown ifTrue: [ ^ self moveSelectionDown: 1 event: evt ].	"down arrow key"
-	char = Character pageUp ifTrue: [ ^ self moveSelectionDown: -5 event: evt ].	"page up key"
-	char = Character pageDown ifTrue: [ ^ self moveSelectionDown: 5 event: evt ]	"page down key"
+	
+	key isArrowUp ifTrue: [ ^ self moveSelectionDown: -1 event: evt ].	"up arrow key"
+	key isArrowDown ifTrue: [ ^ self moveSelectionDown: 1 event: evt ].	"down arrow key"
+	key = KeyboardKey pageUp ifTrue: [ ^ self moveSelectionDown: -5 event: evt ].	"page up key"
+	key = KeyboardKey pageDown ifTrue: [ ^ self moveSelectionDown: 5 event: evt ].	"page down key"
+
+	self window ifNotNil: [:win |
+		(win handlesKeyDown: evt) ifTrue: [
+			(win keyDown: evt) ifTrue: [^true]]].
+]
+
+{ #category : #events }
+EmbeddedMenuMorph >> keyStroke: event [
+	"Handle tabbing and arrows and cr/space."
+
+	| selectable |
+
+	self window ifNotNil: [:win |
+		(win handlesKeyStroke: event) ifTrue: [
+			(win keyStroke: event) ifTrue: [^true]]].
+	event key = KeyboardKey space
+		ifTrue: [ selectedItem
+			ifNotNil: [ ^ selectedItem hasSubMenu
+					ifTrue: [ event hand newMouseFocus: selectedItem subMenu.
+						selectedItem subMenu takeKeyboardFocus ]
+					ifFalse: [ selectedItem invokeWithEvent: event ] ].
+		(selectable := self items) size = 1 ifTrue: [ ^ selectable first invokeWithEvent: event ].
+		^ self ].
 ]
 
 { #category : #'keyboard control' }

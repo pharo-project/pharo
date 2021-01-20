@@ -160,8 +160,7 @@ MorphTreeModel >> defaultTreeMorph [
 			vResizing: #spaceFill;
 			resizerWidth: 0;
 			columnInset: 0; 
-			rowInset: 2; 
-			keystrokeActionSelector: #keyStroke:;
+			rowInset: 2;
 			"preferedPaneColor: Color white;"
 			multiSelection: self multiSelection;
 			autoMultiSelection: self autoMultiSelection;
@@ -268,16 +267,6 @@ MorphTreeModel >> isCheckList [
 { #category : #accessing }
 MorphTreeModel >> isCheckList: aBoolean [
 	^ isCheckList := aBoolean
-]
-
-{ #category : #accessing }
-MorphTreeModel >> keyStroke: anEvent [
-
-	anEvent keyString =  '<Cmd-a>'
-		ifTrue: [ self selectAll ].
-		
-	anEvent keyString =  '<Cmd-A>'
-		ifTrue: [ self deselectAll ]
 ]
 
 { #category : #accessing }

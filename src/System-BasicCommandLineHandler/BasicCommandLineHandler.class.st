@@ -83,13 +83,17 @@ BasicCommandLineHandler class >> startUp: isImageStarting [
 
 { #category : #activation }
 BasicCommandLineHandler >> activate [
-	[ [ self handleArgument: (self arguments ifEmpty: [ '' ] ifNotEmpty: [ :arguments | arguments first ]) ]
+
+	commandLine := commandLine class withArguments: (commandLine arguments 
+					reject: [ :each | each = '--interactive' ]).	
+
+	[ [ self handleArgument: self firstArgument ]
 		on: Exit
 		do: [ :exit | 
 			"If the command line is protected by password, we just exit the image because in non-headless mode the handleExit will let the image open. If the password protection is enabled, it is to avoid to let the access to the image."
 			self class commandLinePasswordManager hasPasswordSet
 				ifTrue: [ Smalltalk snapshot: false andQuit: true ].
-			^ self handleExit: exit ] ] forkAt: Processor userSchedulingPriority named: 'CommandLine handler process'
+			self handleExit: exit ] ] forkAt: Processor userSchedulingPriority named: 'CommandLine handler process'
 ]
 
 { #category : #activation }
@@ -110,6 +114,11 @@ BasicCommandLineHandler >> checkPassword [
 	commandLine := commandLine copyWithoutPassword
 ]
 
+{ #category : #'private - preferences' }
+BasicCommandLineHandler >> copySubcommand [
+	commandLine := commandLine copySubcommand
+]
+
 { #category : #commands }
 BasicCommandLineHandler >> copyright [
 	self stdout 
@@ -119,6 +128,7 @@ BasicCommandLineHandler >> copyright [
 
 { #category : #commands }
 BasicCommandLineHandler >> default [
+
 	^ self 
 		help;
 		exitSuccess
@@ -148,6 +158,14 @@ BasicCommandLineHandler >> error [
 ]
 
 { #category : #activation }
+BasicCommandLineHandler >> firstArgument [
+
+	^ self arguments
+		  ifEmpty: [ '' ]
+		  ifNotEmpty: [ :arguments | arguments first ]
+]
+
+{ #category : #activation }
 BasicCommandLineHandler >> handleArgument: aString [
 
 	"give priority to subcommands"
@@ -155,7 +173,8 @@ BasicCommandLineHandler >> handleArgument: aString [
 		ifFalse: [ ^ self ].
 
 	"check for default options"
-	aString ifEmpty: [ ^ self default ].
+	(aString isEmpty and: [ Smalltalk isInteractiveGraphic not]) 
+			ifTrue: [ ^ self default ].
 	
 	aString = '--version'
 		ifTrue: [ ^ self version ].
@@ -172,9 +191,6 @@ BasicCommandLineHandler >> handleArgument: aString [
 	aString = '--no-quit'
 		ifTrue: [ ^ self noQuit ].
 
-	aString = '--interactive'
-		ifTrue: [ ^ self noQuit ].
-
 	aString = '--readWriteAccessMode'
 		ifTrue: [ ^ self readWriteAccessMode ].
 	aString = '--readOnlyAccessMode'
@@ -183,6 +199,9 @@ BasicCommandLineHandler >> handleArgument: aString [
 		ifTrue: [ ^ self writeOnlyAccessMode ].
 	aString = '--disabledAccessMode'
 		ifTrue: [ ^ self disabledAccessMode ].
+
+	Smalltalk isInteractiveGraphic
+		ifTrue: [ ^ self noQuit ].
 	
 	"none of the previous options matched hence we output an error message"
 	self error.
@@ -204,7 +223,7 @@ BasicCommandLineHandler >> handleExit: exit [
 { #category : #activation }
 BasicCommandLineHandler >> handleExit: exit for: aCommandLinehandler [
 
-	Smalltalk isInteractive 
+	(Smalltalk isInteractive or: [ Smalltalk isInteractiveGraphic ])
 		ifFalse: [ ^ exit pass ].
 		
 	exit isSuccess 

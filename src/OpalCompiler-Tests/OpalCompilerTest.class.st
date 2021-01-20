@@ -96,16 +96,33 @@ OpalCompilerTest >> testCompileWithNilClass [
 ]
 
 { #category : #'tests - bindings' }
+OpalCompilerTest >> testCompilerUsingCleanBlockClosureHasBlockAsLiteral [
+
+	| compiler method |
+	compiler := Smalltalk compiler.
+	compiler compilationContext encoderClass: EncoderForSistaV1.
+	compiler compilationContext compilerOptions:
+		#(+ optionCleanBlockClosure ).
+
+	method := compiler compile: 'test #(1 2 3) do: [:e | e + 1]'.
+
+	self assert: method literals second isEmbeddedBlock.
+	self assert: method literals second class equals: CleanBlockClosure
+]
+
+{ #category : #'tests - bindings' }
 OpalCompilerTest >> testCompilerUsingFullBlockClosureHasBlockAsLiteral [
 
-  	| compiler method |
- 	compiler := Smalltalk compiler.
- 	compiler compilationContext encoderClass: EncoderForSistaV1.
- 	compiler compilationContext compilerOptions: #(optionFullBlockClosure).
+	| compiler method |
+	compiler := Smalltalk compiler.
+	compiler compilationContext encoderClass: EncoderForSistaV1.
+	compiler compilationContext compilerOptions:
+		#(+ optionFullBlockClosure ).
 
-  	method := compiler compile: 'test #(1 2 3) do: [:e | e + 1]'.
+	method := compiler compile: 'test #(1 2 3) do: [:e | e + 1]'.
 
-  	self assert: method literals second isEmbeddedBlock 
+	self assert: method literals second isEmbeddedBlock.
+	self assert: method literals second class equals: CompiledBlock
 ]
 
 { #category : #'tests - bindings' }

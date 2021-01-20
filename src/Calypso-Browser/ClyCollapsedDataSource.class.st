@@ -214,7 +214,7 @@ ClyCollapsedDataSource >> isInSameStateAs: anotherDataSource [
 { #category : #accessing }
 ClyCollapsedDataSource >> numberOfRows [
 	^self itemCursor itemCount 
-		+ (expandedItems detectSum: [ :each | each childrenCount ])
+		+ (expandedItems sum: [ :each | each childrenCount ])
 ]
 
 { #category : #controlling }

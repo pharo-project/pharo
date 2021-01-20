@@ -57,6 +57,15 @@ StTestDebuggerProvider >> debuggerWithFailingAssertionContext [
 ]
 
 { #category : #helpers }
+StTestDebuggerProvider >> debuggerWithFailingShouldntRaiseContext [
+	[ self produceShouldntRaiseFailure ]
+		on: TestFailure
+		do: [ :err | 
+			self sessionFor: err signalerContext exception: err.
+			^ self newDebugger ]
+]
+
+{ #category : #helpers }
 StTestDebuggerProvider >> debuggerWithFailingTestContext [
 	[ self produceTestFailure ]
 		on: TestFailure
@@ -92,12 +101,33 @@ StTestDebuggerProvider >> debuggerWithObjectHalting [
 ]
 
 { #category : #helpers }
+StTestDebuggerProvider >> debuggerWithRecursiveContext [
+
+	| debugger |
+	debugger := self debuggerWithContext:
+		            [ self recursiveMethodCall ] asContext.
+
+	^ debugger
+]
+
+{ #category : #helpers }
 StTestDebuggerProvider >> debuggerWithRunnableContext [
+<haltOrBreakpointForTesting>
 	[ Halt now ]
 		on: Halt
 		do: [ :err | 
 			self sessionFor: err signalerContext exception: err.
 			^ self newDebugger ]
+]
+
+{ #category : #helpers }
+StTestDebuggerProvider >> intermediateRecursiveMethodCall [
+
+	"Dummy assignment to avoid the test session to step to the next interesting bytecode (= next return)"
+
+	| a |
+	a := 0.
+	^ self recursiveMethodCall
 ]
 
 { #category : #helpers }
@@ -122,8 +152,23 @@ StTestDebuggerProvider >> produceAssertionFailure [
 ]
 
 { #category : #helpers }
+StTestDebuggerProvider >> produceShouldntRaiseFailure [
+	TestCase new shouldnt: [ 1/0 ] raise: ZeroDivide
+]
+
+{ #category : #helpers }
 StTestDebuggerProvider >> produceTestFailure [
 	TestCase new fail
+]
+
+{ #category : #helpers }
+StTestDebuggerProvider >> recursiveMethodCall [
+
+	"Dummy assignment to avoid the test session to step to the next interesting bytecode (= next return)"
+
+	| a |
+	a := 0.
+	^ self intermediateRecursiveMethodCall
 ]
 
 { #category : #helpers }
@@ -194,6 +239,6 @@ StTestDebuggerProvider >> sessionWithDNUAfterStep [
 
 { #category : #helpers }
 StTestDebuggerProvider >> terminate [ 
-	session ifNotNil:[session terminate].
+	session ifNotNil:[session clear].
 	session := nil
 ]

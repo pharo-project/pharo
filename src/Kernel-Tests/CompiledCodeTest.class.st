@@ -170,6 +170,34 @@ CompiledCodeTest >> testHasSelectorSpecialSelectorIndex [
 ]
 
 { #category : #'tests-literals' }
+CompiledCodeTest >> testLiteralsDoNotConsiderTheInnerBlockLiterals [
+
+	| method block |
+	method := self class compiler compile: 'method 
+		<pragma: #pragma>
+		test := 1+2.
+		Class.
+		self doIt: [ 
+		test := 1 - 2.
+		test := #(arrayInBlock).
+		Object.
+		self name ].
+		^#(#array) '.
+	block := (self class compiler evaluate: '[ 
+		test := 1 - 2.
+		test := #(arrayInBlock).
+		Object.
+		self name ]') compiledBlock.
+	self assertCollection: method literals equals: { 
+			2.
+			(UndeclaredVariable key: #test value: nil).
+			block.
+			#doIt:.
+			#( #array ).
+			(GlobalVariable key: #Class value: Class) }
+]
+
+{ #category : #'tests-literals' }
 CompiledCodeTest >> testLiteralsDoesNotContainMethodClass [
 	
 	self
@@ -182,6 +210,54 @@ CompiledCodeTest >> testLiteralsDoesNotContainMethodClass [
 CompiledCodeTest >> testLiteralsDoesNotContainMethodName [
 
 	self deny: (self compiledMethod1 refersToLiteral: #method1)
+]
+
+{ #category : #'tests-literals' }
+CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerBlocks [
+	"The behavior is different than literals"
+	| method |
+	method := self class compiler compile: 'method 
+		<pragma: #pragma>
+		test := 1+2.
+		Class.
+		self doIt: [ 
+		test := 1 - 2.
+		test := #(arrayInBlock).
+		Object.
+		self name ].
+		^#(#array) '.
+	"Next assertion is expected: literals have a different behavior more close to the system"
+	self deny: method literalsEvenTheOnesInTheInnerBlocks equals: method literals.
+	self
+		assertCollection: method literalsEvenTheOnesInTheInnerBlocks
+		equals: { 
+				2.
+				(UndeclaredVariable key: #test value: nil).
+				2.
+				(UndeclaredVariable key: #test value: nil).
+				#( #arrayInBlock ).
+				#name.
+				(GlobalVariable key: #Object value: Object).
+				#doIt:.
+				#( #array ).
+				(GlobalVariable key: #Class value: Class) }
+]
+
+{ #category : #'tests-literals' }
+CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerCleanBlocks [
+
+	"The behavior is different than literals"
+
+	| method |
+	method := self class compiler compile:
+		          'exampleAccessOuterFromCleanBlock 
+	<compilerOptions: #(+ optionCleanBlockClosure)>
+	| b |
+	b := 1. 
+	^[ thisContext tempNamed: ''b'' ] value'.
+	self
+		assertCollection: method literalsEvenTheOnesInTheInnerBlocks
+		equals: #( 'b' #tempNamed: )
 ]
 
 { #category : #'tests - scanning' }

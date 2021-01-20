@@ -373,7 +373,15 @@ StDebugger >> canExecuteDebugCommand [
 
 { #category : #'command support' }
 StDebugger >> canExecuteRestartCommand [
-	^ self debuggerActionModel isInterruptedContextPostMortem not
+
+	^ (self debuggerActionModel isInterruptedContextPostMortem or: [ 
+		   self debuggerActionModel isInterruptedContextDead ]) not
+]
+
+{ #category : #'command support' }
+StDebugger >> canExecuteReturnCommand [
+
+	^ self debuggerActionModel isInterruptedContextDead not
 ]
 
 { #category : #actions }
@@ -382,9 +390,9 @@ StDebugger >> clear [
 	extensionToolsNotebook pages do: [ :page | 
 		page activePresenter windowIsClosing ].
 	extensionTools := nil.
-	self unsubscribeFromSystemAnnouncer.
+	self unsubscribeFromSystemAnnouncer.	
 	self removeActionsForSession: self session.
-
+	
 	"When we programmatically close the window, we do not need to terminate the session as it was already cleared"
 	programmaticallyClosed ifTrue: [ ^ self ].
 	debuggerActionModel clearDebugSession
@@ -410,7 +418,8 @@ StDebugger >> close [
 
 	programmaticallyClosed := true.
 	[ self withWindowDo: #close ] ensure: [ 
-		self debuggerActionModel clearDebugSession ]
+		debuggerActionModel ifNotNil: [ :actionModel | 
+			actionModel clearDebugSession ] ]
 ]
 
 { #category : #'accessing widgets' }
@@ -513,6 +522,21 @@ StDebugger >> debuggerActionModel [
 		ifNil: [ debuggerActionModel := StDebuggerActionModel on: self session]
 ]
 
+{ #category : #accessing }
+StDebugger >> debuggerContextClass [
+	^ StDebuggerContext
+]
+
+{ #category : #accessing }
+StDebugger >> debuggerInspectorClass [
+	^ StDebuggerInspector
+]
+
+{ #category : #accessing }
+StDebugger >> debuggerInspectorModelClass [
+	^ StDebuggerInspectorModel
+]
+
 { #category : #'presenter - code' }
 StDebugger >> discardCodeChangesFor: aContext [
 
@@ -524,13 +548,13 @@ StDebugger >> discardCodeChangesFor: aContext [
 { #category : #commands }
 StDebugger >> doBrowseClass [
 
-	self systemNavigation browse: self stackSelectionMethodContext
+	self systemNavigation browse: self stackSelectionMethodContext value
 ]
 
 { #category : #commands }
 StDebugger >> doBrowseReceiverClass [
 
-	self systemNavigation browse: self stackSelectionReceiverClassContext
+	self systemNavigation browse: self stackSelectionReceiverClassContext value
 ]
 
 { #category : #stack }
@@ -634,9 +658,9 @@ StDebugger >> initializeExtensionTools [
 StDebugger >> initializeInspector [
 
 	inspector := self
-		             instantiate: StDebuggerInspector
+		             instantiate: self debuggerInspectorClass
 		             on:
-		             (StDebuggerInspectorModel on: StDebuggerContext new).
+		             (self debuggerInspectorModelClass on: self debuggerContextClass new).
 	inspector label: 'Receiver'
 ]
 
@@ -786,6 +810,14 @@ StDebugger >> openWithNotification: notificationString [
 	self openWithFullView
 ]
 
+{ #category : #actions }
+StDebugger >> peelToFirstLike: aContext [
+
+	self debuggerActionModel peelToFirstLike: aContext.
+	self clearUnsavedCodeChanges.
+	self code text: self currentContext sourceCode
+]
+
 { #category : #printing }
 StDebugger >> printReceiverClassInContext: aContext [
 
@@ -918,7 +950,8 @@ StDebugger >> restartCurrentContext [
 
 	self debuggerActionModel restartContext: self currentContext.
 	self clearUnsavedCodeChanges.
-	self code text: self currentContext sourceCode
+	self code text: self currentContext sourceCode.
+	self updateCodeFromContext
 ]
 
 { #category : #actions }
@@ -1005,7 +1038,7 @@ StDebugger >> stackIconForContext: context [
 
 { #category : #'command support' }
 StDebugger >> stackSelectionMethodContext [
-	^ [ stackTable selection selectedItem method ]
+	^ [ stackTable selection selectedItem home method ]
 ]
 
 { #category : #'command support' }
@@ -1099,19 +1132,17 @@ StDebugger >> updateCodeFromContext: aContext [
 	aContext sourceCode = self code text 
 		ifFalse: [ self updateSourceCodeFor: aContext ].
 	self code beForContext: aContext.
-	self code selectionInterval: selectionInterval.
 	
-	self flag: #DBG, 'the following leaves highlighted text everywhere when the code pane is not updated.'
-	"self
+	self
 		updateCodeTextSegmentDecoratorsIn: aContext
-		forInterval: selectionInterval."
+		forInterval: selectionInterval.
 	
 ]
 
 { #category : #'updating widgets' }
 StDebugger >> updateCodeTextSegmentDecoratorsIn: aContext forInterval: selectionInterval [
-	self flag: #DBG, 'this is temporarily removed for NewTools integration into Pharo 9. We need better support for this.'
-	"self code removeAllTextSegmentDecorations."
+	
+	self code removeAllTextSegmentDecorations.
 	
 	"This decorates the receiver and the next node with an underline"
 	"self code
@@ -1122,13 +1153,13 @@ StDebugger >> updateCodeTextSegmentDecoratorsIn: aContext forInterval: selection
 				yourself)."
 				
 	"This decorates the next executing node"
-	"self code
+	self code
 		addTextSegmentDecoration:
 			(SpTextPresenterDecorator new
 				highlightColor: (Color orange alpha: 0.5);
 				underlineColor: (Color white alpha: 0);
 				interval: (selectionInterval first to: selectionInterval last + 1);
-				yourself)."
+				yourself)
 				
 			"	icon: (self iconNamed: #warning);
 				iconBlock: [ :n | n inspect ];
@@ -1152,7 +1183,7 @@ StDebugger >> updateInspectorFromContext: aContext [
 		updateLayoutForContexts: self session interruptedContext
 		isAssertionFailure:
 		self debuggerActionModel isInterruptedContextAnAssertEqualsFailure.
-	inspector updateWith: (StDebuggerContext context: aContext).
+	inspector updateWith: (self debuggerContextClass context: aContext).
 	self flag: #DBG_INSPECTOR_UPDATE_BUG.
 	inspector getRawInspectorPresenterOrNil ifNotNil: [ :p | p update ]
 ]
@@ -1236,4 +1267,21 @@ StDebugger >> updateToolbar [
 StDebugger >> updateWindowTitle [
 
 	self withWindowDo: [ :window | window title: self newTitle ].
+]
+
+{ #category : #'ui requests' }
+StDebugger >> warning: aString for: aPresenter [
+
+	self newPopover
+		addStyle: 'error';
+		relativeTo: aPresenter;
+		position: SpPopoverPosition top;
+		presenter: (SpPresenter new
+				 layout: (SpBoxLayout newVertical
+						  borderWidth: 2;
+						  spacing: 0;
+						  add: (self newLabel label: aString);
+						  yourself);
+				 yourself);
+		popup
 ]

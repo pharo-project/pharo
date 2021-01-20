@@ -83,38 +83,6 @@ RBNamespace >> addPool: aString to: aRBClass [
 ]
 
 { #category : #accessing }
-RBNamespace >> allBehaviorsDo: aBlock [
-
-	| seen evalBlock |
-
-	seen := Set new.
-	evalBlock := [ :each | 
-	seen add: each first name.
-	aBlock
-		value: each first;
-		value: each last
-	].
-	newClasses do: evalBlock.
-	changedClasses do: evalBlock.
-	environment
-		classesDo: [ :each | 
-			each isObsolete
-				ifFalse: [ | class |
-
-					class := each instanceSide.
-					( ( seen includes: class name ) or: [ self hasRemoved: ( self classNameFor: class ) ] )
-						ifFalse: [ ( class := self classFor: each )
-								ifNotNil: [ seen add: class name.
-									aBlock
-										value: class;
-										value: class classSide
-									]
-							]
-					]
-			]
-]
-
-{ #category : #accessing }
 RBNamespace >> allClassesDo: aBlock [
 
 	| seen evalBlock |
@@ -164,6 +132,13 @@ RBNamespace >> allReferencesTo: aSymbol [
 { #category : #accessing }
 RBNamespace >> allReferencesTo: aSymbol do: aBlock [
 	(self allReferencesTo: aSymbol) do: aBlock
+]
+
+{ #category : #accessing }
+RBNamespace >> allReferencesTo: aSymbol in: classes [
+	| classNames |
+	classNames := classes collect: [ :cls | cls name ].
+	^ (self allReferencesTo: aSymbol) select: [ :ref | classNames includes: ref modelClass name ]
 ]
 
 { #category : #accessing }
@@ -405,7 +380,18 @@ RBNamespace >> privateImplementorsOf: aSelector [
 RBNamespace >> privateReferencesTo: aSelector [ 
 	| methods |
 	methods := OrderedCollection new.
-	self allBehaviorsDo: [ :class |
+	self allClassesDo: [ :class |
+		(class whichSelectorsReferToSymbol: aSelector)
+			do: [ :selector |
+				methods add: (class methodFor: selector) ] ].
+	^ methods
+]
+
+{ #category : #private }
+RBNamespace >> privateReferencesTo: aSelector in: classes [
+	| methods |
+	methods := OrderedCollection new.
+	classes do: [ :class |
 		(class whichSelectorsReferToSymbol: aSelector)
 			do: [ :selector |
 				methods add: (class methodFor: selector) ] ].

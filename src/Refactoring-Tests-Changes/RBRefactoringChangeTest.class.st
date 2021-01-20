@@ -208,7 +208,7 @@ RBRefactoringChangeTest >> testAddMetaclassPattern [
 	self exampleClasses do: [ :class |
 		(class isObsolete or: [ class superclass notNil and: [ class superclass isObsolete ] ]) ifFalse: [  
  		| change |
-		change := changes defineClass: class class definition.
+		change := changes defineClass: class class definitionString.
 		self assert: (change isKindOf: RBAddMetaclassChange).
 		self assert: change changeClassName equals: class name.
 		self assert: change classInstanceVariableNames equals: class class instVarNames.
@@ -232,7 +232,7 @@ RBRefactoringChangeTest >> testAddTraitPattern [
 	
 	self exampleTraits do: [ :trait |
 		| change |
-		change := changes defineClass: trait definition.
+		change := changes defineClass: trait definitionString.
 		self assert: (change isKindOf: RBAddTraitChange).
 		self assert: change changeClassName equals: trait name.
 		self assert: change category equals: trait category.

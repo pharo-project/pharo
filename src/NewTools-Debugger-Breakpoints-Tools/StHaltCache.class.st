@@ -196,10 +196,12 @@ StHaltCache >> shouldConsiderHaltNode: aNode [
 
 { #category : #testing }
 StHaltCache >> shouldConsiderMethod: aCompiledMethod [
-	"We do not consider test methods" 
-	^ ((aCompiledMethod hasPragmaNamed: #haltOrBreakpointForTesting)
-		or: [ aCompiledMethod hasPragmaNamed: #haltOrBreakpointForDevelopment ])
-		not
+
+	"We do not consider test or debugging methods"
+
+	^ #( #haltOrBreakpointForTesting #haltOrBreakpointForDevelopment
+	     #debuggerCompleteToSender ) noneSatisfy: [ :pragmaName | 
+		  aCompiledMethod hasPragmaNamed: pragmaName ]
 ]
 
 { #category : #cache }

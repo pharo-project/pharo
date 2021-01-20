@@ -36,6 +36,11 @@ tag := thisContext method selector.
 ^true
 ]
 
+{ #category : #'accessing context' }
+StDummyDebuggerPresenter >> currentContext [
+	^self
+]
+
 { #category : #accessing }
 StDummyDebuggerPresenter >> debuggerExtensionToolName [
 	^'Test extendedDebuggingToolTitle'
@@ -46,6 +51,13 @@ StDummyDebuggerPresenter >> debuggerExtensionToolName [
 StDummyDebuggerPresenter >> fileOutSelectedContext [
 tag := thisContext method selector.
 ^true
+]
+
+{ #category : #mocks }
+StDummyDebuggerPresenter >> peelToFirstLike: aStDummyDebuggerPresenter [
+
+	tag := thisContext method selector.
+	^ true
 ]
 
 { #category : #mocks }

@@ -155,6 +155,17 @@ RBRefactoring >> classObjectFor: anObject [
 ]
 
 { #category : #support }
+RBRefactoring >> convertAllReferencesTo: aSymbol of: classes using: searchReplacer [ 
+	(self model allReferencesTo: aSymbol in: classes)
+		do: 
+			[:method | 
+			self 
+				convertMethod: method selector
+				for: method modelClass
+				using: searchReplacer]
+]
+
+{ #category : #support }
 RBRefactoring >> convertAllReferencesTo: aSymbol using: searchReplacer [ 
 	self model allReferencesTo: aSymbol
 		do: 

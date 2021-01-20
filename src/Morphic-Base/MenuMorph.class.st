@@ -943,21 +943,12 @@ MenuMorph >> justDroppedInto: aMorph event: evt [
 ]
 
 { #category : #events }
-MenuMorph >> keyStroke: evt [
+MenuMorph >> keyDown: evt [
 	"Handle keboard item matching."
 
-	| matchString char asc selectable help |
-	help := self theme builder newBalloonHelp: 'Enter text to\narrow selection down\to matching items ' withCRs for: self corner: #topLeft.
-	help popUpForHand: self activeHand.
-	(self rootMenu hasProperty: #hasUsedKeyboard)
-		ifFalse: [ self rootMenu setProperty: #hasUsedKeyboard toValue: true.
-			self changed ].
-	(evt commandKeyPressed and: [ self commandKeyHandler notNil ])
-		ifTrue: [ self commandKeyHandler commandKeyTypedIntoMenu: evt.
-			^ self deleteIfPopUp: evt ].
-	char := evt keyCharacter.
-	asc := char asciiValue.
-	char = Character cr
+	| matchString key selectable |
+	key := evt key.
+	key = KeyboardKey enter
 		ifTrue: [ selectedItem
 				ifNotNil: [ ^ selectedItem hasSubMenu
 						ifTrue: [ evt hand newMouseFocus: selectedItem subMenu.
@@ -965,7 +956,7 @@ MenuMorph >> keyStroke: evt [
 						ifFalse: [ "self delete." selectedItem invokeWithEvent: evt ] ].
 			(selectable := self items) size = 1 ifTrue: [ ^ selectable first invokeWithEvent: evt ].
 			^ self ].
-	asc = 27
+	key = KeyboardKey escape
 		ifTrue: [ "escape key"
 			self
 				valueOfProperty: #matchString
@@ -981,27 +972,52 @@ MenuMorph >> keyStroke: evt [
 			^ self deselectAndFocusOutermenuOn: evt ].
 
 	"Left arrow key - If we are in a submenu, then we remove myself (i.e., the current morph) and move the focus to the owner popup"
-	asc = 28 ifTrue: [ ^ self leftArrowStroked: evt ].
+	key isArrowLeft ifTrue: [ ^ self leftArrowStroked: evt ].
 
 	"Right arrow key - If the selected menu item has a submenu, then we move the focus to the submenu "
-	asc = 29 ifTrue: [ (self rightArrowStroked: evt) ifTrue: [ ^ self ] ].
-	asc = 30 ifTrue: [ ^ self moveSelectionDown: -1 event: evt ].	"up arrow key"
-	asc = 31 ifTrue: [ ^ self moveSelectionDown: 1 event: evt ].	"down arrow key"
-	asc = 11 ifTrue: [ ^ self moveSelectionDown: -5 event: evt ].	"page up key"
-	asc = 12 ifTrue: [ ^ self moveSelectionDown: 5 event: evt ].	"page down key"
+	key isArrowRight ifTrue: [ (self rightArrowStroked: evt) ifTrue: [ ^ self ] ].
+	key isArrowUp ifTrue: [ ^ self moveSelectionDown: -1 event: evt ].	"up arrow key"
+	key isArrowDown ifTrue: [ ^ self moveSelectionDown: 1 event: evt ].	"down arrow key"
+	key = KeyboardKey pageUp ifTrue: [ ^ self moveSelectionDown: -5 event: evt ].	"page up key"
+	key = KeyboardKey pageDown ifTrue: [ ^ self moveSelectionDown: 5 event: evt ].	"page down key"
 
 	"If we reach this point, it means that we are editing the filter associated to each menu. "
 	"In case ther eis no filter associated to the menu, we simply create one"
 	matchString := self valueOfProperty: #matchString ifAbsentPut: [ String new ].
 
 	"If we press the backspace, then we simply remove the last character from matchString"
-	(char = Character backspace and: [ matchString notEmpty ])
+	(key = KeyboardKey backspace and: [ matchString notEmpty ])
 		ifTrue: [ matchString := matchString allButLast.
 			self recordFiltering: matchString.
 			self displayFiltered: evt ].
+]
+
+{ #category : #events }
+MenuMorph >> keyStroke: evt [
+	"Handle keboard item matching."
+
+	| matchString char asc help |
+	help := self theme builder newBalloonHelp: 'Enter text to\narrow selection down\to matching items ' withCRs for: self corner: #topLeft.
+	help popUpForHand: self activeHand.
+
+	(self rootMenu hasProperty: #hasUsedKeyboard)
+		ifFalse: [ self rootMenu setProperty: #hasUsedKeyboard toValue: true.
+			self changed ].
+
+	(evt commandKeyPressed and: [ self commandKeyHandler notNil ])
+		ifTrue: [ self commandKeyHandler commandKeyTypedIntoMenu: evt.
+			^ self deleteIfPopUp: evt ].
+
+	char := evt keyCharacter.
+	asc := char asciiValue.
+
+	"If we reach this point, it means that we are editing the filter associated to each menu. "
+	"In case ther eis no filter associated to the menu, we simply create one"
+	matchString := self valueOfProperty: #matchString ifAbsentPut: [ String new ].
 
 	"No need to go further if the character is not alphanumeric, i.e., not useful for filtering"
 	char isAlphaNumeric ifFalse: [ ^ self ].
+
 	matchString := matchString , char asString.
 	self recordFiltering: matchString.
 	self displayFiltered: evt

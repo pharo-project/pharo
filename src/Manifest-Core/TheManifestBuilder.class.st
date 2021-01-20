@@ -345,13 +345,12 @@ TheManifestBuilder >> containsTruePositive: aItem onRule: ruleId version: versio
 
 { #category : #manifest }
 TheManifestBuilder >> createManifestNamed: packageName [
+
+	manifestClass := self class classInstaller make: [ :aBuilder |
+		aBuilder name: (self class manifestClassNameFor: packageName);
+			superclass: PackageManifest;
+			package: packageName ].
 	 
-	manifestClass := PackageManifest 
-							subclass: (self class manifestClassNameFor: packageName) 
-							instanceVariableNames: ''
-							classVariableNames: ''
-							poolDictionaries: ''
-							package: packageName.
 	manifestClass 
 		tagWith: self class manifestTag;
 		comment: self class manifestClassComment.

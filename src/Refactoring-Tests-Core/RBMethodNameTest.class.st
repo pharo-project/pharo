@@ -1,7 +1,7 @@
 Class {
 	#name : #RBMethodNameTest,
 	#superclass : #TestCase,
-	#category : #'Refactoring-Tests-Core'
+	#category : #'Refactoring-Tests-Core-Base'
 }
 
 { #category : #tests }

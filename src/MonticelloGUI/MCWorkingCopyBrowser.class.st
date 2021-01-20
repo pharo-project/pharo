@@ -1017,16 +1017,6 @@ MCWorkingCopyBrowser >> workingCopyTreeMenu: aMenu [
 ]
 
 { #category : #'morphic ui' }
-MCWorkingCopyBrowser >> workingCopyTreeMorph [
-	^ SimpleHierarchicalListMorph
-		on: self
-		list: #workingCopyTree
-		selected: #workingCopyWrapper
-		changeSelected: #workingCopyWrapper:
-		menu: #workingCopyListMenu:
-]
-
-{ #category : #'morphic ui' }
 MCWorkingCopyBrowser >> workingCopyTreePath [
 	workingCopy ifNil: [^ OrderedCollection new].
 	^ OrderedCollection with: workingCopyWrapper.

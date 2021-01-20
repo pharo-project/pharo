@@ -229,6 +229,26 @@ RPackageTest >> testHierarchyRoots [
 		do: [ :each | roots includes: each ]
 ]
 
+{ #category : #test }
+RPackageTest >> testIsTestPackage [
+
+	|packages |
+	packages := self createMockTestPackages.
+	"Happy case: test package 'MockPackage-Tests' must contain -Tests suffix."
+	self assert: packages first isTestPackage equals: true.
+	
+	"Package 'MockPackage-tests' is not test package, since it has lowercase suffix."
+	self assert: packages second isTestPackage  equals: false.
+	
+	"Happy case: regular package 'MockPackage' without -Tests suffix is not a test package."
+	self assert: packages third isTestPackage  equals: false.
+
+	"Package 'MockPackage-Tests-Package' containting -Tests- in middle, so it is test package."
+	self assert: packages fourth isTestPackage equals: true.
+	
+	"cleanup of inst.vars should be done in tearDown"
+]
+
 { #category : #'tests-MC' }
 RPackageTest >> testMcPackage [
 

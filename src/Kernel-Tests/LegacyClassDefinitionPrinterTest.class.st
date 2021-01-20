@@ -28,7 +28,7 @@ LegacyClassDefinitionPrinterTest >> testArrayedCollectionWithPoolDictionary [
 
 	self assert: (self forClass: ExampleForTestWithSharedPool)
 		equals: 'ArrayedCollection subclass: #ExampleForTestWithSharedPool
-	instanceVariableNames: ''aSlot anotherSlot''
+	instanceVariableNames: ''''
 	classVariableNames: ''''
 	poolDictionaries: ''ChronologyConstants''
 	category: ''Kernel-Tests-Classes'''

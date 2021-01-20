@@ -24,8 +24,7 @@ FTSearchFunction >> ghostText [
 
 { #category : #'event handling' }
 FTSearchFunction >> keyStroke: anEvent [
-	(anEvent anyModifierKeyPressed
-		or: [ anEvent keyCharacter isAlphaNumeric not ])
+	(anEvent keyCharacter isAlphaNumeric not)
 		ifTrue: [ ^ false ].
 	currentSelIndex := self table selectedIndex.
 	currentHighlightedIndexes := self table highlightedIndexes.

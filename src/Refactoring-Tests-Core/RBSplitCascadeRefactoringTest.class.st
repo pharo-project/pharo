@@ -6,7 +6,7 @@ The method #methodWithCascades is not called, it is just a ""test data"" method 
 Class {
 	#name : #RBSplitCascadeRefactoringTest,
 	#superclass : #RBRefactoringTest,
-	#category : #'Refactoring-Tests-Core'
+	#category : #'Refactoring-Tests-Core-Refactorings'
 }
 
 { #category : #data }
@@ -22,7 +22,7 @@ RBSplitCascadeRefactoringTest >> testMethodWithoutCascade [
 	self
 		shouldFail: (RBSplitCascadeRefactoring
 		split: (54 to: 55)
-		from: #anInstVar:
+		from: ('an', 'InstVar:') asSymbol
 		in: RBBasicLintRuleTestData)
 ]
 

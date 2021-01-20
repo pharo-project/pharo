@@ -187,6 +187,23 @@ SindarinDebuggerTest >> helperMethodReturn: bool [
 	^ 2
 ]
 
+{ #category : #helpers }
+SindarinDebuggerTest >> helperMethodReturnWithException [
+	| a |
+	a := 0.
+	1/0.
+	^a + 1
+]
+
+{ #category : #helpers }
+SindarinDebuggerTest >> helperMethodReturnWithHalt [
+	<haltOrBreakpointForTesting>
+	| a |
+	a := 0.
+	self halt.
+	^ a + 1
+]
+
 { #category : #running }
 SindarinDebuggerTest >> runCaseManaged [
 	^ self runCase
@@ -298,6 +315,46 @@ SindarinDebuggerTest >> testContinueUntilTheEnd [
 		wait: 5 seconds
 		onCompletion: [ 'success' ]
 		onTimeout: [ "^^^ Setup code for the timeout" self assert: false description: 'Test timed out' ]
+]
+
+{ #category : #'tests - execution predicates' }
+SindarinDebuggerTest >> testIsAboutToInstantiateClass [
+
+	|debugger session|
+	debugger := SindarinDebugger new.
+	session := SindarinDebugSessionMock new.
+	debugger sindarinSession: session.
+	
+	session isMessage: false.	
+	self deny: debugger isAboutToInstantiateClass.
+	
+	session isMessage: true.
+	session receiver: Object new.
+	session selector: #yourself.
+	self deny: debugger isAboutToInstantiateClass.
+	
+	session receiver: Object new.
+	session selector: #toto.
+	self deny: debugger isAboutToInstantiateClass.
+	
+	session receiver: Behavior new.
+	session selector: #basicNew. "Primitive 70"
+	self assert: debugger isAboutToInstantiateClass.
+	
+	session selector: #basicNew:. "Primitive 71"
+	self assert: debugger isAboutToInstantiateClass.
+	
+	session selector: #adoptInstance:. "Primitive 160"
+	self assert: debugger isAboutToInstantiateClass.
+	
+	session receiver: Object new.
+	session selector: #clone. "Primitive 148"
+	self assert: debugger isAboutToInstantiateClass.
+		
+	session receiver: CompiledCode.
+	session selector: #newMethod:header:. "Primitive 79"
+	self assert: debugger isAboutToInstantiateClass
+	
 ]
 
 { #category : #tests }
@@ -492,6 +549,7 @@ SindarinDebuggerTest >> testSkip [
 { #category : #'tests - skipping' }
 SindarinDebuggerTest >> testSkipThroughNode [
 	| dbg realExecPC realValueOfA targetExecNode realExecTopStack nodeAfterSkipThrough |
+	self skipOnPharoCITestingEnvironment.
 	dbg := SindarinDebugger
 		debug: [ self helperMethod1  ].
 	dbg step; stepOver; stepOver.	
@@ -518,6 +576,7 @@ SindarinDebuggerTest >> testSkipThroughNode [
 { #category : #'tests - skipping' }
 SindarinDebuggerTest >> testSkipToPC [
 	| dbg realExecPC realValueOfA realExecNode realExecTopStack |
+	self skipOnPharoCITestingEnvironment.
 	dbg := SindarinDebugger
 		debug: [ self helperMethod1  ].
 	dbg step; stepOver; stepOver.
@@ -540,6 +599,7 @@ SindarinDebuggerTest >> testSkipToPC [
 { #category : #'tests - skipping' }
 SindarinDebuggerTest >> testSkipUpToNode [
 	| dbg realExecPC realValueOfA realExecNode realExecTopStack |
+	self skipOnPharoCITestingEnvironment.
 	dbg := SindarinDebugger
 		debug: [ self helperMethod1  ].
 	dbg step; stepOver; stepOver.
@@ -562,6 +622,7 @@ SindarinDebuggerTest >> testSkipUpToNode [
 { #category : #'tests - skipping' }
 SindarinDebuggerTest >> testSkipWith [
 	| a p scdbg |
+	self skipOnPharoCITestingEnvironment.
 	a := 1.
 	scdbg := SindarinDebugger
 		debug: [ a := 2.
@@ -630,6 +691,7 @@ SindarinDebuggerTest >> testStepOverReturnNode [
 { #category : #'tests - step return' }
 SindarinDebuggerTest >> testStepToImplicitReturn [
 	| dbg |
+	self skipOnPharoCITestingEnvironment.
 	dbg := SindarinDebugger debug: [ self helperMethod23 ].
 	dbg stepToMethodEntry.
 	dbg stepToReturn.
@@ -646,6 +708,7 @@ SindarinDebuggerTest >> testStepToImplicitReturn [
 { #category : #'tests - step return' }
 SindarinDebuggerTest >> testStepToMethodEntry [
 	| dbg |
+	self skipOnPharoCITestingEnvironment.
 	dbg := SindarinDebugger debug: [ self helperMethodReturn: true ].
 	dbg stepToMethodEntry.
 		
@@ -657,7 +720,8 @@ SindarinDebuggerTest >> testStepToMethodEntry [
 
 { #category : #'tests - step return' }
 SindarinDebuggerTest >> testStepToNonLocalReturn [
-	| dbg |	
+	| dbg |
+	self skipOnPharoCITestingEnvironment.	
 	dbg := SindarinDebugger debug: [ self helperMethodNonLocalReturn ].
 	dbg stepToMethodEntry.
 	dbg stepToReturn.
@@ -673,6 +737,7 @@ SindarinDebuggerTest >> testStepToNonLocalReturn [
 { #category : #'tests - step return' }
 SindarinDebuggerTest >> testStepToReturn [
 	| dbg |
+	self skipOnPharoCITestingEnvironment.
 	"First return node"
 	dbg := SindarinDebugger debug: [ self helperMethodReturn: true ].
 	dbg stepToMethodEntry.
@@ -689,6 +754,33 @@ SindarinDebuggerTest >> testStepToReturn [
 	self assert: dbg node isReturn.
 	self assert: dbg topStack equals: 2
 	
+]
+
+{ #category : #'tests - step return' }
+SindarinDebuggerTest >> testStepToReturnWithException [
+	| dbg |
+	self skipOnPharoCITestingEnvironment.
+	"First return node"
+	dbg := SindarinDebugger debug: [ self helperMethodReturnWithException ].
+	dbg stepToMethodEntry.
+	dbg stepToReturn.
+	
+	self assert: dbg receiver class identicalTo: ZeroDivide.
+	self assert: dbg method equals: (Exception >> #signal)
+]
+
+{ #category : #'tests - step return' }
+SindarinDebuggerTest >> testStepToReturnWithHalt [
+	| dbg |
+	self skipOnPharoCITestingEnvironment.
+	"First return node"
+	dbg := SindarinDebugger debug: [ self helperMethodReturnWithHalt ].
+	dbg stepToMethodEntry.
+	dbg stepToReturn.
+	
+	self assert: dbg context willReturn.
+	self assert: dbg node isReturn.
+	self assert: dbg topStack equals: 1
 ]
 
 { #category : #tests }
@@ -714,19 +806,6 @@ SindarinDebuggerTest >> testSteppingAnExecutionSignalingExceptions [
 				stepOver;
 				stepOver ]
 		raise: UnhandledExceptionSignalledByADebuggedExecution
-]
-
-{ #category : #tests }
-SindarinDebuggerTest >> testTemporaries [
-	| scdbg |
-	scdbg := SindarinDebugger debug: [ self helperMethod10 ].
-	self assert: scdbg temporaries size equals: 1.
-	scdbg step.
-	self assert: scdbg temporaries size equals: 1.
-	self assert: (scdbg temporaries at: #a) equals: nil.
-	scdbg step.
-	self assert: scdbg temporaries size equals: 1.
-	self assert: (scdbg temporaries at: #a) equals: 5
 ]
 
 { #category : #tests }
@@ -771,7 +850,7 @@ SindarinDebuggerTest >> testskipUpToNodeSkipTargetNode [
 	Variations of these two params are tested by testSkipUpToNode and testSkipThroughNode.
 	The following just test the remaining aspect of that API, that is we do not skip through a return node."
 	| dbg returnNode |	
-
+	self skipOnPharoCITestingEnvironment.
 	dbg := SindarinDebugger
 		debug: [ self helperMethod1  ].
 		

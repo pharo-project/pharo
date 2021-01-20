@@ -1921,7 +1921,7 @@ RBParserTest >> testUnclosedArrayErrorNodeContainsRightValue [
 	| tree |
 	tree := self parseFaultyExpression: '{ faulty parentheses message node'.
 	self assert: tree isParseError.
-	self assert: tree value equals: '{ faulty parentheses message node '
+	self assert: tree formattedCode equals: '{ faulty parentheses message node'
 ]
 
 { #category : #'error testing' }
@@ -1929,7 +1929,7 @@ RBParserTest >> testUnclosedBracketErrorNodeContainsRightValue [
 	| tree |
 	tree := self parseFaultyExpression: '[ faulty parentheses message node'.
 	self assert: tree isEnglobingError.
-	self assert: tree value equals: '[ faulty parentheses message node '
+	self assert: tree formattedCode equals: '[ faulty parentheses message node'
 ]
 
 { #category : #'error testing' }
@@ -1937,7 +1937,7 @@ RBParserTest >> testUnclosedParenthesesErrorNodeContainsRightValue [
 	| tree |
 	tree := self parseFaultyExpression: '( faulty parentheses message node'.
 	self assert: tree isEnglobingError.
-	self assert: tree value equals: '( faulty parentheses message node '
+	self assert: tree formattedCode equals: '( faulty parentheses message node'
 ]
 
 { #category : #'garbage tests' }
@@ -1951,7 +1951,28 @@ RBParserTest >> testUnclosedTemporariesErrorNodeContainsRightValue [
 	| tree |
 	tree := self parseFaultyExpression: '| faulty temporaries'.
 	self assert: tree isEnglobingError.
-	self assert: tree value equals: '| faulty temporaries '
+	self assert: tree formattedCode equals: '| faulty temporaries'
+]
+
+{ #category : #'error testing' }
+RBParserTest >> testUnfinishedStatementWithLeadingBracesRaisesError [
+
+	self should: [(self parserClass parseExpression: '[]}')] 
+		  raise: SyntaxErrorNotification
+]
+
+{ #category : #'error testing' }
+RBParserTest >> testUnfinishedStatementWithLeadingBracketRaisesError [
+
+	self should: [(self parserClass parseExpression: '[]]')] 
+		  raise: SyntaxErrorNotification.
+]
+
+{ #category : #'error testing' }
+RBParserTest >> testUnfinishedStatementWithLeadingParenthesisRaisesError [
+
+	self should: [(self parserClass parseExpression: '[])')] 
+		  raise: SyntaxErrorNotification.
 ]
 
 { #category : #private }

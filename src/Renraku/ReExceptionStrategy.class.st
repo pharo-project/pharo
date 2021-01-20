@@ -1,5 +1,5 @@
 "
-The subclasses of this class define how Renraku should handle exceptions signallied by analyzers
+The subclasses of this class define how Renraku should handle exceptions signalled by analyzers
 "
 Class {
 	#name : #ReExceptionStrategy,
@@ -38,7 +38,7 @@ ReExceptionStrategy class >> exceptionStrategySettingsOn: aBuilder [
 ]
 
 { #category : #'error handling' }
-ReExceptionStrategy class >> handle: anException about: anEntity forProppertiesDo: aBlock [
+ReExceptionStrategy class >> handle: anException about: anEntity forPropertiesDo: aBlock [
 	"do something with anException that occured during anEntity validation.
 	in case you want to produce a new renraku property evaluate aBlock with it"
 	

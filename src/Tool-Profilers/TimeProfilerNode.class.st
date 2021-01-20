@@ -34,7 +34,7 @@ TimeProfilerNode >> inspectItem [
 ]
 
 { #category : #'UI specific' }
-TimeProfilerNode >> keyStroke: anEvent from: aTreeMorph [
+TimeProfilerNode >> keyDown: anEvent from: aTreeMorph [
 	| c |
 	c := anEvent keyCharacter.
 	c = $b

@@ -5,7 +5,8 @@ Class {
 		'package2',
 		'package1',
 		'mcPackage1',
-		'mcPackage2'
+		'mcPackage2',
+		'classToRemove'
 	],
 	#category : #'Monticello-Tests-Base'
 }
@@ -26,6 +27,8 @@ MCPackageManagerTest >> setUp [
 { #category : #running }
 MCPackageManagerTest >> tearDown [
 	
+	classToRemove ifNotNil: [ classToRemove removeFromSystem ].
+	
 	package1 unregister.
 	package2 unregister.
 	MCPackageManager registry
@@ -40,23 +43,30 @@ MCPackageManagerTest >> testClassAdded [
 	self assert: package1 mcWorkingCopy modified not.
 	self assert: package2 mcWorkingCopy modified not.
 	
-	Object subclass: 'A', UUID new asString36 instanceVariableNames: '' classVariableNames: '' category: package2 name.
+	classToRemove := self class classInstaller make: [ :aBuilder | 
+			aBuilder 
+				name: ('A' , UUID new asString36) asSymbol;
+				package: package2 name].
 	
 	self assert: package1 mcWorkingCopy modified not.
 	self assert: package2 mcWorkingCopy modified
+	
+
 ]
 
 { #category : #tests }
 MCPackageManagerTest >> testClassRemoved [
 	
-	| class |
-
-	class := Object subclass: 'A', UUID new asString36 instanceVariableNames: '' classVariableNames: '' category: package2 name.
+	classToRemove := self class classInstaller make: [ :aBuilder | 
+			aBuilder 
+				name: ('A' , UUID new asString36) asSymbol;
+				package: package2 name].
 	
 	package1 mcWorkingCopy modified: false.
 	package2 mcWorkingCopy modified: false.
 	
-	class removeFromSystem.
+	classToRemove removeFromSystem.
+	classToRemove := nil.
 	
 	self assert: package1 mcWorkingCopy modified not.
 	self assert: package2 mcWorkingCopy modified.

@@ -102,9 +102,8 @@ OSWorldRenderer >> doActivate [
 	attributes preferableDriver: driver.
 	osWindow := OSWindow createWithAttributes: attributes eventHandler: (OSWindowMorphicEventHandler for: world).
 	
-	OSPlatform current sdlPlatform 
-		afterSetWindowTitle: Smalltalk image imageFile fullName onWindow: osWindow.
-	
+	driver afterSetWindowTitle: Smalltalk image imageFile fullName onWindow: osWindow.
+		
 	osWindow focus. 
 	
 	world worldState doFullRepaint.
@@ -221,7 +220,7 @@ OSWorldRenderer >> updateDamage: allDamage [
 OSWorldRenderer >> updateWindowTitle [
 
 	osWindow title: Smalltalk imageFile fullName.
-	OSPlatform current sdlPlatform
+	driver
 		afterSetWindowTitle: Smalltalk imageFile fullName
 		onWindow: osWindow
 ]

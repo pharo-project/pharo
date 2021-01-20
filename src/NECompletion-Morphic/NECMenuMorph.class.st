@@ -480,9 +480,9 @@ NECMenuMorph >> initialize [
 
 { #category : #actions }
 NECMenuMorph >> insertSelected [
+	self delete.
 	context hasEntries ifFalse: [^ false].
 	context activateEntryAt: self selected.
-	self delete.
 	^ true
 ]
 

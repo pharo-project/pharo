@@ -72,7 +72,7 @@ RFSemanticAnalyzer >> visitMethodNode: aMethodNode [
 	aMethodNode scope: scope.  scope node: aMethodNode.
 	aMethodNode arguments do: [:node | self declareArgumentNode: node ].
 	aMethodNode pragmas do: [:each | self visitNode: each].
-	self declareVariableNode: (RBVariableNode named: #RFReifyValueVar).
+	self declareTemporaryNode: (RBVariableNode named: #RFReifyValueVar).
 	self analyseForLinksForNodes: aMethodNode.
 	self visitNode: aMethodNode body.
 
@@ -91,7 +91,7 @@ RFSemanticAnalyzer >> visitStoreIntoTempNode: aNode [
 	name := aNode name.
 	var := scope lookupVarForDeclaration: name.
 	var	ifNil: [ 
-			var := scope addTemp: name ].
+			var := scope addTemp: (TemporaryVariable named: aNode name) ].
 	aNode binding: var.
 ]
 
@@ -101,7 +101,7 @@ RFSemanticAnalyzer >> visitStorePopIntoTempNode: aNode [
 	name := aNode name.
 	var := scope lookupVarForDeclaration: name.
 	var	ifNil: [ 
-			var := scope addTemp: name ].
+			var := scope addTemp: (TemporaryVariable named: aNode name) ].
 	aNode binding: var.
 ]
 

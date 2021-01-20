@@ -9,7 +9,6 @@ Class {
 	#instVars : [
 		'selectedMorph',
 		'getListSelector',
-		'keystrokeActionSelector',
 		'autoDeselect',
 		'columns',
 		'sortingSelector',
@@ -94,23 +93,9 @@ SimpleHierarchicalListMorph class >> exampleSubmorphs [
 			list: #value
 			selected: nil
 			changeSelected: nil
-			menu: nil
-			keystroke: nil.
+			menu: nil.
 
 	morph openInWindow
-]
-
-{ #category : #'instance creation' }
-SimpleHierarchicalListMorph class >> on: anObject list: getListSel selected: getSelectionSel changeSelected: setSelectionSel [
-	"Create a 'pluggable' list view on the given model parameterized by the given message selectors."
-
-	^ self new
-		on: anObject
-		list: getListSel
-		selected: getSelectionSel
-		changeSelected: setSelectionSel
-		menu: nil
-		keystroke: #arrowKey:from:		"default"
 ]
 
 { #category : #'instance creation' }
@@ -123,21 +108,6 @@ SimpleHierarchicalListMorph class >> on: anObject list: getListSel selected: get
 		selected: getSelectionSel
 		changeSelected: setSelectionSel
 		menu: getMenuSel
-		keystroke: #arrowKey:from:		"default"
-
-]
-
-{ #category : #'instance creation' }
-SimpleHierarchicalListMorph class >> on: anObject list: getListSel selected: getSelectionSel changeSelected: setSelectionSel menu: getMenuSel keystroke: keyActionSel [
-	"Create a 'pluggable' list view on the given model parameterized by the given message selectors."
-
-	^ self new
-		on: anObject
-		list: getListSel
-		selected: getSelectionSel
-		changeSelected: setSelectionSel
-		menu: getMenuSel
-		keystroke: keyActionSel
 
 ]
 
@@ -632,8 +602,7 @@ SimpleHierarchicalListMorph >> insertNewMorphs: morphList [
 SimpleHierarchicalListMorph >> keyStroke: event [
 
 	"Process potential command keys that are not handled by keymappings yet"
-
-	| args aCharacter |
+	| aCharacter |
 
 	aCharacter := event keyValue asCharacter.
 	event anyModifierKeyPressed
@@ -642,12 +611,7 @@ SimpleHierarchicalListMorph >> keyStroke: event [
 			].
 	( self scrollByKeyboard: event )
 		ifTrue: [ ^ true ].
-	keystrokeActionSelector ifNil: [ ^ false ].
-	( args := keystrokeActionSelector numArgs ) = 1
-		ifTrue: [ ^ model perform: keystrokeActionSelector with: aCharacter ].
-	args = 2
-		ifTrue: [ ^ model perform: keystrokeActionSelector with: aCharacter with: self ].
-	^ self error: 'The keystrokeActionSelector must be a 1- or 2-keyword symbol'
+	^ false
 ]
 
 { #category : #updating }
@@ -861,6 +825,19 @@ SimpleHierarchicalListMorph >> noteRemovalOfAll: aCollection [
 ]
 
 { #category : #initialization }
+SimpleHierarchicalListMorph >> on: anObject list: getListSel selected: getSelectionSel changeSelected: setSelectionSel menu: getMenuSel [
+
+	self model: anObject.
+	getListSelector := getListSel.
+	getSelectionSelector := getSelectionSel.
+	setSelectionSelector := setSelectionSel.
+	getMenuSelector := getMenuSel.
+	autoDeselect := true.
+	self borderWidth: 1.
+	self list: self getList.
+]
+
+{ #category : #initialization }
 SimpleHierarchicalListMorph >> on: anObject list: getListSel selected: getSelectionSel changeSelected: setSelectionSel menu: getMenuSel keystroke: keyActionSel [
 
 	self model: anObject.
@@ -868,7 +845,6 @@ SimpleHierarchicalListMorph >> on: anObject list: getListSel selected: getSelect
 	getSelectionSelector := getSelectionSel.
 	setSelectionSelector := setSelectionSel.
 	getMenuSelector := getMenuSel.
-	keystrokeActionSelector := keyActionSel.
 	autoDeselect := true.
 	self borderWidth: 1.
 	self list: self getList.

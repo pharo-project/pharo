@@ -155,6 +155,16 @@ Class >> addSharedPool: aSharedPool [
 		ifFalse: [self sharedPools add: aSharedPool]
 ]
 
+{ #category : #'pool variables' }
+Class >> addSharedPoolNamed: aSharedPoolName [ 
+	
+	|poolClass|
+	poolClass := aSharedPoolName asClassIfAbsent: [nil].
+	poolClass isPool 
+		ifTrue: [ self addSharedPool: poolClass ]
+		ifFalse: [ self error: 'The specified class is not pool.' ]
+]
+
 { #category : #'accessing class hierarchy' }
 Class >> addSubclass: aSubclass [ 
 	"Make the argument, aSubclass, be one of the subclasses of the receiver. 

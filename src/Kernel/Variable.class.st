@@ -1,10 +1,14 @@
 "
-I am abstract. Subclasses of me model meta objects for any kind of variables: slots (instance variables), global variables (Class, Global, Pool) and potentialy local variables of methods (temps and args). 
-Currently I only unify Slots, LiteralVariables and TemporaryVariable (recently introduced). 
+I am an abstract class. Subclasses of me model meta objects for any kind of variables: 
+
+- slots (instance variables)
+- literal variables (Class, Global, Pool) and 
+- local variables of methods (temps and args). 
 
 Being a superclass for LiteralVariable I have a restriction on my layout: I can only have a single instance variable representing the variable #name
 								DO NOT ADD ANY NEW STATE TO ME.
-This restriction is requried because LiteralVariable encodes global references in the method literals and therefore there is an expectation from the VM on particular shape of these objects.
+
+This restriction is required because LiteralVariable encodes global references in the method literals and therefore there is an expectation from the VM on particular shape of these objects.
 
 At this step I only pulled a duplicated protocol of properties from my subclasses. But more cleanup is comming:
 - breakpoints
@@ -14,7 +18,7 @@ At this step I only pulled a duplicated protocol of properties from my subclasse
 
 Internal Representation and Key Implementation Points.
 
-    Instance Variables
+Instance Variables
 	name:		<Symbol>
 "
 Class {

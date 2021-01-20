@@ -36,7 +36,7 @@ SpMorphicMillerAdapter >> add: aPresenter constraints: constraints [
 ]
 
 { #category : #private }
-SpMorphicMillerAdapter >> addConstraits: constraints toChild: childMorph [
+SpMorphicMillerAdapter >> addConstraints: constraints toChild: childMorph [
 	"adds constraits by child"
 
 	"Set morph to stay rigid"
