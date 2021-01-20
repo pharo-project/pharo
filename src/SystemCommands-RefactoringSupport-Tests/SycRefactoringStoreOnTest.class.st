@@ -42,10 +42,10 @@ SycRefactoringStoreOnTest >> testSycAddMessageArgumentCommandIsProperlyStoreOn [
 
 	| refactorings |
 	refactorings := SycAddMessageArgumentCommand new
-		originalMessage: (MockTreeTableItem >> #title:) ast;
-		newSelector: (SycMessageDescription new
+		originalMessage: (RBMethodName ofMethod: (MockTreeTableItem >> #title:));
+		newSelector: (RBMethodName new
 			selector: #title:lala:;
-			argumentNames: #(#anObject #anObject1));
+			arguments: #(#anObject #anObject1));
 		argumentDefaultValue: 'nil';
 		class: MockTreeTableItem;
 		asRefactorings.

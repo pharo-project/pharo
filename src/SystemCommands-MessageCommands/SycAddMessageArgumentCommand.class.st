@@ -40,8 +40,8 @@ SycAddMessageArgumentCommand >> argumentDefaultValue: anObject [
 { #category : #execution }
 SycAddMessageArgumentCommand >> createRefactoring [
 	| permutation |
-	permutation := newSelector argumentNames collect: [ :e |
-		originalMessage argumentNames indexOf: e ifAbsent: [ 0 ]
+	permutation := newSelector arguments collect: [ :e |
+		originalMessage arguments indexOf: e ifAbsent: [ 0 ]
 	].
 	^RBAddParameterRefactoring
 		addParameterToMethod: originalMessage selector
@@ -108,7 +108,7 @@ SycAddMessageArgumentCommand >> requestMessageIn: aToolContext [
 	originalMessage selector = methodName selector & (originalMessage argumentNames = methodName arguments)
 		ifTrue: [ CmdCommandAborted signal].		
 				
-	^(SycMessageDescription fromContextOf: aToolContext)
+	^RBMethodNode new
 		selector: methodName selector;
 		argumentNames: methodName arguments
 ]
