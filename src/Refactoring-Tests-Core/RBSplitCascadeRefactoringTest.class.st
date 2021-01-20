@@ -22,7 +22,7 @@ RBSplitCascadeRefactoringTest >> testMethodWithoutCascade [
 	self
 		shouldFail: (RBSplitCascadeRefactoring
 		split: (54 to: 55)
-		from: #anInstVar:
+		from: ('an', 'InstVar:') asSymbol
 		in: RBBasicLintRuleTestData)
 ]
 

@@ -66,10 +66,11 @@ StDebuggerTest >> tearDown [
 	session clear.
 	self debuggerClass fastTDD: oldFastTDD.
 	debugger ifNotNil: [ 
+		debugger unsubscribeFromSystemAnnouncer.
 		debugger close.
 		debugger session ifNotNil: [ :s | s clear ] ].
 	StTestDebuggerProvider removeSelector: #foobar. 
-	StDebuggerObjectForTests compile: 'haltingMethod self halt. ^self' classified: 'util'.
+	StDebuggerObjectForTests compile: 'haltingMethod <haltOrBreakpointForTesting> self halt. ^self' classified: 'util'.
 	super tearDown
 ]
 
@@ -126,7 +127,16 @@ StDebuggerTest >> testClearUnsavedChanges [
 
 { #category : #'tests - actions' }
 StDebuggerTest >> testClose [
-	(self debuggerOn: session) close.
+	|windowPresenter|
+	windowPresenter := SpWindowPresenter new.
+	windowPresenter windowIsOpening.
+	debugger := (self debuggerOn: session).	
+	windowPresenter presenter: debugger.	
+	debugger initializeWindow: windowPresenter.
+	
+	"We trigger the closing from the presenter instead of the debugger itself,
+	because the window is not really open so the debugger will not close through debugger close."
+	windowPresenter windowClosed.	
 	self deny: (SystemAnnouncer uniqueInstance hasSubscriber: debugger)
 ]
 
@@ -149,16 +159,52 @@ StDebuggerTest >> testCodeChangeAfterContextChange [
 ]
 
 { #category : #'tests - code pane' }
-StDebuggerTest >> testCodeSelectionAfterStepping [
+StDebuggerTest >> testCodeSelectionAfterRestart [
 
-	| dbg |
+	| dbg adapter segments highlightSegment pcRangeForContext |
 	dbg := self debuggerOn: session.
+	adapter := SpMorphicCodeAdapter new.
+	adapter adapt: dbg code.	
+	dbg code adapter: adapter.
+	dbg code adapter buildWidget.	
 	dbg
 		stepInto;
 		stepInto.
+	dbg restartCurrentContext.
+	
+	pcRangeForContext := (session pcRangeForContext: dbg currentContext).
+	segments := dbg code adapter widget segments.
+	self assert: segments size equals: 1.
+	highlightSegment := segments first.	
+	
 	self
-		assert: dbg code selectionInterval
-		equals: (session pcRangeForContext: dbg currentContext)
+		assert:  (highlightSegment firstIndex to: highlightSegment lastIndex)
+		equals: (pcRangeForContext first to: pcRangeForContext last + 1)
+	"The pc range is highlighted with an additionnal index to encompass the full text of the node (why?)"
+]
+
+{ #category : #'tests - code pane' }
+StDebuggerTest >> testCodeSelectionAfterStepping [
+
+	| dbg adapter segments highlightSegment pcRangeForContext |
+	dbg := self debuggerOn: session.
+	adapter := SpMorphicCodeAdapter new.
+	adapter adapt: dbg code.	
+	dbg code adapter: adapter.
+	dbg code adapter buildWidget.	
+	dbg
+		stepInto;
+		stepInto.
+	
+	pcRangeForContext := (session pcRangeForContext: dbg currentContext).
+	segments := dbg code adapter widget segments.
+	self assert: segments size equals: 1.
+	highlightSegment := segments first.	
+	
+	self
+		assert:  (highlightSegment firstIndex to: highlightSegment lastIndex)
+		equals: (pcRangeForContext first to: pcRangeForContext last + 1)
+	"The pc range is highlighted with an additionnal index to encompass the full text of the node (why?)"
 ]
 
 { #category : #'tests - context inspector' }
@@ -202,10 +248,10 @@ StDebuggerTest >> testContextTempVarList [
 	self assert: (contextItems at: 1) class equals: StInspectorSelfNode.	
 	
 	"Next nodes are temps"
-	self assert: (contextItems at: 2) class equals: StDebuggerInspectorTempNode.
-	self assert: (contextItems at: 3) class equals: StDebuggerInspectorTempNode.
-	self assert: (contextItems at: 4) class equals: StDebuggerInspectorTempNode.
-	self assert: (contextItems at: 5) class equals: StDebuggerInspectorTempNode.
+	self assert: (contextItems at: 2) tempVariable isTempVariable.
+	self assert: (contextItems at: 3) tempVariable isTempVariable.
+	self assert: (contextItems at: 4) tempVariable isTempVariable.
+	self assert: (contextItems at: 5) tempVariable isTempVariable.
 	
 	"receiver"	
 	self assert: (contextItems at: 6) rawValue identicalTo: session shortStack first receiver session.
@@ -287,14 +333,26 @@ StDebuggerTest >> testFastTDD [
 	self deny: self debuggerClass fastTDD
 ]
 
-{ #category : #'tests - receiver inspector' }
-StDebuggerTest >> testInspectorSelfBinding [
-	| dbg evaluator receiver |
+{ #category : #'tests - code pane' }
+StDebuggerTest >> testInitialCodeSelectionAfterStepping [
+
+	| dbg adapter segments highlightSegment pcRangeForContext |
 	dbg := self debuggerOn: session.
-	evaluator := (dbg inspector instVarNamed: #inspector) millerList pages first evaluator.
-	receiver := dbg inspector model inspectedObject context receiver.
-	self assert: evaluator doItReceiver identicalTo: receiver.
-	self assert: evaluator behavior identicalTo: receiver class
+	adapter := SpMorphicCodeAdapter new.
+	adapter adapt: dbg code.	
+	dbg code adapter: adapter.
+	dbg code adapter buildWidget.
+	dbg stackTable selectItem: dbg stackTable items first.		
+	
+	pcRangeForContext := (session pcRangeForContext: dbg currentContext).
+	segments := dbg code adapter widget segments.
+	self assert: segments size equals: 1.
+	highlightSegment := segments first.	
+	
+	self
+		assert:  (highlightSegment firstIndex to: highlightSegment lastIndex)
+		equals: (pcRangeForContext first to: pcRangeForContext last + 1)
+	"The pc range is highlighted with an additionnal index to encompass the full text of the node (why?)"
 ]
 
 { #category : #'tests - stack table' }

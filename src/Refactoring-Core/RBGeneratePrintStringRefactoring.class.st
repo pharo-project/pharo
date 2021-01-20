@@ -34,9 +34,13 @@ RBGeneratePrintStringRefactoring class >> model: aNamespace className: aClass va
 
 { #category : #preconditions }
 RBGeneratePrintStringRefactoring >> preconditions [
+
 	^ variables
-		inject: RBCondition empty
-		into: [ :condition :variable | condition & (RBCondition definesInstanceVariable: variable in: self theClass) ]
+		  inject: self emptyCondition
+		  into: [ :condition :variable | 
+			  condition
+			  &
+			  (RBCondition definesInstanceVariable: variable in: self theClass) ]
 ]
 
 { #category : #accessing }

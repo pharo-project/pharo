@@ -135,6 +135,13 @@ RBNamespace >> allReferencesTo: aSymbol do: aBlock [
 ]
 
 { #category : #accessing }
+RBNamespace >> allReferencesTo: aSymbol in: classes [
+	| classNames |
+	classNames := classes collect: [ :cls | cls name ].
+	^ (self allReferencesTo: aSymbol) select: [ :ref | classNames includes: ref modelClass name ]
+]
+
+{ #category : #accessing }
 RBNamespace >> allReferencesToClass: aRBClass do: aBlock [ 
 	self allClassesDo: 
 			[:each |
@@ -374,6 +381,17 @@ RBNamespace >> privateReferencesTo: aSelector [
 	| methods |
 	methods := OrderedCollection new.
 	self allClassesDo: [ :class |
+		(class whichSelectorsReferToSymbol: aSelector)
+			do: [ :selector |
+				methods add: (class methodFor: selector) ] ].
+	^ methods
+]
+
+{ #category : #private }
+RBNamespace >> privateReferencesTo: aSelector in: classes [
+	| methods |
+	methods := OrderedCollection new.
+	classes do: [ :class |
 		(class whichSelectorsReferToSymbol: aSelector)
 			do: [ :selector |
 				methods add: (class methodFor: selector) ] ].

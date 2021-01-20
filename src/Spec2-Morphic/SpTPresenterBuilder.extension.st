@@ -1,17 +1,17 @@
-Extension { #name : #SpPresenter }
+Extension { #name : #SpTPresenterBuilder }
 
 { #category : #'*Spec2-Morphic' }
-SpPresenter >> newImage [
+SpTPresenterBuilder >> newImage [
 	^ self instantiate: SpImagePresenter
 ]
 
 { #category : #'*Spec2-Morphic' }
-SpPresenter >> newLink [
+SpTPresenterBuilder >> newLink [
 	^ self instantiate: SpLinkPresenter
 ]
 
 { #category : #'*Spec2-Morphic' }
-SpPresenter >> newMorph [
+SpTPresenterBuilder >> newMorph [
 
 	^ self instantiate: SpMorphPresenter
 ]

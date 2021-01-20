@@ -46,8 +46,7 @@ DACompositeDependency >> extensionDependencies [
 
 { #category : #accessing }
 DACompositeDependency >> extensionDependenciesSize [
-	^ self dependencies
-		detectSum: [ :dependency | 
+	^ self dependencies sum: [ :dependency | 
 			dependency isExtensionDependency
 				ifTrue: [ 1 ]
 				ifFalse: [ 0 ] ]

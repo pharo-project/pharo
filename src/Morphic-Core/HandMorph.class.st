@@ -25,14 +25,12 @@ Class {
 		'savedPatch',
 		'lastEventBuffer',
 		'lastKeyScanCode',
-		'combinedChar',
 		'captureBlock',
 		'recentModifiers',
 		'pendingEventQueue'
 	],
 	#classVars : [
 		'DoubleClickTime',
-		'EventSource',
 		'EventStats',
 		'NormalCursor',
 		'PasteBuffer',
@@ -489,17 +487,33 @@ HandMorph >> generateKeyboardEvent: evtBuf [
 					buttons: buttons
 					hand: self
 					stamp: stamp].
+
+	"All control keys (tab, cr...) should be managed as keydown and ignored as text"	
+	(type = #keystroke and: [
+		charCode <= 31 or: [ (127 to: 159) includes: charCode ]])
+		ifTrue: [ ^ #invalid ].
+
    "If charCode is not single-byte, we definately have Unicode input. Zero keyValue to avoid garbage values from som VMs."
    self flag: #pharoFixMe. "I need to look at the windows vm side, to see why this keyvalue is generated in the first place".
+
    (charCode notNil and:[charCode > 255]) ifTrue: [keyValue:=0].
 	keyEvent := KeyboardEvent new
 		setType: type
 		buttons: buttons
 		position: self position
 		keyValue: keyValue
-		charCode: charCode
+		charCode: (type == #keystroke 
+			ifTrue: [ charCode ]
+			ifFalse: [ self mapSymbolToKeyValue: keyValue ])
 		hand: self
 		stamp: stamp.
+	
+	"If a modifier key is pressed the keystroke event is handled by #visitMouseDownEvent:"
+	(type == #keystroke
+		and: [ keyEvent commandKeyPressed
+			or: [ keyEvent controlKeyPressed ] ])
+				ifTrue: [ ^ #invalid ].
+	
 	keyEvent scanCode: lastKeyScanCode.
 	^keyEvent
 
@@ -775,6 +789,29 @@ HandMorph >> keyboardListeners [
 { #category : #accessing }
 HandMorph >> lastEvent [
 	^ lastMouseEvent
+]
+
+{ #category : #'private events' }
+HandMorph >> mapSymbolToKeyValue: keyValue [
+
+	"Backwards compatibility.
+	Transform a VM keycode to a corresponding ascii value"
+
+	^ { KeyboardKey down -> 31.
+		KeyboardKey keypadDown -> 31.
+		KeyboardKey left -> 28.
+		KeyboardKey keypadLeft -> 28.
+		KeyboardKey right -> 29.
+		KeyboardKey keypadRight -> 29.
+		KeyboardKey up -> 30.
+		KeyboardKey keypadUp -> 30.
+		KeyboardKey enter -> 13.
+		KeyboardKey keypadEnter -> 13.
+		KeyboardKey tab -> 9.
+		KeyboardKey backspace -> 8.
+		} asDictionary
+		at: (Smalltalk os keyForValue: keyValue)
+		ifAbsent: [ 0 ]
 ]
 
 { #category : #'focus handling' }

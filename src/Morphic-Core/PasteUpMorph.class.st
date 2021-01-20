@@ -85,7 +85,7 @@ PasteUpMorph class >> shouldSwapMenuOpenerButtonsSetting: aBuilder [
 		getSelector: #shouldSwapMenuOpenerButtons;
 		setSelector: #shouldSwapMenuOpenerButtons:;
 		description:
-				'If checked the behaviour of the world menu is changed only under linuex and window. The main menu will appear on right click instead of left click.';
+				'If checked the behaviour of the world menu is changed only under Linux and Windows. The main menu will appear on right click instead of left click.';
 		default: false
 ]
 

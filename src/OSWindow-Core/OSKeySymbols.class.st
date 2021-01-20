@@ -186,16 +186,16 @@ OSKeySymbols class >> data [
 		(16r002D OSK_MINUS minus)
 		(16r002E OSK_PERIOD period)
 		(16r002F OSK_SLASH slash)
-		(16r0030 OSK_0 zero)	
-		(16r0031 OSK_1 one)
-		(16r0032 OSK_2 two)
-		(16r0033 OSK_3 three)
-		(16r0034 OSK_4 four)
-		(16r0035 OSK_5 five)
-		(16r0036 OSK_6 six)
-		(16r0037 OSK_7 seven)
-		(16r0038 OSK_8 eight)
-		(16r0039 OSK_9 nine)
+		(16r0030 OSK_0 0)	
+		(16r0031 OSK_1 1)
+		(16r0032 OSK_2 2)
+		(16r0033 OSK_3 3)
+		(16r0034 OSK_4 4)
+		(16r0035 OSK_5 5)
+		(16r0036 OSK_6 6)
+		(16r0037 OSK_7 7)
+		(16r0038 OSK_8 8)
+		(16r0039 OSK_9 9)
 		(16r003A OSK_COLON colon)
 		(16r003B OSK_SEMICOLON semicolon)
 		(16r003C OSK_LESS less)
@@ -252,7 +252,7 @@ OSKeySymbols class >> data [
 		(16r40000047 OSK_SCROLLLOCK scroll_Lock)
 		(16r40000048 OSK_PAUSE pause)
 		(16r40000049 OSK_INSERT insert)
-		(16r4000004A OSK_HOME Begin)
+		(16r4000004A OSK_HOME HOME)
 		(16r4000004B OSK_PAGEUP Page_Up)
 		(16r007F OSK_DELETE delete)
 		(16r4000004D OSK_END end)
@@ -415,7 +415,7 @@ OSKeySymbols class >> initialize [
 		| symbolValue classVarName symbolName keyboardKey |
 		symbolValue := each first.
 		classVarName := each second.
-		symbolName := each third asUppercase asSymbol.
+		symbolName := each third asString asUppercase asSymbol.
 		keyboardKey := KeyboardKey named: symbolName.
 		(self hasClassVarNamed: classVarName) ifFalse: [
 			self addClassVarNamed: classVarName

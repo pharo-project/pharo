@@ -32,7 +32,6 @@ Class {
 	#classTraits : 'TTaskScheduler classTrait',
 	#instVars : [
 		'poolMaxSize',
-		'busyWorkers',
 		'freeWorkers',
 		'poolWorker',
 		'workers',

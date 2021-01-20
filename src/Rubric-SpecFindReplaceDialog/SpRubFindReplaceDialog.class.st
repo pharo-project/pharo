@@ -16,7 +16,6 @@ Class {
 		'replaceButton',
 		'replaceAllButton',
 		'cancelButton',
-		'updateFromModel',
 		'replaceTextInput',
 		'replaceLabel'
 	],

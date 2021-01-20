@@ -1,10 +1,10 @@
 Extension { #name : #Collection }
 
 { #category : #'*NewTools-Inspector-Extensions' }
-Collection >> inspectionItems [
+Collection >> inspectionItems: aBuilder [
 	<inspectorPresentationOrder: 0 title: 'Items'> 
 	
-	^ SpTablePresenter new
+	^ aBuilder newTable		
 		addColumn: (SpIndexTableColumn new 
 			title: 'Index';
 			sortFunction: #yourself ascending;

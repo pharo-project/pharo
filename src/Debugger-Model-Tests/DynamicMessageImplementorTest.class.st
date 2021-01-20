@@ -10,6 +10,13 @@ Class {
 	#category : #'Debugger-Model-Tests-Core'
 }
 
+{ #category : #accessing }
+DynamicMessageImplementorTest >> instVar [
+	"Only required so that instVar is referenced as we do not want unreferenced ivars in the image"
+	
+	^ instVar
+]
+
 { #category : #testing }
 DynamicMessageImplementorTest >> testBinaryMessage [
 

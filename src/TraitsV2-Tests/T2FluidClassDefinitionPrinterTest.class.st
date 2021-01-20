@@ -42,7 +42,7 @@ T2FluidClassDefinitionPrinterTest >> testClassDefinitionWithComplexSlotShouldBeD
 	self 
 		assert: (self forClass: TMockWithComplexSlot) 
 		equals: 'Trait << #TMockWithComplexSlot
-	slots: { #aComplexSlot => ObservableSlot };
+	slots: { #complexSlot => ObservableSlot };
 	package: ''TraitsV2-Tests''' 
 ]
 
@@ -76,7 +76,7 @@ T2FluidClassDefinitionPrinterTest >> testDefinitionWithComplexSlot [
 	"Fluid definition support complex slots."
 	
 	self assert: (self forClass: TMockWithComplexSlot) equals: 'Trait << #TMockWithComplexSlot
-	slots: { #aComplexSlot => ObservableSlot };
+	slots: { #complexSlot => ObservableSlot };
 	package: ''TraitsV2-Tests''' 
 ]
 

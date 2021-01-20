@@ -8,7 +8,7 @@ Class {
 TFPoolTest >> testGrowBy [
 	| pool |
 	
-	pool := TFPool newProvider: [ 1 ] size: 5.
+	pool := TFPool newProvider: [ 1 ] size: 5 releaseBlock: [:x | ].
 	
 	5 timesRepeat: [ pool takeOne ].
 	self assert: pool size equals: 5.
@@ -20,7 +20,7 @@ TFPoolTest >> testGrowBy [
 TFPoolTest >> testPopulate [
 	| pool |
 	
-	pool := TFPool newProvider: [ 1 ] size: 5.
+	pool := TFPool newProvider: [ 1 ] size: 5 releaseBlock: [:x | ].
 	
 	self assert: pool elements equals: #(1 1 1 1 1).
 	pool growBy: 5.
@@ -31,7 +31,7 @@ TFPoolTest >> testPopulate [
 TFPoolTest >> testReturnOne [
 	| pool |
 	
-	pool := TFPool newProvider: [ 1 ] size: 2.
+	pool := TFPool newProvider: [ 1 ] size: 2 releaseBlock: [:x | ].
 	
 	pool takeOne; takeOne.
 	self assert: pool isEmpty.
@@ -47,7 +47,7 @@ TFPoolTest >> testTakeOne [
 	| pool i |
 	
 	i := 0.
-	pool := TFPool newProvider: [ i := i + 1 ] size: 2.
+	pool := TFPool newProvider: [ i := i + 1 ] size: 2 releaseBlock: [:x | ].
 	
 	self assert: pool takeOne equals: 1.
 	self assert: pool takeOne equals: 2.

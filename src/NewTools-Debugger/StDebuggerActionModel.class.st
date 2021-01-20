@@ -32,11 +32,8 @@ StDebuggerActionModel >> autoClassifyMessage: aMessage inClass: aClass [
 
 { #category : #'debug - execution' }
 StDebuggerActionModel >> clearDebugSession [
-
 	contextPredicate := nil.
-	self session
-		terminate;
-		clear
+	self session terminate; clear
 ]
 
 { #category : #context }
@@ -169,6 +166,11 @@ StDebuggerActionModel >> isInterruptedContextAnAssertEqualsFailure [
 ]
 
 { #category : #'debug - predicates' }
+StDebuggerActionModel >> isInterruptedContextDead [
+	^ self contextPredicate isContextDead
+]
+
+{ #category : #'debug - predicates' }
 StDebuggerActionModel >> isInterruptedContextDoesNotUnderstand [
 	^self contextPredicate isContextDoesNotUnderstand
 
@@ -190,9 +192,10 @@ StDebuggerActionModel >> isInterruptedContextSubclassResponsibilityException [
 	^ self contextPredicate isContextSubclassResponsibilityException
 ]
 
-{ #category : #'debug - stack' }
+{ #category : #'debug - execution' }
 StDebuggerActionModel >> peelToFirstLike: aContext [
-	self session peelToFirstLike: aContext
+	self session peelToFirstLike: aContext.
+	self updateTopContext
 ]
 
 { #category : #context }

@@ -5,7 +5,7 @@ All my work is to keep header cells, but my behavior is slightly different to my
 Class {
 	#name : #FTTableHeaderRowMorph,
 	#superclass : #FTTableRowMorph,
-	#category : #'Morphic-Widgets-FastTable'
+	#category : #'Morphic-Widgets-FastTable-Base'
 }
 
 { #category : #'event handling' }

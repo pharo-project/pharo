@@ -139,12 +139,6 @@ TFUFFIBasicTypeMarshallingTest >> testSumFloat [
 ]
 
 { #category : #tests }
-TFUFFIBasicTypeMarshallingTest >> testSumSignedChar [
-
-	self assertSignedIntsWithFunction: 'sum_char'
-]
-
-{ #category : #tests }
 TFUFFIBasicTypeMarshallingTest >> testSumSignedInt [
 
 	self assertSignedIntsWithFunction: 'sum_int'

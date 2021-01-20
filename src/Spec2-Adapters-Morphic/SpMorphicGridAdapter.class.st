@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #private }
-SpMorphicGridAdapter >> addConstraits: constraints toChild: childMorph [
+SpMorphicGridAdapter >> addConstraints: constraints toChild: childMorph [
 	"Adds constraits by child"
 	
 	childMorph hResizing: #spaceFill.

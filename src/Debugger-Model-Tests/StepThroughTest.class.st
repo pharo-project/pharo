@@ -1,9 +1,6 @@
 Class {
 	#name : #StepThroughTest,
 	#superclass : #DebuggerTest,
-	#instVars : [
-		'assistant'
-	],
 	#category : #'Debugger-Model-Tests-Core'
 }
 

@@ -1391,6 +1391,12 @@ Behavior >> removeSelectorSilently: selector [
 	^ SystemAnnouncer uniqueInstance suspendAllWhile: [self removeSelector: selector].
 ]
 
+{ #category : #cleanup }
+Behavior >> restartMethods [
+	"Clean up. Long running loops or stored closures can lead to methods that are out if sync with the recompiled code. Subclasses should override this method if they need to restart methods"
+
+]
+
 { #category : #enumerating }
 Behavior >> selectSubclasses: aBlock [ 
 	"Evaluate the argument, aBlock, with each of the receiver's (next level) 

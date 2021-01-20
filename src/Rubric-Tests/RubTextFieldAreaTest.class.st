@@ -32,6 +32,7 @@ RubTextFieldAreaTest >> simulatedKeyDownFromChar: aCharacter alt: useAlt ctrl: u
 		charCode: code
 		hand: self currentWorld currentHand 
 		stamp: Time now.
+	event key: (KeyboardKey fromCharacter: aCharacter).
 	^ event
 ]
 

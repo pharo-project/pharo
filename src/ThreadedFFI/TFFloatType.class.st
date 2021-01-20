@@ -25,5 +25,5 @@ TFFloatType >> readValue: anExternalAddress offset: offset [
 { #category : #writing }
 TFFloatType >> write: aNumber into: anExternalAddress [ 
 	
-	anExternalAddress floatAt: 1 put: aNumber
+	anExternalAddress floatAt: 1 put: aNumber asFloat
 ]

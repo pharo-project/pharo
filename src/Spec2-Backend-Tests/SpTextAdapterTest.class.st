@@ -20,7 +20,7 @@ SpTextAdapterTest >> testKeyBindings [
 		toAction: [ handled := true ].
 
 	self adapter 
-		keyPressed: $x asciiValue 
+		keyDown: $x
 		shift: false 
 		meta: true
 		control: false

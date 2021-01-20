@@ -1003,7 +1003,8 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 	"If the statement is followed by closers that do not match the current scope, consume them and produce the corresponding errors wrapping the statement."
 	[(')]}' includes: currentToken value)
 		and: [ (aCollectionOfClosers includes: currentToken value) not ]]
-			whileTrue: [ 
+			whileTrue: [
+				self parserError: 'Missing opener for closer: ', currentToken value asString.
 				node := RBUnfinishedStatementErrorNode
 					content: { node }
 					start: node start

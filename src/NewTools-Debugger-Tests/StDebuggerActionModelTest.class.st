@@ -53,7 +53,7 @@ StDebuggerActionModelTest >> benchmarkFilterStack [
 { #category : #helper }
 StDebuggerActionModelTest >> changeSession: aDebugSession [
 
-	session terminate.
+	session clear.
 	session := aDebugSession.
 	debugActionModel := StDebuggerActionModel on: session
 ]
@@ -81,6 +81,7 @@ StDebuggerActionModelTest >> method1: i [
 
 { #category : #helper }
 StDebuggerActionModelTest >> method2: i [
+	<haltOrBreakpointForTesting>
 	i = 9999 ifTrue: [ self halt. ^i ].
 	^self method1: i+1
 ]
@@ -114,6 +115,7 @@ StDebuggerActionModelTest >> setUp [
 	process := [ method valueWithReceiver: self arguments: #() ]
 		newProcess.
 	context := process suspendedContext.
+	session ifNotNil: [ session clear ].
 	session := (StTestDebuggerProvider new debuggerWithContext: context)
 		session.
 	session
@@ -124,7 +126,8 @@ StDebuggerActionModelTest >> setUp [
 { #category : #running }
 StDebuggerActionModelTest >> tearDown [
 	debugger ifNotNil: [ debugger close].
-	session interruptedContext ifNotNil: [ session terminate ].
+	session ifNotNil: [ session clear ].
+	session := nil.
 	StDebuggerUsingSpecSelectorMock removeSelector: #testMethod.
 	StDebuggerUsingSpecSelectorMock removeSelector: #method.
 	StDebuggerUsingSpecSelectorMock removeSelector: #unclassifiedMethod.
@@ -145,13 +148,13 @@ StDebuggerActionModelTest >> testClearDebugSession [
 
 { #category : #'tests - contexts' }
 StDebuggerActionModelTest >> testComputeInitialTopContext [
-	
+	|newSession|
 	self changeSession: StTestDebuggerProvider new debuggerWithMissingSubclassResponsibilityContext session.
 	self assert: debugActionModel topContext identicalTo: session exception signalContext.
 	
-	session := StTestDebuggerProvider new debuggerWithMissingSubclassResponsibilityContext session.
-	session restart: session interruptedContext sender.	
-	self changeSession: session.
+	newSession := StTestDebuggerProvider new debuggerWithMissingSubclassResponsibilityContext session.
+	newSession restart: newSession interruptedContext sender.	
+	self changeSession: newSession.
 	self assert: debugActionModel topContext identicalTo: session interruptedContext
 	
 ]
@@ -326,6 +329,12 @@ StDebuggerActionModelTest >> testIsInterruptedContextAnAssertEqualsFailure [
 ]
 
 { #category : #'tests - predicates' }
+StDebuggerActionModelTest >> testIsInterruptedContextDead [
+	session interruptedContext pc: nil.
+	self assert: debugActionModel isInterruptedContextDead
+]
+
+{ #category : #'tests - predicates' }
 StDebuggerActionModelTest >> testIsInterruptedContextDoesNotUnderstand [
 	self changeSession: StTestDebuggerProvider new debuggerWithDNUContext session.
 	self assert: debugActionModel isInterruptedContextDoesNotUnderstand.
@@ -354,8 +363,31 @@ StDebuggerActionModelTest >> testIsInterruptedContextSubclassResponsibilityExcep
 
 { #category : #'tests - actions' }
 StDebuggerActionModelTest >> testPeelToFirstLike [
-	self skip.
-	self flag: #DBG_TEST
+
+	| firstCaller |
+	
+	self changeSession:
+		StTestDebuggerProvider new debuggerWithRecursiveContext session.
+		
+	session stepInto.
+	session stepInto.
+	
+	firstCaller := session stack first.	
+	session stepInto.
+	session stepInto.
+	session stepInto.
+	session stepInto.
+	debugActionModel updateTopContext.
+	
+	"Explaining the context"
+	self deny: session stack first method identicalTo: session stack second method.
+	self assert: session stack first method identicalTo: session stack third method.	
+	self assert: debugActionModel topContext identicalTo: session stack first.
+		
+	"The peel to first like the first context should pop contexts until the session is back to the first recursive sender down in the stack"
+	debugActionModel peelToFirstLike: firstCaller.
+	self assert: session interruptedContext identicalTo: firstCaller.
+	self assert: debugActionModel topContext identicalTo: firstCaller
 ]
 
 { #category : #'tests - actions' }

@@ -25,9 +25,6 @@ While this runner may seem a bit naive, it may also come in handy to control and
 Class {
 	#name : #TKTLocalProcessTaskRunner,
 	#superclass : #TKTRunner,
-	#instVars : [
-		'process'
-	],
 	#category : #'TaskIt-Kernel'
 }
 

@@ -31,6 +31,14 @@ SycFindAndReplaceMethodCommand class >> methodContextMenuActivation [
 SycFindAndReplaceMethodCommand >> applyResultInContext: aToolContext [
 ]
 
+{ #category : #testing }
+SycFindAndReplaceMethodCommand >> createRefactoring [
+	^RBFindAndReplaceRefactoring 
+		find: originalMessage selector 
+		of: originalMessage contextUser origin
+		inAllHierarchy: true
+]
+
 { #category : #execution }
 SycFindAndReplaceMethodCommand >> defaultMenuItemName [
 	^'Find and replace'
@@ -38,14 +46,7 @@ SycFindAndReplaceMethodCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycFindAndReplaceMethodCommand >> execute [
-	|dialog refactoring|
-	refactoring :=  RBFindAndReplaceMethodRefactoring 
-		find: originalMessage contextUser.
-	refactoring setOption: #listToSearch toUse: [ :met :ref |
-		dialog := RBFindAndReplacePreviewPresenter method: met refactoring: ref.
-		dialog cancelled ifTrue: [ CmdCommandAborted signal ].
-		ref].
-	refactoring transform
+	self executeRefactorings 
 ]
 
 { #category : #testing }

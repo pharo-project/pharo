@@ -203,21 +203,6 @@ SpMorphicTableAdapter >> refreshWidgetSelection [
 	^ self refreshList
 ]
 
-{ #category : #emulating }
-SpMorphicTableAdapter >> rightClicked [
-	| evt |
-
-	evt := MouseButtonEvent new 
-		setType: nil 
-		position: widget center 
-		which: MouseButtonEvent yellowButton 
-		buttons: MouseButtonEvent yellowButton 
-		hand: nil 
-		stamp: nil.
-	
-	self widget click: evt
-]
-
 { #category : #selection }
 SpMorphicTableAdapter >> selectIndex: anInteger [ 
 
@@ -250,6 +235,21 @@ SpMorphicTableAdapter >> selectionChanged: ann [
 		ifTrue: [ self presenter doActivateAtIndex: diff last ].
 		
 	ann newSelectedIndexes ifEmpty: [ selection unselectAll ]
+]
+
+{ #category : #emulating }
+SpMorphicTableAdapter >> sendRightClickEvent [
+	| evt |
+
+	evt := MouseButtonEvent new 
+		setType: nil 
+		position: widget center 
+		which: MouseButtonEvent yellowButton 
+		buttons: MouseButtonEvent yellowButton 
+		hand: nil 
+		stamp: nil.
+	
+	self widget click: evt
 ]
 
 { #category : #factory }

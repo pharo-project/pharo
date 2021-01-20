@@ -6,7 +6,7 @@ Class {
 
 { #category : #default }
 SindarinStepToReturnCommand class >> defaultDescription [
-	^ 'Step to just before the current context returns, then returns debugger control.'
+	^ 'Steps execution until a new instance is created'
 ]
 
 { #category : #initialization }
@@ -18,7 +18,7 @@ SindarinStepToReturnCommand class >> defaultIconName [
 SindarinStepToReturnCommand class >> defaultName [
 	<toolbarExtensionDebugCommand: 50>
 	<codeExtensionDebugCommand: 50>
-	^ 'Step to return'
+	^ 'To return'
 ]
 
 { #category : #executing }
