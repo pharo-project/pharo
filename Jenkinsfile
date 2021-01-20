@@ -47,6 +47,7 @@ def runTests(architecture, prefix=''){
         }
         if(fileExists('progress.log')){
             shell "mv progress.log progress-${env.STAGE_NAME}${prefix}.log"
+            shell "cat progress-${env.STAGE_NAME}${prefix}.log"
             archiveArtifacts allowEmptyArchive: true, artifacts: "progress-${env.STAGE_NAME}${prefix}.log", fingerprint: true
         }
     }

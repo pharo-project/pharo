@@ -18,7 +18,7 @@ SindarinStepToMethodEntryCommand class >> defaultIconName [
 SindarinStepToMethodEntryCommand class >> defaultName [
 	<toolbarExtensionDebugCommand: 50>
 	<codeExtensionDebugCommand: 50>
-	^ 'Step to method entry'
+	^ 'To method entry'
 ]
 
 { #category : #executing }

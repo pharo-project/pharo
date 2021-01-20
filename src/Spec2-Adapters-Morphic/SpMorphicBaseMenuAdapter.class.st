@@ -42,6 +42,12 @@ SpMorphicBaseMenuAdapter >> openAt: aPoint [
 	self widgetDo: [ :w | w invokeAt: (aPoint + (2@7)) in: self currentWorld allowKeyboard: true ]
 ]
 
+{ #category : #'spec protocol' }
+SpMorphicBaseMenuAdapter >> openAtPointer [
+
+	self openAt: self currentHand position
+]
+
 { #category : #protocol }
 SpMorphicBaseMenuAdapter >> title [
 

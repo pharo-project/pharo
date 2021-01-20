@@ -177,16 +177,21 @@ PopupChoiceDialogWindow >> initialize [
 { #category : #'event handling' }
 PopupChoiceDialogWindow >> keyDown: anEvent [
 	"Look for a matching item?"
-	(super keyDown: anEvent) ifTrue: [^true].
-	self inform: anEvent keyCharacter printString.
-	anEvent keyCharacter = Character backspace
+	
+	(super keyDown: anEvent)
+		ifTrue: [ ^ true ].
+	
+	(anEvent key = KeyboardKey enter) 
+		ifTrue: [ ^self processEnter: anEvent ].
+	anEvent key = KeyboardKey backspace
 		ifTrue: [
 			self filter ifNotEmpty: [self filter: self filter allButLast].
 			^ true].
-	anEvent keyCharacter = Character arrowUp ifTrue: [self selectLastEnabledItem. ^true].
-	anEvent keyCharacter = Character arrowDown ifTrue: [self selectFirstEnabledItem. ^true].
-	anEvent keyCharacter = Character arrowLeft ifTrue: [self switchToPreviousColumn. ^true].
-	anEvent keyCharacter = Character arrowRight ifTrue: [self switchToNextColumn. ^true].
+
+	anEvent key isArrowUp ifTrue: [self selectLastEnabledItem. ^true].
+	anEvent key isArrowDown ifTrue: [self selectFirstEnabledItem. ^true].
+	anEvent key isArrowLeft ifTrue: [self switchToPreviousColumn. ^true].
+	anEvent key isArrowRight ifTrue: [self switchToNextColumn. ^true].
 	^false
 ]
 

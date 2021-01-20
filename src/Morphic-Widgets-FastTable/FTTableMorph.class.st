@@ -50,7 +50,7 @@ Class {
 		'resizable',
 		'selectionModeStrategy'
 	],
-	#category : #'Morphic-Widgets-FastTable'
+	#category : #'Morphic-Widgets-FastTable-Base'
 }
 
 { #category : #accessing }

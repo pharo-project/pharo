@@ -589,6 +589,26 @@ SpWindowPresenter >> whenDecorationsChangedDo: aBlock [
 ]
 
 { #category : #'api-events' }
+SpWindowPresenter >> whenFocusLostDo: aBlock [
+	"Inform when window lost focus. 
+	 This is a convenience method that exposes a functionality of the event handler 
+	 (See `SpEventHandler>>#whenFocusLostDo:`, but in the case of windows is 
+	 useful to have it here."
+
+	self eventHandler whenFocusLostDo: aBlock
+]
+
+{ #category : #'api-events' }
+SpWindowPresenter >> whenFocusReceivedDo: aBlock [
+	"Inform when window receives focus. 
+	 This is a convenience method that exposes a functionality of the event handler 
+	 (See `SpEventHandler>>#whenFocusReceivedDo:`, but in the case of windows is 
+	 useful to have it here."
+
+	self eventHandler whenFocusReceivedDo: aBlock
+]
+
+{ #category : #'api-events' }
 SpWindowPresenter >> whenOpenedDo: aBlock [
 	"Inform when window is opened. 
 	 `aBlock` receives zero arguments."

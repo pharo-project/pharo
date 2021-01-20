@@ -127,6 +127,8 @@ ImageCleaner >> cleanUpMethods [
 		
 	ProcessBrowser initialize.
 	Delay restartTimerEventLoop.
+	"We are moving all the restart code to the classes"
+	Smalltalk restartMethods.
 ]
 
 { #category : #cleaning }

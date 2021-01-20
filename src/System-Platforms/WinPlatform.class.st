@@ -121,7 +121,7 @@ WinPlatform >> menuShortcutString [
 { #category : #'string-manipulation' }
 WinPlatform >> multiByteToWideCharacterCodepage: codepage flags: flags input: input inputLen: inputLen output: output outputLen: outputLen [
 
-	^self ffiCall: #(int MultiByteToWideChar(uint codepage, ulong flags, String input, int inputLen, Win32WideString output, int outputLen ))
+	^self ffiCall: #(int MultiByteToWideChar(uint codepage, ulong flags, void* input, int inputLen, Win32WideString output, int outputLen ))
 ]
 
 { #category : #'environment-variables' }
@@ -145,5 +145,5 @@ WinPlatform >> virtualKey: virtualKeyCode [
 { #category : #'string-manipulation' }
 WinPlatform >> wideCharacterToMultiByteCodepage: codepage flags: flags input: input inputLen: inputLen output: output outputLen: outputLen [
 
-	^self ffiCall: #(int WideCharToMultiByte(uint codepage, ulong flags, Win32WideString input, int inputLen, ByteArray output, int outputLen, int 0, int 0))
+	^self ffiCall: #(int WideCharToMultiByte(uint codepage, ulong flags, Win32WideString input, int inputLen, void* output, int outputLen, int 0, int 0))
 ]

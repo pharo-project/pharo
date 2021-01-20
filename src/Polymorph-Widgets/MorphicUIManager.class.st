@@ -32,6 +32,15 @@ MorphicUIManager class >> isValidForCurrentSystemConfiguration [
 			and: [ Smalltalk isInteractiveGraphic ] ]
 ]
 
+{ #category : #cleanup }
+MorphicUIManager class >> restartMethods [
+   UIProcess ifNotNil: [
+	| process |
+	process := UIProcess.
+	self new spawnNewProcess.
+	process terminate. ]
+]
+
 { #category : #'ui process' }
 MorphicUIManager class >> uiProcess [ 
 

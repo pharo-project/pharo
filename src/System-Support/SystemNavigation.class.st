@@ -175,6 +175,13 @@ SystemNavigation >> allReferencesTo: aLiteral do: aBlock [
 ]
 
 { #category : #query }
+SystemNavigation >> allReferencesTo: aLiteral in: classes [
+	"Answer all the methods that refer to aLiteral even deeply embedded in literal array."
+
+	^ classes flatCollect: [ :class | class thoroughWhichMethodsReferTo: aLiteral]
+]
+
+{ #category : #query }
 SystemNavigation >> allReferencesToBinding: aVariablesBinding [
 	"Answer all the methods that refer to aVariableBinding, do not go into nested Arrays"
 

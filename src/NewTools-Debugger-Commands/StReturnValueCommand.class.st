@@ -36,9 +36,10 @@ StReturnValueCommand class >> defaultShortcut [
 ]
 
 { #category : #accessing }
-StReturnValueCommand >> canBeExecuted [
-	"I can always return from a context, for ex. if I'm stuck because of a DNU."
-	^ true
+StReturnValueCommand >> appliesTo: aDebugger [
+	"I can always return from a context, for ex. if I'm stuck because of a DNU.
+	Except from dead contexts"
+	^ aDebugger canExecuteReturnCommand
 ]
 
 { #category : #actions }

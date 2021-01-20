@@ -40,7 +40,6 @@ FluidClassDefinitionPrinterTest >> testArray [
 FluidClassDefinitionPrinterTest >> testArrayedCollectionWithPoolDictionary [
 
 	self assert: (self forClass: ExampleForTestWithSharedPool) equals: 'ArrayedCollection << #ExampleForTestWithSharedPool
-	slots: { #aSlot . #anotherSlot };
 	sharedPools: { ChronologyConstants };
 	tag: ''Classes'';
 	package: ''Kernel-Tests''' 
@@ -98,6 +97,36 @@ FluidClassDefinitionPrinterTest >> testDefinitionWithComplexSlot [
 	slots: { #aComplexSlot => ObservableSlot };
 	tag: ''Fluid'';
 	package: ''Kernel-Tests''' 
+]
+
+{ #category : #'tests - unnecessary values' }
+FluidClassDefinitionPrinterTest >> testDisplayEmptySlots [
+	"I would like to be able to test if I provide too many empty values that
+	the default empty values are just ignored."
+	| class |
+	ClassDefinitionPrinter displayEmptySlots: true.
+	class := (Object << #CDFluidMock
+	slots: {};
+	tag: 'BasicObjects';
+	package: 'Kernel') build.
+	self assert: (self forClass: class) equals: 'Object << #CDFluidMock
+	slots: {};
+	package: ''_UnpackagedPackage'''
+	
+]
+
+{ #category : #'tests - unnecessary values' }
+FluidClassDefinitionPrinterTest >> testDoesNotDisplayEmptySlots [
+
+	| class |
+	ClassDefinitionPrinter displayEmptySlots: false.
+	class := (Object << #CDFluidMock
+	slots: {};
+	tag: 'BasicObjects';
+	package: 'Kernel') build.
+	self assert: (self forClass: class) equals: 'Object << #CDFluidMock
+	package: ''_UnpackagedPackage'''
+	
 ]
 
 { #category : #'tests - expanded' }

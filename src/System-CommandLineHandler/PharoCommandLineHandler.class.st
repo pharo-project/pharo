@@ -98,11 +98,6 @@ PharoCommandLineHandler >> changePreferences [
 	StartupPreferencesLoader default load: {preferenceFile}
 ]
 
-{ #category : #'private - preferences' }
-PharoCommandLineHandler >> copySubcommand [
-	commandLine := commandLine copySubcommand
-]
-
 { #category : #commands }
 PharoCommandLineHandler >> default [
 	Smalltalk isHeadless 

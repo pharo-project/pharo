@@ -5,12 +5,9 @@ Class {
 	#name : #FTHeaderColumnCellMorph,
 	#superclass : #FTCellMorph,
 	#instVars : [
-		'column',
-		'allowSort',
-		'isColumnOrderedFromLeast',
-		'isColumnOrderedFromGreatest'
+		'column'
 	],
-	#category : #'Morphic-Widgets-FastTable'
+	#category : #'Morphic-Widgets-FastTable-Base'
 }
 
 { #category : #accessing }

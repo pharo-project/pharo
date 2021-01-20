@@ -15,6 +15,15 @@ Class {
 	#category : #'Rubric-Editing-Core'
 }
 
+{ #category : #cleanup }
+RubTextSelectionColor class >> cleanUp [
+
+	FindReplaceSelection := nil.
+	OppositeDelimiterSelection := nil.
+	PrimarySelection := nil.
+	SecondarySelection := nil
+]
+
 { #category : #'default accessing' }
 RubTextSelectionColor class >> findReplaceSelection [
 	^ FindReplaceSelection

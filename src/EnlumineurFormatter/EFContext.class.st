@@ -25,7 +25,6 @@ Class {
 		'retainBlankLinesBeforeComments',
 		'selectorAndArgumentCombinedMaxSize',
 		'useBasicCommentFormat',
-		'traditionalBinaryPrecedenceArray',
 		'numberOfSpacesInsideBlock',
 		'numberOfSpacesInsideParentheses',
 		'numberOfSpacesAfterCaretSymbolInReturn',
@@ -43,10 +42,7 @@ Class {
 		'numberOfNewLinesAfterMethodComment',
 		'newLinesAfterMethodSignature',
 		'periodAtEndOfMethod',
-		'periodAtEndOfBlock',
-		'newLinesAfterMethodComment',
-		'newLinesAfterMethodPattern',
-		'periodsAtEndOfBlock'
+		'periodAtEndOfBlock'
 	],
 	#category : #'EnlumineurFormatter-Core'
 }

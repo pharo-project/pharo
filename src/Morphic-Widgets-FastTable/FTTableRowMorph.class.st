@@ -5,7 +5,7 @@ All my work is to keep cells.
 Class {
 	#name : #FTTableRowMorph,
 	#superclass : #FTSelectableMorph,
-	#category : #'Morphic-Widgets-FastTable'
+	#category : #'Morphic-Widgets-FastTable-Base'
 }
 
 { #category : #'instance creation' }

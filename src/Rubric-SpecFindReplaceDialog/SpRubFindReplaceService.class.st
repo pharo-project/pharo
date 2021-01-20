@@ -9,8 +9,7 @@ Class {
 	#instVars : [
 		'dialog',
 		'dialogWindow',
-		'textAreaHolder',
-		'app'
+		'textAreaHolder'
 	],
 	#category : #'Rubric-SpecFindReplaceDialog'
 }

@@ -5,8 +5,6 @@ Class {
 	#name : #NECTestClass,
 	#superclass : #NECTestSuperClass,
 	#instVars : [
-		'third',
-		'fourth',
 		'typeSuggestingParameter',
 		'messageSend',
 		'messageSend2',
@@ -58,9 +56,10 @@ NECTestClass >> initialize: aRectangle [
 ]
 
 { #category : #utilities }
-NECTestClass >> lowPriorityOverrides: aRectangle [ 
+NECTestClass >> lowPriorityOverrides: aRectangle [
+
 	messageSend := aRectangle.
-	typeSuggestingParameter2 := aRectangle. 
+	typeSuggestingParameter2 := aRectangle
 ]
 
 { #category : #tests }

@@ -49,7 +49,7 @@ StInspectorSlotNode >> printOn: stream [
 { #category : #accessing }
 StInspectorSlotNode >> rawValue [
 
-	^ self hostObject readSlot: slot
+	^  slot read: self hostObject
 ]
 
 { #category : #actions }

@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #util }
-StDebuggerObjectForTests >> haltingMethod [ self halt. ^self
+StDebuggerObjectForTests >> haltingMethod [ <haltOrBreakpointForTesting> self halt. ^self
 ]
 
 { #category : #initialization }

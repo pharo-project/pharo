@@ -30,43 +30,18 @@ SycExtractMethodCommand >> defaultMenuItemName [
 { #category : #execution }
 SycExtractMethodCommand >> execute [
 
-	| selectedInterval dialog refactoring|
-	selectedInterval := selectedTextInterval ifEmpty: [ sourceNode sourceInterval ].
-	refactoring := RBExtractMethodRefactoring	
-		extract: selectedInterval from: method selector in: method origin.
+	| selectedInterval refactoring |
+	selectedInterval := selectedTextInterval ifEmpty: [ 
+		                    sourceNode sourceInterval ].
+	refactoring := RBExtractMethodAndOccurrences
+		               extract: selectedInterval
+		               from: method selector
+		               in: method origin.
 	self setUpOptionToUseExistingMethodDuring: refactoring.
 	self setUpOptionToOverrideExistingMethodDuring: refactoring.
-	refactoring setOption: #methodName toUse: [ :ref :methodName |
-		dialog := SycMethodNameEditorPresenter openOn: methodName withRefactoring: ref.
-		dialog cancelled ifTrue: [  CmdCommandAborted signal ].
-		methodName].
-	
-	self executeRefactoring: refactoring.
-]
+	self setUpOptionToChangeMethodNameDuring: refactoring.
 
-{ #category : #private }
-SycExtractMethodCommand >> executeRefactoring: refactoring [
-
-	NautilusRefactoring new refactoringOptions: refactoring.
-	[ refactoring execute.
-	self findOcurrences: refactoring] 
-	on: RBRefactoringError 
-	do: [ :e | UIManager default alert: e messageText ].
-	
-]
-
-{ #category : #execution }
-SycExtractMethodCommand >> findOcurrences: aRefactoring [ 	
-	|refactoring ocurrences|
-	
-	refactoring := RBFindAndReplaceMethodRefactoring 
-		find: aRefactoring compiledMethod
-		andReplaceIn: { aRefactoring method }.
-	ocurrences := (refactoring findOcurrencesIn: method selector of: method origin).
-	ocurrences ifNotEmpty: [ 
-		(self confirm: ('We find <1s> ocurrence(s) of extracted method.
-Would you like review and replace them?' expandMacrosWith: ocurrences size asString))
-		 	ifTrue: [ refactoring transform ] ]
+	self executeRefactoring: refactoring
 ]
 
 { #category : #execution }
@@ -74,6 +49,18 @@ SycExtractMethodCommand >> readParametersFromContext: aSourceCodeContext [
 	super readParametersFromContext: aSourceCodeContext.
 	
 	selectedTextInterval := aSourceCodeContext selectedTextInterval
+]
+
+{ #category : #execution }
+SycExtractMethodCommand >> setUpOptionToChangeMethodNameDuring: refactoring [
+
+	| dialog |
+	refactoring setOption: #methodName toUse: [ :ref :methodName | 
+		dialog := SycMethodNameEditorPresenter
+			          openOn: methodName
+			          withRefactoring: ref.
+		dialog cancelled ifTrue: [ CmdCommandAborted signal ].
+		methodName ]
 ]
 
 { #category : #execution }

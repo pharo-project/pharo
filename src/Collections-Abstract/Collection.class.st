@@ -600,17 +600,6 @@ Collection >> detectMin: aBlock [
 ]
 
 { #category : #enumerating }
-Collection >> detectSum: aBlock [
-	"Evaluate aBlock with each of the receiver's elements as the argument. 
-	Return the sum of the answers."
-	| sum |
-	sum := 0.
-	self do: [:each | 
-		sum := (aBlock value: each) + sum].  
-	^ sum
-]
-
-{ #category : #enumerating }
 Collection >> difference: aCollection [
 	"Answer the set theoretic difference of two collections. Pay attention that the difference is not commutative, hence the order is important."
 

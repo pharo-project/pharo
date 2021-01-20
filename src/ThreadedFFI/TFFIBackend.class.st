@@ -84,6 +84,9 @@ TFFIBackend >> on: anObject float32At: offset [
 { #category : #accessing }
 TFFIBackend >> on: anObject float32At: offset put: value [
 
+	value isFloat ifFalse: [ 
+		^ anObject float32AtOffset: offset - 1 put: value asFloat ].
+
 	self isReadOnlyObject ifTrue: [ 
 		^ self
 			  modificationForbiddenFor: #on:float32At:put:
@@ -101,6 +104,9 @@ TFFIBackend >> on: anObject float64At: offset [
 
 { #category : #accessing }
 TFFIBackend >> on: anObject float64At: offset put: value [
+
+	value isFloat ifFalse: [ 
+		^ anObject float64AtOffset: offset - 1 put: value asFloat ].
 
 	self isReadOnlyObject ifTrue: [ 
 		^ self

@@ -30,18 +30,11 @@ OCAbstractMethodScope >> addCopyingTempToAllScopesUpToDefTemp: aVar [
 ]
 
 { #category : #'temp vars' }
-OCAbstractMethodScope >> addTemp: name [
-	^self addTemp: TemporaryVariable new withName: name
-]
-
-{ #category : #'temp vars' }
-OCAbstractMethodScope >> addTemp: aTempVariable withName: aString [
+OCAbstractMethodScope >> addTemp: aTempVar [	
+	aTempVar scope: self.
 	^ tempVars
-		at: aString
-		put: (aTempVariable
-				name: aString;
-				scope: self;
-				yourself)
+		at: aTempVar name
+		put: aTempVar
 ]
 
 { #category : #'temp vars - vector' }

@@ -129,6 +129,22 @@ SpMorphicWindowAdapter >> initialExtent [
 	^ self model initialExtent
 ]
 
+{ #category : #'event installing' }
+SpMorphicWindowAdapter >> installFocusLostEvent: anEvent to: aWidget [
+
+	aWidget announcer
+		when: WindowDeActivated
+		do: [ anEvent action value ]
+]
+
+{ #category : #'event installing' }
+SpMorphicWindowAdapter >> installFocusReceivedEvent: anEvent to: aWidget [
+
+	aWidget announcer
+		when: WindowActivated
+		do: [ anEvent action value ]
+]
+
 { #category : #protocol }
 SpMorphicWindowAdapter >> isDisplayed [
 

@@ -95,7 +95,8 @@ RBExpandReferencedPoolsRefactoring >> poolVariableNamesIn: poolName [
 
 { #category : #preconditions }
 RBExpandReferencedPoolsRefactoring >> preconditions [
-	^RBCondition empty
+
+	^ self emptyCondition
 ]
 
 { #category : #transforming }

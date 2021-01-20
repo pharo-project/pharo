@@ -217,6 +217,7 @@ ClySystemBrowserContext >> requestSingleMethodTag: queryTitle suggesting: sugges
 		acceptNewEntry: true;
 		title: queryTitle;
 		yourself.
+	ui defaultFocusMorph contentMorph selectAll.
 	selectedTag := ui chooseFromOwner: tool.
 	selectedTag isEmptyOrNil ifTrue: [ CmdCommandAborted signal].
 	(selectedTag beginsWith: '*') ifTrue: [ 

@@ -39,12 +39,31 @@ SycAddMessageArgumentCommand >> argumentDefaultValue: anObject [
 
 { #category : #execution }
 SycAddMessageArgumentCommand >> createRefactoring [
-
+	| permutation |
+	permutation := newSelector argumentNames collect: [ :e |
+		originalMessage argumentNames indexOf: e ifAbsent: [ 0 ]
+	].
 	^RBAddParameterRefactoring
 		addParameterToMethod: originalMessage selector
 		in: (SycMessageOriginHack of: originalMessage) "look at SycMessageOriginHack comment"
-		newSelector: newSelector
+		newSelector: newSelector selector
+		permutation: permutation
 		initializer: argumentDefaultValue
+]
+
+{ #category : #execution }
+SycAddMessageArgumentCommand >> createValidNameArgument [
+	|method newString baseString i|
+	method := originalMessage methodClass >> originalMessage selector.
+	newString := baseString := 'anObject'.
+	i := 0.
+	
+	[(method tempNames includes: newString) 
+		or: [originalMessage methodClass allInstVarNames includes: newString]] 
+			whileTrue: 
+				[i := i + 1.
+				newString := baseString , i printString].
+	^ {newString asSymbol}
 ]
 
 { #category : #accessing }
@@ -71,13 +90,27 @@ SycAddMessageArgumentCommand >> newSelector: anObject [
 { #category : #execution }
 SycAddMessageArgumentCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	newSelector := UIManager default
-		request: 'Enter new selector:' initialAnswer: originalMessage selector.
-	newSelector isEmptyOrNil ifTrue:  [ CmdCommandAborted signal ].
+	
+	newSelector := self requestMessageIn: aToolContext.
 	
 	argumentDefaultValue := UIManager default
 		request: 'Enter default value for argument' initialAnswer: 'nil'.
 	argumentDefaultValue isEmptyOrNil ifTrue:  [ CmdCommandAborted signal ]
+]
+
+{ #category : #execution }
+SycAddMessageArgumentCommand >> requestMessageIn: aToolContext [
+	| methodName dialog |
+	methodName := RBMethodName selector: originalMessage selector, 'arg:' arguments: originalMessage argumentNames, self createValidNameArgument.
+	dialog := SycMethodNameEditorPresenter openOn: methodName.
+	dialog cancelled ifTrue: [  CmdCommandAborted signal ].
+	
+	originalMessage selector = methodName selector & (originalMessage argumentNames = methodName arguments)
+		ifTrue: [ CmdCommandAborted signal].		
+				
+	^(SycMessageDescription fromContextOf: aToolContext)
+		selector: methodName selector;
+		argumentNames: methodName arguments
 ]
 
 { #category : #execution }

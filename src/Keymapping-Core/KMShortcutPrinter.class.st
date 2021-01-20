@@ -51,17 +51,18 @@ KMShortcutPrinter class >> toString: aShortcut [
 { #category : #visiting }
 KMShortcutPrinter >> genericSpecialCharacter: char [ 
 
-	char = Character cr ifTrue: [ ^ 'Enter' ].
-	char = Character space ifTrue: [ ^ 'Space' ].
-	^ char	 asUppercase
+	char = KeyboardKey enter ifTrue: [ ^ 'Enter' ].
+	char = (KeyboardKey fromCharacter: Character space) ifTrue: [ ^ 'Space' ].
+	^ char	 name
 ]
 
 { #category : #visiting }
 KMShortcutPrinter >> macSpecialCharacter: char [ 
 
-	char = Character cr ifTrue: [ ^ self class symbolTableAt: #Enter ifAbsent: [ 'Enter' ] ].	
-	char = Character space ifTrue: [ ^ self class symbolTableAt: #Space ifAbsent: [ 'Space' ] ].	
-	^ char	asUppercase
+	char = KeyboardKey enter ifTrue: [ ^ self class symbolTableAt: #Enter ifAbsent: [ 'Enter' ] ].	
+	(char = (KeyboardKey fromCharacter: Character space))
+		ifTrue: [ ^ self class symbolTableAt: #Space ifAbsent: [ 'Space' ] ].	
+	^ char name asUppercase
 ]
 
 { #category : #accessing }
@@ -87,7 +88,7 @@ KMShortcutPrinter >> shortcutModifiers [
 KMShortcutPrinter >> visitGeneric: aPlatform [
 	| char |
 	
-	char := self genericSpecialCharacter: shortcut platformCharacter asUppercase.	
+	char := self genericSpecialCharacter: shortcut platformCharacter.	
 	^ String streamContents: [ :stream |
 		self shortcutModifiers
 			do: [ :each | stream << each ]

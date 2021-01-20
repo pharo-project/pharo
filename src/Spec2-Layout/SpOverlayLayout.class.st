@@ -71,3 +71,10 @@ SpOverlayLayout >> remove: aPresenter [
 	singleChild := nil.
 	super remove: aPresenter
 ]
+
+{ #category : #accessing }
+SpOverlayLayout >> removeOverlay: aPresenter [
+
+	overlays remove: aPresenter.	
+	self remove: aPresenter
+]

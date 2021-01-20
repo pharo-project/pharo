@@ -183,6 +183,15 @@ ClassFactoryForTestCase >> newClassUsing: aTraitComposition [
 ]
 
 { #category : #creating }
+ClassFactoryForTestCase >> newClassWithInstanceVariableNames: aString [
+
+	^ self 
+		newSubclassOf: self defaultSuperclass
+		instanceVariableNames: aString
+		classVariableNames: ''
+]
+
+{ #category : #creating }
 ClassFactoryForTestCase >> newSubclassOf: aClass [
 
 	^ self 
@@ -318,6 +327,56 @@ ClassFactoryForTestCase >> nextCount [
 ClassFactoryForTestCase >> packageName [
 
 	^ #CategoryForTestToBeDeleted
+]
+
+{ #category : #creating }
+ClassFactoryForTestCase >> redefineClass: aClass category: aString [
+
+	^self
+		redefineClass: aClass
+		subclassOf: aClass superclass
+		uses: aClass traitComposition
+		instanceVariableNames: aClass instanceVariablesString 
+		classVariableNames: aClass classVariablesString
+		poolDictionaries: aClass sharedPoolsString
+		package: aString
+]
+
+{ #category : #creating }
+ClassFactoryForTestCase >> redefineClass: aClass instanceVariableNames: aString [ 
+
+	^self
+		redefineClass: aClass
+		subclassOf: aClass superclass
+		uses: aClass traitComposition
+		instanceVariableNames: aString
+		classVariableNames: aClass classVariablesString
+		poolDictionaries: aClass sharedPoolsString
+		package: aClass category
+]
+
+{ #category : #creating }
+ClassFactoryForTestCase >> redefineClass: aClass subclassOf: aSuperclass 
+	uses: aTraitComposition 
+	instanceVariableNames: ivNamesString 
+	classVariableNames:  classVarsString 
+	poolDictionaries: poolNamesString 
+	package: aPackageName [
+
+	| newClass |
+			
+	newClass := self class classInstaller make: [ :aBuilder | 
+		aBuilder 
+			name: aClass name;
+			superclass: aSuperclass;
+			traitComposition: aTraitComposition asTraitComposition;
+			slots: ivNamesString asSlotCollection;
+			sharedVariablesFromString: classVarsString;
+			sharedPools: poolNamesString;
+			package: aPackageName asSymbol ].	
+		
+	self createdClasses add: newClass.
+	^ newClass
 ]
 
 { #category : #'creating - silently' }

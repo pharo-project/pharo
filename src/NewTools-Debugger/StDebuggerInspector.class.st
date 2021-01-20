@@ -62,6 +62,11 @@ StDebuggerInspector >> currentLayoutSpec [
 	^currentLayoutSpec
 ]
 
+{ #category : #accessing }
+StDebuggerInspector >> debuggerInspectorModelClass [
+	^ StDebuggerInspectorModel
+]
+
 { #category : #layout }
 StDebuggerInspector >> defaultLayoutSpec [
 	^#defaultSpec
@@ -194,18 +199,20 @@ StDebuggerInspector >> updateEvaluationPaneReceiver [
 
 { #category : #layout }
 StDebuggerInspector >> updateLayoutForContexts: aContext isAssertionFailure: isTopContextFailingAssertion [
-	isTopContextFailingAssertion
-		ifFalse: [ currentLayoutSpec = self defaultLayoutSpec
-				ifTrue: [ ^ self ].
+
+	(isTopContextFailingAssertion not or: [ (aContext at: 2) isString ]) 
+		ifTrue: [ 
+			currentLayoutSpec = self defaultLayoutSpec ifTrue: [ ^ self ].
 			self setDefaultLayout.
 			^ self ].
-	currentLayoutSpec = self assertionLayoutSpec
-		ifTrue: [ ^ self ].
+
+	currentLayoutSpec = self assertionLayoutSpec ifTrue: [ ^ self ].
 	self flag: 'Way too much magickal: why these indexes?'.
 	assertionFailure := StFailingAssertionInspector
-		diffInspectorsFromActual: ((aContext at: 2) at: 2)
-		expected: ((aContext at: 2) at: 1)
-		application: self application.
+		                    diffInspectorsFromActual:
+		                    ((aContext at: 2) at: 2)
+		                    expected: ((aContext at: 2) at: 1)
+		                    application: self application.
 	self setAssertionLayout
 ]
 
@@ -220,7 +227,7 @@ StDebuggerInspector >> updateWith: inspectedObject [
 			 oldContext selector == newContext selector ]) ifTrue: [ ^ self ] ].
 
 	self saveRawInspectionSelectionForContext: oldContext.
-	self model: (StDebuggerInspectorModel on: inspectedObject).
+	self model: (self debuggerInspectorModelClass on: inspectedObject).
 	self updateEvaluationPaneReceiver.
 	self restoreRawInspectionSelectionForContext: newContext
 ]

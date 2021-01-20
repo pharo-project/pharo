@@ -2,7 +2,8 @@ Class {
 	#name : #StDebuggerContextPredicateTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'predicate'
+		'predicate',
+		'context'
 	],
 	#category : #'NewTools-Debugger-Tests-Model'
 }
@@ -10,20 +11,34 @@ Class {
 { #category : #running }
 StDebuggerContextPredicateTest >> setUp [
 	super setUp.
-	
-	predicate := (StDebuggerContextPredicate context: 0)
+	context := [  ] asContext.
+	predicate := (StDebuggerContextPredicate context: context)
 ]
 
 { #category : #tests }
 StDebuggerContextPredicateTest >> testContext [
-	self assert: predicate context equals: 0
+	self assert: predicate context identicalTo: context
+]
+
+{ #category : #tests }
+StDebuggerContextPredicateTest >> testIsContextDead [
+	
+	self deny: predicate isContextDead.
+	context pc: nil.
+	self assert: predicate isContextDead
 ]
 
 { #category : #tests }
 StDebuggerContextPredicateTest >> testIsSteppable [
-	
+
 	self assert: predicate isSteppable.
 	predicate postMortem: true.
+	self deny: predicate isSteppable.
+
+	predicate postMortem: false.
+	self assert: predicate isSteppable.
+	context pc: nil.
+	self assert: context isDead.
 	self deny: predicate isSteppable
 ]
 
