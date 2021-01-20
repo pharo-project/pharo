@@ -19,7 +19,7 @@ Class {
 	#category : #'Polymorph-Widgets-Base'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 EditableDropListMorph class >> on: anObject list: getListSel selected: getSelectionSel changeSelected: setSelectionSel useIndex: useIndex addToList: addToListSel class: aClass getEnabled: getEnabledSel [ 
 	^ self
 		on: anObject
@@ -33,7 +33,7 @@ EditableDropListMorph class >> on: anObject list: getListSel selected: getSelect
 		default: '' 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 EditableDropListMorph class >> on: anObject list: getListSel selected: getSelectionSel changeSelected: setSelectionSel useIndex: useIndex addToList: addToListSel class: aClass getEnabled: getEnabledSel default: aDefaultValue [
 	^ (super
 		on: anObject

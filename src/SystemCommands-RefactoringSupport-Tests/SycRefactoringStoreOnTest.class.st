@@ -43,12 +43,14 @@ SycRefactoringStoreOnTest >> testSycAddMessageArgumentCommandIsProperlyStoreOn [
 	| refactorings |
 	refactorings := SycAddMessageArgumentCommand new
 		originalMessage: (MockTreeTableItem >> #title:) ast;
-		newSelector: #title:lala:;
+		newSelector: (SycMessageDescription new
+			selector: #title:lala:;
+			argumentNames: #(#anObject #anObject1));
 		argumentDefaultValue: 'nil';
 		class: MockTreeTableItem;
 		asRefactorings.
 	
 	self 
 		assert: (String streamContents: [ :s | refactorings storeOn: s ])
-		equals: '((Array new: 1) at: 1 put: (RBAddParameterRefactoring addParameterToMethod: #title: in: MockTreeTableItem newSelector: #title:lala: initializer: ''nil''); yourself)'
+		equals: '((Array new: 1) at: 1 put: (RBAddParameterRefactoring addParameterToMethod: #title: in: MockTreeTableItem newSelector: #title:lala: permutation: #(1 0) initializer: ''nil''); yourself)'
 ]

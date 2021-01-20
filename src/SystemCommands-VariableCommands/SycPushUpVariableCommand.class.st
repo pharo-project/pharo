@@ -7,6 +7,13 @@ Class {
 	#category : #'SystemCommands-VariableCommands'
 }
 
+{ #category : #activation }
+SycPushUpVariableCommand class >> sourceCodeMenuActivation [
+	<classAnnotation>
+	
+	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.3 for: ClySourceCodeContext
+]
+
 { #category : #execution }
 SycPushUpVariableCommand >> asRefactorings [
 
