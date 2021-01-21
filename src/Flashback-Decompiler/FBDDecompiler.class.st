@@ -175,6 +175,17 @@ FBDDecompiler >> decompileThenRecompileClass: aClass [
 ]
 
 { #category : #'data flow instructions' }
+FBDDecompiler >> directedSuperSend: selector numArgs: numberArguments [
+
+	| args currentClass |
+
+	currentClass := self popFromStack: 1. 
+	args := self popFromStack: numberArguments.
+	simulatedStack removeLast.
+	simulatedStack addLast: (builder codeMessage: selector receiver: builder codeSuper arguments: args ).
+]
+
+{ #category : #'data flow instructions' }
 FBDDecompiler >> doDup [
 	| dupTemp |
 	simulatedStack last class == RBVariableNode

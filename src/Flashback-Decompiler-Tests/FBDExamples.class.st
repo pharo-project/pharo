@@ -1839,6 +1839,13 @@ FBDExamples >> singleRemoteTempVarWrittenAfterClosedOver [
 ]
 
 { #category : #examples }
+FBDExamples >> superCallInBlock [
+
+	^ [ super yourself ] value
+
+]
+
+{ #category : #examples }
 FBDExamples >> writtenAfterClosedOver [
 
 	| a |      

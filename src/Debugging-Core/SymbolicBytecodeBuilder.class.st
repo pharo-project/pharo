@@ -78,6 +78,15 @@ SymbolicBytecodeBuilder >> decode [
 ]
 
 { #category : #'instruction decoding' }
+SymbolicBytecodeBuilder >> directedSuperSend: selector numArgs: numberArguments [
+	"Print the Directed Super Send Message With Selector, selector, bytecode. 
+	The current class is located in the stack, then the arguments of the message and the receiver just 
+	below them."
+
+	self addBytecode: 'directedSuperSend: ', selector printString
+]
+
+{ #category : #'instruction decoding' }
 SymbolicBytecodeBuilder >> doDup [
 	"Print the Duplicate Top Of Stack bytecode."
 
@@ -229,7 +238,9 @@ SymbolicBytecodeBuilder >> pushFullClosure: lit numCopied: numCopied receiverOnS
 SymbolicBytecodeBuilder >> pushLiteralVariable: anAssociation [
 	"Print the Push Contents Of anAssociation On Top Of Stack bytecode."
 
-	self addBytecode: 'pushLit: ' , anAssociation key
+	self addBytecode: 'pushLit: ' , (anAssociation key 
+		ifNil: [ anAssociation value ] 
+		ifNotNil: [ anAssociation key ]) asString
 ]
 
 { #category : #'instruction decoding' }
