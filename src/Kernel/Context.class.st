@@ -537,6 +537,22 @@ Context >> depthBelow: aContext [
 ]
 
 { #category : #'instruction decoding' }
+Context >> directedSuperSend: selector numArgs: numArgs [ 
+	
+	| lookupClass arguments currentReceiver |
+
+	lookupClass := self pop superclass.
+	
+	arguments := Array new: numArgs.
+	numArgs to: 1 by: -1 do: [ :i | 
+		arguments at: i put: self pop ].
+
+	currentReceiver := self pop.
+	
+	^ self send: selector to: currentReceiver with: arguments lookupIn: lookupClass
+]
+
+{ #category : #'instruction decoding' }
 Context >> doDup [
 	"Simulate the action of a 'duplicate top of stack' bytecode."
 
