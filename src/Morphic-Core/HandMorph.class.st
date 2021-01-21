@@ -673,18 +673,15 @@ HandMorph >> handleEvent: anEvent [
 	self sendListenEvent: evt to: self eventListeners.
 
 	evt isWindowEvent ifTrue: [
-		self sendEvent: evt focus: nil.
-		^self mouseOverHandler processMouseOver: lastMouseEvent].
+		^ self sendEvent: evt focus: nil ].
 	
 
 	evt isKeyboard ifTrue:[
 		self sendListenEvent: evt to: self keyboardListeners.
-		self sendKeyboardEvent: evt.
-		^self mouseOverHandler processMouseOver: lastMouseEvent].
+		^ self sendKeyboardEvent: evt ].
 
 	evt isDropEvent ifTrue:[
-		self sendEvent: evt focus: nil.
-		^self mouseOverHandler processMouseOver: lastMouseEvent].
+		^ self sendEvent: evt focus: nil ].
 
 	evt isMouse ifTrue:[
 		self sendListenEvent: evt to: self mouseListeners.
@@ -694,7 +691,7 @@ HandMorph >> handleEvent: anEvent [
 	mouseClickState ifNotNil:[
 		(mouseClickState handleEvent: evt from: self) ifFalse:[
 			"Possibly dispatched #click: or something and will not re-establish otherwise"
-			^self mouseOverHandler processMouseOver: lastMouseEvent]].
+			^self ]].
 
 	evt isMove ifTrue:[
 		| pos |
