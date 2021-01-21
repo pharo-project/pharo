@@ -1087,19 +1087,12 @@ HandMorph >> processEventsFromQueue: anEventBufferQueue [
 
 	"Process user input events from the local input devices."
 
-	| evt hadAny |
+	| evt |
 
-	self lastEvent ifNotNil: [
-		"Meaning that we were invoked from within an event response.
-		Make sure z-order is up to date"
-		self mouseOverHandler processMouseOver: lastMouseEvent ].
-
-	hadAny := false.
 	[ (evt := self nextEventFrom: anEventBufferQueue) notNil ] whileTrue: [ 
 		evt == #invalid ifTrue: [ ^ self ].
 		evt ifNotNil: [ "Finally, handle it"
 			self handleEvent: evt.
-			hadAny := true.
 			"For better user feedback, return immediately after a mouse event has been processed."
 			( evt isMouse and: [ evt isMouseWheel not ] )
 				ifTrue: [ ^ self ]
@@ -1110,9 +1103,7 @@ HandMorph >> processEventsFromQueue: anEventBufferQueue [
 	mouseClickState notNil ifTrue: [ 
 		"No mouse events during this cycle. Make sure click states time out accordingly"
 		mouseClickState handleEvent: lastMouseEvent asMouseMove from: self ].
-	hadAny ifFalse: [ 
-		"No pending events. Make sure z-order is up to date"
-		self mouseOverHandler processMouseOver: lastMouseEvent ]
+
 ]
 
 { #category : #'private events' }
