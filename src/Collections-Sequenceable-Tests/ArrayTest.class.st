@@ -624,6 +624,16 @@ ArrayTest >> testCopyNonEmptyWithoutAllNotIncluded [
 	
 ]
 
+{ #category : #'tests - enumerating' }
+ArrayTest >> testDifferencePreservesOrder [
+	| n even odd odd2 |
+	n := #(5 3 4).
+	even := #(4).
+	odd := n difference: even.
+	odd2 := n reject: [ :i | i even ].
+	self assert: odd equals: odd2
+]
+
 { #category : #'tests - iterate' }
 ArrayTest >> testDo [
 	| res |
