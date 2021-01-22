@@ -66,14 +66,18 @@ ClyNotebookPageHeaderPresenter >> initializePresenters [
 ClyNotebookPageHeaderPresenter >> mouseDown: event [ 
 
 	"bubble up"
-	self adapter widget owner mouseDown: event
+	self adapter widget owner eventHandler 
+		mouseDown: event 
+		fromMorph: self adapter widget owner
 ]
 
 { #category : #'event processing' }
 ClyNotebookPageHeaderPresenter >> mouseUp: event [ 
 
 	"bubble up"
-	self adapter widget owner mouseUp: event
+	self adapter widget owner eventHandler 
+		mouseUp: event 
+		fromMorph: self adapter widget owner
 ]
 
 { #category : #'event handling' }
