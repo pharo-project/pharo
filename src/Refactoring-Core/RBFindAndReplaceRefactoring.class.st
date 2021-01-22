@@ -10,7 +10,8 @@ Class {
 		'method',
 		'selector',
 		'replacesAllHierarchy',
-		'matchNodes'
+		'matchNodes',
+		'occurrences'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -96,6 +97,7 @@ RBFindAndReplaceRefactoring >> findOccurrencesIn: rbMethod [
                       onSuccess: [ :map |
 	self extract: ((each first to: each last) -> map) 
 	of: rbMethod.
+	occurrences := occurrences + 1.
 	flag := true. ]
                       onFailure: [  ] .
 						flag ifTrue: [ self findOccurrencesIn: (rbMethod modelClass methodFor: rbMethod selector).
@@ -106,10 +108,17 @@ RBFindAndReplaceRefactoring >> findOccurrencesIn: rbMethod [
                       onSuccess: [ :map |
 	self extract: ((node start to: node stop) -> map) 
 	of: rbMethod.
+	occurrences := occurrences + 1.
 	flag := true.]
                       onFailure: [  ] .
 						flag ifTrue: [ self findOccurrencesIn: (rbMethod modelClass methodFor: rbMethod selector).
 							^ self]]].
+]
+
+{ #category : #initialization }
+RBFindAndReplaceRefactoring >> initialize [ 
+	super initialize.
+	occurrences := 0.
 ]
 
 { #category : #accessing }
@@ -194,5 +203,6 @@ RBFindAndReplaceRefactoring >> transform [
 	classes :=replacesAllHierarchy ifFalse: [ { class } ] ifTrue: [ class withAllSubclasses ].
 	classes do: [ :cls | (cls selectors copyWithout: selector) do: [ :sel | |rbMethod|
 		rbMethod := cls methodFor: sel.
-		self findAndReplaceOccurrencesIn: rbMethod] ]
+		self findAndReplaceOccurrencesIn: rbMethod] ].
+	self inform: occurrences asString, ' occurrences were found and changed.'
 ]

@@ -40,6 +40,7 @@ SycExtractMethodCommand >> execute [
 	self setUpOptionToUseExistingMethodDuring: refactoring.
 	self setUpOptionToOverrideExistingMethodDuring: refactoring.
 	self setUpOptionToChangeMethodNameDuring: refactoring.
+	self setUpOptionToSearchInHierarchyDuring: refactoring.
 
 	self executeRefactoring: refactoring
 ]
@@ -68,6 +69,15 @@ SycExtractMethodCommand >> setUpOptionToOverrideExistingMethodDuring: aRefactori
 
 	aRefactoring setOption: #alreadyDefined toUse:  [ :ref :class :selector | 
 		ref refactoringWarning: 'Method ', selector printString, ' will override method in ', class name]. 
+]
+
+{ #category : #execution }
+SycExtractMethodCommand >> setUpOptionToSearchInHierarchyDuring: refactoring [
+
+	refactoring setOption: #searchInAllHierarchy toUse:  [ 
+		UIManager default 
+			confirm: 'Do you want to search occurrences in all hierarchy?'
+			label: 'Warning']. 	
 ]
 
 { #category : #execution }
