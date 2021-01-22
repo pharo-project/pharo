@@ -171,16 +171,38 @@ MorphicEventHandlerTest >> testMouseEnterEventIsNotDuplicated [
 
 { #category : #'tests-events' }
 MorphicEventHandlerTest >> testMouseEnterFromMorph [
+	| event |
 	morph eventHandler on: #mouseEnter send: #value to: true.
 
-	self assert: (morph mouseEnter: nil) identicalTo: true
+	event := (MouseButtonEvent new 
+		setType: #mouseMove
+		position: 0@0
+		which: 0
+		buttons: 0
+		hand: (HandMorph new
+			mouseFocus: morph;
+			yourself)
+		stamp: Time millisecondClockValue).
+
+	self assert: (morph handleMouseEnter: event) identicalTo: true
 ]
 
 { #category : #'tests-events' }
 MorphicEventHandlerTest >> testMouseLeaveFromMorph [
+	| event |
 	morph eventHandler on: #mouseLeave send: #value to: true.
 
-	self assert: (morph mouseLeave: nil) identicalTo: true
+	event := (MouseButtonEvent new 
+		setType: #mouseMove
+		position: 0@0
+		which: 0
+		buttons: 0
+		hand: (HandMorph new
+			mouseFocus: morph;
+			yourself)
+		stamp: Time millisecondClockValue).
+
+	self assert: (morph handleMouseLeave: event) identicalTo: true
 ]
 
 { #category : #'tests-events' }

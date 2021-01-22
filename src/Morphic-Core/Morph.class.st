@@ -2969,10 +2969,11 @@ Morph >> handleMouseEnter: anEvent [
 			^ self eventHandler ifNotNil: [ :handler | handler mouseEnterDragging: anEvent fromMorph: self ] ].
 	self wantsBalloon ifTrue: [ anEvent hand triggerBalloonFor: self after: self balloonHelpDelayTime ].
 
-	^ (self handlesMouseOver: anEvent)
+	(self handlesMouseOver: anEvent)
 		ifTrue: [ anEvent wasHandled: true.
-			self mouseEnter: anEvent ]
-		ifFalse: [ self eventHandler ifNotNil: [ :handler | handler mouseEnter: anEvent fromMorph: self ] ]
+			self mouseEnter: anEvent ].
+	
+	self eventHandler ifNotNil: [ :handler | ^ handler mouseEnter: anEvent fromMorph: self ]
 ]
 
 { #category : #'events-processing' }
