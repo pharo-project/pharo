@@ -10,16 +10,12 @@ Class {
 { #category : #'world menu' }
 AbstractTool class >> menuCommandOn: aBuilder [
 	<worldMenu>
-	(aBuilder item: #Tools)
-		order: 80;
-		target: self;
-		help: 'Set of tools to get a better Pharo experience.';
-		with: [ (aBuilder item: #'Undo last refactoring')
-				target: self;
-				selector: #undoLastRefactoring;
+	(aBuilder item: #'Undo last refactoring')
+				action: [self undoLastRefactoring];
+				parent: #Refactoring;
 				help: 'Undo last refactoring, after execute this command you can not redo this refactoring.';
-				order: 1000;
-				iconName: #smallUndo.]
+				order: 10;
+				iconName: #smallUndo.
 ]
 
 { #category : #private }

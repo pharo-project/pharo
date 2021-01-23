@@ -12,27 +12,11 @@ WorldState >> addAlarm: aSelector withArguments: argArray for: aTarget at: sched
 ]
 
 { #category : #'*Morphic-Base' }
-WorldState class >> debugWorldMenuOn: aBuilder [
+WorldState class >> browseWorldMenuOn: aBuilder [
 	<worldMenu>
-	(aBuilder item: #Debug)
-		order: 50;
-		with: [
-			(aBuilder group: #Breakpoints)
-				order: 1;
-				withSeparatorAfter.
-			(aBuilder group: #Profiling)
-				order: 2;
-				withSeparatorAfter.
-			(aBuilder group: #Counters)
-				order: 3]
-]
-
-{ #category : #'*Morphic-Base' }
-WorldState class >> developWorldMenuOn: aBuilder [
-	<worldMenu>
-	(aBuilder item: #Develop)
+	(aBuilder item: #Browse)
 		order: 10;
-		help: 'Tools to develop in Pharo.';
+		help: 'Tools to explore and modify the image';
 		with: [ 
 			(aBuilder group: #Browsing)
 				order: 1;
@@ -48,6 +32,31 @@ WorldState class >> developWorldMenuOn: aBuilder [
 ]
 
 { #category : #'*Morphic-Base' }
+WorldState class >> debugWorldMenuOn: aBuilder [
+	<worldMenu>
+	(aBuilder item: #Debug)
+		order: 30;
+		with: [
+			(aBuilder group: #Breakpoints)
+				order: 1;
+				withSeparatorAfter.
+			(aBuilder group: #Profiling)
+				order: 2;
+				withSeparatorAfter.
+			(aBuilder group: #Counters)
+				order: 3]
+]
+
+{ #category : #'*Morphic-Base' }
+WorldState class >> libraryWorldMenuOn: aBuilder [
+	<worldMenu>
+	(aBuilder item: #Tools)
+		label: 'Library';
+		order: 70;
+		help: 'Third party tools and applications'
+]
+
+{ #category : #'*Morphic-Base' }
 WorldState >> menuBuilder [
 
 	^ (PragmaMenuBuilder
@@ -55,6 +64,26 @@ WorldState >> menuBuilder [
 		   model: self)
 		  menuSpec;
 		  yourself
+]
+
+{ #category : #'*Morphic-Base' }
+WorldState class >> sourcesWorldMenuOn: aBuilder [
+	<worldMenu>
+	(aBuilder item: #Sources)
+		order: 50;
+		help: 'Source Management Tools';
+		with: [ 
+			(aBuilder group: #Versioning)
+				order: 1;
+				withSeparatorAfter.
+			(aBuilder group: #Packaging)
+				order: 2;
+				withSeparatorAfter.
+			(aBuilder group: #Changes)
+				order: 3;
+				withSeparatorAfter.
+			(aBuilder group: #Refactoring)
+				order: 4 ]
 ]
 
 { #category : #'*Morphic-Base' }
@@ -114,7 +143,7 @@ WorldState >> startThenBrowseMessageTally [
 WorldState class >> systemOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #System)
-		order: 70;
+		order: 60;
 		with: [
 			(aBuilder group: #SystemTools)
 				order: 1;
@@ -150,23 +179,6 @@ WorldState class >> systemOn: aBuilder [
 						order: 3;
 						action: [ self currentWorld restoreMorphicDisplay ].
 					aBuilder withSeparatorAfter ] ]
-]
-
-{ #category : #'*Morphic-Base' }
-WorldState class >> vcsWorldMenuOn: aBuilder [
-	<worldMenu>
-	(aBuilder item: #VCS)
-		order: 20;
-		help: 'Version control tools';
-		with: [ 
-			(aBuilder group: #Versioning)
-				order: 1;
-				withSeparatorAfter.
-			(aBuilder group: #Packaging)
-				order: 2;
-				withSeparatorAfter.
-			(aBuilder group: #Changes)
-				order: 3 ]
 ]
 
 { #category : #'*Morphic-Base' }
