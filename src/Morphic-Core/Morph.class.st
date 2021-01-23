@@ -2969,10 +2969,11 @@ Morph >> handleMouseEnter: anEvent [
 			^ self eventHandler ifNotNil: [ :handler | handler mouseEnterDragging: anEvent fromMorph: self ] ].
 	self wantsBalloon ifTrue: [ anEvent hand triggerBalloonFor: self after: self balloonHelpDelayTime ].
 
-	^ (self handlesMouseOver: anEvent)
+	(self handlesMouseOver: anEvent)
 		ifTrue: [ anEvent wasHandled: true.
-			self mouseEnter: anEvent ]
-		ifFalse: [ self eventHandler ifNotNil: [ :handler | handler mouseEnter: anEvent fromMorph: self ] ]
+			self mouseEnter: anEvent ].
+	
+	self eventHandler ifNotNil: [ :handler | ^ handler mouseEnter: anEvent fromMorph: self ]
 ]
 
 { #category : #'events-processing' }
@@ -4341,11 +4342,7 @@ Morph >> morphsInFrontOverlapping: aRectangle do: aBlock [
 
 { #category : #'event handling' }
 Morph >> mouseDown: evt [ 
-	"Handle a mouse down event. The default response is to let my 
-	eventHandler, if any, handle it."
-	self eventHandler
-		ifNotNil: [self eventHandler mouseDown: evt fromMorph: self]
-
+	"Handle a mouse down event. It can be handled here or in the event handler"
 ]
 
 { #category : #'halos and balloon help' }
@@ -4370,11 +4367,7 @@ Morph >> mouseDownPriority [
 
 { #category : #'event handling' }
 Morph >> mouseEnter: evt [
-	"Handle a mouseEnter event, meaning the mouse just entered my bounds with no button pressed. The default response is to let my eventHandler, if any, handle it."
-
-	^ self eventHandler ifNotNil:
-		[self eventHandler mouseEnter: evt fromMorph: self].
-
+	"Handle a mouseEnter event, meaning the mouse just entered my bounds with no button pressed"
 ]
 
 { #category : #'event handling' }
@@ -4388,35 +4381,23 @@ Morph >> mouseEnterDragging: evt [
 
 { #category : #'event handling' }
 Morph >> mouseLeave: evt [
-	"Handle a mouseLeave event, meaning the mouse just left my bounds with no button pressed. The default response is to let my eventHandler, if any, handle it."
-
-	^ self eventHandler ifNotNil:
-		[self eventHandler mouseLeave: evt fromMorph: self].
-
+	"Handle a mouseLeave event, meaning the mouse just left my bounds with no button pressed."
 ]
 
 { #category : #'event handling' }
 Morph >> mouseLeaveDragging: evt [
-	"Handle a mouseLeaveLaden event, meaning the mouse just left my bounds with a button pressed or laden with submorphs. The default response is to let my eventHandler, if any, handle it; else to do nothing."
-
-	self eventHandler ifNotNil:
-		[self eventHandler mouseLeaveDragging: evt fromMorph: self]
+	"Handle a mouseLeaveLaden event, meaning the mouse just left my bounds with a button pressed or laden with submorphs."
 ]
 
 { #category : #'event handling' }
 Morph >> mouseMove: evt [
 	"Handle a mouse move event. The default response is to let my eventHandler, if any, handle it."
-	self eventHandler ifNotNil:
-		[self eventHandler mouseMove: evt fromMorph: self].
 
 ]
 
 { #category : #'event handling' }
 Morph >> mouseStillDown: evt [
 	"Handle a mouse move event. The default response is to let my eventHandler, if any, handle it."
-
-	self eventHandler ifNotNil:
-		[self eventHandler mouseStillDown: evt fromMorph: self].
 
 ]
 
@@ -4435,9 +4416,6 @@ Morph >> mouseStillDownThreshold [
 { #category : #'event handling' }
 Morph >> mouseUp: evt [
 	"Handle a mouse up event. The default response is to let my eventHandler, if any, handle it."
-
-	^ self eventHandler ifNotNil:
-		[self eventHandler mouseUp: evt fromMorph: self].
 
 ]
 
