@@ -54,8 +54,8 @@ DAPackageDependenciesWelcome class >> menuCommandOn: aBuilder [
 	<worldMenu>
 
 	(aBuilder item: #PackageDependencies)
-		order: 2;
-		parent: #Packaging;
+		order: 210;
+		parent: #Tools;
 		label: 'Dependency Analyser';
 		icon: (self iconNamed: #packageIcon);
 		help: 'Analyze dependencies between different packages in the image.';

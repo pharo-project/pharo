@@ -31,11 +31,11 @@ CatalogBrowser class >> menuCommandOn: aBuilder [
 	"Add a custom menu item to the world menu"
 
 	<worldMenu>
-	(aBuilder item: #'Catalog Browser (Legacy)')
-		order: 1;
+	(aBuilder item: #'Catalog Browser')
+		order: 201;
 		iconName: #catalogIcon;
-		parent: #Packaging;
-		help: '(Deprecated) Project catalog from pharo official repositories.';
+		parent: #Tools;
+		help: 'Project catalog from pharo official repositories.';
 		action: [ self open ]
 ]
 

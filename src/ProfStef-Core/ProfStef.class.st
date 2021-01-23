@@ -133,11 +133,12 @@ ProfStef class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	
 	(aBuilder item: #'Pharo Zen')
-		parent: #PharoHelp;
-		order: 3;
+		parent: #Help;
+		order: 3.0;
 		action: [ self openPharoZenWorkspace ];
 		icon: ((self iconNamed: #pharoIcon) scaledToSize: 16@16);
-		help: 'Pharo values.' 
+		help: 'Pharo values.';
+		withSeparatorAfter 
 ]
 
 { #category : #navigating }

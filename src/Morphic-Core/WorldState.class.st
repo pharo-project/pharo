@@ -154,20 +154,11 @@ WorldState class >> easySelectingWorld: aBoolean [
 WorldState class >> helpOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Help)
-		order: 99;
+		order: 5.0;
 		help: 'Some help tools on Pharo.';
 		with: [
-			(aBuilder group: #HelpBrowser)
-				order: 1;
-				withSeparatorAfter.
-			(aBuilder group: #PharoHelp)
-				order: 2;
-				withSeparatorAfter.
-			(aBuilder group: #SpecHelp)
-				order: 3;
-				withSeparatorAfter.
 			(aBuilder item: #'About...')
-				order: 99;
+				order: 8.0;
 				iconName: #smallInfo;
 				help: 'Informations about this version of Pharo.';
 				action: [ Smalltalk aboutThisSystem ] ]
@@ -212,36 +203,32 @@ WorldState class >> pharoItemsOn: aBuilder [
 		label: 'Pharo';
 		icon: ((self iconNamed: #pharo) scaledToSize: 16 @ 16);
 		order: 0;
-		with: [
-			(aBuilder group: #Saving)
-				order: 98;
-				with: [
-					(aBuilder item: #Save)
-						target: self;
-						selector: #saveSession;
-						help: 'Save the current version of the image on disk.';
-						order: 1;
-						keyText: 'S';
-						iconName: #smallSaveIcon.
-					(aBuilder item: #'Save as...')
-						target: self;
-						selector: #saveAs;
-						help: 'Save the current version of the image on disk under a new name.';
-						order: 2;
-						iconName: #smallSaveAsIcon.
-					(aBuilder item: #'Save and quit')
-						target: self;
-						selector: #saveAndQuit;
-						help: 'Save the current image on disk, and quit Pharo.';
-						order: 3;
-						iconName: #smallQuitIcon.
-					aBuilder	withSeparatorAfter ]. 
-				(aBuilder item: #Quit)
-					target: self;
-					selector: #quitSession;
-					help: 'Quit Pharo without saving the image on disk.';
-					order: 99;
-					iconName: #smallQuitIcon ]
+		with: [ (aBuilder item: #Save)
+				target: self;
+				selector: #saveSession;
+				help: 'Save the current version of the image on disk.';
+				order: 2;
+				keyText: 'S';
+				iconName: #smallSaveIcon.
+			(aBuilder item: #'Save as...')
+				target: self;
+				selector: #saveAs;
+				help: 'Save the current version of the image on disk under a new name.';
+				order: 3;
+				iconName: #smallSaveAsIcon.
+			(aBuilder item: #'Save and quit')
+				target: self;
+				selector: #saveAndQuit;
+				help: 'Save the current image on disk, and quit Pharo.';
+				order: 4;
+				iconName: #smallQuitIcon;
+				withSeparatorAfter. 
+			(aBuilder item: #Quit)
+				target: self;
+				selector: #quitSession;
+				help: 'Quit Pharo without saving the image on disk.';
+				order: 5;
+				iconName: #smallQuitIcon ]
 ]
 
 { #category : #'world menu items' }
@@ -293,7 +280,7 @@ WorldState class >> screenShotCommandOn: aBuilder [
 	(aBuilder item: #Screenshot)
 		parent: #System;
 		target: self currentWorld;
-		order: 99;
+		order: 501;
 		selector: #makeAScreenshot;
 		label: 'Screenshot';
 		help: 'Take a screenshot';

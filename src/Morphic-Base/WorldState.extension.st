@@ -12,48 +12,14 @@ WorldState >> addAlarm: aSelector withArguments: argArray for: aTarget at: sched
 ]
 
 { #category : #'*Morphic-Base' }
-WorldState class >> browseWorldMenuOn: aBuilder [
-	<worldMenu>
-	(aBuilder item: #Browse)
-		order: 10;
-		help: 'Tools to explore and modify the image';
-		with: [ 
-			(aBuilder group: #Browsing)
-				order: 1;
-				withSeparatorAfter.
-			(aBuilder group: #InputOutput)
-				order: 2;
-				withSeparatorAfter.
-			(aBuilder group: #Testing)
-				order: 3;
-				withSeparatorAfter.
-			(aBuilder group: #Searching)
-				order: 4]
-]
-
-{ #category : #'*Morphic-Base' }
 WorldState class >> debugWorldMenuOn: aBuilder [
 	<worldMenu>
-	(aBuilder item: #Debug)
-		order: 30;
-		with: [
-			(aBuilder group: #Breakpoints)
-				order: 1;
-				withSeparatorAfter.
-			(aBuilder group: #Profiling)
-				order: 2;
-				withSeparatorAfter.
-			(aBuilder group: #Counters)
-				order: 3]
-]
-
-{ #category : #'*Morphic-Base' }
-WorldState class >> libraryWorldMenuOn: aBuilder [
-	<worldMenu>
-	(aBuilder item: #Tools)
-		label: 'Library';
-		order: 70;
-		help: 'Third party tools and applications'
+	(aBuilder item: #Debugging)
+		order: 3.5;
+		with: [ (aBuilder item: #'Enable all break/inspect once')
+				order: 0;
+				help: 'Reset the break/inspect once. Once restarted, the first break once encountered will stop the execution.';
+				action: [ Halt resetOnce ]]
 ]
 
 { #category : #'*Morphic-Base' }
@@ -64,26 +30,6 @@ WorldState >> menuBuilder [
 		   model: self)
 		  menuSpec;
 		  yourself
-]
-
-{ #category : #'*Morphic-Base' }
-WorldState class >> sourcesWorldMenuOn: aBuilder [
-	<worldMenu>
-	(aBuilder item: #Sources)
-		order: 50;
-		help: 'Source Management Tools';
-		with: [ 
-			(aBuilder group: #Versioning)
-				order: 1;
-				withSeparatorAfter.
-			(aBuilder group: #Packaging)
-				order: 2;
-				withSeparatorAfter.
-			(aBuilder group: #Changes)
-				order: 3;
-				withSeparatorAfter.
-			(aBuilder group: #Refactoring)
-				order: 4 ]
 ]
 
 { #category : #'*Morphic-Base' }
@@ -143,49 +89,32 @@ WorldState >> startThenBrowseMessageTally [
 WorldState class >> systemOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #System)
-		order: 60;
+		order: 3.0;
 		with: [
-			(aBuilder group: #SystemTools)
-				order: 1;
+			(aBuilder item: #'Space left')
+				help: 'Do a garbage collection, and report results about the to the user.';
+				action: [ Smalltalk informSpaceLeftAfterGarbageCollection ].
+			(aBuilder item: #'Do Image Cleanup')
+				help: 'Clean out any caches and other state that should be flushed when trying to get an image into a pristine state.';
+				action: [ Smalltalk cleanUp: true ];
 				withSeparatorAfter.
-			(aBuilder group: #Startup)
-				order: 2;
+			(aBuilder item: #'Start drawing again')
+				help: 'Resume the drawing after a draw error of the world.';
+				action: [ self currentWorld resumeAfterDrawError ].
+			(aBuilder item: #'Start stepping again')
+				help: 'Resume stepping of Morph after an error has occured.';
+				action: [ self currentWorld resumeAfterStepError ];
 				withSeparatorAfter.
-			(aBuilder group: #Image)
-				order: 3;
-				with: [
-					(aBuilder item: #'Space left')
-						help: 'Do a garbage collection, and report results about the to the user.';
-						order: 1;
-						action: [ Smalltalk informSpaceLeftAfterGarbageCollection ].
-					(aBuilder item: #'Do Image Cleanup')
-						help: 'Clean out any caches and other state that should be flushed when trying to get an image into a pristine state.';
-						order: 2;
-						action: [ Smalltalk cleanUp: true ].
-					aBuilder 	withSeparatorAfter].
-			(aBuilder group: #World)
-				order: 4;
-				with: [
-					(aBuilder item: #'Start drawing again')
-						help: 'Resume the drawing after a draw error of the world.';
-						order: 1;
-						action: [ self currentWorld resumeAfterDrawError ].
-					(aBuilder item: #'Start stepping again')
-						help: 'Resume stepping of Morph after an error has occured.';
-						order: 2;
-						action: [ self currentWorld resumeAfterStepError ].
-					(aBuilder item: #'Restore display')
-						help: 'Restore Morphic display.';
-						order: 3;
-						action: [ self currentWorld restoreMorphicDisplay ].
-					aBuilder withSeparatorAfter ] ]
+			(aBuilder item: #'Restore display')
+				help: 'Restore Morphic display.';
+				action: [ self currentWorld restoreMorphicDisplay ] ]
 ]
 
 { #category : #'*Morphic-Base' }
 WorldState class >> windowsOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Windows)
-		order: 90;
+		order: 4.0;
 		with: [ (aBuilder item: #'Collapse all windows')
 				action: [ self currentWorld collapseAll ];
 				help: 'Reduce all open windows to collapsed forms that only show titles' translated.
