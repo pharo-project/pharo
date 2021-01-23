@@ -76,7 +76,7 @@ TimeProfiler class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'Time Profiler')
 		parent: #Profiling;  
-		order: 1;
+		order: 110;
 		icon: self taskbarIcon;
 		help: 'Profile the execution of a piece of code and navigate into the result.';
 		action: [TimeProfiler new open]
@@ -85,16 +85,19 @@ TimeProfiler class >> menuCommandOn: aBuilder [
 { #category : #'world menu' }
 TimeProfiler class >> menuProfilingOn: aBuilder [
 	<worldMenu>
+	(aBuilder item: #Profiling)
+		parent: #Tools;
+		label: 'Profiling';
+		help: 'Profiling tools';
+		order: 301.
 
 	(aBuilder item: #'Start profiling all Processes')
 		parent: #Profiling;
 		help: 'Profile all Pharo processes.';
-		order: 10;
 		action: [ self currentWorld worldState startMessageTally ].
 	(aBuilder item: #'Start profiling UI ')
 		parent: #Profiling;
 		help: 'Profile the UI process of Pharo.';
-		order: 20;
 		action: [ self currentWorld worldState startThenBrowseMessageTally ].
 ]
 

@@ -19,9 +19,8 @@ StSystemReporter class >> systemReporterMenuOn: aBuilder [
 	<worldMenu>
 	
 	(aBuilder item: #'System Reporter')
-		parent: #SystemTools;
+		parent: #System;
 		action: [ self open ];
-		order: 1;
 		help: 'If you have a bug, use this tool to provide information about your system.'
 ]
 

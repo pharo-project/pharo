@@ -26,10 +26,11 @@ Finder class >> finderMenuOn: aBuilder [
 
 	(aBuilder item: #Finder)
 		action: [self open];
-		order: 2;
-		parent: #Searching;
+		order: 101;
+		parent: #Tools;
 		help: 'Looking for something ?';
 		icon: self icon.
+	aBuilder withSeparatorAfter	
 ]
 
 { #category : #menu }

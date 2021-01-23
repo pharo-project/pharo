@@ -144,12 +144,12 @@ DrTests class >> defaultSpec [
 DrTests class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	
-	(aBuilder item: #'Dr Test (Preview)')
-		parent: #Testing;
+	(aBuilder item: #'Dr Test')
+		parent: #Tools;
 		action: [ self open ];
-		order: 2;
+		order: 21;
 		"keyText: 'o, u';" "Note: Removed the shortcut to not clash with SUnitRunner keybinding."
-		help: '(Preview) Let you run and debug SUnit tests.';
+		help: 'Let you run and debug SUnit tests.';
 		icon: self taskbarIcon;
 		withSeparatorAfter	
 ]

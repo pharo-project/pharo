@@ -29,8 +29,8 @@ ExecutionCounter class >> allCounters [
 ExecutionCounter class >> debugWorldMenuOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'Reset Counters')
-		order: 1;
-		parent: #Counters;
+		order: 0;
+		parent: #Debugging;
 		help: 'Reset the counters on the executions counters.';
 		action: [ ExecutionCounter resetAll ]
 ]

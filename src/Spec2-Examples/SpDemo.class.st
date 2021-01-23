@@ -35,10 +35,11 @@ SpDemo class >> menuExamplesOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'Spec2 examples')
 		iconName: #smallHelpIcon;
-		parent: #SpecHelp;
-		order: 2;
+		parent: #Help;
+		order: 3.5;
 		help: 'Open Spec2 demo browser.';
-		action: [ self open ]	
+		action: [ self open ].
+	aBuilder withSeparatorAfter	
 ]
 
 { #category : #'instance creation' }

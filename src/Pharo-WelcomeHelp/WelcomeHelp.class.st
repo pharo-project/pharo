@@ -208,8 +208,8 @@ A very interesting starting point would be looking into the "Updated Pharo by Ex
 WelcomeHelp class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'Welcome to Pharo')
-		parent: #PharoHelp;
-		order: 1;
+		parent: #Help;
+		order: 1.2;
 		action: [ self open ];
 		icon: ((self iconNamed: #pharoIcon) scaledToSize: 16@16);
 		help: 'Welcome window for Pharo' 

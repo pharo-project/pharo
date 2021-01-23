@@ -130,11 +130,12 @@ FileList class >> itemsForFile: file [
 FileList class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'File Browser')
-		parent: #SystemTools;
-		order: 2;
+		parent: #Tools;
+		order: 320;
 		action: [ self open ];
 		help: 'Browse the files present on your system.';
-		icon: self taskbarIcon
+		icon: self taskbarIcon.
+	aBuilder withSeparatorAfter
 ]
 
 { #category : #'morphic ui' }
