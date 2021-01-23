@@ -7,17 +7,6 @@ Class {
 	#category : #'Tool-Base-Utilities'
 }
 
-{ #category : #'world menu' }
-AbstractTool class >> menuCommandOn: aBuilder [
-	<worldMenu>
-	(aBuilder item: #'Undo last refactoring')
-				action: [self undoLastRefactoring];
-				parent: #Refactoring;
-				help: 'Undo last refactoring, after execute this command you can not redo this refactoring.';
-				order: 10;
-				iconName: #smallUndo.
-]
-
 { #category : #private }
 AbstractTool class >> protocolSuggestionsFor: aClass [
 
