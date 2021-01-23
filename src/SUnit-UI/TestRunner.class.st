@@ -43,9 +43,9 @@ TestRunner class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	
 	(aBuilder item: #'Test Runner')
-		parent: #Tools;
+		parent: #Testing;
 		action: [ Smalltalk tools openTestRunner ];
-		order: 20;
+		order: 1;
 		keyText: 'o, u';
 		help: 'Let you run and debug SUnit tests.';
 		icon: self taskbarIcon

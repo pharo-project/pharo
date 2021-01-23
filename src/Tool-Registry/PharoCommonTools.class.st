@@ -99,7 +99,7 @@ PharoCommonTools class >> shutDown: aboutToQuit [
 PharoCommonTools class >> worldMenuOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'System Browser')
-		parent: #Tools;
+		parent: #Browsing;
 		action: [ Smalltalk tools openClassBrowser ];
 		order: 0;
 		keyText: 'o, b';
