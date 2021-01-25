@@ -65,12 +65,6 @@ WorldState class >> debugShowDamage: aBoolean [
 	DebugShowDamage := aBoolean
 ]
 
-{ #category : #settings }
-WorldState class >> defaultWorldMenu [
-	self desktopMenuTitle: 'World'.
-	self desktopMenuPragmaKeyword: 'worldMenu'.
-]
-
 { #category : #'deferred message' }
 WorldState class >> defer: aValuable [
 	"aValuable will be executed in the next UI rendering cycle"
