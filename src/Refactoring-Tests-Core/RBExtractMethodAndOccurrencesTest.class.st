@@ -32,6 +32,7 @@ RBExtractMethodAndOccurrencesTest >> testExtractMethodWithArgsAndOcurrences [
 				extract: (114 to: 231)
 				from: #displayName
 				in: class.
+	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
 	self setupMethodNameFor: refactoring toReturn: #stringArg:streamArg:.
 	self executeRefactoring: refactoring.
 	self assert: (class parseTreeFor: #stringArg:streamArg:) equals: (self parseMethod: 'stringArg: string streamArg: nameStream
@@ -65,6 +66,7 @@ RBExtractMethodAndOccurrencesTest >> testExtractSimpleMethodAndOcurrences [
 				extract: (282 to: 302)
 				from: #myMethod
 				in: class.
+	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
 	self setupMethodNameFor: refactoring toReturn: #extractedMethod.
 	self executeRefactoring: refactoring.
 	self assert: (class parseTreeFor: #extractedMethod) equals: (self parseMethod: 'extractedMethod
