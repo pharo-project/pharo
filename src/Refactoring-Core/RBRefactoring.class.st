@@ -80,7 +80,10 @@ RBRefactoring class >> initializeRefactoringOptions [
 		put: [ :ref :selector |  self error: #useExistingMethod ];
 		
 		at: #openBrowser
-		put: [ :ref :env |  self error: #openBrowser ]
+		put: [ :ref :env |  self error: #openBrowser ];
+		
+		at: #searchInAllHierarchy
+		put: [ self error: #searchInAllHierarchy ]
 ]
 
 { #category : #'accessing signal' }
