@@ -911,6 +911,18 @@ OrderedCollectionTest >> testCopyWith [
 
 ]
 
+{ #category : #'tests - enumerating' }
+OrderedCollectionTest >> testDifferencePreservesOrder [
+	| n even odd odd2 |
+	n := OrderedCollection with: 5 with: 3 with: 4.
+	even := OrderedCollection with: 4.
+	odd := n difference: even.
+	odd2 := n reject: [ :i | i even ].
+	self assert: odd equals: odd2
+
+	
+]
+
 { #category : #'tests - begin' }
 OrderedCollectionTest >> testEndsWithAnyOf [
 	"We can't test SequenceableCollection directly. However, we can test a sampling of its descendants."

@@ -36,17 +36,12 @@ SycFindAndReplaceMethodCommand >> createRefactoring [
 	^RBFindAndReplaceRefactoring 
 		find: originalMessage selector 
 		of: originalMessage contextUser origin
-		inAllHierarchy: true
+		inAllHierarchy: (self confirm: 'Do you want to search occurrences in all hierarchy?')
 ]
 
 { #category : #execution }
 SycFindAndReplaceMethodCommand >> defaultMenuItemName [
 	^'Find and replace'
-]
-
-{ #category : #execution }
-SycFindAndReplaceMethodCommand >> execute [
-	self executeRefactorings 
 ]
 
 { #category : #testing }

@@ -673,18 +673,15 @@ HandMorph >> handleEvent: anEvent [
 	self sendListenEvent: evt to: self eventListeners.
 
 	evt isWindowEvent ifTrue: [
-		self sendEvent: evt focus: nil.
-		^self mouseOverHandler processMouseOver: lastMouseEvent].
+		^ self sendEvent: evt focus: nil ].
 	
 
 	evt isKeyboard ifTrue:[
 		self sendListenEvent: evt to: self keyboardListeners.
-		self sendKeyboardEvent: evt.
-		^self mouseOverHandler processMouseOver: lastMouseEvent].
+		^ self sendKeyboardEvent: evt ].
 
 	evt isDropEvent ifTrue:[
-		self sendEvent: evt focus: nil.
-		^self mouseOverHandler processMouseOver: lastMouseEvent].
+		^ self sendEvent: evt focus: nil ].
 
 	evt isMouse ifTrue:[
 		self sendListenEvent: evt to: self mouseListeners.
@@ -694,7 +691,7 @@ HandMorph >> handleEvent: anEvent [
 	mouseClickState ifNotNil:[
 		(mouseClickState handleEvent: evt from: self) ifFalse:[
 			"Possibly dispatched #click: or something and will not re-establish otherwise"
-			^self mouseOverHandler processMouseOver: lastMouseEvent]].
+			^self ]].
 
 	evt isMove ifTrue:[
 		| pos |
@@ -1087,19 +1084,12 @@ HandMorph >> processEventsFromQueue: anEventBufferQueue [
 
 	"Process user input events from the local input devices."
 
-	| evt hadAny |
+	| evt |
 
-	self lastEvent ifNotNil: [
-		"Meaning that we were invoked from within an event response.
-		Make sure z-order is up to date"
-		self mouseOverHandler processMouseOver: lastMouseEvent ].
-
-	hadAny := false.
 	[ (evt := self nextEventFrom: anEventBufferQueue) notNil ] whileTrue: [ 
 		evt == #invalid ifTrue: [ ^ self ].
 		evt ifNotNil: [ "Finally, handle it"
 			self handleEvent: evt.
-			hadAny := true.
 			"For better user feedback, return immediately after a mouse event has been processed."
 			( evt isMouse and: [ evt isMouseWheel not ] )
 				ifTrue: [ ^ self ]
@@ -1110,9 +1100,7 @@ HandMorph >> processEventsFromQueue: anEventBufferQueue [
 	mouseClickState notNil ifTrue: [ 
 		"No mouse events during this cycle. Make sure click states time out accordingly"
 		mouseClickState handleEvent: lastMouseEvent asMouseMove from: self ].
-	hadAny ifFalse: [ 
-		"No pending events. Make sure z-order is up to date"
-		self mouseOverHandler processMouseOver: lastMouseEvent ]
+
 ]
 
 { #category : #'private events' }

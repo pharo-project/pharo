@@ -15,10 +15,47 @@ SpHelpTopics class >> bookName [
 ]
 
 { #category : #pages }
+SpHelpTopics class >> hookingWithTheInspector [
+	^HelpTopic 	
+		title: 'Inspector'
+		contents: 'Pharo offers a Spec-based inspector. Inspecting an object opens an inspector that is built using Spec.
+
+You can particularize the inspector in numerous way. For example, consider the following code:
+
+```
+OrderedCollection>>inspectorText
+	<inspectorPresentationOrder: 90 title: ''My description''>
+	^ SpTextPresenter new
+		text: ''OrderedCollection of size = '', self size asString;
+		yourself.
+```
+
+After having defined this method, inspecting the expression `#(1 2 3 5) asOrderedCollection` shows the inspector with a new textual pane.
+
+
+A Roassal view can also be hooked, as follow:
+
+```
+OrderedCollection>>inspectorCanvas2
+	<inspectorPresentationOrder: 90 title: ''Visualization''>
+	| canvas shapes |
+	canvas := RSCanvas new.
+	shapes := (self collect: [ :obj | RSBox new model: obj; size: 20 ]) asGroup.
+	canvas addAll: shapes.
+	RSGridLayout on: shapes.
+	
+	^ SpRoassal3InspectorPresenter new
+		canvas: canvas;
+		yourself
+```
+'
+]
+
+{ #category : #pages }
 SpHelpTopics class >> introduction [
 	^HelpTopic 	
 		title: 'About Spec'
-		contents: 'Spec has been originally developed by B. Van Ryseghem based on an idea of S. Ducasse. It is now maintained by the community and the pharo core team.. 
+		contents: 'Spec has been originally developed by B. Van Ryseghem based on an idea of S. Ducasse. It is now maintained by the community and the pharo core team.
 
 Spec is an attempt to support UI logic reuse. Spec is influenced by VisualWorks and Dolphin MVP in the sense that it recognizes the need for a Presenter or Application-Model class, in Spec called SpPresenter that manages the logic and the link between widgets and domain objects. Spec, following the tradition, uses value holders, simple object raising announcements when their values, often domain objects, change.'
 ]
@@ -30,7 +67,7 @@ SpHelpTopics class >> key [
 
 { #category : #accessing }
 SpHelpTopics class >> pages [
-	^#(introduction terminology #SpExamples #SpTheHeartOfSpec #SpLayouts)
+	^#(introduction terminology #SpExamples #SpTheHeartOfSpec #SpLayouts #hookingWithTheInspector)
 ]
 
 { #category : #pages }

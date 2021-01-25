@@ -789,6 +789,12 @@ SequenceableCollection >> detectIndex: aBlock ifNone: exceptionBlock [
 ]
 
 { #category : #enumerating }
+SequenceableCollection >> difference: aCollection [
+	"Answer the difference of two sequences preserving order and collection type."
+	^ self reject: [:each | aCollection includes: each]
+]
+
+{ #category : #enumerating }
 SequenceableCollection >> do: aBlock [ 
 	"Refer to the comment in Collection|do:."
 	1 to: self size do:
