@@ -150,7 +150,6 @@ BlockClosure >> cull: anArg [
 	"([:x | x + 12] cull: 3)
 	>>> 15
 	"
-	<debuggerCompleteToSender>
 	^numArgs = 0 
 		ifTrue: [self value]
 		ifFalse: [self value: anArg]
