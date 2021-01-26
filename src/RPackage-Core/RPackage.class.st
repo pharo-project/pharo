@@ -1407,6 +1407,17 @@ RPackage >> renameExtensionsPrefixedWith: oldName to: newName [
 ]
 
 { #category : #private }
+RPackage >> renameManifestClass [
+	|manifest|
+	manifest := self packageManifestOrNil.
+	manifest ifNotNil: [ | refactoring |
+	refactoring := RBRenameClassRefactoring
+		rename: manifest
+		to: (TheManifestBuilder manifestClassNameFor: self name).
+	refactoring execute ].
+]
+
+{ #category : #private }
 RPackage >> renameTagsPrefixedWith: oldName to: newName [
 	| oldPrefix newPrefix |
 	
@@ -1451,6 +1462,7 @@ RPackage >> renameTo: aSymbol [
 		basicUnregisterPackageNamed: oldName;
 		basicRegisterPackage: self.
 	self mcPackage workingCopy repositoryGroup: repositoryGroup.
+	self renameManifestClass.
 	SystemAnnouncer uniqueInstance
 		announce:
 			(RPackageRenamed to: self oldName: oldName newName: newName)
