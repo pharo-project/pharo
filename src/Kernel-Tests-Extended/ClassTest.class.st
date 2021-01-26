@@ -425,7 +425,11 @@ ClassTest >> testReferencedClasses [
 	}
 		do: [ :assoc | 
 			self assert: assoc key referencedClasses notEmpty.
-			self assert: (assoc key referencedClasses asSet includesAll: assoc value asSet)]
+			self assert: (assoc key referencedClasses asSet includesAll: assoc value asSet)].
+		
+	"classes referenced from class variables should not be seen as referenced statically"
+	self assert: (SmalltalkImage class>>#compilerClass ) referencedClasses isEmpty.
+	
 ]
 
 { #category : #tests }

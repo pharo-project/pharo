@@ -33,7 +33,7 @@ Behavior >> allUnsentMessages [
 
 { #category : #'*System-Support' }
 Behavior >> referencedClasses [
-	"Return the set of classes that are directly referenced by my methods"
+	"Return the set of classes that are directly referenced by my methods via global Variables"
 
-	^ self methods flatCollectAsSet: #referencedClasses
+	^ self methods flatCollectAsSet: [:each | each referencedClasses]
 ]
