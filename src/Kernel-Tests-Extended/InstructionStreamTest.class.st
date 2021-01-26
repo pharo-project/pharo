@@ -126,6 +126,25 @@ InstructionStreamTest >> testSimulatingAMethodWithHaltHasCorrectContext [
 ]
 
 { #category : #example }
+InstructionStreamTest >> testStepThroughInAMethodWithMNU [
+
+	| initialContext aContext receiver suspendedProcess return |
+	
+	receiver := self classUnderTest new.
+	suspendedProcess := [ receiver callingAMethodWithMNU ] forkAt: Processor activePriority + 1.
+
+	initialContext := aContext := suspendedProcess suspendedContext.
+	[ initialContext method = (self classUnderTest >> #callingAMethodWithMNU) ] 
+		whileFalse: [ initialContext := initialContext sender].
+	
+	return := suspendedProcess stepToHome: initialContext.
+	
+	"Suspended process should stop in the exception"	
+	self assert: return method equals: (self classUnderTest lookupSelector: #doesNotUnderstand:).
+
+]
+
+{ #category : #example }
 InstructionStreamTest >> testStepThroughInAMethodWithoutError [
 
 	| initialContext aContext receiver suspendedProcess return |

@@ -27,6 +27,13 @@ ClassUsedInInstructionStreamTest >> aMethodWithHalt [
 ]
 
 { #category : #example }
+ClassUsedInInstructionStreamTest >> aMethodWithMNU [
+
+	Processor activeProcess suspend.
+	self iAmAnMNUMessage.
+]
+
+{ #category : #example }
 ClassUsedInInstructionStreamTest >> aMethodWithSuspendAndReturnANumber [
 
 	Processor activeProcess suspend.
@@ -49,6 +56,12 @@ ClassUsedInInstructionStreamTest >> callingAMethodSuspendedBeforeTheTerminateOfA
 ClassUsedInInstructionStreamTest >> callingAMethodWithHalt [
 
 	self aMethodWithHalt
+]
+
+{ #category : #example }
+ClassUsedInInstructionStreamTest >> callingAMethodWithMNU [
+
+	self aMethodWithMNU
 ]
 
 { #category : #example }
