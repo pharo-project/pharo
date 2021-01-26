@@ -647,11 +647,16 @@ Process >> stepToHome: aContext [
 				onBehalfOf: self.
 	suspendedContext := pair first.
 	error := pair second.
+
 	"error class = Halt ifTrue: [ 
 		aContext methodNode 
 			pragmaNamed: #debuggerCompleteToSender 
 			ifPresent: [ ^ self completeTo: aContext sender ] ]."
-	error ifNotNil: [^ suspendedContext := error signalerContext].
+	error ifNotNil: [
+		suspendedContext := error signalerContext.
+		"As we are activating a context that has been interrupted in the signal of the exception,
+		we need to push a receiver of the signal message"
+		suspendedContext push: nil].
 	^ suspendedContext
 ]
 

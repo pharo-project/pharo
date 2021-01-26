@@ -107,6 +107,44 @@ InstructionStreamTest >> testSimulatedTerminationOfProcessDoNotCorruptTheContext
 ]
 
 { #category : #example }
+InstructionStreamTest >> testSimulatingAMethodWithHaltHasCorrectContext [
+
+	| initialContext aContext receiver suspendedProcess return |
+	
+	receiver := self classUnderTest new.
+	suspendedProcess := [ receiver callingAMethodWithHalt ] forkAt: Processor activePriority + 1.
+
+	initialContext := aContext := suspendedProcess suspendedContext.
+	[ initialContext method = (self classUnderTest >> #callingAMethodWithHalt) ] 
+		whileFalse: [ initialContext := initialContext sender].
+	
+	return := suspendedProcess stepToHome: initialContext.
+	
+	"Suspended process should stop in the exception"	
+	self assert: return method equals: (Object >> #halt).
+	self assert: return size equals: 1.
+]
+
+{ #category : #example }
+InstructionStreamTest >> testStepThroughInAMethodWithoutError [
+
+	| initialContext aContext receiver suspendedProcess return |
+	
+	receiver := self classUnderTest new.
+	suspendedProcess := [ receiver callingAMethodWithSuspendAndReturnANumber ] forkAt: Processor activePriority + 1.
+
+	initialContext := aContext := suspendedProcess suspendedContext.
+	[ initialContext method = (self classUnderTest >> #callingAMethodWithSuspendAndReturnANumber) ] 
+		whileFalse: [ initialContext := initialContext sender].
+	
+	return := suspendedProcess stepToHome: initialContext.
+	
+	"Suspended process should stop in the exception"	
+	self assert: return method equals: (self classUnderTest >> #callingAMethodWithSuspendAndReturnANumber).
+	self assert: return top equals: 42.
+]
+
+{ #category : #example }
 InstructionStreamTest >> testSteppingSendsDirectSend [
 
 	| initialContext aContext receiver |

@@ -20,6 +20,20 @@ ClassUsedInInstructionStreamTest >> aMethodSuspendedBeforeTheTerminateOfAnotherP
 ]
 
 { #category : #example }
+ClassUsedInInstructionStreamTest >> aMethodWithHalt [
+
+	Processor activeProcess suspend.
+	self halt.
+]
+
+{ #category : #example }
+ClassUsedInInstructionStreamTest >> aMethodWithSuspendAndReturnANumber [
+
+	Processor activeProcess suspend.
+	^ 42.
+]
+
+{ #category : #example }
 ClassUsedInInstructionStreamTest >> aSuperMethod: anInteger with: anotherInteger [
 
 	^ self error
@@ -29,6 +43,18 @@ ClassUsedInInstructionStreamTest >> aSuperMethod: anInteger with: anotherInteger
 ClassUsedInInstructionStreamTest >> callingAMethodSuspendedBeforeTheTerminateOfAnotherProcess [
 
 	self aMethodSuspendedBeforeTheTerminateOfAnotherProcess
+]
+
+{ #category : #example }
+ClassUsedInInstructionStreamTest >> callingAMethodWithHalt [
+
+	self aMethodWithHalt
+]
+
+{ #category : #example }
+ClassUsedInInstructionStreamTest >> callingAMethodWithSuspendAndReturnANumber [
+
+	^ self aMethodWithSuspendAndReturnANumber
 ]
 
 { #category : #example }
