@@ -2,7 +2,6 @@ Class {
 	#name : #RBRefactoringTest,
 	#superclass : #RBRefactoringBrowserTest,
 	#instVars : [
-		'manager',
 		'model'
 	],
 	#category : #'Refactoring-Tests-Core-Refactorings'

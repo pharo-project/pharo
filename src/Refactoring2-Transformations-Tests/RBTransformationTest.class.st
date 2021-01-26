@@ -2,7 +2,6 @@ Class {
 	#name : #RBTransformationTest,
 	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
-		'manager',
 		'model'
 	],
 	#category : #'Refactoring2-Transformations-Tests'
