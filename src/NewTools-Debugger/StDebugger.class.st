@@ -1132,7 +1132,7 @@ StDebugger >> updateCodeFromContext: aContext [
 	aContext sourceCode = self code text 
 		ifFalse: [ self updateSourceCodeFor: aContext ].
 	self code beForContext: aContext.
-	
+	self code selectionInterval: (selectionInterval last to: selectionInterval last - 1).
 	self
 		updateCodeTextSegmentDecoratorsIn: aContext
 		forInterval: selectionInterval.
