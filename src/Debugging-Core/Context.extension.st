@@ -253,6 +253,7 @@ Context >> stepToHome: aContext [
 				            error
 					            ifNil: [ 
 						            			error := ex.
+												ex inspect.
 												ex resumeUnchecked: here jump ]
 					            ifNotNil: [ 
 										ex pass ] ]).
@@ -262,6 +263,8 @@ Context >> stepToHome: aContext [
 	ctxt := self step.
 
 	home == ctxt home ifTrue: [ 
+		"remove above inserted ensure and handler contexts"
+		aContext terminateTo: wrapperContext sender.
 		^ { 
 			  ctxt.
 			  error } ].
