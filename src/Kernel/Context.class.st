@@ -90,7 +90,13 @@ Context class >> contextEnsure: block [
 
 	| ctxt chain |
 	ctxt := thisContext.
-	[chain := thisContext sender cut: ctxt. ctxt jump] ensure: block.
+	[chain := thisContext sender cut: ctxt. 
+		
+		"As the jump will return to the current context inside the context ensure:
+		It is needed to emulate the return value of sending the message ensure:
+		If this is not done, the context will do an additional pop, affecting the temporary variables. "
+		ctxt push: nil. 
+		ctxt jump] ensure: block.
 	"jump above will resume here without unwinding chain"
 	^ chain
 ]
@@ -101,7 +107,13 @@ Context class >> contextOn: exceptionClass do: block [
 
 	| ctxt chain |
 	ctxt := thisContext.
-	[chain := thisContext sender cut: ctxt. ctxt jump] on: exceptionClass do: block.
+	[chain := thisContext sender cut: ctxt. 
+	
+		"As the jump will return to the current context inside the context on:do:
+		It is needed to emulate the return value of sending the message on:do:
+		If this is not done, the context will do an additional pop, affecting the temporary variables. "
+		ctxt push:nil. 
+		ctxt jump] on: exceptionClass do: block.
 	"jump above will resume here without unwinding chain"
 	^ chain
 ]

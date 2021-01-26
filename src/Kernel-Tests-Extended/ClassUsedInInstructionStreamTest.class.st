@@ -2,15 +2,33 @@ Class {
 	#name : #ClassUsedInInstructionStreamTest,
 	#superclass : #SuperClassUsedInInstructionStreamTest,
 	#instVars : [
-		'expectedValue'
+		'expectedValue',
+		'aProcess'
 	],
 	#category : #'Kernel-Tests-Extended-Methods'
 }
 
 { #category : #example }
+ClassUsedInInstructionStreamTest >> aMethodSuspendedBeforeTheTerminateOfAnotherProcess [
+
+	Processor activeProcess suspend.
+
+	aProcess terminate.
+	
+	expectedValue := 42.
+
+]
+
+{ #category : #example }
 ClassUsedInInstructionStreamTest >> aSuperMethod: anInteger with: anotherInteger [
 
 	^ self error
+]
+
+{ #category : #example }
+ClassUsedInInstructionStreamTest >> callingAMethodSuspendedBeforeTheTerminateOfAnotherProcess [
+
+	self aMethodSuspendedBeforeTheTerminateOfAnotherProcess
 ]
 
 { #category : #example }
@@ -29,6 +47,12 @@ ClassUsedInInstructionStreamTest >> methodWithASuperBlock [
 ClassUsedInInstructionStreamTest >> methodWithASuperBlockWithoutArguments [
 
 	^ [ super yourself ]
+]
+
+{ #category : #accessing }
+ClassUsedInInstructionStreamTest >> process: aValue [ 
+	
+	aProcess := aValue
 ]
 
 { #category : #example }

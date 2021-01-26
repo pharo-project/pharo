@@ -85,6 +85,28 @@ InstructionStreamTest >> testBlockWithASuperWithoutArgumentsSendHasCorrectNumber
 ]
 
 { #category : #example }
+InstructionStreamTest >> testSimulatedTerminationOfProcessDoNotCorruptTheContext [
+
+	| initialContext aContext receiver semaphore process suspendedProcess return errorThatHappen |
+	
+	receiver := self classUnderTest new.
+	semaphore := Semaphore new.
+	process := [ semaphore wait ] forkAt: Processor activePriority + 1.
+	receiver process: process.
+	suspendedProcess := [ receiver callingAMethodSuspendedBeforeTheTerminateOfAnotherProcess ] forkAt: Processor activePriority + 1.
+
+	initialContext := aContext := suspendedProcess suspendedContext.
+	[ initialContext method = (self classUnderTest >> #callingAMethodSuspendedBeforeTheTerminateOfAnotherProcess) ] 
+		whileFalse: [ initialContext := initialContext sender].
+	
+	[return := suspendedProcess stepToHome: initialContext] 
+		on: Exception do: [:e | errorThatHappen := e ].
+
+	self assert: errorThatHappen isNil.
+	self assert: receiver expectedValue equals: 42
+]
+
+{ #category : #example }
 InstructionStreamTest >> testSteppingSendsDirectSend [
 
 	| initialContext aContext receiver |
