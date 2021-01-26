@@ -253,7 +253,6 @@ Context >> stepToHome: aContext [
 				            error
 					            ifNil: [ 
 						            			error := ex.
-												ex inspect.
 												ex resumeUnchecked: here jump ]
 					            ifNotNil: [ 
 										ex pass ] ]).
