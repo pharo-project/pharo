@@ -34,6 +34,14 @@ ClassUsedInInstructionStreamTest >> aMethodWithMNU [
 ]
 
 { #category : #example }
+ClassUsedInInstructionStreamTest >> aMethodWithMustBeBooleanMNU [
+
+	Processor activeProcess suspend.
+
+	^ 2 ifTrue: [ 5 ] ifFalse: [ 7 ]
+]
+
+{ #category : #example }
 ClassUsedInInstructionStreamTest >> aMethodWithSuspendAndReturnANumber [
 
 	Processor activeProcess suspend.
@@ -62,6 +70,12 @@ ClassUsedInInstructionStreamTest >> callingAMethodWithHalt [
 ClassUsedInInstructionStreamTest >> callingAMethodWithMNU [
 
 	self aMethodWithMNU
+]
+
+{ #category : #example }
+ClassUsedInInstructionStreamTest >> callingAMethodWithMustBeBooleanMNU [
+
+	self aMethodWithMustBeBooleanMNU
 ]
 
 { #category : #example }
