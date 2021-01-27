@@ -10,6 +10,12 @@ Class {
 	#category : #'ReleaseTests-Tests'
 }
 
+{ #category : #accessing }
+ObsoleteTest >> defaultTimeLimit [ 
+
+	^ 30 seconds
+]
+
 { #category : #running }
 ObsoleteTest >> setUp [
 	super setUp.

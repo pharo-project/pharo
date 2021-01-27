@@ -22,6 +22,8 @@ ClassUsedInInstructionStreamTest >> aMethodSuspendedBeforeTheTerminateOfAnotherP
 { #category : #example }
 ClassUsedInInstructionStreamTest >> aMethodWithHalt [
 
+	<haltOrBreakpointForTesting>
+
 	Processor activeProcess suspend.
 	self halt.
 ]
