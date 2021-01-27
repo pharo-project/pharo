@@ -1411,7 +1411,7 @@ RPackage >> renameManifestClass [
 	|manifest|
 	manifest := self packageManifestOrNil.
 	manifest ifNotNil: [ | refactoring |
-	refactoring := RBRenameClassRefactoring
+	refactoring := self renameClassRefactoring
 		rename: manifest
 		to: (TheManifestBuilder manifestClassNameFor: self name).
 	refactoring execute ].
