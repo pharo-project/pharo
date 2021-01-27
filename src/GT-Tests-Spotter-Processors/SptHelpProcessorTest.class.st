@@ -1,10 +1,6 @@
 Class {
 	#name : #SptHelpProcessorTest,
 	#superclass : #AbstractSptProcessorTest,
-	#instVars : [
-		'firstValue',
-		'secondValue'
-	],
 	#category : #'GT-Tests-Spotter-Processors'
 }
 
