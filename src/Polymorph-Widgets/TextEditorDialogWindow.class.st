@@ -8,9 +8,6 @@ Class {
 		'entryText',
 		'textEditorMorph'
 	],
-	#classVars : [
-		'AutoAccept'
-	],
 	#category : #'Polymorph-Widgets-Windows'
 }
 

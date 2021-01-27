@@ -30,7 +30,6 @@ Class {
 	#classVars : [
 		'BottomArrow',
 		'LeftArrow',
-		'SubMenuBottomArrow',
 		'SubMenuMarker',
 		'UpArrow'
 	],

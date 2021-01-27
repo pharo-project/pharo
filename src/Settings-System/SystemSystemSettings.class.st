@@ -4,10 +4,6 @@ Settings for the system itself
 Class {
 	#name : #SystemSystemSettings,
 	#superclass : #Object,
-	#classVars : [
-		'SoundEnabled',
-		'UseThemeSounds'
-	],
 	#category : #'Settings-System'
 }
 

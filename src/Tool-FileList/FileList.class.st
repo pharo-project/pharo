@@ -26,9 +26,6 @@ Class {
 		'configuredServices',
 		'sourceTextModel'
 	],
-	#classVars : [
-		'FileReaderRegistry'
-	],
 	#classInstVars : [
 		'searchList'
 	],

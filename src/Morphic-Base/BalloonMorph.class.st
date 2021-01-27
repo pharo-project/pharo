@@ -18,8 +18,7 @@ Class {
 		'balloonColor'
 	],
 	#classVars : [
-		'BalloonColor',
-		'BalloonFont'
+		'BalloonColor'
 	],
 	#category : #'Morphic-Base-Widgets'
 }
