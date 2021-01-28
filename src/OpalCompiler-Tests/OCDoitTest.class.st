@@ -1,6 +1,9 @@
 Class {
 	#name : #OCDoitTest,
 	#superclass : #TestCase,
+	#instVars : [
+		'ivarForTesting'
+	],
 	#category : #'OpalCompiler-Tests-Misc'
 }
 
@@ -15,6 +18,23 @@ OCDoitTest >> testDoItContextReadGlobal [
 		evaluate.
 		
 	self assert: value equals: Object
+]
+
+{ #category : #tests }
+OCDoitTest >> testDoItContextReadIvar [
+
+	| value method |
+	"we can read this ivar from a doit when executing against thisContext"
+	ivarForTesting := #someValue.
+
+	method := OpalCompiler new
+		          source: 'ivarForTesting';
+		          noPattern: true;
+		          context: thisContext;
+		          compileDoit.
+
+	value := method valueWithReceiver: self arguments: { thisContext }.
+	self assert: value equals: #someValue
 ]
 
 { #category : #tests }
