@@ -194,6 +194,40 @@ ContextTest >> testSetUp [
 ]
 
 { #category : #tests }
+ContextTest >> testStepIntoQuickMethod [
+
+	|newContext quickMethod|
+	aMethodContext := Context
+		sender: thisContext
+		receiver: aReceiver
+		method: (Rectangle >>#center)
+		arguments: #().
+	
+	"We step into #center to get on the topLeft message.
+	We did not change context."
+	aMethodContext step.
+	
+	"Now we step into #topLeft which is a quick method"
+	newContext := aMethodContext step.
+	quickMethod := (Rectangle >> #topLeft).
+	self assert: newContext sender identicalTo: aMethodContext.
+	self assert: newContext method identicalTo: quickMethod.
+	self assert: quickMethod isQuick.
+	
+	"The quick method contains 3 bytecodes:
+	- primitive 264 (initialPC)
+	- a push of a value (endPC - 1)
+	- the return top instruction (endPC)
+	When activating the quic method, we arrive on the PC corresponding to the primitive.
+	This one is not suposed to be stepped.
+	The first steppable bytecode is the push kjust before the return.
+	That is, endPC - 1."
+	self assert: newContext pc equals: (quickMethod endPC - 1)
+	
+
+]
+
+{ #category : #tests }
 ContextTest >> verifyJumpWithSelector: selector [
 	| guineaPig normalStackp readOnlyStackp |
 	guineaPig := SimulationMock new.
