@@ -215,14 +215,49 @@ ContextTest >> testStepIntoQuickMethod [
 	self assert: quickMethod isQuick.
 	
 	"The quick method contains 3 bytecodes:
-	- primitive 264 (initialPC)
+	- primitive 264: a 3 bytecode primitive (initialPC)
 	- a push of a value (endPC - 1)
 	- the return top instruction (endPC)
 	When activating the quic method, we arrive on the PC corresponding to the primitive.
 	This one is not suposed to be stepped.
-	The first steppable bytecode is the push kjust before the return.
-	That is, endPC - 1."
-	self assert: newContext pc equals: (quickMethod endPC - 1)
+	The first steppable bytecode is the push just before the return.
+	We do that by setting the PC to aMethod initialPC + 3 (the number of bytes of the primitive)."
+	self assert: newContext pc equals: (quickMethod initialPC + 3)
+	
+
+]
+
+{ #category : #tests }
+ContextTest >> testStepIntoReturnSelfMethod [
+
+	|newContext quickMethod|
+	aMethodContext := Context
+		sender: thisContext
+		receiver: SimulationMock new
+		method: (SimulationMock >>#exampleSelfReturnCall)
+		arguments: #().	
+	
+	"(SimulationMock >>#exampleSelfReturnCall) just executes 
+	self yourself
+	We step over self to get on the yourself message.
+	We did not change context."
+	aMethodContext step.
+	
+	"Now we step into #yourself which is a quick method just returning self"
+	newContext := aMethodContext step.
+	quickMethod := (Object >> #yourself).
+	self assert: newContext sender identicalTo: aMethodContext.
+	self assert: newContext method identicalTo: quickMethod.
+	self assert: quickMethod isQuick.
+	
+	"The quick method contains 3 bytecodes:
+	- primitive 256: a 3 bytecode primitive (initialPC)
+	- the return self instruction (endPC)
+	When activating the quick method, we arrive on the PC corresponding to the primitive.
+	This one is not suposed to be stepped.
+	The first steppable bytecode is the push just before the return.
+	We do that by setting the PC to aMethod initialPC + 3 (the number of bytes of the primitive)."
+	self assert: newContext pc equals: (quickMethod initialPC + 3)
 	
 
 ]
@@ -245,6 +280,27 @@ ContextTest >> testSteppingAQuickMethod [
 	self deny: newContext willReturn.
 	
 	newContext := newContext step.
+	self assert: newContext willReturn.
+	
+	newContext := newContext step.
+	self assert: newContext identicalTo: aMethodContext
+]
+
+{ #category : #tests }
+ContextTest >> testSteppingReturnSelfMethod [
+
+	|newContext|
+	aMethodContext := Context
+		sender: thisContext
+		receiver: SimulationMock new
+		method: (SimulationMock >>#exampleSelfReturnCall)
+		arguments: #().	
+			
+	aMethodContext step.
+	newContext := aMethodContext step.
+	
+	"We're in the quick method now, it should be steppable"
+	self assert: newContext sender identicalTo: aMethodContext.
 	self assert: newContext willReturn.
 	
 	newContext := newContext step.
