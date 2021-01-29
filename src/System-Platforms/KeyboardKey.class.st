@@ -311,7 +311,8 @@ KeyboardKey class >> initializeKeyFromCharacterCompatibilityTable [
 		$) 							. #parenright.
 		$< 							. #less.
 		$< 							. #greater.
-		$| 							. #bar}
+		$| 							. #bar.
+		$- 							. #minus}
 			pairsDo: [ :character :keyname |
 				KeyFromCharacterTable at: character put: (self named: keyname asUppercase) ].
 ]

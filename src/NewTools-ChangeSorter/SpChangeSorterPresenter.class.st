@@ -378,8 +378,8 @@ SpChangeSorterPresenter >> forgetMessage [
 { #category : #initialization }
 SpChangeSorterPresenter >> initialize [
 
-	super initialize.
 	model := ChangeSorterModel new.
+	super initialize.
 	SystemAnnouncer uniqueInstance weak 
 		when: CurrentChangeSetChanged 
 		send: #updateTitle 
@@ -521,7 +521,7 @@ SpChangeSorterPresenter >> newSet [
 	aSet := self model createNewSet.
 	aSet
 		ifNotNil: [ self updateChangesList.
-			changesListPresenter setSelectedItem: aSet.
+			changesListPresenter selectItem: aSet.
 			self updateWindowTitle ]
 ]
 
