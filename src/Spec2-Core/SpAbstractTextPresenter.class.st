@@ -311,8 +311,18 @@ SpAbstractTextPresenter >> text [
 { #category : #api }
 SpAbstractTextPresenter >> text: aString [
 	"Set the text of the text presenter"
+	"Attempts to keep text attributes (formatting) of the field"
 
-	text := aString
+	| attributes newValue |
+	aString isText ifTrue: [ 
+		text := aString.
+		^ self ].
+	newValue := aString.
+	self text isText ifTrue: [ 
+		attributes := self text attributesAt: 1 forStyle: TextStyle default.
+		newValue := newValue asText.
+		attributes do: [ :attr | newValue addAttribute: attr ] ].
+	text := newValue
 ]
 
 { #category : #simulating }

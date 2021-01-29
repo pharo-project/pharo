@@ -32,7 +32,7 @@ SpMorphicTableCellBuilder >> addBackgroundColorColumn: aTableColumn item: item t
 { #category : #private }
 SpMorphicTableCellBuilder >> addBoldColumn: aTableColumn item: item to: content [
 
-	aTableColumn displayItalic ifNotNil: [ :block |
+	aTableColumn displayBold ifNotNil: [ :block |
 		(block cull: item) ifTrue: [ 
 			^ content asText addAttribute: TextEmphasis bold ] ].
 	
@@ -226,8 +226,8 @@ SpMorphicTableCellBuilder >> visitLinkColumn: aTableColumn [
 
 { #category : #visiting }
 SpMorphicTableCellBuilder >> visitStringColumn: aTableColumn [
+
 	| content item |
-	
 	item := self item.
 
 	content := aTableColumn readObject: item.
@@ -235,10 +235,39 @@ SpMorphicTableCellBuilder >> visitStringColumn: aTableColumn [
 	content := self addColorColumn: aTableColumn item: item to: content.
 	content := self addItalicColumn: aTableColumn item: item to: content.
 	content := self addBoldColumn: aTableColumn item: item to: content.
-	content := self addUnderlineColumn: aTableColumn item: item to: content.
+	content := self
+		           addUnderlineColumn: aTableColumn
+		           item: item
+		           to: content.
+
+	aTableColumn isEditable
+		ifTrue: [ self visitStringColumnEditable: aTableColumn on: content ]
+		ifFalse: [ "add cell"
+			self addCell: content column: aTableColumn.
+			"add background (this is a special case of properties, 
+			since background needs to be applied to the cell and not to the text)"
+			self
+				addBackgroundColorColumn: aTableColumn
+				item: item
+				toMorph: cell ]
+]
+
+{ #category : #visiting }
+SpMorphicTableCellBuilder >> visitStringColumnEditable: aTableColumn on: content [
+
+	| presenter morph |
+	presenter := SpTextInputFieldPresenter new
+		             addStyle: 'compact';
+		             text: content;
+		             yourself.
+
+	aTableColumn acceptAction ifNotNil: [ :valuable | 
+		presenter whenSubmitDo: [ 
+			valuable cull: self item cull: presenter text ] ].
 	"add cell"
-	self addCell: content column: aTableColumn.
-	"add background (this is a special case of properties, since background needs to be 
-	 applied to the cell and not to the text)"
-	self addBackgroundColorColumn: aTableColumn item: item toMorph: cell
+
+	morph := presenter buildWithSpec.
+	presenter adapter applyStyle: morph.
+
+	self addCellMorph: morph column: aTableColumn 
 ]

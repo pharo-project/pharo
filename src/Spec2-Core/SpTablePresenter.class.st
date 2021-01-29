@@ -41,6 +41,27 @@ SpTablePresenter class >> documentFactoryMethodSelector [
 	^ #newTable
 ]
 
+{ #category : #'as yet unclassified' }
+SpTablePresenter class >> exampleWriteableTable [
+	"The selector names are NOT stored, but serves merely to have something one can edit"
+	| example items|
+	items := String methods.
+	example := self new.
+	example
+		addColumn: (SpStringTableColumn new 
+					title: 'Editable selector name';
+					evaluated: [:m | m selector  ];
+					displayBold: [ :m | m selector isKeyword  ];
+					beEditable ;
+					onAcceptEdition: [ :m :t | Transcript nextPutAll: t;cr;endEntry ];
+					yourself ) ;
+		addColumn: (SpStringTableColumn title: 'Size' evaluated: #size) beSortable;
+		showColumnHeaders;
+		items: items;
+		openWithSpec.
+	^ example
+]
+
 { #category : #api }
 SpTablePresenter >> addColumn: aColumn [
 	"Add a column to the table. A column should be an instance of `SpTableColumn`"
