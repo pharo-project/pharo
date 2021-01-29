@@ -114,7 +114,10 @@ SmalltalkImageTest >> testOpenLog [
 	"Other cases where a file with the given name can not be created."
 	self 
 		writeToLogWithFileNamed: '';
-		writeToLogWithFileNamed: '.'
+		writeToLogWithFileNamed: '.'.
+		
+	"clean the created log file"	
+	File deleteFile: 'file.log'
 
 ]
 
