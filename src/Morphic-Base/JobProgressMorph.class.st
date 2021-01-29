@@ -17,10 +17,6 @@ Class {
 		'result',
 		'startValue'
 	],
-	#classVars : [
-		'BarHeight',
-		'BarWidth'
-	],
 	#category : #'Morphic-Base-ProgressBar'
 }
 
