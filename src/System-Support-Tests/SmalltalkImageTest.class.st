@@ -117,7 +117,7 @@ SmalltalkImageTest >> testOpenLog [
 		writeToLogWithFileNamed: '.'.
 		
 	"clean the created log file"	
-	File deleteFile: 'file.log'
+	'file.log' asFileReference ensureDelete
 
 ]
 
