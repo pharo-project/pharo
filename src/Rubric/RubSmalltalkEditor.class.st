@@ -179,7 +179,6 @@ RubSmalltalkEditor >> bestNodeInString: source at: selectionInterval editingMode
 				[stop > 0 and: [('.;' includes: (source at: stop)) or: [(source at: stop) isSeparator ]]]
 					whileTrue: [ start := stop := stop - 1 ].
 				start := stop].
-		
 		node := ast bestNodeFor: (start to: stop).
 		
 		node ifNil: [ 
@@ -434,13 +433,19 @@ RubSmalltalkEditor >> computeSelectionIntervalFromCommentIn: aString at: anInter
 RubSmalltalkEditor >> copySelection [
 	"Copy the current selection and store it in the paste buffer, unless a caret.  Undoer & Redoer: undoCutCopy"
 
-	| node charac |
+	| node escapingCharacter selection |
 	"Research of selected node for eventual nesting of comment or string."
 	self lineSelectAndEmptyCheck: [^ self].
-	node := self bestNodeInTextAreaWithoutSelection.
-	charac := self getNestingCharacterFromAst: node.
-	charac ifNil: [ self clipboardTextPut: self selection ]
-		    ifNotNil: [ self clipboardTextPut: (self unNesting: self selection with: charac) ].
+	node := self bestNodeInTextArea.
+	escapingCharacter := self getEscapeCharacterFromAst: node.
+	
+	selection := (escapingCharacter notNil and: [ 
+		"The node, if a comment or a string, should entirely contain the selection.
+		We convert the node source interval to an open interval to ignore the node delimiters."
+		node sourceInterval asOpenInterval includesAll: self selectionInterval ])
+		ifTrue: [ self unescapeCharacter: escapingCharacter inString:  self selection ]
+		ifFalse: [ self selection ].
+	self clipboardTextPut: selection.
 	self editingState previousInterval: self selectionInterval.
 
 ]
@@ -970,12 +975,23 @@ RubSmalltalkEditor >> notify: aString at: anInteger in: aStream [
 RubSmalltalkEditor >> paste [
 	"Paste the text from the shared buffer over the current selection and 
 	redisplay if necessary.  Undoer & Redoer: undoAndReselect."
-	| node charac nestedText |
-	"Research of selected node for eventual nesting of comment or string."
+	| node character escapedText |
+	"This method is specialized for Pharo code.
+	If paste happens in the context of a comment or a string, the pasted contents should be properly escaped."
+	
+	"Get the AST node corresponding to where we are going to paste.
+	If there is a selection, cut it off, because pasting it will over-write it, and get the AST node at the cut position.
+	This is specially important when the selection spans multiple scopes (e.g., it starts inside a comment and finished in the middle of another)."
 	node := self bestNodeInTextAreaWithoutSelection.
-	charac := self getNestingCharacterFromAst: node.
-	nestedText := self stringNestedWith: charac.
-	self replace: self selectionInterval with: nestedText and:
+
+	"The pasted text could be inserted in some context requiring escaping, e.g., a comment, a string.
+	If so, get the escaping character, and escape the pasted text before pasting it."
+	character := self getEscapeCharacterFromAst: node.
+	escapedText := (self shouldEscapeCharacter: character)
+		  ifTrue: [ self escapeCharacter: character inString: self clipboardText ]
+		  ifFalse: [ self clipboardText ].
+	
+	self replace: self selectionInterval with: escapedText and:
 		[self selectAt: self pointIndex]
 ]
 

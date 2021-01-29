@@ -574,7 +574,6 @@ RubTextEditor >> copySelection [
 { #category : #'editing keys' }
 RubTextEditor >> copySelection: aKeyboardEvent [
 	"Copy the current text selection."
-
 	self copySelection.
 	^true
 ]
@@ -917,15 +916,15 @@ RubTextEditor >> encloseWith: aMatchingPair [
 			and: [ (text at: startIndex-1) = left and: [(text at: stopIndex) = right]])
 		ifTrue: [
 			"already enclosed; strip off brackets"
-			newString := (self shouldNestCharacter: left)
-						 ifTrue: [ self unNesting: oldSelection with: left ] 
+			newString := (self shouldEscapeCharacter: left)
+						 ifTrue: [ self unescapeCharacter: left inString: oldSelection ] 
 						 ifFalse: [ oldSelection ].
 			self selectFrom: startIndex-1 to: stopIndex.
 			self replaceSelectionWith: newString ]
 		ifFalse: [
 			" Checks if the characters inside the selection need to be escaped or not. "
-			newString := (self shouldNestCharacter: left)
-						 ifTrue: [ self nesting: oldSelection with: left ] 
+			newString := (self shouldEscapeCharacter: left)
+						 ifTrue: [ self escapeCharacter: left inString: oldSelection ] 
 						 ifFalse: [ "not enclosed; enclose by matching brackets"
 									  (String with: left), oldSelection string, (String with: right) ].
 			self replaceSelectionWith:
@@ -953,6 +952,20 @@ RubTextEditor >> escape [
 RubTextEditor >> escape: aKeyboardEvent [
 	textArea escapePressed.
 	^ false  
+]
+
+{ #category : #nesting }
+RubTextEditor >> escapeCharacter: aCharacter inString: aString [
+	" To escape them, we double the character every time it's encountered"
+	| result stream |
+	result := WriteStream with: ''.
+	stream := ReadStream on: aString string.
+	[ stream atEnd ] whileFalse: 
+		[ result nextPutAll: (stream upTo: aCharacter).
+		stream peekBack = aCharacter ifTrue: [result nextPut: aCharacter]. 
+		stream atEnd ifFalse: [ result nextPut: aCharacter ]
+						 ifTrue: [ stream peekBack = aCharacter ifTrue: [result nextPut: aCharacter] ].].
+	^result contents.
 ]
 
 { #category : #'menu messages' }
@@ -1202,6 +1215,15 @@ RubTextEditor >> forwardDelete: aKeyboardEvent [
 	^ false
 ]
 
+{ #category : #nesting }
+RubTextEditor >> getEscapeCharacterFromAst: anAST [
+	"If there is no node (empty textArea) there is no nesting to be had."
+	anAST ifNil: [ ^nil ].
+	anAST isCommentNode ifTrue: [ ^$" ].
+	(anAST isLiteralNode and: [anAST value isString]) ifTrue: [ ^$' ].
+	^nil.
+]
+
 { #category : #'accessing-selection' }
 RubTextEditor >> getHighlightInterval [
 	"Answer the interval that is or should be highligted."
@@ -1209,15 +1231,6 @@ RubTextEditor >> getHighlightInterval [
 	^ self hasSelection 
 		ifTrue: [ self selectionInterval ]
 		ifFalse: [ self computeSelectionIntervalForCurrentLine ]
-]
-
-{ #category : #nesting }
-RubTextEditor >> getNestingCharacterFromAst: anAST [
-	"If there is no node (empty textArea) there is no nesting to be had."
-	anAST ifNil: [ ^nil ].
-	anAST isCommentNode ifTrue: [ ^$" ].
-	(anAST isLiteralNode and: [anAST value isString]) ifTrue: [ ^$' ].
-	^nil.
 ]
 
 { #category : #'accessing-selection' }
@@ -1566,21 +1579,6 @@ RubTextEditor >> moveCursor: directionBlock forward: forward specialBlock: speci
 		ifTrue: [self selectMark: (indices at: #fixed) point: newPosition - 1]
 		ifFalse: [self selectAt: newPosition].
 	self setEmphasisHereFromTextForward: forward
-]
-
-{ #category : #nesting }
-RubTextEditor >> nesting: aString with: aCharacter [ 
-	" To escape them, we double the character every time it's encountered"
-	| result stream |
-	result := WriteStream with: ''.
-	stream := ReadStream on: aString string.
-	result nextPut: aCharacter.
-	[ stream atEnd ] whileFalse: 
-		[ result nextPutAll: (stream upTo: aCharacter).
-		stream peekBack = aCharacter ifTrue: [result nextPut: aCharacter]. 
-		result nextPut: aCharacter.].
-	stream peekBack = aCharacter ifTrue: [result nextPut: aCharacter].
-	^result contents.
 ]
 
 { #category : #nesting }
@@ -2301,8 +2299,9 @@ RubTextEditor >> shiftEnclose: aKeyboardEvent [
 ]
 
 { #category : #nesting }
-RubTextEditor >> shouldNestCharacter: aChar [
-	^'"''' includes: aChar.
+RubTextEditor >> shouldEscapeCharacter: aCharacter [
+
+	^ #($" $') includes: aCharacter
 ]
 
 { #category : #keymapping }
@@ -2361,13 +2360,6 @@ RubTextEditor >> storeSelectionInText [
 RubTextEditor >> string [
 
 	^self text string
-]
-
-{ #category : #nesting }
-RubTextEditor >> stringNestedWith: aCharac [
-	^(self shouldNestCharacter: aCharac) 
-		ifTrue: [ self nestingForPaste: self clipboardText with: aCharac. ]
-		ifFalse: [ self clipboardText ] 
 ]
 
 { #category : #'editing keys' }
@@ -2511,6 +2503,26 @@ RubTextEditor >> undoTypeIn: aText interval: anInterval [
 	self replace: anInterval with: aText and:
 		[self selectInterval: (anInterval first to: anInterval first - 1)].
 
+]
+
+{ #category : #nesting }
+RubTextEditor >> unescapeCharacter: aCharacter inString: aString [
+	"Unescape an escaped string.
+	Assume the string has all occurrences of aCharacter are escaped.
+	That is, they are in pairs.
+	
+	This method returns a copy of the string replacing all pairs of aCharacter by a single appearance of it."
+	
+	"(self unescapeCharacter: $' inString: '''''') >>> ''''"
+	"(self unescapeCharacter: $' inString: '''') >>> ''''"
+	
+	| result stream |
+	result := WriteStream with: ''.
+	stream := ReadStream on: aString.
+	[ stream atEnd ] whileFalse: 
+			[ result nextPutAll: (stream upTo: aCharacter).
+			  stream peek ifNotNil: [result nextPut: stream next]].
+	^result contents.
 ]
 
 { #category : #private }
