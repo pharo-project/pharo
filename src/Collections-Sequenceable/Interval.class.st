@@ -312,7 +312,8 @@ Interval >> printOn: aStream [
 
 { #category : #testing }
 Interval >> rangeIncludes: aNumber [
-	"Return true if the number lies in the interval between start and stop."
+	"Return true if the number lies in the interval between start and stop, considering all values in between as if step was either +1 or -1.
+	Use #include: to take the exact step into account."
 
 	^ step >= 0
 		ifTrue: [ aNumber between: start and: stop ]
