@@ -32,7 +32,7 @@ RFCondition >> cull: arguments [
 	"in case of my wrapped link expects arguments"
 
 	^ condition
-		and: [ linkCondition perform: linkCondition valueSelector withArguments: {arguments} ]
+		and: [ self linkCondition perform: self linkCondition valueSelector withArguments: {arguments} ]
 ]
 
 { #category : #'enable/disable' }
@@ -51,6 +51,11 @@ RFCondition >> initialize [
 ]
 
 { #category : #accessing }
+RFCondition >> linkCondition [
+	^ linkCondition ifNil: [ linkCondition := [ true ] ].
+]
+
+{ #category : #accessing }
 RFCondition >> linkCondition: aBlockOrBoolean [
 		linkCondition := aBlockOrBoolean
 ]
@@ -63,12 +68,12 @@ RFCondition >> reifications [
 
 { #category : #evaluating }
 RFCondition >> value [
-	^condition and: [ linkCondition value ]
+	^condition and: [ self linkCondition value ]
 ]
 
 { #category : #accessing }
 RFCondition >> valueSelector [
-	^ linkCondition numArgs isZero
+	^ self linkCondition numArgs isZero
 		ifTrue: [ #value ]
 		ifFalse: [ #cull: ]
 ]
