@@ -539,6 +539,10 @@ MetaLink >> selector: aSymbol [
 
 { #category : #installing }
 MetaLink >> uninstall [
+	"An uninstalled metaLink may not be re-installable. If you want to be sure you can reinstall it, please use #disable and #enable.
+	Cases when this metalink cannot be reinstalled:
+		- the method the AST node belongs to has been recompiled
+		- the image was saved (i.e. the ASTCache was reset)"
 	self linkInstaller uninstallFromAllAnonymousNodes: self.
 	self linkInstaller uninstallPermaLinkFor: self.
 	nodes do: [ :node | node removeLink: self ].
