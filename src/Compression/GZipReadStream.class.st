@@ -20,22 +20,6 @@ GZipReadStream class >> fileIn: fullFileName [
 ]
 
 { #category : #'file in/out' }
-GZipReadStream class >> fileIntoNewChangeSet: fullFileName [
-	"FileIn the contents of a gzipped file"
-
-	| csClass |
-	csClass := Smalltalk globals at: #ChangeSet ifAbsent: [ ^ self ].
-	fullFileName asFileReference
-		binaryReadStreamDo: [ :aBinaryStream | 
-			self with: aBinaryStream
-				do: [ :aGzStream | 
-					aGzStream contents asString
-						readStreamDo: [ :aReadStream | 
-							aReadStream reset.
-							csClass newChangesFromStream: aReadStream named: fullFileName asFileReference basename ] ] ]
-]
-
-{ #category : #'file in/out' }
 GZipReadStream class >> saveContents: fullFileName [
 	"Save the contents of a gzipped file"
 
