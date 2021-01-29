@@ -67,6 +67,15 @@ SpStringTableColumn >> beSortable [
 ]
 
 { #category : #api }
+SpStringTableColumn >> compareFunction: aBlock [
+	"sets the sorting of this column to use the two argument aBlock for comparing (aBlock should return a boolean) "
+	"it is often simpler to use a boolean compare than the threeway compare required by sortFunction: "
+
+	super sortFunction: [ :i1 :i2| (aBlock value: i1 value: i2) ifTrue:[-1] ifFalse:[1]] asSortFunction .
+	self isSortable: aBlock notNil
+]
+
+{ #category : #api }
 SpStringTableColumn >> displayBackgroundColor [
 
 	^ backgroundColorAction
@@ -165,10 +174,10 @@ SpStringTableColumn >> onAcceptEdition: aBlock [
 
 { #category : #api }
 SpStringTableColumn >> sortFunction: aBlockOrSortFunction [
-	"Set the sort function to apply to the values of this column in order to sort elements.
+	"Set the THREEWAY sort function to apply to the values of this column in order to sort elements.
 	 `aBlockOrSortFunction` is a block that receives two arguments to compare or an instace of 
 	 `SortFunction`. "
 
-	super sortFunction: aBlockOrSortFunction.
+	super sortFunction: aBlockOrSortFunction asSortFunction .
 	self isSortable: aBlockOrSortFunction notNil
 ]
