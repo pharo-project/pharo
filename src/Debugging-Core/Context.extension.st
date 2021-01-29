@@ -245,38 +245,45 @@ Context class >> simulatePrimitiveNumber: num with: simulator [
 Context >> stepToHome: aContext [
 	"Resume self until the home of top context is aContext.  Top context may be a block context."
 
-	| home ctxt here error context |
+	| home ctxt here error wrapperContext |
 	here := thisContext.
-	ctxt := self step.
-	ctxt = self ifFalse: [ "Insert ensure and exception handler contexts under aSender"
-		error := nil.
-		context := aContext insertSender: (Context contextOn: UnhandledError do: [ :ex | 
+	error := nil.
+	
+	wrapperContext := aContext insertSender: (Context contextOn: Exception do: [ :ex | 
 				            error
 					            ifNil: [ 
-						            error := ex exception.
-						            ex resumeUnchecked: here jump ]
-					            ifNotNil: [ ex pass ] ]) ].
+						            			error := ex.
+												ex resumeUnchecked: here jump ]
+					            ifNotNil: [ 
+										ex pass ] ]).
 	home := aContext home.
-	home == ctxt home ifTrue: [ 
-		^ { 
-			  ctxt.
-			  nil } ].
 
-	[ 
-	ctxt := ctxt step.
-	error ifNotNil: [ "remove above inserted ensure and handler contexts"
-		context ifNotNil: [ aContext terminateTo: context sender ].
+	"A first Step to do at least one step"
+	ctxt := self step.
+
+	home == ctxt home ifTrue: [ 
+		"remove above inserted ensure and handler contexts"
+		aContext terminateTo: wrapperContext sender.
 		^ { 
 			  ctxt.
 			  error } ].
 
-	home == ctxt home ] whileFalse: [ 
-		home isDead ifTrue: [ 
+	[  ctxt := ctxt step.
+		error ifNotNil: [ 
+		"remove above inserted ensure and handler contexts"
+		aContext terminateTo: wrapperContext sender.
 			^ { 
 				  ctxt.
-				  nil } ] ].
+				  error } ].
+
+		home == ctxt home ] whileFalse: [ 
+			home isDead ifTrue: [ 
+				^ { 
+					  ctxt.
+					  nil } ] ].
 	"remove above inserted ensure and handler contexts"
-	context ifNotNil: [ aContext terminateTo: context sender ].
+	aContext terminateTo: wrapperContext sender.
+	
 	^ { 
 		  ctxt.
 		  nil }

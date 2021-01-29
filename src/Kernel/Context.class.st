@@ -90,7 +90,15 @@ Context class >> contextEnsure: block [
 
 	| ctxt chain |
 	ctxt := thisContext.
-	[chain := thisContext sender cut: ctxt. ctxt jump] ensure: block.
+	[chain := thisContext sender cut: ctxt. 
+		
+		"As the jump will return to the current context inside the context ensure:
+		It is needed to emulate the return value of sending the message ensure:
+		If this is not done, the context will do an additional pop, affecting the temporary variables. 
+		This is required because we are breaking a condition on Context >> jump.
+		The receiver of jump should be a Top context, in this case it is not. "
+		ctxt push: nil. 
+		ctxt jump] ensure: block.
 	"jump above will resume here without unwinding chain"
 	^ chain
 ]
@@ -101,7 +109,15 @@ Context class >> contextOn: exceptionClass do: block [
 
 	| ctxt chain |
 	ctxt := thisContext.
-	[chain := thisContext sender cut: ctxt. ctxt jump] on: exceptionClass do: block.
+	[chain := thisContext sender cut: ctxt. 
+	
+		"As the jump will return to the current context inside the context on:do:
+		It is needed to emulate the return value of sending the message on:do:
+		If this is not done, the context will do an additional pop, affecting the temporary variables. 
+		This is required because we are breaking a condition on Context >> jump.
+		The receiver of jump should be a Top context, in this case it is not. "
+		ctxt push:nil. 
+		ctxt jump] on: exceptionClass do: block.
 	"jump above will resume here without unwinding chain"
 	^ chain
 ]
@@ -1003,7 +1019,9 @@ Context >> isUnwindContext [
 { #category : #controlling }
 Context >> jump [
 	"Abandon thisContext and resume self instead (using the same current process).  You may want to save thisContext's sender before calling this so you can jump back to it.
-	Self MUST BE a top context (ie. a suspended context or a abandoned context that was jumped out of).  A top context already has its return value on its stack (see Interpreter>>primitiveSuspend and other suspending primitives).
+	Self MUST BE a top context (ie. a suspended context or an abandoned context that was jumped out of).  A top context already has its return value on its stack (see Interpreter>>primitiveSuspend and other suspending primitives).
+	If self is not a top context is the responsibility of the caller to push something in the context. If this is not guarantee an error when accessing the values in the context is produced. Pay special attention to the implementation of Context class >> #contextOn: exceptionClass do: block and Context class >> #contextEnsure:. 
+	
 	thisContext's sender is converted to a top context (by pushing a nil return value on its stack) so it can be jump back to."
 
 	| top |
