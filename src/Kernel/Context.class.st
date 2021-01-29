@@ -1850,14 +1850,13 @@ Context >> send: selector to: aReceiver with: arguments super: superFlag [
 		           class: class.
 		
 	"The quick method contains 3 bytecodes:
-	- primitive 264 (initialPC)
+	- primitive 264 or 256: a 3 bytecode primitive (initialPC)
 	- a push of a value (endPC - 1)
 	- the return top instruction (endPC)
 	When activating the quic method, we arrive on the PC corresponding to the primitive which is not suposed to be stepped.
 	We have to fix the PC so that the next executed bytecode is the push.
-	We do that by setting it to endPC - 1.
-	"
-	aMethod isQuick ifTrue: [ context pc: context method endPC - 1 ].
+	We do that by setting the PC to aMethod initialPC + 3 (the number of bytes of the primitive)."
+	aMethod isQuick ifTrue: [ context pc: aMethod initialPC + 3].
 	
 	"check if activated method handles the error code (a first bytecode will be store into temp)"
 	"long store temp"
