@@ -37,7 +37,7 @@ ReflectivityTest >> tearDown [
 ]
 
 { #category : #tests }
-ReflectivityTest >> testTwoLinksUnstallOne [
+ReflectivityTest >> testTwoLinksUninstallOne [
 	| node instance |
 	node := (ReflectivityExamples >> #exampleWithArg:) ast.
 	link := MetaLink new
