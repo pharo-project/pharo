@@ -5,15 +5,21 @@ Class {
 		'count',
 		'tag',
 		'link',
-		'link2'
+		'link2',
+		'cache'
 	],
 	#category : #'Reflectivity-Tests-Base'
 }
 
 { #category : #tagging }
 ReflectivityTest >> increase [
-	count ifNil: [ count := 0 ].
 	count := count + 1.
+]
+
+{ #category : #running }
+ReflectivityTest >> setUp [
+	super setUp.
+	count := 0.
 ]
 
 { #category : #tagging }
@@ -32,8 +38,67 @@ ReflectivityTest >> tearDown [
 	link2 ifNotNil: [link2 uninstall].
 	tag := nil.
 	count := 0.
-	(ReflectivityExamples>>#exampleWithArg:)  recompile.
+	(ReflectivityExamples>>#exampleWithArg:) recompile.
+	ASTCache default: cache.
 	super tearDown 
+]
+
+{ #category : #tests }
+ReflectivityTest >> testDisableLink [
+	| node instance |
+	node := (ReflectivityExamples >> #exampleWithArg:) ast.
+	link := MetaLink new
+		metaObject: self;
+		selector: #increase.
+	node link: link.
+	instance := ReflectivityExamples new.
+	self assert: (instance exampleWithArg: 3) equals: 5.
+	self assert: count equals: 1.
+	link disable.
+	self assert: (instance exampleWithArg: 3) equals: 5.
+	self assert: count equals: 1.
+]
+
+{ #category : #tests }
+ReflectivityTest >> testDisableThenCleanASTCacheThenEnableLink [
+	| node instance |
+	node := (ReflectivityExamples >> #exampleWithArg:) ast.
+	link := MetaLink new
+		metaObject: self;
+		selector: #increase.
+	node link: link.
+	instance := ReflectivityExamples new.
+	self assert: (instance exampleWithArg: 3) equals: 5.
+	self assert: count equals: 1.
+	link disable.
+	self assert: (instance exampleWithArg: 3) equals: 5.
+	self assert: count equals: 1.
+	"Clean the AST cache"
+	ASTCache default reset.
+	link enable.
+	self assert: (instance exampleWithArg: 3) equals: 5.
+	self assert: count equals: 2.
+
+]
+
+{ #category : #tests }
+ReflectivityTest >> testDisableThenEnableLink [
+	| node instance |
+	node := (ReflectivityExamples >> #exampleWithArg:) ast.
+	link := MetaLink new
+		metaObject: self;
+		selector: #increase.
+	node link: link.
+	instance := ReflectivityExamples new.
+	self assert: (instance exampleWithArg: 3) equals: 5.
+	self assert: count equals: 1.
+	link disable.
+	self assert: (instance exampleWithArg: 3) equals: 5.
+	self assert: count equals: 1.
+	link enable.
+	self assert: (instance exampleWithArg: 3) equals: 5.
+	self assert: count equals: 2.
+
 ]
 
 { #category : #tests }
