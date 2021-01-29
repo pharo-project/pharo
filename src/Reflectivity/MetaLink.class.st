@@ -223,8 +223,9 @@ MetaLink >> doesNotUnderstand: message [
 { #category : #'reflective api' }
 MetaLink >> enable [
 	"turn on link reflectively if it has been turned off"
-	self hasReifiedCondition
-		ifTrue: [self condition enable].
+	self condition: (self condition originalLinkCondition)
+	"self hasReifiedCondition
+		ifTrue: [self condition enable]."
 	
 
 ]

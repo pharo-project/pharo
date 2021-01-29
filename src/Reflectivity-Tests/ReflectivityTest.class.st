@@ -98,6 +98,29 @@ ReflectivityTest >> testDisableThenEnableLink [
 	link enable.
 	self assert: (instance exampleWithArg: 3) equals: 5.
 	self assert: count equals: 2.
+	self assert: link condition isNil.
+
+]
+
+{ #category : #tests }
+ReflectivityTest >> testDisableThenEnableLinkWithCondition [
+	| node instance |
+	node := (ReflectivityExamples >> #exampleWithArg:) ast.
+	link := MetaLink new
+		metaObject: self;
+		condition: false;
+		selector: #increase.
+	node link: link.
+	instance := ReflectivityExamples new.
+	self assert: (instance exampleWithArg: 3) equals: 5.
+	self assert: count equals: 0.
+	link disable.
+	self assert: (instance exampleWithArg: 3) equals: 5.
+	self assert: count equals: 0.
+	link enable.
+	self assert: (instance exampleWithArg: 3) equals: 5.
+	self assert: count equals: 0.
+	self assert: link condition equals: false
 
 ]
 

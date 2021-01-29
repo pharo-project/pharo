@@ -12,14 +12,14 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'condition',
-		'linkCondition'
+		'originalLinkCondition'
 	],
 	#category : #'Reflectivity-Core'
 }
 
 { #category : #'instance creation' }
 RFCondition class >> for: aCondition [
-	^self new linkCondition: aCondition
+	^self new originalLinkCondition: aCondition.
 ]
 
 { #category : #accessing }
@@ -52,12 +52,17 @@ RFCondition >> initialize [
 
 { #category : #accessing }
 RFCondition >> linkCondition [
-	^ linkCondition ifNil: [ linkCondition := [ true ] ].
+	^ self originalLinkCondition ifNil: [ [ true ] ].
 ]
 
 { #category : #accessing }
-RFCondition >> linkCondition: aBlockOrBoolean [
-		linkCondition := aBlockOrBoolean
+RFCondition >> originalLinkCondition [
+	^ originalLinkCondition
+]
+
+{ #category : #accessing }
+RFCondition >> originalLinkCondition: aCondition [
+	originalLinkCondition := aCondition
 ]
 
 { #category : #accessing }
@@ -73,7 +78,8 @@ RFCondition >> value [
 
 { #category : #accessing }
 RFCondition >> valueSelector [
-	^ self linkCondition numArgs isZero
-		ifTrue: [ #value ]
-		ifFalse: [ #cull: ]
+	"If the condition is a block with 1+ arguments, it must be sent #cull: to be evaluated. Otherwise, it's a block with no argument or directly true or false, so we send it #value to evaluate it"
+	^ (self linkCondition isBlock and: [ self linkCondition numArgs isZero not ] )
+		ifTrue: [ #cull: ]
+		ifFalse: [ #value ]
 ]
