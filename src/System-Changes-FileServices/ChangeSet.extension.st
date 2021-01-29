@@ -29,7 +29,7 @@ ChangeSet class >> serviceFileIntoNewChangeSet [
 
 	^ SimpleServiceEntry 
 		provider: self 
-		label: 'Install into new change set'
+		label: 'Install into the image'
 		selector: #fileIntoNewChangeSet:
 		description: 'Install the file as a body of code in the image: create a new change set and file-in the selected file into it'
 		buttonLabel: 'Install'
