@@ -1,6 +1,6 @@
 Extension { #name : #Number }
 
-{ #category : #'*Tools' }
+{ #category : #'*Debugger-Model' }
 Number class >> canonicalArgumentName [
 
 	^ 'aNumber'.

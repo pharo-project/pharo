@@ -1,6 +1,6 @@
 Extension { #name : #Metaclass }
 
-{ #category : #'*Tools' }
+{ #category : #'*Debugger-Model' }
 Metaclass >> canonicalArgumentName [
 
 	^ 'aClass'.

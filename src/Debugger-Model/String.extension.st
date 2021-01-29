@@ -1,6 +1,6 @@
 Extension { #name : #String }
 
-{ #category : #'*Tools' }
+{ #category : #'*Debugger-Model' }
 String class >> canonicalArgumentName [
 
 	^ 'aString'
