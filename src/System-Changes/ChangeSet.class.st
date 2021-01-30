@@ -808,68 +808,6 @@ ChangeSet >> expungeEmptyClassChangeEntries [
 		[:className :classRecord | classRecord hasNoChanges]
 ]
 
-{ #category : #'class changes' }
-ChangeSet >> fatDefForClass: class [ 
-	| newDef oldDef oldStrm newStrm outStrm oldVars newVars addedVars |
-	class isBehavior ifFalse: [ ^ class definition ].
-	
-	newDef := class oldDefinition.
-	oldDef := (self changeRecorderFor: class) priorDefinition.
-	oldDef ifNil: [ ^ newDef ].
-	oldDef = newDef ifTrue: [ ^ newDef ].
-	oldStrm := oldDef readStream.
-	newStrm := newDef readStream.
-	outStrm := (String new: newDef size * 2) writeStream.
-
-	"Merge inst vars from old and new defs..."
-	oldStrm
-		upToAll: 'instanceVariableNames';
-		upTo: $'.
-	outStrm
-		nextPutAll: (newStrm upToAll: 'instanceVariableNames');
-		nextPutAll: 'instanceVariableNames:'.
-	newStrm peek = $: ifTrue: [ newStrm next ].	"may or may not be there, but already written"
-	outStrm
-		nextPutAll: (newStrm upTo: $');
-		nextPut: $'.
-	oldVars := (oldStrm upTo: $') findTokens: Character separators.
-	newVars := (newStrm upTo: $') findTokens: Character separators.
-	addedVars := oldVars asSet
-		addAll: newVars;
-		removeAll: oldVars;
-		asOrderedCollection.
-	oldVars , addedVars do: 
-		[ :var | 
-		outStrm
-			nextPutAll: var;
-			space ].
-	outStrm nextPut: $'.
-	class isMeta ifFalse: 
-		[ "Merge class vars from old and new defs..."
-		oldStrm
-			upToAll: 'classVariableNames:';
-			upTo: $'.
-		outStrm
-			nextPutAll: (newStrm upToAll: 'classVariableNames:');
-			nextPutAll: 'classVariableNames:';
-			nextPutAll: (newStrm upTo: $');
-			nextPut: $'.
-		oldVars := (oldStrm upTo: $') findTokens: Character separators.
-		newVars := (newStrm upTo: $') findTokens: Character separators.
-		addedVars := oldVars asSet
-			addAll: newVars;
-			removeAll: oldVars;
-			asOrderedCollection.
-		oldVars , addedVars do: 
-			[ :var | 
-			outStrm
-				nextPutAll: var;
-				space ].
-		outStrm nextPut: $' ].
-	outStrm nextPutAll: newStrm upToEnd.
-	^ outStrm contents
-]
-
 { #category : #'file in/out' }
 ChangeSet >> fileOut [
 	"File out the receiver, to a file whose name is a function of the  
@@ -930,7 +868,7 @@ ChangeSet >> fileOutClassDefinition: class on: stream [
 		ifTrue: [ 
 			"fat definition only needed for changes"
 			stream
-				nextChunkPut: (self fatDefForClass: class);
+				nextChunkPut: class definitionString;
 				cr.
 			DeepCopier new checkClass: class	"If veryDeepCopy weakly copies some inst 
 			vars in this class, warn author when new ones are added." ]
@@ -957,7 +895,7 @@ ChangeSet >> fileOutOn: stream [
 
 	| classList traits classes traitList list |
 	self ifEmpty: [self inform: 'Warning: no changes to file out'].
-		
+
 	traits := self changedClasses select: [:each | each isTrait].
 	classes := self changedClasses select: [:each | each isBehavior & each isTrait not].
 	traitList := self class traitsOrder: traits asOrderedCollection.
@@ -1002,7 +940,7 @@ ChangeSet >> fileOutPSFor: class on: stream [
 							stream
 								nextChunkPut: class soleInstance name , ' initialize';
 								cr ] ] ].
-	((classRecord includesChangeType: #change) and: [ (currentDef := class definition) ~= (self fatDefForClass: class) ])
+	((classRecord includesChangeType: #change) and: [ (currentDef := class definitionString) ~= class definitionString ])
 		ifTrue: [ 
 			stream
 				nextChunkPut: currentDef;
