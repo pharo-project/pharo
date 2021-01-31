@@ -591,8 +591,22 @@ SpCodePresenter >> selectedClassOrMetaClass [
 
 { #category : #'command support' }
 SpCodePresenter >> selectedSelector [
-	
-    ^ CNSelectorExtractor new extractSelectorFromSelection: self selectedTextOrLine
+
+	"If text is selected, extract the selectors from the selected text. If there is no selection, try to extract the selectors under the caret position."
+
+	| extractor selectedText |
+	extractor := CNSelectorExtractor new.
+	selectedText := self selectedText.
+	selectedText
+		ifNotEmpty: [ 
+		^ extractor extractSelectorFromSelection: selectedText ]
+		ifEmpty: [ 
+			| source ast |
+			source := self text.
+			ast := RBParser parseFaultyExpression: source.
+			^ extractor
+				  extractSelectorFromAST: ast
+				  atPosition: self selectionInterval first ]
 ]
 
 { #category : #api }
