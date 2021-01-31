@@ -597,15 +597,12 @@ SpCodePresenter >> selectedSelector [
 	| extractor selectedText |
 	extractor := CNSelectorExtractor new.
 	selectedText := self selectedText.
-	selectedText
-		ifNotEmpty: [ 
-		^ extractor extractSelectorFromSelection: selectedText ]
-		ifEmpty: [ 
-			| source ast |
-			source := self text.
-			ast := RBParser parseFaultyExpression: source.
-			^ extractor
-				  extractSelectorFromAST: ast
+	^ selectedText
+		  ifNotEmpty: [ 
+		  extractor extractSelectorFromSelection: selectedText ]
+		  ifEmpty: [ 
+			  extractor
+				  extractSelectorFromSource: self text
 				  atPosition: self selectionInterval first ]
 ]
 

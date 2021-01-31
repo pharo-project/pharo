@@ -121,3 +121,13 @@ CNSelectorExtractor >> extractSelectorFromSelection: aString [
 	"fall back"
 	^ aString asSymbol
 ]
+
+{ #category : #'public - extraction' }
+CNSelectorExtractor >> extractSelectorFromSource: aString atPosition: aPosition [
+
+	"Receives a string with the source code, and a number which indicates the position (of the caret) where the selectors will be extracted."
+
+	^ self
+		  extractSelectorFromAST: (RBParser parseFaultyExpression: aString)
+		  atPosition: aPosition
+]
