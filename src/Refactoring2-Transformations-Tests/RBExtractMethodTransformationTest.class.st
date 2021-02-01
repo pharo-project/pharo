@@ -11,7 +11,7 @@ RBExtractMethodTransformationTest >> sourceCodeAt: anInterval forMethod: aSelect
 		copyFrom: anInterval first to: anInterval last
 ]
 
-{ #category : #testing }
+{ #category : #'failure tests' }
 RBExtractMethodTransformationTest >> testBadInterval [
 
 	self shouldFail: (RBExtractMethodTransformation
@@ -29,7 +29,7 @@ RBExtractMethodTransformationTest >> testBadInterval [
 	
 ]
 
-{ #category : #testing }
+{ #category : #'failure tests' }
 RBExtractMethodTransformationTest >> testExtractFailure [
 
 	self shouldFail: (RBExtractMethodTransformation
@@ -55,6 +55,65 @@ RBExtractMethodTransformationTest >> testExtractFailure [
 ]
 
 { #category : #testing }
+RBExtractMethodTransformationTest >> testExtractUsingExistingMethodRefactoring [
+
+	| transformation class |
+	transformation := (RBExtractMethodTransformation
+		extract: 'rewriteRule tree printString'
+		from: #checkMethod:
+		to: #bar
+		in: #RBTransformationRuleTestData).
+	transformation setOption: #useExistingMethod toUse: [ :re :sel | true ].
+	transformation asRefactoring transform.
+	self assert: transformation model changes changes size equals: 1.
+	
+	class := transformation model classNamed: #RBTransformationRuleTestData.
+	self assert: (class parseTreeFor: #checkMethod:) 
+		  equals: (self parseMethod: 'checkMethod: aSmalllintContext
+	class := aSmalllintContext selectedClass.
+	(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: [ 
+		(RecursiveSelfRule
+			 executeTree: rewriteRule tree
+			 initialAnswer: false) ifFalse: [ 
+			builder
+				compile: self rewriteRuleAsString
+				in: class
+				classified: aSmalllintContext protocols ] ]').	
+	self deny: (class directlyDefinesMethod: #bar)
+]
+
+{ #category : #testing }
+RBExtractMethodTransformationTest >> testExtractWithoutUseExistingMethodRefactoring [
+
+	| transformation class |
+	transformation := (RBExtractMethodTransformation
+		extract: 'rewriteRule tree printString'
+		from: #checkMethod:
+		to: #bar
+		in: #RBTransformationRuleTestData).
+	transformation setOption: #useExistingMethod toUse: [ :re :sel | false ].
+	transformation asRefactoring transform.
+	self assert: transformation model changes changes size equals: 2.
+	
+	class := transformation model classNamed: #RBTransformationRuleTestData.
+	self assert: (class parseTreeFor: #checkMethod:) 
+		  equals: (self parseMethod: 'checkMethod: aSmalllintContext
+	class := aSmalllintContext selectedClass.
+	(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: [ 
+		(RecursiveSelfRule
+			 executeTree: rewriteRule tree
+			 initialAnswer: false) ifFalse: [ 
+			builder
+				compile: self bar
+				in: class
+				classified: aSmalllintContext protocols ] ]').	
+	self assert: (class parseTreeFor: #bar)
+		equals: (self parseMethod: 'bar
+		rewriteRule tree printString').
+	self assert: (class directlyDefinesMethod: #bar)
+]
+
+{ #category : #'failure tests' }
 RBExtractMethodTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBExtractMethodTransformation

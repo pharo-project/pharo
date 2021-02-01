@@ -28,7 +28,8 @@ Class {
 		'subtree',
 		'arguments',
 		'temporaries',
-		'assignments'
+		'assignments',
+		'existingSelector'
 	],
 	#category : #'Refactoring2-Transformations-Model'
 }
@@ -69,7 +70,14 @@ RBExtractMethodTransformation class >> model: aRBModel extract: aString from: aS
 RBExtractMethodTransformation >> buildTransformations [
 
 	subtree := self calculateSubtree.
-			
+	
+	existingSelector ifNotNil: [ 
+		^ OrderedCollection with: (self parseTreeRewriterClass 
+			replaceCode: subtree
+			byMessageSendTo: existingSelector
+			in: (self definingClass methodFor: self calculateTree selector))	
+	]
+	ifNil: [
 	^ (parseTree isNil or: [ subtree isNil ])
 		ifTrue: [ OrderedCollection new ]
 		ifFalse: [ 
@@ -110,7 +118,7 @@ RBExtractMethodTransformation >> buildTransformations [
 							variable: temporary
 							inMethod: selector
 							inClass: class ]);
-					yourself ] ]
+					yourself ] ] ]
 ]
 
 { #category : #querying }
@@ -336,14 +344,18 @@ RBExtractMethodTransformation >> preconditions [
 				reject: [ :m | m selector = selector ].
 			
 			(self parseTreeSearcherClass whichMethodIn: searchSpace matches: aSubtree)
-				ifNotEmpty: [ :opportunities |
-					self refactoringError: ('<1s> method(s) already implement this code.<n>Do you want to send a message instead?' expandMacrosWith: opportunities size asString)
-					with: [ (self parseTreeRewriterClass 
-							  replaceCode: aSubtree
-							  byMessageSendTo: opportunities anyOne
-							  in: (self definingClass methodFor: self calculateTree selector))
-							  transform ]. false ]
+				ifNotEmpty: [ :opportunities | 
+					existingSelector := opportunities anyOne.
+					(self shouldUseExistingMethod: existingSelector selector)
+					ifFalse: [ existingSelector := nil ].
+					true ]
 				ifEmpty: [ true ] ])
+]
+
+{ #category : #requesting }
+RBExtractMethodTransformation >> shouldUseExistingMethod: aSelector [ 
+
+	^(self options at: #useExistingMethod) value: self value: aSelector
 ]
 
 { #category : #printing }
