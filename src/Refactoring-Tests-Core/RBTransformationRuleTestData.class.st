@@ -300,6 +300,11 @@ RBTransformationRuleTestData >> resetResult [
 	builder := RBRefactoryChangeManager changeFactory compositeRefactoryChange
 ]
 
+{ #category : #accessing }
+RBTransformationRuleTestData >> rewriteRuleAsString [
+	^ rewriteRule tree printString
+]
+
 { #category : #initialization }
 RBTransformationRuleTestData >> rewriteUsing: searchReplacer [ 
 	rewriteRule := searchReplacer.
