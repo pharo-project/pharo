@@ -118,6 +118,12 @@ ContextTest >> setUp [
 	aMethodContext := Context sender: aSender receiver: aReceiver method: aCompiledMethod arguments: #(). 
 ]
 
+{ #category : #running }
+ContextTest >> tearDown [
+	aMethodContext stepIntoQuickMethod: false.
+	super tearDown
+]
+
 { #category : #tests }
 ContextTest >> testActivateReturnValue [
 	self assert: ((aSender activateReturn: aMethodContext value: #()) isKindOf: Context).
@@ -155,6 +161,30 @@ ContextTest >> testMethodIsBottomContext [
 	self
 		assert: aMethodContext bottomContext equals: aSender;
 		assert: aMethodContext secondFromBottom equals: aMethodContext
+]
+
+{ #category : #tests }
+ContextTest >> testNoStepIntoQuickMethod [
+
+	|newContext |
+	aMethodContext := Context
+		sender: thisContext
+		receiver: aReceiver
+		method: (Rectangle >>#center)
+		arguments: #().
+	
+	"We step into #center to get on the topLeft message.
+	We did not change context."
+	aMethodContext step.
+
+	"Now we step into #topLeft which is a quick method.
+	The primitive should be executed as the flag to step into quick methods
+	has not been set."
+	newContext := aMethodContext step.
+	self assert: newContext identicalTo: aMethodContext
+	
+	
+
 ]
 
 { #category : #tests }
@@ -208,6 +238,7 @@ ContextTest >> testStepIntoQuickMethod [
 	aMethodContext step.
 	
 	"Now we step into #topLeft which is a quick method"
+	aMethodContext stepIntoQuickMethod: true.
 	newContext := aMethodContext step.
 	quickMethod := (Rectangle >> #topLeft).
 	self assert: newContext sender identicalTo: aMethodContext.
@@ -228,6 +259,12 @@ ContextTest >> testStepIntoQuickMethod [
 ]
 
 { #category : #tests }
+ContextTest >> testStepIntoQuickMethodBoolean [
+
+	self deny: aMethodContext stepIntoQuickMethod
+]
+
+{ #category : #tests }
 ContextTest >> testStepIntoReturnSelfMethod [
 
 	|newContext quickMethod|
@@ -244,6 +281,7 @@ ContextTest >> testStepIntoReturnSelfMethod [
 	aMethodContext step.
 	
 	"Now we step into #yourself which is a quick method just returning self"
+	aMethodContext stepIntoQuickMethod: true.
 	newContext := aMethodContext step.
 	quickMethod := (Object >> #yourself).
 	self assert: newContext sender identicalTo: aMethodContext.
@@ -273,6 +311,7 @@ ContextTest >> testSteppingAQuickMethod [
 		arguments: #().	
 	
 	aMethodContext step.
+	aMethodContext stepIntoQuickMethod: true.
 	newContext := aMethodContext step.
 	
 	"We're in the quick method now, it should be steppable"
@@ -297,6 +336,7 @@ ContextTest >> testSteppingReturnSelfMethod [
 		arguments: #().	
 			
 	aMethodContext step.
+	aMethodContext stepIntoQuickMethod: true.
 	newContext := aMethodContext step.
 	
 	"We're in the quick method now, it should be steppable"

@@ -1828,7 +1828,7 @@ Context >> send: selector to: aReceiver with: arguments super: superFlag [
 			  with: (Array with: selector with: arguments with: aReceiver)
 			  super: superFlag ].
 
-	aMethod isRealPrimitive ifTrue: [ 
+	(aMethod isRealPrimitive or:[self stepIntoQuickMethod not]) ifTrue: [ 
 		value := self
 			         tryPrimitiveFor: aMethod
 			         receiver: aReceiver
@@ -1856,7 +1856,7 @@ Context >> send: selector to: aReceiver with: arguments super: superFlag [
 	When activating the quic method, we arrive on the PC corresponding to the primitive which is not suposed to be stepped.
 	We have to fix the PC so that the next executed bytecode is the push.
 	We do that by setting the PC to aMethod initialPC + 3 (the number of bytes of the primitive)."
-	aMethod isQuick ifTrue: [ context pc: aMethod initialPC + 3].
+	(aMethod isQuick and:[self stepIntoQuickMethod]) ifTrue: [ context pc: aMethod initialPC + 3].
 	
 	"check if activated method handles the error code (a first bytecode will be store into temp)"
 	"long store temp"
@@ -2022,6 +2022,17 @@ Context >> step [
 	context that would be the active context after this bytecode."
 
 	^self interpretNextInstructionFor: self
+]
+
+{ #category : #'debugger access' }
+Context >> stepIntoQuickMethod [
+	^self compiledCode stepIntoQuickMethods
+]
+
+{ #category : #'debugger access' }
+Context >> stepIntoQuickMethod: aBoolean [ 
+	self compiledCode isBlock ifTrue: [ ^self ].
+	self compiledCode stepIntoQuickMethods: aBoolean
 ]
 
 { #category : #controlling }
