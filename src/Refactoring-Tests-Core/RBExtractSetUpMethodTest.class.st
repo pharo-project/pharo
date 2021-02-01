@@ -5,6 +5,16 @@ Class {
 }
 
 { #category : #'failure tests' }
+RBExtractSetUpMethodTest >> testBadClass [
+	self
+		shouldFail:
+			(RBExtractSetUpMethodRefactoring
+				extract: (78 to: 197)
+				from: #displayName
+				in: RBLintRuleTestData)
+]
+
+{ #category : #'failure tests' }
 RBExtractSetUpMethodTest >> testBadInterval [
 	self
 		shouldFail:
