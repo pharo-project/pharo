@@ -2,7 +2,6 @@ Class {
 	#name : #RBRefactoringTest,
 	#superclass : #RBRefactoringBrowserTest,
 	#instVars : [
-		'manager',
 		'model'
 	],
 	#category : #'Refactoring-Tests-Core-Refactorings'
@@ -484,6 +483,14 @@ RBRefactoringTest >> setupMethodNameFor: aRefactoring toReturn: aSelector withAr
 				selector: aSelector;
 				arguments: stringCollection;
 				yourself].
+	aRefactoring options: options
+]
+
+{ #category : #'set up' }
+RBRefactoringTest >> setupSearchInAllHierarchyFor: aRefactoring toReturn: aBoolean [ 
+	| options |
+	options := aRefactoring options copy.
+	options at: #searchInAllHierarchy put: [aBoolean ].
 	aRefactoring options: options
 ]
 

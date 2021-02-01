@@ -1,6 +1,6 @@
 Extension { #name : #Boolean }
 
-{ #category : #'*Tools' }
+{ #category : #'*Debugger-Model' }
 Boolean class >> canonicalArgumentName [
 	^ 'aBoolean'
 ]

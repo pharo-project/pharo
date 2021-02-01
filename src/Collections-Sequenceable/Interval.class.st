@@ -312,7 +312,11 @@ Interval >> printOn: aStream [
 
 { #category : #testing }
 Interval >> rangeIncludes: aNumber [
-	"Return true if the number lies in the interval between start and stop."
+	"Return true if aNumber lies anywhere between the interval bounds.
+	This is a fast O(1) bounds check.
+	
+	Beware: because #rangeIncludes: only considers the sign of the step, not its magnitude, it also returns true for values that are not actual elements of the interval.
+	For precise element inclusion with arbitrary step, use #includes:."
 
 	^ step >= 0
 		ifTrue: [ aNumber between: start and: stop ]

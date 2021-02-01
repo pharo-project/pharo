@@ -41,11 +41,12 @@ Class >> inspectionClassComment [
 
 { #category : #'*NewTools-Inspector-Extensions' }
 Class >> inspectionClassDefinition [
+
 	"This provides an editable comment of the current class"
+
 	<inspectorPresentationOrder: 915 title: 'Definition'>
-	
 	^ SpCodePresenter new
-		beForScripting;
-		text: self definition;
-		beNotEditable
+		  beForScripting;
+		  text: self definitionString;
+		  beNotEditable
 ]

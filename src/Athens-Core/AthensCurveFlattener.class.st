@@ -12,7 +12,6 @@ Class {
 		'lengthToleranceSquared'
 	],
 	#classVars : [
-		'CollinearityEps',
 		'CurveAngleToleranceEpsilon',
 		'CurveCollinearityEpsilon',
 		'CurveDistanceEpsilon',

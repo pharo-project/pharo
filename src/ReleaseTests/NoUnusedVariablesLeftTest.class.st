@@ -44,7 +44,7 @@ NoUnusedVariablesLeftTest >> testNoUnusedInstanceVariablesLeft [
 	
 	classes := variables collect: [ :each | each definingClass ] as: Set.
 	
-	validExceptions := { }.	
+	validExceptions := { RBFooLintRuleTestData . RBLintRuleTestData }.	
 	
 	remaining := classes asOrderedCollection removeAll: validExceptions; yourself.
 	

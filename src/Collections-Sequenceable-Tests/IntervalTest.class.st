@@ -635,24 +635,19 @@ IntervalTest >> testPermutationsDo [
 
 { #category : #tests }
 IntervalTest >> testRangeIncludes [
-	self
-		assert: ((1 to: 10)
-				rangeIncludes: 3).
-	self
-		assert: ((1 to: 10 by: 2)
-				rangeIncludes: 3).
-	self
-		deny: ((1 to: 10)
-				rangeIncludes: 0).
-	self
-		deny: ((1 to: 10)
-				rangeIncludes: 11).
-	self
-		deny: ((1 to: 10 by: 2)
-				rangeIncludes: 0).
-	self
-		deny: ((1 to: 10 by: 2)
-				rangeIncludes: 11)
+
+	self assert: ((1 to: 10) rangeIncludes: 3).
+	self assert: ((1 to: 10 by: 2) rangeIncludes: 3).
+	self assert: ((10 to: 1 by: -2) rangeIncludes: 3).
+	self assert: ((1 to: 10 by: 2) rangeIncludes: 4).
+	self assert: ((1 to: 10) rangeIncludes: 3.5).
+	
+	self deny: ((1 to: 10) rangeIncludes: 0).
+	self deny: ((1 to: 10) rangeIncludes: 11).
+	self deny: ((1 to: 10 by: 2) rangeIncludes: 0).
+	self deny: ((1 to: 10 by: 2) rangeIncludes: 11).
+	self deny: ((10 to: 1) rangeIncludes: 3).
+	self deny: ((10 to: 1) rangeIncludes: -3)
 ]
 
 { #category : #tests }

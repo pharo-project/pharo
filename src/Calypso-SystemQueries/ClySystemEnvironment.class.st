@@ -156,6 +156,7 @@ Is this really what you want to do?') asText
 	[class := classCompiler
 		source: aString;
 		requestor: aController;
+		failBlock: [ ^ nil ];
 		logged: true;
 		evaluate] on: OCUndeclaredVariableWarning do: [ :ex | 
 			"we are only interested in class definitions"

@@ -1,6 +1,6 @@
 Extension { #name : #Collection }
 
-{ #category : #'*Tools-Debugger' }
+{ #category : #'*Debugger-Model' }
 Collection class >> canonicalArgumentName [
 
 	^ 'aCollection'.

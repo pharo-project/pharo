@@ -8,7 +8,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'name',
-		'factory',
 		'changeFactory',
 		'onSystemDictionary'
 	],

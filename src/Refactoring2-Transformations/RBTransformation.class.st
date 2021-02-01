@@ -141,6 +141,14 @@ RBTransformation >> defaultEnvironment [
 	^ RBBrowserEnvironment new
 ]
 
+{ #category : #execution }
+RBTransformation >> execute [
+	self primitiveExecute.
+	RBRefactoryChangeManager instance 
+		performChange: self changes; 
+		addUndoPointer: (RBRefactoryChangeManager nextCounter)
+]
+
 { #category : #initialization }
 RBTransformation >> initialize [
 	super initialize.

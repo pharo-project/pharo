@@ -266,7 +266,7 @@ ClassChangeRecord >> noteNewName: newName [
 ClassChangeRecord >> notePriorDefinition: oldClass [
 
 	oldClass ifNil: [^ self].
-	priorDefinition ifNil: [priorDefinition := oldClass oldDefinition]
+	priorDefinition ifNil: [priorDefinition := oldClass definitionString ]
 ]
 
 { #category : #'method changes' }

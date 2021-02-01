@@ -647,11 +647,20 @@ Process >> stepToHome: aContext [
 				onBehalfOf: self.
 	suspendedContext := pair first.
 	error := pair second.
-	"error class = Halt ifTrue: [ 
-		aContext methodNode 
-			pragmaNamed: #debuggerCompleteToSender 
-			ifPresent: [ ^ self completeTo: aContext sender ] ]."
-	error ifNotNil: [^ suspendedContext := error signalerContext].
+
+	error ifNotNil: [
+		suspendedContext := error signalerContext.
+		"As we are activating a context that has been interrupted in the signal of the exception,
+		we need to push a receiver of the signal message.
+		A suspended context should always be a top context.
+		A top context has the return value of the message in the stack.
+		As this context has been suspended while sending a message the return value should be pushed. 
+		This is maybe not the expected return value (the #signal message returns the value with the 
+		one the exception is resumed).
+		But this allows the debugger to continue executing and does not crash the interpreter nor 
+		the VM
+		"
+		suspendedContext push: nil].
 	^ suspendedContext
 ]
 
