@@ -1223,7 +1223,7 @@ FileList >> readContentsHex: brevity [
 ]
 
 { #category : #'file list' }
-FileList >> readOnlyStream [
+FileList >> readStream [
 	"Answer a read-only stream on the selected file. For the various stream-reading services."
 	^ self reference readStream
 ]
