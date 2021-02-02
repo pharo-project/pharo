@@ -138,13 +138,14 @@ ProtoObject >> identityHash [
 { #category : #testing }
 ProtoObject >> ifNil: nilBlock [
 	"Return self, or evaluate the block if I'm == nil (q.v.)"
-
+	"Might be compiled inline for speed, see RBMessageNode>>#isInlineIfNil"
 	^ self
 ]
 
 { #category : #testing }
 ProtoObject >> ifNil: nilBlock ifNotNil: ifNotNilBlock [
-	"If the receiver is not nil, pass it as argument to the ifNotNilBlock block. else execute the nilBlock block "
+	"If the receiver is not nil, pass it as argument to the ifNotNilBlock block. else execute the nilBlock block"
+	"Might be compiled inline for speed, see RBMessageNode>>#isInlineIfNil"
 	
 	"(nil ifNil: [42] ifNotNil: [:o | o +3 ] ) >>> 42"
 	"(3  ifNil: [42] ifNotNil: [:o | o +3 ]) >>> 6"
@@ -155,6 +156,7 @@ ProtoObject >> ifNil: nilBlock ifNotNil: ifNotNilBlock [
 { #category : #testing }
 ProtoObject >> ifNotNil: ifNotNilBlock [
 	"Evaluate the block, unless I'm == nil (q.v.). If the receiver is not nil, pass it as argument to the block."
+	"Might be compiled inline for speed, see RBMessageNode>>#isInlineIfNil"
 
 	"(2 ifNotNil: [ :o | o + 3]) >>> 5"
 	"(nil ifNotNil: [:o | o +3 ]) >>> nil"
@@ -164,7 +166,8 @@ ProtoObject >> ifNotNil: ifNotNilBlock [
 
 { #category : #testing }
 ProtoObject >> ifNotNil: ifNotNilBlock ifNil: nilBlock [ 
-	"If the receiver is not nil, pass it as argument to the ifNotNilBlock block. else execute the nilBlock block "
+	"If the receiver is not nil, pass it as argument to the ifNotNilBlock block. else execute the nilBlock block"
+	"Might be compiled inline for speed, see RBMessageNode>>#isInlineIfNil"
 
 	"(nil ifNotNil: [:o | o +3 ] ifNil: [42]) >>> 42"
 	"(3 ifNotNil: [:o | o +3 ] ifNil: [42]) >>> 6"
