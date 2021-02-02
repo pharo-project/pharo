@@ -13,7 +13,6 @@ Class {
 	#type : #immediate,
 	#classVars : [
 		'CharSet',
-		'CharacterTable',
 		'DigitValues'
 	],
 	#category : #'Kernel-BasicObjects'
