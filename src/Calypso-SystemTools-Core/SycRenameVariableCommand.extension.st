@@ -4,7 +4,7 @@ Extension { #name : #SycRenameVariableCommand }
 SycRenameVariableCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 	
-	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.2 for: ClySourceCodeContext
+	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.1 for: ClySourceCodeContext
 ]
 
 { #category : #'*Calypso-SystemTools-Core' }
