@@ -54,15 +54,6 @@ TaAbstractComposition >> = anotherTrait [
 ]
 
 { #category : #operations }
-TaAbstractComposition >> >> anAssociation [
-
-	"This operation creates a new trait composition element with a slot renamed.
-	The parameter is an association, where the key is the old name and the value the new name."
-	
-	^ TaRenameSlot from:anAssociation key to: anAssociation value on: self.
-]
-
-{ #category : #operations }
 TaAbstractComposition >> @ anArrayOfAssociations [
 	"I return a new trait composition with the aliases passed as parameters. It is an array of associations, the keys are the new selectors and the values are the original selectors"
 	^ TaAliasMethod alias: anArrayOfAssociations to: self.
@@ -72,6 +63,15 @@ TaAbstractComposition >> @ anArrayOfAssociations [
 TaAbstractComposition >> @= anAssociation [
 	"This performs a deep alias, rewriting all the sendings of this message. The association has its key as the new alias selector and the value as the original selector."
 	^ TaDeepAliasMethod alias:anAssociation to: self.
+]
+
+{ #category : #operations }
+TaAbstractComposition >> @@ anArrayOfAssociations [
+
+	"This operation creates a new trait composition element with a slot renamed.
+	The parameter is an association, where the key is the old name and the value the new name."
+	
+	^ TaRenameSlot rename: anArrayOfAssociations on: self
 ]
 
 { #category : #operations }
