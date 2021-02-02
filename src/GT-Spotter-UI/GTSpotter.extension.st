@@ -83,8 +83,8 @@ GTSpotter class >> menuCommandOn: aBuilder [
 	(aBuilder item: #Spotter)
 		action: [ GTSpotterGlobalShortcut openGlobalSpotter ];
 		keyText: 'Shift + Enter';
-		order: 50;
-		parent: #Tools;
+		order: 1;
+		parent: #Searching;
 		help: 'Search tool to explore Pharo system effectively.';
 		iconName: #smallFindIcon
 ]
