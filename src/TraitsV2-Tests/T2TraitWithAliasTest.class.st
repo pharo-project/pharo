@@ -40,22 +40,6 @@ T2TraitWithAliasTest >> testChangingAnAliasedMethodIsUpdated [
 ]
 
 { #category : #tests }
-T2TraitWithAliasTest >> testChangingAnAliasedSlot [
-
-	| t1 c1 |
-	
-	t1 := self newTrait: #T1 with: #(ivar).
-	t1 compile: 'ivar ^ ivar'.
-	
-	c1 := self newClass: #C1 with: #(ivar2) uses: t1 @@ { #ivar -> #ivar2 }.
-
-	self assert: (c1 includesSelector: #ivar).
-	self assert: (c1>>#ivar) decompile printString equals: 'ivar
-
-	^ ivar2'.
-]
-
-{ #category : #tests }
 T2TraitWithAliasTest >> testChangingRenamedSlot [
 
 	| t1 c1 |
