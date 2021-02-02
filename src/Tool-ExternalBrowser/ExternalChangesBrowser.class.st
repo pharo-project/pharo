@@ -114,7 +114,7 @@ ExternalChangesBrowser class >> serviceBrowseCSOrSTFile [
 		selector: #openOnStream:
 		description: 'Open a changelist tool on this file'
 		buttonLabel: 'Changes')
-		argumentGetter: [ :fileList| fileList readOnlyStream ]
+		argumentGetter: [ :stream | stream readStream ]
 ]
 
 { #category : #'file service' }
