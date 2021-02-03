@@ -55,7 +55,7 @@ TaRenameSlot >> slots [
 	^ inner slots
 		collect: [ :e | 
 			| slot |
-			slot := e asSlot.
+			slot := e asSlot copy.
 			(renameDict includesKey: slot name) 
 				ifTrue: [ slot name: (renameDict at: slot name) ].
 			slot ]
