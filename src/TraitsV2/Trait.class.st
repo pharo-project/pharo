@@ -268,7 +268,7 @@ Trait >> isClassTrait [
 	^ false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 Trait >> isEmpty [ 
 	"Since we can have potential an empty array in the fluid definition (to be revisited) 
 	when the trait composition is aTrait it received the message isEmpty and would break
