@@ -82,6 +82,17 @@ CDSlotNode >> isGlobalVariable [
 	^false
 ]
 
+{ #category : #generated }
+CDSlotNode >> isInstance [
+
+	"To be polymorphic to RB method nodes"
+
+	self
+		deprecated: 'Use #isInstanceVariable instead'
+		transformWith: '`@rec isInstance' -> '`@rec isInstanceVariable'.
+	^ self isInstanceVariable
+]
+
 { #category : #testing }
 CDSlotNode >> isInstanceVariable [
 	"To be polymorphic to RB method nodes"
@@ -98,6 +109,17 @@ CDSlotNode >> isLiteralVariable [
 CDSlotNode >> isTempVariable [
 	"To be polymorphic to RB method nodes"
 	^false
+]
+
+{ #category : #generated }
+CDSlotNode >> isUndeclared [
+
+	"To be polymorphic to RB method nodes"
+
+	self
+		deprecated: 'Use #isUndeclaredVariable instead'
+		transformWith: '`@rec isUndeclared' -> '`@rec isUndeclaredVariable'.
+	^ self isUndeclaredVariable
 ]
 
 { #category : #testing }

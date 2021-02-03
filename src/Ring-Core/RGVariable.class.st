@@ -88,6 +88,15 @@ RGVariable >> isVariable [
 	^true
 ]
 
+{ #category : #generated }
+RGVariable >> isVariableDefinition [
+
+	self
+		deprecated: 'Use #isVariable instead'
+		transformWith: '`@rec isVariableDefinition' -> '`@rec isVariable'.
+	^ self isVariable
+]
+
 { #category : #testing }
 RGVariable >> isWorkspaceVariable [
 	^ false
