@@ -80,5 +80,5 @@ TaRenameSlot >> sourceCodeAt: aSelector [
 { #category : #printing }
 TaRenameSlot >> traitCompositionExpression [
 	
-	^ self inner traitCompositionExpressionWithParens , ' @@ ' , renames associations printString
+	^ self inner traitCompositionExpressionWithParens , ' @@ ' , renames printString
 ]
