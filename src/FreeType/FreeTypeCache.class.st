@@ -239,6 +239,17 @@ FreeTypeCache >> removeAllForType: typeFlag [
 	
 ]
 
+{ #category : #generated }
+FreeTypeCache >> report [
+
+	"answer a description of the current state of the cache"
+
+	self
+		deprecated: 'Use #reportCacheState instead'
+		transformWith: '`@rec report' -> '`@rec reportCacheState'.
+	^ self reportCacheState
+]
+
 { #category : #reporting }
 FreeTypeCache >> reportCacheState [
 	"Answer a description of the current state of the cache"
