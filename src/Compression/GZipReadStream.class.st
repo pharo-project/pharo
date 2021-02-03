@@ -41,15 +41,6 @@ GZipReadStream class >> saveContents: fullFileName [
 	^ newName
 ]
 
-{ #category : #'file in/out' }
-GZipReadStream class >> uncompressedFileName: fullName [
-	^((fullName endsWith: '.gz') and: [self confirm: ('{1}
-appears to be a compressed file.
-Do you want to uncompress it?' format:{fullName})])
-		ifFalse: [fullName]
-		ifTrue:[self saveContents: fullName]
-]
-
 { #category : #unzipping }
 GZipReadStream class >> unzip: fullFileName [ 
 	"Unzip the contents of the file specified by the full path name or file reference fullFileName to the current working directory
