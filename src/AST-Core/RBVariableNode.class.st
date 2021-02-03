@@ -181,6 +181,15 @@ RBVariableNode >> isSuperVariable [
 	^ variable isSuperVariable
 ]
 
+{ #category : #generated }
+RBVariableNode >> isTemp [
+
+	self
+		deprecated: 'Use #isTempVariable instead'
+		transformWith: '`@rec isTemp' -> '`@rec isTempVariable'.
+	^ self isTempVariable
+]
+
 { #category : #testing }
 RBVariableNode >> isTempVariable [
 	^variable isTempVariable

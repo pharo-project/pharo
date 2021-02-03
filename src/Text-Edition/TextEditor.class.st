@@ -1658,6 +1658,16 @@ TextEditor >> findAndSelect: aRegex startingAt: anIndex searchBackwards: searchB
 	^ where
 ]
 
+{ #category : #generated }
+TextEditor >> findAndSelectNextOccurenceOf: aRegex [
+
+	self
+		deprecated: 'Use #findAndSelectPreviousOccurrenceOf: instead'
+		transformWith: '`@rec findAndSelectNextOccurenceOf: `@arg'
+			-> '`@rec findAndSelectPreviousOccurrenceOf: `@arg'.
+	^ self findAndSelectPreviousOccurrenceOf: aRegex
+]
+
 { #category : #'find-select' }
 TextEditor >> findAndSelectNextOccurrenceOf: aRegex [
 	| where |

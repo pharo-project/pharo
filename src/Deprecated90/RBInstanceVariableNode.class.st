@@ -11,3 +11,12 @@ Class {
 RBInstanceVariableNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitInstanceVariableNode: self
 ]
+
+{ #category : #generated }
+RBInstanceVariableNode >> isInstance [
+
+	self
+		deprecated: 'Use #isInstanceVariable instead'
+		transformWith: '`@rec isInstance' -> '`@rec isInstanceVariable'.
+	^ self isInstanceVariable
+]
