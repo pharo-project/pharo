@@ -544,6 +544,15 @@ FreeTypeFont >> isRegular [
 		or: [self isSimulatedRegular]
 ]
 
+{ #category : #generated }
+FreeTypeFont >> isSimulated [
+
+	self
+		deprecated: 'Use #isSimulatedStyle instead'
+		transformWith: '`@rec isSimulated' -> '`@rec isSimulatedStyle'.
+	^ self isSimulatedStyle
+]
+
 { #category : #testing }
 FreeTypeFont >> isSimulatedBold [
 	^self simulatedEmphasis anyMask: 1
