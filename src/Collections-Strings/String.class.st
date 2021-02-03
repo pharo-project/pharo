@@ -2676,19 +2676,6 @@ String >> withSeparatorsCompacted [
                         ifFalse: [ stream nextPut: eachChar ] ] ] ]
 ]
 
-{ #category : #formatting }
-String >> withSqueakLineEndings [
-	"Answer a new instance where all occurrences of CRLF and LF are substituted with CR."
-	
-	self
-		deprecated: 'Should use withInternalLineEndings instead'
-		on: '30 October 2020'
-		in: #Pharo9
-		transformWith: '`@rec withSqueakLineEndings' -> '`@rec withInternalLineEndings'.
-	
-	^ self withInternalLineEndings
-]
-
 { #category : #'platform conventions' }
 String >> withUnixLineEndings [
 	"Answer a new instance where all occurrences of CRLF and LF are substituted with LF."

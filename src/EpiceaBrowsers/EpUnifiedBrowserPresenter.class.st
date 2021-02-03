@@ -44,11 +44,11 @@ EpUnifiedBrowserPresenter class >> worldMenuItemOn: aBuilder [
 	<worldMenu>
 
 	(aBuilder item: 'Code Changes')
-		parent: #Tools;
+		parent: #Changes;
 		action: [ self open ]; 
 		icon: self taskbarIcon;
 		help: 'Browse recorded change logs during from Pharo coding sessions and replay changes.';
-		order: 401
+		order: 1
 ]
 
 { #category : #refreshing }

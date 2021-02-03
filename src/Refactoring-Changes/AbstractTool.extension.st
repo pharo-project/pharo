@@ -1,6 +1,17 @@
 Extension { #name : #AbstractTool }
 
 { #category : #'*Refactoring-Changes' }
+AbstractTool class >> menuCommandOn: aBuilder [
+	<worldMenu>
+	(aBuilder item: #'Undo last refactoring')
+				action: [self undoLastRefactoring];
+				parent: #Refactoring;
+				help: 'Undo last refactoring';
+				order: 10;
+				iconName: #smallUndo.
+]
+
+{ #category : #'*Refactoring-Changes' }
 AbstractTool class >> undoLastRefactoring [
 	| manager |
 	manager := RBRefactoryChangeManager instance.
