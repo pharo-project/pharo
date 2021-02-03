@@ -1067,6 +1067,11 @@ CompiledMethod >> sourcePointer [
 
 ]
 
+{ #category : #'debugger support' }
+CompiledMethod >> stepIntoQuickMethods: aBoolean [
+	^self propertyAt: #stepIntoQuickMethod put: aBoolean
+]
+
 { #category : #printing }
 CompiledMethod >> storeOn: aStream [
 	| noneYet |

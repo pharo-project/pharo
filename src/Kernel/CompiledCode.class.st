@@ -859,6 +859,11 @@ CompiledCode >> stamp [
 	^ self timeStamp
 ]
 
+{ #category : #'debugger support' }
+CompiledCode >> stepIntoQuickMethods [
+	^self propertyAt: #stepIntoQuickMethod ifAbsent: [ false ]
+]
+
 { #category : #printing }
 CompiledCode >> symbolic [
 	"Answer a String that contains a list of all the byte codes in a method with a short description of each."
