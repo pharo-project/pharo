@@ -177,7 +177,7 @@ GLMTreeMorphNodeModel >> pathIn: aCollection [
 { #category : #printing }
 GLMTreeMorphNodeModel >> printOn: aStream [
 	aStream nextPutAll: 'a NodeModel with '.
-	aStream nextPutAll: self item printString.
+	aStream print: self item .
 ]
 
 { #category : #actions }

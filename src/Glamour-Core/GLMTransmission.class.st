@@ -299,9 +299,9 @@ GLMTransmission >> printOn: aStream [
 	aStream 
 		nextPutAll: self class name;
 		nextPutAll: ' (origins='; 
-		nextPutAll: self origins printString; 
+		print: self origins ; 
 		nextPutAll: ' destination='; 
-		nextPutAll: self destination printString; 
+		print: self destination; 
 		nextPut: $)
 	 
 	

@@ -129,7 +129,7 @@ DelayBasicScheduler >> printOn: aStream [
 	super printOn: aStream.
 	aStream 
 		nextPutAll: '(';
-		nextPutAll: self identityHash printString;
+		print: self identityHash ;
 		nextPutAll: ') on ' ;
 		nextPutAll: ticker className.
 		 

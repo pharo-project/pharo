@@ -414,5 +414,5 @@ Locale >> primVMOffsetToUTC [
 { #category : #printing }
 Locale >> printOn: aStream [ 
 	super printOn: aStream.
-	aStream print: '(' ; print: id ; print: ')'
+	aStream nextPutAll:  '(' ; print: id ; nextPutAll:  ')'
 ]

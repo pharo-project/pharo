@@ -53,7 +53,7 @@ GLMContextChanged >> printOn: aStream [
 	super printOn: aStream.
 	aStream 
 		nextPutAll: ' (presentation = ';
-		nextPutAll: self presentation printString;
+		print: self presentation ;
 		nextPutAll: ', property = #';
 		nextPutAll: self property;
 		nextPutAll: ', oldValue = ';

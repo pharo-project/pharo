@@ -56,40 +56,38 @@ MetacelloVersionDiffReport >> modifications: anObject [
 
 { #category : #printing }
 MetacelloVersionDiffReport >> printOn: aStream [
-
 	| printBlock |
 	printBlock := [ :pkgName :ar | 
-	              aStream
-		              tab: 2;
-		              print: pkgName;
-		              cr.
-	              aStream
-		              tab: 3;
-		              print: (ar at: 1);
-		              print: ' to ';
-		              print: (ar at: 2);
-		              cr ].
-
-	aStream 
-		print: self configuration;
+	aStream
+		tab: 2;
+		nextPutAll: pkgName asString;
+		cr.
+	aStream
+		tab: 3;
+		print: (ar at: 1) asString ;
+		nextPutAll: ' to ';
+		print: (ar at: 2) asString ;
+		cr ].
+	aStream
+		nextPutAll: self configuration asString;
 		space;
-		print: from;
-		print: ' to ';
-		print: to;
+		print: from asString ;
+		nextPutAll: ' to ';
+		print: to asString ;
 		cr.
 	aStream
 		tab;
-		print: 'Additions:';
+		nextPutAll: 'Additions:';
 		cr.
 	self additions keysAndValuesDo: printBlock.
 	aStream
 		tab;
-		print: 'Modifications:';
+		nextPutAll: 'Modifications:';
 		cr.
 	self modifications keysAndValuesDo: printBlock.
 	aStream
 		tab;
-		print: 'Removals:';
+		nextPutAll: 'Removals:';
 		cr.
 	self removals keysAndValuesDo: printBlock
 ]

@@ -263,33 +263,34 @@ MorphExtension >> printOn: aStream [
 	super printOn: aStream.
 	aStream
 		space;
-		print: $(;
+		nextPut: $(;
 		print: self identityHash;
-		print: $).
+		nextPut: $).
 	locked == true
-		ifTrue: [ aStream print: ' [locked] ' ].
+		ifTrue: [ aStream nextPutAll: ' [locked] ' ].
 	visible == false
-		ifTrue: [ aStream print: '[not visible] ' ].
+		ifTrue: [ aStream nextPutAll: '[not visible] ' ].
 	sticky == true
-		ifTrue: [ aStream print: ' [sticky] ' ].
-	balloonText ifNotNil: [ aStream print: ' [balloonText] ' ].
+		ifTrue: [ aStream nextPutAll: ' [sticky] ' ].
+	balloonText ifNotNil: [ aStream nextPutAll: ' [balloonText] ' ].
 	externalName
 		ifNotNil: [ 
 			aStream
-				print: ' [externalName = ' ; print: externalName;
-				print: ' ] ' ].
+				nextPutAll: ' [externalName = ' , externalName;
+				nextPutAll: ' ] ' ].
 	eventHandler
 		ifNotNil: [ 
 			aStream
-				print: ' [eventHandler = ' ; print: eventHandler;
-				print: '] ' ].
+				print: ' [eventHandler = ' , eventHandler ;
+				nextPutAll: '] ' ].
 	(otherProperties isNil or: [ otherProperties isEmpty ])
 		ifTrue: [ ^ self ].
-	aStream print: ' [other: '.
+	aStream nextPutAll: ' [other: '.
 	self otherProperties
 		keysDo: [ :aKey | 
 			aStream
-				print: ' (' ; print: aKey ; print: ' -> ' ; print: (self otherProperties at: aKey) ;
+				nextPutAll: ' (' ; 
+					nextPutAll:  aKey; nextPutAll:  ' -> ' ; print: (self otherProperties at: aKey) ;
 				nextPutAll: ')' ].
 	aStream nextPut: $]
 ]

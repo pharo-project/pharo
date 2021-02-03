@@ -201,7 +201,7 @@ MCVersion >> package [
 { #category : #printing }
 MCVersion >> printOn: aStream [
 	super printOn: aStream.
-	aStream print: $(; print: self info; print: $).
+	aStream nextPut: $(; print: self info; nextPut: $).
 ]
 
 { #category : #initialization }

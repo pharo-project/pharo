@@ -131,17 +131,17 @@ SHStyleElement >> printOn: aStream [
 	color
 		ifNotNil: [ aStream
 				nextPutAll: ' color: ';
-				nextPutAll: color printString
+				print: color 
 			].
 	emphasis
 		ifNotNil: [ aStream
 				nextPutAll: ' emphasis: ';
-				nextPutAll: emphasis printString
+				print: emphasis 
 			].
 	tokens
 		ifNotNil: [ aStream
 				nextPutAll: ' tokens: ';
-				nextPutAll: tokens printString
+				print: tokens 
 			]
 ]
 

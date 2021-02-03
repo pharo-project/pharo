@@ -413,7 +413,7 @@ Duration >> printOn: aStream [
 	n = 0 ifFalse:
 		[ | z ps |
 		aStream nextPut: $..
-		ps := n printString padLeftTo: 9 with: $0. 
+		ps := n asString padLeftTo: 9 with: $0. 
 		z := ps findLast: [ :c | c asciiValue > $0 asciiValue ].
 		ps from: 1 to: z do: [ :c | aStream nextPut: c ] ].
 

@@ -198,7 +198,7 @@ TestResource >> name: aString [
 { #category : #printing }
 TestResource >> printOn: aStream [
 
-	aStream nextPutAll: self class printString
+	aStream nextPutAll: self class name asString
 ]
 
 { #category : #accessing }
