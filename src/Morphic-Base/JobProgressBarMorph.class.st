@@ -16,8 +16,6 @@ Class {
 		'progressBar'
 	],
 	#classVars : [
-		'BarHeight',
-		'BarWidth',
 		'IsInterruptable'
 	],
 	#category : #'Morphic-Base-ProgressBar'

@@ -15,10 +15,6 @@ Class {
 		'endValue',
 		'lastRefresh'
 	],
-	#classVars : [
-		'BarHeight',
-		'BarWidth'
-	],
 	#category : #'Morphic-Base-ProgressBar'
 }
 
