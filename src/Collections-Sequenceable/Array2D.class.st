@@ -604,7 +604,7 @@ Array2D >> printOn: aStream [
 	(1 to: self numberOfRows) 
 		do: [ :r | 
 				(self atRow: r) 
-					do: [ :each | aStream print: each  ] 
+					do: [ :each | aStream print: each ] 
 					separatedBy: [ aStream space ]]
 		separatedBy: [ aStream cr ].
 	aStream nextPutAll: ' )'.
