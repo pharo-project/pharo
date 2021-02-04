@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #helper }
+StepOverTest >> methodWithUnwindReturn [
+	[ #body ] ensure: [ ^#unwindReturn ]
+]
+
+{ #category : #helper }
 StepOverTest >> step1 [
 	self step2.
 ]
@@ -212,4 +217,24 @@ StepOverTest >> testStepOverUntilTermination [
 	[ session interruptedProcess isTerminated ] whileFalse: [ session stepOver ].
 
 	self assert: session interruptedProcess isTerminated
+]
+
+{ #category : #tests }
+StepOverTest >> testStepOverReturnInUnwindBlock [
+	"methodWithUnwindReturn
+		[ #body ] ensure: [ ^#unwindReturn ]
+	"
+	| rootBlock |
+	rootBlock := [ self methodWithUnwindReturn ].
+	self settingUpSessionAndProcessAndContextForBlock: rootBlock. 
+	[session interruptedContext selector = #methodWithUnwindReturn] whileFalse: [ session stepInto ].
+	"Reached methodWithUnwindReturn"
+	[session interruptedContext sender selector = #ensure: ] whileFalse: [ session stepThrough ].	
+	session stepThrough.
+	self 
+		assert: session interruptedContext closure 
+		identicalTo: session interruptedContext sender unwindBlock.
+	[session interruptedContext home selector == #methodWithUnwindReturn] 
+		whileTrue: [ session stepOver ].
+	self assert: session interruptedContext closure identicalTo: rootBlock
 ]
