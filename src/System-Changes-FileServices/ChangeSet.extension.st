@@ -3,15 +3,9 @@ Extension { #name : #ChangeSet }
 { #category : #'*System-Changes-FileServices' }
 ChangeSet class >> fileIntoNewChangeSet: fullName [
 	"File in all of the contents of the currently selected file, if any, into a new change set." 
-
-	| filename |
 	fullName ifNil: [^ self ].
-	
-	filename := (Smalltalk hasClassNamed: #GZipReadStream) 
-		ifTrue: [(Smalltalk classNamed:  #GZipReadStream) uncompressedFileName: fullName]
-		ifFalse: [fullName].
-	filename asFileReference readStreamDo: [ :readStream |
-		self newChangesFromStream: readStream named: filename asFileReference basename ]
+	fullName asFileReference readStreamDo: [ :readStream |
+		self newChangesFromStream: readStream named: fullName asFileReference basename ]
 ]
 
 { #category : #'*System-Changes-FileServices' }
