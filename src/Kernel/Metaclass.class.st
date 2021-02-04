@@ -120,6 +120,17 @@ Metaclass >> classVariables [
 		ifNotNil: [ :class | class classVariables ]
 ]
 
+{ #category : #generated }
+Metaclass >> definition [
+
+	"Refer to the comment in ClassDescription|definition."
+
+	self
+		deprecated: 'Use #definitionString instead'
+		transformWith: '`@rec definition' -> '`@rec definitionString'.
+	^ self definitionString
+]
+
 { #category : #fileout }
 Metaclass >> definitionStringFor: aConfiguredPrinter [
 

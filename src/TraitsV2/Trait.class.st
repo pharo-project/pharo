@@ -238,6 +238,15 @@ Trait >> classTrait [
 	^ self class
 ]
 
+{ #category : #generated }
+Trait >> definition [
+
+	self
+		deprecated: 'Use #definitionString instead'
+		transformWith: '`@rec definition' -> '`@rec definitionString'.
+	^ self definitionString
+]
+
 { #category : #fileout }
 Trait >> definitionStringFor: aConfiguredPrinter [
 
