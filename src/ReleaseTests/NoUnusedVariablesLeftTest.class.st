@@ -25,7 +25,7 @@ NoUnusedVariablesLeftTest >> testNoUnusedClassVariablesLeft [
 	
 	classes := variables collect: [ :each | each definingClass ] as: Set.
 	
-	validExceptions := { RBTransformationRuleTestData1 }.	
+	validExceptions := {  }.	
 	
 	remaining := classes asOrderedCollection removeAll: validExceptions; yourself.
 	
