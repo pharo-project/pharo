@@ -18,6 +18,7 @@ StDebuggerInspectorTest >> setUp [
 { #category : #running }
 StDebuggerInspectorTest >> tearDown [
 	session ifNotNil:[session clear].
+	StDebuggerInspector maximizeAssertionSpec: nil.
 	super tearDown
 ]
 
@@ -25,6 +26,34 @@ StDebuggerInspectorTest >> tearDown [
 StDebuggerInspectorTest >> testDefaultLayoutSpec [
 	
 	self assert: inspector currentLayoutSpec equals: inspector defaultLayoutSpec
+]
+
+{ #category : #tests }
+StDebuggerInspectorTest >> testMaximizeAssertionSpec [
+	self deny: StDebuggerInspector maximizeAssertionSpec
+]
+
+{ #category : #tests }
+StDebuggerInspectorTest >> testMaximizedAssertionLayoutSpec [
+	|inspectorLayout|
+	
+	inspector class maximizeAssertionSpec: true.
+	inspector setAssertionLayout. 
+	inspectorLayout := inspector layout.
+	self assert: inspectorLayout children size equals: 1.
+	self assert: inspectorLayout children first class identicalTo: SpBoxLayout 
+]
+
+{ #category : #tests }
+StDebuggerInspectorTest >> testMinimizedAssertionLayoutSpec [
+	|inspectorLayout|
+	
+	inspector class maximizeAssertionSpec: false.
+	inspector setAssertionLayout. 
+	inspectorLayout := inspector layout.
+	self assert: inspectorLayout children size equals: 2.
+	self assert: inspectorLayout children first class identicalTo: SpBoxLayout.
+	self assert: inspectorLayout children second equals: #inspector
 ]
 
 { #category : #tests }
@@ -64,6 +93,15 @@ StDebuggerInspectorTest >> testShouldUpdateContext [
 	self deny: (inspector
 			 shouldUpdateContext: session interruptedContext
 			 with: session interruptedContext)
+]
+
+{ #category : #tests }
+StDebuggerInspectorTest >> testToggleMaximizeAssertionSpec [
+
+	|oldFlag|
+	oldFlag := StDebuggerInspector maximizeAssertionSpec.
+	StDebuggerInspector toggleMaximizeAssertionSpec.
+	self assert: StDebuggerInspector maximizeAssertionSpec equals: oldFlag not
 ]
 
 { #category : #tests }
