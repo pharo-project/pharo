@@ -276,12 +276,14 @@ MorphExtension >> printOn: aStream [
 	externalName
 		ifNotNil: [ 
 			aStream
-				nextPutAll: ' [externalName = ' , externalName;
+				nextPutAll: ' [externalName = ' ; 
+					nextPutAll:  externalName;
 				nextPutAll: ' ] ' ].
 	eventHandler
 		ifNotNil: [ 
 			aStream
-				print: ' [eventHandler = ' , eventHandler ;
+				nextPutAll:  ' [eventHandler = ' ; 
+				print: eventHandler ;
 				nextPutAll: '] ' ].
 	(otherProperties isNil or: [ otherProperties isEmpty ])
 		ifTrue: [ ^ self ].
