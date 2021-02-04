@@ -7,53 +7,47 @@ Class {
 	#category : #'Calypso-SystemPlugins-Monticello-Browser'
 }
 
-{ #category : #activation }
-ClyBrowseIcebergRepositoryCommand class >> browserContextActivation [
-	<classAnnotation>
-	
-	"The Default option when double clicking should be the first in the menu"
-	^ CmdContextMenuActivation 
-		byRootGroupItemOrder: 1.1
-		for: IceTipRepositoryListContext
-]
-
-{ #category : #activation }
-ClyBrowseIcebergRepositoryCommand class >> browserShortcutActivation [
-	<classAnnotation>
-	
-	^ CmdShortcutActivation by: $b meta for: IceTipRepositoryListContext
-]
-
-{ #category : #testing }
-ClyBrowseIcebergRepositoryCommand class >> canBeExecutedInContext: aToolContext [
-	^ aToolContext isRepositoryOperational
-]
-
 { #category : #accessing }
-ClyBrowseIcebergRepositoryCommand class >> defaultHelp [
+ClyBrowseIcebergRepositoryCommand class >> defaultDescription [
+
 	^ 'Browse the version in repository'
 ]
 
 { #category : #accessing }
-ClyBrowseIcebergRepositoryCommand class >> defaultMenuIconName [
-	^ #glamorousBrowse
+ClyBrowseIcebergRepositoryCommand class >> defaultName [
+
+	^ 'Browse this version in Calypso'
 ]
 
-{ #category : #accessing }
-ClyBrowseIcebergRepositoryCommand class >> defaultMenuItemName [
-	^ 'Browse repository version'
+{ #category : #testing }
+ClyBrowseIcebergRepositoryCommand >> canBeExecuted [
+
+	^ self isRepositoryOperational
 ]
 
 { #category : #execution }
 ClyBrowseIcebergRepositoryCommand >> execute [
+
 	| env commit snapshot |
-	commit := repositoryModel commit.
+	commit := self repositoryModel commit.
 	env := RGEnvironment new.
-	commit packageNames 
+	commit packageNames
 		do: [ :packageName |
 			snapshot := commit snapshotFor: (RPackage named: packageName).
-			snapshot importInto: env asPackageNamed: packageName ] 
+			snapshot importInto: env asPackageNamed: packageName ]
 		displayingProgress: 'loading'.
 	env clean.
-	env browseAs: repositoryModel entity description
+	env browseAs: self repository description
+]
+
+{ #category : #accessing }
+ClyBrowseIcebergRepositoryCommand >> iconName [
+
+	^ #glamorousBrowse
+]
+
+{ #category : #accessing }
+ClyBrowseIcebergRepositoryCommand >> shortcutKey [
+
+	^ $b meta
 ]
