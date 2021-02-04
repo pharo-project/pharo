@@ -30,9 +30,6 @@ Class {
 		'statAttributes',
 		'accessAttributes'
 	],
-	#classVars : [
-		'Primitives'
-	],
 	#category : #'FileSystem-Core-Public'
 }
 
