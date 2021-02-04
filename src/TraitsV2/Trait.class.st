@@ -211,6 +211,12 @@ Trait >> @ anArray [
 	^ self asTraitComposition @ anArray
 ]
 
+{ #category : #accessing }
+Trait >> @@ anArray [
+	"I return myself with an aliased method. Check TaAbstractComposition >> #@ for more details"
+	^ self asTraitComposition @@ anArray
+]
+
 { #category : #users }
 Trait >> addUser: aClass [ 
 
