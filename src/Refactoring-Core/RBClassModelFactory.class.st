@@ -10,7 +10,8 @@ Class {
 		'RBclass',
 		'RBmetaclass',
 		'RBmethod',
-		'RBnamespace'
+		'RBnamespace',
+		'RBpackage'
 	],
 	#category : #'Refactoring-Core-Model'
 }
@@ -39,6 +40,12 @@ RBClassModelFactory class >> rbNamespace [
 	^ RBnamespace ifNil: [ RBnamespace := RBNamespace ]
 ]
 
+{ #category : #'factory access' }
+RBClassModelFactory class >> rbPackage [
+ 
+	^ RBpackage ifNil: [ RBpackage := RBPackage ]
+]
+
 { #category : #'factory customisation' }
 RBClassModelFactory class >> setRBClass: aClass [
 
@@ -61,6 +68,12 @@ RBClassModelFactory class >> setRBMethod: aClass [
 RBClassModelFactory class >> setRBNamespace: aClass [
  
 	RBnamespace := aClass
+]
+
+{ #category : #'factory customisation' }
+RBClassModelFactory class >> setRBPackage: aClass [
+ 
+	RBpackage := aClass
 ]
 
 { #category : #'factory access' }

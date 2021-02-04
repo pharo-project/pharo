@@ -45,7 +45,8 @@ Class {
 		'changedClasses',
 		'rootClasses',
 		'implementorsCache',
-		'sendersCache'
+		'sendersCache',
+		'changedPackages'
 	],
 	#category : #'Refactoring-Core-Model'
 }
@@ -223,6 +224,13 @@ RBNamespace >> createNewClassFor: aBehavior [
 	^changedClasses at: className put: (Array with: nonMeta with: meta)
 ]
 
+{ #category : #'accessing-classes' }
+RBNamespace >> createNewPackageFor: aPackage [
+	| package |
+	package := modelFactory rbPackage existingNamed: aPackage model: self.
+	^changedClasses at: package put: (Array with: package)
+]
+
 { #category : #changes }
 RBNamespace >> defineClass: aString [
 
@@ -312,6 +320,7 @@ RBNamespace >> initialize [
 	changes := changeFactory compositeRefactoryChange onSystemDictionary: self environment.
 	newClasses := IdentityDictionary new.
 	changedClasses := IdentityDictionary new.
+	changedPackages := IdentityDictionary new.
 	removedClasses := Set new.
 	implementorsCache := IdentityDictionary new.
 	sendersCache := IdentityDictionary new
@@ -352,6 +361,13 @@ RBNamespace >> name [
 { #category : #accessing }
 RBNamespace >> name: aString [
 	^changes name: aString
+]
+
+{ #category : #'accessing-classes' }
+RBNamespace >> packageNamed: aSymbol [
+	aSymbol ifNil: [ ^ nil ].
+	(changedPackages includesKey: aSymbol) ifTrue: [ ^ (changedPackages at: aSymbol) first ].
+	^ (self createNewPackageFor: aSymbol) first
 ]
 
 { #category : #'private-changes' }
