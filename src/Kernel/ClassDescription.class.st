@@ -942,13 +942,10 @@ ClassDescription >> obsolete [
 
 { #category : #'file in/out' }
 ClassDescription >> oldDefinition [
-
-	"Answer a String that defines the receiver."
-
-	self
-		deprecated: 'Use #definition instead'
-		transformWith: '`@rec oldDefinition' -> '`@rec definition'.
-	^ self definition
+	
+	^ ClassDefinitionPrinter legacy
+		for: self;
+		definitionString
 ]
 
 { #category : #organization }
