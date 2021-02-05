@@ -68,6 +68,13 @@ InstructionStream >> interpretJumpIfCond [
 ]
 
 { #category : #'*Debugging-Core' }
+InstructionStream >> interpretNextInstruction [
+	"Return the next bytecode instruction as a message that an InstructionClient would understand.  This advances the pc by one instruction."
+
+	^ self interpretNextInstructionFor: MessageCatcher new
+]
+
+{ #category : #'*Debugging-Core' }
 InstructionStream >> interpretSistaV1Jump [
 	"If the instruction at pc is an unconditional jump, interpret it, advancing
 	the pc,
@@ -249,13 +256,6 @@ InstructionStream >> nextByte [
 	"Answer the next bytecode."
 
 	^self method at: pc
-]
-
-{ #category : #'*Debugging-Core' }
-InstructionStream >> nextInstruction [
-	"Return the next bytecode instruction as a message that an InstructionClient would understand.  This advances the pc by one instruction."
-
-	^ self interpretNextInstructionFor: MessageCatcher new
 ]
 
 { #category : #'*Debugging-Core' }
