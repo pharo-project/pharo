@@ -132,3 +132,8 @@ RBRefactoryChangeFactory >> renameInstanceVariable: oldName to: newName in: aCla
 RBRefactoryChangeFactory >> renamePackage: aRBPackage to: newName [
 	^ RBRenamePackageChange rename: aRBPackage name to: newName
 ]
+
+{ #category : #'refactory-changes-packages' }
+RBRefactoryChangeFactory >> renamePackageNamed: aRBPackage to: newName [
+	^ RBRenamePackageChange rename: aRBPackage to: newName
+]

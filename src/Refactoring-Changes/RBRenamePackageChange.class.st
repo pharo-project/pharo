@@ -17,7 +17,7 @@ RBRenamePackageChange class >> rename: oldString to: newString [
 
 { #category : #converting }
 RBRenamePackageChange >> asUndoOperation [
-	^ changeFactory renamePackage: self changePackage to: oldName
+	^ changeFactory renamePackageNamed: newName to: oldName
 ]
 
 { #category : #accessing }
