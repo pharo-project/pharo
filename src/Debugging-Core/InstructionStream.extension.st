@@ -29,7 +29,12 @@ InstructionStream >> firstByte [
 
 { #category : #'*Debugging-Core' }
 InstructionStream >> followingByte [
-	"Answer the next bytecode."
+	"Answer the next byte.
+	For example for this bytecode 
+	<EB 00> superSend 
+	<D8> pop
+	 If the current byte is EB, the following byte is 00.
+	 It is not the following bytecode, that is D8"
 
 	^self method at: pc + 1
 ]
@@ -253,14 +258,15 @@ InstructionStream >> interpretV3PlusClosureJumpIfCond [
 
 { #category : #'*Debugging-Core' }
 InstructionStream >> nextByte [
-	"Answer the next bytecode."
+	"Answer the next bytecode"
+	self flag: 'Should this method be renamed nextBytecode? Is it possible thta it returns only a byte?'.
 
 	^self method at: pc
 ]
 
 { #category : #'*Debugging-Core' }
 InstructionStream >> nextPc: currentByte [
-	"Answer the pc of the next bytecode following the current one, given the current bytecode.
+	"Answer the pc of the bytecode following the bytecode currentByte.
 	 Skips the extension bytecodes."
 	
 	^ pc + (self method encoderClass bytecodeSize: currentByte)
