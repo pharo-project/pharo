@@ -62,6 +62,20 @@ MustBeBooleanTest >> testIfTrueWithClosureAfterJump [
 ]
 
 { #category : #tests }
+MustBeBooleanTest >> testMultipleOrsInMethod [
+
+	| values r1 r2 |
+	values := OrderedCollection new.
+	10 timesRepeat: [ values add: MyBooleanObject new ].
+
+	r1 := values select: [ :each | each or: [ false ] ].
+	self assert: r1 isEmpty.
+
+	r2 := values select: [ :each | each or: [ true ] ].
+	self assert: r2 size equals: 10
+]
+
+{ #category : #tests }
 MustBeBooleanTest >> testOr [
 	| myBooleanObject |
 	
