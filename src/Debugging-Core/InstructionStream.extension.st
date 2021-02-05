@@ -49,13 +49,6 @@ InstructionStream >> followingPc [
 ]
 
 { #category : #'*Debugging-Core' }
-InstructionStream >> fourthByte [
-	"Answer the fourth byte of the current bytecode."
-
-	^self method at: pc + 3
-]
-
-{ #category : #'*Debugging-Core' }
 InstructionStream >> interpret [
 	| endPC |
 	endPC := self method endPC.
@@ -294,13 +287,6 @@ InstructionStream >> scanFor: scanBlock [
 			[^true].
 		 pc := pc + (encoderClass bytecodeSize: byte)].
 	^false
-]
-
-{ #category : #'*Debugging-Core' }
-InstructionStream >> secondByte [
-	"Answer the second byte of the current bytecode."
-
-	^self method at: pc + 1
 ]
 
 { #category : #'*Debugging-Core' }
