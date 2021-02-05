@@ -184,6 +184,7 @@ Array >> elementsExchangeIdentityWith: otherArray [
 	 should still be properly indexed after the mutation."
 
 	<primitive: 128 error: ec>
+	| minimalRequiredSize |
 	ec == #'bad receiver' ifTrue:
 		[^self error: 'receiver must be of class Array'].
 	ec == #'bad argument' ifTrue:
@@ -197,8 +198,15 @@ Array >> elementsExchangeIdentityWith: otherArray [
 	ec == #'object is pinned' ifTrue:
 		[^self error: 'can''t become pinned objects'].
 	ec == #'insufficient object memory' ifTrue:
-		[Smalltalk garbageCollect < 1048576 ifTrue:
-			[Smalltalk growMemoryByAtLeast: 1048576].
+		[
+			minimalRequiredSize := 
+				(self sumNumbers: [ :anElement | anElement sizeInMemory ]) 
+				+ (otherArray sumNumbers: [ :anElement | anElement sizeInMemory ]).
+			
+			Smalltalk garbageCollect < minimalRequiredSize ifTrue:
+				[ (Smalltalk growMemoryByAtLeast: minimalRequiredSize) < minimalRequiredSize ifTrue:[
+					self error: 'Could not allocate enought memory for two way become']].
+		
 		 ^self elementsExchangeIdentityWith: otherArray].
 	self primitiveFailed
 ]
