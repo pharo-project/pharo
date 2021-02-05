@@ -228,7 +228,7 @@ RBNamespace >> createNewClassFor: aBehavior [
 RBNamespace >> createNewPackageFor: aPackage [
 	| package |
 	package := modelFactory rbPackage existingNamed: aPackage model: self.
-	^changedClasses at: package put: (Array with: package)
+	^changedPackages at: aPackage put: (Array with: package)
 ]
 
 { #category : #changes }
@@ -514,6 +514,7 @@ RBNamespace >> renameInstanceVariable: oldName to: newName in: aRBClass around: 
 RBNamespace >> renamePackage: aRBPackage to: aSymbol [
 	| change value dict |
 	change := changeFactory renamePackage: aRBPackage to: aSymbol.
+	self performChange: change around: [].
 	self flushCaches.
 	dict := changedPackages.
 	"self markAsRemoved: aRBClass name.

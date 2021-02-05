@@ -36,8 +36,9 @@ RBRenamePackageRefactoring >> preconditions [
 { #category : #transforming }
 RBRenamePackageRefactoring >> renameManifestClass [ 
 	|refactoring manifest|
-	manifest := package packageManifestOrNil.
+	manifest := package realPackage packageManifestOrNil.
 	refactoring := RBRenameClassRefactoring 
+		model: self model
 		rename: manifest
 		to: (TheManifestBuilder manifestClassNameFor: newName).
 	self performCompositeRefactoring: refactoring
@@ -45,7 +46,6 @@ RBRenamePackageRefactoring >> renameManifestClass [
 
 { #category : #transforming }
 RBRenamePackageRefactoring >> renamePackage [
-
 	self model renamePackage: package to: newName
 ]
 

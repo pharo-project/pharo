@@ -39,3 +39,9 @@ RBRenamePackageChange >> printOn: aStream [
 		print: newName;
 		nextPut: $!
 ]
+
+{ #category : #'instance creation' }
+RBRenamePackageChange >> rename: oldString to: newString [ 
+	oldName := oldString.
+	newName := newString
+]

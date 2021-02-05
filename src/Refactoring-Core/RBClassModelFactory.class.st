@@ -99,3 +99,9 @@ RBClassModelFactory >> rbNamespace [
 
 	^ self class rbNamespace
 ]
+
+{ #category : #'factory access' }
+RBClassModelFactory >> rbPackage [
+
+	^ self class rbPackage
+]
