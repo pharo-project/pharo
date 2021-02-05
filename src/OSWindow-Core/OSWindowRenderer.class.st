@@ -86,3 +86,10 @@ OSWindowRenderer >> updateRectangle: rectangle [
 OSWindowRenderer >> updateRectangles: aCollectionOfRectangles [
 	aCollectionOfRectangles do: [ :rectangle | self updateRectangle: rectangle ]
 ]
+
+{ #category : #generated }
+OSWindowRenderer >> window [
+
+	self deprecated: 'Use #adapter instead'.
+	^ window
+]

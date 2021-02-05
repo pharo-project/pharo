@@ -226,6 +226,13 @@ OSWindow >> getFlags [
 	^ self validHandle getFlags
 ]
 
+{ #category : #generated }
+OSWindow >> handle [
+
+	self deprecated: 'Use #sdl2Window instead'.
+	^ handle
+]
+
 { #category : #visibility }
 OSWindow >> hide [
 	self checkIsValid .
