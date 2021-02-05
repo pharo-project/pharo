@@ -34,8 +34,8 @@ RBRenamePackageChange >> primitiveExecute [
 { #category : #printing }
 RBRenamePackageChange >> printOn: aStream [ 
 	aStream
-		nextPutAll: self oldName;
+		nextPutAll: oldName;
 		nextPutAll: ' renameTo: ';
-		print: self newName;
+		print: newName;
 		nextPut: $!
 ]

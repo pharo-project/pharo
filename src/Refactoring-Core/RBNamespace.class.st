@@ -511,6 +511,21 @@ RBNamespace >> renameInstanceVariable: oldName to: newName in: aRBClass around: 
 ]
 
 { #category : #changes }
+RBNamespace >> renamePackage: aRBPackage to: aSymbol [
+	| change value dict |
+	change := changeFactory renamePackage: aRBPackage to: aSymbol.
+	self flushCaches.
+	dict := changedPackages.
+	"self markAsRemoved: aRBClass name.
+	self unmarkAsRemoved: aSymbol."
+	value := dict at: aRBPackage name.
+	dict removeKey: aRBPackage name.
+	dict at: aSymbol put: value.
+	value first name: aSymbol.
+	^ change
+]
+
+{ #category : #changes }
 RBNamespace >> reparentClasses: aRBClassCollection to: newClass [ 
 	aRBClassCollection do: 
 			[:aClass | 
