@@ -62,8 +62,11 @@ StDebuggerInspectorTest >> testSetAssertionLayoutSpec [
 	inspector setAssertionLayout. 
 	inspectorLayout := inspector layout.
 	expectedLayout := inspector class assertionFailureSpec.
-	self assert: inspector currentLayoutSpec equals: inspector assertionLayoutSpec.		
-	self assertCollection: inspectorLayout children equals: expectedLayout children. 
+	self assert: inspector currentLayoutSpec equals: inspector assertionLayoutSpec.					
+	self assertCollection: inspectorLayout children size equals: expectedLayout children size. 
+	self assert: inspectorLayout children first class identicalTo:  expectedLayout children first class.
+	self assert: inspectorLayout children first direction equals: expectedLayout children first direction.
+	self assert: inspectorLayout children second equals:  expectedLayout children second.
 	self assert: inspectorLayout direction equals: expectedLayout direction.
 	self assert: inspectorLayout class identicalTo: expectedLayout class
 ]
