@@ -21,12 +21,6 @@ Class {
 }
 
 { #category : #optimizing }
-IRMethod >> absorbConstantConditionalJumps [
-
-	startSequence absorbConstantConditionalJumps: IdentitySet new
-]
-
-{ #category : #optimizing }
 IRMethod >> absorbJumpsToSingleInstrs [
 
 	startSequence absorbJumpToSingleInstr: IdentitySet new
@@ -275,16 +269,7 @@ IRMethod >> numArgs: anInteger [
 IRMethod >> optimize [
 	self removeEmptyStart.
 	self compilationContext optionOptimizeIR ifFalse: [^self].
-	self absorbJumpsToSingleInstrs.
-	
-	"This last two optimizations works but the problem 
-	when you absorb conditional jumps 
-	is that and: / or: chained generate explicitly 
-	constant conditional jumps to tip the JIt and the 
-	decompiler that they are and: or: and not conditions/loops
-	
-	self absorbConstantConditionalJumps.
-	self absorbJumpsToSingleInstrs"
+	self absorbJumpsToSingleInstrs
 ]
 
 { #category : #accessing }
