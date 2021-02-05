@@ -30,6 +30,15 @@ OCUndeclaredVariable >> emitValue: methodBuilder [
 
 ]
 
+{ #category : #generated }
+OCUndeclaredVariable >> isUndeclared [
+
+	self
+		deprecated: 'Use #isUndeclaredVariable instead'
+		transformWith: '`@rec isUndeclared' -> '`@rec isUndeclaredVariable'.
+	^ self isUndeclaredVariable
+]
+
 { #category : #accessing }
 OCUndeclaredVariable >> name [
 	^ name

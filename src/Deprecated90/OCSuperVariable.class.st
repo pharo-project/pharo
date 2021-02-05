@@ -20,6 +20,15 @@ OCSuperVariable >> initialize [
 	name := 'super'
 ]
 
+{ #category : #generated }
+OCSuperVariable >> isSuper [
+
+	self
+		deprecated: 'Use #isSuperVariable instead'
+		transformWith: '`@rec isSuper' -> '`@rec isSuperVariable'.
+	^ self isSuperVariable
+]
+
 { #category : #debugging }
 OCSuperVariable >> readInContext: aContext [
 	^aContext receiver
