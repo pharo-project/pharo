@@ -24,7 +24,7 @@ InstructionStream >> debuggerMap [
 InstructionStream >> firstByte [
 	"Answer the first byte of the current bytecode."
 
-	^self method at: pc
+	^self method at: self method initialPC
 ]
 
 { #category : #'*Debugging-Core' }
