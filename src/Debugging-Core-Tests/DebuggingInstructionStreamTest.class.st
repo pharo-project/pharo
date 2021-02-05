@@ -61,19 +61,15 @@ DebuggingInstructionStreamTest >> testFollowingByteAccessByteCodeConstituentByte
 { #category : #'tests - structure' }
 DebuggingInstructionStreamTest >> testFollowingByteWithSuper [
 
-	| compiledMethod stream client stream2 client2 |
+	| compiledMethod stream client |
 	compiledMethod := self class >> #methodWithSuper.
 	stream := InstructionStream on: compiledMethod.
 	client := InstructionClient new.
 	stream interpretNextInstructionFor: client.
-	
-	self assert: stream followingByte identicalTo: (compiledMethod at: 43)
-	
-	
-	"stream2 := InstructionStream on: compiledMethod.
-	client2 := InstructionClient new.
-	stream2 interpretNextInstructionFor: client2.
-	stream2 interpretNextInstructionFor: client2."
+	self flag: 'improve this test to avoid magic number'.
+	self
+		assert: stream followingByte
+		identicalTo: (compiledMethod at: 43)
 ]
 
 { #category : #'tests - interpretation' }
