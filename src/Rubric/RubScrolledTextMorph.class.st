@@ -678,7 +678,7 @@ RubScrolledTextMorph >> initialize [
 	self addMorph: (scrollPane := self newScrollPane).
 	self announcer when: RubConfigurationChange send: #whenConfigurationChanged: to: self.
 	self textArea announcer when: RubCancelEditRequested send: #whenCancelEditRequested: to: self.
-	self textArea announcer when: MorphGotFocus send: #whenGotForcus: to: self.
+	self textArea announcer when: MorphGotFocus send: #whenGotFocus: to: self.
 	self textArea announcer when: MorphLostFocus send: #whenLostFocus: to: self.
 	self textArea announcer when: RubTextAcceptRequest send: #whenTextAcceptRequest: to: self.
 	self textArea announcer when: RubTextChanged send: #whenTextChangedInTextArea: to: self.
@@ -1184,7 +1184,7 @@ RubScrolledTextMorph >> whenEditsStateChangedInModel: anAnnouncement [
 ]
 
 { #category : #'event handling' }
-RubScrolledTextMorph >> whenGotForcus: anAnnouncement [
+RubScrolledTextMorph >> whenGotFocus: anAnnouncement [
 	self announcer announce: anAnnouncement.
 	self changed
 ]
