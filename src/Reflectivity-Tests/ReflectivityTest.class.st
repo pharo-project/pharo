@@ -20,6 +20,7 @@ ReflectivityTest >> increase [
 ReflectivityTest >> setUp [
 	super setUp.
 	count := 0.
+	cache := ASTCache default.
 ]
 
 { #category : #tagging }
