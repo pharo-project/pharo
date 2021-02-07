@@ -46,7 +46,8 @@ Class {
 		'rootClasses',
 		'implementorsCache',
 		'sendersCache',
-		'changedPackages'
+		'changedPackages',
+		'removedPackages'
 	],
 	#category : #'Refactoring-Core-Model'
 }
@@ -297,6 +298,11 @@ RBNamespace >> hasCreatedClassFor: aBehavior [
 ]
 
 { #category : #testing }
+RBNamespace >> hasPackageRemoved: aSymbol [ 
+	^removedPackages includes: aSymbol
+]
+
+{ #category : #testing }
 RBNamespace >> hasRemoved: aSymbol [ 
 	^removedClasses includes: aSymbol
 ]
@@ -314,6 +320,11 @@ RBNamespace >> includesGlobal: aSymbol [
 	^true
 ]
 
+{ #category : #testing }
+RBNamespace >> includesPackageNamed: aSymbol [ 
+	^(self packageNamed: aSymbol) notNil
+]
+
 { #category : #initialization }
 RBNamespace >> initialize [
 	super initialize.
@@ -322,6 +333,7 @@ RBNamespace >> initialize [
 	changedClasses := IdentityDictionary new.
 	changedPackages := IdentityDictionary new.
 	removedClasses := Set new.
+	removedPackages := Set new.
 	implementorsCache := IdentityDictionary new.
 	sendersCache := IdentityDictionary new
 ]
@@ -332,6 +344,13 @@ RBNamespace >> markAsRemoved: aClassName [
 	removedClasses
 		add: aClassName;
 		add: aClassName, ' class'
+]
+
+{ #category : #private }
+RBNamespace >> markPackageAsRemoved: aPackageName [
+
+	removedPackages
+		add: aPackageName
 ]
 
 { #category : #'accessing-classes' }
@@ -366,6 +385,7 @@ RBNamespace >> name: aString [
 { #category : #'accessing-classes' }
 RBNamespace >> packageNamed: aSymbol [
 	aSymbol ifNil: [ ^ nil ].
+	(self hasPackageRemoved: aSymbol) ifTrue: [ ^ nil ].
 	(changedPackages includesKey: aSymbol) ifTrue: [ ^ (changedPackages at: aSymbol) first ].
 	^ (self createNewPackageFor: aSymbol) first
 ]
@@ -517,6 +537,8 @@ RBNamespace >> renamePackage: aRBPackage to: aSymbol [
 	self performChange: change around: [].
 	self flushCaches.
 	dict := changedPackages.
+	self markPackageAsRemoved: aRBPackage name.
+	self unmarkPackageAsRemoved: aSymbol.
 	"self markAsRemoved: aRBClass name.
 	self unmarkAsRemoved: aSymbol."
 	value := dict at: aRBPackage name.
@@ -552,6 +574,12 @@ RBNamespace >> unmarkAsRemoved: newClassName [
 	removedClasses
 		remove: newClassName ifAbsent: [  ];
 		remove: newClassName , ' class' ifAbsent: [  ]
+]
+
+{ #category : #private }
+RBNamespace >> unmarkPackageAsRemoved: newPackageName [
+	removedPackages
+		remove: newPackageName ifAbsent: [  ]
 ]
 
 { #category : #'accessing-classes' }

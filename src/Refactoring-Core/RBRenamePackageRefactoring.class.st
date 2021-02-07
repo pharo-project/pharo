@@ -30,23 +30,43 @@ RBRenamePackageRefactoring >> packageName: aName newName: aNewName [
 
 { #category : #preconditions }
 RBRenamePackageRefactoring >> preconditions [ 
-	^ self emptyCondition
+	^ (RBCondition withBlock: [ newName = package name ifTrue: 
+		[ self refactoringError: 'Use a different name' ].
+		true ]) &
+	(RBCondition withBlock: [ [RPackage organizer validatePackageDoesNotExist: newName. true]
+			on: Error 
+			do: [ :e | self refactoringError: e messageText ]
+		])
+	
 ]
 
 { #category : #transforming }
 RBRenamePackageRefactoring >> renameManifestClass [ 
 	|refactoring manifest|
 	manifest := package realPackage packageManifestOrNil.
+	manifest ifNotNil: [
 	refactoring := RBRenameClassRefactoring 
 		model: self model
 		rename: manifest
 		to: (TheManifestBuilder manifestClassNameFor: newName).
-	self performCompositeRefactoring: refactoring
+	self performCompositeRefactoring: refactoring]
 ]
 
 { #category : #transforming }
 RBRenamePackageRefactoring >> renamePackage [
 	self model renamePackage: package to: newName
+]
+
+{ #category : #printing }
+RBRenamePackageRefactoring >> storeOn: aStream [ 
+	aStream nextPut: $(.
+	self class storeOn: aStream.
+	aStream nextPutAll: ' rename: '.
+	aStream nextPutAll: package name.
+	aStream
+		nextPutAll: ' to: #';
+		nextPutAll: newName;
+		nextPut: $)
 ]
 
 { #category : #transforming }
