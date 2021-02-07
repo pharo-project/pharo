@@ -41,6 +41,15 @@ MetaclassForTraits >> asTraitComposition [
 	^ TaClassCompositionElement for: self
 ]
 
+{ #category : #generated }
+MetaclassForTraits >> definition [
+
+	self
+		deprecated: 'Use #definitionString instead'
+		transformWith: '`@rec definition' -> '`@rec definitionString'.
+	^ self definitionString
+]
+
 { #category : #testing }
 MetaclassForTraits >> isBaseTrait [
 	

@@ -24,3 +24,12 @@ RBSuperNode >> initialize [
   super initialize.
   variable := SuperVariable instance
 ]
+
+{ #category : #generated }
+RBSuperNode >> isSuper [
+
+	self
+		deprecated: 'Use #isSuperVariable instead'
+		transformWith: '`@rec isSuper' -> '`@rec isSuperVariable'.
+	^ self isSuperVariable
+]

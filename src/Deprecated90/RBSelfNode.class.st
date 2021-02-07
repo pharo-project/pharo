@@ -24,3 +24,12 @@ RBSelfNode >> initialize [
   super initialize.
   variable := SelfVariable instance
 ]
+
+{ #category : #generated }
+RBSelfNode >> isSelf [
+
+	self
+		deprecated: 'Use #isSelfVariable instead'
+		transformWith: '`@rec isSelf' -> '`@rec isSelfVariable'.
+	^ self isSelfVariable
+]

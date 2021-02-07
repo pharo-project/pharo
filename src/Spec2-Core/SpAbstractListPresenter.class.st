@@ -128,6 +128,16 @@ SpAbstractListPresenter >> doubleClickAtIndex: anIndex [
 	self doActivateAtIndex: anIndex
 ]
 
+{ #category : #generated }
+SpAbstractListPresenter >> enableItemSubstringFilter [
+
+	self
+		deprecated: 'Use #matchSubstring instead'
+		transformWith:
+		'`@rec enableItemSubstringFilter' -> '`@rec matchSubstring'.
+	^ self matchSubstring
+]
+
 { #category : #initialization }
 SpAbstractListPresenter >> initialize [
 

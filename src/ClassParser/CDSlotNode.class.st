@@ -105,6 +105,17 @@ CDSlotNode >> isLiteralVariable [
 	^false
 ]
 
+{ #category : #generated }
+CDSlotNode >> isTemp [
+
+	"To be polymorphic to RB method nodes"
+
+	self
+		deprecated: 'Use #isTempVariable instead'
+		transformWith: '`@rec isTemp' -> '`@rec isTempVariable'.
+	^ self isTempVariable
+]
+
 { #category : #testing }
 CDSlotNode >> isTempVariable [
 	"To be polymorphic to RB method nodes"
