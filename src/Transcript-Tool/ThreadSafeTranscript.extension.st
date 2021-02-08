@@ -11,8 +11,8 @@ ThreadSafeTranscript class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'Transcript')
 		action: [ Smalltalk tools transcript open ];
-		order: 220;
-		parent: #Tools;
+		order: 2;
+		parent: #InputOutput;
 		help: 'Transcript';
 		keyText: 'o, t';
 		help: 'Window on the Transcript output stream, which is useful for writing log messages.';

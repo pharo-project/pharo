@@ -52,6 +52,22 @@ CompletionEngineTest >> keyboardEventFor: char useCommand: command [
 	^event
 ]
 
+{ #category : #'tests-keyboard' }
+CompletionEngineTest >> keyboardPressFor: char [
+
+	| event |
+	event := KeyboardEvent new.
+	event 
+		setType: #keypress
+		buttons: 0
+		position:  0@0
+		keyValue: char asciiValue 
+		charCode: char asciiValue
+		hand: nil 
+		stamp: Time now.
+	^event
+]
+
 { #category : #running }
 CompletionEngineTest >> newCompletionEngine [
 	
@@ -310,6 +326,39 @@ CompletionEngineTest >> testSmartCharactersShouldClose [
 ]
 
 { #category : #'tests-keyboard' }
+CompletionEngineTest >> testSmartDoubleQuoteDoesNotEscapeQuote [
+	"Test we surround selected text with smart characters properly"
+	self
+		setEditorText: ' te''xt ';
+		selectFrom: 2 to: 6.
+		
+	controller smartCharacterWithEvent: (self keyboardPressFor: $").
+	self assert: editor text equals: ' "te''xt" '.
+]
+
+{ #category : #'tests-keyboard' }
+CompletionEngineTest >> testSmartDoubleQuoteSurroundsEscapesSelection [
+	"Test we surround selected text with smart characters properly"
+	self
+		setEditorText: ' te"xt ';
+		selectFrom: 2 to: 6.
+		
+	controller smartCharacterWithEvent: (self keyboardPressFor: $").
+	self assert: editor text equals: ' "te""xt" '.
+]
+
+{ #category : #'tests-keyboard' }
+CompletionEngineTest >> testSmartDoubleQuoteSurroundsSelection [
+	"Test we surround selected text with smart characters properly"
+	self
+		setEditorText: ' text ';
+		selectFrom: 2 to: 5.
+		
+	controller smartCharacterWithEvent: (self keyboardPressFor: $").
+	self assert: editor text equals: ' "text" '.
+]
+
+{ #category : #'tests-keyboard' }
 CompletionEngineTest >> testSmartNeedExtraRemoveInForOppositeAt [
 
 	self assert: (controller smartNeedExtraRemoveIn: '()' for: $( opposite:$) at:1).
@@ -319,4 +368,37 @@ CompletionEngineTest >> testSmartNeedExtraRemoveInForOppositeAt [
 	self assert: (controller smartNeedExtraRemoveIn: '((1)1())))' for: $( opposite:$) at:6).
 	self deny: (controller smartNeedExtraRemoveIn: '()(()' for: $( opposite:$) at:3).
 	self assert: (controller smartNeedExtraRemoveIn: '(foobar()' for: $( opposite:$) at:8).
+]
+
+{ #category : #'tests-keyboard' }
+CompletionEngineTest >> testSmartQuoteSurroundsDoesNotEscapeDoubleQuote [
+	"Test we surround selected text with smart characters properly"
+	self
+		setEditorText: ' te"xt ';
+		selectFrom: 2 to: 6.
+		
+	controller smartCharacterWithEvent: (self keyboardPressFor: $').
+	self assert: editor text equals: ' ''te"xt'' '.
+]
+
+{ #category : #'tests-keyboard' }
+CompletionEngineTest >> testSmartQuoteSurroundsEscapesSelection [
+	"Test we surround selected text with smart characters properly"
+	self
+		setEditorText: ' te''xt ';
+		selectFrom: 2 to: 6.
+		
+	controller smartCharacterWithEvent: (self keyboardPressFor: $').
+	self assert: editor text equals: ' ''te''''xt'' '.
+]
+
+{ #category : #'tests-keyboard' }
+CompletionEngineTest >> testSmartQuoteSurroundsSelection [
+	"Test we surround selected text with smart characters properly"
+	self
+		setEditorText: ' text ';
+		selectFrom: 2 to: 5.
+		
+	controller smartCharacterWithEvent: (self keyboardPressFor: $').
+	self assert: editor text equals: ' ''text'' '.
 ]

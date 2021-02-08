@@ -86,16 +86,7 @@ IRPrimitive >> printPrimitiveOn: aStream [
 						nextPutAll: primDecl first;
 						nextPut: $' ] ]
 		ifFalse: [ aStream print: primIndex ].
-	aStream nextPut: $>.
-	(primIndex ~= 117 and: [ primIndex ~= 120 ])
-		ifTrue: [ 
-			Smalltalk
-				at: #Interpreter
-				ifPresent: [ :cls | 
-					aStream
-						nextPutAll: ' "';
-						nextPutAll: ((cls classPool at: #PrimitiveTable) at: primIndex + 1);
-						nextPutAll: '" ' ] ]
+	aStream nextPut: $>
 ]
 
 { #category : #printing }

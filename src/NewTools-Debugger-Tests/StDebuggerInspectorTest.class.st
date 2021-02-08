@@ -18,6 +18,7 @@ StDebuggerInspectorTest >> setUp [
 { #category : #running }
 StDebuggerInspectorTest >> tearDown [
 	session ifNotNil:[session clear].
+	StDebuggerInspector maximizeAssertionSpec: nil.
 	super tearDown
 ]
 
@@ -28,13 +29,44 @@ StDebuggerInspectorTest >> testDefaultLayoutSpec [
 ]
 
 { #category : #tests }
+StDebuggerInspectorTest >> testMaximizeAssertionSpec [
+	self deny: StDebuggerInspector maximizeAssertionSpec
+]
+
+{ #category : #tests }
+StDebuggerInspectorTest >> testMaximizedAssertionLayoutSpec [
+	|inspectorLayout|
+	
+	inspector class maximizeAssertionSpec: true.
+	inspector setAssertionLayout. 
+	inspectorLayout := inspector layout.
+	self assert: inspectorLayout children size equals: 1.
+	self assert: inspectorLayout children first class identicalTo: SpBoxLayout 
+]
+
+{ #category : #tests }
+StDebuggerInspectorTest >> testMinimizedAssertionLayoutSpec [
+	|inspectorLayout|
+	
+	inspector class maximizeAssertionSpec: false.
+	inspector setAssertionLayout. 
+	inspectorLayout := inspector layout.
+	self assert: inspectorLayout children size equals: 2.
+	self assert: inspectorLayout children first class identicalTo: SpBoxLayout.
+	self assert: inspectorLayout children second equals: #inspector
+]
+
+{ #category : #tests }
 StDebuggerInspectorTest >> testSetAssertionLayoutSpec [
 	|inspectorLayout expectedLayout|
 	inspector setAssertionLayout. 
 	inspectorLayout := inspector layout.
 	expectedLayout := inspector class assertionFailureSpec.
-	self assert: inspector currentLayoutSpec equals: inspector assertionLayoutSpec.		
-	self assertCollection: inspectorLayout children equals: expectedLayout children. 
+	self assert: inspector currentLayoutSpec equals: inspector assertionLayoutSpec.					
+	self assertCollection: inspectorLayout children size equals: expectedLayout children size. 
+	self assert: inspectorLayout children first class identicalTo:  expectedLayout children first class.
+	self assert: inspectorLayout children first direction equals: expectedLayout children first direction.
+	self assert: inspectorLayout children second equals:  expectedLayout children second.
 	self assert: inspectorLayout direction equals: expectedLayout direction.
 	self assert: inspectorLayout class identicalTo: expectedLayout class
 ]
@@ -64,6 +96,15 @@ StDebuggerInspectorTest >> testShouldUpdateContext [
 	self deny: (inspector
 			 shouldUpdateContext: session interruptedContext
 			 with: session interruptedContext)
+]
+
+{ #category : #tests }
+StDebuggerInspectorTest >> testToggleMaximizeAssertionSpec [
+
+	|oldFlag|
+	oldFlag := StDebuggerInspector maximizeAssertionSpec.
+	StDebuggerInspector toggleMaximizeAssertionSpec.
+	self assert: StDebuggerInspector maximizeAssertionSpec equals: oldFlag not
 ]
 
 { #category : #tests }

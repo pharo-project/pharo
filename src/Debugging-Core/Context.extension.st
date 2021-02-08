@@ -42,13 +42,18 @@ Context >> methodReturnConstant: value [
 
 { #category : #'*Debugging-Core' }
 Context >> namedTempAt: index [
+
 	"Answer the value of the temp at index in the receiver's sequence of tempNames."
+
 	"NOTE: this list of temp names is completely virtual! It omits temp vectors but 
 	adds every variable that could be acccessed from a source perspective but might not be.
 	Do *not* use this!"
+
+	self
+		deprecated: 'Please access temps by name using #tempNamed:'
+		transformWith: '`@rec namedTempAt: `@arg' -> '`@rec tempNamed: (`@rec tempNames at: `@arg)'.
 	
-	self deprecated: 'Please access temps by name using #tempNamed:'.
-	^self tempNamed: (self tempNames at: index)
+	^ self tempNamed: (self tempNames at: index)
 ]
 
 { #category : #'*Debugging-Core' }
@@ -57,7 +62,10 @@ Context >> namedTempAt: index put: aValue [
 	"NOTE: this list of temp names is completely virtual! It omits temp vectors but 
 	adds every variable that could be acccessed from a source perspective but might not be"
 	"Do *not* use this!"
-	self deprecated: 'Please access temps by name using #tempNamed:put:'.
+	self
+		deprecated: 'Please access temps by name using #tempNamed:put:'
+		transformWith: '`@rec namedTempAt: `@arg1 put: `@arg2' ->
+		               '`@rec tempNamed: (`@rec tempNames at: `@arg1) put: `@arg2'.
 	
 	self tempNamed: (self tempNames at: index) put: aValue
 ]

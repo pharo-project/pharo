@@ -752,10 +752,17 @@ StDebuggerTest >> testUpdateLayoutForContextsIfAssertionFailure [
 	assertionFailure := debugger inspector assertionFailure.
 	currentLayout := debugger inspector layout.
 	expectedLayout := StDebuggerInspector assertionFailureSpec.
+	StDebuggerInspector maximizeAssertionSpec: false.
 	self assert: currentLayout direction equals: expectedLayout direction.
 	self
-		assertCollection: currentLayout children
-		equals: expectedLayout children.
+		assertCollection: currentLayout children first class
+		equals: expectedLayout children first class.
+	self
+		assertCollection: currentLayout children first direction
+		equals: expectedLayout children first direction.
+	self
+		assertCollection: currentLayout children second 
+		equals: expectedLayout children second.
 	self assert: currentLayout position equals: expectedLayout position.
 	self
 		assert: currentLayout children size

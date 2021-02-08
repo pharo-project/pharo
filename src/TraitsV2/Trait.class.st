@@ -211,6 +211,12 @@ Trait >> @ anArray [
 	^ self asTraitComposition @ anArray
 ]
 
+{ #category : #accessing }
+Trait >> @@ anArray [
+	"I return myself with an aliased method. Check TaAbstractComposition >> #@ for more details"
+	^ self asTraitComposition @@ anArray
+]
+
 { #category : #users }
 Trait >> addUser: aClass [ 
 
@@ -236,6 +242,15 @@ Trait >> basicNew [
 Trait >> classTrait [
 
 	^ self class
+]
+
+{ #category : #generated }
+Trait >> definition [
+
+	self
+		deprecated: 'Use #definitionString instead'
+		transformWith: '`@rec definition' -> '`@rec definitionString'.
+	^ self definitionString
 ]
 
 { #category : #fileout }
@@ -268,7 +283,7 @@ Trait >> isClassTrait [
 	^ false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 Trait >> isEmpty [ 
 	"Since we can have potential an empty array in the fluid definition (to be revisited) 
 	when the trait composition is aTrait it received the message isEmpty and would break

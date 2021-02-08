@@ -1819,45 +1819,67 @@ Context >> send: selector to: rcvr with: arguments lookupIn: lookupClass [
 ]
 
 { #category : #controlling }
-Context >> send: selector to: aReceiver with: arguments super: superFlag [ 
+Context >> send: selector to: aReceiver with: arguments super: superFlag [
+
 	"Simulate the action of sending a message with selector, selector, and 
 	arguments, args, to receiver. The argument, superFlag, tells whether the 
 	receiver of the message was specified with 'super' in the source method."
 
 	| class aMethod value context |
 	class := superFlag
-			ifTrue: [(self compiledCode literalAt: self compiledCode numLiterals) value superclass]
-			ifFalse: [self objectClass: aReceiver].
+		         ifTrue: [ 
+			         (self compiledCode literalAt:
+				          self compiledCode numLiterals) value superclass ]
+		         ifFalse: [ self objectClass: aReceiver ].
 	aMethod := class lookupSelector: selector.
-	aMethod == nil
-		ifTrue: [ ^ self
-				send: #doesNotUnderstand:
-				to: aReceiver
-				with: (Array with: (Message selector: selector arguments: arguments))
-				super: superFlag ].
-	aMethod isCompiledMethod
-		ifFalse: [ ^ self
-				send: #run:with:in:
-				to: aMethod
-				with: (Array with: selector with: arguments with: aReceiver)
-				super: superFlag ].
-	
-	value := self tryPrimitiveFor: aMethod receiver: aReceiver args: arguments.
+	aMethod == nil ifTrue: [ 
+		^ self
+			  send: #doesNotUnderstand:
+			  to: aReceiver
+			  with:
+			  (Array with: (Message selector: selector arguments: arguments))
+			  super: superFlag ].
+	aMethod isCompiledMethod ifFalse: [ 
+		^ self
+			  send: #run:with:in:
+			  to: aMethod
+			  with: (Array with: selector with: arguments with: aReceiver)
+			  super: superFlag ].
 
-	"primitive runs without failure?"
-	(self isFailToken: value) ifFalse: [^ value].
-	
-	(selector == #doesNotUnderstand: and: [ (class canUnderstand: #doesNotUnderstand: ) not ]) 
-		ifTrue: [
-			^self error: 'Simulated message ', (arguments at: 1) selector, ' not understood'].
-	
+	(aMethod isRealPrimitive or:[self stepIntoQuickMethod not]) ifTrue: [ 
+		value := self
+			         tryPrimitiveFor: aMethod
+			         receiver: aReceiver
+			         args: arguments.
+		"primitive runs without failure?"
+		(self isFailToken: value) ifFalse: [ ^ value ] ].
+
+	(selector == #doesNotUnderstand: and: [ 
+		 (class canUnderstand: #doesNotUnderstand:) not ]) ifTrue: [ 
+		^ self error:
+			  'Simulated message ' , (arguments at: 1) selector
+			  , ' not understood' ].
+
 	"failure.. lets activate the method"
-	context := self activateMethod: aMethod withArgs: arguments receiver: aReceiver class: class.
+	context := self
+		           activateMethod: aMethod
+		           withArgs: arguments
+		           receiver: aReceiver
+		           class: class.
+		
+	"The quick method contains 3 bytecodes:
+	- primitive 264 or 256: a 3 bytecode primitive (initialPC)
+	- a push of a value (endPC - 1)
+	- the return top instruction (endPC)
+	When activating the quic method, we arrive on the PC corresponding to the primitive which is not suposed to be stepped.
+	We have to fix the PC so that the next executed bytecode is the push.
+	We do that by setting the PC to aMethod initialPC + 3 (the number of bytes of the primitive)."
+	(aMethod isQuick and:[self stepIntoQuickMethod]) ifTrue: [ context pc: aMethod initialPC + 3].
 	
 	"check if activated method handles the error code (a first bytecode will be store into temp)"
-	"long store temp" 
-	 (context compiledCode at: context pc ) = 129 
-		ifTrue: [ context at: context stackPtr put: value last ].
+	"long store temp"
+	(context compiledCode at: context pc) = 129 ifTrue: [ 
+		context at: context stackPtr put: value last ].
 	^ context
 ]
 
@@ -2018,6 +2040,17 @@ Context >> step [
 	context that would be the active context after this bytecode."
 
 	^self interpretNextInstructionFor: self
+]
+
+{ #category : #'debugger access' }
+Context >> stepIntoQuickMethod [
+	^self compiledCode stepIntoQuickMethods
+]
+
+{ #category : #'debugger access' }
+Context >> stepIntoQuickMethod: aBoolean [ 
+	self compiledCode isBlock ifTrue: [ ^self ].
+	self compiledCode stepIntoQuickMethods: aBoolean
 ]
 
 { #category : #controlling }

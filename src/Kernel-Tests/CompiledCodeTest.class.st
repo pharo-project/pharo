@@ -332,3 +332,8 @@ CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsInPragmaSelector
 	self assert: (self compiledMethod1
 				refersToLiteral: #pragma1:foo:)
 ]
+
+{ #category : #'tests - debugging support' }
+CompiledCodeTest >> testStepIntoQuickMethods [
+	self deny: self compiledMethod1 stepIntoQuickMethods 
+]

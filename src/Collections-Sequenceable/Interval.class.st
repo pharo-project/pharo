@@ -170,6 +170,18 @@ Interval >> anyOne [
 	^self at: 1
 ]
 
+{ #category : #converting }
+Interval >> asOpenInterval [
+	"Return a new interval representing the open version of the receiver.
+	In other words, the new inteval does not contain the upper and lower boundaries of the receiver
+	"
+	
+	"(1 to: 10) asOpenInterval >>> (2 to: 9)"
+	"(10 to: 1 by: -1) asOpenInterval >>> (9 to: 2)"
+
+	^ start + step to: stop - step
+]
+
 { #category : #accessing }
 Interval >> at: anInteger [
 	"Answer the anInteger'th element."

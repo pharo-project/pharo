@@ -99,8 +99,8 @@ PragmaSetting >> chooseFileDirectory [
 { #category : #'user interface' }
 PragmaSetting >> chooseFilePath [
     | result |
-    result := self theme chooseFullFileNameIn: self currentWorld title: 'Choose a file' extensions: nil path: nil preview: true.
-    result ifNotNil: [ self realValue: result.]
+    result := self theme chooseFileIn: self currentWorld title: 'Choose a file' extensions: nil path: nil preview: true.
+    result ifNotNil: [ self realValue: result fullName.]
 ]
 
 { #category : #'user interface' }

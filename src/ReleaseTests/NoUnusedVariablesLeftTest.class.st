@@ -25,11 +25,11 @@ NoUnusedVariablesLeftTest >> testNoUnusedClassVariablesLeft [
 	
 	classes := variables collect: [ :each | each definingClass ] as: Set.
 	
-	validExceptions := { }.	
+	validExceptions := {  }.	
 	
 	remaining := classes asOrderedCollection removeAll: validExceptions; yourself.
 	
-	self assert: classes isEmpty
+	self assert: remaining isEmpty
 ]
 
 { #category : #testing }
@@ -48,7 +48,7 @@ NoUnusedVariablesLeftTest >> testNoUnusedInstanceVariablesLeft [
 	
 	remaining := classes asOrderedCollection removeAll: validExceptions; yourself.
 	
-	self assert: classes isEmpty
+	self assert: remaining isEmpty
 ]
 
 { #category : #testing }

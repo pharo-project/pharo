@@ -32,6 +32,15 @@ OCSlotVariable >> emitValue: methodBuilder [
 	slot emitValue: methodBuilder
 ]
 
+{ #category : #generated }
+OCSlotVariable >> isInstance [
+
+	self
+		deprecated: 'Use #isInstanceVariable instead'
+		transformWith: '`@rec isInstance' -> '`@rec isInstanceVariable'.
+	^ self isInstanceVariable
+]
+
 { #category : #accessing }
 OCSlotVariable >> name [
 	^ slot name

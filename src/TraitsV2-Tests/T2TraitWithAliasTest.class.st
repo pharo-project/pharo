@@ -38,3 +38,50 @@ T2TraitWithAliasTest >> testChangingAnAliasedMethodIsUpdated [
 	self assert: obj m2 equals: 2.
 
 ]
+
+{ #category : #tests }
+T2TraitWithAliasTest >> testChangingRenamedSlot [
+
+	| t1 c1 |
+	
+	t1 := self newTrait: #T1 with: #(ivar).
+	t1 compile: 'ivar ^ ivar'.
+	
+	c1 := self newClass: #C1 with: #() uses: t1 @@ { #ivar -> #ivar2 }.
+
+	"we got the method #ivar from the Trait"
+	self assert: (c1 includesSelector: #ivar).
+	"the slot that we got from the trait is now called ivar2"
+	self assert: c1 slotNames equals: #(ivar2).
+	"was the code rewritten?"
+	self assert: (c1>>#ivar) decompile printString equals: 'ivar
+
+	^ ivar2'.
+	
+	"make sure to not modify the Trait"
+	self assert: t1 slotNames equals: #(ivar).
+]
+
+{ #category : #tests }
+T2TraitWithAliasTest >> testChangingRenamedSlot2Slots [
+
+	| t1 c1 |
+	
+	t1 := self newTrait: #T1 with: #(ivar1 ivar2).
+	t1 compile: 'ivar2 ^ ivar2'.
+	t1 compile: 'ivar1 ^ ivar1'.
+	
+	c1 := self newClass: #C1 with: #() uses: t1 @@ {  #ivar1 -> #rvar1 . #ivar2 -> #rvar2 }.
+
+	"we got the methods from the Trait"
+	self assert: (c1 includesSelector: #ivar1).
+	self assert: (c1 includesSelector: #ivar2).
+	"but the code got rewritten to access the renamed variable"
+	self assert: (c1>>#ivar1) decompile printString equals: 'ivar1
+
+	^ rvar1'.
+	
+	self assert: (c1>>#ivar2) decompile printString equals: 'ivar2
+
+	^ rvar2'.
+]

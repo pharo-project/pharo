@@ -127,12 +127,11 @@ FileList class >> itemsForFile: file [
 FileList class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'File Browser')
-		parent: #Tools;
-		order: 320;
+		parent: #SystemTools;
+		order: 2;
 		action: [ self open ];
 		help: 'Browse the files present on your system.';
-		icon: self taskbarIcon.
-	aBuilder withSeparatorAfter
+		icon: self taskbarIcon
 ]
 
 { #category : #'morphic ui' }
@@ -1223,7 +1222,7 @@ FileList >> readContentsHex: brevity [
 ]
 
 { #category : #'file list' }
-FileList >> readOnlyStream [
+FileList >> readStream [
 	"Answer a read-only stream on the selected file. For the various stream-reading services."
 	^ self reference readStream
 ]

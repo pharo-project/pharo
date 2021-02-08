@@ -31,6 +31,14 @@ CDAbstractTraitCompositionNode >> @ aCollection [
 		aliases: aCollection
 ]
 
+{ #category : #composing }
+CDAbstractTraitCompositionNode >> @@ aCollection [ 
+	
+	^ CDTraitSlotRenameNode new
+		subject: self;
+		renames: aCollection
+]
+
 { #category : #testing }
 CDAbstractTraitCompositionNode >> isTraitComposition [
 	

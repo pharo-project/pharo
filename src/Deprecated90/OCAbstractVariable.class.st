@@ -23,6 +23,24 @@ OCAbstractVariable >> asString [
 	^ self name
 ]
 
+{ #category : #generated }
+OCAbstractVariable >> isGlobal [
+
+	self
+		deprecated: 'Use #isGlobalVariable instead'
+		transformWith: '`@rec isGlobal' -> '`@rec isGlobalVariable'.
+	^ self isGlobalVariable
+]
+
+{ #category : #generated }
+OCAbstractVariable >> isInstance [
+
+	self
+		deprecated: 'Use #isInstanceVariable instead'
+		transformWith: '`@rec isInstance' -> '`@rec isInstanceVariable'.
+	^ self isInstanceVariable
+]
+
 { #category : #'read/write usage' }
 OCAbstractVariable >> isRead [
 	^usage = #read
@@ -38,6 +56,42 @@ OCAbstractVariable >> isRemote [
 OCAbstractVariable >> isRepeatedWrite [
 	^usage = #repeatedWrite
 
+]
+
+{ #category : #generated }
+OCAbstractVariable >> isSelf [
+
+	self
+		deprecated: 'Use #isSelfVariable instead'
+		transformWith: '`@rec isSelf' -> '`@rec isSelfVariable'.
+	^ self isSelfVariable
+]
+
+{ #category : #generated }
+OCAbstractVariable >> isSuper [
+
+	self
+		deprecated: 'Use #isSuperVariable instead'
+		transformWith: '`@rec isSuper' -> '`@rec isSuperVariable'.
+	^ self isSuperVariable
+]
+
+{ #category : #generated }
+OCAbstractVariable >> isTemp [
+
+	self
+		deprecated: 'Use #isTempVariable instead'
+		transformWith: '`@rec isTemp' -> '`@rec isTempVariable'.
+	^ self isTempVariable
+]
+
+{ #category : #generated }
+OCAbstractVariable >> isUndeclared [
+
+	self
+		deprecated: 'Use #isUndeclaredVariable instead'
+		transformWith: '`@rec isUndeclared' -> '`@rec isUndeclaredVariable'.
+	^ self isUndeclaredVariable
 ]
 
 { #category : #'read/write usage' }
