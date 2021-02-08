@@ -7,6 +7,6 @@ Class {
 { #category : #running }
 SpHorizontalPanedLayoutTest >> initializeTestedInstance [
 
-	layout := SpPanedLayout newHorizontal.
+	layout := SpPanedLayout newLeftToRight.
 	presenter layout: layout
 ]

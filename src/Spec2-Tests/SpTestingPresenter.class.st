@@ -12,7 +12,7 @@ Class {
 
 { #category : #specs }
 SpTestingPresenter class >> defaultSpec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #list;
 		yourself
 ]

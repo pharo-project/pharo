@@ -7,5 +7,5 @@ Class {
 { #category : #accessing }
 SpVerticalPanedLayoutAdapterTest >> newLayout [
 	
-	^ SpPanedLayout newVertical
+	^ SpPanedLayout newTopToBottom
 ]

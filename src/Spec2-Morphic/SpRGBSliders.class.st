@@ -21,7 +21,7 @@ Class {
 
 { #category : #specs }
 SpRGBSliders class >> defaultSpec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #redSlider;
 		add: #greenSlider;
 		add: #blueSlider;

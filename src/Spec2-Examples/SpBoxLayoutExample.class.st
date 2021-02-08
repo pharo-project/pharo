@@ -95,17 +95,17 @@ SpBoxLayoutExample >> initializeWindow: aWindowPresenter [
 { #category : #accessing }
 SpBoxLayoutExample >> layout [
 	| main content subLayout subLayout2 options |
-	main := SpBoxLayout newVertical.
+	main := SpBoxLayout newTopToBottom.
 
-	subLayout := SpBoxLayout newHorizontal.
+	subLayout := SpBoxLayout newLeftToRight.
 	self add: #element11 to: subLayout.
 	self add: #element12 to: subLayout.
 
-	subLayout2 := SpBoxLayout newHorizontal.
+	subLayout2 := SpBoxLayout newLeftToRight.
 	self add: #element21 to: subLayout2.
 	self add: #element22 to: subLayout2.
 
-	content := SpBoxLayout newVertical.
+	content := SpBoxLayout newTopToBottom.
 
 	self add: subLayout properties: 'Row1' to: content.
 	self add: subLayout2 properties: 'Row2' to: content.
@@ -133,20 +133,20 @@ SpBoxLayoutExample >> layout [
 						yourself)
 				at: ((ind + 1) \\ 2 + 1) @ ((ind + 1) / 2) floor ]."
 
-	options := SpBoxLayout newVertical.
+	options := SpBoxLayout newTopToBottom.
 	#('Row1' 'Row2' 'element11' 'element12' 'element21' 'element22')
 		doWithIndex: [ :ele :ind | 
 			options
 				add:
-					(SpBoxLayout newVertical
+					(SpBoxLayout newTopToBottom
 						add: ele capitalized;
 						add:
-							(SpBoxLayout newHorizontal
+							(SpBoxLayout newLeftToRight
 								add: (self presenterAt: ele , 'Expanded');
 								add: (self presenterAt: ele , 'Filled');
 								yourself);
 						add:
-							(SpBoxLayout newHorizontal
+							(SpBoxLayout newLeftToRight
 								add: 'Padding';
 								add: (self presenterAt: ele , 'Padding');
 								yourself);

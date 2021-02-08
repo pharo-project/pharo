@@ -18,7 +18,7 @@ Class {
 
 { #category : #specs }
 SpTestingPresenterWithModel class >> defaultSpec [
-	^ SpBoxLayout newHorizontal
+	^ SpBoxLayout newLeftToRight
 		add: #x;
 		add: #y;
 		yourself

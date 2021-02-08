@@ -19,18 +19,6 @@ SpPresenterFocusOrderTest >> focusedPresenter [
 
 { #category : #emulating }
 SpPresenterFocusOrderTest >> keyDown: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
-	
-	^ self 
-		keyEvent: #keyDown
-		code: keyCode 
-		shift: shiftBoolean 
-		meta: metaBoolean 
-		control: controlBoolean 
-		option: optionBoolean
-]
-
-{ #category : #emulating }
-SpPresenterFocusOrderTest >> keyEvent: type code: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
 	| evt modifiers widget |
 	
 	widget := self focusedPresenter adapter widget.
@@ -47,14 +35,14 @@ SpPresenterFocusOrderTest >> keyEvent: type code: keyCode shift: shiftBoolean me
 			ifFalse: [ 2r00100000 ]) ].
 	
 	evt := KeyboardEvent new
-		setType: type
+		setType: #keyDown
 		buttons: modifiers
 		position: widget position + (1 @ 1)
-		keyValue: 0
-		charCode: 0
+		keyValue: keyCode
+		charCode: keyCode
 		hand: self currentWorld activeHand
 		stamp: Time millisecondClockValue.
-	evt key: (KeyboardKey fromCharacter: keyCode asCharacter).
+
 	evt sentTo: widget.
 	"Some time to allow things to happen?"
 	10 milliSeconds wait
@@ -62,14 +50,33 @@ SpPresenterFocusOrderTest >> keyEvent: type code: keyCode shift: shiftBoolean me
 
 { #category : #emulating }
 SpPresenterFocusOrderTest >> keyPressed: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
+	| evt modifiers widget |
 	
-	^ self 
-		keyEvent: #keystroke 
-		code: keyCode 
-		shift: shiftBoolean 
-		meta: metaBoolean 
-		control: controlBoolean 
-		option: optionBoolean
+	widget := self focusedPresenter adapter widget.
+	modifiers := 0.
+	shiftBoolean ifTrue: [ modifiers := modifiers | 8 ].
+	metaBoolean ifTrue: [ modifiers := modifiers |
+		(Smalltalk os isWin32 | Smalltalk os isUnix
+			ifTrue: [ 2r00010000 ]
+			ifFalse: [ 2r01000000 ]) ].
+	controlBoolean ifTrue: [ modifiers := modifiers | 2r00010000 ].
+	optionBoolean ifTrue: [ modifiers := modifiers |
+		(Smalltalk os isWin32 | Smalltalk os isUnix
+			ifTrue: [ 2r01000000 ]
+			ifFalse: [ 2r00100000 ]) ].
+	
+	evt := KeyboardEvent new
+		setType: #keystroke
+		buttons: modifiers
+		position: widget position + (1 @ 1)
+		keyValue: keyCode
+		charCode: keyCode
+		hand: self currentWorld activeHand
+		stamp: Time millisecondClockValue.
+
+	evt sentTo: widget.
+	"Some time to allow things to happen?"
+	10 milliSeconds wait
 ]
 
 { #category : #emulating }

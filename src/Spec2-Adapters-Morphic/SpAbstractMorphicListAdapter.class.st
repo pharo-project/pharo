@@ -14,10 +14,19 @@ SpAbstractMorphicListAdapter class >> isAbstract [
 ]
 
 { #category : #initialization }
+SpAbstractMorphicListAdapter >> addActivationKeyBindings: aWidget [
+
+	self 
+		bindKeyCombination: Character cr asKeyCombination
+		toAction: [ self triggerActivationAction ]
+]
+
+{ #category : #initialization }
 SpAbstractMorphicListAdapter >> addKeyBindingsTo: aWidget [
 
 	super addKeyBindingsTo: aWidget.
-	self addContextMenuKeyBindings: aWidget
+	self addContextMenuKeyBindings: aWidget.
+	self addActivationKeyBindings: aWidget
 ]
 
 { #category : #scrolling }
@@ -97,6 +106,12 @@ SpAbstractMorphicListAdapter >> showContextMenu [
 
 	self widgetDo: [ :w |
 		w showMenuForIndex: { self presenter selection selectedIndex. 1 } ]
+]
+
+{ #category : #private }
+SpAbstractMorphicListAdapter >> triggerActivationAction [
+
+	self presenter doActivateAtIndex: self presenter selection selectedIndex
 ]
 
 { #category : #factory }

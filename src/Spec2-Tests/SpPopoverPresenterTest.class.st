@@ -15,7 +15,7 @@ SpPopoverPresenterTest >> classToTest [
 SpPopoverPresenterTest >> initializeTestedInstance [
 
 	presenter presenter: (SpPresenter new 
-		layout: (SpBoxLayout newVertical
+		layout: (SpBoxLayout newTopToBottom
 			add: 'Test Popover';
 			add: (presenter newButton label: 'Button');
 			yourself);

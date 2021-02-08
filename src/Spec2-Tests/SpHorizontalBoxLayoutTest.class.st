@@ -7,7 +7,7 @@ Class {
 { #category : #running }
 SpHorizontalBoxLayoutTest >> initializeTestedInstance [
 
-	layout := SpBoxLayout newHorizontal.
+	layout := SpBoxLayout newLeftToRight.
 	presenter layout: layout
 ]
 

@@ -1,6 +1,8 @@
 Class {
 	#name : #SpScrollableLayout,
 	#superclass : #SpExecutableLayout,
+	#traits : 'SpTAlignable',
+	#classTraits : 'SpTAlignable classTrait',
 	#instVars : [
 		'singleChild'
 	],

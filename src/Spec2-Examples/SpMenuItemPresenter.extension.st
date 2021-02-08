@@ -32,8 +32,8 @@ SpMenuItemPresenter class >> exampleWithinMenuButton [
 	| presenter menuButton loremIpsumWords |
 
 	(presenter := SpPresenter new) 
-		layout: (SpBoxLayout newVertical
-			add: (SpBoxLayout newHorizontal
+		layout: (SpBoxLayout newTopToBottom
+			add: (SpBoxLayout newLeftToRight
 					addLast: (menuButton := presenter newMenuButton) expand: false;
 					yourself)
 				expand: false;

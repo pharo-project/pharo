@@ -22,7 +22,7 @@ SpEventHandlerTest >> testEventIsInstalledDynamically [
 	| t1 t2 lost got |
 
 	(presenter := SpPresenter new) 
-		layout: (SpBoxLayout newVertical
+		layout: (SpBoxLayout newTopToBottom
 			add: (t1 := presenter newTextInput);
 			add: (t2 := presenter newTextInput);
 			yourself).
@@ -46,7 +46,7 @@ SpEventHandlerTest >> testEventIsInstalledOnBuild [
 	| t1 t2 lost got |
 
 	(presenter := SpPresenter new) 
-		layout: (SpBoxLayout newVertical
+		layout: (SpBoxLayout newTopToBottom
 			add: (t1 := presenter newTextInput);
 			add: (t2 := presenter newTextInput);
 			yourself).
@@ -70,7 +70,7 @@ SpEventHandlerTest >> testEventIsTransmittedOnText [
 	| t1 t2 lost got |
 
 	(presenter := SpPresenter new) 
-		layout: (SpBoxLayout newVertical
+		layout: (SpBoxLayout newTopToBottom
 			add: (t1 := presenter newText);
 			add: (t2 := presenter newText);
 			yourself).

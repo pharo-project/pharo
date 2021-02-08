@@ -17,12 +17,12 @@ String >> localizedForPresenter: aPresenter [
 ]
 
 { #category : #'*Spec2-Core' }
-String >> withAccentuatedCharacter: aKey [
+String >> withAccentuatedCharacter: aCharacter [
 
 	| text index | 
 	text := self asText.
-	aKey ifNil: [ ^ text ].
-	index := self asLowercase indexOf: aKey name asLowercase.
+	aCharacter ifNil: [ ^ text ].
+	index := self asLowercase indexOf: aCharacter asLowercase.
 	index isZero
 		ifTrue: [ ^ text ].
 

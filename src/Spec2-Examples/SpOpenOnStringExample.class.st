@@ -21,15 +21,15 @@ Class {
 { #category : #specs }
 SpOpenOnStringExample class >> bottomLayout [
 	<spec>
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 				add: #input;
 				add: #button;
 				yourself)
 			withConstraints: [ :constraints | constraints height: 25 ];
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 				add: #label;
 				add: #check withConstraints: [ :constraints | constraints width: 100 ];
 				yourself)
@@ -39,15 +39,15 @@ SpOpenOnStringExample class >> bottomLayout [
 
 { #category : #specs }
 SpOpenOnStringExample class >> defaultSpec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 				add: #label;
 				add: #check withConstraints: [ :constraints | constraints width: 100 ];
 				yourself)
 			withConstraints: [ :constraints | constraints height: 25 ];
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 				add: #input;
 				add: #button;
 				yourself)

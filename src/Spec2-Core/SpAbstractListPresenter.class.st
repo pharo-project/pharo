@@ -470,11 +470,31 @@ SpAbstractListPresenter >> whenModelChangedDo: aBlock [
 ]
 
 { #category : #'api-events' }
+SpAbstractListPresenter >> whenNoneSelectedDo: aBlock [
+	"Inform when the list has clean selection (there are no items selected).
+	 `aBlock` receives zero arguments"
+
+	self whenSelectionChangedDo: [ :selection | 
+		selection selectedItem 
+			ifNil: [ aBlock value ] ]
+]
+
+{ #category : #'api-events' }
 SpAbstractListPresenter >> whenSearchEnabledChangedDo: aBlock [
 	"Inform when search enabled/disabled has changed.
 	`aBlock` receives zero arguments."
 	
 	self property: #searchEnabled whenChangedDo: aBlock
+]
+
+{ #category : #'api-events' }
+SpAbstractListPresenter >> whenSelectedDo: aBlock [
+	"Inform when an item was selected (a real object in the items list).
+	 `aBlock` receives one argument (the new selected element)"
+
+	self whenSelectionChangedDo: [ :selection | 
+		selection selectedItem 
+			ifNotNil: [ :item | aBlock value: item ] ]
 ]
 
 { #category : #'api-events' }

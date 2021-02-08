@@ -18,7 +18,7 @@ Class {
 
 { #category : #specs }
 SpDemoLinksPresenter class >> defaultSpec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #link1;
 		add: #link2;
 		add: #link3;

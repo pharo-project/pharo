@@ -20,7 +20,7 @@ Class {
 
 { #category : #specs }
 SpInitializeWindowExample class >> defaultSpec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #text;
 		yourself
 ]

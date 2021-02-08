@@ -16,17 +16,17 @@ Class {
 
 { #category : #specs }
 SpDemoImagePresenter class >> defaultSpec [
-	^ SpBoxLayout newVertical
-		add: (SpBoxLayout newHorizontal
+	^ SpBoxLayout newTopToBottom
+		add: (SpBoxLayout newLeftToRight
 			add: 'Image added through an ImagePresenter:';
 			add: #image1;
 			yourself)
 		height: 50;
-		add: (SpBoxLayout newHorizontal
+		add: (SpBoxLayout newLeftToRight
 			add: 'Image added through an ImagePresenter:';
 			add: #image2;
 			yourself);
-		add: (SpBoxLayout newHorizontal
+		add: (SpBoxLayout newLeftToRight
 			add: 'Image added directly from the layout definition:';
 			add: (self iconNamed: #pharoBig);
 			yourself);

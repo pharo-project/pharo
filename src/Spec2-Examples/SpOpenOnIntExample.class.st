@@ -16,10 +16,10 @@ Class {
 
 { #category : #specs }
 SpOpenOnIntExample class >> defaultSpec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #text withConstraints: [ :constraints | constraints height: 25 ];
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 				add: #minus;
 				add: #plus;
 				yourself)

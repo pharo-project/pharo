@@ -7,5 +7,5 @@ Class {
 { #category : #running }
 SpHorizontalBoxLayoutAdapterTest >> newLayout [
 
-	^ SpBoxLayout newHorizontal
+	^ SpBoxLayout newLeftToRight
 ]

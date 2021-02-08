@@ -16,10 +16,10 @@ Class {
 
 { #category : #specs }
 SpMethodBrowser class >> defaultSpec [
-	^ SpPanedLayout newVertical
+	^ SpPanedLayout newTopToBottom
 		add: #listModel;
 		add:
-			(SpBoxLayout newVertical
+			(SpBoxLayout newTopToBottom
 				add: #toolbarModel withConstraints: [ :constraints | constraints height: self toolbarHeight ];
 				add: #textModel;
 				yourself);

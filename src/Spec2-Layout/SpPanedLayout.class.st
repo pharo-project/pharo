@@ -27,11 +27,11 @@ SpPanedLayout >> add: aName [
 	self 
 		add: aName 
 		withConstraints: [ :constraints | ]
-		position: children size + 1
+		place: children size + 1
 ]
 
-{ #category : #adding }
-SpPanedLayout >> add: aChild withConstraints: aBlock position: aPosition [
+{ #category : #private }
+SpPanedLayout >> add: aChild withConstraints: aBlock place: aPosition [
 	"Add a child to the layout following the constraints in the block.
 	The position is an integer index (1 or 2) indicating whether the child is first or last in the pane.
 	For a horizontal layout, index 1 means left, index 2 means right.
@@ -62,7 +62,7 @@ SpPanedLayout >> addFirst: aName [
 	self 
 		add: aName 
 		withConstraints: [ :constraints | ]
-		position: 1
+		place: 1
 ]
 
 { #category : #adding }
@@ -71,7 +71,7 @@ SpPanedLayout >> addSecond: aName [
 	self 
 		add: aName 
 		withConstraints: [ :constraints | ]
-		position: 2
+		place: 2
 ]
 
 { #category : #accessing }
@@ -122,8 +122,14 @@ SpPanedLayout >> position [
 ]
 
 { #category : #accessing }
-SpPanedLayout >> position: anObject [
-	position := anObject
+SpPanedLayout >> position: aNumber [
+	"Position of the slider. 
+	 - `aNumber` can be a fixed number indicating the exact position where the slider will 
+	 be placed in the pane.
+	 - `aNumber` can also be a fraction or a percentage, indicating the percentage position 
+	 of the slider. E.g. 30 percent (0.3) indicates the slider will be place at 1/3 of the 
+	 panel."
+	position := aNumber
 ]
 
 { #category : #accessing }

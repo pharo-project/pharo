@@ -16,8 +16,8 @@ Class {
 { #category : #specs }
 SpTestPresenterWithToolbar class >> defaultSpec [
 
-	^ SpBoxLayout newVertical
-		add: (SpPanedLayout newVertical
+	^ SpBoxLayout newTopToBottom
+		add: (SpPanedLayout newTopToBottom
 			add: #button;
 			yourself);
 		yourself

@@ -10,6 +10,53 @@ Class {
 	#category : #'Spec2-Layout-Base'
 }
 
+{ #category : #documentation }
+SpExecutableLayout class >> addDocumentSection: aBuilder label: label methods: methods [
+	
+	methods ifEmpty: [ ^ self ].
+	
+	aBuilder newLine.
+	aBuilder header: [ :builder | builder text: label ] withLevel: 2.
+	aBuilder unorderedListDuring: [  
+		(methods sorted: #selector ascending) do: [ :each |
+			aBuilder item: [
+				aBuilder monospace: (each methodClass name, '>>#', each selector) ] ] ]
+]
+
+{ #category : #documentation }
+SpExecutableLayout class >> addDocumentSectionHierarchy: aBuilder [
+	
+	aBuilder newLine.
+	aBuilder header: [ :builder | builder text: 'Hierarchy' ] withLevel: 2.
+	SpDocumentHierarchyBuilder new
+		fromClass: Object;
+		builder: aBuilder;
+		filter: [ :eachClass | eachClass package packageName beginsWith: 'Spec2-' ];
+		buildFor: self
+]
+
+{ #category : #documentation }
+SpExecutableLayout class >> buildMicroDownUsing: aBuilder withComment: aString [
+	
+	super buildMicroDownUsing: aBuilder withComment: aString.
+	"Sections"
+	self documentSections keysAndValuesDo: [ :label :methods |
+		self addDocumentSection: aBuilder label: label methods: methods ].
+	"Hierarchy"
+	self addDocumentSectionHierarchy: aBuilder.
+	
+]
+
+{ #category : #documentation }
+SpExecutableLayout class >> documentSections [
+		
+	^ OrderedDictionary newFromPairs: {
+		'Examples'. self class methods select: [ :each | each protocol = '*Spec2-Examples' ].	
+		'Adding Methods'. self methods select: [ :each | each protocol = #'api-adding' ].
+		'API Methods'. self methods select: [ :each | each protocol = #'api' ]
+	}
+]
+
 { #category : #private }
 SpExecutableLayout >> adapterName [
 

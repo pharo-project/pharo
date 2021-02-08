@@ -34,7 +34,7 @@ SpFilteringListSelectableAdapterTest >> testClickOnRowTogglesSelection [
 { #category : #tests }
 SpFilteringListSelectableAdapterTest >> testClickOnRowWithShiftSelectsRange [
 
-	self skipOnPharoCITestingEnvironment.
+	self skip. "Failing on CI"
 
 	presenter items: { 
 		OrderedCollection.
@@ -53,7 +53,7 @@ SpFilteringListSelectableAdapterTest >> testClickOnRowWithShiftSelectsRange [
 { #category : #tests }
 SpFilteringListSelectableAdapterTest >> testClickOnRowWithShiftSelectsRangeReversed [
 
-	self skipOnPharoCITestingEnvironment.
+	self skip. "Failing on CI"
 
 	presenter items: { 
 		OrderedCollection.

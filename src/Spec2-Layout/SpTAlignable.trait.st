@@ -22,43 +22,49 @@ SpTAlignable >> hAlign [
 
 { #category : #accessing }
 SpTAlignable >> hAlign: anAlignment [
-	"Sets the align property. See #hAlign to details"
+	"Sets the horizontal align property. See #hAlign to details"
 	
 	hAlign := anAlignment
 ]
 
 { #category : #accessing }
 SpTAlignable >> hAlignCenter [
+	"Sets the horizontal align property to CENTER. See #hAlign for details"
 
 	self hAlign: SpLayoutWidgetAlignment center
 ]
 
 { #category : #accessing }
 SpTAlignable >> hAlignEnd [
+	"Sets the horizontal align property to END. See #hAlign for details"
 
 	self hAlign: SpLayoutWidgetAlignment end
 ]
 
 { #category : #accessing }
 SpTAlignable >> hAlignStart [
+	"Sets the horizontal align property to START. See #hAlign for details"
 
 	self hAlign: SpLayoutWidgetAlignment start
 ]
 
 { #category : #testing }
 SpTAlignable >> hasAlignment [
+	"Answer whether the component has any alignment defined"
 
 	^ self hasVAlign or: [ self hasHAlign ]
 ]
 
 { #category : #testing }
 SpTAlignable >> hasHAlign [
+	"Answer whether the component has an horizontal alignment defined"
 
 	^ hAlign notNil
 ]
 
 { #category : #testing }
 SpTAlignable >> hasVAlign [
+	"Answer whether the component has a vertical alignment defined"
 
 	^ vAlign notNil
 ]
@@ -74,25 +80,28 @@ SpTAlignable >> vAlign [
 
 { #category : #accessing }
 SpTAlignable >> vAlign: anAlignment [
-	"Sets the align property. See #vAlign to details"
+	"Sets the vertical align property. See #vAlign to details"
 
 	vAlign := anAlignment
 ]
 
 { #category : #accessing }
 SpTAlignable >> vAlignCenter [
+	"Sets the vertical align property to CENTER. See #vAlign for details"
 
 	self vAlign: SpLayoutWidgetAlignment center
 ]
 
 { #category : #accessing }
 SpTAlignable >> vAlignEnd [
+	"Sets the vertical align property to END. See #vAlign for details"
 
 	self vAlign: SpLayoutWidgetAlignment end
 ]
 
 { #category : #accessing }
 SpTAlignable >> vAlignStart [
+	"Sets the vertical align property to START. See #vAlign for details"
 
 	self vAlign: SpLayoutWidgetAlignment start
 ]

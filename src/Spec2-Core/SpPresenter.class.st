@@ -98,7 +98,8 @@ Class {
 		'#additionalSubpresentersMap',
 		'#layout => SpObservableSlot',
 		'#visible => SpObservableSlot',
-		'#extent => SpObservableSlot'
+		'#extent => SpObservableSlot',
+		'#styles'
 	],
 	#category : #'Spec2-Core-Base'
 }
@@ -223,6 +224,25 @@ SpPresenter >> addAll: aWindow withSpecLayout: aSpec [
 { #category : #TOREMOVE }
 SpPresenter >> addMenuItemsToWindowMenu: aMenu [
 	"Do nothing"
+]
+
+{ #category : #api }
+SpPresenter >> addStyle: aStyle [
+	"Add a style-class to a presenter. Styles are defined in the application stylesheet and will 
+	 affect presenters by applying the properties the user adds to the class.
+	 - Styles can just be added to widget presenters (the ones that inherits of *SpAbstractWidgetPresenter*).
+	 - Styles can be added and removed dynamically (see also *SpAbstractWidgetPresenter>>removeStyle:*
+	
+	[[[language=Smalltalk
+	button := self newButton 
+		label: 'Example of style';
+		addStyle: 'myButton';
+		yourself.
+	]]]"
+
+	(styles includes: aStyle) ifTrue: [ ^ self ].
+	styles := styles copyWith: aStyle.
+	self withAdapterDo: [ :anAdapter | anAdapter addStyle: aStyle ]
 ]
 
 { #category : #TOREMOVE }
@@ -531,6 +551,7 @@ SpPresenter >> initialize [
 	super initialize.
 
 	visible := true.
+	styles := #().
 
 	self initializePrivateAnnouncer.
 	self initializePrivateValueHolders.
@@ -801,6 +822,14 @@ SpPresenter >> removeKeyCombination: aShortcut [
 		anAdapter removeKeyCombination: aShortcut ]
 ]
 
+{ #category : #api }
+SpPresenter >> removeStyle: aStyle [
+
+	(styles includes: aStyle) ifFalse: [ ^ self ].
+	styles := styles copyWithout: aStyle.
+	self withAdapterDo: [ :anAdapter | anAdapter removeStyle: aStyle ]
+]
+
 { #category : #private }
 SpPresenter >> replaceLayoutWith: aLayout [
 
@@ -845,6 +874,12 @@ SpPresenter >> setModelBeforeInitialization: aDomainObject [
 SpPresenter >> show [
 
 	visible := true
+]
+
+{ #category : #api }
+SpPresenter >> styles [ 
+
+	^ styles
 ]
 
 { #category : #'api-focus' }
