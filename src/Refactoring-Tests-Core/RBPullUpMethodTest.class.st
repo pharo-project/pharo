@@ -27,6 +27,17 @@ RBPullUpMethodTest >> addClassHierarchyForPools [
 	(model classNamed: #Toto) compile: 'poolReference ^ SP' classified: #(#accessing).
 ]
 
+{ #category : #'failure tests' }
+RBPullUpMethodTest >> testDoesntPullUpReferencesInstVar [
+	| refactoring class |
+	class := model classNamed: ('RBTransformation', 'RuleTestData1') asSymbol.
+	refactoring := RBPullUpMethodRefactoring 
+			model: model
+			pullUp: #(#foo )
+			from: class.
+	[ self shouldFail: refactoring ] valueSupplyingAnswer: false.
+]
+
 { #category : #tests }
 RBPullUpMethodTest >> testPullUpAndCopyDown [
 	| class |
@@ -114,11 +125,21 @@ RBPullUpMethodTest >> testPullUpMethodWithSharedPool [
 	self deny: (class directlyDefinesMethod: #poolReference).
 ]
 
-{ #category : #'failure tests' }
+{ #category : #tests }
 RBPullUpMethodTest >> testPullUpReferencesInstVar [
-	self shouldFail: (RBPullUpMethodRefactoring 
-			pullUp: #(#checkClass: )
-			from: RBBasicLintRuleTestData)
+	| refactoring class superClass |
+	class := model classNamed: ('RBTransformation', 'RuleTestData1') asSymbol.
+	refactoring := RBPullUpMethodRefactoring 
+			model: model
+			pullUp: #(#foo )
+			from: class.
+	[ self executeRefactoring: refactoring ] valueSupplyingAnswer: true.
+	superClass := model classNamed: ('RBFooLint', 'RuleTestData1') asSymbol.
+	self assert: (superClass parseTreeFor: #foo) 
+				equals: (self parseMethod: 'foo ^ foo').
+	self assert: (superClass directlyDefinesInstanceVariable: #foo).
+	self deny: (class directlyDefinesMethod: #foo).
+	self deny: (class directlyDefinesInstanceVariable: #foo).
 ]
 
 { #category : #'failure tests' }
