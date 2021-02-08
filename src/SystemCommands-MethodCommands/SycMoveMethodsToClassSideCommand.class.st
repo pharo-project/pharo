@@ -44,6 +44,6 @@ SycMoveMethodsToClassSideCommand >> defaultMenuItemName [
 SycMoveMethodsToClassSideCommand >> execute [
 	
 	methods 
-		collect: [ :each | RBMoveMethodToClassSideRefactoring method: each class: each origin]
+		collect: [ :each | RBMoveMethodToClassRefactoring method: each class: each origin classSide]
 		thenDo: [ :each | each execute ]
 ]

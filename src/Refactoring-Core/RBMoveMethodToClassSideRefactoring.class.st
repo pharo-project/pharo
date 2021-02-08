@@ -1,3 +1,25 @@
+"
+I am a refactoring for move a method to class side.
+
+For example, a method 
+
+```
+X >> annotatedBlockMarkup
+	^ '@@'
+```	
+
+move this method to class side convert the method to:
+```
+X >> annotatedBlockMarkup
+  ^ self class annotatedBlockMarkup
+```
+and create a new method in class side:
+
+```
+X class >> annotatedBlockMarkup
+	^ '@@'
+```
+"
 Class {
 	#name : #RBMoveMethodToClassSideRefactoring,
 	#superclass : #RBMoveMethodToClassRefactoring,
@@ -10,14 +32,6 @@ RBMoveMethodToClassSideRefactoring >> addMethod: rbMethod to: aClass toProtocol:
 	aClass compile: rbMethod source classified: {protocol}.
 ]
 
-{ #category : #creating }
-RBMoveMethodToClassSideRefactoring >> metaClassOf: aClass [
-	| classModel |
-	classModel :=RBClassModelFactory rbMetaclass named: aClass name.
-	classModel model: self model.
-	^classModel
-]
-
 { #category : #initialization }
 RBMoveMethodToClassSideRefactoring >> method: aMethod class: aClass [
 	method := aMethod.
@@ -26,15 +40,31 @@ RBMoveMethodToClassSideRefactoring >> method: aMethod class: aClass [
 
 { #category : #preconditions }
 RBMoveMethodToClassSideRefactoring >> preconditions [
-	^(RBCondition definesSelector: method selector in: (self metaClassOf: class)) not
+	^(RBCondition 
+		definesSelector: method selector 
+		in: (self model classNamed: class name, ' class')) not
 		& (RBCondition withBlock: [ class isMeta not ])
+]
+
+{ #category : #printing }
+RBMoveMethodToClassSideRefactoring >> storeOn: aStream [ 
+	aStream nextPut: $(.
+	self class storeOn: aStream.
+	aStream
+		nextPutAll: ' method: '.
+	method storeOn: aStream.
+	aStream 
+		nextPutAll: ' class: ';
+		nextPutAll: class name.
+	aStream
+		nextPutAll: ')'
 ]
 
 { #category : #transforming }
 RBMoveMethodToClassSideRefactoring >> transform [
 	| oldClass newClass rbMethod rbMethod2 newSource originalProtocol |
 	oldClass := class.
-	newClass := self metaClassOf: class.
+	newClass := self model classNamed: class name, ' class'.
 	rbMethod := RBClassModelFactory rbMethod for: newClass source: method sourceCode selector: method selector.
 	newSource := method selector, '
 	^ self class ',  method selector.
