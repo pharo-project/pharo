@@ -17,13 +17,6 @@ CNSelectorExtractorTest >> initialize [
 ]
 
 { #category : #test }
-CNSelectorExtractorTest >> testExtractSelectorFromSourceAtPosition [
-
-	self flag: #toImplement.
-	self assert: false
-]
-
-{ #category : #test }
 CNSelectorExtractorTest >> testExtractSelectorFromSourceAtPositionBorderCasesReturnsNil [
 
    |source position|
