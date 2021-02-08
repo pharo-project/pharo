@@ -21,6 +21,13 @@ RBRenamePackageRefactoring class >> rename: aClass to: aNewName [
 	^self new packageName: aClass name newName: aNewName
 ]
 
+{ #category : #transforming }
+RBRenamePackageRefactoring >> manifestClassNameFor: aPackageName [
+	"Returns a symbol representing a suitable name for a Manifest class for the given package"
+	
+	^('Manifest', (aPackageName select: [:each | each isAlphaNumeric ])) asSymbol
+]
+
 { #category : #initialization }
 RBRenamePackageRefactoring >> packageName: aName newName: aNewName [ 
 	packageName := aName asSymbol.
@@ -48,7 +55,7 @@ RBRenamePackageRefactoring >> renameManifestClass [
 	refactoring := RBRenameClassRefactoring 
 		model: self model
 		rename: manifest
-		to: (TheManifestBuilder manifestClassNameFor: newName).
+		to: (self manifestClassNameFor: newName).
 	self performCompositeRefactoring: refactoring]
 ]
 
