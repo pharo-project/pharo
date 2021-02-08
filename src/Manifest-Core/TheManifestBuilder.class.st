@@ -503,7 +503,7 @@ TheManifestBuilder >> printOn: aStream [
 
 	aStream
 		nextPutAll: 'ManifestBuilder of ';
-		nextPutAll: manifestClass printString.
+		print: manifestClass .
 ]
 
 { #category : #manifest }

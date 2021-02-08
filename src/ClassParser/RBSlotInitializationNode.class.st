@@ -95,9 +95,9 @@ RBSlotInitializationNode >> printOn: aStream [
 				size := selectorParts size. 
 				selectorParts withIndexDo: [ :each :i |
 							aStream 
-								<< each asString ;
+								nextPutAll:  each asString  ;
 								<< ' ';
-								<< (argumentParts at: i) printString.
+								print: (argumentParts at: i) .
 							i = size ifFalse: [ aStream	<< ' ']]]
 ]
 

@@ -50,7 +50,11 @@ OSEvent >> performDefaultAction [
 { #category : #printing }
 OSEvent >> printOn: aStream [
 	super printOn: aStream. 
-	window ifNotNil: [ aStream << ' (WindowId=' << window windowId printString << ')' ]
+	window ifNotNil: [ 
+		aStream 
+			nextPutAll:  ' (WindowId='; 
+			print: window windowId;  
+			nextPut:  $) ]
 
 ]
 

@@ -193,9 +193,9 @@ ChangeRecord >> position [
 { #category : #printing }
 ChangeRecord >> printOn: aStream [
 
-	aStream 
-		nextPutAll: self type printString.
-	self stamp ifNotNil: [ aStream nextPutAll: self stamp ]
+	self type printOn: aStream.
+	self stamp ifNotNil: [ :s | s printOn: aStream ].
+	
 ]
 
 { #category : #access }

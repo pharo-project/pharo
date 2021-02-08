@@ -54,7 +54,8 @@ PRCascadingCounter >> isValidCounter [
 
 { #category : #printing }
 PRCascadingCounter >> printOn: aStream [
-	self elements do: [ :each | aStream nextPutAll: each printString ] separatedBy: [ aStream nextPut: $. ]
+	self elements do: [ :each | 
+		aStream print: each ] separatedBy: [ aStream nextPut: $. ]
 ]
 
 { #category : #initialization }

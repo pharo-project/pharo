@@ -64,16 +64,16 @@ MetacelloVersionDiffReport >> printOn: aStream [
 		cr.
 	aStream
 		tab: 3;
-		nextPutAll: (ar at: 1) asString printString;
+		print: (ar at: 1) asString ;
 		nextPutAll: ' to ';
-		nextPutAll: (ar at: 2) asString printString;
+		print: (ar at: 2) asString ;
 		cr ].
 	aStream
 		nextPutAll: self configuration asString;
 		space;
-		nextPutAll: from asString printString;
+		print: from asString ;
 		nextPutAll: ' to ';
-		nextPutAll: to asString printString;
+		print: to asString ;
 		cr.
 	aStream
 		tab;

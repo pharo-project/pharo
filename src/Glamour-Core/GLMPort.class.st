@@ -52,11 +52,11 @@ GLMPort >> printOn: aStream [
 	super printOn: aStream.
 	aStream 
 		nextPut: Character space;
-		nextPutAll: self identityHash printString;
+		print: self identityHash ;
 		nextPutAll: ' (name='; 
-		nextPutAll: self name printString; 
+		print: self name ; 
 		nextPutAll: ' value='; 
-		nextPutAll: self value printString; 
+		print: self value ; 
 		nextPut: $)
 ]
 
