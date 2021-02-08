@@ -17,7 +17,14 @@ CNSelectorExtractorTest >> initialize [
 ]
 
 { #category : #test }
-CNSelectorExtractorTest >> testExtractSelectorFromSourceAtPosition_BorderCases_ReturnsNil [
+CNSelectorExtractorTest >> testExtractSelectorFromSourceAtPosition [
+
+	self flag: #toImplement.
+	self assert: false
+]
+
+{ #category : #test }
+CNSelectorExtractorTest >> testExtractSelectorFromSourceAtPositionBorderCasesReturnsNil [
 
    |source position|
 	"Border cases first"
@@ -45,7 +52,7 @@ CNSelectorExtractorTest >> testExtractSelectorFromSourceAtPosition_BorderCases_R
 ]
 
 { #category : #test }
-CNSelectorExtractorTest >> testExtractSelectorFromSourceAtPosition_GeneralCases_ExtractsSelector [
+CNSelectorExtractorTest >> testExtractSelectorFromSourceAtPositionGeneralCasesExtractsSelector [
 
 	"Note that the tested method (#extractSelectorFromSource:atPosition:) uses internally #extractSelectorFromAST:atPosition:"
 	"Also uses RBParser >> #parseFaultyExpression: "
