@@ -94,11 +94,30 @@ TFStringType >> marshallToPrimitive: aValue [
 { #category : #writting }
 TFStringType >> prepareStringForMarshalling: aStringOrExternalAddress [
 
-	^ aStringOrExternalAddress isString
-		ifTrue: [ 
-			self allocateString: aStringOrExternalAddress ]
-		ifFalse: [ 
-			aStringOrExternalAddress ifNil: [ ExternalAddress null ] ]
+	"The TFString type supports four possible parameters.
+	
+	- A String: this is allocated as an external string, encoded and passed the pointer to the allocated space. 
+	- A ByteArray: this will be passed as a pointer to the external call. It should be pinned and dereferenced to get the address.
+	- An ExternalAddress: this is directly passed to the external call.
+	- nil: An ExternalAddress null is passed in this case "
+	
+	"Maybe this code should be implemented delegating to the objects to handle the different cases"
+
+	"Handling Strings"
+	aStringOrExternalAddress isString
+		ifTrue: [ ^ self allocateString: aStringOrExternalAddress ].
+	
+	"Handling nil"	
+		aStringOrExternalAddress 
+			ifNil: [ ^ ExternalAddress null ].
+
+	"Handling ByteArray"
+		(aStringOrExternalAddress isKindOf: ByteArray) 
+			ifTrue: [ aStringOrExternalAddress pinInMemory.
+            ^ PointerUtils oopForObject: aStringOrExternalAddress ].
+	
+	"Handling ExternalAddress"
+		^ aStringOrExternalAddress
 ]
 
 { #category : #writting }
