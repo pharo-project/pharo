@@ -111,13 +111,17 @@ TFStringType >> prepareStringForMarshalling: aStringOrExternalAddress [
 		aStringOrExternalAddress 
 			ifNil: [ ^ ExternalAddress null ].
 
-	"Handling ByteArray"
+	"Handling ExternalAddress"
+		aStringOrExternalAddress isExternalAddress
+			ifTrue: [ ^ aStringOrExternalAddress ].
+	
+	"Handling ByteArray - We have to first check for ExternalAddress, as ExternalAddress are ByteArray"
 		(aStringOrExternalAddress isKindOf: ByteArray) 
 			ifTrue: [ aStringOrExternalAddress pinInMemory.
             ^ PointerUtils oopForObject: aStringOrExternalAddress ].
 	
 	"Handling ExternalAddress"
-		^ aStringOrExternalAddress
+		^ self error: 'Could not handle this object'
 ]
 
 { #category : #writting }
