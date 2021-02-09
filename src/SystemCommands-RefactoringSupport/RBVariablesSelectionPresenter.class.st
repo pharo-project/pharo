@@ -2,13 +2,13 @@
 I am preview to select variables (Class Variable) 
 "
 Class {
-	#name : #RBVarListPreviewPresenter,
-	#superclass : #RBListPreviewPresenter,
+	#name : #RBVariablesSelectionPresenter,
+	#superclass : #RBItemsSelectionPresenter,
 	#category : #'SystemCommands-RefactoringSupport'
 }
 
 { #category : #'instance creation' }
-RBVarListPreviewPresenter class >> example [
+RBVariablesSelectionPresenter class >> example [
 	<script>
 	^ (self label: 'example ...' 
 		withItems: {(ClassVariable named: #a) . (ClassVariable named: #b) . (ClassVariable named: #z) } 
@@ -16,16 +16,16 @@ RBVarListPreviewPresenter class >> example [
 ]
 
 { #category : #specs }
-RBVarListPreviewPresenter class >> title [ 
+RBVariablesSelectionPresenter class >> title [ 
 	^ 'Class variables'
 ]
 
 { #category : #attributes }
-RBVarListPreviewPresenter >> columnName [
+RBVariablesSelectionPresenter >> columnName [
 	^ 'Variables'
 ]
 
 { #category : #attributes }
-RBVarListPreviewPresenter >> columnSelector [ 
+RBVariablesSelectionPresenter >> columnSelector [ 
 	^ #name
 ]

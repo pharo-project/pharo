@@ -62,7 +62,7 @@ SycAbstractAllInstVarAccessorsCommand >> selectVariables [
 	classes := classes collect: [:aClass | | vars dialog selectedVars |
 		vars := aClass slots asOrderedCollection.
 		selectedVars := vars copy.
-		dialog := RBVarListPreviewPresenter 
+		dialog := RBVariablesSelectionPresenter 
 		   label: aClass name,' - Select all variables to covert abstract'
 			withItems: vars 
 			selecting: selectedVars. 

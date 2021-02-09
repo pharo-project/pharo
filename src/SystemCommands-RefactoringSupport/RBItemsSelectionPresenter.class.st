@@ -17,7 +17,7 @@ items:                   <OrderedCollection> A list to select
 selectedItems:           <OrderedCollection> A list with selected items
 "
 Class {
-	#name : #RBListPreviewPresenter,
+	#name : #RBItemsSelectionPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'table',
@@ -29,7 +29,7 @@ Class {
 }
 
 { #category : #visiting }
-RBListPreviewPresenter class >> defaultSpec [
+RBItemsSelectionPresenter class >> defaultSpec [
 	^ SpBoxLayout newVertical
 		add: #label withConstraints: [ :c | c height: self buttonHeight ];
 		add:
@@ -40,19 +40,19 @@ RBListPreviewPresenter class >> defaultSpec [
 ]
 
 { #category : #visiting }
-RBListPreviewPresenter class >> label: aString withItems: coll1 selecting: coll2 [
+RBItemsSelectionPresenter class >> label: aString withItems: coll1 selecting: coll2 [
 	^ self new 
 		label: aString withItems: coll1 selecting: coll2;
 		openModalWithSpec 
 ]
 
 { #category : #actions }
-RBListPreviewPresenter >> accept [
+RBItemsSelectionPresenter >> accept [
 	"refactoring selectors: (selectedMethods collect: #selector)"
 ]
 
 { #category : #actions }
-RBListPreviewPresenter >> accept: presenter [
+RBItemsSelectionPresenter >> accept: presenter [
 	self accept.
 	presenter
 				beOk;
@@ -60,17 +60,17 @@ RBListPreviewPresenter >> accept: presenter [
 ]
 
 { #category : #attributes }
-RBListPreviewPresenter >> columnName [
+RBItemsSelectionPresenter >> columnName [
 	self shouldBeImplemented
 ]
 
 { #category : #attributes }
-RBListPreviewPresenter >> columnSelector [ 
+RBItemsSelectionPresenter >> columnSelector [ 
 	self shouldBeImplemented 
 ]
 
 { #category : #initialization }
-RBListPreviewPresenter >> initializeChangesTree [
+RBItemsSelectionPresenter >> initializeChangesTree [
 	table addColumn:
 		((SpCheckBoxTableColumn title: ' ' evaluated: [ :aClass | 
 	selectedItems includes: aClass ])
@@ -85,7 +85,7 @@ RBListPreviewPresenter >> initializeChangesTree [
 ]
 
 { #category : #initialization }
-RBListPreviewPresenter >> initializeDialogWindow: aModalPresenter [
+RBItemsSelectionPresenter >> initializeDialogWindow: aModalPresenter [
 	aModalPresenter
 		addButton: 'Refactor' do: [ :presenter | self accept: presenter ];
 		addButton: 'Cancel' do: [ :presenter | 
@@ -95,7 +95,7 @@ RBListPreviewPresenter >> initializeDialogWindow: aModalPresenter [
 ]
 
 { #category : #initialization }
-RBListPreviewPresenter >> initializeWidgets [
+RBItemsSelectionPresenter >> initializeWidgets [
 	table := self newTable.
 	label := self newLabel.
 	
@@ -103,7 +103,7 @@ RBListPreviewPresenter >> initializeWidgets [
 ]
 
 { #category : #initialization }
-RBListPreviewPresenter >> label: aString withItems: coll1 selecting: coll2 [
+RBItemsSelectionPresenter >> label: aString withItems: coll1 selecting: coll2 [
 	label label: aString.
 	selectedItems := coll2.
 	
@@ -111,6 +111,6 @@ RBListPreviewPresenter >> label: aString withItems: coll1 selecting: coll2 [
 ]
 
 { #category : #accessing }
-RBListPreviewPresenter >> selectedItems [
+RBItemsSelectionPresenter >> selectedItems [
 	^ selectedItems 
 ]
