@@ -25,6 +25,7 @@ SpNotebookAdapterTest >> testAddPage [
 
 { #category : #tests }
 SpNotebookAdapterTest >> testClickOnPage [
+
 	self adapter clickTab: 2.
 	self assert: self adapter selectedPageName equals: 'Mock2'
 ]
