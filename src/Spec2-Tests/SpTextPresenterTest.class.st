@@ -16,7 +16,7 @@ SpTextPresenterTest >> testEditable [
 	self openInstance.
 	
 	presenter adapter 
-		keyPressed: $x asciiValue 
+		keyDown: $x asciiValue 
 		shift: false 
 		meta: false 
 		control: false 
