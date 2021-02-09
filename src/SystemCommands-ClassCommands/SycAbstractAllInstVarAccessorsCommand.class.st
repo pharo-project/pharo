@@ -23,7 +23,6 @@ SycAbstractAllInstVarAccessorsCommand class >> fullBrowserMenuActivation [
 
 { #category : #accessing }
 SycAbstractAllInstVarAccessorsCommand >> asRefactorings [
-
 	| refactorings model |
 	refactorings := classes flatCollect: [:each |
 		each value collect: [:var | | refactoring |

@@ -27,13 +27,10 @@ SycPushDownMethodCommand class >> methodShortcutActivation [
 { #category : #execution }
 SycPushDownMethodCommand >> asRefactorings [
 	"Return push down method refactoring using method"
-	|dialog refactoring|
-	refactoring :=  RBPushDownMethodRefactoring 
-		pushDown: methods  
+	| refactoring |
+	refactoring := RBPushDownMethodRefactoring 
+		pushDown: (methods collect: #selector)
 		from: methods first origin.
-	refactoring setOption: #selectorsFromView toUse: [ :ref |
-		dialog := RBPushDownPreviewPresenter on: ref.
-		dialog cancelled ifTrue: [ CmdCommandAborted signal ]].
 	^ OrderedCollection with: refactoring 
 ]
 
@@ -56,4 +53,23 @@ SycPushDownMethodCommand >> execute [
 { #category : #testing }
 SycPushDownMethodCommand >> isComplexRefactoring [
 	^true
+]
+
+{ #category : #execution }
+SycPushDownMethodCommand >> prepareFullExecutionInContext: aToolContext [
+	super prepareFullExecutionInContext: aToolContext.
+	self selectMethods.
+]
+
+{ #category : #execution }
+SycPushDownMethodCommand >> selectMethods [
+	|selectedMethods dialog class|
+	selectedMethods := methods copy asOrderedCollection.
+	class := methods first origin.
+	dialog := RBMethodListPreviewPresenter 
+		   label: class name,' - Select all methods to push down'
+			withItems: (class methods sort: [ :a :b | a asString < b asString ]) asOrderedCollection
+			selecting: selectedMethods. 
+	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
+	methods := selectedMethods.
 ]
