@@ -200,9 +200,9 @@ Trait >> - anArray [
 ]
 
 { #category : #accessing }
-Trait >> -- aSlotName [
+Trait >> -- aSlotNameCollection [
 
-	^ self asTraitComposition -- aSlotName
+	^ self asTraitComposition -- aSlotNameCollection
 ]
 
 { #category : #accessing }

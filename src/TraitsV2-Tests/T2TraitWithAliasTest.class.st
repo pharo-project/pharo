@@ -40,6 +40,46 @@ T2TraitWithAliasTest >> testChangingAnAliasedMethodIsUpdated [
 ]
 
 { #category : #tests }
+T2TraitWithAliasTest >> testChangingDeleteSlot [
+
+	| t1 c1 |
+	
+	t1 := self newTrait: #T1 with: #(ivar).
+	t1 compile: 'ivar ^ ivar'.
+	
+	c1 := self newClass: #C1 with: #() uses: t1 -- {#ivar}.
+
+	"we got the method #ivar from the Trait"
+	self assert: (c1 includesSelector: #ivar).
+	"the slot that we got from the trait is now removed"
+	self assert: c1 slotNames equals: #().
+	"make sure to not modify the Trait"
+	self assert: t1 slotNames equals: #(ivar).
+]
+
+{ #category : #tests }
+T2TraitWithAliasTest >> testChangingDeleteSlot2Slots [
+
+	| t1 c1 |
+	
+	t1 := self newTrait: #T1 with: #(ivar1 ivar2).
+	t1 compile: 'ivar2 ^ ivar2'.
+	t1 compile: 'ivar1 ^ ivar1'.
+	
+	c1 := self newClass: #C1 with: #() uses: t1 -- {  #ivar1 . #ivar2 }.
+
+	"we got the methods from the Trait"
+	self assert: (c1 includesSelector: #ivar1).
+	self assert: (c1 includesSelector: #ivar2).
+	
+	"the slot that we got from the trait is now removed"
+	self assert: c1 slotNames equals: #().
+	"make sure to not modify the Trait"
+	self assert: t1 slotNames equals: #(ivar1 ivar2).
+	
+]
+
+{ #category : #tests }
 T2TraitWithAliasTest >> testChangingRenamedSlot [
 
 	| t1 c1 |
