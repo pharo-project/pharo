@@ -156,7 +156,7 @@ SpPresenterFocusOrderTest >> testFocusRotationBackwards [
 	mock := SpMockFocusOrderPresenter new
 		openWithSpec;
 		yourself.
-		
+	
 	"Focus first"
 	self takeKeyboardFocus: mock.
 	self assert: (mock presenterAt: #firstPresenter) equals: self focusedPresenter.
