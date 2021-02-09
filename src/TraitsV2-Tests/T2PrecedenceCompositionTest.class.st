@@ -94,12 +94,12 @@ T2PrecedenceCompositionTest >> testPrecedencesAreGeneratedInClassDefinitionWithA
 	t2 compile: 'm1 ^ 33'.
 	t3 compile: 'm2 ^ 11'.
 
-	c1 := self newClass: #C1 with: #() uses: (t2 + (t1 -- #aSlot) + t3 withPrecedenceOf: t2).
+	c1 := self newClass: #C1 with: #() uses: (t2 + (t1 -- {#aSlot}) + t3 withPrecedenceOf: t2).
 
 	self
 		assert: (ClassDefinitionPrinter oldPharo for: c1) definitionString
 		equals: 'Object subclass: #C1
-	uses: (T2 + (T1 -- #aSlot) + T3 withPrecedenceOf: T2)
+	uses: (T2 + (T1 -- {#aSlot}) + T3 withPrecedenceOf: T2)
 	instanceVariableNames: ''''
 	classVariableNames: ''''
 	package: ''TraitsV2-Tests-TestClasses''' 
