@@ -92,6 +92,15 @@ MustBeBooleanTest >> testSemanticAnalysisCleaned [
 ]
 
 { #category : #tests }
+MustBeBooleanTest >> testToDo [
+	| variable |
+	
+	variable := #(1 2 3).
+	"in this case, we end up sending #ifTrue: to the Array"
+	self should: [(1 to: variable do: [:index |])] raise: MessageNotUnderstood
+]
+
+{ #category : #tests }
 MustBeBooleanTest >> testWhile [
 	| myFlag |
 	self should: [[ nil ] whileFalse: [myFlag := true ]] raise: MessageNotUnderstood.
