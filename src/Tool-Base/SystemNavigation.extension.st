@@ -55,7 +55,7 @@ SystemNavigation >> browseAllImplementorsOf: selector [
 
 	^ self
 		browseMessageList: (self allImplementorsOf: selector)
-		name: 'Implementors of ' , selector
+		name: 'Implementors of ' , selector asString
 		autoSelect: selector
 		refreshingBlock: [:message | message selector = selector ].
 ]
