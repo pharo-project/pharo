@@ -268,7 +268,7 @@ SmallFloat64 >> ln [
 
 { #category : #'memory scanning' }
 SmallFloat64 >> nextObject [
-	"SmallIntegers are immediate objects, and, as such, do not have successors in object memory."
+	"SmallFloat64 are immediate objects, and, as such, do not have successors in object memory."
 
 	self shouldNotImplement 
 ]

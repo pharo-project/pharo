@@ -812,7 +812,7 @@ Character >> lowercase [
 
 { #category : #'memory scanning' }
 Character >> nextObject [
-	"SmallIntegers are immediate objects, and, as such, do not have successors in object memory."
+	"Characters are immediate objects, and, as such, do not have successors in object memory."
 
 	self shouldNotImplement 
 ]
