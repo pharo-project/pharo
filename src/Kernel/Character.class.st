@@ -810,6 +810,13 @@ Character >> lowercase [
 	^ self asLowercase
 ]
 
+{ #category : #'memory scanning' }
+Character >> nextObject [
+	"SmallIntegers are immediate objects, and, as such, do not have successors in object memory."
+
+	self shouldNotImplement 
+]
+
 { #category : #printing }
 Character >> printOn: aStream [
 	| name |
