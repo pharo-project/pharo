@@ -7,7 +7,7 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #'instance creation' }
+{ #category : #example }
 RBVariablesSelectionPresenter class >> example [
 	<script>
 	^ (self label: 'example ...' 

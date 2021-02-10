@@ -28,7 +28,7 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #visiting }
+{ #category : #specs }
 RBItemsSelectionPresenter class >> defaultSpec [
 	^ SpBoxLayout newVertical
 		add: #label withConstraints: [ :c | c height: self buttonHeight ];
@@ -39,7 +39,7 @@ RBItemsSelectionPresenter class >> defaultSpec [
 		yourself
 ]
 
-{ #category : #visiting }
+{ #category : #specs }
 RBItemsSelectionPresenter class >> label: aString withItems: coll1 selecting: coll2 [
 	^ self new 
 		label: aString withItems: coll1 selecting: coll2;

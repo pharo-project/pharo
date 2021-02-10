@@ -67,7 +67,7 @@ SycPushDownMethodCommand >> selectMethods [
 	selectedMethods := methods copy asOrderedCollection.
 	class := methods first origin.
 	dialog := RBMethodsSelectionPresenter 
-		   label: class name,' - Select all methods to push down'
+		   label: 'Push down methods from ', class name
 			withItems: (class methods sort: [ :a :b | a asString < b asString ]) asOrderedCollection
 			selecting: selectedMethods. 
 	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
