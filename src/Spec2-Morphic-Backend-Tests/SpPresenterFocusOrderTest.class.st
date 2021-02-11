@@ -66,7 +66,7 @@ SpPresenterFocusOrderTest >> keyPressed: keyCode shift: shiftBoolean meta: metaB
 	
 	^ self 
 		keyEvent: #keystroke
-		code: keyCode 
+		code: keyCode asciiValue
 		shift: shiftBoolean 
 		meta: metaBoolean 
 		control: controlBoolean 

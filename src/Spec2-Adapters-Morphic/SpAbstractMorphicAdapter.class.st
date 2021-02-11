@@ -474,7 +474,7 @@ SpAbstractMorphicAdapter >> keyPressed: keyCode shift: shiftBoolean meta: metaBo
 	
 	^ self 
 		keyEvent: #keystroke
-		code: keyCode 
+		code: keyCode asciiValue
 		shift: shiftBoolean 
 		meta: metaBoolean 
 		control: controlBoolean 
