@@ -22,6 +22,13 @@ TEST_NAME_PREFIX=$(find ${CACHE} -name "Pharo*.zip" | head -n 1 | cut -d'/' -f 2
 #TEST_VM_VERSION=$(echo "${TEST_NAME_PREFIX}" | cut -d'-' -f 1| cut -c 6- | cut -d'.' -f 1-2 | sed 's/\.//')
 TEST_VM_VERSION="90"
 
+if [ "${1}" -eq "32" ]
+then
+ TEST_VM_KIND="vm"
+else
+ TEST_VM_KIND="vmHeadlessLatest"	
+fi
+
 ${BOOTSTRAP_REPOSITORY:-.}/bootstrap/scripts/getPharoVM.sh ${TEST_VM_VERSION} vmHeadlessLatest ${1}
 
 IMAGE_ARCHIVE=$(find ${CACHE} -name ${TEST_NAME_PREFIX}-${1}bit-*.zip)
