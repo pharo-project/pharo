@@ -75,6 +75,17 @@ TFUFFIDerivedTypeMarshallingTest >> sum_ulonglong:a with: b [
 ]
 
 { #category : #tests }
+TFUFFIDerivedTypeMarshallingTest >> testMarshallingByteArrayAsStringArgument [
+
+	| stringToMarshall byteArray cString |
+	[	stringToMarshall := 'áèïô å∫'.
+		byteArray := stringToMarshall utf8Encoded.
+		cString := self stringToPointer: byteArray.
+		self assert: cString readStringUTF8 equals: stringToMarshall.
+	] ensure: [ cString free ]
+]
+
+{ #category : #tests }
 TFUFFIDerivedTypeMarshallingTest >> testMarshallingFalseArgument [
 
 	self assert: (self booleanToInt: false) equals: 0
