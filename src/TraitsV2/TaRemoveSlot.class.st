@@ -47,7 +47,6 @@ TaRemoveSlot >> slots [
 { #category : #printing }
 TaRemoveSlot >> traitCompositionExpression [
 
-	
 	removedSlots size = 1
 		           ifTrue: [^ self inner traitCompositionExpressionWithParens , ' -- ' , removedSlots first printString].
 			
