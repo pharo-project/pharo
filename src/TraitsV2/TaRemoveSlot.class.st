@@ -33,8 +33,10 @@ TaRemoveSlot >> removedSlots [
 
 { #category : #accessing }
 TaRemoveSlot >> removedSlots: anObject [
-
-	removedSlots := anObject
+	"we support both a symbol and an array of symbols"
+	removedSlots := anObject isSymbol
+		                ifTrue: [ { anObject } ]
+		                ifFalse: [ anObject ]
 ]
 
 { #category : #accessing }
@@ -44,10 +46,14 @@ TaRemoveSlot >> slots [
 
 { #category : #printing }
 TaRemoveSlot >> traitCompositionExpression [
-	^ String
-		streamContents: [ :s | 
-			s
-				nextPutAll: self inner traitCompositionExpressionWithParens;
-				nextPutAll: ' -- '.
-			removedSlots printAsSelfEvaluatingFormOn: s ]
+
+	
+	removedSlots size = 1
+		           ifTrue: [^ self inner traitCompositionExpressionWithParens , ' -- ' , removedSlots first printString].
+			
+	^ String streamContents: [ :s | 
+		  s
+			  nextPutAll: self inner traitCompositionExpressionWithParens;
+			  nextPutAll: ' -- '.
+		  removedSlots printAsSelfEvaluatingFormOn: s ]
 ]

@@ -163,7 +163,7 @@ T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotUsedInOtherSlot [
 	self createSlotClass.
 	t1 := self newTrait: #T1 with: { #otherSlot => (slotClass associatedSlotName: #aSlot) }. 
 	t2 := self newTrait: #T2 with: { #otherSlot }.
-	c1 := self newClass: #C1 with: { #aSlot. } uses: {t1. t2 asTraitComposition -- {#otherSlot}}.
+	c1 := self newClass: #C1 with: { #aSlot. } uses: {t1. t2 asTraitComposition -- #otherSlot}.
 
 	c1 compile: 'initialize
 		aSlot := 0'.
@@ -185,7 +185,7 @@ T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotUsedInOtherSlotInSupercla
 	self createSlotClass.
 	t1 := self newTrait: #T1 with: { #otherSlot => (slotClass associatedSlotName: #aSlot) }. 
 	t2 := self newTrait: #T2 with: { #otherSlot }.
-	c1 := self newClass: #C1 with: { #aSlot. } uses: {t1. t2 asTraitComposition -- {#otherSlot}}.
+	c1 := self newClass: #C1 with: { #aSlot. } uses: {t1. t2 asTraitComposition -- #otherSlot}.
 
 	c1 compile: 'initialize
 		aSlot := 0'.
@@ -209,7 +209,7 @@ T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotUsedInOtherSlotWithoutTra
 	self createSlotClass.
 	t1 := self newTrait: #T1 with: { #otherSlot => (slotClass associatedSlotName: #aSlot) }. 
 	t2 := self newTrait: #T2 with: { #otherSlot }.
-	c1 := self newClass: #C1 with: { #aSlot. } uses: {t1. t2 -- {#otherSlot}}.
+	c1 := self newClass: #C1 with: { #aSlot. } uses: {t1. t2 -- #otherSlot}.
 
 	c1 compile: 'initialize
 		aSlot := 0'.
