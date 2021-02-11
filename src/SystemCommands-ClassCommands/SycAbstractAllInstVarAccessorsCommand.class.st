@@ -66,7 +66,7 @@ SycAbstractAllInstVarAccessorsCommand >> selectVariables [
 		   label: aClass name,' - Select all variables to covert abstract'
 			withItems: vars 
 			selecting: selectedVars. 
-		dialog cancelled ifTrue: [ CmCommandAborted ].
+		dialog cancelled ifTrue: [ CmdCommandAborted signal ].
 		aClass -> selectedVars
 		]
 ]
