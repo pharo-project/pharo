@@ -59,7 +59,7 @@ T2TraitWithAliasTest >> testChangingDeleteSlot [
 
 { #category : #tests }
 T2TraitWithAliasTest >> testChangingDeleteSlot2Slots [
-
+	"we can add a slot in the class that we removed from the trait"
 	| t1 c1 |
 	
 	t1 := self newTrait: #T1 with: #(ivar1 ivar2).
@@ -77,6 +77,41 @@ T2TraitWithAliasTest >> testChangingDeleteSlot2Slots [
 	"make sure to not modify the Trait"
 	self assert: t1 slotNames equals: #(ivar1 ivar2).
 	
+]
+
+{ #category : #tests }
+T2TraitWithAliasTest >> testChangingDeleteSlotAddVar [
+
+	| t1 c1 |
+	
+	t1 := self newTrait: #T1 with: #(ivar).
+	t1 compile: 'ivar ^ ivar'.
+	
+	c1 := self newClass: #C1 with: #(ivar) uses: t1 -- {#ivar}.
+
+	"we got the method #ivar from the Trait"
+	self assert: (c1 includesSelector: #ivar).
+	"the slot that we got from the trait is now removed"
+	self assert: c1 slotNames equals: #(ivar).
+	"make sure to not modify the Trait"
+	self assert: t1 slotNames equals: #(ivar).
+]
+
+{ #category : #tests }
+T2TraitWithAliasTest >> testChangingDeleteSlotAndAlias [
+	"we can remove a slot from one trait, then rename from the other trait and the class has one var"
+	| t1 t2 c1 |
+	
+	t1 := self newTrait: #T1 with: #(name).
+	t2 := self newTrait: #T2 with: #(personName).
+
+	c1 := self newClass: #C1 with: #() uses: (t1 -- #name) + (t2 @@ {#personName-> #name}).
+
+	"In the class we have just name"
+	self assert: c1 slotNames equals: #(name).
+	"make sure to not modify the Trait"
+	self assert: t1 slotNames equals: #(name).
+	self assert: t2 slotNames equals: #(personName)
 ]
 
 { #category : #tests }
