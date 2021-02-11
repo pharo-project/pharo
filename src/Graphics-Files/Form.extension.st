@@ -113,7 +113,7 @@ Form >> resourceTag [
 { #category : #'*Graphics-Files-FileRegistry' }
 Form class >> serviceImageAsBackground [
 	"Answer a service for setting the desktop background from a given graphical file's contents"
-
+	<formService>
 	^ SimpleServiceEntry 
 		provider: self 
 		label: 'Use graphic as background'
@@ -125,7 +125,7 @@ Form class >> serviceImageAsBackground [
 { #category : #'*Graphics-Files-FileRegistry' }
 Form class >> serviceOpenImageInWindow [
 	"Answer a service for opening a graphic in a window"
-
+	<formService>
 	^ SimpleServiceEntry 
 		provider: self 
 		label: 'Open graphic in a window'
@@ -136,10 +136,15 @@ Form class >> serviceOpenImageInWindow [
 
 { #category : #'*Graphics-Files-FileRegistry' }
 Form class >> services [
-
-	^ Array 
-		with: self serviceOpenImageInWindow
-		with: self serviceImageAsBackground 
+	"Defines what options are available when a user drags and drop an image file (jpeg, png...) onto the pharo image. These options are defined by methods with the #formService pragma on this class."
+	| services |
+	services := OrderedCollection new.
+	(Pragma allNamed: #formService in: self class) do: [:pragma | 
+		pragma method selector isUnary ifTrue: [  
+			services add: (self perform: (pragma method selector))
+		]
+	].
+	^ services asArray.
 ]
 
 { #category : #'*Graphics-Files-FileRegistry' }
