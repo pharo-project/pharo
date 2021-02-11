@@ -7,42 +7,52 @@ Class {
 	#name : #TaRemoveSlot,
 	#superclass : #TaSingleComposition,
 	#instVars : [
-		'slotName',
-		'renames'
+		'removedSlots'
 	],
 	#category : #'TraitsV2-Compositions'
 }
 
 { #category : #'instance creation' }
-TaRemoveSlot class >> named: anSlotName from: aTrait [
+TaRemoveSlot class >> remove: anArrayOfSlotNames from: aTrait [
 	^ self new
-		slotName: anSlotName;
+		removedSlots: anArrayOfSlotNames;
 		inner: aTrait;
 		yourself.
 ]
 
 { #category : #copying }
 TaRemoveSlot >> copyTraitExpression [
-	^ self class named: slotName from: inner.
+	^ self class remove: removedSlots from: inner
 ]
 
 { #category : #accessing }
-TaRemoveSlot >> slotName [
-	^ slotName
+TaRemoveSlot >> removedSlots [
+
+	^ removedSlots
 ]
 
 { #category : #accessing }
-TaRemoveSlot >> slotName: anObject [
-	slotName := anObject
+TaRemoveSlot >> removedSlots: anObject [
+	"we support both a symbol and an array of symbols"
+	removedSlots := anObject isSymbol
+		                ifTrue: [ { anObject } ]
+		                ifFalse: [ anObject ]
 ]
 
 { #category : #accessing }
 TaRemoveSlot >> slots [
-	^ inner slots reject: [ :e | e name = slotName ]
+	^ inner slots reject: [ :e | removedSlots includes: e name ]
 ]
 
 { #category : #printing }
 TaRemoveSlot >> traitCompositionExpression [
 
-	^ (self inner traitCompositionExpressionWithParens , ' -- ' , slotName printString) asString
+	removedSlots size = 1
+		           ifTrue: [^ self inner traitCompositionExpressionWithParens , ' -- ' , removedSlots first printString].
+			
+	^ String streamContents: [ :s | 
+		  s
+			  nextPutAll: self inner traitCompositionExpressionWithParens;
+			  nextPutAll: ' -- '.
+		  removedSlots printAsSelfEvaluatingFormOn: s ]
 ]

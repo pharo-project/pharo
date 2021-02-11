@@ -57,6 +57,13 @@ CDTraitCompositionBuilder >> visitLiteralNode: aRBLiteralValueNode [
 ]
 
 { #category : #visiting }
+CDTraitCompositionBuilder >> visitLiteralValueNode: aRBLiteralValueNode [
+	"Redirect the message by default to #visitLiteralNode: for retrocompatibility (pharo 8)"
+
+	^ self visitLiteralNode: aRBLiteralValueNode
+]
+
+{ #category : #visiting }
 CDTraitCompositionBuilder >> visitLiteralVariableNode: aRBGlobalNode [ 
 	
 	^self visitVariableNode: aRBGlobalNode

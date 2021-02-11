@@ -41,11 +41,11 @@ TaAbstractComposition >> - anArrayOrASymbol [
 ]
 
 { #category : #operations }
-TaAbstractComposition >> -- anSlotName [
+TaAbstractComposition >> -- anArrayOfSlotNames [
 	
 	"I create a new trait composition element, from me but without the slot named as the parameter"
 
-	^ TaRemoveSlot named: anSlotName from: self.
+	^ TaRemoveSlot remove: anArrayOfSlotNames from: self.
 ]
 
 { #category : #comparing }

@@ -1,3 +1,6 @@
+"
+MyTrait @@ {#ivar -> ivar2 }
+"
 Class {
 	#name : #CDTraitSlotRenameNode,
 	#superclass : #CDTraitCompositionNode,
@@ -17,4 +20,9 @@ CDTraitSlotRenameNode >> renames [
 CDTraitSlotRenameNode >> renames: anObject [
 
 	renames := anObject
+]
+
+{ #category : #printing }
+CDTraitSlotRenameNode >> toString [
+	^ subject name ,' @@ ', renames asString.
 ]
