@@ -453,7 +453,7 @@ SpAbstractMorphicAdapter >> keyEvent: type code: keyCode shift: shiftBoolean met
 		(Smalltalk os isWin32 | Smalltalk os isUnix
 			ifTrue: [ 2r01000000 ]
 			ifFalse: [ 2r00100000 ]) ].
-	
+		
 	evt := KeyboardEvent new
 		setType: type
 		buttons: modifiers
@@ -463,6 +463,7 @@ SpAbstractMorphicAdapter >> keyEvent: type code: keyCode shift: shiftBoolean met
 		hand: self currentWorld activeHand
 		stamp: Time millisecondClockValue.
 
+	evt key: (KeyboardKey fromCharacter: keyCode asCharacter).
 	evt sentTo: self widgetEventReceiver.
 	"Some time to allow things to happen?"
 	10 milliSeconds wait
@@ -620,7 +621,7 @@ SpAbstractMorphicAdapter >> type: aString [
 
 	aString do: [ :each | 
 		self 
-			keyPressed: each asciiValue 
+			keyPressed: each 
 			shift: each isUppercase
 			meta: false 
 			control: false 
