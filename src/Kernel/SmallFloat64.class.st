@@ -266,6 +266,13 @@ SmallFloat64 >> ln [
 	"2.718284 ln 1.0"
 ]
 
+{ #category : #'memory scanning' }
+SmallFloat64 >> nextObject [
+	"SmallFloat64 are immediate objects, and, as such, do not have successors in object memory."
+
+	self shouldNotImplement 
+]
+
 { #category : #copying }
 SmallFloat64 >> shallowCopy [
 	"Answer the receiver, because SmallFloat64s are unique."

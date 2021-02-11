@@ -192,6 +192,20 @@ ProtoObjectTest >> testIsNil [
 	self deny: ProtoObject new isNil
 ]
 
+{ #category : #tests }
+ProtoObjectTest >> testNextObject [
+	"In issue 4011 (https://github.com/pharo-project/pharo/issues/4011), "
+	"the image crashed if nextObject was called on a Character, SmallInteger or a SmallFloat64"
+	
+	self assert: (nil nextObject notNil).
+	self assert: ('test' nextObject notNil).
+	
+	self should: [42 nextObject notNil] raise: ShouldNotImplement .
+	self should: [$x nextObject notNil] raise: ShouldNotImplement .
+	self should: [3.14 nextObject notNil] raise: ShouldNotImplement .
+
+]
+
 { #category : #'tests - testing' }
 ProtoObjectTest >> testNotTheSame [
 
