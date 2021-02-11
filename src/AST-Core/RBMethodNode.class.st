@@ -217,9 +217,9 @@ ase try to rewrite the signature as a whole, what unfortunately drops the commen
 { #category : #accessing }
 RBMethodNode >> children [
 	^ OrderedCollection new
-		addAll: self arguments;
-		addAll: self pragmas;
-		add: self body;
+		addAll: arguments;
+		addAll: pragmas;
+		add: body;
 		yourself
 ]
 

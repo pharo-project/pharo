@@ -75,7 +75,7 @@ RBAssignmentNode >> assigns: aVariableName [
 
 { #category : #accessing }
 RBAssignmentNode >> children [
-	^Array with: value with: variable
+	^ { value . variable }
 ]
 
 { #category : #matching }

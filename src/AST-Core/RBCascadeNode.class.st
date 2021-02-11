@@ -56,7 +56,7 @@ RBCascadeNode >> bestNodeFor: anInterval [
 
 { #category : #accessing }
 RBCascadeNode >> children [
-	^self messages
+	^ messages
 ]
 
 { #category : #matching }

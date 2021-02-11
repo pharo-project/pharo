@@ -104,8 +104,8 @@ RBMessageNode >> bestNodeFor: anInterval [
 
 { #category : #accessing }
 RBMessageNode >> children [
-	^(OrderedCollection with: self receiver)
-		addAll: self arguments;
+	^(OrderedCollection with: receiver)
+		addAll: arguments;
 		yourself
 ]
 
