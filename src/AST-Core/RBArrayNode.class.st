@@ -104,7 +104,7 @@ RBArrayNode >> allStatements [
 
 { #category : #accessing }
 RBArrayNode >> children [
-	^ self statements
+	^ statements
 ]
 
 { #category : #matching }

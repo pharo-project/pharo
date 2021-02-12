@@ -54,7 +54,7 @@ RBLiteralArrayNode >> acceptVisitor: aProgramNodeVisitor [
 
 { #category : #accessing }
 RBLiteralArrayNode >> children [
-	^contents
+	^ contents
 ]
 
 { #category : #accessing }
