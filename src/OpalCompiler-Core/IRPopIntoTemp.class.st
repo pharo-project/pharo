@@ -11,3 +11,9 @@ Class {
 IRPopIntoTemp >> accept: aVisitor [
 	^ aVisitor visitPopIntoTemp: self
 ]
+
+{ #category : #acessing }
+IRPopIntoTemp >> nextBytecodeOffsetAfterJump [
+	"if we are in to:do: answers the next byte code offset"
+	^ self sequence last destination last destination first bytecodeOffset
+]
