@@ -47,7 +47,8 @@ Class {
 		'windows',
 		'properties',
 		'configuration',
-		'iconManager'
+		'iconManager',
+		'iconProvider'
 	],
 	#classVars : [
 		'DefaultApplication'
@@ -160,10 +161,16 @@ SpApplication >> iconManager: anIconManager [
 	
 ]
 
-{ #category : #icons }
-SpApplication >> iconNamed: aSymbol [
+{ #category : #'accessing resources' }
+SpApplication >> iconNamed: aString [
 
-	^ self iconManager iconNamed: aSymbol
+	^ self iconProvider iconNamed: aString
+]
+
+{ #category : #'accessing resources' }
+SpApplication >> iconProvider [
+
+	^ iconProvider ifNil: [ iconProvider := self newIconProvider ]
 ]
 
 { #category : #testing }
@@ -184,6 +191,12 @@ SpApplication >> new: aPresenter [
 	"a synonym for #newPresenter:"
 	
 	^ self newPresenter: aPresenter
+]
+
+{ #category : #'private factory' }
+SpApplication >> newIconProvider [
+	
+	^ SpPharoThemeIconProvider new
 ]
 
 { #category : #factory }

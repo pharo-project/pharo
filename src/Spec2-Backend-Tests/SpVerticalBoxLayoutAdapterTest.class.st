@@ -7,5 +7,5 @@ Class {
 { #category : #running }
 SpVerticalBoxLayoutAdapterTest >> newLayout [
 
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 ]

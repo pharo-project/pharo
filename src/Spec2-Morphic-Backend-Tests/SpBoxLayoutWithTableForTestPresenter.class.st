@@ -10,7 +10,7 @@ Class {
 { #category : #specs }
 SpBoxLayoutWithTableForTestPresenter class >> defaultSpec [
 
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #table;
 		yourself
 ]
@@ -25,7 +25,7 @@ SpBoxLayoutWithTableForTestPresenter class >> open [
 { #category : #specs }
 SpBoxLayoutWithTableForTestPresenter class >> specWithPadding [
 
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #table expand: false fill: false padding: 10;
 		yourself
 ]

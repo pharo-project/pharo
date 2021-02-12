@@ -20,9 +20,9 @@ Class {
 
 { #category : #specs }
 SpDropListExample class >> defaultSpec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 				add: #uniformDropList;
 				add: #heterogeneousDropList;
 				yourself)

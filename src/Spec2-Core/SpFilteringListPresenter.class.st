@@ -24,7 +24,7 @@ Class {
 { #category : #specs }
 SpFilteringListPresenter class >> bottomLayout [
 
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		  add: #listPresenter;
 		  add: #filterInputPresenter expand: false;
 		  yourself
@@ -39,7 +39,7 @@ SpFilteringListPresenter class >> defaultSpec [
 { #category : #specs }
 SpFilteringListPresenter class >> topLayout [
 
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		  add: #filterInputPresenter expand: false;
 		  add: #listPresenter;
 		  yourself

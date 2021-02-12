@@ -17,10 +17,10 @@ Class {
 
 { #category : #specs }
 SpDemoNotebookPresenter class >> defaultSpec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #notebook;
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 				add: #checkbox withConstraints: [ :constraints | constraints width: 20 ];
 				add: 'Show dynamic presenter')
 			withConstraints: [ :constraints | constraints height: self labelHeight ];

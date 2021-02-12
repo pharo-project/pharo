@@ -4,26 +4,31 @@ I'm a spec adapter for a morph
 Class {
 	#name : #SpMorphicMorphAdapter,
 	#superclass : #SpAbstractMorphicAdapter,
-	#instVars : [
-		'currentMorph'
-	],
 	#category : #'Spec2-Adapters-Morphic-Base'
 }
 
 { #category : #factory }
 SpMorphicMorphAdapter >> buildWidget [
+	| newWidget |
 
-	currentMorph := self presenter morph 
+	newWidget := self presenter morph 
 		ifNil: [ Morph new color: Color transparent ].
-	currentMorph presenter: self presenter.
+	newWidget presenter: self presenter.
 
-	self presenter whenMorphChangedDo: [ :morph | 
-		self applyStyle: morph.
-		morph presenter: self presenter.
-		currentMorph owner ifNotNil: [ :ownerMorph | 
-			ownerMorph 
-				replaceSubmorph: currentMorph 
-				by: morph ] ].
+	self presenter whenMorphChangedDo: [ :aMorph | 
+		self updateMorph: aMorph ].
 	
-	^ currentMorph
+	^ newWidget
+]
+
+{ #category : #factory }
+SpMorphicMorphAdapter >> updateMorph: aMorph [
+
+	self applyStyle: aMorph.
+	aMorph presenter: self presenter.
+	widget owner ifNotNil: [ :ownerMorph | 
+		ownerMorph 
+			replaceSubmorph: widget
+			by: aMorph ].
+	widget := aMorph
 ]

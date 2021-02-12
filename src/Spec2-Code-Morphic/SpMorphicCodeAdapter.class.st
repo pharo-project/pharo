@@ -200,6 +200,7 @@ SpMorphicCodeAdapter >> setEditingModeFor: textArea [
 
 { #category : #private }
 SpMorphicCodeAdapter >> setEditingModeFor: textArea withBehavior: aBehavior forScripting: aBoolean [
+
 	textArea model: self.
 	(aBoolean or: [ aBehavior isNil ]) 
 		ifTrue: [ 

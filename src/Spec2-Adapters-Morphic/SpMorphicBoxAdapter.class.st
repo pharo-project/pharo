@@ -102,11 +102,10 @@ SpMorphicBoxAdapter >> addVerticalHomogeneousToMorph: aMorph [
 	| size |
 
 	self children ifEmpty: [ ^ self ].
-	
+
 	size := (widget height - (layout borderWidth * 2) - (layout spacing * (self children size - 1))) // self children size.
-	aMorph 
-		height: size; 
-		maxHeight: size.
+	aMorph height: size.
+	aMorph vResizing: #spaceFill.
 ]
 
 { #category : #private }
@@ -202,7 +201,7 @@ SpMorphicBoxAdapter >> layout: aLayout [
 			ifTrue: [ widget := self applyAlignmentTo: widget ].
 		"the spacing needs to be applied to the inner sub-panels"
 		{ startPanel. endPanel } 
-			do: [ :each | each cellInset: aLayout spacing ].
+			do: [ :each | each cellInset: aLayout spacing ]
 		"widget homogeneous: aLayout isHomogeneous" ].
 
 	aLayout whenChildrenAddedDo: [ :ann |
@@ -236,16 +235,16 @@ SpMorphicBoxAdapter >> newHorizontal [
 SpMorphicBoxAdapter >> newVertical [
 
 	^ self newPanel
-		  listDirection: #topToBottom;
-		  addMorphBack: ((startPanel := self newPanel)
-				   listDirection: #topToBottom;
-				   yourself);
-		  addMorphBack: ((endPanel := self newPanel)
-				   listDirection: #topToBottom;
-				   vResizing: #shrinkWrap;
-				   height: 0;
-				   yourself);
-		  yourself
+		listDirection: #topToBottom;
+		addMorphBack: ((startPanel := self newPanel)
+			listDirection: #topToBottom;
+			yourself);
+		addMorphBack: ((endPanel := self newPanel)
+			listDirection: #topToBottom;
+			vResizing: #shrinkWrap;
+			height: 0;
+			yourself);
+		yourself
 ]
 
 { #category : #private }
@@ -309,6 +308,13 @@ SpMorphicBoxAdapter >> replace: aPresenter with: otherPresenter withConstraints:
 	
 	newMorph := self buildMorph: otherPresenter constraints: constraints.
 	panel replaceSubmorph: oldMorph by: newMorph
+]
+
+{ #category : #updating }
+SpMorphicBoxAdapter >> updateSpacing [
+
+	{ startPanel. endPanel } 
+			do: [ :each | each cellInset: layout spacing ]
 ]
 
 { #category : #private }

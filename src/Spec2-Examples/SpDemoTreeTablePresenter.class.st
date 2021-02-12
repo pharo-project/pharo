@@ -15,7 +15,7 @@ Class {
 
 { #category : #specs }
 SpDemoTreeTablePresenter class >> defaultSpec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #table1;
 		add: 'Double click to browse.'
 			expand: false

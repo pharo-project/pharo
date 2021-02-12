@@ -39,7 +39,7 @@ SpCodeInspectItCommand >> execute [
 { #category : #'private - actions' }
 SpCodeInspectItCommand >> inspectObject: anObject [
 
-	anObject inspect
+	Smalltalk tools inspector openOn: anObject
 	"(StInspector onObject: anObject)
 		application: context application;
 		openWithSpec"

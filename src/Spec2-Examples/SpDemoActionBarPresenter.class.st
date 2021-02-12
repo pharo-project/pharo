@@ -14,7 +14,7 @@ Class {
 { #category : #specs }
 SpDemoActionBarPresenter class >> defaultSpec [
 
-	^ SpBoxLayout newVertical 
+	^ SpBoxLayout newTopToBottom 
 		add: #text;
 		addLast: #actionBar expand: false fill: false padding: 0;
 		yourself

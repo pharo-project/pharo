@@ -11,7 +11,7 @@ Class {
 { #category : #initialization }
 SpPopoverContentExample >> initializePresenters [
 
-	self layout: (SpBoxLayout newVertical
+	self layout: (SpBoxLayout newTopToBottom
 		borderWidth: 10; 
 		add: (self newLabel label: 'A cool popup!');
 		yourself)

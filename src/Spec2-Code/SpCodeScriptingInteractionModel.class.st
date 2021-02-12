@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 SpCodeScriptingInteractionModel >> addBinding: aBinding [
 
-	bindings add: aBinding
+	self bindings add: aBinding
 ]
 
 { #category : #binding }
@@ -43,7 +43,7 @@ SpCodeScriptingInteractionModel >> isForScripting [
 { #category : #accessing }
 SpCodeScriptingInteractionModel >> removeBinding: aBinding [
  
-	bindings removeKey: aBinding key
+	self bindings removeKey: aBinding key
 ]
 
 { #category : #accessing }

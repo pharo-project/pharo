@@ -7,6 +7,6 @@ Class {
 { #category : #running }
 SpVerticalPanedLayoutTest >> initializeTestedInstance [
 
-	layout := SpPanedLayout newVertical.
+	layout := SpPanedLayout newTopToBottom.
 	presenter layout: layout
 ]

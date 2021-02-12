@@ -4,9 +4,6 @@ The application for the Pharo IDE.
 Class {
 	#name : #StPharoApplication,
 	#superclass : #SpApplication,
-	#instVars : [
-		'iconProvider'
-	],
 	#classVars : [
 		'Current'
 	],
@@ -39,29 +36,17 @@ StPharoApplication class >> startUp: resuming [
 	Current startUp: resuming
 ]
 
-{ #category : #'accessing resources' }
-StPharoApplication >> iconNamed: aSymbol [
-
-	^ self iconProvider iconNamed: aSymbol
-]
-
-{ #category : #'accessing resources' }
-StPharoApplication >> iconProvider [
-
-	^ iconProvider ifNil: [ iconProvider := StPharoDefaultIconProvider new ]
-]
-
-{ #category : #'accessing resources' }
-StPharoApplication >> iconProvider: anIconProvider [
-	
-	iconProvider := anIconProvider
-]
-
 { #category : #initialization }
 StPharoApplication >> initialize [
 
 	super initialize.
 	self resetConfiguration
+]
+
+{ #category : #'private factory' }
+StPharoApplication >> newIconProvider [
+
+	^ StPharoDefaultIconProvider new
 ]
 
 { #category : #initialization }
@@ -100,4 +85,10 @@ StPharoApplication >> startUp: resuming [
 StPharoApplication >> toolbarDisplayMode [
 
 	^ StPharoSettings toolbarDisplayMode
+]
+
+{ #category : #'accessing resources' }
+StPharoApplication >> tools [
+
+	^ Smalltalk os tools
 ]

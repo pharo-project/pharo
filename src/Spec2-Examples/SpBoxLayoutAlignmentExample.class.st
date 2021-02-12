@@ -9,7 +9,7 @@ SpBoxLayoutAlignmentExample >> initializePresenters [
 	<script: 'self new openWithSpec'>
 	| pages |
 	
-	layout := SpBoxLayout newVertical
+	layout := SpBoxLayout newTopToBottom
 		add: (pages := self newNotebook);
 		yourself.
 		
@@ -31,16 +31,16 @@ SpBoxLayoutAlignmentExample >> initializePresenters [
 { #category : #initialization }
 SpBoxLayoutAlignmentExample >> newHorizontalAlignmentLayout [
 
-	^ SpBoxLayout newVertical
-		add: (SpBoxLayout newHorizontal 
+	^ SpBoxLayout newTopToBottom
+		add: (SpBoxLayout newLeftToRight 
 			hAlignStart;
 			add: (SpLabelPresenter new label: 'hAlignStart') expand: false;
 			yourself);
-		add: (SpBoxLayout newHorizontal 
+		add: (SpBoxLayout newLeftToRight 
 			hAlignCenter;
 			add: (SpLabelPresenter new label: 'hAlignCenter') expand: false;
 			yourself);
-		add: (SpBoxLayout newHorizontal 
+		add: (SpBoxLayout newLeftToRight 
 			hAlignEnd;
 			add: (SpLabelPresenter new label: 'hAlignEnd') expand: false;
 			yourself);
@@ -51,16 +51,16 @@ SpBoxLayoutAlignmentExample >> newHorizontalAlignmentLayout [
 { #category : #initialization }
 SpBoxLayoutAlignmentExample >> newVerticalAlignmentLayout [
 
-	^ SpBoxLayout newHorizontal
-		add: (SpBoxLayout newVertical 
+	^ SpBoxLayout newLeftToRight
+		add: (SpBoxLayout newTopToBottom 
 			vAlignStart;
 			add: (SpLabelPresenter new label: 'vAlignStart') expand: false;
 			yourself);
-		add: (SpBoxLayout newVertical 
+		add: (SpBoxLayout newTopToBottom 
 			vAlignCenter;
 			add: (SpLabelPresenter new label: 'vAlignCenter') expand: false;
 			yourself);
-		add: (SpBoxLayout newVertical 
+		add: (SpBoxLayout newTopToBottom 
 			vAlignEnd;
 			add: (SpLabelPresenter new label: 'vAlignEnd') expand: false;
 			yourself);

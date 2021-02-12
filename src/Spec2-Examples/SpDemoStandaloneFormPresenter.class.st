@@ -37,7 +37,7 @@ Class {
 { #category : #specs }
 SpDemoStandaloneFormPresenter class >> defaultSpec [
 	
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add:
 			(SpGridLayout new
 				add: 'Name:' at: 1 @ 1;
@@ -59,7 +59,7 @@ SpDemoStandaloneFormPresenter class >> defaultSpec [
 				add: #dateInput at: 2 @ 8;"
 				add: 'Gender:' at: 1 @ 9;
 				add:
-					(SpBoxLayout newHorizontal
+					(SpBoxLayout newLeftToRight
 						add: #maleButton;
 						add: #femaleButton;
 						yourself)
@@ -67,7 +67,7 @@ SpDemoStandaloneFormPresenter class >> defaultSpec [
 				add: 'Items:' at: 1 @ 10;
 				add: #itemsInput at: 2 @ 10;
 				yourself);
-		add: (SpBoxLayout newHorizontal
+		add: (SpBoxLayout newLeftToRight
 				add: #submitButton;
 				add: #restoreButton;
 				yourself)

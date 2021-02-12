@@ -9,7 +9,7 @@ SpBoxLayoutReplacePresenterExample >> initializePresenters [
 	| p1 p2 p3 button |
 	<script: 'self new openWithSpec'>
 	
-	layout := SpBoxLayout newVertical
+	layout := SpBoxLayout newTopToBottom
 		add: (p1 := SpLabelPresenter new label: 'Presenter 1');
 		add: (p2 := SpLabelPresenter new label: 'Presenter 2'); 
 		add: (p3 := SpLabelPresenter new label: 'Presenter 3'); 

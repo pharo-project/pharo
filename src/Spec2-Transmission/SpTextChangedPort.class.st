@@ -20,8 +20,8 @@ SpTextChangedPort class >> portName [
 { #category : #attaching }
 SpTextChangedPort >> attachTransmission: aTransmission [
 
-	self destinationPresenter whenTextChangedDo: [ :selection | 
+	self destinationPresenter whenTextChangedDo: [ :aString | 
 		self 
 			transmitWith: aTransmission 
-			value: selection text ]
+			value: aString ]
 ]

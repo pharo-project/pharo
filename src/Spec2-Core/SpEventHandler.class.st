@@ -69,6 +69,12 @@ SpEventHandler >> register: anEvent [
 ]
 
 { #category : #'api-events' }
+SpEventHandler >> whenDoubleClickDo: aBlock [
+
+	 self register: (SpMouseDoubleClickDefinition do: aBlock)
+]
+
+{ #category : #'api-events' }
 SpEventHandler >> whenFocusLostDo: aBlock [
 	"register a focus lost event. 
 	 aBlock does not has parameters"

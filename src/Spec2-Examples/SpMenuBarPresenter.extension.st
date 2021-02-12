@@ -5,7 +5,7 @@ SpMenuBarPresenter class >> example [
 	| presenter menuBar submenuFile submenuEdit |
 
 	(presenter := SpPresenter new) 
-		layout: (SpBoxLayout newVertical 
+		layout: (SpBoxLayout newTopToBottom 
 			add: (menuBar := presenter newMenuBar) expand: false;
 			add: (presenter newLabel label: 'Empty space');
 			yourself).

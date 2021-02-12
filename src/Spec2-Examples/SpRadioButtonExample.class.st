@@ -17,8 +17,8 @@ Class {
 
 { #category : #specs }
 SpRadioButtonExample class >> defaultSpec [
-	^ SpBoxLayout newVertical
-		add: (SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
+		add: (SpBoxLayout newTopToBottom
 				add: #button1 expand: false;
 				add: #button2 expand: false;
 				add: #button3 expand: false;

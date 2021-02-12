@@ -9,7 +9,7 @@ Class {
 
 { #category : #specs }
 SpMockPesenterWithoutGetter class >> defaultSpec [
-	^ SpBoxLayout newHorizontal
+	^ SpBoxLayout newLeftToRight
 		add: #buttonPresenter;
 		yourself
 ]

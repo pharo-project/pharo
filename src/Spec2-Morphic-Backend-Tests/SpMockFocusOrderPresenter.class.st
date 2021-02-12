@@ -12,7 +12,7 @@ Class {
 { #category : #specs }
 SpMockFocusOrderPresenter class >> defaultSpec [
 
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #firstPresenter;
 		add: #secondPresenter;
 		add: #thirdPresenter;

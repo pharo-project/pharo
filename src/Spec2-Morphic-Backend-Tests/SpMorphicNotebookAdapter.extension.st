@@ -3,8 +3,8 @@ Extension { #name : #SpMorphicNotebookAdapter }
 { #category : #'*Spec2-Morphic-Backend-Tests' }
 SpMorphicNotebookAdapter >> clickTab: anIndex [
 	| evt tab |
-	tab := self widget tabSelectorMorph tabs at: anIndex.
 
+	tab := self widget tabSelectorMorph tabs at: anIndex.
 	evt := MouseButtonEvent new
 		setType: nil
 		position: widget center

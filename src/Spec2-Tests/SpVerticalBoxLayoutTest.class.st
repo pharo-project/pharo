@@ -7,7 +7,7 @@ Class {
 { #category : #running }
 SpVerticalBoxLayoutTest >> initializeTestedInstance [
 
-	layout := SpBoxLayout newVertical.
+	layout := SpBoxLayout newTopToBottom.
 	presenter layout: layout
 ]
 
