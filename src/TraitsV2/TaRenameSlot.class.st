@@ -52,7 +52,7 @@ TaRenameSlot >> slots [
 	^ inner slots collect: [ :slot | 
 		  (renames asDictionary includesKey: slot name)
 			  ifTrue: [ 
-				  (TaRemovedSlotWrapper for: slot) name: (renames asDictionary at: slot name) ]
+				  (TaRenamedSlotWrapper for: slot) name: (renames asDictionary at: slot name) ]
 			  ifFalse: [ slot ] ]
 ]
 
