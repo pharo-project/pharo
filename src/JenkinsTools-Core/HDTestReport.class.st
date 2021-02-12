@@ -42,8 +42,9 @@ HDTestReport class >> runClasses: aCollectionOfClasses named: aString [
 			asSortedCollection: [ :a :b | a name <= b name ].
 	classes isEmpty
 		ifTrue: [ ^ nil ].
+		
 	classes
-		do: [ :each | each addToSuiteFromSelectors: suite ].
+		do: [ :each | suite addTests: each buildSuite tests ].
 	^ self runSuite: suite
 ]
 
