@@ -29,7 +29,7 @@ else
  TEST_VM_KIND="vmHeadlessLatest"	
 fi
 
-${BOOTSTRAP_REPOSITORY:-.}/bootstrap/scripts/getPharoVM.sh ${TEST_VM_VERSION} vmHeadlessLatest ${1}
+${BOOTSTRAP_REPOSITORY:-.}/bootstrap/scripts/getPharoVM.sh ${TEST_VM_VERSION} ${TEST_VM_KIND} ${1}
 
 IMAGE_ARCHIVE=$(find ${CACHE} -name ${TEST_NAME_PREFIX}-${1}bit-*.zip)
 unzip $IMAGE_ARCHIVE
