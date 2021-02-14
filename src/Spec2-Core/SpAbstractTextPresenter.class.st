@@ -25,6 +25,20 @@ SpAbstractTextPresenter class >> isAbstract [
 	^ self = SpAbstractTextPresenter
 ]
 
+{ #category : #generated }
+SpAbstractTextPresenter >> acceptBlock: aBlockWithOneArgument [
+
+	"Set the block to perform when the text is accepted.
+	The block must have one argument, which will be the accepted text.
+	The block can return false if the candidate text is to be rejected"
+
+	self
+		deprecated: 'Use #whenSubmitDo: instead'
+		transformWith:
+		'`@rec acceptBlock: `@arg' -> '`@rec whenSubmitDo: `@arg'.
+	^ self whenSubmitDo: aBlockWithOneArgument
+]
+
 { #category : #private }
 SpAbstractTextPresenter >> acceptText: aString [
 	"Used to set the text value comming from the adapter (we do not want to re-send 
