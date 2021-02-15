@@ -72,7 +72,7 @@ Win32Environment >> doGetEnvVariable: aVariableName bufferSize: aSize ifAbsent: 
 			ifTrue: [ 
 				self error: 'Error ', lastErrCode printString, 
 					' occurred while fetching environment variable ', aVariableName asString ]
-			ifFalse: [ self doGetEnvVariable: aVariableName bufferSize: aSize ifAbsent: aBlock isRetry: true ] ].
+			ifFalse: [ ^ self doGetEnvVariable: aVariableName bufferSize: aSize ifAbsent: aBlock isRetry: true ] ].
 	
 	"From MSDN: If lpBuffer is not large enough to hold the data, the return value is the buffer size, in characters,
 	required to hold the string and its terminating null character and the contents of lpBuffer are undefined."
