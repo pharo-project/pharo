@@ -40,3 +40,23 @@ RBMoveMethodToClassSideTest >> testMoveMethodToClassSide [
 	someClass := model classNamed: className name, ' class'.
 	self assert: (someClass parseTreeFor: ('threeElement', 'Point') asSymbol) equals: (self parseMethod: 'threeElementPoint ^5 @ 5 + 6 @ 6').
 ]
+
+{ #category : #tests }
+RBMoveMethodToClassSideTest >> testMoveMethodToClassSideWithInsAndMetReferences [
+	| method someClass className refactoring |
+	className := RBTransformationRuleTestData.
+	method := className >> ('rewrite', 'Using:') asSymbol.
+	refactoring := RBMoveMethodToClassSideRefactoring method: method class: className.
+	self executeRefactoring: refactoring.
+	model := refactoring model.
+	someClass := model classNamed: className name.
+	self assert: (someClass parseTreeFor: ('rewrite', 'Using:') asSymbol) equals: (self parseMethod: 'rewriteUsing: searchReplacer
+	^ self class rewriteUsing: searchReplacer').
+	someClass := model classNamed: className name, ' class'.
+	self assert: (someClass parseTreeFor: ('rewrite', 'Using:') asSymbol) equals: (self parseMethod: 'rewriteUsing: searchReplacer
+
+	| aRBTransformationRuleTestData |
+	aRBTransformationRuleTestData := self new.
+	aRBTransformationRuleTestData rewriteRule: searchReplacer.
+	aRBTransformationRuleTestData resetResult').
+]
