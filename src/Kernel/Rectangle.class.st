@@ -678,36 +678,6 @@ Rectangle >> merge: aRectangle [
 		corner: (corner max: aRectangle corner)
 ]
 
-{ #category : #generated }
-Rectangle >> newRectButtonPressedDo: newRectBlock [
-
-	"Track the outline of a new rectangle until mouse button changes. newFrameBlock produces each new rectangle from the previous. Only tracks while mouse is down."
-
-	| rect newRect buttonNow hand |
-	self deprecated:
-		'Use #newRectButtonPressedDo:inWorld: and #world instead'.
-	hand := self currentWorld activeHand.
-	buttonNow := hand anyButtonPressed.
-	rect := self.
-	self drawReverseFrame: rect.
-	hand captureEventsWhile: [ :evt | 
-		evt isMouse
-			ifTrue: [ 
-				buttonNow := evt anyButtonPressed.
-				newRect := newRectBlock value: rect value: evt cursorPoint.
-				newRect = rect ifFalse: [ 
-					self drawReverseFrame: rect.
-					self drawReverseFrame: newRect.
-					rect := newRect ].
-				buttonNow ]
-			ifFalse: [ true ] ].
-	self drawReverseFrame: rect.
-	self currentWorld activeHand
-		newMouseFocus: nil;
-		showTemporaryCursor: nil.
-	^ rect
-]
-
 { #category : #accessing }
 Rectangle >> origin [
 	"Answer the point at the top left corner of the receiver."
