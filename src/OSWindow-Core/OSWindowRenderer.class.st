@@ -93,3 +93,12 @@ OSWindowRenderer >> window [
 	self deprecated: 'Use #adapter instead'.
 	^ window
 ]
+
+{ #category : #generated }
+OSWindowRenderer >> window: anObject [
+
+	self
+		deprecated: 'Use #backendWindow: instead'
+		transformWith: '`@rec window: `@arg' -> '`@rec backendWindow: `@arg'.
+	^ self backendWindow: anObject
+]

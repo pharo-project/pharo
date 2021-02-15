@@ -568,7 +568,7 @@ Canvas >> line: pt1 to: pt2 width: w1 color: c1 stepWidth: s1 secondWidth: w2 se
 	"if there was no loop, offsetPoint is nil"
 	lastPoint := pt1 + ((offsetPoint ifNil: [0 @ 0])
 					+ delta2).
-	(lastPoint dist: pt2)
+	(lastPoint distanceTo: pt2)
 		<= s1
 		ifTrue: [self
 				line: lastPoint rounded

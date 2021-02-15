@@ -85,7 +85,10 @@ TFPool >> populate: anArray [
 TFPool >> printOn: stream [
 
 	super printOn: stream.
-	stream << '(' << self size printString << ' elements)'
+	stream 
+		nextPut: $( ; 
+		print: self size  ; 
+		nextPutAll: ' elements)'
 ]
 
 { #category : #initialization }

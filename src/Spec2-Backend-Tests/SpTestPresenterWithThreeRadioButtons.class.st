@@ -12,7 +12,7 @@ Class {
 { #category : #specs }
 SpTestPresenterWithThreeRadioButtons class >> defaultSpec [
 
-	^ SpBoxLayout newVertical 
+	^ SpBoxLayout newTopToBottom 
 		add: #radio1;
 		add: #radio2;
 		add: #radio3;

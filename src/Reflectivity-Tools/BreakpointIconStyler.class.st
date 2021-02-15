@@ -1,5 +1,5 @@
 "
-I'm in charge to style an ast when there are breakpoints
+I'm in charge to style an ast when there are breakpoints that are enabled
 "
 Class {
 	#name : #BreakpointIconStyler,
@@ -31,5 +31,5 @@ BreakpointIconStyler >> iconLabel: aNode [
 
 { #category : #testing }
 BreakpointIconStyler >> shouldStyleNode: aNode [
-	^aNode hasBreakpoint
+	^aNode hasBreakpoint and: [ aNode breakpoints anySatisfy: [:brkpt | brkpt isEnabled ]]
 ]

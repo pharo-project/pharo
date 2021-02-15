@@ -16,10 +16,10 @@ Class {
 
 { #category : #specs }
 SpMethodBrowser class >> defaultSpec [
-	^ SpPanedLayout newVertical
+	^ SpPanedLayout newTopToBottom
 		add: #listModel;
 		add:
-			(SpBoxLayout newVertical
+			(SpBoxLayout newTopToBottom
 				add: #toolbarModel withConstraints: [ :constraints | constraints height: self toolbarHeight ];
 				add: #textModel;
 				yourself);
@@ -40,6 +40,16 @@ SpMethodBrowser class >> example [
 SpMethodBrowser class >> title [
 
 	^ 'Method Browser'
+]
+
+{ #category : #generated }
+SpMethodBrowser >> acceptBlock: aBlock [
+
+	self
+		deprecated: 'Use #whenSubmitDo: instead'
+		transformWith:
+		'`@rec acceptBlock: `@arg' -> '`@rec whenSubmitDo: `@arg'.
+	^ self whenSubmitDo: aBlock
 ]
 
 { #category : #accessing }

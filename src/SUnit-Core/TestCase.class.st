@@ -712,7 +712,7 @@ TestCase >> prepareToRunAgain [
 
 { #category : #printing }
 TestCase >> printOn: aStream [
-	aStream nextPutAll: self class printString.
+	aStream nextPutAll: self class name asString.
 	self printTestSelectorOn: aStream
 ]
 

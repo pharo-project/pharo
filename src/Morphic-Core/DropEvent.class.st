@@ -56,9 +56,9 @@ DropEvent >> position [
 DropEvent >> printOn: aStream [
 
 	aStream nextPut: $[.
-	aStream nextPutAll: self position printString; space.
+	aStream print: self position ; space.
 	aStream nextPutAll: self type; space.
-	aStream	 nextPutAll: self windowIndex printString.
+	aStream print: self windowIndex .
 	aStream nextPut: $].
 ]
 

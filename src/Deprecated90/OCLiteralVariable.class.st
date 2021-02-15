@@ -44,6 +44,15 @@ OCLiteralVariable >> isFromSharedPool [
 		ifNone: [ false ]
 ]
 
+{ #category : #generated }
+OCLiteralVariable >> isGlobal [
+
+	self
+		deprecated: 'Use #isGlobalVariable instead'
+		transformWith: '`@rec isGlobal' -> '`@rec isGlobalVariable'.
+	^ self isGlobalVariable
+]
+
 { #category : #testing }
 OCLiteralVariable >> isGlobalClassNameBinding [
 	^ (self value isClass or: [ self value isTrait ])

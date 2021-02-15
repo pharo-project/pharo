@@ -16,9 +16,9 @@ Class {
 
 { #category : #specs }
 SpDemoModalPresenter class >> defaultSpec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 				add: #button1;
 				add: #button2;
 				yourself)

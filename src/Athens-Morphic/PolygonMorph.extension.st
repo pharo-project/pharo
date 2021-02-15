@@ -118,7 +118,7 @@ for the current vertice C.
 			next := vert atWrap: i + 1.
 			tangent := (next - prior) / 2.
 			lenpc := current distanceTo: prior.
-			lencn := next dist: current.
+			lencn := next distanceTo: current.
 			lenpc = 0 ifTrue:[
 				ctrl1 := prior]
 			ifFalse:[	ctrl1 := current - (tangent / (1 + (lencn / lenpc)))].

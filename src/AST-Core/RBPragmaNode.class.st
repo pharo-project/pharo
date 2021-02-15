@@ -79,7 +79,7 @@ RBPragmaNode >> arguments: aLiteralCollection [
 
 { #category : #accessing }
 RBPragmaNode >> children [
-	^ self arguments
+	^ arguments
 ]
 
 { #category : #matching }

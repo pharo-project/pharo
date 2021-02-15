@@ -53,11 +53,12 @@ ClyIcebergShowMethodVersionCommand >> defaultMenuItemName [
 { #category : #execution }
 ClyIcebergShowMethodVersionCommand >> execute [
 	| browserClass |
-	browserClass := #IceTipExtendedVersionBrowser 
-		asClassInEnvironment: self class environment
-		ifAbsent: [ #IceExtendedVersionBrowser asClass ].
+	self flag: #pharoTodo.
+	"This is a way to hide a dependency to Iceberg-IceTip package."
+	browserClass := #IceTipVersionHistoryBrowser
+		asClassInEnvironment: self class environment.
 		
-	(browserClass repository: repository method: method) open
+	(browserClass onRepository: repository method: method) openWithSpec
 ]
 
 { #category : #execution }

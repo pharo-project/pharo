@@ -924,7 +924,7 @@ RubTextEditor >> encloseWith: aMatchingPair [
 		ifFalse: [
 			" Checks if the characters inside the selection need to be escaped or not. "
 			newString := (self shouldEscapeCharacter: left)
-						 ifTrue: [ self escapeCharacter: left inString: oldSelection ] 
+						 ifTrue: [ self surroundString: oldSelection withCharacter: left ] 
 						 ifFalse: [ "not enclosed; enclose by matching brackets"
 									  (String with: left), oldSelection string, (String with: right) ].
 			self replaceSelectionWith:
@@ -1098,6 +1098,16 @@ RubTextEditor >> findAndSelect: aRegex startingAt: anIndex searchBackwards: sear
 		ifFalse: [self findAndSelectNextOccurrenceOf: aRegex].
 	where ifNil: [self selectInterval: oldSelectionInterval].
 	^ where
+]
+
+{ #category : #generated }
+RubTextEditor >> findAndSelectNextOccurenceOf: aRegex [
+
+	self
+		deprecated: 'Use #findAndSelectPreviousOccurrenceOf: instead'
+		transformWith: '`@rec findAndSelectNextOccurenceOf: `@arg'
+			-> '`@rec findAndSelectPreviousOccurrenceOf: `@arg'.
+	^ self findAndSelectPreviousOccurrenceOf: aRegex
 ]
 
 { #category : #'find-select' }
@@ -2360,6 +2370,26 @@ RubTextEditor >> storeSelectionInText [
 RubTextEditor >> string [
 
 	^self text string
+]
+
+{ #category : #nesting }
+RubTextEditor >> surroundString: aString withCharacter: aCharacter [
+	"Returns a new string with contents equals to aString surrounded by aCharacter.
+	Escapes all occurrences of aCharacter within aString by doubling them."
+	
+	"(self new surroundString: 'a' withCharacter: $') >>> '''a'''"
+	"(self new surroundString: 'a''b' withCharacter: $') >>> '''a''''b'''"
+	
+	| result stream |
+	result := WriteStream with: ''.
+	stream := ReadStream on: aString string.
+	result nextPut: aCharacter.
+	[ stream atEnd ] whileFalse: 
+		[ result nextPutAll: (stream upTo: aCharacter).
+		stream peekBack = aCharacter ifTrue: [result nextPut: aCharacter]. 
+		result nextPut: aCharacter.].
+	stream peekBack = aCharacter ifTrue: [result nextPut: aCharacter].
+	^result contents.
 ]
 
 { #category : #'editing keys' }

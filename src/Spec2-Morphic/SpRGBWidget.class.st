@@ -24,7 +24,7 @@ Class {
 
 { #category : #specs }
 SpRGBWidget class >> defaultSpec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #preview;
 		add: #sliders;
 		yourself

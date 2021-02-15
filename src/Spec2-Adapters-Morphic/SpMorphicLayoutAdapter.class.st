@@ -49,11 +49,6 @@ SpMorphicLayoutAdapter >> applyChildrenAlignmentTo: childMorph constraints: cons
 ]
 
 { #category : #styling }
-SpMorphicLayoutAdapter >> applyStyle: aMorph [
-	"lLayouts do not have style to apply"
-]
-
-{ #category : #styling }
 SpMorphicLayoutAdapter >> applyStyle: aPresenter to: aMorph [
 	self flag: #TODO. "This is a HACK, to apply styles just when I'm using new layouts 
 	(otherwise, it interferes on how the old layout is displayed). 
@@ -162,4 +157,10 @@ SpMorphicLayoutAdapter >> takeKeyboardFocus [
 
 	self presenter presentersInFocusOrder 
 		ifNotEmpty: [ :presenters | presenters first takeKeyboardFocus ]
+]
+
+{ #category : #updating }
+SpMorphicLayoutAdapter >> updateBorderWidth [
+
+	widget borderWidth: layout borderWidth
 ]

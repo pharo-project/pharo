@@ -128,7 +128,7 @@ RBBlockNode >> body: stmtsNode [
 
 { #category : #accessing }
 RBBlockNode >> children [
-	^self arguments copyWith: self body
+	^ arguments copyWith: body
 ]
 
 { #category : #'accessing-token' }

@@ -5,8 +5,8 @@ SpStatusBarPresenter class >> example [
 	| presenter pushButton popButton statusBar count |
 	
 	(presenter := SpPresenter new)
-		layout: (SpBoxLayout newVertical 
-			add: (SpBoxLayout newHorizontal 
+		layout: (SpBoxLayout newTopToBottom 
+			add: (SpBoxLayout newLeftToRight 
 				add: (pushButton := presenter newButton);
 				add: (popButton := presenter newButton);
 				yourself);

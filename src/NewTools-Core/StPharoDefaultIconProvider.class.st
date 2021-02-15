@@ -1,6 +1,6 @@
 Class {
 	#name : #StPharoDefaultIconProvider,
-	#superclass : #Object,
+	#superclass : #SpPharoThemeIconProvider,
 	#instVars : [
 		'synonyms'
 	],
@@ -20,7 +20,7 @@ StPharoDefaultIconProvider >> initialize [
 
 	super initialize. 
 	synonyms := Dictionary new.
-	self initializeSynonyms.
+	self initializeSynonyms
 ]
 
 { #category : #'class initialization' }

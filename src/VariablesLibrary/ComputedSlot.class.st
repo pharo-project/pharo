@@ -54,7 +54,7 @@ ComputedSlot >> printOn: aStream [
 		nextPutAll: ' => ';
 		nextPutAll: self class name;
 		nextPutAll: ' with: ';
-		nextPutAll: block printString
+		print: block 
 ]
 
 { #category : #'meta-object-protocol' }

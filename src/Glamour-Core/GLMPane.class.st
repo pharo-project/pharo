@@ -267,7 +267,7 @@ GLMPane >> printOn: aStream [
 	super printOn: aStream.
 	aStream
 		nextPut: $(;
-		nextPutAll: self identityHash printString;
+		print: self identityHash ;
 		space;
 		nextPutAll: self name;
 		nextPut: $)

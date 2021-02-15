@@ -85,7 +85,7 @@ SpCodePopoverPrintPresenter >> initializePresenters [
 
 	self initializeText.
 
-	layout := SpBoxLayout newHorizontal
+	layout := SpBoxLayout newLeftToRight
 		add: text;
 		yourself.
 

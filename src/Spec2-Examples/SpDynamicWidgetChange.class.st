@@ -16,7 +16,7 @@ Class {
 
 { #category : #specs }
 SpDynamicWidgetChange class >> defaultSpec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #button withConstraints: [ :constraints | constraints height: 25 ];
 		add: #bottom;
 		yourself

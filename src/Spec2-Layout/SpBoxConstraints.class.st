@@ -73,8 +73,14 @@ SpBoxConstraints >> height [
 
 { #category : #accessing }
 SpBoxConstraints >> height: aNumber [
-	"height of component.
-	 this just has sense in the case of expand=false"
+	"Height of component.
+	 Set the constraint of the presenter to assign a fixed height. 
+	 This constraint is applied just when using a Vertical (Top to Bottom) layout, 
+	 otherwise is ignored.
+	 Please notice that 99% of the time you DO NOT NEED (and you do not want) to use 
+	 a fixed constraint like this one. 
+	 Instead, consider using `SpBoxLayout>>#add:expand:` method, and let the component
+	 take its 'natural' heiht (often defined in a style)."
 
 	self expand: false.
 	height := aNumber
@@ -124,8 +130,14 @@ SpBoxConstraints >> width [
 
 { #category : #accessing }
 SpBoxConstraints >> width: aNumber [
-	"width of component.
-	 this just has sense in the case of expand=false"
+	"Width of component.
+	 Set the constraint of the presenter to assign a specific width. 
+	 This constraint is applied just when using a Horizontal (Left to Right) layout, 
+	 otherwise is ignored.
+	 Please notice that 99% of the time you DO NOT NEED (and you do not want) to use 
+	 a fixed constraint like this one. 
+	 Instead, consider using `SpBoxLayout>>#add:expand:` method, and let the component
+	 take its 'natural' width (often defined in a style)."
 
 	self expand: false.
 	width := aNumber

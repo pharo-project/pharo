@@ -17,10 +17,10 @@ Class {
 { #category : #specs }
 SpDemo class >> defaultSpec [
 
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #menu withConstraints: [ :constraints | constraints height: self toolbarHeight ];
 		add:
-			(SpPanedLayout newHorizontal
+			(SpPanedLayout newLeftToRight
 				position: 200;
 				add: #list;
 				add: #page;
@@ -35,10 +35,11 @@ SpDemo class >> menuExamplesOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'Spec2 examples')
 		iconName: #smallHelpIcon;
-		parent: #SpecHelp;
-		order: 2;
+		parent: #Help;
+		order: 3.5;
 		help: 'Open Spec2 demo browser.';
-		action: [ self open ]	
+		action: [ self open ].
+	aBuilder withSeparatorAfter	
 ]
 
 { #category : #'instance creation' }

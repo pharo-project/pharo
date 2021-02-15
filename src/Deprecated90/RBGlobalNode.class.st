@@ -11,3 +11,12 @@ Class {
 RBGlobalNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitGlobalNode: self
 ]
+
+{ #category : #generated }
+RBGlobalNode >> isGlobal [
+
+	self
+		deprecated: 'Use #isGlobalVariable instead'
+		transformWith: '`@rec isGlobal' -> '`@rec isGlobalVariable'.
+	^ self isGlobalVariable
+]

@@ -23,8 +23,8 @@ Class {
 { #category : #specs }
 SpSelectEntity class >> defaultSpec [
 
-	^ SpBoxLayout newVertical
-		add: (SpBoxLayout newHorizontal
+	^ SpBoxLayout newTopToBottom
+		add: (SpBoxLayout newLeftToRight
 				add: #entityText;
 				add: #selectEntity expand: false;
 				yourself)

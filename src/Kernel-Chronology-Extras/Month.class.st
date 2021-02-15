@@ -197,7 +197,7 @@ Month >> previous [
 { #category : #printing }
 Month >> printOn: aStream [ 
 
-	aStream nextPutAll: self monthName, ' ', self year printString.
+	aStream nextPutAll: self monthName; space; print: self year .
 ]
 
 { #category : #private }

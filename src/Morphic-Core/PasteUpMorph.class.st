@@ -935,12 +935,6 @@ PasteUpMorph >> shouldGetStepsFrom: aWorld [
 	^super shouldGetStepsFrom: aWorld
 ]
 
-{ #category : #stepping }
-PasteUpMorph >> startStepping: aMorph [
-	"Add the given morph to the step list. Do nothing if it is already being stepped."
-	^self startStepping: aMorph at: Time millisecondClockValue selector: #stepAt: arguments: nil stepTime: nil
-]
-
 { #category : #'world state' }
 PasteUpMorph >> startSteppingSubmorphsOf: aMorph [
 	"Ensure that all submorphs of the given morph that want to be stepped are added to the step list.   Typically used after adding a morph to the world."
@@ -950,13 +944,6 @@ PasteUpMorph >> startSteppingSubmorphsOf: aMorph [
 	]
 
 
-]
-
-{ #category : #'project state' }
-PasteUpMorph >> steppingMorphsNotInWorld [
-	| all |
-	all := self allMorphs.
-	^ self listOfSteppingMorphs reject: [ :m | all includes: m ]	"self currentWorld steppingMorphsNotInWorld do: [:m | m delete]"
 ]
 
 { #category : #options }

@@ -24,11 +24,27 @@ CDAbstractTraitCompositionNode >> - aCollection [
 ]
 
 { #category : #composing }
+CDAbstractTraitCompositionNode >> -- aCollection [ 
+	
+	^ CDTraitSlotRemoveNode new
+		subject: self;
+		removedSlots: aCollection
+]
+
+{ #category : #composing }
 CDAbstractTraitCompositionNode >> @ aCollection [ 
 	
 	^ CDTraitAliasNode new
 		subject: self;
 		aliases: aCollection
+]
+
+{ #category : #composing }
+CDAbstractTraitCompositionNode >> @@ aCollection [ 
+	
+	^ CDTraitSlotRenameNode new
+		subject: self;
+		renames: aCollection
 ]
 
 { #category : #testing }

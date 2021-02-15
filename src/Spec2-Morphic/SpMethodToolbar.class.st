@@ -22,7 +22,7 @@ Class {
 { #category : #specs }
 SpMethodToolbar class >> defaultSpec [
 	<spec>
-	^ SpBoxLayout newHorizontal
+	^ SpBoxLayout newLeftToRight
 		add: #browseModel;
 		add: #usersModel;
 		add: #sendersModel;

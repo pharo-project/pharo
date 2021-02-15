@@ -20,6 +20,15 @@ OCSelfVariable >> initialize [
 	name := 'self'
 ]
 
+{ #category : #generated }
+OCSelfVariable >> isSelf [
+
+	self
+		deprecated: 'Use #isSelfVariable instead'
+		transformWith: '`@rec isSelf' -> '`@rec isSelfVariable'.
+	^ self isSelfVariable
+]
+
 { #category : #debugging }
 OCSelfVariable >> readInContext: aContext [
 	^aContext receiver

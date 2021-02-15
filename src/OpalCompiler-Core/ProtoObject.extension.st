@@ -19,7 +19,7 @@ ProtoObject >> mustBeBooleanCompileExpression: context andCache: cache [
 	"Keep same compilation context as the sender node's"
 	methodNode compilationContext: sendNode methodNode compilationContext copy.
 	"Disable inlining so the message send will be unoptimized"
-	methodNode compilationContext compilerOptions: #(- optionInlineIf optionInlineAndOr optionInlineWhile).
+	methodNode compilationContext compilerOptions: #(- optionInlineIf optionInlineAndOr optionInlineWhile optionInlineToDo).
 	"Generate the method"	
 	OCASTSemanticCleaner clean: methodNode.
 	method := methodNode generate.
@@ -27,7 +27,7 @@ ProtoObject >> mustBeBooleanCompileExpression: context andCache: cache [
 	pcAfterJump := sendNode irInstruction nextBytecodeOffsetAfterJump.
 	method propertyAt: #mustBeBooleanJump put: pcAfterJump.
 	"cache the method we just created"
-	cache at: pc put: method.
+	cache at: context compiledCode at: pc put: method.
 	^method
 	
 	
@@ -43,7 +43,7 @@ ProtoObject >> mustBeBooleanDeOptimizeIn: context [
 
 	cache := context compiledCode method propertyAt: #mustBeBooleanCache ifAbsentPut: [ IdentityDictionary new ].
 	"compile a doit method for the unoptimized expression"
-	method := cache at: (context pc - 1) ifAbsent: [self mustBeBooleanCompileExpression: context andCache: cache ].
+	method := cache at: context compiledCode at: (context pc - 1) ifAbsent: [self mustBeBooleanCompileExpression: context andCache: cache ].
 	"Execute the generated method with the pc still at the optimzized block so that the lookUp can read variables defined in the optimized block"
 	ret := context receiver withArgs: {context} executeMethod: method.
    	"resume the context at the instruction following the send when returning from deoptimized code."

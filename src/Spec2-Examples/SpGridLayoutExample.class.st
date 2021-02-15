@@ -18,7 +18,7 @@ Class {
 { #category : #specs }
 SpGridLayoutExample class >> defaultSpec [
 
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: (SpGridLayout new 
 			beColumnNotHomogeneous;
 			beRowNotHomogeneous;
@@ -51,7 +51,7 @@ SpGridLayoutExample class >> defaultSpec [
 { #category : #specs }
 SpGridLayoutExample class >> defaultSpec1 [
 
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: (SpGridLayout new 
 			beColumnHomogeneous;
 			beRowHomogeneous;
@@ -74,7 +74,7 @@ SpGridLayoutExample class >> defaultSpec1 [
 { #category : #specs }
 SpGridLayoutExample class >> defaultSpec2 [
 
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: (SpGridLayout new 
 			beColumnHomogeneous;
 			beRowHomogeneous;
@@ -110,7 +110,7 @@ SpGridLayoutExample class >> defaultSpec3 [
 { #category : #specs }
 SpGridLayoutExample class >> defaultSpec4 [
 
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: (SpGridLayout new 
 			beColumnNotHomogeneous;
 			beRowNotHomogeneous;

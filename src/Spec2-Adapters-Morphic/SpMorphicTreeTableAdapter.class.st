@@ -16,6 +16,14 @@ SpMorphicTreeTableAdapter class >> intercellSpacing [
 	^ 2@0
 ]
 
+{ #category : #initialization }
+SpMorphicTreeTableAdapter >> addActivationKeyBindings: aWidget [
+
+	self 
+		bindKeyCombination: Character cr asKeyCombination
+		toAction: [ self triggerActivationAction ]
+]
+
 { #category : #factory }
 SpMorphicTreeTableAdapter >> addColumnsFromPresenterTo: tableMorph [
 
@@ -39,7 +47,8 @@ SpMorphicTreeTableAdapter >> addFocusRotationKeyBindings [
 SpMorphicTreeTableAdapter >> addKeyBindingsTo: aWidget [
 
 	super addKeyBindingsTo: aWidget.
-	self addContextMenuKeyBindings: aWidget
+	self addContextMenuKeyBindings: aWidget.
+	self addActivationKeyBindings: aWidget
 ]
 
 { #category : #factory }
@@ -381,6 +390,12 @@ SpMorphicTreeTableAdapter >> suspendSelectionEventsDuring: aBlock [
 	subscriptions do: [ :each | registry remove: each ].
 	aBlock ensure: [ 
 		 subscriptions do: [ :each | registry add: each ] ]
+]
+
+{ #category : #private }
+SpMorphicTreeTableAdapter >> triggerActivationAction [
+
+	self presenter doActivateAtPath: self presenter selection selectedPath
 ]
 
 { #category : #updating }

@@ -1,3 +1,20 @@
+"
+Create a hierarchy tree to show in microdown documentation.
+This builder allows you to create the nice hierarchy you can see at `SpAbstractWidgetPresenter` class comment (in hierarchy section).
+
+## Example
+```Smalltalk
+SpDocumentHierarchyBuilder new
+	""The class where to start the hierarchy (a superclass of aClass)""
+	fromClass: aTopClass;
+	""The microdown builder"" 
+	builder: aBuilder;	
+	""A filter to make sure we include classes we want in hierarchy"" 
+	filter: [ :eachClass | eachClass package packageName beginsWith: 'Spec2-' ]; 
+	""Build the hierarchy for the class aClass""
+	buildFor: aClass
+```
+"
 Class {
 	#name : #SpDocumentHierarchyBuilder,
 	#superclass : #Object,
@@ -158,12 +175,12 @@ SpDocumentHierarchyBuilder >> fromClass: aClass [
 ]
 
 { #category : #testing }
-SpDocumentHierarchyBuilder >> isPassingThrough: aClass topLevel: topClass [
+SpDocumentHierarchyBuilder >> isPassingThrough: aClass topLevel: aTopClass [
 	| superclasses |
 	
-	superclasses := flattenTree at: topClass superclass ifAbsent: [ #() ].
+	superclasses := flattenTree at: aTopClass superclass ifAbsent: [ #() ].
 	superclasses size <= 1 ifFalse: [ 
-		^ (superclasses indexOf: topClass) < superclasses size ].
+		^ (superclasses indexOf: aTopClass) < superclasses size ].
 	
 	^ false
 ]

@@ -41,25 +41,16 @@ TaAbstractComposition >> - anArrayOrASymbol [
 ]
 
 { #category : #operations }
-TaAbstractComposition >> -- anSlotName [
+TaAbstractComposition >> -- anArrayOfSlotNames [
 	
 	"I create a new trait composition element, from me but without the slot named as the parameter"
 
-	^ TaRemoveSlot named: anSlotName from: self.
+	^ TaRemoveSlot remove: anArrayOfSlotNames from: self.
 ]
 
 { #category : #comparing }
 TaAbstractComposition >> = anotherTrait [
 	^ self shouldBeImplemented
-]
-
-{ #category : #operations }
-TaAbstractComposition >> >> anAssociation [
-
-	"This operation creates a new trait composition element with a slot renamed.
-	The parameter is an association, where the key is the old name and the value the new name."
-	
-	^ TaRenameSlot from:anAssociation key to: anAssociation value on: self.
 ]
 
 { #category : #operations }
@@ -72,6 +63,15 @@ TaAbstractComposition >> @ anArrayOfAssociations [
 TaAbstractComposition >> @= anAssociation [
 	"This performs a deep alias, rewriting all the sendings of this message. The association has its key as the new alias selector and the value as the original selector."
 	^ TaDeepAliasMethod alias:anAssociation to: self.
+]
+
+{ #category : #operations }
+TaAbstractComposition >> @@ anArrayOfAssociations [
+
+	"This operation creates a new trait composition element with a slot renamed.
+	The parameter is an array of association, where the key is the old name and the value the new name."
+	
+	^ TaRenameSlot rename: anArrayOfAssociations on: self
 ]
 
 { #category : #operations }

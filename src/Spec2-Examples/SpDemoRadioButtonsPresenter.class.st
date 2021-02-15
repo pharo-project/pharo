@@ -12,7 +12,7 @@ Class {
 
 { #category : #specs }
 SpDemoRadioButtonsPresenter class >> defaultSpec [
-	^ SpBoxLayout newHorizontal
+	^ SpBoxLayout newLeftToRight
 		add: #radioButtonExample;
 		yourself
 ]
