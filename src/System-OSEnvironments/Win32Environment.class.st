@@ -76,7 +76,7 @@ Win32Environment >> doGetEnvVariable: aVariableName bufferSize: aSize ifAbsent: 
 	
 	"From MSDN: If lpBuffer is not large enough to hold the data, the return value is the buffer size, in characters,
 	required to hold the string and its terminating null character and the contents of lpBuffer are undefined."
-	return > aSize ifTrue: [ ^ self doGetEnvVariable: aVariableName bufferSize: aSize ifAbsent: aBlock isRetry: false ].
+	return > aSize ifTrue: [ ^ self doGetEnvVariable: aVariableName bufferSize: return ifAbsent: aBlock isRetry: false ].
 	
 	^ buffer asString
 ]
