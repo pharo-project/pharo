@@ -408,7 +408,8 @@ Context >> bottomContext [
 	^ self findContextSuchThat: [ :context | context sender isNil]
 ]
 
-{ #category : #'private - exceptions' }
+
+{ #category : #'private-exceptions' }
 Context >> canHandleSignal: exception [
 	"Sent to handler (on:do:) contexts only.  If my exception class (first arg) handles exception then return true, otherwise forward this message to the next handler context.  If none left, return false (see nil>>canHandleSignal:)"
 
@@ -417,7 +418,7 @@ Context >> canHandleSignal: exception [
 
 ]
 
-{ #category : #'private - exceptions' }
+{ #category : #'private-exceptions' }
 Context >> cannotReturn: result [
 
 	closureOrNil ifNotNil: [ 
@@ -965,6 +966,18 @@ Context >> isDead [
 	"Has self finished"
 
 	^ pc isNil
+]
+
+{ #category : #testing }
+Context >> isEndOfProcessTermination [ 
+	"The normal completion of any process always ends at Process>>doTerminationFromYourself method
+	(see #newProcess and #terminateRealActive).
+	The last instruction is the call to #suspend primitive methodprocessors 
+	which finally removes the process from the scheduler.
+	Such precise criteria of the terminated process state is used here" 
+	self selector == #doTerminationFromYourself ifFalse: [ ^false ].
+	(self receiver isKindOf: Process) ifFalse: [ ^false ].	
+	^pc + 1 = self endPC
 ]
 
 { #category : #testing }
