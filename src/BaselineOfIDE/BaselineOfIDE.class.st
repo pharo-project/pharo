@@ -208,7 +208,7 @@ BaselineOfIDE >> baseline: spec [
 		spec 
   			baseline: 'Roassal3' 
   			with: [ spec 
-				repository: 'github://ObjectProfile/Roassal3:v0.9.6b/src';
+				repository: 'github://ObjectProfile/Roassal3:v0.9.6c/src';
     				loads: #( 'Core' 'Tests') ].
 
 		spec 
