@@ -68,16 +68,19 @@ RBMoveMethodToClassSideRefactoring >> getNewInstSideSource [
 
 { #category : #transforming }
 RBMoveMethodToClassSideRefactoring >> getNewSource [
-	| newSource rewriter node temp |
+
+	| rewriter node temp |
 	temp := self getTempName.
-	node := (RBParser parseMethod: method source).
+	node := RBParser parseMethod: method source.
 	rewriter := RBParseTreeRewriter new replace: 'self' with: temp.
-	newSource := (rewriter executeTree: node)
-		ifTrue: [ rewriter tree formattedCode].
-	node := (RBParser parseMethod: newSource ).
-	node body addNodeFirst: (RBParser parseExpression: temp, ' := self new').
-	node body addTemporaryNamed: temp.
-	^ node newSource
+	(rewriter executeTree: node)
+		ifTrue: [ 
+			node := RBParser parseMethod: rewriter tree formattedCode.
+			node body addNodeFirst:
+				(RBParser parseExpression: temp , ' := self new').
+			node body addTemporaryNamed: temp.
+			^ node newSource ]
+		ifFalse: [ ^ node sourceCode ] 
 ]
 
 { #category : #transforming }
