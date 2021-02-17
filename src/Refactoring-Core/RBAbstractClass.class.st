@@ -141,6 +141,15 @@ RBAbstractClass >> canUnderstand: aSelector [
 	^self definesMethod: aSelector
 ]
 
+{ #category : #printing }
+RBAbstractClass >> canonicalArgumentName [
+	| prefix |
+	prefix := self name first isVowel
+		ifTrue: [ 'an' ]
+		ifFalse: [ 'a' ].
+	^ prefix, self name
+]
+
 { #category : #accessing }
 RBAbstractClass >> classBinding [
 	^ Smalltalk globals associationAt: self name
