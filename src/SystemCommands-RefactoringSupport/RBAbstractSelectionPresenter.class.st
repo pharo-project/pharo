@@ -11,15 +11,15 @@ Class {
 
 { #category : #specs }
 RBAbstractSelectionPresenter class >> defaultSpec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #dropLabel withConstraints: [ :c | c height: self labelHeight ];
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 				add: #dropList ;
 				yourself) withConstraints: [ :c | c height: self toolbarHeight  ];
 		add: #label withConstraints: [ :c | c height: self buttonHeight ];
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 				add: #table;
 				yourself);
 		yourself

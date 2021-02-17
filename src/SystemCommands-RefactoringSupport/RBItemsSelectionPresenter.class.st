@@ -30,10 +30,10 @@ Class {
 
 { #category : #specs }
 RBItemsSelectionPresenter class >> defaultSpec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #label withConstraints: [ :c | c height: self buttonHeight ];
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 				add: #table;
 				yourself);
 		yourself
