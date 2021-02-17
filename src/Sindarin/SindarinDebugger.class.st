@@ -272,7 +272,7 @@ SindarinDebugger >> isAboutToSignalException [
 SindarinDebugger >> isExecutionFinished [
 	"Returns whether the debugged execution is finished"
 
-	^ process canBeStepped not
+	^ process isTerminating
 ]
 
 { #category : #stackAccessHelpers }
