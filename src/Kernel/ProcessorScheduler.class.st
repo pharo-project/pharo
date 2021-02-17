@@ -336,7 +336,7 @@ ProcessorScheduler >> tallyCPUUsageFor: seconds every: msec [
 ProcessorScheduler >> terminateActive [
 	"Terminate the process that is currently running."
 
-	self activeProcess terminate
+	self activeProcess doTerminationFromYourself
 ]
 
 { #category : #'process state change' }

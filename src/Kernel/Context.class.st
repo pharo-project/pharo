@@ -408,7 +408,6 @@ Context >> bottomContext [
 	^ self findContextSuchThat: [ :context | context sender isNil]
 ]
 
-
 { #category : #'private-exceptions' }
 Context >> canHandleSignal: exception [
 	"Sent to handler (on:do:) contexts only.  If my exception class (first arg) handles exception then return true, otherwise forward this message to the next handler context.  If none left, return false (see nil>>canHandleSignal:)"
@@ -1844,6 +1843,16 @@ Context >> send: selector to: aReceiver with: arguments super: superFlag [
 		^ self error:
 			  'Simulated message ' , (arguments at: 1) selector
 			  , ' not understood' ].
+
+	(selector == #terminateRealActive and: [ aReceiver == Processor ]) ifTrue: [ 
+		"We should never simulate #terminateRealActive as it will terminate a simulating process 
+		(UI process of debugger) instead of the actual process under simulation.
+		Therefore the simulation always delegates this method to the public one 
+		which explicitly supports the simulation with effective process logic.
+		Notice that #terminateRealActive is a process completion method 
+		and normally users do not step over it"
+		^self send: #terminateActive to: aReceiver with: arguments super: superFlag
+	].
 
 	"failure.. lets activate the method"
 	context := self
