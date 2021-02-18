@@ -22,19 +22,17 @@ Form class >> fromBase64String: aBase64EncodedString [
 
 { #category : #'*Graphics-Files' }
 Form class >> fromBinaryStream: aBinaryStream [
+
 	"Read a Form or ColorForm from given file, using the first byte of the file to guess its format. Currently handles: GIF, uncompressed BMP, and new DisplayObject writeOn: formats, JPEG, and PCX. Return nil if the file could not be read or was of an unrecognized format."
 
 	| firstByte |
 	firstByte := aBinaryStream peek.
-	firstByte = 1 ifTrue: [
-		"old ST80 format" ^ self error: 'old ST80 format not supported' ].
-	firstByte = 2 ifTrue: [
-		^ self new readFrom: aBinaryStream].
+	firstByte = 1 ifTrue: [ ^ self error: 'old ST80 format not supported' ].
+	firstByte = 2 ifTrue: [ ^ self new readFrom: aBinaryStream ].
 
 	"Try for JPG, GIF, or PCX..."
 	"Note: The following call closes the stream."
 	^ ImageReadWriter formFromStream: aBinaryStream
-
 ]
 
 { #category : #'*Graphics-Files' }
