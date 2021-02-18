@@ -10,7 +10,7 @@ Class {
 	#category : #'Collections-Unordered-Tests-Dictionaries'
 }
 
-{ #category : #accessing }
+{ #category : #comparing }
 ObjectWithSettableHash >> hash [
 
 	^ hash
