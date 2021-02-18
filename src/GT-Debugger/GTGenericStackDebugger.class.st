@@ -11,7 +11,6 @@ Class {
 		'cache'
 	],
 	#classVars : [
-		'ErrorRecursion',
 		'FilterCommonMessageSends',
 		'LogDebuggerStackToFile',
 		'LogFileName'
