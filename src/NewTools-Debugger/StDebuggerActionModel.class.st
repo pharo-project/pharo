@@ -10,6 +10,9 @@ Class {
 		'contextPredicate',
 		'topContext'
 	],
+	#classVars : [
+		'ShouldFilterStack'
+	],
 	#category : #'NewTools-Debugger-Model'
 }
 
@@ -19,6 +22,27 @@ StDebuggerActionModel class >> on: aDebugSession [
 	^ self basicNew
 		  session: aDebugSession;
 		  initialize
+]
+
+{ #category : #asserting }
+StDebuggerActionModel class >> shouldFilterStack [
+	^ShouldFilterStack ifNil:[ShouldFilterStack := true]
+]
+
+{ #category : #asserting }
+StDebuggerActionModel class >> shouldFilterStack: aBoolean [
+	ShouldFilterStack := aBoolean
+]
+
+{ #category : #settings }
+StDebuggerActionModel class >> shouldFilterStackSettingsOn: aBuilder [
+	<systemsettings>
+	(aBuilder setting: #shouldFilterStack)
+		label: 'Filter the debugger stack';
+		target: self;
+		default: true;
+		parent: #debugging;
+		description: 'Defines if methods with pragma #debuggerCompleteToSender are filtered (hidden) in the debugger stack'
 ]
 
 { #category : #'debug - session' }
@@ -74,8 +98,9 @@ StDebuggerActionModel >> contextPredicateFor: aContext [
 { #category : #'debug - predicates' }
 StDebuggerActionModel >> contextSignalsAnException: aContext [
 
-	^ (aContext receiver isKindOf: Exception) and: [ 
-		  aContext selector = #signal ]
+	^ aContext notNil 
+		and: [ (aContext receiver isKindOf: Exception) 
+		and: [  aContext selector = #signal ] ]
 ]
 
 { #category : #'debug - stack' }
@@ -94,6 +119,7 @@ StDebuggerActionModel >> fileOutMethod: aMethod [
 { #category : #'debug - stack' }
 StDebuggerActionModel >> filterStack: aStack [
 	| context contextsToReject |	
+	self class shouldFilterStack ifFalse: [  ^aStack ].
 	context := aStack first.
 	contextsToReject := 0.
 

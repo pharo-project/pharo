@@ -284,6 +284,7 @@ StDebuggerInspector >> updateWith: inspectedObject [
 		              dbgCtx context ].
 	newContext := inspectedObject ifNotNil: [ :dbgCtx | dbgCtx context ].
 	(self shouldUpdateContext: oldContext with: newContext) ifFalse: [ ^ self ].
+
 	self saveRawInspectionSelectionForContext: oldContext.
 	self model: (self debuggerInspectorModelClass on: inspectedObject).
 	self updateEvaluationPaneReceiver.

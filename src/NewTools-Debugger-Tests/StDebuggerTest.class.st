@@ -21,11 +21,11 @@ StDebuggerTest >> debuggerClass [
 
 { #category : #accessing }
 StDebuggerTest >> debuggerOn: aDebugSession [
+
 	^ self debugger
 		  session: aDebugSession;
 		  application: self debuggerClass currentApplication;
 		  initialize;
-		  buildContextMenus;
 		  yourself
 ]
 
