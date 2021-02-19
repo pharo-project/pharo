@@ -462,6 +462,13 @@ GLMScrollPaneBrick >> scrollpaneBackgroundColor: aColor [
 	self updateStyle
 ]
 
+{ #category : #generated }
+GLMScrollPaneBrick >> unsubscribeListeners [
+
+	self deprecated: 'Use #unsubscribeListeners: instead'.
+	self activeHand removeEventListener: self
+]
+
 { #category : #initialization }
 GLMScrollPaneBrick >> unsubscribeListeners: aWorld [
 

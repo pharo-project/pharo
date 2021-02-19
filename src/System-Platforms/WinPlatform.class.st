@@ -131,6 +131,12 @@ WinPlatform >> setEnvironmentVariable: nameString value: valueString [
 ]
 
 { #category : #accessing }
+WinPlatform >> setLastError: aValue [
+
+	^ self ffiCall: #(void SetLastError(ulong aValue))
+]
+
+{ #category : #accessing }
 WinPlatform >> virtualKey: virtualKeyCode [
 	"Win32Platform virtualKey: $C charCode"
 

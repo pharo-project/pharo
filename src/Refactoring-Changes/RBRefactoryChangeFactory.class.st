@@ -127,3 +127,13 @@ RBRefactoryChangeFactory >> renameClassVariable: oldName to: newName in: aClass 
 RBRefactoryChangeFactory >> renameInstanceVariable: oldName to: newName in: aClass [
 	^ RBRenameInstanceVariableChange rename: oldName to: newName in: aClass 
 ]
+
+{ #category : #'refactory-changes-packages' }
+RBRefactoryChangeFactory >> renamePackage: aRBPackage to: newName [
+	^ RBRenamePackageChange rename: aRBPackage name to: newName
+]
+
+{ #category : #'refactory-changes-packages' }
+RBRefactoryChangeFactory >> renamePackageNamed: aRBPackage to: newName [
+	^ RBRenamePackageChange rename: aRBPackage to: newName
+]

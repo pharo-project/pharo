@@ -362,9 +362,8 @@ TaAbstractComposition >> name [
 { #category : #testing }
 TaAbstractComposition >> needsRecompilation: aSelector [
 	"Checks if a selector should be compiled because it uses new slots or if its code has been rewritten."
-	
-	^ self slots isEmpty not or: [ self changesSourceCode: aSelector ]
 
+	^ self slots isNotEmpty or: [ self changesSourceCode: aSelector ]
 ]
 
 { #category : #querying }
