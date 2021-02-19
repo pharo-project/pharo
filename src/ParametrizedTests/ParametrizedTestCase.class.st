@@ -78,6 +78,17 @@ ParametrizedTestCase >> instanceVariablesToKeep [
 ]
 
 { #category : #accessing }
+ParametrizedTestCase >> nameForReport [
+
+	parametersToUse ifNil: [ ^ super nameForReport ].
+
+	^ String streamContents: [ :s |
+		s nextPutAll: self selector asString.
+		parametersToUse printElementsOn: s ]
+
+]
+
+{ #category : #accessing }
 ParametrizedTestCase >> parametersToUse [
 	^ parametersToUse ifNil: [#()]
 ]
