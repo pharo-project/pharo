@@ -139,12 +139,12 @@ MouseEvent >> isMouseWheel [
 MouseEvent >> printOn: aStream [
 
 	aStream nextPut: $[.
-	aStream nextPutAll: self cursorPoint printString; space.
+	aStream print: self cursorPoint ; space.
 	aStream nextPutAll: type; space.
 	aStream nextPutAll: self modifierString.
 	aStream nextPutAll: self buttonString.
-	aStream nextPutAll: timeStamp printString; space.
-	aStream	 nextPutAll: self windowIndex printString.
+	aStream print: timeStamp ; space.
+	aStream print: self windowIndex .
 	aStream nextPut: $].
 ]
 

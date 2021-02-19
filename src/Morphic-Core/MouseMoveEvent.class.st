@@ -41,13 +41,13 @@ MouseMoveEvent >> isMove [
 MouseMoveEvent >> printOn: aStream [
 
 	aStream nextPut: $[.
-	aStream nextPutAll: self startPoint printString; space.
-	aStream nextPutAll: self endPoint printString; space.
+	aStream print: self startPoint ; space.
+	aStream print: self endPoint ; space.
 	aStream nextPutAll: self type; space.
 	aStream nextPutAll: self modifierString.
 	aStream nextPutAll: self buttonString.
-	aStream nextPutAll: timeStamp printString; space.
-	aStream	 nextPutAll: self windowIndex printString.
+	aStream print: timeStamp ; space.
+	aStream print: self windowIndex .
 	aStream nextPut: $].
 ]
 

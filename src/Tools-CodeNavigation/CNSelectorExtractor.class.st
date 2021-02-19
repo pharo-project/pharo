@@ -64,21 +64,20 @@ CNSelectorExtractor >> extractSelectorFromAST: ast atPosition: aPosition [
 
 { #category : #private }
 CNSelectorExtractor >> extractSelectorFromNode: aNode [
-	
+
 	| node originalNode |
+	aNode ifNil: [ ^ nil ].
 	originalNode := node := aNode.
-	node isReturn ifTrue: [ 
-		node := node value ].
-	
-	node isCascade ifTrue: [ 
-		^ node messages first selector ].
-	
+	node isReturn ifTrue: [ node := node value ].
+
+	node isCascade ifTrue: [ ^ node messages first selector ].
+
 	node isMethod ifFalse: [ 
 		(node isValue and: [ node value isSymbol ]) ifTrue: [ ^ node value ].
-				
-		[ node isMessage or: [ node isMethod ]  ] whileFalse: [ 
-	 		(node := node parent) ifNil: [ ^ nil ] ].
-		
+
+		[ node isMessage or: [ node isMethod ] ] whileFalse: [ 
+			(node := node parent) ifNil: [ ^ nil ] ].
+
 		"This is a strange case with cascades.
 		Cascade nodes contain messages.
 		And each message contains (duplicated) the receiver.
@@ -94,12 +93,11 @@ CNSelectorExtractor >> extractSelectorFromNode: aNode [
 		However, in the first case we want cascade1 and in the latter we want cascade2.
 		
 		"
-		(node ~= originalNode
-			and: [ node parent notNil
-				and: [ node parent isCascade ] ])
-				ifTrue: [ node := node parent messages first ] ].
-	
-	^node selector
+		(node ~= originalNode and: [ 
+			 node parent notNil and: [ node parent isCascade ] ]) ifTrue: [ 
+			node := node parent messages first ] ].
+
+	^ node selector
 ]
 
 { #category : #'public - extraction' }
@@ -120,4 +118,17 @@ CNSelectorExtractor >> extractSelectorFromSelection: aString [
 
 	"fall back"
 	^ aString asSymbol
+]
+
+{ #category : #'public - extraction' }
+CNSelectorExtractor >> extractSelectorFromSource: aString atPosition: aPosition [
+
+	"Receives a string with the source code, and a number which indicates the position (of the caret) where the selectors will be extracted."
+
+	aString ifNil: [ ^ nil ].
+	aString ifEmpty: [ ^ nil ].
+	((aPosition < 0) or: (aPosition > aString size)) ifTrue: [ ^nil ].
+	^ self
+		  extractSelectorFromAST: (RBParser parseFaultyExpression: aString)
+		  atPosition: aPosition
 ]

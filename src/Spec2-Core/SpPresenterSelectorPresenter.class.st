@@ -53,7 +53,7 @@ SpPresenterSelectorPresenter >> initialize [
 { #category : #initialization }
 SpPresenterSelectorPresenter >> initializePresenter [
 
-	layout := SpBoxLayout newVertical
+	layout := SpBoxLayout newTopToBottom
 ]
 
 { #category : #transmission }

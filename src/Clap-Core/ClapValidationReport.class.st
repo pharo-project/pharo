@@ -45,6 +45,6 @@ ClapValidationReport >> isSuccess [
 ClapValidationReport >> printOn: aStream [
 	problems do: [ :each |
 		aStream
-			nextPutAll: each printString;
+			print: each;
 			cr ]
 ]

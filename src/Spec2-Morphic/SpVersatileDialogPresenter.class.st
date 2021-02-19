@@ -258,7 +258,7 @@ SpVersatileDialogPresenter >> initializePresenters [
 { #category : #accessing }
 SpVersatileDialogPresenter >> layout [
 	| mainLayout row |
-	mainLayout := SpBoxLayout newVertical.
+	mainLayout := SpBoxLayout newTopToBottom.
 
 
 	"if the content area is not defined, place main message next to the main icon"
@@ -267,7 +267,7 @@ SpVersatileDialogPresenter >> layout [
 				ifNotNil: [ mainMessagePresenter := (mainMessage isString or: [ mainMessage isText ]) ifTrue: [ self newLabel label: mainMessage ] ifFalse: [ mainMessage ].
 					mainLayout add: #mainMessagePresenter ] ].
 
-	row := SpBoxLayout newHorizontal.
+	row := SpBoxLayout newLeftToRight.
 
 	mainIcon
 		ifNotNil: [ mainIconPresenter := self newImage image: self mainIcon.
@@ -282,7 +282,7 @@ SpVersatileDialogPresenter >> layout [
 
 	mainLayout add: row.
 
-	row := SpBoxLayout newHorizontal.
+	row := SpBoxLayout newLeftToRight.
 
 
 	moreOptionsArea
@@ -298,7 +298,7 @@ SpVersatileDialogPresenter >> layout [
 	moreOptionsVisible ifTrue: [ mainLayout add: #moreOptionsAreaPresenter ].
 
 	footnoteArea
-		ifNotNil: [ row := SpBoxLayout newHorizontal.
+		ifNotNil: [ row := SpBoxLayout newLeftToRight.
 			footnoteIcon
 				ifNotNil: [ footnoteIconPresenter := self newImage image: footnoteIcon.
 					row add: #footnoteIconPresenter withConstraints: [ :constraints | constraints width: self footnoteIcon width * 2 ] ].

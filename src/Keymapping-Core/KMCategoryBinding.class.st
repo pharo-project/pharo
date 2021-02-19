@@ -76,11 +76,11 @@ KMCategoryBinding >> partialMatch [
 
 { #category : #printing }
 KMCategoryBinding >> printOn: aStream [
-
+	super printOn: aStream.
 	aStream
-		nextPutAll: 'aKMCategoryTarget(';
-		nextPutAll: (category name ifNil: 'nil' ifNotNil: [ :n | n printString ]);
-		nextPutAll: ')'.
+		nextPut: $(;
+		print: category name;
+		nextPut: $).
 ]
 
 { #category : #accessing }

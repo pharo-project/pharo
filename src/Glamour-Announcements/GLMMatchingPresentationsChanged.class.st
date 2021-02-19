@@ -48,5 +48,5 @@ GLMMatchingPresentationsChanged >> pane: aPane [
 { #category : #printing }
 GLMMatchingPresentationsChanged >> printOn: aStream [
 	super printOn: aStream.
-	aStream nextPutAll: ' (pane = ', self pane printString , ')'
+	aStream nextPutAll: ' (pane = '; print: self pane  ; nextPut: $)
 ]

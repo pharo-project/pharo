@@ -45,15 +45,16 @@ SpPresenterFocusOrderTest >> keyEvent: type code: keyCode shift: shiftBoolean me
 		(Smalltalk os isWin32 | Smalltalk os isUnix
 			ifTrue: [ 2r01000000 ]
 			ifFalse: [ 2r00100000 ]) ].
-	
+		
 	evt := KeyboardEvent new
 		setType: type
 		buttons: modifiers
-		position: widget position + (1 @ 1)
-		keyValue: 0
-		charCode: 0
+		position:  widget position + (1 @ 1)
+		keyValue: keyCode
+		charCode: keyCode
 		hand: self currentWorld activeHand
 		stamp: Time millisecondClockValue.
+
 	evt key: (KeyboardKey fromCharacter: keyCode asCharacter).
 	evt sentTo: widget.
 	"Some time to allow things to happen?"
@@ -64,8 +65,8 @@ SpPresenterFocusOrderTest >> keyEvent: type code: keyCode shift: shiftBoolean me
 SpPresenterFocusOrderTest >> keyPressed: keyCode shift: shiftBoolean meta: metaBoolean control: controlBoolean option: optionBoolean [
 	
 	^ self 
-		keyEvent: #keystroke 
-		code: keyCode 
+		keyEvent: #keystroke
+		code: keyCode asciiValue
 		shift: shiftBoolean 
 		meta: metaBoolean 
 		control: controlBoolean 
@@ -76,7 +77,7 @@ SpPresenterFocusOrderTest >> keyPressed: keyCode shift: shiftBoolean meta: metaB
 SpPresenterFocusOrderTest >> pressShiftTab [
 
 	self 
-		keyDown: Character tab asciiValue
+		keyDown: Character tab
 		shift: true
 		meta: false
 		control: false
@@ -88,7 +89,7 @@ SpPresenterFocusOrderTest >> pressShiftTab [
 SpPresenterFocusOrderTest >> pressTab [
 
 	self 
-		keyDown: Character tab asciiValue
+		keyDown: Character tab
 		shift: false
 		meta: false
 		control: false
@@ -149,7 +150,7 @@ SpPresenterFocusOrderTest >> testFocusRotationBackwards [
 	mock := SpMockFocusOrderPresenter new
 		openWithSpec;
 		yourself.
-		
+	
 	"Focus first"
 	self takeKeyboardFocus: mock.
 	self assert: (mock presenterAt: #firstPresenter) equals: self focusedPresenter.

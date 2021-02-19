@@ -15,7 +15,7 @@ Class {
 { #category : #specs }
 SpPresenterSelectorExample class >> defaultSpec [
 
-	^ SpPanedLayout newHorizontal
+	^ SpPanedLayout newLeftToRight
 		add: #list;
 		add: #choice;
 		yourself.

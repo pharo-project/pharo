@@ -27,7 +27,7 @@ Class {
 { #category : #specs }
 SpDatePresenter class >> defaultSpec [
 
-	^ SpBoxLayout newHorizontal
+	^ SpBoxLayout newLeftToRight
 		add: #dateModel;
 		add: #chooseDateButton expand: false;
 		yourself

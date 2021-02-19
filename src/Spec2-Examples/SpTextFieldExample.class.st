@@ -13,7 +13,7 @@ Class {
 
 { #category : #specs }
 SpTextFieldExample class >> defaultSpec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #textField withConstraints: [ :constraints | constraints height: StandardFonts defaultFont height + 15 ];
 		add: #methodBrowser;
 		yourself

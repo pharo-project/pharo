@@ -323,7 +323,7 @@ FFIEnumeration >> item [
 FFIEnumeration >> printOn: stream [
 	super printOn: stream.
 	stream nextPut: $(;
-		 nextPutAll: self item printString;
+		 print: self item ;
 		 nextPut: $)
 ]
 

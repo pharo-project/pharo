@@ -27,7 +27,7 @@ SpLabelledContainer class >> defaultSpec [
 { #category : #specs }
 SpLabelledContainer class >> labelBottom [
 	<spec>
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #subwidget;
 		add: #label
 			expand: false
@@ -39,7 +39,7 @@ SpLabelledContainer class >> labelBottom [
 { #category : #specs }
 SpLabelledContainer class >> labelLeft [
 	<spec>
-	^ SpBoxLayout newHorizontal
+	^ SpBoxLayout newLeftToRight
 		add: #label
 			expand: false
 			fill: false
@@ -51,7 +51,7 @@ SpLabelledContainer class >> labelLeft [
 { #category : #specs }
 SpLabelledContainer class >> labelRight [
 	<spec>
-	^ SpBoxLayout newHorizontal
+	^ SpBoxLayout newLeftToRight
 		add: #subwidget;
 		add: #label
 			expand: false
@@ -63,7 +63,7 @@ SpLabelledContainer class >> labelRight [
 { #category : #specs }
 SpLabelledContainer class >> labelTop [
 	<spec>
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #label
 			expand: false
 			fill: false

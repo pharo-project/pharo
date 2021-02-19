@@ -33,10 +33,7 @@ MustBeBooleanTest >> testIfTrueEffect [
 	fakeBool := MyBooleanObject new.
 	temp := 1.
 	fakeBool ifTrue: [ temp := 5 + 3 + 1 ].
-	self assert: temp equals: 9.
-	
-	fakeBool ifTrue: [ [  ] ].
-	"fakeBool ifTrue: [ 1+ 2. [ :a | a ] value: 5. 7 ]."
+	self assert: temp equals: 9
 ]
 
 { #category : #tests }
@@ -46,6 +43,18 @@ MustBeBooleanTest >> testIfTrueValue [
 	self assert: (MyBooleanObject new ifTrue: [ 1 + 2 ]) equals: '3 sent from my boolean object'.
 	myBooleanObject := MyBooleanObject new.
 	self assert: (myBooleanObject ifTrue: [ 1 + 2 ]) equals: '3 sent from my boolean object'.
+]
+
+{ #category : #tests }
+MustBeBooleanTest >> testIfTrueValueLiteral [
+	| myBooleanObject result |
+	myBooleanObject := MyBooleanObject new.
+	"check the case where the block just returna a literal"
+	result := myBooleanObject
+		ifTrue: [ 5 ].
+	self assert: result equals: '5 sent from my boolean object'.
+	"now do it with the expression evaluate for effect"
+	self should: [self class compiler evaluate: '1 ifTrue: [ 5 ]. 1'] raise: MessageNotUnderstood.
 ]
 
 { #category : #tests }
@@ -62,6 +71,20 @@ MustBeBooleanTest >> testIfTrueWithClosureAfterJump [
 ]
 
 { #category : #tests }
+MustBeBooleanTest >> testMultipleOrsInMethod [
+
+	| values r1 r2 |
+	values := OrderedCollection new.
+	10 timesRepeat: [ values add: MyBooleanObject new ].
+
+	r1 := values select: [ :each | each or: [ false ] ].
+	self assert: r1 isEmpty.
+
+	r2 := values select: [ :each | each or: [ true ] ].
+	self assert: r2 size equals: 10
+]
+
+{ #category : #tests }
 MustBeBooleanTest >> testOr [
 	| myBooleanObject |
 	
@@ -75,6 +98,15 @@ MustBeBooleanTest >> testSemanticAnalysisCleaned [
 	
 	self should: [self shouldnt: [1 ifTrue:  [[:dir :path|
                         [ path]]]] raise: KeyNotFound ] raise: MessageNotUnderstood.
+]
+
+{ #category : #tests }
+MustBeBooleanTest >> testToDo [
+	| variable |
+	
+	variable := #(1 2 3).
+	"in this case, we end up sending #ifTrue: to the Array"
+	self should: [(1 to: variable do: [:index |])] raise: MessageNotUnderstood
 ]
 
 { #category : #tests }

@@ -276,12 +276,14 @@ MorphExtension >> printOn: aStream [
 	externalName
 		ifNotNil: [ 
 			aStream
-				nextPutAll: ' [externalName = ' , externalName;
+				nextPutAll: ' [externalName = ' ; 
+					nextPutAll:  externalName;
 				nextPutAll: ' ] ' ].
 	eventHandler
 		ifNotNil: [ 
 			aStream
-				nextPutAll: ' [eventHandler = ' , eventHandler printString;
+				nextPutAll:  ' [eventHandler = ' ; 
+				print: eventHandler ;
 				nextPutAll: '] ' ].
 	(otherProperties isNil or: [ otherProperties isEmpty ])
 		ifTrue: [ ^ self ].
@@ -289,7 +291,8 @@ MorphExtension >> printOn: aStream [
 	self otherProperties
 		keysDo: [ :aKey | 
 			aStream
-				nextPutAll: ' (' , aKey , ' -> ' , (self otherProperties at: aKey) printString;
+				nextPutAll: ' (' ; 
+					nextPutAll:  aKey; nextPutAll:  ' -> ' ; print: (self otherProperties at: aKey) ;
 				nextPutAll: ')' ].
 	aStream nextPut: $]
 ]

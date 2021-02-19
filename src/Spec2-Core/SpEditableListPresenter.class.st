@@ -33,18 +33,18 @@ Class {
 
 { #category : #spec }
 SpEditableListPresenter class >> defaultSpec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 					addLast: #addButton expand: false;
 					addLast: #removeButton expand: false;
 					yourself)
 			expand: false;
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 				add: #list;
 				add:
-					(SpBoxLayout newVertical
+					(SpBoxLayout newTopToBottom
 							add: #topButton expand: false fill: false padding: 0;
 							add: #upButton expand: false fill: false padding: 0;
 							add: #downButton expand: false fill: false padding: 0;
@@ -63,9 +63,9 @@ SpEditableListPresenter class >> new: aCollection [
 
 { #category : #spec }
 SpEditableListPresenter class >> withoutOrderingBar [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 					addLast: #addButton expand: false;
 					addLast: #removeButton expand: false;
 					yourself)

@@ -56,10 +56,13 @@ Point >> degrees [
 { #category : #'*Math-Operations-Extensions' }
 Point >> dist: aPoint [ 
 	"Answer the distance between aPoint and the receiver."
-	| dx dy |
-	dx := aPoint x - x.
-	dy := aPoint y - y.
-	^ (dx * dx + (dy * dy)) sqrt
+	
+	self
+		deprecated: 'Use #distanceTo: instead.'
+		on: '9 February 2021'
+		in: #Pharo9
+		transformWith: '`@receiver dist: `@arg' -> '`@receiver distanceTo: `@arg'.
+	^ self distanceTo: aPoint
 ]
 
 { #category : #'*Math-Operations-Extensions' }

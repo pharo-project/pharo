@@ -677,6 +677,12 @@ TestCase >> logFailure: aString [
 			
 ]
 
+{ #category : #accessing }
+TestCase >> nameForReport [
+
+	^ self selector
+]
+
 { #category : #'CI support' }
 TestCase >> onPharoCITestingEnvironment [
 	
@@ -712,7 +718,7 @@ TestCase >> prepareToRunAgain [
 
 { #category : #printing }
 TestCase >> printOn: aStream [
-	aStream nextPutAll: self class printString.
+	aStream nextPutAll: self class name asString.
 	self printTestSelectorOn: aStream
 ]
 

@@ -43,7 +43,7 @@ RBReturnNode >> acceptVisitor: aProgramNodeVisitor [
 
 { #category : #accessing }
 RBReturnNode >> children [
-	^ Array with: value
+	^ { value }
 ]
 
 { #category : #testing }

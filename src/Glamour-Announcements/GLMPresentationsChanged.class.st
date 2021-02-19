@@ -49,5 +49,5 @@ GLMPresentationsChanged >> presentations [
 { #category : #printing }
 GLMPresentationsChanged >> printOn: aStream [
 	super printOn: aStream.
-	aStream nextPutAll: ' (pane = ', self pane printString , ')'
+	aStream nextPutAll: ' (pane = '; print: self pane  ; nextPut: $)
 ]

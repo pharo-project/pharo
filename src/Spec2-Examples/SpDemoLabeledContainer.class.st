@@ -9,7 +9,7 @@ Class {
 
 { #category : #specs }
 SpDemoLabeledContainer class >> defaultSpec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #label withConstraints: [ :constraints | constraints height: self inputTextHeight ];
 		add: #subwidget;
 		yourself

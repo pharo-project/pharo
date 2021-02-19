@@ -10,7 +10,7 @@ Class {
 { #category : #specs }
 SpTableWithFilter class >> defaultSpec [
 
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #table;
 		yourself
 ]

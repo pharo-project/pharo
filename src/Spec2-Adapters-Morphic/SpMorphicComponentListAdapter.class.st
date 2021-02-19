@@ -5,10 +5,19 @@ Class {
 }
 
 { #category : #initialization }
+SpMorphicComponentListAdapter >> addActivationKeyBindings: aWidget [
+
+	self 
+		bindKeyCombination: Character cr asKeyCombination
+		toAction: [ self triggerActivationAction ]
+]
+
+{ #category : #initialization }
 SpMorphicComponentListAdapter >> addKeyBindingsTo: aWidget [
 
 	super addKeyBindingsTo: aWidget.
-	self addContextMenuKeyBindings: aWidget
+	self addContextMenuKeyBindings: aWidget.
+	self addActivationKeyBindings: aWidget
 ]
 
 { #category : #factory }
@@ -147,4 +156,10 @@ SpMorphicComponentListAdapter >> strongSelectionChanged: aFTStrongSelectionChang
 	
 	self presenter activatesOnDoubleClick ifFalse: [ ^ self ]. 	
 	self presenter doubleClickAtIndex: aFTStrongSelectionChanged selectedIndex
+]
+
+{ #category : #private }
+SpMorphicComponentListAdapter >> triggerActivationAction [
+
+	self presenter doActivateAtIndex: self presenter selection selectedIndex
 ]

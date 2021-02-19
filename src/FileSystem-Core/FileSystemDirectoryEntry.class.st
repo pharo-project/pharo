@@ -353,8 +353,8 @@ FileSystemDirectoryEntry >> printLongFormOn: aStream [
 { #category : #printing }
 FileSystemDirectoryEntry >> printOn: aStream [
 
-	aStream nextPutAll: 'DirectoryEntry: '.
-	reference ifNotNil: [:ref | aStream nextPutAll: reference printString].
+	aStream << 'DirectoryEntry: '.
+	reference ifNotNil: [:ref | ref printOn: aStream].
 ]
 
 { #category : #delegate }

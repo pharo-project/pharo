@@ -7,5 +7,5 @@ Class {
 { #category : #accessing }
 SpHorizontalPanedLayoutAdapterTest >> newLayout [
 	
-	^ SpPanedLayout newHorizontal
+	^ SpPanedLayout newLeftToRight
 ]

@@ -258,7 +258,7 @@ SycRefactoringPreviewPresenter >> updateChanges [
 	self selectectAllCheckBox
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #update }
 SycRefactoringPreviewPresenter >> updateTablePresenter [
 	| aCompositeChange anEnvironment |
 	"We get the environment to apply the changes from any element in the changes instance variable"

@@ -190,7 +190,7 @@ SpGridLayout >> initialize [
 
 	super initialize.
 	self beColumnHomogeneous.
-	self beRowHomogeneous.
+	self beRowNotHomogeneous.
 	columnConstraints := Dictionary new.
 	rowConstraints := Dictionary new.
 	childrenByPosition := Dictionary new.

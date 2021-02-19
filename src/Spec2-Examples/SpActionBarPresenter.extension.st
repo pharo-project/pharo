@@ -6,7 +6,7 @@ SpActionBarPresenter class >> example [
 
 	"A generic presenter with a list and an action bar"	
 	(presenter := SpPresenter new) 
-		layout: (SpBoxLayout newVertical 
+		layout: (SpBoxLayout newTopToBottom 
 			add: (list := presenter newList);
 			add: (actionBar := presenter newActionBar) expand: false;
 			yourself).	

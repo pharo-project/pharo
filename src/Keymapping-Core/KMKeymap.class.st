@@ -157,11 +157,11 @@ KMKeymap >> onMatchWith: anEventBuffer notify: aMatchListener andDo: anAction [
 { #category : #printing }
 KMKeymap >> printOn: aStream [
 	aStream 
-		nextPutAll: self name printString;
+		print: self name ;
 		nextPutAll: ' on ';
-		nextPutAll: self shortcut printString;
+		print: self shortcut ;
 		nextPutAll: ' do ' ;
-		nextPutAll: self action printString;
+		print: self action ;
 		cr.    
 ]
 

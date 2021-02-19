@@ -396,11 +396,8 @@ WorldMorph >> initialize [
 	worldState := WorldState new.
  	super initialize.
 	
-	SystemAnnouncer uniqueInstance weak when: FullscreenAnnouncement send: #fullscreenChanged: to: self.	
-	
-	"subscribe to the tools registry to update the world menu when needed"
-	Smalltalk tools whenToolRegistered: [ :tool :toolName | WorldState defaultWorldMenu ].
-	Smalltalk tools whenToolUnregistered: [ :tool :toolName | WorldState defaultWorldMenu ].
+	SystemAnnouncer uniqueInstance weak when: FullscreenAnnouncement send: #fullscreenChanged: to: self	
+
 ]
 
 { #category : #'change reporting' }
@@ -515,6 +512,12 @@ WorldMorph >> scaleFactor: newScaleFactor [
 ]
 
 { #category : #stepping }
+WorldMorph >> startStepping: aMorph [
+	"Add the given morph to the step list. Do nothing if it is already being stepped."
+	^self startStepping: aMorph at: Time millisecondClockValue selector: #stepAt: arguments: nil stepTime: nil
+]
+
+{ #category : #stepping }
 WorldMorph >> startStepping: aMorph at: scheduledTime selector: aSelector arguments: args stepTime: stepTime [
 	worldState startStepping: aMorph at: scheduledTime selector: aSelector arguments: args stepTime: stepTime.
 ]
@@ -530,6 +533,13 @@ WorldMorph >> stepListSize [
 	^ worldState stepListSize
 
 "Transcript cr; show: self currentWorld stepListSize printString, ' items on steplist as of ', Date dateAndTimeNow printString"
+]
+
+{ #category : #'project state' }
+WorldMorph >> steppingMorphsNotInWorld [
+	| all |
+	all := self allMorphs.
+	^ self listOfSteppingMorphs reject: [ :m | all includes: m ]	"self currentWorld steppingMorphsNotInWorld do: [:m | m delete]"
 ]
 
 { #category : #stepping }

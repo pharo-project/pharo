@@ -20,7 +20,7 @@ Class {
 SpTestingPresenterWithAdditionalPresenters class >> defaultSpec [
 	<spec>
 	| aLayout |
-	aLayout := SpBoxLayout newVertical.
+	aLayout := SpBoxLayout newTopToBottom.
 
 	self keys do: [ :aKey | aLayout add: aKey ].
 

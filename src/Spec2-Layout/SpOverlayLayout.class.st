@@ -37,6 +37,12 @@ SpOverlayLayout >> addOverlay: aPresenter withConstraints: aBlock [
 ]
 
 { #category : #accessing }
+SpOverlayLayout >> child [
+
+	^ singleChild
+]
+
+{ #category : #accessing }
 SpOverlayLayout >> child: aPresenter [
 
 	singleChild ifNotNil: [ self remove: singleChild ].

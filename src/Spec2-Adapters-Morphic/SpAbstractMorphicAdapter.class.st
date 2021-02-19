@@ -361,6 +361,15 @@ SpAbstractMorphicAdapter >> installKeyUpEvent: anEvent to: aWidget [
 ]
 
 { #category : #'event installing' }
+SpAbstractMorphicAdapter >> installMouseDoubleClickEvent: anEvent to: aWidget [
+
+	aWidget 
+		on: #doubleClick
+		send: #value:
+		to: anEvent action
+]
+
+{ #category : #'event installing' }
 SpAbstractMorphicAdapter >> installMouseDownEvent: anEvent to: aWidget [
 
 	aWidget 
@@ -444,7 +453,7 @@ SpAbstractMorphicAdapter >> keyEvent: type code: keyCode shift: shiftBoolean met
 		(Smalltalk os isWin32 | Smalltalk os isUnix
 			ifTrue: [ 2r01000000 ]
 			ifFalse: [ 2r00100000 ]) ].
-	
+		
 	evt := KeyboardEvent new
 		setType: type
 		buttons: modifiers
@@ -453,6 +462,7 @@ SpAbstractMorphicAdapter >> keyEvent: type code: keyCode shift: shiftBoolean met
 		charCode: keyCode
 		hand: self currentWorld activeHand
 		stamp: Time millisecondClockValue.
+
 	evt key: (KeyboardKey fromCharacter: keyCode asCharacter).
 	evt sentTo: self widgetEventReceiver.
 	"Some time to allow things to happen?"
@@ -464,7 +474,7 @@ SpAbstractMorphicAdapter >> keyPressed: keyCode shift: shiftBoolean meta: metaBo
 	
 	^ self 
 		keyEvent: #keystroke
-		code: keyCode 
+		code: keyCode asciiValue
 		shift: shiftBoolean 
 		meta: metaBoolean 
 		control: controlBoolean 
@@ -611,7 +621,7 @@ SpAbstractMorphicAdapter >> type: aString [
 
 	aString do: [ :each | 
 		self 
-			keyPressed: each asciiValue 
+			keyPressed: each 
 			shift: each isUppercase
 			meta: false 
 			control: false 
