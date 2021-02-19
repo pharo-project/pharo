@@ -677,6 +677,12 @@ TestCase >> logFailure: aString [
 			
 ]
 
+{ #category : #accessing }
+TestCase >> nameForReport [
+
+	^ self selector
+]
+
 { #category : #'CI support' }
 TestCase >> onPharoCITestingEnvironment [
 	
