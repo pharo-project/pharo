@@ -4,12 +4,6 @@ I map the FT_SizeRec type.
 Class {
 	#name : #FTSizeRec,
 	#superclass : #FFIExternalStructure,
-	#classVars : [
-		'OFFSET_FACE',
-		'OFFSET_GENERIC',
-		'OFFSET_INTERNAL',
-		'OFFSET_METRICS'
-	],
 	#pools : [
 		'FT2Types'
 	],
