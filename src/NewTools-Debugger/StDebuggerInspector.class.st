@@ -260,10 +260,12 @@ StDebuggerInspector >> updateEvaluationPaneReceiver [
 
 { #category : #layout }
 StDebuggerInspector >> updateLayoutForContexts: aContext isAssertionFailure: isTopContextFailingAssertion [
-	
-	(isTopContextFailingAssertion not or:[(aContext at: 2)  isArray not])
+
+	(isTopContextFailingAssertion not 
+		or:[ (aContext at: 2) isString 
+		or:[ (aContext at: 2) size < 2 ] ])
 		ifTrue: [ 
-			currentLayoutSpec = self defaultLayoutSpec
+			currentLayoutSpec = self defaultLayoutSpec 
 				ifTrue: [ ^ self ].
 			self setDefaultLayout.
 			^ self ].
