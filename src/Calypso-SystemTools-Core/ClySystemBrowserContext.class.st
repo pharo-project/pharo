@@ -172,6 +172,14 @@ ClySystemBrowserContext >> refactoringScopes [
 ]
 
 { #category : #'user requests' }
+ClySystemBrowserContext >> requestMultiplePackages: queryTitle [
+
+	^ tool searchDialog 
+		requestMultipleObjects: queryTitle 
+		from: ClyAllPackagesQuery sorted
+]
+
+{ #category : #'user requests' }
 ClySystemBrowserContext >> requestMultipleVariables: queryTitle from: classes [
 
 	^tool searchDialog 

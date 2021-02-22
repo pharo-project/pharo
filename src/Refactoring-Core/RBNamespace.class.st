@@ -61,7 +61,7 @@ RBNamespace class >> onEnvironment: aBrowserEnvironment [
 ]
 
 { #category : #'private-changes' }
-RBNamespace >> addChangeToClass: aRBClass [ 
+RBNamespace >> addChangeToClass: aRBClass [
 	^ changedClasses 
 		at: aRBClass name
 		put: (Array 
@@ -117,6 +117,38 @@ RBNamespace >> allClassesDo: aBlock [
 ]
 
 { #category : #accessing }
+RBNamespace >> allClassesInPackages: aColl do: aBlock [
+
+	| seen evalBlock |
+
+	seen := Set new.
+	evalBlock := [ :each | 
+	seen add: each first name.
+	aBlock
+		value: each first;
+		value: each last
+	].
+	(newClasses select: [ :e | aColl anySatisfy: [ :cat | cat, '*' match: e first category ]]) do: evalBlock.
+	(changedClasses select: [ :e | aColl anySatisfy: [ :cat | cat, '*' match: e first category ]]) do: evalBlock.
+	self environment
+		classesInPackages: aColl do: [ :each | 
+			each isObsolete
+				ifFalse: [ | class |
+
+					class := each instanceSide.
+					( ( seen includes: class name ) or: [ self hasRemoved: ( self classNameFor: class ) ] )
+						ifFalse: [ ( class := self classFor: each )
+								ifNotNil: [ seen add: class name.
+									aBlock
+										value: class;
+										value: class classSide
+									]
+							]
+					]
+			]
+]
+
+{ #category : #accessing }
 RBNamespace >> allImplementorsOf: aSelector [ 
 	^ implementorsCache at: aSelector ifAbsentPut: [ self privateImplementorsOf: aSelector ]
 ]
@@ -124,6 +156,11 @@ RBNamespace >> allImplementorsOf: aSelector [
 { #category : #accessing }
 RBNamespace >> allImplementorsOf: aSelector do: aBlock [
 	(self allImplementorsOf: aSelector) do: aBlock
+]
+
+{ #category : #accessing }
+RBNamespace >> allImplementorsOf: aSelector inPackages: aColl [
+	^ implementorsCache at: aSelector ifAbsentPut: [ self privateImplementorsOf: aSelector in: aColl ]
 ]
 
 { #category : #accessing }
@@ -141,6 +178,16 @@ RBNamespace >> allReferencesTo: aSymbol in: classes [
 	| classNames |
 	classNames := classes collect: [ :cls | cls name ].
 	^ (self allReferencesTo: aSymbol) select: [ :ref | classNames includes: ref modelClass name ]
+]
+
+{ #category : #accessing }
+RBNamespace >> allReferencesTo: aSymbol inPackages: aColl [
+	^ sendersCache at: aSymbol ifAbsentPut: [ self privateReferencesTo: aSymbol inPackages: aColl ]
+]
+
+{ #category : #accessing }
+RBNamespace >> allReferencesTo: aSymbol inPackages: aColl do: aBlock [
+	(self allReferencesTo: aSymbol inPackages: aColl) do: aBlock
 ]
 
 { #category : #accessing }
@@ -222,6 +269,7 @@ RBNamespace >> createNewClassFor: aBehavior [
 	className := aBehavior instanceSide name.
 	nonMeta := modelFactory rbClass existingNamed: className model: self.
 	meta := modelFactory rbMetaclass existingNamed: className model: self.
+	nonMeta category: aBehavior category.
 	^changedClasses at: className put: (Array with: nonMeta with: meta)
 ]
 
@@ -236,7 +284,6 @@ RBNamespace >> createNewPackageFor: aPackage [
 RBNamespace >> defineClass: aString [
 
 	| change newClass newClassName |
-
 	change := changes defineClass: aString.
 	newClassName := change changeClassName.
 	newClass := self classNamed: newClassName.
@@ -413,6 +460,18 @@ RBNamespace >> privateImplementorsOf: aSelector [
 ]
 
 { #category : #private }
+RBNamespace >> privateImplementorsOf: aSelector in: packages [
+	| classes |
+	classes := Set new.
+	self allClassesInPackages: packages do: [ :class |
+		(class directlyDefinesLocalMethod: aSelector)
+			ifTrue: [ classes add: class ].
+		(class classSide directlyDefinesLocalMethod: aSelector)
+			ifTrue: [ classes add: class classSide ] ].
+	^ classes
+]
+
+{ #category : #private }
 RBNamespace >> privateReferencesTo: aSelector [ 
 	| methods |
 	methods := OrderedCollection new.
@@ -428,6 +487,17 @@ RBNamespace >> privateReferencesTo: aSelector in: classes [
 	| methods |
 	methods := OrderedCollection new.
 	classes do: [ :class |
+		(class whichSelectorsReferToSymbol: aSelector)
+			do: [ :selector |
+				methods add: (class methodFor: selector) ] ].
+	^ methods
+]
+
+{ #category : #private }
+RBNamespace >> privateReferencesTo: aSelector inPackages: aColl [
+	| methods |
+	methods := OrderedCollection new.
+	self allClassesInPackages: aColl do: [ :class |
 		(class whichSelectorsReferToSymbol: aSelector)
 			do: [ :selector |
 				methods add: (class methodFor: selector) ] ].

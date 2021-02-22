@@ -29,7 +29,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'model',
-		'options'
+		'options',
+		'searchInPackages'
 	],
 	#classVars : [
 		'RefactoringOptions'
@@ -170,13 +171,18 @@ RBRefactoring >> convertAllReferencesTo: aSymbol of: classes using: searchReplac
 
 { #category : #support }
 RBRefactoring >> convertAllReferencesTo: aSymbol using: searchReplacer [ 
-	self model allReferencesTo: aSymbol
-		do: 
-			[:method | 
+	|aBlock|
+	aBlock := [:method | 
 			self 
 				convertMethod: method selector
 				for: method modelClass
-				using: searchReplacer]
+				using: searchReplacer].
+	searchInPackages 
+		ifNil: [ self model allReferencesTo: aSymbol do: aBlock ]
+		ifNotNil: [ self model allReferencesTo: aSymbol inPackages: searchInPackages do: aBlock ]
+	
+	
+			
 ]
 
 { #category : #support }
@@ -422,6 +428,11 @@ RBRefactoring >> safeVariableNameFor: aClass temporaries: allTempVars basedOn: a
 			i := i + 1.
 			newString := baseString , i printString ].
 	^ newString
+]
+
+{ #category : #accessing }
+RBRefactoring >> searchInPackages: aList [
+	searchInPackages := aList
 ]
 
 { #category : #requests }
