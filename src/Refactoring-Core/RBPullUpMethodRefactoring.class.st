@@ -199,7 +199,7 @@ RBPullUpMethodRefactoring >> copyDownMethod: aSelector [
 						with: superclassDefiner)].
 	self 
 		refactoringWarning: 'Do you want to copy down the superclass method to the classes that don''t define ' 
-				, aSelector.
+				, aSelector, '?'.
 	refactoring := RBExpandReferencedPoolsRefactoring 
 				model: self model
 				forMethod: (superclassDefiner parseTreeFor: aSelector)

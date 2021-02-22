@@ -70,7 +70,7 @@ RBExtractMethodAndOccurrences >> findOccurrencesOf: aSelector [
 			of: class
 			inAllHierarchy: (self options at: #searchInAllHierarchy) value.
 		self performCompositeRefactoring: refactoring.]
-	ifFalse: [ self refactoringWarning: aSelector , ' is not a valid selector name.' ]
+	ifFalse: [ self refactoringFailure: aSelector , ' is not a valid selector name.' ]
 ]
 
 { #category : #preconditions }

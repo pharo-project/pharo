@@ -79,7 +79,7 @@ RBReplaceMethodRefactoring >> preconditions [
 			ifFalse: [ self model allReferencesTo: oldSelector in: {class} ].
 		senders size > 1 
 			ifTrue: 
-				[self refactoringWarning: ('This will modify all <1p> senders.' 
+				[self refactoringWarning: ('This will modify all <1p> senders.<n>Proceed anyway?' 
 							expandMacrosWith: senders size)].
 		true])
 ]

@@ -105,7 +105,7 @@ RBExpandReferencedPoolsRefactoring >> transform [
 	self hasPoolsToMove 
 		ifTrue: 
 			[self 
-				refactoringWarning: 'This method contains references to pools<n>which may need to be moved.' 
+				refactoringWarning: 'This method contains references to pools<n>which may need to be moved.<n>Proceed anyway?' 
 						expandMacros].
 	self movePoolVariables
 ]
