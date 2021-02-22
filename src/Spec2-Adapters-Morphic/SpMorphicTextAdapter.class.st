@@ -25,7 +25,7 @@ SpMorphicTextAdapter >> bindKeyCombination: aShortcut toAction: aBlock [
 SpMorphicTextAdapter >> buildWidget [
 	| newWidget |
 	
-	newWidget := (RubScrolledTextMorph on: self)
+	newWidget := (SpRubScrolledTextMorph on: self)
 		getTextSelector: #getText;
 		setTextSelector: #accept:notifying:;
 		getSelectionSelector: #readSelection;

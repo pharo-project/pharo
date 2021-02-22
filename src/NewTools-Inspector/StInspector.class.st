@@ -237,7 +237,7 @@ StInspector >> model: anInspectorModel [
 { #category : #'private factory' }
 StInspector >> newInspectorFor: aModel [
 	| newInspector |
-	
+
 	newInspector := self
 		instantiate: aModel defaultObjectInspectorClass
 		on: aModel asInspectorModel.

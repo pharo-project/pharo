@@ -20,7 +20,7 @@ SpMorphicTextInputFieldAdapter >> accept: aText notifying: aNotifyier [
 SpMorphicTextInputFieldAdapter >> buildWidget [
 	| newWidget |
 
-	newWidget := (RubTextFieldMorph on: self)
+	newWidget := (SpRubTextFieldMorph on: self)
 		getTextSelector: #getText;
 		setTextSelector: #accept:notifying:;
 		getSelectionSelector: #readSelection;
