@@ -7,9 +7,3 @@ Class {
 	#superclass : #DynamicVariable,
 	#category : #'Spec2-Commands-Presenters'
 }
-
-{ #category : #accessing }
-SpToolCurrentApplication >> default [
-
-	^ StPharoApplication current
-]

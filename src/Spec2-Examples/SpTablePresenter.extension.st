@@ -59,6 +59,17 @@ SpTablePresenter class >> exampleWithDecoratedString [
 ]
 
 { #category : #'*Spec2-Examples' }
+SpTablePresenter class >> exampleWithSortableColumnHeaders [
+
+	^ self new
+		showColumnHeaders;
+		addColumn: (SpStringTableColumn title: 'Number' evaluated: #yourself) beSortable;
+		addColumn: (SpStringTableColumn title: 'Hex' evaluated: #hex) beSortable;
+		items: (1 to: 16) asArray;
+		openWithSpec
+]
+
+{ #category : #'*Spec2-Examples' }
 SpTablePresenter class >> exampleWithoutColumnHeaders [
 	<sampleInstance>
 	| example |
