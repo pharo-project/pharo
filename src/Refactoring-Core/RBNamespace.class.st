@@ -128,7 +128,7 @@ RBNamespace >> allClassesInPackages: aColl do: aBlock [
 	].
 	(newClasses select: [ :e | aColl anySatisfy: [ :cat | cat, '*' match: e first category ]]) do: evalBlock.
 	(changedClasses select: [ :e | aColl anySatisfy: [ :cat | cat, '*' match: e first category ]]) do: evalBlock.
-	environment
+	self environment
 		classesInPackages: aColl do: [ :each | 
 			each isObsolete
 				ifFalse: [ | class |
