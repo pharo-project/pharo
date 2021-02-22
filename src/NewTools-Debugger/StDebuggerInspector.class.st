@@ -260,15 +260,18 @@ StDebuggerInspector >> updateEvaluationPaneReceiver [
 
 { #category : #layout }
 StDebuggerInspector >> updateLayoutForContexts: aContext isAssertionFailure: isTopContextFailingAssertion [
-	(isTopContextFailingAssertion not or:[(aContext at: 2) isString])
-		ifTrue: [ currentLayoutSpec = self defaultLayoutSpec
+	
+	(isTopContextFailingAssertion not or:[(aContext at: 2)  isArray not])
+		ifTrue: [ 
+			currentLayoutSpec = self defaultLayoutSpec
 				ifTrue: [ ^ self ].
 			self setDefaultLayout.
 			^ self ].
+	
 	currentLayoutSpec = self assertionLayoutSpec
 		ifTrue: [ ^ self ].
+
 	self flag: 'Way too much magickal: why these indexes?'.
-	
 	assertionFailure := StFailingAssertionInspector
 		diffInspectorsFromActual: ((aContext at: 2) at: 2)
 		expected: ((aContext at: 2) at: 1)
