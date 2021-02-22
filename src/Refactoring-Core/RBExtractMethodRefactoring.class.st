@@ -57,7 +57,7 @@ RBExtractMethodRefactoring >> checkAssignments: variableNames [
 		in: extractedParseTree) ifNotEmpty: 
 			[self refactoringError: 'Cannot extract assignment if read before written.'].
 	removeAssigned do: [:each | (node whoDefines: each) removeTemporaryNamed: each].
-	self createTemporariesInExtractedMethodFor: variableNames
+	self updateTemporariesInExtractedMethodFor: variableNames
 ]
 
 { #category : #transforming }
@@ -119,11 +119,6 @@ RBExtractMethodRefactoring >> checkTemporaries [
 	^parameters := (accesses asOrderedCollection)
 				removeAll: assigned;
 				yourself
-]
-
-{ #category : #transforming }
-RBExtractMethodRefactoring >> createTemporariesInExtractedMethodFor: assigned [ 
-	assigned do: [:each | extractedParseTree body addTemporaryNamed: each]
 ]
 
 { #category : #transforming }
@@ -432,6 +427,12 @@ RBExtractMethodRefactoring >> transform [
 			class compile: extractedParseTree newSource
 				withAttributesFrom: (class methodFor: selector)].
 	class compileTree: modifiedParseTree
+]
+
+{ #category : #transforming }
+RBExtractMethodRefactoring >> updateTemporariesInExtractedMethodFor: assigned [ 
+	"Add temporaries in extract method"
+	assigned do: [:each | extractedParseTree body addTemporaryNamed: each]
 ]
 
 { #category : #renaming }
