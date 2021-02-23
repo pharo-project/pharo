@@ -1,3 +1,6 @@
+"
+I am a refactory change for a package renaming. The RBRefactory api is implemented in my super class, I just define the concrete ""package"" renaming.
+"
 Class {
 	#name : #RBRenamePackageChange,
 	#superclass : #RBRefactoryPackageChange,

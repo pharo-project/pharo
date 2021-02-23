@@ -1,3 +1,6 @@
+"
+I am the baseclass for all refactoring changes for all kind of package changes.
+"
 Class {
 	#name : #RBRefactoryPackageChange,
 	#superclass : #RBRefactoryChange,
