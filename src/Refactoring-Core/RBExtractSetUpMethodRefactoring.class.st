@@ -16,6 +16,18 @@ Class {
 }
 
 { #category : #transforming }
+RBExtractSetUpMethodRefactoring >> checkSingleAssignment: varName [ 
+	((RBReadBeforeWrittenTester isVariable: varName
+		readBeforeWrittenIn: extractedParseTree) 
+			or: [extractedParseTree containsReturn]) 
+			ifTrue: 
+				[self 
+					refactoringError: 'Cannot extract assignments to temporaries without all references'].
+	class addInstanceVariable: varName.
+	modifiedParseTree body removeTemporaryNamed: varName.
+]
+
+{ #category : #transforming }
 RBExtractSetUpMethodRefactoring >> nameNewMethod: aSymbol [
 	| args |
 	args := parameters collect: [ :parm | RBVariableNode named: parm ].
@@ -49,4 +61,10 @@ RBExtractSetUpMethodRefactoring >> transform [
 			withAttributesFrom: (class methodFor: selector)].
 	modifiedParseTree body removeNode: (modifiedParseTree body statements at: 1).
 	class compileTree: modifiedParseTree
+]
+
+{ #category : #transforming }
+RBExtractSetUpMethodRefactoring >> updateTemporariesInExtractedMethodFor: variableNames [
+	"Remove temporaries in extract method"
+	variableNames do: [ :varName | extractedParseTree body removeTemporaryNamed: varName ].
 ]

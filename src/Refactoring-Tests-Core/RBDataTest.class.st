@@ -14,3 +14,14 @@ RBDataTest >> testExample [
 	self someMethod.
 	self assert: true
 ]
+
+{ #category : #tests }
+RBDataTest >> testExample1 [
+	| aString aNumber |
+	aString := 'Some string'.
+	self someMethod.
+	aNumber := 4.
+	self assert: aString isNotEmpty.
+	self deny: (aString, aNumber asString) isEmpty.
+	self assert: true
+]

@@ -22,7 +22,6 @@ Class {
 	#instVars : [
 		'table',
 		'label',
-		'items',
 		'selectedItems'
 	],
 	#category : #'SystemCommands-RefactoringSupport'

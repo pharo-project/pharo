@@ -4,6 +4,9 @@ The application for the Pharo IDE.
 Class {
 	#name : #StPharoApplication,
 	#superclass : #SpApplication,
+	#instVars : [
+		'tools'
+	],
 	#classVars : [
 		'Current'
 	],
@@ -34,6 +37,13 @@ StPharoApplication class >> startUp: resuming [
 
 	Current ifNil: [ ^ self ].
 	Current startUp: resuming
+]
+
+{ #category : #'accessing resources' }
+StPharoApplication >> defaultWindowExtent [
+	
+	self flag: #TODO. "Replace this with a real real estate"
+	^ 800@600
 ]
 
 { #category : #initialization }

@@ -23,6 +23,24 @@ RBRenameMethodTest >> testMultipleSelectors [
 ]
 
 { #category : #tests }
+RBRenameMethodTest >> testRenameMethodOnlyInSomePackages [
+	| refactoring class |
+	refactoring := RBRenameMethodRefactoring 
+		renameMethod: ('check', 'Class:') asSymbol
+		in: RBBasicLintRuleTestData
+		to: #checkClass1:
+		permutation: (1 to: 1).
+	refactoring searchInPackages: #(#'Refactoring-Tests-Core').
+	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
+	class := refactoring model classNamed: #RBBasicLintRuleTestData.
+	self assert: (class parseTreeFor: #checkClass1:) 
+		equals: (self parseMethod: 'checkClass1: aSmalllintContext 
+	^classBlock value: aSmalllintContext value: result').
+	self assert: ((refactoring model classNamed: #DeepCopier) directlyDefinesMethod: ('check', 'Class:') asSymbol).
+	
+]
+
+{ #category : #tests }
 RBRenameMethodTest >> testRenameMethodPermuteArgs [
 	| refactoring class |
 	refactoring := RBRenameMethodRefactoring

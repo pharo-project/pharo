@@ -121,7 +121,7 @@ SpMorphicTreeTableAdapter >> basicSelectionChanged: ann [
 SpMorphicTreeTableAdapter >> buildWidget [
 	| tableMorph |
 
-	tableMorph := FTTableMorph new
+	tableMorph := SpFTTableMorph new
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		intercellSpacing: self class intercellSpacing;
@@ -228,6 +228,14 @@ SpMorphicTreeTableAdapter >> isSearchEnabled [
 SpMorphicTreeTableAdapter >> isShowingColumnHeaders [
 
 	^ self presenter isShowingColumnHeaders
+]
+
+{ #category : #accessing }
+SpMorphicTreeTableAdapter >> itemAtPath: anArray [
+
+	self widgetDo: [ :w | 
+		^ (w dataSource itemAtPath: anArray) ifNotNil: [ :item | item data ] ].
+	^ nil
 ]
 
 { #category : #'private factory' }
@@ -366,6 +374,14 @@ SpMorphicTreeTableAdapter >> showContextMenu [
 
 	self widgetDo: [ :w |
 		w showMenuForIndex: { self presenter selection selectedIndex. 1 } ]
+]
+
+{ #category : #accessing }
+SpMorphicTreeTableAdapter >> sortByColumn: aColumn [ 
+	
+	self widgetDo: [ :w | 
+		w dataSource sortByColumn: (w columns 
+			detect: [ :each | each model = aColumn ]) ]
 ]
 
 { #category : #factory }

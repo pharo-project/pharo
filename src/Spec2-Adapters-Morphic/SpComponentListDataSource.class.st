@@ -115,7 +115,11 @@ SpComponentListDataSource >> searchText: aString [
 
 { #category : #'drag and drop' }
 SpComponentListDataSource >> transferFor: passenger from: aMorph [
-    ^(self model transferFor: passenger from: self table) buildWithSpec
+
+	^ (self model adapter 
+		transferFor: passenger 
+		from: self table) 
+		buildWithSpec
 ]
 
 { #category : #private }

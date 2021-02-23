@@ -33,7 +33,11 @@ RBChangeMethodNameRefactoring >> hasPermutedArguments [
 { #category : #private }
 RBChangeMethodNameRefactoring >> implementors [
 
-	implementors ifNil: [ implementors := self model allImplementorsOf: oldSelector ].
+	implementors ifNil: [ 
+		searchInPackages 
+			ifNil: [ implementors := self model allImplementorsOf: oldSelector ]
+			ifNotNil: [ implementors := self model allImplementorsOf: oldSelector inPackages: searchInPackages ]
+		 ].
 	^ implementors
 ]
 
@@ -87,7 +91,7 @@ RBChangeMethodNameRefactoring >> preconditions [
 	^conditions & (RBCondition withBlock: 
 		[self implementors size > 1 
 			ifTrue: 
-				[self refactoringWarning: ('This will modify all <1p> implementors.' 
+				[self refactoringWarning: ('This will modify all <1p> implementors. Proceed anyway?' 
 							expandMacrosWith: self implementors size)].
 		true])
 ]

@@ -149,8 +149,12 @@ StDebugger class >> codeLayout [
 { #category : #'instance creation' }
 StDebugger class >> debugSession: aDebugSession [
 	| debugger |
+
 	debugger := self on: aDebugSession.
+	aDebugSession application 
+		ifNotNil: [ :app | debugger application: app ].
 	debugger openWithFullView.
+	
 	^ debugger
 ]
 
@@ -330,24 +334,21 @@ StDebugger >> acceptCodeChanges: newSource forContext: aContext [
 { #category : #'command support' }
 StDebugger >> buildContextMenus [
 	| stackGroup codeCommands debuggerCommandGroup |
+	
 	debuggerCommandGroup := self rootCommandsGroup.
-
 	"Stack"
-	stackGroup := debuggerCommandGroup
-		/ StDebuggerStackCommandTreeBuilder groupName.
+	stackGroup := debuggerCommandGroup / StDebuggerStackCommandTreeBuilder groupName.
 	stackTable contextMenu: stackGroup beRoot asMenuPresenter.
 
 	"Toolbar"
-	toolbarCommandGroup := debuggerCommandGroup
-		/ StDebuggerToolbarCommandTreeBuilder groupName.
+	toolbarCommandGroup := debuggerCommandGroup / StDebuggerToolbarCommandTreeBuilder groupName.
 	SpToolbarPresenterBuilder new
 		toolbarPresenter: toolbar;
 		visit: toolbarCommandGroup.
 	self updateToolbar.
 
 	"Code"
-	codeCommands := debuggerCommandGroup
-		/ StDebuggerCodeCommandTreeBuilder groupName.
+	codeCommands := debuggerCommandGroup / StDebuggerCodeCommandTreeBuilder groupName.
 	code contextMenu: codeCommands beRoot asMenuPresenter
 ]
 
@@ -736,11 +737,13 @@ StDebugger >> initializeStack [
 			self expandStackIfLastItemIsSelected.
 			self updateWindowTitle ] ].
 	stackHeader := self instantiate: StHeaderBar.
-	stackHeader label: 'Stack'
+	stackHeader label: 'Stack'.
+	stackHeader toolbarActions: (CmCommandGroup new register: (StDebuggerSettingsCommand forSpecWithIconNamed: #configuration); asSpecGroup)
 ]
 
 { #category : #initialization }
 StDebugger >> initializeToolbar [
+
 	toolbar := self newToolbar.
 	toolbar displayMode: self application toolbarDisplayMode
 ]
@@ -799,14 +802,12 @@ StDebugger >> openWithFullView [
 	"Create and schedule a full debugger with the given label. Do not
 	terminate the current active process."
 
-	self
-		openWithSpec;
-		buildContextMenus;
-		updateCodeFromContext
+	self openWithSpec
 ]
 
 { #category : #opening }
 StDebugger >> openWithNotification: notificationString [
+
 	self openWithFullView
 ]
 
@@ -1038,12 +1039,14 @@ StDebugger >> stackIconForContext: context [
 
 { #category : #'command support' }
 StDebugger >> stackSelectionMethodContext [
+
 	^ [ stackTable selection selectedItem home method ]
 ]
 
 { #category : #'command support' }
 StDebugger >> stackSelectionMethodSelectorContext [
-	^[ stackTable selection selectedItem method selector ]
+
+	^ [ stackTable selection selectedItem method selector ]
 ]
 
 { #category : #'command support' }
@@ -1192,6 +1195,14 @@ StDebugger >> updateInspectorFromContext: aContext [
 StDebugger >> updatePredicatesForContext: aContext [
 
 	self debuggerActionModel updateContextPredicate
+]
+
+{ #category : #initialization }
+StDebugger >> updatePresenter [
+
+	self updateStackFromSession: self session.
+	self buildContextMenus.
+	self updateCodeFromContext
 ]
 
 { #category : #'updating actions' }

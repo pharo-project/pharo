@@ -176,6 +176,9 @@ SpAbstractTreePresenter >> itemAt: index of: anArray then: path [
 
 { #category : #private }
 SpAbstractTreePresenter >> itemAtPath: anArray [
+	
+	self withAdapterDo: [ :anAdapter | 
+		^ anAdapter itemAtPath: anArray ].
 
 	^ self 
 		itemAt: anArray first
