@@ -41,11 +41,6 @@ ReShouldSendSuperTearDownAsLastMessage >> basicCheck: aMethod [
 	^ (self isClassToCheck: aMethod methodClass) and: [ aMethod selector = #tearDown and: [ self class superTearDownNotCalledLastIn: aMethod ] ]
 ]
 
-{ #category : #accessing }
-ReShouldSendSuperTearDownAsLastMessage >> group [
-	^ 'SUnit'
-]
-
 { #category : #testing }
 ReShouldSendSuperTearDownAsLastMessage >> isClassToCheck: aClass [
 
