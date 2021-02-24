@@ -41,11 +41,6 @@ ReShouldSendSuperSetUpAsFirstMessage >> basicCheck: aMethod [
 	^ (self isClassToCheck: aMethod methodClass) and: [ aMethod selector = #setUp and: [ self class superSetUpNotCalledFirstIn: aMethod ] ]
 ]
 
-{ #category : #accessing }
-ReShouldSendSuperSetUpAsFirstMessage >> group [
-	^ 'SUnit'
-]
-
 { #category : #testing }
 ReShouldSendSuperSetUpAsFirstMessage >> isClassToCheck: aClass [
 
