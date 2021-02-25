@@ -343,7 +343,7 @@ Context >> stepToHome: aContext [
 				  ctxt.
 				  error } ].
 
-		home == ctxt home ] whileFalse: [ 
+		home == ctxt home or: [(ctxt hasSender: home) not]] whileFalse: [ 
 			home isDead ifTrue: [ 
 				^ { 
 					  ctxt.
