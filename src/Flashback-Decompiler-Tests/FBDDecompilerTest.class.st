@@ -815,6 +815,12 @@ FBDDecompilerTest >> testSuper [
 { #category : #tests }
 FBDDecompilerTest >> testSuperCallInBlock [
 
+	self checkCorrectDecompilation: #superCallInBlock
+]
+
+{ #category : #tests }
+FBDDecompilerTest >> testSuperCallInBlockClassSide [
+
 	self checkCorrectDecompilationClassSide: #superCallInBlock
 ]
 
