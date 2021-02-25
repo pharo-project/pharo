@@ -4,6 +4,6 @@ Extension { #name : #Behavior }
 Behavior >> systemIconName [
 
 	^self isAbstract 
-				ifTrue: [ ^#classAbstract ] 
+				ifTrue: [ #classAbstract ] 
 				ifFalse: [ super systemIconName ]
 ]
