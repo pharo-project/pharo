@@ -168,6 +168,12 @@ StDebuggerContextTest >> testNoDuplicatesBetweenArgsAndTemps [
 ]
 
 { #category : #tests }
+StDebuggerContextTest >> testNullExceptionNodes [
+
+	self assertEmpty: debuggerContext exceptionNodes
+]
+
+{ #category : #tests }
 StDebuggerContextTest >> testReceiverNodes [
 
 	| nodes |

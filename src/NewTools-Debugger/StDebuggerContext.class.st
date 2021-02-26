@@ -86,6 +86,12 @@ StDebuggerContext >> exceptionNodesFor: anException [
 		  yourself
 ]
 
+{ #category : #building }
+StDebuggerContext >> nullExceptionNodesFor: anException [
+
+	^ #(  )
+]
+
 { #category : #printing }
 StDebuggerContext >> printOn: aStream [
 	aStream nextPutAll: context asString 
