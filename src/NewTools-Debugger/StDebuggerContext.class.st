@@ -6,7 +6,8 @@ Class {
 	#name : #StDebuggerContext,
 	#superclass : #Object,
 	#instVars : [
-		'context'
+		'context',
+		'exception'
 	],
 	#category : #'NewTools-Debugger-Model'
 }
@@ -45,6 +46,21 @@ StDebuggerContext >> context [
 { #category : #accessing }
 StDebuggerContext >> context: anObject [
 	context := anObject
+]
+
+{ #category : #accessing }
+StDebuggerContext >> exception [
+	^ exception ifNil:[exception := OupsNullException new]
+]
+
+{ #category : #accessing }
+StDebuggerContext >> exception: anException [
+	exception := anException 
+]
+
+{ #category : #nodes }
+StDebuggerContext >> exceptionNodes [
+	^self exception stDebuggerInspectorNodes
 ]
 
 { #category : #printing }

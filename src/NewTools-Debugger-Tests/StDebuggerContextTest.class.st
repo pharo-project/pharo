@@ -134,6 +134,30 @@ StDebuggerContextTest >> testContext [
 ]
 
 { #category : #tests }
+StDebuggerContextTest >> testExceptionNodes [
+
+	| nodes object exception |
+	object := Object new.
+	[ object toto ]
+		on: Error
+		do: [ :e | 
+			exception := e freeze.
+			debuggerContext context: e signalerContext.
+			debuggerContext exception: e ].
+	nodes := debuggerContext exceptionNodes.
+	self assert: nodes size equals: 2.
+	self assert: nodes first key equals: 'Exception'.
+	self assert: nodes first rawValue equals: exception.
+	self assert: nodes first variableTag equals: 'implicit'.
+	self
+		assert: nodes first rawValue class
+		identicalTo: MessageNotUnderstood.
+	self assert: nodes second key equals: 'DNU receiver'.
+	self assert: nodes second rawValue identicalTo: object.
+	self assert: nodes first variableTag equals: 'implicit'.
+]
+
+{ #category : #tests }
 StDebuggerContextTest >> testNoDuplicatesBetweenArgsAndTemps [
 	|nodes nodesNamesArray nodesNamesSet|
 	debuggerContext context: self contextWithArgs.
