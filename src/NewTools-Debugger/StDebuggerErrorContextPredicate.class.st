@@ -47,17 +47,15 @@ StDebuggerErrorContextPredicate >> isContextDoesNotUnderstand [
 	^ exception class = MessageNotUnderstood and: [ 
 		  | message |
 		  message := exception message.
-		  exception receiver notNil and: [ 
+		  
 			  (exception receiver respondsTo: message selector) not and: [ 
-				  exception signalerContext method methodClass == Object ] ] ]
+				  exception signalerContext method methodClass == Object ] ]
 ]
 
 { #category : #predicates }
 StDebuggerErrorContextPredicate >> isContextMissingClassException [
 
-	^ exception class == VariableNotDeclared or: [ 
-		  exception receiver isNil and: [ 
-			  exception class == MessageNotUnderstood ] ]
+	^ exception class == VariableNotDeclared
 ]
 
 { #category : #predicates }
