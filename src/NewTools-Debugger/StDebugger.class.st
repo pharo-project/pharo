@@ -1255,6 +1255,7 @@ StDebugger >> updateStep [
 	self flag: #DBG_UPDATE_OF_MODEL_SHOULD_BE_AUTOMATED.
 	debuggerActionModel updateTopContext.
 	debuggerActionModel updateContextPredicate.	
+	debuggerActionModel updateDebugSession.
 		
 	self updateStackFromSession: self session.
 	self updateWindowTitle.

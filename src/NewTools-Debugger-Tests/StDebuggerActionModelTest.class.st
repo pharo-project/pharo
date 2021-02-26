@@ -491,6 +491,19 @@ StDebuggerActionModelTest >> testStepThrough [
 		identicalTo: method ast statements second
 ]
 
+{ #category : #'tests - predicates' }
+StDebuggerActionModelTest >> testUpdateDebugSession [
+
+	| exception |
+	self changeSession:
+		StTestDebuggerProvider new debuggerWithErrorContext session.
+	exception := session exception.
+	session exception: nil.
+	debugActionModel updateDebugSession.
+	self assert: session exception notNil.
+	self assert: session exception identicalTo: exception
+]
+
 { #category : #'tests - contexts' }
 StDebuggerActionModelTest >> testUpdateTopContext [
 	
