@@ -36,3 +36,8 @@ ClyClass2FromP1 >> instanceSideClassVar1Reader [
 ClyClass2FromP1 >> instanceSideClassVar1Writer [
 	ClassVar1 := #classVar1Value
 ]
+
+{ #category : #'as yet unclassified' }
+ClyClass2FromP1 >> instanceSideClassVar2Reader [
+	^ClassVar2
+]
