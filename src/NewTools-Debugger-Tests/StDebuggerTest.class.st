@@ -355,6 +355,26 @@ StDebuggerTest >> testInitialCodeSelectionAfterStepping [
 	"The pc range is highlighted with an additionnal index to encompass the full text of the node (why?)"
 ]
 
+{ #category : #'tests - context inspector' }
+StDebuggerTest >> testNewDebuggerContext [
+	|debuggerContext|
+	debugger := (self debuggerOn: session).
+	debuggerContext := debugger newDebuggerContext.
+	self assert: debuggerContext class identicalTo: debugger class debuggerContextClass.
+	self assert: debuggerContext exception equals: session exception
+]
+
+{ #category : #'tests - context inspector' }
+StDebuggerTest >> testNewDebuggerContextFor [
+	|debuggerContext ctx|
+	debugger := (self debuggerOn: session).
+	ctx := [  ] asContext.
+	debuggerContext := debugger newDebuggerContextFor: ctx.
+	self assert: debuggerContext class identicalTo: debugger class debuggerContextClass.
+	self assert: debuggerContext exception equals: session exception.
+	self assert: debuggerContext context identicalTo: ctx
+]
+
 { #category : #'tests - stack table' }
 StDebuggerTest >> testPrintReceiverClassInContext [
 	|ctx result|
