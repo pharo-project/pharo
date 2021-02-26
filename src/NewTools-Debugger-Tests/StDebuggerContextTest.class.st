@@ -120,6 +120,23 @@ StDebuggerContextTest >> testBuildInspectorNodes [
 ]
 
 { #category : #tests }
+StDebuggerContextTest >> testBuildInspectorNodesForException [
+	| nodes object exception |
+	object := Object new.
+	[ object toto ]
+		on: Error
+		do: [ :e | 
+			exception := e freeze.
+			debuggerContext context: e signalerContext.
+			debuggerContext exception: e ].
+	nodes := debuggerContext buildInspectorNodes.
+	self assert: (nodes at: (nodes size - 1)) key equals: 'Exception'.
+	self assert: (nodes at: (nodes size - 1)) rawValue identicalTo: exception.
+	self assert: (nodes last) key equals: 'DNU receiver'. 
+	self assert: (nodes last) rawValue identicalTo: object
+]
+
+{ #category : #tests }
 StDebuggerContextTest >> testContext [
 
 	| closure contextSource ctx |

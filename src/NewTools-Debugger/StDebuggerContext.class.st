@@ -34,6 +34,7 @@ StDebuggerContext >> buildInspectorNodes [
 	nodes addAll: self receiverNodes.
 	nodes add: self stackTopNode.
 	nodes add: self thisContextNode.
+	nodes addAll: self exceptionNodes.
 	^ nodes
 ]
 
