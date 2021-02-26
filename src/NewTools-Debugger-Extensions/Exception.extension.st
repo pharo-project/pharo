@@ -7,13 +7,7 @@ Exception >> signalContext [
 ]
 
 { #category : #'*NewTools-Debugger-Extensions' }
-Exception >> stDebuggerInspectorNodes [
+Exception >> stDebuggerInspectorNodesFor: aStDebuggerContext [
 
-	| nodes |
-	nodes := OrderedCollection new.
-	nodes add: (StInspectorDynamicNode
-			 hostObject: self
-			 label: 'Exception'
-			 value: self).
-	^ nodes
+	^ aStDebuggerContext exceptionNodesFor: self
 ]

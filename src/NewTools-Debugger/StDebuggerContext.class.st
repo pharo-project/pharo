@@ -48,6 +48,17 @@ StDebuggerContext >> context: anObject [
 	context := anObject
 ]
 
+{ #category : #building }
+StDebuggerContext >> doesNotUnderstandNodesFor: anException [
+
+	^ (self exceptionNodesFor: anException)
+		  add: (StInspectorDynamicNode
+				   hostObject: anException receiver
+				   label: 'DNU receiver'
+				   value: anException receiver);
+		  yourself
+]
+
 { #category : #accessing }
 StDebuggerContext >> exception [
 	^ exception ifNil:[exception := OupsNullException new]
@@ -60,7 +71,19 @@ StDebuggerContext >> exception: anException [
 
 { #category : #nodes }
 StDebuggerContext >> exceptionNodes [
-	^self exception stDebuggerInspectorNodes
+
+	^ self exception stDebuggerInspectorNodesFor: self
+]
+
+{ #category : #building }
+StDebuggerContext >> exceptionNodesFor: anException [
+
+	^ OrderedCollection new
+		  add: (StInspectorDynamicNode
+				   hostObject: anException
+				   label: 'Exception'
+				   value: anException);
+		  yourself
 ]
 
 { #category : #printing }
