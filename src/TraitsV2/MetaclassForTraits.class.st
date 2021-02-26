@@ -41,19 +41,13 @@ MetaclassForTraits >> asTraitComposition [
 	^ TaClassCompositionElement for: self
 ]
 
-{ #category : #'file in/out' }
+{ #category : #generated }
 MetaclassForTraits >> definition [
-	^ String streamContents: [ :s | 
-		s nextPutAll: self instanceSide name;
-			nextPutAll: ' classTrait';
-			cr; tab;
-			nextPutAll: 'uses: ';
-			nextPutAll: composition traitCompositionExpression.
-			
-		self localSlots ifNotEmpty: [ 
-				s crtab;
-					nextPutAll: 'slots: ';
-					nextPutAll: self slotDefinitionString]]
+
+	self
+		deprecated: 'Use #definitionString instead'
+		transformWith: '`@rec definition' -> '`@rec definitionString'.
+	^ self definitionString
 ]
 
 { #category : #testing }
@@ -66,6 +60,16 @@ MetaclassForTraits >> isBaseTrait [
 MetaclassForTraits >> isClassTrait [
 	
 	^ true
+]
+
+{ #category : #testing }
+MetaclassForTraits >> isEmpty [ 
+	"Since we can have potential an empty array in the fluid definition (to be revisited) 
+	when the trait composition is aTrait it received the message isEmpty and would break
+	traitComposition 
+		ifNotNil: [ :t | t isEmpty ifFalse: [shiftClassBuilder traitComposition: traitComposition ]]."
+	^ false
+	
 ]
 
 { #category : #testing }

@@ -54,7 +54,7 @@ Behavior >> localMethods [
 { #category : #'*TraitsV2' }
 Behavior >> localSelectors [
 	
-	^ methodDict keys
+	^ self methodDict keys
 ]
 
 { #category : #'*TraitsV2' }

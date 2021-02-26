@@ -24,17 +24,17 @@ TaEmptyComposition >> = anotherTrait [
 ]
 
 { #category : #operations }
-TaEmptyComposition >> >> anAssociation [
-	self error:'Could not perform on empty composition'
-]
-
-{ #category : #operations }
 TaEmptyComposition >> @ anAssociation [
 	self error:'Could not perform on empty composition'
 ]
 
 { #category : #operations }
 TaEmptyComposition >> @= anAssociation [
+	self error:'Could not perform on empty composition'
+]
+
+{ #category : #operations }
+TaEmptyComposition >> @@ anAssociation [
 	self error:'Could not perform on empty composition'
 ]
 

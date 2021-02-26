@@ -7,8 +7,7 @@ Class {
 	#name : #TaRenameSlot,
 	#superclass : #TaSingleComposition,
 	#instVars : [
-		'oldName',
-		'newName'
+		'renames'
 	],
 	#category : #'TraitsV2-Compositions'
 }
@@ -22,51 +21,59 @@ TaRenameSlot class >> from:oldName to: newName on: aTrait [
 		yourself.
 ]
 
+{ #category : #'instance creation' }
+TaRenameSlot class >> rename: anArrayOfAssociations on: aTrait [
+	^ self new 
+		renames: anArrayOfAssociations;
+		inner: aTrait;
+		yourself.
+]
+
 { #category : #copying }
 TaRenameSlot >> copyTraitExpression [
-	^ self class from: oldName to: newName on: inner
+	^ self class rename: renames on: inner
 ]
 
 { #category : #accessing }
-TaRenameSlot >> newName [
-	^ newName
+TaRenameSlot >> renames [
+
+	^ renames
 ]
 
 { #category : #accessing }
-TaRenameSlot >> newName: anObject [
-	newName := anObject
-]
+TaRenameSlot >> renames: anObject [
 
-{ #category : #accessing }
-TaRenameSlot >> oldName [
-	^ oldName
-]
-
-{ #category : #accessing }
-TaRenameSlot >> oldName: anObject [
-	oldName := anObject
+	renames := anObject
 ]
 
 { #category : #accessing }
 TaRenameSlot >> slots [
-	^ inner slots
-		collect: [ :e | 
-			| slot |
-			slot := e asSlot.
-			slot name = oldName
-				ifTrue: [ slot name: newName ].
-			slot ]
+
+	^ inner slots collect: [ :slot | 
+		  (renames asDictionary includesKey: slot name)
+			  ifTrue: [ 
+				  (TaRenamedSlotWrapper for: slot) name: (renames asDictionary at: slot name) ]
+			  ifFalse: [ slot ] ]
 ]
 
 { #category : #accessing }
 TaRenameSlot >> sourceCodeAt: aSelector [
-	| originalSourceCode parseTree |
+	| originalSourceCode parseTree rewriter |
 	originalSourceCode := super sourceCodeAt: aSelector.
 
 	parseTree := RBParser parseMethod: originalSourceCode.
-
-	^ (RBParseTreeRewriter new
-		replace: oldName asString with: newName asString;
+	rewriter := RBParseTreeRewriter new.
+	
+	renames do: [:rename |
+		rewriter replace: rename key asString with: rename value asString ].
+	
+	^(rewriter	
 		executeTree: parseTree;
-		tree) formattedCode
+		tree) formattedCode.
+]
+
+{ #category : #printing }
+TaRenameSlot >> traitCompositionExpression [
+	
+	^ self inner traitCompositionExpressionWithParens , ' @@ ' , renames printString
 ]

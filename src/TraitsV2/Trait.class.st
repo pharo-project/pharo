@@ -21,20 +21,26 @@ Class {
 	#instVars : [
 		'users'
 	],
-	#classInstVars : [
-		'users'
-	],
 	#category : #'TraitsV2-Base'
 }
+
+{ #category : #private }
+Trait class >> configureBuilder: builder withName: aName traitComposition: aTraitCompositionOrCollection instanceVariableNames: aString packageName: aPackageName [
+
+	^ self
+		  configureBuilder: builder
+		  withName: aName
+		  traitComposition: aTraitCompositionOrCollection
+		  slots: aString asSlotCollection
+		  packageName: aPackageName
+]
 
 { #category : #private }
 Trait class >> configureBuilder: builder withName: aName traitComposition: aTraitCompositionOrCollection slots: someSlots packageName: aPackageName [
 
 	^ builder
 		name: aName;
-		superclass: nil;
-		metaSuperclass: self;
-		metaclassClass: MetaclassForTraits;
+		beTrait;
 		slots: someSlots;
 		sharedVariables: '';
 		sharedPools: '';
@@ -44,12 +50,31 @@ Trait class >> configureBuilder: builder withName: aName traitComposition: aTrai
 		classSlots: #()
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'old pharo 8 syntax' }
 Trait class >> named: aSymbol [
 	^ self named: aSymbol uses: {} package: 'Unclassified'
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'old pharo 8 syntax' }
+Trait class >> named: aName instanceVariableNames: aString package: aPackageName [
+
+	^ self named: aName 
+		uses: {} 
+		instanceVariableNames: aString 
+		package: aPackageName 
+		env: self environment 
+]
+
+{ #category : #'old pharo 8 syntax' }
+Trait class >> named: aSymbol package: aString [
+	^ self
+		named: aSymbol
+		uses: {}
+		package: aString
+		env: self environment
+]
+
+{ #category : #'old pharo 8 syntax' }
 Trait class >> named: aSymbol uses: aCompositionOrArray [
 	^ self named: aSymbol uses: aCompositionOrArray package: 'Unclassified'
 ]
@@ -73,7 +98,33 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection category: aStrin
 		env: anEnvironment
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'old pharo 8 syntax' }
+Trait class >> named: aName uses: aTraitCompositionOrCollection instanceVariableNames: aString package: aPackageName [
+
+	^ self named: aName 
+		uses: aTraitCompositionOrCollection 
+		instanceVariableNames: aString 
+		package: aPackageName 
+		env: self environment 
+]
+
+{ #category : #'old pharo 8 syntax' }
+Trait class >> named: aName uses: aTraitCompositionOrCollection instanceVariableNames: aString package: aPackageName env: anEnvironment [
+	| trait |
+	trait := self classInstaller
+		make: [ :builder | 
+			self
+				configureBuilder: builder
+				withName: aName
+				traitComposition: aTraitCompositionOrCollection
+				slots: aString asSlotCollection
+				packageName: aPackageName ].
+	self assert: [ trait class class = MetaclassForTraits ].
+	self assert: [ trait class superclass = Trait ].
+	^ trait
+]
+
+{ #category : #'old pharo 8 syntax' }
 Trait class >> named: aSymbol uses: aTraitCompositionOrCollection package: aString [
 	^ self
 		named: aSymbol
@@ -82,7 +133,7 @@ Trait class >> named: aSymbol uses: aTraitCompositionOrCollection package: aStri
 		env: self environment
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection package: aString env: anEnvironment [
 	^ self
 		named: aName
@@ -109,7 +160,7 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots
 	^ self named: aName uses: aTraitCompositionOrCollection slots: someSlots package: aCategory env: anEnvironment 
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots package: aPackageName [
 
 	^ self named: aName 
@@ -119,7 +170,7 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots
 		env: self environment 
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots package: aPackageName env: anEnvironment [
 	| trait |
 	trait := self classInstaller
@@ -149,15 +200,21 @@ Trait >> - anArray [
 ]
 
 { #category : #accessing }
-Trait >> -- aSlotName [
+Trait >> -- aSlotNameCollection [
 
-	^ self asTraitComposition -- aSlotName
+	^ self asTraitComposition -- aSlotNameCollection
 ]
 
 { #category : #accessing }
 Trait >> @ anArray [
 	"I return myself with an aliased method. Check TaAbstractComposition >> #@ for more details"
 	^ self asTraitComposition @ anArray
+]
+
+{ #category : #accessing }
+Trait >> @@ anArray [
+	"I return myself with an aliased method. Check TaAbstractComposition >> #@ for more details"
+	^ self asTraitComposition @@ anArray
 ]
 
 { #category : #users }
@@ -187,25 +244,25 @@ Trait >> classTrait [
 	^ self class
 ]
 
-{ #category : #'file in/out' }
+{ #category : #generated }
 Trait >> definition [
-	
-	(self instanceSide name == #Trait) ifTrue: [ ^ super definition ].
 
-	^ String streamContents: [ :s | 
-		s 
-			nextPutAll: 'Trait named: ';
-			nextPutAll:	self name printString;
-			cr; tab; 
-			nextPutAll: ' uses: ';
-			nextPutAll: self traitComposition traitCompositionExpression; 
-			cr.
-		self classLayout visibleSlots ifNotEmpty: [ 
-			s tab; nextPutAll: ' slots: ';
-			nextPutAll: self slotDefinitionString; cr. ].
-		s tab; nextPutAll: ' package: ';
-			nextPutAll: self category asString printString
-	]
+	self
+		deprecated: 'Use #definitionString instead'
+		transformWith: '`@rec definition' -> '`@rec definitionString'.
+	^ self definitionString
+]
+
+{ #category : #fileout }
+Trait >> definitionStringFor: aConfiguredPrinter [
+
+	^ aConfiguredPrinter traitDefinitionString
+]
+
+{ #category : #fileout }
+Trait >> expandedDefinitionStringFor: aPrinter [
+
+	^ aPrinter expandedTraitDefinitionString 
 ]
 
 { #category : #testing }
@@ -227,6 +284,17 @@ Trait >> isClassTrait [
 ]
 
 { #category : #testing }
+Trait >> isEmpty [ 
+	"Since we can have potential an empty array in the fluid definition (to be revisited) 
+	when the trait composition is aTrait it received the message isEmpty and would break
+	traitComposition 
+		ifNotNil: [ :t | t isEmpty ifFalse: [shiftClassBuilder traitComposition: traitComposition ]]."
+
+	^ false
+	
+]
+
+{ #category : #testing }
 Trait >> isTrait [
 	^ true
 ]
@@ -241,17 +309,17 @@ Trait >> isTraitExclusion [
 	^ false
 ]
 
+{ #category : #testing }
+Trait >> isUsed [
+
+	^ super isUsed or: [ self traitUsers notEmpty ]
+]
+
 { #category : #'organization updating' }
 Trait >> notifyOfRecategorizedSelector: selector from: oldCategory to: newCategory [
 	"When there is a recategorization of a selector, I propagate the changes to my users"
 	super notifyOfRecategorizedSelector: selector from: oldCategory to: newCategory.
 	self traitUsers do: [ :e | e recategorizeSelector: selector from: oldCategory to: newCategory ].
-]
-
-{ #category : #'file in/out' }
-Trait >> oldDefinition [
-
-	^ self definition
 ]
 
 { #category : #'accessing method dictionary' }

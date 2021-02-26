@@ -44,6 +44,22 @@ TraitedMetaclass >> addSelector: selector withMethod: compiledMethod [
 	TraitChange addSelector: selector on: self
 ]
 
+{ #category : #'accessing method dictionary' }
+TraitedMetaclass >> addSelector: selector withRecompiledMethod: compiledMethod [ 
+
+	self localMethodDict at: selector put: compiledMethod.
+	super addSelector: selector withRecompiledMethod: compiledMethod.
+	TraitChange addSelector: selector on: self
+]
+
+{ #category : #'as yet unclassified' }
+TraitedMetaclass >> allInsVarNames [
+
+	"This is an intermediary fix, see issue #8630"
+
+	^ self allSlots collect: [ :each | each name ]
+]
+
 { #category : #querying }
 TraitedMetaclass >> allTraits [
 	
@@ -70,30 +86,21 @@ TraitedMetaclass >> baseLocalMethods: anObject [
 	baseLocalMethods := anObject
 ]
 
-{ #category : #'file in/out' }
+{ #category : #generated }
 TraitedMetaclass >> definition [
+
 	"Refer to the comment in ClassDescription|definition."
 
-	^ String streamContents: 
-		[:strm |
-		strm print: self.
-		self hasTraitComposition ifTrue: [
-			strm
-				crtab;
-				nextPutAll: 'uses: ';
-				print: self traitComposition ].
-		
-		(self slotsNeedFullDefinition or: [ Slot showSlotClassDefinition ])
-			ifFalse: [  
-						strm
-							crtab;
-							nextPutAll: 'instanceVariableNames: ';
-							store: self instanceVariablesString]
-			ifTrue: [ 
-						strm
-							crtab;
-							nextPutAll: 'slots: ';
-							nextPutAll: self slotDefinitionString]]
+	self
+		deprecated: 'Use #definitionString instead'
+		transformWith: '`@rec definition' -> '`@rec definitionString'.
+	^ self definitionString
+]
+
+{ #category : #fileout }
+TraitedMetaclass >> definitionStringFor: aConfiguredPrinter [
+
+	^ aConfiguredPrinter traitedMetaclassDefinitionString 
 ]
 
 { #category : #initialization }
@@ -145,7 +152,7 @@ TraitedMetaclass >> findOriginMethodOf: aMethod [
 { #category : #testing }
 TraitedMetaclass >> hasTraitComposition [
 	
-	^ self traitComposition isEmpty not
+	^ self traitComposition isEmpty not 
 ]
 
 { #category : #'testing method dictionary' }
@@ -273,14 +280,14 @@ TraitedMetaclass >> rebuildMethodDictionary [
 	
 	modified := false.
 	
-	methodDict valuesDo: [ :m | m traitSource ifNil: [ localMethods at: m selector put: m ]].
+	self methodDict valuesDo: [ :m | m traitSource ifNil: [ localMethods at: m selector put: m ]].
 	
 	selectors := self traitComposition selectors reject: [ :e | self isRejectedMethod: e ].
 	selectors do: [ :e | modified := modified | (self traitComposition installSelector: e into: self replacing: false) ].
 	
-	removedSelectors := methodDict keys reject: [ :aSelector | (selectors includes: aSelector) or: [ self isSelectorToKeep: aSelector ] ].
+	removedSelectors := self methodDict keys reject: [ :aSelector | (selectors includes: aSelector) or: [ self isSelectorToKeep: aSelector ] ].
 	modified := modified | (removedSelectors isNotEmpty).
-	removedSelectors do: [ :aSelector | methodDict removeKey: aSelector ].
+	removedSelectors do: [ :aSelector | self methodDict removeKey: aSelector ].
 	removedSelectors do: [ :aSelector | self organization removeElement: aSelector ]. 
 	
 	^ modified
@@ -336,6 +343,10 @@ TraitedMetaclass >> traitComposition [
 
 { #category : #accessing }
 TraitedMetaclass >> traitComposition: aComposition [
+
+	aComposition asTraitComposition allTraits do: [ :aMaybeTrait |
+		aMaybeTrait isTrait ifFalse: [ 
+			self error: 'All the members of the trait composition should be traits' ]].
 
 	composition := aComposition
 ]
