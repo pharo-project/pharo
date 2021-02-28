@@ -89,3 +89,9 @@ StDebuggerErrorContextPredicate >> printDescription [
 		 ifFalse: [ exception description ]).
 	^ str contents
 ]
+
+{ #category : #updating }
+StDebuggerErrorContextPredicate >> updateSessionForModel: aStDebuggerActionModel [
+
+	aStDebuggerActionModel updateDebugSessionException: exception
+]
