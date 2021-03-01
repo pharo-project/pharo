@@ -1,0 +1,23 @@
+Class {
+	#name : #RBTrait,
+	#superclass : #RBClass,
+	#instVars : [
+		'users'
+	],
+	#category : #'Refactoring-Core-Model'
+}
+
+{ #category : #accessing }
+RBTrait >> definesInstanceVariable: aString [ 
+	^ self directlyDefinesInstanceVariable: aString
+]
+
+{ #category : #accessing }
+RBTrait >> superclass [
+	^ nil
+]
+
+{ #category : #accessing }
+RBTrait >> users [
+	^ users ifNil: [ users := realClass users collect: [ :e | model classNamed: e name ] ]
+]

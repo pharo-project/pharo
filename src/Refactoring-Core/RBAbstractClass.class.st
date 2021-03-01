@@ -421,7 +421,11 @@ RBAbstractClass >> methodFor: aSelector [
 			class := self realClass.
 			class ifNil: [ ^ nil ].
 			compiledMethod := class compiledMethodAt: aSelector ifAbsent: [ nil ].
-			compiledMethod ifNotNil: [ modelFactory rbMethod for: self fromMethod: compiledMethod andSelector: aSelector ] ]
+			compiledMethod ifNotNil: [ | rbClass |
+				rbClass := self.
+				compiledMethod isFromTrait 
+					ifTrue: [ rbClass := model classNamed: compiledMethod origin name ].
+				modelFactory rbMethod for: rbClass fromMethod: compiledMethod andSelector: aSelector ] ]
 ]
 
 { #category : #accessing }
