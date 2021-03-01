@@ -12,10 +12,7 @@ Class {
 SycRemoveHierarchyMethodCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation 
-		byItemOf: ClyMoreRefactorsMenuGroup 
-		order: 100 
-		for: ClyMethod asCalypsoItemContext
+	^ SycMethodMenuActivation byRootGroupItemOrder: 100 for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #converting }

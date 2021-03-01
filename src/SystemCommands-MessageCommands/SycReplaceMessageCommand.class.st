@@ -11,10 +11,7 @@ Class {
 SycReplaceMessageCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation 
-		byItemOf: ClyMoreRefactorsMenuGroup 
-		order: 1100 
-		for: ClyMethod asCalypsoItemContext
+	^ SycMethodMenuActivation byRootGroupItemOrder: 1100 for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #execution }

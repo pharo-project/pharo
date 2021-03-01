@@ -19,7 +19,7 @@ SycOpenMethodMenuCommand class >> methodEditorShortcutActivation [
 SycOpenMethodMenuCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: -10 for: ClyMethod asCalypsoItemContext
+	^CmdContextMenuActivation byRootGroupItemOrder: 10100 for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #execution }

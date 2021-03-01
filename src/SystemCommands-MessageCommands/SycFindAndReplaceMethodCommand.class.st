@@ -21,10 +21,8 @@ SycFindAndReplaceMethodCommand class >> defaultMenuIconName [
 SycFindAndReplaceMethodCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation 
-		byItemOf: ClyMoreRefactorsMenuGroup 
-		order: 25 
-		for: ClyMethod asCalypsoItemContext
+	^ SycMethodMenuActivation
+		byRootGroupItemOrder: 25 for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #execution }

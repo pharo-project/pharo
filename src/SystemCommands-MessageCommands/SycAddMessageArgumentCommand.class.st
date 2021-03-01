@@ -21,10 +21,8 @@ Class {
 SycAddMessageArgumentCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation 
-		byItemOf: ClyMoreRefactorsMenuGroup 
-		order: 30 
-		for: ClyMethod asCalypsoItemContext
+	^ SycMethodMenuActivation
+		byRootGroupItemOrder: 30 for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #accessing }
