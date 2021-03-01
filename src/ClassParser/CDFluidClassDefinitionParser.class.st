@@ -175,6 +175,8 @@ CDFluidClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 		ifTrue: [  ^self handleTag: aNode ].
 	aString =	 #uses:
 		ifTrue: [ ^ self handleTraitUsesFromNode: aNode ].
+	aString =	 #trait:
+		ifTrue: [ ^ self handleTraitUsesFromNode: aNode ].
 	aString =	 #sharedPools:
 		ifTrue: [ ^ self handleSharedPoolsFromNode: aNode ].
 	

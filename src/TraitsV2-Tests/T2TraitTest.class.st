@@ -116,6 +116,16 @@ T2TraitTest >> testClassUsingTraitsDoesNotHaveUsers [
 
 ]
 
+{ #category : #'tests - empty' }
+T2TraitTest >> testEmptyCompositionManagesTEmpty [
+	
+	| t1 superclass subclass |
+	t1 := self newTrait: #T1 with: {} trait: TEmpty.
+	
+	self assert: t1 hasEmptyComposition
+
+]
+
 { #category : #tests }
 T2TraitTest >> testIndirectSequence [
 	| t1 t2 t3 c1 obj |
