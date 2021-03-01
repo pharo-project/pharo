@@ -1,3 +1,9 @@
+"
+I represent the instance side of a trait in a refactoring namespace. 
+
+I shouldn't be created directly, but always be part of a refactoring namespace.
+My  namespace usally knows me and my meta class.
+"
 Class {
 	#name : #RBTrait,
 	#superclass : #RBClass,

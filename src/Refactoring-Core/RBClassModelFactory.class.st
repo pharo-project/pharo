@@ -90,6 +90,18 @@ RBClassModelFactory class >> setRBPackage: aClass [
 	RBpackage := aClass
 ]
 
+{ #category : #'factory customisation' }
+RBClassModelFactory class >> setRBTrait: aClass [
+
+	RBtrait := aClass
+]
+
+{ #category : #'factory customisation' }
+RBClassModelFactory class >> setRBTraitMetaclass: aClass [
+
+	RBtraitMetaclass := aClass
+]
+
 { #category : #'factory access' }
 RBClassModelFactory >> rbClass [ 
 
