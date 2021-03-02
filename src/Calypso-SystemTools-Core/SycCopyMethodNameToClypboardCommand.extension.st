@@ -4,7 +4,7 @@ Extension { #name : #SycCopyMethodNameToClypboardCommand }
 SycCopyMethodNameToClypboardCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 	
-	^SycMethodMenuActivation byItemOf: CmdExtraMenuGroup for: ClyMethod asCalypsoItemContext
+	^CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #'*Calypso-SystemTools-Core' }

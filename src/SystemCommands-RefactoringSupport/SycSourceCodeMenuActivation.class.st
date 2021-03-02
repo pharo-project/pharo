@@ -5,5 +5,5 @@ In Nautilus I was implemented as Suggestions menu
 Class {
 	#name : #SycSourceCodeMenuActivation,
 	#superclass : #CmdMenuCommandActivationStrategy,
-	#category : #'SystemCommands-SourceCodeCommands'
+	#category : #'SystemCommands-RefactoringSupport'
 }

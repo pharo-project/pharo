@@ -4,5 +4,5 @@ Extension { #name : #SycCopyTestMethodNameToClypboardCommand }
 SycCopyTestMethodNameToClypboardCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 	
-	^SycMethodMenuActivation byItemOf: CmdExtraMenuGroup for: ClyMethod asCalypsoItemContext
+	^CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: ClyMethod asCalypsoItemContext
 ]

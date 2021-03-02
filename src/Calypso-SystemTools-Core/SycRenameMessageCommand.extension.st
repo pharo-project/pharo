@@ -9,7 +9,7 @@ SycRenameMessageCommand class >> browserMenuOrder [
 SycRenameMessageCommand class >> methodMenuActivation [
 	<classAnnotation>
 
-	^SycMethodMenuActivation 
+	^CmdContextMenuActivation 
 		byRootGroupItemOrder: self browserMenuOrder for: ClyMethod asCalypsoItemContext 
 ]
 
