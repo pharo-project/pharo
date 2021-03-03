@@ -19,10 +19,7 @@ Class {
 SycMoveMethodsToClassCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation 
-		byItemOf: ClyMoreRefactorsMenuGroup 
-		order: 60 
-		for: ClyMethod asCalypsoItemContext
+	^ SycMethodMenuActivation byRootGroupItemOrder: 60 for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #'instance creation' }
