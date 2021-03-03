@@ -91,6 +91,14 @@ StPharoApplication >> start [
 StPharoApplication >> startUp: resuming [
 ]
 
+{ #category : #'accessing resources' }
+StPharoApplication >> styleSheet [
+
+	^ StPharoStyleContributor allSubclasses 
+			inject: super styleSheet 
+			into: [ :accum :each | accum , (each new styleSheetContribution) ]
+]
+
 { #category : #settings }
 StPharoApplication >> toolbarDisplayMode [
 

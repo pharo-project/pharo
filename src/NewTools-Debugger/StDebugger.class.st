@@ -158,6 +158,11 @@ StDebugger class >> debugSession: aDebugSession [
 	^ debugger
 ]
 
+{ #category : #accessing }
+StDebugger class >> debuggerContextClass [
+	^ StDebuggerContext
+]
+
 { #category : #settings }
 StDebugger class >> debuggerLayoutSettingsOn: aBuilder [
 	<systemsettings>
@@ -524,11 +529,6 @@ StDebugger >> debuggerActionModel [
 ]
 
 { #category : #accessing }
-StDebugger >> debuggerContextClass [
-	^ StDebuggerContext
-]
-
-{ #category : #accessing }
 StDebugger >> debuggerInspectorClass [
 	^ StDebuggerInspector
 ]
@@ -661,7 +661,7 @@ StDebugger >> initializeInspector [
 	inspector := self
 		             instantiate: self debuggerInspectorClass
 		             on:
-		             (self debuggerInspectorModelClass on: self debuggerContextClass new).
+		             (self debuggerInspectorModelClass on: self newDebuggerContext).
 	inspector label: 'Receiver'
 ]
 
@@ -738,7 +738,13 @@ StDebugger >> initializeStack [
 			self updateWindowTitle ] ].
 	stackHeader := self instantiate: StHeaderBar.
 	stackHeader label: 'Stack'.
-	stackHeader toolbarActions: (CmCommandGroup new register: (StDebuggerSettingsCommand forSpecWithIconNamed: #configuration); asSpecGroup)
+	stackHeader toolbarActions: (CmCommandGroup new
+			 register:
+				 ((StDebuggerToggleFilterStackCommand forSpecContext: self) 
+					  iconName: #changeSorter);
+			 register:
+				 (StDebuggerSettingsCommand forSpecWithIconNamed: #configuration);
+			 asSpecGroup)
 ]
 
 { #category : #initialization }
@@ -780,6 +786,22 @@ StDebugger >> interruptedContext [
 StDebugger >> interruptedProcess [
 
 	^ self session interruptedProcess
+]
+
+{ #category : #'instance creation' }
+StDebugger >> newDebuggerContext [
+
+	^ self class debuggerContextClass new
+		  exception: self session exception;
+		  yourself
+]
+
+{ #category : #'instance creation' }
+StDebugger >> newDebuggerContextFor: aContext [
+
+	^ self newDebuggerContext
+		  context: aContext;
+		  yourself
 ]
 
 { #category : #'accessing context' }
@@ -1186,7 +1208,7 @@ StDebugger >> updateInspectorFromContext: aContext [
 		updateLayoutForContexts: self session interruptedContext
 		isAssertionFailure:
 		self debuggerActionModel isInterruptedContextAnAssertEqualsFailure.
-	inspector updateWith: (self debuggerContextClass context: aContext).
+	inspector updateWith: (self newDebuggerContextFor: aContext).
 	self flag: #DBG_INSPECTOR_UPDATE_BUG.
 	inspector getRawInspectorPresenterOrNil ifNotNil: [ :p | p update ]
 ]
@@ -1239,6 +1261,7 @@ StDebugger >> updateStep [
 	self flag: #DBG_UPDATE_OF_MODEL_SHOULD_BE_AUTOMATED.
 	debuggerActionModel updateTopContext.
 	debuggerActionModel updateContextPredicate.	
+	debuggerActionModel updateDebugSession.
 		
 	self updateStackFromSession: self session.
 	self updateWindowTitle.
