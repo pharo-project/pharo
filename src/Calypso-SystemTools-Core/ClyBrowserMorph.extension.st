@@ -32,12 +32,12 @@ ClyBrowserMorph >> confirmEmptySystemQuery: aQuery excluding: classes [
 	| showResult result |
 	
 	result := aQuery execute.
-	(result isEmpty or: [ ((result items collect: [:each | each origin]) difference: classes ) isEmpty]) ifTrue: [ ^true ].
+	(result isEmpty or: [ ((result items collect: [:each | each origin]) difference: classes ) isEmpty]) ifTrue: [ ^#(true false) ].
 	
 	showResult := UIManager default confirm: 'There are '
 		, result size asString, ' ', aQuery description, '. Show them?'.
 	showResult ifTrue: [self spawnQueryBrowserOn: aQuery].
-	^false
+	^Array with: false with: showResult
 ]
 
 { #category : #'*Calypso-SystemTools-Core' }
@@ -48,19 +48,19 @@ ClyBrowserMorph >> confirmUnusedClasses: classes [
 	refQuery := ClyClassReferencesQuery toAny: classes from: self systemScope.	
 	"we need to exclude both the class and instance side of the class"
 	noUsers := self confirmEmptySystemQuery: refQuery excluding: (classes flatCollect: [ :each | { each . each classSide } ]).
-	
 	subclasses := (classes flatCollect: [:each | each subclasses]) copyWithoutAll: classes.
 	subclasses ifNotEmpty: [ 
-		noUsers := false.
+		noUsers at: 1 put: (false and: noUsers first).
 		answer := UIManager default confirm: 'There are subclasses. Show them?'.
-		answer ifTrue: [ self spawnQueryBrowserOn: (ClyConstantQuery returning: subclasses) ] ].
+		answer ifTrue: [ self spawnQueryBrowserOn: (ClyConstantQuery returning: subclasses).
+			noUsers at: 2 put: true. ] ].
 	
 	users := (classes flatCollect: [:each | each users]) copyWithoutAll: classes.
 	users ifNotEmpty: [ 
-		noUsers := false.
+		noUsers at: 1 put: (false and: noUsers first).
 		answer := UIManager default confirm: 'There are users of trait. Show them?'. 
-		answer ifTrue: [ self spawnQueryBrowserOn: (ClyConstantQuery returning: users) ]].
-	
+		answer ifTrue: [ self spawnQueryBrowserOn: (ClyConstantQuery returning: users).
+			noUsers at: 2 put: true. ]].
 	^noUsers
 ]
 

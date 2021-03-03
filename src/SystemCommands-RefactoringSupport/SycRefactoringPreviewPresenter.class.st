@@ -35,7 +35,7 @@ Class {
 
 { #category : #specs }
 SycRefactoringPreviewPresenter class >> defaultSpec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #table;
 		add: #scopeDropList withConstraints: [ :constraints | constraints height: 30 ];
 		add: #diffPresenter;
