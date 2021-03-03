@@ -10,9 +10,7 @@ Class {
 
 { #category : #private }
 RBRenameInstanceVariableChange >> addNewVariable [
-	self flag: #todo.
-	"We should use the factory"
-	(RBAddInstanceVariableChange add: newName to: self changeClass)
+	(changeFactory addInstanceVariable: newName to: self changeClass)
 		execute
 ]
 
@@ -42,8 +40,6 @@ RBRenameInstanceVariableChange >> printOn: aStream [
 
 { #category : #private }
 RBRenameInstanceVariableChange >> removeOldVariable [
-	self flag: #todo.
-	"We should use the factory"
-	(RBRemoveInstanceVariableChange remove: oldName from: self changeClass) 
+	(changeFactory removeInstanceVariable: oldName from: self changeClass) 
 		execute
 ]

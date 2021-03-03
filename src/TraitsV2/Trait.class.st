@@ -46,8 +46,7 @@ Trait class >> configureBuilder: builder withName: aName traitComposition: aTrai
 		sharedPools: '';
 		category: aPackageName;
 		traitComposition: aTraitCompositionOrCollection asTraitComposition;
-		classTraitComposition: aTraitCompositionOrCollection asTraitComposition classComposition;
-		classSlots: #()
+		classTraitComposition: aTraitCompositionOrCollection asTraitComposition classComposition
 ]
 
 { #category : #'old pharo 8 syntax' }

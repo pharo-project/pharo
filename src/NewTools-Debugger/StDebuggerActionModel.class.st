@@ -83,13 +83,13 @@ StDebuggerActionModel >> contextPredicate [
 StDebuggerActionModel >> contextPredicateFor: aContext [
 
 	| postMortem ex |
-	
 	postMortem := self isContextPostMortem: aContext.
 
-	(self contextSignalsAnException: aContext) ifFalse:[^ self predicateFor: aContext postMortem: postMortem].
-	
+	(self contextSignalsAnException: aContext) ifFalse: [ 
+		^ self predicateFor: aContext postMortem: postMortem ].
+
 	ex := aContext receiver.
-	((ex isKindOf: TestFailure) ) ifTrue: [ 
+	(ex isKindOf: TestFailure) ifTrue: [ 
 		^ self predicateFor: aContext failure: ex postMortem: postMortem ].
 
 	^ self predicateFor: aContext exception: ex postMortem: postMortem
@@ -340,6 +340,18 @@ StDebuggerActionModel >> updateContextPredicate [
 StDebuggerActionModel >> updateContextPredicateFor: aContext [    
 	contextPredicate := self contextPredicateFor: aContext.
 	^contextPredicate
+]
+
+{ #category : #'debug - session' }
+StDebuggerActionModel >> updateDebugSession [
+	self contextPredicate updateSessionForModel: self 
+		
+]
+
+{ #category : #'debug - session' }
+StDebuggerActionModel >> updateDebugSessionException: e [
+
+	self session exception: e
 ]
 
 { #category : #context }

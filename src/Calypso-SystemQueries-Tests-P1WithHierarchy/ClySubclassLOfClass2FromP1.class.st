@@ -16,3 +16,8 @@ ClySubclassLOfClass2FromP1 >> subclassClassVar1Reader [
 ClySubclassLOfClass2FromP1 >> subclassClassVar1Writer [
 	ClassVar1 := #subclassClassVar1Value
 ]
+
+{ #category : #'as yet unclassified' }
+ClySubclassLOfClass2FromP1 >> subclassClassVarReader [
+	^SubclassClassVar
+]
