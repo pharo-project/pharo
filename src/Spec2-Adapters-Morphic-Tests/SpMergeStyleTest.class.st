@@ -9,7 +9,7 @@ Class {
 	#category : #'Spec2-Adapters-Morphic-Tests'
 }
 
-{ #category : #tests }
+{ #category : #running }
 SpMergeStyleTest >> setUp [ 
 
 	super setUp.
