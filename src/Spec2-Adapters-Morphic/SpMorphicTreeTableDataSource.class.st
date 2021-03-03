@@ -105,6 +105,12 @@ SpMorphicTreeTableDataSource >> isFirstColumn: column [
 ]
 
 { #category : #accessing }
+SpMorphicTreeTableDataSource >> itemAtIndex: anInteger [ 
+	
+	^ self allShownItems at: anInteger
+]
+
+{ #category : #accessing }
 SpMorphicTreeTableDataSource >> itemAtPath: aPath [ 
 	
 	^ self itemAtPath: aPath expanding: false

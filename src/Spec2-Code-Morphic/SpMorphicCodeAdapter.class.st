@@ -198,16 +198,6 @@ SpMorphicCodeAdapter >> setEditingModeFor: textArea [
 			super setEditingModeFor: textArea ]
 ]
 
-{ #category : #generated }
-SpMorphicCodeAdapter >> setEditingModeFor: textArea withBehavior: aBehavior [
-
-	self deprecated:
-		'Use #setEditingModeFor:withBehavior:forScripting: instead'.
-	aBehavior
-		ifNotNil: [ textArea beForSmalltalkCodeInClass: aBehavior ]
-		ifNil: [ textArea beForSmalltalkScripting ]
-]
-
 { #category : #private }
 SpMorphicCodeAdapter >> setEditingModeFor: textArea withBehavior: aBehavior forScripting: aBoolean [
 
