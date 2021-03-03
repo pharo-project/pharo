@@ -1511,6 +1511,18 @@ SystemWindow >> offerWindowMenu [
 	aMenu popUpEvent: self currentEvent in: self world
 ]
 
+{ #category : #'as yet unclassified' }
+SystemWindow >> openInWorldExtent: extent [
+
+	"This msg and its callees result in the window being activeOnlyOnTop"
+
+	self
+		deprecated: 'Use #extent: instead'
+		transformWith:
+		'`@rec openInWorldExtent: `@arg' -> '`@rec extent: `@arg'.
+	^ self extent: extent
+]
+
 { #category : #'open/close' }
 SystemWindow >> openModal [
 	self openInWorld.
