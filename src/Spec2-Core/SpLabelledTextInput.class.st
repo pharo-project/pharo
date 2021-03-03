@@ -19,16 +19,6 @@ SpLabelledTextInput class >> defaultSpec [
 	^ self labelLeft
 ]
 
-{ #category : #generated }
-SpLabelledTextInput >> acceptBlock: aBlockWithOneArgument [
-
-	self
-		deprecated: 'Use #whenSubmitDo: instead'
-		transformWith:
-		'`@rec acceptBlock: `@arg' -> '`@rec whenSubmitDo: `@arg'.
-	^ self whenSubmitDo: aBlockWithOneArgument
-]
-
 { #category : #'api-shortcuts' }
 SpLabelledTextInput >> beEncrypted [
 	^ self input beEncrypted

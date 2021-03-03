@@ -124,9 +124,13 @@ SpComponentListDataSource >> transferFor: passenger from: aMorph [
 
 { #category : #private }
 SpComponentListDataSource >> widgetFor: aPresenter [
+	| widget |
 
 	aPresenter adapter ifNotNil: [ :adapter | ^ adapter widget ].
-	^ aPresenter buildWithSpec
+	widget := aPresenter buildWithSpec
 		vResizing: #shrinkWrap;
-		yourself
+		yourself.
+	aPresenter adapter applyStyle: widget. 
+		
+	^ widget
 ]
