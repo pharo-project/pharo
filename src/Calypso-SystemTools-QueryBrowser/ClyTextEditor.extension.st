@@ -32,7 +32,7 @@ ClyTextEditor >> implementorsOf: selectedSelector [
 ClyTextEditor >> implementorsOfIt [
 	| selector |
 
-	"self lineSelectAndEmptyCheck: [^ self]."
+	self lineSelectAndEmptyCheck: [^ self].
 	(selector := self selectedSelector) == nil ifTrue: [^ textArea flash].
 	selector 	isCharacter ifTrue: [ ^ textArea flash ].
 	self browser browseImplementorsOf: selector
@@ -82,7 +82,7 @@ ClyTextEditor >> sendersOf: selectedSelector [
 { #category : #'*Calypso-SystemTools-QueryBrowser' }
 ClyTextEditor >> sendersOfIt [
 	| selector |
-	"self lineSelectAndEmptyCheck: [^ self]."
+	self lineSelectAndEmptyCheck: [^ self].
 	(selector := self selectedSelector) == nil ifTrue: [^ textArea flash].
 	
 	self sendersOf: selector 
