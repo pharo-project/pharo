@@ -42,7 +42,9 @@ ClyBrowserMorph >> confirmEmptySystemQuery: aQuery excluding: classes [
 
 { #category : #'*Calypso-SystemTools-Core' }
 ClyBrowserMorph >> confirmUnusedClasses: classes [
-	
+	"Returns a vector of size 2
+	The first value is TRUE when it doesn't have any reference, subclass or is used (for traits), otherwise is FALSE.
+	The second value is TRUE when in case of having references, subclasses or users and the user agreed to be shown those references, otherwise is FALSE  "
 	| refQuery noUsers answer subclasses users |
 	
 	refQuery := ClyClassReferencesQuery toAny: classes from: self systemScope.	
