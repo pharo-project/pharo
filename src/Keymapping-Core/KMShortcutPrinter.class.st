@@ -48,6 +48,20 @@ KMShortcutPrinter class >> toString: aShortcut [
 		visit
 ]
 
+{ #category : #private }
+KMShortcutPrinter >> genericShortcutFor: aShortcut [
+
+	| char |
+	char := self genericSpecialCharacter: aShortcut platformCharacter.	
+	^ String streamContents: [ :stream |
+		(self shortcutModifiersOf: aShortcut)
+			do: [ :each | stream << each ]
+			separatedBy: [ stream << '+' ].
+		stream << '+'.
+		stream << char ]
+	
+]
+
 { #category : #visiting }
 KMShortcutPrinter >> genericSpecialCharacter: char [ 
 
@@ -65,6 +79,21 @@ KMShortcutPrinter >> macSpecialCharacter: char [
 	^ char name asUppercase
 ]
 
+{ #category : #private }
+KMShortcutPrinter >> osxShortcutFor: aShortcut [
+
+	| keyParts symbols char |
+
+	keyParts := self shortcutModifiersOf: aShortcut.
+	symbols := keyParts 
+		inject: ''
+		into: [ :s :each | 
+			s, (self class symbolTableAt: each ifAbsent: [ each capitalized ]) ].
+	
+	char := self macSpecialCharacter: aShortcut platformCharacter.
+	^ symbols, char asString
+]
+
 { #category : #accessing }
 KMShortcutPrinter >> shortcut: aShortcut [
 
@@ -72,10 +101,10 @@ KMShortcutPrinter >> shortcut: aShortcut [
 ]
 
 { #category : #private }
-KMShortcutPrinter >> shortcutModifiers [
+KMShortcutPrinter >> shortcutModifiersOf: aShortcut [
 	| modifiers |
 	
-	modifiers := (shortcut platformModifier asString substrings: '+') collect: [:each | each trimBoth].
+	modifiers := (aShortcut platformModifier asString substrings: '+') collect: [:each | each trimBoth].
 	"Ensure shift is first"
 	((modifiers includes: 'Shift') 
 		and: [ modifiers first ~= 'Shift' ])
@@ -85,29 +114,37 @@ KMShortcutPrinter >> shortcutModifiers [
 ]
 
 { #category : #visiting }
+KMShortcutPrinter >> visitCombinationShortcutOnGeneric: aShortcut [
+
+	^ (shortcut sequence collect: [ :e | self genericShortcutFor: e ]) joinUsing: ','
+]
+
+{ #category : #visiting }
+KMShortcutPrinter >> visitCombinationShortcutOnOSX: aShortcut [
+
+	^ (shortcut sequence collect: [ :e | self osxShortcutFor: e ]) joinUsing: ','
+]
+
+{ #category : #visiting }
 KMShortcutPrinter >> visitGeneric: aPlatform [
-	| char |
 	
-	char := self genericSpecialCharacter: shortcut platformCharacter.	
-	^ String streamContents: [ :stream |
-		self shortcutModifiers
-			do: [ :each | stream << each ]
-			separatedBy: [ stream << '+' ].
-		stream << '+'.
-		stream << char ]
-	
+	^ shortcut acceptVisitorForGenericPlatform: self
 ]
 
 { #category : #visiting }
 KMShortcutPrinter >> visitMacOS: aPlatform [
-	| keyParts symbols char |
-
-	keyParts := self shortcutModifiers.
-	symbols := keyParts 
-		inject: ''
-		into: [ :s :each | 
-			s, (self class symbolTableAt: each ifAbsent: [ each capitalized ]) ].
 	
-	char := self macSpecialCharacter: shortcut platformCharacter.
-	^ symbols, char asString
+	^ shortcut acceptVisitorForOSXPlatform: self
+]
+
+{ #category : #visiting }
+KMShortcutPrinter >> visitSingleShortcutOnGeneric: aShortcut [
+
+	^ self genericShortcutFor: shortcut
+]
+
+{ #category : #visiting }
+KMShortcutPrinter >> visitSingleShortcutOnOSX: aShortcut [
+
+	^ self osxShortcutFor: shortcut
 ]
