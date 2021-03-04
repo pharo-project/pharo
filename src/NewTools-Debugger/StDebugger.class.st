@@ -738,7 +738,13 @@ StDebugger >> initializeStack [
 			self updateWindowTitle ] ].
 	stackHeader := self instantiate: StHeaderBar.
 	stackHeader label: 'Stack'.
-	stackHeader toolbarActions: (CmCommandGroup new register: (StDebuggerSettingsCommand forSpecWithIconNamed: #configuration); asSpecGroup)
+	stackHeader toolbarActions: (CmCommandGroup new
+			 register:
+				 ((StDebuggerToggleFilterStackCommand forSpecContext: self) 
+					  iconName: #changeSorter);
+			 register:
+				 (StDebuggerSettingsCommand forSpecWithIconNamed: #configuration);
+			 asSpecGroup)
 ]
 
 { #category : #initialization }

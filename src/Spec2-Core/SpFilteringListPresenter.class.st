@@ -116,8 +116,8 @@ SpFilteringListPresenter >> filterText [
 SpFilteringListPresenter >> initializePresenters [
 
 	filterInputPresenter := self newTextInput
-		                        placeholder: 'Filter...';
-		                        yourself.
+		placeholder: 'Filter...';
+		yourself.
 	listPresenter := self newListToFilter.
 	self matchSubstring
 ]

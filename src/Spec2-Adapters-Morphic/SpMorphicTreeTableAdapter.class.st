@@ -16,6 +16,14 @@ SpMorphicTreeTableAdapter class >> intercellSpacing [
 	^ 2@0
 ]
 
+{ #category : #factory }
+SpMorphicTreeTableAdapter >> acceptDroppingMorph: aTransferMorph event: anEvent [ 
+	
+	self presenter acceptDrop cull: (self 
+		transferFrom: aTransferMorph 
+		event: anEvent)
+]
+
 { #category : #initialization }
 SpMorphicTreeTableAdapter >> addActivationKeyBindings: aWidget [
 
@@ -125,6 +133,8 @@ SpMorphicTreeTableAdapter >> buildWidget [
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		intercellSpacing: self class intercellSpacing;
+		dragEnabled: self dragEnabled;
+		dropEnabled: self dropEnabled;
 		yourself.
 
 	self addModelTo: tableMorph.
@@ -408,6 +418,24 @@ SpMorphicTreeTableAdapter >> suspendSelectionEventsDuring: aBlock [
 		 subscriptions do: [ :each | registry add: each ] ]
 ]
 
+{ #category : #updating }
+SpMorphicTreeTableAdapter >> transferFrom: aTransferMorph event: anEvent [
+	| rowAndColumn aTarget |
+
+	rowAndColumn := self widget container rowAndColumnIndexContainingPoint: anEvent position.
+	
+	aTarget := rowAndColumn first 
+		ifNil: [ nil ]
+		ifNotNil: [ :anIndex | (self widget dataSource itemAtIndex: anIndex) data ].
+		
+	^ SpDragAndDropTransferToTree new
+		passenger: aTransferMorph passenger;
+		row: (rowAndColumn first ifNil: [ 0 ]);
+		column: (rowAndColumn second ifNil: [ 0 ]);
+		target: aTarget;
+		yourself
+]
+
 { #category : #private }
 SpMorphicTreeTableAdapter >> triggerActivationAction [
 
@@ -425,4 +453,12 @@ SpMorphicTreeTableAdapter >> updateSelectionOf: tableMorph [
 	self 
 		selectInto: tableMorph 
 		paths: self model selection selectedPaths
+]
+
+{ #category : #updating }
+SpMorphicTreeTableAdapter >> wantsDroppedMorph: aTransferMorph event: anEvent [ 
+	
+	^ self presenter wantsDrop cull: (self 
+		transferFrom: aTransferMorph 
+		event: anEvent)
 ]

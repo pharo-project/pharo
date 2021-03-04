@@ -40,10 +40,7 @@ Class {
 { #category : #copying }
 SpStyleClass >> , joinStyle [
 
-	^ self class new
-		name: 'application';
-		styles: self styles, joinStyle styles;
-		yourself
+	^ self mergeWith: joinStyle
 ]
 
 { #category : #adding }
@@ -145,10 +142,42 @@ SpStyleClass >> fullName [
 		ifNil: [ self name ])
 ]
 
+{ #category : #initialization }
+SpStyleClass >> initialize [
+
+	super initialize.
+	styles := #()
+]
+
 { #category : #testing }
 SpStyleClass >> isStyleClass [
 
 	^ true
+]
+
+{ #category : #copying }
+SpStyleClass >> mergeWith: joinStyle [
+
+	^ self class new
+		name: name;
+		styles: (self mergedStylesWith: joinStyle);
+		yourself
+]
+
+{ #category : #private }
+SpStyleClass >> mergedStylesWith: anotherStyle [
+
+	| allStyles results|
+	
+	results := OrderedCollection new.
+	
+	allStyles := (self styles , anotherStyle styles) 
+		groupedBy: [:e | e isStyleClass ifTrue: [ e name ] ifFalse: [ e class]].
+	
+	allStyles valuesDo: [ :value | 
+		results add: (value allButFirst inject: value first into: [:accum :each | accum mergeWith: each ])].
+	
+	^ results asArray
 ]
 
 { #category : #accessing }

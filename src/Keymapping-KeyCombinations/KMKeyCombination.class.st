@@ -50,6 +50,19 @@ KMKeyCombination >> = aShortcut [
 	^ aShortcut isKindOf: self species
 ]
 
+{ #category : #printing }
+KMKeyCombination >> acceptVisitorForGenericPlatform: aKMShortcutPrinter [ 
+
+	^ aKMShortcutPrinter visitSingleShortcutOnGeneric: self
+]
+
+{ #category : #printing }
+KMKeyCombination >> acceptVisitorForOSXPlatform: aKMShortcutPrinter [ 
+	
+	^ aKMShortcutPrinter visitSingleShortcutOnOSX: self
+
+]
+
 { #category : #converting }
 KMKeyCombination >> asKeyCombination [
 	^self

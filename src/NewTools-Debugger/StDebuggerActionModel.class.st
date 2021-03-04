@@ -8,7 +8,8 @@ Class {
 		'debugger',
 		'session',
 		'contextPredicate',
-		'topContext'
+		'topContext',
+		'filterStack'
 	],
 	#classVars : [
 		'ShouldFilterStack'
@@ -116,10 +117,15 @@ StDebuggerActionModel >> fileOutMethod: aMethod [
 	aMethod methodClass fileOutMethod: aMethod selector
 ]
 
+{ #category : #accessing }
+StDebuggerActionModel >> filterStack [
+	^ filterStack
+]
+
 { #category : #'debug - stack' }
 StDebuggerActionModel >> filterStack: aStack [
 	| context contextsToReject |	
-	self class shouldFilterStack ifFalse: [  ^aStack ].
+	self shouldFilterStack ifFalse: [  ^aStack ].
 	context := aStack first.
 	contextsToReject := 0.
 
@@ -153,7 +159,8 @@ StDebuggerActionModel >> implement: aMessage classified: messageCategory inClass
 { #category : #initialize }
 StDebuggerActionModel >> initialize [
 	super initialize.
-	self computeInitialTopContext
+	self computeInitialTopContext.
+	filterStack := true
 ]
 
 { #category : #accessing }
@@ -302,6 +309,12 @@ StDebuggerActionModel >> session: aDebugSession [
 	session := aDebugSession
 ]
 
+{ #category : #'debug - stack' }
+StDebuggerActionModel >> shouldFilterStack [
+
+	^ self filterStack and: [ self class shouldFilterStack ]
+]
+
 { #category : #context }
 StDebuggerActionModel >> statusStringForContext [
 
@@ -310,12 +323,18 @@ StDebuggerActionModel >> statusStringForContext [
 
 { #category : #'debug - stepping' }
 StDebuggerActionModel >> stepInto: aContext [ 
+	filterStack := false.
 	self session stepInto: aContext.
-	self updateTopContext
+	self updateTopContext.
+
 ]
 
 { #category : #'debug - stepping' }
 StDebuggerActionModel >> stepOver: aContext [
+	filterStack := (self topContext method hasPragmaNamed:
+		                #debuggerCompleteToSender)
+		               ifTrue: [ false ]
+		               ifFalse: [ self class shouldFilterStack ].
 	self session stepOver: aContext.
 	self updateTopContext
 ]

@@ -17,10 +17,7 @@ SycMoveMethodsToClassSideCommand class >> canBeExecutedInContext: aToolContext [
 SycMoveMethodsToClassSideCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation 
-		byItemOf: ClyMoreRefactorsMenuGroup 
-		order: 50
-		for: ClyMethod asCalypsoItemContext
+	^ SycMethodMenuActivation byRootGroupItemOrder: 50 for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #activation }

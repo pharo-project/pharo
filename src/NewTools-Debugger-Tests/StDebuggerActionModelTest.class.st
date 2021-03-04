@@ -182,6 +182,67 @@ StDebuggerActionModelTest >> testDefaultShouldFilterStack [
 	self assert: StDebuggerActionModel shouldFilterStack
 ]
 
+{ #category : #'tests - stack filtering' }
+StDebuggerActionModelTest >> testDynamicShouldFilterStack [
+
+	|mockDebugActionModel|
+	mockDebugActionModel := StMockDebuggerActionModel new.
+	
+	self assert: mockDebugActionModel filterStack.
+	
+	StDebuggerActionModel shouldFilterStack: true.
+	self assert: mockDebugActionModel shouldFilterStack.
+	
+	StDebuggerActionModel shouldFilterStack: false.
+	self deny: mockDebugActionModel shouldFilterStack 
+]
+
+{ #category : #'tests - stack filtering' }
+StDebuggerActionModelTest >> testDynamicShouldFilterStackUpdate [
+
+	|mockDebugActionModel context|
+	mockDebugActionModel := StMockDebuggerActionModel new.		
+	self assert: mockDebugActionModel filterStack.
+	self assert: mockDebugActionModel shouldFilterStack.
+	
+	context := Context
+		sender: nil
+		receiver: nil
+		method: Object >> #doesNotUnderstand:
+		arguments: #(#message).
+	mockDebugActionModel interruptedContext: context.
+	mockDebugActionModel stepInto: nil.
+	self deny: mockDebugActionModel filterStack.
+	self deny: mockDebugActionModel shouldFilterStack.
+	
+	mockDebugActionModel stepOver: nil.
+	self deny: mockDebugActionModel filterStack.
+	self deny: mockDebugActionModel shouldFilterStack.
+	
+	mockDebugActionModel := StMockDebuggerActionModel new.		
+	self assert: mockDebugActionModel filterStack.
+	self assert: mockDebugActionModel shouldFilterStack.
+	
+	context := Context
+		sender: nil
+		receiver: nil
+		method: Object >> #asString
+		arguments: #().
+	mockDebugActionModel interruptedContext: context.
+	mockDebugActionModel stepInto: nil.
+	self deny: mockDebugActionModel filterStack.
+	self deny: mockDebugActionModel shouldFilterStack.
+	
+	mockDebugActionModel stepOver: nil.
+	self assert: mockDebugActionModel filterStack.
+	self assert: mockDebugActionModel shouldFilterStack.
+	
+	
+	
+	
+	
+]
+
 { #category : #'tests - actions' }
 StDebuggerActionModelTest >> testFileOutMethod [
 	debugActionModel fileOutMethod: self.
