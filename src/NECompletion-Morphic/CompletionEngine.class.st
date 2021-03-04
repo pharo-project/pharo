@@ -187,8 +187,8 @@ CompletionEngine >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 	keyCharacter := aKeyboardEvent keyCharacter.
 	controlKeyPressed := aKeyboardEvent controlKeyPressed.
 	
-	self editor atCompletionPosition ifFalse: [ 
-		^ (self smartInputWithEvent: aKeyboardEvent ) notNil ].	
+	(self smartInputWithEvent: aKeyboardEvent )
+		ifNotNil: [ ^ true ].
 	
 	self isMenuOpen
 		ifFalse: [ ^ self handleKeystrokeWithoutMenu: aKeyboardEvent ].
