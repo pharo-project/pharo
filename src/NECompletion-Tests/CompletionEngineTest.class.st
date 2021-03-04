@@ -244,6 +244,16 @@ CompletionEngineTest >> testSmartBackspaceWithSelection [
 ]
 
 { #category : #'tests-keyboard' }
+CompletionEngineTest >> testSmartCharacterAfterEspace [
+	"Test we surround selected text with smart characters properly"
+	self
+		setEditorText: 'a b';
+		selectFrom: 2 to: 4.
+	editor keystroke: (self keyboardPressFor: $").
+	self assert: editor text equals: 'a" b"'.
+]
+
+{ #category : #'tests-keyboard' }
 CompletionEngineTest >> testSmartCharacterPairForIfAbsent [
 
 	"Check leading smart character has matching trailing character - e.g. { and }"
