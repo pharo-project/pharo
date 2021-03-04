@@ -46,11 +46,19 @@ StPharoMorphicConfiguration >> styleSheetCommon [
 	"Just an example on how to build styles programatically ;)"
 
 	^ SpStyle newApplication 
-		addClass: 'searchInputField' with: [ :searchInputField |
-			searchInputField addClass: 'stSpotter' with: [ :spotter |
-				spotter 
-					addPropertyGeometryWith: [ :geometry | geometry height: 30 ];
-					addPropertyFontWith: [ :font | font size: 12 ] ] ];
+		addClass: 'presenter' with: [ :presenter |	presenter 
+			addClass: 'stSpotter' with: [ :spotter | spotter 
+				addPropertyDrawWith: [ :draw | draw color: Color transparent ] ];
+			addClass: 'stSpotterLink' with: [ :spotter | spotter 
+				addPropertyGeometryWith: [ :geometry | geometry height: 22; vResizing: false ] ] ]; 
+		addClass: 'componentList' with: [ :componentList | componentList 
+			addClass: 'stSpotterList' with: [ :spotter | spotter 
+				addPropertyDrawWith: [ :draw | draw color: Color transparent ] ] ];
+		addClass: 'searchInputField' with: [ :searchInputField | searchInputField 
+			addClass: 'stSpotterSearch' with: [ :spotter | spotter
+				addPropertyDrawWith: [ :draw | draw color: Color transparent ];
+				addPropertyGeometryWith: [ :geometry | geometry minHeight: 30; vResizing: false ];
+				addPropertyFontWith: [ :font | font size: 12 ] ] ];
 		yourself
 ]
 
