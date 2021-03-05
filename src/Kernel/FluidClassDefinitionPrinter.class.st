@@ -361,6 +361,16 @@ FluidClassDefinitionPrinter >> tagOn: s [
 				nextPutAll: ''';' ] ]
 ]
 
+{ #category : #printing }
+FluidClassDefinitionPrinter >> testClassDefinitionTemplateInPackage: aPackageName [
+
+		^ String streamContents: [ :s |
+						s nextPutAll: 'TestCase << #MyTest'; crtab.
+						s nextPutAll: 'slots: {};'; crtab. 
+						s nextPutAll: 'tag: '''' ;';crtab.
+						s nextPutAll: 'package: ''', aPackageName, '''' ] 
+]
+
 { #category : #'definition double dispatch API' }
 FluidClassDefinitionPrinter >> traitDefinitionString [
 
