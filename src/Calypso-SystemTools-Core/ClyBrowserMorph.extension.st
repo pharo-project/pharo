@@ -44,7 +44,7 @@ ClyBrowserMorph >> confirmEmptySystemQuery: aQuery excluding: classes [
 ClyBrowserMorph >> confirmUnusedClasses: classes [
 	"Returns a vector of size 2
 	The first value is TRUE when it doesn't have any reference, subclass or is used (for traits), otherwise is FALSE.
-	The second value is TRUE when in case of having references, subclasses or users and the user agreed to be shown those references, otherwise is FALSE  "
+	The second value is TRUE when in case of having references, subclasses or users and the user agreed to be shown those references, otherwise is FALSE. "
 	| refQuery noUsers answer subclasses users |
 	
 	refQuery := ClyClassReferencesQuery toAny: classes from: self systemScope.	
@@ -52,14 +52,14 @@ ClyBrowserMorph >> confirmUnusedClasses: classes [
 	noUsers := self confirmEmptySystemQuery: refQuery excluding: (classes flatCollect: [ :each | { each . each classSide } ]).
 	subclasses := (classes flatCollect: [:each | each subclasses]) copyWithoutAll: classes.
 	subclasses ifNotEmpty: [ 
-		noUsers at: 1 put: (false and: noUsers first).
+		noUsers at: 1 put: false.
 		answer := UIManager default confirm: 'There are subclasses. Show them?'.
 		answer ifTrue: [ self spawnQueryBrowserOn: (ClyConstantQuery returning: subclasses).
 			noUsers at: 2 put: true. ] ].
 	
 	users := (classes flatCollect: [:each | each users]) copyWithoutAll: classes.
 	users ifNotEmpty: [ 
-		noUsers at: 1 put: (false and: noUsers first).
+		noUsers at: 1 put: false.
 		answer := UIManager default confirm: 'There are users of trait. Show them?'. 
 		answer ifTrue: [ self spawnQueryBrowserOn: (ClyConstantQuery returning: users).
 			noUsers at: 2 put: true. ]].
