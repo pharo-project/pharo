@@ -50,20 +50,20 @@ Class {
 { #category : #specs }
 SycMethodNameEditorPresenter class >> defaultEditableSpec [
 	<spec>
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 				add: 'Selector'
 					withConstraints: [ :aConstraints | aConstraints width: 80 ];
 				add: #selectorInput;
 				yourself);
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 				add: 'Arguments'
 					withConstraints: [ :aConstraints | aConstraints width: 80 ];
 				add: #argumentsList;
 				add:
-					(SpBoxLayout newVertical
+					(SpBoxLayout newTopToBottom
 						add: #upButton
 							withConstraints: [ :aConstraints | aConstraints height: 30 ];
 						add: #downButton
@@ -72,19 +72,19 @@ SycMethodNameEditorPresenter class >> defaultEditableSpec [
 					withConstraints: [ :aConstraints | aConstraints width: 30 ];
 				yourself);
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 				add: 'Edit'
 					withConstraints: [ :aConstraints | aConstraints width: 80 ];
 				add: #editParameter; 
 				add:
-					(SpBoxLayout newVertical
+					(SpBoxLayout newTopToBottom
 						add: #okEdit
 							withConstraints: [ :aConstraints | aConstraints height: 20 ];
 						yourself)
 					withConstraints: [ :aConstraints | aConstraints width: 30 ];
 				yourself);
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 				add: 'Preview'
 					withConstraints: [ :aConstraints | aConstraints width: 80 ];
 				add: #previewResult yourself);
@@ -93,20 +93,20 @@ SycMethodNameEditorPresenter class >> defaultEditableSpec [
 
 { #category : #specs }
 SycMethodNameEditorPresenter class >> defaultSpec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 				add: 'Selector'
 					withConstraints: [ :aConstraints | aConstraints width: 80 ];
 				add: #selectorInput;
 				yourself);
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 				add: 'Arguments'
 					withConstraints: [ :aConstraints | aConstraints width: 80 ];
 				add: #argumentsList;
 				add:
-					(SpBoxLayout newVertical
+					(SpBoxLayout newTopToBottom
 						add: #upButton
 							withConstraints: [ :aConstraints | aConstraints height: 30 ];
 						add: #downButton
@@ -115,7 +115,7 @@ SycMethodNameEditorPresenter class >> defaultSpec [
 					withConstraints: [ :aConstraints | aConstraints width: 30 ];
 				yourself);
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 				add: 'Preview'
 					withConstraints: [ :aConstraints | aConstraints width: 80 ];
 				add: #previewResult yourself);
