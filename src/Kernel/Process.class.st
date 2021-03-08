@@ -714,7 +714,7 @@ Process >> suspendingList [
 Process >> terminate [ 
 	"Stop the process that the receiver represents forever.  Unwind to execute pending ensure:/ifCurtailed: blocks before terminating."
 	terminating := self isTerminating
-		ifTrue: [ ^ ProcessAlreadyTerminating signal ]
+		ifTrue: [ ProcessAlreadyTerminating signal. ^self ]
 		ifFalse: [ true ].
 
 	self isActiveProcess 
