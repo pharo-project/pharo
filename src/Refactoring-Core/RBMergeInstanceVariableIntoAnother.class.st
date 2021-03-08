@@ -19,11 +19,6 @@ RBMergeInstanceVariableIntoAnother >> preconditions [
 ]
 
 { #category : #transforming }
-RBMergeInstanceVariableIntoAnother >> removeInstVar [
-	(class directlyDefinesInstanceVariable: variableName) ifTrue: [ class removeInstanceVariable: variableName ]
-]
-
-{ #category : #transforming }
 RBMergeInstanceVariableIntoAnother >> renameVariable [ 
 	model 
 		renameInstanceVariable: variableName
@@ -39,8 +34,6 @@ RBMergeInstanceVariableIntoAnother >> transform [
 	].
 	
 	self renameVariable.
-	
-	self removeInstVar.
 	
 	renameAccessors ifFalse: [ ^ self ].
 	self addNewAccessors.

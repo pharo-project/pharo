@@ -10,8 +10,8 @@ Class {
 
 { #category : #private }
 RBRenameInstanceVariableChange >> addNewVariable [
-	(changeFactory addInstanceVariable: newName to: self changeClass)
-		execute
+	(self changeClass allInstVarNames includes: newName) 
+		ifFalse: [ (changeFactory addInstanceVariable: newName to: self changeClass) execute ]
 ]
 
 { #category : #private }
@@ -40,6 +40,6 @@ RBRenameInstanceVariableChange >> printOn: aStream [
 
 { #category : #private }
 RBRenameInstanceVariableChange >> removeOldVariable [
-	(changeFactory removeInstanceVariable: oldName from: self changeClass) 
-		execute
+	(self changeClass allInstVarNames includes: oldName) 
+		ifTrue: [ (changeFactory removeInstanceVariable: oldName from: self changeClass) execute ]
 ]

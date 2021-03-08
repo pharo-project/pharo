@@ -194,6 +194,15 @@ ClySystemBrowserContext >> requestRemoveMethodStrategyFor: methods [
 ]
 
 { #category : #'user requests' }
+ClySystemBrowserContext >> requestSimpleVariable: queryTitle from: classes [
+
+	^tool searchDialog 
+		requestSingleObject: queryTitle 
+		from: ClyAllInstanceVariablesQuery sorted
+		inScope: (ClyClassScope ofAll: classes) withInheritedScope
+]
+
+{ #category : #'user requests' }
 ClySystemBrowserContext >> requestSingleClass: queryTitle [
 
 	^tool searchDialog requestSingleObject: queryTitle from: ClyAllClassesQuery sorted

@@ -22,8 +22,6 @@ RBMergeInstanceVariableIntoAnotherTest >> testReplaceVariableIntoAnother [
 	class := refactoring model classNamed: #RBBasicLintRuleTestData.
 	self assert: (class whichSelectorsReferToInstanceVariable: 'classBlock') isNotEmpty.
 	self executeRefactoring: refactoring.
-	self deny: (class directlyDefinesInstanceVariable: 'classBlock').
-	self assert: (class directlyDefinesInstanceVariable: 'anInstVar').
 	
 	self assert: (class whichSelectorsReferToInstanceVariable: 'classBlock') isEmpty.
 ]
