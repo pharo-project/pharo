@@ -17,9 +17,6 @@ NoUnusedVariablesLeftTest class >> defaultTimeLimit [
 NoUnusedVariablesLeftTest >> testNoUnusedClassVariablesLeft [
 	| variables classes validExceptions remaining |
 	
-	"turn this on when all class variables are cleaned"
-	self skip.
-	
 	variables := Smalltalk globals allBehaviors flatCollect: [ :each | each classVariables ].
 	variables := variables reject: [ :each | each isReferenced ].
 	
@@ -29,7 +26,9 @@ NoUnusedVariablesLeftTest >> testNoUnusedClassVariablesLeft [
 	
 	remaining := classes asOrderedCollection reject: [ :each  | validExceptions includes: each name].
 	
-	self assert: remaining isEmpty
+	"we have three left, there are issue tracker entries for those.
+	By testing for 3, we avoid that new cases are added"
+	self assert: remaining size <= 3
 ]
 
 { #category : #testing }
