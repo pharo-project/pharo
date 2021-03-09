@@ -8,7 +8,7 @@ Class {
 	#category : #'SystemCommands-ClassCommands'
 }
 
-{ #category : #testing }
+{ #category : #executing }
 SycCmInsertSubclassCommand >> executeRefactoring [
 	
 	| refactoring |
@@ -20,7 +20,7 @@ SycCmInsertSubclassCommand >> executeRefactoring [
 	refactoring execute
 ]
 
-{ #category : #testing }
+{ #category : #accessing }
 SycCmInsertSubclassCommand >> icon [
 	^ self iconNamed: #smallLoadProject
 ]
@@ -31,12 +31,12 @@ SycCmInsertSubclassCommand >> isApplicable [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : #accessing }
 SycCmInsertSubclassCommand >> name [
 	^'Insert subclass'
 ]
 
-{ #category : #testing }
+{ #category : #accessing }
 SycCmInsertSubclassCommand >> order [ 
 	^ 20
 ]

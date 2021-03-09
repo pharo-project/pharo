@@ -20,7 +20,7 @@ SycCmInsertSuperclassCommand >> executeRefactoring [
 	refactoring execute
 ]
 
-{ #category : #executing }
+{ #category : #accessing }
 SycCmInsertSuperclassCommand >> icon [
 	^ self iconNamed: #smallLoadProject
 ]
@@ -31,12 +31,12 @@ SycCmInsertSuperclassCommand >> isApplicable [
 	^ true
 ]
 
-{ #category : #executing }
+{ #category : #accessing }
 SycCmInsertSuperclassCommand >> name [
 	^'Insert superclass'
 ]
 
-{ #category : #executing }
+{ #category : #accessing }
 SycCmInsertSuperclassCommand >> order [ 
 	^ 30
 ]

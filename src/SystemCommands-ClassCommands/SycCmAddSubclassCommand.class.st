@@ -7,7 +7,7 @@ Class {
 	#category : #'SystemCommands-ClassCommands'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #executing }
 SycCmAddSubclassCommand >> executeRefactoring [
 	
 	| refactoring |

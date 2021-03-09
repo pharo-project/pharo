@@ -15,29 +15,8 @@ SycClassCmCommand class >> activationStrategy [
 	^ SycClassMenuActivation
 ]
 
-{ #category : #executing }
-SycClassCmCommand >> applyCommandResult [
-]
-
-{ #category : #executing }
-SycClassCmCommand >> execute [ 
-	[self prepareFullExecution.
-	self executeRefactoring.
-	self applyCommandResult] 
-		on: Exception do: [ :exc | self processCommandFailure: exc ]
-]
-
-{ #category : #executing }
-SycClassCmCommand >> executeRefactoring [
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #preparation }
 SycClassCmCommand >> prepareFullExecution [
+	super prepareFullExecution.
 	targetClass := context lastSelectedClass.
-]
-
-{ #category : #execution }
-SycClassCmCommand >> processCommandFailure: anException [
-	
-	context processFailure: anException of: self
 ]

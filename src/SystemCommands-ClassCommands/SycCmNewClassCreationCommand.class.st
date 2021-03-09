@@ -31,7 +31,7 @@ SycCmNewClassCreationCommand >> isApplicable [
 	^ false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #preparation }
 SycCmNewClassCreationCommand >> prepareFullExecution [
 	super prepareFullExecution.
 	newClassName := UIManager default request: 'Name of new class'.	
