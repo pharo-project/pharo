@@ -1,5 +1,5 @@
 "
-I'm an abstract class grouping generic methods for managing packages/classes/groups/methods from a browser
+I'm an utility class grouping generic methods for managing packages/classes/groups/methods from a browser
 "
 Class {
 	#name : #ToolModel,
