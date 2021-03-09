@@ -265,10 +265,18 @@ RBNamespace >> compile: aString in: aRBClass classified: aSymbol [
 
 { #category : #'accessing-classes' }
 RBNamespace >> createNewClassFor: aBehavior [ 
-	| nonMeta meta className |
+	| nonMeta meta className rbType rbMetaType |
 	className := aBehavior instanceSide name.
-	nonMeta := modelFactory rbClass existingNamed: className model: self.
-	meta := modelFactory rbMetaclass existingNamed: className model: self.
+	aBehavior isTrait 
+		ifTrue: [ 
+			rbType := modelFactory rbTrait.
+			rbMetaType := modelFactory rbTraitMetaclass.
+		] ifFalse: [ 
+			rbType := modelFactory rbClass.
+			rbMetaType := modelFactory rbMetaclass.
+		].
+	nonMeta := rbType existingNamed: className model: self.
+	meta := rbMetaType existingNamed: className model: self.
 	nonMeta category: aBehavior category.
 	^changedClasses at: className put: (Array with: nonMeta with: meta)
 ]

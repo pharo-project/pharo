@@ -15,7 +15,6 @@ Class {
 	#name : #SptSpotterProcessor,
 	#superclass : #AbstractSpotterProcessor,
 	#instVars : [
-		'order',
 		'filter',
 		'results',
 		'query',

@@ -42,7 +42,7 @@ RBClass class >> initialize [
 ]
 
 { #category : #'instance creation' }
-RBClass class >> named: aSymbol [ 
+RBClass class >> named: aSymbol [
 	^(self new)
 		name: aSymbol;
 		yourself

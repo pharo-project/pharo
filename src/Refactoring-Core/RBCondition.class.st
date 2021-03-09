@@ -257,7 +257,7 @@ RBCondition class >> isEmptyClass: anObject [
 ]
 
 { #category : #'instance creation' }
-RBCondition class >> isGlobal: aString in: aRBSmalltalk [ 
+RBCondition class >> isGlobal: aString in: aRBSmalltalk [
 	^self new 
 		type: (Array with: #isLiteralVariable with: aString)
 		block: [aRBSmalltalk includesGlobal: aString asSymbol]
