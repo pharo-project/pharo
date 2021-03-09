@@ -7,11 +7,5 @@ My  namespace usally knows me and my non meta class.
 Class {
 	#name : #RBTraitedMetaclass,
 	#superclass : #RBMetaclass,
-	#instVars : [
-		'localMethods',
-		'composition',
-		'baseLocalMethods',
-		'baseComposition'
-	],
 	#category : #'Refactoring-Core-Model'
 }

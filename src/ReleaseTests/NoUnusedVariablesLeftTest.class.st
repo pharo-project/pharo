@@ -46,7 +46,7 @@ NoUnusedVariablesLeftTest >> testNoUnusedInstanceVariablesLeft [
 	
 	"we have 28 left, there are issue tracker entries for those.
  	By testing for these, we avoid that new cases are added"
- 	self assert: remaining size <= 28
+ 	self assert: remaining size <= 27
 ]
 
 { #category : #testing }
