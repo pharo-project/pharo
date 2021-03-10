@@ -1232,8 +1232,7 @@ StDebugger >> updatePredicatesForContext: aContext [
 StDebugger >> updatePresenter [
 
 	self updateStackFromSession: self session.
-	self buildContextMenus.
-	self updateCodeFromContext
+	self buildContextMenus
 ]
 
 { #category : #'updating actions' }
