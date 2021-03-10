@@ -13,5 +13,5 @@ Trait << #TMyTrait
 "
 Trait {
 	#name : #TEmpty,
-	#category : #'TraitsV2-Core'
+	#category : #'Kernel-Traits'
 }
