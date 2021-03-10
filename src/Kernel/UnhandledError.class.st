@@ -55,5 +55,5 @@ UnhandledError >> exception: anError [
 { #category : #testing }
 UnhandledError >> isResumable [
 	
-	^ false
+	^ true
 ]
