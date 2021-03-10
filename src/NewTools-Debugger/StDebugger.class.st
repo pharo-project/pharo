@@ -821,10 +821,14 @@ StDebugger >> okToChange [
 
 { #category : #opening }
 StDebugger >> openWithFullView [
+
 	"Create and schedule a full debugger with the given label. Do not
 	terminate the current active process."
 
-	self openWithSpec
+	self
+		openWithSpec;
+		buildContextMenus;
+		updateCodeFromContext
 ]
 
 { #category : #opening }
@@ -1223,8 +1227,8 @@ StDebugger >> updatePredicatesForContext: aContext [
 StDebugger >> updatePresenter [
 
 	self updateStackFromSession: self session.
-	self buildContextMenus.
-	self updateCodeFromContext
+"	self buildContextMenus.
+	self updateCodeFromContext"
 ]
 
 { #category : #'updating actions' }
