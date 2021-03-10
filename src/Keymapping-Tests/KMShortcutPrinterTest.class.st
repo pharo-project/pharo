@@ -58,7 +58,14 @@ KMShortcutPrinterTest class >> testParameters [
 		addCase: { 
 			#platform -> MacOSPlatform new. 
 			#shortcut -> Character cr shift. 
-			#result -> (shift, enter) }			
+			#result -> (shift, enter) };
+		addCase: { #platform -> MacOSPlatform new. #shortcut -> ($n shift , $m shift). #result -> (shift, 'N' , ',' , shift , 'M') };
+		addCase: { #platform -> UnixPlatform new. #shortcut -> ($n shift , $m shift). #result -> 'Shift+N,Shift+M' };
+		addCase: { #platform -> WinPlatform new. #shortcut -> ($n shift , $m shift). #result -> 'Shift+N,Shift+M' };
+		addCase: { #platform -> MacOSPlatform new. #shortcut -> ($n control , $m control). #result -> (ctrl, 'N' , ',' , ctrl , 'M') };
+		addCase: { #platform -> UnixPlatform new. #shortcut -> ($n control , $m control). #result -> 'Ctrl+N,Ctrl+M' };
+		addCase: { #platform -> WinPlatform new. #shortcut -> ($n control , $m control). #result -> 'Ctrl+N,Ctrl+M' }
+
 ]
 
 { #category : #accessing }

@@ -1,5 +1,5 @@
 "
-AbstractFont defines the generic interface that all fonts need to implement.
+The abstract class AbstractFont defines the generic interface that all fonts need to implement.
 "
 Class {
 	#name : #AbstractFont,
@@ -35,6 +35,12 @@ AbstractFont class >> emphasisStringFor: emphasisCode [
 AbstractFont class >> initialize [
 
 	TextStyle addDependent: self
+]
+
+{ #category : #testing }
+AbstractFont class >> isAbstract [ 
+
+	^self == AbstractFont
 ]
 
 { #category : #updating }

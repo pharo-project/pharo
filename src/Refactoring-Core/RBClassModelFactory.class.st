@@ -11,7 +11,9 @@ Class {
 		'RBmetaclass',
 		'RBmethod',
 		'RBnamespace',
-		'RBpackage'
+		'RBpackage',
+		'RBtrait',
+		'RBtraitMetaclass'
 	],
 	#category : #'Refactoring-Core-Model'
 }
@@ -46,6 +48,18 @@ RBClassModelFactory class >> rbPackage [
 	^ RBpackage ifNil: [ RBpackage := RBPackage ]
 ]
 
+{ #category : #'factory access' }
+RBClassModelFactory class >> rbTrait [
+ 
+	^ RBtrait ifNil: [ RBtrait := RBTrait ]
+]
+
+{ #category : #'factory access' }
+RBClassModelFactory class >> rbTraitMetaclass [
+ 
+	^ RBtraitMetaclass ifNil: [ RBtraitMetaclass := RBTraitedMetaclass ]
+]
+
 { #category : #'factory customisation' }
 RBClassModelFactory class >> setRBClass: aClass [
 
@@ -76,6 +90,18 @@ RBClassModelFactory class >> setRBPackage: aClass [
 	RBpackage := aClass
 ]
 
+{ #category : #'factory customisation' }
+RBClassModelFactory class >> setRBTrait: aClass [
+
+	RBtrait := aClass
+]
+
+{ #category : #'factory customisation' }
+RBClassModelFactory class >> setRBTraitMetaclass: aClass [
+
+	RBtraitMetaclass := aClass
+]
+
 { #category : #'factory access' }
 RBClassModelFactory >> rbClass [ 
 
@@ -104,4 +130,16 @@ RBClassModelFactory >> rbNamespace [
 RBClassModelFactory >> rbPackage [
 
 	^ self class rbPackage
+]
+
+{ #category : #'factory access' }
+RBClassModelFactory >> rbTrait [
+
+	^ self class rbTrait
+]
+
+{ #category : #'factory access' }
+RBClassModelFactory >> rbTraitMetaclass [
+
+	^ self class rbTraitMetaclass
 ]

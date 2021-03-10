@@ -51,9 +51,8 @@ SycRemoveClassCommand >> isComplexRefactoring [
 SycRemoveClassCommand >> prepareFullExecutionInContext: aToolContext [
 	| noUsers answer |
 	super prepareFullExecutionInContext: aToolContext.
-	
 	noUsers := aToolContext confirmUnusedClasses: classes.
-	noUsers ifFalse: [ 
-		answer := UIManager default confirm: 'Do you want to remove anyway?'.
-		answer ifFalse: [ 	CmdCommandAborted signal ]]
+	noUsers second ifFalse: [ ^ self ]. 
+	answer := UIManager default confirm: 'Do you want to remove anyway?'.
+	answer ifFalse: [ 	CmdCommandAborted signal ]
 ]

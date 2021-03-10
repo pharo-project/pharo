@@ -12,10 +12,7 @@ Class {
 SycInsertSubclassCommand class >> browserContextMenuActivation [
 	<classAnnotation>
 	
-	^ CmdContextMenuActivation  
-		byItemOf: ClyMoreRefactorsMenuGroup  
-		order: 20
-		for: ClyClass asCalypsoItemContext 
+	^ SycClassMenuActivation byRootGroupItemOrder: 20 for: ClyClass asCalypsoItemContext
 ]
 
 { #category : #accessing }
