@@ -53,6 +53,22 @@ SycCmCommand class >> addMenuItemsTo: menuMorph onContext: context [
 
 ]
 
+{ #category : #execution }
+SycCmCommand >> applyCommandResult [
+]
+
+{ #category : #executing }
+SycCmCommand >> execute [ 
+	[self prepareFullExecution.
+	self executeRefactoring.
+	self applyCommandResult] 
+		on: Exception do: [ :exc | self processCommandFailure: exc ]
+]
+
+{ #category : #executing }
+SycCmCommand >> executeRefactoring [
+]
+
 { #category : #accessing }
 SycCmCommand >> icon [
 
@@ -87,6 +103,16 @@ SycCmCommand >> parentGroup [
 SycCmCommand >> parentGroup: aCmdRootMenuGroup [ 
 	
 	parentGroup := aCmdRootMenuGroup
+]
+
+{ #category : #preparation }
+SycCmCommand >> prepareFullExecution [
+]
+
+{ #category : #execution }
+SycCmCommand >> processCommandFailure: anException [
+	
+	context processFailure: anException of: self
 ]
 
 { #category : #'context menu' }
