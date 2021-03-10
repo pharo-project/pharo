@@ -674,6 +674,40 @@ StDebuggerTest >> testStackTableInitialization [
 ]
 
 { #category : #'tests - stack table' }
+StDebuggerTest >> testStackTablePackagesLabels [
+	|stackTable packageColumn ctx|
+	self debugger session: session.
+	stackTable := self initializedDebugger stackTable.
+	packageColumn := stackTable columns last.
+	
+	"The method is defined in the same package as its class"
+	ctx := Context
+		sender: nil
+		receiver: nil
+		method: (StTestDebuggerProvider >> #debuggerWithDNUContext)
+		arguments: #().
+	self assert: (packageColumn readObject: ctx) equals: StTestDebuggerProvider package name.
+	
+	"The extension method is defined in another package than its class"
+	ctx := Context
+		sender: nil
+		receiver: nil
+		method: (StDebugger >> #inspector)
+		arguments: #().
+	self assert: (packageColumn readObject: ctx) equals: StTestDebuggerProvider package name.
+	
+	"Doit methods have no package."
+	ctx := Context
+		sender: nil
+		receiver: nil
+		method: (Smalltalk compiler compile: 'doIt 1 + 1')
+		arguments: #().
+	self assert: (packageColumn readObject: ctx) equals: '-'
+	
+
+]
+
+{ #category : #'tests - stack table' }
 StDebuggerTest >> testStackTableSelectionChanged [
 	| dbg |
 	dbg := self debuggerOn: session.
