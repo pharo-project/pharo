@@ -516,6 +516,7 @@ StDebuggerActionModelTest >> testStepInto [
 	|ctx|
 	ctx := session interruptedContext.
 	debugActionModel stepInto: ctx.
+	self assert: ctx stepIntoQuickMethod.
 	self assert: session interruptedContext sender identicalTo: ctx.
 	self assert: session stack second identicalTo: ctx
 ]
