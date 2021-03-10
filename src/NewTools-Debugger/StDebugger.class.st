@@ -724,10 +724,11 @@ StDebugger >> initializeStack [
 						  ifFalse: [ method selector ] ])
 				 sortFunction: nil;
 				 yourself);
-		addColumn: ((SpStringTableColumn
-				  title: 'Package'
-				  evaluated: [ :item | 
-					  item method methodClass package name asString ])
+		addColumn:
+			((SpStringTableColumn title: 'Package' evaluated: [ :item | 
+					  | package |
+					  package := item method package.
+					  package ifNil: [ '-' ] ifNotNil: [ package name asString ] ])
 				 sortFunction: nil;
 				 yourself).
 	stackTable transmitDo: [ :context | 
