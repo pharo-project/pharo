@@ -52,6 +52,12 @@ RBProgramNode class >> formatterClass: aClass [
 		
 ]
 
+{ #category : #testing }
+RBProgramNode class >> isAbstract [
+
+	^ self == RBProgramNode
+]
+
 { #category : #accessing }
 RBProgramNode class >> optimizedSelectors [
 	^ #( and: caseOf: caseOf:otherwise: ifFalse: ifFalse:ifTrue: ifNil: ifNil:ifNotNil: ifNotNil: ifNotNil:ifNil: ifTrue: ifTrue:ifFalse: or: to:by:do: to:do: whileFalse whileFalse: whileTrue whileTrue: )
