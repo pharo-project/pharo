@@ -666,6 +666,15 @@ StDebugger >> initializeInspector [
 ]
 
 { #category : #initialization }
+StDebugger >> initializePresenter [
+
+	super initializePresenter.
+	self whenDisplayDo: [ 
+		self updateToolbar.
+		self updateCodeFromContext ]
+]
+
+{ #category : #initialization }
 StDebugger >> initializePresenters [
 
 	self initializeStack.
