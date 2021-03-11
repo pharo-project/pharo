@@ -666,6 +666,15 @@ StDebugger >> initializeInspector [
 ]
 
 { #category : #initialization }
+StDebugger >> initializePresenter [
+
+	super initializePresenter.
+	self whenDisplayDo: [ 
+		self updateToolbar.
+		self updateCodeFromContext ]
+]
+
+{ #category : #initialization }
 StDebugger >> initializePresenters [
 
 	self initializeStack.
@@ -1224,8 +1233,7 @@ StDebugger >> updatePredicatesForContext: aContext [
 StDebugger >> updatePresenter [
 
 	self updateStackFromSession: self session.
-	self buildContextMenus.
-	self updateCodeFromContext
+	self buildContextMenus
 ]
 
 { #category : #'updating actions' }
