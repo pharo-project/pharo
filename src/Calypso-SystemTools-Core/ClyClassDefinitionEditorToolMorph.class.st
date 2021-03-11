@@ -10,17 +10,49 @@ Class {
 	#category : #'Calypso-SystemTools-Core-Editors-Classes'
 }
 
-{ #category : #operations }
+{ #category : #building }
 ClyClassDefinitionEditorToolMorph >> applyChanges [
+
+	| text |
+	text := self pendingText copy.
+	^ self applyChangesAsClassDefinition or: [ 
+		  self pendingText: text.
+		  self applyChangesAsMethodDefinition ]
+]
+
+{ #category : #building }
+ClyClassDefinitionEditorToolMorph >> applyChangesAsClassDefinition [
+
 	| newClass |
-	newClass := browser compileANewClassFrom: self pendingText asString notifying: textMorph startingFrom: editingClass.
-	newClass ifNil: [ ^false ].
-	
-	editingClass == newClass 
-		ifFalse: [ self removeFromBrowser ].
+	newClass := browser
+		            compileANewClassFrom: self pendingText asString
+		            notifying: textMorph
+		            startingFrom: editingClass.
+	newClass ifNil: [ ^ false ].
+
+	editingClass == newClass ifFalse: [ self removeFromBrowser ].
 	browser selectClass: newClass.
-	^true
-	
+	^ true
+]
+
+{ #category : #building }
+ClyClassDefinitionEditorToolMorph >> applyChangesAsMethodDefinition [
+
+	| newMethod selector selectedClass |
+	selectedClass := self editingClass.
+
+	selector := selectedClass
+		            compile: self pendingText asString
+		            notifying: textMorph.
+
+	selector ifNil: [ ^ false ].
+	newMethod := selectedClass >> selector.
+	MethodClassifier classify: newMethod.
+
+	self removeFromBrowser.
+	browser tabManager desiredSelection: { ClyMethodCodeEditorToolMorph }.
+	browser selectMethod: newMethod.
+	^ true
 ]
 
 { #category : #'to sort' }
