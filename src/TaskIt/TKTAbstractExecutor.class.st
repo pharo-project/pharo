@@ -15,6 +15,12 @@ Class {
 	#category : #'TaskIt-Kernel'
 }
 
+{ #category : #testing }
+TKTAbstractExecutor class >> isAbstract [
+
+	^self == TKTAbstractExecutor 
+]
+
 { #category : #accessing }
 TKTAbstractExecutor >> exceptionHandler [
 	^ exceptionHandler
