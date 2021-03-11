@@ -179,6 +179,31 @@ DoItVariable >> key [
 	^self name
 ]
 
+{ #category : #'read/write usage' }
+DoItVariable >> markEscapingRead [
+	actualVariable markEscapingRead
+]
+
+{ #category : #'read/write usage' }
+DoItVariable >> markEscapingWrite [
+	actualVariable markEscapingWrite
+]
+
+{ #category : #'read/write usage' }
+DoItVariable >> markRead [
+	actualVariable markRead
+]
+
+{ #category : #'read/write usage' }
+DoItVariable >> markRepeatedWrite [
+	actualVariable markRepeatedWrite
+]
+
+{ #category : #'read/write usage' }
+DoItVariable >> markWrite [
+	actualVariable markWrite
+]
+
 { #category : #printing }
 DoItVariable >> printOn: aStream [ 
 	super printOn: aStream.
