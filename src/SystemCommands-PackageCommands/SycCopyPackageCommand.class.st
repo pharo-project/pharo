@@ -44,8 +44,8 @@ SycCopyPackageCommand >> prepareFullExecutionInContext: aToolContext [
 	
 	package := aToolContext lastSelectedPackage.	
 	newName := UIManager default 
-		request: 'New name of the package' 
+		request: 'New name of copied package' 
 		initialAnswer: package name 
-		title: 'Rename a package'.
+		title: 'Copy package'.
 	newName isEmptyOrNil | (newName = package name) ifTrue: [ ^ CmdCommandAborted signal ]
 ]
