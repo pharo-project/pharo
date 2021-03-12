@@ -53,6 +53,20 @@ ExceptionTest >> runWithNoHandlers: aBlock [
 ]
 
 { #category : #test }
+ExceptionTest >> testDefaultAction [
+	"Ensure that the resuming an UnhandledError when the underlying
+	Exception is resumable, results in the resumption value serving
+	as the result of the original #signal."
+
+	| expected result |
+	expected := #marker.
+	[ result := MyResumableTestError signal ]
+		on: UnhandledError
+		do: [ :ex | ex resume: expected ].
+	self assert: result equals: expected
+]
+
+{ #category : #test }
 ExceptionTest >> testDefaultDescription [
    "Tests that the description of an Exception, is the defaultDescription"
    |anException|
@@ -319,6 +333,19 @@ ExceptionTest >> testResumablePass [
 			ex pass.
 			ex return: 5 ].
 	self assert: result equals: 4
+]
+
+{ #category : #test }
+ExceptionTest >> testResumeUnresumableUnhandledError [
+	"Ensure that the resuming an UnhandledError results in
+	an IllegalResumeAttempt."
+
+	self
+		should: [
+	[ MyTestError signal ]
+		on: UnhandledError
+		do: [ :ex | ex resume: nil ]]
+		raise: IllegalResumeAttempt
 ]
 
 { #category : #'tests - exceptiontester' }
