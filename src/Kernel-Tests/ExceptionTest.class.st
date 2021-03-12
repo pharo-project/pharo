@@ -336,15 +336,16 @@ ExceptionTest >> testResumablePass [
 ]
 
 { #category : #test }
-ExceptionTest >> testResumeUnresumableUnhandledError [
+ExceptionTest >> testResumeNonresumableUnhandledError [
+
 	"Ensure that the resuming an UnhandledError results in
 	an IllegalResumeAttempt."
 
 	self
-		should: [
-	[ MyTestError signal ]
-		on: UnhandledError
-		do: [ :ex | ex resume: nil ]]
+		should: [ 
+			[ MyTestError signal ]
+				on: UnhandledError
+				do: [ :ex | ex resume: nil ] ]
 		raise: IllegalResumeAttempt
 ]
 
