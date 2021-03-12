@@ -666,6 +666,15 @@ StDebugger >> initializeInspector [
 ]
 
 { #category : #initialization }
+StDebugger >> initializePresenter [
+
+	super initializePresenter.
+	self whenDisplayDo: [ 
+		self updateToolbar.
+		self updateCodeFromContext ]
+]
+
+{ #category : #initialization }
 StDebugger >> initializePresenters [
 
 	self initializeStack.
@@ -724,10 +733,11 @@ StDebugger >> initializeStack [
 						  ifFalse: [ method selector ] ])
 				 sortFunction: nil;
 				 yourself);
-		addColumn: ((SpStringTableColumn
-				  title: 'Package'
-				  evaluated: [ :item | 
-					  item method methodClass package name asString ])
+		addColumn:
+			((SpStringTableColumn title: 'Package' evaluated: [ :item | 
+					  | package |
+					  package := item method package.
+					  package ifNil: [ '-' ] ifNotNil: [ package name asString ] ])
 				 sortFunction: nil;
 				 yourself).
 	stackTable transmitDo: [ :context | 
@@ -1223,8 +1233,7 @@ StDebugger >> updatePredicatesForContext: aContext [
 StDebugger >> updatePresenter [
 
 	self updateStackFromSession: self session.
-	self buildContextMenus.
-	self updateCodeFromContext
+	self buildContextMenus
 ]
 
 { #category : #'updating actions' }

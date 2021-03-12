@@ -188,8 +188,7 @@ RBRenameInstanceVariableRefactoring >> transform [
 	
 	class renameInstanceVariable: variableName to: newName around: [ self renameReferences ].
 	
-	renameAccessors ifTrue: [ 
-		self addNewAccessors.
-		self renameAccessorsReferences
-	]
+	renameAccessors ifFalse: [ ^ self ].
+	self addNewAccessors.
+	self renameAccessorsReferences.
 ]

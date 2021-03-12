@@ -10,6 +10,12 @@ Class {
 	#category : #'TraitsV2-Tests'
 }
 
+{ #category : #testing }
+T2AbstractTest class >> isAbstract [
+
+	^self == T2AbstractTest
+]
+
 { #category : #'instance creation' }
 T2AbstractTest >> newClass: aName [ 
 	^self newClass: aName with: #() uses: #()
@@ -73,7 +79,7 @@ T2AbstractTest >> newTrait: aName with: slots uses: aComposition category: categ
 { #category : #running }
 T2AbstractTest >> setUp [
 	super setUp.
-	createdClasses := OrderedCollection new.
+	createdClasses := OrderedCollection new
 ]
 
 { #category : #running }
