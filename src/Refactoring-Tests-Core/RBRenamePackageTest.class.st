@@ -4,16 +4,11 @@ Class {
 	#category : #'Refactoring-Tests-Core-Refactorings'
 }
 
-{ #category : #tests }
-RBRenamePackageTest >> getPackageNamed: aSymbol [
-	^ RBBrowserEnvironment default packageAt: aSymbol
-]
-
 { #category : #'failure tests' }
 RBRenamePackageTest >> testBadName [
 	self
 		shouldFail: (RBRenamePackageRefactoring 
-				rename: (self getPackageNamed: #'Refactoring-Tests-Core')
+				rename: #'Refactoring-Tests-Core'
 				to: #'Refactoring-Tests-Core')
 ]
 
@@ -21,7 +16,7 @@ RBRenamePackageTest >> testBadName [
 RBRenamePackageTest >> testExistingPackage [
 	self
 		shouldFail: (RBRenamePackageRefactoring 
-				rename: (self getPackageNamed: #'Refactoring-Tests-Core')
+				rename: #'Refactoring-Tests-Core'
 				to: #'Refactoring-Tests-Changes')
 ]
 
@@ -30,7 +25,7 @@ RBRenamePackageTest >> testRenamePackage [
 	| refactoring aModel |
 	
 	refactoring := (RBRenamePackageRefactoring 
-				rename: (self getPackageNamed: #'Refactoring-Tests-Core')
+				rename: #'Refactoring-Tests-Core'
 				to: #'Refactoring-Tests-Core1').
 	aModel := refactoring model.
 	self executeRefactoring: refactoring.

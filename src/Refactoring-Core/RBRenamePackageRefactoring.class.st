@@ -9,16 +9,16 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBRenamePackageRefactoring class >> model: aRBSmalltalk rename: aPkg to: aNewName [ 
-	^(self new)
+RBRenamePackageRefactoring class >> model: aRBSmalltalk rename: aSymbol to: aNewName [ 
+	^ self new
 		model: aRBSmalltalk;
-		packageName: aPkg name newName: aNewName;
+		packageName: aSymbol newName: aNewName;
 		yourself
 ]
 
 { #category : #'instance creation' }
-RBRenamePackageRefactoring class >> rename: aClass to: aNewName [
-	^self new packageName: aClass name newName: aNewName
+RBRenamePackageRefactoring class >> rename: aString to: aNewName [
+	^self new packageName: aString newName: aNewName
 ]
 
 { #category : #transforming }
@@ -37,7 +37,7 @@ RBRenamePackageRefactoring >> packageName: aName newName: aNewName [
 
 { #category : #preconditions }
 RBRenamePackageRefactoring >> preconditions [ 
-	^ (RBCondition withBlock: [ newName = package name ifTrue: 
+	^ super preconditions & (RBCondition withBlock: [ newName = package name ifTrue: 
 		[ self refactoringError: 'Use a different name' ].
 		true ]) &
 	(RBCondition withBlock: [ [RPackage organizer validatePackageDoesNotExist: newName. true]

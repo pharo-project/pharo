@@ -12,7 +12,7 @@ Class {
 	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RBPackageRefactoring class >> model: aRBModel packageName: aName [ 
 	^ self new
 		model: aRBModel;
@@ -20,7 +20,7 @@ RBPackageRefactoring class >> model: aRBModel packageName: aName [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : #'instance creation' }
 RBPackageRefactoring class >> packageName: aName [
 	^self new packageName: aName
 ]
@@ -35,4 +35,12 @@ RBPackageRefactoring >> packageName [
 RBPackageRefactoring >> packageName: anObject [
 
 	packageName := anObject
+]
+
+{ #category : #preconditions }
+RBPackageRefactoring >> preconditions [ 
+	^ (RBCondition withBlock: [ [ RPackage organizer includesPackageNamed: packageName ]
+			on: Error 
+			do: [ :e | self refactoringError: e messageText ]
+		])
 ]

@@ -30,7 +30,7 @@ SycRenamePackageCommand >> defaultMenuItemName [
 { #category : #execution }
 SycRenamePackageCommand >> execute [
 	
-	(RBRenamePackageRefactoring rename: package to: newName) execute
+	(RBRenamePackageRefactoring rename: package name to: newName) execute
 ]
 
 { #category : #accessing }
