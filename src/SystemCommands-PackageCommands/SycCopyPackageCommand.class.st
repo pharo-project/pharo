@@ -1,5 +1,5 @@
 "
-I am a command to rename given package.
+I am a command to copy given package.
  
 Internal Representation and Key Implementation Points.
 
@@ -8,7 +8,7 @@ Internal Representation and Key Implementation Points.
 	package:		<RPackage>
 "
 Class {
-	#name : #SycRenamePackageCommand,
+	#name : #SycCopyPackageCommand,
 	#superclass : #CmdCommand,
 	#instVars : [
 		'package',
@@ -18,28 +18,28 @@ Class {
 }
 
 { #category : #testing }
-SycRenamePackageCommand class >> canBeExecutedInContext: aToolContext [
+SycCopyPackageCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isPackageSelected
 ]
 
 { #category : #accessing }
-SycRenamePackageCommand >> defaultMenuIconName [ 
-	^ #edit
+SycCopyPackageCommand >> defaultMenuIconName [
+	^#smallCopy
 ]
 
 { #category : #accessing }
-SycRenamePackageCommand >> defaultMenuItemName [
-	^'Rename'
+SycCopyPackageCommand >> defaultMenuItemName [
+	^'Copy all package'
 ]
 
 { #category : #execution }
-SycRenamePackageCommand >> execute [
-	
-	(RBRenamePackageRefactoring rename: package name to: newName) execute
+SycCopyPackageCommand >> execute [
+
+	(RBCopyPackageRefactoring copyPackage: package name in: newName) execute
 ]
 
 { #category : #execution }
-SycRenamePackageCommand >> prepareFullExecutionInContext: aToolContext [
+SycCopyPackageCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	
 	package := aToolContext lastSelectedPackage.	

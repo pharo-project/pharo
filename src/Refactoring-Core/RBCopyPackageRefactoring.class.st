@@ -73,7 +73,7 @@ RBCopyPackageRefactoring >> copyNameFor: symbol [
 RBCopyPackageRefactoring >> copyPackage: aString1 in: aString2 [
 	packageName := aString1 asSymbol.
 	package := self model packageNamed: packageName.
-	newName := aString2.
+	newName := aString2 asSymbol.
 ]
 
 { #category : #preconditions }

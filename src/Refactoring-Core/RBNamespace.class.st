@@ -84,7 +84,6 @@ RBNamespace >> addInstanceVariable: aString to: aRBClass [
 RBNamespace >> addPackageNamed: aSymbol [
 	| change pkg |
 	change := changes addPackageNamed: aSymbol.
-	self performChange: change around: [].
 	self flushCaches.
 	pkg := self packageNamed: aSymbol.
 	self unmarkPackageAsRemoved: aSymbol.
