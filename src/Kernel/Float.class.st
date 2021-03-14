@@ -719,6 +719,12 @@ Float >> asMinimalDecimalFraction [
 ]
 
 { #category : #converting }
+Float >> asScaledDecimal [
+
+	^ self asScaledDecimal: 15
+]
+
+{ #category : #converting }
 Float >> asTrueFraction [
 	" Answer a fraction that EXACTLY represents self,
 	  a double precision IEEE floating point number.
