@@ -25,8 +25,8 @@ RBRenamePackageChange >> asUndoOperation [
 
 { #category : #accessing }
 RBRenamePackageChange >> changePackage [
-	^ (RBBrowserEnvironment default packageAt: oldName ifAbsent: [nil]) 
-		ifNil: [ RBBrowserEnvironment default packageAt: newName ifAbsent: [nil] ]
+	^ (browserEnvironment packageAt: oldName ifAbsent: [nil]) 
+		ifNil: [ browserEnvironment packageAt: newName ifAbsent: [nil] ]
 ]
 
 { #category : #private }

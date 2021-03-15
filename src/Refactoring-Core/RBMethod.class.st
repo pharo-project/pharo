@@ -109,6 +109,12 @@ RBMethod >> modelClass: aRBClass [
 ]
 
 { #category : #accessing }
+RBMethod >> package [
+	compiledMethod ifNotNil: [ ^ compiledMethod package name ].
+	^ class category
+]
+
+{ #category : #accessing }
 RBMethod >> parseTree [
 	^ self parserClass parseMethod: self source onError: [:str :pos | ^nil]
 ]

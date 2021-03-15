@@ -324,6 +324,7 @@ StDebuggerActionModel >> statusStringForContext [
 { #category : #'debug - stepping' }
 StDebuggerActionModel >> stepInto: aContext [ 
 	filterStack := false.
+	aContext stepIntoQuickMethod: true.
 	self session stepInto: aContext.
 	self updateTopContext.
 

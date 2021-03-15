@@ -56,10 +56,10 @@ StSystemReporter >> fillTopics [
 		
 	self isWindows
 		ifTrue: [ 
-			{ (#'OS Details' -> #reportWin32OSDetails:).
+			{
 			(#'VM Configuration' -> #reportWin32VMConfig:).
 			(#'Hardware Details' -> #reportWin32HardwareDetails:).
-			(#'GFX Hardware Details' -> #reportWin32GFXDetails:).	
+			(#'GFX Hardware Details' -> #reportWin32GFXDetails:)	
 			} do: [ :each | self addTopicSpec: each ]. 
 			].	
 		
