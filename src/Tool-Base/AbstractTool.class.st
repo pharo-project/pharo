@@ -1,14 +1,14 @@
 "
-I'm an utility class grouping generic methods for managing packages/classes/groups/methods from a browser
+I'm an abstract class grouping generic methods for managing packages/classes/groups/methods from a browser
 "
 Class {
-	#name : #ToolModel,
+	#name : #AbstractTool,
 	#superclass : #Model,
 	#category : #'Tool-Base-Utilities'
 }
 
 { #category : #private }
-ToolModel class >> protocolSuggestionsFor: aClass [
+AbstractTool class >> protocolSuggestionsFor: aClass [
 
 	| allExistingProtocols interestingProtocols reject |
 	reject := Set new.
@@ -24,12 +24,12 @@ ToolModel class >> protocolSuggestionsFor: aClass [
 ]
 
 { #category : #method }
-ToolModel >> browseAllStoresInto: aVariableName from: aClass [ 
+AbstractTool >> browseAllStoresInto: aVariableName from: aClass [ 
 	^self systemNavigation browseAllStoresInto: aVariableName from: aClass 
 ]
 
 { #category : #class }
-ToolModel >> browseClassRefsOf: aClass [
+AbstractTool >> browseClassRefsOf: aClass [
 
 	| class |
 	aClass ifNil: [ ^self ].
@@ -41,21 +41,21 @@ ToolModel >> browseClassRefsOf: aClass [
 ]
 
 { #category : #method }
-ToolModel >> browseMessagesFrom: aSelector [
+AbstractTool >> browseMessagesFrom: aSelector [
 	" badly named, it browses implementors "
 
 	self getSelectorAndSendQuery: #browseAllImplementorsOf: to: self systemNavigation with: {} selector: aSelector
 ]
 
 { #category : #method }
-ToolModel >> browseSendersOfMessagesFrom: aSelector [
+AbstractTool >> browseSendersOfMessagesFrom: aSelector [
 	"Present a menu of the currently selected message, as well as all messages sent by it.  Open a message set browser of all senders of the selector chosen."
 
 	self getSelectorAndSendQuery: #browseAllSendersOf: to: self systemNavigation with: {} selector: aSelector
 ]
 
 { #category : #method }
-ToolModel >> browseVersionsFrom: aMethod [
+AbstractTool >> browseVersionsFrom: aMethod [
 	"Create and schedule a Versions Browser, showing all versions of the 
 	currently selected message. Answer the browser or nil."
 
@@ -67,7 +67,7 @@ ToolModel >> browseVersionsFrom: aMethod [
 ]
 
 { #category : #method }
-ToolModel >> defaultGetSelectorAndSendQuery: array to: queryPerformer with: querySelector [
+AbstractTool >> defaultGetSelectorAndSendQuery: array to: queryPerformer with: querySelector [
 	| selector |
 	
 	selector := UIManager default request: 'Type selector:' initialAnswer: 'flag:'.
@@ -84,7 +84,7 @@ ToolModel >> defaultGetSelectorAndSendQuery: array to: queryPerformer with: quer
 ]
 
 { #category : #method }
-ToolModel >> getSelectorAndSendQuery: querySelector to: queryPerformer with: queryArgs selector: aSelector [
+AbstractTool >> getSelectorAndSendQuery: querySelector to: queryPerformer with: queryArgs selector: aSelector [
 	"Obtain a selector relevant to the current context, and then send the querySelector to the queryPerformer with the selector obtained and queryArgs as its arguments.  If no message is currently selected, then obtain a method name from a user type-in"
 	| strm array |
 	
@@ -103,7 +103,7 @@ ToolModel >> getSelectorAndSendQuery: querySelector to: queryPerformer with: que
 ]
 
 { #category : #class }
-ToolModel >> removeClass: aClass [
+AbstractTool >> removeClass: aClass [
 	"Remove the selected class from the system, at interactive user request.  Make certain the user really wants to do this, since it is not reversible.  Answer true if removal actually happened."
 
 	| message className classToRemove result |
@@ -122,7 +122,7 @@ ToolModel >> removeClass: aClass [
 ]
 
 { #category : #class }
-ToolModel >> removeClassMessageFor: className [
+AbstractTool >> removeClassMessageFor: className [
 	^ 'Are you certain that you
 want to REMOVE the class ' , className
 		,
@@ -131,7 +131,7 @@ from the system?'
 ]
 
 { #category : #class }
-ToolModel >> removeClasses: aCollection [
+AbstractTool >> removeClasses: aCollection [
 	"Remove the selected classes from the system.  Check that the user really wants to do this, since it is not reversible.  Answer true if removal actually happened."
 
 	| classNames classesToRemove result |
@@ -152,7 +152,7 @@ ToolModel >> removeClasses: aCollection [
 ]
 
 { #category : #class }
-ToolModel >> removeClassesMessageFor: classNames [
+AbstractTool >> removeClassesMessageFor: classNames [
 	^ 'Are you certain that you
 want to REMOVE the classes ' , classNames
 		,
@@ -161,7 +161,7 @@ from the system?'
 ]
 
 { #category : #method }
-ToolModel >> removeMethod: aMethod inClass: aClass [
+AbstractTool >> removeMethod: aMethod inClass: aClass [
 	"If a message is selected, create a Confirmer so the user can verify that  
 	the currently selected message should be removed from the system. If 
 	so, remove it. "
@@ -185,14 +185,14 @@ ToolModel >> removeMethod: aMethod inClass: aClass [
 ]
 
 { #category : #class }
-ToolModel >> removedClassHasSubclassesMessageFor: className [
+AbstractTool >> removedClassHasSubclassesMessageFor: className [
 
 	^ className, ' has subclasses.
 Do you really want to REMOVE it from the system ?'
 ]
 
 { #category : #class }
-ToolModel >> renameClass: aClass [
+AbstractTool >> renameClass: aClass [
 	| oldName newName obs |
 
 	aClass ifNil: [ ^ self ].

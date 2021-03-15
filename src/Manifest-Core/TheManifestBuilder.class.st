@@ -6,7 +6,7 @@ My name is strange but this is to avoid to match with a Manifest class which is 
 "
 Class {
 	#name : #TheManifestBuilder,
-	#superclass : #ToolModel,
+	#superclass : #AbstractTool,
 	#instVars : [
 		'manifestClass'
 	],
