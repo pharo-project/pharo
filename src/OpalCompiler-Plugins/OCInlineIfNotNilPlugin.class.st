@@ -11,6 +11,22 @@ OCInlineIfNotNilPlugin class >> initialize [
 ]
 
 { #category : #api }
+OCInlineIfNotNilPlugin >> buildReplacementBlockWrappingNode: aNode [
+
+	| blockStatement blockArgument argumentIndex |
+
+	argumentIndex := aNode parent arguments indexOf: aNode.
+	(aNode parent selector keywords at: argumentIndex) = 'ifNotNil:' 
+		ifFalse: [ ^ super buildReplacementBlockWrappingNode: aNode ].
+
+	"I need to generate an unused variable name"
+	blockArgument := RBVariableNode named: Object new hash asString asSymbol.
+	blockStatement := self newBlockStatement: aNode argument: blockArgument.
+
+	^ RBBlockNode arguments: {blockArgument} body: (RBSequenceNode statements: { blockStatement })
+]
+
+{ #category : #api }
 OCInlineIfNotNilPlugin >> newBlockStatement: toBeBlock argument: blockArgument [
 
 	^ (toBeBlock isLiteralNode and: [toBeBlock value isSymbol not])
@@ -20,25 +36,6 @@ OCInlineIfNotNilPlugin >> newBlockStatement: toBeBlock argument: blockArgument [
 				  receiver: toBeBlock copy
 				  selector: #cull:
 				  arguments: { blockArgument } ]
-]
-
-{ #category : #api }
-OCInlineIfNotNilPlugin >> replaceNodeWithBlock: toBeBlock [
-
-	| newNode blockStatement blockArgument argumentIndex |
-
-	argumentIndex := toBeBlock parent arguments indexOf: toBeBlock.
-	(toBeBlock parent selector keywords at: argumentIndex) = 'ifNotNil:' 
-		ifFalse: [ ^ super replaceNodeWithBlock: toBeBlock ].
-
-	"I need to generate an unused variable name"
-	blockArgument := RBVariableNode named: Object new hash asString asSymbol.
-	blockStatement := self newBlockStatement: toBeBlock argument: blockArgument.
-
-	newNode := RBBlockNode arguments: {blockArgument} body: (RBSequenceNode statements: { blockStatement }).
-	newNode left: toBeBlock start.
-	newNode right: toBeBlock stop.
-	toBeBlock replaceWith: newNode
 ]
 
 { #category : #api }

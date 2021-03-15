@@ -26,6 +26,14 @@ OCInlineConditionalsWithoutParametersPlugin class >> priority [
 ]
 
 { #category : #private }
+OCInlineConditionalsWithoutParametersPlugin >> buildReplacementBlockWrappingNode: aNode [
+
+	| blockStatement |
+	blockStatement := self newBlockStatement: aNode.
+	^ RBBlockNode body: (RBSequenceNode statements: { blockStatement })
+]
+
+{ #category : #private }
 OCInlineConditionalsWithoutParametersPlugin >> newBlockStatement: toBeBlock [
 
 	^ toBeBlock isLiteralNode
@@ -39,16 +47,19 @@ OCInlineConditionalsWithoutParametersPlugin >> preSemanticAnalysisTransform: ori
 	^ self rewriteConditionalsOn: originalAST 
 ]
 
-{ #category : #private }
-OCInlineConditionalsWithoutParametersPlugin >> replaceNodeWithBlock: toBeBlock [
-
-	| newNode blockStatement |
-	blockStatement := self newBlockStatement: toBeBlock.
-
-	newNode := RBBlockNode body: (RBSequenceNode statements: { blockStatement }).
+{ #category : #api }
+OCInlineConditionalsWithoutParametersPlugin >> replaceNode: toBeBlock with: newNode [
 	newNode left: toBeBlock start.
 	newNode right: toBeBlock stop.
 	toBeBlock replaceWith: newNode
+]
+
+{ #category : #private }
+OCInlineConditionalsWithoutParametersPlugin >> replaceNodeWithBlock: aNode [
+
+	| newNode |
+	newNode := self buildReplacementBlockWrappingNode: aNode.
+	self replaceNode: aNode with: newNode
 ]
 
 { #category : #private }
