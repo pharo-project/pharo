@@ -549,6 +549,7 @@ OpalCompiler >> parse [
 	ast := self compilationContext noPattern 
 		ifTrue: [ self parseExpression ]
 		ifFalse: [ self parseMethod ].
+	self callPluginsPreSemantic.
 	ast methodNode compilationContext: self compilationContext.
 	self doSemanticAnalysis.
 	^ast
@@ -566,6 +567,7 @@ OpalCompiler >> parse: textOrString [
 OpalCompiler >> parseDoIt [
 	"we parse doits without doing name analysis here, it is done in #transformDoit"
 	ast := self parseExpression.
+	self callPluginsPreSemantic.
 	^self transformDoit
 ]
 
