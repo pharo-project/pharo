@@ -270,12 +270,6 @@ Trait >> expandedDefinitionStringFor: aPrinter [
 ]
 
 { #category : #testing }
-Trait >> hasEmptyComposition [
-	
-	^ self traitComposition isEmpty or: [ self traitComposition = TEmpty asTraitComposition ]
-]
-
-{ #category : #testing }
 Trait >> isBaseTrait [
 	
 	^ true
