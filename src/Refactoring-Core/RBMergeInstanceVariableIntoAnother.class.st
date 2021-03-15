@@ -1,7 +1,7 @@
 "
 I am a refactoring for merge an instance variable into another.
 
-I rename the instance variable in the class definition, in all methods refering to this variable and rename the old accessors, then if the instance variable renamed is directly defined in class it is removed.
+I rename the instance variable in all methods refering to this variable and rename the old accessors, then if the instance variable renamed is directly defined in class it is removed.
 
 My precondition verifies that the new variable is a defined instance variable in class.
 
