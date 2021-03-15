@@ -200,3 +200,18 @@ OCInlineNotNilPluginTest >> testASTWithSingleMessageThatIsASymbolCorrectlyRewrit
 	self assert: newBlock statements first receiver equals: nodeToWrap.	
 	self assert: newBlock statements first selector equals: #cull:.	
 ]
+
+{ #category : #tests }
+OCInlineNotNilPluginTest >> testNewBlockWithArgumentsHasSameSourceIntervalAsOriginalBlock [
+
+	| ast nodeToWrap plugin newAst newBlock |
+
+	ast := RBParser parseMethod: 'm1:a a ifNil: [17] ifNotNil: 7'.
+	nodeToWrap := ast body statements first arguments second copy.
+
+	plugin := OCInlineIfNotNilPlugin new.	
+	newAst := plugin preSemanticAnalysisTransform: ast.
+	newBlock := newAst body statements first arguments second.
+	
+	self assert: newBlock sourceInterval equals: nodeToWrap sourceInterval
+]

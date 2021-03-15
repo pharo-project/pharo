@@ -176,3 +176,18 @@ OCInlineConditionalsWithoutParametersPluginTest >> testASTWithSingleMessageResul
 	self assertAllNodesTransformedOn: ast usingSelector: #ifTrue:ifFalse:.
 
 ]
+
+{ #category : #tests }
+OCInlineConditionalsWithoutParametersPluginTest >> testNewBlockWithoutArgumentsHasSameSourceIntervalAsOriginalBlock [
+
+	| ast nodeToWrap plugin newAst newBlock |
+
+	ast := RBParser parseMethod: 'm1:a a ifTrue: [17] ifFalse: 7'.
+	nodeToWrap := ast body statements first arguments second copy.
+
+	plugin := OCInlineConditionalsWithoutParametersPlugin new.	
+	newAst := plugin preSemanticAnalysisTransform: ast.
+	newBlock := newAst body statements first arguments second.
+	
+	self assert: newBlock sourceInterval equals: nodeToWrap sourceInterval
+]

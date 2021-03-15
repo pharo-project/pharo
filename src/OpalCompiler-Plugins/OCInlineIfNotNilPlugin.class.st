@@ -36,8 +36,9 @@ OCInlineIfNotNilPlugin >> replaceNodeWithBlock: toBeBlock [
 	blockStatement := self newBlockStatement: toBeBlock argument: blockArgument.
 
 	newNode := RBBlockNode arguments: {blockArgument} body: (RBSequenceNode statements: { blockStatement }).
+	newNode left: toBeBlock start.
+	newNode right: toBeBlock stop.
 	toBeBlock replaceWith: newNode
-
 ]
 
 { #category : #api }

@@ -46,6 +46,8 @@ OCInlineConditionalsWithoutParametersPlugin >> replaceNodeWithBlock: toBeBlock [
 	blockStatement := self newBlockStatement: toBeBlock.
 
 	newNode := RBBlockNode body: (RBSequenceNode statements: { blockStatement }).
+	newNode left: toBeBlock start.
+	newNode right: toBeBlock stop.
 	toBeBlock replaceWith: newNode
 ]
 
