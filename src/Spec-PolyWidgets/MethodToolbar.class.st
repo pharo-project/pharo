@@ -111,7 +111,7 @@ MethodToolbar >> implementorsModel [
 MethodToolbar >> initialize [
 
 	methodHolder := nil asValueHolder.
-	model := AbstractTool new.
+	model := ToolModel new.
 	
 	super initialize.
 ]
