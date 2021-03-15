@@ -4,6 +4,19 @@ I'm a refactoring operation for replace one method call by another one.
 The another method name should have the same number of arguments.
 
 All senders of this method are changed by the other
+
+Example
+-------
+Script:
+```
+(RBReplaceMethodRefactoring  
+	model: model
+	replaceMethod: #anInstVar:
+	in: RBBasicLintRuleTestData
+	to: #newResultClass: 
+	permutation: (1 to: 1)
+	inAllClasses: true) execute
+```
 "
 Class {
 	#name : #RBReplaceMethodRefactoring,
