@@ -102,14 +102,7 @@ HEInstaller >> buildTrait: aTraitDefinition [
 { #category : #'creating traits' }
 HEInstaller >> buildTraitCompositionFor: traitComposition [
 
-	| aLiteral |
-	
-	aLiteral := (traitComposition asLiteralIn: environment).
-	aLiteral isArray 
-		ifTrue: [ ^ aLiteral 
-							ifEmpty: [ TaEmptyComposition new ]
-							ifNotEmpty: [ TaSequence withAll: (aLiteral collect: [:each | each asTraitComposition]) ]  ]
-		ifFalse: [ ^ aLiteral asTraitComposition ]
+	^ (traitComposition asLiteralIn: environment) asTraitComposition
 ]
 
 { #category : #accessing }
