@@ -86,7 +86,7 @@ Process class >> forContext: aContext priority: anInteger [
 
 	| newProcess |
 	newProcess := self new.
-	newProcess suspendedContext: aContext.
+	newProcess suspendedContext: aContext asContext.
 	newProcess priority: anInteger.
 	Processor activeProcess installEnvIntoForked: newProcess.
 	^newProcess
