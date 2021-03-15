@@ -1,7 +1,7 @@
-Extension { #name : #ToolModel }
+Extension { #name : #AbstractTool }
 
 { #category : #'*Refactoring-Changes' }
-ToolModel class >> menuCommandOn: aBuilder [
+AbstractTool class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'Undo last refactoring')
 				action: [self undoLastRefactoring];
@@ -12,7 +12,7 @@ ToolModel class >> menuCommandOn: aBuilder [
 ]
 
 { #category : #'*Refactoring-Changes' }
-ToolModel class >> undoLastRefactoring [
+AbstractTool class >> undoLastRefactoring [
 	| manager |
 	manager := RBRefactoryChangeManager instance.
 	manager undoPointers ifNotEmpty: [
