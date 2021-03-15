@@ -160,7 +160,7 @@ T2TraitTest >> testClassUsingTraitsDoesNotHaveUsers [
 { #category : #'tests - empty' }
 T2TraitTest >> testEmptyCompositionManagesTEmpty [
 	
-	| t1 superclass subclass |
+	| t1 |
 	t1 := self newTrait: #T1 with: {} trait: TEmpty.
 	
 	self assert: t1 hasEmptyComposition
