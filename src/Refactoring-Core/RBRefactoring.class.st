@@ -327,6 +327,15 @@ RBRefactoring >> performCompositeRefactoring: aRefactoring [
 	aRefactoring primitiveExecute
 ]
 
+{ #category : #transforming }
+RBRefactoring >> performCompositeRefactoringThroughWarning: aRefactoring [ 
+	[ aRefactoring copyOptionsFrom: self options.
+	aRefactoring primitiveExecute ]
+	on: RBRefactoringError do: [ :ex | ex resume ]
+
+	
+]
+
 { #category : #utilities }
 RBRefactoring >> poolVariableNamesFor: aClass [ 
 	| pools |

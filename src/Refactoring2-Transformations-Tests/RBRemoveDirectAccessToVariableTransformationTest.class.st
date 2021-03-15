@@ -138,6 +138,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testRefactoring [
 	super initialize.
 	changes := changeFactory compositeRefactoryChange onSystemDictionary: self environment.
 	newClasses := IdentityDictionary new.
+	newPackages := IdentityDictionary new.
 	changedClasses := IdentityDictionary new.
 	changedPackages := IdentityDictionary new.
 	removedClasses := Set new.
