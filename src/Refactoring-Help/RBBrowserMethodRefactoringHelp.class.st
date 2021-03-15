@@ -58,9 +58,16 @@ RBBrowserMethodRefactoringHelp class >> moveToClassRefactoring [
 		contents: RBSwapMethodRefactoring comment
 ]
 
+{ #category : #pages }
+RBBrowserMethodRefactoringHelp class >> moveToClassSideRefactoring [
+	^HelpTopic
+		title: 'Move to class side'
+		contents: RBMoveMethodToClassSideRefactoring comment
+]
+
 { #category : #accessing }
 RBBrowserMethodRefactoringHelp class >> pages [
-	^ #(addParameterRefactoring deprecateMethodRefactoring inlineParameterRefactoring inlineTargeSendsRefactoring moveMethodRefactoring  moveToClassRefactoring pushUpMethodRefactoring pushDownpMethodRefactoring removeMethodRefactoring removeParameterRefactoring renameMethodRefactoring)
+	^ #(addParameterRefactoring deprecateMethodRefactoring inlineParameterRefactoring inlineTargeSendsRefactoring moveMethodRefactoring  moveToClassRefactoring moveToClassSideRefactoring pushUpMethodRefactoring pushDownpMethodRefactoring removeMethodRefactoring removeParameterRefactoring renameMethodRefactoring replaceMethodByAnotherRefactoring)
 ]
 
 { #category : #pages }
@@ -76,6 +83,14 @@ RBBrowserMethodRefactoringHelp class >> pushUpMethodRefactoring [
 	^HelpTopic
 		title: 'Push up'
 		contents: RBPullUpMethodRefactoring comment
+
+]
+
+{ #category : #pages }
+RBBrowserMethodRefactoringHelp class >> removeHierarchyMethodRefactoring [
+	^HelpTopic
+		title: 'Remove'
+		contents: RBRemoveHierarchyMethodRefactoring comment
 
 ]
 
@@ -99,5 +114,13 @@ RBBrowserMethodRefactoringHelp class >> renameMethodRefactoring [
 	^HelpTopic
 		title: 'Rename method (all)'
 		contents: RBRenameMethodRefactoring comment
+
+]
+
+{ #category : #pages }
+RBBrowserMethodRefactoringHelp class >> replaceMethodByAnotherRefactoring [
+	^HelpTopic
+		title: 'Replace by another'
+		contents: RBReplaceMethodRefactoring comment
 
 ]

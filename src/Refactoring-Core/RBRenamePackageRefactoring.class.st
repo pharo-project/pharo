@@ -1,3 +1,18 @@
+"
+I'm a refactoring to rename a package.
+
+My preconditions verify that the new name is different from the current package name and is a valid name.
+
+I change all the references of the classes that are defined within the package, and if there is a manifest, it is updated with the new name of the package. 
+
+Example
+---------
+```
+(RBRenamePackageRefactoring 
+				rename: (self getPackageNamed: #'Refactoring-Tests-Core')
+				to: #'Refactoring-Tests-Core1') execute.
+```
+"
 Class {
 	#name : #RBRenamePackageRefactoring,
 	#superclass : #RBPackageRefactoring,
