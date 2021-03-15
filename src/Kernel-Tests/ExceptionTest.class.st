@@ -60,9 +60,10 @@ ExceptionTest >> testDefaultAction [
 
 	| expected result |
 	expected := #marker.
-	[ result := MyResumableTestError signal ]
-		on: UnhandledError
-		do: [ :ex | ex resume: expected ].
+	self runWithNoHandlers: [ 
+		[ result := MyResumableTestError signal ]
+			on: UnhandledError
+			do: [ :ex | ex resume: expected ] ].
 	self assert: result equals: expected
 ]
 
@@ -341,12 +342,15 @@ ExceptionTest >> testResumeNonresumableUnhandledError [
 	"Ensure that the resuming an UnhandledError results in
 	an IllegalResumeAttempt."
 
+	| signalOccurred |
 	self
-		should: [ 
-			[ MyTestError signal ]
+		runWithNoHandlers: [ 
+			[[ MyTestError signal ]
 				on: UnhandledError
-				do: [ :ex | ex resume: nil ] ]
-		raise: IllegalResumeAttempt
+				do: [ :ex | ex resume: nil ]]
+			on: IllegalResumeAttempt
+			do: [:ex | signalOccurred := true. ex return ]].
+	self assert: signalOccurred
 ]
 
 { #category : #'tests - exceptiontester' }
