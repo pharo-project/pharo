@@ -120,7 +120,7 @@ ClySystemEnvironment >> compileANewClassFrom: aString notifying: aController sta
 
 	| oldClass class newClassName defTokens keywdIx classCompiler |
 	"for now make it work!"
-	('*<<*' match: aString)
+	(self isFluidClassDefinition: aString)
 		ifTrue: [ ClassDefinitionPrinter showFluidClassDefinition: true ].
 	ClassDefinitionPrinter showFluidClassDefinition
 		ifTrue: [ ^ self defineNewClassFrom: aString notifying: aController  startingFrom: aClass ].
@@ -186,6 +186,8 @@ ClySystemEnvironment >> defineNewClassFrom: aString notifying: aController start
 
 	| class classCompiler |
 	"the logic of erasing an existing class will be added back later."
+	((ClassDefinitionPrinter showFluidClassDefinition) and: [ (self isFluidClassDefinition: aString) not])
+		ifTrue: [ ^ nil ]. 
 	aClass
 		ifNil: [ classCompiler := self defaultClassCompiler ]
 		ifNotNil: [ classCompiler := aClass superclass subclassDefinerClass new ].
@@ -233,6 +235,13 @@ ClySystemEnvironment >> includesClassNamed: aSymbol [
 ClySystemEnvironment >> initialize [
 	super initialize.
 	projectManager := ClyProjectManagerRegistry new
+]
+
+{ #category : #compiling }
+ClySystemEnvironment >> isFluidClassDefinition: aString [ 
+	"for now make it work!"
+	^ ('*<<*' match: aString)
+		
 ]
 
 { #category : #accessing }
