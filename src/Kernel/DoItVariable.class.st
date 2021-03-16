@@ -181,27 +181,27 @@ DoItVariable >> key [
 
 { #category : #'read/write usage' }
 DoItVariable >> markEscapingRead [
-	actualVariable markEscapingRead
+	"ignored, the escape status of the actualVariable does not change"
 ]
 
 { #category : #'read/write usage' }
 DoItVariable >> markEscapingWrite [
-	actualVariable markEscapingWrite
+	"ignored, the escape status of the actualVariable does not change"
 ]
 
 { #category : #'read/write usage' }
 DoItVariable >> markRead [
-	actualVariable markRead
+	"ignored, the escape status of the actualVariable does not change"
 ]
 
 { #category : #'read/write usage' }
 DoItVariable >> markRepeatedWrite [
-	actualVariable markRepeatedWrite
+	"ignored, the escape status of the actualVariable does not change"
 ]
 
 { #category : #'read/write usage' }
 DoItVariable >> markWrite [
-	actualVariable markWrite
+	"ignored, the escape status of the actualVariable does not change"
 ]
 
 { #category : #printing }
