@@ -90,6 +90,12 @@ SpStyleClass >> addPropertyGeometryWith: aBlock [
 ]
 
 { #category : #adding }
+SpStyleClass >> addPropertyTextWith: aBlock [ 
+	
+	self addProperty: SpStyleText with: aBlock
+]
+
+{ #category : #adding }
 SpStyleClass >> addStyle: aStyle [
 
 	styles ifNil: [ styles := #() ].
