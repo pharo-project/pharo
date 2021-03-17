@@ -7,6 +7,18 @@ Class {
 	#category : #'OpalCompiler-Tests-Misc'
 }
 
+{ #category : #binding }
+OCDoitTest >> bindingOf: aSelector [
+	^(aSelector == #requestorVarForTesting) 
+		ifTrue: [WorkspaceVariable key: aSelector value: 5 ]
+		ifFalse:  [nil]
+]
+
+{ #category : #binding }
+OCDoitTest >> hasBindingOf: aSelector [
+	^aSelector == #requestorVarForTesting
+]
+
 { #category : #'interactive error protocol' }
 OCDoitTest >> notify: aString at: anInteger in: aString3 [ 
 	"we ignore"
@@ -64,6 +76,20 @@ OCDoitTest >> testDoItRequestorEvalError [
 	evaluate: '1('.
 
 	self assert: value isNil.
+]
+
+{ #category : #tests }
+OCDoitTest >> testDoItRequestorReadRequestorVar [
+
+	| value  |
+	"we can read a variable from a requestor"
+	value := OpalCompiler new
+		          source: 'requestorVarForTesting';
+		          noPattern: true;
+		          requestor: self;
+		          evaluate.
+		
+	self assert: value equals: 5
 ]
 
 { #category : #tests }
