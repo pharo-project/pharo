@@ -7,6 +7,11 @@ Class {
 	#category : #'OpalCompiler-Tests-Misc'
 }
 
+{ #category : #'interactive error protocol' }
+OCDoitTest >> notify: aString at: anInteger in: aString3 [ 
+	"we ignore"
+]
+
 { #category : #tests }
 OCDoitTest >> testDoItContextReadGlobal [
 	"we can read a global from a doit when executing against a context"
@@ -49,6 +54,16 @@ OCDoitTest >> testDoItContextReadTemp [
 		evaluate.
 		
 	self assert: value equals: #someValue
+]
+
+{ #category : #tests }
+OCDoitTest >> testDoItRequestorEvalError [
+	| value |
+	value  := OpalCompiler new 
+	requestor: self;
+	evaluate: '1('.
+
+	self assert: value isNil.
 ]
 
 { #category : #tests }
