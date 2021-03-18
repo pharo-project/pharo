@@ -212,7 +212,7 @@ CompositionScanner >> placeEmbeddedObject: anchoredMorph [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'multilingual scanning' }
 CompositionScanner >> registerBreakableIndex [
 	"Record left x and character index of the line-wrappable point. 
 	Used for wrap-around in eastern Asian languages."
