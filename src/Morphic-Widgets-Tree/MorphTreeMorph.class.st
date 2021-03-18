@@ -1150,7 +1150,7 @@ MorphTreeMorph >> keyDown: event [
 	^ self listManager keyDown: event
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MorphTreeMorph >> keyDownActionSelector: aSelector [
 
 	self listManager keyDownActionSelector: aSelector

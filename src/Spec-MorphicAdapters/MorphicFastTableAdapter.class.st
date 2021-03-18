@@ -37,7 +37,7 @@ MorphicFastTableAdapter >> buildWidget [
 			yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MorphicFastTableAdapter >> doubleClick: event [
 
 	^ self model doubleClick: event
@@ -49,7 +49,7 @@ MorphicFastTableAdapter >> getIconFor: anItem [
 	^ self model getIconFor: anItem
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MorphicFastTableAdapter >> wrapItem: anObject [
 
 	^ self model wrapItem: anObject

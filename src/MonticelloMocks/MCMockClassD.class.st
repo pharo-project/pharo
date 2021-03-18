@@ -4,7 +4,7 @@ Class {
 	#category : #MonticelloMocks
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MCMockClassD >> one [
 	^ 1
 ]

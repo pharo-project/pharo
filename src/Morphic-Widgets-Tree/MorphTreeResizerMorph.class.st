@@ -36,7 +36,7 @@ MorphTreeResizerMorph >> canResizeColumn [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MorphTreeResizerMorph >> container: aTreeMorph index: anInteger [
 	container := aTreeMorph.
 	index := anInteger
@@ -56,7 +56,7 @@ MorphTreeResizerMorph >> drawOn: aCanvas [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MorphTreeResizerMorph >> getOldColor [
 	^ oldColor ifNil: [Color transparent]
 ]
@@ -117,24 +117,24 @@ MorphTreeResizerMorph >> mouseUp: anEvent [
 	self triggerEvent: #mouseUp
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MorphTreeResizerMorph >> normalFillStyle [
 	"Return the normal fillstyle for the receiver."
 	^ self theme morphTreeSplitterNormalFillStyleFor: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MorphTreeResizerMorph >> normalizedX: x [
 
 	^ x
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MorphTreeResizerMorph >> normalizedY: y [ 
 	^y
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MorphTreeResizerMorph >> pressedFillStyle [
 	"Return the pressed fillStyle of the receiver."
 	^ self theme morphTreeSplitterPressedFillStyleFor: self
@@ -150,12 +150,12 @@ MorphTreeResizerMorph >> release [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MorphTreeResizerMorph >> resizeCursor [
 	^ Cursor resizeForEdge: #left
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MorphTreeResizerMorph >> setGrabbedColor [
 	"Set the color of the receiver when it is grabbed."
 	
@@ -167,7 +167,7 @@ MorphTreeResizerMorph >> shouldDraw [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MorphTreeResizerMorph >> splitsTopAndBottom [
 	^ false
 ]
@@ -179,7 +179,7 @@ MorphTreeResizerMorph >> themeChanged [
 	super themeChanged
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MorphTreeResizerMorph >> updateFromEvent: anEvent [ 
 	"Update the splitter and attached morph positions from
 	the mouse event.

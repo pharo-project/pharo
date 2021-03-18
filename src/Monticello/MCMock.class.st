@@ -7,7 +7,7 @@ Class {
 	#category : #'Monticello-Mocks'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 MCMock class >> wantsChangeSetLogging [
 	^ false
 ]

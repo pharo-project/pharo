@@ -25,7 +25,7 @@ MagnitudeTest >> testBeBetweenAnd [
 	self assert: (30 beBetween: 20 and: 5) equals: 20.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #test }
 MagnitudeTest >> testBetweenAnd [
 	self assert: (3 between: 0 and: 5).
 	self assert: (5.0 between: 5.0 and: 5.0).

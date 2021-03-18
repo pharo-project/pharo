@@ -10,7 +10,7 @@ Class {
 	#category : #MonticelloMocks
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'class initialization' }
 MCMockASubclass class >> initialize [
 
 	InitializationOrder := InitializationOrder
@@ -18,12 +18,12 @@ MCMockASubclass class >> initialize [
 		ifNotNil: [ InitializationOrder + 1.]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MCMockASubclass >> variables [
 	^ x + Y + MCMockClassA
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MCMockASubclass >> variables2 [
 	^ ivar + CVar
 ]

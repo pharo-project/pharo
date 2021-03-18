@@ -25,7 +25,7 @@ MicRootBlock >> canConsumeLine: line [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MicRootBlock >> contents [ 
 	"not clear what tesxt is."
 	^super contents , '[ ', (self showStructure: 0), ' ]'

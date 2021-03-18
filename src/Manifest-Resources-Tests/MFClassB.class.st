@@ -7,7 +7,7 @@ Class {
 	#category : #'Manifest-Resources-Tests'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #protocol }
 MFClassB >> method2 [
 	"This variable is there to trigger the 'Temporary variable not read or written' critics rule for the test SmallintManifestCheckerTest>>testCriticsOf rule"
 	|foo|
@@ -15,7 +15,7 @@ MFClassB >> method2 [
 	1.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #protocol }
 MFClassB >> method3 [
 	"This variable is there to trigger the 'Temporary variable not read or written' critics rule for the test SmallintManifestCheckerTest>>testCriticsOf rule"
 	|foo|

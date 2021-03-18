@@ -25,7 +25,7 @@ MorphTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #'testing - geometry' }
+{ #category : #'tests - geometry' }
 MorphTest >> testBoundingBoxOfSubmorphs [
 
 	| subMorph |
@@ -39,7 +39,7 @@ MorphTest >> testBoundingBoxOfSubmorphs [
 		
 ]
 
-{ #category : #'testing - geometry' }
+{ #category : #'tests - geometry' }
 MorphTest >> testExtent [
 	| m1 m2 v1 v2 v3 b1 b2 |
 	m1 := Morph new.
@@ -58,7 +58,7 @@ MorphTest >> testExtent [
 	self assert: b2 equals: b1
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MorphTest >> testHaloIsDisable [
 	| isHaloEnable |
 	isHaloEnable := Morph halosEnabled.
@@ -67,7 +67,7 @@ MorphTest >> testHaloIsDisable [
 	Morph halosEnabled: isHaloEnable
 ]
 
-{ #category : #'testing - into/outof world' }
+{ #category : #'tests - into/outof world' }
 MorphTest >> testIntoWorldCollapseOutOfWorld [
 	| m1 m2 collapsed |
 	"Create the guys"
@@ -115,7 +115,7 @@ MorphTest >> testIntoWorldCollapseOutOfWorld [
 	self assert: m2 outOfWorldCount equals: 2
 ]
 
-{ #category : #'testing - into/outof world' }
+{ #category : #'tests - into/outof world' }
 MorphTest >> testIntoWorldDeleteOutOfWorld [
 	| m1 m2 |
 	"Create the guys"
@@ -146,7 +146,7 @@ MorphTest >> testIntoWorldDeleteOutOfWorld [
 	self assert: m2 outOfWorldCount equals: 1
 ]
 
-{ #category : #'testing - into/outof world' }
+{ #category : #'tests - into/outof world' }
 MorphTest >> testIntoWorldTransferToNewGuy [
 	| m1 m2 |
 	"Create the guys"
@@ -195,12 +195,12 @@ MorphTest >> testIntoWorldTransferToNewGuy [
 	self assert: m2 outOfWorldCount equals: 1
 ]
 
-{ #category : #'testing - classification' }
+{ #category : #'tests - classification' }
 MorphTest >> testIsMorph [
 	self assert: (morph isMorph).
 ]
 
-{ #category : #'testing - initialization' }
+{ #category : #'tests - initialization' }
 MorphTest >> testOpenInWorld [
 	morph openInWorld
 ]

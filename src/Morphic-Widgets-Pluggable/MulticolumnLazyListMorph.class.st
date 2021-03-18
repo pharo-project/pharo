@@ -38,7 +38,7 @@ MulticolumnLazyListMorph >> display: items atRow: row on: canvas [
 				from: self ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 MulticolumnLazyListMorph >> drawBoundsForRow: row [
 	"calculate the bounds that row should be drawn at.  This might be outside our bounds!"
 	| topLeft drawBounds item width height |

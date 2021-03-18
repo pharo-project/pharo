@@ -45,29 +45,29 @@ Class {
 	#category : #'MonticelloGUI-Tools'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MCFileRepositoryInspector class >> order [
 	^ Order ifNil: [ Order := 5 ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MCFileRepositoryInspector class >> order: anInteger [
 	Order := anInteger
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MCFileRepositoryInspector class >> packageSearchList [
 	^ packageSearchList ifNil: [ packageSearchList := OrderedCollection new]. 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 MCFileRepositoryInspector class >> repository: aFileBasedRepository workingCopy: aWorkingCopy [
 	^self new
 		setRepository: aFileBasedRepository workingCopy: aWorkingCopy;
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MCFileRepositoryInspector class >> versionSearchList [
 	^ versionSearchList ifNil: [ versionSearchList := OrderedCollection new]. 
 ]

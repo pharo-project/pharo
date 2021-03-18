@@ -7,12 +7,12 @@ Class {
 	#category : #'Polymorph-Widgets-Windows'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ModelDependentDialogWindow >> addInitialPanel [
 	"Don't until the model is set."
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ModelDependentDialogWindow >> model: anObject [
 	"Set the model and add the panel for it."
 	
