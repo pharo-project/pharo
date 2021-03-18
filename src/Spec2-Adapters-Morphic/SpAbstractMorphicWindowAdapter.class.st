@@ -4,6 +4,9 @@ I am the adapter used to bridge window presenters and windows or worlds
 Class {
 	#name : #SpAbstractMorphicWindowAdapter,
 	#superclass : #SpAbstractMorphicAdapter,
+	#instVars : [
+		'toolbarMorph'
+	],
 	#category : #'Spec2-Adapters-Morphic-Base'
 }
 
@@ -30,7 +33,12 @@ SpAbstractMorphicWindowAdapter >> addContent: aMorph toWindow: aSpecWindow [
 
 	"add all decorations (menu, toolbar and statusbar)"
 	self model hasMenu ifTrue: [ self addMenuTo: containerMorph ].
-	self model hasToolbar ifTrue: [ self addToolbarTo: containerMorph ].
+
+	self setToolbarTo: containerMorph.
+
+	"Register for changes in the toolbar"
+	self model whenToolbarChangedDo: [ self setToolbarTo: containerMorph ].
+
 	containerMorph addMorphBack: aMorph.
 	aMorph
 		hResizing: #spaceFill;
@@ -63,23 +71,39 @@ SpAbstractMorphicWindowAdapter >> addStatusBarTo: aMorph [
 ]
 
 { #category : #private }
-SpAbstractMorphicWindowAdapter >> addToolbarTo: aMorph [
+SpAbstractMorphicWindowAdapter >> newContainerMorph [
 
-	| toolbarMorph |
-	toolbarMorph := self presenter toolbar buildWithSpec.
-	aMorph addMorphBack: toolbarMorph.
-	toolbarMorph
+	^ Morph new
+		color: Color transparent;
+		layoutPolicy: TableLayout new;
 		hResizing: #spaceFill;
-		vResizing: #rigid
+		vResizing: #spaceFill;
+		listDirection: #topToBottom;
+		yourself
 ]
 
 { #category : #private }
-SpAbstractMorphicWindowAdapter >> newContainerMorph [
+SpAbstractMorphicWindowAdapter >> setToolbarTo: aMorph [
 
-	^ PanelMorph new
-		  layoutPolicy: TableLayout new;
-		  hResizing: #spaceFill;
-		  vResizing: #spaceFill;
-		  listDirection: #topToBottom;
-		  yourself
+	| newToolbarMorph |
+	
+	self model hasToolbar 
+		ifFalse: [ 
+			toolbarMorph ifNotNil: [ 
+				aMorph removeMorph: toolbarMorph.
+				toolbarMorph := nil.  ].
+			^ self. ].
+	
+	newToolbarMorph := self presenter toolbar buildWithSpec.
+	newToolbarMorph
+		hResizing: #spaceFill;
+		vResizing: #rigid.
+	
+	"If we have a toolbar morph, we replace with the new one"
+	toolbarMorph 
+		ifNil: [	aMorph addMorph: newToolbarMorph ]
+		ifNotNil: [ aMorph replaceSubmorph: toolbarMorph by: newToolbarMorph ].
+		
+	toolbarMorph := newToolbarMorph
+
 ]
