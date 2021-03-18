@@ -42,12 +42,12 @@ OSWindowRenderer >> initialize [
 	lastExposeTime := 0
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #operating }
 OSWindowRenderer >> onRenderThread: aBlock [
 	OSWindowRenderThread enqueueOperation: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #operating }
 OSWindowRenderer >> onRenderThreadBlocking: aBlock [
 	OSWindowRenderThread enqueueBlockingOperation: aBlock
 ]
