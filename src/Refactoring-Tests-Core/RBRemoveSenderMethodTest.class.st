@@ -16,6 +16,17 @@ RBRemoveSenderMethodTest >> testIsDirectlyUsed [
 ]
 
 { #category : #'failure tests' }
+RBRemoveSenderMethodTest >> testIsDirectlyUsed2 [
+	| refactoring |
+	refactoring := RBRemoveSenderRefactoring
+		remove: (25 to: 39)
+		inMethod: #returnsBooleanAndOther
+		forClass: RBRefactoryTestDataApp.
+	self setupInlineExpressionFor: refactoring toReturn: false.
+	self shouldFail: refactoring.
+]
+
+{ #category : #'failure tests' }
 RBRemoveSenderMethodTest >> testNonExistantSelector [
 	self shouldFail: (RBRemoveSenderRefactoring 
 			remove: (14 to: 17)
@@ -24,20 +35,88 @@ RBRemoveSenderMethodTest >> testNonExistantSelector [
 ]
 
 { #category : #tests }
-RBRemoveSenderMethodTest >> testRemoveSenderIntoCascadedMessage [
-	"| refactoring |
+RBRemoveSenderMethodTest >> testRemoveMessageInsideBlock [
+	| refactoring |
+	refactoring := RBRemoveSenderRefactoring 
+			remove: (	90 to: 105)
+			inMethod: #caller1
+			forClass: RBRefactoryTestDataApp.
+			
+	self setupInlineExpressionFor: refactoring toReturn: false.
+	self executeRefactoring: refactoring .
+
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #caller1) equals: (self parseMethod: 'caller1
+	| anObject |
+	anObject := 5.
+	self called: anObject + 1
+		on1: 
+			[:each | 
+			^anObject]')
+]
+
+{ #category : #tests }
+RBRemoveSenderMethodTest >> testRemoveSenderIntoCascaded2Message [
+	| refactoring |
 	self proceedThroughWarning: 
 		[ refactoring := RBRemoveSenderRefactoring 
-			remove: (	74 to: 75)
+			remove: (	33 to: 62)
+			inMethod: #inlineMethod
+			forClass: RBRefactoryTestDataApp.
+			
+	self setupInlineExpressionFor: refactoring toReturn: false.
+	self executeRefactoring: refactoring ].
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) 
+	parseTreeFor: #inlineMethod) equals: (self parseMethod: 'inlineMethod
+	| temp |
+	self foo.
+	temp := self bar.
+	^ temp')
+]
+
+{ #category : #tests }
+RBRemoveSenderMethodTest >> testRemoveSenderIntoCascaded3Message [
+	| refactoring |
+	self proceedThroughWarning: 
+		[ refactoring := RBRemoveSenderRefactoring 
+			remove: (	64 to: 461)
+			inMethod: #referencesConditionFor:
+			forClass: RBRefactoryTestDataApp.
+			
+	self setupInlineExpressionFor: refactoring toReturn: false.
+	self executeRefactoring: refactoring ].
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) 
+	parseTreeFor: #referencesConditionFor:) equals: (self parseMethod: 'referencesConditionFor: aClass
+	| environment association anObject |
+	anObject := RBCondition withBlock: [ 
+		            association := Smalltalk globals
+			                           associationAt: aClass name
+			                           ifAbsent: [ 
+			                           self refactoringError:
+				                           ''Could not find class'' ].
+		            environment := (self environment referencesTo:
+			                            association)
+		                           |
+		                           (self environment referencesTo:
+			                            aClass name).
+		            environment isEmpty ].
+	anObject errorMacro: aClass , '' is referenced.<n>Browse references?''.
+	^ anObject yourself')
+]
+
+{ #category : #tests }
+RBRemoveSenderMethodTest >> testRemoveSenderIntoCascadedMessage [
+	| refactoring |
+	self proceedThroughWarning: 
+		[ refactoring := RBRemoveSenderRefactoring 
+			remove: (	31 to: 75)
 			inMethod: #called:on:
 			forClass: RBRefactoryTestDataApp.
 			
 	self setupInlineExpressionFor: refactoring toReturn: false.
 	self executeRefactoring: refactoring ].
 	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #called:on:) equals: (self parseMethod: 'called: anObject on: aBlock 
-	| temp |
-	temp := Transcript show: anObject printString.
-	aBlock value')"
+	Transcript show: anObject printString.
+	aBlock value')
 ]
 
 { #category : #tests }
@@ -52,6 +131,7 @@ RBRemoveSenderMethodTest >> testRemoveSimpleSenderOfMessage [
 	self executeRefactoring: refactoring .
 
 	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #caller1) equals: (self parseMethod: 'caller1
-	| anObject |
-	anObject := 5')
+	| anObject arg1 |
+	anObject := 5.
+	arg1 := anObject + 1')
 ]

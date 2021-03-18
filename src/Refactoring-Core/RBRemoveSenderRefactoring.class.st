@@ -38,7 +38,7 @@ RBRefactoryTestDataApp >> caller1
 "
 Class {
 	#name : #RBRemoveSenderRefactoring,
-	#superclass : #RBInlineMethodRefactoring,
+	#superclass : #RBInlineMethodFromComponentRefactoring,
 	#category : #'Refactoring-Core-Refactorings'
 }
 
@@ -62,34 +62,40 @@ RBRemoveSenderRefactoring class >> remove: anInterval inMethod: aSelector forCla
 
 { #category : #transforming }
 RBRemoveSenderRefactoring >> findSelectedMessage [
-	sourceParseTree := class parseTreeFor: sourceSelector.
-	sourceParseTree ifNil: [ self refactoringFailure: 'Could not parse sources' ].
-	sourceMessage := sourceParseTree whichNodeIsContainedBy: sourceInterval.
-	sourceMessage
-		ifNil: [ self refactoringFailure: 'The selection doesn''t appear to be a message send' ].
+	super findSelectedMessage.
 	sourceMessage isDirectlyUsed
 		ifTrue: [ self refactoringFailure: 'The sender is directly used' ].
-	sourceMessage isCascade
-		ifTrue: [ sourceMessage := sourceMessage messages last ].
-		
-	sourceMessage isMessage
-		ifFalse: [ self refactoringFailure: 'The selection doesn''t appear to be a message send' ].
-	(sourceMessage receiver isSelfVariable or: [ sourceMessage receiver isSuperVariable ])
-		ifFalse: [ self refactoringError: 'Cannot inline non-self messages' ]
 ]
 
 { #category : #transforming }
-RBRemoveSenderRefactoring >> inlineSourceReplacing: aParseTree [
-	| statements nodeUnderSequence |
-	
-	statements := inlineParseTree body statements.
-	(statements size > 1 and: [ aParseTree isEvaluatedFirst not ]) ifTrue: [ 
-		self refactoringWarning:
-			'To inline this method, we need to move some of its statements before the original message send.<n>This could change the order of execution, which can change the behavior.<n>Do you want to proceed?'
-				expandMacros ].
-	nodeUnderSequence := aParseTree.
-	[ nodeUnderSequence parent isSequence ] whileFalse: [ nodeUnderSequence := nodeUnderSequence parent ].
-	aParseTree parent replaceNode: aParseTree withNode: RBVariableNode selfNode
+RBRemoveSenderRefactoring >> inlineClassName [
+
+	^ 'Object'
+]
+
+{ #category : #transforming }
+RBRemoveSenderRefactoring >> inlineParseTree [
+
+	| aSymbol |
+	aSymbol := sourceMessage selector.
+	^ inlineParseTree ifNil: [inlineParseTree := RBMethodNode 
+		selector:  aSymbol
+		arguments: ( (1 to: aSymbol numArgs) collect: [ :e | RBVariableNode named: 'arg', e asString ])
+		body: ( RBSequenceNode statements: #())]
+]
+
+{ #category : #preconditions }
+RBRemoveSenderRefactoring >> preconditions [
+	^(RBCondition definesSelector: sourceSelector in: class) 
+		& (RBCondition withBlock: 
+					[self findSelectedMessage.
+					"self parseInlineMethod."
+					self rewriteInlinedTree.
+					(sourceMessage parent isReturn or: [self hasMultipleReturns not]) 
+						ifFalse: 
+							[self 
+								refactoringError: 'Cannot inline method since it contains multiple returns that cannot be rewritten'].
+					true])
 ]
 
 { #category : #removing }
@@ -97,4 +103,15 @@ RBRemoveSenderRefactoring >> remove: anInterval inMethod: aSelector forClass: aC
 	sourceSelector := aSelector.
 	class := self classObjectFor: aClass.
 	sourceInterval := anInterval
+]
+
+{ #category : #transforming }
+RBRemoveSenderRefactoring >> transform [
+	self inlineParseTree.
+	self renameConflictingTemporaries.
+	self renameSelfReferences.
+	self
+		renameConflictingTemporaries;
+		insertInlinedMethod;
+		compileMethod
 ]

@@ -180,9 +180,6 @@ RBRefactoring >> convertAllReferencesTo: aSymbol using: searchReplacer [
 	searchInPackages 
 		ifNil: [ self model allReferencesTo: aSymbol do: aBlock ]
 		ifNotNil: [ self model allReferencesTo: aSymbol inPackages: searchInPackages do: aBlock ]
-	
-	
-			
 ]
 
 { #category : #support }
