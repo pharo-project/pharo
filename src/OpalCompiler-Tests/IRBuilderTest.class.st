@@ -7,7 +7,7 @@ Class {
 	#category : #'OpalCompiler-Tests-IR'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 IRBuilderTest class >> compilerClass [
 	^ OpalCompiler
 ]
