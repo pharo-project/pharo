@@ -585,7 +585,7 @@ AthensCairoSurface >> getFreetypeFontRendererFor: aFreetypeFont [
 	^ ftFontRenderer font: aFreetypeFont; advance: 0@0; yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensCairoSurface >> getHandle [
 	
 	^ handle
