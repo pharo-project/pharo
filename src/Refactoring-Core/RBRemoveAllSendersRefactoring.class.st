@@ -8,15 +8,15 @@ Class {
 }
 
 { #category : #removing }
-RBRemoveAllSendersRefactoring class >> model: aModel removeSendersOf: aSelector in: aClass [ 
+RBRemoveAllSendersRefactoring class >> model: aModel removeSendersOf: aSelector [
 	^self new
 		model: aModel;
-		removeSendersOf: aSelector in: aClass
+		removeSendersOf: aSelector
 ]
 
 { #category : #removing }
-RBRemoveAllSendersRefactoring class >> removeSendersOf: aSelector in: aClass [ 
-	^self new removeSendersOf: aSelector in: aClass
+RBRemoveAllSendersRefactoring class >> removeSendersOf: aSelector [
+	^self new removeSendersOf: aSelector
 ]
 
 { #category : #transforming }
@@ -26,7 +26,7 @@ RBRemoveAllSendersRefactoring >> messagePattern [
 
 { #category : #preconditions }
 RBRemoveAllSendersRefactoring >> preconditions [
-	^ RBCondition canUnderstand: selector in: class
+	^ self emptyCondition
 ]
 
 { #category : #removing }
@@ -55,8 +55,7 @@ RBRemoveAllSendersRefactoring >> removeSelfSenders [
 ]
 
 { #category : #removing }
-RBRemoveAllSendersRefactoring >> removeSendersOf: aSelector in: aClass [ 
-	class := self classObjectFor: aClass.
+RBRemoveAllSendersRefactoring >> removeSendersOf: aSelector [
 	selector := aSelector.
 ]
 
