@@ -19,7 +19,7 @@ ClyCreateTestCaseCommand class >> canBeExecutedInContext: aBrowserContext [
 ClyCreateTestCaseCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 4 for: ClyFullBrowserClassContext 
+	^CmdContextMenuActivation byRootGroupItemOrder: 5 for: ClyFullBrowserClassContext 
 ]
 
 { #category : #accessing }
