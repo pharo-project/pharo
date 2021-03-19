@@ -89,21 +89,21 @@ SpFilteringListPresenter >> filterInputPresenter [
 
 { #category : #private }
 SpFilteringListPresenter >> filterListItems: pattern [
-
 	| filteredItems |
-	unfilteredItems ifNil: [ unfilteredItems := self items ].
-	(unfilteredItems includesAll: self items) ifFalse: [ 
+	
+	unfilteredItems ifNil: [ 
 		unfilteredItems := self items ].
+	
 	pattern ifEmpty: [ 
 		self items: unfilteredItems.
 		^ self ].
 
-	filteredItems := unfilteredItems select: [ :item | 
-		                 itemFilterBlock
-			                 value: (self display value: item)
-			                 value: pattern ].
+	filteredItems := unfilteredItems select: [ :item |
+		itemFilterBlock
+			value: (self display value: item)
+			value: pattern ].
 
-	self items: filteredItems
+	listPresenter items: filteredItems
 ]
 
 { #category : #api }
@@ -143,7 +143,8 @@ SpFilteringListPresenter >> items [
 { #category : #api }
 SpFilteringListPresenter >> items: aCollection [
 
-	listPresenter items: aCollection
+	listPresenter items: aCollection.
+	unfilteredItems := nil
 ]
 
 { #category : #accessing }

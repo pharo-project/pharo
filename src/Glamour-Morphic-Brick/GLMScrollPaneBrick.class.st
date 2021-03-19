@@ -37,29 +37,29 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Widgets-Scrollpane'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #defaults }
 GLMScrollPaneBrick class >> defaultMaxVelocity [
 	^ self defaultScrollVelocity * 4
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #defaults }
 GLMScrollPaneBrick class >> defaultScrollAcceleration [
 
 	^ 4
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #defaults }
 GLMScrollPaneBrick class >> defaultScrollTimeReset [
 	^ 350
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #defaults }
 GLMScrollPaneBrick class >> defaultScrollTurboTime [
 
 	^ 30
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #defaults }
 GLMScrollPaneBrick class >> defaultScrollVelocity [
 	^ 15
 ]
