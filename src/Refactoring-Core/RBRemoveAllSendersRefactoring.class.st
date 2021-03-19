@@ -1,3 +1,8 @@
+"
+I am a refactoring to remove all possible senders from a method (you cannot remove those calls where the result of the method call is used or when the method name symbol is referenced).
+
+
+"
 Class {
 	#name : #RBRemoveAllSendersRefactoring,
 	#superclass : #RBMethodRefactoring,
@@ -69,6 +74,15 @@ RBRemoveAllSendersRefactoring >> selfSendIn: aTree [
 		do: [ :aNode :answer | nodes add: aNode ].
 	searcher executeTree: aTree initialAnswer: {}.
 	^ nodes
+]
+
+{ #category : #printing }
+RBRemoveAllSendersRefactoring >> storeOn: aStream [ 
+	aStream nextPut: $(.
+	self class storeOn: aStream.
+	aStream nextPutAll: ' removeSendersOf: '.
+	aStream nextPutAll: selector.
+	aStream nextPut: $)
 ]
 
 { #category : #transforming }

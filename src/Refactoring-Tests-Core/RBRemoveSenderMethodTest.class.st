@@ -6,10 +6,11 @@ Class {
 
 { #category : #'failure tests' }
 RBRemoveSenderMethodTest >> testIsDirectlyUsed [
-	| refactoring |
+	| refactoring methodName |
+	methodName := ('caller', '2') asSymbol.
 	refactoring := RBRemoveSenderRefactoring
 		remove: (58 to: 73)
-		inMethod: #caller2
+		inMethod: methodName
 		forClass: RBRefactoryTestDataApp.
 	self setupInlineExpressionFor: refactoring toReturn: false.
 	self shouldFail: refactoring.
@@ -36,16 +37,17 @@ RBRemoveSenderMethodTest >> testNonExistantSelector [
 
 { #category : #tests }
 RBRemoveSenderMethodTest >> testRemoveMessageInsideBlock [
-	| refactoring |
+	| refactoring methodName |
+	methodName := ('caller', '1') asSymbol.
 	refactoring := RBRemoveSenderRefactoring 
 			remove: (	90 to: 105)
-			inMethod: #caller1
+			inMethod: methodName
 			forClass: RBRefactoryTestDataApp.
 			
 	self setupInlineExpressionFor: refactoring toReturn: false.
 	self executeRefactoring: refactoring .
 
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #caller1) equals: (self parseMethod: 'caller1
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: methodName) equals: (self parseMethod: 'caller1
 	| anObject |
 	anObject := 5.
 	self called: anObject + 1
@@ -121,16 +123,17 @@ RBRemoveSenderMethodTest >> testRemoveSenderIntoCascadedMessage [
 
 { #category : #tests }
 RBRemoveSenderMethodTest >> testRemoveSimpleSenderOfMessage [
-	| refactoring |
+	| refactoring methodName |
+	methodName := ('caller', '1') asSymbol.
 	refactoring := RBRemoveSenderRefactoring 
 			remove: (	40 to: 120)
-			inMethod: #caller1
+			inMethod: methodName
 			forClass: RBRefactoryTestDataApp.
 			
 	self setupInlineExpressionFor: refactoring toReturn: false.
 	self executeRefactoring: refactoring .
 
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #caller1) equals: (self parseMethod: 'caller1
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: methodName) equals: (self parseMethod: 'caller1
 	| anObject arg1 |
 	anObject := 5.
 	arg1 := anObject + 1')

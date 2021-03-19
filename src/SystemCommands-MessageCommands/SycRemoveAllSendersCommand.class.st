@@ -1,3 +1,6 @@
+"
+I am a command to launch the Remove All Senders Refactoring: the call to this method in all senders is removed (as long as possible)
+"
 Class {
 	#name : #SycRemoveAllSendersCommand,
 	#superclass : #SycChangeMessageSignatureCommand,

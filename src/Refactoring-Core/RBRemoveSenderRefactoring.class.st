@@ -6,9 +6,9 @@ Example
 ```
 | refactoring options |
 refactoring := RBRemoveSenderRefactoring 
-		remove: (	40 to: 120)
-		inMethod: #caller1
-		forClass: RBRefactoryTestDataApp.
+			remove: (	90 to: 105)
+			inMethod: #caller1
+			forClass: RBRefactoryTestDataApp.
 options := refactoring options copy.
 options at: #inlineExpression put: [:ref :string | false].
 refactoring options: options.
@@ -33,6 +33,10 @@ After refactoring:
 RBRefactoryTestDataApp >> caller1
 	| anObject |
 	anObject := 5.
+	self called: anObject + 1
+		on1: 
+			[:each | 
+			^anObject]
 ```
 
 "
@@ -103,6 +107,20 @@ RBRemoveSenderRefactoring >> remove: anInterval inMethod: aSelector forClass: aC
 	sourceSelector := aSelector.
 	class := self classObjectFor: aClass.
 	sourceInterval := anInterval
+]
+
+{ #category : #printing }
+RBRemoveSenderRefactoring >> storeOn: aStream [ 
+	aStream nextPut: $(.
+	self class storeOn: aStream.
+	aStream nextPutAll: ' remove: '.
+	sourceInterval storeOn: aStream.
+	aStream
+		nextPutAll: ' inMethod: #';
+		nextPutAll: sourceSelector;
+		nextPutAll: ' forClass: '.
+	class storeOn: aStream.
+	aStream nextPut: $)
 ]
 
 { #category : #transforming }
