@@ -118,7 +118,5 @@ FFILibrary >> unixLibraryName [
 
 { #category : #'accessing platform' }
 FFILibrary >> win32LibraryName [
-	"Calling by default #win32ModuleName for backwards compatibility.
-	Please redefine #win32LibraryName"
-	^ self win32ModuleName
+	^self subclassResponsibility
 ]
