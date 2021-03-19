@@ -46,6 +46,7 @@ Class {
 		'rootClasses',
 		'implementorsCache',
 		'sendersCache',
+		'newPackages',
 		'changedPackages',
 		'removedPackages'
 	],
@@ -77,6 +78,17 @@ RBNamespace >> addClassVariable: aString to: aRBClass [
 { #category : #'private-changes' }
 RBNamespace >> addInstanceVariable: aString to: aRBClass [ 
 	^changes addInstanceVariable: aString to: aRBClass
+]
+
+{ #category : #'private-changes' }
+RBNamespace >> addPackageNamed: aSymbol [
+	| change pkg |
+	change := changes addPackageNamed: aSymbol.
+	self flushCaches.
+	pkg := self packageNamed: aSymbol.
+	self unmarkPackageAsRemoved: aSymbol.
+	newPackages at: aSymbol put: pkg.
+	^change
 ]
 
 { #category : #'private-changes' }
@@ -193,6 +205,16 @@ RBNamespace >> allReferencesTo: aSymbol inPackages: aColl do: aBlock [
 { #category : #accessing }
 RBNamespace >> allReferencesToClass: aRBClass do: aBlock [ 
 	self allClassesDo: 
+			[:each |
+			(each whichSelectorsReferToClass: aRBClass) 
+				do: [:sel | aBlock value: (each methodFor: sel)].
+			(each classSide whichSelectorsReferToClass: aRBClass) 
+				do: [:sel | aBlock value: (each classSide methodFor: sel)]]
+]
+
+{ #category : #accessing }
+RBNamespace >> allReferencesToClass: aRBClass inPackages: aColl do: aBlock [ 
+	self allClassesInPackages: aColl do:
 			[:each |
 			(each whichSelectorsReferToClass: aRBClass) 
 				do: [:sel | aBlock value: (each methodFor: sel)].
@@ -385,6 +407,7 @@ RBNamespace >> initialize [
 	super initialize.
 	changes := changeFactory compositeRefactoryChange onSystemDictionary: self environment.
 	newClasses := IdentityDictionary new.
+	newPackages := IdentityDictionary new.
 	changedClasses := IdentityDictionary new.
 	changedPackages := IdentityDictionary new.
 	removedClasses := Set new.
@@ -441,6 +464,7 @@ RBNamespace >> name: aString [
 RBNamespace >> packageNamed: aSymbol [
 	aSymbol ifNil: [ ^ nil ].
 	(self hasPackageRemoved: aSymbol) ifTrue: [ ^ nil ].
+	(newPackages includesKey: aSymbol) ifTrue: [ ^ newPackages at: aSymbol ].
 	(changedPackages includesKey: aSymbol) ifTrue: [ ^ (changedPackages at: aSymbol) first ].
 	^ (self createNewPackageFor: aSymbol) first
 ]
@@ -569,6 +593,13 @@ RBNamespace >> removeMethod: aSelector from: aRBClass [
 	^changes removeMethod: aSelector from: aRBClass
 ]
 
+{ #category : #'private-changes' }
+RBNamespace >> removePackageNamed: aString [
+
+	self flushCaches.
+	^ changes removePackageNamed: aString.
+]
+
 { #category : #changes }
 RBNamespace >> renameClass: aRBClass to: aSymbol around: aBlock [
 	| change value dict |
@@ -617,8 +648,6 @@ RBNamespace >> renamePackage: aRBPackage to: aSymbol [
 	dict := changedPackages.
 	self markPackageAsRemoved: aRBPackage name.
 	self unmarkPackageAsRemoved: aSymbol.
-	"self markAsRemoved: aRBClass name.
-	self unmarkAsRemoved: aSymbol."
 	value := dict at: aRBPackage name.
 	dict removeKey: aRBPackage name.
 	dict at: aSymbol put: value.

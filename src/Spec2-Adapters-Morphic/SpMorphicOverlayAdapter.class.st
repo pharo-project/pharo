@@ -41,13 +41,9 @@ SpMorphicOverlayAdapter >> children [
 SpMorphicOverlayAdapter >> layout: aLayout [
 
 	widget ifNil: [ 
-		widget := PanelMorph new
-			          layoutPolicy: SpMorphicOverlayLayout new;
-			          hResizing: #spaceFill;
-			          vResizing: #spaceFill;
-			          color: Color transparent;
-			          borderColor: Color transparent;
-			          yourself ].
+		widget := self newPanel
+          layoutPolicy: SpMorphicOverlayLayout new;
+          yourself ].
 
 	aLayout whenChildrenAddedDo: [ :ann | 
 		self

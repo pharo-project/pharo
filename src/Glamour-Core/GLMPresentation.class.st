@@ -375,7 +375,7 @@ GLMPresentation >> entity: anObject [
 	(self pane port: #entity) value: anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 GLMPresentation >> gtActionsIn: composite [
 	<gtInspectorPresentationOrder: 50>
 	composite list 

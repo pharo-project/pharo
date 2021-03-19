@@ -4,6 +4,9 @@ I am the baseclass for all refactoring changes for all kind of package changes.
 Class {
 	#name : #RBRefactoryPackageChange,
 	#superclass : #RBRefactoryChange,
+	#instVars : [
+		'browserEnvironment'
+	],
 	#category : #'Refactoring-Changes'
 }
 
@@ -20,6 +23,12 @@ RBRefactoryPackageChange >> executeNotifying: aBlock [
 	self primitiveExecute.
 	aBlock value.
 	^ undo
+]
+
+{ #category : #initialization }
+RBRefactoryPackageChange >> initialize [ 
+	super initialize.
+	browserEnvironment := RBBrowserEnvironment default.
 ]
 
 { #category : #private }

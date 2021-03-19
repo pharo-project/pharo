@@ -63,6 +63,11 @@ RBRefactoryChangeFactory >> addMethodSource: sourceCode in: aClass for: aControl
 			compile: sourceCode in: aClass for: aController
 ]
 
+{ #category : #'refactory-changes-packages' }
+RBRefactoryChangeFactory >> addPackageNamed: aString [
+	^ RBAddPackageChange addPackageNamed: aString
+]
+
 { #category : #'refactory-changes-variables' }
 RBRefactoryChangeFactory >> addPoolVariable: variableName to: aClass [
 	^ RBAddPoolVariableChange add: variableName to: aClass
@@ -106,6 +111,11 @@ RBRefactoryChangeFactory >> removeInstanceVariable: variableName from: aClass [
 { #category : #'refactory-changes-methods' }
 RBRefactoryChangeFactory >> removeMethod: aSelector from: aClass [
 	^ RBRemoveMethodChange remove: aSelector from: aClass
+]
+
+{ #category : #'refactory-changes-packages' }
+RBRefactoryChangeFactory >> removePackageNamed: aString [
+	^ RBRemovePackageChange removePackageNamed: aString
 ]
 
 { #category : #'refactory-changes-variables' }

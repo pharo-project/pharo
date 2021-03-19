@@ -26,6 +26,7 @@ Class {
 
 { #category : #'instance creation' }
 RBCondition class >> canUnderstand: aSelector in: aClass [
+
 	^self new
 		type: (Array with: #understandsSelector with: aClass with: aSelector)
 		block: [aClass canUnderstand: aSelector]

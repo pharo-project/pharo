@@ -21,7 +21,7 @@ CompletionEngineTest >> allSmartCharacters [
 	^ self allSelfClosingCharacters , { '||'. '<>' }
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 CompletionEngineTest >> interactionModel [
 	
 	^ nil
@@ -89,7 +89,7 @@ CompletionEngineTest >> selectFrom: start to: stop [
 	editor selectFrom: start to: stop
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 CompletionEngineTest >> selectedClassOrMetaClass [
 	
 	^ nil

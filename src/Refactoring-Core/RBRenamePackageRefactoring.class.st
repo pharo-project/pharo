@@ -1,3 +1,18 @@
+"
+I'm a refactoring to rename a package.
+
+My preconditions verify that the new name is different from the current package name and is a valid name.
+
+I change all the references of the classes that are defined within the package, and if there is a manifest, it is updated with the new name of the package. 
+
+Example
+---------
+```
+(RBRenamePackageRefactoring 
+				rename: (self getPackageNamed: #'Refactoring-Tests-Core')
+				to: #'Refactoring-Tests-Core1') execute.
+```
+"
 Class {
 	#name : #RBRenamePackageRefactoring,
 	#superclass : #RBPackageRefactoring,
@@ -9,16 +24,16 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBRenamePackageRefactoring class >> model: aRBSmalltalk rename: aPkg to: aNewName [ 
-	^(self new)
+RBRenamePackageRefactoring class >> model: aRBSmalltalk rename: aSymbol to: aNewName [ 
+	^ self new
 		model: aRBSmalltalk;
-		packageName: aPkg name newName: aNewName;
+		packageName: aSymbol newName: aNewName;
 		yourself
 ]
 
 { #category : #'instance creation' }
-RBRenamePackageRefactoring class >> rename: aClass to: aNewName [
-	^self new packageName: aClass name newName: aNewName
+RBRenamePackageRefactoring class >> rename: aString to: aNewName [
+	^self new packageName: aString newName: aNewName
 ]
 
 { #category : #transforming }
@@ -37,7 +52,7 @@ RBRenamePackageRefactoring >> packageName: aName newName: aNewName [
 
 { #category : #preconditions }
 RBRenamePackageRefactoring >> preconditions [ 
-	^ (RBCondition withBlock: [ newName = package name ifTrue: 
+	^ super preconditions & (RBCondition withBlock: [ newName = package name ifTrue: 
 		[ self refactoringError: 'Use a different name' ].
 		true ]) &
 	(RBCondition withBlock: [ [RPackage organizer validatePackageDoesNotExist: newName. true]

@@ -1,23 +1,35 @@
 "
-I am a refactoring for move a method to class side.
+I'm a refactoring to move a method to class side.
 
-For example, a method 
+My preconditions verify that the method exists and belongs to instance side.
 
-```
-X >> annotatedBlockMarkup
-	^ '@@'
-```	
+I catch broken references (method senders and direct access to instVar) and fix them.
 
-move this method to class side convert the method to:
-```
-X >> annotatedBlockMarkup
-  ^ self class annotatedBlockMarkup
-```
-and create a new method in class side:
+Example
+-----------
 
+Script
 ```
-X class >> annotatedBlockMarkup
-	^ '@@'
+	(RBMoveMethodToClassSideRefactoring 
+		method: (RBTransformationRuleTestData >> #rewriteUsing:) 
+		class: RBTransformationRuleTestData) execute.
+```
+Before refactoring:
+```
+RBTransformationRuleTestData >> rewriteUsing: searchReplacer 
+     rewriteRule := searchReplacer.
+     self resetResult.
+```
+After refactoring:
+```
+RBTransformationRuleTestData >> rewriteUsing: searchReplacer
+     ^ self class rewriteUsing: searchReplace.
+
+RBTransformationRuleTestData class >> rewriteUsing: searchReplacer
+    | aRBTransformationRuleTestData |
+    aRBTransformationRuleTestData := self new.
+    aRBTransformationRuleTestData rewriteRule: searchReplacer.
+    aRBTransformationRuleTestData resetResult.
 ```
 "
 Class {
@@ -115,7 +127,7 @@ RBMoveMethodToClassSideRefactoring >> parseTree [
 RBMoveMethodToClassSideRefactoring >> preconditions [
 	^(RBCondition 
 		definesSelector: method selector 
-		in: (self model classNamed: class name, ' class')) not
+		in: class classSide) not
 		& (RBCondition withBlock: [ class isMeta not ])
 ]
 

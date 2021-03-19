@@ -211,11 +211,11 @@ StDebuggerActionModelTest >> testDynamicShouldFilterStackUpdate [
 		method: Object >> #doesNotUnderstand:
 		arguments: #(#message).
 	mockDebugActionModel interruptedContext: context.
-	mockDebugActionModel stepInto: nil.
+	mockDebugActionModel stepInto: context.
 	self deny: mockDebugActionModel filterStack.
 	self deny: mockDebugActionModel shouldFilterStack.
 	
-	mockDebugActionModel stepOver: nil.
+	mockDebugActionModel stepOver: context.
 	self deny: mockDebugActionModel filterStack.
 	self deny: mockDebugActionModel shouldFilterStack.
 	
@@ -229,11 +229,11 @@ StDebuggerActionModelTest >> testDynamicShouldFilterStackUpdate [
 		method: Object >> #asString
 		arguments: #().
 	mockDebugActionModel interruptedContext: context.
-	mockDebugActionModel stepInto: nil.
+	mockDebugActionModel stepInto: context.
 	self deny: mockDebugActionModel filterStack.
 	self deny: mockDebugActionModel shouldFilterStack.
 	
-	mockDebugActionModel stepOver: nil.
+	mockDebugActionModel stepOver: context.
 	self assert: mockDebugActionModel filterStack.
 	self assert: mockDebugActionModel shouldFilterStack.
 	
@@ -516,6 +516,7 @@ StDebuggerActionModelTest >> testStepInto [
 	|ctx|
 	ctx := session interruptedContext.
 	debugActionModel stepInto: ctx.
+	self assert: ctx stepIntoQuickMethod.
 	self assert: session interruptedContext sender identicalTo: ctx.
 	self assert: session stack second identicalTo: ctx
 ]
@@ -579,21 +580,22 @@ StDebuggerActionModelTest >> testUpdateTopContext [
 
 { #category : #'tests - contexts' }
 StDebuggerActionModelTest >> testUpdateTopContextAfterSessionOperation [
-	|mockDebugActionModel|
+	|mockDebugActionModel context|
+	context := [  ] asContext.
 	mockDebugActionModel := StMockDebuggerActionModel new.
-	mockDebugActionModel stepInto: nil.
+	mockDebugActionModel stepInto: context.
 	self assert: mockDebugActionModel tag equals: #updateTopContext.
 	
 	mockDebugActionModel := StMockDebuggerActionModel new.
-	mockDebugActionModel stepOver: nil.
+	mockDebugActionModel stepOver: context.
 	self assert: mockDebugActionModel tag equals: #updateTopContext.
 	
 	mockDebugActionModel := StMockDebuggerActionModel new.
-	mockDebugActionModel stepThrough: nil.
+	mockDebugActionModel stepThrough: context.
 	self assert: mockDebugActionModel tag equals: #updateTopContext.
 	
 	mockDebugActionModel := StMockDebuggerActionModel new.
-	mockDebugActionModel restartContext: nil.
+	mockDebugActionModel restartContext: context.
 	self assert: mockDebugActionModel tag equals: #updateTopContext.
 	
 	mockDebugActionModel := StMockDebuggerActionModel new.
