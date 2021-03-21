@@ -199,7 +199,6 @@ RBFindAndReplaceRefactoring >> storeOn: aStream [
 { #category : #preconditions }
 RBFindAndReplaceRefactoring >> transform [
 	|classes|
-	
 	classes :=replacesAllHierarchy ifFalse: [ { class } ] ifTrue: [ class withAllSubclasses ].
 	classes do: [ :cls | (cls selectors copyWithout: selector) do: [ :sel | |rbMethod|
 		rbMethod := cls methodFor: sel.

@@ -17,7 +17,8 @@ Class {
 		'parameters',
 		'needsReturn',
 		'parameterMap',
-		'newExtractedSelector'
+		'newExtractedSelector',
+		'searchInSuperclasses'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -126,7 +127,7 @@ RBExtractMethodRefactoring >> existingSelector [
 	"Try to find an existing method instead of creating a new one"
 
 	^ self requestExistingSelector
-		ifNil: [ class allSelectors
+		ifNil: [ self selectorsToSearch
 				detect: [ :each | self isMethodEquivalentTo: each ]
 				ifNone: [ nil ] ]
 ]
@@ -394,6 +395,23 @@ RBExtractMethodRefactoring >> requestExistingSelector [
 	^ [(self options at: #existingSelector) value: self]
 			on: Exception 
 			do: [ :e | nil ]
+]
+
+{ #category : #accessing }
+RBExtractMethodRefactoring >> searchInSuperclasses [
+	^ searchInSuperclasses ifNil: [ searchInSuperclasses := false ]
+]
+
+{ #category : #accessing }
+RBExtractMethodRefactoring >> searchInSuperclasses: anObject [
+	searchInSuperclasses := anObject
+]
+
+{ #category : #transforming }
+RBExtractMethodRefactoring >> selectorsToSearch [
+	^ self searchInSuperclasses 
+		ifTrue: [ class allSelectors ]
+		ifFalse: [ class selectors ]
 ]
 
 { #category : #printing }
