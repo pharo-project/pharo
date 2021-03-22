@@ -103,6 +103,17 @@ RBCondition class >> definesSelector: aSelector in: aClass [
 ]
 
 { #category : #'instance creation' }
+RBCondition class >> definesSelector: aSelector in: aClass orIsSimilarTo: rbMethod [
+	^self new
+		type: (Array with: #definesSelector with: aClass with: aSelector)
+		block: [(aClass directlyDefinesMethod: aSelector)
+			ifTrue: [ (aClass parseTreeFor: aSelector) ~= rbMethod parseTree ]
+			ifFalse: [ false ]
+			]
+		errorString: aClass printString , ' <1?:does not >define<1?s:> ' , aSelector printString
+]
+
+{ #category : #'instance creation' }
 RBCondition class >> definesTempVar: aString in: aClass ignoreClass: subclass [ 
 	| condition |
 	condition := self new.

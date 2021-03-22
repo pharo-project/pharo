@@ -37,6 +37,7 @@ SycExtractMethodCommand >> execute [
 		               extract: selectedInterval
 		               from: method selector
 		               in: method origin.
+	refactoring searchInSuperclasses: self searchInSuperclasses.
 	self setUpOptionToUseExistingMethodDuring: refactoring.
 	self setUpOptionToOverrideExistingMethodDuring: refactoring.
 	self setUpOptionToChangeMethodNameDuring: refactoring.
@@ -49,7 +50,15 @@ SycExtractMethodCommand >> execute [
 SycExtractMethodCommand >> readParametersFromContext: aSourceCodeContext [
 	super readParametersFromContext: aSourceCodeContext.
 	
-	selectedTextInterval := aSourceCodeContext selectedTextInterval
+	selectedTextInterval := aSourceCodeContext selectedTextInterval.
+	
+]
+
+{ #category : #execution }
+SycExtractMethodCommand >> searchInSuperclasses [
+	^ UIManager default 
+			confirm: 'Do you want to search extracted code in the superclasses as well?'
+			label: 'Warning'.
 ]
 
 { #category : #execution }
