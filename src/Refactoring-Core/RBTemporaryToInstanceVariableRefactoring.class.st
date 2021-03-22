@@ -5,9 +5,64 @@ My preconditions verify that this variable is not yet used as an instance variab
 
 The temporary variable is added to the class definition and removed from the temporary declaration in this method .
 
-If this instance variable is already used in a subclass will be removed from that class, because subclasses already inherit this attribute.
+If this instance variable is already used in a subclass it will be removed from that class, because subclasses already inherit this attribute.
 
 The temporary variables with the same name in hierarchy will be removed, and replaced with the new instance variable.
+
+Example
+--------------------
+
+Script refactoring:
+```
+(RBTemporaryToInstanceVariableRefactoring 
+    class: MyClassA
+    selector: #someMethod
+    variable: 'log') execute
+```
+Before refactoring:
+```
+Object subclass: #MyClassA
+	instanceVariableNames: ''
+	classVariableNames: ''
+	package: 'example'
+
+MyClassA >> someMethod 
+    |log aNumber|
+    log := self newLog.
+    log isNil.
+    aNumber := 5.
+
+MyClassA >> anotherMethod
+    #(4 5 6 7) do: [:e | | log |
+        log := e ]
+
+MyClassA subclass: #MyClassB
+	instanceVariableNames: 'log'
+	classVariableNames: ''
+	package: 'example'
+```
+After refactoring:
+```
+Object subclass: #MyClassA
+	instanceVariableNames: 'log'
+	classVariableNames: ''
+	package: 'example'
+
+MyClassA >> someMethod 
+    | aNumber |
+    log := self newLog.
+    log isNil.
+    aNumber := 5.
+
+MyClassA >> anotherMethod
+    #(4 5 6 7) do: [:e | 
+        log := e ]
+
+MyClassA subclass: #MyClassB
+	instanceVariableNames: ''
+	classVariableNames: ''
+	package: 'example'
+```
 "
 Class {
 	#name : #RBTemporaryToInstanceVariableRefactoring,
