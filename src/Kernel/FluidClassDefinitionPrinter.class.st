@@ -392,7 +392,7 @@ FluidClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aPackageName [
 			  nextPutAll: 'Trait << #TMyTrait';
 			  crtab.
 		  s
-			  nextPutAll: 'uses: {};';
+			  nextPutAll: 'trait: TEmpty;';
 			  crtab.
 		  s
 			  nextPutAll: 'slots: {};';
@@ -421,9 +421,11 @@ FluidClassDefinitionPrinter >> traitsOn: strm [
 	"uses: can the last part of a definition so watch out for terminating ;"
 	
 	forClass hasTraitComposition ifTrue: [
+		"forClass traitComposition innerClass = TEmpty ifTrue: [ ^ self ]."
+		"isEmpty traitComposition should probably moved to Trait."
 		strm 
 			crtab; 
-			nextPutAll: 'uses: ';
+			nextPutAll: 'trait: ';
 			nextPutAll: forClass traitCompositionString;
 			nextPutAll: ';' ]
 ]

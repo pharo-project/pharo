@@ -129,7 +129,7 @@ ProperMethodCategorizationTest >> testNoUncategorizedMethods [
 		             class protocols includes: #'as yet unclassified' ].
 
 	"we lock in the number of problematic classes, this way it can only improve"
-	self assert: violating size <= 269
+	self assert: violating size <= 151
 ]
 
 { #category : #'tests - object' }

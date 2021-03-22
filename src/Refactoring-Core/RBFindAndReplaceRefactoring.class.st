@@ -159,7 +159,8 @@ RBFindAndReplaceRefactoring >> patternParserClass [
 { #category : #preconditions }
 RBFindAndReplaceRefactoring >> preconditions [
 
-	| condition |
+	| condition rbMethod |
+	rbMethod := class methodFor: selector.
 	condition := (RBCondition definesSelector: selector in: class)
 	             & (replacesAllHierarchy
 			              ifFalse: [ self emptyCondition ]
@@ -169,7 +170,7 @@ RBFindAndReplaceRefactoring >> preconditions [
 					              into: [ :cond :aClass | 
 						              cond
 						              &
-						              (RBCondition definesSelector: selector in: aClass)
+						              (RBCondition definesSelector: selector in: aClass orIsSimilarTo: rbMethod)
 							              not ] ]).
 	^ condition
 ]
@@ -199,7 +200,6 @@ RBFindAndReplaceRefactoring >> storeOn: aStream [
 { #category : #preconditions }
 RBFindAndReplaceRefactoring >> transform [
 	|classes|
-	
 	classes :=replacesAllHierarchy ifFalse: [ { class } ] ifTrue: [ class withAllSubclasses ].
 	classes do: [ :cls | (cls selectors copyWithout: selector) do: [ :sel | |rbMethod|
 		rbMethod := cls methodFor: sel.

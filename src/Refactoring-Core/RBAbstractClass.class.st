@@ -412,6 +412,11 @@ RBAbstractClass >> isMeta [
 	self subclassResponsibility
 ]
 
+{ #category : #testing }
+RBAbstractClass >> isTrait [
+	^ false
+]
+
 { #category : #'method accessing' }
 RBAbstractClass >> methodFor: aSelector [
 	^ self newMethods
@@ -671,7 +676,6 @@ RBAbstractClass >> whichSelectorsReferToClassVariable: aString [
 RBAbstractClass >> whichSelectorsReferToInstanceVariable: aString [
 
 	| selectors |
-
 	selectors := Set new.
 	newMethods
 		ifNotNil: [ newMethods

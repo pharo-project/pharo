@@ -8,7 +8,8 @@ Class {
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
 		'extractionInterval',
-		'selector'
+		'selector',
+		'searchInSuperclasses'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -46,6 +47,7 @@ RBExtractMethodAndOccurrences >> extractMethod [
 				extract: extractionInterval
 				from: selector
 				in: class.
+	refactoring searchInSuperclasses: searchInSuperclasses.
 	self performCompositeRefactoring: refactoring.
 	^ refactoring newExtractedSelector
 ]
@@ -55,7 +57,7 @@ RBExtractMethodAndOccurrences >> findImplementorOf: aSelector [
 	(class directlyDefinesMethod: aSelector) ifTrue: [ ^ true ].
 	class superclass ifNotNil: [
 		class := class superclass.
-		self findImplementorOf: aSelector.
+		^ self findImplementorOf: aSelector.
 	].
 	^ false
 ]
@@ -77,6 +79,11 @@ RBExtractMethodAndOccurrences >> findOccurrencesOf: aSelector [
 RBExtractMethodAndOccurrences >> preconditions [
 
 	^ self emptyCondition
+]
+
+{ #category : #accessing }
+RBExtractMethodAndOccurrences >> searchInSuperclasses: anObject [
+	searchInSuperclasses := anObject
 ]
 
 { #category : #printing }

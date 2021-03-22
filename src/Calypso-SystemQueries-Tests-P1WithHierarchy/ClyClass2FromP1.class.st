@@ -11,12 +11,12 @@ Class {
 	#category : #'Calypso-SystemQueries-Tests-P1WithHierarchy'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ClyClass2FromP1 class >> classSideClassVar1Reader [
 	^ClassVar1
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ClyClass2FromP1 class >> classSideClassVar1Writer [
 	ClassVar1 := #classVar1Value
 ]
@@ -32,12 +32,12 @@ ClyClass2FromP1 >> instanceSideClassVar1Reader [
 	^ClassVar1
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ClyClass2FromP1 >> instanceSideClassVar1Writer [
 	ClassVar1 := #classVar1Value
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ClyClass2FromP1 >> instanceSideClassVar2Reader [
 	^ClassVar2
 ]

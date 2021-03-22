@@ -110,7 +110,7 @@ SpAbstractMorphicAdapter >> applyStyle [
 { #category : #styling }
 SpAbstractMorphicAdapter >> applyStyle: morph [
 	"this will apply general properties to the built morph"
-	
+
 	self style applyTo: morph
 ]
 

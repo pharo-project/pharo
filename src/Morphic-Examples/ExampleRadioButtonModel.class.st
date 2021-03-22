@@ -10,21 +10,21 @@ Class {
 	#category : #'Morphic-Examples-Widgets'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ExampleRadioButtonModel >> beCenter [
 	"Set the option to #center."
 
 	self option: #center
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ExampleRadioButtonModel >> beLeft [
 	"Set the option to #left."
 
 	self option: #left
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ExampleRadioButtonModel >> beRight [
 	"Set the option to #right."
 
@@ -40,21 +40,21 @@ ExampleRadioButtonModel >> initialize [
 		option: #left
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ExampleRadioButtonModel >> isCenter [
 	"Answer whether the option if #center."
 
 	^self option == #center
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ExampleRadioButtonModel >> isLeft [
 	"Answer whether the option if #left."
 
 	^self option == #left
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ExampleRadioButtonModel >> isRight [
 	"Answer whether the option if #right."
 

@@ -18,6 +18,11 @@ RBTrait >> definesInstanceVariable: aString [
 	^ self directlyDefinesInstanceVariable: aString
 ]
 
+{ #category : #testing }
+RBTrait >> isTrait [
+	^ true
+]
+
 { #category : #accessing }
 RBTrait >> superclass [
 	^ nil
