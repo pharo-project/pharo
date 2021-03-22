@@ -198,13 +198,19 @@ FluidClassBuilder >> tagToBuild [
 	^ tagToBuild
 ]
 
+{ #category : #API }
+FluidClassBuilder >> trait: aTraitComposition [
+
+	traitComposition := aTraitComposition
+]
+
 { #category : #accessing }
 FluidClassBuilder >> traitsToBuild [
 
 	^ traitComposition
 ]
 
-{ #category : #API }
+{ #category : #deprecated }
 FluidClassBuilder >> uses: aTraitComposition [
 
 	traitComposition := aTraitComposition

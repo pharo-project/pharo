@@ -99,6 +99,12 @@ FluidTraitBuilder >> tag: anObject [
 ]
 
 { #category : #API }
+FluidTraitBuilder >> trait: anArray [
+	"To replace the uses: which will be deprecated"
+	uses := anArray
+]
+
+{ #category : #deprecated }
 FluidTraitBuilder >> uses: anArray [
 
 	uses := anArray
