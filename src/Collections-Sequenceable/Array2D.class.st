@@ -179,6 +179,17 @@ Array2D >> = aMatrix [
 					and: [ aMatrix privateContents = contents ] ] ]
 ]
 
+{ #category : #'row/column operations' }
+Array2D >> Trace [
+	"returns the trace, the sum of diagonal elements of the matrix"
+	
+	| result |
+	result := 0.
+	[numberOfRows = numberOfColumns] assert.
+	1 to: self numberOfRows do: [ :n | result := result + (self at: n at: n) ].
+	^ result
+]
+
 { #category : #adding }
 Array2D >> add: newObject [
 	self shouldNotImplement
