@@ -184,6 +184,11 @@ RBFindAndReplaceRefactoring >> replaceArgumentsByPattern: sourceCode [
 	
 ]
 
+{ #category : #preconditions }
+RBFindAndReplaceRefactoring >> selectorsFor: cls [
+	^ cls selectors copyWithout: selector
+]
+
 { #category : #printing }
 RBFindAndReplaceRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
@@ -201,7 +206,7 @@ RBFindAndReplaceRefactoring >> storeOn: aStream [
 RBFindAndReplaceRefactoring >> transform [
 	|classes|
 	classes :=replacesAllHierarchy ifFalse: [ { class } ] ifTrue: [ class withAllSubclasses ].
-	classes do: [ :cls | (cls selectors copyWithout: selector) do: [ :sel | |rbMethod|
+	classes do: [ :cls | (self selectorsFor: cls) do: [ :sel | |rbMethod|
 		rbMethod := cls methodFor: sel.
 		self findAndReplaceOccurrencesIn: rbMethod] ].
 	self inform: occurrences asString, ' occurrences were found and changed.'

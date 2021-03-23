@@ -23,8 +23,12 @@ RBExtractSetUpMethodRefactoring >> checkSingleAssignment: varName [
 			ifTrue: 
 				[self 
 					refactoringError: 'Cannot extract assignments to temporaries without all references'].
-	class addInstanceVariable: varName.
 	modifiedParseTree body removeTemporaryNamed: varName.
+	self performCompositeRefactoring: (RBTemporaryToInstanceVariableRefactoring 
+		model: self model
+		class: class
+		selector: selector
+		variable: varName)
 ]
 
 { #category : #transforming }
@@ -41,12 +45,17 @@ RBExtractSetUpMethodRefactoring >> preconditions [
 	(RBCondition definesSelector: #setUp in: class) not &
 	(RBCondition withBlock: [ class allSuperclasses anySatisfy: [ :e | e name = #TestCase ] ])
 		& (RBCondition withBlock: 
-					[self extractMethod.
-					self checkSpecialExtractions.
-					self checkReturn.
-					needsReturn ifTrue: [extractedParseTree addReturn].
-					self checkTemporaries.
-					true])
+			[self extractMethod.
+			self checkSpecialExtractions.
+			self checkReturn.
+			needsReturn ifTrue: [extractedParseTree addReturn].
+			self checkTemporaries.
+			true])
+]
+
+{ #category : #transforming }
+RBExtractSetUpMethodRefactoring >> startLimit: aNumber [
+	^ (class parseTreeFor: selector) statements first start
 ]
 
 { #category : #transforming }
@@ -65,6 +74,5 @@ RBExtractSetUpMethodRefactoring >> transform [
 
 { #category : #transforming }
 RBExtractSetUpMethodRefactoring >> updateTemporariesInExtractedMethodFor: variableNames [
-	"Remove temporaries in extract method"
-	variableNames do: [ :varName | extractedParseTree body removeTemporaryNamed: varName ].
+	
 ]
