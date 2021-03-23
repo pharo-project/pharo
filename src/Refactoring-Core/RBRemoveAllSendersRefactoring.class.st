@@ -1,7 +1,40 @@
 "
 I am a refactoring to remove all possible senders from a method (you cannot remove those calls where the result of the method call is used or when the method name symbol is referenced).
 
-
+Example Script
+----------------
+```
+| refactoring options |
+refactoring := RBRemoveSenderRefactoring 
+			remove: (90 to: 105) ""node position to be removed ""
+			inMethod: #caller1
+			forClass: RBRefactoryTestDataApp.
+options := refactoring options copy.
+options at: #inlineExpression put: [:ref :string | false].
+refactoring options: options.
+refactoring execute.
+```
+Before refactoring:
+```
+RBRefactoryTestDataApp >> caller1
+	| anObject |
+	anObject := 5.
+	self called: anObject + 1
+		on1: 
+			[:each | 
+			each printString.
+			^anObject]
+```
+After refactoring (notice that the call to printstring was removed):
+```
+RBRefactoryTestDataApp >> caller1
+	| anObject |
+	anObject := 5.
+	self called: anObject + 1
+		on1: 
+			[:each | 
+			^anObject]
+```
 "
 Class {
 	#name : #RBRemoveAllSendersRefactoring,
