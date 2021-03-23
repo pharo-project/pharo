@@ -6,10 +6,3 @@ SycMergeVariableCommand class >> fullBrowserMenuActivation [
 	
 	^CmdContextMenuActivation byRootGroupItemOrder: 1.1 for: ClyFullBrowserVariableContext 
 ]
-
-{ #category : #'*Calypso-SystemTools-Core' }
-SycMergeVariableCommand class >> sourceCodeMenuActivation [
-	<classAnnotation>
-	
-	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.1 for: ClySourceCodeContext
-]
