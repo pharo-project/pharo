@@ -273,7 +273,8 @@ Process >> endProcess [
 	<isTerminated>
 	thisContext terminateTo: nil.   "set thisContext sender to nil"
 	self suspend.
-	^thisContext restart   "restart and suspend again in case of sending resume to a terminated process"
+	"the following line commented out because current debugger step over tests fail with this feature"
+	"^thisContext restart"   "restart and suspend again in case of sending resume to a terminated process"
 
 ]
 
