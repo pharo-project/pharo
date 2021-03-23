@@ -42,7 +42,8 @@ RBExtractSetUpMethodRefactoring >> nameNewMethod: aSymbol [
 { #category : #preconditions }
 RBExtractSetUpMethodRefactoring >> preconditions [
 	^(RBCondition definesSelector: selector in: class) &
-	(RBCondition definesSelector: #setUp in: class) not &
+	(self requestExistingSelector ifNil: [ (RBCondition definesSelector: #setUp in: class) not ]
+	ifNotNil: [ self emptyCondition ]) &
 	(RBCondition withBlock: [ class allSuperclasses anySatisfy: [ :e | e name = #TestCase ] ])
 		& (RBCondition withBlock: 
 			[self extractMethod.

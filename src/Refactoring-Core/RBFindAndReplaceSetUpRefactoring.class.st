@@ -10,6 +10,9 @@ RBFindAndReplaceSetUpRefactoring >> extractMethodRefactoring [
 			setOption: #useExistingMethod 
 			toUse:  [ :ref :aSelector | 
 				true];
+			setOption: #extractAssignment 
+			toUse:  [ :ref :aSelector | 
+				true];
 			yourself 
 ]
 
