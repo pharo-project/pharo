@@ -281,7 +281,10 @@ Process >> endProcess [
 	<isTerminated>
 	thisContext terminateTo: nil.   "set thisContext sender to nil"
 	self suspend.
-	^thisContext restart   "restart and suspend again in case of sending resume to a terminated process"
+  
+  "Restart this method.
+  This will terminate and suspend again in case of sending resume to a terminated process"
+	^thisContext restart
 ]
 
 { #category : #private }
