@@ -217,6 +217,12 @@ PharoLightTheme >> configureWindowBorderFor: aWindow [
 	aWindow borderStyle: aStyle
 ]
 
+{ #category : #'accessing colors' }
+PharoLightTheme >> ghostTextColor [
+
+	^ Color darkGray
+]
+
 { #category : #initialization }
 PharoLightTheme >> initialize [
 	"self beCurrent"
