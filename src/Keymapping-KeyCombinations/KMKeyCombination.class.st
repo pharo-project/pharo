@@ -95,7 +95,9 @@ KMKeyCombination >> mac [
 
 { #category : #matching }
 KMKeyCombination >> matches: anEventBuffer [
-	^ self matchesCompletely: anEventBuffer first
+
+	^ anEventBuffer size = 1 and:
+		[self matchesCompletely: anEventBuffer first]
 ]
 
 { #category : #matching }

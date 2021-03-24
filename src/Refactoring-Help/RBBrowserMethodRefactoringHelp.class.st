@@ -67,7 +67,7 @@ RBBrowserMethodRefactoringHelp class >> moveToClassSideRefactoring [
 
 { #category : #accessing }
 RBBrowserMethodRefactoringHelp class >> pages [
-	^ #(addParameterRefactoring deprecateMethodRefactoring inlineParameterRefactoring inlineTargeSendsRefactoring moveMethodRefactoring  moveToClassRefactoring moveToClassSideRefactoring pushUpMethodRefactoring pushDownpMethodRefactoring removeMethodRefactoring removeParameterRefactoring renameMethodRefactoring replaceMethodByAnotherRefactoring)
+	^ #(addParameterRefactoring deprecateMethodRefactoring inlineParameterRefactoring inlineTargeSendsRefactoring moveMethodRefactoring  moveToClassRefactoring moveToClassSideRefactoring pushUpMethodRefactoring pushDownpMethodRefactoring removeMethodRefactoring removeParameterRefactoring removeAllSendersRefactoring renameMethodRefactoring replaceMethodByAnotherRefactoring)
 ]
 
 { #category : #pages }
@@ -84,6 +84,13 @@ RBBrowserMethodRefactoringHelp class >> pushUpMethodRefactoring [
 		title: 'Push up'
 		contents: RBPullUpMethodRefactoring comment
 
+]
+
+{ #category : #removing }
+RBBrowserMethodRefactoringHelp class >> removeAllSendersRefactoring [
+	^HelpTopic
+		title: 'Remove all senders'
+		contents: RBRemoveAllSendersRefactoring comment 
 ]
 
 { #category : #pages }

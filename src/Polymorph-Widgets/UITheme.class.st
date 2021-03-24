@@ -2316,7 +2316,8 @@ UITheme >> forms: anObject [
 ]
 
 { #category : #'accessing colors' }
-UITheme >> ghostTextColor [ 
+UITheme >> ghostTextColor [
+
 	^ Color lightGray
 ]
 
