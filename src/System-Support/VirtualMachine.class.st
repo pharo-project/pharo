@@ -164,6 +164,13 @@ VirtualMachine >> freeOldSpaceSize [
 
 ]
 
+{ #category : #gc }
+VirtualMachine >> freeSize [
+	"Return the amount of free memory of the heap in bytes."
+		
+	^ self freeOldSpaceSize + self edenSpaceSize - self youngSpaceSize
+]
+
 { #category : #statistics }
 VirtualMachine >> fullGCCount [
 	"Answer the total number of full GCs since startup (read-only)."
@@ -526,10 +533,9 @@ VirtualMachine >> memoryEnd [
 
 { #category : #gc }
 VirtualMachine >> memorySize [
-	"for spur, size of heap (read-only)"
+	"Return the memory size of the heap in bytes."
 		
-	^ self parameterAt: 3
-
+	^ self parameterAt: 3 "Readonly parameter for spur"
 ]
 
 { #category : #gc }
@@ -820,7 +826,7 @@ VirtualMachine >> statisticsReport [
 	youngSpaceSize		:= self youngSpaceSize.
 	tenureCount			:= self tenureCount.
 	memorySize			:= self memorySize.
-	freeSize				:= self freeOldSpaceSize + (self edenSpaceSize) - youngSpaceSize.
+	freeSize				:= self freeSize.
 	fullGCs				:= self fullGCCount.
 	fullGCTime			:= self totalFullGCTime.
 	incrGCs				:= self incrementalGCCount.
