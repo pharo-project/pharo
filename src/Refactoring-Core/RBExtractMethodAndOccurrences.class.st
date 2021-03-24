@@ -41,15 +41,22 @@ RBExtractMethodAndOccurrences >> extract: anInterval from: aSelector in: aClass 
 
 { #category : #transforming }
 RBExtractMethodAndOccurrences >> extractMethod [
+
 	| refactoring |
-	refactoring := RBExtractMethodRefactoring 
-				model: self model
-				extract: extractionInterval
-				from: selector
-				in: class.
+	refactoring := self extractMethodClass
+		               model: self model
+		               extract: extractionInterval
+		               from: selector
+		               in: class.
 	refactoring searchInSuperclasses: searchInSuperclasses.
 	self performCompositeRefactoring: refactoring.
 	^ refactoring newExtractedSelector
+]
+
+{ #category : #transforming }
+RBExtractMethodAndOccurrences >> extractMethodClass [
+
+	^ RBExtractMethodRefactoring
 ]
 
 { #category : #transforming }
@@ -63,16 +70,27 @@ RBExtractMethodAndOccurrences >> findImplementorOf: aSelector [
 ]
 
 { #category : #transforming }
+RBExtractMethodAndOccurrences >> findOccurrencesClass [
+
+	^ RBFindAndReplaceRefactoring
+]
+
+{ #category : #transforming }
 RBExtractMethodAndOccurrences >> findOccurrencesOf: aSelector [
-	|refactoring|
-	(self findImplementorOf: aSelector) ifTrue: [
-		refactoring := RBFindAndReplaceRefactoring 
-			model: self model 
-			find: aSelector
-			of: class
-			inAllHierarchy: (self options at: #searchInAllHierarchy) value.
-		self performCompositeRefactoring: refactoring.]
-	ifFalse: [ self refactoringFailure: aSelector , ' is not a valid selector name.' ]
+
+	| refactoring |
+	(self findImplementorOf: aSelector)
+		ifTrue: [ 
+			refactoring := self findOccurrencesClass
+				               model: self model
+				               find: aSelector
+				               of: class
+				               inAllHierarchy:
+				               (self options at: #searchInAllHierarchy) value.
+			self performCompositeRefactoring: refactoring ]
+		ifFalse: [ 
+			self refactoringFailure:
+				aSelector , ' is not a valid selector name.' ]
 ]
 
 { #category : #preconditions }

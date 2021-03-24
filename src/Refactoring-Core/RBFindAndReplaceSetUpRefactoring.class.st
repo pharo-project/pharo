@@ -4,6 +4,23 @@ Class {
 	#category : #'Refactoring-Core-Refactorings'
 }
 
+{ #category : #'instance creation' }
+RBFindAndReplaceSetUpRefactoring class >> model: aModel of: aClass inAllHierarchy: aBoolean [
+	^ self new
+		model: aModel;
+		of: aClass
+		inAllHierarchy: aBoolean;
+		yourself
+]
+
+{ #category : #'instance creation' }
+RBFindAndReplaceSetUpRefactoring class >> of: aClass inAllHierarchy: aBoolean [
+	^ self new
+		of: aClass
+		inAllHierarchy: aBoolean;
+		yourself
+]
+
 { #category : #accessing }
 RBFindAndReplaceSetUpRefactoring >> extractMethodRefactoring [
 	^ RBExtractSetUpMethodRefactoring new
@@ -23,6 +40,13 @@ RBFindAndReplaceSetUpRefactoring >> nodesOf: methodNode [
 	combinations := super nodesOf: methodNode.
 	^ combinations select: [ :e | e first <= limit ] 
 	
+]
+
+{ #category : #'instance creation' }
+RBFindAndReplaceSetUpRefactoring >> of: aClass inAllHierarchy: aBoolean [
+	class := self classObjectFor: aClass.
+	selector := #setUp.
+	replacesAllHierarchy := aBoolean.
 ]
 
 { #category : #preconditions }
