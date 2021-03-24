@@ -180,7 +180,7 @@ Array2D >> = aMatrix [
 ]
 
 { #category : #'row/column operations' }
-Array2D >> Trace [
+Array2D >> tr [
 	"returns the trace, the sum of diagonal elements of the matrix"
 	
 	| result |
