@@ -5,19 +5,19 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBFindAndReplaceSetUpRefactoring class >> model: aModel of: aClass inAllHierarchy: aBoolean [
+RBFindAndReplaceSetUpRefactoring class >> model: aModel of: aClass inWholeHierarchy: aBoolean [
 	^ self new
 		model: aModel;
 		of: aClass
-		inAllHierarchy: aBoolean;
+		inWholeHierarchy: aBoolean;
 		yourself
 ]
 
 { #category : #'instance creation' }
-RBFindAndReplaceSetUpRefactoring class >> of: aClass inAllHierarchy: aBoolean [
+RBFindAndReplaceSetUpRefactoring class >> of: aClass inWholeHierarchy: aBoolean [
 	^ self new
 		of: aClass
-		inAllHierarchy: aBoolean;
+		inWholeHierarchy: aBoolean;
 		yourself
 ]
 
@@ -34,8 +34,17 @@ RBFindAndReplaceSetUpRefactoring >> extractMethodRefactoring [
 ]
 
 { #category : #accessing }
+RBFindAndReplaceSetUpRefactoring >> methodNode [ 
+	| node |
+	node := super methodNode.
+	node body removeNode: (RBParser parseExpression: 'super setUp.').
+	^ node
+]
+
+{ #category : #accessing }
 RBFindAndReplaceSetUpRefactoring >> nodesOf: methodNode [
 	| combinations limit |
+	"TODO -> corregir para cuando un metodo sea vacio"
 	limit :=  methodNode body statements first start.
 	combinations := super nodesOf: methodNode.
 	^ combinations select: [ :e | e first <= limit ] 
@@ -43,7 +52,7 @@ RBFindAndReplaceSetUpRefactoring >> nodesOf: methodNode [
 ]
 
 { #category : #'instance creation' }
-RBFindAndReplaceSetUpRefactoring >> of: aClass inAllHierarchy: aBoolean [
+RBFindAndReplaceSetUpRefactoring >> of: aClass inWholeHierarchy: aBoolean [
 	class := self classObjectFor: aClass.
 	selector := #setUp.
 	replacesAllHierarchy := aBoolean.
@@ -52,4 +61,9 @@ RBFindAndReplaceSetUpRefactoring >> of: aClass inAllHierarchy: aBoolean [
 { #category : #preconditions }
 RBFindAndReplaceSetUpRefactoring >> selectorsFor: cls [
 	^ (cls selectors select: [:e | e isTestSelector]) copyWithout: selector
+]
+
+{ #category : #accessing }
+RBFindAndReplaceSetUpRefactoring >> startLimitOf: sourceCode [
+	^ ((self parserClass parseMethod: sourceCode) body statements first start)
 ]

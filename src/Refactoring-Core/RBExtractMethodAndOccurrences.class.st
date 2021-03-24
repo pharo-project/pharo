@@ -85,7 +85,7 @@ RBExtractMethodAndOccurrences >> findOccurrencesOf: aSelector [
 				               model: self model
 				               find: aSelector
 				               of: class
-				               inAllHierarchy:
+				               inWholeHierarchy:
 				               (self options at: #searchInAllHierarchy) value.
 			self performCompositeRefactoring: refactoring ]
 		ifFalse: [ 

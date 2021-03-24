@@ -17,21 +17,21 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBFindAndReplaceRefactoring class >> find: aMethod of: aClass inAllHierarchy: aBoolean [
+RBFindAndReplaceRefactoring class >> find: aMethod of: aClass inWholeHierarchy: aBoolean [
 	^ self new 
 		find: aMethod 
 		of: aClass
-		inAllHierarchy: aBoolean;
+		inWholeHierarchy: aBoolean;
 		yourself
 ]
 
 { #category : #'instance creation' }
-RBFindAndReplaceRefactoring class >> model: aModel find: aMethod of: aClass inAllHierarchy: aBoolean [
+RBFindAndReplaceRefactoring class >> model: aModel find: aMethod of: aClass inWholeHierarchy: aBoolean [
 	^ self new
 		model: aModel; 
 		find: aMethod 
 		of: aClass
-		inAllHierarchy: aBoolean;
+		inWholeHierarchy: aBoolean;
 		yourself
 ]
 
@@ -72,7 +72,7 @@ RBFindAndReplaceRefactoring >> extractMethodRefactoring [
 ]
 
 { #category : #initialization }
-RBFindAndReplaceRefactoring >> find: aSelector of: aClass inAllHierarchy: aBoolean [
+RBFindAndReplaceRefactoring >> find: aSelector of: aClass inWholeHierarchy: aBoolean [
 	class := self classObjectFor: aClass.
 	selector := aSelector.
 	replacesAllHierarchy := aBoolean.
@@ -123,23 +123,36 @@ RBFindAndReplaceRefactoring >> initialize [
 
 { #category : #accessing }
 RBFindAndReplaceRefactoring >> matchNodes [
-	^ matchNodes ifNil: [ |visitor node sourceCode|
-		visitor := RBMatchVisitor new.
-		node := self method ast copy .
-		node acceptVisitor: visitor.
-		sourceCode := self replaceArgumentsByPattern: node newSource .
-		sourceCode := sourceCode copyFrom: (self method ast body statements first start + visitor difference) to: sourceCode size.
-		matchNodes := OrderedCollection new.
-		matchNodes add: (self patternParserClass parseExpression: sourceCode).
-		node lastIsReturn ifTrue: [  node hasMultipleReturns 
-		ifFalse: [ sourceCode := sourceCode copyReplaceAll: '^' with:  ''.
-		matchNodes add: (self patternParserClass parseExpression: sourceCode) ] ].
-		matchNodes]
+
+	^ matchNodes ifNil: [ 
+		  | visitor node sourceCode |
+		  visitor := RBMatchVisitor new.
+		  node := self methodNode.
+		  node acceptVisitor: visitor.
+		  sourceCode := self replaceArgumentsByPattern: node newSource.
+		  sourceCode := sourceCode
+			                copyFrom: (self startLimitOf: sourceCode) + visitor difference
+			                to: sourceCode size.
+		  matchNodes := OrderedCollection new.
+		  matchNodes add:
+			  (self patternParserClass parseExpression: sourceCode).
+		  node lastIsReturn ifTrue: [ 
+			  node hasMultipleReturns ifFalse: [ 
+				  sourceCode := sourceCode copyReplaceAll: '^' with: ''.
+				  matchNodes add:
+					  (self patternParserClass parseExpression: sourceCode) ] ].
+		  matchNodes ]
 ]
 
 { #category : #accessing }
 RBFindAndReplaceRefactoring >> method [
 	^ method ifNil: [ method := class methodFor: selector ]
+]
+
+{ #category : #accessing }
+RBFindAndReplaceRefactoring >> methodNode [
+
+	^ self method ast copy
 ]
 
 { #category : #accessing }
@@ -160,6 +173,7 @@ RBFindAndReplaceRefactoring >> patternParserClass [
 RBFindAndReplaceRefactoring >> preconditions [
 
 	| condition rbMethod |
+
 	rbMethod := class methodFor: selector.
 	condition := (RBCondition definesSelector: selector in: class)
 	             & (replacesAllHierarchy
@@ -187,6 +201,11 @@ RBFindAndReplaceRefactoring >> replaceArgumentsByPattern: sourceCode [
 { #category : #preconditions }
 RBFindAndReplaceRefactoring >> selectorsFor: cls [
 	^ cls selectors copyWithout: selector
+]
+
+{ #category : #accessing }
+RBFindAndReplaceRefactoring >> startLimitOf: sourceCode [
+	^ self method ast body statements first start
 ]
 
 { #category : #printing }

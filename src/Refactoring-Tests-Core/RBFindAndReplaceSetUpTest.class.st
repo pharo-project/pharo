@@ -8,7 +8,7 @@ Class {
 RBFindAndReplaceSetUpTest >> testClassDoesNotDefineSetUpMethod [
 	| refactoring |
 	refactoring := RBFindAndReplaceSetUpRefactoring 
-			of: #RBTest inAllHierarchy: true.
+			of: RBTest inWholeHierarchy: true.
 	self shouldFail: refactoring
 ]
 
@@ -16,7 +16,7 @@ RBFindAndReplaceSetUpTest >> testClassDoesNotDefineSetUpMethod [
 RBFindAndReplaceSetUpTest >> testReplaceSetUp [
 	| class refactoring |
 	refactoring := RBFindAndReplaceSetUpRefactoring 
-			of: RBTest inAllHierarchy: true.
+			of: RBTest inWholeHierarchy: true.
 	class := refactoring model classNamed: #RBTest.
 	class compile: 'setUp self someClasses. aString := ''Example''.'
 		classified: #(#accessing).

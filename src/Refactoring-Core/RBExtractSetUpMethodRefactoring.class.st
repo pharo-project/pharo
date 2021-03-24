@@ -55,6 +55,11 @@ RBExtractSetUpMethodRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
+RBExtractSetUpMethodRefactoring >> shouldExtractAssignmentTo: name [
+	^ true
+]
+
+{ #category : #transforming }
 RBExtractSetUpMethodRefactoring >> startLimit: aNumber [
 	^ (class parseTreeFor: selector) statements first start
 ]
