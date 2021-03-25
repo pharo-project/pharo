@@ -40,6 +40,16 @@ CairoLibrary >> unixLibraryName [
 		
 ]
 
+{ #category : #versions }
+CairoLibrary >> versionString [
+	"Answer the version in a String, such as '1.16.0'. 
+	
+	See https://www.cairographics.org/manual/cairo-Version-Information.html#cairo-version-string
+	"
+
+	^ self ffiCall: #( String cairo_version_string #() )
+]
+
 { #category : #'accessing platform' }
 CairoLibrary >> win32LibraryName [ 
 	
