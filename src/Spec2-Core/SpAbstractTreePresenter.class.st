@@ -200,6 +200,27 @@ SpAbstractTreePresenter >> items: aCollection [
 	self roots: aCollection
 ]
 
+{ #category : #private }
+SpAbstractTreePresenter >> pathIndexOf: anArrayOfElements [
+
+	^ self 
+		pathIndexOf: anArrayOfElements 
+		in: self roots
+]
+
+{ #category : #private }
+SpAbstractTreePresenter >> pathIndexOf: pathArray in: aCollection [ 
+	| pathElement |
+	
+	pathElement := { aCollection indexOf: pathArray first }.
+	pathArray size = 1 ifTrue: [ ^ pathElement ].
+	
+	^ pathElement, (self 
+		pathIndexOf: pathArray allButFirst
+		in: (self childrenFor: pathArray first))
+
+]
+
 { #category : #api }
 SpAbstractTreePresenter >> refresh [
 	"Forces a refresh of the tree. 
@@ -261,17 +282,45 @@ SpAbstractTreePresenter >> selectPath: aPath [
 	`aPath` is the path to select. A path is an array of node indexes (e.g. #(1 2 3)).
 	 It does not scrolls to selected element."
 
-	self selection selectPath: aPath
+	self withAdapterPerformOrDefer: [ :anAdapter | 
+		self selection selectPath: aPath ]
 ]
 
 { #category : #'api-selection' }
 SpAbstractTreePresenter >> selectPath: aPath scrollToSelection: shouldScrollToSelection [
 	"Selects element in `aPath`
 	`aPath` is the path to select. A path is an array of node indexes (e.g. #(1 2 3)).
-	 If `shouldScrollToSelection` is true, it will scroll to selected element."
+	 If `shouldScrollToSelection` is true, it will scroll to selected element.
+	 IMPORTANT: Scrolling to selection just has sense when the widget is already shown, because before it 
+	 is displayed it does not has real bounds. In morphic (and gtk) it has a minimal extent assigned, 
+	 but that will change as soon as the widget is inserted in a container and the container applies its 
+	 layout."
 
-	self selectPath: aPath.
-	shouldScrollToSelection ifTrue: [ adapter scrollToSelection ]
+	self withAdapterPerformOrDefer: [ :anAdapter |
+		self selectPath: aPath.
+		shouldScrollToSelection ifTrue: [ adapter scrollToSelection ] ]
+]
+
+{ #category : #'api-selection' }
+SpAbstractTreePresenter >> selectPathByItems: pathArray [
+
+	self selectPathByItems: pathArray scrollToSelection: false
+]
+
+{ #category : #'api-selection' }
+SpAbstractTreePresenter >> selectPathByItems: pathArray scrollToSelection: aBoolean [
+	"IMPORTANT: Scrolling to selection just has sense when the widget is already shown, because before it 
+	 is displayed it does not has real bounds. In morphic (and gtk) it has a minimal extent assigned, 
+	 but that will change as soon as the widget is inserted in a container and the container applies its 
+	 layout."
+	| pathIndexes |
+
+	pathIndexes := self pathIndexOf: pathArray.
+	pathIndexes size > 1 ifTrue: [ 
+		self expandPath: pathIndexes allButLast ].
+	self 
+		selectPath: pathIndexes
+		scrollToSelection: aBoolean
 ]
 
 { #category : #'api-selection' }
@@ -279,7 +328,8 @@ SpAbstractTreePresenter >> selectPaths: pathArray [
 	"Selects all elements in `pathsArray``
 	`pathsArray` is an array of paths. A path is an array of node indexes (e.g. #(1 2 3))"
 
-	self selection selectPaths: pathArray
+	self withAdapterPerformOrDefer: [ :anAdapter | 
+		self selection selectPaths: pathArray ]
 ]
 
 { #category : #'api-selection' }
