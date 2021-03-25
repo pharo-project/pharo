@@ -91,6 +91,24 @@ GTSpotter class >> on: anObject [
 	^ self new foundationOrigin: anObject
 ]
 
+{ #category : #'instance creation' }
+GTSpotter class >> open [
+	| spotterModel |
+		
+	GTSpotterGlobalShortcut reset.
+	spotterModel := self new.
+		
+	GTSpotterMorph new
+		extent: (self currentWorld width / 2.4 @ (self currentWorld height / 1.6)) asIntegerPoint;
+		spotterModel: spotterModel;
+		doLayout;
+		openCenteredInWorld;
+		initializeListeners;
+		takeKeyboardFocus.
+		
+	spotterModel class markOpened
+]
+
 { #category : #accessing }
 GTSpotter class >> previewVisible [
 
@@ -101,6 +119,13 @@ GTSpotter class >> previewVisible [
 GTSpotter class >> previewVisible: aValue [
 
 	isPreviewVisible := aValue
+]
+
+{ #category : #'instance creation' }
+GTSpotter class >> registerToolsOn: registry [
+	"self registerToolsOn: Smalltalk tools"
+
+	"registry register: self as: #spotter"
 ]
 
 { #category : #accessing }
