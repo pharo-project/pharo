@@ -1,7 +1,45 @@
 "
-I am a refactoring for find occurrences of a method in owner class and in all hierarchy if apply.
+I am a refactoring for find occurrences of a method in owner class and in the whole hierarchy if apply.
 
-My precondition verifies that the method exists in specified class, and if occurrences are searched in hierarchy this method should not overwritten in hierarchy.
+My precondition verifies that the method exists in specified class, and if occurrences are found in hierarchy this method should not overwritten in hierarchy.
+
+Example script
+----------------
+
+```
+(RBFindAndReplaceRefactoring 
+find: #methodWithArg:andArg: 
+of: MyClassA 
+inWholeHierarchy: true) execute.
+```
+Before refactoring:
+```
+Object subclass: #MyClassA
+	instanceVariableNames: ''
+	classVariableNames: ''
+	category: 'Testing'
+
+MyClassA >> methodWithArg: anArg1 andArg: anArg2
+	^ (anArg1 > anArg2) not	
+
+MyClassA subclass: #MyClassB
+	instanceVariableNames: ''
+	classVariableNames: ''
+	category: 'Testing'
+	
+MyClassB >> someMethod
+	^  3
+	
+MyClassB >> dummyMethod
+	(3 > self someMethod) not
+```
+
+After refactoring:
+
+```
+MyClassB >> dummyMethod 
+	self methodWithArg: 3 andArg: self someMethod
+```
 "
 Class {
 	#name : #RBFindAndReplaceRefactoring,

@@ -8,6 +8,43 @@ The preconditions are quite complex.
 	- The code needs to be parseable valid code. 
 	- The class must not implement setUp method.
 	- Class must inherit from testCase class 
+	
+Example script
+---------------
+```
+(RBExtractSetUpMethodRefactoring
+	extract: (14 to: 29)
+	from: #testExample
+	in: RBDataTest) execute.
+```
+
+Before refactoring:
+```
+TestCase subclass: #RBDataTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	package: 'Example'.
+
+RBDataTest >> someMethod
+	#someMethod.
+
+RBDataTest >> testExample
+	self someMethod.
+	self assert: true.
+```
+After refactoring:
+```
+RBDataTest >> setUp
+	super setUp.
+	self someMethod.
+
+RBDataTest >> testExample
+	self assert: true.
+``` 
+
+
+
+
 "
 Class {
 	#name : #RBExtractSetUpMethodRefactoring,
@@ -61,7 +98,11 @@ RBExtractSetUpMethodRefactoring >> shouldExtractAssignmentTo: name [
 
 { #category : #transforming }
 RBExtractSetUpMethodRefactoring >> startLimit: aNumber [
-	^ (class parseTreeFor: selector) statements first start
+	| node |
+	node := class parseTreeFor: selector.
+	^ node statements ifEmpty: [ node body start ]
+		ifNotEmpty: [ node statements first start ]
+	
 ]
 
 { #category : #transforming }

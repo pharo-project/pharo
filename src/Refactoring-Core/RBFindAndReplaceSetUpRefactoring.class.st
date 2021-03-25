@@ -1,3 +1,58 @@
+"
+I am a refactoring for find occurrences of setUp method in owner class and in the whole hierarchy if apply.
+
+My precondition verifies that setUp method exists in specified class, and if occurrences are found in hierarchy this method should not overwritten in hierarchy.
+
+Example script
+----------------
+```
+(RBFindAndReplaceSetUpRefactoring 
+	of: RBTest 
+	inWholeHierarchy: false) execute.
+```
+Before refactoring:
+```
+TestCase subclass: #RBTest
+	instanceVariableNames: 'aString'
+	classVariableNames: ''
+	package: 'Example'
+	
+RBTest >> setUp
+	self someClasses.
+	aString := 'Example'.
+
+RBTest >> someClasses.
+	""initialize some classes""
+	
+RBTest >> testExample1 	
+	self someClasses.
+	aString := 'Example'.
+	self assert: 4 > 5 equals: false.
+	
+RBTest >> testExample2
+	""Example""
+	self someClasses.
+	aString := 'Example'.
+	self assert: true.
+
+RBTest >> testExample4
+	self assert: true.
+	self deny: false
+```
+
+After refactoring: 
+```
+RBTest >> testExample1 
+	self assert: 4 > 5 equals: false.
+
+RBTest >> testExample2
+	self assert: true
+
+RBTest >> testExample4
+	self assert: true.
+	self deny: false
+```
+"
 Class {
 	#name : #RBFindAndReplaceSetUpRefactoring,
 	#superclass : #RBFindAndReplaceRefactoring,
@@ -44,10 +99,11 @@ RBFindAndReplaceSetUpRefactoring >> methodNode [
 { #category : #accessing }
 RBFindAndReplaceSetUpRefactoring >> nodesOf: methodNode [
 	| combinations limit |
-	"TODO -> corregir para cuando un metodo sea vacio"
-	limit :=  methodNode body statements first start.
+	
 	combinations := super nodesOf: methodNode.
-	^ combinations select: [ :e | e first <= limit ] 
+	^ combinations ifEmpty: [ combinations ]
+		ifNotEmpty: [ limit :=  methodNode body statements first start.
+		combinations select: [ :e | e first <= limit ] ]
 	
 ]
 

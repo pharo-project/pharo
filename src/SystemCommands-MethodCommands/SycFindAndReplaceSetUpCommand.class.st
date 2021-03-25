@@ -1,3 +1,6 @@
+"
+I am a command to find and replace setUp method in owner class and its subclasses if apply
+"
 Class {
 	#name : #SycFindAndReplaceSetUpCommand,
 	#superclass : #SycMethodCmCommand,

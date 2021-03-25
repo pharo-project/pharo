@@ -1,3 +1,6 @@
+"
+I am a command to extract setUp method and then replaces its occurrences
+"
 Class {
 	#name : #SycExtractSetUpRefactoring,
 	#superclass : #SycSourceCodeCmCommand,
