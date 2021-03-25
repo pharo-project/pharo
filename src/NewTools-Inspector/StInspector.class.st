@@ -18,8 +18,7 @@ Class {
 		'millerList',
 		'model',
 		'lastPageSelectedTabName',
-		'withHeaderBar',
-		'paginator'
+		'withHeaderBar'
 	],
 	#classVars : [
 		'IndexableDisplayLimit'

@@ -7,8 +7,16 @@ Also subclasses are able to extend the #isApplicable method in the class side an
 Class {
 	#name : #StPharoStyleContributor,
 	#superclass : #Object,
-	#category : #'NewTools-Core-Application'
+	#category : #'NewTools-Morphic'
 }
+
+{ #category : #'as yet unclassified' }
+StPharoStyleContributor class >> availableContributors [
+
+	^ self allSubclasses
+		select: [ :each | each isApplicable ]
+		thenCollect: [ :each | each new ]
+]
 
 { #category : #testing }
 StPharoStyleContributor class >> isApplicable [ 

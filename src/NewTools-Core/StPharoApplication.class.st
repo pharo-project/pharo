@@ -4,9 +4,6 @@ The application for the Pharo IDE.
 Class {
 	#name : #StPharoApplication,
 	#superclass : #SpApplication,
-	#instVars : [
-		'tools'
-	],
 	#classVars : [
 		'Current'
 	],
@@ -89,14 +86,8 @@ StPharoApplication >> start [
 
 { #category : #'system startup' }
 StPharoApplication >> startUp: resuming [
-]
 
-{ #category : #'accessing resources' }
-StPharoApplication >> styleSheet [
-
-	^ StPharoStyleContributor allSubclasses 
-			inject: super styleSheet 
-			into: [ :accum :each | accum , (each new styleSheetContribution) ]
+	self resetConfiguration
 ]
 
 { #category : #settings }

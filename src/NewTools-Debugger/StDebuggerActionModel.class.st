@@ -5,7 +5,6 @@ Class {
 	#name : #StDebuggerActionModel,
 	#superclass : #Object,
 	#instVars : [
-		'debugger',
 		'session',
 		'contextPredicate',
 		'topContext',

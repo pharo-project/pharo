@@ -1,7 +1,7 @@
-Extension { #name : #Dictionary }
+Extension { #name : #SmallDictionary }
 
 { #category : #'*NewTools-Inspector-Extensions' }
-Dictionary >> inspectionItems: aBuilder [
+SmallDictionary >> inspectionItems: aBuilder [
 	<inspectorPresentationOrder: 0 title: 'Items'> 
 	
 	^ aBuilder newTable 
