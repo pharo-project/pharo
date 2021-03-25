@@ -10,7 +10,8 @@ Class {
 
 { #category : #'accessing platform' }
 CairoLibrary >> macLibraryName [
-	^ 'libcairo.2.dylib'
+
+	^ FFIMacLibraryFinder findLibrary: 'libcairo.2.dylib'
 ]
 
 { #category : #'accessing platform' }
