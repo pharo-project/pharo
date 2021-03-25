@@ -20,14 +20,29 @@ ReVariableReferencedOnceRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-ReVariableReferencedOnceRule >> basicCheck: aClass [
-	^ aClass slots anySatisfy: [ :slot | 
+ReVariableReferencedOnceRule >> check: aClass forCritiquesDo: aCriticBlock [
+		aClass slots do: [ :slot | 
 		  | usingMethods |
 		  usingMethods := slot usingMethods.
-		  usingMethods size = 1 and: [ 
-			  RBReadBeforeWrittenTester
+		  usingMethods size = 1 ifFalse:  [ ^ self ].
+		  (RBReadBeforeWrittenTester
 				  isVariable: slot name
-				  writtenBeforeReadIn: usingMethods first ast ] ]
+				  writtenBeforeReadIn: usingMethods first ast) ifTrue: [aCriticBlock cull: (self critiqueFor: aClass about: slot  name)   ]]
+		
+
+]
+
+{ #category : #running }
+ReVariableReferencedOnceRule >> critiqueFor: aClass about: aVarName [
+
+	| crit |
+	crit := ReTrivialCritique
+		withAnchor: (ReVarSearchSourceAnchor
+			entity: aClass
+			string: aVarName)
+		by: self.
+	crit tinyHint: aVarName.
+	^ crit
 ]
 
 { #category : #accessing }
