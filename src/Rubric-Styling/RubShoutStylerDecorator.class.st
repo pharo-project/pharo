@@ -139,9 +139,7 @@ RubShoutStylerDecorator >> style: aText [
 
 	[ ^ self styler style: aText ]
 		on: Error
-		do: [ :ex | 
-			ex traceCr.
-			^ aText ]
+		do: [ "nothing" ]
 ]
 
 { #category : #accessing }
