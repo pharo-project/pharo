@@ -160,6 +160,11 @@ Variable >> isLocalVariable [
 ]
 
 { #category : #testing }
+Variable >> isPoolVariable [
+	^ false
+]
+
+{ #category : #testing }
 Variable >> isReadIn: aCompiledCode [
 	^aCompiledCode ast readNodes
 		 anySatisfy: [ :node | node binding == self ]
