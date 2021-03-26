@@ -83,8 +83,8 @@ RBRefactoring class >> initializeRefactoringOptions [
 		at: #openBrowser
 		put: [ :ref :env |  self error: #openBrowser ];
 		
-		at: #searchInAllHierarchy
-		put: [ self error: #searchInAllHierarchy ]
+		at: #searchInWholeHierarchy
+		put: [ self error: #searchInWholeHierarchy ]
 ]
 
 { #category : #'accessing signal' }

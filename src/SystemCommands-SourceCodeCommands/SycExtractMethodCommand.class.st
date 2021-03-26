@@ -17,6 +17,24 @@ SycExtractMethodCommand class >> canBeExecutedInContext: aSourceCodeContext [
 	^aSourceCodeContext isMethodSelected not 
 ]
 
+{ #category : #converting }
+SycExtractMethodCommand >> asRefactorings [
+	| selectedInterval refactoring |
+	selectedInterval := selectedTextInterval ifEmpty: [ 
+		                    sourceNode sourceInterval ].
+	refactoring := RBExtractMethodAndOccurrences
+		               extract: selectedInterval
+		               from: method selector
+		               in: method origin.
+	NautilusRefactoring new refactoringOptions: refactoring.
+	refactoring searchInSuperclasses: self searchInSuperclasses.
+	self setUpOptionToUseExistingMethodDuring: refactoring.
+	self setUpOptionToOverrideExistingMethodDuring: refactoring.
+	self setUpOptionToChangeMethodNameDuring: refactoring.
+	^ { refactoring }
+	
+]
+
 { #category : #accessing }
 SycExtractMethodCommand >> defaultMenuIconName [ 
 	^ #glamorousRestart
@@ -30,20 +48,12 @@ SycExtractMethodCommand >> defaultMenuItemName [
 { #category : #execution }
 SycExtractMethodCommand >> execute [
 
-	| selectedInterval refactoring |
-	selectedInterval := selectedTextInterval ifEmpty: [ 
-		                    sourceNode sourceInterval ].
-	refactoring := RBExtractMethodAndOccurrences
-		               extract: selectedInterval
-		               from: method selector
-		               in: method origin.
-	refactoring searchInSuperclasses: self searchInSuperclasses.
-	self setUpOptionToUseExistingMethodDuring: refactoring.
-	self setUpOptionToOverrideExistingMethodDuring: refactoring.
-	self setUpOptionToChangeMethodNameDuring: refactoring.
-	self setUpOptionToSearchInHierarchyDuring: refactoring.
+	self executeRefactoring: self asRefactorings
+]
 
-	self executeRefactoring: refactoring
+{ #category : #testing }
+SycExtractMethodCommand >> isComplexRefactoring [
+	^ true
 ]
 
 { #category : #execution }
@@ -81,20 +91,11 @@ SycExtractMethodCommand >> setUpOptionToOverrideExistingMethodDuring: aRefactori
 ]
 
 { #category : #execution }
-SycExtractMethodCommand >> setUpOptionToSearchInHierarchyDuring: refactoring [
-
-	refactoring setOption: #searchInAllHierarchy toUse:  [ 
-		UIManager default 
-			confirm: 'Do you want to search occurrences in the whole hierarchy?'
-			label: 'Warning']. 	
-]
-
-{ #category : #execution }
 SycExtractMethodCommand >> setUpOptionToUseExistingMethodDuring: aRefactoring [
 
 	aRefactoring setOption: #useExistingMethod toUse:  [ :ref :selector | 
 		UIManager default 
-			confirm: 'Do you want use existing method ', selector printString, '?'
+			confirm: 'Do you want to use existing method ', selector printString, '?'
 			label: 'Warninig']. 	
 	
 ]
