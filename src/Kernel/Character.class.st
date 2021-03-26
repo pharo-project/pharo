@@ -798,6 +798,13 @@ Character >> isUppercase [
 ]
 
 { #category : #testing }
+Character >> isDoubleQuote [
+	"Returns whether the receiver is a Double Quote"
+
+	^ self = $"
+]
+
+{ #category : #testing }
 Character >> isVowel [
 	"Answer whether the receiver is one of the vowels, AEIOU, in upper or 
 	lower case."
