@@ -161,12 +161,12 @@ ClySystemEnvironment >> confirmToOverrideExistingClassNamed: newClassName [
 
 	"Attempting to define new class/trait over existing one when not looking at the original one in this browser..."
 
-	self confirm:
-		((newClassName , ' is an existing class/trait in this system.
+	^ self confirm:
+		  ((newClassName , ' is an existing class/trait in this system.
 Redefining it might cause serious problems.
 Is this really what you want to do?') asText
-			 makeBoldFrom: 1
-			 to: newClassName size)
+			   makeBoldFrom: 1
+			   to: newClassName size)
 ]
 
 { #category : #'package management' }
