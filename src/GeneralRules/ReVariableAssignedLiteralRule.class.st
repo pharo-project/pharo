@@ -17,11 +17,13 @@ ReVariableAssignedLiteralRule class >> checksClass [
 ReVariableAssignedLiteralRule >> check: aClass forCritiquesDo: aCriticBlock [
 
 	aClass definedVariables do: [ :variable | 
-		|  assignmentNodes |
-		assignmentNodes := variable  assignmentNodes.
+		| assignmentNodes |
+		"Pools are often used to define constants and can read without an accessor"
+		variable isPoolVariable ifTrue: [ ^ self ].
+		assignmentNodes := variable assignmentNodes.
 		assignmentNodes size = 1 ifFalse: [ ^ self ].
 		assignmentNodes first value isLiteralNode ifTrue: [ 
-		aCriticBlock cull: (self critiqueFor: aClass about: variable  name) ]]
+			aCriticBlock cull: (self critiqueFor: aClass about: variable name) ] ]
 ]
 
 { #category : #'running-helpers' }
