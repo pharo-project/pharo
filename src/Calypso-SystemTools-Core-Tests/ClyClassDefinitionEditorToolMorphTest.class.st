@@ -13,6 +13,11 @@ Class {
 	#category : #'Calypso-SystemTools-Core-Tests-Editors-Classes'
 }
 
+{ #category : #asserting }
+ClyClassDefinitionEditorToolMorphTest >> assertResultCompilationEquals: aString [
+	self assert: editor textMorph text string equals: aString
+]
+
 { #category : #helper }
 ClyClassDefinitionEditorToolMorphTest >> checkClassDoesntExists [
 	(self class environment classNamed: className) ifNotNil: [ self error: 'Need to rename test class to not override existing class' ].
@@ -63,11 +68,20 @@ ClyClassDefinitionEditorToolMorphTest >> setUp [
 
 { #category : #test }
 ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredDefinitionFailsWithoutTryingToCompileAsMethod [
-	self compileString: 'Object << #MyClass
-		slots: { #s #s };
-    package: ''Calypso-SystemQueries-Tests'''.
-
-	self error
+	"Not sure what a syntax error look like for a simple definition.
+	Open to ideas"
+	self error.
+	
+	self compileString: 
+'Object subclass: #' , className , '
+	instanceVariableNames: ''#'' 
+	classVariableNames: ''''
+  package: ''Calypso-SystemQueries-Tests'''.
+	self assertResultCompilationEquals:
+'Object subclass: #MyClass
+	instanceVariableNames: '''' 
+	classVariableNames: ''''
+  package: ''Calypso-SystemQueries-Tests'''
 ]
 
 { #category : #test }
@@ -76,7 +90,7 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredFluidDefinition
 'Object << #', className , '
 	slots: { #s #s };
 	package: ''Calypso-SystemTools-Core-Tests'''.
-	self assert: editor textMorph text string equals: 
+	self assertResultCompilationEquals:
 'Object << #MyClass
 	slots: { #s # End of statement expected ->s };
 	package: ''Calypso-SystemTools-Core-Tests'''
@@ -86,7 +100,7 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredFluidDefinition
 ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredMethodShouldFailCompilationAsMethod [
 	"failing compilation of a method definition & a fluid class definition should treat their own syntax errors"
 	self compileString: 'banana^'.
-	self assert: editor textMorph text string equals: 
+	self assertResultCompilationEquals:
 		'banana^ Variable or expression expected ->'
 ]
 
@@ -97,7 +111,7 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredTraitDefinition
 	slots: { #s #s };
 	package: ''Calypso-SystemTools-Core-Tests'''.
 
-	self assert: editor textMorph text string equals: 
+	self assertResultCompilationEquals:
 'Object << #MyClass
 	slots: { #s # End of statement expected ->s };
 	package: ''Calypso-SystemTools-Core-Tests'''.
