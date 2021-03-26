@@ -8,11 +8,6 @@ Class {
 	#category : #'Calypso-SystemTools-Core-Tests-Editors-Classes'
 }
 
-{ #category : #helpers }
-MockClyFullBrowserClassContext class >> banana [
-	^ 1
-]
-
 { #category : #accessing }
 MockClyFullBrowserClassContext >> lastSelectedClass [
 	^ { self class }

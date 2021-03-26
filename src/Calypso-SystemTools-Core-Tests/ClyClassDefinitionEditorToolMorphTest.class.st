@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'classDefinitionEditor',
 		'editor',
-		'className'
+		'className',
+		'context'
 	],
 	#category : #'Calypso-SystemTools-Core-Tests-Editors-Classes'
 }
@@ -23,7 +24,7 @@ ClyClassDefinitionEditorToolMorphTest >> classExists [
 
 ]
 
-{ #category : #test }
+{ #category : #helper }
 ClyClassDefinitionEditorToolMorphTest >> compileString: aString [
 	editor textMorph setTextWith: aString.
 	editor applyChanges.
@@ -39,7 +40,7 @@ ClyClassDefinitionEditorToolMorphTest >> deleteClassIfExists [
 
 { #category : #running }
 ClyClassDefinitionEditorToolMorphTest >> setUp [
-	| context browser containerTab methodGroupQuery |
+	| browser containerTab methodGroupQuery |
 	super setUp.
 
 	className := #MyClass.
@@ -135,14 +136,14 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptAWellWrittenFluidClassDefinit
 ClyClassDefinitionEditorToolMorphTest >> testAcceptAWellWrittenMethodRegistersIt [
 	| selector |
 	selector := #banana.
-	(self class lookupSelector: selector) ifNotNil: [ self error: 'I might overide an important behavior' ].
+	(context class class lookupSelector: selector) ifNotNil: [ self error: 'I might overide an important behavior' ].
 	[
 	self compileString:
 selector , '
 	^ 1'.
-	self assert: (self class methodDict includes: selector).
+	self assert: (context class class methodDict includes: selector) isNotNil.
 	
-	] ensure: [ self class removeSelector: selector ].
+	] ensure: [ context class class removeSelector: selector ].
 
 ]
 
