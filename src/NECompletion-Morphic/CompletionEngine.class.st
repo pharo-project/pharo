@@ -113,9 +113,11 @@ CompletionEngine >> handleKeyDownBefore: aKeyboardEvent editor: anEditor [
 	commandKeyPressed := aKeyboardEvent commandKeyPressed.
 	
 	(self isMenuOpen not and: [
-		self editor atCompletionPosition and: [ 
+		self editor atCompletionPosition and: [
 			NECPreferences popupShowWithShortcut matches: {aKeyboardEvent}]])
-				ifTrue: [ self openMenu. ^ true ].
+				ifTrue: [ 
+					aKeyboardEvent supressNextKeyPress: true.
+					self openMenu. ^ true ].
 	
 	key = KeyboardKey backspace
 		ifTrue: [ 

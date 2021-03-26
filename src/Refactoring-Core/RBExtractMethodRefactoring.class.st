@@ -214,7 +214,7 @@ RBExtractMethodRefactoring >> extractedParseTree [
 RBExtractMethodRefactoring >> getExtractedSource [
 	| source |
 	source := class sourceCodeFor: selector.
-	((extractionInterval first between: 1 and: source size) 
+	((extractionInterval first between: 1 and: (self startLimit: source size)) 
 		and: [extractionInterval last between: 1 and: source size]) 
 			ifFalse: [self refactoringFailure: 'Invalid interval'].
 	^source copyFrom: extractionInterval first to: extractionInterval last
@@ -412,6 +412,11 @@ RBExtractMethodRefactoring >> selectorsToSearch [
 	^ self searchInSuperclasses 
 		ifTrue: [ class allSelectors ]
 		ifFalse: [ class selectors ]
+]
+
+{ #category : #transforming }
+RBExtractMethodRefactoring >> startLimit: aNumber [
+	^ aNumber 
 ]
 
 { #category : #printing }

@@ -105,3 +105,12 @@ ClassVariableTest >> testWritingToContext [
 	
 	self assert: TestVariable equals: #testValue
 ]
+
+{ #category : #tests }
+ClassVariableTest >> testisPoolVariable [
+	| variable |
+	variable := SmalltalkImage classVariableNamed: #CompilerClass.
+	self deny: variable isPoolVariable.
+	variable := TextConstants classVariableNamed: #Basal.
+	self assert: variable isPoolVariable.
+]
