@@ -77,6 +77,7 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredDefinitionFails
 	instanceVariableNames: ''#'' 
 	classVariableNames: ''''
   package: ''Calypso-SystemQueries-Tests'''.
+
 	self assertResultCompilationEquals:
 'Object subclass: #MyClass
 	instanceVariableNames: '''' 
@@ -90,6 +91,7 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredFluidDefinition
 'Object << #', className , '
 	slots: { #s #s };
 	package: ''Calypso-SystemTools-Core-Tests'''.
+	
 	self assertResultCompilationEquals:
 'Object << #MyClass
 	slots: { #s # End of statement expected ->s };
