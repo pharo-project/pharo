@@ -12,18 +12,18 @@ Class {
 	#category : #'Calypso-SystemTools-Core-Tests-Editors-Classes'
 }
 
-{ #category : #running }
+{ #category : #helper }
 ClyClassDefinitionEditorToolMorphTest >> checkClassDoesntExists [
 	(self class environment classNamed: className) ifNotNil: [ self error: 'Need to rename test class to not override existing class' ].
 ]
 
-{ #category : #running }
+{ #category : #helper }
 ClyClassDefinitionEditorToolMorphTest >> classExists [
 	^ (self class environment classNamed: className) isNotNil
 
 ]
 
-{ #category : #running }
+{ #category : #helper }
 ClyClassDefinitionEditorToolMorphTest >> deleteClassIfExists [
 	| instaledClass |
 	instaledClass := self class environment classNamed: className.
@@ -54,7 +54,7 @@ ClyClassDefinitionEditorToolMorphTest >> setUp [
 		yourself.
 ]
 
-{ #category : #running }
+{ #category : #test }
 ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredDefinitionFailsWithoutTryingToCompileAsMethod [
  	editor textMorph appendText: 'Object << #MyClass
 		slots: { #s #s };
@@ -64,7 +64,7 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredDefinitionFails
 	self error
 ]
 
-{ #category : #running }
+{ #category : #test }
 ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredFluidDefinitionFailsWithoutTryingToCompileAsMethod [
 	editor textMorph setTextWith: 
 	'Object << #', className , '
@@ -77,7 +77,7 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredFluidDefinition
 		package: ''Calypso-SystemTools-Core-Tests'''
 ]
 
-{ #category : #running }
+{ #category : #test }
 ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredMethodShouldFailCompilationAsMethod [
 	"failing compilation of a method definition & a fluid class definition should treat their own syntax errors"
 	editor textMorph setTextWith: 
@@ -87,7 +87,7 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredMethodShouldFai
 		'banana^ Variable or expression expected ->'
 ]
 
-{ #category : #running }
+{ #category : #test }
 ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredTraitDefinitionFailsWithoutTryingToCompileAsMethod [
 	editor textMorph setTextWith: 
 	'Object << #', className , '
@@ -102,7 +102,7 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredTraitDefinition
 	self error: #todo
 ]
 
-{ #category : #running }
+{ #category : #test }
 ClyClassDefinitionEditorToolMorphTest >> testAcceptAWellWrittenClassDefinitionRegistersIt [
 	self checkClassDoesntExists.
 	[
@@ -117,7 +117,7 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptAWellWrittenClassDefinitionRe
 	] ensure: [ self deleteClassIfExists ].
 ]
 
-{ #category : #running }
+{ #category : #test }
 ClyClassDefinitionEditorToolMorphTest >> testAcceptAWellWrittenFluidClassDefinitionRegistersIt [
 	self checkClassDoesntExists.
 	[
@@ -131,7 +131,7 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptAWellWrittenFluidClassDefinit
 	] ensure: [ self deleteClassIfExists ].
 ]
 
-{ #category : #running }
+{ #category : #test }
 ClyClassDefinitionEditorToolMorphTest >> testAcceptAWellWrittenMethodRegistersIt [
 	| selector |
 	selector := #banana.
@@ -147,7 +147,7 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptAWellWrittenMethodRegistersIt
 
 ]
 
-{ #category : #running }
+{ #category : #test }
 ClyClassDefinitionEditorToolMorphTest >> testAcceptAWellWrittenTraitDefinitionRegistersIt [
 	self error: #todo.
  	editor textMorph appendText: 'Object << #MyClass
