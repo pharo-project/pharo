@@ -55,6 +55,12 @@ SpMorphicTextInputFieldAdapter >> buildWidget [
 ]
 
 { #category : #'widget API' }
+SpMorphicTextInputFieldAdapter >> cursorPositionIndex: index [ 
+
+	self widgetDo: [ :w | ^ w textArea editor selectAt: index ]
+]
+
+{ #category : #'widget API' }
 SpMorphicTextInputFieldAdapter >> encrypted [
 	^ self model isPassword
 ]

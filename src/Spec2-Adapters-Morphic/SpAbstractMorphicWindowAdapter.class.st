@@ -50,8 +50,8 @@ SpAbstractMorphicWindowAdapter >> addContent: aMorph toWindow: aSpecWindow [
 
 { #category : #private }
 SpAbstractMorphicWindowAdapter >> addMenuTo: aMorph [
-
 	| menuMorph |
+	
 	menuMorph := self model menu buildWithSpec.
 	aMorph addMorphBack: menuMorph.	
 	menuMorph
@@ -84,24 +84,25 @@ SpAbstractMorphicWindowAdapter >> newContainerMorph [
 
 { #category : #private }
 SpAbstractMorphicWindowAdapter >> setToolbarTo: aMorph [
-
-	| newToolbarMorph |
+	| newToolbarMorph toolbarPresenter |
 	
 	self model hasToolbar 
-		ifFalse: [ 
+		ifFalse: [
 			toolbarMorph ifNotNil: [ 
 				aMorph removeMorph: toolbarMorph.
 				toolbarMorph := nil.  ].
 			^ self. ].
 	
-	newToolbarMorph := self presenter toolbar buildWithSpec.
+	toolbarPresenter := self presenter toolbar.
+	newToolbarMorph := toolbarPresenter buildWithSpec.
+	toolbarPresenter adapter applyStyle.
 	newToolbarMorph
 		hResizing: #spaceFill;
 		vResizing: #rigid.
 	
 	"If we have a toolbar morph, we replace with the new one"
 	toolbarMorph 
-		ifNil: [	aMorph addMorph: newToolbarMorph ]
+		ifNil: [	aMorph addMorphBack: newToolbarMorph ]
 		ifNotNil: [ aMorph replaceSubmorph: toolbarMorph by: newToolbarMorph ].
 		
 	toolbarMorph := newToolbarMorph

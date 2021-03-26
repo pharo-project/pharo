@@ -282,8 +282,7 @@ SpAbstractTreePresenter >> selectPath: aPath [
 	`aPath` is the path to select. A path is an array of node indexes (e.g. #(1 2 3)).
 	 It does not scrolls to selected element."
 
-	self withAdapterPerformOrDefer: [ :anAdapter | 
-		self selection selectPath: aPath ]
+	self selection selectPath: aPath
 ]
 
 { #category : #'api-selection' }
