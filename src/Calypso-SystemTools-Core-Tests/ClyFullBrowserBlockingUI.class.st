@@ -9,6 +9,10 @@ Class {
 }
 
 { #category : #navigation }
+ClyFullBrowserBlockingUI >> classSelectionChanged [
+]
+
+{ #category : #navigation }
 ClyFullBrowserBlockingUI >> selectMethod: aMethod [
 
 ]
