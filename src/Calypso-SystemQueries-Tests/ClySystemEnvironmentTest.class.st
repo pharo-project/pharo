@@ -215,38 +215,3 @@ ClySystemEnvironmentTest >> testIsTraitDefinition [
 	uses: {}
 	package: ''Calypso-SystemQueries-Domain''')
 ]
-
-{ #category : #test }
-ClySystemEnvironmentTest >> testRedefineAClassShouldRedefineIt [
-	| controlerDummy newClassDefinitionString newClass oldUIManager |
-	controlerDummy := RubScrolledTextMorph new.
-	dummySystemEnvironment globals: Smalltalk globals.
-	(self class environment classNamed: #MyClass) ifNotNil: [ self error: 'Need to rename test class to not override existing class' ].
-
-	newClassDefinitionString := 'Object << #MyClass
-    package: ''Calypso-SystemQueries-Tests'''.
-
-
-	oldUIManager := UIManager default.
-	[
-		UIManager default: DummyUIManager new.
-		[ 
-		
-			dummySystemEnvironment compileANewClassFrom: newClassDefinitionString notifying: controlerDummy startingFrom: nil.
-			newClassDefinitionString := 'Object << #MyClass
-		    slots: {#s};
-		    package: ''Calypso-SystemQueries-Tests'''.
-
-			dummySystemEnvironment compileANewClassFrom: newClassDefinitionString notifying: controlerDummy startingFrom: nil.
-
-		
-		] 
-			on: ProvideAnswerNotification 
-			do:[ :e | e resume: true ]
-	]
-	ensure: [ UIManager default: oldUIManager ].
-
-	newClass := self class environment classNamed: #MyClass.
-	[ self assert: newClass allSlots size equals: 1 ] 
-		ensure: [ (self class environment classNamed: #MyClass) removeFromSystem ]
-]

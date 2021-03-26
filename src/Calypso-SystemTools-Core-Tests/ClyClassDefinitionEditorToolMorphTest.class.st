@@ -23,6 +23,12 @@ ClyClassDefinitionEditorToolMorphTest >> classExists [
 
 ]
 
+{ #category : #test }
+ClyClassDefinitionEditorToolMorphTest >> compileString: aString [
+	editor textMorph setTextWith: aString.
+	editor applyChanges.
+]
+
 { #category : #helper }
 ClyClassDefinitionEditorToolMorphTest >> deleteClassIfExists [
 	| instaledClass |
@@ -56,48 +62,44 @@ ClyClassDefinitionEditorToolMorphTest >> setUp [
 
 { #category : #test }
 ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredDefinitionFailsWithoutTryingToCompileAsMethod [
- 	editor textMorph appendText: 'Object << #MyClass
+	self compileString: 'Object << #MyClass
 		slots: { #s #s };
     package: ''Calypso-SystemQueries-Tests'''.
-	editor applyChanges.
 
 	self error
 ]
 
 { #category : #test }
 ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredFluidDefinitionFailsWithoutTryingToCompileAsMethod [
-	editor textMorph setTextWith: 
-	'Object << #', className , '
-		slots: { #s #s };
-		package: ''Calypso-SystemTools-Core-Tests'''.
-	editor applyChanges.
+	self compileString:
+'Object << #', className , '
+	slots: { #s #s };
+	package: ''Calypso-SystemTools-Core-Tests'''.
 	self assert: editor textMorph text string equals: 
-		'Object << #MyClass
-		slots: { #s # End of statement expected ->s };
-		package: ''Calypso-SystemTools-Core-Tests'''
+'Object << #MyClass
+	slots: { #s # End of statement expected ->s };
+	package: ''Calypso-SystemTools-Core-Tests'''
 ]
 
 { #category : #test }
 ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredMethodShouldFailCompilationAsMethod [
 	"failing compilation of a method definition & a fluid class definition should treat their own syntax errors"
-	editor textMorph setTextWith: 
-	'banana^'.
-	editor applyChanges.
+	self compileString: 'banana^'.
 	self assert: editor textMorph text string equals: 
 		'banana^ Variable or expression expected ->'
 ]
 
 { #category : #test }
 ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredTraitDefinitionFailsWithoutTryingToCompileAsMethod [
-	editor textMorph setTextWith: 
-	'Object << #', className , '
-		slots: { #s #s };
-		package: ''Calypso-SystemTools-Core-Tests'''.
-	editor applyChanges.
+	self compileString:
+'Object << #', className , '
+	slots: { #s #s };
+	package: ''Calypso-SystemTools-Core-Tests'''.
+
 	self assert: editor textMorph text string equals: 
-		'Object << #MyClass
-		slots: { #s # End of statement expected ->s };
-		package: ''Calypso-SystemTools-Core-Tests'''.
+'Object << #MyClass
+	slots: { #s # End of statement expected ->s };
+	package: ''Calypso-SystemTools-Core-Tests'''.
 		
 	self error: #todo
 ]
@@ -106,12 +108,11 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredTraitDefinition
 ClyClassDefinitionEditorToolMorphTest >> testAcceptAWellWrittenClassDefinitionRegistersIt [
 	self checkClassDoesntExists.
 	[
-	editor textMorph setTextWith: 
+	self compileString:
 	'Object subclass: ' , className , '
 	instanceVariableNames: '' 
 	classVariableNames: ''
 	package: ''Calypso-SystemTools-Core-Tests'''.
-	editor applyChanges.
 	self assert: self classExists.
 	
 	] ensure: [ self deleteClassIfExists ].
@@ -121,11 +122,10 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptAWellWrittenClassDefinitionRe
 ClyClassDefinitionEditorToolMorphTest >> testAcceptAWellWrittenFluidClassDefinitionRegistersIt [
 	self checkClassDoesntExists.
 	[
-	editor textMorph setTextWith: 
-	'Object << #', className , '
-		slots: { };
-    package: ''Calypso-SystemTools-Core-Tests'''.
-	editor applyChanges.
+	self compileString:
+'Object << #', className , '
+	slots: { };
+	package: ''Calypso-SystemTools-Core-Tests'''.
 	self assert: self classExists.
 	
 	] ensure: [ self deleteClassIfExists ].
@@ -137,10 +137,9 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptAWellWrittenMethodRegistersIt
 	selector := #banana.
 	(self class lookupSelector: selector) ifNotNil: [ self error: 'I might overide an important behavior' ].
 	[
-	editor textMorph setTextWith: 
-	selector , '
+	self compileString:
+selector , '
 	^ 1'.
-	editor applyChanges.
 	self assert: (self class methodDict includes: selector).
 	
 	] ensure: [ self class removeSelector: selector ].
@@ -150,9 +149,37 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptAWellWrittenMethodRegistersIt
 { #category : #test }
 ClyClassDefinitionEditorToolMorphTest >> testAcceptAWellWrittenTraitDefinitionRegistersIt [
 	self error: #todo.
- 	editor textMorph appendText: 'Object << #MyClass
+	self compileString: 'Object << #MyClass
 		slots: { #s #s };
     package: ''Calypso-SystemQueries-Tests'''.
 	editor applyChanges .
 
+]
+
+{ #category : #test }
+ClyClassDefinitionEditorToolMorphTest >> testRedefineAClassShouldRedefineIt [
+	|  newClass oldUIManager |
+	self checkClassDoesntExists.
+
+	self compileString: 
+'Object << #' , className , '
+	package: ''Calypso-SystemQueries-Tests'''.
+	
+	oldUIManager := UIManager default.
+	[
+		UIManager default: NonInteractiveUIManager new.
+		[ 
+			self compileString: 
+'Object << #' , className , '
+	slots: {#s};
+	package: ''Calypso-SystemQueries-Tests'''.
+		] 
+			on: ProvideAnswerNotification 
+			do:[ :e | e resume: true ]
+	]
+	ensure: [ UIManager default: oldUIManager ].
+
+	newClass := self class environment classNamed: #MyClass.
+	[ self assert: newClass allSlots size equals: 1 ] 
+		ensure: [ self deleteClassIfExists ]
 ]
