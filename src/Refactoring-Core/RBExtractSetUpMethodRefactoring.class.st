@@ -8,6 +8,43 @@ The preconditions are quite complex.
 	- The code needs to be parseable valid code. 
 	- The class must not implement setUp method.
 	- Class must inherit from testCase class 
+	
+Example script
+---------------
+```
+(RBExtractSetUpMethodRefactoring
+	extract: (14 to: 29)
+	from: #testExample
+	in: RBDataTest) execute.
+```
+
+Before refactoring:
+```
+TestCase subclass: #RBDataTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	package: 'Example'.
+
+RBDataTest >> someMethod
+	#someMethod.
+
+RBDataTest >> testExample
+	self someMethod.
+	self assert: true.
+```
+After refactoring:
+```
+RBDataTest >> setUp
+	super setUp.
+	self someMethod.
+
+RBDataTest >> testExample
+	self assert: true.
+``` 
+
+
+
+
 "
 Class {
 	#name : #RBExtractSetUpMethodRefactoring,
@@ -23,8 +60,12 @@ RBExtractSetUpMethodRefactoring >> checkSingleAssignment: varName [
 			ifTrue: 
 				[self 
 					refactoringError: 'Cannot extract assignments to temporaries without all references'].
-	class addInstanceVariable: varName.
 	modifiedParseTree body removeTemporaryNamed: varName.
+	self performCompositeRefactoring: (RBTemporaryToInstanceVariableRefactoring 
+		model: self model
+		class: class
+		selector: selector
+		variable: varName)
 ]
 
 { #category : #transforming }
@@ -38,15 +79,30 @@ RBExtractSetUpMethodRefactoring >> nameNewMethod: aSymbol [
 { #category : #preconditions }
 RBExtractSetUpMethodRefactoring >> preconditions [
 	^(RBCondition definesSelector: selector in: class) &
-	(RBCondition definesSelector: #setUp in: class) not &
+	(self requestExistingSelector ifNil: [ (RBCondition definesSelector: #setUp in: class) not ]
+	ifNotNil: [ self emptyCondition ]) &
 	(RBCondition withBlock: [ class allSuperclasses anySatisfy: [ :e | e name = #TestCase ] ])
 		& (RBCondition withBlock: 
-					[self extractMethod.
-					self checkSpecialExtractions.
-					self checkReturn.
-					needsReturn ifTrue: [extractedParseTree addReturn].
-					self checkTemporaries.
-					true])
+			[self extractMethod.
+			self checkSpecialExtractions.
+			self checkReturn.
+			needsReturn ifTrue: [extractedParseTree addReturn].
+			self checkTemporaries.
+			true])
+]
+
+{ #category : #transforming }
+RBExtractSetUpMethodRefactoring >> shouldExtractAssignmentTo: name [
+	^ true
+]
+
+{ #category : #transforming }
+RBExtractSetUpMethodRefactoring >> startLimit: aNumber [
+	| node |
+	node := class parseTreeFor: selector.
+	^ node statements ifEmpty: [ node body start ]
+		ifNotEmpty: [ node statements first start ]
+	
 ]
 
 { #category : #transforming }
@@ -65,6 +121,5 @@ RBExtractSetUpMethodRefactoring >> transform [
 
 { #category : #transforming }
 RBExtractSetUpMethodRefactoring >> updateTemporariesInExtractedMethodFor: variableNames [
-	"Remove temporaries in extract method"
-	variableNames do: [ :varName | extractedParseTree body removeTemporaryNamed: varName ].
+	
 ]
