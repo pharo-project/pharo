@@ -327,8 +327,7 @@ SpAbstractTreePresenter >> selectPaths: pathArray [
 	"Selects all elements in `pathsArray``
 	`pathsArray` is an array of paths. A path is an array of node indexes (e.g. #(1 2 3))"
 
-	self withAdapterPerformOrDefer: [ :anAdapter | 
-		self selection selectPaths: pathArray ]
+	self selection selectPaths: pathArray
 ]
 
 { #category : #'api-selection' }
