@@ -27,7 +27,6 @@ SycExtractMethodCommand >> asRefactorings [
 		               from: method selector
 		               in: method origin.
 	NautilusRefactoring new refactoringOptions: refactoring.
-	refactoring searchInSuperclasses: self searchInSuperclasses.
 	self setUpOptionToUseExistingMethodDuring: refactoring.
 	self setUpOptionToOverrideExistingMethodDuring: refactoring.
 	self setUpOptionToChangeMethodNameDuring: refactoring.
@@ -62,13 +61,6 @@ SycExtractMethodCommand >> readParametersFromContext: aSourceCodeContext [
 	
 	selectedTextInterval := aSourceCodeContext selectedTextInterval.
 	
-]
-
-{ #category : #execution }
-SycExtractMethodCommand >> searchInSuperclasses [
-	^ UIManager default 
-			confirm: 'Do you want to search extracted code in the superclasses as well?'
-			label: 'Warning'.
 ]
 
 { #category : #execution }
