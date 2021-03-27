@@ -218,6 +218,9 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptAWellWrittenTraitDefinitionRe
 { #category : #test }
 ClyClassDefinitionEditorToolMorphTest >> testRedefineAClassShouldRedefineIt [
 	|  newClass |
+	"This method of removing the GUI confirmation is not my favourite.
+	However, this was less dangerous than the initial solution.
+	See pull request #8884 on pharo repository for details"
 	self checkClassDoesntExists.
 	(ClySystemEnvironment methodDictionary includes: #confirm:) ifTrue: [ self error: 'I might override some important behavior, test needs to be updated.' ].
 
