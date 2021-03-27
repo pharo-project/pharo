@@ -135,7 +135,7 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptAWellWrittenClassDefinitionRe
 	self checkClassDoesntExists.
 	[
 	self compileString:
-	'Object subclass: #' , className , '
+'Object subclass: #' , className , '
 	instanceVariableNames: ''''
 	classVariableNames: ''''
 	package: ''Calypso-SystemTools-Core-Tests'''.
