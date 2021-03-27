@@ -91,7 +91,7 @@ StSpotter class >> history [
 { #category : #'class initialization' }
 StSpotter class >> initialize [
 
-	self showPreview: true
+	self showPreview
 ]
 
 { #category : #testing }
