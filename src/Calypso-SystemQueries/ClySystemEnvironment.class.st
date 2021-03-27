@@ -150,10 +150,13 @@ ClySystemEnvironment >> compileANewClassFrom: newClassDefinitionString notifying
 						  notifying: aController
 						  startingFrom: oldClass ]
 				ifFalse: [ 
-					^ self
-						  defineNewClassFrom: newClassDefinitionString
-						  notifying: aController
-						  startingFrom: oldClass ] ]
+					(self isClassDefinition: newClassDefinitionString)
+						ifTrue: [
+							^ self
+							  defineNewClassFrom: newClassDefinitionString
+							  notifying: aController
+							  startingFrom: oldClass ]
+						ifFalse: [ ^ nil ] ] ]
 ]
 
 { #category : #'class management' }
@@ -280,6 +283,15 @@ ClySystemEnvironment >> includesClassNamed: aSymbol [
 ClySystemEnvironment >> initialize [
 	super initialize.
 	projectManager := ClyProjectManagerRegistry new
+]
+
+{ #category : #compiling }
+ClySystemEnvironment >> isClassDefinition: newClassDefinitionString [
+	| defTokens |
+	defTokens := newClassDefinitionString findTokens: Character separators.
+	^ (self class environment classNamed: defTokens first) isNotNil.
+	
+ 
 ]
 
 { #category : #testing }
