@@ -33,7 +33,7 @@ ClyClassDefinitionEditorToolMorphTest >> checkClassDoesntExists [
 
 { #category : #helper }
 ClyClassDefinitionEditorToolMorphTest >> classExists [
-	^ (self class environment classNamed: className) isNotNil
+	^ self getMyClass isNotNil
 
 ]
 
@@ -47,9 +47,15 @@ ClyClassDefinitionEditorToolMorphTest >> compileString: aString [
 { #category : #helper }
 ClyClassDefinitionEditorToolMorphTest >> deleteClassIfExists [
 	| instaledClass |
-	instaledClass := self class environment classNamed: className.
+	instaledClass := self getMyClass.
 	instaledClass ifNil:[ ^ self ].
 	instaledClass removeFromSystem
+]
+
+{ #category : #helper }
+ClyClassDefinitionEditorToolMorphTest >> getMyClass [
+	^ (self class environment classNamed: className)
+
 ]
 
 { #category : #running }
