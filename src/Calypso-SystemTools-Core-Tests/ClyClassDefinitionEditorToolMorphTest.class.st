@@ -117,17 +117,21 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredMethodShouldFai
 
 { #category : #test }
 ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredTraitDefinitionFailsWithoutTryingToCompileAsMethod [
-	self compileString:
-'Object << #', className , '
-	slots: { #s #s };
-	package: ''Calypso-SystemTools-Core-Tests'''.
+	"Not sure what a syntax error look like for a  shift class builder definition.
+	Open to ideas"
+	self error.
+	
+	self compileString: 
+'Trait subclass: #' , className , '
+	instanceVariableNames: ''#'' 
+	classVariableNames: ''''
+  package: ''Calypso-SystemQueries-Tests'''.
 
 	self assertResultCompilationEquals:
-'Object << #MyClass
-	slots: { #s # End of statement expected ->s };
-	package: ''Calypso-SystemTools-Core-Tests'''.
-		
-	self error: #todo
+'Trait subclass: #MyClass
+	instanceVariableNames: '''' 
+	classVariableNames: ''''
+  package: ''Calypso-SystemQueries-Tests'''
 ]
 
 { #category : #test }
