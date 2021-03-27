@@ -77,8 +77,9 @@ ClyClassDefinitionEditorToolMorphTest >> setUp [
 
 { #category : #test }
 ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredClassDefinitionFailsWithoutTryingToCompileAsMethod [
-	"Not sure what a syntax error look like for a  shift class builder definition.
+	"Not sure what a syntax error look like for a shift class builder definition.
 	Open to ideas"
+	<expectedFailure>
 	self error.
 	
 	self compileString: 
@@ -117,8 +118,9 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredMethodShouldFai
 
 { #category : #test }
 ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredTraitDefinitionFailsWithoutTryingToCompileAsMethod [
-	"Not sure what a syntax error look like for a  shift class builder definition.
+	"Not sure what a syntax error look like for a shift class builder definition.
 	Open to ideas"
+	<expectedFailure>.
 	self error.
 	
 	self compileString: 
