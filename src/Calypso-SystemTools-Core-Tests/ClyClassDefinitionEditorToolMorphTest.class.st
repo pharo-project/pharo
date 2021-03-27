@@ -8,10 +8,18 @@ Class {
 		'classDefinitionEditor',
 		'editor',
 		'className',
-		'context'
+		'context',
+		'oldString'
 	],
 	#category : #'Calypso-SystemTools-Core-Tests-Editors-Classes'
 }
+
+{ #category : #asserting }
+ClyClassDefinitionEditorToolMorphTest >> assertResultCompilationDidntChange [
+	"if the string changed, then there is a syntax error
+	It may be because it was treated as a method"
+	self assert: oldString equals: editor textMorph text string
+]
 
 { #category : #asserting }
 ClyClassDefinitionEditorToolMorphTest >> assertResultCompilationEquals: aString [
@@ -31,6 +39,7 @@ ClyClassDefinitionEditorToolMorphTest >> classExists [
 
 { #category : #helper }
 ClyClassDefinitionEditorToolMorphTest >> compileString: aString [
+	oldString := aString.
 	editor textMorph setTextWith: aString.
 	editor applyChanges.
 ]
@@ -131,6 +140,7 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptAWellWrittenClassDefinitionRe
 	classVariableNames: ''''
 	package: ''Calypso-SystemTools-Core-Tests'''.
 	self assert: self classExists.
+	self assertResultCompilationDidntChange.
 	
 	] ensure: [ self deleteClassIfExists ].
 ]
@@ -141,9 +151,9 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptAWellWrittenFluidClassDefinit
 	[
 	self compileString:
 'Object << #', className , '
-	slots: { };
 	package: ''Calypso-SystemTools-Core-Tests'''.
 	self assert: self classExists.
+	self assertResultCompilationDidntChange.
 	
 	] ensure: [ self deleteClassIfExists ].
 ]
@@ -158,6 +168,7 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptAWellWrittenMethodRegistersIt
 selector , '
 	^ 1'.
 	self assert: (context class class methodDict includes: selector) isNotNil.
+	self assertResultCompilationDidntChange.
 	
 	] ensure: [ context class class removeSelector: selector ].
 

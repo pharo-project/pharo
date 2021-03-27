@@ -105,8 +105,7 @@ FluidClassBuilder >> fillShiftClassBuilder [
 { #category : #building }
 FluidClassBuilder >> install [
 	"Install the class in the system environment"
-	
-	ShiftClassInstaller new makeWithBuilder: shiftClassBuilder 
+	^ ShiftClassInstaller new makeWithBuilder: shiftClassBuilder 
 ]
 
 { #category : #API }
