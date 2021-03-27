@@ -67,8 +67,8 @@ ClyClassDefinitionEditorToolMorphTest >> setUp [
 ]
 
 { #category : #test }
-ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredDefinitionFailsWithoutTryingToCompileAsMethod [
-	"Not sure what a syntax error look like for a simple definition.
+ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredClassDefinitionFailsWithoutTryingToCompileAsMethod [
+	"Not sure what a syntax error look like for a  shift class builder definition.
 	Open to ideas"
 	self error.
 	
@@ -86,7 +86,7 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredDefinitionFails
 ]
 
 { #category : #test }
-ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredFluidDefinitionFailsWithoutTryingToCompileAsMethod [
+ClyClassDefinitionEditorToolMorphTest >> testAcceptASyntaxErroredFluidClassDefinitionFailsWithoutTryingToCompileAsMethod [
 	self compileString:
 'Object << #', className , '
 	slots: { #s #s };
