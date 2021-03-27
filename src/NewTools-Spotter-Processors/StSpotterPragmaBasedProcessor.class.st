@@ -34,8 +34,7 @@ StSpotterPragmaBasedProcessor class >> settingsOn: aBuilder [
 		label: 'Number of results per category';
 		default: 25;
 		order: 100;
-		description:
-			'Number of results per category to show in Spotter'
+		description: 'Number of results per category to show in Spotter'
 ]
 
 { #category : #public }

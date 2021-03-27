@@ -91,7 +91,7 @@ StSpotter class >> history [
 { #category : #'class initialization' }
 StSpotter class >> initialize [
 
-	self showPreview
+	self showPreview: true
 ]
 
 { #category : #testing }
@@ -105,6 +105,18 @@ StSpotter class >> open [
 
 	self reset.
 	^ spotterWindow := self new openModalWithSpec
+]
+
+{ #category : #settings }
+StSpotter class >> previewVisible [
+		
+	^ Preview
+]
+
+{ #category : #settings }
+StSpotter class >> previewVisible: aBoolean [
+	
+	Preview := aBoolean
 ]
 
 { #category : #'tools registry' }
@@ -127,6 +139,23 @@ StSpotter class >> resetHistory [
 	self resetHistory
 	"
 	History := nil
+]
+
+{ #category : #settings }
+StSpotter class >> settingsOn: aBuilder [
+	<systemsettings>
+
+	(aBuilder group: #spotter)
+		parent: #tools;
+		label: 'Spotter';
+		description: 'Spotter configuration'.
+
+	(aBuilder setting: #previewVisible)
+		parent: #spotter;
+		default: self isShowingPreview;
+		target: self;
+		description: 'If Spotter will show the preview panel on the right of spotter';
+		label: 'Show Preview Panel'.
 ]
 
 { #category : #accessing }

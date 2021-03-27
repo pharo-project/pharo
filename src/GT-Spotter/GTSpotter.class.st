@@ -138,7 +138,7 @@ GTSpotter class >> resetHistory [
 
 { #category : #testing }
 GTSpotter class >> settingsOn: aBuilder [
-	<systemsettings>
+	"<systemsettings>
 	(aBuilder group: #spotter)
 		parent: #tools;
 		label: 'Spotter';
@@ -149,7 +149,7 @@ GTSpotter class >> settingsOn: aBuilder [
 		default: false;
 		target: self;
 		description: 'If Spotter will show the preview panel on the right of spotter';
-		label: 'Show Preview Panel'.
+		label: 'Show Preview Panel'."
 ]
 
 { #category : #accessing }
