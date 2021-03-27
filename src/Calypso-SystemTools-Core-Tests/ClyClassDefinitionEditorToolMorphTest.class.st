@@ -159,6 +159,20 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptAWellWrittenFluidClassDefinit
 ]
 
 { #category : #test }
+ClyClassDefinitionEditorToolMorphTest >> testAcceptAWellWrittenFluidTraitDefinitionRegistersIt [
+	self checkClassDoesntExists.
+	[
+	self compileString:
+'Trait << #' , className , '
+	package: ''Calypso-SystemQueries-Tests'''.
+	self assert: self classExists.
+	self assertResultCompilationDidntChange.
+
+	
+	] ensure: [ self deleteClassIfExists ].
+]
+
+{ #category : #test }
 ClyClassDefinitionEditorToolMorphTest >> testAcceptAWellWrittenMethodRegistersIt [
 	| selector |
 	selector := #banana.
