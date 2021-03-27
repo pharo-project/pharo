@@ -201,33 +201,6 @@ RBProgramNode >> bestNodeFor: anInterval [
 ]
 
 { #category : #querying }
-RBProgramNode >> bestNodeForPosition: aPosition [
-
-	"aPosition is an integer that represents the position of the caret. 
-	A value of N represents that the caret is between the characters N-1 and N.
-	The position 1 is at beginning of the text.
-	
-	Position Heuristic: If the previous character is not a separator, take selection one position before.
-		This heuristic is for the cases where the caret (|) is:
-		   |self foo  => the caret is before self, do not move
-		   self foo|  => the caret is before foo, interpret is as if we are in foo.
-			self foo | => the caret is before a space, interpret is as if we are in foo.
-
-		This heuristic introduces although an ambiguity when code is not nicely formatted:
-		   self foo:|#bar => Here a user may want foo: or bar.
-		For now we decided to favor foo: to motivate people to indent code correctly	"
- 
-	| offset position |
-	offset := (aPosition = 1 or: [ (self methodNode sourceCode at: aPosition - 1) isSeparator ])
-		ifTrue: [ 0 ]
-		ifFalse: [ -1 ].
-
-	position := (aPosition + offset) min: self stop.
-
-	^ self bestNodeFor: (position to: position)
-]
-
-{ #category : #querying }
 RBProgramNode >> blockNodes [
 	^self allChildren select: [:each | each isBlock].
 ]
