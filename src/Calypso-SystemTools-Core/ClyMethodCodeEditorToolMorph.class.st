@@ -286,9 +286,14 @@ ClyMethodCodeEditorToolMorph >> selectVariableNamed: varName [
 { #category : #accessing }
 ClyMethodCodeEditorToolMorph >> selectedSourceNode [
 
-	| selectedInterval |
+	| selectedInterval ast |
 	selectedInterval := self selectedTextInterval.
-	^(editingMethod astForStylingInCalypso bestNodeFor: selectedInterval)
+	
+	ast := selectedInterval isEmpty 
+		ifTrue: [ editingMethod astForStylingInCalypso bestNodeForPosition: selectedInterval first ]
+		ifFalse: [ editingMethod astForStylingInCalypso bestNodeFor: selectedInterval ].
+	
+	^ ast
 		ifNil: [ editingMethod astForStylingInCalypso ]
 ]
 
