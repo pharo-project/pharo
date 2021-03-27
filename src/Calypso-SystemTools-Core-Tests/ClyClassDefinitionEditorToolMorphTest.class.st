@@ -217,28 +217,28 @@ ClyClassDefinitionEditorToolMorphTest >> testAcceptAWellWrittenTraitDefinitionRe
 
 { #category : #test }
 ClyClassDefinitionEditorToolMorphTest >> testRedefineAClassShouldRedefineIt [
-	|  newClass oldUIManager |
+	|  newClass |
 	self checkClassDoesntExists.
+	(ClySystemEnvironment methodDictionary includes: #confirm:) ifTrue: [ self error: 'I might override some important behavior, test needs to be updated.' ].
 
+	[ "start of ensure block"
 	self compileString: 
 'Object << #' , className , '
 	package: ''Calypso-SystemQueries-Tests'''.
 	
-	oldUIManager := UIManager default.
-	[
-		UIManager default: NonInteractiveUIManager new.
-		[ 
-			self compileString: 
+	"remove graphical coinfirm component"
+	ClySystemEnvironment compile: 'confirm: aString "noOpFor ClyClassDefinitionEditorToolMorphTest>> testRedefineAClassShouldRedefineIt" ^ true' asString classified: 'toDelete'.
+	
+	self compileString: 
 'Object << #' , className , '
 	slots: {#s};
-	package: ''Calypso-SystemQueries-Tests'''.
-		] 
-			on: ProvideAnswerNotification 
-			do:[ :e | e resume: true ]
-	]
-	ensure: [ UIManager default: oldUIManager ].
+	package: ''Calypso-SystemQueries-Tests'''.	
 
 	newClass := self class environment classNamed: #MyClass.
-	[ self assert: newClass allSlots size equals: 1 ] 
-		ensure: [ self deleteClassIfExists ]
+	self assert: newClass allSlots size equals: 1 ] 
+		ensure: [ 
+			self deleteClassIfExists.
+			"remove the removal of graphical confirm component" 
+			ClySystemEnvironment removeSelector: #confirm:
+			]
 ]
