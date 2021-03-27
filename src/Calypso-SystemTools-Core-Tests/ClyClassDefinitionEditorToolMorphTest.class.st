@@ -190,12 +190,17 @@ selector , '
 
 { #category : #test }
 ClyClassDefinitionEditorToolMorphTest >> testAcceptAWellWrittenTraitDefinitionRegistersIt [
-	self error: #todo.
-	self compileString: 'Object << #MyClass
-		slots: { #s #s };
-    package: ''Calypso-SystemQueries-Tests'''.
-	editor applyChanges .
-
+	self checkClassDoesntExists.
+	[
+	self compileString:
+'Trait subclass: #' , className , '
+	instanceVariableNames: ''''
+	classVariableNames: ''''
+	package: ''Calypso-SystemTools-Core-Tests'''.
+	self assert: self classExists.
+	self assertResultCompilationDidntChange.
+	
+	] ensure: [ self deleteClassIfExists ].
 ]
 
 { #category : #test }
