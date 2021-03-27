@@ -139,7 +139,7 @@ ClySystemEnvironment >> compileANewClassFrom: newClassDefinitionString notifying
 		ifTrue: [ 
 			ClassDefinitionPrinter showFluidClassDefinition: true.
 			^ self
-				  defineNewFluidClassFrom: newClassDefinitionString
+				  defineNewFluidClassOrTraitFrom: newClassDefinitionString
 				  notifying: aController
 				  startingFrom: oldClass ]
 		ifFalse: [ 
@@ -209,9 +209,9 @@ ClySystemEnvironment >> defineNewClassFrom: newClassDefinitionString notifying: 
 ]
 
 { #category : #compiling }
-ClySystemEnvironment >> defineNewFluidClassFrom: newClassDefinitionString notifying: aController startingFrom: oldClass [
+ClySystemEnvironment >> defineNewFluidClassOrTraitFrom: newClassDefinitionString notifying: aController startingFrom: oldClass [
 
-	"Precondition: newClassDefinitionString is a fluid class"
+	"Precondition: newClassDefinitionString is a fluid class or trait"
 
 	| newClass |
 	[ 
