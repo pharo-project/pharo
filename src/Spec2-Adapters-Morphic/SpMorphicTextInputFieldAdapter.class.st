@@ -50,6 +50,8 @@ SpMorphicTextInputFieldAdapter >> buildWidget [
 		newWidget encrypted: isPassword ].
 	self presenter whenMaxLengthChangedDo: [ :length | 
 		newWidget maxLength: length ].
+	self presenter whenEditableChangedDo: [ :value | 
+		self setEditable: value to: newWidget ].
 
 	^ newWidget
 ]
@@ -96,6 +98,12 @@ SpMorphicTextInputFieldAdapter >> getPlaceholderText [
 SpMorphicTextInputFieldAdapter >> isPassword [
 	
 	^ self widget font isKindOf: FixedFaceFont
+]
+
+{ #category : #private }
+SpMorphicTextInputFieldAdapter >> setEditable: aBoolean to: aWidget [
+
+	aWidget textArea readOnly: aBoolean not
 ]
 
 { #category : #accessing }
