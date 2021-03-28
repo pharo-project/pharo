@@ -5,7 +5,8 @@ Class {
 	#name : #SpAbstractMorphicWindowAdapter,
 	#superclass : #SpAbstractMorphicAdapter,
 	#instVars : [
-		'toolbarMorph'
+		'toolbarMorph',
+		'menuMorph'
 	],
 	#category : #'Spec2-Adapters-Morphic-Base'
 }
@@ -50,7 +51,6 @@ SpAbstractMorphicWindowAdapter >> addContent: aMorph toWindow: aSpecWindow [
 
 { #category : #private }
 SpAbstractMorphicWindowAdapter >> addMenuTo: aMorph [
-	| menuMorph |
 	
 	menuMorph := self model menu buildWithSpec.
 	aMorph addMorphBack: menuMorph.	
@@ -102,8 +102,11 @@ SpAbstractMorphicWindowAdapter >> setToolbarTo: aMorph [
 	
 	"If we have a toolbar morph, we replace with the new one"
 	toolbarMorph 
-		ifNil: [	aMorph addMorphBack: newToolbarMorph ]
-		ifNotNil: [ aMorph replaceSubmorph: toolbarMorph by: newToolbarMorph ].
+		ifNotNil: [ aMorph replaceSubmorph: toolbarMorph by: newToolbarMorph ]
+		ifNil: [	
+			menuMorph 
+				ifNotNil: [ aMorph addMorph: newToolbarMorph after: menuMorph ]
+				ifNil: [ aMorph addMorph: newToolbarMorph ] ].
 		
 	toolbarMorph := newToolbarMorph
 
