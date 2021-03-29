@@ -17,8 +17,7 @@ Class {
 		'parameters',
 		'needsReturn',
 		'parameterMap',
-		'newExtractedSelector',
-		'searchInSuperclasses'
+		'newExtractedSelector'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -397,21 +396,9 @@ RBExtractMethodRefactoring >> requestExistingSelector [
 			do: [ :e | nil ]
 ]
 
-{ #category : #accessing }
-RBExtractMethodRefactoring >> searchInSuperclasses [
-	^ searchInSuperclasses ifNil: [ searchInSuperclasses := false ]
-]
-
-{ #category : #accessing }
-RBExtractMethodRefactoring >> searchInSuperclasses: anObject [
-	searchInSuperclasses := anObject
-]
-
 { #category : #transforming }
 RBExtractMethodRefactoring >> selectorsToSearch [
-	^ self searchInSuperclasses 
-		ifTrue: [ class allSelectors ]
-		ifFalse: [ class selectors ]
+	^ class allSelectors
 ]
 
 { #category : #transforming }

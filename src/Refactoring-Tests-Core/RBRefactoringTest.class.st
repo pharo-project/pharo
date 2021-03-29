@@ -494,7 +494,7 @@ RBRefactoringTest >> setupMethodNameFor: aRefactoring toReturn: aSelector withAr
 RBRefactoringTest >> setupSearchInAllHierarchyFor: aRefactoring toReturn: aBoolean [ 
 	| options |
 	options := aRefactoring options copy.
-	options at: #searchInAllHierarchy put: [aBoolean ].
+	options at: #searchInWholeHierarchy put: [ :ref :cls | aBoolean ].
 	aRefactoring options: options
 ]
 
