@@ -83,7 +83,9 @@ ParametrizedTestCase class >> isAbstract [
 
 { #category : #'building suites' }
 ParametrizedTestCase class >> testParameters [
-
+	"I'm the main hook to define configuration.
+	See addCase and forSelector:addOptions: on ParametrizedTestMatrix."
+	
 	^ ParametrizedTestMatrix new
 ]
 
