@@ -601,6 +601,13 @@ Character >> isDigit [
 
 ]
 
+{ #category : #testing }
+Character >> isDoubleQuote [
+	"Returns whether the receiver is a Double Quote"
+
+	^ self = $"
+]
+
 { #category : #'testing unicode' }
 Character >> isEnclosingMark [
 	"Return whether the receiver is ... one of these https://www.compart.com/en/unicode/category/Me"
@@ -795,13 +802,6 @@ Character >> isUppercase [
 
 	^ self characterSet isUppercase: self
 
-]
-
-{ #category : #testing }
-Character >> isDoubleQuote [
-	"Returns whether the receiver is a Double Quote"
-
-	^ self = $"
 ]
 
 { #category : #testing }

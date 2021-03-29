@@ -11,10 +11,11 @@ Class {
 }
 
 { #category : #correcting }
-OCShadowVariableWarning >> defaultAction [ 
+OCShadowVariableWarning >> defaultAction [
 
-	^ self resume: (self variable: self node shadows: self shadowedVar)
-	
+	^ self resume: (compilationContext interactive
+			   ifTrue: [ self raiseSemanticError ]
+			   ifFalse: [ self showWarningOnTranscript ])
 ]
 
 { #category : #accessing }
@@ -28,6 +29,16 @@ OCShadowVariableWarning >> node: aVariableNode [
 { #category : #correcting }
 OCShadowVariableWarning >> openMenuIn: aBlock [
 	self error: 'should not be called'
+]
+
+{ #category : #correcting }
+OCShadowVariableWarning >> raiseSemanticError [
+
+	^OCSemanticError new
+		node: node;
+		compilationContext: compilationContext;
+		messageText: self stringMessage;
+		signal
 ]
 
 { #category : #accessing }
@@ -50,19 +61,6 @@ OCShadowVariableWarning >> showWarningOnTranscript [
 { #category : #accessing }
 OCShadowVariableWarning >> stringMessage [
 	^ 'Name already defined'
-]
-
-{ #category : #correcting }
-OCShadowVariableWarning >> variable: varNode shadows: semVar [
-	compilationContext interactive
-		ifTrue: [ 
-			OCSemanticError new
-				node: node;
-				compilationContext: compilationContext;
-				messageText: self stringMessage;
-				signal ]
-		ifFalse: [ self showWarningOnTranscript ].
-
 ]
 
 { #category : #accessing }
