@@ -14,7 +14,6 @@ Class {
 		'label',
 		'rawInspectionSelectionCache',
 		'assertionFailure',
-		'currentLayout',
 		'currentLayoutSpec',
 		'lateralToolbar'
 	],

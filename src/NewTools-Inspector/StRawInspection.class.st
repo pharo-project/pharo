@@ -172,7 +172,7 @@ StRawInspection >> valuesColumn [
 	^ SpStringTableColumn new
 		title: 'Value';
 		evaluated: #stringValue;
-		beEditable;
+		"beEditable;"
 		onAcceptEdition: [ :node :value | 
 			self inform: node label , '=' , value asString	"node value: value" ];
 		sortFunction: #stringValue ascending;

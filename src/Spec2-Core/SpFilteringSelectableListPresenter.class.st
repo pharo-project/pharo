@@ -60,7 +60,12 @@ SpFilteringSelectableListPresenter >> initializePresenters [
 					selectFrom: previousSelectedIndex
 					to: listPresenter selection selectedIndex ]
 			ifFalse: [ 
-				self toggleSelection ] ]
+				self toggleSelection ] ].
+		
+	"listPresenter
+  		bindKeyCombination: $a meta toAction: [
+    		self selectItems: self items ]"
+
 ]
 
 { #category : #private }

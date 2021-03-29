@@ -32,6 +32,15 @@ StDebuggerErrorContextPredicate >> exception: anObject [
 	exception := anObject
 ]
 
+{ #category : #accessing }
+StDebuggerErrorContextPredicate >> exceptionWhiteList [
+
+	^ { 
+		  Warning.
+		  OupsNullException.
+		  Halt }
+]
+
 { #category : #predicates }
 StDebuggerErrorContextPredicate >> isContextDoesNotUnderstand [
 

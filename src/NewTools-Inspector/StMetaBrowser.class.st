@@ -4,8 +4,7 @@ Class {
 	#instVars : [
 		'classes',
 		'methods',
-		'source',
-		'methodFilter'
+		'source'
 	],
 	#category : #'NewTools-Inspector-View'
 }
