@@ -9,7 +9,6 @@ Class {
 		'text',
 		'toolbar',
 		'statusbar',
-		'bindings',
 		'lineLabel',
 		'toggleLineNumberButton',
 		'page',

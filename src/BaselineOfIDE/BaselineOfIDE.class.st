@@ -200,7 +200,8 @@ BaselineOfIDE >> baseline: spec [
 					'Debugger' 
 					'SystemReporter'
 					'ChangeSorter'
-					'Methods') ].
+					'Methods'
+					'Spotter') ].
 			
 		spec baseline: 'Microdown' with: [ spec 
 				repository: self packageRepositoryURL ].

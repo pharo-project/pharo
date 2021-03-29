@@ -49,9 +49,10 @@ FluidTraitBuilder >> fillShiftClassBuilder [
 
 { #category : #building }
 FluidTraitBuilder >> install [
+
 	"Install the trait in the system environment"
-	
-	ShiftClassInstaller new makeWithBuilder: shiftClassBuilder 
+
+	^ ShiftClassInstaller new makeWithBuilder: shiftClassBuilder
 ]
 
 { #category : #accessing }

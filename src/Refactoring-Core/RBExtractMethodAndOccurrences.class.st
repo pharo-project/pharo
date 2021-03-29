@@ -8,8 +8,7 @@ Class {
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
 		'extractionInterval',
-		'selector',
-		'searchInSuperclasses'
+		'selector'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -48,7 +47,6 @@ RBExtractMethodAndOccurrences >> extractMethod [
 		               extract: extractionInterval
 		               from: selector
 		               in: class.
-	refactoring searchInSuperclasses: searchInSuperclasses.
 	self performCompositeRefactoring: refactoring.
 	^ refactoring newExtractedSelector
 ]
@@ -85,8 +83,7 @@ RBExtractMethodAndOccurrences >> findOccurrencesOf: aSelector [
 				               model: self model
 				               find: aSelector
 				               of: class
-				               inWholeHierarchy:
-				               (self options at: #searchInAllHierarchy) value.
+				               inWholeHierarchy: self shouldSearchInHierarchy.
 			self performCompositeRefactoring: refactoring ]
 		ifFalse: [ 
 			self refactoringFailure:
@@ -99,9 +96,9 @@ RBExtractMethodAndOccurrences >> preconditions [
 	^ self emptyCondition
 ]
 
-{ #category : #accessing }
-RBExtractMethodAndOccurrences >> searchInSuperclasses: anObject [
-	searchInSuperclasses := anObject
+{ #category : #asserting }
+RBExtractMethodAndOccurrences >> shouldSearchInHierarchy [
+	^(self options at: #searchInWholeHierarchy) value: self value: class
 ]
 
 { #category : #printing }

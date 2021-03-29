@@ -91,6 +91,24 @@ GTSpotter class >> on: anObject [
 	^ self new foundationOrigin: anObject
 ]
 
+{ #category : #'instance creation' }
+GTSpotter class >> open [
+	| spotterModel |
+		
+	GTSpotterGlobalShortcut reset.
+	spotterModel := self new.
+		
+	GTSpotterMorph new
+		extent: (self currentWorld width / 2.4 @ (self currentWorld height / 1.6)) asIntegerPoint;
+		spotterModel: spotterModel;
+		doLayout;
+		openCenteredInWorld;
+		initializeListeners;
+		takeKeyboardFocus.
+		
+	spotterModel class markOpened
+]
+
 { #category : #accessing }
 GTSpotter class >> previewVisible [
 
@@ -103,6 +121,13 @@ GTSpotter class >> previewVisible: aValue [
 	isPreviewVisible := aValue
 ]
 
+{ #category : #'instance creation' }
+GTSpotter class >> registerToolsOn: registry [
+	"self registerToolsOn: Smalltalk tools"
+
+	"registry register: self as: #spotter"
+]
+
 { #category : #accessing }
 GTSpotter class >> resetHistory [
 	"
@@ -113,7 +138,7 @@ GTSpotter class >> resetHistory [
 
 { #category : #testing }
 GTSpotter class >> settingsOn: aBuilder [
-	<systemsettings>
+	"<systemsettings>
 	(aBuilder group: #spotter)
 		parent: #tools;
 		label: 'Spotter';
@@ -124,7 +149,7 @@ GTSpotter class >> settingsOn: aBuilder [
 		default: false;
 		target: self;
 		description: 'If Spotter will show the preview panel on the right of spotter';
-		label: 'Show Preview Panel'.
+		label: 'Show Preview Panel'."
 ]
 
 { #category : #accessing }

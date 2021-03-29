@@ -21,7 +21,7 @@ SycExtractSetUpRefactoring >> executeRefactoring [
 			extract: selectedInterval
 			from: method selector
 			in: method origin.
-	self setUpOptionToSearchInHierarchyDuring: refactoring.
+	NautilusRefactoring new refactoringOptions: refactoring.
 	refactoring execute
 ]
 
@@ -42,16 +42,4 @@ SycExtractSetUpRefactoring >> prepareFullExecution [
 	method := context lastSelectedMethod.
 	sourceNode := context lastSelectedSourceNode.
 	selectedTextInterval := context selectedTextInterval.
-]
-
-{ #category : #executing }
-SycExtractSetUpRefactoring >> setUpOptionToSearchInHierarchyDuring: refactoring [
-
-	refactoring setOption: #searchInAllHierarchy toUse: [ 
-		method origin subclasses ifNotEmpty: [ 
-			UIManager default 
-			confirm: 'Do you want to search occurrences in the whole hierarchy?'
-			label: 'Warning'
-		] ifEmpty: [ false ]
-		]. 	
 ]

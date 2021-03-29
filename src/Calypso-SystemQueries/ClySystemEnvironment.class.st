@@ -139,7 +139,7 @@ ClySystemEnvironment >> compileANewClassFrom: newClassDefinitionString notifying
 		ifTrue: [ 
 			ClassDefinitionPrinter showFluidClassDefinition: true.
 			^ self
-				  defineNewFluidClassFrom: newClassDefinitionString
+				  defineNewFluidClassOrTraitFrom: newClassDefinitionString
 				  notifying: aController
 				  startingFrom: oldClass ]
 		ifFalse: [ 
@@ -150,10 +150,13 @@ ClySystemEnvironment >> compileANewClassFrom: newClassDefinitionString notifying
 						  notifying: aController
 						  startingFrom: oldClass ]
 				ifFalse: [ 
-					^ self
-						  defineNewClassFrom: newClassDefinitionString
-						  notifying: aController
-						  startingFrom: oldClass ] ]
+					(self isClassDefinition: newClassDefinitionString)
+						ifTrue: [
+							^ self
+							  defineNewClassFrom: newClassDefinitionString
+							  notifying: aController
+							  startingFrom: oldClass ]
+						ifFalse: [ ^ nil ] ] ]
 ]
 
 { #category : #'class management' }
@@ -161,7 +164,7 @@ ClySystemEnvironment >> confirmToOverrideExistingClassNamed: newClassName [
 
 	"Attempting to define new class/trait over existing one when not looking at the original one in this browser..."
 
-	self confirm:
+	^ self confirm:
 		((newClassName , ' is an existing class/trait in this system.
 Redefining it might cause serious problems.
 Is this really what you want to do?') asText
@@ -206,9 +209,9 @@ ClySystemEnvironment >> defineNewClassFrom: newClassDefinitionString notifying: 
 ]
 
 { #category : #compiling }
-ClySystemEnvironment >> defineNewFluidClassFrom: newClassDefinitionString notifying: aController startingFrom: oldClass [
+ClySystemEnvironment >> defineNewFluidClassOrTraitFrom: newClassDefinitionString notifying: aController startingFrom: oldClass [
 
-	"Precondition: newClassDefinitionString is a fluid class"
+	"Precondition: newClassDefinitionString is a fluid class or trait"
 
 	| newClass |
 	[ 
@@ -280,6 +283,15 @@ ClySystemEnvironment >> includesClassNamed: aSymbol [
 ClySystemEnvironment >> initialize [
 	super initialize.
 	projectManager := ClyProjectManagerRegistry new
+]
+
+{ #category : #compiling }
+ClySystemEnvironment >> isClassDefinition: newClassDefinitionString [
+	| defTokens |
+	defTokens := newClassDefinitionString findTokens: Character separators.
+	^ (self class environment classNamed: defTokens first) isNotNil.
+	
+ 
 ]
 
 { #category : #testing }
