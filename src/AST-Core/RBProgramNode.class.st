@@ -1069,9 +1069,16 @@ RBProgramNode >> uses: aNode [
 ]
 
 { #category : #querying }
+RBProgramNode >> variableDefinitionNodes [
+	^ self allChildren select: [ :each | 
+		  each isVariable and: [ each isDefinition ] ]
+]
+
+{ #category : #querying }
 RBProgramNode >> variableNodes [
-		^self allChildren select: [:each | 
-			each isVariable and: [each isDefinition not]].
+
+	^ self allChildren select: [ :each | 
+		  each isVariable and: [ each isDefinition not ] ]
 ]
 
 { #category : #querying }
