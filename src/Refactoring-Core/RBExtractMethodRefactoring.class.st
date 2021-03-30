@@ -122,6 +122,17 @@ RBExtractMethodRefactoring >> checkTemporaries [
 ]
 
 { #category : #transforming }
+RBExtractMethodRefactoring >> compileExtractedMethod [
+
+	| cls |
+	self renameAllParameters.
+	cls := self classObjectFor: self requestExtractionClass.
+	^ cls
+		  compile: extractedParseTree newSource
+		  withAttributesFrom: (class methodFor: selector)
+]
+
+{ #category : #transforming }
 RBExtractMethodRefactoring >> existingSelector [
 	"Try to find an existing method instead of creating a new one"
 
@@ -397,6 +408,11 @@ RBExtractMethodRefactoring >> requestExistingSelector [
 ]
 
 { #category : #transforming }
+RBExtractMethodRefactoring >> requestExtractionClass [ 
+	^ (self options at: #extractionClass ifAbsent: [ [:ref | class ]]) value: self
+]
+
+{ #category : #transforming }
 RBExtractMethodRefactoring >> selectorsToSearch [
 	^ class allSelectors
 ]
@@ -427,15 +443,13 @@ RBExtractMethodRefactoring >> targetClass [
 
 { #category : #transforming }
 RBExtractMethodRefactoring >> transform [
+
 	| existingSelector |
 	existingSelector := self existingSelector.
-	self nameNewMethod: (existingSelector ifNil: [
-	newExtractedSelector ifNil: [ self getNewMethodName]]
-				ifNotNil: [existingSelector]).
-	existingSelector ifNil: 
-			[ self renameAllParameters.
-			class compile: extractedParseTree newSource
-				withAttributesFrom: (class methodFor: selector)].
+	self nameNewMethod: (existingSelector
+			 ifNil: [ newExtractedSelector ifNil: [ self getNewMethodName ] ]
+			 ifNotNil: [ existingSelector ]).
+	existingSelector ifNil: [ self compileExtractedMethod ].
 	class compileTree: modifiedParseTree
 ]
 
