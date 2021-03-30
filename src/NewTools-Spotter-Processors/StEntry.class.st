@@ -44,6 +44,12 @@ StEntry >> content: anObject [
 	content := anObject
 ]
 
+{ #category : #'spotter-extensions' }
+StEntry >> displayString [
+
+	^ self asString
+]
+
 { #category : #evaluating }
 StEntry >> doEvaluate [ 
 
@@ -59,8 +65,8 @@ StEntry >> evaluateFor: aGTSpotterStep [
 
 { #category : #'spotter-extensions' }
 StEntry >> gtDisplayString [
-
-	^ self asString
+	self deprecated: 'Use displayString' transformWith: '`@receiver gtDisplayString' -> '`@receiver displayString'.
+	^ self displayString
 ]
 
 { #category : #comparing }

@@ -45,6 +45,13 @@ StSpotterCandidateLink >> copy [
 ]
 
 { #category : #printing }
+StSpotterCandidateLink >> displayStringOn: stream [
+
+	stream nextPutAll: 'Candidate link: '.
+	self value displayStringOn: stream 
+]
+
+{ #category : #printing }
 StSpotterCandidateLink >> gtDisplayOn: stream [
 
 	stream nextPutAll: 'Candidate link: '.

@@ -41,6 +41,11 @@ GTSelector >> addMethod: aCompiledMethod [
 ]
 
 { #category : #printing }
+GTSelector >> displayStringOn: stream [
+	stream nextPutAll: self name
+]
+
+{ #category : #printing }
 GTSelector >> gtDisplayOn: stream [
 	stream nextPutAll: self name
 ]

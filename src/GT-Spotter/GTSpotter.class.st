@@ -255,6 +255,12 @@ GTSpotter >> defaultStep [
 	^ GTSpotterStep new
 ]
 
+{ #category : #printing }
+GTSpotter >> displayStringOn: stream [
+
+	stream nextPutAll: 'Spotter'
+]
+
 { #category : #'actions api' }
 GTSpotter >> doIt [
 	| result |

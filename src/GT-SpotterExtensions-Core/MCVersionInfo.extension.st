@@ -17,6 +17,11 @@ MCVersionInfo >> allAncestorsTo: aCollection [
 ]
 
 { #category : #'*GT-SpotterExtensions-Core' }
+MCVersionInfo >> displayStringOn: stream [
+	stream nextPutAll: self name
+]
+
+{ #category : #'*GT-SpotterExtensions-Core' }
 MCVersionInfo >> gtDisplayOn: stream [
 	stream nextPutAll: self name
 ]

@@ -1,6 +1,11 @@
 Extension { #name : #MCPackageManager }
 
 { #category : #'*GT-InspectorExtensions-Core' }
+MCPackageManager >> displayStringOn: stream [
+	stream nextPutAll: self package name
+]
+
+{ #category : #'*GT-InspectorExtensions-Core' }
 MCPackageManager >> gtDisplayOn: stream [
 	stream nextPutAll: self package name
 ]

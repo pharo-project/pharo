@@ -1,8 +1,15 @@
 Extension { #name : #GLMTransmission }
 
 { #category : #'*GT-InspectorExtensions-Core' }
-GLMTransmission >> gtDisplayOn: stream [
-	self origins asArray gtDisplayOn: stream.
+GLMTransmission >> displayStringOn: stream [
+	self origins asArray displayStringOn: stream.
 	stream nextPutAll: '->'.
-	self destination gtDisplayOn: stream
+	self destination displayStringOn: stream
+]
+
+{ #category : #'*GT-InspectorExtensions-Core' }
+GLMTransmission >> gtDisplayOn: stream [
+	self origins asArray displayStringOn: stream.
+	stream nextPutAll: '->'.
+	self destination displayStringOn: stream
 ]

@@ -1,6 +1,13 @@
 Extension { #name : #Pragma }
 
 { #category : #'*GT-InspectorExtensions-Core' }
+Pragma >> displayStringOn: stream [
+	self method displayStringOn: stream.
+	stream space.
+	self printOn: stream
+]
+
+{ #category : #'*GT-InspectorExtensions-Core' }
 Pragma >> gtDisplayOn: stream [
 	self method gtDisplayOn: stream.
 	stream space.
