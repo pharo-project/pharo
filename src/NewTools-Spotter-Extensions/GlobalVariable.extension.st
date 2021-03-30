@@ -16,6 +16,6 @@ GlobalVariable >> spotterForReferencesFor: aStep [
 	aStep listProcessor
 			title: 'References';
 			allCandidates: [ (SystemNavigation default allReferencesTo: self) collect: [:each | each compiledMethod] ];
-			itemName: [ :method | method gtDisplayString ];
+			itemName: [ :method | method displayString ];
 			filter: GTFilterSubstring
 ]

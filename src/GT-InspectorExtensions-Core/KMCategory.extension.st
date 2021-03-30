@@ -15,7 +15,7 @@ KMCategory >> gtInspectorMappingsIn: composite [
 	composite list
 		title: 'Keys';
 		display: [ self allEntries keymaps ];
-		filterOn: [ :text :each | each gtDisplayString includesSubstring: text caseSensitive: false ];
-		format: #gtDisplayString;
+		filterOn: [ :text :each | each displayString includesSubstring: text caseSensitive: false ];
+		format: #displayString;
 		when: [ self allEntries keymaps notEmpty ]
 ]
