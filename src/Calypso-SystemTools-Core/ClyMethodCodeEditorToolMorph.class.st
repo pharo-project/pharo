@@ -325,14 +325,6 @@ ClyMethodCodeEditorToolMorph >> toggleExtendingPackage [
 	self hasUnacceptedEdits ifFalse: [self packageEditingMethod: editingMethod]
 ]
 
-{ #category : #'as yet unclassified' }
-ClyMethodCodeEditorToolMorph >> toto [
-
-	self halt.
-	
-
-]
-
 { #category : #updating }
 ClyMethodCodeEditorToolMorph >> update [
 
