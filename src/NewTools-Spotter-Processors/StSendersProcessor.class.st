@@ -29,8 +29,7 @@ StSendersProcessor class >> title [
 { #category : #testing }
 StSendersProcessor >> askingForSenders [
 
-	^ query categoriesSelected 
-		anySatisfy: [ :each | each asLowercase beginsWith: #s ]
+	^ query hasCategoryMatching: #s
 ]
 
 { #category : #testing }
@@ -42,9 +41,7 @@ StSendersProcessor >> categoriesIncludes: aCategory [
 { #category : #filtering }
 StSendersProcessor >> executeQuery [
 
-	self askingForSenders
-		ifFalse: [ ^ self ].
-
+	self askingForSenders ifFalse: [ ^ self ].
 	^ super executeQuery 
 ]
 
@@ -54,14 +51,13 @@ StSendersProcessor >> installKeymappingsOn: aPresenter onExecution: aBlock [
 	aPresenter
 		bindKeyCombination: self keyBinding
 		toAction: [ 
-			self query filterSenders.
+			self query toggleFilter: self sendersTag.
 			aBlock cull: self ]
 ]
 
 { #category : #'spotter-api' }
 StSendersProcessor >> isRelevantForQuery: aString [ 
 	
-	"I will handle... I am old enough"
 	^ true
 ]
 
@@ -75,4 +71,10 @@ StSendersProcessor >> keyBinding [
 StSendersProcessor >> newTextFilteringSource [
 
 	^ StSendersIterator new 
+]
+
+{ #category : #'key-bindings' }
+StSendersProcessor >> sendersTag [
+		
+	^ #Senders
 ]

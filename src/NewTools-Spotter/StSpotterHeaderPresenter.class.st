@@ -154,8 +154,9 @@ StSpotterHeaderPresenter >> prepareAsImplementors [
 { #category : #accessing }
 StSpotterHeaderPresenter >> prepareAsPackages [
 
-	order := self model order - 1.
-	labelPresenter label: '#Packages'
+	order := self model order + 2.
+	labelPresenter label: '#Packages'.
+	helpLabelPresenter label: (KMShortcutPrinter toString: self model keyBindingForPackages).
 ]
 
 { #category : #'accessing model' }

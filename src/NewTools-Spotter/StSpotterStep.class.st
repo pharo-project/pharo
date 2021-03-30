@@ -73,6 +73,7 @@ StSpotterStep >> connectQuery: aQuery [
 { #category : #accessing }
 StSpotterStep >> deactivate [
 
+	self activeQuery processors do: [ :each | each stop ].
 	self disconnectQuery: activeQuery
 ]
 
@@ -80,6 +81,12 @@ StSpotterStep >> deactivate [
 StSpotterStep >> disconnectQuery: aQuery [
 
 	aQuery announcer unsubscribe: self model
+]
+
+{ #category : #accessing }
+StSpotterStep >> lastSearchText [
+
+	^ self activeQuery searchText
 ]
 
 { #category : #accessing }
@@ -141,10 +148,12 @@ StSpotterStep >> previousProcessorFrom: aCollection [
 StSpotterStep >> process: aString [
 	| query |
 
-	query := StSpotterQuery on: aString.
+	query := StSpotterQuery on: (aString ifNotEmpty: [ aString, ' ' ]).
 	query processors: (self processors sort: #order ascending).
 	self activateQuery: query.
-	query process
+	query process.
+	query candidatesList isEmpty 
+		ifTrue: [ self model announceNoResults ]
 ]
 
 { #category : #accessing }

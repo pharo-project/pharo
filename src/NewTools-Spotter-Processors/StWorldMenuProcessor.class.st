@@ -26,6 +26,27 @@ StWorldMenuProcessor class >> title [
 ]
 
 { #category : #filtering }
+StWorldMenuProcessor >> askingForMenu [
+
+	^ (query hasCategoryMatching: #menu) 
+		or: [ query isSearchEmpty not
+		or: [ query hasAnyCategory not and: [ query isSearchEmpty ] ] ]
+]
+
+{ #category : #filtering }
+StWorldMenuProcessor >> executeQuery [
+
+	self askingForMenu ifFalse: [ ^ self ].
+	^ super executeQuery
+]
+
+{ #category : #'spotter-api' }
+StWorldMenuProcessor >> isRelevantForQuery: aString [ 
+	
+	^ true
+]
+
+{ #category : #filtering }
 StWorldMenuProcessor >> newTextFilteringSource [
 
 	^ ((StGeneratorBlockIterator

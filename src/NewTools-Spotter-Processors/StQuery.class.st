@@ -35,22 +35,16 @@ StQuery >> categoriesSelected [
 	^ modifiers copy
 ]
 
-{ #category : #configuring }
-StQuery >> filterClasses [
+{ #category : #testing }
+StQuery >> hasAnyCategory [
 
-	modifiers add: #Classes
+	^ self categoriesSelected notEmpty
 ]
 
-{ #category : #configuring }
-StQuery >> filterImplementors [
+{ #category : #testing }
+StQuery >> hasCategoryMatching: aSymbol [
 
-	modifiers add: #Implementors
-]
-
-{ #category : #configuring }
-StQuery >> filterSenders [
-
-	modifiers add: #Senders
+	^ self categoriesSelected anySatisfy: [ :each | each asLowercase beginsWith: aSymbol ]
 ]
 
 { #category : #results }
@@ -100,6 +94,14 @@ StQuery >> textInSearchBar [
 	^ String streamContents: [ :stream | 
 		modifiers do: [ :each | stream print:each; space ].
 		stream nextPutAll: query ]
+]
+
+{ #category : #configuring }
+StQuery >> toggleFilter: filterTag [
+
+	(modifiers includes: filterTag) 
+		ifTrue: [ modifiers remove: filterTag ]
+		ifFalse: [ modifiers add: filterTag ]
 ]
 
 { #category : #updating }

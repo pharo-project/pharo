@@ -33,11 +33,12 @@ Class {
 	],
 	#classVars : [
 		'History',
-		'Preview',
-		'Tips'
+		'PreviewVisible',
+		'Tips',
+		'TipsVisible'
 	],
 	#classInstVars : [
-		'spotterWindow'
+		'spotter'
 	],
 	#category : #'NewTools-Spotter-View'
 }
@@ -52,11 +53,13 @@ StSpotter class >> basicHistory [
 StSpotter class >> createTips [
 
 	^ {
-		'<meta+n> filters for Classes'.
-		'<meta+m> filters for Implementros'.
+		'<meta+b> filters for Classes'.
+		'<meta+m> filters for Implementors'.
+		'<meta+n> filters for Senders'.
+		'<meta+p> filters for Packages'.
 		'<meta+h> filters for Help topics'.
 		'Adding #Classes in the query filters for Classes'.
-		'Adding #Implementors in the query filters for Implementros'.
+		'Adding #Implementors in the query filters for Implementors'.
 		'Adding #Help in the query filters for Help Topics'.
 		'Adding #Packages in the query filters for Packages'.
 		'Adding #Menu in the query filters for System Menu entries'.
@@ -71,7 +74,14 @@ StSpotter class >> createTips [
 StSpotter class >> hidePreview [
 	<script>
 
-	Preview := false
+	PreviewVisible := false
+]
+
+{ #category : #accessing }
+StSpotter class >> hideTips [
+	<script>
+
+	TipsVisible := false
 ]
 
 { #category : #private }
@@ -91,32 +101,40 @@ StSpotter class >> history [
 { #category : #'class initialization' }
 StSpotter class >> initialize [
 
-	self showPreview
+	self showPreview.
+	self showTips
 ]
 
 { #category : #testing }
 StSpotter class >> isShowingPreview [
 
-	^ Preview
+	^ PreviewVisible
+]
+
+{ #category : #testing }
+StSpotter class >> isShowingTips [
+
+	^ TipsVisible
 ]
 
 { #category : #'instance creation' }
 StSpotter class >> open [
 
 	self reset.
-	^ spotterWindow := self new openModalWithSpec
+	spotter := self new.
+	^ spotter openModalWithSpec
 ]
 
 { #category : #settings }
 StSpotter class >> previewVisible [
 		
-	^ Preview
+	^ PreviewVisible
 ]
 
 { #category : #settings }
 StSpotter class >> previewVisible: aBoolean [
 	
-	Preview := aBoolean
+	PreviewVisible := aBoolean
 ]
 
 { #category : #'tools registry' }
@@ -129,7 +147,9 @@ StSpotter class >> registerToolsOn: registry [
 { #category : #private }
 StSpotter class >> reset [
 	
-	spotterWindow ifNotNil: [ spotterWindow close ]
+	spotter ifNotNil: [ 
+		spotter window close.
+		spotter := nil ]
 ]
 
 { #category : #accessing }
@@ -156,13 +176,27 @@ StSpotter class >> settingsOn: aBuilder [
 		target: self;
 		description: 'If Spotter will show the preview panel on the right of spotter';
 		label: 'Show Preview Panel'.
+		
+	(aBuilder setting: #tipsVisible)
+		parent: #spotter;
+		default: self isShowingTips;
+		target: self;
+		description: 'If Spotter will show the tips at the bottom of spotter';
+		label: 'Show Tips Panel'.
 ]
 
 { #category : #accessing }
 StSpotter class >> showPreview [
 	<script>
 	
-	Preview := true
+	PreviewVisible := true
+]
+
+{ #category : #accessing }
+StSpotter class >> showTips [
+	<script>
+	
+	TipsVisible := true
 ]
 
 { #category : #private }
@@ -171,10 +205,22 @@ StSpotter class >> tips [
 	^ Tips ifNil: [ Tips := self createTips ]
 ]
 
+{ #category : #settings }
+StSpotter class >> tipsVisible [
+		
+	^ TipsVisible
+]
+
+{ #category : #settings }
+StSpotter class >> tipsVisible: aBoolean [
+		
+	TipsVisible := aBoolean
+]
+
 { #category : #private }
 StSpotter class >> windowClosed [
 
-	spotterWindow := nil
+	spotter := nil
 ]
 
 { #category : #'private actions' }
@@ -192,6 +238,43 @@ StSpotter >> activateLink: aCandidateLink [
 
 ]
 
+{ #category : #initialization }
+StSpotter >> addPreviewPanelTo: contentsLayout [
+	
+	contentsLayout 	add: (previewContainer := SpBoxLayout newVertical).
+		resultList whenSelectionChangedDo: [ :selection | 
+			self showPreview: selection selectedItem ]
+]
+
+{ #category : #initialization }
+StSpotter >> addTipsPanel [ 
+
+	self layout: (SpBoxLayout newVertical
+		add: self layout;
+		add: (SpBoxLayout newHorizontal
+				vAlignCenter;
+				borderWidth: 3;
+				spacing: 3;
+				add: (self newImage 
+					image: (self application iconNamed: #smallHelp);
+					in: [ :this | this eventHandler whenMouseDownDo: [ :anEvent | self feedTip ] ];
+					yourself)
+					expand: false;
+				add: ((tip := self newLabel)
+					in: [ :this | this eventHandler whenMouseDownDo: [ :anEvent | self feedTip ] ];
+					yourself);
+				addLast: (SpBoxLayout newVertical 
+					add: (self newLink 
+						label: 'Advanced Search...';
+						action: [ self openFinder ];
+						yourself);
+					yourself)
+					expand: false;
+				yourself)
+			expand: false;
+		yourself)
+]
+
 { #category : #private }
 StSpotter >> allowUIToDraw [
 
@@ -204,6 +287,7 @@ StSpotter >> allowUIToDraw [
 StSpotter >> configureModel: aModel [ 
 
 	aModel 
+		whenNoResultsDo: [ self removeAllResults ];
 		whenSearchUpdatedDo: [ :aCandidateLink | 
 			self updateResultList: aCandidateLink ];
 		whenAmountChangedDo: [ :processor :amount | 
@@ -223,6 +307,8 @@ StSpotter >> defaultModel [
 { #category : #'private updating' }
 StSpotter >> deferredUpdateResultList: aCandidateLink [
 	| categoryPresenter presenters |
+
+	aCandidateLink value ifNil: [ ^ self ].
 
 	categoryPresenter := aCandidateLink processor 
 		headerCategoryFor: aCandidateLink
@@ -248,6 +334,7 @@ StSpotter >> diveInProcessor: aProcessor [
 
 	[
 		self showSpinner.
+		self model activeStep deactivate.
 		resultList presenters: #().
 		self removeAll.
 		self model pushStepForProcessor: aProcessor.
@@ -259,13 +346,16 @@ StSpotter >> diveInProcessor: aProcessor [
 StSpotter >> diveOut [
 
 	self removeAll.
-	self model popStep
+	self model popStep.
+	self model lastSearchText 
+		ifNotNil: [ :aString | searchText text: aString ]
 ]
 
-{ #category : #'private actions' }
+{ #category : #actions }
 StSpotter >> feedTip [
 	
-	"tip label: self class tips atRandom"
+	tip ifNil: [ ^ self ].
+	tip label: self class tips atRandom
 ]
 
 { #category : #private }
@@ -347,24 +437,24 @@ StSpotter >> initializePresenters [
 				yourself);
 			addOverlay: (spinner := self newSpinner) 
 				withConstraints: [ :c | c vAlignCenter; hAlignCenter ];
-			yourself);
-		"add: (SpBoxLayout newHorizontal
-				vAlignCenter;
-				add: (tip := self newLabel);
-				addLast: (self newButton 
-					label: 'More...';
-					action: [ self feedTip ];
-					yourself);
-				yourself)
-			expand: false;"
+			yourself)
 		yourself).
 
+	self isShowingPreview ifTrue: [ self addPreviewPanelTo: contentsLayout ].
+	self isShowingTips ifTrue: [ self addTipsPanel ].
+
+	self addStyle: 'stSpotter'.
+	
 	spinner hide.
 
 	resultList
 		bindKeyCombination: Character arrowUp asKeyCombination 
 			toAction: [ :target :widget :event |
-				self transferFocusToSearchText.
+				self transferFocusToSearchTextArrowUp.
+				event wasHandled: false ];
+		bindKeyCombination: Character arrowDown asKeyCombination 
+			toAction: [ :target :widget :event | 
+				self transferFocusToSearchTextArrowDown.
 				event wasHandled: false ];
 		bindKeyCombination: Character arrowRight asKeyCombination 
 			toAction: [ self tryDiveIn ];
@@ -374,13 +464,7 @@ StSpotter >> initializePresenters [
 			self activate: selection selectedItem ].
 	resultList eventHandler 
 		whenKeyDownDo: [ :anEvent | self handleKeyEvent: anEvent ].
-		
-	self isShowingPreview ifTrue: [ 
-		contentsLayout 	add: (previewContainer := SpBoxLayout newVertical).
-		resultList whenSelectionChangedDo: [ :selection | 
-			self showPreview: selection selectedItem ] ].
-
-	self addStyle: 'stSpotter'.
+	
 	searchText 
 		placeholder: 'Search...';
 		addStyle: 'stSpotterSearch';
@@ -420,6 +504,12 @@ StSpotter >> isShowingPreview [
 	^ self class isShowingPreview
 ]
 
+{ #category : #testing }
+StSpotter >> isShowingTips [
+
+	^ self class isShowingTips
+]
+
 { #category : #'accessing model' }
 StSpotter >> model [
 
@@ -442,12 +532,26 @@ StSpotter >> newSpotterHeaderPresenter: aProcessor [
 		yourself
 ]
 
+{ #category : #actions }
+StSpotter >> openFinder [
+
+	self window close.
+	Finder open
+]
+
 { #category : #private }
 StSpotter >> removeAll [
 
 	"resultList presenters: #()."
 	self allowUIToDraw.
 	categories removeAll
+]
+
+{ #category : #private }
+StSpotter >> removeAllResults [
+
+	resultList presenters: #().
+	self removeAll
 ]
 
 { #category : #'accessing model' }
@@ -520,12 +624,19 @@ StSpotter >> transferFocusToResultListAtLast [
 ]
 
 { #category : #private }
-StSpotter >> transferFocusToSearchText [
+StSpotter >> transferFocusToSearchTextArrowDown [
 
-	(resultList items notEmpty and: [ resultList selection selectedIndex = 1 ])
-		ifTrue: [ searchText takeKeyboardFocus ].
-		
-	
+	(resultList items notEmpty 
+		and: [ resultList selection selectedIndex = resultList items size ])
+		ifTrue: [ searchText takeKeyboardFocus ]
+]
+
+{ #category : #private }
+StSpotter >> transferFocusToSearchTextArrowUp [
+
+	(resultList items notEmpty 
+		and: [ resultList selection selectedIndex = 1 ])
+		ifTrue: [ searchText takeKeyboardFocus ]
 ]
 
 { #category : #'private actions' }
