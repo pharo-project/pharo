@@ -381,7 +381,7 @@ GLMPresentation >> gtActionsIn: composite [
 	composite list 
 		title: 'Actions';
 		display: [ self actions ];
-		format: [ :each | each gtDisplayString ]
+		format: [ :each | each displayString ]
 ]
 
 { #category : #testing }

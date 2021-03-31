@@ -68,7 +68,7 @@ StSpotterCandidatesProcessor >> itemIconFor: anObject [
 
 { #category : #private }
 StSpotterCandidatesProcessor >> itemNameFor: anObject [
-	^ anObject gtDisplayString
+	^ anObject displayString
 ]
 
 { #category : #accessing }

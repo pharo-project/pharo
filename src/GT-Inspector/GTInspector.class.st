@@ -96,8 +96,8 @@ GTInspector class >> gtInspectorExtensionsIn: composite [
 		title: 'Extensions';
 		display: [ self inspectorExtendingMethods ];
 		showOnly: 50;
-		format: [ :each | each gtDisplayString ];
-		filterOn: [ :text :each | each gtDisplayString includesSubstring: text caseSensitive: false ]
+		format: [ :each | each displayString ];
+		filterOn: [ :text :each | each displayString includesSubstring: text caseSensitive: false ]
 ]
 
 { #category : #settings }

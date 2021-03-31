@@ -64,8 +64,8 @@ GTSpotter class >> gtInspectorExtensionsIn: composite [
 		title: 'Extensions';
 		display: [ self spotterExtendingMethods ];
 		showOnly: 50;
-		format: [ :each | each gtDisplayString ];
-		filterOn: [ :text :each | each gtDisplayString includesSubstring: text caseSensitive: false ]
+		format: [ :each | each displayString ];
+		filterOn: [ :text :each | each displayString includesSubstring: text caseSensitive: false ]
 ]
 
 { #category : #accessing }
@@ -253,6 +253,12 @@ GTSpotter >> defaultPagerModel [
 { #category : #'accessing-defaults' }
 GTSpotter >> defaultStep [
 	^ GTSpotterStep new
+]
+
+{ #category : #printing }
+GTSpotter >> displayStringOn: stream [
+
+	stream nextPutAll: 'Spotter'
 ]
 
 { #category : #'actions api' }

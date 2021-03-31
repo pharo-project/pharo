@@ -59,6 +59,13 @@ StSpotterPragmaBasedProcessor >> continueFilterInContext: aSpotterContext [
 		withArguments: { self allFilteredCandidates size . self }
 ]
 
+{ #category : #printing }
+StSpotterPragmaBasedProcessor >> displayStringOn: stream [
+	stream 
+		nextPutAll: 'Processor: ';
+		nextPutAll: self title asString
+]
+
 { #category : #private }
 StSpotterPragmaBasedProcessor >> doContinueFilterInContext: aSpotterContext [
 	^ aSpotterContext doContinueFilterForProcessor: self

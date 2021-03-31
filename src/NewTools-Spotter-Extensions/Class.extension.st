@@ -26,7 +26,7 @@ Class >> spotterReferenceFor: aStep [
 	aStep listProcessor
 			title: 'References';
 			allCandidates: [ (SystemNavigation default allReferencesTo: self binding) collect: [:each | each compiledMethod ] ];
-			itemName: [ :method | method gtDisplayString ];
+			itemName: [ :method | method displayString ];
 			filter: GTFilterSubstring
 ]
 
