@@ -76,15 +76,16 @@ SpLabelledList >> sortingBlock: aBlock [
 
 { #category : #'events-shortcuts' }
 SpLabelledList >> whenSelectedItemChanged: aBlock [
-self list whenSelectedItemChanged: aBlock
+self list whenSelectionChangedDo: [:selectionMode | aBlock value: (selectionMode selectedItem)]
 ]
 
 { #category : #'events-shortcuts' }
 SpLabelledList >> whenSelectionChanged: aBlock [
-	self list whenSelectionChanged: aBlock
+	"aBlock is passed the instance of SpSingleSelectionMode from list"
+	self list whenSelectionChangedDo: aBlock
 ]
 
 { #category : #'events-shortcuts' }
 SpLabelledList >> whenSelectionIndexChanged: aBlock [
-	self list whenSelectionIndexChanged: aBlock
+	self list whenSelectionChangedDo: [:selectionMode | aBlock value: (selectionMode selectedIndex)]
 ]

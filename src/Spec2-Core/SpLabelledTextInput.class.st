@@ -72,14 +72,14 @@ SpLabelledTextInput >> text: aText [
 
 { #category : #'api-events' }
 SpLabelledTextInput >> whenSubmitDo: aBlock [
-
-	self input whenSubmitDo: aBlock
+	"aBlock is executed on meta-s or CR. It is passed the final string value of the field as parameter"
+	self input whenSubmitDo: [:morph | aBlock value: (morph text asString)]
 ]
 
 { #category : #'api-events' }
 SpLabelledTextInput >> whenTextChanged: aBlock [
 
-	self input whenTextChanged: aBlock
+	self input whenTextChangedDo: aBlock
 ]
 
 { #category : #'api-events' }

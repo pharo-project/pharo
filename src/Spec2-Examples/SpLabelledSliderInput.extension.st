@@ -15,3 +15,16 @@ SpLabelledSliderInput class >> setUpExample: example [
 		value: 120;
 		extent: 400 @ 50
 ]
+
+{ #category : #'*Spec2-Examples' }
+SpLabelledSliderInput class >> simpleExample [
+	<example>
+	^ (self new
+		label: 'slider label';
+		min: 10;
+		max: 90;
+		value: 25;
+		whenValueChangedDo:  
+			[ :new :old| Transcript nextPutAll: new asString;cr;endEntry  ] )
+	openWithSpec
+]

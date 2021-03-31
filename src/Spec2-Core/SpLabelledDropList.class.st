@@ -64,20 +64,20 @@ SpLabelledDropList >> selectedItem [
 
 { #category : #'api-shortcuts' }
 SpLabelledDropList >> setIndex: anIndex [
-	^self dropList setIndex: anIndex
+	^self dropList selectIndex: anIndex
 ]
 
 { #category : #'events-shortcuts' }
 SpLabelledDropList >> whenSelectedItemChanged: aBlock [
-	self dropList whenSelectedItemChanged: aBlock
+	self dropList whenSelectedItemChangedDo: aBlock
 ]
 
 { #category : #'events-shortcuts' }
 SpLabelledDropList >> whenSelectionChanged: aBlock [
-	self dropList whenSelectionChanged: aBlock
+	self dropList whenSelectionChangedDo: aBlock
 ]
 
 { #category : #'events-shortcuts' }
 SpLabelledDropList >> whenSelectionIndexChanged: aBlock [
-	self dropList whenSelectionIndexChanged: aBlock
+	self dropList whenSelectionChangedDo: [:selectionMode | aBlock value: selectionMode selectedIndex]
 ]
