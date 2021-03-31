@@ -15,6 +15,7 @@ SpLabelledList class >> setUpExample: example [
 SpLabelledList class >> simpleExample [
 	<example>
 	^ (self new
+		layout: self labelTop ;
 		label: 'list label';
 		items:#('stef' 'marcus' 'sven' 'norbert' 'guille' 'esteban');
 		display: [ :item | item capitalized  ];

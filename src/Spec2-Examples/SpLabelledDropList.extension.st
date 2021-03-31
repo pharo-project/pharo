@@ -18,6 +18,7 @@ SpLabelledDropList class >> setUpExample: example [
 SpLabelledDropList class >> simpleExample [
 	<example>
 	^ (self new
+		layout: self labelRight ;
 		label: 'droplist label';
 		items:#('stef' 'marcus' 'sven' 'norbert' 'guille' 'esteban');
 		display: [ :item | item capitalized  ];

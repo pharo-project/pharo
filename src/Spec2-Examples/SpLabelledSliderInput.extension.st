@@ -20,6 +20,7 @@ SpLabelledSliderInput class >> setUpExample: example [
 SpLabelledSliderInput class >> simpleExample [
 	<example>
 	^ (self new
+		layout: self labelLeft ;
 		label: 'slider label';
 		min: 10;
 		max: 90;

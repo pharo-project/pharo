@@ -16,6 +16,7 @@ SpLabelledTextInput class >> setUpExample: example [
 SpLabelledTextInput class >> simpleExample [
 	<example>
 	^ (self new
+		layout: self labelTop ;
 		label: 'simple text field'; 
 		text: 'text to be edited';
 		whenTextChanged:  
