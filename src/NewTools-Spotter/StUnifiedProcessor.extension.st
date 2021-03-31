@@ -19,3 +19,9 @@ StUnifiedProcessor >> keyBindingForImplementors [
 
 	^ $m meta
 ]
+
+{ #category : #'*NewTools-Spotter' }
+StUnifiedProcessor >> keyBindingForPackages [
+
+	^ $p meta
+]
