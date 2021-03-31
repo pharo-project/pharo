@@ -55,7 +55,7 @@ StSpotterCandidateLink >> displayStringOn: stream [
 StSpotterCandidateLink >> gtDisplayOn: stream [
 
 	stream nextPutAll: 'Candidate link: '.
-	self value gtDisplayOn: stream 
+	self value displayStringOn: stream 
 ]
 
 { #category : #testing }

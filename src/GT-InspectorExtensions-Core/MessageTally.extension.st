@@ -17,7 +17,7 @@ MessageTally >> displayIdentifierOn: aStream [
 
 { #category : #'*GT-InspectorExtensions-Core' }
 MessageTally >> gtDisplayIdentifierOn: aStream [
-	class gtDisplayOn: aStream.
+	class displayStringOn: aStream.
 	self method methodClass ~~ class 
 		ifTrue: [ aStream nextPut: $(; print: self method methodClass; nextPut: $) ].
 	aStream 

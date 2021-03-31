@@ -4,9 +4,9 @@ Extension { #name : #MCWorkingCopy }
 MCWorkingCopy >> gtDisplayOn: stream [
 	ancestry ancestors isEmpty 
 		ifTrue: [ 
-			super gtDisplayOn: stream. stream nextPutAll: ' (unsaved)' ]
+			super displayStringOn: stream. stream nextPutAll: ' (unsaved)' ]
 		ifFalse: [ 
-			ancestry ancestors first gtDisplayOn: stream.
+			ancestry ancestors first displayStringOn: stream.
 			self needsSaving ifTrue: [ stream nextPutAll: ' (modified)' ] ]
 		
 ]
