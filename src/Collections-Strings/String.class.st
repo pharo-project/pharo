@@ -1050,11 +1050,9 @@ String >> deepCopy [
 	^self shallowCopy
 ]
 
-{ #category : #displaying }
+{ #category : #printing }
 String >> displayStringOn: aStream [
-	
 	aStream nextPutAll: self
-	
 ]
 
 { #category : #printing }
