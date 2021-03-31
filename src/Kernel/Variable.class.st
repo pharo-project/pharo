@@ -193,7 +193,10 @@ Variable >> isSelfVariable [
 
 { #category : #testing }
 Variable >> isShadowing [
-	^self hasProperty: #shadows
+	| outer |
+	outer := self scope outerScope.
+	
+	^(outer ifNotNil: [self scope outerScope lookupVar: self name]) notNil
 ]
 
 { #category : #testing }
@@ -329,11 +332,6 @@ Variable >> removeProperty: propName ifAbsent: aBlock [
 { #category : #accessing }
 Variable >> scope [
 	^self subclassResponsibility
-]
-
-{ #category : #accessing }
-Variable >> shadowing: anotherVariable [
-	self propertyAt: #shadows put: anotherVariable
 ]
 
 { #category : #queries }
