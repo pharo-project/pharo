@@ -41,5 +41,6 @@ Object >> stSpotterProcessorsFor: aSpotterStep [
 	(Pragma allNamed: #stSpotterOrder: from: self class to: Object) 
 		do: [ :aPragma |  
 			self perform: aPragma methodSelector with: aSpotterStep.
-			aSpotterStep processors last order: (aPragma argumentAt: 1) ]
+			aSpotterStep processors 
+				ifNotEmpty: [ :list | list last order: (aPragma argumentAt: 1) ] ]
 ]

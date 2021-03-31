@@ -141,6 +141,12 @@ StUnifiedProcessor >> categoriesIncludes: aCategory [
 		or: [ categories anySatisfy: [ :each | aCategory asLowercase beginsWith: each asLowercase ] ] ] ]
 ]
 
+{ #category : #'spotter-api' }
+StUnifiedProcessor >> classesTag [
+
+	^ #Classes
+]
+
 { #category : #filtering }
 StUnifiedProcessor >> configureFilter [
 
@@ -155,26 +161,37 @@ StUnifiedProcessor >> configureFilter [
 	filter clearDuplicates
 ]
 
+{ #category : #'spotter-api' }
+StUnifiedProcessor >> implementorsTag [
+
+	^ #Implementors
+]
+
 { #category : #'key-bindings' }
 StUnifiedProcessor >> installKeymappingsOn: aPresenter onExecution: aBlock [
 
 	aPresenter
 		bindKeyCombination: $b meta
 		toAction: [
-			self query filterClasses.
+			self query toggleFilter: self classesTag.
 			aBlock cull: self ].
 
 	aPresenter
 		bindKeyCombination: $m meta
 		toAction: [ 
-			self query filterImplementors.
-			aBlock cull: self ]
+			self query toggleFilter: self implementorsTag.
+			aBlock cull: self ].
+		
+	aPresenter
+		bindKeyCombination: $p meta
+		toAction: [ 
+			self query toggleFilter: self packagesTag.
+			aBlock cull: self ]	
 ]
 
 { #category : #'spotter-api' }
 StUnifiedProcessor >> isRelevantForQuery: aString [ 
 	
-	"I will handle... I am old enough"
 	^ true
 ]
 
@@ -203,4 +220,10 @@ StUnifiedProcessor >> newSource [
 StUnifiedProcessor >> newTextFilteringSource [
 	"It should not arrive here"
 	^ nil
+]
+
+{ #category : #'spotter-api' }
+StUnifiedProcessor >> packagesTag [
+
+	^ #Packages
 ]

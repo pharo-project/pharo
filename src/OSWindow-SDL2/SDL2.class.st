@@ -170,6 +170,11 @@ SDL2 class >> getQueuedAudioSize: dev [
 
 { #category : #common }
 SDL2 class >> getVersion: ver [
+	"Get the version of SDL.
+
+	See: https://wiki.libsdl.org/SDL_GetVersion
+	"
+
 	^ self ffiCall: #( void SDL_GetVersion(SDL_Version* ver) )
 ]
 
@@ -392,6 +397,17 @@ SDL2 class >> showCursor: toggle [
 SDL2 class >> ticks [
 	"Gets the number of milliseconds since the SDL library was initialized"
 	^ self ffiCall: #( Uint32 SDL_GetTicks ( ) )
+]
+
+{ #category : #common }
+SDL2 class >> version [
+	"Answer the SDL version. For example, a SDL_Version(2.0.7)."
+
+	| version |
+	version := SDL_Version new.
+	self getVersion: version.
+	version autoRelease.
+	^ version
 ]
 
 { #category : #common }

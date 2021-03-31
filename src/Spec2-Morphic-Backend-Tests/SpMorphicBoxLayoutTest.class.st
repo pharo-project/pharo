@@ -92,20 +92,19 @@ SpMorphicBoxLayoutTest >> testLayoutHeightTakesAllSpaceNeeded [
 SpMorphicBoxLayoutTest >> testNestedLayoutModifiesHeightOfTopLayout [
 	| base presenter layout |
 
+	self skip.
+
 	base := SpBoxLayoutWithTableForTestPresenter new.
+
 	presenter := SpLabelPresenter new
 		label: 'Test';
 		yourself.
 	
 	layout := SpBoxLayout newTopToBottom
 		add: (SpBoxLayout newLeftToRight 
-				add: presenter
-				expand: false
-				fill: false
-				padding: 0) 
-			expand: false 
-			fill: false 
-			padding: 0;
+				add: presenter expand: false;
+				yourself) 
+			expand: false;
 		yourself.
 		
 	base buildAdapterWithSpecLayout: layout.

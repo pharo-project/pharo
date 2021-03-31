@@ -8,7 +8,8 @@ Class {
 		'amountChangedAction',
 		'mutex',
 		'queryStartedAction',
-		'queryEndedAction'
+		'queryEndedAction',
+		'noResultsAction'
 	],
 	#category : #'NewTools-Spotter-Model'
 }
@@ -47,6 +48,13 @@ StSpotterModel >> announceCandidateAdded: ann [
 
 	searchUpdatedAction ifNil: [ ^ self ].
 	searchUpdatedAction value: ann candidateLink
+]
+
+{ #category : #'private announcing' }
+StSpotterModel >> announceNoResults [
+
+	noResultsAction ifNil: [ ^ self ].
+	noResultsAction value
 ]
 
 { #category : #'private announcing' }
@@ -95,6 +103,12 @@ StSpotterModel >> isNested [
 ]
 
 { #category : #accessing }
+StSpotterModel >> lastSearchText [
+
+	^ self activeStep lastSearchText
+]
+
+{ #category : #accessing }
 StSpotterModel >> links [
 
 	^ self activeStep links
@@ -124,8 +138,7 @@ StSpotterModel >> popStep [
 	lastQuery := self activeStep activeQuery.
 	self activeStep deactivate.
 	steps removeLast.
-	self activeStep activate.
-	self asyncProcess: ''
+	self activeStep activate
 ]
 
 { #category : #'private processing' }
@@ -136,9 +149,7 @@ StSpotterModel >> process: aString [
 
 { #category : #accessing }
 StSpotterModel >> pushStep: aStep [
-	| lastQuery |
 
-	lastQuery := self activeStep activeQuery.
 	self activeStep deactivate.
 	steps addLast: aStep
 ]
@@ -147,12 +158,14 @@ StSpotterModel >> pushStep: aStep [
 StSpotterModel >> pushStepForProcessor: aProcessor [
 	| step allCandidates processorLink |
 
+	self activeStep deactivate.
+
 	step := self newStep.
 	processorLink := aProcessor asStSpotterProcessorLink.
 	allCandidates := aProcessor allFilteredCandidates collect: [ :each | 
 		each asStSpotterCandidateLink renderingProcessor: processorLink ].
 	step origin: allCandidates.
-	self pushStep: step
+	steps addLast: step
 ]
 
 { #category : #accessing }
@@ -182,6 +195,12 @@ StSpotterModel >> stopProcessing [
 StSpotterModel >> whenAmountChangedDo: aBlock [
 
 	amountChangedAction := aBlock
+]
+
+{ #category : #events }
+StSpotterModel >> whenNoResultsDo: aBlock [
+
+	noResultsAction := aBlock
 ]
 
 { #category : #events }
