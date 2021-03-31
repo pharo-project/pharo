@@ -54,7 +54,7 @@ ClyMethodCodeEditorToolMorph >> applyDecorations [
 	 a lot of time, we will skip it when it is the case"
 	editingMethod isLiteralMethod ifFalse: [ 
 		IconStyler withStaticStylers  
-			styleText: textModel withAst: editingMethod astForStylingInCalypso ].	
+			styleText: textModel withAst: self currentEditedAST ].	
 	textMorph hasUnacceptedEdits: hasEdits.
 	
 	super applyDecorations.
@@ -169,7 +169,7 @@ ClyMethodCodeEditorToolMorph >> extendingPackage: aPackage [
 ClyMethodCodeEditorToolMorph >> findAnySelectorInSourceCode: selectors [
 
 	| foundSelector foundNode positions ast |
-	ast := editingMethod astForStylingInCalypso.
+	ast := self currentEditedAST.
 	foundNode := ast sendNodes 
 		detect: [:each | selectors includes: (foundSelector := each selector) ] 
 		ifNone: [ 
@@ -180,13 +180,6 @@ ClyMethodCodeEditorToolMorph >> findAnySelectorInSourceCode: selectors [
 		
 	positions := foundNode keywordsPositions.
 	^positions first to: positions last + foundSelector keywords last size - 1.
-]
-
-{ #category : #'selecting text' }
-ClyMethodCodeEditorToolMorph >> findAnySelectorOrString: selectors inSourceCode: aText [
-
-	^(self findAnySelectorInSourceCode: selectors) 
-		ifEmpty: [ self findAnyString: selectors in: aText ]
 ]
 
 { #category : #'selecting text' }
@@ -201,7 +194,7 @@ ClyMethodCodeEditorToolMorph >> findAnyVariableInSourceCode: varNames [
 
 { #category : #contexts }
 ClyMethodCodeEditorToolMorph >> findSourceNodeAt: aCursorPoint [
-	| startPosition endPosition line lineIndex  selection ast |
+	| startPosition endPosition line lineIndex  selection |
 	lineIndex := self leftSideBar lineIndexForPoint: aCursorPoint. "strangely we can't ask text morph about it"
 	line := textMorph paragraph lines at: lineIndex.	
 	startPosition := line first.
@@ -212,9 +205,9 @@ ClyMethodCodeEditorToolMorph >> findSourceNodeAt: aCursorPoint [
 		selection first >= startPosition & (selection last <= endPosition) ifTrue: [ 
 			startPosition := selection first max: 1.
 			endPosition := selection last min: self editingText size]].
-	
-	ast := self editingMethod astForStylingInCalypso.	
-	^(ast bestNodeFor: (startPosition to: endPosition)) ifNil: [ ast ]
+
+	^(self currentEditedAST bestNodeFor: (startPosition to: endPosition))
+		ifNil: [ self currentEditedAST ]
 ]
 
 { #category : #testing }
@@ -286,10 +279,14 @@ ClyMethodCodeEditorToolMorph >> selectVariableNamed: varName [
 { #category : #accessing }
 ClyMethodCodeEditorToolMorph >> selectedSourceNode [
 
-	| selectedInterval |
+	| selectedInterval ast |
 	selectedInterval := self selectedTextInterval.
-	^(editingMethod astForStylingInCalypso bestNodeFor: selectedInterval)
-		ifNil: [ editingMethod astForStylingInCalypso ]
+	
+	ast := selectedInterval isEmpty 
+		ifTrue: [ self currentEditedAST bestNodeForPosition: selectedInterval first ]
+		ifFalse: [ self currentEditedAST bestNodeFor: selectedInterval ].
+	
+	^ ast ifNil: [ self currentEditedAST ]
 ]
 
 { #category : #initialization }

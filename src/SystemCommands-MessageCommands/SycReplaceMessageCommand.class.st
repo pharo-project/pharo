@@ -17,12 +17,13 @@ SycReplaceMessageCommand class >> methodContextMenuActivation [
 { #category : #execution }
 SycReplaceMessageCommand >> createRefactoring [
 
-	^ RBReplaceMethodRefactoring
+	^ (RBReplaceMethodRefactoring
 		replaceCallMethod: originalMessage selector 
 		in: originalMessage contextUser origin
-		to: newSelector
-		permutation: (1 to: originalMessage argumentNames size)
-		inAllClasses: self replaceInAllClasses
+		to: newSelector selector
+		permutation: newSelector permutation
+		inAllClasses: self replaceInAllClasses)
+		initializers: newSelector newArgs values
 ]
 
 { #category : #accessing }
@@ -42,15 +43,19 @@ SycReplaceMessageCommand >> isComplexRefactoring [
 
 { #category : #execution }
 SycReplaceMessageCommand >> prepareFullExecutionInContext: aToolContext [
+	
+	| methodName dialog |
 	super prepareFullExecutionInContext: aToolContext.
 	
-	newSelector := UIManager default 
-		request: 'Update senders of ', originalMessage selector, ' with:' initialAnswer: originalMessage selector title: 'Replace senders of method'.
-		
-	newSelector isEmptyOrNil | (newSelector = originalMessage selector) ifTrue: [ CmdCommandAborted signal]
+	methodName := RBMethodName selector: originalMessage selector arguments: originalMessage argumentNames copy.
+	dialog := SycMethodNameEditorPresenter openOn: methodName.
+	dialog cancelled ifTrue: [  CmdCommandAborted signal ].
+	
+	originalMessage selector = methodName selector ifTrue: [ CmdCommandAborted signal].
+	newSelector := methodName.
 ]
 
 { #category : #execution }
 SycReplaceMessageCommand >> replaceInAllClasses [
-	^ self confirm: 'Do you want replace senders of method in all classes?'
+	^ self confirm: 'Do you want replace senders of method in the whole classes?'
 ]

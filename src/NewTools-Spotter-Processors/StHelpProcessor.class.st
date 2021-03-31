@@ -31,12 +31,34 @@ StHelpProcessor >> collection [
 	^ SystemHelp asHelpTopic gtAllSubtopics
 ]
 
+{ #category : #'private extraction' }
+StHelpProcessor >> helpTag [
+
+	^ #Help
+]
+
 { #category : #'key-bindings' }
 StHelpProcessor >> installKeymappingsOn: aPresenter [
 
 	aPresenter
 		bindKeyCombination: $h meta
 		toAction: [ aPresenter onKeyProcessor: self ]
+]
+
+{ #category : #'key-bindings' }
+StHelpProcessor >> installKeymappingsOn: aPresenter onExecution: aBlock [
+
+	aPresenter
+		bindKeyCombination: self keyBinding
+		toAction: [ 
+			self query toggleFilter: self helpTag.
+			aBlock cull: self ]
+]
+
+{ #category : #'key-bindings' }
+StHelpProcessor >> keyBinding [
+
+	^ $h meta
 ]
 
 { #category : #filtering }

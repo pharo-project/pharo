@@ -192,6 +192,11 @@ Variable >> isSelfVariable [
 ]
 
 { #category : #testing }
+Variable >> isShadowing [
+	^self hasProperty: #shadows
+]
+
+{ #category : #testing }
 Variable >> isSuperVariable [
 	^false
 ]
@@ -324,6 +329,11 @@ Variable >> removeProperty: propName ifAbsent: aBlock [
 { #category : #accessing }
 Variable >> scope [
 	^self subclassResponsibility
+]
+
+{ #category : #accessing }
+Variable >> shadowing: anotherVariable [
+	self propertyAt: #shadows put: anotherVariable
 ]
 
 { #category : #queries }

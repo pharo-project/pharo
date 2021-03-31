@@ -161,7 +161,7 @@ StSpotterProcessor >> executeQuery [
 	self configureFilter.
 		
 	results := OrderedCollection new.
-	[ self filter atEnd or: [ results size = self maxResults ] ] 
+	[ self isRunning and: [ self filter atEnd or: [ results size = self maxResults ] ] ] 
 		whileFalse: [
 			self filter next ifNotNil: [ :aResult | 
 				self query addResult: aResult.
@@ -318,6 +318,12 @@ StSpotterProcessor >> render: anEntry [
 StSpotterProcessor >> showForEmptyQuery [
 
 	^ false
+]
+
+{ #category : #filtering }
+StSpotterProcessor >> stop [
+
+	running := false
 ]
 
 { #category : #accessing }
