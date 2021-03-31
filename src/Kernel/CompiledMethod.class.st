@@ -394,6 +394,11 @@ CompiledMethod >> defaultSelector [
 	^ #DoIt numArgs: self numArgs
 ]
 
+{ #category : #printing }
+CompiledMethod >> displayStringOn: aStream [
+	aStream print: self methodClass; nextPutAll: '>>'; store: self selector.
+]
+
 { #category : #'source code management' }
 CompiledMethod >> embeddSourceInTrailer [
 	"When receiver is deinstalled from its class, its not managed anymore by development tools

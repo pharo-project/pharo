@@ -1,11 +1,6 @@
 Extension { #name : #Text }
 
 { #category : #'*GT-InspectorExtensions-Core' }
-Text >> displayStringOn: aStream [
-	self printOn: aStream
-]
-
-{ #category : #'*GT-InspectorExtensions-Core' }
 Text >> gtDisplayOn: aStream [
 	self printOn: aStream
 ]

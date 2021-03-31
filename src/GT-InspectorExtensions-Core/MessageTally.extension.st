@@ -16,15 +16,6 @@ MessageTally >> displayIdentifierOn: aStream [
 ]
 
 { #category : #'*GT-InspectorExtensions-Core' }
-MessageTally >> displayStringOn: aStream [
-	self displayIdentifierOn: aStream.
-	aStream 
-		nextPutAll: ' (';
-		nextPutAll: self tally printString;
-		nextPutAll: ')'
-]
-
-{ #category : #'*GT-InspectorExtensions-Core' }
 MessageTally >> gtDisplayIdentifierOn: aStream [
 	class gtDisplayOn: aStream.
 	self method methodClass ~~ class 
