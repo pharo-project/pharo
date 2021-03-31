@@ -83,7 +83,7 @@ ReleaseTest >> knownProcesses [
 		TFCallbackQueue uniqueInstance callbackProcess } asSet
 ]
 
-{ #category : #tests }
+{ #category : #'tests - variables' }
 ReleaseTest >> testAllClassPoolBindingAreClassVariables [
 	| wrong |
 	wrong := OrderedCollection new.
@@ -91,7 +91,7 @@ ReleaseTest >> testAllClassPoolBindingAreClassVariables [
 	self assertEmpty: wrong
 ]
 
-{ #category : #tests }
+{ #category : #'tests - variables' }
 ReleaseTest >> testAllClassPoolBindingHaveDefiningClass [
 	| wrong |
 	wrong := OrderedCollection new.
@@ -99,7 +99,7 @@ ReleaseTest >> testAllClassPoolBindingHaveDefiningClass [
 	self assertEmpty: wrong
 ]
 
-{ #category : #tests }
+{ #category : #'tests - variables' }
 ReleaseTest >> testAllGlobalBindingAreGlobalVariables [
 	| wrong |
 	wrong := testingEnvironment associations reject: [ :each | each isKindOf: GlobalVariable ].
@@ -209,7 +209,7 @@ ReleaseTest >> testMethodsContainNoHalt [
 				print: methods ] ]
 ]
 
-{ #category : #tests }
+{ #category : #'tests - variables' }
 ReleaseTest >> testMethodsWithUnboundGlobals [
 	| methodsWithUnboundGlobals |
 	"Ensure the environment is clean"
@@ -240,6 +240,29 @@ ReleaseTest >> testNoNilAssignmentInInitializeMethod [
 	
 	self assertValidLintRule: ReNoNilAssignationInInitializeRule new
 	
+]
+
+{ #category : #'tests - variables' }
+ReleaseTest >> testNoShadowedVariablesInMethods [
+	"Fail if there are methods who define shadowed temps or args"
+	| found validExceptions remaining |
+	found := SystemNavigation default allMethodsSelect: [ :m | 
+		m ast variableDefinitionNodes anySatisfy: [ :node | node variable isShadowing ] ].
+	
+	"No other exceptions beside the ones mentioned here should be allowed"	
+	validExceptions := { 
+		RBDummyRefactoryTestDataApp>>#tempVarOverridesInstVar.
+		RBRefactoryTestDataApp>>#tempVarOverridesInstVar.
+		RBSmalllintTestObject>>#tempVarOverridesInstVar.
+		ReTempVarOverridesInstVarRuleTest>>#sampleMethod:}.	
+	
+	remaining := found asOrderedCollection 
+								removeAll: validExceptions;
+								yourself.
+								
+	self 
+		assert: remaining isEmpty 
+		description: ('the following methods have shadowing variable definitions and should be cleaned: ', remaining asString)
 ]
 
 { #category : #tests }
@@ -340,7 +363,7 @@ ReleaseTest >> testThatAllMethodsArePackaged [
 	self assertEmpty: methodsWithoutPackageInfo
 ]
 
-{ #category : #tests }
+{ #category : #'tests - variables' }
 ReleaseTest >> testUndeclared [
 	| undeclaredBindings |
 	
