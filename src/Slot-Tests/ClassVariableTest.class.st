@@ -18,6 +18,14 @@ ClassVariableTest >> testIsReadInMethod [
 	self assert: ((TestCase classVariableNamed: #DefaultTimeLimit) isReadIn: self class >> testSelector)
 ]
 
+{ #category : #tests }
+ClassVariableTest >> testIsShadowing [
+	| variable |
+	variable := SmalltalkImage classVariableNamed: #CompilerClass.
+	self deny: variable isShadowing
+
+]
+
 { #category : #'tests  - properties' }
 ClassVariableTest >> testIsWrittenInMethod [
 
