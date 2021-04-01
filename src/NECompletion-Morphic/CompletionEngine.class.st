@@ -100,6 +100,12 @@ CompletionEngine >> editor [
 ]
 
 { #category : #keyboard }
+CompletionEngine >> handleKeyDownAfter: aKeyboardEvent editor: aParagraphEditor [
+
+	^ self updateCompletionAfterEdition: aParagraphEditor
+]
+
+{ #category : #keyboard }
 CompletionEngine >> handleKeyDownBefore: aKeyboardEvent editor: anEditor [
 	"I return a boolean. 
 	true when I have handled the event and no futher processing is needed by the caller.
@@ -166,15 +172,9 @@ CompletionEngine >> handleKeyDownBefore: aKeyboardEvent editor: anEditor [
 ]
 
 { #category : #keyboard }
-CompletionEngine >> handleKeystrokeAfter: aKeyboardEvent editor: aParagraphEditor [ 
-	(aParagraphEditor isNil or: [ self isMenuOpen not ])
-		ifTrue: [ ^ self ].
-		
-	aParagraphEditor atCompletionPosition 
-		ifFalse: [ ^ self closeMenu ].
-	
-	context narrowWith: aParagraphEditor wordAtCaret.
-	menuMorph refreshSelection.
+CompletionEngine >> handleKeystrokeAfter: aKeyboardEvent editor: aParagraphEditor [
+
+	^ self updateCompletionAfterEdition: aParagraphEditor
 ]
 
 { #category : #keyboard }
@@ -550,4 +550,16 @@ CompletionEngine >> stopCompletionDelay [
 
     completionDelay ifNotNil: [ 
         completionDelay isTerminating ifFalse: [ completionDelay terminate ] ]
+]
+
+{ #category : #keyboard }
+CompletionEngine >> updateCompletionAfterEdition: aParagraphEditor [
+
+	(aParagraphEditor isNil or: [ self isMenuOpen not ]) ifTrue: [ 
+		^ self ].
+
+	aParagraphEditor atCompletionPosition ifFalse: [ ^ self closeMenu ].
+
+	context narrowWith: aParagraphEditor wordAtCaret.
+	menuMorph refreshSelection
 ]
