@@ -448,6 +448,15 @@ RBRefactoringTest >> setUp [
 ]
 
 { #category : #'set up' }
+RBRefactoringTest >> setupExtractionClassFor: aRefactoring toReturn: aClass [ 
+	| options |
+	options := aRefactoring options copy.
+	options at: #extractionClass
+		put: [:ref | aClass].
+	aRefactoring options: options
+]
+
+{ #category : #'set up' }
 RBRefactoringTest >> setupImplementorToInlineFor: aRefactoring toReturn: anObject [ 
 	| options |
 	options := aRefactoring options copy.

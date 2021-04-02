@@ -32,6 +32,13 @@ StSpotterProcessorLink >> clear [
 ]
 
 { #category : #printing }
+StSpotterProcessorLink >> displayStringOn: stream [
+	stream 
+		nextPutAll: 'Processor link: ';
+		nextPutAll: self processor title asString
+]
+
+{ #category : #printing }
 StSpotterProcessorLink >> gtDisplayOn: stream [
 	stream 
 		nextPutAll: 'Processor link: ';

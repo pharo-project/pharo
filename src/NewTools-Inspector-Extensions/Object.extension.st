@@ -35,7 +35,7 @@ Object >> inspectorNodes [
 { #category : #'*NewTools-Inspector-Extensions' }
 Object >> stDisplayString [
 
-	[ self gtDisplayString linesDo: [ :each | ^ each contractTo: 200 ] ]
+	[ self displayString linesDo: [ :each | ^ each contractTo: 200 ] ]
 		on: Error
 		do: [ :err | ^ err stDisplayString ].
 

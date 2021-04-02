@@ -313,6 +313,11 @@ SystemDictionary >> organization: anOrganization [
 	^self at: #SystemOrganization put: anOrganization
 ]
 
+{ #category : #'variable lookup' }
+SystemDictionary >> outerScope [
+	^nil
+]
+
 { #category : #accessing }
 SystemDictionary >> poolUsers [
 	"Answer a dictionary of pool name -> classes that refer to it.

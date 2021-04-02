@@ -360,7 +360,10 @@ RubSmalltalkEditor >> completionAround: aBlock keyDown: anEvent [
 	
 	(completionEngine handleKeyDownBefore: anEvent editor: self) ifTrue:  [^ self ].
 	
-	aBlock value
+	aBlock value.
+	
+	completionEngine handleKeyDownAfter: anEvent editor: self
+
 ]
 
 { #category : #'completion engine' }

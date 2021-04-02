@@ -63,6 +63,13 @@ GTSpotterPragmaBasedProcessor >> continueFilterInContext: aSpotterContext [
 		withArguments: { self allFilteredCandidates size . self }
 ]
 
+{ #category : #printing }
+GTSpotterPragmaBasedProcessor >> displayStringOn: stream [
+	stream 
+		nextPutAll: 'Processor: ';
+		nextPutAll: self title asString
+]
+
 { #category : #private }
 GTSpotterPragmaBasedProcessor >> doContinueFilterInContext: aSpotterContext [
 	^ aSpotterContext doContinueFilterForProcessor: self

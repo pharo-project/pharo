@@ -21,7 +21,7 @@ SycExtractSetUpRefactoring >> executeRefactoring [
 			extract: selectedInterval
 			from: method selector
 			in: method origin.
-	NautilusRefactoring new refactoringOptions: refactoring.
+	self initializeDefaultOptionsOf: refactoring.
 	refactoring execute
 ]
 
