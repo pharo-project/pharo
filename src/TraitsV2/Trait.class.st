@@ -165,16 +165,6 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots
 ]
 
 { #category : #'old pharo 8 syntax' }
-Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots package: aPackageName [
-
-	^ self named: aName 
-		uses: aTraitCompositionOrCollection 
-		slots: someSlots 
-		package: aPackageName 
-		env: self environment 
-]
-
-{ #category : #'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots package: aPackageName env: anEnvironment [
 	| trait |
 	trait := self classInstaller

@@ -2,71 +2,71 @@
 I model an abstract type of result for the run of a test case.
 "
 Class {
-	#name : #DTTestResultType,
+	#name : #DTAbstractTestResult,
 	#superclass : #Object,
 	#category : #'DrTests-TestsRunner-Results'
 }
 
 { #category : #factory }
-DTTestResultType class >> backgroundColor [
+DTAbstractTestResult class >> backgroundColor [
 	^ self subclassResponsibility
 ]
 
 { #category : #factory }
-DTTestResultType class >> error [
-	^ DTError new
+DTAbstractTestResult class >> error [
+	^ DTErrorTestResult new
 ]
 
 { #category : #factory }
-DTTestResultType class >> fail [
-	^ DTFail new
+DTAbstractTestResult class >> fail [
+	^ DTFailTestResult new
 ]
 
 { #category : #factory }
-DTTestResultType class >> pass [
-	^ DTPass new
+DTAbstractTestResult class >> pass [
+	^ DTPassTestResult new
 ]
 
 { #category : #factory }
-DTTestResultType class >> skipped [
-	^ DTSkipped new
+DTAbstractTestResult class >> skipped [
+	^ DTSkippedTestResult new
 ]
 
 { #category : #factory }
-DTTestResultType class >> textColor [
+DTAbstractTestResult class >> textColor [
 	^ TestResult defaultColorText
 ]
 
 { #category : #testing }
-DTTestResultType >> isError [
+DTAbstractTestResult >> isError [
 	<generated>
 	^ false
 ]
 
 { #category : #testing }
-DTTestResultType >> isFail [
+DTAbstractTestResult >> isFail [
 	<generated>
 	^ false
 ]
 
 { #category : #testing }
-DTTestResultType >> isPass [
+DTAbstractTestResult >> isPass [
 	<generated>
 	^ false
 ]
 
 { #category : #testing }
-DTTestResultType >> isSkipped [
+DTAbstractTestResult >> isSkipped [
 	<generated>
 	^ false
 ]
 
 { #category : #accessing }
-DTTestResultType >> name [
+DTAbstractTestResult >> name [
 	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
-DTTestResultType >> pluralName [
+DTAbstractTestResult >> pluralName [
 	^ self name , 's'
 ]

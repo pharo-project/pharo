@@ -2,23 +2,23 @@
 I model the fact that a test passed.
 "
 Class {
-	#name : #DTPass,
-	#superclass : #DTTestResultType,
+	#name : #DTPassTestResult,
+	#superclass : #DTAbstractTestResult,
 	#category : #'DrTests-TestsRunner-Results'
 }
 
 { #category : #factory }
-DTPass class >> backgroundColor [
+DTPassTestResult class >> backgroundColor [
 	^ TestResult defaultColorBackGroundForPassingTest
 ]
 
 { #category : #testing }
-DTPass >> isPass [
+DTPassTestResult >> isPass [
 	<generated>
 	^ true
 ]
 
 { #category : #accessing }
-DTPass >> name [
+DTPassTestResult >> name [
 	^ 'Passing test'
 ]

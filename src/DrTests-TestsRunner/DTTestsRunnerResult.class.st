@@ -17,14 +17,14 @@ Class {
 
 { #category : #accessing }
 DTTestsRunnerResult >> backgroundColor [
-	testsResult errors ifNotEmpty: [ ^ DTError backgroundColor ].
-	testsResult failures ifNotEmpty: [ ^ DTFail backgroundColor  ].
-	^ DTPass backgroundColor
+	testsResult errors ifNotEmpty: [ ^ DTErrorTestResult backgroundColor ].
+	testsResult failures ifNotEmpty: [ ^ DTFailTestResult backgroundColor  ].
+	^ DTPassTestResult backgroundColor
 ]
 
 { #category : #'tree building' }
 DTTestsRunnerResult >> buildLeavesFrom: aCollection type: testResultType [
-	^ aCollection collect: [ :t | DTTestLeaf content: t type: testResultType ]
+	^ aCollection collect: [ :t | DTTestLeafNode content: t type: testResultType ]
 ]
 
 { #category : #'tree building' }
@@ -61,18 +61,18 @@ DTTestsRunnerResult >> buildTreeForUI [
 	^ DTTreeNode new
 		subResults:
 			{DTTreeNode new
-				name: DTTestResultType error pluralName;
-				subResults: (self buildLeavesFrom: self testResults errors asOrderedCollection type: DTTestResultType error);
+				name: DTAbstractTestResult error pluralName;
+				subResults: (self buildLeavesFrom: self testResults errors asOrderedCollection type: DTAbstractTestResult error);
 				yourself.
 			DTTreeNode new
-				name: DTTestResultType fail pluralName;
-				subResults: (self buildLeavesFrom: self testResults failures asOrderedCollection type: DTTestResultType fail).
+				name: DTAbstractTestResult fail pluralName;
+				subResults: (self buildLeavesFrom: self testResults failures asOrderedCollection type: DTAbstractTestResult fail).
 			DTTreeNode new
-				name: DTTestResultType skipped pluralName;
-				subResults: (self buildLeavesFrom: self testResults skipped asOrderedCollection type: DTTestResultType skipped).
+				name: DTAbstractTestResult skipped pluralName;
+				subResults: (self buildLeavesFrom: self testResults skipped asOrderedCollection type: DTAbstractTestResult skipped).
 			DTTreeNode new
-				name: DTTestResultType pass pluralName;
-				subResults: (self buildLeavesFrom: self testResults passed asOrderedCollection type: DTTestResultType pass)
+				name: DTAbstractTestResult pass pluralName;
+				subResults: (self buildLeavesFrom: self testResults passed asOrderedCollection type: DTAbstractTestResult pass)
 		};
 		yourself
 ]
@@ -82,10 +82,10 @@ DTTestsRunnerResult >> buildTreeForUIByClasses [
 	<dtTestRunnerResultTreeNamed: 'Grouped by type of result and classes' order: 2>
 
 	| errors failures skipped passed |
-	errors := self buildNodeGroupedByTypeAndClass: self testResults errors type: DTTestResultType error.
-	failures := self buildNodeGroupedByTypeAndClass: self testResults failures asOrderedCollection type: DTTestResultType fail.
-	skipped := self buildNodeGroupedByTypeAndClass: self testResults skipped type: DTTestResultType skipped.
-	passed := self buildNodeGroupedByTypeAndClass: self testResults passed type: DTTestResultType pass.
+	errors := self buildNodeGroupedByTypeAndClass: self testResults errors type: DTAbstractTestResult error.
+	failures := self buildNodeGroupedByTypeAndClass: self testResults failures asOrderedCollection type: DTAbstractTestResult fail.
+	skipped := self buildNodeGroupedByTypeAndClass: self testResults skipped type: DTAbstractTestResult skipped.
+	passed := self buildNodeGroupedByTypeAndClass: self testResults passed type: DTAbstractTestResult pass.
 	^ DTTreeNode new
 		subResults:
 			{errors.
@@ -100,10 +100,10 @@ DTTestsRunnerResult >> buildTreeForUIByClassesAndProtocol [
 	<dtTestRunnerResultTreeNamed: 'Grouped by type of result, classes, and protocol' order: 3>
 
 	| errors failures skipped passed |
-	errors := self buildNodeGroupedByTypeClassAndProtocol: self testResults errors type: DTTestResultType error.
-	failures := self buildNodeGroupedByTypeClassAndProtocol: self testResults failures asOrderedCollection type: DTTestResultType fail.
-	skipped := self buildNodeGroupedByTypeClassAndProtocol: self testResults skipped type: DTTestResultType skipped.
-	passed := self buildNodeGroupedByTypeClassAndProtocol: self testResults passed type: DTTestResultType pass.
+	errors := self buildNodeGroupedByTypeClassAndProtocol: self testResults errors type: DTAbstractTestResult error.
+	failures := self buildNodeGroupedByTypeClassAndProtocol: self testResults failures asOrderedCollection type: DTAbstractTestResult fail.
+	skipped := self buildNodeGroupedByTypeClassAndProtocol: self testResults skipped type: DTAbstractTestResult skipped.
+	passed := self buildNodeGroupedByTypeClassAndProtocol: self testResults passed type: DTAbstractTestResult pass.
 	^ DTTreeNode new
 		subResults:
 			{errors.
@@ -145,7 +145,7 @@ DTTestsRunnerResult >> testResults: anObject [
 
 { #category : #accessing }
 DTTestsRunnerResult >> textColor [
-	testsResult errors ifNotEmpty: [ ^ DTError textColor ].
-	testsResult failures ifNotEmpty: [ ^ DTFail textColor  ].
-	^ DTPass textColor
+	testsResult errors ifNotEmpty: [ ^ DTErrorTestResult textColor ].
+	testsResult failures ifNotEmpty: [ ^ DTFailTestResult textColor  ].
+	^ DTPassTestResult textColor
 ]

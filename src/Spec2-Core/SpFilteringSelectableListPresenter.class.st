@@ -105,19 +105,6 @@ SpFilteringSelectableListPresenter >> selectFrom: fromIndex to: toIndex [
 ]
 
 { #category : #api }
-SpFilteringSelectableListPresenter >> selectItem: anObject [
-
-	self selectItems: (self selectedItems copyWith: anObject).
-	listPresenter selectItem: anObject
-]
-
-{ #category : #api }
-SpFilteringSelectableListPresenter >> selectItems: aCollection [
-
-	selectedItems := aCollection asSet
-]
-
-{ #category : #api }
 SpFilteringSelectableListPresenter >> selectedItems [
 
 	^ selectedItems sorted: [ :a :b | (self items indexOf: a) < (self items indexOf: b) ]

@@ -3,40 +3,40 @@ I am a DrTestPlugin.
 I create tests from executable comments and run these tests.
 "
 Class {
-	#name : #DTCommentToTest,
+	#name : #DTCommentToTestPlugin,
 	#superclass : #DrTestsPlugin,
 	#category : #'DrTests-CommentsToTests-Base'
 }
 
 { #category : #'api - accessing' }
-DTCommentToTest class >> pluginName [
+DTCommentToTestPlugin class >> pluginName [
 	"The name of the plugin to be displayed in DrTests UI."
 	^ 'Executable comments checker'
 ]
 
 { #category : #'api - accessing' }
-DTCommentToTest class >> pluginResultClass [
+DTCommentToTestPlugin class >> pluginResultClass [
 	^ DTCommentToTestResult
 ]
 
 { #category : #'api - accessing' }
-DTCommentToTest class >> weight [
+DTCommentToTestPlugin class >> weight [
 	"The lighter is a plugin, the higher it is displayed in the drop list for plugin selection."
 	^ 10
 ]
 
 { #category : #'configuration building' }
-DTCommentToTest >> buildConfigurationFrom: aDrTests [
+DTCommentToTestPlugin >> buildConfigurationFrom: aDrTests [
 	^ DTCommentTestConfiguration items: aDrTests selectedItems packages: aDrTests packagesSelected 
 ]
 
 { #category : #api }
-DTCommentToTest >> firstListLabel [
+DTCommentToTestPlugin >> firstListLabel [
 	^ 'Packages'
 ]
 
 { #category : #api }
-DTCommentToTest >> itemsToBeAnalysedFor: packagesSelected [
+DTCommentToTestPlugin >> itemsToBeAnalysedFor: packagesSelected [
 	^ packagesSelected
 		flatCollect: [ :p | 
 			p definedClasses
@@ -48,30 +48,30 @@ DTCommentToTest >> itemsToBeAnalysedFor: packagesSelected [
 ]
 
 { #category : #api }
-DTCommentToTest >> packagesAvailableForAnalysis [
+DTCommentToTestPlugin >> packagesAvailableForAnalysis [
 	^ RPackage organizer packages
 		select: [ :p | p definedClasses anySatisfy: [ :c | c isTestCase not ] ]
 ]
 
 { #category : #accessing }
-DTCommentToTest >> pragmaForResultTrees [
+DTCommentToTestPlugin >> pragmaForResultTrees [
 	^ #'dtCommentToTestResultTreeNamed:order:'
 ]
 
 { #category : #api }
-DTCommentToTest >> resultButtonHelp [
+DTCommentToTestPlugin >> resultButtonHelp [
 	^ 'Browse the test selected in the result list.'
 ]
 
 { #category : #api }
-DTCommentToTest >> runForConfiguration: aDTpluginConfiguration [
+DTCommentToTestPlugin >> runForConfiguration: aDTpluginConfiguration [
 	^ self pluginResultClass new
 			testResults: (self runTestSuites: {aDTpluginConfiguration asTestSuite});
 			yourself
 ]
 
 { #category : #api }
-DTCommentToTest >> runSuite: aTestSuite withResult: aResult [
+DTCommentToTestPlugin >> runSuite: aTestSuite withResult: aResult [
 	aTestSuite
 		when: TestAnnouncement
 		do: [ :testAnnouncement | 
@@ -84,7 +84,7 @@ DTCommentToTest >> runSuite: aTestSuite withResult: aResult [
 ]
 
 { #category : #api }
-DTCommentToTest >> runTestSuites: testSuites [
+DTCommentToTestPlugin >> runTestSuites: testSuites [
 	| result |
 	result := TestAsserter classForTestResult new.
 	CurrentExecutionEnvironment
@@ -95,16 +95,16 @@ DTCommentToTest >> runTestSuites: testSuites [
 ]
 
 { #category : #api }
-DTCommentToTest >> secondListLabel [
+DTCommentToTestPlugin >> secondListLabel [
 	^ 'Classes'
 ]
 
 { #category : #api }
-DTCommentToTest >> startButtonHelp [
+DTCommentToTestPlugin >> startButtonHelp [
 	^ 'Run selected tests.' 
 ]
 
 { #category : #api }
-DTCommentToTest >> startButtonLabel [
+DTCommentToTestPlugin >> startButtonLabel [
 	^ 'Run Tests' translated
 ]

@@ -2,23 +2,23 @@
 I model the fact that a test was skipped.
 "
 Class {
-	#name : #DTSkipped,
-	#superclass : #DTTestResultType,
+	#name : #DTSkippedTestResult,
+	#superclass : #DTAbstractTestResult,
 	#category : #'DrTests-TestsRunner-Results'
 }
 
 { #category : #factory }
-DTSkipped class >> backgroundColor [
+DTSkippedTestResult class >> backgroundColor [
 	^ TestResult defaultColorBackGroundForPassingTest
 ]
 
 { #category : #testing }
-DTSkipped >> isSkipped [
+DTSkippedTestResult >> isSkipped [
 	<generated>
 	^ true
 ]
 
 { #category : #accessing }
-DTSkipped >> name [
+DTSkippedTestResult >> name [
 	^ 'Skipped test'
 ]

@@ -2,26 +2,26 @@
 I browse the item selected in middle list of DrTests.
 "
 Class {
-	#name : #DTBrowseSelectedItem,
+	#name : #DTBrowseSelectedItemCommand,
 	#superclass : #DTMiddleListCommand,
 	#category : #'DrTests-Commands'
 }
 
 { #category : #defaults }
-DTBrowseSelectedItem class >> defaultName [ 
+DTBrowseSelectedItemCommand class >> defaultName [ 
 	"Return the default name of the command"
 	
 	^ 'Browse'
 ]
 
 { #category : #testing }
-DTBrowseSelectedItem >> canBeExecuted [
+DTBrowseSelectedItemCommand >> canBeExecuted [
 
 	^ self selectedItems size = 1
 ]
 
 { #category : #executing }
-DTBrowseSelectedItem >> execute [
+DTBrowseSelectedItemCommand >> execute [
 
 	self drTest browseSelectedItem
 ]

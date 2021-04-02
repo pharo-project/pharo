@@ -2,23 +2,23 @@
 I model the fact that a test generated an error.
 "
 Class {
-	#name : #DTError,
-	#superclass : #DTTestResultType,
+	#name : #DTErrorTestResult,
+	#superclass : #DTAbstractTestResult,
 	#category : #'DrTests-TestsRunner-Results'
 }
 
 { #category : #factory }
-DTError class >> backgroundColor [
+DTErrorTestResult class >> backgroundColor [
 	^ TestResult defaultColorBackGroundForErrorTest
 ]
 
 { #category : #testing }
-DTError >> isError [
+DTErrorTestResult >> isError [
 	<generated>
 	^ true
 ]
 
 { #category : #accessing }
-DTError >> name [
+DTErrorTestResult >> name [
 	^ 'Error'
 ]

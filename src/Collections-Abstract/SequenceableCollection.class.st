@@ -1735,28 +1735,6 @@ SequenceableCollection >> piecesCutWhere: binaryBlock [
 ]
 
 { #category : #enumerating }
-SequenceableCollection >> piecesCutWhere: binaryBlock do: pieceBlock [
-	"Evaluate pieceBlock with substrings of the receiver derived from cutting the receiver at points where binaryBlock answers true for adjacent elements."
-	
-	"(Array streamContents: [:stream |  #(1 2 3 1 6 1 2 3 4) piecesCutWhere: [ :a :b | a = 1 and: [ b = 2]] do: [:each | stream nextPut: each size]]) >>> #(1 5 3)"
-
-	| size lastCut this next |
-	(size := self size) <= 1 ifTrue:
-		 [size = 1 ifTrue: [pieceBlock value: self].
-		^self].
-	lastCut := 1.
-	this := self at: 1.
-	2 to: size do:
-		[:i|
-		next := self at: i.
-		(binaryBlock value: this value: next) ifTrue:
-			[pieceBlock value: (self copyFrom: lastCut to: i - 1).
-			lastCut := i].
-		this := next].
-	pieceBlock value: (self copyFrom: lastCut to: size)
-]
-
-{ #category : #enumerating }
 SequenceableCollection >> polynomialEval: thisX [
 	"Treat myself as the coeficients of a polynomial in X.  Evaluate it with thisX.  First element is the constant and last is the coeficient for the highest power.
 	#(1 2 3) polynomialEval: 2  is 3*X^2 + 2*X + 1 with X = 2"

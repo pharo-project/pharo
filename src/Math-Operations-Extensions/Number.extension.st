@@ -178,12 +178,6 @@ Number >> odd [
 ]
 
 { #category : #'*Math-Operations-Extensions' }
-Number >> percent [
-
-	^ self / 100
-]
-
-{ #category : #'*Math-Operations-Extensions' }
 Number >> radiansToDegrees [
 	"The receiver is assumed to represent radians. Answer the conversion to 
 	degrees."

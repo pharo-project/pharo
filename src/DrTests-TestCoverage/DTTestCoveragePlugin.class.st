@@ -3,7 +3,7 @@ I am a DrTestPlugin.
 I show the percentage of covered methods with tests and show the list of the uncovered methods.
 "
 Class {
-	#name : #DTTestCoverage,
+	#name : #DTTestCoveragePlugin,
 	#superclass : #DrTestsPlugin,
 	#instVars : [
 		'methods',
@@ -14,32 +14,32 @@ Class {
 }
 
 { #category : #'api - accessing' }
-DTTestCoverage class >> pluginName [
+DTTestCoveragePlugin class >> pluginName [
 	^ 'Test Coverage'
 ]
 
 { #category : #'api - accessing' }
-DTTestCoverage class >> pluginResultClass [
+DTTestCoveragePlugin class >> pluginResultClass [
 	^ DTTestCoverageResult
 ]
 
 { #category : #'api - accessing' }
-DTTestCoverage class >> weight [
+DTTestCoveragePlugin class >> weight [
 	^ 3
 ]
 
 { #category : #api }
-DTTestCoverage >> allowMiniDrTests [
+DTTestCoveragePlugin >> allowMiniDrTests [
 	^ true
 ]
 
 { #category : #api }
-DTTestCoverage >> allowMultipleSelectionInSecondList [
+DTTestCoveragePlugin >> allowMultipleSelectionInSecondList [
 	^ false
 ]
 
 { #category : #api }
-DTTestCoverage >> defineData: aDTpluginConfiguration [
+DTTestCoveragePlugin >> defineData: aDTpluginConfiguration [
 	methods := aDTpluginConfiguration items
 		flatCollect: [ :p | 
 			p methods
@@ -52,28 +52,28 @@ DTTestCoverage >> defineData: aDTpluginConfiguration [
 ]
 
 { #category : #api }
-DTTestCoverage >> firstListLabel [
+DTTestCoveragePlugin >> firstListLabel [
 	^ 'Test Packages'
 ]
 
 { #category : #api }
-DTTestCoverage >> itemsToBeAnalysedFor: packagesSelected [
+DTTestCoveragePlugin >> itemsToBeAnalysedFor: packagesSelected [
 	^ RPackage organizer packages
 		select: [ :p | p definedClasses anySatisfy: [ :c | c isTestCase not ] ]
 ]
 
 { #category : #accessing }
-DTTestCoverage >> pragmaForResultTrees [
+DTTestCoveragePlugin >> pragmaForResultTrees [
 	^ #'dtTestCoverageResultTreeNamed:order:'
 ]
 
 { #category : #api }
-DTTestCoverage >> resultButtonHelp [
+DTTestCoveragePlugin >> resultButtonHelp [
 	^ 'Browse the method selected in the results list.' translated
 ]
 
 { #category : #api }
-DTTestCoverage >> runForConfiguration: aDTpluginConfiguration [
+DTTestCoveragePlugin >> runForConfiguration: aDTpluginConfiguration [
 	| suite notExecuted result |
 	result := self pluginResultClass new.
 	self defineData: aDTpluginConfiguration.
@@ -93,7 +93,7 @@ DTTestCoverage >> runForConfiguration: aDTpluginConfiguration [
 ]
 
 { #category : #api }
-DTTestCoverage >> runSuite: aTestSuite withResult: aResult [
+DTTestCoveragePlugin >> runSuite: aTestSuite withResult: aResult [
 	aTestSuite
 		when: TestAnnouncement
 		do: [ :testAnnouncement | 
@@ -106,7 +106,7 @@ DTTestCoverage >> runSuite: aTestSuite withResult: aResult [
 ]
 
 { #category : #api }
-DTTestCoverage >> runTestSuites: testSuites [
+DTTestCoveragePlugin >> runTestSuites: testSuites [
 	| result |
 	result := TestAsserter classForTestResult new.
 	CurrentExecutionEnvironment
@@ -116,29 +116,29 @@ DTTestCoverage >> runTestSuites: testSuites [
 ]
 
 { #category : #api }
-DTTestCoverage >> secondListLabel [
+DTTestCoveragePlugin >> secondListLabel [
 	^ 'Package under coverage'
 ]
 
 { #category : #api }
-DTTestCoverage >> setSelectionModeOfItemsList: aListPresenter [
+DTTestCoveragePlugin >> setSelectionModeOfItemsList: aListPresenter [
 	aListPresenter
 		beSingleSelection;
 		unselectAll
 ]
 
 { #category : #api }
-DTTestCoverage >> startButtonHelp [
+DTTestCoveragePlugin >> startButtonHelp [
 	^ 'Run test coverage in selected packages' translated
 ]
 
 { #category : #api }
-DTTestCoverage >> startButtonLabel [
+DTTestCoveragePlugin >> startButtonLabel [
 	^ 'Run Coverage' translated
 ]
 
 { #category : #api }
-DTTestCoverage >> suiteFor: classesSelected [
+DTTestCoveragePlugin >> suiteFor: classesSelected [
 	"Return the suite for all the selected test case classes"
 
 	^ TestSuite new
