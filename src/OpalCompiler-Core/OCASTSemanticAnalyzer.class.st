@@ -157,7 +157,6 @@ OCASTSemanticAnalyzer >> unusedVariable: variableNode [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> variable: aVariable shadows: shadowedVariable inNode: variableNode [
-	aVariable shadowing: shadowedVariable. 
 	compilationContext optionSkipSemanticWarnings ifTrue: [ ^aVariable ].
 	^ OCShadowVariableWarning new
 		node: variableNode;
