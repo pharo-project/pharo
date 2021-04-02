@@ -63,12 +63,6 @@ SptEntry >> evaluateFor: aGTSpotterStep [
 	aGTSpotterStep exit.
 ]
 
-{ #category : #'spotter-extensions' }
-SptEntry >> gtDisplayString [
-	self deprecated: 'Use displayString' transformWith: '`@receiver gtDisplayString' -> '`@receiver displayString'.
-	^ self displayString
-]
-
 { #category : #comparing }
 SptEntry >> hash [
 
