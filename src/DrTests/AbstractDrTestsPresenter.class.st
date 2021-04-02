@@ -2,7 +2,7 @@
 Abstract superclass for UI's of Dr Test
 "
 Class {
-	#name : #AbstractDrTestsUI,
+	#name : #AbstractDrTestsPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'pluginResult',
@@ -15,19 +15,19 @@ Class {
 }
 
 { #category : #testing }
-AbstractDrTestsUI class >> isAbstract [
+AbstractDrTestsPresenter class >> isAbstract [
 
-	^ self name = #AbstractDrTestsUI
+	^ self name = #AbstractDrTestsPresenter
 ]
 
 { #category : #accessing }
-AbstractDrTestsUI >> currentPlugin [
+AbstractDrTestsPresenter >> currentPlugin [
 
 	^ currentPlugin
 ]
 
 { #category : #accessing }
-AbstractDrTestsUI >> currentPlugin: anObject [
+AbstractDrTestsPresenter >> currentPlugin: anObject [
 	"If a plugin was set before, unsubscribe first."
 
 	currentPlugin ifNotNil: [ currentPlugin unconfigureUI: self ].
@@ -36,13 +36,13 @@ AbstractDrTestsUI >> currentPlugin: anObject [
 ]
 
 { #category : #'announcement handling' }
-AbstractDrTestsUI >> handlePluginStatusUpdate: aDTStatusUpdate [
+AbstractDrTestsPresenter >> handlePluginStatusUpdate: aDTStatusUpdate [
 
 	self updateStatus: aDTStatusUpdate message
 ]
 
 { #category : #'private - initialization' }
-AbstractDrTestsUI >> initializeButtons [
+AbstractDrTestsPresenter >> initializeButtons [
 
 	startButton := self newButton.
 	switchButton := self newButton.
@@ -51,27 +51,27 @@ AbstractDrTestsUI >> initializeButtons [
 ]
 
 { #category : #initialization }
-AbstractDrTestsUI >> initializePresenter [
+AbstractDrTestsPresenter >> initializePresenter [
 
 	self startButton action: [ self runPlugin ].
 	self switchButton action: [ self switchUI ]
 ]
 
 { #category : #initialization }
-AbstractDrTestsUI >> initializeWidgets [
+AbstractDrTestsPresenter >> initializeWidgets [
 
 	self initializeButtons
 ]
 
 { #category : #'api - locking' }
-AbstractDrTestsUI >> lock [
+AbstractDrTestsPresenter >> lock [
 	"Lock the UI, once this method is called, the user is not able to click on buttons or lists anymore."
 	
 	self locked: false
 ]
 
 { #category : #'api - locking' }
-AbstractDrTestsUI >> locked: aBoolean [
+AbstractDrTestsPresenter >> locked: aBoolean [
 	"Lock or unlock widgets returned by #subwidgetsToLock depending on aBoolean."
 	
 	self subwidgetsToLock
@@ -79,25 +79,25 @@ AbstractDrTestsUI >> locked: aBoolean [
 ]
 
 { #category : #accessing }
-AbstractDrTestsUI >> pluginResult [
+AbstractDrTestsPresenter >> pluginResult [
 
 	^ pluginResult
 ]
 
 { #category : #accessing }
-AbstractDrTestsUI >> pluginResult: anObject [
+AbstractDrTestsPresenter >> pluginResult: anObject [
 
 	pluginResult := anObject
 ]
 
 { #category : #running }
-AbstractDrTestsUI >> runPlugin [
+AbstractDrTestsPresenter >> runPlugin [
 
 	self runPluginFor: self testsConfiguration
 ]
 
 { #category : #running }
-AbstractDrTestsUI >> runPluginFor: aTestsConfiguration [
+AbstractDrTestsPresenter >> runPluginFor: aTestsConfiguration [
 
 	[ self
 			lock;
@@ -107,91 +107,91 @@ AbstractDrTestsUI >> runPluginFor: aTestsConfiguration [
 ]
 
 { #category : #'accessing - subwidgets' }
-AbstractDrTestsUI >> startButton [
+AbstractDrTestsPresenter >> startButton [
 
 	^ startButton
 ]
 
 { #category : #'api - subwidgets configuration' }
-AbstractDrTestsUI >> startButtonAction: aBlock [
+AbstractDrTestsPresenter >> startButtonAction: aBlock [
 
 	self startButton action: aBlock
 ]
 
 { #category : #'api - subwidgets configuration' }
-AbstractDrTestsUI >> startButtonHelp: aString [
+AbstractDrTestsPresenter >> startButtonHelp: aString [
 
 	self startButton help: aString
 ]
 
 { #category : #'api - subwidgets configuration' }
-AbstractDrTestsUI >> startButtonLabel: aString [
+AbstractDrTestsPresenter >> startButtonLabel: aString [
 
 	self startButton label: aString
 ]
 
 { #category : #'api - locking' }
-AbstractDrTestsUI >> subwidgetsToLock [
+AbstractDrTestsPresenter >> subwidgetsToLock [
 
 	^ { self startButton }
 ]
 
 { #category : #accessing }
-AbstractDrTestsUI >> switchButton [
+AbstractDrTestsPresenter >> switchButton [
 
 	^ switchButton
 ]
 
 { #category : #accessing }
-AbstractDrTestsUI >> switchButton: anObject [
+AbstractDrTestsPresenter >> switchButton: anObject [
 
 	switchButton := anObject
 ]
 
 { #category : #'api - subwidgets configuration' }
-AbstractDrTestsUI >> switchButtonAction: aBlock [
+AbstractDrTestsPresenter >> switchButtonAction: aBlock [
 
 	self switchButton action: aBlock
 ]
 
 { #category : #actions }
-AbstractDrTestsUI >> switchUI [
+AbstractDrTestsPresenter >> switchUI [
 
 	self withWindowDo: [ :window | window close ]
 ]
 
 { #category : #accessing }
-AbstractDrTestsUI >> testsConfiguration [
+AbstractDrTestsPresenter >> testsConfiguration [
 
 	^ testsConfiguration
 ]
 
 { #category : #accessing }
-AbstractDrTestsUI >> testsConfiguration: anObject [
+AbstractDrTestsPresenter >> testsConfiguration: anObject [
 
 	testsConfiguration := anObject
 ]
 
 { #category : #'api - locking' }
-AbstractDrTestsUI >> unlock [
+AbstractDrTestsPresenter >> unlock [
 	"Unlock the UI, once this method is called, the user is able to click on buttons or lists and to launch analysis."
 	
 	self locked: true
 ]
 
 { #category : #updating }
-AbstractDrTestsUI >> updateStatus: aString [
+AbstractDrTestsPresenter >> updateStatus: aString [
 	"Does nothing on purpose."
 ]
 
 { #category : #updating }
-AbstractDrTestsUI >> updateUI [
+AbstractDrTestsPresenter >> updateUI [
 
 	self withWindowDo: [ :window | window title: self title ]
 ]
 
 { #category : #updating }
-AbstractDrTestsUI >> updateWithResults: results [
+AbstractDrTestsPresenter >> updateWithResults: results [
 
 	self subclassResponsibility
 ]

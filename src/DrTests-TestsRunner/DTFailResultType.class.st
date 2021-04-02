@@ -2,23 +2,23 @@
 I model the fact that a test failed.
 "
 Class {
-	#name : #DTFail,
+	#name : #DTFailResultType,
 	#superclass : #DTTestResultType,
 	#category : #'DrTests-TestsRunner-Results'
 }
 
 { #category : #factory }
-DTFail class >> backgroundColor [
+DTFailResultType class >> backgroundColor [
 	^ TestResult defaultColorBackGroundForFailureTest
 ]
 
 { #category : #testing }
-DTFail >> isFail [
+DTFailResultType >> isFail [
 	<generated>
 	^ true
 ]
 
 { #category : #accessing }
-DTFail >> name [
+DTFailResultType >> name [
 	^ 'Failure'
 ]
