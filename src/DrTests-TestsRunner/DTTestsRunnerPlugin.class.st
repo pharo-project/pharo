@@ -2,33 +2,33 @@
 I am the plugin implementing test runner for DrTests.
 "
 Class {
-	#name : #DTTestsRunner,
+	#name : #DTTestsRunnerPlugin,
 	#superclass : #DrTestsPlugin,
 	#category : #'DrTests-TestsRunner-Base'
 }
 
 { #category : #'api - accessing' }
-DTTestsRunner class >> pluginName [
+DTTestsRunnerPlugin class >> pluginName [
 	^ 'Tests Runner'
 ]
 
 { #category : #'api - accessing' }
-DTTestsRunner class >> pluginResultClass [
+DTTestsRunnerPlugin class >> pluginResultClass [
 	^ DTTestsRunnerResult
 ]
 
 { #category : #'api - accessing' }
-DTTestsRunner class >> weight [
+DTTestsRunnerPlugin class >> weight [
 	^ 0
 ]
 
 { #category : #api }
-DTTestsRunner >> allowMiniDrTests [
+DTTestsRunnerPlugin >> allowMiniDrTests [
 	^ true
 ]
 
 { #category : #'configuration building' }
-DTTestsRunner >> buildConfigurationFrom: aDrTests [
+DTTestsRunnerPlugin >> buildConfigurationFrom: aDrTests [
 	"Builds a configuration from the plugin by reading the information held by the UI (aDrTests)."
 	^ DTTestsRunnerConfiguration
 		items: aDrTests selectedItems
@@ -36,7 +36,7 @@ DTTestsRunner >> buildConfigurationFrom: aDrTests [
 ]
 
 { #category : #api }
-DTTestsRunner >> buildContextualMenuGroupWith: presenterInstance [
+DTTestsRunnerPlugin >> buildContextualMenuGroupWith: presenterInstance [
 	^ (CmCommandGroup named: 'TestRunnerResult context menu') asSpecGroup
 		description: 'Commands related to re-run a result.';
 		register:
@@ -50,12 +50,12 @@ DTTestsRunner >> buildContextualMenuGroupWith: presenterInstance [
 ]
 
 { #category : #api }
-DTTestsRunner >> firstListLabel [
+DTTestsRunnerPlugin >> firstListLabel [
 	^ 'Packages'
 ]
 
 { #category : #api }
-DTTestsRunner >> handleReRunResult: rerunnedResult forConfiguration: aDTRerunConfiguration [
+DTTestsRunnerPlugin >> handleReRunResult: rerunnedResult forConfiguration: aDTRerunConfiguration [
 	| oldResult |
 	oldResult := self
 		removeTests: aDTRerunConfiguration configurationToRun items
@@ -66,7 +66,7 @@ DTTestsRunner >> handleReRunResult: rerunnedResult forConfiguration: aDTRerunCon
 ]
 
 { #category : #private }
-DTTestsRunner >> joinTestResult: aTestResult with: partialResult [
+DTTestsRunnerPlugin >> joinTestResult: aTestResult with: partialResult [
 	| newResult |
 	newResult := aTestResult.
 	partialResult passed do: [ :each | newResult addPass: each ].
@@ -77,19 +77,19 @@ DTTestsRunner >> joinTestResult: aTestResult with: partialResult [
 ]
 
 { #category : #tests }
-DTTestsRunner >> label: aString forSuite: aTestSuite [
+DTTestsRunnerPlugin >> label: aString forSuite: aTestSuite [
 	^ String streamContents: [ :stream |
 		stream nextPutAll: 'Running '; print: aTestSuite tests size; space; nextPutAll: aString.
 		aTestSuite tests size > 1 ifTrue: [ stream nextPut: $s ] ]. 
 ]
 
 { #category : #accessing }
-DTTestsRunner >> pragmaForResultTrees [
+DTTestsRunnerPlugin >> pragmaForResultTrees [
 	^ #'dtTestRunnerResultTreeNamed:order:'
 ]
 
 { #category : #private }
-DTTestsRunner >> removeTest: aTest from: aTestResult [
+DTTestsRunnerPlugin >> removeTest: aTest from: aTestResult [
 	aTestResult
 		passed: (aTestResult passed copyWithout: aTest).
 	aTestResult
@@ -100,19 +100,19 @@ DTTestsRunner >> removeTest: aTest from: aTestResult [
 ]
 
 { #category : #private }
-DTTestsRunner >> removeTests: aCollectionOfTest from: aTestResult [
+DTTestsRunnerPlugin >> removeTests: aCollectionOfTest from: aTestResult [
 	aCollectionOfTest do: [ :test |
 		self removeTest: test from: aTestResult ].
 	^ aTestResult
 ]
 
 { #category : #api }
-DTTestsRunner >> resultButtonHelp [
+DTTestsRunnerPlugin >> resultButtonHelp [
 	^ 'Browse the test selected in the results list.' translated
 ]
 
 { #category : #api }
-DTTestsRunner >> runForConfiguration: aDTpluginConfiguration [
+DTTestsRunnerPlugin >> runForConfiguration: aDTpluginConfiguration [
 	| results |
 	results := self pluginResultClass new
 		testResults: (self runTestSuites: { aDTpluginConfiguration asTestSuite });
@@ -121,7 +121,7 @@ DTTestsRunner >> runForConfiguration: aDTpluginConfiguration [
 ]
 
 { #category : #private }
-DTTestsRunner >> runSuite: aTestSuite withResult: aResult [
+DTTestsRunnerPlugin >> runSuite: aTestSuite withResult: aResult [
 	aTestSuite
 		when: TestAnnouncement
 		do: [ :testAnnouncement | 
@@ -136,7 +136,7 @@ DTTestsRunner >> runSuite: aTestSuite withResult: aResult [
 ]
 
 { #category : #private }
-DTTestsRunner >> runTestSuites: testSuites [
+DTTestsRunnerPlugin >> runTestSuites: testSuites [
 
 	| result |
 	result := TestAsserter classForTestResult new.
@@ -152,22 +152,22 @@ DTTestsRunner >> runTestSuites: testSuites [
 ]
 
 { #category : #api }
-DTTestsRunner >> secondListLabel [
+DTTestsRunnerPlugin >> secondListLabel [
 	^ 'Tests Cases'
 ]
 
 { #category : #api }
-DTTestsRunner >> startButtonHelp [
+DTTestsRunnerPlugin >> startButtonHelp [
 	^ 'Run tests selected.' translated
 ]
 
 { #category : #api }
-DTTestsRunner >> startButtonLabel [
+DTTestsRunnerPlugin >> startButtonLabel [
 	^ 'Run Tests' translated
 ]
 
 { #category : #tests }
-DTTestsRunner >> testSuiteOf: aSetOfTest withName: aString [
+DTTestsRunnerPlugin >> testSuiteOf: aSetOfTest withName: aString [
 	^ aSetOfTest
 		collect: [ :each | 
 			TestSuite new

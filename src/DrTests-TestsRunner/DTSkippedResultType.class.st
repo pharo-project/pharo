@@ -1,24 +1,24 @@
 "
-I model the fact that a test passed.
+I model the fact that a test was skipped.
 "
 Class {
-	#name : #DTPass,
+	#name : #DTSkippedResultType,
 	#superclass : #DTTestResultType,
 	#category : #'DrTests-TestsRunner-Results'
 }
 
 { #category : #factory }
-DTPass class >> backgroundColor [
+DTSkippedResultType class >> backgroundColor [
 	^ TestResult defaultColorBackGroundForPassingTest
 ]
 
 { #category : #testing }
-DTPass >> isPass [
+DTSkippedResultType >> isSkipped [
 	<generated>
 	^ true
 ]
 
 { #category : #accessing }
-DTPass >> name [
-	^ 'Passing test'
+DTSkippedResultType >> name [
+	^ 'Skipped test'
 ]
