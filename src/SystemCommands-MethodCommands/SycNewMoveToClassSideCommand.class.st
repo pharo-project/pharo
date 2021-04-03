@@ -14,7 +14,10 @@ Class {
 SycNewMoveToClassSideCommand >> executeRefactoring [
 	
 	methods 
-		collect: [ :each | RBMoveMethodToClassSideRefactoring method: each class: each origin ]
+		collect: [ :each | RBMoveMethodToClassSideRefactoring 
+			model: model
+			method: each 
+			class: each origin ]
 		thenDo: [ :each | each execute ]
 ]
 

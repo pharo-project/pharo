@@ -14,7 +14,9 @@ Class {
 SycFindAndReplaceSetUpCommand >> executeRefactoring [
 	| refactoring |
 	refactoring := RBFindAndReplaceSetUpRefactoring 
-		of: RBTest inWholeHierarchy: self searchInTheWholeHierarchy.
+		model: model
+		of: RBTest
+		inWholeHierarchy: self searchInTheWholeHierarchy.
 	refactoring execute
 ]
 

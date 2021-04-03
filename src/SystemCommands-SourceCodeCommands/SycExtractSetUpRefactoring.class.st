@@ -18,9 +18,9 @@ SycExtractSetUpRefactoring >> executeRefactoring [
 	selectedInterval := selectedTextInterval ifEmpty: [ 
 		                    sourceNode sourceInterval ].
 	refactoring := RBExtractSetUpMethodAndOccurrences 
-			extract: selectedInterval
-			from: method selector
-			in: method origin.
+		extract: selectedInterval
+		from: method selector
+		in: method origin.
 	self initializeDefaultOptionsOf: refactoring.
 	refactoring execute
 ]

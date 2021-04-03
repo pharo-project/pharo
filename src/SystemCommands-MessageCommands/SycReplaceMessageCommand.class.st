@@ -1,3 +1,6 @@
+"
+I am a command to replace senders of message selector.
+"
 Class {
 	#name : #SycReplaceMessageCommand,
 	#superclass : #SycChangeMessageSignatureCommand,
@@ -16,9 +19,10 @@ SycReplaceMessageCommand class >> methodContextMenuActivation [
 
 { #category : #execution }
 SycReplaceMessageCommand >> createRefactoring [
-
+	self flag: 'TODO'."Improve preview to add args when change the sender with empty args"
 	^ (RBReplaceMethodRefactoring
-		replaceCallMethod: originalMessage selector 
+		model: model
+		replaceMethod: originalMessage selector 
 		in: originalMessage contextUser origin
 		to: newSelector selector
 		permutation: newSelector permutation

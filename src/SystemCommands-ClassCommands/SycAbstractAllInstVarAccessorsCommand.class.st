@@ -23,12 +23,12 @@ SycAbstractAllInstVarAccessorsCommand class >> fullBrowserMenuActivation [
 
 { #category : #accessing }
 SycAbstractAllInstVarAccessorsCommand >> asRefactorings [
-	| refactorings model |
+	| refactorings model1 |
 	refactorings := classes flatCollect: [:each |
 		each value collect: [:var | | refactoring |
-			model ifNil: [ refactoring := var createRefactoring: RBAbstractInstanceVariableRefactoring for: each key.
-				model := refactoring model ]
-				ifNotNil: [refactoring := var createRefactoring: RBAbstractInstanceVariableRefactoring for: each key in: model].
+			model1 ifNil: [ refactoring := var createRefactoring: RBAbstractInstanceVariableRefactoring for: each key.
+				model1 := refactoring model ]
+				ifNotNil: [refactoring := var createRefactoring: RBAbstractInstanceVariableRefactoring for: each key in: model1 ].
 			refactoring ]].
 	^ refactorings
 ]

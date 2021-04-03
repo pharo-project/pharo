@@ -31,6 +31,7 @@ SycInlineAllSendersMessageCommand >> createRefactoring [
 	Ask #method to resolve to the method, and then ask the origin, i.e. the class or trait where it is defined"
 	methodOrigin := originalMessage contextUser method origin.
 	refactoring := RBInlineAllSendersRefactoring
+		model: model
 		sendersOf: originalMessage selector 
 		in: methodOrigin.
 	refactoring setOption: #inlineExpression toUse: [ :ref :aString | self confirm: ('Do you want to inline the expression ''<1s>'' in the current method?' expandMacrosWith: aString) ] .

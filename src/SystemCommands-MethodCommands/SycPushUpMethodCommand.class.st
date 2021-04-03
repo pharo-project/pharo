@@ -28,6 +28,7 @@ SycPushUpMethodCommand class >> methodShortcutActivation [
 SycPushUpMethodCommand >> asRefactorings [
 	| refactoring |
 	refactoring :=  RBPullUpMethodRefactoring 
+		model: model
 		pullUp: (methods collect: [ :each | each selector ])
 		from: methods first origin.
 	refactoring superClass: superclass.
