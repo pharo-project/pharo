@@ -104,7 +104,7 @@ UITheme class >> current: aUITheme [
 
 	aUITheme updateWorldDockingBars.
 	self currentWorld themeChanged.
-	(SystemWindow allSubInstances select:[:e | e owner isNil]) do: #themeChanged.
+	(SystemWindow allSubInstances select:[:e | e owner isNil]) do: [ :each | each themeChanged ].
 
 	SystemAnnouncer uniqueInstance announce: UIThemeChanged
 ]
