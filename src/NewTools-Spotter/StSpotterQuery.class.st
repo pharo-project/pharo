@@ -6,7 +6,8 @@ Class {
 		'processors',
 		'candidateLinks',
 		'searchText',
-		'finished'
+		'finished',
+		'spotterPresenter'
 	],
 	#category : #'NewTools-Spotter-Model'
 }
@@ -14,7 +15,16 @@ Class {
 { #category : #'instance creation' }
 StSpotterQuery class >> new [
 
-	self error: 'Use #on:'
+	self error: 'Use #newSearch:on:'
+]
+
+{ #category : #'instance creation' }
+StSpotterQuery class >> newSearch: aString on: spotter [
+
+	^ super new 
+		spotter: spotter;
+		searchText: aString;
+		yourself
 ]
 
 { #category : #'instance creation' }
@@ -41,7 +51,8 @@ StSpotterQuery >> announcer [
 { #category : #private }
 StSpotterQuery >> candidateAdded: ann [
 
-	candidateLinks add: ann candidateLink
+	candidateLinks add: ann candidateLink.
+	spotterPresenter updateResultList: ann candidateLink
 ]
 
 { #category : #accessing }
@@ -78,13 +89,6 @@ StSpotterQuery >> initializeCandidatesList [
 		"when: GTSpotterAllCandidatesRemoved do: [ self deselect ];
 		when: StSpotterQueryStarted send: #queryStarted: to: self;
 		when: StSpotterQueryEnded send: #queryEnded: to: self."
-]
-
-{ #category : #initialization }
-StSpotterQuery >> initializeText: aString [ 
-
-	searchText := aString.
-	self initialize
 ]
 
 { #category : #testing }
@@ -124,12 +128,17 @@ StSpotterQuery >> newStreamFor: candidates [
 StSpotterQuery >> process [
 	| stream context |
 
+	spotterPresenter removeAll.
+
 	finished := false.
 	stream := self newStreamFor: candidatesList.
 	context := self newContextFor: stream text: self searchText.
 	self relevantProcessors
 		do: [ :each | each filterInContext: context ].
-	finished := true
+	finished := true.
+
+	self candidatesList isEmpty 
+		ifTrue: [ spotterPresenter removeAllResults ]
 ]
 
 { #category : #accessing }
@@ -168,4 +177,22 @@ StSpotterQuery >> results [
 StSpotterQuery >> searchText [
 
 	^ searchText
+]
+
+{ #category : #accessing }
+StSpotterQuery >> searchText: aString [
+
+	searchText := aString
+]
+
+{ #category : #accessing }
+StSpotterQuery >> spotter: aSpotterPresenter [
+
+ spotterPresenter := aSpotterPresenter
+]
+
+{ #category : #accessing }
+StSpotterQuery >> terminate [
+
+	self processors do: [ :each | each stop ]
 ]

@@ -28,7 +28,7 @@ StHistoryProcessor class >> title [
 { #category : #filtering }
 StHistoryProcessor >> collection [
 
-	^ StSpotter history
+	^ StSpotter history reject: [ :each | each isNil ]
 ]
 
 { #category : #filtering }

@@ -159,7 +159,7 @@ StSpotterProcessor >> executeQuery [
 		ifTrue: [ ^ self ].
 	
 	self configureFilter.
-		
+	
 	results := OrderedCollection new.
 	[ self isRunning and: [ self filter atEnd or: [ results size = self maxResults ] ] ] 
 		whileFalse: [
