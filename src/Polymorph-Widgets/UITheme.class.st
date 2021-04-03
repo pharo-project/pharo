@@ -99,12 +99,14 @@ UITheme class >> current: aUITheme [
 	self class environment at: #Paragraph ifPresent: [ :paragraph |
 		paragraph insertionPointColor: aUITheme caretColor ].
 
-	self class environment at: #BalloonMorph ifPresent: [:balloonMorph |
+	self class environment at: #BalloonMorph ifPresent: [ :balloonMorph |
 		balloonMorph setBalloonColorTo: aUITheme balloonBackgroundColor ].
 
 	aUITheme updateWorldDockingBars.
 	self currentWorld themeChanged.
-	(SystemWindow allSubInstances select:[:e | e owner isNil]) do:#themeChanged.
+	(SystemWindow allSubInstances select:[:e | e owner isNil]) do: [ :each | each themeChanged ].
+
+	SystemAnnouncer uniqueInstance announce: UIThemeChanged
 ]
 
 { #category : #accessing }
