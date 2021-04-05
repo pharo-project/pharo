@@ -379,18 +379,33 @@ ReleaseTest >> testThatAllMethodsArePackaged [
 
 { #category : #'tests - variables' }
 ReleaseTest >> testUndeclared [
-	| undeclaredBindings |
+	| undeclaredVariables validExceptions remaining description |
 	
 	Smalltalk cleanOutUndeclared. 
-	undeclaredBindings := Undeclared keys reject: [:each |
-			each includesSubstring: 'undeclaredStub' caseSensitive: false].
+	undeclaredVariables := Undeclared associations select: [:each |
+			each isUndeclaredVariable].
 	
+	validExceptions := { #undeclaredStubInstVar1 . #undeclaredStubInstVar2 }.
+	
+	"for now we filter by name"
+	remaining := undeclaredVariables reject: [ :each | validExceptions includes: each name  ].
+	
+	"we look for one of the undeclared var and report that, this should be enough to fix it quickly"							
+	description := String streamContents: [ :stream |
+			stream nextPutAll: 'Found undeclared references: '.
+			remaining do: [ :variable  |
+				| methodAST |
+				methodAST := variable accessingNodes first methodNode.
+				stream 
+					nextPutAll: variable name;
+					nextPutAll: ' in: ';
+					print: methodAST methodClass;
+					nextPutAll: '>>';
+					print: methodAST selector ]].
+
 	self 
-		assert: undeclaredBindings isEmpty 
-		description: (String streamContents: [ :s|
-			s 
-				nextPutAll: 'Found undeclared references: ';
-				print: undeclaredBindings ])
+		assert: remaining isEmpty 
+		description: description
 ]
 
 { #category : #tests }
