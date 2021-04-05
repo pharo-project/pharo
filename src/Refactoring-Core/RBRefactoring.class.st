@@ -338,9 +338,13 @@ RBRefactoring >> poolVariableNamesFor: aClass [
 			[:each | 
 			each allPoolDictionaryNames do: 
 					[:pool |
-					pools addAll: ((model classNamed: pool asSymbol) classPool keys 
-								collect: [:name | name asString])]].
+					pools addAll: (self poolVariableNamesIn: pool asSymbol) ] ].
 	^pools
+]
+
+{ #category : #transforming }
+RBRefactoring >> poolVariableNamesIn: poolName [ 
+	^(model classNamed: poolName) classPool keys
 ]
 
 { #category : #preconditions }

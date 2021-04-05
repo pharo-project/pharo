@@ -86,12 +86,6 @@ RBExpandReferencedPoolsRefactoring >> movePoolVariables [
 		do: [:poolDict | toClasses do: [:each | self movePool: poolDict toClass: each]]
 ]
 
-{ #category : #transforming }
-RBExpandReferencedPoolsRefactoring >> poolVariableNamesIn: poolName [ 
-	^(model classNamed: poolName) classPool keys 
-		collect: [:name | name asString]
-]
-
 { #category : #preconditions }
 RBExpandReferencedPoolsRefactoring >> preconditions [
 
