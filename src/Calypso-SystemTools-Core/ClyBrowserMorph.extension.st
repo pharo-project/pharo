@@ -119,7 +119,7 @@ ClyBrowserMorph >> requestRemoveMethodStrategyFor: methods [
 	
 	selectors := (methods collect: [ :each | each selector ] as: IdentitySet) asArray.	
 	
-	senders := (ClyMessageSendersQuery ofAny: selectors from: self systemScope) execute.
+	senders := (ClyMessageSendersQuery ofAny: selectors from: self defaultNavigationScope) execute.
 	(self allowSilentlyRemoveMethods: methods whichHaveSenders: senders)
 		ifTrue: [ ^SycSilentlyRemoveMethodStrategy new ].
 

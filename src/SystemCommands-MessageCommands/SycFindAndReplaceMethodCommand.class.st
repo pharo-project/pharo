@@ -33,9 +33,10 @@ SycFindAndReplaceMethodCommand >> applyResultInContext: aToolContext [
 SycFindAndReplaceMethodCommand >> createRefactoring [
 
 	^ RBFindAndReplaceRefactoring
-		  find: originalMessage selector
-		  of: originalMessage contextUser origin
-		  inWholeHierarchy: self searchInTheWholeHierarchy
+		model: model
+		find: originalMessage selector
+		of: originalMessage contextUser origin
+		inWholeHierarchy: self searchInTheWholeHierarchy
 ]
 
 { #category : #execution }

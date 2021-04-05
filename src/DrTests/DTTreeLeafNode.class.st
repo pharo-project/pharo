@@ -3,7 +3,7 @@ I am a leaf of a Result Tree.
 I have te content and I know the way to browse myself. 
 "
 Class {
-	#name : #DTTreeLeaf,
+	#name : #DTTreeLeafNode,
 	#superclass : #DTAbstractTreeNode,
 	#instVars : [
 		'content'
@@ -12,53 +12,53 @@ Class {
 }
 
 { #category : #'instance creation' }
-DTTreeLeaf class >> content: aRottenTest [ 
+DTTreeLeafNode class >> content: aRottenTest [ 
 	^ self new
 		content: aRottenTest;
 		yourself
 ]
 
 { #category : #visiting }
-DTTreeLeaf >> acceptVisitor: aDTResultsTreeVisitor [
+DTTreeLeafNode >> acceptVisitor: aDTResultsTreeVisitor [
 	^ aDTResultsTreeVisitor visitDTTreeLeaf: self
 ]
 
 { #category : #testing }
-DTTreeLeaf >> canBeBrowsed [
+DTTreeLeafNode >> canBeBrowsed [
 	^ true
 ]
 
 { #category : #accessing }
-DTTreeLeaf >> content [
+DTTreeLeafNode >> content [
 	^ content
 ]
 
 { #category : #accessing }
-DTTreeLeaf >> content: anObject [
+DTTreeLeafNode >> content: anObject [
 	content := anObject
 ]
 
 { #category : #accessing }
-DTTreeLeaf >> contentForReRun [
+DTTreeLeafNode >> contentForReRun [
 	^ { self content }
 ]
 
 { #category : #actions }
-DTTreeLeaf >> drTestsBrowse [
+DTTreeLeafNode >> drTestsBrowse [
 	self content drTestsBrowse
 ]
 
 { #category : #menu }
-DTTreeLeaf >> drTestsBuildContextMenu: menu [
+DTTreeLeafNode >> drTestsBuildContextMenu: menu [
 	self content drTestsBuildContextMenu: menu
 ]
 
 { #category : #accessing }
-DTTreeLeaf >> drTestsName [
+DTTreeLeafNode >> drTestsName [
 	^ self content drTestsName
 ]
 
 { #category : #testing }
-DTTreeLeaf >> isLeaf [
+DTTreeLeafNode >> isLeaf [
 	^ true
 ]

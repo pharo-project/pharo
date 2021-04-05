@@ -24,6 +24,7 @@ SycRemoveAllSendersCommand class >> methodContextMenuActivation [
 SycRemoveAllSendersCommand >> createRefactoring [
 	|refactoring options|
 	refactoring := RBRemoveAllSendersRefactoring
+		model: model
 		removeSendersOf: originalMessage selector.
 	options := refactoring options copy.
 	options at: #inlineExpression put: [:ref :string | false].

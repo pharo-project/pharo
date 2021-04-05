@@ -106,6 +106,20 @@ ReleaseTest >> testAllGlobalBindingAreGlobalVariables [
 	self assertEmpty: wrong
 ]
 
+{ #category : #'tests - variables' }
+ReleaseTest >> testClassesShadow [
+	|  classes validExceptions remaining |
+
+	classes := Smalltalk globals allBehaviors select: [ :class | 
+		class definedVariables anySatisfy: [:var | var isShadowing]].
+
+	validExceptions := #().	
+	
+	remaining := classes asOrderedCollection reject: [ :each  | validExceptions includes: each name].
+	"6 left that we need to fix"
+	self assert: remaining size <= 6.
+]
+
 { #category : #tests }
 ReleaseTest >> testExplicitRequirementMethodsShouldBeImplementedInTheirUsers [
 	"If a class is using a trait with an explicit requirement method, this class should implement the method"

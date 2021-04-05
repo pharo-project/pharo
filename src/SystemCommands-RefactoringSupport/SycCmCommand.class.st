@@ -4,6 +4,8 @@ This class is an extension so we can mix command of Commander2 with Commander.
 Class {
 	#name : #SycCmCommand,
 	#superclass : #CmCommand,
+	#traits : 'TRefactoringCommandSupport',
+	#classTraits : 'TRefactoringCommandSupport classTrait',
 	#instVars : [
 		'parentGroup'
 	],
@@ -107,6 +109,8 @@ SycCmCommand >> parentGroup: aCmdRootMenuGroup [
 
 { #category : #preparation }
 SycCmCommand >> prepareFullExecution [
+	
+	self setUpModelFromContext: context.
 ]
 
 { #category : #execution }

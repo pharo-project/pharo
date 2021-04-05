@@ -4,9 +4,6 @@ I get signalled when a variable in a block or method scope shadows a variable of
 Class {
 	#name : #OCShadowVariableWarning,
 	#superclass : #OCSemanticWarning,
-	#instVars : [
-		'shadowedVar'
-	],
 	#category : #'OpalCompiler-Core-Exception'
 }
 
@@ -22,7 +19,7 @@ OCShadowVariableWarning >> defaultAction [
 OCShadowVariableWarning >> node: aVariableNode [
 
 	super node: aVariableNode.
-	messageText := 'Temp shadows: ', aVariableNode name.
+	messageText := 'Temp shadows: ', aVariableNode name
 
 ]
 
@@ -39,18 +36,6 @@ OCShadowVariableWarning >> raiseSemanticError [
 		compilationContext: compilationContext;
 		messageText: self stringMessage;
 		signal
-]
-
-{ #category : #accessing }
-OCShadowVariableWarning >> shadowedVar [
-
-	^ shadowedVar
-]
-
-{ #category : #accessing }
-OCShadowVariableWarning >> shadowedVar: aVar [
-
-	shadowedVar := aVar
 ]
 
 { #category : #correcting }

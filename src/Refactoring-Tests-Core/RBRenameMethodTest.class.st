@@ -43,18 +43,18 @@ RBRenameMethodTest >> testRenameMethodFromTrait [
 { #category : #tests }
 RBRenameMethodTest >> testRenameMethodOnlyInSomePackages [
 	| refactoring class |
+	model := (RBClassModelFactory rbNamespace onEnvironment: (RBPackageEnvironment packageName: 'Refactoring-Tests-Core')).
 	refactoring := RBRenameMethodRefactoring 
+		model: model
 		renameMethod: ('check', 'Class:') asSymbol
 		in: RBBasicLintRuleTestData
 		to: #checkClass1:
 		permutation: (1 to: 1).
-	refactoring searchInPackages: #(#'Refactoring-Tests-Core').
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBBasicLintRuleTestData.
 	self assert: (class parseTreeFor: #checkClass1:) 
 		equals: (self parseMethod: 'checkClass1: aSmalllintContext 
 	^classBlock value: aSmalllintContext value: result').
-	self assert: ((refactoring model classNamed: #DeepCopier) directlyDefinesMethod: ('check', 'Class:') asSymbol).
 	
 ]
 

@@ -69,16 +69,14 @@ OCASTSemanticAnalyzer >> declareTemporaryNode: aVariableNode [
 
 { #category : #variables }
 OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode as: anOCTempVariable [
-	| name var shadowed |
+	| name var shadowing |
 	name := aVariableNode name. 
 	var := scope lookupVarForDeclaration: name.
-	var ifNotNil: [ 
-		"Another variable with same name is visible from current scope"
-		shadowed := var.
-		].
+	"check if another variable with same name is visible"
+	var ifNotNil: [ shadowing := var].
 	var := scope addTemp: anOCTempVariable.
 	aVariableNode binding: var.
-	shadowed ifNotNil: [self variable: var shadows: shadowed inNode: aVariableNode].
+	shadowing ifNotNil: [self shadowingVariable: aVariableNode].
 	^ var
 ]
 
@@ -111,6 +109,15 @@ OCASTSemanticAnalyzer >> lookupVariableForWrite: aVariableNode [
 { #category : #initialization }
 OCASTSemanticAnalyzer >> scope: aSemScope [
 	scope := aSemScope
+]
+
+{ #category : #'error handling' }
+OCASTSemanticAnalyzer >> shadowingVariable: aNode [
+	compilationContext optionSkipSemanticWarnings ifTrue: [ ^aNode ].
+	^ OCShadowVariableWarning new
+		node: aNode;
+		compilationContext: compilationContext;
+		signal
 ]
 
 { #category : #'error handling' }
@@ -153,16 +160,6 @@ OCASTSemanticAnalyzer >> uninitializedVariable: variableNode [
 OCASTSemanticAnalyzer >> unusedVariable: variableNode [
 
 	variableNode propertyAt: #semanticWarning put: 'unused variable'
-]
-
-{ #category : #'error handling' }
-OCASTSemanticAnalyzer >> variable: aVariable shadows: shadowedVariable inNode: variableNode [
-	compilationContext optionSkipSemanticWarnings ifTrue: [ ^aVariable ].
-	^ OCShadowVariableWarning new
-		node: variableNode;
-		shadowedVar: aVariable;
-		compilationContext: compilationContext;
-		signal
 ]
 
 { #category : #visiting }
