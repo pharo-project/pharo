@@ -40,18 +40,19 @@ DTTestCoveragePlugin >> allowMultipleSelectionInSecondList [
 
 { #category : #api }
 DTTestCoveragePlugin >> defineData: aDTpluginConfiguration [
-	methods := aDTpluginConfiguration items
-		flatCollect: [ :p | 
-			p methods
-				reject: [ :meth | meth isTestMethod or: meth methodClass isTestCase ] ].
-	testClasses := aDTpluginConfiguration packagesSelected
-		flatCollect: [ :p | p classes ].
+
+	methods := aDTpluginConfiguration items flatCollect: [ :p | 
+		           p methods reject: [ :meth | 
+			           meth isTestMethod or: [meth methodClass isTestCase] ] ].
+	methods := methods reject: [ :meth | meth isSubclassResponsibility ].
+	testClasses := aDTpluginConfiguration packagesSelected flatCollect: [ 
+		               :p | p classes ].
 	link := MetaLink new
-		selector: #tagExecuted;
-		metaObject: #node
+		        selector: #tagExecuted;
+		        metaObject: #node
 ]
 
-{ #category : #api }
+{ #category : #accessing }
 DTTestCoveragePlugin >> firstListLabel [
 	^ 'Test Packages'
 ]
@@ -94,15 +95,12 @@ DTTestCoveragePlugin >> runForConfiguration: aDTpluginConfiguration [
 
 { #category : #api }
 DTTestCoveragePlugin >> runSuite: aTestSuite withResult: aResult [
-	aTestSuite
-		when: TestAnnouncement
-		do: [ :testAnnouncement | 
-			self announcer
-				announce:
-					(DTStatusUpdate
-						message: ('Running test {1}.' format: {testAnnouncement test asString})) ].
-	[ aTestSuite run: aResult ]
-		ensure: [ aTestSuite unsubscribe: TestAnnouncement ]
+
+	aTestSuite when: TestAnnouncement do: [ :testAnnouncement | 
+		self announcer announce: (DTStatusUpdate message:
+				 ('Running test {1}.' format: { testAnnouncement test asString })) ].
+	[ aTestSuite run: aResult ] ensure: [ 
+		aTestSuite unsubscribe: TestAnnouncement ]
 ]
 
 { #category : #api }
@@ -115,7 +113,7 @@ DTTestCoveragePlugin >> runTestSuites: testSuites [
 				displayingProgress: 'Running Tests' ].
 ]
 
-{ #category : #api }
+{ #category : #accessing }
 DTTestCoveragePlugin >> secondListLabel [
 	^ 'Package under coverage'
 ]
@@ -139,14 +137,12 @@ DTTestCoveragePlugin >> startButtonLabel [
 
 { #category : #api }
 DTTestCoveragePlugin >> suiteFor: classesSelected [
+
 	"Return the suite for all the selected test case classes"
 
-	^ TestSuite new
-		in: [ :suite | 
-			classesSelected
-				do: [ :each | 
-					each isAbstract
-						ifFalse: [ each isTestCase
-								ifTrue: [ each addToSuiteFromSelectors: suite ] ] ].
-			suite name: 'Test' ]
+	^ TestSuite new in: [ :suite | 
+		  classesSelected do: [ :each | 
+			  each isAbstract ifFalse: [ 
+				  each isTestCase ifTrue: [ each addToSuiteFromSelectors: suite ] ] ].
+		  suite name: 'Test' ]
 ]
