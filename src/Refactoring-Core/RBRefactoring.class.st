@@ -337,8 +337,8 @@ RBRefactoring >> poolVariableNamesFor: aClass [
 	aClass withAllSuperclasses do: 
 			[:each | 
 			each allPoolDictionaryNames do: 
-					[:pool | 
-					pools addAll: ((Smalltalk globals at: pool asSymbol) classPool keys 
+					[:pool |
+					pools addAll: ((model classNamed: pool asSymbol) classPool keys 
 								collect: [:name | name asString])]].
 	^pools
 ]
