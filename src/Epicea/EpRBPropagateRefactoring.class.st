@@ -30,6 +30,11 @@ EpRBPropagateRefactoring >> initializeWith: aRefactoring [
 	targetRefactoring := aRefactoring 
 ]
 
+{ #category : #accessing }
+EpRBPropagateRefactoring >> preconditions [
+	^ self shouldBeImplemented
+]
+
 { #category : #private }
 EpRBPropagateRefactoring >> primitiveExecute [
 	targetRefactoring propagateTransformation.
@@ -38,6 +43,11 @@ EpRBPropagateRefactoring >> primitiveExecute [
 { #category : #accessing }
 EpRBPropagateRefactoring >> setOption: aString toUse: aBlockClosure [ 
 	targetRefactoring setOption: aString toUse: aBlockClosure 
+]
+
+{ #category : #accessing }
+EpRBPropagateRefactoring >> transform [
+	^ self shouldBeImplemented
 ]
 
 { #category : #accessing }

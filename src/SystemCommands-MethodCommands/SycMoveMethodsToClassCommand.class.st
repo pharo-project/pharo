@@ -8,7 +8,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : #SycMoveMethodsToClassCommand,
-	#superclass : #SycMethodCommand,
+	#superclass : #SysRefactoringMethodCommand,
 	#instVars : [
 		'targetClass'
 	],
