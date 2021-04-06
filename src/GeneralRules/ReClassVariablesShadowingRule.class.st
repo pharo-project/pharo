@@ -16,24 +16,9 @@ ReClassVariablesShadowingRule class >> checksClass [
 { #category : #running }
 ReClassVariablesShadowingRule >> check: aClass forCritiquesDo: aCriticBlock [
 
-	aClass definedVariables do: [ :variable | 
-		variable isShadowing  ifTrue: [ 
-			aCriticBlock cull: (self critiqueFor: aClass about: variable name) ] ]
-]
-
-{ #category : #'running-helpers' }
-ReClassVariablesShadowingRule >> critiqueFor: aClass about: aVarName [
-
-	| crit |
-	crit := ReTrivialCritique
-		withAnchor: (ReVarSearchSourceAnchor
-			entity: aClass
-			string: aVarName)
-		by: self.
-	
-	crit tinyHint: aVarName.
-				
-	^ crit
+	aClass definedVariables
+		select: [ :variable | variable isShadowing ]
+		thenDo: [ :variable | aCriticBlock cull: (self critiqueFor: aClass about: variable name) ]
 ]
 
 { #category : #accessing }

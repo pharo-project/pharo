@@ -4,6 +4,9 @@ This smell arises when an instance variable is not both read and written. If an 
 Class {
 	#name : #ReIvarNeitherReadNorWrittenRule,
 	#superclass : #ReAbstractRule,
+	#instVars : [
+		't'
+	],
 	#category : #'GeneralRules-Migrated'
 }
 
@@ -12,25 +15,11 @@ ReIvarNeitherReadNorWrittenRule class >> checksClass [
 	^ true
 ]
 
-{ #category : #enumerating }
+{ #category : #running }
 ReIvarNeitherReadNorWrittenRule >> check: aClass forCritiquesDo: aCriticBlock [
 	aClass slots
 		select: [ :slot | slot isReferenced not ]
-		thenDo: [ :slot | aCriticBlock cull: (self critiqueFor: aClass about: slot) ]
-]
-
-{ #category : #enumerating }
-ReIvarNeitherReadNorWrittenRule >> critiqueFor: aClass about: aSlot [
-
-	| crit |
-	crit := ReTrivialCritique
-		withAnchor: (ReVarSearchSourceAnchor
-			entity: aClass
-			string: aSlot name)
-		by: self.
-	
-	crit tinyHint: aSlot name.
-	^ crit
+		thenDo: [ :slot | aCriticBlock cull: (self critiqueFor: aClass about: slot name) ]
 ]
 
 { #category : #accessing }
