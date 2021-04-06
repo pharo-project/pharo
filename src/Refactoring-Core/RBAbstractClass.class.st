@@ -236,9 +236,8 @@ RBAbstractClass >> definesMethod: aSelector [
 { #category : #testing }
 RBAbstractClass >> definesPoolDictionary: aSymbol [ 
 	(self directlyDefinesPoolDictionary: aSymbol) ifTrue: [^true].
-	^self inheritsPoolDictionaries and: 
-			[self superclass notNil 
-				and: [self superclass definesPoolDictionary: aSymbol]]
+	^ self superclass notNil 
+				and: [self superclass definesPoolDictionary: aSymbol]
 ]
 
 { #category : #testing }
@@ -375,11 +374,6 @@ RBAbstractClass >> includesClass: aRBClass [
 	[currentClass notNil and: [currentClass ~= aRBClass]] 
 		whileTrue: [currentClass := currentClass superclass].
 	^currentClass = aRBClass
-]
-
-{ #category : #testing }
-RBAbstractClass >> inheritsPoolDictionaries [
-	^false
 ]
 
 { #category : #initialization }
