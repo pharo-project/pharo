@@ -11,3 +11,9 @@ Class {
 SycMethodCmCommand class >> activationStrategy [ 
 	^ SycMethodMenuActivation
 ]
+
+{ #category : #preparation }
+SycMethodCmCommand >> prepareFullExecution [
+	super prepareFullExecution.
+	self setUpModelFromContext: context
+]

@@ -77,7 +77,7 @@ RBRemoveSenderRefactoring >> inlineClassName [
 	^ 'Object'
 ]
 
-{ #category : #transforming }
+{ #category : #accessing }
 RBRemoveSenderRefactoring >> inlineParseTree [
 
 	| aSymbol |

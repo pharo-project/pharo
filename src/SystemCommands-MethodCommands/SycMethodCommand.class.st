@@ -53,6 +53,5 @@ SycMethodCommand >> prepareExecutionInDragContext: aToolContext [
 { #category : #execution }
 SycMethodCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	self setUpModelFromContext: aToolContext.
 	methods := aToolContext selectedMethods
 ]

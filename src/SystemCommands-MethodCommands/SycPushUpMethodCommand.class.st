@@ -3,7 +3,7 @@ I am a command to push up given methods
 "
 Class {
 	#name : #SycPushUpMethodCommand,
-	#superclass : #SycMethodCommand,
+	#superclass : #SysRefactoringMethodCommand,
 	#instVars : [
 		'superclass'
 	],

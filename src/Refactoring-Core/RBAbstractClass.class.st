@@ -37,9 +37,19 @@ Class {
 	#category : #'Refactoring-Core-Model'
 }
 
+{ #category : #accessing }
+RBAbstractClass class >> existingNamed: aString [
+	^ self subclassResponsibility
+]
+
 { #category : #'class initialization' }
 RBAbstractClass class >> initialize [
 	LookupSuperclass := Object new
+]
+
+{ #category : #accessing }
+RBAbstractClass class >> named: aString [
+	^ self subclassResponsibility
 ]
 
 { #category : #comparing }
@@ -510,6 +520,11 @@ RBAbstractClass >> realClass: aClass [
 
 	realClass := aClass.
 	superclass ifNil: [ superclass := LookupSuperclass ]
+]
+
+{ #category : #accessing }
+RBAbstractClass >> realName: arg1 [ 
+	^ self subclassResponsibility
 ]
 
 { #category : #'variable accessing' }
