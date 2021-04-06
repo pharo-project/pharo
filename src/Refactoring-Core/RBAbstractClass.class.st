@@ -38,7 +38,7 @@ Class {
 }
 
 { #category : #accessing }
-RBAbstractClass class >> existingNamed: arg1 [ 
+RBAbstractClass class >> existingNamed: aString [
 	^ self subclassResponsibility
 ]
 
@@ -48,7 +48,7 @@ RBAbstractClass class >> initialize [
 ]
 
 { #category : #accessing }
-RBAbstractClass class >> named: arg1 [ 
+RBAbstractClass class >> named: aString [
 	^ self subclassResponsibility
 ]
 
