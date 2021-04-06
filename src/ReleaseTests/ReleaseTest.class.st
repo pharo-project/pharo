@@ -387,25 +387,25 @@ ReleaseTest >> testUndeclared [
 	
 	validExceptions := { #undeclaredStubInstVar1 . #undeclaredStubInstVar2 }.
 	
-	"for now we filter by name"
+	"for now we filter by name, maybe filtering by variable would be better"
 	remaining := undeclaredVariables reject: [ :each | validExceptions includes: each name  ].
 	
-	"we look for one of the undeclared var and report that, this should be enough to fix it quickly"							
+	"we look for one of the using methods of the undeclared var and report that, 
+	this should be enough to fix it quickly"							
 	description := String streamContents: [ :stream |
-			stream nextPutAll: 'Found undeclared references: '.
+			stream nextPutAll: 'Found undeclared Variables: '.
 			remaining do: [ :variable  |
-				| methodAST |
-				methodAST := variable accessingNodes first methodNode.
+				| method |
+				method := variable usingMethods first.
 				stream 
+					cr
 					nextPutAll: variable name;
 					nextPutAll: ' in: ';
-					print: methodAST methodClass;
+					print: method methodClass;
 					nextPutAll: '>>';
-					print: methodAST selector ]].
+					print: method selector]].
 
-	self 
-		assert: remaining isEmpty 
-		description: description
+	self assert: remaining isEmpty description: description
 ]
 
 { #category : #tests }
