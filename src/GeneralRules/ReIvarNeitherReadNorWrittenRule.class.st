@@ -4,9 +4,6 @@ This smell arises when an instance variable is not both read and written. If an 
 Class {
 	#name : #ReIvarNeitherReadNorWrittenRule,
 	#superclass : #ReAbstractRule,
-	#instVars : [
-		't'
-	],
 	#category : #'GeneralRules-Migrated'
 }
 
