@@ -26,21 +26,6 @@ ReVariableAssignedLiteralRule >> check: aClass forCritiquesDo: aCriticBlock [
 			aCriticBlock cull: (self critiqueFor: aClass about: variable name) ] ]
 ]
 
-{ #category : #'running-helpers' }
-ReVariableAssignedLiteralRule >> critiqueFor: aClass about: aVarName [
-
-	| crit |
-	crit := ReTrivialCritique
-		withAnchor: (ReVarSearchSourceAnchor
-			entity: aClass
-			string: aVarName)
-		by: self.
-	
-	crit tinyHint: aVarName.
-				
-	^ crit
-]
-
 { #category : #accessing }
 ReVariableAssignedLiteralRule >> group [
 	^ 'Design Flaws'

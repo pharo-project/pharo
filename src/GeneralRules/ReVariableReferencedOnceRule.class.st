@@ -32,19 +32,6 @@ ReVariableReferencedOnceRule >> check: aClass forCritiquesDo: aCriticBlock [
 
 ]
 
-{ #category : #running }
-ReVariableReferencedOnceRule >> critiqueFor: aClass about: aVarName [
-
-	| crit |
-	crit := ReTrivialCritique
-		withAnchor: (ReVarSearchSourceAnchor
-			entity: aClass
-			string: aVarName)
-		by: self.
-	crit tinyHint: aVarName.
-	^ crit
-]
-
 { #category : #accessing }
 ReVariableReferencedOnceRule >> group [
 	^ 'Design Flaws'
