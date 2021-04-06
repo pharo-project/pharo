@@ -136,6 +136,14 @@ RBMethodNodeTest >> testCommentsParent [
 		equals: #testCommentsParent.
 ]
 
+{ #category : #tests }
+RBMethodNodeTest >> testHasArguments [
+
+	| ast |
+	ast := self parseMethod: 'foo: arg'.
+	self assert: ast hasArguments
+]
+
 { #category : #'testing-comments' }
 RBMethodNodeTest >> testHasComments [
 

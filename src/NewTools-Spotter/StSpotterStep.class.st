@@ -1,8 +1,3 @@
-"
-A ""step"" in spotter is part of the nested structure created by diving into a category.
-""Diving"" means enter to a particular category (or ""processor"" in spotter definition) to show more in detail its results.
-The old spotter allowed also other kinds of diving, but current implementation removed that (since it was not really used).
-"
 Class {
 	#name : #StSpotterStep,
 	#superclass : #Object,
@@ -16,7 +11,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-StSpotterStep class >> newModel: aSpotterModel [
+StSpotterStep class >> on: aSpotterModel [
 
 	^ self new 
 		model: aSpotterModel;
@@ -73,8 +68,11 @@ StSpotterStep >> connectQuery: aQuery [
 { #category : #accessing }
 StSpotterStep >> deactivate [
 
-	self activeQuery processors do: [ :each | each stop ].
-	self disconnectQuery: activeQuery
+	self activeQuery ifNil: [ ^ self ].
+
+	self activeQuery terminate.
+	self disconnectQuery: self activeQuery.
+
 ]
 
 { #category : #private }
@@ -144,18 +142,6 @@ StSpotterStep >> previousProcessorFrom: aCollection [
 		yourself
 ]
 
-{ #category : #processing }
-StSpotterStep >> process: aString [
-	| query |
-
-	query := StSpotterQuery on: (aString ifNotEmpty: [ aString, ' ' ]).
-	query processors: (self processors sort: #order ascending).
-	self activateQuery: query.
-	query process.
-	query candidatesList isEmpty 
-		ifTrue: [ self model announceNoResults ]
-]
-
 { #category : #accessing }
 StSpotterStep >> processors [
 
@@ -169,6 +155,16 @@ StSpotterStep >> processors [
 StSpotterStep >> processors: aCollection [
 
 	processors := aCollection
+]
+
+{ #category : #'accessing query' }
+StSpotterStep >> pushQuery: aQuery [
+
+	self deactivate.
+	
+	aQuery processors: (self processors sort: #order ascending).
+	self activateQuery: aQuery.
+	aQuery process
 ]
 
 { #category : #private }

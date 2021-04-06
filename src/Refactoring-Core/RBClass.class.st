@@ -13,7 +13,8 @@ Class {
 		'classVariableNames',
 		'poolDictionaryNames',
 		'category',
-		'comment'
+		'comment',
+		'classPool'
 	],
 	#classVars : [
 		'LookupComment'
@@ -51,7 +52,8 @@ RBClass class >> named: aSymbol [
 { #category : #'variable accessing' }
 RBClass >> addClassVariable: aString [ 
 	self privateClassVariableNames add: aString asSymbol.
-	model addClassVariable: aString to: self
+	model addClassVariable: aString to: self.
+	self classPool at: aString put: nil
 ]
 
 { #category : #'variable accessing' }
@@ -99,6 +101,11 @@ RBClass >> category: aSymbol [
 ]
 
 { #category : #accessing }
+RBClass >> classPool [
+	^classPool ifNil: [ classPool := Dictionary new ]
+]
+
+{ #category : #accessing }
 RBClass >> classVariableNames [
 	^self privateClassVariableNames copy
 ]
@@ -106,7 +113,8 @@ RBClass >> classVariableNames [
 { #category : #accessing }
 RBClass >> classVariableNames: aCollectionOfStrings [ 
 	classVariableNames := (aCollectionOfStrings 
-				collect: [:each | each asSymbol]) asOrderedCollection
+				collect: [:each | self classPool at: each asSymbol put: nil.
+					each asSymbol]) asOrderedCollection
 ]
 
 { #category : #accessing }

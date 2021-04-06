@@ -61,7 +61,7 @@ SpStyle class >> defaultStyleSheetData [
 .application [
 	Font { #name : EnvironmentFont(#default) },
 	Geometry { #height: 25 },
-	.presenter [ Geometry { #height: Reset, #vResizing: true, #hResizing: true } ],
+	.box [ Geometry { #height: Reset, #vResizing: true, #hResizing: true } ],
 	.label [
 		Geometry { #hResizing: true, #height: 18 },
 		.headerError [ Draw { #color:  #red }  ],

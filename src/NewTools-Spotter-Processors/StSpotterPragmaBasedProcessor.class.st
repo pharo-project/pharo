@@ -180,6 +180,12 @@ StSpotterPragmaBasedProcessor >> shouldFilterInContext: aSpotterContext [
 ]
 
 { #category : #accessing }
+StSpotterPragmaBasedProcessor >> stop [
+	
+	running := false
+]
+
+{ #category : #accessing }
 StSpotterPragmaBasedProcessor >> title [
 	self subclassResponsibility
 ]

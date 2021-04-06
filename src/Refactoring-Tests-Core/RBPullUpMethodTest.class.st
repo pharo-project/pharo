@@ -23,7 +23,7 @@ RBPullUpMethodTest >> addClassHierarchyForPools [
 	model 
 		defineClass: 'Object subclass: #TotoSuperclass instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
 	model 
-		defineClass: 'TotoSuperclass subclass: #Toto instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
+		defineClass: 'TotoSuperclass subclass: #Toto instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: ''TotoSharedPool'' category: #''Refactory-Test data'''.
 	(model classNamed: #Toto) compile: 'poolReference ^ SP' classified: #(#accessing).
 ]
 
@@ -115,11 +115,11 @@ RBPullUpMethodTest >> testPullUpMethodWithSharedPool [
 	self addClassHierarchyForPools.
 	class := model classNamed: #Toto.
 	superClass := model classNamed: #TotoSuperclass.
-	self executeRefactoring: (RBPullUpMethodRefactoring 
+	self proceedThroughWarning: [ self executeRefactoring: (RBPullUpMethodRefactoring 
 				model: model
 				pullUp: #(#poolReference)
 				from: class 
-				to: superClass ).
+				to: superClass) ].
 	self assert: (superClass parseTreeFor: #poolReference) 
 				equals: (self parseMethod: 'poolReference ^ SP').
 	self deny: (class directlyDefinesMethod: #poolReference).

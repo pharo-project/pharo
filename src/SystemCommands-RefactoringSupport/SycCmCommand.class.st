@@ -110,7 +110,6 @@ SycCmCommand >> parentGroup: aCmdRootMenuGroup [
 { #category : #preparation }
 SycCmCommand >> prepareFullExecution [
 	
-	self setUpModelFromContext: context.
 ]
 
 { #category : #execution }

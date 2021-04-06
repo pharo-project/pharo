@@ -11,14 +11,14 @@ StUnifiedProcessorTest >> processor [
 ]
 
 { #category : #tests }
-StUnifiedProcessorTest >> testFindGTClassProcessorTest [
+StUnifiedProcessorTest >> testFindStClassProcessorTest [
 
 	self runForText: 'stunifiedprocessortest'.
 	self assertResultsIncludes: StUnifiedProcessorTest
 ]
 
 { #category : #tests }
-StUnifiedProcessorTest >> testFindGTClassProcessorTestAfterAddingTest [
+StUnifiedProcessorTest >> testFindStClassProcessorTestAfterAddingTest [
 
 	self runForText: 'stun'.
 	self rerunWithText: 'stunifiedprocess'.
@@ -27,7 +27,7 @@ StUnifiedProcessorTest >> testFindGTClassProcessorTestAfterAddingTest [
 ]
 
 { #category : #tests }
-StUnifiedProcessorTest >> testFindGTClassProcessorTestWithPartialText [
+StUnifiedProcessorTest >> testFindStClassProcessorTestWithPartialText [
 
 	self runForText: 'stunifi'.
 	self assertResultsIncludes: self class
