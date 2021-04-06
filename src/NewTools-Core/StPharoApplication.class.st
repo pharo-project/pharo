@@ -47,7 +47,11 @@ StPharoApplication >> defaultWindowExtent [
 StPharoApplication >> initialize [
 
 	super initialize.
-	self resetConfiguration
+	self resetConfiguration.
+	SystemAnnouncer uniqueInstance weak 
+		when: UIThemeChanged 
+		send: #resetConfiguration
+		to: self
 ]
 
 { #category : #'private factory' }

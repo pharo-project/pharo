@@ -29,7 +29,9 @@ Class {
 		'categories',
 		'mutex',
 		'spinner',
-		'tip'
+		'tip',
+		'queue',
+		'updating'
 	],
 	#classVars : [
 		'History',
@@ -288,8 +290,8 @@ StSpotter >> configureModel: aModel [
 
 	aModel 
 		whenNoResultsDo: [ self removeAllResults ];
-		whenSearchUpdatedDo: [ :aCandidateLink | 
-			self updateResultList: aCandidateLink ];
+		"whenSearchUpdatedDo: [ :aCandidateLink | 
+			self updateResultList: aCandidateLink ];"
 		whenAmountChangedDo: [ :processor :amount | 
 			self updateResultProcessor: processor amount: amount ];
 		whenQueryStartedDo: [ self showSpinner ];
@@ -304,42 +306,16 @@ StSpotter >> defaultModel [
 		yourself
 ]
 
-{ #category : #'private updating' }
-StSpotter >> deferredUpdateResultList: aCandidateLink [
-	| categoryPresenter presenters |
-
-	aCandidateLink value ifNil: [ ^ self ].
-
-	categoryPresenter := aCandidateLink processor 
-		headerCategoryFor: aCandidateLink
-		on: self.
-		
-	(categoryPresenter includesLink: aCandidateLink) ifTrue: [ ^ self ].
-	
-	categoryPresenter addCandidate: aCandidateLink inSpotter: self.
-	
-	presenters := (categories values 
-		sorted: [ :each | each order ] ascending)
-		flatCollect: [ :each | each withCandidates ]. 
-	
-	resultList disableActivationDuring: [ 
-		| index |
-		index := resultList selection selectedIndex.
-		resultList items: presenters.
-		resultList selectIndex: index ]
-]
-
 { #category : #'private actions' }
 StSpotter >> diveInProcessor: aProcessor [
 
-	[
+	self model schedule: [
 		self showSpinner.
-		self model activeStep deactivate.
-		resultList presenters: #().
-		self removeAll.
+		self removeAllResults.
 		self model pushStepForProcessor: aProcessor.
-		searchText text: '' 
-	] schedule
+		resultList verticalAlignment desiredVisibleRow: 1.
+		searchText text: ''
+	]
 ]
 
 { #category : #'private actions' }
@@ -347,8 +323,9 @@ StSpotter >> diveOut [
 
 	self removeAll.
 	self model popStep.
-	self model lastSearchText 
-		ifNotNil: [ :aString | searchText text: aString ]
+	self model lastSearchText ifNotNil: [ :aString | 
+		searchText text: aString.
+		searchText cursorPositionIndex: aString size + 1 ]
 ]
 
 { #category : #actions }
@@ -387,9 +364,8 @@ StSpotter >> headerCategoryUnifiedFor: aLink [
 { #category : #'private actions' }
 StSpotter >> hideSpinner [
 
-	[
-		self application defer: [ spinner hide ]
-	] schedule
+	self model schedule: [
+		self application defer: [ spinner hide ] ]
 ]
 
 { #category : #'private actions' }
@@ -411,6 +387,8 @@ StSpotter >> initialExtent [
 StSpotter >> initialize [
 
 	mutex ifNil: [ mutex := Mutex new ].
+	queue := OrderedCollection new.
+	updating := false.
 	categories := Dictionary new.
 	super initialize
 ]
@@ -539,12 +517,44 @@ StSpotter >> openFinder [
 	Finder open
 ]
 
+{ #category : #'private updating' }
+StSpotter >> queuedUpdateResultList [
+	| categoryPresenter presenters |
+
+	updating ifTrue: [ ^ self ].
+	updating := true.
+
+	[  
+		[ queue isEmpty ] 
+		whileFalse: [  | aCandidateLink |
+			mutex critical: [ aCandidateLink := queue removeFirst ].
+			categoryPresenter := aCandidateLink processor 
+			headerCategoryFor: aCandidateLink
+			on: self.
+		
+			(categoryPresenter includesLink: aCandidateLink) ifFalse: [ 
+				categoryPresenter addCandidate: aCandidateLink inSpotter: self ] ].
+	
+		presenters := (categories values 
+			sorted: [ :each | each order ] ascending)
+			flatCollect: [ :each | each withCandidates ]. 
+			
+		resultList disableActivationDuring: [ 
+			| index |
+			index := resultList selection selectedIndex.
+			resultList items: presenters.
+			resultList selectIndex: index ] 
+	]
+	ensure: [ 
+		updating := false ]
+]
+
 { #category : #private }
 StSpotter >> removeAll [
 
-	"resultList presenters: #()."
-	self allowUIToDraw.
-	categories removeAll
+	mutex critical: [ queue removeAll ]. 
+	categories removeAll.
+	self allowUIToDraw
 ]
 
 { #category : #private }
@@ -579,19 +589,19 @@ StSpotter >> showPreview: aPresenter [
 StSpotter >> showSpinner [
 
 	spinner isVisible ifTrue: [ ^ self ].
-	[
+	self model schedule: [
 		self application defer: [ spinner show ]
-	] schedule
+	]
 ]
 
 { #category : #private }
 StSpotter >> startProcessing [
 	"Start the process."
 
-	[ 
+	self model schedule: [ 
 		self allowUIToDraw.
-		self model startProcessing 
-	] schedule
+		self model startProcessingOn: self
+	]
 ]
 
 { #category : #private }
@@ -670,11 +680,13 @@ StSpotter >> updatePresenter [
 { #category : #'private updating' }
 StSpotter >> updateResultList: aCandidateLink [
 
-	[
-		self application defer: [
-			mutex critical: [
-				self deferredUpdateResultList: aCandidateLink ] ]
-	] schedule
+	mutex critical: [ queue add: aCandidateLink ].
+	updating ifTrue: [ ^ self ].
+	
+	self model schedule: [
+		self application defer: [ 
+			self queuedUpdateResultList ]
+	]
 ]
 
 { #category : #'private updating' }
@@ -689,8 +701,10 @@ StSpotter >> updateResultProcessor: processor amount: amount [
 { #category : #'private updating' }
 StSpotter >> updateSearch: aString [
 	
-	self removeAll.
-	self model asyncProcess: aString
+	self model schedule: [
+		self model 
+			processSearch: aString 
+			on: self ]
 ]
 
 { #category : #'private updating' }

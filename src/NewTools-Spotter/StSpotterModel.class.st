@@ -9,7 +9,8 @@ Class {
 		'mutex',
 		'queryStartedAction',
 		'queryEndedAction',
-		'noResultsAction'
+		'noResultsAction',
+		'scheduler'
 	],
 	#category : #'NewTools-Spotter-Model'
 }
@@ -71,15 +72,6 @@ StSpotterModel >> announceQueryStarted: ann [
 	queryStartedAction value
 ]
 
-{ #category : #processing }
-StSpotterModel >> asyncProcess: aString [
-
-	[
-		mutex critical: [
-			self process: aString ]
-	] schedule
-]
-
 { #category : #private }
 StSpotterModel >> defaultProcessors [
 
@@ -92,6 +84,11 @@ StSpotterModel >> defaultProcessors [
 StSpotterModel >> initialize [
 
 	super initialize.
+	
+	scheduler := TKTWorkerPool new.
+	scheduler poolMaxSize: 10.
+	scheduler start.
+	
 	mutex := Mutex new.
 	steps := OrderedCollection with: self newDefaultStep
 ]
@@ -125,7 +122,7 @@ StSpotterModel >> newDefaultStep [
 { #category : #'private factory' }
 StSpotterModel >> newStep [
 
-	^ StSpotterStep newModel: self
+	^ StSpotterStep on: self
 ]
 
 { #category : #accessing }
@@ -141,17 +138,23 @@ StSpotterModel >> popStep [
 	self activeStep activate
 ]
 
-{ #category : #'private processing' }
-StSpotterModel >> process: aString [
+{ #category : #'accessing query' }
+StSpotterModel >> processSearch: aString on: spotter [
+	| query |
+
+	query := StSpotterQuery 
+		newSearch: aString 
+		on: spotter.
+	self pushQuery: query
 	
-	self activeStep process: aString
 ]
 
-{ #category : #accessing }
-StSpotterModel >> pushStep: aStep [
+{ #category : #'accessing query' }
+StSpotterModel >> pushQuery: aQuery [
 
-	self activeStep deactivate.
-	steps addLast: aStep
+	self schedule: [ 
+		mutex critical: [ self activeStep pushQuery: aQuery ]
+	]
 ]
 
 { #category : #accessing }
@@ -175,20 +178,33 @@ StSpotterModel >> results [
 ]
 
 { #category : #accessing }
+StSpotterModel >> schedule: aBlock [
+
+	scheduler schedule: [
+		aBlock 
+			on: Error 
+			fork: [ :e | e pass ] ]
+]
+
+{ #category : #accessing }
 StSpotterModel >> stSpotterProcessorsFor: aStep [
 
 	self defaultProcessors 
 		do: [ :each | aStep addProcessor: each ]
 ]
 
-{ #category : #processing }
-StSpotterModel >> startProcessing [
+{ #category : #'accessing query' }
+StSpotterModel >> startProcessingOn: spotter [
 
-	self asyncProcess: ''
+	self processSearch: '' on: spotter
 ]
 
-{ #category : #processing }
+{ #category : #'accessing query' }
 StSpotterModel >> stopProcessing [
+
+	self activeStep deactivate.
+	scheduler stop
+	
 ]
 
 { #category : #events }

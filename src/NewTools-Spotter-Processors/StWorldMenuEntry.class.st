@@ -7,6 +7,13 @@ Class {
 	#category : #'NewTools-Spotter-Processors-Entries'
 }
 
+{ #category : #comparing }
+StWorldMenuEntry >> = anEntry [
+
+	^ self species = anEntry species
+		and: [ anEntry asString = self asString ]
+]
+
 { #category : #converting }
 StWorldMenuEntry >> asString [ 
 

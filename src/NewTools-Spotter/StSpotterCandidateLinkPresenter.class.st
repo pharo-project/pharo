@@ -48,7 +48,7 @@ StSpotterCandidateLinkPresenter >> model [
 ]
 
 { #category : #'accessing model' }
-StSpotterCandidateLinkPresenter >> setModelBeforeInitialization: anEntry [
+StSpotterCandidateLinkPresenter >> setModelBeforeInitialization: aCandidateLink [
 
-	model := anEntry
+	model := aCandidateLink
 ]

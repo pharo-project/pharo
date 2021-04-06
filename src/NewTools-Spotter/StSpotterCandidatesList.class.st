@@ -5,7 +5,8 @@ Class {
 		'categories',
 		'candidates',
 		'announcer',
-		'processorLinksMap'
+		'processorLinksMap',
+		'count'
 	],
 	#category : #'NewTools-Spotter-Model'
 }
@@ -21,7 +22,6 @@ StSpotterCandidatesList >> addAllCandidates: aCollection in: aProcessor [
 		candidateLink := processorLink isEmpty
 			ifTrue: [ self privateAddCandidate: candidateLink inEmpty: processorLink ]
 			ifFalse: [ self privateAddCandidate: candidateLink inNotEmpty: processorLink ].
-		self updateCycleConnectionFor: candidateLink.
 		candidateLink ].
 
 	self announcer announce: (StSpotterAllCandidatesAdded new
@@ -44,8 +44,9 @@ StSpotterCandidatesList >> addCandidate: anObjectOrLink in: aProcessor [
 		ifTrue: [ self privateAddCandidate: candidateLink inEmpty: processorLink ]
 		ifFalse: [ self privateAddCandidate: candidateLink inNotEmpty: processorLink ].
 		
-	self updateCycleConnectionFor: candidateLink.
-	
+	count := count + 1.
+	candidateLink weight: count.
+		
 	self notifyCandidateAdded: candidateLink in: aProcessor.
 	
 	^ candidateLink
@@ -123,6 +124,13 @@ StSpotterCandidatesList >> getProcessorLinkByCandidateLink: aCandidateLink [
 StSpotterCandidatesList >> head [
 
 	^ self candidates head
+]
+
+{ #category : #initialization }
+StSpotterCandidatesList >> initialize [
+
+	super initialize.
+	count := 0
 ]
 
 { #category : #testing }
@@ -344,18 +352,4 @@ StSpotterCandidatesList >> removeAllCandidatesOf: aProcessor [
 StSpotterCandidatesList >> tail [
 
 	^ self candidates tail
-]
-
-{ #category : #candidates }
-StSpotterCandidatesList >> updateCycleConnectionFor: aCandidateLink [
-
-	"if link is the last setting nextLink to head"
-	(self candidates tail = aCandidateLink) ifTrue: [
-		aCandidateLink nextLink: self candidates head.
-		self candidates head previousLink: aCandidateLink ].
-	
-	"if link is the first setting previousLink to tail"
-	(self candidates head = aCandidateLink) ifTrue: [
-		aCandidateLink previousLink: self candidates tail.
-		self candidates tail nextLink: aCandidateLink ].
 ]

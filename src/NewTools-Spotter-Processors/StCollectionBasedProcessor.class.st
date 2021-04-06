@@ -29,5 +29,6 @@ StCollectionBasedProcessor >> newEntryOn: anElement [
 StCollectionBasedProcessor >> newTextFilteringSource [
 
 	^ ((StCollectionIterator on: self collection) 
-			collect: [ :e | self newEntryOn: e ]) asSubstringFilter
+			collect: [ :each | self newEntryOn: each ]) 
+			asSubstringFilter
 ]

@@ -203,5 +203,5 @@ StSpotterHeaderPresenter >> whenDiveOutDo: aBlock [
 { #category : #accessing }
 StSpotterHeaderPresenter >> withCandidates [
 
-	^ { self }, candidatePresentersList
+	^ { self }, (candidatePresentersList sort: [ :each | each model weight ] ascending)
 ]
