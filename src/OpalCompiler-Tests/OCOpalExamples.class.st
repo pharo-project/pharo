@@ -10,7 +10,7 @@ Class {
 		'result'
 	],
 	#classVars : [
-		'ClassVariable'
+		'ExampleClassVariable'
 	],
 	#category : #'OpalCompiler-Tests-AST'
 }
@@ -23,19 +23,19 @@ OCOpalExamples class >> compilerClass [
 { #category : #compiler }
 OCOpalExamples class >> reset [
 
-	ClassVariable := nil
+	ExampleClassVariable := nil
 ]
 
 { #category : #accessing }
 OCOpalExamples >> classVariable [
 
-	^ ClassVariable
+	^ ExampleClassVariable
 ]
 
 { #category : #accessing }
 OCOpalExamples >> classVariable: anInteger [ 
 
-	ClassVariable := anInteger
+	ExampleClassVariable := anInteger
 ]
 
 { #category : #examples }
@@ -128,7 +128,7 @@ OCOpalExamples >> exampleBlockNested [
 { #category : #'examples-variables' }
 OCOpalExamples >> exampleClassVariableAssignment [
 
-	ClassVariable := 1
+	ExampleClassVariable := 1
 ]
 
 { #category : #'examples-pragmas' }
@@ -443,7 +443,7 @@ OCOpalExamples >> examplePushBigDynamicLiteralArray [
 
 { #category : #'examples-variables' }
 OCOpalExamples >> examplePushClassVariable [
-	self result: ClassVariable
+	self result: ExampleClassVariable
 ]
 
 { #category : #'examples-misc' }
