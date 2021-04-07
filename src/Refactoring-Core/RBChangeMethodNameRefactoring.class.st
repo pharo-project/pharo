@@ -33,11 +33,7 @@ RBChangeMethodNameRefactoring >> hasPermutedArguments [
 { #category : #private }
 RBChangeMethodNameRefactoring >> implementors [
 
-	implementors ifNil: [ 
-		searchInPackages 
-			ifNil: [ implementors := self model allImplementorsOf: oldSelector ]
-			ifNotNil: [ implementors := self model allImplementorsOf: oldSelector inPackages: searchInPackages ]
-		 ].
+	implementors ifNil: [ implementors := self model allImplementorsOf: oldSelector ].
 	^ implementors
 ]
 
