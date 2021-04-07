@@ -250,6 +250,12 @@ VirtualMachine >> getSystemAttribute: attributeID [
 	^ nil
 ]
 
+{ #category : #testing }
+VirtualMachine >> hasSmallFloats [
+	"SmallFloats are available in 64 bits machines"
+	^ self wordSize = 8
+]
+
 { #category : #accessing }
 VirtualMachine >> headlessOption [
 	"Return the default name for the headless option for this VM"
