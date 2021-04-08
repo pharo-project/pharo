@@ -122,7 +122,7 @@ UUIDGenerator >> computeNodeIdentifier [
 UUIDGenerator >> initialize [
 	super initialize.
 	random := Random new.
-	lock := Semaphore forMutualExclusion.
+	lock := Mutex new.
 	node := self computeNodeIdentifier.
 	counter := self nextRandom16
 ]
