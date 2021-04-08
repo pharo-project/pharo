@@ -1146,6 +1146,17 @@ CompiledMethod >> untagFrom: aSymbol [
 		self protocol: Protocol unclassified]
 ]
 
+{ #category : #testing }
+CompiledMethod >> usesUndeclareds [
+	"this is mixing Undeclareds and Obsoletes, maybe we should have two methods"	
+	self withAllNestedLiteralsDo: [ :literal | 
+		literal class == UndeclaredVariable ifTrue: [ ^ true ].
+		(literal isBlock not and: [ 
+			 literal value isBehavior and: [ literal value isObsolete ] ]) 
+			ifTrue: [ ^ true ] ].
+	^ false
+]
+
 { #category : #evaluating }
 CompiledMethod >> valueWithReceiver: aReceiver arguments: anArray [ 
 	"This should be changed when all the VM will support passign of extra arguments
