@@ -54,5 +54,5 @@ CairoLibrary >> versionString [
 { #category : #'accessing platform' }
 CairoLibrary >> win32LibraryName [ 
 	
-	^ FFIWindowsLibraryFinder findAnyLibrary: #('cairo.dll' 'libcairo-2.dll')	
+	^ FFIWindowsLibraryFinder findAnyLibrary: #('libcairo-2.dll')	
 ]
