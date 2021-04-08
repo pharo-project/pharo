@@ -279,9 +279,9 @@ ClassTest >> testHasPoolVarNamed [
 	"a metaclass does not have shared pools since only classes have shared pools"
 	self deny: (Date class usesLocalPoolVarNamed: 'DayNames').
 	
-	self assert: (RootClassPoolUser usesLocalPoolVarNamed: 'Author').
+	self assert: (RootClassPoolUser usesLocalPoolVarNamed: 'AnAuthor').
 	"a subclass does not have the one of its superclass - but it would be good to change that"
-	self deny: (SubclassPoolUser usesLocalPoolVarNamed: 'Author').
+	self deny: (SubclassPoolUser usesLocalPoolVarNamed: 'AnAuthor').
 ]
 
 { #category : #'tests - access' }
@@ -548,9 +548,9 @@ ClassTest >> testUsesPoolVarNamed [
 	"a metaclass does not have shared pools since only classes have shared pools"
 	self deny: (Date class usesPoolVarNamed: 'DayNames').
 	
-	self assert: (RootClassPoolUser usesPoolVarNamed: 'Author').
+	self assert: (RootClassPoolUser usesPoolVarNamed: 'AnAuthor').
 	"a subclass  has  the one of its superclass"
-	self assert: (SubclassPoolUser usesPoolVarNamed: 'Author')
+	self assert: (SubclassPoolUser usesPoolVarNamed: 'AnAuthor')
 ]
 
 { #category : #'tests - class variables' }

@@ -107,6 +107,19 @@ ReleaseTest >> testAllGlobalBindingAreGlobalVariables [
 ]
 
 { #category : #'tests - variables' }
+ReleaseTest >> testAllInstanceVariablesStartLowercase [
+	"Make sure that all class instance variable names start with a lowercase letter"
+	| violating |
+
+	violating := Smalltalk globals allBehaviors select: [ :class | 
+		class slots anySatisfy: [:var | var name first isUppercase]].
+
+	self 
+		assert: violating isEmpty 
+		description: 'Instance variable names must start with a lowercase letter: ', violating asArray asString
+]
+
+{ #category : #'tests - variables' }
 ReleaseTest >> testClassesShadow [
 	|  classes validExceptions remaining |
 
