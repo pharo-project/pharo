@@ -455,11 +455,11 @@ ClassTest >> testSharedPoolOfVarNamed [
 	"a metaclass does not have shared pools since only classes have shared pools"
 	self assert: (Date class sharedPoolOfVarNamed: 'DayNames') isNil.
 	
-	self assert: (RootClassPoolUser sharedPoolOfVarNamed: 'Author') equals: PoolDefiner.
+	self assert: (RootClassPoolUser sharedPoolOfVarNamed: 'AnAuthor') equals: PoolDefiner.
 	self assert: (RootClassPoolUser sharedPoolOfVarNamed: 'Gloups') equals: PoolDefiner.
-	self assert: (SubclassPoolUser sharedPoolOfVarNamed: 'Author') equals: PoolDefiner.
+	self assert: (SubclassPoolUser sharedPoolOfVarNamed: 'AnAuthor') equals: PoolDefiner.
 	
-	self assert: (ClassMultiplePoolUser sharedPoolOfVarNamed: 'Author') equals: PoolDefiner.
+	self assert: (ClassMultiplePoolUser sharedPoolOfVarNamed: 'AnAuthor') equals: PoolDefiner.
 	self assert: (ClassMultiplePoolUser sharedPoolOfVarNamed: 'VariableInPoolDefiner2') equals: PoolDefiner2.
 	self assert: (ClassMultiplePoolUser sharedPoolOfVarNamed: 'Gloups') equals: PoolDefiner
 ]
