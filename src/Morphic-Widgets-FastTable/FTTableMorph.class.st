@@ -217,7 +217,7 @@ FTTableMorph >> beRowSelection [
 
 { #category : #accessing }
 FTTableMorph >> beSingleSelection [
-	selectionStrategy := FTSimpleSelection table: self
+	selectionStrategy := FTSimpleSelectionStrategy table: self
 ]
 
 { #category : #'event handling' }
