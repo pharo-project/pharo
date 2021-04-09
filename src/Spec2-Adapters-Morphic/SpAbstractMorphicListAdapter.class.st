@@ -49,7 +49,7 @@ SpAbstractMorphicListAdapter >> configureScrolling [
 			self scrollingChanged ].
 		
 	widget
-		onAnnouncement: FTScrollingChanged
+		onAnnouncement: FTScrollingChangedAnnouncement
 		send: #scrollingChanged
 		to: self.
 ]

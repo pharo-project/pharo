@@ -137,7 +137,7 @@ FTTableMorph >> announceScrollChangedFrom: oldIndex to: newIndex [
 	oldIndex = newIndex ifTrue: [ ^ self ].
 	self
 		doAnnounce:
-			((FTScrollingChanged from: oldIndex to: newIndex)
+			((FTScrollingChangedAnnouncement from: oldIndex to: newIndex)
 				fastTable: self;
 				yourself)
 ]
