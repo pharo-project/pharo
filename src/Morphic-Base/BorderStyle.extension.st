@@ -37,7 +37,7 @@ BorderStyle class >> inset [
 
 { #category : #'*Morphic-Base' }
 BorderStyle class >> raised [
-	^RaisedBorder new
+	^RaisedBorderStyle new
 ]
 
 { #category : #'*Morphic-Base' }
