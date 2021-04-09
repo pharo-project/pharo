@@ -262,7 +262,7 @@ FTPluggableIconListMorphAdaptor >> initializeKeyBindings [
 { #category : #initialization }
 FTPluggableIconListMorphAdaptor >> initializeSelections [
 	self 
-		onAnnouncement: FTSelectionChanged  
+		onAnnouncement: FTSelectionChangedAnnouncement  
 		send: #selectionChanged: 
 		to: self.
 	self 

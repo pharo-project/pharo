@@ -100,7 +100,7 @@ GLMMorphicFTRenderer >> initializeAnnouncementForDataSource [
 		do: [ :ann | tableModel glamourPresentation strongSelection: ann strongSelectionValue ].
 	tableMorph
 		onAnnouncement: FTStrongSelectionChanged send: #strongSelection: to: tableModel;
-		onAnnouncement: FTSelectionChanged send: #selection: to: tableModel.
+		onAnnouncement: FTSelectionChangedAnnouncement send: #selection: to: tableModel.
 	self installActionsOnModel: tableModel fromPresentation: tableModel glamourPresentation.
 	self installKeystrokeActionsOnMorph: tableMorph fromPresentation: tableModel glamourPresentation.
 

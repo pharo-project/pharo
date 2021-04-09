@@ -50,7 +50,7 @@ SpMorphicTableAdapter >> addModelTo: tableMorph [
 	self configureScrolling.
 
 	tableMorph
-		onAnnouncement: FTSelectionChanged
+		onAnnouncement: FTSelectionChangedAnnouncement
 			send: #selectionChanged:
 			to: self;
 		onAnnouncement: FTStrongSelectionChanged
