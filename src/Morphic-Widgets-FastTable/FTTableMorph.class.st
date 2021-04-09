@@ -1077,7 +1077,7 @@ FTTableMorph >> selectIndexes: anArray andMakeVisibleIf: shouldEnsureVisibleSele
 	self refresh.
 	self
 		doAnnounce:
-			((FTSelectionChanged from: oldSelectedIndexes to: self selectedIndexes)
+			((FTSelectionChangedAnnouncement from: oldSelectedIndexes to: self selectedIndexes)
 				fastTable: self;
 				yourself)
 ]

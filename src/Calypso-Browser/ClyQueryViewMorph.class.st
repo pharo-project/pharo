@@ -469,7 +469,7 @@ ClyQueryViewMorph >> initializeTable [
 	table beResizable.
 	table dragEnabled: true.
 	table dropEnabled: true.
-	table onAnnouncement: FTSelectionChanged send: #selectionChanged to: self.
+	table onAnnouncement: FTSelectionChangedAnnouncement send: #selectionChanged to: self.
 	table addColumn: ClyMainTableColumn default.
 	table vResizing: #spaceFill.
 	table hResizing: #spaceFill.

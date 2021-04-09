@@ -52,7 +52,7 @@ SpMorphicListAdapter >> buildWidget [
 		setBalloonText: self help;
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
-		onAnnouncement: FTSelectionChanged send: #selectionChanged: to: self;
+		onAnnouncement: FTSelectionChangedAnnouncement send: #selectionChanged: to: self;
 		onAnnouncement: FTStrongSelectionChanged send: #strongSelectionChanged: to: self;
 		yourself.
 
