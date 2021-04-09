@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'browser'
 	],
-	#category : #'SystemCommands-RefactoringSupport'
+	#category : #'SystemCommands-ClassCommands'
 }
 
 { #category : #activation }
