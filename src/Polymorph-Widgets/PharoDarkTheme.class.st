@@ -413,7 +413,7 @@ PharoDarkTheme >> taskbarItemLabelColorForExpanded: aButton [
 
 { #category : #'border-styles-taskbar' }
 PharoDarkTheme >> taskbarItemMouseOverBorderStyleFor: aButton [
-	^ BottomBorder new
+	^ BottomBorderStyle new
 		color: Color white;
 		width: 2;
 		yourself
@@ -426,7 +426,7 @@ PharoDarkTheme >> taskbarItemMouseOverFillStyleFor: aButton [
 
 { #category : #'border-styles-taskbar' }
 PharoDarkTheme >> taskbarItemNormalBorderStyleFor: aButton [
-	^ BottomBorder new
+	^ BottomBorderStyle new
 		color: Color white;
 		width: 1;
 		trimSize: 2;
