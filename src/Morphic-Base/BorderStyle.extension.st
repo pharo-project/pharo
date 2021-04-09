@@ -2,32 +2,32 @@ Extension { #name : #BorderStyle }
 
 { #category : #'*Morphic-Base' }
 BorderStyle class >> complexAltFramed [
-	^ComplexBorder style: #complexAltFramed
+	^ComplexBorderStyle style: #complexAltFramed
 ]
 
 { #category : #'*Morphic-Base' }
 BorderStyle class >> complexAltInset [
-	^ComplexBorder style: #complexAltInset
+	^ComplexBorderStyle style: #complexAltInset
 ]
 
 { #category : #'*Morphic-Base' }
 BorderStyle class >> complexAltRaised [
-	^ComplexBorder style: #complexAltRaised
+	^ComplexBorderStyle style: #complexAltRaised
 ]
 
 { #category : #'*Morphic-Base' }
 BorderStyle class >> complexFramed [
-	^ComplexBorder style: #complexFramed
+	^ComplexBorderStyle style: #complexFramed
 ]
 
 { #category : #'*Morphic-Base' }
 BorderStyle class >> complexInset [
-	^ComplexBorder style: #complexInset
+	^ComplexBorderStyle style: #complexInset
 ]
 
 { #category : #'*Morphic-Base' }
 BorderStyle class >> complexRaised [
-	^ComplexBorder style: #complexRaised
+	^ComplexBorderStyle style: #complexRaised
 ]
 
 { #category : #'*Morphic-Base' }
