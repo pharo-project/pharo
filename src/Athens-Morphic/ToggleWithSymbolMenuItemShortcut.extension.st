@@ -1,7 +1,7 @@
-Extension { #name : #ToggleMenuItemShortcutWithSymbol }
+Extension { #name : #ToggleWithSymbolMenuItemShortcut }
 
 { #category : #'*Athens-Morphic' }
-ToggleMenuItemShortcutWithSymbol >> drawOnAthensCanvas: aCanvas [
+ToggleWithSymbolMenuItemShortcut >> drawOnAthensCanvas: aCanvas [
 	| keyParts text paragraph keyBounds keyFont |
 
 	keyParts := (self keyText substrings: '+') collect: [:each | each trimBoth].
