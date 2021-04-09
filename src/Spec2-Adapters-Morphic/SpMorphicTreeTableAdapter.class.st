@@ -105,7 +105,7 @@ SpMorphicTreeTableAdapter >> addModelTo: tableMorph [
 		onAnnouncement: FTSelectionChanged
 			send: #selectionChanged:
 			to: self;
-		onAnnouncement: FTStrongSelectionChanged
+		onAnnouncement: FTStrongSelectionChangedAnnouncement
 			send: #strongSelectionChanged:
 			to: self
 ]
@@ -410,7 +410,7 @@ SpMorphicTreeTableAdapter >> suspendSelectionEventsDuring: aBlock [
 	registry 
 		subscriptionsOf: self 
 		do: [ :each | 
-			({ FTSelectionChanged. FTStrongSelectionChanged } includes: each announcementClass) 
+			({ FTSelectionChanged. FTStrongSelectionChangedAnnouncement } includes: each announcementClass) 
 				ifTrue: [ subscriptions add: each ] ]. 
 			
 	subscriptions do: [ :each | registry remove: each ].

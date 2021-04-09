@@ -53,7 +53,7 @@ SpMorphicTableAdapter >> addModelTo: tableMorph [
 		onAnnouncement: FTSelectionChanged
 			send: #selectionChanged:
 			to: self;
-		onAnnouncement: FTStrongSelectionChanged
+		onAnnouncement: FTStrongSelectionChangedAnnouncement
 			send: #strongSelectionChanged:
 			to: self.
 

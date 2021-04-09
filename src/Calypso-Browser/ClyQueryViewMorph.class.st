@@ -837,7 +837,7 @@ ClyQueryViewMorph >> wantsDropPassenger: aPassenger at: aDataSourceItem [
 { #category : #'events subscription' }
 ClyQueryViewMorph >> whenDoubleClickDo: aBlock [
 
-	table onAnnouncement: FTStrongSelectionChanged do: aBlock
+	table onAnnouncement: FTStrongSelectionChangedAnnouncement do: aBlock
 ]
 
 { #category : #'events subscription' }

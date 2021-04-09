@@ -266,7 +266,7 @@ FTPluggableIconListMorphAdaptor >> initializeSelections [
 		send: #selectionChanged: 
 		to: self.
 	self 
-		onAnnouncement: FTStrongSelectionChanged  
+		onAnnouncement: FTStrongSelectionChangedAnnouncement  
 		send: #strongSelectionChanged: 
 		to: self.	
 ]

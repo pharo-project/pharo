@@ -32,7 +32,7 @@ SpMorphicComponentListAdapter >> buildWidget [
 		vResizing: #spaceFill;
 		setBalloonText: self help;
 		onAnnouncement: FTSelectionChanged send: #selectionChanged: to: self;
-		onAnnouncement: FTStrongSelectionChanged send: #strongSelectionChanged: to: self;
+		onAnnouncement: FTStrongSelectionChangedAnnouncement send: #strongSelectionChanged: to: self;
 		yourself.
 		
 	self presenter whenPresentersChangedDo: [ self refreshList ].

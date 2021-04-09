@@ -300,7 +300,7 @@ FTTableMorph >> disableFunction [
 
 { #category : #'event handling' }
 FTTableMorph >> doubleClick: event [
-	(self selectionModeStrategy selectableIndexContainingPoint: event cursorPoint) ifNotNil: [ :index | self doAnnounce: (FTStrongSelectionChanged index: index event: event) ]
+	(self selectionModeStrategy selectableIndexContainingPoint: event cursorPoint) ifNotNil: [ :index | self doAnnounce: (FTStrongSelectionChangedAnnouncement index: index event: event) ]
 ]
 
 { #category : #drawing }

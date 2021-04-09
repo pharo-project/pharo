@@ -53,7 +53,7 @@ SpMorphicListAdapter >> buildWidget [
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		onAnnouncement: FTSelectionChanged send: #selectionChanged: to: self;
-		onAnnouncement: FTStrongSelectionChanged send: #strongSelectionChanged: to: self;
+		onAnnouncement: FTStrongSelectionChangedAnnouncement send: #strongSelectionChanged: to: self;
 		yourself.
 
 	self presenter whenModelChangedDo: [ widget refresh ].

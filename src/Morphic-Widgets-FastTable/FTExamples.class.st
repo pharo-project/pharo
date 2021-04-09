@@ -261,7 +261,7 @@ FTExamples class >> exampleEditableList1 [
 		dataSource: (FTExampleDropDataSource new elements: data);
 		selectIndex: 1;
 		showFirstSelection;
-		onAnnouncement: FTStrongSelectionChanged
+		onAnnouncement: FTStrongSelectionChangedAnnouncement
 			do: [ :ann | 
 			| index morph ed |
 			index := ann selectedIndex.
@@ -371,7 +371,7 @@ FTExamples class >> exampleList4 [
 		showFirstSelection;
 		onAnnouncement: FTSelectionChanged
 			do: [ :ann | ('row selected: ' , ann newSelectedIndexes asString) crTrace ];
-		onAnnouncement: FTStrongSelectionChanged
+		onAnnouncement: FTStrongSelectionChangedAnnouncement
 			do:
 				[ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
 		yourself.
@@ -395,7 +395,7 @@ FTExamples class >> exampleList5 [
 		selectIndexes: #(42 43);
 		showFirstSelection;
 		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crTrace ];
-		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
+		onAnnouncement: FTStrongSelectionChangedAnnouncement do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
 		beMultipleSelection;
 		yourself.
 
@@ -595,7 +595,7 @@ FTExamples class >> exampleSortableTable1 [
 		selectFirst;
 		showFirstSelection;
 		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crTrace ];
-		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
+		onAnnouncement: FTStrongSelectionChangedAnnouncement do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
 		beMultipleSelection;
 		beResizable;
 		yourself.
@@ -705,7 +705,7 @@ FTExamples class >> exampleTable1 [
 		selectFirst;
 		showFirstSelection;
 		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crTrace ];
-		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
+		onAnnouncement: FTStrongSelectionChangedAnnouncement do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
 		beMultipleSelection;
 		beResizable;
 		yourself.
@@ -729,7 +729,7 @@ FTExamples class >> exampleTable2 [
 		selectFirst;
 		showFirstSelection;
 		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crTrace ];
-		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
+		onAnnouncement: FTStrongSelectionChangedAnnouncement do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
 		beMultipleSelection;
 		beResizable;
 		yourself.
@@ -755,7 +755,7 @@ FTExamples class >> exampleTable3 [
 		selectFirst;
 		showFirstSelection;
 		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crTrace ];
-		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
+		onAnnouncement: FTStrongSelectionChangedAnnouncement do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
 		beMultipleSelection;
 		beResizable;
 		yourself.
@@ -783,7 +783,7 @@ FTExamples class >> exampleTable4 [
 		selectFirst;
 		showFirstSelection;
 		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crTrace ];
-		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
+		onAnnouncement: FTStrongSelectionChangedAnnouncement do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
 		beMultipleSelection;
 		beResizable;
 		yourself.
@@ -833,7 +833,7 @@ FTExamples class >> exampleTableHorizontalScroll [
 		selectFirst;
 		showFirstSelection;
 		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crTrace ];
-		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
+		onAnnouncement: FTStrongSelectionChangedAnnouncement do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
 		beMultipleSelection;
 		yourself.
 
