@@ -15,13 +15,19 @@ FinderExampleMethodNode >> childNodeClassFromItem: anItem [
 	^ FinderExampleClassNode
 ]
 
+{ #category : #displaying }
+FinderExampleMethodNode >> displayString [
+	
+	^ self selector asString
+]
+
 { #category : #private }
 FinderExampleMethodNode >> receiver [
 	"return the receiver of my item."
-	^(RBParser parseExpression: self item) receiver evaluate
+	^self item receiver
 ]
 
 { #category : #private }
 FinderExampleMethodNode >> selector [
-	^ self model finder findSelector: self item
+	^ self item selector
 ]
