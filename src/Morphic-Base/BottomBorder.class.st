@@ -27,7 +27,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : #BottomBorder,
-	#superclass : #SimpleBorder,
+	#superclass : #SimpleBorderStyle,
 	#instVars : [
 		'trimSize'
 	],

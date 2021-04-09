@@ -2336,7 +2336,7 @@ UITheme >> groupLabelBorderStyleFor: aGroupPanel [
 UITheme >> groupPanelBorderStyleFor: aGroupPanel [
 	"Answer the normal border style for a group panel."
 
-	^ SimpleBorder new
+	^ SimpleBorderStyle new
 		width: 1;
 		baseColor: ((self baseColorFor: aGroupPanel))
 ]
@@ -3631,7 +3631,7 @@ UITheme >> newFocusIndicatorMorphFor: aMorph [
 
 	^ BorderedMorph new
 		fillStyle: Color transparent;
-		borderStyle: (SimpleBorder new
+		borderStyle: (SimpleBorderStyle new
 			 width: 1;
 			baseColor: (self baseSelectionColorFor: aMorph));
 		bounds: aMorph focusBounds
@@ -4746,7 +4746,7 @@ UITheme >> patchworkUIThemeColorFor: aWindowOrModel [
 UITheme >> plainGroupPanelBorderStyleFor: aGroupPanel [
 	"Answer the normal border style for a plain group panel."
 
-	^SimpleBorder new
+	^SimpleBorderStyle new
 		width: 1;
 		baseColor: Color transparent
 ]

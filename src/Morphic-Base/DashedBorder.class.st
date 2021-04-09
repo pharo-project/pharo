@@ -3,7 +3,7 @@ Border style supporting dashed lines of configurable patterns and colours.
 "
 Class {
 	#name : #DashedBorder,
-	#superclass : #SimpleBorder,
+	#superclass : #SimpleBorderStyle,
 	#instVars : [
 		'dashColors',
 		'dashLengths'

@@ -3,7 +3,7 @@ see BorderedMorph
 "
 Class {
 	#name : #RaisedBorder,
-	#superclass : #SimpleBorder,
+	#superclass : #SimpleBorderStyle,
 	#category : #'Morphic-Base-Borders'
 }
 

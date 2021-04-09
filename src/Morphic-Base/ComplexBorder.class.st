@@ -58,7 +58,7 @@ Display deferUpdates: false.
 "
 Class {
 	#name : #ComplexBorder,
-	#superclass : #SimpleBorder,
+	#superclass : #SimpleBorderStyle,
 	#instVars : [
 		'style',
 		'colors',

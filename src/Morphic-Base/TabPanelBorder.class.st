@@ -3,7 +3,7 @@ Specialist border for a TabGroup panel. Does not draw border beneath selected ta
 "
 Class {
 	#name : #TabPanelBorder,
-	#superclass : #SimpleBorder,
+	#superclass : #SimpleBorderStyle,
 	#instVars : [
 		'tabSelector'
 	],

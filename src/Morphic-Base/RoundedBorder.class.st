@@ -3,7 +3,7 @@ Rounded corner border supporting radii of 1-4 pixels. Slower but more flexible t
 "
 Class {
 	#name : #RoundedBorder,
-	#superclass : #SimpleBorder,
+	#superclass : #SimpleBorderStyle,
 	#instVars : [
 		'cornerRadius'
 	],

@@ -95,11 +95,11 @@ PharoDarkTheme >> buttonNormalBorderStyleFor: aButton [
 	
 	(aButton valueOfProperty: #noBorder ifAbsent: [ false ]) 
 		ifTrue: [ 
-			^ SimpleBorder new 
+			^ SimpleBorderStyle new 
 				width: 0; 
 				baseColor: Color transparent ].
 	
-	^ SimpleBorder new
+	^ SimpleBorderStyle new
 		width: 1;
 		baseColor: self buttonColor lighter
 ]
@@ -167,7 +167,7 @@ PharoDarkTheme >> configureTextMorph: textMorph [
 PharoDarkTheme >> configureWindowBorderFor: aWindow [
 
 	| aStyle |
-	aStyle := SimpleBorder new 
+	aStyle := SimpleBorderStyle new 
 					color: self borderColor;
 					width: 1.
 	aWindow borderStyle: aStyle

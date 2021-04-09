@@ -44,10 +44,10 @@ BorderStyle class >> raised [
 BorderStyle class >> simple [
 	"Answer a simple border style"
 
-	^ SimpleBorder new
+	^ SimpleBorderStyle new
 ]
 
 { #category : #'*Morphic-Base' }
 BorderStyle class >> width: aNumber color: aColor [
-	^SimpleBorder new color: aColor; width: aNumber; yourself
+	^SimpleBorderStyle new color: aColor; width: aNumber; yourself
 ]

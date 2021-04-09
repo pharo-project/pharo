@@ -3,7 +3,7 @@ BorderStyle supporting general (potentially composite) fillstyles.
 "
 Class {
 	#name : #FillStyleBorder,
-	#superclass : #SimpleBorder,
+	#superclass : #SimpleBorderStyle,
 	#instVars : [
 		'fillStyle'
 	],

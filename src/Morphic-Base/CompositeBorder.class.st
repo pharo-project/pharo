@@ -3,7 +3,7 @@ Border supporting multiple ""sub-borders"".
 "
 Class {
 	#name : #CompositeBorder,
-	#superclass : #SimpleBorder,
+	#superclass : #SimpleBorderStyle,
 	#instVars : [
 		'borders'
 	],
