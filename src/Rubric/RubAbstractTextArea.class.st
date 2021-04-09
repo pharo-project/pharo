@@ -1493,7 +1493,7 @@ RubAbstractTextArea >> paragraphWasComposedFrom: startIndex to: stopIndex [
 { #category : #initialization }
 RubAbstractTextArea >> plugFindReplace [
 	self announcer 
-		when:  MorphGotFocus send: #whenTextAreaGotFocus: to: self findReplaceService;
+		when:  MorphGotFocusAnnouncement send: #whenTextAreaGotFocus: to: self findReplaceService;
 	 	when:  MorphLostFocus send: #whenTextAreaLostFocus: to: self findReplaceService;	
 		when:  RubSelectionChanged send: #whenTextAreaSelectionChanged: to: self findReplaceService
 ]

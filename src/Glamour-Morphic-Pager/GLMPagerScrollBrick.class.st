@@ -105,7 +105,7 @@ GLMPagerScrollBrick >> initialize [
 	maxPanes := 2.
 	self band: self newBand.
 	Morph announcer weak 
-		when: MorphGotFocus send: #focusChanged: to: self.
+		when: MorphGotFocusAnnouncement send: #focusChanged: to: self.
 ]
 
 { #category : #accessing }

@@ -1048,7 +1048,7 @@ Morph >> announceDeleted [
 Morph >> announceKeyboardFocusChange: gotFocus [
 	| announcement |
 	announcement := gotFocus 
-						ifTrue: [ MorphGotFocus morph: self ]
+						ifTrue: [ MorphGotFocusAnnouncement morph: self ]
 						ifFalse: [ MorphLostFocus morph: self ].
 	self doAnnounce: announcement.
 	Morph announcer announce: announcement.

@@ -320,7 +320,7 @@ SpAbstractMorphicAdapter >> installFocusLostEvent: anEvent to: aWidget [
 SpAbstractMorphicAdapter >> installFocusReceivedEvent: anEvent to: aWidget [
 
 	aWidget announcer 
-		when: MorphGotFocus
+		when: MorphGotFocusAnnouncement
 		do: [ anEvent action value ]
 ]
 

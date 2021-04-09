@@ -173,7 +173,7 @@ GLMEditableLabelBrick >> editBrick: aBrick [
 	
 	self editBrick rubric announcer when: RubReturnEntered  send: #onTextAccepted: to: self.
 	self editBrick rubric announcer when: MorphLostFocus send: #onLostFocus to: self.
-	self editBrick rubric announcer when: MorphGotFocus send: #onGotFocus: to: self.
+	self editBrick rubric announcer when: MorphGotFocusAnnouncement send: #onGotFocus: to: self.
 	self editBrick rubric announcer when: RubTextAcceptRequest send: #onTextChanged: to: self
 ]
 
