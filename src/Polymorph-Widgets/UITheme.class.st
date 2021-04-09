@@ -2090,7 +2090,7 @@ UITheme >> drawWindowPlainDropShadowFor: aSystemWindow on: aCanvas [
 	aCanvas
 		clipBy: (aSystemWindow bounds bottomRight - brOffset
 			corner: aSystemWindow bounds bottomRight + (1@1))
-			during: [:c | ((RoundedBorder new
+			during: [:c | ((RoundedBorderStyle new
 							baseColor: aSystemWindow shadowColor;
 							width: 1) cornerRadius: brOffset - 1)
 							frameRectangle: (aSystemWindow bounds translateBy: 1)
