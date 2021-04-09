@@ -39,7 +39,7 @@ RubPrimarySelectionMorph >> registerTextArea [
 	textArea announcer 
 	when:  RubSelectionChanged send: #whenTextAreaSelectionChanged: to: self;
 	when:  MorphGotFocus send: #whenTextAreaGotFocus: to: self;	
-	when:  MorphLostFocus send: #whenTextAreaLostFocus: to: self.	
+	when:  MorphLostFocusAnnouncement send: #whenTextAreaLostFocus: to: self.	
 
 ]
 

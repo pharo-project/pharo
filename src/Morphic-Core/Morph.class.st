@@ -1049,7 +1049,7 @@ Morph >> announceKeyboardFocusChange: gotFocus [
 	| announcement |
 	announcement := gotFocus 
 						ifTrue: [ MorphGotFocus morph: self ]
-						ifFalse: [ MorphLostFocus morph: self ].
+						ifFalse: [ MorphLostFocusAnnouncement morph: self ].
 	self doAnnounce: announcement.
 	Morph announcer announce: announcement.
 ]

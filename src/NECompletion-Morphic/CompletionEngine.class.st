@@ -342,7 +342,7 @@ CompletionEngine >> setEditor: anObject [
 		"make sure we unsubscribe from old editor"
 		editor morph ifNotNil: [:m | m announcer unsubscribe: self] ].
 	editor := anObject.
-	editor morph onAnnouncement: MorphLostFocus send: #closeMenu to: self.
+	editor morph onAnnouncement: MorphLostFocusAnnouncement send: #closeMenu to: self.
 	editor morph onAnnouncement: MorphClosePopups send: #closeMenu to: self.
 ]
 

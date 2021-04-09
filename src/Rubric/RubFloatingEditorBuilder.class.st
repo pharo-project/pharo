@@ -120,7 +120,7 @@ RubFloatingEditorBuilder >> buildEditor [
 		autoAccept: autoAccept;
 		setTextWith: self initialContents.
 	editor announcer
-		when: MorphLostFocus send: #whenEditorLostFocus: to: self;
+		when: MorphLostFocusAnnouncement send: #whenEditorLostFocus: to: self;
 		when: RubTextAccepted send: #whenTextAccepted: to: self;
 		when: RubReturnEntered send: #whenReturnEntered: to: self;
 		when: RubKeystroke send: #whenKeystroke: to: self;

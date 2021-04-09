@@ -52,7 +52,7 @@ GLMPopper >> initialize [
 	super initialize.
 	self changeProportionalLayout.
 	self
-		onAnnouncement: MorphLostFocus do: [ :ann | ann morph delete ];
+		onAnnouncement: MorphLostFocusAnnouncement do: [ :ann | ann morph delete ];
 		color: Color transparent
 ]
 
@@ -81,7 +81,7 @@ GLMPopper >> updateWithString: string from: aMorph [
 			self delete.
 			aMorph textArea removeHighlightSegment.
 			aMorph takeKeyboardFocus ];
-		onAnnouncement: MorphLostFocus do: [ :ann | 
+		onAnnouncement: MorphLostFocusAnnouncement do: [ :ann | 
 			self delete.
 			aMorph textArea removeHighlightSegment.
 			"If this event is triggered then another morph already has the focus.

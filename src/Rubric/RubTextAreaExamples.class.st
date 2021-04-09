@@ -174,7 +174,7 @@ RubTextAreaExamples class >> presentationInput [
 								takeKeyboardFocus;
 								backgroundColor: Color black;
 								cellInset: 50;
-								onAnnouncement: MorphLostFocus
+								onAnnouncement: MorphLostFocusAnnouncement
 									do: [ :ann | ann morph delete ];
 								font: (LogicalFont familyName: 'Source Sans Pro' pointSize: 20);
 								openCenteredInWorld ]))

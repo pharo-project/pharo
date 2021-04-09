@@ -1,8 +1,10 @@
-"
-I'm an announcement raised when a morph losts keyboard focus.
-"
 Class {
 	#name : #MorphLostFocus,
-	#superclass : #MorphAnnouncement,
+	#superclass : #MorphLostFocusAnnouncement,
 	#category : #'Morphic-Core-Announcements'
 }
+
+{ #category : #testing }
+MorphLostFocus class >> isDeprecated [ 
+	^ true
+]
