@@ -109,7 +109,7 @@ PSMCPatchMorph >> buildUI [
 		fullFrame: ((0.3@0 corner: 1@1) asLayoutFrame topLeftOffset: ProportionalSplitterMorph splitterWidth @ descriptionHeight);
 		addPaneSplitters.
 	self updateDescriptionFillStyle: self paneColor.
-	self onAnnouncement: MorphOpened do: [ self expandChangeTree ]
+	self onAnnouncement: MorphOpenedAnnouncement do: [ self expandChangeTree ]
 
 ]
 

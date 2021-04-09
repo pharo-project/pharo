@@ -1056,7 +1056,7 @@ Morph >> announceKeyboardFocusChange: gotFocus [
 
 { #category : #announcements }
 Morph >> announceOpened [
-	self doAnnounce: (MorphOpened morph: self).
+	self doAnnounce: (MorphOpenedAnnouncement morph: self).
 	self submorphs do: #announceOpened
 ]
 
