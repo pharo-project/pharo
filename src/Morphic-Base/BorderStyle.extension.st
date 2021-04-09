@@ -32,7 +32,7 @@ BorderStyle class >> complexRaised [
 
 { #category : #'*Morphic-Base' }
 BorderStyle class >> inset [
-	^InsetBorder new
+	^InsetBorderStyle new
 ]
 
 { #category : #'*Morphic-Base' }
