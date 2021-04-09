@@ -3,7 +3,7 @@ I am the state of a selected tab
 "
 Class {
 	#name : #TabSelected,
-	#superclass : #TabEnabled,
+	#superclass : #TabEnabledState,
 	#category : #'Morphic-Widgets-Tabs-States'
 }
 
@@ -21,7 +21,7 @@ TabSelected >> isSelectedMatchingTheState: aBoolean [
 { #category : #protocol }
 TabSelected >> newStateForSelected: aBoolean [
 
-	^ TabEnabled tab: self tab
+	^ TabEnabledState tab: self tab
 ]
 
 { #category : #protocol }

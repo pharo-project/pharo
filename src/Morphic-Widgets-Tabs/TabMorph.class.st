@@ -601,7 +601,7 @@ TabMorph >> initialize [
 
 	self changeProportionalLayout.
 
-	state := TabEnabled tab: self.
+	state := TabEnabledState tab: self.
 	closeable := true.
 	label := self buildLabel: 'tab' withIcon: self defaultIcon.
 	closeIcon := AlphaImageMorph withForm: self class closeIcon scaledByDisplayScaleFactor.

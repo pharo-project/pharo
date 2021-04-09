@@ -27,7 +27,7 @@ TabDisabled >> isSelectedMatchingTheState: aBoolean [
 { #category : #protocol }
 TabDisabled >> newStateForEnabled: aBoolean [
 
-	^ TabEnabled tab: self tab
+	^ TabEnabledState tab: self tab
 ]
 
 { #category : #protocol }
