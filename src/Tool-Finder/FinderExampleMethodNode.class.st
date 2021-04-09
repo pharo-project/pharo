@@ -17,8 +17,12 @@ FinderExampleMethodNode >> childNodeClassFromItem: anItem [
 
 { #category : #displaying }
 FinderExampleMethodNode >> displayString [
-	
-	^ self selector asString
+
+	^ String streamContents: [ :str | 
+		  str
+			  print: self item;
+			  nextPutAll: ' -> ';
+			  print: self item evaluate ]
 ]
 
 { #category : #private }
