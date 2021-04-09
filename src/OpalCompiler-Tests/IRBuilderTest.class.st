@@ -275,7 +275,7 @@ IRBuilderTest >> testLiteralVariableClass [
 IRBuilderTest >> testLiteralVariableClassVariable [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
-		pushLiteralVariable: (DateAndTime bindingOf: #LocalTimeZone);
+		pushLiteralVariable: (DateAndTime bindingOf: #LocalTimeZoneCache);
 		returnTop;
 		ir.
 
