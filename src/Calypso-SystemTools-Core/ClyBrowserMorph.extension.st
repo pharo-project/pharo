@@ -67,24 +67,6 @@ ClyBrowserMorph >> confirmUnusedClasses: classes [
 ]
 
 { #category : #'*Calypso-SystemTools-Core' }
-ClyBrowserMorph >> confirmUnusedClassesExceptInheritance: classes [
-	
-	| refQuery noUsers answer users |
-	
-	refQuery := ClyClassReferencesQuery toAny: classes from: self systemScope.	
-	"we need to exclude both the class and instance side of the class"
-	noUsers := self confirmEmptySystemQuery: refQuery excluding: (classes flatCollect: [ :each | { each . each classSide } ]).
-	
-	users := (classes flatCollect: [:each | each users]) copyWithoutAll: classes.
-	users ifNotEmpty: [ 
-		noUsers := false.
-		answer := UIManager default confirm: 'There are users of trait. Show them?'. 
-		answer ifTrue: [ self spawnQueryBrowserOn: (ClyConstantQuery returning: users) ]].
-	
-	^noUsers
-]
-
-{ #category : #'*Calypso-SystemTools-Core' }
 ClyBrowserMorph >> confirmUnusedVariables: variables [
 	
 	| refQuery |
@@ -111,6 +93,29 @@ ClyBrowserMorph >> decorateMethodEditor: aMethodEditor [
 ClyBrowserMorph >> isMethodSelected: aMethod [
 
 	^self methodSelection includesActualObject: aMethod
+]
+
+{ #category : #'*Calypso-SystemTools-Core' }
+ClyBrowserMorph >> requestRemoveClassStrategyFor: classes [
+
+	| result strategies title |
+	strategies := SycRemoveClassStrategy
+		              createForBrowser: self
+		              classes: classes.
+
+	strategies size = 1 ifTrue: [ ^ strategies first ].
+	
+	title := classes size = 1
+		ifTrue: [ 'Class has references, subclasses, or users' ]
+		ifFalse: [ 'Classes have references, subclasses, or users' ].
+
+	result := UIManager default
+		          chooseFrom:
+		          (strategies collect: [ :each | each userRequestString ])
+		          values: strategies
+		          title: title.
+
+	^ result ifNil: [ SycNotRemoveClassStrategy new ]
 ]
 
 { #category : #'*Calypso-SystemTools-Core' }
