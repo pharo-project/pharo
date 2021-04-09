@@ -108,16 +108,13 @@ ReleaseTest >> testAllGlobalBindingAreGlobalVariables [
 
 { #category : #'tests - variables' }
 ReleaseTest >> testClassesShadow [
-	|  classes validExceptions remaining |
 
+	| classes |
 	classes := Smalltalk globals allBehaviors select: [ :class | 
-		class definedVariables anySatisfy: [:var | var isShadowing]].
+		           class definedVariables anySatisfy: [ :var | 
+			           var isShadowing ] ].
 
-	validExceptions := #().	
-	
-	remaining := classes asOrderedCollection reject: [ :each  | validExceptions includes: each name].
-	"6 left that we need to fix"
-	self assert: remaining size <= 6.
+	self assert: classes isEmpty description: classes asArray asString
 ]
 
 { #category : #tests }
