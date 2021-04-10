@@ -239,16 +239,17 @@ Process >> doTerminationFromAnotherProcess [
 	ctxt := suspendedContext.
 	[(ctxt := ctxt findNextUnwindContextUpTo: nil) isNil] whileFalse: 
 		"Contexts under evaluation have already set their complete (tempAt: 2) to true."
-		[(ctxt tempAt:2) ifNotNil: [outerMost := ctxt]].
+		[ctxt unwindComplete ifNotNil: [outerMost := ctxt]].
 	outerMost ifNotNil: [
 		"This is the outer-most unwind context currently under evaluation;
 		let's find an inner context executing outerMost's argument block (tempAt: 1)"
 		(suspendedContext findContextSuchThat: [:ctx | 
-			ctx closure == (outerMost tempAt: 1)]) ifNotNil: [:inner | 
+			ctx closure == outerMost unwindBlock]) ifNotNil: [:inner | 
 				"Let's finish the unfinished unwind context only (i.e. up to inner) and return here"
-				suspendedContext runUntilErrorOrReturnFrom: inner.
-				"Update the receiver's suspendedContext (the previous step reset its sender to nil)"
-				suspendedContext := outerMost]]. 
+				outerMost := (suspendedContext runUntilErrorOrReturnFrom: inner) first.
+				"Update the receiver's suspendedContext (the previous step reset its sender to nil);
+				return, if the execution stack reached its bottom (e.g. in case of non-local returns)."
+				(suspendedContext := outerMost sender) ifNil: [^self]]]. 
 
 	"Now all unwind blocks caught halfway through have been completed; 
 	let's execute the ones still pending. Note: #findNextUnwindContextUpTo: starts
@@ -256,9 +257,9 @@ Process >> doTerminationFromAnotherProcess [
 	ctxt := suspendedContext.
 	ctxt isUnwindContext ifFalse: [ctxt := ctxt findNextUnwindContextUpTo: nil].
 	[ctxt isNil] whileFalse: [
-		(ctxt tempAt: 2) ifNil: [
-			ctxt tempAt: 2 put: true.
-			unwindBlock := ctxt tempAt: 1.
+		ctxt unwindComplete ifNil: [
+			ctxt unwindComplete: true.
+			unwindBlock := ctxt unwindBlock.
 			"Create a context for the unwind block and execute it on the unwind block's stack. 
 			Note: using #value instead of #runUntilErrorOrReturnFrom: would lead to executing 
 			the unwind on the wrong stack preventing the correct execution of non-local returns."
