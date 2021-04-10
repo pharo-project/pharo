@@ -260,10 +260,8 @@ Process >> doTerminationFromAnotherProcess [
 			suspendedContext runUntilErrorOrReturnFrom: suspendedContext].
 		ctxt := ctxt findNextUnwindContextUpTo: nil].
 
-	"Set the context to its endPC and its sender to nil for the benefit of isTerminated."
-	ctxt := suspendedContext.
-	ctxt terminateTo: nil.
-	ctxt pc: ctxt endPC
+	"Reset the context's pc and sender to nil for the benefit of isTerminated."
+	suspendedContext terminate
 ]
 
 { #category : #private }
