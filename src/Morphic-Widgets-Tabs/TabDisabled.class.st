@@ -1,3 +1,6 @@
+"
+I am the state corresponding to a tab being disabled.
+"
 Class {
 	#name : #TabDisabled,
 	#superclass : #TabDisabledState,
