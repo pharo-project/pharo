@@ -42,5 +42,5 @@ TabEnabled >> newStateForEnabled: aBoolean [
 TabEnabled >> newStateForSelected: aBoolean [
 	self assert: aBoolean.
 	
-	^ TabSelected tab: self tab
+	^ TabSelectedState tab: self tab
 ]
