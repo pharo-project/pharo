@@ -5,7 +5,7 @@ This way I can control which of my submorphs to show according to the tab size
 "
 Class {
 	#name : #TabLabelItem,
-	#superclass : #IconicListItem,
+	#superclass : #IconicListItemMorph,
 	#instVars : [
 		'tab',
 		'storedIcon'
