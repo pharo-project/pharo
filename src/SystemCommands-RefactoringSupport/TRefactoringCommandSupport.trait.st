@@ -17,7 +17,7 @@ TRefactoringCommandSupport >> setUpModelFromContext: aContext [
 	| browser scope |
 	browser := aContext browser.
 	scope := browser defaultNavigationScope.
-	scope description = 'current image' ifTrue: [ 
+	scope isCurrentImage ifTrue: [ 
 		| scopes choosenScope |
 		scopes := browser allNavigationScopes.
 		choosenScope := scopes select: [ :e | e isKindOf: RefactoringSettings scopeRefactoring ].
