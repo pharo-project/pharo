@@ -1,3 +1,6 @@
+"
+Border with customisable inner margin.
+"
 Class {
 	#name : #MarginBorder,
 	#superclass : #MarginBorderStyle,
