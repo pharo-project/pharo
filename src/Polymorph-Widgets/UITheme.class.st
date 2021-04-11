@@ -5537,7 +5537,7 @@ UITheme >> tabLabelSelectedFillStyleFor: aTabLabel [
 
 { #category : #'border-styles' }
 UITheme >> tabPanelBorderStyleFor: aTabGroup [
-	^ Pharo3TabPanelBorder new 
+	^ Pharo3TabPanelBorderStyle new 
 		width: 1;
 		baseColor: ((self darkBaseColorFor: aTabGroup));
 		tabSelector: aTabGroup tabSelectorMorph
