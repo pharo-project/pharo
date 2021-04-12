@@ -1,6 +1,6 @@
-Extension { #name : #CompositeBorder }
+Extension { #name : #CompositeBorderStyle }
 
 { #category : #'*Athens-Morphic' }
-CompositeBorder >> asAthensPaintOn: anAthensCanvas [
+CompositeBorderStyle >> asAthensPaintOn: anAthensCanvas [
 	^ AthensCompositeStrokePaint new fromBorderStyles: borders on: anAthensCanvas
 ]
