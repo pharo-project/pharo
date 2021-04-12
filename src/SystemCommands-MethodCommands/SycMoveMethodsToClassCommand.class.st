@@ -41,14 +41,14 @@ SycMoveMethodsToClassCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycMoveMethodsToClassCommand >> execute [
-	self fillNonExistenProtocol.
+	self fillNonExistingProtocol.
 	methods 
 		collect: [ :each | RBMoveMethodToClassRefactoring model: model method: each class: targetClass ]
 		thenDo: [ :each | each execute ]
 ]
 
 { #category : #filling }
-SycMoveMethodsToClassCommand >> fillNonExistenProtocol [
+SycMoveMethodsToClassCommand >> fillNonExistingProtocol [
 	methods do: [ :meth | meth tags ifEmpty: 
 		[ self tagMethod: meth ] ].
 ]
