@@ -183,7 +183,7 @@ FTTableMorph >> beCellSelection [
 
 { #category : #accessing }
 FTTableMorph >> beMultipleSelection [
-	selectionStrategy := FTMultipleSelection table: self
+	selectionStrategy := FTMultipleSelectionStrategy table: self
 ]
 
 { #category : #accessing }
