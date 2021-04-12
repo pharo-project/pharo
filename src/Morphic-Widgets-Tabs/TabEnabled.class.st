@@ -35,12 +35,12 @@ TabEnabled >> newStateForEnabled: aBoolean [
 	"aBoolean here must be false"
 	self deny: aBoolean.
 	
-	^ TabDisabled tab: self tab
+	^ TabDisabledState tab: self tab
 ]
 
 { #category : #protocol }
 TabEnabled >> newStateForSelected: aBoolean [
 	self assert: aBoolean.
 	
-	^ TabSelected tab: self tab
+	^ TabSelectedState tab: self tab
 ]

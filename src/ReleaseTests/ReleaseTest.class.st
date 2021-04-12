@@ -107,17 +107,27 @@ ReleaseTest >> testAllGlobalBindingAreGlobalVariables [
 ]
 
 { #category : #'tests - variables' }
+ReleaseTest >> testAllInstanceVariablesStartLowercase [
+	"Make sure that all class instance variable names start with a lowercase letter"
+	| violating |
+
+	violating := Smalltalk globals allBehaviors select: [ :class | 
+		class slots anySatisfy: [:var | var name first isUppercase]].
+
+	self 
+		assert: violating isEmpty 
+		description: 'Instance variable names must start with a lowercase letter: ', violating asArray asString
+]
+
+{ #category : #'tests - variables' }
 ReleaseTest >> testClassesShadow [
-	|  classes validExceptions remaining |
 
+	| classes |
 	classes := Smalltalk globals allBehaviors select: [ :class | 
-		class definedVariables anySatisfy: [:var | var isShadowing]].
+		           class definedVariables anySatisfy: [ :var | 
+			           var isShadowing ] ].
 
-	validExceptions := #().	
-	
-	remaining := classes asOrderedCollection reject: [ :each  | validExceptions includes: each name].
-	"6 left that we need to fix"
-	self assert: remaining size <= 6.
+	self assert: classes isEmpty description: classes asArray asString
 ]
 
 { #category : #tests }
@@ -262,7 +272,8 @@ ReleaseTest >> testNoShadowedVariablesInMethods [
 	| found validExceptions remaining |
 	found := SystemNavigation default allMethodsSelect: [ :m | 
 		m ast variableDefinitionNodes anySatisfy: [ :node | node variable isShadowing ] ].
-	
+	"Make sure to not waste memory with all the ASTs"
+	ASTCache reset.
 	"No other exceptions beside the ones mentioned here should be allowed"	
 	validExceptions := { 
 		RBDummyRefactoryTestDataApp>>#tempVarOverridesInstVar.
