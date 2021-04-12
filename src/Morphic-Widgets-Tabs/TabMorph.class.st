@@ -436,7 +436,7 @@ TabMorph >> buildBorderVertices [
 { #category : #private }
 TabMorph >> buildLabel: text withIcon: icon [
 	
-	^ (TabLabelItem tab: self)
+	^ (TabLabelItemMorph tab: self)
 		morph:	text asMorph;
 		icon: (AlphaImageMorph new image: icon);
 		yourself
