@@ -26,6 +26,7 @@ Class {
 	#name : #ClyMethodEditorToolMorph,
 	#superclass : #ClyTextEditorToolMorph,
 	#instVars : [
+		'ast',
 		'methodTags',
 		'extendingPackage',
 		'targetClasses'
@@ -58,8 +59,8 @@ ClyMethodEditorToolMorph >> belongsToRemovedBrowserContext [
 { #category : #building }
 ClyMethodEditorToolMorph >> buildTextMorph [
 	super buildTextMorph.
-	
-	self formatTextIfNeeded 
+	ast := self currentEditedAST.
+	self formatTextIfNeeded.
 ]
 
 { #category : #'events handling' }
@@ -246,7 +247,6 @@ ClyMethodEditorToolMorph >> tagsAndPackageEditor [
 
 { #category : #'events handling' }
 ClyMethodEditorToolMorph >> textChanged: aTextChanged [
-	| ast |
 	super textChanged: aTextChanged.
 	ast := self currentEditedAST.
 	textMorph segments copy do: #delete.
