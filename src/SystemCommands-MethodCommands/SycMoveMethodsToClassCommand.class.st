@@ -41,10 +41,16 @@ SycMoveMethodsToClassCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycMoveMethodsToClassCommand >> execute [
-	
+	self fillNonExistenProtocol.
 	methods 
 		collect: [ :each | RBMoveMethodToClassRefactoring model: model method: each class: targetClass ]
 		thenDo: [ :each | each execute ]
+]
+
+{ #category : #filling }
+SycMoveMethodsToClassCommand >> fillNonExistenProtocol [
+	methods do: [ :meth | meth tags ifEmpty: 
+		[ self tagMethod: meth ] ].
 ]
 
 { #category : #'drag and drop support' }
@@ -57,9 +63,8 @@ SycMoveMethodsToClassCommand >> prepareExecutionInDropContext: aToolContext [
 { #category : #execution }
 SycMoveMethodsToClassCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
 	targetClass := aToolContext requestSingleClass: 'Choose class'.
-	targetClass := aToolContext currentMetaLevelOf: targetClass
+	targetClass := aToolContext currentMetaLevelOf: targetClass.
 ]
 
 { #category : #accessing }

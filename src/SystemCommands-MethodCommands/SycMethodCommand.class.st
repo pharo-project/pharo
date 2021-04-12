@@ -43,6 +43,11 @@ SycMethodCommand >> methods: anObject [
 	methods := anObject
 ]
 
+{ #category : #execution }
+SycMethodCommand >> newTagFor: aMethod [
+	^ self asCommandActivator context requestSingleMethodTag: 'New protocol name for: ', aMethod name
+]
+
 { #category : #'activation-drag and drop' }
 SycMethodCommand >> prepareExecutionInDragContext: aToolContext [
 	super prepareExecutionInDragContext: aToolContext.
@@ -54,4 +59,9 @@ SycMethodCommand >> prepareExecutionInDragContext: aToolContext [
 SycMethodCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	methods := aToolContext selectedMethods
+]
+
+{ #category : #execution }
+SycMethodCommand >> tagMethod: aMethod [
+	aMethod tagWith: (self newTagFor: aMethod) asSymbol
 ]
