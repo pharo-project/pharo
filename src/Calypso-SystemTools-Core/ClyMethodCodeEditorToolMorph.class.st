@@ -41,6 +41,8 @@ ClyMethodCodeEditorToolMorph >> applyChanges [
 	currentMethod := methodClass >> selector.
 	self tagAndPackageEditingMethod: currentMethod.
 	self switchToMethod: currentMethod.
+	"update the AST to the just compiled method. This clears breakpoints. To be improved"
+	ast := self initializeAST.
 	^true
 ]
 
