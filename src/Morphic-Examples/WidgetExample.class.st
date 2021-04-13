@@ -311,7 +311,7 @@ WidgetExample class >> exampleOtherControls [
 			'Color chooser'->(dialog newColorChooserFor: emboss
 					getColor: #color setColor: #color: help: 'This is a color chooser').
 			'Row with dashed border'->((dialog newRow: {dialog newLabel: 'I have a dashed border!'})
-					borderStyle: (DashedBorderStyle width: 3
+					borderStyle: (DashedBorder width: 3
 							dashColors: {Color red. Color green. Color blue} dashLengths: #(1 2 3))).
 			'Embossed string'->emboss.
 			'Style'->(dialog newDropListFor: emboss list: #styleSymbols
