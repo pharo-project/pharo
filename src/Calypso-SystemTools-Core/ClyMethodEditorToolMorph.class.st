@@ -59,7 +59,7 @@ ClyMethodEditorToolMorph >> belongsToRemovedBrowserContext [
 { #category : #building }
 ClyMethodEditorToolMorph >> buildTextMorph [
 	super buildTextMorph.
-	ast := self currentEditedAST.
+	ast := self initializeAST.
 	self formatTextIfNeeded.
 ]
 
@@ -89,7 +89,10 @@ ClyMethodEditorToolMorph >> chooseClassForNewMethodIfNone: aBlock [
 { #category : #'events handling' }
 ClyMethodEditorToolMorph >> currentEditedAST [
 
-	^ self getASTFor: self pendingText
+	^ self methodClass compiler
+		  source: self pendingText;
+		  options: #( + optionParseErrors + optionSkipSemanticWarnings );
+		  parse
 ]
 
 { #category : #accessing }
@@ -137,19 +140,17 @@ ClyMethodEditorToolMorph >> formatTextIfNeeded [
 	textModel clearUserEdits
 ]
 
-{ #category : #'events handling' }
-ClyMethodEditorToolMorph >> getASTFor: aString [
-	^ self methodClass compiler
-		source: aString;
-		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
-		parse
-]
-
 { #category : #initialization }
 ClyMethodEditorToolMorph >> initialize [
 	super initialize.
 	
 	methodTags := #()
+]
+
+{ #category : #initialization }
+ClyMethodEditorToolMorph >> initializeAST [
+	"subclasses might get it from the method"
+	^ self currentEditedAST
 ]
 
 { #category : #testing }

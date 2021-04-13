@@ -97,14 +97,6 @@ ClyMethodCodeEditorToolMorph >> buildLeftSideBar [
 	self leftSideBar enableMouseCommands: CmdTextLeftBarClickActivation withContextFrom: self
 ]
 
-{ #category : #building }
-ClyMethodCodeEditorToolMorph >> buildTextMorph [
-	super buildTextMorph.
-	"we start with the AST from the cache"
-	ast := editingMethod ast.
-	self formatTextIfNeeded.
-]
-
 { #category : #operations }
 ClyMethodCodeEditorToolMorph >> cancelChanges [
 	self updateMethodTagsAndPackage.
@@ -215,6 +207,12 @@ ClyMethodCodeEditorToolMorph >> findSourceNodeAt: aCursorPoint [
 
 	^(ast bestNodeFor: (startPosition to: endPosition))
 		ifNil: [ ast ]
+]
+
+{ #category : #initialization }
+ClyMethodCodeEditorToolMorph >> initializeAST [
+	"When the editor is created, we get the AST from the method"
+	^ editingMethod ast
 ]
 
 { #category : #testing }
