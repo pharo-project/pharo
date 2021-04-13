@@ -9,7 +9,7 @@ Class {
 
 { #category : #testing }
 SycSilentlyRemoveClassStrategy class >> canExecuteWithReferences: hasReferences subclasses: hasSubclasses users: hasUsers [
-	^(hasReferences | hasSubclasses | hasUsers) not 
+	^(hasSubclasses | hasUsers) not 
 ]
 
 { #category : #execution }
