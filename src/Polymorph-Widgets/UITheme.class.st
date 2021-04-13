@@ -2090,7 +2090,7 @@ UITheme >> drawWindowPlainDropShadowFor: aSystemWindow on: aCanvas [
 	aCanvas
 		clipBy: (aSystemWindow bounds bottomRight - brOffset
 			corner: aSystemWindow bounds bottomRight + (1@1))
-			during: [:c | ((RoundedBorderStyle new
+			during: [:c | ((RoundedBorder new
 							baseColor: aSystemWindow shadowColor;
 							width: 1) cornerRadius: brOffset - 1)
 							frameRectangle: (aSystemWindow bounds translateBy: 1)
@@ -2336,7 +2336,7 @@ UITheme >> groupLabelBorderStyleFor: aGroupPanel [
 UITheme >> groupPanelBorderStyleFor: aGroupPanel [
 	"Answer the normal border style for a group panel."
 
-	^ SimpleBorderStyle new
+	^ SimpleBorder new
 		width: 1;
 		baseColor: ((self baseColorFor: aGroupPanel))
 ]
@@ -3631,7 +3631,7 @@ UITheme >> newFocusIndicatorMorphFor: aMorph [
 
 	^ BorderedMorph new
 		fillStyle: Color transparent;
-		borderStyle: (SimpleBorderStyle new
+		borderStyle: (SimpleBorder new
 			 width: 1;
 			baseColor: (self baseSelectionColorFor: aMorph));
 		bounds: aMorph focusBounds
@@ -4746,7 +4746,7 @@ UITheme >> patchworkUIThemeColorFor: aWindowOrModel [
 UITheme >> plainGroupPanelBorderStyleFor: aGroupPanel [
 	"Answer the normal border style for a plain group panel."
 
-	^SimpleBorderStyle new
+	^SimpleBorder new
 		width: 1;
 		baseColor: Color transparent
 ]

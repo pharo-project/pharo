@@ -95,11 +95,11 @@ PharoDarkTheme >> buttonNormalBorderStyleFor: aButton [
 	
 	(aButton valueOfProperty: #noBorder ifAbsent: [ false ]) 
 		ifTrue: [ 
-			^ SimpleBorderStyle new 
+			^ SimpleBorder new 
 				width: 0; 
 				baseColor: Color transparent ].
 	
-	^ SimpleBorderStyle new
+	^ SimpleBorder new
 		width: 1;
 		baseColor: self buttonColor lighter
 ]
@@ -167,7 +167,7 @@ PharoDarkTheme >> configureTextMorph: textMorph [
 PharoDarkTheme >> configureWindowBorderFor: aWindow [
 
 	| aStyle |
-	aStyle := SimpleBorderStyle new 
+	aStyle := SimpleBorder new 
 					color: self borderColor;
 					width: 1.
 	aWindow borderStyle: aStyle
@@ -413,7 +413,7 @@ PharoDarkTheme >> taskbarItemLabelColorForExpanded: aButton [
 
 { #category : #'border-styles-taskbar' }
 PharoDarkTheme >> taskbarItemMouseOverBorderStyleFor: aButton [
-	^ BottomBorderStyle new
+	^ BottomBorder new
 		color: Color white;
 		width: 2;
 		yourself
@@ -426,7 +426,7 @@ PharoDarkTheme >> taskbarItemMouseOverFillStyleFor: aButton [
 
 { #category : #'border-styles-taskbar' }
 PharoDarkTheme >> taskbarItemNormalBorderStyleFor: aButton [
-	^ BottomBorderStyle new
+	^ BottomBorder new
 		color: Color white;
 		width: 1;
 		trimSize: 2;
