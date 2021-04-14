@@ -7,6 +7,13 @@ Class {
 	#category : #BaselineOfNewTools
 }
 
+{ #category : #accessing }
+BaselineOfNewTools class >> releaseCommit [
+	"The commit corresponding to current release (to be used on bootstrap process)"
+	
+	^ 'f35f3f62fea0d4334863a3687ab6d602858f5b65'
+]
+
 { #category : #baselines }
 BaselineOfNewTools >> baseline: spec [
 	<baseline>

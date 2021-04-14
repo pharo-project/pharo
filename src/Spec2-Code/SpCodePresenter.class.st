@@ -138,18 +138,6 @@ SpCodePresenter >> allowingContextMenu [
 	self overrideContextMenu: false
 ]
 
-{ #category : #'private commands' }
-SpCodePresenter >> basicBrowseImplementors [
-
-	self systemNavigation browseAllImplementorsOf: self selectedSelector
-]
-
-{ #category : #'private commands' }
-SpCodePresenter >> basicBrowseSenders [
-
-	self systemNavigation browseAllReferencesTo: self selectedSelector
-]
-
 { #category : #private }
 SpCodePresenter >> basicInteractionModel: anObject [
 
@@ -202,6 +190,26 @@ SpCodePresenter >> bindingOf: aString [
 
 	self interactionModel ifNotNil:  [ :im | ^ im bindingOf: aString  ].
 	^ nil
+]
+
+{ #category : #'private commands' }
+SpCodePresenter >> browseSelectedSelectorIfGlobal: globalBlock ifNotGlobal: nonGlobalBlock [
+	| variableOrClassName env |
+
+	variableOrClassName := self selectedSelector.
+
+	env := self environment.
+	
+	self flag: #bug.
+	"If we are looking for implementors of a class variable, this does not work right..."
+	env isBehavior ifTrue: [
+		(env hasSlotNamed: variableOrClassName) ifTrue: [
+		 ^ self systemNavigation browseAllAccessesTo: variableOrClassName from: env ] ].
+
+	(env bindingOf: variableOrClassName) 
+		ifNotNil: [ :ref | ^ globalBlock value: ref ].
+	
+	nonGlobalBlock value: variableOrClassName
 ]
 
 { #category : #private }
@@ -299,14 +307,17 @@ SpCodePresenter >> doBrowseHierarchy [
 
 { #category : #commands }
 SpCodePresenter >> doBrowseImplementors [
-
-	self basicBrowseImplementors
+	
+	self
+		browseSelectedSelectorIfGlobal: [ :global | global browse ]
+		ifNotGlobal:  [ :selector |
+			self systemNavigation browseAllImplementorsOf: selector ].
 ]
 
 { #category : #commands }
 SpCodePresenter >> doBrowseMethodReferences [
 
-	self basicBrowseSenders
+	self doBrowseSenders
 ]
 
 { #category : #commands }
@@ -319,21 +330,12 @@ SpCodePresenter >> doBrowseMethodsContainingString [
 
 { #category : #commands }
 SpCodePresenter >> doBrowseSenders [
-	| env variableOrClassName |
 
-	variableOrClassName := self selectedTextOrLine trimmed asSymbol.
-	variableOrClassName ifEmpty: [ ^ self ].
-	 
-	env := self environment.
-	env isBehavior ifTrue: [
-		(env hasSlotNamed: variableOrClassName) ifTrue: [
-		 ^ self systemNavigation browseAllAccessesTo: variableOrClassName from: env ] ].
-
-	(env bindingOf: variableOrClassName) 
-		ifNotNil: [ :ref | ^ self systemNavigation browseAllSendersOf: ref ].
-	
-	"If this is not a class, behave as SpBrowseMethodReferencesCommand"
-	self basicBrowseSenders
+	self
+		browseSelectedSelectorIfGlobal: [ :global | 
+			self systemNavigation browseAllSendersOf: global ]
+		ifNotGlobal:  [ :selector |
+			self systemNavigation browseAllReferencesTo: selector ]
 ]
 
 { #category : #'private bindings' }
