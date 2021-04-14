@@ -41,6 +41,8 @@ ClyMethodCodeEditorToolMorph >> applyChanges [
 	currentMethod := methodClass >> selector.
 	self tagAndPackageEditingMethod: currentMethod.
 	self switchToMethod: currentMethod.
+	"update the AST to the just compiled method. This clears breakpoints. To be improved"
+	ast := self initializeAST.
 	^true
 ]
 
@@ -54,7 +56,7 @@ ClyMethodCodeEditorToolMorph >> applyDecorations [
 	 a lot of time, we will skip it when it is the case"
 	editingMethod isLiteralMethod ifFalse: [ 
 		IconStyler withStaticStylers  
-			styleText: textModel withAst: self currentEditedAST ].	
+			styleText: textModel withAst: ast ].	
 	textMorph hasUnacceptedEdits: hasEdits.
 	
 	super applyDecorations.
@@ -168,8 +170,7 @@ ClyMethodCodeEditorToolMorph >> extendingPackage: aPackage [
 { #category : #'selecting text' }
 ClyMethodCodeEditorToolMorph >> findAnySelectorInSourceCode: selectors [
 
-	| foundSelector foundNode positions ast |
-	ast := self currentEditedAST.
+	| foundSelector foundNode positions |
 	foundNode := ast sendNodes 
 		detect: [:each | selectors includes: (foundSelector := each selector) ] 
 		ifNone: [ 
@@ -206,8 +207,14 @@ ClyMethodCodeEditorToolMorph >> findSourceNodeAt: aCursorPoint [
 			startPosition := selection first max: 1.
 			endPosition := selection last min: self editingText size]].
 
-	^(self currentEditedAST bestNodeFor: (startPosition to: endPosition))
-		ifNil: [ self currentEditedAST ]
+	^(ast bestNodeFor: (startPosition to: endPosition))
+		ifNil: [ ast ]
+]
+
+{ #category : #initialization }
+ClyMethodCodeEditorToolMorph >> initializeAST [
+	"When the editor is created, we get the AST from the method"
+	^ editingMethod ast
 ]
 
 { #category : #testing }
@@ -279,14 +286,14 @@ ClyMethodCodeEditorToolMorph >> selectVariableNamed: varName [
 { #category : #accessing }
 ClyMethodCodeEditorToolMorph >> selectedSourceNode [
 
-	| selectedInterval ast |
+	| selectedInterval selectedNode |
 	selectedInterval := self selectedTextInterval.
 	
-	ast := selectedInterval isEmpty 
-		ifTrue: [ self currentEditedAST bestNodeForPosition: selectedInterval first ]
-		ifFalse: [ self currentEditedAST bestNodeFor: selectedInterval ].
+	selectedNode := selectedInterval isEmpty 
+		ifTrue: [ ast bestNodeForPosition: selectedInterval first ]
+		ifFalse: [ ast bestNodeFor: selectedInterval ].
 	
-	^ ast ifNil: [ self currentEditedAST ]
+	^ selectedNode ifNil: [ ast ]
 ]
 
 { #category : #initialization }
