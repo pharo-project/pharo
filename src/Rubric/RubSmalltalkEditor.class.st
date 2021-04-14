@@ -760,7 +760,6 @@ RubSmalltalkEditor >> implementorsOfIt [
 	"Open an implementors browser on the selected selector"
 
 	| aSelector |
-	"self lineSelectAndEmptyCheck: [^ self]."
 	(aSelector := self selectedSelector) ifNil: [^ textArea flash].
 	aSelector isCharacter ifTrue: [^ textArea flash].
 	self implementorsOf: aSelector
@@ -1165,7 +1164,6 @@ RubSmalltalkEditor >> sendersOfIt [
 	"Open a senders browser on the selected selector"
 
 	| selectedSelector syst |
-	"self lineSelectAndEmptyCheck: [ ^ self ]."
 	(selectedSelector := self selectedSelector) ifNil: [ ^ textArea flash ].
 	syst := self model interactionModel systemNavigation.
 	syst browseAllSendersOrUsersOf: selectedSelector
