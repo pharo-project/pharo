@@ -50,17 +50,10 @@ CommentTestCase class >> errorComment: stringComment class: aClass selector: aSy
 		yourself
 ]
 
-{ #category : #example }
-CommentTestCase class >> example [
-	"1 + 1 >>> 2"
-	^ CommentTestCase comment: '1 + 1 >>> 2' class: CommentTestCase class selector: #example
-]
-
 { #category : #accessing }
 CommentTestCase class >> testSelectors [
-	self flag: #todo.
-	"missing comments. I have no ide what this method is doing."
-	^ super testSelectors \ {#testError . #testIt}
+	"we remove the selectors to add back later one of them, depending if is is error or not"
+	^ super testSelectors \ { #testError. #testIt }
 ]
 
 { #category : #accessing }
@@ -124,7 +117,7 @@ CommentTestCase >> expression: anObject [
 	expression := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #printing }
 CommentTestCase >> printString [
 	^ expression
 ]
@@ -139,12 +132,12 @@ CommentTestCase >> selectorExample: anObject [
 	selectorExample := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #tests }
 CommentTestCase >> testError [
 	self error: 'syntax error on the comment'
 ]
 
-{ #category : #accessing }
+{ #category : #tests }
 CommentTestCase >> testIt [
 	self assert: expectedValue equals: currentValue
 ]

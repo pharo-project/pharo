@@ -14,9 +14,8 @@ DTCommentTestConfiguration >> asTestSuite [
 	suite := TestSuite named: 'Test Generated From Comments'.
 	methods := (self items reject: [ :each | each isAbstract ]) flatCollect: [ :each | each methods ].
 	methods := methods select: [:each | each sourceCode includesSubstring: '>>>' ].
-	methods do: [ :m | m comments do: [ :com | 
-					(com includesSubstring: '>>>')
-						ifTrue: [ suite addTest: 
-							(CommentTestCase comment: com class: m methodClass selector: m selector) ] ] ].
+	methods do: [ :m | m pharoDocCommentNodes do: [ :docComment | 
+			 suite addTest: 
+				(CommentTestCase comment: docComment sourceNode contents class: m methodClass selector: m selector) ] ].
 	^ suite
 ]
