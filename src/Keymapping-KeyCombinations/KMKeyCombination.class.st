@@ -53,14 +53,7 @@ KMKeyCombination >> = aShortcut [
 { #category : #printing }
 KMKeyCombination >> acceptVisitorForGenericPlatform: aKMShortcutPrinter [ 
 
-	^ aKMShortcutPrinter visitSingleShortcutOnGeneric: self
-]
-
-{ #category : #printing }
-KMKeyCombination >> acceptVisitorForOSXPlatform: aKMShortcutPrinter [ 
-	
-	^ aKMShortcutPrinter visitSingleShortcutOnOSX: self
-
+	^ aKMShortcutPrinter visitSingleShortcut: self
 ]
 
 { #category : #converting }
