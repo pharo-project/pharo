@@ -188,6 +188,18 @@ RBMethodNodeTest >> testMethodClass [
 	self assert: ast methodClass equals: nil
 ]
 
+{ #category : #'testing-comments' }
+RBMethodNodeTest >> testMethodWithCommentsAndEmptyStatements [
+
+	| tree |
+	tree := self parseMethod: 'foo: abd bar: cde  
+		"this is comment".
+		"this is another comment"'.
+
+	self assert: tree comments first contents equals: 'this is comment'.
+	self assert: tree body comments first contents equals: 'this is another comment'
+]
+
 { #category : #tests }
 RBMethodNodeTest >> testMethodsHasTemporaries [
 
