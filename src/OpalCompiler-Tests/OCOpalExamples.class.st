@@ -12,7 +12,7 @@ Class {
 	#classVars : [
 		'ExampleClassVariable'
 	],
-	#category : #'OpalCompiler-Tests-AST'
+	#category : #'OpalCompiler-Tests-Data'
 }
 
 { #category : #compiler }
