@@ -31,9 +31,7 @@ Class {
 	#name : #SHTextStyler,
 	#superclass : #Object,
 	#instVars : [
-		'backgroundProcess',
 		'text',
-		'monitor',
 		'view',
 		'stylingEnabled'
 	],
@@ -42,7 +40,6 @@ Class {
 
 { #category : #formatting }
 SHTextStyler >> format: aText [ 
-	self terminateBackgroundStylingProcess.
 	^ aText
 ]
 
@@ -52,38 +49,18 @@ SHTextStyler >> initialize [
 ]
 
 { #category : #private }
-SHTextStyler >> monitor [
-
-	^ monitor ifNil: [ monitor := Monitor new ]
-]
-
-{ #category : #private }
 SHTextStyler >> privateStyle: aText [ 
-	self shouldBeImplemented
+	self subclassResponsibility
 ]
 
 { #category : #styling }
 SHTextStyler >> style: aText [
 	aText ifEmpty: [ ^ self ].
-	self terminateBackgroundStylingProcess.
 	stylingEnabled
 		ifFalse: [ ^ self ].
 	text := aText copy.
 	self privateStyle: text.
 	view ifNotNil: [ :view2 | view2 stylerStyled: text ]
-]
-
-{ #category : #styling }
-SHTextStyler >> styleInBackgroundProcess: aText [
-	aText ifEmpty: [ ^ self ].
-	self terminateBackgroundStylingProcess.
-	stylingEnabled ifFalse: [ ^ self ].
-	text := aText copy.
-	self monitor critical: [
-		backgroundProcess := [ 
-			self privateStyle: text.
-			view ifNotNil: [
-				view stylerStyledInBackground: text ] ] forkAt: Processor userBackgroundPriority ]
 ]
 
 { #category : #styling }
@@ -99,19 +76,6 @@ SHTextStyler >> stylingEnabled [
 { #category : #private }
 SHTextStyler >> stylingEnabled: aBoolean [
 	stylingEnabled := aBoolean
-]
-
-{ #category : #private }
-SHTextStyler >> terminateBackgroundStylingProcess [
-	self monitor critical: [
-		backgroundProcess ifNotNil: [
-			backgroundProcess terminate.
-			backgroundProcess := nil ] ]
-]
-
-{ #category : #styling }
-SHTextStyler >> unstyledTextFrom: aText [ 
-	^ Text fromString: aText string
 ]
 
 { #category : #accessing }
