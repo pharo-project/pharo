@@ -51,7 +51,7 @@ KMKeyCombination >> = aShortcut [
 ]
 
 { #category : #printing }
-KMKeyCombination >> acceptVisitorForGenericPlatform: aKMShortcutPrinter [ 
+KMKeyCombination >> acceptVisitor: aKMShortcutPrinter [ 
 
 	^ aKMShortcutPrinter visitSingleShortcut: self
 ]

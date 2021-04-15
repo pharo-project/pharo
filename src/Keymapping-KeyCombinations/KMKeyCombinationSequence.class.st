@@ -43,7 +43,7 @@ KMKeyCombinationSequence >> = aShortcut [
 ]
 
 { #category : #printing }
-KMKeyCombinationSequence >> acceptVisitorForGenericPlatform: aKMShortcutPrinter [ 
+KMKeyCombinationSequence >> acceptVisitor: aKMShortcutPrinter [ 
 	
 	^ aKMShortcutPrinter visitCombinationShortcut: self
 ]

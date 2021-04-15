@@ -22,5 +22,5 @@ CmdCommandActivator >> setUpShortcutTipForMenuItem: aMenuItemMorph [
 	CmdShortcutActivation 
 		activeInstancesFor: command class inContext: context
 		do: [ :shortcut |  	
-			aMenuItemMorph keyText: (shortcut keyCombination acceptVisitorForGenericPlatform: OSPlatform current shortcutPrinter)]
+			aMenuItemMorph keyText: (shortcut keyCombination acceptVisitor: OSPlatform current shortcutPrinter)]
 ]

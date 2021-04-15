@@ -104,6 +104,6 @@ KMShortcutPrinterTest >> shortcut: anObject [
 KMShortcutPrinterTest >> testPrintShortcut [
 	| printed |
 
-	printed := shortcut acceptVisitorForGenericPlatform: platform shortcutPrinter.
+	printed := shortcut acceptVisitor: platform shortcutPrinter.
 	self assert: printed equals: result
 ]
