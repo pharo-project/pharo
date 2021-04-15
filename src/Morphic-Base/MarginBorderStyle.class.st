@@ -3,7 +3,7 @@ Border with customisable inner margin.
 "
 Class {
 	#name : #MarginBorderStyle,
-	#superclass : #SimpleBorder,
+	#superclass : #SimpleBorderStyle,
 	#instVars : [
 		'margin'
 	],

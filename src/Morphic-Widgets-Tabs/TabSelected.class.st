@@ -1,3 +1,6 @@
+"
+I am the state of a selected tab
+"
 Class {
 	#name : #TabSelected,
 	#superclass : #TabSelectedState,

@@ -226,17 +226,31 @@ BaselineOfIDE >> baseline: spec [
 
 { #category : #actions }
 BaselineOfIDE >> loadIceberg [
+	| pharoPluginClass |
+	
 	Metacello new
 		baseline: 'Iceberg';
 		repository: 'github://pharo-vcs/iceberg:dev-2.0';
 		onConflictUseLoaded;
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
-	(Smalltalk classNamed: #IcePharoPlugin) 
-		addPharoProjectToIceberg;
-		addProjectNamed: 'pharo-spec2' commit: '15cacf316c2bf6e01eae348ac30523433476f1f8' baselines: #(BaselineOfSpec2);
-		addProjectNamed: 'pharo-newtools' commit: '94785f82ef6288de4405b929d7b86faac582be5e' baselines: #(BaselineOfNewTools);
-		addIcebergProjectToIceberg
+	
+	pharoPluginClass := Smalltalk classNamed: #IcePharoPlugin.
+	pharoPluginClass  addPharoProjectToIceberg.
+	
+	(Smalltalk classNamed: #BaselineOfSpec2) ifNotNil: [ :aClass | 
+		pharoPluginClass
+			addProjectNamed: 'pharo-spec2' 
+			commit: aClass releaseCommit 
+			baselines: #(BaselineOfSpec2) ].
+		
+	(Smalltalk classNamed: #BaselineOfNewTools) ifNotNil: [ :aClass | 
+		pharoPluginClass 
+			addProjectNamed: 'pharo-newtools' 
+			commit: aClass releaseCommit 
+			baselines: #(BaselineOfNewTools) ].
+		
+	pharoPluginClass addIcebergProjectToIceberg
 ]
 
 { #category : #actions }

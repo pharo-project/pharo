@@ -37,14 +37,9 @@ DTCommentToTestPlugin >> firstListLabel [
 
 { #category : #api }
 DTCommentToTestPlugin >> itemsToBeAnalysedFor: packagesSelected [
-	^ packagesSelected
-		flatCollect: [ :p | 
-			p definedClasses
-				select: [ :c | 
-					c methods
-						anySatisfy: [ :m | 
-							( m sourceCode includesSubstring: '>>>') and: [
-								m comments anySatisfy: [ :com | com includesSubstring: '>>>' ] ] ] ]]
+
+	^ packagesSelected flatCollect: [ :package | 
+		  package definedClasses select: [ :class | class hasDocComment ] ]
 ]
 
 { #category : #api }

@@ -52,8 +52,10 @@ SycRemoveClassStrategyTest >> testCreateStrategiesForReferencedClass [
 		              createForBrowser: browser
 		              classes: { ClyFullBrowser }.
 	self
-		assert: strategies size equals: 2;
+		assert: strategies size equals: 3;
 		assert: strategies first userRequestString
+		equals: SycSilentlyRemoveClassStrategy new userRequestString;
+		assert: strategies second userRequestString
 		equals:
 			ClyNotRemoveAndShowReferencesClassStrategy new userRequestString;
 		assert: strategies last userRequestString
