@@ -9,13 +9,12 @@ Class {
 
 { #category : #converting }
 DTCommentTestConfiguration >> asTestSuite [
+
 	| suite methods |
-	suite := TestSuite new.
 	suite := TestSuite named: 'Test Generated From Comments'.
-	methods := (self items reject: [ :each | each isAbstract ]) flatCollect: [ :each | each methods ].
-	methods := methods select: [:each | each sourceCode includesSubstring: '>>>' ].
-	methods do: [ :m | m pharoDocCommentNodes do: [ :docComment | 
-			 suite addTest: 
-				(CommentTestCase comment: docComment sourceNode contents class: m methodClass selector: m selector) ] ].
+	methods := self items flatCollect: [ :each | each methods ].
+	methods do: [ :method | 
+		method pharoDocCommentNodes do: [ :docComment | 
+			suite addTest: (CommentTestCase for: docComment) ] ].
 	^ suite
 ]
