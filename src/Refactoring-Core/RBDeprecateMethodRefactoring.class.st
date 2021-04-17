@@ -50,7 +50,7 @@ Class {
 
 { #category : #'intance creation' }
 RBDeprecateMethodRefactoring class >> deprecateMethod: aSelector in: aClass using: newSelector [
-	^(self new)
+	^ self new 
 		deprecateMethod: aSelector
 			in: aClass
 			using: newSelector;
@@ -59,7 +59,7 @@ RBDeprecateMethodRefactoring class >> deprecateMethod: aSelector in: aClass usin
 
 { #category : #'intance creation' }
 RBDeprecateMethodRefactoring class >> model: aRBSmalltalk deprecateMethod: aSelector in: aClass using: newSelector [
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		deprecateMethod: aSelector
 			in: aClass
