@@ -219,6 +219,15 @@ HelpTopic >> pathToTopicSatisfying: aBlock [
 	^ #()
 ]
 
+{ #category : #printing }
+HelpTopic >> printOn: stream [
+	super printOn: stream.
+	stream 
+		nextPutAll: '(';
+		nextPutAll: self title;
+		nextPutAll: ')'
+]
+
 { #category : #operating }
 HelpTopic >> sortSubtopicsByTitle [
 	"Sort the subtopics by title"
