@@ -7,7 +7,9 @@ Class {
 	#classVars : [
 		'DayNames',
 		'DaysInMonth',
+		'HoursInDay',
 		'MicrosecondsInDay',
+		'MinutesInHour',
 		'MonthNames',
 		'NanosInMillisecond',
 		'NanosInSecond',

@@ -230,8 +230,7 @@ Time class >> readFrom: aStream [
 			ampm := aStream next asLowercase.
 			(ampm = $p and: [ hour < 12 ]) ifTrue: [ hour := hour + 12 ].
 			(ampm = $a and: [ hour = 12 ]) ifTrue: [ hour := 0 ].
-			(aStream peekFor: $m) ifFalse: [ aStream peekFor: $M ] ]
-		ifFalse: [Error new signal: 'Invalid Time format.'].
+			(aStream peekFor: $m) ifFalse: [ aStream peekFor: $M ] ].
 	aStream skipSeparators.
 	aStream atEnd ifFalse: [ Error new signal: 'Trailing characters after time' ].
 	^ self 
