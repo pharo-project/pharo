@@ -109,8 +109,7 @@ OSWindowDriver class >> shutDown: quitting [
 ]
 
 { #category : #events }
-OSWindowDriver >> afterSetWindowTitle: windowTitle onWindow: osWindow [.	
-
+OSWindowDriver >> afterSetWindowTitle: windowTitle onWindow: osWindow [
 ]
 
 { #category : #'window creation' }
