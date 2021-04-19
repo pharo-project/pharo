@@ -44,6 +44,12 @@ TFFunctionDefinition class >> parameterTypes: someParameters returnType: returnT
 		yourself
 ]
 
+{ #category : #private }
+TFFunctionDefinition >> doValidate: parameterHandlers [
+
+	self primDefineFunctionWith: parameterHandlers returnType: returnType getHandle
+]
+
 { #category : #accessing }
 TFFunctionDefinition >> parameterTypes [
 	^ parameterTypes
@@ -91,5 +97,7 @@ TFFunctionDefinition >> validate [
 	returnType validate.
 	
 	parameterHandlers := parameterTypes collect: [ :e | e getHandle ] as: Array.
-	self primDefineFunctionWith: parameterHandlers returnType: returnType getHandle
+	
+	self doValidate: parameterHandlers.
+
 ]
