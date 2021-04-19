@@ -77,6 +77,30 @@ TFFunctionCallTest >> testCallbackInSingleFunction [
 ]
 
 { #category : #tests }
+TFFunctionCallTest >> testVariadicFunctionWithOneFixedAndTwoOptional [
+
+	| fun return buffer aString |
+
+	fun := TFExternalFunction
+		name: 'sprintf'
+		moduleName: LibC uniqueInstance ffiLibraryName
+		definition: (TFVariadicFunctionDefinition
+			parameterTypes: { TFBasicType pointer. TFBasicType pointer.  TFBasicType sint. TFBasicType sint }
+			returnType: TFBasicType sint
+			fixedArgumentCount: 2).
+	
+	buffer := ByteArray new: 50.
+	buffer pinInMemory.
+
+	aString := '%d %d' utf8Encoded.
+	aString pinInMemory.
+	
+	return := runner invokeFunction: fun withArguments: {PointerUtils oopForObject: buffer. PointerUtils oopForObject: aString . 5 . 5}.
+	
+	self assert: return equals: 3
+]
+
+{ #category : #tests }
 TFFunctionCallTest >> testWithFloatAndDouble [
 	| fun return |
 
