@@ -149,7 +149,11 @@ Time class >> hour: hour minute: minute second: second  nano: nano [
 { #category : #'*Kernel-Chronology-Extras' }
 Time class >> hour: hour minute: minute second: second  nanoSecond: nanoCount [
 	"Answer a Time - only second precision for now"
- 
+	
+	hour >= 24 ifTrue: [ Error new signal: 'An hour must be 24 or less' ].
+	minute >= 60 ifTrue: [ Error new signal: 'A minute must be 60 or less' ].
+	second > SecondsInMinute ifTrue: [ Error new signal: ('A second must be {1} or less' format: {SecondsInMinute}) ].
+	
  	^ self 
 		seconds: (hour * SecondsInHour) + (minute * SecondsInMinute) + second 
 		nanoSeconds: nanoCount
@@ -226,7 +230,10 @@ Time class >> readFrom: aStream [
 			ampm := aStream next asLowercase.
 			(ampm = $p and: [ hour < 12 ]) ifTrue: [ hour := hour + 12 ].
 			(ampm = $a and: [ hour = 12 ]) ifTrue: [ hour := 0 ].
-			(aStream peekFor: $m) ifFalse: [ aStream peekFor: $M ] ].
+			(aStream peekFor: $m) ifFalse: [ aStream peekFor: $M ] ]
+		ifFalse: [Error new signal: 'Invalid Time format.'].
+	aStream skipSeparators.
+	aStream atEnd ifFalse: [ Error new signal: 'Trailing characters after time' ].
 	^ self 
 		hour: hour 
 		minute: minute 
