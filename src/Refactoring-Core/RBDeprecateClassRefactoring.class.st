@@ -1,187 +1,212 @@
 "
-I am a refactoring to mark a class as deprecated.
+I am a refactoring operation for removing of usages of a deprecated class, that was renamed to another name.
 
-I am rename deprecated class references with the new class, then I add a subclass of deprecated class and finally I add #isDeprecated method in subclass created.
-
-className
-	- is a symbol with class name, it's deprecated
-newClass
-	- is a class name which will be used instead of a deprecated one
-	
-Example
---------
-
-Script:
-
-```
-(RBDeprecateClassRefactoring deprecated: #MyClassAA in: #MyClassAC) execute
-```
-
-Before refactoring:
-
-```
-Object subclass: #MyClassAA
-	instanceVariableNames: ''
-	classVariableNames: ''
-	package: 'Example'
-
-Object subclass: #MyClassAC
-	instanceVariableNames: ''
-	classVariableNames: ''
-	package: 'Example'
-	
-Object subclass: #OtherClass
-	instanceVariableNames: ''
-	classVariableNames: ''
-	package: 'Example'
-	
-OtherClass >> referenceToClass
-	^ MyClassAA new
-
-OtherClass >> symbolReference
-	#MyClassAA
-```
-
-After refactoring:
-```
-Object subclass: #MyClassAA
-	instanceVariableNames: ''
-	classVariableNames: ''
-	package: 'Example'
-	
-MyClassAA subclass: #MyClassAA1
-	instanceVariableNames: ''''
-	classVariableNames: ''''
-	package: ''Example''
-
-Object subclass: #MyClassAC
-	instanceVariableNames: ''
-	classVariableNames: ''
-	package: 'Example'
-	
-Object subclass: #OtherClass
-	instanceVariableNames: ''
-	classVariableNames: ''
-	package: 'Example'
-
-MyClassAA1 class >> isDeprecated
-	"" Uses MyClassAC instead of MyClassAA""
-	^ true
-
-OtherClass >> referenceToClass
-	^ MyClassAC new
-
-OtherClass >> symbolReference
-	#MyClassAC
-```
+ I'm doing following operations:
+ - all subclasses of the deprecated class will use the new class as superclass (optional)
+ - convert new class to superclass of deprecatedclass, remove methods of deprecated class and add class method #isDeprecated (optional)
+ - rename all references in the code
+ - move extensions of the deprecated class owned by other packages to the new class (optional)
+ - remove the extensions (optional)
 
 "
 Class {
 	#name : #RBDeprecateClassRefactoring,
 	#superclass : #RBClassRefactoring,
 	#instVars : [
-		'class',
-		'newClass'
+		'newName',
+		'deprecatedClass',
+		'shouldCopyExtensions',
+		'shouldRemoveExtensions',
+		'shouldFixSubclasses'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : #transforming }
-RBDeprecateClassRefactoring class >> deprecated: aClass in: newClassName [
-	^ self new 
-		deprecated: aClass
-		in: newClassName
+{ #category : #'instance creation' }
+RBDeprecateClassRefactoring class >> deprecate: aDeprecatedClass in: aNewName [
+	^ self new className: aDeprecatedClass name newName: aNewName
 ]
 
-{ #category : #transforming }
-RBDeprecateClassRefactoring class >> model: aRBSmalltalk deprecated: aClass in: newClassName [
+{ #category : #'instance creation' }
+RBDeprecateClassRefactoring class >> model: aRBSmalltalk deprecate: aClass in: aNewName [ 
 	^ self new
-		model: aRBSmalltalk; 
-		deprecated: aClass
-		in: newClassName
+		model: aRBSmalltalk;
+		className: aClass name newName: aNewName;
+		yourself
+]
+
+{ #category : #initialization }
+RBDeprecateClassRefactoring >> className: aName newName: aNewName [ 
+	className := aName asSymbol.
+	deprecatedClass := self model classNamed: className.
+	newName := aNewName asSymbol
 ]
 
 { #category : #transforming }
-RBDeprecateClassRefactoring >> addDeprecatedMethodIn: newSubclass [
-	| subclass |
-	subclass := (self model classNamed: newSubclass) classSide.
-	subclass compile: 'isDeprecated
-		" Uses ', newClass, ' instead of ', className,'"
+RBDeprecateClassRefactoring >> classSideExtensionMethodsOf: anRBClass [
+
+	^ anRBClass realClass classSide localMethods 
+		select: #isExtension 
+		thenCollect: [ :each | anRBClass classSide methodFor: each selector ] 
+]
+
+{ #category : #transforming }
+RBDeprecateClassRefactoring >> convertDeprecatedToSubclass [
+	| replacement |
+	replacement := self model classNamed: newName.
+	self model reparentClasses: {deprecatedClass} to: replacement.
+	deprecatedClass selectors do: [ :symbol | deprecatedClass removeMethod: symbol ].
+	deprecatedClass classSide selectors do: [ :symbol | deprecatedClass classSide removeMethod: symbol ].
+	deprecatedClass classSide compile: 'isDeprecated
+		" Uses ', newName, ' instead of ', className,'"
 		^ true' classified: {'testing'}
 ]
 
 { #category : #transforming }
-RBDeprecateClassRefactoring >> createSubclass [ 
-	| newSubclass refactoring |
-	newSubclass := self subclassNameFor: className.
-	refactoring :=  RBAddClassRefactoring
-		model: self model
-		addClass: newSubclass
-		superclass: class
-		subclasses: class subclasses
-		category: class category.
-	self performCompositeRefactoring: refactoring.
-	^ newSubclass
+RBDeprecateClassRefactoring >> copyExtensionMethods [
+
+	(self instanceSideExtensionMethodsOf: deprecatedClass)
+		do: [ :each | self newClass instanceSide compile: each source classified: each protocols ].
+		
+	(self classSideExtensionMethodsOf: deprecatedClass)
+		do: [ :each | self newClass classSide compile: each source classified: each protocols ]
+]
+
+{ #category : #accessing }
+RBDeprecateClassRefactoring >> deprecatedClass [
+	^ deprecatedClass
+]
+
+{ #category : #accessing }
+RBDeprecateClassRefactoring >> deprecatedClass: anObject [
+	deprecatedClass := anObject
+]
+
+{ #category : #initialization }
+RBDeprecateClassRefactoring >> initialize [
+
+	super initialize.
+	
+	shouldFixSubclasses := true.
+	shouldCopyExtensions := true.
+	shouldRemoveExtensions := true.
 ]
 
 { #category : #transforming }
-RBDeprecateClassRefactoring >> deprecated: aClass in: newClassName [
-	className := aClass.
-	class := self model classNamed: aClass.
-	newClass := newClassName.
+RBDeprecateClassRefactoring >> instanceSideExtensionMethodsOf: anRBClass [
+
+	^ anRBClass realClass instanceSide localMethods 
+		select: #isExtension 
+		thenCollect: [ :each | anRBClass instanceSide methodFor: each selector ] 
 ]
 
 { #category : #transforming }
-RBDeprecateClassRefactoring >> parseTreeRewriter [
-	^ (self parseTreeRewriterClass replaceLiteral: className with: newClass)
-				replace: className with: newClass;
-				replaceArgument: newClass
-					withValueFrom: 
-						[:aNode | 
-						self 
-							refactoringFailure: newClass , ' already exists within the reference scope'];
-				yourself
+RBDeprecateClassRefactoring >> newClass [
+
+	^ self model classNamed: newName.  	
 ]
 
 { #category : #preconditions }
 RBDeprecateClassRefactoring >> preconditions [
-	^((RBCondition withBlock: [class notNil and: [class isMeta not]]) 
-			& (RBCondition isValidClassName: newClass) 
-			& (RBCondition isGlobal: newClass in: self model)) |
-			(RBCondition withBlock: [ self refactoringFailure: newClass, ' is not a valid class name'])
+	^((RBCondition withBlock: [deprecatedClass notNil and: [deprecatedClass isMeta not]]) 
+			& (RBCondition isValidClassName: newName) 
+			& (RBCondition isGlobal: newName in: self model)) |
+			(RBCondition withBlock: [ self refactoringFailure: newName , ' is not a valid class name'])
 ]
 
 { #category : #transforming }
-RBDeprecateClassRefactoring >> renameReferences [ 
-	self convertAllReferencesToClass: class using: self parseTreeRewriter.
+RBDeprecateClassRefactoring >> removeExtensionMethods [
+
+	(self instanceSideExtensionMethodsOf: deprecatedClass)
+		do: [ :each | deprecatedClass instanceSide removeMethod: each selector ].
+		
+	(self classSideExtensionMethodsOf: deprecatedClass)
+		do: [ :each | deprecatedClass classSide removeMethod: each selector ].
+
+]
+
+{ #category : #transforming }
+RBDeprecateClassRefactoring >> renameReferences [
+	| replacer |
+	replacer := (self parseTreeRewriterClass replaceLiteral: className with: newName)
+		replace: className with: newName;
+		replaceArgument: newName
+		withValueFrom: [:aNode | 
+			self refactoringFailure: newName , ' already exists within the reference scope'];
+		yourself.
+				
+	self model allReferencesToClass: deprecatedClass do: [ :method | 
+		(method modelClass hierarchyDefinesVariable: newName) ifTrue: [
+			self refactoringFailure: newName , ' is already defined in hierarchy of ', method modelClass printString].
+		
+		self convertMethod: method selector
+			for: method modelClass
+			using: replacer ]
+]
+
+{ #category : #transforming }
+RBDeprecateClassRefactoring >> renameSuperclassOfSubclasses [
+	
+	| replacement |
+	replacement := self model classNamed: newName.  	
+	self model reparentClasses: deprecatedClass subclasses to: replacement
+]
+
+{ #category : #accessing }
+RBDeprecateClassRefactoring >> shouldCopyExtensions [
+	^ shouldCopyExtensions
+]
+
+{ #category : #accessing }
+RBDeprecateClassRefactoring >> shouldCopyExtensions: anObject [
+	shouldCopyExtensions := anObject
+]
+
+{ #category : #accessing }
+RBDeprecateClassRefactoring >> shouldFixSubclasses [
+	^ shouldFixSubclasses
+]
+
+{ #category : #accessing }
+RBDeprecateClassRefactoring >> shouldFixSubclasses: anObject [
+	shouldFixSubclasses := anObject
+]
+
+{ #category : #accessing }
+RBDeprecateClassRefactoring >> shouldRemoveExtensions [
+	^ shouldRemoveExtensions
+]
+
+{ #category : #accessing }
+RBDeprecateClassRefactoring >> shouldRemoveExtensions: anObject [
+	shouldRemoveExtensions := anObject
 ]
 
 { #category : #printing }
 RBDeprecateClassRefactoring >> storeOn: aStream [ 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
-	aStream nextPutAll: ' deprecated: #';
-		nextPutAll: className;
-		nextPutAll: ' in: #';
-		nextPutAll: newClass;
+	aStream nextPutAll: ' rename: '.
+	deprecatedClass storeOn: aStream.
+	aStream
+		nextPutAll: ' to: #';
+		nextPutAll: newName;
 		nextPut: $)
 ]
 
 { #category : #transforming }
-RBDeprecateClassRefactoring >> subclassNameFor: symbol [
-	| counter copyName |
-	counter := 1.
-	copyName := symbol, counter asString.
-	[ self model includesGlobal: copyName ] 
-		whileTrue: [ counter := counter + 1.
-			copyName := symbol, counter asString ].
-	^ copyName
-]
+RBDeprecateClassRefactoring >> transform [
+	
+	self shouldFixSubclasses 
+		ifTrue: [ self renameSuperclassOfSubclasses.
+			self convertDeprecatedToSubclass ].
 
-{ #category : #transforming }
-RBDeprecateClassRefactoring >> transform [ 
-	| newSubclass |
 	self renameReferences.
-	newSubclass := self createSubclass.
-	self addDeprecatedMethodIn: newSubclass.
+
+	self shouldCopyExtensions 
+		ifTrue: [ self copyExtensionMethods ].
+		
+	self shouldRemoveExtensions 
+		ifTrue: [ self removeExtensionMethods ].
+
 ]
