@@ -7,6 +7,9 @@ Example Usage:
 Class {
 	#name : #MethodClassifier,
 	#superclass : #Object,
+	#instVars : [
+		'protocol'
+	],
 	#classInstVars : [
 		'prefixMapping',
 		'keywordSuffixMapping',
@@ -141,27 +144,37 @@ MethodClassifier class >> prefixMapping [
 ]
 
 { #category : #classification }
+MethodClassifier class >> suggestProtocolFor: aMethod [
+	^ (self new suggestProtocolFor: aMethod) ifNil: [ 'as yet unclassified' ]
+]
+
+{ #category : #classification }
 MethodClassifier >> classify: aMethod [
 
-	(self classifyInSuperclassProtocol: aMethod)
-		ifTrue: [ ^ aMethod protocol ].
-	(self classifyAccessor: aMethod)
-		ifTrue: [ ^ aMethod protocol ].
-	(self classifyByKnownPrefix: aMethod)
-		ifTrue: [ ^ aMethod protocol ].
-	(self classifyByKnownKeywordSuffix: aMethod)
-		ifTrue: [ ^ aMethod protocol ].
-	(self classifyByKnownPragma: aMethod)
-		ifTrue: [ ^ aMethod protocol ].		
-	(self classifyByOtherImplementors: aMethod)
-		ifTrue: [ ^ aMethod protocol ].
+	self suggestProtocolFor: aMethod.
+	protocol ifNotNil: [ aMethod protocol: protocol ]
 
 
 
 ]
 
+{ #category : #classification }
+MethodClassifier >> classifyAll: aCollectionOfMethods [
+	
+	aCollectionOfMethods do: [ :method |
+		self resetProtocol.
+		self classify: method ]
+]
+
+{ #category : #accessing }
+MethodClassifier >> listToFindProtocols [
+	^ #(#protocolAccessorFor: #protocolByKnownKeywordSuffix: 
+	#protocolByKnownPragma: #protocolByKnownPrefix: 
+	#protocolByOtherImplementors: #protocolInSuperclassProtocol:)
+]
+
 { #category : #'classification-rules' }
-MethodClassifier >> classifyAccessor: aMethod [
+MethodClassifier >> protocolAccessorFor: aMethod [
 	" If the method is a setter or getter for a  "
 	| names selector |
 	
@@ -173,55 +186,39 @@ MethodClassifier >> classifyAccessor: aMethod [
 			selector := selector allButLast ].
 	
 	(names includes: selector)
-		ifFalse: [ ^ false ].
-		
-	aMethod protocol: 'accessing'.
-	^ true.
-]
-
-{ #category : #classification }
-MethodClassifier >> classifyAll: aCollectionOfMethods [
-	
-	aCollectionOfMethods do: [ :method |
-		self classify: method ]
+		ifFalse: [ ^ self ].
+	protocol := 'accessing'
 ]
 
 { #category : #'classification-rules' }
-MethodClassifier >> classifyByKnownKeywordSuffix: aMethod [
-	^ (self protocolForKnownKeywordSuffixOfSelector: aMethod selector)
-		ifNil: [ false ]
-		ifNotNil: [ :protocol | 
-			aMethod protocol: protocol.
-			true ]
+MethodClassifier >> protocolByKnownKeywordSuffix: aMethod [
+	(self protocolForKnownKeywordSuffixOfSelector: aMethod selector)
+		ifNotNil: [ :p | protocol := p ]
 ]
 
 { #category : #'classification-rules' }
-MethodClassifier >> classifyByKnownPragma: aMethod [
+MethodClassifier >> protocolByKnownPragma: aMethod [
 	self class pragmaMapping
-		keysAndValuesDo: [ :pragma :protocol | 
+		keysAndValuesDo: [ :pragma :p | 
 			(aMethod hasPragmaNamed: pragma)
-				ifTrue: [ aMethod protocol: protocol.
-					^ true ] ].
-	^ false
+				ifTrue: [ protocol := p] ]
+	
 ]
 
 { #category : #'classification-rules' }
-MethodClassifier >> classifyByKnownPrefix: aMethod [
-	^ (self protocolForKnownPrefixOfSelector: aMethod selector)
-		ifNil: [ false ]
-		ifNotNil: [ :protocol | 
-			aMethod protocol: protocol.
-			true ]
+MethodClassifier >> protocolByKnownPrefix: aMethod [
+	(self protocolForKnownPrefixOfSelector: aMethod selector)
+		ifNotNil: [ :p | protocol := p ]
 ]
 
 { #category : #'classification-rules' }
-MethodClassifier >> classifyByOtherImplementors: aMethod [
+MethodClassifier >> protocolByOtherImplementors: aMethod [
 	| protocolBag |
 	
 	protocolBag := Bag new.
 	
 	aMethod implementors 
-		ifEmpty: [ ^ false ]
+		ifEmpty: [ ^ self ]
 		ifNotEmpty: [ :methods |
 			methods 
 				do: [ :method | 
@@ -229,28 +226,8 @@ MethodClassifier >> classifyByOtherImplementors: aMethod [
 						ifFalse: [ protocolBag add: method protocol ]]
 				without: aMethod ].
 			
-	protocolBag ifEmpty: [ ^ false ].
-	aMethod protocol: protocolBag sortedCounts first value.
-	^ true
-]
-
-{ #category : #'classification-rules' }
-MethodClassifier >> classifyInSuperclassProtocol: aMethod [
-	| currentClass |
-	currentClass := aMethod methodClass.
-	
-	[ currentClass superclass isNil ] whileFalse: [
-		currentClass := currentClass superclass.
-		(currentClass includesSelector: aMethod selector) 
-			ifTrue: [ 
-				| possibleProtocol |
-				possibleProtocol := (currentClass >> aMethod selector) protocol.
-				((possibleProtocol beginsWith: '*') or: 
-					(possibleProtocol asSymbol = currentClass package name))
-						ifFalse: [ aMethod protocol: possibleProtocol.
-								^ true ] 
-							]].
-	^ false.
+	protocolBag ifEmpty: [ ^ self ].
+	protocol := protocolBag sortedCounts first value.
 ]
 
 { #category : #private }
@@ -261,9 +238,9 @@ MethodClassifier >> protocolForKnownKeywordSuffixOfSelector: aSelector [
 	aSelector keywords
 		do: [ :each | 
 			self class keywordSuffixMapping
-				keysAndValuesDo: [ :suffix :protocol | 
+				keysAndValuesDo: [ :suffix :p | 
 					(each = suffix or: [ each endsWith: suffix ])
-						ifTrue: [ ^ protocol ] ] ].
+						ifTrue: [ ^ p ] ] ].
 	^ nil
 ]
 
@@ -276,10 +253,49 @@ MethodClassifier >> protocolForKnownPrefixOfSelector: aSelector [
 	| selectorString |
 	selectorString := aSelector asString.
 	self class prefixMapping
-		keysAndValuesDo: [ :prefix :protocol | 
+		keysAndValuesDo: [ :prefix :p | 
 			(selectorString = prefix
 				or: [ (selectorString beginsWith: prefix)
 						and: [ (selectorString at: prefix size + 1) isLowercase not ] ])
-				ifTrue: [ ^ protocol ] ].
+				ifTrue: [ ^ p ] ].
 	^ nil
+]
+
+{ #category : #'classification-rules' }
+MethodClassifier >> protocolInSuperclassProtocol: aMethod [
+
+	protocol := self superclassProtocol: aMethod
+]
+
+{ #category : #reseting }
+MethodClassifier >> resetProtocol [
+	protocol := nil
+]
+
+{ #category : #'smartSuggestions - support' }
+MethodClassifier >> suggestProtocolFor: aMethod [ 
+	| listToSearch index |
+	listToSearch := self listToFindProtocols.
+	index := 1.
+	[ protocol isNil and: [ index <= listToSearch size ] ] 
+	whileTrue: [ self perform: (listToSearch at: index) withArguments: {aMethod}.
+		index := index + 1 ].
+	^ protocol
+]
+
+{ #category : #classification }
+MethodClassifier >> superclassProtocol: aMethod [
+	| currentClass |
+	currentClass := aMethod methodClass.
+	
+	[ currentClass superclass isNil ] whileFalse: [
+		currentClass := currentClass superclass.
+		(currentClass includesSelector: aMethod selector) 
+			ifTrue: [ 
+				| possibleProtocol |
+				possibleProtocol := (currentClass >> aMethod selector) protocol.
+				((possibleProtocol beginsWith: '*') or: 
+					(possibleProtocol asSymbol = currentClass package name))
+						ifFalse: [ ^ possibleProtocol ]]].
+	^ nil.
 ]

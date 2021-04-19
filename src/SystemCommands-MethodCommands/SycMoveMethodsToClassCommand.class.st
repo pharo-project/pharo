@@ -41,10 +41,15 @@ SycMoveMethodsToClassCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycMoveMethodsToClassCommand >> execute [
-	
+	self fillProtocols.
 	methods 
 		collect: [ :each | RBMoveMethodToClassRefactoring model: model method: each class: targetClass ]
 		thenDo: [ :each | each execute ]
+]
+
+{ #category : #accessing }
+SycMoveMethodsToClassCommand >> fillProtocols [
+	methods do: [ :meth |  self tagMethod: meth ]
 ]
 
 { #category : #'drag and drop support' }
