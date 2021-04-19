@@ -1,19 +1,42 @@
 "
-I am a refactoring to mark a method as deprecated and replace the implementation by a call to a new method.
+I am a refactoring for deprecate a method.
 
-oldSelector
-	- is a selector which shouldn't be used anymore, it's deprecated
-newSelector
-	- is a selector which will be used instead of a deprecated one
+My preconditions verify, that the old selector exists (in  the current namespace) and that the new selector is a valid selector
 
-The implementation of oldSelector is replaced by a call to `#deprecated:on:in:` and the newSelector.
+The refactoring transformation will add the call to the #deprecated:on:in: method 
 
-The message `#deprecated:on:in:`  will be used to inform the user about the deprecation.
+Example
+---------------
 
-### Note 
-It is recommended to use this refactoring only if number of arguments is either equal in both selectors, or the new one has no arguments at all.
-If new selector has fewer number of arguments than the old one, it may lead to unexpected results.
-If you use it in other conditions an error may be be occured.
+Script:
+```
+	(RBDeprecateMethodRefactoring 
+		deprecateMethod: #called:on: 
+		in: RBRefactoryTestDataApp 
+		using: #callFoo) execute
+```
+
+Before refactoring:
+```
+RBRefactoryTestDataApp >> called: anObject on: aBlock 
+	Transcript
+		show: anObject printString;
+		cr.
+	aBlock value
+```
+
+After refactoring:
+```
+RBRefactoryTestDataApp >> called: anObject on: aBlock 
+	self
+		deprecated: 'Use #callFoo instead'
+		on: '16 April 2021'
+		in: 'Pharo-9.0.0+build.1327.sha.a1d951343f221372d949a21fc1e86d5fc2d2be81 (64 Bit)'.
+	Transcript
+		show: anObject printString;
+		cr.
+	aBlock value
+```
 "
 Class {
 	#name : #RBDeprecateMethodRefactoring,
@@ -26,8 +49,17 @@ Class {
 }
 
 { #category : #'intance creation' }
+RBDeprecateMethodRefactoring class >> deprecateMethod: aSelector in: aClass using: newSelector [
+	^ self new 
+		deprecateMethod: aSelector
+			in: aClass
+			using: newSelector;
+		yourself
+]
+
+{ #category : #'intance creation' }
 RBDeprecateMethodRefactoring class >> model: aRBSmalltalk deprecateMethod: aSelector in: aClass using: newSelector [
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		deprecateMethod: aSelector
 			in: aClass
@@ -36,47 +68,29 @@ RBDeprecateMethodRefactoring class >> model: aRBSmalltalk deprecateMethod: aSele
 ]
 
 { #category : #transforming }
+RBDeprecateMethodRefactoring >> callDeprecationMethod [
+
+	^ 'self 
+		deprecated: ''Use ' , newSelector storeString , ' instead''
+		on: 	''' , Date today asString , ''' 
+		in: ''' , SystemVersion current imageVersionString , ''''
+]
+
+{ #category : #preconditions }
 RBDeprecateMethodRefactoring >> deprecateMethod: aSelector in: aClass using: newSel [
-	oldSelector := aSelector.
-	newSelector := newSel.
-	class := self classObjectFor: aClass
-]
-
-{ #category : #transforming }
-RBDeprecateMethodRefactoring >> formNameFor: aSelector [
-
-	| method keywords arguments |
-	method := class methodFor: aSelector.
-	keywords := method parseTree keywords asOrderedCollection ifNil: [ 
-		            '' ].
-	arguments := method parseTree arguments ifNil: [ '' ].
-	^ (keywords isNotEmpty and: [ arguments isNotEmpty ])
-		  ifTrue: [ 
-			  String streamContents: [ :s | 
-				  keywords with: arguments do: [ :keyword :arg | 
-					  s
-						  nextPutAll: keyword , ' ' , arg name;
-						  nextPutAll: ' ' ] ] ]
-		  ifFalse: [ aSelector asString ]
-]
-
-{ #category : #transforming }
-RBDeprecateMethodRefactoring >> formNewName [
-	^ self formNameFor: newSelector
-]
-
-{ #category : #transforming }
-RBDeprecateMethodRefactoring >> formOldName [
-	^ self formNameFor: oldSelector
+	oldSelector := aSelector asSymbol.
+	newSelector := newSel asSymbol.
+	class := self classObjectFor: aClass.
 ]
 
 { #category : #preconditions }
 RBDeprecateMethodRefactoring >> preconditions [
-	| newCondition |
-	newCondition := (RBCondition 
+
+	^ (RBCondition definesSelector: oldSelector in: class) 
+		& (RBCondition canUnderstand: newSelector in: class)
+		& (RBCondition 
 							withBlock: [oldSelector numArgs = newSelector numArgs or: [ newSelector numArgs = 0 ]]
 							errorString: 'The new selectors should have the same number of arguments as the old one, or not have them at all').
-	^newCondition
 ]
 
 { #category : #printing }
@@ -96,20 +110,11 @@ RBDeprecateMethodRefactoring >> storeOn: aStream [
 
 { #category : #transforming }
 RBDeprecateMethodRefactoring >> transform [
-	| protocol deprecatedSource |
-	protocol := (class methodFor: newSelector) protocols.
-	deprecatedSource := self formOldName , String cr , String tab
-		,
-			'self 
-		deprecated: ''Use ' , newSelector asString
-		,
-			' instead''
-		on: 	''' , Date today asString
-		,
-			''' 
-		in: ''' , SystemVersion current imageVersionString
-		,
-			'''.
-	^ self ' , self formNewName.
-	(model classNamed: class realClass name) compile: deprecatedSource classified: protocol
+
+	| node parseTree method |
+	method := class methodFor: oldSelector.
+	parseTree := method parseTree.
+	node := self parserClass parseExpression: self callDeprecationMethod.
+	parseTree body addNodeFirst: node.
+	class compile: parseTree newSource classified: method protocols
 ]

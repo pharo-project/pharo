@@ -136,7 +136,7 @@ RBChangeMethodNameRefactoring >> renameMethod: aSelector in: aClass to: newSel p
 	oldSelector := aSelector asSymbol.
 	newSelector := newSel asSymbol.
 	class := self classObjectFor: aClass.
-	permutation := aMap
+	permutation := aMap.
 ]
 
 { #category : #transforming }

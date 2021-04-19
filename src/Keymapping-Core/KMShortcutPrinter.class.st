@@ -5,9 +5,6 @@ I'm an util to convert a shortcut into the representation used in a platform (th
 Class {
 	#name : #KMShortcutPrinter,
 	#superclass : #OSPlatformVisitor,
-	#instVars : [
-		'shortcut'
-	],
 	#classVars : [
 		'SymbolTable'
 	],
@@ -49,62 +46,26 @@ KMShortcutPrinter class >> toString: aShortcut [
 ]
 
 { #category : #private }
-KMShortcutPrinter >> genericShortcutFor: aShortcut [
-
-	| char |
-	char := self genericSpecialCharacter: aShortcut platformCharacter.	
-	^ String streamContents: [ :stream |
-		(self shortcutModifiersOf: aShortcut)
-			do: [ :each | stream << each ]
-			separatedBy: [ stream << '+' ].
-		stream << '+'.
-		stream << char ]
-	
+KMShortcutPrinter >> basicModifierStringsOf: aShortcut [
+		
+	^ (aShortcut platformModifier asString substrings: '+') collect: [:each | each trimBoth]
 ]
 
 { #category : #visiting }
-KMShortcutPrinter >> genericSpecialCharacter: char [ 
+KMShortcutPrinter >> mapSpecialCharacter: char [ 
 
 	char = KeyboardKey enter ifTrue: [ ^ 'Enter' ].
 	char = (KeyboardKey fromCharacter: Character space) ifTrue: [ ^ 'Space' ].
 	^ char	 name
 ]
 
-{ #category : #visiting }
-KMShortcutPrinter >> macSpecialCharacter: char [ 
-
-	char = KeyboardKey enter ifTrue: [ ^ self class symbolTableAt: #Enter ifAbsent: [ 'Enter' ] ].	
-	(char = (KeyboardKey fromCharacter: Character space))
-		ifTrue: [ ^ self class symbolTableAt: #Space ifAbsent: [ 'Space' ] ].	
-	^ char name asUppercase
-]
-
-{ #category : #private }
-KMShortcutPrinter >> osxShortcutFor: aShortcut [
-
-	| keyParts symbols char |
-
-	keyParts := self shortcutModifiersOf: aShortcut.
-	symbols := keyParts 
-		inject: ''
-		into: [ :s :each | 
-			s, (self class symbolTableAt: each ifAbsent: [ each capitalized ]) ].
-	
-	char := self macSpecialCharacter: aShortcut platformCharacter.
-	^ symbols, char asString
-]
-
-{ #category : #accessing }
-KMShortcutPrinter >> shortcut: aShortcut [
-
-	shortcut := aShortcut
-]
-
 { #category : #private }
 KMShortcutPrinter >> shortcutModifiersOf: aShortcut [
 	| modifiers |
 	
-	modifiers := (aShortcut platformModifier asString substrings: '+') collect: [:each | each trimBoth].
+	modifiers := self basicModifierStringsOf: aShortcut.
+	modifiers replaceAll: 'Meta' with: 'Ctrl'.
+	
 	"Ensure shift is first"
 	((modifiers includes: 'Shift') 
 		and: [ modifiers first ~= 'Shift' ])
@@ -114,37 +75,20 @@ KMShortcutPrinter >> shortcutModifiersOf: aShortcut [
 ]
 
 { #category : #visiting }
-KMShortcutPrinter >> visitCombinationShortcutOnGeneric: aShortcut [
+KMShortcutPrinter >> visitCombinationShortcut: aShortcut [
 
-	^ (shortcut sequence collect: [ :e | self genericShortcutFor: e ]) joinUsing: ','
+	^ (aShortcut sequence collect: [ :e | self visitSingleShortcut: e ]) joinUsing: ','
 ]
 
 { #category : #visiting }
-KMShortcutPrinter >> visitCombinationShortcutOnOSX: aShortcut [
+KMShortcutPrinter >> visitSingleShortcut: aShortcut [
 
-	^ (shortcut sequence collect: [ :e | self osxShortcutFor: e ]) joinUsing: ','
-]
-
-{ #category : #visiting }
-KMShortcutPrinter >> visitGeneric: aPlatform [
-	
-	^ shortcut acceptVisitorForGenericPlatform: self
-]
-
-{ #category : #visiting }
-KMShortcutPrinter >> visitMacOS: aPlatform [
-	
-	^ shortcut acceptVisitorForOSXPlatform: self
-]
-
-{ #category : #visiting }
-KMShortcutPrinter >> visitSingleShortcutOnGeneric: aShortcut [
-
-	^ self genericShortcutFor: shortcut
-]
-
-{ #category : #visiting }
-KMShortcutPrinter >> visitSingleShortcutOnOSX: aShortcut [
-
-	^ self osxShortcutFor: shortcut
+	| char |
+	char := self mapSpecialCharacter: aShortcut platformCharacter.
+	^ String streamContents: [ :stream | 
+		  (self shortcutModifiersOf: aShortcut)
+			  do: [ :each | stream << each ]
+			  separatedBy: [ stream << '+' ].
+		  stream << '+'.
+		  stream << char ]
 ]

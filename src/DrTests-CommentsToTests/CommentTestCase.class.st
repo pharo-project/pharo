@@ -10,44 +10,15 @@ Class {
 		'currentValue',
 		'expectedValue',
 		'expression',
-		'classExample',
-		'selectorExample'
+		'docCommentNode'
 	],
 	#category : #'DrTests-CommentsToTests-Model'
 }
 
 { #category : #'instance creation' }
-CommentTestCase class >> comment: stringComment class: aClass selector: aSymbol [
-	| result |
-	self flag: #todo.
-	"this method body should be moved on instance side."
-	result := [ Smalltalk compiler evaluate: stringComment ]
-		on: Exception
-		do: [ ^ self errorComment: stringComment class: aClass selector: aSymbol ].
-	^ (result isKindOf: Association)
-		ifFalse: [ self errorComment: stringComment class: aClass selector: aSymbol ]
-		ifTrue: [ self new
-				expression: stringComment;
-				expectedValue: result key;
-				currentValue: result value;
-				setTestSelector: #testIt;
-				classExample: aClass;
-				selectorExample: aSymbol;
-				yourself ]
-]
+CommentTestCase class >> for: aDocComment [
 
-{ #category : #'instance creation' }
-CommentTestCase class >> errorComment: stringComment class: aClass selector: aSymbol [
-	self flag: #todo.
-	"this method body should be moved on instance side."
-	^ self new
-		expression: stringComment;
-		setTestSelector: #testError;
-		classExample: aClass;
-		expectedValue: nil;
-		currentValue: nil;
-		selectorExample: aSymbol;
-		yourself
+	^self new docCommentNode: aDocComment
 ]
 
 { #category : #accessing }
@@ -58,12 +29,7 @@ CommentTestCase class >> testSelectors [
 
 { #category : #accessing }
 CommentTestCase >> classExample [ 
-	^ classExample
-]
-
-{ #category : #accessing }
-CommentTestCase >> classExample: anObject [ 
-	classExample := anObject
+	^  docCommentNode sourceNode methodNode methodClass
 ]
 
 { #category : #accessing }
@@ -86,10 +52,36 @@ CommentTestCase >> currentValue: anObject [
 ]
 
 { #category : #accessing }
+CommentTestCase >> docCommentNode [
+
+	^ docCommentNode
+]
+
+{ #category : #accessing }
+CommentTestCase >> docCommentNode: aDocComment [
+
+	| result |
+	docCommentNode := aDocComment.
+	self expression: aDocComment sourceNode contents.
+
+	result := [ Smalltalk compiler evaluate: expression ]
+		          on: Exception
+		          do: [ ^ self setTestSelector: #testError ].
+
+	(result isKindOf: Association)
+		ifFalse: [ self setTestSelector: #testError ]
+		ifTrue: [ 
+			self
+				expectedValue: result key;
+				currentValue: result value;
+				setTestSelector: #testIt ]
+]
+
+{ #category : #accessing }
 CommentTestCase >> drTestsBrowse [
 	self flag: #todo.
 	"this should be done via the presenter application and not using a global variable."
-	Smalltalk tools browser openOnClass: classExample  selector: selectorExample
+	Smalltalk tools browser openOnClass: self classExample  selector: self selectorExample
 ]
 
 { #category : #accessing }
@@ -117,6 +109,11 @@ CommentTestCase >> expression: anObject [
 	expression := anObject
 ]
 
+{ #category : #tests }
+CommentTestCase >> hasError [
+	^ testSelector == #testError
+]
+
 { #category : #printing }
 CommentTestCase >> printString [
 	^ expression
@@ -124,12 +121,7 @@ CommentTestCase >> printString [
 
 { #category : #accessing }
 CommentTestCase >> selectorExample [
-	^ selectorExample
-]
-
-{ #category : #accessing }
-CommentTestCase >> selectorExample: anObject [
-	selectorExample := anObject
+	^docCommentNode sourceNode methodNode methodClass
 ]
 
 { #category : #tests }

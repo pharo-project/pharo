@@ -43,15 +43,9 @@ KMKeyCombinationSequence >> = aShortcut [
 ]
 
 { #category : #printing }
-KMKeyCombinationSequence >> acceptVisitorForGenericPlatform: aKMShortcutPrinter [ 
+KMKeyCombinationSequence >> acceptVisitor: aKMShortcutPrinter [ 
 	
-	^ aKMShortcutPrinter visitCombinationShortcutOnGeneric: self
-]
-
-{ #category : #printing }
-KMKeyCombinationSequence >> acceptVisitorForOSXPlatform: aKMShortcutPrinter [ 
-	
-	^ aKMShortcutPrinter visitCombinationShortcutOnOSX: self
+	^ aKMShortcutPrinter visitCombinationShortcut: self
 ]
 
 { #category : #accessing }
