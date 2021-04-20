@@ -12,8 +12,40 @@ Class {
 	#instVars : [
 		'label'
 	],
+	#classInstVars : [
+		'showLineNumbers'
+	],
 	#category : #'Calypso-Browser-TextEditors'
 }
+
+{ #category : #settings }
+ClyTextLineNumbersSwitchMorph class >> settingsOn: aBuilder [
+	<systemsettings>
+	(aBuilder setting: #showLineNumbers)
+		label: 'Show lines numbers for all browsers';
+		parent: #Calypso;
+		default: false;
+		target: self;
+		description: 'If true, line numbers will appear in new system browsers for method editor'.
+]
+
+{ #category : #settings }
+ClyTextLineNumbersSwitchMorph class >> showLineNumbers [
+	^ showLineNumbers ifNil: [ false ].
+]
+
+{ #category : #settings }
+ClyTextLineNumbersSwitchMorph class >> showLineNumbers: aBoolean [
+	showLineNumbers := aBoolean.
+	self allInstancesDo: [ :inst | 
+		| textMorph |
+		textMorph := inst textMorph.
+		(showLineNumbers and: [textMorph lineNumbersRuler isNil])
+			ifTrue: [ textMorph withLineNumbers ].
+		(showLineNumbers not and: [ textMorph lineNumbersRuler isNotNil ])
+			ifTrue: [ textMorph withoutLineNumbers ].
+		inst updateLabel ].
+]
 
 { #category : #controlling }
 ClyTextLineNumbersSwitchMorph >> attachToTextMorph [ 
@@ -24,7 +56,9 @@ ClyTextLineNumbersSwitchMorph >> attachToTextMorph [
 			'Let you decide if the code pane should show the line numbers at the left of the code pane or not. +L: Click to add the lines number/L: Click to hide them.'.
 	label on: #mouseDown send: #toggle to: self.
 	self updateLabel.
-	self addMorph: label
+	self addMorph: label.
+	self class showLineNumbers 
+		ifTrue: [ self toggle ].
 ]
 
 { #category : #operations }
