@@ -1,6 +1,6 @@
-Extension { #name : #DashedBorder }
+Extension { #name : #DashedBorderStyle }
 
 { #category : #'*Athens-Morphic' }
-DashedBorder >> asAthensPaintOn: anAthensCanvas [
+DashedBorderStyle >> asAthensPaintOn: anAthensCanvas [
 	^ AthensCompositeStrokePaint new fromDashedBorderStyle: self on: anAthensCanvas
 ]

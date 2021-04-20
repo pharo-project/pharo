@@ -2090,7 +2090,7 @@ UITheme >> drawWindowPlainDropShadowFor: aSystemWindow on: aCanvas [
 	aCanvas
 		clipBy: (aSystemWindow bounds bottomRight - brOffset
 			corner: aSystemWindow bounds bottomRight + (1@1))
-			during: [:c | ((RoundedBorder new
+			during: [:c | ((RoundedBorderStyle new
 							baseColor: aSystemWindow shadowColor;
 							width: 1) cornerRadius: brOffset - 1)
 							frameRectangle: (aSystemWindow bounds translateBy: 1)
@@ -2336,7 +2336,7 @@ UITheme >> groupLabelBorderStyleFor: aGroupPanel [
 UITheme >> groupPanelBorderStyleFor: aGroupPanel [
 	"Answer the normal border style for a group panel."
 
-	^ SimpleBorder new
+	^ SimpleBorderStyle new
 		width: 1;
 		baseColor: ((self baseColorFor: aGroupPanel))
 ]
@@ -3631,7 +3631,7 @@ UITheme >> newFocusIndicatorMorphFor: aMorph [
 
 	^ BorderedMorph new
 		fillStyle: Color transparent;
-		borderStyle: (SimpleBorder new
+		borderStyle: (SimpleBorderStyle new
 			 width: 1;
 			baseColor: (self baseSelectionColorFor: aMorph));
 		bounds: aMorph focusBounds
@@ -4746,7 +4746,7 @@ UITheme >> patchworkUIThemeColorFor: aWindowOrModel [
 UITheme >> plainGroupPanelBorderStyleFor: aGroupPanel [
 	"Answer the normal border style for a plain group panel."
 
-	^SimpleBorder new
+	^SimpleBorderStyle new
 		width: 1;
 		baseColor: Color transparent
 ]
@@ -5537,7 +5537,7 @@ UITheme >> tabLabelSelectedFillStyleFor: aTabLabel [
 
 { #category : #'border-styles' }
 UITheme >> tabPanelBorderStyleFor: aTabGroup [
-	^ Pharo3TabPanelBorder new 
+	^ Pharo3TabPanelBorderStyle new 
 		width: 1;
 		baseColor: ((self darkBaseColorFor: aTabGroup));
 		tabSelector: aTabGroup tabSelectorMorph
