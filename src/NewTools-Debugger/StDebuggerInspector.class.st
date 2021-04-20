@@ -25,10 +25,10 @@ Class {
 
 { #category : #specs }
 StDebuggerInspector class >> assertionFailureSpec [
-
 	| assertionFailureLayout |
+	
 	assertionFailureLayout := SpPanedLayout newVertical.
-	assertionFailureLayout position: (self maximizeAssertionSpec
+	assertionFailureLayout positionOfSlider: (self maximizeAssertionSpec
 			 ifTrue: [ 95 percent ]
 			 ifFalse: [ 40 percent ]).
 	assertionFailureLayout add: (SpBoxLayout newHorizontal

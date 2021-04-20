@@ -26,7 +26,7 @@ StPlaygroundBindingsPresenter class >> defaultExtent [
 StPlaygroundBindingsPresenter class >> defaultSpec [
 
 	^ SpPanedLayout newHorizontal
-		position: 30 percent;
+		positionOfSlider: 30 percent;
 		add: #bindingPanel;
 		add: #inspectorPanel;
 		yourself

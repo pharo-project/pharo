@@ -94,7 +94,7 @@ StObjectContextPresenter >> intializePresentersWithEvaluator [
 		whenTextChangedDo: [ :aString | self model codeSnippet: aString ].
 	
 	self layout: (SpPanedLayout newVertical
-		position: 70 percent;
+		positionOfSlider: 70 percent;
 		add: view;
 		add: evaluator;
 		yourself)
