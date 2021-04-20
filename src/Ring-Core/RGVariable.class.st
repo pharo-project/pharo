@@ -12,6 +12,14 @@ RGVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitVariableNode: aNode
 ]
 
+{ #category : #'read/write usage' }
+RGVariable >> analyzeRead: aVariableNode by: aSemanticAnalyzer [
+]
+
+{ #category : #'read/write usage' }
+RGVariable >> analyzeWrite: aVariableNode by: aSemanticAnalyzer [
+]
+
 { #category : #accessing }
 RGVariable >> definitionString [
 	"non special globals are defined by the symbol"
