@@ -38,7 +38,7 @@ SpSliderInput class >> sliderBottom [
 SpSliderInput class >> sliderLeft [
 	<spec>
 	^ SpPanedLayout newLeftToRight
-		position: 85 percent;
+		positionOfSlider: 85 percent;
 		add: #slider withConstraints: [ :constraints | constraints beNotResizable ];
 		add: #input;
 		yourself
@@ -48,7 +48,7 @@ SpSliderInput class >> sliderLeft [
 SpSliderInput class >> sliderRight [
 	<spec>
 	^ SpPanedLayout newLeftToRight
-		position: 15 percent;
+		positionOfSlider: 15 percent;
 		add: #input;
 		add: #slider;
 		yourself
@@ -67,16 +67,11 @@ SpSliderInput class >> sliderTop [
 SpSliderInput >> connectPresenters [
 
 	slider whenValueChangedDo: [ :sliderValue | 
-		| inputValue |
-		inputValue := input text asNumber.	" ifNotNil: [ :text | text asNumber ]"
-		sliderValue == inputValue
-			ifFalse: [ input text: sliderValue asString ] ].
-	
+		input text: sliderValue asString ].
+
 	input whenTextChangedDo: [ :text | 
-		| inputValue |
-		inputValue := text asNumber.
-		slider value == inputValue
-			ifFalse: [ slider value: inputValue ] ]
+		text isEmpty ifFalse: [ "`text isEmpty` conditional is for avoid converting an empty string into a number because an error is raised." 
+			slider value: text asNumber ] ]
 ]
 
 { #category : #initialization }

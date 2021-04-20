@@ -49,8 +49,8 @@ SpMorphicTreeTableDataSource >> cellColumn: column row: rowIndex [
 	
 	item := self elementAt: rowIndex.
 	cell := FTIndentedCellMorph new.
-	cell indentBy: (self cellIndentFor: item).
 	(self isFirstColumn: column) ifTrue: [
+		cell indentBy: (self cellIndentFor: item).
 		cell addMorphBack: (self buttonFor: item) ].
 
 	builder := SpMorphicTreeTableCellBuilder on: self.

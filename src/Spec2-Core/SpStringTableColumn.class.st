@@ -74,6 +74,9 @@ SpStringTableColumn >> displayBackgroundColor [
 
 { #category : #api }
 SpStringTableColumn >> displayBackgroundColor: aBlock [
+	"Changes the background color of cells of the column. 
+	 `aBlock` receives an argument (the model element) and should answer an instance of Color. 
+	 NOTE: This may be not working at the moment :("
 
 	backgroundColorAction := aBlock
 ]
@@ -86,6 +89,8 @@ SpStringTableColumn >> displayBold [
 
 { #category : #api }
 SpStringTableColumn >> displayBold: aBlock [
+	"If `aBlock` answer true, the cell will be displayed in bold.
+	 `aBlock` receives one argument (the model element)."
 
 	boldAction := aBlock
 ]
@@ -98,6 +103,8 @@ SpStringTableColumn >> displayColor [
 
 { #category : #api }
 SpStringTableColumn >> displayColor: aBlock [
+	"Changes the background color of cells of the column. 
+	 `aBlock` receives an argument (the model element) and should answer an instance of Color."
 
 	colorAction := aBlock
 ]
@@ -110,6 +117,8 @@ SpStringTableColumn >> displayItalic [
 
 { #category : #api }
 SpStringTableColumn >> displayItalic: aBlock [
+	"If `aBlock` answer true, the cell will be displayed in italic.
+	 `aBlock` receives one argument (the model element)."
 
 	italicAction := aBlock
 ]
@@ -122,6 +131,8 @@ SpStringTableColumn >> displayUnderline [
 
 { #category : #api }
 SpStringTableColumn >> displayUnderline: aBlock [
+	"If `aBlock` answer true, the cell will be displayed underlined.
+	 `aBlock` receives one argument (the model element)."
 
 	underlineAction := aBlock
 ]
