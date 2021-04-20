@@ -68,11 +68,6 @@ DoItVariable >> actualVariable: aVariable [
 	name := actualVariable name
 ]
 
-{ #category : #converting }
-DoItVariable >> asDoItVariableFrom: aContext [
-	^self
-]
-
 { #category : #accessing }
 DoItVariable >> doItContext [
 	^ doItContext

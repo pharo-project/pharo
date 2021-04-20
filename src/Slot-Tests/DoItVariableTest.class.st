@@ -39,6 +39,20 @@ DoItVariableTest >> testCreationFromAnotherVariable [
 ]
 
 { #category : #tests }
+DoItVariableTest >> testDoItCompilation [
+	| temp var doIt |
+	temp := 100.
+	var := DoItVariable named: #temp fromContext: thisContext.	
+	doIt := thisContext class compiler
+		source: 'temp + 2';
+		context: thisContext;
+		noPattern: true;
+		bindings: { var };
+		compile.
+	self assert: (doIt valueWithReceiver: self arguments: {thisContext}) equals: 102
+]
+
+{ #category : #tests }
 DoItVariableTest >> testFromInstVarVariable [
 
 	| var |
