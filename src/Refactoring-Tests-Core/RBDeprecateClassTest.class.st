@@ -8,17 +8,17 @@ Class {
 RBDeprecateClassTest >> testBadName [
 	self
 		shouldFail: (RBDeprecateClassRefactoring 
-				rename: RBLintRuleTestData
-				to: self objectClassVariable);
+				deprecate: RBLintRuleTestData
+				in: self objectClassVariable);
 		shouldFail: (RBDeprecateClassRefactoring 
-				rename: RBLintRuleTestData
-				to: #'Ob ject')
+				deprecate: RBLintRuleTestData
+				in: #'Ob ject')
 ]
 
 { #category : #'failure tests' }
 RBDeprecateClassTest >> testMetaClassFailure [
 	self 
-		shouldFail: (RBDeprecateClassRefactoring rename: self class class to: #Foo)
+		shouldFail: (RBDeprecateClassRefactoring deprecate: self class class in: #Foo)
 ]
 
 { #category : #tests }
@@ -40,8 +40,8 @@ RBDeprecateClassTest >> testModelRenameClass [
 		compile: 'objectName ^#(ClassDeprecatorTestingClassDeprecated)' classified: #(#accessing).
 	refactoring := RBDeprecateClassRefactoring 
 		model: model
-		rename: deprecated
-		to: #ClassDeprecatorTestingClassReplacement.
+		deprecate: deprecated
+		in: #ClassDeprecatorTestingClassReplacement.
 	
 	"because of RB limitations we cannot detect extensions in the test properly so we skip this operation"
 	refactoring shouldCopyExtensions: false.	
