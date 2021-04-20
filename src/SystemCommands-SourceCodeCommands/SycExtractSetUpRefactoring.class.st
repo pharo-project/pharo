@@ -30,6 +30,13 @@ SycExtractSetUpRefactoring >> icon [
 	^ self iconNamed: #glamorousRestart
 ]
 
+{ #category : #initialization }
+SycExtractSetUpRefactoring >> initialize [
+	super initialize.
+	self
+		description: 'Extract setUp and find occurrences.'
+]
+
 { #category : #testing }
 SycExtractSetUpRefactoring >> isApplicable [
 
