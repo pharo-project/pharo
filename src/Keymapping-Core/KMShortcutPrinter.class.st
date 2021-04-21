@@ -40,9 +40,7 @@ KMShortcutPrinter class >> symbolTableAt: anObject ifAbsent: aBlock [
 { #category : #'instance creation' }
 KMShortcutPrinter class >> toString: aShortcut [
 
-	^ self new
-		shortcut: aShortcut;
-		visit
+	^ aShortcut acceptVisitor: OSPlatform current shortcutPrinter
 ]
 
 { #category : #private }
