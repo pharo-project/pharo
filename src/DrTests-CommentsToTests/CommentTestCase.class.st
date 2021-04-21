@@ -7,9 +7,6 @@ Class {
 	#name : #CommentTestCase,
 	#superclass : #TestCase,
 	#instVars : [
-		'currentValue',
-		'expectedValue',
-		'expression',
 		'docCommentNode'
 	],
 	#category : #'DrTests-CommentsToTests-Model'
@@ -24,64 +21,33 @@ CommentTestCase class >> for: aDocComment [
 { #category : #accessing }
 CommentTestCase class >> testSelectors [
 	"we remove the selectors to add back later one of them, depending if is is error or not"
-	^ super testSelectors \ { #testError. #testIt }
+	^ super testSelectors \ { #testIt }
 ]
 
-{ #category : #accessing }
-CommentTestCase >> classExample [ 
-	^  docCommentNode sourceNode methodNode methodClass
-]
-
-{ #category : #accessing }
+{ #category : #private }
 CommentTestCase >> cleanUpInstanceVariables [
 	self class allInstVarNames
 		do: [ :name | 
-			(#('testSelector' 'currentValue' 'expression' 'classExample' 'selectorExample')
+			(#('docCommentNode')
 				includes: name)
 				ifFalse: [ self instVarNamed: name put: nil ] ]
 ]
 
 { #category : #accessing }
 CommentTestCase >> currentValue [
-	^ currentValue
-]
-
-{ #category : #accessing }
-CommentTestCase >> currentValue: anObject [
-	currentValue := anObject
-]
-
-{ #category : #accessing }
-CommentTestCase >> docCommentNode [
-
-	^ docCommentNode
+	^ docCommentNode expression evaluate
 ]
 
 { #category : #accessing }
 CommentTestCase >> docCommentNode: aDocComment [
 
-	| result |
 	docCommentNode := aDocComment.
-	self expression: aDocComment sourceNode contents.
-
-	result := [ Smalltalk compiler evaluate: expression ]
-		          on: Exception
-		          do: [ ^ self setTestSelector: #testError ].
-
-	(result isKindOf: Association)
-		ifFalse: [ self setTestSelector: #testError ]
-		ifTrue: [ 
-			self
-				expectedValue: result key;
-				currentValue: result value;
-				setTestSelector: #testIt ]
+	testSelector := #testIt.
 ]
 
 { #category : #accessing }
 CommentTestCase >> drTestsBrowse [
-	self flag: #todo.
-	"this should be done via the presenter application and not using a global variable."
-	Smalltalk tools browser openOnClass: self classExample  selector: self selectorExample
+ 	docCommentNode browse
 ]
 
 { #category : #accessing }
@@ -91,45 +57,20 @@ CommentTestCase >> drTestsName [
 
 { #category : #accessing }
 CommentTestCase >> expectedValue [
-	^ expectedValue
-]
-
-{ #category : #accessing }
-CommentTestCase >> expectedValue: anObject [
-	expectedValue := anObject
+	^ docCommentNode result evaluate
 ]
 
 { #category : #accessing }
 CommentTestCase >> expression [
-	^ expression
-]
-
-{ #category : #accessing }
-CommentTestCase >> expression: anObject [
-	expression := anObject
-]
-
-{ #category : #tests }
-CommentTestCase >> hasError [
-	^ testSelector == #testError
+	^ docCommentNode sourceNode contents
 ]
 
 { #category : #printing }
 CommentTestCase >> printString [
-	^ expression
-]
-
-{ #category : #accessing }
-CommentTestCase >> selectorExample [
-	^docCommentNode sourceNode methodNode methodClass
-]
-
-{ #category : #tests }
-CommentTestCase >> testError [
-	self error: 'syntax error on the comment'
+	^ docCommentNode sourceNode contents 
 ]
 
 { #category : #tests }
 CommentTestCase >> testIt [
-	self assert: expectedValue equals: currentValue
+	self assert: self expectedValue equals: self currentValue
 ]
