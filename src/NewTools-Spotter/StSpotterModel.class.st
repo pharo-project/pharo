@@ -3,7 +3,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'steps',
-		'candidateAddedAction',
 		'searchUpdatedAction',
 		'amountChangedAction',
 		'mutex',

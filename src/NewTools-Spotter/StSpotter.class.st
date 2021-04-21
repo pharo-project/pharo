@@ -526,8 +526,8 @@ StSpotter >> queuedUpdateResultList [
 
 	[  
 		[ queue isEmpty ] 
-		whileFalse: [  | aCandidateLink |
-			mutex critical: [ aCandidateLink := queue removeFirst ].
+		whileFalse: [ | aCandidateLink |
+			aCandidateLink := queue removeFirst.
 			categoryPresenter := aCandidateLink processor 
 			headerCategoryFor: aCandidateLink
 			on: self.
@@ -535,15 +535,23 @@ StSpotter >> queuedUpdateResultList [
 			(categoryPresenter includesLink: aCandidateLink) ifFalse: [ 
 				categoryPresenter addCandidate: aCandidateLink inSpotter: self ] ].
 	
+		categories ifEmpty: [ ^ self ].
 		presenters := (categories values 
 			sorted: [ :each | each order ] ascending)
 			flatCollect: [ :each | each withCandidates ]. 
 			
 		resultList disableActivationDuring: [ 
-			| index |
-			index := resultList selection selectedIndex.
+			| selectedModel |
+			selectedModel := resultList selectedItem 
+				ifNotNil: [ :aPresenter | aPresenter model ].
 			resultList items: presenters.
-			resultList selectIndex: index ] 
+			selectedModel ifNotNil: [
+				| selectedPresenter |
+				selectedPresenter := (presenters 
+					detect: [ :each | each model = selectedModel ]
+					ifNone: [ nil ] ). 
+				selectedPresenter ifNotNil: [ 
+					resultList selectItem: selectedPresenter ] ] ] 
 	]
 	ensure: [ 
 		updating := false ]
@@ -685,8 +693,7 @@ StSpotter >> updateResultList: aCandidateLink [
 	
 	self model schedule: [
 		self application defer: [ 
-			self queuedUpdateResultList ]
-	]
+			mutex critical: [  self queuedUpdateResultList ] ] ]
 ]
 
 { #category : #'private updating' }
