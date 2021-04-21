@@ -119,7 +119,7 @@ SpMorphicNumberInputFieldAdapter >> keystroke: aRubricEvent [
 { #category : #factory }
 SpMorphicNumberInputFieldAdapter >> newIconButtonAction: aSymbol with: textMorph iconSelector: anIconSymbol [
 
-	^ IconicButtonMorph new
+	^ IconicButton new
 		  target: self;
 		  actionSelector: aSymbol;
 		  arguments: { textMorph };

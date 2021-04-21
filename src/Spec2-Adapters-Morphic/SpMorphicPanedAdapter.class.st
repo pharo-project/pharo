@@ -73,17 +73,16 @@ SpMorphicPanedAdapter >> layout: aLayout [
 	layout := aLayout.
 	widget ifNil: [ 
 		widget := aLayout direction newWidgetOn: self.
-		widget layoutPolicy position: aLayout position.
+		widget layoutPolicy position: aLayout positionOfSlider.
 		self selector: self splitterNewSelector ].
 
-	layout whenChildrenAddedDo: [ :ann |
-		self 
+	layout whenChildrenAddedDo: [ :ann | 
+		self
 			basicAdd: ann child
-			constraints: (layout constraintsFor: ann child) 
+			constraints: (layout constraintsFor: ann child)
 			to: widget ].
-		
-	layout whenChildrenRemovedDo: [ :ann |
-		self removeChild: ann child ].
+
+	layout whenChildrenRemovedDo: [ :ann | self removeChild: ann child ].
 
 	super layout: aLayout
 ]

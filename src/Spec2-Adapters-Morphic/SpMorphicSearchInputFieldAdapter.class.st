@@ -18,7 +18,7 @@ SpMorphicSearchInputFieldAdapter >> buildWidget [
 		color: Color transparent;
 		changeTableLayout;
 		listDirection: #topToBottom;
-		addMorph: (IconicButtonMorph new
+		addMorph: (IconicButton new
 			target: self;
 			actionSelector: #clearText;
 			labelGraphic: (self iconNamed: #windowCloseInactive);
