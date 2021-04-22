@@ -10,7 +10,6 @@ Class {
 		'#scrollValue => SpObservableSlot',
 		'#editionContextMenu => SpObservableSlot',
 		'#editable => SpObservableSlot',
-		'#cursorPosition => SpObservableSlot',
 		'#wrapWord => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets-Text'

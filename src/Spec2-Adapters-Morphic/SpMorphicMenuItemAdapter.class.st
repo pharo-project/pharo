@@ -163,7 +163,8 @@ SpMorphicMenuItemAdapter >> shortcutText [
 
 	"We can use the KMShortcutPrinter. ToggleMenuItemMorph handles when it has been already normalized or not"
 		
-	^ shortcut asKeyCombination acceptVisitor: OSPlatform current shortcutPrinter	
+	^ KMShortcutPrinter toString: shortcut asKeyCombination
+	
 ]
 
 { #category : #'widget API' }
