@@ -28,7 +28,7 @@ Class {
 ClyJumpToTestClassCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^ CmdContextMenuActivation for: ClyFullBrowserClassContext
+	^ CmdContextMenuActivation byRootGroupItemOrder: 5 for: ClyFullBrowserClassContext
 ]
 
 { #category : #activation }
