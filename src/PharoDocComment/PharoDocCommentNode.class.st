@@ -88,6 +88,13 @@ PharoDocCommentNode >> asTriplet [
 		 self result expressionCode formattedCode }
 ]
 
+{ #category : #private }
+PharoDocCommentNode >> browse [
+	| methodNode |
+	methodNode := self sourceNode methodNode.
+	(methodNode methodClass>>methodNode selector) browse
+]
+
 { #category : #accessing }
 PharoDocCommentNode >> expression [
 	^ expression
