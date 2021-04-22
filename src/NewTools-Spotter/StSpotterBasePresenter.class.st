@@ -18,3 +18,9 @@ StSpotterBasePresenter >> isHeader [
 
 	^ false
 ]
+
+{ #category : #accessing }
+StSpotterBasePresenter >> model [
+
+	^ self subclassResponsibility
+]
