@@ -1770,11 +1770,11 @@ Socket >> waitForDataFor: timeout ifClosed: closedBlock ifTimedOut: timedOutBloc
 	startTime := Time millisecondClockValue.
 	msecsDelta := (timeout * 1000) truncated.
 	[ (Time millisecondsSince: startTime) < msecsDelta ]
-		whileTrue: [ (self primSocketReceiveDataAvailable: socketHandle) ifTrue: [ ^ self ].
+		whileTrue: [ self dataAvailable ifTrue: [ ^ self ].
 			self isConnected ifFalse: [ ^ closedBlock value ].
 			self readSemaphore waitTimeoutMSecs: (msecsDelta - (Time millisecondsSince: startTime) max: 0) ].
 
-	(self primSocketReceiveDataAvailable: socketHandle)
+	self dataAvailable
 		ifFalse: [ ^ (self isConnected
 				ifTrue: [ timedOutBlock ]
 				ifFalse: [ closedBlock ]) value ]
@@ -1787,7 +1787,7 @@ Socket >> waitForDataIfClosed: closedBlock [
 
 	[true]
 		whileTrue: [
-			(self primSocketReceiveDataAvailable: socketHandle)
+			self dataAvailable
 				ifTrue: [^self].
 			self isConnected
 				ifFalse: [^closedBlock value].
