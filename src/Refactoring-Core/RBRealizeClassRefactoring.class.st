@@ -16,8 +16,18 @@ RBRealizeClassRefactoring >> preconditions [
 				detect: [ :each | 
 					(each whichSelectorsReferToSymbol: #subclassResponsibility) notEmpty 
 						or: [ (each classSide whichSelectorsReferToSymbol: #subclassResponsibility) notEmpty ] ]
-				ifNone: [ nil ]) isNil ]
-		errorString: self theClass printString , ' is abstract or has abstract subclasses.'
+				ifNone: [ nil ]) ifNil: 
+				[ self refactoringWarning: 
+				self theClass printString , ' is abstract or has abstract subclasses.']. true ]
+]
+
+{ #category : #printing }
+RBRealizeClassRefactoring >> storeOn: aStream [ 
+	aStream nextPut: $(.
+	self class storeOn: aStream.
+	aStream nextPutAll: ' className: '.
+	className storeOn: aStream.
+	aStream nextPut: $)
 ]
 
 { #category : #accessing }
