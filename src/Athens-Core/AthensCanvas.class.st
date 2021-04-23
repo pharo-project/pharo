@@ -16,20 +16,11 @@ Class {
 		'surface',
 		'shape',
 		'fontRenderer',
-		'paintMode'
-	],
-	#classVars : [
-		'PaintCache'
+		'paintMode',
+		'paintCache'
 	],
 	#category : #'Athens-Core-Base'
 }
-
-{ #category : #private }
-AthensCanvas class >> initialize [
-
-	self reset.
-	SessionManager default registerGuiClassNamed: self name atPriority: 20
-]
 
 { #category : #private }
 AthensCanvas class >> new [
@@ -40,25 +31,6 @@ AthensCanvas class >> new [
 { #category : #private }
 AthensCanvas class >> on: aSurface [
 	^ self basicNew initializeWithSurface: aSurface
-]
-
-{ #category : #private }
-AthensCanvas class >> reset [
-
-	PaintCache := LRUCache new maximumWeight: 100.
-
-]
-
-{ #category : #private }
-AthensCanvas class >> shutDown: isImageQuitting [
-	
-	self reset
-]
-
-{ #category : #private }
-AthensCanvas class >> startUp: isImageStarting [
-	
-	self reset
 ]
 
 { #category : #caching }
@@ -169,6 +141,13 @@ AthensCanvas >> paint [
 	^ paint  
 ]
 
+{ #category : #paint }
+AthensCanvas >> paintCache [ 
+
+	^ paintCache ifNil: [ 
+		paintCache := LRUCache new maximumWeight: 100 ].
+]
+
 { #category : #accessing }
 AthensCanvas >> paintMode [
 	"Answer the current paint mode controller.
@@ -205,7 +184,7 @@ AthensCanvas >> setFont: aFont [
 AthensCanvas >> setPaint: aPaint [
 	"set the current paint of receiver"
 	paint = aPaint ifTrue:[ ^ paint ].
-	paint := PaintCache at: aPaint ifAbsentPut: [ aPaint asAthensPaintOn: self ].
+	paint := self paintCache at: aPaint ifAbsentPut: [ aPaint asAthensPaintOn: self ].
 	^ paint
 ]
 
