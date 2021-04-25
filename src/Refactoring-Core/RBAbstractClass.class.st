@@ -432,7 +432,8 @@ RBAbstractClass >> methodFor: aSelector [
 			compiledMethod := class compiledMethodAt: aSelector ifAbsent: [ nil ].
 			compiledMethod ifNotNil: [ 
 				compiledMethod isFromTrait 
-					ifTrue: [ (model classNamed: compiledMethod origin name) methodFor: aSelector ]
+					ifTrue: [ (compiledMethod traitSource hasMethod: aSelector) ifTrue: [
+						(model classNamed: compiledMethod origin name) methodFor: aSelector ] ]
 					ifFalse: [modelFactory rbMethod for: self fromMethod: compiledMethod andSelector: aSelector ]] ]
 ]
 
@@ -465,11 +466,13 @@ RBAbstractClass >> newMethods [
 { #category : #'method accessing' }
 RBAbstractClass >> parseTreeFor: aSelector [
 
-	| class |
+	| class method |
 
 	class := self whoDefinesMethod: aSelector.
 	class ifNil: [ ^ nil ].
-	^ ( class methodFor: aSelector ) parseTree
+	method := class methodFor: aSelector.
+	method ifNil: [ ^ nil ].
+	^ method parseTree
 ]
 
 { #category : #printing }

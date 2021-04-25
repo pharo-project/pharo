@@ -59,11 +59,11 @@ RBInlineAllSendersRefactoring >> checkInlinedMethods [
 
 { #category : #transforming }
 RBInlineAllSendersRefactoring >> inlineMessagesInClass: aClass andSelector: aSelector [ 
-	| messagesToInline previousCountOfMessages |
+	| messagesToInline previousCountOfMessages rbMethod |
 	previousCountOfMessages := 4294967295.	"Some really large number > # of initial self sends."
-	
-	[messagesToInline := self 
-				numberOfSelfSendsIn: (aClass parseTreeFor: aSelector).
+	rbMethod := aClass parseTreeFor: aSelector.
+	rbMethod ifNil: [ ^ self ].
+	[messagesToInline := self numberOfSelfSendsIn: rbMethod.
 	messagesToInline > 0 and: [previousCountOfMessages > messagesToInline]] 
 			whileTrue: 
 				[| node |
