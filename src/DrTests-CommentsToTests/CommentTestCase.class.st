@@ -24,15 +24,6 @@ CommentTestCase class >> testSelectors [
 	^ super testSelectors \ { #testIt }
 ]
 
-{ #category : #private }
-CommentTestCase >> cleanUpInstanceVariables [
-	self class allInstVarNames
-		do: [ :name | 
-			(#('docCommentNode')
-				includes: name)
-				ifFalse: [ self instVarNamed: name put: nil ] ]
-]
-
 { #category : #accessing }
 CommentTestCase >> currentValue [
 	^ docCommentNode expression evaluate
@@ -63,6 +54,12 @@ CommentTestCase >> expectedValue [
 { #category : #accessing }
 CommentTestCase >> expression [
 	^ docCommentNode sourceNode contents
+]
+
+{ #category : #private }
+CommentTestCase >> instanceVariablesToKeep [
+
+	^ #( 'docCommentNode' )
 ]
 
 { #category : #printing }
