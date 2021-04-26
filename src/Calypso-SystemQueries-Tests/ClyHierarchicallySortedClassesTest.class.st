@@ -6,7 +6,7 @@ Class {
 
 { #category : #running }
 ClyHierarchicallySortedClassesTest >> createQueryResult [
-	^ClyHierarchicallySortedClasses new
+	^ClyHierarchicallySortedClassesResult new
 ]
 
 { #category : #tests }

@@ -12,7 +12,7 @@ ClyMethodVisibilityGroupsTest >> createQuery [
 
 { #category : #running }
 ClyMethodVisibilityGroupsTest >> createQueryResult [
-	^ClyMethodVisibilityGroups withHierarchy: ClySubclassHierarchy new 
+	^ClyMethodVisibilityGroupsResult withHierarchy: ClySubclassHierarchy new 
 ]
 
 { #category : #running }
@@ -32,7 +32,7 @@ ClyMethodVisibilityGroupsTest >> testComparisonWithAnotherHierarchy [
 { #category : #tests }
 ClyMethodVisibilityGroupsTest >> testDefaultHierarchyShouldExist [
 
-	self assert: (ClyMethodVisibilityGroups defaultHierarchy isKindOf: ClyClassHierarchy)
+	self assert: (ClyMethodVisibilityGroupsResult defaultHierarchy isKindOf: ClyClassHierarchy)
 ]
 
 { #category : #tests }

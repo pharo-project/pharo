@@ -20,7 +20,7 @@ Internal Representation and Key Implementation Points.
 	hierarchy:		<ClyClassHierarchy>
 "
 Class {
-	#name : #ClyMethodVisibilityGroups,
+	#name : #ClyMethodVisibilityGroupsResult,
 	#superclass : #ClyBrowserQueryResult,
 	#instVars : [
 		'hierarchy'
@@ -29,26 +29,26 @@ Class {
 }
 
 { #category : #'instance creation' }
-ClyMethodVisibilityGroups class >> defaultHierarchy [
+ClyMethodVisibilityGroupsResult class >> defaultHierarchy [
 
 	^ClyMethodVisibilityProvider defaultHierarchy
 ]
 
 { #category : #'instance creation' }
-ClyMethodVisibilityGroups class >> withDefaultHierarchy [
+ClyMethodVisibilityGroupsResult class >> withDefaultHierarchy [
 
 	^self withHierarchy: self defaultHierarchy 
 ]
 
 { #category : #'instance creation' }
-ClyMethodVisibilityGroups class >> withHierarchy: aClassHierarchy [
+ClyMethodVisibilityGroupsResult class >> withHierarchy: aClassHierarchy [
 
 	^self new 
 		hierarchy: aClassHierarchy
 ]
 
 { #category : #comparing }
-ClyMethodVisibilityGroups >> = anObject [
+ClyMethodVisibilityGroupsResult >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
 	self == anObject ifTrue: [ ^ true ].
@@ -58,7 +58,7 @@ ClyMethodVisibilityGroups >> = anObject [
 ]
 
 { #category : #building }
-ClyMethodVisibilityGroups >> buildGroupFor: aClass depth: depth toShowMethodsFrom: aScope [
+ClyMethodVisibilityGroupsResult >> buildGroupFor: aClass depth: depth toShowMethodsFrom: aScope [
 
 	| group item |
 	group := ClyInheritedMethodGroup withMethodsOf: aClass toShowIn: aScope.
@@ -68,7 +68,7 @@ ClyMethodVisibilityGroups >> buildGroupFor: aClass depth: depth toShowMethodsFro
 ]
 
 { #category : #building }
-ClyMethodVisibilityGroups >> fillWith: classes [
+ClyMethodVisibilityGroupsResult >> fillWith: classes [
 	| actualClassScope classMap addedClasses |
 	actualClassScope := self scope asLocalClassScope. 
 	classMap := hierarchy buildFrom: classes.
@@ -80,18 +80,18 @@ ClyMethodVisibilityGroups >> fillWith: classes [
 ]
 
 { #category : #comparing }
-ClyMethodVisibilityGroups >> hash [
+ClyMethodVisibilityGroupsResult >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^super hash bitXor: hierarchy hash
 ]
 
 { #category : #accessing }
-ClyMethodVisibilityGroups >> hierarchy [
+ClyMethodVisibilityGroupsResult >> hierarchy [
 	^ hierarchy
 ]
 
 { #category : #accessing }
-ClyMethodVisibilityGroups >> hierarchy: anObject [
+ClyMethodVisibilityGroupsResult >> hierarchy: anObject [
 	hierarchy := anObject
 ]

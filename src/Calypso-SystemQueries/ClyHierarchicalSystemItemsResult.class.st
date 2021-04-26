@@ -12,13 +12,13 @@ The children are sorted using special ClySortSystemItemFunction which takes into
 Using this built hierarchy I fill my items in hierarchical order.
 "
 Class {
-	#name : #ClyHierarchicalSystemItems,
+	#name : #ClyHierarchicalSystemItemsResult,
 	#superclass : #ClyBrowserQueryResult,
 	#category : #'Calypso-SystemQueries-Results'
 }
 
 { #category : #building }
-ClyHierarchicalSystemItems >> buildItemsPerClassFrom: systemObjects [
+ClyHierarchicalSystemItemsResult >> buildItemsPerClassFrom: systemObjects [
 	| itemsPerClass item localItems |
 	itemsPerClass := IdentityDictionary new.
 
@@ -32,12 +32,12 @@ ClyHierarchicalSystemItems >> buildItemsPerClassFrom: systemObjects [
 ]
 
 { #category : #building }
-ClyHierarchicalSystemItems >> containerForItemsOfClass [
+ClyHierarchicalSystemItemsResult >> containerForItemsOfClass [
 	^SortedCollection sortBlock: ClySortSystemItemFunction ascending forBrowserItems
 ]
 
 { #category : #building }
-ClyHierarchicalSystemItems >> fillWith: objects [
+ClyHierarchicalSystemItemsResult >> fillWith: objects [
 	"System objects supposed to have definition class and package.
 	It can be classes, methods, variables, class comments and so on"
 	| itemsPerClass localItems classMap |

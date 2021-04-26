@@ -6,7 +6,7 @@ Class {
 
 { #category : #running }
 ClyGroupedExtendingPackagesTest >> createQueryResult [
-	^ClyGroupedExtendingPackages new
+	^ClyGroupedExtendingPackagesResult new
 ]
 
 { #category : #tests }

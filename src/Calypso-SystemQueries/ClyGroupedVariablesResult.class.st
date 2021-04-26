@@ -38,7 +38,7 @@ Internal Representation and Key Implementation Points.
 	hierarchy:		<ClyClassHierarchy>
 "
 Class {
-	#name : #ClyGroupedVariables,
+	#name : #ClyGroupedVariablesResult,
 	#superclass : #ClyBrowserQueryResult,
 	#instVars : [
 		'hierarchy'
@@ -47,31 +47,31 @@ Class {
 }
 
 { #category : #'instance creation' }
-ClyGroupedVariables class >> defaultHierarchy [
+ClyGroupedVariablesResult class >> defaultHierarchy [
 
 	^ClySubclassHierarchy hierarchyForVariables 
 ]
 
 { #category : #testing }
-ClyGroupedVariables class >> isExpandedHierarchy [
+ClyGroupedVariablesResult class >> isExpandedHierarchy [
 	^true
 ]
 
 { #category : #'instance creation' }
-ClyGroupedVariables class >> withDefaultHierarchy [
+ClyGroupedVariablesResult class >> withDefaultHierarchy [
 
 	^self withHierarchy: self defaultHierarchy 
 ]
 
 { #category : #'instance creation' }
-ClyGroupedVariables class >> withHierarchy: aClassHierarchy [
+ClyGroupedVariablesResult class >> withHierarchy: aClassHierarchy [
 
 	^self new 
 		hierarchy: aClassHierarchy
 ]
 
 { #category : #comparing }
-ClyGroupedVariables >> = anObject [
+ClyGroupedVariablesResult >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
 	self == anObject ifTrue: [ ^ true ].
@@ -81,7 +81,7 @@ ClyGroupedVariables >> = anObject [
 ]
 
 { #category : #building }
-ClyGroupedVariables >> fillWith: variables [
+ClyGroupedVariablesResult >> fillWith: variables [
 	| typedGroups |
 	typedGroups := self groupVariablesByTypeAndDefinition: variables.
 	
@@ -89,12 +89,12 @@ ClyGroupedVariables >> fillWith: variables [
 ]
 
 { #category : #building }
-ClyGroupedVariables >> fillWithGroupedVariables: varsPerTypeAndDefiningClass [
+ClyGroupedVariablesResult >> fillWithGroupedVariables: varsPerTypeAndDefiningClass [
 	self subclassResponsibility 
 ]
 
 { #category : #building }
-ClyGroupedVariables >> fillWithVariables: varsPerClass type: varTypeClass [
+ClyGroupedVariablesResult >> fillWithVariables: varsPerClass type: varTypeClass [
 
 	| classMap vars declarationGroup varItem methodQueryScope |
 	methodQueryScope := self queryScope asLocalClassScope.
@@ -114,7 +114,7 @@ ClyGroupedVariables >> fillWithVariables: varsPerClass type: varTypeClass [
 ]
 
 { #category : #building }
-ClyGroupedVariables >> groupVariablesByTypeAndDefinition: variables [
+ClyGroupedVariablesResult >> groupVariablesByTypeAndDefinition: variables [
 
 	| groups varsPerClass typedVars |
 	groups := IdentityDictionary new.
@@ -127,23 +127,23 @@ ClyGroupedVariables >> groupVariablesByTypeAndDefinition: variables [
 ]
 
 { #category : #comparing }
-ClyGroupedVariables >> hash [
+ClyGroupedVariablesResult >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^super hash bitXor: hierarchy hash
 ]
 
 { #category : #accessing }
-ClyGroupedVariables >> hierarchy [
+ClyGroupedVariablesResult >> hierarchy [
 	^ hierarchy
 ]
 
 { #category : #accessing }
-ClyGroupedVariables >> hierarchy: anObject [
+ClyGroupedVariablesResult >> hierarchy: anObject [
 	hierarchy := anObject
 ]
 
 { #category : #building }
-ClyGroupedVariables >> queryScope [
+ClyGroupedVariablesResult >> queryScope [
 	^buildingQuery scope
 ]

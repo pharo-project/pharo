@@ -6,7 +6,7 @@ Class {
 
 { #category : #helpers }
 ClyHierarchicalSystemItemsTest >> createQueryResult [
-	^ClyHierarchicalSystemItems new
+	^ClyHierarchicalSystemItemsResult new
 ]
 
 { #category : #tests }

@@ -6,7 +6,7 @@ Class {
 
 { #category : #helpers }
 ClyGroupedInstanceVariablesTest >> createQueryResult [
-	^ClyGroupedInstanceVariables withHierarchy: ClySubclassHierarchy new
+	^ClyGroupedInstanceVariablesResult withHierarchy: ClySubclassHierarchy new
 ]
 
 { #category : #tests }
@@ -56,7 +56,7 @@ ClyGroupedInstanceVariablesTest >> testFillingWithSingleClassVar [
 	self assert: classVarGroup methodQuery class equals: ClyVariableReferencesQuery.
 	self assert: classVarGroup methodQuery variableQuery class equals: ClyAllClassVariablesQuery.
 	self assert: classVarGroup subgroupsQuery class equals: ClyAllClassVariablesQuery.
-	self assert: classVarGroup subgroupsQuery requiredResult class equals: ClyGroupedClassVariables.
+	self assert: classVarGroup subgroupsQuery requiredResult class equals: ClyGroupedClassVariablesResult.
 	self 
 		assert: classVarGroup subgroupsQuery requiredResult hierarchy 
 		equals: queryResult hierarchy

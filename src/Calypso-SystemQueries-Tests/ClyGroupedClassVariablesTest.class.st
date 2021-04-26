@@ -6,7 +6,7 @@ Class {
 
 { #category : #running }
 ClyGroupedClassVariablesTest >> createQueryResult [
-	^ClyGroupedClassVariables withHierarchy: ClySubclassHierarchy new
+	^ClyGroupedClassVariablesResult withHierarchy: ClySubclassHierarchy new
 ]
 
 { #category : #tests }

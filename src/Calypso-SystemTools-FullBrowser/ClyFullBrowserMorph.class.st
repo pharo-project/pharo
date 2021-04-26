@@ -156,7 +156,7 @@ ClyFullBrowserMorph >> adoptForExtendedClass [
 	
 	extendingPackages := self packageSelection actualObjects.
 	extraGroups := ClyConstantQuery 
-				returning: extendingPackages as: ClyGroupedExtendingPackages new.
+				returning: extendingPackages as: ClyGroupedExtendingPackagesResult new.
 	extraGroups := methodGroupQuery scope adoptQuery: extraGroups.
 	methodGroupQuery := methodGroupQuery , extraGroups
 ]
@@ -807,7 +807,7 @@ ClyFullBrowserMorph >> switchToFullClassHierarchy [
 	classScope := self classSelection asItemsScope: ClyInstanceSideScope.
 	
 	self 
-		switchClassViewTo: ClyHierarchicallySortedClasses new
+		switchClassViewTo: ClyHierarchicallySortedClassesResult new
 		inScope: classScope asFullHierarchyScope
 ]
 
@@ -818,7 +818,7 @@ ClyFullBrowserMorph >> switchToFullClassHierarchyOf: aClass [
 	classScope := ClyInstanceSideScope of: aClass in: navigationEnvironment.
 	
 	self 
-		switchClassViewTo: ClyHierarchicallySortedClasses new
+		switchClassViewTo: ClyHierarchicallySortedClassesResult new
 		inScope: classScope asFullHierarchyScope
 ]
 
@@ -873,7 +873,7 @@ ClyFullBrowserMorph >> switchToVariables [
 		classScope := self classScopeForMethods.
 		ClyAllVariablesQuery 
 			from: classScope, classScope asInheritedScope 
-			as: ClyGroupedInstanceVariables withDefaultHierarchy 
+			as: ClyGroupedInstanceVariablesResult withDefaultHierarchy 
 	]
 ]
 

@@ -5,13 +5,13 @@ In addition I add extra method group for class variables if they exist. It shows
 And I add default ClyAllMethodGroup as first item. 
 "
 Class {
-	#name : #ClyGroupedInstanceVariables,
-	#superclass : #ClyGroupedVariables,
+	#name : #ClyGroupedInstanceVariablesResult,
+	#superclass : #ClyGroupedVariablesResult,
 	#category : #'Calypso-SystemQueries-Results'
 }
 
 { #category : #building }
-ClyGroupedInstanceVariables >> addClassVariableGroup [
+ClyGroupedInstanceVariablesResult >> addClassVariableGroup [
 
 	| variableQuery methodQuery group |
 	variableQuery := ClyAllClassVariablesQuery from: self queryScope.
@@ -22,12 +22,12 @@ ClyGroupedInstanceVariables >> addClassVariableGroup [
 	group := ClyMethodGroup 
 		named: 'Class variables' priority: 9 
 		on: methodQuery 
-		withSubgroupsFrom: (variableQuery withResult: (ClyGroupedClassVariables withHierarchy: hierarchy)).
+		withSubgroupsFrom: (variableQuery withResult: (ClyGroupedClassVariablesResult withHierarchy: hierarchy)).
 	items add: group asCalypsoBrowserItem
 ]
 
 { #category : #building }
-ClyGroupedInstanceVariables >> addInheritedMethodGroup [
+ClyGroupedInstanceVariablesResult >> addInheritedMethodGroup [
 
 	| group |
 	group := ClyAllMethodGroup withMethodsInheritedFrom: self queryScope. 
@@ -35,7 +35,7 @@ ClyGroupedInstanceVariables >> addInheritedMethodGroup [
 ]
 
 { #category : #building }
-ClyGroupedInstanceVariables >> fillWithGroupedVariables: varsPerTypeAndDefiningClass [
+ClyGroupedInstanceVariablesResult >> fillWithGroupedVariables: varsPerTypeAndDefiningClass [
 	self addInheritedMethodGroup.
 	
 	varsPerTypeAndDefiningClass at: ClyClassVariable ifPresent: [:classVarsPerClass |

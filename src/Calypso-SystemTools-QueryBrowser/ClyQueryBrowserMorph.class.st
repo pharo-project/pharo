@@ -75,7 +75,7 @@ ClyQueryBrowserMorph class >> browseSendersOf: aSymbol [
 { #category : #default }
 ClyQueryBrowserMorph class >> defaultQueryResult [
 	^DefaultQueryResult ifNil: [ 
-		DefaultQueryResult := ClyHierarchicalSystemItems new]
+		DefaultQueryResult := ClyHierarchicalSystemItemsResult new]
 ]
 
 { #category : #'instance creation' }
@@ -403,7 +403,7 @@ ClyQueryBrowserMorph >> showResultOf: aQuery [
 { #category : #testing }
 ClyQueryBrowserMorph >> showsFlatResult [
 
-	^(systemQuery retrievesItemsAs: ClyHierarchicalSystemItems) not
+	^(systemQuery retrievesItemsAs: ClyHierarchicalSystemItemsResult) not
 ]
 
 { #category : #testing }
@@ -470,7 +470,7 @@ ClyQueryBrowserMorph >> switchToFlatResult [
 { #category : #navigation }
 ClyQueryBrowserMorph >> switchToHierarchicalResult [
 
-	DefaultQueryResult := ClyHierarchicalSystemItems new.
+	DefaultQueryResult := ClyHierarchicalSystemItemsResult new.
 	self switchResultTo: DefaultQueryResult
 ]
 

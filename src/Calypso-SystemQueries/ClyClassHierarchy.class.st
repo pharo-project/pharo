@@ -150,7 +150,7 @@ ClyClassHierarchy >> = anObject [
 { #category : #converting }
 ClyClassHierarchy >> asQueryResult [
 
-	^ClyHierarchicallySortedClasses with: self
+	^ClyHierarchicallySortedClassesResult with: self
 ]
 
 { #category : #building }

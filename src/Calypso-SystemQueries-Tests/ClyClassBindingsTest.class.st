@@ -6,7 +6,7 @@ Class {
 
 { #category : #running }
 ClyClassBindingsTest >> createQueryResult [
-	^ClyClassBindings new
+	^ClyClassBindingsResult new
 ]
 
 { #category : #tests }
