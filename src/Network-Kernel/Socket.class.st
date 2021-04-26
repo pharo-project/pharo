@@ -1143,7 +1143,14 @@ Socket >> primSocketLocalPort: socketID [
 
 { #category : #primitives }
 Socket >> primSocketReceiveDataAvailable: socketID [
-	"Return true if data may be available for reading from the current socket."
+	"Return true if data may be available for reading from the current socket.
+	This primitive should not be called directly.
+	We should use #dataAvailable because it checks if the handler is nil.
+	The primitive fails with a primitive failure if the handler is nil.
+	Pay attention that if we are using the primitive directly, 
+	the image can be saved in the middle of the method niling the value in the socket. 
+	This can produce a primitiveFailed error while it should be a ConnectionClosedError 
+	or something like that."
 
 	<primitive: 'primitiveSocketReceiveDataAvailable' module: 'SocketPlugin'>
 	self primitiveFailed
