@@ -16,7 +16,7 @@ SycInlineTempCommand class >> canBeExecutedInContext: aSourceCodeContext [
 
 { #category : #execution }
 SycInlineTempCommand >> asRefactorings [
-	| assignment refactoring |
+	| assignment |
 	assignment := sourceNode methodNode assignmentNodes 
 		detect: [:each | each variable = sourceNode ].
 
