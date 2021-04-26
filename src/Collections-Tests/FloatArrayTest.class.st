@@ -362,6 +362,18 @@ FloatArrayTest >> subCollectionNotIn [
 ]
 
 { #category : #'tests - arithmetic' }
+FloatArrayTest >> testAddNoMutation [
+	"this test checks that addition does not impact the orginal arrays"
+
+	| a b c |
+	a := { 1.2. 2.3 } asFloatArray.
+	b := { 1.2. 2.3 } asFloatArray.
+	c := a + b.
+	self assert: a equals: { 1.2. 2.3 } asFloatArray.
+	self assert: b equals: { 1.2. 2.3 } asFloatArray
+]
+
+{ #category : #'tests - arithmetic' }
 FloatArrayTest >> testArithmeticCoercion [
 	"This test is related to http://bugs.squeak.org/view.php?id=6782"
 	
