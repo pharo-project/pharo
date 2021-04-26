@@ -12,6 +12,12 @@ Class {
 	#category : #'Athens-Text'
 }
 
+{ #category : #testing }
+AthensTextDisplayCommand class >> isAbstract [
+
+	^ self == AthensTextDisplayCommand
+]
+
 { #category : #accessing }
 AthensTextDisplayCommand >> addLast: aCommand [
 	self tail next: aCommand
