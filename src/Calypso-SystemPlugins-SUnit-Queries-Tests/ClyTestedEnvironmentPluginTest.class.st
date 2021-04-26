@@ -20,7 +20,7 @@ ClyTestedEnvironmentPluginTest >> setUpEnvironment [
 ClyTestedEnvironmentPluginTest >> testFindTestCaseCoveringTestedClass [
 
 	| foundClass |
-	foundClass := plugin findTestCaseCovering: ClyTestedClass ifAbsent: [  ].
+	foundClass := plugin findTestCaseCovering: ClyTestedClassMock ifAbsent: [  ].
 
 	self assert: foundClass equals: ClyTestedClassTest
 ]
@@ -29,7 +29,7 @@ ClyTestedEnvironmentPluginTest >> testFindTestCaseCoveringTestedClass [
 ClyTestedEnvironmentPluginTest >> testFindTestCaseCoveringTestedMetaclass [
 
 	| foundClass |
-	foundClass := plugin findTestCaseCovering: ClyTestedClass class ifAbsent: [  ].
+	foundClass := plugin findTestCaseCovering: ClyTestedClassMock class ifAbsent: [  ].
 
 	self assert: foundClass equals: ClyTestedClassTest
 ]
@@ -38,7 +38,7 @@ ClyTestedEnvironmentPluginTest >> testFindTestCaseCoveringTestedMetaclass [
 ClyTestedEnvironmentPluginTest >> testFindTestCaseCoveringUntestedClass [
 
 	| foundClass |
-	foundClass := plugin findTestCaseCovering: ClyUntestedClass ifAbsent: [ #noResult  ].
+	foundClass := plugin findTestCaseCovering: ClyUntestedClassMock ifAbsent: [ #noResult  ].
 
 	self assert: foundClass equals: #noResult
 ]
@@ -47,7 +47,7 @@ ClyTestedEnvironmentPluginTest >> testFindTestCaseCoveringUntestedClass [
 ClyTestedEnvironmentPluginTest >> testFindTestCaseWithAnotherSuffixCoveringTestedClass [
 
 	| foundClass |
-	foundClass := plugin findTestCaseCovering: ClyTestedClass2 ifAbsent: [  ].
+	foundClass := plugin findTestCaseCovering: ClyTestedClass2Mock ifAbsent: [  ].
 
 	self assert: foundClass equals: ClyTestedClass2Test
 ]
@@ -58,7 +58,7 @@ ClyTestedEnvironmentPluginTest >> testFindTestedClassCoveredByTestCase [
 	| foundClass |
 	foundClass := plugin findTestedClassCoveredBy: ClyTestedClassTest ifAbsent: [].
 
-	self assert: foundClass equals: ClyTestedClass
+	self assert: foundClass equals: ClyTestedClassMock
 ]
 
 { #category : #tests }
@@ -76,27 +76,27 @@ ClyTestedEnvironmentPluginTest >> testFindTestedClassCoveredByTestCaseWithAnothe
 	| foundClass |
 	foundClass := plugin findTestedClassCoveredBy: ClyTestedClass2Test ifAbsent: [].
 
-	self assert: foundClass equals: ClyTestedClass2
+	self assert: foundClass equals: ClyTestedClass2Mock
 ]
 
 { #category : #tests }
 ClyTestedEnvironmentPluginTest >> testFindTestedClassCoveredByTestCaseWithoutSuffix [
 
 	| foundClass |
-	foundClass := plugin findTestedClassCoveredBy: ClyTestedClass ifAbsent: [#noResult].
+	foundClass := plugin findTestedClassCoveredBy: ClyTestedClassMock ifAbsent: [#noResult].
 
 	self assert: foundClass equals: #noResult
 ]
 
 { #category : #tests }
 ClyTestedEnvironmentPluginTest >> testFindingTestCoveringMethod [
-	{((ClyTestedClass >> #one) -> (ClyTestedClassTest >> #testOne)) . ((ClyTestedClass >> #one:) -> (ClyTestedClassTest >> #testOne)).
-	((ClyTestedClass >> #two) -> (ClyTestedClassTest >> #testTwo)) . ((ClyTestedClass >> #two:) -> (ClyTestedClassTest >> #testTwo)).
-	((ClyTestedClass >> #one:two:) -> (ClyTestedClassTest >> #testOneTwo)) . ((ClyTestedClass >> #oneTwo:) -> (ClyTestedClassTest >> #testOneTwo)).
-	((ClyTestedClass >> #untestedOne) -> nil) . ((ClyTestedClass >> #untestedOne:) -> nil) . ((ClyTestedClass >> #untestedTwo) -> nil).
-	((ClyTestedClass >> #untestedTwo:) -> nil) . ((ClyTestedClass >> #untestedOne:two:) -> nil) . ((ClyTestedClass >> #untestedOneTwo:) -> nil).
-	((ClyTestedClass class >> #one:two:) -> (ClyTestedClassTest >> #testOneTwo)).
-	((ClyTestedClass class >> #untestedOne:two:) -> nil) . ((ClyTestedClassTest >> #testOne) -> nil) . ((ClyTestedClassTest >> #testTwo) -> nil).
+	{((ClyTestedClassMock >> #one) -> (ClyTestedClassTest >> #testOne)) . ((ClyTestedClassMock >> #one:) -> (ClyTestedClassTest >> #testOne)).
+	((ClyTestedClassMock >> #two) -> (ClyTestedClassTest >> #testTwo)) . ((ClyTestedClassMock >> #two:) -> (ClyTestedClassTest >> #testTwo)).
+	((ClyTestedClassMock >> #one:two:) -> (ClyTestedClassTest >> #testOneTwo)) . ((ClyTestedClassMock >> #oneTwo:) -> (ClyTestedClassTest >> #testOneTwo)).
+	((ClyTestedClassMock >> #untestedOne) -> nil) . ((ClyTestedClassMock >> #untestedOne:) -> nil) . ((ClyTestedClassMock >> #untestedTwo) -> nil).
+	((ClyTestedClassMock >> #untestedTwo:) -> nil) . ((ClyTestedClassMock >> #untestedOne:two:) -> nil) . ((ClyTestedClassMock >> #untestedOneTwo:) -> nil).
+	((ClyTestedClassMock class >> #one:two:) -> (ClyTestedClassTest >> #testOneTwo)).
+	((ClyTestedClassMock class >> #untestedOne:two:) -> nil) . ((ClyTestedClassTest >> #testOne) -> nil) . ((ClyTestedClassTest >> #testTwo) -> nil).
 	((ClyTestedClassTest >> #testOneTwo) -> nil)} do: [ :each | self assert: (plugin findTestMethodCovering: each key ifAbsent: nil) identicalTo: each value ]
 ]
 

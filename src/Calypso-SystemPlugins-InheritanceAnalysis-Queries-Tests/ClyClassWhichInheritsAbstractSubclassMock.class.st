@@ -2,7 +2,7 @@
 I am example of class which inherits from abstract superclass
 "
 Class {
-	#name : #ClyClassWhichInheritsAbstractSubclass,
-	#superclass : #ClyAbstractSubclassExample,
+	#name : #ClyClassWhichInheritsAbstractSubclassMock,
+	#superclass : #ClyAbstractSubclassMock,
 	#category : #'Calypso-SystemPlugins-InheritanceAnalysis-Queries-Tests'
 }

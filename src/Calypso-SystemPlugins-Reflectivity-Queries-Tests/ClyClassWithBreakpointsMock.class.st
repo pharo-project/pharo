@@ -2,20 +2,20 @@
 I am example class which has methods with breakpoints
 "
 Class {
-	#name : #ClyClassWithBreakpoints,
+	#name : #ClyClassWithBreakpointsMock,
 	#superclass : #Object,
 	#category : #'Calypso-SystemPlugins-Reflectivity-Queries-Tests-Breakpoints'
 }
 
 { #category : #methods }
-ClyClassWithBreakpoints >> methodWithBreakpoints [
+ClyClassWithBreakpointsMock >> methodWithBreakpoints [
 	self printString
 ]
 
 { #category : #methods }
-ClyClassWithBreakpoints >> methodWithoutBreakpoints [
+ClyClassWithBreakpointsMock >> methodWithoutBreakpoints [
 ]
 
 { #category : #methods }
-ClyClassWithBreakpoints >> methodWithoutBreakpoints2 [
+ClyClassWithBreakpointsMock >> methodWithoutBreakpoints2 [
 ]

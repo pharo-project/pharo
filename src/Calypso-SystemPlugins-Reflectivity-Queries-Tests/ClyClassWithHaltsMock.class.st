@@ -2,13 +2,13 @@
 I am example class which has methods with halts
 "
 Class {
-	#name : #ClyClassWithHalts,
+	#name : #ClyClassWithHaltsMock,
 	#superclass : #Object,
 	#category : #'Calypso-SystemPlugins-Reflectivity-Queries-Tests-Breakpoints'
 }
 
 { #category : #methods }
-ClyClassWithHalts >> methodWithoutHalts [
+ClyClassWithHaltsMock >> methodWithoutHalts [
 
 	self printString
 ]

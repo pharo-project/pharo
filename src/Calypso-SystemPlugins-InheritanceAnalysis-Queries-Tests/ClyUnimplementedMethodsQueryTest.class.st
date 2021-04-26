@@ -8,16 +8,16 @@ Class {
 ClyUnimplementedMethodsQueryTest >> createQuery [
 	^ClyUnimplementedMethodsQuery 
 		from: ClyClassScope 
-		of: ClyClassWhichInheritsAbstractSubclass
+		of: ClyClassWhichInheritsAbstractSubclassMock
 		in: environment
 ]
 
 { #category : #tests }
 ClyUnimplementedMethodsQueryTest >> testCheckIfEmpty [
-	query scope: (ClyClassScope of: ClyAbstractSubclassExample in: environment).
+	query scope: (ClyClassScope of: ClyAbstractSubclassMock in: environment).
 	self deny: query checkEmptyResult.	"it has unimplemented #abstractMethod2"
 
-	query scope: (ClyClassScope of: ClyAbstractClassExample in: environment).
+	query scope: (ClyClassScope of: ClyAbstractClassMock in: environment).
 	self assert: query checkEmptyResult
 ]
 
@@ -33,33 +33,33 @@ ClyUnimplementedMethodsQueryTest >> testFromSingleClass [
 { #category : #tests }
 ClyUnimplementedMethodsQueryTest >> testIsAffectedByChangeOfAbstractMethodWhichIsImplemented [
 	
-	self assert: (query isAffectedByChangedMethod: ClyAbstractClassExample >> #abstractMethod1)
+	self assert: (query isAffectedByChangedMethod: ClyAbstractClassMock >> #abstractMethod1)
 ]
 
 { #category : #tests }
 ClyUnimplementedMethodsQueryTest >> testIsAffectedByChangeOfAbstractMethodWhichIsNotImplemented [
 	
-	self assert: (query isAffectedByChangedMethod: ClyAbstractClassExample>>#abstractMethod2).
-	self assert: (query isAffectedByChangedMethod: ClyAbstractSubclassExample>>#abstractSubclassMethod)
+	self assert: (query isAffectedByChangedMethod: ClyAbstractClassMock>>#abstractMethod2).
+	self assert: (query isAffectedByChangedMethod: ClyAbstractSubclassMock>>#abstractSubclassMethod)
 ]
 
 { #category : #tests }
 ClyUnimplementedMethodsQueryTest >> testIsAffectedByChangeOfMethodOfTargetClassWhichOverridesAbstractOne [
-	query scope: (ClyClassScope	of: ClyClassWhichInheritsAbstractClass in: environment).
+	query scope: (ClyClassScope	of: ClyClassWhichInheritsAbstractClassMock in: environment).
 		
-	self assert: (query isAffectedByChangedMethod: ClyClassWhichInheritsAbstractClass >> #abstractMethod1)
+	self assert: (query isAffectedByChangedMethod: ClyClassWhichInheritsAbstractClassMock >> #abstractMethod1)
 ]
 
 { #category : #tests }
 ClyUnimplementedMethodsQueryTest >> testIsAffectedByChangeOfNotAbstractMethodWhichImplementsAbstractOne [
 	
-	self assert: (query isAffectedByChangedMethod: ClyAbstractSubclassExample >> #abstractMethod1)
+	self assert: (query isAffectedByChangedMethod: ClyAbstractSubclassMock >> #abstractMethod1)
 ]
 
 { #category : #tests }
 ClyUnimplementedMethodsQueryTest >> testIsEmptyForExplicitlyDefinedAbstractClass [
 
-	query scope: (ClyClassScope of: ClyExplicitAbstractClassExample in: environment).
+	query scope: (ClyClassScope of: ClyExplicitAbstractClassExampleMock in: environment).
 
 	self assert: query checkEmptyResult.
 	
@@ -71,7 +71,7 @@ ClyUnimplementedMethodsQueryTest >> testIsEmptyForExplicitlyDefinedAbstractClass
 { #category : #tests }
 ClyUnimplementedMethodsQueryTest >> testIsEmptyForExplicitlyDefinedAbstractMetaclass [
 
-	query scope: (ClyClassScope of: ClyExplicitAbstractClassExample class in: environment).
+	query scope: (ClyClassScope of: ClyExplicitAbstractClassExampleMock class in: environment).
 
 	self assert: query checkEmptyResult.
 	
@@ -103,20 +103,20 @@ ClyUnimplementedMethodsQueryTest >> testNotAffectedByChangeOfAbstractMethodOfNot
 
 { #category : #tests }
 ClyUnimplementedMethodsQueryTest >> testNotAffectedByChangeOfNotAbstractMethod [
-	query scope: (ClyClassScope of: ClyClassWhichInheritsAbstractClass in: environment).
+	query scope: (ClyClassScope of: ClyClassWhichInheritsAbstractClassMock in: environment).
 	
-	self deny: (query isAffectedByChangedMethod: ClyClassWhichInheritsAbstractClass >> #notOverriddenMethod)
+	self deny: (query isAffectedByChangedMethod: ClyClassWhichInheritsAbstractClassMock >> #notOverriddenMethod)
 ]
 
 { #category : #tests }
 ClyUnimplementedMethodsQueryTest >> testNotSelectsAbstractMethodWhichIsImplemented [
 	
-	self deny: (query selectsMethod: ClyAbstractClassExample >> #abstractMethod1)
+	self deny: (query selectsMethod: ClyAbstractClassMock >> #abstractMethod1)
 ]
 
 { #category : #tests }
 ClyUnimplementedMethodsQueryTest >> testSelectsAbstractMethodWhichIsNotImplemented [
 
-	self assert: (query selectsMethod: ClyAbstractClassExample>>#abstractMethod2).
-	self assert: (query selectsMethod: ClyAbstractSubclassExample>>#abstractSubclassMethod)
+	self assert: (query selectsMethod: ClyAbstractClassMock>>#abstractMethod2).
+	self assert: (query selectsMethod: ClyAbstractSubclassMock>>#abstractSubclassMethod)
 ]

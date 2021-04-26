@@ -1,30 +1,30 @@
 Class {
-	#name : #ClyCritiqueQueryTestCase,
+	#name : #ClyCritiqueQueryTest,
 	#superclass : #ClyTypedQueryTest,
 	#category : #'Calypso-SystemPlugins-Critic-Queries-Tests'
 }
 
 { #category : #testing }
-ClyCritiqueQueryTestCase class >> isAbstract [
-	^self = ClyCritiqueQueryTestCase
+ClyCritiqueQueryTest class >> isAbstract [
+	^self = ClyCritiqueQueryTest
 ]
 
 { #category : #examples }
-ClyCritiqueQueryTestCase >> methodWithCritiques [
+ClyCritiqueQueryTest >> methodWithCritiques [
 	^ ClyClassWithProblemMethods >> #methodWithHalt
 ]
 
 { #category : #examples }
-ClyCritiqueQueryTestCase >> methodWithoutCritiques [
+ClyCritiqueQueryTest >> methodWithoutCritiques [
 	^ ClyClassWithProblemMethods >> #methodWithoutCritiques
 ]
 
 { #category : #examples }
-ClyCritiqueQueryTestCase >> scopeWithCritiques [
+ClyCritiqueQueryTest >> scopeWithCritiques [
 	^ ClyMethodScope of: self methodWithCritiques in: environment
 ]
 
 { #category : #examples }
-ClyCritiqueQueryTestCase >> scopeWithoutCritiques [
+ClyCritiqueQueryTest >> scopeWithoutCritiques [
 	^ ClyMethodScope of: self methodWithoutCritiques in: environment
 ]

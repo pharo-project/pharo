@@ -1,16 +1,16 @@
 Class {
-	#name : #ClyFilteringCritiqueQueryTestCase,
-	#superclass : #ClyCritiqueQueryTestCase,
+	#name : #ClyFilteringCritiqueQueryTest,
+	#superclass : #ClyCritiqueQueryTest,
 	#category : #'Calypso-SystemPlugins-Critic-Queries-Tests'
 }
 
 { #category : #testing }
-ClyFilteringCritiqueQueryTestCase class >> isAbstract [
-	^self = ClyFilteringCritiqueQueryTestCase
+ClyFilteringCritiqueQueryTest class >> isAbstract [
+	^self = ClyFilteringCritiqueQueryTest
 ]
 
 { #category : #tests }
-ClyFilteringCritiqueQueryTestCase >> testComparisonWithSimilarQueryBasedOnDifferentBaseCritiqueQuery [
+ClyFilteringCritiqueQueryTest >> testComparisonWithSimilarQueryBasedOnDifferentBaseCritiqueQuery [
 	| query2 |
 	query baseCritiqueQuery: ClyAllBasisCritiqueQuery new.
 	query2 := self createQuery.
@@ -20,7 +20,7 @@ ClyFilteringCritiqueQueryTestCase >> testComparisonWithSimilarQueryBasedOnDiffer
 ]
 
 { #category : #tests }
-ClyFilteringCritiqueQueryTestCase >> testHasBasisCritiquesAsBaseQuery [
+ClyFilteringCritiqueQueryTest >> testHasBasisCritiquesAsBaseQuery [
 
 	query := query class new.
 	self assert: query baseCritiqueQuery class equals: ClyAllBasisCritiqueQuery 

@@ -6,7 +6,7 @@ Class {
 
 { #category : #running }
 ClyBreakpointMethodGroupProviderTest >> classSampleWhichHasGroup [
-	^ClyClassWithHalts
+	^ClyClassWithHaltsMock
 ]
 
 { #category : #running }

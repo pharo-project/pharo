@@ -8,7 +8,7 @@ Internal Representation and Key Implementation Points.
 	two:		<Object>
 "
 Class {
-	#name : #ClyTestedClass,
+	#name : #ClyTestedClassMock,
 	#superclass : #Object,
 	#instVars : [
 		'two',
@@ -18,79 +18,79 @@ Class {
 }
 
 { #category : #protocol }
-ClyTestedClass class >> one: aFirstObject two: aSecondObject [
+ClyTestedClassMock class >> one: aFirstObject two: aSecondObject [
 	^ self new
 		one: aFirstObject
 		two: aSecondObject
 ]
 
 { #category : #protocol }
-ClyTestedClass class >> untestedOne: aFirstObject two: aSecondObject [
+ClyTestedClassMock class >> untestedOne: aFirstObject two: aSecondObject [
 	^ self new
 		one: aFirstObject;
 		two: aSecondObject
 ]
 
 { #category : #accessing }
-ClyTestedClass >> one [
+ClyTestedClassMock >> one [
 	^ one
 ]
 
 { #category : #accessing }
-ClyTestedClass >> one: anObject [
+ClyTestedClassMock >> one: anObject [
 	one := anObject 
 ]
 
 { #category : #accessing }
-ClyTestedClass >> one: aFirstObject two: aSecondObject [
+ClyTestedClassMock >> one: aFirstObject two: aSecondObject [
 	self
 		one: aFirstObject;
 		two: aSecondObject
 ]
 
 { #category : #accessing }
-ClyTestedClass >> oneTwo: anObject [
+ClyTestedClassMock >> oneTwo: anObject [
 	self two: anObject
 ]
 
 { #category : #accessing }
-ClyTestedClass >> two [
+ClyTestedClassMock >> two [
 	^ two 
 ]
 
 { #category : #accessing }
-ClyTestedClass >> two: anObject [
+ClyTestedClassMock >> two: anObject [
 	two := anObject
 ]
 
 { #category : #accessing }
-ClyTestedClass >> untestedOne [
+ClyTestedClassMock >> untestedOne [
 	^ self one
 ]
 
 { #category : #accessing }
-ClyTestedClass >> untestedOne: anObject [
+ClyTestedClassMock >> untestedOne: anObject [
 	self one: anObject
 ]
 
 { #category : #accessing }
-ClyTestedClass >> untestedOne: aFirstObject two: aSecondObject [
+ClyTestedClassMock >> untestedOne: aFirstObject two: aSecondObject [
 	self
 		one: aFirstObject;
 		two: aSecondObject
 ]
 
 { #category : #accessing }
-ClyTestedClass >> untestedOneTwo: anObject [
+ClyTestedClassMock >> untestedOneTwo: anObject [
 	self two: anObject
 ]
 
 { #category : #accessing }
-ClyTestedClass >> untestedTwo [
+ClyTestedClassMock >> untestedTwo [
 	^ self two
 ]
 
 { #category : #accessing }
-ClyTestedClass >> untestedTwo: anObject [
+ClyTestedClassMock >> untestedTwo: anObject [
 	self two: anObject
 ]

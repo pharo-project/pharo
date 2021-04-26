@@ -7,7 +7,7 @@ Class {
 { #category : #running }
 ClyAbstractMethodGroupProviderTest >> classSampleWhichHasGroup [
 
-	^ClyAbstractClassExample
+	^ClyAbstractClassMock
 ]
 
 { #category : #running }

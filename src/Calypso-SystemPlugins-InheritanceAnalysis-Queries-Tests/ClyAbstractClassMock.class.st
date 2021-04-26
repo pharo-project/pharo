@@ -2,22 +2,22 @@
 I am example of class with abstract methods
 "
 Class {
-	#name : #ClyAbstractClassExample,
+	#name : #ClyAbstractClassMock,
 	#superclass : #Object,
 	#category : #'Calypso-SystemPlugins-InheritanceAnalysis-Queries-Tests'
 }
 
 { #category : #protocol }
-ClyAbstractClassExample >> abstractMethod1 [
+ClyAbstractClassMock >> abstractMethod1 [
 	self subclassResponsibility 
 ]
 
 { #category : #protocol }
-ClyAbstractClassExample >> abstractMethod2 [
+ClyAbstractClassMock >> abstractMethod2 [
 	self subclassResponsibility 
 ]
 
 { #category : #protocol }
-ClyAbstractClassExample >> overriddenMethod [
+ClyAbstractClassMock >> overriddenMethod [
 	^#originalValue
 ]

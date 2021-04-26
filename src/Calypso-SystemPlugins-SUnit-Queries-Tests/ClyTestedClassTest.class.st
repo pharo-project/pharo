@@ -6,7 +6,7 @@ Class {
 
 { #category : #running }
 ClyTestedClassTest >> classUnderTest [
-	^ClyTestedClass
+	^ClyTestedClassMock
 ]
 
 { #category : #running }
