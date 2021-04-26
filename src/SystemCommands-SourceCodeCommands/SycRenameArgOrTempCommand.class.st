@@ -29,6 +29,15 @@ SycRenameArgOrTempCommand >> applyResultInContext: aSourceCodeContext [
 	aSourceCodeContext showVariableNamed: newName
 ]
 
+{ #category : #execution }
+SycRenameArgOrTempCommand >> asRefactorings [ 
+	^ {RBRenameArgumentOrTemporaryRefactoring	
+		renameTemporaryFrom: sourceNode sourceInterval
+		to: newName
+		in: method origin
+		selector: method selector}
+]
+
 { #category : #accessing }
 SycRenameArgOrTempCommand >> defaultMenuIconName [ 
 	^ #edit
@@ -37,18 +46,6 @@ SycRenameArgOrTempCommand >> defaultMenuIconName [
 { #category : #accessing }
 SycRenameArgOrTempCommand >> defaultMenuItemName [
 	^'Rename temp'
-]
-
-{ #category : #execution }
-SycRenameArgOrTempCommand >> execute [
-	| refactoring |
-	refactoring := RBRenameArgumentOrTemporaryRefactoring	
-		renameTemporaryFrom: sourceNode sourceInterval
-		to: newName
-		in: method origin
-		selector: method selector.
-	
-	self executeRefactoring: refactoring.
 ]
 
 { #category : #execution }
