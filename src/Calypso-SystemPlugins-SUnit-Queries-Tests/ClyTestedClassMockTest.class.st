@@ -1,27 +1,27 @@
 Class {
-	#name : #ClyTestedClassTest,
+	#name : #ClyTestedClassMockTest,
 	#superclass : #TestCase,
 	#category : #'Calypso-SystemPlugins-SUnit-Queries-Tests'
 }
 
 { #category : #running }
-ClyTestedClassTest >> classUnderTest [
+ClyTestedClassMockTest >> classUnderTest [
 	^ClyTestedClassMock
 ]
 
 { #category : #running }
-ClyTestedClassTest >> newTestedObject [
+ClyTestedClassMockTest >> newTestedObject [
 	^self classUnderTest new
 ]
 
 { #category : #tests }
-ClyTestedClassTest >> testExpectedFailure [
+ClyTestedClassMockTest >> testExpectedFailure [
 	<expectedFailure>
 	self assert: false description: 'it is example test with expected failure'
 ]
 
 { #category : #tests }
-ClyTestedClassTest >> testOne [
+ClyTestedClassMockTest >> testOne [
 	| testedObject |
 	testedObject := self newTestedObject.
 	self
@@ -31,7 +31,7 @@ ClyTestedClassTest >> testOne [
 ]
 
 { #category : #tests }
-ClyTestedClassTest >> testOneTwo [
+ClyTestedClassMockTest >> testOneTwo [
 	| testedObject |
 	testedObject := self newTestedObject one: #one two: #two.
 	self
@@ -46,7 +46,7 @@ ClyTestedClassTest >> testOneTwo [
 ]
 
 { #category : #tests }
-ClyTestedClassTest >> testTwo [
+ClyTestedClassMockTest >> testTwo [
 	| testedObject |
 	testedObject := self newTestedObject.
 	self

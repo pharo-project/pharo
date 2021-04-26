@@ -6,7 +6,7 @@ Class {
 
 { #category : #running }
 ClyExpectedFailureMethodGroupProviderTest >> classSampleWhichHasGroup [
-	^ClyTestedClassTest
+	^ClyTestedClassMockTest
 ]
 
 { #category : #running }
