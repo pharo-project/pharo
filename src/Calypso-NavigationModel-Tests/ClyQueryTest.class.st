@@ -1,5 +1,5 @@
 Class {
-	#name : #ClyQueryTestCase,
+	#name : #ClyQueryTest,
 	#superclass : #ClyNavigationEnvironmentTestCase,
 	#instVars : [
 		'query',
@@ -10,37 +10,37 @@ Class {
 }
 
 { #category : #testing }
-ClyQueryTestCase class >> isAbstract [
-	^self == ClyQueryTestCase
+ClyQueryTest class >> isAbstract [
+	^self == ClyQueryTest
 ]
 
 { #category : #running }
-ClyQueryTestCase >> createQuery [
+ClyQueryTest >> createQuery [
 	self subclassResponsibility 
 ]
 
 { #category : #running }
-ClyQueryTestCase >> executeQuery [
+ClyQueryTest >> executeQuery [
 
 	result := query execute.
 	resultItems := result items
 ]
 
 { #category : #running }
-ClyQueryTestCase >> setUp [
+ClyQueryTest >> setUp [
 	super setUp.
 	
 	query := self createQuery
 ]
 
 { #category : #tests }
-ClyQueryTestCase >> testBuildsDefaultResultByDefault [
+ClyQueryTest >> testBuildsDefaultResultByDefault [
 
 	self assert: query buildsDefaultResult
 ]
 
 { #category : #tests }
-ClyQueryTestCase >> testComparisonOfSameQueries [
+ClyQueryTest >> testComparisonOfSameQueries [
 
 	| query2 |
 	self assert: query equals: query.
@@ -51,7 +51,7 @@ ClyQueryTestCase >> testComparisonOfSameQueries [
 ]
 
 { #category : #tests }
-ClyQueryTestCase >> testComparisonOfSameQueriesWithDifferentRequestedContent [
+ClyQueryTest >> testComparisonOfSameQueriesWithDifferentRequestedContent [
 	| query2 |
 	query requiredResult: #contentClass1.
 	query2 := self createQuery.
@@ -61,7 +61,7 @@ ClyQueryTestCase >> testComparisonOfSameQueriesWithDifferentRequestedContent [
 ]
 
 { #category : #tests }
-ClyQueryTestCase >> testConvertingToAsyncQuery [
+ClyQueryTest >> testConvertingToAsyncQuery [
 	| convertedQuery |
 	convertedQuery := query async.
 
@@ -73,7 +73,7 @@ ClyQueryTestCase >> testConvertingToAsyncQuery [
 ]
 
 { #category : #tests }
-ClyQueryTestCase >> testConvertingToSemiAsyncQuery [
+ClyQueryTest >> testConvertingToSemiAsyncQuery [
 	| convertedQuery |
 	convertedQuery := query semiAsync.
 
@@ -85,7 +85,7 @@ ClyQueryTestCase >> testConvertingToSemiAsyncQuery [
 ]
 
 { #category : #tests }
-ClyQueryTestCase >> testConvertingWithNewRequiredResult [
+ClyQueryTest >> testConvertingWithNewRequiredResult [
 	| newResult convertedQuery |
 	newResult := ClyRawQueryResult new.
 	convertedQuery := query withResult: newResult.
@@ -96,7 +96,7 @@ ClyQueryTestCase >> testConvertingWithNewRequiredResult [
 ]
 
 { #category : #tests }
-ClyQueryTestCase >> testFixingStateBeforeExecution [
+ClyQueryTest >> testFixingStateBeforeExecution [
 
 	query fixStateBeforeExecution.
 	
@@ -105,46 +105,46 @@ ClyQueryTestCase >> testFixingStateBeforeExecution [
 ]
 
 { #category : #tests }
-ClyQueryTestCase >> testGettingEnvironment [
+ClyQueryTest >> testGettingEnvironment [
 
 	self assert: query environment equals: environment
 ]
 
 { #category : #tests }
-ClyQueryTestCase >> testHasReadonlyRequiredResultByDefault [
+ClyQueryTest >> testHasReadonlyRequiredResultByDefault [
 
 	self assert: query requiredResult isReadOnlyObject
 ]
 
 { #category : #tests }
-ClyQueryTestCase >> testHasRequiredResultByDefault [
+ClyQueryTest >> testHasRequiredResultByDefault [
 
 	self assert: query requiredResult notNil
 ]
 
 { #category : #tests }
-ClyQueryTestCase >> testHasUnknownScopeByDefault [
+ClyQueryTest >> testHasUnknownScopeByDefault [
 
 	query := query class new.
 	self assert: query scope equals: ClyUnknownScope instance
 ]
 
 { #category : #tests }
-ClyQueryTestCase >> testIsBoundToEnvironmentWhenScopeIs [
+ClyQueryTest >> testIsBoundToEnvironmentWhenScopeIs [
 
 	self assert: query scope isBoundToEnvironment.
 	self assert: query isBoundToEnvironment 
 ]
 
 { #category : #tests }
-ClyQueryTestCase >> testNotBoundToEnvironmentByDefault [
+ClyQueryTest >> testNotBoundToEnvironmentByDefault [
 
 	query := query class new.
 	self deny: query isBoundToEnvironment 
 ]
 
 { #category : #tests }
-ClyQueryTestCase >> testPrepareResultForExecution [
+ClyQueryTest >> testPrepareResultForExecution [
 	| preparedResult |
 	preparedResult := query prepareNewResult.
 

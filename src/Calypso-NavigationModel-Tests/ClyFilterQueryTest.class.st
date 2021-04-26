@@ -1,13 +1,13 @@
 Class {
 	#name : #ClyFilterQueryTest,
-	#superclass : #ClyWrapQueryTestCase,
+	#superclass : #ClyWrapQueryTest,
 	#category : #'Calypso-NavigationModel-Tests'
 }
 
 { #category : #tests }
 ClyFilterQueryTest >> createQuery [
 	^ ClyFilterQuery
-		for: (ClyQueryExampleReturningScopeBasis
+		for: (ClyReturningScopeBasisExampleQuery
 				from: ClyScopeExample of: self class in: environment)
 		filter: (ClyItemNameFilter substringPattern: 'FilterQueryTest')
 ]
@@ -40,7 +40,7 @@ ClyFilterQueryTest >> testConvertingWithNewScopeShouldKeepFilter [
 ClyFilterQueryTest >> testExecution [
 	| scope mainQuery |
 	scope := ClyScopeExample ofAll: {self class superclass. self class} in: environment.
-	mainQuery := ClyQueryExampleReturningScopeBasis from: scope.
+	mainQuery := ClyReturningScopeBasisExampleQuery from: scope.
 	query subqueries: {mainQuery}.
 	
 	self executeQuery.
@@ -53,7 +53,7 @@ ClyFilterQueryTest >> testExecution [
 ClyFilterQueryTest >> testExecutionOverExistingQuery [
 	| scope mainQuery |
 	scope := ClyScopeExample ofAll: {self class superclass. self class} in: environment.
-	mainQuery := ClyQueryExampleReturningScopeBasis from: scope.
+	mainQuery := ClyReturningScopeBasisExampleQuery from: scope.
 	query := mainQuery filteredBy: query itemFilter.
 	
 	result := query execute.

@@ -1,12 +1,12 @@
 Class {
 	#name : #ClyQueryExampleTest,
-	#superclass : #ClyTypedQueryTestCase,
+	#superclass : #ClyTypedQueryTest,
 	#category : #'Calypso-NavigationModel-Tests'
 }
 
 { #category : #running }
 ClyQueryExampleTest >> createQuery [
-	^ClyQueryExampleReturningScopeBasis from: ClyScopeExample of: #basisObject in: environment
+	^ClyReturningScopeBasisExampleQuery from: ClyScopeExample of: #basisObject in: environment
 ]
 
 { #category : #tests }

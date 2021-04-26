@@ -7,7 +7,7 @@ Class {
 { #category : #helpers }
 ClyNavigationEnvironmentTest >> createQueryFromScope: aScope [
 	aScope bindTo: environment.
-	^ ClyQueryExampleReturningScopeBasis from: aScope
+	^ ClyReturningScopeBasisExampleQuery from: aScope
 ]
 
 { #category : #helpers }

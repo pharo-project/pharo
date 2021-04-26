@@ -1,6 +1,6 @@
 Class {
-	#name : #ClyLongQueryExample,
-	#superclass : #ClyQueryExampleReturningScopeBasis,
+	#name : #ClyLongExampleQuery,
+	#superclass : #ClyReturningScopeBasisExampleQuery,
 	#instVars : [
 		'executionSemaphore'
 	],
@@ -8,35 +8,35 @@ Class {
 }
 
 { #category : #'items type' }
-ClyLongQueryExample class >> resultItemsType [
+ClyLongExampleQuery class >> resultItemsType [
 	self shouldBeImplemented
 ]
 
 { #category : #execution }
-ClyLongQueryExample >> buildResult: aQueryResult [
+ClyLongExampleQuery >> buildResult: aQueryResult [
 	executionSemaphore wait.
 	
 	super buildResult: aQueryResult
 ]
 
 { #category : #execution }
-ClyLongQueryExample >> checkEmptyResult [
+ClyLongExampleQuery >> checkEmptyResult [
 	executionSemaphore wait.
 	super checkEmptyResult
 ]
 
 { #category : #controlling }
-ClyLongQueryExample >> delayExecution [
+ClyLongExampleQuery >> delayExecution [
 	executionSemaphore consumeAllSignals
 ]
 
 { #category : #initialization }
-ClyLongQueryExample >> initialize [
+ClyLongExampleQuery >> initialize [
 	super initialize.
 	executionSemaphore := Semaphore new
 ]
 
 { #category : #controlling }
-ClyLongQueryExample >> passExecution [
+ClyLongExampleQuery >> passExecution [
 	executionSemaphore signal
 ]

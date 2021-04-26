@@ -1,14 +1,14 @@
 Class {
 	#name : #ClyUnionQueryTest,
-	#superclass : #ClyCompositeQueryTestCase,
+	#superclass : #ClyCompositeQueryTest,
 	#category : #'Calypso-NavigationModel-Tests'
 }
 
 { #category : #running }
 ClyUnionQueryTest >> createQuery [
 	^ClyUnionQuery with: { 
-		ClyQueryExampleReturningScopeBasis from: ClyScopeExample of: self class in: environment.
-		ClyQueryExampleReturningScopeBasis2 from: ClyScopeExample2 of: self class superclass in: environment}
+		ClyReturningScopeBasisExampleQuery from: ClyScopeExample of: self class in: environment.
+		ClyReturningScopeBasis2ExampleQuery from: ClyScopeExample2 of: self class superclass in: environment}
 ]
 
 { #category : #running }
@@ -33,7 +33,7 @@ ClyUnionQueryTest >> testCreationFromAnotherCompositeQueryAndNewDifferentSubquer
 	| subquery1 subquery2 subquery3 |
 	subquery1 := self subqueryFromScope: ClyScopeExample of: Array.
 	subquery2 := self subqueryFromScope: ClyScopeExample2 of: String.
-	subquery3 := ClyQueryExampleReturningScopeBasis2 from: ClyScopeExample of: Object in: environment.
+	subquery3 := ClyReturningScopeBasis2ExampleQuery from: ClyScopeExample of: Object in: environment.
 	
 	query := subquery1, subquery2, subquery3.
 	
@@ -61,8 +61,8 @@ ClyUnionQueryTest >> testCreationFromAnotherCompositeQueryAndSimilarQuery [
 { #category : #tests }
 ClyUnionQueryTest >> testCreationFromTwoDifferentTypedQueries [
 	| subquery1 subquery2 |
-	subquery1 := ClyQueryExampleReturningScopeBasis from: ClyScopeExample of: Array in: environment.
-	subquery2 := ClyQueryExampleReturningScopeBasis2 from: ClyScopeExample of: String in: environment.
+	subquery1 := ClyReturningScopeBasisExampleQuery from: ClyScopeExample of: Array in: environment.
+	subquery2 := ClyReturningScopeBasis2ExampleQuery from: ClyScopeExample of: String in: environment.
 
 	query := subquery1 , subquery2.
 

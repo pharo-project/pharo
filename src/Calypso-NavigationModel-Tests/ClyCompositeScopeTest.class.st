@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyCompositeScopeTest,
-	#superclass : #ClyScopeTestCase,
+	#superclass : #ClyScopeTest,
 	#category : #'Calypso-NavigationModel-Tests'
 }
 
@@ -18,7 +18,7 @@ ClyCompositeScopeTest >> testAdoptQuery [
 	scope := ClyCompositeScope on: {
 		ClyScopeExample of: Object in: environment.
 		ClyScopeExample2 of: Array in: environment}.
-	query := ClyQueryExampleReturningScopeBasis new.
+	query := ClyReturningScopeBasisExampleQuery new.
 	query extraParameter: #testParameter.
 	
 	adoptedQuery := scope adoptQuery: query.
@@ -40,7 +40,7 @@ ClyCompositeScopeTest >> testAdoptQueryShouldKeepScopeName [
 		ClyScopeExample of: Object in: environment.
 		ClyScopeExample2 of: Array in: environment}.
 	scope name: 'test scope'.
-	query := ClyQueryExampleReturningScopeBasis new.
+	query := ClyReturningScopeBasisExampleQuery new.
 	
 	adoptedQuery := scope adoptQuery: query.
 	

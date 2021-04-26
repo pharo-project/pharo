@@ -1,5 +1,5 @@
 Class {
-	#name : #ClySortFunctionTestCase,
+	#name : #ClySortFunctionTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'function'
@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #testing }
-ClySortFunctionTestCase class >> isAbstract [
-	^self = ClySortFunctionTestCase
+ClySortFunctionTest class >> isAbstract [
+	^self = ClySortFunctionTest
 ]

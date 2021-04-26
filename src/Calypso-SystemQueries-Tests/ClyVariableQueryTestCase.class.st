@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyVariableQueryTestCase,
-	#superclass : #ClyTypedQueryTestCase,
+	#superclass : #ClyTypedQueryTest,
 	#category : #'Calypso-SystemQueries-Tests-Queries'
 }
 

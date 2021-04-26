@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyTraitFirstSortFunctionTest,
-	#superclass : #ClySortFunctionTestCase,
+	#superclass : #ClySortFunctionTest,
 	#category : #'Calypso-SystemPlugins-Traits-Queries-Tests'
 }
 

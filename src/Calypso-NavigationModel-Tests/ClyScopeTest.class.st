@@ -1,5 +1,5 @@
 Class {
-	#name : #ClyScopeTestCase,
+	#name : #ClyScopeTest,
 	#superclass : #ClyNavigationEnvironmentTestCase,
 	#instVars : [
 		'scope',
@@ -9,17 +9,17 @@ Class {
 }
 
 { #category : #testing }
-ClyScopeTestCase class >> isAbstract [
-	^self == ClyScopeTestCase
+ClyScopeTest class >> isAbstract [
+	^self == ClyScopeTest
 ]
 
 { #category : #running }
-ClyScopeTestCase >> createSampleScope [
+ClyScopeTest >> createSampleScope [
 	self subclassResponsibility 
 ]
 
 { #category : #running }
-ClyScopeTestCase >> setUp [
+ClyScopeTest >> setUp [
 	super setUp.
 	
 	"For tests we want predictable order or collected items to simplify assertions"
@@ -27,7 +27,7 @@ ClyScopeTestCase >> setUp [
 ]
 
 { #category : #tests }
-ClyScopeTestCase >> testBindToEnvironment [
+ClyScopeTest >> testBindToEnvironment [
 
 	scope := self createSampleScope.
 
@@ -38,7 +38,7 @@ ClyScopeTestCase >> testBindToEnvironment [
 ]
 
 { #category : #tests }
-ClyScopeTestCase >> testComparisonWithCopy [
+ClyScopeTest >> testComparisonWithCopy [
 
 	| copy |
 	scope := self createSampleScope.
@@ -48,7 +48,7 @@ ClyScopeTestCase >> testComparisonWithCopy [
 ]
 
 { #category : #tests }
-ClyScopeTestCase >> testComparisonWithDifferentScope [
+ClyScopeTest >> testComparisonWithDifferentScope [
 	| scope2 |
 	scope := self createSampleScope.
 	scope2 := ClyScopeExample2 of: #basisObject in: environment.
@@ -56,7 +56,7 @@ ClyScopeTestCase >> testComparisonWithDifferentScope [
 ]
 
 { #category : #tests }
-ClyScopeTestCase >> testComparisonWithItself [
+ClyScopeTest >> testComparisonWithItself [
 
 	scope := self createSampleScope.
 	
@@ -64,7 +64,7 @@ ClyScopeTestCase >> testComparisonWithItself [
 ]
 
 { #category : #tests }
-ClyScopeTestCase >> testComparisonWithSimilarScope [
+ClyScopeTest >> testComparisonWithSimilarScope [
 
 	| scope2 |
 	scope := self createSampleScope.
@@ -75,7 +75,7 @@ ClyScopeTestCase >> testComparisonWithSimilarScope [
 ]
 
 { #category : #tests }
-ClyScopeTestCase >> testConvertingToAnotherScopeClass [
+ClyScopeTest >> testConvertingToAnotherScopeClass [
 	| convertedScope |
 	scope := self createSampleScope.
 	
@@ -87,7 +87,7 @@ ClyScopeTestCase >> testConvertingToAnotherScopeClass [
 ]
 
 { #category : #tests }
-ClyScopeTestCase >> testConvertingToAnotherScopeClassShouldKeepName [
+ClyScopeTest >> testConvertingToAnotherScopeClassShouldKeepName [
 	| convertedScope |
 	scope := self createSampleScope.
 	scope name: 'test scope'.

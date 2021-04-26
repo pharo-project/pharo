@@ -1,5 +1,5 @@
 Class {
-	#name : #ClyItemFilterTestCase,
+	#name : #ClyItemFilterTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'filter'
@@ -8,6 +8,6 @@ Class {
 }
 
 { #category : #testing }
-ClyItemFilterTestCase class >> isAbstract [
-	^self = ClyItemFilterTestCase 
+ClyItemFilterTest class >> isAbstract [
+	^self = ClyItemFilterTest 
 ]

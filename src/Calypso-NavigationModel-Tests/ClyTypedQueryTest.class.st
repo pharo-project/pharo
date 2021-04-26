@@ -1,28 +1,28 @@
 Class {
-	#name : #ClyTypedQueryTestCase,
-	#superclass : #ClyQueryTestCase,
+	#name : #ClyTypedQueryTest,
+	#superclass : #ClyQueryTest,
 	#category : #'Calypso-NavigationModel-Tests'
 }
 
 { #category : #testing }
-ClyTypedQueryTestCase class >> isAbstract [
-	^self = ClyTypedQueryTestCase 
+ClyTypedQueryTest class >> isAbstract [
+	^self = ClyTypedQueryTest 
 ]
 
 { #category : #running }
-ClyTypedQueryTestCase >> queryFromScope: scopeClass of: aBasisObject [
+ClyTypedQueryTest >> queryFromScope: scopeClass of: aBasisObject [
 	query scope: (scopeClass of: aBasisObject in: environment).
 	self executeQuery
 ]
 
 { #category : #running }
-ClyTypedQueryTestCase >> queryFromScope: scopeClass ofAll: basisObjects [
+ClyTypedQueryTest >> queryFromScope: scopeClass ofAll: basisObjects [
 	query scope: (scopeClass ofAll: basisObjects in: environment).
 	self executeQuery
 ]
 
 { #category : #tests }
-ClyTypedQueryTestCase >> testComparisonOfSimilarQueriesWithDifferentScopes [
+ClyTypedQueryTest >> testComparisonOfSimilarQueriesWithDifferentScopes [
 	| query2 |
 	query2 := self createQuery.
 	query scope: (ClyScopeExample of: #basisObject1 in: environment).
@@ -34,7 +34,7 @@ ClyTypedQueryTestCase >> testComparisonOfSimilarQueriesWithDifferentScopes [
 ]
 
 { #category : #tests }
-ClyTypedQueryTestCase >> testComparisonOfSimilarQueriesWithEqualScopes [
+ClyTypedQueryTest >> testComparisonOfSimilarQueriesWithEqualScopes [
 	| query2 |
 	query2 := self createQuery.
 	query scope: (ClyScopeExample of: #basisObject in: environment).
@@ -45,7 +45,7 @@ ClyTypedQueryTestCase >> testComparisonOfSimilarQueriesWithEqualScopes [
 ]
 
 { #category : #tests }
-ClyTypedQueryTestCase >> testConvertingAsRestrictedByAnotherScope [
+ClyTypedQueryTest >> testConvertingAsRestrictedByAnotherScope [
 	| newScope convertedQuery |
 	newScope := ClyScopeExample2 of: #newBasis in: environment.
 	
@@ -57,7 +57,7 @@ ClyTypedQueryTestCase >> testConvertingAsRestrictedByAnotherScope [
 ]
 
 { #category : #tests }
-ClyTypedQueryTestCase >> testConvertingWithNewCompositeScope [
+ClyTypedQueryTest >> testConvertingWithNewCompositeScope [
 	| newScope convertedQuery |
 	newScope := ClyCompositeScope on: {
 		ClyScopeExample of: #someBasis1 in: environment.
@@ -75,7 +75,7 @@ ClyTypedQueryTestCase >> testConvertingWithNewCompositeScope [
 ]
 
 { #category : #tests }
-ClyTypedQueryTestCase >> testConvertingWithNewScope [
+ClyTypedQueryTest >> testConvertingWithNewScope [
 	| newScope convertedQuery |
 	newScope := ClyScopeExample2 of: #someBasis in: environment.
 	
@@ -86,7 +86,7 @@ ClyTypedQueryTestCase >> testConvertingWithNewScope [
 ]
 
 { #category : #tests }
-ClyTypedQueryTestCase >> testConvertingWithNewScopeBasis [
+ClyTypedQueryTest >> testConvertingWithNewScopeBasis [
 	| convertedQuery |
 	
 	convertedQuery := query withScopeOf: #(newBasis).
@@ -97,7 +97,7 @@ ClyTypedQueryTestCase >> testConvertingWithNewScopeBasis [
 ]
 
 { #category : #tests }
-ClyTypedQueryTestCase >> testCreationOnMultipleScopeOfSameBasis [
+ClyTypedQueryTest >> testCreationOnMultipleScopeOfSameBasis [
 
 	| queryClass |
 	queryClass := query class.
@@ -112,7 +112,7 @@ ClyTypedQueryTestCase >> testCreationOnMultipleScopeOfSameBasis [
 ]
 
 { #category : #tests }
-ClyTypedQueryTestCase >> testCreationUnifiedInstance [
+ClyTypedQueryTest >> testCreationUnifiedInstance [
 
 	| unifiedInstance |
 	unifiedInstance := query asUnifiedInstance.
@@ -123,16 +123,16 @@ ClyTypedQueryTestCase >> testCreationUnifiedInstance [
 ]
 
 { #category : #tests }
-ClyTypedQueryTestCase >> testExecutesConcreteQueryClass [
+ClyTypedQueryTest >> testExecutesConcreteQueryClass [
 	
 	self assert: (query executesQuery: query class).
 	self assert: (query executesQuery: query class superclass).
 	
-	self deny: (query executesQuery: ClyQueryExampleReturningScopeBasis2)
+	self deny: (query executesQuery: ClyReturningScopeBasis2ExampleQuery)
 ]
 
 { #category : #tests }
-ClyTypedQueryTestCase >> testForbidCreationOnScopeWhichNotSupportIt [
+ClyTypedQueryTest >> testForbidCreationOnScopeWhichNotSupportIt [
 
 	[query scope: (ClyCompositeScope in: environment).
 	self assert: false description: 'Query should be supported by scope'
@@ -141,7 +141,7 @@ ClyTypedQueryTestCase >> testForbidCreationOnScopeWhichNotSupportIt [
 ]
 
 { #category : #tests }
-ClyTypedQueryTestCase >> testForbidCreationOnScopeWithoutEnvironment [
+ClyTypedQueryTest >> testForbidCreationOnScopeWithoutEnvironment [
 	[ 
 		query scope: (ClyScopeExample ofAll: {}).
 		self assert: false description: 'Query should be only created on scope bound to concrete environment']
@@ -149,7 +149,7 @@ ClyTypedQueryTestCase >> testForbidCreationOnScopeWithoutEnvironment [
 ]
 
 { #category : #tests }
-ClyTypedQueryTestCase >> testIsExecutedFromConcreteScopeClass [
+ClyTypedQueryTest >> testIsExecutedFromConcreteScopeClass [
 
 	self assert: (query isExecutedFromScope: query scope class).
 	self assert: (query isExecutedFromScope: query scope class superclass).
@@ -158,7 +158,7 @@ ClyTypedQueryTestCase >> testIsExecutedFromConcreteScopeClass [
 ]
 
 { #category : #tests }
-ClyTypedQueryTestCase >> testIsExecutedFromEmptyScope [
+ClyTypedQueryTest >> testIsExecutedFromEmptyScope [
 	
 	query scope: (ClyScopeExample ofAll: #(object1 object2) in: environment).
 	self deny: query isExecutedFromEmptyScope.
@@ -168,7 +168,7 @@ ClyTypedQueryTestCase >> testIsExecutedFromEmptyScope [
 ]
 
 { #category : #tests }
-ClyTypedQueryTestCase >> testIsExecutedFromMultipleScope [
+ClyTypedQueryTest >> testIsExecutedFromMultipleScope [
 
 	query scope: (ClyScopeExample ofAll: #(object1 object2) in: environment).
 	self assert: query isExecutedFromMultipleScope.
@@ -181,7 +181,7 @@ ClyTypedQueryTestCase >> testIsExecutedFromMultipleScope [
 ]
 
 { #category : #tests }
-ClyTypedQueryTestCase >> testIsExecutedFromScopeOfBasisObject [
+ClyTypedQueryTest >> testIsExecutedFromScopeOfBasisObject [
 	query scope: (ClyScopeExample of: #basis in: environment).
 
 	self assert: (query isExecutedFromScopeOf: query scope basisObjects anyOne).
@@ -189,7 +189,7 @@ ClyTypedQueryTestCase >> testIsExecutedFromScopeOfBasisObject [
 ]
 
 { #category : #tests }
-ClyTypedQueryTestCase >> testIsExecutedFromSingleScope [
+ClyTypedQueryTest >> testIsExecutedFromSingleScope [
 	query scope: (ClyScopeExample ofAll: #(object1 object2) in: environment).
 	self deny: query isExecutedFromSingleScope.
 

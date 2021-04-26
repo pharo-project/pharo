@@ -1,12 +1,12 @@
 Class {
 	#name : #ClyAsyncQueryTest,
-	#superclass : #ClyWrapQueryTestCase,
+	#superclass : #ClyWrapQueryTest,
 	#category : #'Calypso-NavigationModel-Tests'
 }
 
 { #category : #running }
 ClyAsyncQueryTest >> createQuery [
-	^ ClyAsyncQuery for: (ClyQueryExampleReturningScopeBasis
+	^ ClyAsyncQuery for: (ClyReturningScopeBasisExampleQuery
 			from: ClyScopeExample of: self class in: environment)
 ]
 

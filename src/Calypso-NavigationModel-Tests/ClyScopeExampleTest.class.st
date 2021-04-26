@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyScopeExampleTest,
-	#superclass : #ClyTypedScopeTestCase,
+	#superclass : #ClyTypedScopeTest,
 	#category : #'Calypso-NavigationModel-Tests'
 }
 

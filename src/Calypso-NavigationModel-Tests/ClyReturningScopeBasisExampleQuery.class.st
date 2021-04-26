@@ -1,5 +1,5 @@
 Class {
-	#name : #ClyQueryExampleReturningScopeBasis,
+	#name : #ClyReturningScopeBasisExampleQuery,
 	#superclass : #ClyTypedQuery,
 	#instVars : [
 		'extraParameter'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #comparing }
-ClyQueryExampleReturningScopeBasis >> = anObject [
+ClyReturningScopeBasisExampleQuery >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
 	self == anObject ifTrue: [ ^ true ].
@@ -17,35 +17,35 @@ ClyQueryExampleReturningScopeBasis >> = anObject [
 ]
 
 { #category : #execution }
-ClyQueryExampleReturningScopeBasis >> buildResult: aQueryResult [ 
+ClyReturningScopeBasisExampleQuery >> buildResult: aQueryResult [ 
 	"For tests we need predictable order of query result items"
 	
 	aQueryResult fillWith: (scope basisObjects sorted: #printString ascending)
 ]
 
 { #category : #execution }
-ClyQueryExampleReturningScopeBasis >> checkEmptyResult [
+ClyReturningScopeBasisExampleQuery >> checkEmptyResult [
 	^scope basisObjects isEmpty
 ]
 
 { #category : #accessing }
-ClyQueryExampleReturningScopeBasis >> extraParameter [
+ClyReturningScopeBasisExampleQuery >> extraParameter [
 	^ extraParameter
 ]
 
 { #category : #accessing }
-ClyQueryExampleReturningScopeBasis >> extraParameter: anObject [
+ClyReturningScopeBasisExampleQuery >> extraParameter: anObject [
 	extraParameter := anObject
 ]
 
 { #category : #comparing }
-ClyQueryExampleReturningScopeBasis >> hash [
+ClyReturningScopeBasisExampleQuery >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^super hash bitXor: extraParameter hash
 ]
 
 { #category : #'system changes' }
-ClyQueryExampleReturningScopeBasis >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
+ClyReturningScopeBasisExampleQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 	^false
 ]
