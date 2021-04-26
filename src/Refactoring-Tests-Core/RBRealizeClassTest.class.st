@@ -18,9 +18,9 @@ RBRealizeClassTest >> createAbstractClass [
 
 { #category : #tests }
 RBRealizeClassTest >> testClassWithoutChanges [
-	self executeRefactoring: (RBRealizeClassRefactoring 
+	self proceedThroughWarning: [ self executeRefactoring: (RBRealizeClassRefactoring 
 		model: model 
-		className: #RBLintRuleTestData).
+		className: #RBLintRuleTestData)].
 	self assert: model changes changes isEmpty
 ]
 
@@ -33,6 +33,46 @@ RBRealizeClassTest >> testRealizeAbstractClass [
 		(RBRealizeClassRefactoring 
 		model: model 
 		className: #RBFooLintRuleTestData)].
+	self assert: (class parseTreeFor: #isEmpty) equals: 
+	(self parseMethod: 'isEmpty
+		self shouldBeImplemented').
+	self assert: (class parseTreeFor: #problemCount) equals: 
+	(self parseMethod: 'problemCount
+		self shouldBeImplemented').
+	self assert: (class parseTreeFor: #viewResults) equals: 
+	(self parseMethod: 'viewResults
+		self shouldBeImplemented') 
+]
+
+{ #category : #tests }
+RBRealizeClassTest >> testRealizeClass [
+	| class |
+	class := model classNamed: #RBFooLintRuleTestData.
+	self executeRefactoring: 
+		(RBRealizeClassRefactoring 
+		model: model 
+		className: #RBFooLintRuleTestData).
+	self assert: (class parseTreeFor: #isEmpty) equals: 
+	(self parseMethod: 'isEmpty
+		self shouldBeImplemented').
+	self assert: (class parseTreeFor: #problemCount) equals: 
+	(self parseMethod: 'problemCount
+		self shouldBeImplemented').
+	self assert: (class parseTreeFor: #viewResults) equals: 
+	(self parseMethod: 'viewResults
+		self shouldBeImplemented') 
+]
+
+{ #category : #tests }
+RBRealizeClassTest >> testRealizeWithAbstractSubclass [
+	| class |
+	class := model classNamed: #RBTransformationRuleTestData.
+	class compile: 'foo: arg1 bar: arg2 self subclassResponsibility' classified: 'accessing'.
+	self proceedThroughWarning: [ self executeRefactoring: 
+		(RBRealizeClassRefactoring 
+		model: model 
+		className: #RBFooLintRuleTestData)].
+	class := model classNamed: #RBFooLintRuleTestData.
 	self assert: (class parseTreeFor: #isEmpty) equals: 
 	(self parseMethod: 'isEmpty
 		self shouldBeImplemented').
