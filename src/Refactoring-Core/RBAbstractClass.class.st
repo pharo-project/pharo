@@ -429,6 +429,18 @@ RBAbstractClass >> isTrait [
 ]
 
 { #category : #'method accessing' }
+RBAbstractClass >> localSelectors [
+	| selectors |
+	selectors := Set new.
+	selectors addAll: self newMethods keys.
+	self isDefined 
+		ifTrue: 
+			[selectors addAll: self realClass localSelectors.
+			removedMethods ifNotNil: [removedMethods do: [:each | selectors remove: each ifAbsent: []]]].
+	^selectors
+]
+
+{ #category : #'method accessing' }
 RBAbstractClass >> methodFor: aSelector [
 	^ self newMethods
 		at: aSelector

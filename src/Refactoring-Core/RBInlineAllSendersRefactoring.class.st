@@ -35,7 +35,8 @@ Class {
 		'numberReplaced',
 		'numberNotReplaced',
 		'pattern',
-		'selectorString'
+		'selectorString',
+		'removeMethod'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -100,7 +101,7 @@ RBInlineAllSendersRefactoring >> inlineSelfSends [
 			| selectors |
 			self initializePatternFor: each.
 			pattern ifNotNil: [
-			selectors := each selectors.
+			selectors := each localSelectors.
 			class = each ifTrue: [ selectors remove: selector ifAbsent: []].
 			selectors do: [:sel | self inlineMessagesInClass: each andSelector: sel]]]
 	
