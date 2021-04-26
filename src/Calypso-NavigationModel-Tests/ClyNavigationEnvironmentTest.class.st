@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyNavigationEnvironmentTest,
-	#superclass : #ClyNavigationEnvironmentTestCase,
+	#superclass : #ClyAbsractNavigationEnvironmentTest,
 	#category : #'Calypso-NavigationModel-Tests'
 }
 

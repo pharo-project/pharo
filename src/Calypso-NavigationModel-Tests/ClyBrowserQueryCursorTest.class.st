@@ -1,6 +1,6 @@
 Class {
-	#name : #ClyBrowserQueryCursorTestCase,
-	#superclass : #ClyNavigationEnvironmentTestCase,
+	#name : #ClyBrowserQueryCursorTest,
+	#superclass : #ClyAbsractNavigationEnvironmentTest,
 	#instVars : [
 		'cursor',
 		'queryResult',
@@ -10,29 +10,29 @@ Class {
 }
 
 { #category : #testing }
-ClyBrowserQueryCursorTestCase class >> isAbstract [
-	^self = ClyBrowserQueryCursorTestCase 
+ClyBrowserQueryCursorTest class >> isAbstract [
+	^self = ClyBrowserQueryCursorTest 
 ]
 
 { #category : #running }
-ClyBrowserQueryCursorTestCase >> createQuery [
+ClyBrowserQueryCursorTest >> createQuery [
 	^ClyReturningScopeBasisExampleQuery
 		from: (ClyScopeExample ofAll: {Array. Object. String} in: environment)
 		as: self createQueryResult
 ]
 
 { #category : #running }
-ClyBrowserQueryCursorTestCase >> createQueryResult [
+ClyBrowserQueryCursorTest >> createQueryResult [
 	self subclassResponsibility 
 ]
 
 { #category : #running }
-ClyBrowserQueryCursorTestCase >> rawResultItems [
+ClyBrowserQueryCursorTest >> rawResultItems [
 	self subclassResponsibility
 ]
 
 { #category : #running }
-ClyBrowserQueryCursorTestCase >> setUp [
+ClyBrowserQueryCursorTest >> setUp [
 	| query |
 	super setUp.
 	query := self createQuery.
@@ -42,14 +42,14 @@ ClyBrowserQueryCursorTestCase >> setUp [
 ]
 
 { #category : #tests }
-ClyBrowserQueryCursorTestCase >> testClosing [
+ClyBrowserQueryCursorTest >> testClosing [
 
 	cursor close.
 	self deny: (queryResult hasSubscriber: itemObserver)
 ]
 
 { #category : #tests }
-ClyBrowserQueryCursorTestCase >> testCurrentItem [
+ClyBrowserQueryCursorTest >> testCurrentItem [
 	
 	| item |
 	item := cursor currentItem.
@@ -60,7 +60,7 @@ ClyBrowserQueryCursorTestCase >> testCurrentItem [
 ]
 
 { #category : #tests }
-ClyBrowserQueryCursorTestCase >> testFindItemsSimilarToOthers [
+ClyBrowserQueryCursorTest >> testFindItemsSimilarToOthers [
 	
 	| found |
 	found := cursor findItemsSimilarTo: ({Class. Array} collect: [:each | each asCalypsoBrowserItem]).
@@ -72,7 +72,7 @@ ClyBrowserQueryCursorTestCase >> testFindItemsSimilarToOthers [
 ]
 
 { #category : #tests }
-ClyBrowserQueryCursorTestCase >> testFindItemsSimilarToOthersWhenTheyAreNotInCache [
+ClyBrowserQueryCursorTest >> testFindItemsSimilarToOthersWhenTheyAreNotInCache [
 	
 	| found |
 	cursor cleanCache.
@@ -85,7 +85,7 @@ ClyBrowserQueryCursorTestCase >> testFindItemsSimilarToOthersWhenTheyAreNotInCac
 ]
 
 { #category : #tests }
-ClyBrowserQueryCursorTestCase >> testFindItemsUsingPredicate [
+ClyBrowserQueryCursorTest >> testFindItemsUsingPredicate [
 	
 	| allItems |
 	allItems := cursor findItemsWhere: [:each | each actualObject = Array].
@@ -97,7 +97,7 @@ ClyBrowserQueryCursorTestCase >> testFindItemsUsingPredicate [
 ]
 
 { #category : #tests }
-ClyBrowserQueryCursorTestCase >> testFindItemsUsingPredicateWhenTheyAreNotInCache [
+ClyBrowserQueryCursorTest >> testFindItemsUsingPredicateWhenTheyAreNotInCache [
 	
 	| allItems |
 	cursor cleanCache.
@@ -110,7 +110,7 @@ ClyBrowserQueryCursorTestCase >> testFindItemsUsingPredicateWhenTheyAreNotInCach
 ]
 
 { #category : #tests }
-ClyBrowserQueryCursorTestCase >> testFindItemsWithActualObjects [
+ClyBrowserQueryCursorTest >> testFindItemsWithActualObjects [
 	
 	| found |
 	found := cursor findItemsWith: {#absentItem1. Array. #absentItem2}.
@@ -124,7 +124,7 @@ ClyBrowserQueryCursorTestCase >> testFindItemsWithActualObjects [
 ]
 
 { #category : #tests }
-ClyBrowserQueryCursorTestCase >> testFindItemsWithActualObjectsWhenTheyAreNotInCache [
+ClyBrowserQueryCursorTest >> testFindItemsWithActualObjectsWhenTheyAreNotInCache [
 	
 	| found |
 	cursor cleanCache.
@@ -139,7 +139,7 @@ ClyBrowserQueryCursorTestCase >> testFindItemsWithActualObjectsWhenTheyAreNotInC
 ]
 
 { #category : #tests }
-ClyBrowserQueryCursorTestCase >> testMoveToItemWhichNotSatisfiesCondition [
+ClyBrowserQueryCursorTest >> testMoveToItemWhichNotSatisfiesCondition [
 	
 	| found |
 	found := cursor moveToItemWhich: [:each | each actualObject = Object].
@@ -152,7 +152,7 @@ ClyBrowserQueryCursorTestCase >> testMoveToItemWhichNotSatisfiesCondition [
 ]
 
 { #category : #tests }
-ClyBrowserQueryCursorTestCase >> testMoveToItemWhichSatisfiesCondition [
+ClyBrowserQueryCursorTest >> testMoveToItemWhichSatisfiesCondition [
 	
 	| found |
 	found := cursor moveToItemWhich: [:each | each actualObject = Object].
@@ -163,7 +163,7 @@ ClyBrowserQueryCursorTestCase >> testMoveToItemWhichSatisfiesCondition [
 ]
 
 { #category : #tests }
-ClyBrowserQueryCursorTestCase >> testMoveToItemWhichSatisfiesConditionWhenItNotExistsInCache [
+ClyBrowserQueryCursorTest >> testMoveToItemWhichSatisfiesConditionWhenItNotExistsInCache [
 	
 	| found |
 	cursor cleanCache.
@@ -175,7 +175,7 @@ ClyBrowserQueryCursorTestCase >> testMoveToItemWhichSatisfiesConditionWhenItNotE
 ]
 
 { #category : #tests }
-ClyBrowserQueryCursorTestCase >> testOpeningShouldSubscribeObserver [
+ClyBrowserQueryCursorTest >> testOpeningShouldSubscribeObserver [
 
 	self assert: (queryResult hasSubscriber: itemObserver).
 	self assert: cursor itemObserver equals: itemObserver

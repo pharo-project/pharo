@@ -1,10 +1,10 @@
 Class {
-	#name : #ClyBrowserQueryResultExample,
+	#name : #ClyBrowserQueryExampleResult,
 	#superclass : #ClyBrowserQueryResult,
 	#category : #'Calypso-NavigationModel-Tests'
 }
 
 { #category : #building }
-ClyBrowserQueryResultExample >> fillWith: objects [
+ClyBrowserQueryExampleResult >> fillWith: objects [
 	items := objects collect: [ :each | ClyBrowserItem named: each printString with: each ]
 ]

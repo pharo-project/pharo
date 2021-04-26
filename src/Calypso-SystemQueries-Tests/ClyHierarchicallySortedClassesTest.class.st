@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyHierarchicallySortedClassesTest,
-	#superclass : #ClyBrowserQueryResultTestCase,
+	#superclass : #ClyBrowserQueryResultTest,
 	#category : #'Calypso-SystemQueries-Tests-Results'
 }
 

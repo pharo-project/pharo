@@ -1,6 +1,6 @@
 Class {
-	#name : #ClyItemGroupProviderTestCase,
-	#superclass : #ClyNavigationEnvironmentTestCase,
+	#name : #ClyItemGroupProviderTest,
+	#superclass : #ClyAbsractNavigationEnvironmentTest,
 	#instVars : [
 		'groupProvider',
 		'builtGroups'
@@ -9,17 +9,17 @@ Class {
 }
 
 { #category : #testing }
-ClyItemGroupProviderTestCase class >> isAbstract [
-	^self == ClyItemGroupProviderTestCase 
+ClyItemGroupProviderTest class >> isAbstract [
+	^self == ClyItemGroupProviderTest 
 ]
 
 { #category : #running }
-ClyItemGroupProviderTestCase >> groupProviderClass [
+ClyItemGroupProviderTest >> groupProviderClass [
 	self subclassResponsibility 
 ]
 
 { #category : #running }
-ClyItemGroupProviderTestCase >> setUp [
+ClyItemGroupProviderTest >> setUp [
 	super setUp.
 	groupProvider := self groupProviderClass new.
 	builtGroups := OrderedCollection new.

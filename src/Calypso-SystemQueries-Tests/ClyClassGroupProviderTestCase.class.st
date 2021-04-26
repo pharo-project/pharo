@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyClassGroupProviderTestCase,
-	#superclass : #ClyItemGroupProviderTestCase,
+	#superclass : #ClyItemGroupProviderTest,
 	#category : #'Calypso-SystemQueries-Tests-Domain'
 }
 

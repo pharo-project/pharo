@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyQueryTest,
-	#superclass : #ClyNavigationEnvironmentTestCase,
+	#superclass : #ClyAbsractNavigationEnvironmentTest,
 	#instVars : [
 		'query',
 		'result',

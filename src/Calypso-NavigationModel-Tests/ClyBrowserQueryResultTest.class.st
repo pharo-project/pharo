@@ -1,5 +1,5 @@
 Class {
-	#name : #ClyBrowserQueryResultTestCase,
+	#name : #ClyBrowserQueryResultTest,
 	#superclass : #ClyQueryResultTestCase,
 	#instVars : [
 		'cursor',
@@ -9,12 +9,12 @@ Class {
 }
 
 { #category : #testing }
-ClyBrowserQueryResultTestCase class >> isAbstract [
-	^self == ClyBrowserQueryResultTestCase 
+ClyBrowserQueryResultTest class >> isAbstract [
+	^self == ClyBrowserQueryResultTest 
 ]
 
 { #category : #helpers }
-ClyBrowserQueryResultTestCase >> assertItems: itemValueWithDepthArray [
+ClyBrowserQueryResultTest >> assertItems: itemValueWithDepthArray [
 
 	self 
 		assertItems: itemValueWithDepthArray 
@@ -22,7 +22,7 @@ ClyBrowserQueryResultTestCase >> assertItems: itemValueWithDepthArray [
 ]
 
 { #category : #helpers }
-ClyBrowserQueryResultTestCase >> assertItems: itemValueWithDepthArray withValue: aBlockToGetValue [
+ClyBrowserQueryResultTest >> assertItems: itemValueWithDepthArray withValue: aBlockToGetValue [
 	| i actualItem valueOfItem |
 	items := queryResult items.
 	self assert: queryResult size equals: itemValueWithDepthArray size / 2.
@@ -36,12 +36,12 @@ ClyBrowserQueryResultTestCase >> assertItems: itemValueWithDepthArray withValue:
 ]
 
 { #category : #helpers }
-ClyBrowserQueryResultTestCase >> meaningfullObjectToAssert: resultItem [
+ClyBrowserQueryResultTest >> meaningfullObjectToAssert: resultItem [
 	^resultItem actualObject
 ]
 
 { #category : #tests }
-ClyBrowserQueryResultTestCase >> testOpeningBrowserCursor [
+ClyBrowserQueryResultTest >> testOpeningBrowserCursor [
 	
 	| itemObserver |
 	itemObserver := ClyItemObserverExample new.

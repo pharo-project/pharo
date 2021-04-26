@@ -1,5 +1,5 @@
 Class {
-	#name : #ClyNavigationEnvironmentTestCase,
+	#name : #ClyAbsractNavigationEnvironmentTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'environment'
@@ -8,17 +8,17 @@ Class {
 }
 
 { #category : #testing }
-ClyNavigationEnvironmentTestCase class >> isAbstract [
-	^self = ClyNavigationEnvironmentTestCase 
+ClyAbsractNavigationEnvironmentTest class >> isAbstract [
+	^self = ClyAbsractNavigationEnvironmentTest 
 ]
 
 { #category : #running }
-ClyNavigationEnvironmentTestCase >> setUp [
+ClyAbsractNavigationEnvironmentTest >> setUp [
 	super setUp.
 	self setUpEnvironment 
 ]
 
 { #category : #running }
-ClyNavigationEnvironmentTestCase >> setUpEnvironment [
+ClyAbsractNavigationEnvironmentTest >> setUpEnvironment [
 	environment := ClyNavigationEnvironment new
 ]

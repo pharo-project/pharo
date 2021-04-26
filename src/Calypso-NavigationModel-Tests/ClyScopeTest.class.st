@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyScopeTest,
-	#superclass : #ClyNavigationEnvironmentTestCase,
+	#superclass : #ClyAbsractNavigationEnvironmentTest,
 	#instVars : [
 		'scope',
 		'result'
