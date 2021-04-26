@@ -4,7 +4,7 @@ I describe the way the context of browser selection should be actived
 
 "
 Class {
-	#name : #ClyContextSelectionStrategy,
+	#name : #ClyContextSelectionStrategyAnnotation,
 	#superclass : #ClassAnnotation,
 	#instVars : [
 		'targetItemType'
@@ -13,13 +13,13 @@ Class {
 }
 
 { #category : #'instance creation' }
-ClyContextSelectionStrategy class >> for: aBrowserClass selectionType: aScopeClass [
+ClyContextSelectionStrategyAnnotation class >> for: aBrowserClass selectionType: aScopeClass [
 	^(self for: aBrowserClass)
 		targetItemType: aScopeClass
 ]
 
 { #category : #query }
-ClyContextSelectionStrategy class >> selectContextOf: aSelection for: aBrowser [
+ClyContextSelectionStrategyAnnotation class >> selectContextOf: aSelection for: aBrowser [
 
 	self activeInstancesInContext: aBrowser do: [ :strategy | 
 		(strategy shouldBeAppliedFor: aSelection) ifTrue: [ 
@@ -29,7 +29,7 @@ ClyContextSelectionStrategy class >> selectContextOf: aSelection for: aBrowser [
 ]
 
 { #category : #query }
-ClyContextSelectionStrategy class >> selectContextOfSingleItem: aDataSourceItem for: aBrowser [
+ClyContextSelectionStrategyAnnotation class >> selectContextOfSingleItem: aDataSourceItem for: aBrowser [
 
 	self activeInstancesInContext: aBrowser do: [ :strategy | 
 		(strategy shouldBeAppliedFor: aDataSourceItem) ifTrue: [ 
@@ -39,19 +39,19 @@ ClyContextSelectionStrategy class >> selectContextOfSingleItem: aDataSourceItem 
 ]
 
 { #category : #'context creation' }
-ClyContextSelectionStrategy >> createBrowserContextOf: aSelection for: aBrowser [
+ClyContextSelectionStrategyAnnotation >> createBrowserContextOf: aSelection for: aBrowser [
 
 	^annotatedClass ofSelection: aSelection for: aBrowser
 ]
 
 { #category : #'context creation' }
-ClyContextSelectionStrategy >> createBrowserContextOfSingleItem: aDataSourceItem for: aBrowser [
+ClyContextSelectionStrategyAnnotation >> createBrowserContextOfSingleItem: aDataSourceItem for: aBrowser [
 
 	^annotatedClass of: {aDataSourceItem} for: aBrowser
 ]
 
 { #category : #printing }
-ClyContextSelectionStrategy >> printOn: aStream [
+ClyContextSelectionStrategyAnnotation >> printOn: aStream [
 	super printOn: aStream.
 	
 	aStream 
@@ -66,7 +66,7 @@ ClyContextSelectionStrategy >> printOn: aStream [
 ]
 
 { #category : #testing }
-ClyContextSelectionStrategy >> shouldBeAppliedFor: aSelectionOrItem [
+ClyContextSelectionStrategyAnnotation >> shouldBeAppliedFor: aSelectionOrItem [
 
 	targetItemType ifNil: [ 
 	"if no scope specified strategy will be applied to any selection independently from it kind"	
@@ -76,11 +76,11 @@ ClyContextSelectionStrategy >> shouldBeAppliedFor: aSelectionOrItem [
 ]
 
 { #category : #accessing }
-ClyContextSelectionStrategy >> targetItemType [
+ClyContextSelectionStrategyAnnotation >> targetItemType [
 	^ targetItemType
 ]
 
 { #category : #accessing }
-ClyContextSelectionStrategy >> targetItemType: aClass [
+ClyContextSelectionStrategyAnnotation >> targetItemType: aClass [
 	targetItemType := aClass
 ]

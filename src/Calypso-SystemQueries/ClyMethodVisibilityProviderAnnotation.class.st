@@ -20,13 +20,13 @@ I expect that annotated classes will implement following class side method
 Look at ClyMethodVisibilityProvider references for details
 "
 Class {
-	#name : #ClyMethodVisibilityProvider,
+	#name : #ClyMethodVisibilityProviderAnnotation,
 	#superclass : #ClassAnnotation,
 	#category : #'Calypso-SystemQueries-Results'
 }
 
 { #category : #'default hierarchy' }
-ClyMethodVisibilityProvider class >> defaultHierarchy [
+ClyMethodVisibilityProviderAnnotation class >> defaultHierarchy [
 
 	self registeredInstancesDo: [ :each | ^each createHierarchy ].
 	
@@ -34,6 +34,6 @@ ClyMethodVisibilityProvider class >> defaultHierarchy [
 ]
 
 { #category : #'hierarchy creation' }
-ClyMethodVisibilityProvider >> createHierarchy [
+ClyMethodVisibilityProviderAnnotation >> createHierarchy [
 	^annotatedClass hierarchyForMethodVisibility
 ]

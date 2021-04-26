@@ -32,5 +32,5 @@ ClyCritiquesTableDecorator class >> decorateTableCell: anItemCellMorph of: aData
 ClyCritiquesTableDecorator class >> decorationStrategy [
 	<classAnnotation>
 	
-	^ClyTableDecorationStrategy for: ReAbstractCritique asCalypsoItemContext 
+	^ClyTableDecorationStrategyAnnotation for: ReAbstractCritique asCalypsoItemContext 
 ]

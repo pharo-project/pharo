@@ -22,13 +22,13 @@ I expect that annotated classes will implement following class side method
 Look at ClyInheritedScopeProvider references for examples
 "
 Class {
-	#name : #ClyInheritedScopeProvider,
+	#name : #ClyInheritedScopeProviderAnnotation,
 	#superclass : #ClassAnnotation,
 	#category : #'Calypso-SystemQueries-Scopes'
 }
 
 { #category : #'scope creation' }
-ClyInheritedScopeProvider class >> createInheritedScopeFrom: aClassScope [
+ClyInheritedScopeProviderAnnotation class >> createInheritedScopeFrom: aClassScope [
 	"We just search first most priority annotation 
 	which class defines inherited scope.
 	So plugin packages can introduce and override inherited scope by annotating 
@@ -40,7 +40,7 @@ ClyInheritedScopeProvider class >> createInheritedScopeFrom: aClassScope [
 ]
 
 { #category : #'scope creation' }
-ClyInheritedScopeProvider class >> createInheritingScopeFrom: aClassScope [
+ClyInheritedScopeProviderAnnotation class >> createInheritingScopeFrom: aClassScope [
 	"We just search first most priority annotation 
 	which class defines inherited scope. Such classes must also define inverse inheriting scope.
 	So plugin packages can introduce and override inherited scope by annotating 
@@ -52,7 +52,7 @@ ClyInheritedScopeProvider class >> createInheritingScopeFrom: aClassScope [
 ]
 
 { #category : #'scope creation' }
-ClyInheritedScopeProvider >> createInheritedScopeFrom: aClassScope [
+ClyInheritedScopeProviderAnnotation >> createInheritedScopeFrom: aClassScope [
 
 	| scope |
 	scope := annotatedClass createInheritedScopeFrom: aClassScope.
@@ -61,7 +61,7 @@ ClyInheritedScopeProvider >> createInheritedScopeFrom: aClassScope [
 ]
 
 { #category : #'scope creation' }
-ClyInheritedScopeProvider >> createInheritingScopeFrom: aClassScope [
+ClyInheritedScopeProviderAnnotation >> createInheritingScopeFrom: aClassScope [
 
 	| scope |
 	scope := annotatedClass createInheritingScopeFrom: aClassScope.

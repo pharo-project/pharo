@@ -19,7 +19,7 @@ ClyTraitUserHierarchy class >> hierarchyForMethodVisibility [
 { #category : #'method visibility' }
 ClyTraitUserHierarchy class >> methodVisibilityProvider [
 	<classAnnotation>
-	^ClyMethodVisibilityProvider new
+	^ClyMethodVisibilityProviderAnnotation new
 		priority: 100 "We should override current default hierarchy in system"
 ]
 

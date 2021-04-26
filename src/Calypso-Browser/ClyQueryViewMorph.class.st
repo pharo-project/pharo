@@ -218,7 +218,7 @@ ClyQueryViewMorph >> createSelectionContext [
 { #category : #context }
 ClyQueryViewMorph >> createSelectionContextOf: aSelection [
 
-	^ClyContextSelectionStrategy selectContextOf: aSelection for: browser
+	^ClyContextSelectionStrategyAnnotation selectContextOf: aSelection for: browser
 ]
 
 { #category : #accessing }
@@ -249,18 +249,18 @@ ClyQueryViewMorph >> dataSourceClass: aClass [
 { #category : #controlling }
 ClyQueryViewMorph >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [
 	| context |
-	context := ClyContextSelectionStrategy selectContextOfSingleItem: aDataSourceItem for: browser.
+	context := ClyContextSelectionStrategyAnnotation selectContextOfSingleItem: aDataSourceItem for: browser.
 	
-	ClyTableDecorationStrategy activeInstancesInContext: context do: [ :strategy | 
+	ClyTableDecorationStrategyAnnotation activeInstancesInContext: context do: [ :strategy | 
 		strategy decorateMainTableCell: anItemCellMorph inContext: context]
 ]
 
 { #category : #controlling }
 ClyQueryViewMorph >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
 	| context |
-	context := ClyContextSelectionStrategy selectContextOfSingleItem: aDataSourceItem for: browser.
+	context := ClyContextSelectionStrategyAnnotation selectContextOfSingleItem: aDataSourceItem for: browser.
 	
-	ClyTableDecorationStrategy activeInstancesInContext: context do: [ :strategy | 
+	ClyTableDecorationStrategyAnnotation activeInstancesInContext: context do: [ :strategy | 
 		strategy decorateTableCell: anItemCellMorph inContext: context]
 ]
 

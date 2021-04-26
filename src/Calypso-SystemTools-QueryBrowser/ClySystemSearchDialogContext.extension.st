@@ -3,5 +3,5 @@ Extension { #name : #ClySystemSearchDialogContext }
 { #category : #'*Calypso-SystemTools-QueryBrowser' }
 ClySystemSearchDialogContext class >> selectionStrategyForQueryBrowser [
 	<classAnnotation>
-	^ClyContextSelectionStrategy for: (ClyBrowserDialogContext ofSearchIn: ClyQueryBrowserMorph)
+	^ClyContextSelectionStrategyAnnotation for: (ClyBrowserDialogContext ofSearchIn: ClyQueryBrowserMorph)
 ]

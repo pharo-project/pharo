@@ -31,7 +31,7 @@ Class {
 { #category : #'instance creation' }
 ClyMethodVisibilityGroupsResult class >> defaultHierarchy [
 
-	^ClyMethodVisibilityProvider defaultHierarchy
+	^ClyMethodVisibilityProviderAnnotation defaultHierarchy
 ]
 
 { #category : #'instance creation' }
