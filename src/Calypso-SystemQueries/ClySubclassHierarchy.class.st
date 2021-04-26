@@ -72,7 +72,7 @@ ClySubclassHierarchy class >> isDefaultHierarchyForVariables: aBool [
 { #category : #'method visibility' }
 ClySubclassHierarchy class >> methodVisibilityProvider [
 	<classAnnotation>
-	^ClyMethodVisibilityProvider new
+	^ClyMethodVisibilityProviderAnnotation new
 ]
 
 { #category : #initialization }

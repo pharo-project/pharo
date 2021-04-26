@@ -6,17 +6,17 @@ Class {
 
 { #category : #running }
 ClyExpectedFailedTestMethodsQueryTest >> createQuery [
-	^ClyExpectedFailedTestMethodsQuery from: ClyClassScope of: ClyTestedClassTest in: environment
+	^ClyExpectedFailedTestMethodsQuery from: ClyClassScope of: ClyTestedClassMockTest in: environment
 ]
 
 { #category : #tests }
 ClyExpectedFailedTestMethodsQueryTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope
-		of: ClyTestedClassTest >> #testExpectedFailure in: environment).
+		of: ClyTestedClassMockTest >> #testExpectedFailure in: environment).
 	self deny: query checkEmptyResult.
 	
 	query scope: (ClyMethodScope 
-		of: ClyTestedClassTest >> #testOne in: environment).
+		of: ClyTestedClassMockTest >> #testOne in: environment).
 	self assert: query checkEmptyResult
 ]
 
@@ -24,8 +24,8 @@ ClyExpectedFailedTestMethodsQueryTest >> testCheckIfEmpty [
 ClyExpectedFailedTestMethodsQueryTest >> testFromTwoMethods [
 
 	self queryFromScope: ClyMethodScope ofAll: {
-		ClyTestedClassTest >> #testExpectedFailure. 
-		ClyTestedClassTest >> #testOne}.
+		ClyTestedClassMockTest >> #testExpectedFailure. 
+		ClyTestedClassMockTest >> #testOne}.
 	
 	self assert: foundSelectors sorted asArray equals: #(testExpectedFailure) 
 ]
@@ -33,11 +33,11 @@ ClyExpectedFailedTestMethodsQueryTest >> testFromTwoMethods [
 { #category : #tests }
 ClyExpectedFailedTestMethodsQueryTest >> testNotSelectsMethodWithoutExpectedFailurePragma [
 	
-	self deny: (query selectsMethod: ClyTestedClassTest >> #testOne)
+	self deny: (query selectsMethod: ClyTestedClassMockTest >> #testOne)
 ]
 
 { #category : #tests }
 ClyExpectedFailedTestMethodsQueryTest >> testSelectsTestMethodWithExpectedFailurePragma [
 	
-	self assert: (query selectsMethod: ClyTestedClassTest >> #testExpectedFailure)
+	self assert: (query selectsMethod: ClyTestedClassMockTest >> #testExpectedFailure)
 ]

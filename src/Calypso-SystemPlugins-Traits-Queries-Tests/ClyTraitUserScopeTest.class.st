@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyTraitUserScopeTest,
-	#superclass : #ClyClassHierarchyScopeTestCase,
+	#superclass : #ClyClassHierarchyScopeTest,
 	#category : #'Calypso-SystemPlugins-Traits-Queries-Tests'
 }
 

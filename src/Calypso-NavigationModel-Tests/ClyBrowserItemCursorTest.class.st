@@ -1,12 +1,12 @@
 Class {
 	#name : #ClyBrowserItemCursorTest,
-	#superclass : #ClyBrowserQueryCursorTestCase,
+	#superclass : #ClyBrowserQueryCursorTest,
 	#category : #'Calypso-NavigationModel-Tests'
 }
 
 { #category : #running }
 ClyBrowserItemCursorTest >> createQueryResult [
-	^ClyBrowserQueryResultExample new
+	^ClyBrowserQueryExampleResult new
 ]
 
 { #category : #running }

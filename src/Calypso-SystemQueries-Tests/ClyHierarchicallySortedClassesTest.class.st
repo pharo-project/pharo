@@ -1,12 +1,12 @@
 Class {
 	#name : #ClyHierarchicallySortedClassesTest,
-	#superclass : #ClyBrowserQueryResultTestCase,
+	#superclass : #ClyBrowserQueryResultTest,
 	#category : #'Calypso-SystemQueries-Tests-Results'
 }
 
 { #category : #running }
 ClyHierarchicallySortedClassesTest >> createQueryResult [
-	^ClyHierarchicallySortedClasses new
+	^ClyHierarchicallySortedClassesResult new
 ]
 
 { #category : #tests }
@@ -48,19 +48,19 @@ ClyHierarchicallySortedClassesTest >> testComparisonWithResultWithSimilarInverse
 { #category : #tests }
 ClyHierarchicallySortedClassesTest >> testFillingWithClassAndItGrandSuperclass [
 	
-	queryResult fillWith: { ClyClass1FromP1. ClySubclassLOfSubclassMFromP3 }.
+	queryResult fillWith: { ClyClass1FromP1Mock. ClySubclassLOfSubclassMFromP3Mock }.
 	
-	self assertItems: {ClyClass1FromP1. 0. ClySubclassLOfSubclassMFromP3. 1}
+	self assertItems: {ClyClass1FromP1Mock. 0. ClySubclassLOfSubclassMFromP3Mock. 1}
 ]
 
 { #category : #tests }
 ClyHierarchicallySortedClassesTest >> testFillingWithClassesFromOneHierarchy [
 
-	queryResult fillWith: { ClySubclassN1OfClass1FromP1. ClySubclassLOfSubclassMFromP3. ClyClass1FromP1. ClySubclassN2OfClass1FromP1 }.
+	queryResult fillWith: { ClySubclassN1OfClass1FromP1Mock. ClySubclassLOfSubclassMFromP3Mock. ClyClass1FromP1Mock. ClySubclassN2OfClass1FromP1Mock }.
 
 	self assertItems: {
-		ClyClass1FromP1. 0. ClySubclassLOfSubclassMFromP3. 1. 
-		ClySubclassN1OfClass1FromP1. 1. ClySubclassN2OfClass1FromP1. 1 }
+		ClyClass1FromP1Mock. 0. ClySubclassLOfSubclassMFromP3Mock. 1. 
+		ClySubclassN1OfClass1FromP1Mock. 1. ClySubclassN2OfClass1FromP1Mock. 1 }
 ]
 
 { #category : #tests }
@@ -74,7 +74,7 @@ ClyHierarchicallySortedClassesTest >> testFillingWithObjectAndTwoProtoObjects [
 { #category : #tests }
 ClyHierarchicallySortedClassesTest >> testFillingWithTwoSameClasses [
 
-	queryResult fillWith: { ClyClass1FromP1. ClyClass1FromP1 }.
+	queryResult fillWith: { ClyClass1FromP1Mock. ClyClass1FromP1Mock }.
 
-	self assertItems: { ClyClass1FromP1. 0 }
+	self assertItems: { ClyClass1FromP1Mock. 0 }
 ]

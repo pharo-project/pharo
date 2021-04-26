@@ -42,7 +42,7 @@ ClySwitchQueryScopeCommand class >> toScope: anEnvironmentScope in: aBrowser [
 ClySwitchQueryScopeCommand >> addToolbarItemInto: toolbarMorph using: aCommandActivator [
 	
 	| compoBox |
-	compoBox := ClyScopeCompoBox for: browser.
+	compoBox := ClyScopeCompoBoxMorph for: browser.
 	
 	toolbarMorph addNewItem: compoBox
 ]

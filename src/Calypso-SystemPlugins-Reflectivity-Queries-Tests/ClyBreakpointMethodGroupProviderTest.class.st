@@ -1,12 +1,12 @@
 Class {
 	#name : #ClyBreakpointMethodGroupProviderTest,
-	#superclass : #ClyMethodGroupProviderTestCase,
+	#superclass : #ClyMethodGroupProviderTest,
 	#category : #'Calypso-SystemPlugins-Reflectivity-Queries-Tests-Breakpoints'
 }
 
 { #category : #running }
 ClyBreakpointMethodGroupProviderTest >> classSampleWhichHasGroup [
-	^ClyClassWithHalts
+	^ClyClassWithHaltsMock
 ]
 
 { #category : #running }

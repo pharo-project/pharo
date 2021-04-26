@@ -64,18 +64,18 @@ ClyOldMessageBrowserAdapter class >> browse: methods title: aString autoSelect: 
 
 { #category : #opening }
 ClyOldMessageBrowserAdapter class >> browseClasses: classes [ 
-	^ClyQueryBrowser browseClasses: classes
+	^ClyQueryBrowserMorph browseClasses: classes
 ]
 
 { #category : #opening }
 ClyOldMessageBrowserAdapter class >> browseImplementorsOf: aSymbol [ 
-	^ClyQueryBrowser browseImplementorsOf: aSymbol 
+	^ClyQueryBrowserMorph browseImplementorsOf: aSymbol 
 
 ]
 
 { #category : #opening }
 ClyOldMessageBrowserAdapter class >> browseSendersOf: aSymbol [ 
-	^ClyQueryBrowser browseSendersOf: aSymbol 
+	^ClyQueryBrowserMorph browseSendersOf: aSymbol 
 
 ]
 
@@ -130,7 +130,7 @@ ClyOldMessageBrowserAdapter >> open [
 	query
 		criteriaString: autoSelect;
 		criteriaBlock: refreshingBlock.
-	openedBrowser := ClyQueryBrowser openOn: query.
+	openedBrowser := ClyQueryBrowserMorph openOn: query.
 ]
 
 { #category : #accessing }

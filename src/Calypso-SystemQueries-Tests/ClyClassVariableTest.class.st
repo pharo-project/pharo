@@ -8,22 +8,22 @@ Class {
 ClyClassVariableTest >> testDetectingDefiningClassFromClassSide [
 
 	| varBinding var |
-	varBinding := ClyClass2FromP1 classVariableNamed: #ClassVar1.
+	varBinding := ClyClass2FromP1Mock classVariableNamed: #ClassVar1.
 	
-	var := ClyClassVariable on: varBinding visibleFrom: ClyClass2FromP1 class.
+	var := ClyClassVariable on: varBinding visibleFrom: ClyClass2FromP1Mock class.
 		
-	self assert: var definingClass equals: ClyClass2FromP1
+	self assert: var definingClass equals: ClyClass2FromP1Mock
 ]
 
 { #category : #tests }
 ClyClassVariableTest >> testDetectingDefiningClassFromItself [
 
 	| varBinding var |
-	varBinding := ClyClass2FromP1 classVariableNamed: #ClassVar1.
+	varBinding := ClyClass2FromP1Mock classVariableNamed: #ClassVar1.
 	
-	var := ClyClassVariable on: varBinding visibleFrom: ClyClass2FromP1.
+	var := ClyClassVariable on: varBinding visibleFrom: ClyClass2FromP1Mock.
 		
-	self assert: var definingClass equals: ClyClass2FromP1
+	self assert: var definingClass equals: ClyClass2FromP1Mock
 ]
 
 { #category : #tests }
@@ -52,20 +52,20 @@ ClyClassVariableTest >> testDetectingDefiningClassFromSharedPoolUserClassSide [
 ClyClassVariableTest >> testDetectingDefiningClassFromSubclass [
 
 	| varBinding var |
-	varBinding := ClyClass2FromP1 classVariableNamed: #ClassVar1.
+	varBinding := ClyClass2FromP1Mock classVariableNamed: #ClassVar1.
 	
-	var := ClyClassVariable on: varBinding visibleFrom: ClySubclassLOfClass2FromP1.
+	var := ClyClassVariable on: varBinding visibleFrom: ClySubclassLOfClass2FromP1Mock.
 		
-	self assert: var definingClass equals: ClyClass2FromP1
+	self assert: var definingClass equals: ClyClass2FromP1Mock
 ]
 
 { #category : #tests }
 ClyClassVariableTest >> testDetectingDefiningClassFromSubclassClassSide [
 
 	| varBinding var |
-	varBinding := ClyClass2FromP1 classVariableNamed: #ClassVar1.
+	varBinding := ClyClass2FromP1Mock classVariableNamed: #ClassVar1.
 	
-	var := ClyClassVariable on: varBinding visibleFrom: ClySubclassLOfClass2FromP1 class.
+	var := ClyClassVariable on: varBinding visibleFrom: ClySubclassLOfClass2FromP1Mock class.
 		
-	self assert: var definingClass equals: ClyClass2FromP1
+	self assert: var definingClass equals: ClyClass2FromP1Mock
 ]

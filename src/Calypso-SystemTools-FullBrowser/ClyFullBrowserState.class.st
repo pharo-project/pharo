@@ -20,7 +20,7 @@ Class {
 
 { #category : #private }
 ClyFullBrowserState >> createBrowser [
-	^ClyFullBrowser new
+	^ClyFullBrowserMorph new
 ]
 
 { #category : #accessing }
