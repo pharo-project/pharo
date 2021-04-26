@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyExpectedFailureMethodGroupProviderTest,
-	#superclass : #ClyMethodGroupProviderTestCase,
+	#superclass : #ClyMethodGroupProviderTest,
 	#category : #'Calypso-SystemPlugins-SUnit-Queries-Tests'
 }
 

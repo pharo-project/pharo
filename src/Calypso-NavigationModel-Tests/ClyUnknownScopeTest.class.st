@@ -25,7 +25,7 @@ ClyUnknownScopeTest >> testConvertingToAnotherScopeClass [
 	| convertedScope |
 	scope := self createSampleScope.
 
-	convertedScope := scope asScope: ClyScopeExample.
+	convertedScope := scope asScope: ClyExampleScope.
 
 	self assert: convertedScope identicalTo: scope
 ]

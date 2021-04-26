@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyFlagMethodGroupProviderTest,
-	#superclass : #ClyMethodGroupProviderTestCase,
+	#superclass : #ClyMethodGroupProviderTest,
 	#category : #'Calypso-SystemPlugins-Flags-Queries-Tests'
 }
 

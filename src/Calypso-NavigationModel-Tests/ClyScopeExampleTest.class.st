@@ -11,7 +11,7 @@ ClyScopeExampleTest >> extraBasisSample [
 
 { #category : #running }
 ClyScopeExampleTest >> scopeClass [
-	^ClyScopeExample 
+	^ClyExampleScope 
 ]
 
 { #category : #running }

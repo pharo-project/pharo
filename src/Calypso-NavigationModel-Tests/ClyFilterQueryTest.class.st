@@ -8,7 +8,7 @@ Class {
 ClyFilterQueryTest >> createQuery [
 	^ ClyFilterQuery
 		for: (ClyReturningScopeBasisExampleQuery
-				from: ClyScopeExample of: self class in: environment)
+				from: ClyExampleScope of: self class in: environment)
 		filter: (ClyItemNameFilter substringPattern: 'FilterQueryTest')
 ]
 
@@ -29,7 +29,7 @@ ClyFilterQueryTest >> testConvertingWithNewScopeBasisShouldKeepFilter [
 { #category : #tests }
 ClyFilterQueryTest >> testConvertingWithNewScopeShouldKeepFilter [
 	| newScope convertedQuery |
-	newScope := ClyScopeExample2 of: #someBasis in: environment.
+	newScope := ClyExample2Scope of: #someBasis in: environment.
 	
 	convertedQuery := query withScope: newScope.
 	
@@ -39,7 +39,7 @@ ClyFilterQueryTest >> testConvertingWithNewScopeShouldKeepFilter [
 { #category : #tests }
 ClyFilterQueryTest >> testExecution [
 	| scope mainQuery |
-	scope := ClyScopeExample ofAll: {self class superclass. self class} in: environment.
+	scope := ClyExampleScope ofAll: {self class superclass. self class} in: environment.
 	mainQuery := ClyReturningScopeBasisExampleQuery from: scope.
 	query subqueries: {mainQuery}.
 	
@@ -52,7 +52,7 @@ ClyFilterQueryTest >> testExecution [
 { #category : #tests }
 ClyFilterQueryTest >> testExecutionOverExistingQuery [
 	| scope mainQuery |
-	scope := ClyScopeExample ofAll: {self class superclass. self class} in: environment.
+	scope := ClyExampleScope ofAll: {self class superclass. self class} in: environment.
 	mainQuery := ClyReturningScopeBasisExampleQuery from: scope.
 	query := mainQuery filteredBy: query itemFilter.
 	

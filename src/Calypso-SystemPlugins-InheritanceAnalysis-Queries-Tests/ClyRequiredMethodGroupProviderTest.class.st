@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyRequiredMethodGroupProviderTest,
-	#superclass : #ClyMethodGroupProviderTestCase,
+	#superclass : #ClyMethodGroupProviderTest,
 	#category : #'Calypso-SystemPlugins-InheritanceAnalysis-Queries-Tests'
 }
 

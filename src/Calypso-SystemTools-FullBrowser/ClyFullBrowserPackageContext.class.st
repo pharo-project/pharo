@@ -11,7 +11,7 @@ Class {
 ClyFullBrowserPackageContext class >> selectionStrategy [
 	<classAnnotation>
 	
-	^ClyContextSelectionStrategy for: ClyFullBrowser selectionType: RPackage
+	^ClyContextSelectionStrategy for: ClyFullBrowserMorph selectionType: RPackage
 ]
 
 { #category : #'selection-class groups' }

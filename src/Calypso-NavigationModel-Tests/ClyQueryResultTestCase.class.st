@@ -17,7 +17,7 @@ ClyQueryResultTestCase class >> isAbstract [
 ClyQueryResultTestCase >> createQuery [
 
 	^ClyReturningScopeBasisExampleQuery 
-		from: (ClyScopeExample emptyIn: environment)
+		from: (ClyExampleScope emptyIn: environment)
 ]
 
 { #category : #running }

@@ -11,7 +11,7 @@ Class {
 ClyFullBrowserMethodGroupContext class >> selectionStrategy [
 	<classAnnotation>
 	
-	^ClyContextSelectionStrategy for: ClyFullBrowser selectionType: ClyMethodGroup
+	^ClyContextSelectionStrategy for: ClyFullBrowserMorph selectionType: ClyMethodGroup
 ]
 
 { #category : #'selection-method groups' }

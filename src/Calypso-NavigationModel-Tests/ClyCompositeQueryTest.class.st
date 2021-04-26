@@ -28,7 +28,7 @@ ClyCompositeQueryTest >> subqueryFromScope: aScopeClass of: aBasisObject [
 
 { #category : #running }
 ClyCompositeQueryTest >> subqueryFromScopeOf: aBasisObject [
-	^self subqueryFromScope: ClyScopeExample of: aBasisObject
+	^self subqueryFromScope: ClyExampleScope of: aBasisObject
 ]
 
 { #category : #tests }
@@ -43,7 +43,7 @@ ClyCompositeQueryTest >> testCompareWithSimilarQueryWhichSubqueryHasDifferentSco
 ClyCompositeQueryTest >> testConvertingAsRestrictedByAnotherScope [
 
 	| convertedQuery restrictedScope |
-	restrictedScope := ClyScopeExample2 of: #restrictedBasis.
+	restrictedScope := ClyExample2Scope of: #restrictedBasis.
 	convertedQuery := query restrictedByScope: restrictedScope.
 	self assert: convertedQuery class equals: query class.
 	self assert: convertedQuery requiredResult identicalTo: query requiredResult.
@@ -54,7 +54,7 @@ ClyCompositeQueryTest >> testConvertingAsRestrictedByAnotherScope [
 { #category : #tests }
 ClyCompositeQueryTest >> testConvertingWithNewScope [
 	| newScope convertedQuery |
-	newScope := ClyScopeExample2 of: #someBasis in: environment.
+	newScope := ClyExample2Scope of: #someBasis in: environment.
 
 	convertedQuery := query withScope: newScope.
 
@@ -115,7 +115,7 @@ ClyCompositeQueryTest >> testHasCompositeScopeFromSubqueries [
 { #category : #tests }
 ClyCompositeQueryTest >> testIsExecutedFromConcreteScopeClass [
 
-	self assert: (query isExecutedFromScope: ClyScopeExample).
+	self assert: (query isExecutedFromScope: ClyExampleScope).
 	self assert: (query isExecutedFromScope: ClyScope).
 	
 	self deny: (query isExecutedFromScope: Array).
@@ -126,7 +126,7 @@ ClyCompositeQueryTest >> testIsExecutedFromEmptyScope [
 
 	self deny: query isExecutedFromEmptyScope.
 	
-	query := self queryClass with: { self subqueryFromScope: ClyScopeExample empty}.
+	query := self queryClass with: { self subqueryFromScope: ClyExampleScope empty}.
 	self assert: query isExecutedFromEmptyScope
 ]
 
@@ -134,7 +134,7 @@ ClyCompositeQueryTest >> testIsExecutedFromEmptyScope [
 ClyCompositeQueryTest >> testIsExecutedFromMultipleScopeWhenSingleSubqueryIsBasedOnIt [
 
 	query subqueries: { 
-		self subqueryFromScope: (ClyScopeExample ofAll: { self class. self class superclass}).
+		self subqueryFromScope: (ClyExampleScope ofAll: { self class. self class superclass}).
 	}.
 	
 	self assert: query isExecutedFromMultipleScope
@@ -174,8 +174,8 @@ ClyCompositeQueryTest >> testIsExecutedFromSingleScopeWhenSingleSubqueryIsBasedO
 ClyCompositeQueryTest >> testIsExecutedFromSingleScopeWhenSubqueriesAreFromDifferentScopesOfSameObject [
 
 	query subqueries: { 
-		self subqueryFromScope: ClyScopeExample of: self class.
-		self subqueryFromScope: ClyScopeExample2 of: self class.
+		self subqueryFromScope: ClyExampleScope of: self class.
+		self subqueryFromScope: ClyExample2Scope of: self class.
 	}.
 	
 	self assert: query isExecutedFromSingleScope
@@ -185,8 +185,8 @@ ClyCompositeQueryTest >> testIsExecutedFromSingleScopeWhenSubqueriesAreFromDiffe
 ClyCompositeQueryTest >> testNotExecutedFromMultipleScopeWhenAllSubqueriesAreFromEmptyScope [
 
 	query subqueries: { 
-		self subqueryFromScope: ClyScopeExample empty.
-		self subqueryFromScope: ClyScopeExample2 empty.
+		self subqueryFromScope: ClyExampleScope empty.
+		self subqueryFromScope: ClyExample2Scope empty.
 	}.
 	
 	self deny: query isExecutedFromMultipleScope
@@ -206,7 +206,7 @@ ClyCompositeQueryTest >> testNotExecutedFromMultipleScopeWhenSingleSubqueryIsBas
 ClyCompositeQueryTest >> testNotExecutedFromMultipleScopeWhenSingleSubqueryIsFromEmptyScope [
 
 	query subqueries: { 
-		self subqueryFromScope: ClyScopeExample empty.
+		self subqueryFromScope: ClyExampleScope empty.
 	}.
 	
 	self deny: query isExecutedFromMultipleScope
@@ -216,8 +216,8 @@ ClyCompositeQueryTest >> testNotExecutedFromMultipleScopeWhenSingleSubqueryIsFro
 ClyCompositeQueryTest >> testNotExecutedFromMultipleScopeWhenSubqueriesAreFromDifferentScopesOfSameObject [
 
 	query subqueries: { 
-		self subqueryFromScope: ClyScopeExample of: self class.
-		self subqueryFromScope: ClyScopeExample2 of: self class.
+		self subqueryFromScope: ClyExampleScope of: self class.
+		self subqueryFromScope: ClyExample2Scope of: self class.
 	}.
 	
 	self deny: query isExecutedFromMultipleScope
@@ -227,8 +227,8 @@ ClyCompositeQueryTest >> testNotExecutedFromMultipleScopeWhenSubqueriesAreFromDi
 ClyCompositeQueryTest >> testNotExecutedFromSingleScopeWhenAllSubqueriesAreFromEmptyScope [
 
 	query subqueries: { 
-		self subqueryFromScope: ClyScopeExample empty.
-		self subqueryFromScope: ClyScopeExample2 empty.
+		self subqueryFromScope: ClyExampleScope empty.
+		self subqueryFromScope: ClyExample2Scope empty.
 	}.
 	
 	self deny: query isExecutedFromSingleScope

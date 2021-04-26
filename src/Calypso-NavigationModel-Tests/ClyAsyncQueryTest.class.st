@@ -7,7 +7,7 @@ Class {
 { #category : #running }
 ClyAsyncQueryTest >> createQuery [
 	^ ClyAsyncQuery for: (ClyReturningScopeBasisExampleQuery
-			from: ClyScopeExample of: self class in: environment)
+			from: ClyExampleScope of: self class in: environment)
 ]
 
 { #category : #running }

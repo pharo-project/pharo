@@ -17,7 +17,7 @@ ClyBrowserQueryCursorTest class >> isAbstract [
 { #category : #running }
 ClyBrowserQueryCursorTest >> createQuery [
 	^ClyReturningScopeBasisExampleQuery
-		from: (ClyScopeExample ofAll: {Array. Object. String} in: environment)
+		from: (ClyExampleScope ofAll: {Array. Object. String} in: environment)
 		as: self createQueryResult
 ]
 

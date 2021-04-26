@@ -51,7 +51,7 @@ ClyScopeTest >> testComparisonWithCopy [
 ClyScopeTest >> testComparisonWithDifferentScope [
 	| scope2 |
 	scope := self createSampleScope.
-	scope2 := ClyScopeExample2 of: #basisObject in: environment.
+	scope2 := ClyExample2Scope of: #basisObject in: environment.
 	self deny: scope equals: scope2
 ]
 
@@ -79,9 +79,9 @@ ClyScopeTest >> testConvertingToAnotherScopeClass [
 	| convertedScope |
 	scope := self createSampleScope.
 	
-	convertedScope := scope asScope: ClyScopeExample.
+	convertedScope := scope asScope: ClyExampleScope.
 	
-	self assert: convertedScope class equals: ClyScopeExample.
+	self assert: convertedScope class equals: ClyExampleScope.
 	self assert: convertedScope basisObjects asIdentitySet equals: scope basisObjects asIdentitySet.
 	self assert: convertedScope environment equals: environment
 ]
@@ -92,7 +92,7 @@ ClyScopeTest >> testConvertingToAnotherScopeClassShouldKeepName [
 	scope := self createSampleScope.
 	scope name: 'test scope'.
 	
-	convertedScope := scope asScope: ClyScopeExample.
+	convertedScope := scope asScope: ClyExampleScope.
 	
 	self assert: convertedScope name equals: 'test scope'.
 	

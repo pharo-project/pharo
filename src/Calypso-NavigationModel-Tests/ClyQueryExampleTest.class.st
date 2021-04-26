@@ -6,14 +6,14 @@ Class {
 
 { #category : #running }
 ClyQueryExampleTest >> createQuery [
-	^ClyReturningScopeBasisExampleQuery from: ClyScopeExample of: #basisObject in: environment
+	^ClyReturningScopeBasisExampleQuery from: ClyExampleScope of: #basisObject in: environment
 ]
 
 { #category : #tests }
 ClyQueryExampleTest >> testConvertingWithNewScopeWhenThereIsExtraQueryParameter [
 	| newScope convertedQuery |
 	query extraParameter: #testParameter.
-	newScope := ClyScopeExample2 of: #someBasis in: environment.
+	newScope := ClyExample2Scope of: #someBasis in: environment.
 	
 	convertedQuery := query withScope: newScope.
 	
