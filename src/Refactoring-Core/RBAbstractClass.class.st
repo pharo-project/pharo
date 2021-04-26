@@ -319,6 +319,13 @@ RBAbstractClass >> existingMethodsThatReferToInstanceVariable: aString [
 		reject: [ :each | (self hasRemoved: each) or: [ self newMethods includesKey: each ] ]
 ]
 
+{ #category : #'method accessing' }
+RBAbstractClass >> firstSuperclassRedefines: aSelector [
+	"Return rbClass, if one of your superclasses redefines the method with name, aMethod"
+	self allSuperclasses do: [:each |
+		(each directlyDefinesMethod: aSelector) ifTrue: [^ each]].
+]
+
 { #category : #testing }
 RBAbstractClass >> hasRemoved: aSelector [ 
 	^removedMethods notNil and: [removedMethods includes: aSelector]
@@ -629,6 +636,13 @@ RBAbstractClass >> superclass: aRBClass [
 	self superclass ifNotNil: [self superclass removeSubclass: self].
 	superclass := aRBClass.
 	superclass ifNotNil: [superclass addSubclass: self].
+]
+
+{ #category : #testing }
+RBAbstractClass >> superclassRedefines: aSelector [
+	"Return true, if one of your superclasses redefines the method with name, aMethod"
+	
+	^ self allSuperclasses anySatisfy: [ :each | each directlyDefinesMethod: aSelector ]
 ]
 
 { #category : #'accessing - deprecated' }
