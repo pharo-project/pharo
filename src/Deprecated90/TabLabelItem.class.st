@@ -6,7 +6,7 @@ This way I can control which of my submorphs to show according to the tab size
 Class {
 	#name : #TabLabelItem,
 	#superclass : #TabLabelItemMorph,
-	#category : #'Morphic-Widgets-Tabs-Support'
+	#category : #'Deprecated90-Morphic'
 }
 
 { #category : #testing }
