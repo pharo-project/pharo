@@ -20,17 +20,19 @@ AthensTextDisplayCommand class >> isAbstract [
 
 { #category : #accessing }
 AthensTextDisplayCommand >> addLast: aCommand [
+
 	self tail next: aCommand
 ]
 
 { #category : #accessing }
 AthensTextDisplayCommand >> do: aBlock [
+
 	| nn |
 	nn := self.
-	
+
 	[ nn isNil ] whileFalse: [ 
 		aBlock value: nn.
-		nn := nn next. ]
+		nn := nn next ]
 ]
 
 { #category : #accessing }
@@ -57,16 +59,19 @@ AthensTextDisplayCommand >> next: anObject [
 { #category : #copying }
 AthensTextDisplayCommand >> postCopy [
 	"unlink the copy by default"
+
 	next := nil
 ]
 
 { #category : #rendering }
 AthensTextDisplayCommand >> renderOn: renderer [
-	self shouldBeImplemented 
+
+	self shouldBeImplemented
 ]
 
 { #category : #accessing }
 AthensTextDisplayCommand >> tail [
+
 	| nn |
 	nn := self.
 	[ nn next notNil ] whileTrue: [ nn := nn next ].
