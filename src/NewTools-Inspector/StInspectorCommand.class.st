@@ -1,8 +1,38 @@
+"
+A base for inspector toolbar commands.
+"
 Class {
 	#name : #StInspectorCommand,
 	#superclass : #CmCommand,
 	#category : #'NewTools-Inspector-Command'
 }
+
+{ #category : #documentation }
+StInspectorCommand class >> addDocumentContextRequiredSelectors: aBuilder [
+	| requiredSelectors |
+
+	requiredSelectors := self documentContextRequiredSelectors. 
+
+	aBuilder newLine.
+	aBuilder header: [ :builder | builder text: 'Required Context API' ] withLevel: 2.	
+	requiredSelectors 
+		ifNotEmpty: [ 
+			aBuilder text: 'To work properly, the context passed to this command has to implement the following vocabulary (See `CmCommand>>#context:`).'.
+			aBuilder newLine.
+			aBuilder unorderedListDuring: [  
+				(requiredSelectors sorted) do: [ :each |
+					aBuilder item: [
+						aBuilder monospace: each ] ] ] ]
+		ifEmpty: [ 
+			aBuilder text: '(No required API is defined)' ]
+]
+
+{ #category : #documentation }
+StInspectorCommand class >> buildMicroDownUsing: aBuilder withComment: aString [
+	
+	super buildMicroDownUsing: aBuilder withComment: aString.
+	self addDocumentContextRequiredSelectors: aBuilder
+]
 
 { #category : #initialization }
 StInspectorCommand class >> defaultIconName [
@@ -14,6 +44,12 @@ StInspectorCommand class >> defaultIconName [
 StInspectorCommand class >> defaultShortcutKey [
 
 	^ nil
+]
+
+{ #category : #documentation }
+StInspectorCommand class >> documentContextRequiredSelectors [
+		
+	^ #()
 ]
 
 { #category : #'instance creation' }
