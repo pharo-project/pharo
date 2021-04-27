@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyFullBrowserStateTest,
-	#superclass : #ClyBrowserStateTestCase,
+	#superclass : #ClyBrowserStateTest,
 	#category : #'Calypso-SystemTools-FullBrowser-Tests'
 }
 

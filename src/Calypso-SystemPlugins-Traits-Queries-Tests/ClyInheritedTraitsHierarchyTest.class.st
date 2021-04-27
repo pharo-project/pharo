@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyInheritedTraitsHierarchyTest,
-	#superclass : #ClyBrowserQueryResultTestCase,
+	#superclass : #ClyBrowserQueryResultTest,
 	#category : #'Calypso-SystemPlugins-Traits-Queries-Tests'
 }
 

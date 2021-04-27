@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyConstantQueryTest,
-	#superclass : #ClyTypedQueryTestCase,
+	#superclass : #ClyTypedQueryTest,
 	#category : #'Calypso-NavigationModel-Tests'
 }
 
@@ -15,7 +15,7 @@ ClyConstantQueryTest >> createQuery: aCollection [
 
 	^ ClyConstantQuery
 		  returning: aCollection
-		  from: (ClyScopeExample emptyIn: environment)
+		  from: (ClyExampleScope emptyIn: environment)
 ]
 
 { #category : #tests }

@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyUndeclaredMethodGroupProviderTest,
-	#superclass : #ClyMethodGroupProviderTestCase,
+	#superclass : #ClyMethodGroupProviderTest,
 	#category : #'Calypso-SystemPlugins-Undeclared-Queries-Tests'
 }
 

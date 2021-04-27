@@ -1,6 +1,6 @@
 Class {
 	#name : #ClySuperclassScopeTest,
-	#superclass : #ClyClassHierarchyScopeTestCase,
+	#superclass : #ClyClassHierarchyScopeTest,
 	#category : #'Calypso-SystemQueries-Tests-Scopes'
 }
 
@@ -13,18 +13,18 @@ ClySuperclassScopeTest >> scopeClass [
 { #category : #tests }
 ClySuperclassScopeTest >> testClassEnumeration [
 	| expected |
-	scope := ClySuperclassScope of: ClyClass1FromP1.
+	scope := ClySuperclassScope of: ClyClass1FromP1Mock.
 	
 	scope classesDo: [ :each | result add: each ].
 	
-	expected := ClyClass1FromP1 allSuperclasses.
+	expected := ClyClass1FromP1Mock allSuperclasses.
 	self assert: result asArray equals: expected asArray
 ]
 
 { #category : #tests }
 ClySuperclassScopeTest >> testClassEnumerationOverInstanceSideBasisWhenBothMetaLevelsAreLocalScope [
 
-	scope := ClySuperclassScope of: ClyClass1FromP1 localScope: ClyBothMetaLevelClassScope.
+	scope := ClySuperclassScope of: ClyClass1FromP1Mock localScope: ClyBothMetaLevelClassScope.
 	
 	scope classesDo: [ :each | result add: each].
 	
@@ -34,7 +34,7 @@ ClySuperclassScopeTest >> testClassEnumerationOverInstanceSideBasisWhenBothMetaL
 { #category : #tests }
 ClySuperclassScopeTest >> testClassEnumerationOverMetaclassBasisWhenInstanceSideIsLocalScope [
 
-	scope := ClySuperclassScope of: ClyClass1FromP1 class localScope: ClyInstanceSideScope.
+	scope := ClySuperclassScope of: ClyClass1FromP1Mock class localScope: ClyInstanceSideScope.
 	
 	scope classesDo: [ :each | result add: each].
 	
@@ -44,7 +44,7 @@ ClySuperclassScopeTest >> testClassEnumerationOverMetaclassBasisWhenInstanceSide
 { #category : #tests }
 ClySuperclassScopeTest >> testClassEnumerationOverMetaclassWhenBothMetaLevelsAreLocalScope [
 
-	scope := ClySuperclassScope of: ClyClass1FromP1 class localScope: ClyBothMetaLevelClassScope.
+	scope := ClySuperclassScope of: ClyClass1FromP1Mock class localScope: ClyBothMetaLevelClassScope.
 	
 	scope classesDo: [ :each | result add: each].
 	
@@ -54,7 +54,7 @@ ClySuperclassScopeTest >> testClassEnumerationOverMetaclassWhenBothMetaLevelsAre
 { #category : #tests }
 ClySuperclassScopeTest >> testClassEnumerationOverMetaclassWhenClassSideIsLocalScope [
 
-	scope := ClySuperclassScope of: ClyClass1FromP1 class localScope: ClyClassSideScope.
+	scope := ClySuperclassScope of: ClyClass1FromP1Mock class localScope: ClyClassSideScope.
 	
 	scope classesDo: [ :each | result add: each].
 	
@@ -64,11 +64,11 @@ ClySuperclassScopeTest >> testClassEnumerationOverMetaclassWhenClassSideIsLocalS
 { #category : #tests }
 ClySuperclassScopeTest >> testClassEnumerationOverMetaclassWhenConcreteClassScopeIsLocal [
 
-	scope := ClySuperclassScope of: ClyClass1FromP1 class localScope: ClyClassScope.
+	scope := ClySuperclassScope of: ClyClass1FromP1Mock class localScope: ClyClassScope.
 
 	scope classesDo: [ :each | result add: each].
 	
-	self assert: result asSet equals: ClyClass1FromP1 class allSuperclasses asSet
+	self assert: result asSet equals: ClyClass1FromP1Mock class allSuperclasses asSet
 ]
 
 { #category : #tests }
@@ -88,7 +88,7 @@ ClySuperclassScopeTest >> testConvertingToInterestingClassScope [
 { #category : #tests }
 ClySuperclassScopeTest >> testMethodsEnumeration [
 	| expected |
-	scope := ClySuperclassScope of: ClyClass1FromP1.
+	scope := ClySuperclassScope of: ClyClass1FromP1Mock.
 	
 	scope methodsDo: [ :each | result add: each ].
 	
@@ -101,7 +101,7 @@ ClySuperclassScopeTest >> testMethodsEnumeration [
 ClySuperclassScopeTest >> testMethodsEnumerationOverInstanceSideWhenBothMetaLevelsAreLocalScope [
 
 	| expected |
-	scope := ClySuperclassScope of: ClyClass1FromP1 localScope: ClyBothMetaLevelClassScope.
+	scope := ClySuperclassScope of: ClyClass1FromP1Mock localScope: ClyBothMetaLevelClassScope.
 	
 	scope methodsDo: [ :each | result add: each].
 
@@ -114,7 +114,7 @@ ClySuperclassScopeTest >> testMethodsEnumerationOverInstanceSideWhenBothMetaLeve
 ClySuperclassScopeTest >> testMethodsEnumerationOverMetaclassWhenBothMetaLevelsAreLocalScope [
 
 	| expected |
-	scope := ClySuperclassScope of: ClyClass1FromP1 class localScope: ClyBothMetaLevelClassScope.
+	scope := ClySuperclassScope of: ClyClass1FromP1Mock class localScope: ClyBothMetaLevelClassScope.
 	
 	scope methodsDo: [ :each | result add: each].
 
@@ -127,7 +127,7 @@ ClySuperclassScopeTest >> testMethodsEnumerationOverMetaclassWhenBothMetaLevelsA
 ClySuperclassScopeTest >> testMethodsEnumerationOverMetaclassWhenClassSideIsLocalScope [
 
 	| expected |
-	scope := ClySuperclassScope of: ClyClass1FromP1 class localScope: ClyClassSideScope.
+	scope := ClySuperclassScope of: ClyClass1FromP1Mock class localScope: ClyClassSideScope.
 	
 	scope methodsDo: [ :each | result add: each].
 
@@ -139,24 +139,24 @@ ClySuperclassScopeTest >> testMethodsEnumerationOverMetaclassWhenClassSideIsLoca
 ClySuperclassScopeTest >> testMethodsEnumerationOverMetaclassWhenConcreteClassScopeIsScope [
 
 	| expected |
-	scope := ClySuperclassScope of: ClyClass1FromP1 class localScope: ClyClassScope.
+	scope := ClySuperclassScope of: ClyClass1FromP1Mock class localScope: ClyClassScope.
 	
 	scope methodsDo: [ :each | result add: each].
 
 	"Now we should see more classes than Object and ProtoObject 
 	because ProtoObject class has more superclasses including Object and ProtoObject itself"
-	expected := ClyClass1FromP1 class allSuperclasses flatCollect: #methods as: IdentitySet.
+	expected := ClyClass1FromP1Mock class allSuperclasses flatCollect: #methods as: IdentitySet.
 	self assert: result asIdentitySet equals: expected
 ]
 
 { #category : #tests }
 ClySuperclassScopeTest >> testMethodsEnumerationWithBothMetaLevelScopeShouldNotDublicateMethods [
 	| expected |
-	scope := ClySuperclassScope of: ClySubclassN1OfClass1FromP1 localScope: ClyBothMetaLevelClassScope.
+	scope := ClySuperclassScope of: ClySubclassN1OfClass1FromP1Mock localScope: ClyBothMetaLevelClassScope.
 	
 	scope methodsDo: [ :each | 
-		each methodClass instanceSide = ClyClass1FromP1 ifTrue: [result add: each] ].
+		each methodClass instanceSide = ClyClass1FromP1Mock ifTrue: [result add: each] ].
 	
-	expected := (ClyClass1FromP1 localMethods , ClyClass1FromP1 class localMethods) asIdentitySet.
+	expected := (ClyClass1FromP1Mock localMethods , ClyClass1FromP1Mock class localMethods) asIdentitySet.
 	self assert: result asIdentitySet equals: expected
 ]

@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyTaggedClassesQueryTest,
-	#superclass : #ClyClassQueryTestCase,
+	#superclass : #ClyClassQueryTest,
 	#category : #'Calypso-SystemQueries-Tests-Queries'
 }
 
@@ -14,10 +14,10 @@ ClyTaggedClassesQueryTest >> createQuery [
 { #category : #tests }
 ClyTaggedClassesQueryTest >> testCheckIfEmpty [
 	query tag: #Tag1.
-	query scope: (ClyClassScope of: ClyClass7WithTag1FromP5 in: environment).
+	query scope: (ClyClassScope of: ClyClass7WithTag1FromP5Mock in: environment).
 	self deny: query checkEmptyResult.
 	
-	query scope: (ClyClassScope of: ClyClass8WithTag2FromP5 in: environment).
+	query scope: (ClyClassScope of: ClyClass8WithTag2FromP5Mock in: environment).
 	self assert: query checkEmptyResult
 ]
 
@@ -35,7 +35,7 @@ ClyTaggedClassesQueryTest >> testFromThreeClasses [
 	query tag: #Tag1.
 	
 	self queryFromScope: ClyClassScope ofAll: {
-		ClyClass6UntaggedFromP5. ClyClass7WithTag1FromP5. ClyClass8WithTag2FromP5 }.
+		ClyClass6UntaggedFromP5Mock. ClyClass7WithTag1FromP5Mock. ClyClass8WithTag2FromP5Mock }.
 
-	self assert: resultItems asArray equals: {ClyClass7WithTag1FromP5}
+	self assert: resultItems asArray equals: {ClyClass7WithTag1FromP5Mock}
 ]

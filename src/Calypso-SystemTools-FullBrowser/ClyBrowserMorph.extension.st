@@ -10,7 +10,7 @@ ClyBrowserMorph >> browseClassNamed: aString [
 	classToBrowse ifNil: [ ^self ].
 	classToBrowse isClassOrTrait ifFalse: [ classToBrowse := classToBrowse class ].
 	
-	self spawnBrowser: ClyFullBrowser withState: [ :browser |
+	self spawnBrowser: ClyFullBrowserMorph withState: [ :browser |
 		browser selectClass: classToBrowse]
 ]
 
@@ -31,7 +31,7 @@ ClyBrowserMorph >> chooseClassToBrowseFrom: aClassNamePattern [
 { #category : #'*Calypso-SystemTools-FullBrowser' }
 ClyBrowserMorph >> spawnFullBrowser [
 	
-	^self spawnBrowser: ClyFullBrowser withState: [ :browser | 
+	^self spawnBrowser: ClyFullBrowserMorph withState: [ :browser | 
 		self navigateSpawnedFullBrowser: browser]
 ]
 
@@ -42,7 +42,7 @@ ClyBrowserMorph >> spawnHierarchyForClass: aClass selector: aSymbolOrNil [
 	navigationEnvironment ifNil: [ 
 		self navigationEnvironment: ClyNavigationEnvironment currentImage.
 		self setUpAvailablePlugins].
-	self spawnBrowser: ClyFullBrowser withState: [ :browser | 
+	self spawnBrowser: ClyFullBrowserMorph withState: [ :browser | 
 		browser selectClass: aClass.
 		browser switchToFullClassHierarchy.
 		aSymbolOrNil ifNotNil: [ 

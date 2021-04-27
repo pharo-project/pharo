@@ -1,12 +1,12 @@
 Class {
 	#name : #ClyPackageScopeTest,
-	#superclass : #ClyTypedScopeTestCase,
+	#superclass : #ClyTypedScopeTest,
 	#category : #'Calypso-SystemQueries-Tests-Scopes'
 }
 
 { #category : #running }
 ClyPackageScopeTest >> extraBasisSample [
-	^ClySubclassMOfClass1FromP2 package 
+	^ClySubclassMOfClass1FromP2Mock package 
 ]
 
 { #category : #running }
@@ -17,13 +17,13 @@ ClyPackageScopeTest >> scopeClass [
 
 { #category : #running }
 ClyPackageScopeTest >> singleBasisSample [
-	^ClyClass1FromP1 package 
+	^ClyClass1FromP1Mock package 
 ]
 
 { #category : #tests }
 ClyPackageScopeTest >> testClassGroupEnumeration [
 	environment addPlugin: ClyDefaultSystemEnvironmentPlugin new.
-	scope := ClyPackageScope of: ClyClass7WithTag1FromP5 package in: environment.
+	scope := ClyPackageScope of: ClyClass7WithTag1FromP5Mock package in: environment.
 	
 	scope classGroupsDo: [ :each | result add: each ].
 	
@@ -35,32 +35,32 @@ ClyPackageScopeTest >> testClassGroupEnumeration [
 			(result
 				select: [ :each | each class = ClyTaggedClassGroup ]
 				thenCollect: #tag) sorted asArray
-		equals: ClyClass7WithTag1FromP5 package tagsForClasses sorted asArray
+		equals: ClyClass7WithTag1FromP5Mock package tagsForClasses sorted asArray
 ]
 
 { #category : #tests }
 ClyPackageScopeTest >> testClassesEnumeration [
-	scope := ClyPackageScope of: ClyClass1FromP1 package.
+	scope := ClyPackageScope of: ClyClass1FromP1Mock package.
 	
 	scope classesDo: [ :each | result add: each ].
 	
-	self assert: (result includesAll: ClyClass1FromP1 package definedClasses).
-	self deny: (result includesAll: ClyClass1FromP1 package extendedClasses)
+	self assert: (result includesAll: ClyClass1FromP1Mock package definedClasses).
+	self deny: (result includesAll: ClyClass1FromP1Mock package extendedClasses)
 ]
 
 { #category : #tests }
 ClyPackageScopeTest >> testMethodsEnumeration [
-	scope := ClyPackageScope of: ClyClass1FromP1 package.
+	scope := ClyPackageScope of: ClyClass1FromP1Mock package.
 	
 	scope methodsDo: [ :each | result add: each ].
 	
-	self assert: (result includesAll: ClyClass1FromP1 localMethods).
-	self assert: (result includesAll: ClyClass2FromP1 localMethods).
+	self assert: (result includesAll: ClyClass1FromP1Mock localMethods).
+	self assert: (result includesAll: ClyClass2FromP1Mock localMethods).
 	self
-		assert: (result includesAll: ClyClass1FromP1 classSide localMethods)
+		assert: (result includesAll: ClyClass1FromP1Mock classSide localMethods)
 		description: 'Package scope should see class side methods too'.
 	self
-		assert: (result includesAll: ClySubclassLOfClass0FromPExtendedByP1 localMethods)
+		assert: (result includesAll: ClySubclassLOfClass0FromPExtendedByP1Mock localMethods)
 		description: 'Package scope should see all clas extensions'
 ]
 

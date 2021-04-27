@@ -39,7 +39,7 @@ ClySuperclassScope class >> defaultName [
 ClySuperclassScope class >> inheritedScopeProvider [
 	<classAnnotation>
 	
-	^ClyInheritedScopeProvider new
+	^ClyInheritedScopeProviderAnnotation new
 ]
 
 { #category : #converting }

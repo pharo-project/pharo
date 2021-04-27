@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyMultipleClassRelationScopeTest,
-	#superclass : #ClyClassHierarchyScopeTestCase,
+	#superclass : #ClyClassHierarchyScopeTest,
 	#category : #'Calypso-SystemQueries-Tests-Scopes'
 }
 

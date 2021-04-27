@@ -26,7 +26,7 @@ ClyProjectTableIndentationDecorator class >> decorateTableCell: anItemCellMorph 
 ClyProjectTableIndentationDecorator class >> decorationStrategy [
 	<classAnnotation>
 	
-	^ClyTableDecorationStrategy for: ClyFullBrowserContext
+	^ClyTableDecorationStrategyAnnotation for: ClyFullBrowserContext
 ]
 
 { #category : #testing }

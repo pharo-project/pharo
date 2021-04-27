@@ -41,9 +41,9 @@ NoUnusedVariablesLeftTest >> testNoUnusedInstanceVariablesLeft [
 	
 	remaining := classes asOrderedCollection removeAll: validExceptions; yourself.
 	
-	"we have 25 left, there are issue tracker entries for those.
+	"we have 12 left, there are issue tracker entries for those.
  	By testing for these, we avoid that new cases are added"
- 	self assert: remaining size <= 19
+ 	self assert: remaining size <= 12
 ]
 
 { #category : #testing }

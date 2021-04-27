@@ -11,7 +11,7 @@ Class {
 ClyQueryBrowserContext class >> selectionStrategy [
 	<classAnnotation>
 	
-	^ClyContextSelectionStrategy for: ClyQueryBrowser
+	^ClyContextSelectionStrategyAnnotation for: ClyQueryBrowserMorph
 ]
 
 { #category : #'selection-classes' }

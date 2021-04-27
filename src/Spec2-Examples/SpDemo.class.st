@@ -21,7 +21,7 @@ SpDemo class >> defaultSpec [
 		add: #menu withConstraints: [ :constraints | constraints height: self toolbarHeight ];
 		add:
 			(SpPanedLayout newLeftToRight
-				position: 200;
+				positionOfSlider: 200;
 				add: #list;
 				add: #page;
 				yourself);

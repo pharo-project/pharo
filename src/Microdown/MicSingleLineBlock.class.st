@@ -1,6 +1,6 @@
 "
 I characterize one liners. 
-They do not know consumeLine: beacuse they are composed of only one line. 
+They do not know consumeLine: because they are composed of only one line. 
 "
 Class {
 	#name : #MicSingleLineBlock,

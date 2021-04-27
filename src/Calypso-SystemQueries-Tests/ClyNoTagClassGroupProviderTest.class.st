@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyNoTagClassGroupProviderTest,
-	#superclass : #ClyClassGroupProviderTestCase,
+	#superclass : #ClyClassGroupProviderTest,
 	#category : #'Calypso-SystemQueries-Tests-Domain'
 }
 
@@ -11,5 +11,5 @@ ClyNoTagClassGroupProviderTest >> groupProviderClass [
 
 { #category : #running }
 ClyNoTagClassGroupProviderTest >> packageSampleWhichHasGroup [
-	^ClyClass6UntaggedFromP5 package "P5WithTags" 
+	^ClyClass6UntaggedFromP5Mock package "P5WithTags" 
 ]

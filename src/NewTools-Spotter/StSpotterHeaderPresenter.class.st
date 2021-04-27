@@ -15,7 +15,6 @@ Class {
 		'diveInAction',
 		'finalAmount',
 		'amountLabelPresenter',
-		'entryClass',
 		'helpLabelPresenter',
 		'order',
 		'diveOutAction',

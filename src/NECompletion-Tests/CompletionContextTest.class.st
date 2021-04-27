@@ -50,12 +50,7 @@ CompletionContextTest >> testReceiverClassVar [
 
 { #category : #tests }
 CompletionContextTest >> testReceiverConstant [
-	| text context |
-	text := 'testIt
-	15r16 as'.
-	context := self createContextFor: text at: text size.
-	self assert: ((context entries collect: [:each | each contents]) includes: #as31BitSmallInt).
-	
+	| text context |	
 	text := 'testIt
 	''test'' pre'.
 	context := self createContextFor: text at: text size.

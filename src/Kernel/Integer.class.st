@@ -289,11 +289,6 @@ Integer >> anyMask: mask [
 	^0 ~= (self bitAnd: mask)
 ]
 
-{ #category : #accessing }
-Integer >> as31BitSmallInt [
-	^ self subclassResponsibility
-]
-
 { #category : #'converting-arrays' }
 Integer >> asByteArray [
 

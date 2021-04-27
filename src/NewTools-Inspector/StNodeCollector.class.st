@@ -26,9 +26,7 @@ StNodeCollector class >> for: anObject [
 { #category : #building }
 StNodeCollector >> collectNodes [
 
-	^ 
-	self indexedNodes,	
-	self slotNodes
+	^ self slotNodes , self indexedNodes
 ]
 
 { #category : #private }

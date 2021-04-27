@@ -1,12 +1,12 @@
 Class {
 	#name : #ClyGroupedClassVariablesTest,
-	#superclass : #ClyGroupedVariablesTestCase,
+	#superclass : #ClyGroupedVariablesTest,
 	#category : #'Calypso-SystemQueries-Tests-Results'
 }
 
 { #category : #running }
 ClyGroupedClassVariablesTest >> createQueryResult [
-	^ClyGroupedClassVariables withHierarchy: ClySubclassHierarchy new
+	^ClyGroupedClassVariablesResult withHierarchy: ClySubclassHierarchy new
 ]
 
 { #category : #tests }
@@ -21,14 +21,14 @@ ClyGroupedClassVariablesTest >> testFillingWithEmptyList [
 ClyGroupedClassVariablesTest >> testFillingWithSingleClassVar [
 
 	| classVarGroup allClassVarGroup |
-	queryResult fillWith: { ClyClassVariable named: #ClassVar1 definedIn: ClyClass2FromP1 }.
+	queryResult fillWith: { ClyClassVariable named: #ClassVar1 definedIn: ClyClass2FromP1Mock }.
 	
 	self assertItems: {ClyVarDefinitionMethodGroup. 0. ClyVariableMethodGroup. 1}.
 	classVarGroup := items last actualObject.
 	self assert: classVarGroup methodQuery class equals: ClyVariableReferencesQuery.
 	self 
 		assert: classVarGroup methodQuery variableQuery resultItems 
-		equals: {ClyClassVariable named: #ClassVar1 definedIn: ClyClass2FromP1}.
+		equals: {ClyClassVariable named: #ClassVar1 definedIn: ClyClass2FromP1Mock}.
 	allClassVarGroup :=  items first actualObject.
 	self assert: allClassVarGroup methodQuery class equals: ClyVariableReferencesQuery.
 	self assert: allClassVarGroup methodQuery variableQuery class equals: ClyAllClassVariablesQuery.
@@ -38,9 +38,9 @@ ClyGroupedClassVariablesTest >> testFillingWithSingleClassVar [
 ClyGroupedClassVariablesTest >> testFillingWithThreeClasVarsOfSuperclassAndSubclass [
 
 	queryResult fillWith: { 
-		ClyClassVariable named: #ClassVar1 definedIn: ClyClass2FromP1.
-		ClyClassVariable named: #SubclassClassVar definedIn: ClySubclassLOfClass2FromP1.
-		ClyClassVariable named: #ClassVar2 definedIn: ClyClass2FromP1}.
+		ClyClassVariable named: #ClassVar1 definedIn: ClyClass2FromP1Mock.
+		ClyClassVariable named: #SubclassClassVar definedIn: ClySubclassLOfClass2FromP1Mock.
+		ClyClassVariable named: #ClassVar2 definedIn: ClyClass2FromP1Mock}.
 	
 	self assertItems: {
 		ClyVarDefinitionMethodGroup. 0. ClyVariableMethodGroup. 1. ClyVariableMethodGroup. 1.

@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyMethodCounterGroupProviderTest,
-	#superclass : #ClyMethodGroupProviderTestCase,
+	#superclass : #ClyMethodGroupProviderTest,
 	#instVars : [
 		'installedCounter'
 	],

@@ -14,7 +14,7 @@ Class {
 ClyClassTableDecorator class >> decorationStrategy [
 	<classAnnotation>
 	
-	^ClyTableDecorationStrategy for: ClyClass asCalypsoItemContext
+	^ClyTableDecorationStrategyAnnotation for: ClyClass asCalypsoItemContext
 ]
 
 { #category : #testing }
