@@ -26,20 +26,15 @@ Class {
 
 { #category : #specs }
 StFailingAssertionInspector class >> defaultSpec [
+
 	^ SpPanedLayout newHorizontal
-		  position: 50 percent;
+		  positionOfSlider: 50 percent;
 		  add: (SpBoxLayout newVertical
-				   add: #actualObjectHeader
-				   expand: false
-				   fill: false
-				   padding: 0;
+				   add: #actualObjectHeader expand: false;
 				   add: #actualObjectMillerList;
 				   yourself);
 		  add: (SpBoxLayout newVertical
-				   add: #expectedObjectHeader
-				   expand: false
-				   fill: false
-				   padding: 0;
+				   add: #expectedObjectHeader expand: false;
 				   add: #expectedObjectMillerList;
 				   yourself);
 		  yourself

@@ -6,7 +6,7 @@ Class {
 
 { #category : #running }
 ClyGroupedExtendingPackagesTest >> createQueryResult [
-	^ClyGroupedExtendingPackages new
+	^ClyGroupedExtendingPackagesResult new
 ]
 
 { #category : #tests }
@@ -21,25 +21,25 @@ ClyGroupedExtendingPackagesTest >> testFillingWithEmptyList [
 ClyGroupedExtendingPackagesTest >> testFillingWithOnePackage [
 
 	| group |
-	queryResult fillWith: {ClyClass1FromP1 package}.
+	queryResult fillWith: {ClyClass1FromP1Mock package}.
 	
 	group := queryResult items first.
 	self assert: group class equals: ClyExternalPackageMethodGroup.
-	self assert: group package equals: ClyClass1FromP1 package.
+	self assert: group package equals: ClyClass1FromP1Mock package.
 	self 
 		assert: group methodQuery 
-		equals: (ClyPackageExtensionMethodsQuery of: ClyClass1FromP1 package from: query scope)
+		equals: (ClyPackageExtensionMethodsQuery of: ClyClass1FromP1Mock package from: query scope)
 ]
 
 { #category : #tests }
 ClyGroupedExtendingPackagesTest >> testFillingWithThreePackages [
 
 	| groups |
-	queryResult fillWith: { ClySubclassMOfClass1FromP2 package. 
-		ClySubclassLOfSubclassMFromP3 package.
-		ClyClass1FromP1 package}.
+	queryResult fillWith: { ClySubclassMOfClass1FromP2Mock package. 
+		ClySubclassLOfSubclassMFromP3Mock package.
+		ClyClass1FromP1Mock package}.
 	groups := queryResult items collect: #package as: Array.
-	self assert: groups equals: { ClyClass1FromP1 package.
-		ClySubclassMOfClass1FromP2 package.
-		ClySubclassLOfSubclassMFromP3 package}
+	self assert: groups equals: { ClyClass1FromP1Mock package.
+		ClySubclassMOfClass1FromP2Mock package.
+		ClySubclassLOfSubclassMFromP3Mock package}
 ]

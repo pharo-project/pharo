@@ -70,45 +70,46 @@ TKTCommonQueueWorkerPoolTest >> testWorkerPoolStopStopsWorkers [
 
 { #category : #tests }
 TKTCommonQueueWorkerPoolTest >> testWorkerPoolWorkersAreStoppedAfterPoolsCollection [
-	| pool workerProcess |
 
+	| pool workerProcess |
 	pool := TKTCommonQueueWorkerPool new.
 	pool name: 'test pool' , UUID new asString.
 	pool poolMaxSize: 4.
 	pool start.
-	(pool future: (MessageSend receiver: self selector: #yourself))
+	(pool future: (MessageSend receiver: self selector: #yourself)) 
 		waitForCompletion: 1 second.
 	self assert: pool workers notEmpty.
 	workerProcess := WeakArray with: pool workers anyOne process.
 	pool := nil.
-	self garbageCollectAndWait.
-	self assert: workerProcess first isNil
+	
+	self assertWithGarbageCollect: [ workerProcess first isNil ].
 ]
 
 { #category : #tests }
 TKTCommonQueueWorkerPoolTest >> testWorkerPoolWorkersProcessesAreStoppedAfterPoolsCollection [
-	| pool workerProcess |
 
+	| pool workerProcess |
 	pool := TKTCommonQueueWorkerPool new.
 	pool name: 'Test pool' , UUID new asString.
 	pool poolMaxSize: 4.
 	pool start.
-	(pool future: (MessageSend receiver: self selector: #yourself))
+	(pool future: (MessageSend receiver: self selector: #yourself)) 
 		waitForCompletion: 1 second.
 	workerProcess := WeakArray with: pool workers anyOne process process.
 	pool := nil.
-	self garbageCollectAndWait.
-	self assert: workerProcess first isNil
+	self assertWithGarbageCollect: [ workerProcess first isNil ].
+
 ]
 
 { #category : #tests }
 TKTCommonQueueWorkerPoolTest >> testWorkerPoolWorkersProcessesAreTerminatedAfterPoolsCollection [
+
 	| pool workerProcess |
 	pool := TKTCommonQueueWorkerPool createDefault.
-	(pool future: (MessageSend receiver: self selector: #yourself)) waitForCompletion: 1 second.
+	(pool future: (MessageSend receiver: self selector: #yourself)) 
+		waitForCompletion: 1 second.
 	workerProcess := pool workers anyOne process process.
 	pool := nil.
-	self garbageCollectAndWait.
-	workerProcess isTerminated.
-	self assert: workerProcess isTerminated
+	self assertWithGarbageCollect: [ workerProcess isTerminated ].
+
 ]

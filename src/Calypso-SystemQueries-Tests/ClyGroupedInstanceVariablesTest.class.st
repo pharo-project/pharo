@@ -1,22 +1,22 @@
 Class {
 	#name : #ClyGroupedInstanceVariablesTest,
-	#superclass : #ClyGroupedVariablesTestCase,
+	#superclass : #ClyGroupedVariablesTest,
 	#category : #'Calypso-SystemQueries-Tests-Results'
 }
 
 { #category : #helpers }
 ClyGroupedInstanceVariablesTest >> createQueryResult [
-	^ClyGroupedInstanceVariables withHierarchy: ClySubclassHierarchy new
+	^ClyGroupedInstanceVariablesResult withHierarchy: ClySubclassHierarchy new
 ]
 
 { #category : #tests }
 ClyGroupedInstanceVariablesTest >> testFillingWithClassAndSuperclassVariables [
 
 	queryResult fillWith: { 
-		ClyInstanceVariable named: #subclassN1Var definedIn: ClySubclassN1OfClass1FromP1.
-		ClyInstanceVariable named: #instanceSideVar2 definedIn: ClyClass1FromP1.
-		ClyInstanceVariable named: #subclassSameVar definedIn: ClySubclassN1OfClass1FromP1.
-		ClyInstanceVariable named: #instanceSideVar1 definedIn: ClyClass1FromP1}.
+		ClyInstanceVariable named: #subclassN1Var definedIn: ClySubclassN1OfClass1FromP1Mock.
+		ClyInstanceVariable named: #instanceSideVar2 definedIn: ClyClass1FromP1Mock.
+		ClyInstanceVariable named: #subclassSameVar definedIn: ClySubclassN1OfClass1FromP1Mock.
+		ClyInstanceVariable named: #instanceSideVar1 definedIn: ClyClass1FromP1Mock}.
 	
 	self assertItems: {ClyAllMethodGroup. 0.
 		ClyVarDefinitionMethodGroup. 0. ClyVariableMethodGroup. 1. ClyVariableMethodGroup. 1.
@@ -36,9 +36,9 @@ ClyGroupedInstanceVariablesTest >> testFillingWithEmptyList [
 ClyGroupedInstanceVariablesTest >> testFillingWithOneInstVarAndTwoClassVarsOfSameClass [
 
 	queryResult fillWith: { 
-		ClyInstanceVariable named: #instVar definedIn: ClyClass2FromP1.
-		ClyClassVariable named: #ClassVar2 definedIn: ClyClass2FromP1.
-		ClyClassVariable named: #ClassVar1 definedIn: ClyClass2FromP1}.
+		ClyInstanceVariable named: #instVar definedIn: ClyClass2FromP1Mock.
+		ClyClassVariable named: #ClassVar2 definedIn: ClyClass2FromP1Mock.
+		ClyClassVariable named: #ClassVar1 definedIn: ClyClass2FromP1Mock}.
 	
 	self assertItems: {ClyAllMethodGroup. 0. ClyMethodGroup. 0.
 		ClyVarDefinitionMethodGroup. 0. ClyVariableMethodGroup. 1 }.
@@ -49,14 +49,14 @@ ClyGroupedInstanceVariablesTest >> testFillingWithOneInstVarAndTwoClassVarsOfSam
 ClyGroupedInstanceVariablesTest >> testFillingWithSingleClassVar [
 
 	| classVarGroup |
-	queryResult fillWith: { ClyClassVariable named: #ClassVar1 definedIn: ClyClass2FromP1 }.
+	queryResult fillWith: { ClyClassVariable named: #ClassVar1 definedIn: ClyClass2FromP1Mock }.
 	
 	self assertItems: {ClyAllMethodGroup. 0. ClyMethodGroup. 0}.
 	classVarGroup := items last actualObject.
 	self assert: classVarGroup methodQuery class equals: ClyVariableReferencesQuery.
 	self assert: classVarGroup methodQuery variableQuery class equals: ClyAllClassVariablesQuery.
 	self assert: classVarGroup subgroupsQuery class equals: ClyAllClassVariablesQuery.
-	self assert: classVarGroup subgroupsQuery requiredResult class equals: ClyGroupedClassVariables.
+	self assert: classVarGroup subgroupsQuery requiredResult class equals: ClyGroupedClassVariablesResult.
 	self 
 		assert: classVarGroup subgroupsQuery requiredResult hierarchy 
 		equals: queryResult hierarchy
@@ -66,7 +66,7 @@ ClyGroupedInstanceVariablesTest >> testFillingWithSingleClassVar [
 ClyGroupedInstanceVariablesTest >> testFillingWithSingleInstVar [
 
 	| classVarGroup allClassVarGroup |
-	queryResult fillWith: { ClyInstanceVariable named: #instVar definedIn: ClyClass2FromP1 }.
+	queryResult fillWith: { ClyInstanceVariable named: #instVar definedIn: ClyClass2FromP1Mock }.
 	
 	self assertItems: {ClyAllMethodGroup. 0. 
 		ClyVarDefinitionMethodGroup. 0. ClyVariableMethodGroup. 1}.
@@ -74,7 +74,7 @@ ClyGroupedInstanceVariablesTest >> testFillingWithSingleInstVar [
 	self assert: classVarGroup methodQuery class equals: ClyVariableReferencesQuery.
 	self 
 		assert: classVarGroup methodQuery variableQuery resultItems 
-		equals: {ClyInstanceVariable named: #instVar definedIn: ClyClass2FromP1}.
+		equals: {ClyInstanceVariable named: #instVar definedIn: ClyClass2FromP1Mock}.
 	allClassVarGroup :=  items second actualObject.
 	self assert: allClassVarGroup methodQuery class equals: ClyVariableReferencesQuery.
 	self assert: allClassVarGroup methodQuery variableQuery class equals: ClyAllInstanceVariablesQuery.
@@ -84,9 +84,9 @@ ClyGroupedInstanceVariablesTest >> testFillingWithSingleInstVar [
 ClyGroupedInstanceVariablesTest >> testFillingWithTwoEqualVarsOfDifferentSubclassesAndOneVarOfSuperclass [
 
 	queryResult fillWith: { 
-		ClyInstanceVariable named: #subclassSameVar definedIn: ClySubclassN2OfClass1FromP1.
-		ClyInstanceVariable named: #instanceSideVar2 definedIn: ClyClass1FromP1.
-		ClyInstanceVariable named: #subclassSameVar definedIn: ClySubclassN1OfClass1FromP1}.
+		ClyInstanceVariable named: #subclassSameVar definedIn: ClySubclassN2OfClass1FromP1Mock.
+		ClyInstanceVariable named: #instanceSideVar2 definedIn: ClyClass1FromP1Mock.
+		ClyInstanceVariable named: #subclassSameVar definedIn: ClySubclassN1OfClass1FromP1Mock}.
 	
 	self assertItems: {ClyAllMethodGroup. 0. 
 		ClyVarDefinitionMethodGroup. 0. ClyVariableMethodGroup. 1.
@@ -99,8 +99,8 @@ ClyGroupedInstanceVariablesTest >> testFillingWithTwoEqualVarsOfDifferentSubclas
 ClyGroupedInstanceVariablesTest >> testFillingWithTwoInstVarsOfSameClass [
 	| variables |
 	variables := {
-		ClyInstanceVariable named: #instanceSideVar2 definedIn: ClyClass1FromP1.
-		ClyInstanceVariable named: #instanceSideVar1 definedIn: ClyClass1FromP1}.
+		ClyInstanceVariable named: #instanceSideVar2 definedIn: ClyClass1FromP1Mock.
+		ClyInstanceVariable named: #instanceSideVar1 definedIn: ClyClass1FromP1Mock}.
 	queryResult fillWith: variables.
 	
 	self assertItems: {ClyAllMethodGroup. 0. 

@@ -1,12 +1,12 @@
 Class {
 	#name : #ClyPackageExtensionScopeTest,
-	#superclass : #ClyTypedScopeTestCase,
+	#superclass : #ClyTypedScopeTest,
 	#category : #'Calypso-SystemQueries-Tests-Scopes'
 }
 
 { #category : #running }
 ClyPackageExtensionScopeTest >> extraBasisSample [
-	^ClySubclassMOfClass1FromP2 package 
+	^ClySubclassMOfClass1FromP2Mock package 
 ]
 
 { #category : #running }
@@ -17,28 +17,28 @@ ClyPackageExtensionScopeTest >> scopeClass [
 
 { #category : #running }
 ClyPackageExtensionScopeTest >> singleBasisSample [
-	^ClyClass1FromP1 package 
+	^ClyClass1FromP1Mock package 
 ]
 
 { #category : #tests }
 ClyPackageExtensionScopeTest >> testClassesEnumeration [
-	scope := ClyPackageExtensionScope of: ClyClass1FromP1 package.
+	scope := ClyPackageExtensionScope of: ClyClass1FromP1Mock package.
 	
 	scope classesDo: [ :each | result add: each ].
 	
-	self deny: (result includesAll: ClyClass1FromP1 package definedClasses).
-	self assert: (result includesAll: ClyClass1FromP1 package extendedClasses)
+	self deny: (result includesAll: ClyClass1FromP1Mock package definedClasses).
+	self assert: (result includesAll: ClyClass1FromP1Mock package extendedClasses)
 ]
 
 { #category : #tests }
 ClyPackageExtensionScopeTest >> testMethodsEnumeration [
-	scope := ClyPackageExtensionScope of: ClyClass1FromP1 package.
+	scope := ClyPackageExtensionScope of: ClyClass1FromP1Mock package.
 	
 	scope methodsDo: [ :each | result add: each ].
 	
-	self deny: (result includesAll: ClyClass1FromP1 localMethods).
-	self deny: (result includesAll: ClyClass2FromP1 classSide localMethods).
-	self assert: (result includesAll: ClySubclassLOfClass0FromPExtendedByP1 localMethods)
+	self deny: (result includesAll: ClyClass1FromP1Mock localMethods).
+	self deny: (result includesAll: ClyClass2FromP1Mock classSide localMethods).
+	self assert: (result includesAll: ClySubclassLOfClass0FromPExtendedByP1Mock localMethods)
 ]
 
 { #category : #tests }

@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyQueryViewStateTest,
-	#superclass : #ClyNavigationHistoryTestCase,
+	#superclass : #ClyNavigationHistoryTest,
 	#instVars : [
 		'viewDataSource',
 		'queryView'
@@ -18,7 +18,7 @@ ClyQueryViewStateTest >> setUp [
 	| packages |
 	super setUp.
 	packages := ClyAllPackagesQuery 
-		from: ClyPackageScope of: ClyClass7WithTag1FromP5 package in: environment.
+		from: ClyPackageScope of: ClyClass7WithTag1FromP5Mock package in: environment.
 	"it is P5WithTag package which allow items expansion"
 	viewDataSource := ClyCollapsedDataSource on: packages.
 	queryView := ClyQueryViewMorph for: browser.

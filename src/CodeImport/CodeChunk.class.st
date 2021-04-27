@@ -17,6 +17,12 @@ CodeChunk class >> contents: someContents [
 			yourself
 ]
 
+{ #category : #testing }
+CodeChunk class >> isAbstract [
+
+	^ self == CodeChunk
+]
+
 { #category : #visiting }
 CodeChunk >> accept: aVisitor [
 

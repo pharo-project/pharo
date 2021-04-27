@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyConcreteGroupCritiquesTest,
-	#superclass : #ClyFilteringCritiqueQueryTestCase,
+	#superclass : #ClyFilteringCritiqueQueryTest,
 	#category : #'Calypso-SystemPlugins-Critic-Queries-Tests'
 }
 

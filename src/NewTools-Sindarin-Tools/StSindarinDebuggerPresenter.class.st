@@ -12,9 +12,9 @@ Class {
 
 { #category : #specs }
 StSindarinDebuggerPresenter class >> defaultSpec [
+
 	^ SpBoxLayout newVertical
-		add: #toolbar
-			withConstraints: [ :constraints | constraints height: self toolbarHeight + 5 ];
+		add: #toolbar expand: false;
 		add:
 			(SpPanedLayout newVertical
 				add: #stack;
@@ -45,7 +45,7 @@ StSindarinDebuggerPresenter >> buildToolbar [
 ]
 
 { #category : #initialization }
-StSindarinDebuggerPresenter >> initializePresenter [
+StSindarinDebuggerPresenter >> initializePresenters [
 	stack := self newList.
 	stack
 		whenSelectionChangedDo: [ :selection | 

@@ -10,7 +10,7 @@ Class {
 { #category : #tests }
 ClyNotRemoveAndShowSubclassesClassStrategyTest >> testExecutingCommand [
 	| browser command strategy |
-	browser := MockClyBrowser new.
+	browser := ClyBrowserMock new.
 	strategy := ClyNotRemoveAndShowSubclassesClassStrategy newForBrowser: browser.
 	command := SycRemoveClassCommand for: { ClyInteractiveRemoveClassStrategy }.
 	strategy execute: command.

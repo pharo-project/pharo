@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyWatchMethodGroupProviderTest,
-	#superclass : #ClyMethodGroupProviderTestCase,
+	#superclass : #ClyMethodGroupProviderTest,
 	#instVars : [
 		'installedWatchpoint'
 	],

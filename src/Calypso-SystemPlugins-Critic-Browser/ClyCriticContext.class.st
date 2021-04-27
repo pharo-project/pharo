@@ -17,7 +17,7 @@ Class {
 ClyCriticContext class >> selectionStrategy [
 	<classAnnotation>
 	
-	^ClyContextSelectionStrategy for: ClyCriticDecorator
+	^ClyContextSelectionStrategyAnnotation for: ClyCriticDecorator
 ]
 
 { #category : #accessing }

@@ -5,7 +5,6 @@ Class {
 	#name : #SpCodePopoverErrorPresenter,
 	#superclass : #SpPopoverContentPresenter,
 	#instVars : [
-		'object',
 		'code',
 		'text',
 		'message'

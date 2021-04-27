@@ -8,13 +8,13 @@ Class {
 ClyTaggedMethodsQueryTest >> createQuery [
 	^ ClyTaggedMethodsQuery
 		by: #tag1
-		from: (ClyClassScope of: ClyClass1FromP1 in: environment)
+		from: (ClyClassScope of: ClyClass1FromP1Mock in: environment)
 ]
 
 { #category : #tests }
 ClyTaggedMethodsQueryTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope
-		of: ClyClass1FromP1 >> #tag1Method1 in: environment).
+		of: ClyClass1FromP1Mock >> #tag1Method1 in: environment).
 	self deny: query checkEmptyResult.
 	
 	query scope: (ClyMethodScope of: Object >> #printString in: environment).
@@ -35,8 +35,8 @@ ClyTaggedMethodsQueryTest >> testComparisonToSimilarQueryButWithDifferentTag [
 ClyTaggedMethodsQueryTest >> testFromThreeMethods [
 
 	self queryFromScope: ClyMethodScope ofAll: {
-		ClyClass1FromP1 >> #tag1Method1. Object >> #printString. 
-		ClyClass2FromP1 >> #instanceSideClassVar1Reader}.
+		ClyClass1FromP1Mock >> #tag1Method1. Object >> #printString. 
+		ClyClass2FromP1Mock >> #instanceSideClassVar1Reader}.
 	
 	self assert: foundSelectors equals: #(tag1Method1)
 ]

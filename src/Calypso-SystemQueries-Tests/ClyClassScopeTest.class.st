@@ -11,16 +11,16 @@ ClyClassScopeTest >> scopeClass [
 
 { #category : #tests }
 ClyClassScopeTest >> testClassEnumeration [
-	scope := ClyClassScope ofAll: {ClyClass1FromP1. ClyClass2FromP1}.
+	scope := ClyClassScope ofAll: {ClyClass1FromP1Mock. ClyClass2FromP1Mock}.
 	
 	scope classesDo: [ :each | result add: each ].
 	
-	self assert: result asArray equals: {ClyClass1FromP1. ClyClass2FromP1}
+	self assert: result asArray equals: {ClyClass1FromP1Mock. ClyClass2FromP1Mock}
 ]
 
 { #category : #tests }
 ClyClassScopeTest >> testClassVarsEnumeration [
-	scope := ClyClassScope ofAll: {Object. ClyClass1FromP1}.	"last one has no class vars"
+	scope := ClyClassScope ofAll: {Object. ClyClass1FromP1Mock}.	"last one has no class vars"
 		
 	scope classVariablesDo: [ :each | result add: each ].
 	
@@ -44,7 +44,7 @@ ClyClassScopeTest >> testClassVarsEnumerationFromClassSideOfDefiningClass [
 
 { #category : #tests }
 ClyClassScopeTest >> testClassVarsEnumerationWhenTheyNotExist [
-	scope := ClyClassScope of: ClyClass1FromP1.
+	scope := ClyClassScope of: ClyClass1FromP1Mock.
 	
 	scope classVariablesDo: [ :each | result add: each ].
 	
@@ -53,13 +53,13 @@ ClyClassScopeTest >> testClassVarsEnumerationWhenTheyNotExist [
 
 { #category : #tests }
 ClyClassScopeTest >> testInstVarsEnumeration [
-	scope := ClyClassScope of: ClyClass1FromP1.
+	scope := ClyClassScope of: ClyClass1FromP1Mock.
 
 	scope instanceVariablesDo: [ :each | result add: each ].
 
 	self assert: (result as: Set) equals: {
-		ClyInstanceVariable named: #instanceSideVar2 definedIn: ClyClass1FromP1.
-		ClyInstanceVariable named: #instanceSideVar1 definedIn: ClyClass1FromP1
+		ClyInstanceVariable named: #instanceSideVar2 definedIn: ClyClass1FromP1Mock.
+		ClyInstanceVariable named: #instanceSideVar1 definedIn: ClyClass1FromP1Mock
 	} asSet
 ]
 
@@ -75,7 +75,7 @@ ClyClassScopeTest >> testInstVarsEnumerationWhenThereAreNoVariables [
 { #category : #tests }
 ClyClassScopeTest >> testMethodGroupsEnumeration [
 	environment addPlugin: ClyDefaultSystemEnvironmentPlugin new.
-	scope := ClyClassScope of: ClyClass1FromP1 in: environment.
+	scope := ClyClassScope of: ClyClass1FromP1Mock in: environment.
 	
 	scope methodGroupsDo: [ :each | result add: each ].
 	
@@ -86,28 +86,28 @@ ClyClassScopeTest >> testMethodGroupsEnumeration [
 		assert: (result
 				select: [ :each | each class = ClyTaggedMethodGroup ]
 				thenCollect: #tag) sorted asArray
-		equals: ClyClass1FromP1 tagsForMethods sorted asArray
+		equals: ClyClass1FromP1Mock tagsForMethods sorted asArray
 ]
 
 { #category : #tests }
 ClyClassScopeTest >> testMethodsEnumeration [
 
 	| expected |
-	scope := ClyClassScope of: ClyClass1FromP1.
+	scope := ClyClassScope of: ClyClass1FromP1Mock.
 	scope methodsDo: [ :each | result add: each selector ].
-	expected := ClyClass1FromP1 localMethods collect: [:each | each selector].
+	expected := ClyClass1FromP1Mock localMethods collect: [:each | each selector].
 	self assert: result sorted asArray equals: expected sorted asArray
 ]
 
 { #category : #tests }
 ClyClassScopeTest >> testVariablesEnumerationForClassWithInstanceVariables [
-	scope := ClyClassScope of: ClyClass1FromP1.
+	scope := ClyClassScope of: ClyClass1FromP1Mock.
 	
 	scope variablesDo: [ :each | result add: each ].
 	
 	self assert: (result as: Set) equals: {
-		ClyInstanceVariable named: #instanceSideVar2 definedIn: ClyClass1FromP1.
-		ClyInstanceVariable named: #instanceSideVar1 definedIn: ClyClass1FromP1
+		ClyInstanceVariable named: #instanceSideVar2 definedIn: ClyClass1FromP1Mock.
+		ClyInstanceVariable named: #instanceSideVar1 definedIn: ClyClass1FromP1Mock
 	} asSet
 ]
 
@@ -125,14 +125,14 @@ ClyClassScopeTest >> testVariablesEnumerationForObject [
 
 { #category : #tests }
 ClyClassScopeTest >> testVariablesEnumerationForTwoClassesWithClassAndInstanceVars [
-	scope := ClyClassScope ofAll: {Object. ClyClass1FromP1}.
+	scope := ClyClassScope ofAll: {Object. ClyClass1FromP1Mock}.
 	
 	scope variablesDo: [ :each | result add: each ].
 	
 	self assert: (result as: Set) equals: {
 		ClyClassVariable named: #DependentsFields definedIn: Object.
-		ClyInstanceVariable named: #instanceSideVar2 definedIn: ClyClass1FromP1.
-		ClyInstanceVariable named: #instanceSideVar1 definedIn: ClyClass1FromP1
+		ClyInstanceVariable named: #instanceSideVar2 definedIn: ClyClass1FromP1Mock.
+		ClyInstanceVariable named: #instanceSideVar1 definedIn: ClyClass1FromP1Mock
 	} asSet
 ]
 

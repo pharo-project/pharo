@@ -8,6 +8,30 @@ Class {
 }
 
 { #category : #tests }
+CommentsToTestsTest >> testCommentWithFailure [
+	"(1+3)>>>5"
+	
+	| docComment commentTestCase |
+
+	docComment := thisContext method ast pharoDocCommentNodes first.
+	commentTestCase := CommentTestCase for: docComment.
+		
+	self should: [commentTestCase testIt] raise: TestFailure
+]
+
+{ #category : #tests }
+CommentsToTestsTest >> testCommentWithSyntaxError [
+	"(1+)>>>5"
+	
+	| docComment commentTestCase |
+
+	docComment := thisContext method ast pharoDocCommentNodes first.
+	commentTestCase := CommentTestCase for: docComment.
+	
+	self should: [commentTestCase testIt] raise: SyntaxErrorNotification
+]
+
+{ #category : #tests }
 CommentsToTestsTest >> testErrorComment [
 	"(1+3)+6/0>>>4"
 	
@@ -15,7 +39,8 @@ CommentsToTestsTest >> testErrorComment [
 
 	docComment := thisContext method ast pharoDocCommentNodes first.
 	commentTestCase := CommentTestCase for: docComment.	
-	self assert: commentTestCase hasError
+	
+	self should: [commentTestCase testIt] raise: Error
 ]
 
 { #category : #tests }
@@ -27,7 +52,6 @@ CommentsToTestsTest >> testSimpleComment [
 	docComment := thisContext method ast pharoDocCommentNodes first.
 	commentTestCase := CommentTestCase for: docComment.
 		
-	self deny: commentTestCase hasError.	
 	self
 		assert: commentTestCase currentValue
 		equals: commentTestCase expectedValue

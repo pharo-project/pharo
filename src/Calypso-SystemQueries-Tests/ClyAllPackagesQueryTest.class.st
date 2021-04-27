@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyAllPackagesQueryTest,
-	#superclass : #ClyPackageQueryTestCase,
+	#superclass : #ClyPackageQueryTest,
 	#category : #'Calypso-SystemQueries-Tests-Queries'
 }
 
@@ -11,7 +11,7 @@ ClyAllPackagesQueryTest >> createQuery [
 
 { #category : #tests }
 ClyAllPackagesQueryTest >> testCheckIfEmpty [
-	query scope: (ClyPackageScope of: ClyClass1FromP1 package in: environment).
+	query scope: (ClyPackageScope of: ClyClass1FromP1Mock package in: environment).
 	
 	self deny: query checkEmptyResult
 ]
@@ -19,7 +19,7 @@ ClyAllPackagesQueryTest >> testCheckIfEmpty [
 { #category : #tests }
 ClyAllPackagesQueryTest >> testFromSinglePackage [
 
-	self queryFromScope: ClyPackageScope of: ClyClass1FromP1 package.
+	self queryFromScope: ClyPackageScope of: ClyClass1FromP1Mock package.
 
-	self assert: resultItems asSet equals: {ClyClass1FromP1 package} asSet
+	self assert: resultItems asSet equals: {ClyClass1FromP1Mock package} asSet
 ]
