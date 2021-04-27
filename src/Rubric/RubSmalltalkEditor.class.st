@@ -464,11 +464,11 @@ RubSmalltalkEditor >> debug: aStream [
 			context := self model doItContext ]
 		ifFalse: [ receiver := context := nil ].
 	method := self compile: aStream for: receiver in: context.
+	method ifNil: [ ^self ].
 	method isReturnSpecial
 		ifTrue: [ self inform: 'Nothing to debug, the expression is optimized'.
 			^ self ].
-	method notNil
-		ifTrue: [ self debug: method receiver: receiver in: context ]
+	 self debug: method receiver: receiver in: context
 ]
 
 { #category : #'do-its' }
