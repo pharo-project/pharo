@@ -11,6 +11,12 @@ Class {
 	#category : #'Athens-Core-Paints'
 }
 
+{ #category : #testing }
+AthensAbstractPaint class >> isAbstract [
+
+	^ self == AthensAbstractPaint
+]
+
 { #category : #converting }
 AthensAbstractPaint >> asAthensPaintOn: aCanvas [	
 	^ self
