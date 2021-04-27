@@ -13,13 +13,13 @@ Class {
 { #category : #accessing }
 SpNotificationType class >> error [
 
-	^ SpNotificationTypeError uniqueInstance
+	^ SpErrorNotificationType uniqueInstance
 ]
 
 { #category : #accessing }
 SpNotificationType class >> info [
 
-	^ SpNotificationTypeInfo uniqueInstance
+	^ SpInfoNotificationType uniqueInstance
 ]
 
 { #category : #'instance creation' }

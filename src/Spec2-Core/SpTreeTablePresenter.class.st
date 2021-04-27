@@ -52,23 +52,6 @@ SpTreeTablePresenter class >> documentSections [
 	 }
 ]
 
-{ #category : #'as yet unclassified' }
-SpTreeTablePresenter class >> exampleWithTwoColumns [ 
-
-	^ self  new
-		addColumn: (SpCompositeTableColumn new
-			title: 'Classes';
-			addColumn: ((SpImageTableColumn evaluated: [:c| c systemIcon]) );
-			addColumn: (SpStringTableColumn evaluated: #name);
-			yourself);
-		addColumn: (SpStringTableColumn new
-			title: 'Methods';
-			evaluated: [:class |  class methodDictionary size asString]);
-		roots: { Object };
-		children: [ :aClass | aClass subclasses ];
-		openWithSpec
-]
-
 { #category : #api }
 SpTreeTablePresenter >> addColumn: aColumn [
 	"Add a column to the table. A column should be an instance of `SpTableColumn`"

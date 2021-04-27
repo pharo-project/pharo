@@ -3,12 +3,11 @@ I'm a notification type error
 "
 Class {
 	#name : #SpNotificationTypeError,
-	#superclass : #SpNotificationType,
+	#superclass : #SpErrorNotificationType,
 	#category : #'Spec2-Core-Base'
 }
 
-{ #category : #dispatching }
-SpNotificationTypeError >> notify: aSpecNotification on: aNotificationAware [
-	
-	aNotificationAware notifyError: aSpecNotification
+{ #category : #testing }
+SpNotificationTypeError class >> isDeprecated [ 
+	^ true
 ]
