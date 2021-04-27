@@ -304,16 +304,22 @@ Context >> stepToHome: aContext [
 
 { #category : #'*Debugging-Core' }
 Context >> stepToSendOrReturn [
+
 	"Simulate the execution of bytecodes until either sending a message or 
 	returning a value to the receiver (that is, until switching contexts)."
 
 	| context |
-	[ self isDead or: [ self willSend or: [  self willReturn or: [ self willStore or: [self willCreateBlock ] ] ] ] ]
-		whileFalse: [
+	self method isQuick ifTrue: [ 
+		pc := pc + self quickMethodPrimitiveBytecodeSize.
+		^ self ].
+	[ 
+	self isDead or: [ 
+		self willSend or: [ 
+			self willReturn or: [ self willStore or: [ self willCreateBlock ] ] ] ] ] 
+		whileFalse: [ 
 			context := self step.
-			context == self ifFalse: [
-				"Caused by mustBeBoolean handling"
-				^context ]]
+			context == self ifFalse: [ "Caused by mustBeBoolean handling" 
+				^ context ] ]
 ]
 
 { #category : #'*Debugging-Core' }
