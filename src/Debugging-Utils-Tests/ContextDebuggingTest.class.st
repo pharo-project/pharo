@@ -14,6 +14,11 @@ ContextDebuggingTest >> deadContext [
 ]
 
 { #category : #tests }
+ContextDebuggingTest >> selfReturnMethod [
+	#foo asSymbol 
+]
+
+{ #category : #tests }
 ContextDebuggingTest >> testRestartQuickMethod [
 
 	|aReceiver aMethodContext newContext stackSize|
@@ -51,4 +56,24 @@ ContextDebuggingTest >> testStepToSendOrReturn [
 	self assert: context isDead.
 	context := context stepToSendOrReturn.
 	self assert: context isDead
+]
+
+{ #category : #tests }
+ContextDebuggingTest >> testStepToSendOrReturnIntoReturnSelfQuickMethod [
+
+	|aMethodContext newContext|
+	aMethodContext := Context
+		sender: thisContext
+		receiver: self class basicNew
+		method: (self class >> #selfReturnMethod)
+		arguments: #().
+
+	newContext := aMethodContext step.
+	aMethodContext stepIntoQuickMethod: true.
+	newContext := newContext step.
+	newContext := newContext stepToSendOrReturn. 	
+	
+	"Stepping to end or return of a quick method just returning self
+	puts the pc at the return of the quick method, if it is not already there."
+	self assert: newContext pc equals: (Symbol >> #asSymbol) endPC.
 ]

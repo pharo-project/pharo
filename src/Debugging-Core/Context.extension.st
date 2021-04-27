@@ -148,6 +148,11 @@ Context >> return: value to: aSender [
 ]
 
 { #category : #'*Debugging-Core' }
+Context >> returnSelfPrimitive [
+	^256
+]
+
+{ #category : #'*Debugging-Core' }
 Context class >> runSimulated: aBlock [
 	"Simulate the execution of the argument, current. Answer the result it 
 	returns."
@@ -310,8 +315,9 @@ Context >> stepToSendOrReturn [
 
 	| context |
 	self method isQuick ifTrue: [ 
-		pc := pc + self quickMethodPrimitiveBytecodeSize.
-		^ self ].
+		self method primitive = self returnSelfPrimitive ifFalse: [ 
+			pc := pc + self quickMethodPrimitiveBytecodeSize.
+			^ self ] ].
 	[ 
 	self isDead or: [ 
 		self willSend or: [ 
