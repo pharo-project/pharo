@@ -583,6 +583,22 @@ RubSmalltalkEditorTest >> testBestNodeWithValidValueMidSource [
 
 ]
 
+{ #category : #'tests-copy' }
+RubSmalltalkEditorTest >> testCopySelection [
+
+	| textArea editor |
+	textArea := RubEditingArea new.
+	textArea editingMode: RubSmalltalkCodeMode new.
+
+	editor := RubSmalltalkEditor new
+		          textArea: textArea;
+		          addString: 'aa "asdfasdf"';
+		          selectInterval: (5 to: 12). 
+	self assert: editor selection equals: 'asdfasdf'.
+	self assert: editor selection class equals: Text.
+	editor copySelection.
+]
+
 { #category : #'tests-completion' }
 RubSmalltalkEditorTest >> testDefaultCompletionEngineUsesGlobalClass [
 
