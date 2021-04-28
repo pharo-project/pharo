@@ -449,8 +449,8 @@ RubSmalltalkEditor >> copySelection [
 		"The node, if a comment or a string, should entirely contain the selection.
 		We convert the node source interval to an open interval to ignore the node delimiters."
 		node sourceInterval asOpenInterval includesAll: self selectionInterval ])
-			ifTrue: [ self selection unescapeCharacter: escapingCharacter ]
-			ifFalse: [ self selection ].
+			ifTrue: [ self selection asString unescapeCharacter: escapingCharacter ]
+			ifFalse: [ self selection asString ].
 	self clipboardTextPut: selection.
 	self editingState previousInterval: self selectionInterval.
 
