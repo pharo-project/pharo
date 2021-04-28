@@ -11,7 +11,7 @@ Class {
 ClyDeprecatedItemTableDecorator class >> browserDecorationStrategy [
 	<classAnnotation>
 	
-	^ClyTableDecorationStrategy for: ClySystemBrowserContext
+	^ClyTableDecorationStrategyAnnotation for: ClySystemBrowserContext
 ]
 
 { #category : #decoration }

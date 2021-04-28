@@ -20,14 +20,14 @@ ClyPackageCommentEditorToolMorph class >> browserTabActivation [
 	"This declaration specifies that in any browser when packages are selected, a comment editor will be available in a tab."
 
 	<classAnnotation>
-	^ClyTabActivationStrategy for: RPackage asCalypsoItemContext
+	^ClyTabActivationStrategyAnnotation for: RPackage asCalypsoItemContext
 ]
 
 { #category : #activation }
 ClyPackageCommentEditorToolMorph class >> browserTabActivation2 [
 	<classAnnotation>
 	
-	^ClyTabActivationStrategy for: ClyClassGroup asCalypsoItemContext
+	^ClyTabActivationStrategyAnnotation for: ClyClassGroup asCalypsoItemContext
 ]
 
 { #category : #testing }

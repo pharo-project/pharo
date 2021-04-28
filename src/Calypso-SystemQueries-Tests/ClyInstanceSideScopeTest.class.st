@@ -12,20 +12,20 @@ ClyInstanceSideScopeTest >> scopeClass [
 
 { #category : #tests }
 ClyInstanceSideScopeTest >> testClassEnumeration [
-	scope := ClyInstanceSideScope ofAll: {ClyClass1FromP1 classSide. ClyClass2FromP1}.
+	scope := ClyInstanceSideScope ofAll: {ClyClass1FromP1Mock classSide. ClyClass2FromP1Mock}.
 	
 	scope classesDo: [ :each | result add: each ].
 	
-	self assert: result asArray equals: {ClyClass1FromP1. ClyClass2FromP1}
+	self assert: result asArray equals: {ClyClass1FromP1Mock. ClyClass2FromP1Mock}
 ]
 
 { #category : #tests }
 ClyInstanceSideScopeTest >> testMethodsEnumerationWhenBasisIsClass [
 
 	| expected |
-	scope := ClyInstanceSideScope of: ClyClass1FromP1.
+	scope := ClyInstanceSideScope of: ClyClass1FromP1Mock.
 	scope methodsDo: [ :each | result add: each selector ].
-	expected := ClyClass1FromP1 localMethods collect: [:each | each selector].
+	expected := ClyClass1FromP1Mock localMethods collect: [:each | each selector].
 	self assert: result sorted asArray equals: expected sorted asArray
 ]
 
@@ -33,9 +33,9 @@ ClyInstanceSideScopeTest >> testMethodsEnumerationWhenBasisIsClass [
 ClyInstanceSideScopeTest >> testMethodsEnumerationWhenBasisIsMetaclass [
 
 	| expected |
-	scope := ClyInstanceSideScope of: ClyClass1FromP1 classSide.	
+	scope := ClyInstanceSideScope of: ClyClass1FromP1Mock classSide.	
 	scope methodsDo: [ :each | result add: each selector ].
-	expected := ClyClass1FromP1 localMethods collect: [:each | each selector].
+	expected := ClyClass1FromP1Mock localMethods collect: [:each | each selector].
 	self assert: result sorted asArray equals: expected sorted asArray
 ]
 

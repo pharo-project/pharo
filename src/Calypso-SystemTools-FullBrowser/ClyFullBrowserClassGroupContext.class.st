@@ -11,7 +11,7 @@ Class {
 ClyFullBrowserClassGroupContext class >> selectionStrategy [
 	<classAnnotation>
 	
-	^ClyContextSelectionStrategy for: ClyFullBrowser selectionType: ClyClassGroup
+	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyClassGroup
 ]
 
 { #category : #testing }

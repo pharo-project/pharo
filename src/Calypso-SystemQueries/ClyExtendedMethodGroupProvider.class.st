@@ -12,7 +12,7 @@ ClyExtendedMethodGroupProvider >> createMethodGroupFor: aMethodQuery from: aClas
 	
 	| subgroupsQuery |
 	subgroupsQuery := ClyExtendingPackagesQuery 
-		from: aClassScope as: ClyGroupedExtendingPackages new.
+		from: aClassScope as: ClyGroupedExtendingPackagesResult new.
 		
 	^ClyMethodGroup 
 		named: 'extensions' priority: 9

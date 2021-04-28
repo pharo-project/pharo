@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyAllMethodGroupsQueryTest,
-	#superclass : #ClyTypedQueryTestCase,
+	#superclass : #ClyTypedQueryTest,
 	#category : #'Calypso-SystemQueries-Tests-Queries'
 }
 
@@ -19,7 +19,7 @@ ClyAllMethodGroupsQueryTest >> setUp [
 { #category : #tests }
 ClyAllMethodGroupsQueryTest >> testCheckIfEmpty [
 	| scope |
-	scope := ClyInstanceSideScope of: ClyClass1FromP1 in: environment.
+	scope := ClyInstanceSideScope of: ClyClass1FromP1Mock in: environment.
 	query scope: scope.
 	
 	self deny: query checkEmptyResult
@@ -38,10 +38,10 @@ ClyAllMethodGroupsQueryTest >> testConvertingToNewMetaLevel [
 { #category : #tests }
 ClyAllMethodGroupsQueryTest >> testFromSingleClass [
 
-	self queryFromScope: ClyInstanceSideScope of: ClyClass1FromP1.
+	self queryFromScope: ClyInstanceSideScope of: ClyClass1FromP1Mock.
 	
 	self assert: (resultItems collect: #class as: Set) equals: { ClyAllMethodGroup. ClyTaggedMethodGroup} asSet.
 	self 
 		assert: (resultItems select:[:each | each class = ClyTaggedMethodGroup] thenCollect: #tag) asSet
-		equals: ClyClass1FromP1 tagsForMethods asSet
+		equals: ClyClass1FromP1Mock tagsForMethods asSet
 ]

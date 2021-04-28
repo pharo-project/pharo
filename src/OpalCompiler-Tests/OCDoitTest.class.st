@@ -93,6 +93,20 @@ OCDoitTest >> testDoItRequestorReadRequestorVar [
 ]
 
 { #category : #tests }
+OCDoitTest >> testDoItRequestorShadow [
+
+	| value  |
+	"we can shadow a var defined in the requestor without error"
+	value := OpalCompiler new
+		          source: '|requestorVarForTesting| requestorVarForTesting';
+		          noPattern: true;
+		          requestor: self;
+		          evaluate.
+		
+	self assert: value equals: nil
+]
+
+{ #category : #tests }
 OCDoitTest >> testDoitContextCheckClass [
 	"if we create a parse tree for a doit in a context, the class should be correctly set"
 	

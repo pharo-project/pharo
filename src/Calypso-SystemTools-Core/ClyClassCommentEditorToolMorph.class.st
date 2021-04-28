@@ -11,7 +11,7 @@ Class {
 ClyClassCommentEditorToolMorph class >> classCommentTabActivation [
 	<classAnnotation>
 	
-	^ClyTabActivationStrategy for: ClyClassComment asCalypsoItemContext
+	^ClyTabActivationStrategyAnnotation for: ClyClassComment asCalypsoItemContext
 ]
 
 { #category : #accessing }

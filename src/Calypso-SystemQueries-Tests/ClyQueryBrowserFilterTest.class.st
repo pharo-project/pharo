@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyQueryBrowserFilterTest,
-	#superclass : #ClyItemFilterTestCase,
+	#superclass : #ClyItemFilterTest,
 	#category : #'Calypso-SystemQueries-Tests-Queries'
 }
 

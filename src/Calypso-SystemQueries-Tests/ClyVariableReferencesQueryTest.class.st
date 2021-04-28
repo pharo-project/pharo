@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyVariableReferencesQueryTest,
-	#superclass : #ClyVariableReferencesTestCase,
+	#superclass : #ClyVariableReferencesTest,
 	#instVars : [
 		'var2'
 	],
@@ -48,9 +48,9 @@ ClyVariableReferencesQueryTest >> testCheckIfEmpty [
 ClyVariableReferencesQueryTest >> testForClassVariable [
 
 	| classVar |
-	classVar := ClyClassVariable named: #ClassVar1 definedIn: ClyClass2FromP1.
+	classVar := ClyClassVariable named: #ClassVar1 definedIn: ClyClass2FromP1Mock.
 	query := ClyVariableReferencesQuery of: classVar.
-	self queryFromScope: ClyClassScope of: ClyClass2FromP1.
+	self queryFromScope: ClyClassScope of: ClyClass2FromP1Mock.
 	
 	self assert: resultItems size equals: 2.	
 	self assert: foundSelectors equals: #(instanceSideClassVar1Reader instanceSideClassVar1Writer)

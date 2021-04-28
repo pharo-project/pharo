@@ -68,11 +68,6 @@ DoItVariable >> actualVariable: aVariable [
 	name := actualVariable name
 ]
 
-{ #category : #converting }
-DoItVariable >> asDoItVariableFrom: aContext [
-	^self
-]
-
 { #category : #accessing }
 DoItVariable >> doItContext [
 	^ doItContext
@@ -177,31 +172,6 @@ DoItVariable >> isWorkspaceVariable [
 { #category : #accessing }
 DoItVariable >> key [ 
 	^self name
-]
-
-{ #category : #'read/write usage' }
-DoItVariable >> markEscapingRead [
-	"ignored, the escape status of the actualVariable does not change"
-]
-
-{ #category : #'read/write usage' }
-DoItVariable >> markEscapingWrite [
-	"ignored, the escape status of the actualVariable does not change"
-]
-
-{ #category : #'read/write usage' }
-DoItVariable >> markRead [
-	"ignored, the escape status of the actualVariable does not change"
-]
-
-{ #category : #'read/write usage' }
-DoItVariable >> markRepeatedWrite [
-	"ignored, the escape status of the actualVariable does not change"
-]
-
-{ #category : #'read/write usage' }
-DoItVariable >> markWrite [
-	"ignored, the escape status of the actualVariable does not change"
 ]
 
 { #category : #printing }

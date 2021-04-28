@@ -10,7 +10,7 @@ Class {
 { #category : #tests }
 ClyNotRemoveAndShowUsersClassStrategyTest >> testExecutingCommand [
 	| browser command strategy |
-	browser := MockClyBrowser new.
+	browser := ClyBrowserMock new.
 	strategy := ClyNotRemoveAndShowUsersClassStrategy newForBrowser: browser.
 	command := SycRemoveClassCommand for: { TRBProgramNodeVisitor }.
 	strategy execute: command.

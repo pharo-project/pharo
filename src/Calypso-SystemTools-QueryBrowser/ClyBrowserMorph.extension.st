@@ -8,7 +8,7 @@ ClyBrowserMorph >> browseImplementorsOf: aSymbol [
 		classBinding ifNotNil: [ 
 			classToBrowse := classBinding value.
 			classToBrowse isClassOrTrait ifFalse: [ classToBrowse := classToBrowse class ].
-			^self spawnBrowser: ClyFullBrowser withState: [ :browser | 
+			^self spawnBrowser: ClyFullBrowserMorph withState: [ :browser | 
 				browser selectClass: classToBrowse]]].
 	
 	self spawnQueryBrowserOn: (ClyMessageImplementorsQuery of: aSymbol)
@@ -58,7 +58,7 @@ ClyBrowserMorph >> spawnQueryBrowserOn: aQuery withState: navigationBlock [
 			"For slow queries we will not wait and open a browser to indicate execution progress"
 			^self inform: 'There are no ', targetQuery description ]  ].
 	
-	self spawnBrowser: ClyQueryBrowser withState: [ :browser | 
+	self spawnBrowser: ClyQueryBrowserMorph withState: [ :browser | 
 		browser queryScopes: self allNavigationScopes.
 		browser showResultOf: targetQuery.
 		navigationBlock valueWithPossibleArgs: {browser}]
