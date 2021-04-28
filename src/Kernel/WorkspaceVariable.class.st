@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #testing }
-WorkspaceVariable >> allowShadowing [
+WorkspaceVariable >> allowsShadowing [
 	^true
 ]
 

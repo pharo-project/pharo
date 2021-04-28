@@ -73,7 +73,7 @@ Variable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 ]
 
 { #category : #testing }
-Variable >> allowShadowing [
+Variable >> allowsShadowing [
 	^false
 ]
 
