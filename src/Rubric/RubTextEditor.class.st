@@ -800,6 +800,7 @@ RubTextEditor >> defaultCommandKeymapping [
 	(KeyboardKey keypadRight -> #cursorRight:).
 	(KeyboardKey keypadUp -> #cursorUp:).
 	(KeyboardKey keypadDown -> #cursorDown:).
+	(KeyboardKey keypadEnter -> #crWithIndent:).
 	(KeyboardKey tab -> #tab:).
 	(KeyboardKey delete -> #forwardDelete:) } do: [ :assoc | 
 		cmdMap at: assoc key  put: assoc value ].
