@@ -17,7 +17,8 @@ Class {
 		'flushProcess',
 		'contentReceived',
 		'timeToWait',
-		'baseDirectory'
+		'baseDirectory',
+		'versionLog'
 	],
 	#category : #'NewTools-Playground-Model'
 }
@@ -129,7 +130,8 @@ StPlaygroundPage >> flush [
 			ensureDelete;
 			writeStreamDo: [ :stream |
 				stream << flushContents ].
-		flushContents := nil ]
+		flushContents := nil.
+		self storeVersion ]
 ]
 
 { #category : #initialization }
@@ -166,6 +168,20 @@ StPlaygroundPage >> spawnFlushProcess [
 	] fork
 ]
 
+{ #category : #'accessing versions' }
+StPlaygroundPage >> storeVersion [
+	| entry |
+
+	"If last version is equal to the one that I want to store, skip it"
+	self versions ifNotEmpty: [ :versions | 
+		versions last content = self contents 
+			ifTrue: [ ^ self ] ].
+	"store new version"
+	entry := OmEntry content: self contents.
+	entry tags at: #timestamp put: DateAndTime now.
+	self versionLog newEntry: entry
+]
+
 { #category : #accessing }
 StPlaygroundPage >> timeToWait [
 
@@ -176,4 +192,19 @@ StPlaygroundPage >> timeToWait [
 StPlaygroundPage >> timeToWait: aDuration [
 
 	timeToWait := aDuration
+]
+
+{ #category : #'accessing versions' }
+StPlaygroundPage >> versionLog [
+	
+	^ versionLog ifNil: [ 
+		versionLog := OmFileStore fromFile: (self fileReference withExtension: 'ombu') ]
+]
+
+{ #category : #'accessing versions' }
+StPlaygroundPage >> versions [
+	
+	^ Array streamContents: [ :stream | 
+		self versionLog entriesDo: [ :anEntry | 
+			stream nextPut: anEntry ] ]
 ]
