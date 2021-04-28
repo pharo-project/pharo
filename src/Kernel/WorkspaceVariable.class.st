@@ -7,6 +7,11 @@ Class {
 	#category : #'Kernel-Variables'
 }
 
+{ #category : #testing }
+WorkspaceVariable >> allowShadowing [
+	^true
+]
+
 { #category : #'code generation' }
 WorkspaceVariable >> emitStore: methodBuilder [
 

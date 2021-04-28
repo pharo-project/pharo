@@ -72,6 +72,11 @@ Variable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitVariableNode: aNode
 ]
 
+{ #category : #testing }
+Variable >> allowShadowing [
+	^false
+]
+
 { #category : #converting }
 Variable >> asDoItVariableFrom: aContext [
 	"Specific kind of variables may require special logic to be visible in DoIt expressions.
