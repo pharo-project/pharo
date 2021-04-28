@@ -14,6 +14,11 @@ StMockSession >> implement: aMessage classified: messageCategory inClass: aClass
 	
 ]
 
+{ #category : #accessing }
+StMockSession >> interruptedContext [
+	 ^self
+]
+
 { #category : #'debugging actions' }
 StMockSession >> restart: aContext [
 ]

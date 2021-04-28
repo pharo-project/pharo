@@ -52,7 +52,7 @@ StDebuggerContextInteractionModel >> doItReceiver [
 { #category : #testing }
 StDebuggerContextInteractionModel >> hasBindingOf: aString [
 	"The debugger does not define new bindings"
-	^nil
+	^ false
 ]
 
 { #category : #testing }

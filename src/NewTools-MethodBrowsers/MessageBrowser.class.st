@@ -303,9 +303,8 @@ MessageBrowser >> initializeDropList [
 { #category : #initialization }
 MessageBrowser >> initializePresenters [
 	super initializePresenters.
-	textModel := self newCode.
 
-	textModel whenBuiltDo: [ :ann | ann widget font: self codeFont ].
+	textModel := self newCode.
 	refreshingBlock := [ :item | true ].
 
 	self
@@ -460,7 +459,6 @@ MessageBrowser >> selectItem: item [
 	textModel text: (self textConverter
 		method: item;
 		getText).
-	textModel clearUndoManager.
 	self installIconStylerFor: item
 ]
 
