@@ -17,12 +17,6 @@ Class {
 	#category : #'Microdown-Model'
 }
 
-{ #category : #testing }
-MicAbstractBlock class >> isAbstract [
-
-	^ self == MicAbstractBlock
-]
-
 { #category : #adding }
 MicAbstractBlock >> addChild: childBlock [
 	children add: childBlock

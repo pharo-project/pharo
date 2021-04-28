@@ -25,12 +25,6 @@ Class {
 	#category : #'Microdown-Model'
 }
 
-{ #category : #testing }
-MicContinuousMarkedBlock class >> isAbstract [
-
-	^ self == MicContinuousMarkedBlock
-]
-
 { #category : #actions }
 MicContinuousMarkedBlock >> addLineAndReturnNextNode: line [
 	"line is assumed to be of the form 'chararacters some text' e.g., '> some text'
