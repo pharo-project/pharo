@@ -24,7 +24,6 @@ SpDemoCheckboxesPresenter class >> defaultSpec [
 				add: #checkboxDisabled;
 				add: #checkboxWithColor;
 				add: #checkboxWithHelp;
-				add: #checkboxWithLabelOnLeft;
 				yourself);
 		add: #checkboxExample;
 		yourself
@@ -97,12 +96,7 @@ SpDemoCheckboxesPresenter >> initializePresenters [
 		label: 'with help';
 		help: 'this is checkbox with help';
 		yourself.
-	checkboxWithLabelOnLeft := self newCheckBox 
-		label: 'left';
-		yourself.
 	checkboxExample := self instantiate: SpCheckBoxExample.
-		
-	self whenBuiltDo: [ 
-		checkboxWithLabelOnLeft labelOnLeft.].		
+
 																						
 ]
