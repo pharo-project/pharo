@@ -411,7 +411,7 @@ StSpotter >> initialize [
 
 { #category : #initialization }
 StSpotter >> initializeDialogWindow: aDialogWindowPresenter [
-
+ 
 	aDialogWindowPresenter closeOnBackdropClick: true
 ]
 
