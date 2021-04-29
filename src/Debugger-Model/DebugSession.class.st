@@ -538,7 +538,7 @@ DebugSession >> stepOver: aContext [
 	after the invoked method returns."
 	
 	| newContext |
-	
+	aContext stepIntoQuickMethod: false.
 	(self isContextPostMortem: aContext) ifTrue: [^ self].
 	
 	newContext := interruptedProcess completeStep: aContext.
@@ -560,7 +560,7 @@ DebugSession >> stepThrough [
 DebugSession >> stepThrough: aContext [
 	"Send messages until you return to selectedContext.
 	 Used to step into a block in the method."
-	
+	aContext stepIntoQuickMethod: false.
 	(self isContextPostMortem: aContext) ifTrue: [^ self].
 	
 	interruptedProcess stepToHome: aContext.
