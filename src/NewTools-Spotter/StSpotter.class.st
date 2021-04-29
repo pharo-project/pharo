@@ -128,6 +128,20 @@ StSpotter class >> open [
 	^ spotter openModalWithSpec
 ]
 
+{ #category : #'instance creation' }
+StSpotter class >> openOn: aModel [
+
+	self reset.
+	spotter := self on: aModel.
+	^ spotter openModalWithSpec
+]
+
+{ #category : #'instance creation' }
+StSpotter class >> openOnOrigin: anObject [
+
+	^ self openOn: (StSpotterModel newOrigin: anObject)
+]
+
 { #category : #settings }
 StSpotter class >> previewVisible [
 		
@@ -397,7 +411,7 @@ StSpotter >> initialize [
 
 { #category : #initialization }
 StSpotter >> initializeDialogWindow: aDialogWindowPresenter [
-
+ 
 	aDialogWindowPresenter closeOnBackdropClick: true
 ]
 

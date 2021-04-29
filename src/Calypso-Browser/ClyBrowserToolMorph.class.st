@@ -532,8 +532,7 @@ ClyBrowserToolMorph >> selectAsExtraTab [
 { #category : #controlling }
 ClyBrowserToolMorph >> selectAsMainTab [
 
-	containerTab selected: true
-
+	containerTab addToSelection
 ]
 
 { #category : #initialization }

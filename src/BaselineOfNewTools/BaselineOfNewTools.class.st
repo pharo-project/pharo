@@ -11,8 +11,8 @@ Class {
 BaselineOfNewTools class >> releaseCommit [
 	"The commit corresponding to current release (to be used on bootstrap process)"
 	
-	"v0.6.4"
-	^ 'ad4ad933695435588b063d710cbc1a71bbbc41f2'
+	"v0.6.5"
+	^ '2aaa7f6731479e4a7b942252f20a5b807d802912'
 ]
 
 { #category : #baselines }

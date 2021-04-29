@@ -68,10 +68,19 @@ SpMorphicTreeTableDataSource >> cellIndentFor: item [
 	^ item depth * 16
 ]
 
+{ #category : #private }
+SpMorphicTreeTableDataSource >> collapsePath: aPath [
+
+	(self itemAtPath: aPath) ifNotNil:[ :aNode | 
+		aNode collapseAll.
+		self tableRefresh ]
+]
+
 { #category : #accessing }
 SpMorphicTreeTableDataSource >> expandPath: anArray [
 
-	self expandPath: anArray root: self rootItem children
+	self expandPath: anArray root: self rootItem children.
+	self tableRefresh
 ]
 
 { #category : #accessing }
