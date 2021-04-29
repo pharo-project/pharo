@@ -1,3 +1,7 @@
+"
+A command to ""evaluate and go"" the content of a selection (evaluate the selection and open an inspector with the results).
+
+"
 Class {
 	#name : #StEvaluateCommand,
 	#superclass : #SpToolCommand,
@@ -28,6 +32,12 @@ StEvaluateCommand class >> defaultShortcutKey [
 	^ $g command mac 
 		| $g control win
 		| $g control unix
+]
+
+{ #category : #documentation }
+StEvaluateCommand class >> documentContextRequiredSelectors [
+
+	^ super documentContextRequiredSelectors, #(doEvaluateAndGo)
 ]
 
 { #category : #executing }

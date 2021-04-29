@@ -22,7 +22,7 @@ StDebuggerContextInteractionModel >> behavior [
 { #category : #binding }
 StDebuggerContextInteractionModel >> bindingOf: aString [
 
-	^ (context lookupVar: aString) ifNotNil: [ :var | 
+	^ (context lookupVar: aString declare: false) ifNotNil: [ :var | 
 		  var asDoItVariableFrom: context ]
 ]
 
@@ -51,8 +51,8 @@ StDebuggerContextInteractionModel >> doItReceiver [
 
 { #category : #testing }
 StDebuggerContextInteractionModel >> hasBindingOf: aString [
-
-	^ (context lookupVar: aString) notNil
+	"The debugger does not define new bindings"
+	^ false
 ]
 
 { #category : #testing }

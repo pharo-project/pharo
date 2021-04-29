@@ -16,6 +16,7 @@ BaselineOfSpecCore >> baseline: spec [
 			package: 'Spec2-ObservableSlot';
 			package: 'Spec2-Layout' with: [ spec requires: #('Spec2-ObservableSlot') ];
 			package: 'Spec2-Core' with: [ spec requires: #('Spec2-ObservableSlot' 'Spec2-Layout') ];
+			package: 'Spec2-Dialogs' with: [ spec requires: #('Spec2-Core') ];
 			package: 'Spec2-CommandLine' with: [ spec requires: #('Spec2-Core') ];
 			package: 'Spec2-Commands';
 			package: 'Spec2-Transmission' with: [ spec requires: #('Spec2-Core') ];
@@ -43,6 +44,7 @@ BaselineOfSpecCore >> baseline: spec [
 		'Spec2-Transmission'
 		'Spec2-Commands' 
 		'Spec2-Core' 
+		'Spec2-Dialogs' 
 		'Spec2-CommandLine' 
 		'Spec2-Adapters-Stub' 
 		'Spec2-Interactions' 

@@ -7,9 +7,9 @@ Class {
 { #category : #accessing }
 BaselineOfSpec2 class >> releaseCommit [
 	"The commit corresponding to current release (to be used on bootstrap process)"
-
-	"v0.8.10"
-	^ '9bec8b8de1003fc6670ea71033da7ff2fca5627a'
+  
+	"v0.8.11"
+	^ '69ad69af2dbecf2ce225eda5277147a9a40ac450'
 ]
 
 { #category : #baseline }

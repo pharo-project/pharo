@@ -8,13 +8,6 @@ Class {
 }
 
 { #category : #'widget API' }
-SpMorphicWindowAdapter >> aboutText [
-
-	^ self model model
-		ifNotNil: [ :m | m aboutText ]
-]
-
-{ #category : #'widget API' }
 SpMorphicWindowAdapter >> aboutTitle [
     ^ self model model
          ifNotNil: [ :m | (m respondsTo: #aboutTitle)

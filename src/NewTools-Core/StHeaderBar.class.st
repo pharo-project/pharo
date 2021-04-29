@@ -88,7 +88,7 @@ StHeaderBar >> label: aString [
 { #category : #accessing }
 StHeaderBar >> shortcut: aShortcut [ 
 
-	self shortcutLabel: (aShortcut asKeyCombination acceptVisitor: OSPlatform current shortcutPrinter	)
+	self shortcutLabel: (KMShortcutPrinter toString: aShortcut)
 ]
 
 { #category : #private }
