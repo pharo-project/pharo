@@ -21,6 +21,7 @@ SDL2SpecialCharacterMapping class >> initialize [
 	Mapping := Dictionary new.
 	{
 	 SDLK_RETURN . Character cr.
+	 SDLK_KP_ENTER. Character cr.
 	 SDLK_BACKSPACE . Character backspace.
 	 SDLK_TAB . Character tab.
 	 SDLK_HOME . Character home.
