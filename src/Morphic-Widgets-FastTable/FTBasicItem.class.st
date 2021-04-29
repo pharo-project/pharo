@@ -87,6 +87,8 @@ FTBasicItem >> collapse [
 	If any selected elements are within the childrens of the collapsed element,
 	I select the collapsed element."
 
+	self isExpanded ifFalse: [ ^ self ].
+	
 	recentlyChanged := true.
 	self dataSource
 		updateSelectionWithCollectBlock:
