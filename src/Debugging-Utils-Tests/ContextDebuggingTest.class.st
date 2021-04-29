@@ -1,10 +1,28 @@
 Class {
 	#name : #ContextDebuggingTest,
 	#superclass : #TestCase,
+	#instVars : [
+		'instVar'
+	],
 	#category : #'Debugging-Utils-Tests'
 }
 
-{ #category : #tests }
+{ #category : #helpers }
+ContextDebuggingTest >> accessorMethod [
+	^instVar
+]
+
+{ #category : #helpers }
+ContextDebuggingTest >> contextForMethod: aCompiledMethod [
+
+	^ Context
+		  sender: thisContext
+		  receiver: self class basicNew
+		  method: aCompiledMethod
+		  arguments: #(  )
+]
+
+{ #category : #helpers }
 ContextDebuggingTest >> deadContext [
 	| process context |
 	process := [  ] newProcess.
@@ -13,40 +31,9 @@ ContextDebuggingTest >> deadContext [
 	^ context
 ]
 
-{ #category : #tests }
+{ #category : #helpers }
 ContextDebuggingTest >> selfReturnMethod [
 	#foo asSymbol 
-]
-
-{ #category : #tests }
-ContextDebuggingTest >> testRestartQuickMethod [
-
-	|aReceiver aMethodContext newContext stackSize|
-	aReceiver := 100@100 corner: 200@200.
-	aMethodContext := Context
-		sender: thisContext
-		receiver: aReceiver
-		method: (Rectangle >>#center)
-		arguments: #().
-	
-	"We step into #center to get on the topLeft message.
-	We did not change context."
-	aMethodContext step.
-	
-	"Now we step into #topLeft which is a quick method"
-	aMethodContext stepIntoQuickMethod: true.	
-	"We simulate a first step and we save the stack size"
-	newContext := aMethodContext step.
-	stackSize := newContext stack size.
-	"Now we simulate a restart of the context: the context is refreshed (pc reset) and
-	stepped to the first interesting bytecode (a send or a return)."
-	newContext privRefresh.
-	newContext := newContext stepToSendOrReturn.
-	
-	"The stack should be preserved"
-	self assert: newContext stack size equals: stackSize.
-	self assert: newContext stack first method identicalTo: (Rectangle >> #topLeft).
-	self assert: newContext stack second method identicalTo: (Rectangle >>#center)
 ]
 
 { #category : #tests }
@@ -59,21 +46,44 @@ ContextDebuggingTest >> testStepToSendOrReturn [
 ]
 
 { #category : #tests }
-ContextDebuggingTest >> testStepToSendOrReturnIntoReturnSelfQuickMethod [
+ContextDebuggingTest >> testUpdatePCForQuickPrimitiveRestart [
 
-	|aMethodContext newContext|
-	aMethodContext := Context
-		sender: thisContext
-		receiver: self class basicNew
-		method: (self class >> #selfReturnMethod)
-		arguments: #().
+	|method newContext  |
+	method := self class >> #accessorMethod.
+	newContext := self  contextForMethod: method.
+	newContext updatePCForQuickPrimitiveRestart.	
+	self
+		assert: newContext pc
+		equals: method initialPC + newContext quickMethodPrimitiveBytecodeSize.
+		
+	method := self class >> #zeroReturnMethod.
+	newContext := self contextForMethod: method.
+	newContext updatePCForQuickPrimitiveRestart.	
+	self
+		assert: newContext pc
+		equals: method initialPC + newContext quickMethodPrimitiveBytecodeSize.
+		
+	method := self class >> #trueReturnMethod.
+	newContext := self  contextForMethod: method.
+	newContext updatePCForQuickPrimitiveRestart.	
+	self
+		assert: newContext pc
+		equals: method endPC.
+		
+	method := Symbol >> #asSymbol.
+	newContext := self  contextForMethod: method.
+	newContext updatePCForQuickPrimitiveRestart.	
+	self
+		assert: newContext pc
+		equals: method endPC
+]
 
-	newContext := aMethodContext step.
-	aMethodContext stepIntoQuickMethod: true.
-	newContext := newContext step.
-	newContext := newContext stepToSendOrReturn. 	
-	
-	"Stepping to end or return of a quick method just returning self
-	puts the pc at the return of the quick method, if it is not already there."
-	self assert: newContext pc equals: (Symbol >> #asSymbol) endPC.
+{ #category : #helpers }
+ContextDebuggingTest >> trueReturnMethod [
+	^true
+]
+
+{ #category : #helpers }
+ContextDebuggingTest >> zeroReturnMethod [
+	^0
 ]

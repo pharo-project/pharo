@@ -148,8 +148,15 @@ Context >> return: value to: aSender [
 ]
 
 { #category : #'*Debugging-Core' }
+Context >> returnBooleanPrimitive [
+
+	^ 257
+]
+
+{ #category : #'*Debugging-Core' }
 Context >> returnSelfPrimitive [
-	^256
+
+	^ 256
 ]
 
 { #category : #'*Debugging-Core' }
@@ -309,23 +316,16 @@ Context >> stepToHome: aContext [
 
 { #category : #'*Debugging-Core' }
 Context >> stepToSendOrReturn [
-
 	"Simulate the execution of bytecodes until either sending a message or 
 	returning a value to the receiver (that is, until switching contexts)."
 
 	| context |
-	self method isQuick ifTrue: [ 
-		self method primitive = self returnSelfPrimitive ifFalse: [ 
-			pc := pc + self quickMethodPrimitiveBytecodeSize.
-			^ self ] ].
-	[ 
-	self isDead or: [ 
-		self willSend or: [ 
-			self willReturn or: [ self willStore or: [ self willCreateBlock ] ] ] ] ] 
-		whileFalse: [ 
+	[ self isDead or: [ self willSend or: [  self willReturn or: [ self willStore or: [self willCreateBlock ] ] ] ] ]
+		whileFalse: [
 			context := self step.
-			context == self ifFalse: [ "Caused by mustBeBoolean handling" 
-				^ context ] ]
+			context == self ifFalse: [
+				"Caused by mustBeBoolean handling"
+				^context ]]
 ]
 
 { #category : #'*Debugging-Core' }
@@ -434,6 +434,17 @@ Context >> tempsAndValuesLimitedTo: sizeLimit indent: indent [
 { #category : #'*Debugging-Core' }
 Context >> unusedBytecode [
 	^ self respondsToUnknownBytecode 
+]
+
+{ #category : #'*Debugging-Core' }
+Context >> updatePCForQuickPrimitiveRestart [
+
+	({self returnBooleanPrimitive.	self returnSelfPrimitive } includes: self method primitive) 
+		ifTrue: [ 
+			pc := self method endPC.
+			^ self ].
+
+	pc := pc + self quickMethodPrimitiveBytecodeSize
 ]
 
 { #category : #'*Debugging-Core' }
