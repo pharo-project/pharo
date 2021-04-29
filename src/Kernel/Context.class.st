@@ -2056,8 +2056,8 @@ Context >> stepIntoQuickMethod [
 ]
 
 { #category : #'debugger access' }
-Context >> stepIntoQuickMethod: aBoolean [ 
-	self compiledCode isCompiledBlock ifTrue: [ ^self ].
+Context >> stepIntoQuickMethod: aBoolean [
+
 	self compiledCode stepIntoQuickMethods: aBoolean
 ]
 

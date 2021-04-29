@@ -350,5 +350,11 @@ CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsInPragmaSelector
 
 { #category : #'tests - debugging support' }
 CompiledCodeTest >> testStepIntoQuickMethods [
-	self deny: self compiledMethod1 stepIntoQuickMethods 
+	|ctx compiledBlock|
+	
+	self deny: self compiledMethod1 stepIntoQuickMethods. 
+	ctx := [ 1 + 1 ] asContext.
+	compiledBlock := ctx method.
+	compiledBlock stepIntoQuickMethods: true.
+	self assert: compiledBlock method stepIntoQuickMethods equals: compiledBlock stepIntoQuickMethods
 ]
