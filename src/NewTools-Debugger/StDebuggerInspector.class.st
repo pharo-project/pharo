@@ -274,7 +274,6 @@ StDebuggerInspector >> updateLayoutForContexts: aContext isAssertionFailure: isT
 			^ self ].
 
 	currentLayoutSpec = self assertionLayoutSpec ifTrue: [ ^ self ].
-	signalerContext copy inspect.
 	self flag: 'Way too much magickal: why these indexes?'.
 	assertionFailure := StFailingAssertionInspector
 		                    diffInspectorsFromActual:
