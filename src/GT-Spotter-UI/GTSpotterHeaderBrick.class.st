@@ -6,7 +6,6 @@ Class {
 		'closeButton',
 		'spotterModel',
 		'settingsButton',
-		'helpButton',
 		'spinner'
 	],
 	#category : #'GT-Spotter-UI-Widgets'
@@ -35,28 +34,6 @@ GTSpotterHeaderBrick >> closeButton: aBrick [
 	self addBrickBack: closeButton
 ]
 
-{ #category : #accessing }
-GTSpotterHeaderBrick >> helpButton [
-
-	^ helpButton
-]
-
-{ #category : #accessing }
-GTSpotterHeaderBrick >> helpButton: aBrick [
-	 
-	helpButton ifNotNil: [self removeBrick: helpButton].
-	helpButton := aBrick.
-	
-	self themer spotterThemer helpButtonWidgetStyleFor: helpButton.
-	self themer spotterThemer helpButtonStyleFor: helpButton.
-	
-	helpButton
-		hintTitle: 'Spotter help';
-		action: [ self inform: 'GT Help is not available anymore' ].
-	
-	self addBrickBack: helpButton
-]
-
 { #category : #actions }
 GTSpotterHeaderBrick >> hideSpinner [
 
@@ -74,19 +51,12 @@ GTSpotterHeaderBrick >> initialize [
 	self spinner: self newSpinner.
 	self hideSpinner.
 
-	self helpButton: self newHelpButton.
 	self closeButton: self newCloseButton.
 	
 ]
 
 { #category : #'instance creation' }
 GTSpotterHeaderBrick >> newCloseButton [
-
-	^ GLMHintableActionButtonBrick new
-]
-
-{ #category : #'instance creation' }
-GTSpotterHeaderBrick >> newHelpButton [
 
 	^ GLMHintableActionButtonBrick new
 ]
@@ -131,7 +101,7 @@ GTSpotterHeaderBrick >> onHideHints [
 
 	self themer spotterThemer hintHideStyleFor: self settingsButton.
 	self themer spotterThemer hintHideStyleFor: self closeButton.
-	self themer spotterThemer hintHideStyleFor: self helpButton.
+	 
 ]
 
 { #category : #'event handling' }
@@ -139,7 +109,7 @@ GTSpotterHeaderBrick >> onRevealHints [
 
 	self themer spotterThemer hintRevealStyleFor: self settingsButton.
 	self themer spotterThemer hintRevealStyleFor: self closeButton.
-	self themer spotterThemer hintRevealStyleFor: self helpButton
+	 
 ]
 
 { #category : #'brick-properties-events' }
