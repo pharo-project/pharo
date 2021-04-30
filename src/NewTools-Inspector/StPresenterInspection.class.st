@@ -1,3 +1,7 @@
+"
+An inspection container to hold any kind of presenter and show them as inspections.
+Called in `SpPresenter>>#asInspection`, a presenter inspection is used to build an inspector, when collecting the inspections defined for the instance.
+"
 Class {
 	#name : #StPresenterInspection,
 	#superclass : #StInspection,

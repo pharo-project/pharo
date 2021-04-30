@@ -1,13 +1,13 @@
 Class {
 	#name : #ClyAbstractMethodGroupProviderTest,
-	#superclass : #ClyMethodGroupProviderTestCase,
+	#superclass : #ClyMethodGroupProviderTest,
 	#category : #'Calypso-SystemPlugins-InheritanceAnalysis-Queries-Tests'
 }
 
 { #category : #running }
 ClyAbstractMethodGroupProviderTest >> classSampleWhichHasGroup [
 
-	^ClyAbstractClassExample
+	^ClyAbstractClassMock
 ]
 
 { #category : #running }

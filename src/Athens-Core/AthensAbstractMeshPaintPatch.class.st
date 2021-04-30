@@ -16,6 +16,12 @@ AthensAbstractMeshPaintPatch class >> controlPoints: controlPoints colors: color
 	^ self new controlPoints: controlPoints; colors: colors; yourself
 ]
 
+{ #category : #testing }
+AthensAbstractMeshPaintPatch class >> isAbstract [
+
+	^ self == AthensAbstractMeshPaintPatch
+]
+
 { #category : #accessing }
 AthensAbstractMeshPaintPatch >> colors [
 	^ colors

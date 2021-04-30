@@ -132,6 +132,11 @@ StSpotterPragmaBasedProcessor >> installKeymappingsOn: aGTSpotterMorph [
 				toAction: [ aGTSpotterMorph onKeyProcessor: self ] ]
 ]
 
+{ #category : #'key-bindings' }
+StSpotterPragmaBasedProcessor >> installKeymappingsOn: aPresenter onExecution: aBlock [
+
+]
+
 { #category : #testing }
 StSpotterPragmaBasedProcessor >> isRelevantForQuery: categoryQueryPrefix [
 	| trimmedProcessorTitle |

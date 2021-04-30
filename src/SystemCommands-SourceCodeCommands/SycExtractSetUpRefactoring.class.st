@@ -25,9 +25,23 @@ SycExtractSetUpRefactoring >> executeRefactoring [
 	refactoring execute
 ]
 
+{ #category : #accessing }
+SycExtractSetUpRefactoring >> icon [ 
+	^ self iconNamed: #glamorousRestart
+]
+
+{ #category : #initialization }
+SycExtractSetUpRefactoring >> initialize [
+	super initialize.
+	self
+		description: 'Extract setUp and find occurrences.'
+]
+
 { #category : #testing }
 SycExtractSetUpRefactoring >> isApplicable [
-	^context isMethodSelected and: [ context lastSelectedMethod selector isTestSelector  ]
+
+	^ context isMethodSelected and: [ 
+		  context lastSelectedMethod selector isTestSelector ]
 ]
 
 { #category : #accessing }

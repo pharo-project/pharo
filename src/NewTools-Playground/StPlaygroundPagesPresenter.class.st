@@ -27,7 +27,7 @@ StPlaygroundPagesPresenter class >> defaultExtent [
 StPlaygroundPagesPresenter class >> defaultSpec [
 
 	^ SpPanedLayout newHorizontal
-		position: 30 percent;
+		positionOfSlider: 30 percent;
 		add: #pageListPanel;
 		add: #pagePreviewPanel;
 		yourself
@@ -79,8 +79,11 @@ StPlaygroundPagesPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 
 	aDialogWindowPresenter 
 		centeredRelativeToTopWindow;
-		addButton: 'Close' do: [ :presenter |
+		addButton: 'Load' do: [ :presenter |
 			presenter triggerOkAction.
+			self loadSelectedPage ];		
+		addButton: 'Close' do: [ :presenter |
+			presenter triggerCancelAction.
 			presenter close ]
 ]
 

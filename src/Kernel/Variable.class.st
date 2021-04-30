@@ -72,9 +72,19 @@ Variable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitVariableNode: aNode
 ]
 
+{ #category : #testing }
+Variable >> allowsShadowing [
+	^false
+]
+
 { #category : #converting }
 Variable >> asDoItVariableFrom: aContext [
-	^ DoItVariable fromContext: aContext variable: self
+	"Specific kind of variables may require special logic to be visible in DoIt expressions.
+	For example local variables can't be accessed directly in DoIt expressions in the debugger:
+		- DoIt is executed using new process where there are no temps from the original context.
+	In such cases subclasses should return adapter variable here to represent receiver in DoIt method.
+	DoItVariable class is implemented with this purpose (see the class comment and tests)"
+	^ self
 ]
 
 { #category : #queries }

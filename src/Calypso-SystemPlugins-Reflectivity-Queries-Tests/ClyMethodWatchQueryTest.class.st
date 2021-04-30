@@ -61,7 +61,7 @@ ClyMethodWatchQueryTest >> testCheckIfEmpty [
 	self deny: query checkEmptyResult.
 	
 	query scope: (ClyMethodScope
-		of: (ClyClassWithBreakpoints >> #methodWithoutBreakpoints) in: environment).
+		of: (ClyClassWithBreakpointsMock >> #methodWithoutBreakpoints) in: environment).
 	self assert: query checkEmptyResult
 ]
 

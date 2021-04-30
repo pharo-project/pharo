@@ -1,25 +1,25 @@
 Class {
 	#name : #ClyNavigationEnvironmentTest,
-	#superclass : #ClyNavigationEnvironmentTestCase,
+	#superclass : #ClyAbsractNavigationEnvironmentTest,
 	#category : #'Calypso-NavigationModel-Tests'
 }
 
 { #category : #helpers }
 ClyNavigationEnvironmentTest >> createQueryFromScope: aScope [
 	aScope bindTo: environment.
-	^ ClyQueryExampleReturningScopeBasis from: aScope
+	^ ClyReturningScopeBasisExampleQuery from: aScope
 ]
 
 { #category : #helpers }
 ClyNavigationEnvironmentTest >> createQueryFromScopeOf: aBasisObject [
-	^ self createQueryFromScope: (ClyScopeExample of: aBasisObject)
+	^ self createQueryFromScope: (ClyExampleScope of: aBasisObject)
 ]
 
 { #category : #tests }
 ClyNavigationEnvironmentTest >> testCheckEmptyQueryWhenThereIsEmptyResult [
 
 	| query result |
-	query := self createQueryFromScope: ClyScopeExample empty.
+	query := self createQueryFromScope: ClyExampleScope empty.
 	result := environment query: query.
 	self assert: result items isEmpty.
 	
@@ -30,7 +30,7 @@ ClyNavigationEnvironmentTest >> testCheckEmptyQueryWhenThereIsEmptyResult [
 ClyNavigationEnvironmentTest >> testCheckEmptyQueryWhenThereIsNoResultButItWouldBeEmpty [
 
 	| query |
-	query := self createQueryFromScope: ClyScopeExample empty.
+	query := self createQueryFromScope: ClyExampleScope empty.
 	
 	self assert: (environment isQueryEmpty: query)
 ]

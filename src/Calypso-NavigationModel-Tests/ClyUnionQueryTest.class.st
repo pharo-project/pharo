@@ -1,14 +1,14 @@
 Class {
 	#name : #ClyUnionQueryTest,
-	#superclass : #ClyCompositeQueryTestCase,
+	#superclass : #ClyCompositeQueryTest,
 	#category : #'Calypso-NavigationModel-Tests'
 }
 
 { #category : #running }
 ClyUnionQueryTest >> createQuery [
 	^ClyUnionQuery with: { 
-		ClyQueryExampleReturningScopeBasis from: ClyScopeExample of: self class in: environment.
-		ClyQueryExampleReturningScopeBasis2 from: ClyScopeExample2 of: self class superclass in: environment}
+		ClyReturningScopeBasisExampleQuery from: ClyExampleScope of: self class in: environment.
+		ClyReturningScopeBasis2ExampleQuery from: ClyExample2Scope of: self class superclass in: environment}
 ]
 
 { #category : #running }
@@ -19,8 +19,8 @@ ClyUnionQueryTest >> queryClass [
 { #category : #tests }
 ClyUnionQueryTest >> testConvertingWithNewScopeWhenAllSubqueriesAreSameKind [
 	| newScope convertedQuery |
-	query subqueries: {(self subqueryFromScope: ClyScopeExample of: Array) . (self subqueryFromScope: ClyScopeExample2 of: String)}.
-	newScope := ClyScopeExample2 of: #someBasis in: environment.
+	query subqueries: {(self subqueryFromScope: ClyExampleScope of: Array) . (self subqueryFromScope: ClyExample2Scope of: String)}.
+	newScope := ClyExample2Scope of: #someBasis in: environment.
 	convertedQuery := query withScope: newScope.
 	self assert: convertedQuery class equals: query subqueries anyOne class.
 	self assert: convertedQuery scope equals: newScope.
@@ -31,9 +31,9 @@ ClyUnionQueryTest >> testConvertingWithNewScopeWhenAllSubqueriesAreSameKind [
 ClyUnionQueryTest >> testCreationFromAnotherCompositeQueryAndNewDifferentSubquery [
 
 	| subquery1 subquery2 subquery3 |
-	subquery1 := self subqueryFromScope: ClyScopeExample of: Array.
-	subquery2 := self subqueryFromScope: ClyScopeExample2 of: String.
-	subquery3 := ClyQueryExampleReturningScopeBasis2 from: ClyScopeExample of: Object in: environment.
+	subquery1 := self subqueryFromScope: ClyExampleScope of: Array.
+	subquery2 := self subqueryFromScope: ClyExample2Scope of: String.
+	subquery3 := ClyReturningScopeBasis2ExampleQuery from: ClyExampleScope of: Object in: environment.
 	
 	query := subquery1, subquery2, subquery3.
 	
@@ -47,22 +47,22 @@ ClyUnionQueryTest >> testCreationFromAnotherCompositeQueryAndSimilarQuery [
 
 	| subquery1 subquery2 subquery3 |
 	subquery1 := self subqueryFromScopeOf: Array.
-	subquery2 := self subqueryFromScope: ClyScopeExample2 of: String.
+	subquery2 := self subqueryFromScope: ClyExample2Scope of: String.
 	subquery3 := self subqueryFromScopeOf: Object.	
 		
 	query := subquery1, subquery2, subquery3.
 	
 	self assert: query class equals: self queryClass.
 	self assert: query subqueries equals: { 
-		self subqueryFromScope: (ClyScopeExample ofAll: { Array. Object }). subquery2} asSet.
+		self subqueryFromScope: (ClyExampleScope ofAll: { Array. Object }). subquery2} asSet.
 	self assert: query requiredResult equals: subquery1 requiredResult
 ]
 
 { #category : #tests }
 ClyUnionQueryTest >> testCreationFromTwoDifferentTypedQueries [
 	| subquery1 subquery2 |
-	subquery1 := ClyQueryExampleReturningScopeBasis from: ClyScopeExample of: Array in: environment.
-	subquery2 := ClyQueryExampleReturningScopeBasis2 from: ClyScopeExample of: String in: environment.
+	subquery1 := ClyReturningScopeBasisExampleQuery from: ClyExampleScope of: Array in: environment.
+	subquery2 := ClyReturningScopeBasis2ExampleQuery from: ClyExampleScope of: String in: environment.
 
 	query := subquery1 , subquery2.
 
@@ -88,8 +88,8 @@ ClyUnionQueryTest >> testCreationFromTwoQueriesOfSameTypeAndScopeButWithDifferen
 { #category : #tests }
 ClyUnionQueryTest >> testCreationFromTwoQueriesOfSameTypeButDifferentScope [
 	| subquery1 subquery2 |
-	subquery1 := self subqueryFromScope: ClyScopeExample of: Array.
-	subquery2 := self subqueryFromScope: ClyScopeExample2 of: String.
+	subquery1 := self subqueryFromScope: ClyExampleScope of: Array.
+	subquery2 := self subqueryFromScope: ClyExample2Scope of: String.
 
 	query := subquery1 , subquery2.
 
@@ -101,14 +101,14 @@ ClyUnionQueryTest >> testCreationFromTwoQueriesOfSameTypeButDifferentScope [
 { #category : #tests }
 ClyUnionQueryTest >> testCreationFromTwoQueriesOfSameTypeSimilarScope [
 	| subquery1 subquery2 |
-	subquery1 := self subqueryFromScope: ClyScopeExample of: Array.
-	subquery2 := self subqueryFromScope: (ClyScopeExample ofAll: {String . Array}).
+	subquery1 := self subqueryFromScope: ClyExampleScope of: Array.
+	subquery2 := self subqueryFromScope: (ClyExampleScope ofAll: {String . Array}).
 
 	query := subquery1 , subquery2.
 
 	self assert: query class equals: subquery1 class.
 	self deny: query identicalTo: subquery1.
-	self assert: query scope equals: (ClyScopeExample ofAll: {Array . String} in: environment).
+	self assert: query scope equals: (ClyExampleScope ofAll: {Array . String} in: environment).
 	self assert: query requiredResult identicalTo: subquery1 requiredResult
 ]
 
@@ -129,10 +129,10 @@ ClyUnionQueryTest >> testCreationFromTwoSameQueriesOfSameScopeButWithDifferentPa
 { #category : #tests }
 ClyUnionQueryTest >> testCreationFromTwoUnionQueries [
 	| subquery1 subquery2 subquery3 subquery4 unionQuery1 unionQuery2 scopes |
-	subquery1 := self subqueryFromScope: ClyScopeExample of: Array.
-	subquery2 := self subqueryFromScope: ClyScopeExample2 of: String.
-	subquery3 := self subqueryFromScope: ClyScopeExample of: Object.
-	subquery4 := self subqueryFromScope: ClyScopeExample2 of: Class.
+	subquery1 := self subqueryFromScope: ClyExampleScope of: Array.
+	subquery2 := self subqueryFromScope: ClyExample2Scope of: String.
+	subquery3 := self subqueryFromScope: ClyExampleScope of: Object.
+	subquery4 := self subqueryFromScope: ClyExample2Scope of: Class.
 
 	unionQuery1 := subquery1 , subquery2.
 	unionQuery2 := subquery3 , subquery4.
@@ -142,7 +142,7 @@ ClyUnionQueryTest >> testCreationFromTwoUnionQueries [
 	self assert: query subqueries size equals: 2.
 	self assert: (query subqueries collect: #class as: Set) equals: {subquery1 class} asSet.
 	scopes := query subqueries collect: #scope as: Set.
-	self assert: scopes equals: {(ClyScopeExample ofAll: {Array . Object}) . (ClyScopeExample2 ofAll: {String . Class})} asSet.
+	self assert: scopes equals: {(ClyExampleScope ofAll: {Array . Object}) . (ClyExample2Scope ofAll: {String . Class})} asSet.
 	self assert: query requiredResult identicalTo: subquery1 requiredResult
 ]
 
@@ -181,8 +181,8 @@ ClyUnionQueryTest >> testEmptySubqueriesAreForbidden [
 ClyUnionQueryTest >> testExecution [
 
 	query subqueries: { 
-		self subqueryFromScope: ClyScopeExample of: self class.
-		self subqueryFromScope: ClyScopeExample2 of: self class superclass.
+		self subqueryFromScope: ClyExampleScope of: self class.
+		self subqueryFromScope: ClyExample2Scope of: self class superclass.
 	}.
 	self executeQuery.
 	
@@ -194,8 +194,8 @@ ClyUnionQueryTest >> testExecution [
 ClyUnionQueryTest >> testExecutionShouldRemoveDuplication [
 
 	query subqueries: { 
-		self subqueryFromScope: ClyScopeExample of: self class.
-		self subqueryFromScope: ClyScopeExample2 of: self class.
+		self subqueryFromScope: ClyExampleScope of: self class.
+		self subqueryFromScope: ClyExample2Scope of: self class.
 	}.
 	self executeQuery.
 	
@@ -205,8 +205,8 @@ ClyUnionQueryTest >> testExecutionShouldRemoveDuplication [
 { #category : #tests }
 ClyUnionQueryTest >> testIsEmptyWhenAllSubqueriesAreEmpty [
 	query subqueries: {
-		(self subqueryFromScope: ClyScopeExample empty).
-		(self subqueryFromScope: ClyScopeExample2 empty)
+		(self subqueryFromScope: ClyExampleScope empty).
+		(self subqueryFromScope: ClyExample2Scope empty)
 	}.
 	
 	self assert: query checkEmptyResult
@@ -215,8 +215,8 @@ ClyUnionQueryTest >> testIsEmptyWhenAllSubqueriesAreEmpty [
 { #category : #tests }
 ClyUnionQueryTest >> testNotEmptyWhenThereIsNotEmptySubquery [
 	query subqueries: {
-		(self subqueryFromScope: ClyScopeExample empty).
-		(self subqueryFromScope: ClyScopeExample2 of: self class superclass)
+		(self subqueryFromScope: ClyExampleScope empty).
+		(self subqueryFromScope: ClyExample2Scope of: self class superclass)
 	}.
 	
 	self deny: query checkEmptyResult

@@ -37,7 +37,7 @@ SindarinDebugger class >> attachTo: aDebugSession [
 
 { #category : #accessing }
 SindarinDebugger class >> closeAllDebuggers [
-	self allInstances do:[:dbg| self flag: 'Sindarin => what should sindarin do while closing?']
+	self allInstances do:[:dbg| dbg terminate]
 ]
 
 { #category : #start }
@@ -666,6 +666,11 @@ SindarinDebugger >> stepUntil: aBlock [
 { #category : #stackAccessHelpers }
 SindarinDebugger >> temporaryNamed: aSymbol [
 	^self context tempNamed: aSymbol
+]
+
+{ #category : #process }
+SindarinDebugger >> terminate [
+	sindarinSession terminate
 ]
 
 { #category : #stackAccessHelpers }

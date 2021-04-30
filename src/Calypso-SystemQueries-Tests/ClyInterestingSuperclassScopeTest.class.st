@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyInterestingSuperclassScopeTest,
-	#superclass : #ClyClassHierarchyScopeTestCase,
+	#superclass : #ClyClassHierarchyScopeTest,
 	#category : #'Calypso-SystemQueries-Tests-Scopes'
 }
 
@@ -22,36 +22,36 @@ ClyInterestingSuperclassScopeTest >> testClassEnumerationOverClassShouldStopAtOb
 ClyInterestingSuperclassScopeTest >> testClassEnumerationOverMetaclassBasisWhenClassSideIsLocalScope [
 
 	scope := ClyInterestingSuperclassScope 
-		of: ClySubclassN1OfClass1FromP1 class localScope: ClyClassSideScope.
+		of: ClySubclassN1OfClass1FromP1Mock class localScope: ClyClassSideScope.
 	
 	scope classesDo: [ :each | result add: each].
 	
-	self assert: result asSet equals: {ClyClass1FromP1 class} asSet
+	self assert: result asSet equals: {ClyClass1FromP1Mock class} asSet
 ]
 
 { #category : #tests }
 ClyInterestingSuperclassScopeTest >> testClassEnumerationOverMetaclassBasisWhenInstanceSideIsLocalScope [
 
 	scope := ClyInterestingSuperclassScope 
-		of: ClySubclassN1OfClass1FromP1 class localScope: ClyInstanceSideScope.
+		of: ClySubclassN1OfClass1FromP1Mock class localScope: ClyInstanceSideScope.
 	
 	scope classesDo: [ :each | result add: each].
 	
-	self assert: result asSet equals: {ClyClass1FromP1 } asSet
+	self assert: result asSet equals: {ClyClass1FromP1Mock } asSet
 ]
 
 { #category : #tests }
 ClyInterestingSuperclassScopeTest >> testClassEnumerationShouldStopAtObject [
-	scope := ClyInterestingSuperclassScope of: ClySubclassN1OfClass1FromP1.
+	scope := ClyInterestingSuperclassScope of: ClySubclassN1OfClass1FromP1Mock.
 	
 	scope classesDo: [ :each | result add: each ].
 	
-	self assert: result asArray equals: {ClyClass1FromP1}
+	self assert: result asArray equals: {ClyClass1FromP1Mock}
 ]
 
 { #category : #tests }
 ClyInterestingSuperclassScopeTest >> testClassEnumerationWhenObjectIsFirstSuperclass [
-	scope := ClyInterestingSuperclassScope of: ClyClass1FromP1.
+	scope := ClyInterestingSuperclassScope of: ClyClass1FromP1Mock.
 	
 	scope classesDo: [ :each | result add: each ].
 	

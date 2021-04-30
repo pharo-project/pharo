@@ -56,24 +56,35 @@ TFExternalFunction class >> name: aName moduleName: aModuleName definition: aFun
 { #category : #'instance creation' }
 TFExternalFunction class >> name: aName moduleName: aModuleName parameterTypes: parameterTypes returnType: returnType [
 
+	^ self name: aName moduleName: aModuleName parameterTypes: parameterTypes returnType: returnType fixedArgumentCount: 0
+]
+
+{ #category : #'instance creation' }
+TFExternalFunction class >> name: aName moduleName: aModuleName parameterTypes: parameterTypes returnType: returnType fixedArgumentCount: fixedArgumentCount [
+
+	| definition |
+
+	definition := fixedArgumentCount = 0 
+		ifTrue:[	
+			TFFunctionDefinition 
+				parameterTypes: parameterTypes
+				returnType: returnType]
+		ifFalse:[	
+			TFVariadicFunctionDefinition 
+				parameterTypes: parameterTypes
+				returnType: returnType
+				fixedArgumentCount: fixedArgumentCount].
+
 	^ self
 		name: aName
 		moduleName: aModuleName
-		definition: (TFFunctionDefinition 
-			parameterTypes: parameterTypes
-			returnType: returnType)
-
+		definition: definition
 ]
 
 { #category : #'instance creation' }
 TFExternalFunction class >> name: aName moduleName: aModuleName parameterTypes: parameterTypes returnType: returnType type: aFunctionCallType [
 
-	^ (self
-		name: aName
-		moduleName: aModuleName
-		definition: (TFFunctionDefinition 
-			parameterTypes: parameterTypes
-			returnType: returnType))
+	^ (self name: aName moduleName: aModuleName parameterTypes: parameterTypes returnType: returnType)
 		type: aFunctionCallType;
 		yourself
 

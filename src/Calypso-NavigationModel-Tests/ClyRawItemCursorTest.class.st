@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyRawItemCursorTest,
-	#superclass : #ClyBrowserQueryCursorTestCase,
+	#superclass : #ClyBrowserQueryCursorTest,
 	#category : #'Calypso-NavigationModel-Tests'
 }
 

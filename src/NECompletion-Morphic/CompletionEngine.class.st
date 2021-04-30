@@ -151,7 +151,7 @@ CompletionEngine >> handleKeyDownBefore: aKeyboardEvent editor: anEditor [
 		ifTrue: [ 
 			menuMorph pageDown.
 			^ true ].
-	(key = KeyboardKey enter and: [ NECPreferences useEnterToAccept ])
+	((key = KeyboardKey enter or:[key = KeyboardKey keypadEnter]) and: [ NECPreferences useEnterToAccept ])
 		ifTrue: [ 
 			menuMorph insertSelected
 				ifTrue: [ ^ true ] ].

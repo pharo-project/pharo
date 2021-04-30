@@ -14,7 +14,26 @@ Object >> ffiCall: fnSpec [
 	Please refer to the booklet about more configuration details
 	or some of the examples on the image LibC / FreeTypeFont / Athens / SDL."
 	
-	self ffiCall: fnSpec library: self ffiLibrary
+	self ffiCall: fnSpec library: self ffiLibrary options: #()	
+]
+
+{ #category : #'*UnifiedFFI' }
+Object >> ffiCall: fnSpec fixedArgumentCount: fixedArgumentsCount [
+	<ffiCalloutTranslator>
+	
+	"All the ffiCall: messages are used to perform Foreign-Function calls (FFI calls).
+	FFI calls allows Pharo code to interact with external dynamic linked libraries.
+	Please refer to the booklet about more configuration details
+	or some of the examples on the image LibC / FreeTypeFont / Athens / SDL.
+	
+	This message allows to call variadic functions.
+	It is required to set the number of fixed arguments in the call as different calling conventions handle them differently"
+	
+	self 
+		ffiCall: fnSpec 
+		library: self ffiLibrary 
+		options: #()	
+		fixedArgumentCount: fixedArgumentsCount
 ]
 
 { #category : #'*UnifiedFFI' }
@@ -25,7 +44,29 @@ Object >> ffiCall: fnSpec library: aLibrary [
 ]
 
 { #category : #'*UnifiedFFI' }
+Object >> ffiCall: fnSpec library: aLibrary fixedArgumentCount: fixedArgumentsCount [
+	<ffiCalloutTranslator>
+	
+	"This message allows to call variadic functions.
+	It is required to set the number of fixed arguments in the call as different calling conventions handle them differently"
+	
+	self 
+		ffiCall: fnSpec 
+		library: aLibrary
+		options: #()	
+		fixedArgumentCount: fixedArgumentsCount
+]
+
+{ #category : #'*UnifiedFFI' }
 Object >> ffiCall: fnSpec library: aLibrary options: callOptions [
+	<ffiCalloutTranslator>
+	
+	"Zero argument count tells it is a not variadic function"
+	^ self ffiCall: fnSpec library: aLibrary options: callOptions fixedArgumentCount: 0
+]
+
+{ #category : #'*UnifiedFFI' }
+Object >> ffiCall: fnSpec library: aLibrary options: callOptions fixedArgumentCount: fixedArgumentsCount [
 	<ffiCalloutTranslator>
 	
 	| ffiLibrary |
@@ -33,6 +74,7 @@ Object >> ffiCall: fnSpec library: aLibrary options: callOptions [
 	^ (ffiLibrary calloutAPIClass inUFFIContext: thisContext)
 		convention: self ffiCallingConvention;
 		options: (ffiLibrary options), callOptions;
+		fixedArgumentCount: fixedArgumentsCount;
 		function: fnSpec library: ffiLibrary
 ]
 
@@ -40,7 +82,8 @@ Object >> ffiCall: fnSpec library: aLibrary options: callOptions [
 Object >> ffiCall: fnSpec module: aModuleName [
 	<ffiCalloutTranslator>
 	
-	self ffiCall: fnSpec library: aModuleName
+	self ffiCall: fnSpec library: aModuleName options: #()	
+
 ]
 
 { #category : #'*UnifiedFFI' }

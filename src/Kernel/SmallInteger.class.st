@@ -188,14 +188,6 @@ SmallInteger >> \\ aNumber [
 ]
 
 { #category : #converting }
-SmallInteger >> as31BitSmallInt [
-	"Polymorphic with LargePositiveInteger (see comment there).
-	 Return self since all SmallIntegers are 31 bits"
-
-	^ self
-]
-
-{ #category : #converting }
 SmallInteger >> asCharacter [
 	<primitive: 170>
 	^self primitiveFailed

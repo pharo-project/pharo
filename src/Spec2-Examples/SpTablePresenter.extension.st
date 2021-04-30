@@ -12,6 +12,26 @@ SpTablePresenter class >> example [
 ]
 
 { #category : #'*Spec2-Examples' }
+SpTablePresenter class >> exampleSorting [
+	"Example shows the two kinds of sorting, using a boolean compare, or a threeway sorting"
+	| classNameCompare methodCountSorter |
+
+	classNameCompare := [ :c1 :c2 | c1 name < c2 name ].
+	methodCountSorter := [ :c1 :c2 | 
+	                     c1 methodDictionary size threeWayCompareTo:
+		                     c2 methodDictionary size ].
+
+	self new
+		addColumn: ((SpStringTableColumn title: 'Name' evaluated: #name) 
+				 compareFunction: classNameCompare);
+		addColumn: ((SpStringTableColumn
+				  title: 'Methods' evaluated: [ :c | c methodDictionary size ]) 
+				sortFunction: methodCountSorter);
+		items: Smalltalk globals allClasses;
+		openWithSpec
+]
+
+{ #category : #'*Spec2-Examples' }
 SpTablePresenter class >> exampleWithColumnHeaders [
 	<sampleInstance>
 

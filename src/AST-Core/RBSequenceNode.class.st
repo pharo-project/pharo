@@ -298,8 +298,11 @@ RBSequenceNode >> indexOfNode: aNode [
 
 { #category : #initialization }
 RBSequenceNode >> initialize [
+
 	super initialize.
-	periods := statements := temporaries := OrderedCollection new.
+	periods := OrderedCollection new.
+	statements := OrderedCollection new.
+	temporaries := OrderedCollection new
 ]
 
 { #category : #testing }

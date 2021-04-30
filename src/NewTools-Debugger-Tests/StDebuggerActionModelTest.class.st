@@ -516,9 +516,25 @@ StDebuggerActionModelTest >> testStepInto [
 	|ctx|
 	ctx := session interruptedContext.
 	debugActionModel stepInto: ctx.
-	self assert: ctx stepIntoQuickMethod.
+	self deny: ctx stepIntoQuickMethod.
 	self assert: session interruptedContext sender identicalTo: ctx.
 	self assert: session stack second identicalTo: ctx
+]
+
+{ #category : #'tests - actions' }
+StDebuggerActionModelTest >> testStepIntoQuickMethods [
+	|ctx|
+	ctx := StMockContext new.
+	debugActionModel session: StMockSession new.
+	debugActionModel stepInto: ctx.
+	
+	"When we step into a context, first that context is configured to step into quick method (aContext stepIntoQuickMethod: true),
+	second it steps,
+	after stepping it is configured back to **not** stepping into quick methods (aContext stepIntoQuickMethod: false).
+	The mock context just records that sequence of configuration."
+	self assert: ctx stepIntoQuickMethodBooleans size equals: 2.
+	self assert: ctx stepIntoQuickMethodBooleans first equals: true.
+	self assert: ctx stepIntoQuickMethodBooleans second equals: false
 ]
 
 { #category : #'tests - actions' }

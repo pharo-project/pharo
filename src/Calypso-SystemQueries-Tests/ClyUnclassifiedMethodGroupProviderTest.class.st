@@ -1,12 +1,12 @@
 Class {
 	#name : #ClyUnclassifiedMethodGroupProviderTest,
-	#superclass : #ClyMethodGroupProviderTestCase,
+	#superclass : #ClyMethodGroupProviderTest,
 	#category : #'Calypso-SystemQueries-Tests-Domain'
 }
 
 { #category : #running }
 ClyUnclassifiedMethodGroupProviderTest >> classSampleWhichHasGroup [
-	^ClySubclassN1OfClass1FromP1 
+	^ClySubclassN1OfClass1FromP1Mock 
 ]
 
 { #category : #running }

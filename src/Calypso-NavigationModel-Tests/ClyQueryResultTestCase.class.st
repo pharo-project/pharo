@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyQueryResultTestCase,
-	#superclass : #ClyNavigationEnvironmentTestCase,
+	#superclass : #ClyAbsractNavigationEnvironmentTest,
 	#instVars : [
 		'queryResult',
 		'query'
@@ -16,8 +16,8 @@ ClyQueryResultTestCase class >> isAbstract [
 { #category : #running }
 ClyQueryResultTestCase >> createQuery [
 
-	^ClyQueryExampleReturningScopeBasis 
-		from: (ClyScopeExample emptyIn: environment)
+	^ClyReturningScopeBasisExampleQuery 
+		from: (ClyExampleScope emptyIn: environment)
 ]
 
 { #category : #running }

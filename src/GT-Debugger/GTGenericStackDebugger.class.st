@@ -100,12 +100,6 @@ GTGenericStackDebugger class >> filterNilSelectors: aBoolean [
 	self flag: 'just for backward compatibility'
 ]
 
-{ #category : #accessing }
-GTGenericStackDebugger class >> helpClass [
-
-	^ GTDebuggerHelp
-]
-
 { #category : #'settings api' }
 GTGenericStackDebugger class >> logDebuggerStackToFile [
 	^ LogDebuggerStackToFile ifNil: [LogDebuggerStackToFile := true]

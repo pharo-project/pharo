@@ -11,7 +11,8 @@ Class {
 		'sender',
 		'signature',
 		'functionResolutionStrategies',
-		'library'
+		'library',
+		'fixedArgumentCount'
 	],
 	#category : #'UnifiedFFI-Callouts'
 }
@@ -97,6 +98,18 @@ FFICalloutMethodBuilder >> extractLibrary [
 	^ ffiLibrary
 ]
 
+{ #category : #accessing }
+FFICalloutMethodBuilder >> fixedArgumentCount [
+
+	^ fixedArgumentCount
+]
+
+{ #category : #accessing }
+FFICalloutMethodBuilder >> fixedArgumentCount: anObject [
+
+	fixedArgumentCount := anObject
+]
+
 { #category : #private }
 FFICalloutMethodBuilder >> generate [
 	^ self generateMethodFromSpec: (self parseSignature: self signature)
@@ -152,7 +165,8 @@ FFICalloutMethodBuilder >> generateMethodFromSpec: functionSpec [
 { #category : #initialization }
 FFICalloutMethodBuilder >> initialize [
 	super initialize.
-	functionResolutionStrategies := FFIFunctionResolutionStrategy allSubclasses collect: [:aClass | aClass new]
+	functionResolutionStrategies := FFIFunctionResolutionStrategy allSubclasses collect: [:aClass | aClass new].
+	fixedArgumentCount := 0.
 		
 ]
 

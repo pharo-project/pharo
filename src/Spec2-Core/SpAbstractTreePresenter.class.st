@@ -96,6 +96,23 @@ SpAbstractTreePresenter >> clickAtPath: aPath [
 	self doActivateAtPath: aPath
 ]
 
+{ #category : #api }
+SpAbstractTreePresenter >> collapseAll [
+	"Collapse all nodes of the tree. "
+
+	self withAdapterPerformOrDefer: [ :anAdapter | 
+		anAdapter collapseAll ]
+]
+
+{ #category : #api }
+SpAbstractTreePresenter >> collapsePath: aPath [
+	"Collapse the tree path.
+	`aPath` is the path to collapse. A path is an array of node indexes (e.g. #(1 2 3))"
+
+	self withAdapterPerformOrDefer: [ :anAdapter |
+		anAdapter collapsePath: aPath ]
+]
+
 { #category : #private }
 SpAbstractTreePresenter >> disableActivationDuring: aBlock [
 	| oldActivate |

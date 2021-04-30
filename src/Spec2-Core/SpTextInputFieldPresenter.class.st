@@ -199,7 +199,8 @@ SpTextInputFieldPresenter >> whenPasswordChangedDo: aBlockClosure [
 { #category : #'api-events' }
 SpTextInputFieldPresenter >> whenSubmitDo: aBlock [
 	"This method will add a 'submit' event to the widget. It will react when user 
-	 presses <meta+s> key (this is for historical reasons), and with enter (cr)."
+	 presses <meta+s> key (this is for historical reasons), and with enter (cr).
+	 `aBlock` receives one argument (the submited text)"
 
 	self 
 		bindKeyCombination: Character cr asKeyCombination | $s meta 

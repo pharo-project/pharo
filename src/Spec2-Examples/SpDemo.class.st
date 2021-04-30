@@ -14,20 +14,6 @@ Class {
 	#category : #'Spec2-Examples-Demo'
 }
 
-{ #category : #specs }
-SpDemo class >> defaultSpec [
-
-	^ SpBoxLayout newTopToBottom
-		add: #menu withConstraints: [ :constraints | constraints height: self toolbarHeight ];
-		add:
-			(SpPanedLayout newLeftToRight
-				position: 200;
-				add: #list;
-				add: #page;
-				yourself);
-		yourself
-]
-
 { #category : #'user interface' }
 SpDemo class >> menuExamplesOn: aBuilder [
 	"Add a custom menu item to the world menu"
@@ -54,7 +40,9 @@ SpDemo class >> on: aModel [
 { #category : #specs }
 SpDemo class >> open [
 	<example>
-	^ self new openWithSpec
+	
+	^ self new
+		openWithSpec
 ]
 
 { #category : #accessing }
@@ -78,18 +66,21 @@ SpDemo >> availablePages [
 
 { #category : #initialization }
 SpDemo >> connectPresenters [
+
 	list selectItem: self selectedPage.
-	list
-		whenSelectionChangedDo: [ :selection | 
-			selection selectedItem
-				ifNotNil: [ :newPageClass | 
-					newPageClass = self selectedPage
-						ifFalse: [ self selectedPage: newPageClass.
-							page := self instantiate: newPageClass.
-							self needRebuild: false.
-							self buildWithSpec.
-							list selectItem: self selectedPage ] ]
-				ifNil: [ "Avoid the user to have no page selected at all." list setSelectedItem: self selectedPage ] ]
+	list whenSelectionChangedDo: [ :selection | 
+		selection selectedItem
+			ifNotNil: [ :newPageClass | 
+				newPageClass = self selectedPage
+					ifFalse: [ 
+						self selectedPage: newPageClass.
+						page
+							removeAll; 
+							add: (self instantiate: newPageClass);
+							yourself ] ]
+			ifNil: [ 
+				"Avoid the user to have no page selected at all." 
+				list setSelectedItem: self selectedPage ] ]
 ]
 
 { #category : #accessing }
@@ -111,9 +102,21 @@ SpDemo >> initialExtent [
 
 { #category : #initialization }
 SpDemo >> initializePresenters [
+
 	menu := self mainMenu.
 	list := self newList.
-	page := self instantiate: (selectedPage := self availablePages first).
+	page := SpBoxLayout newTopToBottom 
+		add: (self instantiate: (selectedPage := self availablePages first));
+		yourself.
+
+	self layout: (SpBoxLayout newTopToBottom
+		add: menu expand: false;
+		add: (SpPanedLayout newLeftToRight
+			positionOfSlider: 200;
+			add: list;
+			add: page;
+			yourself);
+		yourself).
 
 	menu applyTo: self.
 

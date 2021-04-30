@@ -266,6 +266,24 @@ ReleaseTest >> testNoNilAssignmentInInitializeMethod [
 	
 ]
 
+{ #category : #'tests - source' }
+ReleaseTest >> testNoPeriodInMethodSignature [
+	| methods |
+	methods := SystemNavigation new allMethods select: [ :method | 
+ 		method sourceCode lines first trimRight last == $..].
+	
+	"there are 11 problematic methods"
+	self assert: methods size <=11.
+	
+	"there should be no method left"
+	"self assert: methods isEmpty description: [ 
+		String streamContents: [ :stream | 
+			stream
+				nextPutAll: 'Found methods with period in signature:';
+				print: methods ] ]"
+	
+]
+
 { #category : #'tests - variables' }
 ReleaseTest >> testNoShadowedVariablesInMethods [
 	"Fail if there are methods who define shadowed temps or args"

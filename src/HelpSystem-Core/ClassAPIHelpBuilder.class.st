@@ -90,7 +90,7 @@ ClassAPIHelpBuilder >> buildMethodTopicsOn: topic for: aClass [
 		addMethodsWithoutComment | methodComment notNil ifTrue: [ 
 			stream 
 				nextPutAll: aClass name;
-				nextPutAll: '>>';
+				nextPutAll: '>>#';
 				nextPutAll: selector asString;
 				cr.		
 

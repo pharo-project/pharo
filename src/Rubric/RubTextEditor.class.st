@@ -800,6 +800,7 @@ RubTextEditor >> defaultCommandKeymapping [
 	(KeyboardKey keypadRight -> #cursorRight:).
 	(KeyboardKey keypadUp -> #cursorUp:).
 	(KeyboardKey keypadDown -> #cursorDown:).
+	(KeyboardKey keypadEnter -> #crWithIndent:).
 	(KeyboardKey tab -> #tab:).
 	(KeyboardKey delete -> #forwardDelete:) } do: [ :assoc | 
 		cmdMap at: assoc key  put: assoc value ].
@@ -917,7 +918,7 @@ RubTextEditor >> encloseWith: aMatchingPair [
 		ifTrue: [
 			"already enclosed; strip off brackets"
 			newString := (self shouldEscapeCharacter: left)
-						 ifTrue: [ self unescapeCharacter: left inString: oldSelection ] 
+						 ifTrue: [ oldSelection unescapeCharacter: left ] 
 						 ifFalse: [ oldSelection ].
 			self selectFrom: startIndex-1 to: stopIndex.
 			self replaceSelectionWith: newString ]
@@ -2533,26 +2534,6 @@ RubTextEditor >> undoTypeIn: aText interval: anInterval [
 	self replace: anInterval with: aText and:
 		[self selectInterval: (anInterval first to: anInterval first - 1)].
 
-]
-
-{ #category : #nesting }
-RubTextEditor >> unescapeCharacter: aCharacter inString: aString [
-	"Unescape an escaped string.
-	Assume the string has all occurrences of aCharacter are escaped.
-	That is, they are in pairs.
-	
-	This method returns a copy of the string replacing all pairs of aCharacter by a single appearance of it."
-	
-	"(self unescapeCharacter: $' inString: '''''') >>> ''''"
-	"(self unescapeCharacter: $' inString: '''') >>> ''''"
-	
-	| result stream |
-	result := WriteStream with: ''.
-	stream := ReadStream on: aString.
-	[ stream atEnd ] whileFalse: 
-			[ result nextPutAll: (stream upTo: aCharacter).
-			  stream peek ifNotNil: [result nextPut: stream next]].
-	^result contents.
 ]
 
 { #category : #private }

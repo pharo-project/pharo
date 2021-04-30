@@ -20,5 +20,5 @@ ClyProjectChildItemTableDecorator class >> decorateTableCell: anItemCellMorph of
 ClyProjectChildItemTableDecorator class >> decorationStrategy [
 	<classAnnotation>
 	
-	^ClyTableDecorationStrategy for: ClyProjectChildItem asCalypsoItemContext
+	^ClyTableDecorationStrategyAnnotation for: ClyProjectChildItem asCalypsoItemContext
 ]

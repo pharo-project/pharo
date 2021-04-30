@@ -7,10 +7,8 @@ Class {
 	#name : #SpPanedLayout,
 	#superclass : #SpDirectionableLayout,
 	#instVars : [
-		'position',
-		'firstChild',
-		'secondChild',
-		'childrenByPosition'
+		'childrenByPosition',
+		'positionOfSlider'
 	],
 	#category : #'Spec2-Layout-Paned'
 }
@@ -93,10 +91,10 @@ SpPanedLayout >> direction [
 ]
 
 { #category : #initialization }
-SpPanedLayout >> initialize [ 
+SpPanedLayout >> initialize [
 
 	super initialize.
-	self position: 50 percent.
+	self positionOfSlider: 50 percent.
 	childrenByPosition := Array new: 2
 ]
 
@@ -117,8 +115,12 @@ SpPanedLayout >> position [
 	"Indicates original position of splitter. 
 	 It can be nil (then it defaults to 50%).
 	 It can be a percentage (e.g. 30 percent)"
+	
+	self
+		deprecated: 'Use #positionOfSlider instead'
+		transformWith: '`@receiver position' -> '`@receiver positionOfSlider'.
 
-	^ position
+	^ positionOfSlider
 ]
 
 { #category : #accessing }
@@ -129,7 +131,33 @@ SpPanedLayout >> position: aNumber [
 	 - `aNumber` can also be a fraction or a percentage, indicating the percentage position 
 	 of the slider. E.g. 30 percent (0.3) indicates the slider will be place at 1/3 of the 
 	 panel."
-	position := aNumber
+
+	self
+		deprecated: 'Use #positionOfSlider: instead'
+		transformWith: '`@receiver position: `@arg' -> '`@receiver positionOfSlider: `@arg'.
+	
+	positionOfSlider := aNumber
+]
+
+{ #category : #accessing }
+SpPanedLayout >> positionOfSlider [
+	"Indicates original position of splitter. 
+	 It can be nil (then it defaults to 50%).
+	 It can be a percentage (e.g. 30 percent)"
+
+	^ positionOfSlider
+]
+
+{ #category : #accessing }
+SpPanedLayout >> positionOfSlider: aNumber [
+	"Position of the slider. 
+	 - `aNumber` can be a fixed number indicating the exact position where the slider will 
+	 be placed in the pane.
+	 - `aNumber` can also be a fraction or a percentage, indicating the percentage position 
+	 of the slider. E.g. 30 percent (0.3) indicates the slider will be place at 1/3 of the 
+	 panel."
+	
+	positionOfSlider := aNumber
 ]
 
 { #category : #accessing }

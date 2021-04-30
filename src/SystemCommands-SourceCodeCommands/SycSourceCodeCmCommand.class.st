@@ -7,7 +7,7 @@ Class {
 	#category : #'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #execution }
 SycSourceCodeCmCommand class >> activationStrategy [ 
 	^ SycSourceCodeMenuActivation
 ]

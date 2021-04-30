@@ -67,7 +67,7 @@ RGEnvironment >> browseAs: browserTitleString [
 		addPlugin: ClyDefaultSystemEnvironmentPlugin new;
 	   attachToSystem.
 
-	browser := ClyFullBrowser new 
+	browser := ClyFullBrowserMorph new 
 		navigationEnvironment: clyNavEnv;
 		addPlugin: ClyStandardBrowserPlugin new.
 

@@ -6,13 +6,13 @@ Class {
 
 { #category : #running }
 ClyAbstractMethodsQueryTest >> createQuery [
-	^ClyAbstractMethodsQuery from: ClyClassScope of: ClyAbstractClassExample in: environment
+	^ClyAbstractMethodsQuery from: ClyClassScope of: ClyAbstractClassMock in: environment
 ]
 
 { #category : #tests }
 ClyAbstractMethodsQueryTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope
-		of: ClyAbstractClassExample >> #abstractMethod1 in: environment).
+		of: ClyAbstractClassMock >> #abstractMethod1 in: environment).
 	self deny: query checkEmptyResult.
 	
 	query scope: (ClyMethodScope of: Object >> #printString in: environment).
@@ -23,8 +23,8 @@ ClyAbstractMethodsQueryTest >> testCheckIfEmpty [
 ClyAbstractMethodsQueryTest >> testFromThreeMethods [
 
 	self queryFromScope: ClyMethodScope ofAll: {
-		ClyAbstractClassExample >> #abstractMethod1. 
-		ClyAbstractClassExample >> #abstractMethod2.
+		ClyAbstractClassMock >> #abstractMethod1. 
+		ClyAbstractClassMock >> #abstractMethod2.
 		Object >> #printString}.
 	
 	self assert: foundSelectors equals: #(abstractMethod1 abstractMethod2)
@@ -39,5 +39,5 @@ ClyAbstractMethodsQueryTest >> testNotSelectsNotAbstractMethod [
 { #category : #tests }
 ClyAbstractMethodsQueryTest >> testSelectsAbstractMethod [
 
-	self assert: (query selectsMethod: ClyAbstractClassExample>>#abstractMethod1)
+	self assert: (query selectsMethod: ClyAbstractClassMock>>#abstractMethod1)
 ]

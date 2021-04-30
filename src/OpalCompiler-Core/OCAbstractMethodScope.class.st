@@ -142,21 +142,14 @@ OCAbstractMethodScope >> lookupDefiningContextForVariable: var startingFrom: aCo
 ]
 
 { #category : #lookup }
-OCAbstractMethodScope >> lookupVar: name [
+OCAbstractMethodScope >> lookupVar: name declare: aBoolean [
 
 	copiedVars at: name ifPresent: [:v | ^ v].
 	tempVector at: name ifPresent: [:v | ^ v].
 	tempVars at: name ifPresent: [:v | ^ v].
 	name = self tempVectorName ifTrue: [ ^ self tempVectorVar ].
-	^self outerScope lookupVar: name
+	^self outerScope lookupVar: name declare: aBoolean
 	
-]
-
-{ #category : #lookup }
-OCAbstractMethodScope >> lookupVarForDeclaration: name [
-	"This is a version of #lookupVar: that skips the OCRequestorScope"
-	tempVars at: name ifPresent: [:v | ^ v].
-	^self outerScope lookupVarForDeclaration: name
 ]
 
 { #category : #scope }
