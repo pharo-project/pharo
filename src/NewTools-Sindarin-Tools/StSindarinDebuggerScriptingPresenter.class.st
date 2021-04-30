@@ -130,7 +130,6 @@ StSindarinDebuggerScriptingPresenter >> toolbarActions [
 	group register: (SindarinLoadScriptCommand forSpecContext: self).
 	group register: (SindarinCreateCommandFromScriptCommand forSpecContext: self).
 	group register: (SindarinRemoveCommandCommand forSpecContext: self).
-	group register: (StInspectorHelpCommand forSpecContext: self).
 
 	
 	^ group

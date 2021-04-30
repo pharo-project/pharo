@@ -14,6 +14,14 @@ Class {
 	#category : #'NewTools-Spotter-Model'
 }
 
+{ #category : #'instance creation' }
+StSpotterModel class >> newOrigin: anObject [ 
+
+	^ self basicNew 
+		initializeOrigin: anObject;
+		yourself
+]
+
 { #category : #accessing }
 StSpotterModel >> activeProcessors [
 
@@ -23,7 +31,14 @@ StSpotterModel >> activeProcessors [
 { #category : #accessing }
 StSpotterModel >> activeStep [
 
-	^ steps last
+	^ self steps last
+]
+
+{ #category : #private }
+StSpotterModel >> addStep: aStep [ 
+
+	steps ifNil: [ steps := OrderedCollection new ].
+	steps addLast: aStep
 ]
 
 { #category : #'private announcing' }
@@ -88,14 +103,22 @@ StSpotterModel >> initialize [
 	scheduler poolMaxSize: 10.
 	scheduler start.
 	
-	mutex := Mutex new.
-	steps := OrderedCollection with: self newDefaultStep
+	mutex := Mutex new
+]
+
+{ #category : #initialization }
+StSpotterModel >> initializeOrigin: anObject [
+	
+	self initialize.
+	self addStep: (self newStep
+		origin: anObject;
+		yourself)
 ]
 
 { #category : #testing }
 StSpotterModel >> isNested [
 
-	^ steps size > 1
+	^ self steps size > 1
 ]
 
 { #category : #accessing }
@@ -129,11 +152,11 @@ StSpotterModel >> popStep [
 	| lastQuery |
 
 	"Do not pop first"
-	steps size > 1 ifFalse: [ ^ self ]. 
+	self steps size > 1 ifFalse: [ ^ self ]. 
 
 	lastQuery := self activeStep activeQuery.
 	self activeStep deactivate.
-	steps removeLast.
+	self steps removeLast.
 	self activeStep activate
 ]
 
@@ -167,7 +190,7 @@ StSpotterModel >> pushStepForProcessor: aProcessor [
 	allCandidates := aProcessor allFilteredCandidates collect: [ :each | 
 		each asStSpotterCandidateLink renderingProcessor: processorLink ].
 	step origin: allCandidates.
-	steps addLast: step
+	self addStep: step
 ]
 
 { #category : #accessing }
@@ -196,6 +219,14 @@ StSpotterModel >> stSpotterProcessorsFor: aStep [
 StSpotterModel >> startProcessingOn: spotter [
 
 	self processSearch: '' on: spotter
+]
+
+{ #category : #private }
+StSpotterModel >> steps [
+
+	^ steps ifNil: [ 
+		self addStep: self newDefaultStep.
+		steps ]
 ]
 
 { #category : #'accessing query' }

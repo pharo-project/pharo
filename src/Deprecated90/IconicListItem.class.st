@@ -1,7 +1,7 @@
 Class {
 	#name : #IconicListItem,
 	#superclass : #IconicListItemMorph,
-	#category : #'Morphic-Widgets-Basic'
+	#category : #'Deprecated90-Morphic'
 }
 
 { #category : #testing }

@@ -819,6 +819,17 @@ SindarinDebuggerTest >> testTemporaryNamed [
 ]
 
 { #category : #tests }
+SindarinDebuggerTest >> testTerminate [
+	| dbg |
+	dbg := SindarinDebugger debug: [ self helperMethod13 ].
+	self assert: dbg debugSession interruptedContext notNil.
+	self assert: dbg debugSession interruptedProcess notNil.
+	dbg terminate.
+	self assert: dbg debugSession interruptedContext isNil.
+	self assert: dbg debugSession interruptedProcess isNil.
+]
+
+{ #category : #tests }
 SindarinDebuggerTest >> testTopStack [
 	| a dbg |
 	a := 1.

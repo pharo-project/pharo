@@ -15,7 +15,7 @@ Class {
 SpDemoToolbarPresenter class >> defaultSpec [
 
 	^ SpBoxLayout newTopToBottom 
-		add: #toolBar expand: false fill: false padding: 0;
+		add: #toolBar expand: false;
 		add: #text;
 		yourself
 ]

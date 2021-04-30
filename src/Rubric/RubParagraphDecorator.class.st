@@ -15,6 +15,14 @@ RubParagraphDecorator class >> classOfDecoratorNamed: aKey [
 	^ self allSubclasses detect: [ :cls | cls key = aKey ] ifNone: [  ]
 ]
 
+{ #category : #testing }
+RubParagraphDecorator class >> isUsed [
+	"all my subclasses might be used via #classOfDecoratorNamed:"
+	^self name = 'RubParagraphDecorator'
+		ifTrue: [ super isUsed ]
+		ifFalse: [ true ]
+]
+
 { #category : #querying }
 RubParagraphDecorator class >> key [
 	^ self subclassResponsibility 

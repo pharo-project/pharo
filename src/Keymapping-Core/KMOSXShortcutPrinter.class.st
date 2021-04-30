@@ -1,3 +1,7 @@
+"
+I'm an util to convert a shortcut into the representation used in OSX
+
+"
 Class {
 	#name : #KMOSXShortcutPrinter,
 	#superclass : #KMShortcutPrinter,

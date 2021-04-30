@@ -84,9 +84,10 @@ KMShortcutPrinter >> visitSingleShortcut: aShortcut [
 	| char |
 	char := self mapSpecialCharacter: aShortcut platformCharacter.
 	^ String streamContents: [ :stream | 
-		  (self shortcutModifiersOf: aShortcut)
+		(self shortcutModifiersOf: aShortcut) ifNotEmpty: [ :modifiers |  
+			modifiers
 			  do: [ :each | stream << each ]
 			  separatedBy: [ stream << '+' ].
-		  stream << '+'.
-		  stream << char ]
+			stream << '+' ].
+		stream << char ]
 ]

@@ -144,6 +144,18 @@ SpMorphicTreeTableAdapter >> buildWidget [
 	^ tableMorph
 ]
 
+{ #category : #accessing }
+SpMorphicTreeTableAdapter >> collapseAll [
+
+	widget dataSource collapseAll
+]
+
+{ #category : #accessing }
+SpMorphicTreeTableAdapter >> collapsePath: anArray [  
+
+	widget dataSource collapsePath: anArray
+]
+
 { #category : #testing }
 SpMorphicTreeTableAdapter >> columnCount [
 	
@@ -210,7 +222,9 @@ SpMorphicTreeTableAdapter >> isExpanded: anItem [
 	path := widget dataSource 
 		pathOfItem: anItem 
 		root: widget dataSource rootItem.
-	^ (widget dataSource itemAtPath: path) isExpanded
+	^ (widget dataSource itemAtPath: path) 
+		ifNotNil: [ :node | node isExpanded ]
+		ifNil: [ false ]
 ]
 
 { #category : #testing }

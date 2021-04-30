@@ -50,11 +50,5 @@ ClyOpenSpotterMenuCommand class >> textToolShortcutActivation [
 { #category : #execution }
 ClyOpenSpotterMenuCommand >> execute [
 
-	GTSpotterMorph new
-		extent: (self currentWorld width / 2.4 @ (self currentWorld height / 1.6)) asIntegerPoint;
-		spotterModel: (GTSpotter on: (ClySpotterModel on: browser));
-		doLayout;
-		openCenteredInWorld;	
-		initializeListeners;
-		takeKeyboardFocus
+	Smalltalk tools spotter openOnOrigin: (ClySpotterModel on: browser)
 ]

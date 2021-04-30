@@ -12,6 +12,12 @@ Class {
 	#category : #'Athens-Core-Shapes'
 }
 
+{ #category : #testing }
+AthensAbstractShape class >> isAbstract [
+
+	^ self == AthensAbstractShape
+]
+
 { #category : #converting }
 AthensAbstractShape >> asAthensShapeOn: canvas [
 	"Note: The answered object of this message should conform with AthensShape protocol.	"
