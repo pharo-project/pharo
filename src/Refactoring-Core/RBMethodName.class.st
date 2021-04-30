@@ -18,7 +18,8 @@ Class {
 		'selector',
 		'arguments',
 		'newArgs',
-		'permutation'
+		'permutation',
+		'renameMap'
 	],
 	#category : #'Refactoring-Core-Support'
 }
@@ -86,6 +87,18 @@ RBMethodName >> printOn: aStream [
 		(self selector isUnary or: [ argumentStream atEnd ]) 
 			ifTrue: [ ^ self ].
 		aStream space; nextPutAll: argumentStream next ]
+]
+
+{ #category : #accessing }
+RBMethodName >> renameMap [
+
+	^ renameMap
+]
+
+{ #category : #accessing }
+RBMethodName >> renameMap: anObject [
+
+	renameMap := anObject
 ]
 
 { #category : #accessing }
