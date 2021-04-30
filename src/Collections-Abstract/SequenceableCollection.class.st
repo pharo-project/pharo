@@ -84,7 +84,7 @@ SequenceableCollection class >> streamSpecies [
 SequenceableCollection >> , otherCollection [ 
 	"Concatenate two Strings or Collections."
 	"#(2 4 6 8) , #(who do we appreciate) >>> #(2 4 6 8 who do we appreciate)"
-	"((2989 storeStringBase: 16) copyFrom: 4 to: 6) , ' boy!' >>> 'BAD boys!'"
+	"((2989 storeStringBase: 16) copyFrom: 4 to: 6) , ' boy!' >>> 'BAD boy!'"
 	
 	^ self copyReplaceFrom: self size + 1
 		  to: self size
@@ -2211,7 +2211,7 @@ SequenceableCollection >> splitOn: splitter indicesDo: aBlock [
 { #category : #accessing }
 SequenceableCollection >> swap: oneIndex with: anotherIndex [ 
 	"Move the element at oneIndex to anotherIndex, and vice-versa."
-	"({#a #b #c #d #e} swap: 5 with: 1) >>> #(e b c d a)"
+	"({#a. #b. #c. #d. #e} swap: 5 with: 1) >>> #(e b c d a)"
 
 	| element |
 	element := self at: oneIndex.
