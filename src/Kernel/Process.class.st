@@ -240,7 +240,7 @@ Process >> doTerminationFromAnotherProcess [
 		(suspendedContext findContextSuchThat: [:ctx | 
 			ctx closure == outerMost unwindBlock]) ifNotNil: [:inner | 
 				"Let's finish the unfinished unwind context only (i.e. up to inner) and return here"
-				suspendedContext runUntilErrorOrReturnFrom: inner.
+				outerMost := (suspendedContext runUntilErrorOrReturnFrom: inner) first.
 				"Update the receiver's suspendedContext (the previous step reset its sender to nil);
 				return, if the execution stack reached its bottom (e.g. in case of non-local returns)."
 				(suspendedContext := outerMost sender) ifNil: [^self]]]. 
