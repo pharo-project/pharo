@@ -75,6 +75,11 @@ Class {
 	#category : #'Kernel-Exceptions'
 }
 
+{ #category : #testing }
+Halt class >> captureIfSignalledWhenStepping [
+	^self == Halt
+]
+
 { #category : #halting }
 Halt class >> fromCount: anInteger [
 	"Always halt after a count has been reached"
