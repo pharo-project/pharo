@@ -114,6 +114,17 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterFirstMessageInBlock [
 	self assert: self selectedSelector equals: messageInsideBlock selector
 ]
 
+{ #category : #'tests - no selection - variable' }
+CNSelectorExtractionOnPositionTest >> testCaretAfterInVariable [
+
+	| selector |
+	selector := #even.
+	sourceCode := selector.
+	ast := (RBParser parseFaultyExpression: selector).
+	self caretAfter: ast.
+	self assert: self selectedSelector equals: selector
+]
+
 { #category : #'tests - no selection - blocks' }
 CNSelectorExtractionOnPositionTest >> testCaretAfterLastMessageInBlock [
 
