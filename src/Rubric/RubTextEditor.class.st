@@ -2377,8 +2377,8 @@ RubTextEditor >> surroundString: aString withCharacter: aCharacter [
 	"Returns a new string with contents equals to aString surrounded by aCharacter.
 	Escapes all occurrences of aCharacter within aString by doubling them."
 	
-	"(self new surroundString: 'a' withCharacter: $') >>> '''a'''"
-	"(self new surroundString: 'a''b' withCharacter: $') >>> '''a''''b'''"
+	"(RubTextEditor new surroundString: 'a' withCharacter: $') >>> '''a'''"
+	"(RubTextEditor new surroundString: 'a''b' withCharacter: $') >>> '''a''''b'''"
 	
 	| result stream |
 	result := WriteStream with: ''.

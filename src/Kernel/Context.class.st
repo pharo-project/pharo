@@ -1909,7 +1909,7 @@ Context >> sender [
 { #category : #private }
 Context >> setNamedPrimitiveInformationFrom: fromMethod toMethod: toMethod [
 	"For named primitives, the first literal contains a special object that has information of the primitive. In this method we cope such information from one to another one."
-	"((StandardFileStream >> #primOpen:writable:) literalAt: 1) >>> #(#FilePlugin #primitiveFileOpen 0 0)"
+	"((File class >> #open:writable:) literalAt: 1) >>> #(#FilePlugin #primitiveFileOpen 0 0)"
 
 	| spec |	
 	spec := toMethod literalAt: 1.	
