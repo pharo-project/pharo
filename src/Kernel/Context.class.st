@@ -1766,7 +1766,7 @@ Context >> runUntilErrorOrReturnFrom: aSender [
 	"Insert ensure and exception handler contexts under aSender"
 	error := nil.
 	context := aSender insertSender: (Context
-		contextOn: Error, Halt do: [:ex |
+		contextOn: Error, Halt, TestFailure do: [:ex |
 			error ifNil: [
 				error := ex.
 				topContext := thisContext.
