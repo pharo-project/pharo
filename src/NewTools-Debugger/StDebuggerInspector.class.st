@@ -263,18 +263,20 @@ StDebuggerInspector >> updateLayoutForContexts: aContext isAssertionFailure: isT
 	| assertionResult |
 	isTopContextFailingAssertion ifFalse: [ 
 		currentLayoutSpec = self defaultLayoutSpec ifTrue: [ ^ self ].
-		^ self setDefaultLayout ].
+		self setDefaultLayout.
+		^self ].
 	currentLayoutSpec = self assertionLayoutSpec ifTrue: [ ^ self ].
 
 	[ assertionResult := aContext findFailedAssertionResultsInSenderChain ]
 		on: StDebuggeAssertionFailureContextNotFound
-		do: [ ^ self setDefaultLayout ].		
+		do: [ self setDefaultLayout.
+			^self ].		
 	
 	assertionFailure := StFailingAssertionInspector
 		                    diffInspectorsFromActual: assertionResult actual
 		                    expected: assertionResult expected
 		                    application: self application.
-	^ self setAssertionLayout
+	self setAssertionLayout
 ]
 
 { #category : #updating }
