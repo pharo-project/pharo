@@ -107,3 +107,14 @@ KMShortcutPrinterTest >> testPrintShortcut [
 	printed := shortcut acceptVisitor: platform shortcutPrinter.
 	self assert: printed equals: result
 ]
+
+{ #category : #tests }
+KMShortcutPrinterTest >> testSingleKeyCombinationIsPrintedWithoutSeparators [
+	| printed |
+
+	printed := Character arrowLeft asKeyCombination acceptVisitor: platform shortcutPrinter.
+	self assert: printed equals: 'LEFT'.
+	
+	printed := Character arrowRight asKeyCombination acceptVisitor: platform shortcutPrinter.
+	self assert: printed equals: 'RIGHT'
+]
