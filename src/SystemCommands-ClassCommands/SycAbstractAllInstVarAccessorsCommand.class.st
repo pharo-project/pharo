@@ -50,6 +50,11 @@ SycAbstractAllInstVarAccessorsCommand >> execute [
 ]
 
 { #category : #testing }
+SycAbstractAllInstVarAccessorsCommand >> isComplexRefactoring [ 
+	^ true
+]
+
+{ #category : #testing }
 SycAbstractAllInstVarAccessorsCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	

@@ -7,6 +7,13 @@ Class {
 	#category : #'SystemCommands-ClassCommands'
 }
 
+{ #category : #activation }
+SycRealizeClassCommand class >> fullBrowserMenuActivation [
+	<classAnnotation>
+	
+	^CmdContextMenuActivation byRootGroupItemOrder: 2.1 for: ClyFullBrowserClassContext 
+]
+
 { #category : #execution }
 SycRealizeClassCommand >> asRefactorings [
 	

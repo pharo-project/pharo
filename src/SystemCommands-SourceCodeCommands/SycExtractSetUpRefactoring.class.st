@@ -40,8 +40,7 @@ SycExtractSetUpRefactoring >> initialize [
 { #category : #testing }
 SycExtractSetUpRefactoring >> isApplicable [
 
-	^ context isMethodSelected and: [ 
-		  context lastSelectedMethod selector isTestSelector ]
+	^ context isMessageSelected and: [ context lastSelectedMethod selector isTestSelector ]
 ]
 
 { #category : #accessing }
