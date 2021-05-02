@@ -13,16 +13,14 @@ Collection >> selectEvery: aBlock [
 
 { #category : #'*ClassParser' }
 Collection >> selectEveryFirst [
-	"#(1 2 3 4) selectEveryFirst asArray 
-	>>> #(1 3)
+	"#(1 2 3 4) selectEveryFirst asArray >>> #(1 3)
 	"
 	^ self selectEvery: [ :i | (i+1 \\ 2) = 0 ]
 ]
 
 { #category : #'*ClassParser' }
 Collection >> selectEverySecond [
-	"#(1 2 3 4) selectEverySecond asArray 
-	>>> #(2 4)
+	"#(1 2 3 4) selectEverySecond asArray >>> #(2 4)
 	"
 	^ self selectEvery: [ :i | i \\ 2 = 0 ]
 ]

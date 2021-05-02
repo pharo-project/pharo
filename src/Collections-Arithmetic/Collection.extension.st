@@ -61,11 +61,8 @@ Collection >> arcTan [
 Collection >> average [
 	"Calculate the average of a collection, return a CollectionIsEmpty exception if the collection is empty. Look averageIfEmpty: aBlock"
 	
-	" #(2 6 7) average   
-	>>> 5 "
-	
-	" #(3 5 7 7) average 
-	>>> (11/2) "
+	" #(2 6 7) average  >>> 5 "
+	" #(3 5 7 7) average >>> (11/2) "
 
 	^ self sum / self size
 ]
