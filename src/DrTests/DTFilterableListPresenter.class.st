@@ -18,7 +18,7 @@ Class {
 { #category : #specs }
 DTFilterableListPresenter class >> defaultSpec [
 
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #labelPresenter withConstraints: [ :constraints | constraints height: self labelHeight ];
 		add: #listPresenter;
 		add: #filterTextInput withConstraints: [ :constraints | constraints height: self inputTextHeight ];

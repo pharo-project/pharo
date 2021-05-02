@@ -33,10 +33,10 @@ EpLogBrowserPresenter class >> defaultLog [
 { #category : #specs }
 EpLogBrowserPresenter class >> defaultSpec [
 
-	^ SpPanedLayout newVertical
+	^ SpPanedLayout newTopToBottom
 		  positionOfSlider: 0.6;
 		  add: #itemsPresenter;
-		  add: (SpBoxLayout newVertical
+		  add: (SpBoxLayout newTopToBottom
 				   add: #toolbarPresenter
 				   expand: false
 				   fill: false

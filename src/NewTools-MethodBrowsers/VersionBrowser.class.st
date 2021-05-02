@@ -52,9 +52,9 @@ VersionBrowser class >> browseVersionsForMethod: aRingMethod [
 { #category : #specs }
 VersionBrowser class >> defaultSpec [
 	
-	^ SpPanedLayout newVertical
+	^ SpPanedLayout newTopToBottom
 		add: #messageList;
-		add: (SpBoxLayout newVertical
+		add: (SpBoxLayout newTopToBottom
 			add: #toolbarPresenter expand: false;
 			add: #sourcePresenter;
 			yourself);

@@ -81,9 +81,9 @@ MessageBrowser class >> browseSendersOf: aSymbol [
 { #category : #specs }
 MessageBrowser class >> defaultSpec [
 
-	^ SpPanedLayout newVertical
+	^ SpPanedLayout newTopToBottom
 		add: #messageList;
-		add: (SpBoxLayout newVertical
+		add: (SpBoxLayout newTopToBottom
 			add: #toolbarPresenter expand: false;
 			add: #textModel;
 			yourself);

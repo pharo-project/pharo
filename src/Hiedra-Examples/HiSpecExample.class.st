@@ -14,7 +14,7 @@ Class {
 
 { #category : #specs }
 HiSpecExample class >> defaultSpec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #table;
 		add: #actionBar withConstraints: [ :constraints | constraints height: self toolbarHeight ];
 		yourself
