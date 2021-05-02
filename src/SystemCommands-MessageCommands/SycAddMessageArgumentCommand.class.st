@@ -35,34 +35,28 @@ SycAddMessageArgumentCommand >> argumentDefaultValue: anObject [
 	argumentDefaultValue := anObject
 ]
 
+{ #category : #actions }
+SycAddMessageArgumentCommand >> computeInvalidArgNames [ 
+	| invalidArgNames |
+	invalidArgNames := Set new.
+	(model allImplementorsOf: originalMessage selector) do: [ :e | | cm | 
+		cm:=(e realClass >> originalMessage selector).
+		invalidArgNames addAll: cm argumentNames;
+			addAll: cm origin instVarNames ].
+	^ invalidArgNames
+]
+
 { #category : #execution }
 SycAddMessageArgumentCommand >> createRefactoring [
-	| permutation |
-	permutation := newSelector argumentNames collect: [ :e |
-		originalMessage argumentNames indexOf: e ifAbsent: [ 0 ]
-	].
-	^RBAddParameterRefactoring
+
+	^(RBAddParameterRefactoring
 		model: model
 		addParameterToMethod: originalMessage selector
 		in: (SycMessageOriginHack of: originalMessage) "look at SycMessageOriginHack comment"
 		newSelector: newSelector selector
-		permutation: permutation
-		initializer: argumentDefaultValue
-]
-
-{ #category : #execution }
-SycAddMessageArgumentCommand >> createValidNameArgument [
-	|method newString baseString i|
-	method := originalMessage methodClass >> originalMessage selector.
-	newString := baseString := 'anObject'.
-	i := 0.
-	
-	[(method tempNames includes: newString) 
-		or: [originalMessage methodClass allInstVarNames includes: newString]] 
-			whileTrue: 
-				[i := i + 1.
-				newString := baseString , i printString].
-	^ {newString asSymbol}
+		permutation: newSelector permutation
+		newArgs: newSelector newArgs)
+		renameMap: newSelector renameMap
 ]
 
 { #category : #accessing }
@@ -91,25 +85,20 @@ SycAddMessageArgumentCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	
 	newSelector := self requestMessageIn: aToolContext.
-	
-	argumentDefaultValue := UIManager default
-		request: 'Enter default value for argument' initialAnswer: 'nil'.
-	argumentDefaultValue isEmptyOrNil ifTrue:  [ CmdCommandAborted signal ]
 ]
 
 { #category : #execution }
 SycAddMessageArgumentCommand >> requestMessageIn: aToolContext [
-	| methodName dialog |
-	methodName := RBMethodName selector: originalMessage selector, 'arg:' arguments: originalMessage argumentNames, self createValidNameArgument.
-	dialog := SycMethodNameEditorPresenter openOn: methodName.
+	| methodName dialog invalidArgNames |
+	invalidArgNames := self computeInvalidArgNames.
+	methodName := RBMethodName selector: originalMessage selector arguments: originalMessage argumentNames.
+	dialog := SycMethodNameEditorPresenter openOn: methodName withInvalidArgs: invalidArgNames
+		canRenameArgs: true canRemoveArgs: false canAddArgs: true.
 	dialog cancelled ifTrue: [  CmdCommandAborted signal ].
 	
 	originalMessage selector = methodName selector & (originalMessage argumentNames = methodName arguments)
-		ifTrue: [ CmdCommandAborted signal].		
-				
-	^(SycMessageDescription fromContextOf: aToolContext)
-		selector: methodName selector;
-		argumentNames: methodName arguments
+		ifTrue: [ CmdCommandAborted signal].	
+	^methodName
 ]
 
 { #category : #execution }

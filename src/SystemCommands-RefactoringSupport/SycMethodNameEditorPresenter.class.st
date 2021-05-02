@@ -143,12 +143,25 @@ SycMethodNameEditorPresenter class >> openOn: aMethod canRenameArgs: aBoolean1 c
 	^ temp openModalWithSpec
 ]
 
+{ #category : #specs }
+SycMethodNameEditorPresenter class >> openOn: aMethod withInvalidArgs: aSet canRenameArgs: aBoolean1 canRemoveArgs: aBoolean2 canAddArgs: aBoolean3 [
+	"I take a RBMethodName as parameter and open the refactoring UI in a modal to rename it."
+	|temp|
+	temp := self on: aMethod.
+	temp invalidArgNames: aSet. 
+	temp canRenameArgs: aBoolean1.
+	temp canRemoveArgs: aBoolean2.
+	temp canAddArgs: aBoolean3.
+	^ temp openModalWithSpec
+]
+
 { #category : #action }
 SycMethodNameEditorPresenter >> addArgumentAfter: anItem [
 	| newArg argValue |
 	newArg := self newArgName asSymbol.
 	argValue := UIManager default
 		request: 'Enter default value for argument' initialAnswer: 'nil'.
+	argValue isEmptyOrNil ifTrue:  [ CmdCommandAborted signal ].
 	newArg := RBArgumentName name: newArg value: argValue.
 	argumentsList items: (argumentsList items copyUpThrough: anItem), {newArg}, (argumentsList items copyAfter: anItem).
 	self selectorInput text: self selectorInput text, 'arg:'.
@@ -293,12 +306,17 @@ SycMethodNameEditorPresenter >> invalidArgNames [
 	^ invalidArgNames ifNil: [ invalidArgNames := { } ]
 ]
 
+{ #category : #accessing }
+SycMethodNameEditorPresenter >> invalidArgNames: aSet [
+	invalidArgNames := aSet
+]
+
 { #category : #'instance creation' }
 SycMethodNameEditorPresenter >> newArgName [
 	| baseString index newString |
 	newString := baseString := 'anObject'.
 	index := 0.
-	[ self invalidArgNames includes: newString ] 
+	[ self invalidArgNames, (self newArgs collect: #name) includes: newString ] 
 		whileTrue: 
 			[index := index + 1.
 			newString := baseString , index printString].

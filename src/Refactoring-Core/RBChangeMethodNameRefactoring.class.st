@@ -17,7 +17,8 @@ Class {
 		'newSelector',
 		'oldSelector',
 		'permutation',
-		'implementors'
+		'implementors',
+		'renameMap'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -119,6 +120,16 @@ RBChangeMethodNameRefactoring >> renameImplementors [
 			self modifyImplementorParseTree: parseTree in: each.
 			( each methodFor: oldSelector ) compileTree: parseTree
 			]
+]
+
+{ #category : #accessing }
+RBChangeMethodNameRefactoring >> renameMap [
+	^renameMap ifNil: [ renameMap := { } ]
+]
+
+{ #category : #accessing }
+RBChangeMethodNameRefactoring >> renameMap: aColl [
+	renameMap := aColl
 ]
 
 { #category : #transforming }
