@@ -96,10 +96,11 @@ ClyBrowserSearchDialogWindow >> newContentMorph [
 ]
 
 { #category : #private }
-ClyBrowserSearchDialogWindow >> openOn: aQuery withTitle: dialogTitle thenDo: resultActionBlock [
+ClyBrowserSearchDialogWindow >> openOn: aQuery selecting: items withTitle: dialogTitle thenDo: resultActionBlock [
 
 	self showItemsOf: aQuery.
 	self title: dialogTitle.
+	itemsView selection selectItems: (itemsView findItemsWith: items).
 
 	browser window openModal: self.
 
@@ -120,15 +121,16 @@ ClyBrowserSearchDialogWindow >> openOn: aQuery withTitle: dialogTitle thenDo: re
 		ensure: [ itemsView closeDataSource]
 ]
 
+{ #category : #private }
+ClyBrowserSearchDialogWindow >> openOn: aQuery withTitle: dialogTitle thenDo: resultActionBlock [
+
+	^ self openOn: aQuery selecting: #() withTitle: dialogTitle thenDo: resultActionBlock
+]
+
 { #category : #requests }
 ClyBrowserSearchDialogWindow >> requestMultipleObjects: dialogTitle from: aQuery [
 	
-	self 
-		openOn: aQuery 
-		withTitle: dialogTitle
-		thenDo: [ 
-			itemsView selection isEmpty ifTrue: [ ^self findObjectsSameAsFilter ].
-			^itemsView selection actualObjects]
+	^ self requestMultipleObjects: dialogTitle from: aQuery selecting: #()
 ]
 
 { #category : #requests }
@@ -137,6 +139,18 @@ ClyBrowserSearchDialogWindow >> requestMultipleObjects: dialogTitle from: aQuery
 	aScope bindTo: browser navigationEnvironment.
 	
 	^self requestMultipleObjects: dialogTitle from: (aScope adoptQuery: aQuery)
+]
+
+{ #category : #requests }
+ClyBrowserSearchDialogWindow >> requestMultipleObjects: dialogTitle from: aQuery selecting: items [
+	
+	self 
+		openOn: aQuery 
+		selecting: items
+		withTitle: dialogTitle
+		thenDo: [ 
+			itemsView selection isEmpty ifTrue: [ ^self findObjectsSameAsFilter ].
+			^itemsView selection actualObjects]
 ]
 
 { #category : #requests }
