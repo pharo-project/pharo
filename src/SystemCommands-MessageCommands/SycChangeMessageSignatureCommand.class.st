@@ -62,17 +62,6 @@ SycChangeMessageSignatureCommand >> canRenameArgs [
 	^ true
 ]
 
-{ #category : #actions }
-SycChangeMessageSignatureCommand >> computeInvalidArgNames [ 
-	| invalidArgNames |
-	invalidArgNames := Set new.
-	(model allImplementorsOf: originalMessage selector) do: [ :e | | cm | 
-		cm:=(e realClass >> originalMessage selector).
-		invalidArgNames addAll: cm argumentNames;
-			addAll: cm origin instVarNames ].
-	^ invalidArgNames
-]
-
 { #category : #execution }
 SycChangeMessageSignatureCommand >> createRefactoring [
 	self subclassResponsibility
@@ -109,7 +98,7 @@ SycChangeMessageSignatureCommand >> prepareFullExecutionInContext: aToolContext 
 { #category : #requesting }
 SycChangeMessageSignatureCommand >> requestNewMessageIn: aToolContext [
 	| methodName dialog invalidArgNames |
-	invalidArgNames := self computeInvalidArgNames.
+	invalidArgNames := self computeInvalidArgNamesForSelector: originalMessage selector.
 	methodName := RBMethodName selector: originalMessage selector arguments: originalMessage argumentNames.
 	dialog := SycMethodNameEditorPresenter openOn: methodName withInvalidArgs: invalidArgNames
 		canRenameArgs: self canRenameArgs
