@@ -1040,7 +1040,7 @@ Integer >> hex [
 		storeStringBase: 16
 		storeStringBase: 16 length: 11 padded: true"
 		
-	"12 hex >>> '16r2'"	
+	"12 hex >>> '16rC'"	
 	"10 hex >>> '16rA'"	
 	"-10 hex >>> '-16rA'"	
 		
