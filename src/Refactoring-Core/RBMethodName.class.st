@@ -54,7 +54,7 @@ RBMethodName >> isValid [
 { #category : #accessing }
 RBMethodName >> newArgs [
 
-	^ newArgs
+	^ newArgs ifNil: [ newArgs := { } ]
 ]
 
 { #category : #accessing }
@@ -66,7 +66,7 @@ RBMethodName >> newArgs: anObject [
 { #category : #accessing }
 RBMethodName >> permutation [
 
-	^ permutation
+	^ permutation ifNil: [ permutation := 1 to: arguments size ]
 ]
 
 { #category : #accessing }
@@ -92,7 +92,7 @@ RBMethodName >> printOn: aStream [
 { #category : #accessing }
 RBMethodName >> renameMap [
 
-	^ renameMap
+	^ renameMap ifNil: [ renameMap := {  } ]
 ]
 
 { #category : #accessing }
