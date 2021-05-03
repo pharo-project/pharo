@@ -47,7 +47,7 @@ Class {
 }
 
 { #category : #specs }
-SycMethodNameEditorPresenter class >> defaultEditableSpec [
+SycMethodNameEditorPresenter class >> defaultSpec [
 	<spec>
 	^ SpBoxLayout newTopToBottom
 		add:
@@ -68,37 +68,6 @@ SycMethodNameEditorPresenter class >> defaultEditableSpec [
 						add: #downButton
 							withConstraints: [ :aConstraints | aConstraints height: 30 ];
 						add: #addButton
-							withConstraints: [ :aConstraints | aConstraints height: 30 ];
-						yourself)
-					withConstraints: [ :aConstraints | aConstraints width: 30 ];
-				yourself);
-		add:
-			(SpBoxLayout newLeftToRight
-				add: 'Preview'
-					withConstraints: [ :aConstraints | aConstraints width: 80 ];
-				add: #previewResult yourself);
-		yourself
-]
-
-{ #category : #specs }
-SycMethodNameEditorPresenter class >> defaultSpec [
-	^ SpBoxLayout newTopToBottom
-		add:
-			(SpBoxLayout newLeftToRight
-				add: 'Selector'
-					withConstraints: [ :aConstraints | aConstraints width: 80 ];
-				add: #selectorInput;
-				yourself);
-		add:
-			(SpBoxLayout newLeftToRight
-				add: 'Arguments'
-					withConstraints: [ :aConstraints | aConstraints width: 80 ];
-				add: #argumentsList;
-				add:
-					(SpBoxLayout newTopToBottom
-						add: #upButton
-							withConstraints: [ :aConstraints | aConstraints height: 30 ];
-						add: #downButton
 							withConstraints: [ :aConstraints | aConstraints height: 30 ];
 						yourself)
 					withConstraints: [ :aConstraints | aConstraints width: 30 ];
@@ -153,6 +122,20 @@ SycMethodNameEditorPresenter class >> openOn: aMethod withInvalidArgs: aSet canR
 	temp canRemoveArgs: aBoolean2.
 	temp canAddArgs: aBoolean3.
 	^ temp openModalWithSpec
+]
+
+{ #category : #action }
+SycMethodNameEditorPresenter >> addArgument [
+
+	| newArg argValue |
+	newArg := self newArgName asSymbol.
+	argValue := self getDefaultValue.
+	argValue isEmptyOrNil ifTrue: [ CmdCommandAborted signal ].
+	newArg := RBArgumentName name: newArg value: argValue.
+	argumentsList items: { newArg }.
+	self selectorInput text: self selectorInput text , 'arg:'.
+	argumentsList selectIndex: 1.
+	self updateLabel
 ]
 
 { #category : #action }
@@ -283,7 +266,9 @@ SycMethodNameEditorPresenter >> initializePresenter [
 	selectorInput whenTextChangedDo: [ :text | self updateLabel ].
 	upButton action: [ self pushUpSelectedArgument ].
 	downButton action: [ self pushDownSelectedArgument ].
-	addButton action: [ self addArgumentAfter: argumentsList items last ].
+	addButton action: [ argumentsList items 
+		ifEmpty: [ self addArgument ] 
+		ifNotEmpty: [ self addArgumentAfter: argumentsList items last ] ].
 
 	argumentsList
 		whenModelChangedDo: [ :model | 
@@ -374,14 +359,18 @@ SycMethodNameEditorPresenter >> pushUpSelectedArgument [
 
 { #category : #accessing }
 SycMethodNameEditorPresenter >> removeArgument: anItem [
+	| selectedIndex |
+	selectedIndex := argumentsList selection selectedIndex.
 	argumentsList items: (argumentsList items copyUpTo: anItem), (argumentsList items copyAfter: anItem).
+	argumentsList selectIndex: selectedIndex - 1.
 	self updateLabel.
 ]
 
 { #category : #action }
 SycMethodNameEditorPresenter >> renameArgument: anItem [
 
-	| argName |
+	| argName selectedIndex |
+	selectedIndex := argumentsList selection selectedIndex.
 	argName := self uiManager
 		request: 'Enter default name of argument' initialAnswer: anItem.
 	argName ifNil: [ CmdCommandAborted signal ].
@@ -390,6 +379,7 @@ SycMethodNameEditorPresenter >> renameArgument: anItem [
 		CmdCommandAborted signal ].
 	anItem newName: argName.
 	argumentsList items: (argumentsList items copyUpTo: anItem), {anItem}, (argumentsList items copyAfter: anItem).
+	argumentsList selectIndex: selectedIndex.
 	self updateLabel.
 ]
 
