@@ -35,8 +35,7 @@ Class {
 		'numberReplaced',
 		'numberNotReplaced',
 		'pattern',
-		'selectorString',
-		'removeMethod'
+		'selectorString'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
