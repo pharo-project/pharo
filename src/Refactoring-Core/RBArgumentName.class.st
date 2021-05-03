@@ -83,6 +83,11 @@ RBArgumentName >> printOn: aStream [
 	aStream nextPutAll: self newName
 ]
 
+{ #category : #printing }
+RBArgumentName >> storeOn: aStream [
+	aStream
+]
+
 { #category : #accessing }
 RBArgumentName >> value1 [
 
