@@ -84,11 +84,11 @@ RBInlineAllSendersRefactoring >> inlineMessagesInClass: aClass andSelector: aSel
 				previousCountOfMessages := messagesToInline.
 				node := self selfSendIn: (aClass parseTreeFor: aSelector).
 				self onError: 
-						[self performCompositeRefactoring: (RBInlineMethodRefactoring1 
+						[self performCompositeRefactoring: ((RBInlineMethodRefactoring
 									model: self model
 									inline: node sourceInterval
 									inMethod: aSelector
-									forClass: aClass).
+									forClass: aClass) checkOverridden: false).
 						numberReplaced := numberReplaced + 1]
 					do: [ :e | ]].
 	numberNotReplaced := numberNotReplaced + messagesToInline
