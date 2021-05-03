@@ -157,7 +157,8 @@ SycMethodNameEditorPresenter class >> openOn: aMethod withInvalidArgs: aSet canR
 
 { #category : #action }
 SycMethodNameEditorPresenter >> addArgumentAfter: anItem [
-	| newArg argValue |
+	| newArg argValue selectedIndex |
+	selectedIndex := argumentsList selection selectedIndex.
 	newArg := self newArgName asSymbol.
 	argValue := UIManager default
 		request: 'Enter default value for argument' initialAnswer: 'nil'.
@@ -165,6 +166,7 @@ SycMethodNameEditorPresenter >> addArgumentAfter: anItem [
 	newArg := RBArgumentName name: newArg value: argValue.
 	argumentsList items: (argumentsList items copyUpThrough: anItem), {newArg}, (argumentsList items copyAfter: anItem).
 	self selectorInput text: self selectorInput text, 'arg:'.
+	argumentsList selectIndex: selectedIndex + 1.
 	self updateLabel
 ]
 
@@ -281,6 +283,7 @@ SycMethodNameEditorPresenter >> initializePresenter [
 
 	argumentsList items: (methodName arguments collect: [:arg | RBArgumentName name: arg]);
 		contextMenu: self argumentsListMenu.
+	argumentsList items ifNotEmpty: [ argumentsList selectIndex: 1 ]
 
 ]
 
