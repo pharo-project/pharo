@@ -47,6 +47,32 @@ SycChangeMessageSignatureCommand >> asRefactorings [
 	^{self createRefactoring}
 ]
 
+{ #category : #requesting }
+SycChangeMessageSignatureCommand >> canAddArgs [
+	^ true
+]
+
+{ #category : #requesting }
+SycChangeMessageSignatureCommand >> canRemoveArgs [
+	^ true
+]
+
+{ #category : #requesting }
+SycChangeMessageSignatureCommand >> canRenameArgs [
+	^ true
+]
+
+{ #category : #actions }
+SycChangeMessageSignatureCommand >> computeInvalidArgNames [ 
+	| invalidArgNames |
+	invalidArgNames := Set new.
+	(model allImplementorsOf: originalMessage selector) do: [ :e | | cm | 
+		cm:=(e realClass >> originalMessage selector).
+		invalidArgNames addAll: cm argumentNames;
+			addAll: cm origin instVarNames ].
+	^ invalidArgNames
+]
+
 { #category : #execution }
 SycChangeMessageSignatureCommand >> createRefactoring [
 	self subclassResponsibility
@@ -78,6 +104,22 @@ SycChangeMessageSignatureCommand >> prepareFullExecutionInContext: aToolContext 
 	super prepareFullExecutionInContext: aToolContext.
 	self setUpModelFromContext: aToolContext.
 	originalMessage := aToolContext lastSelectedMessage
+]
+
+{ #category : #requesting }
+SycChangeMessageSignatureCommand >> requestNewMessageIn: aToolContext [
+	| methodName dialog invalidArgNames |
+	invalidArgNames := self computeInvalidArgNames.
+	methodName := RBMethodName selector: originalMessage selector arguments: originalMessage argumentNames.
+	dialog := SycMethodNameEditorPresenter openOn: methodName withInvalidArgs: invalidArgNames
+		canRenameArgs: self canRenameArgs
+		canRemoveArgs: self canRemoveArgs
+		canAddArgs: self canAddArgs.
+	dialog cancelled ifTrue: [  CmdCommandAborted signal ].
+	
+	originalMessage selector = methodName selector & (originalMessage argumentNames = methodName arguments)
+		ifTrue: [ CmdCommandAborted signal].	
+	^methodName
 ]
 
 { #category : #execution }

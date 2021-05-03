@@ -11,8 +11,7 @@ Class {
 	#name : #SycAddMessageArgumentCommand,
 	#superclass : #SycChangeMessageSignatureCommand,
 	#instVars : [
-		'newSelector',
-		'argumentDefaultValue'
+		'newSelector'
 	],
 	#category : #'SystemCommands-MessageCommands'
 }
@@ -25,25 +24,9 @@ SycAddMessageArgumentCommand class >> methodContextMenuActivation [
 		byRootGroupItemOrder: 30 for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #accessing }
-SycAddMessageArgumentCommand >> argumentDefaultValue [
-	^ argumentDefaultValue
-]
-
-{ #category : #accessing }
-SycAddMessageArgumentCommand >> argumentDefaultValue: anObject [
-	argumentDefaultValue := anObject
-]
-
-{ #category : #actions }
-SycAddMessageArgumentCommand >> computeInvalidArgNames [ 
-	| invalidArgNames |
-	invalidArgNames := Set new.
-	(model allImplementorsOf: originalMessage selector) do: [ :e | | cm | 
-		cm:=(e realClass >> originalMessage selector).
-		invalidArgNames addAll: cm argumentNames;
-			addAll: cm origin instVarNames ].
-	^ invalidArgNames
+{ #category : #requesting }
+SycAddMessageArgumentCommand >> canRemoveArgs [ 
+	^ false
 ]
 
 { #category : #execution }
@@ -84,21 +67,7 @@ SycAddMessageArgumentCommand >> newSelector: anObject [
 SycAddMessageArgumentCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	
-	newSelector := self requestMessageIn: aToolContext.
-]
-
-{ #category : #execution }
-SycAddMessageArgumentCommand >> requestMessageIn: aToolContext [
-	| methodName dialog invalidArgNames |
-	invalidArgNames := self computeInvalidArgNames.
-	methodName := RBMethodName selector: originalMessage selector arguments: originalMessage argumentNames.
-	dialog := SycMethodNameEditorPresenter openOn: methodName withInvalidArgs: invalidArgNames
-		canRenameArgs: true canRemoveArgs: false canAddArgs: true.
-	dialog cancelled ifTrue: [  CmdCommandAborted signal ].
-	
-	originalMessage selector = methodName selector & (originalMessage argumentNames = methodName arguments)
-		ifTrue: [ CmdCommandAborted signal].	
-	^methodName
+	newSelector := self requestNewMessageIn: aToolContext.
 ]
 
 { #category : #execution }

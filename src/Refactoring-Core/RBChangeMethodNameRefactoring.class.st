@@ -101,6 +101,13 @@ RBChangeMethodNameRefactoring >> removeRenamedImplementors [
 		do: [ :each | each removeMethod: oldSelector ]
 ]
 
+{ #category : #action }
+RBChangeMethodNameRefactoring >> renameArgumentsIn: parseTree [
+	self renameMap do: [ :arg |
+		(self parseTreeRewriterClass rename: arg name to: arg newName) executeTree: parseTree
+	] 
+]
+
 { #category : #transforming }
 RBChangeMethodNameRefactoring >> renameImplementors [
 
