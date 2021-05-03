@@ -3,14 +3,48 @@ I am a command to extract setUp method and then replaces its occurrences
 "
 Class {
 	#name : #SycExtractSetUpRefactoring,
-	#superclass : #SycSourceCodeCmCommand,
+	#superclass : #SycSourceCodeCommand,
 	#instVars : [
-		'method',
-		'sourceNode',
 		'selectedTextInterval'
 	],
 	#category : #'SystemCommands-SourceCodeCommands'
 }
+
+{ #category : #testing }
+SycExtractSetUpRefactoring class >> canBeExecutedInContext: aToolContext [
+	super canBeExecutedInContext: aToolContext.
+	
+	^aToolContext isMethodSelected not and: [aToolContext lastSelectedMethod selector isTestSelector]
+]
+
+{ #category : #executing }
+SycExtractSetUpRefactoring >> asRefactorings [ 
+	| selectedInterval refactoring |
+	selectedInterval := selectedTextInterval ifEmpty: [ 
+		                    sourceNode sourceInterval ].
+	refactoring := RBExtractSetUpMethodAndOccurrences 
+		extract: selectedInterval
+		from: method selector
+		in: method origin.
+	self initializeDefaultOptionsOf: refactoring.
+	^ { refactoring }
+]
+
+{ #category : #accessing }
+SycExtractSetUpRefactoring >> defaultMenuIconName [ 
+	^ #glamorousRestart
+]
+
+{ #category : #accessing }
+SycExtractSetUpRefactoring >> defaultMenuItemName [ 	
+	^ 'Extract setUp'
+]
+
+{ #category : #preparation }
+SycExtractSetUpRefactoring >> execute [
+
+	self executeRefactoring: self asRefactorings
+]
 
 { #category : #executing }
 SycExtractSetUpRefactoring >> executeRefactoring [ 
@@ -25,34 +59,14 @@ SycExtractSetUpRefactoring >> executeRefactoring [
 	refactoring execute
 ]
 
-{ #category : #accessing }
-SycExtractSetUpRefactoring >> icon [ 
-	^ self iconNamed: #glamorousRestart
-]
-
-{ #category : #initialization }
-SycExtractSetUpRefactoring >> initialize [
-	super initialize.
-	self
-		description: 'Extract setUp and find occurrences.'
-]
-
 { #category : #testing }
-SycExtractSetUpRefactoring >> isApplicable [
-
-	^ context isMethodSelected and: [ 
-		  context lastSelectedMethod selector isTestSelector ]
-]
-
-{ #category : #accessing }
-SycExtractSetUpRefactoring >> name [ 	
-	^ 'Extract setUp'
+SycExtractSetUpRefactoring >> isComplexRefactoring [
+	^ true
 ]
 
 { #category : #preparation }
-SycExtractSetUpRefactoring >> prepareFullExecution [
-	super prepareFullExecution.
-	method := context lastSelectedMethod.
-	sourceNode := context lastSelectedSourceNode.
-	selectedTextInterval := context selectedTextInterval.
+SycExtractSetUpRefactoring >> readParametersFromContext: aSourceCodeContext [
+	super readParametersFromContext: aSourceCodeContext.
+	
+	selectedTextInterval := aSourceCodeContext selectedTextInterval.
 ]
