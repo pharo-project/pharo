@@ -135,6 +135,27 @@ OpalCompilerTest >> testEvaluateWithBindings [
 ]
 
 { #category : #'tests - bindings' }
+OpalCompilerTest >> testEvaluateWithBindingsSelfSuperThisContext [
+	| result |
+
+	"via #bindings: we can overwrite even self, super and thisContext"
+	result := Smalltalk compiler
+		bindings: {(#self -> 3)} asDictionary;
+		evaluate: '1+self'.
+	self assert: result equals: 4.
+	
+	result := Smalltalk compiler
+		bindings: {(#super -> 3)} asDictionary;
+		evaluate: '1+super'.
+	self assert: result equals: 4.
+	
+	result := Smalltalk compiler
+		bindings: {(#thisContext -> 3)} asDictionary;
+		evaluate: '1+thisContext'.
+	self assert: result equals: 4
+]
+
+{ #category : #'tests - bindings' }
 OpalCompilerTest >> testEvaluateWithBindingsWithUppercaseName [
 	| result |
 	result := Smalltalk compiler
