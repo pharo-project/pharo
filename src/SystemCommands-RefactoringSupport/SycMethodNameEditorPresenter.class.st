@@ -157,15 +157,17 @@ SycMethodNameEditorPresenter class >> openOn: aMethod withInvalidArgs: aSet canR
 
 { #category : #action }
 SycMethodNameEditorPresenter >> addArgumentAfter: anItem [
+
 	| newArg argValue selectedIndex |
 	selectedIndex := argumentsList selection selectedIndex.
 	newArg := self newArgName asSymbol.
-	argValue := UIManager default
-		request: 'Enter default value for argument' initialAnswer: 'nil'.
-	argValue isEmptyOrNil ifTrue:  [ CmdCommandAborted signal ].
+	argValue := self getDefaultValue.
+	argValue isEmptyOrNil ifTrue: [ CmdCommandAborted signal ].
 	newArg := RBArgumentName name: newArg value: argValue.
-	argumentsList items: (argumentsList items copyUpThrough: anItem), {newArg}, (argumentsList items copyAfter: anItem).
-	self selectorInput text: self selectorInput text, 'arg:'.
+	argumentsList items:
+		(argumentsList items copyUpThrough: anItem) , { newArg }
+		, (argumentsList items copyAfter: anItem).
+	self selectorInput text: self selectorInput text , 'arg:'.
 	argumentsList selectIndex: selectedIndex + 1.
 	self updateLabel
 ]
@@ -180,7 +182,7 @@ SycMethodNameEditorPresenter >> alert: aString [
 	"Display a message for the user to read and then dismiss."
 
 	aString isEmptyOrNil
-		ifFalse: [ UIManager default alert: aString ]
+		ifFalse: [ self uiManager alert: aString ]
 ]
 
 { #category : #accessing }
@@ -250,6 +252,14 @@ SycMethodNameEditorPresenter >> computePermutation [
 { #category : #'accessing ui' }
 SycMethodNameEditorPresenter >> downButton [
 	^ downButton
+]
+
+{ #category : #action }
+SycMethodNameEditorPresenter >> getDefaultValue [
+
+	^ self uiManager
+		  request: 'Enter default value for argument'
+		  initialAnswer: 'nil'
 ]
 
 { #category : #services }
@@ -372,7 +382,7 @@ SycMethodNameEditorPresenter >> removeArgument: anItem [
 SycMethodNameEditorPresenter >> renameArgument: anItem [
 
 	| argName |
-	argName := UIManager default
+	argName := self uiManager
 		request: 'Enter default name of argument' initialAnswer: anItem.
 	argName ifNil: [ CmdCommandAborted signal ].
 	(self invalidArgNames includes: argName) ifTrue: [ 
@@ -427,6 +437,6 @@ SycMethodNameEditorPresenter >> updateLabel [
 	previewResult
 		label:
 			(RBMethodName
-				selector: self selectorInput text
+				selector: (self selectorInput text ifNil: [''])
 				arguments: (argumentsList items collect: #newName) ) methodName
 ]

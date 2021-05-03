@@ -16,7 +16,7 @@ Class {
 RBClassTransformation >> className [
 
 	^ className ifNil: [ 
-		UIManager default
+		self uiManager
 			chooseOrRequestFrom: (self environment allClasses collect: [:each | each name])
 			title: 'Class name was not defined to perform ', self class baseClass name,
 					 '. Please select a class to resume this transformation.' ]
