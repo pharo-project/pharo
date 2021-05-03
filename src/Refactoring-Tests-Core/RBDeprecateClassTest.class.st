@@ -1,28 +1,28 @@
 Class {
-	#name : #RBApplyClassDeprecationRefactoringTest,
+	#name : #RBDeprecateClassTest,
 	#superclass : #RBRefactoringTest,
 	#category : #'Refactoring-Tests-Core-Refactorings'
 }
 
 { #category : #'failure tests' }
-RBApplyClassDeprecationRefactoringTest >> testBadName [
+RBDeprecateClassTest >> testBadName [
 	self
-		shouldFail: (RBApplyClassDeprecationRefactoring 
-				rename: RBLintRuleTestData
-				to: self objectClassVariable);
-		shouldFail: (RBApplyClassDeprecationRefactoring 
-				rename: RBLintRuleTestData
-				to: #'Ob ject')
+		shouldFail: (RBDeprecateClassRefactoring 
+				deprecate: RBLintRuleTestData
+				in: self objectClassVariable);
+		shouldFail: (RBDeprecateClassRefactoring 
+				deprecate: RBLintRuleTestData
+				in: #'Ob ject')
 ]
 
 { #category : #'failure tests' }
-RBApplyClassDeprecationRefactoringTest >> testMetaClassFailure [
+RBDeprecateClassTest >> testMetaClassFailure [
 	self 
-		shouldFail: (RBApplyClassDeprecationRefactoring rename: self class class to: #Foo)
+		shouldFail: (RBDeprecateClassRefactoring deprecate: self class class in: #Foo)
 ]
 
 { #category : #tests }
-RBApplyClassDeprecationRefactoringTest >> testModelRenameClass [
+RBDeprecateClassTest >> testModelRenameClass [
 	| refactoring replacement deprecated user |
 
 	model defineClass: 'Object subclass: #ClassDeprecatorTestingClassReplacement instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
@@ -38,10 +38,10 @@ RBApplyClassDeprecationRefactoringTest >> testModelRenameClass [
 	user
 		compile: 'foo	^ClassDeprecatorTestingClassDeprecated' classified: #(#accessing);
 		compile: 'objectName ^#(ClassDeprecatorTestingClassDeprecated)' classified: #(#accessing).
-	refactoring := RBApplyClassDeprecationRefactoring 
+	refactoring := RBDeprecateClassRefactoring 
 		model: model
-		rename: deprecated
-		to: #ClassDeprecatorTestingClassReplacement.
+		deprecate: deprecated
+		in: #ClassDeprecatorTestingClassReplacement.
 	
 	"because of RB limitations we cannot detect extensions in the test properly so we skip this operation"
 	refactoring shouldCopyExtensions: false.	

@@ -41,12 +41,6 @@ SycExtractMethodCommand >> defaultMenuItemName [
 	^ 'Extract method'
 ]
 
-{ #category : #execution }
-SycExtractMethodCommand >> execute [
-
-	self executeRefactoring: self asRefactorings
-]
-
 { #category : #testing }
 SycExtractMethodCommand >> isComplexRefactoring [
 	^ true

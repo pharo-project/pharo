@@ -3,13 +3,14 @@ I am a refactoring operation for removing of usages of a deprecated class, that 
 
  I'm doing following operations:
  - all subclasses of the deprecated class will use the new class as superclass (optional)
+ - convert new class to superclass of deprecatedclass, remove methods of deprecated class and add class method #isDeprecated (optional)
  - rename all references in the code
  - move extensions of the deprecated class owned by other packages to the new class (optional)
  - remove the extensions (optional)
 
 "
 Class {
-	#name : #RBApplyClassDeprecationRefactoring,
+	#name : #RBDeprecateClassRefactoring,
 	#superclass : #RBClassRefactoring,
 	#instVars : [
 		'newName',
@@ -22,27 +23,27 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBApplyClassDeprecationRefactoring class >> model: aRBSmalltalk rename: aClass to: aNewName [ 
-	^(self new)
+RBDeprecateClassRefactoring class >> deprecate: aDeprecatedClass in: aNewName [
+	^ self new className: aDeprecatedClass name newName: aNewName
+]
+
+{ #category : #'instance creation' }
+RBDeprecateClassRefactoring class >> model: aRBSmalltalk deprecate: aClass in: aNewName [ 
+	^ self new
 		model: aRBSmalltalk;
 		className: aClass name newName: aNewName;
 		yourself
 ]
 
-{ #category : #'instance creation' }
-RBApplyClassDeprecationRefactoring class >> rename: aDeprecatedClass to: aNewName [
-	^self new className: aDeprecatedClass name newName: aNewName
-]
-
 { #category : #initialization }
-RBApplyClassDeprecationRefactoring >> className: aName newName: aNewName [ 
+RBDeprecateClassRefactoring >> className: aName newName: aNewName [ 
 	className := aName asSymbol.
 	deprecatedClass := self model classNamed: className.
 	newName := aNewName asSymbol
 ]
 
 { #category : #transforming }
-RBApplyClassDeprecationRefactoring >> classSideExtensionMethodsOf: anRBClass [
+RBDeprecateClassRefactoring >> classSideExtensionMethodsOf: anRBClass [
 
 	^ anRBClass realClass classSide localMethods 
 		select: #isExtension 
@@ -50,7 +51,19 @@ RBApplyClassDeprecationRefactoring >> classSideExtensionMethodsOf: anRBClass [
 ]
 
 { #category : #transforming }
-RBApplyClassDeprecationRefactoring >> copyExtensionMethods [
+RBDeprecateClassRefactoring >> convertDeprecatedToSubclass [
+	| replacement |
+	replacement := self model classNamed: newName.
+	self model reparentClasses: {deprecatedClass} to: replacement.
+	deprecatedClass selectors do: [ :symbol | deprecatedClass removeMethod: symbol ].
+	deprecatedClass classSide selectors do: [ :symbol | deprecatedClass classSide removeMethod: symbol ].
+	deprecatedClass classSide compile: 'isDeprecated
+		" Uses ', newName, ' instead of ', className,'"
+		^ true' classified: {'testing'}
+]
+
+{ #category : #transforming }
+RBDeprecateClassRefactoring >> copyExtensionMethods [
 
 	(self instanceSideExtensionMethodsOf: deprecatedClass)
 		do: [ :each | self newClass instanceSide compile: each source classified: each protocols ].
@@ -60,17 +73,17 @@ RBApplyClassDeprecationRefactoring >> copyExtensionMethods [
 ]
 
 { #category : #accessing }
-RBApplyClassDeprecationRefactoring >> deprecatedClass [
+RBDeprecateClassRefactoring >> deprecatedClass [
 	^ deprecatedClass
 ]
 
 { #category : #accessing }
-RBApplyClassDeprecationRefactoring >> deprecatedClass: anObject [
+RBDeprecateClassRefactoring >> deprecatedClass: anObject [
 	deprecatedClass := anObject
 ]
 
 { #category : #initialization }
-RBApplyClassDeprecationRefactoring >> initialize [
+RBDeprecateClassRefactoring >> initialize [
 
 	super initialize.
 	
@@ -80,7 +93,7 @@ RBApplyClassDeprecationRefactoring >> initialize [
 ]
 
 { #category : #transforming }
-RBApplyClassDeprecationRefactoring >> instanceSideExtensionMethodsOf: anRBClass [
+RBDeprecateClassRefactoring >> instanceSideExtensionMethodsOf: anRBClass [
 
 	^ anRBClass realClass instanceSide localMethods 
 		select: #isExtension 
@@ -88,13 +101,13 @@ RBApplyClassDeprecationRefactoring >> instanceSideExtensionMethodsOf: anRBClass 
 ]
 
 { #category : #transforming }
-RBApplyClassDeprecationRefactoring >> newClass [
+RBDeprecateClassRefactoring >> newClass [
 
 	^ self model classNamed: newName.  	
 ]
 
 { #category : #preconditions }
-RBApplyClassDeprecationRefactoring >> preconditions [
+RBDeprecateClassRefactoring >> preconditions [
 	^((RBCondition withBlock: [deprecatedClass notNil and: [deprecatedClass isMeta not]]) 
 			& (RBCondition isValidClassName: newName) 
 			& (RBCondition isGlobal: newName in: self model)) |
@@ -102,7 +115,7 @@ RBApplyClassDeprecationRefactoring >> preconditions [
 ]
 
 { #category : #transforming }
-RBApplyClassDeprecationRefactoring >> removeExtensionMethods [
+RBDeprecateClassRefactoring >> removeExtensionMethods [
 
 	(self instanceSideExtensionMethodsOf: deprecatedClass)
 		do: [ :each | deprecatedClass instanceSide removeMethod: each selector ].
@@ -113,7 +126,7 @@ RBApplyClassDeprecationRefactoring >> removeExtensionMethods [
 ]
 
 { #category : #transforming }
-RBApplyClassDeprecationRefactoring >> renameReferences [
+RBDeprecateClassRefactoring >> renameReferences [
 	| replacer |
 	replacer := (self parseTreeRewriterClass replaceLiteral: className with: newName)
 		replace: className with: newName;
@@ -132,7 +145,7 @@ RBApplyClassDeprecationRefactoring >> renameReferences [
 ]
 
 { #category : #transforming }
-RBApplyClassDeprecationRefactoring >> renameSuperclassOfSubclasses [
+RBDeprecateClassRefactoring >> renameSuperclassOfSubclasses [
 	
 	| replacement |
 	replacement := self model classNamed: newName.  	
@@ -140,37 +153,37 @@ RBApplyClassDeprecationRefactoring >> renameSuperclassOfSubclasses [
 ]
 
 { #category : #accessing }
-RBApplyClassDeprecationRefactoring >> shouldCopyExtensions [
+RBDeprecateClassRefactoring >> shouldCopyExtensions [
 	^ shouldCopyExtensions
 ]
 
 { #category : #accessing }
-RBApplyClassDeprecationRefactoring >> shouldCopyExtensions: anObject [
+RBDeprecateClassRefactoring >> shouldCopyExtensions: anObject [
 	shouldCopyExtensions := anObject
 ]
 
 { #category : #accessing }
-RBApplyClassDeprecationRefactoring >> shouldFixSubclasses [
+RBDeprecateClassRefactoring >> shouldFixSubclasses [
 	^ shouldFixSubclasses
 ]
 
 { #category : #accessing }
-RBApplyClassDeprecationRefactoring >> shouldFixSubclasses: anObject [
+RBDeprecateClassRefactoring >> shouldFixSubclasses: anObject [
 	shouldFixSubclasses := anObject
 ]
 
 { #category : #accessing }
-RBApplyClassDeprecationRefactoring >> shouldRemoveExtensions [
+RBDeprecateClassRefactoring >> shouldRemoveExtensions [
 	^ shouldRemoveExtensions
 ]
 
 { #category : #accessing }
-RBApplyClassDeprecationRefactoring >> shouldRemoveExtensions: anObject [
+RBDeprecateClassRefactoring >> shouldRemoveExtensions: anObject [
 	shouldRemoveExtensions := anObject
 ]
 
 { #category : #printing }
-RBApplyClassDeprecationRefactoring >> storeOn: aStream [ 
+RBDeprecateClassRefactoring >> storeOn: aStream [ 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' rename: '.
@@ -182,10 +195,11 @@ RBApplyClassDeprecationRefactoring >> storeOn: aStream [
 ]
 
 { #category : #transforming }
-RBApplyClassDeprecationRefactoring >> transform [
+RBDeprecateClassRefactoring >> transform [
 	
 	self shouldFixSubclasses 
-		ifTrue: [ self renameSuperclassOfSubclasses ].
+		ifTrue: [ self renameSuperclassOfSubclasses.
+			self convertDeprecatedToSubclass ].
 
 	self renameReferences.
 

@@ -42,7 +42,6 @@ SycExtractSetUpRefactoring >> defaultMenuItemName [
 
 { #category : #preparation }
 SycExtractSetUpRefactoring >> execute [
-
 	self executeRefactoring: self asRefactorings
 ]
 
