@@ -18,6 +18,7 @@ PharoDocCommentExpression >> evaluate [
 	^ self methodClass compiler
 		  source: self expression;
 		  noPattern: true;
+		  receiver: self methodClass;
 		  options: #( + optionParseErrors );
 		  evaluate
 ]
