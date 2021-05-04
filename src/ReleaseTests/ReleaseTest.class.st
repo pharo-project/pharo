@@ -272,8 +272,8 @@ ReleaseTest >> testNoPeriodInMethodSignature [
 	methods := SystemNavigation new allMethods select: [ :method | 
  		method sourceCode lines first trimRight last == $..].
 	
-	"there are 11 problematic methods"
-	self assert: methods size <=11.
+	"there are 2 problematic methods left, both in Roassal. They will be fixed with the next merge"
+	self assert: methods size <=2.
 	
 	"there should be no method left"
 	"self assert: methods isEmpty description: [ 
