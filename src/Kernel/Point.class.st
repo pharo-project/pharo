@@ -661,7 +661,7 @@ Point >> setX: xValue setY: yValue [
 { #category : #geometry }
 Point >> sideOf: otherPoint [ 
 	"Returns #left, #right or #center if the otherPoint lies to the left, right or on the line given by the vector from 0@0 to self"
-	"((0@0) sideOf: (100@100)) >>> #right"
+	"((0@0) sideOf: (100@100)) >>> #center"
 	
 	| side |
 	side := (self crossProduct: otherPoint) sign.
