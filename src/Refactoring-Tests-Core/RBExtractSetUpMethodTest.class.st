@@ -69,6 +69,33 @@ RBExtractSetUpMethodTest >> testExtractSetUpAndConvertTempsToInstVars [
 	self someMethod.')
 ]
 
+{ #category : #tests }
+RBExtractSetUpMethodTest >> testExtractSetUpAndConvertTwoTempsToInstVars [
+	| class refactoring |
+	refactoring := RBExtractSetUpMethodRefactoring
+				extract: (36 to: 93)
+				from: #testExample1
+				in: RBDataTest.
+	self executeRefactoring: refactoring.
+	class := refactoring model classNamed: #RBDataTest.
+	self assert: (class instanceVariableNames includes: #aString). 
+	self assert: (class instanceVariableNames includes: #aNumber). 
+	self assert: (class parseTreeFor: #testExample1) equals: (self parseMethod: 'testExample1
+	self assert: aString isNotEmpty.
+	self deny: (aString , aNumber asString) isEmpty.
+	self assert: true').
+	self assert: (class parseTreeFor: #testExample2) equals: (self parseMethod: 'testExample2
+	aString := ''sa''.
+	self someMethod.
+	aNumber := 4.
+	self assert: aString isNotEmpty.').
+	self assert: (class parseTreeFor: #setUp) equals: (self parseMethod: 'setUp
+	super setUp.
+	aString := ''Some string''.
+	self someMethod.
+	aNumber := 4')
+]
+
 { #category : #'failure tests' }
 RBExtractSetUpMethodTest >> testExtractSetUpWhenIsNotFirstsSentences [
 	| refactoring |
