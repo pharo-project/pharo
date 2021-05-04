@@ -6,6 +6,17 @@ Trait {
 	#category : #'SystemCommands-RefactoringSupport'
 }
 
+{ #category : #actions }
+TRefactoringCommandSupport >> computeInvalidArgNamesForSelector: aSymbol [
+	| invalidArgNames |
+	invalidArgNames := Set new.
+	(model allImplementorsOf: aSymbol) do: [ :e | | cm | 
+		cm:=(e realClass >> aSymbol).
+		invalidArgNames addAll: cm argumentNames;
+			addAll: cm origin instVarNames ].
+	^ invalidArgNames
+]
+
 { #category : #initialization }
 TRefactoringCommandSupport >> initializeDefaultOptionsOf: refactoring [
 
