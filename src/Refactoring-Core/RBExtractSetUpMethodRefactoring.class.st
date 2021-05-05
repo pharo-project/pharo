@@ -53,7 +53,24 @@ Class {
 }
 
 { #category : #transforming }
+RBExtractSetUpMethodRefactoring >> checkAssignments: variableNames [ 
+	| node outsideVars removeAssigned |
+	removeAssigned := variableNames copy.
+	node := self placeholderNode.
+	outsideVars := variableNames 
+				select: [:each | (node whoDefines: each) references: each].
+	outsideVars do: [ :var | self checkSingleAssignment: var ].
+	removeAssigned removeAll: outsideVars.
+	(RBReadBeforeWrittenTester readBeforeWritten: removeAssigned
+		in: extractedParseTree) ifNotEmpty: 
+			[self refactoringError: 'Cannot extract assignment if read before written.'].
+	removeAssigned do: [:each | (node whoDefines: each) removeTemporaryNamed: each].
+	self updateTemporariesInExtractedMethodFor: variableNames
+]
+
+{ #category : #transforming }
 RBExtractSetUpMethodRefactoring >> checkSingleAssignment: varName [ 
+
 	((RBReadBeforeWrittenTester isVariable: varName
 		readBeforeWrittenIn: extractedParseTree) 
 			or: [extractedParseTree containsReturn]) 

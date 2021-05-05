@@ -5,6 +5,14 @@ Class {
 }
 
 { #category : #'failure tests' }
+RBMergeInstanceVariableIntoAnotherTest >> testEqualsVariables [
+	self shouldFail: (RBMergeInstanceVariableIntoAnother 
+			rename: 'classBlock'
+			to: 'classBlock'
+			in: RBBasicLintRuleTestData)
+]
+
+{ #category : #'failure tests' }
 RBMergeInstanceVariableIntoAnotherTest >> testNonExistingVariable [
 	self shouldFail: (RBMergeInstanceVariableIntoAnother 
 			rename: 'classBlock'

@@ -28,12 +28,8 @@ Collection >> selectEverySecond [
 { #category : #'*ClassParser' }
 Collection >> unzip [
 	"Given a collection returns in one pass two collections containing each odd and even elements in respective subcollections"
-	"
-	#(1 2 3 4) unzip first asArray 
-	>>> #(1 3)
-	#(1 2 3 4) unzip second asArray 
-	>>> #(2 4)
-	"
+	"#(1 2 3 4) unzip first asArray  >>> #(1 3)"
+	"#(1 2 3 4) unzip second asArray >>> #(2 4)"
 	
 	| odd even s |
 	s := self size // 2.

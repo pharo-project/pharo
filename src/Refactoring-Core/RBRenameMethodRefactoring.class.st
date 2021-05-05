@@ -70,6 +70,12 @@ RBRenameMethodRefactoring >> implementorsCanBePrimitives [
 	^self hasPermutedArguments not
 ]
 
+{ #category : #private }
+RBRenameMethodRefactoring >> modifyImplementorParseTree: parseTree in: aClass [
+	super modifyImplementorParseTree: parseTree in: aClass.
+	self renameArgumentsIn: parseTree.
+]
+
 { #category : #preconditions }
 RBRenameMethodRefactoring >> myConditions [
 	^RBCondition withBlock: [oldSelector numArgs = newSelector numArgs]

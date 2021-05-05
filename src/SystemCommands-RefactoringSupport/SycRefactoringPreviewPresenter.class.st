@@ -79,8 +79,7 @@ SycRefactoringPreviewPresenter >> activeScope [
 SycRefactoringPreviewPresenter >> alert: aString [
 	"Display a message for the user to read and then dismiss."
 
-	aString isEmptyOrNil
-		ifFalse: [ UIManager default alert: aString ]
+	aString isEmptyOrNil ifFalse: [ self uiManager alert: aString ]
 ]
 
 { #category : #'epicea support' }

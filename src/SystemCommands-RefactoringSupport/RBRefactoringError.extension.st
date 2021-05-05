@@ -6,7 +6,7 @@ RBRefactoringError >> notifyUserOfCommand: aCommand [
 	| answer title |
 	title := self actionBlock ifNotNil: [ 'Warning' ] ifNil: [ 'Warning. Want to proceed?' ].
 
-	answer := UIManager default confirm: self messageText label: title. 
+	answer := self uiManager confirm: self messageText label: title. 
 
 	answer ifTrue: [ 
 		"Existing actionBlock means that there is already defined handled of refactoring error.

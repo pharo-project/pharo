@@ -426,9 +426,9 @@ SequenceableCollection >> atWrap: index put: value [
 	"Store value into the index'th element of the receiver.  If index is out
 	of bounds, let it wrap around from the end to the beginning until it 
 	is in bounds. Answer value."
-	"(#(11 22 33) asOrderedCollection atWrap: 2 put: 0; yourself) >>> #(11 0 33)"
-   "(#(11 22 33) asOrderedCollection atWrap: 4 put: 0; yourself) >>> #(0 22 33)"
-   "(#(11 22 33) asOrderedCollection atWrap: 6 put: 0; yourself) >>> #(11 22 0)"
+	"(#(11 22 33) asOrderedCollection atWrap: 2 put: 0; yourself) >>> #(11 0 33) asOrderedCollection"
+   "(#(11 22 33) asOrderedCollection atWrap: 4 put: 0; yourself) >>> #(0 22 33) asOrderedCollection"
+   "(#(11 22 33) asOrderedCollection atWrap: 6 put: 0; yourself) >>> #(11 22 0) asOrderedCollection"
 
 	^ self at: index  - 1 \\ self size + 1 put: value
 ]

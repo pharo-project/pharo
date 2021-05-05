@@ -18,7 +18,8 @@ Class {
 		'selector',
 		'arguments',
 		'newArgs',
-		'permutation'
+		'permutation',
+		'renameMap'
 	],
 	#category : #'Refactoring-Core-Support'
 }
@@ -53,7 +54,7 @@ RBMethodName >> isValid [
 { #category : #accessing }
 RBMethodName >> newArgs [
 
-	^ newArgs
+	^ newArgs ifNil: [ newArgs := { } ]
 ]
 
 { #category : #accessing }
@@ -65,7 +66,7 @@ RBMethodName >> newArgs: anObject [
 { #category : #accessing }
 RBMethodName >> permutation [
 
-	^ permutation
+	^ permutation ifNil: [ permutation := 1 to: arguments size ]
 ]
 
 { #category : #accessing }
@@ -86,6 +87,18 @@ RBMethodName >> printOn: aStream [
 		(self selector isUnary or: [ argumentStream atEnd ]) 
 			ifTrue: [ ^ self ].
 		aStream space; nextPutAll: argumentStream next ]
+]
+
+{ #category : #accessing }
+RBMethodName >> renameMap [
+
+	^ renameMap ifNil: [ renameMap := {  } ]
+]
+
+{ #category : #accessing }
+RBMethodName >> renameMap: anObject [
+
+	renameMap := anObject
 ]
 
 { #category : #accessing }
