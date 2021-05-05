@@ -1,5 +1,5 @@
 Class {
-	#name : #SycJoinScopes,
+	#name : #RBRBEnvironmentsPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'scopeList'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #specs }
-SycJoinScopes class >> defaultSpec [
+RBRBEnvironmentsPresenter class >> defaultSpec [
 	^ SpBoxLayout newTopToBottom
 		add:
 			(SpBoxLayout newLeftToRight
@@ -18,23 +18,23 @@ SycJoinScopes class >> defaultSpec [
 ]
 
 { #category : #specs }
-SycJoinScopes class >> example [
+RBRBEnvironmentsPresenter class >> example [
 	<script>
 	(self new) openWithSpec
 ]
 
 { #category : #accessing }
-SycJoinScopes class >> title [ 
+RBRBEnvironmentsPresenter class >> title [ 
 	^ 'Scope options'
 ]
 
 { #category : #accessing }
-SycJoinScopes >> andWithScope: anItem [ 
+RBRBEnvironmentsPresenter >> andWithScope: anItem [ 
 	self performOperation: #& with: anItem
 ]
 
 { #category : #accessing }
-SycJoinScopes >> argumentsListMenu [
+RBRBEnvironmentsPresenter >> argumentsListMenu [
 	^ self newMenu
 		addGroup: [ :aGroup | 
 			aGroup
@@ -62,7 +62,7 @@ SycJoinScopes >> argumentsListMenu [
 ]
 
 { #category : #accessing }
-SycJoinScopes >> initializePresenter [
+RBRBEnvironmentsPresenter >> initializePresenter [
 
 	self updateList.
 	scopeList contextMenu: self argumentsListMenu.
@@ -70,22 +70,22 @@ SycJoinScopes >> initializePresenter [
 ]
 
 { #category : #accessing }
-SycJoinScopes >> initializeWidgets [
+RBRBEnvironmentsPresenter >> initializeWidgets [
 	scopeList := self newList.
 ]
 
 { #category : #actions }
-SycJoinScopes >> inspect: anItem [
+RBRBEnvironmentsPresenter >> inspect: anItem [
 	anItem inspect
 ]
 
 { #category : #accessing }
-SycJoinScopes >> orWithScope: anItem [ 
+RBRBEnvironmentsPresenter >> orWithScope: anItem [ 
 	self performOperation: #| with: anItem
 ]
 
 { #category : #accessing }
-SycJoinScopes >> performOperation: aSymbol with: anItem [
+RBRBEnvironmentsPresenter >> performOperation: aSymbol with: anItem [
 	| anEnvironment newScope |
 	[ anEnvironment := self selectAnotherScope.
 	newScope := anItem perform: aSymbol with: anEnvironment.
@@ -104,13 +104,13 @@ SycJoinScopes >> performOperation: aSymbol with: anItem [
 ]
 
 { #category : #actions }
-SycJoinScopes >> remove: anItem [
+RBRBEnvironmentsPresenter >> remove: anItem [
 	RefactoringSettings removeScopeNamed: anItem label.
 	self updateList 
 ]
 
 { #category : #actions }
-SycJoinScopes >> rename: anItem [
+RBRBEnvironmentsPresenter >> rename: anItem [
 	[	|key|
 		key := UIManager default
 				request: 'Enter a keyword name for new scope'
@@ -125,7 +125,7 @@ SycJoinScopes >> rename: anItem [
 ]
 
 { #category : #actions }
-SycJoinScopes >> selectAnotherScope [ 
+RBRBEnvironmentsPresenter >> selectAnotherScope [ 
 	| anotherScope |
 	anotherScope := UIManager default
 			chooseOrRequestFrom: RefactoringSettings scopeList values
@@ -134,6 +134,6 @@ SycJoinScopes >> selectAnotherScope [
 ]
 
 { #category : #accessing }
-SycJoinScopes >> updateList [ 
+RBRBEnvironmentsPresenter >> updateList [ 
 	scopeList items: RefactoringSettings scopeList
 ]

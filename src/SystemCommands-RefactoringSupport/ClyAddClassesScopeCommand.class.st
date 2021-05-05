@@ -13,7 +13,7 @@ Class {
 ClyAddClassesScopeCommand class >> browserContextMenuActivation [
 	<classAnnotation>
 	
-	^ SycClassMenuActivation byRootGroupItemOrder: 1000 for: ClyClass asCalypsoItemContext
+	^CmdContextMenuActivation byRootGroupItemOrder: 1.5 for: ClyClass asCalypsoItemContext  
 ]
 
 { #category : #accessing }
