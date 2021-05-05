@@ -43,3 +43,8 @@ ClyClassScope class >> metaLevelsOf: aClass do: aBlock [
 	
 	aBlock value: aClass
 ]
+
+{ #category : #converting }
+ClyClassScope >> asRBEnvironment [
+	^RBClassEnvironment classes: basisObjects
+]

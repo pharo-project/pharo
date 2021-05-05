@@ -152,7 +152,8 @@ RBPackageEnvironment >> postCopy [
 
 { #category : #printing }
 RBPackageEnvironment >> printOn: aStream [ 
-	self storeOn: aStream
+	"self storeOn: aStream"
+	super printOn: aStream
 ]
 
 { #category : #printing }
