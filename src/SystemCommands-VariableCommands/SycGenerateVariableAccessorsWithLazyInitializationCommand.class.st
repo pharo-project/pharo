@@ -49,7 +49,7 @@ SycGenerateVariableAccessorsWithLazyInitializationCommand >> prepareFullExecutio
 
 	super prepareFullExecutionInContext: aToolContext.
 	variable := aToolContext lastSelectedVariable.
-	value := UIManager default
+	value := self uiManager
 		           request: 'Default value of variable accessor'
 		           initialAnswer: 'nil'
 		           title: 'Default variable''s value'.
