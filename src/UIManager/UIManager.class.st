@@ -474,6 +474,15 @@ UIManager >> logError: anError [
 
 { #category : #'default actions' }
 UIManager >> lowSpaceWatcherDefaultAction: preemptedProcess [
+
+	"When there is a signal from the VM, we signal an exception in the preempted process.
+	If we don't have preemptedProcess we are in an error state. We will throw an error"
+
+	preemptedProcess 
+		ifNotNil: [ preemptedProcess signalException: OutOfMemory new.
+						^ self ].
+
+	self error: 'We have a lowSpaceWatcher signal, but there is no ctx... how we arrive here'.
 ]
 
 { #category : #'ui requests' }
