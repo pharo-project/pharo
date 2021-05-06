@@ -30,7 +30,7 @@ Class {
 { #category : #specs }
 MessageList class >> defaultSpec [
 
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #listPresenter;
 		yourself
 ]

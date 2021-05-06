@@ -25,7 +25,7 @@ EyeInspector class >> basicInspect: anObject [
 { #category : #spec }
 EyeInspector class >> debuggerSpec [
 	<spec: #default>
-	^ SpPanedLayout newVertical
+	^ SpPanedLayout newTopToBottom
 		position: 70 percent;
 		add: #list;
 		add: #description;
@@ -61,10 +61,10 @@ EyeInspector class >> inspector: anObject [
 { #category : #spec }
 EyeInspector class >> inspectorSpec [
 	<spec>
-	^ SpPanedLayout newVertical
+	^ SpPanedLayout newTopToBottom
 		position: 70 percent;
 		add:
-			(SpPanedLayout newHorizontal
+			(SpPanedLayout newLeftToRight
 				position: 40 percent;
 				add: #list;
 				add: #description;

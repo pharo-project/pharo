@@ -102,9 +102,9 @@ DrTests class >> buildResultGroupWith: presenterInstance [
 { #category : #specs }
 DrTests class >> defaultSpec [
 
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 				add: #pluginsDropList;
 				add: #switchButton
 					withConstraints: [ :constraints | constraints width: self buttonWidth * 2 ];
@@ -114,20 +114,20 @@ DrTests class >> defaultSpec [
 					expand: false;
 					height: self toolbarHeight ];
 		add:
-			(SpPanedLayout newHorizontal
+			(SpPanedLayout newLeftToRight
 				add:
-					(SpPanedLayout newHorizontal
+					(SpPanedLayout newLeftToRight
 						add:
-							(SpBoxLayout newVertical
+							(SpBoxLayout newTopToBottom
 								add: #packagesList;
 								yourself);
 						add:
-							(SpBoxLayout newVertical
+							(SpBoxLayout newTopToBottom
 								add: #itemsList;
 								yourself);
 						yourself);
 				add:
-					(SpBoxLayout newVertical
+					(SpBoxLayout newTopToBottom
 						add: #resultViewsDropList
 							withConstraints: [ :constraints | constraints expand: false ];
 						add: #resultLabel
