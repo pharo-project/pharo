@@ -24,8 +24,9 @@ SycDeprecateClassCommand class >> browserContextMenuActivation [
 
 { #category : #testing }
 SycDeprecateClassCommand class >> canBeExecutedInContext: aToolContext [
-	^ (super canBeExecutedInContext: aToolContext) &
-		aToolContext lastSelectedClass isDeprecated not
+
+	^ (super canBeExecutedInContext: aToolContext) and: [ 
+		  aToolContext lastSelectedClass isDeprecated not ]
 ]
 
 { #category : #activation }
