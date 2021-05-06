@@ -35,7 +35,7 @@ SpChooserPresenter class >> examplePackages [
 SpChooserPresenter class >> openOn: aCollection [
 	|temp|
 	temp := (self on: aCollection).
-	^ temp openWithSpec
+	^ temp openModalWithSpec
 ]
 
 { #category : #adding }

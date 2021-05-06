@@ -29,7 +29,18 @@ SpChooserPresenterTest >> testAddAll [
 ]
 
 { #category : #running }
-SpChooserPresenterTest >> testAddItem [
+SpChooserPresenterTest >> testAddItemUsingFilter [
+	| sizeList |
+	sizeList := chooserPresenter list items size.
+	chooserPresenter list applyFilter: 'ref'.
+	chooserPresenter list selectItem: chooserPresenter list items first.
+	chooserPresenter addButton click.
+	self assert: (chooserPresenter selectedList unfilteredItems size +
+		chooserPresenter list unfilteredItems size) equals: sizeList
+]
+
+{ #category : #running }
+SpChooserPresenterTest >> testAddSelected [
 	
 	self assert: chooserPresenter list selectedItems isEmpty.
 	chooserPresenter list selectItem: chooserPresenter list unfilteredItems first.
@@ -62,7 +73,19 @@ SpChooserPresenterTest >> testRemoveAll [
 ]
 
 { #category : #running }
-SpChooserPresenterTest >> testRemoveItem [
+SpChooserPresenterTest >> testRemoveItemUsingFilter [
+	| sizeList |
+	chooserPresenter addAllButton click.
+	sizeList := chooserPresenter selectedList items size.
+	chooserPresenter selectedList applyFilter: 'ref'.
+	chooserPresenter selectedList selectItem: chooserPresenter selectedList items first.
+	chooserPresenter removeButton click.
+	self assert: (chooserPresenter list unfilteredItems size +
+		chooserPresenter selectedList unfilteredItems size) equals: sizeList
+]
+
+{ #category : #running }
+SpChooserPresenterTest >> testRemoveSelected [
 
 	chooserPresenter addAllButton click.
 	self assert: chooserPresenter list unfilteredItems isEmpty.
