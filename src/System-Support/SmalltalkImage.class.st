@@ -1116,7 +1116,11 @@ SmalltalkImage >> lowSpaceWatcher [
 		ifFalse: [free := self bytesLeft.
 			self bytesLeft > free
 				ifTrue: [^ self installLowSpaceWatcher]].
-	UIManager default lowSpaceWatcherDefaultAction: preemptedProcess
+			
+	UIManager default lowSpaceWatcherDefaultAction: preemptedProcess.
+	"We need to reinstall the lowSpaceWatcher"	
+	Smalltalk installLowSpaceWatcher.
+
 ]
 
 { #category : #'memory space' }
