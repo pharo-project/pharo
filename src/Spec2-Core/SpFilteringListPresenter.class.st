@@ -91,14 +91,11 @@ SpFilteringListPresenter >> filterInputPresenter [
 SpFilteringListPresenter >> filterListItems: pattern [
 	| filteredItems |
 	
-	unfilteredItems ifNil: [ 
-		unfilteredItems := self items ].
-	
 	pattern ifEmpty: [ 
-		self items: unfilteredItems.
+		self items: self unfilteredItems.
 		^ self ].
 
-	filteredItems := unfilteredItems select: [ :item |
+	filteredItems := self unfilteredItems select: [ :item |
 		itemFilterBlock
 			value: (self display value: item)
 			value: pattern ].
