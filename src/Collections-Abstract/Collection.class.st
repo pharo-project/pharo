@@ -603,9 +603,9 @@ Collection >> detectMin: aBlock [
 Collection >> difference: aCollection [
 	"Answer the set theoretic difference of two collections. Pay attention that the difference is not commutative, hence the order is important."
 
-	"(#(a b c d e f) difference:  #(a b z k))>>> #(#f #d #e #c)"
+	"(#(a b c d e f) difference:  #(a b z k))>>> #(#c #d #e #f)"
 
-	"(#(a b z k) difference: #(a b c d e f)) >>> #(#k #z)"
+	"(#(a b z k) difference: #(a b c d e f)) >>> #(#z #k)"
 
 	| set |
 	set := self asSet
@@ -1318,7 +1318,7 @@ Collection >> sumNumbers: aBlock [
 { #category : #enumerating }
 Collection >> union: aCollection [
 	"Answer the set theoretic union of two collections."
-	"(#(1 2 3) union: #(4 5 6 2)) >>> #(1 2 3 4 5 6)"
+	"(#(1 2 3) union: #(4 5 6 2)) asSet >>> #(1 2 3 4 5 6) asSet"
 	
 	| set |
 	set := self asSet addAll: aCollection; yourself.
