@@ -105,3 +105,11 @@ CNSelectorExtractionOnSelectionTest >> testSelectReturnShouldMatchToken [
 	
 	self assert: self selectedSelector equals: #foo
 ]
+
+{ #category : #'tests - selection' }
+CNSelectorExtractionOnSelectionTest >> testSelectTokenShouldMatchToken [
+
+	self select: 'foo'.
+	
+	self assert: self selectedSelector equals: #foo
+]
