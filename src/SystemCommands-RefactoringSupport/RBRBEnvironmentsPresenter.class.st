@@ -53,11 +53,12 @@ RBRBEnvironmentsPresenter >> argumentsListMenu [
 				addItem: [ :anItem | 
 					anItem
 						name: 'Edit';
+						visibleIf: [ scopeList selectedItem label ~= 'current image' ];
 						action: [ self edit: scopeList selectedItem ] ];
 				addItem: [ :anItem | 
 					anItem
 						name: 'Remove';
-						visibleIf: [ scopeList selectedItem label = 'current image' ];
+						visibleIf: [ scopeList selectedItem label ~= 'current image' ];
 						action: [ self remove: scopeList selectedItem ] ]
 				 ]
 ]
