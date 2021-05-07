@@ -8,6 +8,12 @@ Class {
 }
 
 { #category : #adding }
+RefactoringSettings class >> addScope: aScope [ "withKey: key
+	aScope label: key.
+"	self scopeList add: aScope
+]
+
+{ #category : #adding }
 RefactoringSettings class >> addScope: aScope withKey: key [
 	aScope label: key.
 	self scopeList add: aScope
@@ -20,13 +26,17 @@ RefactoringSettings class >> invalidNames [
 
 { #category : #adding }
 RefactoringSettings class >> removeScopeNamed: key [ 
-	self scopeList removeAllSuchThat: [ :e | e label = key ]
+	self scopeList removeAllSuchThat: 
+		[ :e | e label = key and: 
+			[ e name ~= 'current image'] ]
 ]
 
 { #category : #accesing }
 RefactoringSettings class >> scopeList [
 
-	^ ScopeList ifNil: [ ScopeList := Dictionary new ]
+	^ ScopeList ifNil: 
+		[ ScopeList := OrderedCollection with: 
+			(ClyNavigationEnvironment currentImageScope asRBEnvironment label: 'current image') ]
 ]
 
 { #category : #accesing }

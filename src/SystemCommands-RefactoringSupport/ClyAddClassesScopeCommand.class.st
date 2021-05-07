@@ -31,13 +31,13 @@ ClyAddClassesScopeCommand >> execute [
 	| scope |
 	
 	scope := RBClassEnvironment " onEnvironment: browser navigationEnvironment "classes: classes.
-	RefactoringSettings addScope: scope withKey: key.
+	RefactoringSettings addScope: scope" withKey: key."
 ]
 
 { #category : #execution }
 ClyAddClassesScopeCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	browser := aToolContext browser.
-	key := UIManager default request: 'Keyword of scoper'.
-	(key isEmptyOrNil or: [ RefactoringSettings invalidNames includes: key ]) ifTrue: [ CmdCommandAborted signal ].
+	"key := UIManager default request: 'Keyword of scoper'.
+	(key isEmptyOrNil or: [ RefactoringSettings invalidNames includes: key ]) ifTrue: [ CmdCommandAborted signal ]."
 ]

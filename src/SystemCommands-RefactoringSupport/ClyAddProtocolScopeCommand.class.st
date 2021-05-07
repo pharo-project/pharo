@@ -31,7 +31,7 @@ ClyAddProtocolScopeCommand >> execute [
 	| scope protocols |
 	protocols := methodGroups collect: [:each | each tag].
 	scope := RBProtocolEnvironment " onEnvironment: browser navigationEnvironment "class: class protocols: protocols.
-	RefactoringSettings addScope: scope withKey: key.
+	RefactoringSettings addScope: scope "withKey: key."
 ]
 
 { #category : #execution }
@@ -39,6 +39,6 @@ ClyAddProtocolScopeCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	class := aToolContext lastSelectedClass.
 	browser := aToolContext browser.
-	key := UIManager default request: 'Keyword of scoper'.
-	(key isEmptyOrNil or: [ RefactoringSettings invalidNames includes: key ]) ifTrue: [ CmdCommandAborted signal ].
+	"key := UIManager default request: 'Keyword of scoper'.
+	(key isEmptyOrNil or: [ RefactoringSettings invalidNames includes: key ]) ifTrue: [ CmdCommandAborted signal ]."
 ]

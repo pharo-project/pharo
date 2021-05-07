@@ -30,7 +30,7 @@ ClyAddPackagesScopeCommand >> execute [
 	| scope |
 
 	scope := RBPackageEnvironment "	onEnvironment: browser navigationEnvironment "packages: packages.
-	RefactoringSettings addScope: scope withKey: key.
+	RefactoringSettings addScope: scope "withKey: key."
 ]
 
 { #category : #accessing }
@@ -50,6 +50,6 @@ ClyAddPackagesScopeCommand >> prepareFullExecutionInContext: aBrowserContext [
 
 	super prepareFullExecutionInContext: aBrowserContext.
 	packages := aBrowserContext selectedPackageItems collect: [:e | e actualObject ].
-	key := UIManager default request: 'Keyword of scoper'.
-	(key isEmptyOrNil or: [ RefactoringSettings invalidNames includes: key ]) ifTrue: [ CmdCommandAborted signal ].
+"key := UIManager default request: 'Keyword of scoper'.
+	(key isEmptyOrNil or: [ RefactoringSettings invalidNames includes: key ]) ifTrue: [ CmdCommandAborted signal ]."
 ]

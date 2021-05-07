@@ -57,6 +57,7 @@ RBRBEnvironmentsPresenter >> argumentsListMenu [
 				addItem: [ :anItem | 
 					anItem
 						name: 'Remove';
+						visibleIf: [ scopeList selectedItem label = 'current image' ];
 						action: [ self remove: scopeList selectedItem ] ]
 				 ]
 ]
@@ -65,7 +66,7 @@ RBRBEnvironmentsPresenter >> argumentsListMenu [
 RBRBEnvironmentsPresenter >> edit: anItem [
 	[ anItem acceptVisitor: RBEnvironmentVisitor new ]
 	on: Error 
-	do: [ :e | self halt. self inform:  'Somethig was wrong']
+	do: [ :e | self inform:  'Somethig was wrong']
 	
 ]
 
@@ -108,28 +109,13 @@ RBRBEnvironmentsPresenter >> performOperation: aSymbol with: anItem [
 		] ifFalse: [ newScope inspect ].
 	] 
 	on: Error 
-	do: [ self inform: 'Something was wrong']
+	do: [ :e | self inform: 'Something was wrong']
 ]
 
 { #category : #actions }
 RBRBEnvironmentsPresenter >> remove: anItem [
 	RefactoringSettings removeScopeNamed: anItem label.
 	self updateList 
-]
-
-{ #category : #actions }
-RBRBEnvironmentsPresenter >> rename: anItem [
-	[	|key|
-		key := UIManager default
-				request: 'Enter a keyword name for new scope'
-				initialAnswer: anItem label.
-		(key isEmptyOrNil or: [ RefactoringSettings invalidNames includes: key ]) ifTrue: [ Error signal ].
-		anItem label: key.	
-		self updateList.
-	]
-	on: Error 
-	do: [ self inform:  'Somethig was wrong']
-	
 ]
 
 { #category : #actions }
