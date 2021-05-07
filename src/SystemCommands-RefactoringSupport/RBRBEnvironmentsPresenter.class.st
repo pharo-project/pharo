@@ -136,7 +136,7 @@ RBRBEnvironmentsPresenter >> rename: anItem [
 RBRBEnvironmentsPresenter >> selectAnotherScope [ 
 	| anotherScope |
 	anotherScope := UIManager default
-			chooseOrRequestFrom: RefactoringSettings scopeList values
+			chooseOrRequestFrom: RefactoringSettings scopeList
 			title: 'Select another scope (RBEnvironment)'.
 	^ anotherScope 
 ]
