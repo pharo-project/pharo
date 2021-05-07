@@ -292,7 +292,7 @@ SpChooserPresenter >> setModelBeforeInitialization: aCollection [
 
 { #category : #adding }
 SpChooserPresenter >> title [ 
-	^ 'Choose Packages'
+	^ 'Choose items'
 ]
 
 { #category : #adding }
