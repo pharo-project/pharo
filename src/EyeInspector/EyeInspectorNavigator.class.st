@@ -32,7 +32,7 @@ EyeInspectorNavigator class >> inspectorSpec [
 
 { #category : #specs }
 EyeInspectorNavigator class >> layoutForSpec: spec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #toolbar withConstraints: [ :constraints | constraints height: self toolbarHeight ];
 		add: #inspector withConstraints: [ :constraints | constraints spec: spec ];
 		yourself

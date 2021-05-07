@@ -26,12 +26,12 @@ RewriteRuleChangesBrowser class >> changes: aCollection [
 { #category : #specs }
 RewriteRuleChangesBrowser class >> defaultSpec [
 
-	^ SpBoxLayout newVertical 
-		add: (SpPanedLayout newVertical
+	^ SpBoxLayout newTopToBottom 
+		add: (SpPanedLayout newTopToBottom
 			add: #changeTree;
 			add: #diffView;
 		yourself);
-		add: (SpBoxLayout newHorizontal
+		add: (SpBoxLayout newLeftToRight
 			addLast: #buttonCancel expand: false fill: true padding: 2;
 			addLast: #buttonOk expand: false fill: false padding: 0;
 			yourself) 

@@ -19,10 +19,10 @@ Class {
 
 { #category : #specs }
 CoverageDemo class >> defaultSpec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #codePanelMorph;
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 				add: #installMetalinkButton;
 				add: #runCodeButton;
 				yourself)

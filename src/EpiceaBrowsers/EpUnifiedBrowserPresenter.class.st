@@ -18,7 +18,7 @@ Class {
 { #category : #specs }
 EpUnifiedBrowserPresenter class >> defaultSpec [
 
-	^ SpPanedLayout newHorizontal
+	^ SpPanedLayout newLeftToRight
 		  positionOfSlider: 40 percent;
 		  add: #logNodesPresenter;
 		  add: #logPresenter;
