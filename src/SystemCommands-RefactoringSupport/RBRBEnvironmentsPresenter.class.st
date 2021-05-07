@@ -52,13 +52,28 @@ RBRBEnvironmentsPresenter >> argumentsListMenu [
 						action: [ self inspect: scopeList selectedItem ] ];
 				addItem: [ :anItem | 
 					anItem
-						name: 'Rename';
-						action: [ self rename: scopeList selectedItem ] ];
+						name: 'Edit';
+						action: [ self edit: scopeList selectedItem ] ];
 				addItem: [ :anItem | 
 					anItem
 						name: 'Remove';
 						action: [ self remove: scopeList selectedItem ] ]
 				 ]
+]
+
+{ #category : #actions }
+RBRBEnvironmentsPresenter >> edit: anItem [
+	[	|key|
+		key := UIManager default
+				request: 'Enter a keyword name for new scope'
+				initialAnswer: anItem label.
+		(key isEmptyOrNil or: [ RefactoringSettings invalidNames includes: key ]) ifTrue: [ Error signal ].
+		anItem label: key.	
+		self updateList.
+	]
+	on: Error 
+	do: [ self inform:  'Somethig was wrong']
+	
 ]
 
 { #category : #accessing }

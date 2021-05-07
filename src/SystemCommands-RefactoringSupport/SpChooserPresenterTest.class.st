@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 SpChooserPresenterTest >> packages [
-	^ {(RPackageOrganizer default packages sorted: #packageName ascending) . #packageName}
+	^ {(RPackageOrganizer default packages sorted: #packageName ascending) . {  } . #packageName}
 ]
 
 { #category : #running }

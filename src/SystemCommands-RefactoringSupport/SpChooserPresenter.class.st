@@ -10,7 +10,9 @@ Class {
 		'removeAllButton',
 		'buttonBar',
 		'items',
-		'methodName'
+		'selectedItems',
+		'methodName',
+		'acceptBlock'
 	],
 	#category : #'SystemCommands-RefactoringSupport-Scope'
 }
@@ -20,6 +22,7 @@ SpChooserPresenter class >> exampleClasses [
 
 	self openOn: 
 		{(RBBrowserEnvironment default allClasses sorted: #name ascending) . 
+		{ SpChooserPresenter . RefactoringSettings } .
 		#name}
 ]
 
@@ -28,6 +31,7 @@ SpChooserPresenter class >> examplePackages [
 
 	self openOn: 
 		{(RPackageOrganizer default packages sorted: #packageName ascending) . 
+		{ RPackageOrganizer default packageNamed: 'Refactoring-Core' } .
 		#packageName}
 ]
 
@@ -35,7 +39,15 @@ SpChooserPresenter class >> examplePackages [
 SpChooserPresenter class >> openOn: aCollection [
 	|temp|
 	temp := (self on: aCollection).
-	^ temp openModalWithSpec
+	^ temp openDialogWithSpec
+]
+
+{ #category : #'instance creation' }
+SpChooserPresenter class >> openOn: aCollection onAccept: aBlock [
+	|temp|
+	temp := (self on: aCollection).
+	temp onAccept: aBlock.
+	^ temp openDialogWithSpec
 ]
 
 { #category : #adding }
@@ -83,8 +95,7 @@ SpChooserPresenter >> addSelectedMessage [
 
 { #category : #adding }
 SpChooserPresenter >> doAccept [
-
-	self window close
+	acceptBlock ifNotNil: [ acceptBlock cull: self selectedList items]
 ]
 
 { #category : #adding }
@@ -141,11 +152,11 @@ SpChooserPresenter >> initializeButtons [
 				yourself
 ]
 
-{ #category : #adding }
-SpChooserPresenter >> initializeDialogWindow: aDialogWindowPresenter [
+{ #category : #initialization }
+SpChooserPresenter >> initializeDialogWindow: aWindowPresenter [
 
-	aDialogWindowPresenter
-		addButton: 'Accept' do: [ self doAccept ]
+	super initializeDialogWindow: aWindowPresenter.
+	aWindowPresenter okAction: [ self doAccept ].
 ]
 
 { #category : #adding }
@@ -206,6 +217,12 @@ SpChooserPresenter >> methodName [
 	^ methodName
 ]
 
+{ #category : #events }
+SpChooserPresenter >> onAccept: aBlock [
+
+	acceptBlock := aBlock
+]
+
 { #category : #adding }
 SpChooserPresenter >> removeAll [
 
@@ -246,6 +263,12 @@ SpChooserPresenter >> removeSelectedMessage [
 
 ]
 
+{ #category : #adding }
+SpChooserPresenter >> selectedItems [
+
+	^ selectedItems ifNil: [ selectedItems := {  } ]
+]
+
 { #category : #accessing }
 SpChooserPresenter >> selectedList [
 	^ selectedList
@@ -254,7 +277,8 @@ SpChooserPresenter >> selectedList [
 { #category : #initialization }
 SpChooserPresenter >> setModelBeforeInitialization: aCollection [
 	items := aCollection first.
-	methodName :=  aCollection second.
+	selectedItems := aCollection second.
+	methodName :=  aCollection third.
 ]
 
 { #category : #adding }
@@ -265,5 +289,6 @@ SpChooserPresenter >> title [
 { #category : #adding }
 SpChooserPresenter >> updatePresenter [
 
-	list items: self items
+	list items: self items \ self selectedItems.
+	selectedList items: self selectedItems
 ]
