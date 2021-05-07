@@ -1,8 +1,6 @@
 "
-NumberParser is an abstract class for parsing and building numbers from string/stream.
+NumberParser implements parsing and building numbers from string/stream.
 It offers a framework with utility methods and exception handling.
-
-Number syntax is not defined and should be subclassResponsibility.
 
 Instance variables:
 sourceStream <Stream> the stream of characters from which the number is read
