@@ -7,6 +7,11 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport-Scope'
 }
 
+{ #category : #'as yet unclassified' }
+RBEnvironmentVisitor >> chooserClass [ 
+	^ SpChooserPresenter
+]
+
 { #category : #visiting }
 RBEnvironmentVisitor >> visitClassEnv: rbClassEnv [
 	| list selectedList methodName items dialog |
@@ -15,7 +20,7 @@ RBEnvironmentVisitor >> visitClassEnv: rbClassEnv [
 		[ :e | Smalltalk globals at: e ifAbsent: [ nil ] ]) asArray sorted: #name ascending.
 	methodName := #name.
 	items := OrderedCollection new.
-	dialog := SpChooserPresenter openOn: 
+	dialog := self chooserClass openOn: 
 		{ list . selectedList . methodName }
 		onAccept: [:e| items addAll: e ].
 	dialog isCancelled ifTrue: [ ^self ].
@@ -30,7 +35,7 @@ RBEnvironmentVisitor >> visitPackageEnv: rbPackageEnv [
 	selectedList := rbPackageEnv packages asArray sorted: #packageName ascending.
 	methodName := #packageName.
 	items := OrderedCollection new.
-	dialog := SpChooserPresenter openOn: 
+	dialog := self chooserClass openOn: 
 		{ list . selectedList . methodName }
 		onAccept: [:e| items addAll: e ].
 	dialog isCancelled ifTrue: [ ^self ].
@@ -41,4 +46,16 @@ RBEnvironmentVisitor >> visitPackageEnv: rbPackageEnv [
 
 { #category : #visiting }
 RBEnvironmentVisitor >> visitProtocolEnv: rbProtocolEnv [
+	| list selectedList methodName items dialog |
+	list := rbProtocolEnv definedClass protocols sorted.
+	selectedList := rbProtocolEnv protocols sorted.
+	methodName := #yourself.
+	items := OrderedCollection new.
+	dialog := self chooserClass openOn: 
+		{ list . selectedList . methodName }
+		onAccept: [:e| items addAll: e ].
+	dialog isCancelled ifTrue: [ ^self ].
+	
+	rbProtocolEnv protocols do: [ :cls | rbProtocolEnv removeProtocol: cls ].
+	items do: [ :cls | rbProtocolEnv addProtocol: cls ].
 ]

@@ -34,9 +34,14 @@ RBProtocolEnvironment >> acceptVisitor: aEnvVisitor [
 ]
 
 { #category : #initialization }
+RBProtocolEnvironment >> addProtocol: aSymbol [ 
+	protocols add: aSymbol
+]
+
+{ #category : #initialization }
 RBProtocolEnvironment >> class: aClass protocols: aCollection [
 	class := aClass.
-	protocols := aCollection
+	protocols := aCollection asOrderedCollection
 ]
 
 { #category : #private }
@@ -50,6 +55,11 @@ RBProtocolEnvironment >> defaultLabel [
 			stream nextPutAll: each;
 				nextPut: $ ].
 	^stream contents
+]
+
+{ #category : #printing }
+RBProtocolEnvironment >> definedClass [ 
+	^ class
 ]
 
 { #category : #testing }
@@ -100,6 +110,16 @@ RBProtocolEnvironment >> packages [
 RBProtocolEnvironment >> postCopy [
 	super postCopy.
 	protocols := protocols copy
+]
+
+{ #category : #printing }
+RBProtocolEnvironment >> protocols [ 
+	^ protocols
+]
+
+{ #category : #initialization }
+RBProtocolEnvironment >> removeProtocol: aSymbol [ 
+	protocols remove: aSymbol ifAbsent: [  ]
 ]
 
 { #category : #printing }
