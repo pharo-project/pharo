@@ -157,8 +157,8 @@ RBPackageEnvironment >> postCopy [
 
 { #category : #printing }
 RBPackageEnvironment >> printOn: aStream [ 
-	"self storeOn: aStream"
-	super printOn: aStream
+	aStream nextPutAll: 'Pck: '.
+	packages do: [ :pkg | aStream nextPutAll: pkg packageName, ', ']
 ]
 
 { #category : #adding }

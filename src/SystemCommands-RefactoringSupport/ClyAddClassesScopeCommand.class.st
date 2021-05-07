@@ -3,8 +3,7 @@ Class {
 	#superclass : #SycClassCommand,
 	#instVars : [
 		'classGroup',
-		'browser',
-		'key'
+		'browser'
 	],
 	#category : #'SystemCommands-RefactoringSupport-Scope'
 }
@@ -30,14 +29,12 @@ ClyAddClassesScopeCommand >> defaultMenuItemName [
 ClyAddClassesScopeCommand >> execute [
 	| scope |
 	
-	scope := RBClassEnvironment " onEnvironment: browser navigationEnvironment "classes: classes.
-	RefactoringSettings addScope: scope" withKey: key."
+	scope := RBClassEnvironment classes: classes.
+	RefactoringSettings addScope: scope
 ]
 
 { #category : #execution }
 ClyAddClassesScopeCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	browser := aToolContext browser.
-	"key := UIManager default request: 'Keyword of scoper'.
-	(key isEmptyOrNil or: [ RefactoringSettings invalidNames includes: key ]) ifTrue: [ CmdCommandAborted signal ]."
 ]

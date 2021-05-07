@@ -3,8 +3,7 @@ Class {
 	#superclass : #ClyMethodGroupCommand,
 	#instVars : [
 		'class',
-		'browser',
-		'key'
+		'browser'
 	],
 	#category : #'SystemCommands-RefactoringSupport-Scope'
 }
@@ -30,8 +29,8 @@ ClyAddProtocolScopeCommand >> defaultMenuItemName [
 ClyAddProtocolScopeCommand >> execute [
 	| scope protocols |
 	protocols := methodGroups collect: [:each | each tag].
-	scope := RBProtocolEnvironment " onEnvironment: browser navigationEnvironment "class: class protocols: protocols.
-	RefactoringSettings addScope: scope "withKey: key."
+	scope := RBProtocolEnvironment class: class protocols: protocols.
+	RefactoringSettings addScope: scope
 ]
 
 { #category : #execution }
@@ -39,6 +38,4 @@ ClyAddProtocolScopeCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	class := aToolContext lastSelectedClass.
 	browser := aToolContext browser.
-	"key := UIManager default request: 'Keyword of scoper'.
-	(key isEmptyOrNil or: [ RefactoringSettings invalidNames includes: key ]) ifTrue: [ CmdCommandAborted signal ]."
 ]

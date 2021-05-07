@@ -184,6 +184,12 @@ RBClassEnvironment >> postCopy [
 	metaClasses := metaClasses copy
 ]
 
+{ #category : #printing }
+RBClassEnvironment >> printOn: aStream [ 
+	aStream nextPutAll: 'Cls: '.
+	classes do: [ :cls | aStream nextPutAll: cls, ', ']
+]
+
 { #category : #accessing }
 RBClassEnvironment >> problemCount [
 	^self numberClasses

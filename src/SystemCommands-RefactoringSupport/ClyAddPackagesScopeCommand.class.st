@@ -2,8 +2,7 @@ Class {
 	#name : #ClyAddPackagesScopeCommand,
 	#superclass : #ClyBrowserCommand,
 	#instVars : [
-		'packages',
-		'key'
+		'packages'
 	],
 	#category : #'SystemCommands-RefactoringSupport-Scope'
 }
@@ -29,8 +28,8 @@ ClyAddPackagesScopeCommand >> defaultMenuItemName [
 ClyAddPackagesScopeCommand >> execute [
 	| scope |
 
-	scope := RBPackageEnvironment "	onEnvironment: browser navigationEnvironment "packages: packages.
-	RefactoringSettings addScope: scope "withKey: key."
+	scope := RBPackageEnvironment packages: packages.
+	RefactoringSettings addScope: scope
 ]
 
 { #category : #accessing }
@@ -50,6 +49,4 @@ ClyAddPackagesScopeCommand >> prepareFullExecutionInContext: aBrowserContext [
 
 	super prepareFullExecutionInContext: aBrowserContext.
 	packages := aBrowserContext selectedPackageItems collect: [:e | e actualObject ].
-"key := UIManager default request: 'Keyword of scoper'.
-	(key isEmptyOrNil or: [ RefactoringSettings invalidNames includes: key ]) ifTrue: [ CmdCommandAborted signal ]."
 ]
