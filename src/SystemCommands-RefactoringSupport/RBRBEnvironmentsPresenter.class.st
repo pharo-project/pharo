@@ -63,16 +63,9 @@ RBRBEnvironmentsPresenter >> argumentsListMenu [
 
 { #category : #actions }
 RBRBEnvironmentsPresenter >> edit: anItem [
-	[	|key|
-		key := UIManager default
-				request: 'Enter a keyword name for new scope'
-				initialAnswer: anItem label.
-		(key isEmptyOrNil or: [ RefactoringSettings invalidNames includes: key ]) ifTrue: [ Error signal ].
-		anItem label: key.	
-		self updateList.
-	]
+	[ anItem acceptVisitor: RBEnvironmentVisitor new ]
 	on: Error 
-	do: [ self inform:  'Somethig was wrong']
+	do: [ :e | self halt. self inform:  'Somethig was wrong']
 	
 ]
 

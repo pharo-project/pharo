@@ -54,6 +54,11 @@ RBPackageEnvironment class >> packages: aCollection [
 		packages: aCollection
 ]
 
+{ #category : #visiting }
+RBPackageEnvironment >> acceptVisitor: aEnvVisitor [
+	^ aEnvVisitor visitPackageEnv: self
+]
+
 { #category : #adding }
 RBPackageEnvironment >> addPackage: aSymbol [
 	packages add: aSymbol
@@ -154,6 +159,11 @@ RBPackageEnvironment >> postCopy [
 RBPackageEnvironment >> printOn: aStream [ 
 	"self storeOn: aStream"
 	super printOn: aStream
+]
+
+{ #category : #adding }
+RBPackageEnvironment >> removePackage: aSymbol [
+	packages remove: aSymbol ifAbsent: []
 ]
 
 { #category : #printing }

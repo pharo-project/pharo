@@ -26,6 +26,11 @@ RBBrowserEnvironmentWrapper class >> onEnvironment: anEnvironment [
 		yourself
 ]
 
+{ #category : #visiting }
+RBBrowserEnvironmentWrapper >> acceptVisitor: aProgramNodeVisitor [
+	self subclassResponsibility
+]
+
 { #category : #testing }
 RBBrowserEnvironmentWrapper >> definesClass: aClass [
 	^ environment definesClass: aClass

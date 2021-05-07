@@ -30,7 +30,7 @@ ClyAddClassesScopeCommand >> defaultMenuItemName [
 ClyAddClassesScopeCommand >> execute [
 	| scope |
 	
-	scope := RBClassEnvironment onEnvironment: browser navigationEnvironment classes: classes.
+	scope := RBClassEnvironment " onEnvironment: browser navigationEnvironment "classes: classes.
 	RefactoringSettings addScope: scope withKey: key.
 ]
 

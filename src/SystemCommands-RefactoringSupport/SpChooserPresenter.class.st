@@ -39,7 +39,7 @@ SpChooserPresenter class >> examplePackages [
 SpChooserPresenter class >> openOn: aCollection [
 	|temp|
 	temp := (self on: aCollection).
-	^ temp openDialogWithSpec
+	^ temp openModalWithSpec
 ]
 
 { #category : #'instance creation' }
@@ -47,7 +47,7 @@ SpChooserPresenter class >> openOn: aCollection onAccept: aBlock [
 	|temp|
 	temp := (self on: aCollection).
 	temp onAccept: aBlock.
-	^ temp openDialogWithSpec
+	^ temp openModalWithSpec
 ]
 
 { #category : #adding }
@@ -95,6 +95,7 @@ SpChooserPresenter >> addSelectedMessage [
 
 { #category : #adding }
 SpChooserPresenter >> doAccept [
+	
 	acceptBlock ifNotNil: [ acceptBlock cull: self selectedList items]
 ]
 
@@ -154,9 +155,17 @@ SpChooserPresenter >> initializeButtons [
 
 { #category : #initialization }
 SpChooserPresenter >> initializeDialogWindow: aWindowPresenter [
-
-	super initializeDialogWindow: aWindowPresenter.
-	aWindowPresenter okAction: [ self doAccept ].
+	
+	aWindowPresenter
+		addButton: 'Accept' do: [ :presenter |
+			self doAccept.
+			presenter
+				beOk;
+				close];
+		addButton: 'Cancel' do: [ :presenter | 
+			presenter
+				beCancel;
+				close ]
 ]
 
 { #category : #adding }

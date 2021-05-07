@@ -28,6 +28,11 @@ RBProtocolEnvironment class >> onEnvironment: anEnvironment class: aClass protoc
 		class: aClass protocols: aCollection; yourself
 ]
 
+{ #category : #visiting }
+RBProtocolEnvironment >> acceptVisitor: aEnvVisitor [
+	^ aEnvVisitor visitProtocolEnv: self 
+]
+
 { #category : #initialization }
 RBProtocolEnvironment >> class: aClass protocols: aCollection [
 	class := aClass.

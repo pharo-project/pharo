@@ -30,7 +30,7 @@ ClyAddProtocolScopeCommand >> defaultMenuItemName [
 ClyAddProtocolScopeCommand >> execute [
 	| scope protocols |
 	protocols := methodGroups collect: [:each | each tag].
-	scope := RBProtocolEnvironment onEnvironment: browser navigationEnvironment class: class protocols: protocols.
+	scope := RBProtocolEnvironment " onEnvironment: browser navigationEnvironment "class: class protocols: protocols.
 	RefactoringSettings addScope: scope withKey: key.
 ]
 

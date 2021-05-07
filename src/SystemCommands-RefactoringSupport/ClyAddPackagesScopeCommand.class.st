@@ -29,7 +29,7 @@ ClyAddPackagesScopeCommand >> defaultMenuItemName [
 ClyAddPackagesScopeCommand >> execute [
 	| scope |
 
-	scope := RBPackageEnvironment	onEnvironment: browser navigationEnvironment packages: packages.
+	scope := RBPackageEnvironment "	onEnvironment: browser navigationEnvironment "packages: packages.
 	RefactoringSettings addScope: scope withKey: key.
 ]
 
