@@ -68,7 +68,7 @@ RBCreateAccessorsForVariableRefactoring >> defineGetterMethod [
 
 { #category : #transforming }
 RBCreateAccessorsForVariableRefactoring >> defineSetterMethod [
-	| selector definingClass string |
+	| definingClass string |
 	definingClass := self definingClass.
 	string := self needsReturnForSetter 
 				ifTrue: ['<1s> anObject<r><r><t>^ <2s> := anObject']
