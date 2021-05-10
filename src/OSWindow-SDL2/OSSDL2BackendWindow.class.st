@@ -127,13 +127,15 @@ OSSDL2BackendWindow >> convertCursor: aCursor [
 { #category : #cursor }
 OSSDL2BackendWindow >> convertCursor: cursor withMask: mask andScale: scale [
 
-	| maskBits extent cursorBits offset sdlCursor scaledCursor scaledMask |
+	| maskBits extent cursorBits offset sdlCursor scaledCursor scaledMask scaleToUse |
+
+	scaleToUse := scale ceiling.
 
 	^ self 
 		lookupSystemCursor: cursor 
 		ifNotFound: [ 
-			scaledCursor := cursor scaledToSize: (cursor extent * scale).
-			scaledMask := mask scaledToSize: (mask extent * scale).
+			scaledCursor := cursor scaledToSize: (cursor extent * scaleToUse).
+			scaledMask := mask scaledToSize: (mask extent * scaleToUse).
 
 			cursorBits := self convertCursor: scaledCursor.
 			maskBits := self convertCursor: scaledMask.
