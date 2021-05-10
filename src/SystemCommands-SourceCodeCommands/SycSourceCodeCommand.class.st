@@ -51,11 +51,6 @@ SycSourceCodeCommand >> executeRefactoring: refactoring [
 		do: [ :e | UIManager default alert: e messageText ]
 ]
 
-{ #category : #testing }
-SycSourceCodeCommand >> isComplexRefactoring [
-	^ true
-]
-
 { #category : #accessing }
 SycSourceCodeCommand >> method [
 	^ method
