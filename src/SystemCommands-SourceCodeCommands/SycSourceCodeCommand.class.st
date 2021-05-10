@@ -53,7 +53,7 @@ SycSourceCodeCommand >> executeRefactoring: refactoring [
 
 { #category : #testing }
 SycSourceCodeCommand >> isComplexRefactoring [
-	^ true
+	^ false
 ]
 
 { #category : #accessing }

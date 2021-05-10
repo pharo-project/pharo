@@ -3,7 +3,7 @@ I am a command to inline ""self send"" method directly into sender method
 "
 Class {
 	#name : #SycInlineMethodCommand,
-	#superclass : #SycSourceCodeCommand,
+	#superclass : #SycSourceCodeRefactoringCommand,
 	#category : #'SystemCommands-SourceCodeCommands'
 }
 
