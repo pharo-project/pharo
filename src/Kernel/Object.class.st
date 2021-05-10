@@ -1745,6 +1745,15 @@ Object >> respondsTo: aSymbol [
 	^self class canUnderstand: aSymbol
 ]
 
+{ #category : #private }
+Object >> retrySetPinnedInMemory: aBoolean [
+	"Never use me directly use #setPinnedInMemory: instead"
+	
+	<primitive: 184 error: ec>
+	
+	^ self primitiveFailed
+]
+
 { #category : #finalization }
 Object >> retryWithGC: execBlock until: testBlock [
 	"Retry execBlock as long as testBlock returns false. Do an incremental GC after the first try, a full GC after the second try."
@@ -1790,9 +1799,23 @@ Object >> setPinnedInMemory: aBoolean [
 	 memory. But it can also pin an object so that it will not be moved around in memory,
     while still being reclamable by the garbage collector. This can make
 	 it easier to pass objects out through the FFI. Objects are unpinnned when created.
-	 This primitive either pins or unpins an object, and answers if it was already pinned."
+	 This primitive either pins or unpins an object, and answers if it was already pinned.
+	
+	If there is not enough memory, I will try to find more memory and retry once."
 	<primitive: 184 error: ec>
-	^self primitiveFailed
+	
+	| requiredSize |
+	
+	ec = #'insufficient object memory'
+		ifFalse: [ ^ self primitiveFailed ].
+	
+	"Require at least the double of my size in Memory"
+	requiredSize := self sizeInMemory * 2.
+	
+	Smalltalk garbageCollect < requiredSize ifTrue:
+		[Smalltalk growMemoryByAtLeast: requiredSize].
+
+	^ self retrySetPinnedInMemory: aBoolean
 ]
 
 { #category : #copying }
