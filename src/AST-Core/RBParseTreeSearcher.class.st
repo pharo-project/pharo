@@ -55,7 +55,7 @@ RBParseTreeSearcher class >> buildTree: aString method: aBoolean [
 
 { #category : #'instance creation' }
 RBParseTreeSearcher class >> getterMethod: aVarName [ 
-	^(self new)
+	^ self new
 		matchesMethod: '`method ^' , aVarName do: [:aNode :ans | aNode selector];
 		matchesMethod: '`method ^' , aVarName, ' ifNil:[ `@expr]' do: [:aNode :ans | aNode selector];
 		yourself
