@@ -43,15 +43,20 @@ StInspectorModel >> behavior [
 
 { #category : #accessing }
 StInspectorModel >> descriptionString [
-	| header printString object |
+
+	^ self descriptionStringFor: self inspectedObject
+]
+
+{ #category : #accessing }
+StInspectorModel >> descriptionStringFor: object [
+	| header printString |
 	
-	object := self inspectedObject.
 	header := (object class name first isVowel
 		ifTrue: [ 'an ' ]
 		ifFalse: [ 'a ' ]) , 
 		object class name.
 	
-	printString := self smallDescriptionString.
+	printString := self smallDescriptionStringFor: object.
 	^ ((printString beginsWith: header)
 		ifTrue: [ printString ]
 		ifFalse: [ 
@@ -96,6 +101,12 @@ StInspectorModel >> printOn: stream [
 StInspectorModel >> smallDescriptionString [
 	
 	^ (StObjectPrinter asTruncatedTextFrom: self inspectedObject) asString
+]
+
+{ #category : #accessing }
+StInspectorModel >> smallDescriptionStringFor: anObject [
+	
+	^ (StObjectPrinter asTruncatedTextFrom: anObject) asString
 ]
 
 { #category : #accessing }
