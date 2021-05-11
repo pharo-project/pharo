@@ -249,7 +249,7 @@ SequenceableCollection >> asDigitsToPower: anInteger do: aBlock [
 	so that aBlock is presented all (self size raisedTo: anInteger) possible 
 	combinations of the receiver's elements taken as digits of an anInteger long number."
 
-	"(Array streamContents: [:stream | (0 to: 1) asDigitsToPower: 4 do: [:each | stream nextPut: each copy]]) >>> #((0 0 0 0) (0 0 0 1) (0 0 1 0) (0 0 1 1) (0 1 0 0) (0 1 0 1) (0 1 1 0) (0 1 1 1) (1 0 0 0) (1 0 0 1) (1 0 1 0) (1 0 1 1) (1 1 1 0) (1 1 1 1))"
+	"(Array streamContents: [:stream | (0 to: 1) asDigitsToPower: 4 do: [:each | stream nextPut: each copy]]) >>> #(#(0 0 0 0) #(0 0 0 1) #(0 0 1 0) #(0 0 1 1) #(0 1 0 0) #(0 1 0 1) #(0 1 1 0) #(0 1 1 1) #(1 0 0 0) #(1 0 0 1) #(1 0 1 0) #(1 0 1 1) #(1 1 0 0) #(1 1 0 1) #(1 1 1 0) #(1 1 1 1))"
 
 	| aCollection |
 	aCollection := Array new: anInteger.

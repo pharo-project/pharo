@@ -484,7 +484,7 @@ Collection >> copyWithoutAll: aCollection [
 { #category : #copying }
 Collection >> copyWithoutDuplicates [
 	"Answer a copy of the receiver without any duplicated elements"
-	"(#(2 3 4 4 5 6) copyWithoutDuplicates)  >>> #(2 3 4 5 6)"
+	"(#(2 3 4 4 5 6) copyWithoutDuplicates asSet)  >>> #(2 3 4 5 6) asSet"
 	"(#('do' 'la' 'si' 'do' 'la') copyWithoutDuplicates) >>> #('la' 'do' 'si')"
 	"(#(#do #la #si #do #la) copyWithoutDuplicates) >>> #(#la #do #si)"
 	^ self asSet asArray
