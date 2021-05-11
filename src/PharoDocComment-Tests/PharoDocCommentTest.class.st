@@ -42,6 +42,28 @@ PharoDocCommentTest >> testExpressionResult [
 ]
 
 { #category : #tests }
+PharoDocCommentTest >> testMultipleDocComments [
+	"3 + 4 >>> 7"
+	"1 + 2 >>> 3."
+	| espression |
+	espression := thisContext method ast pharoDocCommentNodes first expression.
+	self assert: espression evaluate equals: 7.
+	espression := thisContext method ast pharoDocCommentNodes second expression.
+	self assert: espression evaluate equals: 3.
+]
+
+{ #category : #tests }
+PharoDocCommentTest >> testMultipleDocCommentsInOneComment [
+	"3 + 4 >>> 7.
+	1 + 2 >>> 3."
+	| espression |
+	espression := thisContext method ast pharoDocCommentNodes first expression.
+	self assert: espression evaluate equals: 7.
+	espression := thisContext method ast pharoDocCommentNodes second expression.
+	self assert: espression evaluate equals: 3.
+]
+
+{ #category : #tests }
 PharoDocCommentTest >> testNodeResultSource [
 	"we use a doc comment here to test"
 	"3 + 4 >>> 7"
