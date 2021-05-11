@@ -105,7 +105,7 @@ StObjectContextModel >> newInspectionView [
 { #category : #accessing }
 StObjectContextModel >> smallDescriptionString [
 
-	^ self inspection smallDescriptionString
+	^ self inspection smallDescriptionStringFor: self inspectedObject
 ]
 
 { #category : #'private building' }
