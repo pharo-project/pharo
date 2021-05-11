@@ -83,15 +83,72 @@ OSSDL2BackendWindow >> convertButtonState: mouseState modState: modState modifie
 
 { #category : #private }
 OSSDL2BackendWindow >> convertCursor: aCursor [
-	| result bits|
+	| bits size result bytesPerLineInResult bytesPerLineInBitMap lineBitmapPosition lineResultPosition |
+
+	"This method converts the bits in a Pharo Cursor to the bitmap expected by SDL.
+	SDL expects a bitmap of 1bit depth. The cursor passed as parameter should be 1 bit depth.	
+		
+	This conversion handles cursors of any size. SDL requires that the resulting width is multiple of 8.
+	"
 	aCursor unhibernate.
+	
 	bits := aCursor bits.
-	result := ByteArray new: 32.
-	0 to: 15 do: [ :i |
-		result at: i*2 + 1 put: (bits at: i + 1) >> 24 & 255.
-		result at: i*2 + 2 put: (bits at: i + 1) >> 16 & 255.
-	].
-	^ result
+	size := aCursor extent.
+
+	"The resulting byte array has the size of the cursor (e.g., 32x32), but as each pixel is one byte 
+	we need to divide it by 8"
+	result := ByteArray new: (size x * size y) // 8.
+
+	"We are going to traverse the whole Pharo bitmap and generate the byteArray.
+	As the bitmap is organized line by line, we need to calculate how many bytes there is in a line."
+	bytesPerLineInResult := size x // 8.
+	"The amount of bytes in a line in the bitmap is not the same as the result.
+	Bitmaps contain 32-bit numbers. So each line is padded to 32 bits elements (4 bytes). 
+	If the line has 48 pixels, in the byteArray it will take 6 bytes, but in the bitmap this is round up to 8 bytes.
+	The padding is always zero and we can discard it in the transformation (as it has not image information)"
+	bytesPerLineInBitMap := bytesPerLineInResult roundUpTo: 4.
+
+	"We are going to traverse the cursor line by line.
+	As the positions in the bitmap and the byte array are not the same (the bitmap has padding, the bytearray no)
+	we need to have different starts for each line.
+	Once the offset is adjusted we can copy byte-per-byte"	
+	1 to: size y do: [ :line |
+		lineBitmapPosition := (line - 1) * bytesPerLineInBitMap.
+		lineResultPosition := (line - 1) * bytesPerLineInResult.
+		
+		1 to: bytesPerLineInResult do: [ :i |
+			result at: lineResultPosition + i put: (bits byteAt: lineBitmapPosition + i)]].
+	
+
+	^ result 
+	
+]
+
+{ #category : #cursor }
+OSSDL2BackendWindow >> convertCursor: cursor withMask: mask andScale: scale [
+
+	| maskBits extent cursorBits offset sdlCursor scaledCursor scaledMask scaleToUse |
+
+	scaleToUse := scale ceiling.
+
+	^ self 
+		lookupSystemCursor: cursor 
+		ifNotFound: [ 
+			scaledCursor := cursor scaledToSize: (cursor extent * scaleToUse).
+			scaledMask := mask scaledToSize: (mask extent * scaleToUse).
+
+			cursorBits := self convertCursor: scaledCursor.
+			maskBits := self convertCursor: scaledMask.
+			extent := scaledCursor extent.
+			offset := scaledCursor offset.
+			sdlCursor := SDL2
+				             createCursor: cursorBits
+				             mask: maskBits
+				             w: extent x
+				             h: extent y
+				             hotX: offset x negated
+				             hotY: offset y negated ].
+	
 ]
 
 { #category : #'event handling' }
@@ -269,6 +326,15 @@ OSSDL2BackendWindow >> isVisible [
 	^ (self getFlags bitAnd: SDL_WINDOW_SHOWN) = SDL_WINDOW_SHOWN
 ]
 
+{ #category : #cursor }
+OSSDL2BackendWindow >> lookupSystemCursor: cursor ifNotFound: aBlock [
+	
+	^ self systemCursorConversionTable
+		  detect: [ :aMapping | (Cursor perform: aMapping key) = cursor ]
+		  ifFound: [ :aMapping | SDL2 createSystemCursor: (SDL_SystemCursorType perform: aMapping value) ]
+		  ifNone: [ aBlock value  ]
+]
+
 { #category : #'event handling' }
 OSSDL2BackendWindow >> mapSpecialCharacter: symbol [
 	^ SDL2SpecialCharacterMapping mapKeySymbol: symbol ifAbsent: [ ^ nil ]
@@ -415,13 +481,11 @@ OSSDL2BackendWindow >> setDraggableArea: aRectangle [
 ]
 
 { #category : #cursor }
-OSSDL2BackendWindow >> setMouseCursor: cursor mask: mask [
-	| cursorBits maskBits extent offset sdlCursor |
-	cursorBits := self convertCursor: cursor.
-	maskBits := self convertCursor: mask.
-	extent := cursor extent.
-	offset := cursor offset.
-	sdlCursor := SDL2 createCursor: cursorBits mask: maskBits w: extent x h: extent y hotX: offset x negated hotY: offset y negated.
+OSSDL2BackendWindow >> setMouseCursor: cursor mask: mask andScale: scale [
+
+	| sdlCursor |
+	sdlCursor := self convertCursor: cursor withMask: mask andScale: scale.
+
 	sdlCursor ifNotNil: [ sdlCursor setCursor ].
 	currentCursor ifNotNil: [ currentCursor freeCursor ].
 	currentCursor := sdlCursor
@@ -449,6 +513,12 @@ OSSDL2BackendWindow >> stopTextInput [
 	"See https://wiki.libsdl.org/SDL_StopTextInput"
 
 	sdl2Window stopTextInput
+]
+
+{ #category : #cursor }
+OSSDL2BackendWindow >> systemCursorConversionTable [
+
+	^ OSPlatform current sdlPlatform systemCursorConversionTable
 ]
 
 { #category : #accessing }

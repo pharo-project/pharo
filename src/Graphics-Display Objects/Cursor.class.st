@@ -1079,6 +1079,17 @@ Cursor >> printOn: aStream [
 	self storeOn: aStream base: 2
 ]
 
+{ #category : #primitives }
+Cursor >> scaledToSize: newExtent [
+
+	"We need to override, so we can scale also the offset."
+
+	| newOne |
+	newOne := super scaledToSize: newExtent.
+	newOne offset: offset * (newExtent / self extent).
+	^ newOne
+]
+
 { #category : #displaying }
 Cursor >> show [
 	"Make the hardware's mouse cursor look like the receiver"
