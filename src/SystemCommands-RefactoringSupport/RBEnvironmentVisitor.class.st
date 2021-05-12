@@ -7,7 +7,7 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport-Scope'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RBEnvironmentVisitor >> chooserClass [ 
 	^ SpChooserPresenter
 ]
@@ -40,7 +40,7 @@ RBEnvironmentVisitor >> visitPackageEnv: rbPackageEnv [
 		onAccept: [:e| items addAll: e ].
 	dialog isCancelled ifTrue: [ ^self ].
 	
-	rbPackageEnv classesDo: [ :cls | rbPackageEnv removePackage: cls ].
+	rbPackageEnv packages do: [ :cls | rbPackageEnv removePackage: cls ].
 	items do: [ :cls | rbPackageEnv addPackage: cls ].
 ]
 

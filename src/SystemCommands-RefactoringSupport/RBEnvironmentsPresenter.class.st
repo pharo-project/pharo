@@ -1,5 +1,5 @@
 Class {
-	#name : #RBRBEnvironmentsPresenter,
+	#name : #RBEnvironmentsPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'scopeList'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #specs }
-RBRBEnvironmentsPresenter class >> defaultSpec [
+RBEnvironmentsPresenter class >> defaultSpec [
 	^ SpBoxLayout newTopToBottom
 		add:
 			(SpBoxLayout newLeftToRight
@@ -18,23 +18,23 @@ RBRBEnvironmentsPresenter class >> defaultSpec [
 ]
 
 { #category : #specs }
-RBRBEnvironmentsPresenter class >> example [
+RBEnvironmentsPresenter class >> example [
 	<script>
 	(self new) openWithSpec
 ]
 
 { #category : #accessing }
-RBRBEnvironmentsPresenter class >> title [ 
+RBEnvironmentsPresenter class >> title [ 
 	^ 'Scope options'
 ]
 
 { #category : #accessing }
-RBRBEnvironmentsPresenter >> andWithScope: anItem [ 
+RBEnvironmentsPresenter >> andWithScope: anItem [ 
 	self performOperation: #& with: anItem
 ]
 
 { #category : #accessing }
-RBRBEnvironmentsPresenter >> argumentsListMenu [
+RBEnvironmentsPresenter >> argumentsListMenu [
 	^ self newMenu
 		addGroup: [ :aGroup | 
 			aGroup
@@ -64,7 +64,7 @@ RBRBEnvironmentsPresenter >> argumentsListMenu [
 ]
 
 { #category : #actions }
-RBRBEnvironmentsPresenter >> edit: anItem [
+RBEnvironmentsPresenter >> edit: anItem [
 	[ anItem acceptVisitor: RBEnvironmentVisitor new ]
 	on: Error 
 	do: [ :e | self inform:  'Somethig was wrong']
@@ -72,7 +72,7 @@ RBRBEnvironmentsPresenter >> edit: anItem [
 ]
 
 { #category : #accessing }
-RBRBEnvironmentsPresenter >> initializePresenter [
+RBEnvironmentsPresenter >> initializePresenter [
 
 	self updateList.
 	scopeList contextMenu: self argumentsListMenu.
@@ -80,22 +80,22 @@ RBRBEnvironmentsPresenter >> initializePresenter [
 ]
 
 { #category : #accessing }
-RBRBEnvironmentsPresenter >> initializeWidgets [
-	scopeList := self newList.
+RBEnvironmentsPresenter >> initializeWidgets [
+	scopeList := self newTreeTable.
 ]
 
 { #category : #actions }
-RBRBEnvironmentsPresenter >> inspect: anItem [
+RBEnvironmentsPresenter >> inspect: anItem [
 	anItem inspect
 ]
 
 { #category : #accessing }
-RBRBEnvironmentsPresenter >> orWithScope: anItem [ 
+RBEnvironmentsPresenter >> orWithScope: anItem [ 
 	self performOperation: #| with: anItem
 ]
 
 { #category : #accessing }
-RBRBEnvironmentsPresenter >> performOperation: aSymbol with: anItem [
+RBEnvironmentsPresenter >> performOperation: aSymbol with: anItem [
 	| anEnvironment newScope |
 	[ anEnvironment := self selectAnotherScope.
 	newScope := anItem perform: aSymbol with: anEnvironment.
@@ -114,13 +114,13 @@ RBRBEnvironmentsPresenter >> performOperation: aSymbol with: anItem [
 ]
 
 { #category : #actions }
-RBRBEnvironmentsPresenter >> remove: anItem [
+RBEnvironmentsPresenter >> remove: anItem [
 	RefactoringSettings removeScopeNamed: anItem label.
 	self updateList 
 ]
 
 { #category : #actions }
-RBRBEnvironmentsPresenter >> selectAnotherScope [ 
+RBEnvironmentsPresenter >> selectAnotherScope [ 
 	| anotherScope |
 	anotherScope := UIManager default
 			chooseOrRequestFrom: RefactoringSettings scopeList
@@ -129,6 +129,10 @@ RBRBEnvironmentsPresenter >> selectAnotherScope [
 ]
 
 { #category : #accessing }
-RBRBEnvironmentsPresenter >> updateList [ 
-	scopeList items: RefactoringSettings scopeList
+RBEnvironmentsPresenter >> updateList [ 
+	"scopeList items: RefactoringSettings scopeList"
+	scopeList "addColumn: (SpStringTableColumn title: 'Environment' evaluated: #asString);"
+		roots: RefactoringSettings scopeList;
+		children: [ :aClass | RefactoringSettings scopeList select: [ :cls | aClass isCompositeEnvironment ifTrue: [ aClass environment == cls or: [ aClass otherEnvironment == cls ] ] ifFalse: [ false ] ] ];
+		yourself.
 ]

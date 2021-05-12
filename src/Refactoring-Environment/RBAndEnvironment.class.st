@@ -7,10 +7,7 @@ env1 & env2 -> a RBAndEnvironment.
 "
 Class {
 	#name : #RBAndEnvironment,
-	#superclass : #RBBrowserEnvironmentWrapper,
-	#instVars : [
-		'andedEnvironment'
-	],
+	#superclass : #RBCompositeEnvironment,
 	#category : #'Refactoring-Environment'
 }
 
@@ -23,17 +20,17 @@ RBAndEnvironment class >> onEnvironment: anEnvironment and: anotherEnvironment [
 
 { #category : #private }
 RBAndEnvironment >> andedEnvironment [
-	^andedEnvironment
+	^otherEnvironment
 ]
 
 { #category : #initialization }
 RBAndEnvironment >> andedEnvironment: aBrowserEnvironment [ 
-	andedEnvironment := aBrowserEnvironment
+	otherEnvironment := aBrowserEnvironment
 ]
 
 { #category : #testing }
 RBAndEnvironment >> classes [
-	^ environment classes & andedEnvironment classes
+	^ environment classes & self andedEnvironment classes
 ]
 
 { #category : #accessing }
@@ -45,7 +42,7 @@ RBAndEnvironment >> classesDo: aBlock [
 { #category : #testing }
 RBAndEnvironment >> definesClass: aClass [
 	^ (environment definesClass: aClass) and: [ 
-		andedEnvironment definesClass: aClass ]
+		self andedEnvironment definesClass: aClass ]
 ]
 
 { #category : #testing }
@@ -57,38 +54,38 @@ RBAndEnvironment >> includesCategory: aCategory [
 RBAndEnvironment >> includesClass: aClass [ 
 	| doesntHaveSelectors |
 	(environment includesClass: aClass) ifFalse: [^false].
-	(andedEnvironment includesClass: aClass) ifFalse: [^false].
+	(self andedEnvironment includesClass: aClass) ifFalse: [^false].
 	doesntHaveSelectors := true.
 	environment selectorsForClass: aClass
 		do: 
 			[:each | 
 			doesntHaveSelectors := false.
-			(andedEnvironment includesSelector: each in: aClass) ifTrue: [^true]].
+			(self andedEnvironment includesSelector: each in: aClass) ifTrue: [^true]].
 	^doesntHaveSelectors
 ]
 
 { #category : #testing }
 RBAndEnvironment >> includesProtocol: aProtocol in: aClass [ 
 	^ (environment includesProtocol: aProtocol in: aClass)
-		and: [ andedEnvironment includesProtocol: aProtocol in: aClass ]
+		and: [ self andedEnvironment includesProtocol: aProtocol in: aClass ]
 ]
 
 { #category : #testing }
 RBAndEnvironment >> includesSelector: aSelector in: aClass [ 
 	^(environment includesSelector: aSelector in: aClass) 
-		and: [andedEnvironment includesSelector: aSelector in: aClass]
+		and: [self andedEnvironment includesSelector: aSelector in: aClass]
 ]
 
 { #category : #accessing }
 RBAndEnvironment >> packages [
-	^ environment packages & andedEnvironment packages
+	^ environment packages & self andedEnvironment packages
 ]
 
 { #category : #printing }
 RBAndEnvironment >> printOn: aStream [ 
 	environment printOn: aStream.
 	aStream nextPutAll: ' & '.
-	andedEnvironment printOn: aStream.
+	self andedEnvironment printOn: aStream.
 ]
 
 { #category : #accessing }
@@ -103,7 +100,7 @@ RBAndEnvironment >> selectionIntervalFor: aString [
 	| interval |
 	interval := super selectionIntervalFor: aString.
 	interval ifNotNil: [^interval].
-	^andedEnvironment selectionIntervalFor: aString
+	^ self andedEnvironment selectionIntervalFor: aString
 
 ]
 
@@ -112,7 +109,7 @@ RBAndEnvironment >> selectorsForClass: aClass do: aBlock [
 	environment selectorsForClass: aClass
 		do: 
 			[:each | 
-			(andedEnvironment includesSelector: each in: aClass) 
+			(self andedEnvironment includesSelector: each in: aClass) 
 				ifTrue: [aBlock value: each]]
 ]
 
@@ -121,6 +118,6 @@ RBAndEnvironment >> storeOn: aStream [
 	aStream nextPut: $(.
 	environment storeOn: aStream.
 	aStream nextPutAll: ' & '.
-	andedEnvironment storeOn: aStream.
+	self andedEnvironment storeOn: aStream.
 	aStream nextPut: $)
 ]
