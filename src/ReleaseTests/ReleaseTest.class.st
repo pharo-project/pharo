@@ -272,15 +272,11 @@ ReleaseTest >> testNoPeriodInMethodSignature [
 	methods := SystemNavigation new allMethods select: [ :method | 
  		method sourceCode lines first trimRight last == $..].
 	
-	"there are 2 problematic methods left, both in Roassal. They will be fixed with the next merge"
-	self assert: methods size <=2.
-	
-	"there should be no method left"
-	"self assert: methods isEmpty description: [ 
+	self assert: methods isEmpty description: [ 
 		String streamContents: [ :stream | 
 			stream
 				nextPutAll: 'Found methods with period in signature:';
-				print: methods ] ]"
+				print: methods ] ]
 	
 ]
 
