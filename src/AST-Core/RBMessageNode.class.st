@@ -199,7 +199,7 @@ RBMessageNode >> isSelfSend [
 
 { #category : #testing }
 RBMessageNode >> isSuperSend [
-	^ self receiver isVariable and: [ self receiver name = 'super' ]
+	^ self receiver isSuperVariable
 ]
 
 { #category : #testing }

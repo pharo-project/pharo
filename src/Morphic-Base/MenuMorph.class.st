@@ -948,7 +948,7 @@ MenuMorph >> keyDown: evt [
 
 	| matchString key selectable |
 	key := evt key.
-	key = KeyboardKey enter
+	(key = KeyboardKey enter or: [key = KeyboardKey keypadEnter])
 		ifTrue: [ selectedItem
 				ifNotNil: [ ^ selectedItem hasSubMenu
 						ifTrue: [ evt hand newMouseFocus: selectedItem subMenu.

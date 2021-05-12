@@ -478,7 +478,7 @@ RBRefactoringTest >> setupMethodNameFor: aRefactoring toReturn: aSelector [
 	options := aRefactoring options copy.
 	options at: #methodName
 		put: 
-			[:ref :aMethodName | 
+			[:aMethodName | 
 			aMethodName
 				selector: aSelector;
 				yourself].
@@ -491,7 +491,7 @@ RBRefactoringTest >> setupMethodNameFor: aRefactoring toReturn: aSelector withAr
 	options := aRefactoring options copy.
 	options at: #methodName
 		put: 
-			[:ref :aMethodName | 
+			[ :aMethodName | 
 			aMethodName
 				selector: aSelector;
 				arguments: stringCollection;

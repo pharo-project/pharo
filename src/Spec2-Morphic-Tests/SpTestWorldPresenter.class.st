@@ -6,9 +6,6 @@ I allows to test a WorldPresenter in a World that is not the current world.
 Class {
 	#name : #SpTestWorldPresenter,
 	#superclass : #SpWorldPresenter,
-	#instVars : [
-		'worldMorph'
-	],
 	#classVars : [
 		'TestWorld'
 	],

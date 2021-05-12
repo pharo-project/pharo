@@ -28,6 +28,12 @@ BytecodeEncoder class >> extensionsFor: pc in: aCompiledMethod into: trinaryBloc
 	^self extensionsAt: pc in: aCompiledMethod into: trinaryBlock
 ]
 
+{ #category : #testing }
+BytecodeEncoder class >> isAbstract [
+
+	^ self == BytecodeEncoder
+]
+
 { #category : #'instruction stream support' }
 BytecodeEncoder class >> isExtension: byte [
 	"Answer if the bytecode is that of an extension bytecodee (a prefix for other bytecodes to extend their range)."

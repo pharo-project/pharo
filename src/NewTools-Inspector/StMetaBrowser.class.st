@@ -1,3 +1,9 @@
+"
+A special inspection that shows a simplified browser. 
+This inspection allow the user to operate with the class of the instance.
+
+Also, this inspection allows the user to place instance breakpoints (breakpoints that will act when the method where the breakpoint is) is called for the instance being inspected.
+"
 Class {
 	#name : #StMetaBrowser,
 	#superclass : #StInspection,
@@ -95,7 +101,7 @@ StMetaBrowser >> initializePresenters [
 
 { #category : #initialization }
 StMetaBrowser >> methodListMenu [
-	
+
 	^ (self rootCommandsGroup / 'methods') asMenuPresenter
 ]
 

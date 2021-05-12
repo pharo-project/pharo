@@ -47,6 +47,12 @@ StDebuggerRawObjectInspector >> rawInspectorPageOrNil [
 	^raw
 ]
 
+{ #category : #accessing }
+StDebuggerRawObjectInspector >> selectedObject [
+	"The debugger raw object inspector is opened on a StDebuggerContext object that holds context information. Here the view expected by users is on the receiver and not on the StDebuggerContext."
+	^super selectedObject context receiver
+]
+
 { #category : #stepping }
 StDebuggerRawObjectInspector >> step [
 	super step.

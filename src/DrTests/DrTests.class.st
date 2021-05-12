@@ -38,9 +38,9 @@ DrTests class >> beDefaultTestRunner [
 { #category : #specs }
 DrTests class >> defaultSpec [
 
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 				add: #pluginsDropList;
 				add: #switchButton
 					withConstraints: [ :constraints | constraints width: self buttonWidth * 2 ];

@@ -31,6 +31,12 @@ KMModifier class >> ctrl [
 	^ KMCtrlModifier new
 ]
 
+{ #category : #testing }
+KMModifier class >> isAbstract [
+
+	^ self == KMModifier
+]
+
 { #category : #'instance creation' }
 KMModifier class >> meta [
 	^ KMMetaModifier new

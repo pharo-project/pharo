@@ -1,17 +1,17 @@
 Class {
 	#name : #ClyAllInstanceVariablesQueryTest,
-	#superclass : #ClyVariableQueryTestCase,
+	#superclass : #ClyVariableQueryTest,
 	#category : #'Calypso-SystemQueries-Tests-Queries'
 }
 
 { #category : #running }
 ClyAllInstanceVariablesQueryTest >> createQuery [
-	^ClyAllInstanceVariablesQuery from: ClyClassScope of: ClyClass2FromP1 in: environment
+	^ClyAllInstanceVariablesQuery from: ClyClassScope of: ClyClass2FromP1Mock in: environment
 ]
 
 { #category : #tests }
 ClyAllInstanceVariablesQueryTest >> testCheckIfEmpty [
-	query scope: (ClyClassScope of: ClyClass2FromP1 in: environment).
+	query scope: (ClyClassScope of: ClyClass2FromP1Mock in: environment).
 	self deny: query checkEmptyResult.
 	
 	query scope: (ClyClassScope of: ProtoObject in: environment).
@@ -22,8 +22,8 @@ ClyAllInstanceVariablesQueryTest >> testCheckIfEmpty [
 ClyAllInstanceVariablesQueryTest >> testFromSingleClass [
 
 	| varNames |
-	self queryFromScope: ClyClassScope of: ClyClass2FromP1.
+	self queryFromScope: ClyClassScope of: ClyClass2FromP1Mock.
 	
 	varNames := resultItems collect: #name as: Set.
-	self assert: varNames equals: ClyClass2FromP1 instVarNames asSet
+	self assert: varNames equals: ClyClass2FromP1Mock instVarNames asSet
 ]

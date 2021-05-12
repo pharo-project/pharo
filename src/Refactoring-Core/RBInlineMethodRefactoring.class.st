@@ -17,7 +17,8 @@ Class {
 		'sourceParseTree',
 		'sourceSelector',
 		'sourceMessage',
-		'inlineClass'
+		'inlineClass',
+		'checkOverridden'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -53,6 +54,16 @@ RBInlineMethodRefactoring >> addTemporary: sourceNode assignedTo: replacementNod
 		addTemporaryNamed: newName;
 		addNodeFirst: (RBAssignmentNode variable: (RBVariableNode named: newName)
 					value: replacementNode)
+]
+
+{ #category : #accessing }
+RBInlineMethodRefactoring >> checkOverridden [
+	^ checkOverridden ifNil: [ checkOverridden := true ]
+]
+
+{ #category : #accessing }
+RBInlineMethodRefactoring >> checkOverridden: aBoolean [
+	checkOverridden := aBoolean
 ]
 
 { #category : #transforming }
@@ -272,12 +283,13 @@ RBInlineMethodRefactoring >> preconditions [
 	^(RBCondition definesSelector: sourceSelector in: class) 
 		& (RBCondition withBlock: 
 					[self findSelectedMessage.
-					self isOverridden 
+					self checkOverridden ifTrue: [
+						self isOverridden 
 						ifTrue: 
 							[self 
 								refactoringWarning: ('<1p>>><2s> is overriden. Do you want to inline it anyway?' 
 										expandMacrosWith: self inlineClass
-										with: self inlineSelector)].
+										with: self inlineSelector)] ].
 					self parseInlineMethod.
 					self isPrimitive 
 						ifTrue: [self refactoringError: 'Cannot inline primitives'].

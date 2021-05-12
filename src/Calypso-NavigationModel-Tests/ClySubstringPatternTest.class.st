@@ -1,6 +1,6 @@
 Class {
 	#name : #ClySubstringPatternTest,
-	#superclass : #ClyStringPatternTestCase,
+	#superclass : #ClyStringPatternTest,
 	#category : #'Calypso-NavigationModel-Tests'
 }
 

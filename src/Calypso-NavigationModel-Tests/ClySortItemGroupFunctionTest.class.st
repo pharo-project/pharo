@@ -1,6 +1,6 @@
 Class {
 	#name : #ClySortItemGroupFunctionTest,
-	#superclass : #ClySortFunctionTestCase,
+	#superclass : #ClySortFunctionTest,
 	#category : #'Calypso-NavigationModel-Tests'
 }
 

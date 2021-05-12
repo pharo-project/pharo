@@ -1,6 +1,5 @@
 "
-I'm a command to show the refresh content option for inspectors. 
-I will call the #refreshContent method of my caller context.
+A command to show the refresh content option for inspectors.
 "
 Class {
 	#name : #StInspectorRefreshCommand,
@@ -25,6 +24,12 @@ StInspectorRefreshCommand class >> defaultName [
 	<toolbarInspectCommand: 10>
 
 	^ 'Refresh'
+]
+
+{ #category : #documentation }
+StInspectorRefreshCommand class >> documentContextRequiredSelectors [
+
+	^ super documentContextRequiredSelectors, #(refreshContent)
 ]
 
 { #category : #execution }

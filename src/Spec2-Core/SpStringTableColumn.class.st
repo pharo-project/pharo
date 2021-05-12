@@ -66,6 +66,24 @@ SpStringTableColumn >> beSortable [
 	self isSortable: true
 ]
 
+{ #category : #'as yet unclassified' }
+SpStringTableColumn >> compareFunction: aBlock [
+	"sets the sorting of this column to use the two argument aBlock for comparing (aBlock should return a boolean). 
+	it is often simpler to use a boolean compare than the threeway compare required by sortFunction: "
+
+	aBlock ifNil: [ 
+		super sortFunction: nil. 
+		self isSortable: false.
+		^ self ].
+	
+	super sortFunction: [ :a :b| 
+		(aBlock value: a value: b) 
+			ifTrue:[ -1 ] 
+			ifFalse:[ 1 ] ] 
+		asSortFunction .
+	self isSortable: true
+]
+
 { #category : #api }
 SpStringTableColumn >> displayBackgroundColor [
 
@@ -74,6 +92,9 @@ SpStringTableColumn >> displayBackgroundColor [
 
 { #category : #api }
 SpStringTableColumn >> displayBackgroundColor: aBlock [
+	"Changes the background color of cells of the column. 
+	 `aBlock` receives an argument (the model element) and should answer an instance of Color. 
+	 NOTE: This may be not working at the moment :("
 
 	backgroundColorAction := aBlock
 ]
@@ -86,6 +107,8 @@ SpStringTableColumn >> displayBold [
 
 { #category : #api }
 SpStringTableColumn >> displayBold: aBlock [
+	"If `aBlock` answer true, the cell will be displayed in bold.
+	 `aBlock` receives one argument (the model element)."
 
 	boldAction := aBlock
 ]
@@ -98,6 +121,8 @@ SpStringTableColumn >> displayColor [
 
 { #category : #api }
 SpStringTableColumn >> displayColor: aBlock [
+	"Changes the background color of cells of the column. 
+	 `aBlock` receives an argument (the model element) and should answer an instance of Color."
 
 	colorAction := aBlock
 ]
@@ -110,6 +135,8 @@ SpStringTableColumn >> displayItalic [
 
 { #category : #api }
 SpStringTableColumn >> displayItalic: aBlock [
+	"If `aBlock` answer true, the cell will be displayed in italic.
+	 `aBlock` receives one argument (the model element)."
 
 	italicAction := aBlock
 ]
@@ -122,6 +149,8 @@ SpStringTableColumn >> displayUnderline [
 
 { #category : #api }
 SpStringTableColumn >> displayUnderline: aBlock [
+	"If `aBlock` answer true, the cell will be displayed underlined.
+	 `aBlock` receives one argument (the model element)."
 
 	underlineAction := aBlock
 ]
@@ -171,10 +200,15 @@ SpStringTableColumn >> sortFunction [
 
 { #category : #api }
 SpStringTableColumn >> sortFunction: aBlockOrSortFunction [
-	"Set the sort function to apply to the values of this column in order to sort elements.
+	"Set the THREEWAY sort function to apply to the values of this column in order to sort elements.
 	 `aBlockOrSortFunction` is a block that receives two arguments to compare or an instace of 
 	 `SortFunction`. "
 
-	super sortFunction: aBlockOrSortFunction.
+	 aBlockOrSortFunction ifNil: [ 
+		super sortFunction: nil.
+		self isSortable: false.
+		^ self ].
+	
+	super sortFunction: aBlockOrSortFunction asSortFunction.
 	self isSortable: aBlockOrSortFunction notNil
 ]

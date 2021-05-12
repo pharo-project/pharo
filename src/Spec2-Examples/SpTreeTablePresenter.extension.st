@@ -43,3 +43,20 @@ SpTreeTablePresenter class >> exampleExpandRoots [
 		expandRoots;
 		openWithSpec
 ]
+
+{ #category : #'*Spec2-Examples' }
+SpTreeTablePresenter class >> exampleWithTwoColumns [ 
+
+	^ self  new
+		addColumn: (SpCompositeTableColumn new
+			title: 'Classes';
+			addColumn: ((SpImageTableColumn evaluated: [:c| c systemIcon]) );
+			addColumn: (SpStringTableColumn evaluated: #name);
+			yourself);
+		addColumn: (SpStringTableColumn new
+			title: 'Methods';
+			evaluated: [:class |  class methodDictionary size asString]);
+		roots: { Object };
+		children: [ :aClass | aClass subclasses ];
+		openWithSpec
+]

@@ -11,7 +11,7 @@ Class {
 ClyFullBrowserVariableContext class >> selectionStrategy [
 	<classAnnotation>
 	
-	^(ClyContextSelectionStrategy for: ClyFullBrowser selectionType: ClyVariableMethodGroup)
+	^(ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyVariableMethodGroup)
 		priority: 1000 "variable context should be with more priority than basic method group context"
 ]
 
@@ -19,7 +19,7 @@ ClyFullBrowserVariableContext class >> selectionStrategy [
 ClyFullBrowserVariableContext class >> selectionStrategy2 [
 	<classAnnotation>
 	
-	^(ClyContextSelectionStrategy for: ClyFullBrowser selectionType: ClyVariable)
+	^(ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyVariable)
 ]
 
 { #category : #'selection-variables' }

@@ -22,7 +22,7 @@ Class {
 ClyClassEditorToolMorph class >> classTabActivation [
 	<classAnnotation>
 	
-	^ClyTabActivationStrategy for: ClyClass asCalypsoItemContext
+	^ClyTabActivationStrategyAnnotation for: ClyClass asCalypsoItemContext
 ]
 
 { #category : #testing }

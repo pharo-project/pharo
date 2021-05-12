@@ -32,15 +32,21 @@ EpLogBrowserPresenter class >> defaultLog [
 
 { #category : #specs }
 EpLogBrowserPresenter class >> defaultSpec [
-	^ SpPanedLayout newVertical
-		position: 0.6;
-		add: #itemsPresenter;
-		add:
-			(SpBoxLayout newVertical
-				add: #toolbarPresenter expand: false fill: false padding: 2;
-				add: #entryContentPresenter expand: true fill: true padding: 2;
-				yourself);
-		yourself
+
+	^ SpPanedLayout newTopToBottom
+		  positionOfSlider: 0.6;
+		  add: #itemsPresenter;
+		  add: (SpBoxLayout newTopToBottom
+				   add: #toolbarPresenter
+				   expand: false
+				   fill: false
+				   padding: 2;
+				   add: #entryContentPresenter
+				   expand: true
+				   fill: true
+				   padding: 2;
+				   yourself);
+		  yourself
 ]
 
 { #category : #'instance creation' }

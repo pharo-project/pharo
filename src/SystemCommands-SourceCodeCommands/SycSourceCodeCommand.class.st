@@ -31,6 +31,17 @@ SycSourceCodeCommand class >> method: aMethod node: aRBProgramNode [
 		sourceNode: aRBProgramNode
 ]
 
+{ #category : #execution }
+SycSourceCodeCommand >> asRefactorings [
+	self subclassResponsibility
+]
+
+{ #category : #execution }
+SycSourceCodeCommand >> execute [
+
+	self executeRefactoring: self asRefactorings
+]
+
 { #category : #private }
 SycSourceCodeCommand >> executeRefactoring: refactoring [
 

@@ -10,7 +10,6 @@ Class {
 		'#scrollValue => SpObservableSlot',
 		'#editionContextMenu => SpObservableSlot',
 		'#editable => SpObservableSlot',
-		'#cursorPosition => SpObservableSlot',
 		'#wrapWord => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets-Text'
@@ -273,7 +272,8 @@ SpTextPresenter >> whenScrollValueChangedDo: aBlock [
 { #category : #'api-events' }
 SpTextPresenter >> whenSubmitDo: aBlock [
 	"This method will add a 'submit' event to the widget. It will react when user 
-	 presses <meta+s> key (this is for historical reasons) and with enter (cr)."
+	 presses <meta+s> key (this is for historical reasons) and with enter (cr).
+	 `aBlock` receives one argument (the submited text)"
 
 	self 
 		bindKeyCombination: $s meta 

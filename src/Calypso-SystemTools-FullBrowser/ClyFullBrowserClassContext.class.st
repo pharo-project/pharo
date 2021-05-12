@@ -11,7 +11,7 @@ Class {
 ClyFullBrowserClassContext class >> selectionStrategy [
 	<classAnnotation>
 	
-	^ClyContextSelectionStrategy for: ClyFullBrowser selectionType: ClyClass
+	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyClass
 ]
 
 { #category : #'browser state' }

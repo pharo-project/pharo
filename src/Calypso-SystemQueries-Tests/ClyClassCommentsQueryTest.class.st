@@ -7,7 +7,7 @@ which should be found
 "
 Class {
 	#name : #ClyClassCommentsQueryTest,
-	#superclass : #ClyClassQueryTestCase,
+	#superclass : #ClyClassQueryTest,
 	#category : #'Calypso-SystemQueries-Tests-Queries'
 }
 

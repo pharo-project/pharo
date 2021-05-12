@@ -15,7 +15,32 @@ SpTreePresenterExpandTest >> initializeTestedInstance [
 
 	presenter 
 		roots: #(1);
-		children: [ :aNumber | (aNumber * 10 to: (aNumber * 10) + 10) asOrderedCollection ].
+		children: [ :aNumber | 
+			aNumber < 1000
+				ifTrue: [ (aNumber * 10 to: (aNumber * 10) + 10) asOrderedCollection ]
+				ifFalse: [ #() ] ].
+]
+
+{ #category : #tests }
+SpTreePresenterExpandTest >> testCollapseAll [
+
+	presenter expandAll.
+	self openInstance.
+	self deny: presenter roots isEmpty.
+	self assert: (presenter adapter isExpanded: (presenter itemAtPath: #(1 2 3))).	
+	presenter collapseAll.
+	self deny: (presenter adapter isExpanded: (presenter itemAtPath: #(1 2 3)))
+]
+
+{ #category : #tests }
+SpTreePresenterExpandTest >> testCollapsePath [
+
+	presenter expandAll.
+	self openInstance.
+	self deny: presenter roots isEmpty.
+	self assert: (presenter adapter isExpanded: (presenter itemAtPath: #(1 2 3))).	
+	presenter collapsePath: #(1 2 3).
+	self deny: (presenter adapter isExpanded: (presenter itemAtPath: #(1 2 3)))
 ]
 
 { #category : #tests }

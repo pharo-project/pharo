@@ -32,11 +32,3 @@ OCEnvironmentScope >> hasBindingThatBeginsWith: aString [
 	^environment hasBindingThatBeginsWith: aString
 
 ]
-
-{ #category : #lookup }
-OCEnvironmentScope >> lookupVar: name [
-	"Return a var with this name.  Return nil if none found"
-	name isString ifFalse: [ ^nil ].
-	
-	^environment bindingOf: name
-]

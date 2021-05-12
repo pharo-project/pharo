@@ -19,10 +19,10 @@ Class {
 
 { #category : #specs }
 EpDashboardPresenter class >> defaultSpec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #currentSessionInfoPresenter;
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 					add: #enableMonitorButton;
 					add: #createLogButton;
 					add: #openSettingsButton;

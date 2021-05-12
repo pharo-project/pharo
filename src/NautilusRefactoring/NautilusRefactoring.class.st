@@ -33,9 +33,13 @@ NautilusRefactoring >> chooseFrom: anArray title: aString lines: aCollection [
 ]
 
 { #category : #display }
-NautilusRefactoring >> handleMethodNameRequest: aMethodName in: ref [
+NautilusRefactoring >> handleMethodNameRequest: aMethodName [
 	|dialog|
-	dialog := SycMethodNameEditorPresenter openOn: aMethodName withRefactoring: ref.
+	dialog := SycMethodNameEditorPresenter 
+		openOn: aMethodName 
+		canRenameArgs: false 
+		canRemoveArgs: false 
+		canAddArgs: false.
 	dialog cancelled ifTrue: [  CmdCommandAborted signal ].
 	^ aMethodName
 ]
@@ -62,7 +66,7 @@ NautilusRefactoring >> refactoringOptions: aRefactoring [
 		setOption: #implementorToInline
 		toUse: [ :ref :imps | self requestImplementorToInline: imps ];
 		setOption: #methodName
-		toUse: [ :ref :name | self requestMethodNameFor: name in: ref ];
+		toUse: [ :name | self requestMethodNameFor: name ];
 		setOption: #selfArgumentName
 		toUse: [ :ref | self requestSelfArgumentName ];
 		setOption: #selectVariableToMoveTo
@@ -102,8 +106,8 @@ NautilusRefactoring >> requestImplementorToInline: imps [
 ]
 
 { #category : #option }
-NautilusRefactoring >> requestMethodNameFor: aMethodName in: ref [
-	^ self handleMethodNameRequest: aMethodName in: ref
+NautilusRefactoring >> requestMethodNameFor: aMethodName [
+	^ self handleMethodNameRequest: aMethodName
 ]
 
 { #category : #option }

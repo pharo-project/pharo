@@ -13,16 +13,14 @@ Collection >> selectEvery: aBlock [
 
 { #category : #'*ClassParser' }
 Collection >> selectEveryFirst [
-	"#(1 2 3 4) selectEveryFirst asArray 
-	>>> #(1 3)
+	"#(1 2 3 4) selectEveryFirst asArray >>> #(1 3)
 	"
 	^ self selectEvery: [ :i | (i+1 \\ 2) = 0 ]
 ]
 
 { #category : #'*ClassParser' }
 Collection >> selectEverySecond [
-	"#(1 2 3 4) selectEverySecond asArray 
-	>>> #(2 4)
+	"#(1 2 3 4) selectEverySecond asArray >>> #(2 4)
 	"
 	^ self selectEvery: [ :i | i \\ 2 = 0 ]
 ]
@@ -30,12 +28,8 @@ Collection >> selectEverySecond [
 { #category : #'*ClassParser' }
 Collection >> unzip [
 	"Given a collection returns in one pass two collections containing each odd and even elements in respective subcollections"
-	"
-	#(1 2 3 4) unzip first asArray 
-	>>> #(1 3)
-	#(1 2 3 4) unzip second asArray 
-	>>> #(2 4)
-	"
+	"#(1 2 3 4) unzip first asArray  >>> #(1 3)"
+	"#(1 2 3 4) unzip second asArray >>> #(2 4)"
 	
 	| odd even s |
 	s := self size // 2.

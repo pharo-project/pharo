@@ -1,3 +1,7 @@
+"
+A selection container to simulate a selection object (the object that is sent when a selection is triggered on `activation` and `selection` events). 
+This is used so we can trigger `activation` events outside lists tables and trees (for example, in a playground or an inpector evaluator).   
+"
 Class {
 	#name : #StEvaluatedSelectionModel,
 	#superclass : #Object,

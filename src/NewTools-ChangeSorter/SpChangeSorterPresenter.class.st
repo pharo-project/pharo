@@ -23,7 +23,7 @@ SpChangeSorterPresenter class >> defaultSpec [
 	<spec>
 	
 	^ SpPanedLayout newVertical
-		position: 35 percent;
+		positionOfSlider: 35 percent;
 		add: (SpPanedLayout newHorizontal
 			add: #changesListPresenter;
 			add: #classesListPresenter;

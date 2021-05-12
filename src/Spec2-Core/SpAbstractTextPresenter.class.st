@@ -394,7 +394,8 @@ SpAbstractTextPresenter >> whenSelectionChangedDo: aBlock [
 { #category : #'api-events' }
 SpAbstractTextPresenter >> whenSubmitDo: aBlock [
 	"Inform a 'submit' event has been triggered. 
-	 It will react when user presses <meta+s> key (this is for historical reasons) and (in case of text fields) with <cr>."
+	 It will react when user presses <meta+s> key (this is for historical reasons) and (in case of text fields) with <cr>.
+	 `aBlock` receives one argument (the submited text)"
 
 	self subclassResponsibility
 ]

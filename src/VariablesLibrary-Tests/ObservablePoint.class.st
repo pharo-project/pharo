@@ -32,6 +32,11 @@ ObservablePoint >> x: anInteger [
 ]
 
 { #category : #accessing }
+ObservablePoint >> xReturn: anInteger [ 
+	^x := anInteger
+]
+
+{ #category : #accessing }
 ObservablePoint >> y [
 	^ y
 ]

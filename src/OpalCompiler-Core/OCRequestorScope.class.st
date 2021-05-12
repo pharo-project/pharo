@@ -31,26 +31,21 @@ OCRequestorScope >> compilationContext: anObject [
 ]
 
 { #category : #lookup }
-OCRequestorScope >> lookupVar: name [
-
-	"reserved Variables are defined by the instance scope"
-	(ReservedVariable nameIsReserved: name) ifTrue: [ ^ outerScope lookupVar: name ].
+OCRequestorScope >> lookupVar: name declare: aBoolean [
 	
 	"generated temps (e.g. for limits in to:do: should not create bindings"
-	name first = $0 ifTrue: [ ^ outerScope lookupVar: name ].
-	
+	name first = $0 ifTrue: [ ^ outerScope lookupVar: name declare: aBoolean ].
 	"We do not want to auto define bindings for unknown Globals"
-	(name isString and: [name first isUppercase]) ifTrue: [ ^ outerScope lookupVar: name].
-	
+	(name isString and: [name first isUppercase]) ifTrue: [ ^ outerScope lookupVar: name declare: aBoolean].
 	"do not 'create bindings' in requestor scope if we just want to style a possible unknown variable"
-	(compilationContext optionSkipSemanticWarnings
+	((compilationContext optionSkipSemanticWarnings or: [aBoolean not])
 		and: [ (requestor hasBindingOf: name) not ])
-		ifTrue: [ ^ outerScope lookupVar: name ].
+		ifTrue: [ ^ outerScope lookupVar: name declare: aBoolean ].
 
 	"the requestors #bindingOf may create a binding for not yet existing variables"
 	^(requestor bindingOf: name)
 		ifNotNil: [ :var | var ]
-		ifNil: [ outerScope lookupVar: name ]
+		ifNil: [ outerScope lookupVar: name declare: aBoolean ]
 ]
 
 { #category : #accessing }

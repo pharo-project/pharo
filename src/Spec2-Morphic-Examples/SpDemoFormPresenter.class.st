@@ -35,7 +35,7 @@ Class {
 { #category : #specs }
 SpDemoFormPresenter class >> defaultSpec [
 	^ SpPanedLayout newLeftToRight
-		position: (StandardFonts defaultFont widthOfString: 'M') * 35;
+		positionOfSlider: (StandardFonts defaultFont widthOfString: 'M') * 35;
 		add: #form;
 		add: #resultPane;
 		yourself

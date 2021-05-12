@@ -50,6 +50,11 @@ Exception class >> - anotherException [
 		yourself
 ]
 
+{ #category : #testing }
+Exception class >> captureIfSignalledWhenStepping [
+	^false
+]
+
 { #category : #exceptionselector }
 Exception class >> handles: exception [
 	"Determine whether an exception handler will accept a signaled exception."

@@ -7,14 +7,14 @@ Class {
 	#category : #'Kernel-Tests-Exception'
 }
 
-{ #category : #tests }
+{ #category : #running }
 OutOfMemoryTest >> setUp [ 
 
 	super setUp.
 	oldValue := Smalltalk vm maxOldSpaceSize: 2 * 1024 *1024 * 1024.
 ]
 
-{ #category : #tests }
+{ #category : #running }
 OutOfMemoryTest >> tearDown [ 
 
 	Smalltalk vm maxOldSpaceSize: oldValue.

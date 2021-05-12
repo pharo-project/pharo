@@ -40,9 +40,7 @@ KMShortcutPrinter class >> symbolTableAt: anObject ifAbsent: aBlock [
 { #category : #'instance creation' }
 KMShortcutPrinter class >> toString: aShortcut [
 
-	^ self new
-		shortcut: aShortcut;
-		visit
+	^ aShortcut acceptVisitor: OSPlatform current shortcutPrinter
 ]
 
 { #category : #private }
@@ -86,9 +84,10 @@ KMShortcutPrinter >> visitSingleShortcut: aShortcut [
 	| char |
 	char := self mapSpecialCharacter: aShortcut platformCharacter.
 	^ String streamContents: [ :stream | 
-		  (self shortcutModifiersOf: aShortcut)
+		(self shortcutModifiersOf: aShortcut) ifNotEmpty: [ :modifiers |  
+			modifiers
 			  do: [ :each | stream << each ]
 			  separatedBy: [ stream << '+' ].
-		  stream << '+'.
-		  stream << char ]
+			stream << '+' ].
+		stream << char ]
 ]

@@ -480,9 +480,7 @@ Path >> parentUpTo: aParentDirName [
 Path >> pathString [
 	"Return a string containing the path elements of the receiver, without the 'Path *' part"
 
-	"((FileSystem workingDirectory / 'book-result' / 'W01-Welcome')
-		relativeToReference: FileSystem workingDirectory) pathString
-	>>> 'book-result/W01-Welcome'"
+	"((FileSystem workingDirectory / 'book-result' / 'W01-Welcome') relativeToReference: FileSystem workingDirectory) pathString >>> 'book-result/W01-Welcome'"
 
 	^String streamContents: [ :stream | 
 		self printPathOn: stream delimiter: self delimiter ]
@@ -498,10 +496,7 @@ Path >> printOn: aStream delimiter: aCharacter [
 { #category : #printing }
 Path >> printPathOn: aStream [
 	"Print the receiver's path on aStream (without 'Path' prepended) using the default delimiter"
-	"(String streamContents: [ :str| 
-		((FileSystem workingDirectory / 'book-result' / 'W01-Welcome') 
-			relativeToReference: FileSystem workingDirectory) printPathOn: str])
-	>>> 'book-result/W01-Welcome'"
+	"(String streamContents: [ :str| ((FileSystem workingDirectory / 'book-result' / 'W01-Welcome') relativeToReference: FileSystem workingDirectory) printPathOn: str]) >>> 'book-result/W01-Welcome'"
 
 	self printPathOn: aStream delimiter: self delimiter.
 
@@ -510,10 +505,7 @@ Path >> printPathOn: aStream [
 { #category : #printing }
 Path >> printPathOn: aStream delimiter: aCharacter [
 	"Print the receiver's path on aStream (without 'Path' prepended)"
-	"(String streamContents: [ :str| 
-		((FileSystem workingDirectory / 'book-result' / 'W01-Welcome')
-			relativeToReference: FileSystem workingDirectory) printPathOn: str delimiter: $|])
-	>>> 'book-result|W01-Welcome'"
+	"(String streamContents: [ :str| ((FileSystem workingDirectory / 'book-result' / 'W01-Welcome') relativeToReference: FileSystem workingDirectory) printPathOn: str delimiter: $|]) >>> 'book-result|W01-Welcome'"
 
 	(1 to: self size)
 		do: [:index | aStream nextPutAll: (self at: index)]

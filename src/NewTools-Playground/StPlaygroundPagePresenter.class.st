@@ -303,12 +303,11 @@ StPlaygroundPagePresenter >> toggleShowLineNumbers [
 StPlaygroundPagePresenter >> toolbarActions [
 
 	^ CmCommandGroup forSpec
-		register: (CmCommandGroup forSpec
-			register: (StPlaygroundDoItCommand forSpecContext: self);
-			register: (StPlaygroundPublishCommand forSpecContext: self);
-			register: (StPlaygroundBindingsCommand forSpecContext: self);
-			register: (StPlaygroundPagesCommand forSpecContext: self);
-			yourself);
+		register: (StPlaygroundDoItCommand forSpecContext: self);
+		register: (StPlaygroundPublishCommand forSpecContext: self);
+		register: (StPlaygroundBindingsCommand forSpecContext: self);
+		register: (StPlaygroundVersionsCommand forSpecContext: self);
+		register: (StPlaygroundPagesCommand forSpecContext: self);
 		yourself
 ]
 

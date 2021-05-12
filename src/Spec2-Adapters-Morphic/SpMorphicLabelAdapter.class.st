@@ -4,9 +4,6 @@ I am the adapter used to bridget a LabelPresenter and a LabelMorph
 Class {
 	#name : #SpMorphicLabelAdapter,
 	#superclass : #SpAbstractMorphicAdapter,
-	#instVars : [
-		'emphasisOptions'
-	],
 	#category : #'Spec2-Adapters-Morphic-Base'
 }
 
