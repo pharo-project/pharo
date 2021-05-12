@@ -36,6 +36,21 @@ CNSelectorExtractionOnSelectionTest >> testSelectCascadeFirstMessageWithoutRecei
 ]
 
 { #category : #'tests - selection' }
+CNSelectorExtractionOnSelectionTest >> testSelectInvalidCode [
+
+	self select: 'even : 2'.
+	
+	self assert: self selectedSelector equals: #even
+]
+
+{ #category : #'tests - selection' }
+CNSelectorExtractionOnSelectionTest >> testSelectInvalidCodeWithPossibleSelector [
+	"Code has faulty code"
+	self select: 'anObject do : 1 with: 2'.
+	self assert: self selectedSelector equals: #do
+]
+
+{ #category : #'tests - selection' }
 CNSelectorExtractionOnSelectionTest >> testSelectKeywordMessageShouldMatchKeywordSelector [
 
 	self select: 'a foo: 17 bar: (some message: #toto) fum: [ :will | it break ]'.

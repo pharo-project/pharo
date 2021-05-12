@@ -197,7 +197,8 @@ SpCodePresenter >> browseSelectedSelectorIfGlobal: globalBlock ifNotGlobal: nonG
 	| variableOrClassName env |
 
 	variableOrClassName := self selectedSelector.
-
+	variableOrClassName ifNil: [ ^ self inform: 'No string could be parsed to answer your query.' ].
+	
 	env := self environment.
 	
 	self flag: #bug.
