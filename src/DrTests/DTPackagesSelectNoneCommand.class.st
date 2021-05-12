@@ -16,5 +16,5 @@ DTPackagesSelectNoneCommand class >> defaultName [
 { #category : #executing }
 DTPackagesSelectNoneCommand >> execute [
 
-	self drTest selectNoneInPackageList
+	self context selectNoneInPackageList
 ]

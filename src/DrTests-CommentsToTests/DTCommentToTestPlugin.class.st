@@ -70,10 +70,7 @@ DTCommentToTestPlugin >> runSuite: aTestSuite withResult: aResult [
 	aTestSuite
 		when: TestAnnouncement
 		do: [ :testAnnouncement | 
-			self announcer
-				announce:
-					(DTStatusUpdate
-						message: ('Running test {1}.' format: {testAnnouncement test asString})) ].
+			self announceStatusChanged: ('Running test {1}.' format: {testAnnouncement test asString}) ].
 	[ aTestSuite run: aResult ]
 		ensure: [ aTestSuite unsubscribe: TestAnnouncement ]
 ]

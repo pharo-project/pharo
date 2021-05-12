@@ -127,10 +127,8 @@ DTTestsRunnerPlugin >> runSuite: aTestSuite withResult: aResult [
 		do: [ :testAnnouncement | 
 			self flag: #TODO. "Dirty"
 			testAnnouncement test class = TestSuite
-				ifTrue: [ self announcer
-				announce:
-					(DTStatusUpdate
-						message: ('Running test {1}.' format: {testAnnouncement test name})) ] ].
+				ifTrue: [ 
+					self announceStatusChanged: ('Running test {1}.' format: {testAnnouncement test name}) ] ].
 	[ aTestSuite run: aResult ]
 		ensure: [ aTestSuite unsubscribe: TestAnnouncement ]
 ]
