@@ -175,8 +175,14 @@ OSBackendWindow >> setMouseCursor: cursorWithMask [
 	self setMouseCursor: cursorWithMask mask: cursorWithMask maskForm
 ]
 
-{ #category : #accessing }
+{ #category : #cursor }
 OSBackendWindow >> setMouseCursor: cursor mask: mask [
+
+	self setMouseCursor: cursor mask: mask andScale: 1
+]
+
+{ #category : #accessing }
+OSBackendWindow >> setMouseCursor: cursor mask: mask andScale: scale [
 ]
 
 { #category : #accessing }

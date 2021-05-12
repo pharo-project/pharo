@@ -355,7 +355,7 @@ Point >> guarded [
 	"(100@200) guarded >>> (100@200)"
 	"(0@5) guarded >>> (1@5)"
 	
-	self max: 1@1
+	^self max: 1@1
 ]
 
 { #category : #comparing }
@@ -453,7 +453,7 @@ Point >> max [
 Point >> max: aPoint [ 
 	"Answer the lower right corner of the rectangle uniquely defined by the receiver and the argument, aPoint."
 	"((100@200) max: (330@400)) >>> (330@400)"
-	"((100@200) min: (30@400)) >>> (100@400)"
+	"((100@200) max: (30@400)) >>> (100@400)"
 	^ (x max: aPoint x) @ (y max: aPoint y)
 ]
 
