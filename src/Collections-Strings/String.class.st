@@ -1601,12 +1601,14 @@ String >> hasSubstring: str at: index [
 	"Answer true if the receiver contains the substring str exactly at index, false otherwise."
 
 	| pos |
+	
+	(index < 1) ifTrue: [ ^ false ].
 	pos := index - 1.
-
+	
 	^ str size <= (self size - pos) and:
-		[ str allSatisfy: [ :char | 
+		[ str noneSatisfy: [ :char |  
 		  pos := pos + 1.
-		  (self at: pos) = char ] ]
+		  (self at: pos) ~= char ] ]
 ]
 
 { #category : #testing }

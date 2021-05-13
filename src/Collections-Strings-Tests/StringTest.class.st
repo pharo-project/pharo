@@ -1260,6 +1260,24 @@ StringTest >> testFormatFailures [
 
 ]
 
+{ #category : #test }
+StringTest >> testHasSubstringAt [
+
+	"Test empty strings"
+	self assert: ('' hasSubstring: '' at: 1).
+	self assert: ('test' hasSubstring: '' at: 1).
+	self deny: ('' hasSubstring: 'test' at: 1).
+	"Test out of bounds indexes"
+	self deny: ('test' hasSubstring: 't' at: 0).
+	self deny: ('test' hasSubstring: 't' at: 10).
+	"Test matching substring"
+	self assert: ('test' hasSubstring: 'st' at: 3).
+	"Test partially matching substring"
+	self deny: ('test' hasSubstring: 'sty' at: 3).
+	
+	
+]
+
 { #category : #tests }
 StringTest >> testHasWideCharacterFromTo [
 
