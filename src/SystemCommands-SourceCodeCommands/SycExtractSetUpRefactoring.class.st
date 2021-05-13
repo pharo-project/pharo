@@ -3,7 +3,7 @@ I am a command to extract setUp method and then replaces its occurrences
 "
 Class {
 	#name : #SycExtractSetUpRefactoring,
-	#superclass : #SycSourceCodeCommand,
+	#superclass : #SycSourceCodeRefactoringCommand,
 	#instVars : [
 		'selectedTextInterval'
 	],
@@ -56,11 +56,6 @@ SycExtractSetUpRefactoring >> executeRefactoring [
 		in: method origin.
 	self initializeDefaultOptionsOf: refactoring.
 	refactoring execute
-]
-
-{ #category : #testing }
-SycExtractSetUpRefactoring >> isComplexRefactoring [
-	^ true
 ]
 
 { #category : #preparation }
