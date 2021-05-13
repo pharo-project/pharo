@@ -1780,6 +1780,34 @@ StringTest >> testRomanNumber [
 	self assert: '-MDCCCXCV' romanNumber equals: -1895.
 ]
 
+{ #category : #test }
+StringTest >> testSkipAnySubstringStartingAt [
+	
+	"Simple skip"
+	self assert: ('abcd' skipAnySubstring: #('a') startingAt: 1) equals: 2. 
+	"Test multiple substrings to skip"
+	self assert: ('abcd' skipAnySubstring: #('a' 'b' 'd') startingAt: 1) equals: 3.
+	"Test skip symbol"
+	self assert: ('abcd' skipAnySubstring: #(ab) startingAt: 1) equals: 3.
+	"Test string is full of substrings to skip"
+	self assert: ('abcd' skipAnySubstring: #('ab' 'cd') startingAt: 1) equals: 5. 
+	"Test first substring matches but second substring is larger than entire string"
+	self assert: ('abcd' skipAnySubstring: #('ab' 'abcdefg') startingAt: 1) equals: 3.
+	"Test first substring is larger than entire string, and second substring matches string"
+	self assert: ('abcd' skipAnySubstring: #('abcdefg' 'ab') startingAt: 1) equals: 3.
+	"Test string is empty, return length of string + 1"
+	self assert: ('' skipAnySubstring: #('ab') startingAt: 1) equals: 1.
+	"Test starting at index > 1"
+	self assert: ('abcde' skipAnySubstring: #('cd') startingAt: 3) equals: 5.
+	"Test substring appears multiple times in a row"
+	self assert: ('ababc' skipAnySubstring: #('ab') startingAt: 1) equals: 5.
+	"Test substring to skip is given directly as a string instead of in an array"
+	self assert: (',ab' skipAnySubstring: ',' startingAt: 1) equals: 2.
+	"Test how delimiters order can influence the result: substrings are skipped greedily with no backtracking."
+	self assert: ('abcdefg' skipAnySubstring: #('abcd' 'abc' 'def' 'g') startingAt: 1) equals: 5.
+	self assert: ('abcdefg' skipAnySubstring: #('abc' 'def' 'g' 'abcd') startingAt: 1) equals: 8.
+]
+
 { #category : #'tests - instance creation' }
 StringTest >> testSpace [
 		
