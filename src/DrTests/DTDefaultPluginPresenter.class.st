@@ -9,7 +9,6 @@ Class {
 		'resultLabel',
 		'plugin',
 		'drTests',
-		'results',
 		'lastResults',
 		'startButton'
 	],

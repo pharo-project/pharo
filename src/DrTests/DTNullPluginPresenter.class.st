@@ -1,9 +1,6 @@
 Class {
 	#name : #DTNullPluginPresenter,
 	#superclass : #SpPresenter,
-	#instVars : [
-		'drTest'
-	],
 	#category : #'DrTests-Spec'
 }
 
