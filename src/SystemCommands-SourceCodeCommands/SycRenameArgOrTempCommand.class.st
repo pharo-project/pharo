@@ -8,7 +8,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : #SycRenameArgOrTempCommand,
-	#superclass : #SycSourceCodeCommand,
+	#superclass : #SycSourceCodeRefactoringCommand,
 	#instVars : [
 		'newName'
 	],

@@ -3,7 +3,7 @@ I am a command to extract selected ast node into separate method
 "
 Class {
 	#name : #SycExtractMethodCommand,
-	#superclass : #SycSourceCodeCommand,
+	#superclass : #SycSourceCodeRefactoringCommand,
 	#traits : 'TRefactoringCommandSupport',
 	#classTraits : 'TRefactoringCommandSupport classTrait',
 	#instVars : [
@@ -41,11 +41,6 @@ SycExtractMethodCommand >> defaultMenuIconName [
 { #category : #accessing }
 SycExtractMethodCommand >> defaultMenuItemName [
 	^ 'Extract method'
-]
-
-{ #category : #testing }
-SycExtractMethodCommand >> isComplexRefactoring [
-	^ true
 ]
 
 { #category : #execution }
