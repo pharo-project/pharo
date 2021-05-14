@@ -40,6 +40,12 @@ KMKeyCombination class >> fromKeyboardEvent: evt [
 	^ modifier + evt key asKeyCombination
 ]
 
+{ #category : #testing }
+KMKeyCombination class >> isAbstract [ 
+
+	^ self == KMKeyCombination
+]
+
 { #category : #combining }
 KMKeyCombination >> , aShortcut [
 	^ KMKeyCombinationSequence first: self next: aShortcut asKeyCombination

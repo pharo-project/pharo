@@ -2,7 +2,6 @@ Class {
 	#name : #SpDemoMenuButtonPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'actionBar',
 		'text',
 		'menu',
 		'button'

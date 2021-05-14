@@ -46,7 +46,7 @@ RBTransformation class >> initializeRefactoringOptions [
 		put: [ :ref :imps | self error: #implementorToInline ];
 		
 		at: #methodName
-		put: [ :ref :methodName | self error: #methodName ];
+		put: [ :methodName | self error: #methodName ];
 		
 		at: #selfArgumentName
 		put: [ :ref | self error: #selfArgumentName ];

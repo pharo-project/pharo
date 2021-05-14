@@ -7,19 +7,19 @@ Class {
 { #category : #running }
 ClyPackageExtensionMethodsQueryTest >> createQuery [
 	^ ClyPackageExtensionMethodsQuery
-		of: ClyClass1FromP1 package
-		from: (ClyClassScope of: ClyClass1FromP1 in: environment)
+		of: ClyClass1FromP1Mock package
+		from: (ClyClassScope of: ClyClass1FromP1Mock in: environment)
 ]
 
 { #category : #tests }
 ClyPackageExtensionMethodsQueryTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope 
-		of: ClySubclassLOfClass0FromPExtendedByP1 >> #extensionMethodFromSubclassL
+		of: ClySubclassLOfClass0FromPExtendedByP1Mock >> #extensionMethodFromSubclassL
 		in: environment).
 	self deny: query checkEmptyResult.
 	
 	query scope: (ClyMethodScope
-		of: ClyClass9FromPExtendedByP5 >> #extensionMethodFromClass9 in: environment).
+		of: ClyClass9FromPExtendedByP5Mock >> #extensionMethodFromClass9 in: environment).
 	self assert: query checkEmptyResult
 ]
 
@@ -37,9 +37,9 @@ ClyPackageExtensionMethodsQueryTest >> testComparisonToSimilarQueryButWithDiffer
 ClyPackageExtensionMethodsQueryTest >> testFromThreeMethods [
 
 	self queryFromScope: ClyMethodScope ofAll: {
-		ClyClass1FromP1 >> #tag1Method1. Object >> #printString. 
-		ClySubclassLOfClass0FromPExtendedByP1 >> #extensionMethodFromSubclassL.
-		ClyClass9FromPExtendedByP5 >> #extensionMethodFromClass9}.
+		ClyClass1FromP1Mock >> #tag1Method1. Object >> #printString. 
+		ClySubclassLOfClass0FromPExtendedByP1Mock >> #extensionMethodFromSubclassL.
+		ClyClass9FromPExtendedByP5Mock >> #extensionMethodFromClass9}.
 	
 	self assert: foundSelectors equals: #(#extensionMethodFromSubclassL)
 ]

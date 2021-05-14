@@ -778,6 +778,17 @@ Context >> exceptionHandlerBlock [
 
 ]
 
+{ #category : #'private-exceptions' }
+Context >> exceptionsToCaptureWhenStepping [
+
+	| exceptionsToCapture exceptionsSet |
+	exceptionsToCapture := Exception allSubclasses select: [ :c | 
+		                       c captureIfSignalledWhenStepping ].
+	exceptionsSet := ExceptionSet new.
+	exceptionsToCapture do: [ :e | exceptionsSet add: e ].
+	^ exceptionsSet
+]
+
 { #category : #'system simulation' }
 Context >> failPrimitiveWith: maybePrimFailToken [
 	"The receiver is a freshly-created context on a primitive method.  Skip the callPrimitive:
@@ -1351,26 +1362,42 @@ Context >> printDebugOn: aStream [
 
 { #category : #printing }
 Context >> printDetails: stream [
+
 	"Put my class>>selector and instance variables and arguments and temporaries on the stream.  Protect against errors during printing."
 
 	| errorMessage string |
 	self printOn: stream.
 	stream cr.
-	stream tab; nextPutAll: 'Receiver: '.
+	stream
+		tab;
+		nextPutAll: 'Receiver: '.
 	errorMessage := '<<error during printing>>'.
-	stream nextPutAll: ([receiver printStringLimitedTo: 90] onErrorDo: [errorMessage]).
+	stream nextPutAll:
+		([ receiver printStringLimitedTo: 90 ] onErrorDo: [ errorMessage ]).
 
-	stream cr; tab; nextPutAll: 'Arguments and temporary variables: '; cr.
-	string := [(self tempsAndValuesLimitedTo: 80 indent: 2) 
-				padRightTo:1 with: $x] onErrorDo: [errorMessage].
-	stream nextPutAll: (string allButLast).
+	stream
+		cr;
+		tab;
+		nextPutAll: 'Arguments and temporary variables: ';
+		cr.
+	string := [ 
+	          (self tempsAndValuesLimitedTo: 80 indent: 2)
+		          padRightTo: 1
+		          with: $x ] onErrorDo: [ errorMessage ].
+	stream nextPutAll: string.
 
-	stream cr; tab; nextPutAll: 'Receiver''s instance variables: '; cr.
-	receiver class allInstVarNames isEmpty ifTrue: [ 
-		stream nextPutAll: ([receiver printStringLimitedTo: 90] onErrorDo: [ errorMessage ]).
-	] ifFalse: [
-		[receiver longPrintOn: stream limitedTo: 80 indent: 2] onErrorDo: [ stream nextPutAll: errorMessage ].
-	].
+	stream
+		cr;
+		tab;
+		nextPutAll: 'Receiver''s instance variables: ';
+		cr.
+	receiver class allInstVarNames isEmpty
+		ifTrue: [ 
+			stream nextPutAll:
+				([ receiver printStringLimitedTo: 90 ] onErrorDo: [ errorMessage ]) ]
+		ifFalse: [ 
+			[ receiver longPrintOn: stream limitedTo: 80 indent: 2 ] 
+				onErrorDo: [ stream nextPutAll: errorMessage ] ].
 	stream cr
 ]
 
@@ -1750,7 +1777,7 @@ Context >> runUntilErrorOrReturnFrom: aSender [
 	"Insert ensure and exception handler contexts under aSender"
 	error := nil.
 	context := aSender insertSender: (Context
-		contextOn: Error, Halt do: [:ex |
+		contextOn: self exceptionsToCaptureWhenStepping do: [:ex |
 			error ifNil: [
 				error := ex.
 				topContext := thisContext.
@@ -1893,8 +1920,6 @@ Context >> sender [
 { #category : #private }
 Context >> setNamedPrimitiveInformationFrom: fromMethod toMethod: toMethod [
 	"For named primitives, the first literal contains a special object that has information of the primitive. In this method we cope such information from one to another one."
-	"((StandardFileStream >> #primOpen:writable:) literalAt: 1) >>> #(#FilePlugin #primitiveFileOpen 0 0)"
-
 	| spec |	
 	spec := toMethod literalAt: 1.	
 	spec replaceFrom: 1 to: spec size with: (fromMethod literalAt: 1) startingAt: 1.

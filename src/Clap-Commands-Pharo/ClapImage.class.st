@@ -6,17 +6,13 @@ Class {
 
 { #category : #'command line - subcommands' }
 ClapImage class >> cleanupCommand [
+
 	^ (ClapCommand id: 'cleanup')
-		description: 'Clean caches & other temporary data from the image ';
-		add:
-			((ClapFlag id: 'aggressive')
-				description: 'Also delete resources, change sets, etc');
-		add:
-			((ClapFlag id: 'release')
-				description: 'Prepare for release (implies --aggressive)');
-		add:
-			((ClapFlag id: 'production')
-				description: 'Unload tests, examples, etc, for production (implies --release)')
+		  description: 'Clean caches & other temporary data from the image ';
+		  add: ((ClapFlag id: 'aggressive') description: 'Also delete resources, change sets, etc');
+		  add: ((ClapFlag id: 'release') description: 'Prepare for release (implies --aggressive)');
+		  add: ((ClapFlag id: 'production') description: 'Unload tests, examples, etc, for production (implies --release)');
+		  yourself
 ]
 
 { #category : #'command line' }
@@ -35,9 +31,11 @@ ClapImage class >> image [
 
 { #category : #'command line - subcommands' }
 ClapImage class >> saveCommand [
+
 	^ (ClapCommand id: #save)
-		description: 'Save the image/changes file under a new name';
-		add: (ClapFlag id: #rename);
-		add: (ClapFlag id: #backup);
-		add: (ClapPositional id: #NAME)
+		  description: 'Save the image/changes file under a new name';
+		  add: (ClapFlag id: #rename);
+		  add: (ClapFlag id: #backup);
+		  add: (ClapPositional id: #NAME);
+		  yourself
 ]

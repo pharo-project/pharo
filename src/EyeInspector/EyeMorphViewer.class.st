@@ -13,7 +13,7 @@ Class {
 { #category : #spec }
 EyeMorphViewer class >> inspectorSpec [
 	<spec>
-	^ SpPanedLayout newVertical
+	^ SpPanedLayout newTopToBottom
 		position: 70 percent;
 		add: #morphPresenter;
 		add: #text;

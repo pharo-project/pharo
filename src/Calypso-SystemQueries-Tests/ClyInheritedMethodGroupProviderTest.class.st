@@ -1,12 +1,12 @@
 Class {
 	#name : #ClyInheritedMethodGroupProviderTest,
-	#superclass : #ClyMethodGroupProviderTestCase,
+	#superclass : #ClyMethodGroupProviderTest,
 	#category : #'Calypso-SystemQueries-Tests-Domain'
 }
 
 { #category : #running }
 ClyInheritedMethodGroupProviderTest >> classSampleWhichHasGroup [
-	^ClyClass1FromP1 
+	^ClyClass1FromP1Mock 
 ]
 
 { #category : #running }

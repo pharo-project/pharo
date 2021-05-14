@@ -1,9 +1,6 @@
 Class {
 	#name : #SpFilteringListSelectableAdapterTest,
 	#superclass : #SpAbstractAdapterTest,
-	#instVars : [
-		'listWithFilter'
-	],
 	#category : #'Spec2-Backend-Tests'
 }
 

@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyMethodQueryTestCase,
-	#superclass : #ClyTypedQueryTestCase,
+	#superclass : #ClyTypedQueryTest,
 	#instVars : [
 		'foundSelectors'
 	],

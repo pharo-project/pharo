@@ -35,11 +35,8 @@ OCExtraBindingScope >> bindings: anObject [
 ]
 
 { #category : #lookup }
-OCExtraBindingScope >> lookupVar: name [
-	"reserved Variables are defined by the instance scope"
-	(ReservedVariable nameIsReserved: name) ifTrue: [ ^ outerScope lookupVar: name ].
-	
+OCExtraBindingScope >> lookupVar: name declare: aBoolean [
 	^(bindings bindingOf: name asSymbol)
 		ifNotNil: [ :var | var ]
-		ifNil: [ outerScope lookupVar: name ]
+		ifNil: [ outerScope lookupVar: name declare: aBoolean]
 ]

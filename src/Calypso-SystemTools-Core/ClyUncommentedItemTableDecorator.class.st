@@ -27,7 +27,7 @@ ClyUncommentedItemTableDecorator class >> decorateTableCell: anItemCellMorph of:
 ClyUncommentedItemTableDecorator class >> decorationStrategy [
 	<classAnnotation>
 	
-	^ClyTableDecorationStrategy for: ClyClass asCalypsoItemContext
+	^ClyTableDecorationStrategyAnnotation for: ClyClass asCalypsoItemContext
 ]
 
 { #category : #decoration }

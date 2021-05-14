@@ -33,14 +33,14 @@ ClyClassSideLinkTableDecorator class >> decorateTableCell: anItemCellMorph of: a
 ClyClassSideLinkTableDecorator class >> methodDecorationStrategy [
 	<classAnnotation>
 	
-	^ClyTableDecorationStrategy for: ClyFullBrowserMethodContext 
+	^ClyTableDecorationStrategyAnnotation for: ClyFullBrowserMethodContext 
 ]
 
 { #category : #decoration }
 ClyClassSideLinkTableDecorator class >> methodGroupDecorationStrategy [
 	<classAnnotation>
 	
-	^ClyTableDecorationStrategy for: ClyTaggedMethodGroup asCalypsoItemContext
+	^ClyTableDecorationStrategyAnnotation for: ClyTaggedMethodGroup asCalypsoItemContext
 ]
 
 { #category : #decoration }

@@ -10,3 +10,9 @@ Class {
 	],
 	#category : #'NewTools-Debugger-Breakpoints-Tools-Tests'
 }
+
+{ #category : #accessing }
+StDummyTestClassWithHalts >> var [
+	"the var is used for testing, this accessor us just here so that it has one user"
+	^var
+]

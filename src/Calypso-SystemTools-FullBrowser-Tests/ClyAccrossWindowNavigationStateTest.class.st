@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyAccrossWindowNavigationStateTest,
-	#superclass : #ClyNavigationHistoryTestCase,
+	#superclass : #ClyNavigationHistoryTest,
 	#category : #'Calypso-SystemTools-FullBrowser-Tests'
 }
 

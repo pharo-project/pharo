@@ -387,10 +387,16 @@ OSWindow >> setMouseCursor: cursorWithMask [
 
 { #category : #accessing }
 OSWindow >> setMouseCursor: cursor mask: mask [
+
+	self setMouseCursor: cursor mask: mask andScale: 1
+]
+
+{ #category : #accessing }
+OSWindow >> setMouseCursor: cursor mask: mask andScale: scale [
 	currentCursor == cursor ifTrue: [ ^ self ].
 	currentCursor := cursor.
 
-	self validHandle setMouseCursor: cursor mask: mask
+	self validHandle setMouseCursor: cursor mask: mask andScale: scale
 ]
 
 { #category : #visibility }

@@ -325,6 +325,7 @@ StDebuggerActionModel >> stepInto: aContext [
 	filterStack := false.
 	aContext stepIntoQuickMethod: true.
 	self session stepInto: aContext.
+	aContext stepIntoQuickMethod: false.
 	self updateTopContext.
 
 ]

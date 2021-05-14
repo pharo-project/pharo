@@ -609,9 +609,7 @@ SpPresenter >> initializeWindow: aWindowPresenter [
 	aWindowPresenter
 		title: self title;
 		initialExtent: self initialExtent;
-		windowIcon: self windowIcon;
-		askOkToClose: self askOkToClose;
-		aboutText: self aboutText
+		windowIcon: self windowIcon
 ]
 
 { #category : #'inspector-Extensions' }

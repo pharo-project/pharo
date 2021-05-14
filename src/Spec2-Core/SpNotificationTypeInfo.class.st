@@ -3,12 +3,11 @@ I'm a notification type information
 "
 Class {
 	#name : #SpNotificationTypeInfo,
-	#superclass : #SpNotificationType,
+	#superclass : #SpInfoNotificationType,
 	#category : #'Spec2-Core-Base'
 }
 
-{ #category : #dispatching }
-SpNotificationTypeInfo >> notify: aSpecNotification on: aNotificationAware [
-	
-	aNotificationAware notifyInfo: aSpecNotification
+{ #category : #testing }
+SpNotificationTypeInfo class >> isDeprecated [ 
+	^ true
 ]

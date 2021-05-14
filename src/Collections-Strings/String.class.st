@@ -2554,6 +2554,23 @@ String >> uncapitalized [
 ]
 
 { #category : #converting }
+String >> unescapeCharacter: aCharacter [
+	"Unescape an escaped string. Assume the string has all occurrences of aCharacter are escaped. That is, they are in pairs.
+	This method returns a copy of the string replacing all pairs of aCharacter by a single appearance of it."
+	
+	"('''''' unescapeCharacter: $') >>> ''''"
+	"('''' unescapeCharacter: $') >>> ''"
+	
+	| result stream |
+	result := WriteStream with: ''.
+	stream := ReadStream on: self.
+	[ stream atEnd ] whileFalse: 
+			[ result nextPutAll: (stream upTo: aCharacter).
+			  stream peek ifNotNil: [result nextPut: stream next]].
+	^result contents
+]
+
+{ #category : #converting }
 String >> withBlanksCondensed [
 	"Return a copy of the receiver with leading/trailing blanks (separators) removed
 	 and consecutive white spaces (separators) condensed to the first one."

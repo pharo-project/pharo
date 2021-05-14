@@ -37,8 +37,9 @@ StSpotterCandidateLinkPresenter >> initializePresenters [
 		yourself).
 		
 	self addStyle: 'stSpotterLink'.
-	iconPresenter image: self entry icon.
-	labelPresenter label: self entry label
+	self entry ifNotNil: [ 
+		iconPresenter image: self entry icon.
+		labelPresenter label: self entry label ]
 ]
 
 { #category : #'accessing model' }

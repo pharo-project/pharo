@@ -83,6 +83,16 @@ SpCodePresenterTest >> testFindClassFrom [
 ]
 
 { #category : #tests }
+SpCodePresenterTest >> testNilTestSelectedSelectorDoesNotBreakExecution [
+	"Code presenter has nil text for some reason"
+
+	| selector |
+	presenter text: nil.
+	selector := presenter selectedSelector.
+	self assert: selector isNil.
+]
+
+{ #category : #tests }
 SpCodePresenterTest >> testWhenSyntaxHighlightChangedDo [
 	| count result |
 	count := 0.

@@ -14,6 +14,15 @@ SycInlineMethodCommand class >> canBeExecutedInContext: aSourceCodeContext [
 	^aSourceCodeContext isMethodSelected not and: [ aSourceCodeContext isMessageSelected ]
 ]
 
+{ #category : #execution }
+SycInlineMethodCommand >> asRefactorings [
+
+	^ {RBInlineMethodRefactoring
+		  inline: sourceNode sourceInterval
+		  inMethod: method selector
+		  forClass: method origin}
+]
+
 { #category : #accessing }
 SycInlineMethodCommand >> defaultMenuIconName [ 
 	^ #smallRightFlushIcon
@@ -22,15 +31,4 @@ SycInlineMethodCommand >> defaultMenuIconName [
 { #category : #accessing }
 SycInlineMethodCommand >> defaultMenuItemName [
 	^ 'Inline method'
-]
-
-{ #category : #execution }
-SycInlineMethodCommand >> execute [
-	| refactoring |
-	refactoring := RBInlineMethodRefactoring	
-		inline: sourceNode sourceInterval
-		inMethod: method selector
-		forClass: method origin.
-	
-	self executeRefactoring: refactoring. 
 ]

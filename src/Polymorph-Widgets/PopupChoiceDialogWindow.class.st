@@ -181,7 +181,7 @@ PopupChoiceDialogWindow >> keyDown: anEvent [
 	(super keyDown: anEvent)
 		ifTrue: [ ^ true ].
 	
-	(anEvent key = KeyboardKey enter) 
+	(anEvent key = KeyboardKey enter or: [anEvent key = KeyboardKey keypadEnter]) 
 		ifTrue: [ ^self processEnter: anEvent ].
 	anEvent key = KeyboardKey backspace
 		ifTrue: [

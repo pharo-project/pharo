@@ -225,7 +225,9 @@ DialogWindow >> keyDown: evt [
 	"Check for return and escape keys."
 
 	super keyDown: evt.
-	(self defaultButton notNil and: [evt key = KeyboardKey enter]) ifTrue: [self returnPressed. ^true].
+	(self defaultButton notNil and: [evt key = KeyboardKey enter or: [evt key = KeyboardKey keypadEnter]]) 
+		ifTrue: [self returnPressed. ^true].
+	
 	evt key = KeyboardKey escape ifTrue: [self escapePressed. ^true].
 	^false
 ]

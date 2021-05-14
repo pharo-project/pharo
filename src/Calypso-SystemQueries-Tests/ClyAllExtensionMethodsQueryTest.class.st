@@ -12,11 +12,11 @@ ClyAllExtensionMethodsQueryTest >> createQuery [
 { #category : #tests }
 ClyAllExtensionMethodsQueryTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope
-		of: (ClySubclassLOfClass0FromPExtendedByP1>>#extensionMethodFromSubclassL)
+		of: (ClySubclassLOfClass0FromPExtendedByP1Mock>>#extensionMethodFromSubclassL)
 		in: environment).
 	self deny: query checkEmptyResult.
 	
-	query scope: (ClyMethodScope of: (ClyClass1FromP1 >> #tag1Method1) in: environment).
+	query scope: (ClyMethodScope of: (ClyClass1FromP1Mock >> #tag1Method1) in: environment).
 	self assert: query checkEmptyResult
 ]
 
@@ -24,8 +24,8 @@ ClyAllExtensionMethodsQueryTest >> testCheckIfEmpty [
 ClyAllExtensionMethodsQueryTest >> testFromThreeMethods [
 
 	self queryFromScope: ClyMethodScope ofAll: {
-		ClyClass1FromP1 >> #tag1Method1. Object >> #printString. 
-		ClySubclassLOfClass0FromPExtendedByP1 >> #extensionMethodFromSubclassL}.
+		ClyClass1FromP1Mock >> #tag1Method1. Object >> #printString. 
+		ClySubclassLOfClass0FromPExtendedByP1Mock >> #extensionMethodFromSubclassL}.
 	
 	self assert: foundSelectors equals: #(#extensionMethodFromSubclassL)
 ]

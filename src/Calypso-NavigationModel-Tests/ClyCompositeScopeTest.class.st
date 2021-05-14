@@ -1,14 +1,14 @@
 Class {
 	#name : #ClyCompositeScopeTest,
-	#superclass : #ClyScopeTestCase,
+	#superclass : #ClyScopeTest,
 	#category : #'Calypso-NavigationModel-Tests'
 }
 
 { #category : #running }
 ClyCompositeScopeTest >> createSampleScope [
 	| subscope subscope2 |
-	subscope := ClyScopeExample of: #basisObject in: environment.
-	subscope2 := ClyScopeExample2 of: #basisObject2 in: environment.
+	subscope := ClyExampleScope of: #basisObject in: environment.
+	subscope2 := ClyExample2Scope of: #basisObject2 in: environment.
 	^ ClyCompositeScope on: {subscope. subscope2}
 ]
 
@@ -16,9 +16,9 @@ ClyCompositeScopeTest >> createSampleScope [
 ClyCompositeScopeTest >> testAdoptQuery [
 	| query adoptedQuery |
 	scope := ClyCompositeScope on: {
-		ClyScopeExample of: Object in: environment.
-		ClyScopeExample2 of: Array in: environment}.
-	query := ClyQueryExampleReturningScopeBasis new.
+		ClyExampleScope of: Object in: environment.
+		ClyExample2Scope of: Array in: environment}.
+	query := ClyReturningScopeBasisExampleQuery new.
 	query extraParameter: #testParameter.
 	
 	adoptedQuery := scope adoptQuery: query.
@@ -37,10 +37,10 @@ ClyCompositeScopeTest >> testAdoptQuery [
 ClyCompositeScopeTest >> testAdoptQueryShouldKeepScopeName [
 	| query adoptedQuery |
 	scope := ClyCompositeScope on: {
-		ClyScopeExample of: Object in: environment.
-		ClyScopeExample2 of: Array in: environment}.
+		ClyExampleScope of: Object in: environment.
+		ClyExample2Scope of: Array in: environment}.
 	scope name: 'test scope'.
-	query := ClyQueryExampleReturningScopeBasis new.
+	query := ClyReturningScopeBasisExampleQuery new.
 	
 	adoptedQuery := scope adoptQuery: query.
 	
@@ -60,8 +60,8 @@ ClyCompositeScopeTest >> testBasedOnBasisObject [
 ClyCompositeScopeTest >> testBindToEnvironmentShouldBindSubscopes [
 	| subscopes |
 	scope := ClyCompositeScope on: {
-		ClyScopeExample of: Object. 
-		ClyScopeExample2 of: Array}.
+		ClyExampleScope of: Object. 
+		ClyExample2Scope of: Array}.
 
 	scope bindTo: environment.
 	
@@ -75,7 +75,7 @@ ClyCompositeScopeTest >> testComparisonWithCompositeScopeBasedOnDifferentQueries
 	| scope2 |
 	scope := self createSampleScope.
 	scope2 := self createSampleScope.
-	scope2 subscopes: {(ClyScopeExample2 of: #someBasis in: environment)}.
+	scope2 subscopes: {(ClyExample2Scope of: #someBasis in: environment)}.
 
 	self deny: scope equals: scope2
 ]
@@ -84,12 +84,12 @@ ClyCompositeScopeTest >> testComparisonWithCompositeScopeBasedOnDifferentQueries
 ClyCompositeScopeTest >> testConvertingToAnotherScopeClassShouldRemoveDuplications [
 	| convertedScope |
 	scope := ClyCompositeScope on: {
-		ClyScopeExample of: Object in: environment.
-		ClyScopeExample2 ofAll: {Object. Array} in: environment}.
+		ClyExampleScope of: Object in: environment.
+		ClyExample2Scope ofAll: {Object. Array} in: environment}.
 		
-	convertedScope := scope asScope: ClyScopeExample2.
+	convertedScope := scope asScope: ClyExample2Scope.
 	
-	self assert: convertedScope class equals: ClyScopeExample2.
+	self assert: convertedScope class equals: ClyExample2Scope.
 	self assert: convertedScope basisObjects size equals: 2.
 	self assert: convertedScope basisObjects asIdentitySet equals: {Object. Array} asSet.
 	self assert: convertedScope environment equals: environment
@@ -98,8 +98,8 @@ ClyCompositeScopeTest >> testConvertingToAnotherScopeClassShouldRemoveDuplicatio
 { #category : #tests }
 ClyCompositeScopeTest >> testCreationByComma [
 	| subscope1 subscope2 |
-	subscope1 := ClyScopeExample of: #basisObject1 in: environment.
-	subscope2 := ClyScopeExample2 of: #basisObject2 in: environment.
+	subscope1 := ClyExampleScope of: #basisObject1 in: environment.
+	subscope2 := ClyExample2Scope of: #basisObject2 in: environment.
 	
 	scope := subscope1 , subscope2.
 	
@@ -112,9 +112,9 @@ ClyCompositeScopeTest >> testCreationByComma [
 { #category : #tests }
 ClyCompositeScopeTest >> testCreationByCommaFromThreeSubscopes [
 	| subscope1 subscope2 subscope3 |
-	subscope1 := ClyScopeExample of: #basisObject1 in: environment.
-	subscope2 := ClyScopeExample2 of: #basisObject2 in: environment.
-	subscope3 := ClyScopeExample2 of: #basisObject3 in: environment.
+	subscope1 := ClyExampleScope of: #basisObject1 in: environment.
+	subscope2 := ClyExample2Scope of: #basisObject2 in: environment.
+	subscope3 := ClyExample2Scope of: #basisObject3 in: environment.
 	
 	scope := subscope1 , subscope2 , subscope3.
 	
@@ -131,7 +131,7 @@ ClyCompositeScopeTest >> testCreationByCommaFromThreeSubscopes [
 { #category : #tests }
 ClyCompositeScopeTest >> testCreationOnSingleSubscopeOfMultipleObjects [
 	| subscope |
-	subscope := ClyScopeExample ofAll: #(basisObject1 basisObject2) in: environment.
+	subscope := ClyExampleScope ofAll: #(basisObject1 basisObject2) in: environment.
 	
 	scope := ClyCompositeScope on: {subscope}.
 	
@@ -141,8 +141,8 @@ ClyCompositeScopeTest >> testCreationOnSingleSubscopeOfMultipleObjects [
 { #category : #tests }
 ClyCompositeScopeTest >> testCreationOnTwoDifferentSubscopesOfSameObject [
 	| subscope1 subscope2 |
-	subscope1 := ClyScopeExample ofAll: #(sameBasisObject basisObject1) in: environment.
-	subscope2 := ClyScopeExample2 ofAll: #(sameBasisObject basisObject2) in: environment.
+	subscope1 := ClyExampleScope ofAll: #(sameBasisObject basisObject1) in: environment.
+	subscope2 := ClyExample2Scope ofAll: #(sameBasisObject basisObject2) in: environment.
 	
 	scope := ClyCompositeScope on: {subscope1. subscope2}.
 	self
@@ -153,8 +153,8 @@ ClyCompositeScopeTest >> testCreationOnTwoDifferentSubscopesOfSameObject [
 { #category : #tests }
 ClyCompositeScopeTest >> testCreationOnTwoSimilarSubscopesOfSameObject [
 	| subscope1 subscope2 |
-	subscope1 := ClyScopeExample ofAll: #(sameBasisObject basisObject1) in: environment.
-	subscope2 := ClyScopeExample ofAll: #(sameBasisObject basisObject2) in: environment.
+	subscope1 := ClyExampleScope ofAll: #(sameBasisObject basisObject1) in: environment.
+	subscope2 := ClyExampleScope ofAll: #(sameBasisObject basisObject2) in: environment.
 	
 	scope := ClyCompositeScope on: {subscope1. subscope2}.
 	
@@ -166,8 +166,8 @@ ClyCompositeScopeTest >> testCreationOnTwoSimilarSubscopesOfSameObject [
 { #category : #tests }
 ClyCompositeScopeTest >> testCreationOnTwoSubscopesOfDifferentObjects [
 	| subscope1 subscope2 |
-	subscope1 := ClyScopeExample of: #basisObject1 in: environment.
-	subscope2 := ClyScopeExample of: #basisObject2 in: environment.
+	subscope1 := ClyExampleScope of: #basisObject1 in: environment.
+	subscope2 := ClyExampleScope of: #basisObject2 in: environment.
 	
 	scope := ClyCompositeScope on: {subscope1. subscope2}.
 	
@@ -195,8 +195,8 @@ ClyCompositeScopeTest >> testHasEnvironmentFromSubscopes [
 { #category : #tests }
 ClyCompositeScopeTest >> testIsBasedOnEmptyBasisWhenAllSubscopesHaveEmptyBasis [
 	| subscope1 subscope2 |
-	subscope1 := ClyScopeExample emptyIn: environment.
-	subscope2 := ClyScopeExample emptyIn: environment.
+	subscope1 := ClyExampleScope emptyIn: environment.
+	subscope2 := ClyExampleScope emptyIn: environment.
 	
 	scope := ClyCompositeScope on: {subscope1. subscope2}.
 	
@@ -206,7 +206,7 @@ ClyCompositeScopeTest >> testIsBasedOnEmptyBasisWhenAllSubscopesHaveEmptyBasis [
 { #category : #tests }
 ClyCompositeScopeTest >> testIsBasedOnMultipleBasisWhenSingleSubscopeIs [
 	| subscope |
-	subscope := ClyScopeExample ofAll: #(basisObject1 basisObject2) in: environment.
+	subscope := ClyExampleScope ofAll: #(basisObject1 basisObject2) in: environment.
 	
 	scope := ClyCompositeScope on: {subscope}.
 	
@@ -216,8 +216,8 @@ ClyCompositeScopeTest >> testIsBasedOnMultipleBasisWhenSingleSubscopeIs [
 { #category : #tests }
 ClyCompositeScopeTest >> testIsBasedOnMultipleBasisWhenTwoSubscopesAreBasedOnSingleButDifferentObject [
 	| subscope1 subscope2 |
-	subscope1 := ClyScopeExample of: #basisObject1 in: environment.
-	subscope2 := ClyScopeExample of: #basisObject2 in: environment.	
+	subscope1 := ClyExampleScope of: #basisObject1 in: environment.
+	subscope2 := ClyExampleScope of: #basisObject2 in: environment.	
 	scope := ClyCompositeScope on: {subscope1. subscope2}.
 	
 	self assert: scope isBasedOnMultipleBasis
@@ -226,7 +226,7 @@ ClyCompositeScopeTest >> testIsBasedOnMultipleBasisWhenTwoSubscopesAreBasedOnSin
 { #category : #tests }
 ClyCompositeScopeTest >> testIsBasedOnSingleBasisWhenSingleSubscopeIs [
 	| subscope |
-	subscope := ClyScopeExample of: #basisObject in: environment.
+	subscope := ClyExampleScope of: #basisObject in: environment.
 	scope := ClyCompositeScope on: {subscope}.
 	
 	self assert: scope isBasedOnSingleBasis
@@ -235,8 +235,8 @@ ClyCompositeScopeTest >> testIsBasedOnSingleBasisWhenSingleSubscopeIs [
 { #category : #tests }
 ClyCompositeScopeTest >> testIsBasedOnSingleBasisWhenTwoSubscopesAreBasedOnSameSingleObject [
 	| subscope1 subscope2 |
-	subscope1 := ClyScopeExample of: #basisObject in: environment.
-	subscope2 := ClyScopeExample2 of: #basisObject in: environment.
+	subscope1 := ClyExampleScope of: #basisObject in: environment.
+	subscope2 := ClyExample2Scope of: #basisObject in: environment.
 	scope := ClyCompositeScope on: {subscope1. subscope2}.
 	
 	self assert: scope isBasedOnSingleBasis
@@ -245,8 +245,8 @@ ClyCompositeScopeTest >> testIsBasedOnSingleBasisWhenTwoSubscopesAreBasedOnSameS
 { #category : #tests }
 ClyCompositeScopeTest >> testNotBasedOnMultipleBasisWhenAllSubscopesHaveEmptyBasis [
 	| subscope1 subscope2 |
-	subscope1 := ClyScopeExample emptyIn: environment.
-	subscope2 := ClyScopeExample emptyIn: environment.
+	subscope1 := ClyExampleScope emptyIn: environment.
+	subscope2 := ClyExampleScope emptyIn: environment.
 	scope := ClyCompositeScope on: {subscope1. subscope2}.
 
 	self deny: scope isBasedOnMultipleBasis
@@ -255,7 +255,7 @@ ClyCompositeScopeTest >> testNotBasedOnMultipleBasisWhenAllSubscopesHaveEmptyBas
 { #category : #tests }
 ClyCompositeScopeTest >> testNotBasedOnMultipleBasisWhenSingleSubscopeIsNot [
 	| subscope |
-	subscope := ClyScopeExample of: #basisObject in: environment.
+	subscope := ClyExampleScope of: #basisObject in: environment.
 	scope := ClyCompositeScope on: {subscope}.
 	
 	self deny: scope isBasedOnMultipleBasis
@@ -264,8 +264,8 @@ ClyCompositeScopeTest >> testNotBasedOnMultipleBasisWhenSingleSubscopeIsNot [
 { #category : #tests }
 ClyCompositeScopeTest >> testNotBasedOnMultipleBasisWhenTwoSubscopesAreBasedOnSameSingleObject [
 	| subscope1 subscope2 |
-	subscope1 := ClyScopeExample of: #basisObject in: environment.
-	subscope2 := ClyScopeExample2 of: #basisObject in: environment.
+	subscope1 := ClyExampleScope of: #basisObject in: environment.
+	subscope2 := ClyExample2Scope of: #basisObject in: environment.
 	scope := ClyCompositeScope on: {subscope1. subscope2}.
 	
 	self deny: scope isBasedOnMultipleBasis
@@ -274,8 +274,8 @@ ClyCompositeScopeTest >> testNotBasedOnMultipleBasisWhenTwoSubscopesAreBasedOnSa
 { #category : #tests }
 ClyCompositeScopeTest >> testNotBasedOnSingleBasisWhenAllSubscopesHaveEmptyBasis [
 	| subscope1 subscope2 |
-	subscope1 := ClyScopeExample emptyIn: environment.
-	subscope2 := ClyScopeExample emptyIn: environment.
+	subscope1 := ClyExampleScope emptyIn: environment.
+	subscope2 := ClyExampleScope emptyIn: environment.
 	scope := ClyCompositeScope on: {subscope1. subscope2}.
 	
 	self deny: scope isBasedOnSingleBasis
@@ -284,7 +284,7 @@ ClyCompositeScopeTest >> testNotBasedOnSingleBasisWhenAllSubscopesHaveEmptyBasis
 { #category : #tests }
 ClyCompositeScopeTest >> testNotBasedOnSingleBasisWhenSingleSubscopeIsNot [
 	| subscope |
-	subscope := ClyScopeExample ofAll: #(basisObject1 basisObject2) in: environment.
+	subscope := ClyExampleScope ofAll: #(basisObject1 basisObject2) in: environment.
 	scope := ClyCompositeScope on: {subscope}.
 	
 	self deny: scope isBasedOnSingleBasis
@@ -293,8 +293,8 @@ ClyCompositeScopeTest >> testNotBasedOnSingleBasisWhenSingleSubscopeIsNot [
 { #category : #tests }
 ClyCompositeScopeTest >> testNotBasedOnSingleBasisWhenTwoSubscopesAreBasedOnSingleButDifferentObject [
 	| subscope1 subscope2 |
-	subscope1 := ClyScopeExample of: #basisObject1 in: environment.
-	subscope2 := ClyScopeExample of: #basisObject2 in: environment.
+	subscope1 := ClyExampleScope of: #basisObject1 in: environment.
+	subscope2 := ClyExampleScope of: #basisObject2 in: environment.
 	scope := ClyCompositeScope on: {subscope1. subscope2}.
 
 	self deny: scope isBasedOnSingleBasis
@@ -304,7 +304,7 @@ ClyCompositeScopeTest >> testNotBasedOnSingleBasisWhenTwoSubscopesAreBasedOnSing
 ClyCompositeScopeTest >> testRepresentsClassOfScope [
 
 	scope := self createSampleScope.
-	self assert: (scope representsScope: ClyScopeExample).
+	self assert: (scope representsScope: ClyExampleScope).
 	self assert: (scope representsScope: ClyTypedScope).
 	
 	self deny: (scope representsScope: String). "Class of scope which are not the class of subscopes"

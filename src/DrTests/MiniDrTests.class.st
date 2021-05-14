@@ -12,8 +12,8 @@ Class {
 
 { #category : #specs }
 MiniDrTests class >> defaultSpec [
-	^ SpBoxLayout newVertical
-		add: (SpBoxLayout newHorizontal
+	^ SpBoxLayout newTopToBottom
+		add: (SpBoxLayout newLeftToRight
 				add: #switchButton;
 				yourself)
 		expand: false

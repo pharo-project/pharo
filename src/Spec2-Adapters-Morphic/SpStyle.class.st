@@ -90,7 +90,7 @@ SpStyle class >> defaultStyleSheetData [
 	],
 	.menuBar [ Geometry { #width: 150, #hResizing: true } ],
 	.actionButton [  
-		Geometry { #width: 60, #hResizing: false },
+		Geometry { #width: 70, #hResizing: false },
 		.showIcon [ Geometry { #width: 25 } ]
 	],
 	.toolbar [ 

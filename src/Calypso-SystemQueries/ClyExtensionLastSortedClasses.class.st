@@ -39,7 +39,7 @@ Class {
 
 { #category : #'instance creation' }
 ClyExtensionLastSortedClasses class >> hierarchical [
-	^self using: ClyHierarchicallySortedClasses new
+	^self using: ClyHierarchicallySortedClassesResult new
 ]
 
 { #category : #'instance creation' }

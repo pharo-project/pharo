@@ -44,8 +44,8 @@ SycMoveMethodsToPackageCommand >> defaultMenuItemName [
 SycMoveMethodsToPackageCommand >> execute [
 	
 	methods do: [ :each | 
-		self moveMethod: each toPackage: package]
-
+		self moveMethod: each toPackage: package.
+		each origin organization removeEmptyCategories ]
 ]
 
 { #category : #accessing }

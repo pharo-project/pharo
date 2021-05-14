@@ -14,5 +14,6 @@ FFIUnix64LibraryFinder >> knownPaths [
 	'/lib/x86_64-linux-gnu'
 	'/lib64'
 	'/usr/lib64'	
-	'/usr/lib')
+	'/usr/lib'
+	'/usr/local/lib')
 ]

@@ -18,5 +18,6 @@ StHaltOnCallCommand class >> defaultName [
 
 { #category : #executing }
 StHaltOnCallCommand >> execute [
-	^context haltInspectedObjectOnCallToSelectedMethod
+
+	^ context haltInspectedObjectOnCallToSelectedMethod
 ]

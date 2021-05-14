@@ -1,3 +1,6 @@
+"
+Open an inspector on current selected object. 
+"
 Class {
 	#name : #StInspectorInspectSelectedCommand,
 	#superclass : #StInspectorCommand,
@@ -21,6 +24,12 @@ StInspectorInspectSelectedCommand class >> defaultName [
 	<toolbarInspectCommand: 20>
 
 	^ 'Inspect'
+]
+
+{ #category : #documentation }
+StInspectorInspectSelectedCommand class >> documentContextRequiredSelectors [
+
+	^ super documentContextRequiredSelectors, #(selectedObject)
 ]
 
 { #category : #execution }

@@ -23,10 +23,10 @@ Class {
 
 { #category : #specs }
 EpLogNodeGraphPresenter class >> defaultSpec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #logNodesTable;
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 					add: #hiedraCheckBox;
 					add: #refreshButton;
 					add: #selectDirectoryButton;

@@ -1,14 +1,14 @@
 Class {
 	#name : #ClyFilterQueryTest,
-	#superclass : #ClyWrapQueryTestCase,
+	#superclass : #ClyWrapQueryTest,
 	#category : #'Calypso-NavigationModel-Tests'
 }
 
 { #category : #tests }
 ClyFilterQueryTest >> createQuery [
 	^ ClyFilterQuery
-		for: (ClyQueryExampleReturningScopeBasis
-				from: ClyScopeExample of: self class in: environment)
+		for: (ClyReturningScopeBasisExampleQuery
+				from: ClyExampleScope of: self class in: environment)
 		filter: (ClyItemNameFilter substringPattern: 'FilterQueryTest')
 ]
 
@@ -29,7 +29,7 @@ ClyFilterQueryTest >> testConvertingWithNewScopeBasisShouldKeepFilter [
 { #category : #tests }
 ClyFilterQueryTest >> testConvertingWithNewScopeShouldKeepFilter [
 	| newScope convertedQuery |
-	newScope := ClyScopeExample2 of: #someBasis in: environment.
+	newScope := ClyExample2Scope of: #someBasis in: environment.
 	
 	convertedQuery := query withScope: newScope.
 	
@@ -39,8 +39,8 @@ ClyFilterQueryTest >> testConvertingWithNewScopeShouldKeepFilter [
 { #category : #tests }
 ClyFilterQueryTest >> testExecution [
 	| scope mainQuery |
-	scope := ClyScopeExample ofAll: {self class superclass. self class} in: environment.
-	mainQuery := ClyQueryExampleReturningScopeBasis from: scope.
+	scope := ClyExampleScope ofAll: {self class superclass. self class} in: environment.
+	mainQuery := ClyReturningScopeBasisExampleQuery from: scope.
 	query subqueries: {mainQuery}.
 	
 	self executeQuery.
@@ -52,8 +52,8 @@ ClyFilterQueryTest >> testExecution [
 { #category : #tests }
 ClyFilterQueryTest >> testExecutionOverExistingQuery [
 	| scope mainQuery |
-	scope := ClyScopeExample ofAll: {self class superclass. self class} in: environment.
-	mainQuery := ClyQueryExampleReturningScopeBasis from: scope.
+	scope := ClyExampleScope ofAll: {self class superclass. self class} in: environment.
+	mainQuery := ClyReturningScopeBasisExampleQuery from: scope.
 	query := mainQuery filteredBy: query itemFilter.
 	
 	result := query execute.

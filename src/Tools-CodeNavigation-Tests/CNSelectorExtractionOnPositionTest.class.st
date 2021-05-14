@@ -102,6 +102,66 @@ CNSelectorExtractionOnPositionTest >> sourceCodeOf: aMethod [
 	ast := aMethod ast
 ]
 
+{ #category : #'tests - no selection - withOutMessage' }
+CNSelectorExtractionOnPositionTest >> testCaretAfterABlock [
+	| selector |
+	selector := '[]'.
+	sourceCode := selector.
+	ast := (RBParser parseFaultyExpression: selector).
+	self caretAfter: ast.
+	self assert: self selectedSelector equals: #noMethod
+]
+
+{ #category : #'tests - no selection - withOutMessage' }
+CNSelectorExtractionOnPositionTest >> testCaretAfterABlockWithArgument [
+	| selector |
+	selector := '[:even| ]'.
+	sourceCode := selector.
+	ast := (RBParser parseFaultyExpression: selector).
+	self caretAfter: ast.
+	self assert: self selectedSelector equals: #noMethod
+]
+
+{ #category : #'tests - no selection - withOutMessage' }
+CNSelectorExtractionOnPositionTest >> testCaretAfterADynamicArray [
+	| selector |
+	selector := '{}'.
+	sourceCode := selector.
+	ast := (RBParser parseFaultyExpression: selector).
+	self caretAfter: ast.
+	self assert: self selectedSelector equals: #noMethod
+]
+
+{ #category : #'tests - no selection - withOutMessage' }
+CNSelectorExtractionOnPositionTest >> testCaretAfterADynamicArrayWithAnElement [
+	| selector |
+	selector := '{even}'.
+	sourceCode := selector.
+	ast := (RBParser parseFaultyExpression: selector).
+	self caretAfter: ast.
+	self assert: self selectedSelector equals: #noMethod
+]
+
+{ #category : #'tests - no selection - withOutMessage' }
+CNSelectorExtractionOnPositionTest >> testCaretAfterALiteralArray [
+	| selector |
+	selector := '#()'.
+	sourceCode := selector.
+	ast := (RBParser parseFaultyExpression: selector).
+	self caretAfter: ast.
+	self assert: self selectedSelector equals: #noMethod
+]
+
+{ #category : #'tests - no selection - withOutMessage' }
+CNSelectorExtractionOnPositionTest >> testCaretAfterALiteralArrayWithAnElement [
+	| selector |
+	selector := '#(even)'.
+	sourceCode := selector.
+	ast := (RBParser parseFaultyExpression: selector).
+	self caretAfter: ast.
+	self assert: self selectedSelector equals: #noMethod
+]
+
 { #category : #'tests - no selection - blocks' }
 CNSelectorExtractionOnPositionTest >> testCaretAfterFirstMessageInBlock [
 
@@ -171,6 +231,17 @@ CNSelectorExtractionOnPositionTest >> testCaretAfterReturnShouldMatchChildCascad
 	
 	cascade := self returnNodeToTest value.
 	self assert: self selectedSelector equals: cascade messages first selector
+]
+
+{ #category : #'tests - no selection - variable' }
+CNSelectorExtractionOnPositionTest >> testCaretAfterVariableNode [
+
+	| selector |
+	selector := #even.
+	sourceCode := selector.
+	ast := (RBParser parseFaultyExpression: selector).
+	self caretAfter: ast.
+	self assert: self selectedSelector equals: selector
 ]
 
 { #category : #'tests - no selection - return' }
@@ -379,6 +450,27 @@ CNSelectorExtractionOnPositionTest >> testCaretInTheMiddleOfNestedMessageReceive
 	self caretInMiddleOf: self messageNodeToTest receiver.
 	
 	self assert: self selectedSelector equals: self messageNodeToTest receiver selector
+]
+
+{ #category : #'tests - no selection - withOutMessage' }
+CNSelectorExtractionOnPositionTest >> testCaretOnNonValidCode [
+	"Code has invalid code (no selectors at all)"
+
+	
+	sourceCode := 'anObjectdo : 2'.
+	ast := (RBParser parseFaultyExpression: sourceCode).
+	self caretAfter: ast.
+	self assert: self selectedSelector equals: #noMethod.
+]
+
+{ #category : #'tests - no selection - withOutMessage' }
+CNSelectorExtractionOnPositionTest >> testCaretWithEmptyString [
+	| selector |
+	selector := ''.
+	sourceCode := selector.
+	ast := (RBParser parseFaultyExpression: selector).
+	self caretAfter: ast.
+	self assert: self selectedSelector equals: nil
 ]
 
 { #category : #'tests - no selection - blocks' }

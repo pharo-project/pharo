@@ -17,11 +17,12 @@ Class {
 
 { #category : #specs }
 EpUnifiedBrowserPresenter class >> defaultSpec [
-	^ SpPanedLayout newHorizontal
-		position: 40 percent;
-		add: #logNodesPresenter;
-		add: #logPresenter;
-		yourself
+
+	^ SpPanedLayout newLeftToRight
+		  positionOfSlider: 40 percent;
+		  add: #logNodesPresenter;
+		  add: #logPresenter;
+		  yourself
 ]
 
 { #category : #'instance creation' }

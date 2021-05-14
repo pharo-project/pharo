@@ -31,7 +31,8 @@ Class {
 		'spinner',
 		'tip',
 		'queue',
-		'updating'
+		'updating',
+		'lastSelectedEntry'
 	],
 	#classVars : [
 		'History',
@@ -125,6 +126,20 @@ StSpotter class >> open [
 	self reset.
 	spotter := self new.
 	^ spotter openModalWithSpec
+]
+
+{ #category : #'instance creation' }
+StSpotter class >> openOn: aModel [
+
+	self reset.
+	spotter := self on: aModel.
+	^ spotter openModalWithSpec
+]
+
+{ #category : #'instance creation' }
+StSpotter class >> openOnOrigin: anObject [
+
+	^ self openOn: (StSpotterModel newOrigin: anObject)
 ]
 
 { #category : #settings }
@@ -311,17 +326,18 @@ StSpotter >> diveInProcessor: aProcessor [
 
 	self model schedule: [
 		self showSpinner.
+		self resetLastSelectedEntry.
 		self removeAllResults.
 		self model pushStepForProcessor: aProcessor.
 		resultList verticalAlignment desiredVisibleRow: 1.
-		searchText text: ''
-	]
+		searchText text: '' ]
 ]
 
 { #category : #'private actions' }
 StSpotter >> diveOut [
 
-	self removeAll.
+	self resetLastSelectedEntry.
+	self removeAllResults.
 	self model popStep.
 	self model lastSearchText ifNotNil: [ :aString | 
 		searchText text: aString.
@@ -395,7 +411,7 @@ StSpotter >> initialize [
 
 { #category : #initialization }
 StSpotter >> initializeDialogWindow: aDialogWindowPresenter [
-
+ 
 	aDialogWindowPresenter closeOnBackdropClick: true
 ]
 
@@ -451,7 +467,8 @@ StSpotter >> initializePresenters [
 			toAction: [ self transferFocusToResultList ];
 		bindKeyCombination: Character arrowUp asKeyCombination 
 			toAction: [ self transferFocusToResultListAtLast ].
-	resultList addStyle: 'stSpotterList'.
+	
+	resultList addStyle: 'stSpotterList'
 ]
 
 { #category : #initialization }
@@ -488,6 +505,20 @@ StSpotter >> isShowingTips [
 	^ self class isShowingTips
 ]
 
+{ #category : #'private processing' }
+StSpotter >> keepLastSelectedEntry [
+	"When starting a process (a new query), it may happen that I have already a selection on the 
+	 result list. Since my new query may be a refination (or expansion) of an existing search. 
+	 As an explication, if you search for the string 'Obje', what in fact happens in spotter is that 
+	 several search starts and resuls are produced before having time of cancelling it. 
+	 So, you may be browsing the result of the search 'Obj' to select 'Object', 
+	 then the results of the search 'Obje' start to arrive... we need to keep the entry selected to 
+	 ensure the selection of 'Object' will stay there when the new results arrive."
+
+	lastSelectedEntry := resultList selectedItem 
+		ifNotNil: [ :aPresenter | aPresenter model value ]
+]
+
 { #category : #'accessing model' }
 StSpotter >> model [
 
@@ -510,6 +541,23 @@ StSpotter >> newSpotterHeaderPresenter: aProcessor [
 		yourself
 ]
 
+{ #category : #'private updating' }
+StSpotter >> nextSelectablePresenter: selectedPresenter oldPresenters: oldPresenters newPresenters: newPresenters [
+	
+	(selectedPresenter notNil and: [ selectedPresenter model notNil ]) ifTrue: [ 	
+		newPresenters 
+			detect: [ :each | each model value = selectedPresenter model value ]
+			ifFound: [ :aPresenter | ^ aPresenter ] ].
+		
+	"not found, look for last selected"
+	lastSelectedEntry ifNotNil: [ 
+		newPresenters 
+			detect: [ :each | each model value = lastSelectedEntry ]
+			ifFound: [ :aPresenter | ^ aPresenter ] ].
+
+	^ nil
+]
+
 { #category : #actions }
 StSpotter >> openFinder [
 
@@ -526,8 +574,8 @@ StSpotter >> queuedUpdateResultList [
 
 	[  
 		[ queue isEmpty ] 
-		whileFalse: [  | aCandidateLink |
-			mutex critical: [ aCandidateLink := queue removeFirst ].
+		whileFalse: [ | aCandidateLink |
+			aCandidateLink := queue removeFirst.
 			categoryPresenter := aCandidateLink processor 
 			headerCategoryFor: aCandidateLink
 			on: self.
@@ -535,15 +583,21 @@ StSpotter >> queuedUpdateResultList [
 			(categoryPresenter includesLink: aCandidateLink) ifFalse: [ 
 				categoryPresenter addCandidate: aCandidateLink inSpotter: self ] ].
 	
+		categories ifEmpty: [ ^ self ].
 		presenters := (categories values 
 			sorted: [ :each | each order ] ascending)
 			flatCollect: [ :each | each withCandidates ]. 
 			
 		resultList disableActivationDuring: [ 
-			| index |
-			index := resultList selection selectedIndex.
-			resultList items: presenters.
-			resultList selectIndex: index ] 
+			| selectedPresenter |
+			
+			selectedPresenter := self 
+				nextSelectablePresenter: resultList selectedItem
+				oldPresenters: resultList presenters
+				newPresenters: presenters.
+			resultList presenters: presenters.
+			selectedPresenter 
+				ifNotNil: [ resultList selectItem: selectedPresenter ] ] 
 	]
 	ensure: [ 
 		updating := false ]
@@ -562,6 +616,12 @@ StSpotter >> removeAllResults [
 
 	resultList presenters: #().
 	self removeAll
+]
+
+{ #category : #'private processing' }
+StSpotter >> resetLastSelectedEntry [
+	
+	lastSelectedEntry := nil
 ]
 
 { #category : #'accessing model' }
@@ -592,6 +652,13 @@ StSpotter >> showSpinner [
 	self model schedule: [
 		self application defer: [ spinner show ]
 	]
+]
+
+{ #category : #processing }
+StSpotter >> startNewProcess [
+
+	self keepLastSelectedEntry.
+	self removeAll
 ]
 
 { #category : #private }
@@ -685,8 +752,7 @@ StSpotter >> updateResultList: aCandidateLink [
 	
 	self model schedule: [
 		self application defer: [ 
-			self queuedUpdateResultList ]
-	]
+			mutex critical: [  self queuedUpdateResultList ] ] ]
 ]
 
 { #category : #'private updating' }

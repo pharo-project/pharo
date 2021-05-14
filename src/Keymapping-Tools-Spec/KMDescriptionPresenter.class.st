@@ -14,7 +14,7 @@ Class {
 
 { #category : #specs }
 KMDescriptionPresenter class >> defaultSpec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #categoryList withConstraints: [ :c | c height: 25 ];
 		add: #shortcutList;
 		add: #actionBar withConstraints: [ :c | c height: 25 ];

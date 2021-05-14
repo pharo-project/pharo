@@ -6,7 +6,7 @@ Class {
 
 { #category : #running }
 ClyOverridingMethodsQueryTest >> createQuery [
-	^ClyOverridingMethodsQuery from: ClyClassScope of: ClyClassWhichInheritsAbstractClass in: environment
+	^ClyOverridingMethodsQuery from: ClyClassScope of: ClyClassWhichInheritsAbstractClassMock in: environment
 ]
 
 { #category : #running }
@@ -19,15 +19,15 @@ ClyOverridingMethodsQueryTest >> setUpEnvironment [
 { #category : #tests }
 ClyOverridingMethodsQueryTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope
-		of: (ClyClassWhichInheritsAbstractClass >> #abstractMethod1) in: environment).
+		of: (ClyClassWhichInheritsAbstractClassMock >> #abstractMethod1) in: environment).
 	self deny: query checkEmptyResult.
 	
 	query scope: (ClyMethodScope
-		of: (ClyClassWhichInheritsAbstractClass >> #overriddenMethod) in: environment).
+		of: (ClyClassWhichInheritsAbstractClassMock >> #overriddenMethod) in: environment).
 	self deny: query checkEmptyResult.
 	
 	query scope: (ClyMethodScope
-		of: (ClyClassWhichInheritsAbstractClass >> #notOverriddenMethod) in: environment).
+		of: (ClyClassWhichInheritsAbstractClassMock >> #notOverriddenMethod) in: environment).
 	self assert: query checkEmptyResult
 ]
 
@@ -35,9 +35,9 @@ ClyOverridingMethodsQueryTest >> testCheckIfEmpty [
 ClyOverridingMethodsQueryTest >> testFromThreeMethods [
 
 	self queryFromScope: ClyMethodScope ofAll: {
-		ClyClassWhichInheritsAbstractClass >> #abstractMethod1. 
-		ClyClassWhichInheritsAbstractClass >> #notOverriddenMethod.
-		ClyClassWhichInheritsAbstractClass >> #overriddenMethod}.
+		ClyClassWhichInheritsAbstractClassMock >> #abstractMethod1. 
+		ClyClassWhichInheritsAbstractClassMock >> #notOverriddenMethod.
+		ClyClassWhichInheritsAbstractClassMock >> #overriddenMethod}.
 	
 	self assert: foundSelectors equals: #(abstractMethod1 #overriddenMethod)
 ]
@@ -45,14 +45,14 @@ ClyOverridingMethodsQueryTest >> testFromThreeMethods [
 { #category : #tests }
 ClyOverridingMethodsQueryTest >> testIsAffectedByChangeOfOwnMethodWhichIsNotOverridden [
 	
-	self assert: (query isAffectedByChangedMethod: ClyClassWhichInheritsAbstractClass >> #notOverriddenMethod)
+	self assert: (query isAffectedByChangedMethod: ClyClassWhichInheritsAbstractClassMock >> #notOverriddenMethod)
 
 ]
 
 { #category : #tests }
 ClyOverridingMethodsQueryTest >> testIsAffectedByChangeOfSuperclassMethodWhichIsAlreadyImplemented [
 	
-	self assert: (query isAffectedByChangedMethod: ClyAbstractClassExample >> #overriddenMethod)
+	self assert: (query isAffectedByChangedMethod: ClyAbstractClassMock >> #overriddenMethod)
 
 ]
 
@@ -61,27 +61,27 @@ ClyOverridingMethodsQueryTest >> testIsAffectedByChangeOfSuperclassMethodWhichOv
 	"this case is important to be affected when override method was removed"
 	
 	query := ClyOverridingMethodsQuery 
-		from: ClyClassScope of: ClyClassWhichInheritsAbstractSubclass in: environment.
+		from: ClyClassScope of: ClyClassWhichInheritsAbstractSubclassMock in: environment.
 		
-	self assert: (query isAffectedByChangedMethod: ClyAbstractSubclassExample >> #abstractMethod1)
+	self assert: (query isAffectedByChangedMethod: ClyAbstractSubclassMock >> #abstractMethod1)
 
 ]
 
 { #category : #tests }
 ClyOverridingMethodsQueryTest >> testNotAffectedByChangeOfOverriddenMethodFromAnotherHierarchyWhenSameMethodExistsHereToo [
 	
-	self deny: (query isAffectedByChangedMethod: ClyAbstractSubclassExample >> #abstractMethod1)
+	self deny: (query isAffectedByChangedMethod: ClyAbstractSubclassMock >> #abstractMethod1)
 
 ]
 
 { #category : #tests }
 ClyOverridingMethodsQueryTest >> testNotSelectsNotOverrideMethod [
 
-	self deny: (query selectsMethod: ClyClassWhichInheritsAbstractClass>>#notOverriddenMethod)
+	self deny: (query selectsMethod: ClyClassWhichInheritsAbstractClassMock>>#notOverriddenMethod)
 ]
 
 { #category : #tests }
 ClyOverridingMethodsQueryTest >> testSelectsOverrideMethod [
 
-	self assert: (query selectsMethod: ClyClassWhichInheritsAbstractClass>>#overriddenMethod)
+	self assert: (query selectsMethod: ClyClassWhichInheritsAbstractClassMock>>#overriddenMethod)
 ]

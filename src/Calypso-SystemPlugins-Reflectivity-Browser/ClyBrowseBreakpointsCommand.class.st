@@ -44,5 +44,5 @@ ClyBrowseBreakpointsCommand >> description [
 { #category : #execution }
 ClyBrowseBreakpointsCommand >> execute [ 
 	
-	ClyQueryBrowser browseBreakpoints
+	ClyQueryBrowserMorph browseBreakpoints
 ]

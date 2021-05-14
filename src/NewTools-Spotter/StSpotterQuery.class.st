@@ -128,7 +128,7 @@ StSpotterQuery >> newStreamFor: candidates [
 StSpotterQuery >> process [
 	| stream context |
 
-	spotterPresenter removeAll.
+	spotterPresenter startNewProcess.
 
 	finished := false.
 	stream := self newStreamFor: candidatesList.

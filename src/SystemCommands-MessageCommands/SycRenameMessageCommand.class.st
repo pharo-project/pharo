@@ -16,15 +16,26 @@ Class {
 	#category : #'SystemCommands-MessageCommands'
 }
 
+{ #category : #requesting }
+SycRenameMessageCommand >> canAddArgs [ 
+	^false
+]
+
+{ #category : #requesting }
+SycRenameMessageCommand >> canRemoveArgs [ 
+	^ false
+]
+
 { #category : #execution }
 SycRenameMessageCommand >> createRefactoring [
 
-	^ RBRenameMethodRefactoring
+	^ (RBRenameMethodRefactoring
 		model: model
 		renameMethod: originalMessage selector 
 		in: (SycMessageOriginHack of: originalMessage) "look at SycMessageOriginHack comment"
 		to: newSignature selector 
-		permutation: (originalMessage computeArgumentPermutationsFor: newSignature) 
+		permutation: newSignature permutation)
+		renameMap: newSignature renameMap
 ]
 
 { #category : #accessing }
@@ -52,7 +63,7 @@ SycRenameMessageCommand >> newSignature: anObject [
 SycRenameMessageCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
-	newSignature := originalMessage requestNewSignature.
+	newSignature := self requestNewMessageIn: aToolContext
 	
 
 ]

@@ -17,7 +17,7 @@ Class {
 ClyGroupItemTableDecorator class >> classGroupDecorationStrategy [
 	<classAnnotation>
 	
-	^ClyTableDecorationStrategy for: ClyClassGroup asCalypsoItemContext
+	^ClyTableDecorationStrategyAnnotation for: ClyClassGroup asCalypsoItemContext
 ]
 
 { #category : #decoration }
@@ -36,5 +36,5 @@ ClyGroupItemTableDecorator class >> decorateTableCell: anItemCellMorph of: group
 ClyGroupItemTableDecorator class >> methodGroupDecorationStrategy [
 	<classAnnotation>
 	
-	^ClyTableDecorationStrategy for: ClyMethodGroup asCalypsoItemContext
+	^ClyTableDecorationStrategyAnnotation for: ClyMethodGroup asCalypsoItemContext
 ]

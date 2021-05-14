@@ -11,13 +11,24 @@ Class {
 { #category : #preconditions }
 RBRealizeClassRefactoring >> preconditions [
 	^ RBCondition
-		withBlock: [
+		withBlock: [ 
 			(self theClass withAllSubclasses
 				detect: [ :each | 
 					(each whichSelectorsReferToSymbol: #subclassResponsibility) notEmpty 
 						or: [ (each classSide whichSelectorsReferToSymbol: #subclassResponsibility) notEmpty ] ]
-				ifNone: [ nil ]) isNil ]
-		errorString: self theClass printString , ' is abstract or has abstract subclasses.'
+				ifNone: [ nil ]) ifNotNil: 
+				[ self refactoringWarning: 
+				self theClass printString ,
+					' is abstract or has abstract subclasses. Do you want to proceed?']. true ]
+]
+
+{ #category : #printing }
+RBRealizeClassRefactoring >> storeOn: aStream [ 
+	aStream nextPut: $(.
+	self class storeOn: aStream.
+	aStream nextPutAll: ' className: '.
+	className storeOn: aStream.
+	aStream nextPut: $)
 ]
 
 { #category : #accessing }
