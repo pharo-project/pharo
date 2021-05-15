@@ -20,5 +20,5 @@ DTResultBrowseCommand >> canBeExecuted [
 
 { #category : #hooks }
 DTResultBrowseCommand >> execute [
-	self drTest browseSelectedResult
+	self context browseSelectedResult
 ]

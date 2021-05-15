@@ -1,5 +1,6 @@
 "
-Notify when executing an analysis.
+I am an announcement to force the UI to refresh the status bar.
+This is useful when the results are handled in a asynchronous way
 "
 Class {
 	#name : #DTStatusUpdate,

@@ -16,5 +16,5 @@ DTPackagesSelectAllCommand class >> defaultName [
 { #category : #hooks }
 DTPackagesSelectAllCommand >> execute [
 
-	self drTest selectAllInPackageList
+	self context selectAllInPackageList
 ]

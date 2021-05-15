@@ -23,5 +23,5 @@ DTBrowseSelectedItemCommand >> canBeExecuted [
 { #category : #executing }
 DTBrowseSelectedItemCommand >> execute [
 
-	self drTest browseSelectedItem
+	self context browseSelectedItem
 ]

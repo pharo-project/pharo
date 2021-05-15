@@ -7,7 +7,6 @@ Class {
 	#instVars : [
 		'pluginResult',
 		'testsConfiguration',
-		'startButton',
 		'currentPlugin',
 		'switchButton'
 	],
@@ -32,7 +31,23 @@ AbstractDrTestsPresenter >> currentPlugin: anObject [
 
 	currentPlugin ifNotNil: [ currentPlugin unconfigureUI: self ].
 	currentPlugin := anObject.
-	currentPlugin configureUI: self
+	
+	currentPlugin announcer
+		when: DTStatusUpdate
+		send: #handlePluginStatusUpdate:
+		to: self.
+
+	currentPlugin announcer
+		when: DTUpdateResults
+		send: #handlePluginResultUpdate:
+		to: self.
+
+]
+
+{ #category : #events }
+AbstractDrTestsPresenter >> handlePluginResultUpdate: resultsAnnouncement [ 
+
+	self updateWithPluginResult: resultsAnnouncement results
 ]
 
 { #category : #'announcement handling' }
@@ -44,7 +59,6 @@ AbstractDrTestsPresenter >> handlePluginStatusUpdate: aDTStatusUpdate [
 { #category : #'private - initialization' }
 AbstractDrTestsPresenter >> initializeButtons [
 
-	startButton := self newButton.
 	switchButton := self newButton.
 	switchButton
 		icon: (self iconNamed: #smallRemoteOpen)
@@ -53,12 +67,11 @@ AbstractDrTestsPresenter >> initializeButtons [
 { #category : #initialization }
 AbstractDrTestsPresenter >> initializePresenter [
 
-	self startButton action: [ self runPlugin ].
 	self switchButton action: [ self switchUI ]
 ]
 
 { #category : #initialization }
-AbstractDrTestsPresenter >> initializeWidgets [
+AbstractDrTestsPresenter >> initializePresenters [
 
 	self initializeButtons
 ]
@@ -104,30 +117,6 @@ AbstractDrTestsPresenter >> runPluginFor: aTestsConfiguration [
 			updateStatus: 'Tests started.';
 			updateWithResults: (self currentPlugin runForConfiguration: aTestsConfiguration);
 			updateStatus: 'Tests finished.' ] ensure: [ self unlock ]
-]
-
-{ #category : #'accessing - subwidgets' }
-AbstractDrTestsPresenter >> startButton [
-
-	^ startButton
-]
-
-{ #category : #'api - subwidgets configuration' }
-AbstractDrTestsPresenter >> startButtonAction: aBlock [
-
-	self startButton action: aBlock
-]
-
-{ #category : #'api - subwidgets configuration' }
-AbstractDrTestsPresenter >> startButtonHelp: aString [
-
-	self startButton help: aString
-]
-
-{ #category : #'api - subwidgets configuration' }
-AbstractDrTestsPresenter >> startButtonLabel: aString [
-
-	self startButton label: aString
 ]
 
 { #category : #'api - locking' }
@@ -188,6 +177,12 @@ AbstractDrTestsPresenter >> updateStatus: aString [
 AbstractDrTestsPresenter >> updateUI [
 
 	self withWindowDo: [ :window | window title: self title ]
+]
+
+{ #category : #updating }
+AbstractDrTestsPresenter >> updateWithPluginResult: aPluginResult [
+
+	aPluginResult ifNotNil: [ self updateWithResults: aPluginResult ]
 ]
 
 { #category : #updating }
