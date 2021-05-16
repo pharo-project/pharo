@@ -124,7 +124,7 @@ FLCompiledMethodSerializationTest >> testMethodAccessingAClassVariableInADoit [
 	materializedMethod := self resultOfSerializeAndMaterialize: aMethod.
 	
 	self assertCollection: materializedMethod literals hasSameElements: aMethod literals.
-	self assert: (materializedMethod literalAt: 2) identicalTo: (aMethod literalAt: 2)
+	self assert: (materializedMethod literalAt: 2) equals: (aMethod literalAt: 2)
 ]
 
 { #category : #tests }
