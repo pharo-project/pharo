@@ -74,8 +74,8 @@ BaselineOfFuel >> groupsForPharoCommon: spec [
 		self roassal: spec.
 
 		spec
-			group: 'default' with: #('Core' 'Fuel-Tools-Pharo' 'Tests');
-			group: 'CoreWithExtras' with: #('Core'  'Fuel-Metalevel' 'Fuel-ProgressUpdate');
+			group: 'default' with: #('Core' 'Fuel-Tools-Pharo' 'Tests' 'Fuel-Tools-Pharo-Tests');
+			group: 'CoreWithExtras' with: #('Core' 'Fuel-Metalevel' 'Fuel-ProgressUpdate');
 			group: 'DevelopmentGroup' with: #('CoreWithExtras' 'Fuel-Debug' 'Tests' 'Fuel-Tests-Metalevel') ]
 ]
 
