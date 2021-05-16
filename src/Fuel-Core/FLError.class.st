@@ -6,8 +6,3 @@ Class {
 	#superclass : #Error,
 	#category : #'Fuel-Core-Errors'
 }
-
-{ #category : #private }
-FLError >> isResumable [ 
-	^true
-]

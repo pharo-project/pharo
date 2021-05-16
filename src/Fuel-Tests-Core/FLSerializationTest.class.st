@@ -110,15 +110,13 @@ FLSerializationTest >> newClassInCategory: aCategory [
 { #category : #'class-factory' }
 FLSerializationTest >> newSubclassNamed: nameString of: aClass  instanceVariableNames: ivNamesString classVariableNames: classVarsString [
 	| class |
-
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
 		class := self class classInstaller make: [ :aBuilder | 
-		aBuilder 
-			name: nameString;
-			superclass: aClass;
-			slots: ivNamesString asSlotCollection;
-			sharedVariablesFromString: classVarsString ].	
-	].
+			aBuilder 
+				name: nameString;
+				superclass: aClass;
+				slots: ivNamesString asSlotCollection;
+				sharedVariablesFromString: classVarsString ] ].
 	self classFactory createdClasses add: class.
 	^ class
 ]
@@ -126,14 +124,6 @@ FLSerializationTest >> newSubclassNamed: nameString of: aClass  instanceVariable
 { #category : #'class-factory' }
 FLSerializationTest >> newSubclassOf: aClass  instanceVariableNames: ivNamesString classVariableNames: classVarsString [
 	^ self classFactory silentlyNewSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames:  classVarsString
-]
-
-{ #category : #'traits-factory' }
-FLSerializationTest >> newTraitNamed: traitName inCategory: aCategory [
-	^ self classFactory
-		newTraitNamed: traitName asSymbol
-		uses: Array new 
-		tag: aCategory asSymbol
 ]
 
 { #category : #'traits-factory' }
@@ -220,8 +210,13 @@ FLSerializationTest >> setUp [
 	self setUpSerializer.
 	self setUpMaterializer.
 	"You have several stream strategies available on 'stream-strategies' category."
-	self useMemoryStream.
+	self useFileReferenceStream.
 
+	"When rerunning tests from the test runner #initialize
+	will not be sent to the instance but the previous run will
+	have torn down the variable"
+	testingEnvironment ifNil: [ 
+		testingEnvironment := Smalltalk globals ]
 ]
 
 { #category : #running }
@@ -251,7 +246,6 @@ FLSerializationTest >> tearDown [
 		tearDownClassFactory;
 		tearDownGlobalVariables.
 	self streamFactory tearDown.
-	self tearDownInstanceVariables.
 	
 	super tearDown
 ]
@@ -263,19 +257,9 @@ FLSerializationTest >> tearDownClassFactory [
 
 { #category : #running }
 FLSerializationTest >> tearDownGlobalVariables [
-
-	testingEnvironment removeKey: #FLGlobalVariableForTesting ifAbsent: []
-]
-
-{ #category : #running }
-FLSerializationTest >> tearDownInstanceVariables [
-	self class withAllSuperclasses do: [ :class |
-		class = TestCase ifTrue: [ ^ self ].
-		
-		class instVarNames do: [ :varName |
-			self 
-				instVarNamed: varName
-				put: nil ] ]
+	testingEnvironment
+		removeKey: #FLGlobalVariableForTesting
+		ifAbsent: []
 ]
 
 { #category : #'traits-factory' }
@@ -284,21 +268,27 @@ FLSerializationTest >> traitNamePrefix [
 ]
 
 { #category : #'stream-strategies' }
-FLSerializationTest >> useGzipInMemoryStream [
+FLSerializationTest >> useBinaryFileStream [
 
-	streamFactory := FLGZipStrategy newWithTarget: FLByteArrayStreamStrategy new
+	streamFactory := FLBinaryFileStreamStrategy new
 ]
 
 { #category : #'stream-strategies' }
-FLSerializationTest >> useInMemorySerializationStream [ 
+FLSerializationTest >> useByteArrayStream [ 
 	"This is a special factory to test what we offer with FLSerializer class >> #serializeInMemory:  and  FLMaterializer class >> #materializeFromByteArray: "
 	streamFactory := FLByteArrayStreamStrategy new
 ]
 
 { #category : #'stream-strategies' }
-FLSerializationTest >> useMemoryStream [
+FLSerializationTest >> useFileReferenceStream [
 
-	streamFactory := FLMultiByteStreamStrategy new
+	streamFactory := FLFileReferenceStreamStrategy new
+]
+
+{ #category : #'stream-strategies' }
+FLSerializationTest >> useGzipInMemoryStream [
+
+	streamFactory := FLGZipStrategy newWithTarget: FLByteArrayStreamStrategy new
 ]
 
 { #category : #'class-factory' }

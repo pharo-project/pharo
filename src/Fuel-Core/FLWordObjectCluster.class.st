@@ -25,8 +25,7 @@ Class {
 FLWordObjectCluster >> materializeInstanceWith: aDecoder [
 
 	| inst wideSize |
-
-	wideSize :=  aDecoder nextEncodedPositiveInteger.
+	wideSize := aDecoder nextEncodedUint32.
 	inst := theClass basicNew: wideSize.	
 
 	aDecoder nextEncodedWordsInto: inst. 
@@ -39,9 +38,9 @@ FLWordObjectCluster >> materializeInstanceWith: aDecoder [
 
 { #category : #'serialize/materialize' }
 FLWordObjectCluster >> serializeInstance: aWordObject with: anEncoder [
-
-	anEncoder encodePositiveInteger: aWordObject basicSize.
-	anEncoder encodeWords: aWordObject
+	anEncoder
+		encodeUint32: aWordObject basicSize;
+		encodeWords: aWordObject
 
 
 ]

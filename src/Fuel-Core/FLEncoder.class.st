@@ -41,7 +41,7 @@ FLEncoder >> encodeBitmap: aBitmap [
 
 { #category : #encoding }
 FLEncoder >> encodeByte: aSmallInteger [ 
-	stream nextPut: aSmallInteger
+	self encodeUint8: aSmallInteger
 ]
 
 { #category : #encoding }
@@ -56,44 +56,48 @@ FLEncoder >> encodeClusterClass: aClusterClass [
 ]
 
 { #category : #encoding }
-FLEncoder >> encodeInt24: aSmallInteger [ 
-	"Write a signed integer to the next 4 bytes"
-	| pos |
-	pos := aSmallInteger < 0
-		ifTrue: [((0-aSmallInteger) bitXor: 16rFFFFFF) + 1]
-		ifFalse: [aSmallInteger].
-	1 to: 3 do: [:i | stream nextPut: (pos byteAt: 4-i)].
+FLEncoder >> encodeInt24: aSmallInteger [
+	"Write a signed integer to the next 4 bytes.
+	
+	Note: In Pharo SmallIntegers are signed 31-bit / 63-bit numbers stored
+			in memory as twos' complement. For storage we can pretend that
+			they are unsigned, as long as we decode them as signed.
+	Note: 	Integers of larger word size are truncated, which is necessary in case of negative
+			numbers (this may change the perceived value).
+			This may result in the creation of a LargeInteger in case of `SmallInteger maxVal`.
+			We assume that doesn't happen often and thus won'	impact performance much."
 
+	self encodeUint24: (aSmallInteger bitAnd: 16rFFFFFF)
 ]
 
 { #category : #encoding }
-FLEncoder >> encodeInt32: aSmallInteger [ 
-	"Write a signed integer to the next 4 bytes"
-	| pos |
-	pos := aSmallInteger < 0
-		ifTrue: [(0-aSmallInteger) bitInvert32 + 1]
-		ifFalse: [aSmallInteger].
-	1 to: 4 do: [:i | stream nextPut: (pos byteAt: 5-i)].
+FLEncoder >> encodeInt32: aSmallInteger [
+	"Write a signed integer to the next 4 bytes.
+	
+	Note: In Pharo SmallIntegers are signed 31-bit / 63-bit numbers stored
+			in memory as twos' complement. For storage we can pretend that
+			they are unsigned, as long as we decode them as signed.
+	Note: 	Integers of larger word size are truncated, which is necessary in case of negative
+			numbers (this may change the perceived value).
+			This may result in the creation of a LargeInteger in case of `SmallInteger maxVal`.
+			We assume that doesn't happen often and thus won'	impact performance much."
 
+	self encodeUint32: (aSmallInteger bitAnd: 16rFFFFFFFF)
 ]
 
 { #category : #encoding }
-FLEncoder >> encodeInt64: aSmallInteger [ 
+FLEncoder >> encodeInt64: aSmallInteger [
+	"Write a signed integer to the next 8 bytes.
+	
+	Note: In Pharo SmallIntegers are signed 31-bit / 63-bit numbers stored
+			in memory as twos' complement. For storage we can pretend that
+			they are unsigned, as long as we decode them as signed.
+	Note: 	Integers of larger word size are truncated, which is necessary in case of negative
+			numbers (this may change the perceived value).
+			This may result in the creation of a LargeInteger in case of `SmallInteger maxVal`.
+			We assume that doesn't happen often and thus won'	impact performance much."
 
-	"Write a signed integer to the next 8 bytes"
-	| pos |
-	pos := aSmallInteger < 0
-		ifTrue: [((0-aSmallInteger) bitXor: 16rFFFFFFFFFFFFFFFF) + 1]
-		ifFalse: [aSmallInteger].
-
-	1 to: 8 do: [:i | stream nextPut: (pos byteAt: 9-i)].
-
-]
-
-{ #category : #encoding }
-FLEncoder >> encodePositiveInteger: anInteger [
-	"Append to the receiver an Integer as the next 4 bytes."
-	1 to: 4 do: [:i | stream nextPut: (anInteger byteAt: 4+1-i)].
+	self encodeUint64: (aSmallInteger bitAnd: 16rFFFFFFFFFFFFFFFF)
 ]
 
 { #category : #encoding }
@@ -119,20 +123,20 @@ FLEncoder >> encodeReferenceToClusterObjectClass: aClass [
 FLEncoder >> encodeString: aString [
 	| length |
 	(length := aString size) < 192
-		ifTrue: [stream nextPut: length]
-		ifFalse: 
-			[stream nextPut: (length byteAt: 4)+192.
+		ifTrue: [ stream nextPut: length ]
+		ifFalse: [ stream nextPut: (length byteAt: 4) + 192.
 			stream nextPut: (length byteAt: 3).
 			stream nextPut: (length byteAt: 2).
-			stream nextPut: (length byteAt: 1)].
-	stream nextBytesPutAll: aString.
+			stream nextPut: (length byteAt: 1) ].
+	stream nextBytesPutAll: aString
 ]
 
 { #category : #encoding }
 FLEncoder >> encodeUint16: aSmallInteger [ 
-	"Append to the receiver an Integer as the next two bytes."
-	stream nextPut: (aSmallInteger bitShift: -8).
-	stream nextPut: (aSmallInteger bitAnd: 255).
+	"Append to the receiver an Integer as the next 2 bytes."
+	stream
+		nextPut: ((aSmallInteger bitShift: -8) bitAnd: 255);
+		nextPut: (aSmallInteger bitAnd: 255)
 ]
 
 { #category : #encoding }
@@ -150,7 +154,7 @@ FLEncoder >> encodeUint24: aSmallInteger [
 FLEncoder >> encodeUint32: aSmallInteger [ 
 	"Append to the receiver an Integer as the next 4 bytes."
 	stream		
-		nextPut: (aSmallInteger bitShift: -24);
+		nextPut: ((aSmallInteger bitShift: -24) bitAnd: 255);
 		nextPut: ((aSmallInteger bitShift: -16) bitAnd: 255);
 		nextPut: ((aSmallInteger bitShift: -8) bitAnd: 255);
 		nextPut: (aSmallInteger bitAnd: 255)
@@ -161,7 +165,7 @@ FLEncoder >> encodeUint32: aSmallInteger [
 FLEncoder >> encodeUint64: aSmallInteger [ 
 	"Append to the receiver an Integer as the next 8 bytes."
 	stream	
-		nextPut: (aSmallInteger bitShift: -56);
+		nextPut: ((aSmallInteger bitShift: -56) bitAnd: 255);
 		nextPut: ((aSmallInteger bitShift: -48) bitAnd: 255);
 		nextPut: ((aSmallInteger bitShift: -40) bitAnd: 255);
 		nextPut: ((aSmallInteger bitShift: -32) bitAnd: 255);
@@ -174,8 +178,8 @@ FLEncoder >> encodeUint64: aSmallInteger [
 
 { #category : #encoding }
 FLEncoder >> encodeUint8: aSmallInteger [ 
-	"Append to the receiver an Integer as the next two bytes."
-	stream nextPut: aSmallInteger 
+	"Append to the receiver an Integer as the next byte."
+	stream nextPut: (aSmallInteger bitAnd: 255)
 ]
 
 { #category : #encoding }
@@ -193,9 +197,9 @@ FLEncoder >> encodeWords: aWordsObject [
 
 { #category : #encoding }
 FLEncoder >> encodeYourself [
-
-	self encodePositiveInteger: objectCount.
-	self encodePositiveInteger: FLPlatform current isBigEndian asBit.
+	self
+		encodeUint32: objectCount;
+		encodeUint32: FLPlatform current isBigEndian asBit
 ]
 
 { #category : #encoding }
@@ -231,7 +235,6 @@ FLEncoder >> objectCount [
 
 { #category : #accessing }
 FLEncoder >> objectCount: aNumber [
-
 	objectCount := aNumber.
 	objectsIndexes := FLLargeIdentityDictionary new.
 	substitutionIndexes := FLLargeIdentityDictionary new.

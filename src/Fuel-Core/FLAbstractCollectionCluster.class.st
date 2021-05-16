@@ -23,7 +23,7 @@ FLAbstractCollectionCluster >> afterMaterializationStepWith: aDecoder [
 { #category : #'serialize/materialize' }
 FLAbstractCollectionCluster >> materializeInstanceWith: aDecoder [
 
-	^theClass new: aDecoder nextEncodedPositiveInteger
+	^theClass new: aDecoder nextEncodedUint32
 ]
 
 { #category : #'serialize/materialize' }
@@ -41,7 +41,7 @@ FLAbstractCollectionCluster >> materializeReferencesStepWith: aDecoder [
 
 { #category : #'serialize/materialize' }
 FLAbstractCollectionCluster >> serializeInstance: anObject with: anEncoder [
-	anEncoder encodePositiveInteger: anObject size
+	anEncoder encodeUint32: anObject size
 ]
 
 { #category : #'serialize/materialize' }
@@ -51,7 +51,7 @@ FLAbstractCollectionCluster >> serializeReferencesOf: anObject with: anEncoder [
 		at: anObject
 		ifAbsent: [ ^ self ].
 	
-	anEncoder encodePositiveInteger: refs first.
+	anEncoder encodeUint32: refs first.
 
 	refs
 		from: 2

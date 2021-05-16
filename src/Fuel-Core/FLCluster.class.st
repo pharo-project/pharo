@@ -97,6 +97,11 @@ FLCluster >> objects [
 ]
 
 { #category : #'serialize/materialize' }
+FLCluster >> prepareObjectsStep [
+	"Prepare for Fuel serialization."
+]
+
+{ #category : #'serialize/materialize' }
 FLCluster >> registerIndexesOn: anEncoder [
 	"Maps objects with indexes in the dictionary."
 ]

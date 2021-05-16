@@ -4,17 +4,14 @@ I clusterize CompiledMethods that will be obtained on materialization accessing 
 "
 Class {
 	#name : #FLGlobalCompiledMethodCluster,
-	#superclass : #FLGlobalCluster,
+	#superclass : #FLGlobalCompiledCodeCluster,
 	#category : #'Fuel-Core-Clusters'
 }
 
 { #category : #'serialize/materialize' }
 FLGlobalCompiledMethodCluster >> materializeInstanceWith: aDecoder [
-
 	| methodClass selector method serializedHash |
 	methodClass := self materializeGlobalClassFrom: aDecoder.
-	(aDecoder nextEncodedByte = 1) ifTrue: [
-		methodClass := methodClass classSide].
 	selector := aDecoder nextEncodedString asSymbol.
 	method := methodClass  
 		compiledMethodAt: selector
@@ -27,10 +24,10 @@ FLGlobalCompiledMethodCluster >> materializeInstanceWith: aDecoder [
 
 { #category : #'serialize/materialize' }
 FLGlobalCompiledMethodCluster >> serializeInstance: aCompiledMethod with: anEncoder [
-	| methodClass |
-	methodClass := aCompiledMethod methodClass.
-	self serializeGlobalClass: methodClass instanceSide on: anEncoder.
-	anEncoder encodeByte: (methodClass isClassSide ifTrue: [1] ifFalse: [0]).
-	anEncoder encodeString: aCompiledMethod selector.
-	anEncoder encodeUint16: aCompiledMethod bytecodesHash.
+	self
+		serializeGlobalClass: aCompiledMethod methodClass
+		on: anEncoder.
+	anEncoder
+		encodeString: aCompiledMethod selector;
+		encodeUint16: aCompiledMethod bytecodesHash
 ]

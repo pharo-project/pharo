@@ -85,19 +85,6 @@ HDTestReport >> done [
 ]
 
 { #category : #private }
-HDTestReport >> fuelFileNameForNextErrorDuring: aTestCase [
-		
-	| fileName errorsCount testName |
-	testName := aTestCase class name asString, '-', aTestCase selector.
-	fileName := testName, '.fuel'.
-	errorsCount := 1.
-	[ File exists: fileName ] whileTrue: [ 
-		errorsCount := errorsCount + 1.
-		fileName := testName , '_' , errorsCount asString , '.fuel' ].
-	^fileName 
-]
-
-{ #category : #private }
 HDTestReport >> generateTestName: aTestCase [
 	^ nodeName , (aTestCase class category copyReplaceAll: '-' with: '.')
 ]
@@ -286,16 +273,14 @@ HDTestReport >> serializeError: error of: aTestCase [
 	self class environment
 		at: #FuelOutStackDebugAction
 		ifPresent: [ :fuelOutStackDebugAction | 
-			| context testCaseMethodContext fileName |
+			| context testCaseMethodContext |
 			context := error signalerContext.
 			testCaseMethodContext := context findContextSuchThat: [ :ctx | 
 				                         ctx receiver == aTestCase and: [ 
 					                         ctx methodSelector == #performTest ] ].
 			context := context copyTo: testCaseMethodContext.
 
-			[ 
-			fileName := self fuelFileNameForNextErrorDuring: aTestCase.
-			fuelOutStackDebugAction serializeTestFailureContext: context sender ]
+			[ fuelOutStackDebugAction serializeStackFromContext: context sender ]
 				on: Error
 				do: [ :err | "simply continue..." ] ]
 ]
