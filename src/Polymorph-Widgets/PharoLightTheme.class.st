@@ -205,7 +205,7 @@ PharoLightTheme >> buttonDisabledBorderStyleFor: aButton [
 PharoLightTheme >> buttonDisabledFillStyleFor: aButton [
 	"Return the disabled button fillStyle for the given color."
 
-	^ SolidFillStyle color: Color transparent "(self darkBaseColorFor: aButton)"
+	^ SolidFillStyle color: Color transparent
 ]
 
 { #category : #'border-styles-buttons' }
