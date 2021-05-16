@@ -93,8 +93,7 @@ BaselineOfNewTools >> baseline: spec [
 				'NewTools-Sindarin-Commands'
 				'NewTools-Sindarin-Commands-Tests'
 				'NewTools-Debugger-Breakpoints-Tools'
-				'NewTools-Debugger-Tests'
-				'NewTools-Debugger-Fuel');
+				'NewTools-Debugger-Tests');
 			group: 'Spotter' with: #(
 				'NewTools-Morphic-Spotter' 
 				'NewTools-Spotter-Processors' 
