@@ -28,8 +28,7 @@ Class {
 		'command',
 		'selectedRefactorings',
 		'diffPresenter',
-		'existsChanges',
-		'selectedItems'
+		'existsChanges'
 	],
 	#category : #'SystemCommands-RefactoringSupport'
 }
