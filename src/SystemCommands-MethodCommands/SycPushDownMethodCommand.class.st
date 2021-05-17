@@ -69,5 +69,5 @@ SycPushDownMethodCommand >> selectMethods [
 			withItems: (class methods sort: [ :a :b | a asString < b asString ]) asOrderedCollection
 			selecting: selectedMethods. 
 	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
-	methods := selectedMethods.
+	methods := dialog presenter selectedItems.
 ]

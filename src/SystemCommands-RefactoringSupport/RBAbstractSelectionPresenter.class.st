@@ -39,7 +39,7 @@ RBAbstractSelectionPresenter class >> label: aString dropLabel: aString2 withIte
 
 { #category : #actions }
 RBAbstractSelectionPresenter >> accept [
-	acceptBlock value: self selectedItem value: selectedItems
+	acceptBlock value: self selectedItem value: table selectedItems
 ]
 
 { #category : #initialization }

@@ -10,7 +10,7 @@ RBSelectClassAndMethodsPresenter class >> example [
 	^ (self label: 'example ...' 
 		dropLabel: 'Pull up methods'
 		withItems: SycExtractMethodCommand methods
-		selecting: {}
+		selecting: OrderedCollection new
 		dropItems: SycExtractMethodCommand allSuperclasses
 		acceptBlock: [ :item :items |  ] )
 ]

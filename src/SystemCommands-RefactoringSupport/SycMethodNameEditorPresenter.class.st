@@ -297,6 +297,8 @@ SycMethodNameEditorPresenter >> initializeWidgets [
 	addButton label: '+'.
 	selectorInput text: methodName selector.
 	previewResult label: methodName methodName.
+	
+	self setFocus
 ]
 
 { #category : #accessing }
@@ -407,6 +409,16 @@ SycMethodNameEditorPresenter >> renameMethodAndClose: presenter [
 { #category : #'accessing ui' }
 SycMethodNameEditorPresenter >> selectorInput [
 	^ selectorInput
+]
+
+{ #category : #action }
+SycMethodNameEditorPresenter >> setFocus [
+	self focusOrder
+		add: selectorInput;
+		add: argumentsList;
+		add: upButton;
+		add: downButton;
+		add: addButton
 ]
 
 { #category : #'accessing model' }

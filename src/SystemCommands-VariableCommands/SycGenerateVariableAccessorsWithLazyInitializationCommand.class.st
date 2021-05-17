@@ -22,10 +22,11 @@ SycGenerateVariableAccessorsWithLazyInitializationCommand class >> fullBrowserMe
 
 { #category : #converting }
 SycGenerateVariableAccessorsWithLazyInitializationCommand >> asRefactorings [
+
 	^ { (RBCreateAccessorsWithLazyInitializationForVariableRefactoring 
 		variable: variable name
 		class: variable definingClass 
-		classVariable: variable definingClass isMeta
+		classVariable: variable isClassVariable
 		defaultValue: value) }
 ]
 

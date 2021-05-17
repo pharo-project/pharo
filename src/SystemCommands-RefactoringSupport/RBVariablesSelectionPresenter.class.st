@@ -11,8 +11,9 @@ Class {
 RBVariablesSelectionPresenter class >> example [
 	<script>
 	^ (self label: 'example ...' 
-		withItems: {(ClassVariable named: #a) . (ClassVariable named: #b) . (ClassVariable named: #z) } 
-		selecting: {(ClassVariable named: #z) . (ClassVariable named: #a) } )
+		withItems: 
+			{(ClassVariable named: #a) . (ClassVariable named: #b) . (ClassVariable named: #z) } asOrderedCollection 
+		selecting: {(ClassVariable named: #z) . (ClassVariable named: #a) } asOrderedCollection )
 ]
 
 { #category : #specs }
