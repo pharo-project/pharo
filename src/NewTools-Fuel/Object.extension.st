@@ -1,6 +1,6 @@
 Extension { #name : #Object }
 
-{ #category : #'*Fuel-Tools-Pharo' }
+{ #category : #'*NewTools-Fuel' }
 Object >> fuelOut [
 	| target |
 	target := FileLocator imageDirectory / self printString asFileName, 'fuel'.

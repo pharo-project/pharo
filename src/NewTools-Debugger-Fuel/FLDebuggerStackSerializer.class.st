@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'fileName'
 	],
-	#category : #'Fuel-Tools-Pharo-Debugger'
+	#category : #'NewTools-Debugger-Fuel'
 }
 
 { #category : #serializing }

@@ -4,7 +4,7 @@ Serializes a portion of the current stack trace using fuel.
 Class {
 	#name : #StFuelOutStackCommand,
 	#superclass : #StDebuggerCommand,
-	#category : #'Fuel-Tools-Pharo-Debugger'
+	#category : #'NewTools-Debugger-Fuel'
 }
 
 { #category : #accessing }

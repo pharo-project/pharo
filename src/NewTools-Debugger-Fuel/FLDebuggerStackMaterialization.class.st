@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'interruptedContext'
 	],
-	#category : #'Fuel-Tools-Pharo-Debugger'
+	#category : #'NewTools-Debugger-Fuel'
 }
 
 { #category : #handling }

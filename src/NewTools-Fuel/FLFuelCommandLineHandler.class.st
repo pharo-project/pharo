@@ -28,7 +28,7 @@ Class {
 	#instVars : [
 		'files'
 	],
-	#category : #'Fuel-Tools-Pharo-CommandLineHandler'
+	#category : #'NewTools-Fuel-CommandLineHandler'
 }
 
 { #category : #accessing }

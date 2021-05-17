@@ -1,7 +1,7 @@
 Class {
 	#name : #FLDebuggerStackSerializerTest,
 	#superclass : #TestCase,
-	#category : #'Fuel-Tools-Pharo-Tests'
+	#category : #'NewTools-Debugger-Fuel-Tests'
 }
 
 { #category : #tests }
