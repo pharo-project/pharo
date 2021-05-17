@@ -37,6 +37,11 @@ RBBrowserEnvironment class >> default [
 	^ RBBrowserEnvironment new
 ]
 
+{ #category : #accessing }
+RBBrowserEnvironment class >> defaultName [
+	^ 'Current image'
+]
+
 { #category : #environments }
 RBBrowserEnvironment >> & anEnvironment [ 
 	"If we or anEnvironment includes everything, then just include the other environment (optimization)"
@@ -237,9 +242,25 @@ RBBrowserEnvironment >> defaultLabel [
 	^ 'Smalltalk'
 ]
 
+{ #category : #accessing }
+RBBrowserEnvironment >> defaultName [
+	^ self class defaultName
+]
+
 { #category : #testing }
 RBBrowserEnvironment >> definesClass: aClass [
 	^ true
+]
+
+{ #category : #printing }
+RBBrowserEnvironment >> description [ 
+	^ self defaultName
+]
+
+{ #category : #'as yet unclassified' }
+RBBrowserEnvironment >> descriptionUntil: aNumber [
+	
+	^ self description contractTo: aNumber
 ]
 
 { #category : #private }
@@ -268,6 +289,11 @@ RBBrowserEnvironment >> forClass: aClass selectors: selectorCollection [
 		label: aClass name , '>>' 
 					, (selectorCollection detect: [:each | true] ifNone: ['']);
 		yourself
+]
+
+{ #category : #environments }
+RBBrowserEnvironment >> forClassHierarchy: aClass [
+	^ RBClassHierarchyEnvironment class: aClass.
 ]
 
 { #category : #environments }
@@ -635,6 +661,12 @@ RBBrowserEnvironment >> selectorsForClass: aClass do: aBlock [
 	aClass selectorsAndMethodsDo: 
 			[:each :meth | 
 			(self includesSelector: each in: aClass) ifTrue: [aBlock value: each]]
+]
+
+{ #category : #'as yet unclassified' }
+RBBrowserEnvironment >> shortDescription [
+	
+	^ self description contractTo: 30
 ]
 
 { #category : #printing }

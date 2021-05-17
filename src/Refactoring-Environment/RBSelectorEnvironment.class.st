@@ -13,6 +13,11 @@ Class {
 	#category : #'Refactoring-Environment'
 }
 
+{ #category : #accessing }
+RBSelectorEnvironment class >> defaultName [
+	^ 'Selectors'
+]
+
 { #category : #'instance creation' }
 RBSelectorEnvironment class >> implementorsMatching: aString [
 	^ self 

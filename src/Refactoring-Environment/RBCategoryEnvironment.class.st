@@ -29,6 +29,11 @@ RBCategoryEnvironment class >> category: aCategory [
 	^ self categories: { aCategory }
 ]
 
+{ #category : #accessing }
+RBCategoryEnvironment class >> defaultName [
+	^ 'Categories'
+]
+
 { #category : #'instance creation' }
 RBCategoryEnvironment class >> onEnvironment: anEnvironment categories: aCollection [
 	^(self onEnvironment: anEnvironment)
@@ -39,6 +44,11 @@ RBCategoryEnvironment class >> onEnvironment: anEnvironment categories: aCollect
 { #category : #adding }
 RBCategoryEnvironment >> addCategory: aSymbol [
 	categories add: aSymbol
+]
+
+{ #category : #accessing }
+RBCategoryEnvironment >> basisObjects [
+	^ self categories
 ]
 
 { #category : #initialization }

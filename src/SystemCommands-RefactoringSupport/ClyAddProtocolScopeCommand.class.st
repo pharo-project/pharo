@@ -1,19 +1,14 @@
+"
+I am a command to add protocol scope to listScopes
+"
 Class {
 	#name : #ClyAddProtocolScopeCommand,
 	#superclass : #ClyMethodGroupCommand,
 	#instVars : [
-		'class',
-		'browser'
+		'class'
 	],
 	#category : #'SystemCommands-RefactoringSupport-Scope'
 }
-
-{ #category : #activation }
-ClyAddProtocolScopeCommand class >> fullBrowserMethodGroupMenuActivation [
-	<classAnnotation>
-	
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyFullBrowserMethodGroupContext 
-]
 
 { #category : #execution }
 ClyAddProtocolScopeCommand >> defaultMenuIconName [ 
@@ -22,14 +17,14 @@ ClyAddProtocolScopeCommand >> defaultMenuIconName [
 
 { #category : #execution }
 ClyAddProtocolScopeCommand >> defaultMenuItemName [ 
-	^'Add to scope list'
+	^'Add protocols to scope list'
 ]
 
 { #category : #execution }
 ClyAddProtocolScopeCommand >> execute [
 	| scope protocols |
 	protocols := methodGroups collect: [:each | each tag].
-	scope := RBProtocolEnvironment class: class protocols: protocols.
+	scope := RBBrowserEnvironment new forClass: class protocols: protocols.
 	RefactoringSettings addScope: scope
 ]
 
@@ -37,5 +32,4 @@ ClyAddProtocolScopeCommand >> execute [
 ClyAddProtocolScopeCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	class := aToolContext lastSelectedClass.
-	browser := aToolContext browser.
 ]

@@ -22,6 +22,11 @@ RBProtocolEnvironment class >> class: aClass protocols: aCollection [
 		protocols: aCollection
 ]
 
+{ #category : #accessing }
+RBProtocolEnvironment class >> defaultName [
+	^ 'Protocols'
+]
+
 { #category : #'instance creation' }
 RBProtocolEnvironment class >> onEnvironment: anEnvironment class: aClass protocols: aCollection [
 	^(self onEnvironment: anEnvironment)
@@ -36,6 +41,11 @@ RBProtocolEnvironment >> acceptVisitor: aEnvVisitor [
 { #category : #initialization }
 RBProtocolEnvironment >> addProtocol: aSymbol [ 
 	protocols add: aSymbol
+]
+
+{ #category : #accessing }
+RBProtocolEnvironment >> basisObjects [
+	^ self protocols
 ]
 
 { #category : #initialization }

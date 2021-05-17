@@ -14,6 +14,11 @@ Class {
 	#category : #'Refactoring-Environment'
 }
 
+{ #category : #accessing }
+RBPragmaEnvironment class >> defaultName [
+	^ 'Pragmas'
+]
+
 { #category : #'instance creation' }
 RBPragmaEnvironment class >> keywords: aKeywordCollection [
 	^ self
@@ -31,6 +36,11 @@ RBPragmaEnvironment class >> onEnvironment: anEnvironment keywords: aKeywordColl
 { #category : #adding }
 RBPragmaEnvironment >> addKeyword: aSymbol [
 	keywords add: aSymbol
+]
+
+{ #category : #accessing }
+RBPragmaEnvironment >> basisObjects [
+	^ keywords 
 ]
 
 { #category : #initialization }

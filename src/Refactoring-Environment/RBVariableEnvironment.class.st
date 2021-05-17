@@ -20,6 +20,11 @@ Class {
 	#category : #'Refactoring-Environment'
 }
 
+{ #category : #accessing }
+RBVariableEnvironment class >> defaultName [
+	^ 'Variables'
+]
+
 { #category : #'instance creation' }
 RBVariableEnvironment class >> on: anEnvironment readersOfInstanceVariable: aString in: aClass [ 
 	| newEnv |

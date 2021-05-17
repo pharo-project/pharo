@@ -1,19 +1,11 @@
+"
+I am a command to add classes scope to listScopes
+"
 Class {
 	#name : #ClyAddClassesScopeCommand,
 	#superclass : #SycClassCommand,
-	#instVars : [
-		'classGroup',
-		'browser'
-	],
 	#category : #'SystemCommands-RefactoringSupport-Scope'
 }
-
-{ #category : #activation }
-ClyAddClassesScopeCommand class >> browserContextMenuActivation [
-	<classAnnotation>
-	
-	^CmdContextMenuActivation byRootGroupItemOrder: 1.5 for: ClyClass asCalypsoItemContext  
-]
 
 { #category : #accessing }
 ClyAddClassesScopeCommand >> defaultMenuIconName [ 
@@ -22,19 +14,18 @@ ClyAddClassesScopeCommand >> defaultMenuIconName [
 
 { #category : #accessing }
 ClyAddClassesScopeCommand >> defaultMenuItemName [ 
-	^'Add to scope list'
+	^'Add class(es) to scope list'
 ]
 
 { #category : #execution }
 ClyAddClassesScopeCommand >> execute [
 	| scope |
 	
-	scope := RBClassEnvironment classes: classes.
+	scope := RBBrowserEnvironment new forClasses: classes.
 	RefactoringSettings addScope: scope
 ]
 
 { #category : #execution }
 ClyAddClassesScopeCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	browser := aToolContext browser.
 ]

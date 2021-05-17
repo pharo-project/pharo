@@ -1,9 +1,9 @@
+"
+I'm a visitor to create the correct presenter to edit a scope
+"
 Class {
 	#name : #RBEnvironmentVisitor,
 	#superclass : #Object,
-	#classVars : [
-		'ScopeList'
-	],
 	#category : #'SystemCommands-RefactoringSupport-Scope'
 }
 

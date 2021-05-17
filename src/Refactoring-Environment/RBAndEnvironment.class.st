@@ -76,6 +76,11 @@ RBAndEnvironment >> includesSelector: aSelector in: aClass [
 		and: [self andedEnvironment includesSelector: aSelector in: aClass]
 ]
 
+{ #category : #printing }
+RBAndEnvironment >> operator [
+	^ ' & '
+]
+
 { #category : #accessing }
 RBAndEnvironment >> packages [
 	^ environment packages & self andedEnvironment packages
@@ -84,7 +89,7 @@ RBAndEnvironment >> packages [
 { #category : #printing }
 RBAndEnvironment >> printOn: aStream [ 
 	environment printOn: aStream.
-	aStream nextPutAll: ' & '.
+	aStream nextPutAll: self operator.
 	self andedEnvironment printOn: aStream.
 ]
 

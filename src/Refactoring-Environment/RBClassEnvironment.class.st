@@ -27,6 +27,11 @@ RBClassEnvironment class >> classes: aCollection [
 		classes: aCollection
 ]
 
+{ #category : #accessing }
+RBClassEnvironment class >> defaultName [
+	^ 'Classes'
+]
+
 { #category : #'instance creation' }
 RBClassEnvironment class >> onEnvironment: anEnvironment classes: aCollection [
 	^(self onEnvironment: anEnvironment)
@@ -62,6 +67,11 @@ RBClassEnvironment >> asSelectorEnvironment [
 		onEnvironment: self environment;
 		classSelectors: self classSelectorDictionary metaClassSelectors: self metaClassSelectorDictionary;
 		yourself.
+]
+
+{ #category : #accessing }
+RBClassEnvironment >> basisObjects [
+	^ self classes
 ]
 
 { #category : #'accessing-classes' }
@@ -182,6 +192,12 @@ RBClassEnvironment >> postCopy [
 	super postCopy.
 	classes := classes copy.
 	metaClasses := metaClasses copy
+]
+
+{ #category : #printing }
+RBClassEnvironment >> printBasisObject: aClass on: aStream [
+
+	^aStream nextPutAll: aClass
 ]
 
 { #category : #printing }

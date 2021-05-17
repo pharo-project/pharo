@@ -64,6 +64,11 @@ RBOrEnvironment >> includesSelector: aSelector in: aClass [
 ]
 
 { #category : #accessing }
+RBOrEnvironment >> operator [
+	^ ' | '
+]
+
+{ #category : #accessing }
 RBOrEnvironment >> orEnvironment [
 	^ otherEnvironment
 ]
@@ -104,7 +109,7 @@ RBOrEnvironment >> selectorsForClass: aClass do: aBlock [
 RBOrEnvironment >> storeOn: aStream [ 
 	aStream nextPut: $(.
 	environment storeOn: aStream.
-	aStream nextPutAll: ' | '.
+	aStream nextPutAll: self operator.
 	self orEnvironment storeOn: aStream.
 	aStream nextPut: $)
 ]

@@ -1,3 +1,6 @@
+"
+I am a command to add packages scope to listScopes
+"
 Class {
 	#name : #ClyAddPackagesScopeCommand,
 	#superclass : #ClyBrowserCommand,
@@ -6,13 +9,6 @@ Class {
 	],
 	#category : #'SystemCommands-RefactoringSupport-Scope'
 }
-
-{ #category : #activation }
-ClyAddPackagesScopeCommand class >> fullBrowserMenuActivation [
-	<classAnnotation>
-	
-	^CmdContextMenuActivation byRootGroupItemFor: ClyFullBrowserPackageContext 
-]
 
 { #category : #accessing }
 ClyAddPackagesScopeCommand >> defaultMenuIconName [ 
@@ -28,7 +24,7 @@ ClyAddPackagesScopeCommand >> defaultMenuItemName [
 ClyAddPackagesScopeCommand >> execute [
 	| scope |
 
-	scope := RBPackageEnvironment packages: packages.
+	scope := RBBrowserEnvironment new forPackages: packages.
 	RefactoringSettings addScope: scope
 ]
 

@@ -15,6 +15,11 @@ Class {
 	#category : #'Refactoring-Environment'
 }
 
+{ #category : #accessing }
+RBPackageEnvironment class >> defaultName [
+	^ 'Packages'
+]
+
 { #category : #'instance creation' }
 RBPackageEnvironment class >> onEnvironment: anEnvironment packageNames: aCollection [
 	^ self 
@@ -70,6 +75,11 @@ RBPackageEnvironment >> asSelectorEnvironment [
 	result := RBSelectorEnvironment onEnvironment: environment.
 	self classesAndSelectorsDo: [ :class :selector | result addClass: class selector: selector ].
 	^ result
+]
+
+{ #category : #accessing }
+RBPackageEnvironment >> basisObjects [
+	^ self packages
 ]
 
 { #category : #accessing }
@@ -153,6 +163,12 @@ RBPackageEnvironment >> packages: aCollection [
 RBPackageEnvironment >> postCopy [
 	super postCopy.
 	packages := packages copy
+]
+
+{ #category : #printing }
+RBPackageEnvironment >> printBasisObject: aClass on: aStream [
+
+	^aStream nextPutAll: aClass name
 ]
 
 { #category : #printing }
