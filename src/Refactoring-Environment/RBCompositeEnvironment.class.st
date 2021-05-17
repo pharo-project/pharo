@@ -29,7 +29,7 @@ RBCompositeEnvironment >> otherEnvironment [
 	^ otherEnvironment
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #description }
 RBCompositeEnvironment >> shortDescription [
 	^ self description 
 ]

@@ -252,12 +252,12 @@ RBBrowserEnvironment >> definesClass: aClass [
 	^ true
 ]
 
-{ #category : #printing }
+{ #category : #description }
 RBBrowserEnvironment >> description [ 
 	^ self defaultName
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #description }
 RBBrowserEnvironment >> descriptionUntil: aNumber [
 	
 	^ self description contractTo: aNumber
@@ -663,7 +663,7 @@ RBBrowserEnvironment >> selectorsForClass: aClass do: aBlock [
 			(self includesSelector: each in: aClass) ifTrue: [aBlock value: each]]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #description }
 RBBrowserEnvironment >> shortDescription [
 	
 	^ self description contractTo: 30

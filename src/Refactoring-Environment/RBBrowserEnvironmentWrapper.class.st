@@ -46,7 +46,7 @@ RBBrowserEnvironmentWrapper >> description [
 	^ super description, self descriptionBasis
 ]
 
-{ #category : #printing }
+{ #category : #description }
 RBBrowserEnvironmentWrapper >> descriptionBasis [ 
 	^ String streamContents: [ :s | | basis |
 		basis := self basisObjects.

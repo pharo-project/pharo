@@ -17,8 +17,18 @@ RBEnvironmentsPresenter class >> defaultSpec [
 		yourself
 ]
 
+{ #category : #'world menu' }
+RBEnvironmentsPresenter class >> menuCommandOn: aBuilder [
+    <worldMenu>
+    (aBuilder item: #'Scopes Editor')
+                action: [self open];
+                parent: #Refactoring;
+                help: 'Editor for custom refactoring environments (scopes)';
+                order: 10
+]
+
 { #category : #specs }
-RBEnvironmentsPresenter class >> example [
+RBEnvironmentsPresenter class >> open [
 	<script>
 	(self new) openWithSpec
 ]
@@ -53,7 +63,8 @@ RBEnvironmentsPresenter >> argumentsListMenu [
 				addItem: [ :anItem | 
 					anItem
 						name: 'Edit';
-						visibleIf: [ scopeList selectedItem label ~= 'current image' ];
+						visibleIf: [ (scopeList selectedItem isCompositeEnvironment not
+							and: [ scopeList selectedItem label ~= 'current image' ])];
 						action: [ self edit: scopeList selectedItem ] ];
 				addItem: [ :anItem | 
 					anItem
@@ -76,9 +87,11 @@ RBEnvironmentsPresenter >> initializePresenter [
 
 	scopeList addColumn: (SpStringTableColumn title: 'Environment' evaluated: #shortDescription);
 		roots: RefactoringSettings scopeList;
-		children: [ :aClass | RefactoringSettings scopeList select: [ :cls | aClass isCompositeEnvironment ifTrue: [ aClass environment == cls or: [ aClass otherEnvironment == cls ] ] ifFalse: [ false ] ] ];
-		yourself.
-	scopeList contextMenu: self argumentsListMenu.
+		children: [ :aClass | RefactoringSettings scopeList 
+			select: [ :cls | aClass isCompositeEnvironment ifTrue: 
+				[ aClass environment == cls or: [ aClass otherEnvironment == cls ] ] 
+			ifFalse: [ false ] ] ];
+		contextMenu: self argumentsListMenu.
 
 ]
 
