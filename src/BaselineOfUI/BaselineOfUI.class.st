@@ -33,7 +33,7 @@ BaselineOfUI >> baseline: spec [
 	repository := self packageRepositoryURL.
        
 	spec for: #common do: [
-		spec postLoadDoIt: #'postload:package:'.
+		spec postLoadDoIt: #postLoad.
 		
 		"Loading the debugger model and infrastructure before the UI"		
 		spec package: 'Debugger-Model'.
@@ -42,10 +42,6 @@ BaselineOfUI >> baseline: spec [
 		"Load morphic before Spec"
 		spec baseline: 'Morphic' with: [ spec repository: repository ].
 		spec baseline: 'Commander2' with: [ spec repository: repository ].
-		spec baseline: 'Spec2' with: [ 
-			spec 
-				repository: repository;
-				loads: #('Base' 'Tests') ].
 		spec baseline: 'Spec' with: [ spec repository: repository ].
 		
 		spec baseline: 'DrTests' with: [ spec repository: repository ].
@@ -71,8 +67,36 @@ BaselineOfUI >> baseline: spec [
 
 		spec package: 'HelpSystem-Core'.
 
-		spec package: 'EyeInspector'.
-	].
+		spec package: 'EyeInspector' ].
+]
+
+{ #category : #'external projects' }
+BaselineOfUI >> loadSpecBase [
+
+	Metacello new
+		baseline: 'Spec2';
+		repository: 'github://pharo-spec/Spec:master';
+		onConflictUseLoaded;
+		load: #('Base' 'CodeTests')	
+]
+
+{ #category : #actions }
+BaselineOfUI >> postLoad [
+
+	"Ignore pre and post loads if already executed"
+	Initialized = true ifTrue: [ ^ self ].
+
+	self loadSpecBase.
+
+	Smalltalk tools register: Workspace as: #browser.
+	Smalltalk tools register: Workspace as: #monticelloBrowser.
+	Smalltalk tools register: Workspace as: #fileList.
+	Smalltalk tools register: Workspace as: #changeList.	
+	
+	Smalltalk ui theme settings preferGradientFill: true.
+	PharoCommonTools initialize.
+
+	Initialized := true
 ]
 
 { #category : #actions }
