@@ -23,7 +23,8 @@ ClyAddProtocolScopeCommand >> defaultMenuItemName [
 { #category : #execution }
 ClyAddProtocolScopeCommand >> execute [
 	| scope protocols |
-	protocols := methodGroups collect: [:each | each tag].
+	protocols := methodGroups select: [:each | each isKindOf: ClyTaggedMethodGroup] 
+		thenCollect: [ :each | each tag].
 	scope := RBBrowserEnvironment new forClass: class protocols: protocols.
 	RefactoringSettings addScope: scope
 ]
