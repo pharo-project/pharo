@@ -80,8 +80,8 @@ BaselineOfNewTools >> baseline: spec [
 			
 			"Fuel"
 			package: 'NewTools-Debugger-Fuel';
-			package: 'NewTools-Debugger-Fuel-Tests' with: [ spec requires: #('NewTools-Debugger-Fuel');
-			package: 'NewTools-Fuel' ].
+			package: 'NewTools-Debugger-Fuel-Tests' with: [ spec requires: #('NewTools-Debugger-Fuel') ];
+			package: 'NewTools-Fuel'.
 
 		spec
 			group: 'Core' with: #('NewTools-Core' 'NewTools-Morphic');
