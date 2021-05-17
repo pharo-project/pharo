@@ -26,8 +26,8 @@ RefactoringSettings class >> invalidNames [
 { #category : #adding }
 RefactoringSettings class >> removeScopeNamed: key [ 
 	self scopeList removeAllSuchThat: 
-		[ :e | e label = key and: 
-			[ e label ~= 'current image'] ]
+		[ :e | e description = key and: 
+			[ e description ~= 'Current image'] ]
 ]
 
 { #category : #accesing }

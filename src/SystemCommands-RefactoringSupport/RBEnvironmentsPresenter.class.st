@@ -58,7 +58,13 @@ RBEnvironmentsPresenter >> argumentsListMenu [
 						action: [ self orWithScope: scopeList selectedItem ] ];
 				addItem: [ :anItem | 
 					anItem
+						name: 'NOT';
+						action: [ self notWithScope: scopeList selectedItem ] ];
+				addItem: [ :anItem | 
+					anItem
 						name: 'Inspect';
+						visibleIf: [ (scopeList selectedItem isCompositeEnvironment not
+							and: [ scopeList selectedItem label ~= 'current image' ])];
 						action: [ self inspect: scopeList selectedItem ] ];
 				addItem: [ :anItem | 
 					anItem
@@ -102,7 +108,22 @@ RBEnvironmentsPresenter >> initializeWidgets [
 
 { #category : #actions }
 RBEnvironmentsPresenter >> inspect: anItem [
-	anItem inspect
+
+	(anItem inspectIn: self) openWithSpec title: anItem shortDescription.
+]
+
+{ #category : #accessing }
+RBEnvironmentsPresenter >> notWithScope: anItem [ 
+	
+	[ | newScope |
+	newScope := anItem not.
+	(self confirm: 'Do you want store this result in the list?') 
+		ifTrue: [
+			RefactoringSettings addScope: newScope.
+			self updateList.
+		] ifFalse: [ newScope inspect ] ] 
+	on: Error 
+	do: [ :e | self inform: 'Something was wrong']
 ]
 
 { #category : #accessing }
@@ -127,7 +148,7 @@ RBEnvironmentsPresenter >> performOperation: aSymbol with: anItem [
 
 { #category : #actions }
 RBEnvironmentsPresenter >> remove: anItem [
-	RefactoringSettings removeScopeNamed: anItem label.
+	RefactoringSettings removeScopeNamed: anItem description.
 	self updateList 
 ]
 

@@ -363,6 +363,13 @@ RBBrowserEnvironment >> includesSelector: aSelector in: aClass [
 	^ true
 ]
 
+{ #category : #accessing }
+RBBrowserEnvironment >> inspectIn: spec [
+	^ (spec instantiate: SpFilteringListPresenter)
+		  items: self basisObjects asArray;
+		  yourself
+]
+
 { #category : #environments }
 RBBrowserEnvironment >> instVarReadersTo: instVarName in: aClass [ 
 	^RBVariableEnvironment 
