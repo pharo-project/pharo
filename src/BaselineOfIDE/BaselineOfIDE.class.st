@@ -315,5 +315,5 @@ BaselineOfIDE >> specCode: spec [
 		spec
 			repository: 'github://pharo-spec/Spec:master/src';
 			className: 'BaselineOfSpec2';
-			loads: #('Code' 'CodeTest') ]
+			loads: #('Code' 'CodeTests') ]
 ]
