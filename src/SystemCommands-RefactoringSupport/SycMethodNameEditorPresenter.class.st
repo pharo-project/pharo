@@ -292,6 +292,9 @@ SycMethodNameEditorPresenter >> initializeWidgets [
 	addButton := self newButton.
 	
 	selectorInput autoAccept: true.
+	selectorInput 
+		bindKeyCombination: Character cr asKeyCombination 
+		toAction: [ :p | self renameMethodAndClose: self owner ].
 	upButton label: 'Up'.
 	downButton label: 'Dn'.
 	addButton label: '+'.
