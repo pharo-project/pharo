@@ -42,7 +42,12 @@ BaselineOfUI >> baseline: spec [
 		"Load morphic before Spec"
 		spec baseline: 'Morphic' with: [ spec repository: repository ].
 		spec baseline: 'Commander2' with: [ spec repository: repository ].
+		
+		"old spec, to be removed"
 		spec baseline: 'Spec' with: [ spec repository: repository ].
+		
+		"new spec (base), using external configuration"
+		self specBase: spec.
 		
 		spec baseline: 'DrTests' with: [ spec repository: repository ].
 
@@ -86,8 +91,6 @@ BaselineOfUI >> postLoad [
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
 
-	self loadSpecBase.
-
 	Smalltalk tools register: Workspace as: #browser.
 	Smalltalk tools register: Workspace as: #monticelloBrowser.
 	Smalltalk tools register: Workspace as: #fileList.
@@ -99,19 +102,12 @@ BaselineOfUI >> postLoad [
 	Initialized := true
 ]
 
-{ #category : #actions }
-BaselineOfUI >> postload: loader package: packageSpec [
+{ #category : #'external projects' }
+BaselineOfUI >> specBase: spec [
 
-	"Ignore pre and post loads if already executed"
-	Initialized = true ifTrue: [ ^ self ].
-
-	Smalltalk tools register: Workspace as: #browser.
-	Smalltalk tools register: Workspace as: #monticelloBrowser.
-	Smalltalk tools register: Workspace as: #fileList.
-	Smalltalk tools register: Workspace as: #changeList.	
-	
-	Smalltalk ui theme settings preferGradientFill: true.
-	PharoCommonTools initialize.
-
-	Initialized := true
+	spec baseline: 'SpecBase' with: [
+		spec 
+			repository: 'github://pharo-spec/Spec:master';
+			className: 'BaselineOfSpec2';
+			loads: #('Base' 'CodeTests') ]
 ]
