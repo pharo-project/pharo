@@ -113,6 +113,19 @@ SycRefactoringPreviewPresenter >> changes: aCollection [
 	self generateChanges 
 ]
 
+{ #category : #initialization }
+SycRefactoringPreviewPresenter >> columns [
+
+	^ { (SpCompositeTableColumn new
+		   addColumn:
+			   ((SpCheckBoxTableColumn evaluated: [ :x | selectedRefactorings at: x ])
+				    onActivation: [ :class | self toggleSelectionOf: class ];
+				    onDeactivation: [ :class | self toggleSelectionOf: class ];
+				    width: 20);
+		   addColumn: (SpStringTableColumn evaluated: #name);
+		   yourself) }
+]
+
 { #category : #accessing }
 SycRefactoringPreviewPresenter >> command: aCommand [
 	command := aCommand
@@ -163,17 +176,12 @@ SycRefactoringPreviewPresenter >> initializePresenter [
 
 { #category : #initialization }
 SycRefactoringPreviewPresenter >> initializeWidgets [
-	table := self newTable.
+
 	diffPresenter := self newDiff.
 	scopeDropList := self newDropList.
-
-	table
-		addColumn:
-			((SpCheckBoxTableColumn evaluated: [ :x | selectedRefactorings at: x ])
-				onActivation: [ :class | self toggleSelectionOf: class ];
-				onDeactivation: [ :class | self toggleSelectionOf: class ];
-				width: 20);
-		addColumn: (SpStringTableColumn evaluated: #name);
+	table := self newTable.
+	
+	table columns: self columns;
 		hideColumnHeaders.
 
 	diffPresenter disable.

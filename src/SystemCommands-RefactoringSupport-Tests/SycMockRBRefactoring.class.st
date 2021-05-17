@@ -32,5 +32,4 @@ SycMockRBRefactoring >> primitiveExecute [
 { #category : #accessing }
 SycMockRBRefactoring >> whatToDisplayIn: aBrowser [ 
 	^ aBrowser scopeDropList selectedItem content
-	
 ]

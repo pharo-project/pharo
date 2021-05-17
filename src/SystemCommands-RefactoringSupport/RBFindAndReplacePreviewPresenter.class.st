@@ -58,13 +58,6 @@ RBFindAndReplacePreviewPresenter class >> method: aMethod [
 ]
 
 { #category : #specs }
-RBFindAndReplacePreviewPresenter class >> method: aMethod refactoring: aRef [
-	|temp|
-	temp := self new method: aMethod; refactoring: aRef.
-	^ temp openModalWithSpec
-]
-
-{ #category : #specs }
 RBFindAndReplacePreviewPresenter class >> title [
 	^ 'Find and replace'
 ]
