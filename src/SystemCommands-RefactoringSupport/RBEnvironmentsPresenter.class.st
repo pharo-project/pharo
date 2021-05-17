@@ -74,7 +74,10 @@ RBEnvironmentsPresenter >> edit: anItem [
 { #category : #accessing }
 RBEnvironmentsPresenter >> initializePresenter [
 
-	self updateList.
+	scopeList addColumn: (SpStringTableColumn title: 'Environment' evaluated: #shortDescription);
+		roots: RefactoringSettings scopeList;
+		children: [ :aClass | RefactoringSettings scopeList select: [ :cls | aClass isCompositeEnvironment ifTrue: [ aClass environment == cls or: [ aClass otherEnvironment == cls ] ] ifFalse: [ false ] ] ];
+		yourself.
 	scopeList contextMenu: self argumentsListMenu.
 
 ]
@@ -100,12 +103,8 @@ RBEnvironmentsPresenter >> performOperation: aSymbol with: anItem [
 	[ anEnvironment := self selectAnotherScope.
 	newScope := anItem perform: aSymbol with: anEnvironment.
 	(self confirm: 'Do you want store this result in the list?') 
-		ifTrue: [ |key|
-			key := UIManager default
-				request: 'Enter a keyword name for new scope'
-				initialAnswer: anItem label , ' ', aSymbol , ' ', anEnvironment label.
-			key isEmptyOrNil ifTrue: [ Error signal ].
-			RefactoringSettings addScope: newScope withKey: key.
+		ifTrue: [
+			RefactoringSettings addScope: newScope.
 			self updateList.
 		] ifFalse: [ newScope inspect ].
 	] 
@@ -121,18 +120,16 @@ RBEnvironmentsPresenter >> remove: anItem [
 
 { #category : #actions }
 RBEnvironmentsPresenter >> selectAnotherScope [ 
-	| anotherScope |
+	| anotherScope list |
+	list := RefactoringSettings scopeList.
 	anotherScope := UIManager default
-			chooseOrRequestFrom: RefactoringSettings scopeList
+			chooseFrom: (list collect: #shortDescription)
+			values: list
 			title: 'Select another scope (RBEnvironment)'.
 	^ anotherScope 
 ]
 
 { #category : #accessing }
 RBEnvironmentsPresenter >> updateList [ 
-	"scopeList items: RefactoringSettings scopeList"
-	scopeList "addColumn: (SpStringTableColumn title: 'Environment' evaluated: #asString);"
-		roots: RefactoringSettings scopeList;
-		children: [ :aClass | RefactoringSettings scopeList select: [ :cls | aClass isCompositeEnvironment ifTrue: [ aClass environment == cls or: [ aClass otherEnvironment == cls ] ] ifFalse: [ false ] ] ];
-		yourself.
+	scopeList roots: RefactoringSettings scopeList
 ]

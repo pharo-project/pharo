@@ -8,9 +8,8 @@ Class {
 }
 
 { #category : #adding }
-RefactoringSettings class >> addScope: aScope [ "withKey: key
-	aScope label: key.
-"	self scopeList add: aScope
+RefactoringSettings class >> addScope: aScope [ 
+	self scopeList add: aScope
 ]
 
 { #category : #adding }
