@@ -75,16 +75,6 @@ BaselineOfUI >> baseline: spec [
 		spec package: 'EyeInspector' ].
 ]
 
-{ #category : #'external projects' }
-BaselineOfUI >> loadSpecBase [
-
-	Metacello new
-		baseline: 'Spec2';
-		repository: 'github://pharo-spec/Spec:master';
-		onConflictUseLoaded;
-		load: #('Base' 'CodeTests')	
-]
-
 { #category : #actions }
 BaselineOfUI >> postLoad [
 
@@ -109,5 +99,5 @@ BaselineOfUI >> specBase: spec [
 		spec 
 			repository: 'github://pharo-spec/Spec:master/src';
 			className: 'BaselineOfSpec2';
-			loads: #('Base' 'CodeTests') ]
+			loads: #('Base' 'Tests') ]
 ]
