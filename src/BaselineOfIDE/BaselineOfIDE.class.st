@@ -187,7 +187,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'PharoGT' with: [ spec repository: repository ].
 		spec baseline: 'HeuristicCompletion' with: [ spec repository: repository ].
 		
-		self specCode: spec.
+		"self specCode: spec."
 		spec baseline: 'NewTools' with: [
 			spec 
 				repository: repository;
