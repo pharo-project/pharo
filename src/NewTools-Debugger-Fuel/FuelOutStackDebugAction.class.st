@@ -13,6 +13,14 @@ FuelOutStackDebugAction class >> actionType [
 	<contextMenuDebuggingAction>
 ]
 
+{ #category : #'gt-extensions' }
+FuelOutStackDebugAction class >> gtActionFor: aDebugger [
+	<gtStackDebuggingAction>
+	
+	^ (self forDebugger: aDebugger)
+			order: 30
+]
+
 { #category : #serialization }
 FuelOutStackDebugAction class >> serializeStackFromContext: aContext [
 	FLDebuggerStackSerializer serializeStackFromContext: aContext
