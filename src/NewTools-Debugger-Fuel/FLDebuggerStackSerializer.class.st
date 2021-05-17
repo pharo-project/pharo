@@ -53,8 +53,8 @@ FLDebuggerStackSerializer >> fileNameForContext: aContext [
 
 { #category : #private }
 FLDebuggerStackSerializer >> imageInformationString [
-	^ String streamContents: [ :stream |
-		stream	
+	^ String streamContents: [ :stringStream |
+		stringStream	
 			nextPutAll: 'Image: ';
 			nextPutAll:  SystemVersion current version asString;
 			nextPutAll: ' [';
@@ -83,8 +83,8 @@ FLDebuggerStackSerializer >> serializeStackFromContext: aContext toFileNamed: aF
 
 { #category : #private }
 FLDebuggerStackSerializer >> timestampString [
-	^ String streamContents: [ :stream |
-		stream
+	^ String streamContents: [ :stringStream |
+		stringStream
 			print: Date today;
 			space;
 			print: Time now ]
@@ -92,8 +92,8 @@ FLDebuggerStackSerializer >> timestampString [
 
 { #category : #private }
 FLDebuggerStackSerializer >> vmInformationString [
-	^ String streamContents: [ :stream |
-		stream
+	^ String streamContents: [ :stringStream |
+		stringStream
 			nextPutAll: 'VM: ';
 			nextPutAll: Smalltalk os name asString;
 			nextPutAll: ' - ';	
