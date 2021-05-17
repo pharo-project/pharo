@@ -54,11 +54,6 @@ BaselineOfUI >> baseline: spec [
 		
 		spec package: 'Debugger-Actions'.
 
-		spec baseline: 'Fuel' with: [
-			spec
-				repository: repository;
-				loads: 'Fuel-Tools-Pharo' ].
-
 		spec package: 'Fonts-Chooser'.
 
 		spec package: 'Transcript-Tool'.
