@@ -185,3 +185,13 @@ CompiledBlock >> sourceCode [
 CompiledBlock >> sourcePointer [
 	^self outerCode sourcePointer
 ]
+
+{ #category : #'debugger support' }
+CompiledBlock >> stepIntoQuickMethods [
+	^self method stepIntoQuickMethods
+]
+
+{ #category : #'debugger support' }
+CompiledBlock >> stepIntoQuickMethods: aBoolean [
+	^self method stepIntoQuickMethods: aBoolean
+]
