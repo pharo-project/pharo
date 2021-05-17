@@ -107,7 +107,7 @@ BaselineOfUI >> specBase: spec [
 
 	spec baseline: 'SpecBase' with: [
 		spec 
-			repository: 'github://pharo-spec/Spec:master';
+			repository: 'github://pharo-spec/Spec:master/src';
 			className: 'BaselineOfSpec2';
 			loads: #('Base' 'CodeTests') ]
 ]
