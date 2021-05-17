@@ -138,7 +138,6 @@ BaselineOfIDE >> baseline: spec [
 				repository: repository;
 				loads: #( 'tests' ) ].
 				
-				
 		spec package: 'Network-Tests'.
 		spec package: 'Network-Mail-Tests'.
 		spec package: 'Gofer-Tests'.
@@ -189,7 +188,6 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'HeuristicCompletion' with: [ spec repository: repository ].
 		
 		self specCode: spec.
-
 		spec baseline: 'NewTools' with: [
 			spec 
 				repository: repository;
@@ -201,9 +199,9 @@ BaselineOfIDE >> baseline: spec [
 					'ChangeSorter'
 					'Methods'
 					'Spotter') ].
-			
+					
 		spec baseline: 'Microdown' with: [ spec 
-				repository: self packageRepositoryURL ].
+			repository: self packageRepositoryURL ].
 	
 		spec 
   			baseline: 'Roassal3' 
