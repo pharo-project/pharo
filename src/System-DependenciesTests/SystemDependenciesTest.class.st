@@ -333,7 +333,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 		(self packagesOfGroupNamed: 'default' on: BaselineOfThreadedFFI ).
 	packages := packages ,  #('TaskIt').
 	packages := packages , { BaselineOfFuel name } , (BaselineOfFuel packagesOfGroupNamed: #Core).
-	packages := packages , BaselineOfFuelPlatform allPackageNames.
+	packages := packages , {BaselineOfFuel name } , BaselineOfFuelPlatform allPackageNames.
 
 	dependencies := self externalDependendiesOf: packages.
 	self assertCollection: dependencies hasSameElements: self knownIDEDependencies
