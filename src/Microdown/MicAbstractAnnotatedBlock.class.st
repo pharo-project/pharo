@@ -10,6 +10,12 @@ Class {
 }
 
 { #category : #testing }
+MicAbstractAnnotatedBlock class >> isAbstract [
+
+	^ self == MicAbstractAnnotatedBlock
+]
+
+{ #category : #testing }
 MicAbstractAnnotatedBlock >> addLineAndReturnNextNode: line [
 	"line is assumed to be of the form '@@label some text
 	
