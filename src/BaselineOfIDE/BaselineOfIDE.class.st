@@ -188,17 +188,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'HeuristicCompletion' with: [ spec repository: repository ].
 		
 		self specCode: spec.
-		spec baseline: 'NewTools' with: [
-			spec 
-				repository: repository;
-				loads: #(
-					'Playground' 
-					'Inspector' 
-					'Debugger' 
-					'SystemReporter'
-					'ChangeSorter'
-					'Methods'
-					'Spotter') ].
+		self newTools: spec.
 					
 		spec baseline: 'Microdown' with: [ spec 
 			repository: self packageRepositoryURL ].
@@ -254,6 +244,15 @@ BaselineOfIDE >> loadIceberg [
 BaselineOfIDE >> makeCalypsoDefaultBrowser [
 
 	(self class environment at: #ClyBrowserMorph) beAllDefault.
+]
+
+{ #category : #'external projects' }
+BaselineOfIDE >> newTools: spec [
+	
+	spec baseline: 'NewTools' with: [  
+		spec 
+			repository: 'github://pharo-spec/NewTools:master/src';
+			loads: 'default' ]
 ]
 
 { #category : #actions }
