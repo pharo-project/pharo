@@ -645,7 +645,7 @@ Integer >> slowFactorial [
 	"6 slowFactorial >>> 720"
 
 	self > 0
-		ifTrue: [ ^ self * (self - 1) factorial ].
+		ifTrue: [ ^ self * (self - 1) slowFactorial ].
 	self = 0
 		ifTrue: [ ^ 1 ].
 	self error: 'Not valid for negative integers'
