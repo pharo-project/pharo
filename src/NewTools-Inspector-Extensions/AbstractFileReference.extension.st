@@ -69,6 +69,8 @@ AbstractFileReference >> inspectionContents [
 	^ SpCodePresenter new
 		withoutSyntaxHighlight;
 		text: displayString;
+		whenSubmitDo: [ :text | 
+			self writeStreamDo: [ :s | s nextPutAll: text string ] ];
 		yourself
 ]
 
@@ -196,6 +198,8 @@ AbstractFileReference >> inspectionStScript [
 	
 	^ SpCodePresenter new 
 		text: (self readStreamDo: #contents);
+		whenSubmitDo: [ :text | 
+			self writeStreamDo: [ :s | s nextPutAll: text string ] ];
 		yourself
 ]
 
