@@ -58,7 +58,7 @@ RBParser class >> parseExpression: aString onError: aBlock [
 	node := self new
 		        errorBlock: aBlock;
 		        initializeParserWith: aString;
-		        parseExpression: aString.
+		        parseExpression.
 	^ (node statements size == 1 and: [ node temporaries isEmpty ])
 		  ifTrue: [ node statements first ]
 		  ifFalse: [ node ]
@@ -95,7 +95,7 @@ RBParser class >> parseMethod: aString onError: aBlock [
 	parser := self new
 		errorBlock: aBlock;
 		initializeParserWith: aString.
-	^ [ parser parseMethod: aString ]
+	^ [ parser parseMethod ]
 		on: ReparseAfterSourceEditing
 		do: [ :exception | self parseMethod: exception newSource onError: aBlock ]
 ]
@@ -545,13 +545,12 @@ RBParser >> parseErrorNode: aMessageString [
 	^ RBParseErrorNode errorMessage: aMessageString value: currentToken value asString at: errorPosition
 ]
 
-{ #category : #accessing }
-RBParser >> parseExpression: anExpressionString [
+{ #category : #parsing }
+RBParser >> parseExpression [
 	"Parse and return an AST corresponding to the expression passed as argument."
-	
 	| node |
 	node := self parseStatements: false.
-	(self methodNodeClass selector: #noMethod body: node) source: anExpressionString.	"Make the sequence node have a method node as its parent"
+	(self methodNodeClass selector: #noMethod body: node) source: source.	"Make the sequence node have a method node as its parent"
 	self atEnd ifFalse: [ ^ self parseIncompleteExpression: node ].
 	(node statements isEmpty and: [currentToken comments notNil]) 
 			ifTrue: [self extractCommentsFrom: currentToken. self addCommentsTo: node.].
@@ -715,7 +714,7 @@ RBParser >> parseLiteralByteArrayObject [
 	^self parsePrimitiveLiteral
 ]
 
-{ #category : #accessing }
+{ #category : #'private-parsing' }
 RBParser >> parseLiterals: aString [ 
 	| stream |
 	stream := (Array new: 5) writeStream.
@@ -736,7 +735,7 @@ RBParser >> parseMessagePattern [
 				ifFalse: [self parseBinaryPattern]]
 ]
 
-{ #category : #'private-parsing' }
+{ #category : #parsing }
 RBParser >> parseMethod [
 	| methodNode sequenceNode | 
 	methodNode := self parseMessagePattern.
@@ -750,21 +749,10 @@ RBParser >> parseMethod [
 	self parseStatements: true into: methodNode body untilAnyCloserOf: #().
 		
 	pragmas ifNotNil: [ methodNode pragmas: pragmas ].
-	^methodNode
-]
-
-{ #category : #accessing }
-RBParser >> parseMethod: aMethodDefinitionString [
-	"Parse and return a abstract syntax tree from the argument"
-	
-	| node |
-	node := self parseMethod.
-	node source: aMethodDefinitionString.
-	self atEnd
-		ifFalse: [ 
-			 ^ self parseIncompleteExpression: node body ].
-	node source: aMethodDefinitionString.
-	^ node
+	methodNode source: source.
+	self atEnd ifFalse: [ ^ self parseIncompleteExpression: methodNode body ]. 
+	methodNode source: source.
+	^ methodNode
 ]
 
 { #category : #'private-parsing' }
@@ -1220,7 +1208,10 @@ RBParser >> parseUnaryPattern [
 	| selector |
 	selector := currentToken.
 	self step.
-	^self methodNodeClass selector: selector value asSymbol keywordsPositions: (Array with: selector start) arguments: #()
+	^self methodNodeClass 
+		selector: selector value asSymbol 
+		keywordsPositions: (Array with: selector start) 
+		arguments: #()
 ]
 
 { #category : #'private-parsing' }
