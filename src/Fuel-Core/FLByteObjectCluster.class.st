@@ -9,9 +9,8 @@ Class {
 
 { #category : #'serialize/materialize' }
 FLByteObjectCluster >> materializeInstanceWith: aDecoder [
-
 	| instance size |
-	size := aDecoder nextEncodedPositiveInteger.
+	size := aDecoder nextEncodedUint32.
 	instance := theClass basicNew: size.
 	aDecoder nextEncodedBytesInto: instance.
 	^ instance
@@ -20,7 +19,7 @@ FLByteObjectCluster >> materializeInstanceWith: aDecoder [
 
 { #category : #'serialize/materialize' }
 FLByteObjectCluster >> serializeInstance: anObject with: anEncoder [
-
-	anEncoder encodePositiveInteger: anObject basicSize.
-	anEncoder encodeBytes: anObject.
+	anEncoder
+		encodeUint32: anObject basicSize;
+		encodeBytes: anObject
 ]

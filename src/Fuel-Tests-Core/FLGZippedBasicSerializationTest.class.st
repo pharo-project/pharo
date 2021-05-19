@@ -7,11 +7,6 @@ Class {
 	#category : #'Fuel-Tests-Core-Base'
 }
 
-{ #category : #testing }
-FLGZippedBasicSerializationTest class >> shouldInheritSelectors [ 
-	^true
-]
-
 { #category : #'expected failures' }
 FLGZippedBasicSerializationTest >> expectedFailures [
 

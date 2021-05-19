@@ -1,32 +1,30 @@
 Class {
 	#name : #FLDebuggerStackSerializerTest,
 	#superclass : #TestCase,
-	#category : #'Fuel-Tools-Pharo-Tests'
+	#category : #'NewTools-Debugger-Fuel-Tests'
 }
 
 { #category : #tests }
-FLDebuggerStackSerializerTest >> testBuildFileNameForContext [
-
-	| stackSerializer context |
+FLDebuggerStackSerializerTest >> testFileNameForContext [
+	| stackSerializer context fileName |
 	stackSerializer := FLDebuggerStackSerializer new.
 
 	context := [  ] asContext.
-	stackSerializer buildFileNameForContext: context.
+	fileName := stackSerializer fileNameForContext: context.
 
-	self deny: stackSerializer fileName equals: nil.
+	self deny: fileName equals: nil.
 	self assert:
 		('Debugger-Stack-' , context receiver class instanceSide name
-		 , '-*.fuel' match: stackSerializer fileName)
+		 , '-*.fuel' match: fileName)
 ]
 
 { #category : #tests }
 FLDebuggerStackSerializerTest >> testSerializeContextToFileNamed [
-
 	| context file |
 	context := [  ] asContext.
 	file := 'serialized-stack' asFileReference.
 	FLDebuggerStackSerializer
-		serializeContext: context
+		serializeStackFromContext: context
 		toFileNamed: 'serialized-stack'.
 
 	self assert: file exists.
@@ -38,7 +36,6 @@ FLDebuggerStackSerializerTest >> testSerializeContextToFileNamed [
 
 { #category : #tests }
 FLDebuggerStackSerializerTest >> testSerializeStackFromContext [
-
 	| stackSerializer context |
 	stackSerializer := FLDebuggerStackSerializer new.
 	

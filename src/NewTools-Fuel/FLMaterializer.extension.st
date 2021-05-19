@@ -1,6 +1,6 @@
 Extension { #name : #FLMaterializer }
 
-{ #category : #'*Fuel-Tools-Pharo-FileRegistry' }
+{ #category : #'*NewTools-Fuel-FileRegistry' }
 FLMaterializer class >> fileReaderServicesForFile: fullName suffix: suffix [
 	<fileService>
 	suffix = 'fuel'
@@ -8,12 +8,20 @@ FLMaterializer class >> fileReaderServicesForFile: fullName suffix: suffix [
 	^ { self serviceFuelMaterialize }
 ]
 
-{ #category : #'*Fuel-Tools-Pharo-FileRegistry' }
+{ #category : #'*NewTools-Fuel-FileRegistry' }
+FLMaterializer class >> inspectMaterializationFromFileNamed: aString [
+
+	| result |
+	result := self materializeFromFileNamed: aString.
+	^ result inspect
+]
+
+{ #category : #'*NewTools-Fuel-FileRegistry' }
 FLMaterializer class >> serviceFuelMaterialize [
 	^ SimpleServiceEntry 
 		provider: self 
 		label: 'Materialize Fuel file'
-		selector: #materializeFromFileNamed:
+		selector: #inspectMaterializationFromFileNamed:
 		description: 'Materialize objects previously serialized with Fuel'
 		buttonLabel: 'materialize'
 ]

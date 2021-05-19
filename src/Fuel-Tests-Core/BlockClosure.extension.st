@@ -5,8 +5,8 @@ BlockClosure >> assertWellMaterializedInto: aBlockClosure in: aTestCase [
 
 	aTestCase assert: self ~~ aBlockClosure.
 	aTestCase assert: self class == aBlockClosure class.
-	aTestCase assert: numArgs = aBlockClosure numArgs.
-	aTestCase assert: startpc = aBlockClosure startpcOrOuterCode.
+	aTestCase assert: self numArgs = aBlockClosure numArgs.
+	aTestCase assert: self startpcOrOuterCode = aBlockClosure startpcOrOuterCode.
 
 	outerContext
 		ifNil: [ self assert: aBlockClosure outerContext isNil ]
@@ -23,4 +23,9 @@ BlockClosure >> assertWellMaterializedInto: aBlockClosure in: aTestCase [
 { #category : #'*Fuel-Tests-Core' }
 BlockClosure >> fuelValueWithoutNotifications [
 	SystemAnnouncer uniqueInstance suspendAllWhile: self
+]
+
+{ #category : #'*Fuel-Tests-Core' }
+BlockClosure >> isEqualRegardlessTrailerTo: anObject [
+	^ self = anObject
 ]

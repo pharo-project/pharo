@@ -65,9 +65,9 @@ FLSerialization >> fuelAccept: aGeneralMapper [
 
 { #category : #private }
 FLSerialization >> headerStep [
-	
-	encoder encodeYourself.
-	encoder encodePositiveInteger: clusters size.
+	encoder
+		encodeYourself;
+		encodeUint32: clusters size
 ]
 
 { #category : #'initialize-release' }
@@ -94,6 +94,12 @@ FLSerialization >> objects [
 ]
 
 { #category : #private }
+FLSerialization >> prepareObjectsStep [
+	clusters do: [ :aCluster |
+		aCluster prepareObjectsStep ]
+]
+
+{ #category : #private }
 FLSerialization >> referencesStep [
 
 	clusters do: [ :aCluster | aCluster serializeReferencesStepWith: encoder ]
@@ -108,11 +114,13 @@ FLSerialization >> root [
 FLSerialization >> run [
 	"Serialize the graph starting at the root object."
 
-	self analysisStep.
-	self headerStep.
-	self instancesStep.
-	self referencesStep.
-	self trailerStep.
+	self
+		analysisStep;
+		prepareObjectsStep;
+		headerStep;
+		instancesStep;
+		referencesStep;
+		trailerStep
 ]
 
 { #category : #private }
