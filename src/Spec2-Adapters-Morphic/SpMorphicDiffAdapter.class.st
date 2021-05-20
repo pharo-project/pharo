@@ -7,6 +7,18 @@ Class {
 	#category : #'Spec2-Adapters-Morphic-Base'
 }
 
+{ #category : #'widget API' }
+SpMorphicDiffAdapter >> beWrapped [
+
+	^ self model beWrapped
+]
+
+{ #category : #'spec protocol' }
+SpMorphicDiffAdapter >> beWrapped: aBoolean [
+
+	self widgetDo: [ :w | w beWrapped: aBoolean ]
+]
+
 { #category : #factory }
 SpMorphicDiffAdapter >> buildWidget [
 

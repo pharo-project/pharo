@@ -23,7 +23,8 @@ Class {
 		'sourceTextModel',
 		'destTextModel',
 		'leftCaption',
-		'rightCaption'
+		'rightCaption',
+		'beWrapped'
 	],
 	#category : #'Tool-Diff-Morphs'
 }
@@ -240,6 +241,22 @@ DiffMorph >> applyPrettyPrinter [
 				ifFalse: [ self sourceTextModel formatSourceCodeInView ].
 			self destTextModel getString isEmpty
 				ifFalse: [ self destTextModel formatSourceCodeInView ] ]
+]
+
+{ #category : #accessing }
+DiffMorph >> beWrapped [
+
+	^ beWrapped
+]
+
+{ #category : #accessing }
+DiffMorph >> beWrapped: aBoolean [
+
+	beWrapped = aBoolean ifTrue: [ ^ self ].
+	beWrapped := aBoolean.
+	aBoolean
+		ifTrue: [ self dstMorph beWrapped. self srcMorph beWrapped ]
+		ifFalse: [ self dstMorph beNotWrapped. self srcMorph beNotWrapped ]
 ]
 
 { #category : #actions }
@@ -536,6 +553,7 @@ DiffMorph >> initialize [
 	showOnlyDestination := false.
 	showOnlySource := false.
 	showOptions := true.
+	beWrapped := false.
 	self
 		srcMorph: self newSrcMorph;
 		joinMorph: self newJoinMorph;
