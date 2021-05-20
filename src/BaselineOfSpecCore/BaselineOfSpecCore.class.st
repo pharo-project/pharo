@@ -81,8 +81,7 @@ Then Spec-Deprecated80 is loaded but it does not migrate the subclasses of the o
 
 We need to use atomic loading only during update of existing Spec upgrade"
 
-	^ super project
-	"^self class environment at: #SpPresenter 
+	^self class environment at: #SpPresenter 
 		ifPresent: [
 			super project
 				loadType: #atomic;
@@ -90,5 +89,7 @@ We need to use atomic loading only during update of existing Spec upgrade"
 		ifAbsent: [ 		
 			super project
 				loadType: #linear;
-				yourself  ]"
+				yourself  ]
+
+	 
 ]

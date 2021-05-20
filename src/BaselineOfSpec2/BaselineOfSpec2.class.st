@@ -25,8 +25,8 @@ BaselineOfSpec2 >> baseline: spec [
 		spec
 			"Core"
 			package: 'Spec2-Adapters-Morphic' with: [ spec requires: #('SpecCore') ];
-			package: 'Spec2-Code-Morphic' with: [ spec requires: #('Spec2-Adapters-Morphic') ];
-			package: 'Spec2-Morphic' with: [ spec requires: #('Spec2-Adapters-Morphic') ];
+			package: 'Spec2-Code-Morphic' with: [ spec requires: #('SpecCore' 'Spec2-Adapters-Morphic') ];
+			package: 'Spec2-Morphic' with: [ spec requires: #('SpecCore' 'Spec2-Adapters-Morphic') ];
 			"Tests"
 			package: 'Spec2-Morphic-Examples' with: [ spec requires: #('Spec2-Morphic') ];
 			package: 'Spec2-Backend-Tests' with: [ spec requires: #('Spec2-Adapters-Morphic') ];
@@ -51,7 +51,7 @@ BaselineOfSpec2 >> baseline: spec [
 		'Core'
 		'Support').
 
-	spec group: 'default' with: #('SpecCore' 'Base' 'Code' 'Tests' 'CodeTests').
+	spec group: 'default' with: #('Base' 'Code' 'Tests' 'CodeTests').
 ]
 
 { #category : #script }
@@ -75,7 +75,7 @@ Then Spec-Deprecated80 is loaded but it does not migrate the subclasses of the o
 
 We need to use atomic loading only during update of existing Spec upgrade"
 
-	^ super project "self class environment at: #SpPresenter 
+	^self class environment at: #SpPresenter 
 		ifPresent: [
 			super project
 				loadType: #atomic;
@@ -83,7 +83,9 @@ We need to use atomic loading only during update of existing Spec upgrade"
 		ifAbsent: [ 		
 			super project
 				loadType: #linear;
-				yourself  ]"
+				yourself  ]
+
+	 
 ]
 
 { #category : #'external projects' }
