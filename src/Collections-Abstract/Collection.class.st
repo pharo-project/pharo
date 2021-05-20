@@ -1,5 +1,9 @@
 "
 I am the abstract superclass of all classes that represent a group of elements.
+
+To get more information you read the dedicated chapter on Pharo by Example in the next link: [Pharo by Example - Collections](https://github.com/SquareBracketAssociates/UpdatedPharoByExample/blob/pharo5/Collections/Collections.pillar).
+
+Or if you want to read in PDF format, download it from [Pharo by Example](https://github.com/SquareBracketAssociates/PharoByExample80/releases/tag/continuous) and look for Chapter 13: Collections. 
 "
 Class {
 	#name : #Collection,
