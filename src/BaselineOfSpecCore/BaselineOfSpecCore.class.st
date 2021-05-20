@@ -48,7 +48,7 @@ BaselineOfSpecCore >> baseline: spec [
 		'Spec2-CommandLine' 
 		'Spec2-Adapters-Stub' 
 		'Spec2-Interactions' 
-		'Spec2-Commander2').
+		'Spec2-Commander2' ).
 	spec group: 'Code' with: #('Core' 'Spec2-Code-Commands' 'Spec2-Code').
 	spec group: 'CodeTests' with: #('Spec2-Code-Tests').
 	spec group: 'Support' with: #('Core' 'Spec2-Examples').

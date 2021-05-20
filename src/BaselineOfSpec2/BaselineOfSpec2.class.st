@@ -26,7 +26,7 @@ BaselineOfSpec2 >> baseline: spec [
 			"Core"
 			package: 'Spec2-Adapters-Morphic' with: [ spec requires: #('SpecCore') ];
 			package: 'Spec2-Code-Morphic' with: [ spec requires: #('SpecCore' 'Spec2-Adapters-Morphic') ];
-			package: 'Spec2-Morphic' with: [ spec requires: #('Spec2-Adapters-Morphic') ];
+			package: 'Spec2-Morphic' with: [ spec requires: #('SpecCore' 'Spec2-Adapters-Morphic') ];
 			"Tests"
 			package: 'Spec2-Morphic-Examples' with: [ spec requires: #('Spec2-Morphic') ];
 			package: 'Spec2-Backend-Tests' with: [ spec requires: #('Spec2-Adapters-Morphic') ];
@@ -52,6 +52,20 @@ BaselineOfSpec2 >> baseline: spec [
 		'Support').
 
 	spec group: 'default' with: #('Base' 'Code' 'Tests' 'CodeTests').
+]
+
+{ #category : #'external projects' }
+BaselineOfSpec2 >> packageRepositoryURL [
+	| url |
+	
+	url := super packageRepositoryURL.
+	url ifEmpty: [ ^ url ].
+	"Verify if I am running in CI"
+	"travis or github actions"
+	((url includesSubstring: 'pharo-spec') 
+		or: [ url beginsWith: 'tonel:///home/runner/' ]) ifTrue: [ ^ '' ].
+	
+	^ url
 ]
 
 { #category : #script }
@@ -93,7 +107,7 @@ BaselineOfSpec2 >> specCore: spec [
 
 	spec baseline: 'SpecCore' with: [ 
 		spec 
-			repository: (self packageRepositoryURL ifEmpty: [ 'github://pharo-spec/Spec' ]);
+			repository: self packageRepositoryURL;
 			loads: #('Base' 'Tests') ]
 ]
 
@@ -102,7 +116,7 @@ BaselineOfSpec2 >> specCoreCode: spec [
 
 	spec baseline: 'SpecCoreCode' with: [ 
 		spec 
-			repository: (self packageRepositoryURL ifEmpty: [ 'github://pharo-spec/Spec' ]);
+			repository: self packageRepositoryURL;
 			className: 'BaselineOfSpecCore';
 			loads: #('Code' 'CodeTests') ]
 ]
