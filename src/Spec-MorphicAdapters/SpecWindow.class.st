@@ -15,16 +15,6 @@ SpecWindow >> aboutText [
 	^ self model aboutText
 ]
 
-{ #category : #controls }
-SpecWindow >> close [
-
-	self model ifNotNil: [ :aModel |
-		aModel askOkToClose
-			ifTrue: [ self okToChange ifFalse: [ ^ self ] ] ].
-		
-	super close
-]
-
 { #category : #updating }
 SpecWindow >> okToChange [
 

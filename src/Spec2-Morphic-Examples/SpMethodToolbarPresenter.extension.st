@@ -1,10 +1,10 @@
-Extension { #name : #SpMethodToolbar }
+Extension { #name : #SpMethodToolbarPresenter }
 
 { #category : #'*Spec2-Morphic-Examples' }
-SpMethodToolbar class >> example [
+SpMethodToolbarPresenter class >> example [
 	<sampleInstance>
 	| example |
-	example := SpMethodToolbar new.
+	example := SpMethodToolbarPresenter new.
 	example
 		method: SpButtonPresenter >> #state:;
 		method: nil;

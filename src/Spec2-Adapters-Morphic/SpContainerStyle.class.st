@@ -1,5 +1,5 @@
 "
-! Container properties (==SpStyleContainer==)
+# Container properties (`SpContainerStyle`)
 
 A container property can be applied to container elements (buttonbar, toolbar, actionbar), and define several properties: 
 
@@ -7,22 +7,22 @@ A container property can be applied to container elements (buttonbar, toolbar, a
 - borderWidth: The width of the border.
 - padding: The space between elements.
 
-See *method:SpStyleContainer#borderColor*
+See `SpContainerStyle>>#borderColor`
 
-!! Usage
-The identifier of container in the stylesheet is ==Container==.
+## Usage
+The identifier of container in the stylesheet is`Container`.
 
-[[[
+```
 Container { 
 	#borderColor: #blue, 
 	#borderWidth: 2,
 	#padding: 5
 }
-]]]
+```
 "
 Class {
-	#name : #SpStyleContainer,
-	#superclass : #SpStyleProperty,
+	#name : #SpContainerStyle,
+	#superclass : #SpPropertyStyle,
 	#instVars : [
 		'borderWidth',
 		'padding',
@@ -32,13 +32,13 @@ Class {
 }
 
 { #category : #'ston-core' }
-SpStyleContainer class >> stonName [
+SpContainerStyle class >> stonName [
 
 	^ 'Container'
 ]
 
 { #category : #operations }
-SpStyleContainer >> applyTo: aMorph [ 
+SpContainerStyle >> applyTo: aMorph [ 
 
 	self borderColorVariable ifNotNil: [ :aVariable | aMorph borderColor: aVariable valueAsColor ].
 	self borderWidthVariable ifNotNil: [ :aVariable | aMorph borderWidth: aVariable value ].
@@ -46,7 +46,7 @@ SpStyleContainer >> applyTo: aMorph [
 ]
 
 { #category : #accessing }
-SpStyleContainer >> borderColor [
+SpContainerStyle >> borderColor [
   "This property can be expressed as 
 	- a STON map: ==Color { #red : 1., #green : 0, #blue : 0, #alpha : 1 }==
 	- a named selector: ==#red==
@@ -56,13 +56,13 @@ SpStyleContainer >> borderColor [
 ]
 
 { #category : #accessing }
-SpStyleContainer >> borderColor: aColor [
+SpContainerStyle >> borderColor: aColor [
 
 	borderColor := aColor asStyleVariable
 ]
 
 { #category : #'accessing variables' }
-SpStyleContainer >> borderColorVariable [
+SpContainerStyle >> borderColorVariable [
   "This property can be expressed as 
 	- a STON map: ==Color { #red : 1., #green : 0, #blue : 0, #alpha : 1 }==
 	- a named selector: ==#red==
@@ -72,37 +72,37 @@ SpStyleContainer >> borderColorVariable [
 ]
 
 { #category : #accessing }
-SpStyleContainer >> borderWidth [
+SpContainerStyle >> borderWidth [
 
 	^ self borderWidthVariable value
 ]
 
 { #category : #accessing }
-SpStyleContainer >> borderWidth: aNumber [
+SpContainerStyle >> borderWidth: aNumber [
 
 	borderWidth := aNumber asStyleVariable
 ]
 
 { #category : #'accessing variables' }
-SpStyleContainer >> borderWidthVariable [
+SpContainerStyle >> borderWidthVariable [
 
 	^ self toVariable: borderWidth
 ]
 
 { #category : #accessing }
-SpStyleContainer >> padding [
+SpContainerStyle >> padding [
 
 	^ self paddingVariable value
 ]
 
 { #category : #accessing }
-SpStyleContainer >> padding: aNumber [
+SpContainerStyle >> padding: aNumber [
 
 	padding := aNumber asStyleVariable
 ]
 
 { #category : #'accessing variables' }
-SpStyleContainer >> paddingVariable [
+SpContainerStyle >> paddingVariable [
 
 	^ self toVariable: padding
 ]

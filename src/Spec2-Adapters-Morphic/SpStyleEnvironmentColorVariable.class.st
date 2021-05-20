@@ -2,19 +2,19 @@
 A variable to access environment colors (defined in `UITheme` and subclasses) 
 "
 Class {
-	#name : #SpStyleVariableEnvironmentColor,
-	#superclass : #SpStyleVariableEnvironment,
+	#name : #SpStyleEnvironmentColorVariable,
+	#superclass : #SpStyleEnvironmentVariable,
 	#category : #'Spec2-Adapters-Morphic-StyleSheet'
 }
 
 { #category : #documentation }
-SpStyleVariableEnvironmentColor class >> documentExampleCode [
+SpStyleEnvironmentColorVariable class >> documentExampleCode [
 
 	^ 'Draw { #color: EnvironmentColor(#background) }'
 ]
 
 { #category : #documentation }
-SpStyleVariableEnvironmentColor class >> documentValidValues [
+SpStyleEnvironmentColorVariable class >> documentValidValues [
 
 	^ UITheme selectors
 		select: [ :each | 
@@ -24,20 +24,20 @@ SpStyleVariableEnvironmentColor class >> documentValidValues [
 ]
 
 { #category : #'ston-core' }
-SpStyleVariableEnvironmentColor class >> stonName [
+SpStyleEnvironmentColorVariable class >> stonName [
 
 	^ 'EnvironmentColor'
 ]
 
 { #category : #evaluating }
-SpStyleVariableEnvironmentColor >> value [
+SpStyleEnvironmentColorVariable >> value [
 
 	self name ifNil: [ ^ nil ].
 	^ Smalltalk ui theme perform: (self name, 'Color') asSymbol
 ]
 
 { #category : #evaluating }
-SpStyleVariableEnvironmentColor >> valueAsColor [
+SpStyleEnvironmentColorVariable >> valueAsColor [
 	
 	^ self value
 ]

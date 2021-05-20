@@ -63,3 +63,9 @@ SpMorphicBackend >> selectFileTitle: aString [
 		  extensions: nil
 		  path: ''
 ]
+
+{ #category : #display }
+SpMorphicBackend >> showWaitCursorWhile: aBlock inApplication: anApplication [
+
+	Cursor wait showWhile: aBlock
+]

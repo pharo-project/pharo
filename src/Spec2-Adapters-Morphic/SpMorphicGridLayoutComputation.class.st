@@ -75,8 +75,8 @@ SpMorphicGridLayoutComputation >> calculateHomogeneousColumnWidths [
 	   than that number.
 	 - if min width > bounds width/numColumns, then all columns becomw width = min width (to 
 		make them homogeneous)"
-
 	| columnWidth |	
+
 	columnWidth := 0.
 	morphs do: [ :each | 
 		columnWidth := columnWidth max: (self minWidthOf: each) ].
@@ -91,8 +91,8 @@ SpMorphicGridLayoutComputation >> calculateHomogeneousRowHeights [
 	   than that number
 	 - if min height > bounds height/numRows, then all rows become height = min height (to 
 		make them homogeneous)"
+	| rowHeight |
 
-	| rowHeight |	
 	rowHeight := 0.
 	morphs do: [ :each | 
 		rowHeight := rowHeight max: (self minHeightOf: each) ].
@@ -106,17 +106,20 @@ SpMorphicGridLayoutComputation >> calculateNotHomogeneousColumnWidths [
 	 - the max width of cells of that column. EXCEPT if
 	 - the column is expandable, in which case, they will receive the remaining width 
 	   after assigning the others (a minimum if there is no remaining place)"
+	| newColumnWidths expandables |
 
-	| newColumnWidths expandables |	
 	newColumnWidths := Array new: numColumns withAll: 0.
 	
-	"Assign non expandable values"
-	morphs do: [ :each | | column |
-		column := (each valueOfProperty: #gridConstraints) column.
-		(self isColumnExpandable: column) ifFalse: [ 
-			newColumnWidths 
-				at: column
-				put: ((newColumnWidths at: column) max: ((self styleOf: each) width)) ] ].
+	"Assign non expandable values, 
+	 skip spanned columns (otherwise column will take an spanned width)"
+	morphs 
+		select: [ :each | (each valueOfProperty: #gridConstraints) columnSpan = 1 ]
+		thenDo: [ :each | | column |
+			column := (each valueOfProperty: #gridConstraints) column.
+			(self isColumnExpandable: column) ifFalse: [ 
+				newColumnWidths 
+					at: column
+					put: ((newColumnWidths at: column) max: (self widthOf: each))] ].
 		
 	"now I count the zeroes, if there are remaining means we need to assign the remaining 
 	 width (divided between the remaining)"
@@ -140,13 +143,16 @@ SpMorphicGridLayoutComputation >> calculateNotHomogeneousRowHeights [
 	 - the max height of cells of that row
 	"
 	| newRowHeights |	
-	
+
 	newRowHeights := Array new: numRows withAll: 0.
-	morphs do: [ :each | | row |
-		row := (each valueOfProperty: #gridConstraints) row.
-		newRowHeights 
-			at: row 
-			put: ((newRowHeights at: row) max: each height) ].
+	"skip spanned rows (otherwise row will take an spanned row)"
+	morphs 
+		select: [ :each | (each valueOfProperty: #gridConstraints) rowSpan = 1 ]
+		thenDo: [ :each | | row |
+			row := (each valueOfProperty: #gridConstraints) row.
+			newRowHeights 
+				at: row 
+				put: ((newRowHeights at: row) max: (self heightOf: each)) ].
 		
 	^ newRowHeights
 ]
@@ -264,6 +270,25 @@ SpMorphicGridLayoutComputation >> extent [
 	^ self columnWidths sum @ self rowHeights sum
 ]
 
+{ #category : #private }
+SpMorphicGridLayoutComputation >> geometryPropertyOf: aMorph [ 
+		
+	^ (self styleOf: aMorph) mergedProperties
+		detect: [ :each | each class = SpGeometryStyle ]
+		ifNone: [ nil ]
+]
+
+{ #category : #private }
+SpMorphicGridLayoutComputation >> heightOf: aMorph [ 
+	| height |
+
+	
+	height := (self geometryPropertyOf: aMorph) ifNotNil: [ :geometry | geometry height ].
+	^ (height isNil or: [ height = 0 ])
+		ifTrue: [ aMorph height ]
+		ifFalse: [ height ]
+]
+
 { #category : #initialization }
 SpMorphicGridLayoutComputation >> initializeLayout: aLayout [
 
@@ -293,23 +318,20 @@ SpMorphicGridLayoutComputation >> layout [
 	^ layout
 ]
 
-{ #category : #TOREMOVE }
-SpMorphicGridLayoutComputation >> maxWidthOf: aCollection [
-
-	self flag: #REMOVE. "I think noone uses it?"
-	^ (aCollection collect: [ :each | (each valueOfProperty: #style) width ]) max
-]
-
-{ #category : #'private computation' }
+{ #category : #private }
 SpMorphicGridLayoutComputation >> minHeightOf: aMorph [ 
+	| minHeight |
 
-	^ (self styleOf: aMorph) minHeight ifNil: [ 0 ]
+	minHeight := (self geometryPropertyOf: aMorph) ifNotNil: [ :geometry | geometry minHeight ]. 
+	^ minHeight ifNil: [ 0 ]
 ]
 
-{ #category : #'private computation' }
+{ #category : #private }
 SpMorphicGridLayoutComputation >> minWidthOf: aMorph [ 
+	| minWidth |
 
-	^ (self styleOf: aMorph) minWidth ifNil: [ 0 ]
+	minWidth := (self geometryPropertyOf: aMorph) ifNotNil: [ :geometry | geometry minWidth ]. 
+	^ minWidth ifNil: [ 0 ]
 ]
 
 { #category : #private }
@@ -348,4 +370,14 @@ SpMorphicGridLayoutComputation >> styleOf: aMorph [
 	^ aMorph 
 		valueOfProperty: #style
 		ifAbsent: [ SpMorphStyle newStyles: #() ]
+]
+
+{ #category : #private }
+SpMorphicGridLayoutComputation >> widthOf: aMorph [ 
+	| width |
+
+	width := (self geometryPropertyOf: aMorph) ifNotNil: [ :geometry | geometry width ].
+	^ (width isNil or: [ width = 0 ])
+		ifTrue: [ aMorph width ]
+		ifFalse: [ width ]
 ]

@@ -1,13 +1,13 @@
-Extension { #name : #SpLayoutDirectionVertical }
+Extension { #name : #SpVerticalLayoutDirection }
 
 { #category : #'*Spec2-Adapters-Morphic' }
-SpLayoutDirectionVertical >> addHomogeneousToMorph: aMorph into: anAdapter [
+SpVerticalLayoutDirection >> addHomogeneousToMorph: aMorph into: anAdapter [
 	
 	^ anAdapter addVerticalHomogeneousToMorph: aMorph
 ]
 
 { #category : #'*Spec2-Adapters-Morphic' }
-SpLayoutDirectionVertical >> addPadding: aNumber toMorph: aMorph into: anAdapter [
+SpVerticalLayoutDirection >> addPadding: aNumber toMorph: aMorph into: anAdapter [
 
 	^ anAdapter 
 		addVerticalPadding: aNumber 
@@ -15,18 +15,18 @@ SpLayoutDirectionVertical >> addPadding: aNumber toMorph: aMorph into: anAdapter
 ]
 
 { #category : #'*Spec2-Adapters-Morphic' }
-SpLayoutDirectionVertical >> newSplitter [
+SpVerticalLayoutDirection >> newSplitter [
 	^ SpPanedResizerMorph newVertical
 ]
 
 { #category : #'*Spec2-Adapters-Morphic' }
-SpLayoutDirectionVertical >> recalculatePages: anAdaptor [
+SpVerticalLayoutDirection >> recalculatePages: anAdaptor [
 
 	^ anAdaptor recalculatePageHeights
 ]
 
 { #category : #'*Spec2-Adapters-Morphic' }
-SpLayoutDirectionVertical >> setRigidityOfNonExpandedMorph: aMorph [
+SpVerticalLayoutDirection >> setRigidityOfNonExpandedMorph: aMorph [
 
 	aMorph 
 		hResizing: #spaceFill; 

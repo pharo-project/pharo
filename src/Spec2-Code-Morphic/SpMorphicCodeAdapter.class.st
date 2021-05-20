@@ -43,6 +43,11 @@ SpMorphicCodeAdapter >> buildWidget [
 	self presenter whenSyntaxHighlightChangedDo: [ :hasSyntaxHighlight | 
 		self setEditingModeFor: newWidget ].
 	
+	self presenter syntaxHighlightTheme ifNotNil: [ 
+		self setSyntaxHighlightThemeFor: newWidget ].
+	self presenter whenSyntaxHighlightThemeChangedDo: [ :value |
+		self setSyntaxHighlightThemeFor: newWidget ].
+	
 	^ newWidget
 ]
 
@@ -223,6 +228,18 @@ SpMorphicCodeAdapter >> setInteractionModel: anInteractionModel to: w [
 
 	w textArea editor isSmalltalkEditor ifFalse: [ ^ self ].
 	w completionEngine: (self newCompletionEngine: anInteractionModel)
+]
+
+{ #category : #private }
+SpMorphicCodeAdapter >> setSyntaxHighlightThemeFor: textArea [
+	| theme |
+	
+	theme := self presenter syntaxHighlightTheme.
+	theme ifNil: [ ^ self ].
+
+	textArea shoutStyler 
+		styler: (SpMorphicCodeTextStyler newWithAttributeTableNamed: theme);
+		refreshStyling
 ]
 
 { #category : #private }

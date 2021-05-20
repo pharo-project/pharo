@@ -19,6 +19,17 @@ SpTreeAdapterMultipleSelectionTest >> initializeTestedInstance [
 ]
 
 { #category : #'tests-model-to-widget' }
+SpTreeAdapterMultipleSelectionTest >> testClickDoesNotAccumulatesSelection [
+	
+	self openInstance.
+	presenter adapter sendClickEventToRowAtPath: #(1).
+	presenter adapter sendClickEventToRowAtPath: #(2).
+	self
+		assert: self adapter selectedPaths
+		equals: #((2))
+]
+
+{ #category : #'tests-model-to-widget' }
 SpTreeAdapterMultipleSelectionTest >> testSelectManyIndexesKeepsAllSelected [
 	
 	presenter selectPath: #(1).
@@ -68,6 +79,17 @@ SpTreeAdapterMultipleSelectionTest >> testSelectWidgetIndexRaisesSelectionIndexC
 	presenter selection whenChangedDo: [ :selection | selectedPaths := selection ].
 	self adapter selectPath: #(1).
 	self assert: (selectedPaths includes: #(1))
+]
+
+{ #category : #'tests-model-to-widget' }
+SpTreeAdapterMultipleSelectionTest >> testShiftClicktAccumulatesSelection [
+	
+	self openInstance.
+	presenter adapter sendClickWithShiftEventToRowAtPath: #(1).
+	presenter adapter sendClickWithShiftEventToRowAtPath: #(2).
+	self
+		assert: self adapter selectedPaths
+		equals: #((2) (1))
 ]
 
 { #category : #running }

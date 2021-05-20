@@ -38,11 +38,12 @@ SpMorphicGridAdapter >> applyChildrenAlignmentTo: aWidget constraints: constrain
 
 { #category : #private }
 SpMorphicGridAdapter >> basicAdd: aPresenter constraints: constraints to: aPanel [
-
 	| childMorph |
+
 	childMorph := self 
 		buildMorph: aPresenter 
 		constraints: constraints.
+	
 	aPanel addMorphBack: childMorph.
 		
 	^ childMorph	

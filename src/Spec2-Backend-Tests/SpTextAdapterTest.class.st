@@ -29,6 +29,24 @@ SpTextAdapterTest >> testKeyBindings [
 	self assert: handled
 ]
 
+{ #category : #tests }
+SpTextAdapterTest >> testLineAtCursorPosition [
+
+	self openInstance.
+	presenter text: 'one
+two
+three'.
+	
+	presenter cursorPositionIndex: 5.
+	self assert: presenter lineAtCursorPosition equals: 'two'.
+	
+	presenter cursorPositionIndex: 8.
+	self assert: presenter lineAtCursorPosition equals: 'two'.	
+	
+	presenter cursorPositionIndex: 14.
+	self assert: presenter lineAtCursorPosition equals: 'three'
+]
+
 { #category : #accessing }
 SpTextAdapterTest >> testRightClickShowsMenu [
 	| menu |

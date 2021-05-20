@@ -37,7 +37,9 @@ SpMorphicButtonAdapter >> buildLabel: text withIcon: icon [
 		^ (text localizedForPresenter: self presenter) ifNil: [ '' ] ].
 	
 	iconLabel := IconicListItemMorph new.
-	iconLabel icon: icon.
+	iconLabel icon: (self presenter isEnabled
+		ifTrue: [ icon ]
+		ifFalse: [ icon asGrayScaleWithAlpha ]).
 	text isEmptyOrNil ifFalse: [ 
 		iconLabel morph: (text asMorph 
 			lock;
@@ -48,8 +50,8 @@ SpMorphicButtonAdapter >> buildLabel: text withIcon: icon [
 
 { #category : #factory }
 SpMorphicButtonAdapter >> buildWidget [
-
 	| button | 
+
 	button := self newButton.	
 	button 
 		getEnabledSelector: #enabled ;
@@ -96,6 +98,13 @@ SpMorphicButtonAdapter >> clicked [
 SpMorphicButtonAdapter >> deleteIfPopUp: evt [
 ]
 
+{ #category : #accessing }
+SpMorphicButtonAdapter >> enabled: aBoolean [
+
+	super enabled: aBoolean.
+	self widgetDo: [ :w | w label: self label ]
+]
+
 { #category : #'widget API' }
 SpMorphicButtonAdapter >> font [
 
@@ -137,7 +146,9 @@ SpMorphicButtonAdapter >> keyStroke: anEvent fromMorph: aMorph [
 { #category : #'widget API' }
 SpMorphicButtonAdapter >> label [
 	
-	^ self buildLabel: self presenter label withIcon: self presenter icon
+	^ self 
+		buildLabel: self presenter label 
+		withIcon: self presenter icon
 ]
 
 { #category : #'widget API' }

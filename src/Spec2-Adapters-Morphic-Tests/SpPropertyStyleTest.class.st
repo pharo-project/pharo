@@ -1,18 +1,18 @@
 Class {
-	#name : #SpStylePropertyTest,
+	#name : #SpPropertyStyleTest,
 	#superclass : #TestCase,
 	#category : #'Spec2-Adapters-Morphic-Tests'
 }
 
 { #category : #tests }
-SpStylePropertyTest >> testMergeWith [
+SpPropertyStyleTest >> testMergeWith [
 	| p1 p2 p3 |
 	
-	p1 := SpStyleGeometry new
+	p1 := SpGeometryStyle new
 		width: 20;
 		height: 20;
 		yourself.
-	p2 := SpStyleGeometry new
+	p2 := SpGeometryStyle new
 		width: 40;
 		height: 40;
 		yourself.
@@ -24,13 +24,13 @@ SpStylePropertyTest >> testMergeWith [
 ]
 
 { #category : #tests }
-SpStylePropertyTest >> testMergeWithFontDoNotRemovePredefinedFontWhenNoFontIsDefined [
+SpPropertyStyleTest >> testMergeWithFontDoNotRemovePredefinedFontWhenNoFontIsDefined [
 	| p1 p2 p3 |
 	
-	p1 := SpStyleFont new
+	p1 := SpFontStyle new
 		predefinedFont: #default;
 		yourself.
-	p2 := SpStyleFont new
+	p2 := SpFontStyle new
 		name: nil;
 		color: Color white;
 		yourself.
@@ -42,13 +42,13 @@ SpStylePropertyTest >> testMergeWithFontDoNotRemovePredefinedFontWhenNoFontIsDef
 ]
 
 { #category : #tests }
-SpStylePropertyTest >> testMergeWithFontRemovePredefinedFont [
+SpPropertyStyleTest >> testMergeWithFontRemovePredefinedFont [
 	| p1 p2 p3 |
 	
-	p1 := SpStyleFont new
+	p1 := SpFontStyle new
 		predefinedFont: #default;
 		yourself.
-	p2 := SpStyleFont new
+	p2 := SpFontStyle new
 		name: 'Source Code Pro';
 		size: 10;
 		yourself.
@@ -60,13 +60,13 @@ SpStylePropertyTest >> testMergeWithFontRemovePredefinedFont [
 ]
 
 { #category : #tests }
-SpStylePropertyTest >> testMergeWithPredefinedFontCanBeDecorated [
+SpPropertyStyleTest >> testMergeWithPredefinedFontCanBeDecorated [
 	| p1 p2 p3 |
 	
-	p1 := SpStyleFont new
+	p1 := SpFontStyle new
 		predefinedFont: #default;
 		yourself.
-	p2 := SpStyleFont new
+	p2 := SpFontStyle new
 		name: nil;
 		color: Color white;
 		size: 42;

@@ -1,5 +1,5 @@
 "
-! Draw property (==SpStyleDraw==)
+! Draw property (`SpDrawStyle`)
 
 Draw properties control how the component (morph) will be draw.
 I keep this properties: 
@@ -7,21 +7,21 @@ I keep this properties:
 - color: foreground color for the morph if it applies (if the morph understands #color:).
 - backgroundColor: background color if it applies (if the morph understands #backgroundColor:).
 
-See *method:SpStyleDraw#color* and *method:SpStyleDraw#backgroundColor*
+See `SpDrawStyle>>#color` and `SpDrawStyle>>#backgroundColor`
 
-!! Usage
-The identifier of draw in the stylesheet is ==Draw==.
+## Usage
+The identifier of draw in the stylesheet is `Draw`.
 
-[[[
+```
 Draw { 
 	#color: #red,
 	#backgroundColor: '00FF00'
 }
-]]]
+```
 "
 Class {
-	#name : #SpStyleDraw,
-	#superclass : #SpStyleProperty,
+	#name : #SpDrawStyle,
+	#superclass : #SpPropertyStyle,
 	#instVars : [
 		'color',
 		'backgroundColor'
@@ -30,13 +30,13 @@ Class {
 }
 
 { #category : #'ston-core' }
-SpStyleDraw class >> stonName [
+SpDrawStyle class >> stonName [
 
 	^ 'Draw'
 ]
 
 { #category : #operations }
-SpStyleDraw >> applyTo: aMorph [ 
+SpDrawStyle >> applyTo: aMorph [ 
 
 	self color ifNotNil: [ :aColor | aMorph color: aColor asStyleVariable valueAsColor ].
 	self backgroundColor ifNotNil: [ :aColor |
@@ -48,7 +48,7 @@ SpStyleDraw >> applyTo: aMorph [
 ]
 
 { #category : #accessing }
-SpStyleDraw >> backgroundColor [
+SpDrawStyle >> backgroundColor [
   "This property can be expressed as 
 	- a STON map: ==Color { #red : 1., #green : 0, #blue : 0, #alpha : 1 }==
 	- a named selector: ==#red==
@@ -58,13 +58,13 @@ SpStyleDraw >> backgroundColor [
 ]
 
 { #category : #accessing }
-SpStyleDraw >> backgroundColor: aColorOrSymbol [
+SpDrawStyle >> backgroundColor: aColorOrSymbol [
 
 	backgroundColor := aColorOrSymbol asStyleVariable
 ]
 
 { #category : #'accessing variables' }
-SpStyleDraw >> backgroundColorVariable [
+SpDrawStyle >> backgroundColorVariable [
   "This property can be expressed as 
 	- a STON map: ==Color { #red : 1., #green : 0, #blue : 0, #alpha : 1 }==
 	- a named selector: ==#red==
@@ -74,7 +74,7 @@ SpStyleDraw >> backgroundColorVariable [
 ]
 
 { #category : #accessing }
-SpStyleDraw >> color [
+SpDrawStyle >> color [
   "This property can be expressed as 
 	- a STON map: ==Color { #red : 1., #green : 0, #blue : 0, #alpha : 1 }==
 	- a named selector: ==#red==
@@ -84,13 +84,13 @@ SpStyleDraw >> color [
 ]
 
 { #category : #accessing }
-SpStyleDraw >> color: aColorOrSymbol [
+SpDrawStyle >> color: aColorOrSymbol [
 
 	color := aColorOrSymbol asStyleVariable
 ]
 
 { #category : #'accessing variables' }
-SpStyleDraw >> colorVariable [
+SpDrawStyle >> colorVariable [
   "This property can be expressed as 
 	- a STON map: ==Color { #red : 1., #green : 0, #blue : 0, #alpha : 1 }==
 	- a named selector: ==#red==

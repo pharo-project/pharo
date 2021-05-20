@@ -1,13 +1,13 @@
-Extension { #name : #SpLayoutDirectionHorizontal }
+Extension { #name : #SpHorizontalLayoutDirection }
 
 { #category : #'*Spec2-Adapters-Morphic' }
-SpLayoutDirectionHorizontal >> addHomogeneousToMorph: aMorph into: anAdapter [
+SpHorizontalLayoutDirection >> addHomogeneousToMorph: aMorph into: anAdapter [
 	
 	^ anAdapter addHorizontalHomogeneousToMorph: aMorph
 ]
 
 { #category : #'*Spec2-Adapters-Morphic' }
-SpLayoutDirectionHorizontal >> addPadding: aNumber toMorph: aMorph into: anAdapter [
+SpHorizontalLayoutDirection >> addPadding: aNumber toMorph: aMorph into: anAdapter [
 
 	^ anAdapter 
 		addHorizontalPadding: aNumber 
@@ -15,19 +15,19 @@ SpLayoutDirectionHorizontal >> addPadding: aNumber toMorph: aMorph into: anAdapt
 ]
 
 { #category : #'*Spec2-Adapters-Morphic' }
-SpLayoutDirectionHorizontal >> newSplitter [
+SpHorizontalLayoutDirection >> newSplitter [
 
 	^ SpPanedResizerMorph newHorizontal
 ]
 
 { #category : #'*Spec2-Adapters-Morphic' }
-SpLayoutDirectionHorizontal >> recalculatePages: anAdaptor [
+SpHorizontalLayoutDirection >> recalculatePages: anAdaptor [
 
 	^ anAdaptor recalculatePageWidths
 ]
 
 { #category : #'*Spec2-Adapters-Morphic' }
-SpLayoutDirectionHorizontal >> setRigidityOfNonExpandedMorph: aMorph [
+SpHorizontalLayoutDirection >> setRigidityOfNonExpandedMorph: aMorph [
 
 	aMorph 
 		vResizing: #spaceFill; 

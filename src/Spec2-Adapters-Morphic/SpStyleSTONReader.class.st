@@ -109,7 +109,7 @@ SpStyleSTONReader >> pushStyle: aStyle during: aBlock [
 { #category : #private }
 SpStyleSTONReader >> styleClass [
 
-	^ SpStyleClass
+	^ SpClassStyle
 ]
 
 { #category : #private }

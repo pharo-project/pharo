@@ -1,5 +1,5 @@
 "
-Font property (`SpStyleFont`)
+# Font property (`SpFontStyle`)
 
 Font properties control how a component (morph) with font will draw the text.
 I keep this properties: 
@@ -10,7 +10,7 @@ I keep this properties:
 - italic: Font is italic? (boolean, default """"false"""")
 
 ## Usage
-The identifier of font in the stylesheet is _Font_.
+The identifier of font in the stylesheet is `Font`.
 
 ```language=Javascript
 Font { 
@@ -43,8 +43,8 @@ Font {
 
 "
 Class {
-	#name : #SpStyleFont,
-	#superclass : #SpStyleProperty,
+	#name : #SpFontStyle,
+	#superclass : #SpPropertyStyle,
 	#instVars : [
 		'predefinedFont',
 		'name',
@@ -60,31 +60,31 @@ Class {
 }
 
 { #category : #private }
-SpStyleFont class >> addFontToCache: aFont [
+SpFontStyle class >> addFontToCache: aFont [
 
 	self fontCache add: aFont
 ]
 
 { #category : #private }
-SpStyleFont class >> fontCache [
+SpFontStyle class >> fontCache [
 
 	^ FontCache ifNil: [ FontCache := WeakSet new ]
 ]
 
 { #category : #'ston-core' }
-SpStyleFont class >> stonName [
+SpFontStyle class >> stonName [
 	
 	^ 'Font'
 ]
 
 { #category : #private }
-SpStyleFont >> addFontToCache: aFont [
+SpFontStyle >> addFontToCache: aFont [
 
 	self class addFontToCache: aFont
 ]
 
 { #category : #private }
-SpStyleFont >> anyFontDecorator [
+SpFontStyle >> anyFontDecorator [
 	
 	^ color notNil 
 		or: [ size notNil 
@@ -93,7 +93,7 @@ SpStyleFont >> anyFontDecorator [
 ]
 
 { #category : #operations }
-SpStyleFont >> applyTo: aMorph [
+SpFontStyle >> applyTo: aMorph [
 
 	"not all morphs understand font, I need to verify it (which is not cool verifying a 
 	 selector but other way would be to define #font: in Morph and I do not want that)"
@@ -108,25 +108,25 @@ SpStyleFont >> applyTo: aMorph [
 ]
 
 { #category : #accessing }
-SpStyleFont >> bold [
+SpFontStyle >> bold [
 
 	^ self boldVariable value
 ]
 
 { #category : #accessing }
-SpStyleFont >> bold: aBoolean [
+SpFontStyle >> bold: aBoolean [
 
 	bold := aBoolean asStyleVariable
 ]
 
 { #category : #'accessing variables' }
-SpStyleFont >> boldVariable [
+SpFontStyle >> boldVariable [
 
 	^ self toVariable: bold
 ]
 
 { #category : #private }
-SpStyleFont >> calculateDefinedFont [
+SpFontStyle >> calculateDefinedFont [
 	| font |
 	
 	font := LogicalFont
@@ -140,7 +140,7 @@ SpStyleFont >> calculateDefinedFont [
 ]
 
 { #category : #private }
-SpStyleFont >> calculateFontName [
+SpFontStyle >> calculateFontName [
 	| var |
 	
 	var := self nameVariable.
@@ -150,7 +150,7 @@ SpStyleFont >> calculateFontName [
 ]
 
 { #category : #private }
-SpStyleFont >> calculateFontSize [
+SpFontStyle >> calculateFontSize [
 	
 	self sizeVariable ifNotNil: [ :aVariable |
 		aVariable value ifNotNil: [ 
@@ -162,7 +162,7 @@ SpStyleFont >> calculateFontSize [
 ]
 
 { #category : #accessing }
-SpStyleFont >> color [
+SpFontStyle >> color [
   "This is meant to set the text color.
 	This property can be expressed as 
 	- a STON map: ==Color { #red : 1., #green : 0, #blue : 0, #alpha : 1 }==
@@ -173,13 +173,13 @@ SpStyleFont >> color [
 ]
 
 { #category : #accessing }
-SpStyleFont >> color: aColorOrSymbol [
+SpFontStyle >> color: aColorOrSymbol [
 
 	color := aColorOrSymbol asStyleVariable
 ]
 
 { #category : #'accessing variables' }
-SpStyleFont >> colorVariable [
+SpFontStyle >> colorVariable [
   "This is meant to set the text color.
 	This property can be expressed as 
 	- a STON map: ==Color { #red : 1., #green : 0, #blue : 0, #alpha : 1 }==
@@ -190,7 +190,7 @@ SpStyleFont >> colorVariable [
 ]
 
 { #category : #private }
-SpStyleFont >> definedFont [
+SpFontStyle >> definedFont [
 	| definedFont |
 
 	(self predefinedFont notNil and: [ self anyFontDecorator not ]) ifTrue: [ 
@@ -204,45 +204,45 @@ SpStyleFont >> definedFont [
 ]
 
 { #category : #private }
-SpStyleFont >> hasPredefinedFont [
+SpFontStyle >> hasPredefinedFont [
 
 	^ self predefinedFont notNil
 ]
 
 { #category : #testing }
-SpStyleFont >> isBold [
+SpFontStyle >> isBold [
 	"property may be nil, we verify with strict comparisson"
 	
 	^ self boldVariable value == true
 ]
 
 { #category : #testing }
-SpStyleFont >> isItalic [
+SpFontStyle >> isItalic [
 	"property may be nil, we verify with strict comparisson"
 	
 	^ self italicVariable value == true 
 ]
 
 { #category : #accessing }
-SpStyleFont >> italic [
+SpFontStyle >> italic [
 
 	^ self italicVariable value
 ]
 
 { #category : #accessing }
-SpStyleFont >> italic: aBoolean [
+SpFontStyle >> italic: aBoolean [
 
 	italic := aBoolean asStyleVariable
 ]
 
 { #category : #'accessing variables' }
-SpStyleFont >> italicVariable [
+SpFontStyle >> italicVariable [
 
 	^ italic
 ]
 
 { #category : #operations }
-SpStyleFont >> mergeWith: otherProperty [
+SpFontStyle >> mergeWith: otherProperty [
 	| merged |
 
 	merged := super mergeWith: otherProperty.
@@ -258,61 +258,61 @@ SpStyleFont >> mergeWith: otherProperty [
 ]
 
 { #category : #accessing }
-SpStyleFont >> name [
+SpFontStyle >> name [
 
 	^ self nameVariable value
 ]
 
 { #category : #accessing }
-SpStyleFont >> name: aString [
+SpFontStyle >> name: aString [
 
 	name := aString asStyleVariable
 ]
 
 { #category : #'accessing variables' }
-SpStyleFont >> nameVariable [
+SpFontStyle >> nameVariable [
 
 	^ self toVariable: name
 ]
 
 { #category : #private }
-SpStyleFont >> obtainPredefinedFont [
+SpFontStyle >> obtainPredefinedFont [
 
 	^ StandardFonts perform: (self predefinedFont value, 'Font') asSymbol
 ]
 
 { #category : #accessing }
-SpStyleFont >> predefinedFont [
+SpFontStyle >> predefinedFont [
 
 	^ predefinedFont
 ]
 
 { #category : #accessing }
-SpStyleFont >> predefinedFont: aSymbol [
+SpFontStyle >> predefinedFont: aSymbol [
 
 	predefinedFont := aSymbol
 ]
 
 { #category : #accessing }
-SpStyleFont >> size [
+SpFontStyle >> size [
 
 	^ self sizeVariable value
 ]
 
 { #category : #accessing }
-SpStyleFont >> size: aNumber [
+SpFontStyle >> size: aNumber [
 
 	size := aNumber asStyleVariable
 ]
 
 { #category : #'accessing variables' }
-SpStyleFont >> sizeVariable [
+SpFontStyle >> sizeVariable [
 
 	^ size
 ]
 
 { #category : #private }
-SpStyleFont >> withCachedFontDo: aBlock [
+SpFontStyle >> withCachedFontDo: aBlock [
 
 	self class fontCache 
 		detect: [ :each | 

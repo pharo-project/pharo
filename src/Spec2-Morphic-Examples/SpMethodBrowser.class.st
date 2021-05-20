@@ -75,7 +75,7 @@ SpMethodBrowser >> displayBlock: aBlock [
 SpMethodBrowser >> initializePresenters [
 	listModel := self instantiate: SpListPresenter .
 	textModel := self newCode.
-	toolbarModel := self instantiate: SpMethodToolbar.
+	toolbarModel := self instantiate: SpMethodToolbarPresenter.
 	self focusOrder
 		add: listModel;
 		add: toolbarModel;

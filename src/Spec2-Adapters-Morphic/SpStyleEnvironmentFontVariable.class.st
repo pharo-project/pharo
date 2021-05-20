@@ -3,19 +3,19 @@ A variable to access environment fonts (defined in `StandardFonts class`).
 This variable must be used to assign the attribute `name` of a `SpStyleFont` property.
 "
 Class {
-	#name : #SpStyleVariableEnvironmentFont,
-	#superclass : #SpStyleVariableEnvironment,
+	#name : #SpStyleEnvironmentFontVariable,
+	#superclass : #SpStyleEnvironmentVariable,
 	#category : #'Spec2-Adapters-Morphic-StyleSheet'
 }
 
 { #category : #documentation }
-SpStyleVariableEnvironmentFont class >> documentExampleCode [
+SpStyleEnvironmentFontVariable class >> documentExampleCode [
 
 	^ 'Font { #name: EnvironmentFont(#default) }'
 ]
 
 { #category : #documentation }
-SpStyleVariableEnvironmentFont class >> documentValidValues [
+SpStyleEnvironmentFontVariable class >> documentValidValues [
 
 	^ StandardFonts class selectors 
 		select: [ :each | each endsWith: 'Font' ]
@@ -23,31 +23,31 @@ SpStyleVariableEnvironmentFont class >> documentValidValues [
 ]
 
 { #category : #'ston-core' }
-SpStyleVariableEnvironmentFont class >> stonName [
+SpStyleEnvironmentFontVariable class >> stonName [
 
 	^ 'EnvironmentFont'
 ]
 
 { #category : #accessing }
-SpStyleVariableEnvironmentFont >> familyName [
+SpStyleEnvironmentFontVariable >> familyName [
 
 	^ self value familyName
 ]
 
 { #category : #accessing }
-SpStyleVariableEnvironmentFont >> name [
+SpStyleEnvironmentFontVariable >> name [
 
 	^ super name ifNil: [ #default ]
 ]
 
 { #category : #accessing }
-SpStyleVariableEnvironmentFont >> pointSize [
+SpStyleEnvironmentFontVariable >> pointSize [
 
 	^ self value pointSize
 ]
 
 { #category : #evaluating }
-SpStyleVariableEnvironmentFont >> value [
+SpStyleEnvironmentFontVariable >> value [
 
 	^ StandardFonts perform: (self name, 'Font') asSymbol
 ]

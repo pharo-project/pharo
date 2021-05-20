@@ -7,33 +7,46 @@ I am a Morphic adapter to bridge the ProgressBarPresenter and the ProgressBarMor
 Class {
 	#name : #SpMorphicProgressBarAdapter,
 	#superclass : #SpAbstractMorphicAdapter,
+	#instVars : [
+		'progressBar'
+	],
 	#category : #'Spec2-Adapters-Morphic-Base'
 }
 
 { #category : #factory }
 SpMorphicProgressBarAdapter >> buildWidget [
+	| panel |
+	
+	panel := Morph new
+		changeProportionalLayout;
+		hResizing: #spaceFill;
+		vResizing: #spaceFill;
+		yourself.
 
-	| m p |
-	m := Morph new
+	progressBar := (self progressBarState progressBarMorph from: 0 to: 1)
 		     changeProportionalLayout;
 		     hResizing: #spaceFill;
 		     vResizing: #spaceFill;
 		     yourself.
 
-	p := (self progressBarState progressBarMorph from: 0 to: 1)
-		     changeProportionalLayout;
-		     hResizing: #spaceFill;
-		     vResizing: #spaceFill;
-		     yourself.
+	self progressBarState customizeMorphicBar: progressBar.
 
-	self progressBarState customizeMorphicBar: p.
-
-	m addMorph: p fullFrame: LayoutFrame identity.
-	^ m
+	panel 
+		addMorph: progressBar
+		fullFrame: LayoutFrame identity.
+	
+	^ panel
 ]
 
 { #category : #accessing }
 SpMorphicProgressBarAdapter >> progressBarState [
 
 	^ self model state
+]
+
+{ #category : #updating }
+SpMorphicProgressBarAdapter >> updateState [
+
+	self progressBarState customizeMorphicBar: progressBar
+
 ]

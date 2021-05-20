@@ -1,9 +1,9 @@
 "
-Text property controls how the ""input text"" fields (*SpTextInputFieldPresenter* hierarchy for now)
+Text property controls how the ""input text"" fields (`SpTextInputFieldPresenter` hierarchy for now)
 "
 Class {
-	#name : #SpStyleText,
-	#superclass : #SpStyleProperty,
+	#name : #SpTextStyle,
+	#superclass : #SpPropertyStyle,
 	#instVars : [
 		'drawKeyboardFocus'
 	],
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #operations }
-SpStyleText >> applyTo: aMorph [
+SpTextStyle >> applyTo: aMorph [
 
 
 	self drawKeyboardFocusVariable
@@ -19,19 +19,19 @@ SpStyleText >> applyTo: aMorph [
 ]
 
 { #category : #accessing }
-SpStyleText >> drawKeyboardFocus [
+SpTextStyle >> drawKeyboardFocus [
 
 	^ self drawKeyboardFocusVariable value
 ]
 
 { #category : #accessing }
-SpStyleText >> drawKeyboardFocus: aBoolean [
+SpTextStyle >> drawKeyboardFocus: aBoolean [
 
 	drawKeyboardFocus := aBoolean asStyleVariable
 ]
 
 { #category : #'accessing variables' }
-SpStyleText >> drawKeyboardFocusVariable [
+SpTextStyle >> drawKeyboardFocusVariable [
 
 	^ self toVariable: drawKeyboardFocus
 ]

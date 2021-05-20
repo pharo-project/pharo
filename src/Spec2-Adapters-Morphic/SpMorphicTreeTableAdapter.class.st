@@ -222,6 +222,9 @@ SpMorphicTreeTableAdapter >> isExpanded: anItem [
 	path := widget dataSource 
 		pathOfItem: anItem 
 		root: widget dataSource rootItem.
+
+  path ifEmpty: [ ^ false ].
+	
 	^ (widget dataSource itemAtPath: path) 
 		ifNotNil: [ :node | node isExpanded ]
 		ifNil: [ false ]
@@ -376,6 +379,44 @@ SpMorphicTreeTableAdapter >> selectionChanged: ann [
 
 	self suspendSelectionEventsDuring: [ 
 		self basicSelectionChanged: ann ]
+]
+
+{ #category : #emulating }
+SpMorphicTreeTableAdapter >> sendClickEventToRowAtPath: aPath [
+	| evt rowWidget index |
+
+	index := widget dataSource indexFromPath: aPath.
+	rowWidget := widget container submorphs at: index.
+	evt := MouseButtonEvent new 
+		setType: nil 
+		position: rowWidget bounds center 
+		which: MouseButtonEvent redButton 
+		buttons: MouseButtonEvent redButton 
+		hand: self currentHand 
+		stamp: nil.
+	
+	(widget handlesMouseDown: evt) ifTrue: [
+		widget handleMouseDown: evt.
+		widget handleMouseUp: evt ]
+]
+
+{ #category : #emulating }
+SpMorphicTreeTableAdapter >> sendClickWithShiftEventToRowAtPath: aPath [
+	| evt rowWidget index |
+	
+	index := widget dataSource indexFromPath: aPath.
+	rowWidget := widget container submorphs at: index.
+	evt := MouseButtonEvent new 
+		setType: nil 
+		position: rowWidget bounds center 
+		which: MouseButtonEvent redButton 
+		buttons: (MouseButtonEvent redButton | 8 "shift = 8 mask")
+		hand: self currentHand 
+		stamp: nil.
+
+	(widget handlesMouseDown: evt) ifTrue: [
+		widget handleMouseDown: evt.
+		widget handleMouseUp: evt ]
 ]
 
 { #category : #emulating }

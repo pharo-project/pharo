@@ -2,7 +2,7 @@
 A base for environment variables (values that point to values in the environment).
 "
 Class {
-	#name : #SpStyleVariableEnvironment,
+	#name : #SpStyleEnvironmentVariable,
 	#superclass : #SpStyleAbstractVariable,
 	#instVars : [
 		'name'
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #documentation }
-SpStyleVariableEnvironment class >> addDocumentExample: aBuilder [
+SpStyleEnvironmentVariable class >> addDocumentExample: aBuilder [
 
 	aBuilder newLine.
 	aBuilder header: [ :builder | builder text: 'Example' ] withLevel: 2.
@@ -20,7 +20,7 @@ SpStyleVariableEnvironment class >> addDocumentExample: aBuilder [
 ]
 
 { #category : #documentation }
-SpStyleVariableEnvironment class >> addDocumentValidValues: aBuilder [	
+SpStyleEnvironmentVariable class >> addDocumentValidValues: aBuilder [	
 
 	aBuilder newLine.
 	aBuilder header: [ :builder | builder text: 'Valid values' ] withLevel: 2.
@@ -32,7 +32,7 @@ SpStyleVariableEnvironment class >> addDocumentValidValues: aBuilder [
 ]
 
 { #category : #documentation }
-SpStyleVariableEnvironment class >> buildMicroDownUsing: aBuilder withComment: aString [
+SpStyleEnvironmentVariable class >> buildMicroDownUsing: aBuilder withComment: aString [
 	
 	super buildMicroDownUsing: aBuilder withComment: aString.
 	self addDocumentExample: aBuilder.
@@ -41,41 +41,41 @@ SpStyleVariableEnvironment class >> buildMicroDownUsing: aBuilder withComment: a
 ]
 
 { #category : #documentation }
-SpStyleVariableEnvironment class >> documentExampleCode [
+SpStyleEnvironmentVariable class >> documentExampleCode [
 
 	^ '(none)'
 ]
 
 { #category : #documentation }
-SpStyleVariableEnvironment class >> documentValidValues [
+SpStyleEnvironmentVariable class >> documentValidValues [
 	
 	^ #()
 ]
 
 { #category : #'ston-core' }
-SpStyleVariableEnvironment class >> stonName [
+SpStyleEnvironmentVariable class >> stonName [
 
 	^ 'Environment'
 ]
 
 { #category : #'instance creation' }
-SpStyleVariableEnvironment >> fromSton: stonReader [
+SpStyleEnvironmentVariable >> fromSton: stonReader [
 
 	self name: stonReader parseContainedValue
 ]
 
 { #category : #testing }
-SpStyleVariableEnvironment >> isEnvironmentVariable [
+SpStyleEnvironmentVariable >> isEnvironmentVariable [
 
 	^ true
 ]
 
 { #category : #accessing }
-SpStyleVariableEnvironment >> name [
+SpStyleEnvironmentVariable >> name [
 	^ name
 ]
 
 { #category : #accessing }
-SpStyleVariableEnvironment >> name: anObject [
+SpStyleEnvironmentVariable >> name: anObject [
 	name := anObject
 ]

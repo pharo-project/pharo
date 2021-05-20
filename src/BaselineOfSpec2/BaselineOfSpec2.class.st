@@ -16,11 +16,12 @@ BaselineOfSpec2 class >> releaseCommit [
 BaselineOfSpec2 >> baseline: spec [
 	<baseline>
 	
-	spec for: #common do: [ 
-		self spec: spec.
-		
+	spec for: #common do: [ 		
 		spec postLoadDoIt: #postLoad.
 		
+		self specCore: spec.
+		self specCoreCode: spec.
+	
 		spec
 			"Core"
 			package: 'Spec2-Adapters-Morphic' with: [ spec requires: #('SpecCore') ];
@@ -35,7 +36,7 @@ BaselineOfSpec2 >> baseline: spec [
 			package: 'Spec2-Code-Backend-Tests' with: [ spec requires: #('Spec2-Backend-Tests') ] ].
 	
 	spec group: 'Core' with: #('SpecCore' 'Spec2-Morphic' 'Spec2-Adapters-Morphic').
-	spec group: 'Code' with: #('Core' 'Spec2-Code-Morphic').
+	spec group: 'Code' with: #('Core' 'SpecCoreCode' 'Spec2-Code-Morphic').
 	spec group: 'CodeTests' with: #('Code' 'Spec2-Code-Backend-Tests').
 	spec group: 'Support' with: #('Core' 'Spec2-Morphic-Examples').
 	spec group: 'Tests' with: #(
@@ -49,8 +50,8 @@ BaselineOfSpec2 >> baseline: spec [
 		'SpecCore'
 		'Core'
 		'Support').
-		
-	spec group: 'default' with: #('Base' 'Code' 'Tests' 'CodeTests').
+
+	spec group: 'default' with: #('Base' 'Tests' 'Code' 'CodeTests').
 ]
 
 { #category : #script }
@@ -88,9 +89,20 @@ We need to use atomic loading only during update of existing Spec upgrade"
 ]
 
 { #category : #'external projects' }
-BaselineOfSpec2 >> spec: spec [
+BaselineOfSpec2 >> specCore: spec [
 
 	spec baseline: 'SpecCore' with: [ 
-		spec repository: (self packageRepositoryURL 
-			ifEmpty: [ 'github://pharo-spec/Spec' ]) ]
+		spec 
+			repository: (self packageRepositoryURL ifEmpty: [ 'github://pharo-spec/Spec' ]);
+			loads: #('Base' 'Tests') ]
+]
+
+{ #category : #'external projects' }
+BaselineOfSpec2 >> specCoreCode: spec [
+
+	spec baseline: 'SpecCoreCode' with: [ 
+		spec 
+			repository: (self packageRepositoryURL ifEmpty: [ 'github://pharo-spec/Spec' ]);
+			className: 'BaselineOfSpecCore';
+			loads: #('Code' 'CodeTests') ]
 ]

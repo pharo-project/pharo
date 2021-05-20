@@ -4,7 +4,7 @@ A MethodToolbar is xxxxxxxxx.
 self example
 "
 Class {
-	#name : #SpMethodToolbar,
+	#name : #SpMethodToolbarPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'browseModel',
@@ -20,7 +20,7 @@ Class {
 }
 
 { #category : #specs }
-SpMethodToolbar class >> defaultSpec [
+SpMethodToolbarPresenter class >> defaultSpec [
 	<spec>
 	^ SpBoxLayout newLeftToRight
 		add: #browseModel;
@@ -33,61 +33,61 @@ SpMethodToolbar class >> defaultSpec [
 ]
 
 { #category : #specs }
-SpMethodToolbar class >> title [
+SpMethodToolbarPresenter class >> title [
 
 	^ 'Toolbar'
 ]
 
 { #category : #api }
-SpMethodToolbar >> addItemLabeled: aString do: aBlock [
+SpMethodToolbarPresenter >> addItemLabeled: aString do: aBlock [
 
 	dropListModel addItemLabeled: aString do: aBlock
 ]
 
 { #category : #private }
-SpMethodToolbar >> browseMethod [
+SpMethodToolbarPresenter >> browseMethod [
 
 	self method ifNotNil: [ :aMethod | aMethod browse ]
 ]
 
 { #category : #accessing }
-SpMethodToolbar >> browseModel [
+SpMethodToolbarPresenter >> browseModel [
 
 	^ browseModel
 ]
 
 { #category : #accessing }
-SpMethodToolbar >> dropListModel [
+SpMethodToolbarPresenter >> dropListModel [
 
 	^ dropListModel
 ]
 
 { #category : #api }
-SpMethodToolbar >> emptyDropList [
+SpMethodToolbarPresenter >> emptyDropList [
 	
 	dropListModel emptyList
 ]
 
 { #category : #private }
-SpMethodToolbar >> implementorsMethod [
+SpMethodToolbarPresenter >> implementorsMethod [
 	self method ifNotNil: [ :aMethod | self model browseMessagesFrom: aMethod selector ]
 ]
 
 { #category : #accessing }
-SpMethodToolbar >> implementorsModel [
+SpMethodToolbarPresenter >> implementorsModel [
 
 	^ implementorsModel
 ]
 
 { #category : #initialization }
-SpMethodToolbar >> initialize [
+SpMethodToolbarPresenter >> initialize [
 	model := AbstractTool new.
 
 	super initialize
 ]
 
 { #category : #initialization }
-SpMethodToolbar >> initializePresenters [
+SpMethodToolbarPresenter >> initializePresenters [
 
 	browseModel := self newButton.
 	usersModel := self newButton.
@@ -105,24 +105,24 @@ SpMethodToolbar >> initializePresenters [
 ]
 
 { #category : #accessing }
-SpMethodToolbar >> method [
+SpMethodToolbarPresenter >> method [
 	^ method
 ]
 
 { #category : #api }
-SpMethodToolbar >> method: aMethod [
+SpMethodToolbarPresenter >> method: aMethod [
 
 	method := aMethod
 ]
 
 { #category : #accessing }
-SpMethodToolbar >> model [
+SpMethodToolbarPresenter >> model [
 
 	^ model
 ]
 
 { #category : #initialization }
-SpMethodToolbar >> registerForChanges [
+SpMethodToolbarPresenter >> registerForChanges [
 	self
 		property: #method
 		whenChangedDo: [ :contents | 
@@ -136,18 +136,18 @@ SpMethodToolbar >> registerForChanges [
 ]
 
 { #category : #private }
-SpMethodToolbar >> sendersMethod [
+SpMethodToolbarPresenter >> sendersMethod [
 	self method ifNotNil: [ :aMethod | self model browseSendersOfMessagesFrom: aMethod selector ]
 ]
 
 { #category : #accessing }
-SpMethodToolbar >> sendersModel [
+SpMethodToolbarPresenter >> sendersModel [
 
 	^ sendersModel
 ]
 
 { #category : #initialization }
-SpMethodToolbar >> setBrowseModel [
+SpMethodToolbarPresenter >> setBrowseModel [
 	
 	browseModel
 		state: false;
@@ -158,7 +158,7 @@ SpMethodToolbar >> setBrowseModel [
 ]
 
 { #category : #initialization }
-SpMethodToolbar >> setFocusOrder [
+SpMethodToolbarPresenter >> setFocusOrder [
 
 	self focusOrder
 		add: browseModel;
@@ -170,7 +170,7 @@ SpMethodToolbar >> setFocusOrder [
 ]
 
 { #category : #initialization }
-SpMethodToolbar >> setImplementorsModel [
+SpMethodToolbarPresenter >> setImplementorsModel [
 	
 	implementorsModel
 		state: false;
@@ -181,13 +181,13 @@ SpMethodToolbar >> setImplementorsModel [
 ]
 
 { #category : #initialization }
-SpMethodToolbar >> setModelBeforeInitialization: aMethod [
+SpMethodToolbarPresenter >> setModelBeforeInitialization: aMethod [
 
 	self method: aMethod
 ]
 
 { #category : #initialization }
-SpMethodToolbar >> setSendersModel [
+SpMethodToolbarPresenter >> setSendersModel [
 	
 	sendersModel
 		state: false;
@@ -198,7 +198,7 @@ SpMethodToolbar >> setSendersModel [
 ]
 
 { #category : #initialization }
-SpMethodToolbar >> setUsersModel [
+SpMethodToolbarPresenter >> setUsersModel [
 	usersModel
 		state: false;
 		label: 'Users';
@@ -206,7 +206,7 @@ SpMethodToolbar >> setUsersModel [
 ]
 
 { #category : #initialization }
-SpMethodToolbar >> setVersionModel [
+SpMethodToolbarPresenter >> setVersionModel [
 	
 	versionModel
 		state: false;
@@ -217,22 +217,22 @@ SpMethodToolbar >> setVersionModel [
 ]
 
 { #category : #private }
-SpMethodToolbar >> usersMethod [
+SpMethodToolbarPresenter >> usersMethod [
 	self method methodClass ifNotNil: [ :class | self model browseClassRefsOf: class ]
 ]
 
 { #category : #accessing }
-SpMethodToolbar >> usersModel [
+SpMethodToolbarPresenter >> usersModel [
 	^ usersModel
 ]
 
 { #category : #private }
-SpMethodToolbar >> versionMethod [
+SpMethodToolbarPresenter >> versionMethod [
 	self method ifNotNil: [ :aMethod | self model browseVersionsFrom: aMethod ]
 ]
 
 { #category : #accessing }
-SpMethodToolbar >> versionModel [
+SpMethodToolbarPresenter >> versionModel [
 
 	^ versionModel
 ]

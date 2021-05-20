@@ -7,6 +7,12 @@ Class {
 	#category : #'Spec2-Adapters-Morphic-Base'
 }
 
+{ #category : #accessing }
+SpMorphicToolbarButtonAdapter >> badge [
+
+	^ self presenter badge
+]
+
 { #category : #factory }
 SpMorphicToolbarButtonAdapter >> buildWidget [
 	| button |
@@ -25,10 +31,35 @@ SpMorphicToolbarButtonAdapter >> button [
 	^ widget
 ]
 
+{ #category : #accessing }
+SpMorphicToolbarButtonAdapter >> enabled: aBoolean [
+
+	super enabled: aBoolean.
+	self updateIcon
+]
+
 { #category : #execution }
 SpMorphicToolbarButtonAdapter >> execute [
 
 	self presenter action cull: self presenter
+]
+
+{ #category : #accessing }
+SpMorphicToolbarButtonAdapter >> icon [
+	| icon |
+	
+	icon := self presenter icon.
+	icon ifNil: [ ^ nil ].
+	
+	^ self presenter isEnabled
+		ifTrue: [ icon ]
+		ifFalse: [ icon asGrayScaleWithAlpha ]
+]
+
+{ #category : #accessing }
+SpMorphicToolbarButtonAdapter >> label [
+
+	^ self presenter label
 ]
 
 { #category : #factory }
@@ -41,7 +72,7 @@ SpMorphicToolbarButtonAdapter >> morphClass [
 SpMorphicToolbarButtonAdapter >> newButton [
 	
 	^ (self morphClass
-			on: self presenter
+			on: self
 			getState: nil 
 			action: #execute)
 		helpText: self presenter help;

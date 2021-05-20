@@ -69,25 +69,24 @@ SpMorphicMenuItemAdapter >> buildWidgetAutoRefresh [
 
 { #category : #factory }
 SpMorphicMenuItemAdapter >> buildWidgetNoRefresh [
-
 	| item |
-	item := ToggleMenuItemMorph new
-		        contents: self name;
-		        target: self;
-		        selector: #performMenuActionWith:;
-		        subMenu: self subMenu;
-		        argumentsBlock: self actionArguments;
-		        getStateSelector: self stateSelector;
-		        icon: self icon;
-		        enablementSelector: #enabled;
-		        balloonText: self balloonText;
-		        keyText: self shortcutText;
-		        yourself.
+
+	item := SpToggleMenuItemMorph new
+		contents: self name;
+		target: self;
+		selector: #performMenuActionWith:;
+		subMenu: self subMenu;
+		argumentsBlock: self actionArguments;
+		getStateSelector: self stateSelector;
+		icon: self icon;
+		enablementSelector: #enabled;
+		balloonText: self balloonText;
+		keyText: self shortcutText;
+		yourself.
 
 	self presenter whenNameChangedDo: [ item contents: self name ].
 	self presenter whenIconChangedDo: [ item icon: self icon ].
-	self presenter whenDescriptionChangedDo: [ 
-		item balloonText: self balloonText ].
+	self presenter whenDescriptionChangedDo: [ item balloonText: self balloonText ].
 
 	^ item
 ]
@@ -154,17 +153,14 @@ SpMorphicMenuItemAdapter >> shortcut [
 
 { #category : #'widget API' }
 SpMorphicMenuItemAdapter >> shortcutText [
-	
 	| shortcut |
 	
 	shortcut := self shortcut.
-	shortcut isString ifTrue: [ shortcut := self defaultModifierShortcut ].
+	shortcut isString ifTrue: [
+		shortcut := self defaultModifierShortcut ].
 	shortcut ifNil: [ ^ nil ].
 
-	"We can use the KMShortcutPrinter. ToggleMenuItemMorph handles when it has been already normalized or not"
-		
-	^ KMShortcutPrinter toString: shortcut asKeyCombination
-	
+	^ KMShortcutPrinter toString: shortcut asKeyCombination	
 ]
 
 { #category : #'widget API' }

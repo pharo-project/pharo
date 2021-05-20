@@ -21,8 +21,8 @@ SpMorphicPanedLayoutTest >> testListTakesAssignedSpace [
 	| list |
 
 	(instance := SpPresenter new) 
-		layout: (SpPanedLayout newVertical 
-			add: (SpPanedLayout newHorizontal
+		layout: (SpPanedLayout newTopToBottom 
+			add: (SpPanedLayout newLeftToRight
 				add: (list := instance newTree);
 				add: (instance newLabel);
 				yourself);

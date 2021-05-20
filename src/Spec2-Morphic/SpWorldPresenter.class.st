@@ -75,12 +75,6 @@ SpWorldPresenter >> openWithSpecLayout: aSpec [
 ]
 
 { #category : #private }
-SpWorldPresenter >> title: aString [
-
-	self adapter ifNotNil: [ :worldAdapter | worldAdapter title: self title ]
-]
-
-{ #category : #private }
 SpWorldPresenter >> updateTitle [
 	"Update the window title"
 

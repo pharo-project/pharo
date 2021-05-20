@@ -9,7 +9,7 @@ I set their min at 0 and their max at 255.
 I provide the methods color that calculate the Color obtains with the current value of the sliders.
 "
 Class {
-	#name : #SpRGBSliders,
+	#name : #SpRGBSlidersPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'redSlider',
@@ -20,7 +20,7 @@ Class {
 }
 
 { #category : #specs }
-SpRGBSliders class >> defaultSpec [
+SpRGBSlidersPresenter class >> defaultSpec [
 	^ SpBoxLayout newTopToBottom
 		add: #redSlider;
 		add: #greenSlider;
@@ -29,12 +29,12 @@ SpRGBSliders class >> defaultSpec [
 ]
 
 { #category : #accessing }
-SpRGBSliders >> blueSlider [
+SpRGBSlidersPresenter >> blueSlider [
 	^ blueSlider
 ]
 
 { #category : #accessing }
-SpRGBSliders >> color [
+SpRGBSlidersPresenter >> color [
 	^ (Color
 				r: redSlider value
 				g: greenSlider value
@@ -43,15 +43,15 @@ SpRGBSliders >> color [
 ]
 
 { #category : #accessing }
-SpRGBSliders >> greenSlider [
+SpRGBSlidersPresenter >> greenSlider [
 	^ greenSlider
 ]
 
 { #category : #initialization }
-SpRGBSliders >> initializePresenters [
-	redSlider := self instantiate: SpSliderInput.
-	greenSlider := self instantiate: SpSliderInput.
-	blueSlider := self instantiate: SpSliderInput.
+SpRGBSlidersPresenter >> initializePresenters [
+	redSlider := self instantiate: SpSliderInputPresenter.
+	greenSlider := self instantiate: SpSliderInputPresenter.
+	blueSlider := self instantiate: SpSliderInputPresenter.
 	redSlider
 		min: 0;
 		max: 255; label: 'Red' translated.
@@ -68,12 +68,12 @@ SpRGBSliders >> initializePresenters [
 ]
 
 { #category : #accessing }
-SpRGBSliders >> redSlider [
+SpRGBSlidersPresenter >> redSlider [
 	^ redSlider
 ]
 
 { #category : #initialization }
-SpRGBSliders >> whenChangedDo: aBlock [
+SpRGBSlidersPresenter >> whenChangedDo: aBlock [
 	redSlider whenValueChangedDo: aBlock.
 	greenSlider whenValueChangedDo: aBlock.
 	blueSlider whenValueChangedDo: aBlock

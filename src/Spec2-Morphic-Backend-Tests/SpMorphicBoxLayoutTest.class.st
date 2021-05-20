@@ -118,7 +118,7 @@ SpMorphicBoxLayoutTest >> testPresenterTakesRightHeight [
 	| presenter l1 l2 |
 	
 	(presenter := SpPresenter new) 
-		layout: (SpBoxLayout newVertical 
+		layout: (SpBoxLayout newTopToBottom 
 			add: (l1 := (presenter newLabel label: 'Line 1')) expand: false;
 			add: (l2 := (presenter newLabel label: 'Line 2')) expand: false).
 	

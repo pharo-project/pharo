@@ -1,32 +1,32 @@
 "
-! Style properties (==SpStyleProperty==)
+# Style properties (`SpPropertyStyle`)
 
 Style properties define different kind of properties a morphic component can have. There are several types of properties, defined as: 
 
-- *class:SpStyleContainer*
-- *class:SpStyleDraw*
-- *class:SpStyleFont*
-- *class:SpStyleGeometry*
+- `SpContainerStyle`
+- `SpDrawStyle`
+- `SpFontStyle`
+- `SpGeometryStyle`
 "
 Class {
-	#name : #SpStyleProperty,
+	#name : #SpPropertyStyle,
 	#superclass : #SpStyle,
 	#category : #'Spec2-Adapters-Morphic-StyleSheet'
 }
 
 { #category : #copying }
-SpStyleProperty >> , other [
+SpPropertyStyle >> , other [
 
 	^ self mergeWith: other
 ]
 
 { #category : #operations }
-SpStyleProperty >> applyTo: aMorph [
+SpPropertyStyle >> applyTo: aMorph [
 	
 ]
 
 { #category : #'instance creation' }
-SpStyleProperty >> fromSton: stonReader [
+SpPropertyStyle >> fromSton: stonReader [
 
 	"I will use accessors because I want to be able to add convenience methods"
 	stonReader parseMapDo: [ :message :value |
@@ -36,13 +36,19 @@ SpStyleProperty >> fromSton: stonReader [
 ]
 
 { #category : #testing }
-SpStyleProperty >> isStyleProperty [
+SpPropertyStyle >> isGeometry [
+
+	^ false
+]
+
+{ #category : #testing }
+SpPropertyStyle >> isStyleProperty [
 
 	^ true
 ]
 
 { #category : #operations }
-SpStyleProperty >> mergeWith: otherProperty [
+SpPropertyStyle >> mergeWith: otherProperty [
 	| merged |
 
 	self species = otherProperty species ifFalse: [ 
@@ -59,7 +65,7 @@ SpStyleProperty >> mergeWith: otherProperty [
 ]
 
 { #category : #private }
-SpStyleProperty >> toColor: aColorOrSymbol [
+SpPropertyStyle >> toColor: aColorOrSymbol [
 
 	"Try if color"
 	aColorOrSymbol isSymbol ifFalse: [ ^ aColorOrSymbol ].
@@ -70,7 +76,7 @@ SpStyleProperty >> toColor: aColorOrSymbol [
 ]
 
 { #category : #private }
-SpStyleProperty >> toVariable: anObject [
+SpPropertyStyle >> toVariable: anObject [
 
 	^ anObject ifNotNil: [ anObject asStyleVariable ].
 	

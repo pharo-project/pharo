@@ -70,7 +70,12 @@ SpMorphicGridLayoutTest >> styleExtent: aPoint [
 	| rootStyle |
 
 	rootStyle := (SpStyleSTONReader fromString: ('
-.application [ Geometry \{ #width: {1}, #height: {2} \} ]'
+.application [ 
+	Geometry \{ 
+		#width: {1}, 
+		#height: {2}, 
+		#hResizing: false, 
+		#vResizing: false \} ]'
 	format: { aPoint x. aPoint y })).
 	
 	^ SpMorphStyle newStyles: rootStyle flattenClasses

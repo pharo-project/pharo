@@ -1,5 +1,5 @@
 "
-! Geometry properties (==SpStyleGeometry==)
+# Geometry properties (`SpGeometryStyle`)
 
 Geometry properties controls how the component (morph) will be arranged within its layout.
 
@@ -7,15 +7,15 @@ Geometry properties controls how the component (morph) will be arranged within i
 - vResizing: the component can be resized vertically? (boolean, default depends on how the morph behaves outside spec)
 - width: fixed width of the component.
 - height: fixed height of the component.
-- minWidth: minimum width of the component (to use when ==hResizing=true==) 
-- minHeight: minimum height of the component (to use when ==vResizing=true==) 
-- maxWidth: maximum width of the component (to use when ==hResizing=true==) 
-- maxHeight: maximum height of the component (to use when ==vResizing=true==) 
+- minWidth: minimum width of the component (to use when `hResizing=true`) 
+- minHeight: minimum height of the component (to use when `vResizing=true`) 
+- maxWidth: maximum width of the component (to use when `hResizing=true`) 
+- maxHeight: maximum height of the component (to use when `vResizing=true`) 
 
-!! Usage
-The identifier of geometry in the stylesheet is ==Geometry==.
+## Usage
+The identifier of geometry in the stylesheet is `Geometry`.
 
-[[[
+```
 Geometry { 
 	#hResizing: false,
 	#vResizing: false,
@@ -26,11 +26,11 @@ Geometry {
 	#maxWidth: 150,
 	#maxHeight: 25
 }
-]]]
+```
 "
 Class {
-	#name : #SpStyleGeometry,
-	#superclass : #SpStyleProperty,
+	#name : #SpGeometryStyle,
+	#superclass : #SpPropertyStyle,
 	#instVars : [
 		'width',
 		'height',
@@ -43,13 +43,13 @@ Class {
 }
 
 { #category : #'ston-core' }
-SpStyleGeometry class >> stonName [
+SpGeometryStyle class >> stonName [
 	
 	^ 'Geometry'
 ]
 
 { #category : #operations }
-SpStyleGeometry >> applyTo: aMorph [
+SpGeometryStyle >> applyTo: aMorph [
 
 	(self widthVariable preferredValueWith: aMorph width) 
 		ifNotNil: [ :aNumber | aMorph width: aNumber ].
@@ -66,7 +66,7 @@ SpStyleGeometry >> applyTo: aMorph [
 ]
 
 { #category : #private }
-SpStyleGeometry >> geometryValueBetween: baseNumber and: otherNumber [
+SpGeometryStyle >> geometryValueBetween: baseNumber and: otherNumber [
 
 	^ baseNumber = 0 
 		ifTrue: [ otherNumber ]
@@ -74,79 +74,85 @@ SpStyleGeometry >> geometryValueBetween: baseNumber and: otherNumber [
 ]
 
 { #category : #accessing }
-SpStyleGeometry >> hResizing [
+SpGeometryStyle >> hResizing [
 
 	^ self hResizingVariable value
 ]
 
 { #category : #accessing }
-SpStyleGeometry >> hResizing: aBoolean [
+SpGeometryStyle >> hResizing: aBoolean [
 
 	hResizing := aBoolean asStyleVariable
 ]
 
 { #category : #'accessing variables' }
-SpStyleGeometry >> hResizingVariable [
+SpGeometryStyle >> hResizingVariable [
 
 	^ self toVariable: hResizing
 ]
 
 { #category : #accessing }
-SpStyleGeometry >> height [
+SpGeometryStyle >> height [
 
 	^ self heightVariable value
 ]
 
 { #category : #accessing }
-SpStyleGeometry >> height: aNumber [
+SpGeometryStyle >> height: aNumber [
 	
 	height := aNumber asStyleVariable
 ]
 
 { #category : #'accessing variables' }
-SpStyleGeometry >> heightVariable [
+SpGeometryStyle >> heightVariable [
 
 	^ self toVariable: (height ifNil: [ 0 ])
 ]
 
+{ #category : #testing }
+SpGeometryStyle >> isGeometry [
+
+	^ true
+]
+
 { #category : #accessing }
-SpStyleGeometry >> minHeight [
+SpGeometryStyle >> minHeight [
 
 	^ self minHeightVariable value
 ]
 
 { #category : #accessing }
-SpStyleGeometry >> minHeight: aNumber [
+SpGeometryStyle >> minHeight: aNumber [
 	
 	minHeight := aNumber asStyleVariable
 ]
 
 { #category : #'accessing variables' }
-SpStyleGeometry >> minHeightVariable [
+SpGeometryStyle >> minHeightVariable [
 
 	^ self toVariable: minHeight
 ]
 
 { #category : #accessing }
-SpStyleGeometry >> minWidth [
+SpGeometryStyle >> minWidth [
 
 	^ self minWidthVariable value
 ]
 
 { #category : #accessing }
-SpStyleGeometry >> minWidth: aNumber [
+SpGeometryStyle >> minWidth: aNumber [
 
 	minWidth := aNumber asStyleVariable
 ]
 
 { #category : #'accessing variables' }
-SpStyleGeometry >> minWidthVariable [
+SpGeometryStyle >> minWidthVariable [
 
 	^ self toVariable: minWidth
 ]
 
 { #category : #private }
-SpStyleGeometry >> resizingStringFor: expand [
+SpGeometryStyle >> resizingStringFor: expand [
 
 	^ expand
 		ifTrue: [ #spaceFill ]
@@ -154,37 +160,37 @@ SpStyleGeometry >> resizingStringFor: expand [
 ]
 
 { #category : #accessing }
-SpStyleGeometry >> vResizing [
+SpGeometryStyle >> vResizing [
 
 	^ self vResizingVariable value
 ]
 
 { #category : #accessing }
-SpStyleGeometry >> vResizing: aBoolean [
+SpGeometryStyle >> vResizing: aBoolean [
 
 	vResizing := aBoolean asStyleVariable
 ]
 
 { #category : #'accessing variables' }
-SpStyleGeometry >> vResizingVariable [
+SpGeometryStyle >> vResizingVariable [
 
 	^ self toVariable: vResizing
 ]
 
 { #category : #accessing }
-SpStyleGeometry >> width [
+SpGeometryStyle >> width [
 
 	^ self widthVariable value
 ]
 
 { #category : #accessing }
-SpStyleGeometry >> width: aNumber [
+SpGeometryStyle >> width: aNumber [
 
 	width := aNumber asStyleVariable
 ]
 
 { #category : #'accessing variables' }
-SpStyleGeometry >> widthVariable [
+SpGeometryStyle >> widthVariable [
 
 	^ self toVariable: (width ifNil: [ 0 ])
 ]

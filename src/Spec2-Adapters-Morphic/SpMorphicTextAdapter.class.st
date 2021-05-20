@@ -96,7 +96,7 @@ SpMorphicTextAdapter >> cursorPosition [
 { #category : #'widget API' }
 SpMorphicTextAdapter >> cursorPositionIndex: index [ 
 
-	self widgetDo: [ :w | ^ w textArea editor pointIndex: index ]
+	self widgetDo: [ :w | w textArea pointBlock: (w textArea paragraph characterBlockForIndex: index) ]
 ]
 
 { #category : #commands }
@@ -127,6 +127,13 @@ SpMorphicTextAdapter >> findNextText [
 SpMorphicTextAdapter >> findText [
 
 	self editor find
+]
+
+{ #category : #api }
+SpMorphicTextAdapter >> lineAtCursorPosition [
+
+	^ self widgetDo: [ :w | 
+		w textArea editor lineAtCursorPosition ]
 ]
 
 { #category : #private }
