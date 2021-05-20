@@ -51,7 +51,7 @@ BaselineOfSpec2 >> baseline: spec [
 		'Core'
 		'Support').
 
-	spec group: 'default' with: #('Base' 'Tests' 'Code' 'CodeTests').
+	spec group: 'default' with: #('SpecCore' 'Base' 'Code' 'Tests' 'CodeTests').
 ]
 
 { #category : #script }
