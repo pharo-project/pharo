@@ -1,17 +1,17 @@
 Class {
-	#name : #SpLayoutDirectionVertical,
+	#name : #SpVerticalLayoutDirection,
 	#superclass : #SpLayoutDirection,
 	#category : #'Spec2-Layout-Base'
 }
 
 { #category : #testing }
-SpLayoutDirectionVertical >> isVertical [
+SpVerticalLayoutDirection >> isVertical [
 
 	^ true
 ]
 
 { #category : #factory }
-SpLayoutDirectionVertical >> newWidgetOn: anAdapter [
+SpVerticalLayoutDirection >> newWidgetOn: anAdapter [
 
 	^ anAdapter newVertical
 ]

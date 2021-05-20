@@ -14,9 +14,9 @@ SpDirectionableLayout class >> new [
 ]
 
 { #category : #'instance creation' }
-SpDirectionableLayout class >> newHorizontal [ 
+SpDirectionableLayout class >> newHorizontal [
 
-	^ self newLeftToRight 
+	^ self newLeftToRight
 ]
 
 { #category : #'instance creation' }

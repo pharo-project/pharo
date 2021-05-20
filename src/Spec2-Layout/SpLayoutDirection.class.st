@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 SpLayoutDirection class >> horizontal [
 
-	^ SpLayoutDirectionHorizontal uniqueInstance
+	^ SpHorizontalLayoutDirection uniqueInstance
 ]
 
 { #category : #accessing }
@@ -24,7 +24,7 @@ SpLayoutDirection class >> uniqueInstance [
 { #category : #accessing }
 SpLayoutDirection class >> vertical [
 
-	^ SpLayoutDirectionVertical uniqueInstance
+	^ SpVerticalLayoutDirection uniqueInstance
 ]
 
 { #category : #testing }
