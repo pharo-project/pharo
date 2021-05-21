@@ -28,12 +28,6 @@ Class {
 	#category : #BaselineOfBasicTools
 }
 
-{ #category : #versions }
-BaselineOfBasicTools class >> specVersion [
-
-	^ (self environment at: #BaselineOfUI) specVersion
-]
-
 { #category : #baseline }
 BaselineOfBasicTools >> baseline: spec [
 	<baseline>
@@ -140,7 +134,7 @@ BaselineOfBasicTools >> specBase: spec [
 	
 	spec baseline: 'SpecHelp' with: [
 		spec 
-			repository: ('github://pharo-spec/Spec:{1}/src' format: { self class specVersion });
+			repository: 'github://pharo-spec/Spec:Pharo9.0/src';
 			className: 'BaselineOfSpec2';
 			loads: #('Spec2-Help') ]
 ]

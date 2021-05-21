@@ -33,13 +33,6 @@ Class {
 	#category : #BaselineOfIDE
 }
 
-{ #category : #versions }
-BaselineOfIDE class >> specVersion [
-	
-	"Since BaselineOfUI needs to be load before this"
-	^ (self environment at: #BaselineOfUI) specVersion
-]
-
 { #category : #actions }
 BaselineOfIDE >> additionalInitialization [
 
@@ -318,7 +311,7 @@ BaselineOfIDE >> specCode: spec [
 
 	spec baseline: 'SpecCode' with: [ 
 		spec
-			repository: ('github://pharo-spec/Spec:{1}/src' format: { self class specVersion });
+			repository: 'github://pharo-spec/Spec:Pharo9.0/src';
 			className: 'BaselineOfSpec2';
 			loads: #('Code' 'CodeTests') ]
 ]
