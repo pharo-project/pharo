@@ -23,6 +23,12 @@ Class {
 	#category : #BaselineOfUI
 }
 
+{ #category : #versions }
+BaselineOfUI class >> specVersion [
+
+	^ 'Pharo9.0'
+]
+
 { #category : #baseline }
 BaselineOfUI >> baseline: spec [ 
     
@@ -93,7 +99,7 @@ BaselineOfUI >> specBase: spec [
 	
 	spec baseline: 'SpecBase' with: [
 		spec 
-			repository: 'github://pharo-spec/Spec:Pharo9.0/src';
+			repository: ('github://pharo-spec/Spec:{1}/src' format: { self class specVersion });
 			className: 'BaselineOfSpec2';
 			loads: #('Base' 'Tests') ]
 ]

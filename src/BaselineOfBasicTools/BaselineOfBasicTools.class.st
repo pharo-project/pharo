@@ -28,6 +28,12 @@ Class {
 	#category : #BaselineOfBasicTools
 }
 
+{ #category : #versions }
+BaselineOfBasicTools class >> specVersion [
+
+	^ (self environment at: #BaselineOfUI) specVersion
+]
+
 { #category : #baseline }
 BaselineOfBasicTools >> baseline: spec [
 	<baseline>
@@ -86,7 +92,9 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Regex-Help'.
 		spec package: 'Monticello-OldDataStreamCompatibility'.
 		spec package: 'MonticelloFileServices'.
-		spec package: 'Spec2-Help'.
+		
+		self specHelp: spec.
+		
 		spec package: 'Tools-CodeNavigation'.
 		spec package: 'Tool-Diff'.
 		spec package: 'Tool-FileList'.
@@ -125,4 +133,14 @@ BaselineOfBasicTools >> project [
 	aProject loadType: #atomic.
 	^ aProject.
 	
+]
+
+{ #category : #baseline }
+BaselineOfBasicTools >> specBase: spec [
+	
+	spec baseline: 'SpecHelp' with: [
+		spec 
+			repository: ('github://pharo-spec/Spec:{1}/src' format: { self class specVersion });
+			className: 'BaselineOfSpec2';
+			loads: #('Spec2-Help') ]
 ]
