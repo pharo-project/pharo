@@ -4,6 +4,18 @@ Class {
 	#category : #BaselineOfPharo
 }
 
+{ #category : #'repository urls' }
+BaselineOfPharo class >> specRepository [
+
+	^ 'github://pharo-spec/Spec:{1}/src' format: { self specVersion }
+]
+
+{ #category : #versions }
+BaselineOfPharo class >> specVersion [
+
+	^ 'Pharo9.0'
+]
+
 { #category : #baseline }
 BaselineOfPharo >> baseline: spec [
 	<baseline>

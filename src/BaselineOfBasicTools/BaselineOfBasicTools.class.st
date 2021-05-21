@@ -134,7 +134,7 @@ BaselineOfBasicTools >> specHelp: spec [
 	
 	spec baseline: 'SpecHelp' with: [
 		spec 
-			repository: 'github://pharo-spec/Spec:Pharo9.0/src';
+			repository: (self class environment at: #BaselineOfPharo) specRepository;
 			className: 'BaselineOfSpec2';
 			loads: #('Spec2-Help') ]
 ]

@@ -311,7 +311,7 @@ BaselineOfIDE >> specCode: spec [
 
 	spec baseline: 'SpecCode' with: [ 
 		spec
-			repository: 'github://pharo-spec/Spec:Pharo9.0/src';
+			repository: (self class environment at: #BaselineOfPharo) specRepository;
 			className: 'BaselineOfSpec2';
 			loads: #('Code' 'CodeTests') ]
 ]

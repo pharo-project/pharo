@@ -93,7 +93,7 @@ BaselineOfUI >> specBase: spec [
 	
 	spec baseline: 'SpecBase' with: [
 		spec 
-			repository: 'github://pharo-spec/Spec:Pharo9.0/src';
+			repository: (self class environment at: #BaselineOfPharo) specRepository;
 			className: 'BaselineOfSpec2';
 			loads: #('Base' 'Tests') ]
 ]
