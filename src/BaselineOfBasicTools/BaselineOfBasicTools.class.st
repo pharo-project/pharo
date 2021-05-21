@@ -130,7 +130,7 @@ BaselineOfBasicTools >> project [
 ]
 
 { #category : #baseline }
-BaselineOfBasicTools >> specBase: spec [
+BaselineOfBasicTools >> specHelp: spec [
 	
 	spec baseline: 'SpecHelp' with: [
 		spec 
