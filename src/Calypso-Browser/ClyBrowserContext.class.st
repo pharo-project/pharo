@@ -174,6 +174,12 @@ ClyBrowserContext >> selectedObjects [
 	^self actualSelectionFrom: selectedItems
 ]
 
+{ #category : #'tool controlling' }
+ClyBrowserContext >> showMethodTag: aString [
+	"Default is to do nothing"
+	
+]
+
 { #category : #accessing }
 ClyBrowserContext >> system [
 	^tool system
