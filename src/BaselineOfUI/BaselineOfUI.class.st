@@ -42,11 +42,10 @@ BaselineOfUI >> baseline: spec [
 		"Load morphic before Spec"
 		spec baseline: 'Morphic' with: [ spec repository: repository ].
 		spec baseline: 'Commander2' with: [ spec repository: repository ].
-		spec baseline: 'Spec2' with: [ 
-			spec 
-				repository: repository;
-				loads: #('Base' 'Tests') ].
+		"old spec, to be removed"
 		spec baseline: 'Spec' with: [ spec repository: repository ].
+		"new spec (base), using external configuration"
+		self specBase: spec.		
 		
 		spec baseline: 'DrTests' with: [ spec repository: repository ].
 
@@ -87,4 +86,14 @@ BaselineOfUI >> postload: loader package: packageSpec [
 	PharoCommonTools initialize.
 
 	Initialized := true
+]
+
+{ #category : #baseline }
+BaselineOfUI >> specBase: spec [
+	
+	spec baseline: 'SpecBase' with: [
+		spec 
+			repository: 'github://pharo-spec/Spec:Pharo9.0';
+			className: 'BaselineOfSpec2';
+			loads: #('Base' 'Tests') ]
 ]

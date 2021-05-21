@@ -187,10 +187,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'PharoGlamour' with: [ spec repository: repository ].
 		spec baseline: 'PharoGT' with: [ spec repository: repository ].
 		spec baseline: 'HeuristicCompletion' with: [ spec repository: repository ].
-		spec baseline: 'Spec2' with: [ 
-			spec 
-				repository: repository;
-				loads: #('Code' 'CodeTests') ].
+		self specCode: spec.
 		spec baseline: 'NewTools' with: [
 			spec 
 				repository: repository;
@@ -307,4 +304,14 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	self additionalInitialization.
 
 	Initialized := true.
+]
+
+{ #category : #baseline }
+BaselineOfIDE >> specCode: spec [
+
+	spec baseline: 'SpecCode' with: [ 
+		spec
+			repository: 'github://pharo-spec/Spec:Pharo9.0';
+			className: 'BaselineOfSpec2';
+			loads: #('Code' 'CodeTests') ]
 ]
