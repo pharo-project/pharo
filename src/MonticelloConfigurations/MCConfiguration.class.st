@@ -284,7 +284,8 @@ MCConfiguration >> log: aStream [
 
 { #category : #logging }
 MCConfiguration >> logError: aString [
-	self traceCr ; nextPutAll: 'ERROR: ';
+	self log
+		cr; nextPutAll: 'ERROR: ';
 		nextPutAll: aString; cr;
 		flush.
 
