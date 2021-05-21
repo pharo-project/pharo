@@ -39,5 +39,7 @@ StDebuggerInspectorModel >> inspectedObject [
 
 { #category : #accessing }
 StDebuggerInspectorModel >> labelString [
-	^super labelString capitalized
+
+	^ (self descriptionStringFor: self inspectedObject context receiver) 
+		  truncateWithElipsisTo: 30
 ]

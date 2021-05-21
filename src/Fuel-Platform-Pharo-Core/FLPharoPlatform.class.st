@@ -4,40 +4,6 @@ Class {
 	#category : #'Fuel-Platform-Pharo-Core'
 }
 
-{ #category : #testing }
-FLPharoPlatform class >> addNativeBoostComponents [
-	self environment
-		at: #NBExternalHandle
-		ifPresent: [ :handle | ^ self ].
-
-	self class classInstaller make: [ :aBuilder | 
-		aBuilder 
-			name: #NBExternalHandle;
-			package: self hacksCategoryName].
-]
-
-{ #category : #testing }
-FLPharoPlatform class >> addPackageManifest [
-	self environment
-		at: #PackageManifest
-		ifPresent: [ ^ self ].
-
-	self class classInstaller make: [ :aBuilder | 
-		aBuilder 
-			name: #PackageManifest;
-			package: self hacksCategoryName].
-
-]
-
-{ #category : #'private-hacks' }
-FLPharoPlatform class >> basicAddHacks [
-	super basicAddHacks.
-	
-	self
-		addNativeBoostComponents;
-		addPackageManifest
-]
-
 { #category : #'private-extensions-znbufferedreadstream' }
 FLPharoPlatform class >> fuelNextWordsInto: aWordObject [
 	<flExtensionOf: #ZnBufferedReadStream>

@@ -162,9 +162,7 @@ RBExtractMethodTest >> testExtractWithRenamingOfParameters [
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	refactoring
 		parameterMap:
-			(Dictionary new
-				at: #nameStream put: #newParameter;
-				yourself).
+			(Array with: ((RBArgumentName name: #nameStream) newName: #newParameter)).
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBLintRuleTestData.
 

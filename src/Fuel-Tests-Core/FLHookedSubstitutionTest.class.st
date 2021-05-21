@@ -9,11 +9,13 @@ Class {
 
 { #category : #tests }
 FLHookedSubstitutionTest >> testAvoidRecursion [
-
 	| result original | 
 	original := FLClassWithRecursiveSubstitution new index: 1.
 	
-	result := self resultOfSerializeAndMaterialize: original.
+	"Fail fast so the image doesn't crash if we end up in an endless loop"
+	result := [ self resultOfSerializeAndMaterialize: original ]
+		valueWithin: 1 second
+		onTimeout: [ self fail ].
 	
 	self assert: result index equals: 2
 ]
@@ -73,23 +75,22 @@ FLHookedSubstitutionTest >> testProxyByTarget [
 
 { #category : #tests }
 FLHookedSubstitutionTest >> testProxyByTargetAnalisysIsPropagated [
-	| aProxyClass result pair |
-	self flag: #pharoTodo.	"I don't understand what are we testing here."
-
+	| aProxyClass result pair original |
 	aProxyClass := (self newSubclassOf: Object instanceVariableNames: 'target' classVariableNames: '')
 		duringTestCompileSilently: 'target: x  target := x';
 		duringTestCompileSilently: 'fuelAccept: aVisitor  ^aVisitor visitSubstitution: self by: target';
 		yourself.
 
-	pair := FLPair new.
-	pair left: 6.
-	pair right: 'foo'.
+	pair := FLPair new
+		left: 6;
+		right: 'foo';
+		yourself.
 
-	aProxyClass new
+	original := aProxyClass new
 		target: pair;
 		yourself.
 
-	result := self resultOfSerializeAndMaterialize: pair.
+	result := self resultOfSerializeAndMaterialize: original.
 
 	self assert: result left equals: 6.
 	self assert: result right equals: 'foo'
@@ -103,9 +104,9 @@ FLHookedSubstitutionTest >> testProxyByTargetInsideObjectAndAnalisysIsPropagated
 		duringTestCompileSilently: 'fuelAccept: aVisitor  ^aVisitor visitSubstitution: self by: target';
 		yourself.
 
-	pair := FLPair new.
-	pair left: 6.
-	pair right: 'foo'.
+	pair := FLPair new
+		left: 6;
+		right: 'foo'.
 
 	original := aProxyClass new
 		target: pair;
@@ -134,9 +135,9 @@ FLHookedSubstitutionTest >> testProxyInsideObjectByTarget [
 		target: 5;
 		yourself.
 
-	pair := FLPair new.
-	pair left: original.
-	pair right: 'foo'.
+	pair := FLPair new
+		left: original;
+		right: 'foo'.
 
 	result := self resultOfSerializeAndMaterialize: pair.
 
@@ -146,20 +147,25 @@ FLHookedSubstitutionTest >> testProxyInsideObjectByTarget [
 
 { #category : #tests }
 FLHookedSubstitutionTest >> testSubstituteByItself [
-	| aRecursiveClass |
-	aRecursiveClass := (self newSubclassOf: Object instanceVariableNames: '' classVariableNames: '')
-		                   duringTestCompileSilently: 'fuelAccept: aMapper  
+	| aRecursiveClass result | 
+	aRecursiveClass := (self newSubclassOf: Object instanceVariableNames: '' classVariableNames: '') 
+		duringTestCompileSilently: 'fuelAccept: aMapper  
 			^aMapper 
 				visitSubstitution: self by: self 
 				onRecursionDo: [super fuelAccept: aMapper]';
-		                   yourself.
-	self resultOfSerializeAndMaterialize: aRecursiveClass new
-	"self flag: #todo." "Should test that it doesn't enter in loop."
+		yourself.
+
+	"Fail fast so the image doesn't crash if we end up in an endless loop"
+	result := [ self resultOfSerializeAndMaterialize: aRecursiveClass new ]
+		valueWithin: 1 second
+		onTimeout: [ self fail ].
+	
+	"shouldn't lead to endless loop"
+	self assert: result class identicalTo: aRecursiveClass
 ]
 
 { #category : #tests }
 FLHookedSubstitutionTest >> testTransientByNil [
-
 	| result aClassOfTransientObjects | 
 	aClassOfTransientObjects := self newClass
 		duringTestCompileSilently: 'fuelAccept: aVisitor  ^aVisitor visitSubstitution: self by: nil';
@@ -167,5 +173,5 @@ FLHookedSubstitutionTest >> testTransientByNil [
 
 	result := self resultOfSerializeAndMaterialize: aClassOfTransientObjects new.
 	
-	self assert: result isNil.
+	self assert: result isNil
 ]

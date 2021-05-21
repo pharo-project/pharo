@@ -9,7 +9,7 @@ Class {
 
 { #category : #hooks }
 DTRerunCommand >> execute [
-	self drTest runPluginFor: (self plugin buildReRunConfigurationFrom: self drTest)
+	self context runPluginFor: (self plugin buildReRunConfigurationFrom: self context)
 ]
 
 { #category : #hooks }

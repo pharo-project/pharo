@@ -14,11 +14,6 @@ DTCommand class >> isAbstract [
 ]
 
 { #category : #accessing }
-DTCommand >> drTest [
-	^ self context
-]
-
-{ #category : #accessing }
 DTCommand >> plugin [
-	^ self drTest currentPlugin
+	^ self context plugin
 ]

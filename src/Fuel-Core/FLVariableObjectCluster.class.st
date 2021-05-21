@@ -43,7 +43,7 @@ FLVariableObjectCluster >> addVariableReferenceFrom: anObject to: anotherObject 
 { #category : #'serialize/materialize' }
 FLVariableObjectCluster >> materializeInstanceWith: aDecoder [
 
-	^theClass fuelNew: aDecoder nextEncodedPositiveInteger
+	^theClass fuelNew: aDecoder nextEncodedUint32
 ]
 
 { #category : #'serialize/materialize' }
@@ -62,8 +62,7 @@ FLVariableObjectCluster >> materializeReferencesVariablePartOf: anObject with: a
 
 { #category : #'serialize/materialize' }
 FLVariableObjectCluster >> serializeInstance: anObject with: anEncoder [
-
-	anEncoder encodePositiveInteger: anObject basicSize
+	anEncoder encodeUint32: anObject basicSize
 ]
 
 { #category : #'serialize/materialize' }

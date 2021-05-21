@@ -12,7 +12,8 @@ Class {
 		'getterMethod',
 		'setterMethod',
 		'classVariable',
-		'needsReturn'
+		'needsReturn',
+		'selector'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -46,6 +47,11 @@ RBCreateAccessorsForVariableRefactoring >> createGetterAccessor [
 ]
 
 { #category : #transforming }
+RBCreateAccessorsForVariableRefactoring >> createMatcher [ 
+	^ self parseTreeSearcherClass getterMethod: variableName
+]
+
+{ #category : #transforming }
 RBCreateAccessorsForVariableRefactoring >> createSetterAccessor [
 
 	setterMethod := self findSetterMethod.
@@ -54,19 +60,15 @@ RBCreateAccessorsForVariableRefactoring >> createSetterAccessor [
 
 { #category : #transforming }
 RBCreateAccessorsForVariableRefactoring >> defineGetterMethod [
-	| selector definingClass |
-	definingClass := self definingClass.
-	selector := self safeMethodNameFor: definingClass
-				basedOn: variableName asString.
-	definingClass 
-		compile: ('<1s><r><r><t>^ <2s>' expandMacrosWith: selector with: variableName)
+	self definingClass 
+		compile: ('<1s><r><r><t>^ <2s>' expandMacrosWith: self selector with: variableName)
 		classified: #(#accessing).
 	^selector
 ]
 
 { #category : #transforming }
 RBCreateAccessorsForVariableRefactoring >> defineSetterMethod [
-	| selector definingClass string |
+	| definingClass string |
 	definingClass := self definingClass.
 	string := self needsReturnForSetter 
 				ifTrue: ['<1s> anObject<r><r><t>^ <2s> := anObject']
@@ -90,9 +92,9 @@ RBCreateAccessorsForVariableRefactoring >> definingClass [
 RBCreateAccessorsForVariableRefactoring >> findGetterMethod [
 	| definingClass matcher |
 	definingClass := self definingClass.
-	matcher := self parseTreeSearcherClass getterMethod: variableName.
+	matcher := self createMatcher.
 	^ self possibleGetterSelectors
-		detect: [ :each | 
+		detect: [ :each |
 			(self checkClass: definingClass selector: each using: matcher) notNil
 				and: [ (definingClass subclassRedefines: each) not ] ]
 		ifNone: [ nil ]
@@ -127,7 +129,6 @@ RBCreateAccessorsForVariableRefactoring >> methodsReferencingVariable [
 
 { #category : #testing }
 RBCreateAccessorsForVariableRefactoring >> needsReturnForSetter [
-
 	needsReturn
 		ifNil:
 			[ needsReturn := self usesAssignmentOf: variableName in: class classVariable: classVariable ].
@@ -149,6 +150,13 @@ RBCreateAccessorsForVariableRefactoring >> preconditions [
 	^classVariable 
 		ifTrue: [RBCondition definesClassVariable: variableName asSymbol in: class]
 		ifFalse: [RBCondition definesInstanceVariable: variableName in: class]
+]
+
+{ #category : #transforming }
+RBCreateAccessorsForVariableRefactoring >> selector [ 
+	^ selector ifNil: [ 
+		selector := self safeMethodNameFor: self definingClass
+				basedOn: variableName asString. ]
 ]
 
 { #category : #'private-accessing' }

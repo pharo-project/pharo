@@ -272,15 +272,11 @@ ReleaseTest >> testNoPeriodInMethodSignature [
 	methods := SystemNavigation new allMethods select: [ :method | 
  		method sourceCode lines first trimRight last == $..].
 	
-	"there are 11 problematic methods"
-	self assert: methods size <=11.
-	
-	"there should be no method left"
-	"self assert: methods isEmpty description: [ 
+	self assert: methods isEmpty description: [ 
 		String streamContents: [ :stream | 
 			stream
 				nextPutAll: 'Found methods with period in signature:';
-				print: methods ] ]"
+				print: methods ] ]
 	
 ]
 

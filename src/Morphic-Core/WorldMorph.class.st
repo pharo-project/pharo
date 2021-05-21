@@ -81,14 +81,14 @@ WorldMorph class >> displayScaleFactor: aNumber [
 WorldMorph class >> displayScaleFactorSettingsOn: aBuilder [ 
 	<systemsettings>
 	
-	(aBuilder range: #displayScaleFactor)
+	(aBuilder range: #scaleFactor)
 		parent: #appearance;
 		order: 3;
 		default: 1;
 		label: 'Display scale factor';
 		description: 'Specify scale factor for UI elements. This setting does not affect defined font sizes.';
 		target: self;
-		range: (0.3 to: 8 by: 0.1)
+		range: (0.5 to: 5 by: 0.5)
 	
 ]
 
@@ -125,6 +125,18 @@ WorldMorph class >> removeExtraWorld: aWorld [
 		ExtraWorldList := self extraWorldList copyWithout: aWorld.
 	].
 	CursorOwnerWorld == aWorld ifTrue: [ CursorOwnerWorld := nil ].	
+]
+
+{ #category : #setting }
+WorldMorph class >> scaleFactor [
+	
+	^ World scaleFactor 
+]
+
+{ #category : #setting }
+WorldMorph class >> scaleFactor: aValue [
+	
+	World scaleFactor: aValue
 ]
 
 { #category : #cursor }

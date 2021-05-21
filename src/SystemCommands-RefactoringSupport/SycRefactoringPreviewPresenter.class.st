@@ -79,8 +79,7 @@ SycRefactoringPreviewPresenter >> activeScope [
 SycRefactoringPreviewPresenter >> alert: aString [
 	"Display a message for the user to read and then dismiss."
 
-	aString isEmptyOrNil
-		ifFalse: [ UIManager default alert: aString ]
+	aString isEmptyOrNil ifFalse: [ self uiManager alert: aString ]
 ]
 
 { #category : #'epicea support' }
@@ -112,6 +111,19 @@ SycRefactoringPreviewPresenter >> changes [
 SycRefactoringPreviewPresenter >> changes: aCollection [
 	changes := aCollection.
 	self generateChanges 
+]
+
+{ #category : #initialization }
+SycRefactoringPreviewPresenter >> columns [
+
+	^ { (SpCompositeTableColumn new
+		   addColumn:
+			   ((SpCheckBoxTableColumn evaluated: [ :x | selectedRefactorings at: x ])
+				    onActivation: [ :class | self toggleSelectionOf: class ];
+				    onDeactivation: [ :class | self toggleSelectionOf: class ];
+				    width: 20);
+		   addColumn: (SpStringTableColumn evaluated: #name);
+		   yourself) }
 ]
 
 { #category : #accessing }
@@ -164,17 +176,12 @@ SycRefactoringPreviewPresenter >> initializePresenter [
 
 { #category : #initialization }
 SycRefactoringPreviewPresenter >> initializeWidgets [
-	table := self newTable.
+
 	diffPresenter := self newDiff.
 	scopeDropList := self newDropList.
-
-	table
-		addColumn:
-			((SpCheckBoxTableColumn evaluated: [ :x | selectedRefactorings at: x ])
-				onActivation: [ :class | self toggleSelectionOf: class ];
-				onDeactivation: [ :class | self toggleSelectionOf: class ];
-				width: 20);
-		addColumn: (SpStringTableColumn evaluated: #name);
+	table := self newTable.
+	
+	table columns: self columns;
 		hideColumnHeaders.
 
 	diffPresenter disable.

@@ -7,7 +7,7 @@ CmdCommand >> confirmRefactoringInContext: aToolContext by: aCommandActivator [
 		for: self
 		scopes: aToolContext refactoringScopes.
 	submitDialog existChanges ifTrue:[
-	submitDialog openModalWithSpec
+	submitDialog openDialogWithSpec
 		okAction: [ submitDialog accept.
 			aCommandActivator applyCommandResult ];
 		cancelAction: [ submitDialog cancel ]]

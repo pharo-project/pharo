@@ -13,6 +13,12 @@ Class {
 	#category : #'Microdown-Parser'
 }
 
+{ #category : #testing }
+MicAbstractMicrodownTextualBuilder class >> isAbstract [
+
+	^ self == MicAbstractMicrodownTextualBuilder
+]
+
 { #category : #'instance creation' }
 MicAbstractMicrodownTextualBuilder class >> on: aStream [ 
 	^ self new

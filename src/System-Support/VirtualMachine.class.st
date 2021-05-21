@@ -522,6 +522,22 @@ VirtualMachine >> maxFilenameLength [
 	^ (self getSystemAttribute: 1201) ifNotNil: [ :string | string asNumber ]
 ]
 
+{ #category : #gc }
+VirtualMachine >> maxOldSpaceSize [
+
+	"the max allowed size of old space (Spur only; nil otherwise; 0 implies no limit except that of the underlying platform)"
+
+	^ self parameterAt: 67
+]
+
+{ #category : #gc }
+VirtualMachine >> maxOldSpaceSize: aValue [
+
+	"the max allowed size of old space (Spur only; nil otherwise; 0 implies no limit except that of the underlying platform)"
+
+	^ self parameterAt: 67 put: aValue
+]
+
 { #category : #statistics }
 VirtualMachine >> maximumPauseTimeDueToSegmentAllocation [
 

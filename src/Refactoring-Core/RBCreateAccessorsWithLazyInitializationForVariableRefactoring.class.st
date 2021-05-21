@@ -47,10 +47,42 @@ RBCreateAccessorsWithLazyInitializationForVariableRefactoring class >> model: aR
 
 { #category : #'instance creation' }
 RBCreateAccessorsWithLazyInitializationForVariableRefactoring class >> variable: aVarName class: aClass classVariable: aBoolean defaultValue: aString [
+
 	^(self variable: aVarName class: aClass)
 		classVariable: aBoolean;
 		defaultValue: aString;
 		yourself
+]
+
+{ #category : #preconditions }
+RBCreateAccessorsWithLazyInitializationForVariableRefactoring >> checkVariableReferencesIn: aParseTree [
+
+	| searcher |
+
+	searcher := self parseTreeSearcher.
+	searcher
+		matches: '`var'
+		do: [ :aNode :answer | 
+			| name |
+
+			name := aNode name.
+			( aNode whoDefines: name ) ifNil: [ self canReferenceVariable: name in: class  ]
+			].
+	searcher executeTree: aParseTree
+]
+
+{ #category : #private }
+RBCreateAccessorsWithLazyInitializationForVariableRefactoring >> createGetterAccessor [
+
+	getterMethod := self findGetterMethod.
+	getterMethod ifNil: [ getterMethod := self defineGetterMethod ]
+		ifNotNil: [ |matcher|
+			matcher := self parseTreeSearcherClass new
+			matchesMethod: '`method ^' , variableName 
+			do: [:aNode :ans | aNode selector].
+			(self checkClass: self definingClass selector: getterMethod using: matcher)
+				ifNotNil: [ selector := getterMethod ].
+			getterMethod := self defineGetterMethod ]
 ]
 
 { #category : #acccessing }
@@ -65,15 +97,31 @@ RBCreateAccessorsWithLazyInitializationForVariableRefactoring >> defaultValue: a
 
 { #category : #transforming }
 RBCreateAccessorsWithLazyInitializationForVariableRefactoring >> defineGetterMethod [
-	| selector definingClass |
-	definingClass := self definingClass.
-	selector := self safeMethodNameFor: definingClass
-				basedOn: variableName asString.
-	definingClass 
+	
+	self definingClass 
 		compile: ('<1s><r><r><t>^ <2s> ifNil: [ <2s> := <3s> ]' 
-			expandMacrosWith: selector 
+			expandMacrosWith: self selector 
 			with: variableName
 			with: self defaultValue)
 		classified: #(#accessing).
 	^selector
+]
+
+{ #category : #preconditions }
+RBCreateAccessorsWithLazyInitializationForVariableRefactoring >> preconditions [
+	^ super preconditions & 
+	(RBCondition withBlock: [ 
+		self verifyInitializationExpressionOf: self defaultValue.
+		true ])
+]
+
+{ #category : #preconditions }
+RBCreateAccessorsWithLazyInitializationForVariableRefactoring >> verifyInitializationExpressionOf: initializer [
+	| tree |
+	tree := self parserClass
+		parseExpression: initializer
+		onError: [ :msg :index | self refactoringFailure: 'Illegal initialization code because:.', msg ].
+	tree isValue
+		ifFalse: [ self refactoringFailure: 'The initialization code cannot be a return node or a list of statements' ].
+	self checkVariableReferencesIn: tree.
 ]

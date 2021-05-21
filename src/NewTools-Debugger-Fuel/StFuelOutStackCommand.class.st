@@ -34,7 +34,5 @@ StFuelOutStackCommand >> appliesTo: aDebugger [
 
 { #category : #actions }
 StFuelOutStackCommand >> execute [
-
-	FLDebuggerStackSerializer new serializeStackFromContext:
-		self context interruptedContext copyStack
+	FLDebuggerStackSerializer serializeStackFromContext: self context interruptedContext
 ]

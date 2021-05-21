@@ -538,7 +538,7 @@ DebugSession >> stepOver: aContext [
 	after the invoked method returns."
 	
 	| newContext |
-	
+	aContext stepIntoQuickMethod: false.
 	(self isContextPostMortem: aContext) ifTrue: [^ self].
 	
 	newContext := interruptedProcess completeStep: aContext.
@@ -560,7 +560,7 @@ DebugSession >> stepThrough [
 DebugSession >> stepThrough: aContext [
 	"Send messages until you return to selectedContext.
 	 Used to step into a block in the method."
-	
+	aContext stepIntoQuickMethod: false.
 	(self isContextPostMortem: aContext) ifTrue: [^ self].
 	
 	interruptedProcess stepToHome: aContext.
@@ -602,15 +602,18 @@ DebugSession >> terminate [
 
 { #category : #evaluating }
 DebugSession >> unwindAndRestartToContext: aContext [
-	|ctx|
 
+	| ctx |
 	ctx := interruptedProcess popTo: aContext.
-	ctx == aContext ifTrue: [ 
-		"Only restart the process if the stack was unwind"
+	ctx == aContext ifTrue: [ "Only restart the process if the stack was unwind"
 		interruptedProcess restartTop.
-		self stepToFirstInterestingBytecodeIn: interruptedProcess ].
+
+		aContext method isQuick
+			ifTrue: [ aContext updatePCForQuickPrimitiveRestart ]
+			ifFalse: [ 
+			self stepToFirstInterestingBytecodeIn: interruptedProcess ] ].
 	self flag: 'Should a warning be displayed if the the unwind failed?'.
-	self updateContextTo:  aContext
+	self updateContextTo: aContext
 ]
 
 { #category : #context }

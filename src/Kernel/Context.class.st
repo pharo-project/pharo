@@ -778,6 +778,17 @@ Context >> exceptionHandlerBlock [
 
 ]
 
+{ #category : #'private-exceptions' }
+Context >> exceptionsToCaptureWhenStepping [
+
+	| exceptionsToCapture exceptionsSet |
+	exceptionsToCapture := Exception allSubclasses select: [ :c | 
+		                       c captureIfSignalledWhenStepping ].
+	exceptionsSet := ExceptionSet new.
+	exceptionsToCapture do: [ :e | exceptionsSet add: e ].
+	^ exceptionsSet
+]
+
 { #category : #'system simulation' }
 Context >> failPrimitiveWith: maybePrimFailToken [
 	"The receiver is a freshly-created context on a primitive method.  Skip the callPrimitive:
@@ -1609,6 +1620,14 @@ Context >> pushTemporaryVariable: offset [
 	self push: (self at: offset + 1)
 ]
 
+{ #category : #private }
+Context >> quickMethodPrimitiveBytecodeSize [
+
+	"A quick method starts with a 3 bytecodes primitive (264 or 256)"
+
+	^ 3
+]
+
 { #category : #accessing }
 Context >> receiver [ 
 
@@ -1766,7 +1785,7 @@ Context >> runUntilErrorOrReturnFrom: aSender [
 	"Insert ensure and exception handler contexts under aSender"
 	error := nil.
 	context := aSender insertSender: (Context
-		contextOn: Error, Halt do: [:ex |
+		contextOn: self exceptionsToCaptureWhenStepping do: [:ex |
 			error ifNil: [
 				error := ex.
 				topContext := thisContext.
@@ -1887,10 +1906,10 @@ Context >> send: selector to: aReceiver with: arguments super: superFlag [
 	- primitive 264 or 256: a 3 bytecode primitive (initialPC)
 	- a push of a value (endPC - 1)
 	- the return top instruction (endPC)
-	When activating the quic method, we arrive on the PC corresponding to the primitive which is not suposed to be stepped.
+	When activating the quick method, we arrive on the PC corresponding to the primitive which is not suposed to be stepped.
 	We have to fix the PC so that the next executed bytecode is the push.
 	We do that by setting the PC to aMethod initialPC + 3 (the number of bytes of the primitive)."
-	(aMethod isQuick and:[self stepIntoQuickMethod]) ifTrue: [ context pc: aMethod initialPC + 3].
+	(aMethod isQuick and:[self stepIntoQuickMethod]) ifTrue: [ context pc: aMethod initialPC + self quickMethodPrimitiveBytecodeSize].
 	
 	"check if activated method handles the error code (a first bytecode will be store into temp)"
 	"long store temp"
@@ -1909,8 +1928,6 @@ Context >> sender [
 { #category : #private }
 Context >> setNamedPrimitiveInformationFrom: fromMethod toMethod: toMethod [
 	"For named primitives, the first literal contains a special object that has information of the primitive. In this method we cope such information from one to another one."
-	"((File class >> #open:writable:) literalAt: 1) >>> #(#FilePlugin #primitiveFileOpen 0 0)"
-
 	| spec |	
 	spec := toMethod literalAt: 1.	
 	spec replaceFrom: 1 to: spec size with: (fromMethod literalAt: 1) startingAt: 1.
@@ -2064,8 +2081,8 @@ Context >> stepIntoQuickMethod [
 ]
 
 { #category : #'debugger access' }
-Context >> stepIntoQuickMethod: aBoolean [ 
-	self compiledCode isCompiledBlock ifTrue: [ ^self ].
+Context >> stepIntoQuickMethod: aBoolean [
+
 	self compiledCode stepIntoQuickMethods: aBoolean
 ]
 

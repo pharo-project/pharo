@@ -11,16 +11,46 @@ RBAddParameterTest >> setUp [
 ]
 
 { #category : #tests }
-RBAddParameterTest >> testAddParameterForTwoArgumentMessage [
-	| oldSelector newSelector refactoring class |
+RBAddParameterTest >> testAddParameterAndRenameParameters [
+	| oldSelector newSelector refactoring class newArg |
 	oldSelector := ('called:' , 'on:') asSymbol.
 	newSelector := #called:bar:on:.
+	newArg := RBArgumentName name: 'anObject' value: '#(1.0)'.
 	refactoring := RBAddParameterRefactoring 
 		addParameterToMethod: oldSelector
 		in: RBRefactoryTestDataApp
 		newSelector: newSelector
-		permutation: #(1 0 2)
-		initializer: '#(1.0)'.
+		permutation: #(1 -1 2)
+		newArgs: { newArg }.
+	refactoring renameMap: (Array with: ((RBArgumentName name: 'aBlock') newName: 'aBlock1')).
+	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
+	class := refactoring model classNamed: #RBRefactoryTestDataApp.
+	self assert: (class parseTreeFor: newSelector) equals: (self parseMethod: 'called: anObject bar: anObject1 on: aBlock1
+							Transcript
+								show: anObject printString;
+								cr.
+								aBlock1 value').
+	self assert: (class parseTreeFor: #caller) equals: (self parseMethod: 'caller
+							| anObject |
+							anObject := 5.
+							self 
+								called: anObject + 1
+								bar: #(1.0) on: [^anObject]').
+	self deny: (class directlyDefinesMethod: oldSelector)
+]
+
+{ #category : #tests }
+RBAddParameterTest >> testAddParameterForTwoArgumentMessage [
+	| oldSelector newSelector refactoring class newArg |
+	oldSelector := ('called:' , 'on:') asSymbol.
+	newSelector := #called:bar:on:.
+	newArg := RBArgumentName name: 'anObject' value: '#(1.0)'.
+	refactoring := RBAddParameterRefactoring 
+		addParameterToMethod: oldSelector
+		in: RBRefactoryTestDataApp
+		newSelector: newSelector
+		permutation: #(1 -1 2)
+		newArgs: { newArg }.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self assert: (class parseTreeFor: newSelector) equals: (self parseMethod: 'called: anObject bar: anObject1 on: aBlock
@@ -40,15 +70,16 @@ RBAddParameterTest >> testAddParameterForTwoArgumentMessage [
 { #category : #tests }
 RBAddParameterTest >> testAddParameterThatReferencesGlobalAndLiteral [
 
-	| refactoring class oldSelector newSelector |
+	| refactoring class oldSelector newSelector newArg |
 	oldSelector := ('test' , 'Foo:') asSymbol.
 	newSelector := #testFoo:bar:.
+	newArg := RBArgumentName name: 'anObject' value: 'OrderedCollection new: 5'.
 	refactoring := RBAddParameterRefactoring
 		addParameterToMethod: oldSelector
 		in: RBRefactoryTestDataApp
 		newSelector: newSelector
-		permutation: #(1 0)
-		initializer: 'OrderedCollection new: 5'.
+		permutation: #(1 -1)
+		newArgs: {newArg}.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self
@@ -65,16 +96,17 @@ RBAddParameterTest >> testAddParameterThatReferencesGlobalAndLiteral [
 { #category : #tests }
 RBAddParameterTest >> testAddParameterThatReferencesModelGlobal [
 
-	| refactoring class oldSelector newSelector |
+	| refactoring class oldSelector newSelector newArg |
 	oldSelector := ('test' , 'Foo:') asSymbol.
 	newSelector := #testFoo:bar:.
+	newArg := RBArgumentName name: 'anObject' value:  'Bar new'.
 	refactoring := RBAddParameterRefactoring
 		model: model
 		addParameterToMethod: oldSelector
 		in: RBRefactoryTestDataApp
 		newSelector: newSelector
-		permutation: #(1 0)
-		initializer: 'Bar new'.
+		permutation: #(1 -1)
+		newArgs: {newArg}.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self
@@ -91,20 +123,21 @@ RBAddParameterTest >> testAddParameterThatReferencesModelGlobal [
 { #category : #tests }
 RBAddParameterTest >> testAddParameterThatReferencesSelf [
 
-	| refactoring class oldSelector newSelector |
+	| refactoring class oldSelector newSelector newArg |
 	oldSelector := ('test' , 'Foo:') asSymbol.
 	newSelector := #testFoo:bar:.
+	newArg := RBArgumentName name: 'aFoo' value: 'self printString'. 
 	refactoring := RBAddParameterRefactoring
 		addParameterToMethod: oldSelector
 		in: RBRefactoryTestDataApp
 		newSelector: newSelector
-		permutation: #(1 0)
-		initializer: 'self printString'.
+		permutation: #(1 -1)
+		newArgs: {newArg}.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self
 		assert: (class parseTreeFor: newSelector)
-		equals: (self parseMethod: 'testFoo: anObject bar: anObject1
+		equals: (self parseMethod: 'testFoo: anObject bar: aFoo
 								^self class + anObject').
 	self
 		assert: (class parseTreeFor: #callFoo)
@@ -114,74 +147,111 @@ RBAddParameterTest >> testAddParameterThatReferencesSelf [
 	self deny: (class directlyDefinesMethod: oldSelector)
 ]
 
+{ #category : #tests }
+RBAddParameterTest >> testAddTwoParameters [
+
+	| refactoring class oldSelector newSelector newArgs |
+	oldSelector := ('test' , 'Foo:') asSymbol.
+	newSelector := #testColl:foo:string:.
+	newArgs := Array with: (RBArgumentName name: 'aColl' value: 'OrderedCollection new: 5')
+		with: (RBArgumentName name: 'aString' value: '''string''').
+	refactoring := RBAddParameterRefactoring
+		addParameterToMethod: oldSelector
+		in: RBRefactoryTestDataApp
+		newSelector: newSelector
+		permutation: #(-1 1 -2)
+		newArgs: newArgs.
+	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
+	class := refactoring model classNamed: #RBRefactoryTestDataApp.
+	self
+		assert: (class parseTreeFor: newSelector)
+		equals: (self parseMethod: 'testColl: aColl foo: anObject string: aString
+								^self class + anObject').
+	self
+		assert: (class parseTreeFor: #callFoo)
+		equals: (self parseMethod:
+				 'callFoo ^self testColl: (OrderedCollection new: 5) foo: 5 string: ''string''').
+	self deny: (class directlyDefinesMethod: oldSelector)
+]
+
 { #category : #'failure tests' }
 RBAddParameterTest >> testBadInitializationCode [
+	| newArg |
+	newArg := RBArgumentName name: 'anObject' value: 'foo:'.
 	self
 		shouldFail: (RBAddParameterRefactoring 
 				addParameterToMethod: #name
 				in: RBLintRuleTestData
 				newSelector: #name:
-				permutation: #(0)
-				initializer: 'foo:');
-		shouldFail: (RBAddParameterRefactoring 
+				permutation: #(-1)
+				newArgs: {newArg}).
+	newArg := RBArgumentName name: 'anObject' value: 'foo'.
+	self shouldFail: (RBAddParameterRefactoring 
 				addParameterToMethod: #name
 				in: RBLintRuleTestData
 				newSelector: #name:
-				permutation: #(0)
-				initializer: 'foo')
+				permutation: #(-1)
+				newArgs: {newArg}).
 ]
 
 { #category : #'failure tests' }
 RBAddParameterTest >> testInvalidNumArgsOfNewSelector [
+	| newArg |
+	newArg := RBArgumentName name: 'anObject' value: 'nil'.
 	self shouldFail: (RBAddParameterRefactoring 
 			addParameterToMethod: #checkSendersAccessTo:
 			in: RBLintRuleTestData
 			newSelector: #checkSendersAccessTo:
-			permutation: #(0)
-			initializer: 'nil')
+			permutation: #(1 -1)
+			newArgs: {newArg})
 ]
 
 { #category : #'failure tests' }
 RBAddParameterTest >> testModelBadInitializationCode [
-	| refactoring |
+	| refactoring newArg |
+	newArg := RBArgumentName name: 'anObject' value: 'AddParameterRefactoring new'.
 	model removeClassNamed: #RBRefactoring.
 	refactoring := RBAddParameterRefactoring 
 		model: model
 		addParameterToMethod: #name1
 		in: RBLintRuleTestData
 		newSelector: #name1:
-		permutation: #(0) 
-		initializer: 'AddParameterRefactoring new'.
+		permutation: #(-1) 
+		newArgs: {newArg}.
 	self shouldFail: refactoring
 ]
 
 { #category : #'failure tests' }
 RBAddParameterTest >> testModelNonExistantName [
-	| refactoring |
+	| refactoring newArg |
+	newArg := RBArgumentName name: 'anObject' value: 'nil'.
 	(model classNamed: #RBLintRuleTestData) removeMethod: #name.
 	refactoring := RBAddParameterRefactoring 
 		model: model
 		addParameterToMethod: #name
 		in: RBLintRuleTestData
 		newSelector: #nameNew:
-		permutation: #(0)
-		initializer: 'nil'.
+		permutation: #(-1)
+		newArgs: {newArg}.
 	self shouldFail: refactoring
 ]
 
 { #category : #'failure tests' }
 RBAddParameterTest >> testNonExistantName [
+	| newArg |
+	newArg := RBArgumentName name: 'anObject' value: 'nil'.
 	self shouldFail: (RBAddParameterRefactoring 
 			addParameterToMethod: #name1
 			in: RBLintRuleTestData
 			newSelector: #name1:
-			permutation: #(0)
-			initializer: 'nil')
+			permutation: #(-1)
+			newArgs: {newArg})
 ]
 
 { #category : #'failure tests' }
 RBAddParameterTest >> testPrimitiveMethods [
-	| refactoring |
+	| refactoring newArg |
+	newArg := RBArgumentName name: 'anObject' value: '1'.
 	(model classNamed: #Object) 
 		compile: 'foo <primitive: 100> ^#() primitiveFailed'
 		classified: #(#accessing).
@@ -190,25 +260,27 @@ RBAddParameterTest >> testPrimitiveMethods [
 				addParameterToMethod: #foo
 				in: Object
 				newSelector: #foo123124321s:
-				permutation: #(0)
-				initializer: '1'.
+				permutation: #(-1)
+				newArgs: {newArg}.
 	self shouldFail: refactoring.
 	refactoring := RBAddParameterRefactoring 
 				addParameterToMethod: #at:
 				in: Object
 				newSelector: #at:foo:
-				permutation: #(1 0)
-				initializer: '1'.
+				permutation: #(1 -1)
+				newArgs: {newArg}.
 	self shouldFail: refactoring.
 	
 ]
 
 { #category : #'failure tests' }
 RBAddParameterTest >> testUseExistingNewSelector [
+	| newArg |
+	newArg := RBArgumentName name: 'anObject' value: 'nil'.
 	self shouldFail: (RBAddParameterRefactoring 
 			addParameterToMethod: #checkSendersAccessTo:
 			in: RBLintRuleTestData
 			newSelector: #safeVariableNameFor:temporaries:
-			permutation: #(1 0)
-			initializer: 'nil')
+			permutation: #(1 -1)
+			newArgs: {newArg})
 ]

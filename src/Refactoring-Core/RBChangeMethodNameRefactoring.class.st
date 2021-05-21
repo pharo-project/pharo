@@ -17,7 +17,8 @@ Class {
 		'newSelector',
 		'oldSelector',
 		'permutation',
-		'implementors'
+		'implementors',
+		'renameMap'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -100,6 +101,13 @@ RBChangeMethodNameRefactoring >> removeRenamedImplementors [
 		do: [ :each | each removeMethod: oldSelector ]
 ]
 
+{ #category : #action }
+RBChangeMethodNameRefactoring >> renameArgumentsIn: parseTree [
+	self renameMap do: [ :arg |
+		(self parseTreeRewriterClass rename: arg name to: arg newName) executeTree: parseTree
+	] 
+]
+
 { #category : #transforming }
 RBChangeMethodNameRefactoring >> renameImplementors [
 
@@ -119,6 +127,16 @@ RBChangeMethodNameRefactoring >> renameImplementors [
 			self modifyImplementorParseTree: parseTree in: each.
 			( each methodFor: oldSelector ) compileTree: parseTree
 			]
+]
+
+{ #category : #accessing }
+RBChangeMethodNameRefactoring >> renameMap [
+	^renameMap ifNil: [ renameMap := { } ]
+]
+
+{ #category : #accessing }
+RBChangeMethodNameRefactoring >> renameMap: aColl [
+	renameMap := aColl
 ]
 
 { #category : #transforming }

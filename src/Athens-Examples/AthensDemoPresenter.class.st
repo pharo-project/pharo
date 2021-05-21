@@ -21,10 +21,10 @@ Class {
 
 { #category : #specs }
 AthensDemoPresenter class >> defaultSpec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		add: #demo;
 		add:
-			(SpBoxLayout newHorizontal
+			(SpBoxLayout newLeftToRight
 				add: #backButton;
 				add: #forwardButton;
 				yourself)

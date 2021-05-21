@@ -17,7 +17,7 @@ Class {
 
 { #category : #specs }
 ClyMetaLinkInstallationPresenter class >> defaultSpec [
-	^ SpBoxLayout newVertical
+	^ SpBoxLayout newTopToBottom
 		  add: #toolBar
 		  expand: false
 		  fill: false

@@ -12,7 +12,7 @@ Context >> assertWellMaterializedInto: aMethodContext in: aTestCase [
 		ifNil: [ aTestCase assert: aMethodContext closure isNil ]
 		ifNotNil: [ closureOrNil assertWellMaterializedInto: aMethodContext closure in: aTestCase ].
 	aTestCase assert: receiver = aMethodContext receiver.
-	aTestCase assert: ( method isEqualRegardlessTrailerTo: aMethodContext compiledCode ).
+	aTestCase assert: (method isEqualRegardlessTrailerTo: aMethodContext compiledCode).
 	sender
 		ifNil: [ aTestCase assert: aMethodContext sender isNil ]
 		ifNotNil: [ sender assertWellMaterializedInto: aMethodContext sender in: aTestCase ]

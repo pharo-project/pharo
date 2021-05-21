@@ -14,7 +14,7 @@ Class {
 
 { #category : #specs }
 EpLogBrowserToolbarPresenter class >> defaultSpec [
-	^ SpBoxLayout newHorizontal
+	^ SpBoxLayout newLeftToRight
 		add: #statusLabel;
 		addLast: #filtersButton;
 		yourself

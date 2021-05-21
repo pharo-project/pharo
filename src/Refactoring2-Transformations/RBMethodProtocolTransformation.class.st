@@ -65,7 +65,7 @@ RBMethodProtocolTransformation >> privateTransform [
 RBMethodProtocolTransformation >> protocol [
 
 	^ protocol ifNil: [ 
-		UIManager default
+		self uiManager
 			chooseOrRequestFrom: self definingClass protocols
 			title: 'Class name was not defined to perform ', self class baseClass name,
 					 '. Please select a class to resume this transformation.'  ]

@@ -10,30 +10,54 @@ RBCreateAccessorsWithLazyInitializationForVariableTest >> setUp [
 	model := self abstractVariableTestData.
 ]
 
+{ #category : #'failure tests' }
+RBCreateAccessorsWithLazyInitializationForVariableTest >> testBadInitializationCode [
+	self shouldFail: ( RBCreateAccessorsWithLazyInitializationForVariableRefactoring 
+		variable: 'Foo1' 
+		class: RBLintRuleTestData 
+		classVariable: true 
+		defaultValue: 'foo:')
+]
+
+{ #category : #'failure tests' }
+RBCreateAccessorsWithLazyInitializationForVariableTest >> testBadInitializationCode1 [
+	self shouldFail: (RBCreateAccessorsWithLazyInitializationForVariableRefactoring 
+		variable: 'Foo1' 
+		class: RBLintRuleTestData 
+		classVariable: true 
+		defaultValue: '''string')
+]
+
 { #category : #tests }
 RBCreateAccessorsWithLazyInitializationForVariableTest >> testExistingClassVariableAccessors [
-	| refactoring |
+	| refactoring class |
 	refactoring := RBCreateAccessorsWithLazyInitializationForVariableRefactoring 
 							variable: 'Name1' 
 							class: RBLintRuleTestData 
 							classVariable: true.
+	class := refactoring model classNamed: #RBLintRuleTestData.
+	self assert: (class classSide parseTreeFor: #name1) 
+		equals: (self parseMethod: 'name1 ^Name1').
 	self executeRefactoring: refactoring.
-	self assertEmpty: refactoring changes changes.
-	self assert: refactoring setterMethod identicalTo: #name1:.
-	self assert: refactoring getterMethod identicalTo: #name1
+	self assert: refactoring getterMethod identicalTo: #name1.
+	self assert: (class classSide parseTreeFor: #name1) 
+		equals: (self parseMethod: 'name1 ^Name1 ifNil: [Name1 := nil]').
 ]
 
 { #category : #tests }
 RBCreateAccessorsWithLazyInitializationForVariableTest >> testExistingInstanceVariableAccessors [
-	| refactoring |
+	| refactoring class |
 	refactoring := RBCreateAccessorsWithLazyInitializationForVariableRefactoring 
 							variable: 'name' 
 							class: RBLintRuleTestData 
 							classVariable: false.
+	class := refactoring model classNamed: #RBLintRuleTestData.
+	self assert: (class parseTreeFor: #name) 
+		equals: (self parseMethod: 'name ^name').
 	self executeRefactoring: refactoring.
-	self assertEmpty: refactoring changes changes.
-	self assert: refactoring setterMethod identicalTo: #name:.
-	self assert: refactoring getterMethod identicalTo: #name
+	self assert: refactoring getterMethod identicalTo: #name.
+	self assert: (class parseTreeFor: #name) 
+		equals: (self parseMethod: 'name ^name ifNil: [name := nil]').
 ]
 
 { #category : #tests }

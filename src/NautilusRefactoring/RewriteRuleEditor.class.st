@@ -18,14 +18,14 @@ Class {
 { #category : #specs }
 RewriteRuleEditor class >> defaultSpec [
 
-	^ SpBoxLayout newHorizontal
-		add: (SpBoxLayout newVertical
+	^ SpBoxLayout newLeftToRight
+		add: (SpBoxLayout newTopToBottom
 			add: #searchLabel expand: false;
 			add: #searchPattern expand: true fill: true padding: 0;
 			add: #replaceLabel expand: false;
 			add: #replacePattern expand: true fill: true padding: 0) 
 			expand: true fill: true padding: 5;
-		add: (SpBoxLayout newVertical 
+		add: (SpBoxLayout newTopToBottom 
 			add: #helpText expand: true fill: true padding: 18;
 			addLast: #replaceButton)
 			expand: false fill: false padding: 0;

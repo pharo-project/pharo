@@ -12,6 +12,20 @@ SycMergeVariableCommand class >> defaultMenuIconName [
 	^ #merge
 ]
 
+{ #category : #activation }
+SycMergeVariableCommand class >> fullBrowserShortcutActivation [
+	
+]
+
+{ #category : #activation }
+SycMergeVariableCommand class >> sourceCodeMenuActivation [
+]
+
+{ #category : #activation }
+SycMergeVariableCommand class >> sourceCodeShortcutActivation [
+	
+]
+
 { #category : #execution }
 SycMergeVariableCommand >> classRefactoring [
 	^ RBMergeInstanceVariableIntoAnother

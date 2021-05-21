@@ -27,27 +27,29 @@ SycRefactoringStoreOnTest >> testSSycRenameMessageCommandIsProperlyStoreOn [
 	
 	refactorings := SycRenameMessageCommand new
 		originalMessage: (SycMessageDescription ofMessageNode: node);
-		newSignature: (SycMessageDescription ofMessageNode: node) ;
+		newSignature: (RBMethodName selector: #title: arguments: #('anObject')) ;
 		asRefactorings.
 	
 	self 
 		assert: (String streamContents: [ :s | refactorings storeOn: s ])
-		equals: '((Array new: 1) at: 1 put: (RBRenameMethodRefactoring renameMethod: #title: in: MockTreeTableItem to: #title: permutation: ((OrderedCollection new) add: 1; yourself)); yourself)'
+		equals: '((Array new: 1) at: 1 put: (RBRenameMethodRefactoring renameMethod: #title: in: MockTreeTableItem to: #title: permutation: (1 to: 1)); yourself)'
 ]
 
 { #category : #tests }
 SycRefactoringStoreOnTest >> testSycAddMessageArgumentCommandIsProperlyStoreOn [
 
-	| refactorings |
+	| refactorings node newSelector |
+	
+	node := (MockTreeTableItem >> #title:) ast.
+	newSelector := (RBMethodName selector: #title:lala: arguments: #(#anObject #anObject1))
+		newArgs: (Array with: (RBArgumentName name: 'anObject1' value: 'nil'));
+		permutation: #(1 -1).
 	refactorings := SycAddMessageArgumentCommand new
-		originalMessage: (MockTreeTableItem >> #title:) ast;
-		newSelector: (SycMessageDescription new
-			selector: #title:lala:;
-			argumentNames: #(#anObject #anObject1));
-		argumentDefaultValue: 'nil';
+		originalMessage: (SycMessageDescription ofMessageNode: node);
+		newSelector: newSelector;
 		asRefactorings.
 	
 	self 
 		assert: (String streamContents: [ :s | refactorings storeOn: s ])
-		equals: '((Array new: 1) at: 1 put: (RBAddParameterRefactoring addParameterToMethod: #title: in: MockTreeTableItem newSelector: #title:lala: permutation: #(1 0) initializer: ''nil''); yourself)'
+		equals: '((Array new: 1) at: 1 put: (RBAddParameterRefactoring addParameterToMethod: #title: in: MockTreeTableItem newSelector: #title:lala: permutation: #(1 -1) newArgs: ''((Array new: 1) at: 1 put: ; yourself)''); yourself)'
 ]

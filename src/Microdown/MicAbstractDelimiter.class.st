@@ -34,6 +34,12 @@ MicAbstractDelimiter class >> index: anIndex [
 ]
 
 { #category : #testing }
+MicAbstractDelimiter class >> isAbstract [
+
+	^ self == MicAbstractDelimiter
+]
+
+{ #category : #testing }
 MicAbstractDelimiter class >> isActive [
 	^ true
 ]

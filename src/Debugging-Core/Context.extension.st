@@ -148,6 +148,18 @@ Context >> return: value to: aSender [
 ]
 
 { #category : #'*Debugging-Core' }
+Context >> returnBooleanPrimitive [
+
+	^ 257
+]
+
+{ #category : #'*Debugging-Core' }
+Context >> returnSelfPrimitive [
+
+	^ 256
+]
+
+{ #category : #'*Debugging-Core' }
 Context class >> runSimulated: aBlock [
 	"Simulate the execution of the argument, current. Answer the result it 
 	returns."
@@ -422,6 +434,17 @@ Context >> tempsAndValuesLimitedTo: sizeLimit indent: indent [
 { #category : #'*Debugging-Core' }
 Context >> unusedBytecode [
 	^ self respondsToUnknownBytecode 
+]
+
+{ #category : #'*Debugging-Core' }
+Context >> updatePCForQuickPrimitiveRestart [
+
+	({self returnBooleanPrimitive.	self returnSelfPrimitive } includes: self method primitive) 
+		ifTrue: [ 
+			pc := self method endPC.
+			^ self ].
+
+	pc := pc + self quickMethodPrimitiveBytecodeSize
 ]
 
 { #category : #'*Debugging-Core' }

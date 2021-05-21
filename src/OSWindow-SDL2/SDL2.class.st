@@ -89,6 +89,11 @@ SDL2 class >> createRGBSurfaceFromPixels: pixels width: width height: height dep
 						  Uint32 rmask , Uint32 gmask , Uint32 bmask , Uint32 amask ) )
 ]
 
+{ #category : #cursor }
+SDL2 class >> createSystemCursor: cursorId [
+	^ self ffiCall: #( SDL_Cursor SDL_CreateSystemCursor (SDL_SystemCursorType cursorId) )
+]
+
 { #category : #video }
 SDL2 class >> createWindow: title x: x y: y width: w height: h flags: flags [
 	^ self ffiCall: #( SDL_Window SDL_CreateWindow ( String title, int x, int y, int w, int h, Uint32 flags ) )

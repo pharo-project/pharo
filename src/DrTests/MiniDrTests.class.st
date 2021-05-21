@@ -4,13 +4,16 @@ A minified version of the DrTest tool.
 Class {
 	#name : #MiniDrTests,
 	#superclass : #AbstractDrTestsPresenter,
+	#instVars : [
+		'startButton'
+	],
 	#category : #'DrTests-Spec'
 }
 
 { #category : #specs }
 MiniDrTests class >> defaultSpec [
-	^ SpBoxLayout newVertical
-		add: (SpBoxLayout newHorizontal
+	^ SpBoxLayout newTopToBottom
+		add: (SpBoxLayout newLeftToRight
 				add: #switchButton;
 				yourself)
 		expand: false
@@ -35,12 +38,17 @@ MiniDrTests >> evaluateBackgroundColor [
 { #category : #'private - initialization' }
 MiniDrTests >> initializeButtons [
 	super initializeButtons.
+
+	startButton := self newButton.
+
 	startButton
 		label: 'run';
 		icon: (self iconNamed: #smallUpdate);
 		color: (Color gray).
 	switchButton
-		label: 'Maximize'
+		label: 'Maximize'.
+		
+	startButton action: [ self runPlugin ]
 ]
 
 { #category : #initialization }
@@ -50,6 +58,11 @@ MiniDrTests >> initializeWindow: aWindowPresenter [
 	aWindowPresenter
 		title: self title;
 		initialExtent: 200 @ 200
+]
+
+{ #category : #accessing }
+MiniDrTests >> startButton [
+	^ startButton
 ]
 
 { #category : #'private - actions' }
@@ -83,11 +96,6 @@ MiniDrTests >> updateUI [
 	"The next line doesn't work because Spec2 does not handle button label's styles.
 	Should be changed at some point"
 	startButton label makeAllColor: pluginResult textColor.
-]
-
-{ #category : #initialization }
-MiniDrTests >> updateWithPluginResult: aPluginResult [
-	aPluginResult ifNotNil: [ self updateWithResults: aPluginResult ]
 ]
 
 { #category : #initialization }

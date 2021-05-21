@@ -2201,7 +2201,8 @@ UITheme >> editableDropListMargins [
 ]
 
 { #category : #'accessing colors' }
-UITheme >> enabledColor [ 
+UITheme >> enabledColor [
+
 	^ Color black
 ]
 

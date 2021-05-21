@@ -3,7 +3,7 @@ I am a command to inline selected temp variable (represented by source node)
 "
 Class {
 	#name : #SycInlineTempCommand,
-	#superclass : #SycSourceCodeCommand,
+	#superclass : #SycSourceCodeRefactoringCommand,
 	#category : #'SystemCommands-SourceCodeCommands'
 }
 

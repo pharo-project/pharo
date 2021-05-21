@@ -47,7 +47,8 @@ RBItemsSelectionPresenter class >> label: aString withItems: coll1 selecting: co
 
 { #category : #actions }
 RBItemsSelectionPresenter >> accept [
-	"refactoring selectors: (selectedMethods collect: #selector)"
+
+	selectedItems := table selectedItems
 ]
 
 { #category : #actions }
@@ -69,21 +70,6 @@ RBItemsSelectionPresenter >> columnSelector [
 ]
 
 { #category : #initialization }
-RBItemsSelectionPresenter >> initializeChangesTree [
-	table addColumn:
-		((SpCheckBoxTableColumn title: ' ' evaluated: [ :aClass | 
-	selectedItems includes: aClass ])
-				onActivation: [ :aClass | selectedItems add: aClass ];
-				onDeactivation: [ :aClass | selectedItems remove: aClass ];
-				width: 20;
-				yourself);
-			addColumn: (SpStringTableColumn 
-				title: self columnName 
-				evaluated: self columnSelector );
-			beResizable.
-]
-
-{ #category : #initialization }
 RBItemsSelectionPresenter >> initializeDialogWindow: aModalPresenter [
 	aModalPresenter
 		addButton: 'Refactor' do: [ :presenter | self accept: presenter ];
@@ -95,18 +81,17 @@ RBItemsSelectionPresenter >> initializeDialogWindow: aModalPresenter [
 
 { #category : #initialization }
 RBItemsSelectionPresenter >> initializeWidgets [
-	table := self newTable.
+	table := self instantiate: SpFilteringSelectableListPresenter.
+	table display: self columnSelector.
 	label := self newLabel.
-	
-	self initializeChangesTree.
 ]
 
 { #category : #initialization }
 RBItemsSelectionPresenter >> label: aString withItems: coll1 selecting: coll2 [
 	label label: aString.
-	selectedItems := coll2.
 	
-	table items: coll1
+	table items: coll1;
+		selectItems: coll2	
 ]
 
 { #category : #accessing }
