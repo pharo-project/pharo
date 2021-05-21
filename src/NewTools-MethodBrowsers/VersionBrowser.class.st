@@ -161,7 +161,7 @@ VersionBrowser >> initialize [
 VersionBrowser >> initializePresenters [
 
 	messageList := self instantiate: MessageList on: rgMethod.
-	toolbarPresenter := self instantiate: SpMethodToolbar on: rgMethod.
+	toolbarPresenter := self instantiate: SpMethodToolbarPresenter on: rgMethod.
 
 	messageList
 		topologicSort: false;
