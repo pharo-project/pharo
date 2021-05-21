@@ -58,8 +58,7 @@ BaselineOfSpec2 >> baseline: spec [
 BaselineOfSpec2 >> postLoad [
 
 	self flag: #REMOVE. "This is a temporal hack to ensure the style is taken the new variables way."
-	(self class environment at: #SpStyle) reset.
-		
+	(self class environment at: #SpStyle) reset
 ]
 
 { #category : #acccessing }
