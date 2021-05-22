@@ -187,10 +187,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'PharoGlamour' with: [ spec repository: repository ].
 		spec baseline: 'PharoGT' with: [ spec repository: repository ].
 		spec baseline: 'HeuristicCompletion' with: [ spec repository: repository ].
-		spec baseline: 'Spec2' with: [ 
-			spec 
-				repository: repository;
-				loads: #('Code' 'CodeTests') ].
+		self specCode: spec.
 		spec baseline: 'NewTools' with: [
 			spec 
 				repository: repository;
@@ -230,7 +227,7 @@ BaselineOfIDE >> loadIceberg [
 	
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:dev-2.0';
+		repository: (self class environment at: #BaselineOfPharo) icebergRepository;
 		onConflictUseLoaded;
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
@@ -241,7 +238,7 @@ BaselineOfIDE >> loadIceberg [
 	(Smalltalk classNamed: #BaselineOfSpec2) ifNotNil: [ :aClass | 
 		pharoPluginClass
 			addProjectNamed: 'pharo-spec2' 
-			commit: aClass releaseCommit 
+			commit: (Smalltalk classNamed: #BaselineOfPharo) specReleaseCommit 
 			baselines: #(BaselineOfSpec2) ].
 		
 	(Smalltalk classNamed: #BaselineOfNewTools) ifNotNil: [ :aClass | 
@@ -307,4 +304,14 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	self additionalInitialization.
 
 	Initialized := true.
+]
+
+{ #category : #baseline }
+BaselineOfIDE >> specCode: spec [
+
+	spec baseline: 'SpecCode' with: [ 
+		spec
+			repository: (self class environment at: #BaselineOfPharo) specRepository;
+			className: 'BaselineOfSpec2';
+			loads: #('Code' 'CodeTests') ]
 ]
