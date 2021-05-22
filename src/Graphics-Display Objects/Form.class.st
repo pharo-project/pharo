@@ -189,22 +189,22 @@ Form class >> fromDisplay: aRectangle using: oldForm [
 ]
 
 { #category : #'instance creation' }
-Form class >> fromUser [
-	"Answer an instance of me with bitmap initialized from the area of the 
-	display screen designated by the user. The grid for selecting an area is 
-	1@1."
-	"self fromUser asMorph openInWorld"
-	
-	^self fromUser: 1 @ 1
-]
-
-{ #category : #'instance creation' }
 Form class >> fromUser: gridPoint [
 	"Answer an instance of me with bitmap initialized from the area of the 
 	display screen designated by the user. The grid for selecting an area is 
 	aPoint. Ensures that the returned form has positive extent."
 	| rect |
 	rect := Rectangle fromUser: gridPoint.
+	^ self fromDisplay: (rect origin extent: (rect extent max: gridPoint))
+]
+
+{ #category : #'instance creation' }
+Form class >> fromUser: gridPoint inWorld: aWorld [
+	"Answer an instance of me with bitmap initialized from the area of the 
+	display screen designated by the user. The grid for selecting an area is 
+	aPoint. Ensures that the returned form has positive extent."
+	| rect |
+	rect := Rectangle fromUser: gridPoint inWorld: aWorld.
 	^ self fromDisplay: (rect origin extent: (rect extent max: gridPoint))
 ]
 

@@ -4,7 +4,7 @@ Extension { #name : #BitmapFillStyle }
 BitmapFillStyle >> grabNewGraphicIn: aMorph event: evt [ 
 	"Used by any morph that can be represented by a graphic"
 	| fill |
-	fill := Form fromUser.
+	fill := Form fromUser: 1 @ 1 inWorld: self currentWorld.
 	fill boundingBox area = 0
 		ifTrue: [^ self].
 	self form: fill.

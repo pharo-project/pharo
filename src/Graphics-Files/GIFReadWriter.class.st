@@ -81,7 +81,7 @@ GIFReadWriter class >> grabScreenAndSaveOnDisk [
 	"GIFReadWriter grabScreenAndSaveOnDisk"
 	| form fileName |
 	
-	form := Form fromUser.
+	form := Form fromUser: 1 @ 1 inWorld: self currentWorld.
 	form bits size = 0 ifTrue: [ ^ self inform: 'Empty region selected.' ].
 	
 	fileName := (FileSystem disk workingDirectory / 'Pharo', 'gif') fullName.

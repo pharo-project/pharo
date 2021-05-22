@@ -186,7 +186,7 @@ ImageMorph >> form: aForm [
 { #category : #'menu commands' }
 ImageMorph >> grabFromScreen [
 
-	self form: Form fromUser.
+	self form: (Form fromUser: 1 @ 1 inWorld: self currentWorld).
 
 ]
 

@@ -34,7 +34,7 @@ BitmapFillStyle class >> fromForm: aForm [
 { #category : #'instance creation' }
 BitmapFillStyle class >> fromUser [
 	| fill |
-	fill := self form: Form fromUser.
+	fill := self form: (Form fromUser: 1 @ 1 inWorld: self currentWorld).
 	fill origin: 0@0.
 	fill direction: fill form width @ 0.
 	fill normal: 0 @ fill form height.
