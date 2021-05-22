@@ -9,6 +9,12 @@ Class {
 }
 
 { #category : #defaults }
+SpCodeInspectItCommand class >> defaultDescription [
+
+	^ 'Evaluate selection and inspect the result.'
+]
+
+{ #category : #defaults }
 SpCodeInspectItCommand class >> defaultIconName [
 
 	^ #smallInspectIt

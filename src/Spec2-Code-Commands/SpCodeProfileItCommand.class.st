@@ -8,6 +8,12 @@ Class {
 	#category : #'Spec2-Code-Commands-TODO'
 }
 
+{ #category : #default }
+SpCodeProfileItCommand class >> defaultDescription [
+
+	^ 'Evaluate and profile selection .'
+]
+
 { #category : #defaults }
 SpCodeProfileItCommand class >> defaultIconName [
 

@@ -8,6 +8,12 @@ Class {
 	#category : #'Spec2-Code-Commands-Base'
 }
 
+{ #category : #default }
+SpCodeDebugItCommand class >> defaultDescription [
+
+	^ 'Debug selection.'
+]
+
 { #category : #defaults }
 SpCodeDebugItCommand class >> defaultIconName [
 

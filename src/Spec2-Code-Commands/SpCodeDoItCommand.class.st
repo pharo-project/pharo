@@ -8,6 +8,12 @@ Class {
 	#category : #'Spec2-Code-Commands-Base'
 }
 
+{ #category : #accessing }
+SpCodeDoItCommand class >> defaultDescription [
+
+	^ 'Evaluate selection'
+]
+
 { #category : #defaults }
 SpCodeDoItCommand class >> defaultIconName [
 
