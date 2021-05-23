@@ -16,6 +16,18 @@ BaselineOfPharo class >> icebergVersion [
 	^ 'dev-2.0'
 ]
 
+{ #category : #'repository urls' }
+BaselineOfPharo class >> newToolsRepository [
+
+	^ 'github://pharo-spec/NewTools:{1}/src' format: { self newToolsVersion }
+]
+
+{ #category : #versions }
+BaselineOfPharo class >> newToolsVersion [
+
+	^ 'Pharo9.0'
+]
+
 { #category : #versions }
 BaselineOfPharo class >> specReleaseCommit [
 	"The commit corresponding to current release (to be used on bootstrap process)"
