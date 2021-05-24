@@ -583,8 +583,11 @@ File class >> open: fileName writable: writableFlag [
 { #category : #'file creation' }
 File class >> openAndTruncateForWriteFileNamed: aName [
 	self
-		deprecated: 'Please use #truncatedFileNamed: instead'.
+		deprecated: 'Please use #truncatedFileNamed: instead'
+		transformWith: '`@receiver openAndTruncateForWriteFileNamed: `@arg' -> '`@receiver truncatedFileNamed: `@arg'.
 	^ self truncatedFileNamed: aName  
+
+  
 ]
 
 { #category : #'file creation' }
