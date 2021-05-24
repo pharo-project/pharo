@@ -581,6 +581,13 @@ File class >> open: fileName writable: writableFlag [
 ]
 
 { #category : #'file creation' }
+File class >> openAndTruncateForWriteFileNamed: aName [
+	self
+		deprecated: 'Please use #truncatedFileNamed: instead'.
+	^ self truncatedFileNamed: aName  
+]
+
+{ #category : #'file creation' }
 File class >> openForReadFileNamed: aName [
 
 	^ (self named: aName)
