@@ -234,7 +234,7 @@ BaselineOfIDE >> loadIceberg [
 	(Smalltalk classNamed: #BaselineOfNewTools) ifNotNil: [ :aClass | 
 		pharoPluginClass 
 			addProjectNamed: 'pharo-newtools' 
-			commit: aClass releaseCommit 
+			commit: (Smalltalk classNamed: #BaselineOfPharo) newToolsReleaseCommit 
 			baselines: #(BaselineOfNewTools) ].
 		
 	pharoPluginClass addIcebergProjectToIceberg
