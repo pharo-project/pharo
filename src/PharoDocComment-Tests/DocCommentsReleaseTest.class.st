@@ -6,7 +6,7 @@ See #buildSuite on the class side.
 Class {
 	#name : #DocCommentsReleaseTest,
 	#superclass : #TestCase,
-	#category : #'ReleaseTests-CleanCode'
+	#category : #'PharoDocComment-Tests'
 }
 
 { #category : #'building suites' }
