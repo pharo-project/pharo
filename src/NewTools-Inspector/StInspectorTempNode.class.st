@@ -49,8 +49,10 @@ StInspectorTempNode >> key [
 StInspectorTempNode >> rawValue [
 	"Answer the object value of this object variable (slot, indexed attribute, computed value)."
 
-	^ [ tempVariable readInContext: self hostObject ]
-		  on: SubscriptOutOfBounds
+	^ [ 
+		"we use #tempNamed: to force a re-lookup of the variable"
+		self hostObject tempNamed: tempVariable name]
+		  on: Error
 		  do: [ :err | 'cannot read ' , tempVariable name ]
 ]
 
