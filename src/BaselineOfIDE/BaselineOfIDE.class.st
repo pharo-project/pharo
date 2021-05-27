@@ -188,18 +188,8 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'PharoGT' with: [ spec repository: repository ].
 		spec baseline: 'HeuristicCompletion' with: [ spec repository: repository ].
 		self specCode: spec.
-		spec baseline: 'NewTools' with: [
-			spec 
-				repository: repository;
-				loads: #(
-					'Playground' 
-					'Inspector' 
-					'Debugger' 
-					'SystemReporter'
-					'ChangeSorter'
-					'Methods'
-					'Spotter') ].
-			
+		self newTools: spec.
+					
 		spec baseline: 'Microdown' with: [ spec 
 				repository: self packageRepositoryURL ].
 	
@@ -244,7 +234,7 @@ BaselineOfIDE >> loadIceberg [
 	(Smalltalk classNamed: #BaselineOfNewTools) ifNotNil: [ :aClass | 
 		pharoPluginClass 
 			addProjectNamed: 'pharo-newtools' 
-			commit: aClass releaseCommit 
+			commit: (Smalltalk classNamed: #BaselineOfPharo) newToolsReleaseCommit 
 			baselines: #(BaselineOfNewTools) ].
 		
 	pharoPluginClass addIcebergProjectToIceberg
@@ -254,6 +244,16 @@ BaselineOfIDE >> loadIceberg [
 BaselineOfIDE >> makeCalypsoDefaultBrowser [
 
 	(self class environment at: #ClyBrowserMorph) beAllDefault.
+]
+
+{ #category : #baseline }
+BaselineOfIDE >> newTools: spec [ 
+
+	spec baseline: 'NewTools' with: [
+		spec 
+			repository: (self class environment at: #BaselineOfPharo) newToolsRepository;
+			loads: #('default') ].
+
 ]
 
 { #category : #actions }
