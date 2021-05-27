@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'docCommentNode'
 	],
-	#category : #'DrTests-CommentsToTests-Model'
+	#category : #'PharoDocComment-Base'
 }
 
 { #category : #'instance creation' }
