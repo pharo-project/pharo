@@ -22,7 +22,7 @@ RBErrorToken class >> value: value start: tokenStart cause: errorCause location:
 		yourself
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RBErrorToken >> cause [
 	^ cause
 ]

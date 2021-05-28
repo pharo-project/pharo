@@ -10,12 +10,12 @@ Class {
 	#category : #'Network-Tests-MIME'
 }
 
-{ #category : #accesing }
+{ #category : #accessing }
 QuotedPrintableMimeConverterTest >> decode: string [
 	^ coder mimeDecode: string as: String
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 QuotedPrintableMimeConverterTest >> encode: string [
 	^ coder mimeEncode: string
 ]
