@@ -216,13 +216,19 @@ RBProgramNode >> bestNodeForPosition: aPosition [
 		This heuristic introduces although an ambiguity when code is not nicely formatted:
 		   self foo:|#bar => Here a user may want foo: or bar.
 		For now we decided to favor foo: to motivate people to indent code correctly	"
- 
-	| offset position |
-	offset := (aPosition = 1 or: [ (self methodNode sourceCode at: aPosition - 1) isSeparator ])
-		ifTrue: [ 0 ]
-		ifFalse: [ -1 ].
 
-	position := (aPosition + offset) min: self stop.
+	| offset position precededBySeparator |
+	precededBySeparator := (aPosition
+		                        between: 2
+		                        and: self methodNode sourceCode size + 1) 
+		                       and: [ 
+		                       (self methodNode sourceCode at: aPosition - 1)
+			                       isSeparator ].
+	offset := (aPosition = 1 or: [ precededBySeparator ])
+		          ifTrue: [ 0 ]
+		          ifFalse: [ -1 ].
+
+	position := aPosition + offset min: self stop.
 
 	^ self bestNodeFor: (position to: position)
 ]
