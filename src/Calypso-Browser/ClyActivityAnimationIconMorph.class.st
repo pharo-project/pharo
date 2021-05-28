@@ -33,7 +33,7 @@ ClyActivityAnimationIconMorph >> addLabel: aStringOrMorph [
 	
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 ClyActivityAnimationIconMorph >> currentIcon [
 	^TabMorph perform: (#refreshIcon, progress asString) asSymbol
 ]
