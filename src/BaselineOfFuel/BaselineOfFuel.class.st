@@ -43,11 +43,11 @@ BaselineOfFuel >> baseline: spec [
 		spec
 			group: 'default' with: #('Core');
 			group: 'Core' with: #('Fuel-Core');
-			group: 'CoreWithExtras' with: #('Core' 'Fuel-ProgressUpdate' 'Fuel-Tests-ProgressUpdate');
-			group: 'Tests' with: #('Core' 'Fuel-Tests-Core');
-			group: 'Benchmarks' with: #('Core' 'Fuel-Benchmarks') ].
+			group: 'Tests' with: #('Core' 'Fuel-Tests-Core') ].
 
-	self groupsForPharoCommon: spec
+	self
+		groupsForPharoCommon: spec;
+		groupsForSqueakCommon: spec
 ]
 
 { #category : #'baselines-helpers' }
@@ -72,9 +72,24 @@ BaselineOfFuel >> groupsForPharoCommon: spec [
 		self roassal: spec.
 
 		spec
-			group: 'default' with: #('Core' 'Tests');
 			group: 'CoreWithExtras' with: #('Core' 'Fuel-Metalevel' 'Fuel-ProgressUpdate');
-			group: 'DevelopmentGroup' with: #('CoreWithExtras' 'Fuel-Debug' 'Tests' 'Fuel-Tests-Metalevel') ]
+			group: 'DevelopmentGroup' with: #(
+				'CoreWithExtras'
+				'Fuel-Debug'
+				'Tests'
+				'Fuel-Tests-Metalevel'
+				'Fuel-Tests-ProgressUpdate'
+				'Fuel-Tests-Debug');
+			group: 'Benchmarks' with: #('Core' 'Fuel-Benchmarks');
+			group: 'BenchmarksTests' with: #('Benchmarks' 'Fuel-Tests-Benchmarks') ]
+]
+
+{ #category : #'baselines-helpers' }
+BaselineOfFuel >> groupsForSqueakCommon: spec [
+	spec for: #squeak do: [
+		spec
+			group: 'CoreWithExtras' with: #('Core' 'Fuel-ProgressUpdate');
+			group: 'Benchmarks' with: #('Core' 'Fuel-Benchmarks') ]
 ]
 
 { #category : #'baselines-helpers' }
