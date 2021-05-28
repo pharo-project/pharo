@@ -94,7 +94,7 @@ ASTClassBuilderTest >> testCreateImmediateClassWithAll [
 	self assert: class classVarNames equals: #( #classVar #pouet #var )
 ]
 
-{ #category : #NormalClass }
+{ #category : #tests }
 ASTClassBuilderTest >> testCreateNormalClassNamed [
 
 	| ast class |
@@ -106,7 +106,7 @@ ASTClassBuilderTest >> testCreateNormalClassNamed [
 	self assert: class name equals: #TestClass
 ]
 
-{ #category : #NormalClass }
+{ #category : #tests }
 ASTClassBuilderTest >> testCreateNormalClassSuperClass [
 
 	| ast class |
@@ -122,7 +122,7 @@ ASTClassBuilderTest >> testCreateNormalClassSuperClass [
 		equals: (self environment classNamed: 'Xcrd')
 ]
 
-{ #category : #NormalClass }
+{ #category : #tests }
 ASTClassBuilderTest >> testCreateNormalClassWithClassVariable [
 
 	| ast class |
@@ -136,7 +136,7 @@ ASTClassBuilderTest >> testCreateNormalClassWithClassVariable [
 	self assert: class classVarNames equals: #( #classVar #pouet #var )
 ]
 
-{ #category : #NormalClass }
+{ #category : #tests }
 ASTClassBuilderTest >> testCreateNormalClassWithIV [
 
 	| ast class |
@@ -149,7 +149,7 @@ ASTClassBuilderTest >> testCreateNormalClassWithIV [
 	self assert: class instanceVariablesString equals: ''
 ]
 
-{ #category : #NormalClass }
+{ #category : #tests }
 ASTClassBuilderTest >> testCreateNormalClassWithPackage [
 
 	| ast class |
@@ -162,7 +162,7 @@ ASTClassBuilderTest >> testCreateNormalClassWithPackage [
 	self assert: class category equals: #Unclassified
 ]
 
-{ #category : #NormalClass }
+{ #category : #tests }
 ASTClassBuilderTest >> testCreateNormalClassWithSharedPools [
 
 	| ast class resTest |
@@ -178,7 +178,7 @@ ASTClassBuilderTest >> testCreateNormalClassWithSharedPools [
 	self assert: class sharedPoolNames equals: resTest
 ]
 
-{ #category : #NormalClass }
+{ #category : #tests }
 ASTClassBuilderTest >> testCreateNormalClassWithSlots [
 
 	| ast class |
@@ -194,7 +194,7 @@ ASTClassBuilderTest >> testCreateNormalClassWithSlots [
 	self assert: class instanceVariablesString equals: 'cat env'
 ]
 
-{ #category : #NormalClass }
+{ #category : #tests }
 ASTClassBuilderTest >> testCreateNormalClassWithTrait [
 
 	| ast class |
@@ -207,7 +207,7 @@ ASTClassBuilderTest >> testCreateNormalClassWithTrait [
 	self assert: (class isComposedBy: TOccurrencesTest)
 ]
 
-{ #category : #NormalClass }
+{ #category : #tests }
 ASTClassBuilderTest >> testCreateNormalClassWithTraitComposition [
 
 	| ast class |
@@ -221,7 +221,7 @@ ASTClassBuilderTest >> testCreateNormalClassWithTraitComposition [
 	self assert: (class isComposedBy: TIncludesWithIdentityCheckTest)
 ]
 
-{ #category : #NormalClass }
+{ #category : #tests }
 ASTClassBuilderTest >> testCreateTraitUsingAnotherSingleTrait [
 
 	| ast class |
@@ -234,7 +234,7 @@ ASTClassBuilderTest >> testCreateTraitUsingAnotherSingleTrait [
 	self assert: (class isComposedBy: TOccurrencesTest)
 ]
 
-{ #category : #NormalClass }
+{ #category : #tests }
 ASTClassBuilderTest >> testCreateTraitUsingAnotherTraitComposition [
 
 	| ast class |
@@ -248,7 +248,7 @@ ASTClassBuilderTest >> testCreateTraitUsingAnotherTraitComposition [
 	self assert: (class isComposedBy: TAddForUniquenessTest)
 ]
 
-{ #category : #NormalClass }
+{ #category : #tests }
 ASTClassBuilderTest >> testCreateTraitWithoutOtherTraits [
 
 	| ast class |
