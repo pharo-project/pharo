@@ -26,7 +26,7 @@ Class {
 	#category : #'STON-Tests-Support'
 }
 
-{ #category : #acccessing }
+{ #category : #accessing }
 STONTestKnownObject class >> addKnownObject: object [
 	^ self knownObjects addIfNotPresent: object
 ]
@@ -47,12 +47,12 @@ STONTestKnownObject class >> fromSton: stonReader [
 	^ self fromId: stonReader parseListSingleton
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 STONTestKnownObject class >> knownObjects [
 	^ KnownObjects ifNil: [ KnownObjects := OrderedCollection new ]
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 STONTestKnownObject class >> resetKnownObjects [
 	KnownObjects ifNotNil: [ :collection | collection removeAll ]
 ]

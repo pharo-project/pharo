@@ -41,7 +41,7 @@ ZnUrlOperation class >> handlerForOperation: operation with: argument on: url [
 			format: { operation. url. argument })
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 ZnUrlOperation class >> handlesOperation: operation with: argument on: url [
 	"Return true when my instances can handle operation with argument on url.
 	This can optionally be overridden for a more specific test."
@@ -49,7 +49,7 @@ ZnUrlOperation class >> handlesOperation: operation with: argument on: url [
 	^ self operation = operation and: [ self schemes includes: url scheme ]
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 ZnUrlOperation class >> operation [
 	"Return the operation that I implement.
 	Subclasses can/should override this method."
@@ -71,7 +71,7 @@ ZnUrlOperation class >> performOperation: operation with: argument on: url [
 		performOperation 
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 ZnUrlOperation class >> schemes [
 	"Return a collection of scheme identifiers that I handle.
 	Subclasses can/should override this method."

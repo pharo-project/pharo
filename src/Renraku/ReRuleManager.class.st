@@ -80,7 +80,7 @@ ReRuleManager class >> managerFor: aCodeEntity [
 		ifAbsentPut: [ self newManagerForPackage: aCodeEntity package ]
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 ReRuleManager class >> managers [
 	^ managers ifNil: [ managers := WeakKeyDictionary new ]
 ]
@@ -137,7 +137,7 @@ ReRuleManager class >> resetWithInform [
 	self inform: 'Cache of the Renraku rule manager has been reset'
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 ReRuleManager class >> ruleProfileSettingsOn: aBuilder [ 
 	<systemsettings>
 	(aBuilder pickOne: #rulesProfile)
@@ -178,27 +178,27 @@ ReRuleManager class >> ruleToggleSettingsOn: aBuilder [
 					description: inst rationale ] ]
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 ReRuleManager class >> rulesProfile [
 
 	^ RulesProfile ifNil: [ RulesProfile := #setDefaultProfile ]
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 ReRuleManager class >> rulesProfile: aSelector [
 
 	RulesProfile := aSelector.
 	self perform: RulesProfile 
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 ReRuleManager class >> setBeginnerProfile [
 
 	self visibleRuleClasses do: [ :rule | rule enabled: rule isBeginnerRule ].
 	self reset
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 ReRuleManager class >> setDefaultProfile [
 
 	self visibleRuleClasses do: [ :rule | rule enabled: rule isDefaultRule ].
