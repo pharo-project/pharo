@@ -103,7 +103,7 @@ CPUWatcher class >> shutDown [
 	self stopMonitoring.
 ]
 
-{ #category : #'startup-shutdown' }
+{ #category : #'startup - shutdown' }
 CPUWatcher class >> startMonitoring [
 	"CPUWatcher startMonitoring"
 
