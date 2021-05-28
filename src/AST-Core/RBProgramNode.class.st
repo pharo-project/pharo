@@ -218,13 +218,14 @@ RBProgramNode >> bestNodeForPosition: aPosition [
 		For now we decided to favor foo: to motivate people to indent code correctly	"
 
 	| offset position precededBySeparator |
-	precededBySeparator := (aPosition
+	precededBySeparator := [ 
+	                       (aPosition
 		                        between: 2
 		                        and: self methodNode sourceCode size + 1) 
 		                       and: [ 
 		                       (self methodNode sourceCode at: aPosition - 1)
-			                       isSeparator ].
-	offset := (aPosition = 1 or: [ precededBySeparator ])
+			                       isSeparator ] ].
+	offset := (aPosition = 1 or: precededBySeparator)
 		          ifTrue: [ 0 ]
 		          ifFalse: [ -1 ].
 
