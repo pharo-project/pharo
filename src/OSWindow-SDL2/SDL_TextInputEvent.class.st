@@ -100,7 +100,7 @@ SDL_TextInputEvent >> accept: aVisitor [
 	^ aVisitor visitTextInputEvent: self
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 SDL_TextInputEvent >> strlen [
 	| len |
 	len := 0.
@@ -112,7 +112,7 @@ SDL_TextInputEvent >> strlen [
 	^ len
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 SDL_TextInputEvent >> text [
 	| len text |
 	len := self strlen.
