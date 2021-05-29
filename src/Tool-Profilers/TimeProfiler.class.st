@@ -244,7 +244,7 @@ TimeProfiler >> expandAll [
 	treeMorph expandAllSuchThat: [:node | node percentage > self minPercentageToExpand]
 ]
 
-{ #category : #'accessing-computed' }
+{ #category : #'accessing - computed' }
 TimeProfiler >> fullReport [
 	"Return the full report of the tally "
 	^ String streamContents: [:strm |
@@ -284,7 +284,7 @@ TimeProfiler >> keyDown: anEvent from: aTreeMorph [
 	self selectedNode ifNotNil: [:current | current keyDown: anEvent from: aTreeMorph ]
 ]
 
-{ #category : #'accessing-computed' }
+{ #category : #'accessing - computed' }
 TimeProfiler >> leaveItems [
 	| res  |
 	res := OrderedCollection new.
@@ -440,13 +440,13 @@ TimeProfiler >> result: anObject [
 
 ]
 
-{ #category : #'accessing-computed' }
+{ #category : #'accessing - computed' }
 TimeProfiler >> resultText [
 	^ result printString
 
 ]
 
-{ #category : #'accessing-computed' }
+{ #category : #'accessing - computed' }
 TimeProfiler >> rootItems [
 	^ rootMessageTally
 		ifNil: [#()]
@@ -461,7 +461,7 @@ TimeProfiler >> rootNodeClassFromItem: anItem [
 	^ TimeProfilerNode 
 ]
 
-{ #category : #'accessing-computed' }
+{ #category : #'accessing - computed' }
 TimeProfiler >> rootTallyItems [
 	| res sons groups |
 	res := OrderedCollection new.
@@ -540,7 +540,7 @@ TimeProfiler >> selectedClass [
 		ifNotNil: [ :currNode | currNode methodClass ]
 ]
 
-{ #category : #'accessing-computed' }
+{ #category : #'accessing - computed' }
 TimeProfiler >> selectedMethodCode [
 	| node method |
 	node := self selectedNode.
@@ -655,7 +655,7 @@ TimeProfiler >> startState [
 	
 ]
 
-{ #category : #'accessing-computed' }
+{ #category : #'accessing - computed' }
 TimeProfiler >> summaryText [
 	^ String streamContents: [:strm | rootMessageTally 
 		ifNotNil: [rootMessageTally time > 0 

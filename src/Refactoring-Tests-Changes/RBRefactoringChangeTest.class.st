@@ -140,7 +140,7 @@ RBRefactoringChangeTest >> testAddClassInteractively [
 	self universalTestFor: change
 ]
 
-{ #category : #'tests-pattern' }
+{ #category : #'tests - pattern' }
 RBRefactoringChangeTest >> testAddClassPattern [
 
 	"Make sure that all class definitions can be parsed."
@@ -167,7 +167,7 @@ RBRefactoringChangeTest >> testAddClassPattern [
 			]
 ]
 
-{ #category : #'tests-pattern' }
+{ #category : #'tests - pattern' }
 RBRefactoringChangeTest >> testAddClassTraitPattern [
 	"Make sure that all class trait definitions can be parsed."
 	
@@ -201,7 +201,7 @@ RBRefactoringChangeTest >> testAddInstanceVariable [
 	self universalTestFor: change
 ]
 
-{ #category : #'tests-pattern' }
+{ #category : #'tests - pattern' }
 RBRefactoringChangeTest >> testAddMetaclassPattern [
 	"Make sure that metaclass definitions can be parsed."
 	
@@ -226,7 +226,7 @@ RBRefactoringChangeTest >> testAddPool [
 	self universalTestFor: change
 ]
 
-{ #category : #'tests-pattern' }
+{ #category : #'tests - pattern' }
 RBRefactoringChangeTest >> testAddTraitPattern [
 	"Make sure that all trait definitions can be parsed."
 	
@@ -318,7 +318,7 @@ RBRefactoringChangeTest >> testComposite [
 	self universalTestFor: changes
 ]
 
-{ #category : #'tests-perform' }
+{ #category : #'tests - perform' }
 RBRefactoringChangeTest >> testPerformAddRemoveClass [
 	| change |
 	change := changes defineClass: 'Object subclass: #' , self changeMock name , 'Temporary
@@ -334,7 +334,7 @@ RBRefactoringChangeTest >> testPerformAddRemoveClass [
 	self assert: change definedClass isObsolete
 ]
 
-{ #category : #'tests-perform' }
+{ #category : #'tests - perform' }
 RBRefactoringChangeTest >> testPerformAddRemoveClassInstanceVariable [
 	| change |
 	change := changes addInstanceVariable: 'foo' to: self changeMock class.
@@ -342,7 +342,7 @@ RBRefactoringChangeTest >> testPerformAddRemoveClassInstanceVariable [
 	self deny: (change changeClass instVarNames includes: 'foo')
 ]
 
-{ #category : #'tests-perform' }
+{ #category : #'tests - perform' }
 RBRefactoringChangeTest >> testPerformAddRemoveClassInteractively [
 	| change |
 	change := changeFactory addClassDefinition: 'Object subclass: #' , self changeMock name , 'Temporary
@@ -359,7 +359,7 @@ RBRefactoringChangeTest >> testPerformAddRemoveClassInteractively [
 	
 ]
 
-{ #category : #'tests-perform' }
+{ #category : #'tests - perform' }
 RBRefactoringChangeTest >> testPerformAddRemoveClassMethod [
 	| change |
 	change := changes compile: 'method ^ 1' in: self changeMock class classified: #utilities.
@@ -368,7 +368,7 @@ RBRefactoringChangeTest >> testPerformAddRemoveClassMethod [
 	self assert: change definedSelector equals: #method
 ]
 
-{ #category : #'tests-perform' }
+{ #category : #'tests - perform' }
 RBRefactoringChangeTest >> testPerformAddRemoveClassVariable [
 	| change |
 	change := changes addClassVariable: 'Foo' to: self changeMock.
@@ -376,7 +376,7 @@ RBRefactoringChangeTest >> testPerformAddRemoveClassVariable [
 	self deny: (change changeClass classVarNames includes: 'Foo')
 ]
 
-{ #category : #'tests-perform' }
+{ #category : #'tests - perform' }
 RBRefactoringChangeTest >> testPerformAddRemoveInstanceVariable [
 	| change |
 	change := changes addInstanceVariable: 'foo' to: self changeMock.
@@ -384,7 +384,7 @@ RBRefactoringChangeTest >> testPerformAddRemoveInstanceVariable [
 	self deny: (change changeClass instVarNames includes: 'foo')
 ]
 
-{ #category : #'tests-perform' }
+{ #category : #'tests - perform' }
 RBRefactoringChangeTest >> testPerformAddRemoveMethod [
 	| change |
 	change := changes compile: 'method ^ 1' in: self changeMock classified: #utilities.
@@ -393,7 +393,7 @@ RBRefactoringChangeTest >> testPerformAddRemoveMethod [
 	self assert: change definedSelector equals: #method
 ]
 
-{ #category : #'tests-perform' }
+{ #category : #'tests - perform' }
 RBRefactoringChangeTest >> testPerformAddRemoveMethodInteractively [
 	| change |
 	change := changeFactory addMethodSource: 'method ^ 1' in: self changeMock classified: #utilities for: self. 
@@ -402,7 +402,7 @@ RBRefactoringChangeTest >> testPerformAddRemoveMethodInteractively [
 	self assert: change definedSelector equals: #method
 ]
 
-{ #category : #'tests-perform' }
+{ #category : #'tests - perform' }
 RBRefactoringChangeTest >> testPerformChangeClass [
 	| change |
 	change := changes
@@ -423,7 +423,7 @@ RBRefactoringChangeTest >> testPerformChangeClass [
 	self assert: change definedClass equals: self changeMock
 ]
 
-{ #category : #'tests-perform' }
+{ #category : #'tests - perform' }
 RBRefactoringChangeTest >> testPerformChangeComment [
 	| change comment |
 	change := changes comment: 'Some Comment' in: self changeMock.
@@ -432,7 +432,7 @@ RBRefactoringChangeTest >> testPerformChangeComment [
 	self assert: change changeClass organization classComment equals: comment
 ]
 
-{ #category : #'tests-perform' }
+{ #category : #'tests - perform' }
 RBRefactoringChangeTest >> testPerformChangeMetaclass [
 	| change |
 	change := changes
@@ -446,7 +446,7 @@ RBRefactoringChangeTest >> testPerformChangeMetaclass [
 	self assert: change definedClass equals: self changeMock class
 ]
 
-{ #category : #'tests-perform' }
+{ #category : #'tests - perform' }
 RBRefactoringChangeTest >> testPerformChangeMethod [
 	| change source |
 	change := changes compile: 'one ^ 2' in: self changeMock.
@@ -455,7 +455,7 @@ RBRefactoringChangeTest >> testPerformChangeMethod [
 	self assert: (change changeClass sourceCodeAt: #one) equals: source
 ]
 
-{ #category : #'tests-perform' }
+{ #category : #'tests - perform' }
 RBRefactoringChangeTest >> testPerformCompositeChange [
 	changes 
 		compile: 'method1 ^ 1' in: self changeMock;
@@ -467,7 +467,7 @@ RBRefactoringChangeTest >> testPerformCompositeChange [
 	self deny: (self changeMock canUnderstand: #method2) 
 ]
 
-{ #category : #'tests-perform' }
+{ #category : #'tests - perform' }
 RBRefactoringChangeTest >> testPerformRenameClass [
 	| change |
 	change := changes renameClass: self changeMock to: self changeMock name , 'Plus'.
@@ -478,7 +478,7 @@ RBRefactoringChangeTest >> testPerformRenameClass [
 	self deny: (workingEnvironment hasClassNamed: change newName)
 ]
 
-{ #category : #'tests-perform' }
+{ #category : #'tests - perform' }
 RBRefactoringChangeTest >> testPerformRenameClassInstanceVariable [
 	| change |
 	change := changes renameInstanceVariable: 'classInstVar' to: 'classInstVarPlus' in: self changeMock class.
@@ -489,7 +489,7 @@ RBRefactoringChangeTest >> testPerformRenameClassInstanceVariable [
 	self deny: (change changeClass instVarNames includes: change newName)
 ]
 
-{ #category : #'tests-perform' }
+{ #category : #'tests - perform' }
 RBRefactoringChangeTest >> testPerformRenameClassVariable [
 	| change |
 	change := changes renameClassVariable: 'ClassVar' to: 'ClassVarPlus' in: self changeMock.
@@ -500,7 +500,7 @@ RBRefactoringChangeTest >> testPerformRenameClassVariable [
 	self deny: (change changeClass classVarNames includes: change newName)
 ]
 
-{ #category : #'tests-perform' }
+{ #category : #'tests - perform' }
 RBRefactoringChangeTest >> testPerformRenameInstanceVariable [
 	| change |
 	change := changes renameInstanceVariable: 'instVar' to: 'instVarPlus' in: self changeMock.

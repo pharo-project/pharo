@@ -193,13 +193,13 @@ ObjectTest >> testCaseOfOtherwise [
 	self assert: temp equals: 3
 ]
 
-{ #category : #'tests-printing' }
+{ #category : #'tests - printing' }
 ObjectTest >> testDisplayString [
 
 	self assert: Object new displayString equals: 'an Object'
 ]
 
-{ #category : #'tests-printing' }
+{ #category : #'tests - printing' }
 ObjectTest >> testDisplayStringLimitedString [
 
 	| actual |
@@ -235,7 +235,7 @@ ObjectTest >> testInstVarNamedPut [
 	self should: [ obj instVarNamed: 'timoleon' put: 1 ] raise: InstanceVariableNotFound
 ]
 
-{ #category : #'tests-printing' }
+{ #category : #'tests - printing' }
 ObjectTest >> testPrintLimitedString [
 
 	| actual |
@@ -243,7 +243,7 @@ ObjectTest >> testPrintLimitedString [
 	self assert: actual equals: 'an O...etc...'
 ]
 
-{ #category : #'tests-printing' }
+{ #category : #'tests - printing' }
 ObjectTest >> testPrintString [
 
 	self assert: Object new printString equals: 'an Object'

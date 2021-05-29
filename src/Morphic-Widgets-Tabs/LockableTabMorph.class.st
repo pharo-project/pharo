@@ -15,7 +15,7 @@ LockableTabMorph class >> lockedIcon [
 		ifAbsentPut: [ self lockedIconContents ]
 ]
 
-{ #category : #'icons-contents' }
+{ #category : #'icons - contents' }
 LockableTabMorph class >> lockedIconContents [
 
 	^ Form

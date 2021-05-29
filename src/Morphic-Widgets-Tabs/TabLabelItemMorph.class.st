@@ -33,7 +33,7 @@ TabLabelItemMorph >> clippingBounds [
 	^ tab modifyClippingBounds: super clippingBounds
 ]
 
-{ #category : #'drawing-private' }
+{ #category : #'private - drawing' }
 TabLabelItemMorph >> computeSubmorphsToDraw [
 
 	owner width < tab showIconTreshold 

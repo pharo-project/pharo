@@ -123,17 +123,17 @@ ZnBufferedWriteStream >> flushBufferIfFull [
 
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : #'accessing - bytes' }
 ZnBufferedWriteStream >> int16: integer [
 	^ self nextIntegerOfSize: 2 signed: true bigEndian: true put: integer
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : #'accessing - bytes' }
 ZnBufferedWriteStream >> int32: integer [
 	^ self nextIntegerOfSize: 4 signed: true bigEndian: true put: integer
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : #'accessing - bytes' }
 ZnBufferedWriteStream >> int8: integer [
 	^ self nextIntegerOfSize: 1 signed: true bigEndian: true put: integer
 ]
@@ -182,12 +182,12 @@ ZnBufferedWriteStream >> next: count putAll: collection startingAt: offset [
 
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : #'accessing - bytes' }
 ZnBufferedWriteStream >> nextInt32Put: integer [
 	^ self nextIntegerOfSize: 4 signed: true bigEndian: true put: integer
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : #'accessing - bytes' }
 ZnBufferedWriteStream >> nextIntegerOfSize: numberOfBytes signed: signed bigEndian: bigEndian put: value [
 	"Assuming the receiver is a stream of bytes, write value as the next integer of size numberOfBytes.
 	If bigEndian is true, use network byte order, most significant byte first, 
@@ -211,12 +211,12 @@ ZnBufferedWriteStream >> nextIntegerOfSize: numberOfBytes signed: signed bigEndi
 	^ value
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : #'accessing - bytes' }
 ZnBufferedWriteStream >> nextLittleEndianNumber: numberOfBytes put: integer [
 	^ self nextIntegerOfSize: numberOfBytes signed: false bigEndian: false put: integer
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : #'accessing - bytes' }
 ZnBufferedWriteStream >> nextNumber: numberOfBytes put: integer [
 	^ self nextIntegerOfSize: numberOfBytes signed: false bigEndian: true put: integer
 ]
@@ -238,7 +238,7 @@ ZnBufferedWriteStream >> nextPutAll: collection [
 		startingAt: 1
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : #'accessing - bytes' }
 ZnBufferedWriteStream >> nextWordPut: integer [
 	^ self nextIntegerOfSize: 2 signed: false bigEndian: true put: integer
 ]
@@ -308,17 +308,17 @@ ZnBufferedWriteStream >> truncate: anInteger [
 	stream truncate: anInteger
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : #'accessing - bytes' }
 ZnBufferedWriteStream >> uint16: integer [
 	^ self nextIntegerOfSize: 2 signed: false bigEndian: true put: integer
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : #'accessing - bytes' }
 ZnBufferedWriteStream >> uint32: integer [
 	^ self nextIntegerOfSize: 4 signed: false bigEndian: true put: integer
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : #'accessing - bytes' }
 ZnBufferedWriteStream >> uint8: integer [
 	^ self nextIntegerOfSize: 1 signed: false bigEndian: true put: integer
 ]

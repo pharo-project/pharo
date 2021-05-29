@@ -62,7 +62,7 @@ DatePresenter >> chooseDate [
 		onChoiceSend: #onDateChosen: to: self.
 ]
 
-{ #category : #'accessing-widgets' }
+{ #category : #'accessing - widgets' }
 DatePresenter >> chooseDateButton [
 
 	^ chooseDateButton.
@@ -83,7 +83,7 @@ DatePresenter >> date: aDate [
 	self dateModel text: dateString.
 ]
 
-{ #category : #'accessing-widgets' }
+{ #category : #'accessing - widgets' }
 DatePresenter >> dateModel [
 
 	^ dateModel.

@@ -156,7 +156,7 @@ MorphicTextAdapter >> hasUnacceptedEdits: aBoolean [
 	self model hasUnacceptedEdits: aBoolean
 ]
 
-{ #category : #'protocol-shout' }
+{ #category : #'protocol - shout' }
 MorphicTextAdapter >> isAboutToStyle [
 
 	^ self model isAboutToStyle
@@ -173,7 +173,7 @@ MorphicTextAdapter >> notify: errorMessage at: position in: sourceCode [
 	self widgetDo: [ :w | w notify: errorMessage at: position in: sourceCode ]
 ]
 
-{ #category : #'private-shout' }
+{ #category : #'private - shout' }
 MorphicTextAdapter >> okToStyle [
 
 	^ true

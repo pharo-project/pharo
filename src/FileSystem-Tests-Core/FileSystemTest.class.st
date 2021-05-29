@@ -60,7 +60,7 @@ FileSystemTest >> tearDown [
 	super tearDown	
 ]
 
-{ #category : #'tests-streams-compatibility' }
+{ #category : #'tests - streams compatibility' }
 FileSystemTest >> testBinaryReadStream [
 	| reference stream |
 	self markForCleanup: (reference := filesystem workingDirectory / 'griffle').
@@ -71,7 +71,7 @@ FileSystemTest >> testBinaryReadStream [
 	stream close
 ]
 
-{ #category : #'tests-streams-compatibility' }
+{ #category : #'tests - streams compatibility' }
 FileSystemTest >> testBinaryReadStreamDo [
 	| reference |
 	self markForCleanup: (reference := filesystem workingDirectory / 'griffle').
@@ -84,7 +84,7 @@ FileSystemTest >> testBinaryReadStreamDo [
 		equals: 'griffle'
 ]
 
-{ #category : #'tests-streams-compatibility' }
+{ #category : #'tests - streams compatibility' }
 FileSystemTest >> testBinaryReadStreamDoIfAbsent [
 	| reference |
 	self markForCleanup: (reference := filesystem workingDirectory / 'griffle').
@@ -97,7 +97,7 @@ FileSystemTest >> testBinaryReadStreamDoIfAbsent [
 		ifAbsent: [ false ])
 ]
 
-{ #category : #'tests-streams-compatibility' }
+{ #category : #'tests - streams compatibility' }
 FileSystemTest >> testBinaryReadStreamIfAbsent [
 	| reference stream |
 	self markForCleanup: (reference := filesystem workingDirectory / 'griffle').
@@ -620,7 +620,7 @@ FileSystemTest >> testNonExistentFileSize [
 	self should: [ file2 size ] raise: FileDoesNotExistException
 ]
 
-{ #category : #'tests-streams' }
+{ #category : #'tests - streams' }
 FileSystemTest >> testReadStream [
 	| reference stream |
 	self markForCleanup: (reference := filesystem workingDirectory / 'griffle').
@@ -631,7 +631,7 @@ FileSystemTest >> testReadStream [
 	stream close
 ]
 
-{ #category : #'tests-streams' }
+{ #category : #'tests - streams' }
 FileSystemTest >> testReadStreamDo [
 	| reference |
 	self markForCleanup: (reference := filesystem workingDirectory / 'griffle').
@@ -644,7 +644,7 @@ FileSystemTest >> testReadStreamDo [
 		equals: 'griffle'
 ]
 
-{ #category : #'tests-streams' }
+{ #category : #'tests - streams' }
 FileSystemTest >> testReadStreamDoIfAbsent [
 	| reference |
 	self markForCleanup: (reference := filesystem workingDirectory / 'griffle').
@@ -657,7 +657,7 @@ FileSystemTest >> testReadStreamDoIfAbsent [
 		ifAbsent: [ false ])
 ]
 
-{ #category : #'tests-streams' }
+{ #category : #'tests - streams' }
 FileSystemTest >> testReadStreamIfAbsent [
 	| reference stream |
 	self markForCleanup: (reference := filesystem workingDirectory / 'griffle').
@@ -668,7 +668,7 @@ FileSystemTest >> testReadStreamIfAbsent [
 	stream close
 ]
 
-{ #category : #'tests-streams' }
+{ #category : #'tests - streams' }
 FileSystemTest >> testReadingAfterWriting [
 	| reference stream |
 	self markForCleanup: (reference := filesystem workingDirectory / 'griffle').
@@ -715,7 +715,7 @@ FileSystemTest >> testWorking [
 	self assert: filesystem workingDirectory path equals: filesystem workingDirectoryPath
 ]
 
-{ #category : #'tests-streams' }
+{ #category : #'tests - streams' }
 FileSystemTest >> testWriteStream [
 	| reference stream |
 	self markForCleanup: (reference := filesystem workingDirectory / 'griffle').
@@ -727,7 +727,7 @@ FileSystemTest >> testWriteStream [
 	stream close
 ]
 
-{ #category : #'tests-streams' }
+{ #category : #'tests - streams' }
 FileSystemTest >> testWriteStreamDo [
 	| reference |
 	self markForCleanup: (reference := filesystem workingDirectory / 'griffle').
@@ -738,7 +738,7 @@ FileSystemTest >> testWriteStreamDo [
 	self assert: (reference writeStreamDo: [ :stream | true ])
 ]
 
-{ #category : #'tests-streams' }
+{ #category : #'tests - streams' }
 FileSystemTest >> testWriteStreamDoIfPresent [
 	| reference |
 	self markForCleanup: (reference := filesystem workingDirectory / 'griffle').
@@ -753,7 +753,7 @@ FileSystemTest >> testWriteStreamDoIfPresent [
 		ifPresent: [ true ])
 ]
 
-{ #category : #'tests-streams' }
+{ #category : #'tests - streams' }
 FileSystemTest >> testWriteStreamIfPresent [
 	| reference stream |
 	self markForCleanup: (reference := filesystem workingDirectory / 'griffle').

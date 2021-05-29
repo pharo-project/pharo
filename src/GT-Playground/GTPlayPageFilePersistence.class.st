@@ -24,7 +24,7 @@ GTPlayPageFilePersistence >> fileName [
 	self subclassResponsibility
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 GTPlayPageFilePersistence >> fileReference [
 
 	self fileDirectory ifNil: [ 
@@ -34,7 +34,7 @@ GTPlayPageFilePersistence >> fileReference [
 	^ self fileDirectory / self fileName
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 GTPlayPageFilePersistence >> fileReferenceOrNil [
 
 	self fileDirectory ifNil: [ 

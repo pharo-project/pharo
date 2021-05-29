@@ -12,7 +12,7 @@ PluggableCanvas >> apply: aBlock [
 	"evaluate aBlock with a canvas to do a drawing command on.  See implementors for examples"
 ]
 
-{ #category : #'drawing-support' }
+{ #category : #'drawing - support' }
 PluggableCanvas >> clipBy: newClipRect during: aBlock [
 	self apply: [ :c |
 		c clipBy: newClipRect during: aBlock ]
@@ -33,19 +33,19 @@ PluggableCanvas >> contentsOfArea: aRectangle into: aForm [
 	^aForm
 ]
 
-{ #category : #'drawing-polygons' }
+{ #category : #'drawing - polygons' }
 PluggableCanvas >> drawPolygon: vertices color: aColor borderWidth: bw borderColor: bc [
 	self apply: [ :c |
 		c drawPolygon: vertices color: aColor borderWidth: bw borderColor: bc ]
 ]
 
-{ #category : #'drawing-text' }
+{ #category : #'drawing - text' }
 PluggableCanvas >> drawString: s from: firstIndex to: lastIndex in: boundsRect font: fontOrNil color: c [
 	self apply: [ :clippedCanvas |
 		clippedCanvas drawString: s from: firstIndex to: lastIndex in: boundsRect font: fontOrNil color: c]
 ]
 
-{ #category : #'drawing-text' }
+{ #category : #'drawing - text' }
 PluggableCanvas >> drawString: s from: firstIndex to: lastIndex in: boundsRect font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc [
 	self apply: [ :clippedCanvas |
 		clippedCanvas drawString: s from: firstIndex to: lastIndex in: boundsRect font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc]
@@ -58,13 +58,13 @@ PluggableCanvas >> extent [
 
 ]
 
-{ #category : #'drawing-ovals' }
+{ #category : #'drawing - ovals' }
 PluggableCanvas >> fillOval: r color: c borderWidth: borderWidth borderColor: borderColor [
 	self apply: [ :clippedCanvas |
 		clippedCanvas fillOval: r color: c borderWidth: borderWidth borderColor: borderColor ]
 ]
 
-{ #category : #'drawing-ovals' }
+{ #category : #'drawing - ovals' }
 PluggableCanvas >> fillOval: aRectangle fillStyle: aFillStyle borderWidth: bw borderColor: bc [
 	"Fill the given oval."
 	(aFillStyle isBitmapFill and:[aFillStyle isKindOf: InfiniteForm]) ifTrue:[
@@ -81,7 +81,7 @@ PluggableCanvas >> fillOval: aRectangle fillStyle: aFillStyle borderWidth: bw bo
 			borderColor: bc ]
 ]
 
-{ #category : #'drawing-rectangles' }
+{ #category : #'drawing - rectangles' }
 PluggableCanvas >> fillRectangle: aRectangle basicFillStyle: aFillStyle [
 	"Fill the given rectangle with the given, non-composite, fill style."
 
@@ -129,7 +129,7 @@ PluggableCanvas >> forceToScreen: rect [
 		c forceToScreen: rect ]
 ]
 
-{ #category : #'drawing-rectangles' }
+{ #category : #'drawing - rectangles' }
 PluggableCanvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderWidth borderColor: borderColor [
 	self apply: [ :c |
 		c frameAndFillRectangle: r fillColor: fillColor borderWidth: borderWidth borderColor: borderColor ]
@@ -160,13 +160,13 @@ PluggableCanvas >> origin [
 
 ]
 
-{ #category : #'drawing-images' }
+{ #category : #'drawing - images' }
 PluggableCanvas >> paintImage: aForm at: aPoint [
 	self apply: [ :c |
 		c paintImage: aForm at: aPoint ]
 ]
 
-{ #category : #'drawing-images' }
+{ #category : #'drawing - images' }
 PluggableCanvas >> paintImage: aForm at: aPoint sourceRect: sourceRect [
 	self apply: [ :c |
 		c paintImage: aForm at: aPoint sourceRect: sourceRect ]
@@ -184,7 +184,7 @@ PluggableCanvas >> render: anObject [
 		c render: anObject ]
 ]
 
-{ #category : #'drawing-general' }
+{ #category : #'drawing - general' }
 PluggableCanvas >> roundCornersOf: aMorph in: bounds during: aBlock [
 	aMorph wantsRoundedCorners ifFalse:[^aBlock value].
 	(self seesNothingOutside: (CornerRounder rectWithinCornersOf: bounds))
@@ -208,13 +208,13 @@ PluggableCanvas >> showAt: pt invalidRects: updateRects [
 		c showAt: pt invalidRects: updateRects ]
 ]
 
-{ #category : #'drawing-images' }
+{ #category : #'drawing - images' }
 PluggableCanvas >> stencil: stencilForm at: aPoint sourceRect: sourceRect color: aColor [
 	self apply: [ :c |
 		c stencil: stencilForm at: aPoint sourceRect: sourceRect color: aColor ]
 ]
 
-{ #category : #'drawing-support' }
+{ #category : #'drawing - support' }
 PluggableCanvas >> transformBy: aDisplayTransform clippingTo: aClipRect during: aBlock smoothing: cellSize [
 
 	self apply: [ :clippedCanvas |
@@ -227,7 +227,7 @@ PluggableCanvas >> translateBy: aPoint clippingTo: aRect during: aBlock [
 		clippedCanvas translateBy: aPoint clippingTo: aRect during: aBlock ]
 ]
 
-{ #category : #'drawing-support' }
+{ #category : #'drawing - support' }
 PluggableCanvas >> translateBy: delta during: aBlock [
 	self apply: [ :clippedCanvas |
 		 clippedCanvas translateBy: delta during: aBlock ]

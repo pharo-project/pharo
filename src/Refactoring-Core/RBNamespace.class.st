@@ -237,7 +237,7 @@ RBNamespace >> changes [
 	^changes
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBNamespace >> classFor: aBehavior [
 
 	aBehavior ifNil: [ ^ nil ].
@@ -251,7 +251,7 @@ RBNamespace >> classNameFor: aBehavior [
 	^ aBehavior instanceSide name
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBNamespace >> classNamed: aSymbol [
 	| class classes index |
 	aSymbol ifNil: [ ^ nil ].
@@ -285,7 +285,7 @@ RBNamespace >> compile: aString in: aRBClass classified: aSymbol [
 	^change
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBNamespace >> createNewClassFor: aBehavior [ 
 	| nonMeta meta className rbType rbMetaType |
 	className := aBehavior instanceSide name.
@@ -303,7 +303,7 @@ RBNamespace >> createNewClassFor: aBehavior [
 	^changedClasses at: className put: (Array with: nonMeta with: meta)
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBNamespace >> createNewPackageFor: aPackage [
 	| package |
 	package := modelFactory rbPackage existingNamed: aPackage model: self.
@@ -431,7 +431,7 @@ RBNamespace >> markPackageAsRemoved: aPackageName [
 		add: aPackageName
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBNamespace >> metaclassNamed: aSymbol [
 
 	| class |
@@ -460,7 +460,7 @@ RBNamespace >> name: aString [
 	^changes name: aString
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBNamespace >> packageNamed: aSymbol [
 	aSymbol ifNil: [ ^ nil ].
 	(self hasPackageRemoved: aSymbol) ifTrue: [ ^ nil ].
@@ -689,7 +689,7 @@ RBNamespace >> unmarkPackageAsRemoved: newPackageName [
 		remove: newPackageName ifAbsent: [  ]
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBNamespace >> whichCategoryIncludes: aSymbol [
 	^self environment whichCategoryIncludes: aSymbol
 ]

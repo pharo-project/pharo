@@ -334,7 +334,7 @@ Array2D >> atRow: row put: aCollection [
 	^aCollection
 ]
 
-{ #category : #'accessing submatrices' }
+{ #category : #'accessing - submatrices' }
 Array2D >> atRows: rs columns: cs [
 	"Answer a Matrix obtained by slicing the receiver.
 	 rs and cs should be sequenceable collections of positive integers."
@@ -343,7 +343,7 @@ Array2D >> atRows: rs columns: cs [
 		self at: (rs at: r) at: (cs at: c)]
 ]
 
-{ #category : #'accessing submatrices' }
+{ #category : #'accessing - submatrices' }
 Array2D >> atRows: r1 to: r2 columns: c1 to: c2 [
 	"Answer a submatrix [r1..r2][c1..c2] of the receiver."
 	|rd cd|
@@ -354,7 +354,7 @@ Array2D >> atRows: r1 to: r2 columns: c1 to: c2 [
 
 ]
 
-{ #category : #'accessing submatrices' }
+{ #category : #'accessing - submatrices' }
 Array2D >> atRows: r1 to: r2 columns: c1 to: c2 ifInvalid: element [
 	"Answer a submatrix [r1..r2][c1..c2] of the receiver.
 	 Portions of the result outside the bounds of the original matrix are filled in with element."
@@ -365,7 +365,7 @@ Array2D >> atRows: r1 to: r2 columns: c1 to: c2 ifInvalid: element [
 
 ]
 
-{ #category : #'accessing submatrices' }
+{ #category : #'accessing - submatrices' }
 Array2D >> atRows: r1 to: r2 columns: c1 to: c2 put: aMatrix [
 	"Set the [r1..r2][c1..c2] submatrix of the receiver
 	 from the [1..r2-r1+1][1..c2-c1+1] submatrix of aMatrix.

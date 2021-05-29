@@ -80,12 +80,12 @@ GTFilter >> context: anObject [
 	context := anObject
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTFilter >> defaultFilteredItems [
 	^ OrderedCollection new: 100 " not a limitation, just a reasonable start size "
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTFilter >> defaultStreamed [
 	^ true
 ]
