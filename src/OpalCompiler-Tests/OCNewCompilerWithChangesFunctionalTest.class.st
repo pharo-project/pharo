@@ -4,7 +4,7 @@ Class {
 	#category : #'OpalCompiler-Tests-Misc'
 }
 
-{ #category : #'test - block returning' }
+{ #category : #'tests - block returning' }
 OCNewCompilerWithChangesFunctionalTest >> testBlockReturning [
 	
 	| aCompiledMethod bytecode expected compiler |
@@ -134,7 +134,7 @@ OCNewCompilerWithChangesFunctionalTest >> testBlockTemp [
 
 ]
 
-{ #category : #'other-tests' }
+{ #category : #'tests - other' }
 OCNewCompilerWithChangesFunctionalTest >> testDifferentBlocksWithSameArgumentName [
 	
 	| aCompiledMethod bytecode expected compiler |
@@ -362,7 +362,7 @@ OCNewCompilerWithChangesFunctionalTest >> testMethodTemp [
 
 ]
 
-{ #category : #'other-tests' }
+{ #category : #'tests - other' }
 OCNewCompilerWithChangesFunctionalTest >> testModulePrimitive [
 	
 	| aCompiledMethod bytecode expected |
@@ -396,7 +396,7 @@ OCNewCompilerWithChangesFunctionalTest >> testModulePrimitive [
 
 ]
 
-{ #category : #'test - array compilation' }
+{ #category : #'tests - array compilation' }
 OCNewCompilerWithChangesFunctionalTest >> testMultiElementArray [
 	| aCompiledMethod bytecode expected |
 	aCompiledMethod := OpalCompiler new 
@@ -531,7 +531,7 @@ OCNewCompilerWithChangesFunctionalTest >> testSetUp [
 
 ]
 
-{ #category : #'test - array compilation' }
+{ #category : #'tests - array compilation' }
 OCNewCompilerWithChangesFunctionalTest >> testSimpleArray [
 	
 	| aCompiledMethod bytecode expected |
