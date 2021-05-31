@@ -91,6 +91,11 @@ RBBrowserEnvironmentWrapper >> includesSelector: aSelector in: aClass [
 ]
 
 { #category : #testing }
+RBBrowserEnvironmentWrapper >> isBoundToEnvironment [
+	^ environment notNil
+]
+
+{ #category : #testing }
 RBBrowserEnvironmentWrapper >> isEmpty [
 	self classesDo: [:each | ^false].
 	^true

@@ -165,12 +165,13 @@ ClyFullBrowserMorph >> adoptForExtendedClass [
 ClyFullBrowserMorph >> allNavigationScopes [
 	
 	| classLocalScope |
+
 	classLocalScope := self classSelection asItemsScope: ClyBothMetaLevelClassScope.
 
 	^super allNavigationScopes, { 
 		self packageSelection asItemsScope: ClyPackageScope. 
 		classLocalScope asFullHierarchyScope. 
-		classLocalScope }
+		classLocalScope }, RefactoringSettings availableScopes
 ]
 
 { #category : #updating }

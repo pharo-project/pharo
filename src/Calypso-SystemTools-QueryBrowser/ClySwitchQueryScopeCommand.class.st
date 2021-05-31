@@ -43,7 +43,6 @@ ClySwitchQueryScopeCommand >> addToolbarItemInto: toolbarMorph using: aCommandAc
 	
 	| compoBox |
 	compoBox := ClyScopeCompoBoxMorph for: browser.
-	
 	toolbarMorph addNewItem: compoBox
 ]
 

@@ -19,6 +19,12 @@ RefactoringSettings class >> addScope: aScope withKey: key [
 ]
 
 { #category : #accesing }
+RefactoringSettings class >> availableScopes [
+	"We don't return the Current image scope"
+	^ self scopeList allButFirst
+]
+
+{ #category : #accesing }
 RefactoringSettings class >> invalidNames [ 
 	^ self scopeList collect: [ :e | e label ]
 ]

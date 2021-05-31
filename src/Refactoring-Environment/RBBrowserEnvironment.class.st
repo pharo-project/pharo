@@ -27,7 +27,12 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'label',
-		'searchStrings'
+		'searchStrings',
+		'accessGuard',
+		'queryCache',
+		'plugins',
+		'updateStrategy',
+		'updateGuard'
 	],
 	#category : #'Refactoring-Environment'
 }
@@ -51,6 +56,11 @@ RBBrowserEnvironment >> & anEnvironment [
 	^RBAndEnvironment onEnvironment: self and: anEnvironment
 ]
 
+{ #category : #private }
+RBBrowserEnvironment >> accessGuard [ 
+	^ accessGuard ifNil: [ accessGuard := Mutex new ]
+]
+
 { #category : #accessing }
 RBBrowserEnvironment >> addSearchString: aString [
 
@@ -60,6 +70,12 @@ RBBrowserEnvironment >> addSearchString: aString [
 			].
 	( searchStrings includes: aString )
 		ifFalse: [ searchStrings add: aString ]
+]
+
+{ #category : #queries }
+RBBrowserEnvironment >> adoptQuery: aQuery [
+	aQuery scope: self.
+	^aQuery
 ]
 
 { #category : #'accessing-classes' }
@@ -119,6 +135,12 @@ RBBrowserEnvironment >> allNonMetaClasses [
 	^ allNonMetaClasses asArray
 ]
 
+{ #category : #printing }
+RBBrowserEnvironment >> announceChangesOf: aQueryResult [
+	
+	self updateStrategy announceChangesOf: aQueryResult
+]
+
 { #category : #accessing }
 RBBrowserEnvironment >> asSelectorEnvironment [
 	^(RBClassEnvironment onEnvironment: self classes: self classes) asSelectorEnvironment
@@ -155,6 +177,12 @@ RBBrowserEnvironment >> at: aKey ifAbsent: aBlock [
 
 	association := self associationAt: aKey ifAbsent: [ nil ].
 	^ association ifNil: [ aBlock value ] ifNotNil: [ association value ]
+]
+
+{ #category : #printing }
+RBBrowserEnvironment >> cachedResultOf: aQuery [
+
+	^self queryCache at: aQuery ifAbsent: [ nil ]
 ]
 
 { #category : #accessing }
@@ -232,6 +260,12 @@ RBBrowserEnvironment >> classesDo: aBlock [
 			ifTrue: [aBlock value: each ] ]
 ]
 
+{ #category : #private }
+RBBrowserEnvironment >> cleanGarbageInCache [
+
+	self accessGuard critical: [ self queryCache clyCleanGarbage ]
+]
+
 { #category : #copying }
 RBBrowserEnvironment >> copyEmpty [
 	^ self class new
@@ -245,6 +279,11 @@ RBBrowserEnvironment >> defaultLabel [
 { #category : #accessing }
 RBBrowserEnvironment >> defaultName [
 	^ self class defaultName
+]
+
+{ #category : #accessing }
+RBBrowserEnvironment >> defaultPlugins [
+	^ OrderedCollection new
 ]
 
 { #category : #testing }
@@ -319,6 +358,23 @@ RBBrowserEnvironment >> forPackages: aCollection [
 { #category : #environments }
 RBBrowserEnvironment >> forPragmas: aKeywordCollection [
 	^ RBPragmaEnvironment onEnvironment: self keywords: aKeywordCollection
+]
+
+{ #category : #printing }
+RBBrowserEnvironment >> handleSystemChange: aSystemAnnouncement [
+
+	| todoList todoSize anyResult |
+	todoList := 	(queryCache values select: [ :each | each notNil ]) as: IdentitySet.
+	todoSize := 0.
+	[[todoSize = todoList size] whileFalse: [
+		todoSize := todoList size.  
+		todoList asArray do: [ :eachResult |
+			(todoList includes: eachResult) ifTrue: [  
+				eachResult handleSystemChange: aSystemAnnouncement byProcessingList: todoList]]].
+	todoList notEmpty] whileTrue: [ 
+		anyResult := todoList anyOne.
+		anyResult handleSystemChange: aSystemAnnouncement.
+		todoList remove: anyResult]
 ]
 
 { #category : #environments }
@@ -397,6 +453,17 @@ RBBrowserEnvironment >> instVarWritersTo: instVarName in: aClass [
 { #category : #accessing }
 RBBrowserEnvironment >> instanceVariablesFor: aClass [ 
 	^aClass instVarNames
+]
+
+{ #category : #testing }
+RBBrowserEnvironment >> isBasedOnEmptyBasis [
+
+	^false
+]
+
+{ #category : #testing }
+RBBrowserEnvironment >> isBoundToEnvironment [
+	^ true
 ]
 
 { #category : #testing }
@@ -537,6 +604,22 @@ RBBrowserEnvironment >> packagesWithContributors [
 ]
 
 { #category : #printing }
+RBBrowserEnvironment >> plugins [ 
+	^ plugins ifNil: [ self defaultPlugins ]
+]
+
+{ #category : #printing }
+RBBrowserEnvironment >> pluginsDo: aBlock [
+	^ self plugins do: aBlock
+]
+
+{ #category : #printing }
+RBBrowserEnvironment >> printDescriptionOn: aStream [
+
+	aStream nextPutAll: self description
+]
+
+{ #category : #printing }
 RBBrowserEnvironment >> printOn: aStream [
 	aStream nextPutAll: self label
 ]
@@ -550,6 +633,29 @@ RBBrowserEnvironment >> problemCount [
 RBBrowserEnvironment >> protocolsFor: aClass [
 	^aClass organization categories 
 		select: [ :each | self includesProtocol: each in: aClass ]
+]
+
+{ #category : #private }
+RBBrowserEnvironment >> query: aQuery [
+
+	| result |
+
+	self cleanGarbageInCache.
+	result := self queryCache at: aQuery ifAbsent: [nil]. "cache is weak dict where ifAbsentPut: not works"
+	result ifNil: [  
+		result := aQuery prepareNewResult.
+		aQuery fixStateBeforeExecution.
+		"We should ensure that state of query will not be modified after execution 
+		because it is the key in cache.
+		So aQuery is supposed to become readonly object together with required internal state"
+		self accessGuard critical: [ self queryCache at: aQuery put: result]].	
+	result rebuildIfNeeded.
+	^result
+]
+
+{ #category : #private }
+RBBrowserEnvironment >> queryCache [
+	^queryCache ifNil: [ queryCache := WeakValueDictionary new ]
 ]
 
 { #category : #environments }
@@ -683,6 +789,11 @@ RBBrowserEnvironment >> storeOn: aStream [
 		nextPutAll: ' new'
 ]
 
+{ #category : #testing }
+RBBrowserEnvironment >> supportsQuery: aQuery [
+	^true
+]
+
 { #category : #private }
 RBBrowserEnvironment >> systemDictionary [
 	"The root system dictionary as the source of all objects in this environment."
@@ -710,6 +821,35 @@ RBBrowserEnvironment >> traitsDo: aBlock [
 	self systemDictionary allTraitsDo: [ :each | 
 		(self includesClass: each)
 			ifTrue: [ aBlock value: each ]  ]
+]
+
+{ #category : #printing }
+RBBrowserEnvironment >> updateGuard [
+	^ updateGuard ifNil: [ updateGuard := Mutex new. ]
+]
+
+{ #category : #printing }
+RBBrowserEnvironment >> updateUsing: newUpdateStrategy by: updateBlock [
+	"here is special logic to break current mutex when any error is signalled.
+	Without this logic fixing code inside spawned debugger will lead to deadlock
+	because applying method changes will blocked at this accessGuard.
+	Breaking mutex is done by creating new one which meand that current process
+	is not guarded any more and proceeding execution in debugger can lead to some errors in rare cases. But it is less problem than locked UI"
+	[
+		self updateGuard critical: [ | oldStrategy |
+			oldStrategy := updateStrategy.
+			[
+				updateStrategy := newUpdateStrategy.
+				updateBlock on: Error do: [ :err |
+					updateStrategy := oldStrategy.
+					updateGuard := Mutex new.
+					err pass]
+			] ensure: [ 
+				self updateStrategy == newUpdateStrategy ifTrue: [ 
+					"In case of error another process can set up new strategy. 
+					This condition will avoid possible collision"
+					updateStrategy := oldStrategy ]]]
+	] ensure: [ newUpdateStrategy publishCollectedChanges]
 ]
 
 { #category : #accessing }
