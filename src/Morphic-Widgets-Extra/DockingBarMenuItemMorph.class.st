@@ -78,7 +78,7 @@ DockingBarMenuItemMorph >> mouseUp: evt [
 
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 DockingBarMenuItemMorph >> noteNewOwner: aMorph [ 
 	"I have just been added as a submorph of aMorph"
 	super noteNewOwner: aMorph.
@@ -94,7 +94,7 @@ DockingBarMenuItemMorph >> ownerChanged [
 	self updateLayoutInDockingBar
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 DockingBarMenuItemMorph >> roundedCorners [
 	"Return a list of those corners to round"
 	owner isFloating

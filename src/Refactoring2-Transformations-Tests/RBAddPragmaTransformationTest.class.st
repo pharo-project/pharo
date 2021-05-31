@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #'testing-utilities' }
+{ #category : #utilities }
 RBAddPragmaTransformationTest >> methodAfter [
 	<gtInspectorPresentationOrder: 56>
 
@@ -12,14 +12,14 @@ RBAddPragmaTransformationTest >> methodAfter [
 	variable := 'String'.
 ]
 
-{ #category : #'testing-utilities' }
+{ #category : #utilities }
 RBAddPragmaTransformationTest >> methodBefore [
 
 	| variable |
 	variable := 'String'.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddPragmaTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBAddPragmaTransformation
@@ -29,7 +29,7 @@ RBAddPragmaTransformationTest >> testClassDoesNotExist [
 							asRefactoring 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddPragmaTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBAddPragmaTransformation
@@ -39,7 +39,7 @@ RBAddPragmaTransformationTest >> testMethodDoesNotExist [
 							asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddPragmaTransformationTest >> testPragmaAlreadyExists [
 
 	self shouldFail: (RBAddPragmaTransformation
@@ -49,7 +49,7 @@ RBAddPragmaTransformationTest >> testPragmaAlreadyExists [
 							asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddPragmaTransformationTest >> testRefactoring [
 
 	| refactoring class |
@@ -66,7 +66,7 @@ RBAddPragmaTransformationTest >> testRefactoring [
 			equals: (class parseTreeFor: #methodAfter) body.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddPragmaTransformationTest >> testTransform [
 
 	| transformation class |

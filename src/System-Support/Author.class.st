@@ -94,7 +94,7 @@ Author class >> uniqueInstance [
 	^ uniqueInstance ifNil: [ uniqueInstance := super new ]
 ]
 
-{ #category : #'testing-support' }
+{ #category : #'testing - support' }
 Author class >> useAuthor: aString during: aBlock [
 	^ self uniqueInstance useAuthor: aString during: aBlock
 ]
@@ -153,7 +153,7 @@ Author >> initialize [
 	fullName := ''
 ]
 
-{ #category : #'ui-requests' }
+{ #category : #'ui - requests' }
 Author >> requestFullName [
 	| initialAnswer |
 	
@@ -171,7 +171,7 @@ Author >> reset [
 	fullName := ''
 ]
 
-{ #category : #'testing-support' }
+{ #category : #'testing - support' }
 Author >> useAuthor: aString during: aBlock [
 	| previous |
 	previous := fullName.

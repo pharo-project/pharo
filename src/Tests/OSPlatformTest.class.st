@@ -4,7 +4,7 @@ Class {
 	#category : #'Tests-System'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 OSPlatformTest >> testAPI [
 	"A test to make sure the full API will work"
 	Smalltalk os
@@ -20,7 +20,7 @@ OSPlatformTest >> testAPI [
 		family
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OSPlatformTest >> testCurrentWorkingDirectory [
 	"This is a test to make sure getCurrentWorkingDirectory is working"
 
@@ -28,7 +28,7 @@ OSPlatformTest >> testCurrentWorkingDirectory [
  self assert: 'relativePath' asFileReference asAbsolute parent fullName equals: OSPlatform current currentWorkingDirectoryPath
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OSPlatformTest >> testCurrentWorkingDirectoryWithBufferSize [
 	"This is a test to make sure getCurrentWorkingDirectoryWithBufferSize is working"
 	
@@ -36,7 +36,7 @@ OSPlatformTest >> testCurrentWorkingDirectoryWithBufferSize [
  self assert: 'relativePath' asFileReference asAbsolute parent fullName equals: (OSPlatform current currentWorkingDirectoryPathWithBufferSize: 1024)
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OSPlatformTest >> testNewFileInWorkingDirectory [
 	"This is a test to make sure new files are created in the current working directory"
 
@@ -49,7 +49,7 @@ OSPlatformTest >> testNewFileInWorkingDirectory [
 	file delete
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OSPlatformTest >> testStartUpList [
 	"This test documents issue http://code.google.com/p/pharo/issues/detail?id=838"
 	

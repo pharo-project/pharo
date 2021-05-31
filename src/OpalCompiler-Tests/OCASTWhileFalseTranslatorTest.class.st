@@ -11,7 +11,7 @@ OCASTWhileFalseTranslatorTest class >> testParameters [
 			forSelector: #optimization addOptions: { #optionInlineWhile . #optionInlineNone })
 ]
 
-{ #category : #'testing - blocks - optimized' }
+{ #category : #'tests - blocks - optimized' }
 OCASTWhileFalseTranslatorTest >> testWhileFalseExecutesLeftBlock [
 	| result |
 	result := self
@@ -27,7 +27,7 @@ OCASTWhileFalseTranslatorTest >> testWhileFalseExecutesLeftBlock [
 	self assert: result equals: 5.
 ]
 
-{ #category : #'testing - blocks - optimized' }
+{ #category : #'tests - blocks - optimized' }
 OCASTWhileFalseTranslatorTest >> testWhileFalseExecutesLeftBlockWithTemp [
 	| result |
 	result := self
@@ -46,7 +46,7 @@ OCASTWhileFalseTranslatorTest >> testWhileFalseExecutesLeftBlockWithTemp [
 	self assert: result equals: 5.
 ]
 
-{ #category : #'testing - blocks - optimized' }
+{ #category : #'tests - blocks - optimized' }
 OCASTWhileFalseTranslatorTest >> testWhileFalseExecutesRightBlock [
 	| result |
 	result := self
@@ -62,7 +62,7 @@ OCASTWhileFalseTranslatorTest >> testWhileFalseExecutesRightBlock [
 	self assert: result equals: 5.
 ]
 
-{ #category : #'testing - blocks - optimized' }
+{ #category : #'tests - blocks - optimized' }
 OCASTWhileFalseTranslatorTest >> testWhileFalseExecutesRightBlockWithTemp [
 	| result |
 	result := self
@@ -80,7 +80,7 @@ OCASTWhileFalseTranslatorTest >> testWhileFalseExecutesRightBlockWithTemp [
 	self assert: result equals: 5.
 ]
 
-{ #category : #'testing - blocks - optimized' }
+{ #category : #'tests - blocks - optimized' }
 OCASTWhileFalseTranslatorTest >> testWhileFalseReturnsNil [
 	| result |
 	result := self

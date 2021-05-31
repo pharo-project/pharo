@@ -217,7 +217,7 @@ TransformationMorph >> renderedMorph [
 	^self firstSubmorph renderedMorph
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 TransformationMorph >> replaceSubmorph: oldMorph by: newMorph [
 	| t b |
 	t := transform.

@@ -42,7 +42,7 @@ CoStatisticsTest >> testAcceptEntryIncrementsAverageEvenIfAtDifferentIndexes [
 	self assert: statistics averageTypedCharacters equals: 4
 ]
 
-{ #category : #'test-entries' }
+{ #category : #'tests - entries' }
 CoStatisticsTest >> testAcceptEntryLogsAllSources [
 
 	statistics := CoStatistics new.
@@ -72,21 +72,21 @@ CoStatisticsTest >> testAcceptEntryLogsAverageTypedCharactersDoesNotAffectOtherI
 	self assert: (statistics averageTypedCharactersAt: 1) equals: 0
 ]
 
-{ #category : #'test-entries' }
+{ #category : #'tests - entries' }
 CoStatisticsTest >> testAcceptEntryLogsIt [
 	statistics := CoStatistics new.
 	self logAcceptedEvent: 1.
 	self assert: statistics acceptedEntries notEmpty
 ]
 
-{ #category : #'test-entries' }
+{ #category : #'tests - entries' }
 CoStatisticsTest >> testAcceptEntryLogsItsSize [
 	statistics := CoStatistics new.
 	self logAcceptedEvent: 1.
 	self assert: (statistics entriesAtIndex: 1) size equals: 1
 ]
 
-{ #category : #'test-entries' }
+{ #category : #'tests - entries' }
 CoStatisticsTest >> testAcceptEntryLogsItsSource [
 
 	| entries |
@@ -98,7 +98,7 @@ CoStatisticsTest >> testAcceptEntryLogsItsSource [
 	self assert: entries size equals: 1
 ]
 
-{ #category : #'test-entries' }
+{ #category : #'tests - entries' }
 CoStatisticsTest >> testAcceptEntryLogsItsSourceInSeparateEntries [
 
 	| entries |
@@ -108,7 +108,7 @@ CoStatisticsTest >> testAcceptEntryLogsItsSourceInSeparateEntries [
 	self assert: entries size equals: 0
 ]
 
-{ #category : #'test-entries' }
+{ #category : #'tests - entries' }
 CoStatisticsTest >> testAcceptTwoEntriesAtDifferentIndexLogsSeparateCounts [
 	statistics := CoStatistics new.
 	self logAcceptedEvent: 1.
@@ -117,7 +117,7 @@ CoStatisticsTest >> testAcceptTwoEntriesAtDifferentIndexLogsSeparateCounts [
 	self assert: (statistics entriesAtIndex: 2) size equals: 1
 ]
 
-{ #category : #'test-entries' }
+{ #category : #'tests - entries' }
 CoStatisticsTest >> testAcceptTwoEntriesAtSameIndexLogsCount [
 	statistics := CoStatistics new.
 	self logAcceptedEvent: 1.
@@ -229,7 +229,7 @@ CoStatisticsTest >> testHeuristicBuilderForTwoHeuristicWrapsNonWrapper [
 	self assert: heuristic wrapped equals: heuristic1
 ]
 
-{ #category : #'test-entries' }
+{ #category : #'tests - entries' }
 CoStatisticsTest >> testNewStatisticsHaveNoAcceptedEntries [
 
 	statistics := CoStatistics new.

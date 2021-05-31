@@ -4,7 +4,7 @@ Class {
 	#category : #'OpalCompiler-Tests-Misc'
 }
 
-{ #category : #util }
+{ #category : #utilities }
 MethodMapTest >> compileAndRunExample: aSelector [
 	| cm |
 	
@@ -12,19 +12,19 @@ MethodMapTest >> compileAndRunExample: aSelector [
 	^cm valueWithReceiver:  MethodMapExamples new arguments: #().
 ]
 
-{ #category : #util }
+{ #category : #utilities }
 MethodMapTest >> compileMethod: aMethod [
 
 	^aMethod parseTree generate: aMethod trailer.
 	
 ]
 
-{ #category : #'testing - ast mapping' }
+{ #category : #'tests - ast mapping' }
 MethodMapTest >> deadContext [
 	^ thisContext
 ]
 
-{ #category : #'testing - ast mapping' }
+{ #category : #'tests - ast mapping' }
 MethodMapTest >> inlinedBlockSourceNode [
 	1 to: 1 do: [ :i | ^ thisContext sourceNode ]. 
 
@@ -37,7 +37,7 @@ MethodMapTest >> parseExpression: aString [
 	^ RBParser parseExpression: aString
 ]
 
-{ #category : #'testing - ast mapping' }
+{ #category : #'tests - ast mapping' }
 MethodMapTest >> testBlockAndContextSourceNode [
 	| block blockNodeViaContext blockNodeViaClosure |
 	block := [ blockNodeViaContext := thisContext sourceNode ].
@@ -47,7 +47,7 @@ MethodMapTest >> testBlockAndContextSourceNode [
 	self assert: blockNodeViaContext identicalTo: blockNodeViaClosure
 ]
 
-{ #category : #'testing - ast mapping' }
+{ #category : #'tests - ast mapping' }
 MethodMapTest >> testBlockSourceNode [
 	| sourceNode |
 	sourceNode := [ 1 + 2 ] sourceNode.
@@ -56,7 +56,7 @@ MethodMapTest >> testBlockSourceNode [
 
 ]
 
-{ #category : #'testing - ast mapping' }
+{ #category : #'tests - ast mapping' }
 MethodMapTest >> testBlockWithArgAndEnclosedBlockSourceNode [
 	| sourceNode |
 	sourceNode := [ :arg |  [ arg ] ] sourceNode.
@@ -64,7 +64,7 @@ MethodMapTest >> testBlockWithArgAndEnclosedBlockSourceNode [
 
 ]
 
-{ #category : #'testing - ast mapping' }
+{ #category : #'tests - ast mapping' }
 MethodMapTest >> testBlockWithEnclosedBlockSourceNode [
 	| sourceNode |
 	sourceNode := [ [ ] ] sourceNode.
@@ -72,7 +72,7 @@ MethodMapTest >> testBlockWithEnclosedBlockSourceNode [
 
 ]
 
-{ #category : #'testing - ast mapping' }
+{ #category : #'tests - ast mapping' }
 MethodMapTest >> testBlockWithTempsSourceNode [
 	| sourceNode |
 	sourceNode := [ | t1 t2 | ] sourceNode.
@@ -80,12 +80,12 @@ MethodMapTest >> testBlockWithTempsSourceNode [
 
 ]
 
-{ #category : #'testing - temp access' }
+{ #category : #'tests - temp access' }
 MethodMapTest >> testCopiedVarFromDeadContext [
 	self assert:  (self compileAndRunExample:  #exampleCopiedVarFromDeadContext) equals: 2.
 ]
 
-{ #category : #'testing - ast mapping' }
+{ #category : #'tests - ast mapping' }
 MethodMapTest >> testDeadContextSourceNode [
 	| deadContext |
 	deadContext := self deadContext.
@@ -94,81 +94,81 @@ MethodMapTest >> testDeadContextSourceNode [
 
 ]
 
-{ #category : #'testing - temp access' }
+{ #category : #'tests - temp access' }
 MethodMapTest >> testExampleAccessOuterFromCleanBlock [
 	self assert: (self compileAndRunExample: #exampleAccessOuterFromCleanBlock) equals: 1
 ]
 
-{ #category : #'testing - temp access' }
+{ #category : #'tests - temp access' }
 MethodMapTest >> testExampleSimpleTemp [
 	self assert: (self compileAndRunExample: #exampleSimpleTemp) equals: 1
 ]
 
-{ #category : #'testing - temp access' }
+{ #category : #'tests - temp access' }
 MethodMapTest >> testExampleTempNamedCopying [
 	self assert: (self compileAndRunExample: #exampleTempNamedCopying) equals: 1
 ]
 
-{ #category : #'testing - temp access' }
+{ #category : #'tests - temp access' }
 MethodMapTest >> testExampleTempNamedCopying2 [
 	self assert: (self compileAndRunExample: #exampleTempNamedCopying2) equals: 1
 ]
 
-{ #category : #'testing - temp access' }
+{ #category : #'tests - temp access' }
 MethodMapTest >> testExampleTempNamedPutCopying [
 	self assert: (self compileAndRunExample: #exampleTempNamedPutCopying) equals: 2.
 ]
 
-{ #category : #'testing - temp access' }
+{ #category : #'tests - temp access' }
 MethodMapTest >> testExampleTempNamedPutCopying2 [
 	"modifying a copied temp variable will modify the value in the outer context"
 
 	self assert: (self compileAndRunExample: #exampleTempNamedPutCopying2) equals: 2
 ]
 
-{ #category : #'testing - temp access' }
+{ #category : #'tests - temp access' }
 MethodMapTest >> testExampleTempNamedPutCopying3 [
 	"modifying a copied temp variable will modify the value in the outer context"
 
 	self assert: (self compileAndRunExample: #exampleTempNamedPutCopying3) equals: 2
 ]
 
-{ #category : #'testing - temp access' }
+{ #category : #'tests - temp access' }
 MethodMapTest >> testExampleTempNamedPutTempVector [
 	self assert: (self compileAndRunExample: #exampleTempNamedPutTempVector) equals: 3.
 ]
 
-{ #category : #'testing - temp access' }
+{ #category : #'tests - temp access' }
 MethodMapTest >> testExampleTempNamedPutTempVector2 [
 	self assert: (self compileAndRunExample: #exampleTempNamedPutTempVector2) equals: 3
 ]
 
-{ #category : #'testing - temp access' }
+{ #category : #'tests - temp access' }
 MethodMapTest >> testExampleTempNamedTempVector [
 	self assert: (self compileAndRunExample: #exampleTempNamedTempVector) equals: 2
 ]
 
-{ #category : #'testing - temp access' }
+{ #category : #'tests - temp access' }
 MethodMapTest >> testExampleTempNamedTempVector2 [
 	self assert: (self compileAndRunExample: #exampleTempNamedTempVector2) equals: 2
 ]
 
-{ #category : #'testing - temp access' }
+{ #category : #'tests - temp access' }
 MethodMapTest >> testExampleTempNamedTempVectorInOptimizedBlock [
 	self assert:  (self compileAndRunExample:  #exampleTempNamedTempVectorInOptimizedBlock ) equals: 2.
 ]
 
-{ #category : #'testing - temp access' }
+{ #category : #'tests - temp access' }
 MethodMapTest >> testExampleTempNamedTempVectorInlinedLoop [
 	self assert:  (self compileAndRunExample:  #exampleTempNamedTempVectorInlinedLoop ) equals: 42.
 ]
 
-{ #category : #'testing - temp access' }
+{ #category : #'tests - temp access' }
 MethodMapTest >> testExampleTempNamedTempVectorNestedBlock [
 	self assert:  (self compileAndRunExample:  #exampleTempNamedTempVectorNestedBlock ) equals: 2.
 ]
 
-{ #category : #'testing - ast mapping' }
+{ #category : #'tests - ast mapping' }
 MethodMapTest >> testMethodSourceNodeAtInitialPC [
 
 	| method actual |
@@ -179,13 +179,13 @@ MethodMapTest >> testMethodSourceNodeAtInitialPC [
 
 ]
 
-{ #category : #'testing - ast mapping' }
+{ #category : #'tests - ast mapping' }
 MethodMapTest >> testMethodSourceNodeAtPC [
 	self assert: (((Object>>#halt) sourceNodeForPC:  (Smalltalk vm for32bit: 22 for64bit: 42)) isKindOf: RBMessageNode).
 
 ]
 
-{ #category : #'testing - ast mapping' }
+{ #category : #'tests - ast mapping' }
 MethodMapTest >> testPrimitiveMethodSourceNodeAtInitialPC [
 
 	| method actual |
@@ -196,21 +196,21 @@ MethodMapTest >> testPrimitiveMethodSourceNodeAtInitialPC [
 
 ]
 
-{ #category : #'testing - temp access' }
+{ #category : #'tests - temp access' }
 MethodMapTest >> testTempNamedTempCopyingNestedBlock [
 	self
 		assert: (self compileAndRunExample: #exampleTempNamedTempCopyingNestedBlock)
 		equals: 1
 ]
 
-{ #category : #'testing - temp access' }
+{ #category : #'tests - temp access' }
 MethodMapTest >> testTempNamedTempCopyingNestedBlock2 [
 	self
 		assert: (self compileAndRunExample: #exampleTempNamedTempCopyingNestedBlock2)
 		equals: 1
 ]
 
-{ #category : #'testing - ast mapping' }
+{ #category : #'tests - ast mapping' }
 MethodMapTest >> testThisContextSourceNode [
 	self assert: (thisContext sourceNode isKindOf: RBMethodNode).
 	self assert: ([thisContext sourceNode] value isKindOf: RBBlockNode).
@@ -220,7 +220,7 @@ MethodMapTest >> testThisContextSourceNode [
 
 ]
 
-{ #category : #'testing - ast mapping' }
+{ #category : #'tests - ast mapping' }
 MethodMapTest >> testThisContextSourceNodeInInlinedMessage [
 	| inlinedBlockSourceNode |
 	"we get the method node as this is what created the context"

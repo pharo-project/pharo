@@ -7,7 +7,7 @@ Class {
 	#category : #'GeneralRules-Tests-Migrated'
 }
 
-{ #category : #'test-help' }
+{ #category : #sample }
 ReUsesTrueRuleTest >> sampleMethod [
 	"You should not use True or False, but true and false. Unless it is the classes you refer to"
 	| foo balse|
@@ -15,7 +15,7 @@ ReUsesTrueRuleTest >> sampleMethod [
 	balse := False | foo
 ]
 
-{ #category : #'test-help' }
+{ #category : #tests }
 ReUsesTrueRuleTest >> testRule [
 	| critiques|
  	critiques := self myCritiques .

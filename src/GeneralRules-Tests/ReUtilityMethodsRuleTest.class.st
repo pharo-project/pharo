@@ -4,7 +4,7 @@ Class {
 	#category : #'GeneralRules-Tests-Migrated'
 }
 
-{ #category : #'test-support' }
+{ #category : #accessing }
 ReUtilityMethodsRuleTest >> myCritiques [
 	| critiques |
 	critiques := OrderedCollection new.
@@ -13,7 +13,7 @@ ReUtilityMethodsRuleTest >> myCritiques [
 	^critiques 
 ]
 
-{ #category : #'test-help' }
+{ #category : #sample }
 ReUtilityMethodsRuleTest >> sampleMethod: arg [
 	^arg
 ]
@@ -21,7 +21,7 @@ ReUtilityMethodsRuleTest >> sampleMethod: arg [
 { #category : #tests }
 ReUtilityMethodsRuleTest >> testRule [
 	| critiques|
- 	critiques := self myCritiques .
+ 	critiques := self myCritiques.
 
  	self assert: critiques size equals: 1.
  	self assert: critiques first rule class equals: ReUtilityMethodsRule

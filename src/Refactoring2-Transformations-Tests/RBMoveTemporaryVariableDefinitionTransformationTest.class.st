@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 RBMoveTemporaryVariableDefinitionTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBMoveTemporaryVariableDefinitionTransformation 
@@ -13,7 +13,7 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testMethodDoesNotExist [
 							inClass: #RBDummyLintRuleTest)
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinition [
 
 	| transformation class |
@@ -38,7 +38,7 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinition [
 										temp odd]')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage [
 
 	| transformation class |				
@@ -63,7 +63,7 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinitionIntoBlo
 							yourself')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBMoveTemporaryVariableDefinitionTransformationTest >> testNowhereToMove [
 
 	| transformation |
@@ -80,7 +80,7 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testNowhereToMove [
 							asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBMoveTemporaryVariableDefinitionTransformationTest >> testVariableDoesNotExist [
 
 	self shouldFail: (RBMoveTemporaryVariableDefinitionTransformation 

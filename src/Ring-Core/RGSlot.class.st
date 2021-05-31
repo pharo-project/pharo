@@ -39,7 +39,7 @@ RGSlot >> isInstanceVariable [
 	^ true
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGSlot >> isSlot [
 
 	^ true

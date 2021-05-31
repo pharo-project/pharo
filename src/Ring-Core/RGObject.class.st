@@ -158,14 +158,14 @@ RGObject >> copyWithParent: newParent [
 		yourself.
 ]
 
-{ #category : #'hierarchy-defaults' }
+{ #category : #'hierarchy - defaults' }
 RGObject >> defaultClassStub [
 
 	<ignoreForMutations>
 	^ RGClass unresolved
 ]
 
-{ #category : #'hierarchy-defaults' }
+{ #category : #'hierarchy - defaults' }
 RGObject >> defaultCommentStubIn: anRGBehavior [
 
 	<ignoreForMutations>
@@ -174,21 +174,21 @@ RGObject >> defaultCommentStubIn: anRGBehavior [
 		yourself.
 ]
 
-{ #category : #'hierarchy-defaults' }
+{ #category : #'hierarchy - defaults' }
 RGObject >> defaultEnvironmentStub [
 
 	<ignoreForMutations>
 	^ RGEnvironment unresolved
 ]
 
-{ #category : #'hierarchy-defaults' }
+{ #category : #'hierarchy - defaults' }
 RGObject >> defaultFixedLayoutStub [
 
 	<ignoreForMutations>
 	^ RGFixedLayout unresolved
 ]
 
-{ #category : #'hierarchy-defaults' }
+{ #category : #'hierarchy - defaults' }
 RGObject >> defaultFixedLayoutStubIn: anRGBehavior [
 
 	<ignoreForMutations>
@@ -197,7 +197,7 @@ RGObject >> defaultFixedLayoutStubIn: anRGBehavior [
 		yourself.
 ]
 
-{ #category : #'hierarchy-defaults' }
+{ #category : #'hierarchy - defaults' }
 RGObject >> defaultPackageStubIn: anRGEnvironment [
 
 	<ignoreForMutations>
@@ -212,13 +212,13 @@ RGObject >> defaultParentStub [
 	self subclassResponsibility
 ]
 
-{ #category : #'hierarchy-defaults' }
+{ #category : #'hierarchy - defaults' }
 RGObject >> defaultTraitCompositionStub [
 
 	^ RGTraitComposition unresolved
 ]
 
-{ #category : #'hierarchy-defaults' }
+{ #category : #'hierarchy - defaults' }
 RGObject >> defaultTraitCompositionStubIn: anRGBehavior [
 	<ignoreForMutations>
 
@@ -335,37 +335,37 @@ RGObject >> initializeUnresolved [
 
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGObject >> isBehavior [
 
 	^ false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGObject >> isClass [
 
 	^ false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGObject >> isComment [
 
 	^false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGObject >> isEnvironment [
 
 	^false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGObject >> isGlobalVariable [
 
 	^false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGObject >> isLayout [
 
 	^false
@@ -377,31 +377,31 @@ RGObject >> isMeta [
 	^ false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGObject >> isMetaclass [
 
 	^ false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGObject >> isMetaclassTrait [
 
 	^ false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGObject >> isMethod [
 
 	^false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGObject >> isPackage [
 
 	^false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGObject >> isProtocol [
 
 	^false
@@ -433,37 +433,37 @@ RGObject >> isRingResolved [
 	^ self propertyNamed: #resolved ifAbsent: [ true ]
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGObject >> isSlot [
 
 	^ false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGObject >> isTraitAlias [
 
 	^ false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGObject >> isTraitComposition [
 
 	^ false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGObject >> isTraitExclusion [
 
 	^ false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGObject >> isTraitTransformation [
 
 	^ false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGObject >> isVariable [
 
 	"is the definition a variable class?"
@@ -471,7 +471,7 @@ RGObject >> isVariable [
 	^ false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGObject >> isVariableDefinition [
 	self 
 		deprecated: 'Use #isVariable instead.' 

@@ -4,7 +4,7 @@ Class {
 	#category : #'Tests-Traits'
 }
 
-{ #category : #'testing-applying trait composition' }
+{ #category : #'tests - applying trait composition' }
 TraitPureBehaviorTest >> testChangeSuperclass [
 	"Test that when the superclass of a class is changed the non-local methods
 	of the class sending super are recompiled to correctly store the new superclass."
@@ -64,7 +64,7 @@ TraitPureBehaviorTest >> testChangeSuperclass [
 	self assert: self c2 localSelectors sorted equals: #(bar foo m51)
 ]
 
-{ #category : #'testing-applying trait composition' }
+{ #category : #'tests - applying trait composition' }
 TraitPureBehaviorTest >> testClassesWithTraits [
 	self assert: (self c1 methodDict includesKey: #foo).
 	self assert: (self c2 methodDict includesKey: #bar).
@@ -81,7 +81,7 @@ TraitPureBehaviorTest >> testClassesWithTraits [
 	self assert: (self c2 class traitComposition includesTrait: self t5 classTrait)
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitPureBehaviorTest >> testIsAliasSelector [
 	self deny: (self t1 isAliasSelector: #m11).
 	self deny: (self t1 isAliasSelector: #foo).
@@ -96,7 +96,7 @@ TraitPureBehaviorTest >> testIsAliasSelector [
 	self deny: (self c1 isAliasSelector: #m22)
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitPureBehaviorTest >> testIsLocalAliasSelector [
 	self deny: (self t1 isLocalAliasSelector: #m11).
 	self deny: (self t1 isLocalAliasSelector: #foo).
@@ -111,7 +111,7 @@ TraitPureBehaviorTest >> testIsLocalAliasSelector [
 	self deny: (self c1 isLocalAliasSelector: #m22)
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitPureBehaviorTest >> testLocalSelectors [
 
 	self assert: self t3 localSelectors size equals: 3.
@@ -139,7 +139,7 @@ TraitPureBehaviorTest >> testLocalSelectors [
 	self assert: (self c2 localSelectors includesAll: #(#foo #bar ))
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitPureBehaviorTest >> testMethodCategoryReorganization [
 
 	self t1 compile: 'm1' classified: 'category1'.
@@ -153,7 +153,7 @@ TraitPureBehaviorTest >> testMethodCategoryReorganization [
 	self assert: (self c2 organization categoryOfElement: #m1) equals: #category2
 ]
 
-{ #category : #'testing-applying trait composition' }
+{ #category : #'tests - applying trait composition' }
 TraitPureBehaviorTest >> testMethodClass [
 	"Test sharing of compiled methods between traits and their users. Methods are installed in exactly one behavior, however, the source pointers of methods are shared (unless sources or changes have been condensed). Verify	that methodClass properties are set correctly."
 
@@ -169,7 +169,7 @@ TraitPureBehaviorTest >> testMethodClass [
 	self assert: m1 sourcePointer equals: m2 sourcePointer
 ]
 
-{ #category : #'testing-applying trait composition' }
+{ #category : #'tests - applying trait composition' }
 TraitPureBehaviorTest >> testOwnMethodsTakePrecedenceOverTraitsMethods [
 	"First create a trait with no subtraits and then
 	add subtrait t1 which implements m11 as well."
@@ -193,7 +193,7 @@ TraitPureBehaviorTest >> testOwnMethodsTakePrecedenceOverTraitsMethods [
 	self assert: (trait methodDict at: #m12) sourceCode equals: 'm12 ^12'
 ]
 
-{ #category : #'testing-applying trait composition' }
+{ #category : #'tests - applying trait composition' }
 TraitPureBehaviorTest >> testPropagationOfChangesInTraits [
 	| aC2 |
 	aC2 := self c2 new.
@@ -209,7 +209,7 @@ TraitPureBehaviorTest >> testPropagationOfChangesInTraits [
 	self assert: aC2 m21 equals: 99
 ]
 
-{ #category : #'testing-applying trait composition' }
+{ #category : #'tests - applying trait composition' }
 TraitPureBehaviorTest >> testPropagationOfChangesInTraitsToAliasMethods [
 	| anObject |
 	anObject := (self createClassNamed: #AliasTestClass superclass: Object uses: self t6) new.
@@ -224,7 +224,7 @@ TraitPureBehaviorTest >> testPropagationOfChangesInTraitsToAliasMethods [
 	self should: [ anObject m22Alias ] raise: MessageNotUnderstood
 ]
 
-{ #category : #'testing-applying trait composition' }
+{ #category : #'tests - applying trait composition' }
 TraitPureBehaviorTest >> testPropagationOfChangesInTraitsToAliasMethodsWhenOriginalMethodIsExcluded [
 	"Assert that alias method is updated although
 	the original method is excluded from this user."
@@ -237,7 +237,7 @@ TraitPureBehaviorTest >> testPropagationOfChangesInTraitsToAliasMethodsWhenOrigi
 	self assert: anObject aliasM11 equals: 17
 ]
 
-{ #category : #'testing-applying trait composition' }
+{ #category : #'tests - applying trait composition' }
 TraitPureBehaviorTest >> testPropagationWhenTraitCompositionModifications [
 	"Test that the propagation mechanism works when
 	setting new traitCompositions."
@@ -266,7 +266,7 @@ TraitPureBehaviorTest >> testPropagationWhenTraitCompositionModifications [
 	self assert: (self c2 selectors asSet includesAll: #(#m31 #m32 #m33))
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitPureBehaviorTest >> testRemovingMethods [
 	"When removing a local method, assure that the method
 	from the trait is installed instead and that the users are 
@@ -288,7 +288,7 @@ TraitPureBehaviorTest >> testRemovingMethods [
 	self assert: self c2 new m12 equals: 12
 ]
 
-{ #category : #'testing-applying trait composition' }
+{ #category : #'tests - applying trait composition' }
 TraitPureBehaviorTest >> testReshapeClass [
 	"Ensure that reshaping a class has no impact on its traits"
 
@@ -309,7 +309,7 @@ TraitPureBehaviorTest >> testReshapeClass [
 	self assert: self c2 localSelectors sorted equals: #(bar foo).
 ]
 
-{ #category : #'testing-applying trait composition' }
+{ #category : #'tests - applying trait composition' }
 TraitPureBehaviorTest >> testSuperSends [
 
 	| aC2 |
@@ -319,7 +319,7 @@ TraitPureBehaviorTest >> testSuperSends [
 	self deny: aC2 bar
 ]
 
-{ #category : #'testing-applying trait composition' }
+{ #category : #'tests - applying trait composition' }
 TraitPureBehaviorTest >> testTraitCompositionModifications [
 	self assert: self t6 methodDict size equals: 6.
 	self assert: (self t6 sourceCodeAt: #m22Alias) asString equals: 'm22Alias ^22'.
@@ -334,7 +334,7 @@ TraitPureBehaviorTest >> testTraitCompositionModifications [
 	self assert: (self t6 sourceCodeAt: #m13Alias) asString equals: 'm13Alias ^self m12'
 ]
 
-{ #category : #'testing-applying trait composition' }
+{ #category : #'tests - applying trait composition' }
 TraitPureBehaviorTest >> testTraitCompositionWithCycles [
 	self should: [self t1 setTraitComposition: self t1 asTraitComposition]
 		raise: Error.
@@ -343,13 +343,13 @@ TraitPureBehaviorTest >> testTraitCompositionWithCycles [
 		raise: Error
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitPureBehaviorTest >> testTraitsAccessor [
 	self assertEmpty: self c1 traits.
 	self assert: (self c2 traits hasEqualElements: (Array with: self t5))
 ]
 
-{ #category : #'testing-applying trait composition' }
+{ #category : #'tests - applying trait composition' }
 TraitPureBehaviorTest >> testUpdateWhenLocalMethodRemoved [
 	| aC2 |
 	aC2 := self c2 new.
@@ -359,7 +359,7 @@ TraitPureBehaviorTest >> testUpdateWhenLocalMethodRemoved [
 	self assert: aC2 foo equals: 123
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitPureBehaviorTest >> traitOrClassOfSelector [
 
 	"locally defined in trait or class"

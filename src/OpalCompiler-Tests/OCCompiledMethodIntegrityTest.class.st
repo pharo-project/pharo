@@ -4,7 +4,7 @@ Class {
 	#category : #'OpalCompiler-Tests-Misc'
 }
 
-{ #category : #test }
+{ #category : #tests }
 OCCompiledMethodIntegrityTest >> testBlockTemps [
 	| newCompiledMethod |
 	newCompiledMethod := OpalCompiler new
@@ -20,7 +20,7 @@ OCCompiledMethodIntegrityTest >> testBlockTemps [
 	self assert: newCompiledMethod primitive equals: 0
 ]
 
-{ #category : #test }
+{ #category : #tests }
 OCCompiledMethodIntegrityTest >> testNotUsedArgument [
 	| newCompiledMethod |
 	newCompiledMethod := OpalCompiler new
@@ -36,7 +36,7 @@ OCCompiledMethodIntegrityTest >> testNotUsedArgument [
 	self assert: newCompiledMethod primitive equals: 0
 ]
 
-{ #category : #test }
+{ #category : #tests }
 OCCompiledMethodIntegrityTest >> testPragmas [
 	| newCompiledMethod |
 	newCompiledMethod := OpalCompiler new
@@ -57,7 +57,7 @@ OCCompiledMethodIntegrityTest >> testPragmas [
 	self assert: newCompiledMethod primitive equals: 256
 ]
 
-{ #category : #test }
+{ #category : #tests }
 OCCompiledMethodIntegrityTest >> testPrimitive [
 	| newCompiledMethod |
 	newCompiledMethod := OpalCompiler new
@@ -74,7 +74,7 @@ OCCompiledMethodIntegrityTest >> testPrimitive [
 	self assert: newCompiledMethod primitive equals: 62
 ]
 
-{ #category : #test }
+{ #category : #tests }
 OCCompiledMethodIntegrityTest >> testRemoteTempInVector [
 	| newCompiledMethod expectedLiterals |
 	newCompiledMethod := OpalCompiler new
@@ -97,7 +97,7 @@ OCCompiledMethodIntegrityTest >> testRemoteTempInVector [
 	self assert: newCompiledMethod primitive equals: 0
 ]
 
-{ #category : #test }
+{ #category : #tests }
 OCCompiledMethodIntegrityTest >> testUndeclaredVariable [
 	| newCompiledMethod undeclaredBinding |
 	newCompiledMethod := OpalCompiler new
@@ -113,7 +113,7 @@ OCCompiledMethodIntegrityTest >> testUndeclaredVariable [
 	undeclaredBinding unregister
 ]
 
-{ #category : #test }
+{ #category : #tests }
 OCCompiledMethodIntegrityTest >> testUndeclaredVariableWhenItIsAlreadyRegistered [
 	| newCompiledMethod undeclaredBinding var |
 	var := UndeclaredVariable registeredWithName: #undeclaredTestVar.
@@ -129,7 +129,7 @@ OCCompiledMethodIntegrityTest >> testUndeclaredVariableWhenItIsAlreadyRegistered
 	undeclaredBinding unregister
 ]
 
-{ #category : #test }
+{ #category : #tests }
 OCCompiledMethodIntegrityTest >> testUndeclaredVariableWhenItIsAlreadyRegisteredAsAssociation [
 	"Test describes current state of bootstrap where undeclared vars are encoded using associations.
 	It breaks introduced logic which explicitly return existing variable from Undeclared registry. 

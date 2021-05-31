@@ -59,7 +59,7 @@ RGTraitAlias >> initializeUnresolved [
 	aliases := self unresolvedValue: self defaultAliases.
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGTraitAlias >> isTraitAlias [
 
 	^ true

@@ -33,7 +33,7 @@ TimeProfilerNode >> inspectItem [
 	self item inspect
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfilerNode >> keyDown: anEvent from: aTreeMorph [
 	| c |
 	c := anEvent keyCharacter.
@@ -47,7 +47,7 @@ TimeProfilerNode >> keyDown: anEvent from: aTreeMorph [
 
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfilerNode >> menu: menu shifted: b [ 
 	menu
 		add: 'Browse (b)'

@@ -244,14 +244,14 @@ SelectionMorph >> defaultColor [
 	^ self theme menuSelectionColor alpha: 0.08
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 SelectionMorph >> delete [
 	self setProperty: #deleting toValue: true.
 	super delete.
 	
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 SelectionMorph >> dismissViaHalo [
 
 	super dismissViaHalo.
@@ -431,7 +431,7 @@ SelectionMorph >> fillStyleForItems: fillStyleCollection [
 	selectedItems with: fillStyleCollection do: [:m :c | m fillStyle: c]
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 SelectionMorph >> goBehind [
 	"selection morph stays on top"
 

@@ -4,7 +4,7 @@ Class {
 	#category : #'Tests-Traits'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 ClassTraitTest >> testChanges [
 	"Test the most important features to ensure that
 	general functionality of class traits are working."
@@ -27,7 +27,7 @@ ClassTraitTest >> testChanges [
 	self assert: (self c2 class organization categoryOfElement: #m1ClassSide) equals: #mycategory
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ClassTraitTest >> testConflictsAliasesAndExclusions [
 	"conflict"
 
@@ -47,7 +47,7 @@ ClassTraitTest >> testConflictsAliasesAndExclusions [
 	self assert: (self c2 m2ClassSideAlias2: 13) equals: 13
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ClassTraitTest >> testInitialization [
 	| classTrait |
 	classTrait := self t1 classTrait.
@@ -67,7 +67,7 @@ ClassTraitTest >> testInitialization [
 	self assert: (self c2 m2ClassSide: 17) equals: 17
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ClassTraitTest >> testIsClassOrTrait [
 
 	self 
@@ -78,7 +78,7 @@ ClassTraitTest >> testIsClassOrTrait [
 		assert: TSortable classTrait isClassOrTrait.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ClassTraitTest >> testUsers [
 	self assert: self t2 classSide traitUsers size equals: 3.
 	self assert: (self t2 classSide traitUsers includesAll: {self t4 classTrait . self t5 classTrait . self t6 classTrait}).

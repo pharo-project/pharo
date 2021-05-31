@@ -54,14 +54,14 @@ SimpleButtonMorph class >> newWithLabel: labelString [
 
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 SimpleButtonMorph >> actWhen [
 	"acceptable symbols:  #buttonDown, #buttonUp, and #whilePressed"
 
 	^ actWhen
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 SimpleButtonMorph >> actWhen: condition [
 	"Accepts symbols:  #buttonDown, #buttonUp, and #whilePressed, #startDrag"
 	actWhen := condition.

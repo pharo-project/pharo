@@ -11,7 +11,7 @@ OCASTSingleBranchConditionalTranslatorTest class >> testParameters [
 			forSelector: #optimization addOptions: { #optionInlineIf . #optionInlineIfNil . #optionInlineNone })
 ]
 
-{ #category : #'testing-ifFalse' }
+{ #category : #'tests - ifFalse' }
 OCASTSingleBranchConditionalTranslatorTest >> testFalseIfFalseEvaluatesBlock [
 
 	self
@@ -22,7 +22,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testFalseIfFalseEvaluatesBlock [
 	self assert: instance iVar equals: 17
 ]
 
-{ #category : #'testing-ifFalse' }
+{ #category : #'tests - ifFalse' }
 OCASTSingleBranchConditionalTranslatorTest >> testFalseIfFalseEvaluatesBlockWithTempInsideBlock [
 
 	self
@@ -35,7 +35,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testFalseIfFalseEvaluatesBlockWith
 	self assert: instance iVar equals: 17
 ]
 
-{ #category : #'testing-ifFalse' }
+{ #category : #'tests - ifFalse' }
 OCASTSingleBranchConditionalTranslatorTest >> testFalseIfFalseEvaluatesBlockWithTempOutsideBlock [
 
 	self
@@ -49,7 +49,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testFalseIfFalseEvaluatesBlockWith
 	self assert: instance iVar equals: 17
 ]
 
-{ #category : #'testing-ifFalse' }
+{ #category : #'tests - ifFalse' }
 OCASTSingleBranchConditionalTranslatorTest >> testFalseIfFalseReturnsBlockValue [
 
 	| result |
@@ -61,7 +61,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testFalseIfFalseReturnsBlockValue 
 	self assert: result equals: 1
 ]
 
-{ #category : #'testing-ifFalse' }
+{ #category : #'tests - ifFalse' }
 OCASTSingleBranchConditionalTranslatorTest >> testFalseIfFalseReturnsBlockValueWithTempInsideBlock [
 
 	| result |
@@ -75,7 +75,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testFalseIfFalseReturnsBlockValueW
 	self assert: result equals: 1
 ]
 
-{ #category : #'testing-ifFalse' }
+{ #category : #'tests - ifFalse' }
 OCASTSingleBranchConditionalTranslatorTest >> testFalseIfFalseReturnsBlockValueWithTempOutsideBlock [
 
 	| result |
@@ -90,7 +90,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testFalseIfFalseReturnsBlockValueW
 	self assert: result equals: 1
 ]
 
-{ #category : #'testing-ifTrue' }
+{ #category : #'tests - ifTrue' }
 OCASTSingleBranchConditionalTranslatorTest >> testFalseIfTrueDoesNotEvaluateBlock [
 
 	self
@@ -101,7 +101,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testFalseIfTrueDoesNotEvaluateBloc
 	self assert: instance iVar equals: nil
 ]
 
-{ #category : #'testing-ifTrue' }
+{ #category : #'tests - ifTrue' }
 OCASTSingleBranchConditionalTranslatorTest >> testFalseIfTrueReturnsNil [
 
 	| result |
@@ -113,7 +113,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testFalseIfTrueReturnsNil [
 	self assert: result equals: nil
 ]
 
-{ #category : #'testing-ifNil' }
+{ #category : #'tests - ifNil' }
 OCASTSingleBranchConditionalTranslatorTest >> testNilIfNilEvaluatesBlock [
 
 	self
@@ -124,7 +124,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testNilIfNilEvaluatesBlock [
 	self assert: instance iVar equals: 17
 ]
 
-{ #category : #'testing-ifNil' }
+{ #category : #'tests - ifNil' }
 OCASTSingleBranchConditionalTranslatorTest >> testNilIfNilReturnsBlockValue [
 	| result |
 	
@@ -136,7 +136,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testNilIfNilReturnsBlockValue [
 	self assert: result equals: 17
 ]
 
-{ #category : #'testing-ifNotNil' }
+{ #category : #'tests - ifNotNil' }
 OCASTSingleBranchConditionalTranslatorTest >> testNilIfNotNilDoesNotEvaluateBlock [
 
 	self
@@ -149,7 +149,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testNilIfNotNilDoesNotEvaluateBloc
 		raise: Error
 ]
 
-{ #category : #'testing-ifNotNil' }
+{ #category : #'tests - ifNotNil' }
 OCASTSingleBranchConditionalTranslatorTest >> testNilIfNotNilReturnsNil [
 	| result |
 	
@@ -161,7 +161,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testNilIfNotNilReturnsNil [
 	self assert: result equals: nil
 ]
 
-{ #category : #'testing-ifNotNil' }
+{ #category : #'tests - ifNotNil' }
 OCASTSingleBranchConditionalTranslatorTest >> testNilIfNotNilWithArgumentDoesNotEvaluateBlock [
 	self shouldnt: [ 
 		self
@@ -171,7 +171,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testNilIfNotNilWithArgumentDoesNot
 			withBlock: '[ :arg | self error ]' ] raise: Error
 ]
 
-{ #category : #'testing-ifNotNil' }
+{ #category : #'tests - ifNotNil' }
 OCASTSingleBranchConditionalTranslatorTest >> testNilIfNotNilWithArgumentReturnsNil [
 	| result |
 	result := self
@@ -182,7 +182,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testNilIfNotNilWithArgumentReturns
 	self assert: result equals: nil
 ]
 
-{ #category : #'testing-ifNil' }
+{ #category : #'tests - ifNil' }
 OCASTSingleBranchConditionalTranslatorTest >> testNotNilIfNilDoesNotEvaluateBlock [
 
 	self
@@ -195,7 +195,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testNotNilIfNilDoesNotEvaluateBloc
 		raise: Error
 ]
 
-{ #category : #'testing-ifNil' }
+{ #category : #'tests - ifNil' }
 OCASTSingleBranchConditionalTranslatorTest >> testNotNilIfNilReturnsReceiver [
 	| result |
 	result := self
@@ -206,7 +206,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testNotNilIfNilReturnsReceiver [
 	self assert: result equals: 1
 ]
 
-{ #category : #'testing-ifNotNil' }
+{ #category : #'tests - ifNotNil' }
 OCASTSingleBranchConditionalTranslatorTest >> testNotNilIfNotNilEvaluatesBlock [
 
 	self
@@ -218,7 +218,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testNotNilIfNotNilEvaluatesBlock [
 	self assert: instance iVar equals: 17
 ]
 
-{ #category : #'testing-ifNotNil' }
+{ #category : #'tests - ifNotNil' }
 OCASTSingleBranchConditionalTranslatorTest >> testNotNilIfNotNilReturnsBlockValue [
 	| result |
 	result := self
@@ -229,7 +229,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testNotNilIfNotNilReturnsBlockValu
 	self assert: result equals: 17
 ]
 
-{ #category : #'testing-ifNotNil' }
+{ #category : #'tests - ifNotNil' }
 OCASTSingleBranchConditionalTranslatorTest >> testNotNilIfNotNilWithArgumentEvaluatesBlock [
 
 	self
@@ -241,7 +241,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testNotNilIfNotNilWithArgumentEval
 	self assert: instance iVar equals: 1
 ]
 
-{ #category : #'testing-ifNotNil' }
+{ #category : #'tests - ifNotNil' }
 OCASTSingleBranchConditionalTranslatorTest >> testNotNilIfNotNilWithArgumentReturnsBlockValue [
 	| result |
 	result := 	self
@@ -252,7 +252,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testNotNilIfNotNilWithArgumentRetu
 	self assert: result equals: 1
 ]
 
-{ #category : #'testing-ifFalse' }
+{ #category : #'tests - ifFalse' }
 OCASTSingleBranchConditionalTranslatorTest >> testTrueIfFalseDoesNotEvaluateBlock [
 
 	self
@@ -264,7 +264,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testTrueIfFalseDoesNotEvaluateBloc
 	self assert: instance iVar equals: nil
 ]
 
-{ #category : #'testing-ifFalse' }
+{ #category : #'tests - ifFalse' }
 OCASTSingleBranchConditionalTranslatorTest >> testTrueIfFalseReturnsNil [
 
 	| result |
@@ -276,7 +276,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testTrueIfFalseReturnsNil [
 	self assert: result equals: nil
 ]
 
-{ #category : #'testing-ifTrue' }
+{ #category : #'tests - ifTrue' }
 OCASTSingleBranchConditionalTranslatorTest >> testTrueIfTrueEvaluateBlock [
 
 	self
@@ -287,7 +287,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testTrueIfTrueEvaluateBlock [
 	self assert: instance iVar equals: 17
 ]
 
-{ #category : #'testing-ifTrue' }
+{ #category : #'tests - ifTrue' }
 OCASTSingleBranchConditionalTranslatorTest >> testTrueIfTrueEvaluateBlockWithTempInsideBlock [
 
 	self
@@ -300,7 +300,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testTrueIfTrueEvaluateBlockWithTem
 	self assert: instance iVar equals: 17
 ]
 
-{ #category : #'testing-ifTrue' }
+{ #category : #'tests - ifTrue' }
 OCASTSingleBranchConditionalTranslatorTest >> testTrueIfTrueEvaluateBlockWithTempOutsideBlock [
 
 	self
@@ -314,7 +314,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testTrueIfTrueEvaluateBlockWithTem
 	self assert: instance iVar equals: 17
 ]
 
-{ #category : #'testing-ifTrue' }
+{ #category : #'tests - ifTrue' }
 OCASTSingleBranchConditionalTranslatorTest >> testTrueIfTrueReturnsBlockValue [
 
 	| result |
@@ -326,7 +326,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testTrueIfTrueReturnsBlockValue [
 	self assert: result equals: 1
 ]
 
-{ #category : #'testing-ifTrue' }
+{ #category : #'tests - ifTrue' }
 OCASTSingleBranchConditionalTranslatorTest >> testTrueIfTrueReturnsBlockValueWithTempInsideBlock [
 
 	| result |
@@ -340,7 +340,7 @@ OCASTSingleBranchConditionalTranslatorTest >> testTrueIfTrueReturnsBlockValueWit
 	self assert: result equals: 1
 ]
 
-{ #category : #'testing-ifTrue' }
+{ #category : #'tests - ifTrue' }
 OCASTSingleBranchConditionalTranslatorTest >> testTrueIfTrueReturnsBlockValueWithTempOutsideBlock [
 
 	| result |

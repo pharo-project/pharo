@@ -249,7 +249,7 @@ OCASTTranslator >> emitIfTrueIfFalse: aMessageNode [
 	self emitIf: aMessageNode boolean: false
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 OCASTTranslator >> emitMessageNode: aMessageNode [
 
 	aMessageNode isCascaded ifFalse: [
@@ -455,7 +455,7 @@ OCASTTranslator >> shouldBeSentToValueOrEffectTranslator [
 	self error: 'should be sent only to valueTranslator or effectTranslator'
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 OCASTTranslator >> translateFullBlock: aBlockNode [
 
 	methodBuilder mapToNode: aBlockNode.
@@ -479,7 +479,7 @@ OCASTTranslator >> translateFullBlock: aBlockNode [
 	^ aBlockNode ir compiledBlock: aBlockNode scope
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitArrayNode: anArrayNode [ 
 
 	| elementNodes |
@@ -491,7 +491,7 @@ OCASTTranslator >> visitArrayNode: anArrayNode [
 	methodBuilder pushConsArray: elementNodes size.
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitAssignmentNode: anAssignmentNode [ 
 
 	valueTranslator visitNode: anAssignmentNode value.
@@ -499,7 +499,7 @@ OCASTTranslator >> visitAssignmentNode: anAssignmentNode [
 
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitBlockNode: aBlockNode [
 	aBlockNode arguments size >15 ifTrue: [self backendError: 'Too many arguments' forNode: aBlockNode ].
 	
@@ -526,7 +526,7 @@ OCASTTranslator >> visitBlockNode: aBlockNode [
 
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitCascadeNode: aCascadeNode [ 
 
 	valueTranslator visitNode: aCascadeNode receiver.
@@ -538,7 +538,7 @@ OCASTTranslator >> visitCascadeNode: aCascadeNode [
 
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitFullBlockNode: aBlockNode [
 	| compiledBlock |
 	compiledBlock := self compilationContext astTranslatorClass new translateFullBlock: aBlockNode.
@@ -547,7 +547,7 @@ OCASTTranslator >> visitFullBlockNode: aBlockNode [
 		ifFalse: [methodBuilder pushFullClosureCompiledBlock: compiledBlock copiedValues: aBlockNode scope inComingCopiedVarNames  ]
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitInlinedBlockNode: anOptimizedBlockNode [
 
 	"We are visiting a scope that is not a block, but inlined in the outer context.
@@ -576,7 +576,7 @@ OCASTTranslator >> visitInlinedBlockNode: anOptimizedBlockNode [
 	methodBuilder popMap
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitLargeArrayNode: aRBArrayNode [ 
 	"Long form: generates (Array braceStream: N) nextPut: a; nextPut: b; ...; braceArray"
 	methodBuilder pushLiteralVariable: Array binding.
@@ -592,21 +592,21 @@ OCASTTranslator >> visitLargeArrayNode: aRBArrayNode [
 				
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitLiteralArrayNode: aRBLiteralArrayNode [ 
 	 
 	methodBuilder pushLiteral: aRBLiteralArrayNode value.
 
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitLiteralNode: aLiteralNode [
 
 	methodBuilder pushLiteral: aLiteralNode value.
 
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitMessageNode: aMessageNode [
 	aMessageNode isInlined ifTrue: [
 		methodBuilder addLiteral: aMessageNode selector. "so searching for senders will work"
@@ -616,7 +616,7 @@ OCASTTranslator >> visitMessageNode: aMessageNode [
 	^ self emitMessageNode: aMessageNode
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitMethodNode: aMethodNode [
 	
 	aMethodNode arguments size > 15 ifTrue: [self backendError: 'Too many arguments' forNode: aMethodNode ].
@@ -638,7 +638,7 @@ OCASTTranslator >> visitMethodNode: aMethodNode [
 	aMethodNode body lastIsReturn ifFalse:  [methodBuilder pushReceiver; returnTop]
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitNode: aNode [
 	methodBuilder mapToNode: aNode.
 	super visitNode: aNode.
@@ -646,7 +646,7 @@ OCASTTranslator >> visitNode: aNode [
 
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitParseErrorNode: anErrorNode [  
 	methodBuilder 
 		pushLiteralVariable: RuntimeSyntaxError binding;
@@ -654,7 +654,7 @@ OCASTTranslator >> visitParseErrorNode: anErrorNode [
 		send: #signalSyntaxError:
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitPragmaNode: aPragmaNode [
 
 	| var |
@@ -667,7 +667,7 @@ OCASTTranslator >> visitPragmaNode: aPragmaNode [
 	var emitStore: methodBuilder.
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitReturnNode: aReturnNode [ 
 
 	valueTranslator visitNode: aReturnNode value.
@@ -676,13 +676,13 @@ OCASTTranslator >> visitReturnNode: aReturnNode [
 
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitSequenceNode: aSequenceNode [ 
 
 	self shouldBeSentToValueOrEffectTranslator
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitVariableNode: aVariableNode [
 	aVariableNode variable emitValue: methodBuilder
 	

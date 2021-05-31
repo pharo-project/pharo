@@ -229,7 +229,7 @@ RPackageTest >> testHierarchyRoots [
 		do: [ :each | roots includes: each ]
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RPackageTest >> testIsTestPackage [
 
 	|packages |

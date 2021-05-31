@@ -4,19 +4,19 @@ Class {
 	#category : #'Metacello-TestsCore'
 }
 
-{ #category : #'test approximately greater than' }
+{ #category : #'tests - approximately greater than' }
 MetacelloVersionNumberTestCase >> testApproxVersion01 [
 
 	self assert: '1.1.1' asMetacelloVersionNumber ~> '1.1' asMetacelloVersionNumber
 ]
 
-{ #category : #'test approximately greater than' }
+{ #category : #'tests - approximately greater than' }
 MetacelloVersionNumberTestCase >> testApproxVersion02 [
 
 	self deny: '1.1' asMetacelloVersionNumber ~> '1' asMetacelloVersionNumber
 ]
 
-{ #category : #'test approximately greater than' }
+{ #category : #'tests - approximately greater than' }
 MetacelloVersionNumberTestCase >> testApproxVersion03 [
 
 	self assert: '1.1' asMetacelloVersionNumber ~> '1.1' asMetacelloVersionNumber
@@ -29,7 +29,7 @@ MetacelloVersionNumberTestCase >> testCollapseZeros [
 	self assert: (MetacelloVersionNumber fromString: '1.0.0-beta.24.0.0.1') collapseZeros printString equals: '1-beta.24.0.0.1'
 ]
 
-{ #category : #'tests version increment/decrement' }
+{ #category : #'tests - version increment/decrement' }
 MetacelloVersionNumberTestCase >> testIncrementDecrementVersionNumber [
 	| version |
 	super testIncrementDecrementVersionNumber.
@@ -47,7 +47,7 @@ MetacelloVersionNumberTestCase >> testIncrementDecrementVersionNumber [
 	self assert: version decrementMinorVersionNumber asString equals: '1.0.0.0'
 ]
 
-{ #category : #'test matching' }
+{ #category : #'tests - matching' }
 MetacelloVersionNumberTestCase >> testInvalidSpecialMatch [
 
 	self 
@@ -56,7 +56,7 @@ MetacelloVersionNumberTestCase >> testInvalidSpecialMatch [
 
 ]
 
-{ #category : #'test matching' }
+{ #category : #'tests - matching' }
 MetacelloVersionNumberTestCase >> testSpecialMatch [
 
 	self assert: ((self versionClass fromString: '1.1') match: '?').
@@ -71,7 +71,7 @@ MetacelloVersionNumberTestCase >> testSpecialMatch [
 
 ]
 
-{ #category : #'test matching' }
+{ #category : #'tests - matching' }
 MetacelloVersionNumberTestCase >> testStandardMatch [
 
 	self assert: ((self versionClass fromString: '1.1.1') match: '*.*.*').

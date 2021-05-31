@@ -11,7 +11,7 @@ RBExtractMethodTransformationTest >> sourceCodeAt: anInterval forMethod: aSelect
 		copyFrom: anInterval first to: anInterval last
 ]
 
-{ #category : #'failure tests' }
+{ #category : #'tests - failures' }
 RBExtractMethodTransformationTest >> testBadInterval [
 
 	self shouldFail: (RBExtractMethodTransformation
@@ -29,7 +29,7 @@ RBExtractMethodTransformationTest >> testBadInterval [
 	
 ]
 
-{ #category : #'failure tests' }
+{ #category : #'tests - failures' }
 RBExtractMethodTransformationTest >> testExtractFailure [
 
 	self shouldFail: (RBExtractMethodTransformation
@@ -54,7 +54,7 @@ RBExtractMethodTransformationTest >> testExtractFailure [
 			asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBExtractMethodTransformationTest >> testExtractUsingExistingMethodRefactoring [
 
 	| transformation class |
@@ -82,7 +82,7 @@ RBExtractMethodTransformationTest >> testExtractUsingExistingMethodRefactoring [
 	self deny: (class directlyDefinesMethod: #bar)
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBExtractMethodTransformationTest >> testExtractWithoutUseExistingMethodRefactoring [
 
 	| transformation class |
@@ -113,7 +113,7 @@ RBExtractMethodTransformationTest >> testExtractWithoutUseExistingMethodRefactor
 	self assert: (class directlyDefinesMethod: #bar)
 ]
 
-{ #category : #'failure tests' }
+{ #category : #'tests - failures' }
 RBExtractMethodTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBExtractMethodTransformation
@@ -124,7 +124,7 @@ RBExtractMethodTransformationTest >> testMethodDoesNotExist [
 			asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBExtractMethodTransformationTest >> testNeedsReturn [
 
 	| refactoring class |
@@ -149,7 +149,7 @@ RBExtractMethodTransformationTest >> testNeedsReturn [
 				rules size == 1 ifTrue: [^rules first viewResults]')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBExtractMethodTransformationTest >> testRefactoring [
 
 	| transformation class |
@@ -181,7 +181,7 @@ RBExtractMethodTransformationTest >> testRefactoring [
 							classified: aSmalllintContext protocols ]')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBExtractMethodTransformationTest >> testTransform [
 
 	| transformation class |
@@ -223,7 +223,7 @@ RBExtractMethodTransformationTest >> testTransform [
 													^temp.')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBExtractMethodTransformationTest >> testWithArgument [
 
 	| refactoring class |
@@ -252,7 +252,7 @@ RBExtractMethodTransformationTest >> testWithArgument [
 										classified: aSmalllintContext protocols]')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBExtractMethodTransformationTest >> testWithTemporariesSelected [
 
 	| class refactoring |
@@ -276,7 +276,7 @@ RBExtractMethodTransformationTest >> testWithTemporariesSelected [
 		  equals: (self parseMethod: 'foobar |temp | temp := 5. ^temp * temp')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBExtractMethodTransformationTest >> testWithTemporaryAssigned [
 
 	| class method refactoring |
@@ -305,7 +305,7 @@ RBExtractMethodTransformationTest >> testWithTemporaryAssigned [
 		  equals: (self parseMethod: 'foobar | temp bar | bar := 5. temp := bar * bar. Transcript show: temp printString; cr. ^temp.')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBExtractMethodTransformationTest >> testWithTemporaryVariable [
 
 	| refactoring class |
@@ -337,7 +337,7 @@ RBExtractMethodTransformationTest >> testWithTemporaryVariable [
 				^rule')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBExtractMethodTransformationTest >> testWithTemporaryVariable2 [
 
 	| refactoring class |

@@ -7,7 +7,7 @@ Class {
 	#category : #'Slot-Tests-VariablesAndSlots'
 }
 
-{ #category : #'tests  - properties' }
+{ #category : #'tests - properties' }
 GlobalVariableTest >> testIsReadInMethod [
 
 	self assert: (Object binding isReadIn: self class >> testSelector).
@@ -20,13 +20,13 @@ GlobalVariableTest >> testIsShadowing [
 	self deny: Object binding isShadowing
 ]
 
-{ #category : #'tests  - properties' }
+{ #category : #'tests - properties' }
 GlobalVariableTest >> testNotWrittenInMethod [
 
 	self deny: (Object binding isWrittenIn: self class >> testSelector)
 ]
 
-{ #category : #'tests  - properties' }
+{ #category : #'tests - properties' }
 GlobalVariableTest >> testPropertyAtPut [
 
 	| testValue |
@@ -40,7 +40,7 @@ GlobalVariableTest >> testPropertyAtPut [
 	self assert: self class binding properties isNil.
 ]
 
-{ #category : #'tests  - properties' }
+{ #category : #'tests - properties' }
 GlobalVariableTest >> testRemoveProperty [
 
 	self class binding propertyAt: #testKeySelector put: 1.
@@ -53,7 +53,7 @@ GlobalVariableTest >> testRemoveProperty [
 	self assert: self class binding properties isNil.
 ]
 
-{ #category : #'tests  - properties' }
+{ #category : #'tests - properties' }
 GlobalVariableTest >> testScope [
 
 	self assert: Object binding scope equals: Object environment.

@@ -11,7 +11,7 @@ Class {
 	#category : #'System-CommandLine-Utilities'
 }
 
-{ #category : #TermStyle }
+{ #category : #'term style' }
 TermInfoCharacter >> on: aStream [
 	"Define the stream where termcap will change the style, normaly it's used on a terminal"
 
@@ -25,7 +25,7 @@ TermInfoCharacter >> print: aString [
 	out nextPutAll: aString
 ]
 
-{ #category : #TermStyle }
+{ #category : #'term style' }
 TermInfoCharacter >> set: aString [
 	self print: Character escape asString, '['   , aString
 ]

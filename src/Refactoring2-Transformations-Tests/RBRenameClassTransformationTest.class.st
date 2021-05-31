@@ -9,7 +9,7 @@ RBRenameClassTransformationTest class >> defaultTimeLimit [
 	^30 seconds
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRenameClassTransformationTest >> testBadName [
 
 	self
@@ -23,7 +23,7 @@ RBRenameClassTransformationTest >> testBadName [
 						asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRenameClassTransformationTest >> testExistingName [
 
 	self shouldFail: (RBRenameClassTransformation
@@ -32,7 +32,7 @@ RBRenameClassTransformationTest >> testExistingName [
 							asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRenameClassTransformationTest >> testMetaClassFailure [
 
 	self shouldFail: (RBRenameClassTransformation
@@ -41,7 +41,7 @@ RBRenameClassTransformationTest >> testMetaClassFailure [
 							asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRenameClassTransformationTest >> testModelRenameSequenceClass [
 
 	model defineClass: 'Object subclass: #Foo1 
@@ -72,7 +72,7 @@ RBRenameClassTransformationTest >> testModelRenameSequenceClass [
 		  equals: (self parseMethod: 'objectName ^ #(Foo3)')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRenameClassTransformationTest >> testRefactoring [
 
 	| refactoring class |
@@ -100,7 +100,7 @@ RBRenameClassTransformationTest >> testRefactoring [
 	self assert: class superclass name equals: #Thing
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRenameClassTransformationTest >> testTransform [
 
 	| transformation class |

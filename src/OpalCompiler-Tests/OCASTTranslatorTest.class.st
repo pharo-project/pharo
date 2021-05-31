@@ -182,7 +182,7 @@ OCASTTranslatorTest >> testExample: aSelector withArguments: arguments [
 
 ]
 
-{ #category : #'testing - primitives' }
+{ #category : #'tests - primitives' }
 OCASTTranslatorTest >> testExamplePrimitiveErrorCode [
 	| ast ir newMethod |
 	method := OCOpalExamples >> #examplePrimitiveErrorCode.
@@ -193,7 +193,7 @@ OCASTTranslatorTest >> testExamplePrimitiveErrorCode [
 	self assert: method primitive equals: newMethod primitive
 ]
 
-{ #category : #'testing - primitives' }
+{ #category : #'tests - primitives' }
 OCASTTranslatorTest >> testExamplePrimitiveErrorCodeModule [
 	| ast ir newMethod |
 	method := OCOpalExamples >> #examplePrimitiveErrorCodeModule.
@@ -206,7 +206,7 @@ OCASTTranslatorTest >> testExamplePrimitiveErrorCodeModule [
 	self assert: method pragmas printString equals: newMethod pragmas printString
 ]
 
-{ #category : #'testing - primitives' }
+{ #category : #'tests - primitives' }
 OCASTTranslatorTest >> testExamplePrimitiveErrorModule [
 "test for primitive declaration
   <primitive: 'primFunction'  error: errorCode module: 'primModule'  >
@@ -218,7 +218,7 @@ OCASTTranslatorTest >> testExamplePrimitiveErrorModule [
 	self assert: ir tempKeys equals: #(#errorCode)
 ]
 
-{ #category : #'testing - primitives' }
+{ #category : #'tests - primitives' }
 OCASTTranslatorTest >> testExamplePrimitiveModuleError [
 "teset for primitive declaration
   <primitive: 'primFunction'  module: 'primModule' error: errorCode >
@@ -230,7 +230,7 @@ OCASTTranslatorTest >> testExamplePrimitiveModuleError [
 	self assert: ir tempKeys equals: #(#errorCode)
 ]
 
-{ #category : #'testing - simple' }
+{ #category : #'tests - simple' }
 OCASTTranslatorTest >> testSendSpecialBinaryMessage [
 
 	self assert: (Smalltalk specialSelectors includes: #+).

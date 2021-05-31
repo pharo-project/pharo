@@ -9,12 +9,12 @@ RBEOFToken >> isEOF [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : #accessing }
 RBEOFToken >> length [
 	^ 0
 ]
 
-{ #category : #testing }
+{ #category : #accessing }
 RBEOFToken >> value [
 
 	^ ''

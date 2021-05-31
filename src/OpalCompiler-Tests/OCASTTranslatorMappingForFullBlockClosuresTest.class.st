@@ -8,7 +8,7 @@ Class {
 	#category : #'OpalCompiler-Tests-AST'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 OCASTTranslatorMappingForFullBlockClosuresTest >> assertBlockNodeHasCorrectIR: blockNode [
 	| sequence |
 	blockNode methodNode ir.
@@ -17,7 +17,7 @@ OCASTTranslatorMappingForFullBlockClosuresTest >> assertBlockNodeHasCorrectIR: b
 	self assert: sequence last sourceNode equals: blockNode body
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCASTTranslatorMappingForFullBlockClosuresTest >> assertMethodReturnValue: method [
 	self
 		assert: (method valueWithReceiver: nil arguments: #())
@@ -50,7 +50,7 @@ OCASTTranslatorMappingForFullBlockClosuresTest >> tearDown [
 	super tearDown 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCASTTranslatorMappingForFullBlockClosuresTest >> testBlockWithParametersASTMapping [
 	|method blockNode|
 	method := self compileSourceToMethod: 'm ^[:i :j|i+j] value: 41 value: 1'.
@@ -59,7 +59,7 @@ OCASTTranslatorMappingForFullBlockClosuresTest >> testBlockWithParametersASTMapp
 	self assertMethodReturnValue: method
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCASTTranslatorMappingForFullBlockClosuresTest >> testSimpleBlockASTMapping [
 	|method blockNode|
 	method := self compileSourceToMethod: 'm ^[40 + 2] value'.

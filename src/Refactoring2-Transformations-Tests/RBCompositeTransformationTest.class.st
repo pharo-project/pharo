@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 RBCompositeTransformationTest >> testTransform [
 
 	| transformation newClassName class |

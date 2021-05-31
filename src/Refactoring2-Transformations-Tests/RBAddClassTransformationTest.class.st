@@ -11,7 +11,7 @@ RBAddClassTransformationTest >> setUp [
 	model := self abstractVariableTestData.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddClassTransformationTest >> testAddClass [
 	| refactoring newClass superClass classTest |
 	refactoring := (RBAddClassTransformation
@@ -34,7 +34,7 @@ RBAddClassTransformationTest >> testAddClass [
 	self assert: (newClass theMetaClass subclasses includes: classTest theMetaClass)
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddClassTransformationTest >> testExistingName [
 
 	self shouldFail: (
@@ -46,7 +46,7 @@ RBAddClassTransformationTest >> testExistingName [
 			asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddClassTransformationTest >> testInvalidSubclass [
 
 	self shouldFail: (
@@ -58,7 +58,7 @@ RBAddClassTransformationTest >> testInvalidSubclass [
 			asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddClassTransformationTest >> testModelAddClass [
 	| refactoring newClass superClass subclass |
 	subclass := model classNamed: #Bar.
@@ -82,7 +82,7 @@ RBAddClassTransformationTest >> testModelAddClass [
 	self assert: (newClass theMetaClass subclasses includes: subclass theMetaClass)
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddClassTransformationTest >> testModelExistingName [
 
 	self shouldFail: (
@@ -95,7 +95,7 @@ RBAddClassTransformationTest >> testModelExistingName [
 			asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddClassTransformationTest >> testModelInvalidSubclass [
 
 	self shouldFail: (
@@ -108,7 +108,7 @@ RBAddClassTransformationTest >> testModelInvalidSubclass [
 			asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddClassTransformationTest >> testTransform [
 	| transformation newClass superclass |
 	transformation := (RBAddClassTransformation

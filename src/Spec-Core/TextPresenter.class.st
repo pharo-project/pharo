@@ -241,7 +241,7 @@ TextPresenter >> clearSelection [
 	self setSelection: (0 to: 0)
 ]
 
-{ #category : #'undo-redo' }
+{ #category : #'undo - redo' }
 TextPresenter >> clearUndoManager [
 	self widget ifNotNil: #clearUndoManager
 ]

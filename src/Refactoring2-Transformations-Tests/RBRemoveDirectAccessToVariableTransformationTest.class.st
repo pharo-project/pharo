@@ -11,7 +11,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> setUp [
 	model := self abstractVariableTestData.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveDirectAccessToVariableTransformationTest >> testClassVariable [
 
 	| refactoring class |
@@ -33,7 +33,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testClassVariable [
 				redo := OrderedCollection new')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveDirectAccessToVariableTransformationTest >> testDoesNotDefineVariable [
 
 	self
@@ -48,7 +48,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testDoesNotDefineVariable [
 						asRefactoring 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveDirectAccessToVariableTransformationTest >> testDoesNotUnderstandAccessors [
 
 	self
@@ -63,7 +63,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testDoesNotUnderstandAccesso
 						asRefactoring 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveDirectAccessToVariableTransformationTest >> testInheritedName [
 
 	self
@@ -77,7 +77,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testInheritedName [
 						asRefactoring 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveDirectAccessToVariableTransformationTest >> testInstanceVariable [
 
 	| class |
@@ -92,7 +92,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testInstanceVariable [
 			equals: (self parseMethod: 'foo ^ self instVarName2: 3')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveDirectAccessToVariableTransformationTest >> testMetaclassFailure [
 
 	self shouldFail: (RBRemoveDirectAccessToVariableTransformation 
@@ -101,7 +101,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testMetaclassFailure [
 							asRefactoring 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveDirectAccessToVariableTransformationTest >> testNonExistantName [
 
 	self
@@ -115,7 +115,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testNonExistantName [
 						asRefactoring 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveDirectAccessToVariableTransformationTest >> testRefactoring [
 
 	| refactoring class |
@@ -147,7 +147,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testRefactoring [
 	sendersCache := IdentityDictionary new')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveDirectAccessToVariableTransformationTest >> testTransform [
 
 	| transformation class |

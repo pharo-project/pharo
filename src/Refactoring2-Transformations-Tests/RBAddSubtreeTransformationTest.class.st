@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddSubtreeTransformationTest >> testMethodDoesNotExist [
 	| transformation |
 	transformation := (RBAddSubtreeTransformation
@@ -16,7 +16,7 @@ RBAddSubtreeTransformationTest >> testMethodDoesNotExist [
 	self assertEmpty: transformation model changes changes
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddSubtreeTransformationTest >> testParseFailure [
 	| transformation |
 	transformation := (RBAddSubtreeTransformation
@@ -28,7 +28,7 @@ RBAddSubtreeTransformationTest >> testParseFailure [
 	self assertEmpty: transformation model changes changes
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddSubtreeTransformationTest >> testRefactoring [
 
 	self 
@@ -46,7 +46,7 @@ RBAddSubtreeTransformationTest >> testRefactoring [
 							asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddSubtreeTransformationTest >> testTransform [
 
 	| transformation class |
