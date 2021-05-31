@@ -7,7 +7,7 @@ Class {
 	#category : #'Deprecated90-AST'
 }
 
-{ #category : #visting }
+{ #category : #visiting }
 RBInstanceVariableNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitInstanceVariableNode: self
 ]

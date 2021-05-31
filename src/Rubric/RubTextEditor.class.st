@@ -918,7 +918,7 @@ RubTextEditor >> encloseWith: aMatchingPair [
 		ifTrue: [
 			"already enclosed; strip off brackets"
 			newString := (self shouldEscapeCharacter: left)
-						 ifTrue: [ oldSelection unescapeCharacter: left ] 
+						 ifTrue: [ oldSelection asString unescapeCharacter: left ] 
 						 ifFalse: [ oldSelection ].
 			self selectFrom: startIndex-1 to: stopIndex.
 			self replaceSelectionWith: newString ]

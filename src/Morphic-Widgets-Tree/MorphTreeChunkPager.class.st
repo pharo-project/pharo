@@ -25,7 +25,7 @@ MorphTreeChunkPager >> atBottom: aBoolean [
 
 ]
 
-{ #category : #'initailize-release' }
+{ #category : #'initialize - release' }
 MorphTreeChunkPager >> buildPanel [
 	| widgets nextButton lastPageButton searchEditor |
 	self removeAllMorphs.
@@ -180,7 +180,7 @@ MorphTreeChunkPager >> onLastPage [
 	^ self lastIndex = self nodeList size
 ]
 
-{ #category : #'initailize-release' }
+{ #category : #'initialize - release' }
 MorphTreeChunkPager >> updateContents [
 	treeMorph vIsScrollable 
 		ifFalse: [self atBottom: true].

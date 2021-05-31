@@ -17,28 +17,26 @@ FLCompiledCodeCluster class >> clusterBucketIn: aClusterization [
 
 { #category : #protected }
 FLCompiledCodeCluster >> decodeHeaderWith: aDecoder [
-	"Read the sign bit and remove it from the integer since SmallInteger only
-	uses 31 bits.
-	Finally, set the sign bit properly, respecting word size.
-	See #encodeHeader:with:"
-	| header signBit |
+	| signBit header |
+	signBit := aDecoder nextEncodedByte.
 	header := aDecoder nextEncodedInt32.
-	signBit := header bitShift: -31.
+
 	^ signBit = 1
-		ifTrue: [ (header bitAnd: 16r7FFFFFFF) + SmallInteger minVal ]
+		ifTrue: [ header + SmallInteger minVal ]
 		ifFalse: [ header ]
 
 ]
 
 { #category : #protected }
 FLCompiledCodeCluster >> encodeHeader: aSmallInteger with: anEncoder [
-	"Reduce storage by storing the sign bit as the top bit of the 32 bit integer.
-	We know that bit 32 is unused because SmallInteger uses 31 bits (on 32-bits systems).
-	This operation is redundant on 32-bits systems but necessary on 64-bits systems since
-	the sign bit will be bit 63, not 31."
-	anEncoder encodeInt32: (aSmallInteger < 0
-		ifTrue: [ aSmallInteger bitOr: 16r80000000 ]
-		ifFalse: [ aSmallInteger ])
+	"Store the sign bit separately. We can't encoded it within the 32 bit integer because the
+	high bit will be truncated.
+	See #encodeInt32:."
+	anEncoder
+		encodeByte: (aSmallInteger < 0
+			ifTrue: [ 1 ]
+			ifFalse: [ 0 ]);
+		encodeInt32: aSmallInteger
 ]
 
 { #category : #protected }
