@@ -43,7 +43,7 @@ RBBrowserEnvironmentWrapper >> definesClass: aClass [
 
 { #category : #accessing }
 RBBrowserEnvironmentWrapper >> description [ 
-	^ super description, self descriptionBasis
+	^ label ifNil: [super description, self descriptionBasis]
 ]
 
 { #category : #description }

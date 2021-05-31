@@ -2,7 +2,8 @@ Class {
 	#name : #RefactoringSettings,
 	#superclass : #Object,
 	#classVars : [
-		'ScopeList'
+		'ScopeList',
+		'ScopeRefactoring'
 	],
 	#category : #'SystemCommands-RefactoringSupport-Scope'
 }
@@ -24,9 +25,41 @@ RefactoringSettings class >> availableScopes [
 	^ self scopeList allButFirst
 ]
 
+{ #category : #accessing }
+RefactoringSettings class >> domainValues [
+
+	^ self scopeList collect: [ :each |
+		each description asSymbol -> each	
+	]
+]
+
 { #category : #accesing }
 RefactoringSettings class >> invalidNames [ 
 	^ self scopeList collect: [ :e | e label ]
+]
+
+{ #category : #accessing }
+RefactoringSettings class >> refactoringSettingsOn: aBuilder [
+
+	<systemsettings>
+	(aBuilder group: #refactoring)
+		label: 'Refactoring Engine';
+		description:
+			'All refactoring related settings';
+		noOrdering;
+		with: [ 
+			(aBuilder pickOne: #scopeRefactoring)
+				order: 0;
+				target: self;
+				description: 'Selection new default scope for refactorings';
+				label: 'Default scope';
+				default: ClySystemEnvironmentScope;
+				domainValues: self domainValues.
+			(aBuilder setting: #undoSize)
+				target: RBRefactoryChangeManager;
+				default: 20;
+				label: 'Undo size';
+				parentName: #refactoring ]
 ]
 
 { #category : #adding }
@@ -48,4 +81,21 @@ RefactoringSettings class >> scopeList [
 RefactoringSettings class >> scopeList: anObject [
 
 	ScopeList := anObject
+]
+
+{ #category : #accessing }
+RefactoringSettings class >> scopeRefactoring [
+
+	^ ScopeRefactoring ifNil: [ ScopeRefactoring := self scopeList first ]
+]
+
+{ #category : #accessing }
+RefactoringSettings class >> scopeRefactoring: anObject [
+
+	ScopeRefactoring := anObject
+]
+
+{ #category : #accesing }
+RefactoringSettings class >> setDescriptionOf: anItem with: aString [ 
+	anItem label: aString. 
 ]
