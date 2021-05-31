@@ -367,14 +367,8 @@ OpalCompiler >> compileDoit [
 { #category : #'public access' }
 OpalCompiler >> compileMethod [
 	| cm |
-	[	self parse.
-			self callPlugins.  
-		] 	on: ReparseAfterSourceEditing 
-			do: 
-			[  	:notification | 
-				self source: notification newSource. 
-				notification retry. 
-			]. 
+	self parse.
+	self callPlugins.  
 		cm := compilationContext optionEmbeddSources
 			ifTrue: [ ast generateWithSource ]
 			ifFalse: [ast generate: self compilationContext compiledMethodTrailer   ].
@@ -530,11 +524,17 @@ OpalCompiler >> options: anOptionsArray [
 
 { #category : #'public access' }
 OpalCompiler >> parse [
-	ast := self compilationContext noPattern 
+	[ast := self compilationContext noPattern 
 		ifTrue: [ self parseExpression ]
 		ifFalse: [ self parseMethod ].
 	ast methodNode compilationContext: self compilationContext.
-	self doSemanticAnalysis.
+	self doSemanticAnalysis]
+	on: ReparseAfterSourceEditing 
+			do: 
+			[  	:notification | 
+				self source: notification newSource. 
+				notification retry.  
+			]. 
 	^ast
 ]
 

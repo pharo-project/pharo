@@ -12,21 +12,21 @@ OCUndeclaredVariableWarning >> declareClassVar [
 
 	self methodClass instanceSide
 		addClassVarNamed: node name asSymbol.
-	^ self lookUpVariable
+	(ReparseAfterSourceEditing new newSource: self requestor text) signal
 ]
 
 { #category : #correcting }
 OCUndeclaredVariableWarning >> declareGlobal [
 
 	Smalltalk at: node name asSymbol put: nil.
-	^self lookUpVariable
+	(ReparseAfterSourceEditing new newSource: self requestor text) signal
 ]
 
 { #category : #correcting }
 OCUndeclaredVariableWarning >> declareInstVar: name [
 	"Declare an instance variable."
 	self methodClass addInstVarNamed: name.
-	^ self lookUpVariable
+	(ReparseAfterSourceEditing new newSource: self requestor text) signal
 ]
 
 { #category : #correcting }
@@ -135,12 +135,6 @@ OCUndeclaredVariableWarning >> defineTrait: traitName [
 		evaluate.
 	^ (node owningScope lookupVar: traitSymbol)
 		ifNil: [self error: 'should be not happen']
-]
-
-{ #category : #correcting }
-OCUndeclaredVariableWarning >> lookUpVariable [
-	^ (node owningScope lookupVar: node name)
-		ifNil: [self error: 'should be found']
 ]
 
 { #category : #accessing }
