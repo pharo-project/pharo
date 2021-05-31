@@ -58,7 +58,7 @@ TextTest >> setUp [
 	text addAttribute: TextColor red from: 7 to: 13.
 ]
 
-{ #category : #'tests-error' }
+{ #category : #'tests - error' }
 TextTest >> testAddAttributeFromTo [
 	"Adding attributes before begining"
 	text := 'foo' asText.
@@ -187,7 +187,7 @@ TextTest >> testFindStringStartingAtCaseSensitive [
 	
 ]
 
-{ #category : #test }
+{ #category : #tests }
 TextTest >> testGtDisplayOn [
 
 	| hello exp res |
@@ -277,7 +277,7 @@ TextTest >> testRangeOfStartingAt [
 	self deny: (text rangeOf: TextEmphasis underlined startingAt: 5) equals: (7 to: 8).
 ]
 
-{ #category : #'tests-error' }
+{ #category : #'tests - error' }
 TextTest >> testRemoveAttribute [
 	"Removing attribute before the beginning"
 	text := Text string: 'foo' attribute: TextColor red.
@@ -331,7 +331,7 @@ TextTest >> testReplacementAtStartPos2 [
 	self assert: text string size equals: text runs size
 ]
 
-{ #category : #'tests-error' }
+{ #category : #'tests - error' }
 TextTest >> testReplacementAtStartPos3 [
 	"For a Text t, the following assertion should always hold:
 		t string size = t run size 
@@ -358,7 +358,7 @@ TextTest >> testRuns [
 	self should: [ text runs: attributes ] raise: Error.
 ]
 
-{ #category : #'tests-error' }
+{ #category : #'tests - error' }
 TextTest >> testSettingRunsOfWrongSize [
 	|  newRuns |
 	newRuns := text runs copyReplaceFrom: 2 to: 1 with: (Array with: TextColor red).
@@ -557,7 +557,7 @@ TextTest >> testTextReplacement2 [
 	self assert: text string size equals: text runs size
 ]
 
-{ #category : #'tests-error' }
+{ #category : #'tests - error' }
 TextTest >> testTextReplacement3 [
 	"For a Text t, the following assertion should always hold:
 		t string size = t run size 

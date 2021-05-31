@@ -220,7 +220,7 @@ SourceFileArrayTest >> testProtocol [
 	self assert: (SourceFiles protocolAt: okCm sourcePointer) equals: 'point functions'.
 
 	notOkCm := Behavior >> #superclass.
-	self assert: (SourceFiles protocolAt: notOkCm sourcePointer) equals: 'accessing class hierarchy'
+	self assert: (SourceFiles protocolAt: notOkCm sourcePointer) equals: 'accessing - class hierarchy'
 ]
 
 { #category : #testing }

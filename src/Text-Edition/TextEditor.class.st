@@ -1826,7 +1826,7 @@ TextEditor >> handleKeystrokeAction: aBlock [
 	self storeSelectionInParagraph
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> hasCaret [
 	^self editingState markBlock = self editingState pointBlock
 ]
@@ -1836,7 +1836,7 @@ TextEditor >> hasError [
 	^ false 
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> hasSelection [
 	^self hasCaret not
 ]
@@ -2080,7 +2080,7 @@ TextEditor >> makeUppercase: aKeyboardEvent [
 	^ true
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> markBlock [
 	^ self editingState markBlock
 ]
@@ -2090,12 +2090,12 @@ TextEditor >> markBlock: aCharacterBlock [
 	self editingState markBlock:  aCharacterBlock
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> markIndex [
 	^ self editingState markBlock stringIndex
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> markIndex: anIndex [
 	self editingState markBlock: (self paragraph characterBlockForIndex: anIndex)
 
@@ -2391,17 +2391,17 @@ TextEditor >> pluggableYellowButtonActivity: shiftKeyState [
 		  ifNotNil: [ true ]
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> pointBlock [
 	^ self editingState pointBlock
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> pointIndex [
 	^ self editingState pointBlock stringIndex
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> pointIndex: anIndex [
 	self editingState pointBlock: (self paragraph characterBlockForIndex: anIndex)
 
@@ -2808,14 +2808,14 @@ TextEditor >> selectWord: aKeyboardEvent [
 	^ true
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> selection [
 	"Answer the text in the paragraph that is currently selected."
 
 	^self text copyFrom: self startIndex to: self stopIndex - 1 
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> selectionAsStream [
 	"Answer a ReadStream on the text in the paragraph that is currently 
 	selected."
@@ -2824,7 +2824,7 @@ TextEditor >> selectionAsStream [
 		on: (self string copyFrom: self startIndex to: self stopIndex - 1)
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> selectionInterval [
 	"Answer the interval that is currently selected."
 
@@ -2956,7 +2956,7 @@ TextEditor >> shiftedYellowButtonMenu [
 
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> startBlock [
 	^ self editingState pointBlock min: self editingState markBlock
 ]
@@ -2967,7 +2967,7 @@ TextEditor >> startDrag: event [
 	self morph startDrag: (event translatedBy: self morph editView topLeft)
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> startIndex [
 	^ self startBlock stringIndex
 ]
@@ -2993,12 +2993,12 @@ TextEditor >> stateArrayPut: stateArray [
 
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> stopBlock [
 	^ self editingState pointBlock max: self editingState markBlock
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> stopIndex [
 	^ self stopBlock stringIndex
 ]
@@ -3104,7 +3104,7 @@ TextEditor >> undoTypeIn: aText interval: anInterval [
 
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> unselect [
 	self markBlock: self pointBlock copy
 ]

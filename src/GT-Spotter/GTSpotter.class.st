@@ -245,12 +245,12 @@ GTSpotter >> defaultFilterClass [
     ^ GTFilterFuzzy
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTSpotter >> defaultPagerModel [
 	^ GLMPagerModel new
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTSpotter >> defaultStep [
 	^ GTSpotterStep new
 ]

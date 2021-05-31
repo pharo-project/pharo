@@ -37,7 +37,7 @@ TabMorph class >> closeHalfOverIcon [
 		ifAbsentPut: [ self closeHalfOverIconContents ]
 ]
 
-{ #category : #'icons-contents' }
+{ #category : #'icons - contents' }
 TabMorph class >> closeHalfOverIconContents [
 
 	^ Form
@@ -55,7 +55,7 @@ TabMorph class >> closeIcon [
 		ifAbsentPut: [ self closeIconContents ]
 ]
 
-{ #category : #'icons-contents' }
+{ #category : #'icons - contents' }
 TabMorph class >> closeIconContents [
 
 	^ Form
@@ -73,7 +73,7 @@ TabMorph class >> closeOverIcon [
 		ifAbsentPut: [ self closeOverIconContents ]
 ]
 
-{ #category : #'icons-contents' }
+{ #category : #'icons - contents' }
 TabMorph class >> closeOverIconContents [
 
 	^ Form
@@ -88,7 +88,7 @@ TabMorph class >> defaultHeight [
 	^ 22
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 TabMorph class >> initialize [
 
 	Icons := Dictionary new.
@@ -158,7 +158,7 @@ TabMorph class >> refreshIcon10 [
 		ifAbsentPut: [ self refreshIcon10Contents ]
 ]
 
-{ #category : #'icons-contents' }
+{ #category : #'icons - contents' }
 TabMorph class >> refreshIcon10Contents [
 
 	^ Form
@@ -168,7 +168,7 @@ TabMorph class >> refreshIcon10Contents [
 		offset: 0@0
 ]
 
-{ #category : #'icons-contents' }
+{ #category : #'icons - contents' }
 TabMorph class >> refreshIcon1Contents [
 
 	^ Form
@@ -186,7 +186,7 @@ TabMorph class >> refreshIcon2 [
 		ifAbsentPut: [ self refreshIcon2Contents ]
 ]
 
-{ #category : #'icons-contents' }
+{ #category : #'icons - contents' }
 TabMorph class >> refreshIcon2Contents [
 
 	^ Form
@@ -204,7 +204,7 @@ TabMorph class >> refreshIcon3 [
 		ifAbsentPut: [ self refreshIcon3Contents ]
 ]
 
-{ #category : #'icons-contents' }
+{ #category : #'icons - contents' }
 TabMorph class >> refreshIcon3Contents [
 
 	^ Form
@@ -222,7 +222,7 @@ TabMorph class >> refreshIcon4 [
 		ifAbsentPut: [ self refreshIcon4Contents ]
 ]
 
-{ #category : #'icons-contents' }
+{ #category : #'icons - contents' }
 TabMorph class >> refreshIcon4Contents [
 
 	^ Form
@@ -240,7 +240,7 @@ TabMorph class >> refreshIcon5 [
 		ifAbsentPut: [ self refreshIcon5Contents ]
 ]
 
-{ #category : #'icons-contents' }
+{ #category : #'icons - contents' }
 TabMorph class >> refreshIcon5Contents [
 
 	^ Form
@@ -258,7 +258,7 @@ TabMorph class >> refreshIcon6 [
 		ifAbsentPut: [ self refreshIcon6Contents ]
 ]
 
-{ #category : #'icons-contents' }
+{ #category : #'icons - contents' }
 TabMorph class >> refreshIcon6Contents [
 
 	^ Form
@@ -276,7 +276,7 @@ TabMorph class >> refreshIcon7 [
 		ifAbsentPut: [ self refreshIcon7Contents ]
 ]
 
-{ #category : #'icons-contents' }
+{ #category : #'icons - contents' }
 TabMorph class >> refreshIcon7Contents [
 
 	^ Form
@@ -294,7 +294,7 @@ TabMorph class >> refreshIcon8 [
 		ifAbsentPut: [ self refreshIcon8Contents ]
 ]
 
-{ #category : #'icons-contents' }
+{ #category : #'icons - contents' }
 TabMorph class >> refreshIcon8Contents [
 
 	^ Form
@@ -312,7 +312,7 @@ TabMorph class >> refreshIcon9 [
 		ifAbsentPut: [ self refreshIcon9Contents ]
 ]
 
-{ #category : #'icons-contents' }
+{ #category : #'icons - contents' }
 TabMorph class >> refreshIcon9Contents [
 
 	^ Form
@@ -322,7 +322,7 @@ TabMorph class >> refreshIcon9Contents [
 		offset: 0@0
 ]
 
-{ #category : #'private-constants' }
+{ #category : #'private - constants' }
 TabMorph >> actionOffset [
 
 	^ 4 * self displayScaleFactor
@@ -353,7 +353,7 @@ TabMorph >> addActions: aCollection [
 	actions addAll: aCollection
 ]
 
-{ #category : #'icons-actions' }
+{ #category : #'icons - actions' }
 TabMorph >> addActionsToIcon [
 
 	closeIcon 
@@ -362,7 +362,7 @@ TabMorph >> addActionsToIcon [
 		on: #mouseLeave send: #mouseLeaveIcon to: self
 ]
 
-{ #category : #'private-icons' }
+{ #category : #'private - icons' }
 TabMorph >> addIcon [
 
 	self
@@ -410,7 +410,7 @@ TabMorph >> addToSelection [
 	"No need to change here since the toolbar I belong to will do it"
 ]
 
-{ #category : #'private-drawing' }
+{ #category : #'private - drawing' }
 TabMorph >> backgroundColor [
 	^ state backgroundColor
 ]
@@ -421,13 +421,13 @@ TabMorph >> blueButtonUp: anEvent [
 	self close
 ]
 
-{ #category : #'private-drawing' }
+{ #category : #'private - drawing' }
 TabMorph >> borderColor [
 	"I do not use #borderColor because I want a light border"
 	^ self theme lightBackgroundColor
 ]
 
-{ #category : #'private-drawing' }
+{ #category : #'private - drawing' }
 TabMorph >> buildBorderVertices [
 	
 	^ state buildBorderVertices
@@ -442,7 +442,7 @@ TabMorph >> buildLabel: text withIcon: icon [
 		yourself
 ]
 
-{ #category : #'private-drawing' }
+{ #category : #'private - drawing' }
 TabMorph >> buildVerticesFrom: borderVertices [
 	
 	^ state buildVerticesFrom: borderVertices
@@ -470,12 +470,12 @@ TabMorph >> closeable: anObject [
 		ifFalse: [ self hideCloseIcon ]
 ]
 
-{ #category : #initialize }
+{ #category : #'accessing - defaults' }
 TabMorph >> defaultBounds [
 	^ 0@0 corner: (100@(self class defaultHeight)) * self displayScaleFactor
 ]
 
-{ #category : #'private-icons' }
+{ #category : #'private - icons' }
 TabMorph >> defaultIcon [
 	^ self iconNamed: #blankIcon
 ]
@@ -544,14 +544,14 @@ TabMorph >> extraSpaceForActions [
 	^ space + (offsets * self actionOffset)
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 TabMorph >> handleMouseUp: anEvent [
 	anEvent blueButtonChanged
 		ifTrue: [ self blueButtonUp: anEvent ]
 		ifFalse: [ super handleMouseUp: anEvent ]
 ]
 
-{ #category : #'event handling' }
+{ #category : #'events - handling' }
 TabMorph >> handlesMouseDown: event [
 
 	^ true
@@ -589,7 +589,7 @@ TabMorph >> icon: anIcon [
 		ifNotNil: [ label icon: (AlphaImageMorph new image: anIcon) ]
 ]
 
-{ #category : #'private-constants' }
+{ #category : #'private - constants' }
 TabMorph >> iconRightOffset [
 
 	^ 10 * self displayScaleFactor
@@ -624,13 +624,13 @@ TabMorph >> label: aString [
 	label morph: aString asMorph
 ]
 
-{ #category : #'private-constants' }
+{ #category : #'private - constants' }
 TabMorph >> labelBottomOffset [
 
 	^ 5 * self displayScaleFactor
 ]
 
-{ #category : #'private-constants' }
+{ #category : #'private - constants' }
 TabMorph >> labelRightOffset [
 
 	^ 12 * self displayScaleFactor
@@ -654,7 +654,7 @@ TabMorph >> menu: aMenu [
 	menu := aMenu
 ]
 
-{ #category : #'private-icons' }
+{ #category : #'private - icons' }
 TabMorph >> menuIcon [
 	
 	^ self class menuIcon
@@ -672,7 +672,7 @@ TabMorph >> model: aModel [
 	model := aModel
 ]
 
-{ #category : #'private-tab label' }
+{ #category : #'private - tab label' }
 TabMorph >> modifyClippingBounds: clippingBounds [
 	| rightOffset |
 
@@ -695,12 +695,12 @@ TabMorph >> morph: anObject [
 	self triggerEvent: #tabRefreshed with: self
 ]
 
-{ #category : #'event handling' }
+{ #category : #'events - handling' }
 TabMorph >> mouseDown: event [
 	self flag: #pharoTodo. "Add drag"
 ]
 
-{ #category : #'icons-actions' }
+{ #category : #'icons - actions' }
 TabMorph >> mouseEnterIcon [
 
 	closeable ifFalse: [ ^ self ].
@@ -708,7 +708,7 @@ TabMorph >> mouseEnterIcon [
 	closeIcon image: self class closeOverIcon
 ]
 
-{ #category : #'icons-actions' }
+{ #category : #'icons - actions' }
 TabMorph >> mouseLeaveIcon [
 
 	closeable ifFalse: [ ^ self ].
@@ -719,7 +719,7 @@ TabMorph >> mouseLeaveIcon [
 		closeIcon image: self class closeIcon ] fork
 ]
 
-{ #category : #'event handling' }
+{ #category : #'events - handling' }
 TabMorph >> mouseUp: event [
 
 	(event commandKeyPressed or: [ event controlKeyPressed ])
@@ -820,7 +820,7 @@ TabMorph >> showCloseIcon [
 		ifTrue: [ closeIcon show ]
 ]
 
-{ #category : #'private-tab label' }
+{ #category : #'private - tab label' }
 TabMorph >> showIconTreshold [
 
 	^ (closeIcon visible

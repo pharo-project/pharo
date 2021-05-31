@@ -173,13 +173,13 @@ AthensBalloonSurface >> fillRectangle: aRectangle withSolidColor: aColor [
 	self fillRectangle: aRectangle color: aColor
 ]
 
-{ #category : #'accessing matrices' }
+{ #category : #'accessing - matrices' }
 AthensBalloonSurface >> fillTransform [
 
 	^ fillTransform
 ]
 
-{ #category : #'accessing matrices' }
+{ #category : #'accessing - matrices' }
 AthensBalloonSurface >> fillTransform: anObject [
 
 	fillTransform := anObject
@@ -210,7 +210,7 @@ AthensBalloonSurface >> getFreetypeFontRendererFor: aFreeTypeFont [
 	^ (FT2GlyphRenderer forFont: aFreeTypeFont surface: self)
 ]
 
-{ #category : #'accessing matrices' }
+{ #category : #'accessing - matrices' }
 AthensBalloonSurface >> imageTransform [
 
 	^ imageTransform
@@ -237,13 +237,13 @@ AthensBalloonSurface >> paintTransform [
 	^ paintTransform 
 ]
 
-{ #category : #'accessing matrices' }
+{ #category : #'accessing - matrices' }
 AthensBalloonSurface >> pathTransform [
 
 	^ pathTransform
 ]
 
-{ #category : #'accessing matrices' }
+{ #category : #'accessing - matrices' }
 AthensBalloonSurface >> pathTransform: anObject [
 
 	pathTransform := anObject copy.
@@ -268,13 +268,13 @@ AthensBalloonSurface >> strokeRectangle: rect color: aColor width: aWidth [
 		strokeRectangle: rect width: aWidth
 ]
 
-{ #category : #'accessing matrices' }
+{ #category : #'accessing - matrices' }
 AthensBalloonSurface >> strokeTransform [
 
 	^ strokeTransform
 ]
 
-{ #category : #'accessing matrices' }
+{ #category : #'accessing - matrices' }
 AthensBalloonSurface >> strokeTransform: anObject [
 
 	strokeTransform := anObject

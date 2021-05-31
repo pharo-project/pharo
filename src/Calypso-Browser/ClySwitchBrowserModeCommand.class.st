@@ -24,7 +24,7 @@ ClySwitchBrowserModeCommand >> applyResultInContext: aToolContext [
 	browser rebuildToolbar
 ]
 
-{ #category : #'activation-toolbar support' }
+{ #category : #'activation - toolbar support' }
 ClySwitchBrowserModeCommand >> createToolbarItemFor: aCommandActivator [
 
 	^ClyBrowserModeSwitchMorph activatingBy: aCommandActivator

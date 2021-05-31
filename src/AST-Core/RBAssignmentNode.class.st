@@ -48,12 +48,12 @@ RBAssignmentNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitAssignmentNode: self
 ]
 
-{ #category : #'accessing-token' }
+{ #category : #'accessing - token' }
 RBAssignmentNode >> assignment [
 	^ assignment
 ]
 
-{ #category : #'accessing-token' }
+{ #category : #'accessing - token' }
 RBAssignmentNode >> assignment: anInteger [
 	assignment := anInteger
 ]

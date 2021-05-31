@@ -98,7 +98,7 @@ FormCanvas >> allocateForm: extentPoint [
 	^form allocateForm: extentPoint
 ]
 
-{ #category : #'drawing-support' }
+{ #category : #'drawing - support' }
 FormCanvas >> clipBy: aRectangle during: aBlock [
 	"Set a clipping rectangle active only during the execution of aBlock.
 	Note: In the future we may want to have more general clip shapes - not just rectangles"
@@ -169,13 +169,13 @@ FormCanvas >> drawOval: r color: c borderWidth: borderWidth borderColor: borderC
 		transform: self transform.
 ]
 
-{ #category : #'drawing-polygons' }
+{ #category : #'drawing - polygons' }
 FormCanvas >> drawPolygon: vertices color: aColor borderWidth: bw borderColor: bc [
 	"Generalize for the BalloonCanvas"
 	^self drawPolygon: vertices fillStyle: aColor borderWidth: bw borderColor: bc
 ]
 
-{ #category : #'drawing-polygons' }
+{ #category : #'drawing - polygons' }
 FormCanvas >> drawPolygon: vertices fillStyle: aFillStyle borderWidth: borderWidth borderColor: borderColor [
 
 	| canvasCopy |
@@ -200,7 +200,7 @@ FormCanvas >> drawRectangle: r color: c borderWidth: borderWidth borderColor: bo
 		transform: self transform.
 ]
 
-{ #category : #'drawing-text' }
+{ #category : #'drawing - text' }
 FormCanvas >> drawString: aString from: firstIndex to: lastIndex at: aPoint font: fontOrNil color: c [
 	| font |
 	port colorMap: nil.
@@ -213,7 +213,7 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex at: aPoint font
 		from: firstIndex to: lastIndex at: (origin + aPoint) kern: 0.
 ]
 
-{ #category : #'drawing-text' }
+{ #category : #'drawing - text' }
 FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c [
 	| font portRect |
 	port colorMap: nil.
@@ -232,7 +232,7 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font
 	port clipRect: portRect.
 ]
 
-{ #category : #'drawing-text' }
+{ #category : #'drawing - text' }
 FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc [
 	| font portRect endPoint |
 	port colorMap: nil.
@@ -292,7 +292,7 @@ FormCanvas >> fillColor: c [
 	port fillRect: form boundingBox offset: origin.
 ]
 
-{ #category : #'drawing-ovals' }
+{ #category : #'drawing - ovals' }
 FormCanvas >> fillOval: r color: fillColor borderWidth: borderWidth borderColor: borderColor [
 	| rect |
 	"draw the border of the oval"
@@ -309,7 +309,7 @@ FormCanvas >> fillOval: r color: fillColor borderWidth: borderWidth borderColor:
 
 ]
 
-{ #category : #'drawing-ovals' }
+{ #category : #'drawing - ovals' }
 FormCanvas >> fillOval: aRectangle fillStyle: aFillStyle borderWidth: bw borderColor: bc [
 	"Fill the given oval."
 
@@ -330,7 +330,7 @@ FormCanvas >> fillOval: aRectangle fillStyle: aFillStyle borderWidth: bw borderC
 
 ]
 
-{ #category : #'drawing-rectangles' }
+{ #category : #'drawing - rectangles' }
 FormCanvas >> fillRectangle: aRectangle basicFillStyle: aFillStyle [
 	"Fill the given rectangle with the given, non-composite, fill style."
 	
@@ -389,7 +389,7 @@ FormCanvas >> form [
 	^ form
 ]
 
-{ #category : #'drawing-rectangles' }
+{ #category : #'drawing - rectangles' }
 FormCanvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderWidth borderColor: borderColor [
 	| rect |
 	rect := r translateBy: origin.
@@ -408,7 +408,7 @@ FormCanvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderW
 		port fillRect: (rect insetBy: borderWidth) offset: origin].
 ]
 
-{ #category : #'drawing-rectangles' }
+{ #category : #'drawing - rectangles' }
 FormCanvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderWidth topLeftColor: topLeftColor bottomRightColor: bottomRightColor [
 
 	| w h rect |
@@ -445,7 +445,7 @@ FormCanvas >> image: aForm at: aPoint sourceRect: sourceRect rule: rule alpha: s
 	port image: aForm at: aPoint + origin sourceRect: sourceRect rule: rule alpha: sourceAlpha.
 ]
 
-{ #category : #'drawing-rectangles' }
+{ #category : #'drawing - rectangles' }
 FormCanvas >> infiniteFillRectangle: aRectangle fillStyle: aFillStyle [
 
 	| additionalOffset rInPortTerms clippedPort targetTopLeft clipOffset ex |
@@ -698,7 +698,7 @@ FormCanvas >> showAt: pt invalidRects: updateRects [
 			copyBits]
 ]
 
-{ #category : #'drawing-images' }
+{ #category : #'drawing - images' }
 FormCanvas >> stencil: stencilForm at: aPoint sourceRect: sourceRect color: aColor [
 	"Flood this canvas with aColor wherever stencilForm has non-zero pixels"
 	self setPaintColor: aColor.
@@ -714,7 +714,7 @@ FormCanvas >> transform [
 	^ (transform ifNil: [MatrixTransform2x3 identity])
 ]
 
-{ #category : #'drawing-support' }
+{ #category : #'drawing - support' }
 FormCanvas >> transformBy: aDisplayTransform clippingTo: aClipRect during: aBlock	 smoothing: cellSize [
 
 	"Note: This method has been originally copied from TransformationMorph."
@@ -749,13 +749,13 @@ FormCanvas >> transformBy: aDisplayTransform clippingTo: aClipRect during: aBloc
 
 ]
 
-{ #category : #'drawing-support' }
+{ #category : #'drawing - support' }
 FormCanvas >> translateBy: delta during: aBlock [
 	"Set a translation only during the execution of aBlock."
 	^aBlock value: (self copyOffset: delta)
 ]
 
-{ #category : #'drawing-support' }
+{ #category : #'drawing - support' }
 FormCanvas >> translateTo: newOrigin clippingTo: aRectangle during: aBlock [
 	"Set a new origin and clipping rectangle only during the execution of aBlock."
 	aBlock value: (self copyOrigin: newOrigin clipRect: aRectangle)
@@ -780,7 +780,7 @@ FormCanvas >> warpFrom: sourceQuad toRect: destRect [
 		clipRect: clipRect
 ]
 
-{ #category : #'drawing-images' }
+{ #category : #'drawing - images' }
 FormCanvas >> warpImage: aForm transform: aTransform at: extraOffset sourceRect: sourceRect cellSize: cellSize [
 	"Warp the given using the appropriate transform and offset."
 	| tfm |

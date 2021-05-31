@@ -217,7 +217,7 @@ RGEnvironment >> cleanWithMetaclassNamed: aProposedName [
 	self cleanUnusedUnreferencedPackages.
 ]
 
-{ #category : #'accessing-backend' }
+{ #category : #'accessing - backend' }
 RGEnvironment >> compileANewClassFrom: aString notifying: aMorph startingFrom: aClass [ 
 	| importer |
 	

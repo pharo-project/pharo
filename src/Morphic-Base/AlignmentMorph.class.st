@@ -13,7 +13,7 @@ Class {
 	#category : #'Morphic-Base-Basic'
 }
 
-{ #category : #example }
+{ #category : #examples }
 AlignmentMorph class >> columnPrototype [
 	"Answer a prototypical column"
 	"self columnPrototype openInHand"
@@ -73,7 +73,7 @@ AlignmentMorph class >> newVariableTransparentSpacer [
 
 ]
 
-{ #category : #example }
+{ #category : #examples }
 AlignmentMorph class >> rowPrototype [
 	"Answer a prototypical row"
 	"self rowPrototype openInHand"

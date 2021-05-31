@@ -20,7 +20,7 @@ ReInstanceVariableCapitalizationRule >> check: aClass forCritiquesDo: aCriticBlo
 		thenDo: [ :each | aCriticBlock cull: (self critiqueFor: aClass about: each) ]
 ]
 
-{ #category : #'running-helpers' }
+{ #category : #'running - helpers' }
 ReInstanceVariableCapitalizationRule >> critiqueFor: aClass about: aVarName [
 
 	| crit |

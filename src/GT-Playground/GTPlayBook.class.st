@@ -52,22 +52,22 @@ GTPlayBook class >> customDirectory: aFileReference [
 	self cacheDirectory: aFileReference
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTPlayBook class >> defaultCacheDirectory [
 	^ (DefaultCacheDirectory ifNil: [ DefaultCacheDirectory := FileLocator localDirectory / 'play-cache' ]) asFileReference
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTPlayBook class >> defaultCacheDirectory: aFileReference [
 	DefaultCacheDirectory := aFileReference
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTPlayBook class >> defaultStashDirectory [
 	^ (DefaultCacheDirectory ifNil: [ DefaultCacheDirectory := FileLocator localDirectory / 'play-stash' ]) asFileReference
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTPlayBook class >> defaultStashDirectory: aFileReference [
 	^ DefaultStashDirectory := aFileReference
 ]
@@ -164,30 +164,30 @@ GTPlayBook >> addPageIfInteresting: aPage [
 	self addPage: aPage
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 GTPlayBook >> allFiles [
 	^ self class cacheDirectory files select: [ :each | 
 		each extension = GTPlayPage fileExtension ]
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 GTPlayBook >> allFilesSorted [
 	^ self allFiles sorted: [ :a :b | 
 		a modificationTime > b modificationTime ]
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTPlayBook >> defaultPages [
 	^ OrderedCollection new
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTPlayBook >> defaultPagesLimit [
 	" page list in ui might get too long / holding too many object might decrease performance "
 	^ 100
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 GTPlayBook >> files [
 	^ self allFilesSorted takeFirst: self pagesLimit
 ]

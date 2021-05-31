@@ -96,7 +96,7 @@ GTSpotterMorph >> closeSpotter [
 	self autoHide ifTrue: [ self delete ]
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTSpotterMorph >> defaultLabel [
 	^ 'Spotter'
 ]
@@ -123,7 +123,7 @@ GTSpotterMorph >> diveOut [
 		self spotterModel popStep ]
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 GTSpotterMorph >> handleListenEvent: anEvent [
 		
 	anEvent type = #mouseDown ifTrue: [ 
@@ -191,13 +191,13 @@ GTSpotterMorph >> newPaneBrick [
 	^ GTSpotterPaneBrick new
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 GTSpotterMorph >> onBreadcrumbVisibilityChanged [
 
 	self changed.
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 GTSpotterMorph >> onHidePreview [
 	|delta|
 	self paneBrick isPreviewShown ifFalse: [ ^ self ].
@@ -247,13 +247,13 @@ GTSpotterMorph >> onKeyProcessor: aProcessor [
 		selectFrom: newSelection first to: newSelection last
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 GTSpotterMorph >> onLostFocus: event [
 
 	focusedMorph ifNil: [ focusedMorph := event morph ]
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 GTSpotterMorph >> onShowPreview [
 
 	|delta|
@@ -401,7 +401,7 @@ GTSpotterMorph >> stepScrollPageUp [
 	self spotterModel currentStep announcer announce: (GTSpotterScrollPageUp new)
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 GTSpotterMorph >> takeKeyboardFocus [
 
 	self paneBrick takeKeyboardFocus

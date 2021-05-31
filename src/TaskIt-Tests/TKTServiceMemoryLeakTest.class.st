@@ -4,7 +4,7 @@ Class {
 	#category : #'TaskIt-Tests-Services'
 }
 
-{ #category : #'tests-worker' }
+{ #category : #'tests - worker' }
 TKTServiceMemoryLeakTest >> testServiceInstancesAreCollectedAfterStartingAndStoppingService [
 
 	self
@@ -12,7 +12,7 @@ TKTServiceMemoryLeakTest >> testServiceInstancesAreCollectedAfterStartingAndStop
 		during: [ TKTParameterizableService new name: 'test'; start; stop  ]
 ]
 
-{ #category : #'tests-worker' }
+{ #category : #'tests - worker' }
 TKTServiceMemoryLeakTest >> testWorkerInstancesAreCollectedAfterStartingAndStoppingService [
 
 	self
@@ -23,7 +23,7 @@ TKTServiceMemoryLeakTest >> testWorkerInstancesAreCollectedAfterStartingAndStopp
 				stop ]
 ]
 
-{ #category : #'tests-worker' }
+{ #category : #'tests - worker' }
 TKTServiceMemoryLeakTest >> testWorkerPoolInstancesAreCollectedAfterStartingAndStoppingService [
 
 	self
@@ -31,7 +31,7 @@ TKTServiceMemoryLeakTest >> testWorkerPoolInstancesAreCollectedAfterStartingAndS
 		during: [ TKTParameterizableService new name: 'test'; start; stop  ]
 ]
 
-{ #category : #'tests-worker' }
+{ #category : #'tests - worker' }
 TKTServiceMemoryLeakTest >> testWorkerProcessInstancesAreCollectedAfterStartingAndStoppingService [
 
 	self

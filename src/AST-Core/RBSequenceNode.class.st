@@ -331,12 +331,12 @@ RBSequenceNode >> lastIsReturn [
 	^statements notEmpty and: [statements last lastIsReturn]
 ]
 
-{ #category : #'accessing-token' }
+{ #category : #'accessing - token' }
 RBSequenceNode >> leftBar [
 	^ leftBar
 ]
 
-{ #category : #'accessing-token' }
+{ #category : #'accessing - token' }
 RBSequenceNode >> leftBar: anInteger [
 	leftBar := anInteger
 ]
@@ -361,12 +361,12 @@ RBSequenceNode >> match: aNode inContext: aDictionary [
 					inContext: aDictionary]
 ]
 
-{ #category : #'accessing-token' }
+{ #category : #'accessing - token' }
 RBSequenceNode >> periods [
 	^ periods
 ]
 
-{ #category : #'accessing-token' }
+{ #category : #'accessing - token' }
 RBSequenceNode >> periods: anArray [
 	periods := anArray
 ]
@@ -429,12 +429,12 @@ RBSequenceNode >> replaceNode: aNode withNodes: aCollection [
 	statements := newStatements
 ]
 
-{ #category : #'accessing-token' }
+{ #category : #'accessing - token' }
 RBSequenceNode >> rightBar [
 	^ rightBar
 ]
 
-{ #category : #'accessing-token' }
+{ #category : #'accessing - token' }
 RBSequenceNode >> rightBar: anInteger [
 	rightBar := anInteger
 ]

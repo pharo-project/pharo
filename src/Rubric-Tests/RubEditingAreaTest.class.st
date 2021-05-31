@@ -59,14 +59,14 @@ RubEditingAreaTest >> setUp [
 	area setTextWith: 'one two three four'.
 ]
 
-{ #category : #'tests-accessing selection' }
+{ #category : #'tests - accessing selection' }
 RubEditingAreaTest >> testMarkBlockPointBlock [
 	self setSelectionFrom: 3 to: 6 text: area text.
 	self assert: area pointBlock stringIndex equals: 3.
 	self assert: area markBlock stringIndex equals: 6
 ]
 
-{ #category : #'tests-accessing selection' }
+{ #category : #'tests - accessing selection' }
 RubEditingAreaTest >> testModifySelection [
 	self testMarkBlockPointBlock.
 	area modifySelection: (self newCharacterBlockIndex: 8 text: area text).
@@ -74,7 +74,7 @@ RubEditingAreaTest >> testModifySelection [
 	self assert: area pointBlock stringIndex equals: 8.
 ]
 
-{ #category : #'tests-accessing selection' }
+{ #category : #'tests - accessing selection' }
 RubEditingAreaTest >> testMouseClickShiftClick [
 	self sendMouseClickAt: 3 withShift: false.
 	self sendMouseClickAt: 6 withShift: true.
@@ -82,7 +82,7 @@ RubEditingAreaTest >> testMouseClickShiftClick [
 	self assert: area pointBlock stringIndex equals: 6
 ]
 
-{ #category : #'tests-accessing selection' }
+{ #category : #'tests - accessing selection' }
 RubEditingAreaTest >> testMouseMoveAfterDoubleClick [
 	self sendMouseClickAt: 11 withShift: false.
 	self sendDoubleClickAt: 11 withShift: false.

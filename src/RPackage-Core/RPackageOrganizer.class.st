@@ -214,7 +214,7 @@ RPackageOrganizer >> addMethod: method [
 	rPackage addMethod: method
 ]
 
-{ #category : #'package-names-cache' }
+{ #category : #'package - names-cache' }
 RPackageOrganizer >> addPackageNameToCache: aPackageName [
 
 	packageNames ifNil: [ ^ self ].
@@ -228,7 +228,7 @@ RPackageOrganizer >> announcer [
 	^SystemAnnouncer uniqueInstance private
 ]
 
-{ #category : #'initialization-data' }
+{ #category : #'initialization - data' }
 RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 
 	aPackagesList
@@ -382,13 +382,13 @@ RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
 	^ package
 ]
 
-{ #category : #'package access from class' }
+{ #category : #'package - access from class' }
 RPackageOrganizer >> extendingPackagesOf: aClass [
 	"Returns the packages extending the class aClass"
 	^ classExtendingPackagesMapping at: aClass instanceSide name ifAbsent: [#()]
 ]
 
-{ #category : #'package access from class' }
+{ #category : #'package - access from class' }
 RPackageOrganizer >> extendingPackagesOfClassNamed: aName [
 	"Returns the packages extending the class named a Symbol"
 	^ classExtendingPackagesMapping at: aName asSymbol ifAbsent: [#()]
@@ -409,7 +409,7 @@ RPackageOrganizer >> fullyRemoveClassNamed: className [
 	
 ]
 
-{ #category : #'package access from class' }
+{ #category : #'package - access from class' }
 RPackageOrganizer >> globalPackageOf: aClass [
 	"this method should return the 'global' parent package of aClass, that means the package holding the (possible) subcategory in which aClass is concretely defined. For example, 'Object package' returns Kernel-Object, whereas 'PackageOrganizer packageOf: Object' returns Kernel. So I guess that all use of 'packageOf' should be replaced by this method  "
 
@@ -503,7 +503,7 @@ RPackageOrganizer >> initialize [
 	self defineUnpackagedClassesPackage
 ]
 
-{ #category : #'initialization-data' }
+{ #category : #'initialization - data' }
 RPackageOrganizer >> initializeExtensionsFor: aBehavior protocol: aProtocol [
 	| package protocolName nonTraitMethods |
 	
@@ -519,7 +519,7 @@ RPackageOrganizer >> initializeExtensionsFor: aBehavior protocol: aProtocol [
 		do: [ :eachSelector | package addMethod: aBehavior >> eachSelector ]
 ]
 
-{ #category : #'initialization-data' }
+{ #category : #'initialization - data' }
 RPackageOrganizer >> initializeFor: aBehavior [
 	| package |
 		
@@ -535,14 +535,14 @@ RPackageOrganizer >> initializeFor: aBehavior [
 	self registerPackage: package forClass: aBehavior.
 ]
 
-{ #category : #'initialization-data' }
+{ #category : #'initialization - data' }
 RPackageOrganizer >> initializeFromPackagesList: aPackagesList [
  	self packageClass 
 		withOrganizer: self  
 		do:  [  self basicInitializeFromPackagesList: aPackagesList ].
 ]
 
-{ #category : #'initialization-data' }
+{ #category : #'initialization - data' }
 RPackageOrganizer >> initializeMethodsFor: aBehavior [
 	| package |
 	
@@ -714,19 +714,19 @@ RPackageOrganizer >> packageNamedIgnoreCase: aSymbol ifAbsent: aBlock [
 	^ aBlock value.
 ]
 
-{ #category : #'package-names-cache' }
+{ #category : #'package - names-cache' }
 RPackageOrganizer >> packageNames [ 
 
 	^ packageNames ifNil: [ packageNames := packages keys asSortedCollection ]
 ]
 
-{ #category : #'package-names-cache' }
+{ #category : #'package - names-cache' }
 RPackageOrganizer >> packageNamesDo: aBlock [
 
 	^ self packageNames do: aBlock
 ]
 
-{ #category : #'package access from class' }
+{ #category : #'package - access from class' }
 RPackageOrganizer >> packageOf: aClass [
 
 	^ classPackageMapping 
@@ -734,7 +734,7 @@ RPackageOrganizer >> packageOf: aClass [
 		ifAbsent: [self packageNamed: self packageClass defaultPackageName]
 ]
 
-{ #category : #'package access from class' }
+{ #category : #'package - access from class' }
 RPackageOrganizer >> packageOfClassNamed: aName [
 
 	self flag: #pharoFixMe. "Should probably return _UnunpackagedPackage instead of nil"
@@ -871,7 +871,7 @@ RPackageOrganizer >> registerPackageNamed: aString [
 		ifAbsent: [ (self packageClass named: aString asSymbol) register ]
 ]
 
-{ #category : #'package-names-cache' }
+{ #category : #'package - names-cache' }
 RPackageOrganizer >> removePackageNameFromCache: aPackageName [
 
 	packageNames ifNil: [ ^ self ].	
