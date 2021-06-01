@@ -4,14 +4,14 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #'testing-utilities' }
+{ #category : #utilities }
 RBRemoveAssignmentTransformationTest >> methodAfter [
 
 	| variable |
 	variable := 'String'.
 ]
 
-{ #category : #'testing-utilities' }
+{ #category : #utilities }
 RBRemoveAssignmentTransformationTest >> methodBefore [
 
 	| variable |
@@ -19,7 +19,7 @@ RBRemoveAssignmentTransformationTest >> methodBefore [
 	variable := 1 asString.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveAssignmentTransformationTest >> testAssignmentDoesNotExist [
 
 	| refactoring |
@@ -38,7 +38,7 @@ RBRemoveAssignmentTransformationTest >> testAssignmentDoesNotExist [
 							asRefactoring 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveAssignmentTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBRemoveAssignmentTransformation 
@@ -49,7 +49,7 @@ RBRemoveAssignmentTransformationTest >> testClassDoesNotExist [
 							asRefactoring 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveAssignmentTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBRemoveAssignmentTransformation 
@@ -60,7 +60,7 @@ RBRemoveAssignmentTransformationTest >> testMethodDoesNotExist [
 							asRefactoring 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveAssignmentTransformationTest >> testRefactoring [
 
 	| refactoring class |
@@ -78,7 +78,7 @@ RBRemoveAssignmentTransformationTest >> testRefactoring [
 			equals: (class parseTreeFor: #methodAfter) body.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveAssignmentTransformationTest >> testTransform [
 
 	| transformation class |
@@ -96,7 +96,7 @@ RBRemoveAssignmentTransformationTest >> testTransform [
 			equals: (class parseTreeFor: #methodAfter) body.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveAssignmentTransformationTest >> testVariableDoesNotExist [
 
 	self shouldFail: (RBRemoveAssignmentTransformation

@@ -508,7 +508,7 @@ RGBehavior >> includesSelector: aString [
 	^ self selectors includes: aString
 ]
 
-{ #category : #'testing class hierarchy' }
+{ #category : #'testing - class hierarchy' }
 RGBehavior >> inheritsFrom: aClass [ 
 	"Answer whether the argument, aClass, is on the receiver's superclass 
 	chain."

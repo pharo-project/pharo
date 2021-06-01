@@ -228,7 +228,7 @@ RGEnvironment >> compileANewClassFrom: aString notifying: aMorph startingFrom: a
 	^ aClass
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 RGEnvironment >> createDefaultEnvironment [
 
 	| protoobject protoobjectClass object objectClass class classClass classDescription classDescriptionClass behavior behaviorClass metaclass metaclassClass kernelPackage |
@@ -639,7 +639,7 @@ RGEnvironment >> initializeUnresolved [
 
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGEnvironment >> isEnvironment [
 
 	^ true
@@ -949,7 +949,7 @@ RGEnvironment >> unpackagedPackageOrNil [
 
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 RGEnvironment >> verifyOwnership: anRGObject [
 
 	"ignore unresolved values. TODO: check default values ownership?"

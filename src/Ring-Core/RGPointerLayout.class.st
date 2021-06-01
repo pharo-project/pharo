@@ -58,7 +58,7 @@ RGPointerLayout >> instVarNames [
 	^ self slots collect: [:each | each name]
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGPointerLayout >> isPointerLayout [
 
 	^ true

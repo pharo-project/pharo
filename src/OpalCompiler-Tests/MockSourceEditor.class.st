@@ -12,13 +12,13 @@ Class {
 	#category : #'OpalCompiler-Tests-FromOld'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MockSourceEditor >> contents: aText [
 
 	text := aText
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utilities }
 MockSourceEditor >> cut [
 
 	text := (text first: selectionStart-1), (text copyFrom: selectionEnd+1 to: text size).
@@ -27,7 +27,7 @@ MockSourceEditor >> cut [
 	selectionEnd := selectionStart
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MockSourceEditor >> editor [
 
 	^ self
@@ -40,7 +40,7 @@ MockSourceEditor >> initialize [
 	selectionStart := selectionEnd := 0.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utilities }
 MockSourceEditor >> insertAndSelect: aString at: anInteger [
 
 	text := (text first: anInteger-1), 
@@ -51,7 +51,7 @@ MockSourceEditor >> insertAndSelect: aString at: anInteger [
 	selectionEnd := anInteger + aString size 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #notifications }
 MockSourceEditor >> notify: aString at: anInteger in: aStream [
 
 	| pos |
@@ -61,7 +61,7 @@ MockSourceEditor >> notify: aString at: anInteger in: aStream [
 	self insertAndSelect: aString at: (pos max: 1)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #selection }
 MockSourceEditor >> selectFrom: start to: end [
 
 	selectionStart := start.
@@ -69,32 +69,32 @@ MockSourceEditor >> selectFrom: start to: end [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #selection }
 MockSourceEditor >> selection [
 
 	^ self text copyFrom: selectionStart to: selectionEnd
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #selection }
 MockSourceEditor >> selectionAsStream [
 
 	^ ReadStream
 		on: (self text copyFrom: selectionStart to: selectionEnd)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #selection }
 MockSourceEditor >> selectionInterval [
 
 	^ Interval from: selectionStart to: selectionEnd.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MockSourceEditor >> startIndex [
 
 	^ selectionStart
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MockSourceEditor >> text [
 
 	^ text

@@ -52,7 +52,7 @@ EFBlockExpressionOnlyTest >> dontFormatCommentWithStatementConfiguration [
 		indentExtraSpaces:0
 ]
 
-{ #category : #configuration }
+{ #category : #tests }
 EFBlockExpressionOnlyTest >> testDontFormatCommentWithStatement2 [
 	| source |
 	configurationSelector := #dontFormatCommentWithStatementConfiguration.
@@ -62,7 +62,7 @@ EFBlockExpressionOnlyTest >> testDontFormatCommentWithStatement2 [
 2 factorial ]'
 ]
 
-{ #category : #configuration }
+{ #category : #tests }
 EFBlockExpressionOnlyTest >> testNewLineAfterComment [
 
 	| source |
@@ -73,7 +73,7 @@ EFBlockExpressionOnlyTest >> testNewLineAfterComment [
 2 ]'
 ]
 
-{ #category : #configuration }
+{ #category : #tests }
 EFBlockExpressionOnlyTest >> testSpaceAfterComment [
 
 	| source |
@@ -82,7 +82,7 @@ EFBlockExpressionOnlyTest >> testSpaceAfterComment [
 	self assert: source equals: '[ "aComment" 1 ]'
 ]
 
-{ #category : #configuration }
+{ #category : #tests }
 EFBlockExpressionOnlyTest >> testformatComment [
 
 	| source |

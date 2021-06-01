@@ -11,7 +11,7 @@ OCASTTimesRepeatTranslatorTest class >> testParameters [
 			forSelector: #optimization addOptions: { #optionInlineTimesRepeat . #optionInlineNone })
 ]
 
-{ #category : #'testing - blocks - optimized' }
+{ #category : #'tests - blocks - optimized' }
 OCASTTimesRepeatTranslatorTest >> testTimesRepeatExecutesBlock [
 
 
@@ -28,7 +28,7 @@ OCASTTimesRepeatTranslatorTest >> testTimesRepeatExecutesBlock [
 	self assert: result equals: 2 ** 5.
 ]
 
-{ #category : #'testing - blocks - optimized' }
+{ #category : #'tests - blocks - optimized' }
 OCASTTimesRepeatTranslatorTest >> testTimesRepeatReturnsReceiver [
 
 
@@ -42,7 +42,7 @@ OCASTTimesRepeatTranslatorTest >> testTimesRepeatReturnsReceiver [
 	self assert: result equals: 5
 ]
 
-{ #category : #'testing - blocks - optimized' }
+{ #category : #'tests - blocks - optimized' }
 OCASTTimesRepeatTranslatorTest >> testTimesRepeatWithCalculatedArguments [
 
 
@@ -60,7 +60,7 @@ OCASTTimesRepeatTranslatorTest >> testTimesRepeatWithCalculatedArguments [
 	self assert: result equals: 2 ** 5.
 ]
 
-{ #category : #'testing - blocks - optimized' }
+{ #category : #'tests - blocks - optimized' }
 OCASTTimesRepeatTranslatorTest >> testTimesRepeatWithTempInBlock [
 
 	| result |
@@ -78,7 +78,7 @@ OCASTTimesRepeatTranslatorTest >> testTimesRepeatWithTempInBlock [
 	self assert: result equals: 2 ** 5.
 ]
 
-{ #category : #'testing - blocks - optimized' }
+{ #category : #'tests - blocks - optimized' }
 OCASTTimesRepeatTranslatorTest >> testTimesRepeatWithTempOutsideBlock [
 
 	| result |

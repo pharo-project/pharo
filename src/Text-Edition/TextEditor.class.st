@@ -597,7 +597,7 @@ TextEditor >> acceptCR: aKeyboardEvent return: return [
 			return value: true].
 ]
 
-{ #category : #'undo-redo private' }
+{ #category : #'undo - redo private' }
 TextEditor >> addDeleteSelectionUndoRecord [
 	| undoText redoText |
 	undoText := self selection.
@@ -614,7 +614,7 @@ TextEditor >> addString: aString [
 	self zapSelectionWith: (Text string: aString attributes: self emphasisHere)
 ]
 
-{ #category : #'undo-redo private' }
+{ #category : #'undo - redo private' }
 TextEditor >> addTypeInUndoRecord [
 	| begin stop undoText redoText |
 	begin := self startOfTyping min: self stopIndex. 
@@ -996,7 +996,7 @@ TextEditor >> clearParens [
 	self editingState lastParenLocation: nil
 ]
 
-{ #category : #'undo-redo private' }
+{ #category : #'undo - redo private' }
 TextEditor >> clearUndoManager: aKeyboardEvent [
 	^ self editingState clearUndoManager: aKeyboardEvent.
 
@@ -1575,7 +1575,7 @@ TextEditor >> exchangeWith: prior [
 			[morph flash]
 ]
 
-{ #category : #'undo-redo private' }
+{ #category : #'undo - redo private' }
 TextEditor >> exploreUndoManager: aKeyboardEvent [
 	^ self editingState exploreUndoManager: aKeyboardEvent
 ]
@@ -2489,7 +2489,7 @@ TextEditor >> redo: aKeyboardEvent [
 	^true
 ]
 
-{ #category : #'undoers-redoers' }
+{ #category : #'undoers - redoers' }
 TextEditor >> redoTypeIn: aText interval: anInterval [
 	self selectInterval: anInterval.
 	self replace: self selectionInterval with: aText and:
@@ -3089,14 +3089,14 @@ TextEditor >> undo: aKeyboardEvent [
 	^true
 ]
 
-{ #category : #'undoers-redoers' }
+{ #category : #'undoers - redoers' }
 TextEditor >> undoRedoExchange: aninterval with: anotherInterval [
 	self selectInvisiblyFrom: aninterval first to: aninterval last.
 	self exchangeWith: anotherInterval
 
 ]
 
-{ #category : #'undoers-redoers' }
+{ #category : #'undoers - redoers' }
 TextEditor >> undoTypeIn: aText interval: anInterval [
 	self selectInterval: anInterval.
 	self replace: anInterval with: aText and:

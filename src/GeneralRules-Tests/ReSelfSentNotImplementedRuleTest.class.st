@@ -7,7 +7,7 @@ Class {
 	#category : #'GeneralRules-Tests-Migrated'
 }
 
-{ #category : #'test-help' }
+{ #category : #sample }
 ReSelfSentNotImplementedRuleTest >> sampleMethod [
 	"Do not highlight this bar. I am a method used in testCheckForCritiques"
 

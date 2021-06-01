@@ -4,14 +4,14 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddVariableAccessorTransformationTest >> testExistingInstanceVariableAccessors [
 	| refactoring |
 	refactoring := (RBAddVariableAccessorTransformation instanceVariable: 'name' class: #RBDummyLintRuleTest) asRefactoring transform.
 	self assertEmpty: refactoring changes changes
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddVariableAccessorTransformationTest >> testNewClassVariableAccessors [
 	| refactoring class |
 	refactoring := (RBAddVariableAccessorTransformation classVariable: 'Foo1' class: #RBDummyLintRuleTest) asRefactoring transform.
@@ -22,7 +22,7 @@ RBAddVariableAccessorTransformationTest >> testNewClassVariableAccessors [
 	self assert: (class parseTreeFor: #foo1:) equals: (self parseMethod: 'foo1: anObject Foo1 := anObject')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddVariableAccessorTransformationTest >> testNewInstanceVariableAccessors [
 	| refactoring class |
 	refactoring := (RBAddVariableAccessorTransformation instanceVariable: 'foo1' class: #RBDummyLintRuleTest) asRefactoring transform.
@@ -33,7 +33,7 @@ RBAddVariableAccessorTransformationTest >> testNewInstanceVariableAccessors [
 	self assert: (class parseTreeFor: #foo1:) equals: (self parseMethod: 'foo1: anObject foo1 := anObject')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddVariableAccessorTransformationTest >> testNonExistantName [
 
 	self
@@ -47,7 +47,7 @@ RBAddVariableAccessorTransformationTest >> testNonExistantName [
 						asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddVariableAccessorTransformationTest >> testRefactoring [
 	| refactoring class |
 	refactoring := (RBAddVariableAccessorTransformation instanceVariable: 'foo1' class: #RBDummyLintRuleTest) asRefactoring transform.
@@ -58,7 +58,7 @@ RBAddVariableAccessorTransformationTest >> testRefactoring [
 	self assert: (class parseTreeFor: #foo1:) equals: (self parseMethod: 'foo1: anObject foo1 := anObject')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddVariableAccessorTransformationTest >> testTransform [
 	| transformation class |
 	transformation := (RBAddVariableAccessorTransformation instanceVariable: 'instVar' class: self changeMock name) transform.

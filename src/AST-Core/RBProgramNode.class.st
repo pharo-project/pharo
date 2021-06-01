@@ -244,7 +244,7 @@ RBProgramNode >> blockVariables [
 	^parent ifNil: [#()] ifNotNil: [parent blockVariables]
 ]
 
-{ #category : #'testing-matching' }
+{ #category : #'testing - matching' }
 RBProgramNode >> canMatchMethod: aCompiledMethod [ 
 	^self sentMessages allSatisfy: 
 			[:each | 
@@ -584,7 +584,7 @@ RBProgramNode >> isLast: aNode [
 	^children notEmpty and: [children last == aNode]
 ]
 
-{ #category : #'testing-matching' }
+{ #category : #'testing - matching' }
 RBProgramNode >> isList [
 	^false
 ]
@@ -634,7 +634,7 @@ RBProgramNode >> isParseError [
 	^false
 ]
 
-{ #category : #'testing-matching' }
+{ #category : #'testing - matching' }
 RBProgramNode >> isPatternNode [
 	^false
 ]
@@ -914,7 +914,7 @@ RBProgramNode >> propertyAt: aKey put: anObject [
 		at: aKey put: anObject
 ]
 
-{ #category : #'testing-matching' }
+{ #category : #'testing - matching' }
 RBProgramNode >> recurseInto [
 	^false
 ]

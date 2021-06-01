@@ -32,7 +32,7 @@ RubDropListButtonRuler >> level [
 	^ 1
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 RubDropListButtonRuler >> noteNewOwner: aMorph [
 	| downArrow |
 	super noteNewOwner: aMorph.

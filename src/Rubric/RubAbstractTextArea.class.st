@@ -683,7 +683,7 @@ RubAbstractTextArea >> defaultYellowButtonMenuEnabled [
 	^ self defaultMenuAllowed 
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 RubAbstractTextArea >> delete [
 	self hasFocus
 		ifTrue: [ self currentHand newKeyboardFocus: nil ].

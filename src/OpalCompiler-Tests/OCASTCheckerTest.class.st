@@ -4,7 +4,7 @@ Class {
 	#category : #'OpalCompiler-Tests-AST'
 }
 
-{ #category : #tools }
+{ #category : #utilities }
 OCASTCheckerTest >> nameAnalysisNoClosureIn: class for: ast [
 	"Look up vars in classOrScope.  My tree will be annotated with bindings to Scopes and Variables."
 
@@ -13,7 +13,7 @@ OCASTCheckerTest >> nameAnalysisNoClosureIn: class for: ast [
 		visitNode: ast.
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTCheckerTest >> testDoubleRemoteAnidatedBlocks [
 	| ast scopes |
 	ast := (OCOpalExamples >> #doubleRemoteAnidatedBlocks) parseTree.
@@ -34,7 +34,7 @@ OCASTCheckerTest >> testDoubleRemoteAnidatedBlocks [
 	self deny: (scopes third lookupVar: 'continue') isEscaping	"It is not escaping since is being accessed in an optimized block."
 ]
 
-{ #category : #'testing - simple' }
+{ #category : #'tests - simple' }
 OCASTCheckerTest >> testExampleIfNotNilReturnNil [
 	| ast |
 	ast := (OCOpalExamples >> #exampleIfNotNilReturnNil) parseTree.
@@ -43,7 +43,7 @@ OCASTCheckerTest >> testExampleIfNotNilReturnNil [
 	self assert: ast scope tempVars size equals: 0
 ]
 
-{ #category : #'testing - blocks - optimized' }
+{ #category : #'tests - blocks - optimized' }
 OCASTCheckerTest >> testExampleInlineBlockCollectionLR3 [
 	| ast |
 	ast := (OCOpalExamples >> #exampleInlineBlockCollectionLR3) parseTree.
@@ -52,7 +52,7 @@ OCASTCheckerTest >> testExampleInlineBlockCollectionLR3 [
 	self assert: ast scope tempVars size equals: 1	"index is a temp of the outer method due to optimized block"
 ]
 
-{ #category : #'testing - primitives' }
+{ #category : #'tests - primitives' }
 OCASTCheckerTest >> testExamplePrimitiveErrorCode [
 	| ast |
 	ast := (OCOpalExamples>>#examplePrimitiveErrorCode) parseTree.
@@ -65,7 +65,7 @@ OCASTCheckerTest >> testExamplePrimitiveErrorCode [
 	
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTCheckerTest >> testExampleSelf [
 	| ast assignment |
 	ast := (OCOpalExamples>>#exampleSelf) parseTree.
@@ -78,14 +78,14 @@ OCASTCheckerTest >> testExampleSelf [
 	self assert: assignment arguments first variable isSelfVariable.
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTCheckerTest >> testExampleSelfReceiver [
 	| ast |
 	ast := (OCOpalExamples>>#exampleSelfReceiver) parseTree.
 	self assert: ast body statements first receiver isSelfVariable.
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTCheckerTest >> testExampleSuper [
 	| ast assignment |
 	ast := (OCOpalExamples>>#exampleSuper) parseTree.
@@ -98,14 +98,14 @@ OCASTCheckerTest >> testExampleSuper [
 	self assert: assignment arguments first variable isSuperVariable.
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTCheckerTest >> testExampleSuperReceiver [
 	| ast |
 	ast := (OCOpalExamples>>#exampleSuperReceiver) parseTree.
 	self assert: ast body statements first receiver isSuperVariable
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTCheckerTest >> testExampleThisContext [ 
 	| ast assignment |
 	ast := (OCOpalExamples>>#exampleThisContext) parseTree.
@@ -118,7 +118,7 @@ OCASTCheckerTest >> testExampleThisContext [
 	self assert: assignment arguments first variable isThisContextVariable.
 ]
 
-{ #category : #'testing - blocks - optimized' }
+{ #category : #'tests - blocks - optimized' }
 OCASTCheckerTest >> testExampleToDoArgument [
 	| ast |
 	ast := (OCOpalExamples >> #exampleToDoArgument) parseTree.
@@ -127,7 +127,7 @@ OCASTCheckerTest >> testExampleToDoArgument [
 	self assert: ast scope tempVars size equals: 0
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTCheckerTest >> testInstanceVar [
 	| ast assignment |
 	ast := (OCOpalExamples >> #exampleInstanceVariableAssignment) parseTree.
@@ -140,7 +140,7 @@ OCASTCheckerTest >> testInstanceVar [
 	self assert: assignment variable isInstanceVariable
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTCheckerTest >> testNoRemoteBlockArgument [
 	| ast |
 	ast := (OCOpalExamples >> #noRemoteBlockArgument) parseTree.
@@ -153,7 +153,7 @@ OCASTCheckerTest >> testNoRemoteBlockArgument [
 	self deny: (ast scope lookupVar: 'block2') isEscaping
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTCheckerTest >> testNoRemoteBlockReturn [
 	| ast |
 	ast := (OCOpalExamples >> #noRemoteBlockReturn) parseTree.
@@ -162,7 +162,7 @@ OCASTCheckerTest >> testNoRemoteBlockReturn [
 	self assert: ast scope tempVars size equals: 0
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTCheckerTest >> testNoRemoteBlockTemp [
 	| ast |
 	ast := (OCOpalExamples >> #noRemoteBlockTemp) parseTree.
@@ -175,7 +175,7 @@ OCASTCheckerTest >> testNoRemoteBlockTemp [
 	self deny: (ast scope lookupVar: 'block2') isEscaping
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTCheckerTest >> testNoRemoteMethodTemp [
 	| ast |
 	ast := (OCOpalExamples >> #noRemoteMethodTemp) parseTree.
@@ -187,7 +187,7 @@ OCASTCheckerTest >> testNoRemoteMethodTemp [
 	self deny: (ast scope lookupVar: 'block2') isEscaping
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTCheckerTest >> testOptimizedBlockWrittenAfterClosedOverCase1 [
 	| ast scopes |
 	ast := (OCOpalExamples >> #optimizedBlockWrittenAfterClosedOverCase1) parseTree.
@@ -205,7 +205,7 @@ OCASTCheckerTest >> testOptimizedBlockWrittenAfterClosedOverCase1 [
 	self assert: (scopes third lookupVar: 'temp') isEscaping
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTCheckerTest >> testOptimizedBlockWrittenAfterClosedOverCase2 [
 	| ast scopes |
 	ast := (OCOpalExamples >> #optimizedBlockWrittenAfterClosedOverCase2) parseTree.
@@ -222,7 +222,7 @@ OCASTCheckerTest >> testOptimizedBlockWrittenAfterClosedOverCase2 [
 	self assert: (scopes third lookupVar: 'temp') isEscaping
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTCheckerTest >> testOptimizedBlocksAndSameNameTemps [
 	| ast scopes |
 	ast := (OCOpalExamples >> #optimizedBlocksAndSameNameTemps) parseTree.
@@ -239,7 +239,7 @@ OCASTCheckerTest >> testOptimizedBlocksAndSameNameTemps [
 	self deny: (scopes fourth lookupVar: 'i') isRemote
 ]
 
-{ #category : #'testing - simple' }
+{ #category : #'tests - simple' }
 OCASTCheckerTest >> testReturn1 [
 	| ast |
 	ast := (OCOpalExamples >> #exampleReturn42) parseTree.
@@ -248,7 +248,7 @@ OCASTCheckerTest >> testReturn1 [
 	self assertEmpty: ast scope tempVars
 ]
 
-{ #category : #'testing - simple' }
+{ #category : #'tests - simple' }
 OCASTCheckerTest >> testSemanticAnalysisOnNonMethodNode [
 	| ast |
 	{[ 1 + 2 ].
@@ -264,7 +264,7 @@ OCASTCheckerTest >> testSemanticAnalysisOnNonMethodNode [
 	ast doSemanticAnalysis
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTCheckerTest >> testSingleRemoteDifferentBlocksSameArgumentName [
 	| ast |
 	ast := (OCOpalExamples >> #singleRemoteDifferentBlocksSameArgumentName) parseTree.
@@ -277,7 +277,7 @@ OCASTCheckerTest >> testSingleRemoteDifferentBlocksSameArgumentName [
 	self assert: (ast scope lookupVar: 'z') isEscaping
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTCheckerTest >> testSingleRemoteMethodArgument [
 	| ast |
 	ast := (OCOpalExamples >> #singleRemoteMethodArgument) parseTree.
@@ -290,7 +290,7 @@ OCASTCheckerTest >> testSingleRemoteMethodArgument [
 	self assert: (ast scope lookupVar: 'temp') isWrite
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTCheckerTest >> testSingleRemoteTempVar [
 	| ast |
 	ast := (OCOpalExamples >> #singleRemoteTempVar) parseTree.
@@ -309,7 +309,7 @@ OCASTCheckerTest >> testSingleRemoteTempVar [
 	self deny: (ast scope lookupVar: 'block') isInstanceVariable
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTCheckerTest >> testsingleRemoteTempVarWhileWithTempNotInlined [
 	| ast |
 	ast := (OCOpalExamples >> #exampleWhileWithTempNotInlined) parseTree.
@@ -323,7 +323,7 @@ OCASTCheckerTest >> testsingleRemoteTempVarWhileWithTempNotInlined [
 	self assert: (ast scope lookupVar: 'block') isTempVariable
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTCheckerTest >> testsingleRemoteTempVarWrittenAfterClosedOver [
 	| ast |
 	ast := (OCOpalExamples >> #singleRemoteTempVarWrittenAfterClosedOver) parseTree.

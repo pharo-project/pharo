@@ -148,7 +148,7 @@ StandardWindow >> newTextEntryFor: aModel getText: getSel setText: setSel help: 
 		help: helpText
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 StandardWindow >> noteNewOwner: aMorph [ 
 	"Go fullscreen if needed."
 

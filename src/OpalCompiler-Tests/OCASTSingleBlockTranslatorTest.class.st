@@ -22,7 +22,7 @@ OCASTSingleBlockTranslatorTest class >> testParameters [
 			yourself)
 ]
 
-{ #category : #support }
+{ #category : #accessing }
 OCASTSingleBlockTranslatorTest >> extractBlockInTemp [
 
 	^ extractBlockInTemp	ifNil: [ extractBlockInTemp := false ]
@@ -33,13 +33,13 @@ OCASTSingleBlockTranslatorTest >> extractBlockInTemp: aBoolean [
 	extractBlockInTemp := aBoolean
 ]
 
-{ #category : #support }
+{ #category : #tests }
 OCASTSingleBlockTranslatorTest >> testComposedExample: template withBlock: blockCode [
 
 	^ self testComposedExample: template withBlock: blockCode withArguments: #()
 ]
 
-{ #category : #support }
+{ #category : #tests }
 OCASTSingleBlockTranslatorTest >> testComposedExample: template withBlock: blockCode withArguments: arguments [
 	
 	^ self
@@ -49,13 +49,13 @@ OCASTSingleBlockTranslatorTest >> testComposedExample: template withBlock: block
 		withArguments: arguments
 ]
 
-{ #category : #support }
+{ #category : #tests }
 OCASTSingleBlockTranslatorTest >> testComposedExample: template withTemps: temps withBlock: blockCode [
 
 	^ self testComposedExample: template  withTemps: temps withBlock: blockCode withArguments: #()
 ]
 
-{ #category : #support }
+{ #category : #tests }
 OCASTSingleBlockTranslatorTest >> testComposedExample: template  withTemps: temps withBlock: blockCode withArguments: arguments [
 	| declaration argument source methodTemps |
 	methodTemps := OrderedCollection withAll: temps.

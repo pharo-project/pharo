@@ -7,7 +7,7 @@ Class {
 	#category : #'Morphic-Widgets-Tree'
 }
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 MorphTreeTransformMorph >> addAllMorphs: aCollection after: anotherMorph [
 	^self privateAddAllMorphs: aCollection 
 			atIndex: (anotherMorph index ifNil: [submorphs size])

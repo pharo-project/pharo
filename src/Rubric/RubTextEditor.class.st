@@ -130,7 +130,7 @@ RubTextEditor >> accept: aKeyboardEvent [
 	^ true
 ]
 
-{ #category : #'undo-redo private' }
+{ #category : #'undo - redo private' }
 RubTextEditor >> addDeleteSelectionUndoRecord [
 	| undoText redoText |
 	undoText := self selection.
@@ -146,7 +146,7 @@ RubTextEditor >> addString: aString [
 	self zapSelectionWith: (Text string: aString attributes: self emphasisHere)
 ]
 
-{ #category : #'undo-redo private' }
+{ #category : #'undo - redo private' }
 RubTextEditor >> addTypeInUndoRecord [
 	| begin stop undoText redoText |
 	begin := self startOfTyping min: self stopIndex. 
@@ -277,12 +277,12 @@ RubTextEditor >> backspace: aKeyboardEvent [
 	^ result
 ]
 
-{ #category : #'obsolete-parenblinking' }
+{ #category : #'obsolete - parenblinking' }
 RubTextEditor >> blinkParenAt: parenLocation [ 
 	"kept because NECController is sending it to me"
 ]
 
-{ #category : #'obsolete-parenblinking' }
+{ #category : #'obsolete - parenblinking' }
 RubTextEditor >> blinkPrevParen: aCharacter [
 	"kept because NECController is sending it to me"
 ]
@@ -472,7 +472,7 @@ RubTextEditor >> chooseColor [
 
 ]
 
-{ #category : #'undo-redo private' }
+{ #category : #'undo - redo private' }
 RubTextEditor >> clearUndoManager: aKeyboardEvent [
 	^ self editingState clearUndoManager: aKeyboardEvent.
 
@@ -1021,7 +1021,7 @@ RubTextEditor >> exchangeWith: prior [
 			[textArea flash]
 ]
 
-{ #category : #'undo-redo private' }
+{ #category : #'undo - redo private' }
 RubTextEditor >> exploreUndoManager: aKeyboardEvent [
 	^ self editingState exploreUndoManager: aKeyboardEvent
 ]
@@ -1820,12 +1820,12 @@ RubTextEditor >> redo: aKeyboardEvent [
 	^true
 ]
 
-{ #category : #'undo-redo private' }
+{ #category : #'undo - redo private' }
 RubTextEditor >> redoArray: doArray undoArray: undoArray [
 	self editingState redoArray: doArray undoArray: undoArray
 ]
 
-{ #category : #'undoers-redoers' }
+{ #category : #'undoers - redoers' }
 RubTextEditor >> redoTypeIn: aText interval: anInterval [
 	self selectInterval: anInterval.
 	self replace: self selectionInterval with: aText and:
@@ -2516,7 +2516,7 @@ RubTextEditor >> undo: aKeyboardEvent [
 	^true
 ]
 
-{ #category : #'undoers-redoers' }
+{ #category : #'undoers - redoers' }
 RubTextEditor >> undoRedoExchange: aninterval with: anotherInterval [
 	self selectInvisiblyFrom: aninterval first to: aninterval last.
 	self exchangeWith: anotherInterval
@@ -2528,7 +2528,7 @@ RubTextEditor >> undoRedoTransaction: aBlock [
 	self editingState undoRedoTransaction: aBlock
 ]
 
-{ #category : #'undoers-redoers' }
+{ #category : #'undoers - redoers' }
 RubTextEditor >> undoTypeIn: aText interval: anInterval [
 	self selectInterval: anInterval.
 	self replace: anInterval with: aText and:

@@ -729,7 +729,7 @@ HaloMorph >> defaultColor [
 	^Color transparent
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 HaloMorph >> delete [
 	"Delete the halo.  Tell the target that it no longer has the halo; accept any pending edits to the name; and then  actually delete myself"
 

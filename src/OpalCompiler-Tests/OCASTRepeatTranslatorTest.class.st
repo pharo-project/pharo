@@ -11,7 +11,7 @@ OCASTRepeatTranslatorTest class >> testParameters [
 			forSelector: #optimization addOptions: { #optionInlineRepeat . #optionInlineNone })
 ]
 
-{ #category : #'testing - blocks - optimized' }
+{ #category : #'tests - blocks - optimized' }
 OCASTRepeatTranslatorTest >> testRepeatExecutesBlock [
 
 
@@ -28,7 +28,7 @@ OCASTRepeatTranslatorTest >> testRepeatExecutesBlock [
 	self assert: result equals: 6.
 ]
 
-{ #category : #'testing - blocks - optimized' }
+{ #category : #'tests - blocks - optimized' }
 OCASTRepeatTranslatorTest >> testRepeatWithTempInBlock [
 
 	| result |
@@ -47,7 +47,7 @@ OCASTRepeatTranslatorTest >> testRepeatWithTempInBlock [
 	self assert: result equals: 6.
 ]
 
-{ #category : #'testing - blocks - optimized' }
+{ #category : #'tests - blocks - optimized' }
 OCASTRepeatTranslatorTest >> testTimesRepeatWithTempInBlock [
 
 	| result |

@@ -57,7 +57,7 @@ ChangeSetClassChangesTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ChangeSetClassChangesTest >> testAddInstanceVariable [
 
 	"Adding an instance variable to the class should result in a change
@@ -86,7 +86,7 @@ ChangeSetClassChangesTest >> testAddInstanceVariable [
 		equivalentTo: saveClassDefinition
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ChangeSetClassChangesTest >> testAddInstanceVariableAddsNewChangeRecord [
 	"Changing the class category for a class should result in a change
 	record being updated in the current change set."
@@ -104,7 +104,7 @@ ChangeSetClassChangesTest >> testAddInstanceVariableAddsNewChangeRecord [
 		equivalentTo: saveClassDefinition
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ChangeSetClassChangesTest >> testChangeClassCategory [
 	"Changing the class category for a class should result in a change
 	record being added to the current change set."
@@ -130,7 +130,7 @@ ChangeSetClassChangesTest >> testChangeClassCategory [
 		equivalentTo: class definitionString
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ChangeSetClassChangesTest >> testChangeClassCategoryAddsNewChangeRecord [
 	"Changing the class category for a class should result in a change
 	record being updated in the current change set."
@@ -152,7 +152,7 @@ ChangeSetClassChangesTest >> testChangeClassCategoryAddsNewChangeRecord [
 		equivalentTo: class definitionString
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ChangeSetClassChangesTest >> testInitialChangeSet [
 	"Run this to assure the initial changeset is named. Checks bug found in 3.9 7052."
 

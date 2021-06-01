@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 RBPushDownVariableTransformationTest >> testClassVariable [
 
 	| refactoring class |
@@ -20,7 +20,7 @@ RBPushDownVariableTransformationTest >> testClassVariable [
 	class withAllSubclasses do: [ :each | self deny: (each directlyDefinesClassVariable: #Foo1) ]
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBPushDownVariableTransformationTest >> testClassVariableToMultipleSubclasses [
 
 	| class |
@@ -53,7 +53,7 @@ RBPushDownVariableTransformationTest >> testClassVariableToMultipleSubclasses [
 	self assert: (class directlyDefinesClassVariable: #Foo)
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBPushDownVariableTransformationTest >> testClassVariableToMultipleSubclasses2 [
 
 	| class |
@@ -87,7 +87,7 @@ RBPushDownVariableTransformationTest >> testClassVariableToMultipleSubclasses2 [
 	self assert: (class directlyDefinesClassVariable: #Foo)
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBPushDownVariableTransformationTest >> testClassVariableToMultipleSubclassesFailure [
 
 	model defineClass: 'Object subclass: #SomeClass
@@ -115,7 +115,7 @@ RBPushDownVariableTransformationTest >> testClassVariableToMultipleSubclassesFai
 							asRefactoring 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBPushDownVariableTransformationTest >> testInstanceVariable [
 
 	| refactoring |
@@ -128,7 +128,7 @@ RBPushDownVariableTransformationTest >> testInstanceVariable [
 	subclasses do: [ :each | self assert: (each directlyDefinesInstanceVariable: 'foo1') ]
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBPushDownVariableTransformationTest >> testInstanceVariableToMultipleSubclasses [
 
 	model defineClass: 'Object subclass: #SomeClass
@@ -160,7 +160,7 @@ RBPushDownVariableTransformationTest >> testInstanceVariableToMultipleSubclasses
 	self assert: ((model classNamed: #AnotherSubclass) directlyDefinesVariable: 'foo')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBPushDownVariableTransformationTest >> testMetaclass [
 
 	model defineClass: 'Object subclass: #SomeClass
@@ -186,7 +186,7 @@ RBPushDownVariableTransformationTest >> testMetaclass [
 	self assert: ((model metaclassNamed: #Subclass) directlyDefinesVariable: 'foo')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBPushDownVariableTransformationTest >> testModel [
 
 	| class |
@@ -213,7 +213,7 @@ RBPushDownVariableTransformationTest >> testModel [
 	self assert: (class directlyDefinesClassVariable: #Foo)
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBPushDownVariableTransformationTest >> testTransform [
 
 	| transformation |
@@ -226,7 +226,7 @@ RBPushDownVariableTransformationTest >> testTransform [
 	subclasses do: [ :each | self assert: (each directlyDefinesInstanceVariable: 'foo1') ]
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBPushDownVariableTransformationTest >> testUnusedClassVariable [
 
 	model defineClass: 'Object subclass: #SomeClass
@@ -252,7 +252,7 @@ RBPushDownVariableTransformationTest >> testUnusedClassVariable [
 	self deny: ((model classNamed: #Subclass) directlyDefinesVariable: #Foo)
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBPushDownVariableTransformationTest >> testUnusedInstanceVariable [
 
 	model defineClass: 'Object subclass: #SomeClass
@@ -276,7 +276,7 @@ RBPushDownVariableTransformationTest >> testUnusedInstanceVariable [
 	self assert: ((model classNamed: #Subclass) directlyDefinesVariable: 'foo')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBPushDownVariableTransformationTest >> testVariableDoesNotExist [
 
 	model defineClass: 'Object subclass: #SomeClass

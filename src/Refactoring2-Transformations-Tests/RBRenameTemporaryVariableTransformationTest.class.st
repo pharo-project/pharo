@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 RBRenameTemporaryVariableTransformationTest >> testExistingVariable [
 
 	| transformation |
@@ -26,7 +26,7 @@ RBRenameTemporaryVariableTransformationTest >> testExistingVariable [
 							selector: #foo)
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRenameTemporaryVariableTransformationTest >> testRefactoring [
 
 	| transformation class |
@@ -56,7 +56,7 @@ RBRenameTemporaryVariableTransformationTest >> testRefactoring [
 	self assert: ((class parseTreeFor: #foo) temporaries anySatisfy: [ :e | e name = #temp2 ])
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRenameTemporaryVariableTransformationTest >> testRename [
 
 	| transformation |
@@ -74,7 +74,7 @@ RBRenameTemporaryVariableTransformationTest >> testRename [
 								asdf size == 1 ifTrue: [^asdf first viewResults]')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRenameTemporaryVariableTransformationTest >> testTransform [
 
 	| transformation class |
@@ -104,7 +104,7 @@ RBRenameTemporaryVariableTransformationTest >> testTransform [
 	self assert: ((class parseTreeFor: #foo) temporaries anySatisfy: [ :e | e name = #temp2 ])
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRenameTemporaryVariableTransformationTest >> testVariableDoesNotExist [
 
 	self shouldFail: (RBRenameTemporaryVariableTransformation 

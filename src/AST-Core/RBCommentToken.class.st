@@ -14,7 +14,7 @@ RBCommentToken class >> value: aString start: aStartPosition stop: aStopPosition
 				 stop: aStopPosition.
 ]
 
-{ #category : #testing }
+{ #category : #accessing }
 RBCommentToken >> first [
 
 	^ self start
@@ -25,18 +25,18 @@ RBCommentToken >> isComment [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : #accessing }
 RBCommentToken >> last [
 
 	^ self stop
 ]
 
-{ #category : #testing }
+{ #category : #accessing }
 RBCommentToken >> stop [
 	^ stopPosition
 ]
 
-{ #category : #testing }
+{ #category : #accessing }
 RBCommentToken >> stop: aPosition [
 	stopPosition := aPosition
 ]

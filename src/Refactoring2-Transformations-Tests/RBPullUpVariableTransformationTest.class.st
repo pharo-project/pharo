@@ -11,7 +11,7 @@ RBPullUpVariableTransformationTest >> setUp [
 	model := self abstractVariableTestData.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBPullUpVariableTransformationTest >> testClassVariable [
 
 	| refactoring |
@@ -27,7 +27,7 @@ RBPullUpVariableTransformationTest >> testClassVariable [
 			directlyDefinesClassVariable: #RecursiveSelfRule)
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBPullUpVariableTransformationTest >> testMetaclassFailure [
 
 	self shouldFail: (RBPullUpVariableTransformation
@@ -55,7 +55,7 @@ RBPullUpVariableTransformationTest >> testRefactoring [
 			directlyDefinesInstanceVariable: 'result')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBPullUpVariableTransformationTest >> testTransform [
 
 	| transformation |

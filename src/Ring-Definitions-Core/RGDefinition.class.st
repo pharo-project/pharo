@@ -133,85 +133,85 @@ RGDefinition >> hasAnnotations [
 	^annotations notNil
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGDefinition >> isAccess [ 
 
 	^false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGDefinition >> isComment [
 
 	^false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGDefinition >> isGlobalVariable [
 
 	^false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGDefinition >> isInheritance [
 
 	^false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGDefinition >> isInvocation [
 
 	^false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGDefinition >> isMethod [
 
 	^false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGDefinition >> isNamespace [
 
 	^false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGDefinition >> isOrganization [ 
 
 	^false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGDefinition >> isPackage [
 
 	^false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGDefinition >> isPool [
 
 	^false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGDefinition >> isReference [ 
 
 	^false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGDefinition >> isRingObject [
 
 	^true
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGDefinition >> isSlice [
 
 	^false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGDefinition >> isVariable [
 
 	^false

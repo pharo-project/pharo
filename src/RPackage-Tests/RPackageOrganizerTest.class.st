@@ -50,7 +50,7 @@ RPackageOrganizerTest >> packageOrganizer [
 	^ packageOrganizer 
 ]
 
-{ #category : #'tests extending' }
+{ #category : #'tests - extending' }
 RPackageOrganizerTest >> pointRectangleInGraphElement [ 
 	| p |
 	p := self packageClass named: #GraphElement.
@@ -80,7 +80,7 @@ RPackageOrganizerTest >> setUp [
 	self quadrangleClass compileSilently: 'intersect:aPoint ^ false'.
 ]
 
-{ #category : #'tests extending' }
+{ #category : #'tests - extending' }
 RPackageOrganizerTest >> stringCharacterInCollPackage [
 	| p |
 	p := self packageClass named: #CollPackage.
@@ -372,7 +372,7 @@ RPackageOrganizerTest >> testRegisteredNumberOfPackageIsOk [
 	self assert: self packageOrganizer packageNames size equals: 3.
 ]
 
-{ #category : #'tests extending' }
+{ #category : #'tests - extending' }
 RPackageOrganizerTest >> testRegistrationExtendingPackages [
 	| p |
 	self assertEmpty: (self packageOrganizer extendingPackagesOf: self quadrangleClass).
@@ -382,7 +382,7 @@ RPackageOrganizerTest >> testRegistrationExtendingPackages [
 	self assert: (self packageOrganizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #GraphElement
 ]
 
-{ #category : #'tests extensions' }
+{ #category : #'tests - extensions' }
 RPackageOrganizerTest >> testSilentlyRenameCategoryToBe [
 
 	| class |
@@ -442,7 +442,7 @@ RPackageOrganizerTest >> testUnregisterBasedOnNames [
 		self deny:  (self packageOrganizer packageNames includes: each name)]
 ]
 
-{ #category : #'tests extending' }
+{ #category : #'tests - extending' }
 RPackageOrganizerTest >> testUnregistrationExtendingPackages [
 	| p |
 	p := self pointRectangleInGraphElement.

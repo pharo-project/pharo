@@ -10,21 +10,21 @@ Class {
 	#category : #'RPackage-Tests'
 }
 
-{ #category : #'simple ensure tests' }
+{ #category : #'tests - simple ensuring' }
 RPackageWithDoTest >> do: aBlock [ 
 
 	x := 5.
 	[aBlock value] ensure: [x :=3.]
 ]
 
-{ #category : #'simple ensure tests' }
+{ #category : #'tests - simple ensuring' }
 RPackageWithDoTest >> doC: aBlock [ 
 	
 	x := 5.
 	[aBlock value] ifCurtailed: [x :=3]
 ]
 
-{ #category : #'simple ensure tests' }
+{ #category : #'tests - simple ensuring' }
 RPackageWithDoTest >> doOnDo: aBlock [ 
 	
 	x := 5.
@@ -32,7 +32,7 @@ RPackageWithDoTest >> doOnDo: aBlock [
 	self ensure] on: Error do:  [:ex | self ensure].
 ]
 
-{ #category : #'simple ensure tests' }
+{ #category : #'tests - simple ensuring' }
 RPackageWithDoTest >> ensure [
 
 	x := 3
@@ -53,7 +53,7 @@ RPackageWithDoTest >> packageOrganizerClass [
 	^ RPackageOrganizer
 ]
 
-{ #category : #'simple ensure tests' }
+{ #category : #'tests - simple ensuring' }
 RPackageWithDoTest >> testDo [
 	[ self do: [ Error signal ] ]
 		on: Error
@@ -62,7 +62,7 @@ RPackageWithDoTest >> testDo [
 	self assert: x equals: 3
 ]
 
-{ #category : #'simple ensure tests' }
+{ #category : #'tests - simple ensuring' }
 RPackageWithDoTest >> testDo2 [
 	[ self do: [ self error ] ]
 		on: Error
@@ -71,7 +71,7 @@ RPackageWithDoTest >> testDo2 [
 	self assert: x equals: 3
 ]
 
-{ #category : #'simple ensure tests' }
+{ #category : #'tests - simple ensuring' }
 RPackageWithDoTest >> testDoC [
 	[ self doC: [ self error ] ]
 		on: Error
@@ -80,7 +80,7 @@ RPackageWithDoTest >> testDoC [
 	self assert: x equals: 3
 ]
 
-{ #category : #'simple ensure tests' }
+{ #category : #'tests - simple ensuring' }
 RPackageWithDoTest >> testOnDo [
 	self doOnDo: [ self error ].
 	self assert: x equals: 3.

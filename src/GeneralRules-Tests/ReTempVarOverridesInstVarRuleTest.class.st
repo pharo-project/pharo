@@ -33,7 +33,7 @@ ReTempVarOverridesInstVarRuleTest >> dummy4 [
 	^ dummy4
 ]
 
-{ #category : #'test-help' }
+{ #category : #sample }
 ReTempVarOverridesInstVarRuleTest >> sampleMethod: dummy1 [
 	"I override dummy1, dummy2, dummy3  "
 	| dummy2 |
