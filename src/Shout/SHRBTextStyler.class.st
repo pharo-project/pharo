@@ -849,7 +849,7 @@ SHRBTextStyler >> addAttributes: attributes forNode: anRBNode [
 { #category : #formatting }
 SHRBTextStyler >> addAttributes: attributes from: start to: stop [
 	charAttr
-		from: (start min: charAttr size) 
+		from: (start max: 1)
 		to: (stop min: charAttr size)
 		put: attributes 
 ]
