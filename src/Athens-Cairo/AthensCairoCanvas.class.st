@@ -118,9 +118,7 @@ AthensCairoCanvas >> fillRule [
 
 { #category : #drawing }
 AthensCairoCanvas >> fillRuleEvenOdd [
-	"I am a extention method basic because pharo7 does not have this method
-	we added in this package with the Baseline of roassal3
-	this is a patch and we will find the right anwser to avoid this issue"
+	self setFillRule: CAIRO_FILL_RULE_EVEN_ODD
 ]
 
 { #category : #accessing }
