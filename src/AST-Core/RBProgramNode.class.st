@@ -252,7 +252,7 @@ RBProgramNode >> canMatchMethod: aCompiledMethod [
 				or: [aCompiledMethod refersToLiteral: each]]
 ]
 
-{ #category : #'meta variable-accessing' }
+{ #category : #'accessing - meta variable' }
 RBProgramNode >> cascadeListCharacter [
 	^$;
 ]
@@ -739,12 +739,12 @@ RBProgramNode >> lastIsReturn [
 	^self isReturn
 ]
 
-{ #category : #'meta variable-accessing' }
+{ #category : #'accessing - meta variable' }
 RBProgramNode >> listCharacter [
 	^$@
 ]
 
-{ #category : #'meta variable-accessing' }
+{ #category : #'accessing - meta variable' }
 RBProgramNode >> literalCharacter [
 	^$#
 ]
@@ -919,7 +919,7 @@ RBProgramNode >> recurseInto [
 	^false
 ]
 
-{ #category : #'meta variable-accessing' }
+{ #category : #'accessing - meta variable' }
 RBProgramNode >> recurseIntoCharacter [
 	^$`
 ]
@@ -1050,7 +1050,7 @@ RBProgramNode >> start [
 	self subclassResponsibility
 ]
 
-{ #category : #'meta variable-accessing' }
+{ #category : #'accessing - meta variable' }
 RBProgramNode >> statementCharacter [
 	^$.
 ]

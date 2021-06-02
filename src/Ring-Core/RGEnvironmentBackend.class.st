@@ -8,12 +8,12 @@ Class {
 	#category : #'Ring-Core-Environment'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RGEnvironmentBackend class >> for: anRGEnvironment [
 
 	^ self new 
 		environment: anRGEnvironment;
-		yourself.
+		yourself
 ]
 
 { #category : #'trait alias' }

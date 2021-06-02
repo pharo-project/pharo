@@ -4,7 +4,7 @@ Class {
 	#category : #'AST-Core-Tests-Nodes'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 RBMessageNodeTest >> testArgumentPartsForBinaryMessages [
 	| tree message |
 	tree := self parseMethod: 'test 1 + 2 '.
@@ -14,7 +14,7 @@ RBMessageNodeTest >> testArgumentPartsForBinaryMessages [
 		
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBMessageNodeTest >> testArgumentPartsForKeywordMessages [
 	| tree message |
 	tree := self parseMethod: 'test self between: x + 2 and: (y foo: 3)'.
@@ -24,7 +24,7 @@ RBMessageNodeTest >> testArgumentPartsForKeywordMessages [
 		
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBMessageNodeTest >> testArgumentPartsForKeywordMessages1 [
 	| tree message |
 	tree := self parseMethod: 'test self between: 2 and: 3'.
@@ -34,7 +34,7 @@ RBMessageNodeTest >> testArgumentPartsForKeywordMessages1 [
 		
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBMessageNodeTest >> testArgumentPartsForKeywordMessages2 [
 
 		| tree message |
@@ -47,7 +47,7 @@ RBMessageNodeTest >> testArgumentPartsForKeywordMessages2 [
 		self assert: message argumentPartStrings asArray equals: #('x' 'y' 'zzz')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBMessageNodeTest >> testArgumentPartsForUnaryMessages [
 	| tree message |
 	tree := self parseMethod: 'test 1 foo '.
@@ -57,7 +57,7 @@ RBMessageNodeTest >> testArgumentPartsForUnaryMessages [
 		
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBMessageNodeTest >> testSelectorAndArgumentNamesForComposedKeywords [
 		| tree message |
 		tree := self parseMethod: 'test self between: x and: y'.
@@ -69,7 +69,7 @@ RBMessageNodeTest >> testSelectorAndArgumentNamesForComposedKeywords [
 		self assert: message selectorAndArgumentNames equals: 'between: x and: y and: zzz'
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBMessageNodeTest >> testSelectorAndArgumentNamesForComposedKeywordsAndComplexArgs [
 		| tree message |
 		tree := self parseMethod: 'test self between: x + 2 and: (y foo: 3)'.
@@ -79,7 +79,7 @@ RBMessageNodeTest >> testSelectorAndArgumentNamesForComposedKeywordsAndComplexAr
 		
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBMessageNodeTest >> testSelectorAndArgumentNamesForSimpleKeywords [
 		| tree message |
 		tree := self parseMethod: 'test self doit: 5'.
@@ -89,7 +89,7 @@ RBMessageNodeTest >> testSelectorAndArgumentNamesForSimpleKeywords [
 		
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBMessageNodeTest >> testSelectorAndArgumentNamesForUnary [
 		| tree message |
 		tree := self parseMethod: 'test self doit'.
@@ -99,7 +99,7 @@ RBMessageNodeTest >> testSelectorAndArgumentNamesForUnary [
 		
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBMessageNodeTest >> testSelectorInterval [
 		| tree message |
 		tree := self parseMethod: 'test self doit'.
@@ -110,7 +110,7 @@ RBMessageNodeTest >> testSelectorInterval [
 		self assert: message selectorInterval equals: (11 to: 27).
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBMessageNodeTest >> testSelectorPartsForBinaryMessages [
 	| tree message |
 	tree := self parseMethod: 'test 1 + 2 '.
@@ -120,7 +120,7 @@ RBMessageNodeTest >> testSelectorPartsForBinaryMessages [
 		
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBMessageNodeTest >> testSelectorPartsForKeywordMessages [
 		| tree message |
 		tree := self parseMethod: 'test self doit: 5'.
@@ -133,7 +133,7 @@ RBMessageNodeTest >> testSelectorPartsForKeywordMessages [
 		
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBMessageNodeTest >> testSelectorPartsForUnaryMessages [
 		| tree message |
 		tree := self parseMethod: 'test self doit'.

@@ -8,7 +8,7 @@ Class {
 	#category : #'Ring-Core-Environment'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RGEnvironmentQueryInterface class >> for: anRGEnvironment [
 
 	^ self new 

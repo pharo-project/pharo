@@ -36,7 +36,7 @@ ReInvocationSequenceRule class >> exampleSequenceMethods [
 		add: #edges requiresPreSend: #nodes
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 ReInvocationSequenceRule class >> isVisible [
 
 	^ self name ~= #ReInvocationSequenceRule and: [ 

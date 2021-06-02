@@ -15,7 +15,7 @@ Class {
 	#category : #'SystemCommands-MessageCommands'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 SycDeprecateMessageCommand class >> browserMenuOrder [
 	^ 2.5
 ]

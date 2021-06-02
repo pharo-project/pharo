@@ -1,11 +1,6 @@
 Extension { #name : #AbstractFileReference }
 
 { #category : #'*GT-SpotterExtensions-Core' }
-AbstractFileReference >> isZipFile [
-	^ self isFile and: [ #('zip' 'jar' 'ear' 'war') includes: self extension ]
-]
-
-{ #category : #'*GT-SpotterExtensions-Core' }
 AbstractFileReference >> spotterPreviewContentsIn: aComposite [
 	<spotterPreview: 20>
 	
