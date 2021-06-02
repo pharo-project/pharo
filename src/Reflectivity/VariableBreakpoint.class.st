@@ -144,6 +144,14 @@ VariableBreakpoint >> accessStrategy: anObject [
 	accessStrategy := anObject
 ]
 
+{ #category : #install }
+VariableBreakpoint >> breakLink [
+
+	^ super breakLink
+		  control: #after;
+		  yourself
+]
+
 { #category : #initialize }
 VariableBreakpoint >> initialize [
 	super initialize.
@@ -175,14 +183,6 @@ VariableBreakpoint >> isInstalled [
 { #category : #testing }
 VariableBreakpoint >> isVariableBreakpoint [
 	^true
-]
-
-{ #category : #install }
-VariableBreakpoint >> link [
-	self flag: 'This is not clear if it should break after or before a variable has been accessed/written'.
-	^ super link
-		control: #after;
-		yourself
 ]
 
 { #category : #install }
