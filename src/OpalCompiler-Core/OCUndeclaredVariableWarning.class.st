@@ -90,7 +90,7 @@ OCUndeclaredVariableWarning >> defaultAction [
 OCUndeclaredVariableWarning >> defineClass: className [ 
 	"Prompts the user to define a new class."
 	
-	| classSymbol systemCategory classDefinition |
+	| classSymbol systemCategory classDefinition classBinding |
 	classSymbol := className asSymbol.
 	systemCategory := self methodClass category
 		ifNil: [ 'Unknown' ].
@@ -108,8 +108,10 @@ OCUndeclaredVariableWarning >> defineClass: className [
 		source: classDefinition;
 		logged: true;
 		evaluate.
-	^ (node owningScope lookupVar: className)
-		ifNil: [self error: 'should be not happen']
+	classBinding := node owningScope lookupVar: className.
+	"make sure to recompile all methods referencing this class"
+	classBinding usingMethods do: [:method | method recompile].
+	^classBinding 
 ]
 
 { #category : #correcting }
