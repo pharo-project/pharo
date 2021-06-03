@@ -377,6 +377,15 @@ VariableBreakpointTest >> testInstall [
 ]
 
 { #category : #'tests - installation' }
+VariableBreakpointTest >> testInstrumentedMethodIsCompiledMethod [
+
+
+	wp := VariableBreakpointMockClass newBreakpointForVariable: #v1.
+	wp install.
+	self assert: (VariableBreakpointMockClass>>#v1) isCompiledMethod 
+]
+
+{ #category : #'tests - installation' }
 VariableBreakpointTest >> testIsInstalled [
 	
 	wp := VariableBreakpoint newForClass: VariableBreakpointMockSubclass.
