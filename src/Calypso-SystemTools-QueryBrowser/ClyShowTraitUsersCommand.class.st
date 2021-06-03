@@ -21,13 +21,6 @@ ClyShowTraitUsersCommand class >> fullBrowserMenuActivation [
 ]
 
 { #category : #activation }
-ClyShowTraitUsersCommand class >> fullBrowserShortcutActivation [
-	<classAnnotation>
-	
-	^CmdShortcutActivation by: $n meta for: ClyFullBrowserClassContext
-]
-
-{ #category : #activation }
 ClyShowTraitUsersCommand class >> fullBrowserToolbarActivation [
 	<classAnnotation>
 	
@@ -45,7 +38,7 @@ ClyShowTraitUsersCommand class >> queryBrowserMenuActivation [
 ClyShowTraitUsersCommand class >> queryBrowserShortcutActivation [
 	<classAnnotation>
 	
-	^CmdShortcutActivation by: $c meta, $n meta for: ClyQueryBrowserContext
+	^CmdShortcutActivation by: $c meta, $t meta for: ClyQueryBrowserContext
 ]
 
 { #category : #activation }
@@ -82,8 +75,10 @@ ClyShowTraitUsersCommand >> defaultMenuItemName [
 { #category : #execution }
 ClyShowTraitUsersCommand >> execute [
 
-	browser spawnQueryBrowserOn: (ClyConstantQuery returning:classes first traitUsers as: (ClySortedQueryResult using: ClySortByNameFunction ascending)).
-	
+	classes first isTrait ifTrue: [ 
+		browser spawnQueryBrowserOn: (ClyConstantQuery
+				 returning: classes first traitUsers
+				 as: (ClySortedQueryResult using: ClySortByNameFunction ascending)) ]
 ]
 
 { #category : #execution }
