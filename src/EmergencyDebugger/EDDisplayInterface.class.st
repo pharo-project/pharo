@@ -5,32 +5,40 @@ Class {
 	#name : #EDDisplayInterface,
 	#superclass : #Object,
 	#instVars : [
-		'frame',
-		'methodFrame'
+		'window',
+		'renderer',
+		'characterReceivedAction',
+		'windowClosedAction',
+		'extent'
 	],
 	#category : #'EmergencyDebugger-Core'
 }
 
-{ #category : #'display - properties' }
+{ #category : #'accessing properties' }
 EDDisplayInterface >> black [
 	^ Color black
 ]
 
-{ #category : #'display - API' }
+{ #category : #accessing }
 EDDisplayInterface >> clear [
-	self displayCanvas
-		frameAndFillRectangle: self frame
-		fillColor: self white
-		borderWidth: 2
-		borderColor: self red.
-"	self displayCanvas
-		frameAndFillRectangle: self methodFrame
-		fillColor: self white
-		borderWidth: 2
-		borderColor: self red"
+	
+	self drawDuring: [ :canvas | 
+		canvas
+			frameAndFillRectangle: self frame
+			fillColor: self white
+			borderWidth: 2
+			borderColor: self red ]
 ]
 
-{ #category : #'text - private' }
+{ #category : #'private display' }
+EDDisplayInterface >> closeWindow [
+
+	windowClosedAction 
+		ifNotNil: [ windowClosedAction value ]
+		ifNil: [ self terminateWindow ]
+]
+
+{ #category : #'private text' }
 EDDisplayInterface >> composeParagraphWith: aText inFrame: aRect [
 	| paragraph |
 	paragraph := Paragraph new.
@@ -42,57 +50,116 @@ EDDisplayInterface >> composeParagraphWith: aText inFrame: aRect [
 	^ paragraph
 ]
 
-{ #category : #'display - private' }
+{ #category : #'private display' }
 EDDisplayInterface >> display: aParagraph in: aRect [
-	self displayCanvas
-		paragraph: aParagraph
-		bounds: aRect
-		color: self black
+
+	self drawDuring: [ :canvas |
+		canvas
+			paragraph: aParagraph
+			bounds: aRect
+			color: self black ]
 ]
 
-{ #category : #'display - properties' }
-EDDisplayInterface >> displayCanvas [
-	^Display getCanvas
+{ #category : #'private display' }
+EDDisplayInterface >> drawDuring: aBlock [
+
+	self ensureWindowOpen.
+	renderer deferUpdatesWhile: [
+		renderer drawDuring: aBlock.
+		renderer present ]
 ]
 
-{ #category : #'display - properties' }
+{ #category : #'private display' }
+EDDisplayInterface >> enqueueRender [
+	
+	OSWindowRenderThread enqueueOperation: [ 
+		renderer ifNotNil: [ renderer present ] ]
+]
+
+{ #category : #'private display' }
+EDDisplayInterface >> ensureWindowOpen [
+	| attrs |
+	
+	window ifNotNil: [ ^ self ].
+	
+	attrs := OSWindowAttributes new.
+	attrs 
+		title: 'Emergency Debugger';
+		extent: self extent;
+		resizable: false.
+		
+	window := OSWindow 
+		createWithAttributes: attrs
+		eventHandler: (EDDisplayEventHandler on: self).
+	renderer := window newFormRenderer: (Form extent: self extent depth: 32).
+]
+
+{ #category : #'private display' }
+EDDisplayInterface >> extent [
+
+	^ extent ifNil: [ 
+		extent := DisplayScreen actualScreenSize min: (650@700) ]
+]
+
+{ #category : #'private display' }
 EDDisplayInterface >> frame [
-	^ frame
-		ifNil: [ frame := 0 @ 0 corner: DisplayScreen actualScreenSize * (0.3 @ 1) ]
+
+	^ 0@0 corner: self extent
 ]
 
-{ #category : #'display - properties' }
+{ #category : #'accessing properties' }
 EDDisplayInterface >> gray [
 	^ Color gray
 ]
 
-{ #category : #'display - properties' }
-EDDisplayInterface >> methodFrame [
-	^ methodFrame
-		ifNil: [ methodFrame := self frame corner corner: DisplayScreen actualScreenSize ]
+{ #category : #'private text' }
+EDDisplayInterface >> pushChar: char [
+
+	characterReceivedAction ifNil: [ ^ self ].
+	characterReceivedAction value: char
 ]
 
-{ #category : #'display - properties' }
+{ #category : #'accessing properties' }
 EDDisplayInterface >> red [
 	^ Color red
 ]
 
-{ #category : #'display - API' }
+{ #category : #accessing }
 EDDisplayInterface >> show: aText [
+	
 	self
-		display: (self composeParagraphWith: aText inFrame: self frame)
-		in: self frame.
-	"self
-		display: (self composeParagraphWith: aText inFrame: self frame)
-		in: self methodFrame."
+		display: (self 
+			composeParagraphWith: aText 
+			inFrame: self frame)
+		in: self frame
 ]
 
-{ #category : #'text - private' }
+{ #category : #accessing }
+EDDisplayInterface >> terminateWindow [
+
+	window ifNil: [ ^ self ].
+	window destroy
+]
+
+{ #category : #'private text' }
 EDDisplayInterface >> textStyle [
 	^ TextStyle default
 ]
 
-{ #category : #'display - properties' }
+{ #category : #events }
+EDDisplayInterface >> whenCharacterReceivedDo: aBlock [
+
+	characterReceivedAction := aBlock
+]
+
+{ #category : #events }
+EDDisplayInterface >> whenWindowClosedDo: aBlock [
+	"informs when window was closed from buttons"
+
+	windowClosedAction := aBlock
+]
+
+{ #category : #'accessing properties' }
 EDDisplayInterface >> white [
 	^ Color white
 ]
