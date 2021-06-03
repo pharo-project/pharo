@@ -82,8 +82,8 @@ ClyShowTraitUsersCommand >> defaultMenuItemName [
 { #category : #execution }
 ClyShowTraitUsersCommand >> execute [
 
-	browser spawnQueryBrowserOn:
-		 (ClyClassReferencesQuery ofAny: classes result: classes first traitUsers)
+	browser spawnQueryBrowserOn: (ClyConstantQuery returning:classes first traitUsers as: (ClySortedQueryResult using: ClySortByNameFunction ascending)).
+	
 ]
 
 { #category : #execution }
