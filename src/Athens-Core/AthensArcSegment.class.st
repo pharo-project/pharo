@@ -11,17 +11,17 @@ Class {
 	#category : #'Athens-Core-Paths'
 }
 
-{ #category : #accessors }
+{ #category : #accessing }
 AthensArcSegment >> angle [
 	^ angle
 ]
 
-{ #category : #accessors }
+{ #category : #accessing }
 AthensArcSegment >> endPoint [
 	^ endPoint
 ]
 
-{ #category : #accessors }
+{ #category : #accessing }
 AthensArcSegment >> endPoint: pt angle: a [
 
 	endPoint := pt.

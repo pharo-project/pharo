@@ -33,7 +33,7 @@ AnnouncerTest >> setUp [
 	announcer := self newAnnouncer
 ]
 
-{ #category : #'test - subscribers' }
+{ #category : #'tests - subscribers' }
 AnnouncerTest >> testAccessingSubscribers [
 	| subscribers |
 	subscribers := announcer subscriptionsForClass: self class.
@@ -98,7 +98,7 @@ AnnouncerTest >> testAnnouncingReentrant [
 
 ]
 
-{ #category : #'test - subscribers' }
+{ #category : #'tests - subscribers' }
 AnnouncerTest >> testHandleSubscriberClass [
 	announcer when: AnnouncementMockA do: [  ].
 	self assert: (announcer handleSubscriberClass: self class).
@@ -292,7 +292,7 @@ AnnouncerTest >> testSubscribeSubclass [
 	self assert: announcement equals: instance
 ]
 
-{ #category : #'test - subscribers' }
+{ #category : #'tests - subscribers' }
 AnnouncerTest >> testSubscribersForClass [
 	| subscribers mockA mockB |
 	self assert: announcer numberOfSubscriptions equals: 0.

@@ -9,7 +9,7 @@ Class {
 	#category : #'Ring-Core-Kernel'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RGMergeError class >> property: propertySymbol target: targetDefinition source: sourceDefinition [
 
 	^ self new

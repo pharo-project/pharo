@@ -622,7 +622,7 @@ TestCase class >> testSelectors [
 	^(self selectors select: [ :each | (each beginsWith: 'test') and: [each numArgs isZero]])
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TestCase class >> whichClassIncludesTestSelector: aSymbol [
 	^self whichClassIncludesSelector: aSymbol
 ]

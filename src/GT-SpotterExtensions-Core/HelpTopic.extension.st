@@ -1,13 +1,6 @@
 Extension { #name : #HelpTopic }
 
 { #category : #'*GT-SpotterExtensions-Core' }
-HelpTopic >> gtAllSubtopics [
-	 ^ self subtopics flatCollect: [:aTopic |
-		aTopic asOrderedCollection, aTopic gtAllSubtopics ]
-		 
-]
-
-{ #category : #'*GT-SpotterExtensions-Core' }
 HelpTopic >> gtBreadcrumbTitle [
 	|breadcrumbTitle currentHelpTopic|
 	

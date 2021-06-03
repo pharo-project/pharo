@@ -712,14 +712,14 @@ Unicode class >> isTitlecaseLetter: char [
 	^ (GeneralCategory at: index) = Lt
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 Unicode class >> isTraditionalChinese: code [
 
 	^ false.
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 Unicode class >> isUnifiedKanji: code [
 	^ ((((code between: 16r2E80 and: 16rA4CF)
 		or: [ code between: 16rF900 and: 16rFAFF ])

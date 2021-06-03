@@ -7,7 +7,7 @@ Class {
 	#category : #'Renraku-Critiques'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 ReStringBasedCritique class >> for: anEntity by: aRule badString: aString [
 	^ self basicNew
 		initializeRule: aRule target: anEntity badString: aString;

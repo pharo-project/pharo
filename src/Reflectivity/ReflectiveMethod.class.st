@@ -19,7 +19,7 @@ Class {
 	#category : #'Reflectivity-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 ReflectiveMethod class >> on: aCompiledMethod [ 
 	^self new
 		compiledMethod: aCompiledMethod

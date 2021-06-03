@@ -135,7 +135,7 @@ AthensCairoTransform >> scaleX: fx Y: fy [
 	^ self primScaleX: fx asFloat Y: fy asFloat
 ]
 
-{ #category : #'vector-transform' }
+{ #category : #'vector - transform' }
 AthensCairoTransform >> transform: aPoint [
 	| x y |
 	x := ByteArray new: 8.

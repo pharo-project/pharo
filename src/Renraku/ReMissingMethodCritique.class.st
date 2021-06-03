@@ -12,7 +12,7 @@ Class {
 	#category : #'Renraku-Critiques'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 ReMissingMethodCritique class >> for: anEntity by: aRule class: aClass selector: aSymbol [
 
 	^ self basicNew 
