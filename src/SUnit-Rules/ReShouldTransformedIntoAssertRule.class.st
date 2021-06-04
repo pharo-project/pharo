@@ -1,5 +1,5 @@
 "
-should: will be deprecated sooner or leater. Use assert: instead
+should: will be deprecated sooner or later. Use assert: instead
 "
 Class {
 	#name : #ReShouldTransformedIntoAssertRule,
