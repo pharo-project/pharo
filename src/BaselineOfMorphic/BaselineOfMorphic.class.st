@@ -51,7 +51,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'System-Clipboard'.
 		
 		spec package: 'EmbeddedFreeType'.
-		spec package: 'EmergencyDebugger'.
 		spec package: 'FileSystem-Zip'.
 		spec package: 'Fonts-Infrastructure'.
 		spec package: 'FreeType'.
