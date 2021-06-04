@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'interface'
 	],
-	#category : #'EmergencyDebugger-Core'
+	#category : #'EmergencyDebugger-View'
 }
 
 { #category : #'instance creation' }

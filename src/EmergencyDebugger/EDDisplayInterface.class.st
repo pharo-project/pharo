@@ -11,7 +11,7 @@ Class {
 		'windowClosedAction',
 		'extent'
 	],
-	#category : #'EmergencyDebugger-Core'
+	#category : #'EmergencyDebugger-View'
 }
 
 { #category : #'accessing properties' }
@@ -41,12 +41,14 @@ EDDisplayInterface >> closeWindow [
 { #category : #'private text' }
 EDDisplayInterface >> composeParagraphWith: aText inFrame: aRect [
 	| paragraph |
+
 	paragraph := Paragraph new.
 	paragraph
 		compose: aText
 		style: self textStyle
 		from: 1
 		in: ((aRect insetBy: 4) withHeight: aRect height).
+	
 	^ paragraph
 ]
 
@@ -70,17 +72,12 @@ EDDisplayInterface >> drawDuring: aBlock [
 ]
 
 { #category : #'private display' }
-EDDisplayInterface >> enqueueRender [
-	
-	OSWindowRenderThread enqueueOperation: [ 
-		renderer ifNotNil: [ renderer present ] ]
-]
-
-{ #category : #'private display' }
 EDDisplayInterface >> ensureWindowOpen [
 	| attrs |
 	
-	window ifNotNil: [ ^ self ].
+	window ifNotNil: [ 
+		window isVisible ifFalse: [ window show ].
+		^ self ].
 	
 	attrs := OSWindowAttributes new.
 	attrs 

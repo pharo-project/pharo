@@ -16,7 +16,7 @@ Class {
 	#pools : [
 		'EventSensorConstants'
 	],
-	#category : #'EmergencyDebugger-Core'
+	#category : #'EmergencyDebugger-View'
 }
 
 { #category : #'instance creation' }
