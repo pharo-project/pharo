@@ -11,3 +11,7 @@ Class {
 { #category : #'command line' }
 EDMockREPLInterface >> readEvalPrint [
 ]
+
+{ #category : #'command line' }
+EDMockREPLInterface >> terminateREPL [
+]
