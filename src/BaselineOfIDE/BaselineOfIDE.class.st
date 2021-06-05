@@ -159,6 +159,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'FuzzyMatcher' with: [ spec repository: repository ].
 		spec baseline: 'QA' with: [ spec repository: repository ].
 		spec baseline: 'OSWindow' with: [ spec repository: repository ].
+		spec baseline: 'EmergencyDebugger' with: [ spec repository: repository ].
 		spec baseline: 'Refactoring' with: [ spec repository: repository ].
 		spec baseline: 'Epicea' with: [ spec repository: repository ].
 		spec baseline: 'Misc' with: [ spec repository: repository ].
