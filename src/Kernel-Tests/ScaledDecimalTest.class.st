@@ -281,11 +281,13 @@ ScaledDecimalTest >> testRounded [
 
 { #category : #tests }
 ScaledDecimalTest >> testScaleExtension [
-	"The scale is extended to the larger one in case of arithmetic operation"
-	
-	#( #* #+ #- #/) do: [:op |
+
+	#( #+ #- #/ ) do: [ :op | "The scale is extended to the larger one in case of arithmetic operation"
 		self assert: (2.5s1 perform: op with: 1.000s3) scale equals: 3.
-		self assert: (3.5000s4 perform: op with: 1.0s1) scale equals: 4.]
+		self assert: (3.5000s4 perform: op with: 1.0s1) scale equals: 4 ].
+	"The scale for multiplication is the sum of the operand scales"
+	self assert: (2.5s1 * 1.000s3) scale equals: 4.
+	self assert: (3.5000s4 * 1.0s1) scale equals: 5
 ]
 
 { #category : #tests }
