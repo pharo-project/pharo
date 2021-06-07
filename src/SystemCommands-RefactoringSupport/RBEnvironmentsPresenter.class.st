@@ -134,7 +134,7 @@ RBEnvironmentsPresenter >> orWithScope: anItem [
 { #category : #accessing }
 RBEnvironmentsPresenter >> performOperation: aSymbol with: anItem [
 	| anEnvironment newScope |
-	[ anEnvironment := self selectAnotherScope.
+	[ anEnvironment := self selectAnotherScopeWhitout: anItem.
 	newScope := anItem perform: aSymbol with: anEnvironment.
 	(self confirm: 'Do you want store this result in the list?') 
 		ifTrue: [
@@ -153,9 +153,9 @@ RBEnvironmentsPresenter >> remove: anItem [
 ]
 
 { #category : #actions }
-RBEnvironmentsPresenter >> selectAnotherScope [ 
+RBEnvironmentsPresenter >> selectAnotherScopeWhitout: anItem [
 	| anotherScope list |
-	list := RefactoringSettings scopeList.
+	list := RefactoringSettings scopeList copyWithout: anItem.
 	anotherScope := UIManager default
 			chooseFrom: (list collect: #shortDescription)
 			values: list
