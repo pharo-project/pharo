@@ -55,8 +55,12 @@ RBDeprecateClassRefactoring >> convertDeprecatedToSubclass [
 	| replacement |
 	replacement := self model classNamed: newName.
 	self model reparentClasses: {deprecatedClass} to: replacement.
-	deprecatedClass selectors do: [ :symbol | deprecatedClass removeMethod: symbol ].
-	deprecatedClass classSide selectors do: [ :symbol | deprecatedClass classSide removeMethod: symbol ].
+	deprecatedClass selectors do: [ :symbol | 
+		(deprecatedClass realClass instanceSide compiledMethodAt: symbol) isExtension 
+			ifFalse: [ deprecatedClass removeMethod: symbol ] ].
+	deprecatedClass classSide selectors do: [ :symbol | 
+		(deprecatedClass realClass classSide compiledMethodAt: symbol) isExtension
+			ifFalse: [ deprecatedClass classSide removeMethod: symbol ] ].
 	deprecatedClass classSide compile: 'isDeprecated
 		" Uses ', newName, ' instead of ', className,'"
 		^ true' classified: {'testing'}

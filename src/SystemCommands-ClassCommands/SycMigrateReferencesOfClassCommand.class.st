@@ -33,8 +33,8 @@ SycMigrateReferencesOfClassCommand class >> sourceCodeMenuActivation [
 SycMigrateReferencesOfClassCommand >> asRefactorings [
 	| refactoring |
 	refactoring :=  RBDeprecateClassRefactoring deprecate: targetClass in: newName name.
-	refactoring shouldCopyExtensions: false.
 	refactoring shouldFixSubclasses: false.
+	refactoring shouldCopyExtensions: false.
 	refactoring shouldRemoveExtensions: false.
 	^ { refactoring }
 ]
