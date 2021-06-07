@@ -39,10 +39,10 @@ RBItemsSelectionPresenter class >> defaultSpec [
 ]
 
 { #category : #specs }
-RBItemsSelectionPresenter class >> label: aString withItems: coll1 selecting: coll2 [
+RBItemsSelectionPresenter class >> label: aString withItems: items selecting: selectedItems [
 	^ self new 
-		label: aString withItems: coll1 selecting: coll2;
-		openModalWithSpec 
+		label: aString withItems: items selecting: selectedItems;
+		openBlockedDialogWithSpec 
 ]
 
 { #category : #actions }
@@ -67,6 +67,21 @@ RBItemsSelectionPresenter >> columnName [
 { #category : #attributes }
 RBItemsSelectionPresenter >> columnSelector [ 
 	self shouldBeImplemented 
+]
+
+{ #category : #accessing }
+RBItemsSelectionPresenter >> components [ 
+	^ { table . label }
+]
+
+{ #category : #initialization }
+RBItemsSelectionPresenter >> connectPresenters [
+	
+	table bindKeyCombination: Character backspace asShortcut 
+		toAction: [ table toggleSelection ].
+	self components do: [ :each |
+	each bindKeyCombination: Character cr asKeyCombination 
+		toAction: [ :presenter | self accept: presenter] ]
 ]
 
 { #category : #initialization }
