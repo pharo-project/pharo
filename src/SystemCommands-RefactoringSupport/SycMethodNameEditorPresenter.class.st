@@ -98,7 +98,7 @@ SycMethodNameEditorPresenter class >> openOn: aMethod [
 	"I take a RBMethodName as parameter and open the refactoring UI in a modal to rename it."
 	|temp|
 	temp := self on: aMethod.
-	^ temp openModalWithSpec
+	^ temp openBlockedDialogWithSpec
 ]
 
 { #category : #specs }
@@ -109,7 +109,7 @@ SycMethodNameEditorPresenter class >> openOn: aMethod canRenameArgs: aBoolean1 c
 	temp canRenameArgs: aBoolean1.
 	temp canRemoveArgs: aBoolean2.
 	temp canAddArgs: aBoolean3.
-	^ temp openModalWithSpec
+	^ temp openBlockedDialogWithSpec
 ]
 
 { #category : #specs }
@@ -121,7 +121,7 @@ SycMethodNameEditorPresenter class >> openOn: aMethod withInvalidArgs: aSet canR
 	temp canRenameArgs: aBoolean1.
 	temp canRemoveArgs: aBoolean2.
 	temp canAddArgs: aBoolean3.
-	^ temp openModalWithSpec
+	^ temp openBlockedDialogWithSpec
 ]
 
 { #category : #action }
@@ -232,6 +232,17 @@ SycMethodNameEditorPresenter >> computePermutation [
 	 ]
 ]
 
+{ #category : #accessing }
+SycMethodNameEditorPresenter >> connectPresenters [ 
+	
+	selectorInput 
+		bindKeyCombination: Character cr asKeyCombination 
+		toAction: [ :p | self renameMethodAndClose: self owner ];
+	
+		bindKeyCombination: Character escape asKeyCombination 
+			toAction: [ self owner triggerCancelAction; close ]
+]
+
 { #category : #'accessing ui' }
 SycMethodNameEditorPresenter >> downButton [
 	^ downButton
@@ -254,7 +265,6 @@ SycMethodNameEditorPresenter >> getParametersOrder [
 { #category : #initialization }
 SycMethodNameEditorPresenter >> initializeDialogWindow: aModalPresenter [
 	aModalPresenter
-		closeOnBackdropClick: true;
 		addButton: 'Rename' do: [ :presenter | self renameMethodAndClose: presenter ];
 		addButton: 'Cancel' do: [ :presenter | presenter beCancel; close ];
 		initialExtent: 600 @ 300 ;
@@ -284,7 +294,7 @@ SycMethodNameEditorPresenter >> initializePresenter [
 
 { #category : #initialization }
 SycMethodNameEditorPresenter >> initializeWidgets [
-	selectorInput := self instantiate: SpTextInputFieldPresenter.
+	selectorInput := self newTextInput.
 	argumentsList := self newList.
 	previewResult := self newLabel.
 	upButton := self newButton.
@@ -292,9 +302,6 @@ SycMethodNameEditorPresenter >> initializeWidgets [
 	addButton := self newButton.
 	
 	selectorInput autoAccept: true.
-	selectorInput 
-		bindKeyCombination: Character cr asKeyCombination 
-		toAction: [ :p | self renameMethodAndClose: self owner ].
 	upButton label: 'Up'.
 	downButton label: 'Dn'.
 	addButton label: '+'.
