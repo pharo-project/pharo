@@ -38,7 +38,9 @@ SycDeprecateClassCommand class >> sourceCodeMenuActivation [
 
 { #category : #converting }
 SycDeprecateClassCommand >> asRefactorings [
-	^ { RBDeprecateClassRefactoring deprecate: targetClass in: newName name }
+	| refactoring |
+	refactoring := RBDeprecateClassRefactoring deprecate: targetClass in: newName name.
+	^ { refactoring }
 ]
 
 { #category : #accessing }
