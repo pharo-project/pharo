@@ -374,7 +374,7 @@ RBProgramNode >> dump [
 	| visitor |
 	visitor := RBDumpVisitor new.
 	self acceptVisitor: visitor.
-	^ visitor stream contents
+	^ visitor contents
 ]
 
 { #category : #comparing }
