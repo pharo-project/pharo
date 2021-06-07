@@ -222,6 +222,13 @@ ScaledDecimalTest >> testLiteral [
 ]
 
 { #category : #tests }
+ScaledDecimalTest >> testMultiplicationDoesNotLoosePrecision [
+	"Check that not only the largest scale is considered but the sum of the two scales. See issue #8668"
+	
+	self assert: 1.003s3 * 1.006s4 equals: 1.0090180s7
+]
+
+{ #category : #tests }
 ScaledDecimalTest >> testOneRaisedToInteger [
 	"One might be handled specially"
 	
