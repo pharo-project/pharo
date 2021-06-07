@@ -57,3 +57,8 @@ FLPharo9Platform >> silentlyAddAndClassifySelector: aSymbol inClass: aClass with
 		classify: aSymbol
 		under: aString
 ]
+
+{ #category : #'accessing-kernel' }
+FLPharo9Platform >> withPragmasIn: aClass do: aBlock [
+	aClass pragmasDo: aBlock
+]

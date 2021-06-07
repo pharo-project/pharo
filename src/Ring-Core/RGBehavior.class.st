@@ -231,7 +231,7 @@ RGBehavior >> announceDefinitionChangeDuring: aBlock [
 	
 ]
 
-{ #category : #asYetUnclassified }
+{ #category : #accessing }
 RGBehavior >> asYetUnclassifiedProtocolName [
 
 	^ 'as yet unclassified' asSymbol
@@ -1235,7 +1235,7 @@ RGBehavior >> untagFrom: aSymbol [
 	self backend forPackage untagClass: self from: aSymbol
 ]
 
-{ #category : #asYetUnclassified }
+{ #category : #accessing }
 RGBehavior >> usedTraits [
 
 	^ self traitComposition usedTraits

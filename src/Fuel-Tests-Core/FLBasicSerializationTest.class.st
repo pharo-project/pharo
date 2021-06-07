@@ -293,6 +293,19 @@ FLBasicSerializationTest >> testDateAndTime [
 ]
 
 { #category : #tests }
+FLBasicSerializationTest >> testDateAndTimeOffsetNegative [
+	| edt now |
+	edt := TimeZone timeZones last.
+	
+	DateAndTime localTimeZone: edt.
+	now := DateAndTime now.
+	self assert: now offset equals: -4 hours.
+	self serialize: now.
+
+	self assert: self materialized offset equals: -4 hours
+]
+
+{ #category : #tests }
 FLBasicSerializationTest >> testDateOffsets [
 	| bst sast materialized object |
 	bst := TimeZone timeZones third.
@@ -324,7 +337,7 @@ FLBasicSerializationTest >> testDateOffsetsChanging [
 	self assert: DateAndTime now offset equals: 1 hour.
 	object := Date fromDays: 37023.
 	self assert: object start offset equals: 0 hours.
-	self serialize:object.
+	self serialize: object.
 	
 	DateAndTime localTimeZone: sast.
 	self assert: DateAndTime now offset equals: 2 hours.
@@ -757,6 +770,22 @@ FLBasicSerializationTest >> testSmallIntegerMinValue [
 FLBasicSerializationTest >> testSmallIntegerNegative [
 
 	self assertSerializationIdentityOf: -42.
+]
+
+{ #category : #'tests-numbers' }
+FLBasicSerializationTest >> testSmallIntegerSerializationForAllBits [
+	1
+		to: 64
+		do: [ :exp |
+			| integer |
+			integer := 2 raisedTo: exp.
+			integer isLarge ifFalse: [
+				self assertSerializationIdentityOf: integer ].
+			integer := 0 - integer.
+			integer isLarge ifFalse: [
+				self assertSerializationIdentityOf: integer ] ]
+
+
 ]
 
 { #category : #'tests-globals' }

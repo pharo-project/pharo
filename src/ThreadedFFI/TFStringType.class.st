@@ -13,7 +13,7 @@ Class {
 	#category : #'ThreadedFFI-Types'
 }
 
-{ #category : #writting }
+{ #category : #writing }
 TFStringType >> allocateString: aString [
 	| anExternalAddress |
 	
@@ -22,7 +22,7 @@ TFStringType >> allocateString: aString [
 	^ anExternalAddress 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TFStringType >> allocatedStrings [
 
 	^ AllocatedStrings ifNil: [ AllocatedStrings := Set new ]
@@ -34,7 +34,7 @@ TFStringType >> basicType [
 	^ TFBasicType pointer
 ]
 
-{ #category : #writting }
+{ #category : #writing }
 TFStringType >> callbackReadValue: anExternalAddress [
 
 	^ (self readValue: anExternalAddress) readStringUTF8
@@ -72,7 +72,7 @@ TFStringType >> emitMarshallToPrimitive: anIRBuilder [
 
 ]
 
-{ #category : #writting }
+{ #category : #writing }
 TFStringType >> freeValueIfNeeded: aCHeapValueHolder [
 	| pointer |
 
@@ -91,7 +91,7 @@ TFStringType >> marshallToPrimitive: aValue [
 	
 ]
 
-{ #category : #writting }
+{ #category : #writing }
 TFStringType >> prepareStringForMarshalling: aStringOrExternalAddress [
 
 	"The TFString type supports four possible parameters.
@@ -124,13 +124,13 @@ TFStringType >> prepareStringForMarshalling: aStringOrExternalAddress [
 		^ self error: 'Could not handle this object'
 ]
 
-{ #category : #writting }
+{ #category : #writing }
 TFStringType >> readValue: anExternalAddress [
 
 	^ self basicType readValue: anExternalAddress
 ]
 
-{ #category : #writting }
+{ #category : #writing }
 TFStringType >> write: aStringOrExternalAddress into: targetAddress [
 
 	"If the argument is a aString I have to allocate it and later free it"

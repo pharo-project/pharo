@@ -28,7 +28,7 @@ DAPackageAnalyzerWindow class >> onPackagesNamed: aCollection [
 		yourself
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 DAPackageAnalyzerWindow class >> selectedPackagesFrom: aBuilder [
 	| target selectedPackages |
 	target := aBuilder model.

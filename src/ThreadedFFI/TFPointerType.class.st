@@ -22,7 +22,7 @@ TFPointerType >> readValue: anExternalAddress offset: offset [
 	^ anExternalAddress pointerAt: offset
 ]
 
-{ #category : #writting }
+{ #category : #writing }
 TFPointerType >> write: anExternalAddress into: targetAddress [
 
 	targetAddress 

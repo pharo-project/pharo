@@ -37,7 +37,7 @@ FLDecoderTest >> testNextEncodedInt24 [
 		resetToStart;
 		nextPutAll: #[255 255 255];
 		reset.
-	self assert: decoder nextEncodedInt24 equals: (2 raisedTo: 24) - 1.
+	self assert: decoder nextEncodedInt24 equals: -1.
 	
 	"Maximum positive 24-bit integer in two's complement"
 	stream
@@ -51,7 +51,7 @@ FLDecoderTest >> testNextEncodedInt24 [
 		resetToStart;
 		nextPutAll: #[128 0 0 0];
 		reset.
-	self assert: decoder nextEncodedInt24 equals: (2 raisedTo: 23)
+	self assert: decoder nextEncodedInt24 equals: 0 - (2 raisedTo: 23)
 ]
 
 { #category : #tests }
@@ -72,8 +72,7 @@ FLDecoderTest >> testNextEncodedInt32 [
 		resetToStart;
 		nextPutAll: #[127 255 255 255];
 		reset.
-	"The decoded integer will be negative on a 32-bits system but not on 64-bits"
-	self assert: decoder nextEncodedInt32 equals: (2 raisedTo: 31) - 1.
+	self assert: decoder nextEncodedInt32 equals: -1.
 	
 	"SmallInteger maxVal on 32-bits systems"
 	stream
@@ -87,8 +86,7 @@ FLDecoderTest >> testNextEncodedInt32 [
 		resetToStart;
 		nextPutAll: #[64 0 0 0];
 		reset.
-	"The decoded integer will be negative on a 32-bits system but not on 64-bits"
-	self assert: decoder nextEncodedInt32 equals: (2 raisedTo: 30)
+	self assert: decoder nextEncodedInt32 equals: 0 - (2 raisedTo: 30)
 ]
 
 { #category : #tests }
@@ -107,9 +105,9 @@ FLDecoderTest >> testNextEncodedInt64 [
 	"-1 on 64-bits systems"
 	stream
 		resetToStart;
-		nextPutAll: #[63 255 255 255 255 255 255 255];
+		nextPutAll: #[31 255 255 255 255 255 255 255];
 		reset.
-	self assert: decoder nextEncodedInt64 equals: (2 raisedTo: 62) - 1.
+	self assert: decoder nextEncodedInt64 equals: -1.
 	
 	"SmallInteger maxVal on 64-bits systems"
 	stream
@@ -123,7 +121,7 @@ FLDecoderTest >> testNextEncodedInt64 [
 		resetToStart;
 		nextPutAll: #[16 0 0 0 0 0 0 0];
 		reset.
-	self assert: decoder nextEncodedInt64 equals: (2 raisedTo: 60)
+	self assert: decoder nextEncodedInt64 equals: 0 - (2 raisedTo: 60)
 ]
 
 { #category : #tests }

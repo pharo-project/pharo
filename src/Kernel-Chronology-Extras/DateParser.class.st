@@ -44,24 +44,24 @@ DateParser class >> readingFrom: anInputStream pattern: aPattern [
 
 ]
 
-{ #category : #'parsing - private' }
+{ #category : #'private - parsing' }
 DateParser >> convertTwoDigitsYear [
 
 	(year between: 0 and: 99) ifTrue: [ year := self currentMillenium + year ]
 ]
 
-{ #category : #'parsing - private' }
+{ #category : #'private - parsing' }
 DateParser >> createDate [
 
 	^ Date year: year month: month day: day
 ]
 
-{ #category : #'parsing - private' }
+{ #category : #'private - parsing' }
 DateParser >> currentMillenium [
 	^ (Date current year / 100) asInteger * 100
 ]
 
-{ #category : #'parsing - private' }
+{ #category : #'private - parsing' }
 DateParser >> initializeParsing [
 
 	invalidPattern := false.
@@ -76,61 +76,61 @@ DateParser >> initializeReadingFrom: anInputStream pattern: aPattern [
 	
 ]
 
-{ #category : #'parsing day - private' }
+{ #category : #'private - parsing day' }
 DateParser >> isDayPattern [
 
 	^ char = $d
 ]
 
-{ #category : #'parsing - private' }
+{ #category : #'private - parsing' }
 DateParser >> isDoneParsing [
 
 	^ patternStream atEnd or: [ inputStream atEnd or: [  invalidPattern  ]]
 ]
 
-{ #category : #'parsing - private' }
+{ #category : #'private - parsing' }
 DateParser >> isEscape [
 
 	^ char = $\
 ]
 
-{ #category : #'parsing year - private' }
+{ #category : #'private - parsing year' }
 DateParser >> isFourDigitYearPattern [
 
 	^ patternStream nextMatchAll: 'yyy'
 ]
 
-{ #category : #'parsing - private' }
+{ #category : #'private - parsing' }
 DateParser >> isInvalidPattern [
 
 	^ year isNil or: [ month isNil or: [ day isNil or: [ invalidPattern ]]]
 ]
 
-{ #category : #'parsing month - private' }
+{ #category : #'private - parsing month' }
 DateParser >> isMonthPattern [
 
 	^ char = $m
 ]
 
-{ #category : #'parsing day - private' }
+{ #category : #'private - parsing day' }
 DateParser >> isTwoDigitDayPattern [
 
 	^ patternStream peekFor: $d
 ]
 
-{ #category : #'parsing month - private' }
+{ #category : #'private - parsing month' }
 DateParser >> isTwoDigitMonthPattern [
 
 	^ patternStream peekFor: $m
 ]
 
-{ #category : #'parsing year - private' }
+{ #category : #'private - parsing year' }
 DateParser >> isTwoDigitYearPattern [
 
 	^ patternStream peekFor: $y
 ]
 
-{ #category : #'parsing year - private' }
+{ #category : #'private - parsing year' }
 DateParser >> isYearPattern [
 
 	^ char = $y
@@ -141,12 +141,12 @@ DateParser >> parse [
 	^ self parseIfError: [ DateError signal ]
 ]
 
-{ #category : #'parsing - private' }
+{ #category : #'private - parsing' }
 DateParser >> parse: aTimeUnitName [
 	^ Integer readFrom: inputStream ifFail: [ DateError signal: 'Expecting a ',aTimeUnitName ]
 ]
 
-{ #category : #'parsing - private' }
+{ #category : #'private - parsing' }
 DateParser >> parse: timeUnitName expectedSize: anInteger [
 	| extractedString result |
 	extractedString := inputStream next: anInteger.
@@ -156,20 +156,20 @@ DateParser >> parse: timeUnitName expectedSize: anInteger [
 	^ result
 ]
 
-{ #category : #'parsing day - private' }
+{ #category : #'private - parsing day' }
 DateParser >> parseDay [
 
 	self isTwoDigitDayPattern ifTrue: [ ^ self parseTwoDigitDay ].
 	self parseVariableDigitDay
 ]
 
-{ #category : #'parsing - private' }
+{ #category : #'private - parsing' }
 DateParser >> parseEscapePattern [
 
 	inputStream next = patternStream next ifFalse: [ invalidPattern := true ]
 ]
 
-{ #category : #'parsing year - private' }
+{ #category : #'private - parsing year' }
 DateParser >> parseFourDigitYear [
 
 	year := self parse: 'year' expectedSize: 4
@@ -190,14 +190,14 @@ DateParser >> parseIfError: aBlock [
 	^ self createDate
 ]
 
-{ #category : #'parsing month - private' }
+{ #category : #'private - parsing month' }
 DateParser >> parseMonth [
 
 	self isTwoDigitMonthPattern ifTrue: [ ^self parseTwoDigitMonth ].
 	self parseVariableDigitMonth 
 ]
 
-{ #category : #'parsing - private' }
+{ #category : #'private - parsing' }
 DateParser >> parseNextPattern [
 
 	self readNextChar.
@@ -210,48 +210,48 @@ DateParser >> parseNextPattern [
 	self parseSameChar
 ]
 
-{ #category : #'parsing - private' }
+{ #category : #'private - parsing' }
 DateParser >> parseSameChar [
 
 	inputStream next = char ifFalse: [ invalidPattern := true ]
 ]
 
-{ #category : #'parsing day - private' }
+{ #category : #'private - parsing day' }
 DateParser >> parseTwoDigitDay [
 	day := self parse: 'day' expectedSize: 2
 ]
 
-{ #category : #'parsing month - private' }
+{ #category : #'private - parsing month' }
 DateParser >> parseTwoDigitMonth [
 
 	month := self parse: 'month' expectedSize: 2
 ]
 
-{ #category : #'parsing year - private' }
+{ #category : #'private - parsing year' }
 DateParser >> parseTwoDigitYear [
 
 	year := self parse: 'year' expectedSize: 2
 ]
 
-{ #category : #'parsing day - private' }
+{ #category : #'private - parsing day' }
 DateParser >> parseVariableDigitDay [
 
 	day := self parse: 'day'
 ]
 
-{ #category : #'parsing month - private' }
+{ #category : #'private - parsing month' }
 DateParser >> parseVariableDigitMonth [
 
 	month := self parse: 'month'
 ]
 
-{ #category : #'parsing year - private' }
+{ #category : #'private - parsing year' }
 DateParser >> parseVariableDigitYear [
 
 	year := self parse: 'year'
 ]
 
-{ #category : #'parsing year - private' }
+{ #category : #'private - parsing year' }
 DateParser >> parseYear [
 
 	self isFourDigitYearPattern ifTrue: [ ^ self parseFourDigitYear ].
@@ -259,7 +259,7 @@ DateParser >> parseYear [
 	self parseVariableDigitYear
 ]
 
-{ #category : #'parsing - private' }
+{ #category : #'private - parsing' }
 DateParser >> readNextChar [
 
 	char := patternStream next

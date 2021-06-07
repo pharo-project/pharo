@@ -22,7 +22,6 @@ Class {
 	#classVars : [
 		'Activated',
 		'Current',
-		'CurrentPlatform',
 		'KnownLocales',
 		'LanguageSymbols',
 		'PlatformEncodings'
@@ -45,35 +44,18 @@ Locale class >> activated: aBoolean [
 
 { #category : #accessing }
 Locale class >> current [
-	"Current := nil"
-	Current ifNil: [
-		Current := self determineCurrentLocale.
-		"Transcript show: 'Current locale: ' , Current localeID asString; cr"].
-	^Current
-]
 
-{ #category : #accessing }
-Locale class >> currentPlatform [
-	"CurrentPlatform := nil"
-	CurrentPlatform ifNil: [CurrentPlatform := self determineCurrentLocale].
-	^CurrentPlatform
-]
-
-{ #category : #accessing }
-Locale class >> currentPlatform: locale [
-
-	CurrentPlatform := locale
-
+	^ Current ifNil: [ Current := self determineCurrentLocale ]
 ]
 
 { #category : #accessing }
 Locale class >> currentPlatform: locale during: aBlock [ 
-	"Alter current language platform during a block"
-	| backupPlatform |
-	backupPlatform := self currentPlatform.
-	[self currentPlatform: locale.
+	"Alter current locale during a block"
+	| savedLocale |
+	savedLocale := self current.
+	[self switchTo: locale.
 	aBlock value]
-		ensure: [self currentPlatform: backupPlatform]
+		ensure: [self switchTo: savedLocale]
 ]
 
 { #category : #'platform specific' }
@@ -222,15 +204,13 @@ Locale class >> stringForLanguageNameIs: localeID [
 ]
 
 { #category : #accessing }
-Locale class >> switchTo: locale [ 
-	"Locale switchTo: Locale isoLanguage: 'de'"
-	Current localeID = locale localeID
-		ifFalse: [
-			|announcement|
-			announcement := LocaleChanged from: Current to: locale.
-			Current := locale.
-			CurrentPlatform := locale.
-			self localeAnnouncer announce: announcement ]
+Locale class >> switchTo: locale [
+
+	| announcement |
+	Current localeID = locale localeID ifTrue: [ ^ self ].
+	announcement := LocaleChanged from: Current to: locale.
+	Current := locale.
+	self localeAnnouncer announce: announcement
 ]
 
 { #category : #accessing }

@@ -44,6 +44,12 @@ NullWorldRenderer >> checkForNewScreenSize [
 
 ]
 
+{ #category : #initialization }
+NullWorldRenderer >> convertWindowMouseEventPosition: aPosition [
+
+	^ aPosition
+]
+
 { #category : #activation }
 NullWorldRenderer >> deactivate [
 ]

@@ -141,6 +141,11 @@ RBBrowserEnvironment >> announceChangesOf: aQueryResult [
 	self updateStrategy announceChangesOf: aQueryResult
 ]
 
+{ #category : #converting }
+RBBrowserEnvironment >> asRBEnvironment [ 
+	^ self
+]
+
 { #category : #accessing }
 RBBrowserEnvironment >> asSelectorEnvironment [
 	^(RBClassEnvironment onEnvironment: self classes: self classes) asSelectorEnvironment
@@ -779,7 +784,7 @@ RBBrowserEnvironment >> selectorsForClass: aClass do: aBlock [
 { #category : #description }
 RBBrowserEnvironment >> shortDescription [
 	
-	^ self description contractTo: 30
+	^ self description contractTo: 50
 ]
 
 { #category : #printing }

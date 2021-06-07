@@ -77,6 +77,12 @@ RBProtocolEnvironment >> definesClass: aClass [
 	^ aClass == class and: [super definesClass: aClass]
 ]
 
+{ #category : #accessing }
+RBProtocolEnvironment >> description [ 
+
+	^ label ifNil: [self defaultName , ' of ', self class name, self descriptionBasis]
+]
+
 { #category : #testing }
 RBProtocolEnvironment >> includesCategory: aCategory [
 	^ (super includesCategory: aCategory) and: [

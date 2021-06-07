@@ -57,47 +57,38 @@ FLEncoder >> encodeClusterClass: aClusterClass [
 
 { #category : #encoding }
 FLEncoder >> encodeInt24: aSmallInteger [
-	"Write a signed integer to the next 4 bytes.
-	
-	Note: In Pharo SmallIntegers are signed 31-bit / 63-bit numbers stored
-			in memory as twos' complement. For storage we can pretend that
-			they are unsigned, as long as we decode them as signed.
-	Note: 	Integers of larger word size are truncated, which is necessary in case of negative
-			numbers (this may change the perceived value).
-			This may result in the creation of a LargeInteger in case of `SmallInteger maxVal`.
-			We assume that doesn't happen often and thus won'	impact performance much."
-
-	self encodeUint24: (aSmallInteger bitAnd: 16rFFFFFF)
+	"SmallInteger is 31 / 63 bits. Hence, we can store a full 24 bit signed integer.
+	We only have to restore the two's complement of the remaining higher bits when
+	we materialize."
+	self encodeUint24: aSmallInteger
 ]
 
 { #category : #encoding }
 FLEncoder >> encodeInt32: aSmallInteger [
-	"Write a signed integer to the next 4 bytes.
-	
-	Note: In Pharo SmallIntegers are signed 31-bit / 63-bit numbers stored
-			in memory as twos' complement. For storage we can pretend that
-			they are unsigned, as long as we decode them as signed.
-	Note: 	Integers of larger word size are truncated, which is necessary in case of negative
-			numbers (this may change the perceived value).
-			This may result in the creation of a LargeInteger in case of `SmallInteger maxVal`.
-			We assume that doesn't happen often and thus won'	impact performance much."
-
-	self encodeUint32: (aSmallInteger bitAnd: 16rFFFFFFFF)
+	"SmallInteger is 31 / 63 bits. We could encode 32 bit signed integers in theory but
+	that would mean that we could receive large integers as input, which shouldn't happen.
+	We have to assume that we are storing a SmallInteger with 31 bits of information here.
+	We can store the SmallInteger as a uint and then take care to restore potential higher
+	bits when we materialze.
+	Note: we have to mask the top bit because we don't know what was in there. Since
+		we store byte units but SmallInteger is only 31 bits, the top bit may be 1 if
+		the argument is negative and we're on a 64 bit system."
+	self encodeUint32: (aSmallInteger bitAnd: 16r7FFFFFFF)
 ]
 
 { #category : #encoding }
 FLEncoder >> encodeInt64: aSmallInteger [
-	"Write a signed integer to the next 8 bytes.
-	
-	Note: In Pharo SmallIntegers are signed 31-bit / 63-bit numbers stored
-			in memory as twos' complement. For storage we can pretend that
-			they are unsigned, as long as we decode them as signed.
-	Note: 	Integers of larger word size are truncated, which is necessary in case of negative
-			numbers (this may change the perceived value).
-			This may result in the creation of a LargeInteger in case of `SmallInteger maxVal`.
-			We assume that doesn't happen often and thus won'	impact performance much."
-
-	self encodeUint64: (aSmallInteger bitAnd: 16rFFFFFFFFFFFFFFFF)
+	"SmallInteger is 31 / 63 bits. We could encode 64 bit signed integers in theory but
+	that would mean that we could receive large integers as input, which shouldn't happen.
+	We have to assume that we are storing a SmallInteger with 63 bits of information here.
+	We can store the SmallInteger as a uint and then take care to restore potential higher
+	bits when we materialze.
+	Note: we have to mask the top bit because we don't know what was in there. Since
+		we store byte units but SmallInteger is only 63 bits, the top bit may be 1 if
+		the argument is negative and we're on a system > 64 bits.
+	Note: while the documentation says that SmallInteger uses 63 bits on 64 bit platforms
+			`SmallInteger minVal` actually only uses 61 bits!"
+	self encodeUint64: (aSmallInteger bitAnd: 16r1FFFFFFFFFFFFFFF)
 ]
 
 { #category : #encoding }
