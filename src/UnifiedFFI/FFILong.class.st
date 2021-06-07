@@ -23,12 +23,12 @@ FFILong >> basicHandle: aHandle at: index put: value [
 	^ aHandle platformLongAt: index put: value
 ]
 
-{ #category : #'private emitting code' }
+{ #category : #'private - emitting code' }
 FFILong >> emitSelector [
 	^ 'platformLongAt'
 ]
 
-{ #category : #'private emitting code' }
+{ #category : #'private - emitting code' }
 FFILong >> offsetPointerReadFieldAt: offsetVariableName [
 	^ '^ExternalData 
 		fromHandle: (handle {1}: {2})

@@ -128,7 +128,7 @@ EyeTreeInspector >> selectedObject [
 	^self selectedElement value
 ]
 
-{ #category : #'private-focus' }
+{ #category : #'private - focus' }
 EyeTreeInspector >> takeKeyboardFocus [
 	^ self tree takeKeyboardFocus
 ]

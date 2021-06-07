@@ -264,6 +264,18 @@ GLMBrick >> brickApi [
 	^ brickApi ifNil: [ brickApi := GLMBrickWrapper on: self ]
 ]
 
+{ #category : #'private - structure' }
+GLMBrick >> brickDoubleLink [
+
+	^ self valueOfProperty: #brickDoubleLink ifAbsentPut: [ nil ]
+]
+
+{ #category : #'private - structure' }
+GLMBrick >> brickDoubleLink: aDoubleLink [
+
+	self setProperty: #brickDoubleLink toValue: aDoubleLink
+]
+
 { #category : #'morph-drawing' }
 GLMBrick >> changed [
 	"Report that the area occupied by this morph should be redrawn.
@@ -287,6 +299,18 @@ GLMBrick >> changedWith: aBlock [
 { #category : #'brick-properties' }
 GLMBrick >> currentColor [
 	^ self color
+]
+
+{ #category : #'private - geometry' }
+GLMBrick >> customHeight [
+
+	^ self layout height brickValue: self
+]
+
+{ #category : #'private - geometry' }
+GLMBrick >> customWidth [
+
+	^ self layout width brickValue: self
 ]
 
 { #category : #initialization }
@@ -426,6 +450,12 @@ GLMBrick >> fullDrawOn: aCanvas [
 	super fullDrawOn: aCanvas
 ]
 
+{ #category : #'private - geometry' }
+GLMBrick >> globalBoundsTranslateFactor [
+
+	^ self owner ifNotNil: [ self owner globalBoundsTranslateFactor + self brickBounds origin ] ifNil: [ 0@0 ]
+]
+
 { #category : #'brick-geometry' }
 GLMBrick >> globalClippingBounds [
 	^ self owner
@@ -440,7 +470,7 @@ GLMBrick >> haloClass [
 	^ #GLMHaloBrick
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrick >> hasProperty: aSymbol [ 
 	
 	^ super hasProperty: aSymbol
@@ -467,6 +497,18 @@ GLMBrick >> isFitsInParent [
 		ifNotNil: [ self owner globalBounds containsRect: self globalBounds ]
 		"if our owner is a morph"
 		ifNil: [ self owner ifNotNil: [ self owner bounds containsRect: self globalBounds ] ifNil: [ ^ true ] ]
+]
+
+{ #category : #'private - layout' }
+GLMBrick >> isLayotingAllowed [
+
+	^ self valueOfProperty: #brickLayoutingAllowed ifAbsent: [ true ]
+]
+
+{ #category : #'private - layout' }
+GLMBrick >> isLayotingAllowed: aBoolean [
+
+	self setProperty: #brickLayoutingAllowed toValue: aBoolean
 ]
 
 { #category : #'morph-common' }
@@ -530,6 +572,140 @@ GLMBrick >> owner [
 	^ owner
 ]
 
+{ #category : #'private - structure' }
+GLMBrick >> owner: aBrick [
+	|oldOwner|
+	oldOwner := self owner.
+	self privateOwner: aBrick.
+	aBrick
+		ifNotNil: [ self themerChanged ]
+		ifNil: [ self onRemovedFrom: oldOwner ]
+]
+
+{ #category : #'private - structure' }
+GLMBrick >> privateAddAllBricks: aCollection [
+	|bricks|
+	bricks := aCollection collect: [:each | each asBrick].
+	bricks do: [ :each | self privateAddBrickLinkBack: each ].
+	self privateSubbricks: (self subbricks, bricks).
+	^ bricks
+]
+
+{ #category : #'private - structure' }
+GLMBrick >> privateAddBrick: aBrick after: otherBrick [
+	| brick link otherLink otherLinkSuccessor index|
+	brick := aBrick asBrick.
+	
+	otherLink := otherBrick brickDoubleLink.
+	otherLink = self lastSubbrick brickDoubleLink
+		ifTrue: [ ^ self privateAddBrickBack: aBrick ].
+		
+	link := brick asDoubleLink.
+	brick brickDoubleLink: link.
+	otherLinkSuccessor := otherLink nextLink.
+	otherLink nextLink: link.
+	link previousLink: otherLink.
+	link nextLink: otherLinkSuccessor.
+	otherLinkSuccessor previousLink: link.
+	
+	index := (self subbricks indexOf: otherBrick) + 1.
+	self privateSubbricks: (self subbricks copyReplaceFrom: index to: index - 1 with: (Array with: brick)).
+	
+	brick owner: self.
+	
+	^ aBrick
+]
+
+{ #category : #'private - structure' }
+GLMBrick >> privateAddBrick: aBrick before: otherBrick [
+	| brick link otherLink otherLinkPredeccessor index|
+	brick := aBrick asBrick.
+	
+	otherLink := otherBrick brickDoubleLink.
+	otherLink = self firstSubbrick brickDoubleLink
+		ifTrue: [ ^ self privateAddBrickFirst: aBrick ].
+		
+	link := brick asDoubleLink.
+	brick brickDoubleLink: link.
+	otherLinkPredeccessor := otherLink previousLink.
+	otherLink previousLink: link.
+	link nextLink: otherLink.
+	link previousLink: otherLinkPredeccessor.
+	otherLinkPredeccessor nextLink: link.
+	
+	index := ((self subbricks indexOf: otherBrick) max: 1).
+	self privateSubbricks: (self subbricks copyReplaceFrom: index to: index - 1 with: (Array with: brick)).
+	
+	brick owner: self.
+	
+	^ aBrick
+]
+
+{ #category : #'private - structure' }
+GLMBrick >> privateAddBrickBack: aBrick [
+	|brick|
+	
+	brick := aBrick asBrick.
+	self privateAddBrickLinkBack: brick.
+	self privateSubbricks: (self subbricks copyWith: brick).
+	
+	^ aBrick
+]
+
+{ #category : #'private - structure' }
+GLMBrick >> privateAddBrickFirst: aBrick [
+	| link head tail brick|
+	
+	brick := aBrick asBrick.
+	head := nil.
+	tail := nil.
+	self hasSubbricks ifTrue: [
+		head := self firstSubbrick brickDoubleLink.
+		tail := self lastSubbrick brickDoubleLink ].
+	
+	link := brick asDoubleLink.
+	brick brickDoubleLink: link.
+	link nextLink: head.
+	head ifNotNil: [ head previousLink: link ].
+	
+	self privateSubbricks: (self subbricks copyWithFirst: brick).
+	brick owner: self.
+	
+	^ aBrick
+]
+
+{ #category : #'private - structure' }
+GLMBrick >> privateAddBrickLinkBack: aBrick [
+	|link brick|
+	
+	brick := aBrick asBrick.
+	link := brick asDoubleLink.
+	brick brickDoubleLink: link.
+	
+	self hasSubbricks ifTrue: [
+		self lastSubbrick brickDoubleLink nextLink: link.	
+		link previousLink: self lastSubbrick brickDoubleLink ].
+	
+	brick owner: self.
+	
+	^ aBrick
+]
+
+{ #category : #'private - structure' }
+GLMBrick >> privateAddIntoWorld: aBrick [
+
+	self world == aBrick world
+		ifFalse: [ self privateRemoveOutWorld: aBrick ].
+	aBrick intoWorld: self world
+	
+]
+
+{ #category : #'private - geometry' }
+GLMBrick >> privateHeight: anObject [
+	
+	self layout height: anObject
+]
+
 { #category : #'morph-common' }
 GLMBrick >> privateMoveBy: delta [ 
 	"Private! Use 'position:' instead."
@@ -537,16 +713,86 @@ GLMBrick >> privateMoveBy: delta [
 	fullBounds ifNotNil: [fullBounds := fullBounds translateBy: delta].
 ]
 
-{ #category : #'private-structure' }
+{ #category : #'private - structure' }
 GLMBrick >> privateOwner: aBrick [
 
 	owner := aBrick
 ]
 
-{ #category : #'private-structure' }
+{ #category : #'private - structure' }
+GLMBrick >> privatePrepareBrickAfterAdding: aBrick [
+
+	aBrick wrappedBounds markWidthDirty; markHeightDirty.
+	self privateAddIntoWorld: aBrick
+]
+
+{ #category : #'private - structure' }
+GLMBrick >> privatePrepareBrickAfterRemoving: aBrick [
+
+	self privateRemoveOutWorld: aBrick
+]
+
+{ #category : #'private - structure' }
+GLMBrick >> privateRemoveAllBricks [
+	
+	self hasSubbricks ifFalse: [ ^ self ].
+	self subbricks do: [:each |
+		each brickDoubleLink: nil.
+		each owner: nil ].
+	self subbricks removeAll
+]
+
+{ #category : #'private - structure' }
+GLMBrick >> privateRemoveBrick: aBrick [
+	| predecessor successor link head tail index|
+	aBrick ifNil: [ ^ aBrick ].
+	(self hasSubbrick: aBrick) ifFalse: [ ^ aBrick ].
+	
+	link := aBrick brickDoubleLink.
+	
+	head := self firstSubbrick brickDoubleLink.
+	tail := self lastSubbrick brickDoubleLink.
+	
+	predecessor := link previousLink.
+	successor := link nextLink.
+	predecessor
+		ifNotNil: [ predecessor nextLink: successor ].
+	successor
+		ifNotNil: [ successor previousLink: predecessor ].
+	link clearLinks.
+	
+	aBrick brickDoubleLink: nil.
+	
+	index := self subbricks find: aBrick.
+	self privateSubbricks: (self subbricks copyWithoutIndex: index).
+	aBrick owner: nil.
+	
+	^ aBrick
+]
+
+{ #category : #'private - structure' }
+GLMBrick >> privateRemoveOutWorld: aBrick [
+
+	aBrick outOfWorld: aBrick world
+	
+]
+
+{ #category : #'private - structure' }
 GLMBrick >> privateSubbricks: aCollection [
 
 	submorphs := aCollection
+]
+
+{ #category : #'private - properties' }
+GLMBrick >> privateThemer [
+
+	^ self valueOfProperty: #brickThemer ifAbsentPut: [ nil ]
+]
+
+{ #category : #'private - geometry' }
+GLMBrick >> privateWidth: anObject [
+
+	self layout width: anObject
 ]
 
 { #category : #'morph-common' }
@@ -561,10 +807,19 @@ GLMBrick >> removeAllMorphs [
 
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrick >> removeProperty: aSymbol [
 	
 	super removeProperty: aSymbol
+]
+
+{ #category : #'private - layout' }
+GLMBrick >> resetLayout [
+
+	self vResizing: #rigid.
+	self hResizing: #rigid.
+	self height: nil.
+	self width: nil
 ]
 
 { #category : #'morph-common' }
@@ -582,7 +837,7 @@ GLMBrick >> setConstrainedPosition: aPoint hangOut: partiallyOutside [
 
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrick >> setProperty: aSymbol toValue: anObject [
 	
 	super setProperty: aSymbol toValue: anObject
@@ -623,25 +878,51 @@ GLMBrick >> taskThumbnailOfSize: thumbExtent [
 		form: f
 ]
 
+{ #category : #'private - geometry' }
+GLMBrick >> updateFoundationBounds [
+
+	self owner ifNotNil: [ :o | o isFoundationBrick ifTrue: [ 
+		self doNotLayoutDuring: [
+			(o isVShrinking | o isHShrinking) ifTrue: [ o privateExtent: self outerBounds extent ] ] ] ]
+]
+
+{ #category : #'private - geometry' }
+GLMBrick >> updateHeight [
+	"no need to care about height, when it's logic is not customized"
+	self layout isHeightCustom ifFalse: [ ^ self ].
+	[ self bounds: (self brickBounds withHeight: self customHeight) ]
+		on: Exception
+		do: [ "just skip and do nothing" ]
+]
+
 { #category : #'morph-common' }
 GLMBrick >> updateMorphBounds [
 
 	self withAllSubbricks select: #isMorphBrick thenDo: #onLayouted
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - geometry' }
+GLMBrick >> updateWidth [
+	"no need to care about width, when it's logic is not customized"
+	self layout isWidthCustom ifFalse: [ ^ self ].
+	[ self bounds: (self brickBounds withWidth: self customWidth) ]
+		on: Exception
+		do: [ "just skip and do nothing" ]
+]
+
+{ #category : #'private - extension' }
 GLMBrick >> valueOfProperty: aSymbol [
 	
 	^ super valueOfProperty: aSymbol
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrick >> valueOfProperty: aSymbol ifAbsent: aBlock [
 	
 	^ super valueOfProperty: aSymbol ifAbsent: aBlock
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrick >> valueOfProperty: aSymbol ifAbsentPut: aBlock [ 
 	
 	^ super valueOfProperty: aSymbol ifAbsentPut: aBlock

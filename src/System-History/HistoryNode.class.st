@@ -181,7 +181,7 @@ HistoryNode >> removeAt: anIndex [
 	self history removeAt: anIndex
 ]
 
-{ #category : #'private ' }
+{ #category : #private }
 HistoryNode >> removeFirst [
 	self history removeFirst
 ]

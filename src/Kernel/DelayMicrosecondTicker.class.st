@@ -24,7 +24,7 @@ DelayMicrosecondTicker >> nowTick [
 	self primitiveFailed
 ]
 
-{ #category : #'private-primitives' }
+{ #category : #'private - primitives' }
 DelayMicrosecondTicker >> primSignal: aSemaphore atUTCMicroseconds: aLargePositiveInteger [
 	"Signal the semaphore when the microsecond clock reaches the value of the second argument. Fail if the first argument is neither a Semaphore nor nil. Essential. See Object documentation whatIsAPrimitive."
 	<primitive: 242>

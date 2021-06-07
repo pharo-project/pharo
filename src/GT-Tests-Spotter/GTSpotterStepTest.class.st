@@ -176,7 +176,7 @@ GTSpotterStepTest >> basicSearch: aString [
 	self assert: previousStep identicalTo: currentStep
 ]
 
-{ #category : #'private-navigation' }
+{ #category : #'private - navigation' }
 GTSpotterStepTest >> defaultPackages [
 	^ { 'GT-Spotter'. 'GT-SpotterExtensions-Core' }
 ]
@@ -195,12 +195,12 @@ GTSpotterStepTest >> denySearch: aString [
 	self assert: (previousContext matches: aString)
 ]
 
-{ #category : #'private-navigation' }
+{ #category : #'private - navigation' }
 GTSpotterStepTest >> implementors: aSelector [
 	^ self implementors: aSelector inPackages: self defaultPackages
 ]
 
-{ #category : #'private-navigation' }
+{ #category : #'private - navigation' }
 GTSpotterStepTest >> implementors: aSelector inPackages: anArray [
 	| implementors |
 	implementors := OrderedCollection new.
@@ -212,19 +212,19 @@ GTSpotterStepTest >> implementors: aSelector inPackages: anArray [
 	^ implementors
 ]
 
-{ #category : #'private-navigation' }
+{ #category : #'private - navigation' }
 GTSpotterStepTest >> pragma: aSelector of: aCompiledMethod [
 	^ aCompiledMethod pragmas 
 		detect: [ :each | each selector = aSelector ] 
 		ifNone: [ nil ]
 ]
 
-{ #category : #'private-navigation' }
+{ #category : #'private - navigation' }
 GTSpotterStepTest >> pragmas: aSelector [
 	^ self pragmas: aSelector inPackages: self defaultPackages
 ]
 
-{ #category : #'private-navigation' }
+{ #category : #'private - navigation' }
 GTSpotterStepTest >> pragmas: aSelector inPackages: anArray [
 	| pragmas |
 	pragmas := OrderedCollection new.
@@ -239,12 +239,12 @@ GTSpotterStepTest >> pragmas: aSelector inPackages: anArray [
 	^ pragmas
 ]
 
-{ #category : #'private-navigation' }
+{ #category : #'private - navigation' }
 GTSpotterStepTest >> senders: aSelector [
 	^ self senders: aSelector inPackages: self defaultPackages
 ]
 
-{ #category : #'private-navigation' }
+{ #category : #'private - navigation' }
 GTSpotterStepTest >> senders: aSelector inPackages: anArray [
 	| senders |
 	senders := OrderedCollection new.
@@ -269,13 +269,13 @@ GTSpotterStepTest >> setUp [
 	currentStep := currentProcessor := currentCandidate := nil
 ]
 
-{ #category : #'private-navigation' }
+{ #category : #'private - navigation' }
 GTSpotterStepTest >> subclassesOf: aClass filterBySubstring: aString inPackage: aPackageName [
 	^ (self subclassesOf: aClass inPackage: aPackageName) select: [ :each |
 		each name includesSubstring: aString caseSensitive: false ]
 ]
 
-{ #category : #'private-navigation' }
+{ #category : #'private - navigation' }
 GTSpotterStepTest >> subclassesOf: aClass inPackage: aPackageName [
 	^ (RPackageOrganizer default packages 
 		detect: [ :each | each packageName = aPackageName ] 
@@ -330,12 +330,12 @@ GTSpotterStepTest >> testMock [
 	self assert: spotter newStep asyncTask class equals: GTMockSpotterTask
 ]
 
-{ #category : #'private-navigation' }
+{ #category : #'private - navigation' }
 GTSpotterStepTest >> users: aSelector [
 	^ self users: aSelector inPackages: self defaultPackages
 ]
 
-{ #category : #'private-navigation' }
+{ #category : #'private - navigation' }
 GTSpotterStepTest >> users: aSelector inPackages: anArray [
 	| users |
 	users := OrderedCollection new.

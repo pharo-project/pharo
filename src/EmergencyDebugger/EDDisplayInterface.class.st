@@ -14,7 +14,7 @@ Class {
 	#category : #'EmergencyDebugger-View'
 }
 
-{ #category : #'accessing properties' }
+{ #category : #'accessing - properties' }
 EDDisplayInterface >> black [
 	^ Color black
 ]
@@ -30,7 +30,7 @@ EDDisplayInterface >> clear [
 			borderColor: self red ]
 ]
 
-{ #category : #'private display' }
+{ #category : #'private - display' }
 EDDisplayInterface >> closeWindow [
 
 	windowClosedAction 
@@ -38,7 +38,7 @@ EDDisplayInterface >> closeWindow [
 		ifNil: [ self terminateWindow ]
 ]
 
-{ #category : #'private text' }
+{ #category : #'private - text' }
 EDDisplayInterface >> composeParagraphWith: aText inFrame: aRect [
 	| paragraph |
 
@@ -52,7 +52,7 @@ EDDisplayInterface >> composeParagraphWith: aText inFrame: aRect [
 	^ paragraph
 ]
 
-{ #category : #'private display' }
+{ #category : #'private - display' }
 EDDisplayInterface >> display: aParagraph in: aRect [
 
 	self drawDuring: [ :canvas |
@@ -62,7 +62,7 @@ EDDisplayInterface >> display: aParagraph in: aRect [
 			color: self black ]
 ]
 
-{ #category : #'private display' }
+{ #category : #'private - display' }
 EDDisplayInterface >> drawDuring: aBlock [
 
 	self ensureWindowOpen.
@@ -71,7 +71,7 @@ EDDisplayInterface >> drawDuring: aBlock [
 		renderer present ]
 ]
 
-{ #category : #'private display' }
+{ #category : #'private - display' }
 EDDisplayInterface >> ensureWindowOpen [
 	| attrs |
 	
@@ -91,32 +91,32 @@ EDDisplayInterface >> ensureWindowOpen [
 	renderer := window newFormRenderer: (Form extent: self extent depth: 32).
 ]
 
-{ #category : #'private display' }
+{ #category : #'private - display' }
 EDDisplayInterface >> extent [
 
 	^ extent ifNil: [ 
 		extent := DisplayScreen actualScreenSize min: (650@700) ]
 ]
 
-{ #category : #'private display' }
+{ #category : #'private - display' }
 EDDisplayInterface >> frame [
 
 	^ 0@0 corner: self extent
 ]
 
-{ #category : #'accessing properties' }
+{ #category : #'accessing - properties' }
 EDDisplayInterface >> gray [
 	^ Color gray
 ]
 
-{ #category : #'private text' }
+{ #category : #'private - text' }
 EDDisplayInterface >> pushChar: char [
 
 	characterReceivedAction ifNil: [ ^ self ].
 	characterReceivedAction value: char
 ]
 
-{ #category : #'accessing properties' }
+{ #category : #'accessing - properties' }
 EDDisplayInterface >> red [
 	^ Color red
 ]
@@ -138,7 +138,7 @@ EDDisplayInterface >> terminateWindow [
 	window destroy
 ]
 
-{ #category : #'private text' }
+{ #category : #'private - text' }
 EDDisplayInterface >> textStyle [
 	^ TextStyle default
 ]
@@ -156,7 +156,7 @@ EDDisplayInterface >> whenWindowClosedDo: aBlock [
 	windowClosedAction := aBlock
 ]
 
-{ #category : #'accessing properties' }
+{ #category : #'accessing - properties' }
 EDDisplayInterface >> white [
 	^ Color white
 ]

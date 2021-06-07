@@ -8,7 +8,7 @@ Class {
 	#category : #'UnifiedFFI-Arguments'
 }
 
-{ #category : #'private emitting code' }
+{ #category : #'private - emitting code' }
 FFIFunctionArgumentLoader >> addUnpack: aBuilder fromArity: arity [
 	aBuilder
 		pushTemp: self rolledPointerTempName;
@@ -34,7 +34,7 @@ FFIFunctionArgumentLoader >> emitArgument: aBuilder context: aContext objectClas
 	self subclassResponsibility
 ]
 
-{ #category : #'private emitting code' }
+{ #category : #'private - emitting code' }
 FFIFunctionArgumentLoader >> emitArgumentVariableAccesingPart: aBuilder context: aContext objectClass: objectClass instVarName: aName [
 	"Emit access to calling variable (changes depending on the type)."
 	self subclassResponsibility
@@ -87,13 +87,13 @@ FFIFunctionArgumentLoader >> emitPointerArityPack: aBuilder context: aContext ar
 		storeTemp: ptrName
 ]
 
-{ #category : #'private emitting code' }
+{ #category : #'private - emitting code' }
 FFIFunctionArgumentLoader >> emitPointerArityUnpack: aBuilder context: aContext arity: arity [
 	self emitArgument: aBuilder context: aContext.
 	self addUnpack: aBuilder fromArity: arity
 ]
 
-{ #category : #'private emitting code' }
+{ #category : #'private - emitting code' }
 FFIFunctionArgumentLoader >> emitPointerArityUnpack: aBuilder context: aContext objectClass: objectClass instVarName: aName arity: arity [
 	self emitArgument: aBuilder context: aContext objectClass: objectClass instVarName: aName.
 	self addUnpack: aBuilder fromArity: arity

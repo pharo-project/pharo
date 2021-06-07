@@ -33,13 +33,13 @@ FT2Library >> checkLibrary [
 	self setHandle: holder value
 ]
 
-{ #category : #'private-ffi-calls' }
+{ #category : #'private - ffi' }
 FT2Library >> ffiDoneFace: aHandle [
 
 	self ffiCall: #(int FT_Done_Face(void* aHandle))
 ]
 
-{ #category : #'private-ffi' }
+{ #category : #'private - ffi' }
 FT2Library >> ffiGetBitmap: abitmap fromOutline: outline [
 	self
 		ffiCall:
@@ -52,12 +52,12 @@ FT2Library >> ffiInitFreeType: aPointer [
 	self ffiCall: #(int FT_Init_FreeType(PointerHolder* aPointer))
 ]
 
-{ #category : #'private-ffi-calls' }
+{ #category : #'private - ffi' }
 FT2Library >> ffiLibraryVersionMajor: major minor: minor patch: patch [
 	self ffiCall: #(void FT_Library_Version #(self , IntHolder * major , IntHolder * minor , IntHolder* patch))
 ]
 
-{ #category : #'private-ffi-calls' }
+{ #category : #'private - ffi' }
 FT2Library >> ffiNewFace: aface fromFilename: filepathname index: face_index [
 
 	self ffiCall: #(int FT_New_Face(self,
@@ -66,7 +66,7 @@ FT2Library >> ffiNewFace: aface fromFilename: filepathname index: face_index [
                PointerHolder *aface ))
 ]
 
-{ #category : #'private-ffi-calls' }
+{ #category : #'private - ffi' }
 FT2Library >> ffiNewFace: aface fromMemory: file_base size: file_size index: face_index [
 
 self ffiCall: #(int FT_New_Memory_Face(self,
@@ -76,7 +76,7 @@ self ffiCall: #(int FT_New_Memory_Face(self,
                       PointerHolder   *aface ))
 ]
 
-{ #category : #'private-ffi-calls' }
+{ #category : #'private - ffi' }
 FT2Library >> ffiOutline: outline getBitmap: abitmap [
 	self
 		ffiCall: #(int FT_Outline_Get_Bitmap #(self , FT_Outline * outline , FT_Bitmap * abitmap))

@@ -14,7 +14,7 @@ Class {
 	#category : #'HelpSystem-Core-Builders'
 }
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 MicrodownStyleHelpBuilder class >> allHelpPragmas [
 	^ self pragmaKeywords flatCollect: [ :keyword | Pragma allNamed: keyword ]
 ]
@@ -25,13 +25,13 @@ MicrodownStyleHelpBuilder class >> help [
 	^ self comment
 ]
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 MicrodownStyleHelpBuilder class >> pragmaKeyword [
 	 ^ #microdownStyleHelp:
 
 ]
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 MicrodownStyleHelpBuilder class >> pragmaKeywords [
 	 ^ #(microdownStyleHelp:)
 
@@ -52,12 +52,12 @@ MicrodownStyleHelpBuilder >> build [
 			topicToBuild addSubtopic: topic ]
 ]
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 MicrodownStyleHelpBuilder >> defaultSyntax [
 	^#microdown
 ]
 
-{ #category : #'private extraction' }
+{ #category : #'private - extraction' }
 MicrodownStyleHelpBuilder >> extractHelpContentFromString: aString [
 	| start stop |
 	start := aString findString: self helpStartMarker.
@@ -71,22 +71,22 @@ MicrodownStyleHelpBuilder >> extractHelpContentFromString: aString [
 	^ (aString copyFrom: start to: stop) trimBoth
 ]
 
-{ #category : #'private extraction' }
+{ #category : #'private - extraction' }
 MicrodownStyleHelpBuilder >> helpStartMarker [
 	^  '<', self helpTag, '>'
 ]
 
-{ #category : #'private extraction' }
+{ #category : #'private - extraction' }
 MicrodownStyleHelpBuilder >> helpStopMarker [
 	^  '</', self helpTag, '>'
 ]
 
-{ #category : #'private extraction' }
+{ #category : #'private - extraction' }
 MicrodownStyleHelpBuilder >> helpTag [
 	^  #help
 ]
 
-{ #category : #'private conversion' }
+{ #category : #'private - conversion' }
 MicrodownStyleHelpBuilder >> helpTopicFromFormattedString: aString title: aTitle [
 	| helpString currentLevel section topicStack topic |
 	helpString := aString.
@@ -129,12 +129,12 @@ MicrodownStyleHelpBuilder >> helpTopicFromFormattedString: aString title: aTitle
 
 ]
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 MicrodownStyleHelpBuilder >> sectionStartChar [
 	^ $!
 ]
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 MicrodownStyleHelpBuilder >> supportedSyntaxes [
 	^#(microdown) 
 ]
