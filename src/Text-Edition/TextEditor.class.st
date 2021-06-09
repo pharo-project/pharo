@@ -431,7 +431,7 @@ TextEditor class >> skipOverMultipleSpaces: aBoolean [
 	SkipOverMultipleSpaces := aBoolean
 ]
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 TextEditor class >> specialShiftCmdKeys [
 
 "Private - return array of key codes that represent single keys acting

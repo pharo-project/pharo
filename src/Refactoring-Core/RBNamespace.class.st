@@ -61,7 +61,7 @@ RBNamespace class >> onEnvironment: aBrowserEnvironment [
 		yourself
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> addChangeToClass: aRBClass [
 	^ changedClasses 
 		at: aRBClass name
@@ -70,17 +70,17 @@ RBNamespace >> addChangeToClass: aRBClass [
 				with: aRBClass classSide)
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> addClassVariable: aString to: aRBClass [ 
 	^changes addClassVariable: aString to: aRBClass
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> addInstanceVariable: aString to: aRBClass [ 
 	^changes addInstanceVariable: aString to: aRBClass
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> addPackageNamed: aSymbol [
 	| change pkg |
 	change := changes addPackageNamed: aSymbol.
@@ -91,7 +91,7 @@ RBNamespace >> addPackageNamed: aSymbol [
 	^change
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> addPool: aString to: aRBClass [ 
 	^changes addPool: aString to: aRBClass
 ]
@@ -222,7 +222,7 @@ RBNamespace >> allReferencesToClass: aRBClass inPackages: aColl do: aBlock [
 				do: [:sel | aBlock value: (each classSide methodFor: sel)]]
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> changeClass: aRBClass [ 
 	changedClasses 
 		at: aRBClass name
@@ -274,7 +274,7 @@ RBNamespace >> comment: aString in: aClass [
 	^ changes comment: aString in: aClass
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> compile: aString in: aRBClass classified: aSymbol [ 
 	| change |
 	change := changes 
@@ -360,7 +360,7 @@ RBNamespace >> environment: aBrowserEnvironment [
 	environment := aBrowserEnvironment
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> flushCaches [
 	implementorsCache := IdentityDictionary new.
 	sendersCache := IdentityDictionary new
@@ -469,7 +469,7 @@ RBNamespace >> packageNamed: aSymbol [
 	^ (self createNewPackageFor: aSymbol) first
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> performChange: aCompositeRefactoryChange around: aBlock [ 
 	| oldChanges |
 	changes addChange: aCompositeRefactoryChange.
@@ -553,7 +553,7 @@ RBNamespace >> removeClass: aRBClass [
 	self removeClassNamed: aRBClass name
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> removeClassKeepingSubclassesNamed: aSymbol [ 
 	removedClasses
 		add: aSymbol;
@@ -577,23 +577,23 @@ RBNamespace >> removeClassNamed: aSymbol [
 	^changes removeClassNamed: aSymbol
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> removeClassVariable: aString from: aRBClass [ 
 	^changes removeClassVariable: aString from: aRBClass
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> removeInstanceVariable: aString from: aRBClass [ 
 	^changes removeInstanceVariable: aString from: aRBClass
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> removeMethod: aSelector from: aRBClass [ 
 	self flushCaches.
 	^changes removeMethod: aSelector from: aRBClass
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> removePackageNamed: aString [
 
 	self flushCaches.
@@ -621,7 +621,7 @@ RBNamespace >> renameClass: aRBClass to: aSymbol around: aBlock [
 	^ change
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> renameClassVariable: oldName to: newName in: aRBClass around: aBlock [ 
 	^self performChange: (changeFactory  
 				renameClassVariable: oldName
@@ -630,7 +630,7 @@ RBNamespace >> renameClassVariable: oldName to: newName in: aRBClass around: aBl
 		around: aBlock
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> renameInstanceVariable: oldName to: newName in: aRBClass around: aBlock [ 
 	^self performChange: (changeFactory 
 				renameInstanceVariable: oldName
@@ -663,7 +663,7 @@ RBNamespace >> reparentClasses: aRBClassCollection to: newClass [
 						to: newClass name)]
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> replaceClassNameIn: definitionString to: aSymbol [ 
 	| parseTree |
 	parseTree := self parserClass parseExpression: definitionString.

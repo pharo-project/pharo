@@ -67,7 +67,7 @@ ZdcSimpleSocketStream >> connectTo: hostAddress port: portNumber [
 	self socketConnectTo: hostAddress port: portNumber
 ]
 
-{ #category : #'private in' }
+{ #category : #'private - in' }
 ZdcSimpleSocketStream >> fillBytes: bytes startingAt: offset count: count [
 	"Ask the socket to read count elements into bytes starting at offset. Do not wait. Return read count."
 	
@@ -78,7 +78,7 @@ ZdcSimpleSocketStream >> fillBytes: bytes startingAt: offset count: count [
 		count: count
 ]
 
-{ #category : #'private in' }
+{ #category : #'private - in' }
 ZdcSimpleSocketStream >> fillReadBuffer [
 	"Ask the socket to fill the read buffer with data. Wait for a data."
 	
@@ -89,7 +89,7 @@ ZdcSimpleSocketStream >> fillReadBuffer [
 			self fillReadBuffer ]  
 ]
 
-{ #category : #'private in' }
+{ #category : #'private - in' }
 ZdcSimpleSocketStream >> fillReadBufferNoWait [
 	"Ask the socket to fill the read buffer with data. Do not wait for data."
 	
@@ -103,7 +103,7 @@ ZdcSimpleSocketStream >> fillReadBufferNoWait [
 	^ readCount
 ]
 
-{ #category : #'private out' }
+{ #category : #'private - out' }
 ZdcSimpleSocketStream >> flushBytes: bytes startingAt: offset count: count [
 	"Ask the socket to write count bytes starting from offset. Wait. Fail if not successful"
 	
@@ -117,7 +117,7 @@ ZdcSimpleSocketStream >> flushBytes: bytes startingAt: offset count: count [
 			ifFalse: [ ConnectionTimedOut signal: 'Data send timed out.' ] ]
 ]
 
-{ #category : #'private out' }
+{ #category : #'private - out' }
 ZdcSimpleSocketStream >> flushWriteBuffer [
 	"Ask the socket to write all data in the write buffer. Fail if not successful"
 	

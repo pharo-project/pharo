@@ -169,7 +169,7 @@ ShiftClassBuilder >> comment: anObject [
 	comment := anObject
 ]
 
-{ #category : #'accessing comment' }
+{ #category : #'accessing - comment' }
 ShiftClassBuilder >> comment:aComment stamp: anStamp [
 	self comment: aComment.
 	self commentStamp: anStamp.
@@ -535,7 +535,7 @@ ShiftClassBuilder >> useStrictSuperclass [
 	self superclassResolver: ClassResolverStrictResolve new.
 ]
 
-{ #category : #'private validating' }
+{ #category : #'private - validating' }
 ShiftClassBuilder >> validateClassName [
 	name ifNil: [ ^self ].
 	
@@ -552,7 +552,7 @@ ShiftClassBuilder >> validateClassName [
 	DangerousClassNotifier check: name 
 ]
 
-{ #category : #'private validating' }
+{ #category : #'private - validating' }
 ShiftClassBuilder >> validateSuperclass [
 	self superclass ifNil: [ ^self ].
 	oldClass ifNil: [ ^ self ].	

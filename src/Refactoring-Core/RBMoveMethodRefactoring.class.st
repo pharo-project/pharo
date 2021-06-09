@@ -181,7 +181,7 @@ RBMoveMethodRefactoring >> getArgumentNameForSelf [
 			whileTrue: []
 ]
 
-{ #category : #'private-accessing' }
+{ #category : #'private - accessing' }
 RBMoveMethodRefactoring >> getClassForGlobalOrClassVariable [
 	| definingClass type |
 	definingClass := class whoDefinesClassVariable: (variable ifNil: ['']).
@@ -193,7 +193,7 @@ RBMoveMethodRefactoring >> getClassForGlobalOrClassVariable [
 	moveToClasses ifNil: [ self refactoringFailure: 'Method not moved' ]
 ]
 
-{ #category : #'private-accessing' }
+{ #category : #'private - accessing' }
 RBMoveMethodRefactoring >> getClassesForInstanceVariable [
 
 	| definingClass typer types |
@@ -207,7 +207,7 @@ RBMoveMethodRefactoring >> getClassesForInstanceVariable [
 	moveToClasses ifNil: [ self refactoringFailure: 'Method not moved' ]
 ]
 
-{ #category : #'private-accessing' }
+{ #category : #'private - accessing' }
 RBMoveMethodRefactoring >> getClassesForTemporaryVariable [
 
 	| types |
@@ -218,7 +218,7 @@ RBMoveMethodRefactoring >> getClassesForTemporaryVariable [
 	moveToClasses ifNil: [ self refactoringFailure: 'Method not moved' ]
 ]
 
-{ #category : #'private-accessing' }
+{ #category : #'private - accessing' }
 RBMoveMethodRefactoring >> getClassesToMoveTo [
 	self isMovingToArgument 
 		ifTrue: [self getClassesForTemporaryVariable]

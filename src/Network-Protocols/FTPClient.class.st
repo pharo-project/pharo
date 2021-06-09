@@ -130,7 +130,7 @@ FTPClient >> deleteFileNamed: fileName [
 
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 FTPClient >> get: limit dataInto: dataStream [
 	"Reel in data until the server closes the connection or the limit is reached.
 	At the same time, watch for errors on otherSocket."
@@ -149,7 +149,7 @@ FTPClient >> get: limit dataInto: dataStream [
 	^ dataStream
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 FTPClient >> getData [
 
 	| dataStream |
@@ -160,7 +160,7 @@ FTPClient >> getData [
 
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 FTPClient >> getDataInto: dataStream [
 	"Reel in all data until the server closes the connection.  At the same time, watch for errors on otherSocket.  Don't know how much is coming.  Put the data on the stream."
 
@@ -277,7 +277,7 @@ FTPClient >> loginUser: userName password: passwdString [
 	self login
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 FTPClient >> lookForCode: code ifDifferent: handleBlock [ 
 	"We are expecting a certain numeric code next.  
 	However, in the FTP protocol, multiple lines are allowed.  
@@ -314,7 +314,7 @@ FTPClient >> openDataSocket: remoteHostAddress port: dataPort [
 	dataSocket connectTo: remoteHostAddress port: dataPort
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 FTPClient >> openPassiveDataConnection [
 	| portInfo list dataPort remoteHostAddress remoteAddressString |
 	self sendCommand: 'PASV'.

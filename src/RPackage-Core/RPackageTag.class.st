@@ -36,7 +36,7 @@ RPackageTag >> addClassNamed: aSymbol [
 	^ classNames add: aSymbol.
 ]
 
-{ #category : #'private ' }
+{ #category : #private }
 RPackageTag >> asRPackage [
 	"Create a new RPackage with the same contents as this rpackage tag"
 	| newRPackage |
@@ -50,7 +50,7 @@ RPackageTag >> asRPackage [
 	^ newRPackage
 ]
 
-{ #category : #'private ' }
+{ #category : #private }
 RPackageTag >> basicRenameTo: aString [
 	name := aString.
 ]
@@ -243,7 +243,7 @@ RPackageTag >> renameTo: aString category: categoryName [
 			toBe: categoryName. ].
 ]
 
-{ #category : #'private ' }
+{ #category : #private }
 RPackageTag >> toCategoryName: aString [ 
 	^ aString = self packageName
 		ifTrue: [ aString ]

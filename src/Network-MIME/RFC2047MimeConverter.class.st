@@ -7,7 +7,7 @@ Class {
 	#category : #'Network-MIME-Converter'
 }
 
-{ #category : #'private-encoding' }
+{ #category : #'private - encoding' }
 RFC2047MimeConverter >> encodeChar: aChar to: aStream [
 
 	aChar = Character space
@@ -20,7 +20,7 @@ RFC2047MimeConverter >> encodeChar: aChar to: aStream [
 
 ]
 
-{ #category : #'private-encoding' }
+{ #category : #'private - encoding' }
 RFC2047MimeConverter >> encodeWord: aString [
 
 	(aString allSatisfy: [:c | c asciiValue < 128])
@@ -31,7 +31,7 @@ RFC2047MimeConverter >> encodeWord: aString [
 		stream nextPutAll: '?=']
 ]
 
-{ #category : #'private-encoding' }
+{ #category : #'private - encoding' }
 RFC2047MimeConverter >> isStructuredField: aString [
 
 	| fName |
@@ -78,7 +78,7 @@ RFC2047MimeConverter >> mimeEncode [
 	^ mimeStream
 ]
 
-{ #category : #'private-encoding' }
+{ #category : #'private - encoding' }
 RFC2047MimeConverter >> readWord [
 
 	| strm |

@@ -7,7 +7,7 @@ Class {
 	#category : #'Fuel-Platform-Core'
 }
 
-{ #category : #'private-extensions' }
+{ #category : #'private - extensions' }
 FLPlatform class >> addExtensions [
 	self extensionPragmas do: [ :pragma |
 		(FLExtensionWrapper fromPragma: pragma) install ]
@@ -20,7 +20,7 @@ FLPlatform class >> addHacks [
 		during: [ self basicAddHacks ]
 ]
 
-{ #category : #'private-hacks' }
+{ #category : #'private - hacks' }
 FLPlatform class >> basicAddHacks [
 	self
 		fixMetacello;
@@ -50,7 +50,7 @@ FLPlatform class >> extensionCategoryName [
 	^ 'FuelPlatformExtensions'
 ]
 
-{ #category : #'private-extensions' }
+{ #category : #'private - extensions' }
 FLPlatform class >> extensionPragmas [
 	| pragmas |
 	pragmas := Dictionary new.
@@ -82,7 +82,7 @@ FLPlatform class >> extensionProtocolName [
 	^ '*', self extensionCategoryName
 ]
 
-{ #category : #'private-hacks-metacello' }
+{ #category : #'private - hacks-metacello' }
 FLPlatform class >> fixMetacello [
 ]
 
@@ -96,7 +96,7 @@ FLPlatform class >> isResponsibleForCurrentPlatform [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'private-convenience' }
+{ #category : #'private - convenience' }
 FLPlatform class >> removeModifications [
 	((Smalltalk globals at: #(Smalltalk globals at: #PackageInfo)) named: self extensionProtocolName) extensionMethods do: [ :methodReference |
 		methodReference actualClass removeSelector: methodReference selector ].
@@ -112,12 +112,12 @@ FLPlatform class >> reset [
 	Current := nil
 ]
 
-{ #category : #'accessing-system' }
+{ #category : #'accessing - system' }
 FLPlatform >> absolutePathOf: aString [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'accessing-compiler' }
+{ #category : #'accessing - compiler' }
 FLPlatform >> addAndClassifySelector: aSymbol inClass: aClass withMethod: aCompiledMethod inProtocol: aString [
 	self subclassResponsibility
 ]
@@ -127,27 +127,27 @@ FLPlatform >> addHacks [
 	self class addHacks
 ]
 
-{ #category : #'accessing-tests' }
+{ #category : #'accessing - tests' }
 FLPlatform >> classFactoryForTestCaseClass [
 	^ ClassFactoryForTestCase
 ]
 
-{ #category : #'accessing-files' }
+{ #category : #'accessing - files' }
 FLPlatform >> deleteFileNamed: aFilename [
 	self subclassResponsibility
 ]
 
-{ #category : #'accessing-files' }
+{ #category : #'accessing - files' }
 FLPlatform >> fileNamed: aFilename readStreamDo: aBlock [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'accessing-files' }
+{ #category : #'accessing - files' }
 FLPlatform >> fileNamed: aFilename writeStreamDo: aBlock [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'accessing-system' }
+{ #category : #'accessing - system' }
 FLPlatform >> imageName [
 	^ self subclassResponsibility
 ]
@@ -172,22 +172,22 @@ FLPlatform >> isSqueak [
 	^ false
 ]
 
-{ #category : #'accessing-compiler' }
+{ #category : #'accessing - compiler' }
 FLPlatform >> renamedMethodCopyOf: aMethod selector: aSymbol [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'accessing-tests' }
+{ #category : #'accessing - tests' }
 FLPlatform >> setTestTimeLimitFor: aTest to: aDuration [
 	self subclassResponsibility
 ]
 
-{ #category : #'accessing-compiler' }
+{ #category : #'accessing - compiler' }
 FLPlatform >> silentlyAddAndClassifySelector: aSymbol inClass: aClass withMethod: aCompiledMethod inProtocol: aString [
 	self subclassResponsibility
 ]
 
-{ #category : #'accessing-system' }
+{ #category : #'accessing - system' }
 FLPlatform >> useAuthor: aString during: aBlock [
 	self subclassResponsibility
 ]
@@ -197,7 +197,7 @@ FLPlatform >> versionNumber [
 	^ ('\d+' asRegex matchesIn: self className) first asInteger
 ]
 
-{ #category : #'accessing-kernel' }
+{ #category : #'accessing - kernel' }
 FLPlatform >> withPragmasIn: aClass do: aBlock [
 	self subclassResponsibility
 ]

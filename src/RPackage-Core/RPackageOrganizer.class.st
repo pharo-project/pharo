@@ -264,7 +264,7 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 	packageNames := nil.
 ]
 
-{ #category : #'private registration' }
+{ #category : #'private - registration' }
 RPackageOrganizer >> basicRegisterPackage: aPackage [
 	"A new package is now available and declared in the receiver. Note that it is a low level implementation method since it does not deal with package contained information and does not update the related mapping tables."
 	
@@ -282,7 +282,7 @@ RPackageOrganizer >> basicRegisterPackage: aPackage [
 	^ aPackage
 ]
 
-{ #category : #'private registration' }
+{ #category : #'private - registration' }
 RPackageOrganizer >> basicUnregisterPackage: aPackage [
 	"Unregister the specified package from the list of registered packages. Raise the announcement RPackageUnregistered. This is a low level action. It does not unregister the back pointer from classes to packages or any other information managed by the organizer"
 	
@@ -299,7 +299,7 @@ RPackageOrganizer >> basicUnregisterPackage: aPackage [
 	self removePackageNameFromCache: aPackage name asSymbol
 ]
 
-{ #category : #'private registration' }
+{ #category : #'private - registration' }
 RPackageOrganizer >> basicUnregisterPackageNamed: aSymbolName [
 	"Unregister the specified package from the list of registered packages. Raise the RPackageUnregistered announcement. This is a low level action. It does not unregister the back pointer from classes to packages or any other information managed by the organizer"
 	
@@ -324,14 +324,14 @@ RPackageOrganizer >> category: categoryName matches: prefix [
 	^(categoryName at: prefix size + 1 ifAbsent: [ ^true ]) = $-
 ]
 
-{ #category : #'private registration' }
+{ #category : #'private - registration' }
 RPackageOrganizer >> checkPackageExistsOrRegister: packageName [
 	(self packages 
 		anySatisfy: [ :each | self category: packageName matches: each packageName ])
 		ifFalse: [ (self packageClass named: packageName capitalized) register ] 
 ]
 
-{ #category : #'public registration' }
+{ #category : #registration }
 RPackageOrganizer >> createPackageNamed: aString [ 
 
 	| instance |
@@ -342,13 +342,13 @@ RPackageOrganizer >> createPackageNamed: aString [
 	^ instance
 ]
 
-{ #category : #'private testing' }
+{ #category : #'private - testing' }
 RPackageOrganizer >> debuggingName [
 
 	^ debuggingName 
 ]
 
-{ #category : #'private testing' }
+{ #category : #'private - testing' }
 RPackageOrganizer >> debuggingName: aString [
 
 	debuggingName := aString
@@ -359,7 +359,7 @@ RPackageOrganizer >> defineUnpackagedClassesPackage [
 	^ self ensureExistAndRegisterPackageNamed: self packageClass defaultPackageName
 ]
 
-{ #category : #'private registration' }
+{ #category : #'private - registration' }
 RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
 	"A new package is now available and declared in the receiver."
 	
@@ -479,7 +479,7 @@ RPackageOrganizer >> includesPackage: aPackage [
 	^ self includesPackageNamed: aPackage name
 ]
 
-{ #category : #'private testing' }
+{ #category : #'private - testing' }
 RPackageOrganizer >> includesPackageBackPointerForClass: aClass [
 
 	^ classPackageMapping includesKey: aClass instanceSide name asSymbol
@@ -767,7 +767,7 @@ RPackageOrganizer >> register [
 	self registerInterestToSystemAnnouncement.
 ]
 
-{ #category : #'private registration' }
+{ #category : #'private - registration' }
 RPackageOrganizer >> registerExtendingPackage: aPackage forClass: aClass [
 
 	| cur |
@@ -778,7 +778,7 @@ RPackageOrganizer >> registerExtendingPackage: aPackage forClass: aClass [
 		ifNotNil: [ cur add: aPackage ]
 ]
 
-{ #category : #'private registration' }
+{ #category : #'private - registration' }
 RPackageOrganizer >> registerExtendingPackage: aPackage forClassName: aClassName [
 
 	| cur |
@@ -829,7 +829,7 @@ RPackageOrganizer >> registerInterestToSystemAnnouncement [
 	self registerInterestToAnnouncer: self announcer
 ]
 
-{ #category : #'public registration' }
+{ #category : #registration }
 RPackageOrganizer >> registerPackage: aPackage [
 	"A new package is now available and declared in the receiver. "
 	
@@ -846,7 +846,7 @@ RPackageOrganizer >> registerPackage: aPackage [
 	^ aPackage
 ]
 
-{ #category : #'private registration' }
+{ #category : #'private - registration' }
 RPackageOrganizer >> registerPackage: aPackage forClass: aClass [ 
 	(aPackage includesClass: aClass) 
 		ifFalse: 
@@ -854,7 +854,7 @@ RPackageOrganizer >> registerPackage: aPackage forClass: aClass [
 	^classPackageMapping at: aClass instanceSide name put: aPackage
 ]
 
-{ #category : #'private registration' }
+{ #category : #'private - registration' }
 RPackageOrganizer >> registerPackage: aPackage forClassName: aClassNameSymbol [
 	"Register aPackage as the package of the class aClassNameSymbol. The package should contain the class in its class definitions."
 	
@@ -864,7 +864,7 @@ RPackageOrganizer >> registerPackage: aPackage forClassName: aClassNameSymbol [
 	^classPackageMapping at: aClassNameSymbol put: aPackage
 ]
 
-{ #category : #'public registration' }
+{ #category : #registration }
 RPackageOrganizer >> registerPackageNamed: aString [ 
 	^ self 
 		packageNamed: aString asSymbol
@@ -917,7 +917,7 @@ RPackageOrganizer >> reportExtraRemovalOf: aClass [
 	self traceCr: 'The class ', aClass name printString , ' is removed twice'
 ]
 
-{ #category : #'public registration' }
+{ #category : #registration }
 RPackageOrganizer >> signalPackageExists: aPackageName [
 
 	RPackageConflictError signal: ('A package named {1} already exists' format: {aPackageName})
@@ -1232,7 +1232,7 @@ RPackageOrganizer >> unregister [
 	SystemAnnouncer uniqueInstance unsubscribe: self.
 ]
 
-{ #category : #'private registration' }
+{ #category : #'private - registration' }
 RPackageOrganizer >> unregisterExtendingPackage: aPackage forClass: aClass [
 	| extendingPackageForClass |
 	
@@ -1245,7 +1245,7 @@ RPackageOrganizer >> unregisterExtendingPackage: aPackage forClass: aClass [
 			ifAbsent: [] "not happy with this one" ]
 ]
 
-{ #category : #'private registration' }
+{ #category : #'private - registration' }
 RPackageOrganizer >> unregisterExtendingPackage: aPackage forClassName: aClassName [
 
 	| cur |
@@ -1261,7 +1261,7 @@ RPackageOrganizer >> unregisterInterestToSystemAnnouncement [
 	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
-{ #category : #'public registration' }
+{ #category : #registration }
 RPackageOrganizer >> unregisterPackage: aPackage [
 	"Unregister the specified package from the list of registered packages. Raise the announcement RPackageUnregistered."
 
@@ -1275,7 +1275,7 @@ RPackageOrganizer >> unregisterPackage: aPackage [
 	^ aPackage
 ]
 
-{ #category : #'private registration' }
+{ #category : #'private - registration' }
 RPackageOrganizer >> unregisterPackage: aPackage forClass: aClass [ 
 	"unregister the back pointer mapping from classes to packages."
 		
@@ -1284,7 +1284,7 @@ RPackageOrganizer >> unregisterPackage: aPackage forClass: aClass [
 		ifAbsent: [ self reportExtraRemovalOf: aClass ]
 ]
 
-{ #category : #'private registration' }
+{ #category : #'private - registration' }
 RPackageOrganizer >> unregisterPackage: aPackage forClassName: aClassName [
 	"Unregister the package back pointer for a given class. The class should not belong to the package anymore before removing the back pointer."
 
@@ -1294,7 +1294,7 @@ RPackageOrganizer >> unregisterPackage: aPackage forClassName: aClassName [
 	^classPackageMapping removeKey: aClassName asSymbol ifAbsent: [self reportBogusBehaviorOf: #unregisterPackage:forClassName:  ]
 ]
 
-{ #category : #'public registration' }
+{ #category : #registration }
 RPackageOrganizer >> unregisterPackageNamed: symbol [
 	"Unregister the specified package from the list of registered packages. Raise the announcement RPackageUnregistered."
 	
@@ -1340,7 +1340,7 @@ RPackageOrganizer >> validateCanBeAddedPackageName: packageName tagName: tagName
 
 ]
 
-{ #category : #'public registration' }
+{ #category : #registration }
 RPackageOrganizer >> validatePackageDoesNotExist: aPackageName [
 
 	(self includesPackageNamed: aPackageName)

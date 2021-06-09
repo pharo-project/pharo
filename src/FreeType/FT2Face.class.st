@@ -238,62 +238,62 @@ FT2Face >> familyName [
 	^familyName
 ]
 
-{ #category : #'private-ffi-calls' }
+{ #category : #'private - ffi' }
 FT2Face >> ffiGetCharIndex: charIndex [
 	^ self ffiCall: #(FT_UInt FT_Get_Char_Index(self, FT_ULong charIndex))
 ]
 
-{ #category : #'private-ffi-calls' }
+{ #category : #'private - ffi' }
 FT2Face >> ffiGetKerningLeft: left_glyph right: right_glyph result: akerning [
 	self
 		ffiCall: #(FT_Error FT_Get_Kerning(self, FT_UInt left_glyph, FT_UInt right_glyph, 2, FT_Vector  *akerning ))
 ]
 
-{ #category : #'private-ffi-calls' }
+{ #category : #'private - ffi' }
 FT2Face >> ffiGetPostscriptName [
 	self ffiCall: #(char* FT_Get_Postscript_Name(self))
 ]
 
-{ #category : #'private-ffi-calls' }
+{ #category : #'private - ffi' }
 FT2Face >> ffiLoadChar: char_code flags: load_flags [
 	^ self ffiCall: #(FT_Error FT_Load_Char(self, FT_ULong  char_code, FT_Int32  load_flags ))
 ]
 
-{ #category : #'private-ffi-calls' }
+{ #category : #'private - ffi' }
 FT2Face >> ffiLoadGlyph: glyph_index flags: load_flags [
 	^ self ffiCall: #(FT_Error FT_Load_Glyph(self, FT_UInt glyph_index,FT_Int32  load_flags ))
 ]
 
-{ #category : #'private-ffi-calls' }
+{ #category : #'private - ffi' }
 FT2Face >> ffiOutline: outline embolden: strength [
 
 	^ self ffiCall: #(FT_Error FT_Outline_Embolden(FT_Outline*  outline, FT_Pos strength ))
 ]
 
-{ #category : #'private-ffi-calls' }
+{ #category : #'private - ffi' }
 FT2Face >> ffiOutline: outline transformByMatrix: matrix [
 	^ self ffiCall: #(void FT_Outline_Transform( FT_Outline*  outline, FT_Matrix*   matrix ))
 
 ]
 
-{ #category : #'private-ffi-calls' }
+{ #category : #'private - ffi' }
 FT2Face >> ffiSelectCharmap: encoding_value [
 	self ffiCall: #(FT_Error FT_Select_Charmap(self, FT_Encoding  encoding_value ))
 ]
 
-{ #category : #'private-ffi-calls' }
+{ #category : #'private - ffi' }
 FT2Face >> ffiSetPixelWidth: pixel_width height: pixel_height [
 	^ self ffiCall: #(long FT_Set_Pixel_Sizes(self,
                       FT_UInt  pixel_width,
                       FT_UInt  pixel_height ))
 ]
 
-{ #category : #'private-ffi-calls' }
+{ #category : #'private - ffi' }
 FT2Face >> ffiTransformMatrix: matrix delta: delta [
 	self ffiCall: #(void FT_Set_Transform(self, FT_Matrix*  matrix, FT_Vector*  delta ))
 ]
 
-{ #category : #'private-ffi-calls' }
+{ #category : #'private - ffi' }
 FT2Face >> ffiTranslateOutline: outline x: xOffset y: yOffset [
 	self ffiCall: #(void FT_Outline_Translate (FT_Outline * outline , FT_Pos xOffset , FT_Pos yOffset))
 ]
@@ -560,7 +560,7 @@ FT2Face >> postscriptName [
 	^self ffiGetPostscriptName
 ]
 
-{ #category : #'private-primitives' }
+{ #category : #'private - primitives' }
 FT2Face >> primGetKerningLeft: leftGlyphIndex right: rightGlyphIndex [
 	| result returnCode |
 	result := FTVector new.
@@ -576,7 +576,7 @@ FT2Face >> primGetKerningLeft: leftGlyphIndex right: rightGlyphIndex [
 	^ result x @ result y
 ]
 
-{ #category : #'private-primitives' }
+{ #category : #'private - primitives' }
 FT2Face >> primLoadCharacter: index flags: flags [
 	| returnCode |
 	self validate.
@@ -584,7 +584,7 @@ FT2Face >> primLoadCharacter: index flags: flags [
 	returnCode ~= 0 ifTrue: [ FT2Error errorCode: returnCode signal: 'Error loading character' ].
 ]
 
-{ #category : #'private-primitives' }
+{ #category : #'private - primitives' }
 FT2Face >> primSetTransform: matrixWordArray delta: deltaWordArray [
 	"matrix is 16.16 fixed point
 		x' = x*m[0] + y*m[1]                                 
@@ -609,7 +609,7 @@ FT2Face >> primSetTransform: matrixWordArray delta: deltaWordArray [
 	self ffiTransformMatrix: matrix delta: delta.
 ]
 
-{ #category : #'private-primitives' }
+{ #category : #'private - primitives' }
 FT2Face >> primTransformGlyphSlotOutline:  anIntegerArray [
 	| faceRec outline matrix |
 	faceRec := FTFaceRec fromHandle: handle.
@@ -626,7 +626,7 @@ FT2Face >> primTransformGlyphSlotOutline:  anIntegerArray [
 	self ffiOutline: outline transformByMatrix: matrix.
 ]
 
-{ #category : #'private-primitives' }
+{ #category : #'private - primitives' }
 FT2Face >> primTranslateGlyphSlotOutline:  anIntegerArray [
 	self ffiTranslateOutline: self outline x: (anIntegerArray at: 1) y: (anIntegerArray at: 2).
 	

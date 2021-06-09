@@ -42,7 +42,7 @@ AthensCanvasWrapper >> canvas: anAthensCanvas [
 	athensCanvas := anAthensCanvas
 ]
 
-{ #category : #'private clip transform' }
+{ #category : #'private - clip transform' }
 AthensCanvasWrapper >> canvasClipBy: aClipRect during: aBlock [
 	| oldRect |
 	oldRect := self clipRect.
@@ -61,7 +61,7 @@ AthensCanvasWrapper >> clipRect [
 	^ self canvas clipRect
 ]
 
-{ #category : #'private clip transform' }
+{ #category : #'private - clip transform' }
 AthensCanvasWrapper >> clipWrapperAndAthensTransformBy: aDisplayTransform clippingTo: aClipRect during: aBlock smoothing: cellSize [
 "the clipTransform methods are just trial and error attemps on getting this right"
 	| rect |
@@ -78,7 +78,7 @@ AthensCanvasWrapper >> clipWrapperAndAthensTransformBy: aDisplayTransform clippi
 					aBlock value: self ] ]	"]"
 ]
 
-{ #category : #'private clip transform' }
+{ #category : #'private - clip transform' }
 AthensCanvasWrapper >> clipWrapperTransformBy: aDisplayTransform clippingTo: aClipRect during: aBlock smoothing: cellSize [
 "the clipTransform methods are just trial and error attemps on getting this right"
 	| rect |

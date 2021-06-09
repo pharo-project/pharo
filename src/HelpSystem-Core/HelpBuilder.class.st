@@ -48,7 +48,7 @@ HelpBuilder >> rootToBuildFrom: anObject [
 	rootToBuildFrom := anObject
 ]
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 HelpBuilder >> topicClass [
 	^HelpTopic
 ]

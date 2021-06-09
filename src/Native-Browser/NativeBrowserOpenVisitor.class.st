@@ -50,7 +50,7 @@ NativeBrowserOpenVisitor >> pathString: aString [
 	pathString := aString
 ]
 
-{ #category : #'private-ffi-calls' }
+{ #category : #'private - ffi' }
 NativeBrowserOpenVisitor >> privShellExecute: lpOperation file: lpFile parameters: lpParameters directory: lpDirectory show: nShowCmd [
 	^ self ffiCall: #( 
 			FFIConstantHandle ShellExecuteA(

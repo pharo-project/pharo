@@ -132,7 +132,7 @@ TFCallbackQueue >> nextPendingCallback [
 	^ TFCallbackInvocation fromHandle: externalAddress
 ]
 
-{ #category : #'private primitives' }
+{ #category : #'private - primitives' }
 TFCallbackQueue >> primNextPendingCallback [
 	<primitive: 'primitiveReadNextCallback'>
 

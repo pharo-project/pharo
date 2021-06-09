@@ -167,7 +167,7 @@ LzwGifEncoder >> extent: anExtentPoint [
 	dimensions := anExtentPoint
 ]
 
-{ #category : #'private-bits access' }
+{ #category : #'private - bits access' }
 LzwGifEncoder >> flushBits [
 	numLeftoverBits = 0 ifFalse: 
 		[ self nextBytePut: bitBuffer.
@@ -203,7 +203,7 @@ LzwGifEncoder >> minimumCodeSize: anInteger [
 	minimumCodeSize := anInteger
 ]
 
-{ #category : #'private-packing' }
+{ #category : #'private - packing' }
 LzwGifEncoder >> nextBytePut: anInteger [
 	"Write a complete byte to the output byteStream.
 	Be sure to reset one we reach the limit, which is
@@ -214,7 +214,7 @@ LzwGifEncoder >> nextBytePut: anInteger [
 		ifTrue: [ self flushBuffer ].
 ]
 
-{ #category : #'private-bits access' }
+{ #category : #'private - bits access' }
 LzwGifEncoder >> nextCodePut: anInteger [
 	"Attempt to put the bits on the
 	output stream. If we have remaining bits,
@@ -241,7 +241,7 @@ LzwGifEncoder >> nextCodePut: anInteger [
 	
 ]
 
-{ #category : #'private-encoding' }
+{ #category : #'private - encoding' }
 LzwGifEncoder >> readPixelFrom: bits [
 	"Using the current x and y positions and
 	the specified byte size for a row, determine
