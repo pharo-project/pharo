@@ -4,7 +4,7 @@ Class {
 	#category : #'Spec-Tests-Core-Widgets'
 }
 
-{ #category : #running }
+{ #category : #accessing }
 IconListPresenterTest >> classToTest [
 	^ IconListPresenter
 ]

@@ -21,7 +21,7 @@ Class {
 	#category : #'Morphic-Base-Basic'
 }
 
-{ #category : #example }
+{ #category : #examples }
 ThumbnailMorph class >> example1 [
 	"Create a thumbnail representing another Morph. The thumbnail is continously updated."
 	"self example1"

@@ -34,7 +34,7 @@ IconListPresenter class >> defaultSpec [
 		adapt: #(model))
 ]
 
-{ #category : #example }
+{ #category : #examples }
 IconListPresenter class >> example [
 	<sampleInstance>
 	| example |
@@ -75,7 +75,7 @@ IconListPresenter >> initialize [
 	iconHolder := [:item | nil ] asValueHolder.
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 IconListPresenter >> whenIconsChanged: aBlock [ 
 	
 	iconHolder whenChangedDo: aBlock 

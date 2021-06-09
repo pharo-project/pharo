@@ -38,7 +38,7 @@ DiffPresenter class >> defaultSpec [
 		adapt: #(model))
 ]
 
-{ #category : #example }
+{ #category : #examples }
 DiffPresenter class >> exampleWithOptions [
 	"
 	self exampleWithOptions
@@ -52,7 +52,7 @@ DiffPresenter class >> exampleWithOptions [
 		openWithSpec
 ]
 
-{ #category : #example }
+{ #category : #examples }
 DiffPresenter class >> exampleWithoutOptions [
 	"
 	self exampleWithoutOptions

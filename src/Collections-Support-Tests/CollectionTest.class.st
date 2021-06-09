@@ -7,7 +7,7 @@ Class {
 	#category : #'Collections-Support-Tests-Base'
 }
 
-{ #category : #test }
+{ #category : #tests }
 CollectionTest >> testCopyWithoutDuplicates [
  	| a b |
 	a := #(1 2 3 4 4 5 6 1) copyWithoutDuplicates.

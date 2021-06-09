@@ -13,7 +13,7 @@ FloatTest >> classToBeTested [
 	^ Float
 ]
 
-{ #category : #test }
+{ #category : #tests }
 FloatTest >> testAsScaledDecimal [
 
 	self

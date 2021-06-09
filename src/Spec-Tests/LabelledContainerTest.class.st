@@ -4,12 +4,12 @@ Class {
 	#category : #'Spec-Tests-PolyWidgets-Elementary'
 }
 
-{ #category : #running }
+{ #category : #accessing }
 LabelledContainerTest >> classToTest [
 	^ LabelledContainer
 ]
 
-{ #category : #running }
+{ #category : #initialization }
 LabelledContainerTest >> initializeTestedInstance [
 	testedInstance content: TestingComposablePresenter.
 ]

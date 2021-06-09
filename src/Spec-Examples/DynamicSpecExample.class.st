@@ -15,20 +15,20 @@ Class {
 	#category : #'Spec-Examples-Wrapper'
 }
 
-{ #category : #example }
+{ #category : #examples }
 DynamicSpecExample class >> exampleInt [
 	<sampleInstance>
 	^ self new open: 42
 ]
 
-{ #category : #example }
+{ #category : #examples }
 DynamicSpecExample class >> exampleNil [
 	<sampleInstance>
 	^ self new
 		open: nil
 ]
 
-{ #category : #example }
+{ #category : #examples }
 DynamicSpecExample class >> exampleString [
 	<sampleInstance>
 	^ self new

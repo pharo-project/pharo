@@ -4,7 +4,7 @@ Class {
 	#category : #'Spec-Tests-PolyWidgets-RGBAndShape'
 }
 
-{ #category : #running }
+{ #category : #accessing }
 RGBWidgetTest >> classToTest [
 	^ RGBWidget
 ]

@@ -75,7 +75,7 @@ Class {
 	#category : #'Network-Kernel-Base'
 }
 
-{ #category : #example }
+{ #category : #examples }
 SocketStream class >> finger: userName [
 	"SocketStream finger: 'stp'"
 

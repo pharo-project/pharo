@@ -7,12 +7,12 @@ Class {
 	#category : #'Kernel-Tests-Methods'
 }
 
-{ #category : #example }
+{ #category : #examples }
 ObjectsAsMethodsExample >> add: a with: b [
 	^a + b
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ObjectsAsMethodsExample >> answer42 [
 	^42
 ]

@@ -9,7 +9,7 @@ Class {
 	#category : #'SUnit-Rules-Base'
 }
 
-{ #category : #'testing-interest' }
+{ #category : #'testing - interest' }
 ReTestClassNotInPackageWithTestEndingNameRule class >> checksClass [
 
 	^ true

@@ -46,7 +46,7 @@ RadioButtonGroupPresenter class >> defaultSpec [
 		yourself
 ]
 
-{ #category : #example }
+{ #category : #examples }
 RadioButtonGroupPresenter class >> example [
 	<sampleInstance>
 	| example |

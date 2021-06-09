@@ -28,7 +28,7 @@ Class {
 	#category : #'Spec-PolyWidgets-ListAndTree'
 }
 
-{ #category : #example }
+{ #category : #examples }
 EditableList class >> example [
 	<sampleInstance>
 	^self new

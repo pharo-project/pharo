@@ -80,7 +80,7 @@ SycMethodNameEditorPresenter class >> defaultSpec [
 		yourself
 ]
 
-{ #category : #example }
+{ #category : #examples }
 SycMethodNameEditorPresenter class >> example2 [
 	<script>
 	self

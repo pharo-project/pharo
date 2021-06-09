@@ -21,7 +21,7 @@ KMDescriptionPresenter class >> defaultSpec [
 		yourself
 ]
 
-{ #category : #example }
+{ #category : #examples }
 KMDescriptionPresenter class >> example [
 	self new
 		categories: #(GlobalShortcuts MonticelloShortcuts TextEditor);

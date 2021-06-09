@@ -56,7 +56,7 @@ Class {
 	#category : #'Morphic-Widgets-Tree'
 }
 
-{ #category : #example }
+{ #category : #examples }
 FilteredMorphTreeModel class >> example [
 	"self example"
 

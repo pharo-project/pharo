@@ -4,7 +4,7 @@ Class {
 	#category : #'Spec-Tests-PolyWidgets-Labelled'
 }
 
-{ #category : #running }
+{ #category : #accessing }
 LabelledListTest >> classToTest [
 	^ LabelledList
 ]

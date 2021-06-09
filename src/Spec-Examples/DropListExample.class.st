@@ -30,7 +30,7 @@ DropListExample class >> defaultSpec [
 		newRow: [ :r | r add: #container ] yourself
 ]
 
-{ #category : #example }
+{ #category : #examples }
 DropListExample class >> example [
 	<sampleInstance>
 	
