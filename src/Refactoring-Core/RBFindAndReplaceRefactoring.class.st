@@ -137,7 +137,7 @@ RBFindAndReplaceRefactoring >> findOccurrencesIn: rbMethod [
 	of: rbMethod.
 	occurrences := occurrences + 1.
 	flag := true. ]
-                      onFailure: [  ] .
+                      onFailure: [ ] .
 						flag ifTrue: [ self findOccurrencesIn: (rbMethod modelClass methodFor: rbMethod selector).
 							^ self]]]]. 
 	methodNode body nodesDo: [ :node |
@@ -148,7 +148,7 @@ RBFindAndReplaceRefactoring >> findOccurrencesIn: rbMethod [
 	of: rbMethod.
 	occurrences := occurrences + 1.
 	flag := true.]
-                      onFailure: [  ] .
+                      onFailure: [ ] .
 						flag ifTrue: [ self findOccurrencesIn: (rbMethod modelClass methodFor: rbMethod selector).
 							^ self]]].
 ]

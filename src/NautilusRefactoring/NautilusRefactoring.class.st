@@ -166,6 +166,7 @@ NautilusRefactoring >> shouldOverride: aSelector in: aClass [
 
 { #category : #option }
 NautilusRefactoring >> shouldSearchInHierarchy: class [
+
 	^ class subclasses 
 		ifNotEmpty: [ 
 			UIManager default 
