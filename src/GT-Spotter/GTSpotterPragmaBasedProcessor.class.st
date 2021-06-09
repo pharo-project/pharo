@@ -15,19 +15,19 @@ Class {
 	#category : #'GT-Spotter-Pragma-Based-Processors'
 }
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTSpotterPragmaBasedProcessor class >> defaultItemsLimit [
 
 	^ DefaultItemsLimit ifNil: [ DefaultItemsLimit := 25 ]
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTSpotterPragmaBasedProcessor class >> defaultItemsLimit: aValue [
 
 	DefaultItemsLimit := aValue
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTSpotterPragmaBasedProcessor class >> settingsOn: aBuilder [
 	"<systemsettings>
 

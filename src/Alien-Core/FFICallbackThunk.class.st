@@ -334,12 +334,12 @@ FFICallbackThunk >> initializeX86Stdcall: bytes [
 		unsignedShortAt: 23 put: bytes
 ]
 
-{ #category : #'primitives-memory management' }
+{ #category : #'primitives - memory management' }
 FFICallbackThunk >> primFree [
 	self shouldNotImplement
 ]
 
-{ #category : #'private-primitives' }
+{ #category : #'private - primitives' }
 FFICallbackThunk >> primThunkEntryAddress [ "^<Integer>"
 	"Answer the address of the entry-point for thunk callbacks:
 		x86: long thunkEntry(void *thunkp, long *stackp);

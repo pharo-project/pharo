@@ -42,7 +42,7 @@ RGTraitTransformation >> initializeUnresolved [
 	subject := self unresolvedValue: self defaultSubject.
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGTraitTransformation >> isTraitTransformation [
 
 	^ true
@@ -107,7 +107,7 @@ RGTraitTransformation >> subject: anRGTrait [
 		self backend forBehavior setSubjectFor: self to: anRGTrait. ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGTraitTransformation >> trait [
 	
 	^ self subject trait

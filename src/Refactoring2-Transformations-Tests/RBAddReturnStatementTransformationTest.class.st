@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #'testing-utilities' }
+{ #category : #utilities }
 RBAddReturnStatementTransformationTest >> methodAfter [
 
 	| variable |
@@ -12,14 +12,14 @@ RBAddReturnStatementTransformationTest >> methodAfter [
 	^ variable
 ]
 
-{ #category : #'testing-utilities' }
+{ #category : #utilities }
 RBAddReturnStatementTransformationTest >> methodBefore [
 
 	| variable |
 	variable := 'String'.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddReturnStatementTransformationTest >> testAccessIsNotDefined [
 
 	self shouldFail: (RBAddReturnStatementTransformation 
@@ -29,7 +29,7 @@ RBAddReturnStatementTransformationTest >> testAccessIsNotDefined [
 							asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddReturnStatementTransformationTest >> testAlreadyDefinesReturn [
 
 	self shouldFail: (RBAddReturnStatementTransformation 
@@ -39,7 +39,7 @@ RBAddReturnStatementTransformationTest >> testAlreadyDefinesReturn [
 							asRefactoring 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddReturnStatementTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBAddReturnStatementTransformation
@@ -49,7 +49,7 @@ RBAddReturnStatementTransformationTest >> testClassDoesNotExist [
 							asRefactoring 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddReturnStatementTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBAddReturnStatementTransformation
@@ -59,7 +59,7 @@ RBAddReturnStatementTransformationTest >> testMethodDoesNotExist [
 							asRefactoring 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddReturnStatementTransformationTest >> testRefactoring [
 
 	| refactoring class |
@@ -76,7 +76,7 @@ RBAddReturnStatementTransformationTest >> testRefactoring [
 			equals: (class parseTreeFor: #methodAfter) body.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddReturnStatementTransformationTest >> testTransform [
 
 	| transformation class |

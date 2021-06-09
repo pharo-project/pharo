@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveSubtreeTransformationTest >> testEmptyCode [
 	| transformation |
 	transformation := (RBRemoveSubtreeTransformation code: '' from: #one in: self changeMock name) transform.
@@ -13,7 +13,7 @@ RBRemoveSubtreeTransformationTest >> testEmptyCode [
 	self shouldFail: (RBRemoveSubtreeTransformation code: '' from: #selector:from: in: #RBRemoveMethodTransformation) asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveSubtreeTransformationTest >> testExtractFailure [
 	| transformation |
 	transformation := (RBRemoveSubtreeTransformation code: ':= anInterval' from: #one in: self changeMock name) transform.
@@ -22,7 +22,7 @@ RBRemoveSubtreeTransformationTest >> testExtractFailure [
 	self shouldFail: (RBRemoveSubtreeTransformation code: ':= aSelector' from: #selector:from: in: #RBRemoveMethodTransformation) asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveSubtreeTransformationTest >> testMethodDoesNotExist [
 	| transformation |
 	transformation := (RBRemoveSubtreeTransformation code: 'selector := aSelector' from: #two in: self changeMock name) transform.
@@ -31,7 +31,7 @@ RBRemoveSubtreeTransformationTest >> testMethodDoesNotExist [
 	self shouldFail: (RBRemoveSubtreeTransformation code: 'selector := aSelector' from: #selector:for: in: #RBRemoveMethodTransformation) asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveSubtreeTransformationTest >> testRefactoring [
 
 	| transformation class |
@@ -48,7 +48,7 @@ RBRemoveSubtreeTransformationTest >> testRefactoring [
 	self assert: (class parseTreeFor: #selector:from:) body statements size equals: 1
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveSubtreeTransformationTest >> testTransform [
 	| transformation class |
 	transformation := (RBRemoveSubtreeTransformation code: '^ 1' from: #one in: self changeMock name) transform.
@@ -60,7 +60,7 @@ RBRemoveSubtreeTransformationTest >> testTransform [
 	self assertEmpty: (class parseTreeFor: #one) body statements
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveSubtreeTransformationTest >> testTransformNotSequenceNode [
 	| transformation class |
 	transformation := RBCompositeTransformation new

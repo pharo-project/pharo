@@ -503,7 +503,7 @@ PRRichTextComposer >> visitBeginEnvironmentAnnotation: aBeginEnvironmentAnnotati
 	canvas << '>>> Environments not supported in RichText Pillar <<<' asText
 ]
 
-{ #category : #'visiting -  format' }
+{ #category : #'visiting - format' }
 PRRichTextComposer >> visitBoldFormat: anObject [
 	canvas 
 		includeAttribute: TextEmphasis bold 
@@ -653,7 +653,7 @@ PRRichTextComposer >> visitHorizontalRule: anHorizontalLine [
 	canvas newLine.	
 ]
 
-{ #category : #'visiting -  format' }
+{ #category : #'visiting - format' }
 PRRichTextComposer >> visitItalicFormat: anObject [
 	canvas includeAttribute: TextEmphasis italic in: [ self visitFormat: anObject ]
 ]
@@ -697,7 +697,7 @@ PRRichTextComposer >> visitMathInTextAnnotation: aPRMathInTextAnnotation [
 		ifFalse: [ canvas << (PRCodeblockStylerExtensions latexMathStylerFor: aPRMathInTextAnnotation text)]
 ]
 
-{ #category : #'visiting -  format' }
+{ #category : #'visiting - format' }
 PRRichTextComposer >> visitMonospaceFormat: anObject [
 	"Notice - I add a highlight to the backgorund rather than mono-spaced."
 	| backgroundColor sem |
@@ -761,19 +761,19 @@ PRRichTextComposer >> visitPreformatted: aPreformatted [
 	canvas newLine
 ]
 
-{ #category : #'visiting -  format' }
+{ #category : #'visiting - format' }
 PRRichTextComposer >> visitStrikethroughFormat: anObject [
 	canvas includeAttribute: TextEmphasis struckOut in: [ self visitFormat: anObject ]
 ]
 
-{ #category : #'visiting -  format' }
+{ #category : #'visiting - format' }
 PRRichTextComposer >> visitSubscriptFormat: anObject [
 	canvas
 		includeAttribute: self subscriptColor
 		in: [ self visitFormat: anObject ]
 ]
 
-{ #category : #'visiting -  format' }
+{ #category : #'visiting - format' }
 PRRichTextComposer >> visitSuperscriptFormat: anObject [
 	canvas
 		includeAttribute: self superscriptColor
@@ -796,7 +796,7 @@ PRRichTextComposer >> visitText: anObject [
 		" - should not be necessary addAttribute: (TextIndent tabs: canvas nesting)"
 ]
 
-{ #category : #'visiting -  format' }
+{ #category : #'visiting - format' }
 PRRichTextComposer >> visitUnderlineFormat: anObject [
 	canvas includeAttribute: TextEmphasis underlined in: [ self visitFormat: anObject ]
 ]

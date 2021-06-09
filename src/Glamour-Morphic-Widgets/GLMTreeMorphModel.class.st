@@ -159,7 +159,7 @@ GLMTreeMorphModel >> explicitSelection: anObject [
 		ifFalse: [ self explicitlySelectItem: anObject ]
 ]
 
-{ #category : #'private selecting' }
+{ #category : #'private - selecting' }
 GLMTreeMorphModel >> explicitlySelectItem: anObject [
 
 	( self selectedItem notNil and: [ self selectedItem = anObject ] )
@@ -184,7 +184,7 @@ GLMTreeMorphModel >> explicitlySelectItem: anObject [
 			]
 ]
 
-{ #category : #'private selecting' }
+{ #category : #'private - selecting' }
 GLMTreeMorphModel >> explicitlySelectMultipleItems: aCollection [
 
 	| newSelection collection |

@@ -281,49 +281,49 @@ AthensCairoMatrix >> setTranslateX: x Y: y [
 
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 AthensCairoMatrix >> shx [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_SHX
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 AthensCairoMatrix >> shx: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_SHX put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 AthensCairoMatrix >> shy [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_SHY
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 AthensCairoMatrix >> shy: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_SHY put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 AthensCairoMatrix >> sx [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_SX
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 AthensCairoMatrix >> sx: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_SX put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 AthensCairoMatrix >> sy [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_SY
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 AthensCairoMatrix >> sy: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_SY put: anObject
@@ -374,25 +374,25 @@ AthensCairoMatrix >> translateX: px Y: py [
 
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 AthensCairoMatrix >> x [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_X
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 AthensCairoMatrix >> x: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_X put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 AthensCairoMatrix >> y [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_Y
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 AthensCairoMatrix >> y: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_Y put: anObject

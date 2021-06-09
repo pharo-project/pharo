@@ -22,7 +22,7 @@ ReClassVariableCapitalizationRule >> check: aClass forCritiquesDo: aCriticBlock 
 				(self critiqueFor: aClass about: each) ]
 ]
 
-{ #category : #'running-helpers' }
+{ #category : #'running - helpers' }
 ReClassVariableCapitalizationRule >> critiqueFor: aClass about: aVarName [
 
 	| crit |

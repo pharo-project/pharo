@@ -314,7 +314,7 @@ GIFReadWriter >> nextPutImage: aForm [
 	self writeBitData: reduced bits.
 ]
 
-{ #category : #'private-decoding' }
+{ #category : #'private - decoding' }
 GIFReadWriter >> processColorsFor: anImageFrame [
 	"Colors can only be mapped after the GCE has been evaluated
 	for a given image frame. We perform this action using either
@@ -338,7 +338,7 @@ GIFReadWriter >> processColorsFor: anImageFrame [
 	anImageFrame form colors: colorTable.
 ]
 
-{ #category : #'private-decoding' }
+{ #category : #'private - decoding' }
 GIFReadWriter >> readApplicationExtension [
 	"Uses the underlying stream to read a so-called
 	Application Extension to the GIF Image. These extensions
@@ -383,7 +383,7 @@ GIFReadWriter >> readApplicationExtension [
 	
 ]
 
-{ #category : #'private-decoding' }
+{ #category : #'private - decoding' }
 GIFReadWriter >> readBitDataOnFrame: aFrame [
 	"using modified Lempel-Ziv Welch algorithm."
 	| initCodeSize  packedBits hasLocalColor localColorSize maxOutCodes decoder c  bytes |
@@ -432,7 +432,7 @@ GIFReadWriter >> readBitDataOnFrame: aFrame [
 	^ c
 ]
 
-{ #category : #'private-decoding' }
+{ #category : #'private - decoding' }
 GIFReadWriter >> readBody [
 	"Read the GIF blocks. Modified to return a frame."
 	| block frame |
@@ -465,7 +465,7 @@ GIFReadWriter >> readBody [
 	^ frames.
 ]
 
-{ #category : #'private-decoding' }
+{ #category : #'private - decoding' }
 GIFReadWriter >> readColorTable: numberOfEntries [ 
 	| array r g b |
 	array := Array new: numberOfEntries.
@@ -486,7 +486,7 @@ GIFReadWriter >> readColorTable: numberOfEntries [
 	^ array
 ]
 
-{ #category : #'private-decoding' }
+{ #category : #'private - decoding' }
 GIFReadWriter >> readCommentExtension [
 	| blockTerminator |
 	blockTerminator := self next.
@@ -497,7 +497,7 @@ GIFReadWriter >> readCommentExtension [
 		ifFalse: [ ^ self error: 'Invalid Block Terminator' ]
 ]
 
-{ #category : #'private-decoding' }
+{ #category : #'private - decoding' }
 GIFReadWriter >> readDisposal: aPackedByte [
 	"Read the three-bit disposal flag from
 	the packed byte in the Graphic Control Extension block.
@@ -520,7 +520,7 @@ GIFReadWriter >> readDisposal: aPackedByte [
 	
 ]
 
-{ #category : #'private-decoding' }
+{ #category : #'private - decoding' }
 GIFReadWriter >> readExtensionBlock: aGifBlock withFrame: anImageFrame [
 	"Determine which type of extension block we are
 	looking at. The most common is the Graphic Control Extension (GCE)
@@ -567,7 +567,7 @@ GIFReadWriter >> readExtensionBlock: aGifBlock withFrame: anImageFrame [
 	^ self error: 'Unknown GIF Extension: ',(extensionType asString).
 ]
 
-{ #category : #'private-decoding' }
+{ #category : #'private - decoding' }
 GIFReadWriter >> readHeader [
 	| is89 byte hasColorMap |
 	(self hasMagicNumber: 'GIF87a' asByteArray) 
@@ -592,7 +592,7 @@ GIFReadWriter >> readHeader [
 			[ colorPalette := nil	"Palette monochromeDefault" ]
 ]
 
-{ #category : #'private-decoding' }
+{ #category : #'private - decoding' }
 GIFReadWriter >> readWord [
 	^self next + (self next bitShift: 8)
 ]
@@ -636,7 +636,7 @@ GIFReadWriter >> updatePixelPosition [
 	^ self error: 'can''t happen'
 ]
 
-{ #category : #'private-encoding' }
+{ #category : #'private - encoding' }
 GIFReadWriter >> writeBitData: bits [ 
 	"using modified Lempel-Ziv Welch algorithm."
 	| encoder initCodeSize |
@@ -702,7 +702,7 @@ GIFReadWriter >> writeFrameHeader: anImageFrame [
 	
 ]
 
-{ #category : #'private-encoding' }
+{ #category : #'private - encoding' }
 GIFReadWriter >> writeGCEForFrame: anAnimatedImageFrame [
 	"Writes a Graphics Control Extension onto
 	the output stream for the given image frame"
@@ -735,7 +735,7 @@ GIFReadWriter >> writeGCEForFrame: anAnimatedImageFrame [
 		nextPut: 0.
 ]
 
-{ #category : #'private-encoding' }
+{ #category : #'private - encoding' }
 GIFReadWriter >> writeHeader [
 	| byte |
 	"Write the overall image file header onto the
@@ -763,7 +763,7 @@ GIFReadWriter >> writeHeader [
 		[ self writeNetscapeExtension ].
 ]
 
-{ #category : #'private-encoding' }
+{ #category : #'private - encoding' }
 GIFReadWriter >> writeNetscapeExtension [
 	"Writes a GIF Application Extension corresponding
 	to the NETSCAPE2.0 version, with specifies the loopCount."
@@ -778,7 +778,7 @@ GIFReadWriter >> writeNetscapeExtension [
 		nextPut: 0.
 ]
 
-{ #category : #'private-encoding' }
+{ #category : #'private - encoding' }
 GIFReadWriter >> writeWord: aWord [
 	self nextPut: (aWord bitAnd: 255).
 	self nextPut: ((aWord bitShift: -8) bitAnd: 255).

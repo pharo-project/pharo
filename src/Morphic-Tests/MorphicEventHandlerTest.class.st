@@ -44,7 +44,7 @@ MorphicEventHandlerTest >> testDoubleClickTimeoutFromMorph [
 	self assert: (morph doubleClickTimeout: nil) identicalTo: true
 ]
 
-{ #category : #'tests-events' }
+{ #category : #'tests - events' }
 MorphicEventHandlerTest >> testKeyDownFromMorph [
 	| keyboardEvent |
 
@@ -79,7 +79,7 @@ MorphicEventHandlerTest >> testKeyStrokeFromMorph [
 	self assert: (morph handleKeystroke: keyboardEvent) identicalTo: true
 ]
 
-{ #category : #'tests-events' }
+{ #category : #'tests - events' }
 MorphicEventHandlerTest >> testKeyUpFromMorph [
 	| keyboardEvent |
 
@@ -97,7 +97,7 @@ MorphicEventHandlerTest >> testKeyUpFromMorph [
 	self assert: (keyboardEvent sentTo: morph) identicalTo: true
 ]
 
-{ #category : #'tests-events' }
+{ #category : #'tests - events' }
 MorphicEventHandlerTest >> testMiddleButtonOpenHalos [
 	| event |
 
@@ -116,7 +116,7 @@ MorphicEventHandlerTest >> testMiddleButtonOpenHalos [
 	self assert: (morph halo) isNotNil
 ]
 
-{ #category : #'tests-events' }
+{ #category : #'tests - events' }
 MorphicEventHandlerTest >> testMouseDownFromMorph [
 	| event |
 
@@ -135,7 +135,7 @@ MorphicEventHandlerTest >> testMouseDownFromMorph [
 	self assert: (event sentTo: morph) identicalTo: true
 ]
 
-{ #category : #'tests-events' }
+{ #category : #'tests - events' }
 MorphicEventHandlerTest >> testMouseEnterDraggingFromMorph [
 	| event |
 	event := MouseEvent basicNew
@@ -169,7 +169,7 @@ MorphicEventHandlerTest >> testMouseEnterEventIsNotDuplicated [
 		ensure: [ window ifNotNil: #close ]
 ]
 
-{ #category : #'tests-events' }
+{ #category : #'tests - events' }
 MorphicEventHandlerTest >> testMouseEnterFromMorph [
 	| event |
 	morph eventHandler on: #mouseEnter send: #value to: true.
@@ -187,7 +187,7 @@ MorphicEventHandlerTest >> testMouseEnterFromMorph [
 	self assert: (morph handleMouseEnter: event) identicalTo: true
 ]
 
-{ #category : #'tests-events' }
+{ #category : #'tests - events' }
 MorphicEventHandlerTest >> testMouseLeaveFromMorph [
 	| event |
 	morph eventHandler on: #mouseLeave send: #value to: true.
@@ -205,7 +205,7 @@ MorphicEventHandlerTest >> testMouseLeaveFromMorph [
 	self assert: (morph handleMouseLeave: event) identicalTo: true
 ]
 
-{ #category : #'tests-events' }
+{ #category : #'tests - events' }
 MorphicEventHandlerTest >> testMouseUpFromMorph [
 	| event |
 

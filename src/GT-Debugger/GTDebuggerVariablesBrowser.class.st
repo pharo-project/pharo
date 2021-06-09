@@ -13,7 +13,7 @@ Class {
 	#category : #'GT-Debugger-UI'
 }
 
-{ #category : #'private building' }
+{ #category : #'private - building' }
 GTDebuggerVariablesBrowser >> buildVariablesFromContext: aContext [ 
 	^ aContext gtDebuggerRetrieveVariableValuePairs
 ]
@@ -51,7 +51,7 @@ GTDebuggerVariablesBrowser >> compose [
 	tabulator transmit from: #main; toOutsidePort: #selection.
 ]
 
-{ #category : #'private building' }
+{ #category : #'private - building' }
 GTDebuggerVariablesBrowser >> contextEvaluatorIn: aComposite [
 
 	aComposite pharoScript
@@ -107,12 +107,12 @@ GTDebuggerVariablesBrowser >> updateVariablesForContext [
 	cachedVariables := self 
 ]
 
-{ #category : #'private building' }
+{ #category : #'private - building' }
 GTDebuggerVariablesBrowser >> variablesFromContext: aContext [ 
 	^ cachedVariables ifNil: [ cachedVariables := self buildVariablesFromContext: aContext ]
 ]
 
-{ #category : #'private building' }
+{ #category : #'private - building' }
 GTDebuggerVariablesBrowser >> variablesIn: composite [
 	^ composite fastTable
 		useCache;

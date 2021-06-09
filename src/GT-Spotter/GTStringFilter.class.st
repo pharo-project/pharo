@@ -59,7 +59,7 @@ GTStringFilter >> caseSensitive: anObject [
 	caseSensitive := anObject
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTStringFilter >> defaultCaseSensitive [
 	^ false
 ]

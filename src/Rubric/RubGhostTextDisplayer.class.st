@@ -99,7 +99,7 @@ RubGhostTextDisplayer >> manageLayoutInBounds: aRectangle [
 	^ ret
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 RubGhostTextDisplayer >> noteNewOwner: aMorph [
 	super noteNewOwner: aMorph.
 	ghostText := self paragraphProvider defaultGhostTextMorph.

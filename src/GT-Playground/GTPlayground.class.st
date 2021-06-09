@@ -377,7 +377,7 @@ GTPlayground >> codeIn: a [
 			text clearUserEdits ]
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 GTPlayground >> codePresentation [
 
 	^ self inspectorPresentation firstPresentation
@@ -438,24 +438,24 @@ GTPlayground >> contextMenuPragma [
 	^ #playgroundContextMenu
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 GTPlayground >> currentBindings [ 
 
 	^ self codePresentation currentBindings
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 GTPlayground >> currentBindingsSorted [
 
 	^ self currentBindings associations asSortedCollection: [ :first :second | first key < second key ]
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTPlayground >> defaultPlaygroundTitle [
 	^ 'Playground'
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 GTPlayground >> inspectorPresentation [
 
 	^ self presentations first 
@@ -533,7 +533,7 @@ GTPlayground >> playgroundIcon [
 	^ self iconNamed: #workspace
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 GTPlayground >> removeBinding: anAssociation [
 
 	|bindings|

@@ -87,7 +87,7 @@ FLEncoderTest >> testEncodeInt32Truncated [
 	self assert: self getResult equals: #[0 0 0 0].
 	
 	encoder encodeInt32: (2 raisedTo: 64) - 1.
-	self assert: self getResult equals: #[255 255 255 255]
+	self assert: self getResult equals: #[127 255 255 255]
 ]
 
 { #category : #tests }
@@ -102,16 +102,16 @@ FLEncoderTest >> testEncodeInt64 [
 	self assert: self getResult equals: #[0 0 0 0 0 0 0 1].
 	
 	"-1 on 64-bits systems"
-	encoder encodeInt64: (2 raisedTo: 63) - 1.
-	self assert: self getResult equals: #[127 255 255 255 255 255 255 255].
+	encoder encodeInt64: -1.
+	self assert: self getResult equals: #[31 255 255 255 255 255 255 255].
 	
 	"SmallInteger maxVal on 32-bits systems"
-	encoder encodeInt64: (2 raisedTo: 62) - 1.
-	self assert: self getResult equals: #[63 255 255 255 255 255 255 255].
+	encoder encodeInt64: (2 raisedTo: 60) - 1.
+	self assert: self getResult equals: #[15 255 255 255 255 255 255 255].
 	
-	"SmallInteger minVal on 32-bits systems"
-	encoder encodeInt64: (2 raisedTo: 62).
-	self assert: self getResult equals: #[64 0 0 0 0 0 0 0]
+	"SmallInteger minVal on 64-bits systems"
+	encoder encodeInt64: 0 - (2 raisedTo: 60).
+	self assert: self getResult equals: #[16 0 0 0 0 0 0 0]
 ]
 
 { #category : #tests }
@@ -120,7 +120,7 @@ FLEncoderTest >> testEncodeInt64Truncated [
 	self assert: self getResult equals: #[0 0 0 0 0 0 0 0].
 	
 	encoder encodeInt64: (2 raisedTo: 65) - 1.
-	self assert: self getResult equals: #[255 255 255 255 255 255 255 255]
+	self assert: self getResult equals: #[31 255 255 255 255 255 255 255]
 ]
 
 { #category : #tests }

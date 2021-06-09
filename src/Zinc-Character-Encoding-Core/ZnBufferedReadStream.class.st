@@ -83,17 +83,17 @@ ZnBufferedReadStream >> initialize [
 	limit := 0
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : #'accessing - bytes' }
 ZnBufferedReadStream >> int16 [
 	^ self nextIntegerOfSize: 2 signed: true bigEndian: true 
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : #'accessing - bytes' }
 ZnBufferedReadStream >> int32 [
 	^ self nextIntegerOfSize: 4 signed: true bigEndian: true
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : #'accessing - bytes' }
 ZnBufferedReadStream >> int8 [
 	^ self nextIntegerOfSize: 1 signed: true bigEndian: true 
 ]
@@ -165,12 +165,12 @@ ZnBufferedReadStream >> nextBuffer [
 	position := 1
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : #'accessing - bytes' }
 ZnBufferedReadStream >> nextInt32 [
 	^ self nextIntegerOfSize: 4 signed: true bigEndian: true
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : #'accessing - bytes' }
 ZnBufferedReadStream >> nextIntegerOfSize: numberOfBytes signed: signed bigEndian: bigEndian [
 	"Assuming the receiver is a stream of bytes, read the next integer of size numberOfBytes.
 	If bigEndian is true, use network byte order, most significant byte first, 
@@ -202,17 +202,17 @@ ZnBufferedReadStream >> nextInto: collection [
 		into: collection
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : #'accessing - bytes' }
 ZnBufferedReadStream >> nextLittleEndianNumber: numberOfBytes [
 	^ self nextIntegerOfSize: numberOfBytes signed: false bigEndian: false
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : #'accessing - bytes' }
 ZnBufferedReadStream >> nextNumber: numberOfBytes [
 	^ self nextIntegerOfSize: numberOfBytes signed: false bigEndian: true
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : #'accessing - bytes' }
 ZnBufferedReadStream >> nextWord [
 	^ self nextIntegerOfSize: 2 signed: false bigEndian: true
 ]
@@ -343,17 +343,17 @@ ZnBufferedReadStream >> skip: count [
 	count timesRepeat: [ self next ]
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : #'accessing - bytes' }
 ZnBufferedReadStream >> uint16 [
 	^ self nextIntegerOfSize: 2 signed: false bigEndian: true 
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : #'accessing - bytes' }
 ZnBufferedReadStream >> uint32 [
 	^ self nextIntegerOfSize: 4 signed: false bigEndian: true 
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : #'accessing - bytes' }
 ZnBufferedReadStream >> uint8 [
 	^ self nextIntegerOfSize: 1 signed: false bigEndian: true
 ]

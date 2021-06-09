@@ -25,8 +25,11 @@ ScaledDecimal class >> newFromNumber: aNumber scale: anInteger [
 
 { #category : #arithmetic }
 ScaledDecimal >> * aNumber [
-	aNumber class = self class ifTrue: [^self asFraction * aNumber asFraction asScaledDecimal: (scale max: aNumber scale)].
-	^self coerce: self asFraction * aNumber
+
+	aNumber class = self class ifTrue: [ 
+		^ self asFraction * aNumber asFraction asScaledDecimal:
+			  scale + aNumber scale ].
+	^ self coerce: self asFraction * aNumber
 ]
 
 { #category : #arithmetic }

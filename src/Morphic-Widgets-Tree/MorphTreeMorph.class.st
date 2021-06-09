@@ -293,7 +293,7 @@ MorphTreeMorph >> addColumnResizers [
 	self columnResizersToFront
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 MorphTreeMorph >> addMorphsAfter: parentMorph fromCollection: aCollection [
 	"Sent when expanding a node in order to add chilldren nodes after the expanded node"
 	| priorMorph morphList  subs |
@@ -332,7 +332,7 @@ MorphTreeMorph >> addMorphsAfter: parentMorph fromCollection: aCollection [
 
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 MorphTreeMorph >> addMorphsTo: morphList from: aCollection withExpandedItems: expandedItems atLevel: newIndent [ 
 	"Sent when building the list (by #buildContents), takes
 	into accound old expanded items: they remain 
@@ -364,13 +364,13 @@ MorphTreeMorph >> addMorphsTo: morphList from: aCollection withExpandedItems: ex
 	^ firstAddition
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 MorphTreeMorph >> addSubmorphsFromNodeList [
 	self addSubmorphsFromNodeList: self currentNodelist previouslyExpanded: #() 
 
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 MorphTreeMorph >> addSubmorphsFromNodeList: aNodeList previouslyExpanded: expandedNodeList [
 	| morphList  |
 	morphList := OrderedCollection new.

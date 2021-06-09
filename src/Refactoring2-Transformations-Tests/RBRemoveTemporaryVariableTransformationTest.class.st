@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveTemporaryVariableTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBRemoveTemporaryVariableTransformation 
@@ -14,7 +14,7 @@ RBRemoveTemporaryVariableTransformationTest >> testClassDoesNotExist [
 							asRefactoring 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveTemporaryVariableTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBRemoveTemporaryVariableTransformation 
@@ -24,7 +24,7 @@ RBRemoveTemporaryVariableTransformationTest >> testMethodDoesNotExist [
 							asRefactoring 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveTemporaryVariableTransformationTest >> testRefactoring [
 
 	| refactoring class |
@@ -53,7 +53,7 @@ RBRemoveTemporaryVariableTransformationTest >> testRefactoring [
 	self assert: (class parseTreeFor: #foo) temporaries size equals: 1
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveTemporaryVariableTransformationTest >> testTransform [
 
 	| transformation class |
@@ -82,7 +82,7 @@ RBRemoveTemporaryVariableTransformationTest >> testTransform [
 	self assert: (class parseTreeFor: #foo) temporaries size equals: 1
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveTemporaryVariableTransformationTest >> testVariableDoesNotExist [
 
 	self shouldFail: (RBRemoveTemporaryVariableTransformation 

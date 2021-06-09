@@ -220,7 +220,7 @@ Morph >> actAsExecutor [
 	self breakDependents
 ]
 
-{ #category : #'events-accessing' }
+{ #category : #'events - accessing' }
 Morph >> actionMap [
 	"Answer an action map"
 
@@ -241,49 +241,49 @@ Morph >> addAddHandMenuItemsForHalo: aMenu hand: aHandMorph [
 
 ]
 
-{ #category : #'events-alarms' }
+{ #category : #'events - alarms' }
 Morph >> addAlarm: aSelector after: delayTime [
 	"Add an alarm (that is an action to be executed once) with the given set of parameters"
 	^self addAlarm: aSelector withArguments: #() after: delayTime
 ]
 
-{ #category : #'events-alarms' }
+{ #category : #'events - alarms' }
 Morph >> addAlarm: aSelector at: scheduledTime [
 	"Add an alarm (that is an action to be executed once) with the given set of parameters"
 	^self addAlarm: aSelector withArguments: #() at: scheduledTime
 ]
 
-{ #category : #'events-alarms' }
+{ #category : #'events - alarms' }
 Morph >> addAlarm: aSelector with: arg1 after: delayTime [
 	"Add an alarm (that is an action to be executed once) with the given set of parameters"
 	^self addAlarm: aSelector withArguments: (Array with: arg1) after: delayTime
 ]
 
-{ #category : #'events-alarms' }
+{ #category : #'events - alarms' }
 Morph >> addAlarm: aSelector with: arg1 at: scheduledTime [
 	"Add an alarm (that is an action to be executed once) with the given set of parameters"
 	^self addAlarm: aSelector withArguments: (Array with: arg1) at: scheduledTime
 ]
 
-{ #category : #'events-alarms' }
+{ #category : #'events - alarms' }
 Morph >> addAlarm: aSelector with: arg1 with: arg2 after: delayTime [
 	"Add an alarm (that is an action to be executed once) with the given set of parameters"
 	^self addAlarm: aSelector withArguments: (Array with: arg1 with: arg2) after: delayTime
 ]
 
-{ #category : #'events-alarms' }
+{ #category : #'events - alarms' }
 Morph >> addAlarm: aSelector with: arg1 with: arg2 at: scheduledTime [
 	"Add an alarm (that is an action to be executed once) with the given set of parameters"
 	^self addAlarm: aSelector withArguments: (Array with: arg1 with: arg2) at: scheduledTime
 ]
 
-{ #category : #'events-alarms' }
+{ #category : #'events - alarms' }
 Morph >> addAlarm: aSelector withArguments: args after: delayTime [
 	"Add an alarm (that is an action to be executed once) with the given set of parameters"
 	^self addAlarm: aSelector withArguments: args at: Time millisecondClockValue + delayTime
 ]
 
-{ #category : #'events-alarms' }
+{ #category : #'events - alarms' }
 Morph >> addAlarm: aSelector withArguments: args at: scheduledTime [
 	"Add an alarm (that is an action to be executed once) with the given set of parameters"
 	| scheduler |
@@ -291,12 +291,12 @@ Morph >> addAlarm: aSelector withArguments: args at: scheduledTime [
 	scheduler ifNotNil:[scheduler addAlarm: aSelector withArguments: args for: self at: scheduledTime].
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 Morph >> addAllMorphs: aCollection [
 	^self privateAddAllMorphs: aCollection atIndex: submorphs size
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 Morph >> addAllMorphs: aCollection after: anotherMorph [
 	^self privateAddAllMorphs: aCollection 
 			atIndex: (submorphs indexOf: anotherMorph ifAbsent: [submorphs size])
@@ -308,7 +308,7 @@ Morph >> addBorderStyleMenuItems: aMenu hand: aHandMorph [
 
 ]
 
-{ #category : #'layout-menu' }
+{ #category : #'layout - menu' }
 Morph >> addCellLayoutMenuItems: aMenu hand: aHand [
 	"Cell (e.g., child) related items"
 	| menu sub |
@@ -517,7 +517,7 @@ Morph >> addHaloActionsTo: aMenu [
 
 ]
 
-{ #category : #'layout-menu' }
+{ #category : #'layout - menu' }
 Morph >> addLayoutMenuItems: topMenu hand: aHand [
 	| aMenu |
 	aMenu := UIManager default newMenuIn: self for: self.
@@ -559,19 +559,19 @@ Morph >> addModelYellowButtonItemsTo: aCustomMenu event: evt [
 				hand: evt hand]
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 Morph >> addMorph: aMorph [
 
 	self addMorphFront: aMorph.
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 Morph >> addMorph: newMorph after: aMorph [
 	"Add the given morph as one of my submorphs, inserting it after anotherMorph"
 	^self privateAddMorph: newMorph atIndex: (submorphs indexOf: aMorph)+1
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 Morph >> addMorph: aMorph asElementNumber: aNumber [
 	"Add the given morph so that it becomes the aNumber'th element of my submorph list.  If aMorph is already one of my submorphs, reposition it"
 
@@ -585,14 +585,14 @@ Morph >> addMorph: aMorph asElementNumber: aNumber [
 
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 Morph >> addMorph: newMorph behind: aMorph [
 	"Add a morph to the list of submorphs behind the specified morph"
 	^self privateAddMorph: newMorph atIndex: (submorphs indexOf: aMorph) + 1.
 
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 Morph >> addMorph: aMorph fullFrame: aLayoutFrame [
 
 	aMorph layoutFrame: aLayoutFrame asLayoutFrame.
@@ -602,18 +602,18 @@ Morph >> addMorph: aMorph fullFrame: aLayoutFrame [
 
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 Morph >> addMorph: newMorph inFrontOf: aMorph [
 	"Add a morph to the list of submorphs in front of the specified morph"
 	^self privateAddMorph: newMorph atIndex: ((submorphs indexOf: aMorph) max: 1).
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 Morph >> addMorphBack: aMorph [
 	^self privateAddMorph: aMorph atIndex: submorphs size+1
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 Morph >> addMorphCentered: aMorph [
 
 	aMorph position: bounds center - (aMorph extent // 2).
@@ -621,19 +621,19 @@ Morph >> addMorphCentered: aMorph [
 
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 Morph >> addMorphFront: aMorph [
 	^self privateAddMorph: aMorph atIndex: 1
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 Morph >> addMorphFront: aMorph fromWorldPosition: wp [
 
 	self addMorphFront: aMorph.
 	aMorph position: (self transformFromWorld globalPointToLocal: wp)
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 Morph >> addMorphFrontFromWorldPosition: aMorph [
 	^self addMorphFront: aMorph fromWorldPosition: aMorph positionInWorld.
 ]
@@ -725,7 +725,7 @@ Morph >> addStandardHaloMenuItemsTo: aMenu hand: aHandMorph [
 	aMenu defaultTarget: aHandMorph
 ]
 
-{ #category : #'layout-menu' }
+{ #category : #'layout - menu' }
 Morph >> addTableLayoutMenuItems: aMenu hand: aHand [
 	| menu sub |
 	menu := UIManager default newMenuIn: self for: self.
@@ -958,7 +958,7 @@ Morph >> adoptPaneColor: paneColor [
 	self submorphsDo:[:m| m adoptPaneColor: paneColor].
 ]
 
-{ #category : #'events-alarms' }
+{ #category : #'events - alarms' }
 Morph >> alarmScheduler [
 	"Return the scheduler being responsible for triggering alarms"
 	^self world
@@ -971,7 +971,7 @@ Morph >> align: aPoint1 with: aPoint2 [
 	^ self position: self position + (aPoint2 - aPoint1)
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> allMorphs [
 	"Return a collection containing all morphs in this composite morph (including the receiver)."
 
@@ -981,7 +981,7 @@ Morph >> allMorphs [
 	^ all contents
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> allMorphsDo: aBlock [ 
 	"Evaluate the given block for all morphs in this composite morph (including the receiver)."
 
@@ -989,7 +989,7 @@ Morph >> allMorphsDo: aBlock [
 	aBlock value: self
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> allMorphsInto: aSet [
 	"Return a set of all submorphs.  Don't forget the hidden ones. Consider only objects that are in memory (see allNonSubmorphMorphs)." 
 
@@ -1001,7 +1001,7 @@ Morph >> allMorphsInto: aSet [
 	^ aSet
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> allNonSubmorphMorphs [
 	"Return a collection containing all morphs in this morph which are not currently in the submorph containment hierarchy"
 
@@ -1246,7 +1246,7 @@ Morph >> becomeModal [
 	self world modalWindow: self
 ]
 
-{ #category : #'base-widgets' }
+{ #category : #'base - widgets' }
 Morph >> beginsWith: aString fromList: aMorph [
 	| string |
 	string := self userString ifNil: [(self submorphs collect: [:m | m userString]) detect: [:us | us notNil] ifNone: ['']].
@@ -1566,20 +1566,20 @@ Morph >> canDrawBorder: aBorderStyle [
 	^true
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> cellInset [
 	"Layout specific. This property specifies an extra inset for each cell in the layout."
 	^ self layoutProperties ifNil:[0] ifNotNil: [:props | props cellInset]
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> cellInset: aNumber [
 	"Layout specific. This property specifies an extra inset for each cell in the layout."
 	self assureTableProperties cellInset: aNumber.
 	self layoutChanged.
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> cellPositioning [
 	"Layout specific. This property describes how the receiver should be layed out in its owner when the bounds of the cell assigned to the receiver do not exactly match its bounds. Possible values are:
 		#topLeft, #topRight, #bottomLeft, #bottomRight, #topCenter, #leftCenter, #rightCenter, #bottomCenter, #center 
@@ -1589,7 +1589,7 @@ Morph >> cellPositioning [
 	^props ifNil:[#center] ifNotNil:[props cellPositioning].
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> cellPositioning: aSymbol [
 	"Layout specific. This property describes how the receiver should be layed out in its owner when the bounds of the cell assigned to the receiver do not exactly match its bounds. Possible values are:
 		#topLeft, #topRight, #bottomLeft, #bottomRight, #topCenter, #leftCenter, #rightCenter, #bottomCenter, #center 
@@ -1598,12 +1598,12 @@ Morph >> cellPositioning: aSymbol [
 	self layoutChanged.
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> cellPositioningString: aSymbol [
 	^self layoutMenuPropertyString: aSymbol from: self cellPositioning
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> cellSpacing [
 	"Layout specific. This property describes how the cell size for each element in a list should be computed.
 		#globalRect - globally equal rectangular cells
@@ -1617,7 +1617,7 @@ Morph >> cellSpacing [
 	^props ifNil:[#none] ifNotNil:[props cellSpacing].
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> cellSpacing: aSymbol [
 	"Layout specific. This property describes how the cell size for each element in a list should be computed.
 		#globalRect - globally equal rectangular cells
@@ -1630,7 +1630,7 @@ Morph >> cellSpacing: aSymbol [
 	self layoutChanged.
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> cellSpacingString: aSymbol [
 	^self layoutMenuPropertyString: aSymbol from: self cellSpacing
 ]
@@ -1646,7 +1646,7 @@ Morph >> center: aPoint [
 	self position: (aPoint - (self extent // 2))
 ]
 
-{ #category : #'layout-menu' }
+{ #category : #'layout - menu' }
 Morph >> changeClipLayoutCells [
 	self invalidRect: self fullBounds.
 	self clipLayoutCells: self clipLayoutCells not.
@@ -1672,7 +1672,7 @@ Morph >> changeDirectionHandles [
 	^self wantsDirectionHandles: self wantsDirectionHandles not
 ]
 
-{ #category : #'layout-menu' }
+{ #category : #'layout - menu' }
 Morph >> changeDisableTableLayout [
 	self disableTableLayout: self disableTableLayout not.
 	self layoutChanged.
@@ -1715,7 +1715,7 @@ Morph >> changeInlineAnchor [
 				type: newType]
 ]
 
-{ #category : #'layout-menu' }
+{ #category : #'layout - menu' }
 Morph >> changeListDirection: aSymbol [
 	| listDir wrapDir |
 	self listDirection: aSymbol.
@@ -1733,7 +1733,7 @@ Morph >> changeListDirection: aSymbol [
 
 ]
 
-{ #category : #'layout-menu' }
+{ #category : #'layout - menu' }
 Morph >> changeNoLayout [
 	self layoutPolicy ifNil:[^self]. "already no layout"
 	self layoutPolicy: nil.
@@ -1756,12 +1756,12 @@ Morph >> changeParagraphAnchor [
 				type: newType]
 ]
 
-{ #category : #'layout-menu' }
+{ #category : #'layout - menu' }
 Morph >> changeReverseCells [
 	self reverseTableCells: self reverseTableCells not.
 ]
 
-{ #category : #'layout-menu' }
+{ #category : #'layout - menu' }
 Morph >> changeRubberBandCells [
 	self rubberBandCells: self rubberBandCells not.
 ]
@@ -1802,7 +1802,7 @@ Morph >> changed: anAspect with: anObject [
 		arguments: anObject)
 ]
 
-{ #category : #'base-worlds' }
+{ #category : #'base - worlds' }
 Morph >> clearArea [
 	"Answer the clear area of the receiver. It means the area free  
 	of docking bars."
@@ -1947,7 +1947,7 @@ Morph >> colorForInsets [
 
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 Morph >> comeToFront [
 	| outerMorph |
 	outerMorph := self topRendererOrSelf.
@@ -1989,7 +1989,7 @@ Morph >> containsPoint: aPoint [
 	^ self bounds containsPoint: aPoint
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 Morph >> containsPoint: aPoint event: anEvent [
 	"Return true if aPoint is considered to be inside the receiver for the given event.
 	The default implementation treats locked children as integral part of their owners."
@@ -2012,7 +2012,7 @@ Morph >> copyToPasteBuffer: evt [
 	^evt hand copyToPasteBuffer: self.
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 Morph >> copyWithoutSubmorph: sub [
 	"Needed to get a morph to draw without one of its submorphs.
 	NOTE:  This must be thrown away immediately after use."
@@ -2066,26 +2066,26 @@ Morph >> deepCopy [
 
 ]
 
-{ #category : #initialize }
+{ #category : #'accessing - defaults' }
 Morph >> defaultBackgroundColor [
 	"Answer the color to be used as the base window color for a window whose model is an object of the receiver's class"
 	
 	^  self theme windowColorFor: self
 ]
 
-{ #category : #initialize }
+{ #category : #'accessing - defaults' }
 Morph >> defaultBounds [
 "answer the default bounds for the receiver"
 	^ 0 @ 0 corner: 50 @ 40
 ]
 
-{ #category : #initialize }
+{ #category : #'accessing - defaults' }
 Morph >> defaultColor [
 	"answer the default color/fill style for the receiver"
 	^ Color blue
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 Morph >> defaultEventDispatcher [
 	"Return the default event dispatcher to use with events that are directly sent to the receiver"
  	^ self class defaultEventDispatcher
@@ -2120,7 +2120,7 @@ Morph >> degreesOfFlex [
 	^ 0.0
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 Morph >> delete [
 	"Remove the receiver as a submorph of its owner and make its 
 	new owner be nil."
@@ -2145,7 +2145,7 @@ Morph >> deleteBalloon [
 	w deleteBalloonTarget: self.
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 Morph >> deleteDockingBars [
 	"Delete the receiver's docking bars"
 	self dockingBars
@@ -2157,7 +2157,7 @@ Morph >> disableDragNDrop [
 	self enableDragNDrop: false
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> disableTableLayout [
 	"Layout specific. Disable laying out the receiver in table layout"
 	| props |
@@ -2165,7 +2165,7 @@ Morph >> disableTableLayout [
 	^props ifNil:[false] ifNotNil:[props disableTableLayout].
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> disableTableLayout: aBool [
 	"Layout specific. Disable laying out the receiver in table layout"
 	self assureLayoutProperties disableTableLayout: aBool.
@@ -2187,7 +2187,7 @@ Morph >> dismissMorph: evt [
 	self dismissMorph
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 Morph >> dismissViaHalo [
 	"The user has clicked in the delete halo-handle.  This provides a hook in case some concomitant action should be taken, or if the particular morph is not one which should be put in the trash can, for example."
 
@@ -2268,7 +2268,7 @@ Morph >> doOpenInWorld: aWorld [
 	aWorld addMorph: self
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> dockingBars [
 	"Answer the receiver's dockingBars"
 	^ self submorphs
@@ -2576,7 +2576,7 @@ Morph >> fillStyle: aFillStyle [
 	self changed
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> findA: aClass [
 	"Return the first submorph of the receiver that is descended from the given class. Return nil if there is no such submorph. Clients of this code should always check for a nil return value so that the code will be robust if the user takes the morph apart."
 
@@ -2585,7 +2585,7 @@ Morph >> findA: aClass [
 		ifNone: [nil]
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> findDeepSubmorphThat: block1 ifAbsent: block2 [ 
 	self
 		allMorphsDo: [:m | (block1 value: m)
@@ -2593,7 +2593,7 @@ Morph >> findDeepSubmorphThat: block1 ifAbsent: block2 [
 	^ block2 value
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> findDeeplyA: aClass [
 	"Return a morph in the submorph tree of the receiver that is descended from the given class. Return nil if there is no such morph. Clients of this code should always check for a nil return value so that the code will be robust if the user takes the morph apart."
 
@@ -2602,7 +2602,7 @@ Morph >> findDeeplyA: aClass [
 		ifNone: [nil]
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> findSubmorphBinary: aBlock [
 	"Use binary search for finding a specific submorph of the receiver. Caller must be certain that the ordering holds for the submorphs."
 	^submorphs findBinary: aBlock do: [ :found | found ] ifNone: [:a :b | ]
@@ -2616,7 +2616,7 @@ Morph >> firstOwnerSuchThat: conditionBlock [
 
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> firstSubmorph [
 	^submorphs first
 ]
@@ -2752,7 +2752,7 @@ Morph >> globalPointToLocal: aPoint [
 	^self point: aPoint from: nil
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 Morph >> goBehind [
 
 	owner addMorphBack: self.
@@ -2792,7 +2792,7 @@ Morph >> grabTransform [
 	^owner ifNil:[IdentityTransform new] ifNotNil:[owner grabTransform]
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> hResizing [
 	"Layout specific. This property describes how the receiver should be resized with respect to its owner and its children. Possible values are:
 		#rigid			-	do not resize the receiver
@@ -2804,7 +2804,7 @@ Morph >> hResizing [
 	^props ifNil:[#rigid] ifNotNil:[props hResizing].
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> hResizing: aSymbol [
 	"Layout specific. This property describes how the receiver should be resized with respect to its owner and its children. Possible values are:
 		#rigid			-	do not resize the receiver
@@ -2816,7 +2816,7 @@ Morph >> hResizing: aSymbol [
 
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> hResizingString: aSymbol [
 	^self layoutMenuPropertyString: aSymbol from: self hResizing
 ]
@@ -2841,7 +2841,7 @@ Morph >> halosEnabled [
 	^ self class halosEnabled
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 Morph >> handleDropFiles: anEvent [
 	"Handle a drop from the OS."
 	anEvent wasHandled ifTrue:[^self]. "not interested"
@@ -2851,7 +2851,7 @@ Morph >> handleDropFiles: anEvent [
 
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 Morph >> handleDropMorph: anEvent [
 	"Handle a dropping morph."
 	| aMorph localPt |
@@ -2870,19 +2870,19 @@ Morph >> handleDropMorph: anEvent [
 
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 Morph >> handleEvent: anEvent [
 	"Handle the given event"
 	^anEvent sentTo: self.
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 Morph >> handleFocusEvent: anEvent [
 	"Handle the given event. This message is sent if the receiver currently has the focus and is therefore receiving events directly from some hand."
 	^self handleEvent: anEvent
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 Morph >> handleKeyDown: anEvent [
 	"System level event handling."
 	
@@ -2898,7 +2898,7 @@ Morph >> handleKeyDown: anEvent [
 	^ self eventHandler ifNotNil: [ :handler | handler keyDown: anEvent fromMorph: self ]
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 Morph >> handleKeyUp: anEvent [
 	"System level event handling."
 
@@ -2923,13 +2923,13 @@ Morph >> handleKeystroke: anEvent [
 	^ self eventHandler ifNotNil: [:handler | handler keyStroke: anEvent fromMorph: self ].
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 Morph >> handleListenEvent: anEvent [
 	"Handle the given event. This message is sent if the receiver is a registered listener for the given event."
 	^anEvent sentTo: self.
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 Morph >> handleMouseDown: anEvent [
 	"System level event handling."
 	anEvent wasHandled ifTrue:[^self]. "not interested"
@@ -2958,7 +2958,7 @@ Morph >> handleMouseDown: anEvent [
 	^ self eventHandler ifNotNil: [:handler | handler mouseDown: anEvent fromMorph: self ]
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 Morph >> handleMouseEnter: anEvent [
 	"System level event handling."
 
@@ -2976,7 +2976,7 @@ Morph >> handleMouseEnter: anEvent [
 	self eventHandler ifNotNil: [ :handler | ^ handler mouseEnter: anEvent fromMorph: self ]
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 Morph >> handleMouseLeave: anEvent [
 	"System level event handling."
 
@@ -2992,7 +2992,7 @@ Morph >> handleMouseLeave: anEvent [
 	^ self eventHandler ifNotNil: [ :handler | handler mouseLeave: anEvent fromMorph: self ]
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 Morph >> handleMouseMove: anEvent [
 	"System level event handling."
 	anEvent wasHandled ifTrue:[^self]. 
@@ -3012,7 +3012,7 @@ Morph >> handleMouseMove: anEvent [
 
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 Morph >> handleMouseOver: anEvent [
 	"System level event handling."
 	anEvent hand mouseFocus == self ifTrue:[
@@ -3021,7 +3021,7 @@ Morph >> handleMouseOver: anEvent [
 	anEvent hand noticeMouseOver: self event: anEvent
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 Morph >> handleMouseStillDown: anEvent [
 	"Called from the stepping mechanism for morphs wanting continuously repeated 'yes the mouse is still down, yes it is still down, yes it has not changed yet, no the mouse is still not up, yes the button is down' etc messages"
 	(anEvent hand mouseFocus == self) 
@@ -3031,7 +3031,7 @@ Morph >> handleMouseStillDown: anEvent [
 
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 Morph >> handleMouseUp: anEvent [
 	"System level event handling."
 	anEvent wasHandled ifTrue: [^self]. "not interested"
@@ -3048,7 +3048,7 @@ Morph >> handleMouseUp: anEvent [
 	^ self eventHandler ifNotNil: [:handler | handler mouseUp: anEvent fromMorph: self]
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 Morph >> handleMouseWheel: anEvent [
 	"System level event handling."
 	
@@ -3058,7 +3058,7 @@ Morph >> handleMouseWheel: anEvent [
 		self mouseWheel: anEvent]
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 Morph >> handleUnknownEvent: anEvent [
 	"An event of an unknown type was sent to the receiver. What shall we do?!"
 	self inform: 'Unknown event: ', anEvent printString. 
@@ -3187,7 +3187,7 @@ Morph >> handlesMouseDown: evt [
 	^ false
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 Morph >> handlesMouseMove: anEvent [
 	"Rules say that by default a morph gets #mouseMove if
 		* the hand is not dragging anything,
@@ -3233,14 +3233,14 @@ Morph >> handlesMouseStillDown: evt [
 
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 Morph >> handlesMouseWheel: evt [
 	"Do I want to receive mouseWheel events?." 
 
 	^false
 ]
 
-{ #category : #'layout-menu' }
+{ #category : #'layout - menu' }
 Morph >> hasClipLayoutCellsString [
 	^ (self clipLayoutCells) -> 'clip to cell size' translated
 ]
@@ -3256,7 +3256,7 @@ Morph >> hasDirectionHandlesString [
 	^ (self wantsDirectionHandles) ->  'direction handles' translated
 ]
 
-{ #category : #'layout-menu' }
+{ #category : #'layout - menu' }
 Morph >> hasDisableTableLayoutString [
 	^ (self disableTableLayout) -> 'disable layout in tables' translated
 ]
@@ -3323,7 +3323,7 @@ Morph >> hasInlineAnchorString [
 	^ (self textAnchorType == #inline)-> 'Inline' translated
 ]
 
-{ #category : #'layout-menu' }
+{ #category : #'layout - menu' }
 Morph >> hasNoLayoutString [
 	^ (self layoutPolicy isNil) -> 'no layout' translated
 ]
@@ -3351,29 +3351,29 @@ Morph >> hasProperty: aSymbol [
 		  ifNotNil: [ :ext | ext hasProperty: aSymbol ]
 ]
 
-{ #category : #'layout-menu' }
+{ #category : #'layout - menu' }
 Morph >> hasProportionalLayoutString [
 	| layout |
 	^ ((layout := self layoutPolicy) notNil
 			and: [layout isProportionalLayout]) -> 'proportional layout' translated
 ]
 
-{ #category : #'layout-menu' }
+{ #category : #'layout - menu' }
 Morph >> hasReverseCellsString [
 	^ (self reverseTableCells) -> 'reverse table cells' translated
 ]
 
-{ #category : #'layout-menu' }
+{ #category : #'layout - menu' }
 Morph >> hasRubberBandCellsString [
 	^ (self rubberBandCells) -> 'rubber band cells' translated
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> hasSubmorphs [
 	^submorphs notEmpty
 ]
 
-{ #category : #'layout-menu' }
+{ #category : #'layout - menu' }
 Morph >> hasTableLayoutString [
 	| layout |
 	^ ((layout := self layoutPolicy) notNil
@@ -3401,7 +3401,7 @@ Morph >> height: aNumber [
 
 ]
 
-{ #category : #'base-widgets' }
+{ #category : #'base - widgets' }
 Morph >> heightToDisplayInList: aList [
 
 	^ self minExtent y
@@ -3821,7 +3821,7 @@ Morph >> keyboardFocusChange: gotFocus [
 	self announceKeyboardFocusChange: gotFocus
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> lastSubmorph [
 	^submorphs last
 ]
@@ -3863,14 +3863,14 @@ Morph >> layoutChanged [
 	"note: does not send #ownerChanged here - we'll do this when computing the new layout"
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> layoutFrame [
 	"Layout specific. Return the layout frame describing where the  
 	receiver should appear in a proportional layout"
 	^ extension ifNotNil: [extension layoutFrame]
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> layoutFrame: aLayoutFrame [
 	"Layout specific. Return the layout frame describing where the receiver should appear in a proportional layout"
 	self layoutFrame == aLayoutFrame ifTrue: [^self].
@@ -3878,21 +3878,21 @@ Morph >> layoutFrame: aLayoutFrame [
 	self layoutChanged.
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> layoutInset [
 	"Return the extra inset for layouts"
 
 	^ self layoutProperties ifNil: [ 0 ] ifNotNil: [ :props | props layoutInset ]
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> layoutInset: aNumber [
 	"Return the extra inset for layouts"
 	self assureTableProperties layoutInset: aNumber.
 	self layoutChanged.
 ]
 
-{ #category : #'layout-menu' }
+{ #category : #'layout - menu' }
 Morph >> layoutMenuPropertyString: aSymbol from: currentSetting [ 
 	| wording |
 	wording := String
@@ -3908,14 +3908,14 @@ Morph >> layoutMenuPropertyString: aSymbol from: currentSetting [
 	^ (aSymbol == currentSetting) -> wording translated
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> layoutPolicy [
 	"Layout specific. Return the layout policy describing how children 
 	of the receiver should appear."
 	^ extension ifNotNil: [ extension layoutPolicy]
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> layoutPolicy: aLayoutPolicy [
 	"Layout specific. Return the layout policy describing how children of the receiver should appear."
 	self layoutPolicy == aLayoutPolicy ifTrue:[^self].
@@ -3923,14 +3923,14 @@ Morph >> layoutPolicy: aLayoutPolicy [
 	self layoutChanged.
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> layoutProperties [
 	"Return the current layout properties associated with the  
 	receiver"
 	^ extension ifNotNil: [ extension layoutProperties]
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> layoutProperties: newProperties [
 	"Return the current layout properties associated with the receiver"
 	self layoutProperties == newProperties ifTrue:[^self].
@@ -3970,7 +3970,7 @@ Morph >> leftCenter [
 	^ bounds leftCenter
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> listCentering [
 	"Layout specific. This property describes how the rows/columns in a list-like layout should be centered.
 		#topLeft - center at start of primary direction
@@ -3983,7 +3983,7 @@ Morph >> listCentering [
 	^props ifNil:[#topLeft] ifNotNil:[props listCentering].
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> listCentering: aSymbol [
 	"Layout specific. This property describes how the rows/columns in a list-like layout should be centered.
 		#topLeft - center at start of primary direction
@@ -3995,12 +3995,12 @@ Morph >> listCentering: aSymbol [
 	self layoutChanged.
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> listCenteringString: aSymbol [
 	^self layoutMenuPropertyString: aSymbol from: self listCentering
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> listDirection [
 	"Layout specific. This property describes the direction in which a list-like layout should be applied. Possible values are:
 		#leftToRight
@@ -4013,7 +4013,7 @@ Morph >> listDirection [
 	^props ifNil:[#topToBottom] ifNotNil:[props listDirection].
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> listDirection: aSymbol [
 	"Layout specific. This property describes the direction in which a list-like layout should be applied. Possible values are:
 		#leftToRight
@@ -4025,12 +4025,12 @@ Morph >> listDirection: aSymbol [
 	self layoutChanged.
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> listDirectionString: aSymbol [
 	^self layoutMenuPropertyString: aSymbol from: self listDirection
 ]
 
-{ #category : #'base-widgets' }
+{ #category : #'base - widgets' }
 Morph >> listRenderOn: aCanvas atRow: aRow bounds: drawBounds color: drawColor backgroundColor: backgroundColor from: aMorph [
 
 	self bounds: drawBounds.
@@ -4039,7 +4039,7 @@ Morph >> listRenderOn: aCanvas atRow: aRow bounds: drawBounds color: drawColor b
 		ifFalse: [ aMorph addMorph: self ]
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> listSpacing [
 	"Layout specific. This property describes how the heights for different rows in a table layout should be handled.
 		#equal - all rows have the same height
@@ -4050,7 +4050,7 @@ Morph >> listSpacing [
 	^props ifNil:[#none] ifNotNil:[props listSpacing].
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> listSpacing: aSymbol [
 	"Layout specific. This property describes how the heights for different rows in a table layout should be handled.
 		#equal - all rows have the same height
@@ -4060,7 +4060,7 @@ Morph >> listSpacing: aSymbol [
 	self layoutChanged.
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> listSpacingString: aSymbol [
 	^self layoutMenuPropertyString: aSymbol from: self listSpacing
 ]
@@ -4095,14 +4095,14 @@ Morph >> lockedString [
 	^ (self isLocked) -> 'be locked' translated
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> mainDockingBars [
 	"Answer the receiver's main dockingBars"
 	^ self dockingBars
 		select: [:each | each hasProperty: #mainDockingBarTimeStamp]
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> maxCellSize [
 	"Layout specific. This property specifies the maximum size of a table cell."
 	| props |
@@ -4110,7 +4110,7 @@ Morph >> maxCellSize [
 	^props ifNil:[SmallInteger maxVal] ifNotNil:[props maxCellSize].
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> maxCellSize: aPoint [
 	"Layout specific. This property specifies the maximum size of a table cell."
 	self assureTableProperties maxCellSize: aPoint.
@@ -4144,7 +4144,7 @@ Morph >> menuKeyboardControl [
 	^ self theme settings menuKeyboardControl
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> minCellSize [
 	"Layout specific. This property specifies the minimal size of a table cell."
 	| props |
@@ -4152,7 +4152,7 @@ Morph >> minCellSize [
 	^props ifNil:[0] ifNotNil:[props minCellSize].
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> minCellSize: aPoint [
 	"Layout specific. This property specifies the minimal size of a table cell."
 	self assureTableProperties minCellSize: aPoint.
@@ -4242,13 +4242,13 @@ Morph >> morphicLayerNumber [
 	"leave lots of room for special things"
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> morphsAt: aPoint [
 	"Return a collection of all morphs in this morph structure that contain the given point, possibly including the receiver itself.  The order is deepest embedding first."
 	^self morphsAt: aPoint unlocked: false
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> morphsAt: aPoint behind: aMorph unlocked: aBool [ 
 	"Return all morphs at aPoint that are behind frontMorph; if aBool is true return only unlocked, visible morphs."
 
@@ -4291,7 +4291,7 @@ Morph >> morphsAt: aPoint behind: aMorph unlocked: aBool [
 	^all ifNil: [#()] ifNotNil: [all contents]
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> morphsAt: aPoint unlocked: aBool [
 	"Return a collection of all morphs in this morph structure that contain the given point, possibly including the receiver itself.  The order is deepest embedding first."
 	| mList |
@@ -4300,7 +4300,7 @@ Morph >> morphsAt: aPoint unlocked: aBool [
 	^mList contents
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> morphsAt: aPoint unlocked: aBool do: aBlock [
 	"Evaluate aBlock with all the morphs starting at the receiver which appear at aPoint. If aBool is true take only visible, unlocked morphs into account."
 	
@@ -4312,7 +4312,7 @@ Morph >> morphsAt: aPoint unlocked: aBool do: aBlock [
 	(self containsPoint: aPoint) ifTrue:[aBlock value: self].
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> morphsInFrontOf: someMorph overlapping: aRectangle do: aBlock [
 	"Evaluate aBlock with all top-level morphs in front of someMorph that overlap with the given rectangle. someMorph is either an immediate child of the receiver or nil (in which case all submorphs of the receiver are enumerated)."
 	self submorphsDo:[:m|
@@ -4325,7 +4325,7 @@ Morph >> morphsInFrontOf: someMorph overlapping: aRectangle do: aBlock [
 	^owner morphsInFrontOf: self overlapping: aRectangle do: aBlock.
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> morphsInFrontOverlapping: aRectangle [
 	"Return all top-level morphs in front of someMorph that overlap with the given rectangle."
 	| morphList |
@@ -4334,7 +4334,7 @@ Morph >> morphsInFrontOverlapping: aRectangle [
 	^morphList contents
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> morphsInFrontOverlapping: aRectangle do: aBlock [
 	"Evaluate aBlock with all top-level morphs in front of someMorph that overlap with the given rectangle."
 	^self morphsInFrontOf: nil overlapping: aRectangle do: aBlock
@@ -4357,7 +4357,7 @@ Morph >> mouseDownOnHelpHandle: anEvent [
 
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 Morph >> mouseDownPriority [
 	"Return the default mouse down priority for the receiver"
 
@@ -4464,7 +4464,7 @@ Morph >> noHelpString [
 	^ 'Help not yet supplied' translated
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> noteNewOwner: aMorph [
 	"I have just been added as a submorph of aMorph"
 ]
@@ -4517,7 +4517,7 @@ Morph >> onAnnouncement: anAnnouncement send: aMessageSelector to: anObject [
 	self announcer when: anAnnouncement send: aMessageSelector to: anObject.
 ]
 
-{ #category : #initialize }
+{ #category : #showing }
 Morph >> openCenteredInWorld [
 	"Open me in the center of current world"
 	self 
@@ -4526,7 +4526,7 @@ Morph >> openCenteredInWorld [
 		center: self world clearArea center
 ]
 
-{ #category : #initialize }
+{ #category : #showing }
 Morph >> openInHand [
 	"Attach the receiver to the current hand in the current morphic world"
 
@@ -4654,13 +4654,13 @@ Morph >> ownerThatIsA: aClass [
 	^ self firstOwnerSuchThat: [:m | m isKindOf: aClass]
 ]
 
-{ #category : #'base-worlds' }
+{ #category : #'base - worlds' }
 Morph >> pasteUpMorph [
 	"Answer the closest containing morph that is a PasteUp morph"
 	^ self ownerThatIsA: PasteUpMorph
 ]
 
-{ #category : #'base-worlds' }
+{ #category : #'base - worlds' }
 Morph >> pasteUpMorphHandlingTabAmongFields [
 	"Answer the nearest PasteUpMorph in my owner chain that has the tabAmongFields property, or nil if none"
 
@@ -4957,7 +4957,7 @@ Morph >> privateColor: aColor [
 
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 Morph >> privateDelete [
 	"Remove the receiver as a submorph of its owner"
 	owner ifNotNil:[owner removeMorph: self].
@@ -5052,13 +5052,13 @@ Morph >> privateSubmorphs: aCollection [
 	submorphs := aCollection.
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 Morph >> processEvent: anEvent [
 	"Process the given event using the default event dispatcher."
 	^self processEvent: anEvent using: self defaultEventDispatcher
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 Morph >> processEvent: anEvent using: defaultDispatcher [
 	"This is the central entry for dispatching events in morphic. Given some event and a default dispatch strategy, find the right receiver and let him handle it.
 	WARNING: This is a powerful hook. If you want to use a different event dispatcher from the default, here is the place to hook it in. Depending on how the dispatcher is written (e.g., whether it calls simply #processEvent: or #processEvent:using:) you can change the dispatch strategy for entire trees of morphs. Similarly, you can disable entire trees of morphs from receiving any events whatsoever. Read the documentation in class MorphicEventDispatcher before playing with it. "
@@ -5126,7 +5126,7 @@ Morph >> refreshWorld [
 
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 Morph >> rejectDropEvent: anEvent [
 	"This hook allows the receiver to repel a drop operation currently executed. The method is called prior to checking children so the receiver must validate that the event was really designated for it.
 	Note that the ordering of the tests below is designed to avoid a (possibly expensive) #fullContainsPoint: test. If the receiver doesn't want to repel the morph anyways we don't need to check after all."
@@ -5171,7 +5171,7 @@ Morph >> relativeTextAnchorPosition: aPoint [
 	^self setProperty: #relativeTextAnchorPosition toValue: aPoint
 ]
 
-{ #category : #'events-removing' }
+{ #category : #'events - removing' }
 Morph >> releaseActionMap [
 	"Release the action map"
 	
@@ -5185,7 +5185,7 @@ Morph >> releaseCachedState [
 
 ]
 
-{ #category : #'events-alarms' }
+{ #category : #'events - alarms' }
 Morph >> removeAlarm: aSelector [
 	"Remove the given alarm"
 	| scheduler |
@@ -5193,7 +5193,7 @@ Morph >> removeAlarm: aSelector [
 	scheduler ifNotNil:[scheduler removeAlarm: aSelector for: self].
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 Morph >> removeAllMorphs [
 	| oldMorphs myWorld |
 	myWorld := self world.
@@ -5206,7 +5206,7 @@ Morph >> removeAllMorphs [
 
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 Morph >> removeAllMorphsIn: aCollection [
 	"greatly speeds up the removal of *lots* of submorphs"
 	| set myWorld |
@@ -5254,7 +5254,7 @@ Morph >> removeLink: actionCode [
 		[self eventHandler on: actionCode send: nil to: nil]
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 Morph >> removeMorph: aMorph [
 	"Remove the given morph from my submorphs"
 	| aWorld |
@@ -5277,7 +5277,7 @@ Morph >> removeProperty: aSymbol [
 	extension removeProperty: aSymbol
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 Morph >> removedMorph: aMorph [
 	"Notify the receiver that aMorph was just removed from its children"
 
@@ -5303,7 +5303,7 @@ Morph >> repelsMorph: aMorph event: ev [
 	^ false
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 Morph >> replaceSubmorph: oldMorph by: newMorph [
 	| index itsPosition w |
 	oldMorph stopStepping.
@@ -5375,7 +5375,7 @@ Morph >> resumeAfterStepError [
 
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> reverseTableCells [
 	"Layout specific. This property describes if the cells should be treated in reverse order of submorphs."
 	| props |
@@ -5383,7 +5383,7 @@ Morph >> reverseTableCells [
 	^props ifNil:[false] ifNotNil:[props reverseTableCells].
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> reverseTableCells: aBool [
 	"Layout specific. This property describes if the cells should be treated in reverse order of submorphs."
 	self assureTableProperties reverseTableCells: aBool.
@@ -5417,7 +5417,7 @@ Morph >> root [
 	^owner root
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> rootMorphsAt: aPoint [
 	"Return the list of root morphs containing the given point, excluding the receiver.
 	ar 11/8/1999: Moved into morph for an incredibly ugly hack in 3D worlds"
@@ -5451,7 +5451,7 @@ Morph >> roundedCornersString [
 		, ('round corners' translated)
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> rubberBandCells [
 	"Layout specific. This property describes if a parent that is #shrinkWrapped around its children should ignore any #spaceFill children. E.g., when #rubberBandCells is true, the compound layout will always stay at the smallest available size, even though some child may be able to grow."
 	| props |
@@ -5459,7 +5459,7 @@ Morph >> rubberBandCells [
 	^props ifNil:[false] ifNotNil:[props rubberBandCells].
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> rubberBandCells: aBool [
 	"Layout specific. This property describes if a parent that is #shrinkWrapped around its children should ignore any #spaceFill children. E.g., when #rubberBandCells is true, the compound layout will always stay at the smallest available size, even though some child may be able to grow."
 	self assureTableProperties rubberBandCells: aBool.
@@ -5932,7 +5932,7 @@ Morph >> snapToEdgeIfAppropriate [
 			[aWorld displayWorld]]]]
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> spaceFillWeight [
 	"Layout specific. This property describes the relative weight that 
 	should be given to the receiver when extra space is distributed 
@@ -5943,7 +5943,7 @@ Morph >> spaceFillWeight [
 		ifAbsent: [1]
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> spaceFillWeight: aNumber [
 	"Layout specific. This property describes the relative weight that should be given to the receiver when extra space is distributed between different #spaceFill cells."
 	aNumber = 1
@@ -6057,7 +6057,7 @@ Morph >> stopSteppingSelfAndSubmorphs [
 
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> submorphAfter [
 	"Return the submorph after (behind) me, or nil"
 	| ii |
@@ -6069,7 +6069,7 @@ Morph >> submorphAfter [
 
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> submorphBefore [
 	"Return the submorph after (behind) me, or nil"
 	| ii |
@@ -6096,37 +6096,37 @@ Morph >> submorphBounds [
 
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> submorphCount [
 
 	^ submorphs size
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 Morph >> submorphIndexOf: aMorph [
 	"Assuming aMorph to be one of my submorphs, answer where it occurs in my submorph list"
 
 	^ submorphs indexOf: aMorph ifAbsent: [nil]
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> submorphThat: block1 ifNone: block2 [
 	^ submorphs detect: [:m | (block1 value: m) == true] ifNone: block2
 	
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> submorphWithProperty: aSymbol [
 	^ submorphs detect: [:aMorph | aMorph hasProperty: aSymbol] ifNone: [nil]
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> submorphs [
 	"This method returns my actual submorphs collection. Modifying the collection directly could be dangerous; make a copy if you need to alter it."
 	^ submorphs 
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> submorphsBehind: aMorph do: aBlock [
 	| behind |
 	behind := false.
@@ -6136,12 +6136,12 @@ Morph >> submorphsBehind: aMorph do: aBlock [
 
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> submorphsDo: aBlock [ 
 	submorphs do: aBlock
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> submorphsInFrontOf: aMorph do: aBlock [
 	| behind |
 	behind := false.
@@ -6151,13 +6151,13 @@ Morph >> submorphsInFrontOf: aMorph do: aBlock [
 
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> submorphsReverseDo: aBlock [
 
 	submorphs reverseDo: aBlock.
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 Morph >> submorphsSatisfying: aBlock [
 	^ submorphs select: [:m | (aBlock value: m) == true]
 ]
@@ -6188,7 +6188,7 @@ Morph >> tabHitWithEvent: anEvent [
 	itemToHighlight invalidRect: itemToHighlight bounds 
 ]
 
-{ #category : #'accessing-backstop' }
+{ #category : #'accessing - backstop' }
 Morph >> target: aMorph [
 "Morphs with targets will override. This backstop does nothing."
 "This is here because targeting meta-actions are taken at morph level. 
@@ -6409,7 +6409,7 @@ Morph >> topLeft: aPoint [
 
 ]
 
-{ #category : #'base-worlds' }
+{ #category : #'base - worlds' }
 Morph >> topPasteUp [
 	"If the receiver is in a world, return that; otherwise return the outermost pasteup morph"
 	^ self outermostMorphThat: [:m | m isKindOf: PasteUpMorph]
@@ -6535,7 +6535,7 @@ Morph >> transformedBy: aTransform [
 	^self addFlexShell transformedBy: aTransform
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 Morph >> transformedFrom: uberMorph [
 	"Return a transform to map coordinates of uberMorph, a morph above me in my owner chain, into the coordinates of MYSELF not any of my children."
 	"self flag: #arNote." "rename this method"
@@ -6565,7 +6565,7 @@ Morph >> update: anAspect [
 	^ self
 ]
 
-{ #category : #'events-accessing' }
+{ #category : #'events - accessing' }
 Morph >> updateableActionMap [
 	"Answer an updateable action map, saving it in my #actionMap property"
 	
@@ -6603,7 +6603,7 @@ Morph >> userString [
 	^ nil
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> vResizeToFit: aBoolean [
 	aBoolean ifTrue:[
 		self vResizing: #shrinkWrap.
@@ -6612,7 +6612,7 @@ Morph >> vResizeToFit: aBoolean [
 	].
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> vResizing [
 	"Layout specific. This property describes how the receiver should be resized with respect to its owner and its children. Possible values are:
 		#rigid			-	do not resize the receiver
@@ -6624,7 +6624,7 @@ Morph >> vResizing [
 	^props ifNil:[#rigid] ifNotNil:[props vResizing].
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> vResizing: aSymbol [
 	"Layout specific. This property describes how the receiver should be resized with respect to its owner and its children. Possible values are:
 		#rigid			-	do not resize the receiver
@@ -6636,7 +6636,7 @@ Morph >> vResizing: aSymbol [
 
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> vResizingString: aSymbol [
 	^self layoutMenuPropertyString: aSymbol from: self vResizing
 ]
@@ -6726,7 +6726,7 @@ Morph >> veryDeepInner: deepCopier [
 	extension := (extension veryDeepCopyWith: deepCopier)
 ]
 
-{ #category : #'base-worlds' }
+{ #category : #'base - worlds' }
 Morph >> viewBox [
 	^ self pasteUpMorph viewBox
 ]
@@ -6895,7 +6895,7 @@ Morph >> width: aNumber [
 
 ]
 
-{ #category : #'base-widgets' }
+{ #category : #'base - widgets' }
 Morph >> widthToDisplayInList: aList [
 
 	^ self minExtent x
@@ -6943,7 +6943,7 @@ Morph >> wouldAcceptKeyboardFocusUponTab [
 	^ false
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> wrapCentering [
 	"Layout specific. This property describes how the rows/columns in a list-like layout should be centered.
 		#topLeft - center at start of secondary direction
@@ -6956,7 +6956,7 @@ Morph >> wrapCentering [
 	^props ifNil:[#topLeft] ifNotNil:[props wrapCentering].
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> wrapCentering: aSymbol [
 	"Layout specific. This property describes how the rows/columns in a list-like layout should be centered.
 		#topLeft - center at start of secondary direction
@@ -6968,12 +6968,12 @@ Morph >> wrapCentering: aSymbol [
 	self layoutChanged.
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> wrapCenteringString: aSymbol [
 	^self layoutMenuPropertyString: aSymbol from: self wrapCentering
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> wrapDirection [
 	"Layout specific. This property describes the direction along which a list-like layout should be wrapped. Possible values are:
 		#leftToRight
@@ -6987,7 +6987,7 @@ Morph >> wrapDirection [
 	^props ifNil:[#none] ifNotNil:[props wrapDirection].
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> wrapDirection: aSymbol [
 	"Layout specific. This property describes the direction along which a list-like layout should be wrapped. Possible values are:
 		#leftToRight
@@ -7001,7 +7001,7 @@ Morph >> wrapDirection: aSymbol [
 
 ]
 
-{ #category : #'layout-properties' }
+{ #category : #'layout - properties' }
 Morph >> wrapDirectionString: aSymbol [
 	^self layoutMenuPropertyString: aSymbol from: self wrapDirection 
 ]

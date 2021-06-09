@@ -67,27 +67,27 @@ RBPatternVariableNode >> initializePatternVariables [
 										ifFalse: [^self]]]]]
 ]
 
-{ #category : #'testing-matching' }
+{ #category : #'testing - matching' }
 RBPatternVariableNode >> isAnything [
 	^isAnything
 ]
 
-{ #category : #'testing-matching' }
+{ #category : #'testing - matching' }
 RBPatternVariableNode >> isList [
 	^isList
 ]
 
-{ #category : #'testing-matching' }
+{ #category : #'testing - matching' }
 RBPatternVariableNode >> isLiteralNode [
 	^isLiteral
 ]
 
-{ #category : #'testing-matching' }
+{ #category : #'testing - matching' }
 RBPatternVariableNode >> isPatternNode [
 	^true
 ]
 
-{ #category : #'testing-matching' }
+{ #category : #'testing - matching' }
 RBPatternVariableNode >> isStatement [
 	^isStatement
 ]
@@ -141,7 +141,7 @@ RBPatternVariableNode >> parent: aBRProgramNode [
 				ifFalse: [isList := false]]
 ]
 
-{ #category : #'testing-matching' }
+{ #category : #'testing - matching' }
 RBPatternVariableNode >> recurseInto [
 	^recurseInto
 ]

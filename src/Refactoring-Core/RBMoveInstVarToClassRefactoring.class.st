@@ -16,7 +16,7 @@ Class {
 	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RBMoveInstVarToClassRefactoring class >> model: aRBSmalltalk variable: aVarName class: aClass oldClass: anOldClass [
 	^(self new)
 		model: aRBSmalltalk;

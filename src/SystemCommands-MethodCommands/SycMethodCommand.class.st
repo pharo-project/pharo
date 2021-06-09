@@ -49,7 +49,7 @@ SycMethodCommand >> newTagFor: aMethod [
 		 suggesting: (MethodClassifier suggestProtocolFor: aMethod)
 ]
 
-{ #category : #'activation-drag and drop' }
+{ #category : #'activation - drag and drop' }
 SycMethodCommand >> prepareExecutionInDragContext: aToolContext [
 	super prepareExecutionInDragContext: aToolContext.
 	

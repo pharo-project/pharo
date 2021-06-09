@@ -4,12 +4,12 @@ Class {
 	#category : #'GT-Tests-Spotter-Scripting-Mocks'
 }
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTMockSpotter >> defaultPagerModel [
 	^ GLMMockPagerModel new
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTMockSpotter >> defaultStep [
 	^ GTMockSpotterStep new
 ]

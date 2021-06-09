@@ -164,7 +164,7 @@ PluggableListMorph >> adoptPaneColor: paneColor [
 		self borderStyle: self borderStyleToUse]
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 PluggableListMorph >> allSubmorphNamesDo: nameBlock [
 	"Assume list morphs do not have named parts -- saves MUCH time"
 

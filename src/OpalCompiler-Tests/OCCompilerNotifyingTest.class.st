@@ -115,21 +115,21 @@ OCCompilerNotifyingTest >> setUpForErrorsIn: aTextWithErrorsEnclosedInBackQuote 
   morph := MockSourceEditor new contents: self initializeTextWithoutError asString.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testAssignmentOfSelf [
 
 	self setUpForErrorsIn: '` Cannot store into ->`self := 1. ^self'.
 	self enumerateAllSelections.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testDigitTooLargeForARadix [
 
 	self setUpForErrorsIn: '2r` Reading a number failed: a digit between 0 and 1 expected ->`3'.
 	self enumerateAllSelections
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testEmptyCaseStatement [
 	self flag: 'Opal has the correct behavior but the error is not caught'
 
@@ -137,7 +137,7 @@ OCCompilerNotifyingTest >> testEmptyCaseStatement [
 	self enumerateAllSelections."
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testExpectedExpressionInBraceArray [
 	
 	self setUpForErrorsIn: '{ 1. 2 ` End of statement expected ->`3 }'.
@@ -146,50 +146,50 @@ OCCompilerNotifyingTest >> testExpectedExpressionInBraceArray [
 	self enumerateAllSelections.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testExtraneousStatementAfterAReturnInABlock [
 	self setUpForErrorsIn: '[ ^1 ` End of statement expected ->`2]'.
 	self enumerateAllSelections.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testInvalidExternalFunctionDeclaration [
 	"Not implemented yet.
 	#externalFunctionDeclaration skipped, cannot be evaluated"
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testInvalidLiteralCharacter [
 	self setUpForErrorsIn: '^ #yourself , #` Expecting a literal type ->`) , #end'.
 	self enumerateAllSelections.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testInvalidPattern [
 	"Not implemented yet.
 	#pattern:inContext: skipped, cannot be evaluated"
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testInvalidPragma [
 	"Not implemented yet.
 	#pragmaLiteral: #pragmaSequence #pragmaStatement #pragmaPrimitives skipped, cannot be evaluated"
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testInvalidPrimitive [
 	"Not implemented yet.
 	##primitive:error: #primitive:module:error: skipped, cannot be evaluated"
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testInvalidRadix [
 
 	self setUpForErrorsIn: '1` Reading a number failed: an integer greater than 1 as valid radix expected ->`r0'.
 	self enumerateAllSelections.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testMissingArgumentAfterABinaryMessage [
 	self setUpForErrorsIn: '1 +` Variable or expression expected ->`'.
 	self enumerateAllSelections.
@@ -197,20 +197,20 @@ OCCompilerNotifyingTest >> testMissingArgumentAfterABinaryMessage [
 	self enumerateAllSelections
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testMissingArgumentAfterAMessageKey [
 	self setUpForErrorsIn: '1 to: ` Variable or expression expected ->`:='.
 	self enumerateAllSelections
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testMissingBlockArgumentName [
 
 	self setUpForErrorsIn: '[ :x : ` Variable name expected ->`1]'.
 	self enumerateAllSelections
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testMissingExpression [
 
 	
@@ -218,48 +218,48 @@ OCCompilerNotifyingTest >> testMissingExpression [
 	self enumerateAllSelections
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testMissingExpressionAfterAReturn [
 
 	self setUpForErrorsIn: '^ ` Variable or expression expected ->`. 1 + 2'.
 	self enumerateAllSelections.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testMissingMessageAfterACascade [
 	
 	self setUpForErrorsIn: 'nil yourself; ` Cascade message expected ->`^ 2'.
 	self enumerateAllSelections
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testMissingPeriodSeparatorBetweenStatements [
 
 	self setUpForErrorsIn: '1 + 2 ` End of statement expected ->`^nil'.
 	self enumerateAllSelections.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testMissingSeparatorBetweenBlockArgumentAndStatements [
 	
 	self setUpForErrorsIn: '[ :x ` ''|'' expected ->`x + 1 ]'.
 	self enumerateAllSelections
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testTooLargeAnIntegerInALiteralByteArray [
 
 	self setUpForErrorsIn: '#[ 1 2 ` Expecting 8-bit integer ->`256 4 5]'.
 	self enumerateAllSelections
 ]
 
-{ #category : #'testing-byteCode limits' }
+{ #category : #'tests - bytecode limits' }
 OCCompilerNotifyingTest >> testTooManyArguments [
 	self setUpForErrorsIn: '^ ` Too many arguments ->`[:x1 :x2 :x3 :x4 :x5 :x6 :x7 :x8 :x9 :x10 :x11 :x12 :x13 :x14 :x15 :x16 :x17 | ]'.
 	self enumerateAllSelections.
 ]
 
-{ #category : #'testing-byteCode limits' }
+{ #category : #'tests - bytecode limits' }
 OCCompilerNotifyingTest >> testTooManyLiterals [
 	(thisContext method  encoderClass  = EncoderForSistaV1) ifTrue: [ ^self ].  "new bytecode does not have this limit"
 	
@@ -274,7 +274,7 @@ The 257th literal is: ->`#(257)}'.
 			exc messageText = 'too many literals (>256)' ]
 ]
 
-{ #category : #'testing-byteCode limits' }
+{ #category : #'tests - bytecode limits' }
 OCCompilerNotifyingTest >> testTooManyTemporaries [
 	self setUpForErrorsIn: '| a1 a2 a3 a4 a5 a6 a7 a8 a9 b1 b2 b3 b4 b5 b6 b7 b8 b9 c1 c2 c3 c4 c5 c6 c7 c8 c9 d1 d2 d3 d4 d5 d6 d7 d8 d9 e1 e2 e3 e4 e5 e6 e7 e8 e9 f1 f2 f3 f4 f5 f6 f7 f8 f9 g1 g2 g3 g4 g5 g6 g7 g8 g9 |
 	a1 := a2 := a3 := a4 := a5 := a6 := a7 := a8 := a9 := b1 := b2 := b3 := b4 := b5 := b6 := b7 := b8 := b9 := c1 := c2 := c3 := c4 := c5 := c6 := c7 := c8 := c9 := d1 := d2 := d3 := d4 := d5 := d6 := d7 := d8 := d9 := e1 := e2 := e3 := e4 := e5 := e6 := e7 := e8 := e9 := f1 := f2 := f3 := f4 := f5 := f6 := f7 := f8 := f9 := g1 := g2 := g3 := g4 := g5 := g6 := g7 := g8 := g9 := 1'.
@@ -283,13 +283,13 @@ OCCompilerNotifyingTest >> testTooManyTemporaries [
 	[ self enumerateAllSelections ] on: Error do: [ :ex | self assert: ex messageText equals: 'Cannot compile -- stack including temps is too deep' ]"
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testUnmatchedBlockBracket [
 	self setUpForErrorsIn: 'nil yourself. [` '']'' expected ->`'.
 	self enumerateAllSelections.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testUnmatchedBraceArray [
 	self setUpForErrorsIn: '{ 1. 2` expected } ->`'.
 	self enumerateAllSelections.
@@ -297,28 +297,28 @@ OCCompilerNotifyingTest >> testUnmatchedBraceArray [
 	self enumerateAllSelections
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testUnmatchedByteArrayBracket [
 
 	self setUpForErrorsIn: '#[ 1 2 ` '']'' expected ->`'.
 	self enumerateAllSelections
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testUnmatchedCommentQuote [
 
 	self setUpForErrorsIn: '1+2   "unfinished comment` Unmatched " in comment. ->`'.
 	self enumerateAllSelections
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testUnmatchedExpressionParenthesis [
 
 	self setUpForErrorsIn: '1+(2 ` '')'' expected ->`. '.
 	self enumerateAllSelections.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testUnmatchedLiteralParenthesis [
 
 	self setUpForErrorsIn: '#( 1 2` '')'' expected ->`'.
@@ -327,21 +327,21 @@ OCCompilerNotifyingTest >> testUnmatchedLiteralParenthesis [
 	self enumerateAllSelections.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testUnmatchedLocalTempDeclaration [
 
 	self setUpForErrorsIn: '| x y ` ''|'' expected ->`'.
 	self enumerateAllSelections.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testUnmatchedLocalTempDeclarationInABlock [
 
 	self setUpForErrorsIn: '[:z | | x y ` ''|'' expected ->`]'.
 	self enumerateAllSelections.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCCompilerNotifyingTest >> testUnmatchedStringQuote [
 
 	self setUpForErrorsIn: '^nil printString ,  ''unfinished string` Unmatched '' in string literal. ->`'.

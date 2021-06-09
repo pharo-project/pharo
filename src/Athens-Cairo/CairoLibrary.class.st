@@ -8,13 +8,13 @@ Class {
 	#category : #'Athens-Cairo-Library'
 }
 
-{ #category : #'accessing platform' }
+{ #category : #'accessing - platform' }
 CairoLibrary >> macLibraryName [
 
 	^ FFIMacLibraryFinder findLibrary: 'libcairo.2.dylib'
 ]
 
-{ #category : #'accessing platform' }
+{ #category : #'accessing - platform' }
 CairoLibrary >> unix32LibraryName [
 	"On different flavors of linux the path to library may differ
 	depending on OS distro or whether system is 32 or 64 bit.
@@ -24,7 +24,7 @@ CairoLibrary >> unix32LibraryName [
 	^ FFIUnix32LibraryFinder findLibrary: 'libcairo.so.2'
 ]
 
-{ #category : #'accessing platform' }
+{ #category : #'accessing - platform' }
 CairoLibrary >> unix64LibraryName [
 	"On different flavors of linux the path to library may differ
 	depending on OS distro or whether system is 32 or 64 bit.
@@ -34,7 +34,7 @@ CairoLibrary >> unix64LibraryName [
 	^ FFIUnix64LibraryFinder findLibrary: 'libcairo.so.2'
 ]
 
-{ #category : #'accessing platform' }
+{ #category : #'accessing - platform' }
 CairoLibrary >> unixLibraryName [
 	"Backward compatibility"
 	^ self unix32LibraryName
@@ -51,7 +51,7 @@ CairoLibrary >> versionString [
 	^ self ffiCall: #( String cairo_version_string #() )
 ]
 
-{ #category : #'accessing platform' }
+{ #category : #'accessing - platform' }
 CairoLibrary >> win32LibraryName [ 
 	
 	^ FFIWindowsLibraryFinder findAnyLibrary: #('libcairo-2.dll')	

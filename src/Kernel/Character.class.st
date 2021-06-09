@@ -608,7 +608,7 @@ Character >> isDoubleQuote [
 	^ self = $"
 ]
 
-{ #category : #'testing unicode' }
+{ #category : #'testing - unicode' }
 Character >> isEnclosingMark [
 	"Return whether the receiver is ... one of these https://www.compart.com/en/unicode/category/Me"
 	"$' isEnclosingMark >>> false"
@@ -617,7 +617,7 @@ Character >> isEnclosingMark [
 	^ self characterSet isEnclosingMark: self
 ]
 
-{ #category : #'testing unicode' }
+{ #category : #'testing - unicode' }
 Character >> isFinalQuote [
 	"Return whether the receiver is https://www.compart.com/en/unicode/category/Pf"
 	"$' isFinalQuote >>> false"
@@ -625,7 +625,7 @@ Character >> isFinalQuote [
 	^ self characterSet isFinalQuote: self
 ]
 
-{ #category : #'testing unicode' }
+{ #category : #'testing - unicode' }
 Character >> isFormatOther [
 	"Return whether the receiver in this category: https://www.compart.com/en/unicode/category/Cf"
 	^ self characterSet isFormatOther: self
@@ -637,7 +637,7 @@ Character >> isImmediateObject [
 	^ true
 ]
 
-{ #category : #'testing unicode' }
+{ #category : #'testing - unicode' }
 Character >> isInitialQuote [
 	"Return whether the receiver is https://www.compart.com/en/unicode/category/Pi"
 	"$' isInitialQuote >>> false"
@@ -656,27 +656,27 @@ Character >> isLetter [
 
 ]
 
-{ #category : #'testing unicode' }
+{ #category : #'testing - unicode' }
 Character >> isLetterModifier [
 	"Return whether the receiver is https://www.compart.com/en/unicode/category/Lm"
 	
 	^ self characterSet isLetterModifier: self
 ]
 
-{ #category : #'testing unicode' }
+{ #category : #'testing - unicode' }
 Character >> isLetterNumber [
 	"Return whether the receiver is part of https://www.compart.com/en/unicode/category/Nl"
 	^ self characterSet isLetterNumber: self
 ]
 
-{ #category : #'testing unicode' }
+{ #category : #'testing - unicode' }
 Character >> isLineSeparator [
 	"Return whether the receiver is https://www.compart.com/en/unicode/category/Zl"
 	
 	^ self characterSet isLineSeparator: self
 ]
 
-{ #category : #'testing kind' }
+{ #category : #'testing - kind' }
 Character >> isLiteral [
 
 	^ true
@@ -705,7 +705,7 @@ Character >> isNonspacingMark [
 ^ self characterSet isNonspacingMark: self
 ]
 
-{ #category : #'testing kind' }
+{ #category : #'testing - kind' }
 Character >> isOctetCharacter [
 	^ self asInteger < 256
 ]
@@ -861,7 +861,7 @@ Character >> shallowCopy [
 	^self
 ]
 
-{ #category : #'testing kind' }
+{ #category : #'testing - kind' }
 Character >> shouldBePrintedAsLiteral [
 	^ self asInteger between: 33 and: 255
 ]

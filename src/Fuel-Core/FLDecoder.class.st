@@ -101,17 +101,54 @@ FLDecoder >> nextEncodedClusterClass [
 
 { #category : #decoding }
 FLDecoder >> nextEncodedInt24 [
-	^ self nextEncodedUint24
+	"SmallInteger is 31 / 63 bits. Hence, we can store a full 24 bit signed integer.
+	Look at the high bit to see whether this is actually a negative integer and then
+	restore the remaining two's complement bits."
+	| uInt |
+	uInt := self nextEncodedUint24.
+	^ (uInt bitShift: -23) = 1
+		ifTrue: [ uInt + (-1 bitShift: 24) ]
+		ifFalse: [ uInt ]
 ]
 
 { #category : #decoding }
 FLDecoder >> nextEncodedInt32 [
-	^ self nextEncodedUint32
+	"SmallInteger is 31 / 63 bits.
+	Look at the high bit (bit 30, not 31!) to see whether this is actually a negative
+	integer and then restore the remaining two's complement bits.
+	Note: we don't dispatch to #nextEncodedUint32 to avoid overflow to large integers
+			when decoding negative integers."
+	| n |
+	n := stream next.
+	"See whether bit 7 of the byte is set (= bit 31)"
+	(n bitAnd: 64) = 64 ifTrue: [
+		n := n + (-1 bitShift: 7) ].
+	n := (n bitShift: 8) + stream next.
+	n := (n bitShift: 8) + stream next.
+	^ (n bitShift: 8) + stream next
 ]
 
 { #category : #decoding }
 FLDecoder >> nextEncodedInt64 [
-	^ self nextEncodedUint64
+	"SmallInteger is 31 / 63 bits.
+	Look at the high bit (bit 61, not 63!) to see whether this is actually a negative
+	integer and then restore the remaining two's complement bits.
+	Note: we don't dispatch to #nextEncodedUint64 to avoid overflow to large integers
+			when decoding negative integers.
+	Note: while the documentation says that SmallInteger uses 63 bits on 64 bit platforms
+			`SmallInteger minVal` actually only uses 61 bits!"
+	| n |
+	n := stream next.
+	"See whether bit 5 of the byte is set (= bit 61)"
+	(n bitAnd: 16) = 16 ifTrue: [
+		n := n + (-1 bitShift: 5) ].
+	n := (n bitShift: 8) + stream next.
+	n := (n bitShift: 8) + stream next.
+	n := (n bitShift: 8) + stream next.
+	n := (n bitShift: 8) + stream next.
+	n := (n bitShift: 8) + stream next.
+	n := (n bitShift: 8) + stream next.
+	^ (n bitShift: 8) + stream next
 ]
 
 { #category : #decoding }

@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 RBSplitClassTransformationTest >> testClassVariable [
 
 	self shouldFail: (RBSplitClassTransformation
@@ -15,7 +15,7 @@ RBSplitClassTransformationTest >> testClassVariable [
 							asRefactoring.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBSplitClassTransformationTest >> testNonExistantName [
 
 	self shouldFail: (RBSplitClassTransformation
@@ -26,7 +26,7 @@ RBSplitClassTransformationTest >> testNonExistantName [
 							asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBSplitClassTransformationTest >> testTransform [
 
 	| transformation class |

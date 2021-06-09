@@ -31,7 +31,7 @@ ReTempVarOverridesInstVarRule >> check: aMethod forCritiquesDo: aCriticBlock [
 			(self critiqueFor: aMethod about: var definingNode) ]
 ]
 
-{ #category : #'running-helpers' }
+{ #category : #'running - helpers' }
 ReTempVarOverridesInstVarRule >> critiqueFor: aMethod about: aVarNode [
 	^ (ReTrivialCritique
 		withAnchor: (ReIntervalSourceAnchor

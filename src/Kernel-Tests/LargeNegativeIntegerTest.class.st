@@ -122,7 +122,7 @@ LargeNegativeIntegerTest >> testSqrt [
 	self should: [(SmallInteger minVal - 1) sqrt] raise: DomainError
 ]
 
-{ #category : #'tests-printing' }
+{ #category : #'tests - printing' }
 LargeNegativeIntegerTest >> testStoreOn [
 	| integer |
 	integer := SmallInteger minVal - 1.

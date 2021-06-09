@@ -93,12 +93,12 @@ PRDocumentGroup >> setChildren: aCollection [
 	children := aCollection
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 PRDocumentGroup >> size [
 	^ self children size
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 PRDocumentGroup >> text [
 	^ String streamContents: [ :stream |
 		self children do: [ :each |

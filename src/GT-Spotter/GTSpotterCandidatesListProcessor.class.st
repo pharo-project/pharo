@@ -58,13 +58,13 @@ GTSpotterCandidatesListProcessor >> defaultCandidatesLimit [
 	^ self defaultItemsLimit
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTSpotterCandidatesListProcessor >> defaultContinueItemsLimit [
 	" Spotter becomes extraordenary slow when rendering too many results. So we set the maximum limit to 100. This is only a temporary solution until we have fixed the problem. Until then no spotter processor will ever generate more then 100 results. "
 	^ 100
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTSpotterCandidatesListProcessor >> defaultItemsLimit [
 	^ self class defaultItemsLimit
 ]

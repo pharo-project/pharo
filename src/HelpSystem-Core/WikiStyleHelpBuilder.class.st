@@ -27,7 +27,7 @@ Class {
 	#category : #'HelpSystem-Core-Builders'
 }
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 WikiStyleHelpBuilder class >> allHelpPragmas [
 	^ self pragmaKeywords flatCollect: [ :keyword | Pragma allNamed: keyword ]
 ]
@@ -38,13 +38,13 @@ WikiStyleHelpBuilder class >> help [
         ^ 'From WikiStyleHelpBuilder comment: ', String cr, self comment
 ]
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 WikiStyleHelpBuilder class >> pragmaKeyword [
 	 ^#wikiStyleHelp:
 
 ]
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 WikiStyleHelpBuilder class >> pragmaKeywords [
 	 ^#(wikiStyleHelp: wikiStyleHelp:syntax:)
 
@@ -65,12 +65,12 @@ WikiStyleHelpBuilder >> build [
 			topicToBuild addSubtopic: topic ]
 ]
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 WikiStyleHelpBuilder >> defaultSyntax [
 	^#pier
 ]
 
-{ #category : #'private extraction' }
+{ #category : #'private - extraction' }
 WikiStyleHelpBuilder >> extractHelpContentFromString: aString [
 	| start stop |
 	start := aString findString: self helpStartMarker.
@@ -84,7 +84,7 @@ WikiStyleHelpBuilder >> extractHelpContentFromString: aString [
 	^ (aString copyFrom: start to: stop) trimBoth
 ]
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 WikiStyleHelpBuilder >> helpContentFromString: aString [
 	| start stop |
 	start := aString findString: self helpStartMarker.
@@ -98,22 +98,22 @@ WikiStyleHelpBuilder >> helpContentFromString: aString [
 	^ (aString copyFrom: start to: stop) trimBoth
 ]
 
-{ #category : #'private extraction' }
+{ #category : #'private - extraction' }
 WikiStyleHelpBuilder >> helpStartMarker [
 	^  '<', self helpTag, '>'
 ]
 
-{ #category : #'private extraction' }
+{ #category : #'private - extraction' }
 WikiStyleHelpBuilder >> helpStopMarker [
 	^  '</', self helpTag, '>'
 ]
 
-{ #category : #'private extraction' }
+{ #category : #'private - extraction' }
 WikiStyleHelpBuilder >> helpTag [
 	^  #help
 ]
 
-{ #category : #'private conversion' }
+{ #category : #'private - conversion' }
 WikiStyleHelpBuilder >> helpTopicFromFormattedString: aString title: aTitle [
 	| helpString currentLevel section topicStack topic |
 	helpString := aString.
@@ -156,12 +156,12 @@ WikiStyleHelpBuilder >> helpTopicFromFormattedString: aString title: aTitle [
 
 ]
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 WikiStyleHelpBuilder >> sectionStartChar [
 	^ $!
 ]
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 WikiStyleHelpBuilder >> supportedSyntaxes [
 	^#(pier) 
 ]

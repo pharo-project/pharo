@@ -40,7 +40,7 @@ TFCallback class >> forCallback: aCallback parameters: parameterTypes returnType
 		yourself
 ]
 
-{ #category : #'private primitives' }
+{ #category : #'private - primitives' }
 TFCallback class >> primUnregister: callbackHandle [
 	<primitive: 'primitiveUnregisterCallback'>
 
@@ -199,7 +199,7 @@ TFCallback >> thunk [
 	^ self getHandle 
 ]
 
-{ #category : #'private operations' }
+{ #category : #'private - operations' }
 TFCallback >> validateTypes [
 
 	parameterTypes do: [ :each | each validate ].

@@ -46,7 +46,7 @@ RBCategoryEnvironment >> categories: aCollection [
 	categories addAll: aCollection
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBCategoryEnvironment >> classNames [
 	^ self categories 
 		inject: IdentitySet new

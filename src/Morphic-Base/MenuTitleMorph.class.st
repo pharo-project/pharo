@@ -43,7 +43,7 @@ MenuTitleMorph >> bigTitle: aTitle [
 	withPinBox.
 ]
 
-{ #category : #'private-creation' }
+{ #category : #'private - creation' }
 MenuTitleMorph >> boxExtent [
 
 	^ (18 @ 18) * self displayScaleFactor
@@ -87,7 +87,7 @@ MenuTitleMorph >> icon: aForm [
 	self addMorphFront: icon
 ]
 
-{ #category : #'private-creation' }
+{ #category : #'private - creation' }
 MenuTitleMorph >> iconButtonCalling: aSelector withForm: aForm helpText: aText [
 
 	^IconicButtonMorph new target: self;

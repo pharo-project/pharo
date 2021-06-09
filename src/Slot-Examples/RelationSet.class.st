@@ -43,7 +43,7 @@ RelationSet >> do: aBlock [
 	set do: aBlock
 ]
 
-{ #category : #'initailize-release' }
+{ #category : #'initialize - release' }
 RelationSet >> initializeOwner: anObject slot: aToManyAssociation [
 
 	owner := anObject.

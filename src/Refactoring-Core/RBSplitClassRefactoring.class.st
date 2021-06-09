@@ -63,7 +63,7 @@ RBSplitClassRefactoring class >> model: aRBSmalltalk class: class instanceVariab
 		yourself
 ]
 
-{ #category : #'private-transforming' }
+{ #category : #'private - transforming' }
 RBSplitClassRefactoring >> abstractReferenceTo: each [ 
 	| setterMethod replacer accessorRef getterMethod |
 	accessorRef := RBCreateAccessorsForVariableRefactoring 
@@ -92,7 +92,7 @@ RBSplitClassRefactoring >> abstractVariableReferences [
 	instanceVariables do: [:each | self abstractReferenceTo: each]
 ]
 
-{ #category : #'private-transforming' }
+{ #category : #'private - transforming' }
 RBSplitClassRefactoring >> addClass [
 	self performCompositeRefactoring: (RBAddClassRefactoring 
 				model: self model
@@ -103,7 +103,7 @@ RBSplitClassRefactoring >> addClass [
 	newClass := self model classNamed: newClassName asSymbol
 ]
 
-{ #category : #'private-transforming' }
+{ #category : #'private - transforming' }
 RBSplitClassRefactoring >> addInstanceVariables [
 	instanceVariables do: 
 			[:each | 

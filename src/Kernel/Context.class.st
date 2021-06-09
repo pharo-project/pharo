@@ -405,7 +405,7 @@ Context >> bottomContext [
 	^ self findContextSuchThat: [ :context | context sender isNil]
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> canHandleSignal: exception [
 	"Sent to handler (on:do:) contexts only.  If my exception class (first arg) handles exception then return true, otherwise forward this message to the next handler context.  If none left, return false (see nil>>canHandleSignal:)"
 
@@ -414,7 +414,7 @@ Context >> canHandleSignal: exception [
 
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> cannotReturn: result [
 
 	closureOrNil ifNotNil: [ 
@@ -743,7 +743,7 @@ Context >> errorReportOn: stream [
 		aContext := aContext sender ].
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> evaluateSignal: exception [
 	"The following primitive is just a marker used to find the evaluation context. 
 	See MethodContext>>#isHandlerOrSignalingContext. "
@@ -801,7 +801,7 @@ Context >> findContextSuchThat: testBlock [
 	^ nil
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> findNextHandlerContext [
 	"Return the next handler marked context, returning nil if there is none.  
 	Search starts with self and proceeds up to nil."
@@ -816,7 +816,7 @@ Context >> findNextHandlerContext [
 	^searchStartContext nextHandlerContext
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> findNextHandlerOrSignalingContext [
 	"Return the next handler/signaling marked context, answering nil if there is none. 
 	Search starts with self and proceeds up to nil."
@@ -831,7 +831,7 @@ Context >> findNextHandlerOrSignalingContext [
 	^ nil
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> findNextUnwindContextUpTo: aContext [
 	"Return the next unwind marked above the receiver, returning nil if there is none.  Search proceeds up to but not including aContext."
 
@@ -872,7 +872,7 @@ Context >> findSimilarSender [
 		context compiledCode == method ]
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> handleSignal: exception [
 	"Sent to handler (on:do:) contexts only.  If my exception class (first arg) handles exception then execute my handle block (second arg), otherwise forward this message to the next handler context.  If none left, execute exception's defaultAction (see nil>>handleSignal:)."
 	<debuggerCompleteToSender>
@@ -990,13 +990,13 @@ Context >> isFailToken: anObject [
 			and: [ anObject size = 2 and: [(anObject at: 1) == PrimitiveFailToken]]
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> isHandlerContext [
 	"is this context for #on:do:?"
 	^self isHandlerOrSignalingContext and: [ self selector == #on:do: ]
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> isHandlerOrSignalingContext [
 	"Both BlockClosure>>on:do: (handler) and Context>>evaluateSignal: (signaling) 
 	are marked with primitive 199."
@@ -1010,7 +1010,7 @@ Context >> isPrimFailToken: anObject [
 		  and: [anObject first == PrimitiveFailToken]]
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> isUnwindContext [
 	"is this context for  method that is marked?"
 	^method primitive = 198
@@ -1118,7 +1118,7 @@ Context >> methodSelector [
 	^ self compiledCode selector
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> nextHandlerContext [
 
 	^ self sender findNextHandlerContext
@@ -1623,7 +1623,7 @@ Context >> receiver [
 	^receiver
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> receiver: anObject [
 
 	receiver := anObject
@@ -2133,7 +2133,7 @@ Context >> storeIntoTemporaryVariable: offset [
 	self at: offset + 1 put: self top
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> swapReceiver: newReceiver [
 
 	receiver := newReceiver
@@ -2263,7 +2263,7 @@ Context >> unwindComplete: aBoolean [
 
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> unwindForTermination [
 	"Unwind to execute pending ensure:/ifCurtailed: blocks before terminating active process.
 	It assumes that self belongs to the active process. "
@@ -2279,7 +2279,7 @@ Context >> unwindForTermination [
 	self terminateTo: nil
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> unwindTo: aContext [
 
 	| context unwindBlock |

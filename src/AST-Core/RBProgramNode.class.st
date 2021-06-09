@@ -216,13 +216,20 @@ RBProgramNode >> bestNodeForPosition: aPosition [
 		This heuristic introduces although an ambiguity when code is not nicely formatted:
 		   self foo:|#bar => Here a user may want foo: or bar.
 		For now we decided to favor foo: to motivate people to indent code correctly	"
- 
-	| offset position |
-	offset := (aPosition = 1 or: [ (self methodNode sourceCode at: aPosition - 1) isSeparator ])
-		ifTrue: [ 0 ]
-		ifFalse: [ -1 ].
 
-	position := (aPosition + offset) min: self stop.
+	| offset position precededBySeparator |
+	precededBySeparator := [ 
+	                       (aPosition
+		                        between: 2
+		                        and: self methodNode sourceCode size + 1) 
+		                       and: [ 
+		                       (self methodNode sourceCode at: aPosition - 1)
+			                       isSeparator ] ].
+	offset := (aPosition = 1 or: precededBySeparator)
+		          ifTrue: [ 0 ]
+		          ifFalse: [ -1 ].
+
+	position := aPosition + offset min: self stop.
 
 	^ self bestNodeFor: (position to: position)
 ]
@@ -237,7 +244,7 @@ RBProgramNode >> blockVariables [
 	^parent ifNil: [#()] ifNotNil: [parent blockVariables]
 ]
 
-{ #category : #'testing-matching' }
+{ #category : #'testing - matching' }
 RBProgramNode >> canMatchMethod: aCompiledMethod [ 
 	^self sentMessages allSatisfy: 
 			[:each | 
@@ -245,7 +252,7 @@ RBProgramNode >> canMatchMethod: aCompiledMethod [
 				or: [aCompiledMethod refersToLiteral: each]]
 ]
 
-{ #category : #'meta variable-accessing' }
+{ #category : #'accessing - meta variable' }
 RBProgramNode >> cascadeListCharacter [
 	^$;
 ]
@@ -367,7 +374,7 @@ RBProgramNode >> dump [
 	| visitor |
 	visitor := RBDumpVisitor new.
 	self acceptVisitor: visitor.
-	^ visitor stream contents
+	^ visitor contents
 ]
 
 { #category : #comparing }
@@ -577,7 +584,7 @@ RBProgramNode >> isLast: aNode [
 	^children notEmpty and: [children last == aNode]
 ]
 
-{ #category : #'testing-matching' }
+{ #category : #'testing - matching' }
 RBProgramNode >> isList [
 	^false
 ]
@@ -627,7 +634,7 @@ RBProgramNode >> isParseError [
 	^false
 ]
 
-{ #category : #'testing-matching' }
+{ #category : #'testing - matching' }
 RBProgramNode >> isPatternNode [
 	^false
 ]
@@ -732,12 +739,12 @@ RBProgramNode >> lastIsReturn [
 	^self isReturn
 ]
 
-{ #category : #'meta variable-accessing' }
+{ #category : #'accessing - meta variable' }
 RBProgramNode >> listCharacter [
 	^$@
 ]
 
-{ #category : #'meta variable-accessing' }
+{ #category : #'accessing - meta variable' }
 RBProgramNode >> literalCharacter [
 	^$#
 ]
@@ -907,12 +914,12 @@ RBProgramNode >> propertyAt: aKey put: anObject [
 		at: aKey put: anObject
 ]
 
-{ #category : #'testing-matching' }
+{ #category : #'testing - matching' }
 RBProgramNode >> recurseInto [
 	^false
 ]
 
-{ #category : #'meta variable-accessing' }
+{ #category : #'accessing - meta variable' }
 RBProgramNode >> recurseIntoCharacter [
 	^$`
 ]
@@ -965,13 +972,13 @@ RBProgramNode >> replaceNode: aNode withNode: anotherNode [
 	self error: 'I don''t store other nodes'
 ]
 
-{ #category : #'private-replacing' }
+{ #category : #'private - replacing' }
 RBProgramNode >> replaceSourceFrom: aNode [
 	self == aNode
 		ifFalse: [ self clearReplacements ]
 ]
 
-{ #category : #'private-replacing' }
+{ #category : #'private - replacing' }
 RBProgramNode >> replaceSourceWith: aNode [ 
 	aNode replaceSourceFrom: self
 ]
@@ -1043,7 +1050,7 @@ RBProgramNode >> start [
 	self subclassResponsibility
 ]
 
-{ #category : #'meta variable-accessing' }
+{ #category : #'accessing - meta variable' }
 RBProgramNode >> statementCharacter [
 	^$.
 ]

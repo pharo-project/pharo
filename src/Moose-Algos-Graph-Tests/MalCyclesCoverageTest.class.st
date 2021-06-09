@@ -13,7 +13,7 @@ MalCyclesCoverageTest >> setUp [
 	cc := MalCyclesCoverage new
 ]
 
-{ #category : #'tests-cse' }
+{ #category : #'tests - cse' }
 MalCyclesCoverageTest >> testAseCircuitWithCse [
 	cc useCircuitSpan.
 	MalGraphFixture aseCircuitGraph: cc.
@@ -23,7 +23,7 @@ MalCyclesCoverageTest >> testAseCircuitWithCse [
 		do: [ :c | self assert: (cc circuits anySatisfy: [ :ci | c hasEqualElements: (cc normalize: ci) ]) ]
 ]
 
-{ #category : #'tests-sed' }
+{ #category : #'tests - sed' }
 MalCyclesCoverageTest >> testAseCircuitWithSed [
 	cc useEdgeDecomposition.
 	MalGraphFixture aseCircuitGraph: cc.
@@ -33,7 +33,7 @@ MalCyclesCoverageTest >> testAseCircuitWithSed [
 		do: [ :c | self assert: (cc circuits anySatisfy: [ :ci | c hasEqualElements: ci ]) ]
 ]
 
-{ #category : #'tests-snd' }
+{ #category : #'tests - snd' }
 MalCyclesCoverageTest >> testAseCircuitWithSnd [
 	MalGraphFixture aseCircuitGraph: cc.
 	cc run.
@@ -43,7 +43,7 @@ MalCyclesCoverageTest >> testAseCircuitWithSnd [
 
 ]
 
-{ #category : #'tests-cse' }
+{ #category : #'tests - cse' }
 MalCyclesCoverageTest >> testAseSccWithCse [
 	| cse |
 	cse := MalCircuitSpanningEdges new.
@@ -56,7 +56,7 @@ MalCyclesCoverageTest >> testAseSccWithCse [
 	self assert: (#($e $a $b $d) hasEqualElements: cse circuits fourth)
 ]
 
-{ #category : #'tests-sed' }
+{ #category : #'tests - sed' }
 MalCyclesCoverageTest >> testAseSccWithSed [
 	| sed circuits |
 	sed := MalSccEdgeDecomposition new.
@@ -68,7 +68,7 @@ MalCyclesCoverageTest >> testAseSccWithSed [
 		do: [ :c | self assert: (circuits anySatisfy: [ :ci | c hasEqualElements: ci ]) ]
 ]
 
-{ #category : #'tests-snd' }
+{ #category : #'tests - snd' }
 MalCyclesCoverageTest >> testAseSccWithSnd [
 	| sed circuits |
 	sed := MalSccNodeDecomposition new.

@@ -10,13 +10,13 @@ Class {
 	#category : #'GT-Inspector'
 }
 
-{ #category : #'private building' }
+{ #category : #'private - building' }
 GTObjectVariablesBrowser >> basicVariableNodesFor: anObject in: aCollection [
 
 	^ anObject gtInspectorVariableNodesIn: aCollection 
 ]
 
-{ #category : #'private building' }
+{ #category : #'private - building' }
 GTObjectVariablesBrowser >> printArray: anArray [
 	"The #printString method of an array needs to scan through the entire array to
 	determine how to print the array. Only scan through a limited number of elements
@@ -32,7 +32,7 @@ GTObjectVariablesBrowser >> printArray: anArray [
 	
 ]
 
-{ #category : #'private building' }
+{ #category : #'private - building' }
 GTObjectVariablesBrowser >> printStringOf: anObject [ 
 	^ ["Treat arrays differently as their #printString method can be slow.
 		In the future if multiple objects need to be handled differenty,

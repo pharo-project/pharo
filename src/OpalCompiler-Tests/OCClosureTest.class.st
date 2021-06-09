@@ -17,7 +17,7 @@ OCClosureTest >> assertValues: anArray [
 			', but got ' , values asArray printString]
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCClosureTest >> methodArgument: anObject [
 	^ [ anObject ]
 	
@@ -29,7 +29,7 @@ OCClosureTest >> setUp [
 	collection := OrderedCollection new
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCClosureTest >> testBlockArgument [
 	| block block1 block2 |
 	block := [ :arg | 
@@ -42,7 +42,7 @@ OCClosureTest >> testBlockArgument [
 	self assert: block2 value equals: 2
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCClosureTest >> testBlockTemp [
 	| block block1 block2 |
 	block := [ :arg | [ arg ] ].
@@ -52,7 +52,7 @@ OCClosureTest >> testBlockTemp [
 	self assert: block2 value equals: 2
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCClosureTest >> testBlockTemps [
 	| block block1 block2 |
 	"Regression test: Bytecode offset of IR was to last byte of IR node, which for blocks include temp initialization bytes. This caused scan for block creation bytecode to fail when there were many block temps, and no source node to be found."
@@ -68,7 +68,7 @@ OCClosureTest >> testBlockTemps [
 	self assert: block2 value equals: 2
 ]
 
-{ #category : #'testing-empty' }
+{ #category : #'tests - empty' }
 OCClosureTest >> testEmptyBlockOneArgument [
 	self
 		assert: (self class compiler evaluate: '[ :a ] value: 1') isNil
@@ -81,7 +81,7 @@ OCClosureTest >> testEmptyBlockOneArgument [
 		description: 'Empty blocks in ST-80 should return nil'
 ]
 
-{ #category : #'testing-empty' }
+{ #category : #'tests - empty' }
 OCClosureTest >> testEmptyBlockTwoArguments [
 	self
 		assert: (self class compiler evaluate: '[ :a :b ] value: 1 value: 2') isNil
@@ -94,7 +94,7 @@ OCClosureTest >> testEmptyBlockTwoArguments [
 		description: 'Empty blocks in ST-80 should return nil'
 ]
 
-{ #category : #'testing-empty' }
+{ #category : #'tests - empty' }
 OCClosureTest >> testEmptyBlockZeroArguments [
 	self
 		assert: (self class compiler evaluate: '[ ] value') isNil
@@ -104,7 +104,7 @@ OCClosureTest >> testEmptyBlockZeroArguments [
 		description: 'Empty blocks in ST-80 should return nil'
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCClosureTest >> testMethodArgument [
 	| temp block |
 	temp := 0.
@@ -115,7 +115,7 @@ OCClosureTest >> testMethodArgument [
 	self assert: block value equals: 2
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 OCClosureTest >> testMethodTemp [
 	| block1 block2 |
 	block1 := self methodArgument: 1.
@@ -124,14 +124,14 @@ OCClosureTest >> testMethodTemp [
 	self assert: block2 value equals: 2
 ]
 
-{ #category : #'testing-todo' }
+{ #category : #'tests - todo' }
 OCClosureTest >> testToDoArgument [
 	1 to: 5 do: [ :index |
 		collection add: [ index ] ].
 	self assertValues: #(1 2 3 4 5)
 ]
 
-{ #category : #'testing-todo' }
+{ #category : #'tests - todo' }
 OCClosureTest >> testToDoArgumentNotInlined [
 	| block |
 	block := [ :index |
@@ -140,7 +140,7 @@ OCClosureTest >> testToDoArgumentNotInlined [
 	self assertValues: #(1 2 3 4 5)
 ]
 
-{ #category : #'testing-todo' }
+{ #category : #'tests - todo' }
 OCClosureTest >> testToDoInsideTemp [
 	1 to: 5 do: [ :index | 
 		| temp | 
@@ -149,7 +149,7 @@ OCClosureTest >> testToDoInsideTemp [
 	self assertValues: #(1 2 3 4 5)
 ]
 
-{ #category : #'testing-todo' }
+{ #category : #'tests - todo' }
 OCClosureTest >> testToDoInsideTempNotInlined [
 	| block |
 	block := [ :index | 
@@ -160,7 +160,7 @@ OCClosureTest >> testToDoInsideTempNotInlined [
 	self assertValues: #(1 2 3 4 5)
 ]
 
-{ #category : #'testing-todo' }
+{ #category : #'tests - todo' }
 OCClosureTest >> testToDoOutsideTemp [
 	| temp |
 	1 to: 5 do: [ :index | 
@@ -169,7 +169,7 @@ OCClosureTest >> testToDoOutsideTemp [
 	self assertValues: #(5 5 5 5 5)
 ]
 
-{ #category : #'testing-todo' }
+{ #category : #'tests - todo' }
 OCClosureTest >> testToDoOutsideTempNotInlined [
 	| block temp |
 	block := [ :index | 
@@ -179,7 +179,7 @@ OCClosureTest >> testToDoOutsideTempNotInlined [
 	self assertValues: #(5 5 5 5 5)
 ]
 
-{ #category : #'testing-while' }
+{ #category : #'tests - while' }
 OCClosureTest >> testWhileModificationAfter [
 	| index |
 	index := 0.
@@ -189,7 +189,7 @@ OCClosureTest >> testWhileModificationAfter [
 	self assertValues: #(5 5 5 5 5)
 ]
 
-{ #category : #'testing-while' }
+{ #category : #'tests - while' }
 OCClosureTest >> testWhileModificationAfterNotInlined [
 	| index block |
 	index := 0.
@@ -200,7 +200,7 @@ OCClosureTest >> testWhileModificationAfterNotInlined [
 	self assertValues: #(5 5 5 5 5)
 ]
 
-{ #category : #'testing-while' }
+{ #category : #'tests - while' }
 OCClosureTest >> testWhileModificationBefore [
 	| index |
 	index := 0.
@@ -210,7 +210,7 @@ OCClosureTest >> testWhileModificationBefore [
 	self assertValues: #(5 5 5 5 5)
 ]
 
-{ #category : #'testing-while' }
+{ #category : #'tests - while' }
 OCClosureTest >> testWhileModificationBeforeNotInlined [
 	| index block |
 	index := 0.
@@ -221,7 +221,7 @@ OCClosureTest >> testWhileModificationBeforeNotInlined [
 	self assertValues: #(5 5 5 5 5)
 ]
 
-{ #category : #'testing-while' }
+{ #category : #'tests - while' }
 OCClosureTest >> testWhileWithTemp [
 	| index |
 	index := 0.
@@ -232,7 +232,7 @@ OCClosureTest >> testWhileWithTemp [
 	self assertValues: #(1 2 3 4 5)
 ]
 
-{ #category : #'testing-while' }
+{ #category : #'tests - while' }
 OCClosureTest >> testWhileWithTempIsNil [
 	
 	| index |
@@ -245,7 +245,7 @@ OCClosureTest >> testWhileWithTempIsNil [
 	self assertValues: #(nil 1 nil 2 nil 3 nil 4 nil 5)
 ]
 
-{ #category : #'testing-while' }
+{ #category : #'tests - while' }
 OCClosureTest >> testWhileWithTempNotInlined [
 	| index block |
 	index := 0.

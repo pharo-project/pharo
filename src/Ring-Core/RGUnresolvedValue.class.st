@@ -7,7 +7,7 @@ Class {
 	#category : #'Ring-Core-Kernel'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RGUnresolvedValue class >> recursive [
 
 	| unresolvedValue |

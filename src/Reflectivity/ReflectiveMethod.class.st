@@ -19,7 +19,7 @@ Class {
 	#category : #'Reflectivity-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 ReflectiveMethod class >> on: aCompiledMethod [ 
 	^self new
 		compiledMethod: aCompiledMethod
@@ -282,38 +282,8 @@ ReflectiveMethod >> spotterActDefault [
 ]
 
 { #category : #spotter }
-ReflectiveMethod >> spotterForBytecodesFor: aStep [
-	<spotterOrder: 15>
-	compiledMethod spotterForBytecodesFor: aStep
-]
-
-{ #category : #spotter }
-ReflectiveMethod >> spotterForImplementorsFor: aStep [
-	<spotterOrder: 10>
-	self compiledMethod spotterForImplementorsFor: aStep
-]
-
-{ #category : #spotter }
-ReflectiveMethod >> spotterForMessagesFor: aStep [
-	<spotterOrder: 12>
-	self compiledMethod spotterForMessagesFor: aStep
-]
-
-{ #category : #spotter }
-ReflectiveMethod >> spotterForSendersFor: aStep [
-	<spotterOrder: 11>
-	self compiledMethod spotterForSendersFor: aStep
-]
-
-{ #category : #spotter }
 ReflectiveMethod >> spotterItemsFor: aStep [
 	"do nothing for compiled method"
-]
-
-{ #category : #spotter }
-ReflectiveMethod >> spotterMethodClassFor: aStep [
-	<spotterOrder: 50>
-	self compiledMethod spotterMethodClassFor: aStep
 ]
 
 { #category : #spotter }

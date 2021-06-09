@@ -24,7 +24,7 @@ TraitedMetaclass class >> traitedClassTrait [
 	^ (TaCompositionElement for: TraitedClass)
 ]
 
-{ #category : #'accessing method dictionary' }
+{ #category : #'accessing - method dictionary' }
 TraitedMetaclass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory [
 	
 	self localMethodDict at: selector put: compiledMethod.
@@ -37,14 +37,14 @@ TraitedMetaclass >> addAndClassifySelector: selector withMethod: compiledMethod 
 	TraitChange addSelector: selector on: self.
 ]
 
-{ #category : #'accessing method dictionary' }
+{ #category : #'accessing - method dictionary' }
 TraitedMetaclass >> addSelector: selector withMethod: compiledMethod [
 	self localMethodDict at: selector put: compiledMethod.
 	super addSelector: selector withMethod: compiledMethod.
 	TraitChange addSelector: selector on: self
 ]
 
-{ #category : #'accessing method dictionary' }
+{ #category : #'accessing - method dictionary' }
 TraitedMetaclass >> addSelector: selector withRecompiledMethod: compiledMethod [ 
 
 	compiledMethod isFromTrait 
@@ -150,7 +150,7 @@ TraitedMetaclass >> hasTraitComposition [
 	^ self traitComposition isEmpty not 
 ]
 
-{ #category : #'testing method dictionary' }
+{ #category : #'testing - method dictionary' }
 TraitedMetaclass >> includesLocalSelector: aSymbol [
 	^ self isLocalSelector: aSymbol
 ]
@@ -335,7 +335,7 @@ TraitedMetaclass >> removeFromComposition: aTrait [
 	self setTraitComposition: (self traitComposition copyWithoutTrait: aTrait asTraitComposition)
 ]
 
-{ #category : #'accessing method dictionary' }
+{ #category : #'accessing - method dictionary' }
 TraitedMetaclass >> removeSelector: aSelector [
 
 	"When a selector is removed it should be notified to my users.

@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveVariableTransformationTest >> testModelRemoveInstanceVariable [
 
 	| class |
@@ -24,7 +24,7 @@ RBRemoveVariableTransformationTest >> testModelRemoveInstanceVariable [
 	self deny: (class definesInstanceVariable: 'foo1')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveVariableTransformationTest >> testNonExistantName [
 
 	self 
@@ -38,7 +38,7 @@ RBRemoveVariableTransformationTest >> testNonExistantName [
 						asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveVariableTransformationTest >> testRefactoring [
 
 	| refactoring class |
@@ -53,7 +53,7 @@ RBRemoveVariableTransformationTest >> testRefactoring [
 	self deny: (class definesInstanceVariable: 'foo1')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveVariableTransformationTest >> testReferencedVariable [
 
 	self 
@@ -67,7 +67,7 @@ RBRemoveVariableTransformationTest >> testReferencedVariable [
 						asRefactoring 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveVariableTransformationTest >> testRemoveClassVariable [
 
 	| refactoring class |
@@ -82,7 +82,7 @@ RBRemoveVariableTransformationTest >> testRemoveClassVariable [
 	self deny: (class definesClassVariable: 'Foo1')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveVariableTransformationTest >> testTransform [
 
 	| transformation class |

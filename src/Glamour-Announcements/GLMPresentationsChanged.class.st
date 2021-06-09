@@ -39,7 +39,7 @@ GLMPresentationsChanged >> pane: aPane [
 	pane := aPane
 ]
 
-{ #category : #'accessing-convenience' }
+{ #category : #'accessing - convenience' }
 GLMPresentationsChanged >> presentations [ 
 	"The presentationt that are currently present on the pane." 
 	 

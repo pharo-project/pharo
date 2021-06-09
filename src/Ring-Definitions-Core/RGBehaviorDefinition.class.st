@@ -288,7 +288,7 @@ RGBehaviorDefinition >> hasTraitComposition [
 	^self traitCompositionSource ~= '{}'
 ]
 
-{ #category : #'testing class hierarchy' }
+{ #category : #'testing - class hierarchy' }
 RGBehaviorDefinition >> includesBehavior: aClass [
 	^self == aClass or: [self inheritsFrom: aClass]
 ]

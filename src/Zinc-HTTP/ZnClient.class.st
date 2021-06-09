@@ -41,7 +41,7 @@ Class {
 	#category : #'Zinc-HTTP-Client-Server'
 }
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> accept: mimeTypeObject [
 	"Set the Accept HTTP header to mimeTypeObject for the current request."
 
@@ -50,7 +50,7 @@ ZnClient >> accept: mimeTypeObject [
 	self request setAccept: mimeType
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> addPart: mimePart [
 	"Add mimePart to the multipart/form-data entity of the current request"
 
@@ -58,7 +58,7 @@ ZnClient >> addPart: mimePart [
 		addPart: mimePart 
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> addPath: object [
 	"Extend the path of the current request with object.
 	Either a string or a collection of strings is allowed as argument."
@@ -68,7 +68,7 @@ ZnClient >> addPath: object [
 		ifFalse: [ object do: [ :each | self addPathSegment: each ] ]
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> addPathSegment: pathSegment [
 	"Extend the path of the current request with a single pathSegment."
 	
@@ -77,7 +77,7 @@ ZnClient >> addPathSegment: pathSegment [
 		ifNotNil: [ request url addPathSegment: pathSegment ]  
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> applicationFormUrlEncodedEntity [
 	"Initialize the current request to have an application/x-www-form-urlencoded entity.
 	Return the existing entity if there is one. 
@@ -233,7 +233,7 @@ ZnClient >> contentReader: object [
 	self optionAt: #contentReader put: object
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> contentType: mimeType [
 	"Set the content-type of the request entity, provided we have one"
 	
@@ -264,7 +264,7 @@ ZnClient >> contentWriter: object [
 	self optionAt: #contentWriter put: object
 ]
 
-{ #category : #'accessing response' }
+{ #category : #'accessing - response' }
 ZnClient >> contents [ 
 	"Answer the contents or HTTP payload of the last response, 
 	assuming the current request was executed.
@@ -281,7 +281,7 @@ ZnClient >> contents [
 			ifNotNil: [ :reader | reader value: response entity ] ]  
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> contents: object [
 	"Set the entity contents of the current request to object.
 	I will pass this through my contentWriter if I have one.
@@ -425,7 +425,7 @@ ZnClient >> enforceHttpSuccess: boolean [
 	self optionAt: #enforceHttpSuccess put: boolean
 ]
 
-{ #category : #'accessing response' }
+{ #category : #'accessing - response' }
 ZnClient >> entity [
 	"Answer the entity or HTTP payload of the last response, 
 	assuming the current request was executed."
@@ -433,7 +433,7 @@ ZnClient >> entity [
 	^ response ifNotNil: [ response entity ]  
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> entity: entity [
 	"Set the entity of the current request to enity.
 	A ZnEntity subclass or compatible object is expected."
@@ -453,7 +453,7 @@ ZnClient >> execute [
 	^ result
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ZnClient >> executeRequestResponse [
 	| initialMilliseconds requestDuration responseDuration |
 	initialMilliseconds := Time millisecondClockValue.
@@ -465,7 +465,7 @@ ZnClient >> executeRequestResponse [
 	self logClientTransactionRequestDuration: requestDuration responseDuration: responseDuration
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ZnClient >> executeWithRedirectsRemaining: redirectCount [
 	self getConnectionAndExecute.
 	response isRedirect 
@@ -482,7 +482,7 @@ ZnClient >> executeWithRedirectsRemaining: redirectCount [
 	
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ZnClient >> executeWithRetriesRemaining: retryCount [
 	^ [ self executeWithRedirectsRemaining: self maxNumberOfRedirects ]
 		on: self retryExceptionSet
@@ -496,7 +496,7 @@ ZnClient >> executeWithRetriesRemaining: retryCount [
 					exception pass ] ]
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ZnClient >> executeWithTimeout [
 	^ self withTimeoutDo: [ 
 		[ self executeWithRetriesRemaining: self numberOfRetries ]
@@ -522,7 +522,7 @@ ZnClient >> followRedirects: boolean [
 	self optionAt: #followRedirects put: boolean 
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> formAdd: association [
 	"Add the key->value association to the application/x-www-form-urlencoded 
 	entity of the current request."
@@ -531,7 +531,7 @@ ZnClient >> formAdd: association [
 		add: association 
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> formAddAll: keyedCollection [
 	"Add all key->value associations of keyedCollection to 
 	the application/x-www-form-urlencoded entity of the current request."
@@ -540,7 +540,7 @@ ZnClient >> formAddAll: keyedCollection [
 		addAll: keyedCollection 
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> formAt: key add: value [
 	"Add key equals value to the application/x-www-form-urlencoded 
 	entity of the current request. This is for multi-values form fields."
@@ -549,7 +549,7 @@ ZnClient >> formAt: key add: value [
 		at: key add: value
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> formAt: key put: value [
 	"Set key equal to value in the application/x-www-form-urlencoded 
 	entity of the current request."
@@ -576,7 +576,7 @@ ZnClient >> get: url [
 		get
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ZnClient >> getConnectionAndExecute [
 	self canReuseConnection 
 		ifTrue: [ 
@@ -588,7 +588,7 @@ ZnClient >> getConnectionAndExecute [
 		ensure: [ self cleanupConnection ]
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ZnClient >> handleResponse [
 	self receiveCookies.
 	(self enforceHttpSuccess and: [ response isSuccess not ])
@@ -603,7 +603,7 @@ ZnClient >> handleResponse [
 	^ self contents
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ZnClient >> handleRetry: exception [
 	self logRetrying: exception.
 	self close.
@@ -629,7 +629,7 @@ ZnClient >> head: url [
 		head
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> headerAddAll: keyedCollection [
 	"Add all key/value pairs of keyedCollection as headers.
 	Note that #addAllMulti: is used"
@@ -638,7 +638,7 @@ ZnClient >> headerAddAll: keyedCollection [
 		addAll: keyedCollection 
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> headerAt: key add: value [
 	"Add value to key in the HTTP header of the current request.
 	This is for multi-values headers."
@@ -647,7 +647,7 @@ ZnClient >> headerAt: key add: value [
 		at: key add: value
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> headerAt: key put: value [
 	"Set key equals value in the HTTP header of the current request"
 	
@@ -655,21 +655,21 @@ ZnClient >> headerAt: key put: value [
 		at: key put: value   
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> host: hostName [
 	"Set the host of the current request to hostName."
 	
 	self url: (ZnUrl new host: hostName; yourself)
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> http [
 	"Set the scheme of the current request to HTTP."
 	
 	self url: (ZnUrl new scheme: #http; yourself)
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> https [
 	"Set the scheme of the current request to HTTPS."
 	
@@ -790,7 +790,7 @@ ZnClient >> isSuccess [
 		ifNotNil: [ response isSuccess ]
 ]
 
-{ #category : #'private logging' }
+{ #category : #'private - logging' }
 ZnClient >> logClientTransactionRequestDuration: requestDuration responseDuration: responseDuration [
 	| logEventClass |
 	logLevel < 1 ifTrue: [ ^ nil ].
@@ -806,7 +806,7 @@ ZnClient >> logClientTransactionRequestDuration: requestDuration responseDuratio
 		yourself
 ]
 
-{ #category : #'private logging' }
+{ #category : #'private - logging' }
 ZnClient >> logConnectionClosedAddress: address port: port [
 	logLevel < 3 ifTrue: [ ^ nil ].
 	^ (self newLogEvent: ZnClientConnectionClosedEvent)
@@ -815,7 +815,7 @@ ZnClient >> logConnectionClosedAddress: address port: port [
 		emit
 ]
 
-{ #category : #'private logging' }
+{ #category : #'private - logging' }
 ZnClient >> logConnectionEstablishedTo: url started: initialMilliseconds [
 	| event |
 	logLevel < 3 ifTrue: [ ^ nil ].
@@ -829,7 +829,7 @@ ZnClient >> logConnectionEstablishedTo: url started: initialMilliseconds [
 	event emit
 ]
 
-{ #category : #'private logging' }
+{ #category : #'private - logging' }
 ZnClient >> logIgnoringExceptionOnReusedConnection: exception [
 	logLevel < 3 ifTrue: [ ^ nil ].
 	^ (self newLogEvent: ZnClientIgnoringExceptionOnConnectionReuseEvent)
@@ -848,14 +848,14 @@ ZnClient >> logLevel: integer [
 	logLevel := integer
 ]
 
-{ #category : #'private logging' }
+{ #category : #'private - logging' }
 ZnClient >> logRedirect: url [
 	^ (self newLogEvent: ZnClientFollowingRedirectEvent)
 		target: url;
 		emit
 ]
 
-{ #category : #'private logging' }
+{ #category : #'private - logging' }
 ZnClient >> logRequestWrittenStarted: initialMilliseconds [
 	^ logLevel < 3
 		ifTrue: [ Time millisecondsSince: initialMilliseconds ]
@@ -867,7 +867,7 @@ ZnClient >> logRequestWrittenStarted: initialMilliseconds [
 				duration ]
 ]
 
-{ #category : #'private logging' }
+{ #category : #'private - logging' }
 ZnClient >> logResponseReadStarted: initialMilliseconds [
 	^ logLevel < 3
 		ifTrue: [ Time millisecondsSince: initialMilliseconds ]
@@ -879,7 +879,7 @@ ZnClient >> logResponseReadStarted: initialMilliseconds [
 				duration ]
 ]
 
-{ #category : #'private logging' }
+{ #category : #'private - logging' }
 ZnClient >> logRetrying: exception [
 	logLevel < 3 ifTrue: [ ^ nil ].
 	^ (self newLogEvent: ZnClientRetryingEvent)
@@ -962,7 +962,7 @@ ZnClient >> maximumNumberOfDictionaryEntries: anInteger [
 		put: anInteger
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> method: httpMethod [
 	"Set the HTTP method of the current request to httpMethod.
 	An uppercase symbol such as #GET is expected.
@@ -974,7 +974,7 @@ ZnClient >> method: httpMethod [
 	request method: httpMethod
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> multiPartFormDataEntity [
 	"Initialize the current request to have an multipart/form-data entity.
 	Return the existing entity if there is one. 
@@ -1002,7 +1002,7 @@ ZnClient >> newConnectionTo: url [
 	self logConnectionEstablishedTo: url started: initialMilliseconds
 ]
 
-{ #category : #'private logging' }
+{ #category : #'private - logging' }
 ZnClient >> newLogEvent: logEventClass [
 	^ logEventClass new
 		clientId: self clientId;
@@ -1091,7 +1091,7 @@ ZnClient >> patch: url contents: object [
 		patch
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> path: pathString [
 	"Set the path of the current request to pathString.
 	The argument will be merged with of the current/previous request."
@@ -1099,7 +1099,7 @@ ZnClient >> path: pathString [
 	self url: pathString
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> port: portNumber [
 	"Set the port of the current request to portNumber."
 	
@@ -1126,7 +1126,7 @@ ZnClient >> post: url contents: object [
 		post
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ZnClient >> prepareNextRequest [
 	"The request could be modified destructively in the next run,
 	but the request can also be part of a log event, hence copy it"
@@ -1134,7 +1134,7 @@ ZnClient >> prepareNextRequest [
 
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ZnClient >> prepareRedirect [
 	"We implement the common behavior that POST/PUT redirects turn into GET request
 	and that the body data is dropped, except for a 307 or 308 where this is explicitly forbidden.
@@ -1155,7 +1155,7 @@ ZnClient >> prepareRedirect [
 	self sendCookies
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ZnClient >> prepareRequest [
 	self isOneShot 
 		ifTrue: [ request setConnectionClose ].
@@ -1209,7 +1209,7 @@ ZnClient >> put: url contents: object [
 		put
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> queryAddAll: keyedCollection [
 	"Add all key -> value elements of keyedCollection 
 	as HTTP query parameters to the current request.
@@ -1219,7 +1219,7 @@ ZnClient >> queryAddAll: keyedCollection [
 		self queryAt: key add: value ]
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> queryAt: key add: value [ 
 	"Modify the receiver by adding a query variable key=value.
 	If key already exists, value is added to it."
@@ -1229,7 +1229,7 @@ ZnClient >> queryAt: key add: value [
 		ifNotNil: [ request url queryAt: key add: value ]  
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> queryAt: key put: value [
 	"Add key equals value as an HTTP query parameter to the current request.
 	If the key already exists, its value is overwritten."
@@ -1239,7 +1239,7 @@ ZnClient >> queryAt: key put: value [
 		ifNotNil: [ request url queryAt: key put: value ]  
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ZnClient >> readResponse [
 	self signalHTTPProgress: 'Reading response'.
 	self withMaximumNumberOfDictionaryEntriesDo: [
@@ -1275,7 +1275,7 @@ ZnClient >> receiveCookies [
 		self session cookieJar add: each ]
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ZnClient >> redirectUrl [
 	"We support relative locations although they are not the standard (http://en.wikipedia.org/wiki/HTTP_location)"
 
@@ -1286,7 +1286,7 @@ ZnClient >> redirectUrl [
 		ifFalse: [ redirectUrl inContextOf: request url ]
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> request [
 	"Return the current request that I am building,
 	or the previous request that I executed."
@@ -1294,7 +1294,7 @@ ZnClient >> request [
 	^ request 
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> request: aRequest [
 	"Replace my current request with aRequest.
 	This is a low level operation only needed in special cases."
@@ -1308,7 +1308,7 @@ ZnClient >> resetCookies [
 	session ifNotNil: [ session resetCookies ]
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> resetEntity [
 	"Make sure that the current request does not hold an entity from a previous request.
 	This is sometimes necessary after a POST or PUT. This method will be called automatically
@@ -1318,7 +1318,7 @@ ZnClient >> resetEntity [
 		ifTrue: [ request resetEntity: nil ]
 ]
 
-{ #category : #'accessing response' }
+{ #category : #'accessing - response' }
 ZnClient >> response [ 
 	"Answer the last response, assuming the current request was executed."
 
@@ -1367,7 +1367,7 @@ ZnClient >> session [
 	^ session ifNil: [ session := ZnUserAgentSession new ]
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> setAcceptEncodingGzip [
 	"Give the server the hint that we accept gzip content encoding.
 	When the server complies, important bandwidth reductions are possible."
@@ -1375,7 +1375,7 @@ ZnClient >> setAcceptEncodingGzip [
 	self request setAcceptEncodingGzip
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> setBasicAuthenticationUsername: username password: password [
 	"Set the username/password for basic authenticationfor the current request."
 	
@@ -1383,7 +1383,7 @@ ZnClient >> setBasicAuthenticationUsername: username password: password [
 
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> setIfModifiedSince: reference [
 	"Tell the server that we are only interested in the currently requested URI
 	if it was modified since reference, a DateAndTime.
@@ -1492,7 +1492,7 @@ ZnClient >> uploadEntityFrom: path [
 	self entity: (ZnStreamingEntity readFrom: stream usingType: type andLength: length)
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> url: urlObject [
 	"Modify the URL of the current request object to urlObject.
 	This is done using ZnUrl>>#inContextOf: so that either scheme, 
@@ -1511,7 +1511,7 @@ ZnClient >> url: urlObject [
 		ifTrue: [ self setBasicAuthenticationUsername: url username password: url password ]
 ]
 
-{ #category : #'accessing request' }
+{ #category : #'accessing - request' }
 ZnClient >> username: username password: password [
 	"Set the username/password for basic authenticationfor the current request."
 	
@@ -1579,7 +1579,7 @@ ZnClient >> withTimeoutDo: block [
 			block value ]
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ZnClient >> writeRequest [
 	self signalHTTPProgress: 'Writing request'.
 	self withDefaultCharacterEncoderDo: [ request writeOn: connection ].

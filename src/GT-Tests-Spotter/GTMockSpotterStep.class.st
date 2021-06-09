@@ -4,12 +4,12 @@ Class {
 	#category : #'GT-Tests-Spotter-Scripting-Mocks'
 }
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTMockSpotterStep >> defaultStream [
 	^ GTMockSpotterStream new
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTMockSpotterStep >> defaultTask [
 	^ GTMockSpotterTask new
 ]

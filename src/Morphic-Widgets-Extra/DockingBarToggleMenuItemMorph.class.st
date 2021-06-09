@@ -76,7 +76,7 @@ DockingBarToggleMenuItemMorph >> drawOn: aCanvas [
 			aCanvas paintImage: subMenuMarker at: subMenuMarkerPosition ]
 ]
 
-{ #category : #'drawing-private' }
+{ #category : #'private - drawing' }
 DockingBarToggleMenuItemMorph >> drawSubMenuMarker: aForm on: aCanvas in: aRectangle [
 	"Draw the submenu marker on the canvas within the given bounds."
 	

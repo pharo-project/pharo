@@ -95,13 +95,13 @@ GLMBrickStructureTrait >> brick [
 	^ self
 ]
 
-{ #category : #'private-structure' }
+{ #category : #'private - structure' }
 GLMBrickStructureTrait >> brickDoubleLink [
 
 	^ self valueOfProperty: #brickDoubleLink ifAbsentPut: [ nil ]
 ]
 
-{ #category : #'private-structure' }
+{ #category : #'private - structure' }
 GLMBrickStructureTrait >> brickDoubleLink: aDoubleLink [
 
 	self setProperty: #brickDoubleLink toValue: aDoubleLink
@@ -237,7 +237,7 @@ GLMBrickStructureTrait >> owner [
 	^ self explicitRequirement
 ]
 
-{ #category : #'private-structure' }
+{ #category : #'private - structure' }
 GLMBrickStructureTrait >> owner: aBrick [
 	|oldOwner|
 	oldOwner := self owner.
@@ -254,7 +254,7 @@ GLMBrickStructureTrait >> ownerThatIsA: aClass [
 	^ self firstOwnerSuchThat: [:m | m isKindOf: aClass]
 ]
 
-{ #category : #'private-structure' }
+{ #category : #'private - structure' }
 GLMBrickStructureTrait >> privateAddAllBricks: aCollection [
 	|bricks|
 	bricks := aCollection collect: [:each | each asBrick].
@@ -263,7 +263,7 @@ GLMBrickStructureTrait >> privateAddAllBricks: aCollection [
 	^ bricks
 ]
 
-{ #category : #'private-structure' }
+{ #category : #'private - structure' }
 GLMBrickStructureTrait >> privateAddBrick: aBrick after: otherBrick [
 	| brick link otherLink otherLinkSuccessor index|
 	brick := aBrick asBrick.
@@ -288,7 +288,7 @@ GLMBrickStructureTrait >> privateAddBrick: aBrick after: otherBrick [
 	^ aBrick
 ]
 
-{ #category : #'private-structure' }
+{ #category : #'private - structure' }
 GLMBrickStructureTrait >> privateAddBrick: aBrick before: otherBrick [
 	| brick link otherLink otherLinkPredeccessor index|
 	brick := aBrick asBrick.
@@ -313,7 +313,7 @@ GLMBrickStructureTrait >> privateAddBrick: aBrick before: otherBrick [
 	^ aBrick
 ]
 
-{ #category : #'private-structure' }
+{ #category : #'private - structure' }
 GLMBrickStructureTrait >> privateAddBrickBack: aBrick [
 	|brick|
 	
@@ -324,7 +324,7 @@ GLMBrickStructureTrait >> privateAddBrickBack: aBrick [
 	^ aBrick
 ]
 
-{ #category : #'private-structure' }
+{ #category : #'private - structure' }
 GLMBrickStructureTrait >> privateAddBrickFirst: aBrick [
 	| link head tail brick|
 	
@@ -346,7 +346,7 @@ GLMBrickStructureTrait >> privateAddBrickFirst: aBrick [
 	^ aBrick
 ]
 
-{ #category : #'private-structure' }
+{ #category : #'private - structure' }
 GLMBrickStructureTrait >> privateAddBrickLinkBack: aBrick [
 	|link brick|
 	
@@ -363,7 +363,7 @@ GLMBrickStructureTrait >> privateAddBrickLinkBack: aBrick [
 	^ aBrick
 ]
 
-{ #category : #'private-structure' }
+{ #category : #'private - structure' }
 GLMBrickStructureTrait >> privateAddIntoWorld: aBrick [
 
 	self world == aBrick world
@@ -372,26 +372,26 @@ GLMBrickStructureTrait >> privateAddIntoWorld: aBrick [
 	
 ]
 
-{ #category : #'private-structure' }
+{ #category : #'private - structure' }
 GLMBrickStructureTrait >> privateOwner: aBrick [
 
 	^ self explicitRequirement
 ]
 
-{ #category : #'private-structure' }
+{ #category : #'private - structure' }
 GLMBrickStructureTrait >> privatePrepareBrickAfterAdding: aBrick [
 
 	aBrick wrappedBounds markWidthDirty; markHeightDirty.
 	self privateAddIntoWorld: aBrick
 ]
 
-{ #category : #'private-structure' }
+{ #category : #'private - structure' }
 GLMBrickStructureTrait >> privatePrepareBrickAfterRemoving: aBrick [
 
 	self privateRemoveOutWorld: aBrick
 ]
 
-{ #category : #'private-structure' }
+{ #category : #'private - structure' }
 GLMBrickStructureTrait >> privateRemoveAllBricks [
 	
 	self hasSubbricks ifFalse: [ ^ self ].
@@ -401,7 +401,7 @@ GLMBrickStructureTrait >> privateRemoveAllBricks [
 	self subbricks removeAll
 ]
 
-{ #category : #'private-structure' }
+{ #category : #'private - structure' }
 GLMBrickStructureTrait >> privateRemoveBrick: aBrick [
 	| predecessor successor link head tail index|
 	aBrick ifNil: [ ^ aBrick ].
@@ -429,14 +429,14 @@ GLMBrickStructureTrait >> privateRemoveBrick: aBrick [
 	^ aBrick
 ]
 
-{ #category : #'private-structure' }
+{ #category : #'private - structure' }
 GLMBrickStructureTrait >> privateRemoveOutWorld: aBrick [
 
 	aBrick outOfWorld: aBrick world
 	
 ]
 
-{ #category : #'private-structure' }
+{ #category : #'private - structure' }
 GLMBrickStructureTrait >> privateSubbricks: aCollection [
 
 	^ self explicitRequirement

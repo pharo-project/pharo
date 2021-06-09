@@ -97,7 +97,7 @@ SUnitExtensionsTest >> stream [
 	^stream ifNil: [stream := String new writeStream].
 ]
 
-{ #category : #test }
+{ #category : #tests }
 SUnitExtensionsTest >> testAssertionFailedInRaiseWithExceptionDo [
 	| testCase testResult |
 	testCase := self class selector: #assertionFailedInRaiseWithExceptionDoTest.
@@ -109,7 +109,7 @@ SUnitExtensionsTest >> testAssertionFailedInRaiseWithExceptionDo [
 	self assertEmpty: testResult errors
 ]
 
-{ #category : #test }
+{ #category : #tests }
 SUnitExtensionsTest >> testAutoAssertFalse [
 	| booleanCondition |
 	self assert: self isLogging.
@@ -118,13 +118,13 @@ SUnitExtensionsTest >> testAutoAssertFalse [
 	self assert: booleanCondition
 ]
 
-{ #category : #test }
+{ #category : #tests }
 SUnitExtensionsTest >> testAutoAssertTrue [
 	self assert: 1 equals: 1.
 	self assert: true
 ]
 
-{ #category : #test }
+{ #category : #tests }
 SUnitExtensionsTest >> testAutoDenyFalse [
 	| booleanCondition |
 	self assert: self isLogging.
@@ -133,13 +133,13 @@ SUnitExtensionsTest >> testAutoDenyFalse [
 	self assert: booleanCondition
 ]
 
-{ #category : #test }
+{ #category : #tests }
 SUnitExtensionsTest >> testAutoDenyTrue [
 	self deny: 1 equals: 2.
 	self deny: false
 ]
 
-{ #category : #test }
+{ #category : #tests }
 SUnitExtensionsTest >> testDifferentExceptionInShouldRaiseWithExceptionDo [
 	| testCase testResult |
 	testCase := self class selector: #differentExceptionInShouldRaiseWithExceptionDoTest.
@@ -151,7 +151,7 @@ SUnitExtensionsTest >> testDifferentExceptionInShouldRaiseWithExceptionDo [
 	self assert: testResult passed size equals: 1
 ]
 
-{ #category : #test }
+{ #category : #tests }
 SUnitExtensionsTest >> testErrorInRaiseWithExceptionDo [
 	| testCase testResult |
 	testCase := self class selector: #errorInRaiseWithExceptionDoTest.
@@ -177,7 +177,7 @@ SUnitExtensionsTest >> testExceptionWithoutMatchingString [
 		description: 'tested obsoleting Object'
 ]
 
-{ #category : #test }
+{ #category : #tests }
 SUnitExtensionsTest >> testInvalidShouldNotTakeMoreThan [
 	| testCase testResult |
 	testCase := self class selector: #invalidShouldNotTakeMoreThan.
@@ -189,7 +189,7 @@ SUnitExtensionsTest >> testInvalidShouldNotTakeMoreThan [
 	self assertEmpty: testResult errors
 ]
 
-{ #category : #test }
+{ #category : #tests }
 SUnitExtensionsTest >> testInvalidShouldNotTakeMoreThanMilliseconds [
 	| testCase testResult |
 	testCase := self class selector: #invalidShouldNotTakeMoreThanMilliseconds.
@@ -201,7 +201,7 @@ SUnitExtensionsTest >> testInvalidShouldNotTakeMoreThanMilliseconds [
 	self assertEmpty: testResult errors
 ]
 
-{ #category : #test }
+{ #category : #tests }
 SUnitExtensionsTest >> testNoExceptionInShouldRaiseWithExceptionDo [
 	| testCase testResult |
 	testCase := self class selector: #noExceptionInShouldRaiseWithExceptionDoTest.
@@ -231,7 +231,7 @@ SUnitExtensionsTest >> testNoExceptionWithNoMatchingString [
 		description: 'tested obsoleting Object'
 ]
 
-{ #category : #test }
+{ #category : #tests }
 SUnitExtensionsTest >> testShouldFix [
 	| testCase testResult |
 	testCase := self class selector: #shouldFixTest.
@@ -243,7 +243,7 @@ SUnitExtensionsTest >> testShouldFix [
 	self assertEmpty: testResult errors
 ]
 
-{ #category : #test }
+{ #category : #tests }
 SUnitExtensionsTest >> testShouldRaiseWithExceptionDo [
 	| testCase testResult |
 	testCase := self class selector: #shouldRaiseWithExceptionDoTest.
@@ -255,7 +255,7 @@ SUnitExtensionsTest >> testShouldRaiseWithExceptionDo [
 	self assertEmpty: testResult errors
 ]
 
-{ #category : #test }
+{ #category : #tests }
 SUnitExtensionsTest >> testValidShouldNotTakeMoreThan [
 	| testCase testResult |
 	testCase := self class selector: #validShouldNotTakeMoreThan.
@@ -267,7 +267,7 @@ SUnitExtensionsTest >> testValidShouldNotTakeMoreThan [
 	self assertEmpty: testResult errors
 ]
 
-{ #category : #test }
+{ #category : #tests }
 SUnitExtensionsTest >> testValidShouldNotTakeMoreThanMilliseconds [
 	| testCase testResult |
 	testCase := self class selector: #validShouldNotTakeMoreThanMilliseconds.

@@ -327,7 +327,7 @@ GLMScrollPaneBrick >> outOfWorld: aWorld [
 	self unsubscribeListeners: aWorld
 ]
 
-{ #category : #'private-scrolling' }
+{ #category : #'private - scrolling' }
 GLMScrollPaneBrick >> privateScrollPosition: anInteger [
 
 	scrollPosition := anInteger.

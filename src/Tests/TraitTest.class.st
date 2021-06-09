@@ -27,7 +27,7 @@ TraitTest >> createTrait [
 	^ trait
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testAddAndRemoveMethodsFromSubtraits [
 	| aC2 |
 	aC2 := self c2 new.
@@ -41,7 +41,7 @@ TraitTest >> testAddAndRemoveMethodsFromSubtraits [
 	self assert: aC2 m51 identicalTo: aC2
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testAddAndRemoveMethodsInClassOrTrait [
 	| aC2 |
 	aC2 := self c2 new.
@@ -55,12 +55,12 @@ TraitTest >> testAddAndRemoveMethodsInClassOrTrait [
 	self assert: (self t4 includesSelector: #m11)
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testAllClassVarNames [
 	self assertEmpty: self t1 allClassVarNames
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testComposedBy [
 	"tests the #isComposedBy: aTrait method"
 	
@@ -70,7 +70,7 @@ TraitTest >> testComposedBy [
 	
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testCompositionCopy [
  
 	self assert: (self t1 + self t2) allTraits 
@@ -83,7 +83,7 @@ TraitTest >> testCompositionCopy [
 				includesAll: { (self t1). (self t2). (self t6) }).
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testErrorClassCreation [
     | tmpCategory trait aSubclass aClass |
 	
@@ -128,7 +128,7 @@ TraitTest >> testErrorClassCreation [
             testingEnvironment at: aClassName ifPresent: [ :v | v removeFromSystem ]]]
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testExplicitRequirement [
 	self t1 compile: 'm self explicitRequirement'.
 	self t2 compile: 'm ^true'.
@@ -139,7 +139,7 @@ TraitTest >> testExplicitRequirement [
 	self should: [ self c2 new m ] raise: Error
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testExplicitRequirementDoesNotTakePrecedenceEvenWhenAddingTraits [
 	"Make sure that an explicitRequirement method from a trait does not take precedence over a superclass implementation, even if he trait is created later."
 
@@ -151,7 +151,7 @@ TraitTest >> testExplicitRequirementDoesNotTakePrecedenceEvenWhenAddingTraits [
 	self assert: tempClass new m equals: 100
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testExplicitRequirementDoesNotTakePrecedenceInDeepHierarchy [
 	"Make sure that an explicitRequirement method from a trait does not take precedence over a superclass implementation, even if the superclass implementation is not just in the direct superclass."
 
@@ -168,7 +168,7 @@ TraitTest >> testExplicitRequirementDoesNotTakePrecedenceInDeepHierarchy [
 	self assert: self c11 new m equals: 2
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testExplicitRequirementInClassAlwaysTakesPrecedence [
 	"If i create an explicit requirement method on a class, and the superclass already have the method (non explicit requirement), the class should raise an exception"
 
@@ -177,7 +177,7 @@ TraitTest >> testExplicitRequirementInClassAlwaysTakesPrecedence [
 	self should: [ self c11 new m ] raise: Error
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testExplicitRequirementTakesPrecedenceOverTraitImplementation [
 	"If i create an explicit requirement method on a trait, the method has to be explicit requirement "
 	self t12 compile: 'm ^11'.
@@ -193,7 +193,7 @@ TraitTest >> testExplicitRequirementTakesPrecedenceOverTraitImplementation [
 	
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testExplicitRequirementWithSuperclassImplementation [
 	"Make sure that an explicitRequirement method from a trait does not take precedence over a superclass implementation."
 
@@ -211,7 +211,7 @@ TraitTest >> testExplicitRequirementWithSuperclassImplementation [
 	self t10 removeSelector: #m
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testExplicitRequirementWithSuperclassImplementationAndAnotherTrait [
 	"Make sure that an explicitRequirement method from a trait does not take precedence over a superclass implementation."
 
@@ -229,7 +229,7 @@ TraitTest >> testExplicitRequirementWithSuperclassImplementationAndAnotherTrait 
 	self assert: self c11 new m equals: 2
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testExplicitRequirementWithSuperclassImplementatiosAlwaysReturnsTheCorrectValue [
 	"Make sure that an explicitRequirement method from a trait that is overrided by a method on a superclass always returns the value from the class defined method, even when an explict return from the trait defined method is missing."
 
@@ -244,7 +244,7 @@ TraitTest >> testExplicitRequirementWithSuperclassImplementatiosAlwaysReturnsThe
 	self assert: self c10 new m2 equals: 2.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testForbidInstantiation [
 	| tmpCategory trait |
 	tmpCategory := 'TemporaryGeneratedClasses'.
@@ -258,13 +258,13 @@ TraitTest >> testForbidInstantiation [
 	self should: [ trait basicNew ] raise: Error 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testIsRootInEnvironment [
 	self assert: self t1 isRootInEnvironment.
 	self assert: self t2 isRootInEnvironment
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testIsUsed [
 
 	self assert: Trait1 isUsed.
@@ -272,7 +272,7 @@ TraitTest >> testIsUsed [
 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testLocalMethodWithSameCodeInTrait [
 	"Test whether there are no unintentional overridden traits methods"
 
@@ -286,7 +286,7 @@ TraitTest >> testLocalMethodWithSameCodeInTrait [
 										ifNotNil: [ :trait | (trait selectors includes: selector) ifTrue: [ self deny: (trait compiledMethodAt: selector) equals: each >> selector ] ] ] ] ] ]
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testMarkerMethods [
 	self t1 compile: 'm1 self foo bar'.
 	self assert: (self t1 >> #m1) markerOrNil isNil.
@@ -295,7 +295,7 @@ TraitTest >> testMarkerMethods [
 	self assert: (self t1 >> #m2) markerOrNil identicalTo: #explicitRequirement
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testOrigin [
 	| tr1 tr2 tr3 tr23 |
 	tr1 := self createTraitNamed: #TTT1 uses: {}.
@@ -323,7 +323,7 @@ TraitTest >> testOrigin [
 	"----------"
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testOriginWithRequiredMethod [
 	| tr1 c1 |
 	tr1 := self createTraitNamed: #TTT1 uses: {}.
@@ -335,7 +335,7 @@ TraitTest >> testOriginWithRequiredMethod [
 	self assert: (c1 >> #foo) origin identicalTo: tr1
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testOriginWithRequiredMethodInTraitChain [
 	"check that the origin of a explicit requirement is the trait defining this method, even if we check
 this from another *trait* using the first trait. Tr2 uses Tr1, Tr1 defines a explicit requirement #foo, the
@@ -349,7 +349,7 @@ origin of Tr2>>foo is Tr1"
 	self assert: (tr2 >> #foo) origin identicalTo: tr1
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testPrinting [
 
 	self assertPrints: (ClassDefinitionPrinter oldPharo for: self t6) definitionString like: 'Trait named: #T6
@@ -358,7 +358,7 @@ TraitTest >> testPrinting [
 	package: ''Tests-Traits'''
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testPrintingClassSide [
 	
 	self 
@@ -368,7 +368,7 @@ TraitTest >> testPrintingClassSide [
 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testRemoveFromSystem [
 	SystemAnnouncer uniqueInstance
 		suspendAllWhile: [ 
@@ -382,7 +382,7 @@ TraitTest >> testRemoveFromSystem [
 				ensure: [ aClass removeFromSystem: false ] ]
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testTraitCompositionRespectsParenthesis [
 	self t1 compile: 'method ^1234'.
 	self t2 compile: 'method ^4'.
@@ -393,7 +393,7 @@ TraitTest >> testTraitCompositionRespectsParenthesis [
 	self assert: self c1 new method equals: 1234
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testTraitRemoval [
 	SystemAnnouncer uniqueInstance
 		suspendAllWhile: [ | aClass aTrait |
@@ -409,7 +409,7 @@ TraitTest >> testTraitRemoval [
 					aTrait removeFromSystem: false ] ]
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testTraitsMethodClassSanity [
 		
 	(testingEnvironment allTraits flatCollect: #traitUsers) asSet do: [ :each |
@@ -417,7 +417,7 @@ TraitTest >> testTraitsMethodClassSanity [
 			self should: [ (each >> selector) methodClass == each ] ] ]
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testTraitsUsersSanity [
 	"This documents bug http://code.google.com/p/pharo/issues/detail?id=443"
 		
@@ -428,7 +428,7 @@ TraitTest >> testTraitsUsersSanity [
 		self assert: (each traitUsers allSatisfy: [ :b | b traits includes: each ]) ]
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testUsers [
 	self assert: self t1 traitUsers size equals: 3.
 	self assert: (self t1 traitUsers includesAll: {self t4 . self t5 . self t6}).
@@ -442,7 +442,7 @@ TraitTest >> testUsers [
 	self assertEmpty: self t5 traitUsers
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitTest >> testUsersWithClassChanges [
 	"This documents bug http://code.google.com/p/pharo/issues/detail?id=443"
 

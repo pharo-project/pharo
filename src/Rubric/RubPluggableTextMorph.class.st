@@ -37,7 +37,7 @@ RubPluggableTextMorph class >> on: anObject text: getTextSel accept: setTextSel 
 		setSelection: setSelectionSel
 ]
 
-{ #category : #'undo-redo' }
+{ #category : #'undo - redo' }
 RubPluggableTextMorph >> clearUndoManager [
 	self textArea editingState clearUndoManager: nil
 ]

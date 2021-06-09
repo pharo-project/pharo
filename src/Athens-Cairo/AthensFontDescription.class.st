@@ -73,14 +73,14 @@ AthensFontDescription >> beOblique [
 	self slant: #oblique
 ]
 
-{ #category : #'cairo-options' }
+{ #category : #'cairo - options' }
 AthensFontDescription >> family: aFamilyName [
 	"CSS2 generic family names: serif, sans-serif, cursive, fantasy, monospace"
 	family := aFamilyName.
 	
 ]
 
-{ #category : #'cairo-options' }
+{ #category : #'cairo - options' }
 AthensFontDescription >> fontFamily [
 	^ family
 ]
@@ -90,17 +90,17 @@ AthensFontDescription >> fontGravity [
 	^ options at: #gravity
 ]
 
-{ #category : #'cairo-options' }
+{ #category : #'cairo - options' }
 AthensFontDescription >> fontSize [
 	^ size 
 ]
 
-{ #category : #'cairo-options' }
+{ #category : #'cairo - options' }
 AthensFontDescription >> fontSize: aPointSize [
 	size := aPointSize
 ]
 
-{ #category : #'cairo-options' }
+{ #category : #'cairo - options' }
 AthensFontDescription >> fontSlant [
 	^ options at: #slant 
 ]
@@ -115,7 +115,7 @@ AthensFontDescription >> fontVariant [
 	^ options at: #variant 
 ]
 
-{ #category : #'cairo-options' }
+{ #category : #'cairo - options' }
 AthensFontDescription >> fontWeight [
 	^ options at: #weight 
 ]
@@ -138,7 +138,7 @@ AthensFontDescription >> initialize [
 	
 ]
 
-{ #category : #'cairo-options' }
+{ #category : #'cairo - options' }
 AthensFontDescription >> slant: aNumber [
 	options at: #slant put: aNumber.		
 
@@ -156,7 +156,7 @@ AthensFontDescription >> variant: aNumber [
 
 ]
 
-{ #category : #'cairo-options' }
+{ #category : #'cairo - options' }
 AthensFontDescription >> weight: aNumber [
 	options at: #weight put: aNumber.		
 

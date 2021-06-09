@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #'testing-utilities' }
+{ #category : #utilities }
 RBAddMessageSendTransformationTest >> methodAfter [
 
 	| variable |
@@ -12,14 +12,14 @@ RBAddMessageSendTransformationTest >> methodAfter [
 	variable byteAt: 1.
 ]
 
-{ #category : #'testing-utilities' }
+{ #category : #utilities }
 RBAddMessageSendTransformationTest >> methodBefore [
 
 	| variable |
 	variable := 'String'.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddMessageSendTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBAddMessageSendTransformation
@@ -29,7 +29,7 @@ RBAddMessageSendTransformationTest >> testClassDoesNotExist [
 							asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddMessageSendTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBAddMessageSendTransformation
@@ -39,7 +39,7 @@ RBAddMessageSendTransformationTest >> testMethodDoesNotExist [
 							asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddMessageSendTransformationTest >> testReceiverDoesNotExist [
 
 	self shouldFail: (RBAddMessageSendTransformation
@@ -49,7 +49,7 @@ RBAddMessageSendTransformationTest >> testReceiverDoesNotExist [
 							asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddMessageSendTransformationTest >> testRefactoring [
 
 	| refactoring class |
@@ -66,7 +66,7 @@ RBAddMessageSendTransformationTest >> testRefactoring [
 			equals: (class parseTreeFor: #methodAfter) body.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddMessageSendTransformationTest >> testTransform [
 
 	| transformation class |

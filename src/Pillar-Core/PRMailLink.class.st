@@ -25,17 +25,17 @@ PRMailLink >> accept: aVisitor [
 	^ aVisitor visitMailLink: self
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 PRMailLink >> scrambledUrl [
 	^ self url
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 PRMailLink >> unscrambledUrl [
 	^ self urlPrefix, super urlEntry, self urlPostfix
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 PRMailLink >> urlEntry [
 	^ String streamContents: [ :stream |
 		super urlEntry do: [ :each |
@@ -45,7 +45,7 @@ PRMailLink >> urlEntry [
 		padLeftTo: 2 with: $0) ] ] ]
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 PRMailLink >> urlPrefix [
 	^ 'mailto:'
 ]
