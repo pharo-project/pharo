@@ -61,6 +61,12 @@ ObservableSlot >> initialize: anObject [
 	super write: ObservableValueHolder new to: anObject
 ]
 
+{ #category : #testing }
+ObservableSlot >> isObservableSlot [
+	
+	^ true
+]
+
 { #category : #'meta-object-protocol' }
 ObservableSlot >> rawRead: anObject [
 	^ super read: anObject
