@@ -1,14 +1,31 @@
 Class {
 	#name : #ClyConstantQueryTest,
-	#superclass : #ClyTypedQueryTestCase,
+	#superclass : #ClyTypedQueryTest,
 	#category : #'Calypso-NavigationModel-Tests'
 }
 
 { #category : #running }
 ClyConstantQueryTest >> createQuery [
+
+	^ self createQuery: #( #item1 #item2 )
+]
+
+{ #category : #running }
+ClyConstantQueryTest >> createQuery: aCollection [
+
 	^ ClyConstantQuery
-		returning: #(item1 item2)
-		from: (ClyScopeExample emptyIn: environment)
+		  returning: aCollection
+		  from: (ClyExampleScope emptyIn: environment)
+]
+
+{ #category : #tests }
+ClyConstantQueryTest >> testCheckingForEmptyResult [
+
+	| empty notEmpty |
+	empty := self createQuery: #().
+	notEmpty := self createQuery.
+	self assert: empty checkEmptyResult;
+		deny: notEmpty checkEmptyResult.
 ]
 
 { #category : #tests }

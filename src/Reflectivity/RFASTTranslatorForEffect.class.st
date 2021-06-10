@@ -49,7 +49,7 @@ RFASTTranslatorForEffect >> emitIfTrue: aMessageNode [
 	methodBuilder jumpAheadTarget: #else.
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 RFASTTranslatorForEffect >> emitMessageNode: aMessageNode [ 
 
 	super emitMessageNode: aMessageNode.
@@ -64,7 +64,7 @@ RFASTTranslatorForEffect >> emitOr: aMessageNode [
 	methodBuilder popTop.
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 RFASTTranslatorForEffect >> visitArrayNode: anArrayNode [ 
 	"An arrayNode may have side effect, for example: '{self foo}'. So we cannot just generate nothing for this node."
 
@@ -73,14 +73,14 @@ RFASTTranslatorForEffect >> visitArrayNode: anArrayNode [
 
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 RFASTTranslatorForEffect >> visitAssignmentNode: anAssignmentNode [ 
 
 	super visitAssignmentNode: anAssignmentNode .
 	methodBuilder popTop. 
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 RFASTTranslatorForEffect >> visitBlockNode: aBlockNode [ 
 	"even though the code is never executed, we generate it to make sure that we 
 	can map bytecode and access temps"
@@ -88,19 +88,19 @@ RFASTTranslatorForEffect >> visitBlockNode: aBlockNode [
 	methodBuilder popTop
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 RFASTTranslatorForEffect >> visitLiteralArrayNode: aLiteralNode [
 	"when visiting a literal array for effect, we could push it and then pop it, but we do nothing"
 	methodBuilder addLiteral: aLiteralNode value
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 RFASTTranslatorForEffect >> visitLiteralNode: aLiteralNode [
 	"when visiting a literal for effect, we could push it and then pop it, but we do nothing"
 	methodBuilder addLiteral: aLiteralNode value
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 RFASTTranslatorForEffect >> visitParseErrorNode: anErrorNode [  
 
 	super visitParseErrorNode: anErrorNode.
@@ -108,7 +108,7 @@ RFASTTranslatorForEffect >> visitParseErrorNode: anErrorNode [
 
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 RFASTTranslatorForEffect >> visitSequenceNode: aSequenceNode [
 	self emitPreamble: aSequenceNode.
 	self emitMetaLinkBefore: aSequenceNode.
@@ -123,7 +123,7 @@ RFASTTranslatorForEffect >> visitSequenceNode: aSequenceNode [
 			ifFalse: [methodBuilder popTop]]
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 RFASTTranslatorForEffect >> visitVariableNode: aVariableNode [
 	
 	| binding |

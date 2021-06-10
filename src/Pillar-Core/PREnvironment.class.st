@@ -59,7 +59,7 @@ PREnvironment >> name: aString [
 	name := aString
 ]
 
-{ #category : #'accessing-parameters' }
+{ #category : #'accessing - parameters' }
 PREnvironment >> parameters [
 	^ parameters
 ]

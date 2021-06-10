@@ -7,7 +7,7 @@ Class {
 	#category : #'GT-Spotter-Filters'
 }
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTFilterSubstrings >> defaultSeparators [
 	^ ' '
 ]

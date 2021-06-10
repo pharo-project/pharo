@@ -11,7 +11,7 @@ RBAddMethodTransformationTest >> setUp [
 	model := self abstractVariableTestData.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddMethodTransformationTest >> testBadSourceCode [
 
 	self shouldFail: (RBAddMethodTransformation
@@ -21,7 +21,7 @@ RBAddMethodTransformationTest >> testBadSourceCode [
 							asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddMethodTransformationTest >> testMethodAlreadyExists [
 
 	self 
@@ -44,7 +44,7 @@ RBAddMethodTransformationTest >> testMethodAlreadyExists [
 			asRefactoring.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddMethodTransformationTest >> testModel [
 
 	| class |
@@ -61,7 +61,7 @@ RBAddMethodTransformationTest >> testModel [
 		  equals: (self parseMethod: 'printString1 ^super printString')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddMethodTransformationTest >> testRefactoring [
 
 	| refactoring |
@@ -75,7 +75,7 @@ RBAddMethodTransformationTest >> testRefactoring [
 		  equals: (self parseMethod: 'printString1 ^super printString')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddMethodTransformationTest >> testTransform [
 
 	| transformation class |

@@ -220,7 +220,7 @@ RPackageTest >> testHasProperty [
 	self deny: (package hasProperty: #testKeySelector).
 ]
 
-{ #category : #'test-queries' }
+{ #category : #'tests - queries' }
 RPackageTest >> testHierarchyRoots [
 	| roots |
 	roots := (RPackageOrganizer default packageNamed: #'RPackage-Tests') hierarchyRoots. 
@@ -229,7 +229,7 @@ RPackageTest >> testHierarchyRoots [
 		do: [ :each | roots includes: each ]
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RPackageTest >> testIsTestPackage [
 
 	|packages |
@@ -249,7 +249,7 @@ RPackageTest >> testIsTestPackage [
 	"cleanup of inst.vars should be done in tearDown"
 ]
 
-{ #category : #'tests-MC' }
+{ #category : #'tests - MC' }
 RPackageTest >> testMcPackage [
 
 	| rPackage |
@@ -257,7 +257,7 @@ RPackageTest >> testMcPackage [
 	self assert: rPackage mcPackage equals: (MCPackage new name: #Test1).
 ]
 
-{ #category : #'tests-MC' }
+{ #category : #'tests - MC' }
 RPackageTest >> testMcWorkingCopy [
 
 	| rPackage |
@@ -294,7 +294,7 @@ RPackageTest >> testRenameToMakesMCDirty [
 	
 ]
 
-{ #category : #'test-queries' }
+{ #category : #'tests - queries' }
 RPackageTest >> testRoots [
 	| roots |
 	roots := (RPackageOrganizer default packageNamed: #'RPackage-Tests') roots.

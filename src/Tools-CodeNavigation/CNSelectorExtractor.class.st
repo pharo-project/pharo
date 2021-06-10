@@ -38,27 +38,11 @@ Class {
 	#category : #'Tools-CodeNavigation'
 }
 
-{ #category : #'public - extraction' }
+{ #category : #private }
 CNSelectorExtractor >> extractSelectorFromAST: ast atPosition: aPosition [
 
-	"Obtain the the best node matching the position and extracts a selector from it."
-
-	"Position Heuristic: If the previous character is not a separator, take selection one position before.
-	This heuristic is for the cases where the caret (|) is:
-	   |self foo  => the caret is before self, do not move
-	   self foo|  => the caret is before foo, interpret is as if we are in foo.
-		self foo | => the caret is before a space, interpret is as if we are in foo.
-
-	This heuristic introduces although an ambiguity when code is not nicely formatted:
-	   self foo:|#bar => Here a user may want foo: or bar.
-	For now we decided to favor foo: to motivate people to indent code correctly"
-	| offset position bestNodeAtPosition |
-	offset := (aPosition = 1 or: [ (ast sourceCode at: aPosition - 1) isSeparator ])
-		ifTrue: [ 0 ]
-		ifFalse: [ -1 ].
-
-	position := (aPosition + offset) min: ast stop.
-	bestNodeAtPosition := ast bestNodeFor: (position to: position).
+	| bestNodeAtPosition |
+	bestNodeAtPosition := ast bestNodeForPosition: aPosition.
 	^ self extractSelectorFromNode: bestNodeAtPosition
 ]
 
@@ -96,6 +80,11 @@ CNSelectorExtractor >> extractSelectorFromNode: aNode [
 		(node ~= originalNode and: [ 
 			 node parent notNil and: [ node parent isCascade ] ]) ifTrue: [ 
 			node := node parent messages first ] ].
+	
+	"In the case of doIt methods"
+	(node selector = #noMethod and: [ aNode isVariable ])
+		ifTrue: [  ^ aNode name ].
+
 
 	^ node selector
 ]
@@ -124,10 +113,14 @@ CNSelectorExtractor >> extractSelectorFromSelection: aString [
 CNSelectorExtractor >> extractSelectorFromSource: aString atPosition: aPosition [
 
 	"Receives a string with the source code, and a number which indicates the position (of the caret) where the selectors will be extracted."
-
+	| position |
 	aString ifNil: [ ^ nil ].
 	aString ifEmpty: [ ^ nil ].
-	((aPosition < 0) or: (aPosition > aString size)) ifTrue: [ ^nil ].
+	position := (aPosition < 0 or: [ aPosition > aString size ]) 
+		ifTrue: [
+			(aString size + 1) = aPosition 
+				ifTrue: [ aPosition -1 ]
+				ifFalse: [ ^ nil ]].
 	^ self
 		  extractSelectorFromAST: (RBParser parseFaultyExpression: aString)
 		  atPosition: aPosition

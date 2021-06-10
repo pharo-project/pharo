@@ -52,6 +52,31 @@ ExceptionTest >> runWithNoHandlers: aBlock [
 	^result
 ]
 
+{ #category : #'tests - handling' }
+ExceptionTest >> testCaptureIfSignalledWhenStepping [
+	self deny: Exception captureIfSignalledWhenStepping.
+	self assert: Error captureIfSignalledWhenStepping.
+	self deny: (Error allSubclasses anySatisfy: [ :c| c  captureIfSignalledWhenStepping]).
+	self assert: (UnhandledException withAllSubclasses select:[:c| c captureIfSignalledWhenStepping]) size equals: 1.
+	self assert: (UnhandledException withAllSubclasses select:[:c| c captureIfSignalledWhenStepping]) first identicalTo: Halt.
+	
+]
+
+{ #category : #test }
+ExceptionTest >> testDefaultAction [
+	"Ensure that the resuming an UnhandledError when the underlying
+	Exception is resumable, results in the resumption value serving
+	as the result of the original #signal."
+
+	| expected result |
+	expected := #marker.
+	self runWithNoHandlers: [ 
+		[ result := MyResumableTestError signal ]
+			on: UnhandledError
+			do: [ :ex | ex resume: expected ] ].
+	self assert: result equals: expected
+]
+
 { #category : #test }
 ExceptionTest >> testDefaultDescription [
    "Tests that the description of an Exception, is the defaultDescription"
@@ -319,6 +344,23 @@ ExceptionTest >> testResumablePass [
 			ex pass.
 			ex return: 5 ].
 	self assert: result equals: 4
+]
+
+{ #category : #test }
+ExceptionTest >> testResumeNonresumableUnhandledError [
+
+	"Ensure that the resuming an UnhandledError results in
+	an IllegalResumeAttempt."
+
+	| signalOccurred |
+	self
+		runWithNoHandlers: [ 
+			[[ MyTestError signal ]
+				on: UnhandledError
+				do: [ :ex | ex resume: nil ]]
+			on: IllegalResumeAttempt
+			do: [:ex | signalOccurred := true. ex return ]].
+	self assert: signalOccurred
 ]
 
 { #category : #'tests - exceptiontester' }

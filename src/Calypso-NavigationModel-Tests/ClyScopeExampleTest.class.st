@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyScopeExampleTest,
-	#superclass : #ClyTypedScopeTestCase,
+	#superclass : #ClyTypedScopeTest,
 	#category : #'Calypso-NavigationModel-Tests'
 }
 
@@ -11,7 +11,7 @@ ClyScopeExampleTest >> extraBasisSample [
 
 { #category : #running }
 ClyScopeExampleTest >> scopeClass [
-	^ClyScopeExample 
+	^ClyExampleScope 
 ]
 
 { #category : #running }

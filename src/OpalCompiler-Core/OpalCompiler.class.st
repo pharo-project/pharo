@@ -336,9 +336,19 @@ OpalCompiler >> compilationContextClass: aClass [
 
 { #category : #'public access' }
 OpalCompiler >> compile [
-	^compilationContext noPattern 
+	^[compilationContext noPattern 
 		ifTrue: [ self compileDoit ]
-		ifFalse: [ self compileMethod ]
+		ifFalse: [ self compileMethod ]]
+		on: SyntaxErrorNotification 
+		do: [ :exception | 
+			self compilationContext requestor
+                ifNotNil: [
+						self compilationContext requestor 
+							notify: exception errorMessage , ' ->'
+							at: exception location
+							in: exception errorCode.
+                    ^ self compilationContext failBlock value ]
+                ifNil: [ exception pass ]].
 ]
 
 { #category : #'public access' }
@@ -352,23 +362,12 @@ OpalCompiler >> compile: textOrString [
 { #category : #private }
 OpalCompiler >> compileDoit [
 	| cm |
-	["We need to first compile with the AST having the text 
+	"We need to first compile with the AST having the text 
 	offset of the original selected code. This way the #location 
 	will be correct regarding the requestor"
 	self parseDoIt.
 	self callPlugins.
-	cm := ast generateWithSource ]
-		on: SyntaxErrorNotification
-		do: [ :exception | 
-			self compilationContext requestor
-				ifNotNil: [ 
-					self compilationContext requestor
-						notify: exception errorMessage , ' ->'
-						at: exception location
-						in: exception errorCode.
-					^ self compilationContext failBlock value ]
-				ifNil: [ exception pass ] ].
-
+	cm := ast generateWithSource.
 	"We need to re-parse so that the AST is in sync with the 
 	bytecode to be able to debug the doit. Recompile not needed"
 	ast := RBParser parseMethod: ast formattedCode.
@@ -382,28 +381,11 @@ OpalCompiler >> compileDoit [
 { #category : #'public access' }
 OpalCompiler >> compileMethod [
 	| cm |
-	[ 	[	self parse.
-			self callPlugins.  
-		] 	on: ReparseAfterSourceEditing 
-			do: 
-			[  	:notification | 
-				self source: notification newSource. 
-				notification retry. 
-			]. 
+	self parse.
+	self callPlugins.  
 		cm := compilationContext optionEmbeddSources
 			ifTrue: [ ast generateWithSource ]
-			ifFalse: [ast generate: self compilationContext compiledMethodTrailer   ]
-		
-	]	on: SyntaxErrorNotification 
-		do: [ :exception | 
-			self compilationContext requestor
-                ifNotNil: [
-						self compilationContext requestor 
-							notify: exception errorMessage , ' ->'
-							at: exception location
-							in: exception errorCode.
-                    ^ self compilationContext failBlock value ]
-                ifNil: [ exception pass ]].
+			ifFalse: [ast generate: self compilationContext compiledMethodTrailer   ].
 	^cm
 ]
 
@@ -460,7 +442,17 @@ OpalCompiler >> evaluate [
 	self noPattern: true.
 	self getSourceFromRequestorSelection.
 	self class: (context ifNil: [ receiver class ] ifNotNil: [ context compiledCode methodClass ]).
-	value := receiver withArgs: (context ifNil: [ #() ] ifNotNil: [ {context} ]) executeMethod: self compileDoit.
+	value := [ receiver withArgs: (context ifNil: [ #() ] ifNotNil: [ {context} ]) executeMethod: self compileDoit]
+		on: SyntaxErrorNotification 
+		do: [ :exception | 
+			self compilationContext requestor
+                ifNotNil: [
+						self compilationContext requestor 
+							notify: exception errorMessage , ' ->'
+							at: exception location
+							in: exception errorCode.
+                    self compilationContext failBlock value ]
+                ifNil: [ exception pass ]].
 	self logDoIt.
 	^ value
 ]
@@ -546,12 +538,18 @@ OpalCompiler >> options: anOptionsArray [
 
 { #category : #'public access' }
 OpalCompiler >> parse [
-	ast := self compilationContext noPattern 
+	[ast := self compilationContext noPattern 
 		ifTrue: [ self parseExpression ]
 		ifFalse: [ self parseMethod ].
 	self callPluginsPreSemantic.
 	ast methodNode compilationContext: self compilationContext.
-	self doSemanticAnalysis.
+	self doSemanticAnalysis]
+	on: ReparseAfterSourceEditing 
+			do: 
+			[  	:notification | 
+				self source: notification newSource. 
+				notification retry.  
+			]. 
 	^ast
 ]
 

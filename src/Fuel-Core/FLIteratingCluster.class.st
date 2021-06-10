@@ -45,14 +45,14 @@ FLIteratingCluster >> addReferencesFrom: anObject to: aCollection [
 FLIteratingCluster >> clusterMaterializeStepWith: aMaterialization [
 
 	super clusterMaterializeStepWith: aMaterialization.
-	objects := Array new: aMaterialization decoder nextEncodedPositiveInteger
+	objects := Array new: aMaterialization decoder nextEncodedUint32
 ]
 
 { #category : #'serialize/materialize' }
 FLIteratingCluster >> clusterSerializeStepWith: aSerialization [
 
 	super clusterSerializeStepWith: aSerialization.
-	aSerialization encoder encodePositiveInteger: objects size.
+	aSerialization encoder encodeUint32: objects size
 ]
 
 { #category : #'initialize-release' }

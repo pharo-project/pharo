@@ -11,7 +11,7 @@ Class {
 	#category : #'Morphic-Base-Widgets'
 }
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 NewHandleMorph >> delete [
 	hand ifNotNil: [ hand showTemporaryCursor: nil ].
 	super delete

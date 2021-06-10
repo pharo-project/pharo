@@ -7,7 +7,7 @@ Class {
 	#category : #'OpalCompiler-Tests-IR'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 IRBuilderTest class >> compilerClass [
 	^ OpalCompiler
 ]
@@ -23,7 +23,7 @@ IRBuilderTest class >> testToPush: anObject [
 	TestToPush := anObject
 ]
 
-{ #category : #'testing - builder' }
+{ #category : #'tests - builder' }
 IRBuilderTest >> testBuildMethod [
 	|  aCompiledMethod |
 	
@@ -36,7 +36,7 @@ IRBuilderTest >> testBuildMethod [
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testDup [
 
 	| iRMethod aCompiledMethod |
@@ -53,7 +53,7 @@ IRBuilderTest >> testDup [
 	
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testInstVar [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -69,7 +69,7 @@ IRBuilderTest >> testInstVar [
 	^ iRMethod
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testJumpAheadTo [
 	| iRMethod aCompiledMethod iRBuilder |
 	iRBuilder := IRBuilder new.
@@ -90,7 +90,7 @@ IRBuilderTest >> testJumpAheadTo [
 	^ iRMethod
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testJumpAheadToIf [
 
 	| iRMethod aCompiledMethod |
@@ -111,7 +111,7 @@ IRBuilderTest >> testJumpAheadToIf [
 	
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testJumpBackTo [
 
 	| iRMethod aCompiledMethod |
@@ -133,7 +133,7 @@ IRBuilderTest >> testJumpBackTo [
 	
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testLiteralArray [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -147,7 +147,7 @@ IRBuilderTest >> testLiteralArray [
 	^ iRMethod
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testLiteralBoolean [
 
 	| iRMethod aCompiledMethod |
@@ -164,7 +164,7 @@ IRBuilderTest >> testLiteralBoolean [
 	
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testLiteralCharacter [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -178,7 +178,7 @@ IRBuilderTest >> testLiteralCharacter [
 	^ iRMethod
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testLiteralFloat [
 
 	| iRMethod aCompiledMethod |
@@ -195,7 +195,7 @@ IRBuilderTest >> testLiteralFloat [
 	
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testLiteralInteger [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -209,7 +209,7 @@ IRBuilderTest >> testLiteralInteger [
 	^ iRMethod
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testLiteralNil [
 
 	| iRMethod aCompiledMethod |
@@ -226,7 +226,7 @@ IRBuilderTest >> testLiteralNil [
 	
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testLiteralString [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -241,7 +241,7 @@ IRBuilderTest >> testLiteralString [
 	^ iRMethod
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testLiteralSymbol [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -256,7 +256,7 @@ IRBuilderTest >> testLiteralSymbol [
 	^ iRMethod
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testLiteralVariableClass [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -271,22 +271,24 @@ IRBuilderTest >> testLiteralVariableClass [
 	^ iRMethod
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testLiteralVariableClassVariable [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
-		pushLiteralVariable: (DateAndTime bindingOf: #LocalTimeZone);
+		pushLiteralVariable: (OCOpalExamples classVariableNamed: #ExampleClassVariable);
 		returnTop;
 		ir.
 
 	aCompiledMethod := iRMethod compiledMethod.
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: DateAndTime localTimeZone.
+	OCOpalExamples new classVariable: #tag.
+	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: #tag.
+	OCOpalExamples reset.
 	^ iRMethod
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testLiteralVariableGlobale [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -301,7 +303,7 @@ IRBuilderTest >> testLiteralVariableGlobale [
 	^ iRMethod
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testPopTop [
 
 	| iRMethod aCompiledMethod |
@@ -319,7 +321,7 @@ IRBuilderTest >> testPopTop [
 	
 ]
 
-{ #category : #'testing - blocks' }
+{ #category : #'tests - blocks' }
 IRBuilderTest >> testPushClosureCopyNoCopied [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -340,7 +342,7 @@ IRBuilderTest >> testPushClosureCopyNoCopied [
 	^ iRMethod
 ]
 
-{ #category : #'testing - blocks' }
+{ #category : #'tests - blocks' }
 IRBuilderTest >> testPushClosureCopyNoCopiedArg [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -362,7 +364,7 @@ IRBuilderTest >> testPushClosureCopyNoCopiedArg [
 	^ iRMethod
 ]
 
-{ #category : #'testing - blocks' }
+{ #category : #'tests - blocks' }
 IRBuilderTest >> testPushClosureCopyNoCopiedArgNamed [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -384,7 +386,7 @@ IRBuilderTest >> testPushClosureCopyNoCopiedArgNamed [
 	^ iRMethod
 ]
 
-{ #category : #'testing - blocks' }
+{ #category : #'tests - blocks' }
 IRBuilderTest >> testPushClosureCopyOneCopied [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -407,7 +409,7 @@ IRBuilderTest >> testPushClosureCopyOneCopied [
 	^ iRMethod
 ]
 
-{ #category : #'testing - blocks' }
+{ #category : #'tests - blocks' }
 IRBuilderTest >> testPushClosureCopyOneCopiedArg [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -433,7 +435,7 @@ IRBuilderTest >> testPushClosureCopyOneCopiedArg [
 	^ iRMethod
 ]
 
-{ #category : #'testing - blocks' }
+{ #category : #'tests - blocks' }
 IRBuilderTest >> testPushClosureCopyOneCopiedTemp [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -463,7 +465,7 @@ IRBuilderTest >> testPushClosureCopyOneCopiedTemp [
 	^ iRMethod
 ]
 
-{ #category : #'testing - blocks' }
+{ #category : #'tests - blocks' }
 IRBuilderTest >> testPushClosureCopyOneCopiedTempArg [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -494,7 +496,7 @@ IRBuilderTest >> testPushClosureCopyOneCopiedTempArg [
 	^ iRMethod
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testPushConsArray [
 	| iRMethod aCompiledMethod receiver |
 	iRMethod := IRBuilder new
@@ -512,7 +514,7 @@ IRBuilderTest >> testPushConsArray [
 	^ iRMethod
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testPushConsArray2 [
 	| iRMethod aCompiledMethod receiver |
 	iRMethod := IRBuilder new
@@ -530,7 +532,7 @@ IRBuilderTest >> testPushConsArray2 [
 	^ iRMethod
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testPushNewArray [
 
 	| iRMethod aCompiledMethod receiver |
@@ -550,7 +552,7 @@ IRBuilderTest >> testPushNewArray [
 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testPushSelf [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -567,7 +569,7 @@ IRBuilderTest >> testPushSelf [
 	^ iRMethod
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testPushTempArgument [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -587,7 +589,7 @@ IRBuilderTest >> testPushTempArgument [
 	^ iRMethod
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testPushTempTemp [
 
 	| iRMethod aCompiledMethod  |
@@ -606,7 +608,7 @@ IRBuilderTest >> testPushTempTemp [
 	
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testPushThisContext [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -621,7 +623,7 @@ IRBuilderTest >> testPushThisContext [
 	^ iRMethod
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testPushThisProcess [
 	
 	| iRMethod aCompiledMethod |
@@ -641,7 +643,7 @@ IRBuilderTest >> testPushThisProcess [
 	^ iRMethod
 ]
 
-{ #category : #'testing - blocks' }
+{ #category : #'tests - blocks' }
 IRBuilderTest >> testRemoteTemp [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -672,7 +674,7 @@ IRBuilderTest >> testRemoteTemp [
 	^ iRMethod
 ]
 
-{ #category : #'testing - blocks' }
+{ #category : #'tests - blocks' }
 IRBuilderTest >> testRemoteTempNested [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -710,7 +712,7 @@ IRBuilderTest >> testRemoteTempNested [
 	^ iRMethod
 ]
 
-{ #category : #'testing - blocks' }
+{ #category : #'tests - blocks' }
 IRBuilderTest >> testRemoteTempShadowed [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -736,7 +738,7 @@ IRBuilderTest >> testRemoteTempShadowed [
 	^ iRMethod
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testReturnInstVar [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -750,7 +752,7 @@ IRBuilderTest >> testReturnInstVar [
 	^ iRMethod
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testReturnTop [
 
 	| iRMethod aCompiledMethod |
@@ -766,7 +768,7 @@ IRBuilderTest >> testReturnTop [
 	
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testSendSuper [
 
 	| iRMethod aCompiledMethod  |
@@ -785,7 +787,7 @@ IRBuilderTest >> testSendSuper [
 	
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testStoreIntoVariable [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -804,7 +806,7 @@ IRBuilderTest >> testStoreIntoVariable [
 	^ iRMethod
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testStoreIvar [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -819,7 +821,7 @@ IRBuilderTest >> testStoreIvar [
 	^ iRMethod
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testStorePopIntoVariable [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -840,7 +842,7 @@ IRBuilderTest >> testStorePopIntoVariable [
 	^ iRMethod
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testStorePopIvar [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -857,7 +859,7 @@ IRBuilderTest >> testStorePopIvar [
 	^ iRMethod
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 IRBuilderTest >> testStoreTemp [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new

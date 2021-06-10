@@ -349,7 +349,7 @@ DockingBarMorph >> defaultColor [
 	^ self theme settings derivedMenuColor
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 DockingBarMorph >> delete [
 	activeSubMenu
 		ifNotNil: [activeSubMenu delete].
@@ -617,7 +617,7 @@ DockingBarMorph >> newMenuItem [
 	^ DockingBarMenuItemMorph new
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 DockingBarMorph >> noteNewOwner: aMorph [ 
 	"I have just been added as a submorph of aMorph"
 	super noteNewOwner: aMorph.

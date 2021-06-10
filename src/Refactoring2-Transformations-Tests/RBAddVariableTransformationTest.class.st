@@ -168,7 +168,7 @@ RBAddVariableTransformationTest >> testRefactoring [
 		directlyDefinesInstanceVariable: 'asdf')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddVariableTransformationTest >> testTransform [
 
 	| transformation class |

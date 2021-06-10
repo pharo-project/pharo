@@ -1,11 +1,34 @@
 Extension { #name : #CmdCommandActivator }
 
 { #category : #'*Calypso-SystemPlugins-Spotter' }
-CmdCommandActivator >> spotterPreviewIn: aComposite [
-	<spotterPreview: 10>
+CmdCommandActivator >> doEvaluate [
 	
-	^aComposite text
-		title: [self command class name]; 
-		display: [self command class comment];
-		entity: [ self ]
+	self executeCommand
+]
+
+{ #category : #'*Calypso-SystemPlugins-Spotter' }
+CmdCommandActivator >> icon [
+
+	^ self menuItemIcon
+]
+
+{ #category : #'*Calypso-SystemPlugins-Spotter' }
+CmdCommandActivator >> label [
+
+	^ self menuItemName
+]
+
+{ #category : #'*Calypso-SystemPlugins-Spotter' }
+CmdCommandActivator >> spotterPreview [
+
+	^ self spotterPreview: SpPresenterBuilder new
+]
+
+{ #category : #'*Calypso-SystemPlugins-Spotter' }
+CmdCommandActivator >> spotterPreview: aBuilder [
+
+	^ aBuilder newText
+		beNotEditable;
+		text: self command class comment;
+		yourself
 ]

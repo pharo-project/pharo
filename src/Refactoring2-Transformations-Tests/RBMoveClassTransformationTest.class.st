@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 RBMoveClassTransformationTest >> testBadCategoryName [
 
 	self shouldFail: (RBMoveClassTransformation 
@@ -13,7 +13,7 @@ RBMoveClassTransformationTest >> testBadCategoryName [
 							asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBMoveClassTransformationTest >> testRefactoring [
 
 	| transformation class |
@@ -30,7 +30,7 @@ RBMoveClassTransformationTest >> testRefactoring [
 	self assert: class category equals: #'Refactoring2-Transformations-Utilities'
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBMoveClassTransformationTest >> testTransform [
 
 	| transformation class |

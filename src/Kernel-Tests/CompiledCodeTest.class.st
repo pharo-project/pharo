@@ -30,7 +30,7 @@ CompiledCodeTest >> testAccessesRef [
 	self assert: (writeMethod accessesRef: classVar).
 ]
 
-{ #category : #'tests-literals' }
+{ #category : #'tests - literals' }
 CompiledCodeTest >> testHasLiteral [
 
 	| method |
@@ -64,7 +64,7 @@ CompiledCodeTest >> testHasLiteral [
 	self deny: (method hasLiteral: #method).
 ]
 
-{ #category : #'tests-literals' }
+{ #category : #'tests - literals' }
 CompiledCodeTest >> testHasLiteralSuchThat [
 
 	| method |
@@ -96,7 +96,7 @@ CompiledCodeTest >> testHasLiteralSuchThat [
 	self deny: (method hasLiteralSuchThat: [:literal | literal == #method]).
 ]
 
-{ #category : #'tests-literals' }
+{ #category : #'tests - literals' }
 CompiledCodeTest >> testHasSelector [
 
 	| method |
@@ -128,7 +128,7 @@ CompiledCodeTest >> testHasSelector [
 	self deny: (method hasSelector: #method).
 ]
 
-{ #category : #'tests-literals' }
+{ #category : #'tests - literals' }
 CompiledCodeTest >> testHasSelectorSpecialSelectorIndex [
 
 	| method specialIndex |
@@ -169,7 +169,7 @@ CompiledCodeTest >> testHasSelectorSpecialSelectorIndex [
 	self deny: (method hasSelector: #method specialSelectorIndex: specialIndex).
 ]
 
-{ #category : #'tests-literals' }
+{ #category : #'tests - literals' }
 CompiledCodeTest >> testLiteralsDoNotConsiderTheInnerBlockLiterals [
 
 	| method block |
@@ -197,7 +197,7 @@ CompiledCodeTest >> testLiteralsDoNotConsiderTheInnerBlockLiterals [
 			(GlobalVariable key: #Class value: Class) }
 ]
 
-{ #category : #'tests-literals' }
+{ #category : #'tests - literals' }
 CompiledCodeTest >> testLiteralsDoesNotContainMethodClass [
 	
 	self
@@ -206,13 +206,13 @@ CompiledCodeTest >> testLiteralsDoesNotContainMethodClass [
 				refersToLiteral: (self class environment associationAt: self class name asSymbol))
 ]
 
-{ #category : #'tests-literals' }
+{ #category : #'tests - literals' }
 CompiledCodeTest >> testLiteralsDoesNotContainMethodName [
 
 	self deny: (self compiledMethod1 refersToLiteral: #method1)
 ]
 
-{ #category : #'tests-literals' }
+{ #category : #'tests - literals' }
 CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerBlocks [
 	"The behavior is different than literals"
 	| method |
@@ -243,7 +243,7 @@ CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerBlocks [
 				(GlobalVariable key: #Class value: Class) }
 ]
 
-{ #category : #'tests-literals' }
+{ #category : #'tests - literals' }
 CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerCleanBlocks [
 
 	"The behavior is different than literals"
@@ -258,6 +258,21 @@ CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerCleanBlocks [
 	self
 		assertCollection: method literalsEvenTheOnesInTheInnerBlocks
 		equals: #( 'b' #tempNamed: )
+]
+
+{ #category : #'tests - scanning' }
+CompiledCodeTest >> testReadsRef [
+	| readMethod writeMethod classVar |
+	readMethod := SmalltalkImage class>>#compilerClass.
+	writeMethod := SmalltalkImage class>>#compilerClass:.
+	classVar := SmalltalkImage classVariableNamed: #CompilerClass.
+	
+	self assert: (readMethod readsRef: classVar).
+	self deny: (writeMethod readsRef: classVar).
+	
+	"Special test for a method with super in a full block. 
+	We push a binding for this class but make sure that it is not the same"
+	self deny: ((DelayMutexScheduler>>#unschedule:) readsRef: DelayMutexScheduler binding)
 ]
 
 { #category : #'tests - scanning' }
@@ -280,7 +295,7 @@ CompiledCodeTest >> testReadsThisContext [
 	self deny: method readsThisContext.
 ]
 
-{ #category : #'tests-literals' }
+{ #category : #'tests - literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsFalseWhenLiteralNotInMethodPropertiesKey [
 	
 	[ self compiledMethod1 propertyAt: #Once put: true.
@@ -288,45 +303,45 @@ CompiledCodeTest >> testRefersToLiteralsReturnsFalseWhenLiteralNotInMethodProper
 		ensure: [ self compiledMethod1 removeProperty: #Once ]
 ]
 
-{ #category : #'tests-literals' }
+{ #category : #'tests - literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsArrayOfLiterals [
 
 	self assert: (self compiledMethod1 refersToLiteral: #(#add #at: #remove))
 ]
 
-{ #category : #'tests-literals' }
+{ #category : #'tests - literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsByteString [
 
 	self assert: (self compiledMethod1 refersToLiteral: 'Pharo loves tests')
 ]
 
-{ #category : #'tests-literals' }
+{ #category : #'tests - literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsByteSymbol [
 
 	self assert: (self compiledMethod1 refersToLiteral: #printOn:)
 ]
 
-{ #category : #'tests-literals' }
+{ #category : #'tests - literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsContainedInArrayOfLitterals [
 
 	self assert: (self compiledMethod1 refersToLiteral: #add)
 ]
 
-{ #category : #'tests-literals' }
+{ #category : #'tests - literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsGlobalVariable [
 	
 	self assert: (self compiledMethod1
 				refersToLiteral: (self class environment associationAt: #Array))
 ]
 
-{ #category : #'tests-literals' }
+{ #category : #'tests - literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsInPragmaArguments [
 	
 	self assert: (self compiledMethod1 refersToLiteral: 'bar').
 	self assert: (self compiledMethod1 refersToLiteral: 123)
 ]
 
-{ #category : #'tests-literals' }
+{ #category : #'tests - literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsInPragmaSelector [
 	
 	self assert: (self compiledMethod1
@@ -335,5 +350,11 @@ CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsInPragmaSelector
 
 { #category : #'tests - debugging support' }
 CompiledCodeTest >> testStepIntoQuickMethods [
-	self deny: self compiledMethod1 stepIntoQuickMethods 
+	|ctx compiledBlock|
+	
+	self deny: self compiledMethod1 stepIntoQuickMethods. 
+	ctx := [ 1 + 1 ] asContext.
+	compiledBlock := ctx method.
+	compiledBlock stepIntoQuickMethods: true.
+	self assert: compiledBlock method stepIntoQuickMethods equals: compiledBlock stepIntoQuickMethods
 ]

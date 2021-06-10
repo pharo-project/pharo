@@ -170,7 +170,7 @@ LargePositiveIntegerTest >> testSqrt [
 	self assert: (SmallInteger maxVal + 1) sqrt equals: (SmallInteger maxVal + 1) asFloat sqrt.
 ]
 
-{ #category : #'tests-printing' }
+{ #category : #'tests - printing' }
 LargePositiveIntegerTest >> testStoreOn [
 	| integer |
 	integer := SmallInteger maxVal + 1.

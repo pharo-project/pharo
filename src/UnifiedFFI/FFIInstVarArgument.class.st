@@ -36,7 +36,7 @@ FFIInstVarArgument >> emitArgument: aBuilder context: aContext objectClass: obje
 		send: #instVarAt:
 ]
 
-{ #category : #'private emitting code' }
+{ #category : #'private - emitting code' }
 FFIInstVarArgument >> emitArgumentVariableAccesingPart: aBuilder context: aContext objectClass: objectClass instVarName: aName [
 	aBuilder 
 		pushInstVar: (aContext methodClass instVarIndexFor: self argName);

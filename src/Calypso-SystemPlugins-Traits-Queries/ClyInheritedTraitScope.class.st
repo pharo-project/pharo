@@ -34,6 +34,6 @@ ClyInheritedTraitScope class >> defaultName [
 ClyInheritedTraitScope class >> inheritedScopeProvider [
 	<classAnnotation>
 	
-	^ClyInheritedScopeProvider new 
+	^ClyInheritedScopeProviderAnnotation new 
 		priority: 100
 ]

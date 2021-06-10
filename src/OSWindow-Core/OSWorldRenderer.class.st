@@ -29,7 +29,7 @@ OSWorldRenderer class >> priority [
 { #category : #initialization }
 OSWorldRenderer >> activateCursor: aCursor withMask: maskForm [
 
-	osWindow ifNotNil: [ osWindow setMouseCursor: aCursor mask: maskForm ]
+	osWindow ifNotNil: [ osWindow setMouseCursor: aCursor mask: maskForm andScale: world worldState worldRenderer screenScaleFactor ]
 ]
 
 { #category : #initialization }
@@ -64,6 +64,7 @@ OSWorldRenderer >> clipboardText: aString [
 
 { #category : #initialization }
 OSWorldRenderer >> convertWindowMouseEventPosition: aPosition [
+
 	^ (aPosition / self screenScaleFactor) rounded
 ]
 

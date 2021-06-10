@@ -39,7 +39,7 @@ WorldMorph class >> allowDropFiles: anObject [
 	AllowDropFiles := anObject
 ]
 
-{ #category : #'system startup' }
+{ #category : #'startup - shutdown' }
 WorldMorph class >> cleanUp [
 	self currentWorld cleanseOtherworldlySteppers
 ]
@@ -81,14 +81,14 @@ WorldMorph class >> displayScaleFactor: aNumber [
 WorldMorph class >> displayScaleFactorSettingsOn: aBuilder [ 
 	<systemsettings>
 	
-	(aBuilder range: #displayScaleFactor)
+	(aBuilder range: #scaleFactor)
 		parent: #appearance;
 		order: 3;
 		default: 1;
 		label: 'Display scale factor';
 		description: 'Specify scale factor for UI elements. This setting does not affect defined font sizes.';
 		target: self;
-		range: (0.3 to: 8 by: 0.1)
+		range: (0.5 to: 5 by: 0.5)
 	
 ]
 
@@ -127,6 +127,18 @@ WorldMorph class >> removeExtraWorld: aWorld [
 	CursorOwnerWorld == aWorld ifTrue: [ CursorOwnerWorld := nil ].	
 ]
 
+{ #category : #setting }
+WorldMorph class >> scaleFactor [
+	
+	^ World scaleFactor 
+]
+
+{ #category : #setting }
+WorldMorph class >> scaleFactor: aValue [
+	
+	World scaleFactor: aValue
+]
+
 { #category : #cursor }
 WorldMorph >> activateCursor: aCursor [
      aCursor beCursor
@@ -159,13 +171,13 @@ WorldMorph >> actualScreenSize [
 	^ self worldState worldRenderer actualScreenSize
 ]
 
-{ #category : #'alarms-scheduler' }
+{ #category : #'alarms - scheduler' }
 WorldMorph >> addAlarm: aSelector withArguments: argArray for: aTarget at: scheduledTime [
 	"Add a new alarm with the given set of parameters"
 	worldState addAlarm: aSelector withArguments: argArray for: aTarget at: scheduledTime.
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 WorldMorph >> addAllMorphs: array [
 
 	super addAllMorphs: array.
@@ -189,7 +201,7 @@ WorldMorph >> addStandardHaloMenuItemsTo: aMenu hand: aHandMorph [
 	self addWorldHaloMenuItemsTo: aMenu hand: aHandMorph
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 WorldMorph >> allMorphsDo: aBlock [
 	"Enumerate all morphs in the world, including those held in hands."
 
@@ -346,7 +358,7 @@ WorldMorph >> firstHand [
 	^ worldState hands first
 ]
 
-{ #category : #'geometry testing' }
+{ #category : #'geometry - testing' }
 WorldMorph >> fullContainsPoint: pt [
 	^bounds containsPoint: pt
 
@@ -467,7 +479,7 @@ WorldMorph >> releaseCachedState [
 	self cleanseStepList.
 ]
 
-{ #category : #'alarms-scheduler' }
+{ #category : #'alarms - scheduler' }
 WorldMorph >> removeAlarm: aSelector for: aTarget [
 	"Remove the alarm with the given selector"
 	

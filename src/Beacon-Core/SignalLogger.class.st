@@ -66,6 +66,12 @@ SignalLogger class >> instance [
 	^ instance ifNil: [ instance := self new ]
 ]
 
+{ #category : #testing }
+SignalLogger class >> isAbstract [
+
+	^ self == SignalLogger
+]
+
 { #category : #accessing }
 SignalLogger class >> named: aString [
 	^ (Beacon loggersOf: self)

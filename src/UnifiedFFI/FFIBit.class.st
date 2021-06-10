@@ -23,12 +23,12 @@ FFIBit >> basicHandle: aHandle at: index put: value [
 	^ aHandle platformBitAt: index put: value
 ]
 
-{ #category : #'private emitting code' }
+{ #category : #'private - emitting code' }
 FFIBit >> emitSelector [
 	^ 'platformBitAt'
 ]
 
-{ #category : #'private emitting code' }
+{ #category : #'private - emitting code' }
 FFIBit >> offsetPointerReadFieldAt: offsetVariableName [
 	^ '^ExternalData 
 		fromHandle: (handle {1}: {2})

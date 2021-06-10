@@ -16,7 +16,7 @@ Class {
 { #category : #specs }
 EyeInspectorToolBar class >> defaultSpec [
 	<spec>
-	^ SpBoxLayout newHorizontal
+	^ SpBoxLayout newLeftToRight
 		add: #previousButton
 			withConstraints: [ :constraints | 
 			constraints

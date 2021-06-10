@@ -3,7 +3,7 @@ I am a command to convert a temp variable in instance variable.
 "
 Class {
 	#name : #SycConvertTempToInstVarCommand,
-	#superclass : #SycSourceCodeCommand,
+	#superclass : #SycSourceCodeRefactoringCommand,
 	#category : #'SystemCommands-SourceCodeCommands'
 }
 
@@ -15,6 +15,14 @@ SycConvertTempToInstVarCommand class >> canBeExecutedInContext: aSourceCodeConte
 ]
 
 { #category : #execution }
+SycConvertTempToInstVarCommand >> asRefactorings [ 
+	^ { RBTemporaryToInstanceVariableRefactoring 
+		class: method origin
+		selector: method selector
+		variable: sourceNode name }
+]
+
+{ #category : #execution }
 SycConvertTempToInstVarCommand >> defaultMenuIconName [ 
 	^ #smallRedo
 ]
@@ -22,16 +30,4 @@ SycConvertTempToInstVarCommand >> defaultMenuIconName [
 { #category : #execution }
 SycConvertTempToInstVarCommand >> defaultMenuItemName [
 	^'Convert to Instance Var'
-]
-
-{ #category : #execution }
-SycConvertTempToInstVarCommand >> execute [
-	| refactoring |
-
-	refactoring := RBTemporaryToInstanceVariableRefactoring 
-		class: method origin
-		selector: method selector
-		variable: sourceNode name.
-
-	self executeRefactoring: refactoring.
 ]

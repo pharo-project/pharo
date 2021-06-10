@@ -10,7 +10,7 @@ Class {
 	#category : #'GT-Inspector'
 }
 
-{ #category : #'private building' }
+{ #category : #'private - building' }
 GTProtoObjectVariablesBrowser >> basicVariableNodesFor: anObject in: aCollection [
 
 	aCollection addAll: ((anObject class allInstVarNames 
@@ -20,7 +20,7 @@ GTProtoObjectVariablesBrowser >> basicVariableNodesFor: anObject in: aCollection
 			
 ]
 
-{ #category : #'private building' }
+{ #category : #'private - building' }
 GTProtoObjectVariablesBrowser >> printStringOf: anObject [
 	| className |
 	className := anObject class name.

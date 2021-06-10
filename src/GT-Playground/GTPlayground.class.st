@@ -377,7 +377,7 @@ GTPlayground >> codeIn: a [
 			text clearUserEdits ]
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 GTPlayground >> codePresentation [
 
 	^ self inspectorPresentation firstPresentation
@@ -394,13 +394,6 @@ GTPlayground >> compose [
 	self title: self defaultPlaygroundTitle.
 	self titleIcon: self playgroundIcon.
 	self act: [:b | b update] icon: GLMUIThemeExtraIcons glamorousRefresh entitled: 'Update'.
-	self act: [:b | 
-		HelpBrowser open selectTopicSatisfying: [:each |
-			each owner notNil and:  [
-			(each owner key = GTPlaygroundHelp key) and: [
-				each title = 'Overview' ] ] ] ] 
-		icon: GLMUIThemeExtraIcons glamorousHelp 
-		entitled: 'Help'.
 		
 	self act: [ :b | 
 			SettingBrowser new 
@@ -445,24 +438,24 @@ GTPlayground >> contextMenuPragma [
 	^ #playgroundContextMenu
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 GTPlayground >> currentBindings [ 
 
 	^ self codePresentation currentBindings
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 GTPlayground >> currentBindingsSorted [
 
 	^ self currentBindings associations asSortedCollection: [ :first :second | first key < second key ]
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTPlayground >> defaultPlaygroundTitle [
 	^ 'Playground'
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 GTPlayground >> inspectorPresentation [
 
 	^ self presentations first 
@@ -540,7 +533,7 @@ GTPlayground >> playgroundIcon [
 	^ self iconNamed: #workspace
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 GTPlayground >> removeBinding: anAssociation [
 
 	|bindings|

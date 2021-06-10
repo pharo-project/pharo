@@ -1,5 +1,7 @@
 "
-I am an abstract class to hold all the common behavior between the serialization / materialization of CompiledBlocks and CompiledMethods
+I am the abstract cluster for CompiledCode classes. I implement shared serialization and materialization behavior.
+
+See the class comment of CompiledCode for information on the format.
 "
 Class {
 	#name : #FLCompiledCodeCluster,
@@ -7,59 +9,73 @@ Class {
 	#category : #'Fuel-Core-Clusters'
 }
 
-{ #category : #protected }
-FLCompiledCodeCluster >> afterMaterializationStepWith: aDecoder [
+{ #category : #analyzing }
+FLCompiledCodeCluster class >> clusterBucketIn: aClusterization [
 
-	"In the aftermath of the materialization I fix all the class variables to point to the correct ones"
-	objects do: [ :aCompiledCode | self fixClassVariableReferencesOf: aCompiledCode ]
-]
-
-{ #category : #materializing }
-FLCompiledCodeCluster >> fixClassVariableReferencesOf: aCompiledCode [
-
-	"When the literals are serialized / materialized the ClassVariables and GlobalVariables are handled as simples associations, but they should be recovered to point to the correct classVariable"
-
-	1 to: aCompiledCode numLiterals do: [ :anIndex | 
-		| aLiteral |
-		aLiteral := aCompiledCode literalAt: anIndex.
-		((aLiteral isKindOf: ClassVariable) or:[aLiteral isKindOf: GlobalVariable])
-			ifTrue: [ aCompiledCode
-					literalAt: anIndex
-					put: (aCompiledCode methodClass bindingOf: aLiteral name) ] ]
+	^aClusterization primitivesBucket
 ]
 
 { #category : #protected }
-FLCompiledCodeCluster >> materializeLiteralsTo: compiledMethod with: aDecoder [
+FLCompiledCodeCluster >> decodeHeaderWith: aDecoder [
+	| signBit header |
+	signBit := aDecoder nextEncodedByte.
+	header := aDecoder nextEncodedInt32.
 
-	1 to: compiledMethod numLiterals 
-		do: [ :index | compiledMethod literalAt: index put: aDecoder nextEncodedReference ].
-		
+	^ signBit = 1
+		ifTrue: [ header + SmallInteger minVal ]
+		ifFalse: [ header ]
+
+]
+
+{ #category : #protected }
+FLCompiledCodeCluster >> encodeHeader: aSmallInteger with: anEncoder [
+	"Store the sign bit separately. We can't encoded it within the 32 bit integer because the
+	high bit will be truncated.
+	See #encodeInt32:."
+	anEncoder
+		encodeByte: (aSmallInteger < 0
+			ifTrue: [ 1 ]
+			ifFalse: [ 0 ]);
+		encodeInt32: aSmallInteger
+]
+
+{ #category : #protected }
+FLCompiledCodeCluster >> materializeLiteralsTo: compiledCode with: aDecoder [
+	1
+		to: compiledCode numLiterals 
+		do: [ :index |
+			compiledCode
+				literalAt: index
+				put: aDecoder nextEncodedReference ]
 ]
 
 { #category : #'serialize/materialize' }
 FLCompiledCodeCluster >> materializeReferencesStepWith: aDecoder [
-
-	objects do: [ :aCompiledMethod | self materializeLiteralsTo: aCompiledMethod with: aDecoder ]
+	objects do: [ :compiledCode |
+		self
+			materializeLiteralsTo: compiledCode
+			with: aDecoder ]
 ]
 
 { #category : #analyzing }
-FLCompiledCodeCluster >> referencesOf: aCompiledMethod do: aBlock [
-
-	aCompiledMethod fuelPrepare.
-	1 to: aCompiledMethod numLiterals
-		do: [ :index | aBlock value: (aCompiledMethod literalAt: index) ]
+FLCompiledCodeCluster >> referencesOf: compiledCode do: aBlock [
+	1
+		to: compiledCode numLiterals
+		do: [ :index | aBlock value: (compiledCode literalAt: index) ]
 ]
 
 { #category : #protected }
-FLCompiledCodeCluster >> serializeLiteralsOf: aCompiledMethod with: anEncoder [
-
-	aCompiledMethod fuelPrepare.
-	1 to: aCompiledMethod numLiterals 
-		do: [ :index | anEncoder encodeReferenceTo: (aCompiledMethod literalAt: index) ]
+FLCompiledCodeCluster >> serializeLiteralsOf: aCompiledBlock with: anEncoder [
+	1
+		to: aCompiledBlock numLiterals 
+		do: [ :index |
+			anEncoder encodeReferenceTo: (aCompiledBlock literalAt: index) ]
 ]
 
 { #category : #'serialize/materialize' }
 FLCompiledCodeCluster >> serializeReferencesStepWith: anEncoder [
-
-	objects do: [ :aCompiledMethod | self serializeLiteralsOf: aCompiledMethod with: anEncoder ]
+	objects do: [ :compiledCode |
+		self
+			serializeLiteralsOf: compiledCode
+			with: anEncoder ]
 ]

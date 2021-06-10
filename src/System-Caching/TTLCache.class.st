@@ -50,7 +50,7 @@ TTLCache >> at: key ifAbsentPut: block [
 		^ self handleHit: association ifStale: block ]
 ]
 
-{ #category : #'private ' }
+{ #category : #private }
 TTLCache >> handleHit: association ifStale: block [
 	"In case of a hit, the cached value's timestamp is check to see if its age
 	does not exceed the allowed timeToLive. If so, the stale value is recomputed."
@@ -72,7 +72,7 @@ TTLCache >> initialize [
 	self timeToLive: 1 hour
 ]
 
-{ #category : #'private ' }
+{ #category : #private }
 TTLCache >> isStale: association [
 	"Delegate the decision to the association itself 
 	with our time to live as default"
@@ -80,7 +80,7 @@ TTLCache >> isStale: association [
 	^ association isStale: timeToLive
 ]
 
-{ #category : #'private ' }
+{ #category : #private }
 TTLCache >> newAssociationKey: key value: value [
 	"Override this method in a subclass to customise expiration behavior"
 	

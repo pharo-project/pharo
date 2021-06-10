@@ -13,3 +13,9 @@ FLMaterializationError class >> signal: signalerText [
 	^ super signal: 'Materialization error. ', signalerText
 	
 ]
+
+{ #category : #testing }
+FLMaterializationError >> isResumable [
+	"Allow users to ignore errors if they know what they are doing"
+	^ true
+]

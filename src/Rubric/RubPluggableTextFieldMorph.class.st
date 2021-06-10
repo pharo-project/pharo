@@ -124,7 +124,7 @@ RubPluggableTextFieldMorph >> getEnabledSelector: aSymbol [
 	getEnabledSelector := aSymbol
 ]
 
-{ #category : #'acessing text' }
+{ #category : #'accessing - text' }
 RubPluggableTextFieldMorph >> getTextFromModel [
 
 	| newObj |

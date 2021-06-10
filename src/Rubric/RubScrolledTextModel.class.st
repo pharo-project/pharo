@@ -61,7 +61,7 @@ RubScrolledTextModel >> cancelEdits [
 	self clearUserEdits  
 ]
 
-{ #category : #'undo-redo' }
+{ #category : #'undo - redo' }
 RubScrolledTextModel >> clearUndoManager [
 	self reconfigureViewWith: [ :view | view textArea editingState clearUndoManager: nil ]
 ]

@@ -33,12 +33,12 @@ RBPatternPragmaNode >> copyInContext: aDictionary [
 		arguments: (self copyList: self arguments inContext: aDictionary)
 ]
 
-{ #category : #'testing-matching' }
+{ #category : #'testing - matching' }
 RBPatternPragmaNode >> isPatternNode [
 	^ true
 ]
 
-{ #category : #'testing-matching' }
+{ #category : #'testing - matching' }
 RBPatternPragmaNode >> isSelectorList [
 	^ isList
 ]

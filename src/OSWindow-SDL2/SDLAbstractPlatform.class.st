@@ -24,3 +24,9 @@ SDLAbstractPlatform >> initPlatformSpecific [
 
 	self subclassResponsibility
 ]
+
+{ #category : #initialization }
+SDLAbstractPlatform >> systemCursorConversionTable [
+
+	^ #()
+]

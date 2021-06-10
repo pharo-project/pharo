@@ -59,7 +59,7 @@ ProtocolClient class >> openOnHostNamed: hostName port: portNumber [
 
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ProtocolClient >> checkForPendingError [
 	"If data is waiting, check it to catch any error reports.
 	In case the response is not an error, push it back."
@@ -75,7 +75,7 @@ ProtocolClient >> checkForPendingError [
 	self pushResponse: self lastResponse
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ProtocolClient >> checkResponse [
 	self
 		checkResponseOnError: [:response | (TelnetProtocolError protocolInstance: self)
@@ -84,7 +84,7 @@ ProtocolClient >> checkResponse [
 				signal: response]
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ProtocolClient >> checkResponse: aResponse onError: errorBlock onWarning: warningBlock [
 	"Get the response from the server and check for errors. Invoke one of the blocks if an error or warning is encountered. See class comment for classification of error codes."
 
@@ -95,7 +95,7 @@ ProtocolClient >> checkResponse: aResponse onError: errorBlock onWarning: warnin
 
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ProtocolClient >> checkResponseOnError: errorBlock onWarning: warningBlock [
 	"Get the response from the server and check for errors. Invoke one of the blocks if an error or warning is encountered. See class comment for classification of error codes."
 
@@ -134,12 +134,12 @@ ProtocolClient >> ensureConnection [
 	self login
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ProtocolClient >> fetchNextResponse [
 	self lastResponse: self stream nextLine
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ProtocolClient >> fetchPendingResponse [
 	^pendingResponses
 		ifNil: [self fetchNextResponse; lastResponse]
@@ -263,23 +263,23 @@ ProtocolClient >> response [
 	^self protocolInstance lastResponse
 ]
 
-{ #category : #'private testing' }
+{ #category : #'private - testing' }
 ProtocolClient >> responseIsError [
 	self subclassResponsibility
 ]
 
-{ #category : #'private testing' }
+{ #category : #'private - testing' }
 ProtocolClient >> responseIsWarning [
 	self subclassResponsibility
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ProtocolClient >> sendCommand: aString [
 	self stream sendCommand: aString.
 
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ProtocolClient >> sendStreamContents: aStream [
 	self stream sendStreamContents: aStream
 ]

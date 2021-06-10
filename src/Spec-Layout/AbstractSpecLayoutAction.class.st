@@ -11,12 +11,12 @@ Class {
 	#category : #'Spec-Layout-Actions'
 }
 
-{ #category : #accesing }
+{ #category : #accessing }
 AbstractSpecLayoutAction >> arguments [
 	^ arguments
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 AbstractSpecLayoutAction >> arguments: anObject [
 	arguments := anObject
 ]
@@ -33,12 +33,12 @@ AbstractSpecLayoutAction >> generateArguments [
 	
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 AbstractSpecLayoutAction >> selector [
 	^ selector
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 AbstractSpecLayoutAction >> selector: anObject [
 	selector := anObject
 ]

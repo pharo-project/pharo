@@ -4,6 +4,14 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport'
 }
 
+{ #category : #example }
+RBMethodsSelectionPresenter class >> example [
+	<script>
+	^ (self label: 'example ...' 
+		withItems: SycExtractMethodCommand methods
+		selecting: {} )
+]
+
 { #category : #specs }
 RBMethodsSelectionPresenter class >> title [ 
 	^ 'Methods'

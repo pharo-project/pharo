@@ -21,18 +21,14 @@ RBDeprecateMethodTest >> testDeprecateMethodUsingMethodWithSameNumberOfArgs [
 	self
 		assert: ((class parseTreeFor: oldSelector ) statements anySatisfy: 
 			[ :e | e isMessage ifTrue: [ e selector = #deprecated:on:in: ] ]).
-	
-	self
-		assert: ((class parseTreeFor: oldSelector ) statements anySatisfy: 
-			[ :e | e isReturn ifTrue: [ e value selector = newSelector  ] ifFalse: [ false ] ]).
 ]
 
 { #category : #tests }
 RBDeprecateMethodTest >> testDeprecateMethodUsingMethodWithoutArgs [
 
 	| refactoring class oldSelector newSelector |
-	oldSelector := #called:on:.
-	newSelector := #callFoo.
+	oldSelector := ('called:', 'on:') asSymbol.
+	newSelector := 'callFoo' asSymbol.
 	refactoring := RBDeprecateMethodRefactoring 
 							model: model 
 							deprecateMethod: oldSelector 
@@ -45,17 +41,29 @@ RBDeprecateMethodTest >> testDeprecateMethodUsingMethodWithoutArgs [
 		assert: ((class parseTreeFor: oldSelector ) statements anySatisfy: 
 			[ :e | e isMessage ifTrue: [ e selector = #deprecated:on:in: ] ]).
 	
-	self
-		assert: ((class parseTreeFor: oldSelector ) statements anySatisfy: 
-			[ :e | e isReturn ifTrue: [ e value selector = newSelector  ] ifFalse: [ false ] ]).
+]
+
+{ #category : #'failure tests' }
+RBDeprecateMethodTest >> testInvalidNewSelector [
+
+	| refactoring oldSelector newSelector |
+	oldSelector := ('called:', 'on1:') asSymbol.
+	newSelector := 'inlineFoo1:' asSymbol.
+	refactoring := RBDeprecateMethodRefactoring 
+							model: model 
+							deprecateMethod: oldSelector 
+							in: RBRefactoryTestDataApp 
+							using: newSelector .
+	
+	self shouldFail: refactoring
 ]
 
 { #category : #'failure tests' }
 RBDeprecateMethodTest >> testInvalidNumArgsOfSelector [
 
 	| refactoring oldSelector newSelector |
-	oldSelector := #called:on1: .
-	newSelector := #inlineFoo:.
+	oldSelector := ('called:', 'on1:') asSymbol.
+	newSelector := 'inlineFoo:' asSymbol.
 	refactoring := RBDeprecateMethodRefactoring 
 							model: model 
 							deprecateMethod: oldSelector 

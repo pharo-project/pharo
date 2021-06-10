@@ -93,9 +93,9 @@ FLCompiledMethodSerializationTest >> testInstalledModified [
 
 { #category : #tests }
 FLCompiledMethodSerializationTest >> testMethodAccessingAClassVariable [
-
 	| aClassWithVariable aMethod materializedMethod |
-	aClassWithVariable := self newSubclassOf: Object 
+	aClassWithVariable := self
+		newSubclassOf: Object 
 		instanceVariableNames: '' 
 		classVariableNames: 'A'.
 
@@ -106,14 +106,14 @@ FLCompiledMethodSerializationTest >> testMethodAccessingAClassVariable [
 	materializedMethod := self resultOfSerializeAndMaterialize: aMethod.
 	
 	self assertCollection: materializedMethod literals hasSameElements: aMethod literals.
-	self assert: (materializedMethod literalAt: 2) identicalTo: (aMethod literalAt: 2).	
+	self assert: (materializedMethod literalAt: 2) identicalTo: (aMethod literalAt: 2).
 ]
 
 { #category : #tests }
 FLCompiledMethodSerializationTest >> testMethodAccessingAClassVariableInADoit [
-
 	| aClassWithVariable aMethod materializedMethod |
-	aClassWithVariable := self newSubclassOf: Object 
+	aClassWithVariable := self
+		newSubclassOf: Object 
 		instanceVariableNames: '' 
 		classVariableNames: 'A'.
 
@@ -124,7 +124,7 @@ FLCompiledMethodSerializationTest >> testMethodAccessingAClassVariableInADoit [
 	materializedMethod := self resultOfSerializeAndMaterialize: aMethod.
 	
 	self assertCollection: materializedMethod literals hasSameElements: aMethod literals.
-	self assert: (materializedMethod literalAt: 2) identicalTo: (aMethod literalAt: 2).
+	self assert: (materializedMethod literalAt: 2) equals: (aMethod literalAt: 2)
 ]
 
 { #category : #tests }

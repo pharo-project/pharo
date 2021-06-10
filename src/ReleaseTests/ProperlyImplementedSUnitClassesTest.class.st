@@ -4,7 +4,7 @@ This class checks if test classes have been properly implemented
 Class {
 	#name : #ProperlyImplementedSUnitClassesTest,
 	#superclass : #TestCase,
-	#category : #'ReleaseTests-Tests'
+	#category : #'ReleaseTests-CleanCode'
 }
 
 { #category : #tests }
@@ -38,4 +38,14 @@ ProperlyImplementedSUnitClassesTest >> testAndMakeSureSuperTearDownIsCalledAsLas
 						superTearDownNotCalledLastIn: method)
 						ifTrue: [ violating add: method ] ] ].
 	self assertEmpty: violating
+]
+
+{ #category : #tests }
+ProperlyImplementedSUnitClassesTest >> testTestClassesShouldBeSingular [
+
+	| violations |
+	"Ensure test class names are consistent"
+	violations := Object allSubclasses select: [ :each | 
+		              (each inheritsFrom: TestCase) and: [ each name endsWith: 'Tests' ] ].
+	self assert: violations isEmpty
 ]

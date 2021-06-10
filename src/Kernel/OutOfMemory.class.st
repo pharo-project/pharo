@@ -8,11 +8,6 @@ Class {
 	#category : #'Kernel-Exceptions'
 }
 
-{ #category : #handling }
-OutOfMemory >> defaultAction [
-	Smalltalk signalLowSpace.
-]
-
 { #category : #testing }
 OutOfMemory >> isResumable [
 

@@ -120,12 +120,12 @@ ClyAbstractClassScope >> adoptLocalScopeClassTo: aLocalScopeClass [
 
 { #category : #converting }
 ClyAbstractClassScope >> asInheritedScope [
-	^ClyInheritedScopeProvider createInheritedScopeFrom: self
+	^ClyInheritedScopeProviderAnnotation createInheritedScopeFrom: self
 ]
 
 { #category : #converting }
 ClyAbstractClassScope >> asInheritingScope [
-	^ClyInheritedScopeProvider createInheritingScopeFrom: self
+	^ClyInheritedScopeProviderAnnotation createInheritingScopeFrom: self
 ]
 
 { #category : #converting }

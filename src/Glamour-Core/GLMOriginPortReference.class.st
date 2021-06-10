@@ -47,7 +47,7 @@ GLMOriginPortReference >> transformation: anObject [
 	transformation := anObject
 ]
 
-{ #category : #'accessing-convenience' }
+{ #category : #'accessing - convenience' }
 GLMOriginPortReference >> value [
 
 	^ self transformation

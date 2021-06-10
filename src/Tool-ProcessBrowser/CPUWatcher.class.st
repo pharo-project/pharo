@@ -103,7 +103,7 @@ CPUWatcher class >> shutDown [
 	self stopMonitoring.
 ]
 
-{ #category : #'startup-shutdown' }
+{ #category : #'startup - shutdown' }
 CPUWatcher class >> startMonitoring [
 	"CPUWatcher startMonitoring"
 
@@ -188,7 +188,7 @@ CPUWatcher >> isMonitoring [
 	^watcher notNil
 ]
 
-{ #category : #'startup-shutdown' }
+{ #category : #'startup - shutdown' }
 CPUWatcher >> monitorProcessPeriod: secs sampleRate: msecs [
 	self stopMonitoring.
 
@@ -256,13 +256,13 @@ CPUWatcher >> resumeProcess: aProcess fromMenu: aMenuMorph [
 	self processBrowser resumeProcess: aProcess.
 ]
 
-{ #category : #'startup-shutdown' }
+{ #category : #'startup - shutdown' }
 CPUWatcher >> startMonitoring [
 	self
 		monitorProcessPeriod: 20 sampleRate: 100
 ]
 
-{ #category : #'startup-shutdown' }
+{ #category : #'startup - shutdown' }
 CPUWatcher >> stopMonitoring [
 	watcher ifNotNil: [
 		self processBrowser terminateProcess: watcher.

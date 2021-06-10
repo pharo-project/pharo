@@ -21,13 +21,13 @@ Class {
 { #category : #'instance creation' }
 ClyClassQuery class >> hierarchical [
 
-	^self as: ClyHierarchicallySortedClasses new
+	^self as: ClyHierarchicallySortedClassesResult new
 ]
 
 { #category : #'instance creation' }
 ClyClassQuery class >> hierarchicalFrom: aScope [
 
-	^self from: aScope as: ClyHierarchicallySortedClasses new
+	^self from: aScope as: ClyHierarchicallySortedClassesResult new
 ]
 
 { #category : #'items type' }

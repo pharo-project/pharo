@@ -98,7 +98,7 @@ RubTextComposer >> checkIfReadyToSlide [
 	]
 ]
 
-{ #category : #'private composition' }
+{ #category : #'private - composition' }
 RubTextComposer >> completeComposition [
 	numberOfPhysicalLines := 1.
 	actualWidth := 1.
@@ -110,7 +110,7 @@ RubTextComposer >> completeComposition [
 			actualWidth := line actualWidth max: actualWidth ]
 ]
 
-{ #category : #'private composition' }
+{ #category : #'private - composition' }
 RubTextComposer >> composeAllLines [
 	[ currCharIndex <= theText size and: [ currentY + defaultLineHeight <= theContainer bottom ] ]
 		whileTrue: [ 
@@ -119,7 +119,7 @@ RubTextComposer >> composeAllLines [
 				ifFalse: [ self composeOneLine ]) ifNil: [ ^ nil ] ]
 ]
 
-{ #category : #'private composition' }
+{ #category : #'private - composition' }
 RubTextComposer >> composeAllRectangles: rectangles [
 	| charIndexBeforeLine numberOfLinesBefore |
 	actualHeight := defaultLineHeight.
@@ -142,7 +142,7 @@ RubTextComposer >> composeAllRectangles: rectangles [
 		ifTrue: [ ^ nil	"we are finished composing" ]
 ]
 
-{ #category : #'private composition' }
+{ #category : #'private - composition' }
 RubTextComposer >> composeEachRectangleIn: rectangles [
 
 	| myLine lastChar |
@@ -170,7 +170,7 @@ RubTextComposer >> composeEachRectangleIn: rectangles [
 	^false
 ]
 
-{ #category : #'public composition' }
+{ #category : #composition }
 RubTextComposer >> composeLinesFrom: start to: stop delta: delta into: lineColl priorLines: priorLines atY: startingY [
 	"While the section from start to stop has changed, composition may
 	ripple all the way to the end of the text. However in a rectangular
@@ -192,7 +192,7 @@ RubTextComposer >> composeLinesFrom: start to: stop delta: delta into: lineColl 
 	self completeComposition
 ]
 
-{ #category : #'private composition' }
+{ #category : #'private - composition' }
 RubTextComposer >> composeLinesFrom: argStart to: argStop delta: argDelta into: argLinesCollection priorLines: argPriorLines atY: argStartY textStyle: argTextStyle text: argText container: argContainer [
 	theTextStyle := argTextStyle.
 	theText := argText.
@@ -221,7 +221,7 @@ RubTextComposer >> composeLinesFrom: argStart to: argStop delta: argDelta into: 
 	prevLines := #()
 ]
 
-{ #category : #'private composition' }
+{ #category : #'private - composition' }
 RubTextComposer >> composeOneLine [
 	| rectangles |
 	rectangles := theContainer rectanglesAt: currentY height: defaultLineHeight.
@@ -351,7 +351,7 @@ RubTextComposer >> moveBy: aPoint [
 	maxRightX := maxRightX + aPoint x
 ]
 
-{ #category : #'private composition' }
+{ #category : #'private - composition' }
 RubTextComposer >> needComposition [
 	| ret |
 	ret := prevText isNil.
@@ -371,12 +371,12 @@ RubTextComposer >> numberOfPhysicalLines [
 	^ numberOfPhysicalLines ifNil: [ numberOfPhysicalLines := 0 ]
 ]
 
-{ #category : #'public composition' }
+{ #category : #composition }
 RubTextComposer >> prepareToForceComposition [
 	prevText := nil
 ]
 
-{ #category : #'private composition' }
+{ #category : #'private - composition' }
 RubTextComposer >> recomposeFrom: start to: stop delta: delta [
 	"Recompose this paragraph. The altered portion is between start and
 	stop. Recomposition may continue to the end of the text, due to a
@@ -403,7 +403,7 @@ RubTextComposer >> recomposeFrom: start to: stop delta: delta [
 
 ]
 
-{ #category : #'public composition' }
+{ #category : #composition }
 RubTextComposer >> replaceFrom: start to: stop with: aText [
 	"Edit the text, and then recompose the lines."
 	self text replaceFrom: start to: stop with: aText.

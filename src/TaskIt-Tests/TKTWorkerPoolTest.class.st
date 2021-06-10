@@ -111,41 +111,37 @@ TKTWorkerPoolTest >> testWorkerPoolWorkersAreStoppedAfterPoolsCollection [
 	pool name: 'test pool'.
 	pool poolMaxSize: 4.
 	pool start.
-		
-	(pool future: [ 1 ])
-		waitForCompletion: 1 second.
+
+	(pool future: [ 1 ]) waitForCompletion: 1 second.
 
 	self assert: pool workers notEmpty.
-	
-	workerProcess := WeakArray with: pool workers anyOne process.
-	
-	pool := nil.
-	self garbageCollectAndWait .
 
-	self assert: workerProcess first isNil.
+	workerProcess := WeakArray with: pool workers anyOne process.
+
+	pool := nil.
+	self assertWithGarbageCollect: [ workerProcess first isNil ].
 ]
 
 { #category : #tests }
 TKTWorkerPoolTest >> testWorkerPoolWorkersProcessesAreStoppedAfterPoolsCollection [
+
 	| pool workerProcess |
 	pool := TKTWorkerPool new.
 	pool name: 'test pool'.
 	pool poolMaxSize: 4.
 	pool start.
-		
-	(pool future: [ 1 ])
-		waitForCompletion: 1 second.
+
+	(pool future: [ 1 ]) waitForCompletion: 1 second.
 
 	workerProcess := WeakArray with: pool workers anyOne process process.
-	
-	pool := nil.
-	self garbageCollectAndWait .
 
-	self assert: workerProcess first isNil
+	pool := nil.
+	self assertWithGarbageCollect: [ workerProcess first isNil ].
 ]
 
 { #category : #tests }
 TKTWorkerPoolTest >> testWorkerPoolWorkersProcessesAreTerminatedAfterPoolsCollection [
+
 	| pool workerProcess |
 	pool := TKTWorkerPool new.
 	pool name: 'Test pool'.
@@ -154,6 +150,6 @@ TKTWorkerPoolTest >> testWorkerPoolWorkersProcessesAreTerminatedAfterPoolsCollec
 	(pool future: [ 1 ]) waitForCompletion: 1 second.
 	workerProcess := pool workers anyOne process process.
 	pool := nil.
- 	self garbageCollectAndWait .
-	self assert: workerProcess isTerminated
+	self assertWithGarbageCollect: [ workerProcess isTerminated ].
+
 ]

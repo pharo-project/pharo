@@ -22,7 +22,7 @@ Class {
 	#category : #'Refactoring-Changes'
 }
 
-{ #category : #'change-factory' }
+{ #category : #'change - factory' }
 RBRefactoryChangeManager class >> changeFactory [
 	^ self instance changeFactory
 ]

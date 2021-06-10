@@ -32,7 +32,7 @@ RubDropListButtonRuler >> level [
 	^ 1
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 RubDropListButtonRuler >> noteNewOwner: aMorph [
 	| downArrow |
 	super noteNewOwner: aMorph.
@@ -40,7 +40,7 @@ RubDropListButtonRuler >> noteNewOwner: aMorph [
 		basicCreateArrowOfDirection: #bottom 
 		size: (self textArea textStyle defaultFont height)
 		color: Color veryLightGray).
-	downArrowBtn := IconicButton new labelGraphic: downArrow.
+	downArrowBtn := IconicButtonMorph new labelGraphic: downArrow.
 	downArrowBtn height: self paragraphProvider innerBounds height.
 	downArrowBtn borderWidth: 0.
 	downArrowBtn color: Color transparent.

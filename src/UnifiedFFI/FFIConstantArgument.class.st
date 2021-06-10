@@ -14,7 +14,7 @@ Class {
 	#category : #'UnifiedFFI-Arguments'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 FFIConstantArgument class >> value: aValue typeName: aTypeName arity: anInteger [
 	
 	^ self new
@@ -41,7 +41,7 @@ FFIConstantArgument >> emitArgument: aBuilder context: aContext objectClass: obj
 	self shouldNotImplement
 ]
 
-{ #category : #'private emitting code' }
+{ #category : #'private - emitting code' }
 FFIConstantArgument >> emitArgumentVariableAccesingPart: aBuilder context: aContext objectClass: objectClass instVarName: aName [
 
 	self shouldNotImplement

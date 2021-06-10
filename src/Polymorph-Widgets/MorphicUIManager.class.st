@@ -435,29 +435,6 @@ Here are some suggestions:
 
 ]
 
-{ #category : #debug }
-MorphicUIManager >> lowSpaceWatcherDefaultAction: theInterruptedProcess [
-
-	"Create a Notifier on the active scheduling process with the given label."
-
-	| preemptedProcess projectProcess |
-	ActiveWorld := self currentWorld. "reinstall active globals"
-	self currentWorld primaryHand interrupted.
-
-	projectProcess := self uiProcess. "we still need the accessor for a while"
-	preemptedProcess := theInterruptedProcess ifNil: [ 
-		                    Processor preemptedProcess ].
-	"Only debug preempted process if its priority is >= projectProcess' priority"
-	preemptedProcess priority < projectProcess priority ifTrue: [ 
-		preemptedProcess := projectProcess ].
-	preemptedProcess suspend.
-
-	(OupsDebugRequest newForContext: preemptedProcess suspendedContext)
-		process: preemptedProcess;
-		label: 'Space is low';
-		submit
-]
-
 { #category : #'ui requests' }
 MorphicUIManager >> merge: merger informing: aString [
 

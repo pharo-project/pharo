@@ -56,7 +56,7 @@ PRCodeblock >> accept: aVisitor [
 	^ aVisitor visitCodeblock: self
 ]
 
-{ #category : #'accessing-delegated' }
+{ #category : #'accessing - delegated' }
 PRCodeblock >> caption [
 	^ caption
 		ifNil: [ 
@@ -66,12 +66,12 @@ PRCodeblock >> caption [
 				ifAbsent: [ PRParagraph with: (PRText content: '') ] ]
 ]
 
-{ #category : #'accessing-delegated' }
+{ #category : #'accessing - delegated' }
 PRCodeblock >> caption: aString [
 	parameters := self parameters copyWith: 'caption' -> aString
 ]
 
-{ #category : #'accessing-delegated' }
+{ #category : #'accessing - delegated' }
 PRCodeblock >> eval: aString [
 	parameters := parameters copyWith: 'eval' -> aString
 ]
@@ -115,7 +115,7 @@ PRCodeblock >> hash [
 	^ super hash bitXor: self properties hash
 ]
 
-{ #category : #'accessing-delegated' }
+{ #category : #'accessing - delegated' }
 PRCodeblock >> hideable: aString [
 	parameters := parameters copyWith: 'hideable' -> aString
 ]
@@ -141,17 +141,17 @@ PRCodeblock >> isStructure [
 	^ self parameters includesKey: 'structure'
 ]
 
-{ #category : #'accessing-delegated' }
+{ #category : #'accessing - delegated' }
 PRCodeblock >> label [
 	^ self parameters at: 'label' ifAbsent: ['']
 ]
 
-{ #category : #'accessing-delegated' }
+{ #category : #'accessing - delegated' }
 PRCodeblock >> label: aString [
 	parameters := parameters copyWith: 'label' -> aString
 ]
 
-{ #category : #'accessing-delegated' }
+{ #category : #'accessing - delegated' }
 PRCodeblock >> language [
 	^ self
 		parameters at: 'language'
@@ -166,7 +166,7 @@ PRCodeblock >> language [
 		ifAbsent: [ PRUnspecifiedScriptLanguage default ]
 ]
 
-{ #category : #'accessing-delegated' }
+{ #category : #'accessing - delegated' }
 PRCodeblock >> language: aLanguage [
 	self parameters at: 'language' put: aLanguage
 ]
@@ -181,12 +181,12 @@ PRCodeblock >> lineNumber: aString [
 	parameters := parameters copyWith: 'lineNumber' -> aString
 ]
 
-{ #category : #'accessing-parameters' }
+{ #category : #'accessing - parameters' }
 PRCodeblock >> parameters [
 	^ parameters
 ]
 
-{ #category : #'accessing-parameters' }
+{ #category : #'accessing - parameters' }
 PRCodeblock >> parameters: aCollection [
 
 	parameters := aCollection
@@ -199,12 +199,12 @@ PRCodeblock >> removePossibleParagraph: content [
 		ifFalse: [ content ]
 ]
 
-{ #category : #'accessing-delegated' }
+{ #category : #'accessing - delegated' }
 PRCodeblock >> shortCaption [
 	^ self parameters at: 'shortCaption' ifAbsent: ['']
 ]
 
-{ #category : #'accessing-delegated' }
+{ #category : #'accessing - delegated' }
 PRCodeblock >> shortCaption: aString [ 
 	parameters := parameters copyWith: 'shortCaption' -> aString
 ]

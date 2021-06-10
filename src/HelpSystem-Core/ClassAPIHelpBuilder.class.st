@@ -81,7 +81,7 @@ ClassAPIHelpBuilder >> build [
 		ifTrue: [ self buildSubnodesForSubclasses ]
 ]
 
-{ #category : #'private building' }
+{ #category : #'private - building' }
 ClassAPIHelpBuilder >> buildMethodTopicsOn: topic for: aClass [
 	|stream methodComment|
 	stream := String new writeStream.
@@ -90,7 +90,7 @@ ClassAPIHelpBuilder >> buildMethodTopicsOn: topic for: aClass [
 		addMethodsWithoutComment | methodComment notNil ifTrue: [ 
 			stream 
 				nextPutAll: aClass name;
-				nextPutAll: '>>';
+				nextPutAll: '>>#';
 				nextPutAll: selector asString;
 				cr.		
 
@@ -102,7 +102,7 @@ ClassAPIHelpBuilder >> buildMethodTopicsOn: topic for: aClass [
 	
 ]
 
-{ #category : #'private building' }
+{ #category : #'private - building' }
 ClassAPIHelpBuilder >> buildSubclassTopicFor: aSubclass [
 	 
 	^(self class new) 
@@ -115,7 +115,7 @@ ClassAPIHelpBuilder >> buildSubclassTopicFor: aSubclass [
 	 
 ]
 
-{ #category : #'private building' }
+{ #category : #'private - building' }
 ClassAPIHelpBuilder >> buildSubnodesForMethods [
 	| instanceSide classSide |
 	instanceSide := HelpTopic named: 'Instance side'.
@@ -128,7 +128,7 @@ ClassAPIHelpBuilder >> buildSubnodesForMethods [
 	self buildMethodTopicsOn: classSide for: rootToBuildFrom class
 ]
 
-{ #category : #'private building' }
+{ #category : #'private - building' }
 ClassAPIHelpBuilder >> buildSubnodesForSubclasses [
 	| topic |
 	rootToBuildFrom subclasses isEmpty

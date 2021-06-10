@@ -32,12 +32,17 @@ GTSelector class >> substring: aString filter: aFilter [
 				group addMethod: method ] ] ] 
 ]
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 GTSelector >> addMethod: aCompiledMethod [
 	"this is a private method that can be used by the constructor on the class side
 	exclusively within the context of Spotter"
 	methods ifNil: [ methods := OrderedCollection new ].
 	methods add: aCompiledMethod
+]
+
+{ #category : #printing }
+GTSelector >> displayStringOn: stream [
+	stream nextPutAll: self name
 ]
 
 { #category : #printing }
@@ -68,31 +73,11 @@ GTSelector >> senders [
 ]
 
 { #category : #ui }
-GTSelector >> spotterImplementorsFor: aStep [
-	<spotterOrder: 40>
-	^ aStep listProcessor
-		title: 'Implementors';
-		filter: GTFilterSubstring item: [ :filter :context | self implementors do: filter ];
-		keyBinding: $m meta
-]
-
-{ #category : #ui }
 GTSelector >> spotterPreviewIn: aComposite [
 	<spotterPreview: 10>
 	aComposite list
 		title: 'Preview';
 		display: [ :x | x ];
-		format: [ :method | GTSpotterItemBrick new text: method gtDisplayString; disable; yourself ];
+		format: [ :method | GTSpotterItemBrick new text: method displayString; disable; yourself ];
 		entity: self implementors
-]
-
-{ #category : #ui }
-GTSelector >> spotterUsersFor: aStep [
-	<spotterOrder: 50>
-	^ aStep listProcessor
-		title: 'Senders';
-		filter: GTFilterSubstring item: [ :filter :context | 
-			self senders do: [ :sender | 
-				filter value: sender compiledMethod ] ];
-		keyBinding: $n meta
 ]

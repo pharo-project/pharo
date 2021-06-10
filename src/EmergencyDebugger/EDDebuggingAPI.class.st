@@ -75,8 +75,9 @@ EDDebuggingAPI >> changesForMethods [
 
 { #category : #'API - Debugging support' }
 EDDebuggingAPI >> closeEmergencySession [
-	debugger terminate.
-	self currentWorld restoreMorphicDisplay
+
+	debugger terminate
+	
 ]
 
 { #category : #'API - Context' }

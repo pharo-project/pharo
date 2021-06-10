@@ -10,7 +10,7 @@ ReAbstractRuleTestCase class >> isAbstract [
 	^self == ReAbstractRuleTestCase 
 ]
 
-{ #category : #'test-support' }
+{ #category : #utilities }
 ReAbstractRuleTestCase >> critiguesFor: ruleClass onMethod: method [
 	| critiques |
 	critiques := OrderedCollection new.
@@ -19,7 +19,7 @@ ReAbstractRuleTestCase >> critiguesFor: ruleClass onMethod: method [
 	^critiques 
 ]
 
-{ #category : #'test-support' }
+{ #category : #utilities }
 ReAbstractRuleTestCase >> myCritiques [
 	| critiques |
 	critiques := OrderedCollection new.
@@ -28,7 +28,7 @@ ReAbstractRuleTestCase >> myCritiques [
 	^critiques 
 ]
 
-{ #category : #'test-support' }
+{ #category : #utilities }
 ReAbstractRuleTestCase >> myCritiquesOnClass: aClass [
 	| critiques |
 	critiques := OrderedCollection new.
@@ -37,7 +37,7 @@ ReAbstractRuleTestCase >> myCritiquesOnClass: aClass [
 	^critiques 
 ]
 
-{ #category : #'test-support' }
+{ #category : #utilities }
 ReAbstractRuleTestCase >> myCritiquesOnMethod: method [
 	| critiques |
 	critiques := OrderedCollection new.
@@ -46,12 +46,12 @@ ReAbstractRuleTestCase >> myCritiquesOnMethod: method [
 	^critiques 
 ]
 
-{ #category : #'test-support' }
+{ #category : #utilities }
 ReAbstractRuleTestCase >> sourceAtChritique: critique [
 	^ critique sourceAnchor in: [ :anchor | anchor entity sourceCode atAll: anchor interval ]
 ]
 
-{ #category : #'test-support' }
+{ #category : #utilities }
 ReAbstractRuleTestCase >> subjectUnderTest [ 
 	^(self class name allButLast: 4) asClass
 ]

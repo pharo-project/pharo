@@ -165,12 +165,12 @@ RBCascadeNode >> replaceNode: aNode withNode: anotherNode [
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])
 ]
 
-{ #category : #'accessing-token' }
+{ #category : #'accessing - token' }
 RBCascadeNode >> semicolons [
 	^ semicolons
 ]
 
-{ #category : #'accessing-token' }
+{ #category : #'accessing - token' }
 RBCascadeNode >> semicolons: anArray [
 	semicolons := anArray
 ]

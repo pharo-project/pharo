@@ -23,12 +23,12 @@ SycAbstractAllInstVarAccessorsCommand class >> fullBrowserMenuActivation [
 
 { #category : #accessing }
 SycAbstractAllInstVarAccessorsCommand >> asRefactorings [
-	| refactorings model |
+	| refactorings env |
 	refactorings := classes flatCollect: [:each |
 		each value collect: [:var | | refactoring |
-			model ifNil: [ refactoring := var createRefactoring: RBAbstractInstanceVariableRefactoring for: each key.
-				model := refactoring model ]
-				ifNotNil: [refactoring := var createRefactoring: RBAbstractInstanceVariableRefactoring for: each key in: model].
+			env ifNil: [ refactoring := var createRefactoring: RBAbstractInstanceVariableRefactoring for: each key.
+				env := refactoring model ]
+				ifNotNil: [refactoring := var createRefactoring: RBAbstractInstanceVariableRefactoring for: each key in: env ].
 			refactoring ]].
 	^ refactorings
 ]
@@ -43,10 +43,9 @@ SycAbstractAllInstVarAccessorsCommand >> defaultMenuItemName [
 	^'Abstract instance variables'
 ]
 
-{ #category : #execution }
-SycAbstractAllInstVarAccessorsCommand >> execute [
-
-	self executeRefactorings
+{ #category : #testing }
+SycAbstractAllInstVarAccessorsCommand >> isComplexRefactoring [ 
+	^ true
 ]
 
 { #category : #testing }
@@ -59,14 +58,13 @@ SycAbstractAllInstVarAccessorsCommand >> prepareFullExecutionInContext: aToolCon
 
 { #category : #execution }
 SycAbstractAllInstVarAccessorsCommand >> selectVariables [ 
-	classes := classes collect: [:aClass | | vars dialog selectedVars |
+	classes := classes collect: [:aClass | | vars dialog |
 		vars := aClass slots asOrderedCollection.
-		selectedVars := vars copy.
 		dialog := RBVariablesSelectionPresenter 
-		   label: aClass name,' - Select all variables to covert abstract'
+		   label: aClass name,' - Select all variables to convert abstract'
 			withItems: vars 
-			selecting: selectedVars. 
+			selecting: vars. 
 		dialog cancelled ifTrue: [ CmdCommandAborted signal ].
-		aClass -> selectedVars
+		aClass -> dialog presenter selectedItems
 		]
 ]

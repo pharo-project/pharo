@@ -20,19 +20,19 @@ Class {
 	#category : #'Ring-Core-Kernel'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - accessing' }
 RGBehavior class >> badInstantiationError [
 
 	RGBadInstantiationError signal: 'I cannot be instantiated this way because every RGBehavior must know its proper behavior strategy. Please use a subclass of RGBehaviorFactory or my methods like #newClass'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBehavior class >> named: aString [
 
 	^ self badInstantiationError
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBehavior class >> named: aName behaviorStrategy: anRGBehaviorStrategy [
 
 	| aBehavior |
@@ -47,13 +47,13 @@ RGBehavior class >> named: aName behaviorStrategy: anRGBehaviorStrategy [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBehavior class >> named: aString parent: anRGObject [
 
 	^ self badInstantiationError
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBehavior class >> named: aName parent: anRGObject behaviorStrategy: anRGBehaviorStrategy [
 	
 	| aBehavior |
@@ -93,7 +93,7 @@ RGBehavior class >> newTrait [
 	^ self unnamedWithBehaviorStrategy: RGTrait newStrategy
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBehavior class >> parent: anRGObject behaviorStrategy: anRGBehaviorStrategy [
 	
 	| aBehavior |
@@ -107,7 +107,7 @@ RGBehavior class >> parent: anRGObject behaviorStrategy: anRGBehaviorStrategy [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBehavior class >> unnamedWithBehaviorStrategy: anRGBehaviorStrategy [
 
 	| aBehavior |
@@ -120,7 +120,7 @@ RGBehavior class >> unnamedWithBehaviorStrategy: anRGBehaviorStrategy [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBehavior class >> unresolvedNamed: aName withParent: anRGObject behaviorStrategy: anRGBehaviorStrategy [
 	
 	| aBehavior |
@@ -136,7 +136,7 @@ RGBehavior class >> unresolvedNamed: aName withParent: anRGObject behaviorStrate
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBehavior class >> unresolvedWithBehaviorStrategy: anRGBehaviorStrategy [
 
 	| aBehavior |
@@ -149,7 +149,7 @@ RGBehavior class >> unresolvedWithBehaviorStrategy: anRGBehaviorStrategy [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBehavior class >> unresolvedWithParent: anRGObject behaviorStrategy: anRGBehaviorStrategy [
 	
 	| aBehavior |
@@ -231,7 +231,7 @@ RGBehavior >> announceDefinitionChangeDuring: aBlock [
 	
 ]
 
-{ #category : #asYetUnclassified }
+{ #category : #accessing }
 RGBehavior >> asYetUnclassifiedProtocolName [
 
 	^ 'as yet unclassified' asSymbol
@@ -432,6 +432,12 @@ RGBehavior >> defaultTraitComposition [
 	^ self defaultTraitCompositionStubIn: self.
 ]
 
+{ #category : #fileout }
+RGBehavior >> definitionStringFor: aConfiguredPrinter [
+
+	^ aConfiguredPrinter classDefinitionString 
+]
+
 { #category : #'queries - methods' }
 RGBehavior >> ensureLocalMethodNamed: aSymbol [
 
@@ -502,7 +508,7 @@ RGBehavior >> includesSelector: aString [
 	^ self selectors includes: aString
 ]
 
-{ #category : #'testing class hierarchy' }
+{ #category : #'testing - class hierarchy' }
 RGBehavior >> inheritsFrom: aClass [ 
 	"Answer whether the argument, aClass, is on the receiver's superclass 
 	chain."
@@ -677,6 +683,11 @@ RGBehavior >> lookupVar: aName [
 ]
 
 { #category : #lookup }
+RGBehavior >> lookupVar: aName declare: aBoolean [
+	^ self lookupVar: aName 
+]
+
+{ #category : #lookup }
 RGBehavior >> lookupVarForDeclaration: aName [
 
 	"This is a version of #lookupVar: that skips the OCRequestorScope, from here on it is the same as lookupVar:"
@@ -761,6 +772,14 @@ RGBehavior >> name: aString [
 		self announcer behaviorDefinitionChangedFrom: assoc value to: assoc key.
 		self announcer behaviorModificationAppliedTo: assoc key.
 		self announcer behaviorParentRenamed: assoc key from: oldName ].
+]
+
+{ #category : #fileout }
+RGBehavior >> oldDefinition [
+	
+	^ ClassDefinitionPrinter legacy
+		for: self;
+		definitionString
 ]
 
 { #category : #printing }
@@ -1216,7 +1235,7 @@ RGBehavior >> untagFrom: aSymbol [
 	self backend forPackage untagClass: self from: aSymbol
 ]
 
-{ #category : #asYetUnclassified }
+{ #category : #accessing }
 RGBehavior >> usedTraits [
 
 	^ self traitComposition usedTraits

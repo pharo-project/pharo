@@ -849,9 +849,9 @@ SHRBTextStyler >> addAttributes: attributes forNode: anRBNode [
 { #category : #formatting }
 SHRBTextStyler >> addAttributes: attributes from: start to: stop [
 	charAttr
-		from: start
-		to: stop
-		put: attributes
+		from: (start max: 1)
+		to: (stop min: charAttr size)
+		put: attributes 
 ]
 
 { #category : #converting }
@@ -1063,7 +1063,7 @@ SHRBTextStyler >> style: aText ast: ast [
 	charAttr := Array new: aText size withAll: (self attributesFor: #default).
 	bracketLevel := 0.
 	parentheseLevel:=0.
-	ast acceptVisitor: self.
+	self visitNode: ast.
 	^aText runs: (RunArray newFrom: charAttr)	
 
 ]

@@ -1,16 +1,16 @@
 Class {
 	#name : #RBUnfinishedStatementErrorNode,
 	#superclass : #RBEnglobingErrorNode,
-	#category : #'AST-Core-Nodes'
+	#category : #'AST-Core-Nodes - ErrorNodes'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 RBUnfinishedStatementErrorNode >> isUnfinishedStatement [
 	
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RBUnfinishedStatementErrorNode >> statement [
 	
 	^ content first

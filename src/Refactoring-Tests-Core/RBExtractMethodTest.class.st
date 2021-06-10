@@ -131,15 +131,38 @@ RBExtractMethodTest >> testExtractMethodThatNeedsTemporaryVariable [
 ]
 
 { #category : #tests }
+RBExtractMethodTest >> testExtractMethodToSuperclass [
+	| refactoring class |
+	refactoring := RBExtractMethodRefactoring
+		extract: (145 to: 343)
+		from: #checkMethod:
+		in: RBTransformationRuleTestData.
+	self setupMethodNameFor: refactoring toReturn: #foo:.
+	self setupExtractionClassFor: refactoring toReturn: RBFooLintRuleTestData. 
+	self executeRefactoring: refactoring.
+	class := refactoring model classNamed: #RBTransformationRuleTestData.
+
+	self assert: (class parseTreeFor: #checkMethod:) equals: (self parseMethod: 'checkMethod: aSmalllintContext 
+	class := aSmalllintContext selectedClass.
+	(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: 
+			[self foo: aSmalllintContext]').
+	
+	class := refactoring model classNamed: #RBFooLintRuleTestData.
+	self assert: (class parseTreeFor: #foo:) equals: (self parseMethod: 'foo: aSmalllintContext (RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
+				ifFalse: 
+					[builder compile: rewriteRule tree printString
+						in: class
+						classified: aSmalllintContext protocols]')
+]
+
+{ #category : #tests }
 RBExtractMethodTest >> testExtractWithRenamingOfParameters [
 	| refactoring class |
 	refactoring := RBExtractMethodRefactoring extract: (78 to: 197) from: #displayName in: RBLintRuleTestData.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	refactoring
 		parameterMap:
-			(Dictionary new
-				at: #nameStream put: #newParameter;
-				yourself).
+			(Array with: ((RBArgumentName name: #nameStream) newName: #newParameter)).
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBLintRuleTestData.
 

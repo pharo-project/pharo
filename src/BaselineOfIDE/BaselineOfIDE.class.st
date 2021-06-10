@@ -165,6 +165,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'FuzzyMatcher' with: [ spec repository: repository ].
 		spec baseline: 'QA' with: [ spec repository: repository ].
 		spec baseline: 'OSWindow' with: [ spec repository: repository ].
+		spec baseline: 'EmergencyDebugger' with: [ spec repository: repository ].
 		spec baseline: 'Refactoring' with: [ spec repository: repository ].
 		spec baseline: 'Epicea' with: [ spec repository: repository ].
 		spec baseline: 'Misc' with: [ spec repository: repository ].
@@ -193,28 +194,16 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'PharoGlamour' with: [ spec repository: repository ].
 		spec baseline: 'PharoGT' with: [ spec repository: repository ].
 		spec baseline: 'HeuristicCompletion' with: [ spec repository: repository ].
-		spec baseline: 'Spec2' with: [ 
-			spec 
-				repository: repository;
-				loads: #('Code' 'CodeTests') ].
-		spec baseline: 'NewTools' with: [
-			spec 
-				repository: repository;
-				loads: #(
-					'Playground' 
-					'Inspector' 
-					'Debugger' 
-					'SystemReporter'
-					'ChangeSorter'
-					'Methods') ].
-			
+		self specCode: spec.
+		self newTools: spec.
+					
 		spec baseline: 'Microdown' with: [ spec 
 				repository: self packageRepositoryURL ].
 	
 		spec 
   			baseline: 'Roassal3' 
   			with: [ spec 
-				repository: 'github://ObjectProfile/Roassal3:v0.9.6d/src';
+				repository: 'github://ObjectProfile/Roassal3:v0.9.8/src';
     				loads: #( 'Core' 'Tests') ].
 
 		spec 
@@ -231,23 +220,47 @@ BaselineOfIDE >> baseline: spec [
 
 { #category : #actions }
 BaselineOfIDE >> loadIceberg [
+	| pharoPluginClass |
+	
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:dev-2.0';
+		repository: (self class environment at: #BaselineOfPharo) icebergRepository;
 		onConflictUseLoaded;
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
-	(Smalltalk classNamed: #IcePharoPlugin) 
-		addPharoProjectToIceberg;
-		addProjectNamed: 'pharo-spec2' commit: '15cacf316c2bf6e01eae348ac30523433476f1f8' baselines: #(BaselineOfSpec2);
-		addProjectNamed: 'pharo-newtools' commit: '94785f82ef6288de4405b929d7b86faac582be5e' baselines: #(BaselineOfNewTools);
-		addIcebergProjectToIceberg
+	
+	pharoPluginClass := Smalltalk classNamed: #IcePharoPlugin.
+	pharoPluginClass  addPharoProjectToIceberg.
+	
+	(Smalltalk classNamed: #BaselineOfSpec2) ifNotNil: [ :aClass | 
+		pharoPluginClass
+			addProjectNamed: 'pharo-spec2' 
+			commit: (Smalltalk classNamed: #BaselineOfPharo) specReleaseCommit 
+			baselines: #(BaselineOfSpec2) ].
+		
+	(Smalltalk classNamed: #BaselineOfNewTools) ifNotNil: [ :aClass | 
+		pharoPluginClass 
+			addProjectNamed: 'pharo-newtools' 
+			commit: (Smalltalk classNamed: #BaselineOfPharo) newToolsReleaseCommit 
+			baselines: #(BaselineOfNewTools) ].
+		
+	pharoPluginClass addIcebergProjectToIceberg
 ]
 
 { #category : #actions }
 BaselineOfIDE >> makeCalypsoDefaultBrowser [
 
 	(self class environment at: #ClyBrowserMorph) beAllDefault.
+]
+
+{ #category : #baseline }
+BaselineOfIDE >> newTools: spec [ 
+
+	spec baseline: 'NewTools' with: [
+		spec 
+			repository: (self class environment at: #BaselineOfPharo) newToolsRepository;
+			loads: #('default') ].
+
 ]
 
 { #category : #actions }
@@ -298,4 +311,14 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	self additionalInitialization.
 
 	Initialized := true.
+]
+
+{ #category : #baseline }
+BaselineOfIDE >> specCode: spec [
+
+	spec baseline: 'SpecCode' with: [ 
+		spec
+			repository: (self class environment at: #BaselineOfPharo) specRepository;
+			className: 'BaselineOfSpec2';
+			loads: #('Code' 'CodeTests') ]
 ]

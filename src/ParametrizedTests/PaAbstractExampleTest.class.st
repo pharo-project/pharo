@@ -36,7 +36,7 @@ PaAbstractExampleTest >> option2: anInteger [
 	option2 := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : #tests }
 PaAbstractExampleTest >> testParametersHaveValue [
 	self assert: option1 isNotNil.
 	self assert: option2 isNotNil.	

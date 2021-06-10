@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyQueryResultTestCase,
-	#superclass : #ClyNavigationEnvironmentTestCase,
+	#superclass : #ClyAbsractNavigationEnvironmentTest,
 	#instVars : [
 		'queryResult',
 		'query'
@@ -16,8 +16,8 @@ ClyQueryResultTestCase class >> isAbstract [
 { #category : #running }
 ClyQueryResultTestCase >> createQuery [
 
-	^ClyQueryExampleReturningScopeBasis 
-		from: (ClyScopeExample emptyIn: environment)
+	^ClyReturningScopeBasisExampleQuery 
+		from: (ClyExampleScope emptyIn: environment)
 ]
 
 { #category : #running }
@@ -36,6 +36,13 @@ ClyQueryResultTestCase >> setUp [
 	"by default result is in state to be rebuilt by query.
 	We do not need it in tests where we usually just test fillWith: logic"
 	
+]
+
+{ #category : #tests }
+ClyQueryResultTestCase >> testCheckingForEmpty [
+	self
+		assert: queryResult isEmpty;
+		deny: queryResult notEmpty
 ]
 
 { #category : #tests }
@@ -97,14 +104,6 @@ ClyQueryResultTestCase >> testItemsChangedNotificationShouldResetItems [
 	
 	self deny: queryResult isBuilt.
 	self assert: queryResult items isNil
-]
-
-{ #category : #tests }
-ClyQueryResultTestCase >> testItemsInitialization [
-	
-	queryResult initializeItems.
-	
-	self assert: queryResult items notNil
 ]
 
 { #category : #tests }

@@ -7,7 +7,7 @@ Class {
 	#category : #'Renraku-Rules'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 ReNoNilAssignationInInitializeRule class >> checksMethod [
 	^ true
 ]

@@ -196,7 +196,7 @@ TimeProfiler >> browseItem [
 
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> codePaneMenu: aMenu shifted: shifted [ 
 	"Note that unless we override perform:orSendTo:, 
 	PluggableTextController will respond to all menu items in a 
@@ -206,14 +206,14 @@ TimeProfiler >> codePaneMenu: aMenu shifted: shifted [
 	^ aMenu addAllFrom: donorMenu
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> contentsSelection [
 	"Return the interval of text in the code pane to select when I set the pane's contents"
 
 	^ 1 to: 0		"null selection"
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> correctFrom: start to: stop with: aString [
 	^ blockCodePane correctFrom: start to: stop with: aString
 ]
@@ -244,7 +244,7 @@ TimeProfiler >> expandAll [
 	treeMorph expandAllSuchThat: [:node | node percentage > self minPercentageToExpand]
 ]
 
-{ #category : #'accessing-computed' }
+{ #category : #'accessing - computed' }
 TimeProfiler >> fullReport [
 	"Return the full report of the tally "
 	^ String streamContents: [:strm |
@@ -252,7 +252,7 @@ TimeProfiler >> fullReport [
 			ifNotNil: [ rootMessageTally report: strm ] ]
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> fullReportMenu: aMenuMorph shift: aBoolean [
 	^ (PragmaMenuBuilder 
 		pragmaKeyword: 'TimeProfilerFullReportMenu'
@@ -279,12 +279,12 @@ TimeProfiler >> initialExtent [
 	^ 750 @ 700
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> keyDown: anEvent from: aTreeMorph [ 
 	self selectedNode ifNotNil: [:current | current keyDown: anEvent from: aTreeMorph ]
 ]
 
-{ #category : #'accessing-computed' }
+{ #category : #'accessing - computed' }
 TimeProfiler >> leaveItems [
 	| res  |
 	res := OrderedCollection new.
@@ -297,7 +297,7 @@ TimeProfiler >> leaveItems [
 	^ res
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> menu: menu shifted: b [ 
 	"Set up the menu to apply to the receiver's, honoring the #shifted boolean"
 	
@@ -313,19 +313,19 @@ TimeProfiler >> menu: menu shifted: b [
 	^ menu
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> minPercentageToExpand [
 	^ minPercentageToExpand ifNil: [minPercentageToExpand := 3.0]
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> minPercentageToExpand: aPercentage [
 	minPercentageToExpand := aPercentage.
 	self changed: #minPercentageToExpand
 
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> notify: aString at: anInteger in: aStream [
 	blockCodePane notify: aString at: anInteger - 'self runBlock: [' size in: aStream 
 ]
@@ -419,13 +419,13 @@ TimeProfiler >> profileIt [
 	
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> reportOtherProcesses [
 	^ reportOtherProcesses ifNil: [reportOtherProcesses := true]
 
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> reportOtherProcesses: aBoolean [
 	self reportOtherProcesses ~= aBoolean
 		ifFalse: [ ^ self ].
@@ -440,13 +440,13 @@ TimeProfiler >> result: anObject [
 
 ]
 
-{ #category : #'accessing-computed' }
+{ #category : #'accessing - computed' }
 TimeProfiler >> resultText [
 	^ result printString
 
 ]
 
-{ #category : #'accessing-computed' }
+{ #category : #'accessing - computed' }
 TimeProfiler >> rootItems [
 	^ rootMessageTally
 		ifNil: [#()]
@@ -461,7 +461,7 @@ TimeProfiler >> rootNodeClassFromItem: anItem [
 	^ TimeProfilerNode 
 ]
 
-{ #category : #'accessing-computed' }
+{ #category : #'accessing - computed' }
 TimeProfiler >> rootTallyItems [
 	| res sons groups |
 	res := OrderedCollection new.
@@ -519,17 +519,17 @@ TimeProfiler >> runProcess: aProcess forMilliseconds: msecDuration pollingEvery:
 	^result
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> select [
 	blockCodePane select
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> selectFrom: start to: stop [
 	blockCodePane  selectFrom: start to: stop
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> selectInvisiblyFrom:  first to:  last [
 	blockCodePane selectInvisiblyFrom: first to: last.
 ]
@@ -540,7 +540,7 @@ TimeProfiler >> selectedClass [
 		ifNotNil: [ :currNode | currNode methodClass ]
 ]
 
-{ #category : #'accessing-computed' }
+{ #category : #'accessing - computed' }
 TimeProfiler >> selectedMethodCode [
 	| node method |
 	node := self selectedNode.
@@ -575,12 +575,12 @@ TimeProfiler >> selection: aSelection [
 
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> selectionInterval [
 	^ 1 to: 0
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> shoutAboutToStyle: aPluggableShoutMorphOrView [ 
 	self selectedNode
 		ifNotNil: [ :currNode | 
@@ -595,12 +595,12 @@ TimeProfiler >> shoutAboutToStyle: aPluggableShoutMorphOrView [
 
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> showLeavesOnly [ 
 	^ showLeavesOnly ifNil: [showLeavesOnly := false]
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> showLeavesOnly: aBoolean [
 	self showLeavesOnly ~= aBoolean
 		ifFalse: [ ^ self ].
@@ -614,7 +614,7 @@ TimeProfiler >> showLeavesOnly: aBoolean [
 	self updateList
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> showResult: anObject [
 	self result: anObject.
 	resultPane
@@ -649,13 +649,13 @@ TimeProfiler >> startMinPercentageToExpand [
 	^ 20
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> startState [
 	treeMorph expandAllSuchThat: [:node | node percentage > self startMinPercentageToExpand]
 	
 ]
 
-{ #category : #'accessing-computed' }
+{ #category : #'accessing - computed' }
 TimeProfiler >> summaryText [
 	^ String streamContents: [:strm | rootMessageTally 
 		ifNotNil: [rootMessageTally time > 0 
@@ -693,7 +693,7 @@ TimeProfiler >> time [
 	^ rootMessageTally time
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> toolBarOn: aWindow [
 	| uiTheme toolBar |
 	uiTheme :=self theme.
@@ -767,7 +767,7 @@ TimeProfiler >> toolName [
 	^ 'Time profiler'
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> treeMorph [
 	^ (self treeMorphClass on: self)
 		rowInset: 2;
@@ -784,12 +784,12 @@ TimeProfiler >> treeMorph [
 
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> whatToShow [
 	^ self showLeavesOnly ifTrue: [#'Leaves'] ifFalse: [#'Full tree']
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> whatToShow: aSymbol [
 	self showLeavesOnly: aSymbol = #'Leaves'
 ]
@@ -799,22 +799,22 @@ TimeProfiler >> whatToShowList [
 	^ #(#'Full tree' #'Leaves')
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> withBlockCodePane [
 	^ withBlockCodePane ifNil: [withBlockCodePane := true]
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> withBlockCodePane: aBoolean [
 	withBlockCodePane := aBoolean
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> withToolBar [
 	^ withToolBar ifNil: [withToolBar := true]
 ]
 
-{ #category : #'UI specific' }
+{ #category : #'ui specific' }
 TimeProfiler >> withToolBar: aBoolean [
 	withToolBar := aBoolean
 ]

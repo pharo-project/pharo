@@ -8,7 +8,8 @@ Class {
 		'options',
 		'callingConvention',
 		'senderContext',
-		'uFFIEntryPointContext'
+		'uFFIEntryPointContext',
+		'fixedArgumentCount'
 	],
 	#classVars : [
 		'CalloutAPIClass'
@@ -96,6 +97,18 @@ FFICalloutAPI >> findUffiEnterContext [
 	^ uffiEnterContext
 ]
 
+{ #category : #accessing }
+FFICalloutAPI >> fixedArgumentCount [
+
+	^ fixedArgumentCount
+]
+
+{ #category : #accessing }
+FFICalloutAPI >> fixedArgumentCount: anObject [
+
+	fixedArgumentCount := anObject
+]
+
 { #category : #action }
 FFICalloutAPI >> function: functionSignature library: moduleNameOrLibrary [
 	| sender ffiMethod ffiMethodSelector |
@@ -106,6 +119,7 @@ FFICalloutAPI >> function: functionSignature library: moduleNameOrLibrary [
 			builder
 				signature: functionSignature;
 				sender: sender;
+				fixedArgumentCount: fixedArgumentCount;
 				library: moduleNameOrLibrary ].
 	ffiMethod
 		selector: sender selector;
@@ -129,8 +143,11 @@ FFICalloutAPI >> function: aCollection module: aClass [
 
 { #category : #initialization }
 FFICalloutAPI >> initialize [
+
 	callingConvention := #cdecl.
 	options := #().
+	fixedArgumentCount := 0.
+
 	super initialize
 ]
 
@@ -151,7 +168,7 @@ FFICalloutAPI >> newBuilder [
 	^ FFICalloutMethodBuilder calloutAPI: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 FFICalloutAPI >> newCallbackWithSignature: signature block: aBlock library: aLibrary [
 
 	^ (FFICallback signature: signature block: aBlock)

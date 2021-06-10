@@ -15,6 +15,11 @@ RBProgramNodeVisitor class >> isAbstract [
 	^ self == RBProgramNodeVisitor
 ]
 
+{ #category : #API }
+RBProgramNodeVisitor >> visit: aRBMessageNode [ 
+	^ aRBMessageNode acceptVisitor: self
+]
+
 { #category : #visiting }
 RBProgramNodeVisitor >> visitArgumentNode: anArgumentNode [
 	"Sent *each time* an argument node is found"

@@ -21,6 +21,11 @@ Class {
 	#category : #'AST-Core-Visitors'
 }
 
+{ #category : #accessing }
+RBDumpVisitor >> contents [
+	^ stream contents
+]
+
 { #category : #initialization }
 RBDumpVisitor >> initialize [
 	stream := String new writeStream

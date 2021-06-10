@@ -42,7 +42,7 @@ SelfPropagatingLinkDemo >> link [
 		arguments: #(methodToExecute)]
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 SelfPropagatingLinkDemo >> methodsvisited [
 	^ methodsvisited
 ]

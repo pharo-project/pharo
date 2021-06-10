@@ -64,7 +64,7 @@ Finder >> classSearch: aSelectBlock [
 	^ result
 ]
 
-{ #category : #'private-class' }
+{ #category : #'private - class' }
 Finder >> computeListOfClasses: aString [
 	"Compute in the case I'm searching class names"
 		
@@ -77,12 +77,12 @@ Finder >> computeListOfClasses: aString [
 				class name includesSubstring: aString caseSensitive: false ]]
 ]
 
-{ #category : #'private-example' }
+{ #category : #'private - example' }
 Finder >> computeWithMethodFinder: aString [
 	"Compute the selectors for the single example of receiver and args, in the very top pane"
 
-	| data result resultArray dataObjects |
-(aString includes: $.)
+	| data result dataObjects |
+	(aString includes: $.)
 		ifFalse: [ ^ #() ].	"delete trailing period. This should be fixed in the Parser!"
 	data := aString trimRight: [ :char | char isSeparator or: [ char = $. ] ].
 
@@ -102,12 +102,10 @@ Finder >> computeWithMethodFinder: aString [
 		
 	result := MethodFinder new findMethodsByExampleInput: dataObjects allButLast andExpectedResult: dataObjects last.
 	result isEmpty ifTrue: [ self inform: 'no single method'. ^ #()].
-	
-	resultArray := result collect: [ :send | send asString , ' --> ', dataObjects last asString. ].
-	^ resultArray.
+	^ result.
 ]
 
-{ #category : #'private-class' }
+{ #category : #'private - class' }
 Finder >> constructClassNamesDictionary [
 	"Construct the dictionary in the case I'm searching in class names"
 	
@@ -139,7 +137,7 @@ Finder >> constructDictionary [
 	] asJob run
 ]
 
-{ #category : #'private-selector' }
+{ #category : #'private - selector' }
 Finder >> constructDictionaryWithMessagesNameSearch: aString [
 	"Construct dictionary when searching for selector"
 	
@@ -155,21 +153,21 @@ Finder >> constructDictionaryWithMessagesNameSearch: aString [
 	self resultDictionary: result
 ]
 
-{ #category : #'private-example' }
+{ #category : #'private - example' }
 Finder >> constructDictionaryWithMethodFinder: aString [
 	"construct dictionary when searching patterns"
 
-	| result listOfStrings listOfSelectors |
+	| result listOfResults listOfSelectors |
 	result := Dictionary new.
-	listOfStrings := self computeWithMethodFinder: aString.
-	listOfSelectors := listOfStrings collect: [ :each | self findSelector: each ].
+	listOfResults := self computeWithMethodFinder: aString.
+	listOfSelectors := listOfResults collect: [ :each | each selector ].
 	self packagesSelection classesDo:[ :class | 
 			class methodsDo:  [ :method | 
 					| index |
 					(index := listOfSelectors indexOf: method selector) = 0
 						ifFalse: [ 
 							| key value |
-							key := listOfStrings at: index.
+							key := listOfResults at: index.
 							value := method methodClass.
 							(result includesKey: key)
 								ifTrue: [ (result at: key) add: value ]
@@ -183,7 +181,7 @@ Finder >> constructDictionaryWithMethodFinder: aString [
 	self resultDictionary: result
 ]
 
-{ #category : #'private-pragma' }
+{ #category : #'private - pragma' }
 Finder >> constructDictionaryWithPragmaSearch: aString [ 
 	"construct dictionary when searching for pragmas"
 	
@@ -281,20 +279,6 @@ Finder >> environment: aCollection [
 	 environment := aCollection
 ]
 
-{ #category : #private }
-Finder >> findSelector: aString [
-	"Answer the selector of aString."
-
-	| example tokens |
-	example := aString.
-	tokens := example parseLiterals.
-	tokens size = 1 ifTrue: [^ tokens first].
-	tokens first == #'^' ifTrue: [^ nil].
-	(tokens second includes: $:) ifTrue: [^ example findSelector].
-	Symbol hasInterned: tokens second ifTrue: [:aSymbol | ^ aSymbol].
-	^ nil
-]
-
 { #category : #initialization }
 Finder >> initialize [
 	super initialize.
@@ -337,7 +321,7 @@ Finder >> isSourceSymbol [
 	^self currentSearchMode = #Source
 ]
 
-{ #category : #'private-selector' }
+{ #category : #'private - selector' }
 Finder >> messageSearchBlockFrom: aString [
 	| exactMatch |
 	exactMatch := aString first = $" and: [ aString last = $" ].
@@ -347,7 +331,7 @@ Finder >> messageSearchBlockFrom: aString [
 	^ (Symbol findInterned: (aString copyFrom: 2 to: aString size - 1)) ifNotNil: [ :aSymbol | [ :method | method selector = aSymbol ] ]
 ]
 
-{ #category : #'private-selector' }
+{ #category : #'private - selector' }
 Finder >> messagesNameSearch: aString [
 	"I'm searching for selectors"
 	^ self useRegEx
@@ -394,7 +378,7 @@ Finder >> packagesSelection: aCollection [
 	self constructDictionary
 ]
 
-{ #category : #'private-pragma' }
+{ #category : #'private - pragma' }
 Finder >> pragmaSearch: aString [ 
 	| result byCondition |
 	"I choose a dictionary here because the next step is to group result by pragmas."

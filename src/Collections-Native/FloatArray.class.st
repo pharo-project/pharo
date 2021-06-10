@@ -24,7 +24,8 @@ FloatArray >> = aFloatArray [
 
 { #category : #adding }
 FloatArray >> addAssignToFloatArray: aFloatArray [
-	^ self primAddArray: aFloatArray
+
+	^ aFloatArray primAddArray: self
 ]
 
 { #category : #converting }
@@ -75,56 +76,56 @@ FloatArray >> hash [
 	^result bitAnd: 16r1FFFFFFF
 ]
 
-{ #category : #'primitives-plugin' }
+{ #category : #'primitives - plugin' }
 FloatArray >> primAddArray: floatArray [
 
 	<primitive: 'primitiveAddFloatArray' module: 'FloatArrayPlugin'>
 	1 to: self size do:[:i| self at: i put: (self at: i) + (floatArray at: i)].
 ]
 
-{ #category : #'primitives-plugin' }
+{ #category : #'primitives - plugin' }
 FloatArray >> primAddScalar: scalarValue [
 
 	<primitive: 'primitiveAddScalar' module: 'FloatArrayPlugin'>
 	1 to: self size do:[:i| self at: i put: (self at: i) + scalarValue].
 ]
 
-{ #category : #'primitives-plugin' }
+{ #category : #'primitives - plugin' }
 FloatArray >> primDivArray: floatArray [
 
 	<primitive: 'primitiveDivFloatArray' module: 'FloatArrayPlugin'>
 	1 to: self size do:[:i| self at: i put: (self at: i) / (floatArray at: i)].
 ]
 
-{ #category : #'primitives-plugin' }
+{ #category : #'primitives - plugin' }
 FloatArray >> primDivScalar: scalarValue [
 
 	<primitive: 'primitiveDivScalar' module: 'FloatArrayPlugin'>
 	1 to: self size do:[:i| self at: i put: (self at: i) / scalarValue].
 ]
 
-{ #category : #'primitives-plugin' }
+{ #category : #'primitives - plugin' }
 FloatArray >> primMulArray: floatArray [
 
 	<primitive: 'primitiveMulFloatArray' module: 'FloatArrayPlugin'>
 	1 to: self size do:[:i| self at: i put: (self at: i) * (floatArray at: i)].
 ]
 
-{ #category : #'primitives-plugin' }
+{ #category : #'primitives - plugin' }
 FloatArray >> primMulScalar: scalarValue [
 
 	<primitive: 'primitiveMulScalar' module: 'FloatArrayPlugin'>
 	1 to: self size do:[:i| self at: i put: (self at: i) * scalarValue].
 ]
 
-{ #category : #'primitives-plugin' }
+{ #category : #'primitives - plugin' }
 FloatArray >> primSubArray: floatArray [
 
 	<primitive: 'primitiveSubFloatArray' module: 'FloatArrayPlugin'>
 	1 to: self size do:[:i| self at: i put: (self at: i) - (floatArray at: i)].
 ]
 
-{ #category : #'primitives-plugin' }
+{ #category : #'primitives - plugin' }
 FloatArray >> primSubScalar: scalarValue [
 
 	<primitive: 'primitiveSubScalar' module: 'FloatArrayPlugin'>
@@ -138,7 +139,7 @@ FloatArray >> replaceFrom: start to: stop with: replacement startingAt: repStart
 	super replaceFrom: start to: stop with: replacement startingAt: repStart
 ]
 
-{ #category : #'primitives-plugin' }
+{ #category : #'primitives - plugin' }
 FloatArray >> sum [
 
 	<primitive: 'primitiveSum' module: 'FloatArrayPlugin'>

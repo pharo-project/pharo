@@ -51,6 +51,12 @@ Class {
 }
 
 { #category : #testing }
+MicListBlock class >> isAbstract [
+
+	^ self == MicListBlock
+]
+
+{ #category : #testing }
 MicListBlock >> addLineAndReturnNextNode: inLine [
 	"Create a new item, and insert it into me.
 	line is on the format 'markup text'"

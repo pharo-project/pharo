@@ -96,7 +96,7 @@ TransferMorph >> defaultColor [
 	^ self theme selectionColor
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 TransferMorph >> delete [
 	"See also >>justDroppedInto:event:."
 	accepted ifFalse: [

@@ -21,6 +21,7 @@ KMShortcutPrinterTest class >> testParameters [
 
 	^ super testParameters
 		"linux"
+		addCase: { #platform -> UnixPlatform new. #shortcut -> $n meta. #result -> 'Ctrl+N' };
 		addCase: { #platform -> UnixPlatform new. #shortcut -> $n command. #result -> 'Cmd+N' };
 		addCase: { #platform -> UnixPlatform new. #shortcut -> $n control. #result -> 'Ctrl+N' };
 		addCase: { #platform -> UnixPlatform new. #shortcut -> $n alt. #result -> 'Alt+N' };
@@ -34,6 +35,7 @@ KMShortcutPrinterTest class >> testParameters [
 			#shortcut -> Character cr shift. 
 			#result -> 'Shift+Enter' };
 		"windows"
+		addCase: { #platform -> WinPlatform new. #shortcut -> $n meta. #result -> 'Ctrl+N' };
 		addCase: { #platform -> WinPlatform new. #shortcut -> $n command. #result -> 'Cmd+N' };
 		addCase: { #platform -> WinPlatform new. #shortcut -> $n control. #result -> 'Ctrl+N' };
 		addCase: { #platform -> WinPlatform new. #shortcut -> $n alt. #result -> 'Alt+N' };
@@ -102,9 +104,17 @@ KMShortcutPrinterTest >> shortcut: anObject [
 KMShortcutPrinterTest >> testPrintShortcut [
 	| printed |
 
-	printed := platform accept: (KMShortcutPrinter new
-		shortcut: shortcut;
-		yourself).
-
+	printed := shortcut acceptVisitor: platform shortcutPrinter.
 	self assert: printed equals: result
+]
+
+{ #category : #tests }
+KMShortcutPrinterTest >> testSingleKeyCombinationIsPrintedWithoutSeparators [
+	| printed |
+
+	printed := Character arrowLeft asKeyCombination acceptVisitor: platform shortcutPrinter.
+	self assert: printed equals: 'LEFT'.
+	
+	printed := Character arrowRight asKeyCombination acceptVisitor: platform shortcutPrinter.
+	self assert: printed equals: 'RIGHT'
 ]

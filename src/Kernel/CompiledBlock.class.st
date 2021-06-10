@@ -15,6 +15,11 @@ Class {
 	#category : #'Kernel-Methods'
 }
 
+{ #category : #printing }
+CompiledBlock >> displayStringOn: stream [
+	self printOn: stream
+]
+
 { #category : #accessing }
 CompiledBlock >> endPC [
 	"Answer the index of the last bytecode."
@@ -179,4 +184,14 @@ CompiledBlock >> sourceCode [
 { #category : #'source code management' }
 CompiledBlock >> sourcePointer [
 	^self outerCode sourcePointer
+]
+
+{ #category : #'debugger support' }
+CompiledBlock >> stepIntoQuickMethods [
+	^self method stepIntoQuickMethods
+]
+
+{ #category : #'debugger support' }
+CompiledBlock >> stepIntoQuickMethods: aBoolean [
+	^self method stepIntoQuickMethods: aBoolean
 ]

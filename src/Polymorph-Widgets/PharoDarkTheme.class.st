@@ -89,17 +89,33 @@ PharoDarkTheme >> buttonColor [
 	^ self backgroundColor lighter lighter
 ]
 
+{ #category : #'fill-styles-buttons' }
+PharoDarkTheme >> buttonDisabledBorderStyleFor: aButton [
+	"Return the disabled button fillStyle for the given color."
+
+	^ BorderStyle
+		width: 0
+		color: Color transparent
+]
+
+{ #category : #'fill-styles-buttons' }
+PharoDarkTheme >> buttonDisabledFillStyleFor: aButton [
+	"Return the disabled button fillStyle for the given color."
+
+	^ SolidFillStyle color: Color transparent
+]
+
 { #category : #'border-styles-buttons' }
 PharoDarkTheme >> buttonNormalBorderStyleFor: aButton [
 	"Return the normal button borderStyle for the given button."
 	
 	(aButton valueOfProperty: #noBorder ifAbsent: [ false ]) 
 		ifTrue: [ 
-			^ SimpleBorder new 
+			^ SimpleBorderStyle new 
 				width: 0; 
 				baseColor: Color transparent ].
 	
-	^ SimpleBorder new
+	^ SimpleBorderStyle new
 		width: 1;
 		baseColor: self buttonColor lighter
 ]
@@ -167,7 +183,7 @@ PharoDarkTheme >> configureTextMorph: textMorph [
 PharoDarkTheme >> configureWindowBorderFor: aWindow [
 
 	| aStyle |
-	aStyle := SimpleBorder new 
+	aStyle := SimpleBorderStyle new 
 					color: self borderColor;
 					width: 1.
 	aWindow borderStyle: aStyle
@@ -268,6 +284,17 @@ PharoDarkTheme >> initialize [
 	super initialize.
 	self windowActiveDropShadowStyle: #diffuse.
 	self settings preferGradientFill: false.
+]
+
+{ #category : #'label-styles' }
+PharoDarkTheme >> labelDisabledColorFor: aLabel [
+	"Answer the color to use for a label when disabled."
+
+	^aLabel owner
+		ifNil: [aLabel paneColor muchDarker]
+		ifNotNil: [aLabel owner color isTransparent
+			ifTrue: [ aLabel owner paneColor muchLighter ]
+			ifFalse: [ aLabel owner color muchLighter ] ]
 ]
 
 { #category : #'accessing colors' }
@@ -413,7 +440,7 @@ PharoDarkTheme >> taskbarItemLabelColorForExpanded: aButton [
 
 { #category : #'border-styles-taskbar' }
 PharoDarkTheme >> taskbarItemMouseOverBorderStyleFor: aButton [
-	^ BottomBorder new
+	^ BottomBorderStyle new
 		color: Color white;
 		width: 2;
 		yourself
@@ -426,7 +453,7 @@ PharoDarkTheme >> taskbarItemMouseOverFillStyleFor: aButton [
 
 { #category : #'border-styles-taskbar' }
 PharoDarkTheme >> taskbarItemNormalBorderStyleFor: aButton [
-	^ BottomBorder new
+	^ BottomBorderStyle new
 		color: Color white;
 		width: 1;
 		trimSize: 2;

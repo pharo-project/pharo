@@ -160,6 +160,13 @@ GLMTransmission >> destination: aPort [
 	destination := aPort
 ]
 
+{ #category : #printing }
+GLMTransmission >> displayStringOn: stream [
+	self origins asArray displayStringOn: stream.
+	stream nextPutAll: '->'.
+	self destination displayStringOn: stream
+]
+
 { #category : #accessing }
 GLMTransmission >> ensurePresentIfNoneStrategy [
 	self transmissionStrategy class = GLMPresentIfNoneStrategy ifFalse: [
@@ -242,7 +249,7 @@ GLMTransmission >> meetsCondition [
 	^ self condition glamourValue: originValues
 ]
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 GLMTransmission >> originReferences [
 	"Returns the set of ports (instances of PortReference) the transmission receives its data from"
 	^ origins ifNil: [origins := OrderedCollection new]

@@ -138,7 +138,7 @@ FLBufferedWriteStream >> nextBytesPutAll: collection [
 		ifFalse: [
 			self flushBuffer.
 			collection size > (self buffer size / 2)
-				ifTrue: [ stream nextPutAll: collection ]
+				ifTrue: [ stream nextBytesPutAll: collection ]
 				ifFalse: [ self nextBytesPutAll: collection ] ]
 
 ]

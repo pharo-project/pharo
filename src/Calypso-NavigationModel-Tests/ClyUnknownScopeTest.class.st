@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyUnknownScopeTest,
-	#superclass : #ClyScopeTestCase,
+	#superclass : #ClyScopeTest,
 	#category : #'Calypso-NavigationModel-Tests'
 }
 
@@ -13,7 +13,7 @@ ClyUnknownScopeTest >> createSampleScope [
 ClyUnknownScopeTest >> testAdoptQuery [
 	| query adoptedQuery |
 	scope := self createSampleScope.
-	query := ClyQueryExampleReturningScopeBasis new.
+	query := ClyReturningScopeBasisExampleQuery new.
 
 	adoptedQuery := scope adoptQuery: query.
 
@@ -25,7 +25,7 @@ ClyUnknownScopeTest >> testConvertingToAnotherScopeClass [
 	| convertedScope |
 	scope := self createSampleScope.
 
-	convertedScope := scope asScope: ClyScopeExample.
+	convertedScope := scope asScope: ClyExampleScope.
 
 	self assert: convertedScope identicalTo: scope
 ]

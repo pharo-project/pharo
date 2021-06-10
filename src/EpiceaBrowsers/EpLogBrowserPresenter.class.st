@@ -32,15 +32,21 @@ EpLogBrowserPresenter class >> defaultLog [
 
 { #category : #specs }
 EpLogBrowserPresenter class >> defaultSpec [
-	^ SpPanedLayout newVertical
-		position: 0.6;
-		add: #itemsPresenter;
-		add:
-			(SpBoxLayout newVertical
-				add: #toolbarPresenter expand: false fill: false padding: 2;
-				add: #entryContentPresenter expand: true fill: true padding: 2;
-				yourself);
-		yourself
+
+	^ SpPanedLayout newTopToBottom
+		  positionOfSlider: 0.6;
+		  add: #itemsPresenter;
+		  add: (SpBoxLayout newTopToBottom
+				   add: #toolbarPresenter
+				   expand: false
+				   fill: false
+				   padding: 2;
+				   add: #entryContentPresenter
+				   expand: true
+				   fill: true
+				   padding: 2;
+				   yourself);
+		  yourself
 ]
 
 { #category : #'instance creation' }
@@ -96,10 +102,10 @@ EpLogBrowserPresenter >> addMenuItemsForSelectedItemsIn: aMenu [
 	aMenu addGroup: [ :aGroup | 
 		aGroup addItem: [ :anItem | 
 			anItem
-				name: 'File Out';
+				name: 'Write Ombu file';
 				description: 'Write selected entries to an Ombu file';
 				icon: (self iconNamed: #smallSaveAsIcon);
-				action: [ self fileOutSelection ] ] ].
+				action: [ self ombuFileSaveSelection ] ] ].
 
 ]
 
@@ -312,15 +318,6 @@ EpLogBrowserPresenter >> eventsMenuActions [
 		$c command }.
 	}
 
-]
-
-{ #category : #'menu - operations' }
-EpLogBrowserPresenter >> fileOutSelection [
-
-	| entries |
-	entries := self selectedEntryItems collect: [ :each | each entry ].
-	
-	EpOmbuExporter askFileNameAndFileOut: entries in: FileLocator workingDirectory.
 ]
 
 { #category : #'menu - filters' }
@@ -665,6 +662,15 @@ EpLogBrowserPresenter >> newItemForEntryReference: entryReference [
 		entry: entry;
 		triggerItems: triggers;
 		yourself
+]
+
+{ #category : #'menu - operations' }
+EpLogBrowserPresenter >> ombuFileSaveSelection [
+
+	| entries |
+	entries := self selectedEntryItems collect: [ :each | each entry ].
+	
+	EpOmbuExporter askFileNameAndFileOut: entries in: FileLocator workingDirectory.
 ]
 
 { #category : #'menu - operations' }

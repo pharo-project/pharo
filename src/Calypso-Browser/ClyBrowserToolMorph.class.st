@@ -225,7 +225,7 @@ ClyBrowserToolMorph >> applyDecorations [
 ClyBrowserToolMorph >> attachToSystem [
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ClyBrowserToolMorph >> backgroundColor [
 	
 	^ containerTab backgroundColor
@@ -532,8 +532,7 @@ ClyBrowserToolMorph >> selectAsExtraTab [
 { #category : #controlling }
 ClyBrowserToolMorph >> selectAsMainTab [
 
-	containerTab selected: true
-
+	containerTab addToSelection
 ]
 
 { #category : #initialization }

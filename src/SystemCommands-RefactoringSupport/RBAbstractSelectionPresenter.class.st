@@ -26,20 +26,25 @@ RBAbstractSelectionPresenter class >> defaultSpec [
 ]
 
 { #category : #specs }
-RBAbstractSelectionPresenter class >> label: aString dropLabel: aString2 withItems: coll1 selecting: coll2 dropItems: coll3 acceptBlock: aBlock [
+RBAbstractSelectionPresenter class >> label: aString dropLabel: aString2 withItems: items selecting: selectedItems dropItems: dropItems acceptBlock: aBlock [
 	^ self new 
 		label: aString
 		dropLabel: aString2
-		withItems: coll1
-		selecting: coll2
-		dropItems: coll3
+		withItems: items
+		selecting: selectedItems
+		dropItems: dropItems
 		acceptBlock: aBlock;
-		openModalWithSpec
+		openBlockedDialogWithSpec
 ]
 
 { #category : #actions }
 RBAbstractSelectionPresenter >> accept [
-	acceptBlock value: self selectedItem value: selectedItems
+	acceptBlock value: self selectedItem value: table selectedItems
+]
+
+{ #category : #accessing }
+RBAbstractSelectionPresenter >> components [ 
+	^ super components , { dropList . dropLabel }
 ]
 
 { #category : #initialization }
@@ -58,10 +63,10 @@ RBAbstractSelectionPresenter >> initializeWidgets [
 ]
 
 { #category : #initialization }
-RBAbstractSelectionPresenter >> label: aString dropLabel: aString2 withItems: coll1 selecting: coll2 dropItems: coll3 acceptBlock: aBlock [
-	self label: aString withItems: coll1 selecting: coll2.
-	dropLabel label: aString2.
-	dropList items: coll3.
+RBAbstractSelectionPresenter >> label: aString dropLabel: dropString withItems: items selecting: selItems dropItems: dropItems acceptBlock: aBlock [
+	self label: aString withItems: items selecting: selItems.
+	dropLabel label: dropString.
+	dropList items: dropItems.
 	acceptBlock := aBlock.
 	
 ]

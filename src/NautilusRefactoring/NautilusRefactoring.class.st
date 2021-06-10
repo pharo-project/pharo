@@ -33,9 +33,13 @@ NautilusRefactoring >> chooseFrom: anArray title: aString lines: aCollection [
 ]
 
 { #category : #display }
-NautilusRefactoring >> handleMethodNameRequest: aMethodName in: ref [
+NautilusRefactoring >> handleMethodNameRequest: aMethodName [
 	|dialog|
-	dialog := SycMethodNameEditorPresenter openOn: aMethodName withRefactoring: ref.
+	dialog := SycMethodNameEditorPresenter 
+		openOn: aMethodName 
+		canRenameArgs: false 
+		canRemoveArgs: false 
+		canAddArgs: false.
 	dialog cancelled ifTrue: [  CmdCommandAborted signal ].
 	^ aMethodName
 ]
@@ -62,7 +66,7 @@ NautilusRefactoring >> refactoringOptions: aRefactoring [
 		setOption: #implementorToInline
 		toUse: [ :ref :imps | self requestImplementorToInline: imps ];
 		setOption: #methodName
-		toUse: [ :ref :name | self requestMethodNameFor: name in: ref ];
+		toUse: [ :name | self requestMethodNameFor: name ];
 		setOption: #selfArgumentName
 		toUse: [ :ref | self requestSelfArgumentName ];
 		setOption: #selectVariableToMoveTo
@@ -76,7 +80,9 @@ NautilusRefactoring >> refactoringOptions: aRefactoring [
 		setOption: #alreadyDefined
 		toUse: [ :ref :class :selector | self shouldOverride: selector in: class ];
 		setOption: #useExistingMethod
-		toUse: [ :ref :selector | self shouldUseExistingMethod: selector ]
+		toUse: [ :ref :selector | self shouldUseExistingMethod: selector ];
+		setOption: #searchInWholeHierarchy
+		toUse: [ :ref :class | self shouldSearchInHierarchy: class ]
 ]
 
 { #category : #display }
@@ -100,8 +106,8 @@ NautilusRefactoring >> requestImplementorToInline: imps [
 ]
 
 { #category : #option }
-NautilusRefactoring >> requestMethodNameFor: aMethodName in: ref [
-	^ self handleMethodNameRequest: aMethodName in: ref
+NautilusRefactoring >> requestMethodNameFor: aMethodName [
+	^ self handleMethodNameRequest: aMethodName
 ]
 
 { #category : #option }
@@ -156,6 +162,16 @@ NautilusRefactoring >> shouldInlineExpression: aString [
 { #category : #option }
 NautilusRefactoring >> shouldOverride: aSelector in: aClass [ 
 	^ self confirm: ('<1s> is already defined in the <2p> hierarchy. Extracting it to an existing selector may change behavior. Do you wish to use <1s> anyway?' expandMacrosWith: aSelector with: aClass)
+]
+
+{ #category : #option }
+NautilusRefactoring >> shouldSearchInHierarchy: class [
+	^ class subclasses 
+		ifNotEmpty: [ 
+			UIManager default 
+				confirm: 'Do you want to search occurrences in the whole hierarchy?'
+				label: 'Warning'
+		] ifEmpty: [ false ]
 ]
 
 { #category : #option }

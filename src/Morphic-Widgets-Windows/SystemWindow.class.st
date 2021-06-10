@@ -869,7 +869,7 @@ SystemWindow >> createBox [
 	"Transcript show: self paneColor asString;  
 	cr."
 	| box |
-	box := IconicButton new.
+	box := IconicButtonMorph new.
 	box color: Color transparent;
 		 target: self;
 		 useSquareCorners;

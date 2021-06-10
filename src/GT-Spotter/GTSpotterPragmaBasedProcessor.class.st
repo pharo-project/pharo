@@ -15,21 +15,21 @@ Class {
 	#category : #'GT-Spotter-Pragma-Based-Processors'
 }
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTSpotterPragmaBasedProcessor class >> defaultItemsLimit [
 
 	^ DefaultItemsLimit ifNil: [ DefaultItemsLimit := 25 ]
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTSpotterPragmaBasedProcessor class >> defaultItemsLimit: aValue [
 
 	DefaultItemsLimit := aValue
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTSpotterPragmaBasedProcessor class >> settingsOn: aBuilder [
-	<systemsettings>
+	"<systemsettings>
 
 	(aBuilder setting: #defaultItemsLimit)
 		target: self;
@@ -38,7 +38,7 @@ GTSpotterPragmaBasedProcessor class >> settingsOn: aBuilder [
 		default: 25;
 		order: 100;
 		description:
-			'Number of results per category to show in Spotter'
+			'Number of results per category to show in Spotter'"
 ]
 
 { #category : #public }
@@ -61,6 +61,13 @@ GTSpotterPragmaBasedProcessor >> continueFilterInContext: aSpotterContext [
 	aSpotterContext stream 
 		performSymbol: #onAmountChanged:in:
 		withArguments: { self allFilteredCandidates size . self }
+]
+
+{ #category : #printing }
+GTSpotterPragmaBasedProcessor >> displayStringOn: stream [
+	stream 
+		nextPutAll: 'Processor: ';
+		nextPutAll: self title asString
 ]
 
 { #category : #private }

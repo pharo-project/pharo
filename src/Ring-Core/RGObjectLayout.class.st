@@ -4,7 +4,7 @@ Class {
 	#category : #'Ring-Core-Kernel'
 }
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGObjectLayout >> isObjectLayout [
 
 	^ true

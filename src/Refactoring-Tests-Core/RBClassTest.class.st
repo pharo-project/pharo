@@ -2,6 +2,7 @@ Class {
 	#name : #RBClassTest,
 	#superclass : #RBRefactoringBrowserTest,
 	#instVars : [
+		'rbNamespace',
 		'objectClass',
 		'newClass',
 		'messageNodeClass'
@@ -11,17 +12,16 @@ Class {
 
 { #category : #running }
 RBClassTest >> setUp [
-	| st |
 	super setUp.
-	st := RBClassModelFactory rbNamespace new.
-	objectClass := st classNamed: #Object.
-	messageNodeClass := st classNamed: #RBMessageNode.
-	st defineClass: 'Object subclass: #SomeClassName
+	rbNamespace := RBClassModelFactory rbNamespace new.
+	objectClass := rbNamespace classNamed: #Object.
+	messageNodeClass := rbNamespace classNamed: #RBMessageNode.
+	rbNamespace defineClass: 'Object subclass: #SomeClassName
 	instanceVariableNames: ''instanceVariable1 instanceVariable2''
 	classVariableNames: ''ClassVariable1''
 	poolDictionaries: ''TextConstants''
 	category: #''Refactory-Testing'''.
-	newClass := st classNamed: #SomeClassName
+	newClass := rbNamespace classNamed: #SomeClassName
 ]
 
 { #category : #'method tests' }
@@ -57,6 +57,22 @@ RBClassTest >> testDefinesPoolDictionary [
 	self deny: (messageNodeClass definesPoolDictionary: #OpcodePool).
 	self assert: ((RBClassModelFactory rbNamespace new classNamed: #Text) 
 				definesPoolDictionary: #TextConstants)
+]
+
+{ #category : #'method tests' }
+RBClassTest >> testDefinesTraitMethod [
+	| user trait |
+	user := rbNamespace classNamed: #MOPTestClassD.
+	self assert: (user definesMethod: #c3).
+	self assert: (user definesMethod: #c).
+	self assert: (user definesMethod: #c2).
+	self assert: (user methodFor: #c2) modelClass ~= user.
+	self assert: (user methodFor: #c) modelClass ~= user.
+	self assert: (user methodFor: #c3) isNil. "we use nil to represent alias"
+	trait := rbNamespace classNamed: #Trait2.
+	self assert: (user methodFor: #c2) modelClass equals: trait.
+	self assert: (user methodFor: #c) modelClass equals: trait.
+	
 ]
 
 { #category : #'method tests' }

@@ -360,7 +360,10 @@ RubSmalltalkEditor >> completionAround: aBlock keyDown: anEvent [
 	
 	(completionEngine handleKeyDownBefore: anEvent editor: self) ifTrue:  [^ self ].
 	
-	aBlock value
+	aBlock value.
+	
+	completionEngine handleKeyDownAfter: anEvent editor: self
+
 ]
 
 { #category : #'completion engine' }
@@ -446,8 +449,8 @@ RubSmalltalkEditor >> copySelection [
 		"The node, if a comment or a string, should entirely contain the selection.
 		We convert the node source interval to an open interval to ignore the node delimiters."
 		node sourceInterval asOpenInterval includesAll: self selectionInterval ])
-		ifTrue: [ self unescapeCharacter: escapingCharacter inString:  self selection ]
-		ifFalse: [ self selection ].
+			ifTrue: [ self selection asString unescapeCharacter: escapingCharacter ]
+			ifFalse: [ self selection asString ].
 	self clipboardTextPut: selection.
 	self editingState previousInterval: self selectionInterval.
 
@@ -461,11 +464,11 @@ RubSmalltalkEditor >> debug: aStream [
 			context := self model doItContext ]
 		ifFalse: [ receiver := context := nil ].
 	method := self compile: aStream for: receiver in: context.
+	method ifNil: [ ^self ].
 	method isReturnSpecial
 		ifTrue: [ self inform: 'Nothing to debug, the expression is optimized'.
 			^ self ].
-	method notNil
-		ifTrue: [ self debug: method receiver: receiver in: context ]
+	 self debug: method receiver: receiver in: context
 ]
 
 { #category : #'do-its' }
@@ -757,7 +760,6 @@ RubSmalltalkEditor >> implementorsOfIt [
 	"Open an implementors browser on the selected selector"
 
 	| aSelector |
-	"self lineSelectAndEmptyCheck: [^ self]."
 	(aSelector := self selectedSelector) ifNil: [^ textArea flash].
 	aSelector isCharacter ifTrue: [^ textArea flash].
 	self implementorsOf: aSelector
@@ -1162,7 +1164,6 @@ RubSmalltalkEditor >> sendersOfIt [
 	"Open a senders browser on the selected selector"
 
 	| selectedSelector syst |
-	"self lineSelectAndEmptyCheck: [ ^ self ]."
 	(selectedSelector := self selectedSelector) ifNil: [ ^ textArea flash ].
 	syst := self model interactionModel systemNavigation.
 	syst browseAllSendersOrUsersOf: selectedSelector

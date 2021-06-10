@@ -1050,11 +1050,10 @@ String >> deepCopy [
 	^self shallowCopy
 ]
 
-{ #category : #displaying }
+{ #category : #printing }
 String >> displayStringOn: aStream [
-	
+	"Make sure that this is not printOn: because we do not want to have multiple quotes."
 	aStream nextPutAll: self
-	
 ]
 
 { #category : #printing }
@@ -2552,6 +2551,23 @@ String >> uncapitalized [
 	answer := self copy.
 	answer at: 1 put: answer first asLowercase.
 	^ answer
+]
+
+{ #category : #converting }
+String >> unescapeCharacter: aCharacter [
+	"Unescape an escaped string. Assume the string has all occurrences of aCharacter are escaped. That is, they are in pairs.
+	This method returns a copy of the string replacing all pairs of aCharacter by a single appearance of it."
+	
+	"('''''' unescapeCharacter: $') >>> ''''"
+	"('''' unescapeCharacter: $') >>> ''"
+	
+	| result stream |
+	result := WriteStream with: ''.
+	stream := ReadStream on: self.
+	[ stream atEnd ] whileFalse: 
+			[ result nextPutAll: (stream upTo: aCharacter).
+			  stream peek ifNotNil: [result nextPut: stream next]].
+	^result contents
 ]
 
 { #category : #converting }

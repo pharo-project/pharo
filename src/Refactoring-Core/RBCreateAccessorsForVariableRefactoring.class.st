@@ -12,7 +12,8 @@ Class {
 		'getterMethod',
 		'setterMethod',
 		'classVariable',
-		'needsReturn'
+		'needsReturn',
+		'selector'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -46,6 +47,11 @@ RBCreateAccessorsForVariableRefactoring >> createGetterAccessor [
 ]
 
 { #category : #transforming }
+RBCreateAccessorsForVariableRefactoring >> createMatcher [ 
+	^ self parseTreeSearcherClass getterMethod: variableName
+]
+
+{ #category : #transforming }
 RBCreateAccessorsForVariableRefactoring >> createSetterAccessor [
 
 	setterMethod := self findSetterMethod.
@@ -54,19 +60,15 @@ RBCreateAccessorsForVariableRefactoring >> createSetterAccessor [
 
 { #category : #transforming }
 RBCreateAccessorsForVariableRefactoring >> defineGetterMethod [
-	| selector definingClass |
-	definingClass := self definingClass.
-	selector := self safeMethodNameFor: definingClass
-				basedOn: variableName asString.
-	definingClass 
-		compile: ('<1s><r><r><t>^ <2s>' expandMacrosWith: selector with: variableName)
+	self definingClass 
+		compile: ('<1s><r><r><t>^ <2s>' expandMacrosWith: self selector with: variableName)
 		classified: #(#accessing).
 	^selector
 ]
 
 { #category : #transforming }
 RBCreateAccessorsForVariableRefactoring >> defineSetterMethod [
-	| selector definingClass string |
+	| definingClass string |
 	definingClass := self definingClass.
 	string := self needsReturnForSetter 
 				ifTrue: ['<1s> anObject<r><r><t>^ <2s> := anObject']
@@ -79,26 +81,26 @@ RBCreateAccessorsForVariableRefactoring >> defineSetterMethod [
 	^selector
 ]
 
-{ #category : #'private-accessing' }
+{ #category : #'private - accessing' }
 RBCreateAccessorsForVariableRefactoring >> definingClass [
 	^ classVariable 
 		ifTrue: [ class classSide ]
 		ifFalse: [ class ]
 ]
 
-{ #category : #'private-accessing' }
+{ #category : #'private - accessing' }
 RBCreateAccessorsForVariableRefactoring >> findGetterMethod [
 	| definingClass matcher |
 	definingClass := self definingClass.
-	matcher := self parseTreeSearcherClass getterMethod: variableName.
+	matcher := self createMatcher.
 	^ self possibleGetterSelectors
-		detect: [ :each | 
+		detect: [ :each |
 			(self checkClass: definingClass selector: each using: matcher) notNil
 				and: [ (definingClass subclassRedefines: each) not ] ]
 		ifNone: [ nil ]
 ]
 
-{ #category : #'private-accessing' }
+{ #category : #'private - accessing' }
 RBCreateAccessorsForVariableRefactoring >> findSetterMethod [
 	| definingClass matcher |
 	definingClass := self definingClass.
@@ -112,12 +114,12 @@ RBCreateAccessorsForVariableRefactoring >> findSetterMethod [
 		ifNone: [ nil ]
 ]
 
-{ #category : #'private-accessing' }
+{ #category : #'private - accessing' }
 RBCreateAccessorsForVariableRefactoring >> getterMethod [
 	^getterMethod
 ]
 
-{ #category : #'private-accessing' }
+{ #category : #'private - accessing' }
 RBCreateAccessorsForVariableRefactoring >> methodsReferencingVariable [
 	^classVariable 
 		ifTrue: [self definingClass whichSelectorsReferToClassVariable: variableName]
@@ -127,19 +129,18 @@ RBCreateAccessorsForVariableRefactoring >> methodsReferencingVariable [
 
 { #category : #testing }
 RBCreateAccessorsForVariableRefactoring >> needsReturnForSetter [
-
 	needsReturn
 		ifNil:
 			[ needsReturn := self usesAssignmentOf: variableName in: class classVariable: classVariable ].
 	^ needsReturn
 ]
 
-{ #category : #'private-accessing' }
+{ #category : #'private - accessing' }
 RBCreateAccessorsForVariableRefactoring >> possibleGetterSelectors [
 	^self methodsReferencingVariable select: [:each | each numArgs == 0]
 ]
 
-{ #category : #'private-accessing' }
+{ #category : #'private - accessing' }
 RBCreateAccessorsForVariableRefactoring >> possibleSetterSelectors [
 	^self methodsReferencingVariable select: [:each | each numArgs == 1]
 ]
@@ -151,7 +152,14 @@ RBCreateAccessorsForVariableRefactoring >> preconditions [
 		ifFalse: [RBCondition definesInstanceVariable: variableName in: class]
 ]
 
-{ #category : #'private-accessing' }
+{ #category : #transforming }
+RBCreateAccessorsForVariableRefactoring >> selector [ 
+	^ selector ifNil: [ 
+		selector := self safeMethodNameFor: self definingClass
+				basedOn: variableName asString. ]
+]
+
+{ #category : #'private - accessing' }
 RBCreateAccessorsForVariableRefactoring >> setterMethod [
 	^setterMethod
 ]

@@ -12,21 +12,21 @@ OCUndeclaredVariableWarning >> declareClassVar [
 
 	self methodClass instanceSide
 		addClassVarNamed: node name asSymbol.
-	^ self lookUpVariable
+	(ReparseAfterSourceEditing new newSource: self requestor text) signal
 ]
 
 { #category : #correcting }
 OCUndeclaredVariableWarning >> declareGlobal [
 
 	Smalltalk at: node name asSymbol put: nil.
-	^self lookUpVariable
+	(ReparseAfterSourceEditing new newSource: self requestor text) signal
 ]
 
 { #category : #correcting }
 OCUndeclaredVariableWarning >> declareInstVar: name [
 	"Declare an instance variable."
 	self methodClass addInstVarNamed: name.
-	^ self lookUpVariable
+	(ReparseAfterSourceEditing new newSource: self requestor text) signal
 ]
 
 { #category : #correcting }
@@ -90,7 +90,7 @@ OCUndeclaredVariableWarning >> defaultAction [
 OCUndeclaredVariableWarning >> defineClass: className [ 
 	"Prompts the user to define a new class."
 	
-	| classSymbol systemCategory classDefinition |
+	| classSymbol systemCategory classDefinition classBinding |
 	classSymbol := className asSymbol.
 	systemCategory := self methodClass category
 		ifNil: [ 'Unknown' ].
@@ -108,8 +108,10 @@ OCUndeclaredVariableWarning >> defineClass: className [
 		source: classDefinition;
 		logged: true;
 		evaluate.
-	^ (node owningScope lookupVar: className)
-		ifNil: [self error: 'should be not happen']
+	classBinding := node owningScope lookupVar: className.
+	"make sure to recompile all methods referencing this class"
+	classBinding usingMethods do: [:method | method recompile].
+	^classBinding 
 ]
 
 { #category : #correcting }
@@ -135,12 +137,6 @@ OCUndeclaredVariableWarning >> defineTrait: traitName [
 		evaluate.
 	^ (node owningScope lookupVar: traitSymbol)
 		ifNil: [self error: 'should be not happen']
-]
-
-{ #category : #correcting }
-OCUndeclaredVariableWarning >> lookUpVariable [
-	^ (node owningScope lookupVar: node name)
-		ifNil: [self error: 'should be found']
 ]
 
 { #category : #accessing }

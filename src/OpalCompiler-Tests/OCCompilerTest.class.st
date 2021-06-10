@@ -78,7 +78,7 @@ OCCompilerTest >> tempTraitShadowingString [
 		replacementCollection := 1.'
 ]
 
-{ #category : #'test readonly vars' }
+{ #category : #'tests - readonly vars' }
 OCCompilerTest >> testAssignmentOfClassNameBinding [
 	interactive := true.
 	self initializeErrorMessage.
@@ -92,7 +92,7 @@ OCCompilerTest >> testAssignmentOfClassNameBinding [
 	self fail
 ]
 
-{ #category : #'test readonly vars' }
+{ #category : #'tests - readonly vars' }
 OCCompilerTest >> testAssignmentOfGlobalVarBinding [
 	interactive := true.
 	self initializeErrorMessage.
@@ -107,7 +107,7 @@ OCCompilerTest >> testAssignmentOfGlobalVarBinding [
 		compile
 ]
 
-{ #category : #'test shadowing' }
+{ #category : #'tests - shadowing' }
 OCCompilerTest >> testInBlockArgumentInstanceVariableShadowing [
 	interactive := true.
 	self initializeErrorMessage.
@@ -122,7 +122,7 @@ OCCompilerTest >> testInBlockArgumentInstanceVariableShadowing [
 	self assert: errorSource contents equals: 'temp [:var1 | ]'
 ]
 
-{ #category : #'test shadowing' }
+{ #category : #'tests - shadowing' }
 OCCompilerTest >> testInBlockTempArgumentShadowing [
 	interactive := true.
 	self initializeErrorMessage.
@@ -136,7 +136,7 @@ OCCompilerTest >> testInBlockTempArgumentShadowing [
 	self fail
 ]
 
-{ #category : #'test shadowing' }
+{ #category : #'tests - shadowing' }
 OCCompilerTest >> testInBlockTempInstanceVariableShadowing [
 	interactive := true.
 	self initializeErrorMessage.
@@ -150,7 +150,7 @@ OCCompilerTest >> testInBlockTempInstanceVariableShadowing [
 	self fail
 ]
 
-{ #category : #'test shadowing' }
+{ #category : #'tests - shadowing' }
 OCCompilerTest >> testInBlockTempShadowing [
 	interactive := true.
 	self initializeErrorMessage.
@@ -164,7 +164,7 @@ OCCompilerTest >> testInBlockTempShadowing [
 	self fail
 ]
 
-{ #category : #'test shadowing' }
+{ #category : #'tests - shadowing' }
 OCCompilerTest >> testInstanceVariableShadowing [
 	interactive := true.
 	self initializeErrorMessage.
@@ -188,7 +188,7 @@ OCCompilerTest >> testNegativeZero [
 		equals: Float negativeZero hex
 ]
 
-{ #category : #'test shadowing' }
+{ #category : #'tests - shadowing' }
 OCCompilerTest >> testNoShadowing [
 	interactive := true.
 	self initializeErrorMessage.
@@ -202,7 +202,7 @@ OCCompilerTest >> testNoShadowing [
 
 ]
 
-{ #category : #'test shadowing2' }
+{ #category : #'tests - shadowing2' }
 OCCompilerTest >> testNotInteractiveInBlockArgumentInstanceVariableShadowing [
 
 	interactive := false.
@@ -224,7 +224,7 @@ OCCompilerTest >> testNotInteractiveInBlockArgumentInstanceVariableShadowing [
 
 ]
 
-{ #category : #'test shadowing2' }
+{ #category : #'tests - shadowing2' }
 OCCompilerTest >> testNotInteractiveInBlockTempArgumentShadowing [
 	
 	interactive := false.
@@ -245,7 +245,7 @@ OCCompilerTest >> testNotInteractiveInBlockTempArgumentShadowing [
 		].
 ]
 
-{ #category : #'test shadowing2' }
+{ #category : #'tests - shadowing2' }
 OCCompilerTest >> testNotInteractiveInBlockTempInstanceVariableShadowing [
 	
 	interactive := false.
@@ -268,7 +268,7 @@ OCCompilerTest >> testNotInteractiveInBlockTempInstanceVariableShadowing [
 	
 ]
 
-{ #category : #'test shadowing2' }
+{ #category : #'tests - shadowing2' }
 OCCompilerTest >> testNotInteractiveInBlockTempShadowing [
 	
 	interactive := false.
@@ -292,7 +292,7 @@ OCCompilerTest >> testNotInteractiveInBlockTempShadowing [
 
 ]
 
-{ #category : #'test shadowing2' }
+{ #category : #'tests - shadowing2' }
 OCCompilerTest >> testNotInteractiveNoShadowing [
 
 	interactive := false.
@@ -312,7 +312,7 @@ OCCompilerTest >> testNotInteractiveNoShadowing [
 
 ]
 
-{ #category : #'test shadowing2' }
+{ #category : #'tests - shadowing2' }
 OCCompilerTest >> testNotInteractiveShadowingOfTemp [
 
 	interactive := false.
@@ -334,7 +334,7 @@ OCCompilerTest >> testNotInteractiveShadowingOfTemp [
 	
 ]
 
-{ #category : #'test shadowing2' }
+{ #category : #'tests - shadowing2' }
 OCCompilerTest >> testNotInteractiveSiblingBlocksInstanceVariableShadowing [
 
 	interactive := false.
@@ -359,7 +359,7 @@ OCCompilerTest >> testNotInteractiveSiblingBlocksInstanceVariableShadowing [
 	
 ]
 
-{ #category : #'test shadowing2' }
+{ #category : #'tests - shadowing2' }
 OCCompilerTest >> testNotInteractiveSiblingBlocksTempShadowing [
 
 	interactive := false.
@@ -383,7 +383,7 @@ OCCompilerTest >> testNotInteractiveSiblingBlocksTempShadowing [
 
 ]
 
-{ #category : #'test shadowing' }
+{ #category : #'tests - shadowing' }
 OCCompilerTest >> testReservedNameAsBlockArgumentShadowing [
 	interactive := true.
 	#('self' 'super' 'thisContext' 'true' 'false' 'nil')
@@ -401,7 +401,7 @@ OCCompilerTest >> testReservedNameAsBlockArgumentShadowing [
 			self assert: errorLocation equals: 11 ]
 ]
 
-{ #category : #'test shadowing' }
+{ #category : #'tests - shadowing' }
 OCCompilerTest >> testReservedNameAsMethodArgumentShadowing [
 	interactive := true.
 	#('self' 'super' 'thisContext' 'true' 'false' 'nil')
@@ -432,7 +432,7 @@ OCCompilerTest >> testScaledDecimalLiterals [
 	self deny: (Smalltalk compiler evaluate: '0.5s1 scale =  0.5s2 scale')
 ]
 
-{ #category : #'test shadowing' }
+{ #category : #'tests - shadowing' }
 OCCompilerTest >> testSiblingBlocksInstanceVariableShadowing [
 	interactive := true.
 	self initializeErrorMessage.
@@ -448,7 +448,7 @@ OCCompilerTest >> testSiblingBlocksInstanceVariableShadowing [
 	self fail
 ]
 
-{ #category : #'test shadowing' }
+{ #category : #'tests - shadowing' }
 OCCompilerTest >> testSiblingBlocksTempShadowing [
 
 	interactive := true.
@@ -469,7 +469,7 @@ OCCompilerTest >> testSiblingBlocksTempShadowing [
 
 ]
 
-{ #category : #'test shadowing2' }
+{ #category : #'tests - shadowing2' }
 OCCompilerTest >> testTraitTempShadowing [
 	
 	| warningCount |

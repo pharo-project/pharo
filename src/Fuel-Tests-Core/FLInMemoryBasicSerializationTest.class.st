@@ -10,11 +10,6 @@ Class {
 	#category : #'Fuel-Tests-Core-Base'
 }
 
-{ #category : #testing }
-FLInMemoryBasicSerializationTest class >> shouldInheritSelectors [ 
-	^ true
-]
-
 { #category : #running }
 FLInMemoryBasicSerializationTest >> materialization [
 

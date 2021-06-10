@@ -20,7 +20,7 @@ MetacelloSemanticVersionNumberTestCase >> testEqualityComparison [
 		do: [ :versionString | self assert: versionString asMetacelloSemanticVersionNumber equals: versionString asMetacelloSemanticVersionNumber ]
 ]
 
-{ #category : #'test matching' }
+{ #category : #'tests - matching' }
 MetacelloSemanticVersionNumberTestCase >> testInvalidSpecialMatch [
     self should: [ (self versionClass fromString: '1.1.1') match: '?.?.?' ] raise: Error
 ]
@@ -107,7 +107,7 @@ MetacelloSemanticVersionNumberTestCase >> testSemanticVersioningSubsetCompliance
             #('1.0.0-alpha' '1.0.0-alpha.1' '1.0.0-beta.2' '1.0.0-beta.11' '1.0.0-rc.1' '1.0.0')
 ]
 
-{ #category : #'test matching' }
+{ #category : #'tests - matching' }
 MetacelloSemanticVersionNumberTestCase >> testSpecialMatch [
     self assert: ((self versionClass fromString: '1.1.0') match: '?').
     self assert: ((self versionClass fromString: '1.0.0-alpha') match: '?').
@@ -120,7 +120,7 @@ MetacelloSemanticVersionNumberTestCase >> testSpecialMatch [
     self assert: ((self versionClass fromString: '1.1.1') match: '*.?')
 ]
 
-{ #category : #'test matching' }
+{ #category : #'tests - matching' }
 MetacelloSemanticVersionNumberTestCase >> testStandardMatch [
     self assert: ((self versionClass fromString: '1.0.0+alpha5.0') match: '1.0.0+alpha#.0').
     self assert: ((self versionClass fromString: '1.1.1') match: '*.*.*').

@@ -198,7 +198,7 @@ LzwGifDecoder >> minimumCodeSize: anInteger [
 	minimumCodeSize := anInteger
 ]
 
-{ #category : #'private-packing' }
+{ #category : #'private - packing' }
 LzwGifDecoder >> nextByte [
 	| nextChunkSize |
 	codeStreamBuffer atEnd
@@ -244,7 +244,7 @@ LzwGifDecoder >> onDecodedBit: aBlock [
 	outBlock := aBlock
 ]
 
-{ #category : #'private-packing' }
+{ #category : #'private - packing' }
 LzwGifDecoder >> peekByte [
 	| nextChunkSize |
 	codeStreamBuffer atEnd

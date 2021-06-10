@@ -135,6 +135,11 @@ HelpTopic >> defaultTitle [
 	
 ]
 
+{ #category : #printing }
+HelpTopic >> displayStringOn: stream [
+	^ stream nextPutAll: self title
+]
+
 { #category : #testing }
 HelpTopic >> hasSubtopics [ 
 	"Returns true if the receiver has subtopics, false otherwise"
@@ -212,6 +217,15 @@ HelpTopic >> pathToTopicSatisfying: aBlock [
 			ifNotEmpty: [ :aPath |
 				^ { self }, aPath ] ].
 	^ #()
+]
+
+{ #category : #printing }
+HelpTopic >> printOn: stream [
+	super printOn: stream.
+	stream 
+		nextPutAll: '(';
+		nextPutAll: self title;
+		nextPutAll: ')'
 ]
 
 { #category : #operating }

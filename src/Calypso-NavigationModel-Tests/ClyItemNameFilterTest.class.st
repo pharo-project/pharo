@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyItemNameFilterTest,
-	#superclass : #ClyItemFilterTestCase,
+	#superclass : #ClyItemFilterTest,
 	#category : #'Calypso-NavigationModel-Tests'
 }
 

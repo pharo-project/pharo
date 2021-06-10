@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 RBRenameVariableTransformationTest >> testClassVariable [
 
 	| refactoring class |
@@ -36,7 +36,7 @@ RBRenameVariableTransformationTest >> testClassVariable [
 										classified: aSmalllintContext protocols]]')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRenameVariableTransformationTest >> testMetaclassFailure [
 
 	self shouldFail: (RBRenameVariableTransformation
@@ -46,7 +46,7 @@ RBRenameVariableTransformationTest >> testMetaclassFailure [
 							asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRenameVariableTransformationTest >> testRefactoring [
 
 	| refactoring class |
@@ -73,7 +73,7 @@ RBRenameVariableTransformationTest >> testRefactoring [
 					self resultClass: RBSelectorEnvironment')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRenameVariableTransformationTest >> testTransform [
 
 	| transformation class |
@@ -100,7 +100,7 @@ RBRenameVariableTransformationTest >> testTransform [
 					self resultClass: RBSelectorEnvironment')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRenameVariableTransformationTest >> testVariableAlreadyExists [
 
 	self
@@ -116,7 +116,7 @@ RBRenameVariableTransformationTest >> testVariableAlreadyExists [
 						asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRenameVariableTransformationTest >> testVariableDoesNotExist [
 
 	self

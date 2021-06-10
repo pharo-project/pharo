@@ -29,79 +29,79 @@ RGLayout >> instVarNames [
 	^ {}
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGLayout >> isBitsLayout [
 
 	^ false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGLayout >> isByteLayout [
 
 	^ false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGLayout >> isCompiledMethodLayout [
 
 	^ false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGLayout >> isEmptyLayout [
 
 	^ false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGLayout >> isEphemeronLayout [
 
 	^ false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGLayout >> isFixedLayout [
 
 	^ false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGLayout >> isImmediateLayout [
 
 	^ false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGLayout >> isLayout [
 
 	^true
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGLayout >> isObjectLayout [
 
 	^ false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGLayout >> isPointerLayout [
 
 	^ false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGLayout >> isVariableLayout [
 
 	^ false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGLayout >> isWeakLayout [
 
 	^ false
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGLayout >> isWordLayout [
 
 	^ false

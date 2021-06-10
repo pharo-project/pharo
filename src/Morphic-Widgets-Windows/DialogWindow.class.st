@@ -225,7 +225,9 @@ DialogWindow >> keyDown: evt [
 	"Check for return and escape keys."
 
 	super keyDown: evt.
-	(self defaultButton notNil and: [evt key = KeyboardKey enter]) ifTrue: [self returnPressed. ^true].
+	(self defaultButton notNil and: [evt key = KeyboardKey enter or: [evt key = KeyboardKey keypadEnter]]) 
+		ifTrue: [self returnPressed. ^true].
+	
 	evt key = KeyboardKey escape ifTrue: [self escapePressed. ^true].
 	^false
 ]
@@ -317,27 +319,6 @@ DialogWindow >> returnPressed [
 	"Default is to do the default button."
 
 	(self defaultButton ifNil: [^self]) performAction
-]
-
-{ #category : #actions }
-DialogWindow >> setButtonFont: aFont [
-	"Set the font for the buttons."
-
-	| buttons e|
-	buttons := self buttons.
-	e := 0@0.
-	buttons do: [:b | | hRes vRes |
-		hRes := b hResizing.
-		vRes := b vResizing.
-		b
-			hResizing: #shrinkWrap;
-			vResizing: #shrinkWrap.
-		b label: b label font: aFont.
-		e := e max: b minExtent.
-		b
-			hResizing: hRes;
-			vResizing: vRes].
-	buttons do: [:b | b extent: e]
 ]
 
 { #category : #initialization }

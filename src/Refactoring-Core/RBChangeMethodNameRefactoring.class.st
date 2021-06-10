@@ -17,7 +17,8 @@ Class {
 		'newSelector',
 		'oldSelector',
 		'permutation',
-		'implementors'
+		'implementors',
+		'renameMap'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -33,11 +34,7 @@ RBChangeMethodNameRefactoring >> hasPermutedArguments [
 { #category : #private }
 RBChangeMethodNameRefactoring >> implementors [
 
-	implementors ifNil: [ 
-		searchInPackages 
-			ifNil: [ implementors := self model allImplementorsOf: oldSelector ]
-			ifNotNil: [ implementors := self model allImplementorsOf: oldSelector inPackages: searchInPackages ]
-		 ].
+	implementors ifNil: [ implementors := self model allImplementorsOf: oldSelector ].
 	^ implementors
 ]
 
@@ -104,6 +101,13 @@ RBChangeMethodNameRefactoring >> removeRenamedImplementors [
 		do: [ :each | each removeMethod: oldSelector ]
 ]
 
+{ #category : #action }
+RBChangeMethodNameRefactoring >> renameArgumentsIn: parseTree [
+	self renameMap do: [ :arg |
+		(self parseTreeRewriterClass rename: arg name to: arg newName) executeTree: parseTree
+	] 
+]
+
 { #category : #transforming }
 RBChangeMethodNameRefactoring >> renameImplementors [
 
@@ -125,6 +129,16 @@ RBChangeMethodNameRefactoring >> renameImplementors [
 			]
 ]
 
+{ #category : #accessing }
+RBChangeMethodNameRefactoring >> renameMap [
+	^renameMap ifNil: [ renameMap := { } ]
+]
+
+{ #category : #accessing }
+RBChangeMethodNameRefactoring >> renameMap: aColl [
+	renameMap := aColl
+]
+
 { #category : #transforming }
 RBChangeMethodNameRefactoring >> renameMessageSends [
 	self convertAllReferencesTo: oldSelector using: self parseTreeRewriter
@@ -140,7 +154,7 @@ RBChangeMethodNameRefactoring >> renameMethod: aSelector in: aClass to: newSel p
 	oldSelector := aSelector asSymbol.
 	newSelector := newSel asSymbol.
 	class := self classObjectFor: aClass.
-	permutation := aMap
+	permutation := aMap.
 ]
 
 { #category : #transforming }

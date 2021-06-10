@@ -192,17 +192,33 @@ PharoLightTheme >> balloonBackgroundColor [
 	^ (Color r: 1.0 g: 1.0 b: 0.71 alpha: 1.0)
 ]
 
+{ #category : #'fill-styles-buttons' }
+PharoLightTheme >> buttonDisabledBorderStyleFor: aButton [
+	"Return the disabled button fillStyle for the given color."
+
+	^ BorderStyle
+		width: 0
+		color: Color transparent
+]
+
+{ #category : #'fill-styles-buttons' }
+PharoLightTheme >> buttonDisabledFillStyleFor: aButton [
+	"Return the disabled button fillStyle for the given color."
+
+	^ SolidFillStyle color: Color transparent
+]
+
 { #category : #'border-styles-buttons' }
 PharoLightTheme >> buttonNormalBorderStyleFor: aButton [
 	"Return the normal button borderStyle for the given button."
 
 	| outerColor |
 	(aButton valueOfProperty: #noBorder ifAbsent: [false]) 
-		ifTrue: [ ^ SimpleBorder new 
+		ifTrue: [ ^ SimpleBorderStyle new 
 							width: 0; 
 							baseColor: Color transparent ].
 	outerColor := self darkBaseColorFor: aButton.
-	^ SimpleBorder new
+	^ SimpleBorderStyle new
 			width: 1;
 			baseColor: outerColor
 ]
@@ -211,10 +227,16 @@ PharoLightTheme >> buttonNormalBorderStyleFor: aButton [
 PharoLightTheme >> configureWindowBorderFor: aWindow [
 
 	| aStyle |
-	aStyle := SimpleBorder new 
+	aStyle := SimpleBorderStyle new 
 					color: (Color lightGray);
 					width: 1.
 	aWindow borderStyle: aStyle
+]
+
+{ #category : #'accessing colors' }
+PharoLightTheme >> ghostTextColor [
+
+	^ Color darkGray
 ]
 
 { #category : #initialization }
@@ -265,7 +287,7 @@ PharoLightTheme >> taskbarItemDisabledFillStyleFor: aButton [
 
 { #category : #'border-styles-taskbar' }
 PharoLightTheme >> taskbarItemMouseOverBorderStyleFor: aButton [
-	^ BottomBorder new
+	^ BottomBorderStyle new
 		color: (Color fromHexString: '616161');
 		width: 2;
 		yourself
@@ -278,7 +300,7 @@ PharoLightTheme >> taskbarItemMouseOverFillStyleFor: aButton [
 
 { #category : #'border-styles-taskbar' }
 PharoLightTheme >> taskbarItemNormalBorderStyleFor: aButton [
-	^ BottomBorder new
+	^ BottomBorderStyle new
 		color: (Color fromHexString: '757575');
 		width: 2;
 		trimSize: 2;

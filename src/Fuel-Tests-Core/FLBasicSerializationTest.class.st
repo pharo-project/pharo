@@ -10,6 +10,11 @@ Class {
 	#category : #'Fuel-Tests-Core-Base'
 }
 
+{ #category : #testing }
+FLBasicSerializationTest class >> shouldInheritSelectors [ 
+	^true
+]
+
 { #category : #failures }
 FLBasicSerializationTest >> expectedFailures [
 	^ #(testConsiderCustomWideSymbolGlobal testWideStringGlobal testWideStringClassName)
@@ -122,6 +127,13 @@ FLBasicSerializationTest >> testClassSideCompiledMethod [
 	
 	self assertSerializationIdentityOf: FLGlobalSendMock class >> #newInstanceToSerialize
 
+]
+
+{ #category : #'tests-collections-Pharo1.3' }
+FLBasicSerializationTest >> testCollectionElement [
+	(Smalltalk classNamed: #CollectionElement) ifNil: [ self skip ].
+	
+	self assertSerializationEqualityOf: ((Smalltalk classNamed: #CollectionElement) with: 3)
 ]
 
 { #category : #tests }
@@ -281,6 +293,19 @@ FLBasicSerializationTest >> testDateAndTime [
 ]
 
 { #category : #tests }
+FLBasicSerializationTest >> testDateAndTimeOffsetNegative [
+	| edt now |
+	edt := TimeZone timeZones last.
+	
+	DateAndTime localTimeZone: edt.
+	now := DateAndTime now.
+	self assert: now offset equals: -4 hours.
+	self serialize: now.
+
+	self assert: self materialized offset equals: -4 hours
+]
+
+{ #category : #tests }
 FLBasicSerializationTest >> testDateOffsets [
 	| bst sast materialized object |
 	bst := TimeZone timeZones third.
@@ -312,7 +337,7 @@ FLBasicSerializationTest >> testDateOffsetsChanging [
 	self assert: DateAndTime now offset equals: 1 hour.
 	object := Date fromDays: 37023.
 	self assert: object start offset equals: 0 hours.
-	self serialize:object.
+	self serialize: object.
 	
 	DateAndTime localTimeZone: sast.
 	self assert: DateAndTime now offset equals: 2 hours.
@@ -688,21 +713,16 @@ FLBasicSerializationTest >> testSet [
 ]
 
 { #category : #'tests-collections-Pharo1.3' }
-FLBasicSerializationTest >> testSetElement [
-
-	self assertSerializationEqualityOf: (CollectionElement with: 3)
+FLBasicSerializationTest >> testSetWithCollectionElement [
+	(Smalltalk classNamed: #CollectionElement) ifNil: [ self skip ].
+	
+	self assertSerializationEqualityOf: (Set with: ((Smalltalk classNamed: #CollectionElement) with: 3))
 ]
 
 { #category : #'tests-collections-Pharo1.3' }
 FLBasicSerializationTest >> testSetWithNil [
 
 	self assertSerializationEqualityOf: (Set with: nil)
-]
-
-{ #category : #'tests-collections-Pharo1.3' }
-FLBasicSerializationTest >> testSetWithSetElement [
-
-	self assertSerializationEqualityOf: (Set with: (CollectionElement with: 3))
 ]
 
 { #category : #tests }
@@ -750,6 +770,22 @@ FLBasicSerializationTest >> testSmallIntegerMinValue [
 FLBasicSerializationTest >> testSmallIntegerNegative [
 
 	self assertSerializationIdentityOf: -42.
+]
+
+{ #category : #'tests-numbers' }
+FLBasicSerializationTest >> testSmallIntegerSerializationForAllBits [
+	1
+		to: 64
+		do: [ :exp |
+			| integer |
+			integer := 2 raisedTo: exp.
+			integer isLarge ifFalse: [
+				self assertSerializationIdentityOf: integer ].
+			integer := 0 - integer.
+			integer isLarge ifFalse: [
+				self assertSerializationIdentityOf: integer ] ]
+
+
 ]
 
 { #category : #'tests-globals' }

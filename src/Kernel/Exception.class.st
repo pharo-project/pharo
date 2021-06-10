@@ -50,6 +50,11 @@ Exception class >> - anotherException [
 		yourself
 ]
 
+{ #category : #testing }
+Exception class >> captureIfSignalledWhenStepping [
+	^false
+]
+
 { #category : #exceptionselector }
 Exception class >> handles: exception [
 	"Determine whether an exception handler will accept a signaled exception."
@@ -123,7 +128,7 @@ Exception >> defaultAction [
 	Note about naming here: 
 	Even if not all exceptions are errors the absence of a handler for signaled exception is considered as an error by default. Therefore #defaultAction for Exception raises an error, an UnhandledError"
 
-	self raiseUnhandledError
+	^ self raiseUnhandledError
 ]
 
 { #category : #default }
@@ -261,7 +266,7 @@ Exception >> privHandlerContext: aContextTag [
 Exception >> raiseUnhandledError [
 	"No one has handled this error, but now give them a chance to decide how to debug it.  If none handle this either then open debugger (see UnhandedError>>#defaultAction)"
 
-	UnhandledError signalForException: self
+	^ UnhandledError signalForException: self
 ]
 
 { #category : #accessing }

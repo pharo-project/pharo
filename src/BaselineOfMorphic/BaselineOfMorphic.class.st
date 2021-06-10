@@ -51,7 +51,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'System-Clipboard'.
 		
 		spec package: 'EmbeddedFreeType'.
-		spec package: 'EmergencyDebugger'.
 		spec package: 'FileSystem-Zip'.
 		spec package: 'Fonts-Infrastructure'.
 		spec package: 'FreeType'.
@@ -292,9 +291,8 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	TextConstants initialize.
 		
 	"Initialize Fuel"
-
 	FLLargeIdentityHashedCollection initialize.
-	FLPlatform classPool at: #Current put: FLPharo7Platform new.
+	FLPlatform reset.
 
 	Stdio stdout nextPutAll: 'starting...'; lf.
 
@@ -353,7 +351,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	Smalltalk cleanOutUndeclared.
 
-	#(#AbstractFont #BalloonMorph #Clipboard #EditorFindReplaceDialogWindow #EmbeddedFreeTypeFontInstaller #FLCompiledMethodCluster #FLLargeIdentityHashedCollection #FLPlatform #FreeTypeFontProvider #GradientFillStyle #IconicButton #KMLog #LogicalFont #LucidaGrandeRegular #OSEnvironment #ScrollBar #StrikeFont #SystemSettingsPersistence #TabMorph #TaskbarMorph #Text #TextAction #TextConstants #TextEditor #TextStyle) do: [:each |
+	#(#AbstractFont #BalloonMorph #Clipboard #EditorFindReplaceDialogWindow #EmbeddedFreeTypeFontInstaller #FLCompiledMethodCluster #FLLargeIdentityHashedCollection #FLPlatform #FreeTypeFontProvider #GradientFillStyle #IconicButtonMorph #KMLog #LogicalFont #LucidaGrandeRegular #OSEnvironment #ScrollBar #StrikeFont #SystemSettingsPersistence #TabMorph #TaskbarMorph #Text #TextAction #TextConstants #TextEditor #TextStyle) do: [:each |
 		 (Smalltalk globals at: each) initialize. ].
 
 	LogicalFontManager current addFontProvider: FreeTypeFontProvider current.

@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 RBMoveInstanceVariableToClassTransformationTest >> testRefactoring [
 
 	| refactoring oldClass newClass |
@@ -30,7 +30,7 @@ RBMoveInstanceVariableToClassTransformationTest >> testRefactoring [
 	
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBMoveInstanceVariableToClassTransformationTest >> testTransform [
 
 	| transformation oldClass newClass |
@@ -62,7 +62,7 @@ RBMoveInstanceVariableToClassTransformationTest >> testTransform [
 	
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBMoveInstanceVariableToClassTransformationTest >> testVariableAlreadyExists [
 
 	self shouldFail: (RBMoveInstanceVariableToClassTransformation
@@ -73,7 +73,7 @@ RBMoveInstanceVariableToClassTransformationTest >> testVariableAlreadyExists [
 							asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBMoveInstanceVariableToClassTransformationTest >> testVariableDoesNotExistInOldClass [
 
 	self shouldFail: (RBMoveInstanceVariableToClassTransformation

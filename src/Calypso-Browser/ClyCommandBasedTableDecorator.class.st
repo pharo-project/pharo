@@ -26,7 +26,7 @@ ClyCommandBasedTableDecorator class >> decorateTableCell: anItemCellMorph of: aD
 ClyCommandBasedTableDecorator class >> decorationStrategy [
 	<classAnnotation>
 	
-	^ClyTableDecorationStrategy for: ClyBrowserContext
+	^ClyTableDecorationStrategyAnnotation for: ClyBrowserContext
 ]
 
 { #category : #decoration }

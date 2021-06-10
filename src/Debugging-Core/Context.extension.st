@@ -33,6 +33,11 @@ Context >> lookupVar: aSymbol [
 ]
 
 { #category : #'*Debugging-Core' }
+Context >> lookupVar: aSymbol declare: aBoolean [
+	^ self astScope lookupVar: aSymbol declare: aBoolean
+]
+
+{ #category : #'*Debugging-Core' }
 Context >> methodReturnConstant: value [
 	"Simulate the action of a 'return constant' bytecode whose value is the
 	 argument, value. This corresponds to a source expression like '^0'."
@@ -140,6 +145,18 @@ Context >> return: value to: aSender [
 	self releaseTo: aSender.
 	aSender ifNil: [^ nil].
 	^ aSender push: value
+]
+
+{ #category : #'*Debugging-Core' }
+Context >> returnBooleanPrimitive [
+
+	^ 257
+]
+
+{ #category : #'*Debugging-Core' }
+Context >> returnSelfPrimitive [
+
+	^ 256
 ]
 
 { #category : #'*Debugging-Core' }
@@ -417,6 +434,17 @@ Context >> tempsAndValuesLimitedTo: sizeLimit indent: indent [
 { #category : #'*Debugging-Core' }
 Context >> unusedBytecode [
 	^ self respondsToUnknownBytecode 
+]
+
+{ #category : #'*Debugging-Core' }
+Context >> updatePCForQuickPrimitiveRestart [
+
+	({self returnBooleanPrimitive.	self returnSelfPrimitive } includes: self method primitive) 
+		ifTrue: [ 
+			pc := self method endPC.
+			^ self ].
+
+	pc := pc + self quickMethodPrimitiveBytecodeSize
 ]
 
 { #category : #'*Debugging-Core' }

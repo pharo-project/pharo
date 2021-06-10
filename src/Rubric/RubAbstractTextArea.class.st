@@ -683,7 +683,7 @@ RubAbstractTextArea >> defaultYellowButtonMenuEnabled [
 	^ self defaultMenuAllowed 
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 RubAbstractTextArea >> delete [
 	self hasFocus
 		ifTrue: [ self currentHand newKeyboardFocus: nil ].
@@ -1109,7 +1109,7 @@ RubAbstractTextArea >> isReadOnly [
 { #category : #'event handling' }
 RubAbstractTextArea >> keyDown: anEvent [
 	"Handle a keystroke event."
-	anEvent key = KeyboardKey enter
+	(anEvent key = KeyboardKey enter or: [ anEvent key = KeyboardKey keypadEnter ])
 		ifTrue: [ self handleReturnKey
 				ifTrue: [ ^ self ] ].
 

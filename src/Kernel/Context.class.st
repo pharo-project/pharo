@@ -405,7 +405,7 @@ Context >> bottomContext [
 	^ self findContextSuchThat: [ :context | context sender isNil]
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> canHandleSignal: exception [
 	"Sent to handler (on:do:) contexts only.  If my exception class (first arg) handles exception then return true, otherwise forward this message to the next handler context.  If none left, return false (see nil>>canHandleSignal:)"
 
@@ -414,7 +414,7 @@ Context >> canHandleSignal: exception [
 
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> cannotReturn: result [
 
 	closureOrNil ifNotNil: [ 
@@ -743,7 +743,7 @@ Context >> errorReportOn: stream [
 		aContext := aContext sender ].
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> evaluateSignal: exception [
 	"The following primitive is just a marker used to find the evaluation context. 
 	See MethodContext>>#isHandlerOrSignalingContext. "
@@ -778,6 +778,17 @@ Context >> exceptionHandlerBlock [
 
 ]
 
+{ #category : #'private - exceptions' }
+Context >> exceptionsToCaptureWhenStepping [
+
+	| exceptionsToCapture exceptionsSet |
+	exceptionsToCapture := Exception allSubclasses select: [ :c | 
+		                       c captureIfSignalledWhenStepping ].
+	exceptionsSet := ExceptionSet new.
+	exceptionsToCapture do: [ :e | exceptionsSet add: e ].
+	^ exceptionsSet
+]
+
 { #category : #'system simulation' }
 Context >> failPrimitiveWith: maybePrimFailToken [
 	"The receiver is a freshly-created context on a primitive method.  Skip the callPrimitive:
@@ -801,7 +812,7 @@ Context >> findContextSuchThat: testBlock [
 	^ nil
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> findNextHandlerContext [
 	"Return the next handler marked context, returning nil if there is none.  
 	Search starts with self and proceeds up to nil."
@@ -816,7 +827,7 @@ Context >> findNextHandlerContext [
 	^searchStartContext nextHandlerContext
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> findNextHandlerOrSignalingContext [
 	"Return the next handler/signaling marked context, answering nil if there is none. 
 	Search starts with self and proceeds up to nil."
@@ -831,7 +842,7 @@ Context >> findNextHandlerOrSignalingContext [
 	^ nil
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> findNextUnwindContextUpTo: aContext [
 	"Return the next unwind marked above the receiver, returning nil if there is none.  Search proceeds up to but not including aContext."
 
@@ -872,7 +883,7 @@ Context >> findSimilarSender [
 		context compiledCode == method ]
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> handleSignal: exception [
 	"Sent to handler (on:do:) contexts only.  If my exception class (first arg) handles exception then execute my handle block (second arg), otherwise forward this message to the next handler context.  If none left, execute exception's defaultAction (see nil>>handleSignal:)."
 	<debuggerCompleteToSender>
@@ -990,13 +1001,13 @@ Context >> isFailToken: anObject [
 			and: [ anObject size = 2 and: [(anObject at: 1) == PrimitiveFailToken]]
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> isHandlerContext [
 	"is this context for #on:do:?"
 	^self isHandlerOrSignalingContext and: [ self selector == #on:do: ]
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> isHandlerOrSignalingContext [
 	"Both BlockClosure>>on:do: (handler) and Context>>evaluateSignal: (signaling) 
 	are marked with primitive 199."
@@ -1010,7 +1021,7 @@ Context >> isPrimFailToken: anObject [
 		  and: [anObject first == PrimitiveFailToken]]
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> isUnwindContext [
 	"is this context for  method that is marked?"
 	^method primitive = 198
@@ -1118,7 +1129,7 @@ Context >> methodSelector [
 	^ self compiledCode selector
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> nextHandlerContext [
 
 	^ self sender findNextHandlerContext
@@ -1351,26 +1362,42 @@ Context >> printDebugOn: aStream [
 
 { #category : #printing }
 Context >> printDetails: stream [
+
 	"Put my class>>selector and instance variables and arguments and temporaries on the stream.  Protect against errors during printing."
 
 	| errorMessage string |
 	self printOn: stream.
 	stream cr.
-	stream tab; nextPutAll: 'Receiver: '.
+	stream
+		tab;
+		nextPutAll: 'Receiver: '.
 	errorMessage := '<<error during printing>>'.
-	stream nextPutAll: ([receiver printStringLimitedTo: 90] onErrorDo: [errorMessage]).
+	stream nextPutAll:
+		([ receiver printStringLimitedTo: 90 ] onErrorDo: [ errorMessage ]).
 
-	stream cr; tab; nextPutAll: 'Arguments and temporary variables: '; cr.
-	string := [(self tempsAndValuesLimitedTo: 80 indent: 2) 
-				padRightTo:1 with: $x] onErrorDo: [errorMessage].
-	stream nextPutAll: (string allButLast).
+	stream
+		cr;
+		tab;
+		nextPutAll: 'Arguments and temporary variables: ';
+		cr.
+	string := [ 
+	          (self tempsAndValuesLimitedTo: 80 indent: 2)
+		          padRightTo: 1
+		          with: $x ] onErrorDo: [ errorMessage ].
+	stream nextPutAll: string.
 
-	stream cr; tab; nextPutAll: 'Receiver''s instance variables: '; cr.
-	receiver class allInstVarNames isEmpty ifTrue: [ 
-		stream nextPutAll: ([receiver printStringLimitedTo: 90] onErrorDo: [ errorMessage ]).
-	] ifFalse: [
-		[receiver longPrintOn: stream limitedTo: 80 indent: 2] onErrorDo: [ stream nextPutAll: errorMessage ].
-	].
+	stream
+		cr;
+		tab;
+		nextPutAll: 'Receiver''s instance variables: ';
+		cr.
+	receiver class allInstVarNames isEmpty
+		ifTrue: [ 
+			stream nextPutAll:
+				([ receiver printStringLimitedTo: 90 ] onErrorDo: [ errorMessage ]) ]
+		ifFalse: [ 
+			[ receiver longPrintOn: stream limitedTo: 80 indent: 2 ] 
+				onErrorDo: [ stream nextPutAll: errorMessage ] ].
 	stream cr
 ]
 
@@ -1593,13 +1620,21 @@ Context >> pushTemporaryVariable: offset [
 	self push: (self at: offset + 1)
 ]
 
+{ #category : #private }
+Context >> quickMethodPrimitiveBytecodeSize [
+
+	"A quick method starts with a 3 bytecodes primitive (264 or 256)"
+
+	^ 3
+]
+
 { #category : #accessing }
 Context >> receiver [ 
 
 	^receiver
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> receiver: anObject [
 
 	receiver := anObject
@@ -1750,7 +1785,7 @@ Context >> runUntilErrorOrReturnFrom: aSender [
 	"Insert ensure and exception handler contexts under aSender"
 	error := nil.
 	context := aSender insertSender: (Context
-		contextOn: Error, Halt do: [:ex |
+		contextOn: self exceptionsToCaptureWhenStepping do: [:ex |
 			error ifNil: [
 				error := ex.
 				topContext := thisContext.
@@ -1871,10 +1906,10 @@ Context >> send: selector to: aReceiver with: arguments super: superFlag [
 	- primitive 264 or 256: a 3 bytecode primitive (initialPC)
 	- a push of a value (endPC - 1)
 	- the return top instruction (endPC)
-	When activating the quic method, we arrive on the PC corresponding to the primitive which is not suposed to be stepped.
+	When activating the quick method, we arrive on the PC corresponding to the primitive which is not suposed to be stepped.
 	We have to fix the PC so that the next executed bytecode is the push.
 	We do that by setting the PC to aMethod initialPC + 3 (the number of bytes of the primitive)."
-	(aMethod isQuick and:[self stepIntoQuickMethod]) ifTrue: [ context pc: aMethod initialPC + 3].
+	(aMethod isQuick and:[self stepIntoQuickMethod]) ifTrue: [ context pc: aMethod initialPC + self quickMethodPrimitiveBytecodeSize].
 	
 	"check if activated method handles the error code (a first bytecode will be store into temp)"
 	"long store temp"
@@ -1893,8 +1928,6 @@ Context >> sender [
 { #category : #private }
 Context >> setNamedPrimitiveInformationFrom: fromMethod toMethod: toMethod [
 	"For named primitives, the first literal contains a special object that has information of the primitive. In this method we cope such information from one to another one."
-	"((StandardFileStream >> #primOpen:writable:) literalAt: 1) >>> #(#FilePlugin #primitiveFileOpen 0 0)"
-
 	| spec |	
 	spec := toMethod literalAt: 1.	
 	spec replaceFrom: 1 to: spec size with: (fromMethod literalAt: 1) startingAt: 1.
@@ -2048,8 +2081,8 @@ Context >> stepIntoQuickMethod [
 ]
 
 { #category : #'debugger access' }
-Context >> stepIntoQuickMethod: aBoolean [ 
-	self compiledCode isBlock ifTrue: [ ^self ].
+Context >> stepIntoQuickMethod: aBoolean [
+
 	self compiledCode stepIntoQuickMethods: aBoolean
 ]
 
@@ -2110,7 +2143,7 @@ Context >> storeIntoTemporaryVariable: offset [
 	self at: offset + 1 put: self top
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> swapReceiver: newReceiver [
 
 	receiver := newReceiver
@@ -2240,7 +2273,7 @@ Context >> unwindComplete: aBoolean [
 
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> unwindForTermination [
 	"Unwind to execute pending ensure:/ifCurtailed: blocks before terminating active process.
 	It assumes that self belongs to the active process. "
@@ -2256,7 +2289,7 @@ Context >> unwindForTermination [
 	self terminateTo: nil
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> unwindTo: aContext [
 
 	| context unwindBlock |

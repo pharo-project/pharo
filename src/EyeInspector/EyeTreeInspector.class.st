@@ -13,7 +13,7 @@ Class {
 { #category : #spec }
 EyeTreeInspector class >> inspectorSpec [
 	<spec>
-	^ SpPanedLayout newVertical
+	^ SpPanedLayout newTopToBottom
 		position: 70 percent;
 		add: #tree;
 		add: #text;
@@ -128,7 +128,7 @@ EyeTreeInspector >> selectedObject [
 	^self selectedElement value
 ]
 
-{ #category : #'private-focus' }
+{ #category : #'private - focus' }
 EyeTreeInspector >> takeKeyboardFocus [
 	^ self tree takeKeyboardFocus
 ]

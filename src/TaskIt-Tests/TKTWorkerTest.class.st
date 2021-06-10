@@ -34,48 +34,56 @@ TKTWorkerTest >> testWorkerProcessDiesAfterStop [
 
 { #category : #tests }
 TKTWorkerTest >> testWorkerProcessDiesAfterWorkerAndAllFuturesAreCollected [
+
 	| worker future process waitFuture1 waitFuture2 |
 	worker := TKTWorker new.
 	worker start.
 	process := worker process.
-	waitFuture1 := TKTFuture
-		doing: [ [ process isRunning ] whileTrue: [ 50 milliSeconds wait ] ].
-	waitFuture2 := TKTFuture
-		doing: [ [ process isRunning ] whileTrue: [ 50 milliSeconds wait ] ].
+	waitFuture1 := TKTFuture doing: [ 
+		               [ process isRunning ] whileTrue: [ 
+			               50 milliSeconds wait ] ].
+	waitFuture2 := TKTFuture doing: [ 
+		               [ process isRunning ] whileTrue: [ 
+			               50 milliSeconds wait ] ].
 	future := worker future: [ 10 milliSeconds wait ].
 	worker := nil.
-	self garbageCollectAndWait.
+	self waitGarbageCollect.
 	self
 		should: [ waitFuture1 synchronizeTimeout: 200 milliSeconds ]
 		raise: TKTTimeoutException.
 	self assert: process isRunning.
 	future := nil.
-	self garbageCollectAndWait.
-	self garbageCollectAndWait.
+	self waitGarbageCollect.
+	self waitGarbageCollect.
 	waitFuture2 synchronizeTimeout: 400 milliSeconds.
 	self deny: process isRunning
 ]
 
 { #category : #tests }
 TKTWorkerTest >> testWorkerProcessDiesAfterWorkerIsCollected [
+
 	| worker future process |
 	worker := TKTWorker new.
 	worker start.
 	process := worker process.
 	worker := nil.
-	self garbageCollectAndWait.
-	future := TKTFuture doing: [ [ process isRunning ] whileTrue: [ 50 milliSeconds wait ] ].
+	self waitGarbageCollect.
+	future := TKTFuture doing: [ 
+		          [ process isRunning ] whileTrue: [ 50 milliSeconds wait ] ].
 	future synchronizeTimeout: 2 seconds.
 	self deny: process isRunning
 ]
 
 { #category : #tests }
 TKTWorkerTest >> testWorkerProcessIsWorkingUntilAllTasksAreDone [
+
 	| worker process waitFuture |
 	worker := TKTWorker new.
 	worker start.
 	process := worker process.
-	waitFuture := TKTFuture doing: [ [ process isRunning ] whileTrue: [ 50 milliSeconds wait ] ].
+	waitFuture := TKTFuture doing: [ 
+		              [ process isRunning ] whileTrue: [ 
+			              50 milliSeconds wait ] ].
 	worker schedule: [ 100 milliSeconds wait ].
 	self assert: process taskQueue size equals: 1.
 	50 milliSeconds wait.
@@ -83,7 +91,7 @@ TKTWorkerTest >> testWorkerProcessIsWorkingUntilAllTasksAreDone [
 	worker := nil.
 	self assert: process taskQueue size equals: 0.
 	self assert: process isRunning.
-	self garbageCollectAndWait .
+	self waitGarbageCollect.
 	waitFuture waitForCompletion: 100 second.
 	self deny: process isRunning
 ]

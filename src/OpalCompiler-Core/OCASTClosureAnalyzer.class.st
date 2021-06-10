@@ -14,7 +14,7 @@ Class {
 OCASTClosureAnalyzer >> lookupAndFixBinding: aVariableNode [
 	| var |
 	var := scope lookupVar: aVariableNode name.
-	aVariableNode binding: var.
+	aVariableNode variable: var.
 	^var
 ]
 
@@ -36,6 +36,17 @@ OCASTClosureAnalyzer >> visitBlockNode: aBlockNode [
 ]
 
 { #category : #visiting }
+OCASTClosureAnalyzer >> visitLocalVariableNode: aVariableNode [
+	"re-lookup local variables..."
+	| var |
+	var := self lookupAndFixBinding: aVariableNode.
+	var isTempVectorTemp ifTrue: [ | vectorVar |
+		vectorVar := scope lookupVar: var vectorName.
+		scope addCopyingTempToAllScopesUpToDefTemp: vectorVar].
+	var isCopying ifTrue: [scope addCopyingTempToAllScopesUpToDefTemp: var].
+]
+
+{ #category : #visiting }
 OCASTClosureAnalyzer >> visitMethodNode: aMethodNode [
 	"here look at the temps and make copying vars / tempVector out of them"
 	self visitArgumentNodes: aMethodNode arguments.
@@ -44,17 +55,4 @@ OCASTClosureAnalyzer >> visitMethodNode: aMethodNode [
 	scope copyEscapingReads.
 	self visitNode: aMethodNode body.
 	aMethodNode temporaries do: [ :each | self lookupAndFixBinding: each ]
-]
-
-{ #category : #visiting }
-OCASTClosureAnalyzer >> visitVariableNode: aVariableNode [
-	"re-lookup the temorary variables..."
-	
-	| var |
-	aVariableNode isLocalVariable ifFalse: [^self].
-	var := self lookupAndFixBinding: aVariableNode.
-	var isTempVectorTemp ifTrue: [ | vectorVar |
-		vectorVar := scope lookupVar: var vectorName.
-		scope addCopyingTempToAllScopesUpToDefTemp: vectorVar].
-	var isCopying ifTrue: [scope addCopyingTempToAllScopesUpToDefTemp: var].
 ]

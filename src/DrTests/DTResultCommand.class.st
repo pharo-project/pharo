@@ -15,5 +15,5 @@ DTResultCommand class >> isAbstract [
 
 { #category : #hooks }
 DTResultCommand >> resultSelected [
-	^ self drTest resultSelected
+	^ self context resultSelected
 ]

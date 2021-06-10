@@ -91,7 +91,7 @@ RBExtractToTemporaryRefactoring >> insertTemporary [
 		addTemporaryNamed: newVariableName
 ]
 
-{ #category : #'private-accessing' }
+{ #category : #'private - accessing' }
 RBExtractToTemporaryRefactoring >> parseTree [
 
 	parseTree
@@ -111,7 +111,7 @@ RBExtractToTemporaryRefactoring >> preconditions [
 						true])
 ]
 
-{ #category : #'private-accessing' }
+{ #category : #'private - accessing' }
 RBExtractToTemporaryRefactoring >> selectedSource [
 
 	| source |

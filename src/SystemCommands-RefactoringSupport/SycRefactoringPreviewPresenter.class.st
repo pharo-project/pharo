@@ -79,8 +79,7 @@ SycRefactoringPreviewPresenter >> activeScope [
 SycRefactoringPreviewPresenter >> alert: aString [
 	"Display a message for the user to read and then dismiss."
 
-	aString isEmptyOrNil
-		ifFalse: [ UIManager default alert: aString ]
+	aString isEmptyOrNil ifFalse: [ self uiManager alert: aString ]
 ]
 
 { #category : #'epicea support' }
@@ -114,9 +113,34 @@ SycRefactoringPreviewPresenter >> changes: aCollection [
 	self generateChanges 
 ]
 
+{ #category : #initialization }
+SycRefactoringPreviewPresenter >> columns [
+
+	^ { (SpCompositeTableColumn new
+		   addColumn:
+			   ((SpCheckBoxTableColumn evaluated: [ :x | selectedRefactorings at: x ])
+				    onActivation: [ :class | self toggleSelectionOf: class ];
+				    onDeactivation: [ :class | self toggleSelectionOf: class ];
+				    width: 20);
+		   addColumn: (SpStringTableColumn evaluated: #name);
+		   yourself) }
+]
+
 { #category : #accessing }
 SycRefactoringPreviewPresenter >> command: aCommand [
 	command := aCommand
+]
+
+{ #category : #initialization }
+SycRefactoringPreviewPresenter >> connectPresenters [
+	table bindKeyCombination: Character backspace asShortcut 
+		toAction: [ self toggleSelectionOf: table selectedItem ].
+	
+	{ table . scopeDropList . diffPresenter } do: [ :each | 
+		each bindKeyCombination: Character cr asKeyCombination 
+			toAction: [ self owner triggerOkAction; close ];
+		bindKeyCombination: Character escape asKeyCombination 
+			toAction: [ self owner triggerCancelAction; close ] ]
 ]
 
 { #category : #accessing }
@@ -129,7 +153,7 @@ SycRefactoringPreviewPresenter >> generateChanges [
 
 	| rbEnvironment |
 	changes := command asRefactorings.
-	rbEnvironment := self activeRBEnvironment.
+	rbEnvironment := changes first model environment.
 	changes do: [ :each | 
 		each model environment: rbEnvironment.
 		each primitiveExecute ]
@@ -154,27 +178,23 @@ SycRefactoringPreviewPresenter >> initializePresenter [
 		whenSelectionChangedDo: [ :selection | 
 			selection selectedItem ifNotNil: [ 
 				self buildDiffFor: selection selectedItem ] ].
+	
 	table
 		whenActivatedDo: [ :selectedElement | 
-			self toggleSelectionOf: selectedElement widget selection selectedItem.
-			self rebuild ].
+			self toggleSelectionOf: selectedElement widget selection selectedItem ].
+	
 	scopeDropList
 		whenSelectedItemChangedDo: [ :scope | self updateChanges ]
 ]
 
 { #category : #initialization }
 SycRefactoringPreviewPresenter >> initializeWidgets [
-	table := self newTable.
+
 	diffPresenter := self newDiff.
 	scopeDropList := self newDropList.
-
-	table
-		addColumn:
-			((SpCheckBoxTableColumn evaluated: [ :x | selectedRefactorings at: x ])
-				onActivation: [ :class | self toggleSelectionOf: class ];
-				onDeactivation: [ :class | self toggleSelectionOf: class ];
-				width: 20);
-		addColumn: (SpStringTableColumn evaluated: #name);
+	table := self newTable.
+	
+	table columns: self columns;
 		hideColumnHeaders.
 
 	diffPresenter disable.
@@ -182,7 +202,6 @@ SycRefactoringPreviewPresenter >> initializeWidgets [
 
 	self
 		selectectAllCheckBox;
-		setShortcuts;
 		setFocus
 ]
 
@@ -227,13 +246,6 @@ SycRefactoringPreviewPresenter >> setFocus [
 		add: diffPresenter
 ]
 
-{ #category : #initialization }
-SycRefactoringPreviewPresenter >> setShortcuts [
-	self
-		bindKeyCombination: PharoShortcuts current acceptShortcut toAction: [ self accept ];
-		bindKeyCombination: Character escape toAction: [ self close ]
-]
-
 { #category : #accessing }
 SycRefactoringPreviewPresenter >> table [
 	^ table
@@ -248,7 +260,8 @@ SycRefactoringPreviewPresenter >> title [
 SycRefactoringPreviewPresenter >> toggleSelectionOf: aRefactoring [
 	"it's normal it's impossible that anItem dosn't store in dictionary because at initialize i fill the dictionary and at each scope change"
 
-	selectedRefactorings at: aRefactoring put: (selectedRefactorings at: aRefactoring) not
+	selectedRefactorings at: aRefactoring put: (selectedRefactorings at: aRefactoring) not.
+	self rebuild 
 ]
 
 { #category : #update }

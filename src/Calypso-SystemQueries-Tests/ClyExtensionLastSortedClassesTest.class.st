@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyExtensionLastSortedClassesTest,
-	#superclass : #ClyBrowserQueryResultTestCase,
+	#superclass : #ClyBrowserQueryResultTest,
 	#category : #'Calypso-SystemQueries-Tests-Results'
 }
 
@@ -23,7 +23,7 @@ ClyExtensionLastSortedClassesTest >> testCreationHierarchicalInstance [
 
 	queryResult := ClyExtensionLastSortedClasses hierarchical.
 	
-	self assert: queryResult baseQueryResult class equals: ClyHierarchicallySortedClasses 
+	self assert: queryResult baseQueryResult class equals: ClyHierarchicallySortedClassesResult 
 ]
 
 { #category : #tests }
@@ -36,14 +36,14 @@ ClyExtensionLastSortedClassesTest >> testCreationSimpleInstance [
 
 { #category : #tests }
 ClyExtensionLastSortedClassesTest >> testFillingHierarchicalInstance [
-	query := ClyAllClassesQuery from: ClyPackageScope of: ClyClass1FromP1 package in: environment.
+	query := ClyAllClassesQuery from: ClyPackageScope of: ClyClass1FromP1Mock package in: environment.
 	queryResult := ClyExtensionLastSortedClasses hierarchical prepareNewFor: query in: environment..
 	
 	queryResult buildWith: {
-		ClySubclassLOfClass0FromPExtendedByP1. ClySubclassN1OfClass1FromP1.  ClyClass1FromP1}.
+		ClySubclassLOfClass0FromPExtendedByP1Mock. ClySubclassN1OfClass1FromP1Mock.  ClyClass1FromP1Mock}.
 	
-	self assertItems: {ClyClass1FromP1. 0. ClySubclassN1OfClass1FromP1. 1.
-		 ClySubclassLOfClass0FromPExtendedByP1. 0}.
+	self assertItems: {ClyClass1FromP1Mock. 0. ClySubclassN1OfClass1FromP1Mock. 1.
+		 ClySubclassLOfClass0FromPExtendedByP1Mock. 0}.
 	self assert: (items last isMarkedWith: ClyExtendedClassTag).
 	self deny: (items first isMarkedWith: ClyExtendedClassTag).
 	self deny: (items second isMarkedWith: ClyExtendedClassTag)
@@ -51,14 +51,14 @@ ClyExtensionLastSortedClassesTest >> testFillingHierarchicalInstance [
 
 { #category : #tests }
 ClyExtensionLastSortedClassesTest >> testFillingSimpleInstance [
-	query := ClyAllClassesQuery from: ClyPackageScope of: ClyClass1FromP1 package in: environment.
+	query := ClyAllClassesQuery from: ClyPackageScope of: ClyClass1FromP1Mock package in: environment.
 	queryResult := ClyExtensionLastSortedClasses simple prepareNewFor: query in: environment.
 
 	queryResult buildWith: {
-		ClySubclassLOfClass0FromPExtendedByP1. ClySubclassN1OfClass1FromP1.  ClyClass1FromP1}.
+		ClySubclassLOfClass0FromPExtendedByP1Mock. ClySubclassN1OfClass1FromP1Mock.  ClyClass1FromP1Mock}.
 	
-	self assertItems: {ClyClass1FromP1. 0. ClySubclassN1OfClass1FromP1. 0.
-		 ClySubclassLOfClass0FromPExtendedByP1. 0}.
+	self assertItems: {ClyClass1FromP1Mock. 0. ClySubclassN1OfClass1FromP1Mock. 0.
+		 ClySubclassLOfClass0FromPExtendedByP1Mock. 0}.
 	self assert: (items last isMarkedWith: ClyExtendedClassTag).
 	self deny: (items first isMarkedWith: ClyExtendedClassTag).
 	self deny: (items second isMarkedWith: ClyExtendedClassTag)
@@ -66,14 +66,14 @@ ClyExtensionLastSortedClassesTest >> testFillingSimpleInstance [
 
 { #category : #tests }
 ClyExtensionLastSortedClassesTest >> testFillingWithExtendedClassSide [
-	query := ClyAllClassesQuery from: ClyPackageScope of: ClyClass1FromP1 package in: environment.
+	query := ClyAllClassesQuery from: ClyPackageScope of: ClyClass1FromP1Mock package in: environment.
 	queryResult := ClyExtensionLastSortedClasses simple prepareNewFor: query in: environment.
 	
 	queryResult buildWith: {
-		ClySubclassLOfClass0FromPExtendedByP1 class. ClyClass2FromP1.  ClyClass1FromP1}.
+		ClySubclassLOfClass0FromPExtendedByP1Mock class. ClyClass2FromP1Mock.  ClyClass1FromP1Mock}.
 	
-	self assertItems: {ClyClass1FromP1. 0. ClyClass2FromP1. 0.
-		 ClySubclassLOfClass0FromPExtendedByP1 class. 0}.
+	self assertItems: {ClyClass1FromP1Mock. 0. ClyClass2FromP1Mock. 0.
+		 ClySubclassLOfClass0FromPExtendedByP1Mock class. 0}.
 	self assert: (items last isMarkedWith: ClyExtendedClassTag)
 ]
 

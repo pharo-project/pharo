@@ -39,15 +39,16 @@ RBItemsSelectionPresenter class >> defaultSpec [
 ]
 
 { #category : #specs }
-RBItemsSelectionPresenter class >> label: aString withItems: coll1 selecting: coll2 [
+RBItemsSelectionPresenter class >> label: aString withItems: items selecting: selectedItems [
 	^ self new 
-		label: aString withItems: coll1 selecting: coll2;
-		openModalWithSpec 
+		label: aString withItems: items selecting: selectedItems;
+		openBlockedDialogWithSpec 
 ]
 
 { #category : #actions }
 RBItemsSelectionPresenter >> accept [
-	"refactoring selectors: (selectedMethods collect: #selector)"
+
+	selectedItems := table selectedItems
 ]
 
 { #category : #actions }
@@ -68,19 +69,19 @@ RBItemsSelectionPresenter >> columnSelector [
 	self shouldBeImplemented 
 ]
 
+{ #category : #accessing }
+RBItemsSelectionPresenter >> components [ 
+	^ { table . label }
+]
+
 { #category : #initialization }
-RBItemsSelectionPresenter >> initializeChangesTree [
-	table addColumn:
-		((SpCheckBoxTableColumn title: ' ' evaluated: [ :aClass | 
-	selectedItems includes: aClass ])
-				onActivation: [ :aClass | selectedItems add: aClass ];
-				onDeactivation: [ :aClass | selectedItems remove: aClass ];
-				width: 20;
-				yourself);
-			addColumn: (SpStringTableColumn 
-				title: self columnName 
-				evaluated: self columnSelector );
-			beResizable.
+RBItemsSelectionPresenter >> connectPresenters [
+	
+	table bindKeyCombination: Character backspace asShortcut 
+		toAction: [ table toggleSelection ].
+	self components do: [ :each |
+	each bindKeyCombination: Character cr asKeyCombination 
+		toAction: [ :presenter | self accept: presenter] ]
 ]
 
 { #category : #initialization }
@@ -95,18 +96,17 @@ RBItemsSelectionPresenter >> initializeDialogWindow: aModalPresenter [
 
 { #category : #initialization }
 RBItemsSelectionPresenter >> initializeWidgets [
-	table := self newTable.
+	table := self instantiate: SpFilteringSelectableListPresenter.
+	table display: self columnSelector.
 	label := self newLabel.
-	
-	self initializeChangesTree.
 ]
 
 { #category : #initialization }
 RBItemsSelectionPresenter >> label: aString withItems: coll1 selecting: coll2 [
 	label label: aString.
-	selectedItems := coll2.
 	
-	table items: coll1
+	table items: coll1;
+		selectItems: coll2	
 ]
 
 { #category : #accessing }

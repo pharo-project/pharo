@@ -1,11 +1,14 @@
 "
-This class defines Help for the system in front of you.
-It defines the default contents when you open a help browser.
+This class defines Help for the system in front of you. It defines the default contents when you open a help browser.
+So `HelpBrowser open` is the same as `HelpBrowser openOn: SystemHelp`.
 
-So ""HelpBrowser open"" is the same as ""HelpBrowser openOn: SystemHelp"".
+It identifies the help to be included in the system based on the fact that the class method should be named `asHelpTopic` and that it is tagged with the pragma `<systemHelp>` 
 
+```
+asHelpTopic 
+	<systemHelp>
 
-
+```
 "
 Class {
 	#name : #SystemHelp,
@@ -13,7 +16,7 @@ Class {
 	#category : #'HelpSystem-Core-Utilities'
 }
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 SystemHelp class >> allSystemHelpPragmas [
 	^ Pragma allNamed: self pragmaKeyword
 ]
@@ -36,7 +39,7 @@ SystemHelp class >> asHelpTopic [
 	^topic
 ]
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 SystemHelp class >> pragmaKeyword [
 
 	^#systemHelp

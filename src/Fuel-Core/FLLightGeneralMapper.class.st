@@ -62,20 +62,20 @@ FLLightGeneralMapper >> visitClassTrait: aClassTrait [
 
 { #category : #visiting }
 FLLightGeneralMapper >> visitCompiledBlock: aCompiledBlock [
-	
-	self mapAndTraceByClusterName: aCompiledBlock to: FLCompiledBlockCluster
-	
-	
+	self
+		mapAndTraceByClusterName: aCompiledBlock
+		to: ((aCompiledBlock method isInstalled not or: [ aCompiledBlock method isDoIt ])
+			ifTrue: [ FLCompiledBlockCluster ]
+			ifFalse: [ FLGlobalCompiledBlockCluster ])
 ]
 
 { #category : #visiting }
 FLLightGeneralMapper >> visitCompiledMethod: aCompiledMethod [
-	(aCompiledMethod isInstalled not or: [aCompiledMethod isDoIt ])
-		ifTrue: [ self mapAndTraceByClusterName: aCompiledMethod to: FLCompiledMethodCluster ]
-		ifFalse: [self mapAndTraceByClusterName: aCompiledMethod to: FLGlobalCompiledMethodCluster]
-		
-	
-	
+	self
+		mapAndTraceByClusterName: aCompiledMethod
+		to: ((aCompiledMethod isInstalled not or: [aCompiledMethod isDoIt ])
+			ifTrue: [ FLCompiledMethodCluster ]
+			ifFalse: [ FLGlobalCompiledMethodCluster ])
 ]
 
 { #category : #visiting }
@@ -83,6 +83,13 @@ FLLightGeneralMapper >> visitDictionary: aDictionary [
 
 	self mapAndTraceByObjectClass: aDictionary to: FLDictionaryCollectionCluster
 
+]
+
+{ #category : #visiting }
+FLLightGeneralMapper >> visitExternalAddress: anObject [
+	self
+		mapAndTraceByObjectClass: anObject
+		to: FLExternalAddressCluster
 ]
 
 { #category : #visiting }

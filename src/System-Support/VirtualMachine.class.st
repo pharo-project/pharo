@@ -164,6 +164,13 @@ VirtualMachine >> freeOldSpaceSize [
 
 ]
 
+{ #category : #gc }
+VirtualMachine >> freeSize [
+	"Return the amount of free memory of the heap in bytes."
+		
+	^ self freeOldSpaceSize + self edenSpaceSize - self youngSpaceSize
+]
+
 { #category : #statistics }
 VirtualMachine >> fullGCCount [
 	"Answer the total number of full GCs since startup (read-only)."
@@ -241,6 +248,12 @@ VirtualMachine >> getSystemAttribute: attributeID [
 
 	<primitive: 149>
 	^ nil
+]
+
+{ #category : #testing }
+VirtualMachine >> hasSmallFloats [
+	"SmallFloats are available in 64 bits machines"
+	^ self wordSize = 8
 ]
 
 { #category : #accessing }
@@ -509,6 +522,22 @@ VirtualMachine >> maxFilenameLength [
 	^ (self getSystemAttribute: 1201) ifNotNil: [ :string | string asNumber ]
 ]
 
+{ #category : #gc }
+VirtualMachine >> maxOldSpaceSize [
+
+	"the max allowed size of old space (Spur only; nil otherwise; 0 implies no limit except that of the underlying platform)"
+
+	^ self parameterAt: 67
+]
+
+{ #category : #gc }
+VirtualMachine >> maxOldSpaceSize: aValue [
+
+	"the max allowed size of old space (Spur only; nil otherwise; 0 implies no limit except that of the underlying platform)"
+
+	^ self parameterAt: 67 put: aValue
+]
+
 { #category : #statistics }
 VirtualMachine >> maximumPauseTimeDueToSegmentAllocation [
 
@@ -526,10 +555,9 @@ VirtualMachine >> memoryEnd [
 
 { #category : #gc }
 VirtualMachine >> memorySize [
-	"for spur, size of heap (read-only)"
+	"Return the memory size of the heap in bytes."
 		
-	^ self parameterAt: 3
-
+	^ self parameterAt: 3 "Readonly parameter for spur"
 ]
 
 { #category : #gc }
@@ -820,7 +848,7 @@ VirtualMachine >> statisticsReport [
 	youngSpaceSize		:= self youngSpaceSize.
 	tenureCount			:= self tenureCount.
 	memorySize			:= self memorySize.
-	freeSize				:= self freeOldSpaceSize + (self edenSpaceSize) - youngSpaceSize.
+	freeSize				:= self freeSize.
 	fullGCs				:= self fullGCCount.
 	fullGCTime			:= self totalFullGCTime.
 	incrGCs				:= self incrementalGCCount.

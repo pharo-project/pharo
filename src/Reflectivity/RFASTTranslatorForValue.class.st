@@ -64,7 +64,7 @@ RFASTTranslatorForValue >> emitWhileTrue: aMessageNode [
 
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 RFASTTranslatorForValue >> visitSequenceNode: aSequenceNode [ 
 	| statements |
 	self emitPreamble: aSequenceNode.

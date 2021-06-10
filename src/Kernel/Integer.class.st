@@ -289,12 +289,7 @@ Integer >> anyMask: mask [
 	^0 ~= (self bitAnd: mask)
 ]
 
-{ #category : #accessing }
-Integer >> as31BitSmallInt [
-	^ self subclassResponsibility
-]
-
-{ #category : #'converting-arrays' }
+{ #category : #'converting - arrays' }
 Integer >> asByteArray [
 
 	| stream |
@@ -305,7 +300,7 @@ Integer >> asByteArray [
 
 ]
 
-{ #category : #'converting-arrays' }
+{ #category : #'converting - arrays' }
 Integer >> asByteArrayOfSize: aSize [ 
 	"Answer a ByteArray of aSize with my value, most-significant byte first."
 	| answer digitPos |
@@ -1045,7 +1040,7 @@ Integer >> hex [
 		storeStringBase: 16
 		storeStringBase: 16 length: 11 padded: true"
 		
-	"12 hex >>> '16r2'"	
+	"12 hex >>> '16rC'"	
 	"10 hex >>> '16rA'"	
 	"-10 hex >>> '-16rA'"	
 		
@@ -1195,7 +1190,7 @@ Integer >> print: positiveNumberString on: aStream prefix: prefix length: minimu
 	
 ]
 
-{ #category : #'printing-numerative' }
+{ #category : #'printing - numerative' }
 Integer >> printHexByteOn: characterWriteStream [
 	"Assuming the receiver is a byte value [0, 255],
 	print a 2 character hexadecimal representation on characterWriteStream
@@ -1214,7 +1209,7 @@ Integer >> printHexByteOn: characterWriteStream [
 			self error: 'byte value between 0 and 255 expected' ]
 ]
 
-{ #category : #'printing-numerative' }
+{ #category : #'printing - numerative' }
 Integer >> printLowercaseHexByteOn: characterWriteStream [
 	"Assuming the receiver is a byte value [0, 255],
 	print a 2 character hexadecimal representation on characterWriteStream
@@ -1233,7 +1228,7 @@ Integer >> printLowercaseHexByteOn: characterWriteStream [
 			self error: 'byte value between 0 and 255 expected' ]
 ]
 
-{ #category : #'printing-numerative' }
+{ #category : #'printing - numerative' }
 Integer >> printOn: aStream base: base length: minimum padded: zeroFlag [
 	"Return a String representation of this number in base b with a minimum length and padded by 0 if zeroFlag is set"
 	
@@ -1252,7 +1247,7 @@ Integer >> printOn: aStream base: base length: minimum padded: zeroFlag [
 
 ]
 
-{ #category : #'printing-numerative' }
+{ #category : #'printing - numerative' }
 Integer >> printOn: aStream base: b nDigits: n [ 
 	"Append a representation of this number in base b on aStream using nDigits.
 	self must be positive."
@@ -1345,13 +1340,13 @@ Integer >> printString [
 	^String streamContents: [:str | self printOn: str base: 10]
 ]
 
-{ #category : #'printing-numerative' }
+{ #category : #'printing - numerative' }
 Integer >> printStringBase: base length: minimum padded: zeroFlag [
 
 	^ String streamContents: [:s| self printOn: s base: base length: minimum padded: zeroFlag]
 ]
 
-{ #category : #'printing-numerative' }
+{ #category : #'printing - numerative' }
 Integer >> printStringHex [
 	"Returns the hex digit part of the integer when printed in hexadecimal format."
 	"30 printStringHex >>> '1E'"
@@ -1360,18 +1355,18 @@ Integer >> printStringHex [
 	^ self printStringBase: 16
 ]
 
-{ #category : #'printing-numerative' }
+{ #category : #'printing - numerative' }
 Integer >> printStringLength: minimal [
 	^self printStringLength: minimal padded: false
 
 ]
 
-{ #category : #'printing-numerative' }
+{ #category : #'printing - numerative' }
 Integer >> printStringLength: minimal padded: zeroFlag [
 	^self printStringBase: 10 length: minimal padded: zeroFlag
 ]
 
-{ #category : #'printing-numerative' }
+{ #category : #'printing - numerative' }
 Integer >> printStringPadded: minimal [
 	^self printStringLength: minimal padded: true
 
@@ -1422,7 +1417,7 @@ Integer >> quo: aNumber [
 	^ aNumber adaptToInteger: self andSend: #quo:
 ]
 
-{ #category : #'printing-numerative' }
+{ #category : #'printing - numerative' }
 Integer >> radix: base [ 
 	^ self printStringBase: base
 ]
@@ -1485,7 +1480,7 @@ Integer >> storeOn: aStream [
 	super storeOn: aStream.
 ]
 
-{ #category : #'printing-numerative' }
+{ #category : #'printing - numerative' }
 Integer >> storeOn: aStream base: base [
 	"Print a representation of the receiver on the stream
 	<aStream> in base <base> where
@@ -1502,7 +1497,7 @@ Integer >> storeOn: aStream base: base [
 
 ]
 
-{ #category : #'printing-numerative' }
+{ #category : #'printing - numerative' }
 Integer >> storeOn: aStream base: base length: minimum padded: zeroFlag [
 	| prefix |
 	prefix := self negative ifTrue: ['-'] ifFalse: [String new].
@@ -1511,7 +1506,7 @@ Integer >> storeOn: aStream base: base length: minimum padded: zeroFlag [
 
 ]
 
-{ #category : #'printing-numerative' }
+{ #category : #'printing - numerative' }
 Integer >> storeStringBase: base length: minimum padded: zeroFlag [
 	"(10 storeStringBase: 16 length: 6 padded: true) >>> '16r00A'"
 
@@ -1519,7 +1514,7 @@ Integer >> storeStringBase: base length: minimum padded: zeroFlag [
 			self storeOn: s base: base length: minimum padded: zeroFlag ]
 ]
 
-{ #category : #'printing-numerative' }
+{ #category : #'printing - numerative' }
 Integer >> storeStringHex [
 	"Returns a string representation of the receiver in base 16 in a way that executing it will return the receiver."
 	"10 storeStringHex >>> '16rA'"

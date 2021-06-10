@@ -19,7 +19,8 @@ Class {
 		'aMethodContext',
 		'aSender',
 		'instVarForTestLookupSymbol',
-		'nonActiveBlockContext'
+		'nonActiveBlockContext',
+		'anArgument'
 	],
 	#classVars : [
 		'Block',
@@ -111,11 +112,17 @@ ContextTest >> privRestartBlockTest [
 
 { #category : #running }
 ContextTest >> setUp [
+
 	super setUp.
-	aCompiledMethod := Rectangle methodDict at: #rightCenter.
-	aReceiver := 100@100 corner: 200@200.
+	aCompiledMethod := Rectangle methodDict at: #areasOutside:.
+	aReceiver := 100 @ 100 corner: 200 @ 200.
 	aSender := thisContext.
-	aMethodContext := Context sender: aSender receiver: aReceiver method: aCompiledMethod arguments: #(). 
+	anArgument := 420 @ 420 corner: 200 @ 200.
+	aMethodContext := Context
+		                  sender: aSender
+		                  receiver: aReceiver
+		                  method: aCompiledMethod
+		                  arguments: { anArgument }
 ]
 
 { #category : #running }
@@ -154,6 +161,23 @@ ContextTest >> testMethodContext [
 	self assert: aMethodContext home notNil.
 	self assert: aMethodContext receiver notNil.
 	self assert: (aMethodContext method isKindOf: CompiledMethod).
+]
+
+{ #category : #tests }
+ContextTest >> testMethodContextPrintDetails [
+
+	self
+		assert: (String streamContents: [ :stream | 
+				 aMethodContext printDetails: stream ])
+		equals: 'Rectangle>>areasOutside:
+	Receiver: (100@100) corner: (200@200)
+	Arguments and temporary variables: 
+		aRectangle: 	(200@200) corner: (420@420)
+	Receiver''s instance variables: 
+		origin: 	(100@100)
+		corner: 	(200@200)
+
+'
 ]
 
 { #category : #tests }
@@ -262,6 +286,17 @@ ContextTest >> testStepIntoQuickMethod [
 ContextTest >> testStepIntoQuickMethodBoolean [
 
 	self deny: aMethodContext stepIntoQuickMethod
+]
+
+{ #category : #tests }
+ContextTest >> testStepIntoQuickMethodInCompiledBlock [
+
+	|newContext|
+	newContext := [ ] asContext.
+	newContext stepIntoQuickMethod: false.
+	self deny: newContext method stepIntoQuickMethods.
+	newContext stepIntoQuickMethod: true.
+	self assert: newContext method stepIntoQuickMethods
 ]
 
 { #category : #tests }

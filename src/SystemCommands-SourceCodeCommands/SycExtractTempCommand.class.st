@@ -9,7 +9,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : #SycExtractTempCommand,
-	#superclass : #SycSourceCodeCommand,
+	#superclass : #SycSourceCodeRefactoringCommand,
 	#instVars : [
 		'tempName'
 	],
@@ -30,6 +30,16 @@ SycExtractTempCommand >> applyResultInContext: aSourceCodeContext [
 	aSourceCodeContext showVariableNamed: tempName
 ]
 
+{ #category : #execution }
+SycExtractTempCommand >> asRefactorings [
+
+	^ {RBExtractToTemporaryRefactoring
+		  extract: sourceNode sourceInterval
+		  to: tempName
+		  from: method selector
+		  in: method origin}
+]
+
 { #category : #accessing }
 SycExtractTempCommand >> defaultMenuIconName [ 
 	^ ##smallUpdateIcon
@@ -38,18 +48,6 @@ SycExtractTempCommand >> defaultMenuIconName [
 { #category : #accessing }
 SycExtractTempCommand >> defaultMenuItemName [
 	^ 'Extract temp'
-]
-
-{ #category : #execution }
-SycExtractTempCommand >> execute [
-	| refactoring |
-	refactoring := RBExtractToTemporaryRefactoring	
-		extract: sourceNode sourceInterval
-		to: tempName
-		from: method selector
-		in: method origin.
-	
-	self executeRefactoring: refactoring.
 ]
 
 { #category : #execution }

@@ -58,7 +58,7 @@ ZipDirectoryMember >> usesFile: aFileReferenceOrFileName [
 	^false
 ]
 
-{ #category : #'private-writing' }
+{ #category : #'private - writing' }
 ZipDirectoryMember >> writeDataTo: aStream [
 	"Write nothing. Directories have no contents to write."
 ]

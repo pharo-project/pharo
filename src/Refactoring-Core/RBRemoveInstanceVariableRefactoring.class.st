@@ -9,12 +9,12 @@ Class {
 	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RBRemoveInstanceVariableRefactoring class >> model: aNamespace remove: variable from: class [
 	^ self model: aNamespace variable: variable class: class
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RBRemoveInstanceVariableRefactoring class >> remove: variable from: class [
 	^ self variable: variable class: class
 ]

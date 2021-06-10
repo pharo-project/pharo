@@ -38,16 +38,14 @@ FLDecoder >> classNamed: className [
 
 { #category : #decoding }
 FLDecoder >> decodeYourself [
-
 	| objectCount |
-	objectCount := self nextEncodedPositiveInteger.
-	
-	indexStream := FLIndexStream on: stream digits: objectCount bytesCount.
+	objectCount := self nextEncodedUint32.
+	indexStream := FLIndexStream
+		on: stream
+		digits: objectCount bytesCount.
 	objects := Array new: objectCount.
 	objectsWriteStream := WriteStream on: objects.
-
-	isBigEndian := self nextEncodedPositiveInteger.
-
+	isBigEndian := self nextEncodedUint32
 ]
 
 { #category : #accessing }
@@ -103,51 +101,54 @@ FLDecoder >> nextEncodedClusterClass [
 
 { #category : #decoding }
 FLDecoder >> nextEncodedInt24 [
-	| n firstDigit |
-	n := firstDigit := stream next.
-	n := (n bitShift: 8) + stream next.
-	n := (n bitShift: 8) + stream next.
-	firstDigit >= 128 ifTrue: [n := -16r1000000 + n].  "decode negative 24-bit integer"
-	^ n
-
+	"SmallInteger is 31 / 63 bits. Hence, we can store a full 24 bit signed integer.
+	Look at the high bit to see whether this is actually a negative integer and then
+	restore the remaining two's complement bits."
+	| uInt |
+	uInt := self nextEncodedUint24.
+	^ (uInt bitShift: -23) = 1
+		ifTrue: [ uInt + (-1 bitShift: 24) ]
+		ifFalse: [ uInt ]
 ]
 
 { #category : #decoding }
 FLDecoder >> nextEncodedInt32 [
-	| n firstDigit |
-	n := firstDigit := stream next.
+	"SmallInteger is 31 / 63 bits.
+	Look at the high bit (bit 30, not 31!) to see whether this is actually a negative
+	integer and then restore the remaining two's complement bits.
+	Note: we don't dispatch to #nextEncodedUint32 to avoid overflow to large integers
+			when decoding negative integers."
+	| n |
+	n := stream next.
+	"See whether bit 7 of the byte is set (= bit 31)"
+	(n bitAnd: 64) = 64 ifTrue: [
+		n := n + (-1 bitShift: 7) ].
 	n := (n bitShift: 8) + stream next.
 	n := (n bitShift: 8) + stream next.
-	n := (n bitShift: 8) + stream next.
-	firstDigit >= 128 ifTrue: [n := -16r100000000 + n].  "decode negative 32-bit integer"
-	^ n
-
+	^ (n bitShift: 8) + stream next
 ]
 
 { #category : #decoding }
 FLDecoder >> nextEncodedInt64 [
-	| n firstDigit |
-	n := firstDigit := stream next.
+	"SmallInteger is 31 / 63 bits.
+	Look at the high bit (bit 61, not 63!) to see whether this is actually a negative
+	integer and then restore the remaining two's complement bits.
+	Note: we don't dispatch to #nextEncodedUint64 to avoid overflow to large integers
+			when decoding negative integers.
+	Note: while the documentation says that SmallInteger uses 63 bits on 64 bit platforms
+			`SmallInteger minVal` actually only uses 61 bits!"
+	| n |
+	n := stream next.
+	"See whether bit 5 of the byte is set (= bit 61)"
+	(n bitAnd: 16) = 16 ifTrue: [
+		n := n + (-1 bitShift: 5) ].
 	n := (n bitShift: 8) + stream next.
 	n := (n bitShift: 8) + stream next.
 	n := (n bitShift: 8) + stream next.
 	n := (n bitShift: 8) + stream next.
 	n := (n bitShift: 8) + stream next.
 	n := (n bitShift: 8) + stream next.
-	n := (n bitShift: 8) + stream next.	
-
-	firstDigit >= 128 ifTrue: [n := -16r10000000000000000 + n].  "decode negative 32-bit integer"
-	^ n
-
-]
-
-{ #category : #decoding }
-FLDecoder >> nextEncodedPositiveInteger [
-	"Read a 32-bit signed integer from the next 4 bytes"
-	| s |
-	s := 0.
-	1 to: 4 do: [:i | s := (s bitShift: 8) + stream next].
-	^ s
+	^ (n bitShift: 8) + stream next
 ]
 
 { #category : #decoding }
@@ -185,8 +186,7 @@ FLDecoder >> nextEncodedUint24 [
 	| n |
 	n := stream next.
 	n := (n bitShift: 8) + stream next.
-	n := (n bitShift: 8) + stream next.
-	^ n
+	^ (n bitShift: 8) + stream next
 
 ]
 
@@ -198,8 +198,7 @@ FLDecoder >> nextEncodedUint32 [
 	n := stream next.
 	n := (n bitShift: 8) + stream next.
 	n := (n bitShift: 8) + stream next.
-	n := (n bitShift: 8) + stream next.
-	^ n
+	^ (n bitShift: 8) + stream next
 
 ]
 
@@ -215,15 +214,14 @@ FLDecoder >> nextEncodedUint64 [
 	n := (n bitShift: 8) + stream next.
 	n := (n bitShift: 8) + stream next.
 	n := (n bitShift: 8) + stream next.
-	n := (n bitShift: 8) + stream next.
-	^ n
+	^ (n bitShift: 8) + stream next
 
 ]
 
 { #category : #decoding }
 FLDecoder >> nextEncodedUint8 [
 	"Answer the next unsigned, 16-bit integer from this (binary) stream."
-	^ stream next.
+	^ stream next
 	
 
 ]

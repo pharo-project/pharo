@@ -71,6 +71,11 @@ ClySpotterModel >> commandListProcessorForContext: aContext step: aStep [
 ]
 
 { #category : #printing }
+ClySpotterModel >> displayStringOn: stream [
+	stream << self browser newWindowTitle
+]
+
+{ #category : #printing }
 ClySpotterModel >> gtDisplayOn: stream [
 	stream << self browser newWindowTitle
 ]
@@ -79,28 +84,4 @@ ClySpotterModel >> gtDisplayOn: stream [
 ClySpotterModel >> initializeOn: aBrowser [
 	browser := aBrowser.
 	self initialize	
-]
-
-{ #category : #private }
-ClySpotterModel >> spotterForCommandsFor: aStep [
-	<spotterOrder: 20>
-
-	browser allContextsDo: [ :each | 
-		self commandListProcessorForContext: each step: aStep]
-]
-
-{ #category : #'accessing spotter' }
-ClySpotterModel >> spotterForGoToFor: aStep [
-	<spotterOrder: 10>
-
-	aStep listProcessor
-		title: 'Go to';
-		allCandidates: [ self collectGoToCandidates ];
-		itemName: #name;
-		itemIcon: #icon;
-		candidatesLimit: 10;
-		filter: GTFilterSubstring;
-		actLogic: [ :assoc :step | 
-			step exit. 
-			assoc activate ]
 ]

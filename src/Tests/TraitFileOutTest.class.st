@@ -59,7 +59,7 @@ TraitFileOutTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitFileOutTest >> testFileOutCategory [
 	"File out whole system category, delete all classes and traits and then
 	file them in again."
@@ -81,7 +81,7 @@ TraitFileOutTest >> testFileOutCategory [
 	self assertCollection: cb classSide selectors asSet includesAll: #(#d #c)
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitFileOutTest >> testFileOutTrait [
 	"fileOut trait T6, remove it from system and then file it in again"
 
@@ -103,7 +103,7 @@ TraitFileOutTest >> testFileOutTrait [
 	self assertCollection: self t6 classSide selectors asSet includesAll: #(#localClassSideMethod: #m2ClassSide:)
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitFileOutTest >> testRecompiling [
 
 	| traitSrcPtr methodSrcPtr |
@@ -120,7 +120,7 @@ TraitFileOutTest >> testRecompiling [
 	
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitFileOutTest >> testRemovingMethods [
 	"When removing a local method, assure that the method
 	from the trait is installed instead and that the users are 

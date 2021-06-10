@@ -16,5 +16,5 @@ DTMiddleListCommand class >> isAbstract [
 { #category : #accessing }
 DTMiddleListCommand >> selectedItems [
 
-	^ self drTest selectedItems
+	^ self context selectedItems
 ]

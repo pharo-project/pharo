@@ -11,7 +11,8 @@ Class {
 		'sender',
 		'signature',
 		'functionResolutionStrategies',
-		'library'
+		'library',
+		'fixedArgumentCount'
 	],
 	#category : #'UnifiedFFI-Callouts'
 }
@@ -58,7 +59,7 @@ FFICalloutMethodBuilder >> calloutAPI [
 	^ calloutAPI
 ]
 
-{ #category : #'private factory' }
+{ #category : #'private - factory' }
 FFICalloutMethodBuilder >> createFFICallout [
 	^ FFICallout new
 		sender: self sender;
@@ -66,7 +67,7 @@ FFICalloutMethodBuilder >> createFFICallout [
 		yourself
 ]
 
-{ #category : #'private factory' }
+{ #category : #'private - factory' }
 FFICalloutMethodBuilder >> createFFICalloutLiteralFromSpec: functionSpec [
 	| externalFunction |
 	
@@ -84,7 +85,7 @@ FFICalloutMethodBuilder >> createFFICalloutLiteralFromSpec: functionSpec [
 	^ externalFunction
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #compatibility }
 FFICalloutMethodBuilder >> extractLibrary [
 	"Obtain the library to use"
 	| ffiLibrary |
@@ -95,6 +96,18 @@ FFICalloutMethodBuilder >> extractLibrary [
 		ifTrue: [ ffiLibrary uniqueInstance ].
 
 	^ ffiLibrary
+]
+
+{ #category : #accessing }
+FFICalloutMethodBuilder >> fixedArgumentCount [
+
+	^ fixedArgumentCount
+]
+
+{ #category : #accessing }
+FFICalloutMethodBuilder >> fixedArgumentCount: anObject [
+
+	fixedArgumentCount := anObject
 ]
 
 { #category : #private }
@@ -152,7 +165,8 @@ FFICalloutMethodBuilder >> generateMethodFromSpec: functionSpec [
 { #category : #initialization }
 FFICalloutMethodBuilder >> initialize [
 	super initialize.
-	functionResolutionStrategies := FFIFunctionResolutionStrategy allSubclasses collect: [:aClass | aClass new]
+	functionResolutionStrategies := FFIFunctionResolutionStrategy allSubclasses collect: [:aClass | aClass new].
+	fixedArgumentCount := 0.
 		
 ]
 

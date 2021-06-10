@@ -39,16 +39,17 @@ CoASTResultSetBuilder >> configureEmptyFetcherForNode: aNode [
 		forNode: aNode
 ]
 
-{ #category : #'private-building' }
+{ #category : #'private - building' }
 CoASTResultSetBuilder >> configureFetcher: aFetcher forNode: aNode [
 	
 	| completion |
 	completion := CoResultSet fetcher: aFetcher.
+	completion caseSensitive: NECPreferences caseSensitive.
 	completion filterWithString: completionContext completionToken.
 	^ completion
 ]
 
-{ #category : #'private-building' }
+{ #category : #'private - building' }
 CoASTResultSetBuilder >> configureFetcherForNode: aNode usingHeuristicAvoidingRepetitions: heuristic [
 	
 	| fetcher |

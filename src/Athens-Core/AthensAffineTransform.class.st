@@ -30,7 +30,7 @@ AthensAffineTransform >> initialize [
 	self loadIdentity
 ]
 
-{ #category : #'vector-transform' }
+{ #category : #'vector - transform' }
 AthensAffineTransform >> inverseTransform: aPoint [ 
 	"We assume matrix is never degenerated"
 	| px py y0 x0 |
@@ -339,7 +339,7 @@ AthensAffineTransform >> sy: number [
 	sy := number
 ]
 
-{ #category : #'vector-transform' }
+{ #category : #'vector - transform' }
 AthensAffineTransform >> transform: aPoint [ 
 	| px py |
 	
@@ -350,7 +350,7 @@ AthensAffineTransform >> transform: aPoint [
 		y: (shy*px + (sy*py) + y) 
 ]
 
-{ #category : #'vector-transform' }
+{ #category : #'vector - transform' }
 AthensAffineTransform >> transformX: px Y: py [
 	"Transform x and y coordinates by receiver. Answer a Point"
 	^ Point 

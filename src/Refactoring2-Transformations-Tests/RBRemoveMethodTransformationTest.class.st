@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveMethodTransformationTest >> testMethodIsReferenced [
 
 	self shouldFail: (RBRemoveMethodTransformation
@@ -13,7 +13,7 @@ RBRemoveMethodTransformationTest >> testMethodIsReferenced [
 							asRefactoring 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveMethodTransformationTest >> testMethodSendsSuper [
 	<expectedFailure>
 	self shouldFail: (RBRemoveMethodTransformation
@@ -22,7 +22,7 @@ RBRemoveMethodTransformationTest >> testMethodSendsSuper [
 							asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveMethodTransformationTest >> testRecursiveMethod [
 
 	| refactoring class selector otherClass |
@@ -46,7 +46,7 @@ RBRemoveMethodTransformationTest >> testRecursiveMethod [
 	self deny: (class definesMethod: selector)
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveMethodTransformationTest >> testRefactoring [
 
 	| refactoring selector class |
@@ -62,7 +62,7 @@ RBRemoveMethodTransformationTest >> testRefactoring [
 	self deny: (class directlyDefinesMethod: selector)
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveMethodTransformationTest >> testTransform [
 
 	| transformation class |

@@ -1,13 +1,6 @@
 Extension { #name : #HelpTopic }
 
 { #category : #'*GT-SpotterExtensions-Core' }
-HelpTopic >> gtAllSubtopics [
-	 ^ self subtopics flatCollect: [:aTopic |
-		aTopic asOrderedCollection, aTopic gtAllSubtopics ]
-		 
-]
-
-{ #category : #'*GT-SpotterExtensions-Core' }
 HelpTopic >> gtBreadcrumbTitle [
 	|breadcrumbTitle currentHelpTopic|
 	
@@ -29,20 +22,6 @@ HelpTopic >> gtTopicIcon [
 { #category : #'*GT-SpotterExtensions-Core' }
 HelpTopic >> spotterActDefault [
 	HelpBrowser openOn: self
-]
-
-{ #category : #'*GT-SpotterExtensions-Core' }
-HelpTopic >> spotterForHelpTopicFor: aStep [
-	<spotterOrder: 200>
-	self flag: 'filter for multiple items like #title + #contents (combined by OR)'.
-	self flag: #specialFilter.
-	aStep listProcessor 
-		title: 'Help contents';
-		items: [ self subtopics ];
-		itemName: [ :helpTopic | helpTopic title ];
-		itemIcon: [ :helpTopic | helpTopic gtTopicIcon ];
-		filter: GTFilterSubstrings;
-		wantsToDisplayOnEmptyQuery: true
 ]
 
 { #category : #'*GT-SpotterExtensions-Core' }

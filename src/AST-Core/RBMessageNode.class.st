@@ -155,7 +155,7 @@ RBMessageNode >> isCascaded [
 	^parent notNil and: [parent isCascade]
 ]
 
-{ #category : #'private-replacing' }
+{ #category : #'private - replacing' }
 RBMessageNode >> isContainmentReplacement: aNode [ 
 	^(self mappingFor: self receiver) = aNode 
 		or: [self arguments anySatisfy: [:each | (self mappingFor: each) = aNode]]
@@ -199,7 +199,7 @@ RBMessageNode >> isSelfSend [
 
 { #category : #testing }
 RBMessageNode >> isSuperSend [
-	^ self receiver isVariable and: [ self receiver name = 'super' ]
+	^ self receiver isSuperVariable
 ]
 
 { #category : #testing }
@@ -327,7 +327,7 @@ RBMessageNode >> renameSelector: newSelector andArguments: varNodeCollection [
 		selector: newSelector
 ]
 
-{ #category : #'private-replacing' }
+{ #category : #'private - replacing' }
 RBMessageNode >> replaceContainmentSourceWith: aNode [ 
 	| originalNode needsParenthesis |
 	needsParenthesis := aNode hasParentheses not and: [aNode needsParenthesis].
@@ -358,7 +358,7 @@ RBMessageNode >> replaceNode: aNode withNode: anotherNode [
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])
 ]
 
-{ #category : #'private-replacing' }
+{ #category : #'private - replacing' }
 RBMessageNode >> replaceSourceWith: aNode [ 
 	(self isContainmentReplacement: aNode) 
 		ifTrue: [^self replaceContainmentSourceWith: aNode].
@@ -366,7 +366,7 @@ RBMessageNode >> replaceSourceWith: aNode [
 	^self replaceSourceWithMessageNode: aNode
 ]
 
-{ #category : #'private-replacing' }
+{ #category : #'private - replacing' }
 RBMessageNode >> replaceSourceWithMessageNode: aNode [ 
 	| isBinaryToKeyword newSelectorParts  oldkeywordsIntervals|
 	self numArgs = aNode numArgs ifFalse: [^super replaceSourceWith: aNode].

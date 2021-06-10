@@ -26,3 +26,8 @@ Object >> primitiveError: aString [
 
 	UIManager default onPrimitiveError: aString
 ]
+
+{ #category : #'*UIManager' }
+Object >> uiManager [
+	^ UIManager default
+]

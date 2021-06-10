@@ -83,7 +83,7 @@ RubWorkspaceBarRuler >> modeListMenu [
 	^ menu
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 RubWorkspaceBarRuler >> noteNewOwner: aMorph [
 	super noteNewOwner: aMorph.
 	self color: self backgroundColor.

@@ -32,7 +32,7 @@ ClyQueryBrowserState >> activeScope: anObject [
 
 { #category : #private }
 ClyQueryBrowserState >> createBrowser [
-	^ClyQueryBrowser new
+	^ClyQueryBrowserMorph new
 ]
 
 { #category : #accessing }

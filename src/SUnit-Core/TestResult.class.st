@@ -22,37 +22,37 @@ TestResult class >> currentTheme [
 	^ Smalltalk ui theme
 ]
 
-{ #category : #'default-color' }
+{ #category : #'default - color' }
 TestResult class >> defaultColorBackGroundForErrorTest [
 	^ self currentTheme testColorError
 ]
 
-{ #category : #'default-color' }
+{ #category : #'default - color' }
 TestResult class >> defaultColorBackGroundForFailureTest [
 	^ self currentTheme testColorFailure
 ]
 
-{ #category : #'default-color' }
+{ #category : #'default - color' }
 TestResult class >> defaultColorBackGroundForPassingTest [
 	^ self currentTheme testColorPassing
 ]
 
-{ #category : #'default-color' }
+{ #category : #'default - color' }
 TestResult class >> defaultColorText [
 	^ Color black
 ]
 
-{ #category : #'default-color' }
+{ #category : #'default - color' }
 TestResult class >> defaultColorTextForErrorTest [
 	^ self defaultColorText
 ]
 
-{ #category : #'default-color' }
+{ #category : #'default - color' }
 TestResult class >> defaultColorTextForFailureTest [
 	^ self defaultColorText
 ]
 
-{ #category : #'default-color' }
+{ #category : #'default - color' }
 TestResult class >> defaultColorTextForPassingTest [
 	^ self defaultColorText
 ]

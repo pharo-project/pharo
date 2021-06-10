@@ -7,7 +7,7 @@ Class {
 	#category : #'Slot-Core-Manifest'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'meta-data - dependency analyser' }
 ManifestSlotCore class >> ignoredDependencies [
 	^ #(#'System-Settings-Core')
 ]

@@ -4,7 +4,7 @@ Class {
 	#category : #'GT-Spotter-Exceptions'
 }
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTCurrentSpotterExceptionHandler class >> defaultValue [
 	^ nil
 ]
@@ -20,7 +20,7 @@ GTCurrentSpotterExceptionHandler class >> value [
 	^ self signal
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTCurrentSpotterExceptionHandler >> defaultAction [
 	^ self class defaultValue
 ]

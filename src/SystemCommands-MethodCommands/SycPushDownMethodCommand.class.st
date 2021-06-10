@@ -3,7 +3,7 @@ I am a command to push down given methods
 "
 Class {
 	#name : #SycPushDownMethodCommand,
-	#superclass : #SycMethodCommand,
+	#superclass : #SysRefactoringMethodCommand,
 	#category : #'SystemCommands-MethodCommands'
 }
 
@@ -26,6 +26,7 @@ SycPushDownMethodCommand >> asRefactorings [
 	"Return push down method refactoring using method"
 	| refactoring |
 	refactoring := RBPushDownMethodRefactoring 
+		model: model
 		pushDown: (methods collect: [ :each | each selector ])
 		from: methods first origin.
 	^ OrderedCollection with: refactoring 
@@ -68,5 +69,5 @@ SycPushDownMethodCommand >> selectMethods [
 			withItems: (class methods sort: [ :a :b | a asString < b asString ]) asOrderedCollection
 			selecting: selectedMethods. 
 	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
-	methods := selectedMethods.
+	methods := dialog presenter selectedItems.
 ]

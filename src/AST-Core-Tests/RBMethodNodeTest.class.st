@@ -114,7 +114,7 @@ RBMethodNodeTest >> testCachingMethodArguments [
 	self assert: (ast methodPropertyAt: #argumentNames) equals: #(someArgName someAnotherArgName)
 ]
 
-{ #category : #'testing-comments' }
+{ #category : #'tests - comments' }
 RBMethodNodeTest >> testCommentedMethodHasComments [
 
 	| tree |
@@ -128,7 +128,7 @@ RBMethodNodeTest >> testCommentedMethodHasComments [
 
 ]
 
-{ #category : #'testing-comments' }
+{ #category : #'tests - comments' }
 RBMethodNodeTest >> testCommentsParent [
 	"Test if comment has a parent"
 	self
@@ -136,7 +136,15 @@ RBMethodNodeTest >> testCommentsParent [
 		equals: #testCommentsParent.
 ]
 
-{ #category : #'testing-comments' }
+{ #category : #tests }
+RBMethodNodeTest >> testHasArguments [
+
+	| ast |
+	ast := self parseMethod: 'foo: arg'.
+	self assert: ast hasArguments
+]
+
+{ #category : #'tests - comments' }
 RBMethodNodeTest >> testHasComments [
 
 	| tree |
@@ -178,6 +186,18 @@ RBMethodNodeTest >> testMethodClass [
 	"if we create an AST, the class should be nil"
 	ast := RBMethodNode selector: #tt body: RBSelectorNode new. 
 	self assert: ast methodClass equals: nil
+]
+
+{ #category : #'tests - comments' }
+RBMethodNodeTest >> testMethodWithCommentsAndEmptyStatements [
+
+	| tree |
+	tree := self parseMethod: 'foo: abd bar: cde  
+		"this is comment".
+		"this is another comment"'.
+
+	self assert: tree comments first contents equals: 'this is comment'.
+	self assert: tree body comments first contents equals: 'this is another comment'
 ]
 
 { #category : #tests }
@@ -373,7 +393,7 @@ RBMethodNodeTest >> testSizeOfSignatureOfUnaryMethod [
 	self assert: tree conceptualSignatureSize equals: 'foo' size
 ]
 
-{ #category : #'testing-comments' }
+{ #category : #'tests - comments' }
 RBMethodNodeTest >> testUncommentMethodDoesNotHaveComments [
 
 	| tree |

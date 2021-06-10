@@ -165,6 +165,12 @@ AbstractWorldRenderer >> actualScreenSize [
 	self subclassResponsibility 
 ]
 
+{ #category : #initialization }
+AbstractWorldRenderer >> convertWindowMouseEventPosition: aPosition [
+
+	self subclassResponsibility
+]
+
 { #category : #activation }
 AbstractWorldRenderer >> deactivate [
 

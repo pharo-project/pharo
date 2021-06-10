@@ -92,22 +92,12 @@ OSBackendWindow >> isValid [
 ]
 
 { #category : #factory }
-OSBackendWindow >> newAthensRenderer [
-	self subclassResponsibility
-]
-
-{ #category : #factory }
 OSBackendWindow >> newFormRenderer: aForm [
 	self subclassResponsibility
 ]
 
 { #category : #factory }
 OSBackendWindow >> newGenericRenderer [
-	self subclassResponsibility
-]
-
-{ #category : #factory }
-OSBackendWindow >> newOpenGLRenderer [
 	self subclassResponsibility
 ]
 
@@ -185,8 +175,14 @@ OSBackendWindow >> setMouseCursor: cursorWithMask [
 	self setMouseCursor: cursorWithMask mask: cursorWithMask maskForm
 ]
 
-{ #category : #accessing }
+{ #category : #cursor }
 OSBackendWindow >> setMouseCursor: cursor mask: mask [
+
+	self setMouseCursor: cursor mask: mask andScale: 1
+]
+
+{ #category : #accessing }
+OSBackendWindow >> setMouseCursor: cursor mask: mask andScale: scale [
 ]
 
 { #category : #accessing }

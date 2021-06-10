@@ -14,7 +14,7 @@ Class {
 	#category : #'MonticelloGUI-Tools'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 MCRepositoryInspector class >> repository: aFileBasedRepository workingCopy: aWorkingCopy [
 	^self new
 		setRepository: aFileBasedRepository workingCopy: aWorkingCopy;

@@ -27,13 +27,13 @@ GLMBrickGeometryTrait >> brickBounds: aRectangle [
 	self wrappedBounds brickBounds: aRectangle
 ]
 
-{ #category : #'private-geometry' }
+{ #category : #'private - geometry' }
 GLMBrickGeometryTrait >> customHeight [
 
 	^ self layout height brickValue: self
 ]
 
-{ #category : #'private-geometry' }
+{ #category : #'private - geometry' }
 GLMBrickGeometryTrait >> customWidth [
 
 	^ self layout width brickValue: self
@@ -68,7 +68,7 @@ GLMBrickGeometryTrait >> globalBounds [
 	^ self owner ifNotNil: [ self brickBounds translateBy: self owner globalBoundsTranslateFactor ] ifNil: [ self brickBounds ].
 ]
 
-{ #category : #'private-geometry' }
+{ #category : #'private - geometry' }
 GLMBrickGeometryTrait >> globalBoundsTranslateFactor [
 
 	^ self owner ifNotNil: [ self owner globalBoundsTranslateFactor + self brickBounds origin ] ifNil: [ 0@0 ]
@@ -100,7 +100,7 @@ GLMBrickGeometryTrait >> hPadding [
 	^ self paddingLeft + self paddingRight
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrickGeometryTrait >> hasProperty: aSymbol [
 
 	^ self explicitRequirement
@@ -298,31 +298,31 @@ GLMBrickGeometryTrait >> position: aPoint [
 	self translateBy: (aPoint asNonFractionalPoint - self brickBounds topLeft)
 ]
 
-{ #category : #'private-geometry' }
+{ #category : #'private - geometry' }
 GLMBrickGeometryTrait >> privateBounds: aRectangle [
 	
 	^ self explicitRequirement
 ]
 
-{ #category : #'private-geometry' }
+{ #category : #'private - geometry' }
 GLMBrickGeometryTrait >> privateHeight: anObject [
 	
 	self layout height: anObject
 ]
 
-{ #category : #'private-geometry' }
+{ #category : #'private - geometry' }
 GLMBrickGeometryTrait >> privateWidth: anObject [
 
 	self layout width: anObject
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrickGeometryTrait >> removeProperty: aSymbol [
 	
 	^ self explicitRequirement
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrickGeometryTrait >> setProperty: aSymbol toValue: anObject [
 	
 	^ self explicitRequirement
@@ -358,7 +358,7 @@ GLMBrickGeometryTrait >> translateYTo: anInteger [
 	self translateY: (self brickBounds top negated + anInteger)
 ]
 
-{ #category : #'private-geometry' }
+{ #category : #'private - geometry' }
 GLMBrickGeometryTrait >> updateFoundationBounds [
 
 	self owner ifNotNil: [ :o | o isFoundationBrick ifTrue: [ 
@@ -366,7 +366,7 @@ GLMBrickGeometryTrait >> updateFoundationBounds [
 			(o isVShrinking | o isHShrinking) ifTrue: [ o privateExtent: self outerBounds extent ] ] ] ]
 ]
 
-{ #category : #'private-geometry' }
+{ #category : #'private - geometry' }
 GLMBrickGeometryTrait >> updateHeight [
 	"no need to care about height, when it's logic is not customized"
 	self layout isHeightCustom ifFalse: [ ^ self ].
@@ -375,7 +375,7 @@ GLMBrickGeometryTrait >> updateHeight [
 		do: [ "just skip and do nothing" ]
 ]
 
-{ #category : #'private-geometry' }
+{ #category : #'private - geometry' }
 GLMBrickGeometryTrait >> updateWidth [
 	"no need to care about width, when it's logic is not customized"
 	self layout isWidthCustom ifFalse: [ ^ self ].
@@ -396,19 +396,19 @@ GLMBrickGeometryTrait >> vPadding [
 	^ self paddingTop + self paddingBottom
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrickGeometryTrait >> valueOfProperty: aSymbol [
 	
 	^ self explicitRequirement
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrickGeometryTrait >> valueOfProperty: aSymbol ifAbsent: aBlock [
 	
 	^ self explicitRequirement
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrickGeometryTrait >> valueOfProperty: aSymbol ifAbsentPut: aBlock [ 
 	
 	^ self explicitRequirement

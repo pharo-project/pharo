@@ -18,18 +18,28 @@ Class {
 { #category : #specs }
 RewriteRuleEditor class >> defaultSpec [
 
-	^ SpBoxLayout newHorizontal
-		add: (SpBoxLayout newVertical
+	^ SpBoxLayout newLeftToRight
+		add: (SpBoxLayout newTopToBottom
 			add: #searchLabel expand: false;
 			add: #searchPattern expand: true fill: true padding: 0;
 			add: #replaceLabel expand: false;
 			add: #replacePattern expand: true fill: true padding: 0) 
 			expand: true fill: true padding: 5;
-		add: (SpBoxLayout newVertical 
+		add: (SpBoxLayout newTopToBottom 
 			add: #helpText expand: true fill: true padding: 18;
 			addLast: #replaceButton)
 			expand: false fill: false padding: 0;
 		yourself	
+]
+
+{ #category : #'world menu' }
+RewriteRuleEditor class >> menuCommandOn: aBuilder [
+    <worldMenu>
+    (aBuilder item: #'Rewrite Rule Editor')
+                action: [self open];
+                parent: #Refactoring;
+                help: 'Editor for custom refactoring rewrites';
+                order: 10
 ]
 
 { #category : #examples }

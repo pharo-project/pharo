@@ -115,7 +115,7 @@ PasteUpMorph >> addMorph: aMorph centeredNear: aPoint [
 
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 PasteUpMorph >> addMorphFront: aMorph [
 
 	^self addMorphInFrontOfLayer: aMorph
@@ -743,7 +743,7 @@ PasteUpMorph >> morphToGrab: event [
 	^nil
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 PasteUpMorph >> morphsInFrontOf: someMorph overlapping: aRectangle do: aBlock [
 	"Include hands if the receiver is the World"
 	self handsDo:[:m|

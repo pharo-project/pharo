@@ -34,6 +34,25 @@ LocalVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitLocalVariableNode: aNode
 ]
 
+{ #category : #'read/write usage' }
+LocalVariable >> analyzeRead: aVariableNode by: aSemanticAnalyzer [
+	super analyzeRead: aVariableNode by: aSemanticAnalyzer.
+
+	aSemanticAnalyzer analyzeLocalVariableRead: self
+]
+
+{ #category : #'read/write usage' }
+LocalVariable >> analyzeWrite: aVariableNode by: aSemanticAnalyzer [
+	super analyzeWrite: aVariableNode by: aSemanticAnalyzer.
+
+	aSemanticAnalyzer analyzeLocalVariableWrite: self
+]
+
+{ #category : #converting }
+LocalVariable >> asDoItVariableFrom: aContext [
+	^ DoItVariable fromContext: aContext variable: self
+]
+
 { #category : #converting }
 LocalVariable >> asString [
 
@@ -201,7 +220,7 @@ LocalVariable >> markEscapingRead [
 { #category : #escaping }
 LocalVariable >> markEscapingWrite [
 	escaping := #escapingWrite.
-	self isRepeatedWrite ifFalse:[usage := #write]
+	self isRepeatedWrite ifFalse: [usage := #write]
 ]
 
 { #category : #'read/write usage' }

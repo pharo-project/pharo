@@ -87,6 +87,8 @@ FTBasicItem >> collapse [
 	If any selected elements are within the childrens of the collapsed element,
 	I select the collapsed element."
 
+	self isExpanded ifFalse: [ ^ self ].
+	
 	recentlyChanged := true.
 	self dataSource
 		updateSelectionWithCollectBlock:
@@ -115,7 +117,7 @@ FTBasicItem >> collapseAndRefresh [
 
 { #category : #button }
 FTBasicItem >> collpasedButton [
-	^ IconicButton new
+	^ IconicButtonMorph new
 		target: self;
 		actionSelector: #expandAndRefresh;
 		arguments: {};
@@ -187,7 +189,7 @@ FTBasicItem >> expandWithoutChange [
 
 { #category : #button }
 FTBasicItem >> expandedButton [
-	^ IconicButton new
+	^ IconicButtonMorph new
 		target: self;
 		actionSelector: #collapseAndRefresh;
 		arguments: {};

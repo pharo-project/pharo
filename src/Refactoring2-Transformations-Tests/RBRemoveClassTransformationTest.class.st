@@ -17,7 +17,7 @@ RBRemoveClassTransformationTest >> resumeIfCannotRemove: error [
 		ifTrue: [ error resume ]
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveClassTransformationTest >> testRefactoring [
 	| refactoring |
 	refactoring := (RBRemoveClassTransformation className: #RBFooDummyLintRuleTest1) asRefactoring.
@@ -30,7 +30,7 @@ RBRemoveClassTransformationTest >> testRefactoring [
 	self assert: (refactoring model classNamed: 'RBTransformationDummyRuleTest1' asSymbol) superclass equals: (refactoring model classNamed: #RBDummyLintRuleTest)
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveClassTransformationTest >> testRemoveClassWithBadName [
 
 	self shouldFail: (RBRemoveClassTransformation
@@ -38,7 +38,7 @@ RBRemoveClassTransformationTest >> testRemoveClassWithBadName [
 							asRefactoring 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveClassTransformationTest >> testRemoveClassWithReferences [
 
 	self shouldFail: (RBRemoveClassTransformation
@@ -46,7 +46,7 @@ RBRemoveClassTransformationTest >> testRemoveClassWithReferences [
 							asRefactoring 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveClassTransformationTest >> testRemoveClassWithSubclasses [
 
 	self shouldFail: (RBRemoveClassTransformation
@@ -54,7 +54,7 @@ RBRemoveClassTransformationTest >> testRemoveClassWithSubclasses [
 							asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveClassTransformationTest >> testTransform [
 
 	| transformation newClass superclass |

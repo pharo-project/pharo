@@ -4,7 +4,7 @@ Class {
 	#category : #'OpalCompiler-Tests-IR'
 }
 
-{ #category : #'testing - adding' }
+{ #category : #'tests - adding' }
 IRTransformTest >> testAdd [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -21,7 +21,7 @@ IRTransformTest >> testAdd [
 		equals: 2
 ]
 
-{ #category : #'testing - adding' }
+{ #category : #'tests - adding' }
 IRTransformTest >> testAddBefore [
 	| iRMethod aCompiledMethod ret |
 	iRMethod := IRBuilder new
@@ -41,7 +41,7 @@ IRTransformTest >> testAddBefore [
 		equals: 2
 ]
 
-{ #category : #'testing - adding' }
+{ #category : #'tests - adding' }
 IRTransformTest >> testAddIntructions [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -60,7 +60,7 @@ IRTransformTest >> testAddIntructions [
 		equals: 2
 ]
 
-{ #category : #'testing - adding' }
+{ #category : #'tests - adding' }
 IRTransformTest >> testAddIntructionsBefore [
 	| iRMethod aCompiledMethod push |
 	iRMethod := IRBuilder new
@@ -79,7 +79,7 @@ IRTransformTest >> testAddIntructionsBefore [
 		equals: 2
 ]
 
-{ #category : #'testing - adding' }
+{ #category : #'tests - adding' }
 IRTransformTest >> testAddIntructionsBeforeFromLList [
 	| iRMethod aCompiledMethod push llist col |
 	iRMethod := IRBuilder new
@@ -98,7 +98,7 @@ IRTransformTest >> testAddIntructionsBeforeFromLList [
 		equals: 2
 ]
 
-{ #category : #'testing - enumeration' }
+{ #category : #'tests - enumeration' }
 IRTransformTest >> testAllInstructions [
 		| ir |
 
@@ -106,14 +106,14 @@ IRTransformTest >> testAllInstructions [
 		self assert: ir allInstructions last isReturn.
 ]
 
-{ #category : #'testing - enumeration' }
+{ #category : #'tests - enumeration' }
 IRTransformTest >> testAllTempAccessInstructions [
 	| ir |
 	ir := IRBuilderTest new testPushTempTemp.
 	self assert: ir allTempAccessInstructions size equals: 1
 ]
 
-{ #category : #'testing - adding' }
+{ #category : #'tests - adding' }
 IRTransformTest >> testDelete [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -129,7 +129,7 @@ IRTransformTest >> testDelete [
 		equals: 1
 ]
 
-{ #category : #'testing - adding' }
+{ #category : #'tests - adding' }
 IRTransformTest >> testReplace [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
@@ -144,7 +144,7 @@ IRTransformTest >> testReplace [
 		equals: 2
 ]
 
-{ #category : #'testing - adding' }
+{ #category : #'tests - adding' }
 IRTransformTest >> testReplaceInstr [
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new

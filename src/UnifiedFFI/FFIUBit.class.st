@@ -44,12 +44,12 @@ FFIUBit >> basicHandle: aHandle at: index put: value [
 	^ aHandle platformUnsignedBitAt: index put: value
 ]
 
-{ #category : #'private emitting code' }
+{ #category : #'private - emitting code' }
 FFIUBit >> emitSelector [
 	^ 'platformUnsignedBitAt'
 ]
 
-{ #category : #'private emitting code' }
+{ #category : #'private - emitting code' }
 FFIUBit >> offsetPointerReadFieldAt: offsetVariableName [
 	^ '^ExternalData 
 		fromHandle: (handle {1}: {2})
@@ -81,7 +81,7 @@ FFIUBit >> offsetWriteFieldAt: offsetVariableName with: valueName [
 			<< ' put: ' << valueName ]
 ]
 
-{ #category : #'private emitting code' }
+{ #category : #'private - emitting code' }
 FFIUBit >> pointerReadFieldAt: byteOffset [
 	"since offsetPointerReadFieldAt: receives a variable no matter what we use the trick of 
 	 just passing the offset as a string... it will work :)"

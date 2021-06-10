@@ -9,13 +9,13 @@ Class {
 	#category : #'GT-BytecodeDebugger-UI'
 }
 
-{ #category : #'private building' }
+{ #category : #'private - building' }
 GTBytecodeDebuggerVariablesBrowser >> buildVariablesFromContext: aContext [ 
 
 	^ aContext gtBytecodeDebuggerRetrieveContextValues
 ]
 
-{ #category : #'private building' }
+{ #category : #'private - building' }
 GTBytecodeDebuggerVariablesBrowser >> variablesIn: aComposite [
 
 	^ (super variablesIn: aComposite)

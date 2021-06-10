@@ -29,8 +29,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'model',
-		'options',
-		'searchInPackages'
+		'options'
 	],
 	#classVars : [
 		'RefactoringOptions'
@@ -57,7 +56,7 @@ RBRefactoring class >> initializeRefactoringOptions [
 		put: [ :ref :imps | self error: #implementorToInline ];
 		
 		at: #methodName
-		put: [ :ref :methodName | self error: #methodName ];
+		put: [ :methodName | self error: #methodName ];
 		
 		at: #selfArgumentName
 		put: [ :ref | self error: #selfArgumentName ];
@@ -83,8 +82,8 @@ RBRefactoring class >> initializeRefactoringOptions [
 		at: #openBrowser
 		put: [ :ref :env |  self error: #openBrowser ];
 		
-		at: #searchInAllHierarchy
-		put: [ self error: #searchInAllHierarchy ]
+		at: #searchInWholeHierarchy
+		put: [ self error: #searchInWholeHierarchy ]
 ]
 
 { #category : #'accessing signal' }
@@ -177,12 +176,7 @@ RBRefactoring >> convertAllReferencesTo: aSymbol using: searchReplacer [
 				convertMethod: method selector
 				for: method modelClass
 				using: searchReplacer].
-	searchInPackages 
-		ifNil: [ self model allReferencesTo: aSymbol do: aBlock ]
-		ifNotNil: [ self model allReferencesTo: aSymbol inPackages: searchInPackages do: aBlock ]
-	
-	
-			
+	self model allReferencesTo: aSymbol do: aBlock
 ]
 
 { #category : #support }
@@ -327,6 +321,15 @@ RBRefactoring >> performCompositeRefactoring: aRefactoring [
 	aRefactoring primitiveExecute
 ]
 
+{ #category : #transforming }
+RBRefactoring >> performCompositeRefactoringThroughWarning: aRefactoring [ 
+	[ aRefactoring copyOptionsFrom: self options.
+	aRefactoring primitiveExecute ]
+	on: RBRefactoringError do: [ :ex | ex resume ]
+
+	
+]
+
 { #category : #utilities }
 RBRefactoring >> poolVariableNamesFor: aClass [ 
 	| pools |
@@ -334,10 +337,14 @@ RBRefactoring >> poolVariableNamesFor: aClass [
 	aClass withAllSuperclasses do: 
 			[:each | 
 			each allPoolDictionaryNames do: 
-					[:pool | 
-					pools addAll: ((Smalltalk globals at: pool asSymbol) classPool keys 
-								collect: [:name | name asString])]].
+					[:pool |
+					pools addAll: (self poolVariableNamesIn: pool asSymbol) ] ].
 	^pools
+]
+
+{ #category : #transforming }
+RBRefactoring >> poolVariableNamesIn: poolName [ 
+	^(model classNamed: poolName) classPool keys
 ]
 
 { #category : #preconditions }
@@ -354,7 +361,7 @@ RBRefactoring >> primitiveExecute [
 { #category : #private }
 RBRefactoring >> refactoringConfirmWarning: aString [
 	| ret |
-	ret := UIManager default confirm: aString orCancel: [ ^ RBRefactoringFailure signal: 'aborted' ].
+	ret := self uiManager confirm: aString orCancel: [ ^ RBRefactoringFailure signal: 'aborted' ].
 	^ ret
 ]
 
@@ -391,7 +398,7 @@ RBRefactoring >> requestImplementorToInline: implementorsCollection [
 
 { #category : #requests }
 RBRefactoring >> requestMethodNameFor: aMethodName [ 
-	^(self options at: #methodName) value: self value: aMethodName
+	^(self options at: #methodName) value: aMethodName
 ]
 
 { #category : #requests }
@@ -428,11 +435,6 @@ RBRefactoring >> safeVariableNameFor: aClass temporaries: allTempVars basedOn: a
 			i := i + 1.
 			newString := baseString , i printString ].
 	^ newString
-]
-
-{ #category : #accessing }
-RBRefactoring >> searchInPackages: aList [
-	searchInPackages := aList
 ]
 
 { #category : #requests }

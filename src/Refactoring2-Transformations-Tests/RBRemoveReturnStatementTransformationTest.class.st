@@ -4,14 +4,14 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #'testing-utilities' }
+{ #category : #utilities }
 RBRemoveReturnStatementTransformationTest >> methodAfter [
 
 	| variable |
 	variable := 'String'.
 ]
 
-{ #category : #'testing-utilities' }
+{ #category : #utilities }
 RBRemoveReturnStatementTransformationTest >> methodBefore [
 
 	| variable |
@@ -19,7 +19,7 @@ RBRemoveReturnStatementTransformationTest >> methodBefore [
 	^ variable
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveReturnStatementTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBRemoveReturnStatementTransformation
@@ -29,7 +29,7 @@ RBRemoveReturnStatementTransformationTest >> testClassDoesNotExist [
 							asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveReturnStatementTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBRemoveReturnStatementTransformation 
@@ -39,7 +39,7 @@ RBRemoveReturnStatementTransformationTest >> testMethodDoesNotExist [
 							asRefactoring 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveReturnStatementTransformationTest >> testRefactoring [
 
 	| refactoring class |
@@ -56,7 +56,7 @@ RBRemoveReturnStatementTransformationTest >> testRefactoring [
 			equals: (class parseTreeFor: #methodAfter) body.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveReturnStatementTransformationTest >> testReturnDoesNotExist [
 
 	self shouldFail: (RBRemoveReturnStatementTransformation
@@ -66,7 +66,7 @@ RBRemoveReturnStatementTransformationTest >> testReturnDoesNotExist [
 							asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveReturnStatementTransformationTest >> testTransform [
 
 	| transformation class |

@@ -14,11 +14,12 @@ Class {
 DrTestsTestRunnerUITest >> setUp [
 
 	super setUp.
-	drTest := DrTests on: { DTTestsRunner }.
+	drTest := DrTests on: { DTTestsRunnerPlugin }.
 ]
 
 { #category : #tests }
 DrTestsTestRunnerUITest >> testRunTestsUpdatesUIWithResults [
-	drTest startButton performAction.
-	self assert: drTest resultsList roots notEmpty
+
+	drTest pluginPresenter startButton performAction.
+	self assert: drTest pluginPresenter resultsList roots notEmpty
 ]
