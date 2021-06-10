@@ -5,7 +5,7 @@ So I will return the projects required for the tests
 "
 Class {
 	#name : #MockCatalogProvider,
-	#superclass : #CatalogProvider,
+	#superclass : #AnObsoleteCatalogProvider,
 	#category : #'GT-Tests-Spotter-Processors'
 }
 
