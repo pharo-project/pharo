@@ -16,8 +16,9 @@ Class {
 
 { #category : #adding }
 ReSmalllintChecker >> addCritique: aCritique [
-
-	^ critiques add: aCritique
+  (((critiques  collect: [ :x | x sourceAnchor sourceEntity name ]) includes: aCritique sourceAnchor sourceEntity name))
+  ifFalse:[
+    ^ critiques add: aCritique]
 ]
 
 { #category : #private }
