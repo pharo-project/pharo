@@ -294,7 +294,6 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfGeneralTests.
 	BaselineOfMisc.
 	BaselineOfEpicea.
-	BaselineOfCatalog.
 	BaselineOfRefactoring.
 	BaselineOfOSWindow.
 	BaselineOfQA.
