@@ -97,7 +97,7 @@ RBFindAndReplaceRefactoring >> extract: occurrence of: rbMethod [
 	refactoring setOption: #existingSelector toUse:  [ :ref | 
 			ref parameters: (self argumentsOf: occurrence value).
 			selector].
-	self performCompositeRefactoring: refactoring ] on: Exception do: [ :e | e ]
+	self performCompositeRefactoring: refactoring ] on: Exception do: [ :e | ]
 ]
 
 { #category : #accessing }

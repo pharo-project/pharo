@@ -784,7 +784,9 @@ RBProgramNode >> matchList: matchNodes index: matchIndex against: programNodes i
 			[currentDictionary := aDictionary copy.
 			programNodes size < currentIndex or: 
 					[nodes := programNodes copyFrom: programIndex to: currentIndex.
-					(nodes allSatisfy: [:n | (currentDictionary at: node ifAbsentPut: [n]) = n]) and: 
+					(nodes size = 1 ifTrue: [ (currentDictionary at: node ifAbsentPut: [ nodes first ]) = nodes first ]
+					ifFalse:[
+					(currentDictionary at: node ifAbsentPut: [nodes]) = nodes]) and: 
 							[(self 
 								matchList: matchNodes
 								index: matchIndex + 1
