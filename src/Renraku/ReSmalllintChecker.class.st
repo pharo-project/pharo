@@ -16,7 +16,7 @@ Class {
 
 { #category : #adding }
 ReSmalllintChecker >> addCritique: aCritique [
-  (((critiques  collect: [ :x | x sourceAnchor sourceEntity name ]) includes: aCritique sourceAnchor sourceEntity name))
+  (((critiques  collect: [ :x | x sourceAnchor sourceEntity name ]) includes: aCritique sourceAnchor sourceEntity name)and: rule first name = 'Illegal dependency of Bootstrap Layer')
   ifFalse:[
     ^ critiques add: aCritique]
 ]
