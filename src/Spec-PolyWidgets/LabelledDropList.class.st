@@ -21,7 +21,7 @@ LabelledDropList class >> defaultSpec [
 
 ]
 
-{ #category : #example }
+{ #category : #examples }
 LabelledDropList class >> example [
 	<sampleInstance>
 	| example |
@@ -34,7 +34,7 @@ example
 	^ example
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledDropList >> displayBlock: aBlock [
 	^self dropList displayBlock: aBlock
 ]
@@ -44,7 +44,7 @@ LabelledDropList >> dropList [
 	^ self subwidget
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledDropList >> emptyList [
 	^self dropList emptyList
 ]
@@ -55,42 +55,42 @@ super initializeWidgets.
 	self content: DropListPresenter
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledDropList >> items: aList [
 	^self dropList items: aList
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledDropList >> listSize [
 	^self dropList listSize
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledDropList >> resetSelection [
 	^self dropList resetSelection
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledDropList >> selectedItem [
 	^self dropList selectedItem
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledDropList >> setIndex: anIndex [
 	^self dropList setIndex: anIndex
 ]
 
-{ #category : #'events-shortcuts' }
+{ #category : #'events - shortcuts' }
 LabelledDropList >> whenSelectedItemChanged: aBlock [
 	self dropList whenSelectedItemChanged: aBlock
 ]
 
-{ #category : #'events-shortcuts' }
+{ #category : #'events - shortcuts' }
 LabelledDropList >> whenSelectionChanged: aBlock [
 	self dropList whenSelectionChanged: aBlock
 ]
 
-{ #category : #'events-shortcuts' }
+{ #category : #'events - shortcuts' }
 LabelledDropList >> whenSelectionIndexChanged: aBlock [
 	self dropList whenSelectionIndexChanged: aBlock
 ]

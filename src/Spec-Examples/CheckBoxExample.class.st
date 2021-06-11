@@ -59,7 +59,7 @@ CheckBoxExample class >> defaultSpec3 [
 		yourself
 ]
 
-{ #category : #example }
+{ #category : #examples }
 CheckBoxExample class >> example [
 	<sampleInstance>
 	^ self new openWithSpec

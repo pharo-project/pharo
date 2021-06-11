@@ -4,12 +4,12 @@ Class {
 	#category : #'Reflectivity-Tests-Data'
 }
 
-{ #category : #example }
+{ #category : #examples }
 ReflectivityExamples2Subclass >> methodWithOverrides [
 	^super methodWithOverrides, ' + down'
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ReflectivityExamples2Subclass >> methodWithOverrides: str1 with: str2 [
 	^(super methodWithOverrides: str1 with: str2), str1, str2
 ]

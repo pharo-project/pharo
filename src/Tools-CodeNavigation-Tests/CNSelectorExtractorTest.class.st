@@ -16,7 +16,7 @@ CNSelectorExtractorTest >> initialize [
 	selectorExtractor := CNSelectorExtractor new.
 ]
 
-{ #category : #test }
+{ #category : #tests }
 CNSelectorExtractorTest >> testExtractSelectorFromSourceAtPositionBorderCasesReturnsNil [
 
    |source position|
@@ -44,7 +44,7 @@ CNSelectorExtractorTest >> testExtractSelectorFromSourceAtPositionBorderCasesRet
 
 ]
 
-{ #category : #test }
+{ #category : #tests }
 CNSelectorExtractorTest >> testExtractSelectorFromSourceAtPositionGeneralCasesExtractsSelector [
 
 	"Note that the tested method (#extractSelectorFromSource:atPosition:) uses internally #extractSelectorFromAST:atPosition:"

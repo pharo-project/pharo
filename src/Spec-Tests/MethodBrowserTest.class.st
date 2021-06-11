@@ -4,7 +4,7 @@ Class {
 	#category : #'Spec-Tests-Examples'
 }
 
-{ #category : #running }
+{ #category : #accessing }
 MethodBrowserTest >> classToTest [
 	^ MethodBrowser
 ]

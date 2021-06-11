@@ -19,12 +19,12 @@ Class {
 	#category : #'Renraku-Rules'
 }
 
-{ #category : #example }
+{ #category : #examples }
 ReInvocationSequenceRule class >> checksNode [
 	^ true
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ReInvocationSequenceRule class >> exampleSequenceMethods [
 	<sampleInstance>
 	<gtExample>

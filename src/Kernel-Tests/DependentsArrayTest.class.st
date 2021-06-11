@@ -7,7 +7,7 @@ Class {
 	#category : #'Kernel-Tests-Objects'
 }
 
-{ #category : #test }
+{ #category : #tests }
 DependentsArrayTest >> testSize [
 	self
 		assert: (DependentsArray with: nil) size equals: 0;

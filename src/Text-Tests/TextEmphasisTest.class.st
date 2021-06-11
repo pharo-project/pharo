@@ -32,7 +32,7 @@ TextEmphasisTest >> testBold [
 
 ]
 
-{ #category : #test }
+{ #category : #tests }
 TextEmphasisTest >> testDominatedByCmd0 [
 	self assert: TextEmphasis new dominatedByCmd0
 ]

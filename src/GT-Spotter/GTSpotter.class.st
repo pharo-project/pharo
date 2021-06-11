@@ -43,7 +43,7 @@ GTSpotter class >> dontShowPreview [
 	isPreviewVisible := false
 ]
 
-{ #category : #example }
+{ #category : #examples }
 GTSpotter class >> exampleSpotterWithoutMorph [
 	<sampleInstance>
 	<gtExample>

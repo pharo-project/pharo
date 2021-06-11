@@ -202,7 +202,7 @@ EpLogNodeGraphPresenter >> selectedLogNodes [
 	^ logNodesTable selection selectedItems
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 EpLogNodeGraphPresenter >> whenSelectionChangedDo: aBlock [
 	logNodesTable whenSelectionChangedDo: aBlock
 ]

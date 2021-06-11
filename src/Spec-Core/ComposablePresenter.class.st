@@ -239,7 +239,7 @@ ComposablePresenter >> addMenuItemsToWindowMenu: aMenu [
 	"Do nothing"
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 ComposablePresenter >> additionalKeyBindings [
 
 	^ additionalKeyBindings value
@@ -278,7 +278,7 @@ ComposablePresenter >> askOkToClose: aBoolean [
 	askOkToClose value: aBoolean
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 ComposablePresenter >> bindKeyCombination: aShortcut toAction: aBlock [
 
 	additionalKeyBindings at: aShortcut put: aBlock.
@@ -286,7 +286,7 @@ ComposablePresenter >> bindKeyCombination: aShortcut toAction: aBlock [
 	self changed: #bindKeyCombination:toAction: with: {aShortcut . aBlock}
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 ComposablePresenter >> bindMenuKeyCombination: aShortcut toAction: aBlock [
 
 	additionalKeyBindings at: aShortcut put: aBlock.
@@ -405,7 +405,7 @@ ComposablePresenter >> ensureExtentFor: widget [
 	
 ]
 
-{ #category : #'private-focus' }
+{ #category : #'private - focus' }
 ComposablePresenter >> ensureKeyBindingsFor: aWidget [
 
 	self registerKeyStrokesForNextFor: aWidget.
@@ -414,14 +414,14 @@ ComposablePresenter >> ensureKeyBindingsFor: aWidget [
 	additionalKeyBindings associationsDo: [:association | aWidget bindKeyCombination: association key toAction: association value ]
 ]
 
-{ #category : #'api-focus' }
+{ #category : #'api - focus' }
 ComposablePresenter >> eventKeyStrokesForNextFocus [
 	"String describing the keystroke to perform to jump to the next widget"
 
 	^ keyStrokesForNextFocusHolder value
 ]
 
-{ #category : #'api-focus' }
+{ #category : #'api - focus' }
 ComposablePresenter >> eventKeyStrokesForPreviousFocus [
 	"String describing the keystroke to perform to jump to the previous widget"
 
@@ -451,7 +451,7 @@ ComposablePresenter >> focusOrder: anObject [
 	^ focusOrder := anObject
 ]
 
-{ #category : #'private-focus' }
+{ #category : #'private - focus' }
 ComposablePresenter >> giveFocusToNextFrom: aModel [
 	| focus |
 	
@@ -478,7 +478,7 @@ ComposablePresenter >> giveFocusToNextFrom: aModel [
 			true ]
 ]
 
-{ #category : #'private-focus' }
+{ #category : #'private - focus' }
 ComposablePresenter >> giveFocusToPreviousFrom: aModel [ 
 	| focus |
 	
@@ -505,7 +505,7 @@ ComposablePresenter >> giveFocusToPreviousFrom: aModel [
 			true ]
 ]
 
-{ #category : #'private-focus' }
+{ #category : #'private - focus' }
 ComposablePresenter >> handlesKeyboard: evt [
 
 	^ true
@@ -649,25 +649,25 @@ ComposablePresenter >> isDisplayed [
 	^ self window notNil and: [ self window isDisplayed ]
 ]
 
-{ #category : #'api-focus' }
+{ #category : #'api - focus' }
 ComposablePresenter >> keyStrokeForNextFocus: aKMShortcut [
 
 	keyStrokesForNextFocusHolder value: { aKMShortcut }
 ]
 
-{ #category : #'api-focus' }
+{ #category : #'api - focus' }
 ComposablePresenter >> keyStrokeForPreviousFocus: aKMShortcut [
 
 	keyStrokesForPreviousFocusHolder value: { aKMShortcut }
 ]
 
-{ #category : #'api-focus' }
+{ #category : #'api - focus' }
 ComposablePresenter >> keyStrokesForNextFocus: aCollection [
 
 	keyStrokesForNextFocusHolder value: aCollection
 ]
 
-{ #category : #'api-focus' }
+{ #category : #'api - focus' }
 ComposablePresenter >> keyStrokesForPreviousFocus: aCollection [
 
 	keyStrokesForPreviousFocusHolder value: aCollection 
@@ -813,13 +813,13 @@ ComposablePresenter >> okToChange [
 		ifNotNil: [ owner okToChange ]
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 ComposablePresenter >> on: aShortcut do: aBlock [
 
 	self bindKeyCombination: aShortcut toAction: aBlock
 ]
 
-{ #category : #'api-announcements' }
+{ #category : #'api - announcements' }
 ComposablePresenter >> on: anAnnouncement send: aSelector to: aTarget [
 
 	self announcer
@@ -922,7 +922,7 @@ ComposablePresenter >> private_buildWithSpec: aSpec [
 	^ adapter
 ]
 
-{ #category : #'private-focus' }
+{ #category : #'private - focus' }
 ComposablePresenter >> registerKeyStrokesForNextFor: aWidget [
 
 	aWidget ifNil: [ ^ self ].
@@ -931,7 +931,7 @@ ComposablePresenter >> registerKeyStrokesForNextFor: aWidget [
 		aWidget bindKeyCombination: each toAction: [ self giveFocusToNextFrom: self ] ]
 ]
 
-{ #category : #'private-focus' }
+{ #category : #'private - focus' }
 ComposablePresenter >> registerKeyStrokesForPreviousFor: aWidget [
 
 	aWidget ifNil: [ ^ self ].
@@ -940,7 +940,7 @@ ComposablePresenter >> registerKeyStrokesForPreviousFor: aWidget [
 		aWidget bindKeyCombination: each toAction: [ self giveFocusToPreviousFrom: self ] ]
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 ComposablePresenter >> removeKeyCombination: aShortcut [
 
 	additionalKeyBindings 
@@ -950,7 +950,7 @@ ComposablePresenter >> removeKeyCombination: aShortcut [
 	self changed: #removeKeyCombination: with: { aShortcut }
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 ComposablePresenter >> removeMenuKeyCombination: aShortcut [
 
 	additionalKeyBindings 
@@ -1028,14 +1028,14 @@ ComposablePresenter >> specSelectors [
 	^ self class specSelectors
 ]
 
-{ #category : #'private-focus' }
+{ #category : #'private - focus' }
 ComposablePresenter >> takeKeyboardFocus [
 
 	self focusOrder ifNotEmpty:[:focus | ^ focus first takeKeyboardFocus ].
 	^ self changed: #takeKeyboardFocus with: #()
 ]
 
-{ #category : #'private-focus' }
+{ #category : #'private - focus' }
 ComposablePresenter >> takeLastKeyboardFocus [
 
 	self focusOrder
@@ -1073,7 +1073,7 @@ ComposablePresenter >> updateTitle [
 	self window ifNotNil: [:w | w updateTitle ]
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 ComposablePresenter >> whenBuiltDo: aBlock [
 
 	self announcer 
@@ -1081,13 +1081,13 @@ ComposablePresenter >> whenBuiltDo: aBlock [
 		do: aBlock
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 ComposablePresenter >> whenShortcutsChanged: aBlock [
 	"Set a block to value when the shortcuts block has changed"
 	additionalKeyBindings whenChangedDo: aBlock
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 ComposablePresenter >> whenWindowChanged: aBlock [
 
 	window whenChangedDo: aBlock

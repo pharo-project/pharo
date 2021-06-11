@@ -16,7 +16,7 @@ Class {
 	#category : #'Morphic-Widgets-ColorPicker'
 }
 
-{ #category : #example }
+{ #category : #examples }
 ColorPresenterMorph class >> example [
 	<sampleInstance>
 

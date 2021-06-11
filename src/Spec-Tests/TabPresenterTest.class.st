@@ -7,12 +7,12 @@ Class {
 	#category : #'Spec-Tests-Core-Widgets'
 }
 
-{ #category : #running }
+{ #category : #accessing }
 TabPresenterTest >> classToTest [
 	^ TabPresenter
 ]
 
-{ #category : #running }
+{ #category : #initialization }
 TabPresenterTest >> initializeTestedInstance [
 	manager := TabManagerPresenter new
 ]

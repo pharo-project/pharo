@@ -33,7 +33,7 @@ ZdcSecureSMTPClient class >> defaultPortForStartTLS [
 	^ 587
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ZdcSecureSMTPClient class >> sendUsingGMailAccount: senderAddress password: password to: receiverAddress message: mailMessage [
 	| smtpClient |
 	(smtpClient := self new)

@@ -7,7 +7,7 @@ Class {
 	#category : #'Spec-Tests-Core-Widgets'
 }
 
-{ #category : #running }
+{ #category : #accessing }
 ListPresenterTest >> classToTest [
 	^ ListPresenter
 ]

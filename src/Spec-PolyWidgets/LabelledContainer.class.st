@@ -19,7 +19,7 @@ Class {
 	#category : #'Spec-PolyWidgets-Elementary'
 }
 
-{ #category : #example }
+{ #category : #examples }
 LabelledContainer class >> abstractExample [
 	| example |
 	example := self new.
@@ -29,7 +29,7 @@ LabelledContainer class >> abstractExample [
 	^ example
 ]
 
-{ #category : #example }
+{ #category : #examples }
 LabelledContainer class >> example [
 	<sampleInstance>
 	| example |

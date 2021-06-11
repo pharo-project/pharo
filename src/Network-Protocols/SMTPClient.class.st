@@ -59,7 +59,7 @@ SMTPClient class >> deliverMailFrom: fromAddress to: recipientList text: message
 
 ]
 
-{ #category : #example }
+{ #category : #examples }
 SMTPClient class >> example [
 	"SMTPClient example"
 
@@ -72,7 +72,7 @@ Hello from Pharo!
 '	usingServer: 'smtp.concentric.net'
 ]
 
-{ #category : #example }
+{ #category : #examples }
 SMTPClient class >> example2 [
 	"SMTPClient example2"
 

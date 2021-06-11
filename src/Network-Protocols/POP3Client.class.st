@@ -16,7 +16,7 @@ POP3Client class >> defaultPortNumber [
 	^110
 ]
 
-{ #category : #example }
+{ #category : #examples }
 POP3Client class >> example [
 
 	"POP3Client example"

@@ -18,7 +18,7 @@ Class {
 	#category : #'Spec-PolyWidgets-Support'
 }
 
-{ #category : #example }
+{ #category : #examples }
 AbstractTwoButtons class >> abstractExample [
 	| example |
 	example := self new.

@@ -22,7 +22,7 @@ ZdcSecurePOP3Client class >> defaultPortForSSL [
 	^ 995
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ZdcSecurePOP3Client class >> retrieveMessagesFromGMailAccount: accountAddress password: password limit: limit [
 	| pop3Client messages messageCount |
 	(pop3Client := self openOnHostNamed: 'smtp.gmail.com' port: self defaultPortForSSL)

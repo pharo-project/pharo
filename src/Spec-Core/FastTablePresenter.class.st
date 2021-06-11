@@ -27,7 +27,7 @@ FastTablePresenter class >> defaultSpec [
 		adapt: #(model))
 ]
 
-{ #category : #example }
+{ #category : #examples }
 FastTablePresenter class >> example [
 	<sampleInstance>
 	| example |
@@ -39,7 +39,7 @@ FastTablePresenter class >> example [
 	^ example
 ]
 
-{ #category : #example }
+{ #category : #examples }
 FastTablePresenter class >> exampleMultipleSelection [
 	<sampleInstance>
 	| example |
@@ -157,7 +157,7 @@ FastTablePresenter >> registerEvents [
 
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 FastTablePresenter >> whenIconsChanged: aBlock [ 
 	
 	iconHolder whenChangedDo: aBlock 

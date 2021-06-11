@@ -30,7 +30,7 @@ Class {
 	#category : #'GT-Spotter-Model'
 }
 
-{ #category : #example }
+{ #category : #examples }
 GTSpotterStep class >> gtExampleBasic [
 	<gtExample>
 	^ self new

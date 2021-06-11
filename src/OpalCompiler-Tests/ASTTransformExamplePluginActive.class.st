@@ -15,7 +15,7 @@ ASTTransformExamplePluginActive class >> compiler [
 	^super compiler addPlugin: ASTPluginMeaningOfLife.
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ASTTransformExamplePluginActive >> example42 [
 	<sampleInstance>
 	^42
