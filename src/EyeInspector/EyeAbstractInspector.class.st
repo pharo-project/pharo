@@ -7,7 +7,7 @@ Class {
 	#traits : 'TEyeInspectorActions',
 	#classTraits : 'TEyeInspectorActions classTrait',
 	#instVars : [
-		'#object => SpObservableSlot',
+		'#object => ObservableSlot',
 		'#customMenuActions',
 		'#text'
 	],
