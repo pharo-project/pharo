@@ -1362,7 +1362,7 @@ Context >> printDetails: stream [
 		nextPutAll: 'Receiver: '.
 	errorMessage := '<<error during printing>>'.
 	stream nextPutAll:
-		([ receiver printStringLimitedTo: 90 ] onErrorDo: [ errorMessage ]).
+		([ receiver printStringLimitedTo: 90 ] on: Exception do: [ errorMessage ]).
 
 	stream
 		cr;
@@ -1372,7 +1372,7 @@ Context >> printDetails: stream [
 	string := [ 
 	          (self tempsAndValuesLimitedTo: 80 indent: 2)
 		          padRightTo: 1
-		          with: $x ] onErrorDo: [ errorMessage ].
+		          with: $x ] on: Exception do:  [ errorMessage ].
 	stream nextPutAll: string.
 
 	stream
@@ -1383,10 +1383,10 @@ Context >> printDetails: stream [
 	receiver class allInstVarNames isEmpty
 		ifTrue: [ 
 			stream nextPutAll:
-				([ receiver printStringLimitedTo: 90 ] onErrorDo: [ errorMessage ]) ]
+				([ receiver printStringLimitedTo: 90 ] on: Exception do:  [ errorMessage ]) ]
 		ifFalse: [ 
 			[ receiver longPrintOn: stream limitedTo: 80 indent: 2 ] 
-				onErrorDo: [ stream nextPutAll: errorMessage ] ].
+				on: Exception do:  [ stream nextPutAll: errorMessage ] ].
 	stream cr
 ]
 
