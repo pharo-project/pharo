@@ -17,9 +17,9 @@ OCUndeclaredVariableWarning >> declareClassVar [
 
 { #category : #correcting }
 OCUndeclaredVariableWarning >> declareGlobal [
-
-	Smalltalk at: node name asSymbol put: nil.
-	(ReparseAfterSourceEditing new newSource: self requestor text) signal
+	Smalltalk globals at: node name asSymbol put: nil.
+	(ReparseAfterSourceEditing new newSource: self requestor text) signal.
+	^Smalltalk globals bindingOf: node name asSymbol
 ]
 
 { #category : #correcting }
