@@ -87,7 +87,7 @@ ScrollPane >> alwaysHideHScrollbar [
 	^ self class alwaysHideHScrollbar
 ]
 
-{ #category : #'access options' }
+{ #category : #'accessing - options' }
 ScrollPane >> alwaysShowHScrollBar: bool [
 	self setProperty: #hScrollBarAlways toValue: bool.
 	self hHideOrShowScrollBar.
@@ -99,7 +99,7 @@ ScrollPane >> alwaysShowHScrollbar [
 	^ self class alwaysShowHScrollbar
 ]
 
-{ #category : #'access options' }
+{ #category : #'accessing - options' }
 ScrollPane >> alwaysShowScrollBars: bool [
 	"Get rid of scroll bar for short panes that don't want it shown."
 
@@ -109,7 +109,7 @@ ScrollPane >> alwaysShowScrollBars: bool [
 
 ]
 
-{ #category : #'access options' }
+{ #category : #'accessing - options' }
 ScrollPane >> alwaysShowVScrollBar: bool [
 
 	self setProperty: #vScrollBarAlways toValue: bool.
@@ -304,7 +304,7 @@ ScrollPane >> hLeftoverScrollRange [
 
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 ScrollPane >> hMargin [
 "pixels of whitespace at to the left of the scroller when the hScrollBar offset is 0"
 	^3
@@ -444,7 +444,7 @@ ScrollPane >> handlesMouseOver: evt [
 "
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 ScrollPane >> hasFocus [
 	"hasFocus is currently set by mouse enter/leave events.
 	This inst var should probably be moved up to a higher superclass."
@@ -452,7 +452,7 @@ ScrollPane >> hasFocus [
 	^ hasFocus ifNil: [false]
 ]
 
-{ #category : #'access options' }
+{ #category : #'accessing - options' }
 ScrollPane >> hideHScrollBarIndefinitely: bool [
 	"Get rid of scroll bar for short panes that don't want it shown."
 
@@ -493,13 +493,13 @@ ScrollPane >> hideScrollBars [
 
 ]
 
-{ #category : #'access options' }
+{ #category : #'accessing - options' }
 ScrollPane >> hideScrollBarsIndefinitely [
 	self hideScrollBarsIndefinitely: true
 
 ]
 
-{ #category : #'access options' }
+{ #category : #'accessing - options' }
 ScrollPane >> hideScrollBarsIndefinitely: bool [
 	"Get rid of scroll bar for short panes that don't want it shown."
 
@@ -508,7 +508,7 @@ ScrollPane >> hideScrollBarsIndefinitely: bool [
 
 ]
 
-{ #category : #'access options' }
+{ #category : #'accessing - options' }
 ScrollPane >> hideVScrollBarIndefinitely: bool [
 	"Get rid of scroll bar for short panes that don't want it shown."
 
@@ -711,7 +711,7 @@ ScrollPane >> resizeScroller [
 	scroller bounds: self innerBounds
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 ScrollPane >> scrollBar [
 	^scrollBar
 ]
@@ -787,12 +787,12 @@ ScrollPane >> scrollToShow: aRectangle [
 	self scrollBy: dx@dy.
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 ScrollPane >> scroller [
 	^ scroller
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 ScrollPane >> scroller: aTransformMorph [
 	scroller ifNotNil:[scroller delete].
 	scroller := aTransformMorph.
@@ -830,7 +830,7 @@ ScrollPane >> shiftedYellowButtonActivity [
 	^ self yellowButtonActivity: true
 ]
 
-{ #category : #'access options' }
+{ #category : #'accessing - options' }
 ScrollPane >> showHScrollBarOnlyWhenNeeded: bool [
 	"Get rid of scroll bar for short panes that don't want it shown."
 
@@ -847,7 +847,7 @@ ScrollPane >> showScrollBars [
 
 ]
 
-{ #category : #'access options' }
+{ #category : #'accessing - options' }
 ScrollPane >> showScrollBarsOnlyWhenNeeded: bool [
 
 	self showHScrollBarOnlyWhenNeeded: bool.
@@ -855,7 +855,7 @@ ScrollPane >> showScrollBarsOnlyWhenNeeded: bool [
 
 ]
 
-{ #category : #'access options' }
+{ #category : #'accessing - options' }
 ScrollPane >> showVScrollBarOnlyWhenNeeded: bool [
 	"Get rid of scroll bar for short panes that don't want it shown."
 
