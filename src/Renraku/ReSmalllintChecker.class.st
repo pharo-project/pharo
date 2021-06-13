@@ -16,9 +16,10 @@ Class {
 
 { #category : #adding }
 ReSmalllintChecker >> addCritique: aCritique [
-  (((critiques  collect: [ :x | x sourceAnchor sourceEntity name ]) includes: aCritique sourceAnchor sourceEntity name)and: rule first name = 'Illegal dependency of Bootstrap Layer')
-  ifFalse:[
-    ^ critiques add: aCritique]
+
+	((self critiquesName includes: aCritique sourceAnchor sourceEntity name) and:
+		 (self rulesWithoutDuplicateCritics includes: rule first name)) 
+		ifFalse: [ ^ critiques add: aCritique ]
 ]
 
 { #category : #private }
@@ -61,6 +62,12 @@ ReSmalllintChecker >> criticsOf: aRule [
 
 	^ critiques
 		select: [ :c | c rule class = aRule class ]
+]
+
+{ #category : #running }
+ReSmalllintChecker >> critiquesName [
+
+	^ critiques collect: [ :x | x sourceAnchor sourceEntity name ]
 ]
 
 { #category : #manifest }
@@ -127,6 +134,12 @@ ReSmalllintChecker >> rule [
 	^ (rule isKindOf: RBCompositeLintRule)
 		ifTrue: [ rule leaves ]
 		ifFalse: [ rule ]
+]
+
+{ #category : #accessing }
+ReSmalllintChecker >> rulesWithoutDuplicateCritics [
+
+	^ #('Illegal dependency of Bootstrap Layer')
 ]
 
 { #category : #actions }
