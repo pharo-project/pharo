@@ -52,7 +52,7 @@ Symbol class >> allSymbolTablesDo: aBlock after: aSymbol [
 	SymbolTable do: aBlock after: aSymbol.
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Symbol class >> allSymbols [
 	"Answer all interned symbols"
 	^Array streamContents:[:s|
@@ -276,7 +276,7 @@ Symbol class >> selectorThatStartsCaseSensitive: leadingCharacters skipping: ski
 
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Symbol class >> selectorsContaining: aString [
 	"Answer a list of selectors that contain aString within them. Case-insensitive.  Does return symbols that begin with a capital letter."
 
@@ -326,7 +326,7 @@ Symbol class >> streamSpecies [
 	^ String
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Symbol class >> thatStarts: leadingCharacters skipping: skipSym [
 	"Answer a selector symbol that starts with leadingCharacters.
 	Symbols beginning with a lower-case letter handled directly here.
@@ -361,7 +361,7 @@ Symbol class >> thatStarts: leadingCharacters skipping: skipSym [
 
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Symbol class >> thatStartsCaseSensitive: leadingCharacters skipping: skipSym [
 	"Same as thatStarts:skipping: but caseSensitive"
 	| size firstMatch key |

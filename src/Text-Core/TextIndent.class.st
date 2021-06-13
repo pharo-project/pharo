@@ -33,13 +33,13 @@ TextIndent class >> tabs: numTabs [
 	^self amount: numTabs
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 TextIndent >> amount [
 	"number of tab spaces to indent by"
 	^amount
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 TextIndent >> amount: anInteger [
 	"change the number of tabs to indent by"
 	amount := anInteger

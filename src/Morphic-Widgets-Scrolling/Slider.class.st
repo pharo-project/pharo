@@ -53,24 +53,24 @@ Slider >> defaultColor [
 	^ Color lightGray
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Slider >> descending [
 	"It may happen that an instance variable is nil, for example, if an instance is in the image when the instance is introduced. This test should probably be removed."
 	^ descending == true
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Slider >> descending: aBoolean [
 	descending := aBoolean.
 	self value: value
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Slider >> dragging [
 	^ dragging.
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Slider >> dragging: aBoolean [
 	dragging := aBoolean.
 ]
@@ -157,7 +157,7 @@ Slider >> mouseUpInSlider: event [
 	self dragging: false.
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Slider >> pagingArea [
 	^self
 ]
@@ -222,7 +222,7 @@ Slider >> setValue: newValue [
 		].
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Slider >> setValueSelector: aSymbol [
 	"Directly set the selector to make more flexible."
 	
@@ -286,14 +286,14 @@ Slider >> simulateSliderRightMouseUp [
 	slider simulateMouseUpWith: MouseEvent yellowButton
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Slider >> sliderColor [
 	"color scheme for the whole slider widget"
 	sliderColor ifNil: [^ (color alphaMixed: 0.7 with: Color white) slightlyLighter].
 	^ sliderColor
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Slider >> sliderColor: newColor [
 
 	sliderColor := newColor.
@@ -307,7 +307,7 @@ Slider >> sliderExtent [
 		ifFalse: [self innerBounds width @ self sliderThickness]
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Slider >> sliderShadowColor [
 	^ self sliderColor alphaMixed: 0.2 with: self pagingArea color
 ]
@@ -317,7 +317,7 @@ Slider >> sliderThickness [
 	^ 7
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Slider >> thumbColor [
 	"Color of the draggable 'thumb'"
 	^ self sliderColor
@@ -337,7 +337,7 @@ Slider >> updateSliderBounds [
 
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Slider >> value [
 	^ value
 ]

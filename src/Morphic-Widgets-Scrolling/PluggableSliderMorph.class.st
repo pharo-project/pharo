@@ -425,7 +425,7 @@ PluggableSliderMorph >> setValueSelector [
 	^setValueSelector
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 PluggableSliderMorph >> sliderColor: newColor [
 	"Set the slider colour."
 	

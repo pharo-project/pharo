@@ -28,13 +28,13 @@ PluggableTabButtonMorph class >> on: anObject label: getTextSelector [
 		yourself.
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 PluggableTabButtonMorph >> active [
 	active ifNil: [ active := false ].
 	^ active
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 PluggableTabButtonMorph >> active: aBoolean [
 	active := aBoolean.
 	self changed.
@@ -157,7 +157,7 @@ PluggableTabButtonMorph >> initializeShortcuts: aKMDispatcher [
 	aKMDispatcher attachCategory: #MorphFocusNavigation
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 PluggableTabButtonMorph >> innerExtent: aPoint [
 	"Set the extent based on the primary visible part of the tab.  In other words add twice the cornerRadius to this extent"
 	self extent: (aPoint x + (self cornerRadius * 2)) @ (aPoint y)
@@ -170,18 +170,18 @@ PluggableTabButtonMorph >> keyDown: event [
 	super keyDown: event
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 PluggableTabButtonMorph >> model [
 	^ model
 
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 PluggableTabButtonMorph >> model: anObject [
 	model := anObject
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 PluggableTabButtonMorph >> outerGap [
 	"The horizontal distance of the outer left and right edges of the tab excluding the inner visible part"
 	^ self cornerRadius * 2
@@ -219,13 +219,13 @@ PluggableTabButtonMorph >> takesKeyboardFocus [
 	^true
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 PluggableTabButtonMorph >> textSelector [
 	^ textSelector
 
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 PluggableTabButtonMorph >> textSelector: aSymbol [
 	textSelector := aSymbol
 ]
