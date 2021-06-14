@@ -75,6 +75,11 @@ Class {
 	#category : #'Kernel-Exceptions'
 }
 
+{ #category : #testing }
+Halt class >> captureIfSignalledWhenStepping [
+	^self == Halt
+]
+
 { #category : #halting }
 Halt class >> fromCount: anInteger [
 	"Always halt after a count has been reached"
@@ -230,9 +235,4 @@ Halt >> exception [
 	"In the context management, it might happen that we get an Halt instead of an UnhandledError. The context will ask the exception. In case we have an halt, we should return self."
 
 	^ self
-]
-
-{ #category : #testing }
-Halt >> shouldInterruptExecutionSimulation [
-	^true
 ]

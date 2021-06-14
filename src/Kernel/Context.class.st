@@ -778,6 +778,17 @@ Context >> exceptionHandlerBlock [
 
 ]
 
+{ #category : #'private - exceptions' }
+Context >> exceptionsToCaptureWhenStepping [
+
+	| exceptionsToCapture exceptionsSet |
+	exceptionsToCapture := Exception allSubclasses select: [ :c | 
+		                       c captureIfSignalledWhenStepping ].
+	exceptionsSet := ExceptionSet new.
+	exceptionsToCapture do: [ :e | exceptionsSet add: e ].
+	^ exceptionsSet
+]
+
 { #category : #'system simulation' }
 Context >> failPrimitiveWith: maybePrimFailToken [
 	"The receiver is a freshly-created context on a primitive method.  Skip the callPrimitive:
@@ -1774,8 +1785,7 @@ Context >> runUntilErrorOrReturnFrom: aSender [
 	"Insert ensure and exception handler contexts under aSender"
 	error := nil.
 	context := aSender insertSender: (Context
-		contextOn: Exception do: [:ex |
-			ex shouldInterruptExecutionSimulation ifFalse: [ ex pass ].
+		contextOn: self exceptionsToCaptureWhenStepping do: [:ex |
 			error ifNil: [
 				error := ex.
 				topContext := thisContext.

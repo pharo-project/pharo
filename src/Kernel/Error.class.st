@@ -12,14 +12,14 @@ Class {
 	#category : #'Kernel-Exceptions'
 }
 
+{ #category : #testing }
+Error class >> captureIfSignalledWhenStepping [
+	^self == Error
+]
+
 { #category : #private }
 Error >> isResumable [
 	"Determine whether an exception is resumable."
 
 	^ false
-]
-
-{ #category : #testing }
-Error >> shouldInterruptExecutionSimulation [
-	^true
 ]

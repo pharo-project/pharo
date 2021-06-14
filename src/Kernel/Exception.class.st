@@ -50,6 +50,11 @@ Exception class >> - anotherException [
 		yourself
 ]
 
+{ #category : #testing }
+Exception class >> captureIfSignalledWhenStepping [
+	^false
+]
+
 { #category : #exceptionselector }
 Exception class >> handles: exception [
 	"Determine whether an exception handler will accept a signaled exception."
@@ -324,11 +329,6 @@ Exception >> searchFrom: aContext [
 	"Set the context where the handler search will start. "
 
 	signalContext := aContext contextTag
-]
-
-{ #category : #testing }
-Exception >> shouldInterruptExecutionSimulation [
-	^false
 ]
 
 { #category : #signaling }
