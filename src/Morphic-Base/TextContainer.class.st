@@ -24,12 +24,12 @@ TextContainer class >> initialize [    "TextContainer initialize"
 	OuterMargin := 2
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 TextContainer >> avoidsOcclusions [
 	^ avoidsOcclusions ifNil: [false]
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 TextContainer >> avoidsOcclusions: aBoolean [
 	avoidsOcclusions := aBoolean.
 	self releaseCachedState
@@ -80,12 +80,12 @@ TextContainer >> computeShadow [
 	^ shadowForm
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 TextContainer >> fillsOwner [
 	^ fillsOwner ifNil: [true]
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 TextContainer >> fillsOwner: aBoolean [
 	fillsOwner := aBoolean.
 	self releaseCachedState
@@ -153,7 +153,7 @@ TextContainer >> rectanglesAt: lineY height: lineHeight [
 	^rects
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 TextContainer >> releaseCachedState [
 
 	shadowForm := nil.
@@ -168,7 +168,7 @@ TextContainer >> shadowForm [
 	^ shadowForm
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 TextContainer >> textMorph [
 	^ textMorph
 ]

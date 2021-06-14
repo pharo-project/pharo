@@ -179,7 +179,7 @@ ScrollBar >> adoptGradientColor: aColor [
 	self updateDownButtonImage
 ]
 
-{ #category : #access }
+{ #category : #'private - accessing' }
 ScrollBar >> adoptPaneColor: aColor [
 	"Adopt the given pane color"
 	aColor ifNil:[^self].
@@ -200,7 +200,7 @@ ScrollBar >> buttonExtent [
 			ifNotNil: [ downButton extent ] ]
 ]
 
-{ #category : #access }
+{ #category : #'private - accessing' }
 ScrollBar >> buttonImageColor [
 	"Answer the color to use for the arrow image of a button."
 
@@ -262,7 +262,7 @@ ScrollBar >> extent: p [
 	
 ]
 
-{ #category : #access }
+{ #category : #'private - accessing' }
 ScrollBar >> finishedScrolling [
 	"Scrolling has finished (button or paging area)."
 	
@@ -280,7 +280,7 @@ ScrollBar >> finishedScrolling [
 		borderStyle: self normalBorderStyle
 ]
 
-{ #category : #access }
+{ #category : #'private - accessing' }
 ScrollBar >> finishedScrolling: event [
 	"Scrolling has finished for a button."
 	
@@ -416,7 +416,7 @@ ScrollBar >> initializeUpButton [
 	self addMorph: upButton
 ]
 
-{ #category : #access }
+{ #category : #'private - accessing' }
 ScrollBar >> interval: d [
 	"Supply an optional floating fraction so slider can expand to indicate range.
 	Update the fill style for the tumb (may have extent-based elements)."
@@ -756,7 +756,7 @@ ScrollBar >> normalThumbFillStyle [
 	^self theme scrollbarNormalThumbFillStyleFor: self
 ]
 
-{ #category : #access }
+{ #category : #'private - accessing' }
 ScrollBar >> pagingArea [
 	^pagingArea
 ]
@@ -821,12 +821,12 @@ ScrollBar >> scrollBarAction: aSymbol [
 	self setProperty: #scrollBarAction toValue: aSymbol
 ]
 
-{ #category : #access }
+{ #category : #'private - accessing' }
 ScrollBar >> scrollDelta [
 	^ scrollDelta
 ]
 
-{ #category : #access }
+{ #category : #'private - accessing' }
 ScrollBar >> scrollDelta: d1 pageDelta: d2 [
 	"Supply optional increments for better scrolling of, eg, text"
 	scrollDelta := d1.
@@ -838,7 +838,7 @@ ScrollBar >> scrollDown: count [
 	self setValue: (value + (scrollDelta * count) + 0.000001 min: 1.0)
 ]
 
-{ #category : #access }
+{ #category : #'private - accessing' }
 ScrollBar >> scrollDownInit [
 	"Initialize a scroll down (from button) operation.
 	Fixed to perform immediately with deferred 
@@ -864,7 +864,7 @@ ScrollBar >> scrollLeft: count [
 	self scrollUp: count
 ]
 
-{ #category : #access }
+{ #category : #'private - accessing' }
 ScrollBar >> scrollPageInit: evt [
 	"Scroll initiated by the paging area."
 	
@@ -889,7 +889,7 @@ ScrollBar >> scrollUp: count [
 	self setValue: (value - (scrollDelta * count) - 0.000001 max: 0.0)
 ]
 
-{ #category : #access }
+{ #category : #'private - accessing' }
 ScrollBar >> scrollUpInit [
 	"Initialize a scroll up (from button) operation.
 	Fixed to perform immediately with deferred 
@@ -934,14 +934,14 @@ ScrollBar >> setValue: newValue [
 	^ super setValue: (newValue roundTo: scrollDelta)
 ]
 
-{ #category : #access }
+{ #category : #'private - accessing' }
 ScrollBar >> slider [
 	"Answer the slider."
 
 	^slider
 ]
 
-{ #category : #access }
+{ #category : #'private - accessing' }
 ScrollBar >> sliderColor: aColor [ 
 	"Change the color of the scrollbar to go with aColor."
 	| buttonColor |
@@ -996,7 +996,7 @@ ScrollBar >> themeChanged [
 	super themeChanged
 ]
 
-{ #category : #access }
+{ #category : #'private - accessing' }
 ScrollBar >> thumbColor [
 	"Problem: Part of the ScrollBar/Slider code uses 'slider' to mean the entire scrollbar/slider widget, and part of it uses 'slider' to mean only the draggable 'thumb'.  This should be cleaned up so that 'thumb' is used instead of 'slider' where appropriate.  For now, the meaning of thumbColor is clear, at least."
 
