@@ -98,6 +98,21 @@ RBCopyClassRefactoring >> copyMethodsOf: rbClass1 in: rbClass2 [
 	]
 ]
 
+{ #category : #transforming }
+RBCopyClassRefactoring >> copyVariables [
+	aClass instanceVariableNames do: [ :varName |
+		self performCompositeRefactoring: (RBAddInstanceVariableRefactoring
+		model: self model
+		variable: varName
+		class: className) ].
+
+	aClass classVariableNames do: [ :varName |
+		self performCompositeRefactoring: (RBAddClassVariableRefactoring
+		model: self model
+		variable: varName
+		class: className) ]
+]
+
 { #category : #preconditions }
 RBCopyClassRefactoring >> preconditions [ 
 	^ (RBCondition isValidClassName: className) 
@@ -107,5 +122,6 @@ RBCopyClassRefactoring >> preconditions [
 { #category : #transforming }
 RBCopyClassRefactoring >> transform [
 	self copyClass.
+	self copyVariables.
 	self copyMethods.
 ]

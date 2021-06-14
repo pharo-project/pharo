@@ -22,6 +22,8 @@ RBCopyPackageTest >> testCopyPackage [
 	self executeRefactoring: refactoring.
 	self assert: (aModel packageNamed: #'Refactoring-Tests-Changes1') isNotNil.
 	self assert: (aModel classNamed: #RBRefactoringChangeTestCopy) category equals: #'Refactoring-Tests-Changes1'.
+	self assert: (aModel classNamed: #RBRefactoringChangeTestCopy) instanceVariableNames asArray
+		equals: #( 'changes' 'workingEnvironment' 'changeFactory').
 	self assert: (aModel classNamed: #RBRefactoringChangeManagerTestCopy) category equals: #'Refactoring-Tests-Changes1'.
 	
 ]
@@ -37,6 +39,8 @@ RBCopyPackageTest >> testCopyPackageAndChangesCopyReferences [
 	self executeRefactoring: refactoring.
 	self assert: (aModel classNamed: #RBRefactoringClassesHelpCopy) category 
 		equals: #'Refactoring-Help1'.
+	self assert: (aModel classNamed: #RBRefactoringClassesHelpCopy) superclass name 
+		equals: #RBClassesHelpCopy.
 	self assert: (aModel classNamed: #RBRefactoringClassesHelpCopy) superclass name 
 		equals: #RBClassesHelpCopy.
 	self assert: ((aModel classNamed: #RBCoreClassesHelpCopy) classSide parseTreeFor: #pages) 
