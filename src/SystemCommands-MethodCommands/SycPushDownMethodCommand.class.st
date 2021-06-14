@@ -43,17 +43,6 @@ SycPushDownMethodCommand >> defaultMenuItemName [
 ]
 
 { #category : #execution }
-SycPushDownMethodCommand >> execute [
-
-	self executeRefactorings
-]
-
-{ #category : #testing }
-SycPushDownMethodCommand >> isComplexRefactoring [
-	^true
-]
-
-{ #category : #execution }
 SycPushDownMethodCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	self selectMethods.

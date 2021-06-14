@@ -46,17 +46,6 @@ SycPushUpMethodCommand >> defaultMenuItemName [
 ]
 
 { #category : #execution }
-SycPushUpMethodCommand >> execute [
-
-	self executeRefactorings
-]
-
-{ #category : #testing }
-SycPushUpMethodCommand >> isComplexRefactoring [
-	^true
-]
-
-{ #category : #execution }
 SycPushUpMethodCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	self selectMethodsAndSuperclass.
