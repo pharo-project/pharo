@@ -97,7 +97,7 @@ RBFindAndReplaceRefactoring >> extract: occurrence of: rbMethod [
 	refactoring setOption: #existingSelector toUse:  [ :ref | 
 			ref parameters: (self argumentsOf: occurrence value).
 			selector].
-	self performCompositeRefactoring: refactoring ] on: Exception do: [ :e | ]
+	self performCompositeRefactoring: refactoring ] on: Exception do: [ :e | e ]
 ]
 
 { #category : #accessing }
@@ -137,7 +137,7 @@ RBFindAndReplaceRefactoring >> findOccurrencesIn: rbMethod [
 	of: rbMethod.
 	occurrences := occurrences + 1.
 	flag := true. ]
-                      onFailure: [ ] .
+                      onFailure: [  ] .
 						flag ifTrue: [ self findOccurrencesIn: (rbMethod modelClass methodFor: rbMethod selector).
 							^ self]]]]. 
 	methodNode body nodesDo: [ :node |
@@ -148,7 +148,7 @@ RBFindAndReplaceRefactoring >> findOccurrencesIn: rbMethod [
 	of: rbMethod.
 	occurrences := occurrences + 1.
 	flag := true.]
-                      onFailure: [ ] .
+                      onFailure: [  ] .
 						flag ifTrue: [ self findOccurrencesIn: (rbMethod modelClass methodFor: rbMethod selector).
 							^ self]]].
 ]

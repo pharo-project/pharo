@@ -183,7 +183,7 @@ RBInlineMethodRefactoring >> insertInlinedMethod [
 			node := node parent].
 	node parent isReturn 
 		ifTrue: [node := node parent]
-		ifFalse: [inlineParseTree := self removeReturnsOf: inlineParseTree].
+		ifFalse: [self removeReturns].
 	self replaceArguments.
 	self inlineSourceReplacing: node.
 	sourceParseTree removeDeadCode.
@@ -335,6 +335,15 @@ RBInlineMethodRefactoring >> removeImmediateBlocks [
 ]
 
 { #category : #transforming }
+RBInlineMethodRefactoring >> removeReturns [
+	| rewriter |
+	rewriter := self parseTreeRewriter.
+	rewriter replace: '^``@object' with: '``@object'.
+	(rewriter executeTree: inlineParseTree) 
+		ifTrue: [inlineParseTree := rewriter tree]
+]
+
+{ #category : #transforming }
 RBInlineMethodRefactoring >> renameConflictingTemporaries [
 	inlineParseTree allDefinedVariables 
 		do: [:each | self renameConflictingTemporary: each]
@@ -402,7 +411,7 @@ RBInlineMethodRefactoring >> rewriteCascadedMessage [
 				detect: [:i | sourceMessage == (messages at: i)]
 				ifNone: [0].
 	inlineParseTree body addNodesFirst: (messages copyFrom: 1 to: index - 1).
-	inlineParseTree := self removeReturnsOf: inlineParseTree.
+	self removeReturns.
 	inlineParseTree body 
 		addNodes: (messages copyFrom: index + 1 to: messages size).
 	inlineParseTree addReturn
