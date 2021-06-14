@@ -780,13 +780,11 @@ RBProgramNode >> matchList: matchNodes index: matchIndex against: programNodes i
 	node isList 
 		ifTrue: 
 			[currentIndex := programIndex - 1.
-			 
+			
 			[currentDictionary := aDictionary copy.
 			programNodes size < currentIndex or: 
 					[nodes := programNodes copyFrom: programIndex to: currentIndex.
-					(nodes size = 1 ifTrue: [ (currentDictionary at: node ifAbsentPut: [ nodes first ]) = nodes first ]
-					ifFalse:[
-					(currentDictionary at: node ifAbsentPut: [nodes]) = nodes]) and: 
+					(currentDictionary at: node ifAbsentPut: [nodes]) = nodes and: 
 							[(self 
 								matchList: matchNodes
 								index: matchIndex + 1
