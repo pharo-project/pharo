@@ -5,6 +5,7 @@ requestor <Object> usually a textEditor. This can be used to bind editor variabl
 failBlock <BlockClosure> block with non local return used to abort the compilation (like an exception).
 noPattern <Boolean> false if compiling a method which has selector and arguments at the beginning (the so-called pattern) and true if compiling something without selector and arguments (such as a DoIt).
 class <Behavior> the behavior in which the code is compiled into (used to know inst var names & methodClass for example)
+semanticScope <SemapticScope> defines the meaning of the code which is compiled into (used to know inst var names & methodClass for example)
 logged <Boolean> true if the sources will be logged in external logging system (change file, epicea, ...)
 interactive <Boolean> Interactive mode is typically used in the IDE (showing errors when compiling code inlined,  pop-ups for some errors/warnings, ...), non-interactive mode is used for headless & code loading to compile code by logging into stdout or Transcript but no interaction required by the user.
 options <Set of Symbols> See optionsDescription method comment class side
@@ -17,8 +18,6 @@ Class {
 	#instVars : [
 		'requestor',
 		'failBlock',
-		'noPattern',
-		'class',
 		'logged',
 		'interactive',
 		'compiledMethod',
@@ -33,7 +32,8 @@ Class {
 		'encoderClass',
 		'astTransformPlugins',
 		'requestorScopeClass',
-		'bindings'
+		'bindings',
+		'semanticScope'
 	],
 	#classVars : [
 		'BytecodeBackend',
@@ -401,8 +401,8 @@ CompilationContext >> bytecodeGeneratorClass: anObject [
 ]
 
 { #category : #accessing }
-CompilationContext >> class: anObject [
-	class := anObject
+CompilationContext >> class: aClass [ 
+	self semanticScope: (OCMethodSemanticScope targetingClass: aClass)
 ]
 
 { #category : #accessing }
@@ -442,7 +442,7 @@ CompilationContext >> encoderClass: anObject [
 
 { #category : #accessing }
 CompilationContext >> environment [
-	^ environment ifNil: [ environment := self getClass environment ]
+	^ environment ifNil: [ environment := semanticScope targetEnvironment ]
 ]
 
 { #category : #accessing }
@@ -462,13 +462,14 @@ CompilationContext >> failBlock: anObject [
 
 { #category : #accessing }
 CompilationContext >> getClass [
-	^ class ifNil: [ UndefinedObject ]
+	^ semanticScope targetClass
 ]
 
 { #category : #initialization }
 CompilationContext >> initialize [
 	options := Set new.
-	astTransformPlugins := OrderedCollection withAll: self class defaultTransformationPlugins
+	astTransformPlugins := OrderedCollection withAll: self class defaultTransformationPlugins.
+	semanticScope := OCMethodSemanticScope targetingClass: nil class
 ]
 
 { #category : #accessing }
@@ -479,6 +480,16 @@ CompilationContext >> interactive [
 { #category : #accessing }
 CompilationContext >> interactive: anObject [
 	interactive := anObject
+]
+
+{ #category : #accessing }
+CompilationContext >> logDoItEvaluation: aSourceString [ 
+	self logged ifFalse: [ ^self ].
+	
+	Smalltalk globals 
+			at: #SystemAnnouncer 
+			ifPresent: [ :sysAnn | 
+				semanticScope announceDoItEvaluation: aSourceString by: sysAnn uniqueInstance ]
 ]
 
 { #category : #accessing }
@@ -493,12 +504,16 @@ CompilationContext >> logged: anObject [
 
 { #category : #accessing }
 CompilationContext >> noPattern [
-	^noPattern ifNil: [ false ].
+	^semanticScope isDoItScope
 ]
 
 { #category : #accessing }
 CompilationContext >> noPattern: anObject [
-	noPattern := anObject
+	anObject ifTrue: [
+		semanticScope := semanticScope asDoItScope.
+		"when we compile an expression, embedd sources, as the resulting method will never be installed"
+		self parseOptions: #(+ #optionEmbeddSources).
+	 ]
 ]
 
 { #category : #options }
@@ -656,7 +671,7 @@ CompilationContext >> requestorScopeClass: anObject [
 CompilationContext >> scope [
 	| newScope |
 
-	newScope := self getClass.
+	newScope := semanticScope.
 	requestor ifNotNil: [
 		"the requestor is allowed to manage variables, the workspace is using it to auto-define vars"  
 		newScope := (self requestorScopeClass new
@@ -679,6 +694,20 @@ CompilationContext >> semanticAnalyzerClass [
 { #category : #accessing }
 CompilationContext >> semanticAnalyzerClass: anObject [
 	semanticAnalyzerClass := anObject
+]
+
+{ #category : #accessing }
+CompilationContext >> semanticScope [
+
+	^ semanticScope
+]
+
+{ #category : #accessing }
+CompilationContext >> semanticScope: anObject [
+
+	semanticScope := anObject
+	
+
 ]
 
 { #category : #options }

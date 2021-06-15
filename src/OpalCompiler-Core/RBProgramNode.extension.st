@@ -23,8 +23,7 @@ RBProgramNode >> asDoitForContext: aContext [
 		arguments: { RBVariableNode named: 'ThisContext' } 
 		body: self asSequenceNode transformLastToReturn.
 	
-	methodNode methodClass: aContext receiver class.
-	methodNode rewriteTempsForContext: aContext.
+	methodNode semanticScope: (OCContextualDoItSemanticScope targetingContext: aContext).
 	methodNode source: methodNode formattedCode.
 	^methodNode
 ]
