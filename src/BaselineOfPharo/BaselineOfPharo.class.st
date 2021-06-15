@@ -40,8 +40,8 @@ BaselineOfPharo class >> newToolsVersion [
 BaselineOfPharo class >> specReleaseCommit [
 	"The commit corresponding to current release (to be used on bootstrap process)"
 
-	"v0.8.13"
-	^ '54c1a02e928aeaaaaa9314a4bc3f987cea5ed49a'
+	"v0.8.14"
+	^ '5d215c0c5ca608bb6ff5c46425d102ffe6c53458'
 ]
 
 { #category : #'repository urls' }
