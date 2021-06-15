@@ -410,6 +410,33 @@ DictionaryTest >> testAtUpdateInitial [
 ]
 
 { #category : #tests }
+DictionaryTest >> testCollectAsWithParenthesis [
+
+	| array dict |
+	array := { 1. 2. 3 }.
+	dict := (array collect: [ :each | each -> each asString ]) as:
+		        Dictionary.
+	self assert: dict equals: { 
+			(1 -> '1').
+			(2 -> '2').
+			(3 -> '3') } asDictionary
+]
+
+{ #category : #tests }
+DictionaryTest >> testCollectAsWithoutParenthesis [
+
+	| array dict |
+	array := { 1. 2. 3 }.
+	dict := array
+		        collect: [ :each | each -> each asString ]
+		        as: Dictionary.
+	self assert: dict equals: { 
+			(1 -> '1').
+			(2 -> '2').
+			(3 -> '3') } asDictionary
+]
+
+{ #category : #tests }
 DictionaryTest >> testDictionaryPublicProtocolCompatibility [
 	"Tests that other dictionaries and their classes respond to the messages
 	in the public protocols (ignoring extensions, private, printing, copying,

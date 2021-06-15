@@ -429,15 +429,6 @@ Dictionary >> errorValueNotFound: value [
 ]
 
 { #category : #private }
-Dictionary >> fillFrom: aCollection with: aBlock [
-	"Evaluate aBlock with each of aCollections's elements as the argument.  
-	Collect the resulting values into self. Answer self."
-
-	aCollection keysAndValuesDo: [ :key :value |
-		self at: key put: (aBlock value: value) ]
-]
-
-{ #category : #private }
 Dictionary >> fixCollisionsFrom: start [
 	"The element at start has been removed and replaced by nil.
 	This method moves forward from there, relocating any entries
