@@ -7,15 +7,15 @@ Class {
 	#category : #'SUnit-Core-Kernel'
 }
 
+{ #category : #testing }
+TestFailure class >> captureIfSignalledWhenStepping [
+	^self == TestFailure
+]
+
 { #category : #'camp smalltalk' }
 TestFailure >> isResumable [
 	
 	^ false
-]
-
-{ #category : #testing }
-TestFailure >> shouldInterruptExecutionSimulation [
-	^true
 ]
 
 { #category : #'camp smalltalk' }
