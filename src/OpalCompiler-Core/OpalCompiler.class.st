@@ -31,7 +31,6 @@ Class {
 	#instVars : [
 		'ast',
 		'source',
-		'context',
 		'receiver',
 		'compilationContext',
 		'compilationContextClass'
@@ -297,7 +296,7 @@ OpalCompiler >> callPlugins [
 
 { #category : #accessing }
 OpalCompiler >> class: aClass [
-	self compilationContext class: aClass.
+	self compilationContext class: aClass
 ]
 
 { #category : #accessing }
@@ -366,13 +365,11 @@ OpalCompiler >> compileDoit [
 
 { #category : #'public access' }
 OpalCompiler >> compileMethod [
-	| cm |
-	self parse.
-	self callPlugins.  
-		cm := compilationContext optionEmbeddSources
-			ifTrue: [ ast generateWithSource ]
-			ifFalse: [ast generate: self compilationContext compiledMethodTrailer   ].
-	^cm
+	[self parse.
+	self callPlugins] 	on: ReparseAfterSourceEditing do: [:notification | 
+			self source: notification newSource. 
+			notification retry ]. 
+	^ast generateMethod.
 ]
 
 { #category : #accessing }
@@ -382,7 +379,20 @@ OpalCompiler >> compiledMethodTrailer: bytes [
 
 { #category : #accessing }
 OpalCompiler >> context: aContext [
-	context  := aContext
+	aContext ifNil: [ ^self ]. "there are such users"
+	self semanticScope: (self semanticScope asDoItForContext: aContext)
+]
+
+{ #category : #private }
+OpalCompiler >> createParser [ 
+
+	| parser |
+	parser := self parserClass new
+		        initializeParserWith: source contents. 
+	(self compilationContext optionParseErrors or: [ self allowParseErrorsNonInteractive ])
+		ifTrue: [ parser beFaulty ].
+	
+	^parser 
 ]
 
 { #category : #'public access' }
@@ -424,11 +434,12 @@ OpalCompiler >> evaluate [
 	 compiled method is invoked from here via withArgs:executeMethod:, hence
 	 the system no longer creates Doit method litter on errors."
 
-	| value |
+	| value doItMethod |
 	self noPattern: true.
 	self getSourceFromRequestorSelection.
-	self class: (context ifNil: [ receiver class ] ifNotNil: [ context compiledCode methodClass ]).
-	value := [ receiver withArgs: (context ifNil: [ #() ] ifNotNil: [ {context} ]) executeMethod: self compileDoit]
+	value := [ 
+		doItMethod := self compileDoit.
+		self semanticScope evaluateDoIt: doItMethod ]
 		on: SyntaxErrorNotification 
 		do: [ :exception | 
 			self compilationContext requestor
@@ -497,11 +508,7 @@ OpalCompiler >> isInteractiveFor: aRequestor [
 
 { #category : #private }
 OpalCompiler >> logDoIt [
-	self compilationContext logged ifFalse: [ ^self ].
-	Smalltalk globals 
-			at: #SystemAnnouncer 
-			ifPresent: [ :sysAnn | 
-				sysAnn uniqueInstance evaluated: source contents context: context ]
+	self compilationContext logDoItEvaluation: source contents
 ]
 
 { #category : #accessing }
@@ -511,10 +518,7 @@ OpalCompiler >> logged: aBoolean [
 
 { #category : #accessing }
 OpalCompiler >> noPattern: aBoolean [
-	self compilationContext noPattern: aBoolean.
-	"when we compile an expression, embedd sources, as the resulting method will never be installed"
-	compilationContext parseOptions: #(+ #optionEmbeddSources).
-	
+	self compilationContext noPattern: aBoolean
 ]
 
 { #category : #'public access' }
@@ -591,7 +595,7 @@ OpalCompiler >> productionEnvironment: anObject [
 
 { #category : #accessing }
 OpalCompiler >> receiver: anObject [
-	receiver := anObject.
+	self semanticScope: (self semanticScope asDoItForReceiver: anObject)
 ]
 
 { #category : #accessing }
@@ -607,6 +611,16 @@ OpalCompiler >> requestorScopeClass: aClass [
 ]
 
 { #category : #accessing }
+OpalCompiler >> semanticScope [
+	^self compilationContext semanticScope
+]
+
+{ #category : #accessing }
+OpalCompiler >> semanticScope: anObject [
+	self compilationContext semanticScope: anObject
+]
+
+{ #category : #accessing }
 OpalCompiler >> source: aString [
 	source := aString readStream.
 ]
@@ -616,12 +630,9 @@ OpalCompiler >> transformDoit [
 	"if we compile an expression, we wrap it in a method here"
 	self compilationContext noPattern ifFalse: [ ^ast ].
 		
-	ast := context 
-		ifNil: [ast asDoit] 
-		ifNotNil: [ast asDoitForContext: context].
+	ast := self semanticScope transformDoItExpressionToMethodAST: ast.
 	"we need to set the compilation context in the new method node"
 	ast compilationContext: self compilationContext.
-	context ifNotNil: [ast methodClass: context receiver class].
 	self doSemanticAnalysis.
 	^ast
 ]
