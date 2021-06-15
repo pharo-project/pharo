@@ -156,18 +156,6 @@ GIFReadWriter >> close [
 ]
 
 { #category : #accessing }
-GIFReadWriter >> delay [
-	^ self
-		deprecated: 'Delay values for animaed GIFs are no longer set by the GIFReadWriter. Set them in each AnimatedImageFrame instead! See GIFReaderWriter class >> #exampleAnim for an example.'
-]
-
-{ #category : #accessing }
-GIFReadWriter >> delay: anInteger [
-	^ self
-		deprecated: 'Delay values for animaed GIFs are no longer set by the GIFReadWriter. Set them in each AnimatedImageFrame instead! See GIFReaderWriter class >> #exampleAnim for an example.'
-]
-
-{ #category : #accessing }
 GIFReadWriter >> form [
 	"By default, answer with the first Form available in the
 	ImageFrames collection. If there are not any frames, answer nil"
