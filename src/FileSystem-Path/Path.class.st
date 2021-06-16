@@ -401,12 +401,6 @@ Path >> isAbsolute [
 	self subclassResponsibility 
 ]
 
-{ #category : #private }
-Path >> isAllParents [
-	1 to: self size do: [:i | (self at: i) = '..' ifFalse: [^ false]].
-	^ true
-]
-
 { #category : #comparing }
 Path >> isChildOf: anObject [
 	^ self parent = anObject
