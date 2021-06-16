@@ -173,6 +173,24 @@ PathTest >> testContainsLocator [
 ]
 
 { #category : #tests }
+PathTest >> testDotDotParent [
+	| path parent |
+	path := (Path * 'plonk') / 'griffle' / '..'.
+	parent := path parent.
+	self assert: parent isRelative.
+	self assert: parent segments equals: #(plonk griffle '..' '..').
+]
+
+{ #category : #tests }
+PathTest >> testDotParent [
+	| path parent |
+	path := (Path * 'plonk') / 'griffle' / '.'.
+	parent := path parent.
+	self assert: parent isRelative.
+	self assert: parent segments equals: #(plonk).
+]
+
+{ #category : #tests }
 PathTest >> testEqual [
 	| a b |
 	a := Path * 'plonk'.
