@@ -195,22 +195,22 @@ RubEditingArea >> walkAlongDisplayedLine [
 	^ self class walkAlongDisplayedLine
 ]
 
-{ #category : #'accessing decorators' }
+{ #category : #'accessing - decorators' }
 RubEditingArea >> withSecondarySelection [
 	self withDecoratorNamed: #secondarySelection
 ]
 
-{ #category : #'accessing decorators' }
+{ #category : #'accessing - decorators' }
 RubEditingArea >> withSelectionBar [
 	self withDecoratorNamed: #selectionBar
 ]
 
-{ #category : #'accessing decorators' }
+{ #category : #'accessing - decorators' }
 RubEditingArea >> withoutOpeningClosingDelimitersHighlight [
 	self withoutDecoratorNamed: #openingClosingDelimitersHighlight
 ]
 
-{ #category : #'accessing decorators' }
+{ #category : #'accessing - decorators' }
 RubEditingArea >> withoutSelectionBar [
 	self withoutDecoratorNamed: #selectionBar
 ]

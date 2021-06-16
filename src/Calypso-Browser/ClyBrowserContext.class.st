@@ -72,7 +72,7 @@ ClyBrowserContext >> copyForBrowserStateSnapshot [
 		yourself
 ]
 
-{ #category : #'accessing context' }
+{ #category : #'accessing - context' }
 ClyBrowserContext >> currentMetaLevelOf: aClass [
 	"we do not model class side vs instance side"
 	^aClass

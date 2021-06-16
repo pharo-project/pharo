@@ -7,13 +7,13 @@ Class {
 	#category : #'ThreadedFFI-UFFI-Tests'
 }
 
-{ #category : #'accessing platform' }
+{ #category : #'accessing - platform' }
 TFTestLibraryUsingSameThreadRunner >> calloutAPIClass [
 
 	^ TFCalloutAPI 
 ]
 
-{ #category : #'accessing platform' }
+{ #category : #'accessing - platform' }
 TFTestLibraryUsingSameThreadRunner >> macLibraryName [ 
 
 	^ 'libTestLibrary.dylib'
@@ -25,13 +25,13 @@ TFTestLibraryUsingSameThreadRunner >> runner [
 	^ TFSameThreadRunner uniqueInstance
 ]
 
-{ #category : #'accessing platform' }
+{ #category : #'accessing - platform' }
 TFTestLibraryUsingSameThreadRunner >> unixModuleName [
 
 	^ 'libTestLibrary.so'
 ]
 
-{ #category : #'accessing platform' }
+{ #category : #'accessing - platform' }
 TFTestLibraryUsingSameThreadRunner >> win32LibraryName [
  
 	^ 'TestLibrary.dll'

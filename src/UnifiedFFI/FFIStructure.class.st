@@ -274,7 +274,7 @@ FFIStructure class >> fromHandle: aHandle [
 
 { #category : #private }
 FFIStructure class >> generatedFieldProtocolName [
-	^ 'accessing structure variables'
+	^ 'accessing - structure variables'
 ]
 
 { #category : #testing }

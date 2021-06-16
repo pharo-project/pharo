@@ -37,73 +37,73 @@ CairoTextExtents class >> fieldsDesc [
 	)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoTextExtents >> height [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_HEIGHT
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoTextExtents >> height: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_HEIGHT put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoTextExtents >> width [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_WIDTH
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoTextExtents >> width: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_WIDTH put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoTextExtents >> x_advance [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_X_ADVANCE
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoTextExtents >> x_advance: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_X_ADVANCE put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoTextExtents >> x_bearing [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_X_BEARING
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoTextExtents >> x_bearing: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_X_BEARING put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoTextExtents >> y_advance [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_Y_ADVANCE
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoTextExtents >> y_advance: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_Y_ADVANCE put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoTextExtents >> y_bearing [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_Y_BEARING
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoTextExtents >> y_bearing: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_Y_BEARING put: anObject

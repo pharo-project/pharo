@@ -37,13 +37,13 @@ FTBitmap class >> fieldsDesc [
 )
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTBitmap >> buffer [
 	"This method was automatically generated"
 	^ExternalData fromHandle: (handle pointerAt: OFFSET_BUFFER) type: ExternalType void asPointerType
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTBitmap >> buffer: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_BUFFER put: anObject getHandle.
@@ -84,90 +84,90 @@ FTBitmap >> initializeFromForm: aForm pixelMode: pixelMode [
 	self pixel_mode: pixelModeToUse
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTBitmap >> num_grays [
 	"This method was automatically generated"
 	^handle unsignedShortAt: OFFSET_NUM_GRAYS
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTBitmap >> num_grays: anObject [
 	"This method was automatically generated"
 	handle unsignedShortAt: OFFSET_NUM_GRAYS put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTBitmap >> palette [
 	"This method was automatically generated"
 	^ExternalData fromHandle: (handle pointerAt: OFFSET_PALETTE) type: ExternalType void asPointerType
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTBitmap >> palette: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_PALETTE put: anObject getHandle.
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTBitmap >> palette_mode [
 	"This method was automatically generated"
 	^handle unsignedByteAt: OFFSET_PALETTE_MODE
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTBitmap >> palette_mode: anObject [
 	"This method was automatically generated"
 	handle unsignedByteAt: OFFSET_PALETTE_MODE put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTBitmap >> pitch [
 	"This method was automatically generated"
 	^handle signedLongAt: OFFSET_PITCH
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTBitmap >> pitch: anObject [
 	"This method was automatically generated"
 	handle signedLongAt: OFFSET_PITCH put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTBitmap >> pixel_mode [
 	"This method was automatically generated"
 	^handle unsignedByteAt: OFFSET_PIXEL_MODE
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTBitmap >> pixel_mode: anObject [
 	"This method was automatically generated"
 	handle unsignedByteAt: OFFSET_PIXEL_MODE put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTBitmap >> rows [
 	"This method was automatically generated"
 	^handle unsignedLongAt: OFFSET_ROWS
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTBitmap >> rows: anObject [
 	"This method was automatically generated"
 	handle unsignedLongAt: OFFSET_ROWS put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTBitmap >> setBuffer: anAddress [
 	handle pointerAt: OFFSET_BUFFER put: anAddress
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTBitmap >> width [
 	"This method was automatically generated"
 	^handle unsignedLongAt: OFFSET_WIDTH
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTBitmap >> width: anObject [
 	"This method was automatically generated"
 	handle unsignedLongAt: OFFSET_WIDTH put: anObject

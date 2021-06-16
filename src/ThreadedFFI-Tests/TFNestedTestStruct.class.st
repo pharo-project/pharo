@@ -24,37 +24,37 @@ TFNestedTestStruct class >> fieldsDesc [
 	)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 TFNestedTestStruct >> inner [
 	"This method was automatically generated"
 	^ TFInnerTestStruct fromHandle: (handle referenceStructAt: OFFSET_INNER length: TFInnerTestStruct byteSize)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 TFNestedTestStruct >> inner: anObject [
 	"This method was automatically generated"
 	handle structAt: OFFSET_INNER put: anObject getHandle length: TFInnerTestStruct byteSize
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 TFNestedTestStruct >> x [
 	"This method was automatically generated"
 	^handle floatAt: OFFSET_X
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 TFNestedTestStruct >> x: anObject [
 	"This method was automatically generated"
 	handle floatAt: OFFSET_X put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 TFNestedTestStruct >> y [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_Y
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 TFNestedTestStruct >> y: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_Y put: anObject

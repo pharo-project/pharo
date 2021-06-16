@@ -22,25 +22,25 @@ TFPointTestStruct class >> fieldsDesc [
 	)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 TFPointTestStruct >> x [
 	"This method was automatically generated"
 	^handle signedLongAt: OFFSET_X
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 TFPointTestStruct >> x: anObject [
 	"This method was automatically generated"
 	handle signedLongAt: OFFSET_X put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 TFPointTestStruct >> y [
 	"This method was automatically generated"
 	^handle signedLongAt: OFFSET_Y
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 TFPointTestStruct >> y: anObject [
 	"This method was automatically generated"
 	handle signedLongAt: OFFSET_Y put: anObject

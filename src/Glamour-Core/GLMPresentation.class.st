@@ -60,7 +60,7 @@ GLMPresentation >> acceptsSelection: aBoolean [
 	acceptsSelection := aBoolean
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> act: aBlock entitled: aString [ 
 	 
 	self 
@@ -71,7 +71,7 @@ GLMPresentation >> act: aBlock entitled: aString [
 				yourself)
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> act: aBlock entitled: aString categorized: anotherString [
 	 
 	self 
@@ -83,7 +83,7 @@ GLMPresentation >> act: aBlock entitled: aString categorized: anotherString [
 				yourself)
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> act: aBlock icon: anIcon entitled: aString [
 	self 
 		addAction: 
@@ -94,7 +94,7 @@ GLMPresentation >> act: aBlock icon: anIcon entitled: aString [
 				yourself)
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> act: aBlock icon: anIcon on: aCharacter entitled: aString [
 	self 
 		addAction: 
@@ -106,17 +106,17 @@ GLMPresentation >> act: aBlock icon: anIcon on: aCharacter entitled: aString [
 				yourself)
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> act: aBlock iconName: aSymbol entitled: aString [
 	self act: aBlock icon: (self iconNamed: aSymbol) entitled: aString
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> act: aBlock iconName: aSymbol on: aCharacter entitled: aString [
 	self act: aBlock icon: (self iconNamed: aSymbol) on: aCharacter entitled: aString
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> act: aBlock on: aCharacter [ 
 	 
 	self 
@@ -127,7 +127,7 @@ GLMPresentation >> act: aBlock on: aCharacter [
 				yourself)
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> act: aBlock on: aCharacter entitled: aString [ 
 	 
 	self 
@@ -139,7 +139,7 @@ GLMPresentation >> act: aBlock on: aCharacter entitled: aString [
 				yourself)
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> act: aBlock on: aCharacter entitled: aString categorized: anotherString [ 
 	 
 	self 
@@ -159,7 +159,7 @@ GLMPresentation >> actions [
 	^ actions
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> actions: aBlock [ 
 	self 
 		deprecated: 'use dynamicActionsOnSelection: for contextual actions, and dynamicActions for presentation-wide actions'
@@ -251,7 +251,7 @@ GLMPresentation >> color: aSymbolOrColor [
 	color := aSymbolOrColor
 ]
 
-{ #category : #'accessing values' }
+{ #category : #'accessing - values' }
 GLMPresentation >> colorValue [
 	^ self color notNil
 		ifTrue: [ self color glamourValue: self entity ]
@@ -287,12 +287,12 @@ GLMPresentation >> copy [
 	^ copy
 ]
 
-{ #category : #'accessing validation' }
+{ #category : #'accessing - validation' }
 GLMPresentation >> customValidation [
 	^ customValidation
 ]
 
-{ #category : #'accessing validation' }
+{ #category : #'accessing - validation' }
 GLMPresentation >> customValidation: aBlock [
 	customValidation := aBlock.
 	shouldValidate := true.
@@ -311,12 +311,12 @@ GLMPresentation >> display: aBlock [
 	self transformation: aBlock
 ]
 
-{ #category : #'accessing values' }
+{ #category : #'accessing - values' }
 GLMPresentation >> displayValue [
 	^ cachedDisplayedValue := self transformation glamourValue: self entity
 ]
 
-{ #category : #'accessing values' }
+{ #category : #'accessing - values' }
 GLMPresentation >> displayedValue [
 	"This returns the cached displayed value.
 	
@@ -345,7 +345,7 @@ GLMPresentation >> dynamicActions [
 	^ dynamicActionsBlock glamourValue: self
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> dynamicActions: aBlock [ 
 	dynamicActionsBlock := aBlock
 ]
@@ -365,12 +365,12 @@ GLMPresentation >> dynamicActionsOnSelection: aBlock [
 	selectionDynamicActionsBlock := aBlock
 ]
 
-{ #category : #'accessing ports' }
+{ #category : #'accessing - ports' }
 GLMPresentation >> entity [
 	^ (self pane port: #entity) value
 ]
 
-{ #category : #'accessing ports' }
+{ #category : #'accessing - ports' }
 GLMPresentation >> entity: anObject [
 	(self pane port: #entity) value: anObject
 ]
@@ -457,7 +457,7 @@ GLMPresentation >> matches [
 			(self condition glamourValue: self entity) = true]
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> noActions [
 	actions := nil.
 	dynamicActionsBlock := nil.
@@ -479,7 +479,7 @@ GLMPresentation >> noTitleIcon [
 	titleIcon := nil
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> onChangeOfPort: aPortName act: aBlock [
 	self portChangeActions add: (
 		GLMPortChangeAction new 
@@ -538,7 +538,7 @@ GLMPresentation >> parentPrototype: aPresentation [
 	parentPrototype := aPresentation
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> populate: aPortSymbol icon: anIcon entitled: aString with: aBlock [ 
 	 
 	self 
@@ -554,7 +554,7 @@ GLMPresentation >> populate: aPortSymbol icon: anIcon entitled: aString with: aB
 				yourself)
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> populate: aPortSymbol icon: anIcon on: aCharacter entitled: aString with: aBlock [ 
 	 
 	self 
@@ -571,19 +571,19 @@ GLMPresentation >> populate: aPortSymbol icon: anIcon on: aCharacter entitled: a
 				yourself)
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> populate: aPortSymbol iconName: aSymbol entitled: aString with: aBlock [ 
 	 
 	self populate: aPortSymbol icon: (self iconNamed: aSymbol) entitled: aString with: aBlock 
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> populate: aPortSymbol iconName: aSymbol on: aCharacter entitled: aString with: aBlock [ 
 	 
 	self populate: aPortSymbol icon: (self iconNamed: aSymbol) on: aCharacter entitled: aString with: aBlock 
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> populate: aPortSymbol on: aCharacter entitled: aString with: aBlock [ 
 	 
 	self 
@@ -599,7 +599,7 @@ GLMPresentation >> populate: aPortSymbol on: aCharacter entitled: aString with: 
 				yourself)
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> populate: aPortSymbol on: aCharacter with: aBlock [
 	self addAction: 
 			((GLMGenericAction new) 
@@ -650,7 +650,7 @@ GLMPresentation >> printOn: aStream [
 		nextPutAll: ')'
 ]
 
-{ #category : #'accessing ports' }
+{ #category : #'accessing - ports' }
 GLMPresentation >> rawSelection [
 	^ (self pane port: #rawSelection) value
 ]
@@ -696,12 +696,12 @@ GLMPresentation >> rootPrototype [
 	^ self parentPrototype ifNil: [ self ] ifNotNil: [ self parentPrototype rootPrototype ]
 ]
 
-{ #category : #'accessing ports' }
+{ #category : #'accessing - ports' }
 GLMPresentation >> selection [
 	^ (self pane port: #selection) value
 ]
 
-{ #category : #'accessing ports' }
+{ #category : #'accessing - ports' }
 GLMPresentation >> selection: anObject [
 	"Tell the pane about the new selection. This method is called when the user changes a view's selection' (e.g., he clicks on an element in a list morph)." 
 	(self pane port: #rawSelection) value: anObject.
@@ -709,7 +709,7 @@ GLMPresentation >> selection: anObject [
 	rawSelectionTransmissions do: #transmit
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> selectionAct: aBlock entitled: aString [ 
 	 
 	self 
@@ -720,7 +720,7 @@ GLMPresentation >> selectionAct: aBlock entitled: aString [
 				yourself)
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> selectionAct: aBlock entitled: aString categorized: anotherString [
 	 
 	self 
@@ -732,7 +732,7 @@ GLMPresentation >> selectionAct: aBlock entitled: aString categorized: anotherSt
 				yourself)
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> selectionAct: aBlock entitled: aString condition: conditionBlock [
 	 
 	self 
@@ -744,7 +744,7 @@ GLMPresentation >> selectionAct: aBlock entitled: aString condition: conditionBl
 				yourself)
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> selectionAct: aBlock entitled: aString enabledWhen: conditionBlock [
 	 
 	self 
@@ -756,7 +756,7 @@ GLMPresentation >> selectionAct: aBlock entitled: aString enabledWhen: condition
 				yourself)
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> selectionAct: aBlock icon: anIcon entitled: aString [
 	self 
 		addSelectionAction: 
@@ -767,7 +767,7 @@ GLMPresentation >> selectionAct: aBlock icon: anIcon entitled: aString [
 				yourself)
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> selectionAct: aBlock icon: anIcon on: aCharacter entitled: aString [ 
 	 
 	self 
@@ -780,18 +780,18 @@ GLMPresentation >> selectionAct: aBlock icon: anIcon on: aCharacter entitled: aS
 				yourself)
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> selectionAct: aBlock iconName: aSymbol entitled: aString [
 	self selectionAct: aBlock icon: (self iconNamed: aSymbol) entitled: aString
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> selectionAct: aBlock iconName: aSymbol on: aCharacter entitled: aString [ 
 	 
 	self selectionAct: aBlock icon: (self iconNamed: aSymbol) on: aCharacter entitled: aString
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> selectionAct: aBlock on: aCharacter [ 
 	 
 	self 
@@ -802,7 +802,7 @@ GLMPresentation >> selectionAct: aBlock on: aCharacter [
 				yourself)
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> selectionAct: aBlock on: aCharacter entitled: aString [ 
 	 
 	self 
@@ -825,7 +825,7 @@ GLMPresentation >> selectionActions: anObject [
 	selectionActions := anObject
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> selectionPopulate: aPortSymbol entitled: aString with: aBlock [ 
 	 
 	self 
@@ -840,7 +840,7 @@ GLMPresentation >> selectionPopulate: aPortSymbol entitled: aString with: aBlock
 				yourself)
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> selectionPopulate: aPortSymbol on: aCharacter entitled: aString with: aBlock [ 
 	 
 	self 
@@ -856,7 +856,7 @@ GLMPresentation >> selectionPopulate: aPortSymbol on: aCharacter entitled: aStri
 				yourself)
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> selectionSpawn: aBlock entitled: aString [ 
 	 
 	"These are actions that return a glamour browser to open at the end."
@@ -921,12 +921,12 @@ GLMPresentation >> sendOneOrMultipleAs: aCollectionClass updatedBy: oneArgBlock 
 		 ]
 ]
 
-{ #category : #'accessing validation' }
+{ #category : #'accessing - validation' }
 GLMPresentation >> shouldValidate [
 	^ shouldValidate ifNil: [shouldValidate := false]
 ]
 
-{ #category : #'accessing validation' }
+{ #category : #'accessing - validation' }
 GLMPresentation >> shouldValidate: aBoolean [
 	shouldValidate := aBoolean 
 ]
@@ -941,7 +941,7 @@ GLMPresentation >> sourceContext: aContext [
 	sourceLink := aContext
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> spawn: aBlock entitled: aString [ 
 	"These are actions that return a glamour browser to open at the end."
 	self 
@@ -952,7 +952,7 @@ GLMPresentation >> spawn: aBlock entitled: aString [
 				yourself)
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> spawn: aBlock icon: anIcon entitled: aString [
 	self 
 		addAction: 
@@ -963,13 +963,13 @@ GLMPresentation >> spawn: aBlock icon: anIcon entitled: aString [
 				yourself)
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> spawn: aBlock iconName: aSymbol entitled: aString [
 	self spawn: aBlock icon: (self iconNamed: aSymbol) entitled: aString
 	
 ]
 
-{ #category : #'accessing ports' }
+{ #category : #'accessing - ports' }
 GLMPresentation >> status: anObject [ 
 	self flag: 'what kind of transformation should we want here?'.
 	(self pane port: #status) value: (self selectionTransformation glamourValue: anObject)
@@ -1015,12 +1015,12 @@ GLMPresentation >> stepTime: anInteger [
 	stepTime := anInteger
 ]
 
-{ #category : #'accessing ports' }
+{ #category : #'accessing - ports' }
 GLMPresentation >> strongSelection [
 	^ (self pane port: #strongSelection) value
 ]
 
-{ #category : #'accessing ports' }
+{ #category : #'accessing - ports' }
 GLMPresentation >> strongSelection: anObject [
 	(self pane port: #strongSelection) value: (self selectionTransformation glamourValue: anObject)
 ]
@@ -1046,7 +1046,7 @@ GLMPresentation >> titleAction [
 	^ self titleActionBlock ifNotNil: [ :aBlock | aBlock glamourValue: self ]
 ]
 
-{ #category : #'scripting actions' }
+{ #category : #'scripting - actions' }
 GLMPresentation >> titleAction: aBlock [ 
 
 	labelActionBlock := aBlock
@@ -1068,14 +1068,14 @@ GLMPresentation >> titleIcon: anObject [
 	titleIcon := anObject
 ]
 
-{ #category : #'accessing values' }
+{ #category : #'accessing - values' }
 GLMPresentation >> titleIconValue [
 	^ self titleIcon notNil
 		ifTrue: [ self titleIcon glamourValue: self entity ]
 		ifFalse: [ self titleIcon ]
 ]
 
-{ #category : #'accessing values' }
+{ #category : #'accessing - values' }
 GLMPresentation >> titleValue [
 	^ self title glamourValue: self entity
 ]

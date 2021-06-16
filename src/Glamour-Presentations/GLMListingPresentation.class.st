@@ -34,13 +34,13 @@ Class {
 	#category : #'Glamour-Presentations'
 }
 
-{ #category : #'accessing values' }
+{ #category : #'accessing - values' }
 GLMListingPresentation >> accept: passengerObject droppedOnItem: anItem [
 	self dropOnItemBlock glamourValue: (GLMMultiValue with: passengerObject with: anItem with: self).
 	^ true
 ]
 
-{ #category : #'accessing values' }
+{ #category : #'accessing - values' }
 GLMListingPresentation >> allow: passengerObject droppedOnItem: anItem [
 	^ self allowDropOnItemBlock glamourValue: (GLMMultiValue with: passengerObject with: anItem with: self)
 ]
@@ -158,7 +158,7 @@ GLMListingPresentation >> defaultAmountToShow [
 	^ 500
 ]
 
-{ #category : #'accessing values' }
+{ #category : #'accessing - values' }
 GLMListingPresentation >> displayValue [
 	^ sortBlock 
 		ifNil: [super displayValue]
@@ -326,7 +326,7 @@ GLMListingPresentation >> transformDraggedItemBlock [
 	^ transformDraggedItemBlock
 ]
 
-{ #category : #'accessing values' }
+{ #category : #'accessing - values' }
 GLMListingPresentation >> transformedDraggedItem: anItem [
 	^ self transformDraggedItemBlock 
 		ifNotNil: [ :transform | transform glamourValue: (GLMMultiValue with: anItem with: self)]

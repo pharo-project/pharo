@@ -16,13 +16,13 @@ IRJumpIf >> accept: aVisitor [
 	^ aVisitor visitJumpIf: self
 ]
 
-{ #category : #acessing }
+{ #category : #accessing }
 IRJumpIf >> boolean [
 
 	^ boolean
 ]
 
-{ #category : #acessing }
+{ #category : #accessing }
 IRJumpIf >> boolean: bool [
 
 	boolean := bool
@@ -41,7 +41,7 @@ IRJumpIf >> isIf [
 	^ true
 ]
 
-{ #category : #acessing }
+{ #category : #accessing }
 IRJumpIf >> nextBytecodeOffsetAfterJump [
 	"check if we are in ifTrue:ifFalse: / ifFalse:ifTrue: or in ifTrue: / ifFalse: and answers the next byte code offset"
 	^destination last isJump 
@@ -50,25 +50,25 @@ IRJumpIf >> nextBytecodeOffsetAfterJump [
 			(destination sequence at: ((destination size - 1) max: 1)) bytecodeOffset ]
 ]
 
-{ #category : #acessing }
+{ #category : #accessing }
 IRJumpIf >> nonBodySuccessorSequences [
 
 	^ {destination}
 ]
 
-{ #category : #acessing }
+{ #category : #accessing }
 IRJumpIf >> otherwise [
 
 	^ otherwise
 ]
 
-{ #category : #acessing }
+{ #category : #accessing }
 IRJumpIf >> otherwise: aSequence [
 
 	otherwise := aSequence
 ]
 
-{ #category : #acessing }
+{ #category : #accessing }
 IRJumpIf >> successorSequences [
 
 	^ {destination. otherwise}

@@ -70,7 +70,7 @@ FFILibrary >> libraryName [
 	^ Smalltalk platform ffiLibraryName: self
 ]
 
-{ #category : #'accessing platform' }
+{ #category : #'accessing - platform' }
 FFILibrary >> macLibraryName [
 	"Calling by default #macModuleName for backwards compatibility.
 	The system complains that this method is not implemented as it will only exist
@@ -79,7 +79,7 @@ FFILibrary >> macLibraryName [
 	^ self macModuleName
 ]
 
-{ #category : #'accessing platform' }
+{ #category : #'accessing - platform' }
 FFILibrary >> options [
 	
 	^ self class options
@@ -99,19 +99,19 @@ FFILibrary >> uniqueInstance [
 	^ self
 ]
 
-{ #category : #'accessing platform' }
+{ #category : #'accessing - platform' }
 FFILibrary >> unix32LibraryName [
 	"Use to #unixLibraryName to keep backward compatibility." 
 	^ self unixLibraryName
 ]
 
-{ #category : #'accessing platform' }
+{ #category : #'accessing - platform' }
 FFILibrary >> unix64LibraryName [
 	"Point to #unixLibraryName to keep backward compatibility." 
 	^ self unixLibraryName
 ]
 
-{ #category : #'accessing platform' }
+{ #category : #'accessing - platform' }
 FFILibrary >> unixLibraryName [
 	"Kept for backward compatibility. 
 	The system complains that this method is not implemented as it will only exist
@@ -120,7 +120,7 @@ FFILibrary >> unixLibraryName [
 	^ self unixModuleName
 ]
 
-{ #category : #'accessing platform' }
+{ #category : #'accessing - platform' }
 FFILibrary >> win32LibraryName [
 	"Calling by default #win32ModuleName for backwards compatibility.
 	The system complains that this method is not implemented as it will only exist

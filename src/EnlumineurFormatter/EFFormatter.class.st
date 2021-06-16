@@ -1565,12 +1565,12 @@ EFFormatter >> lineUpBlockBrackets: aBoolean [
 	context lineUpBlockBrackets: aBoolean
 ]
 
-{ #category : #accessors }
+{ #category : #accessing }
 EFFormatter >> lookAheadCode [
 	^ lookAheadCode
 ]
 
-{ #category : #accessors }
+{ #category : #accessing }
 EFFormatter >> lookAheadCode: anObject [
 	lookAheadCode := anObject
 ]

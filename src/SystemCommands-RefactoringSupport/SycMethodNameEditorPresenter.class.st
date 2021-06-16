@@ -243,7 +243,7 @@ SycMethodNameEditorPresenter >> connectPresenters [
 			toAction: [ self owner triggerCancelAction; close ]
 ]
 
-{ #category : #'accessing ui' }
+{ #category : #'accessing - ui' }
 SycMethodNameEditorPresenter >> downButton [
 	^ downButton
 ]
@@ -338,7 +338,7 @@ SycMethodNameEditorPresenter >> newArgs [
 	^ argumentsList items select: [ :e | (args includes: e name) not ]
 ]
 
-{ #category : #'accessing ui' }
+{ #category : #'accessing - ui' }
 SycMethodNameEditorPresenter >> previewResult [
 	^ previewResult
 ]
@@ -416,7 +416,7 @@ SycMethodNameEditorPresenter >> renameMethodAndClose: presenter [
 				close ]
 ]
 
-{ #category : #'accessing ui' }
+{ #category : #'accessing - ui' }
 SycMethodNameEditorPresenter >> selectorInput [
 	^ selectorInput
 ]
@@ -431,13 +431,13 @@ SycMethodNameEditorPresenter >> setFocus [
 		add: addButton
 ]
 
-{ #category : #'accessing model' }
+{ #category : #'accessing - model' }
 SycMethodNameEditorPresenter >> setModelBeforeInitialization: aRBMethodName [
 	methodName := aRBMethodName.
 	args := methodName arguments copy.
 ]
 
-{ #category : #'accessing ui' }
+{ #category : #'accessing - ui' }
 SycMethodNameEditorPresenter >> upButton [
 	^ upButton
 ]

@@ -59,7 +59,7 @@ OupsDebugRequest class >> newForException: anException [
 	^ self basicNew exception: anException; yourself
 ]
 
-{ #category : #accessors }
+{ #category : #accessing }
 OupsDebugRequest >> compiledMethod: anObject [
 	compiledMethod := anObject
 ]
@@ -74,12 +74,12 @@ OupsDebugRequest >> computePreDebugActions [
 		(self preDebugActionForDebugItMethod: compiledMethod)
 ]
 
-{ #category : #accessors }
+{ #category : #accessing }
 OupsDebugRequest >> context: anObject [
 	context := anObject
 ]
 
-{ #category : #accessors }
+{ #category : #accessing }
 OupsDebugRequest >> debugSession [
 
 	^ debugSession ifNil: [ debugSession := self newDebugSession ]
@@ -106,24 +106,24 @@ OupsDebugRequest >> defaultUIManager [
 	^ UIManager default
 ]
 
-{ #category : #accessors }
+{ #category : #accessing }
 OupsDebugRequest >> exception [
 
 	^ exception ifNil: [ exception := self defaultException ]
 ]
 
-{ #category : #accessors }
+{ #category : #accessing }
 OupsDebugRequest >> exception: anObject [
 	exception := anObject
 ]
 
-{ #category : #accessors }
+{ #category : #accessing }
 OupsDebugRequest >> label [
 
 	^ label ifNil: [ label := self defaultLabel ]
 ]
 
-{ #category : #accessors }
+{ #category : #accessing }
 OupsDebugRequest >> label: anObject [
 	label := anObject
 ]
@@ -155,19 +155,19 @@ OupsDebugRequest >> preDebugActionForDebugItMethod: aCompiledMethod [
 		  currentContext method == aCompiledMethod ] ]
 ]
 
-{ #category : #accessors }
+{ #category : #accessing }
 OupsDebugRequest >> preDebugActions [
 	preDebugActions ifNil: [ preDebugActions := OrderedCollection new ].
 	^ preDebugActions
 ]
 
-{ #category : #accessors }
+{ #category : #accessing }
 OupsDebugRequest >> process [
 	"If a process was provided, return it, otherwise use the result of 'self defaultProcess'"
 	^ process ifNil: [ self defaultProcess ]
 ]
 
-{ #category : #accessors }
+{ #category : #accessing }
 OupsDebugRequest >> process: anObject [
 	process := anObject
 ]
