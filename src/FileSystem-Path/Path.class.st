@@ -457,7 +457,7 @@ Path >> makeRelative: anObject [
 Path >> parent [
 	| size parent |
 	self isRoot ifTrue: [^ self].
-	self isAllParents ifTrue: [^ self / '..'].
+	(self isEmpty or: [ (self at: self size) = '..' ]) ifTrue: [^ self / '..'].
 	
 	size := self size - 1.
 	parent := self class new: size.
