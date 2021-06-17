@@ -4,55 +4,55 @@ Class {
 	#category : #'ThreadedFFI-UFFI-Tests'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - ffi' }
 TFUFFIStructuresTest >> passStructByParameter: aPoint x: x y: y [
 
 	^ self ffiCall: #(int assertCorrectPoint(TFPointTestStruct aPoint, int x, int y))
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - ffi' }
 TFUFFIStructuresTest >> passStructByReference: aPoint [
 
 	^ self ffiCall: #(void* id_pointer(TFPointTestStruct* aPoint))
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - ffi' }
 TFUFFIStructuresTest >> passingLongStructByCopy: st b: b c: c d: d [
 
 	^ self ffiCall: #(int passingLongStruct(TFLongTestStruct st, float b, double c, long d))
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - ffi' }
 TFUFFIStructuresTest >> passingLongStructByReference: st b: b c: c d: d [
 
 	^ self ffiCall: #(int passingLongStructByRef(TFLongTestStruct* st, float b, double c, long d))
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - ffi' }
 TFUFFIStructuresTest >> passingNestedStructByCopy: st a: a y: y [
  
 	^ self ffiCall: #(int passingNestedStruct(TFNestedTestStruct st, char a, double y))
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - ffi' }
 TFUFFIStructuresTest >> returnNewPointX: x Y: y [
 
 	^ self ffiCall: #(TFPointTestStruct newPoint(int x, int y))
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - ffi' }
 TFUFFIStructuresTest >> sizeOfNestedStruct [
 
 	^ self ffiCall: #(int sizeOfNestedStruct())
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 TFUFFIStructuresTest >> testNestedStructSize [
 
 	self assert: TFNestedTestStruct byteSize equals: self sizeOfNestedStruct
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 TFUFFIStructuresTest >> testPassingByParameterAStructInC [
 
 	| aPoint return |
@@ -68,7 +68,7 @@ TFUFFIStructuresTest >> testPassingByParameterAStructInC [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 TFUFFIStructuresTest >> testPassingByParameterAStructInPharo [
 
 	| aPoint return |
@@ -82,7 +82,7 @@ TFUFFIStructuresTest >> testPassingByParameterAStructInPharo [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 TFUFFIStructuresTest >> testPassingByReferenceAStructInC [
 
 	| aPoint return |
@@ -98,7 +98,7 @@ TFUFFIStructuresTest >> testPassingByReferenceAStructInC [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 TFUFFIStructuresTest >> testPassingLongStructByCopyInC [
 
 	| aPoint return |
@@ -115,7 +115,7 @@ TFUFFIStructuresTest >> testPassingLongStructByCopyInC [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 TFUFFIStructuresTest >> testPassingLongStructByCopyInPharo [
 
 	| aPoint return |
@@ -130,7 +130,7 @@ TFUFFIStructuresTest >> testPassingLongStructByCopyInPharo [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 TFUFFIStructuresTest >> testPassingLongStructByReferenceInC [
 
 	| aPoint return |
@@ -147,7 +147,7 @@ TFUFFIStructuresTest >> testPassingLongStructByReferenceInC [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 TFUFFIStructuresTest >> testPassingNestedStructByCopyInC [
 
 	| st return |
@@ -163,7 +163,7 @@ TFUFFIStructuresTest >> testPassingNestedStructByCopyInC [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 TFUFFIStructuresTest >> testReturningAnStruct [
 
 	| aPoint |

@@ -44,7 +44,7 @@ TFSameThreadCall >> invokeFunction: aTFExternalFunction withArguments: aCollecti
 	self primitiveFailed 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TFSameThreadCall >> parameters: aCollection [ 
 	self shouldBeImplemented.
 ]
