@@ -91,8 +91,7 @@ CNSelectorExtractor >> extractSelectorFromNode: aNode [
 
 { #category : #'public - extraction' }
 CNSelectorExtractor >> extractSelectorFromSelection: aString [ 
-
-	"Extract a selector from the given string in isolation, regarless of the context around it"
+   "Extract a selector from the given string in isolation, regardless of the context around it"
 	
 	| node |
 	node := RBParser parseFaultyExpression: aString.
@@ -111,8 +110,8 @@ CNSelectorExtractor >> extractSelectorFromSelection: aString [
 
 { #category : #'public - extraction' }
 CNSelectorExtractor >> extractSelectorFromSource: aString atPosition: aPosition [
-
 	"Receives a string with the source code, and a number which indicates the position (of the caret) where the selectors will be extracted."
+	
 	| position |
 	aString ifNil: [ ^ nil ].
 	aString ifEmpty: [ ^ nil ].
