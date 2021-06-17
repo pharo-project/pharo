@@ -86,7 +86,7 @@ ClassDescriptionTest >> testSlots [
 
 { #category : #tests }
 ClassDescriptionTest >> testWhichCategoryIncludesSelector [
-	self assert: (ClassDescription whichCategoryIncludesSelector: #comment) equals: #'accessing comment'.
+	self assert: (ClassDescription whichCategoryIncludesSelector: #comment) equals: #'accessing - comment'.
 	self assert: (ClassDescription whichCategoryIncludesSelector: #doesNotExist) equals: nil.
 ]
 
