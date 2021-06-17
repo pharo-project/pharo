@@ -11,15 +11,16 @@ Class {
 		'canBeTerminated',
 		'debugSession'
 	],
-	#category : #Sindarin
+	#category : #'Sindarin-Base'
 }
 
 { #category : #'instance creation' }
 SindarinDebugSession class >> newWithName: aString forProcess: aProcess [
+
 	^ DebugSession new
-		name: aString;
-		process: aProcess context: aProcess suspendedContext;
-		asSindarinDebugSession
+		  name: aString;
+		  process: aProcess context: aProcess suspendedContext;
+		  asSindarinDebugSession
 ]
 
 { #category : #initialization }
@@ -31,36 +32,43 @@ SindarinDebugSession >> activateEventTriggering [
 
 { #category : #converting }
 SindarinDebugSession >> asSindarinDebugSession [
+
 	^ self
 ]
 
 { #category : #accessing }
 SindarinDebugSession >> canBeTerminated [
+
 	^ canBeTerminated
 ]
 
 { #category : #accessing }
 SindarinDebugSession >> canBeTerminated: anObject [
+
 	canBeTerminated := anObject
 ]
 
 { #category : #initialization }
 SindarinDebugSession >> deactivateEventTriggering [
-	triggerEventOn := false.
+
+	triggerEventOn := false
 ]
 
 { #category : #accessing }
 SindarinDebugSession >> debugSession [
+
 	^ debugSession
 ]
 
 { #category : #accessing }
 SindarinDebugSession >> debugSession: anObject [
+
 	debugSession := anObject
 ]
 
 { #category : #initialization }
 SindarinDebugSession >> initialize [
+
 	super initialize.
 	triggerEventOn := true.
 	canBeTerminated := true
@@ -69,6 +77,7 @@ SindarinDebugSession >> initialize [
 { #category : #initialization }
 SindarinDebugSession >> refreshAttachedDebugger [
 	"The following lines are to force possible debuggers observing the same debug session to update themselves based"
+
 	self debugSession triggerEvent: #contextChanged
 ]
 
@@ -102,12 +111,13 @@ SindarinDebugSession >> stepOver: aContext [
 
 { #category : #'debugging actions' }
 SindarinDebugSession >> terminate [
-	canBeTerminated
-		ifTrue: [ ^ self debugSession terminate ]
+
+	canBeTerminated ifTrue: [ ^ self debugSession terminate ]
 ]
 
 { #category : #'debugging actions' }
 SindarinDebugSession >> triggerEvent: anEventSelector [
-	triggerEventOn
-		ifTrue: [ ^ self debugSession triggerEvent: anEventSelector ]
+
+	triggerEventOn ifTrue: [ 
+		^ self debugSession triggerEvent: anEventSelector ]
 ]

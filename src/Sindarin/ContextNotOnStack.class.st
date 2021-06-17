@@ -1,5 +1,5 @@
 Class {
 	#name : #ContextNotOnStack,
 	#superclass : #Error,
-	#category : #Sindarin
+	#category : #'Sindarin-Exceptions'
 }
