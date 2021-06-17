@@ -62,7 +62,7 @@ ExceptionTest >> testCaptureIfSignalledWhenStepping [
 	
 ]
 
-{ #category : #test }
+{ #category : #tests }
 ExceptionTest >> testDefaultAction [
 	"Ensure that the resuming an UnhandledError when the underlying
 	Exception is resumable, results in the resumption value serving
