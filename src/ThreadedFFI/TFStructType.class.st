@@ -59,7 +59,7 @@ TFStructType >> callbackWrite: aNumber into: anExternalAddress [
 	self write: aNumber getHandle into: anExternalAddress
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 TFStructType >> copyFrom: from to: to size: size [ 
 	"Copy from the from an externalAdress or a ByteArray or to a ByteArray or an External Address"
 
@@ -97,7 +97,7 @@ TFStructType >> free [
 	^ self primitiveFailed	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utilities }
 TFStructType >> freeValueIfNeeded: anExternalAddress [ 
 	
 	"Nothing to free"
