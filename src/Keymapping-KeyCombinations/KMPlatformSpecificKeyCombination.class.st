@@ -62,7 +62,7 @@ KMPlatformSpecificKeyCombination >> platform: aPlatform [
 	platform := aPlatform
 ]
 
-{ #category : #'accessing platform' }
+{ #category : #'accessing - platform' }
 KMPlatformSpecificKeyCombination >> platformCharacter [
 
 	^ (self platform = #all or: [ self platform = OSPlatform current platformFamily ])
@@ -70,7 +70,7 @@ KMPlatformSpecificKeyCombination >> platformCharacter [
 		ifFalse: [ nil ]
 ]
 
-{ #category : #'accessing platform' }
+{ #category : #'accessing - platform' }
 KMPlatformSpecificKeyCombination >> platformModifier [
 
 	^ (self platform = #all or: [ self platform = OSPlatform current platformFamily ])

@@ -187,14 +187,14 @@ DiffMorph >> addTitlePanel: initialOffset [
 
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 DiffMorph >> additionColor [
 	"Answer the color used to show additions."
 
 	^ self theme diffAdditionalLineBackgroundColor 
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 DiffMorph >> additionHighlightColor [
 	"Answer the color used to show addition highlights."
 	^ self theme diffAdditionalTextInLineBackgroundColor
@@ -389,7 +389,7 @@ DiffMorph >> calibrateScrollbar [
 				min: 1.0) asFloat
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 DiffMorph >> colorForType: type [
 	"Anwser the color to use for the given change type."
 
@@ -438,7 +438,7 @@ DiffMorph >> destTextModel [
 	^ destTextModel ifNil: [ destTextModel := RubScrolledTextModel new interactionModel: self ].
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 DiffMorph >> diffMapColor [
 	"Answer the color used for the mapping bar on the left side."
 	^ self theme diffMapColor
@@ -483,7 +483,7 @@ DiffMorph >> dstMorph: anObject [
 	dstMorph := anObject
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 DiffMorph >> edgeColor [
 	"Answer the color used to show the border of the changes."
 	^ self theme diffEdgeColor
@@ -585,7 +585,7 @@ DiffMorph >> join: aJoin selected: aBoolean [
 	self dstMorph changed
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 DiffMorph >> joinColor [
 	"Answer the color used for the join bar."
 	^ self theme diffJoinColor
@@ -656,14 +656,14 @@ DiffMorph >> mapMorph: anObject [
 	mapMorph := anObject
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 DiffMorph >> matchColor [
 	"Answer the color used to show matches."
 
 	^ Color transparent
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 DiffMorph >> modificationColor [
 	"Answer the color used to show changes."
 	^ self theme diffModificatedLineBackgroundColor
@@ -871,13 +871,13 @@ DiffMorph >> prettyPrint: aBoolean [
 	
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 DiffMorph >> removalColor [
 	"Answer the color used to show removals."
 	^ self theme diffRemovedLinesBackgroundColor
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 DiffMorph >> removalHighlightColor [
 	"Answer the color used to show removal highligths."
 	^ self theme diffRemovalHighlightColor

@@ -1093,7 +1093,7 @@ RGBehavior >> slotsNeedFullDefinition [
 	^self slots anySatisfy: [ :each | each needsFullDefinition ]
 ]
 
-{ #category : #'accessing class hierarchy' }
+{ #category : #'accessing - class hierarchy' }
 RGBehavior >> subclasses [
 
 	| result |

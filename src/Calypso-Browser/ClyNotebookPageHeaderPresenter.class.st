@@ -94,7 +94,7 @@ ClyNotebookPageHeaderPresenter >> onDoubleClick: aBlock [
 	doubleClickAction := aBlock
 ]
 
-{ #category : #'accessing model' }
+{ #category : #'accessing - model' }
 ClyNotebookPageHeaderPresenter >> setModelBeforeInitialization: aPageMorph [
 
 	pageMorph := aPageMorph

@@ -24,25 +24,25 @@ FTVector class >> fieldsDesc [
     FT_Pos  y;)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTVector >> x [
 	"This method was automatically generated"
 	^handle platformLongAt: OFFSET_X
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTVector >> x: anObject [
 	"This method was automatically generated"
 	^handle platformLongAt: OFFSET_X put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTVector >> y [
 	"This method was automatically generated"
 	^handle platformLongAt: OFFSET_Y
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTVector >> y: anObject [
 	"This method was automatically generated"
 	^handle platformLongAt: OFFSET_Y put: anObject

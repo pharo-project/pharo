@@ -25,7 +25,7 @@ ClassDescription >> acceptsLoggingOfCompilation [
 	^ true
 ]
 
-{ #category : #'accessing method dictionary' }
+{ #category : #'accessing - method dictionary' }
 ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: category [
 	| priorMethodOrNil priorOriginOrNil oldProtocol newProtocol |
 
@@ -76,14 +76,14 @@ ClassDescription >> addInstVarNamed: aString [
 	self subclassResponsibility
 ]
 
-{ #category : #'accessing tags' }
+{ #category : #'accessing - tags' }
 ClassDescription >> addMethodTag: aSymbol [
 	"Any method could be tagged with multiple symbols for user purpose.
 	In class we could define what tags could be used for methods"
 	self organization addCategory: aSymbol
 ]
 
-{ #category : #'accessing method dictionary' }
+{ #category : #'accessing - method dictionary' }
 ClassDescription >> addSelector: selector withMethod: compiledMethod [
 	| priorMethodOrNil oldProtocol |
 	priorMethodOrNil := self compiledMethodAt: selector ifAbsent: [nil].
@@ -94,7 +94,7 @@ ClassDescription >> addSelector: selector withMethod: compiledMethod [
 		ifNotNil: [SystemAnnouncer uniqueInstance methodChangedFrom: priorMethodOrNil to: compiledMethod oldProtocol: oldProtocol ].
 ]
 
-{ #category : #'accessing method dictionary' }
+{ #category : #'accessing - method dictionary' }
 ClassDescription >> addSelectorSilently: selector withMethod: compiledMethod [
 	super addSelectorSilently: selector withMethod: compiledMethod.
 	self instanceSide noteAddedSelector: selector meta: self isMeta.
@@ -121,7 +121,7 @@ ClassDescription >> allLocalCallsOn: aSymbol [
 			(class thoroughWhichMethodsReferTo: aSymbol), (class class thoroughWhichMethodsReferTo: aSymbol)]
 ]
 
-{ #category : #'accessing method dictionary' }
+{ #category : #'accessing - method dictionary' }
 ClassDescription >> allProtocolsUpTo: mostGenericClass [
 	"Answer a list of all the method protocols of the receiver and all its superclasses, up through mostGenericClass"
 
@@ -139,7 +139,7 @@ ClassDescription >> allProtocolsUpTo: mostGenericClass [
 								thisClassCategories includes: each ]) sorted: lowercaseSortBlock)
 ]
 
-{ #category : #'accessing method dictionary' }
+{ #category : #'accessing - method dictionary' }
 ClassDescription >> allSelectorsInProtocol: aName [ 
 	"Answer a list of all the methods of the receiver and all its 
 	superclasses that are in the protocol named aName"
@@ -246,7 +246,7 @@ ClassDescription >> classComment: aString stamp: aStamp [
 		newStamp: aStamp
 ]
 
-{ #category : #'accessing comment' }
+{ #category : #'accessing - comment' }
 ClassDescription >> classCommentBlank [
 	"Classes can override this method to show another template."
 	"There are two use cases: a class hierarchy can give information about what kind of comment is 
@@ -287,7 +287,7 @@ Internal Representation and Key Implementation Points.'.
 	^stream contents
 ]
 
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing - parallel hierarchy' }
 ClassDescription >> classSide [
 	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
 	"Point classSide >>> Point class"
@@ -328,7 +328,7 @@ ClassDescription >> classVariablesString [
 	^ String streamContents: [ :stream | self classVariablesOn: stream ]
 ]
 
-{ #category : #'accessing class hierarchy' }
+{ #category : #'accessing - class hierarchy' }
 ClassDescription >> classesThatImplementAllOf: selectorSet [
 	"Return an array of any classes that implement all the messages in selectorSet."
 
@@ -347,20 +347,20 @@ ClassDescription >> classesThatImplementAllOf: selectorSet [
 							subsThatDo , (sub classesThatImplementAllOf: remaining)]]
 ]
 
-{ #category : #'accessing comment' }
+{ #category : #'accessing - comment' }
 ClassDescription >> comment [
     "Answer the receiver's comment. (If missing, supply a template) "
     ^self instanceSide organization classComment ifEmpty: [ self classCommentBlank ]
 ]
 
-{ #category : #'accessing comment' }
+{ #category : #'accessing - comment' }
 ClassDescription >> comment: aStringOrText [
 	"Set the receiver's comment to be the argument, aStringOrText."
 
 	self instanceSide classComment: aStringOrText.
 ]
 
-{ #category : #'accessing comment' }
+{ #category : #'accessing - comment' }
 ClassDescription >> comment: aStringOrText stamp: aStamp [
 	"Set the receiver's comment to be the argument, aStringOrText."
 
@@ -631,12 +631,12 @@ ClassDescription >> forceNewFrom: anArray [
     ^ object
 ]
 
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing - parallel hierarchy' }
 ClassDescription >> hasClassSide [
 	^self subclassResponsibility.
 ]
 
-{ #category : #'accessing comment' }
+{ #category : #'accessing - comment' }
 ClassDescription >> hasComment [
 	"Return whether this class truly has a comment other than the default"
 	^self instanceSide organization hasComment
@@ -710,7 +710,7 @@ ClassDescription >> instVarNames [
 	^self slots collect: [ :each | each name ]
 ]
 
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing - parallel hierarchy' }
 ClassDescription >> instanceSide [
 	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
 	"Point instanceSide >>> Point"
@@ -736,7 +736,7 @@ ClassDescription >> instanceVariablesString [
 	^ String streamContents: [ :stream | self instanceVariablesOn: stream ]
 ]
 
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing - parallel hierarchy' }
 ClassDescription >> isClassSide [
 	"Return true whether the receiver is a metaclass (in a couple class/metaclass sense)."
 	"Point isClassSide >>> false"
@@ -750,7 +750,7 @@ ClassDescription >> isDeprecated [
 	^ self package isDeprecated
 ]
 
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing - parallel hierarchy' }
 ClassDescription >> isInstanceSide [
 	"Return true whether the receiver is a class (in a couple class/metaclass sense)."
 	"Point isClassSide >>> false"
@@ -807,7 +807,7 @@ ClassDescription >> methodsInProtocol: aString [
 			collect: [ :each | (self compiledMethodAt: each) ]
 ]
 
-{ #category : #'accessing tags' }
+{ #category : #'accessing - tags' }
 ClassDescription >> methodsTaggedWith: aSymbol [
 	"Any method could be tagged with multiple symbols for user purpose. 
 	And class contains all method tags which used or not used yet by methods.
@@ -869,7 +869,7 @@ ClassDescription >> newInstanceFrom: oldInstance variable: variable size: instSi
 	^new
 ]
 
-{ #category : #'accessing method dictionary' }
+{ #category : #'accessing - method dictionary' }
 ClassDescription >> noteAddedSelector: aSelector meta: isMeta [
 	"A hook allowing some classes to react to adding of certain selectors"
 ]
@@ -988,7 +988,7 @@ ClassDescription >> removeInstVarNamed: aString [
 	^self removeSlot: (self slotNamed: aString)
 ]
 
-{ #category : #'accessing tags' }
+{ #category : #'accessing - tags' }
 ClassDescription >> removeMethodTag: aSymbol [
 	"Any method could be tagged with multiple symbols for user purpose.
 	In class we could define what tags could be used for methods.
@@ -996,7 +996,7 @@ ClassDescription >> removeMethodTag: aSymbol [
 	self organization removeCategory: aSymbol
 ]
 
-{ #category : #'accessing method dictionary' }
+{ #category : #'accessing - method dictionary' }
 ClassDescription >> removeProtocol: aString [ 
 	"Remove each of the messages categorized under aString in the method 
 	dictionary of the receiver. Then remove the category aString."
@@ -1007,7 +1007,7 @@ ClassDescription >> removeProtocol: aString [
 	self organization removeCategory: categoryName
 ]
 
-{ #category : #'accessing method dictionary' }
+{ #category : #'accessing - method dictionary' }
 ClassDescription >> removeSelector: selector [ 
 	"Remove the message whose selector is given from the method 
 	dictionary of the receiver, if it is there. Answer nil otherwise."
@@ -1036,7 +1036,7 @@ ClassDescription >> reorganize [
 	^self organization
 ]
 
-{ #category : #'accessing method dictionary' }
+{ #category : #'accessing - method dictionary' }
 ClassDescription >> selectorsInCategory: aName [ 
 	"Answer a list of the selectors of the receiver that are in category named aName"
 	
@@ -1045,7 +1045,7 @@ ClassDescription >> selectorsInCategory: aName [
 	^ aColl asArray sort
 ]
 
-{ #category : #'accessing method dictionary' }
+{ #category : #'accessing - method dictionary' }
 ClassDescription >> selectorsInProtocol: aName [ 
 	"Answer a list of the selectors of the receiver that are in category named aName"
 	
@@ -1188,7 +1188,7 @@ ClassDescription >> superclass: aSuperclass withLayoutType: layoutType slots: sl
 		layout: newLayout
 ]
 
-{ #category : #'accessing tags' }
+{ #category : #'accessing - tags' }
 ClassDescription >> tagWith: aSymbol [
 	| package packageTag |
 	"Any class or trait could be tagged by multiple symbols for user purpose.
@@ -1199,7 +1199,7 @@ ClassDescription >> tagWith: aSymbol [
 	packageTag addClass: self
 ]
 
-{ #category : #'accessing tags' }
+{ #category : #'accessing - tags' }
 ClassDescription >> tags [
 	| packageTag |
 	"Any class or trait could be tagged by multiple symbols for user purpose.
@@ -1211,7 +1211,7 @@ ClassDescription >> tags [
 	^{packageTag name}
 ]
 
-{ #category : #'accessing tags' }
+{ #category : #'accessing - tags' }
 ClassDescription >> tagsForMethods [
 	"Any method could be tagged with multiple symbols for user purpose. 
 	And class contains all method tags which used or not used yet by methods.
@@ -1241,12 +1241,12 @@ ClassDescription >> theNonMetaClass [
 	^ self instanceSide
 ]
 
-{ #category : #'accessing method dictionary' }
+{ #category : #'accessing - method dictionary' }
 ClassDescription >> uncategorizedSelectors [
 	^ self selectorsInProtocol: Protocol unclassified
 ]
 
-{ #category : #'accessing tags' }
+{ #category : #'accessing - tags' }
 ClassDescription >> untagFrom: aSymbol [
 	| package packageTag |
 	"Any class or trait could be tagged by multiple symbols for user purpose.

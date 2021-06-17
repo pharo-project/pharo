@@ -404,7 +404,7 @@ GTGenericStackDebugger >> selectTopContext [
 	((self browser paneNamed: #stack) port: #selection) value: self interruptedContext
 ]
 
-{ #category : #'accessing context' }
+{ #category : #'accessing - context' }
 GTGenericStackDebugger >> selectedContext [
 
 	^ ((self browser paneNamed: #stack) port: #selection) value

@@ -28,7 +28,7 @@ GTBytecodeDebuggerSession >> stepToFirstInterestingBytecodeIn: aProcess [
 	^ aProcess suspendedContext
 ]
 
-{ #category : #acessing }
+{ #category : #accessing }
 GTBytecodeDebuggerSession >> symbolicBytecodeForCurrentPCFrom: aContext [
 	| pc |
 	

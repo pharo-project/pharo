@@ -41,13 +41,13 @@ SDL_RendererInfo class >> initialize [
 	Uint32_16 := FFITypeArray ofType: Uint32 size: 16
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_RendererInfo >> flags [
 	"This method was automatically generated"
 	^handle unsignedLongAt: OFFSET_FLAGS
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_RendererInfo >> flags: anObject [
 	"This method was automatically generated"
 	handle unsignedLongAt: OFFSET_FLAGS put: anObject
@@ -73,61 +73,61 @@ SDL_RendererInfo >> isSynchronizedWithRefreshRate [
 	^ self flags & SDL_RENDERER_PRESENTVSYNC == SDL_RENDERER_PRESENTVSYNC
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_RendererInfo >> max_texture_height [
 	"This method was automatically generated"
 	^handle signedLongAt: OFFSET_MAX_TEXTURE_HEIGHT
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_RendererInfo >> max_texture_height: anObject [
 	"This method was automatically generated"
 	handle signedLongAt: OFFSET_MAX_TEXTURE_HEIGHT put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_RendererInfo >> max_texture_width [
 	"This method was automatically generated"
 	^handle signedLongAt: OFFSET_MAX_TEXTURE_WIDTH
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_RendererInfo >> max_texture_width: anObject [
 	"This method was automatically generated"
 	handle signedLongAt: OFFSET_MAX_TEXTURE_WIDTH put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_RendererInfo >> name [
 	"This method was automatically generated"
 	^ExternalData fromHandle: (handle pointerAt: OFFSET_NAME) type: ExternalType char asPointerType
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_RendererInfo >> name: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_NAME put: anObject getHandle.
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_RendererInfo >> num_texture_formats [
 	"This method was automatically generated"
 	^handle unsignedLongAt: OFFSET_NUM_TEXTURE_FORMATS
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_RendererInfo >> num_texture_formats: anObject [
 	"This method was automatically generated"
 	handle unsignedLongAt: OFFSET_NUM_TEXTURE_FORMATS put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_RendererInfo >> texture_formats [
 	"This method was automatically generated"
 	^(FFITypeArray ofType: #FFIUInt32 size: 16) fromHandle: (handle copyFrom: OFFSET_TEXTURE_FORMATS to: OFFSET_TEXTURE_FORMATS + 63)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_RendererInfo >> texture_formats: anObject [
 	"This method was automatically generated"
 	handle replaceFrom: OFFSET_TEXTURE_FORMATS to: OFFSET_TEXTURE_FORMATS + 63 with: anObject getHandle startingAt: 1

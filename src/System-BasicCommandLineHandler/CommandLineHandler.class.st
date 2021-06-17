@@ -142,12 +142,12 @@ CommandLineHandler >> allHandlers [
 	^ CommandLineHandler allHandlers 
 ]
 
-{ #category : #'accessing arguments' }
+{ #category : #'accessing - arguments' }
 CommandLineHandler >> argumentAt: anInteger [
 	^ self commandLine argumentAt: anInteger
 ]
 
-{ #category : #'accessing arguments' }
+{ #category : #'accessing - arguments' }
 CommandLineHandler >> arguments [
 	^ self commandLine arguments
 ]
@@ -196,7 +196,7 @@ CommandLineHandler >> hasArguments [
 	^ self commandLine hasArguments
 ]
 
-{ #category : #'accessing arguments' }
+{ #category : #'accessing - arguments' }
 CommandLineHandler >> hasOption: aString [
 	^ self commandLine hasOption: aString
 ]
@@ -243,24 +243,24 @@ CommandLineHandler >> name [
 	^ self printString
 ]
 
-{ #category : #'accessing arguments' }
+{ #category : #'accessing - arguments' }
 CommandLineHandler >> optionAt: aString [
 	^ self commandLine optionAt: aString
 ]
 
-{ #category : #'accessing arguments' }
+{ #category : #'accessing - arguments' }
 CommandLineHandler >> optionAt: aString ifAbsent: absentBlock [
 	^ self commandLine 
 		optionAt: aString ifAbsent: absentBlock
 ]
 
-{ #category : #'accessing arguments' }
+{ #category : #'accessing - arguments' }
 CommandLineHandler >> optionAt: aString ifPresent: absentBlock [
 	^ self commandLine 
 		optionAt: aString ifPresent: absentBlock
 ]
 
-{ #category : #'accessing arguments' }
+{ #category : #'accessing - arguments' }
 CommandLineHandler >> optionAt: aString ifPresent: presentBlock ifAbsent: absentBlock [
 	^ self commandLine 
 		optionAt: aString ifPresent: presentBlock ifAbsent: absentBlock

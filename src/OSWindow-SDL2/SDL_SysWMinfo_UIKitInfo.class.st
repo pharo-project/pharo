@@ -35,49 +35,49 @@ SDL_SysWMinfo_UIKitInfo >> asPlatformSpecificHandle [
 		yourself
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_UIKitInfo >> colorbuffer [
 	"This method was automatically generated"
 	^handle unsignedLongAt: OFFSET_COLORBUFFER
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_UIKitInfo >> colorbuffer: anObject [
 	"This method was automatically generated"
 	handle unsignedLongAt: OFFSET_COLORBUFFER put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_UIKitInfo >> framebuffer [
 	"This method was automatically generated"
 	^handle unsignedLongAt: OFFSET_FRAMEBUFFER
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_UIKitInfo >> framebuffer: anObject [
 	"This method was automatically generated"
 	handle unsignedLongAt: OFFSET_FRAMEBUFFER put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_UIKitInfo >> resolveFramebuffer [
 	"This method was automatically generated"
 	^handle unsignedLongAt: OFFSET_RESOLVEFRAMEBUFFER
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_UIKitInfo >> resolveFramebuffer: anObject [
 	"This method was automatically generated"
 	handle unsignedLongAt: OFFSET_RESOLVEFRAMEBUFFER put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_UIKitInfo >> window [
 	"This method was automatically generated"
 	^ExternalData fromHandle: (handle pointerAt: OFFSET_WINDOW) type: ExternalType void asPointerType
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_UIKitInfo >> window: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_WINDOW put: anObject getHandle.

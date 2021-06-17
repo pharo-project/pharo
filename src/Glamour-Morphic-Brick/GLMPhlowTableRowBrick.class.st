@@ -29,7 +29,7 @@ GLMPhlowTableRowBrick >> entity: anObject [
 	self initializeColumns.
 ]
 
-{ #category : #acessing }
+{ #category : #accessing }
 GLMPhlowTableRowBrick >> in: aTableBrick [
 
 	table := aTableBrick.
@@ -55,7 +55,7 @@ GLMPhlowTableRowBrick >> initializeColumns [
 	self updateWidthPercentage
 ]
 
-{ #category : #acessing }
+{ #category : #accessing }
 GLMPhlowTableRowBrick >> table [
 
 	^ table

@@ -81,7 +81,7 @@ GTSpecPreDebugPresenter >> session [
 	^ self debugger session
 ]
 
-{ #category : #'accessing model' }
+{ #category : #'accessing - model' }
 GTSpecPreDebugPresenter >> setModelBeforeInitialization: aDebugger [
 	debugger := aDebugger
 ]

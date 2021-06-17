@@ -21,14 +21,14 @@ RubPluggableGetMenuPolicy >> getMenuSelector: aSymbol [
 	getMenuSelector := aSymbol
 ]
 
-{ #category : #'accessing menu' }
+{ #category : #'accessing - menu' }
 RubPluggableGetMenuPolicy >> lookupMenu [
 	(getMenuSelector isNil or: [ menuProvider isNil ])
 		ifTrue: [ ^ super lookupMenu ].
 	^ (WeakMessageSend receiver: menuProvider selector: getMenuSelector) cull: MenuMorph new cull: false
 ]
 
-{ #category : #'accessing menu' }
+{ #category : #'accessing - menu' }
 RubPluggableGetMenuPolicy >> lookupShiftMenu [
 	(getMenuSelector isNil or: [ menuProvider isNil ])
 		ifTrue: [ ^ super lookupMenu ].

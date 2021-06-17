@@ -26,49 +26,49 @@ SDL_Keysym class >> fieldsDesc [
  	)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_Keysym >> mod [
 	"This method was automatically generated"
 	^handle unsignedShortAt: OFFSET_MOD
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_Keysym >> mod: anObject [
 	"This method was automatically generated"
 	handle unsignedShortAt: OFFSET_MOD put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_Keysym >> scancode [
 	"This method was automatically generated"
 	^handle unsignedLongAt: OFFSET_SCANCODE
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_Keysym >> scancode: anObject [
 	"This method was automatically generated"
 	handle unsignedLongAt: OFFSET_SCANCODE put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_Keysym >> sym [
 	"This method was automatically generated"
 	^handle signedLongAt: OFFSET_SYM
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_Keysym >> sym: anObject [
 	"This method was automatically generated"
 	handle signedLongAt: OFFSET_SYM put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_Keysym >> unused [
 	"This method was automatically generated"
 	^handle unsignedLongAt: OFFSET_UNUSED
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_Keysym >> unused: anObject [
 	"This method was automatically generated"
 	handle unsignedLongAt: OFFSET_UNUSED put: anObject

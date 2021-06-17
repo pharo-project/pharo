@@ -23,25 +23,25 @@ TFInnerTestStruct class >> fieldsDesc [
 	)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 TFInnerTestStruct >> a [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_A
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 TFInnerTestStruct >> a: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_A put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 TFInnerTestStruct >> b [
 	"This method was automatically generated"
 	^ExternalData fromHandle: (handle pointerAt: OFFSET_B) type: ExternalType void asPointerType
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 TFInnerTestStruct >> b: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_B put: anObject getHandle.

@@ -27,12 +27,12 @@ IRReconstructor >> createTempVectorNamed: name withVars: anArray [
 	self add: (IRInstruction createTempVectorNamed: name withVars: anArray)
 ]
 
-{ #category : #accessors }
+{ #category : #accessing }
 IRReconstructor >> currentSequence [
 	^currentSequence 
 ]
 
-{ #category : #accessors }
+{ #category : #accessing }
 IRReconstructor >> currentSequence: aSeq [
 	currentSequence := aSeq
 ]

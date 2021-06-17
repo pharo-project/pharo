@@ -154,7 +154,7 @@ RubTextFieldMorph >> focusChanged [
 
 ]
 
-{ #category : #'accessing text area' }
+{ #category : #'accessing - text area' }
 RubTextFieldMorph >> font: aNewFont [
 	
 	"As the text field is using a font full of * to show the password.

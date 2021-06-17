@@ -10,12 +10,12 @@ Class {
 	#category : #'Rubric-Editing-Core'
 }
 
-{ #category : #'accessing menu' }
+{ #category : #'accessing - menu' }
 RubGetMenuPolicy >> lookupMenu [ 
 	^ textArea lookupMenu
 ]
 
-{ #category : #'accessing menu' }
+{ #category : #'accessing - menu' }
 RubGetMenuPolicy >> lookupShiftMenu [ 
 	^ textArea lookupShiftMenu
 ]

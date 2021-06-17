@@ -73,265 +73,265 @@ FTGlyphSlotRec class >> fieldsDesc [
     FT_Slot_Internal  internal;)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> advance [
 	"This method was automatically generated"
 	^ FTVector fromHandle: (handle referenceStructAt: OFFSET_ADVANCE length: FTVector byteSize)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> advance: anObject [
 	"This method was automatically generated"
 	handle structAt: OFFSET_ADVANCE put: anObject getHandle length: FTVector byteSize
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> bitmap [
 	"This method was automatically generated"
 	^ FTBitmap fromHandle: (handle referenceStructAt: OFFSET_BITMAP length: FTBitmap byteSize)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> bitmap: anObject [
 	"This method was automatically generated"
 	handle structAt: OFFSET_BITMAP put: anObject getHandle length: FTBitmap byteSize
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> bitmap_left [
 	"This method was automatically generated"
 	^handle signedLongAt: OFFSET_BITMAP_LEFT
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> bitmap_left: anObject [
 	"This method was automatically generated"
 	handle signedLongAt: OFFSET_BITMAP_LEFT put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> bitmap_top [
 	"This method was automatically generated"
 	^handle signedLongAt: OFFSET_BITMAP_TOP
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> bitmap_top: anObject [
 	"This method was automatically generated"
 	handle signedLongAt: OFFSET_BITMAP_TOP put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> control_data [
 	"This method was automatically generated"
 	^ExternalData fromHandle: (handle pointerAt: OFFSET_CONTROL_DATA) type: ExternalType void asPointerType
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> control_data: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_CONTROL_DATA put: anObject getHandle.
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> control_len [
 	"This method was automatically generated"
 	^handle platformLongAt: OFFSET_CONTROL_LEN
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> control_len: anObject [
 	"This method was automatically generated"
 	^handle platformLongAt: OFFSET_CONTROL_LEN put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> face [
 	"This method was automatically generated"
 	^FTFaceRec fromHandle: (handle pointerAt: OFFSET_FACE)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> face: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_FACE put: anObject getHandle.
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> format [
 	"This method was automatically generated"
 	^handle platformLongAt: OFFSET_FORMAT
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> format: anObject [
 	"This method was automatically generated"
 	^handle platformLongAt: OFFSET_FORMAT put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> generic [
 	"This method was automatically generated"
 	^ FTGeneric fromHandle: (handle referenceStructAt: OFFSET_GENERIC length: FTGeneric byteSize)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> generic: anObject [
 	"This method was automatically generated"
 	handle structAt: OFFSET_GENERIC put: anObject getHandle length: FTGeneric byteSize
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> internal [
 	"This method was automatically generated"
 	^ExternalData fromHandle: (handle pointerAt: OFFSET_INTERNAL) type: ExternalType void asPointerType
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> internal: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_INTERNAL put: anObject getHandle.
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> library [
 	"This method was automatically generated"
 	^ExternalData fromHandle: (handle pointerAt: OFFSET_LIBRARY) type: ExternalType void asPointerType
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> library: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_LIBRARY put: anObject getHandle.
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> linearHoriAdvance [
 	"This method was automatically generated"
 	^handle platformLongAt: OFFSET_LINEARHORIADVANCE
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> linearHoriAdvance: anObject [
 	"This method was automatically generated"
 	^handle platformLongAt: OFFSET_LINEARHORIADVANCE put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> linearVertAdvance [
 	"This method was automatically generated"
 	^handle platformLongAt: OFFSET_LINEARVERTADVANCE
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> linearVertAdvance: anObject [
 	"This method was automatically generated"
 	^handle platformLongAt: OFFSET_LINEARVERTADVANCE put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> lsb_delta [
 	"This method was automatically generated"
 	^handle platformLongAt: OFFSET_LSB_DELTA
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> lsb_delta: anObject [
 	"This method was automatically generated"
 	^handle platformLongAt: OFFSET_LSB_DELTA put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> metrics [
 	"This method was automatically generated"
 	^ FTGlyphMetrics fromHandle: (handle referenceStructAt: OFFSET_METRICS length: FTGlyphMetrics byteSize)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> metrics: anObject [
 	"This method was automatically generated"
 	handle structAt: OFFSET_METRICS put: anObject getHandle length: FTGlyphMetrics byteSize
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> next [
 	"This method was automatically generated"
 	^FTGlyphSlotRec fromHandle: (handle pointerAt: OFFSET_NEXT)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> next: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_NEXT put: anObject getHandle.
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> num_subglyphs [
 	"This method was automatically generated"
 	^handle unsignedLongAt: OFFSET_NUM_SUBGLYPHS
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> num_subglyphs: anObject [
 	"This method was automatically generated"
 	handle unsignedLongAt: OFFSET_NUM_SUBGLYPHS put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> other [
 	"This method was automatically generated"
 	^ExternalData fromHandle: (handle pointerAt: OFFSET_OTHER) type: ExternalType void asPointerType
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> other: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_OTHER put: anObject getHandle.
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> outline [
 	"This method was automatically generated"
 	^ FTOutline fromHandle: (handle referenceStructAt: OFFSET_OUTLINE length: FTOutline byteSize)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> outline: anObject [
 	"This method was automatically generated"
 	handle structAt: OFFSET_OUTLINE put: anObject getHandle length: FTOutline byteSize
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> reserved [
 	"This method was automatically generated"
 	^handle unsignedLongAt: OFFSET_RESERVED
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> reserved: anObject [
 	"This method was automatically generated"
 	handle unsignedLongAt: OFFSET_RESERVED put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> rsb_delta [
 	"This method was automatically generated"
 	^handle platformLongAt: OFFSET_RSB_DELTA
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> rsb_delta: anObject [
 	"This method was automatically generated"
 	^handle platformLongAt: OFFSET_RSB_DELTA put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> subglyphs [
 	"This method was automatically generated"
 	^ExternalData fromHandle: (handle pointerAt: OFFSET_SUBGLYPHS) type: ExternalType void asPointerType
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGlyphSlotRec >> subglyphs: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_SUBGLYPHS put: anObject getHandle.
