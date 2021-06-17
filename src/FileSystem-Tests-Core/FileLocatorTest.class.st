@@ -75,6 +75,19 @@ FileLocatorTest >> testCanCreateLocatorFromStringWhenSamePath [
 		equals: path.
 ]
 
+{ #category : #'creation tests' }
+FileLocatorTest >> testCananonicalize [
+	| fl canonicalized |
+
+	fl := FileLocator home / 'foo' / 'bar'.
+	self assert: fl path isRelative.
+	self assert: fl path size equals: 2.
+
+	canonicalized := fl canonicalize.
+	self assert: canonicalized path isRelative.
+	self assert: canonicalized path size equals: 2.
+]
+
 { #category : #'compatibility tests' }
 FileLocatorTest >> testCommaAddsExtension [
 
@@ -219,7 +232,7 @@ FileLocatorTest >> testIsRelative [
 FileLocatorTest >> testIsRoot [
 	locator := FileLocator image.
 	(locator resolve path size) timesRepeat: [ locator := locator / '..' ].
-	self assert: locator canonicalize isRoot
+	self assert: locator resolve canonicalize isRoot
 ]
 
 { #category : #'resolution tests' }
