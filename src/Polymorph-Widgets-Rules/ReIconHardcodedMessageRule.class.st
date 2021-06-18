@@ -1,11 +1,11 @@
 "
 According to the new API you should use
 
-	#iconName asIcon
+	self iconNamed: #symbol
 	
 Instead of
 
-	Smalltalk ui icons iconName
+	Smalltalk ui icons iconNamed: #symbol
 "
 Class {
 	#name : #ReIconHardcodedMessageRule,
