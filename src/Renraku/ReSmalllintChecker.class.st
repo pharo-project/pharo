@@ -100,7 +100,7 @@ ReSmalllintChecker >> initialize [
 
 { #category : #private }
 ReSmalllintChecker >> reParseRule [
-	" Not add any rule to the critique browser that has answered true for #checksPackage for now. "
+
 	methodRules := Set new.
 	nodeRules := Set new.
 	classRules := Set new.
@@ -109,8 +109,7 @@ ReSmalllintChecker >> reParseRule [
 	self rule do: [ :r | 
 		r class checksMethod ifTrue: [ methodRules add: r ].
 		r class checksNode ifTrue: [ nodeRules add: r ].
-		r class checksClass ifTrue: [ classRules add: r ].
-		"r class checksPackage ifTrue: [ packageRules add: r ]" ]
+		r class checksClass ifTrue: [ classRules add: r ] ]
 ]
 
 { #category : #running }
