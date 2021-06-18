@@ -115,7 +115,7 @@ Class {
 		'changesWasInitiatedByUser',
 		'navigationSelector',
 		'dataSourceClass',
-		'expandedItem'
+		'expandedItemByDrag'
 	],
 	#category : #'Calypso-Browser-Table'
 }
@@ -361,12 +361,12 @@ ClyQueryViewMorph >> ensureVisibleSelection [
 
 { #category : #drag }
 ClyQueryViewMorph >> expandForDrag: dropTargetItem [
-	(expandedItem isNotNil 
-		and: [ expandedItem ~= dropTargetItem
-		and: [ expandedItem hasChildren 
-		and: [ expandedItem isExpanded ]]])
-			ifTrue: [ expandedItem collapse ].
-	^ expandedItem := dropTargetItem hasChildren 
+	(expandedItemByDrag isNotNil 
+		and: [ expandedItemByDrag ~= dropTargetItem
+		and: [ expandedItemByDrag hasChildren 
+		and: [ expandedItemByDrag isExpanded ]]])
+			ifTrue: [ expandedItemByDrag collapse ].
+	^ expandedItemByDrag := dropTargetItem hasChildren 
 		ifFalse: [ nil ]
 		ifTrue: [
 			dropTargetItem expand.
