@@ -34,12 +34,6 @@ SycRemoveHierarchyMethodCommand >> defaultMenuItemName [
 	^'Remove and the ones in subclasses'
 ]
 
-{ #category : #execution }
-SycRemoveHierarchyMethodCommand >> execute [
-
-	self executeRefactorings
-]
-
 { #category : #initialization }
 SycRemoveHierarchyMethodCommand >> setUpModelFromContext: aToolContext [
 ]

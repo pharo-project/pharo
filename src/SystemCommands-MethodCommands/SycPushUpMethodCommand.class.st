@@ -46,17 +46,6 @@ SycPushUpMethodCommand >> defaultMenuItemName [
 ]
 
 { #category : #execution }
-SycPushUpMethodCommand >> execute [
-
-	self executeRefactorings
-]
-
-{ #category : #testing }
-SycPushUpMethodCommand >> isComplexRefactoring [
-	^true
-]
-
-{ #category : #execution }
 SycPushUpMethodCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	self selectMethodsAndSuperclass.
@@ -64,15 +53,14 @@ SycPushUpMethodCommand >> prepareFullExecutionInContext: aToolContext [
 
 { #category : #execution }
 SycPushUpMethodCommand >> selectMethodsAndSuperclass [
-	| selectedMethods dialog class classes |
-	selectedMethods := methods copy asOrderedCollection.
+	| dialog class classes |
 	class := methods first origin.
 	classes := class allSuperclasses removeAllSuchThat: [ :each | each == Object or: [ each == ProtoObject ] ].
 	dialog := RBSelectClassAndMethodsPresenter 
 			label: 'Methods to be pull up'
 			dropLabel: 'Pull up methods of ', class name, ' to:'
 			withItems: (class methods sort: [ :a :b | a asString < b asString ]) asOrderedCollection
-			selecting: selectedMethods
+			selecting: methods asOrderedCollection
 			dropItems: classes
 			acceptBlock: [ :item :items | superclass := item.
 				methods := items ].
