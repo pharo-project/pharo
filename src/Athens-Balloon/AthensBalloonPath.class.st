@@ -73,13 +73,6 @@ AthensBalloonPath >> paintFillsUsing: aPaint on: anAthensCanvas [
 	^ aPaint athensFillPath: self on: anAthensCanvas
 ]
 
-{ #category : #drawing }
-AthensBalloonPath >> paintStrokeUsing: paint on: anAthensCanvas [ 
-	
-	^ paint strokePath: self on: anAthensCanvas
-
-]
-
 { #category : #converting }
 AthensBalloonPath >> visitCloseSegment: closeSegment [
 	
