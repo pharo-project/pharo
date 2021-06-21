@@ -780,7 +780,6 @@ RBProgramNode >> matchList: matchNodes index: matchIndex against: programNodes i
 	node isList 
 		ifTrue: 
 			[currentIndex := programIndex - 1.
-			
 			[currentDictionary := aDictionary copy.
 			programNodes size < currentIndex or: 
 					[nodes := programNodes copyFrom: programIndex to: currentIndex.
