@@ -9,10 +9,12 @@ Class {
 
 { #category : #converting }
 AthensBalloonPaint >> asAthensPaintOn: surf [
-	^ self 
+
+	^ self
 ]
 
 { #category : #converting }
 AthensBalloonPaint >> asStrokePaintOn: aCanvas [
+
 	^ AthensBalloonStrokePaint new fillPaint: self
 ]

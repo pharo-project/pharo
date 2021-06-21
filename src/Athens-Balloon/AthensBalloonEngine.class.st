@@ -17,10 +17,12 @@ Class {
 	#category : #'Athens-Balloon-Engine'
 }
 
-{ #category : #drawing }
+{ #category : #copying }
 AthensBalloonEngine >> copyBits [
-	(bitBlt notNil and:[bitBlt destForm notNil]) ifTrue:[bitBlt destForm unhibernate].
-	self copyLoopFastest.
+
+	(bitBlt notNil and: [ bitBlt destForm notNil ]) ifTrue: [ 
+		bitBlt destForm unhibernate ].
+	self copyLoopFastest
 ]
 
 { #category : #drawing }
@@ -68,7 +70,7 @@ AthensBalloonEngine >> fastReset [
 	self primSetDepth: self primGetDepth + 1. 
 
 	postFlushNeeded := false.
-	forms := #().
+	forms := #()
 
 "	
 -	self magicNumberPut: GWMagicNumber.
@@ -113,7 +115,7 @@ AthensBalloonEngine >> fillBezierShape: contours [
 		self primFlushNeeded: false.
 	].
 
-	self copyBits.
+	self copyBits
 ]
 
 { #category : #drawing }
@@ -126,24 +128,26 @@ AthensBalloonEngine >> fillRectangle: rect [
 			borderWidth: 0
 			borderColor: 0.
 
-	self copyBits.
+	self copyBits
 	
 ]
 
 { #category : #private }
 AthensBalloonEngine >> prepareForRendering [
+
 	self fastReset
 ]
 
 { #category : #'registering fills' }
 AthensBalloonEngine >> registerColorFill: aColor [ 
 
-	currentFill := aColor scaledPixelValue32.
+	currentFill := aColor scaledPixelValue32
 
 ]
 
 { #category : #'registering fills' }
 AthensBalloonEngine >> registerFormFill: form origin: orig direction: dir normal: norm [
+
 	self
 		registerFormFill: form
 		origin: orig
@@ -163,69 +167,74 @@ AthensBalloonEngine >> registerFormFill: form origin: orig direction: dir normal
 			from: orig
 			along: dir
 			normal: norm
-			xIndex: forms size.
+			xIndex: forms size
 			
 
 ]
 
 { #category : #paints }
-AthensBalloonEngine >> registerLinearGradient: colorRamp origin: origin corner: corner [ 
+AthensBalloonEngine >> registerLinearGradient: colorRamp origin: origin corner: corner [
+
 	| pixelRamp direction normal |
-	
 	pixelRamp := GradientFillStyle pixelRampCache at: colorRamp.
 	direction := corner - origin.
 	normal := direction y negated @ direction x.
-	
-	currentFill := 
-		self primAddGradientFill: pixelRamp
-			from: origin
-			along: direction
-			normal:  normal
-			radial:  false.
+
+	currentFill := self
+		               primAddGradientFill: pixelRamp
+		               from: origin
+		               along: direction
+		               normal: normal
+		               radial: false
 ]
 
 { #category : #paints }
-AthensBalloonEngine >> registerRadialGradient: colorRamp center: aCenter direction: dir normal: n [ 
+AthensBalloonEngine >> registerRadialGradient: colorRamp center: aCenter direction: dir normal: n [
+
 	| pixelRamp |
-	
 	pixelRamp := GradientFillStyle pixelRampCache at: colorRamp.
-	
-	currentFill := 
-		self primAddGradientFill: pixelRamp
-			from: aCenter
-			along: dir
-			normal:  n
-			radial:  true.
+
+	currentFill := self
+		               primAddGradientFill: pixelRamp
+		               from: aCenter
+		               along: dir
+		               normal: n
+		               radial: true
 ]
 
 { #category : #paints }
-AthensBalloonEngine >> registerRadialGradient: colorRamp center: aCenter radius: r [ 
+AthensBalloonEngine >> registerRadialGradient: colorRamp center: aCenter radius: r [
+
 	| pixelRamp |
-	
 	pixelRamp := GradientFillStyle pixelRampCache at: colorRamp.
-	
-	currentFill := 
-		self primAddGradientFill: pixelRamp
-			from: aCenter
-			along: (aCenter x + r @ aCenter y)
-			normal:  (aCenter x  @ aCenter y - r)
-			radial:  true.
+
+	currentFill := self
+		               primAddGradientFill: pixelRamp
+		               from: aCenter
+		               along: aCenter x + r @ aCenter y
+		               normal: aCenter x @ aCenter y - r
+		               radial: true
 ]
 
 { #category : #initialization }
 AthensBalloonEngine >> reset [
+
 	workBuffer ifNil:[workBuffer := self class allocateOrRecycleBuffer: 10000].
-	self primInitializeBuffer: workBuffer.
-	self primSetAALevel: 4.
-	self primSetOffset: 0@0.
-	self primSetClipRect: clipRect.
-	self primSetEdgeTransform: edgeTransform.
-	self primSetColorTransform: colorTransform.
-	forms := #().
+
+	self 
+		primInitializeBuffer: workBuffer;
+		primSetAALevel: 4;
+		primSetOffset: 0@0;
+		primSetClipRect: clipRect;
+		primSetEdgeTransform: edgeTransform;
+		primSetColorTransform: colorTransform.
+		
+	forms := #()
 ]
 
 { #category : #accessing }
 AthensBalloonEngine >> setFill: aFill [
+
 	currentFill := aFill
 ]
 
@@ -243,7 +252,7 @@ AthensBalloonEngine >> strokeBezierShape: contours width: aWidth [
 		self primFlushNeeded: false.
 	].
 
-	self copyBits. 
+	self copyBits
 
 ]
 
@@ -257,7 +266,7 @@ AthensBalloonEngine >> strokeRectangle: rect borderWidth: width [
 			borderWidth: width
 			borderColor: currentFill.
 
-	self copyBits.
+	self copyBits
 	
 ]
 
@@ -271,6 +280,6 @@ AthensBalloonEngine >> strokeRectangle: rect width: aWidth [
 			borderWidth: aWidth asInteger
 			borderColor: currentFill.
 
-	self copyBits.
+	self copyBits
 	
 ]
