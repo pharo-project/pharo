@@ -401,7 +401,7 @@ MenuMorph >> addMenuItem: anItem [
 
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 MenuMorph >> addSeparator [
 	
 	self addMenuItem: MenuLineMorph new
