@@ -102,7 +102,7 @@ ReInvocationSequenceRule >> initialize [
 { #category : #accessing }
 ReInvocationSequenceRule >> name [
 
-	^ 'invocation order incorect'
+	^ 'Invocation order incorect'
 ]
 
 { #category : #running }
