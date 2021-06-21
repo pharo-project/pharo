@@ -45,7 +45,7 @@ OSPlatform class >> determineActivePlatform [
 
 ]
 
-{ #category : #example }
+{ #category : #examples }
 OSPlatform class >> example [
 	<example>
 	Smalltalk os current inspect

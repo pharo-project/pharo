@@ -165,7 +165,7 @@ Class >> addSharedPoolNamed: aSharedPoolName [
 		ifFalse: [ self error: 'The specified class is not pool.' ]
 ]
 
-{ #category : #'accessing class hierarchy' }
+{ #category : #'accessing - class hierarchy' }
 Class >> addSubclass: aSubclass [ 
 	"Make the argument, aSubclass, be one of the subclasses of the receiver. 
 	Create an error notification if the argument's superclass is not the receiver."
@@ -335,7 +335,7 @@ Class >> classPool: aDictionary [
 	classPool := aDictionary
 ]
 
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing - parallel hierarchy' }
 Class >> classSide [
 	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
 	"Point classSide >>> Point class"
@@ -407,7 +407,7 @@ Class >> classVariablesNeedFullDefinition [
 	^ self classVariables anySatisfy: [ :each | each needsFullDefinition ]
 ]
 
-{ #category : #'accessing class hierarchy' }
+{ #category : #'accessing - class hierarchy' }
 Class >> commonSuperclassWith: aClass [
 	"return the next common superclass between me and aClass. If I am the superclass of aClass, that is me"
 	^ self withAllSuperclasses detect: [ :class | (aClass allSuperclasses includes: class) ] ifNone: nil
@@ -602,7 +602,7 @@ Class >> hasBindingThatBeginsWith: aString [
 	^ self environment hasBindingThatBeginsWith: aString
 ]
 
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing - parallel hierarchy' }
 Class >> hasClassSide [
 	^self classSide notNil.
 ]
@@ -636,7 +636,7 @@ Class >> hasSharedPools [
 	^ self sharedPools notEmpty
 ]
 
-{ #category : #'accessing class hierarchy' }
+{ #category : #'accessing - class hierarchy' }
 Class >> hasSubclasses [
 	^ self subclasses isNotEmpty
 ]
@@ -693,7 +693,7 @@ Class >> innerBindingOf: aSymbol [
 	^ nil
 ]
 
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing - parallel hierarchy' }
 Class >> instanceSide [
 	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
 	"Point instanceSide >>> Point"
@@ -962,7 +962,7 @@ Class >> removeSharedPool: aDictionary [
 	self sharedPools isEmpty ifTrue: [self sharedPools: nil]
 ]
 
-{ #category : #'accessing class hierarchy' }
+{ #category : #'accessing - class hierarchy' }
 Class >> removeSubclass: aSubclass [ 
 	"If the argument, aSubclass, is one of the receiver's subclasses, remove it."
 
@@ -1173,7 +1173,7 @@ Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVa
 				category: aCategorySymbol ]
 ]
 
-{ #category : #'accessing class hierarchy' }
+{ #category : #'accessing - class hierarchy' }
 Class >> subclasses [
 	"Answer a Set containing the receiver's subclasses."
 
@@ -1182,12 +1182,12 @@ Class >> subclasses [
 		ifNotNil: [ subclasses copy ]
 ]
 
-{ #category : #'accessing class hierarchy' }
+{ #category : #'accessing - class hierarchy' }
 Class >> subclasses: aCollection [
 	subclasses := aCollection.
 ]
 
-{ #category : #'accessing class hierarchy' }
+{ #category : #'accessing - class hierarchy' }
 Class >> subclassesDo: aBlock [ 
 	"Evaluate the argument, aBlock, for each of the receiver's immediate subclasses."
 	

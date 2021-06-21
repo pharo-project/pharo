@@ -84,7 +84,7 @@ InstructionStreamTest >> testBlockWithASuperWithoutArgumentsSendHasCorrectNumber
 	self assert: operations last equals: { #directSuperSend:numArgs:. #yourself. 0 }
 ]
 
-{ #category : #example }
+{ #category : #'tests - example' }
 InstructionStreamTest >> testSimulatedTerminationOfProcessDoNotCorruptTheContext [
 
 	| initialContext aContext receiver semaphore process suspendedProcess return errorThatHappen |
@@ -106,7 +106,7 @@ InstructionStreamTest >> testSimulatedTerminationOfProcessDoNotCorruptTheContext
 	self assert: receiver expectedValue equals: 42
 ]
 
-{ #category : #example }
+{ #category : #'tests - example' }
 InstructionStreamTest >> testSimulatingAMethodWithHaltHasCorrectContext [
 
 	| initialContext aContext receiver suspendedProcess return |
@@ -125,7 +125,7 @@ InstructionStreamTest >> testSimulatingAMethodWithHaltHasCorrectContext [
 	self assert: return size equals: 1.
 ]
 
-{ #category : #example }
+{ #category : #'tests - example' }
 InstructionStreamTest >> testStepThroughInAMethodWithMNU [
 
 	| initialContext aContext receiver suspendedProcess return |
@@ -144,7 +144,7 @@ InstructionStreamTest >> testStepThroughInAMethodWithMNU [
 
 ]
 
-{ #category : #example }
+{ #category : #'tests - example' }
 InstructionStreamTest >> testStepThroughInAMethodWithMNUInMustBeBoolean [
 
 	| initialContext aContext receiver suspendedProcess return |
@@ -162,7 +162,7 @@ InstructionStreamTest >> testStepThroughInAMethodWithMNUInMustBeBoolean [
 	self assert: return method equals: (self classUnderTest lookupSelector: #doesNotUnderstand:).
 ]
 
-{ #category : #example }
+{ #category : #'tests - example' }
 InstructionStreamTest >> testStepThroughInAMethodWithoutError [
 
 	| initialContext aContext receiver suspendedProcess return |
@@ -181,7 +181,7 @@ InstructionStreamTest >> testStepThroughInAMethodWithoutError [
 	self assert: return top equals: 42.
 ]
 
-{ #category : #example }
+{ #category : #'tests - example' }
 InstructionStreamTest >> testSteppingSendsDirectSend [
 
 	| initialContext aContext receiver |

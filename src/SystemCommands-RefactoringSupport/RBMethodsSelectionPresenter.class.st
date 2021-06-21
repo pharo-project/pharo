@@ -4,7 +4,7 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #example }
+{ #category : #examples }
 RBMethodsSelectionPresenter class >> example [
 	<script>
 	^ (self label: 'example ...' 

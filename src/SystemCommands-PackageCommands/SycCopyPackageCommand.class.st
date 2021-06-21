@@ -19,7 +19,8 @@ Class {
 
 { #category : #testing }
 SycCopyPackageCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isPackageSelected
+	"^aToolContext isPackageSelected"
+	^ false
 ]
 
 { #category : #accessing }

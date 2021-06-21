@@ -8,7 +8,7 @@ Class {
 	#category : #'Kernel-Tests-Extended-Methods'
 }
 
-{ #category : #example }
+{ #category : #examples }
 ClassUsedInInstructionStreamTest >> aMethodSuspendedBeforeTheTerminateOfAnotherProcess [
 
 	Processor activeProcess suspend.
@@ -19,7 +19,7 @@ ClassUsedInInstructionStreamTest >> aMethodSuspendedBeforeTheTerminateOfAnotherP
 
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ClassUsedInInstructionStreamTest >> aMethodWithHalt [
 
 	<haltOrBreakpointForTesting>
@@ -28,14 +28,14 @@ ClassUsedInInstructionStreamTest >> aMethodWithHalt [
 	self halt.
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ClassUsedInInstructionStreamTest >> aMethodWithMNU [
 
 	Processor activeProcess suspend.
 	self iAmAnMNUMessage.
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ClassUsedInInstructionStreamTest >> aMethodWithMustBeBooleanMNU [
 
 	Processor activeProcess suspend.
@@ -43,62 +43,62 @@ ClassUsedInInstructionStreamTest >> aMethodWithMustBeBooleanMNU [
 	^ 2 ifTrue: [ 5 ] ifFalse: [ 7 ]
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ClassUsedInInstructionStreamTest >> aMethodWithSuspendAndReturnANumber [
 
 	Processor activeProcess suspend.
 	^ 42.
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ClassUsedInInstructionStreamTest >> aSuperMethod: anInteger with: anotherInteger [
 
 	^ self error
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ClassUsedInInstructionStreamTest >> callingAMethodSuspendedBeforeTheTerminateOfAnotherProcess [
 
 	self aMethodSuspendedBeforeTheTerminateOfAnotherProcess
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ClassUsedInInstructionStreamTest >> callingAMethodWithHalt [
 
 	self aMethodWithHalt
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ClassUsedInInstructionStreamTest >> callingAMethodWithMNU [
 
 	self aMethodWithMNU
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ClassUsedInInstructionStreamTest >> callingAMethodWithMustBeBooleanMNU [
 
 	self aMethodWithMustBeBooleanMNU
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ClassUsedInInstructionStreamTest >> callingAMethodWithSuspendAndReturnANumber [
 
 	^ self aMethodWithSuspendAndReturnANumber
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ClassUsedInInstructionStreamTest >> expectedValue [
 
 	^ expectedValue
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ClassUsedInInstructionStreamTest >> methodWithASuperBlock [
 
 	^ [ super aSuperMethod: 1 with: 2 ]
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ClassUsedInInstructionStreamTest >> methodWithASuperBlockWithoutArguments [
 
 	^ [ super yourself ]
@@ -110,7 +110,7 @@ ClassUsedInInstructionStreamTest >> process: aValue [
 	aProcess := aValue
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ClassUsedInInstructionStreamTest >> valueOfBlockWithSupersend [
 
 	expectedValue := self methodWithASuperBlock value

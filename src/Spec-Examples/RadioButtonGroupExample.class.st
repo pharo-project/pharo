@@ -32,7 +32,7 @@ RadioButtonGroupExample class >> defaultSpec [
 		yourself
 ]
 
-{ #category : #example }
+{ #category : #examples }
 RadioButtonGroupExample class >> example [
 	<sampleInstance>
 	^ self new openWithSpec

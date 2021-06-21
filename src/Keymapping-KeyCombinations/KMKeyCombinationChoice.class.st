@@ -52,7 +52,7 @@ KMKeyCombinationChoice >> matchesCompletely: anEventBuffer [
 	^ shortcuts anySatisfy: [ :each | each matchesCompletely: anEventBuffer ]
 ]
 
-{ #category : #'accessing platform' }
+{ #category : #'accessing - platform' }
 KMKeyCombinationChoice >> platformCharacter [
 
 	shortcuts do: [ :each | 
@@ -60,7 +60,7 @@ KMKeyCombinationChoice >> platformCharacter [
 	^ nil
 ]
 
-{ #category : #'accessing platform' }
+{ #category : #'accessing - platform' }
 KMKeyCombinationChoice >> platformModifier [
 
 	shortcuts do: [ :each | 

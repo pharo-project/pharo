@@ -242,7 +242,7 @@ Trait >> basicNew [
 	self error: 'Traits should not be instantiated!'
 ]
 
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing - parallel hierarchy' }
 Trait >> classTrait [
 
 	^ self class
@@ -326,7 +326,7 @@ Trait >> notifyOfRecategorizedSelector: selector from: oldCategory to: newCatego
 	self traitUsers do: [ :e | e recategorizeSelector: selector from: oldCategory to: newCategory ].
 ]
 
-{ #category : #'accessing method dictionary' }
+{ #category : #'accessing - method dictionary' }
 Trait >> rebuildMethodDictionary [
 	"I extend the behavior in TraitedMetaclass propagating the changes to my users"
 	self doRebuildMethodDictionary ifFalse: [ ^ false ].

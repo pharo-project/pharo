@@ -26,7 +26,7 @@ ChangeRecord >> <= anotherOne [
 	^ self timeStamp <= anotherOne timeStamp 
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 ChangeRecord >> category [
 	^category
 ]
@@ -39,7 +39,7 @@ ChangeRecord >> classIncludesSelector [
 			and: [aClass includesSelector: self methodSelector]
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 ChangeRecord >> commentClass [ 
 	| commentClass |
 	type == #classComment ifFalse: [^ nil].
@@ -92,12 +92,12 @@ ChangeRecord >> fileIn [
 					[ (Smalltalk globals at: class asSymbol) comment: self text stamp: stamp ] ]
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 ChangeRecord >> fileName [
 	^file ifNotNil: [ file name ] ifNil: [ '<no file>' ]
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 ChangeRecord >> fileOutOn: aFileStream [
 	"File the receiver out on the given file stream"
 
@@ -127,7 +127,7 @@ ChangeRecord >> fileOutOn: aFileStream [
 	aFileStream cr
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 ChangeRecord >> isMetaClassChange [
 	^meta
 ]
@@ -159,7 +159,7 @@ ChangeRecord >> isUnchangedMethod [
 				= (self methodClass sourceCodeAt: self methodSelector) asString withBlanksCondensed ]
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 ChangeRecord >> methodClass [
 	| methodClass |
 	type == #method
@@ -172,20 +172,20 @@ ChangeRecord >> methodClass [
 		ifFalse: [ methodClass ]
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 ChangeRecord >> methodClassName [
 	^ meta
 		ifTrue: [ class , ' class' ]
 		ifFalse: [ class ]
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 ChangeRecord >> methodSelector [
 	^ type == #method
 		ifTrue: [ (Smalltalk globals at: class ifAbsent: [ Object ]) compiler parseSelector: self string ]
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 ChangeRecord >> position [
 	^ position
 ]
@@ -198,7 +198,7 @@ ChangeRecord >> printOn: aStream [
 	
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 ChangeRecord >> sourceCode [
 	
 	self type= #preamble ifTrue: [ ^ #preamble printString ].
@@ -208,18 +208,18 @@ ChangeRecord >> sourceCode [
 	^ self string
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 ChangeRecord >> stamp [
 	^ stamp
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 ChangeRecord >> stamp: threePartString [
 
 	stamp := threePartString
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 ChangeRecord >> string [ 
 	| copy |
 	copy := file readOnlyCopy.
@@ -228,7 +228,7 @@ ChangeRecord >> string [
 		ensure: [ copy close ]
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 ChangeRecord >> timeStamp [
 	"Answer a TimeStamp that corresponds to my (text) stamp"
 
@@ -246,7 +246,7 @@ ChangeRecord >> timeStamp [
 		ifFalse: [ DateAndTime new ]
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 ChangeRecord >> type [
 	^ type
 ]

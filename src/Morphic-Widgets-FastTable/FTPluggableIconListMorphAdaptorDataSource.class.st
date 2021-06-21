@@ -63,12 +63,12 @@ FTPluggableIconListMorphAdaptorDataSource >> dropElements: aCollection index: ro
 		with: rowIndex
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> dropItemSelector [
 	^ dropItemSelector 
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> dropItemSelector: aSelector [
 	dropItemSelector := aSelector
 
@@ -95,52 +95,52 @@ FTPluggableIconListMorphAdaptorDataSource >> elements [
 	^self model getList
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> getIconSelector [
 	^ getIconSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> getIconSelector: anObject [
 	getIconSelector := anObject
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> getListElementSelector [
 	^ getListElementSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> getListElementSelector: anObject [
 	getListElementSelector := anObject
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> getListSelector [
 	^ getListSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> getListSelector: anObject [
 	getListSelector := anObject
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> getListSizeSelector [
 	^ getListSizeSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> getListSizeSelector: anObject [
 	getListSizeSelector := anObject
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> getMenuSelector [
 	^ getMenuSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> getMenuSelector: anObject [
 	getMenuSelector := anObject
 ]
@@ -225,22 +225,22 @@ FTPluggableIconListMorphAdaptorDataSource >> wantsDropElements: aCollection type
 		with: aCollection
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> wantsDropSelector [
 	^ wantsDropSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> wantsDropSelector: aSelector [
 	wantsDropSelector := aSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> wrapSelector [
 	^ wrapSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> wrapSelector: anObject [
 	wrapSelector := anObject
 ]

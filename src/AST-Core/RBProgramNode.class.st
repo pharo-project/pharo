@@ -374,7 +374,7 @@ RBProgramNode >> dump [
 	| visitor |
 	visitor := RBDumpVisitor new.
 	self acceptVisitor: visitor.
-	^ visitor stream contents
+	^ visitor contents
 ]
 
 { #category : #comparing }
@@ -971,13 +971,13 @@ RBProgramNode >> replaceNode: aNode withNode: anotherNode [
 	self error: 'I don''t store other nodes'
 ]
 
-{ #category : #'private-replacing' }
+{ #category : #'private - replacing' }
 RBProgramNode >> replaceSourceFrom: aNode [
 	self == aNode
 		ifFalse: [ self clearReplacements ]
 ]
 
-{ #category : #'private-replacing' }
+{ #category : #'private - replacing' }
 RBProgramNode >> replaceSourceWith: aNode [ 
 	aNode replaceSourceFrom: self
 ]

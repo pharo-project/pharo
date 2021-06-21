@@ -37,7 +37,7 @@ MethodBrowser class >> defaultSpec2 [
 		#hResizing:.		 #spaceFill.}
 ]
 
-{ #category : #example }
+{ #category : #examples }
 MethodBrowser class >> example [
 	<sampleInstance>
 	| example |

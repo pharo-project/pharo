@@ -31,7 +31,7 @@ TextStreamTest >> testAddStringToTextStream [
 
 ]
 
-{ #category : #test }
+{ #category : #tests }
 TextStreamTest >> testApplyAttributeBeginningAt [
 	| attributes |
 	stream nextPutAll: 'Pharo is cool'.
@@ -45,7 +45,7 @@ TextStreamTest >> testApplyAttributeBeginningAt [
 		self assert: attributes first emphasisCode equals: 4].
 ]
 
-{ #category : #test }
+{ #category : #tests }
 TextStreamTest >> testNextPutAll [
 	stream 
 		nextPutAll: 'Pharo';
@@ -56,7 +56,7 @@ TextStreamTest >> testNextPutAll [
 	1 to: 6 do: [:index | self assertEmpty: (stream contents runs at: index) ]
 ]
 
-{ #category : #test }
+{ #category : #tests }
 TextStreamTest >> testWithAttributeDo [
 	| attributes |
 	stream 
@@ -81,7 +81,7 @@ TextStreamTest >> testWithAttributeDo [
 		self assert: attributes first emphasisCode equals: 4].
 ]
 
-{ #category : #test }
+{ #category : #tests }
 TextStreamTest >> testWithAttributesDo [
 	| attributes |
 	stream 

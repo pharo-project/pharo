@@ -5,7 +5,7 @@ Class {
 	#name : #EyeInspectorNavigator,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'#inspector => SpObservableSlot',
+		'#inspector => ObservableSlot',
 		'#history',
 		'#canBeRefreshed',
 		'#toolbar'

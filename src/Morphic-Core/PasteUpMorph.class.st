@@ -31,7 +31,7 @@ PasteUpMorph class >> initialize [
 	self shouldShowWorldMenu: true
 ]
 
-{ #category : #acessing }
+{ #category : #testing }
 PasteUpMorph class >> isMenuOpenByLeftClick [
 	"Truth table:
 	swap 	isMac	methodReturn
@@ -65,12 +65,12 @@ PasteUpMorph class >> shouldShowWorldMenuSettingOn: aBuilder [
 		description: 'Whether the World''s world menu should be shown or not on a click in the World.'
 ]
 
-{ #category : #acessing }
+{ #category : #accessing }
 PasteUpMorph class >> shouldSwapMenuOpenerButtons [
 	^ ShouldSwapMenuOpenerButtons 
 ]
 
-{ #category : #acessing }
+{ #category : #accessing }
 PasteUpMorph class >> shouldSwapMenuOpenerButtons: aBoolean [
 	^ ShouldSwapMenuOpenerButtons := aBoolean
 ]

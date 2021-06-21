@@ -208,7 +208,7 @@ DrTests >> selectedItems [
 	^ pluginPresenter selectedItems 
 ]
 
-{ #category : #'accessing model' }
+{ #category : #'accessing - model' }
 DrTests >> setModelBeforeInitialization: aDomainObject [
 
 	plugins := aDomainObject

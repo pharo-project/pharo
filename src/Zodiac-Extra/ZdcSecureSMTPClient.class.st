@@ -33,7 +33,7 @@ ZdcSecureSMTPClient class >> defaultPortForStartTLS [
 	^ 587
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ZdcSecureSMTPClient class >> sendUsingGMailAccount: senderAddress password: password to: receiverAddress message: mailMessage [
 	| smtpClient |
 	(smtpClient := self new)
@@ -50,7 +50,7 @@ ZdcSecureSMTPClient class >> sendUsingGMailAccount: senderAddress password: pass
 
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ZdcSecureSMTPClient >> alternativeLogin [
 	self initiateSession. "send EHLO first"
 	self user ifNil: [ ^ self ].
@@ -74,7 +74,7 @@ ZdcSecureSMTPClient >> ensureConnection [
 	self login
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ZdcSecureSMTPClient >> fetchNextResponse [
 	"The FTP and similar protocols allow multi-line responses.
 	If the response is multi-line, the fourth character of the first line is a  
@@ -118,7 +118,7 @@ ZdcSecureSMTPClient >> logVerbose: aString [
 	"self log: aString; log: Character cr"
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ZdcSecureSMTPClient >> nextLineFromStream [
 	| line |
 	line := lineReader nextLine.
@@ -126,14 +126,14 @@ ZdcSecureSMTPClient >> nextLineFromStream [
 	^ line
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ZdcSecureSMTPClient >> requireStartTLS [
 	(self lastResponse includesSubstring: 'STARTTLS')
 		ifFalse: [ ^ self error: 'Server does not seem to support STARTTLS' ].
 
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ZdcSecureSMTPClient >> sendCommand: aString [
 	self logVerbose: aString.
 	self stream 
@@ -170,7 +170,7 @@ ZdcSecureSMTPClient >> setupStreamForStartTLS [
 	self startTLS
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ZdcSecureSMTPClient >> startTLS [
 	"Send a STARTTLS command and after the response, 
 	switch to a SecureSocketStream and do the client handshake"

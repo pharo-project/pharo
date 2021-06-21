@@ -11,7 +11,7 @@ Class {
 	#category : #'System-Localization-Tests-Announcements'
 }
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 LocaleAnnouncementTest >> frenchLocale [
 
 	^ Locale isoLanguage: 'fr'

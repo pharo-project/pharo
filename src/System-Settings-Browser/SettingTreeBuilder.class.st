@@ -25,13 +25,13 @@ SettingTreeBuilder >> buildPragma: aPragma [
 	^ nodeList
 ]
 
-{ #category : #'public tree building' }
+{ #category : #'tree building' }
 SettingTreeBuilder >> group: aSymbol [
 	^ self nodeClass: PragmaSetting name: aSymbol
 
 ]
 
-{ #category : #'public tree building' }
+{ #category : #'tree building' }
 SettingTreeBuilder >> launcher: aSymbol [
 	^ self nodeClass: SystemSettingLauncher name: aSymbol
 
@@ -42,7 +42,7 @@ SettingTreeBuilder >> nodeClass [
 	^ SettingNode
 ]
 
-{ #category : #'private tree building' }
+{ #category : #'private - tree building' }
 SettingTreeBuilder >> nodeClass: aClass name: aSymbol [
 	| node |
 	node := self nodeClass with: aClass new.
@@ -59,7 +59,7 @@ SettingTreeBuilder >> nodeList [
 
 ]
 
-{ #category : #'private tree building' }
+{ #category : #'private - tree building' }
 SettingTreeBuilder >> parent: aNode while: aBlock [
 	| oldParent |
 	oldParent := currentParent.
@@ -68,19 +68,19 @@ SettingTreeBuilder >> parent: aNode while: aBlock [
 	currentParent := oldParent
 ]
 
-{ #category : #'public tree building' }
+{ #category : #'tree building' }
 SettingTreeBuilder >> pickOne: aSymbol [
 	^ self nodeClass: PickOneSettingDeclaration name: aSymbol
 
 ]
 
-{ #category : #'public tree building' }
+{ #category : #'tree building' }
 SettingTreeBuilder >> range: aSymbol [
 	^ self nodeClass: RangeSettingDeclaration name: aSymbol
 
 ]
 
-{ #category : #'public tree building' }
+{ #category : #'tree building' }
 SettingTreeBuilder >> setting: aSymbol [
 	^ self nodeClass: SettingDeclaration name: aSymbol
 

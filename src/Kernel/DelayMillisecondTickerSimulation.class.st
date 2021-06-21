@@ -26,7 +26,7 @@ DelayMillisecondTickerSimulation >> nowTick [
 	^vmSimNow
 ]
 
-{ #category : #'private-primitives' }
+{ #category : #'private - primitives' }
 DelayMillisecondTickerSimulation >> primSignal: sempahore atMilliseconds: nextTick [
 	"This is a simulation of the primitive, working hand-in-hand with #simulate_vmMilliseconds:"
 	(sempahore isKindOf: Semaphore) ifTrue: [ 

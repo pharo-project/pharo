@@ -24,13 +24,13 @@ Class {
 	#category : #'Spec-PolyWidgets-Widgets'
 }
 
-{ #category : #example }
+{ #category : #examples }
 DatePresenter class >> example [
 	<sampleInstance>
 	^ self new openDialogWithSpec
 ]
 
-{ #category : #example }
+{ #category : #examples }
 DatePresenter class >> exampleModal [
 	<sampleInstance>
 	^ self new openDialogWithSpec modalRelativeTo: self currentWorld
@@ -148,7 +148,7 @@ DatePresenter >> onDateChosen: aChoseDate [
 	self date: aChoseDate date
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 DatePresenter >> whenDateChanged: aBlock [
 
 	dateModel whenTextChanged: [ :newText :oldText :announcement :anAnnouncer |

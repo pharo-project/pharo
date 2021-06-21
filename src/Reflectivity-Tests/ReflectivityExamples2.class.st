@@ -13,12 +13,12 @@ Class {
 	#category : #'Reflectivity-Tests-Data'
 }
 
-{ #category : #example }
+{ #category : #examples }
 ReflectivityExamples2 >> exampleMethod [
 	^ 2 + 3
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ReflectivityExamples2 >> exampleMethod2 [
 	^ (WriteStream on: String new)
 		nextPutAll: 'hello world';
@@ -36,7 +36,7 @@ ReflectivityExamples2 >> generateNewMethodWithInstVarAccess [
 		classified: 'example'
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ReflectivityExamples2 >> methodWithClassVarAccess [
 	classVar := 5.
 	classVar := 6.
@@ -45,7 +45,7 @@ ReflectivityExamples2 >> methodWithClassVarAccess [
 
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ReflectivityExamples2 >> methodWithInstVarAccess [
 	instVar := 5.
 	instVar := 6.
@@ -54,17 +54,17 @@ ReflectivityExamples2 >> methodWithInstVarAccess [
 
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ReflectivityExamples2 >> methodWithOverrides [
 	^'top'
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ReflectivityExamples2 >> methodWithOverrides: str1 with: str2 [
 	^str1, str2
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ReflectivityExamples2 >> methodWithTempVarAccess [
 	|temp|
 	temp := 5.
@@ -74,7 +74,7 @@ ReflectivityExamples2 >> methodWithTempVarAccess [
 
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ReflectivityExamples2 >> modifyMethodWithInstVarAccess [
 	self class compile:'modifiedMethodWithInstVarAccess
 	instVar > 5 ifTrue:[^ instVar raisedTo: 2]'
@@ -82,7 +82,7 @@ ReflectivityExamples2 >> modifyMethodWithInstVarAccess [
 
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ReflectivityExamples2 >> newMethodWithInstVarAccess [
 	instVar := 5.
 	instVar := 6.

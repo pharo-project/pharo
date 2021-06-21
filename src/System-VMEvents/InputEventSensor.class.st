@@ -127,7 +127,7 @@ InputEventSensor >> blueButtonPressed [
 
 ]
 
-{ #category : #'private events' }
+{ #category : #'private - events' }
 InputEventSensor >> characterForEvent: evtBuf [
 
 	| keycode |
@@ -179,7 +179,7 @@ InputEventSensor >> flushKeyboard [
 		whileTrue: [self keyboard]
 ]
 
-{ #category : #'private events' }
+{ #category : #'private - events' }
 InputEventSensor >> flushNonKbdEvents [
 	eventQueue ifNil: [^ self].
 	eventQueue flushAllSuchThat:
@@ -256,7 +256,7 @@ InputEventSensor >> keyboardPressed [
 	^self peekKeyboardEvent notNil
 ]
 
-{ #category : #'private events' }
+{ #category : #'private - events' }
 InputEventSensor >> mapButtons: buttons modifiers: anInteger [
 	"Map the buttons to yellow or blue based on the given modifiers.
 	 If only the red button is pressed, then map
@@ -273,7 +273,7 @@ InputEventSensor >> mapButtons: buttons modifiers: anInteger [
 	^ buttons
 ]
 
-{ #category : #'private events' }
+{ #category : #'private - events' }
 InputEventSensor >> modifiers [
 	"modifier keys; bitfield with the following entries:
 		1	-	shift key
@@ -290,7 +290,7 @@ InputEventSensor >> modifiers [
 	^modifiers
 ]
 
-{ #category : #'private events' }
+{ #category : #'private - events' }
 InputEventSensor >> mouseButtons [
 	"button state; bitfield with the following entries:
 		1	-	yellow (e.g., right) button
@@ -315,7 +315,7 @@ InputEventSensor >> nextEvent [
 
 ]
 
-{ #category : #'private events' }
+{ #category : #'private - events' }
 InputEventSensor >> nextKeyboardEvent [
 	"Allows for use of old Sensor protocol to get at the keyboard,
 	as when running kbdTest or the InterpreterSimulator in Morphic"
@@ -345,7 +345,7 @@ InputEventSensor >> peekEvent [
 		ifTrue: [ self processEvent: nextEvent ]
 ]
 
-{ #category : #'private events' }
+{ #category : #'private - events' }
 InputEventSensor >> peekKeyboardEvent [
 	"Allows for use of old Sensor protocol to get at the keyboard,
 	as when running kbdTest or the InterpreterSimulator in Morphic"
@@ -400,7 +400,7 @@ InputEventSensor >> primTabletRead: cursorIndex [
 
 ]
 
-{ #category : #'private events' }
+{ #category : #'private - events' }
 InputEventSensor >> processEvent: evt [
 	"Process a single event. This method is run at high priority."
 
@@ -425,13 +425,13 @@ InputEventSensor >> processEvent: evt [
 	^ evt
 ]
 
-{ #category : #'private events' }
+{ #category : #'private - events' }
 InputEventSensor >> processKeyboardEvent: evt [
 	modifiers := evt at: KeyboardModifierIndexInEventBuffer.	"Update state for polling calls"
 	^ evt
 ]
 
-{ #category : #'private events' }
+{ #category : #'private - events' }
 InputEventSensor >> processMouseEvent: evt [
 	"Transmogrify the button state according to the platform's button map definition"
 	evt
@@ -452,7 +452,7 @@ InputEventSensor >> processMouseEvent: evt [
 	^ evt
 ]
 
-{ #category : #'private events' }
+{ #category : #'private - events' }
 InputEventSensor >> queueEvent: evt [
 	"Queue the given event in the event queue"
 	eventQueue nextPut: evt

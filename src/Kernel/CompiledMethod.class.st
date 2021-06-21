@@ -158,7 +158,7 @@ CompiledMethod class >> installSecondaryBytecodeSet: aBytecodeEncoderSubclass [
 	SecondaryBytecodeSetEncoderClass := aBytecodeEncoderSubclass
 ]
 
-{ #category : #'accessing class hierarchy' }
+{ #category : #'accessing - class hierarchy' }
 CompiledMethod class >> methodPropertiesClass [
 	"Answer the class to use to create a method's properties, which can be a poor man's way
 	 to add instance variables to subclassses of CompiledMethod.  Subclasses of CompiledMethod

@@ -205,13 +205,13 @@ FFIExternalType >> externalTypeWithArity [
 		ifFalse: [ self externalType ]
 ]
 
-{ #category : #'accessing array' }
+{ #category : #'accessing - array' }
 FFIExternalType >> handle: aHandle at: index [ 
 	self isPointer ifTrue: [ ^ aHandle pointerAt: index ].
 	^ self basicHandle: aHandle at: index
 ]
 
-{ #category : #'accessing array' }
+{ #category : #'accessing - array' }
 FFIExternalType >> handle: aHandle at: index put: value [
 	self isPointer ifTrue: [ ^ aHandle pointerAt: index put: value ].
 	^ self basicHandle: aHandle at: index put: value

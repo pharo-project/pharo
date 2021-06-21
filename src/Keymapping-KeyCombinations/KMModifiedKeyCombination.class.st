@@ -116,13 +116,13 @@ KMModifiedKeyCombination >> modifier: aModifier [
 	modifier := aModifier
 ]
 
-{ #category : #'accessing platform' }
+{ #category : #'accessing - platform' }
 KMModifiedKeyCombination >> platformCharacter [
 	
 	^ self character key
 ]
 
-{ #category : #'accessing platform' }
+{ #category : #'accessing - platform' }
 KMModifiedKeyCombination >> platformModifier [
 	
 	^ self modifier

@@ -20,7 +20,7 @@ Class {
 	#category : #'Spec-PolyWidgets-Elementary'
 }
 
-{ #category : #example }
+{ #category : #examples }
 SliderInput class >> example [
 	<sampleInstance>
 	| example |
@@ -156,7 +156,7 @@ SliderInput >> value: aNumber [
 	slider value: aNumber 
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 SliderInput >> whenValueChangedDo: aBlock [
 	slider whenValueChangedDo: aBlock
 ]

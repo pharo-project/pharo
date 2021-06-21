@@ -20,7 +20,7 @@ LabelledTextInput class >> defaultSpec [
 	^ super labelLeft
 ]
 
-{ #category : #example }
+{ #category : #examples }
 LabelledTextInput class >> example [
 	<sampleInstance>
 	| example |
@@ -32,37 +32,37 @@ example
 	^ example
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledTextInput >> acceptBlock: aBlockWithOneArgument [
 	^ self input acceptBlock: aBlockWithOneArgument
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledTextInput >> acceptOnCR: aBoolean [
 	^ self input acceptOnCR: aBoolean
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledTextInput >> autoAccept: aBoolean [
 	^ self input autoAccept: aBoolean
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledTextInput >> beEncrypted [
 	^ self input beEncrypted
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledTextInput >> encrypted: aBoolean [
 	^self input encrypted: aBoolean
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledTextInput >> entryCompletion: anEntryCompletion [
 	^self input entryCompletion: anEntryCompletion
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledTextInput >> ghostText: aText [
 	^self input ghostText: aText
 ]
@@ -78,32 +78,32 @@ LabelledTextInput >> input [
 	^ self subwidget
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledTextInput >> removeEntryCompletion [
 	^self input removeEntryCompletion
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledTextInput >> selectAll [
 	^self input selectAll
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledTextInput >> text [
 	^self input text
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledTextInput >> text: aText [
 	self input text: aText
 ]
 
-{ #category : #'events-shortcuts' }
+{ #category : #'events - shortcuts' }
 LabelledTextInput >> whenTextChanged: aBlock [
 	self input whenTextChanged: aBlock
 ]
 
-{ #category : #'events-shortcuts' }
+{ #category : #'events - shortcuts' }
 LabelledTextInput >> whenTextIsAccepted: aBlock [
 	self input whenTextIsAccepted: aBlock
 ]

@@ -14,7 +14,7 @@ Class {
 	#category : #'Spec-PolyWidgets-Labelled'
 }
 
-{ #category : #example }
+{ #category : #examples }
 LabelledSliderInput class >> example [
 	<sampleInstance>
 	| example |
@@ -29,22 +29,22 @@ LabelledSliderInput class >> example [
 	^ example
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledSliderInput >> absoluteValue [
 	^ self sliderInput absoluteValue
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledSliderInput >> absoluteValue: aBoolean [
 	^ self sliderInput absoluteValue: aBoolean
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledSliderInput >> autoAccept [
 	^ self sliderInput autoAccept
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledSliderInput >> autoAccept: aBoolean [
 	^ self sliderInput autoAccept: aBoolean
 ]
@@ -60,12 +60,12 @@ LabelledSliderInput >> input [
 	^ subwidget input
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledSliderInput >> max: aNumber [
 	^ self sliderInput max: aNumber
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledSliderInput >> min: aNumber [
 	^ self sliderInput min: aNumber
 ]
@@ -90,7 +90,7 @@ LabelledSliderInput >> value: aNumber [
 	^ self sliderInput value: aNumber
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 LabelledSliderInput >> whenValueChangedDo: aBlock [
 	self sliderInput whenValueChangedDo: aBlock
 ]

@@ -50,9 +50,12 @@ ClyClassVariable >> detectDefiningClassFrom: anUserClass ifAbsent: aBlock [
 
 { #category : #testing }
 ClyClassVariable >> isAccessibleFrom: aClass [
-	(aClass instanceSide includesSharedPoolNamed: definingClass name) ifTrue: [ ^true ].
-		
-	^aClass instanceSide = definingClass or: [ aClass instanceSide inheritsFrom: definingClass ]
+
+	(aClass instanceSide withAllSuperclasses anySatisfy: [ :c | 
+		 c includesSharedPoolNamed: definingClass name ]) ifTrue: [ ^ true ].
+
+	^ aClass instanceSide = definingClass or: [ 
+		  aClass instanceSide inheritsFrom: definingClass ]
 ]
 
 { #category : #testing }

@@ -151,15 +151,6 @@ One chapter of particular interest is the one that provides a quick tour of the 
 ', (self url: 'https://ci.inria.fr/pharo-contribution/job/UpdatedPharoByExample/lastSuccessfulBuild/artifact/book-result/PharoTour/PharoTour.pdf')
 ]
 
-{ #category : #defaults }
-WelcomeHelp class >> fastNetworkDefaults [
-	"Allow to display catalog projects in spotter on regular and fast networks"
-
-	SptCatalogProjectsProcessor enabled: true.
-	
-	self inform: 'Catalog projects accessible through Spotter'
-]
-
 { #category : #pages }
 WelcomeHelp class >> gettingHelp [
 	^ HelpTopic 
@@ -252,7 +243,7 @@ WelcomeHelp class >> openNetworkSettings [
 
 { #category : #accessing }
 WelcomeHelp class >> pages [
-	^ #(welcome changeLog learn exploreEnvironment useExternalPackages documentation gettingHelp)
+	^ #(welcome changeLog learn exploreEnvironment documentation gettingHelp)
 ]
 
 { #category : #pages }
@@ -274,39 +265,6 @@ WelcomeHelp class >> pharoVersionString [
 			nextPutAll: version date asString]
 ]
 
-{ #category : #defaults }
-WelcomeHelp class >> slowNetworkDefaults [
-	"Do not display network bound catalog projects in spotter to keep it responsive."
-	
-	SptCatalogProjectsProcessor enabled: false.
-	
-	self inform: 'Catalog projects not accessible through Spotter due to slow network. Use search in catalog tool to load external packages.'
-]
-
-{ #category : #pages }
-WelcomeHelp class >> useExternalPackages [
-	^ HelpTopic 
-		title: 'Using External Packages'
-		contents: (self heading: 'Using External Packages'), 'Pharo already comes pre-loaded with a rich set of packages that you can use to explore the system and develop your own applications. However there is also a huge library of user contributed projects that you can also load using the "Catalog Browser". To open it click on the following expression:
-		
-', (self doItFrom: 'CatalogBrowser open.'), '
-
-This browser is also accessible from the World>Tools>Catalog Browser menu (just click the desktop, select Tools, and then Catalog Browser).
-
-Catalog projects can be browsed online: 
-
-', (self url: 'http://catalog.pharo.org'), '
-
-You can also find a rough list (not very friendly) of many packages available stored in smalltalkhub repository:
-
-', (self url: 'http://smalltalkhub.com/list'), '
-
-(this list is not a compendium of packages for Pharo but is a good place to start looking for something in particular and which happens to not be present in the catalog).
-
-The catalog can be enabled in Spotter by enabling the "Display catalog projects in Spotter" system preference.
-'
-]
-
 { #category : #pages }
 WelcomeHelp class >> welcome [
 	^ HelpTopic 
@@ -325,13 +283,9 @@ For more information, please visit here: ', (self url: 'http://pharo.org'),
 (self doItFrom: 'Display toggleFullscreen ' text: ' switch fullscreen mode')
 ,' 
 
-Click if you have access to a: ',
-(self doItFrom: 'WelcomeHelp fastNetworkDefaults' text: 'regular network connection'), ' or ',
-(self doItFrom: 'WelcomeHelp slowNetworkDefaults' text: 'slow network'), '
-or if need to ',
+Click if you need to ',
 (self doItFrom: 'WelcomeHelp openNetworkSettings' text: 'setup a network proxy'), '.
 
 You can also ',
-(self doItFrom: 'SettingBrowser open' text: 'apply many other other settings'), ' or extend the image ',
-(self doItFrom: 'CatalogBrowser open' text: 'by loading additional external packages from catalog'), '.'
+(self doItFrom: 'SettingBrowser open' text: 'apply many other other settings').
 ]

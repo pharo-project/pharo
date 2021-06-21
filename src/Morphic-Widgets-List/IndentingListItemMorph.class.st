@@ -42,7 +42,7 @@ IndentingListItemMorph >> acceptDroppingMorph: toDrop event: evt [
 	self highlightForDrop: false.
 ]
 
-{ #category : #'private-container protocol' }
+{ #category : #'private - container protocol' }
 IndentingListItemMorph >> addChildrenForList: hostList addingTo: morphList withExpandedItems: expandedItems [
 
 	firstChild ifNotNil: [
@@ -95,7 +95,7 @@ IndentingListItemMorph >> childrenDo: aBlock [
 	]
 ]
 
-{ #category : #'private-container protocol' }
+{ #category : #'private - container protocol' }
 IndentingListItemMorph >> complexContents [
 
 	^complexContents
@@ -286,7 +286,7 @@ IndentingListItemMorph >> hasToggle [
 	^ complexContents hasContents
 ]
 
-{ #category : #'private-container protocol' }
+{ #category : #'private - container protocol' }
 IndentingListItemMorph >> highlight [
 
 	complexContents highlightingColor ifNotNil: [self color: complexContents highlightingColor].
@@ -398,7 +398,7 @@ IndentingListItemMorph >> nextSibling: anotherMorph [
 	nextSibling := anotherMorph
 ]
 
-{ #category : #'private-container protocol' }
+{ #category : #'private - container protocol' }
 IndentingListItemMorph >> openPath: anArray [
 	| found |
 	anArray isEmpty
@@ -417,7 +417,7 @@ IndentingListItemMorph >> openPath: anArray [
 		ifNotNil: [ found firstChild openPath: anArray allButFirst ]
 ]
 
-{ #category : #'private-container protocol' }
+{ #category : #'private - container protocol' }
 IndentingListItemMorph >> recursiveAddTo: aCollection [
 
 	firstChild ifNotNil: [
@@ -427,7 +427,7 @@ IndentingListItemMorph >> recursiveAddTo: aCollection [
 	
 ]
 
-{ #category : #'private-container protocol' }
+{ #category : #'private - container protocol' }
 IndentingListItemMorph >> recursiveDelete [
 
 	firstChild ifNotNil: [
@@ -437,7 +437,7 @@ IndentingListItemMorph >> recursiveDelete [
 	
 ]
 
-{ #category : #'private-container protocol' }
+{ #category : #'private - container protocol' }
 IndentingListItemMorph >> refreshExpandedState [
 
  	| newChildren toDelete c |
@@ -470,7 +470,7 @@ IndentingListItemMorph >> toggleBounds [
 	^self toggleRectangle
 ]
 
-{ #category : #'private-container protocol' }
+{ #category : #'private - container protocol' }
 IndentingListItemMorph >> toggleExpandedState [
 
 	isExpanded := isExpanded not.

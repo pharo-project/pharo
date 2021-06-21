@@ -4,7 +4,7 @@ Class {
 	#category : #'Spec-Tests-Examples-Morphic'
 }
 
-{ #category : #running }
+{ #category : #accessing }
 ScrollSyncExampleTest >> classToTest [
 	^ ScrollSyncExample
 ]

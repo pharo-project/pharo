@@ -36,6 +36,337 @@ file readInto: buffer startingAt: 1 count: 5.
 buffer asString.
 ```
 
+# How to Migrate from FileStream
+
+The following migration instructions were moved here from the `FileStream` class comment in Pharo 8.
+
+Since the version 5, Pharo provides a new file streams API that makes the old one based on classes like FileStream or MultiByteBinaryOrTextStream deprecated. 
+Pharo 7 makes the next important steps and removes usages of the old API from the kernel.
+
+What you should remember:
+
+- use file references as entry points to file streams 
+- DO NOT USE FileStream class
+- 'file.txt' asFileReference readStream and similar methods now return an instance of ZnCharacterReadStream instead of MultiByteFileStream
+- 'file.txt' asFileReference writeStream and similar methods now return an instance of ZnCharacterWriteStream instead of MultiByteFileStream
+- the new API has a clearer separation between binary and text files
+
+## 1. Basic Files
+By default files are binary. Not buffered.
+
+Read UTF-8 text from an existing file
+
+**Obsolete code:**
+
+```
+FileStream readOnlyFileNamed: '1.txt' do: [ :stream | 
+    stream upToEnd ].
+```
+
+**New code:**
+
+```
+(File named: 'name') readStream.
+(File named: 'name') readStreamDo: [ :stream | … ].
+'1.txt' asFileReference readStreamDo: [ :stream | 
+    stream upToEnd ].
+```
+
+## 2. Encoding
+To add encoding, wrap a stream with a corresponding ZnCharacterRead/WriteStream.
+
+**Reading:**
+
+```
+utf8Encoded := ZnCharacterReadStream on: aBinaryStream encoding: 'utf8'.
+utf16Encoded := ZnCharacterReadStream on: aBinaryStream encoding: 'utf16'.
+```
+
+**Writing:**
+
+```
+utf8Encoded := ZnCharacterWriteStream on: aBinaryStream encoding: 'utf8'.
+utf16Encoded := ZnCharacterWriteStream on: aBinaryStream encoding: 'utf16'.
+```
+
+Force creation of a new file and write a UTF-8 text
+
+**Obsolete code:**
+
+```
+FileStream forceNewFileNamed: '1.txt' do: [ :stream | stream nextPutAll: 'a ≠ b' ].
+```
+
+**New code:**
+
+```
+(File named: 'name') writeStream.
+(File named: 'name') writeStreamDo: [ :stream | ... ].
+'1.txt' asFileReference ensureDelete; 
+    writeStreamDo: [ :stream | stream nextPutAll: 'a ≠ b' ].
+```
+
+Get all content of existing UTF-8 file
+
+**Obsolete code:**
+
+```
+(FileStream readOnlyFileNamed: '1.txt') contentsOfEntireFile.
+```
+
+**New code:**
+
+```
+'1.txt' asFileReference readStream upToEnd.
+```
+
+## 3. Buffering
+To add buffering, wrap a stream with a corresponding ZnBufferedRead/WriteStream.
+
+```
+bufferedReadStream := ZnBufferedReadStream on: aStream.
+bufferedWriteStream := ZnBufferedWriteStream on: aStream.
+```
+
+It is in general better to buffer the reading on the binary file and apply the encoding on the buffer in memory than the other way around. See
+
+```
+[file := Smalltalk sourcesFile fullName.
+(File named: file) readStreamDo: [ :binaryFile |
+(ZnCharacterReadStream on: (ZnBufferedReadStream on: binaryFile) encoding: 'utf8') upToEnd
+]] timeToRun. ""0:00:00:09.288""
+```
+
+```
+[file := Smalltalk sourcesFile fullName.
+(File named: file) readStreamDo: [ :binaryFile |
+(ZnBufferedReadStream on: (ZnCharacterReadStream on: binaryFile encoding: 'utf8')) upToEnd
+]] timeToRun. ""0:00:00:14.189""
+```
+
+The MultiByteFileStream was buffered. If you create a stream using the expression
+
+```
+'file.txt' asFileReference readStream.
+```
+
+then the ZnCharacterReadStream is not created directly on top of the stream but on top of a buffered stream that uses the file stream internally.
+
+If you create a ZnCharacterReadStream directly on the file stream, then the characters from the file are read one by one which may be about ten times slower!
+
+```
+ZnCharacterReadStream on: (File openForReadFileNamed: 'file.txt').
+```
+
+## 4. File System
+By default, file system files are buffered and utf8 encoded to keep backwards compatibility.
+
+```
+'name' asFileReference readStreamDo: [ :bufferedUtf8Stream | ... ].
+'name' asFileReference writeStreamDo: [ :bufferedUtf8Stream | ... ].
+```
+
+FileStream also provides access to plain binary files using the #binaryRead/WriteStream messages. Binary streams are buffered by default too.
+
+```
+'name' asFileReference binaryReadStreamDo: [ :bufferedBinaryStream | ... ].
+'name' asFileReference binaryWriteStreamDo: [ :bufferedBinaryStream | ... ].
+```
+
+If you want a file with another encoding (to come in the [PR #1134](https://github.com/pharo-project/pharo/pull/1134)), you can specify it while obtaining the stream:
+
+```
+'name' asFileReference
+    readStreamEncoded: 'utf16'
+    do: [ :bufferedUtf16Stream | ... ].
+'name' asFileReference
+    writeStreamEncoded: 'utf8'
+    do: [ :bufferedUtf16Stream | ... ].
+```
+
+Force creation of a new file and write binary data into it
+
+**Obsolete code:**
+
+```
+(FileStream forceNewFileNamed: '1.bin') 
+    binary;
+    nextPutAll: #[1 2 3].
+```
+
+**New code:**
+
+```
+'1.bin' asFileReference ensureDelete; 
+    binaryWriteStreamDo: [ :stream | stream nextPutAll: #[1 2 3] ].
+```
+
+Read binary data from an existing file
+
+**Obsolete code:**
+
+```
+(FileStream readOnlyFileNamed: '1.bin') binary; contentsOfEntireFile.
+```
+
+**New code:**
+
+```
+'1.bin' asFileReference binaryReadStream upToEnd.
+```
+
+Force creation of a new file with a different encoding
+
+**Obsolete code:**
+
+```
+FileStream forceNewFileNamed: '2.txt' do: [ :stream | 
+    stream converter: (TextConverter newForEncoding: 'cp-1250').
+    stream nextPutAll: 'Příliš žluťoučký kůň úpěl ďábelské ódy.' ].
+```
+
+**New code:**
+
+```
+('2.txt' asFileReference) ensureDelete;
+    writeStreamEncoded: 'cp-1250' do: [ :stream |
+        stream nextPutAll: 'Příliš žluťoučký kůň úpěl ďábelské ódy.' ].
+```
+
+Read encoded text from an existing file
+
+**Obsolete code:**
+
+```
+FileStream readOnlyFileNamed: '2.txt' do: [ :stream | 
+    stream converter: (TextConverter newForEncoding: 'cp-1250').
+    stream upToEnd ].
+```
+
+**New code:**
+
+```
+('2.txt' asFileReference)
+    readStreamEncoded: 'cp-1250' do: [ :stream |
+        stream upToEnd ].
+```
+
+Write a UTF-8 text to STDOUT
+
+**Obsolete code:**
+
+```
+FileStream stdout nextPutAll: 'a ≠ b'; lf.
+```
+
+**New code:**
+
+```
+(ZnCharacterWriteStream on: Stdio stdout)
+    nextPutAll: 'a ≠ b'; lf;
+    flush.
+```
+
+Write CP-1250 encoded text to STDOUT
+
+**Obsolete code:**
+
+```
+FileStream stdout 
+    converter: (TextConverter newForEncoding: 'cp-1250');
+    nextPutAll: 'Příliš žluťoučký kůň úpěl ďábelské ódy.'; lf.
+```
+
+**New code:**
+
+```
+(ZnCharacterWriteStream on: Stdio stdout encoding: 'cp1250')
+    nextPutAll: 'Příliš žluťoučký kůň úpěl ďábelské ódy.'; lf;
+    flush.
+```
+
+Read a UTF-8 text from STDIN
+**CAUTION:** Following code will stop your VM until an input on STDIN will be provided!
+
+**Obsolete code:**
+
+```
+FileStream stdin upTo: Character lf.
+```
+
+**New code:**
+
+```
+(ZnCharacterReadStream on: Stdio stdin) upTo: Character lf.
+```
+
+Write binary data to STDOUT
+
+**Obsolete code:**
+
+```
+FileStream stdout 
+    binary
+    nextPutAll: #[80 104 97 114 111 10 ].
+```
+
+**New code:**
+
+```
+Stdio stdout 
+    nextPutAll: #[80 104 97 114 111 10 ].
+```
+
+Read binary data from STDIN
+**CAUTION:** Following code will stop your VM until an input on STDIN will be provided!
+
+**Obsolete code:**
+
+```
+FileStream stdin binary upTo: 10.
+```
+
+**New code:**
+
+```
+Stdio stdin upTo: 10.
+```
+
+### Positionable streams
+The message #position: always works on the binary level, not on the character level.
+
+```
+'1.txt' asFileReference readStreamDo: [ :stream | 
+    stream position: 4.
+    stream upToEnd ].
+```
+
+This will lead to an error _(ZnInvalidUTF8: Illegal leading byte for UTF-8 encoding)_ in case of the file created above because we set the position into the middle of a UTF-8 encoded character. To be safe, you need to read the file from the beginning.
+
+```
+'1.txt' asFileReference readStreamDo: [ :stream |
+    3 timesRepeat: [ stream next ].
+    stream upToEnd.].
+```
+
+## 5. Line Ending Conventions
+
+If you want to write files following a specific line ending convention, use the ZnNewLineWriterStream.
+This stream decorator will transform any line ending (cr, lf, crlf) into a defined line ending.
+By default, it chooses the platform line ending convention.
+
+```
+lineWriter := ZnNewLineWriterStream on: aStream.
+```
+
+If you want to choose another line ending convention you can do:
+
+```
+lineWriter forCr.
+lineWriter forLf.
+lineWriter forCrLf.
+lineWriter forPlatformLineEnding.
+```
 "
 Class {
 	#name : #File,

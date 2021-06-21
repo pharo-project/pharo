@@ -24,7 +24,7 @@ CmCommandDecoratorTest >> setUp [
 	decorator := CmCommandDecorator decorate: commandToBeDecorated
 ]
 
-{ #category : #test }
+{ #category : #tests }
 CmCommandDecoratorTest >> testContext [
 	self assert: decorator context equals: commandToBeDecorated context
 ]
@@ -35,27 +35,27 @@ CmCommandDecoratorTest >> testDecorate [
 	self assert: decorator decoratedCommand equals: commandToBeDecorated
 ]
 
-{ #category : #test }
+{ #category : #tests }
 CmCommandDecoratorTest >> testDecoratedCommand [
 	self assert: decorator decoratedCommand equals: commandToBeDecorated
 ]
 
-{ #category : #test }
+{ #category : #tests }
 CmCommandDecoratorTest >> testDescription [
 	self assert: decorator description equals: commandToBeDecorated description
 ]
 
-{ #category : #test }
+{ #category : #tests }
 CmCommandDecoratorTest >> testDynamicDescription [
 	self assert: decorator description equals: commandToBeDecorated description
 ]
 
-{ #category : #test }
+{ #category : #tests }
 CmCommandDecoratorTest >> testDynamicName [
 	self assert: decorator dynamicName equals: commandToBeDecorated dynamicName
 ]
 
-{ #category : #test }
+{ #category : #tests }
 CmCommandDecoratorTest >> testName [
 	self assert: decorator name equals: commandToBeDecorated name
 ]

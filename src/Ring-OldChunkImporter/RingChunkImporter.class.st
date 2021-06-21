@@ -15,7 +15,7 @@ Class {
 	#category : #'Ring-OldChunkImporter-Base'
 }
 
-{ #category : #example }
+{ #category : #examples }
 RingChunkImporter class >> example [
 	| internalStream |
 	internalStream := (String new: 1000) writeStream.

@@ -48,17 +48,17 @@ CommandLinePasswordManager class >> defaultNumberOfHashIterations [
 	^ 5
 ]
 
-{ #category : #example }
+{ #category : #examples }
 CommandLinePasswordManager class >> exampleEnablePasswordProtection [
 	self protectCommandLinesByPasswordWith: 'PharoPassword'
 ]
 
-{ #category : #example }
+{ #category : #examples }
 CommandLinePasswordManager class >> exampleEnablePasswordProtectionCustomized [
 	self protectCommandLinesByPasswordWith: 'PharoPassword' pepper: 'SomePepper' numberOfHashIterations: 10
 ]
 
-{ #category : #example }
+{ #category : #examples }
 CommandLinePasswordManager class >> exampleRemovePasswordProtection [
 	self removePasswordProtection
 ]

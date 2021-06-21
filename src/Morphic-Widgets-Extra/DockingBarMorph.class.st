@@ -32,7 +32,7 @@ Class {
 	#category : #'Morphic-Widgets-Extra'
 }
 
-{ #category : #example }
+{ #category : #examples }
 DockingBarMorph class >> example [
 	"self example"
 	<exampleWidget>
@@ -54,7 +54,7 @@ DockingBarMorph class >> example [
 	openInWorld.
 ]
 
-{ #category : #example }
+{ #category : #examples }
 DockingBarMorph class >> exampleWithMenu [
 	"self exampleWithMenu"
 	<exampleWidget>

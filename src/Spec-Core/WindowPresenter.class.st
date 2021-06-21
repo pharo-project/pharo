@@ -298,7 +298,7 @@ WindowPresenter >> updateTitle [
 	self title: self title
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 WindowPresenter >> whenClosedDo: aBlock [
 
 	isClosedHolder whenChangedDo: [:value |

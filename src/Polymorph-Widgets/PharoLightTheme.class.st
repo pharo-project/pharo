@@ -186,7 +186,7 @@ PharoLightTheme class >> veryLightSelectionColor [
 	^ self lightSelectionColor muchLighter
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 PharoLightTheme >> balloonBackgroundColor [
 
 	^ (Color r: 1.0 g: 1.0 b: 0.71 alpha: 1.0)
@@ -233,7 +233,7 @@ PharoLightTheme >> configureWindowBorderFor: aWindow [
 	aWindow borderStyle: aStyle
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 PharoLightTheme >> ghostTextColor [
 
 	^ Color darkGray

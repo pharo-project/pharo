@@ -4,7 +4,7 @@ Class {
 	#category : #'Spec-Tests-PolyWidgets-Elementary'
 }
 
-{ #category : #running }
+{ #category : #accessing }
 InputTextDropListTest >> classToTest [
 	^ InputTextDropList
 ]

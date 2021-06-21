@@ -110,7 +110,7 @@ SettingTree >> deeplySelect: aBlock in: aCollection [
 	^ aCollection
 ]
 
-{ #category : #'private tree building' }
+{ #category : #'private - tree building' }
 SettingTree >> emptyNodeNamed: aSymbol [
 	(self nodeNamed: aSymbol)
 
@@ -140,13 +140,13 @@ SettingTree >> nodeList [
 			self nodeList]
 ]
 
-{ #category : #'private tree building' }
+{ #category : #'private - tree building' }
 SettingTree >> nodeNamed: aSymbol [
 	^ self nodeNamed: aSymbol ifAbsent: []
 
 ]
 
-{ #category : #'private tree building' }
+{ #category : #'private - tree building' }
 SettingTree >> nodeNamed: aSymbol ifAbsent: aBlock [
 	^ self nodeList detect: [:d | d settingDeclaration name = aSymbol] ifNone: aBlock
 ]

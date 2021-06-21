@@ -35,7 +35,7 @@ MethodToolbar class >> defaultSpec [
 		yourself
 ]
 
-{ #category : #example }
+{ #category : #examples }
 MethodToolbar class >> example [
 	<sampleInstance>
 	| example |

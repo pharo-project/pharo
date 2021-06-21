@@ -41,7 +41,7 @@ CDAbstractClassDefinitionParser >> beTraitDefinition [
 	classDefinition := CDTraitDefinitionNode new
 ]
 
-{ #category : #'private class factory' }
+{ #category : #'private - class factory' }
 CDAbstractClassDefinitionParser >> classNameNodeClass [
 	^ CDClassNameNode
 ]
@@ -228,18 +228,18 @@ CDAbstractClassDefinitionParser >> setAdequateClassDefinitionFrom: expressionTre
 		ifFalse: [ self beMetaclassDefinition ]
 ]
 
-{ #category : #'private class factory' }
+{ #category : #'private - class factory' }
 CDAbstractClassDefinitionParser >> sharedPoolNodeClass [
 	^ CDSharedPoolNode
 ]
 
-{ #category : #'private class factory' }
+{ #category : #'private - class factory' }
 CDAbstractClassDefinitionParser >> slotInitializationNodeClass [
 
 	^ RBSlotInitializationNode 
 ]
 
-{ #category : #'private class factory' }
+{ #category : #'private - class factory' }
 CDAbstractClassDefinitionParser >> slotNodeClass [
 	^ CDSlotNode
 ]

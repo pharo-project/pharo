@@ -79,7 +79,7 @@ EditingState >> emphasisHere: aListOfTextAttribute [
 				ifNotNil: [:l | l reject: [:a | TextSelectionColor = a class]]
 ]
 
-{ #category : #'private-debugging' }
+{ #category : #'private - debugging' }
 EditingState >> exploreUndoManager: aKeyboardEvent [
 	self undoManager inspect.
 	^ true

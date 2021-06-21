@@ -30,7 +30,7 @@ CoverageDemo class >> defaultSpec [
 		yourself
 ]
 
-{ #category : #example }
+{ #category : #examples }
 CoverageDemo class >> exampleIfTrueIfFalse [
 	| t |
 	t := false.
@@ -38,7 +38,7 @@ CoverageDemo class >> exampleIfTrueIfFalse [
 	^ 5 
 ]
 
-{ #category : #example }
+{ #category : #examples }
 CoverageDemo class >> exampleMethod [
 	^ 2 + 3
 ]
@@ -79,13 +79,13 @@ CoverageDemo >> coverageCode: anObject [
 	coverageCode := anObject
 ]
 
-{ #category : #example }
+{ #category : #examples }
 CoverageDemo >> exampleMethod [
 
 	self openWithSpec.
 ]
 
-{ #category : #example }
+{ #category : #examples }
 CoverageDemo >> exampleNotCompleteCoverage [
 
 	self coverageCode: [ CoverageDemo exampleIfTrueIfFalse. ].

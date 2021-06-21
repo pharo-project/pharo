@@ -25,7 +25,7 @@ ScrollSyncExample class >> defaultSpec [
 		yourself
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ScrollSyncExample class >> example [
 	<sampleInstance>
 	^ self new openWithSpec

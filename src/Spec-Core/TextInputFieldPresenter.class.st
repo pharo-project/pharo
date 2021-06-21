@@ -50,7 +50,7 @@ TextInputFieldPresenter class >> defaultSpec [
 		adapt: #(model))
 ]
 
-{ #category : #example }
+{ #category : #examples }
 TextInputFieldPresenter class >> example [
 	<sampleInstance>
 	^ self new
@@ -190,7 +190,7 @@ TextInputFieldPresenter >> removeEntryCompletion [
 	self entryCompletion: nil
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 TextInputFieldPresenter >> text [ 
 	
 	^ self getText asString
@@ -202,21 +202,21 @@ TextInputFieldPresenter >> textHolder [
 	^ textHolder
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 TextInputFieldPresenter >> whenAcceptOnCRChanged: aBlock [
 	"aBlock will be performed when acceptOnCR changed"
 	
 	acceptOnCR whenChangedDo: aBlock
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 TextInputFieldPresenter >> whenEntryCompletionChanged: aBlock [
 	"aBlock will be performed when entryCompletion changed"
 	
 	entryCompletion whenChangedDo: aBlock
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 TextInputFieldPresenter >> whenGhostTextChanged: aBlock [
 	"aBlock will be performed when ghostText changed"
 	
