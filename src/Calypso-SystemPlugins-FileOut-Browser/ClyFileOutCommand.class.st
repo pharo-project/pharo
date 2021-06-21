@@ -30,7 +30,7 @@ ClyFileOutCommand class >> canBeExecutedInContext: aToolContext [
 
 { #category : #accessing }
 ClyFileOutCommand >> defaultMenuItemName [
-	^'File Out'
+	^'File out'
 ]
 
 { #category : #execution }
