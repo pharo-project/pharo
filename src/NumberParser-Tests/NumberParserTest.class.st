@@ -6,7 +6,7 @@ It duplicates NumberParsingTest, with few more tests.
 Class {
 	#name : #NumberParserTest,
 	#superclass : #ClassTestCase,
-	#category : #'AST-Core-Tests-Parser'
+	#category : #'NumberParser-Tests'
 }
 
 { #category : #utilities }
@@ -26,6 +26,44 @@ NumberParserTest >> classToBeTested [
 NumberParserTest >> testFail [
 	"Verify that the value of a failblock is returned."
 	self assert: (NumberParser parse: 'blablabla' onError: [42]) equals: 42
+]
+
+{ #category : #'tests - Fail' }
+NumberParserTest >> testFailParsingGarbage [
+
+	| failed |
+	failed := false.
+	self
+		assert: (NumberParser new
+				 on: 'garbage';
+				 failBlock: [ :error :index | 
+					 self
+						 assert: error equals: 'Digit expected';
+						 assert: index equals: 1.
+					 failed := true.
+					 42 ];
+				 nextInteger)
+		equals: 42;
+		assert: failed
+]
+
+{ #category : #'tests - Fail' }
+NumberParserTest >> testFailWithDetails [
+
+	| failed |
+	failed := false.
+	self
+		assert: (NumberParser new
+				 on: '-';
+				 failBlock: [ :error :errorIndex | 
+					 self
+						 assert: error equals: 'Digit expected';
+						 assert: errorIndex equals: 2.
+					 failed := true.
+					 42 ];
+				 nextInteger)
+		equals: 42;
+		assert: failed
 ]
 
 { #category : #'tests - Float' }

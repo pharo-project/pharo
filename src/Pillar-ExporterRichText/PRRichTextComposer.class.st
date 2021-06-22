@@ -249,15 +249,15 @@ PRRichTextComposer class >> preferencesSettingsOn: aBuilder [
 		description: 'All settings concerned with the notifications popup look''n feel';
 		with: [
 		(aBuilder setting: #offline)
-			label: 'To set offline mode';
+			label: 'Enable offline mode';
 			target: self;
 			default: false;
 			description: '
-			When oneline is chosen, requests to external images are only performed when they are not in the image cache (since requesting systematically HTTP may lead of latency. Each figure is cached, so the request is at most done one per external references. When the system is online but the request failed we return a placeholder that is not cached.
+			When online is chosen, requests to external images are only performed when they are not in the image cache (since requesting systematically HTTP may lead of latency. Each figure is cached, so the request is at most done one per external references. When the system is online but the request failed we return a placeholder that is not cached.
 			
 			When offline, requests to external images are not performed. The cache can be reset executing PRRichTextComposer resetCache. When the system is off line and an image is requested, a placeholder is computed but not put in the cache. This way when the system is put online the requested elements will be requested and put in the cache (without needing to flush placeholders from the cache).'. 
 			(aBuilder setting: #notRendering)
-				label: 'To set off the rendering in richtext';
+				label: 'Disable richtext rendering';
 				default: false;
 				target: self;
 				description: 'Comments are by default rendered via Pillar in Richtext. When this setting is on, they are rendered as plain text (showing their Microdown definitions).'. 

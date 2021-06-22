@@ -27,7 +27,7 @@ ReUsesWorldGlobalRule >> group [
 
 { #category : #accessing }
 ReUsesWorldGlobalRule >> name [
-	^ 'Uses World/ActiveWorld directly'
+	^ 'Uses World or ActiveWorld directly'
 ]
 
 { #category : #accessing }
