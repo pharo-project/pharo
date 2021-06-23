@@ -1,3 +1,6 @@
+"
+Subclass for testing premalink spanning class hierarchies.
+"
 Class {
 	#name : #ReflectivityExamples2Subclass,
 	#superclass : #ReflectivityExamples2,
