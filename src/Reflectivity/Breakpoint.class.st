@@ -91,10 +91,11 @@ Breakpoint class >> debugWorldMenuOn: aBuilder [
 
 { #category : #'system announcements' }
 Breakpoint class >> handleClassRemoved: anAnnouncement [
-	self all copy do: [ :breakpoint |
+
+	self all copy do: [ :breakpoint | 
 		breakpoint link methods
 			detect: [ :m | m methodClass = anAnnouncement classRemoved ]
-			ifFound: [ self removeBreakpoint: breakpoint ] ]
+			ifFound: [ breakpoint removeFromClass: anAnnouncement classRemoved ] ]
 ]
 
 { #category : #'system announcements' }
@@ -337,14 +338,19 @@ Breakpoint >> options: anArray [
 	options := anArray
 ]
 
-{ #category : #install }
+{ #category : #removing }
 Breakpoint >> remove [
 	self removeFromNodeProperty.
 	self class removeBreakpoint: self.
 	link uninstall
 ]
 
-{ #category : #install }
+{ #category : #removing }
+Breakpoint >> removeFromClass: aClass [
+	self class removeBreakpoint: self
+]
+
+{ #category : #removing }
 Breakpoint >> removeFromNodeProperty [
 	self node removeBreakpoint: self
 	
