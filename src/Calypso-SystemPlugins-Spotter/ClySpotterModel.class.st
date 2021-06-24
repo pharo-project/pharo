@@ -85,3 +85,27 @@ ClySpotterModel >> initializeOn: aBrowser [
 	browser := aBrowser.
 	self initialize	
 ]
+
+{ #category : #spotter }
+ClySpotterModel >> spotterForCommandsFor: aStep [
+	<stSpotterOrder: 20>
+
+	browser allContextsDo: [ :each | 
+		self commandListProcessorForContext: each step: aStep ]
+]
+
+{ #category : #spotter }
+ClySpotterModel >> spotterForGoToFor: aStep [
+	<stSpotterOrder: 10>
+
+	aStep listProcessor
+		title: 'Go to';
+		allCandidates: [ self collectGoToCandidates ];
+		itemName: #name;
+		itemIcon: #icon;
+		candidatesLimit: 10;
+		filter: StFilterSubstring;
+		actLogic: [ :assoc :step | 
+			step exit. 
+			assoc activate ]
+]
