@@ -78,7 +78,7 @@ RBRemoveTemporaryVariableTransformationTest >> testTransform [
 	self assert: transformation model changes changes size equals: 2.			
 	
 	class := transformation model classNamed: self changeMock name.
-	self assert: (class directlyDefinesMethod: #one).		
+	self assert: (class directlyDefinesMethod: #one).	
 	self assert: (class parseTreeFor: #foo) temporaries size equals: 1
 ]
 

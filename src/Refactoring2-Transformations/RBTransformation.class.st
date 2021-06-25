@@ -13,8 +13,9 @@ My main API is
 Class {
 	#name : #RBTransformation,
 	#superclass : #Object,
+	#traits : 'RBTTransformationModel + RBTExceptionBuilder',
+	#classTraits : 'RBTTransformationModel classTrait + RBTExceptionBuilder classTrait',
 	#instVars : [
-		'model',
 		'options',
 		'preconditionChecking'
 	],
