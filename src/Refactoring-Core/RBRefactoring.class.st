@@ -27,6 +27,8 @@ A RBRefactoringManager  is used to collect the executed refactorings and provide
 Class {
 	#name : #RBRefactoring,
 	#superclass : #Object,
+	#traits : 'RBTExceptionBuilder',
+	#classTraits : 'RBTExceptionBuilder classTrait',
 	#instVars : [
 		'model',
 		'options'
@@ -356,38 +358,6 @@ RBRefactoring >> preconditions [
 RBRefactoring >> primitiveExecute [
 	self checkPreconditions.
 	self transform
-]
-
-{ #category : #private }
-RBRefactoring >> refactoringConfirmWarning: aString [
-	| ret |
-	ret := self uiManager confirm: aString orCancel: [ ^ RBRefactoringFailure signal: 'aborted' ].
-	^ ret
-]
-
-{ #category : #private }
-RBRefactoring >> refactoringError: aString [ 
-	^ RBRefactoringError signal: aString
-]
-
-{ #category : #private }
-RBRefactoring >> refactoringError: aString with: aBlock [ 
-	^ RBRefactoringError signal: aString with: aBlock
-]
-
-{ #category : #private }
-RBRefactoring >> refactoringFailure: aString [ 
-	^ RBRefactoringFailure signal: aString
-]
-
-{ #category : #private }
-RBRefactoring >> refactoringFailure: aString with: aBlock [
-	^ RBRefactoringFailure signal: aString with: aBlock
-]
-
-{ #category : #private }
-RBRefactoring >> refactoringWarning: aString [ 
-	^ RBRefactoringWarning signal: aString
 ]
 
 { #category : #requests }

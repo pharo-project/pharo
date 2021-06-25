@@ -136,10 +136,9 @@ RBTransformation >> copyOptionsFrom: aDictionary [
 	self options: dict
 ]
 
-{ #category : #initialize }
-RBTransformation >> defaultEnvironment [
-
-	^ RBBrowserEnvironment new
+{ #category : #accessing }
+RBTransformation >> emptyCondition [
+	^ RBCondition empty
 ]
 
 { #category : #execution }
@@ -154,27 +153,6 @@ RBTransformation >> execute [
 RBTransformation >> initialize [
 	super initialize.
 	preconditionChecking := false
-]
-
-{ #category : #accessing }
-RBTransformation >> model [
-
-	^ model ifNil: [ model := self newModel ]
-]
-
-{ #category : #accessing }
-RBTransformation >> model: aRBNamespace [
-
-	model := aRBNamespace
-]
-
-{ #category : #initialize }
-RBTransformation >> newModel [
-
-	^ (RBNamespace2
-		onEnvironment: self defaultEnvironment)
-		name: self printString;
-		yourself
 ]
 
 { #category : #executing }
@@ -244,18 +222,6 @@ RBTransformation >> primitiveExecute [
 RBTransformation >> privateTransform [
 
 	self subclassResponsibility
-]
-
-{ #category : #preconditions }
-RBTransformation >> refactoringError: aString [
-
-	^ RBRefactoringError signal: aString
-]
-
-{ #category : #preconditions }
-RBTransformation >> refactoringError: aString with: aBlock [
-
-	^ RBRefactoringError signal: aString with: aBlock
 ]
 
 { #category : #accessing }
