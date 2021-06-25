@@ -2158,7 +2158,7 @@ EFFormatter >> visitParseErrorNode: aNode [
 	self writeString: aNode value
 ]
 
-{ #category : #'visiting patterns' }
+{ #category : #'visiting - patterns' }
 EFFormatter >> visitPatternBlockNode: aRBPatternBlockNode [ 
 	codeStream nextPut: $`.
 	self 
@@ -2166,7 +2166,7 @@ EFFormatter >> visitPatternBlockNode: aRBPatternBlockNode [
 		around: [self formatBlock: aRBPatternBlockNode]
 ]
 
-{ #category : #'visiting patterns' }
+{ #category : #'visiting - patterns' }
 EFFormatter >> visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode [
 	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
 	codeStream nextPut: $`.
