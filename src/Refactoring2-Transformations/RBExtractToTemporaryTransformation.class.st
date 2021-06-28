@@ -1,23 +1,16 @@
-"
-Add a new temporary variable for the value of the selected code. Every place in this method using the same piece of code is replaced by accessing this new temporary variable instead.
-As the code is now only evaluated once for initializing the variable value, this refactoring may modify the behavior if the code statements didn't evaluate to the same value on every call.
-
-My preconditions verify that the new temporary name is a valid name and isn't already used (neither a temporary, an instance variable or a class variable).
-"
 Class {
-	#name : #RBExtractToTemporaryRefactoring,
-	#superclass : #RBMethodRefactoring,
+	#name : #RBExtractToTemporaryTransformation,
+	#superclass : #RBCompositeMethodTransformation,
 	#instVars : [
 		'sourceInterval',
-		'selector',
 		'newVariableName',
 		'parseTree'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : #'Refactoring2-Transformations-Model-Migration'
 }
 
 { #category : #'instance creation' }
-RBExtractToTemporaryRefactoring class >> extract: anInterval to: aString from: aSelector in: aClass [ 
+RBExtractToTemporaryTransformation class >> extract: anInterval to: aString from: aSelector in: aClass [ 
 	^self new 
 		extract: anInterval
 		to: aString
@@ -26,7 +19,7 @@ RBExtractToTemporaryRefactoring class >> extract: anInterval to: aString from: a
 ]
 
 { #category : #'instance creation' }
-RBExtractToTemporaryRefactoring class >> model: aRBSmalltalk extract: anInterval to: aString from: aSelector in: aClass [ 
+RBExtractToTemporaryTransformation class >> model: aRBSmalltalk extract: anInterval to: aString from: aSelector in: aClass [ 
 	^ self new
 		model: aRBSmalltalk;
 		extract: anInterval
@@ -36,8 +29,14 @@ RBExtractToTemporaryRefactoring class >> model: aRBSmalltalk extract: anInterval
 		yourself
 ]
 
+{ #category : #executing }
+RBExtractToTemporaryTransformation >> buildTransformations [
+
+	^ self insertTemporary
+]
+
 { #category : #preconditions }
-RBExtractToTemporaryRefactoring >> checkVariableName [
+RBExtractToTemporaryTransformation >> checkVariableName [
 	(class whoDefinesInstanceVariable: newVariableName) ifNotNil: 
 			[self refactoringError: ('<1p> defines an instance variable named <2s>' 
 						expandMacrosWith: class
@@ -52,47 +51,63 @@ RBExtractToTemporaryRefactoring >> checkVariableName [
 						expandMacrosWith: newVariableName)]
 ]
 
-{ #category : #transforming }
-RBExtractToTemporaryRefactoring >> compileNewMethod [
-	class compileTree: self parseTree
-]
-
-{ #category : #transforming }
-RBExtractToTemporaryRefactoring >> constructAssignmentFrom: aNode [ 
+{ #category : #preconditions }
+RBExtractToTemporaryTransformation >> constructAssignmentFrom: aNode [ 
 	| valueNode |
 	valueNode := RBVariableNode named: newVariableName.
 	^RBAssignmentNode variable: valueNode value: aNode
 ]
 
-{ #category : #initialization }
-RBExtractToTemporaryRefactoring >> extract: anInterval to: aString from: aSelector in: aClass [ 
-	class := self classObjectFor: aClass.
+{ #category : #executing }
+RBExtractToTemporaryTransformation >> extract: anInterval to: aString from: aSelector in: aClass [ 
+	class := self model classObjectFor: aClass.
 	selector := aSelector.
 	sourceInterval := anInterval.
 	newVariableName := aString
 ]
 
-{ #category : #transforming }
-RBExtractToTemporaryRefactoring >> insertTemporary [
-	| node statementNode nodeReferences children |
+{ #category : #preconditions }
+RBExtractToTemporaryTransformation >> insertTemporary [
+	| node statementNode nodeReferences children list index |
 	node := self parseTree whichNodeIsContainedBy: sourceInterval.
 	(node notNil and: [ node isValue ])
 		ifFalse: [ self refactoringFailure: 'Cannot assign to non-value nodes' ].
 	children := self parseTree body allChildren.
 	nodeReferences := children select: [ :each | each = node ].
 	statementNode := node statementNode.
-	nodeReferences do: [ :each | each replaceWith: (RBVariableNode named: newVariableName) ].
+	list := nodeReferences collect: [ :each | 
+		RBReplaceSubtreeTransformation
+			model: self model
+			replace: each newSource
+			to: newVariableName
+			inMethod: selector
+			inClass: class.
+	"	each replaceWith: (RBVariableNode named: newVariableName) "]."
 	statementNode parent
 		addNode: (self constructAssignmentFrom: node)
 			before:
 				(node == statementNode
 						ifTrue: [ RBVariableNode named: newVariableName ]
 						ifFalse: [ statementNode ]);
-		addTemporaryNamed: newVariableName
+		addTemporaryNamed: newVariableName."
+	list add: (RBAddSubtreeTransformation
+		model: self model
+		beforeNode: statementNode
+		with: (self constructAssignmentFrom: node) newSource 
+		from: selector
+		in: class).
+	
+	list add: (RBAddTemporaryVariableTransformation
+					model: self model
+					variable: newVariableName
+					inNode: statementNode
+					inMethod: selector
+					inClass: class name).
+	^ list
 ]
 
-{ #category : #'private - accessing' }
-RBExtractToTemporaryRefactoring >> parseTree [
+{ #category : #preconditions }
+RBExtractToTemporaryTransformation >> parseTree [
 
 	parseTree
 		ifNil: [ parseTree := class parseTreeFor: selector.
@@ -102,7 +117,7 @@ RBExtractToTemporaryRefactoring >> parseTree [
 ]
 
 { #category : #preconditions }
-RBExtractToTemporaryRefactoring >> preconditions [
+RBExtractToTemporaryTransformation >> preconditions [
 	^(RBCondition definesSelector: selector in: class) 
 		& (RBCondition isValidInstanceVariableName: newVariableName for: class) 
 			& (RBCondition withBlock: 
@@ -111,8 +126,8 @@ RBExtractToTemporaryRefactoring >> preconditions [
 						true])
 ]
 
-{ #category : #'private - accessing' }
-RBExtractToTemporaryRefactoring >> selectedSource [
+{ #category : #preconditions }
+RBExtractToTemporaryTransformation >> selectedSource [
 
 	| source |
 
@@ -124,31 +139,8 @@ RBExtractToTemporaryRefactoring >> selectedSource [
 	^ source copyFrom: sourceInterval first to: sourceInterval last
 ]
 
-{ #category : #printing }
-RBExtractToTemporaryRefactoring >> storeOn: aStream [ 
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' extract: '.
-	sourceInterval storeOn: aStream.
-	aStream
-		nextPutAll: ' to: ''';
-		nextPutAll: newVariableName;
-		nextPutAll: ''' from: #';
-		nextPutAll: selector;
-		nextPutAll: ' in: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBExtractToTemporaryRefactoring >> transform [
-	self
-		insertTemporary;
-		compileNewMethod
-]
-
 { #category : #preconditions }
-RBExtractToTemporaryRefactoring >> verifySelectedInterval [
+RBExtractToTemporaryTransformation >> verifySelectedInterval [
 	| selectedParseTree selectedSources |
 	selectedSources := self selectedSource.
 	selectedParseTree := self parserClass

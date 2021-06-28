@@ -21,7 +21,8 @@ Class {
 	#superclass : #RBMethodTransformation,
 	#instVars : [
 		'variableName',
-		'interval'
+		'interval',
+		'node'
 	],
 	#category : #'Refactoring2-Transformations-Model'
 }
@@ -32,6 +33,18 @@ RBAddTemporaryVariableTransformation class >> model: aRBModel variable: aString 
 	^ self new
 		model: aRBModel;
 		variable: aString
+		inMethod: aSelector
+		inClass: aClass;
+		yourself
+]
+
+{ #category : #api }
+RBAddTemporaryVariableTransformation class >> model: aRBModel variable: aString inNode: aNode inMethod: aSelector inClass: aClass [
+
+	^ self new
+		model: aRBModel;
+		variable: aString
+		inNode: aNode
 		inMethod: aSelector
 		inClass: aClass;
 		yourself
@@ -58,6 +71,22 @@ RBAddTemporaryVariableTransformation class >> variable: aString inMethod: aSelec
 		yourself
 ]
 
+{ #category : #api }
+RBAddTemporaryVariableTransformation class >> variable: aString inNode: aNode inMethod: aSelector inClass: aClass [
+
+	^ self new
+		variable: aString
+		inNode: aNode
+		inMethod: aSelector
+		inClass: aClass;
+		yourself
+]
+
+{ #category : #api }
+RBAddTemporaryVariableTransformation >> interval [ 
+	^ interval ifNil: [ interval := node start to: node start ]
+]
+
 { #category : #preconditions }
 RBAddTemporaryVariableTransformation >> preconditions [
 
@@ -80,9 +109,9 @@ RBAddTemporaryVariableTransformation >> privateTransform [
 	methodTree := self definingMethod.
 	parseTree := methodTree body.
 	
-	interval ifNotNil: [ 
+	self interval ifNotNil: [ 
 		| nodeInInterval |
-		nodeInInterval := methodTree bestNodeFor: interval.
+		nodeInInterval := methodTree bestNodeFor: self interval.
 		nodeInInterval isSequence ifTrue: [ parseTree := nodeInInterval ] ].
 	
 	parseTree addTemporaryNamed: variableName.
@@ -98,7 +127,7 @@ RBAddTemporaryVariableTransformation >> storeOn: aStream [
 		nextPutAll: ' variable: ''';
 		nextPutAll: variableName;
 		nextPutAll: ''' inInterval: ''';
-		nextPutAll: interval;
+		nextPutAll: self interval;
 		nextPutAll: ''' inMethod: ''';
 		nextPutAll: selector;
 		nextPutAll: ''' inClass: '.
@@ -123,4 +152,13 @@ RBAddTemporaryVariableTransformation >> variable: aVariableName inMethod: aSelec
 		inInterval: nil
 		inMethod: aSelector
 		inClass: aClass
+]
+
+{ #category : #api }
+RBAddTemporaryVariableTransformation >> variable: aVariableName inNode: aNode inMethod: aSelector inClass: aClass [
+
+	self className: aClass.
+	node := aNode.
+	selector := aSelector.
+	variableName := aVariableName
 ]

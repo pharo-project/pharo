@@ -20,16 +20,40 @@ Class {
 	#superclass : #RBMethodTransformation,
 	#instVars : [
 		'interval',
-		'sourceCode'
+		'sourceCode',
+		'beforeNode'
 	],
 	#category : #'Refactoring2-Transformations-Model'
 }
+
+{ #category : #api }
+RBAddSubtreeTransformation class >> beforeNode: aNode with: aString from: aSelector in: aClass [
+
+	^ self new
+		beforeNode: aNode
+		with: aString
+		from: aSelector
+		in: aClass;
+		yourself
+]
 
 { #category : #api }
 RBAddSubtreeTransformation class >> interval: anInterval with: aString from: aSelector in: aClass [
 
 	^ self new
 		interval: anInterval
+		with: aString
+		from: aSelector
+		in: aClass;
+		yourself
+]
+
+{ #category : #api }
+RBAddSubtreeTransformation class >> model: aRBModel beforeNode: aNode with: aString from: aSelector in: aClass [
+
+	^ self new
+		model: aRBModel;
+		beforeNode: aNode
 		with: aString
 		from: aSelector
 		in: aClass;
@@ -52,14 +76,28 @@ RBAddSubtreeTransformation class >> model: aRBModel interval: anInterval with: a
 RBAddSubtreeTransformation >> addNode: aRBNode toSequence: aSequenceNode [
 	"Searches for the statement before which the new code should be added.
 	 If not found, it just adds the new code at the end of the block"
-	
 	aSequenceNode statements
-		detect: [ :node | node intersectsInterval: interval ]
+		detect: [ :node | node intersectsInterval: self interval ]
 		ifFound: [ :node |
 						node isBlock "special case when a block is empty"
 							ifTrue: [ node body addNode: aRBNode ]
 							ifFalse: [ aSequenceNode addNode: aRBNode before: node ]].
 	^ aSequenceNode parentSuchAs: #isMethod
+]
+
+{ #category : #api }
+RBAddSubtreeTransformation >> beforeNode: aNode with: aString from: aSelector in: aClass [
+
+	self className: aClass.
+	selector := aSelector.
+	beforeNode := aNode.
+	sourceCode := aString.
+]
+
+{ #category : #api }
+RBAddSubtreeTransformation >> interval [ 
+
+	^ interval ifNil: [ interval := beforeNode start to: beforeNode start ]
 ]
 
 { #category : #api }
@@ -100,7 +138,7 @@ RBAddSubtreeTransformation >> privateTransform [
 	"It tries to find the block to insert new code.
 	 If not found, e.g., the interval is invalid, it adds the code at the end."
 	parseTree := parseTree allSequenceNodes
-		detect: [ :sequence | sequence intersectsInterval: interval ]
+		detect: [ :sequence | sequence intersectsInterval: self interval ]
 		ifFound: [ :sequence | self addNode: newNode toSequence: sequence ]
 		ifNone: [ parseTree body addNodeLast: newNode.
 			parseTree ].
@@ -114,7 +152,7 @@ RBAddSubtreeTransformation >> storeOn: aStream [
 	self class storeOn: aStream.
 	aStream
 		nextPutAll: ' interval: ''';
-		nextPutAll: interval asString;
+		nextPutAll: self interval asString;
 		nextPutAll: ' with: ''';
 		nextPutAll: sourceCode;
 		nextPutAll: ''' from: ''';

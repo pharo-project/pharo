@@ -194,6 +194,11 @@ RBTransformation >> parseTreeSearcherClass [
 	^ RBParseTreeSearcher
 ]
 
+{ #category : #accessing }
+RBTransformation >> parserClass [
+	^ RBParser
+]
+
 { #category : #preconditions }
 RBTransformation >> preconditionChecking [
 
