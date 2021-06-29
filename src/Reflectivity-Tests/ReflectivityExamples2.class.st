@@ -5,7 +5,8 @@ Class {
 	#name : #ReflectivityExamples2,
 	#superclass : #Object,
 	#instVars : [
-		'instVar'
+		'instVar',
+		'instVar2'
 	],
 	#classVars : [
 		'classVar'
@@ -34,6 +35,12 @@ ReflectivityExamples2 >> generateNewMethodWithInstVarAccess [
 	instVar := 6.
 	instVar > 5 ifTrue:[^ instVar raisedTo: 2]'
 		classified: 'example'
+]
+
+{ #category : #accessing }
+ReflectivityExamples2 >> instVar2: anObject [
+
+	instVar2 := anObject
 ]
 
 { #category : #examples }
@@ -82,7 +89,7 @@ ReflectivityExamples2 >> modifyMethodWithInstVarAccess [
 
 ]
 
-{ #category : #examples }
+{ #category : #example }
 ReflectivityExamples2 >> newMethodWithInstVarAccess [
 	instVar := 5.
 	instVar := 6.
