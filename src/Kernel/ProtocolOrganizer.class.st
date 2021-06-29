@@ -190,13 +190,7 @@ ProtocolOrganizer >> removeMethod: aSymbol [
 { #category : #'protocol - removing' }
 ProtocolOrganizer >> removeProtocol: aProtocol [
 	
-	aProtocol canBeRemoved
-		ifFalse: [ 
-			"Virtual protocols who cannot be removed should not raise an error"
-			aProtocol isVirtualProtocol 
-				ifTrue: [ ^ self ].
-			ProtocolRemovalException signal ].
-	
+	aProtocol canBeRemoved ifFalse:  [ ^ self ].
 	^ protocols 
 		remove: aProtocol
 		ifAbsent: [ ]

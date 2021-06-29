@@ -154,7 +154,7 @@ HEInstaller >> environment: anObject [
 	environment := anObject
 ]
 
-{ #category : #'validating existance' }
+{ #category : #'validating existence' }
 HEInstaller >> existingClass: aHEClass [
 	(environment hasClassNamed: aHEClass className) ifTrue:[
 		self error: (self messageExistingClass: aHEClass)
@@ -162,7 +162,7 @@ HEInstaller >> existingClass: aHEClass [
 	^ nil
 ]
 
-{ #category : #'validating existance' }
+{ #category : #'validating existence' }
 HEInstaller >> existingTrait: aHETrait [
 	(environment includesKey: aHETrait traitName) ifTrue:[ 
 		self error: (self messageExistingTrait: aHETrait)
@@ -266,7 +266,7 @@ HEInstaller >> reportNewUndeclareds: newUndeclareds [
 	newUndeclareds ifNotEmpty: [ self error: 'New Undeclared created... check dependencies: ' , newUndeclareds keys printString ]
 ]
 
-{ #category : #'validating existance' }
+{ #category : #'validating existence' }
 HEInstaller >> shouldBuildMethod: aHEMethod in: aClass [
 	aClass
 		compiledMethodAt: aHEMethod name

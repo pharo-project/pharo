@@ -7,6 +7,12 @@ Class {
 	#category : #'Shift-Changes'
 }
 
+{ #category : #testing }
+ShAbstractInstanceSideClassChangeDetector class >> isAbstract [
+
+	^ self == ShAbstractInstanceSideClassChangeDetector
+]
+
 { #category : #changes }
 ShAbstractInstanceSideClassChangeDetector >> newChanges [
 	^ {ShClassChanged new

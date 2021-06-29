@@ -22,6 +22,12 @@ Class {
 	#category : #'Shift-Changes'
 }
 
+{ #category : #testing }
+ShAbstractClassChangeDetector class >> isAbstract [
+
+	^ self == ShAbstractClassChangeDetector
+]
+
 { #category : #comparing }
 ShAbstractClassChangeDetector >> compareClass [
 	oldValue := classAccessor value: builder oldClass.

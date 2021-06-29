@@ -185,14 +185,46 @@ VariableBreakpoint >> isVariableBreakpoint [
 	^true
 ]
 
-{ #category : #install }
+{ #category : #removing }
 VariableBreakpoint >> remove [
 	super remove.
 	targetInstance := nil.
 	isInstalled := false
 ]
 
-{ #category : #install }
+{ #category : #removing }
+VariableBreakpoint >> removeFromClass: aClass [
+
+	"If we're targeting a temp var in a method,
+	then we got here because we detected that method belong to the class
+	passed as parameter. We need to uninstall."
+	self targetClassOrMethod isCompiledMethod ifTrue: [ 
+		self remove.
+		^ self ].
+
+	"If the removed class is the class we target or one of its superclasses,
+	then after that class is removed we have no reason to exist. We need to uninstall."
+	(self targetClassOrMethod = aClass or: [ 
+		 self targetClassOrMethod allSuperclasses includes: aClass ]) 
+		ifTrue: [ 
+			self remove.
+			^ self ].
+
+	"We removed a aClass, but it is not our target class nor one of its superclasses.
+	It is then one of its subclasses, we can continue to exist since the variable
+	we target still exist in the target class.
+	However, we need to remove the nodes of the removed class from our metalink"
+	(self link nodes select: [ :n | n methodNode methodClass == aClass ]) 
+		do: [ :n | self link removeNode: n ]
+]
+
+{ #category : #removing }
+VariableBreakpoint >> removeFromMethod: aMethod [
+	(self link nodes select: [ :n | n methodNode method == aMethod ]) 
+		do: [ :n | self link removeNode: n ]
+]
+
+{ #category : #removing }
 VariableBreakpoint >> removeFromNodeProperty [
 	 self link nodes do: [ :n | n removeBreakpoint: self ]
 ]

@@ -23,11 +23,13 @@ AthensBalloonGradientPaint >> colorRamp: anObject [
 ]
 
 { #category : #rendering }
-AthensBalloonGradientPaint >> strokeRect: aRectangle on: anAthensCanvas stroke: anAthensBalloonStrokePaint [ 
-	self shouldBeImplemented.
+AthensBalloonGradientPaint >> strokeRect: aRectangle on: anAthensCanvas stroke: anAthensBalloonStrokePaint [
+
+	self shouldBeImplemented
 ]
 
 { #category : #rendering }
 AthensBalloonGradientPaint >> strokeRect: aRectangle on: anAthensCanvas strokeWidth: strokeWidth [
-	self shouldBeImplemented.
+
+	self shouldBeImplemented
 ]

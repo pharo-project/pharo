@@ -61,7 +61,7 @@ AthensBalloonImagePaint >> form: anObject [
 
 	form := anObject.
 	origin := 0@0.
-	direction := form extent x @0.
+	direction := form extent x @0
 ]
 
 { #category : #initialization }
@@ -75,7 +75,8 @@ AthensBalloonImagePaint >> initialize [
 
 { #category : #accessing }
 AthensBalloonImagePaint >> normal [
-	^ ((direction y negated @ direction x) *  form height / form width ) rounded
+
+	^ (direction y negated @ direction x * form height / form width) rounded
 ]
 
 { #category : #accessing }
@@ -92,5 +93,6 @@ AthensBalloonImagePaint >> origin: anObject [
 
 { #category : #accessing }
 AthensBalloonImagePaint >> repeat [
-	tileFlag:=true
+
+	tileFlag := true
 ]

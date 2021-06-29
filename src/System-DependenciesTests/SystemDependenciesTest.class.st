@@ -83,7 +83,7 @@ SystemDependenciesTest >> knownIDEDependencies [
 
 	"ideally this list should be empty"	
 	
-	^ #()
+	^ #('NewTools-Spotter')
 ]
 
 { #category : #'known dependencies' }
