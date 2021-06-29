@@ -613,6 +613,26 @@ VariableBreakpointTest >> testRemoveAfterSuperclassRemoved [
 
 ]
 
+{ #category : #'tests - removing' }
+VariableBreakpointTest >> testRemoveFromMethod [
+	"Removing a variable breakpoint should not uninstall the breakpoint"
+	wp := VariableBreakpoint watchVariable: #v1 inClass: VariableBreakpointMockSubclass. 
+	wp install.	
+		
+	"Let us recompile a method touching v1 in the super class of our test class.
+	This is meant so simulate, e.g., a modification in the debugger after a break in that method."
+	VariableBreakpointMockClass compile: 'v1 ^v1'.
+	
+	"First, the breakpoint should still be installed in that method"
+	self assert: wp isInstalled.
+	self should: [ VariableBreakpointMockClass basicNew v1 ] raise: Break.
+	self should: [ VariableBreakpointMockSubclass basicNew v1 ] raise: Break.
+	
+	"Second, the old method ast's is not referenced by the breakpoint's link anymore"
+	
+	
+]
+
 { #category : #'tests - installation' }
 VariableBreakpointTest >> testScopeTo [
 	| instance testContext |

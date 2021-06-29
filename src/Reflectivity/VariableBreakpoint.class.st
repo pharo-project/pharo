@@ -219,6 +219,12 @@ VariableBreakpoint >> removeFromClass: aClass [
 ]
 
 { #category : #removing }
+VariableBreakpoint >> removeFromMethod: aMethod [
+	(self link nodes select: [ :n | n methodNode method == aMethod ]) 
+		do: [ :n | self link removeNode: n ]
+]
+
+{ #category : #removing }
 VariableBreakpoint >> removeFromNodeProperty [
 	 self link nodes do: [ :n | n removeBreakpoint: self ]
 ]

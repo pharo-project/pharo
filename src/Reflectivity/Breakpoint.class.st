@@ -193,11 +193,12 @@ Breakpoint class >> removeFrom: aNode [
 ]
 
 { #category : #cleanup }
-Breakpoint class >> removeFromMethod: aMethod [ 
-	self all copy do: [ :breakpoint |
+Breakpoint class >> removeFromMethod: aMethod [
+
+	self all copy do: [ :breakpoint | 
 		breakpoint link methods
 			detect: [ :m | m == aMethod ]
-			ifFound: [ self removeBreakpoint: breakpoint  ] ]
+			ifFound: [ breakpoint removeFromMethod: aMethod ] ]
 ]
 
 { #category : #'observers - experimental' }
@@ -348,6 +349,11 @@ Breakpoint >> remove [
 { #category : #removing }
 Breakpoint >> removeFromClass: aClass [
 	self class removeBreakpoint: self
+]
+
+{ #category : #removing }
+Breakpoint >> removeFromMethod: aMethod [
+	self remove
 ]
 
 { #category : #removing }

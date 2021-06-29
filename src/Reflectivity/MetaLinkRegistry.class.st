@@ -107,9 +107,7 @@ MetaLinkRegistry >> permaLinksForMethod: method [
 	targets := (self slotSourcesAt: class) flattened.
 	^ (permanentTargets associationsSelect: [ :assoc | 
 		   targets includes: assoc key ]) values flattened select: [ 
-		  :permalink | 
-		  permalink slotOrVarClass == class or: [ 
-			  class allSuperclasses includes: permalink slotOrVarClass ] ] 
+		  :permalink | permalink slotOrVarClass isInClassHierarchyOf: class ]
 ]
 
 { #category : #permalinks }
@@ -162,11 +160,9 @@ MetaLinkRegistry >> slotSourcesAt: aClass ifAbsent: aBlock [
 
 	| registeredClasses |
 	registeredClasses := slotSources keys select: [ :c | 
-		                     c == aClass or: [ 
-			                     (aClass allSuperclasses includes: c) or: [ 
-				                     c allSubclasses includes: aClass ] ] ].
+		                     c isInClassHierarchyOf: aClass ].
 	registeredClasses isEmpty ifTrue: [ ^ aBlock value ].
-	^ (registeredClasses collect: [ :c | slotSources at: c ])
+	^ registeredClasses collect: [ :c | slotSources at: c ]
 ]
 
 { #category : #'registry access' }
