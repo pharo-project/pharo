@@ -142,21 +142,6 @@ RBExtractToTemporaryTransformationTest >> testBadName [
 ]
 
 { #category : #'failure tests' }
-RBExtractToTemporaryTransformationTest >> testExtractToTemporaryForLastStatementInBlock [
-	| refactoring methodName |
-	methodName := ('caller', '2') asSymbol.
-	refactoring := RBExtractToTemporaryTransformation
-		extract: (52 to: 73)
-		to: 'temp'
-		from: methodName
-		in: RBRefactoryTestDataApp.
-	refactoring asRefactoring transform.
-
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: methodName) equals: (self parseMethod: 'caller2
-	^(1 to: 10) inject: 1 into: [:sum :each | | temp | temp := sum * (self foo: each). temp]')
-]
-
-{ #category : #'failure tests' }
 RBExtractToTemporaryTransformationTest >> testExtractToTemporaryRefactoring [
 	| refactoring  |
 	refactoring := RBExtractToTemporaryTransformation
@@ -165,6 +150,20 @@ RBExtractToTemporaryTransformationTest >> testExtractToTemporaryRefactoring [
 		from: methodSelector
 		in: targetClass.
 	refactoring asRefactoring transform.
+
+	self assert: ((refactoring model classNamed: targetClass) parseTreeFor: methodSelector) 
+		equals: (self parseMethod: newSource)
+]
+
+{ #category : #'failure tests' }
+RBExtractToTemporaryTransformationTest >> testExtractToTemporaryTransformation [
+	| refactoring  |
+	refactoring := RBExtractToTemporaryTransformation
+		extract: interval
+		to: newVariableName
+		from: methodSelector
+		in: targetClass.
+	refactoring transform.
 
 	self assert: ((refactoring model classNamed: targetClass) parseTreeFor: methodSelector) 
 		equals: (self parseMethod: newSource)

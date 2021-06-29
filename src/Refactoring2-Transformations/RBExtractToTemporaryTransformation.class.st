@@ -51,14 +51,14 @@ RBExtractToTemporaryTransformation >> checkVariableName [
 						expandMacrosWith: newVariableName)]
 ]
 
-{ #category : #preconditions }
+{ #category : #'building actions' }
 RBExtractToTemporaryTransformation >> constructAssignmentFrom: aNode [ 
 	| valueNode |
 	valueNode := RBVariableNode named: newVariableName.
 	^RBAssignmentNode variable: valueNode value: aNode
 ]
 
-{ #category : #executing }
+{ #category : #api }
 RBExtractToTemporaryTransformation >> extract: anInterval to: aString from: aSelector in: aClass [ 
 	class := self model classObjectFor: aClass.
 	selector := aSelector.
@@ -66,53 +66,42 @@ RBExtractToTemporaryTransformation >> extract: anInterval to: aString from: aSel
 	newVariableName := aString
 ]
 
-{ #category : #preconditions }
+{ #category : #executing }
 RBExtractToTemporaryTransformation >> insertTemporary [
-	| node statementNode nodeReferences children list index |
-	node := self parseTree whichNodeIsContainedBy: sourceInterval.
-	(node notNil and: [ node isValue ])
-		ifFalse: [ self refactoringFailure: 'Cannot assign to non-value nodes' ].
-	children := self parseTree body allChildren.
-	nodeReferences := children select: [ :each | each = node ].
+	^ {RBCustomTransformation 
+	model: self model 
+	with: [ :rbMode | | node statementNode nodeReferences  |
+	node := self nodeContainedBy: sourceInterval.
+	nodeReferences := self referencesTo: node.
 	statementNode := node statementNode.
-	list := nodeReferences collect: [ :each | 
-		RBReplaceSubtreeTransformation
-			model: self model
-			replace: each newSource
-			to: newVariableName
-			inMethod: selector
-			inClass: class.
-	"	each replaceWith: (RBVariableNode named: newVariableName) "]."
+	nodeReferences do: [ :each | each replaceWith: (RBVariableNode named: newVariableName) ].
 	statementNode parent
 		addNode: (self constructAssignmentFrom: node)
 			before:
 				(node == statementNode
 						ifTrue: [ RBVariableNode named: newVariableName ]
 						ifFalse: [ statementNode ]);
-		addTemporaryNamed: newVariableName."
-	list add: (RBAddSubtreeTransformation
-		model: self model
-		beforeNode: statementNode
-		with: (self constructAssignmentFrom: node) newSource 
-		from: selector
-		in: class).
-	
-	list add: (RBAddTemporaryVariableTransformation
-					model: self model
-					variable: newVariableName
-					inNode: statementNode
-					inMethod: selector
-					inClass: class name).
-	^ list
+		addTemporaryNamed: newVariableName.
+		class compileTree: self parseTree]}
+]
+
+{ #category : #accessing }
+RBExtractToTemporaryTransformation >> nodeContainedBy: anInterval [
+	| node |
+	node := self parseTree whichNodeIsContainedBy: anInterval.
+	(node notNil and: [ node isValue ])
+		ifFalse: [ self refactoringFailure: 'Cannot assign to non-value nodes' ].
+	^ node
 ]
 
 { #category : #preconditions }
 RBExtractToTemporaryTransformation >> parseTree [
 
 	parseTree
-		ifNil: [ parseTree := class parseTreeFor: selector.
+		ifNil: [ 
+			parseTree := class parseTreeFor: selector.
 			parseTree ifNil: [ self refactoringFailure: 'Could not parse method' ]
-			].
+		].
 	^ parseTree
 ]
 
@@ -126,7 +115,14 @@ RBExtractToTemporaryTransformation >> preconditions [
 						true])
 ]
 
-{ #category : #preconditions }
+{ #category : #accessing }
+RBExtractToTemporaryTransformation >> referencesTo: aNode [
+	| children |
+	children := self parseTree body allChildren.
+	^ children select: [ :each | each = aNode ].
+]
+
+{ #category : #accessing }
 RBExtractToTemporaryTransformation >> selectedSource [
 
 	| source |
