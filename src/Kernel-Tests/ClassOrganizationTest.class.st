@@ -73,7 +73,9 @@ ClassOrganizationTest >> testListAtCategoryNamed [
 { #category : #tests }
 ClassOrganizationTest >> testRemoveCategory [
 	self assert: self organization categories size equals: 2.
-	self should: [ self organization removeCategory: 'one' ] raise: Error.
+	"just ignore removing of non empty categories" 
+	self organization removeCategory: 'one'.
+	self assert: self organization categories size equals: 2.
 	self organization removeCategory: 'empty'.
 	self assert: self organization categories size equals: 1.
 	self assert: self organization categories first equals: 'one'

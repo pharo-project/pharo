@@ -30,18 +30,20 @@ Class {
 
 { #category : #'instance creation' }
 FT2GlyphRenderer class >> forFont: aFont surface: aSurface [
+
 	^ self new initForFont: aFont surface: aSurface
 ]
 
 { #category : #private }
 FT2GlyphRenderer >> clearBitmap [
 	
-	form bits atAllPut: 0.
+	form bits atAllPut: 0
 
 ]
 
 { #category : #accessing }
 FT2GlyphRenderer >> form [
+
 	^ form
 ]
 
@@ -52,7 +54,6 @@ FT2GlyphRenderer >> getAdvance [
 
 	| pt |
 	pt := (penX/64.0) @ (penY/64.0) - origin.
-
 	^ pt
 ]
 
@@ -86,13 +87,14 @@ FT2GlyphRenderer >> initForFont: aFont surface: aSurface [
 		colorMap: colorMap;
 		clipRect: surface clipRect.
 	
-	translation := IntegerArray new: 2.
+	translation := IntegerArray new: 2
 
 ]
 
 { #category : #private }
 FT2GlyphRenderer >> loadSlotInfo [
-	slot loadFrom: font face.
+
+	slot loadFrom: font face
 ]
 
 { #category : #private }
@@ -149,7 +151,7 @@ FT2GlyphRenderer >> loadSurfaceTransform [
 		at: 1 put: (m sx * fix) rounded;
 		at: 2 put: (m shx * fix) rounded;
 		at: 3 put: (m shy * fix) rounded;
-		at: 4 put: (m sy * fix) rounded.
+		at: 4 put: (m sy * fix) rounded
 
 
 ]
@@ -166,17 +168,19 @@ FT2GlyphRenderer >> loadUnicode: unicode [
 "	bitOr:( LoadIgnoreTransform  bitOr: 2 ). "
 	face primLoadCharacter: unicode flags: flags.
 
-	self loadSlotInfo.
+	self loadSlotInfo
 
 ]
 
 { #category : #private }
-FT2GlyphRenderer >> pixelValue32Of: aColor [ 
+FT2GlyphRenderer >> pixelValue32Of: aColor [
+ 
 	^ aColor pixelWordForDepth: 32
 ]
 
 { #category : #rendering }
 FT2GlyphRenderer >> renderGlyphsIn: text from: start to: stop [
+
 	| face |
 	face := font face.
 "	face
@@ -206,8 +210,7 @@ FT2GlyphRenderer >> renderGlyphsIn: text from: start to: stop [
 
 	"increment x by horizontal advance"
 		penX := penX + slot advanceX.
-		penY := penY - slot advanceY.
-
+		penY := penY - slot advanceY
 	].
 
 
@@ -227,7 +230,7 @@ FT2GlyphRenderer >> setColor: color [
  	0 to: 255 do:[:i | | a |
 		a :=  (i+1) * alpha bitAnd: 16rFF00.
 		colorMap at: i+1 put: ( (a<<16) + rgb ).
-	].
+	]
 
 "	colorMap at: 1 put: (Color red  alpha: 0.1) pixelValue32."
 
@@ -251,7 +254,7 @@ FT2GlyphRenderer >> setPosition: aPoint advance: advancePt baseline: baselineOff
 	
 "	2 raisedTo: 6 "
 	penX := (pt x * 64) rounded.
-	penY := (pt y * 64) rounded.
+	penY := (pt y * 64) rounded
 
 
 ]

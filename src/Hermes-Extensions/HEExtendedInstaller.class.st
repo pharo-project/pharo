@@ -24,12 +24,12 @@ HEExtendedInstaller >> duplicationMode: anObject [
 	duplicationMode := anObject
 ]
 
-{ #category : #'validating existance' }
+{ #category : #'validating existence' }
 HEExtendedInstaller >> existingClass: aHEClass [
 	^ duplicationMode existingClass: aHEClass on: self.
 ]
 
-{ #category : #'validating existance' }
+{ #category : #'validating existence' }
 HEExtendedInstaller >> existingTrait: aHETrait [
 	^ duplicationMode existingTrait: aHETrait on: self.
 ]
@@ -63,7 +63,7 @@ HEExtendedInstaller >> reportNewUndeclareds: newUndeclareds [
 				ifFalse: [ SystemNotification signal: message ] ]
 ]
 
-{ #category : #'validating existance' }
+{ #category : #'validating existence' }
 HEExtendedInstaller >> shouldBuildMethod: aHEMethod in: aClass [
 	^ duplicationMode shouldBuildMethod: aHEMethod in: aClass installer: self.
 ]

@@ -923,7 +923,7 @@ LinkInstallerTest >> testUninstallLinkOnSlotOrVar [
 		
 	"After installing, registry must be correct"	
 	permalink := (linkRegistry permaLinksFor:link) asArray first.
-	self assert: (linkRegistry registeredClassesAt: ReflectivityExamples2) asArray first 
+	self assert: (linkRegistry slotSourcesAt: ReflectivityExamples2) asArray first asArray first
 		identicalTo: permalink slotOrVariable.
 	self assert: (linkRegistry registeredTargetsAt: permalink slotOrVariable) asArray first 
 		identicalTo: permalink.
@@ -932,7 +932,7 @@ LinkInstallerTest >> testUninstallLinkOnSlotOrVar [
 	link uninstall.
 	self assertEmpty: link nodes.
 	self assertEmpty: (linkRegistry permaLinksFor:link).
-	self assertEmpty: (linkRegistry registeredClassesAt: ReflectivityExamples2).
+	self assertEmpty: (linkRegistry slotSourcesAt: ReflectivityExamples2) flattened.
 	self assertEmpty: (linkRegistry registeredTargetsAt: permalink slotOrVariable).
 	
 	link installOnVariableNamed: #classVar
@@ -942,16 +942,16 @@ LinkInstallerTest >> testUninstallLinkOnSlotOrVar [
 	
 	"After installing, registry must be correct"	
 	permalink := (linkRegistry permaLinksFor:link) asArray first.
-	self assert: (linkRegistry registeredClassesAt: ReflectivityExamples2) asArray first 
+	self assert: (linkRegistry slotSourcesAt: ReflectivityExamples2) flattened first 
 		identicalTo: permalink slotOrVariable.
-	self assert: (linkRegistry registeredTargetsAt: permalink slotOrVariable) asArray first 
+	self assert: (linkRegistry registeredTargetsAt: permalink slotOrVariable) flattened first 
 		identicalTo: permalink.
 	
 	"After uninstalling, registry must be cleared"
 	link uninstall.
 	self assertEmpty: link nodes.
 	self assertEmpty: (linkRegistry permaLinksFor:link).
-	self assertEmpty: (linkRegistry registeredClassesAt: ReflectivityExamples2).
+	self assertEmpty: (linkRegistry slotSourcesAt: ReflectivityExamples2) flattened.
 	self assertEmpty: (linkRegistry registeredTargetsAt: permalink slotOrVariable)
 ]
 

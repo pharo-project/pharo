@@ -66,13 +66,13 @@ MCSnapshotTest >> createSnapshotWithTraitWithClassSideTraits [
 	^ (MCWorkingCopy forPackage: (MCPackage new name: 'Monticello-Snapshot-Mock')) snapshot. 
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 MCSnapshotTest >> lookupClass: aName in: definitions [
 	^ definitions
 		detect: [ :aDef | aDef isClassDefinition and: [ aDef className = aName ] ]
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 MCSnapshotTest >> lookupTrait: aName in: definitions [ 
 
 	^ definitions detect: [ :aDef | aDef isTraitDefinition and: [ aDef className = aName ] ]

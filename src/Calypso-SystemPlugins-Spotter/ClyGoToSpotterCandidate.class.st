@@ -72,6 +72,12 @@ ClyGoToSpotterCandidate >> label [
 	^ self name
 ]
 
+{ #category : #spotter }
+ClyGoToSpotterCandidate >> matchesText: aString [ 
+
+	^ self name = aString
+]
+
 { #category : #accessing }
 ClyGoToSpotterCandidate >> name [
 	^ name

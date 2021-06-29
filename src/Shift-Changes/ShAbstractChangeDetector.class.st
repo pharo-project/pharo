@@ -28,6 +28,12 @@ ShAbstractChangeDetector class >> compareClass: oldClass with: aBuilder [
 	changes do:[:e | aBuilder addChange: e].
 ]
 
+{ #category : #testing }
+ShAbstractChangeDetector class >> isAbstract [
+
+	^ self == ShAbstractChangeDetector 
+]
+
 { #category : #accessing }
 ShAbstractChangeDetector >> builder [
 	^ builder
