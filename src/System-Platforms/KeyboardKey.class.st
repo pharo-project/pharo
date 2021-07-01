@@ -1,6 +1,6 @@
 "
 I represent a keyboard Key, I am independent from the text issued from myself.
-That is, when you press e.g., the combination Alt + A, you get the Character å (as in ""an instance of Character"") in a text event, but in the KeyDown/Up events you get an instance of the myself, the KeyboardKey A (see section Keys vs Characters below).
+That is, when you press e.g., the combination Alt + A, you get the Character å (as in ""an instance of Character"") in a text event, but in the KeyDown/Up events you get an instance of myself, the KeyboardKey A (see section Keys vs Characters below).
 
 # Implementation details
 

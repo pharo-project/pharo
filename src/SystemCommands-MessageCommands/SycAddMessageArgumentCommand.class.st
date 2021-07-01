@@ -23,7 +23,7 @@ SycAddMessageArgumentCommand class >> canBeExecutedInContext: aToolContext [
 
 	Using the refactor from the method selection panel works fine.
 	Otherwise createValidNameArgument creates an argument name that is not already in use (for example: if anObject is used then it return anObject1).
-	Howerver when we ask this refactoring from a message we don't know the method and cannot do those checks. (If there is only one)"
+	However when we ask this refactoring from a message we don't know the method and cannot do those checks. (If there is only one)"
 	^aToolContext isMethodSelected
 ]
 

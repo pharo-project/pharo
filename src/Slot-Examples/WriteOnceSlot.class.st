@@ -33,5 +33,5 @@ WriteOnceSlot >> write: aValue to: anObject [
 
 	^(self isWritten: anObject)
 		ifTrue: [ (super read: anObject) key: aValue value: false. aValue ]
-		ifFalse: [ self error: 'only one assigment allowed' ]
+		ifFalse: [ self error: 'only one assignment allowed' ]
 ]

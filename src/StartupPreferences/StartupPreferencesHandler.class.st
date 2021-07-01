@@ -1,5 +1,5 @@
 "
-I manage the links of the chain of responsibilites to retrieve the good preference file.
+I manage the links of the chain of responsibilities to retrieve the good preference file.
 "
 Class {
 	#name : #StartupPreferencesHandler,

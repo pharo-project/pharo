@@ -197,7 +197,7 @@ SystemVersion >> highestUpdate: anInteger [
 
 { #category : #'accessing - version strings' }
 SystemVersion >> imageVersionString [
-	"Print the version compatibile with naming the image."
+	"Print the version compatible with naming the image."
 	
 	^String streamContents: [:str |
 		str nextPutAll: self type;

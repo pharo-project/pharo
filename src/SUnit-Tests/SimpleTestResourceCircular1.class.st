@@ -1,5 +1,5 @@
 "
-I'm a simple test ressource for test purposes
+I'm a simple test resource for test purposes
 "
 Class {
 	#name : #SimpleTestResourceCircular1,

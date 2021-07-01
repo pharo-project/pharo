@@ -132,7 +132,7 @@ SlotErrorsTest >> testDangerousClassesEnabling [
 
 { #category : #tests }
 SlotErrorsTest >> testDirectCircularHierarchyError [
-	"Tests an error is raised when trying to create a heirarchy A<-A"
+	"Tests an error is raised when trying to create a hierarchy A<-A"
 	
 	| classA |
 	classA := self make: [ :builder |
@@ -150,7 +150,7 @@ SlotErrorsTest >> testDirectCircularHierarchyError [
 
 { #category : #tests }
 SlotErrorsTest >> testIndirectCircularHierarchyError [
-	"Tests an error is raised when trying to create a heirarchy A<-B<-A"
+	"Tests an error is raised when trying to create a hierarchy A<-B<-A"
 	
 	| classA classB |
 	classA := self make: [ :builder |

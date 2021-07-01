@@ -47,7 +47,7 @@ Or with configuration block:
 	self executionEnvironment enableService: TestServiceExample using: [:service | ]
 	
 I lookup given service class in my registered services and use the found one if it exists. Otherwise I create and register new service instance with enabled state. 	
-At the end of test I disable services which were registered manually registed and which are disabled by default. So no other tests are affected by them.
+At the end of test I disable services which were registered manually registered and which are disabled by default. So no other tests are affected by them.
 	
 I provide handy method to access well known service ProcessMonitorTestService:
 
