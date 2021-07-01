@@ -53,9 +53,9 @@ Win32Environment >> doGetEnvVariable: aVariableName bufferSize: aSize ifAbsent: 
 	name := aVariableName asWin32WideString.
 	buffer := Win32WideString new: aSize.
 
-	"This Windows API to get the environment variable has ambigous behavior when handling environment variables with empty values.
+	"This Windows API to get the environment variable has ambiguous behavior when handling environment variables with empty values.
 	In the case of a empty string, the API call to get the environment variable returns 0. 
-	We need to differenciate the 0 in the case of an empty string and when there is an error.
+	We need to differentiate the 0 in the case of an empty string and when there is an error.
 	To do so, we are clearing the last error variable, and also we are retrying.
 	The retrying is needed because we can have a race condition between different API calls."
 

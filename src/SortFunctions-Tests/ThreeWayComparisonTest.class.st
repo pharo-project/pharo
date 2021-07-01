@@ -1,5 +1,5 @@
 "
-Unit test for three way comparision
+Unit test for three way comparison
 "
 Class {
 	#name : #ThreeWayComparisonTest,

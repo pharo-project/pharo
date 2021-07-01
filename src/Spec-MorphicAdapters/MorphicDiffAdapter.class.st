@@ -1,5 +1,5 @@
 "
-I am an adpater to bridge a DiffPresenter and a DiffMorph
+I am an adapter to bridge a DiffPresenter and a DiffMorph
 "
 Class {
 	#name : #MorphicDiffAdapter,

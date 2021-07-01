@@ -8,7 +8,7 @@ I also implement a way to password-protect command lines.
 
 The password will not be saved as in clear. It will be hash using pepper and iterations.
 
-The pepper of a hash is a fix string happened to a password to increase the difficulty of finding the password. Also, we hash multiple times (iterations) to increase the strenght of the protection.
+The pepper of a hash is a fix string happened to a password to increase the difficulty of finding the password. Also, we hash multiple times (iterations) to increase the strength of the protection.
 
 If you wish to define ""application"" command lines who do not need a password protection, implement the method #requirePasswordInDeployment on the class side to return false.
 
@@ -74,7 +74,7 @@ BasicCommandLineHandler class >> priority [
 
 { #category : #'system startup' }
 BasicCommandLineHandler class >> startUp: isImageStarting [
-	"only handle when lauching a new image"
+	"only handle when launching a new image"
 	isImageStarting ifFalse: [ ^ self ].
 
 	Smalltalk session 
@@ -100,7 +100,7 @@ BasicCommandLineHandler >> activate [
 BasicCommandLineHandler >> activateSubCommand: aCommandLinehandler [
 	[ aCommandLinehandler activateWith: commandLine ] on: Exit do: [ :exit |
 		^ self handleExit: exit for: aCommandLinehandler ].
-	"the return value of this method is used to check if the subcommand was successfull"
+	"the return value of this method is used to check if the subcommand was successful"
 	^ aCommandLinehandler
 ]
 

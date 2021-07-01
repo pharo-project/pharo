@@ -5,7 +5,7 @@ See AbstractWidgetPresenter
 self example
 
 I provide the following variables and their accessors
-- activationAction and desactivationAction are actions to perform when I am activeted / desactivated.
+- activationAction and desactivationAction are actions to perform when I am activated / deactivated.
 - label is the text displayed near the box.
 - state is a boolean representing if I am activated, it is false by default
 
@@ -127,7 +127,7 @@ AbstractFormButtonPresenter >> state: aBoolean [
 { #category : #api }
 AbstractFormButtonPresenter >> toggleState [
 	"<api: #do>"
-	"Toogle the current state of the checkbox"
+	"Toggle the current state of the checkbox"
 
 	self state: self state not
 ]

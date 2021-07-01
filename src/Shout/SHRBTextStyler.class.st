@@ -402,7 +402,7 @@ SHRBTextStyler class >> settingsOn: aBuilder [
 		order: 1;
 		label: 'Format Incomplete Identifiers';
 		parentName: #'Syntax Highlighting';
-		description: 'If the code highlighter tryies to format incomplete identifiers and selectors or not. This is not recomended for big images, as it traverse all the image to get the information'
+		description: 'If the code highlighter tryies to format incomplete identifiers and selectors or not. This is not recommended for big images, as it traverse all the image to get the information'
 
 ]
 

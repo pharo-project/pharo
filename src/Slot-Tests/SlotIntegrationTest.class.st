@@ -1,5 +1,5 @@
 "
-I'm a test case of SlotClassBuilder integration in the system. Tipically, my tests assert over Class API.
+I'm a test case of SlotClassBuilder integration in the system. Typically, my tests assert over Class API.
 "
 Class {
 	#name : #SlotIntegrationTest,

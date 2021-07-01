@@ -61,7 +61,7 @@ EndianDetector class >> isLittleEndian [
 { #category : #'system startup' }
 EndianDetector class >> startUp: isImageStarting [
 
-	"only handle when lauching a new image"
+	"only handle when launching a new image"
 	isImageStarting ifFalse: [ ^ self ].
 	EndianCache := nil.
 ]

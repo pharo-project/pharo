@@ -59,7 +59,7 @@ Instantiation
 
 The instantiation of a subwidget should use one of that way
 - instantiate: take a class in parameter and return the created instance.
-- methods named 'new' followed by a widget name are shortcut working with instatiate:
+- methods named 'new' followed by a widget name are shortcut working with instantiate:
 
 Usually, the subwidgets must be added in the focusOrder using something like 'self focusOrder add: accessor of  the  subwidget'
 
@@ -72,7 +72,7 @@ Methods named 'when' followed by an event provide hook to perform the action in 
 Note
 -------
 Be careful about code order if you are overriding initialize method.
-Normally in Spec initializing instance variables should be done BEFORE calling super initialize (so the opposite of the normal approach), because super initialize calls initalizeWidgets and initializePresenter that normally would make use of those variables.
+Normally in Spec initializing instance variables should be done BEFORE calling super initialize (so the opposite of the normal approach), because super initialize calls initializeWidgets and initializePresenter that normally would make use of those variables.
 
 Layout
 ======
@@ -80,7 +80,7 @@ Layout
 See SpecLayout
 
 defaultSpec or a method containing the pragma <spec: #default> must be defined in the class side of my subclasses.
-It contains informations about how place its elements.
+It contains information about how place its elements.
 It possible to define more than one method to give the possibility to use another layout, by default the one containing the pragma will be used if it exists, if not defaultSpec will be used.
 "
 Class {
@@ -346,7 +346,7 @@ ComposablePresenter >> centeredRelativeTo: aModel [
 
 { #category : #'instance creation' }
 ComposablePresenter >> createInstanceFor: aClassSymbol [
-	"Retrieve the class corresponding to aClassSymbol using the bindings, then create a new instance of theis class"
+	"Retrieve the class corresponding to aClassSymbol using the bindings, then create a new instance of this class"
 	| class |
 	
 	class := self resolveSymbol: aClassSymbol.

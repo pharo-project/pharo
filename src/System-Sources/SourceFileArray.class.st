@@ -102,7 +102,7 @@ SourceFileArray >> createReadOnlyFiles [
 { #category : #'public - string writing' }
 SourceFileArray >> deferFlushDuring: aBlock [
 
-	"defer flusing the filestream until a block has been executed"
+	"defer flushing the filestream until a block has been executed"
 	
 	flushChanges ifFalse: [ ^ aBlock value ].
 	

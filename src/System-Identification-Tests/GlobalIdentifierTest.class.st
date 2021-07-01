@@ -81,7 +81,7 @@ GlobalIdentifierTest >> testBackwardCompatibility [
 { #category : #tests }
 GlobalIdentifierTest >> testBackwardCompatibility2 [
 	"Let's say that we have information stored using both FUEL and STON, and we use STON.
-	We will ingnore FUEL file and load STON."
+	We will ignore FUEL file and load STON."
 
 	| fuelPersistence fuelPrefereces fuelDictionary stonDictionary |
 	fuelPersistence := GlobalIdentifierPersistence fuel.

@@ -5,7 +5,7 @@ I provide suitable methods for subclasses to move methods to package:
 
 - moveMethod: aMethod toPackage: aPackage
 
-Subclasses should just deside what package it should be. 
+Subclasses should just decide what package it should be. 
 "
 Class {
 	#name : #SycMethodRepackagingCommand,

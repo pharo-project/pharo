@@ -36,7 +36,7 @@ SlotTraitsTest >> testClassWithTrait [
 
 { #category : #tests }
 SlotTraitsTest >> testModifyClassTraitComposition [
-	"Tests that when modifing the trait composition on class-side, the old methods are removed from the method dictionary, and the new ones are added."
+	"Tests that when modifying the trait composition on class-side, the old methods are removed from the method dictionary, and the new ones are added."
 
 	self make: [ :builder | builder classTraitComposition: TOne ].
 

@@ -1,5 +1,5 @@
 "
-An  UndefinedSortFunction is a specialization usefull for sorting undefined objects (nil), either first or last according to direction.
+An  UndefinedSortFunction is a specialization useful for sorting undefined objects (nil), either first or last according to direction.
 The non nil objects are sorted according to the baseSortFunction defined in superclass.
 
 instance variables:

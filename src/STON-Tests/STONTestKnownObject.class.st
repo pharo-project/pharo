@@ -33,7 +33,7 @@ STONTestKnownObject class >> addKnownObject: object [
 
 { #category : #'instance creation' }
 STONTestKnownObject class >> fromId: idString [
-	"Given id, return a matching instance of me, either by returning an existing known instance or by creating a new one (that is automtically added to the known instances)"
+	"Given id, return a matching instance of me, either by returning an existing known instance or by creating a new one (that is automatically added to the known instances)"
 	
 	| uuid |
 	uuid := UUID fromString: idString.
