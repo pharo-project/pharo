@@ -23,8 +23,29 @@ RBExtractMethodAndOccurrencesTest >> testBadInterval [
 				in:  class)
 ]
 
+{ #category : #running }
+RBExtractMethodAndOccurrencesTest >> testExtractMethodWithOneArgAndOcurrences [
+	|class refactoring|
+	class := model classNamed: #MyClassC.
+	refactoring := RBExtractMethodAndOccurrences
+				model: model 
+				extract: (28 to: 77)
+				from: #visitMonospace:
+				in: class.
+	self setupShouldUseExistingMethodFor: refactoring toReturn: true.
+	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
+	self executeRefactoring: refactoring.
+	self assert: (class parseTreeFor: #visitMonospace:) equals: (self parseMethod: 'visitMonospace: aFormat
+	self visitParagraph: aFormat.
+	self fixBlockWithoutMicText: aFormat').
+	self assert: (class parseTreeFor: #visitStrike:) equals: (self parseMethod: 'visitStrike: aFormat
+	self visitParagraph: aFormat.
+	self fixBlockWithoutMicText: aFormat.
+	#( 4 5 2 ) do: [ :val | self visitParagraph: val ]').
+]
+
 { #category : #tests }
-RBExtractMethodAndOccurrencesTest >> testExtractMethodWithArgsAndOcurrences [
+RBExtractMethodAndOccurrencesTest >> testExtractMethodWithTwoArgsAndOcurrences [
 	|class refactoring|
 	class := model classNamed: #MyClassA.
 	refactoring := RBExtractMethodAndOccurrences
