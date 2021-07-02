@@ -132,6 +132,18 @@ ProperMethodCategorizationTest >> testNoUncategorizedMethods [
 	self assert: violating size <= 74
 ]
 
+{ #category : #tests }
+ProperMethodCategorizationTest >> testNoUtilsMethods [
+	"Check that we have no #'utils' protocols left, the protocol should be 'utilities' "
+
+	| violating |
+	violating := Smalltalk globals allBehaviors select: [ :class | 
+		             class protocols includes: #'utils' ].
+
+	"we lock in the number of problematic classes, this way it can only improve"
+	self assert: violating size <= 10
+]
+
 { #category : #'tests - object' }
 ProperMethodCategorizationTest >> testPostCopyMethodNeedsToBeInCopyingProtocol [
 	"The #postCopy methods should be in method protocol 'copying'"
