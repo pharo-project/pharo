@@ -141,7 +141,7 @@ RBExtractToTemporaryTransformationTest >> testBadName [
 				in: RBRefactoryTestDataApp) asRefactoring
 ]
 
-{ #category : #'failure tests' }
+{ #category : #tests }
 RBExtractToTemporaryTransformationTest >> testExtractToTemporaryRefactoring [
 	| refactoring  |
 	refactoring := RBExtractToTemporaryTransformation
@@ -155,7 +155,7 @@ RBExtractToTemporaryTransformationTest >> testExtractToTemporaryRefactoring [
 		equals: (self parseMethod: newSource)
 ]
 
-{ #category : #'failure tests' }
+{ #category : #tests }
 RBExtractToTemporaryTransformationTest >> testExtractToTemporaryTransformation [
 	| refactoring  |
 	refactoring := RBExtractToTemporaryTransformation

@@ -13,7 +13,8 @@ Class {
 		'classVariableNames',
 		'poolDictionaryNames',
 		'category',
-		'comment'
+		'comment',
+		'classPool'
 	],
 	#classVars : [
 		'LookupComment'
@@ -41,6 +42,17 @@ RBClass2 >> addProtocolNamed: aString [
 ]
 
 { #category : #accessing }
+RBClass2 >> allPoolDictionaryNames [
+
+	| sprClass |
+
+	sprClass := self superclass.
+	^ sprClass
+		ifNil: [ self sharedPoolNames ]
+		ifNotNil: [ sprClass allPoolDictionaryNames , self sharedPoolNames ]
+]
+
+{ #category : #accessing }
 RBClass2 >> category [
 
 	^ category ifNil: [ 
@@ -53,6 +65,11 @@ RBClass2 >> category [
 { #category : #accessing }
 RBClass2 >> category: anObject [
 	category := anObject
+]
+
+{ #category : #accessing }
+RBClass2 >> classPool [
+	^classPool ifNil: [ classPool := Dictionary new ]
 ]
 
 { #category : #accessing }
@@ -113,6 +130,11 @@ RBClass2 >> definitionString [
 RBClass2 >> directlyDefinesClassVariable: aString [
 
 	^ self classVariableNames includes: aString asSymbol
+]
+
+{ #category : #accessing }
+RBClass2 >> directlyDefinesPoolDictionary: aString [ 
+	^self sharedPoolNames includes: aString asSymbol
 ]
 
 { #category : #testing }

@@ -93,6 +93,12 @@ RBParametrizedTransformationTest >> proceedThroughWarning: aBlock [
 		do: [ :ex | ex resume ]
 ]
 
+{ #category : #initialization }
+RBParametrizedTransformationTest >> setUp [ 
+	super setUp.
+	model := RBNamespace2 new
+]
+
 { #category : #'set up' }
 RBParametrizedTransformationTest >> setupInlineExpressionFor: aRefactoring toReturn: aBoolean [ 
 	| options |
