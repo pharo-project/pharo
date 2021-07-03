@@ -143,6 +143,8 @@ RubTextEditor >> addDeleteSelectionUndoRecord [
 { #category : #'typing support' }
 RubTextEditor >> addString: aString [
 	"Think of a better name"
+	self hasSelection 
+		ifTrue: [self addDeleteSelectionUndoRecord].
 	self openTypeIn.
 	self zapSelectionWith: (Text string: aString attributes: self emphasisHere)
 ]
@@ -1644,8 +1646,6 @@ RubTextEditor >> noop: aKeyboardEvent [
 RubTextEditor >> normalCharacter: aKeyboardEvent [ 
 	"A nonspecial character is to be added to the stream of characters."
 
-	self hasSelection 
-		ifTrue: [self addDeleteSelectionUndoRecord].
 	self addString: aKeyboardEvent keyCharacter asString.
 	^false
 ]
