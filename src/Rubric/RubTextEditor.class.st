@@ -260,6 +260,7 @@ RubTextEditor >> backWord: aKeyboardEvent [
 { #category : #'typing/selecting keys' }
 RubTextEditor >> backspace: aKeyboardEvent [
 	| result startIndex |
+	self closeTypeIn.
 	result := aKeyboardEvent shiftPressed
 		ifTrue: [ self backWord: aKeyboardEvent keyCharacter ]
 		ifFalse: [ 
@@ -276,7 +277,6 @@ RubTextEditor >> backspace: aKeyboardEvent [
 					startIndex := 1 max: startIndex - 1.
 					self backTo: startIndex ].
 			false ].
-	self closeTypeIn.
 	^ result
 ]
 
