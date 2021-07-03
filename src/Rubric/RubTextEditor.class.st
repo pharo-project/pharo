@@ -143,6 +143,7 @@ RubTextEditor >> addDeleteSelectionUndoRecord [
 { #category : #'typing support' }
 RubTextEditor >> addString: aString [
 	"Think of a better name"
+	self openTypeIn.
 	self zapSelectionWith: (Text string: aString attributes: self emphasisHere)
 ]
 
@@ -1459,7 +1460,6 @@ RubTextEditor >> keystroke: aKeyboardEvent [
 	textArea announce: ((RubKeystroke with: aKeyboardEvent) morph: self).
 	self normalCharacter: aKeyboardEvent.
 	"normal character"
-	self openTypeIn.
 	self hasSelection
 		ifTrue: [ 
 			"save highlighted characters"
