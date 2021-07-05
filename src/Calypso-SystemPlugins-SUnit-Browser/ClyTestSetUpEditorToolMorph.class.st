@@ -8,7 +8,7 @@ Internal Representation and Key Implementation Points.
 	testClass:		<TestCase>
 "
 Class {
-	#name : #ClyTestSetUpEditorTool,
+	#name : #ClyTestSetUpEditorToolMorph,
 	#superclass : #ClyMethodCodeEditorToolMorph,
 	#instVars : [
 		'testClass'
@@ -17,7 +17,7 @@ Class {
 }
 
 { #category : #activation }
-ClyTestSetUpEditorTool class >> browserTabActivation [
+ClyTestSetUpEditorToolMorph class >> browserTabActivation [
 	"This declaration specifies that in any browser when classes are selected, a test setup editor will be available in a tab."
 	
 	<classAnnotation>
@@ -25,7 +25,7 @@ ClyTestSetUpEditorTool class >> browserTabActivation [
 ]
 
 { #category : #testing }
-ClyTestSetUpEditorTool class >> shouldBeActivatedInContext: aBrowserContext [
+ClyTestSetUpEditorToolMorph class >> shouldBeActivatedInContext: aBrowserContext [
 	aBrowserContext isClassSelected ifFalse: [ ^false ].
 	
 	(aBrowserContext lastSelectedItem hasProperty: ClyTestResultProperty) ifFalse: [ ^false ].
@@ -37,22 +37,22 @@ ClyTestSetUpEditorTool class >> shouldBeActivatedInContext: aBrowserContext [
 ]
 
 { #category : #accessing }
-ClyTestSetUpEditorTool class >> tabOrder [
+ClyTestSetUpEditorToolMorph class >> tabOrder [
 	^ ClyClassDefinitionEditorToolMorph tabOrder + 1
 ]
 
 { #category : #accessing }
-ClyTestSetUpEditorTool >> activationPriority [
+ClyTestSetUpEditorToolMorph >> activationPriority [
 	^-100
 ]
 
 { #category : #testing }
-ClyTestSetUpEditorTool >> belongsToCurrentBrowserContext [
+ClyTestSetUpEditorToolMorph >> belongsToCurrentBrowserContext [
 	^browser isClassSelected: testClass
 ]
 
 { #category : #building }
-ClyTestSetUpEditorTool >> buildTextMorph [
+ClyTestSetUpEditorToolMorph >> buildTextMorph [
 	super buildTextMorph.
 	
 	editingMethod == (TestCase >> #setUp) ifTrue: [ 
@@ -60,7 +60,7 @@ ClyTestSetUpEditorTool >> buildTextMorph [
 ]
 
 { #category : #initialization }
-ClyTestSetUpEditorTool >> defaultTemplateForNewSetUp [
+ClyTestSetUpEditorToolMorph >> defaultTemplateForNewSetUp [
 
 	^'setUp
 	super setUp.
@@ -69,49 +69,49 @@ ClyTestSetUpEditorTool >> defaultTemplateForNewSetUp [
 ]
 
 { #category : #initialization }
-ClyTestSetUpEditorTool >> defaultTitle [
+ClyTestSetUpEditorToolMorph >> defaultTitle [
 	^'setUp'
 ]
 
 { #category : #accessing }
-ClyTestSetUpEditorTool >> editingMethod: aMethod [
+ClyTestSetUpEditorToolMorph >> editingMethod: aMethod [
 	editingMethod := aMethod
 ]
 
 { #category : #testing }
-ClyTestSetUpEditorTool >> isSimilarTo: anotherBrowserTool [
+ClyTestSetUpEditorToolMorph >> isSimilarTo: anotherBrowserTool [
 	^self class = anotherBrowserTool class
 		and: [ testClass == anotherBrowserTool testClass ]
 ]
 
 { #category : #initialization }
-ClyTestSetUpEditorTool >> setUpDefaultTemplate [
+ClyTestSetUpEditorToolMorph >> setUpDefaultTemplate [
 
 	textModel setInitialText: self defaultTemplateForNewSetUp.
 	targetClasses := { testClass }
 ]
 
 { #category : #initialization }
-ClyTestSetUpEditorTool >> setUpModelFromContext [
+ClyTestSetUpEditorToolMorph >> setUpModelFromContext [
 	
 	testClass := context lastSelectedClass
 ]
 
 { #category : #initialization }
-ClyTestSetUpEditorTool >> setUpParametersFromModel [
+ClyTestSetUpEditorToolMorph >> setUpParametersFromModel [
 
 	editingMethod := testClass lookupSelector: #setUp.
 	super setUpParametersFromModel
 ]
 
 { #category : #controlling }
-ClyTestSetUpEditorTool >> switchToMethod: aMethod [
+ClyTestSetUpEditorToolMorph >> switchToMethod: aMethod [
 
 	browser selectMethod: aMethod.
 	self removeFromBrowser
 ]
 
 { #category : #accessing }
-ClyTestSetUpEditorTool >> testClass [
+ClyTestSetUpEditorToolMorph >> testClass [
 	^ testClass
 ]
