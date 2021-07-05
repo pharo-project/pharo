@@ -1,32 +1,25 @@
-"
-I am a refactoring to replace a temporary variable by code.
-
-All references to the temporary variable in this method are replaced by the value used to initialize the temporary variable. 
-The initialization and declaration of this variable will be removed. You need to select the variable and its initial assignment code to apply this refactoring.
-"
 Class {
-	#name : #RBInlineTemporaryRefactoring,
-	#superclass : #RBMethodRefactoring,
+	#name : #RBInlineTemporaryTransformation,
+	#superclass : #RBCompositeMethodTransformation,
 	#instVars : [
 		'sourceInterval',
-		'selector',
 		'sourceTree',
 		'assignmentNode',
 		'definingNode'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : #'Refactoring2-Transformations-Model-Migration'
 }
 
-{ #category : #'instance creation' }
-RBInlineTemporaryRefactoring class >> inline: anInterval from: aSelector in: aClass [ 
+{ #category : #api }
+RBInlineTemporaryTransformation class >> inline: anInterval from: aSelector in: aClass [ 
 	^self new 
 		inline: anInterval
 		from: aSelector
 		in: aClass
 ]
 
-{ #category : #'instance creation' }
-RBInlineTemporaryRefactoring class >> model: aRBSmalltalk inline: anInterval from: aSelector in: aClass [ 
+{ #category : #api }
+RBInlineTemporaryTransformation class >> model: aRBSmalltalk inline: anInterval from: aSelector in: aClass [ 
 	^ self new
 		model: aRBSmalltalk;
 		inline: anInterval
@@ -35,13 +28,15 @@ RBInlineTemporaryRefactoring class >> model: aRBSmalltalk inline: anInterval fro
 		yourself
 ]
 
-{ #category : #transforming }
-RBInlineTemporaryRefactoring >> compileMethod [
-	class compileTree: sourceTree
+{ #category : #executing }
+RBInlineTemporaryTransformation >> buildTransformations [
+	^ OrderedCollection 
+		with: self replaceAssignment
+		with: self replaceReferences
 ]
 
-{ #category : #testing }
-RBInlineTemporaryRefactoring >> hasOnlyOneAssignment [
+{ #category : #preconditions }
+RBInlineTemporaryTransformation >> hasOnlyOneAssignment [
 	| searcher |
 	searcher := self parseTreeSearcher.
 	searcher
@@ -51,39 +46,42 @@ RBInlineTemporaryRefactoring >> hasOnlyOneAssignment [
 ]
 
 { #category : #api }
-RBInlineTemporaryRefactoring >> inline: anInterval from: aSelector in: aClass [ 
-	class := self classObjectFor: aClass.
+RBInlineTemporaryTransformation >> inline: anInterval from: aSelector in: aClass [ 
+	class := self model classObjectFor: aClass.
 	selector := aSelector.
 	sourceInterval := anInterval
 ]
 
 { #category : #preconditions }
-RBInlineTemporaryRefactoring >> preconditions [
+RBInlineTemporaryTransformation >> preconditions [
 	^(RBCondition definesSelector: selector in: class) 
 		& (RBCondition withBlock: 
 					[self verifySelectedInterval.
 					true])
 ]
 
-{ #category : #transforming }
-RBInlineTemporaryRefactoring >> replaceAssignment [
-	assignmentNode parent isSequence 
+{ #category : #executing }
+RBInlineTemporaryTransformation >> replaceAssignment [
+	^ RBCustomTransformation model: self model with: [ :rbModel |
+		assignmentNode parent isSequence 
 		ifTrue: [assignmentNode parent removeNode: assignmentNode]
-		ifFalse: [assignmentNode replaceWith: assignmentNode value]
+		ifFalse: [assignmentNode replaceWith: assignmentNode value]]
 ]
 
-{ #category : #transforming }
-RBInlineTemporaryRefactoring >> replaceReferences [
+{ #category : #executing }
+RBInlineTemporaryTransformation >> replaceReferences [
+	^ RBCustomTransformation model: self model with: [ :rbModel |
 	| rewriter |
 	rewriter := self parseTreeRewriter.
 	rewriter replaceTree: assignmentNode variable
 		withTree: assignmentNode value.
 	definingNode removeTemporaryNamed: assignmentNode variable name.
-	rewriter executeTree: definingNode
+	rewriter executeTree: definingNode.
+	class compileTree: sourceTree ]
 ]
 
-{ #category : #printing }
-RBInlineTemporaryRefactoring >> storeOn: aStream [ 
+{ #category : #preconditions }
+RBInlineTemporaryTransformation >> storeOn: aStream [ 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' inline: '.
@@ -96,16 +94,8 @@ RBInlineTemporaryRefactoring >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #transforming }
-RBInlineTemporaryRefactoring >> transform [
-	self
-		replaceAssignment;
-		replaceReferences;
-		compileMethod
-]
-
 { #category : #preconditions }
-RBInlineTemporaryRefactoring >> verifySelectedInterval [
+RBInlineTemporaryTransformation >> verifySelectedInterval [
 
 	sourceTree := class parseTreeFor: selector.
 	sourceTree ifNil: [ self refactoringFailure: 'Could not parse source' ].

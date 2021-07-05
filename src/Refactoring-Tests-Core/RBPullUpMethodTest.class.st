@@ -77,7 +77,6 @@ RBPullUpMethodTest >> testPullUpInAHighHierarchyClass [
 	
 	self addClassHierarchy .
 	class := model classNamed: #Foo1.
-	self addClassHierarchy.
 	superClass := model classNamed: #SomeClass .
 	class compile: 'example ^1' classified: #(#accessing).
 	self executeRefactoring: (RBPullUpMethodRefactoring 
