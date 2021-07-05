@@ -1,5 +1,5 @@
 "
-I represent the abstact superclass of all checksum algorithms.
+I represent the abstract superclass of all checksum algorithms.
 "
 Class {
 	#name : #Checksum,

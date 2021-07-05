@@ -57,7 +57,7 @@ CodeHolderSystemSettings class>>caseSensitiveFindsSettingsOn: aBuilder
 		target: TextEditor;
 		parent: #codeEditing.
 
-For this setting to be declared, we make the asumption that we have TextEditor class>>caseSensitiveFinds and TextEditor class>>caseSensitiveFinds: methods in order to change the preference value. 
+For this setting to be declared, we make the assumption that we have TextEditor class>>caseSensitiveFinds and TextEditor class>>caseSensitiveFinds: methods in order to change the preference value. 
 To declare a setting, just send #setting: to the builder with its identifier, a Symbol passed as argument. It creates a setting node. Then you can set the label, the description with #label: and #description sent to the newly created setting node. You also have to set the selectors for setting and getting the preference value as well as the target to which these accessors are sent  (often a class). This is done by sending respectively, #setSelector:, #getSelector: and #target: to the setting node.
 Because all settings are organized in trees we need a way to indicate what is the position of the setting node in the overall setting trees list. In fact it can be done two ways. The first way is to use the #parent: message (A second possibility is to declare a subtree in one method, it is explained later in this documentation).The #parent: message is send for non root settings. #parent takes the identifier of the parent setting as argument.
 
@@ -131,7 +131,7 @@ windowPositionStrategySettingsOn: aBuilder
 			'Standard' translated -> #standardFor:initialExtent:world:};
 
 !!Launcher
-A launcher is a particular setting. It allows to launch a script directly from the setting browser. Imagine that you have changed some settings and that you need to evaluate a script in order to update some other objets. It can be used also to configurate globally a package of the entire image.
+A launcher is a particular setting. It allows to launch a script directly from the setting browser. Imagine that you have changed some settings and that you need to evaluate a script in order to update some other objects. It can be used also to configurate globally a package of the entire image.
 As an example, in order to use True Type Fonts, the system must be updated by collecting all the available TT fonts. This can be done by evaluating the following expression:
 -------------
 FreeTypeFontProvider current updateFromSystem
@@ -812,7 +812,7 @@ SettingBrowser >> toolBarIn: aMorph [
 				arguments: {aMorph}
 				getEnabled: nil
 				label: 'Choose packages' translated 
-				help: 'Per default, SettingBrowser shows all the setting of the system. You can restrict what is displayed to some packages that contains setting defintions.' translated).
+				help: 'Per default, SettingBrowser shows all the setting of the system. You can restrict what is displayed to some packages that contains setting definitions.' translated).
 	(aMorph
 				newButtonFor: self
 				getState: nil

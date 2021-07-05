@@ -1,5 +1,5 @@
 "
-This announcment is thrown when a test suite just finished (more precisly when hisoties are updated)
+This announcement is thrown when a test suite just finished (more precisely when hisoties are updated)
 "
 Class {
 	#name : #TestSuiteEnded,

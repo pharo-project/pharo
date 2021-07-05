@@ -1,5 +1,5 @@
 "
-I am an abstract class providing all the properties shared amongs all the morphic specific adapters
+I am an abstract class providing all the properties shared amongst all the morphic specific adapters
 "
 Class {
 	#name : #AbstractMorphicAdapter,

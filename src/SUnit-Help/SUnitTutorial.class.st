@@ -37,7 +37,7 @@ So to create a test for the Person class we subclass TestCase with a custom "Per
 		poolDictionaries: ''''
 		category: ''MyApp-Tests-Model''
 
-Note that we havent created the class Person yet - so one idea of ExtremeProgramming (XP) is to write the test first as a way to describe a use case that your application has to cover. After that you write the code and the test will show you if the scenario is fullfilled. You dont have to follow this programming style and can also write tests to cover existing code.
+Note that we have not created the class Person yet - so one idea of ExtremeProgramming (XP) is to write the test first as a way to describe a use case that your application has to cover. After that you write the code and the test will show you if the scenario is fulfilled. You dont have to follow this programming style and can also write tests to cover existing code.
 	!' readStream nextChunkText
 ]
 
@@ -82,9 +82,9 @@ If you print the result then the following will appear:
 
       1 run, 0 passes, 0 skipped, 0 expected failures, 0 failures, 1 errors, 0 unexpected passes
 
-This tells us that one test has been run and one error occured while testing. Currently we dont have all messages implemented - so the test has to fail. 
+This tells us that one test has been run and one error occurred while testing. Currently we dont have all messages implemented - so the test has to fail. 
 
-If you want to debug the test to see whats happened you can evaluate:
+If you want to debug the test to see what has happened you can evaluate:
 
      PersonTest debug: #testInstanceCreation
 

@@ -53,7 +53,7 @@ SessionErrorHandlingTest >> testErrorCaughtIfExceptionSignaledAtShutdownWhenDefa
 	self shouldnt: [ session stop: false ] raise: Halt.
 	self assert: session errorHandler errors size equals: 1.
 
-	"ensure no defered actions"
+	"ensure no deferred actions"
 	self assertEmpty: (session instVarNamed: 'deferredStartupActions')
 ]
 
@@ -85,6 +85,6 @@ SessionErrorHandlingTest >> testErrorHandledIfExceptionSignaledAtStartupWhenDefa
 	self shouldnt: [ session start: false ] raise: Halt.
 	self assert: session errorHandler errors size equals: 1.
 
-	"ensure no defered actions"
+	"ensure no deferred actions"
 	self assertEmpty: (session instVarNamed: 'deferredStartupActions')
 ]

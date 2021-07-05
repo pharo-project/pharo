@@ -482,7 +482,7 @@ DigitalSignatureAlgorithm >> stringToSignature: aString [
 
 		 '[DSA digital signature <r> <s>]'
 
-	where <r> and <s> are large positive integers represented by strings of hexidecimal digits."
+	where <r> and <s> are large positive integers represented by strings of hexadecimal digits."
 	| prefix stream r s |
 	prefix := '[DSA digital signature '.
 	(aString beginsWith: prefix) ifFalse: [ self error: 'bad signature prefix' ].

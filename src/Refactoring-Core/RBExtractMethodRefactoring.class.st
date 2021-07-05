@@ -272,6 +272,7 @@ RBExtractMethodRefactoring >> isParseTreeEquivalentTo: aSelector [
 	tree := definingClass parseTreeFor: aSelector.
 	tree ifNil: [^false].
 	tree isPrimitive ifTrue: [^false].
+	needsReturn ifFalse: [ tree := self removeReturnsOf: tree ].
 	(tree body equalTo: extractedParseTree body
 		exceptForVariables: (tree arguments collect: [:each | each name])) 
 			ifFalse: [^false].
@@ -391,6 +392,7 @@ RBExtractMethodRefactoring >> renameParameterWith: oldName to: newName [
 RBExtractMethodRefactoring >> reorderParametersToMatch: aSelector [ 
 	| tree dictionary |
 	tree := class parseTreeFor: aSelector.
+	needsReturn ifFalse: [ tree := self removeReturnsOf: tree ].
 	dictionary := Dictionary new.
 	tree body equalTo: extractedParseTree body withMapping: dictionary.
 	parameters := tree arguments collect: 

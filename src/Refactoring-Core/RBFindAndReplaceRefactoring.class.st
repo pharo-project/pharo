@@ -127,12 +127,10 @@ RBFindAndReplaceRefactoring >> findOccurrencesIn: rbMethod [
 	flag := false.
 	methodNode := rbMethod ast.
 	sourceCode := methodNode sourceCode.
-	
 	(self nodesOf: methodNode) do: [ :each |
             each first < each last
                 ifTrue: [ 
-	self matchNodes do: [ :matchNode | 
-		matchNode
+	self matchNodes do: [ :matchNode | matchNode
                       match: (self patternParserClass parseExpression: (sourceCode copyFrom: each first to: each last ))
                       onSuccess: [ :map |
 	self extract: ((each first to: each last) -> map) 

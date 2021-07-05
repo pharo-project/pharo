@@ -1,5 +1,5 @@
 "
-This announcement will be emited when removing a category using:
+This announcement will be emitted when removing a category using:
 => SystemOrganizer >> removeCategory:
 "
 Class {

@@ -52,7 +52,7 @@ VirtualMachine >> cogitClass [
 
 { #category : #accessing }
 VirtualMachine >> command [
-	"return a bash-like lauch command for the vm including all arguments up to the image name "
+	"return a bash-like launch command for the vm including all arguments up to the image name "
 	^ String streamContents: [ :s|
 		s nextPutAll: (self optionAt: 0).
 		Smalltalk commandLine options 
@@ -86,7 +86,7 @@ VirtualMachine >> directory [
 { #category : #modules }
 VirtualMachine >> disableModuleLoading [
 	"Primitive. Disable a new module loading mechanism for the rest of current session.
-	This operation is not reversable.
+	This operation is not reversible.
 	Any subsequent attempts to load either external or internal module(s) will fail"
 
 	<primitive: 'primitiveDisableModuleLoading' module: ''>
@@ -354,7 +354,7 @@ VirtualMachine >> is64bit [
 
 { #category : #testing }
 VirtualMachine >> isAIOInterrupt [
-	"Answer true, if the vm is capable of being interupted until there is an AIO event. 
+	"Answer true, if the vm is capable of being interrupted until there is an AIO event. 
 	 (This means we are going idle until we have something real to process)"
 
 	^ (self getSystemAttribute: 1010) = 'AIO'
@@ -615,7 +615,7 @@ To speed-up execution, the cog uses internally a JIT compiler which translates t
 
 The default size should be between 1Mb and 2Mb for standard applications. If memory is a constraint, it can be lowered down to 750kb, under that you should use the stack VM else the performance starts to drastically decrease.
 
-This setting is useful to tune your application performance. For example, on compilation-intensive benchs, 750kb is the optimal machine code zone size. On large benchmarks, 2 Mb, maybe more, is better, but then one may see machine code garbage collection pauses. On small benchs all the methods fit into this zone so it doesn't really matter.
+This setting is useful to tune your application performance. For example, on compilation-intensive benches, 750kb is the optimal machine code zone size. On large benchmarks, 2 Mb, maybe more, is better, but then one may see machine code garbage collection pauses. On small benches all the methods fit into this zone so it doesn't really matter.
 
 Growing the machine code zone:
 - increase the number of methods that can be present there, hence decreasing machine code zone garbage collection frequency and method jit compilation.
