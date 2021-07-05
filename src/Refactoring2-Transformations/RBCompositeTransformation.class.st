@@ -2,6 +2,7 @@ Class {
 	#name : #RBCompositeTransformation,
 	#superclass : #RBTransformation,
 	#instVars : [
+		'previousTransformations',
 		'transformations',
 		'delegatesPreconditions'
 	],
@@ -41,7 +42,7 @@ RBCompositeTransformation >> delegatesPreconditions: aBoolean [
 RBCompositeTransformation >> initialize [
 
 	super initialize.
-	delegatesPreconditions := true
+	delegatesPreconditions := true.
 ]
 
 { #category : #preconditions }
@@ -52,12 +53,17 @@ RBCompositeTransformation >> preconditions [
 	^ RBCondition empty
 ]
 
+{ #category : #initialization }
+RBCompositeTransformation >> previousTransformations [
+	^ previousTransformations ifNil: [ previousTransformations := OrderedCollection new ]
+]
+
 { #category : #executing }
 RBCompositeTransformation >> privateTransform [
 	"in refactoring mode, the transformation can do its own precondition checking,
 	 therefore not needing checking from its containing transformations"
 
-	self transformations do: [ :transformation |
+	(self previousTransformations, self transformations) do: [ :transformation |
 		transformation
 			copyOptionsFrom: self options;
 			model: self model;

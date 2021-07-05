@@ -89,7 +89,7 @@ RBParametrizedTransformationTest >> parserClass [
 RBParametrizedTransformationTest >> proceedThroughWarning: aBlock [
 
 	aBlock
-		on: RBRefactoringError
+		on: RBRefactoringError, RBRefactoringWarning
 		do: [ :ex | ex resume ]
 ]
 
@@ -118,5 +118,12 @@ RBParametrizedTransformationTest >> shouldFail: aRefactoring [
 RBParametrizedTransformationTest >> shouldWarn: aRefactoring [ 
 	self 
 		should: [ aRefactoring asRefactoring transform ]
+		raise: RBRefactoringWarning
+]
+
+{ #category : #asserting }
+RBParametrizedTransformationTest >> shouldntWarn: aRefactoring [ 
+	self 
+		shouldnt: [ aRefactoring transform ]
 		raise: RBRefactoringWarning
 ]

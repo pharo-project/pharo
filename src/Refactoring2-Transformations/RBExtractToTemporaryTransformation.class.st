@@ -135,6 +135,22 @@ RBExtractToTemporaryTransformation >> selectedSource [
 	^ source copyFrom: sourceInterval first to: sourceInterval last
 ]
 
+{ #category : #printing }
+RBExtractToTemporaryTransformation >> storeOn: aStream [
+	aStream nextPut: $(.
+	self class storeOn: aStream.
+	aStream
+		nextPutAll: ' extract: ';
+		nextPutAll: sourceInterval asString ;
+		nextPutAll: ' to: ';
+		nextPutAll: newVariableName;
+		nextPutAll: ' from: ';
+		nextPutAll: selector;
+		nextPutAll: ' in: ';
+		nextPutAll: class name.
+	aStream nextPut: $)
+]
+
 { #category : #preconditions }
 RBExtractToTemporaryTransformation >> verifySelectedInterval [
 	| selectedParseTree selectedSources |

@@ -84,7 +84,7 @@ RBAddTemporaryVariableTransformation class >> variable: aString inNode: aNode in
 
 { #category : #api }
 RBAddTemporaryVariableTransformation >> interval [ 
-	^ interval ifNil: [ interval := node start to: node start ]
+	^ interval ifNil: [ node ifNotNil: [ interval := node start to: node start ]]
 ]
 
 { #category : #preconditions }
