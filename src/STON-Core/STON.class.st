@@ -30,7 +30,7 @@ STON is more or less a superset of JSON and is backwards compatible with JSON wh
 
   - class information (except for lists (Array) and maps (Dictionary))
   - proper handling of shared and circular references
-  - more Smalltalk like syntax (Symbols with #, single qouted Strings, nil instead of null)
+  - more Smalltalk like syntax (Symbols with #, single quoted Strings, nil instead of null)
   - more defined special types (Date, Time, DataAndTime, ByteArray, Point)
 
 Parsing JSON is done using #fromString: or #fromStream: with the results being composed of Arrays and Dictionaries.
@@ -46,7 +46,7 @@ For a much more sophisticated JSON parser/writer implementation, have a look at 
 
 Like JSON, STON does not allow for comments. However, a preprocessor option can skip C style comments before parsing.
 
-I also define some contants used in the implementation: the class used as list, map and association, as well as the optional class name key (used when reading objects using an unknown class).
+I also define some constants used in the implementation: the class used as list, map and association, as well as the optional class name key (used when reading objects using an unknown class).
 
 
 I m p l e m e n t a t i o n

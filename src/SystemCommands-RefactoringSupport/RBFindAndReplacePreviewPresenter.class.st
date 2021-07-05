@@ -1,5 +1,5 @@
 "
-I am a preview of find and replace refactoring (tool). I can select the methods of class (or subclasses) to find ocurrences in them. 
+I am a preview of find and replace refactoring (tool). I can select the methods of class (or subclasses) to find occurrences in them. 
 
 EXAMPLES
 -------------------------------------------------
@@ -13,7 +13,7 @@ changeList:           <TablePresenter> A table to display the possible methods t
 label:                <LabelPresenter> Title of table
 dropList:             <DropListPresenter> A selector to select the search type
 selectedRefactorings: <OrderedCollection> A list with elements to search
-method:               <CompiledMethod> A method to find ocurrences
+method:               <CompiledMethod> A method to find occurrences
 refactoring:          <RBRefactoring> A subclass of RBRefactoring 
 
 

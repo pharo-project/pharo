@@ -58,7 +58,7 @@ SystemSettingsPersistence class >> deleteSettingNode: aSettingNode [
 { #category : #'class initialization' }
 SystemSettingsPersistence class >> initialize [
 	"in order to update settings at startup.
-	shoudl be register at the end of standard classes but before user classes"
+	should be registered at the end of standard classes but before user classes"
 	
 	"IMPORTANT: do not uncomment the registration to the session manager!
 	For now, SystemSettingsPersistence is handled directly by the command line handler startup.

@@ -360,6 +360,16 @@ RBRefactoring >> primitiveExecute [
 	self transform
 ]
 
+{ #category : #removing }
+RBRefactoring >> removeReturnsOf: parseTree [
+	| rewriter |
+	rewriter := self parseTreeRewriter.
+	rewriter replace: '^``@object' with: '``@object'.
+	(rewriter executeTree: parseTree) 
+		ifTrue: [ ^ rewriter tree].
+	^ parseTree
+]
+
 { #category : #requests }
 RBRefactoring >> requestImplementorToInline: implementorsCollection [ 
 	^(self options at: #implementorToInline) value: self

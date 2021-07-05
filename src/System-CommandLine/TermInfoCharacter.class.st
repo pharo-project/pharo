@@ -1,6 +1,6 @@
 "
 I'm a TermCap which define the styles with the printing of characters, used when OSSubProcess is not installed in the image.
-Not really powerfull, better install OSSubProcess and use TermCapTput
+Not really powerful, better install OSSubProcess and use TermCapTput
 "
 Class {
 	#name : #TermInfoCharacter,
@@ -13,7 +13,7 @@ Class {
 
 { #category : #'term style' }
 TermInfoCharacter >> on: aStream [
-	"Define the stream where termcap will change the style, normaly it's used on a terminal"
+	"Define the stream where termcap will change the style, normally it's used on a terminal"
 
 	out := aStream
 ]

@@ -11,7 +11,7 @@ errorName
 errorCode
 	- the value of the error, a signed 64-bit value, a representation imposed by the VM; specific clients must map this error value into an unsigned value as appropriate if required
 
-Typical usage is shown in the ficticious method below:
+Typical usage is shown in the fictitious method below:
 
 primitiveOperation
 	<primitive: 'primitiveOperation' module: 'APlugin' error: error>

@@ -1,5 +1,5 @@
 "
-I am a MOCK equivalent for GlobalIdentifierPersistenceChecker, userful for testing behavior.
+I am a MOCK equivalent for GlobalIdentifierPersistenceChecker, useful for testing behavior.
 "
 Class {
 	#name : #GlobalIdentifierPersistenceMockChecker,

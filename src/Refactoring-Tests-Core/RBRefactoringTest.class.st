@@ -139,7 +139,7 @@ m
 { #category : #private }
 RBRefactoringTest >> extractMethodTestData [
 	| newModel classEnvironment classes |
-	classes := #(#MyClassA #MyClassB ) 
+	classes := #(#MyClassA #MyClassB #MyClassC ) 
 		inject: OrderedCollection new 
 		into: [ :sum :each | 
 			testingEnvironment at: each ifPresent: [ :class | 
@@ -220,7 +220,17 @@ RBRefactoringTest >> extractMethodTestData [
 		#('methodWithArg: anArg
 			(currentChar isLetter and: [anArg isDecimal])
 			ifTrue: [^ self].
-			^ nil' #tests)))) 
+			^ nil' #tests)
+		#('visitMonospace: aFormat
+			aFormat children do: [ :each | each accept: self ].
+			self fixBlockWithoutMicText: aFormat' #tests)
+		#('visitStrike: aFormat
+			aFormat children do: [ :each | each accept: self ].
+			self fixBlockWithoutMicText: aFormat.
+			#( 4 5 2 ) do: [ :val | val children do: [ :each | each accept: self ] ]' #tests)
+		#('visitParagraph: aParagraph
+			^ aParagraph children do: [:each | each accept: self ]' #tests)
+		)))
 		do: [:each | 
 			| class |
 			class := newModel classNamed: each first.
@@ -512,6 +522,14 @@ RBRefactoringTest >> setupSelfArgumentNameFor: aRefactoring toReturn: aString [
 	| options |
 	options := aRefactoring options copy.
 	options at: #selfArgumentName put: [:ref | aString].
+	aRefactoring options: options
+]
+
+{ #category : #'set up' }
+RBRefactoringTest >> setupShouldUseExistingMethodFor: aRefactoring toReturn: aBoolean [ 
+	| options |
+	options := aRefactoring options copy.
+	options at: #useExistingMethod put: [ :ref :cls | aBoolean ].
 	aRefactoring options: options
 ]
 

@@ -19,7 +19,7 @@ Copied from CFSHA256 (Cloudfront)
 
 Please direct questions or comments about this implementation to Ron Teitelbaum: Ron@USMedRec.com
 
-This code was extensively coppied from SHA1 by Luciano Notarfrancesco lnotarfrancesco@yahoo.com
+This code was extensively copied from SHA1 by Luciano Notarfrancesco lnotarfrancesco@yahoo.com
 "
 Class {
 	#name : #SHA256,

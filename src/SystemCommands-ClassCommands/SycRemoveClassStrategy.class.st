@@ -1,7 +1,7 @@
 "
 I am the abstract strategy used to remove classes from the system.
 
-My concrete subclasses handle the possible actions when a user attemps to remove a class:
+My concrete subclasses handle the possible actions when a user attempts to remove a class:
 	- remove the class
 	- remove the class, keeping the subclasses
 	- Don't remove the class, but browse references/subclasses/users

@@ -258,7 +258,7 @@ SycRefactoringPreviewPresenter >> title [
 
 { #category : #private }
 SycRefactoringPreviewPresenter >> toggleSelectionOf: aRefactoring [
-	"it's normal it's impossible that anItem dosn't store in dictionary because at initialize i fill the dictionary and at each scope change"
+	"it's normal it's impossible that anItem doesn't store in dictionary because at initialize I fill the dictionary and at each scope change"
 
 	selectedRefactorings at: aRefactoring put: (selectedRefactorings at: aRefactoring) not.
 	self rebuild 

@@ -1,5 +1,5 @@
 "
-This announcement will be emited when renaming a category using:
+This announcement will be emitted when renaming a category using:
 => SystemOrganizer >> renameCategory:toBe:
 "
 Class {

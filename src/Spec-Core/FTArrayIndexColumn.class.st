@@ -42,7 +42,7 @@ FTArrayIndexColumn class >> index: aNumber width: aNumber2 [
 
 { #category : #accessing }
 FTArrayIndexColumn class >> undefinedColumnWidth [
-	"This is a contant that defines a column width is undefined, then the layout will try to arrange 
+	"This is a constant that defines a column width is undefined, then the layout will try to arrange 
 	 it by itself."
 	^ 0
 ]
