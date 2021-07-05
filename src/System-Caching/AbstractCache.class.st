@@ -12,7 +12,7 @@ The default #computeWeight returns 1 for each value, effectively counting the nu
 
 I count hits and misses and can return my #hitRatio.
 
-Optionally, but not by default, I can be configured so that it is safe to access me from different threads/processess during my important operations. See #beThreadSafe.
+Optionally, but not by default, I can be configured so that it is safe to access me from different threads/processes during my important operations. See #beThreadSafe.
 "
 Class {
 	#name : #AbstractCache,

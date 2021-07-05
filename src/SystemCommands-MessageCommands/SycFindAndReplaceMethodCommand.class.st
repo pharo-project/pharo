@@ -46,7 +46,7 @@ SycFindAndReplaceMethodCommand >> defaultMenuItemName [
 
 { #category : #testing }
 SycFindAndReplaceMethodCommand >> isComplexRefactoring [
-	^false
+	^ true
 ]
 
 { #category : #execution }

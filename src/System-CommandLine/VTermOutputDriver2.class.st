@@ -639,7 +639,7 @@ VTermOutputDriver2 >> reset [
 
 { #category : #reset }
 VTermOutputDriver2 >> resetStyle [
-	"Reset the style by creating a new VTermOutputStyle and reseting the terminal to default config"
+	"Reset the style by creating a new VTermOutputStyle and resetting the terminal to default config"
 
 	style := VTermOutputStyle new.
 	installedStyle := style copy.

@@ -260,7 +260,7 @@ SystemDictionary >> hasBindingThatBeginsWith: aString [
 
 { #category : #'classes and traits' }
 SystemDictionary >> hasClassNamed: aString [
-	"Answer whether there is a class of the given name, but don't intern aString if it's not alrady interned."
+	"Answer whether there is a class of the given name, but don't intern aString if it's not already interned."
 
 	Symbol 
 		hasInterned: aString 
@@ -270,7 +270,7 @@ SystemDictionary >> hasClassNamed: aString [
 
 { #category : #'classes and traits' }
 SystemDictionary >> hasClassOrTraitNamed: aString [
-	"Answer whether there is a class of the given name, but don't intern aString if it's not alrady interned."
+	"Answer whether there is a class of the given name, but don't intern aString if it's not already interned."
 
 	Symbol 
 		hasInterned: aString 

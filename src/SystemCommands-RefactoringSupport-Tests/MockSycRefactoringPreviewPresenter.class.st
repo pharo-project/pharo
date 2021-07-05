@@ -11,7 +11,7 @@ MockSycRefactoringPreviewPresenter >> activeRBEnvironment [
 
 { #category : #private }
 MockSycRefactoringPreviewPresenter >> buildDiffFor: aChange [
-	"i override this method bacause i just want to test if the transmission use this method"
+	"i override this method because i just want to test if the transmission use this method"
 	^ 'useForTest'
 ]
 

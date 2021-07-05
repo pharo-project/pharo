@@ -9,7 +9,7 @@ max: aNumber
 	^ self > aNumber ifTrue: [self] ifFalse: [aNumber]!
  
 Some chunks are styled (they have parts in bold, or font color...).
-When a chunk is styled, it is followed by a second chunk (prefixed with something like ]sytle[), and specifying the style.
+When a chunk is styled, it is followed by a second chunk (prefixed with something like ]style[), and specifying the style.
 The encoding is as follows:
 
 max: aNumber

@@ -295,7 +295,7 @@ SmalltalkImage >> bytesLeft [
 
 { #category : #'memory space' }
 SmalltalkImage >> bytesLeft: aBool [
-	"Return the amount of available space. If aBool is true, include possibly available swap space. If aBool is false, include possibly available physical memory. For a report on the largest free block currently availabe within Pharo memory but not counting extra memory use #primBytesLeft."
+	"Return the amount of available space. If aBool is true, include possibly available swap space. If aBool is false, include possibly available physical memory. For a report on the largest free block currently available within Pharo memory but not counting extra memory use #primBytesLeft."
 	<primitive: 112>
 	^self primBytesLeft
 ]
@@ -529,7 +529,7 @@ SmalltalkImage >> exitToDebugger [
 
 { #category : #'special objects' }
 SmalltalkImage >> externalObjects [
-	"Return an array of objects that have been registered for use in non-Smalltalk code. Smalltalk objects should be referrenced by external code only via indirection through this array, thus allowing the objects to move during compaction. This array can be cleared when the VM re-starts, since variables in external code do not survive snapshots. Note that external code should not attempt to access a Smalltalk object, even via this mechanism, while garbage collection is in progress."
+	"Return an array of objects that have been registered for use in non-Smalltalk code. Smalltalk objects should be referenced by external code only via indirection through this array, thus allowing the objects to move during compaction. This array can be cleared when the VM re-starts, since variables in external code do not survive snapshots. Note that external code should not attempt to access a Smalltalk object, even via this mechanism, while garbage collection is in progress."
 	"Smalltalk externalObjects"
 
 	^ ExternalSemaphoreTable externalObjects
@@ -750,7 +750,7 @@ SmalltalkImage >> growMemoryByAtLeast: numBytes [
 
 { #category : #'class and trait names' }
 SmalltalkImage >> hasClassNamed: aString [
-	"Answer whether there is a class of the given name, but don't intern aString if it's not alrady interned."
+	"Answer whether there is a class of the given name, but don't intern aString if it's not already interned."
 
 	^ globals hasClassNamed: aString
 ]

@@ -135,7 +135,7 @@ SliderPresenter >> label: aString [
 { #category : #api }
 SliderPresenter >> max [
 	"<api: #inspect>"
-	"Return the maximun value"
+	"Return the maximum value"
 	
 	^ max value
 ]
@@ -143,7 +143,7 @@ SliderPresenter >> max [
 { #category : #api }
 SliderPresenter >> max: anObject [
 	"<api: #integer min: 1 max: 100 getter:#max registration: #whenMaxChanged:>"
-	"Set the maximun value"
+	"Set the maximum value"
 
 	max value: anObject
 ]
@@ -167,7 +167,7 @@ SliderPresenter >> min: anObject [
 { #category : #api }
 SliderPresenter >> quantum [
 	"<api: #inspect>"
-	"Return the quantum betwen values"
+	"Return the quantum between values"
 
 	^ quantum value
 ]
@@ -175,7 +175,7 @@ SliderPresenter >> quantum [
 { #category : #api }
 SliderPresenter >> quantum: aNumber [
 	"<api: #integer min: #min max: #max getter:#quantum registration: #whenQuantumChanged:>"
-	"Set the quantum betwen values"
+	"Set the quantum between values"
 
 	quantum value: aNumber
 ]

@@ -37,7 +37,7 @@ RBPatternVariableNode class >> identifierNamed: anIdentifierName at: aPosition [
 ]
 
 { #category : #verification }
-RBPatternVariableNode >> compare: anObject with: aNode [ 
+RBPatternVariableNode >> compare: anObject with: aNode [
 	^ anObject isCollection  
 		ifTrue: [ anObject anySatisfy: [ :e | e = aNode ] ]
 		ifFalse: [ anObject = aNode ]
@@ -100,7 +100,7 @@ RBPatternVariableNode >> isStatement [
 ]
 
 { #category : #matching }
-RBPatternVariableNode >> match: aNode inContext: aDictionary [ 
+RBPatternVariableNode >> match: aNode inContext: aDictionary [
 	self isAnything 
 		ifTrue: [^ self compare: (aDictionary at: self ifAbsentPut: [aNode]) with: aNode].
 	self isLiteralNode ifTrue: [^self matchLiteral: aNode inContext: aDictionary].
@@ -111,13 +111,13 @@ RBPatternVariableNode >> match: aNode inContext: aDictionary [
 ]
 
 { #category : #matching }
-RBPatternVariableNode >> matchLiteral: aNode inContext: aDictionary [ 
+RBPatternVariableNode >> matchLiteral: aNode inContext: aDictionary [
 	^aNode isLiteralNode
 		and: [ self compare: (aDictionary at: self ifAbsentPut: [aNode]) with: aNode]
 ]
 
 { #category : #matching }
-RBPatternVariableNode >> matchStatement: aNode inContext: aDictionary [ 
+RBPatternVariableNode >> matchStatement: aNode inContext: aDictionary [
 	(aNode parent notNil and: [aNode parent isSequence]) ifFalse: [^false].
 	^ self compare: (aDictionary at: self ifAbsentPut: [aNode]) with: aNode
 ]

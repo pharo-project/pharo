@@ -1,13 +1,13 @@
 "
 I am a strategy on how remove methods.
 You can see my subclasses when you try remove method in the browser which is still in use.
-Usualy you see four options what to do:
+Usually you see four options what to do:
 - just remove 
 - remove and show senders
 - do not remove and show senders
 - cancel  
 
-My subclasses reprsent this choices using following method: 
+My subclasses represent this choices using following method: 
 
 - removeMethods: methods 
 

@@ -1,6 +1,6 @@
 "
 An InputEventSensor is a replacement for the old Morphic EventSensor framework.
-It updates its state when events are received so that all state based users of Sensor (e.g., Sensor keyboard, Sensor leftShiftDown, Sensor mouseButtons) will work exactly as before. The usage of these funtions is discouraged. 
+It updates its state when events are received so that all state based users of Sensor (e.g., Sensor keyboard, Sensor leftShiftDown, Sensor mouseButtons) will work exactly as before. The usage of these functions is discouraged. 
 
 Instance variables:
 	mouseButtons <Integer>	- mouse button state as replacement for primMouseButtons
@@ -371,8 +371,8 @@ InputEventSensor >> primTabletGetParameters: cursorIndex [
 	3. number of tablet units per inch
 	4. number of cursors (pens, pucks, etc; some tablets have more than one)
 	5. this cursor index
-	6. and 7. x scale and x offset for scaling tablet coordintes (e.g., to fit the screen)
-	8. and 9. y scale and y offset for scaling tablet coordintes  (e.g., to fit the screen)
+	6. and 7. x scale and x offset for scaling tablet coordinates (e.g., to fit the screen)
+	8. and 9. y scale and y offset for scaling tablet coordinates  (e.g., to fit the screen)
 	10. number of pressure levels
 	11. presure threshold needed close pen tip switch 
 	12. number of pen tilt angles"
@@ -421,7 +421,7 @@ InputEventSensor >> processEvent: evt [
 	type = EventTypeKeyboard
 		ifTrue: [ ^ self processKeyboardEvent: evt ].
 
-	"Handle all events other than Keyborad or Mouse."
+	"Handle all events other than Keyboard or Mouse."
 	^ evt
 ]
 
@@ -547,7 +547,7 @@ InputEventSensor >> waitButton [
 { #category : #mouse }
 InputEventSensor >> waitButtonOrKeyboard [
 	"Wait for the user to press either any mouse button or any key. 
-	Answer the current cursor location or nil if a keypress occured."
+	Answer the current cursor location or nil if a keypress occurred."
 
 	| delay |
 	delay := Delay forMilliseconds: 50.
