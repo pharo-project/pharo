@@ -78,9 +78,9 @@ ShortcutReminder >> createKeyTextMorph: aString [
 
 	| font |
 	font := ToggleWithSymbolMenuItemShortcut canBeUsed
-		ifTrue: [ ToggleWithSymbolMenuItemShortcut createSymbolFont 
-						pointSize: self pointSize * 2;
-						yourself ]
+		ifTrue: [ LogicalFont 
+						familyName: 'Lucida Grande' 
+						pointSize: self pointSize * 2 ]
 		ifFalse: [ self keyTextFont ].
 
 	^(self fixKeyText: aString) asStringMorph 
