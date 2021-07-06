@@ -192,7 +192,6 @@ def bootstrapImage(){
       }
       }
     }
-  
   }
   parallel builders 
 
