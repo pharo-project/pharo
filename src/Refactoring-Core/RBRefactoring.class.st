@@ -101,6 +101,11 @@ RBRefactoring class >> setDefaultOption: aSymbol to: aBlock [
 	self refactoringOptions at: aSymbol put: aBlock
 ]
 
+{ #category : #converting }
+RBRefactoring >> asRefactoring [
+	^ self
+]
+
 { #category : #utilities }
 RBRefactoring >> associationForClassVariable: aName in: aClass ifAbsent: aBlock [
 	"Return the class variable association of class aClass"

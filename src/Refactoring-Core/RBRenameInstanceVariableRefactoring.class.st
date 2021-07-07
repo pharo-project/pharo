@@ -72,12 +72,6 @@ RBRenameInstanceVariableRefactoring >> browsedEnvironment [
 	^ browsedEnvironment ifNil: [ browsedEnvironment := RBBrowserEnvironment new ]
 ]
 
-{ #category : #refactoring }
-RBRenameInstanceVariableRefactoring >> executeRefactoring: aRefactoring [
-	aRefactoring primitiveExecute.
-	self parserClass parseExpression: aRefactoring storeString
-]
-
 { #category : #initialization }
 RBRenameInstanceVariableRefactoring >> initialize [
 	super initialize.
