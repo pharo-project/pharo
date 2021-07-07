@@ -38,7 +38,14 @@ InstructionStream class >> isContextClass [
 InstructionStream class >> on: method [ 
 	"Answer an instance of me on the argument, method."
 
-	^self new method: method pc: method initialPC
+	^self on: method pc: method initialPC
+]
+
+{ #category : #'instance creation' }
+InstructionStream class >> on: method pc: aPC [
+	"Answer an instance of me on the argument, method."
+
+	^self new method: method pc: aPC
 ]
 
 { #category : #accessing }
@@ -110,7 +117,7 @@ InstructionStream >> interpretNext2ByteSistaV1Instruction: bytecode for: client 
 	bytecode = 245 ifTrue:
 		[^client storeIntoTemporaryVariable: byte].
 	"246-247	1111011 i	xxxxxxxx	UNASSIGNED"
-	^self unusedBytecode: client at: startPC
+	^self interpretUnusedBytecode: client at: startPC
 ]
 
 { #category : #interpreting }
@@ -150,7 +157,7 @@ InstructionStream >> interpretNext3ByteSistaV1Instruction: bytecode for: client 
 			numCopied: (byte3 bitAnd: 16r3F) 
 			receiverOnStack: (byte3 bitAt: 7) = 1
 			ignoreOuterContext: (byte3 bitAt: 8) = 1 ].
-	^self unusedBytecode: client at: startPC
+	^self interpretUnusedBytecode: client at: startPC
 ]
 
 { #category : #interpreting }
@@ -229,7 +236,7 @@ InstructionStream >> interpretNextSistaV1InstructionFor: client [
 				[^client blockReturnTop].
 			 offset = 15 ifTrue:
 				[^client doNop].
-			 ^self unusedBytecode: client at: savedPC].
+			 ^self interpretUnusedBytecode: client at: savedPC].
 		"short sends"
 		div16 = 6 ifTrue:
 			[^client
@@ -260,7 +267,7 @@ InstructionStream >> interpretNextSistaV1InstructionFor: client [
 		 	[^client popIntoTemporaryVariable: offset].
 		 offset = 8 ifTrue: [ ^ client doPop ].
 		 offset = 9 ifTrue: [ ^ client trap ].
-		^self unusedBytecode: client at: savedPC].
+		^self interpretUnusedBytecode: client at: savedPC].
 	"2 byte and 3 byte codes"
 	byte < 248 ifTrue:
 		[^self interpretNext2ByteSistaV1Instruction: byte for: client extA: extA extB: extB startPC: savedPC].
@@ -324,7 +331,7 @@ InstructionStream >> interpretNextV3PlusClosureInstructionFor: client [
 									offset = 13
 										ifTrue: [^ client blockReturnTop].
 									offset > 13
-										ifTrue: [^ self unusedBytecode: client at: pc - 1 ]]]]]
+										ifTrue: [^ self interpretUnusedBytecode: client at: pc - 1 ]]]]]
 		ifFalse: [type < 12
 				ifTrue: [type < 10
 						ifTrue: [type < 9
@@ -422,6 +429,11 @@ InstructionStream >> interpretSistaV1ExtendedPush: extB for: client [
 		ifTrue: [^ client pushActiveProcess].
 	self error: 'undefined extended push'
 
+]
+
+{ #category : #interpreting }
+InstructionStream >> interpretUnusedBytecode: client at: startPC [
+	^ client unusedBytecode
 ]
 
 { #category : #interpreting }

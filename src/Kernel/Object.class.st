@@ -496,6 +496,12 @@ Object >> bindingOf: aString [
 	^nil
 ]
 
+{ #category : #comparing }
+Object >> bla [
+
+	^ 1
+]
+
 { #category : #dependencies }
 Object >> breakDependents [
 	"Remove all of the receiver's dependents."
@@ -1991,6 +1997,12 @@ Object >> toFinalizeSend: aSelector to: aFinalizer with: aResourceHandle [
 			receiver: aFinalizer
 			selector: aSelector
 			argument: aResourceHandle)
+]
+
+{ #category : #comparing }
+Object >> toto [
+
+	self bla
 ]
 
 { #category : #'error handling' }

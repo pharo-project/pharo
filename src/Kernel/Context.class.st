@@ -858,31 +858,6 @@ Context >> findNextUnwindContextUpTo: aContext [
 	^nil
 ]
 
-{ #category : #query }
-Context >> findSecondToOldestSimilarSender [
-	"Search the stack for the second-to-oldest occurance of self's method.  Very useful for an infinite recursion.  Gets back to the second call so you can see one complete recursion cycle, and how it was called at the beginning."
-
-	| secondContext context lastContext |
-	secondContext := self.
-	context := self.
-	[	lastContext := context findSimilarSender.
-		lastContext isNil
-	] whileFalse: [
-		secondContext := context.
-		context := lastContext.
-	].
-	^ secondContext
-
-]
-
-{ #category : #query }
-Context >> findSimilarSender [
-	"Return the closest sender with the same method, return nil if none found"
-
-	^ self sender findContextSuchThat: [ :context | 
-		context compiledCode == method ]
-]
-
 { #category : #'private - exceptions' }
 Context >> handleSignal: exception [
 	"Sent to handler (on:do:) contexts only.  If my exception class (first arg) handles exception then execute my handle block (second arg), otherwise forward this message to the next handler context.  If none left, execute exception's defaultAction (see nil>>handleSignal:)."
@@ -1810,15 +1785,6 @@ Context >> runUntilErrorOrReturnFrom: aSender [
 		{topContext. error}
 	].
 
-]
-
-{ #category : #query }
-Context >> secondFromBottom [
-	"Return the second from bottom of my sender chain"
-
-	self sender ifNil: [ ^ nil ].
-	^ self findContextSuchThat: [ :context |
-		context sender sender isNil]
 ]
 
 { #category : #'debugger access' }
