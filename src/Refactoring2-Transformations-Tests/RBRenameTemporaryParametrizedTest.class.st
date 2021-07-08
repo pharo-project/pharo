@@ -1,9 +1,6 @@
 Class {
 	#name : #RBRenameTemporaryParametrizedTest,
-	#superclass : #RBParametrizedTestWithDifferentConstructors,
-	#instVars : [
-		'index'
-	],
+	#superclass : #RBParametrizedTestWithDifferentsArguments,
 	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 
@@ -20,33 +17,7 @@ RBRenameTemporaryParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #builder }
-RBRenameTemporaryParametrizedTest >> createRefactoringWithArguments: aParameterCollection [
-	^ (rbClass
-		perform: constructor 
-		withArguments: (self selectIndex: index of: aParameterCollection)) asRefactoring
-]
-
-{ #category : #builder }
-RBRenameTemporaryParametrizedTest >> createRefactoringWithModel: rbNamespace andArguments: aParameterCollection [
-	^ (rbClass
-		perform: #model: , constructor 
-		withArguments: {rbNamespace}, 
-			(self selectIndex: index of: aParameterCollection)) asRefactoring
-]
-
-{ #category : #accessing }
-RBRenameTemporaryParametrizedTest >> index: aBlock [ 
-
-	index := aBlock
-]
-
-{ #category : #accessing }
-RBRenameTemporaryParametrizedTest >> selectIndex: anInteger of: aCollection [
-	^ aCollection collect: [ :each | each isArray ifTrue: [each at: anInteger ] ifFalse: each ]
-]
-
-{ #category : #builder }
+{ #category : #'failure tests' }
 RBRenameTemporaryParametrizedTest >> testBadIntervalAndVariableDoesNotExist [
 	self
 		shouldFail:

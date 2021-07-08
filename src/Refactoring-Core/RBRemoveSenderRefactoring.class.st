@@ -48,7 +48,7 @@ Class {
 
 { #category : #'instance creation' }
 RBRemoveSenderRefactoring class >> model: aRBSmalltalk remove: anInterval inMethod: aSelector forClass: aClass [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		remove: anInterval
 			inMethod: aSelector
