@@ -16,7 +16,7 @@ RBRenameTemporaryVariableTransformationTest >> testExistingVariable [
 									Transcript show: temp printString; cr.
 									^temp * temp'
 							in: self changeMock name
-							withProtocol: #accessing)
+							withProtocols: {#accessing})
 							transform.
 	
 	self shouldFail: (RBRenameTemporaryVariableTransformation 
@@ -38,7 +38,7 @@ RBRenameTemporaryVariableTransformationTest >> testRefactoring [
 									Transcript show: temp printString; cr.
 									^temp * temp'
 							in: self changeMock name
-							withProtocol: #accessing)
+							withProtocols: {#accessing})
 							transform.
 	
 	transformation := (RBRenameTemporaryVariableTransformation 
@@ -86,7 +86,7 @@ RBRenameTemporaryVariableTransformationTest >> testTransform [
 									Transcript show: temp printString; cr.
 									^temp * temp'
 							in: self changeMock name
-							withProtocol: #accessing)
+							withProtocols: {#accessing})
 							transform.
 	
 	transformation := (RBRenameTemporaryVariableTransformation 

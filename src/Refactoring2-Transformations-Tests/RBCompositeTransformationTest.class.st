@@ -22,7 +22,7 @@ RBCompositeTransformationTest >> testTransform [
 			add: (RBAddMethodTransformation
 					sourceCode: 'printString1 ^super printString'
 					in: newClassName
-					withProtocol: #accessing);
+					withProtocols: {#accessing});
 			yourself).
 	transformation transform.
 	

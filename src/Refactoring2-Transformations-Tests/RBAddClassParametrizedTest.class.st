@@ -1,7 +1,7 @@
 Class {
 	#name : #RBAddClassParametrizedTest,
 	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests'
+	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 
 { #category : #tests }

@@ -36,7 +36,7 @@ RBAddMethodRefactoring class >> addMethod: aString toClass: aClass inProtocols: 
 
 { #category : #'instance creation' }
 RBAddMethodRefactoring class >> model: aRBSmalltalk addMethod: aString toClass: aClass inProtocols: protocolList [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		addMethod: aString
 			toClass: aClass

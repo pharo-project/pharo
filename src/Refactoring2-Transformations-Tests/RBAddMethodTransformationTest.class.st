@@ -17,7 +17,7 @@ RBAddMethodTransformationTest >> testBadSourceCode [
 	self shouldFail: (RBAddMethodTransformation
 							sourceCode: 'asdf ^super ^printString'
 							in: RBBasicLintRuleTestData
-							withProtocol: #accessing)
+							withProtocols: {#accessing})
 							asRefactoring
 ]
 
@@ -28,19 +28,19 @@ RBAddMethodTransformationTest >> testMethodAlreadyExists [
 		shouldFail: (RBAddMethodTransformation
 			sourceCode: 'printString ^super printString'
 			in: #RBBasicLintRuleTestData
-			withProtocol: #accessing)
+			withProtocols: {#accessing})
 			asRefactoring;
 		shouldFail: (RBAddMethodTransformation 
 			model: model
 			sourceCode: 'classVarName1 ^super printString'
 			in: (model classNamed: #Bar)
-			withProtocol: #accessing)
+			withProtocols: {#accessing})
 			asRefactoring;
 		shouldFail: (RBAddMethodTransformation
 			model: model
 			sourceCode: 'printString ^super printString'
 			in: (model classNamed: #Bar)
-			withProtocol: #accessing)
+			withProtocols: {#accessing})
 			asRefactoring.
 ]
 
@@ -54,7 +54,7 @@ RBAddMethodTransformationTest >> testModel [
 		model: model
 		sourceCode: 'printString1 ^super printString'
 		in: class
-		withProtocol: #accessing)
+		withProtocols: {#accessing})
 		asRefactoring transform.
 		
 	self assert: (class parseTreeFor: #printString1) 
@@ -68,7 +68,7 @@ RBAddMethodTransformationTest >> testRefactoring [
 	refactoring := (RBAddMethodTransformation 
 						sourceCode: 'printString1 ^super printString'
 						in: #RBBasicDummyLintRuleTest
-						withProtocol: #accessing)
+						withProtocols: {#accessing})
 						asRefactoring transform.
 	
 	self assert: ((refactoring model classNamed: #RBBasicDummyLintRuleTest) parseTreeFor: #printString1)
@@ -82,7 +82,7 @@ RBAddMethodTransformationTest >> testTransform [
 	transformation := (RBAddMethodTransformation
 		sourceCode: 'printString1 ^super printString'
 		in: self changeMock name
-		withProtocol: #accessing)
+		withProtocols: {#accessing})
 		transform.
 	
 	class := transformation model classNamed: self changeMock name.
