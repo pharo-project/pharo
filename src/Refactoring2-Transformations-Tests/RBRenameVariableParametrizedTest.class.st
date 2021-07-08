@@ -1,6 +1,6 @@
 Class {
 	#name : #RBRenameVariableParametrizedTest,
-	#superclass : #RBVariableParametrizedTest,
+	#superclass : #RBParametrizedTestWithDifferentConstructors,
 	#instVars : [
 		'extraArgument'
 	],

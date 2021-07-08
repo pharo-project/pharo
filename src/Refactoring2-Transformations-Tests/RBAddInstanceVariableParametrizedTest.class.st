@@ -1,6 +1,6 @@
 Class {
 	#name : #RBAddInstanceVariableParametrizedTest,
-	#superclass : #RBVariableParametrizedTest,
+	#superclass : #RBParametrizedTestWithDifferentConstructors,
 	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 
@@ -74,7 +74,7 @@ RBAddInstanceVariableParametrizedTest >> testModelMetaclassAlreadyExistingName [
 { #category : #'failure tests' }
 RBAddInstanceVariableParametrizedTest >> testNewExistingName [
 	| refactoring |
-	model := RBClassModelFactory rbNamespace new.
+	model := RBNamespace2 new.
 	model name: 'Add instance variable'.
 	model 
 		defineClass: 'Object subclass: #FOOBAR 
@@ -90,7 +90,7 @@ RBAddInstanceVariableParametrizedTest >> testNewExistingName [
 { #category : #'failure tests' }
 RBAddInstanceVariableParametrizedTest >> testNewHierarchyExistingName [
 	| refactoring |
-	model := RBClassModelFactory rbNamespace new.
+	model := RBNamespace2 new.
 	model name: 'Add instance variable'.
 	model 
 		defineClass: 'Object subclass: #FOOBAR 

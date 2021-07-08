@@ -68,11 +68,13 @@ RBRenameTemporaryTest >> testModelBadName [
 		classified: #(#accessing).
 	self
 		shouldFail: (RBRenameArgumentOrTemporaryRefactoring 
+		model: model
 					renameTemporaryFrom: (20 to: 24)
 					to: 'temp3'
 					in: class
 					selector: #aMethod:);
 		shouldFail: (RBRenameArgumentOrTemporaryRefactoring 
+		model: model
 					renameTemporaryFrom: (20 to: 24)
 					to: 'temp1'
 					in: class
