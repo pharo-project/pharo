@@ -18,6 +18,7 @@ MethodContexts must only be created using the method newForMethod:.  Note that i
 Class {
 	#name : #Context,
 	#type : #variable,
+	#superclass : #Object,
 	#instVars : [
 		'sender',
 		'pc',
