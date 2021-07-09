@@ -123,6 +123,15 @@ TaCompositionElement >> name [
 	^ innerClass name
 ]
 
+{ #category : #testing }
+TaCompositionElement >> needsRecompilation: aSelector [
+
+	"We need to recompile if there is a supersend"
+
+	^ (innerClass >> aSelector) sendsToSuper or: [ 
+		  super needsRecompilation: aSelector ]
+]
+
 { #category : #users }
 TaCompositionElement >> removeUser: aClass [ 
 	"When a user is removed from me I propagate to the real Trait, as I am the root of the TraitComposition"	
