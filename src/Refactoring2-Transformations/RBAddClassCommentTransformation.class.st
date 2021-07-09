@@ -48,7 +48,7 @@ RBAddClassCommentTransformation >> comment: aString in: aClassName [
 RBAddClassCommentTransformation >> preconditions [
 	"no preconditions needed"
 	
-	^ RBCondition empty
+	^ self emptyCondition
 ]
 
 { #category : #executing }

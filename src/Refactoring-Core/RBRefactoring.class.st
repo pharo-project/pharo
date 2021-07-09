@@ -27,6 +27,8 @@ A RBRefactoringManager  is used to collect the executed refactorings and provide
 Class {
 	#name : #RBRefactoring,
 	#superclass : #Object,
+	#traits : 'RBTRefactoringBuilder',
+	#classTraits : 'RBTRefactoringBuilder classTrait',
 	#instVars : [
 		'model',
 		'options'
@@ -134,16 +136,6 @@ RBRefactoring >> checkClass: aRBClass selector: aSelector using: aMatcher [
 	^aMatcher answer
 ]
 
-{ #category : #utilities }
-RBRefactoring >> checkInstanceVariableName: aName in: aClass [ 
-	^RBCondition checkInstanceVariableName: aName in: aClass
-]
-
-{ #category : #utilities }
-RBRefactoring >> checkMethodName: aName in: aClass [ 
-	^RBCondition checkMethodName: aName in: aClass
-]
-
 { #category : #preconditions }
 RBRefactoring >> checkPreconditions [
 	| conditions block |
@@ -241,11 +233,6 @@ RBRefactoring >> defaultEnvironment [
 	^RBBrowserEnvironment new
 ]
 
-{ #category : #utilities }
-RBRefactoring >> emptyCondition [
-	^ RBCondition empty
-]
-
 { #category : #transforming }
 RBRefactoring >> execute [
 	self primitiveExecute.
@@ -295,31 +282,6 @@ RBRefactoring >> options: aDictionary [
 	options := aDictionary
 ]
 
-{ #category : #parsing }
-RBRefactoring >> parseTreeRewriter [
-	^ self parseTreeRewriterClass new
-]
-
-{ #category : #parsing }
-RBRefactoring >> parseTreeRewriterClass [
-	^ RBParseTreeRewriter
-]
-
-{ #category : #utilities }
-RBRefactoring >> parseTreeSearcher [
-	^ self parseTreeSearcherClass new
-]
-
-{ #category : #transforming }
-RBRefactoring >> parseTreeSearcherClass [
-	^ RBParseTreeSearcher
-]
-
-{ #category : #refactoring }
-RBRefactoring >> parserClass [
-	^ RBParser
-]
-
 { #category : #transforming }
 RBRefactoring >> performCompositeRefactoring: aRefactoring [ 
 	aRefactoring copyOptionsFrom: self options.
@@ -361,38 +323,6 @@ RBRefactoring >> preconditions [
 RBRefactoring >> primitiveExecute [
 	self checkPreconditions.
 	self transform
-]
-
-{ #category : #private }
-RBRefactoring >> refactoringConfirmWarning: aString [
-	| ret |
-	ret := self uiManager confirm: aString orCancel: [ ^ RBRefactoringFailure signal: 'aborted' ].
-	^ ret
-]
-
-{ #category : #private }
-RBRefactoring >> refactoringError: aString [ 
-	^ RBRefactoringError signal: aString
-]
-
-{ #category : #private }
-RBRefactoring >> refactoringError: aString with: aBlock [ 
-	^ RBRefactoringError signal: aString with: aBlock
-]
-
-{ #category : #private }
-RBRefactoring >> refactoringFailure: aString [ 
-	^ RBRefactoringFailure signal: aString
-]
-
-{ #category : #private }
-RBRefactoring >> refactoringFailure: aString with: aBlock [
-	^ RBRefactoringFailure signal: aString with: aBlock
-]
-
-{ #category : #private }
-RBRefactoring >> refactoringWarning: aString [ 
-	^ RBRefactoringWarning signal: aString
 ]
 
 { #category : #removing }

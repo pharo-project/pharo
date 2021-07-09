@@ -27,7 +27,7 @@ RBRenameClassTransformationTest >> testBadName [
 RBRenameClassTransformationTest >> testExistingName [
 
 	self shouldFail: (RBRenameClassTransformation
-							rename: self class
+							rename: self class name
 							to: #Object)
 							asRefactoring
 ]
@@ -36,7 +36,7 @@ RBRenameClassTransformationTest >> testExistingName [
 RBRenameClassTransformationTest >> testMetaClassFailure [
 
 	self shouldFail: (RBRenameClassTransformation
-							rename: self class class
+							rename: self class class name
 							to: #Foo)
 							asRefactoring
 ]

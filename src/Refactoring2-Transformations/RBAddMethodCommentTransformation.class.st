@@ -53,7 +53,7 @@ RBAddMethodCommentTransformation >> comment: aString inMethod: aSelector inClass
 RBAddMethodCommentTransformation >> preconditions [
 	"no preconditions needed"
 	
-	^ RBCondition empty
+	^ self emptyCondition
 ]
 
 { #category : #executing }

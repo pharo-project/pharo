@@ -44,8 +44,9 @@ RBPullUpVariableTransformationTest >> testRefactoring [
 						instanceVariable: 'result'
 						class: #RBDummyLintRuleTest)
 						asRefactoring.
-	
-	[ refactoring transform ] on: RBRefactoringError do: [ :e | e resume ].
+	[ refactoring transform ] 
+		on: RBRefactoringError, RBRefactoringWarning
+		do: [ :e | e resume ].
 	self assert: ((refactoring model classNamed: #RBDummyLintRuleTest)
 			directlyDefinesInstanceVariable: 'result').
 	
