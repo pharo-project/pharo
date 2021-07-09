@@ -17,9 +17,10 @@ MethodContexts must only be created using the method newForMethod:.  Note that i
 "
 Class {
 	#name : #Context,
-	#superclass : #InstructionStream,
 	#type : #variable,
 	#instVars : [
+		'sender',
+		'pc'
 		'stackp',
 		'method',
 		'closureOrNil',
