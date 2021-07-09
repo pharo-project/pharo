@@ -20,7 +20,7 @@ Class {
 	#type : #variable,
 	#instVars : [
 		'sender',
-		'pc'
+		'pc',
 		'stackp',
 		'method',
 		'closureOrNil',
