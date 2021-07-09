@@ -13,7 +13,7 @@ Class {
 
 { #category : #'instance creation' }
 RBVariableRefactoring class >> model: aRBSmalltalk variable: aVarName class: aClass [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		variable: aVarName class: aClass;
 		yourself
