@@ -10,7 +10,7 @@ Internal Representation and Key Implementation Points.
 	rightMethod:		<CompiledMethod>
 "
 Class {
-	#name : #ClyMethodDiffTool,
+	#name : #ClyMethodDiffToolMorph,
 	#superclass : #ClyBrowserToolMorph,
 	#instVars : [
 		'diffMorph',
@@ -21,7 +21,7 @@ Class {
 }
 
 { #category : #activation }
-ClyMethodDiffTool class >> browserTabActivation [
+ClyMethodDiffToolMorph class >> browserTabActivation [
 	"This declaration specifies that in any browser when methods are selected, a diff tool will be available in a tab."
 
 	<classAnnotation>
@@ -29,22 +29,22 @@ ClyMethodDiffTool class >> browserTabActivation [
 ]
 
 { #category : #accessing }
-ClyMethodDiffTool class >> shouldBeActivatedInContext: aBrowserContext [
+ClyMethodDiffToolMorph class >> shouldBeActivatedInContext: aBrowserContext [
 	^aBrowserContext selectedMethods size > 1
 ]
 
 { #category : #accessing }
-ClyMethodDiffTool class >> tabOrder [
+ClyMethodDiffToolMorph class >> tabOrder [
 	^10000
 ]
 
 { #category : #accessing }
-ClyMethodDiffTool >> activationPriority [
+ClyMethodDiffToolMorph >> activationPriority [
 	^0
 ]
 
 { #category : #controlling }
-ClyMethodDiffTool >> attachToSystem [
+ClyMethodDiffToolMorph >> attachToSystem [
 
 	browser system 
 		when: (ClyMethodChange ofAll: {self leftMethod. self rightMethod}) 
@@ -52,18 +52,18 @@ ClyMethodDiffTool >> attachToSystem [
 ]
 
 { #category : #testing }
-ClyMethodDiffTool >> belongsToCurrentBrowserContext [
+ClyMethodDiffToolMorph >> belongsToCurrentBrowserContext [
 	^(browser isMethodSelected: leftMethod) 
 		and: [ browser isMethodSelected: rightMethod ]
 ]
 
 { #category : #testing }
-ClyMethodDiffTool >> belongsToRemovedBrowserContext [
+ClyMethodDiffToolMorph >> belongsToRemovedBrowserContext [
 	^self leftMethod isInstalled not or: [ self rightMethod isInstalled not ]
 ]
 
 { #category : #building }
-ClyMethodDiffTool >> build [
+ClyMethodDiffToolMorph >> build [
 	diffMorph := DiffMorph from: self leftMethod sourceCode to: self rightMethod sourceCode.
 	diffMorph	
 		contextClass: self rightMethod sourceCode;
@@ -74,59 +74,59 @@ ClyMethodDiffTool >> build [
 ]
 
 { #category : #initialization }
-ClyMethodDiffTool >> defaultIconName [
+ClyMethodDiffToolMorph >> defaultIconName [
 	^#diff
 ]
 
 { #category : #initialization }
-ClyMethodDiffTool >> defaultTitle [
+ClyMethodDiffToolMorph >> defaultTitle [
 	^'Diff'
 ]
 
 { #category : #controlling }
-ClyMethodDiffTool >> detachFromSystem [
+ClyMethodDiffToolMorph >> detachFromSystem [
 
 	browser system unsubscribe: self
 ]
 
 { #category : #testing }
-ClyMethodDiffTool >> isSimilarTo: anotherBrowserTool [
+ClyMethodDiffToolMorph >> isSimilarTo: anotherBrowserTool [
 	(super isSimilarTo: anotherBrowserTool) ifFalse: [ ^false ].
 	
 	^{leftMethod. rightMethod} asIdentitySet = {anotherBrowserTool leftMethod. anotherBrowserTool rightMethod  } asIdentitySet
 ]
 
 { #category : #accessing }
-ClyMethodDiffTool >> leftMethod [
+ClyMethodDiffToolMorph >> leftMethod [
 	^leftMethod
 ]
 
 { #category : #printing }
-ClyMethodDiffTool >> printContext [
+ClyMethodDiffToolMorph >> printContext [
 	^'left / ', leftMethod printSystemPath , ' vs right / ', rightMethod printSystemPath
 ]
 
 { #category : #initialization }
-ClyMethodDiffTool >> resetStateForSnapshot [
+ClyMethodDiffToolMorph >> resetStateForSnapshot [
 	super resetStateForSnapshot.
 	
 	diffMorph := nil
 ]
 
 { #category : #accessing }
-ClyMethodDiffTool >> rightMethod [
+ClyMethodDiffToolMorph >> rightMethod [
 	^rightMethod
 ]
 
 { #category : #initialization }
-ClyMethodDiffTool >> setUpModelFromContext [ 
+ClyMethodDiffToolMorph >> setUpModelFromContext [ 
 
 	leftMethod := context firstSelectedMethod.
 	rightMethod := context lastSelectedMethod
 ]
 
 { #category : #updating }
-ClyMethodDiffTool >> update [
+ClyMethodDiffToolMorph >> update [
 	leftMethod := leftMethod origin 
 		localMethodNamed: leftMethod selector ifAbsent: [^self].
 	rightMethod := rightMethod origin 
