@@ -29,11 +29,6 @@ InstructionStream class >> initialize [
 
 ]
 
-{ #category : #testing }
-InstructionStream class >> isContextClass [
-	^false
-]
-
 { #category : #'instance creation' }
 InstructionStream class >> on: method [ 
 	"Answer an instance of me on the argument, method."

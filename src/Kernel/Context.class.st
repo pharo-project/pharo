@@ -84,6 +84,12 @@ Context class >> carefullyPrint: anObject on: aStream [
 		do: ['unprintable ' , anObject class name])
 ]
 
+{ #category : #compiler }
+Context class >> compiler [
+	"The JIT compiler needs to trap all reads to instance variables of contexts. As this check is costly, it is only done in the long form of the bytecodes, which are not used often. In this hierarchy we force the compiler to alwasy generate long bytecodes"
+	^super compiler options: #(+ optionLongIvarAccessBytecodes)
+]
+
 { #category : #'special context creation' }
 Context class >> contextEnsure: block [
 	"Create an #ensure: context that is ready to return from executing its receiver"
@@ -163,11 +169,6 @@ Context class >> initializeTryNamedPrimitiveTemplateMethod [
 
 
 	
-]
-
-{ #category : #testing }
-Context class >> isContextClass [
-	^true
 ]
 
 { #category : #'instance creation' }
@@ -2037,8 +2038,11 @@ Context >> startpc [
 Context >> step [
 	"Simulate the execution of the receiver's next bytecode. Answer the 
 	context that would be the active context after this bytecode."
-
-	^self interpretNextInstructionFor: self
+	| stream result |
+	stream := InstructionStream on: method pc: pc.
+	result := stream interpretNextInstructionFor: self.
+	pc ifNotNil: [ pc := stream pc ].
+	^ result
 ]
 
 { #category : #'debugger access' }
