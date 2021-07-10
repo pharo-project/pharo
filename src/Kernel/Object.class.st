@@ -1993,12 +1993,6 @@ Object >> toFinalizeSend: aSelector to: aFinalizer with: aResourceHandle [
 			argument: aResourceHandle)
 ]
 
-{ #category : #comparing }
-Object >> toto [
-
-	self bla
-]
-
 { #category : #'error handling' }
 Object >> traitConflict [
 	self error: 'A class or trait does not properly resolve a conflict between multiple traits it uses.'
