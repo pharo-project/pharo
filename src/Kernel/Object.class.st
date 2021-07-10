@@ -496,12 +496,6 @@ Object >> bindingOf: aString [
 	^nil
 ]
 
-{ #category : #comparing }
-Object >> bla [
-
-	^ 1
-]
-
 { #category : #dependencies }
 Object >> breakDependents [
 	"Remove all of the receiver's dependents."
