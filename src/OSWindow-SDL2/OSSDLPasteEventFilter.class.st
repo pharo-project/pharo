@@ -55,14 +55,18 @@ OSSDLPasteEventFilter >> currentState: aValue [
 { #category : #'events-processing' }
 OSSDLPasteEventFilter >> dispatchEvent: aSDLEvent [
 	
-	"This filter will handle the case when an external Clipboard handling tool is used.
+	"
+	This isssue was first detected in OSX, but we have seen the other platforms code in SDL and it is
+	possible the issue will happen in all platforms.
+	
+	This filter will handle the case when an external Clipboard handling tool is used.
 	When an external tool modifies the clipboard and send a virtual paste command, it sends three events:
 	
 	1) SDL_CLIPBOARDUPDATEEVENT
 	2) SDL_KEYDOWN with $v as the key
 	3) SDL KEYUP with $v as the keysym 
 	
-	If we find this three events, we need to modify the last two events to include defaul system modifier.
+	If we find these three events, we need to modify the last two events to include defaul system modifier.
 	Check #changeEventsToIncludeModifier.
 	
 	This is implemented with a 3 state machine.
@@ -79,12 +83,6 @@ OSSDLPasteEventFilter >> dispatchEvent: aSDLEvent [
 	
 	(self currentState = 1 and: [aSDLEvent isClipboardUpdateEvent not]) 
 		ifTrue: [  ^ next dispatchEvent: aSDLEvent ].
-
-	(self currentState = 1 and: [aSDLEvent isClipboardUpdateEvent]) 
-		ifTrue: [ 
-			self addEvent: aSDLEvent.
-			self currentState: 2.
-			 ^ self ].
 
 	(self currentState = 1 and: [aSDLEvent isClipboardUpdateEvent]) 
 		ifTrue: [ 
