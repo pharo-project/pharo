@@ -14,7 +14,7 @@ TModelBuilder >> abstractVariableTestData [
 				sum add: class; add: class class ].
 			sum ].
 	classEnvironment := RBClassEnvironment classes: classes.
-	newModel := RBNamespace2 onEnvironment: classEnvironment not.
+	newModel := self defaultNamespace onEnvironment: classEnvironment not.
 	newModel name: 'Test'.
 	
 	#('Object subclass: #Foo
@@ -132,6 +132,11 @@ m
 '
 ]
 
+{ #category : #'as yet unclassified' }
+TModelBuilder >> defaultNamespace [
+	^RBNamespace2
+]
+
 { #category : #mocking }
 TModelBuilder >> extractMethodTestData [
 	| newModel classEnvironment classes |
@@ -142,7 +147,7 @@ TModelBuilder >> extractMethodTestData [
 				sum add: class; add: class class ].
 			sum ].
 	classEnvironment := RBClassEnvironment classes: classes.
-	newModel := RBNamespace2 onEnvironment: classEnvironment not.
+	newModel := self defaultNamespace onEnvironment: classEnvironment not.
 	newModel name: 'Test'.
 	
 	#('Object subclass: #MyClassA
