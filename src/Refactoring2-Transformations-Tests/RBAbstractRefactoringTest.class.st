@@ -15,6 +15,11 @@ RBAbstractRefactoringTest >> executeRefactoring: aRefactoring [
 	aRefactoring primitiveExecute.
 ]
 
+{ #category : #parsing }
+RBAbstractRefactoringTest >> executeRefactorings: aRefactoringColl [
+	aRefactoringColl do: [ :ref | ref primitiveExecute]
+]
+
 { #category : #helpers }
 RBAbstractRefactoringTest >> objectClassVariable [
 	^Object classPool keys detect: [:each | true]

@@ -7,6 +7,12 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 
+{ #category : #mocking }
+RBAbstractEnvTestCase >> changeMock [
+
+	^ testingEnvironment at: #RBRefactoringChangeMock
+]
+
 { #category : #accessing }
 RBAbstractEnvTestCase >> environmentOfTest [
 	^ testingEnvironment

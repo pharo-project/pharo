@@ -28,7 +28,7 @@ RBRemoveClassRefactoring class >> classNames: aClassNameCollection [
 
 { #category : #'instance creation' }
 RBRemoveClassRefactoring class >> model: aRBSmalltalk classNames: aClassNameCollection [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		classNames: aClassNameCollection;
 		yourself
