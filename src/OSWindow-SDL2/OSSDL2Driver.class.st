@@ -6,7 +6,6 @@ Class {
 	#superclass : #OSWindowDriver,
 	#instVars : [
 		'inputSemaphore',
-		'eventQueue',
 		'globalListeners',
 		'eventFilter'
 	],
