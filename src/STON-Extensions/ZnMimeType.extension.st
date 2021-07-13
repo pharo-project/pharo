@@ -1,21 +1,21 @@
 Extension { #name : #ZnMimeType }
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Extensions' }
 ZnMimeType class >> fromSton: stonReader [
 	^ self fromString: stonReader parseListSingleton
 ]
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Extensions' }
 ZnMimeType >> stonContainSubObjects [
 	^ false
 ]
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Extensions' }
 ZnMimeType class >> stonName [
 	^ #MimeType
 ]
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Extensions' }
 ZnMimeType >> stonOn: stonWriter [
 	stonWriter writeObject: self listSingleton: self asString 
 ]

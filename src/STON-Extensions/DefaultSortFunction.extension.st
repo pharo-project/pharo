@@ -1,6 +1,6 @@
 Extension { #name : #DefaultSortFunction }
 
-{ #category : #'*STON-Core' }
+{ #category : #'*STON-Extensions' }
 DefaultSortFunction class >> fromSton: stonReader [
 	"Overwritten to always return the default"
 	
