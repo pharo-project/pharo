@@ -127,7 +127,7 @@ ClassDefinitionPrinter class >> settingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #showFluidClassDefinition)
 		parent: #codeBrowsing;
-		default: true;
+		default: false;
 		label: 'Use fluid class definition';
 		description: 'If true, the system will display the class definition using a fluid interface e.g., 
 
@@ -142,7 +142,7 @@ In addition, as soon as you will use slots such as ObservableSlot and more this 
 		
 	(aBuilder setting: #displayEmptySlots)
 		parent: #codeBrowsing;
-		default: false;
+		default: true;
 		label: 'Display empty slots';
 		description: 'If true, the system will display the slots even if they are empty e.g., 
 
