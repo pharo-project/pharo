@@ -265,11 +265,9 @@ WelcomeHelp class >> gettingHelp [
 		'Pharo has a vibrant community that shares knowledge in different ways: 
 
 - The "Pharo Users" mailing list: 
-	', (self url: 'http://lists.pharo.org/mailman/listinfo/pharo-users_lists.pharo.org'), '
+	', (self url: 'https://lists.pharo.org/empathy/list/pharo-users.lists.pharo.org'), '
 - The "Pharo Discord channel": 
 	', 	(self url: 'https://discord.gg/QewZMZa'), '
-- The "Pharo IRC Channel": 
-	', (self url: 'irc.freenode.net, #pharo channel '), '
 
 You can find more information, lists to browse/suscribe and places to share code at: 
 
