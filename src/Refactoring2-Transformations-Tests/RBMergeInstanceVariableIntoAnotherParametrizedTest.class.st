@@ -12,28 +12,27 @@ RBMergeInstanceVariableIntoAnotherParametrizedTest class >> testParameters [
 ]
 
 { #category : #'failure tests' }
+RBMergeInstanceVariableIntoAnotherParametrizedTest >> constructor [ 
+	^ #rename:to:in:
+]
+
+{ #category : #'failure tests' }
 RBMergeInstanceVariableIntoAnotherParametrizedTest >> testEqualsVariables [
-	self shouldFail: (rbClass 
-			rename: 'classBlock'
-			to: 'classBlock'
-			in: RBBasicLintRuleTestData)
+	self shouldFail: (self createRefactoringWithArguments: 
+		{ 'classBlock' . 'classBlock' . RBBasicLintRuleTestData })
 ]
 
 { #category : #'failure tests' }
 RBMergeInstanceVariableIntoAnotherParametrizedTest >> testNonExistingVariable [
-	self shouldFail: (rbClass 
-			rename: 'classBlock'
-			to: 'anInstVar1'
-			in: RBBasicLintRuleTestData)
+	self shouldFail: (self createRefactoringWithArguments: 
+		{ 'classBlock' . 'anInstVar1' . RBBasicLintRuleTestData })
 ]
 
 { #category : #tests }
 RBMergeInstanceVariableIntoAnotherParametrizedTest >> testReplaceVariableIntoAnother [
 	| refactoring class |
-	refactoring := rbClass 
-			rename: 'classBlock'
-			to: 'anInstVar'
-			in: RBBasicLintRuleTestData.
+	refactoring := self createRefactoringWithArguments: 
+		{ 'classBlock' . 'anInstVar' . RBBasicLintRuleTestData }.
 	class := refactoring model classNamed: #RBBasicLintRuleTestData.
 	self assert: (class whichSelectorsReferToInstanceVariable: 'classBlock') isNotEmpty.
 	self executeRefactoring: refactoring.
@@ -44,10 +43,8 @@ RBMergeInstanceVariableIntoAnotherParametrizedTest >> testReplaceVariableIntoAno
 { #category : #tests }
 RBMergeInstanceVariableIntoAnotherParametrizedTest >> testReplaceVariableIntoSupeclassVariable [
 	| refactoring class |
-	refactoring := rbClass 
-			rename: 'name'
-			to: 'classBlock'
-			in: RBBasicLintRuleTestData.
+	refactoring := self createRefactoringWithArguments: 
+		{ 'name' . 'classBlock' . RBBasicLintRuleTestData }.
 	class := refactoring model classNamed: #RBBasicLintRuleTestData.
 	self assert: (class whichSelectorsReferToInstanceVariable: 'name') isNotEmpty.
 	self executeRefactoring: refactoring.

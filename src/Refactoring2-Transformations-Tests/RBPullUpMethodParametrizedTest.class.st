@@ -56,6 +56,11 @@ RBPullUpMethodParametrizedTest >> addClassHierarchyForPools [
 	(model classNamed: #Toto) compile: 'poolReference ^ SP' classified: #(#accessing).
 ]
 
+{ #category : #tests }
+RBPullUpMethodParametrizedTest >> constructor [ 
+	^ #pullUp:from:
+]
+
 { #category : #accessing }
 RBPullUpMethodParametrizedTest >> defaultNamespace [
 	^RBNamespace
@@ -65,10 +70,8 @@ RBPullUpMethodParametrizedTest >> defaultNamespace [
 RBPullUpMethodParametrizedTest >> testDoesntPullUpReferencesInstVar [
 	| refactoring class |
 	class := model classNamed: ('RBTransformation', 'RuleTestData1') asSymbol.
-	refactoring := rbClass
-			model: model
-			pullUp: #(#foo )
-			from: class.
+	refactoring := self createRefactoringWithModel: model 
+		andArguments: { #(#foo ) . class }.
 	[ self shouldFail: refactoring ] valueSupplyingAnswer: false.
 ]
 
@@ -79,10 +82,8 @@ RBPullUpMethodParametrizedTest >> testPullUpAndCopyDown [
 	class := model classNamed: #Foo1.
 	class compile: 'yourself ^1' classified: #(#accessing).
 	self proceedThroughWarning: [ 
-		self executeRefactoring: (rbClass 
-			model: model
-			pullUp: #(#yourself)
-			from: class) ].
+		self executeRefactoring: (self createRefactoringWithModel: model 
+			andArguments: { #(#yourself) . class }) ].
 	self assert: (class superclass parseTreeFor: #yourself) 
 			equals: (self parseMethod: 'yourself ^1').
 	self deny: (class directlyDefinesMethod: #yourself).
@@ -100,10 +101,8 @@ RBPullUpMethodParametrizedTest >> testPullUpClassMethod [
 	class classSide 
 		compile: 'foo ^Foo'
 		classified: #(#accessing ).
-	self shouldFail: (rbClass 
-			model: model
-			pullUp: #(#foo )
-			from: class classSide)
+	self shouldFail: (self createRefactoringWithModel: model
+		andArguments: { #(#foo ) . class classSide })
 ]
 
 { #category : #tests }
@@ -133,9 +132,8 @@ RBPullUpMethodParametrizedTest >> testPullUpInAHighHierarchyClass [
 RBPullUpMethodParametrizedTest >> testPullUpMethodWithCopyOverriddenMethodsDown [
 	| refactoring |
 	self proceedThroughWarning: 
-		[ refactoring := rbClass 
-			pullUp: #(#isComposite )
-			from: RBCompositeLintRuleTestData.
+		[ refactoring := self createRefactoringWithArguments: 
+			{ #(#isComposite ) . RBCompositeLintRuleTestData }.
 		self executeRefactoring: refactoring ].
 	self assert: ((refactoring model classNamed: #RBBasicLintRuleTestData) parseTreeFor: #isComposite) equals: (self parseMethod: 'isComposite ^false').
 	self assert: ((refactoring model classNamed: ('RBFoo' , 'LintRuleTestData') asSymbol) parseTreeFor: #isComposite) equals: (self parseMethod: 'isComposite ^false').
@@ -151,7 +149,7 @@ RBPullUpMethodParametrizedTest >> testPullUpMethodWithSharedPool [
 	class := model classNamed: #Toto.
 	superClass := model classNamed: #TotoSuperclass.
 	self proceedThroughWarning: [ 
-		self executeRefactoring: (rbClass 
+		self executeRefactoring: (rbClass
 			model: model
 			pullUp: #(#poolReference)
 			from: class 
@@ -165,10 +163,8 @@ RBPullUpMethodParametrizedTest >> testPullUpMethodWithSharedPool [
 RBPullUpMethodParametrizedTest >> testPullUpReferencesInstVar [
 	| refactoring class superClass |
 	class := model classNamed: ('RBTransformation', 'RuleTestData1') asSymbol.
-	refactoring := rbClass 
-			model: model
-			pullUp: #(#foo )
-			from: class.
+	refactoring := self createRefactoringWithModel: model
+		andArguments: { #(#foo ) . class }.
 	[ self executeRefactoring: refactoring ] valueSupplyingAnswer: true.
 	superClass := model classNamed: ('RBFooLint', 'RuleTestData1') asSymbol.
 	self assert: (superClass parseTreeFor: #foo) 
@@ -220,12 +216,9 @@ RBPullUpMethodParametrizedTest >> testPullUpWhenSuperClassDoesNotDirectlyImpleme
 			each last
 				do:
 					[ :methodPair | class compile: methodPair first classified: methodPair last ] ].
-	self
-		shouldntWarn:
-			 (rbClass
-				model: model
-				pullUp: #(#foo)
-				from: (model classNamed: #ClassC))
+	self shouldntWarn:
+			 (self createRefactoringWithModel: model
+				andArguments: { #(#foo) . (model classNamed: #ClassC) })
 ]
 
 { #category : #'failure tests' }
@@ -237,10 +230,8 @@ RBPullUpMethodParametrizedTest >> testPullUpWithInvalidSuperSend [
 	class := model classNamed: #Foo1.
 	class compile: 'yourself ^1' classified: #(#accessing).
 	
-	self shouldFail: (rbClass 
-				model: model
-				pullUp: #(#yourself)
-				from: class)
+	self shouldFail: (self createRefactoringWithModel: model 
+		andArguments: { #(#yourself) . class })
 ]
 
 { #category : #'failure tests' }
@@ -250,10 +241,8 @@ RBPullUpMethodParametrizedTest >> testPullUpWithMethodThatCannotBePullUp [
 	(model classNamed: #SomeClass) compile: 'yourself ^54'
 		classified: #(#accessing).
 	
-	self shouldFail: (rbClass 
-				model: model
-				pullUp: #(#yourself)
-				from: (model classNamed: #SomeClass))
+	self shouldFail: (self createRefactoringWithModel: model
+		andArguments: { #(#yourself) . (model classNamed: #SomeClass) })
 ]
 
 { #category : #'failure tests' }
@@ -266,8 +255,6 @@ RBPullUpMethodParametrizedTest >> testPullUpWithSuperSendThatCannotBeCopiedDown 
 	(class := model classNamed: #Foo2) compile: 'foo ^1'
 		classified: #(#accessing).
 	
-	self shouldFail: (rbClass 
-				model: model
-				pullUp: #(#foo)
-				from: class)
+	self shouldFail: (self createRefactoringWithModel: model 
+		andArguments: { #(#foo) . class })
 ]

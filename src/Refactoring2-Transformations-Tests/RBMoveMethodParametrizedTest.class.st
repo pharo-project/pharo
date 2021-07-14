@@ -12,13 +12,16 @@ RBMoveMethodParametrizedTest class >> testParameters [
 ]
 
 { #category : #test }
+RBMoveMethodParametrizedTest >> constructor [ 
+	^ #selector:class:variable:
+]
+
+{ #category : #test }
 RBMoveMethodParametrizedTest >> testMoveMethodIntoArgument [
 	| refactoring class |
 	self proceedThroughWarning: 
-		[ refactoring := rbClass 
-			selector: #checkMethod:
-			class: RBTransformationRuleTestData
-			variable: 'aSmalllintContext'.
+		[ refactoring := self createRefactoringWithArguments:  
+				{ #checkMethod: . RBTransformationRuleTestData . 'aSmalllintContext' }.
 		self 
 			setupSelfArgumentNameFor: refactoring
 			toReturn: 'transformationRule'.
@@ -53,10 +56,8 @@ RBMoveMethodParametrizedTest >> testMoveMethodIntoArgument [
 RBMoveMethodParametrizedTest >> testMoveMethodIntoClassVariable [
 	| refactoring class |
 	self proceedThroughWarning: 
-		[ refactoring := rbClass 
-			selector: #checkMethod:
-			class: RBTransformationRuleTestData
-			variable: 'RecursiveSelfRule'.
+		[ refactoring := self createRefactoringWithArguments:  
+				{ #checkMethod: . RBTransformationRuleTestData . 'RecursiveSelfRule'}.
 		self 
 			setupSelfArgumentNameFor: refactoring
 			toReturn: 'transformationRule'.
@@ -90,10 +91,8 @@ RBMoveMethodParametrizedTest >> testMoveMethodIntoClassVariable [
 RBMoveMethodParametrizedTest >> testMoveMethodIntoInstanceVariable [
 	| refactoring class |
 	self proceedThroughWarning: 
-		[ refactoring := rbClass 
-			selector: #checkMethod:
-			class: RBTransformationRuleTestData
-			variable: 'rewriteRule'.
+		[ refactoring := self createRefactoringWithArguments: 
+			  { #checkMethod: . RBTransformationRuleTestData . 'rewriteRule' }.
 		self 
 			setupSelfArgumentNameFor: refactoring
 			toReturn: 'transformationRule'.
@@ -127,10 +126,8 @@ RBMoveMethodParametrizedTest >> testMoveMethodIntoInstanceVariable [
 RBMoveMethodParametrizedTest >> testMoveMethodThatReferencesPoolDictionary [
 	| refactoring class |
 	self proceedThroughWarning: 
-		[ refactoring := rbClass 
-			selector: #junk
-			class: RBLintRuleTestData
-			variable: 'RefactoryTestDataApp'.
+		[ refactoring := self createRefactoringWithArguments: 
+			  { #junk . RBLintRuleTestData . 'RefactoryTestDataApp' }.
 		self 
 			setupSelfArgumentNameFor: refactoring
 			toReturn: 'transformationRule'.
@@ -154,10 +151,7 @@ RBMoveMethodParametrizedTest >> testMovePrimitiveMethod [
 	(model classNamed: #Object) 
 		compile: 'foo <primitive: 100> ^#() primitiveFailed'
 		classified: #(#accessing).
-	refactoring := rbClass 
-				model: model
-				selector: #foo
-				class: Object
-				variable: 'OrderedCollection'.
+	refactoring := self createRefactoringWithModel: model 
+		andArguments: { #foo . Object . 'OrderedCollection' }.
 	self shouldFail: refactoring
 ]

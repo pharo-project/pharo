@@ -11,6 +11,11 @@ RBAddVariableAccessorsWithLazyInitializationParametrizedTest class >> testParame
 		yourself
 ]
 
+{ #category : #tests }
+RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> constructor [ 
+	^ #variable:class:classVariable:defaultValue:
+]
+
 { #category : #running }
 RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> setUp [
 	super setUp.
@@ -19,29 +24,23 @@ RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> setUp [
 
 { #category : #'failure tests' }
 RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testBadInitializationCode [
-	self shouldFail: ( rbClass 
-		variable: 'Foo1' 
-		class: RBLintRuleTestData 
-		classVariable: true 
-		defaultValue: 'foo:')
+	self shouldFail: (self createRefactoringWithArguments: 
+		{'Foo1' . RBLintRuleTestData . true . 'foo:'})
 ]
 
 { #category : #'failure tests' }
 RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testBadInitializationCode1 [
-	self shouldFail: (rbClass 
-		variable: 'Foo1' 
-		class: RBLintRuleTestData 
-		classVariable: true 
-		defaultValue: '''string')
+	self shouldFail: (self createRefactoringWithArguments: 
+		{'Foo1' . RBLintRuleTestData . true . '''string'})
 ]
 
 { #category : #tests }
 RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testExistingClassVariableAccessors [
 	| refactoring class |
 	refactoring := rbClass 
-							variable: 'Name1' 
-							class: RBLintRuleTestData 
-							classVariable: true.
+		variable: 'Name1' 
+		class: RBLintRuleTestData 
+		classVariable: true.
 	class := refactoring model classNamed: #RBLintRuleTestData.
 	self assert: (class classSide parseTreeFor: #name1) 
 		equals: (self parseMethod: 'name1 ^Name1').
@@ -55,9 +54,9 @@ RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testExistingClas
 RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testExistingInstanceVariableAccessors [
 	| refactoring class |
 	refactoring := rbClass 
-							variable: 'name' 
-							class: RBLintRuleTestData 
-							classVariable: false.
+		variable: 'name' 
+		class: RBLintRuleTestData 
+		classVariable: false.
 	class := refactoring model classNamed: #RBLintRuleTestData.
 	self assert: (class parseTreeFor: #name) 
 		equals: (self parseMethod: 'name ^name').
@@ -70,11 +69,8 @@ RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testExistingInst
 { #category : #tests }
 RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testNewClassVariableAccessors [
 	| ref class |
-	ref := rbClass 
-		variable: 'Foo1' 
-		class: RBLintRuleTestData 
-		classVariable: true 
-		defaultValue: '''someString'''.
+	ref := self createRefactoringWithArguments:  
+		{'Foo1' . RBLintRuleTestData . true . '''someString'''}.
 	self executeRefactoring: ref.
 	class := ref model metaclassNamed: #RBLintRuleTestData.
 	self denyEmpty: ref changes changes.
@@ -87,11 +83,8 @@ RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testNewClassVari
 { #category : #tests }
 RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testNewInstanceVariableAccessors [
 	| ref class |
-	ref := rbClass 
-		variable: 'foo1' 
-		class: RBLintRuleTestData 
-		classVariable: false 
-		defaultValue: '123'.
+	ref := self createRefactoringWithArguments: 
+		{'foo1' . RBLintRuleTestData . false . '123'}.
 	self executeRefactoring: ref.
 	class := ref model classNamed: #RBLintRuleTestData.
 	self denyEmpty: ref changes changes.

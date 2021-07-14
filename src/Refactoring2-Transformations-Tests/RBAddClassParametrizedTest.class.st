@@ -12,9 +12,9 @@ RBAddClassParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #parameterization }
-RBAddClassParametrizedTest >> addClass [
-	^ rbClass
+{ #category : #tests }
+RBAddClassParametrizedTest >> constructor [ 
+	^ #addClass:superclass:subclasses:category: 
 ]
 
 { #category : #'failure tests' }
@@ -28,12 +28,11 @@ RBAddClassParametrizedTest >> setUp [
 RBAddClassParametrizedTest >> testAddClass [
 	| refactoring newClass superClass classTest |
 	
-	refactoring := self addClass 
-		addClass: #FooTest
-		superclass: #RBAbstractRefactoringTest
-		subclasses: (Array with: self class)
-		category: #'Refactory-Testing'.
-	self executeRefactoring: refactoring asRefactoring.
+	refactoring := self createRefactoringWithArguments: 
+		{ #FooTest . #RBAbstractRefactoringTest . (Array with: self class) . #'Refactory-Testing' }.
+		
+	self executeRefactoring: refactoring.
+	
 	newClass := refactoring model classNamed: #FooTest.
 	superClass := refactoring model classNamed: #RBAbstractRefactoringTest.
 	classTest := refactoring model classNamed: self class name.
@@ -49,20 +48,14 @@ RBAddClassParametrizedTest >> testAddClass [
 
 { #category : #'failure tests' }
 RBAddClassParametrizedTest >> testEmptyCategory [
-	self shouldFail: (self addClass
-		addClass: #FooTest
-		superclass: #RBRefactoringTest
-		subclasses: (Array with: self class)
-		category: #'') asRefactoring
+	self shouldFail: (self createRefactoringWithArguments:
+		{ #FooTest . #RBRefactoringTest . (Array with: self class) . #'' })
 ]
 
 { #category : #'failure tests' }
 RBAddClassParametrizedTest >> testExistingClassName [
-	self shouldFail: (self addClass
-				addClass: #Object
-				superclass: self class name asSymbol
-				subclasses: #()
-				category: #'Refactory-Testing') asRefactoring
+	self shouldFail: (self createRefactoringWithArguments:
+		{ #Object . self class name asSymbol . #() .  #'Refactory-Testing' } )
 ]
 
 { #category : #tests }
@@ -70,13 +63,11 @@ RBAddClassParametrizedTest >> testModelAddClass [
 	| refactoring newClass superClass subclass |
 	subclass := model classNamed: #Bar.
 	superClass := model classNamed: #Foo.
-	refactoring := self addClass 
-		model: model
-		addClass: #FooTest
-		superclass: superClass name
-		subclasses: (Array with: subclass)
-		category: #'Refactory-Testing'.
-	self executeRefactoring: refactoring asRefactoring.
+	refactoring := self createRefactoringWithModel: model andArguments:
+		{ #FooTest . superClass name . (Array with: subclass) . #'Refactory-Testing' }.
+		
+	self executeRefactoring: refactoring.
+	
 	newClass := model classNamed: #FooTest.
 	self assert: newClass superclass equals: superClass.
 	self assert: (superClass subclasses includes: newClass).
@@ -91,71 +82,46 @@ RBAddClassParametrizedTest >> testModelAddClass [
 { #category : #'failure tests' }
 RBAddClassParametrizedTest >> testModelExistingClassName [
 
-	self shouldFail: (self addClass
-				model: model
-				addClass: #Foo
-				superclass: #Object
-				subclasses: #()
-				category: #'Refactory-Testing') asRefactoring
+	self shouldFail: (self createRefactoringWithModel: model andArguments: 
+		{ #Foo . #Object . #() . #'Refactory-Testing' })
 ]
 
 { #category : #'failure tests' }
 RBAddClassParametrizedTest >> testModelInvalidSubclass [
 
-	self shouldFail: (
-		self addClass
-			model: model
-			addClass: #Foo2
-			superclass: #Object
-			subclasses: (Array with: (model classNamed: #Bar))
-			category: #'Refactory-Tesing')
-			asRefactoring
+	self shouldFail: (self createRefactoringWithModel: model andArguments: 
+		{ #Foo2 . #Object . (Array with: (model classNamed: #Bar)) . #'Refactory-Tesing' } )
 ]
 
 { #category : #'failure tests' }
 RBAddClassParametrizedTest >> testModelNonImmediateSubclassOfSuperclass [
 	| refactoring |
-	refactoring := self addClass 
-				model: model
-				addClass: #Foo2
-				superclass: #Object
-				subclasses: (Array with: (model classNamed: #Bar))
-				category: #'Refactory-Tesing'.
-	self shouldFail: refactoring asRefactoring
+	refactoring := self createRefactoringWithModel: model andArguments:  
+		{ #Foo2 . #Object .(Array with: (model classNamed: #Bar)) . #'Refactory-Tesing'}.
+		
+	self shouldFail: refactoring
 ]
 
 { #category : #'failure tests' }
 RBAddClassParametrizedTest >> testNonImmediateSubclassOfSuperclass [
-	self shouldFail: (self addClass 
-			addClass: #Foo
-			superclass: #RBCompositeLintRuleTestData
-			subclasses: (Array with: RBBasicLintRuleTestData)
-			category: #'Refactory-Tesing') asRefactoring
+	self shouldFail: (self createRefactoringWithArguments: 
+		{ #Foo . #RBCompositeLintRuleTestData . (Array with: RBBasicLintRuleTestData) . #'Refactory-Tesing'})
 ]
 
 { #category : #'failure tests' }
 RBAddClassParametrizedTest >> testNonSymbolCategory [
-	self shouldFail: (self addClass 
-		addClass: #FooTest
-		superclass: #RBRefactoringTest
-		subclasses: (Array with: self class)
-		category: 'Refactory-Testing') asRefactoring
+	self shouldFail: (self createRefactoringWithArguments:  
+		{ #FooTest . #RBRefactoringTest . (Array with: self class) . 'Refactory-Testing'})
 ]
 
 { #category : #'failure tests' }
 RBAddClassParametrizedTest >> testSubclassIsMetaslass [
-	self shouldFail: (self addClass 
-			addClass: #Foo
-			superclass: #RBLintRuleTestData
-			subclasses: (Array with: RBCompositeLintRuleTestData class)
-			category: #'Refactory-Tesing') asRefactoring
+	self shouldFail: (self createRefactoringWithArguments: 
+		{ #Foo . #RBLintRuleTestData . (Array with: RBCompositeLintRuleTestData class) . #'Refactory-Tesing'})
 ]
 
 { #category : #'failure tests' }
 RBAddClassParametrizedTest >> testSuperclassIsMetaclass [
-	self shouldFail: (self addClass 
-				addClass: #Foo
-				superclass: self class class name asSymbol
-				subclasses: #()
-				category: #'Refactory-Testing') asRefactoring
+	self shouldFail: (self createRefactoringWithArguments:  
+		{ #Foo . self class class name asSymbol . #() . #'Refactory-Testing'})
 ]

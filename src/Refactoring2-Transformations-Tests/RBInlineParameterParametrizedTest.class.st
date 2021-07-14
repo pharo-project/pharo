@@ -12,28 +12,27 @@ RBInlineParameterParametrizedTest class >> testParameters [
 ]
 
 { #category : #'failure tests' }
+RBInlineParameterParametrizedTest >> constructor [ 
+	^ #inlineParameter:in:selector:
+]
+
+{ #category : #'failure tests' }
 RBInlineParameterParametrizedTest >> testInlineArgsWhitoutSameLiteral [
-	self shouldFail: (rbClass 
-		inlineParameter: 'aSymbol'
-		in: RBRefactoryTestDataApp
-		selector: ('inline' , 'Bar:') asSymbol)
+	self shouldFail: (self createRefactoringWithArguments:  
+		{ 'aSymbol' . RBRefactoryTestDataApp . ('inline' , 'Bar:') asSymbol })
 ]
 
 { #category : #'failure tests' }
 RBInlineParameterParametrizedTest >> testInlineBlockFailure [
-	self shouldFail: (rbClass 
-		inlineParameter: 'aBlock'
-		in: RBRefactoryTestDataApp
-		selector: ('inline' , 'Foo:') asSymbol)
+	self shouldFail: (self createRefactoringWithArguments: 
+		{ 'aBlock' . RBRefactoryTestDataApp . ('inline' , 'Foo:') asSymbol })
 ]
 
 { #category : #tests }
 RBInlineParameterParametrizedTest >> testInlineLiteralArray [
 	| refactoring class |
-	refactoring := rbClass 
-		inlineParameter: 'aSymbol'
-		in: RBRefactoryTestDataApp
-		selector: ('inline' , 'ParameterMethod:') asSymbol.
+	refactoring := self createRefactoringWithArguments: 
+		{ 'aSymbol' . RBRefactoryTestDataApp . ('inline' , 'ParameterMethod:') asSymbol }.
 	
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	

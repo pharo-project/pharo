@@ -12,12 +12,15 @@ RBInlineTemporaryParametrizedTest class >> testParameters [
 ]
 
 { #category : #tests }
+RBInlineTemporaryParametrizedTest >> constructor [ 
+	^ #inline:from:in:
+]
+
+{ #category : #tests }
 RBInlineTemporaryParametrizedTest >> testInlineTemporary [
 	| refactoring |
-	refactoring := rbClass
-		inline: (24 to: 72)
-		from: #inlineMethod
-		in: RBRefactoryTestDataApp.
+	refactoring := self createRefactoringWithArguments:
+		{ (24 to: 72) . #inlineMethod . RBRefactoryTestDataApp }.
 	
 	self executeRefactoring: refactoring.
 
@@ -30,24 +33,18 @@ RBInlineTemporaryParametrizedTest >> testInlineTemporary [
 
 { #category : #'failure tests' }
 RBInlineTemporaryParametrizedTest >> testInlineTemporaryBadInterval [
-	self shouldFail: (rbClass
-		inline: (29 to: 100)
-		from: #moveDefinition
-		in: RBRefactoryTestDataApp)
+	self shouldFail: (self createRefactoringWithArguments:
+		{ (29 to: 100) . #moveDefinition . RBRefactoryTestDataApp })
 ]
 
 { #category : #'failure tests' }
 RBInlineTemporaryParametrizedTest >> testInlineTemporaryMutlipleAssignment [
-	self shouldFail: (rbClass
-		inline: (60 to: 83)
-		from: #moveDefinition
-		in: RBRefactoryTestDataApp)
+	self shouldFail: (self createRefactoringWithArguments:
+		{ (60 to: 83) . #moveDefinition . RBRefactoryTestDataApp })
 ]
 
 { #category : #'failure tests' }
 RBInlineTemporaryParametrizedTest >> testInlineTemporaryReadBeforeWritten [
-	self shouldFail: (rbClass
-		inline: (48 to: 56)
-		from: #inlineTemporary
-		in: RBRefactoryTestDataApp)
+	self shouldFail: (self createRefactoringWithArguments:
+		{ (48 to: 56) . #inlineTemporary . RBRefactoryTestDataApp })
 ]

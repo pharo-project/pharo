@@ -12,18 +12,21 @@ RBCopyPackageParametrizedTest class >> testParameters [
 ]
 
 { #category : #'failure tests' }
+RBCopyPackageParametrizedTest >> constructor [ 
+	^ #copyPackage:in:
+]
+
+{ #category : #'failure tests' }
 RBCopyPackageParametrizedTest >> testBadName [
-	self shouldFail: (rbClass 
-		copyPackage: #'Refactoring-Tests-Core'
-		in: #'Refactoring-Tests-Core').
+	self shouldFail: (self createRefactoringWithArguments: 
+		{#'Refactoring-Tests-Core' . #'Refactoring-Tests-Core'}).
 ]
 
 { #category : #tests }
 RBCopyPackageParametrizedTest >> testCopyPackage [
 	| refactoring aModel |
-	refactoring := (rbClass 
-		copyPackage: #'Refactoring-Tests-Changes'
-		in: #'Refactoring-Tests-Changes1').
+	refactoring := (self createRefactoringWithArguments: 
+		{ #'Refactoring-Tests-Changes' . #'Refactoring-Tests-Changes1'}).
 	aModel := refactoring model.
 	
 	self executeRefactoring: refactoring.
@@ -40,9 +43,8 @@ RBCopyPackageParametrizedTest >> testCopyPackage [
 RBCopyPackageParametrizedTest >> testCopyPackageAndChangesCopyReferences [
 	| refactoring aModel |
 	self timeLimit: 2 minutes.
-	refactoring := (rbClass 
-		copyPackage: #'Refactoring-Help'
-		in: #'Refactoring-Help1').
+	refactoring := (self createRefactoringWithArguments: 
+		{ #'Refactoring-Help' . #'Refactoring-Help1'}).
 	aModel := refactoring model.
 	
 	self executeRefactoring: refactoring.
@@ -60,7 +62,6 @@ RBCopyPackageParametrizedTest >> testCopyPackageAndChangesCopyReferences [
 
 { #category : #'failure tests' }
 RBCopyPackageParametrizedTest >> testExistingPackage [
-	self shouldFail: (rbClass 
-		copyPackage: #'Refactoring-Tests-Core'
-		in: #'Refactoring-Tests-Changes')
+	self shouldFail: (self createRefactoringWithArguments: 
+		{ #'Refactoring-Tests-Core' . #'Refactoring-Tests-Changes'})
 ]
