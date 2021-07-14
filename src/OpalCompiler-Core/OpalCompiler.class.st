@@ -31,7 +31,6 @@ Class {
 	#instVars : [
 		'ast',
 		'source',
-		'receiver',
 		'compilationContext',
 		'compilationContextClass'
 	],
