@@ -166,7 +166,8 @@ RBAbstractRefactoringTest >> setUp [
 RBAbstractRefactoringTest >> shouldFail: aRefactoring [ 
 
 	self proceedThroughWarning: [
-		self should: [ aRefactoring primitiveExecute ] raise: RBRefactoringError ]
+		self should: [ aRefactoring primitiveExecute ] 
+		raise: RBRefactoringError ]
 ]
 
 { #category : #actions }

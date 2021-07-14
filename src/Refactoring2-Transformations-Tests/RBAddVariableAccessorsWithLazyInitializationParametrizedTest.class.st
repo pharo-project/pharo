@@ -1,18 +1,25 @@
 Class {
-	#name : #RBCreateAccessorsWithLazyInitializationForVariableTest,
-	#superclass : #RBRefactoringTest,
-	#category : #'Refactoring-Tests-Core-Refactorings'
+	#name : #RBAddVariableAccessorsWithLazyInitializationParametrizedTest,
+	#superclass : #RBAbstractRefactoringTest,
+	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 
+{ #category : #tests }
+RBAddVariableAccessorsWithLazyInitializationParametrizedTest class >> testParameters [
+	^ ParametrizedTestMatrix new
+		addCase: { #rbClass -> RBCreateAccessorsWithLazyInitializationForVariableRefactoring };
+		yourself
+]
+
 { #category : #running }
-RBCreateAccessorsWithLazyInitializationForVariableTest >> setUp [
+RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> setUp [
 	super setUp.
 	model := self abstractVariableTestData.
 ]
 
 { #category : #'failure tests' }
-RBCreateAccessorsWithLazyInitializationForVariableTest >> testBadInitializationCode [
-	self shouldFail: ( RBCreateAccessorsWithLazyInitializationForVariableRefactoring 
+RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testBadInitializationCode [
+	self shouldFail: ( rbClass 
 		variable: 'Foo1' 
 		class: RBLintRuleTestData 
 		classVariable: true 
@@ -20,8 +27,8 @@ RBCreateAccessorsWithLazyInitializationForVariableTest >> testBadInitializationC
 ]
 
 { #category : #'failure tests' }
-RBCreateAccessorsWithLazyInitializationForVariableTest >> testBadInitializationCode1 [
-	self shouldFail: (RBCreateAccessorsWithLazyInitializationForVariableRefactoring 
+RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testBadInitializationCode1 [
+	self shouldFail: (rbClass 
 		variable: 'Foo1' 
 		class: RBLintRuleTestData 
 		classVariable: true 
@@ -29,9 +36,9 @@ RBCreateAccessorsWithLazyInitializationForVariableTest >> testBadInitializationC
 ]
 
 { #category : #tests }
-RBCreateAccessorsWithLazyInitializationForVariableTest >> testExistingClassVariableAccessors [
+RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testExistingClassVariableAccessors [
 	| refactoring class |
-	refactoring := RBCreateAccessorsWithLazyInitializationForVariableRefactoring 
+	refactoring := rbClass 
 							variable: 'Name1' 
 							class: RBLintRuleTestData 
 							classVariable: true.
@@ -45,9 +52,9 @@ RBCreateAccessorsWithLazyInitializationForVariableTest >> testExistingClassVaria
 ]
 
 { #category : #tests }
-RBCreateAccessorsWithLazyInitializationForVariableTest >> testExistingInstanceVariableAccessors [
+RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testExistingInstanceVariableAccessors [
 	| refactoring class |
-	refactoring := RBCreateAccessorsWithLazyInitializationForVariableRefactoring 
+	refactoring := rbClass 
 							variable: 'name' 
 							class: RBLintRuleTestData 
 							classVariable: false.
@@ -61,9 +68,13 @@ RBCreateAccessorsWithLazyInitializationForVariableTest >> testExistingInstanceVa
 ]
 
 { #category : #tests }
-RBCreateAccessorsWithLazyInitializationForVariableTest >> testNewClassVariableAccessors [
+RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testNewClassVariableAccessors [
 	| ref class |
-	ref := RBCreateAccessorsWithLazyInitializationForVariableRefactoring variable: 'Foo1' class: RBLintRuleTestData classVariable: true defaultValue: '''someString'''.
+	ref := rbClass 
+		variable: 'Foo1' 
+		class: RBLintRuleTestData 
+		classVariable: true 
+		defaultValue: '''someString'''.
 	self executeRefactoring: ref.
 	class := ref model metaclassNamed: #RBLintRuleTestData.
 	self denyEmpty: ref changes changes.
@@ -74,9 +85,13 @@ RBCreateAccessorsWithLazyInitializationForVariableTest >> testNewClassVariableAc
 ]
 
 { #category : #tests }
-RBCreateAccessorsWithLazyInitializationForVariableTest >> testNewInstanceVariableAccessors [
+RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testNewInstanceVariableAccessors [
 	| ref class |
-	ref := RBCreateAccessorsWithLazyInitializationForVariableRefactoring variable: 'foo1' class: RBLintRuleTestData classVariable: false defaultValue: '123'.
+	ref := rbClass 
+		variable: 'foo1' 
+		class: RBLintRuleTestData 
+		classVariable: false 
+		defaultValue: '123'.
 	self executeRefactoring: ref.
 	class := ref model classNamed: #RBLintRuleTestData.
 	self denyEmpty: ref changes changes.
@@ -87,13 +102,13 @@ RBCreateAccessorsWithLazyInitializationForVariableTest >> testNewInstanceVariabl
 ]
 
 { #category : #'failure tests' }
-RBCreateAccessorsWithLazyInitializationForVariableTest >> testNonExistantName [
+RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> testNonExistantName [
 	self
-		shouldFail: (RBCreateAccessorsWithLazyInitializationForVariableRefactoring 
+		shouldFail: (rbClass 
 				variable: #Foo
 				class: RBBasicLintRuleTestData
 				classVariable: true);
-		shouldFail: (RBCreateAccessorsWithLazyInitializationForVariableRefactoring 
+		shouldFail: (rbClass 
 				variable: 'foo'
 				class: RBBasicLintRuleTestData
 				classVariable: true)
