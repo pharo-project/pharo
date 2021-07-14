@@ -27,7 +27,7 @@ RBRealizeClassParametrizedTest >> createAbstractClass [
 RBRealizeClassParametrizedTest >> testClassWithoutChanges [
 	self proceedThroughWarning: [ self executeRefactoring: (rbClass 
 		model: model 
-		className: #RBLintRuleTestData)].
+		className: #RBLintRuleTestData) asRefactoring ].
 	self assert: model changes changes isEmpty
 ]
 
@@ -36,10 +36,10 @@ RBRealizeClassParametrizedTest >> testRealizeAbstractClass [
 	| class |
 	class := model classNamed: #RBFooLintRuleTestData.
 	self createAbstractClass.
-	self proceedThroughWarning: [ self executeRefactoring: 
-		(rbClass 
-		model: model 
-		className: #RBFooLintRuleTestData)].
+	self proceedThroughWarning: [ 
+		self executeRefactoring: (rbClass 
+			model: model 
+			className: #RBFooLintRuleTestData) asRefactoring ].
 	self assert: (class parseTreeFor: #isEmpty) equals: 
 	(self parseMethod: 'isEmpty
 		self shouldBeImplemented').
@@ -55,10 +55,9 @@ RBRealizeClassParametrizedTest >> testRealizeAbstractClass [
 RBRealizeClassParametrizedTest >> testRealizeClass [
 	| class |
 	class := model classNamed: #RBFooLintRuleTestData.
-	self executeRefactoring: 
-		(rbClass 
+	self executeRefactoring: (rbClass 
 		model: model 
-		className: #RBFooLintRuleTestData).
+		className: #RBFooLintRuleTestData) asRefactoring.
 	self assert: (class parseTreeFor: #isEmpty) equals: 
 	(self parseMethod: 'isEmpty
 		self shouldBeImplemented').
@@ -75,10 +74,10 @@ RBRealizeClassParametrizedTest >> testRealizeWithAbstractSubclass [
 	| class |
 	class := model classNamed: #RBTransformationRuleTestData.
 	class compile: 'foo: arg1 bar: arg2 self subclassResponsibility' classified: 'accessing'.
-	self proceedThroughWarning: [ self executeRefactoring: 
-		(rbClass 
-		model: model 
-		className: #RBFooLintRuleTestData)].
+	self proceedThroughWarning: [ 
+		self executeRefactoring: (rbClass 
+			model: model 
+			className: #RBFooLintRuleTestData) asRefactoring ].
 	class := model classNamed: #RBFooLintRuleTestData.
 	self assert: (class parseTreeFor: #isEmpty) equals: 
 	(self parseMethod: 'isEmpty

@@ -159,7 +159,7 @@ RBAbstractRefactoringTest >> rbClass: anObject [
 { #category : #running }
 RBAbstractRefactoringTest >> setUp [
 	super setUp.
-	model := RBNamespace2 new
+	model := self defaultNamespace new
 ]
 
 { #category : #actions }
@@ -174,6 +174,13 @@ RBAbstractRefactoringTest >> shouldFail: aRefactoring [
 RBAbstractRefactoringTest >> shouldWarn: aRefactoringColl [ 
 	self 
 		should: [ self executeRefactoring: aRefactoringColl ]
+		raise: RBRefactoringWarning
+]
+
+{ #category : #actions }
+RBAbstractRefactoringTest >> shouldntWarn: aRefactoring [ 
+	self 
+		shouldnt: [ self executeRefactoring: aRefactoring ]
 		raise: RBRefactoringWarning
 ]
 

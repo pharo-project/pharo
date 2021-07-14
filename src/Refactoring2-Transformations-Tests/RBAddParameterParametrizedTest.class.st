@@ -11,7 +11,7 @@ RBAddParameterParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RBAddParameterParametrizedTest >> defaultNamespace [ 
 	^ RBNamespace
 ]

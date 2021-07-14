@@ -1,18 +1,26 @@
 Class {
-	#name : #RBChildrenToSiblingsTest,
-	#superclass : #RBRefactoringTest,
-	#category : #'Refactoring-Tests-Core-Refactorings'
+	#name : #RBChildrenToSiblingsParametrizedTest,
+	#superclass : #RBAbstractRefactoringTest,
+	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 
+{ #category : #tests }
+RBChildrenToSiblingsParametrizedTest class >> testParameters [
+	^ ParametrizedTestMatrix new
+		addCase: { #rbClass -> RBChildrenToSiblingsRefactoring };
+		yourself
+]
+
 { #category : #running }
-RBChildrenToSiblingsTest >> setUp [
+RBChildrenToSiblingsParametrizedTest >> setUp [
 	super setUp.
-	model := Smalltalk compiler evaluate: self childrenToSiblingTestData
+	model := self childrenToSiblingTestData
 ]
 
 { #category : #'failure tests' }
-RBChildrenToSiblingsTest >> testBadName [
-	self shouldFail: (RBChildrenToSiblingsRefactoring 
+RBChildrenToSiblingsParametrizedTest >> testBadName [
+	
+	self shouldFail: (rbClass 
 			name: #'Obje ct'
 			class: RBLintRuleTestData
 			subclasses: (Array 
@@ -21,15 +29,14 @@ RBChildrenToSiblingsTest >> testBadName [
 ]
 
 { #category : #'failure tests' }
-RBChildrenToSiblingsTest >> testExistingName [
-	self
-		shouldFail: (RBChildrenToSiblingsRefactoring 
+RBChildrenToSiblingsParametrizedTest >> testExistingName [
+	self shouldFail: (rbClass 
 				name: #Object
 				class: RBLintRuleTestData
 				subclasses: (Array 
 						with: RBBasicLintRuleTestData
-						with: RBCompositeLintRuleTestData));
-		shouldFail: (RBChildrenToSiblingsRefactoring 
+						with: RBCompositeLintRuleTestData)).
+	self shouldFail: (rbClass 
 				name: #Processor
 				class: RBLintRuleTestData
 				subclasses: (Array 
@@ -38,8 +45,8 @@ RBChildrenToSiblingsTest >> testExistingName [
 ]
 
 { #category : #'failure tests' }
-RBChildrenToSiblingsTest >> testInvalidSubclass [
-	self shouldFail: (RBChildrenToSiblingsRefactoring 
+RBChildrenToSiblingsParametrizedTest >> testInvalidSubclass [
+	self shouldFail: (rbClass 
 			name: #Foo
 			class: RBRefactoringTest
 			subclasses: (Array 
@@ -48,8 +55,8 @@ RBChildrenToSiblingsTest >> testInvalidSubclass [
 ]
 
 { #category : #'failure tests' }
-RBChildrenToSiblingsTest >> testMetaClassFailure [
-	self shouldFail: (RBChildrenToSiblingsRefactoring 
+RBChildrenToSiblingsParametrizedTest >> testMetaClassFailure [
+	self shouldFail: (rbClass 
 			name: #Foo
 			class: RBLintRuleTestData class
 			subclasses: (Array 
@@ -58,11 +65,11 @@ RBChildrenToSiblingsTest >> testMetaClassFailure [
 ]
 
 { #category : #tests }
-RBChildrenToSiblingsTest >> testModelChildrenToSibling [
+RBChildrenToSiblingsParametrizedTest >> testModelChildrenToSibling [
 	| refactoring class subclass superclass |
 	class := model classNamed: #ConcreteSuperclass.
 	subclass := model classNamed: #ConcreteSubclass.
-	refactoring := RBChildrenToSiblingsRefactoring
+	refactoring := rbClass
 		model: model
 		name: #AbstractSuperclass
 		class: class

@@ -13,21 +13,17 @@ RBTransformationsTest >> setUp [
 
 { #category : #tests }
 RBTransformationsTest >> testAddClassTransform [
-	| transformation newClass superclass |
-	transformation := (RBAddClassTransformation
-		addClass: self changeMock name , 'Temporary'
-		superclass: #Object
-		subclasses: OrderedCollection new
-		category: self class category) transform.
 
+	| transformation class |
+	transformation := (RBAddClassCommentTransformation
+		comment: 'New comment for class'
+		in: self changeMock name)
+		transform.
+	
 	self assert: transformation model changes changes size equals: 1.
-
-	newClass := transformation model classNamed: (self changeMock name , 'Temporary') asSymbol.
-	superclass := transformation model classNamed: #Object.
-	self assert: newClass superclass equals: superclass.
-	self assert: (superclass subclasses includes: newClass).
-	self assert: newClass theMetaClass superclass equals: superclass theMetaClass.
-	self assert: (superclass theMetaClass subclasses includes: newClass theMetaClass)
+	
+	class := transformation model classNamed: self changeMock name.
+	self assert: class comment equals: 'New comment for class'
 ]
 
 { #category : #tests }
@@ -62,6 +58,18 @@ RBTransformationsTest >> testAddMethodTransform [
 ]
 
 { #category : #tests }
+RBTransformationsTest >> testAddProtocolTransform [
+	
+	| transformation |
+	transformation := (RBAddProtocolTransformation new
+		protocol: 'transforming'
+		inClass: #RBDummyEmptyClass)
+		transform.
+		
+	self assert: transformation model changes changes size equals: 1
+]
+
+{ #category : #tests }
 RBTransformationsTest >> testAddVariableAccessorTransform [
 	| transformation class |
 	transformation := (RBAddVariableAccessorTransformation 
@@ -91,6 +99,35 @@ RBTransformationsTest >> testAddVariableTransform [
 	
 	class := transformation model classNamed: self changeMock name asSymbol.
 	self assert: (class directlyDefinesInstanceVariable: 'asdf').
+]
+
+{ #category : #tests }
+RBTransformationsTest >> testCustomTransform [
+
+	| transformation newClassName class |
+	newClassName := (self changeMock name, 'Temporary') asSymbol.
+	transformation := RBCustomTransformation with: [ :aModel |
+		"add class"
+		aModel
+			defineClass: ('<1p> subclass: #<2s>
+				instanceVariableNames: ''''
+				classVariableNames: ''''
+				poolDictionaries: ''''
+				category: <3p>' 
+			expandMacrosWith: 'Object'
+			with: newClassName
+			with: self class category).
+		
+		"add a comment in the class description"
+		(aModel classNamed: newClassName) comment: 'Deprecated!!! Use super class'.
+		"add an instance variable"
+		(aModel classNamed: newClassName) addInstanceVariable: 'asdf' ].
+
+	transformation transform.
+	self assert: transformation model changes changes size equals: 3.
+	
+	class := transformation model classNamed: (self changeMock name, 'Temporary') asSymbol.
+	self assert: (class directlyDefinesInstanceVariable: 'asdf')
 ]
 
 { #category : #tests }
@@ -170,6 +207,26 @@ RBTransformationsTest >> testRemoveClassTransform [
 	newClass := self changeMock name.
 	self assert: ((superclass subclasses collect: [:each | each name]) includes: newClass) not.
 	self assert: ((superclass theMetaClass subclasses collect: [:each | each name]) includes: newClass) not.
+]
+
+{ #category : #tests }
+RBTransformationsTest >> testRemoveMessageSendTransform [
+
+	| transformation class methodName |
+	methodName := ('called:', 'on:') asSymbol.
+	transformation := (RBRemoveMessageSendTransformation new
+		messageSend: #cr
+		inMethod: methodName
+		inClass: #RBRefactoryTestDataApp)
+		transform.
+	
+	self assert: transformation model changes changes size equals: 1.
+	
+	class := transformation model classNamed: #RBRefactoryTestDataApp.
+	self assert: (class parseTreeFor: methodName)
+			equals:  (self parseMethod: 'called: anObject on: aBlock 
+	Transcript show: anObject printString.
+	aBlock value')
 ]
 
 { #category : #tests }

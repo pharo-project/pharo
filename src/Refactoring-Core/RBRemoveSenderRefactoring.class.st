@@ -90,7 +90,9 @@ RBRemoveSenderRefactoring >> inlineParseTree [
 
 { #category : #preconditions }
 RBRemoveSenderRefactoring >> preconditions [
-	^(RBCondition definesSelector: sourceSelector in: class) 
+	^ (RBCondition withBlock: [class ifNil: 
+			[self refactoringError: 'Invalid class name']. true]) &
+	(RBCondition definesSelector: sourceSelector in: class) 
 		& (RBCondition withBlock: 
 					[self findSelectedMessage.
 					"self parseInlineMethod."

@@ -1,37 +1,71 @@
 Class {
-	#name : #RBPullUpMethodTest,
-	#superclass : #RBRefactoringTest,
-	#category : #'Refactoring-Tests-Core-Refactorings'
+	#name : #RBPullUpMethodParametrizedTest,
+	#superclass : #RBAbstractRefactoringTest,
+	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 
 { #category : #tests }
-RBPullUpMethodTest >> addClassHierarchy [
-	model 
-		defineClass: 'Object subclass: #SomeClass instanceVariableNames: '''' classVariableNames: ''Foo'' poolDictionaries: '''' category: #''Refactory-Test data'''.
-	model 
-		defineClass: 'SomeClass subclass: #Subclass instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
-	model 
-		defineClass: 'Subclass subclass: #Foo1 instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
-	model 
-		defineClass: 'Subclass subclass: #Foo2 instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
+RBPullUpMethodParametrizedTest class >> testParameters [
+	^ ParametrizedTestMatrix new
+		addCase: { #rbClass -> RBPullUpMethodRefactoring };
+		yourself
 ]
 
 { #category : #tests }
-RBPullUpMethodTest >> addClassHierarchyForPools [
-	model 
-		defineClass: 'SharedPool subclass: #TotoSharedPool instanceVariableNames: '''' classVariableNames: ''SP'' poolDictionaries: '''' category: #''Refactory-Test data'''.
-	model 
-		defineClass: 'Object subclass: #TotoSuperclass instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
-	model 
-		defineClass: 'TotoSuperclass subclass: #Toto instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: ''TotoSharedPool'' category: #''Refactory-Test data'''.
+RBPullUpMethodParametrizedTest >> addClassHierarchy [
+	model defineClass: 'Object subclass: #SomeClass 
+		instanceVariableNames: '''' 
+		classVariableNames: ''Foo'' 
+		poolDictionaries: '''' 
+		category: #''Refactory-Test data'''.
+	model defineClass: 'SomeClass subclass: #Subclass 
+		instanceVariableNames: '''' 
+		classVariableNames: '''' 
+		poolDictionaries: '''' 
+		category: #''Refactory-Test data'''.
+	model defineClass: 'Subclass subclass: #Foo1 
+		instanceVariableNames: '''' 
+		classVariableNames: '''' 
+		poolDictionaries: '''' 
+		category: #''Refactory-Test data'''.
+	model defineClass: 'Subclass subclass: #Foo2 
+		instanceVariableNames: '''' 
+		classVariableNames: '''' 
+		poolDictionaries: '''' 
+		category: #''Refactory-Test data'''.
+]
+
+{ #category : #tests }
+RBPullUpMethodParametrizedTest >> addClassHierarchyForPools [
+	model defineClass: 'SharedPool subclass: #TotoSharedPool 
+		instanceVariableNames: '''' 
+		classVariableNames: ''SP'' 
+		poolDictionaries: '''' 
+		category: #''Refactory-Test data'''.
+	model defineClass: 'Object subclass: #TotoSuperclass 
+		instanceVariableNames: '''' 
+		classVariableNames: '''' 
+		poolDictionaries: '''' 
+		category: #''Refactory-Test data'''.
+	model defineClass: 'TotoSuperclass subclass: #Toto 
+		instanceVariableNames: '''' 
+		classVariableNames: '''' 
+		poolDictionaries: ''TotoSharedPool'' 
+		category: #''Refactory-Test data'''.
+	
 	(model classNamed: #Toto) compile: 'poolReference ^ SP' classified: #(#accessing).
 ]
 
+{ #category : #accessing }
+RBPullUpMethodParametrizedTest >> defaultNamespace [
+	^RBNamespace
+]
+
 { #category : #'failure tests' }
-RBPullUpMethodTest >> testDoesntPullUpReferencesInstVar [
+RBPullUpMethodParametrizedTest >> testDoesntPullUpReferencesInstVar [
 	| refactoring class |
 	class := model classNamed: ('RBTransformation', 'RuleTestData1') asSymbol.
-	refactoring := RBPullUpMethodRefactoring 
+	refactoring := rbClass
 			model: model
 			pullUp: #(#foo )
 			from: class.
@@ -39,15 +73,16 @@ RBPullUpMethodTest >> testDoesntPullUpReferencesInstVar [
 ]
 
 { #category : #tests }
-RBPullUpMethodTest >> testPullUpAndCopyDown [
+RBPullUpMethodParametrizedTest >> testPullUpAndCopyDown [
 	| class |
 	self addClassHierarchy.
 	class := model classNamed: #Foo1.
 	class compile: 'yourself ^1' classified: #(#accessing).
-	self proceedThroughWarning: [ self executeRefactoring: (RBPullUpMethodRefactoring 
-				model: model
-				pullUp: #(#yourself)
-				from: class) ].
+	self proceedThroughWarning: [ 
+		self executeRefactoring: (rbClass 
+			model: model
+			pullUp: #(#yourself)
+			from: class) ].
 	self assert: (class superclass parseTreeFor: #yourself) 
 			equals: (self parseMethod: 'yourself ^1').
 	self deny: (class directlyDefinesMethod: #yourself).
@@ -58,21 +93,21 @@ RBPullUpMethodTest >> testPullUpAndCopyDown [
 ]
 
 { #category : #'failure tests' }
-RBPullUpMethodTest >> testPullUpClassMethod [
+RBPullUpMethodParametrizedTest >> testPullUpClassMethod [
 	| class |
 	class := model classNamed: #Object.
 	class addClassVariable: #Foo.
 	class classSide 
 		compile: 'foo ^Foo'
 		classified: #(#accessing ).
-	self shouldFail: (RBPullUpMethodRefactoring 
+	self shouldFail: (rbClass 
 			model: model
 			pullUp: #(#foo )
 			from: class classSide)
 ]
 
 { #category : #tests }
-RBPullUpMethodTest >> testPullUpInAHighHierarchyClass [
+RBPullUpMethodParametrizedTest >> testPullUpInAHighHierarchyClass [
 	| class superClass |
 	
 	self addClassHierarchy .
@@ -80,7 +115,7 @@ RBPullUpMethodTest >> testPullUpInAHighHierarchyClass [
 	self addClassHierarchy.
 	superClass := model classNamed: #SomeClass .
 	class compile: 'example ^1' classified: #(#accessing).
-	self executeRefactoring: (RBPullUpMethodRefactoring 
+	self executeRefactoring: (rbClass 
 				model: model
 				pullUp: #(#example)
 				from: class 
@@ -95,10 +130,10 @@ RBPullUpMethodTest >> testPullUpInAHighHierarchyClass [
 ]
 
 { #category : #tests }
-RBPullUpMethodTest >> testPullUpMethodWithCopyOverriddenMethodsDown [
+RBPullUpMethodParametrizedTest >> testPullUpMethodWithCopyOverriddenMethodsDown [
 	| refactoring |
 	self proceedThroughWarning: 
-		[ refactoring := RBPullUpMethodRefactoring 
+		[ refactoring := rbClass 
 			pullUp: #(#isComposite )
 			from: RBCompositeLintRuleTestData.
 		self executeRefactoring: refactoring ].
@@ -109,27 +144,28 @@ RBPullUpMethodTest >> testPullUpMethodWithCopyOverriddenMethodsDown [
 ]
 
 { #category : #tests }
-RBPullUpMethodTest >> testPullUpMethodWithSharedPool [
+RBPullUpMethodParametrizedTest >> testPullUpMethodWithSharedPool [
 	| class superClass |
 	
 	self addClassHierarchyForPools.
 	class := model classNamed: #Toto.
 	superClass := model classNamed: #TotoSuperclass.
-	self proceedThroughWarning: [ self executeRefactoring: (RBPullUpMethodRefactoring 
-				model: model
-				pullUp: #(#poolReference)
-				from: class 
-				to: superClass) ].
+	self proceedThroughWarning: [ 
+		self executeRefactoring: (rbClass 
+			model: model
+			pullUp: #(#poolReference)
+			from: class 
+			to: superClass) ].
 	self assert: (superClass parseTreeFor: #poolReference) 
 				equals: (self parseMethod: 'poolReference ^ SP').
 	self deny: (class directlyDefinesMethod: #poolReference).
 ]
 
 { #category : #tests }
-RBPullUpMethodTest >> testPullUpReferencesInstVar [
+RBPullUpMethodParametrizedTest >> testPullUpReferencesInstVar [
 	| refactoring class superClass |
 	class := model classNamed: ('RBTransformation', 'RuleTestData1') asSymbol.
-	refactoring := RBPullUpMethodRefactoring 
+	refactoring := rbClass 
 			model: model
 			pullUp: #(#foo )
 			from: class.
@@ -143,7 +179,7 @@ RBPullUpMethodTest >> testPullUpReferencesInstVar [
 ]
 
 { #category : #'failure tests' }
-RBPullUpMethodTest >> testPullUpWhenSuperClassDoesNotDirectlyImplement [
+RBPullUpMethodParametrizedTest >> testPullUpWhenSuperClassDoesNotDirectlyImplement [
 	| classEnvironment classes |
 	classes := #(#ClassA #ClassB #ClassC)
 		inject: OrderedCollection new
@@ -162,11 +198,15 @@ RBPullUpMethodTest >> testPullUpWhenSuperClassDoesNotDirectlyImplement [
 		instanceVariableNames: ''''
 		classVariableNames: ''''
 		poolDictionaries: ''''
-		category: ''Testing'' ' 'ClassA subclass: #ClassB
+		category: ''Testing'' ' 
+		
+		'ClassA subclass: #ClassB
 		instanceVariableNames: ''''
 		classVariableNames: ''''
 		poolDictionaries: ''''
-		category: ''Testing'' ' 'ClassB subclass: #ClassC
+		category: ''Testing'' ' 
+		
+		'ClassB subclass: #ClassC
 		instanceVariableNames: ''''
 		classVariableNames: ''''
 		poolDictionaries: ''''
@@ -182,40 +222,42 @@ RBPullUpMethodTest >> testPullUpWhenSuperClassDoesNotDirectlyImplement [
 					[ :methodPair | class compile: methodPair first classified: methodPair last ] ].
 	self
 		shouldntWarn:
-			 (RBPullUpMethodRefactoring
+			 (rbClass
 				model: model
 				pullUp: #(#foo)
 				from: (model classNamed: #ClassC))
 ]
 
 { #category : #'failure tests' }
-RBPullUpMethodTest >> testPullUpWithInvalidSuperSend [
+RBPullUpMethodParametrizedTest >> testPullUpWithInvalidSuperSend [
 	| class |
 	self addClassHierarchy .
 	(model classNamed: #Foo2) compile: 'yourself ^super yourself + 1'
 		classified: #(#accessing).
 	class := model classNamed: #Foo1.
 	class compile: 'yourself ^1' classified: #(#accessing).
-	self shouldFail: (RBPullUpMethodRefactoring 
+	
+	self shouldFail: (rbClass 
 				model: model
 				pullUp: #(#yourself)
 				from: class)
 ]
 
 { #category : #'failure tests' }
-RBPullUpMethodTest >> testPullUpWithMethodThatCannotBePullUp [
+RBPullUpMethodParametrizedTest >> testPullUpWithMethodThatCannotBePullUp [
 	model 
 		defineClass: 'Object subclass: #SomeClass instanceVariableNames: '''' classVariableNames: ''Foo'' poolDictionaries: '''' category: #''Refactory-Test data'''.
 	(model classNamed: #SomeClass) compile: 'yourself ^54'
 		classified: #(#accessing).
-	self shouldFail: (RBPullUpMethodRefactoring 
+	
+	self shouldFail: (rbClass 
 				model: model
 				pullUp: #(#yourself)
 				from: (model classNamed: #SomeClass))
 ]
 
 { #category : #'failure tests' }
-RBPullUpMethodTest >> testPullUpWithSuperSendThatCannotBeCopiedDown [
+RBPullUpMethodParametrizedTest >> testPullUpWithSuperSendThatCannotBeCopiedDown [
 	| class |
 	self addClassHierarchy.
 	(model classNamed: #Object) compile: 'foo ^3' classified: #(#accessing).
@@ -223,7 +265,8 @@ RBPullUpMethodTest >> testPullUpWithSuperSendThatCannotBeCopiedDown [
 		classified: #(#accessing).
 	(class := model classNamed: #Foo2) compile: 'foo ^1'
 		classified: #(#accessing).
-	self shouldFail: (RBPullUpMethodRefactoring 
+	
+	self shouldFail: (rbClass 
 				model: model
 				pullUp: #(#foo)
 				from: class)
