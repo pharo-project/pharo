@@ -1,25 +1,33 @@
 Class {
-	#name : #RBCopyPackageTest,
-	#superclass : #RBRefactoringTest,
-	#category : #'Refactoring-Tests-Core-Refactorings'
+	#name : #RBCopyPackageParametrizedTest,
+	#superclass : #RBAbstractRefactoringTest,
+	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 
+{ #category : #tests }
+RBCopyPackageParametrizedTest class >> testParameters [
+	^ ParametrizedTestMatrix new
+		addCase: { #rbClass -> RBCopyPackageRefactoring };
+		yourself
+]
+
 { #category : #'failure tests' }
-RBCopyPackageTest >> testBadName [
-	self
-		shouldFail: (RBCopyPackageRefactoring 
-				copyPackage: #'Refactoring-Tests-Core'
-				in: #'Refactoring-Tests-Core').
+RBCopyPackageParametrizedTest >> testBadName [
+	self shouldFail: (rbClass 
+		copyPackage: #'Refactoring-Tests-Core'
+		in: #'Refactoring-Tests-Core').
 ]
 
 { #category : #tests }
-RBCopyPackageTest >> testCopyPackage [
+RBCopyPackageParametrizedTest >> testCopyPackage [
 	| refactoring aModel |
-	refactoring := (RBCopyPackageRefactoring 
-				copyPackage: #'Refactoring-Tests-Changes'
-				in: #'Refactoring-Tests-Changes1').
+	refactoring := (rbClass 
+		copyPackage: #'Refactoring-Tests-Changes'
+		in: #'Refactoring-Tests-Changes1').
 	aModel := refactoring model.
+	
 	self executeRefactoring: refactoring.
+	
 	self assert: (aModel packageNamed: #'Refactoring-Tests-Changes1') isNotNil.
 	self assert: (aModel classNamed: #RBRefactoringChangeTestCopy) category equals: #'Refactoring-Tests-Changes1'.
 	self assert: (aModel classNamed: #RBRefactoringChangeTestCopy) instanceVariableNames asArray
@@ -29,14 +37,16 @@ RBCopyPackageTest >> testCopyPackage [
 ]
 
 { #category : #tests }
-RBCopyPackageTest >> testCopyPackageAndChangesCopyReferences [
+RBCopyPackageParametrizedTest >> testCopyPackageAndChangesCopyReferences [
 	| refactoring aModel |
 	self timeLimit: 2 minutes.
-	refactoring := (RBCopyPackageRefactoring 
-				copyPackage: #'Refactoring-Help'
-				in: #'Refactoring-Help1').
+	refactoring := (rbClass 
+		copyPackage: #'Refactoring-Help'
+		in: #'Refactoring-Help1').
 	aModel := refactoring model.
+	
 	self executeRefactoring: refactoring.
+	
 	self assert: (aModel classNamed: #RBRefactoringClassesHelpCopy) category 
 		equals: #'Refactoring-Help1'.
 	self assert: (aModel classNamed: #RBRefactoringClassesHelpCopy) superclass name 
@@ -49,9 +59,8 @@ RBCopyPackageTest >> testCopyPackageAndChangesCopyReferences [
 ]
 
 { #category : #'failure tests' }
-RBCopyPackageTest >> testExistingPackage [
-	self
-		shouldFail: (RBCopyPackageRefactoring 
-				copyPackage: #'Refactoring-Tests-Core'
-				in: #'Refactoring-Tests-Changes')
+RBCopyPackageParametrizedTest >> testExistingPackage [
+	self shouldFail: (rbClass 
+		copyPackage: #'Refactoring-Tests-Core'
+		in: #'Refactoring-Tests-Changes')
 ]

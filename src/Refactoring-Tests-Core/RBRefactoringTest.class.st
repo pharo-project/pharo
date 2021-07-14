@@ -245,7 +245,7 @@ RBRefactoringTest >> extractMethodTestData [
 RBRefactoringTest >> inlineMethodTestData [
 ^ '
 | m |
-(m := RBNamespace 
+(m := RBNamespace
 			onEnvironment: ((RBClassEnvironment onEnvironment: RBBrowserEnvironment new) 
 					classes: (#(#RBRenameClassVariableChange #RBVariableCompositeRefactoryChange #RBRenameInstanceVariableChange #RBCompositeRefactoryChange #RBRenameVariableChange #RBRefactoryChange) 
 							inject: OrderedCollection new

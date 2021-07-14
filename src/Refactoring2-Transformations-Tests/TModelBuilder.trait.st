@@ -246,7 +246,7 @@ TModelBuilder >> extractMethodTestData [
 TModelBuilder >> inlineMethodTestData [
 	^ Smalltalk compiler evaluate: '
 		| m |
-		(m := RBNamespace2 
+		(m := RBNamespace2
 			onEnvironment: ((RBClassEnvironment onEnvironment: RBBrowserEnvironment new) 
 					classes: (#(#RBRenameClassVariableChange #RBVariableCompositeRefactoryChange #RBRenameInstanceVariableChange #RBCompositeRefactoryChange #RBRenameVariableChange #RBRefactoryChange) 
 							inject: OrderedCollection new

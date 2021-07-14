@@ -1,14 +1,21 @@
 Class {
-	#name : #RBInlineMethodFromComponentTest,
-	#superclass : #RBRefactoringTest,
-	#category : #'Refactoring-Tests-Core-Refactorings'
+	#name : #RBInlineMethodFromComponentParametrizedTest,
+	#superclass : #RBAbstractRefactoringTest,
+	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 
 { #category : #tests }
-RBInlineMethodFromComponentTest >> testInlineComponentIntoCascadedMessage [
+RBInlineMethodFromComponentParametrizedTest class >> testParameters [
+	^ ParametrizedTestMatrix new
+		addCase: { #rbClass -> RBInlineMethodFromComponentRefactoring };
+		yourself
+]
+
+{ #category : #tests }
+RBInlineMethodFromComponentParametrizedTest >> testInlineComponentIntoCascadedMessage [
 	| refactoring |
 	self proceedThroughWarning: 
-		[ refactoring := RBInlineMethodFromComponentRefactoring 
+		[ refactoring := rbClass 
 			inline:  (35 to: 79)
 			inMethod: #inlineComponent
 			forClass: RBRefactoryTestDataApp.
@@ -19,7 +26,9 @@ RBInlineMethodFromComponentTest >> testInlineComponentIntoCascadedMessage [
 			setupInlineExpressionFor: refactoring
 			toReturn: false.
 		self executeRefactoring: refactoring ].
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #inlineComponent) equals: (self parseMethod: 'inlineComponent
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) 
+		parseTreeFor: #inlineComponent) 
+		equals: (self parseMethod: 'inlineComponent
 	| a aBehavior |
 	a := 5.
 	aBehavior := a class.
@@ -29,11 +38,10 @@ RBInlineMethodFromComponentTest >> testInlineComponentIntoCascadedMessage [
 ]
 
 { #category : #tests }
-RBInlineMethodFromComponentTest >> testInlineComponentMethodMax [
+RBInlineMethodFromComponentParametrizedTest >> testInlineComponentMethodMax [
 	| refactoring |
-	self
-		proceedThroughWarning: [ | class |
-			refactoring := RBInlineMethodFromComponentRefactoring
+	self proceedThroughWarning: [ | class |
+			refactoring := rbClass
 				inline: (47 to: 58)
 				inMethod: #inlineMax
 				forClass: RBRefactoryTestDataApp.
@@ -64,11 +72,11 @@ RBInlineMethodFromComponentTest >> testInlineComponentMethodMax [
 ]
 
 { #category : #tests }
-RBInlineMethodFromComponentTest >> testInlineEmptyComponentMethod [
+RBInlineMethodFromComponentParametrizedTest >> testInlineEmptyComponentMethod [
 	| refactoring |
 
 	self proceedThroughWarning: 
-		[ refactoring := RBInlineMethodFromComponentRefactoring 
+		[ refactoring := rbClass 
 			inline: (35 to: 91)
 			inMethod: #inlineComponent
 			forClass: RBRefactoryTestDataApp.
@@ -80,7 +88,9 @@ RBInlineMethodFromComponentTest >> testInlineEmptyComponentMethod [
 			setupImplementorToInlineFor: refactoring
 			toReturn: (refactoring model classNamed: #Object).
 		self executeRefactoring: refactoring ].
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #inlineComponent) equals: (self parseMethod: 'inlineComponent
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) 
+		parseTreeFor: #inlineComponent) 
+		equals: (self parseMethod: 'inlineComponent
 	| a anObject |
 	a := 5.
 	anObject := a class.
@@ -90,17 +100,15 @@ RBInlineMethodFromComponentTest >> testInlineEmptyComponentMethod [
 ]
 
 { #category : #'failure tests' }
-RBInlineMethodFromComponentTest >> testInlineMethodFromComponentFailure [
-	self
-		shouldFail:
-			(RBInlineMethodFromComponentRefactoring
-				inline: (50 to: 64)
-				inMethod: #inlineFailed
-				forClass: RBRefactoryTestDataApp)
+RBInlineMethodFromComponentParametrizedTest >> testInlineMethodFromComponentFailure [
+	self shouldFail: (rbClass
+		inline: (50 to: 64)
+		inMethod: #inlineFailed
+		forClass: RBRefactoryTestDataApp)
 ]
 
 { #category : #tests }
-RBInlineMethodFromComponentTest >> testModelInlineMethodWithSameVariableNames [
+RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVariableNames [
 	| class refactoring |
 	model := RBClassModelFactory rbNamespace new.
 	class := model classNamed: self class name.
@@ -109,7 +117,7 @@ RBInlineMethodFromComponentTest >> testModelInlineMethodWithSameVariableNames [
 		compile: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^a a9: b b9: c'
 		classified: #(#accessing).
 	self proceedThroughWarning: 
-			[refactoring := RBInlineMethodFromComponentRefactoring 
+			[refactoring := rbClass 
 						model: model
 						inline: (72 to: 84)
 						inMethod: #foo
@@ -122,7 +130,7 @@ RBInlineMethodFromComponentTest >> testModelInlineMethodWithSameVariableNames [
 ]
 
 { #category : #tests }
-RBInlineMethodFromComponentTest >> testModelInlineMethodWithSameVariableNames1 [
+RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVariableNames1 [
 	| class refactoring |
 	model := RBClassModelFactory rbNamespace new.
 	class := model classNamed: #Rectangle.
@@ -133,7 +141,7 @@ RBInlineMethodFromComponentTest >> testModelInlineMethodWithSameVariableNames1 [
 		compile: 'foo | aRectangle temp | aRectangle := 0@0 corner: 1@1. temp := aRectangle. ^aRectangle rectangleRelativeTo: temp'
 		classified: #(#accessing).
 	self proceedThroughWarning: 
-			[refactoring := RBInlineMethodFromComponentRefactoring 
+			[refactoring := rbClass 
 						model: model
 						inline: (77 to: 112)
 						inMethod: #foo
@@ -147,7 +155,7 @@ RBInlineMethodFromComponentTest >> testModelInlineMethodWithSameVariableNames1 [
 ]
 
 { #category : #tests }
-RBInlineMethodFromComponentTest >> testModelInlineMethodWithSameVariableNames2 [
+RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVariableNames2 [
 	| class refactoring |
 	model := RBClassModelFactory rbNamespace new.
 	class := model classNamed: self class name.
@@ -156,7 +164,7 @@ RBInlineMethodFromComponentTest >> testModelInlineMethodWithSameVariableNames2 [
 		compile: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^c a9: b b9: a'
 		classified: #(#accessing).
 	self proceedThroughWarning: 
-			[refactoring := RBInlineMethodFromComponentRefactoring 
+			[refactoring := rbClass 
 						model: model
 						inline: (72 to: 84)
 						inMethod: #foo
