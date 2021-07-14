@@ -23,15 +23,18 @@ RBRemoveClassVariableParametrizedTest >> testNonExistantName [
 { #category : #'failure tests' }
 RBRemoveClassVariableParametrizedTest >> testReferencedVariable [
 	self shouldFail: (self createRefactoringWithArguments:
-		{ #RecursiveSelfRule . #RBTransformationRuleTestData })
+		{ #RecursiveSelfRule . #RBTransformationRuleTestData }).
 ]
 
 { #category : #tests }
-RBRemoveClassVariableParametrizedTest >> testRemoveClassVar [
+RBRemoveClassVariableParametrizedTest >> testRemoveClassVariable [
 	| refactoring class |
-	refactoring :=  self createRefactoringWithArguments: {'Foo1' . #RBLintRuleTestData}.
+	refactoring :=  self createRefactoringWithArguments: 
+		{'Foo1' . #RBLintRuleTestData}.
 	class := refactoring model classNamed: #RBLintRuleTestData.
 	self assert: (class definesClassVariable: 'Foo1').
+	
 	self executeRefactoring: refactoring.
+	
 	self deny: (class definesClassVariable: 'Foo1')
 ]

@@ -17,12 +17,17 @@ RBRemoveInstanceVariableParametrizedTest class >> testParameters [
 { #category : #tests }
 RBRemoveInstanceVariableParametrizedTest >> testModelRemoveInstanceVariable [
 	| class |
-	model 
-		defineClass: 'nil subclass: #Object instanceVariableNames: ''foo1'' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
+	model defineClass: 'nil subclass: #Object 
+		instanceVariableNames: ''foo1'' 
+		classVariableNames: '''' 
+		poolDictionaries: '''' 
+		category: #''Refactory-Test data'''.
 	class := model classNamed: #Object.
 	self assert: (class definesInstanceVariable: 'foo1').
-	self executeRefactoring: (self createRefactoringWithModel: model andArguments: 
-				{'foo1' . class name asSymbol }).
+	
+	self executeRefactoring: (self createRefactoringWithModel: model 
+		andArguments: {'foo1' . class name asSymbol }).
+	
 	self deny: (class definesInstanceVariable: 'foo1')
 ]
 
@@ -41,9 +46,12 @@ RBRemoveInstanceVariableParametrizedTest >> testReferencedVariable [
 { #category : #tests }
 RBRemoveInstanceVariableParametrizedTest >> testRemoveInstVar [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments: {'foo1' . #RBLintRuleTestData}.
+	refactoring := self createRefactoringWithArguments: 
+		{'foo1' . #RBLintRuleTestData}.
 	class := refactoring model classNamed: #RBLintRuleTestData.
 	self assert: (class definesInstanceVariable: 'foo1').
+	
 	self executeRefactoring: refactoring.
+	
 	self deny: (class definesInstanceVariable: 'foo1')
 ]

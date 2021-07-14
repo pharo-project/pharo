@@ -31,6 +31,22 @@ RBTransformationsTest >> testAddClassTransform [
 ]
 
 { #category : #tests }
+RBTransformationsTest >> testAddMethodCommentTransform [
+
+	| transformation method |
+	transformation := (RBAddMethodCommentTransformation
+		comment: 'New comment for method'
+		inMethod: #one
+		inClass: self changeMock name)
+		transform.
+	
+	self assert: transformation model changes changes size equals: 1.
+	
+	method := (transformation model classNamed: self changeMock name) methodFor: #one.
+	self assert: method ast comments first contents equals: 'New comment for method'
+]
+
+{ #category : #tests }
 RBTransformationsTest >> testAddMethodTransform [
 
 	| transformation class |
@@ -89,6 +105,52 @@ RBTransformationsTest >> testPushDownVariableTransform [
 		
 	(transformation model classNamed: #RBDummyLintRuleTest) 
 	subclasses do: [ :each | self assert: (each directlyDefinesInstanceVariable: 'foo1') ]
+]
+
+{ #category : #tests }
+RBTransformationsTest >> testRemoveClassTransform [
+
+	| transformation newClass superclass |
+	transformation := (RBRemoveClassTransformation
+							className: self changeMock name)
+							transform.
+	self assert: transformation model changes changes size equals: 1.
+	newClass := transformation model classNamed: self changeMock name asSymbol.
+	superclass := transformation model classNamed: #Object.
+	self assert: newClass isNil.
+	newClass := self changeMock name.
+	self assert: ((superclass subclasses collect: [:each | each name]) includes: newClass) not.
+	self assert: ((superclass theMetaClass subclasses collect: [:each | each name]) includes: newClass) not.
+]
+
+{ #category : #tests }
+RBTransformationsTest >> testRemoveMethodTransform [
+
+	| transformation class |
+	transformation := (RBRemoveMethodTransformation 
+		selector: #one
+		from: self changeMock name)
+		transform. 
+	
+	self assert: transformation model changes changes size equals: 1.
+	
+	class := transformation model classNamed: self changeMock name asSymbol.
+	self deny: (class directlyDefinesMethod: #one).
+]
+
+{ #category : #tests }
+RBTransformationsTest >> testRemoveVariableTransform [
+
+	| transformation class |
+	transformation := (RBRemoveVariableTransformation 
+							instanceVariable: 'instVar'
+							class: self changeMock name)
+							transform. 
+	
+	self assert: transformation model changes changes size equals: 1.
+	
+	class := transformation model classNamed: self changeMock name asSymbol.
+	self deny: (class directlyDefinesInstanceVariable: 'instVar').
 ]
 
 { #category : #tests }
