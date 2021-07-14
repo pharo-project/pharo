@@ -476,8 +476,7 @@ RBMethodNode >> methodClass [
 
 { #category : #'accessing - compiled method' }
 RBMethodNode >> methodClass: aClass [	
-	compilationContext ifNil: [compilationContext := aClass compiler compilationContext].
-	self compilationContext class: aClass
+	self semanticScope: (OCMethodSemanticScope targetingClass: aClass)
 ]
 
 { #category : #accessing }
@@ -681,6 +680,14 @@ RBMethodNode >> selectorAndArgumentNames [
 { #category : #accessing }
 RBMethodNode >> selectorParts [
 	^ self keywords collect: [:each | each asSymbol]
+]
+
+{ #category : #'accessing compiled method' }
+RBMethodNode >> semanticScope: aSemanticScope [	
+	compilationContext ifNil: [
+		compilationContext := aSemanticScope targetClass compiler compilationContext].
+	
+	self compilationContext semanticScope: aSemanticScope
 ]
 
 { #category : #accessing }

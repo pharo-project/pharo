@@ -10,6 +10,11 @@ Class {
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
+{ #category : #testing }
+OCAbstractScope class >> isAbstract [ 
+	^self = OCAbstractScope
+]
+
 { #category : #lookup }
 OCAbstractScope >> hasBindingThatBeginsWith: aString [
 	"check weather there are any variables defined that start with aString"

@@ -185,7 +185,12 @@ RBParser >> basicParsePragma [
 				ifFalse: [ self parseBinaryPragma ] ]
 ]
 
-{ #category : #'private - classes' }
+{ #category : #initialization }
+RBParser >> beFaulty [ 
+	errorBlock := self class errorNodeBlock
+]
+
+{ #category : #'private-classes' }
 RBParser >> blockNodeClass [
 	^ RBBlockNode
 ]

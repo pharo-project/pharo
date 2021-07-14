@@ -1,6 +1,21 @@
 Extension { #name : #RBProgramNode }
 
 { #category : #'*OpalCompiler-Core' }
+RBProgramNode >> asDoItForContext: aContext [
+	"The VM can only evaluate methods. wrap this ast in a doitIn MethodNode to evaluate in a context"
+	| methodNode |
+	
+	methodNode := RBMethodNode 
+		selector: #DoItIn:
+		arguments: { RBVariableNode named: 'ThisContext' } 
+		body: self asSequenceNode transformLastToReturn.
+	
+	methodNode semanticScope: (OCContextualDoItSemanticScope targetingContext: aContext).
+	methodNode source: methodNode formattedCode.
+	^methodNode
+]
+
+{ #category : #'*OpalCompiler-Core' }
 RBProgramNode >> asDoit [
 	"The VM can only evaluate methods. wrap this ast in a doit MethodNode"
 	| methodNode |
@@ -14,7 +29,7 @@ RBProgramNode >> asDoit [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-RBProgramNode >> asDoitForContext: aContext [
+RBProgramNode >> asReflectiveDoItForContext: aContext [
 	"The VM can only evaluate methods. wrap this ast in a doitIn MethodNode to evaluate in a context"
 	| methodNode |
 	

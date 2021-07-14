@@ -15,6 +15,11 @@ Class {
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
+{ #category : #testing }
+OCAbstractMethodScope class >> isAbstract [ 
+	^self = OCAbstractMethodScope 
+]
+
 { #category : #'temp vars - copying' }
 OCAbstractMethodScope >> addCopyingTemp: aTempVar [
 	^copiedVars at: aTempVar name put: (aTempVar createCopiedVariableFor: self)
