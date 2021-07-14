@@ -48,7 +48,7 @@ OCDoitTest >> testDoItContextReadIvar [
 		          source: 'ivarForTesting';
 		          noPattern: true;
 		          context: thisContext;
-		          compileDoit.
+		          compile.
 
 	value := method valueWithReceiver: self arguments: { thisContext }.
 	self assert: value equals: #someValue
@@ -110,12 +110,13 @@ OCDoitTest >> testDoItRequestorShadow [
 OCDoitTest >> testDoitContextCheckClass [
 	"if we create a parse tree for a doit in a context, the class should be correctly set"
 	
-	| ast |
-	ast := OpalCompiler new
+	| ast method |
+	method := OpalCompiler new
 		source: 'tempForTesting';
 		noPattern: true;
 		context: thisContext;
-		parseDoIt.
+		compile.
+	ast := method ast.
 	"we expect that the class is set to the class of the context, which is self class"		
 	self assert: ast methodClass equals: self class
 ]
