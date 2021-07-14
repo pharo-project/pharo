@@ -73,6 +73,11 @@ GLMBrick class >> increaseFormExtentCentered: aForm to: aPoint [
 	^ icon
 ]
 
+{ #category : #testing }
+GLMBrick class >> isDeprecated [
+	^ true
+]
+
 { #category : #utilities }
 GLMBrick class >> makeForm32Bit: aForm [
 	aForm ifNil: [ ^ nil ].

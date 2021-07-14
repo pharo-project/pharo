@@ -9,6 +9,11 @@ Class {
 	#category : #'Glamour-Morphic-Widgets'
 }
 
+{ #category : #testing }
+GLMMorphicModel class >> isDeprecated [
+	^ true
+]
+
 { #category : #callbacks }
 GLMMorphicModel >> allKeystrokeActions [
 	^ (self glamourPresentation allActions, self glamourPresentation allSelectionActions) select: [ :action | 

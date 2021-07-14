@@ -6,3 +6,8 @@ Class {
 	#superclass : #Announcement,
 	#category : #'Glamour-Announcements'
 }
+
+{ #category : #testing }
+GLMTransmissionTriggered class >> isDeprecated [
+	^ true
+]

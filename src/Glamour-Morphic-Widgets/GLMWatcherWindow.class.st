@@ -30,6 +30,11 @@ GLMWatcherWindow class >> buildKeymapsOn: aBuilder [
 	aBuilder attachShortcutCategory: #Glamour to: Morph.
 ]
 
+{ #category : #testing }
+GLMWatcherWindow class >> isDeprecated [
+	^ true
+]
+
 { #category : #initialization }
 GLMWatcherWindow class >> reset [ 
 	"self reset"

@@ -111,6 +111,11 @@ GTPlayBook class >> instance [
 	^ instance ifNil: [ instance := self new ]
 ]
 
+{ #category : #testing }
+GTPlayBook class >> isDeprecated [
+	^ true
+]
+
 { #category : #initialization }
 GTPlayBook class >> reset [
 	

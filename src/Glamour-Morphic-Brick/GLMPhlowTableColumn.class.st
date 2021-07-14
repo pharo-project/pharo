@@ -9,6 +9,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Widgets-Phlow'
 }
 
+{ #category : #testing }
+GLMPhlowTableColumn class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMPhlowTableColumn >> computation [
 	^ computation

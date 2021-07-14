@@ -12,6 +12,11 @@ GLMActionAnnouncement class >> action: anAction [
 	^self new action: anAction; yourself
 ]
 
+{ #category : #testing }
+GLMActionAnnouncement class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMActionAnnouncement >> action [
 	^action

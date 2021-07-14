@@ -15,6 +15,11 @@ GTDebuggerBrowserUpdateRequest class >> from: anAnnouncement [
 	^ self new from: anAnnouncement
 ]
 
+{ #category : #testing }
+GTDebuggerBrowserUpdateRequest class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GTDebuggerBrowserUpdateRequest >> debugActionExecutedAnnouncement [
 	^ debugActionExecutedAnnouncement

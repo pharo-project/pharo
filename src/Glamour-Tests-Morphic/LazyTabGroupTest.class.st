@@ -8,6 +8,11 @@ Class {
 	#category : #'Glamour-Tests-Morphic'
 }
 
+{ #category : #testing }
+LazyTabGroupTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #running }
 LazyTabGroupTest >> setUp [
 	super setUp.

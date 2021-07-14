@@ -17,6 +17,11 @@ Class {
 	#category : #'GT-Spotter-Model'
 }
 
+{ #category : #testing }
+GTSpotterMethodListProcessorFilter class >> isDeprecated [
+	^ true
+]
+
 { #category : #adding }
 GTSpotterMethodListProcessorFilter >> allowProcessorsFrom: aMethod [
 	|signature|

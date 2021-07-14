@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Layouts-Utils'
 }
 
+{ #category : #testing }
+GLMBrickWrapper class >> isDeprecated [
+	^ true
+]
+
 { #category : #api }
 GLMBrickWrapper >> brickBounds: aRectangle [
 

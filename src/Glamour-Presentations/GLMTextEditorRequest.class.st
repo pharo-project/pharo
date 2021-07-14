@@ -16,6 +16,11 @@ GLMTextEditorRequest class >> for: aSelector [
 	^ self new action: [ :editor | editor perform: aSelector ]
 ]
 
+{ #category : #testing }
+GLMTextEditorRequest class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMTextEditorRequest >> action [
 	^ action

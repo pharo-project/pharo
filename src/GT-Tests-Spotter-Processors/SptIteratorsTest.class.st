@@ -4,6 +4,11 @@ Class {
 	#category : #'GT-Tests-Spotter-Processors'
 }
 
+{ #category : #testing }
+SptIteratorsTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 SptIteratorsTest >> testBeginsWithFilterDoesNotFetchTwiceIfTheFilterIsARefinementOfPreviousText [
 

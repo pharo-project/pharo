@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMPortIdentifierTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMPortIdentifierTest >> testAsOriginIdentifier [
 	| id |

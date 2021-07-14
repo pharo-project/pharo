@@ -8,6 +8,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Renderer'
 }
 
+{ #category : #testing }
+GLMBrickRenderer class >> isDeprecated [
+	^ true
+]
+
 { #category : #'private - shadow' }
 GLMBrickRenderer >> bottomLeftCornerShadowOf: aBrick on: aCanvas [
 	| gradient width origin offset |

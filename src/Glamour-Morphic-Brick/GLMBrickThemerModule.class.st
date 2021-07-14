@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Theme'
 }
 
+{ #category : #testing }
+GLMBrickThemerModule class >> isDeprecated [
+	^ true
+]
+
 { #category : #values }
 GLMBrickThemerModule >> theme [ 
 	^ Smalltalk ui theme

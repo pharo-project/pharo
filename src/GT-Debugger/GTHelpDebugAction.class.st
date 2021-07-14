@@ -14,6 +14,11 @@ GTHelpDebugAction class >> gtDebuggingAction [
 	"<gtDebuggingAction>"
 ]
 
+{ #category : #testing }
+GTHelpDebugAction class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GTHelpDebugAction >> defaultIcon [
 

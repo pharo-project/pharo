@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Morphic'
 }
 
+{ #category : #testing }
+GLMMorphicFTTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #asserting }
 GLMMorphicFTTest >> assertNoDuplicatedAnnouncementsIn: anAnnouncement [
 	| duplications |

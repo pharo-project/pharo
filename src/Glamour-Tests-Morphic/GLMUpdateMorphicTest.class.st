@@ -15,6 +15,11 @@ Class {
 	#category : #'Glamour-Tests-Morphic'
 }
 
+{ #category : #testing }
+GLMUpdateMorphicTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #running }
 GLMUpdateMorphicTest >> setUp [
 	super setUp.

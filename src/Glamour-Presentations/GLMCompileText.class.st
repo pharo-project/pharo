@@ -13,6 +13,11 @@ Class {
 	#category : #'Glamour-Presentations-Announcements'
 }
 
+{ #category : #testing }
+GLMCompileText class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMCompileText >> action [
 

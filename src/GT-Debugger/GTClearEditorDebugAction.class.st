@@ -15,6 +15,11 @@ GTClearEditorDebugAction class >> gtActionFor: aDebugger [
 		icon: GLMUIThemeExtraIcons glamorousCancel
 ]
 
+{ #category : #testing }
+GTClearEditorDebugAction class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GTClearEditorDebugAction >> defaultIcon [
 

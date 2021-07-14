@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMTabulatorTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMTabulatorTest >> testComplex [
 	| layout |

@@ -9,6 +9,11 @@ Class {
 	#category : #'Glamour-Tests-Morphic'
 }
 
+{ #category : #testing }
+GLMPagerMorphTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMPagerMorphTest >> buttonsMorphs [
 
