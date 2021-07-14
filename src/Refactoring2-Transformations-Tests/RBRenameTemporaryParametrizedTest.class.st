@@ -25,11 +25,11 @@ RBRenameTemporaryParametrizedTest >> testBadIntervalAndVariableDoesNotExist [
 				'asdf' . #RBRefactoryTestDataApp .#testMethod }).
 	self
 		shouldFail:
-			(self createRefactoringWithArguments: { { (17 to: 14) . #rule } .
+			(self createRefactoringWithArguments: { { (17 to: 14) . #xyz } .
 				'asdf' . #RBRefactoryTestDataApp . #testMethod }).
 	self
 		shouldFail:
-			(self createRefactoringWithArguments: { { (19 to: 24) . #rule } .
+			(self createRefactoringWithArguments: { { (19 to: 24) . #temporaryVariable1 } .
 				'asdf' . #RBRefactoryTestDataApp . #testMethod })
 ]
 
@@ -38,16 +38,21 @@ RBRenameTemporaryParametrizedTest >> testBadName [
 	self
 		shouldFail:
 			(self createRefactoringWithArguments: { { (15 to: 19) . #rules }.
-				'name' . #RBLintRuleTestData . #openEditor });
-		shouldFail:
-			(self createRefactoringWithArguments: { { (15 to: 19). #rules }.
-				'rules' . #RBLintRuleTestData . #openEditor });
-		shouldFail:
-			(self createRefactoringWithArguments: { { (15 to: 19) . #rules }.
 				'DependentFields' . #RBLintRuleTestData . #openEditor });
 		shouldFail:
 			(self createRefactoringWithArguments: { { (15 to: 19) . #rules }.
 				'a b' . #RBLintRuleTestData . #openEditor })
+]
+
+{ #category : #'failure tests' }
+RBRenameTemporaryParametrizedTest >> testExistingVariable [
+	self
+		shouldFail:
+			(self createRefactoringWithArguments: { { (15 to: 19) . #rules }.
+				'name' . #RBLintRuleTestData . #openEditor });
+		shouldFail:
+			(self createRefactoringWithArguments: { { (15 to: 19). #rules }.
+				'rules' . #RBLintRuleTestData . #openEditor })
 ]
 
 { #category : #'failure tests' }
@@ -65,6 +70,29 @@ RBRenameTemporaryParametrizedTest >> testModelBadName [
 		shouldFail: (self createRefactoringWithModel: model 
 			andArguments: { { (20 to: 24) . #temp2 } .
 					'temp1' . #Object . #aMethod: })
+]
+
+{ #category : #'failure tests' }
+RBRenameTemporaryParametrizedTest >> testModelExistingVariable [
+
+	| transformation |
+	transformation := (RBAddMethodTransformation
+		                   sourceCode: 'foo
+									| temp bar |
+									bar := 5.
+									temp := bar * bar.
+									Transcript show: temp printString; cr.
+									^temp * temp'
+		                   in: self class name
+		                   withProtocols: { #accessing }) transform.
+
+	self shouldFail: (self
+			 createRefactoringWithModel: transformation model
+			 andArguments: { 
+					 { (16 to: 19) . #temp }.
+					 #bar.
+					 self class name.
+					 #foo })
 ]
 
 { #category : #tests }

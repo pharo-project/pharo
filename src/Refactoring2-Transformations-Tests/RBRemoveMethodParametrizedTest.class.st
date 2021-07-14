@@ -41,29 +41,41 @@ RBRemoveMethodParametrizedTest >> createRefactoringWithModel: rbNamespace andArg
 RBRemoveMethodParametrizedTest >> testModelRecursiveMethodThatIsNotReferencedFromOtherMethods [
 	| class otherClass |
 	class := model classNamed: #Object.
-	class compile: 'someMethodThatIsNotReferenced1 ^2' classified: #(#accessing).
-	self assert: (class definesMethod: #someMethodThatIsNotReferenced1).
+	class compile: 'someMethodThatIsNotReferenced ^2' classified: #(#accessing).
+	self assert: (class definesMethod: 'someMethodThatIsNotReferenced' asSymbol).
 	otherClass := model metaclassNamed: self class superclass name.
 	otherClass 
-		compile: 'someMethodThatIsNotReferenced1 ^3 someMethodThatIsNotReferenced1'
+		compile: 'someMethodThatIsNotReferenced ^3 someMethodThatIsNotReferenced'
 		classified: #(#accessing).
 	model removeClassNamed: self class name.
+	
 	self executeRefactorings: (self createRefactoringWithModel: model
-		andArgumentsColl: #(#someMethodThatIsNotReferenced1) 
+		andArgumentsColl: {'someMethodThatIsNotReferenced' asSymbol} 
 		andOtherArgs: { #Object }).
-	self deny: (class definesMethod: #someMethodThatIsNotReferenced1)
+	self deny: (class definesMethod: 'someMethodThatIsNotReferenced' asSymbol)
 ]
 
 { #category : #tests }
 RBRemoveMethodParametrizedTest >> testRemoveMethod [
 	| refactoring selectors |
-	selectors := Array with: ('selectorNot' , 'Referenced') asSymbol.
+	selectors := Array with: 'selectorNotReferenced' asSymbol.
 	refactoring := self createRefactoringWithModel: model
 		andArgumentsColl: selectors 
 		andOtherArgs: { #RBRefactoryTestDataApp }.
-	self assert: (( model classNamed: #RBRefactoryTestDataApp) directlyDefinesMethod: selectors first).
+	
+	selectors do: [ :symbol |
+		self assert: 
+			(( model classNamed: #RBRefactoryTestDataApp) 
+				directlyDefinesMethod: symbol).
+	].
+	
 	self executeRefactorings: refactoring.
-	self deny: (( model classNamed: #RBRefactoryTestDataApp) directlyDefinesMethod: selectors first)
+	
+	selectors do: [ :symbol |
+		self deny: 
+			(( model classNamed: #RBRefactoryTestDataApp) 
+				directlyDefinesMethod: symbol)
+	].
 ]
 
 { #category : #'failure tests' }

@@ -24,22 +24,30 @@ RBAddMethodParametrizedTest >> setUp [
 RBAddMethodParametrizedTest >> testAddMethod [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
-		{'printString1 ^super printString' . RBBasicLintRuleTestData . #(#accessing )}.
+		{'printString1 ^ super printString' . 
+		RBBasicLintRuleTestData . 
+		#(#accessing )}.
+	
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBBasicLintRuleTestData) parseTreeFor: #printString1) 
+	self assert: ((refactoring model classNamed: #RBBasicLintRuleTestData) 
+			parseTreeFor: #printString1) 
 		equals: (self parseMethod: 'printString1 ^super printString')
 ]
 
 { #category : #'failure tests' }
 RBAddMethodParametrizedTest >> testBadMethod [
 	self shouldFail: (self createRefactoringWithArguments: 
-		{ 'asdf ^super ^printString' . RBBasicLintRuleTestData . #(#accessing )})
+		{ 'asdf ^super ^printString' . 
+		RBBasicLintRuleTestData . 
+		#(#accessing )})
 ]
 
 { #category : #'failure tests' }
 RBAddMethodParametrizedTest >> testExistingSelector [
 	self shouldFail: (self createRefactoringWithArguments: 
-		{'printString ^super printString' . RBBasicLintRuleTestData . #(#accessing )})
+		{'printString ^super printString' . 
+		RBBasicLintRuleTestData . 
+		#(#accessing )})
 ]
 
 { #category : #tests }
@@ -47,7 +55,9 @@ RBAddMethodParametrizedTest >> testModelAddMethod [
 	| refactoring class |
 	class := model metaclassNamed: #Bar.
 	refactoring := self createRefactoringWithModel: model andArguments: 
-				{'printString1 ^super printString' . class . #(#accessing)}.
+				{'printString1 ^super printString' . 
+				class . 
+				#(#accessing)}.
 	self executeRefactoring: refactoring.
 	self assert: (class parseTreeFor: #printString1) 
 		  equals: (self parseMethod: 'printString1 ^super printString')
@@ -55,10 +65,16 @@ RBAddMethodParametrizedTest >> testModelAddMethod [
 
 { #category : #'failure tests' }
 RBAddMethodParametrizedTest >> testModelExistingSelector [
-	| refactoring |
-	refactoring := self createRefactoringWithModel: model andArguments: 
-				{'classVarName1 ^super printString' . (model classNamed: #Bar) . #(#accessing) }.
-	self shouldFail: refactoring
+	self shouldFail: ( self createRefactoringWithModel: model 
+			andArguments: 
+				{'classVarName1 ^super printString' . 
+				(model classNamed: #Bar) . 
+				#(#accessing) });
+		  shouldFail: (self createRefactoringWithModel: model 
+			andArguments:
+				{'printString ^super printString' .
+				(model classNamed: #Bar) .
+				{#accessing}}).
 ]
 
 { #category : #'failure tests' }

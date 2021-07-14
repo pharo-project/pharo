@@ -16,12 +16,19 @@ RBPushDownInstanceVariableParametrizedTest class >> testParameters [
 
 { #category : #tests }
 RBPushDownInstanceVariableParametrizedTest >> testModelPushDownToMetaclass [
-	model 
-		defineClass: 'Object subclass: #SomeClass instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
+	model defineClass: 'Object subclass: #SomeClass 
+		instanceVariableNames: '''' 
+		classVariableNames: '''' 
+		poolDictionaries: '''' 
+		category: #''Refactory-Test data'''.
 	(model metaclassNamed: #SomeClass) addInstanceVariable: 'foo'.
-	model 
-		defineClass: 'SomeClass subclass: #Subclass instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
-	(model metaclassNamed: #Subclass) compile: 'foo ^foo'
+	model defineClass: 'SomeClass subclass: #Subclass 
+		instanceVariableNames: '''' 
+		classVariableNames: '''' 
+		poolDictionaries: '''' 
+		category: #''Refactory-Test data'''.
+	(model metaclassNamed: #Subclass) 
+		compile: 'foo ^foo'
 		classified: #(#accessing).
 	self executeRefactoring: (self createRefactoringWithModel: model 
 		andArguments: {'foo' . #'SomeClass class'}).
@@ -33,30 +40,44 @@ RBPushDownInstanceVariableParametrizedTest >> testModelPushDownToMetaclass [
 
 { #category : #tests }
 RBPushDownInstanceVariableParametrizedTest >> testModelPushDownToMultipleSubclasses [
-	model 
-		defineClass: 'Object subclass: #SomeClass instanceVariableNames: ''foo'' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
-	model 
-		defineClass: 'SomeClass subclass: #Subclass instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
+	model defineClass: 'Object subclass: #SomeClass 
+		instanceVariableNames: ''foo'' 
+		classVariableNames: '''' 
+		poolDictionaries: '''' 
+		category: #''Refactory-Test data'''.
+	model defineClass: 'SomeClass subclass: #Subclass 
+		instanceVariableNames: '''' 
+		classVariableNames: '''' 
+		poolDictionaries: '''' 
+		category: #''Refactory-Test data'''.
 	(model classNamed: #Subclass) compile: 'foo ^foo' classified: #(#accessing).
-	model 
-		defineClass: 'SomeClass subclass: #AnotherSubclass instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
+	model defineClass: 'SomeClass subclass: #AnotherSubclass 
+		instanceVariableNames: '''' 
+		classVariableNames: '''' 
+		poolDictionaries: '''' 
+		category: #''Refactory-Test data'''.
 	(model classNamed: #AnotherSubclass) compile: 'bar ^foo'
 		classified: #(#accessing).
 	self executeRefactoring: (self createRefactoringWithModel: model 
 		andArguments: {'foo' . #SomeClass}).
 	self deny: ((model classNamed: #SomeClass) directlyDefinesVariable: 'foo').
-	self 
-		assert: ((model classNamed: #Subclass) directlyDefinesVariable: 'foo').
-	self assert: ((model classNamed: #AnotherSubclass) 
-				directlyDefinesVariable: 'foo')
+	self assert: ((model classNamed: #Subclass) directlyDefinesVariable: 'foo').
+	self assert: ((model classNamed: #AnotherSubclass) directlyDefinesVariable: 'foo')
 ]
 
 { #category : #tests }
 RBPushDownInstanceVariableParametrizedTest >> testModelRemoveUnusedVariable [
-	model 
-		defineClass: 'Object subclass: #SomeClass instanceVariableNames: ''foo'' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
-	model 
-		defineClass: 'SomeClass subclass: #Subclass instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
+	model defineClass: 'Object subclass: #SomeClass 
+		instanceVariableNames: ''foo'' 
+		classVariableNames: '''' 
+		poolDictionaries: '''' 
+		category: #''Refactory-Test data'''.
+	model defineClass: 'SomeClass subclass: #Subclass 
+		instanceVariableNames: '''' 
+		classVariableNames: '''' 
+		poolDictionaries: '''' 
+		category: #''Refactory-Test data'''.
+	
 	self executeRefactoring: (self createRefactoringWithModel: model 
 		andArguments: {'foo' . #SomeClass}).
 	self deny: ((model classNamed: #SomeClass) directlyDefinesVariable: 'foo').
@@ -75,5 +96,6 @@ RBPushDownInstanceVariableParametrizedTest >> testPushDownInstanceVariable [
 	refactoring := self createRefactoringWithArguments: 
 		{'foo1' . #RBLintRuleTestData}.
 	self executeRefactoring: refactoring.
-	(refactoring model classNamed: #RBLintRuleTestData) subclasses do: [ :each | self assert: (each directlyDefinesInstanceVariable: 'foo1') ]
+	(refactoring model classNamed: #RBLintRuleTestData) subclasses do: 
+		[ :each | self assert: (each directlyDefinesInstanceVariable: 'foo1') ]
 ]

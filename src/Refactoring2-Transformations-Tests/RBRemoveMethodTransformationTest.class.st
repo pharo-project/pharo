@@ -5,64 +5,6 @@ Class {
 }
 
 { #category : #tests }
-RBRemoveMethodTransformationTest >> testMethodIsReferenced [
-
-	self shouldFail: (RBRemoveMethodTransformation
-							selector: #checkClass:
-							from: #RBBasicLintRuleTestData)
-							asRefactoring 
-]
-
-{ #category : #tests }
-RBRemoveMethodTransformationTest >> testMethodSendsSuper [
-	<expectedFailure>
-	self shouldFail: (RBRemoveMethodTransformation
-							selector: #new
-							from: RBBasicLintRuleTestData class)
-							asRefactoring
-]
-
-{ #category : #tests }
-RBRemoveMethodTransformationTest >> testRecursiveMethod [
-
-	| refactoring class selector otherClass |
-	class := model classNamed: #Object.
-	selector := 'someMethodThatIsNotReferenced' asSymbol.
-	class compile: 'someMethodThatIsNotReferenced ^2' classified: #(#accessing).
-	self assert: (class definesMethod: selector).
-	
-	otherClass := model metaclassNamed: self class superclass name.
-	otherClass 
-		compile: 'someMethodThatIsNotReferenced ^3 someMethodThatIsNotReferenced'
-		classified: #(#accessing).
-	model removeClassNamed: self class name.
-	
-	refactoring := (RBRemoveMethodTransformation
-				model: model
-				selector: selector
-				from: class)
-				asRefactoring.
-	[ refactoring transform ] on: RBRefactoringError do: [ :e | e resume ].
-	self deny: (class definesMethod: selector)
-]
-
-{ #category : #tests }
-RBRemoveMethodTransformationTest >> testRefactoring [
-
-	| refactoring selector class |
-	selector := 'selectorNotReferenced' asSymbol.
-	refactoring := (RBRemoveMethodTransformation
-						selector: selector
-						from: #RBRefactoryTestDataApp)
-						asRefactoring.
-	
-	class := refactoring model classNamed: #RBRefactoryTestDataApp.
-	self assert: (class directlyDefinesMethod: selector).
-	refactoring transform.
-	self deny: (class directlyDefinesMethod: selector)
-]
-
-{ #category : #tests }
 RBRemoveMethodTransformationTest >> testTransform [
 
 	| transformation class |

@@ -100,6 +100,19 @@ RBAddClassParametrizedTest >> testModelExistingClassName [
 ]
 
 { #category : #'failure tests' }
+RBAddClassParametrizedTest >> testModelInvalidSubclass [
+
+	self shouldFail: (
+		self addClass
+			model: model
+			addClass: #Foo2
+			superclass: #Object
+			subclasses: (Array with: (model classNamed: #Bar))
+			category: #'Refactory-Tesing')
+			asRefactoring
+]
+
+{ #category : #'failure tests' }
 RBAddClassParametrizedTest >> testModelNonImmediateSubclassOfSuperclass [
 	| refactoring |
 	refactoring := self addClass 
