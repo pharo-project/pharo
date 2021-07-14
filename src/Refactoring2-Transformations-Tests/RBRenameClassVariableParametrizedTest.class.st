@@ -18,27 +18,39 @@ RBRenameClassVariableParametrizedTest class >> testParameters [
 
 { #category : #'failure tests' }
 RBRenameClassVariableParametrizedTest >> testAlreadyExistingName [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ #RecursiveSelfRule . self objectClassVariable . #RBTransformationRuleTestData})
+	self shouldFail: 
+		(self createRefactoringWithArguments:
+			{ #RecursiveSelfRule . 
+			self objectClassVariable . 
+			#RBTransformationRuleTestData})
 ]
 
 { #category : #'failure tests' }
 RBRenameClassVariableParametrizedTest >> testMetaClassFailure [
 
-	self shouldFail: (self createRefactoringWithArguments: 
-		{ #RecursiveSelfRule . #Foo . RBTransformationRuleTestData class name asSymbol })
+	self shouldFail: 
+		(self createRefactoringWithArguments: 
+			{ #RecursiveSelfRule . 
+			#Foo . 
+			RBTransformationRuleTestData class name asSymbol })
 ]
 
 { #category : #'failure tests' }
 RBRenameClassVariableParametrizedTest >> testNonExistantName [
-	self shouldFail: (self createRefactoringWithArguments: 
-		{ #foo . #newFoo . #RBBasicLintRuleTestData })
+	self shouldFail: 
+		(self createRefactoringWithArguments: 
+			{ #foo . 
+			#newFoo . 
+			#RBBasicLintRuleTestData })
 ]
 
 { #category : #tests }
 RBRenameClassVariableParametrizedTest >> testRenameClassVar [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments: { #RecursiveSelfRule . #RSR . #RBTransformationRuleTestData}.
+	refactoring := self createRefactoringWithArguments: 
+		{ #RecursiveSelfRule . 
+		#RSR . 
+		#RBTransformationRuleTestData}.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBTransformationRuleTestData.
 	self assert: (class directlyDefinesClassVariable: #RSR).
@@ -79,7 +91,11 @@ RBRenameClassVariableParametrizedTest >> testRenameClassVar [
 RBRenameClassVariableParametrizedTest >> testRenameClassVarInSharedPool [
 	| refactoring class userClass |
 	
-	refactoring := self createRefactoringWithArguments: { #Var1 . #VarOne . #RBSharedPoolForTestData}.
+	refactoring := self createRefactoringWithArguments: 
+		{ #Var1 . 
+		#VarOne . 
+		#RBSharedPoolForTestData}.
+	
 	self executeRefactoring: refactoring.
 	
 	class := refactoring model classNamed: #RBSharedPoolForTestData.

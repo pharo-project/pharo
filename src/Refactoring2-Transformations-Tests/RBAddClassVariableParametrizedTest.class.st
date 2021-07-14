@@ -23,17 +23,25 @@ RBAddClassVariableParametrizedTest >> setUp [
 { #category : #tests }
 RBAddClassVariableParametrizedTest >> testAddClassVariable [
 	| refactoring |
-	refactoring := self createRefactoringWithArguments: {'Asdf' . #RBTransformationRuleTestData }.
+	refactoring := self createRefactoringWithArguments: 
+		{'Asdf' . #RBTransformationRuleTestData }.
+		
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBTransformationRuleTestData) directlyDefinesClassVariable: #Asdf)
+	
+	self assert: ((refactoring model 
+		classNamed: #RBTransformationRuleTestData) 
+		directlyDefinesClassVariable: #Asdf)
 ]
 
 { #category : #'failure tests' }
 RBAddClassVariableParametrizedTest >> testAlreadyExistingName [
 
-	self
-		shouldFail: (self createRefactoringWithArguments: { #RecursiveSelfRule . #RBTransformationRuleTestData });
-		shouldFail: (self createRefactoringWithArguments: { self objectClassVariable . #RBTransformationRuleTestData })
+	self shouldFail: 
+		(self createRefactoringWithArguments:
+			{ #RecursiveSelfRule . #RBTransformationRuleTestData }).
+	self shouldFail: 
+		(self createRefactoringWithArguments: 
+			{ self objectClassVariable . #RBTransformationRuleTestData })
 ]
 
 { #category : #'failure tests' }
@@ -53,17 +61,20 @@ RBAddClassVariableParametrizedTest >> testMetaclass [
 { #category : #tests }
 RBAddClassVariableParametrizedTest >> testModelAddClassVariable [
 	| refactoring |
-	refactoring := self createRefactoringWithModel: model andArguments: { #ClassVarName3 . #Bar }.
+	refactoring := self createRefactoringWithModel: model 
+		andArguments: { #ClassVarName3 . #Bar }.
+		
 	self executeRefactoring: refactoring.
+	
 	self assert: ((model classNamed: #Bar) 
 				directlyDefinesClassVariable: #ClassVarName3)
 ]
 
 { #category : #'failure tests' }
 RBAddClassVariableParametrizedTest >> testModelAlreadyExistingName [
-	| refactoring |
-	refactoring := self createRefactoringWithModel: model andArguments: {#ClassVarName2 . #Bar }.
-	self shouldFail: refactoring
+	self shouldFail: 
+		(self createRefactoringWithModel: model 
+		andArguments: {#ClassVarName2 . #Bar })
 ]
 
 { #category : #'failure tests' }

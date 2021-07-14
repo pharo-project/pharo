@@ -17,14 +17,3 @@ RBPullUpClassVariableTest >> testNonExistantName [
 			variable: #Foo
 			class: RBLintRuleTestData)
 ]
-
-{ #category : #tests }
-RBPullUpClassVariableTest >> testPullUpClassVariable [
-	| refactoring |
-	refactoring := RBPullUpClassVariableRefactoring 
-		variable: #RecursiveSelfRule
-		class: RBLintRuleTestData.
-	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBLintRuleTestData) directlyDefinesClassVariable: #RecursiveSelfRule).
-	self deny: ((refactoring model classNamed: #RBTransformationRuleTestData) directlyDefinesClassVariable: #RecursiveSelfRule)
-]

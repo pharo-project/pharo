@@ -41,8 +41,12 @@ RBRenameInstanceVariableParametrizedTest >> testNonExistantName [
 RBRenameInstanceVariableParametrizedTest >> testRenameInstVar [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments: 
-		{ 'classBlock' . 'asdf' . #RBBasicLintRuleTestData}.
+		{ 'classBlock' . 
+		'asdf' . 
+		#RBBasicLintRuleTestData}.
+	
 	self executeRefactoring: refactoring.
+	
 	class := refactoring model classNamed: #RBBasicLintRuleTestData.
 	self assert: (class directlyDefinesInstanceVariable: 'asdf').
 	self deny: (class directlyDefinesInstanceVariable: 'classBlock').
@@ -72,8 +76,13 @@ RBRenameInstanceVariableParametrizedTest >> testRenameInstVar [
 RBRenameInstanceVariableParametrizedTest >> testRenameInstVarFromTrait [
 	| refactoring class |
 	
-	refactoring := self createRefactoringWithArguments: { 'var1' . 'var11' . #RBDummy }.
+	refactoring := self createRefactoringWithArguments: 
+		{ 'var1' . 
+		'var11' . 
+		#RBDummy }.
+		
 	self executeRefactoring: refactoring.
+	
 	class := refactoring model classNamed: #RBDummy.
 	self assert: (class directlyDefinesInstanceVariable: 'var11').
 	self deny: (class directlyDefinesInstanceVariable: 'var1').
@@ -94,8 +103,13 @@ RBRenameInstanceVariableParametrizedTest >> testRenameInstVarFromTrait [
 { #category : #tests }
 RBRenameInstanceVariableParametrizedTest >> testRenameInstVarNotAccessors [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments: { 'result' . 'whatever' . #RBBasicLintRuleTestData }.
+	refactoring := self createRefactoringWithArguments: 
+		{ 'result' . 
+		'whatever' . 
+		#RBBasicLintRuleTestData }.
+		
 	self executeRefactoring: refactoring.
+	
 	class := refactoring model classNamed: #RBBasicLintRuleTestData.
 	self assert: (class directlyDefinesInstanceVariable: 'whatever').
 	self deny: (class directlyDefinesInstanceVariable: 'result').

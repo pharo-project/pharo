@@ -16,8 +16,9 @@ RBPullUpClassVariableParametrizedTest class >> testParameters [
 
 { #category : #'failure tests' }
 RBPullUpClassVariableParametrizedTest >> testMetaClassFailure [
-	self shouldFail: (self createRefactoringWithArguments: 
-		{ #RecursiveSelfRule . #'RBLintRuleTestData class'})
+	self shouldFail: 
+		(self createRefactoringWithArguments: 
+			{ #RecursiveSelfRule . #'RBLintRuleTestData class'})
 ]
 
 { #category : #'failure tests' }
@@ -36,6 +37,8 @@ RBPullUpClassVariableParametrizedTest >> testPullUpClassVariable [
 	[ self executeRefactoring: refactoring ] 
 		on: RBRefactoringError 
 		do: [ :e | e resume ].
-	self assert: ((refactoring model classNamed: #RBLintRuleTestData) directlyDefinesClassVariable: #RecursiveSelfRule).
-	self deny: ((refactoring model classNamed: #RBTransformationRuleTestData) directlyDefinesClassVariable: #RecursiveSelfRule)
+	self assert: ((refactoring model classNamed: #RBLintRuleTestData) 
+		directlyDefinesClassVariable: #RecursiveSelfRule).
+	self deny: ((refactoring model classNamed: #RBTransformationRuleTestData) 
+		directlyDefinesClassVariable: #RecursiveSelfRule)
 ]

@@ -25,6 +25,8 @@ RBPullUpInstanceVariableParametrizedTest >> testPullUpInstVar [
 	self assert: ((refactoring model classNamed: #RBLintRuleTestData) 
 		directlyDefinesInstanceVariable: 'result').
 	self deny: ((refactoring model classNamed: #RBBasicLintRuleTestData) 
+		directlyDefinesInstanceVariable: 'result').
+	self deny: ((refactoring model classNamed: #RBFooLintRuleTestData) 
 		directlyDefinesInstanceVariable: 'result')
 ]
 
