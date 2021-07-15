@@ -81,6 +81,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Layouts'
 }
 
+{ #category : #testing }
+GLMBrickLayoutProperties class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMBrickLayoutProperties >> floating [
 

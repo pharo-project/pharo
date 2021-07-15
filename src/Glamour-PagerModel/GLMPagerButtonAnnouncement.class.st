@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-PagerModel-Announcements'
 }
 
+{ #category : #testing }
+GLMPagerButtonAnnouncement class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMPagerButtonAnnouncement >> buttonModel [
 	^ buttonModel

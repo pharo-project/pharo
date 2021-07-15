@@ -18,6 +18,11 @@ Class {
 	#category : #'Glamour-Core'
 }
 
+{ #category : #testing }
+GLMPortEvent class >> isDeprecated [
+	^ true
+]
+
 { #category : #'instance creation' }
 GLMPortEvent class >> on: aPort previouslyValued: anObject [ 
 	^ self new 

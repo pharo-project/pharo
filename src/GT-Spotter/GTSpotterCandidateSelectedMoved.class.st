@@ -7,6 +7,11 @@ Class {
 	#category : #'GT-Spotter-Announcements'
 }
 
+{ #category : #testing }
+GTSpotterCandidateSelectedMoved class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GTSpotterCandidateSelectedMoved >> itemBrick [
 	^ candidateBrick

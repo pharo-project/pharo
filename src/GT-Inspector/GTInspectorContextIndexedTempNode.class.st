@@ -17,6 +17,11 @@ GTInspectorContextIndexedTempNode class >> hostObject: aContext tempIndex: anInt
 		yourself
 ]
 
+{ #category : #testing }
+GTInspectorContextIndexedTempNode class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GTInspectorContextIndexedTempNode >> label [
 	^ self tempIndex

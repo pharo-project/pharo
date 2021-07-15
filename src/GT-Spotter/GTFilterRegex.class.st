@@ -7,6 +7,11 @@ Class {
 	#category : #'GT-Spotter-Filters'
 }
 
+{ #category : #testing }
+GTFilterRegex class >> isDeprecated [
+	^ true
+]
+
 { #category : #private }
 GTFilterRegex >> applyFilterInContext: aSpotterContext error: exception [
 	super applyFilterInContext: aSpotterContext error: exception.

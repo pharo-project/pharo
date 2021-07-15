@@ -6,3 +6,8 @@ Class {
 	#superclass : #GLMLogger,
 	#category : #'Glamour-Helpers'
 }
+
+{ #category : #testing }
+GLMNullLogger class >> isDeprecated [
+	^ true
+]

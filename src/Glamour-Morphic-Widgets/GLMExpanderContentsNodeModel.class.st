@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Widgets'
 }
 
+{ #category : #testing }
+GLMExpanderContentsNodeModel class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMExpanderContentsNodeModel >> containerNode [
 	^ containerNode

@@ -10,6 +10,11 @@ Class {
 	#category : #'Glamour-Core'
 }
 
+{ #category : #testing }
+GLMCompositeArrangement class >> isDeprecated [
+	^ true
+]
+
 { #category : #'instance creation' }
 GLMCompositeArrangement class >> of: aCompositePresentation [
 	^ self new composite: aCompositePresentation; yourself

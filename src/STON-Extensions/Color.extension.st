@@ -1,6 +1,6 @@
 Extension { #name : #Color }
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Extensions' }
 Color class >> fromSton: stonReader [
 	| representation |
 	representation := stonReader parseMapOrListRepresentation.
@@ -19,12 +19,12 @@ Color class >> fromSton: stonReader [
 						alpha: (representation at: #alpha) ] ]
 ]
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Extensions' }
 Color >> stonContainSubObjects [
 	^ false
 ]
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Extensions' }
 Color >> stonOn: stonWriter [
 	| name |
 	(self isTranslucent or: [ (name := self name) = #unnamed ])

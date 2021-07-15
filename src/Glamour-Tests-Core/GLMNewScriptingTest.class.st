@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMNewScriptingTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMNewScriptingTest >> testBuildingNestedComposites [
 	| browser |

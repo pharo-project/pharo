@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #testing }
+GLMBrickLayoutState class >> isDeprecated [
+	^ true
+]
+
+{ #category : #testing }
 GLMBrickLayoutState >> isOnChildren [
 
 	^ false

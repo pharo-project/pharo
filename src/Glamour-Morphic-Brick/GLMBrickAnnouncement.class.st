@@ -17,6 +17,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Announcements'
 }
 
+{ #category : #testing }
+GLMBrickAnnouncement class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMBrickAnnouncement >> data [
 	^ data

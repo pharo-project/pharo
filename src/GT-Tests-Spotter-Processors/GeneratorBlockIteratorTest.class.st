@@ -4,6 +4,11 @@ Class {
 	#category : #'GT-Tests-Spotter-Processors'
 }
 
+{ #category : #testing }
+GeneratorBlockIteratorTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GeneratorBlockIteratorTest >> testIteratorOnACalculatedCollectionReturnsOnlyFirst [
 

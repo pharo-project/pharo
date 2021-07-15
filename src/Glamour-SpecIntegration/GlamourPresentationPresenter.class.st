@@ -26,6 +26,11 @@ GlamourPresentationPresenter class >> exampleGLMPharoScript [
 	^ GlamourPresentationPresenter new openWithSpec.
 ]
 
+{ #category : #testing }
+GlamourPresentationPresenter class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GlamourPresentationPresenter >> glmPres [
 

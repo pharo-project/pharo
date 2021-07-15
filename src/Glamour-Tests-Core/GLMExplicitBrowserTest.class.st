@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMExplicitBrowserTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMExplicitBrowserTest >> testAddTransmissionReturn [
 	| transmission |

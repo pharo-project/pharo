@@ -8,6 +8,11 @@ Class {
 	#category : #'Glamour-PagerModel-Announcements'
 }
 
+{ #category : #testing }
+GLMPagerScrollPositionChanged class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMPagerScrollPositionChanged >> callback [
 	^ callback

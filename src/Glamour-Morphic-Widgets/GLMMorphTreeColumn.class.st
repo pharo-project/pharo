@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Widgets'
 }
 
+{ #category : #testing }
+GLMMorphTreeColumn class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMMorphTreeColumn >> glamourColumn: aColumn [
 	glamourColumn := aColumn

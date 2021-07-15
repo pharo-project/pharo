@@ -4,6 +4,11 @@ Class {
 	#category : #'GT-Tests-Debugger'
 }
 
+{ #category : #testing }
+InfiniteDebuggerTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #running }
 InfiniteDebuggerTest >> runCaseManaged [
 	

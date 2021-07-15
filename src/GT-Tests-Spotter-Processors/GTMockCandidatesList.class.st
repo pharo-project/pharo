@@ -8,6 +8,11 @@ Class {
 	#category : #'GT-Tests-Spotter-Processors'
 }
 
+{ #category : #testing }
+GTMockCandidatesList class >> isDeprecated [
+	^ true
+]
+
 { #category : #adding }
 GTMockCandidatesList >> addAllCandidates: aCollection in: aProcessor [
 

@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Widgets'
 }
 
+{ #category : #testing }
+GLMExpanderLabelNodeModel class >> isDeprecated [
+	^ true
+]
+
 { #category : #'instance creation' }
 GLMExpanderLabelNodeModel class >> with: anObject in: aTreeModel [
 	^ (self with: anObject) containerTree: aTreeModel; yourself

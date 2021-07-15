@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Layouts-Utils'
 }
 
+{ #category : #testing }
+GLMBrickGeneralWrapper class >> isDeprecated [
+	^ true
+]
+
 { #category : #'instance creation' }
 GLMBrickGeneralWrapper class >> on: aBrick [
 

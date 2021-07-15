@@ -22,6 +22,11 @@ Class {
 	#category : #'Glamour-Core'
 }
 
+{ #category : #testing }
+GLMTransmission class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMTransmission >> activeOrigins [ 
 	 

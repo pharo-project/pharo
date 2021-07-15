@@ -10,6 +10,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Tests'
 }
 
+{ #category : #testing }
+GLMScrollListBrickTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #running }
 GLMScrollListBrickTest >> tearDown [
 	window ifNotNil: [ :aWindow | aWindow delete ].

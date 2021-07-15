@@ -13,6 +13,11 @@ Class {
 	#category : #'Glamour-FastTable-Model'
 }
 
+{ #category : #testing }
+GLMFastTableColumn class >> isDeprecated [
+	^ true
+]
+
 { #category : #execute }
 GLMFastTableColumn >> execute [ 
 	target ifNil: [ ^ self ].

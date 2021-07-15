@@ -19,6 +19,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Theme'
 }
 
+{ #category : #testing }
+GLMBrickThemer class >> isDeprecated [
+	^ true
+]
+
 { #category : #'theme-actions' }
 GLMBrickThemer >> actionThemer [
 

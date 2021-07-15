@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Theme'
 }
 
+{ #category : #testing }
+GLMBrickTabLabelDarkThemer class >> isDeprecated [
+	^ true
+]
+
 { #category : #'brick-tab-label' }
 GLMBrickTabLabelDarkThemer >> normalBorderStyleFor: aBrick [
 

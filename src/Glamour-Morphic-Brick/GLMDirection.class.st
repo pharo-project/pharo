@@ -14,6 +14,11 @@ GLMDirection class >> cleanUp [
 	uniqueInstance := nil
 ]
 
+{ #category : #testing }
+GLMDirection class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMDirection class >> uniqueInstance [
 	^ uniqueInstance ifNil: [ uniqueInstance := self new ]

@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Core'
 }
 
+{ #category : #testing }
+GLMNoStrategy class >> isDeprecated [
+	^ true
+]
+
 { #category : #transmitting }
 GLMNoStrategy >> transmitIn: aContext [
 	"do nothing else then was already done by the transmission"

@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMActionTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMActionTest >> testCondition [
 	self 

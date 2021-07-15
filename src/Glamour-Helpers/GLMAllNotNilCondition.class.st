@@ -9,6 +9,11 @@ Class {
 	#category : #'Glamour-Helpers'
 }
 
+{ #category : #testing }
+GLMAllNotNilCondition class >> isDeprecated [
+	^ true
+]
+
 { #category : #glamour }
 GLMAllNotNilCondition >> glamourValueWithArgs: anArray [ 
 	 

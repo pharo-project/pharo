@@ -8,6 +8,11 @@ Class {
 	#category : #'Glamour-Morphic-Widgets'
 }
 
+{ #category : #testing }
+GLMTreeMorphSelectionChanged class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMTreeMorphSelectionChanged >> selectionPathValue [
 	^ selectionPathValue

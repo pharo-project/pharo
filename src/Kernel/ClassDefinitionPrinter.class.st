@@ -68,7 +68,7 @@ Class {
 { #category : #configure }
 ClassDefinitionPrinter class >> displayEmptySlots [
 
-	^ DisplayEmptySlots ifNil: [ DisplayEmptySlots := false ]
+	^ DisplayEmptySlots ifNil: [ DisplayEmptySlots := true ]
 ]
 
 { #category : #configure }
@@ -142,7 +142,7 @@ In addition, as soon as you will use slots such as ObservableSlot and more this 
 		
 	(aBuilder setting: #displayEmptySlots)
 		parent: #codeBrowsing;
-		default: false;
+		default: true;
 		label: 'Display empty slots';
 		description: 'If true, the system will display the slots even if they are empty e.g., 
 

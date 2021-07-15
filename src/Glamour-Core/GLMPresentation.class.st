@@ -48,6 +48,11 @@ Class {
 	#category : #'Glamour-Core'
 }
 
+{ #category : #testing }
+GLMPresentation class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMPresentation >> acceptsSelection [
 	"this flag is used to specify whether the presentation

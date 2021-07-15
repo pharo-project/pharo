@@ -15,6 +15,11 @@ GTBrowseMethodDebuggerAction class >> gtActionFor: aDebugger [
 			icon: GLMUIThemeExtraIcons glamorousBrowse
 ]
 
+{ #category : #testing }
+GTBrowseMethodDebuggerAction class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GTBrowseMethodDebuggerAction >> defaultLabel [
 

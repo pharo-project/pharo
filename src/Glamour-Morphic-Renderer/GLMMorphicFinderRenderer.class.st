@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Renderer'
 }
 
+{ #category : #testing }
+GLMMorphicFinderRenderer class >> isDeprecated [
+	^ true
+]
+
 { #category : #rendering }
 GLMMorphicFinderRenderer >> actOnPaneAdded: ann [
 	self subclassResponsibility

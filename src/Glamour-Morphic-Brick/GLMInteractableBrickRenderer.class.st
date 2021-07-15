@@ -8,6 +8,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Renderer'
 }
 
+{ #category : #testing }
+GLMInteractableBrickRenderer class >> isDeprecated [
+	^ true
+]
+
 { #category : #rendering }
 GLMInteractableBrickRenderer >> render: aBrick on: aCanvas [
 

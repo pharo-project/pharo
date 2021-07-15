@@ -4,6 +4,11 @@ Class {
 	#category : #'GT-SpotterExtensions-Core'
 }
 
+{ #category : #testing }
+GTFilterFileReference class >> isDeprecated [
+	^ true
+]
+
 { #category : #private }
 GTFilterFileReference >> indexForItemName: aString andQuery: aQueryString [
 	^ aQueryString isEmpty

@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Morphic'
 }
 
+{ #category : #testing }
+GLMDropDownMorphicTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMDropDownMorphicTest >> testSelectionTriggeredOnSelectedIndex [
 	| browser dropdown text dropdownMorph textMorph |

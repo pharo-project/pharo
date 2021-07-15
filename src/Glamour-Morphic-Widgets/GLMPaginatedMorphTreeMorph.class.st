@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Morphic-Widgets'
 }
 
+{ #category : #testing }
+GLMPaginatedMorphTreeMorph class >> isDeprecated [
+	^ true
+]
+
 { #category : #stepping }
 GLMPaginatedMorphTreeMorph >> step [
 

@@ -22,6 +22,11 @@ Class {
 	#category : #'Glamour-PagerModel-Pager'
 }
 
+{ #category : #testing }
+GLMPagerModel class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMPagerModel >> actualNumberOfVisiblePages [
 	"returns actual number of visible pages based on first and last visible page indexes"

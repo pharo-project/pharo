@@ -36,6 +36,11 @@ GLMPopper class >> installAlarm: aSelector for: anObject withArguments: anArray 
 		at: Time millisecondClockValue + 50.
 ]
 
+{ #category : #testing }
+GLMPopper class >> isDeprecated [
+	^ true
+]
+
 { #category : #public }
 GLMPopper >> computeOriginFor: aMorph [
 	| desiredTop desiredLeft |

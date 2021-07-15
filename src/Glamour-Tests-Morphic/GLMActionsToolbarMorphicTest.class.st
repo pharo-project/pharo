@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Morphic'
 }
 
+{ #category : #testing }
+GLMActionsToolbarMorphicTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMActionsToolbarMorphicTest >> testDynamicActionsAreUpdated [
 	<expectedFailure>

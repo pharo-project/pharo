@@ -4,6 +4,11 @@ Class {
 	#category : #'GT-Tests-Spotter-Processors'
 }
 
+{ #category : #testing }
+CamelCaseSplitTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 CamelCaseSplitTest >> testSingleLowercaseLetter [
 

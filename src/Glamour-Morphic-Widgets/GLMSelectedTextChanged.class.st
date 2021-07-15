@@ -9,6 +9,11 @@ Class {
 	#category : #'Glamour-Morphic-Widgets'
 }
 
+{ #category : #testing }
+GLMSelectedTextChanged class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMSelectedTextChanged >> end [
 	^ end

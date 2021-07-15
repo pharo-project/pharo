@@ -22,6 +22,11 @@ GLMLogger class >> instance: aLogger [
 	instance := aLogger 
 ]
 
+{ #category : #testing }
+GLMLogger class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMLogger class >> nullInstance [ 
 	^ nullInstance ifNil: [

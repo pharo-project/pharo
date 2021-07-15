@@ -20,6 +20,11 @@ SptClassProcessor class >> hideInSettings [
 	^ true
 ]
 
+{ #category : #testing }
+SptClassProcessor class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 SptClassProcessor class >> order [
 	

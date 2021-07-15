@@ -4,6 +4,11 @@ Class {
 	#category : #'GT-Tests-Spotter-Processors'
 }
 
+{ #category : #testing }
+GeneratorIteratorTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GeneratorIteratorTest >> testCollectionWithSingleElementReturnsIt [
 

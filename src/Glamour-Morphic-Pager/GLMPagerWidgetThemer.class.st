@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Morphic-Pager-Theme'
 }
 
+{ #category : #testing }
+GLMPagerWidgetThemer class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMPagerWidgetThemer >> defaultScrollButtonStyleFor: aButton [
 

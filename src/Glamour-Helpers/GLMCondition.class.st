@@ -6,3 +6,8 @@ Class {
 	#superclass : #Object,
 	#category : #'Glamour-Helpers'
 }
+
+{ #category : #testing }
+GLMCondition class >> isDeprecated [
+	^ true
+]

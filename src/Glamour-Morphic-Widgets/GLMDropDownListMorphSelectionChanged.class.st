@@ -8,6 +8,11 @@ Class {
 	#category : #'Glamour-Morphic-Widgets'
 }
 
+{ #category : #testing }
+GLMDropDownListMorphSelectionChanged class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMDropDownListMorphSelectionChanged >> selectionIndex [
 	^ selectionIndex

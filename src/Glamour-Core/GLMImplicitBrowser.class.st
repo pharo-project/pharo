@@ -12,6 +12,11 @@ Class {
 	#category : #'Glamour-Core'
 }
 
+{ #category : #testing }
+GLMImplicitBrowser class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMImplicitBrowser >> addPresentation: aPresentation [
 	self transmission transmissionStrategy addPresentation: aPresentation 

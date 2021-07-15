@@ -106,6 +106,11 @@ GLMScrollPaneBrick class >> exampleLarge [
 	foundation openInWindow
 ]
 
+{ #category : #testing }
+GLMScrollPaneBrick class >> isDeprecated [
+	^ true
+]
+
 { #category : #'brick-structure-adding/removing' }
 GLMScrollPaneBrick >> addAllBricks: aCollection [
 

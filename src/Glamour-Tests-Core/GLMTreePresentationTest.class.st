@@ -8,6 +8,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMTreePresentationTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #running }
 GLMTreePresentationTest >> setUp [
 	super setUp.

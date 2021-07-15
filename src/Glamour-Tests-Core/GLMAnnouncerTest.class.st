@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMAnnouncerTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #running }
 GLMAnnouncerTest >> setUp [
 	super setUp.

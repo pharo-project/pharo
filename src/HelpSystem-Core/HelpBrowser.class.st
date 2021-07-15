@@ -109,6 +109,13 @@ HelpBrowser class >> taskbarIconName [
 ]
 
 { #category : #ui }
+HelpBrowser >> bindings [
+	"I'm used as an interaction model for the Help Browser text editors.
+	Return an empty collection of bindings, since no compilation or code completion happen on myself"
+	^ Dictionary new
+]
+
+{ #category : #ui }
 HelpBrowser >> close [
 	window notNil ifTrue: [window delete]
 ]

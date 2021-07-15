@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMTextPresentationTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMTextPresentationTest >> testSelectedText [
 	| presentation |

@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GlamourousBenchmark class >> isDeprecated [
+	^ true
+]
+
 { #category : #utilities }
 GlamourousBenchmark >> defaultBrowser [ 
 	| browser |

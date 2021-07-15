@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Morphic'
 }
 
+{ #category : #testing }
+GLMCompositePresentationMorphicTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #private }
 GLMCompositePresentationMorphicTest >> compositeMorph [
 	^ window submorphs last submorphs last submorphs last

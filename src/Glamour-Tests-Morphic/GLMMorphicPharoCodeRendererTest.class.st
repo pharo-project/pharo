@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Morphic'
 }
 
+{ #category : #testing }
+GLMMorphicPharoCodeRendererTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMMorphicPharoCodeRendererTest >> testCodeExecutionWithBindings [
 	| composite textMorph result |

@@ -7,6 +7,11 @@ Class {
 	#category : #'GT-Tests-Spotter-Processors'
 }
 
+{ #category : #testing }
+BenchProcessors class >> isDeprecated [
+	^ true
+]
+
 { #category : #benchmarking }
 BenchProcessors >> benchClassFinding [
 	<script: 'self new benchClassFinding'>

@@ -58,6 +58,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Morphic'
 }
 
+{ #category : #testing }
+GLMRubTextFieldMorph class >> isDeprecated [
+	^ true
+]
+
 { #category : #geometry }
 GLMRubTextFieldMorph >> extent: aPoint [
 	|newTop patch offset|

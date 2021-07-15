@@ -13,6 +13,11 @@ GLMMorphicIcons class >> form16x16FromContents: aByteArray [
 	offset: 0@0
 ]
 
+{ #category : #testing }
+GLMMorphicIcons class >> isDeprecated [
+	^ true
+]
+
 { #category : #'accessing - icons' }
 GLMMorphicIcons class >> toolbarMenuForm [
 	^self form16x16FromContents: self windowMenuFormContents 

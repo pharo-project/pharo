@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMFlexiblePresentationTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMFlexiblePresentationTest >> testDefault [
 	| browser |

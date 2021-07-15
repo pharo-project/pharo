@@ -32,6 +32,11 @@ Class {
 	#category : #'Glamour-FastTable-Model'
 }
 
+{ #category : #testing }
+GLMFastTreeDataSource class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMFastTreeDataSource >> announcer [
 	^ announcer ifNil: [ announcer := GLMAnnouncer new ]

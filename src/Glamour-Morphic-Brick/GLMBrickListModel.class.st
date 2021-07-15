@@ -27,6 +27,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Model'
 }
 
+{ #category : #testing }
+GLMBrickListModel class >> isDeprecated [
+	^ true
+]
+
 { #category : #'instance creation' }
 GLMBrickListModel class >> on: anObject [
 

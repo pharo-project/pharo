@@ -4,6 +4,11 @@ Class {
 	#category : #'GT-Tests-Debugger'
 }
 
+{ #category : #testing }
+GTGenericStackDebuggerTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GTGenericStackDebuggerTest >> testBasic [
 	| context process debugger printedString |

@@ -66,6 +66,11 @@ GLMMorphic class >> isAlignmentMorph: anObject [
 	^anObject isMemberOf: AlignmentMorph
 ]
 
+{ #category : #testing }
+GLMMorphic class >> isDeprecated [
+	^ true
+]
+
 { #category : #'button styles' }
 GLMMorphic class >> isGrayRoundedButton: aSymbol [
 

@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMPaneTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMPaneTest >> testAllRecursivePresentations [
 	| browser |

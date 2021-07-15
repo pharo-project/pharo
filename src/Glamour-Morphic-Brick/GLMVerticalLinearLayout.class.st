@@ -13,6 +13,11 @@ GLMVerticalLinearLayout class >> cleanUp [
 	self reset
 ]
 
+{ #category : #testing }
+GLMVerticalLinearLayout class >> isDeprecated [
+	^ true
+]
+
 { #category : #initialization }
 GLMVerticalLinearLayout class >> reset [
 	"

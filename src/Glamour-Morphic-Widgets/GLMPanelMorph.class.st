@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Widgets'
 }
 
+{ #category : #testing }
+GLMPanelMorph class >> isDeprecated [
+	^ true
+]
+
 { #category : #'change reporting' }
 GLMPanelMorph >> adoptPaneColor: paneColor [
 	"Change our color too."

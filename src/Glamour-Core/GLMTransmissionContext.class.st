@@ -16,6 +16,11 @@ Class {
 	#category : #'Glamour-Core'
 }
 
+{ #category : #testing }
+GLMTransmissionContext class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMTransmissionContext >> addPort: aPort [
 	self ports add: aPort

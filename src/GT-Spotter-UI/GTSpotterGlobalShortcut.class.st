@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #testing }
+GTSpotterGlobalShortcut class >> isDeprecated [
+	^ true
+]
+
+{ #category : #testing }
 GTSpotterGlobalShortcut class >> isGlobalCategory [
 	^ true
 ]

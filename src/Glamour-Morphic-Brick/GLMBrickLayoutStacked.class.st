@@ -8,6 +8,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Announcements'
 }
 
+{ #category : #testing }
+GLMBrickLayoutStacked class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMBrickLayoutStacked >> index [
 	^ index

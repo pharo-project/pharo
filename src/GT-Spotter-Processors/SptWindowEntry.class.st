@@ -7,6 +7,11 @@ Class {
 	#category : #'GT-Spotter-Processors-Entries'
 }
 
+{ #category : #testing }
+SptWindowEntry class >> isDeprecated [
+	^ true
+]
+
 { #category : #converting }
 SptWindowEntry >> asString [ 
 

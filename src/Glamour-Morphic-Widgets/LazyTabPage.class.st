@@ -10,6 +10,11 @@ Class {
 	#category : #'Glamour-Morphic-Widgets'
 }
 
+{ #category : #testing }
+LazyTabPage class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 LazyTabPage >> actualPageMorph [
 	^ actualPageMorph ifNil: 

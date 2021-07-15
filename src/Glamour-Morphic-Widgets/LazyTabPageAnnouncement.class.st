@@ -9,6 +9,11 @@ Class {
 	#category : #'Glamour-Morphic-Widgets'
 }
 
+{ #category : #testing }
+LazyTabPageAnnouncement class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 LazyTabPageAnnouncement >> page [
 	^ page

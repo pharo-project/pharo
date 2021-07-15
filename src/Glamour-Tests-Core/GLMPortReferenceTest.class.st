@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMPortReferenceTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMPortReferenceTest >> testOriginTransformedValue [
 	| port reference |

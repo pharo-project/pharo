@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Browsers-Other'
 }
 
+{ #category : #testing }
+GLMStacker class >> isDeprecated [
+	^ true
+]
+
 { #category : #scripting }
 GLMStacker >> aPane: aBlockOrSymbol [
 	^ self addNewPaneNamed: aBlockOrSymbol

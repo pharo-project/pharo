@@ -9,6 +9,11 @@ Class {
 	#category : #'Glamour-Morphic-Widgets'
 }
 
+{ #category : #testing }
+LazyTabGroupMorph class >> isDeprecated [
+	^ true
+]
+
 { #category : #adding }
 LazyTabGroupMorph >> addLazyPage: aBlock label: aStringOrMorph [
 	self addLazyPage: aBlock label: aStringOrMorph toolbar: nil

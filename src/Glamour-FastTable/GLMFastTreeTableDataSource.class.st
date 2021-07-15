@@ -30,6 +30,11 @@ Class {
 	#category : #'Glamour-FastTable-Model'
 }
 
+{ #category : #testing }
+GLMFastTreeTableDataSource class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMFastTreeTableDataSource >> actionColumn: column [
 	"If columns has actions associated, execute them"

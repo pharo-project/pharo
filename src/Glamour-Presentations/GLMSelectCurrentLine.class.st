@@ -6,3 +6,8 @@ Class {
 	#superclass : #Announcement,
 	#category : #'Glamour-Presentations-Announcements'
 }
+
+{ #category : #testing }
+GLMSelectCurrentLine class >> isDeprecated [
+	^ true
+]

@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #testing }
+GTPlayPagePersistence class >> isDeprecated [
+	^ true
+]
+
+{ #category : #testing }
 GTPlayPagePersistence >> isStash [
 	^ false
 ]

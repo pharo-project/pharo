@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMBrowserTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMBrowserTest >> testAddPane [
 	| browser pane |

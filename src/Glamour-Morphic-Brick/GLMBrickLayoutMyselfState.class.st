@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Layouts'
 }
 
+{ #category : #testing }
+GLMBrickLayoutMyselfState class >> isDeprecated [
+	^ true
+]
+
 { #category : #initialization }
 GLMBrickLayoutMyselfState >> defaultDimension [
 

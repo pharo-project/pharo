@@ -8,6 +8,11 @@ Class {
 	#category : #'GT-Spotter-Announcements'
 }
 
+{ #category : #testing }
+GTSpotterDiveInElement class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GTSpotterDiveInElement >> element [
 	^ element

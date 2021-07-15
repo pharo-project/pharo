@@ -13,6 +13,11 @@ GLMBrickWidthTraverser class >> cleanUp [
 	uniqueInstance := nil
 ]
 
+{ #category : #testing }
+GLMBrickWidthTraverser class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMBrickWidthTraverser class >> uniqueInstance [
 	^ uniqueInstance ifNil: [ uniqueInstance := self new ]

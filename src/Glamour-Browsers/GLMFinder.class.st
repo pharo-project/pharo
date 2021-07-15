@@ -21,6 +21,11 @@ Class {
 	#category : #'Glamour-Browsers-Other'
 }
 
+{ #category : #testing }
+GLMFinder class >> isDeprecated [
+	^ true
+]
+
 { #category : #private }
 GLMFinder >> addPaneFromInner: aPort [ 
 	"This method adds a new pane at the end of the finder. Data comes from a port that is in a pane inside the current browser."

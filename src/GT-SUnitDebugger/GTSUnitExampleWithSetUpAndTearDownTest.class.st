@@ -16,6 +16,11 @@ GTSUnitExampleWithSetUpAndTearDownTest class >> isAbstract [
 ]
 
 { #category : #testing }
+GTSUnitExampleWithSetUpAndTearDownTest class >> isDeprecated [
+	^ true
+]
+
+{ #category : #testing }
 GTSUnitExampleWithSetUpAndTearDownTest class >> isUnitTest [
 	^ false
 ]

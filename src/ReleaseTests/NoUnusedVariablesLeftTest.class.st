@@ -22,7 +22,7 @@ NoUnusedVariablesLeftTest >> testNoUnusedClassVariablesLeft [
 	
 	classes := variables collect: [ :each | each definingClass ] as: Set.
 	
-	validExceptions := #(OSKeySymbols FooSharedPool SDL2Constants AthensCairoDefinitions BalloonEngineConstants ShTestSharedPool RBLintRuleTestData RBDummyLintRuleTest MCMockClassF Unicode Character).	
+	validExceptions := #(OSKeySymbols FooSharedPool SDL2Constants AthensCairoDefinitions BalloonEngineConstants ShTestSharedPool RBLintRuleTestData RBDummyLintRuleTest MCMockClassF Unicode Character STONAlternativeRepresentationTestObject).	
 	
 	remaining := classes asOrderedCollection reject: [ :each  | validExceptions includes: each name].
 	self assert: remaining isEmpty

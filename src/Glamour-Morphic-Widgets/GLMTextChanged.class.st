@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Widgets'
 }
 
+{ #category : #testing }
+GLMTextChanged class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMTextChanged >> text [
 	^ text

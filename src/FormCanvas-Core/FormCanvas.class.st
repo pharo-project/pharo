@@ -266,14 +266,13 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font
 
 { #category : #'private - balloon engine' }
 FormCanvas >> ensuredEngine [
-	engine ifNil:[
-		engine := BalloonEngine new.
-		engine aaLevel: 1.
-		engine bitBlt: port.
-		engine destOffset: origin.
-		engine clipRect: clipRect.
-		engine deferred: false.
-		engine].
+	engine := BalloonEngine new.
+	engine aaLevel: 1.
+	engine bitBlt: port.
+	engine destOffset: origin.
+	engine clipRect: clipRect.
+	engine deferred: false.
+
 	engine colorTransform: colorTransform.
 	engine edgeTransform: self transform.
 	^engine

@@ -10,6 +10,11 @@ Class {
 	#category : #'Glamour-Core'
 }
 
+{ #category : #testing }
+GLMTransmissionStrategy class >> isDeprecated [
+	^ true
+]
+
 { #category : #'instance creation' }
 GLMTransmissionStrategy class >> of: aTransmission [
 	^ self new transmission: aTransmission; yourself

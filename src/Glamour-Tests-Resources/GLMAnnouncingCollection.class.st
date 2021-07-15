@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Tests-Resources'
 }
 
+{ #category : #testing }
+GLMAnnouncingCollection class >> isDeprecated [
+	^ true
+]
+
 { #category : #initialization }
 GLMAnnouncingCollection >> add: anObject [
 

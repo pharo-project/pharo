@@ -9,6 +9,11 @@ GTNullFilter class >> gtListFilter [
 	^ GTFilterSubstring new
 ]
 
+{ #category : #testing }
+GTNullFilter class >> isDeprecated [
+	^ true
+]
+
 { #category : #private }
 GTNullFilter >> doApplyFilterWithQuery [
 	self streamed 

@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Renderer'
 }
 
+{ #category : #testing }
+GLMMorphicTabbedRenderer class >> isDeprecated [
+	^ true
+]
+
 { #category : #rendering }
 GLMMorphicTabbedRenderer >> actOnContextChanged: ann [
 	ann property = #activePresentation ifTrue: [ 

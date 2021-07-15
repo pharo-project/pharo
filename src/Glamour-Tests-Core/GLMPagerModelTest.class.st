@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMPagerModelTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #private }
 GLMPagerModelTest >> createSimplePaneMorph [
 

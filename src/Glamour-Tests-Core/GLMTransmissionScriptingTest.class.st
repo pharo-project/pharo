@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMTransmissionScriptingTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #running }
 GLMTransmissionScriptingTest >> setUp [
 	super setUp.

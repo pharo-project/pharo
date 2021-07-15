@@ -30,6 +30,11 @@ GTInspectorVariableNode class >> hostObject: anObject [
 		yourself
 ]
 
+{ #category : #testing }
+GTInspectorVariableNode class >> isDeprecated [
+	^ true
+]
+
 { #category : #composition }
 GTInspectorVariableNode >> childrenNodesFor: aVariablesBrowser [
 	"Return a collection of subvariable nodes to be displayed in a given raw variables browser.

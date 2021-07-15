@@ -8,6 +8,11 @@ Class {
 	#category : #'GT-Spotter-Announcements'
 }
 
+{ #category : #testing }
+GTSpotterSelectedCandidateChanged class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GTSpotterSelectedCandidateChanged >> eventType [
 	^ eventType

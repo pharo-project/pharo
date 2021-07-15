@@ -32,6 +32,11 @@ Class {
 	#category : #'Glamour-FastTable-Model'
 }
 
+{ #category : #testing }
+GLMFastListOutlineDataSource class >> isDeprecated [
+	^ true
+]
+
 { #category : #announcing }
 GLMFastListOutlineDataSource >> announcer [
 	^ announcer ifNil: [ announcer := GLMAnnouncer new ]

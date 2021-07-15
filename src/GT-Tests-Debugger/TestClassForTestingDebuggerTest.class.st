@@ -4,6 +4,11 @@ Class {
 	#category : #'GT-Tests-Debugger'
 }
 
+{ #category : #testing }
+TestClassForTestingDebuggerTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 TestClassForTestingDebuggerTest >> testBla [
 <expectedFailure>

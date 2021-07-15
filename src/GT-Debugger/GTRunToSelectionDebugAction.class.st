@@ -15,6 +15,11 @@ GTRunToSelectionDebugAction class >> gtActionFor: aDebugger [
 			icon: GLMUIThemeExtraIcons glamorousPlay
 ]
 
+{ #category : #testing }
+GTRunToSelectionDebugAction class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GTRunToSelectionDebugAction >> defaultOrder [
 

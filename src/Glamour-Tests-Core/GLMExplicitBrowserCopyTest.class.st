@@ -8,6 +8,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMExplicitBrowserCopyTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #running }
 GLMExplicitBrowserCopyTest >> setUp [
 	| pane1 pane2 transmission1 transmission2 | 

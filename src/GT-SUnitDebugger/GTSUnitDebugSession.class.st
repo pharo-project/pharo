@@ -32,6 +32,11 @@ GTSUnitDebugSession class >> activationPredicate [
 	^  GTSUnitActivationPredicate new
 ]
 
+{ #category : #testing }
+GTSUnitDebugSession class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GTSUnitDebugSession >> actualResult [
 	

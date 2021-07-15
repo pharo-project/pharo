@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Morphic'
 }
 
+{ #category : #testing }
+GLMRubEditingArea class >> isDeprecated [
+	^ true
+]
+
 { #category : #drawing }
 GLMRubEditingArea >> drawKeyboardFocusOn: aCanvas [
 	"remove focused border"

@@ -16,6 +16,11 @@ GLMWindowRequest class >> for: aSelector [
 	^ self new action: [ :editor | editor perform: aSelector ]
 ]
 
+{ #category : #testing }
+GLMWindowRequest class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMWindowRequest >> action [
 	^ action

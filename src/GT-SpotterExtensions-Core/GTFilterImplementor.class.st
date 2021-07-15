@@ -9,6 +9,11 @@ GTFilterImplementor class >> gtListFilter [
 	^ GTFilterSubstring new
 ]
 
+{ #category : #testing }
+GTFilterImplementor class >> isDeprecated [
+	^ true
+]
+
 { #category : #private }
 GTFilterImplementor >> applyFilterWithQuery [ 
 	super applyFilterWithQuery.

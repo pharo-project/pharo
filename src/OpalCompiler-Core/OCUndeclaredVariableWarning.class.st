@@ -149,10 +149,14 @@ OCUndeclaredVariableWarning >> node: aVariableNode [
 
 { #category : #correcting }
 OCUndeclaredVariableWarning >> openMenuIn: aBlock [
-	| alternatives labels actions lines caption choice name interval |
+	| alternatives labels actions lines caption choice name interval requestor |
 	
-	"Turn off suggestions when in RubSmalltalkCommentMode" 
-	(compilationContext requestor editingMode class name == #RubSmalltalkCommentMode) ifTrue: [ ^UndeclaredVariable named: node name ].
+	"Turn off suggestions when in RubSmalltalkCommentMode
+ 	This is a workaround, the plan is to not do this as part of the exception"
+ 	requestor := compilationContext requestor.
+ 	((requestor class name = #RubEditingArea) and: [
+ 		requestor editingMode class name = #RubSmalltalkCommentMode])
+ 					ifTrue: [ ^UndeclaredVariable named: node name ].
 	
 	interval := node sourceInterval.
 	name := node name.

@@ -8,6 +8,11 @@ Class {
 	#category : #'Glamour-PagerModel-Announcements'
 }
 
+{ #category : #testing }
+GLMPageSwitched class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMPageSwitched >> pageIndex [
 	^ pageIndex

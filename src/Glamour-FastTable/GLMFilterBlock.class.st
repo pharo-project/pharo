@@ -15,6 +15,11 @@ GLMFilterBlock class >> block: aBlockClosure [
 	^ self new filterBlock: aBlockClosure; yourself
 ]
 
+{ #category : #testing }
+GLMFilterBlock class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMFilterBlock >> filterBlock [
 	^ filterBlock

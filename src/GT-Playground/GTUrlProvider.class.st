@@ -15,6 +15,11 @@ Class {
 	#category : #'GT-Playground'
 }
 
+{ #category : #testing }
+GTUrlProvider class >> isDeprecated [
+	^ true
+]
+
 { #category : #settings }
 GTUrlProvider class >> settingsOn: aBuilder [ 
 	<systemsettings>

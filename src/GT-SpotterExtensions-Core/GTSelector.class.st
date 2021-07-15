@@ -17,6 +17,11 @@ GTSelector class >> gtExampleNew [
 	^ self new name: #new
 ]
 
+{ #category : #testing }
+GTSelector class >> isDeprecated [
+	^ true
+]
+
 { #category : #private }
 GTSelector class >> substring: aString filter: aFilter [
 	| selectors |

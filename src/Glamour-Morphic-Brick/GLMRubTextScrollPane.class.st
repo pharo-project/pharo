@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Morphic'
 }
 
+{ #category : #testing }
+GLMRubTextScrollPane class >> isDeprecated [
+	^ true
+]
+
 { #category : #drawing }
 GLMRubTextScrollPane >> drawKeyboardFocusOn: aCanvas [
 	"empty to remove focus border"

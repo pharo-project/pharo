@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Widgets-UI'
 }
 
+{ #category : #testing }
+GLMHaloBrick class >> isDeprecated [
+	^ true
+]
+
 { #category : #handles }
 GLMHaloBrick >> addDupHandle: haloSpec [
 ]

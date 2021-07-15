@@ -8,6 +8,11 @@ Class {
 	#category : #'GT-BytecodeDebugger-Model'
 }
 
+{ #category : #testing }
+GTBytecodeDebuggerSession class >> isDeprecated [
+	^ true
+]
+
 { #category : #'debugging actions' }
 GTBytecodeDebuggerSession >> runToBytecode: aSymbolicBytecode inContext: aContext [ 
 	"Attempt to step over instructions in selectedContext until the 

@@ -10,6 +10,11 @@ Class {
 	#category : #'Glamour-Browsers-Tabulator'
 }
 
+{ #category : #testing }
+GLMTabulator class >> isDeprecated [
+	^ true
+]
+
 { #category : #layout }
 GLMTabulator >> addColumn: aBlockOrSymbol [ 
 	 

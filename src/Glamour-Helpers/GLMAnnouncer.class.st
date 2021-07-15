@@ -11,6 +11,11 @@ Class {
 	#category : #'Glamour-Helpers'
 }
 
+{ #category : #testing }
+GLMAnnouncer class >> isDeprecated [
+	^ true
+]
+
 { #category : #announce }
 GLMAnnouncer >> announce: anAnnouncement [
 	(self isAnnouncementSuspended: anAnnouncement) ifTrue: [ ^ anAnnouncement asAnnouncement ].

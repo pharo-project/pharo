@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Widgets'
 }
 
+{ #category : #testing }
+GLMTreeMorphStrongSelectionChanged class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMTreeMorphStrongSelectionChanged >> strongSelectionValue [
 	^ strongSelectionValue

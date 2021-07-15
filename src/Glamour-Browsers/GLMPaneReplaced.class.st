@@ -21,6 +21,11 @@ Class {
 	#category : #'Glamour-Browsers-Announcements'
 }
 
+{ #category : #testing }
+GLMPaneReplaced class >> isDeprecated [
+	^ true
+]
+
 { #category : #'instance creation' }
 GLMPaneReplaced class >> oldPane: oldPane newPane: newPane fromBrowser: aBrowser [
 	^ self new 

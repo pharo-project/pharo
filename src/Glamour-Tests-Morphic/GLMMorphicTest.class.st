@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Tests-Morphic'
 }
 
+{ #category : #testing }
+GLMMorphicTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #private }
 GLMMorphicTest >> find: aClass in: aMorph [
 	"Explores aMorph hierarchy of sub morphs to find a morph whose class inherits from aClass"

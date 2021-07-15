@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Widgets-UI-Popup'
 }
 
+{ #category : #testing }
+GLMPopupBrickPredicate class >> isDeprecated [
+	^ true
+]
+
 { #category : #predicate }
 GLMPopupBrickPredicate >> popup: aPopupBrick event: anEvent [
 	"Return true if predicate is activated based on a given popup and event"

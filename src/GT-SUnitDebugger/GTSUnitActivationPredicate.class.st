@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #testing }
+GTSUnitActivationPredicate class >> isDeprecated [
+	^ true
+]
+
+{ #category : #testing }
 GTSUnitActivationPredicate >> matchContext: aContext [
 	
 	^ aContext method isTestMethod

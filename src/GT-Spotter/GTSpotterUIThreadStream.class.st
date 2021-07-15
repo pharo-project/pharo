@@ -10,6 +10,11 @@ Class {
 	#category : #'GT-Spotter-Utils'
 }
 
+{ #category : #testing }
+GTSpotterUIThreadStream class >> isDeprecated [
+	^ true
+]
+
 { #category : #'adding/removing' }
 GTSpotterUIThreadStream >> addObject: firstObject inProcessor: secondObject [
 

@@ -21,6 +21,11 @@ Class {
 	#category : #'Glamour-Core'
 }
 
+{ #category : #testing }
+GLMUpdateAction class >> isDeprecated [
+	^ true
+]
+
 { #category : #'announcement handling' }
 GLMUpdateAction >> actOn: anAnnouncement [
 	| allowedToTrigger |

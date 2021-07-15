@@ -25,6 +25,11 @@ GLMLoggedObject class >> initialize [
 	logger := GLMLogger instance
 ]
 
+{ #category : #testing }
+GLMLoggedObject class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMLoggedObject class >> logger [
 	^ logger

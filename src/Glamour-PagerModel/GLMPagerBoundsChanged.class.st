@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-PagerModel-Announcements'
 }
 
+{ #category : #testing }
+GLMPagerBoundsChanged class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMPagerBoundsChanged >> bounds [
 	^ bounds

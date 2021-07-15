@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Widgets-UI-Popup-Themer'
 }
 
+{ #category : #testing }
+GLMBrickPopupThemer class >> isDeprecated [
+	^ true
+]
+
 { #category : #'brick-popup' }
 GLMBrickPopupThemer >> backgroundColor [
 	"Return a background color of a default popup"

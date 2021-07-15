@@ -195,6 +195,11 @@ GTSpotterHelp class >> extensionsString [
 			s cr ] ]
 ]
 
+{ #category : #testing }
+GTSpotterHelp class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GTSpotterHelp class >> key [
 	^ self name

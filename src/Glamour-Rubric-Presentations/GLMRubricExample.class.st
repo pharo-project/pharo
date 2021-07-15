@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Rubric-Presentations-Examples'
 }
 
+{ #category : #testing }
+GLMRubricExample class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMRubricExample >> iconProvider [
 	" For 2.0/3.0 compatibility "

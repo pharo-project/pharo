@@ -10,6 +10,11 @@ Class {
 	#category : #'GT-Inspector'
 }
 
+{ #category : #testing }
+GTInspectorPresentationFilter class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GTInspectorPresentationFilter >> changeFilterRequestFor: aGTInspector [
 

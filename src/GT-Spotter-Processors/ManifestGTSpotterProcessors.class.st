@@ -7,6 +7,11 @@ Class {
 	#category : #'GT-Spotter-Processors-Manifest'
 }
 
+{ #category : #testing }
+ManifestGTSpotterProcessors class >> isDeprecated [
+	^ true
+]
+
 { #category : #'code-critics' }
 ManifestGTSpotterProcessors class >> ruleReClassNotReferencedRuleV1FalsePositive [
 	^ #(#(#(#RGPackageDefinition #(#'GT-Spotter-Processors')) #'2020-03-26T18:37:51.234976+01:00') )

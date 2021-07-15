@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMFinderTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMFinderTest >> testEmptyPanes [
 	| browser | 

@@ -4,6 +4,11 @@ Class {
 	#category : #'GT-Tests-Inspector'
 }
 
+{ #category : #testing }
+GTInspectorVariableValuePairsTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #object }
 GTInspectorVariableValuePairsTest >> testArrayPairsEqualLimit [
 

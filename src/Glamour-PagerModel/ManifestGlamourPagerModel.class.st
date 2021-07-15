@@ -6,3 +6,8 @@ Class {
 	#superclass : #PackageManifest,
 	#category : #'Glamour-PagerModel-Manifest'
 }
+
+{ #category : #testing }
+ManifestGlamourPagerModel class >> isDeprecated [
+	^ true
+]

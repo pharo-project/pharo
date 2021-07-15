@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMExpanderTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMExpanderTest >> testAllowNilConditionWhenEmbedded [
 	| expander tabulator |

@@ -29,6 +29,11 @@ Class {
 	#category : #'Glamour-FastTable-Announcement'
 }
 
+{ #category : #testing }
+GLMDataSourceUpdated class >> isDeprecated [
+	^ true
+]
+
 { #category : #'instance creation' }
 GLMDataSourceUpdated class >> newDataSource: aDataSource [
 	^ self new

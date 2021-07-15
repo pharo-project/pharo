@@ -10,6 +10,11 @@ Class {
 	#category : #'Glamour-Morphic-Renderer'
 }
 
+{ #category : #testing }
+GLMMorphicWidgetRenderer class >> isDeprecated [
+	^ true
+]
+
 { #category : #'instance creation' }
 GLMMorphicWidgetRenderer class >> render: aPresentation from: aRenderer [
 	^ self new 

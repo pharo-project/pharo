@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Widgets-UI-Popup-Themer'
 }
 
+{ #category : #testing }
+GLMBrickPopupHelpThemer class >> isDeprecated [
+	^ true
+]
+
 { #category : #'brick-popup' }
 GLMBrickPopupHelpThemer >> backgroundColor [
 

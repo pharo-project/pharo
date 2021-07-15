@@ -7,3 +7,8 @@ Class {
 	#superclass : #GLMBrickAnnouncement,
 	#category : #'Glamour-Morphic-Brick-Announcements'
 }
+
+{ #category : #testing }
+GLMBrickDataChanged class >> isDeprecated [
+	^ true
+]

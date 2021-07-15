@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMPresentationTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMPresentationTest >> testActions [
 	| listing |

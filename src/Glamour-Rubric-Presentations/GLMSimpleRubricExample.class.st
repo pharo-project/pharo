@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Rubric-Presentations-Examples'
 }
 
+{ #category : #testing }
+GLMSimpleRubricExample class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMSimpleRubricExample >> presentation [
 	^ GLMCompositePresentation new

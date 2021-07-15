@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Layouts'
 }
 
+{ #category : #testing }
+GLMLinearLayout class >> isDeprecated [
+	^ true
+]
+
 { #category : #layout }
 GLMLinearLayout >> align: aBrick in: parentBrick anchorPoint: aPoint inContext: aContext [
 

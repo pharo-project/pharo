@@ -13,6 +13,11 @@ GLMBrickHeightTraverser class >> cleanUp [
 	uniqueInstance := nil
 ]
 
+{ #category : #testing }
+GLMBrickHeightTraverser class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMBrickHeightTraverser class >> uniqueInstance [
 	^ uniqueInstance ifNil: [ uniqueInstance := self new ]

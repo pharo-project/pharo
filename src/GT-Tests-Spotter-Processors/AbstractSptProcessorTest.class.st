@@ -17,6 +17,11 @@ AbstractSptProcessorTest class >> isAbstract [
 	^ self == AbstractSptProcessorTest
 ]
 
+{ #category : #testing }
+AbstractSptProcessorTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #asserting }
 AbstractSptProcessorTest >> assertQuantityOfResults: anInteger [ 
 	

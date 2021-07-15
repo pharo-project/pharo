@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Renderer'
 }
 
+{ #category : #testing }
+GLMBrickAreaRenderer class >> isDeprecated [
+	^ true
+]
+
 { #category : #geometry }
 GLMBrickAreaRenderer >> drawingBounds: aBrick [
 	| aRectangle anOffset |

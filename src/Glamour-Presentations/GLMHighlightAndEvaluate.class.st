@@ -10,6 +10,11 @@ Class {
 	#category : #'Glamour-Presentations-Announcements'
 }
 
+{ #category : #testing }
+GLMHighlightAndEvaluate class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMHighlightAndEvaluate >> action [
 	^ action
