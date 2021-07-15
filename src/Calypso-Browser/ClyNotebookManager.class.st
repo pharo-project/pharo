@@ -402,11 +402,15 @@ ClyNotebookManager >> updateTabsWith: newTools [
 			ifFound: [ :existing | toRemove remove: existing ]
 			ifNone: [ toInstall add: new ] ].
 
+	"We need to install the new tabs before removing the old ones.
+	Because removing the old ones force to generate the content of the existing ones.
+	Even the ones we are going to remove"
+	toInstall do: [ :each | self addTool: each ].
 	toRemove 
 		reject: [ :each | each wantsStayInDifferentContext ]
 		thenDo: [ :each | self removeTool: each ].
 	tools do: [ :each | each browserContextWasChanged ].
-	toInstall do: [ :each | self addTool: each ]
+	
 ]
 
 { #category : #updating }
