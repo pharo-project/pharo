@@ -1,38 +1,41 @@
 Class {
-	#name : #RBExtractSetUpMethodAndOccurrencesTest,
-	#superclass : #RBRefactoringTest,
-	#category : #'Refactoring-Tests-Core-Refactorings'
+	#name : #RBExtractSetUpMethodAndOccurrencesParametrizedTest,
+	#superclass : #RBAbstractRefactoringTest,
+	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 
+{ #category : #tests }
+RBExtractSetUpMethodAndOccurrencesParametrizedTest class >> testParameters [
+	^ ParametrizedTestMatrix new
+		addCase: { #rbClass -> RBExtractSetUpMethodAndOccurrences };
+		yourself
+]
+
+{ #category : #accessing }
+RBExtractSetUpMethodAndOccurrencesParametrizedTest >> constructor [ 
+	^ #extract:from:in:
+]
+
 { #category : #'failure tests' }
-RBExtractSetUpMethodAndOccurrencesTest >> testBadInterval [
+RBExtractSetUpMethodAndOccurrencesParametrizedTest >> testBadInterval [
 	| refactoring |
-	refactoring := RBExtractSetUpMethodAndOccurrences
-				extract: (36 to: 56)
-				from: #testExample1
-				in: RBTest.
+	refactoring := self createRefactoringWithArguments: { (36 to: 56) . #testExample1 . RBTest }.
 	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
 	self shouldFail: refactoring.
 ]
 
 { #category : #'failure tests' }
-RBExtractSetUpMethodAndOccurrencesTest >> testBadMethodName [
+RBExtractSetUpMethodAndOccurrencesParametrizedTest >> testBadMethodName [
 	| refactoring |
-	refactoring := RBExtractSetUpMethodAndOccurrences
-				extract: (36 to: 56)
-				from: #testExample7
-				in: RBTest.
+	refactoring := self createRefactoringWithArguments: { (36 to: 56) . #testExample7 . RBTest }.
 	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
 	self shouldFail: refactoring.
 ]
 
 { #category : #tests }
-RBExtractSetUpMethodAndOccurrencesTest >> testExtractSimpleMethodAndOcurrences [
+RBExtractSetUpMethodAndOccurrencesParametrizedTest >> testExtractSimpleMethodAndOcurrences [
 	|class refactoring|
-	refactoring := RBExtractSetUpMethodAndOccurrences
-				extract: (17 to: 56)
-				from: #testExample1
-				in: RBTest.
+	refactoring := self createRefactoringWithArguments: { (17 to: 56) . #testExample1 . RBTest }.
 	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBTest.

@@ -11,7 +11,7 @@ RBRenamePackageParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #'failure tests' }
+{ #category : #accessing }
 RBRenamePackageParametrizedTest >> constructor [ 
 	^ #rename:to:
 ]

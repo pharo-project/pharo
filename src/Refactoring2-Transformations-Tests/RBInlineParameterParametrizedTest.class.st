@@ -11,7 +11,7 @@ RBInlineParameterParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #'failure tests' }
+{ #category : #accessing }
 RBInlineParameterParametrizedTest >> constructor [ 
 	^ #inlineParameter:in:selector:
 ]

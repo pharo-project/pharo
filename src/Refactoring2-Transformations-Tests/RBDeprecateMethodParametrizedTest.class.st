@@ -11,7 +11,7 @@ RBDeprecateMethodParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #'failure tests' }
+{ #category : #accessing }
 RBDeprecateMethodParametrizedTest >> constructor [ 
 	^ #deprecateMethod:in:using:
 ]

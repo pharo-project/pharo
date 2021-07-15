@@ -1,3 +1,6 @@
+"
+A trait to setUp refactorings for tests purposes
+"
 Trait {
 	#name : #TSetUpRefactorings,
 	#category : #'Refactoring2-Transformations-Tests'

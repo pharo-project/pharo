@@ -1,22 +1,32 @@
 Class {
-	#name : #RBFindAndReplaceSetUpTest,
-	#superclass : #RBRefactoringTest,
-	#category : #'Refactoring-Tests-Core-Refactorings'
+	#name : #RBFindAndReplaceSetUpParametrizedTest,
+	#superclass : #RBAbstractRefactoringTest,
+	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 
 { #category : #tests }
-RBFindAndReplaceSetUpTest >> testClassDoesNotDefineSetUpMethod [
+RBFindAndReplaceSetUpParametrizedTest class >> testParameters [
+	^ ParametrizedTestMatrix new
+		addCase: { #rbClass -> RBFindAndReplaceSetUpRefactoring };
+		yourself
+]
+
+{ #category : #accessing }
+RBFindAndReplaceSetUpParametrizedTest >> constructor [ 
+	^ #of:inWholeHierarchy:
+]
+
+{ #category : #tests }
+RBFindAndReplaceSetUpParametrizedTest >> testClassDoesNotDefineSetUpMethod [
 	| refactoring |
-	refactoring := RBFindAndReplaceSetUpRefactoring 
-			of: RBTest inWholeHierarchy: true.
+	refactoring := self createRefactoringWithArguments: { RBTest . true }.
 	self shouldFail: refactoring
 ]
 
 { #category : #tests }
-RBFindAndReplaceSetUpTest >> testReplaceSetUp [
+RBFindAndReplaceSetUpParametrizedTest >> testReplaceSetUp [
 	| class refactoring |
-	refactoring := RBFindAndReplaceSetUpRefactoring 
-			of: RBTest inWholeHierarchy: true.
+	refactoring := self createRefactoringWithArguments: { RBTest . true }.
 	class := refactoring model classNamed: #RBTest.
 	class compile: 'setUp self someClasses. aString := ''Example''.'
 		classified: #(#accessing).

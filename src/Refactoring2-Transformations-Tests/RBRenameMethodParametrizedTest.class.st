@@ -11,7 +11,7 @@ RBRenameMethodParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #'failure tests' }
+{ #category : #accessing }
 RBRenameMethodParametrizedTest >> constructor [
 	^ #renameMethod:in:to:permutation:
 ]

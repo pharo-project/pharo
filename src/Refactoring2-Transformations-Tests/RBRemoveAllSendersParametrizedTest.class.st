@@ -11,7 +11,7 @@ RBRemoveAllSendersParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : #accessing }
 RBRemoveAllSendersParametrizedTest >> constructor [ 
 	^ #removeSendersOf:
 ]

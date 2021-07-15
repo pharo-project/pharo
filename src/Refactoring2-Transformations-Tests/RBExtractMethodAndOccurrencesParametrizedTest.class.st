@@ -1,58 +1,41 @@
 Class {
-	#name : #RBExtractMethodAndOccurrencesTest,
-	#superclass : #RBRefactoringTest,
-	#category : #'Refactoring-Tests-Core-Refactorings'
+	#name : #RBExtractMethodAndOccurrencesParametrizedTest,
+	#superclass : #RBAbstractRefactoringTest,
+	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 
+{ #category : #tests }
+RBExtractMethodAndOccurrencesParametrizedTest class >> testParameters [
+	^ ParametrizedTestMatrix new
+		addCase: { #rbClass -> RBExtractMethodAndOccurrences };
+		yourself
+]
+
+{ #category : #accessing }
+RBExtractMethodAndOccurrencesParametrizedTest >> constructor [ 
+	^ #extract:from:in:
+]
+
 { #category : #running }
-RBExtractMethodAndOccurrencesTest >> setUp [ 
+RBExtractMethodAndOccurrencesParametrizedTest >> setUp [ 
 	super setUp.
 	model := self extractMethodTestData.
 ]
 
 { #category : #'failure tests' }
-RBExtractMethodAndOccurrencesTest >> testBadInterval [
+RBExtractMethodAndOccurrencesParametrizedTest >> testBadInterval [
 	|class|
 	class := model classNamed: #MyClassA.
-	self
-		shouldFail:
-			(RBExtractMethodAndOccurrences 
-				model: model
-				extract: (127 to: 136)
-				from: #myMethod
-				in:  class)
-]
-
-{ #category : #running }
-RBExtractMethodAndOccurrencesTest >> testExtractMethodWithOneArgAndOcurrences [
-	|class refactoring|
-	class := model classNamed: #MyClassC.
-	refactoring := RBExtractMethodAndOccurrences
-				model: model 
-				extract: (28 to: 77)
-				from: #visitMonospace:
-				in: class.
-	self setupShouldUseExistingMethodFor: refactoring toReturn: true.
-	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
-	self executeRefactoring: refactoring.
-	self assert: (class parseTreeFor: #visitMonospace:) equals: (self parseMethod: 'visitMonospace: aFormat
-	self visitParagraph: aFormat.
-	self fixBlockWithoutMicText: aFormat').
-	self assert: (class parseTreeFor: #visitStrike:) equals: (self parseMethod: 'visitStrike: aFormat
-	self visitParagraph: aFormat.
-	self fixBlockWithoutMicText: aFormat.
-	#( 4 5 2 ) do: [ :val | self visitParagraph: val ]').
+	self shouldFail: (self createRefactoringWithModel: model
+		andArguments: { (127 to: 136) . #myMethod . class })
 ]
 
 { #category : #tests }
-RBExtractMethodAndOccurrencesTest >> testExtractMethodWithTwoArgsAndOcurrences [
+RBExtractMethodAndOccurrencesParametrizedTest >> testExtractMethodWithTwoArgsAndOcurrences [
 	|class refactoring|
 	class := model classNamed: #MyClassA.
-	refactoring := RBExtractMethodAndOccurrences
-				model: model 
-				extract: (114 to: 231)
-				from: #displayName
-				in: class.
+	refactoring := self createRefactoringWithModel: model
+		andArguments: { (114 to: 231) . #displayName . class }.
 	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
 	self setupMethodNameFor: refactoring toReturn: #stringArg:streamArg:.
 	self executeRefactoring: refactoring.
@@ -79,14 +62,11 @@ RBExtractMethodAndOccurrencesTest >> testExtractMethodWithTwoArgsAndOcurrences [
 ]
 
 { #category : #tests }
-RBExtractMethodAndOccurrencesTest >> testExtractSimpleMethodAndOcurrences [
+RBExtractMethodAndOccurrencesParametrizedTest >> testExtractSimpleMethodAndOcurrences [
 	|class refactoring|
 	class := model classNamed: #MyClassA.
-	refactoring := RBExtractMethodAndOccurrences
-				model: model 
-				extract: (282 to: 302)
-				from: #myMethod
-				in: class.
+	refactoring := self createRefactoringWithModel: model
+		andArguments: { (282 to: 302) . #myMethod . class }.
 	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
 	self setupMethodNameFor: refactoring toReturn: #extractedMethod.
 	self executeRefactoring: refactoring.

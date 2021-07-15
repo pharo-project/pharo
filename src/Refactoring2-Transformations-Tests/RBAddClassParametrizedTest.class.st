@@ -12,7 +12,7 @@ RBAddClassParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : #accessing }
 RBAddClassParametrizedTest >> constructor [ 
 	^ #addClass:superclass:subclasses:category: 
 ]
@@ -49,7 +49,7 @@ RBAddClassParametrizedTest >> testAddClass [
 { #category : #'failure tests' }
 RBAddClassParametrizedTest >> testEmptyCategory [
 	self shouldFail: (self createRefactoringWithArguments:
-		{ #FooTest . #RBRefactoringTest . (Array with: self class) . #'' })
+		{ #FooTest . #RBAbstractRefactoringTest . (Array with: self class) . #'' })
 ]
 
 { #category : #'failure tests' }
@@ -106,12 +106,6 @@ RBAddClassParametrizedTest >> testModelNonImmediateSubclassOfSuperclass [
 RBAddClassParametrizedTest >> testNonImmediateSubclassOfSuperclass [
 	self shouldFail: (self createRefactoringWithArguments: 
 		{ #Foo . #RBCompositeLintRuleTestData . (Array with: RBBasicLintRuleTestData) . #'Refactory-Tesing'})
-]
-
-{ #category : #'failure tests' }
-RBAddClassParametrizedTest >> testNonSymbolCategory [
-	self shouldFail: (self createRefactoringWithArguments:  
-		{ #FooTest . #RBRefactoringTest . (Array with: self class) . 'Refactory-Testing'})
 ]
 
 { #category : #'failure tests' }

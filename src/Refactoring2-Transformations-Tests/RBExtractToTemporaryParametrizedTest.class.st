@@ -11,7 +11,7 @@ RBExtractToTemporaryParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #'failure tests' }
+{ #category : #accessing }
 RBExtractToTemporaryParametrizedTest >> constructor [ 
 	^ #extract:to:from:in:
 ]

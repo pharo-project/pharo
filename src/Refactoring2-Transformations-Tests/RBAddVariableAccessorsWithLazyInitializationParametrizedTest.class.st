@@ -11,7 +11,7 @@ RBAddVariableAccessorsWithLazyInitializationParametrizedTest class >> testParame
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : #accessing }
 RBAddVariableAccessorsWithLazyInitializationParametrizedTest >> constructor [ 
 	^ #variable:class:classVariable:defaultValue:
 ]

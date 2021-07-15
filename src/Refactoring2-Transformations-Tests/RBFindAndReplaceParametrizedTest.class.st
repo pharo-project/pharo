@@ -1,27 +1,37 @@
 Class {
-	#name : #RBFindAndReplaceTest,
-	#superclass : #RBRefactoringTest,
-	#category : #'Refactoring-Tests-Core-Refactorings'
+	#name : #RBFindAndReplaceParametrizedTest,
+	#superclass : #RBAbstractRefactoringTest,
+	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 
+{ #category : #tests }
+RBFindAndReplaceParametrizedTest class >> testParameters [
+	^ ParametrizedTestMatrix new
+		addCase: { #rbClass -> RBFindAndReplaceRefactoring };
+		yourself
+]
+
+{ #category : #accessing }
+RBFindAndReplaceParametrizedTest >> constructor [ 
+	^ #find:of:inWholeHierarchy:
+]
+
 { #category : #running }
-RBFindAndReplaceTest >> setUp [ 
+RBFindAndReplaceParametrizedTest >> setUp [ 
 	super setUp.
 	model := self extractMethodTestData.
 ]
 
 { #category : #'failure tests' }
-RBFindAndReplaceTest >> testBadSelector [
+RBFindAndReplaceParametrizedTest >> testBadSelector [
 	|class|
 	class := model classNamed: #MyClassA.
-	self
-		shouldFail:
-			(RBFindAndReplaceRefactoring 
-				model: model find: #unexitingMethod of: class inWholeHierarchy: true)
+	self shouldFail: (self createRefactoringWithModel: model
+		andArguments: { #unexitingMethod . class . true })
 ]
 
 { #category : #'failure tests' }
-RBFindAndReplaceTest >> testFindOcurrencesFailureInHierarchy [
+RBFindAndReplaceParametrizedTest >> testFindOcurrencesFailureInHierarchy [
 	|class refactoring|
 	class := model classNamed: #MyClassA.
 	class 
@@ -32,21 +42,21 @@ RBFindAndReplaceTest >> testFindOcurrencesFailureInHierarchy [
 		compile: 'simpleMethod
 			^ nil'
 		classified: #(#accessing).
-	refactoring := RBFindAndReplaceRefactoring 
-				model: model find: #simpleMethod of: class inWholeHierarchy: true.
+	refactoring := self createRefactoringWithModel: model
+		andArguments: { #simpleMethod . class . true }.
 	self shouldFail: refactoring.
 ]
 
 { #category : #tests }
-RBFindAndReplaceTest >> testFindOcurrencesInClass [
+RBFindAndReplaceParametrizedTest >> testFindOcurrencesInClass [
 	|class refactoring|
 	class := model classNamed: #MyClassA.
 	class 
 		compile: 'simpleMethod
 			^ currentChar isLetter'
 		classified: #(#accessing).
-	refactoring := RBFindAndReplaceRefactoring 
-				model: model find: #simpleMethod of: class inWholeHierarchy: false.
+	refactoring := self createRefactoringWithModel: model
+		andArguments: {#simpleMethod . class . false }.
 	self executeRefactoring: refactoring.
 	self assert: (class parseTreeFor: #myMethod) equals: (self parseMethod: 'myMethod
 
@@ -74,15 +84,15 @@ RBFindAndReplaceTest >> testFindOcurrencesInClass [
 ]
 
 { #category : #tests }
-RBFindAndReplaceTest >> testFindOcurrencesInHierarchy [
+RBFindAndReplaceParametrizedTest >> testFindOcurrencesInHierarchy [
 	|class refactoring|
 	class := model classNamed: #MyClassA.
 	class 
 		compile: 'simpleMethod
 			^ currentChar isLetter'
 		classified: #(#accessing).
-	refactoring := RBFindAndReplaceRefactoring 
-				model: model find: #simpleMethod of: class inWholeHierarchy: true.
+	refactoring := self createRefactoringWithModel: model
+		andArguments: { #simpleMethod . class . true }.
 	self executeRefactoring: refactoring.
 	self assert: (class parseTreeFor: #myMethod) equals: (self parseMethod: 'myMethod
 
@@ -110,15 +120,15 @@ RBFindAndReplaceTest >> testFindOcurrencesInHierarchy [
 ]
 
 { #category : #tests }
-RBFindAndReplaceTest >> testFindOcurrencesWithArgInHierarchy [
+RBFindAndReplaceParametrizedTest >> testFindOcurrencesWithArgInHierarchy [
 	|class refactoring|
 	class := model classNamed: #MyClassA.
 	class 
 		compile: 'simpleMethod
 			^ currentChar isLetter'
 		classified: #(#accessing).
-	refactoring := RBFindAndReplaceRefactoring 
-				model: model find: #methodWithArg:andArg: of: class inWholeHierarchy: true.
+	refactoring := self createRefactoringWithModel: model
+		andArguments: { #methodWithArg:andArg: . class . true }.
 	self executeRefactoring: refactoring.
 	class := model classNamed: #MyClassB.
 	self assert: (class parseTreeFor: #dummyMethod) equals: (self parseMethod: 

@@ -12,7 +12,7 @@ RBRenameClassParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : #accessing }
 RBRenameClassParametrizedTest >> constructor [
 	^ #rename:to:
 ]

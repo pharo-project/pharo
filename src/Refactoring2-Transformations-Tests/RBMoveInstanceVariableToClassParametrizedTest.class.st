@@ -12,7 +12,7 @@ RBMoveInstanceVariableToClassParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : #accessing }
 RBMoveInstanceVariableToClassParametrizedTest >> constructor [ 
 	^ #variable:fromClass:toClass:
 ]

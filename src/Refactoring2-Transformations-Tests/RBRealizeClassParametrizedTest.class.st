@@ -11,7 +11,7 @@ RBRealizeClassParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : #accessing }
 RBRealizeClassParametrizedTest >> constructor [ 
 	^ #model:className:
 ]

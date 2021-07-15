@@ -11,7 +11,7 @@ RBInlineAllMethodParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #'failure tests' }
+{ #category : #accessing }
 RBInlineAllMethodParametrizedTest >> constructor [ 
 	^ #sendersOf:in:
 ]

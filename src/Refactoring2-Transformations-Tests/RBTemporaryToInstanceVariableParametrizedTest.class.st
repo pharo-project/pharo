@@ -20,7 +20,7 @@ RBTemporaryToInstanceVariableParametrizedTest >> addClassHierarchy [
 		classified: #(#accessing).
 ]
 
-{ #category : #'failure tests' }
+{ #category : #accessing }
 RBTemporaryToInstanceVariableParametrizedTest >> constructor [ 
 	^ #class:selector:variable:
 ]

@@ -11,7 +11,7 @@ RBPushDownMethodParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #'failure tests' }
+{ #category : #accessing }
 RBPushDownMethodParametrizedTest >> constructor [ 
 	^ #pushDown:from:
 ]

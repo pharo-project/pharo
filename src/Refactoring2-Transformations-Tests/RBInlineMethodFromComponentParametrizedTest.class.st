@@ -11,7 +11,7 @@ RBInlineMethodFromComponentParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : #accessing }
 RBInlineMethodFromComponentParametrizedTest >> constructor [ 
 	^ #inline:inMethod:forClass:
 ]

@@ -11,7 +11,7 @@ RBMoveMethodParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #test }
+{ #category : #accessing }
 RBMoveMethodParametrizedTest >> constructor [ 
 	^ #selector:class:variable:
 ]

@@ -1,3 +1,6 @@
+"
+A trait to build models for tests purposes
+"
 Trait {
 	#name : #TModelBuilder,
 	#category : #'Refactoring2-Transformations-Tests'
@@ -132,7 +135,7 @@ m
 '
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TModelBuilder >> defaultNamespace [
 	^RBNamespace2
 ]

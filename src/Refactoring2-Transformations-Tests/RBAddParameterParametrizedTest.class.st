@@ -11,7 +11,7 @@ RBAddParameterParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : #accessing }
 RBAddParameterParametrizedTest >> constructor [ 
 	^ #addParameterToMethod:in:newSelector:permutation:newArgs:
 ]

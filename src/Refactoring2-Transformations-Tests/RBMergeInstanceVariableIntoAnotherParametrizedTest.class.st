@@ -11,7 +11,7 @@ RBMergeInstanceVariableIntoAnotherParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #'failure tests' }
+{ #category : #accessing }
 RBMergeInstanceVariableIntoAnotherParametrizedTest >> constructor [ 
 	^ #rename:to:in:
 ]

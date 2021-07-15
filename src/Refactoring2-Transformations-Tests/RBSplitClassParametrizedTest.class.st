@@ -12,7 +12,7 @@ RBSplitClassParametrizedTest class >> testParameters [
 		"yourself
 ]
 
-{ #category : #'failure tests' }
+{ #category : #accessing }
 RBSplitClassParametrizedTest >> constructor [ 
 	^ #class:instanceVariables:newClassName:referenceVariableName:
 ]

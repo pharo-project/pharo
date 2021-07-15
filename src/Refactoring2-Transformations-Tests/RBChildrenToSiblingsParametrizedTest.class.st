@@ -11,7 +11,7 @@ RBChildrenToSiblingsParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #'failure tests' }
+{ #category : #accessing }
 RBChildrenToSiblingsParametrizedTest >> constructor [ 
 	^ #name:class:subclasses:
 ]
@@ -46,7 +46,7 @@ RBChildrenToSiblingsParametrizedTest >> testExistingName [
 { #category : #'failure tests' }
 RBChildrenToSiblingsParametrizedTest >> testInvalidSubclass [
 	self shouldFail: (self createRefactoringWithArguments: 
-		{ #Foo .  RBRefactoringTest . (Array 
+		{ #Foo .  RBAbstractRefactoringTest . (Array 
 					with: RBBasicLintRuleTestData
 					with: RBCompositeLintRuleTestData)})
 ]

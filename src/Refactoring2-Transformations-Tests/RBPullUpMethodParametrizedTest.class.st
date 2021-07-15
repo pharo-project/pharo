@@ -56,7 +56,7 @@ RBPullUpMethodParametrizedTest >> addClassHierarchyForPools [
 	(model classNamed: #Toto) compile: 'poolReference ^ SP' classified: #(#accessing).
 ]
 
-{ #category : #tests }
+{ #category : #accessing }
 RBPullUpMethodParametrizedTest >> constructor [ 
 	^ #pullUp:from:
 ]

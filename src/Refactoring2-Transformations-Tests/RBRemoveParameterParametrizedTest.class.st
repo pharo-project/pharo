@@ -11,7 +11,7 @@ RBRemoveParameterParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : #accessing }
 RBRemoveParameterParametrizedTest >> constructor [ 
 	^ #removeParameter:in:selector:
 ]

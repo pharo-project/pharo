@@ -11,7 +11,7 @@ RBInlineTemporaryParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : #accessing }
 RBInlineTemporaryParametrizedTest >> constructor [ 
 	^ #inline:from:in:
 ]

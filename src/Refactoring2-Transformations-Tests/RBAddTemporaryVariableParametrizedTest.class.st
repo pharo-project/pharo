@@ -11,7 +11,7 @@ RBAddTemporaryVariableParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #'failure tests' }
+{ #category : #accessing }
 RBAddTemporaryVariableParametrizedTest >> constructor [ 
 	^ #variable:inMethod:inClass:
 ]

@@ -11,7 +11,7 @@ RBMoveVariableDefinitionParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #'failure tests' }
+{ #category : #accessing }
 RBMoveVariableDefinitionParametrizedTest >> constructor [ 
 	^ #bindTight:in:selector:
 ]

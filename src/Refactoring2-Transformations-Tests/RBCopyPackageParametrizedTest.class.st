@@ -11,7 +11,7 @@ RBCopyPackageParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #'failure tests' }
+{ #category : #accessing }
 RBCopyPackageParametrizedTest >> constructor [ 
 	^ #copyPackage:in:
 ]
