@@ -12,38 +12,30 @@ RBRenameClassParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #parameterization }
-RBRenameClassParametrizedTest >> renameClass [
-
-	^ rbClass
+{ #category : #tests }
+RBRenameClassParametrizedTest >> constructor [
+	^ #rename:to:
 ]
 
 { #category : #'failure tests' }
 RBRenameClassParametrizedTest >> testBadName [
-	self
-		shouldFail: (self renameClass
-				rename: #RBLintRuleTestData
-				to: self objectClassVariable) asRefactoring;
-		shouldFail: (self renameClass  
-				rename: #RBLintRuleTestData
-				to: #'Ob ject') asRefactoring
+	self shouldFail: (self createRefactoringWithArguments: 
+		{ #RBLintRuleTestData . self objectClassVariable }).
+	self shouldFail: (self createRefactoringWithArguments:   
+		{ #RBLintRuleTestData . #'Ob ject' })
 ]
 
 { #category : #'failure tests' }
 RBRenameClassParametrizedTest >> testExistingName [
 	self shouldFail: 
-		(self renameClass 
-			rename: self class name 
-			to: #Object) asRefactoring
+		(self createRefactoringWithArguments:  { self class name . #Object })
 ]
 
 { #category : #'failure tests' }
 RBRenameClassParametrizedTest >> testMetaClassFailure [
 
 	self shouldFail: 
-		(self renameClass 
-			rename: self class class name 
-			to: #Foo) asRefactoring
+		(self createRefactoringWithArguments: { self class class name . #Foo })
 ]
 
 { #category : #tests }
@@ -57,14 +49,10 @@ RBRenameClassParametrizedTest >> testModelRenameSequenceClass [
 		compile: 'foo	 ^ Foo1' classified: #(accessing);
 		compile: 'objectName ^ #(Foo1)' classified: #(accessing).
 		
-	self executeRefactoring: (self renameClass
-		model: model
-		rename: #Foo1
-		to: #Foo2).
-	self executeRefactoring: (self renameClass
-		model: model
-		rename: #Foo2
-		to: #Foo3).
+	self executeRefactoring: (self createRefactoringWithModel: model 
+		andArguments: { #Foo1 . #Foo2 }).
+	self executeRefactoring: (self createRefactoringWithModel: model 
+		andArguments: { #Foo2 . #Foo3 }).
 		
 	self deny: (model includesClassNamed: #Foo1).
 	self deny: (model includesClassNamed: #Foo2).
@@ -88,11 +76,9 @@ RBRenameClassParametrizedTest >> testRefactoring [
 	class compile: 'foo	^Object' classified: #(#accessing);
 			compile: 'objectName ^#(Object)' classified: #(#accessing).
 			
-	refactoring := (self renameClass
-						model: model
-						rename: #Object
-						to: #Thing)
-						asRefactoring transform.
+	refactoring := self createRefactoringWithModel: model andArguments: { #Object . #Thing }.
+	
+	self executeRefactoring: refactoring.
 	
 	self assert: (model includesClassNamed: #Thing).
 	self deny: (model includesClassNamed: #Object).
@@ -111,9 +97,7 @@ RBRenameClassParametrizedTest >> testRenameClass [
 	classB := ('RBNew', 'ClassName') asSymbol.
 	classC := #RBSubclassOfClassToRename.
 	
-	refactoring := (self renameClass 
-		rename: classA
-		to: classB) asRefactoring.
+	refactoring := self createRefactoringWithArguments: { classA . classB }.
 	self executeRefactoring: refactoring.
 	
 	aModel := refactoring model.
@@ -138,9 +122,7 @@ RBRenameClassParametrizedTest >> testRenameClassFromTrait [
 	classA := ('RBClass', 'ToRename') asSymbol.
 	classB := ('RBNew', 'ClassName') asSymbol.
 	classC := #RBDummy.
-	refactoring := (self renameClass 
-		rename: classA
-		to: classB) asRefactoring.
+	refactoring := self createRefactoringWithArguments: { classA . classB }.
 	self executeRefactoring: refactoring.
 	aModel := refactoring model.
 	self assert: (aModel includesClassNamed: classB).
@@ -172,11 +154,11 @@ rename class B to A
 		category: self class package name.
 	self executeRefactoring: addClass asRefactoring.
 	self assert: (model includesClassNamed: classA).
-	renameClass := self renameClass model: model rename: classA to: classC.
+	renameClass := self createRefactoringWithModel: model andArguments: { classA . classC }.
 	self executeRefactoring: renameClass asRefactoring.
 	self deny: (model includesClassNamed: classA).
 	self assert: (model includesClassNamed: classC).
-	renameClass :=self renameClass model: model rename: classB to: classA.
+	renameClass :=self createRefactoringWithModel: model andArguments: { classB . classA }.
 	self executeRefactoring: renameClass asRefactoring.
 	self deny: (model includesClassNamed: classB).
 	self assert: (model includesClassNamed: classC).

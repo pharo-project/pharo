@@ -12,11 +12,15 @@ RBRemoveAllSendersParametrizedTest class >> testParameters [
 ]
 
 { #category : #tests }
+RBRemoveAllSendersParametrizedTest >> constructor [ 
+	^ #removeSendersOf:
+]
+
+{ #category : #tests }
 RBRemoveAllSendersParametrizedTest >> testRemoveMessageInsideBlock [
 	| refactoring methodName |
 	methodName := ('caller', '2') asSymbol.
-	refactoring := rbClass  
-			removeSendersOf: methodName.
+	refactoring := self createRefactoringWithArguments: { methodName }.
 	self setupInlineExpressionFor: refactoring toReturn: false.
 	self proceedThroughWarning: [self executeRefactoring: refactoring ].
 	"remove 2 senders"

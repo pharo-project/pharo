@@ -135,10 +135,17 @@ RBPullUpMethodParametrizedTest >> testPullUpMethodWithCopyOverriddenMethodsDown 
 		[ refactoring := self createRefactoringWithArguments: 
 			{ #(#isComposite ) . RBCompositeLintRuleTestData }.
 		self executeRefactoring: refactoring ].
-	self assert: ((refactoring model classNamed: #RBBasicLintRuleTestData) parseTreeFor: #isComposite) equals: (self parseMethod: 'isComposite ^false').
-	self assert: ((refactoring model classNamed: ('RBFoo' , 'LintRuleTestData') asSymbol) parseTreeFor: #isComposite) equals: (self parseMethod: 'isComposite ^false').
-	self assert: ((refactoring model classNamed: #RBLintRuleTestData) parseTreeFor: #isComposite) equals: (self parseMethod: 'isComposite ^true').
-	self deny: ((refactoring model classNamed: #RBCompositeLintRuleTestData) directlyDefinesMethod: #isComposite)
+	self assert: ((refactoring model classNamed: #RBBasicLintRuleTestData) 
+			parseTreeFor: #isComposite) 
+		equals: (self parseMethod: 'isComposite ^false').
+	self assert: ((refactoring model classNamed: ('RBFoo' , 'LintRuleTestData') asSymbol) 
+			parseTreeFor: #isComposite) 
+		equals: (self parseMethod: 'isComposite ^false').
+	self assert: ((refactoring model classNamed: #RBLintRuleTestData) 
+			parseTreeFor: #isComposite) 
+		equals: (self parseMethod: 'isComposite ^true').
+	self deny: ((refactoring model classNamed: #RBCompositeLintRuleTestData) 
+		directlyDefinesMethod: #isComposite)
 ]
 
 { #category : #tests }

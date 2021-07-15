@@ -13,49 +13,39 @@ RBSplitClassParametrizedTest class >> testParameters [
 ]
 
 { #category : #'failure tests' }
+RBSplitClassParametrizedTest >> constructor [ 
+	^ #class:instanceVariables:newClassName:referenceVariableName:
+]
+
+{ #category : #'failure tests' }
 RBSplitClassParametrizedTest >> testInvalidInstanceVariableName [
 	self shouldFail: 
-		(rbClass 
-			class: #RBBasicLintRuleTestData 
-			instanceVariables: #(#inexistentVar #classBlock) 
-			newClassName: #Object 
-			referenceVariableName: #blocks)
+		(self createRefactoringWithArguments: 
+			{ #RBBasicLintRuleTestData . #(#inexistentVar #classBlock) . #Object . #blocks })
 ]
 
 { #category : #'failure tests' }
 RBSplitClassParametrizedTest >> testInvalidNewClassName [
 	self shouldFail: 
-		(rbClass 
-			class: #RBBasicLintRuleTestData 
-			instanceVariables: #(#methodBlock #classBlock) 
-			newClassName: #Object 
-			referenceVariableName: #blocks)
+		(self createRefactoringWithArguments:  
+			{ #RBBasicLintRuleTestData . #(#methodBlock #classBlock) . #Object . #blocks })
 ]
 
 { #category : #'failure tests' }
 RBSplitClassParametrizedTest >> testInvalidReferenceVariableName [
 	self shouldFail: 
-		(rbClass 
-			class: #RBLintRuleTestData 
-			instanceVariables: #(#name #foo1) 
-			newClassName: #ClassA 
-			referenceVariableName: #result).
+		(self createRefactoringWithArguments:  
+			{ #RBLintRuleTestData . #(#name #foo1) . #ClassA . #result }).
 	self shouldFail: 
-		(rbClass 
-			class: #RBLintRuleTestData 
-			instanceVariables: #(#name #foo1) 
-			newClassName: #ClassA 
-			referenceVariableName: #temp).
+		(self createRefactoringWithArguments:  
+			{ #RBLintRuleTestData . #(#name #foo1) . #ClassA . #temp }).
 ]
 
 { #category : #tests }
 RBSplitClassParametrizedTest >> testSplitClass [
 	|ref aModel|
-	ref := rbClass 
-		class: #RBBasicLintRuleTestData 
-		instanceVariables: #(#methodBlock #classBlock) 
-		newClassName: #BlockClass 
-		referenceVariableName: #blocks.
+	ref := self createRefactoringWithArguments:  
+		{ #RBBasicLintRuleTestData . #(#methodBlock #classBlock) . #BlockClass . #blocks }.
 	aModel := ref model.
 	self executeRefactoring: ref.
 	

@@ -20,6 +20,11 @@ RBTemporaryToInstanceVariableParametrizedTest >> addClassHierarchy [
 		classified: #(#accessing).
 ]
 
+{ #category : #'failure tests' }
+RBTemporaryToInstanceVariableParametrizedTest >> constructor [ 
+	^ #class:selector:variable:
+]
+
 { #category : #running }
 RBTemporaryToInstanceVariableParametrizedTest >> setUp [
 	super setUp.
@@ -31,23 +36,16 @@ RBTemporaryToInstanceVariableParametrizedTest >> testHierarchyDefinesVarableName
 	| class |
 	self addClassHierarchy.
 	class := model classNamed: #Foo.
-	self shouldWarn: (rbClass 
-				class: class
-				selector: #someMethod
-				variable: 'foo')
+	self shouldWarn: (self createRefactoringWithArguments: 
+		{ class . #someMethod . 'foo' })
 ]
 
 { #category : #'failure tests' }
 RBTemporaryToInstanceVariableParametrizedTest >> testNonExistantName [
-	self
-		shouldFail: (rbClass 
-				class: RBBasicLintRuleTestData
-				selector: #checkClass:
-				variable: 'asdf');
-		shouldFail: (rbClass 
-				class: RBBasicLintRuleTestData
-				selector: #checkClass1:
-				variable: 'aSmalllintContext')
+	self shouldFail: (self createRefactoringWithArguments:  
+		{ RBBasicLintRuleTestData . #checkClass: .'asdf' }).
+	self shouldFail: (self createRefactoringWithArguments: 
+		{ RBBasicLintRuleTestData . #checkClass1: . 'aSmalllintContext' })
 ]
 
 { #category : #'failure tests' }
@@ -57,19 +55,15 @@ RBTemporaryToInstanceVariableParametrizedTest >> testRedefinedTemporary [
 	class 
 		compile: 'someMethod | instVarName1 | instVarName1 := 4. ^instVarName1'
 		classified: #(#accessing).
-	self shouldFail: (rbClass 
-				class: class
-				selector: #someMethod
-				variable: 'instVarName1')
+	self shouldFail: (self createRefactoringWithArguments:  
+		{ class . #someMethod . 'instVarName1' })
 ]
 
 { #category : #tests }
 RBTemporaryToInstanceVariableParametrizedTest >> testTemporaryToInstanceVariable [
 	| refactoring class |
-	refactoring := rbClass 
-		class: RBLintRuleTestData
-		selector: #displayName
-		variable: 'nameStream'.
+	refactoring := self createRefactoringWithArguments: 
+		{ RBLintRuleTestData . #displayName . 'nameStream'}.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBLintRuleTestData.
 	self assert: (class parseTreeFor: #displayName) equals: (self parseMethod: 'displayName
@@ -88,10 +82,8 @@ RBTemporaryToInstanceVariableParametrizedTest >> testWhenHierarchyDefinesVariabl
 	| class refactoring |
 	self addClassHierarchy.
 	class := model classNamed: #Foo.
-	refactoring := rbClass 
-				class: class
-				selector: #someMethod
-				variable: 'foo'.
+	refactoring := self createRefactoringWithArguments: 
+		{ class . #someMethod . 'foo' }.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	self assert: (class definesInstanceVariable: 'foo').
 	self deny: ((model classNamed: #Foo1) directlyDefinesInstanceVariable: 'foo').

@@ -12,28 +12,28 @@ RBRenamePackageParametrizedTest class >> testParameters [
 ]
 
 { #category : #'failure tests' }
+RBRenamePackageParametrizedTest >> constructor [ 
+	^ #rename:to:
+]
+
+{ #category : #'failure tests' }
 RBRenamePackageParametrizedTest >> testBadName [
-	self
-		shouldFail: (rbClass 
-				rename: #'Refactoring-Tests-Core'
-				to: #'Refactoring-Tests-Core')
+	self shouldFail: (self createRefactoringWithArguments:
+		{ #'Refactoring-Tests-Core' . #'Refactoring-Tests-Core' })
 ]
 
 { #category : #'failure tests' }
 RBRenamePackageParametrizedTest >> testExistingPackage [
-	self
-		shouldFail: (rbClass 
-				rename: #'Refactoring-Tests-Core'
-				to: #'Refactoring-Tests-Changes')
+	self shouldFail: (self createRefactoringWithArguments:  
+		{ #'Refactoring-Tests-Core' . #'Refactoring-Tests-Changes' })
 ]
 
 { #category : #tests }
 RBRenamePackageParametrizedTest >> testRenamePackage [
 	| refactoring aModel |
 	
-	refactoring := (rbClass 
-				rename: #'Refactoring-Tests-Core'
-				to: #'Refactoring-Tests-Core1').
+	refactoring := (self createRefactoringWithArguments:  
+		{ #'Refactoring-Tests-Core' . #'Refactoring-Tests-Core1' }).
 	aModel := refactoring model.
 	self executeRefactoring: refactoring.
 	self assert: (aModel packageNamed: #'Refactoring-Tests-Core') isNil.

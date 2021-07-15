@@ -11,6 +11,11 @@ RBRealizeClassParametrizedTest class >> testParameters [
 		yourself
 ]
 
+{ #category : #tests }
+RBRealizeClassParametrizedTest >> constructor [ 
+	^ #model:className:
+]
+
 { #category : #builder }
 RBRealizeClassParametrizedTest >> createAbstractClass [ 
 	(model classNamed: #RBFooLintRuleTestData) 
@@ -25,9 +30,9 @@ RBRealizeClassParametrizedTest >> createAbstractClass [
 
 { #category : #tests }
 RBRealizeClassParametrizedTest >> testClassWithoutChanges [
-	self proceedThroughWarning: [ self executeRefactoring: (rbClass 
-		model: model 
-		className: #RBLintRuleTestData) asRefactoring ].
+	self proceedThroughWarning: [ 
+		self executeRefactoring: 
+			(self createRefactoringWithArguments: { model . #RBLintRuleTestData}) ].
 	self assert: model changes changes isEmpty
 ]
 
@@ -37,9 +42,8 @@ RBRealizeClassParametrizedTest >> testRealizeAbstractClass [
 	class := model classNamed: #RBFooLintRuleTestData.
 	self createAbstractClass.
 	self proceedThroughWarning: [ 
-		self executeRefactoring: (rbClass 
-			model: model 
-			className: #RBFooLintRuleTestData) asRefactoring ].
+		self executeRefactoring: 
+			(self createRefactoringWithArguments:  { model . #RBFooLintRuleTestData}) ].
 	self assert: (class parseTreeFor: #isEmpty) equals: 
 	(self parseMethod: 'isEmpty
 		self shouldBeImplemented').
@@ -55,9 +59,8 @@ RBRealizeClassParametrizedTest >> testRealizeAbstractClass [
 RBRealizeClassParametrizedTest >> testRealizeClass [
 	| class |
 	class := model classNamed: #RBFooLintRuleTestData.
-	self executeRefactoring: (rbClass 
-		model: model 
-		className: #RBFooLintRuleTestData) asRefactoring.
+	self executeRefactoring: 
+		(self createRefactoringWithArguments:  { model . #RBFooLintRuleTestData }).
 	self assert: (class parseTreeFor: #isEmpty) equals: 
 	(self parseMethod: 'isEmpty
 		self shouldBeImplemented').
@@ -75,9 +78,8 @@ RBRealizeClassParametrizedTest >> testRealizeWithAbstractSubclass [
 	class := model classNamed: #RBTransformationRuleTestData.
 	class compile: 'foo: arg1 bar: arg2 self subclassResponsibility' classified: 'accessing'.
 	self proceedThroughWarning: [ 
-		self executeRefactoring: (rbClass 
-			model: model 
-			className: #RBFooLintRuleTestData) asRefactoring ].
+		self executeRefactoring: 
+			(self createRefactoringWithArguments: { model . #RBFooLintRuleTestData }) ].
 	class := model classNamed: #RBFooLintRuleTestData.
 	self assert: (class parseTreeFor: #isEmpty) equals: 
 	(self parseMethod: 'isEmpty

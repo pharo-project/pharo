@@ -11,26 +11,30 @@ RBPushDownMethodParametrizedTest class >> testParameters [
 		yourself
 ]
 
+{ #category : #'failure tests' }
+RBPushDownMethodParametrizedTest >> constructor [ 
+	^ #pushDown:from:
+]
+
 { #category : #tests }
 RBPushDownMethodParametrizedTest >> testPushDownMethod [
 	| refactoring class |
-	refactoring := rbClass 
-		pushDown: #(#name: )
-		from: RBLintRuleTestData.
+	refactoring := self createRefactoringWithArguments: 
+		{ #(#name: ) . RBLintRuleTestData }.
 	self executeRefactoring: refactoring asRefactoring.
 	class := refactoring model classNamed: #RBLintRuleTestData.
 	self deny: (class directlyDefinesMethod: #name:).
 	class subclasses do: 
 		[ :each | 
-		self assert: (each parseTreeFor: #name:) equals: (self parseMethod: 'name: aString name := aString') ]
+		self assert: (each parseTreeFor: #name:)
+			equals: (self parseMethod: 'name: aString name := aString') ]
 ]
 
 { #category : #'failure tests' }
 RBPushDownMethodParametrizedTest >> testPushDownMethodOnNonAbstractClass [
 	| refactoring |
-	refactoring := rbClass 
-		pushDown: #(#isArray) 
-		from: Array.
+	refactoring := self createRefactoringWithArguments: 
+		{ #(#isArray) . Array }.
 	self shouldFail: refactoring asRefactoring
 ]
 
@@ -66,9 +70,8 @@ RBPushDownMethodParametrizedTest >> testPushDownMethodSubclassesReferToSelector 
 RBPushDownMethodParametrizedTest >> testPushDownMethodThatReferencesPoolDictionary [
 	| refactoring class parseTree |
 	parseTree := RBLintRuleTestData parseTreeFor: #junk.
-	refactoring := rbClass 
-			pushDown: #(#junk )
-			from: RBLintRuleTestData.
+	refactoring := self createRefactoringWithArguments: 
+		{ #(#junk ) . RBLintRuleTestData }.
 	self executeRefactoring: refactoring asRefactoring.
 	class := refactoring model classNamed: #RBLintRuleTestData.
 	self deny: (class directlyDefinesMethod: #junk).
@@ -81,8 +84,7 @@ RBPushDownMethodParametrizedTest >> testPushDownMethodThatReferencesPoolDictiona
 { #category : #'failure tests' }
 RBPushDownMethodParametrizedTest >> testPushDownNonExistantMenu [
 	| refactoring |
-	refactoring := rbClass
-		pushDown: #(#someMethodThatDoesNotExist )
-		from: RBLintRuleTestData.
+	refactoring := self createRefactoringWithArguments: 
+		{ #(#someMethodThatDoesNotExist ) . RBLintRuleTestData }.
 	self shouldFail: refactoring asRefactoring
 ]

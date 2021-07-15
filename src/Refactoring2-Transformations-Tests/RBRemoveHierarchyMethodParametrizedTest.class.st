@@ -12,12 +12,15 @@ RBRemoveHierarchyMethodParametrizedTest class >> testParameters [
 ]
 
 { #category : #tests }
+RBRemoveHierarchyMethodParametrizedTest >> constructor [ 
+	^ #removeMethods:from:
+]
+
+{ #category : #tests }
 RBRemoveHierarchyMethodParametrizedTest >> testRemoveMethod [
 	| refactoring selectors |
 	selectors := Array with: 'msg4' asSymbol.
-	refactoring := rbClass 
-		removeMethods: selectors
-		from: RBSharedPoolForTestData.
+	refactoring := self createRefactoringWithArguments: { selectors . RBSharedPoolForTestData }.
 	self assert: ((refactoring model classNamed: #RBSharedPoolForTestData) directlyDefinesMethod: selectors first).
 	self assert: ((refactoring model classNamed: #RBSharedPoolForTestData1) directlyDefinesMethod: selectors first).
 	self assert: ((refactoring model classNamed: #RBSharedPoolForTestData2) directlyDefinesMethod: selectors first).
@@ -29,14 +32,10 @@ RBRemoveHierarchyMethodParametrizedTest >> testRemoveMethod [
 
 { #category : #'failure tests' }
 RBRemoveHierarchyMethodParametrizedTest >> testRemoveNonExistantMethod [
-	self shouldFail: (rbClass 
-			removeMethods: #(#msg7 )
-			from: RBBasicLintRuleTestData)
+	self shouldFail: (self createRefactoringWithArguments: { #(#msg7) . RBBasicLintRuleTestData})
 ]
 
 { #category : #'failure tests' }
 RBRemoveHierarchyMethodParametrizedTest >> testRemoveReferenced [
-	self shouldFail: (rbClass 
-			removeMethods: #(#msg1 )
-			from: RBBasicLintRuleTestData)
+	self shouldFail: (self createRefactoringWithArguments: { #(#msg1) . RBBasicLintRuleTestData })
 ]

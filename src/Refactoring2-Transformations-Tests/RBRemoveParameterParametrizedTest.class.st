@@ -11,17 +11,17 @@ RBRemoveParameterParametrizedTest class >> testParameters [
 		yourself
 ]
 
+{ #category : #tests }
+RBRemoveParameterParametrizedTest >> constructor [ 
+	^ #removeParameter:in:selector:
+]
+
 { #category : #'failure tests' }
 RBRemoveParameterParametrizedTest >> testNonExistantName [
-	self
-		shouldFail: (rbClass 
-				removeParameter: 'asdf'
-				in: RBBasicLintRuleTestData
-				selector: #checkClass:);
-		shouldFail: (rbClass 
-				removeParameter: 'aSmalllintContext'
-				in: RBBasicLintRuleTestData
-				selector: #checkClass1:)
+	self shouldFail: (self createRefactoringWithArguments: 
+		{ 'asdf' . RBBasicLintRuleTestData . #checkClass: }).
+	self shouldFail: (self createRefactoringWithArguments:  
+		{ 'aSmalllintContext' . RBBasicLintRuleTestData . #checkClass1: })
 ]
 
 { #category : #'failure tests' }
@@ -30,11 +30,8 @@ RBRemoveParameterParametrizedTest >> testPrimitiveMethods [
 	(model classNamed: #Object) 
 		compile: 'foo123: a <primitive: 100> ^#() primitiveFailed'
 		classified: #(#accessing).
-	refactoring := rbClass 
-				model: model
-				removeParameter: 'a'
-				in: Object
-				selector: #foo123:.
+	refactoring := self createRefactoringWithModel: model 
+		andArguments: { 'a' . Object . #foo123: }.
 	self shouldFail: refactoring
 ]
 
@@ -44,21 +41,16 @@ RBRemoveParameterParametrizedTest >> testReferenceArgument [
 	(model classNamed: #Object) 
 		compile: 'methWith: arg1 ^ arg1 * 8'
 		classified: #(#accessing).
-	refactoring := rbClass 
-				model: model
-				removeParameter: 'arg1'
-				in: Object
-				selector: #methWith:.
+	refactoring := self createRefactoringWithModel: model 
+		andArguments: { 'arg1' . Object . #methWith: }.
 	self shouldFail: refactoring
 ]
 
 { #category : #tests }
 RBRemoveParameterParametrizedTest >> testRemoveParameter [
 	| refactoring class |
-	refactoring := rbClass 
-		removeParameter: 'anArg'
-		in: RBRefactoryTestDataApp
-		selector: ('rename' , 'ThisMethod:') asSymbol.
+	refactoring := self createRefactoringWithArguments: 
+		{ 'anArg' . RBRefactoryTestDataApp . ('rename' , 'ThisMethod:') asSymbol }.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self assert: (class parseTreeFor: #renameThisMethod) equals: (self parseMethod: 'renameThisMethod

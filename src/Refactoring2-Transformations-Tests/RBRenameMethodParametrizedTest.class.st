@@ -12,31 +12,27 @@ RBRenameMethodParametrizedTest class >> testParameters [
 ]
 
 { #category : #'failure tests' }
+RBRenameMethodParametrizedTest >> constructor [
+	^ #renameMethod:in:to:permutation:
+]
+
+{ #category : #'failure tests' }
 RBRenameMethodParametrizedTest >> testExistingSelector [
-	self shouldFail: (rbClass 
-			renameMethod: #checkClass:
-			in: RBBasicLintRuleTestData
-			to: #runOnEnvironment:
-			permutation: (1 to: 1))
+	self shouldFail: (self createRefactoringWithArguments: 
+		{ #checkClass: . RBBasicLintRuleTestData . #runOnEnvironment: . (1 to: 1) })
 ]
 
 { #category : #'failure tests' }
 RBRenameMethodParametrizedTest >> testMultipleSelectors [
-	self shouldWarn: (rbClass 
-			renameMethod: #checkClass:
-			in: RBBasicLintRuleTestData
-			to: #foo:
-			permutation: (1 to: 1))
+	self shouldWarn: (self createRefactoringWithArguments:  
+		{ #checkClass: . RBBasicLintRuleTestData . #foo: . (1 to: 1) })
 ]
 
 { #category : #tests }
 RBRenameMethodParametrizedTest >> testRenameMethodFromTrait [
 	| refactoring class |
-	refactoring := rbClass 
-		renameMethod: ('just', 'ForTest') asSymbol
-		in: RBClassToRename classSide 
-		to: #justForTest1
-		permutation: (1 to: 0).
+	refactoring := self createRefactoringWithArguments:  
+		{ ('just', 'ForTest') asSymbol . RBClassToRename classSide . #justForTest1 . (1 to: 0)}.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #'RBClassToRename class'.
 	self assert: (class parseTreeFor: #justForTest1) 
@@ -51,12 +47,8 @@ RBRenameMethodParametrizedTest >> testRenameMethodFromTrait [
 RBRenameMethodParametrizedTest >> testRenameMethodOnlyInSomePackages [
 	| refactoring class |
 	model := (RBClassModelFactory rbNamespace onEnvironment: (RBPackageEnvironment packageName: 'Refactoring-Tests-Core')).
-	refactoring := rbClass 
-		model: model
-		renameMethod: ('check', 'Class:') asSymbol
-		in: RBBasicLintRuleTestData
-		to: #checkClass1:
-		permutation: (1 to: 1).
+	refactoring := self createRefactoringWithModel: model andArguments:  
+		{ ('check', 'Class:') asSymbol . RBBasicLintRuleTestData . #checkClass1: . (1 to: 1) }.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBBasicLintRuleTestData.
 	self assert: (class parseTreeFor: #checkClass1:) 
@@ -68,11 +60,9 @@ RBRenameMethodParametrizedTest >> testRenameMethodOnlyInSomePackages [
 { #category : #tests }
 RBRenameMethodParametrizedTest >> testRenameMethodPermuteArgs [
 	| refactoring class |
-	refactoring := rbClass
-		renameMethod: ('demoRenameMethod:' , 'PermuteArgs:') asSymbol
-		in: RBRefactoryTestDataApp
-		to: ('demoRenameMethod:' , 'PermuteArgs:') asSymbol
-		permutation: #(2 1).
+	refactoring := self createRefactoringWithArguments: 
+		{ ('demoRenameMethod:' , 'PermuteArgs:') asSymbol . RBRefactoryTestDataApp .
+		('demoRenameMethod:' , 'PermuteArgs:') asSymbol . #(2 1) }.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self
@@ -93,11 +83,9 @@ RBRenameMethodParametrizedTest >> testRenameMethodPermuteArgs [
 { #category : #tests }
 RBRenameMethodParametrizedTest >> testRenamePermuteArgs [
 	| refactoring class |
-	refactoring := rbClass 
-		renameMethod: ('rename:' , 'two:') asSymbol
-		in: RBRefactoryTestDataApp
-		to: ('rename:' , 'two:') asSymbol
-		permutation: #(2 1 ).
+	refactoring := self createRefactoringWithArguments:  
+		{ ('rename:' , 'two:') asSymbol . RBRefactoryTestDataApp . 
+		('rename:' , 'two:') asSymbol . #(2 1 ) }.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self assert: (class parseTreeFor: ('rename:' , 'two:') asSymbol) 
@@ -111,12 +99,8 @@ RBRenameMethodParametrizedTest >> testRenamePrimitive [
 	| refactoring count |
 	count := 0.
 	model allReferencesTo: #basicAt:put: do: [:method | count := count + 1].
-	refactoring := rbClass 
-				model: model
-				renameMethod: #basicAt:put:
-				in: Object
-				to: ('at:' , 'bar:') asSymbol
-				permutation: (1 to: 2).
+	refactoring := self createRefactoringWithModel: model
+		andArguments: { #basicAt:put: . Object . ('at:' , 'bar:') asSymbol . (1 to: 2) }.
 	self proceedThroughWarning: [self executeRefactoring: refactoring].
 	model allReferencesTo: #basicAt:put:
 		do: 
@@ -131,11 +115,8 @@ RBRenameMethodParametrizedTest >> testRenamePrimitive [
 { #category : #tests }
 RBRenameMethodParametrizedTest >> testRenameTestMethod [
 	| refactoring class |
-	refactoring := rbClass 
-		renameMethod: ('rename' , 'ThisMethod:') asSymbol
-		in: RBRefactoryTestDataApp
-		to: #renameThisMethod2:
-		permutation: (1 to: 1).
+	refactoring := self createRefactoringWithArguments:  
+		{ ('rename' , 'ThisMethod:') asSymbol . RBRefactoryTestDataApp . #renameThisMethod2: . (1 to: 1) }.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self assert: (class parseTreeFor: #renameThisMethod2:) equals: (self parseMethod: 'renameThisMethod2: anArg
@@ -150,11 +131,8 @@ RBRenameMethodParametrizedTest >> testRenameTestMethod [
 { #category : #tests }
 RBRenameMethodParametrizedTest >> testRenameTestMethod1 [
 	| refactoring class |
-	refactoring := rbClass 
-		renameMethod: ('testMethod1') asSymbol
-		in: RBRefactoryTestDataApp
-		to: #testMethod2
-		permutation: (1 to: 0).
+	refactoring := self createRefactoringWithArguments:  
+		{ ('testMethod1') asSymbol . RBRefactoryTestDataApp . #testMethod2 . (1 to: 0) }.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self assert: (class parseTreeFor: #testMethod2) 
@@ -167,9 +145,6 @@ RBRenameMethodParametrizedTest >> testRenameTestMethod1 [
 
 { #category : #'failure tests' }
 RBRenameMethodParametrizedTest >> testWithNonCorrectNumberOfArgs [
-	self shouldFail: (rbClass 
-			renameMethod: #checkClass:
-			in: RBBasicLintRuleTestData
-			to: #checkClass
-			permutation: (1 to: 1))
+	self shouldFail: (self createRefactoringWithArguments:  
+		{ #checkClass: . RBBasicLintRuleTestData . #checkClass . (1 to: 1) })
 ]
