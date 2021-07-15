@@ -21,7 +21,7 @@ Class {
 { #category : #api }
 RBAddClassCommentTransformation class >> comment: aString in: aClass [
 
-	^ (self new)
+	^ self new
 		comment: aString
 		in: aClass;
 		yourself
@@ -30,7 +30,7 @@ RBAddClassCommentTransformation class >> comment: aString in: aClass [
 { #category : #api }
 RBAddClassCommentTransformation class >> model: aRBModel comment: aString in: aClass [
 
-	^ (self new)
+	^ self new
 		model: aRBModel;
 		comment: aString
 		in: aClass;

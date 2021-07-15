@@ -23,7 +23,8 @@ RBRemoveClassRefactoring class >> cannotRemoveTopLevelClassErrorMesssage [
 
 { #category : #'instance creation' }
 RBRemoveClassRefactoring class >> classNames: aClassNameCollection [ 
-	^self new classNames: aClassNameCollection
+	^ self new
+		classNames: aClassNameCollection
 ]
 
 { #category : #'instance creation' }

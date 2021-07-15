@@ -23,7 +23,8 @@ Class {
 
 { #category : #'instance creation' }
 RBAddParameterRefactoring class >> addParameterToMethod: aSelector in: aClass newSelector: newSelector permutation: aColl1 newArgs: aColl2 [ 
-	^self new addParameterToMethod: aSelector
+	^ self new 
+		addParameterToMethod: aSelector
 		in: aClass
 		newSelector: newSelector
 		permutation: aColl1

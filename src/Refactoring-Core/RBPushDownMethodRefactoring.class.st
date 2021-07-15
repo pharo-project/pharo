@@ -17,7 +17,7 @@ Class {
 
 { #category : #'instance creation' }
 RBPushDownMethodRefactoring class >> model: aRBSmalltalk pushDown: selectorCollection from: aClass [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		pushDown: selectorCollection from: aClass;
 		yourself
@@ -25,7 +25,7 @@ RBPushDownMethodRefactoring class >> model: aRBSmalltalk pushDown: selectorColle
 
 { #category : #'instance creation' }
 RBPushDownMethodRefactoring class >> model: aRBSmalltalk pushDown: selectorCollection from: aClass in: classes [
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		pushDown: selectorCollection from: aClass in: classes;
 		yourself
@@ -33,12 +33,14 @@ RBPushDownMethodRefactoring class >> model: aRBSmalltalk pushDown: selectorColle
 
 { #category : #'instance creation' }
 RBPushDownMethodRefactoring class >> pushDown: selectorCollection from: aClass [ 
-	^self new pushDown: selectorCollection from: aClass
+	^ self new
+		pushDown: selectorCollection from: aClass
 ]
 
 { #category : #'instance creation' }
 RBPushDownMethodRefactoring class >> pushDown: selectorCollection from: aClass in: classes [
-	^self new pushDown: selectorCollection from: aClass in: classes
+	^ self new
+		pushDown: selectorCollection from: aClass in: classes
 ]
 
 { #category : #transforming }

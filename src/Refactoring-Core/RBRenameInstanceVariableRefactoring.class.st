@@ -18,7 +18,7 @@ Class {
 
 { #category : #'instance creation' }
 RBRenameInstanceVariableRefactoring class >> model: aRBSmalltalk rename: aVarName to: aName in: aClass [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		rename: aVarName
 			to: aName
@@ -28,7 +28,7 @@ RBRenameInstanceVariableRefactoring class >> model: aRBSmalltalk rename: aVarNam
 
 { #category : #'instance creation' }
 RBRenameInstanceVariableRefactoring class >> model: aRBSmalltalk rename: aVarName to: aName in: aClass renameAccessors: aBoolean [
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		rename: aVarName
 			to: aName
@@ -39,7 +39,7 @@ RBRenameInstanceVariableRefactoring class >> model: aRBSmalltalk rename: aVarNam
 
 { #category : #'instance creation' }
 RBRenameInstanceVariableRefactoring class >> rename: aVarName to: aName in: aClass [
-	^self new
+	^ self new
 		rename: aVarName
 		to: aName
 		in: aClass
@@ -47,7 +47,7 @@ RBRenameInstanceVariableRefactoring class >> rename: aVarName to: aName in: aCla
 
 { #category : #'instance creation' }
 RBRenameInstanceVariableRefactoring class >> rename: aVarName to: aName in: aClass renameAccessors: aBoolean [
-	^self new
+	^ self new
 		rename: aVarName
 		to: aName
 		in: aClass

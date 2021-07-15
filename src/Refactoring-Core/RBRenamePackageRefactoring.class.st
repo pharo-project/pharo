@@ -32,7 +32,8 @@ RBRenamePackageRefactoring class >> model: aRBSmalltalk rename: aSymbol to: aNew
 
 { #category : #'instance creation' }
 RBRenamePackageRefactoring class >> rename: aString to: aNewName [
-	^self new packageName: aString newName: aNewName
+	^ self new
+		packageName: aString newName: aNewName
 ]
 
 { #category : #transforming }

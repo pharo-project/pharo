@@ -23,7 +23,7 @@ RBExtractMethodAndOccurrences class >> extract: anInterval from: aSelector in: a
 
 { #category : #'instance creation' }
 RBExtractMethodAndOccurrences class >> model: aRBSmalltalk extract: anInterval from: aSelector in: aClass [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		extract: anInterval
 			from: aSelector

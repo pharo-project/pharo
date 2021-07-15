@@ -30,7 +30,9 @@ RBRenameClassRefactoring class >> model: aRBSmalltalk rename: aClass to: aNewNam
 
 { #category : #'instance creation' }
 RBRenameClassRefactoring class >> rename: aClassName to: aNewName [
-	^self new className: aClassName newName: aNewName
+	^ self new 
+		className: aClassName 
+		newName: aNewName
 ]
 
 { #category : #initialization }

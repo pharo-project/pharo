@@ -58,7 +58,7 @@ RBRemoveSenderRefactoring class >> model: aRBSmalltalk remove: anInterval inMeth
 
 { #category : #'instance creation' }
 RBRemoveSenderRefactoring class >> remove: anInterval inMethod: aSelector forClass: aClass [ 
-	^self new 
+	^ self new 
 		remove: anInterval
 		inMethod: aSelector
 		forClass: aClass
