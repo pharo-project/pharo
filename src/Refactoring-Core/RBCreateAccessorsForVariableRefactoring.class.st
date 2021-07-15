@@ -19,6 +19,28 @@ Class {
 }
 
 { #category : #'instance creation' }
+RBCreateAccessorsForVariableRefactoring class >> classVariable: aVarName class: aClass [
+	^ self variable: aVarName class: aClass classVariable: true
+]
+
+{ #category : #'instance creation' }
+RBCreateAccessorsForVariableRefactoring class >> instanceVariable: aVarName class: aClass [
+	^ self variable: aVarName class: aClass classVariable: false
+]
+
+{ #category : #'instance creation' }
+RBCreateAccessorsForVariableRefactoring class >> model: aRBSmalltalk classVariable: aVarName class: aClass [ 
+
+	^ self model: aRBSmalltalk variable: aVarName class: aClass classVariable: true
+]
+
+{ #category : #'instance creation' }
+RBCreateAccessorsForVariableRefactoring class >> model: aRBSmalltalk instanceVariable: aVarName class: aClass [
+
+	^ self model: aRBSmalltalk variable: aVarName class: aClass classVariable: false
+]
+
+{ #category : #'instance creation' }
 RBCreateAccessorsForVariableRefactoring class >> model: aRBSmalltalk variable: aVarName class: aClass classVariable: aBoolean [ 
 	^(self 
 		model: aRBSmalltalk

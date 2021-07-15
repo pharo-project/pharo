@@ -19,7 +19,7 @@ Class {
 
 { #category : #'instance creation' }
 RBExtractMethodToComponentRefactoring class >> extract: anInterval from: aSelector in: aClass [ 
-	^self new
+	^ self new
 		extract: anInterval
 		from: aSelector
 		in: aClass
@@ -27,7 +27,7 @@ RBExtractMethodToComponentRefactoring class >> extract: anInterval from: aSelect
 
 { #category : #'instance creation' }
 RBExtractMethodToComponentRefactoring class >> model: aRBSmalltalk extract: anInterval from: aSelector in: aClass [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		extract: anInterval
 			from: aSelector

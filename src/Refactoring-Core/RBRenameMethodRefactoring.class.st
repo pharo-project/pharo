@@ -40,7 +40,7 @@ Class {
 
 { #category : #'instance creation' }
 RBRenameMethodRefactoring class >> model: aRBSmalltalk renameMethod: aSelector in: aClass to: newSelector permutation: aMap [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		renameMethod: aSelector
 			in: aClass
@@ -51,7 +51,8 @@ RBRenameMethodRefactoring class >> model: aRBSmalltalk renameMethod: aSelector i
 
 { #category : #'instance creation' }
 RBRenameMethodRefactoring class >> renameMethod: aSelector in: aClass to: newSelector permutation: aMap [
-	^self new renameMethod: aSelector
+	^ self new 
+		renameMethod: aSelector
 		in: aClass
 		to: newSelector
 		permutation: aMap

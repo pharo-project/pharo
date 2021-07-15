@@ -19,7 +19,7 @@ Class {
 
 { #category : #'instance creation' }
 RBInlineTemporaryRefactoring class >> inline: anInterval from: aSelector in: aClass [ 
-	^self new 
+	^ self new 
 		inline: anInterval
 		from: aSelector
 		in: aClass
@@ -27,7 +27,7 @@ RBInlineTemporaryRefactoring class >> inline: anInterval from: aSelector in: aCl
 
 { #category : #'instance creation' }
 RBInlineTemporaryRefactoring class >> model: aRBSmalltalk inline: anInterval from: aSelector in: aClass [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		inline: anInterval
 			from: aSelector

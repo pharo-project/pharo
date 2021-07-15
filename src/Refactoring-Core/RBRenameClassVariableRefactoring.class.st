@@ -16,7 +16,7 @@ Class {
 
 { #category : #'instance creation' }
 RBRenameClassVariableRefactoring class >> model: aRBSmalltalk rename: aVarName to: aName in: aClass [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		rename: aVarName
 			to: aName
@@ -26,7 +26,7 @@ RBRenameClassVariableRefactoring class >> model: aRBSmalltalk rename: aVarName t
 
 { #category : #'instance creation' }
 RBRenameClassVariableRefactoring class >> rename: aVarName to: aName in: aClass [
-	^self new
+	^ self new
 		rename: aVarName
 		to: aName
 		in: aClass

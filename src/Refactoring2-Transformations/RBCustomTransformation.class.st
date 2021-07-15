@@ -43,7 +43,7 @@ RBCustomTransformation class >> with: aBlockWithOneArg [
 RBCustomTransformation >> preconditions [
 	"no precondition so far"
 	
-	^ RBCondition empty
+	^ self emptyCondition
 ]
 
 { #category : #executing }

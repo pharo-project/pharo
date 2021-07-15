@@ -47,14 +47,15 @@ Class {
 
 { #category : #removing }
 RBRemoveAllSendersRefactoring class >> model: aModel removeSendersOf: aSelector [
-	^self new
+	^ self new
 		model: aModel;
 		removeSendersOf: aSelector
 ]
 
 { #category : #removing }
 RBRemoveAllSendersRefactoring class >> removeSendersOf: aSelector [
-	^self new removeSendersOf: aSelector
+	^ self new
+		removeSendersOf: aSelector
 ]
 
 { #category : #transforming }

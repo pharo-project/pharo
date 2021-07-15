@@ -43,8 +43,8 @@ RBRenameClassTransformation class >> rename: aClassName to: aNewClassName [
 { #category : #api }
 RBRenameClassTransformation >> className: aClassName newClassName: aNewClassName [
 
-	self className: aClassName.
-	newClassName := aNewClassName
+	self className: aClassName asSymbol.
+	newClassName := aNewClassName asSymbol.
 ]
 
 { #category : #preconditions }

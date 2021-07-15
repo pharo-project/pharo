@@ -19,7 +19,7 @@ Class {
 
 { #category : #'instance creation' }
 RBMoveVariableDefinitionRefactoring class >> bindTight: anInterval in: aClass selector: aSelector [ 
-	^self new
+	^ self new
 		class: aClass
 		selector: aSelector
 		interval: anInterval
@@ -27,7 +27,7 @@ RBMoveVariableDefinitionRefactoring class >> bindTight: anInterval in: aClass se
 
 { #category : #'instance creation' }
 RBMoveVariableDefinitionRefactoring class >> model: aRBSmalltalk bindTight: anInterval in: aClass selector: aSelector [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		class: aClass
 			selector: aSelector

@@ -23,7 +23,8 @@ RBPackageRefactoring class >> model: aRBModel packageName: aName [
 
 { #category : #'instance creation' }
 RBPackageRefactoring class >> packageName: aName [
-	^self new packageName: aName
+	^ self new
+		packageName: aName
 ]
 
 { #category : #accessing }

@@ -14,7 +14,7 @@ Class {
 
 { #category : #'instance creation' }
 RBRemoveMethodRefactoring class >> model: aRBSmalltalk removeMethods: selectorCollection from: aClass [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		removeMethods: selectorCollection from: aClass;
 		yourself
@@ -22,7 +22,8 @@ RBRemoveMethodRefactoring class >> model: aRBSmalltalk removeMethods: selectorCo
 
 { #category : #'instance creation' }
 RBRemoveMethodRefactoring class >> removeMethods: selectorCollection from: aClass [
-	^self new removeMethods: selectorCollection from: aClass
+	^ self new
+		removeMethods: selectorCollection from: aClass
 ]
 
 { #category : #preconditions }

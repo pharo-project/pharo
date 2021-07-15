@@ -76,7 +76,7 @@ Class {
 
 { #category : #'instance creation' }
 RBTemporaryToInstanceVariableRefactoring class >> class: aClass selector: aSelector variable: aVariableName [ 
-	^self new 
+	^ self new 
 		class: aClass
 		selector: aSelector
 		variable: aVariableName
@@ -84,7 +84,7 @@ RBTemporaryToInstanceVariableRefactoring class >> class: aClass selector: aSelec
 
 { #category : #'instance creation' }
 RBTemporaryToInstanceVariableRefactoring class >> model: aRBSmalltalk class: aClass selector: aSelector variable: aVariableName [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		class: aClass
 			selector: aSelector

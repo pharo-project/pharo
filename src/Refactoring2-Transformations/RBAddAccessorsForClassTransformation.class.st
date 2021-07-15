@@ -22,7 +22,7 @@ Class {
 { #category : #api }
 RBAddAccessorsForClassTransformation class >> className: aClassName [
 
-	^ (self new)
+	^ self new
 		className: aClassName;
 		yourself
 ]
@@ -30,7 +30,7 @@ RBAddAccessorsForClassTransformation class >> className: aClassName [
 { #category : #api }
 RBAddAccessorsForClassTransformation class >> model: aRBModel className: aClassName [
 
-	^ (self new)
+	^ self new
 		model: aRBModel;
 		className: aClassName;
 		yourself

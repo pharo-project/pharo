@@ -22,7 +22,8 @@ Class {
 
 { #category : #removing }
 RBRemoveHierarchyMethodRefactoring class >> removeMethods: selectorCollection from: aClass [
-	^self new removeMethods: selectorCollection from: aClass
+	^ self new
+		removeMethods: selectorCollection from: aClass
 ]
 
 { #category : #transforming }

@@ -42,7 +42,7 @@ Class {
 
 { #category : #'instance creation' }
 RBInlineAllSendersRefactoring class >> model: aRBSmalltalk sendersOf: aSelector in: aClass [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		sendersOf: aSelector in: aClass;
 		yourself
@@ -50,7 +50,9 @@ RBInlineAllSendersRefactoring class >> model: aRBSmalltalk sendersOf: aSelector 
 
 { #category : #'instance creation' }
 RBInlineAllSendersRefactoring class >> sendersOf: aSelector in: aClass [ 
-	^self new sendersOf: aSelector in: aClass
+	^ self new
+		sendersOf: aSelector
+		in: aClass
 ]
 
 { #category : #transforming }

@@ -23,7 +23,8 @@ RBSwapMethodRefactoring class >> model: aRBSmalltalk swapMethod: aSelector in: a
 
 { #category : #'instance creation' }
 RBSwapMethodRefactoring class >> swapMethod: aSelector in: aClass [
-	^ self new swapMethod: aSelector in: aClass
+	^ self new
+		swapMethod: aSelector in: aClass
 ]
 
 { #category : #preconditions }

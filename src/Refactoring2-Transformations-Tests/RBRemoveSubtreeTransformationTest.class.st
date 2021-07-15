@@ -66,7 +66,7 @@ RBRemoveSubtreeTransformationTest >> testTransformNotSequenceNode [
 	transformation := RBCompositeTransformation new
 		transformations:
 			(OrderedCollection
-				with: (RBAddMethodTransformation sourceCode: 'printString1 super printString' in: self changeMock name withProtocol: #accessing)
+				with: (RBAddMethodTransformation sourceCode: 'printString1 super printString' in: self changeMock name withProtocols: {#accessing})
 				with: (RBRemoveSubtreeTransformation code: 'super printString' from: #printString1 in: self changeMock name)).
 	transformation transform.
 
