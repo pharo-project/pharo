@@ -8,6 +8,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Widgets-Phlow'
 }
 
+{ #category : #testing }
+GLMPhlowBrick class >> isDeprecated [
+	^ true
+]
+
 { #category : #phlow }
 GLMPhlowBrick >> display: aBlockOrSymbol [
 

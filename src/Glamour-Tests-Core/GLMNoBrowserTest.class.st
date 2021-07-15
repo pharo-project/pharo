@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMNoBrowserTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMNoBrowserTest >> testCreation [
 	self deny: GLMNoBrowser new isNil.

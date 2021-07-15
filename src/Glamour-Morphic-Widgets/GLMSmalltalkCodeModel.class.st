@@ -10,6 +10,11 @@ Class {
 	#category : #'Glamour-Morphic-Widgets'
 }
 
+{ #category : #testing }
+GLMSmalltalkCodeModel class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMSmalltalkCodeModel >> addVariableBinding: anAssociation [
 	self variableBindings at: anAssociation key put: anAssociation value

@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Morphic'
 }
 
+{ #category : #testing }
+GLMBrickedMorph class >> isDeprecated [
+	^ true
+]
+
 { #category : #layout }
 GLMBrickedMorph >> adjustLayoutBounds [
 	"no need in it"

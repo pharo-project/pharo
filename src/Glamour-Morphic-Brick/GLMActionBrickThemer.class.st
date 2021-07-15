@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Theme'
 }
 
+{ #category : #testing }
+GLMActionBrickThemer class >> isDeprecated [
+	^ true
+]
+
 { #category : #modules }
 GLMActionBrickThemer >> popupThemer [
 

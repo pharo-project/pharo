@@ -20,6 +20,11 @@ GLMPagerPanePreviewMorph class >> cleanUp [
 	uniqueInstance := nil
 ]
 
+{ #category : #testing }
+GLMPagerPanePreviewMorph class >> isDeprecated [
+	^ true
+]
+
 { #category : #actions }
 GLMPagerPanePreviewMorph class >> remove [
 

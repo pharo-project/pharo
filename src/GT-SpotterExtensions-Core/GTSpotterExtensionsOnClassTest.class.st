@@ -4,6 +4,11 @@ Class {
 	#category : #'GT-SpotterExtensions-Core'
 }
 
+{ #category : #testing }
+GTSpotterExtensionsOnClassTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GTSpotterExtensionsOnClassTest >> testBasic [
 

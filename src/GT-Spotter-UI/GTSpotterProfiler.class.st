@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #testing }
+GTSpotterProfiler class >> isDeprecated [
+	^ true
+]
+
+{ #category : #testing }
 GTSpotterProfiler class >> isGlobalCategory [
 	^ true
 ]

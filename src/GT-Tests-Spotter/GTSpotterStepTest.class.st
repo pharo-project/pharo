@@ -13,6 +13,11 @@ Class {
 	#category : #'GT-Tests-Spotter-Scripting'
 }
 
+{ #category : #testing }
+GTSpotterStepTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #convenience }
 GTSpotterStepTest >> assertCandidateMatching: aBlock [
 	| candidates |

@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Core'
 }
 
+{ #category : #testing }
+GLMStackedVerticallyArrangement class >> isDeprecated [
+	^ true
+]
+
 { #category : #rendering }
 GLMStackedVerticallyArrangement >> renderGlamorouslyOn: aRenderer [
 	^ aRenderer renderStackedVerticallyCompositePresentation: self composite

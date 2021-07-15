@@ -32,6 +32,11 @@ GTSpotterExtensionSettings class >> groupedAndSortedSpotterExtensions [
 	^ groupedExtensions asSortedCollection: [ :a1 :a2 | a1 key name < a2 key name ]. 
 ]
 
+{ #category : #testing }
+GTSpotterExtensionSettings class >> isDeprecated [
+	^ true
+]
+
 { #category : #settings }
 GTSpotterExtensionSettings class >> shouldSpotterIgnoreProcessorDefinedInMethod: aCompiledMethod [
 	"

@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Rubric-Presentations-Examples'
 }
 
+{ #category : #testing }
+GLMLipsumWithSegmentsExample class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMLipsumWithSegmentsExample >> presentation [
 	^ GLMCompositePresentation new

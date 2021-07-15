@@ -127,6 +127,11 @@ GLMBrickLayouter class >> example [
 	
 ]
 
+{ #category : #testing }
+GLMBrickLayouter class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMBrickLayouter class >> uniqueInstance [
 	^ uniqueInstance ifNil: [ uniqueInstance := self new ]

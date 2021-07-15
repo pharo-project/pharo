@@ -13,6 +13,11 @@ Class {
 	#category : #'Glamour-Core'
 }
 
+{ #category : #testing }
+GLMPanePort class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMPanePort >> basicValue: anObject [
 	value := anObject. 

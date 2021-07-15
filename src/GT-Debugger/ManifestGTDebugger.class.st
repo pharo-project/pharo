@@ -7,6 +7,11 @@ Class {
 	#category : #'GT-Debugger-Manifest'
 }
 
+{ #category : #testing }
+ManifestGTDebugger class >> isDeprecated [
+	^ true
+]
+
 { #category : #unloading }
 ManifestGTDebugger class >> preUnload [
   GTGenericStackDebugger closeAllDebuggers

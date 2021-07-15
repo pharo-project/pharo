@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Utils-Geometry'
 }
 
+{ #category : #testing }
+GLMEastDirection class >> isDeprecated [
+	^ true
+]
+
 { #category : #arithmetic }
 GLMEastDirection >> * aNumber [
 	<return: #Point>

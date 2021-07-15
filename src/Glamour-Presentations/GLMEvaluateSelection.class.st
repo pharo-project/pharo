@@ -11,6 +11,11 @@ Class {
 	#category : #'Glamour-Presentations-Announcements'
 }
 
+{ #category : #testing }
+GLMEvaluateSelection class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMEvaluateSelection >> action [
 	^ action

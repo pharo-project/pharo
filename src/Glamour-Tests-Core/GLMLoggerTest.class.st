@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMLoggerTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMLoggerTest >> testCustomInstance [
 	| memoryLogger |

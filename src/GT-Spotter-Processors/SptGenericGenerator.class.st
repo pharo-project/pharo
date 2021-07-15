@@ -27,6 +27,11 @@ Class {
 }
 
 { #category : #testing }
+SptGenericGenerator class >> isDeprecated [
+	^ true
+]
+
+{ #category : #testing }
 SptGenericGenerator >> atEnd [ 
 
 	^ generator atEnd

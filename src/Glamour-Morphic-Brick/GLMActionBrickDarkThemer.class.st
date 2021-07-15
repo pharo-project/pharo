@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Theme'
 }
 
+{ #category : #testing }
+GLMActionBrickDarkThemer class >> isDeprecated [
+	^ true
+]
+
 { #category : #'brick-scrollbar' }
 GLMActionBrickDarkThemer >> scrollbarWidth [
 

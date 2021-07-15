@@ -12,6 +12,11 @@ Class {
 	#category : #'Glamour-Announcements'
 }
 
+{ #category : #testing }
+GLMPresentationToolbarUpdated class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMPresentationToolbarUpdated >> presentation [
 	^ presentation

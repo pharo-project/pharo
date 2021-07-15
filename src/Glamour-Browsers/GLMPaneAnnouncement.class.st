@@ -17,6 +17,11 @@ Class {
 	#category : #'Glamour-Browsers-Announcements'
 }
 
+{ #category : #testing }
+GLMPaneAnnouncement class >> isDeprecated [
+	^ true
+]
+
 { #category : #'instance creation' }
 GLMPaneAnnouncement class >> pane: aPane atPosition: anInteger inBrowser: aBrowser [ 
 	 

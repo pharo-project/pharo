@@ -170,6 +170,8 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'GeneralTests' with: [ spec repository: repository ].
 		spec baseline: 'Zodiac' with: [ spec repository: repository ].
 		spec baseline: 'SortFunctions' with: [ spec repository: repository ].
+		spec package: 'STON-Extensions'. 
+		
 		spec package: 'BaselineOfPharoBootstrap'.
 		spec package: 'BaselineOfMonticello'.
 		spec package: 'BaselineOfMetacello'.

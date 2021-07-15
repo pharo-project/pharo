@@ -13,6 +13,11 @@ Class {
 }
 
 { #category : #testing }
+SptIteratorDecorator class >> isDeprecated [
+	^ true
+]
+
+{ #category : #testing }
 SptIteratorDecorator >> atEnd [ 
 
 	^ inner atEnd

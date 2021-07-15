@@ -16,6 +16,11 @@ GTStepToBytecodeDebugAction class >> gtBytecodeDebuggerActionFor: aDebugger [
 ]
 
 { #category : #testing }
+GTStepToBytecodeDebugAction class >> isDeprecated [
+	^ true
+]
+
+{ #category : #testing }
 GTStepToBytecodeDebugAction >> appliesToDebugger: aDebugger [
 
 	^ (aDebugger session isContextPostMortem: aDebugger currentContext) not and: [ 

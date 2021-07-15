@@ -17,6 +17,11 @@ GTSUnitDebuggerJumpToTestAction class >> gtDebuggerActionFor: aDebugger [
 ]
 
 { #category : #testing }
+GTSUnitDebuggerJumpToTestAction class >> isDeprecated [
+	^ true
+]
+
+{ #category : #testing }
 GTSUnitDebuggerJumpToTestAction >> appliesToDebugger: aDebugger [
 
 	^ aDebugger session class = GTSUnitDebugSession and: [ 

@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Widgets'
 }
 
+{ #category : #testing }
+GLMPopperNotificationStrategy class >> isDeprecated [
+	^ true
+]
+
 { #category : #notification }
 GLMPopperNotificationStrategy >> notify: aString at: anInteger in: aStream [
 	| pos |

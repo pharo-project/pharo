@@ -14,6 +14,11 @@ Class {
 }
 
 { #category : #testing }
+GLMContextChanged class >> isDeprecated [
+	^ true
+]
+
+{ #category : #testing }
 GLMContextChanged >> announcesNewSelection [ 
 	"ContextChanged announces a new selection if 
 	the updated port is #selection and the new value is different from the current selection. 

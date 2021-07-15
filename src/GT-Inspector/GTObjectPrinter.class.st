@@ -27,6 +27,11 @@ GTObjectPrinter class >> asTruncatedTextFrom: anObject [
 		do: [ Text string: 'error printing' attribute: TextColor red ]
 ]
 
+{ #category : #testing }
+GTObjectPrinter class >> isDeprecated [
+	^ true
+]
+
 { #category : #printing }
 GTObjectPrinter >> asNonTruncatedTextFrom: anObject [
 	^ self class asNonTruncatedTextFrom: anObject

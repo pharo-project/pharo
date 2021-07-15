@@ -13,6 +13,11 @@ SptWindowsProcessor class >> defaultEnabled [
 	^ true
 ]
 
+{ #category : #testing }
+SptWindowsProcessor class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 SptWindowsProcessor class >> order [
 	

@@ -10,6 +10,11 @@ Class {
 	#category : #'Glamour-Morphic-Widgets'
 }
 
+{ #category : #testing }
+GLMDropListModel class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMDropListModel >> announcer [
 	^ announcer ifNil: [announcer := GLMAnnouncer new]

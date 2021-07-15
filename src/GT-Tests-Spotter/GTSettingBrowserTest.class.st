@@ -4,6 +4,11 @@ Class {
 	#category : #'GT-Tests-Spotter-SettingBrowser'
 }
 
+{ #category : #testing }
+GTSettingBrowserTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GTSettingBrowserTest >> testgroupedAndSortedSpotterExtensions [
 
