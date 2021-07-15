@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Renderer'
 }
 
+{ #category : #testing }
+GLMMorphicPaneWithoutTitleRenderer class >> isDeprecated [
+	^ true
+]
+
 { #category : #rendering }
 GLMMorphicPaneWithoutTitleRenderer >> actOnMatchingPresentationsChanged: anAnnouncement [ 
 	paneMorph	removeAllMorphs.

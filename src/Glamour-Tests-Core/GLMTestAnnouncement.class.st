@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMTestAnnouncement class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMTestAnnouncement >> parameter [
 	^ parameter

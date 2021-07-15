@@ -13,6 +13,11 @@ Class {
 	#category : #'Glamour-Core'
 }
 
+{ #category : #testing }
+GLMOriginPortReference class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMOriginPortReference >> beActive [ 
 	 

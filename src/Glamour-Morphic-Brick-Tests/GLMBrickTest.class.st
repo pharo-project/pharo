@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Tests'
 }
 
+{ #category : #testing }
+GLMBrickTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #asserting }
 GLMBrickTest >> assertAllSubbricksAreClean: aBrick [
 

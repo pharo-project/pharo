@@ -11,6 +11,11 @@ Class {
 	#category : #'Glamour-Morphic-Widgets'
 }
 
+{ #category : #testing }
+GLMSystemWindow class >> isDeprecated [
+	^ true
+]
+
 { #category : #callbacks }
 GLMSystemWindow >> actOnWindowRequest: ann [
 

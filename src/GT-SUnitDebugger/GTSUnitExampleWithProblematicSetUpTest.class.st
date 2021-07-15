@@ -13,6 +13,11 @@ GTSUnitExampleWithProblematicSetUpTest class >> isAbstract [
 ]
 
 { #category : #testing }
+GTSUnitExampleWithProblematicSetUpTest class >> isDeprecated [
+	^ true
+]
+
+{ #category : #testing }
 GTSUnitExampleWithProblematicSetUpTest class >> isUnitTest [
 	^ false
 ]

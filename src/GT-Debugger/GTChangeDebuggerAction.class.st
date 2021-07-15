@@ -40,6 +40,11 @@ GTChangeDebuggerAction class >> gtChangeDebuggerActionsFor: aDebugger [
 		excluding: aDebugger
 ]
 
+{ #category : #testing }
+GTChangeDebuggerAction class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GTChangeDebuggerAction >> debuggerClass: aClass [
 

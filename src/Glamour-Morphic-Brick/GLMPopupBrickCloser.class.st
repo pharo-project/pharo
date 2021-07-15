@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Widgets-UI-Popup'
 }
 
+{ #category : #testing }
+GLMPopupBrickCloser class >> isDeprecated [
+	^ true
+]
+
 { #category : #action }
 GLMPopupBrickCloser >> act [
 	self popup ifNotNil: [ :thePopup | thePopup close ]

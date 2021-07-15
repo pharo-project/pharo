@@ -8,6 +8,11 @@ Class {
 	#category : #'Glamour-Morphic-Widgets'
 }
 
+{ #category : #testing }
+GLMRubricTextModel class >> isDeprecated [
+	^ true
+]
+
 { #category : #'text managing' }
 GLMRubricTextModel >> clearUserEdits [
 	

@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMNestedBrowserTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMNestedBrowserTest >> testChangeInnerSelection [
 	"Tests setting the selection of an inner pane from the oustide. 

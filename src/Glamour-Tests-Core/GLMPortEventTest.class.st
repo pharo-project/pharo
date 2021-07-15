@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMPortEventTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMPortEventTest >> testCreation [
 	| anEvent portOne portTwo |

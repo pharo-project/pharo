@@ -27,6 +27,11 @@ GLMBrickBounds class >> initialize [
 	Left := 4
 ]
 
+{ #category : #testing }
+GLMBrickBounds class >> isDeprecated [
+	^ true
+]
+
 { #category : #'accessing - bounds' }
 GLMBrickBounds >> bounds [
 

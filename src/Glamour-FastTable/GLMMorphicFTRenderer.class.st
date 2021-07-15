@@ -38,6 +38,11 @@ Class {
 	#category : #'Glamour-FastTable-Morphic-Renderer'
 }
 
+{ #category : #testing }
+GLMMorphicFTRenderer class >> isDeprecated [
+	^ true
+]
+
 { #category : #callbacks }
 GLMMorphicFTRenderer >> actOnContextChanged: anAnnouncement [ 
 	anAnnouncement property = #selection ifTrue: [ 

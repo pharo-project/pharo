@@ -18,6 +18,11 @@ Class {
 	#category : #'Glamour-Tasks'
 }
 
+{ #category : #testing }
+GLMAsyncTask class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMAsyncTask >> arguments [
 

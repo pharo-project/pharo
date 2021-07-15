@@ -10,6 +10,11 @@ Class {
 	#category : #'Glamour-Core'
 }
 
+{ #category : #testing }
+GLMPresentStrategy class >> isDeprecated [
+	^ true
+]
+
 { #category : #'accessing - convenience' }
 GLMPresentStrategy >> addPresentation: aPresentation [
 	|currentPresentations|

@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMDynamicPresentationTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMDynamicPresentationTest >> testCachedPresentation [
 	| dynamic currentPresentation |

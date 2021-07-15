@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMPortTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMPortTest >> testPanePortTransmissionCallingReceiveIn [
 	| originPort destinationPort transmission |

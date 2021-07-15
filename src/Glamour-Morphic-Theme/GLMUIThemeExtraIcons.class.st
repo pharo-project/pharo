@@ -265,6 +265,11 @@ GLMUIThemeExtraIcons class >> icons [
 	^ icons ifNil: [icons := Dictionary new] 
 ]
 
+{ #category : #testing }
+GLMUIThemeExtraIcons class >> isDeprecated [
+	^ true
+]
+
 { #category : #utilities }
 GLMUIThemeExtraIcons class >> resetIcons [
 	icons := nil

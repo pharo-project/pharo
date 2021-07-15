@@ -17,6 +17,11 @@ GTGenericStackDebuggerSelectionChanged class >> forDebugger: aDebugger [
 	^ self new forDebugger: aDebugger
 ]
 
+{ #category : #testing }
+GTGenericStackDebuggerSelectionChanged class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GTGenericStackDebuggerSelectionChanged >> debugger [
 

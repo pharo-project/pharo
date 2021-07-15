@@ -4,6 +4,11 @@ Class {
 	#category : #'GT-Tests-Debugger'
 }
 
+{ #category : #testing }
+GTBytecodeDebuggerSmokeTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GTBytecodeDebuggerSmokeTest >> debuggerToTest [
 

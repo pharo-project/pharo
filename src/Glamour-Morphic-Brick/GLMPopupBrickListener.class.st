@@ -11,6 +11,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Widgets-UI-Popup'
 }
 
+{ #category : #testing }
+GLMPopupBrickListener class >> isDeprecated [
+	^ true
+]
+
 { #category : #'instance creation' }
 GLMPopupBrickListener class >> predicate: aPopupPredicate [
 

@@ -21,6 +21,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Morphic'
 }
 
+{ #category : #testing }
+GLMFoundationBrick class >> isDeprecated [
+	^ true
+]
+
 { #category : #'instance creation' }
 GLMFoundationBrick class >> root: aBrick [
 

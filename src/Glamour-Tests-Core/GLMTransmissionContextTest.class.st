@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMTransmissionContextTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMTransmissionContextTest >> testCopy [
 	| context copy |

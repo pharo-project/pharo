@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Layouts-Utils'
 }
 
+{ #category : #testing }
+GLMBrickLayoutTraverser class >> isDeprecated [
+	^ true
+]
+
 { #category : #private }
 GLMBrickLayoutTraverser >> customDependencies: aBrick [
 

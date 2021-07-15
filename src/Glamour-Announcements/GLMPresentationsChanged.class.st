@@ -11,6 +11,11 @@ Class {
 	#category : #'Glamour-Announcements'
 }
 
+{ #category : #testing }
+GLMPresentationsChanged class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMPresentationsChanged >> oldPresentations [ 
 	"The presentations that were present on the pane before the change." 

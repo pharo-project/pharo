@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Rubric'
 }
 
+{ #category : #testing }
+GLMRubricTextMorphicTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #private }
 GLMRubricTextMorphicTest >> checkInitializeBlockSetsTextSelectionForPresentation: aSelector [
 	| browser textMorph |

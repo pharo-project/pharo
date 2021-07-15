@@ -8,6 +8,11 @@ Class {
 	#category : #'Glamour-Morphic-Renderer'
 }
 
+{ #category : #testing }
+GLMMorphicTextRenderer class >> isDeprecated [
+	^ true
+]
+
 { #category : #rendering }
 GLMMorphicTextRenderer >> actOnContextChanged: ann [ 
 	ann property = #selectionInterval
