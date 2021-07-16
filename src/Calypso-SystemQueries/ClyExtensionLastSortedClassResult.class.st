@@ -29,7 +29,7 @@ Internal Representation and Key Implementation Points.
 	baseQueryResult:		<ClyQueryResult>
 "
 Class {
-	#name : #ClyExtensionLastSortedClasses,
+	#name : #ClyExtensionLastSortedClassResult,
 	#superclass : #ClyBrowserQueryResult,
 	#instVars : [
 		'baseQueryResult'
@@ -38,23 +38,23 @@ Class {
 }
 
 { #category : #'instance creation' }
-ClyExtensionLastSortedClasses class >> hierarchical [
+ClyExtensionLastSortedClassResult class >> hierarchical [
 	^self using: ClyHierarchicallySortedClassesResult new
 ]
 
 { #category : #'instance creation' }
-ClyExtensionLastSortedClasses class >> simple [
+ClyExtensionLastSortedClassResult class >> simple [
 	^self using: (ClySortedQueryResult using: ClySortByNameFunction ascending)
 ]
 
 { #category : #'instance creation' }
-ClyExtensionLastSortedClasses class >> using: aQueryResult [
+ClyExtensionLastSortedClassResult class >> using: aQueryResult [
 	^self new
 		baseQueryResult: aQueryResult
 ]
 
 { #category : #comparing }
-ClyExtensionLastSortedClasses >> = anObject [
+ClyExtensionLastSortedClassResult >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
 	self == anObject ifTrue: [ ^ true ].
@@ -63,17 +63,17 @@ ClyExtensionLastSortedClasses >> = anObject [
 ]
 
 { #category : #accessing }
-ClyExtensionLastSortedClasses >> baseQueryResult [
+ClyExtensionLastSortedClassResult >> baseQueryResult [
 	^ baseQueryResult
 ]
 
 { #category : #accessing }
-ClyExtensionLastSortedClasses >> baseQueryResult: anObject [
+ClyExtensionLastSortedClassResult >> baseQueryResult: anObject [
 	baseQueryResult := anObject
 ]
 
 { #category : #building }
-ClyExtensionLastSortedClasses >> buildExtensionItemsFrom: classes [
+ClyExtensionLastSortedClassResult >> buildExtensionItemsFrom: classes [
 
 	| extensions |
 	extensions := self buildItemsFrom: classes.
@@ -82,7 +82,7 @@ ClyExtensionLastSortedClasses >> buildExtensionItemsFrom: classes [
 ]
 
 { #category : #building }
-ClyExtensionLastSortedClasses >> buildItemsFrom: classes [
+ClyExtensionLastSortedClassResult >> buildItemsFrom: classes [
 
 	| subResult |
 	subResult := baseQueryResult prepareNewFor: buildingQuery in: environment.
@@ -91,7 +91,7 @@ ClyExtensionLastSortedClasses >> buildItemsFrom: classes [
 ]
 
 { #category : #building }
-ClyExtensionLastSortedClasses >> fillWith: classes [
+ClyExtensionLastSortedClassResult >> fillWith: classes [
 
 	| definedClasses extensions |
 	definedClasses := IdentitySet withAll: classes.
@@ -105,12 +105,12 @@ ClyExtensionLastSortedClasses >> fillWith: classes [
 ]
 
 { #category : #comparing }
-ClyExtensionLastSortedClasses >> hash [
+ClyExtensionLastSortedClassResult >> hash [
 	^super hash bitXor: baseQueryResult hash
 ]
 
 { #category : #building }
-ClyExtensionLastSortedClasses >> isQueryScopeDefinesClass: aClass [
+ClyExtensionLastSortedClassResult >> isQueryScopeDefinesClass: aClass [
 
 	| classPackage |
 	classPackage := aClass package.
