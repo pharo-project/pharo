@@ -432,6 +432,7 @@ Morph >> rowMorphForNode: aNode inColumn: aColumn [
 			yourself.
 			
 	rm addMorph: self.
+	rm computeBounds.
 	
 	aColumn isFirstColumn 
 		ifTrue: [ | icon |

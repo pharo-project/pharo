@@ -32,8 +32,13 @@ MorphTreeResizerMorph >> adoptPaneColor: paneColor [
 
 { #category : #'private - testing' }
 MorphTreeResizerMorph >> canResizeColumn [
-	^(container columns at: index) resizable
+	^self column resizable
 
+]
+
+{ #category : #'private - testing' }
+MorphTreeResizerMorph >> column [
+	^container columns at: index
 ]
 
 { #category : #'as yet unclassified' }
@@ -47,6 +52,17 @@ MorphTreeResizerMorph >> delete [
 	super delete.
 	self release.
 	
+]
+
+{ #category : #'event handling' }
+MorphTreeResizerMorph >> doubleClick: event [
+	"A double click occurred.
+	Resize the column to fit all content."
+	| maxWidth |
+	self canResizeColumn ifFalse: [^ self].
+	maxWidth := container getList max: [ :node | (self column rowMorphFor: node) width ].
+	self column currentWidth: maxWidth + 6.
+	container resizerChanged
 ]
 
 { #category : #drawing }
@@ -68,6 +84,7 @@ MorphTreeResizerMorph >> mouseDown: anEvent [
 	position and relative offset to the receiver."
 	| cp |
 	self canResizeColumn ifFalse: [^ self].
+	anEvent hand waitForClicksOrDrag: self event: anEvent.
 	(self bounds containsPoint: anEvent cursorPoint)
 		ifTrue: [oldColor := self color.
 			self setGrabbedColor].
@@ -197,6 +214,6 @@ MorphTreeResizerMorph >> updateFromEvent: anEvent [
 		ifTrue: [container scroller left - container scroller offset x + 3] 
 		ifFalse: [(container columnResizers at: index - 1) left].
 	newWidth := self left - previousX.
-	(container columns at: index) currentWidth: newWidth.
+	self column currentWidth: newWidth.
 	container resizerChanged
 ]
