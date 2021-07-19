@@ -1,6 +1,6 @@
 Class {
 	#name : #RBPushDownInstanceVariableParametrizedTest,
-	#superclass : #RBParametrizedTestWithDifferentConstructors,
+	#superclass : #RBWithDifferentConstructorsParametrizedTest,
 	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 

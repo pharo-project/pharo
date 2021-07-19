@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #initialization }
+{ #category : #running }
 RBTransformationsTest >> setUp [
 
 	super setUp.

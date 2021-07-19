@@ -1,5 +1,5 @@
 Class {
-	#name : #RBParametrizedTestWithDifferentConstructors,
+	#name : #RBWithDifferentConstructorsParametrizedTest,
 	#superclass : #RBAbstractRefactoringTest,
 	#instVars : [
 		'constructor'
@@ -8,20 +8,20 @@ Class {
 }
 
 { #category : #parameterization }
-RBParametrizedTestWithDifferentConstructors >> constructor: anObject [
+RBWithDifferentConstructorsParametrizedTest >> constructor: anObject [
 
 	constructor := anObject
 ]
 
 { #category : #builder }
-RBParametrizedTestWithDifferentConstructors >> createRefactoringWithArguments: aParameterCollection [
+RBWithDifferentConstructorsParametrizedTest >> createRefactoringWithArguments: aParameterCollection [
 	^ (rbClass
 		perform: constructor 
 		withArguments: aParameterCollection) asRefactoring
 ]
 
 { #category : #builder }
-RBParametrizedTestWithDifferentConstructors >> createRefactoringWithModel: rbNamespace andArguments: aParameterCollection [
+RBWithDifferentConstructorsParametrizedTest >> createRefactoringWithModel: rbNamespace andArguments: aParameterCollection [
 	^ (rbClass
 		perform: #model: , constructor 
 		withArguments: {rbNamespace}, aParameterCollection) asRefactoring

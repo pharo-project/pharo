@@ -1,6 +1,6 @@
 Class {
 	#name : #RBParametrizedTestWithDifferentsArguments,
-	#superclass : #RBParametrizedTestWithDifferentConstructors,
+	#superclass : #RBWithDifferentConstructorsParametrizedTest,
 	#instVars : [
 		'index'
 	],

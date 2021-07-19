@@ -1,9 +1,6 @@
 Class {
 	#name : #RBRemoveMethodParametrizedTest,
 	#superclass : #RBComposeParametrizedTest,
-	#instVars : [
-		'index'
-	],
 	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 

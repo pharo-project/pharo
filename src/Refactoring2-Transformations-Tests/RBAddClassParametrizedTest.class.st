@@ -17,7 +17,7 @@ RBAddClassParametrizedTest >> constructor [
 	^ #addClass:superclass:subclasses:category: 
 ]
 
-{ #category : #'failure tests' }
+{ #category : #running }
 RBAddClassParametrizedTest >> setUp [
 
 	super setUp.

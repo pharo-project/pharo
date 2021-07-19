@@ -1,6 +1,6 @@
 Class {
 	#name : #RBComposeParametrizedTest,
-	#superclass : #RBParametrizedTestWithDifferentConstructors,
+	#superclass : #RBWithDifferentConstructorsParametrizedTest,
 	#instVars : [
 		'isComposed'
 	],

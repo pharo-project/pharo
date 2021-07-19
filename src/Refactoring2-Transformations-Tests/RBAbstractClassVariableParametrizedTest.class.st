@@ -1,6 +1,6 @@
 Class {
 	#name : #RBAbstractClassVariableParametrizedTest,
-	#superclass : #RBParametrizedTestWithDifferentConstructors,
+	#superclass : #RBWithDifferentConstructorsParametrizedTest,
 	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 
@@ -22,7 +22,7 @@ RBAbstractClassVariableParametrizedTest >> setUp [
 
 { #category : #tests }
 RBAbstractClassVariableParametrizedTest >> testAbstractClassVariable [
-	| refactoring meta class |
+	| refactoring |
 	refactoring := self createRefactoringWithArguments:
 		{'RecursiveSelfRule' . #RBTransformationRuleTestData}.
 	self flag: 'There are some errors or different behavior bwt ref and transformation'.
