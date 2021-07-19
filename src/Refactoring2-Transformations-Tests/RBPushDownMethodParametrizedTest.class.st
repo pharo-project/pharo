@@ -8,6 +8,7 @@ Class {
 RBPushDownMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBPushDownMethodRefactoring };
+		addCase: { #rbClass -> RBPushDownMethodTransformation };
 		yourself
 ]
 

@@ -62,6 +62,12 @@ RBClass >> addPoolDictionary: aString [
 	model addPool: aString to: self
 ]
 
+{ #category : #adding }
+RBClass >> addProtocolNamed: aString [
+
+	model addProtocolNamed: aString in: self
+]
+
 { #category : #accessing }
 RBClass >> allClassVariableNames [
 
@@ -129,7 +135,7 @@ RBClass >> comment [
 
 { #category : #accessing }
 RBClass >> comment: aString [
-	model comment: (comment := aString) in: self
+	self model changes comment: (comment := aString) in: self
 ]
 
 { #category : #accessing }
@@ -176,7 +182,8 @@ RBClass >> definitionString [
 ]
 
 { #category : #testing }
-RBClass >> directlyDefinesClassVariable: aString [ 
+RBClass >> directlyDefinesClassVariable: aString [
+
 	^self classVariableNames includes: aString asSymbol
 ]
 
@@ -199,6 +206,7 @@ RBClass >> instanceSide [
 
 { #category : #testing }
 RBClass >> isMeta [
+
 	^false
 ]
 
@@ -216,6 +224,12 @@ RBClass >> methodsUsingClassVariableNamed: aClassVariableName [
 			modelClass := self model classNamed: aMethod methodClass name.
 			modelClass methodFor: aMethod selector
 		]
+]
+
+{ #category : #accessing }
+RBClass >> poolDictionaryNames [
+
+	^ self privatePoolDictionaryNames copy
 ]
 
 { #category : #accessing }
@@ -255,20 +269,28 @@ RBClass >> removePoolDictionary: aString [
 	self privatePoolDictionaryNames remove: aString asSymbol
 ]
 
+{ #category : #removing }
+RBClass >> removeProtocolNamed: aString [
+
+	model removeProtocolNamed: aString in: self
+]
+
 { #category : #'variable accessing' }
 RBClass >> renameClassVariable: oldName to: newName around: aBlock [ 
 	self privateClassVariableNames 
 		at: (self privateClassVariableNames indexOf: oldName asSymbol)
 		put: newName asSymbol.
-	model 
-		renameClassVariable: oldName
-		to: newName
-		in: self
+	^ self model
+		performChange: (changeFactory  
+								renameClassVariable: oldName
+								to: newName
+								in: self)
 		around: aBlock
 ]
 
 { #category : #accessing }
 RBClass >> sharedPoolNames [
+
 	^self privatePoolDictionaryNames copy
 ]
 

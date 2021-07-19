@@ -207,7 +207,7 @@ RBTransformationsTest >> testDeprecateClassTransform [
 RBTransformationsTest >> testMoveInstanceVariableToClassTransform [
 
 	| transformation oldClass newClass |
-	model := RBNamespace2 new.
+	model := RBNamespace new.
 	model defineClass: 'Object subclass: #FOOBAR 
 				instanceVariableNames: ''asdf'' 	
 				classVariableNames: ''''

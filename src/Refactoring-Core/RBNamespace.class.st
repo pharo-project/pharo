@@ -96,6 +96,12 @@ RBNamespace >> addPool: aString to: aRBClass [
 	^changes addPool: aString to: aRBClass
 ]
 
+{ #category : #adding }
+RBNamespace >> addProtocolNamed: aString in: aClass [
+
+	^ changes addProtocolNamed: aString in: aClass
+]
+
 { #category : #accessing }
 RBNamespace >> allClassesDo: aBlock [
 
@@ -222,6 +228,12 @@ RBNamespace >> allReferencesToClass: aRBClass inPackages: aColl do: aBlock [
 				do: [:sel | aBlock value: (each classSide methodFor: sel)]]
 ]
 
+{ #category : #transforming }
+RBNamespace >> category: aString for: aClass [
+
+	^ changes addChange: (RBClassCategoryChange category: aString for: aClass)
+]
+
 { #category : #'private - changes' }
 RBNamespace >> changeClass: aRBClass [ 
 	changedClasses 
@@ -293,6 +305,14 @@ RBNamespace >> compile: aString in: aRBClass classified: aSymbol [
 				classified: aSymbol.
 	self flushCaches.
 	^change
+]
+
+{ #category : #transforming }
+RBNamespace >> convertClasses: classSet select: aBlock using: searchReplacer [
+ 
+	classSet do: [ :aClass | 
+		(aBlock value: aClass) do: [ :selector |
+			aClass convertMethod: selector using: searchReplacer ]]
 ]
 
 { #category : #'accessing - classes' }
@@ -610,6 +630,12 @@ RBNamespace >> removePackageNamed: aString [
 	^ changes removePackageNamed: aString.
 ]
 
+{ #category : #'private - changes' }
+RBNamespace >> removeProtocolNamed: aString in: aClass [
+
+	^ changes removeProtocolNamed: aString in: aClass
+]
+
 { #category : #changes }
 RBNamespace >> renameClass: aRBClass to: aSymbol around: aBlock [
 	| change value dict |
@@ -684,6 +710,15 @@ RBNamespace >> replaceClassNameIn: definitionString to: aSymbol [
 { #category : #accessing }
 RBNamespace >> rootClasses [
 	^ rootClasses ifNil: [ rootClasses := self privateRootClasses]
+]
+
+{ #category : #transforming }
+RBNamespace >> selector: aSelector in: aClass classified: aProtocol [
+
+	^ changes
+		selector: aSelector
+		in: aClass
+		classified: aProtocol
 ]
 
 { #category : #private }

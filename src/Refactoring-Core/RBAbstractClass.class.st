@@ -93,6 +93,14 @@ RBAbstractClass >> allInstanceVariableNames [
 ]
 
 { #category : #accessing }
+RBAbstractClass >> allMethods [
+
+	^ self allSelectors
+		collect: [ :selector | self methodFor: selector ]
+		thenSelect: #isNotNil
+]
+
+{ #category : #accessing }
 RBAbstractClass >> allPoolDictionaryNames [
 	^self subclassResponsibility
 ]
@@ -140,6 +148,18 @@ RBAbstractClass >> allSuperclasses [
 	^supers
 ]
 
+{ #category : #accessing }
+RBAbstractClass >> allSuperclassesUntil: aClass [
+
+	| supers sprClass |
+	supers := OrderedCollection new.
+	sprClass := self superclass.
+	[sprClass notNil and: [sprClass name ~= aClass name]] whileTrue: 
+			[supers add: sprClass.
+			sprClass := sprClass superclass].
+	^supers
+]
+
 { #category : #'method accessing' }
 RBAbstractClass >> bindingOf: aString [ 
 	^self realClass classPool associationAt: aString asSymbol
@@ -158,6 +178,15 @@ RBAbstractClass >> canonicalArgumentName [
 		ifTrue: [ 'an' ]
 		ifFalse: [ 'a' ].
 	^ prefix, self name
+]
+
+{ #category : #testing }
+RBAbstractClass >> checkSelector: aSelector using: aMatcher [ 
+
+	| parseTree |
+	parseTree := self parseTreeFor: aSelector.
+	parseTree ifNotNil: [aMatcher executeTree: parseTree].
+	^ aMatcher answer
 ]
 
 { #category : #accessing }
@@ -210,6 +239,20 @@ RBAbstractClass >> compile: aString withAttributesFrom: aRBMethod [
 { #category : #'method accessing' }
 RBAbstractClass >> compileTree: aRBMethodNode [ 
 	^ (self methodFor: aRBMethodNode selector) compileTree: aRBMethodNode
+]
+
+{ #category : #transforming }
+RBAbstractClass >> convertMethod: selector using: searchReplacer [
+
+	"Convert the parse tree for selector using the searchReplacer. If a
+	change is made then compile it into the changeBuilder."
+
+	| parseTree |
+
+	parseTree := self parseTreeFor: selector.
+	parseTree ifNil: [ ^ self ].
+	( searchReplacer executeTree: parseTree )
+		ifTrue: [ self compileTree: searchReplacer tree ]
 ]
 
 { #category : #testing }
@@ -324,6 +367,22 @@ RBAbstractClass >> firstSuperclassRedefines: aSelector [
 	"Return rbClass, if one of your superclasses redefines the method with name, aMethod"
 	self allSuperclasses do: [:each |
 		(each directlyDefinesMethod: aSelector) ifTrue: [^ each]].
+]
+
+{ #category : #querying }
+RBAbstractClass >> getterMethodFor: aVariableName [
+	| matcher candidateGetters |
+	matcher := self parseTreeSearcherClass getterMethod: aVariableName.
+	candidateGetters := (self definesInstanceVariable: aVariableName)
+		ifTrue: [ self whichSelectorsReferToInstanceVariable: aVariableName ]
+		ifFalse: [ self whichSelectorsReferToClassVariable: aVariableName ].
+	candidateGetters := candidateGetters
+		select: [ :each | each numArgs == 0 ].
+	^ candidateGetters
+		detect: [ :each | 
+			(self checkSelector: each using: matcher) notNil
+				and: [ (self subclassRedefines: each) not ] ]
+		ifNone: [ nil ]
 ]
 
 { #category : #testing }
@@ -494,6 +553,11 @@ RBAbstractClass >> parseTreeFor: aSelector [
 	^ method parseTree
 ]
 
+{ #category : #accessing }
+RBAbstractClass >> parseTreeSearcherClass [
+	^ RBParseTreeSearcher
+]
+
 { #category : #printing }
 RBAbstractClass >> printOn: aStream [ 
 	aStream nextPutAll: self name
@@ -508,6 +572,14 @@ RBAbstractClass >> privateInstanceVariableNames [
 				ifFalse: [ instanceVariableNames := OrderedCollection new ]
 			].
 	^ instanceVariableNames
+]
+
+{ #category : #accessing }
+RBAbstractClass >> protocols [
+
+	^ (self allMethods
+		flatCollect: [ :each | self protocolsFor: each selector ])
+		asOrderedCollection
 ]
 
 { #category : #'method accessing' }
@@ -539,7 +611,7 @@ RBAbstractClass >> realClass: aClass [
 ]
 
 { #category : #accessing }
-RBAbstractClass >> realName: arg1 [ 
+RBAbstractClass >> realName: aSymbol [ 
 	^ self subclassResponsibility
 ]
 
@@ -572,10 +644,11 @@ RBAbstractClass >> renameInstanceVariable: oldName to: newName around: aBlock [
 	self privateInstanceVariableNames 
 		at: (self privateInstanceVariableNames indexOf: oldName asString)
 		put: newName asString.
-	model 
-		renameInstanceVariable: oldName
-		to: newName
-		in: self
+	^ self model 
+		performChange: (changeFactory   
+							renameInstanceVariable: oldName
+							to: newName
+							in: self)
 		around: aBlock
 ]
 
@@ -589,6 +662,22 @@ RBAbstractClass >> selectors [
 			[selectors addAll: self realClass selectors.
 			removedMethods ifNotNil: [removedMethods do: [:each | selectors remove: each ifAbsent: []]]].
 	^selectors
+]
+
+{ #category : #querying }
+RBAbstractClass >> setterMethodFor: aVariableName [
+	| matcher candidateSetters |
+	matcher := self parseTreeSearcherClass setterMethod: aVariableName.
+	candidateSetters := (self definesInstanceVariable: aVariableName)
+		ifTrue: [ self whichSelectorsReferToInstanceVariable: aVariableName ]
+		ifFalse: [ self whichSelectorsReferToClassVariable: aVariableName ].
+	candidateSetters := candidateSetters
+		select: [ :each | each numArgs == 1 ].
+	^ candidateSetters
+		detect: [ :each | 
+			(self checkSelector: each using: matcher) notNil
+				and: [ (self subclassRedefines: each) not ] ]
+		ifNone: [ nil ]
 ]
 
 { #category : #accessing }
@@ -779,6 +868,14 @@ RBAbstractClass >> withAllSubclasses [
 { #category : #accessing }
 RBAbstractClass >> withAllSuperclasses [
 	^ self allSuperclasses
+		add: self;
+		yourself
+]
+
+{ #category : #accessing }
+RBAbstractClass >> withAllSuperclassesUntil: aClass [
+
+	^ (self allSuperclassesUntil: aClass)
 		add: self;
 		yourself
 ]
