@@ -190,8 +190,8 @@ BaselineOfIDE >> baseline: spec [
 		self specCode: spec.
 		self newTools: spec.
 					
-		spec baseline: 'Microdown' with: [ spec 
-				repository: self packageRepositoryURL ].
+		"spec baseline: 'Microdown' with: [ spec 
+				repository: self packageRepositoryURL ]."
 	
 		spec 
   			baseline: 'Roassal3' 
