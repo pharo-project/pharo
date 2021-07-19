@@ -212,7 +212,7 @@ A new VM with
 		
 You can see the Pharo 8.0 changelog at: 
 
-', (self url: 'https://github.com/pharo-project/pharo-changelogs/blob/master/Pharo80ChangeLogs.md')
+', (self url: 'https://github.com/pharo-project/pharo-changelogs/blob/master/Pharo90ChangeLogs.md')
 
 ]
 
