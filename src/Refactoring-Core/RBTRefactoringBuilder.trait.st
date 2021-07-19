@@ -1,6 +1,6 @@
 Trait {
 	#name : #RBTRefactoringBuilder,
-	#category : #'Refactoring2-Transformations-Model'
+	#category : #'Refactoring-Core-Support'
 }
 
 { #category : #'defining conditions' }
