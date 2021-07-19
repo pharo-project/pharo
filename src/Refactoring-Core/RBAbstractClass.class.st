@@ -621,6 +621,12 @@ RBAbstractClass >> removeInstanceVariable: aString [
 	model removeInstanceVariable: aString from: self
 ]
 
+{ #category : #'variable accessing' }
+RBAbstractClass >> removeInstanceVariable: aString ifAbsent: aBlock [
+	self privateInstanceVariableNames remove: aString ifAbsent: aBlock.
+	model removeInstanceVariable: aString from: self
+]
+
 { #category : #'method accessing' }
 RBAbstractClass >> removeMethod: aSelector [ 
 	self newMethods removeKey: aSelector ifAbsent: [].

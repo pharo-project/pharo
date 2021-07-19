@@ -265,6 +265,12 @@ RBClass >> removeClassVariable: aString [
 ]
 
 { #category : #'variable accessing' }
+RBClass >> removeClassVariable: aString ifAbsent: aBlock [
+	self privateClassVariableNames remove: aString asSymbol ifAbsent: aBlock.
+	model removeClassVariable: aString from: self
+]
+
+{ #category : #'variable accessing' }
 RBClass >> removePoolDictionary: aString [ 
 	self privatePoolDictionaryNames remove: aString asSymbol
 ]
