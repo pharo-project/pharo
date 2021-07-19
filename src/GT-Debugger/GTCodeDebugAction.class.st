@@ -11,6 +11,11 @@ Class {
 	#category : #'GT-Debugger-Actions'
 }
 
+{ #category : #testing }
+GTCodeDebugAction class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GTCodeDebugAction >> codePresentation [
 	^ self debugger perform: self codePresentationSelector

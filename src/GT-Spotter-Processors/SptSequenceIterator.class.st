@@ -11,6 +11,11 @@ Class {
 	#category : #'GT-Spotter-Processors-Iterators'
 }
 
+{ #category : #testing }
+SptSequenceIterator class >> isDeprecated [
+	^ true
+]
+
 { #category : #'instance creation' }
 SptSequenceIterator class >> with: aCollection [ 
 	

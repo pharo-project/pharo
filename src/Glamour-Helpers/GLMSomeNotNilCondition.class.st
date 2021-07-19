@@ -8,6 +8,11 @@ Class {
 	#category : #'Glamour-Helpers'
 }
 
+{ #category : #testing }
+GLMSomeNotNilCondition class >> isDeprecated [
+	^ true
+]
+
 { #category : #glamour }
 GLMSomeNotNilCondition >> glamourValueWithArgs: anArray [ 
 	 

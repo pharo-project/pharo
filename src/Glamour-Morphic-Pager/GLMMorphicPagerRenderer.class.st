@@ -8,6 +8,11 @@ Class {
 	#category : #'Glamour-Morphic-Pager-Glamour'
 }
 
+{ #category : #testing }
+GLMMorphicPagerRenderer class >> isDeprecated [
+	^ true
+]
+
 { #category : #callbacks }
 GLMMorphicPagerRenderer >> actOnPaneAdded: ann [
 	container brickRoot pushPane: (self renderObject: ann pane).

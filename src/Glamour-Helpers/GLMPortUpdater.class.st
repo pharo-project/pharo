@@ -11,6 +11,11 @@ Class {
 	#category : #'Glamour-Helpers'
 }
 
+{ #category : #testing }
+GLMPortUpdater class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMPortUpdater >> glamourValueWithArgs: anArray [ 
 	 

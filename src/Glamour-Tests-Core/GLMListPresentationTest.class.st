@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMListPresentationTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMListPresentationTest >> testChildren [
 	| tree |

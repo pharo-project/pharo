@@ -10,6 +10,11 @@ Class {
 	#category : #'Glamour-Presentations-Announcements'
 }
 
+{ #category : #testing }
+GLMVariableBindingsChanged class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMVariableBindingsChanged >> presentation [
 	^ presentation

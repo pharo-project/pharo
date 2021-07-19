@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMTransmissionTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMTransmissionTest >> testBundleStrategy [
 	| pane1 pane2 transmission presentation |

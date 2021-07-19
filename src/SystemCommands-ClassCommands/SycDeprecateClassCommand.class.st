@@ -17,7 +17,8 @@ Class {
 
 { #category : #activation }
 SycDeprecateClassCommand class >> browserContextMenuActivation [
-	<classAnnotation>
+	"disabled for now, see https://github.com/pharo-project/pharo/issues/9551"
+	"<classAnnotation>"
 	
 	^CmdContextMenuActivation byRootGroupItemOrder: 1.4 for: ClyClass asCalypsoItemContext  
 ]
@@ -31,7 +32,8 @@ SycDeprecateClassCommand class >> canBeExecutedInContext: aToolContext [
 
 { #category : #activation }
 SycDeprecateClassCommand class >> sourceCodeMenuActivation [
-	<classAnnotation>
+	"disabled for now, see https://github.com/pharo-project/pharo/issues/9551"
+	"<classAnnotation>"
 	
 	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.3 for: ClySourceCodeContext
 ]

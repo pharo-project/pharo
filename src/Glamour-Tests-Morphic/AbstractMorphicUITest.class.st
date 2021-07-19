@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Tests-Morphic'
 }
 
+{ #category : #testing }
+AbstractMorphicUITest class >> isDeprecated [
+	^ true
+]
+
 { #category : #running }
 AbstractMorphicUITest >> defaultWaitDuration [
 

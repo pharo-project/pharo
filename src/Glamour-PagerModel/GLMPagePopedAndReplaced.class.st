@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-PagerModel-Announcements'
 }
 
+{ #category : #testing }
+GLMPagePopedAndReplaced class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMPagePopedAndReplaced >> brick [
 	^ brick

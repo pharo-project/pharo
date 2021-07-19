@@ -8,6 +8,11 @@ Class {
 	#category : #'Glamour-Morphic-Widgets'
 }
 
+{ #category : #testing }
+GLMMorphicPresentationToolbarModel class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMMorphicPresentationToolbarModel >> presentation [
 	^ presentation

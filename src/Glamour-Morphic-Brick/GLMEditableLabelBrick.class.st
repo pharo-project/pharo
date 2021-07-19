@@ -41,6 +41,11 @@ GLMEditableLabelBrick class >> gtExample [
 		yourself
 ]
 
+{ #category : #testing }
+GLMEditableLabelBrick class >> isDeprecated [
+	^ true
+]
+
 { #category : #'label-brick-actions' }
 GLMEditableLabelBrick >> accept [
 

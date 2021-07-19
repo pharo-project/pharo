@@ -10,6 +10,11 @@ Class {
 	#category : #'Glamour-Browsers-Announcements'
 }
 
+{ #category : #testing }
+GLMBrowserClosing class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMBrowserClosing >> presentation [
 	^ presentation

@@ -15,6 +15,11 @@ GTGoAndInspectBytecodeDebugAction class >> gtBytecodeDebuggerActionFor: aDebugge
 	^ (self forDebugger: aDebugger)
 ]
 
+{ #category : #testing }
+GTGoAndInspectBytecodeDebugAction class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GTGoAndInspectBytecodeDebugAction >> defaultKeymap [
 

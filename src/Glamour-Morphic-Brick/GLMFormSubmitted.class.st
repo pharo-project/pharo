@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Announcements'
 }
 
+{ #category : #testing }
+GLMFormSubmitted class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMFormSubmitted >> result [
 	^ result

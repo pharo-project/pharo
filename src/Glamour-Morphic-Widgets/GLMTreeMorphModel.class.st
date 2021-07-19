@@ -21,6 +21,11 @@ Class {
 	#category : #'Glamour-Morphic-Widgets'
 }
 
+{ #category : #testing }
+GLMTreeMorphModel class >> isDeprecated [
+	^ true
+]
+
 { #category : #'drag and drop' }
 GLMTreeMorphModel >> acceptDroppingMorph: transferMorph event: evt inMorph: listMorph [ 
 	| targetItem |

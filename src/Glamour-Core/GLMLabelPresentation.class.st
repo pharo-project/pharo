@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Core'
 }
 
+{ #category : #testing }
+GLMLabelPresentation class >> isDeprecated [
+	^ true
+]
+
 { #category : #rendering }
 GLMLabelPresentation >> renderGlamorouslyOn: aRenderer [ 
 	self registerAnnouncements.

@@ -8,6 +8,11 @@ Class {
 	#category : #'Glamour-Morphic-Widgets'
 }
 
+{ #category : #testing }
+GLMExpanderTreeMorphModel class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMExpanderTreeMorphModel >> glamourExpander [
 	^ glamourExpander

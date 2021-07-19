@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Widgets-UI-Popup'
 }
 
+{ #category : #testing }
+GLMPopupBrickOutisideClickPredicate class >> isDeprecated [
+	^ true
+]
+
 { #category : #predicate }
 GLMPopupBrickOutisideClickPredicate >> popup: aPopupBrick event: anEvent [
 	"Return true when user clicks outside of a popup brick, false otherwise"

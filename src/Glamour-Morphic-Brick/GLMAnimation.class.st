@@ -64,6 +64,11 @@ GLMAnimation class >> exampleSimple [
 		openInWindow
 ]
 
+{ #category : #testing }
+GLMAnimation class >> isDeprecated [
+	^ true
+]
+
 { #category : #'instance creation' }
 GLMAnimation class >> swipeLeft [
 

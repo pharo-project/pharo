@@ -13,6 +13,11 @@ Class {
 	#category : #'Glamour-FastTable-Morphic-Renderer'
 }
 
+{ #category : #testing }
+GLMMorphicFastTableRenderer class >> isDeprecated [
+	^ true
+]
+
 { #category : #initialization }
 GLMMorphicFastTableRenderer >> createDataSourceFrom: aPresentation [
 	^ GLMFastTableDataSource new

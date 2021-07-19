@@ -22,6 +22,11 @@ GTGlamourWrapperDebuggingAction class >> gtActionFor: aDebugger [
 				order: (index := index + 10) ]
 ]
 
+{ #category : #testing }
+GTGlamourWrapperDebuggingAction class >> isDeprecated [
+	^ true
+]
+
 { #category : #transformation }
 GTGlamourWrapperDebuggingAction >> asGlamourAction [
 	|actionBlock|

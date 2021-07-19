@@ -7,6 +7,11 @@ Class {
 	#category : #'GT-Tests-Spotter'
 }
 
+{ #category : #testing }
+GTSpotterCandidatesListTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GTSpotterCandidatesListTest >> addCategories: aCollection [
 

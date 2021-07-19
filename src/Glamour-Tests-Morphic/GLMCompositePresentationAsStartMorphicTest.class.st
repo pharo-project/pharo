@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Morphic'
 }
 
+{ #category : #testing }
+GLMCompositePresentationAsStartMorphicTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMCompositePresentationAsStartMorphicTest >> testSimpleOpen [
 	| p |
