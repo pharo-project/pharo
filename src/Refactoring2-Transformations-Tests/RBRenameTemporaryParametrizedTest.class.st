@@ -1,6 +1,6 @@
 Class {
 	#name : #RBRenameTemporaryParametrizedTest,
-	#superclass : #RBParametrizedTestWithDifferentsArguments,
+	#superclass : #RBWithDifferentsArgumentsParametrizedTest,
 	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 

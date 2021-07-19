@@ -1,5 +1,5 @@
 Class {
-	#name : #RBParametrizedTestWithDifferentsArguments,
+	#name : #RBWithDifferentsArgumentsParametrizedTest,
 	#superclass : #RBWithDifferentConstructorsParametrizedTest,
 	#instVars : [
 		'index'
@@ -8,14 +8,14 @@ Class {
 }
 
 { #category : #builder }
-RBParametrizedTestWithDifferentsArguments >> createRefactoringWithArguments: aParameterCollection [
+RBWithDifferentsArgumentsParametrizedTest >> createRefactoringWithArguments: aParameterCollection [
 	^ (rbClass
 		perform: constructor 
 		withArguments: (self selectIndex: index of: aParameterCollection)) asRefactoring
 ]
 
 { #category : #builder }
-RBParametrizedTestWithDifferentsArguments >> createRefactoringWithModel: rbNamespace andArguments: aParameterCollection [
+RBWithDifferentsArgumentsParametrizedTest >> createRefactoringWithModel: rbNamespace andArguments: aParameterCollection [
 	^ (rbClass
 		perform: #model: , constructor 
 		withArguments: {rbNamespace}, 
@@ -23,12 +23,12 @@ RBParametrizedTestWithDifferentsArguments >> createRefactoringWithModel: rbNames
 ]
 
 { #category : #accessing }
-RBParametrizedTestWithDifferentsArguments >> index: aBlock [ 
+RBWithDifferentsArgumentsParametrizedTest >> index: aBlock [ 
 
 	index := aBlock
 ]
 
 { #category : #accessing }
-RBParametrizedTestWithDifferentsArguments >> selectIndex: anInteger of: aCollection [
+RBWithDifferentsArgumentsParametrizedTest >> selectIndex: anInteger of: aCollection [
 	^ aCollection collect: [ :each | each isArray ifTrue: [each at: anInteger ] ifFalse: each ]
 ]
