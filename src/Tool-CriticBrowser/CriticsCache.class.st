@@ -185,10 +185,11 @@ CriticsCache >> falsePositiveOf: aRule [
 { #category : #initialization }
 CriticsCache >> initCache [
 
-	checker rule leaves do: [ :rule | 
+
+	checker rule do: [ :rule | 
 		falsePositives at: rule put: (IdentitySet newFrom: (checker falsePositiveOf: rule)).
 		toDos at: rule put: (IdentitySet newFrom: (checker toDoOf: rule)).
-		critics at: rule put: (IdentitySet newFrom: rule critics) 
+		critics at: rule put: (IdentitySet newFrom: (checker criticsOf: rule)) 
 	].
 	packages do: [ :package |	
 		falsePositiveRules at: package put: (checker rejectRulesOf: package) asSet.
@@ -245,7 +246,9 @@ CriticsCache >> logFalsePositiveInManifest [
 	falsePositives
 		keysAndValuesDo: [ :rule :criticss | 
 			removeFp := (checker falsePositiveOf: rule) \ criticss.
+			removeFp := removeFp collect: [ :c | c sourceAnchor entity ].
 			addFp := criticss \ (checker falsePositiveOf: rule).
+			addFp := addFp collect: [ :c | c sourceAnchor entity ].			
 			(removeFp groupedBy: [ :each | self builderManifestClass of: each ])
 				keysAndValuesDo: [ :manifestBuilder :value | self removeAllCriticToFalsePositive: value forRule: rule on: manifestBuilder ].
 			(addFp groupedBy: [ :each | self builderManifestClass of: each ])
@@ -284,7 +287,9 @@ CriticsCache >> logToDosInManifest [
 	toDos
 		keysAndValuesDo: [ :rule :criticss | 
 			removeFp := (checker toDoOf: rule) \ criticss.
+			removeFp := removeFp collect: [ :c | c sourceAnchor entity ].
 			addFp := criticss \ (checker toDoOf: rule).
+			addFp := addFp collect: [ :c | c sourceAnchor entity ].	
 			(removeFp groupedBy: [ :each | self builderManifestClass of: each ])
 				keysAndValuesDo: [ :manifestBuilder :value | self removeAllCriticToToDo: value forRule: rule on: manifestBuilder ].
 			(addFp groupedBy: [ :each | self builderManifestClass of: each ])
