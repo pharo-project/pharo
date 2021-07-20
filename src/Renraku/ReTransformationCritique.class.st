@@ -10,7 +10,7 @@ Class {
 	#category : #'Renraku-Critiques'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 ReTransformationCritique class >> for: anEntity by: aRule tree: newAST [
 
 	^ self basicNew

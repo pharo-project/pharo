@@ -19,12 +19,12 @@ Class {
 	#category : #'Renraku-Rules'
 }
 
-{ #category : #example }
+{ #category : #examples }
 ReInvocationSequenceRule class >> checksNode [
 	^ true
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ReInvocationSequenceRule class >> exampleSequenceMethods [
 	<sampleInstance>
 	<gtExample>
@@ -36,7 +36,7 @@ ReInvocationSequenceRule class >> exampleSequenceMethods [
 		add: #edges requiresPreSend: #nodes
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 ReInvocationSequenceRule class >> isVisible [
 
 	^ self name ~= #ReInvocationSequenceRule and: [ 
@@ -102,7 +102,7 @@ ReInvocationSequenceRule >> initialize [
 { #category : #accessing }
 ReInvocationSequenceRule >> name [
 
-	^ 'invocation order incorect'
+	^ 'Invocation order incorect'
 ]
 
 { #category : #running }

@@ -27,7 +27,7 @@ DockingBarMenuLineMorph >> minWidth [
 		ifFalse: [ self theme menuBorderWidth ]
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 DockingBarMenuLineMorph >> noteNewOwner: aMorph [ 
 	"I have just been added as a submorph of aMorph"
 	super noteNewOwner: aMorph.

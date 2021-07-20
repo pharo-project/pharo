@@ -431,7 +431,7 @@ TextEditor class >> skipOverMultipleSpaces: aBoolean [
 	SkipOverMultipleSpaces := aBoolean
 ]
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 TextEditor class >> specialShiftCmdKeys [
 
 "Private - return array of key codes that represent single keys acting
@@ -597,7 +597,7 @@ TextEditor >> acceptCR: aKeyboardEvent return: return [
 			return value: true].
 ]
 
-{ #category : #'undo-redo private' }
+{ #category : #'undo - redo private' }
 TextEditor >> addDeleteSelectionUndoRecord [
 	| undoText redoText |
 	undoText := self selection.
@@ -614,7 +614,7 @@ TextEditor >> addString: aString [
 	self zapSelectionWith: (Text string: aString attributes: self emphasisHere)
 ]
 
-{ #category : #'undo-redo private' }
+{ #category : #'undo - redo private' }
 TextEditor >> addTypeInUndoRecord [
 	| begin stop undoText redoText |
 	begin := self startOfTyping min: self stopIndex. 
@@ -996,7 +996,7 @@ TextEditor >> clearParens [
 	self editingState lastParenLocation: nil
 ]
 
-{ #category : #'undo-redo private' }
+{ #category : #'undo - redo private' }
 TextEditor >> clearUndoManager: aKeyboardEvent [
 	^ self editingState clearUndoManager: aKeyboardEvent.
 
@@ -1575,7 +1575,7 @@ TextEditor >> exchangeWith: prior [
 			[morph flash]
 ]
 
-{ #category : #'undo-redo private' }
+{ #category : #'undo - redo private' }
 TextEditor >> exploreUndoManager: aKeyboardEvent [
 	^ self editingState exploreUndoManager: aKeyboardEvent
 ]
@@ -1826,7 +1826,7 @@ TextEditor >> handleKeystrokeAction: aBlock [
 	self storeSelectionInParagraph
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> hasCaret [
 	^self editingState markBlock = self editingState pointBlock
 ]
@@ -1836,7 +1836,7 @@ TextEditor >> hasError [
 	^ false 
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> hasSelection [
 	^self hasCaret not
 ]
@@ -2080,7 +2080,7 @@ TextEditor >> makeUppercase: aKeyboardEvent [
 	^ true
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> markBlock [
 	^ self editingState markBlock
 ]
@@ -2090,12 +2090,12 @@ TextEditor >> markBlock: aCharacterBlock [
 	self editingState markBlock:  aCharacterBlock
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> markIndex [
 	^ self editingState markBlock stringIndex
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> markIndex: anIndex [
 	self editingState markBlock: (self paragraph characterBlockForIndex: anIndex)
 
@@ -2391,17 +2391,17 @@ TextEditor >> pluggableYellowButtonActivity: shiftKeyState [
 		  ifNotNil: [ true ]
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> pointBlock [
 	^ self editingState pointBlock
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> pointIndex [
 	^ self editingState pointBlock stringIndex
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> pointIndex: anIndex [
 	self editingState pointBlock: (self paragraph characterBlockForIndex: anIndex)
 
@@ -2489,7 +2489,7 @@ TextEditor >> redo: aKeyboardEvent [
 	^true
 ]
 
-{ #category : #'undoers-redoers' }
+{ #category : #'undoers - redoers' }
 TextEditor >> redoTypeIn: aText interval: anInterval [
 	self selectInterval: anInterval.
 	self replace: self selectionInterval with: aText and:
@@ -2808,14 +2808,14 @@ TextEditor >> selectWord: aKeyboardEvent [
 	^ true
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> selection [
 	"Answer the text in the paragraph that is currently selected."
 
 	^self text copyFrom: self startIndex to: self stopIndex - 1 
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> selectionAsStream [
 	"Answer a ReadStream on the text in the paragraph that is currently 
 	selected."
@@ -2824,7 +2824,7 @@ TextEditor >> selectionAsStream [
 		on: (self string copyFrom: self startIndex to: self stopIndex - 1)
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> selectionInterval [
 	"Answer the interval that is currently selected."
 
@@ -2956,7 +2956,7 @@ TextEditor >> shiftedYellowButtonMenu [
 
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> startBlock [
 	^ self editingState pointBlock min: self editingState markBlock
 ]
@@ -2967,7 +2967,7 @@ TextEditor >> startDrag: event [
 	self morph startDrag: (event translatedBy: self morph editView topLeft)
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> startIndex [
 	^ self startBlock stringIndex
 ]
@@ -2993,12 +2993,12 @@ TextEditor >> stateArrayPut: stateArray [
 
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> stopBlock [
 	^ self editingState pointBlock max: self editingState markBlock
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> stopIndex [
 	^ self stopBlock stringIndex
 ]
@@ -3089,14 +3089,14 @@ TextEditor >> undo: aKeyboardEvent [
 	^true
 ]
 
-{ #category : #'undoers-redoers' }
+{ #category : #'undoers - redoers' }
 TextEditor >> undoRedoExchange: aninterval with: anotherInterval [
 	self selectInvisiblyFrom: aninterval first to: aninterval last.
 	self exchangeWith: anotherInterval
 
 ]
 
-{ #category : #'undoers-redoers' }
+{ #category : #'undoers - redoers' }
 TextEditor >> undoTypeIn: aText interval: anInterval [
 	self selectInterval: anInterval.
 	self replace: anInterval with: aText and:
@@ -3104,7 +3104,7 @@ TextEditor >> undoTypeIn: aText interval: anInterval [
 
 ]
 
-{ #category : #'accessing-selection' }
+{ #category : #'accessing - selection' }
 TextEditor >> unselect [
 	self markBlock: self pointBlock copy
 ]

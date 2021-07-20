@@ -73,6 +73,11 @@ GLMBrick class >> increaseFormExtentCentered: aForm to: aPoint [
 	^ icon
 ]
 
+{ #category : #testing }
+GLMBrick class >> isDeprecated [
+	^ true
+]
+
 { #category : #utilities }
 GLMBrick class >> makeForm32Bit: aForm [
 	aForm ifNil: [ ^ nil ].
@@ -440,7 +445,7 @@ GLMBrick >> haloClass [
 	^ #GLMHaloBrick
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrick >> hasProperty: aSymbol [ 
 	
 	^ super hasProperty: aSymbol
@@ -537,13 +542,13 @@ GLMBrick >> privateMoveBy: delta [
 	fullBounds ifNotNil: [fullBounds := fullBounds translateBy: delta].
 ]
 
-{ #category : #'private-structure' }
+{ #category : #'private - structure' }
 GLMBrick >> privateOwner: aBrick [
 
 	owner := aBrick
 ]
 
-{ #category : #'private-structure' }
+{ #category : #'private - structure' }
 GLMBrick >> privateSubbricks: aCollection [
 
 	submorphs := aCollection
@@ -561,7 +566,7 @@ GLMBrick >> removeAllMorphs [
 
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrick >> removeProperty: aSymbol [
 	
 	super removeProperty: aSymbol
@@ -582,7 +587,7 @@ GLMBrick >> setConstrainedPosition: aPoint hangOut: partiallyOutside [
 
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrick >> setProperty: aSymbol toValue: anObject [
 	
 	super setProperty: aSymbol toValue: anObject
@@ -629,19 +634,19 @@ GLMBrick >> updateMorphBounds [
 	self withAllSubbricks select: #isMorphBrick thenDo: #onLayouted
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrick >> valueOfProperty: aSymbol [
 	
 	^ super valueOfProperty: aSymbol
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrick >> valueOfProperty: aSymbol ifAbsent: aBlock [
 	
 	^ super valueOfProperty: aSymbol ifAbsent: aBlock
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrick >> valueOfProperty: aSymbol ifAbsentPut: aBlock [ 
 	
 	^ super valueOfProperty: aSymbol ifAbsentPut: aBlock

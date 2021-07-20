@@ -1,5 +1,5 @@
 Class {
 	#name : #DebuggedExecutionIsFinished,
 	#superclass : #DebuggedExecutionException,
-	#category : #Sindarin
+	#category : #'Sindarin-Exceptions'
 }

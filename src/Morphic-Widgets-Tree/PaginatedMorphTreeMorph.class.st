@@ -19,7 +19,7 @@ PaginatedMorphTreeMorph >> addNavigationPane: aNavigPane [
 	self changed
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 PaginatedMorphTreeMorph >> adoptPaneColor: paneColor [
 	"Pass on to the selection, the border and on the eventual pager too."
 	

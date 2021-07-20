@@ -37,5 +37,5 @@ ReSuperSendsNewRule >> initialize [
 
 { #category : #accessing }
 ReSuperSendsNewRule >> name [
-	^ 'Sends super new initialize'
+	^ 'Sends super new initialize or self new initialize'
 ]

@@ -13,6 +13,8 @@ My main API is
 Class {
 	#name : #RBTransformation,
 	#superclass : #Object,
+	#traits : 'RBTRefactoringBuilder',
+	#classTraits : 'RBTRefactoringBuilder classTrait',
 	#instVars : [
 		'model',
 		'options',
@@ -195,26 +197,6 @@ RBTransformation >> options: aDictionary [
 	options := aDictionary
 ]
 
-{ #category : #parsing }
-RBTransformation >> parseTreeRewriter [
-	^ self parseTreeRewriterClass new
-]
-
-{ #category : #preconditions }
-RBTransformation >> parseTreeRewriterClass [
-	^ RBParseTreeRewriter
-]
-
-{ #category : #private }
-RBTransformation >> parseTreeSearcher [
-	^ self parseTreeSearcherClass new
-]
-
-{ #category : #private }
-RBTransformation >> parseTreeSearcherClass [
-	^ RBParseTreeSearcher
-]
-
 { #category : #preconditions }
 RBTransformation >> preconditionChecking [
 
@@ -243,18 +225,6 @@ RBTransformation >> primitiveExecute [
 RBTransformation >> privateTransform [
 
 	self subclassResponsibility
-]
-
-{ #category : #preconditions }
-RBTransformation >> refactoringError: aString [
-
-	^ RBRefactoringError signal: aString
-]
-
-{ #category : #preconditions }
-RBTransformation >> refactoringError: aString with: aBlock [
-
-	^ RBRefactoringError signal: aString with: aBlock
 ]
 
 { #category : #accessing }

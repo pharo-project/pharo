@@ -10,7 +10,12 @@ Class {
 	#category : #'Glamour-Core'
 }
 
-{ #category : #'accessing-convenience' }
+{ #category : #testing }
+GLMPresentStrategy class >> isDeprecated [
+	^ true
+]
+
+{ #category : #'accessing - convenience' }
 GLMPresentStrategy >> addPresentation: aPresentation [
 	|currentPresentations|
 	
@@ -20,7 +25,7 @@ GLMPresentStrategy >> addPresentation: aPresentation [
 		composite add: aPresentation copy ]
 ]
 
-{ #category : #'accessing-convenience' }
+{ #category : #'accessing - convenience' }
 GLMPresentStrategy >> addPresentations: aCollection [
 	aCollection do: [:each | self addPresentation: each ]
 ]

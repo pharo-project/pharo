@@ -140,25 +140,27 @@ EDEmergencyDebugger >> basicDebug: aDebugSession [
 { #category : #actions }
 EDEmergencyDebugger >> buildDefaultActions [
 	|dic|
+	
 	dic := Dictionary new.
-	dic at: 'q!' put: [ debugAPI closeEmergencySession ].
-	dic at: 'q' put: [ debugAPI terminateSession ].
-	dic at: 'showDebuggerError' put: [ self showDebuggerError ].
-	dic at: 'exit' put: [ debugAPI terminateSession ].
-	dic at: 'retry' put: [ debugAPI tryReopenSessionWithDebugger ].
-	dic at: Character arrowUp put: [ self moveUpInStack ].
-	dic at: Character arrowDown put: [ self moveDownInStack ].
-	dic at: Character arrowLeft put: [ self showMoreRecentMethodVersion ].
-	dic at: Character arrowRight put: [ self showOlderMethodVersion ].
-	dic at: 'help' put: [ self composeHelpText ].
-	dic at: 'revert' put: [ self revertCurrentMethodToSelectedVersion ].
-	dic at: 'forceRevert' put: [ self revertCurrentMethodToSelectedVersionAndQuit ].
-	dic at: 'terminateAll' put: [ debugAPI terminateAllProcesses ].
-	dic at: 'proceed' put: [ debugAPI resume ].
-	dic at: 'debug' put:[self debugDebuggerError].
-	dic at: 'dump' put:[self dumpStackAndQuit].
-	dic at: 'inspect' put:[self inspectStackAndQuit].
-	^dic
+	dic at: 'q!' 						put: [ debugAPI closeEmergencySession ].
+	dic at: 'q' 							put: [ debugAPI terminateSession ].
+	dic at: 'showDebuggerError' 	put: [ self showDebuggerError ].
+	dic at: 'exit' 						put: [ debugAPI terminateSession ].
+	dic at: 'retry' 					put: [ debugAPI tryReopenSessionWithDebugger ].
+	dic at: Character arrowUp 		put: [ self moveUpInStack ].
+	dic at: Character arrowDown 	put: [ self moveDownInStack ].
+	dic at: Character arrowLeft 	put: [ self showMoreRecentMethodVersion ].
+	dic at: Character arrowRight 	put: [ self showOlderMethodVersion ].
+	dic at: 'help' 						put: [ self composeHelpText ].
+	dic at: 'revert' 					put: [ self revertCurrentMethodToSelectedVersion ].
+	dic at: 'forceRevert' 			put: [ self revertCurrentMethodToSelectedVersionAndQuit ].
+	dic at: 'terminateAll' 			put: [ debugAPI terminateAllProcesses ].
+	dic at: 'proceed' 					put: [ debugAPI resume ].
+	dic at: 'debug' 					put: [ self debugDebuggerError ].
+	dic at: 'dump' 						put: [ self dumpStackAndQuit ].
+	dic at: 'inspect' 					put: [ self inspectStackAndQuit ].
+	
+	^ dic
 ]
 
 { #category : #actions }
@@ -311,6 +313,7 @@ EDEmergencyDebugger >> composeTitleText [
 
 { #category : #initialization }
 EDEmergencyDebugger >> debug: aDebugSession [
+
 	self basicDebug: aDebugSession.
 	self composeTitleText.
 	self composeStackText.
@@ -392,6 +395,7 @@ EDEmergencyDebugger >> errorText: aText [
 
 { #category : #evaluation }
 EDEmergencyDebugger >> eval: command [
+
 	self evalCommand: command.
 	self composePromptWith: ''.
 	self updateDisplay
@@ -400,6 +404,7 @@ EDEmergencyDebugger >> eval: command [
 { #category : #evaluation }
 EDEmergencyDebugger >> evalCommand: aString [
 	| action |
+	
 	action := self availableActions at: aString ifAbsent: [ ^ false ].
 	[ action value ]
 		on: Exception
@@ -432,8 +437,12 @@ EDEmergencyDebugger >> handleEmergencyDebuggerError: e description: commandStrin
 
 { #category : #initialization }
 EDEmergencyDebugger >> initialize [
+
 	repl := EDREPLInterface forDebugger: self.
-	rawDisplay := EDDisplayInterface new.
+	rawDisplay := EDDisplayInterface new
+		whenCharacterReceivedDo: [ :aChar | repl pushChar: aChar ];
+		whenWindowClosedDo: [ self terminate ].
+	
 	stackSelectionIndex := 1.
 	shortStackIndex := 1.
 	methodVersionSelectionIndex := 0.
@@ -520,6 +529,12 @@ EDEmergencyDebugger >> performActionForChar: aCharacter [
 { #category : #accessing }
 EDEmergencyDebugger >> repl: aREPLInterface [
 	repl := aREPLInterface
+]
+
+{ #category : #accessing }
+EDEmergencyDebugger >> resetDisplay [
+
+	rawDisplay destroyWindow
 ]
 
 { #category : #accessing }
@@ -684,7 +699,10 @@ EDEmergencyDebugger >> stackText [
 
 { #category : #initialization }
 EDEmergencyDebugger >> terminate [
-	isRunning := false
+
+	isRunning := false.
+	rawDisplay terminateWindow.
+	repl terminateREPL
 ]
 
 { #category : #accessing }

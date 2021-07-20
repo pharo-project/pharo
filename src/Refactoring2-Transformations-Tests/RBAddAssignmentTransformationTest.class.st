@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #'testing-utilities' }
+{ #category : #utilities }
 RBAddAssignmentTransformationTest >> methodAfter [
 
 	| variable |
@@ -12,14 +12,14 @@ RBAddAssignmentTransformationTest >> methodAfter [
 	variable := 1 asString.
 ]
 
-{ #category : #'testing-utilities' }
+{ #category : #utilities }
 RBAddAssignmentTransformationTest >> methodBefore [
 
 	| variable |
 	variable := 'String'.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddAssignmentTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBAddAssignmentTransformation
@@ -30,7 +30,7 @@ RBAddAssignmentTransformationTest >> testClassDoesNotExist [
 							asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddAssignmentTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBAddAssignmentTransformation
@@ -41,7 +41,7 @@ RBAddAssignmentTransformationTest >> testMethodDoesNotExist [
 							asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddAssignmentTransformationTest >> testRefactoring [
 
 	| refactoring class |
@@ -60,7 +60,7 @@ RBAddAssignmentTransformationTest >> testRefactoring [
 	self assert: (class parseTreeFor: #methodBefore) body statements last value sourceCode equals: '1 asString'
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddAssignmentTransformationTest >> testTransform [
 
 	| transformation class |
@@ -78,7 +78,7 @@ RBAddAssignmentTransformationTest >> testTransform [
 			equals: (class parseTreeFor: #methodAfter) body.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddAssignmentTransformationTest >> testVariableDoesNotExist [
 
 	self shouldFail: (RBAddAssignmentTransformation

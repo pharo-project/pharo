@@ -253,7 +253,7 @@ SystemProgressMorph >> close: aSystemProgressItemMorph [
 	self refresh.
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 SystemProgressMorph >> dismissViaHalo [
 
 	self class reset.

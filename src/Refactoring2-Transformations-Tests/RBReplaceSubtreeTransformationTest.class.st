@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 RBReplaceSubtreeTransformationTest >> testEmptyCode [
 
 	self shouldFail: (RBReplaceSubtreeTransformation 
@@ -15,7 +15,7 @@ RBReplaceSubtreeTransformationTest >> testEmptyCode [
 							asRefactoring 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBReplaceSubtreeTransformationTest >> testExtractFailure [
 
 	self shouldFail: (RBReplaceSubtreeTransformation 
@@ -26,7 +26,7 @@ RBReplaceSubtreeTransformationTest >> testExtractFailure [
 							asRefactoring 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBReplaceSubtreeTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBReplaceSubtreeTransformation 
@@ -37,7 +37,7 @@ RBReplaceSubtreeTransformationTest >> testMethodDoesNotExist [
 							asRefactoring 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBReplaceSubtreeTransformationTest >> testParseFailure [
 
 	self shouldFail: (RBReplaceSubtreeTransformation 
@@ -48,7 +48,7 @@ RBReplaceSubtreeTransformationTest >> testParseFailure [
 							asRefactoring 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBReplaceSubtreeTransformationTest >> testRefactoring [
 
 	| transformation class |
@@ -67,7 +67,7 @@ RBReplaceSubtreeTransformationTest >> testRefactoring [
 	self assert: (class parseTreeFor: #selector:from:) body statements last isReturn.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBReplaceSubtreeTransformationTest >> testTransform [
 
 	| transformation class |
@@ -87,7 +87,7 @@ RBReplaceSubtreeTransformationTest >> testTransform [
 	self assert: (class parseTreeFor: #one) body statements first value value equals: 123
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBReplaceSubtreeTransformationTest >> testTransformOneOfManyStatements [
 
 	| transformation class |

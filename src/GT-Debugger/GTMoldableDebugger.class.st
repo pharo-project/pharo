@@ -176,12 +176,12 @@ GTMoldableDebugger >> compose [
 	self registerActions
 ]
 
-{ #category : #'accessing context' }
+{ #category : #'accessing - context' }
 GTMoldableDebugger >> contextToSelectFrom: aSession [
 	^ aSession interruptedContext
 ]
 
-{ #category : #'accessing context' }
+{ #category : #'accessing - context' }
 GTMoldableDebugger >> currentContext [
 
 	^self selectedContext 
@@ -250,7 +250,7 @@ GTMoldableDebugger >> installDebuggingActionsFor: aPresentation [
 	self subclassResponsibility
 ]
 
-{ #category : #'accessing context' }
+{ #category : #'accessing - context' }
 GTMoldableDebugger >> interruptedContext [
 
 	^ self session interruptedContext
@@ -318,7 +318,7 @@ GTMoldableDebugger >> removeSessionSilently [
 	(self browser pane port: #entity) silentValue: nil
 ]
 
-{ #category : #'accessing context' }
+{ #category : #'accessing - context' }
 GTMoldableDebugger >> selectedContext [
 	self subclassResponsibility 
 ]

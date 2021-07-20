@@ -131,12 +131,6 @@ NumberParser >> exponentLetters [
 	^'edq'
 ]
 
-{ #category : #error }
-NumberParser >> fail [
-	failBlock ifNotNil: [^failBlock value].
-	self error: 'Reading a number failed'
-]
-
 { #category : #accessing }
 NumberParser >> failBlock: aBlockOrNil [
 	failBlock := aBlockOrNil
@@ -226,7 +220,7 @@ NumberParser >> nextInteger [
 	base := 10.
 	neg := self peekSignIsMinus.
 	integerPart := self nextUnsignedIntegerOrNilBase: base.
-	integerPart ifNil: [self fail].
+	integerPart ifNil: [ ^self expected: 'Digit'].
 	(sourceStream peekFor: $r)
 		ifTrue: ["<base>r<integer>"
 			(base := integerPart) < 2
@@ -237,7 +231,7 @@ NumberParser >> nextInteger [
 						ifFalse: [base]].
 			self peekSignIsMinus ifTrue: [neg := neg not].
 			integerPart := self nextUnsignedIntegerOrNilBase: base.
-			integerPart ifNil: [self fail]].
+			integerPart ifNil: [^self expected: 'Digit']].
 	neg
 		ifTrue: [integerPart := integerPart negated].
 	self readExponent

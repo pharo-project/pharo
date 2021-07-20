@@ -7,7 +7,9 @@ Class {
 		'wp',
 		'obj3',
 		'obj4',
-		'observer'
+		'observer',
+		'testClass',
+		'testSubclass'
 	],
 	#category : #'Reflectivity-Tests-Breakpoints'
 }
@@ -49,6 +51,29 @@ VariableBreakpointTest >> argNodes [
 	nodes := OrderedCollection new.
 	nodes add: (VariableBreakpointMockClass>>#methodWithTempsAndArg:) ast statements first value.
 	^nodes
+]
+
+{ #category : #helpers }
+VariableBreakpointTest >> compileTestClass [
+
+	testClass := VariableBreakpointMockClass
+		             subclass: #VariableBreakpointTestSubclass
+		             instanceVariableNames: 'v3'
+		             classVariableNames: ''
+		             package: 'Reflectivity-Tests-Breakpoints'.
+	testClass compile: 'accessingV1 ^v1'.
+	testClass compile: 'accessingtemp |temp| temp := 0'.
+]
+
+{ #category : #helpers }
+VariableBreakpointTest >> compileTestClass2 [
+
+	testSubclass := testClass
+		                subclass: #VariableBreakpointTestSubclass2
+		                instanceVariableNames: ''
+		                classVariableNames: ''
+		                package: 'Reflectivity-Tests-Breakpoints'.
+	testSubclass compile: 'accessingV1 ^v1'
 ]
 
 { #category : #helpers }
@@ -99,6 +124,8 @@ VariableBreakpointTest >> tearDown [
 		ifNotNil: [ wp isInstalled
 				ifTrue: [ wp remove ] ].
 	Breakpoint unregisterObserver: observer.
+	testSubclass ifNotNil:[testSubclass removeFromSystem].
+	testClass ifNotNil:[testClass removeFromSystem].
 	super tearDown
 ]
 
@@ -377,6 +404,15 @@ VariableBreakpointTest >> testInstall [
 ]
 
 { #category : #'tests - installation' }
+VariableBreakpointTest >> testInstrumentedMethodIsCompiledMethod [
+
+
+	wp := VariableBreakpointMockClass newBreakpointForVariable: #v1.
+	wp install.
+	self assert: (VariableBreakpointMockClass>>#v1) isCompiledMethod 
+]
+
+{ #category : #'tests - installation' }
 VariableBreakpointTest >> testIsInstalled [
 	
 	wp := VariableBreakpoint newForClass: VariableBreakpointMockSubclass.
@@ -409,6 +445,29 @@ VariableBreakpointTest >> testNewForClass [
 	self assert: wp class identicalTo: VariableBreakpoint.
 	self assertCollection: wp targetVariableNames equals: (OrderedCollection with: #v1 with: #v2).
 	self assert: wp targetClassOrMethod equals: VariableBreakpointMockSubclass
+]
+
+{ #category : #'tests - removing' }
+VariableBreakpointTest >> testNoRemoveAfterSubclassRemoved [
+	"Removing the class where the target variable of a variable breakpoint is defined should uninstall the variable breakpoint"
+	|testClassNode testSubclassNode|
+	self compileTestClass.
+	self compileTestClass2.
+	testClassNode := (testClass >> #accessingV1) ast allChildren detect:[:n| n isVariable].
+	testSubclassNode := (testSubclass >> #accessingV1) ast allChildren detect:[:n| n isVariable].
+	
+	wp := VariableBreakpoint watchVariable: #v1 inClass: testClass. 
+	wp install.	
+	
+	self should: [testClass basicNew accessingV1] raise: Break.
+	
+	testSubclass removeFromSystem.	
+
+	self deny: (wp link nodes anySatisfy:[:n| n == testSubclassNode]).
+	self assert: (wp link nodes anySatisfy:[:n| n == testClassNode]).
+	self assert: wp isInstalled.
+	self should: [ testClass basicNew accessingV1 ] raise: Break
+
 ]
 
 { #category : #'tests - notifications' }
@@ -476,7 +535,7 @@ VariableBreakpointTest >> testNotifyTempBreakpointHit [
 	self assert: notification valueOrNil equals: 42
 ]
 
-{ #category : #'tests - installation' }
+{ #category : #'tests - removing' }
 VariableBreakpointTest >> testRemove [
 
 	wp := VariableBreakpoint watchVariablesInClass: VariableBreakpointMockSubclass.
@@ -496,6 +555,86 @@ VariableBreakpointTest >> testRemove [
 	self shouldnt: [obj2 v2: 0] raise: Break.
 	self shouldnt: [obj2 v1] raise: Break.	
 	self shouldnt: [obj2 v1: 0] raise: Break.
+	
+]
+
+{ #category : #'tests - removing' }
+VariableBreakpointTest >> testRemoveAfterClassRemoved [
+	"Removing the class where the target variable of a variable breakpoint is defined should uninstall the variable breakpoint"
+	|testClassNodes|
+	self compileTestClass.
+	testClassNodes := (testClass >> #accessingV1) ast allChildren.
+	
+	wp := VariableBreakpoint watchVariable: #v1 inClass: testClass. 
+	wp install.	
+		
+	testClass removeFromSystem.	
+	self denyCollection: wp link nodes includesAny: testClassNodes.
+	self deny: wp isInstalled.
+	self shouldnt: [ VariableBreakpointMockClass new v1 ] raise: Break
+
+]
+
+{ #category : #'tests - removing' }
+VariableBreakpointTest >> testRemoveAfterClassWithTempVarRemoved [
+	"Removing the class where the target temporary variable of a variable breakpoint is defined should uninstall the variable breakpoint"
+	|testClassNodes|
+	self compileTestClass.
+	testClassNodes := (testClass >> #accessingtemp) ast allChildren.
+	
+	wp := (testClass >> #accessingtemp)  newBreakpointForVariable: #temp.
+	wp install.	
+	self should: [ testClass basicNew accessingtemp ] raise: Break.
+		
+	testClass removeFromSystem.	
+	self denyCollection: wp link nodes includesAny: testClassNodes.
+	self deny: wp isInstalled.
+	self shouldnt: [ testClass basicNew accessingtemp ] raise: Break
+
+]
+
+{ #category : #'tests - removing' }
+VariableBreakpointTest >> testRemoveAfterSuperclassRemoved [
+	"Removing the class where the target variable of a variable breakpoint is defined should uninstall the variable breakpoint"
+	|testClassNodes|
+	self compileTestClass.
+	self compileTestClass2.
+	testClassNodes := (testClass >> #accessingV1) ast allChildren.
+	
+	wp := VariableBreakpoint watchVariable: #v1 inClass: testClass. 
+	wp install.	
+	
+	self should: [testSubclass basicNew accessingV1] raise: Break.
+	
+	testClass removeFromSystem.	
+	self denyCollection: wp link nodes includesAny: testClassNodes.
+	self deny: wp isInstalled.
+	self shouldnt: [ testSubclass basicNew accessingV1 ] raise: Break
+
+]
+
+{ #category : #'tests - removing' }
+VariableBreakpointTest >> testRemoveFromMethod [
+	
+	|ast|
+	"We get the variable node one which the variable breakpoint will be installed"
+	ast := (VariableBreakpointMockClass >> #v1) ast allChildren last. 
+	
+	"Removing a variable breakpoint should not uninstall the breakpoint"
+	wp := VariableBreakpoint watchVariable: #v1 inClass: VariableBreakpointMockSubclass. 
+	wp install.		
+		
+	"Let us recompile a method touching v1 in the super class of our test class.
+	This is meant so simulate, e.g., a modification in the debugger after a break in that method."
+	VariableBreakpointMockClass compile: 'v1 ^v1'.
+	
+	"First, the breakpoint should still be installed in that method"
+	self assert: wp isInstalled.
+	self should: [ VariableBreakpointMockClass basicNew v1 ] raise: Break.
+	self should: [ VariableBreakpointMockSubclass basicNew v1 ] raise: Break.
+	
+	"Second, the old method ast's is not referenced by the breakpoint's link anymore"
+	self assert: (wp link nodes noneSatisfy: [ :n| n == ast ])
 	
 ]
 

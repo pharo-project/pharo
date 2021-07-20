@@ -20,6 +20,11 @@ GTInspectorDynamicNode class >> hostObject: anObject label: aString value: anoth
 		yourself
 ]
 
+{ #category : #testing }
+GTInspectorDynamicNode class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GTInspectorDynamicNode >> key [
 	^ label

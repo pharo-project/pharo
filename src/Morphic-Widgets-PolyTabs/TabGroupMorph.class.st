@@ -12,7 +12,7 @@ Class {
 	#category : #'Morphic-Widgets-PolyTabs'
 }
 
-{ #category : #example }
+{ #category : #examples }
 TabGroupMorph class >> example [
 	| builder window page1 page2 label1 label2 tabs content okButton cancelButton |
 	builder := self theme builder.

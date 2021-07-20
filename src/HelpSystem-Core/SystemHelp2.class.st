@@ -16,7 +16,7 @@ Class {
 	#category : #'HelpSystem-Core-Utilities'
 }
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 SystemHelp2 class >> allSystemHelpPragmas [
 	^ Pragma allNamed: self pragmaKeyword
 ]
@@ -40,7 +40,7 @@ SystemHelp2 class >> asHelpTopic [
 	^topic
 ]
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 SystemHelp2 class >> pragmaKeyword [
 
 	^#newSystemHelp

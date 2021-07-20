@@ -23,6 +23,11 @@ GLMNoBrowser class >> initializeUniqueInstance [
 	uniqueInstance := self basicNew initialize
 ]
 
+{ #category : #testing }
+GLMNoBrowser class >> isDeprecated [
+	^ true
+]
+
 { #category : #'instance creation' }
 GLMNoBrowser class >> new [
 

@@ -21,6 +21,11 @@ Class {
 	#category : #'Glamour-Morphic-Widgets'
 }
 
+{ #category : #testing }
+GLMTreeMorphModel class >> isDeprecated [
+	^ true
+]
+
 { #category : #'drag and drop' }
 GLMTreeMorphModel >> acceptDroppingMorph: transferMorph event: evt inMorph: listMorph [ 
 	| targetItem |
@@ -159,7 +164,7 @@ GLMTreeMorphModel >> explicitSelection: anObject [
 		ifFalse: [ self explicitlySelectItem: anObject ]
 ]
 
-{ #category : #'private selecting' }
+{ #category : #'private - selecting' }
 GLMTreeMorphModel >> explicitlySelectItem: anObject [
 
 	( self selectedItem notNil and: [ self selectedItem = anObject ] )
@@ -184,7 +189,7 @@ GLMTreeMorphModel >> explicitlySelectItem: anObject [
 			]
 ]
 
-{ #category : #'private selecting' }
+{ #category : #'private - selecting' }
 GLMTreeMorphModel >> explicitlySelectMultipleItems: aCollection [
 
 	| newSelection collection |

@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Morphic'
 }
 
+{ #category : #testing }
+GLMPharoScriptMorphicTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMPharoScriptMorphicTest >> testDefault [
 	| browser textMorph |

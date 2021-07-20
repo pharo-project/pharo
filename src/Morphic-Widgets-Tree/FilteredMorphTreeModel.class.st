@@ -56,7 +56,7 @@ Class {
 	#category : #'Morphic-Widgets-Tree'
 }
 
-{ #category : #example }
+{ #category : #examples }
 FilteredMorphTreeModel class >> example [
 	"self example"
 
@@ -95,7 +95,7 @@ FilteredMorphTreeModel >> defaultMorphIn: aThemable [
 		for: {patternMorph. treeMorph}
 ]
 
-{ #category : #'accessing pattern' }
+{ #category : #'accessing - pattern' }
 FilteredMorphTreeModel >> ensureSafePattern: aPattern [
 	" do not throw an error if the pattern is bad - important in case of auto-accepting"
 	^ [ aPattern asRegexIgnoringCase ]
@@ -132,7 +132,7 @@ FilteredMorphTreeModel >> initialize [
 	ghostString := ''
 ]
 
-{ #category : #'accessing pattern' }
+{ #category : #'accessing - pattern' }
 FilteredMorphTreeModel >> pattern [
 	" the pattern to use to filter the list"
 	^ self ensureSafePattern: patternModel getText asString trimBoth
@@ -153,20 +153,20 @@ FilteredMorphTreeModel >> rootItems: aListOfItems [
 	self updateList
 ]
 
-{ #category : #'accessing pattern' }
+{ #category : #'accessing - pattern' }
 FilteredMorphTreeModel >> updateList [
 	"update the list by applying the pattern on the initial root item list"
 	super rootItems: (self initialRootItems select: [ :p | (self pattern matchesIn: p name) notEmpty ]).
 	super updateList
 ]
 
-{ #category : #'accessing pattern' }
+{ #category : #'accessing - pattern' }
 FilteredMorphTreeModel >> whenPatternChanged: anAnnouncement [
 	"just update the list"
 	self updateList
 ]
 
-{ #category : #'accessing pattern' }
+{ #category : #'accessing - pattern' }
 FilteredMorphTreeModel >> whenReturnInFilter: anAnnouncement [ 
 	"needed if auto-accept is false"
 	patternModel acceptEditsInView  

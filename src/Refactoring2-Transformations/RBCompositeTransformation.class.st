@@ -11,7 +11,7 @@ Class {
 { #category : #api }
 RBCompositeTransformation class >> model: aRBModel with: aCollection [
 
-	^ (self new)
+	^ self new
 		model: aRBModel;
 		transformations: aCollection;
 		yourself
@@ -20,7 +20,7 @@ RBCompositeTransformation class >> model: aRBModel with: aCollection [
 { #category : #api }
 RBCompositeTransformation class >> with: aCollection [
 
-	^ (self new)
+	^ self new
 		transformations: aCollection;
 		yourself
 ]
@@ -49,7 +49,7 @@ RBCompositeTransformation >> preconditions [
 	"it delegates the preconditionn checking to each sub-refactoring separately.
 	 additional preconditions are welcomed"
 
-	^ RBCondition empty
+	^ self emptyCondition
 ]
 
 { #category : #executing }

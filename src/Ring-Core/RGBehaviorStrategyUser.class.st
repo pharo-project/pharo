@@ -40,7 +40,7 @@ RGBehaviorStrategyUser >> allClassVariables [
 	^ self behaviorStrategy allClassVariables
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBehaviorStrategyUser >> allSlots [
 
 	^ self behaviorStrategy allSlots
@@ -52,7 +52,7 @@ RGBehaviorStrategyUser >> baseBehavior [
 	^ self behaviorStrategy baseBehavior
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBehaviorStrategyUser >> baseClass [
 
 	^ self behaviorStrategy baseClass
@@ -203,18 +203,18 @@ RGBehaviorStrategyUser >> innerBindingOf: aSymbol [
 	^ self behaviorStrategy innerBindingOf: aSymbol
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBehaviorStrategyUser >> instSize [
 
 	^ self behaviorStrategy instSize
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBehaviorStrategyUser >> instVarNames [
 	^ self behaviorStrategy instVarNames
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBehaviorStrategyUser >> instanceSide [
 
 	^ self behaviorStrategy instanceSide
@@ -245,13 +245,13 @@ RGBehaviorStrategyUser >> isMeta [
 	^ self behaviorStrategy isMeta
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGBehaviorStrategyUser >> isMetaclass [
 
 	^ self behaviorStrategy isMetaclass
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGBehaviorStrategyUser >> isMetaclassTrait [
 
 	^ self behaviorStrategy isMetaclassTrait
@@ -263,7 +263,7 @@ RGBehaviorStrategyUser >> isTrait [
 	^ self behaviorStrategy isTrait
 ]
 
-{ #category : #'testing class hierarchy' }
+{ #category : #'testing - class hierarchy' }
 RGBehaviorStrategyUser >> kindOfSubclass [
 
 	^ self behaviorStrategy kindOfSubclass
@@ -362,13 +362,13 @@ RGBehaviorStrategyUser >> storeOn: aStream [
 	^ self behaviorStrategy storeOn: aStream
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBehaviorStrategyUser >> theMetaClass [
 
 	^ self behaviorStrategy theMetaClass
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBehaviorStrategyUser >> theNonMetaClass [
 	
 	^ self behaviorStrategy theNonMetaClass

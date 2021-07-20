@@ -18,6 +18,11 @@ GTInspectorProtoObjectNode class >> hostObject: anObject index: index slotName: 
 		yourself
 ]
 
+{ #category : #testing }
+GTInspectorProtoObjectNode class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GTInspectorProtoObjectNode >> index: anIndex slotName: aSlotName [
 	index := anIndex.

@@ -19,6 +19,11 @@ GLMCustomCell class >> isAbstract [
 	^self == GLMCustomCell
 ]
 
+{ #category : #testing }
+GLMCustomCell class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMCustomCell >> browser [ 
 	 

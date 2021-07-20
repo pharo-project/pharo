@@ -126,13 +126,13 @@ KMKeyCombination >> platform [
 	^#all
 ]
 
-{ #category : #'accessing platform' }
+{ #category : #'accessing - platform' }
 KMKeyCombination >> platformCharacter [
 
 	^ ''
 ]
 
-{ #category : #'accessing platform' }
+{ #category : #'accessing - platform' }
 KMKeyCombination >> platformModifier [
 
 	^ nil

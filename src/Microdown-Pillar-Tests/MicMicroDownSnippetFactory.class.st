@@ -235,7 +235,7 @@ MicMicroDownSnippetFactory >> orderedListWithTwoItemsSample [
 '
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 MicMicroDownSnippetFactory >> parserClass [
 
 	^ MicroDownParser

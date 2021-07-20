@@ -62,7 +62,7 @@ Class {
 	#category : #'Text-Edition-Utilities'
 }
 
-{ #category : #'undo-redo' }
+{ #category : #'undo - redo' }
 EditingState >> clearUndoManager: aKeyboardEvent [
 	self undoManager reset.
 	^ true
@@ -79,7 +79,7 @@ EditingState >> emphasisHere: aListOfTextAttribute [
 				ifNotNil: [:l | l reject: [:a | TextSelectionColor = a class]]
 ]
 
-{ #category : #'private-debugging' }
+{ #category : #'private - debugging' }
 EditingState >> exploreUndoManager: aKeyboardEvent [
 	self undoManager inspect.
 	^ true
@@ -169,12 +169,12 @@ EditingState >> previousSelection [
 	^ previousSelection ifNil: [previousSelection := '' asText]
 ]
 
-{ #category : #'undo-redo' }
+{ #category : #'undo - redo' }
 EditingState >> redo [
 	^ self undoManager redo 
 ]
 
-{ #category : #'undo-redo' }
+{ #category : #'undo - redo' }
 EditingState >> redoArray: doArray undoArray: undoArray [
 	self undoManager isPlugged 
 		ifTrue: [self undoManager redoArray: doArray undoArray: undoArray]
@@ -190,7 +190,7 @@ EditingState >> startOfTyping: anIntegerIndex [
 	startOfTyping := anIntegerIndex
 ]
 
-{ #category : #'undo-redo' }
+{ #category : #'undo - redo' }
 EditingState >> undo [
 	^ self undoManager undo 
 ]

@@ -24,7 +24,7 @@ GLMDiffPresentation >> contextClass: aClassOrBlock [
 	contextClass := aClassOrBlock
 ]
 
-{ #category : #'accessing values' }
+{ #category : #'accessing - values' }
 GLMDiffPresentation >> contextClassValue [
 	^ self contextClass glamourValue: self entity
 ]

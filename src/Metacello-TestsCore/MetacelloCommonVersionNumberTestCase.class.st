@@ -17,7 +17,7 @@ MetacelloCommonVersionNumberTestCase >> defaultVersion1 [
   ^ self versionClass fromString: '1.0.0'
 ]
 
-{ #category : #'test alpha/numeric version numbers' }
+{ #category : #'tests - alpha/numeric version numbers' }
 MetacelloCommonVersionNumberTestCase >> testAlphaNumericVersion1 [
 
 	"Use numeric comparison for pure numbers. If you non-numeric version separate with '-'"
@@ -27,28 +27,28 @@ MetacelloCommonVersionNumberTestCase >> testAlphaNumericVersion1 [
 
 ]
 
-{ #category : #'test alpha/numeric version numbers' }
+{ #category : #'tests - alpha/numeric version numbers' }
 MetacelloCommonVersionNumberTestCase >> testAlphaNumericVersion2 [
 
 	self assert: ((self versionClass fromString: '2.9.0-alpha.2') < (self versionClass fromString: '2.9.0-alpha.3')).
 
 ]
 
-{ #category : #'test alpha/numeric version numbers' }
+{ #category : #'tests - alpha/numeric version numbers' }
 MetacelloCommonVersionNumberTestCase >> testAlphaNumericVersion3 [
 
 	self assert: ((self versionClass fromString: '2.9.9-alpha.2') < (self versionClass fromString: '2.9.10')).
 
 ]
 
-{ #category : #'test alpha/numeric version numbers' }
+{ #category : #'tests - alpha/numeric version numbers' }
 MetacelloCommonVersionNumberTestCase >> testAlphaNumericVersion4 [
 
 	self assert: ((self versionClass fromString: '2.9.9-alpha.2') < (self versionClass fromString: '2.9.9')).
 
 ]
 
-{ #category : #'tests version increment/decrement' }
+{ #category : #'tests - version increment/decrement' }
 MetacelloCommonVersionNumberTestCase >> testIncrementDecrementVersion [
 	| version |
 	version := self defaultVersion1.
@@ -60,7 +60,7 @@ MetacelloCommonVersionNumberTestCase >> testIncrementDecrementVersion [
 	self assert: version decrementPatchVersion asString equals: '1.0.0'
 ]
 
-{ #category : #'tests version increment/decrement' }
+{ #category : #'tests - version increment/decrement' }
 MetacelloCommonVersionNumberTestCase >> testIncrementDecrementVersionNumber [
 	| version |
 	version := self defaultVersion1.

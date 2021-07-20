@@ -4,7 +4,7 @@ Class {
 	#category : #'Spec-Tests-PolyWidgets-Support'
 }
 
-{ #category : #running }
+{ #category : #accessing }
 RGBSlidersTest >> classToTest [
 	^ RGBSliders
 ]

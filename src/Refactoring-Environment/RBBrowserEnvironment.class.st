@@ -78,7 +78,7 @@ RBBrowserEnvironment >> adoptQuery: aQuery [
 	^aQuery
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBBrowserEnvironment >> allClasses [
 	"Answer all the unique non-metaclasses of all the classes and metaclasses in this environment."
 
@@ -89,7 +89,7 @@ RBBrowserEnvironment >> allClasses [
 	^ allClasses asArray
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBBrowserEnvironment >> allClassesAndTraits [
 	" compatibility method with SystemDictionary "
 	
@@ -110,7 +110,7 @@ RBBrowserEnvironment >> allClassesDo: aBlock [
 	self systemDictionaryClassesDo: aBlock
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBBrowserEnvironment >> allMetaClasses [
 	"Answer all the unique non-metaclasses of all metaclasses in this environment."
 
@@ -123,7 +123,7 @@ RBBrowserEnvironment >> allMetaClasses [
 	^ allMetaClasses asArray
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBBrowserEnvironment >> allNonMetaClasses [
 	"Answer all the unique non-metaclasses of all of all the non-metaclasses in this environment."
 	| allNonMetaClasses |
@@ -151,12 +151,12 @@ RBBrowserEnvironment >> asSelectorEnvironment [
 	^(RBClassEnvironment onEnvironment: self classes: self classes) asSelectorEnvironment
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBBrowserEnvironment >> associationAt: aKey [
 	^ self associationAt: aKey ifAbsent: [ self error: aKey printString , ' not found' ]
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBBrowserEnvironment >> associationAt: aKey ifAbsent: aBlock [
 	| association class |
 	association := self systemDictionary
@@ -170,12 +170,12 @@ RBBrowserEnvironment >> associationAt: aKey ifAbsent: aBlock [
 		ifFalse: [ nil ]
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBBrowserEnvironment >> at: aKey [
 	^ self at: aKey ifAbsent: [ self error: aKey printString , ' not found' ]
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBBrowserEnvironment >> at: aKey ifAbsent: aBlock [
 
 	| association |
@@ -195,7 +195,7 @@ RBBrowserEnvironment >> categories [
 	^ self systemDictionary organization categories select: [ :each | self includesCategory: each ]
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBBrowserEnvironment >> classNames [
 	| names |
 	names := IdentitySet new: 4096.
@@ -226,7 +226,7 @@ RBBrowserEnvironment >> classVariablesFor: aClass [
 	^aClass classVarNames
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBBrowserEnvironment >> classes [
 	| classes |
 	classes := IdentitySet new: 4096.
@@ -241,7 +241,7 @@ RBBrowserEnvironment >> classesAndSelectorsDo: aBlock [
 			aBlock value: class value: sel ]]
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBBrowserEnvironment >> classesAndTraits [
 	
 	| classesAndTraits |
@@ -251,14 +251,14 @@ RBBrowserEnvironment >> classesAndTraits [
 	^ classesAndTraits asArray
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBBrowserEnvironment >> classesAndTraitsDo: aBlock [ 
 	self allClassesAndTraitsDo: [ :each |
 		(self includesClass: each)
 			ifTrue: [ aBlock value: each ] ]
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBBrowserEnvironment >> classesDo: aBlock [ 
 	self systemDictionaryClassesDo: [ :each |
 		(self includesClass: each)
@@ -501,7 +501,7 @@ RBBrowserEnvironment >> isVariableEnvironment [
 	^ false
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBBrowserEnvironment >> keys [
 	| keys |
 	keys := Set new.
@@ -570,12 +570,12 @@ RBBrowserEnvironment >> numberSelectors [
 	^total
 ]
 
-{ #category : #'accessing-packages' }
+{ #category : #'accessing - packages' }
 RBBrowserEnvironment >> packageAt: aName [
 	^ self packageAt: aName ifAbsent: [ NotFound signalFor: aName in: self ]
 ]
 
-{ #category : #'accessing-packages' }
+{ #category : #'accessing - packages' }
 RBBrowserEnvironment >> packageAt: aName ifAbsent: absentBlock [
 	| package |
 	package := self packageOrganizer 
@@ -592,7 +592,7 @@ RBBrowserEnvironment >> packageOrganizer [
 	^ RPackageOrganizer default
 ]
 
-{ #category : #'accessing-packages' }
+{ #category : #'accessing - packages' }
 RBBrowserEnvironment >> packages [
 
 	^ self packageOrganizer packages
@@ -600,7 +600,7 @@ RBBrowserEnvironment >> packages [
 			self includesCategory: package name ]
 ]
 
-{ #category : #'accessing-packages' }
+{ #category : #'accessing - packages' }
 RBBrowserEnvironment >> packagesWithContributors [
 	"answer a list of all packages contributing to the definition of classes in the environment"
 	^ self classes 
@@ -812,7 +812,7 @@ RBBrowserEnvironment >> systemDictionaryClassesDo: aBlock [
 		 aBlock value: class; value: class classSide]
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBBrowserEnvironment >> traits [
 	| traits |
 	traits := IdentitySet new: 4096.
@@ -820,7 +820,7 @@ RBBrowserEnvironment >> traits [
 	^ traits
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBBrowserEnvironment >> traitsDo: aBlock [
 
 	self systemDictionary allTraitsDo: [ :each | 

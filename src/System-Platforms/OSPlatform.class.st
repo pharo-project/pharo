@@ -45,7 +45,7 @@ OSPlatform class >> determineActivePlatform [
 
 ]
 
-{ #category : #example }
+{ #category : #examples }
 OSPlatform class >> example [
 	<example>
 	Smalltalk os current inspect
@@ -239,7 +239,7 @@ OSPlatform >> shutDown: quitting [
 
 { #category : #initialize }
 OSPlatform >> startUp: resuming [
-	"Pharo is starting up. If this platform requires specific intialization, this is a great place to put it."
+	"Pharo is starting up. If this platform requires specific initialization, this is a great place to put it."
 
 ]
 

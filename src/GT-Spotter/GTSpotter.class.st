@@ -43,7 +43,7 @@ GTSpotter class >> dontShowPreview [
 	isPreviewVisible := false
 ]
 
-{ #category : #example }
+{ #category : #examples }
 GTSpotter class >> exampleSpotterWithoutMorph [
 	<sampleInstance>
 	<gtExample>
@@ -245,12 +245,12 @@ GTSpotter >> defaultFilterClass [
     ^ GTFilterFuzzy
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTSpotter >> defaultPagerModel [
 	^ GLMPagerModel new
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 GTSpotter >> defaultStep [
 	^ GTSpotterStep new
 ]

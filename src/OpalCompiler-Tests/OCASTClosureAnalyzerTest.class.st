@@ -4,7 +4,7 @@ Class {
 	#category : #'OpalCompiler-Tests-AST'
 }
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTClosureAnalyzerTest >> testArgumentIsRead [
 
 	| ast |
@@ -12,7 +12,7 @@ OCASTClosureAnalyzerTest >> testArgumentIsRead [
 	self assert: ast arguments first variable usage equals: #read
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTClosureAnalyzerTest >> testBlockArgumentIsArgumentVariable [
 	| ast blockNode |
 	ast := (OCOpalExamples>>#exampleForBlockArgument) parseTree.
@@ -149,7 +149,7 @@ only needs to copy the tempvars. No write -> no indirection vector."
 	self deny: (ast scope lookupVar: 'c') isRemote
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTClosureAnalyzerTest >> testInlinedBlockArgumentIsArgumentVariable [
 	| ast blockNode |
 	ast := (OCOpalExamples>>#exampleForInlinedBlockArgument) parseTree.
@@ -159,7 +159,7 @@ OCASTClosureAnalyzerTest >> testInlinedBlockArgumentIsArgumentVariable [
 	
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTClosureAnalyzerTest >> testMethodArgumentIsArgumentVariable [
 	| ast |
 	ast := (OCOpalExamples>>#exampleWithArgument:) parseTree.
@@ -442,7 +442,7 @@ OCASTClosureAnalyzerTest >> testSingleRemoteTempVar [
 	self deny: (ast scope lookupVar: 'theCollection') isRemote
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTClosureAnalyzerTest >> testVariableDefintionScopeUpdate [
 	"the scope of local var definitons needs to be updated, too"
 

@@ -8,6 +8,11 @@ Class {
 	#category : #'GT-Tests-Playground'
 }
 
+{ #category : #testing }
+GTPlaygroundBasicTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #running }
 GTPlaygroundBasicTest >> setUp [
 	super setUp.

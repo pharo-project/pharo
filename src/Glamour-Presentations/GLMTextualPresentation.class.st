@@ -24,13 +24,13 @@ Class {
 	#category : #'Glamour-Presentations'
 }
 
-{ #category : #'accessing ports' }
+{ #category : #'accessing - ports' }
 GLMTextualPresentation >> cursorPosition [ 
 	 
 	^cursorPosition
 ]
 
-{ #category : #'accessing ports' }
+{ #category : #'accessing - ports' }
 GLMTextualPresentation >> cursorPosition: anObject [ 
 	 
 	cursorPosition := anObject
@@ -75,7 +75,7 @@ GLMTextualPresentation >> selectLine [
 	self announce: GLMSelectCurrentLine.
 ]
 
-{ #category : #'accessing ports' }
+{ #category : #'accessing - ports' }
 GLMTextualPresentation >> selectedText [
 
 	^ ( self pane port: #selectedText ) value
@@ -83,7 +83,7 @@ GLMTextualPresentation >> selectedText [
 		ifNotNil: [ ( self pane port: #selectedText ) value ]
 ]
 
-{ #category : #'accessing ports' }
+{ #category : #'accessing - ports' }
 GLMTextualPresentation >> selectedText: anObject [
 	(self pane port: #selectedText) value: anObject copy
 ]
@@ -109,7 +109,7 @@ GLMTextualPresentation >> selectionInterval: anInterval [
 	(self pane port: #selectionInterval) value: anInterval
 ]
 
-{ #category : #'accessing ports' }
+{ #category : #'accessing - ports' }
 GLMTextualPresentation >> text [
 
 	^ ( self pane port: #text ) value
@@ -117,7 +117,7 @@ GLMTextualPresentation >> text [
 		ifNotNil: [ ( self pane port: #text ) value ]
 ]
 
-{ #category : #'accessing ports' }
+{ #category : #'accessing - ports' }
 GLMTextualPresentation >> text: aString [
 	(self pane port: #text) value: aString copy
 ]

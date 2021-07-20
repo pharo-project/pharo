@@ -7,14 +7,14 @@ Class {
 	#category : #'GeneralRules-Tests-Migrated'
 }
 
-{ #category : #'test-help' }
+{ #category : #testing }
 ReRefersToClassRuleTest class >> isAbstract [
 	"I can refer to RBRefersToClassRuleTest without error"
 	'It is ok to refert to', ReRefersToClassRuleTest name.
 	^ false 
 ]
 
-{ #category : #'test-help' }
+{ #category : #sample }
 ReRefersToClassRuleTest >> referToClassName [
 	"I refer to my own class by name - RBRefersToClassRuleTest"
 	ReRefersToClassRuleTest name,

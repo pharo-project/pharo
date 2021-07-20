@@ -7,7 +7,7 @@ Class {
 	#category : #'GeneralRules-Tests-Migrated'
 }
 
-{ #category : #'test-help' }
+{ #category : #sample }
 ReMultiplePeriodsTerminatingStatementRuleTest >> sampleMethod [
 	"I have two periods between statements"
 	2+3.  .

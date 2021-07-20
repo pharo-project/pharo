@@ -35,6 +35,11 @@ GLMPortIdentifier class >> defaultTargetPortName [
 	^ #entity
 ]
 
+{ #category : #testing }
+GLMPortIdentifier class >> isDeprecated [
+	^ true
+]
+
 { #category : #'instance creation' }
 GLMPortIdentifier class >> pane: aPaneName port: aPortName [
 	^ self new 

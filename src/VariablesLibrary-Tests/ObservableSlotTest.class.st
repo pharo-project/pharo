@@ -52,6 +52,12 @@ ObservableSlotTest >> testExplicitNotifyUnexistentPropertyChangedRaisesError [
 ]
 
 { #category : #tests }
+ObservableSlotTest >> testIsObservableSlot [
+
+	self assert: (point class slotNamed: 'x') isObservableSlot
+]
+
+{ #category : #tests }
 ObservableSlotTest >> testObservableSlotAssignReturnsValue [
 	"When assigning to a Observable Slot, the return value should be the value"
 	self assert: (point xReturn: 299) equals: 299

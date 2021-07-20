@@ -18,7 +18,7 @@ ZnCredential class >> authName [
 	self subclassResponsibility 
 ]
 
-{ #category : #'accessing class hierarchy' }
+{ #category : #'accessing - class hierarchy' }
 ZnCredential class >> findHandlerFor: anAuthHeader [
 	| type i |
 	i := anAuthHeader indexOf: Character space.

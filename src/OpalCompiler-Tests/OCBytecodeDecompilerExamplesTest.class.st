@@ -4,7 +4,7 @@ Class {
 	#category : #'OpalCompiler-Tests-Bytecode'
 }
 
-{ #category : #'tests-blocks' }
+{ #category : #'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleBlockArgument [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleBlockArgument) parseTree generate.
@@ -16,7 +16,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockArgument [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleBlockArgument
 ]
 
-{ #category : #'tests-blocks' }
+{ #category : #'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleBlockExternal [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleBlockExternal) parseTree generate.
@@ -28,7 +28,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockExternal [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleBlockExternal
 ]
 
-{ #category : #'tests-blocks' }
+{ #category : #'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleBlockExternal2 [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleBlockExternal2) parseTree generate.
@@ -40,7 +40,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockExternal2 [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleBlockExternal2
 ]
 
-{ #category : #'tests-blocks' }
+{ #category : #'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleBlockExternalArg [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleBlockExternalArg) parseTree generate.
@@ -52,7 +52,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockExternalArg [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleBlockExternalArg
 ]
 
-{ #category : #'tests-blocks' }
+{ #category : #'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleBlockExternalNested [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleBlockExternalNested) parseTree generate.
@@ -64,7 +64,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockExternalNested [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleBlockExternalNested
 ]
 
-{ #category : #'tests-blocks' }
+{ #category : #'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleBlockInternal [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleBlockInternal) parseTree generate.
@@ -76,7 +76,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockInternal [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleBlockInternal
 ]
 
-{ #category : #'tests-blocks' }
+{ #category : #'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleBlockNested [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleBlockNested) parseTree generate.
@@ -88,7 +88,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockNested [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleBlockNested
 ]
 
-{ #category : #'tests-simple' }
+{ #category : #'tests - simple' }
 OCBytecodeDecompilerExamplesTest >> testExampleEmptyMethod [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleEmptyMethod) parseTree generate.
@@ -100,7 +100,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleEmptyMethod [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleEmptyMethod
 ]
 
-{ #category : #'tests-blocks-optimized' }
+{ #category : #'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleIfFalse [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleIfFalse) parseTree generate.
@@ -112,7 +112,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfFalse [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleIfFalse
 ]
 
-{ #category : #'tests-blocks-optimized' }
+{ #category : #'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleIfFalseIfTrue [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleIfFalseIfTrue) parseTree generate.
@@ -124,7 +124,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfFalseIfTrue [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleIfFalseIfTrue
 ]
 
-{ #category : #'tests-blocks-optimized' }
+{ #category : #'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleIfIfNotNilReturnNil [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleIfNotNilReturnNil) parseTree generate.
@@ -136,7 +136,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfIfNotNilReturnNil [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleIfNotNilReturnNil
 ]
 
-{ #category : #'tests-blocks-optimized' }
+{ #category : #'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleIfNotNilArg [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleIfNotNilArg) parseTree generate.
@@ -148,7 +148,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfNotNilArg [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleIfNotNilArg
 ]
 
-{ #category : #'tests-blocks-optimized' }
+{ #category : #'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleIfTrue [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleIfTrue) parseTree generate.
@@ -160,7 +160,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfTrue [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleIfTrue
 ]
 
-{ #category : #'tests-blocks-optimized' }
+{ #category : #'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleIfTrueIfFalse [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleIfTrueIfFalse) parseTree generate.
@@ -172,7 +172,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfTrueIfFalse [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleIfTrueIfFalse
 ]
 
-{ #category : #'tests-blocks' }
+{ #category : #'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleMethodTempInNestedBlock [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleMethodTempInNestedBlock) parseTree generate.
@@ -184,7 +184,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleMethodTempInNestedBlock [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleMethodTempInNestedBlock
 ]
 
-{ #category : #'tests-blocks-optimized' }
+{ #category : #'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleMethodWithOptimizedBlocksA [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleMethodWithOptimizedBlocksA) parseTree generate.
@@ -196,7 +196,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleMethodWithOptimizedBlocksA [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleMethodWithOptimizedBlocksA
 ]
 
-{ #category : #'tests-blocks' }
+{ #category : #'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleNestedBlockScoping [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleNestedBlockScoping) parseTree generate.
@@ -208,7 +208,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleNestedBlockScoping [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleNestedBlockScoping
 ]
 
-{ #category : #'tests-simple' }
+{ #category : #'tests - simple' }
 OCBytecodeDecompilerExamplesTest >> testExampleNewArray [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleNewArray) parseTree generate.
@@ -220,7 +220,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleNewArray [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleNewArray
 ]
 
-{ #category : #'tests-misc' }
+{ #category : #'tests - misc' }
 OCBytecodeDecompilerExamplesTest >> testExamplePushArray [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #examplePushArray) parseTree generate.
@@ -232,7 +232,7 @@ OCBytecodeDecompilerExamplesTest >> testExamplePushArray [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance examplePushArray
 ]
 
-{ #category : #'tests-simple' }
+{ #category : #'tests - simple' }
 OCBytecodeDecompilerExamplesTest >> testExampleReturn1 [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleReturn42) parseTree generate.
@@ -244,7 +244,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleReturn1 [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleReturn42
 ]
 
-{ #category : #'tests-simple' }
+{ #category : #'tests - simple' }
 OCBytecodeDecompilerExamplesTest >> testExampleReturn1plus2 [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleReturn1plus2) parseTree generate.
@@ -256,7 +256,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleReturn1plus2 [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleReturn1plus2
 ]
 
-{ #category : #'tests-variables' }
+{ #category : #'tests - variables' }
 OCBytecodeDecompilerExamplesTest >> testExampleSelf [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSelf) parseTree generate.
@@ -268,7 +268,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSelf [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleSelf
 ]
 
-{ #category : #'tests-blocks' }
+{ #category : #'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlock [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlock) parseTree generate.
@@ -280,7 +280,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlock [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) value equals: instance exampleSimpleBlock value
 ]
 
-{ #category : #'tests-blocks' }
+{ #category : #'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument1 [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlockArgument1) parseTree generate.
@@ -292,7 +292,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument1 [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleSimpleBlockArgument1
 ]
 
-{ #category : #'tests-blocks' }
+{ #category : #'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument2 [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlockArgument2) parseTree generate.
@@ -304,7 +304,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument2 [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleSimpleBlockArgument2
 ]
 
-{ #category : #'tests-blocks' }
+{ #category : #'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument3 [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlockArgument3) parseTree generate.
@@ -316,7 +316,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument3 [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleSimpleBlockArgument3
 ]
 
-{ #category : #'tests-blocks' }
+{ #category : #'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument4 [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlockArgument4) parseTree generate.
@@ -328,7 +328,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument4 [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleSimpleBlockArgument4
 ]
 
-{ #category : #'tests-blocks' }
+{ #category : #'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument5 [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlockArgument5) parseTree generate.
@@ -340,7 +340,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument5 [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleSimpleBlockArgument5
 ]
 
-{ #category : #'tests-blocks' }
+{ #category : #'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockEmpty [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlockEmpty) parseTree generate.
@@ -352,7 +352,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockEmpty [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleSimpleBlockEmpty
 ]
 
-{ #category : #'tests-blocks' }
+{ #category : #'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocal [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlockLocal) parseTree generate.
@@ -364,7 +364,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocal [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleSimpleBlockLocal
 ]
 
-{ #category : #'tests-blocks-optimized' }
+{ #category : #'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalIf [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlockLocalIf) parseTree generate.
@@ -376,7 +376,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalIf [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleSimpleBlockLocalIf
 ]
 
-{ #category : #'tests-blocks' }
+{ #category : #'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalNested [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlockNested) parseTree generate.
@@ -388,7 +388,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalNested [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleSimpleBlockNested
 ]
 
-{ #category : #'tests-blocks-optimized' }
+{ #category : #'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalWhile [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlockLocalWhile) parseTree generate.
@@ -400,7 +400,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalWhile [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleSimpleBlockLocalWhile
 ]
 
-{ #category : #'tests-blocks' }
+{ #category : #'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockNested [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlockNested) parseTree generate.
@@ -412,7 +412,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockNested [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleSimpleBlockNested
 ]
 
-{ #category : #'tests-blocks' }
+{ #category : #'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockReturn [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlockReturn) parseTree generate.
@@ -424,7 +424,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockReturn [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleSimpleBlockReturn
 ]
 
-{ #category : #'tests-blocks' }
+{ #category : #'tests - blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockiVar [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSimpleBlockiVar) parseTree generate.
@@ -436,7 +436,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockiVar [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleSimpleBlockiVar
 ]
 
-{ #category : #'tests-variables' }
+{ #category : #'tests - variables' }
 OCBytecodeDecompilerExamplesTest >> testExampleSuper [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleSuper) parseTree generate.
@@ -448,7 +448,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSuper [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleSuper
 ]
 
-{ #category : #'tests-variables' }
+{ #category : #'tests - variables' }
 OCBytecodeDecompilerExamplesTest >> testExampleThisContext [
 	| ir method newMethod instance |
 	
@@ -463,7 +463,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleThisContext [
 	self assert: instance result isContext
 ]
 
-{ #category : #'tests-blocks-optimized' }
+{ #category : #'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleToDoArgument [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleToDoArgument) parseTree generate.
@@ -475,7 +475,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoArgument [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleToDoArgument
 ]
 
-{ #category : #'tests-blocks-optimized' }
+{ #category : #'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleToDoArgumentNotInlined [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleToDoArgumentNotInlined) parseTree generate.
@@ -487,7 +487,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoArgumentNotInlined [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleToDoArgumentNotInlined
 ]
 
-{ #category : #'tests-blocks-optimized' }
+{ #category : #'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleToDoInsideTemp [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleToDoInsideTemp) parseTree generate.
@@ -499,7 +499,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoInsideTemp [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleToDoInsideTemp
 ]
 
-{ #category : #'tests-blocks-optimized' }
+{ #category : #'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleToDoInsideTempNotInlined [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleToDoInsideTempNotInlined) parseTree generate.
@@ -511,7 +511,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoInsideTempNotInlined [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleToDoInsideTempNotInlined
 ]
 
-{ #category : #'tests-blocks-optimized' }
+{ #category : #'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleToDoOutsideTemp [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleToDoOutsideTemp) parseTree generate.
@@ -523,7 +523,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoOutsideTemp [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleToDoOutsideTemp
 ]
 
-{ #category : #'tests-blocks-optimized' }
+{ #category : #'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleToDoOutsideTempNotInlined [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleToDoOutsideTempNotInlined) parseTree generate.
@@ -535,7 +535,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoOutsideTempNotInlined [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleToDoOutsideTempNotInlined
 ]
 
-{ #category : #'tests-misc' }
+{ #category : #'tests - misc' }
 OCBytecodeDecompilerExamplesTest >> testExampleToDoValue [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleToDoValue) parseTree generate.
@@ -547,7 +547,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoValue [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleToDoValue
 ]
 
-{ #category : #'tests-blocks-optimized' }
+{ #category : #'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationAfterNotInlined [
 	| ir method newMethod |
 	method := (OCOpalExamples >> #exampleWhileModificationAfterNotInlined) parseTree generate.
@@ -558,7 +558,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationAfterNotInlined 
 	self assert: (newMethod valueWithReceiver: OCOpalExamples new arguments: #()) equals: OCOpalExamples new exampleWhileModificationAfterNotInlined
 ]
 
-{ #category : #'tests-blocks-optimized' }
+{ #category : #'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationBefore [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleWhileModificationBefore) parseTree generate.
@@ -570,7 +570,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationBefore [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleWhileModificationBefore
 ]
 
-{ #category : #'tests-blocks-optimized' }
+{ #category : #'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationBeforeNotInlined [
 	| ir method newMethod |
 	method := (OCOpalExamples >> #exampleWhileModificationBeforeNotInlined) parseTree generate.
@@ -581,7 +581,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationBeforeNotInlined
 	self assert: (newMethod valueWithReceiver: OCOpalExamples new arguments: #()) equals:  OCOpalExamples new exampleWhileModificationBeforeNotInlined
 ]
 
-{ #category : #'tests-blocks-optimized' }
+{ #category : #'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleWhileWithTemp [
 	| ir method newMethod |
 	method := (OCOpalExamples >> #exampleWhileWithTemp) parseTree generate.
@@ -592,7 +592,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleWhileWithTemp [
 	self assert: (newMethod valueWithReceiver: OCOpalExamples new arguments: #()) equals: OCOpalExamples new exampleWhileWithTemp
 ]
 
-{ #category : #'tests-blocks-optimized' }
+{ #category : #'tests - blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleWhileWithTempNotInlined [
 	| ir method newMethod |
 	method := (OCOpalExamples >> #exampleWhileWithTempNotInlined) parseTree generate.
@@ -603,7 +603,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleWhileWithTempNotInlined [
 	self assert: (newMethod valueWithReceiver: OCOpalExamples new arguments: #()) equals: OCOpalExamples new exampleWhileWithTempNotInlined
 ]
 
-{ #category : #'tests-variables' }
+{ #category : #'tests - variables' }
 OCBytecodeDecompilerExamplesTest >> testExampleiVar [
 	| ir method newMethod instance |
 	method := (OCOpalExamples >> #exampleiVar) parseTree generate.

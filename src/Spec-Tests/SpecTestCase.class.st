@@ -28,21 +28,21 @@ SpecTestCase class >> shouldInheritSelectors [
 	^ true
 ]
 
-{ #category : #running }
+{ #category : #accessing }
 SpecTestCase >> classToTest [
 	self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : #initialization }
 SpecTestCase >> initializeTestedInstance [
 ]
 
-{ #category : #running }
+{ #category : #utilities }
 SpecTestCase >> openInstance [
 	window := testedInstance openWithSpec
 ]
 
-{ #category : #running }
+{ #category : #utilities }
 SpecTestCase >> openInstance: aLayoutSelector [
 	window := testedInstance openWithSpec: aLayoutSelector
 ]

@@ -20,7 +20,7 @@ Class {
 	#category : #'AST-Core-Nodes - ErrorNodes'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RBEnglobingErrorNode class >> content: aCollection start: aStart stop: aStop errorMessage: message [
 	^self new 
 		content: aCollection; 

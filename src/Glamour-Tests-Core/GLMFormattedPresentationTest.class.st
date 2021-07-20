@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMFormattedPresentationTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMFormattedPresentationTest >> testFormat [
 	| presentation |

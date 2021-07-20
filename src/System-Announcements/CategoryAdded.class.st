@@ -1,5 +1,5 @@
 "
-This announcement will be emited when adding a category using:
+This announcement will be emitted when adding a category using:
 => SystemOrganizer >> addCategory:
 "
 Class {

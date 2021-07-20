@@ -66,7 +66,7 @@ UnixResolver >> xdgParseUserDirLine: aStream [
 	(#($$ $/) includes: firstChar) ifFalse: [ ^ nil ].
 	path := firstChar = $$
 				ifTrue: [ (aStream next: 5) = 'HOME/' ifFalse: [ ^ nil ].
-					       self home / (aStream upTo: $") ]
+					       self home / ((aStream upTo: $") ifEmpty: [ '.' ]) ]
 				ifFalse: [ self resolveString: '/', (aStream upTo: $") ].
 	^ path
 ]

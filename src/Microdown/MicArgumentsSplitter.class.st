@@ -10,12 +10,12 @@ Class {
 	#category : #'Microdown-Parser'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 MicArgumentsSplitter class >> withStream: aStream [
 	^ self new stream: aStream; yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 MicArgumentsSplitter class >> withString: aString [
 	^ self new stream: (aString readStream); yourself
 ]

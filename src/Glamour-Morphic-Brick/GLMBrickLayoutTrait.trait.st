@@ -78,7 +78,7 @@ GLMBrickLayoutTrait >> hSpaceFill: anInteger [
 	self layout hSpaceFill: anInteger
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrickLayoutTrait >> hasProperty: aSymbol [
 
 	^ self explicitRequirement
@@ -103,13 +103,13 @@ GLMBrickLayoutTrait >> invalidateWith: aBlock [
 	self doLayoutForce.
 ]
 
-{ #category : #'private-layout' }
+{ #category : #'private - layout' }
 GLMBrickLayoutTrait >> isLayotingAllowed [
 
 	^ self valueOfProperty: #brickLayoutingAllowed ifAbsent: [ true ]
 ]
 
-{ #category : #'private-layout' }
+{ #category : #'private - layout' }
 GLMBrickLayoutTrait >> isLayotingAllowed: aBoolean [
 
 	self setProperty: #brickLayoutingAllowed toValue: aBoolean
@@ -183,13 +183,13 @@ GLMBrickLayoutTrait >> onLayouted [
 	self updateFoundationBounds
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrickLayoutTrait >> removeProperty: aSymbol [
 	
 	^ self explicitRequirement
 ]
 
-{ #category : #'private-layout' }
+{ #category : #'private - layout' }
 GLMBrickLayoutTrait >> resetLayout [
 
 	self vResizing: #rigid.
@@ -198,7 +198,7 @@ GLMBrickLayoutTrait >> resetLayout [
 	self width: nil
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrickLayoutTrait >> setProperty: aSymbol toValue: anObject [
 	
 	^ self explicitRequirement
@@ -254,19 +254,19 @@ GLMBrickLayoutTrait >> vSpaceFill: anInteger [
 	self layout vSpaceFill: anInteger
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrickLayoutTrait >> valueOfProperty: aSymbol [
 	
 	^ self explicitRequirement
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrickLayoutTrait >> valueOfProperty: aSymbol ifAbsent: aBlock [
 	
 	^ self explicitRequirement
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrickLayoutTrait >> valueOfProperty: aSymbol ifAbsentPut: aBlock [ 
 	
 	^ self explicitRequirement

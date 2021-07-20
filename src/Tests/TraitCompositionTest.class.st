@@ -4,7 +4,7 @@ Class {
 	#category : #'Tests-Traits'
 }
 
-{ #category : #'testing-basic' }
+{ #category : #'tests - basic' }
 TraitCompositionTest >> testAliasCompositions [
 	"unary"
 
@@ -43,7 +43,7 @@ TraitCompositionTest >> testAliasCompositions [
 		raise: Error
 ]
 
-{ #category : #'testing-enquiries' }
+{ #category : #'tests - enquiries' }
 TraitCompositionTest >> testClassMethodsTakePrecedenceOverTraitsMethods [
 	| keys |
 	keys := Set new.
@@ -53,7 +53,7 @@ TraitCompositionTest >> testClassMethodsTakePrecedenceOverTraitsMethods [
 	self assert: (self t4 methodDict at: #m11) sourceCode equals: 'm11 ^41'
 ]
 
-{ #category : #'testing-basic' }
+{ #category : #'tests - basic' }
 TraitCompositionTest >> testCompositionFromArray [
 	| composition |
 	composition := {self t1} asTraitComposition.
@@ -66,7 +66,7 @@ TraitCompositionTest >> testCompositionFromArray [
 	self assert: composition traits size equals: 2
 ]
 
-{ #category : #'testing-basic' }
+{ #category : #'tests - basic' }
 TraitCompositionTest >> testEmptyTrait [
 	| composition |
 	composition := {} asTraitComposition.
@@ -75,7 +75,7 @@ TraitCompositionTest >> testEmptyTrait [
 	self assertEmpty: composition traits
 ]
 
-{ #category : #'testing-basic' }
+{ #category : #'tests - basic' }
 TraitCompositionTest >> testInvalidComposition [
 	self t1 @ {(#a -> #b)} @ {(#x -> #y)}.
 	self shouldnt: [ (self t1 + self t2) @ {(#a -> #b)} @ {(#x -> #y)}] raise: Error.
@@ -101,7 +101,7 @@ TraitCompositionTest >> testInvalidComposition [
 		raise: Error
 ]
 
-{ #category : #'testing-basic' }
+{ #category : #'tests - basic' }
 TraitCompositionTest >> testOriginSelectorOf [
 	
 	"regular method "
@@ -112,7 +112,7 @@ TraitCompositionTest >> testOriginSelectorOf [
 	self assert: (MOPTestClassD traitComposition originSelectorOf: #c3) equals: #c2.
 ]
 
-{ #category : #'testing-basic' }
+{ #category : #'tests - basic' }
 TraitCompositionTest >> testPrinting [
 	| composition1 composition2 |
 	composition1 := ((self t2 + self t1) @ { (#z -> #c) } - {#a. #b. #c } 
@@ -129,7 +129,7 @@ TraitCompositionTest >> testPrinting [
 		
 ]
 
-{ #category : #'testing-basic' }
+{ #category : #'tests - basic' }
 TraitCompositionTest >> testSum [
 	| composition |
 	composition := self t1 + self t2 + self t3.
@@ -140,7 +140,7 @@ TraitCompositionTest >> testSum [
 	self assert: composition traits size equals: 3
 ]
 
-{ #category : #'testing-basic' }
+{ #category : #'tests - basic' }
 TraitCompositionTest >> testSumWithParenthesis [
 	| composition |
 	composition := self t1 + (self t2 + self t3).
@@ -150,7 +150,7 @@ TraitCompositionTest >> testSumWithParenthesis [
 	self assert: composition traits size equals: 3
 ]
 
-{ #category : #'testing-comparing' }
+{ #category : #'tests - comparing' }
 TraitCompositionTest >> testSyntacticEqualsWithAlias [
 
 	"To create a trait composition, it should be valid."
@@ -167,7 +167,7 @@ TraitCompositionTest >> testSyntacticEqualsWithAlias [
 	self deny: ((self t1 @ {#a -> #b} @ {#x -> #y}) semanticallyEquals: (self t1 @ {#x -> #y} @ {#a -> #b})).
 ]
 
-{ #category : #'testing-comparing' }
+{ #category : #'tests - comparing' }
 TraitCompositionTest >> testSyntacticEqualsWithComplexCompositions [
 
 	self t3 compile: 'y ^$y'.
@@ -189,7 +189,7 @@ TraitCompositionTest >> testSyntacticEqualsWithComplexCompositions [
 
 ]
 
-{ #category : #'testing-comparing' }
+{ #category : #'tests - comparing' }
 TraitCompositionTest >> testSyntacticEqualsWithComposition [
 
 	self assert: ({} asTraitComposition semanticallyEquals: {} asTraitComposition).
@@ -207,7 +207,7 @@ TraitCompositionTest >> testSyntacticEqualsWithComposition [
 
 ]
 
-{ #category : #'testing-comparing' }
+{ #category : #'tests - comparing' }
 TraitCompositionTest >> testSyntacticEqualsWithExclusion [
 
 	self t1 compile: 'a ^$a'.

@@ -14,7 +14,7 @@ NullTermInfo >> on: aStream [
 	^self
 ]
 
-{ #category : #TermStyle }
+{ #category : #'term style' }
 NullTermInfo >> set: aString [
 	^ aString
 ]

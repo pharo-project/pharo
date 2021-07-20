@@ -31,25 +31,25 @@ SDL_SysWMinfo_MirInfo >> asPlatformSpecificHandle [
 		yourself
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_MirInfo >> connection [
 	"This method was automatically generated"
 	^ExternalData fromHandle: (handle pointerAt: OFFSET_CONNECTION) type: ExternalType void asPointerType
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_MirInfo >> connection: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_CONNECTION put: anObject getHandle.
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_MirInfo >> surface [
 	"This method was automatically generated"
 	^ExternalData fromHandle: (handle pointerAt: OFFSET_SURFACE) type: ExternalType void asPointerType
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_MirInfo >> surface: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_SURFACE put: anObject getHandle.

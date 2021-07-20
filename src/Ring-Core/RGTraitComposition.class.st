@@ -35,10 +35,10 @@ RGTraitComposition >> defaultParentStub [
 	^ self defaultClassStub
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGTraitComposition >> defaultTransformations [
 
-	^ OrderedCollection new.
+	^ OrderedCollection new
 ]
 
 { #category : #initialization }
@@ -57,7 +57,7 @@ RGTraitComposition >> initializeUnresolved [
 	transformations := self unresolvedValue: self defaultTransformations.
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGTraitComposition >> isTraitComposition [
 
 	^ true
@@ -120,7 +120,7 @@ RGTraitComposition >> pvtTransformationsDo: aBlock [
 	transformations value do: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGTraitComposition >> referencedBehaviors [
 
 	^ self transformations collect: [ :each |
@@ -136,7 +136,7 @@ RGTraitComposition >> removeTransformation: anRGTraitTransformation [
 		self backend forBehavior removeTransformation: anRGTraitTransformation from: self ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGTraitComposition >> traitCompositionString [
 
 	self transformations isEmpty ifTrue: [ ^ '{}' ].
@@ -148,10 +148,10 @@ RGTraitComposition >> traitCompositionString [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGTraitComposition >> traits [
 
-	^ self transformations collect: [:each | each trait]
+	^ self transformations collect: [:each | each trait ]
 ]
 
 { #category : #'queries - transformations' }
@@ -170,12 +170,12 @@ RGTraitComposition >> transformationsDo: aBlock [
 	self backend forBehavior transformationsFor: self do: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGTraitComposition >> usedTraits [
 
 	^ self transformations flatCollect: [ :each | 
 		each isTrait 
 			ifTrue: [ {each} ]
 			ifFalse: [ each usedTraits ].
-		 ] as: IdentitySet.
+		 ] as: IdentitySet
 ]

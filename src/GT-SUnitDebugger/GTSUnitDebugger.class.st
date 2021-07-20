@@ -40,7 +40,7 @@ GTSUnitDebugger class >> sessionClass [
 	^ GTSUnitDebugSession
 ]
 
-{ #category : #'accessing context' }
+{ #category : #'accessing - context' }
 GTSUnitDebugger >> contextToSelectFrom: aSession [
 	^ aSession assertionCallerContext ifNil: [ aSession testContext ]
 ]
@@ -87,7 +87,7 @@ GTSUnitDebugger >> setUpCodeIn: aComposite [
 		doItReceiver: [ self session testObject ].
 ]
 
-{ #category : #'accessing context' }
+{ #category : #'accessing - context' }
 GTSUnitDebugger >> setUpPresentationTitle [
 
 	^ 'SetUp', 
@@ -107,7 +107,7 @@ GTSUnitDebugger >> tearDownCodeIn: aComposite [
 		doItReceiver: [ self session testObject ].
 ]
 
-{ #category : #'accessing context' }
+{ #category : #'accessing - context' }
 GTSUnitDebugger >> tearDownPresentationTitle [
 
 	^ 'TearDown', 

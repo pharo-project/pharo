@@ -125,7 +125,7 @@ RBLiteralArrayNode >> replaceNode: aNode withNode: anotherNode [
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])
 ]
 
-{ #category : #'private-replacing' }
+{ #category : #'private - replacing' }
 RBLiteralArrayNode >> replaceSourceWith: aNode [ 
 	(self class = aNode class and: 
 			[self isForByteArray = aNode isForByteArray 

@@ -44,7 +44,7 @@ ReSubclassResponsibilityNotDefinedRule >> group [
 
 { #category : #accessing }
 ReSubclassResponsibilityNotDefinedRule >> name [
-	^ 'Subclass responsibility not defined'
+	^ '#subclassResponsibility not defined'
 ]
 
 { #category : #accessing }

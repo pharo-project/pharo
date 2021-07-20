@@ -28,13 +28,13 @@ SDL_SysWMinfo_WindowsRTInfo >> asPlatformSpecificHandle [
 		yourself
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_WindowsRTInfo >> window [
 	"This method was automatically generated"
 	^ExternalData fromHandle: (handle pointerAt: OFFSET_WINDOW) type: ExternalType void asPointerType
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_WindowsRTInfo >> window: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_WINDOW put: anObject getHandle.

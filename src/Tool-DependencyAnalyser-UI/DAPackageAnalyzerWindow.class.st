@@ -68,7 +68,7 @@ DAPackageAnalyzerWindow >> buildMorphWindowForTreeModel [
 	^ specWindow
 ]
 
-{ #category : #'initialization-filter' }
+{ #category : #'initialization - filter' }
 DAPackageAnalyzerWindow >> buildandAddAllMorph [
 	browser := packageAnalyzerTreeModel browser.
 	self addAllMorph

@@ -238,7 +238,7 @@ ClyFullBrowserMorph >> chooseClassesForNewMethod: aMethod [
 	^selectedClasses, {methodClass}
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 ClyFullBrowserMorph >> classGroupSelection [
 	^packageView selection asSelectedItemsOf: ClyClassGroup 
 ]
@@ -251,12 +251,12 @@ ClyFullBrowserMorph >> classScopeForMethods [
 	^self extendClassScopeForMethods: currentClassScope
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 ClyFullBrowserMorph >> classSelection [
 	^classView selection
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 ClyFullBrowserMorph >> classSelectionChanged [
 	
 	self changeStateBy: [
@@ -271,7 +271,7 @@ ClyFullBrowserMorph >> classSelectionChanged [
 	]
 ]
 
-{ #category : #'accessing view' }
+{ #category : #'accessing - view' }
 ClyFullBrowserMorph >> classView [
 	^ classView
 ]
@@ -283,12 +283,12 @@ ClyFullBrowserMorph >> compileANewClassFrom: aString notifying: aController star
 
 ]
 
-{ #category : #'accessing context' }
+{ #category : #'accessing - context' }
 ClyFullBrowserMorph >> createCommandContext [
 	^ClyFullBrowserGlobalContext for: self
 ]
 
-{ #category : #'accessing context' }
+{ #category : #'accessing - context' }
 ClyFullBrowserMorph >> currentMetaLevelOf: aClass [
 	^metaLevelScope metaLevelOf: aClass
 ]
@@ -408,12 +408,12 @@ ClyFullBrowserMorph >> methodGroupQuery: aQuery [
 	methodGroupQuery := aQuery
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 ClyFullBrowserMorph >> methodGroupSelection [
 	^methodGroupView selection
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 ClyFullBrowserMorph >> methodGroupSelectionChanged [
 		
 	| methodQueries |
@@ -428,17 +428,17 @@ ClyFullBrowserMorph >> methodGroupSelectionChanged [
 		showQueries: methodQueries as: (ClySortedQueryResult using: ClySortMethodBySelectorFunction ascending)
 ]
 
-{ #category : #'accessing view' }
+{ #category : #'accessing - view' }
 ClyFullBrowserMorph >> methodGroupView [
 	^ methodGroupView
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 ClyFullBrowserMorph >> methodSelection [
 	^methodView selection
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 ClyFullBrowserMorph >> methodSelectionChanged [
 	| actualMethods |
 
@@ -448,7 +448,7 @@ ClyFullBrowserMorph >> methodSelectionChanged [
 			eachGroup actualObject includesMethod: eachMethod ] ]
 ]
 
-{ #category : #'accessing view' }
+{ #category : #'accessing - view' }
 ClyFullBrowserMorph >> methodView [
 	^ methodView
 ]
@@ -534,18 +534,18 @@ ClyFullBrowserMorph >> newWindowTitle [
 	^newTitle
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 ClyFullBrowserMorph >> packageSelection [
 	^packageView selection asSelectedParentsOf: RPackage
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 ClyFullBrowserMorph >> packageSelectionChanged [
 	
 	self switchToFlatClasses 
 ]
 
-{ #category : #'accessing view' }
+{ #category : #'accessing - view' }
 ClyFullBrowserMorph >> packageView [
 	^ packageView
 ]
@@ -568,7 +568,7 @@ ClyFullBrowserMorph >> prepareInitialState [
 	self switchToPackages
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 ClyFullBrowserMorph >> projectChildrenSelection [
 	^packageView selection asSelectedParentsOf: ClyProjectChildItem
 ]
@@ -579,7 +579,7 @@ ClyFullBrowserMorph >> projectClass [
 	^ ClyManagedProject
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 ClyFullBrowserMorph >> projectSelection [
 	^packageView selection asSelectedParentsOf: self projectClass
 ]
@@ -798,7 +798,7 @@ ClyFullBrowserMorph >> switchToFlatClasses [
 	packageView selection groupItemsByTypeAndDo: [ :typeClass :items | 
 		classQueries addAll: (typeClass prepareClassQueriesFrom: items in: navigationEnvironment)].
 	
-	classView showQueries: classQueries as: ClyExtensionLastSortedClasses hierarchical
+	classView showQueries: classQueries as: ClyExtensionLastSortedClassResult hierarchical
 ]
 
 { #category : #navigation }

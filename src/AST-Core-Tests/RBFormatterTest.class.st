@@ -29,7 +29,7 @@ RBFormatterTest >> formatterClass [
   ^RBSimpleFormatter
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBFormatterTest >> testCoreSystem [
 	#(#Object #Behavior #Boolean #True #False #Integer #SmallInteger #Collection #String)
 		do: [ :each | 
@@ -40,7 +40,7 @@ RBFormatterTest >> testCoreSystem [
 				formatClass: class class ]
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBFormatterTest >> testFormatPragmaWithLastIsSymbolArgument [
 	| inputSource tree outputSource |
 	"formatter should not create invalid code by removing whitespace between #= and >"
@@ -64,7 +64,7 @@ RBFormatterTest >> testFormatPragmaWithLastIsSymbolArgument [
 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBFormatterTest >> testLiteralDynamicArray [
 	| source tree1 |
 	source := 'foo ^ { ''film'' . ''FILM''} '.
@@ -72,7 +72,7 @@ RBFormatterTest >> testLiteralDynamicArray [
 	self assert: ((self formatterClass new format: tree1) occurrencesOf: $.) equals: 1
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBFormatterTest >> testParseError [
 	| inputSource errorNode |
 	"parse error nodes should have the faulty code"
@@ -82,7 +82,7 @@ RBFormatterTest >> testParseError [
 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBFormatterTest >> testParseError2 [
 	| inputSource errorNode |
 	"parse error nodes should have the faulty code"
@@ -91,7 +91,7 @@ RBFormatterTest >> testParseError2 [
 	self assert: errorNode source equals: errorNode formattedCode
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBFormatterTest >> testPreserveLiteralArrayFormat [
 	| inputSource literalArrayNode |
 	"symbols within a literal array can omit the # character, if it is used that way,
@@ -102,7 +102,7 @@ RBFormatterTest >> testPreserveLiteralArrayFormat [
 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBFormatterTest >> testPreserveLiteralNumberFormat [
 	| inputSource numbersNode |
 	"Literal numbers can be written in different ways, integer, integer with

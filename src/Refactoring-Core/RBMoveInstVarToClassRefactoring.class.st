@@ -16,9 +16,9 @@ Class {
 	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : #'as yet unclassified' }
-RBMoveInstVarToClassRefactoring class >> model: aRBSmalltalk variable: aVarName class: aClass oldClass: anOldClass [
-	^(self new)
+{ #category : #'instance creation' }
+RBMoveInstVarToClassRefactoring class >> model: aRBSmalltalk variable: aVarName fromClass: anOldClass toClass: aClass [
+	^ self new
 		model: aRBSmalltalk;
 		variable: aVarName class: aClass;
 		oldClass: anOldClass;
@@ -52,10 +52,11 @@ RBMoveInstVarToClassRefactoring >> oldClass: aClass [
 
 { #category : #preconditions }
 RBMoveInstVarToClassRefactoring >> preconditions [
-	^ RBCondition
+	^ (RBCondition definesInstanceVariable: variableName asString in: oldClass) & 
+		(RBCondition
 		withBlock: [ 
 			(class hierarchyDefinesInstanceVariable: variableName)
-				ifTrue: [ self refactoringError: 'Already defined in hierarchy' ].true ]
+				ifTrue: [ self refactoringError: 'Already defined in hierarchy' ].true ])
 ]
 
 { #category : #transforming }

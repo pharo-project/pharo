@@ -167,7 +167,7 @@ RBSelectorEnvironment >> asSelectorEnvironment [
 	^ self
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBSelectorEnvironment >> classNames [
 	^ IdentitySet new
 		addAll: classSelectors keys;
@@ -193,7 +193,7 @@ RBSelectorEnvironment >> classes: classArray metaClasses: metaArray [
 		do: [ :each | metaClassSelectors at: each first put: each last asIdentitySet ]
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBSelectorEnvironment >> classesDo: aBlock [ 
 	classSelectors keysDo: [ :each | 
 		| class |

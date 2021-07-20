@@ -4,7 +4,7 @@ Class {
 	#category : #'Kernel-Tests-Extended-Methods'
 }
 
-{ #category : #example }
+{ #category : #examples }
 SuperClassUsedInInstructionStreamTest >> aSuperMethod: anInteger with: anotherInteger [
 
 	^ 42

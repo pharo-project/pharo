@@ -44,22 +44,22 @@ AthensCairoStrokePaint >> athensFillRectangle: aRect on: aCanvas [
 
 ]
 
-{ #category : #'setting cap styles' }
+{ #category : #'setting - cap styles' }
 AthensCairoStrokePaint >> capButt [
 	capStyle := CAIRO_LINE_CAP_BUTT.
 ]
 
-{ #category : #'setting cap styles' }
+{ #category : #'setting - cap styles' }
 AthensCairoStrokePaint >> capRound [
 	capStyle := CAIRO_LINE_CAP_ROUND
 ]
 
-{ #category : #'setting cap styles' }
+{ #category : #'setting - cap styles' }
 AthensCairoStrokePaint >> capSquare [
 	capStyle := CAIRO_LINE_CAP_SQUARE
 ]
 
-{ #category : #'setting dashes' }
+{ #category : #'setting - dashes' }
 AthensCairoStrokePaint >> dashes: anAlternateCollectionOfLenghts offset: anOffset [
 	dashLenghts := anAlternateCollectionOfLenghts.
 	dashOffset := anOffset asFloat.
@@ -72,17 +72,17 @@ AthensCairoStrokePaint >> initialize [
 	self setDefaults
 ]
 
-{ #category : #'setting join styles' }
+{ #category : #'setting - join styles' }
 AthensCairoStrokePaint >> joinBevel [
 	joinStyle := CAIRO_LINE_JOIN_BEVEL
 ]
 
-{ #category : #'setting join styles' }
+{ #category : #'setting - join styles' }
 AthensCairoStrokePaint >> joinMiter [
 	joinStyle := CAIRO_LINE_JOIN_MITER
 ]
 
-{ #category : #'setting join styles' }
+{ #category : #'setting - join styles' }
 AthensCairoStrokePaint >> joinRound [
 	joinStyle := CAIRO_LINE_JOIN_ROUND 
 ]

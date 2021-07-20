@@ -11,6 +11,11 @@ Class {
 	#category : #'Glamour-Announcements'
 }
 
+{ #category : #testing }
+GLMPresentationsChanged class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMPresentationsChanged >> oldPresentations [ 
 	"The presentations that were present on the pane before the change." 
@@ -39,7 +44,7 @@ GLMPresentationsChanged >> pane: aPane [
 	pane := aPane
 ]
 
-{ #category : #'accessing-convenience' }
+{ #category : #'accessing - convenience' }
 GLMPresentationsChanged >> presentations [ 
 	"The presentationt that are currently present on the pane." 
 	 

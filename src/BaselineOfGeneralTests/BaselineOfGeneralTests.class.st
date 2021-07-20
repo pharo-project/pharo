@@ -13,6 +13,7 @@ BaselineOfGeneralTests >> baseline: spec [
 		spec 
 			package: 'Debugging-Utils-Tests';
 			package: 'Tests';
+			package: 'NumberParser-Tests';
 			package: 'AST-Core-Tests';			
 			package: 'RPackage-Tests';
 			package: 'Monticello-Tests';	"required by MonticelloMocks"
@@ -25,8 +26,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'ConfigurationCommandLineHandler-Tests';
 			package: 'MetacelloCommandLineHandler-Tests';
 			package: 'Debugger-Model-Tests';
-			package: 'Debugger-Oups-Tests';
-			package: 'EmergencyDebugger-Tests';
+			package: 'Debugger-Oups-Tests';		
 			package: 'EmbeddedFreeType-Tests';
 			
 			package: 'Ombu-Tests';

@@ -10,19 +10,19 @@ Class {
 	#category : #'GT-Inspector'
 }
 
-{ #category : #'private building' }
+{ #category : #'private - building' }
 GTRawObjectVariablesBrowser >> basicVariableNodesFor: anObject [
 
 	^ #()
 ]
 
-{ #category : #'private building' }
+{ #category : #'private - building' }
 GTRawObjectVariablesBrowser >> basicVariableNodesFor: anObject in: aCollection [
 
 	self subclassResponsibility 
 ]
 
-{ #category : #'private building' }
+{ #category : #'private - building' }
 GTRawObjectVariablesBrowser >> childrenVariableNodesForNode: aNode [
 	| variableNodes |
 
@@ -57,7 +57,7 @@ GTRawObjectVariablesBrowser >> compose [
 	self wantsAutomaticRefresh: true
 ]
 
-{ #category : #'private building' }
+{ #category : #'private - building' }
 GTRawObjectVariablesBrowser >> evaluatorIn: composite [
 	^ composite pharoScript
 		doItReceiver: [ :object | object ];
@@ -99,7 +99,7 @@ GTRawObjectVariablesBrowser >> generateHashFor: anObject [
 	
 ]
 
-{ #category : #'private building' }
+{ #category : #'private - building' }
 GTRawObjectVariablesBrowser >> iconFor: anObject [
 		
 	^ [ (anObject gtInspectorIcon)
@@ -107,12 +107,12 @@ GTRawObjectVariablesBrowser >> iconFor: anObject [
 			on: Error do: [ :error | self iconFor: anObject error: error ]
 ]
 
-{ #category : #'private building' }
+{ #category : #'private - building' }
 GTRawObjectVariablesBrowser >> iconFor: anEyeElement error: error [
 	^ self iconNamed: #smallWarningIcon
 ]
 
-{ #category : #'private building' }
+{ #category : #'private - building' }
 GTRawObjectVariablesBrowser >> printStringOf: anObject [
 	self subclassResponsibility
 ]
@@ -138,7 +138,7 @@ GTRawObjectVariablesBrowser >> shouldRefresh [
 	^ result
 ]
 
-{ #category : #'private building' }
+{ #category : #'private - building' }
 GTRawObjectVariablesBrowser >> stringWithoutInitialCommentFrom: aString [
 	^ (aString trimLeft isEmpty not and: [ aString trimLeft first = $" ])
 		ifFalse: [ aString trimRight ]
@@ -161,7 +161,7 @@ GTRawObjectVariablesBrowser >> stringWithoutInitialCommentFrom: aString [
 				to: aString size) trimBoth ]
 ]
 
-{ #category : #'private building' }
+{ #category : #'private - building' }
 GTRawObjectVariablesBrowser >> updateVariableNode: aNode basedOn: aString [
 	| aResult |
 
@@ -175,7 +175,7 @@ GTRawObjectVariablesBrowser >> updateVariableNode: aNode basedOn: aString [
 	aNode save: aResult
 ]
 
-{ #category : #'private building' }
+{ #category : #'private - building' }
 GTRawObjectVariablesBrowser >> variableNodesFor: anObject [
 	| variableNodes |
 
@@ -189,7 +189,7 @@ GTRawObjectVariablesBrowser >> variableNodesFor: anObject [
 	^ variableNodes
 ]
 
-{ #category : #'private building' }
+{ #category : #'private - building' }
 GTRawObjectVariablesBrowser >> variablesIn: composite [
 	^ composite fastTreeTable
 		useCache;

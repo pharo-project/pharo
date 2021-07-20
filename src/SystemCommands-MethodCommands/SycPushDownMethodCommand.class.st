@@ -43,17 +43,6 @@ SycPushDownMethodCommand >> defaultMenuItemName [
 ]
 
 { #category : #execution }
-SycPushDownMethodCommand >> execute [
-
-	self executeRefactorings
-]
-
-{ #category : #testing }
-SycPushDownMethodCommand >> isComplexRefactoring [
-	^true
-]
-
-{ #category : #execution }
 SycPushDownMethodCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	self selectMethods.
@@ -61,13 +50,12 @@ SycPushDownMethodCommand >> prepareFullExecutionInContext: aToolContext [
 
 { #category : #execution }
 SycPushDownMethodCommand >> selectMethods [
-	|selectedMethods dialog class|
-	selectedMethods := methods copy asOrderedCollection.
+	| dialog class|
 	class := methods first origin.
 	dialog := RBMethodsSelectionPresenter 
 		   label: 'Push down methods from ', class name
 			withItems: (class methods sort: [ :a :b | a asString < b asString ]) asOrderedCollection
-			selecting: selectedMethods. 
+			selecting: methods asOrderedCollection. 
 	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
 	methods := dialog presenter selectedItems.
 ]

@@ -11,7 +11,7 @@ RBProtectVariableTransformationTest >> setUp [
 	model := self abstractVariableTestData.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBProtectVariableTransformationTest >> testAccessorsAlreadyExist [
 
 	| class |
@@ -37,7 +37,7 @@ RBProtectVariableTransformationTest >> testAccessorsAlreadyExist [
 			self instVarName11: self instVarName11 + instVarName2 + ClassVarName1')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBProtectVariableTransformationTest >> testClassVariable [
 
 	| refactoring class |
@@ -71,7 +71,7 @@ RBProtectVariableTransformationTest >> testClassVariable [
 								classified: aSmalllintContext protocols]]')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBProtectVariableTransformationTest >> testClassVariableInModel [
 
 	| class |
@@ -108,7 +108,7 @@ RBProtectVariableTransformationTest >> testClassVariableInModel [
 				instVarName1 := instVarName1 + instVarName2 + self class classVarName1')"
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBProtectVariableTransformationTest >> testMetaclass [
 
 	| class |
@@ -131,7 +131,7 @@ RBProtectVariableTransformationTest >> testMetaclass [
 			equals: (self parseMethod: 'zzz ^self foo: self foo1 + self foo1 * 2')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBProtectVariableTransformationTest >> testMetaclassFailure [
 
 	self shouldFail: (RBProtectVariableTransformation 
@@ -140,7 +140,7 @@ RBProtectVariableTransformationTest >> testMetaclassFailure [
 							asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBProtectVariableTransformationTest >> testRefactoring [
 
 	| refactoring class |
@@ -168,7 +168,7 @@ RBProtectVariableTransformationTest >> testRefactoring [
 						classified: aSmalllintContext protocols]]')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBProtectVariableTransformationTest >> testTransform [
 
 	| transformation class |
@@ -205,7 +205,7 @@ RBProtectVariableTransformationTest >> testTransform [
 					classified: aSmalllintContext protocols]]')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBProtectVariableTransformationTest >> testVariableDoesNotExist [
 
 	self
@@ -219,7 +219,7 @@ RBProtectVariableTransformationTest >> testVariableDoesNotExist [
 						asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBProtectVariableTransformationTest >> testVariableIsNotAccessed [
 
 	| transformation class |
@@ -237,7 +237,7 @@ RBProtectVariableTransformationTest >> testVariableIsNotAccessed [
 	self assert: (class directlyDefinesLocalMethod: #instVar:).
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBProtectVariableTransformationTest >> testVariableNotDirectlyDefined [
 
 	self 
@@ -256,7 +256,7 @@ RBProtectVariableTransformationTest >> testVariableNotDirectlyDefined [
 						asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBProtectVariableTransformationTest >> testWithAssignment [
 
 	| refactoring class |

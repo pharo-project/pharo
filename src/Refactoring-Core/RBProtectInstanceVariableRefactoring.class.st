@@ -10,7 +10,7 @@ Class {
 	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : #'private-accessing' }
+{ #category : #'private - accessing' }
 RBProtectInstanceVariableRefactoring >> getterSetterMethods [
 	| matcher |
 	matcher := self parseTreeSearcher.

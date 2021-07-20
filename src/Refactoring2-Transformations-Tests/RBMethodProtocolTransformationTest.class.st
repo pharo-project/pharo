@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 RBMethodProtocolTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBMethodProtocolTransformation
@@ -14,7 +14,7 @@ RBMethodProtocolTransformationTest >> testClassDoesNotExist [
 							asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBMethodProtocolTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBMethodProtocolTransformation
@@ -24,7 +24,7 @@ RBMethodProtocolTransformationTest >> testMethodDoesNotExist [
 							asRefactoring
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBMethodProtocolTransformationTest >> testRefactoring [
 	| refactoring |
 	self assert: (RBDummyEmptyClass organization protocolOrganizer protocolNamed: 'empty protocol 2') isEmpty.
@@ -40,7 +40,7 @@ RBMethodProtocolTransformationTest >> testRefactoring [
 	self assert: (RBDummyEmptyClass organization protocolOrganizer protocolNamed: 'empty protocol 2') isEmpty
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBMethodProtocolTransformationTest >> testTransform [
 
 	| transformation |

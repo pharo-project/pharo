@@ -38,7 +38,7 @@ ClassMethodBrowser class >> defaultSpec2 [
 		yourself
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ClassMethodBrowser class >> example [
 	<sampleInstance>
 	| example |

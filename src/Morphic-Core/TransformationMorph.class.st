@@ -11,7 +11,7 @@ Class {
 	#category : #'Morphic-Core-Support'
 }
 
-{ #category : #example }
+{ #category : #examples }
 TransformationMorph class >> example1 [
 	| stringMorph transformationMorph |
 	stringMorph := 'vertical text' asMorph.
@@ -65,7 +65,7 @@ TransformationMorph >> computeBounds [
 	fullBounds := bounds.
 ]
 
-{ #category : #'geometry etoy' }
+{ #category : #'geometry - etoy' }
 TransformationMorph >> degreesOfFlex [
 	"Return any rotation due to flexing"
 	^ self rotationDegrees
@@ -122,7 +122,7 @@ TransformationMorph >> hasNoScaleOrRotation [
 
 ]
 
-{ #category : #'geometry etoy' }
+{ #category : #'geometry - etoy' }
 TransformationMorph >> heading [
 	"End recusion when necessary."
 	| rendee |
@@ -176,7 +176,7 @@ TransformationMorph >> printOn: aStream [
 		ifFalse: [aStream nextPutAll: ' on ' ; print: submorphs first ]
 ]
 
-{ #category : #'geometry etoy' }
+{ #category : #'geometry - etoy' }
 TransformationMorph >> referencePosition [
 	"Answer the  receiver's reference position, bullet-proofed against infinite recursion in the unlikely but occasionally-seen case that I am my own renderee"
 
@@ -217,7 +217,7 @@ TransformationMorph >> renderedMorph [
 	^self firstSubmorph renderedMorph
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 TransformationMorph >> replaceSubmorph: oldMorph by: newMorph [
 	| t b |
 	t := transform.
@@ -260,7 +260,7 @@ TransformationMorph >> scaleToMatch: aPoint [
 	self adjustAfter:[self scale: ((scaleFactor min: 8.0) max: 0.1)].
 ]
 
-{ #category : #'geometry etoy' }
+{ #category : #'geometry - etoy' }
 TransformationMorph >> setDirectionFrom: aPoint [
 	| delta degrees inner |
 	inner := self renderedMorph.
@@ -290,7 +290,7 @@ TransformationMorph >> transformedBy: aTransform [
 	self changed.
 ]
 
-{ #category : #'geometry etoy' }
+{ #category : #'geometry - etoy' }
 TransformationMorph >> visible: aBoolean [
 	"Set the receiver's visibility property"
 

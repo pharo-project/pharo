@@ -12,7 +12,7 @@ RBPullUpClassVariableRefactoring >> preconditions [
 	^(RBCondition isMetaclass: class) not
 ]
 
-{ #category : #'private-accessing' }
+{ #category : #'private - accessing' }
 RBPullUpClassVariableRefactoring >> subclassDefiningVariable [
 	| subclasses |
 	subclasses := class allSubclasses 

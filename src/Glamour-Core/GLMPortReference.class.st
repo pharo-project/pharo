@@ -10,6 +10,11 @@ Class {
 	#category : #'Glamour-Core'
 }
 
+{ #category : #testing }
+GLMPortReference class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMPortReference >> port [ 
 	 

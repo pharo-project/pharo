@@ -30,7 +30,7 @@ The startup and shutdown lists can be accessed through the messages:
 
 In general terms, the shutdown list is the startup list reversed.
 
-Upon a startup [shutdown], all elements in the startup list are sent the message #startup: [#shutdown:] with a boolean as argument that indicates wether the image is being saved [closed].
+Upon a startup [shutdown], all elements in the startup list are sent the message #startup: [#shutdown:] with a boolean as argument that indicates whether the image is being saved [closed].
 
 Internally, startup and shutdown lists are prioritised. Priorities are managed by startup categories. By default the session manager includes the following categories in decreasing priority order:
 

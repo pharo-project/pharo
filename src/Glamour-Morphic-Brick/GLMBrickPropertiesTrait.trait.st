@@ -102,7 +102,7 @@ GLMBrickPropertiesTrait >> data: anObject [
 	^ self setProperty: #brickDataObject  toValue:  anObject
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrickPropertiesTrait >> hasProperty: aSymbol [
 
 	^ self explicitRequirement
@@ -126,13 +126,13 @@ GLMBrickPropertiesTrait >> onThemerChanged [
 
 ]
 
-{ #category : #'private-properties' }
+{ #category : #'private - properties' }
 GLMBrickPropertiesTrait >> privateThemer [
 
 	^ self valueOfProperty: #brickThemer ifAbsentPut: [ nil ]
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrickPropertiesTrait >> removeProperty: aSymbol [
 	
 	^ self explicitRequirement
@@ -150,7 +150,7 @@ GLMBrickPropertiesTrait >> renderer: aRenderer [
 	self setProperty: #brickRenderer toValue: aRenderer
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrickPropertiesTrait >> setProperty: aSymbol toValue: anObject [
 	
 	^ self explicitRequirement
@@ -226,19 +226,19 @@ GLMBrickPropertiesTrait >> themerChanged [
 	self subbricks do: #themerChanged
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrickPropertiesTrait >> valueOfProperty: aSymbol [
 	
 	^ self explicitRequirement
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrickPropertiesTrait >> valueOfProperty: aSymbol ifAbsent: aBlock [
 	
 	^ self explicitRequirement
 ]
 
-{ #category : #'private-extension' }
+{ #category : #'private - extension' }
 GLMBrickPropertiesTrait >> valueOfProperty: aSymbol ifAbsentPut: aBlock [ 
 	
 	^ self explicitRequirement

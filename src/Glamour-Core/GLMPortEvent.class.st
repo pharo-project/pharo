@@ -18,6 +18,11 @@ Class {
 	#category : #'Glamour-Core'
 }
 
+{ #category : #testing }
+GLMPortEvent class >> isDeprecated [
+	^ true
+]
+
 { #category : #'instance creation' }
 GLMPortEvent class >> on: aPort previouslyValued: anObject [ 
 	^ self new 
@@ -65,7 +70,7 @@ GLMPortEvent >> oldValue [
 	^oldValue
 ]
 
-{ #category : #'accessing-convenience' }
+{ #category : #'accessing - convenience' }
 GLMPortEvent >> pane [ 
 	 
 	^self port pane
@@ -77,7 +82,7 @@ GLMPortEvent >> port [
 	^port
 ]
 
-{ #category : #'accessing-convenience' }
+{ #category : #'accessing - convenience' }
 GLMPortEvent >> portName [ 
 	 
 	^self port name
@@ -98,7 +103,7 @@ GLMPortEvent >> transmissionContext [
 	^ transmissionContext
 ]
 
-{ #category : #'accessing-convenience' }
+{ #category : #'accessing - convenience' }
 GLMPortEvent >> value [ 
 	 
 	^self port value

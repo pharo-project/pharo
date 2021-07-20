@@ -14,6 +14,11 @@ GTDebuggerSmokeTest class >> isAbstract [
 	^ self name = #GTDebuggerSmokeTest
 ]
 
+{ #category : #testing }
+GTDebuggerSmokeTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #asserting }
 GTDebuggerSmokeTest >> assertDebuggerClosing [
 	

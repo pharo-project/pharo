@@ -22,6 +22,11 @@ Class {
 	#category : #'Glamour-Core'
 }
 
+{ #category : #testing }
+GLMTransmission class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMTransmission >> activeOrigins [ 
 	 
@@ -249,7 +254,7 @@ GLMTransmission >> meetsCondition [
 	^ self condition glamourValue: originValues
 ]
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 GLMTransmission >> originReferences [
 	"Returns the set of ports (instances of PortReference) the transmission receives its data from"
 	^ origins ifNil: [origins := OrderedCollection new]

@@ -4,12 +4,12 @@ Class {
 	#category : #'Spec-Tests-Core-Widgets'
 }
 
-{ #category : #running }
+{ #category : #accessing }
 TextPresenterTest >> classToTest [
 	^ TextPresenter
 ]
 
-{ #category : #running }
+{ #category : #accessing }
 TextPresenterTest >> initializationText [
 	testedInstance text: 'Text for tests.'
 ]

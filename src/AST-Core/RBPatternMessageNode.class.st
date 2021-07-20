@@ -47,17 +47,17 @@ RBPatternMessageNode >> copyInContext: aDictionary [
 		arguments: (self copyList: self arguments inContext: aDictionary)
 ]
 
-{ #category : #'testing-matching' }
+{ #category : #'testing - matching' }
 RBPatternMessageNode >> isList [
 	^isCascadeList and: [parent notNil and: [parent isCascade]]
 ]
 
-{ #category : #'testing-matching' }
+{ #category : #'testing - matching' }
 RBPatternMessageNode >> isPatternNode [
 	^true
 ]
 
-{ #category : #'testing-matching' }
+{ #category : #'testing - matching' }
 RBPatternMessageNode >> isSelectorList [
 	^isList
 ]

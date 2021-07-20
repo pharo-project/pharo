@@ -4,7 +4,7 @@ Class {
 	#category : #'Spec-Tests-PolyWidgets-Toolbar'
 }
 
-{ #category : #running }
+{ #category : #accessing }
 MethodToolbarTest >> classToTest [
 	^ MethodToolbar
 ]

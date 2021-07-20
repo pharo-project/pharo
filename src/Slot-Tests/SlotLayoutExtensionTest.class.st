@@ -32,7 +32,7 @@ SlotLayoutExtensionTest >> shouldnt: superclassBlock extendWith: subclassBlock [
 		raise: IncompatibleLayoutConflict
 ]
 
-{ #category : #'tests-valid extensions' }
+{ #category : #'tests - valid extensions' }
 SlotLayoutExtensionTest >> testByteCanExtendByte [
 
 	self should: [ :builder | 
@@ -41,7 +41,7 @@ SlotLayoutExtensionTest >> testByteCanExtendByte [
 			builder layoutClass: ByteLayout ]
 ]
 
-{ #category : #'tests-invalid extensions' }
+{ #category : #'tests - invalid extensions' }
 SlotLayoutExtensionTest >> testByteCannotExtendPointerWithFields [
 
 	self shouldnt: [ :builder | 
@@ -52,7 +52,7 @@ SlotLayoutExtensionTest >> testByteCannotExtendPointerWithFields [
 			builder layoutClass: ByteLayout ]
 ]
 
-{ #category : #'tests-invalid extensions' }
+{ #category : #'tests - invalid extensions' }
 SlotLayoutExtensionTest >> testByteCannotExtendWord [
 
 	self shouldnt: [ :builder | 
@@ -61,7 +61,7 @@ SlotLayoutExtensionTest >> testByteCannotExtendWord [
 			builder layoutClass: ByteLayout ]
 ]
 
-{ #category : #'tests-valid extensions' }
+{ #category : #'tests - valid extensions' }
 SlotLayoutExtensionTest >> testCompiledMethodCanBeExtended [
 
 	self should: [ :builder | 
@@ -70,7 +70,7 @@ SlotLayoutExtensionTest >> testCompiledMethodCanBeExtended [
 			builder layoutClass: CompiledMethodLayout ]
 ]
 
-{ #category : #'tests-invalid extensions' }
+{ #category : #'tests - invalid extensions' }
 SlotLayoutExtensionTest >> testInstanceVariableNamesMetaclassInterface [
 	"Add instance variables using the Metaclass interface"
 	
@@ -90,7 +90,7 @@ SlotLayoutExtensionTest >> testInstanceVariableNamesMetaclassInterface [
 	self assert: (anotherClass class allInstVarNames includesAll: #(x y)).
 ]
 
-{ #category : #'tests-valid extensions' }
+{ #category : #'tests - valid extensions' }
 SlotLayoutExtensionTest >> testPointerCanExtendPointer [
 
 	self should: [ :builder | 
@@ -99,7 +99,7 @@ SlotLayoutExtensionTest >> testPointerCanExtendPointer [
 			builder layoutClass: FixedLayout ]
 ]
 
-{ #category : #'tests-valid extensions' }
+{ #category : #'tests - valid extensions' }
 SlotLayoutExtensionTest >> testPointerCanExtendVariable [
 
 	self should: [ :builder | 
@@ -108,7 +108,7 @@ SlotLayoutExtensionTest >> testPointerCanExtendVariable [
 			builder layoutClass: FixedLayout ]
 ]
 
-{ #category : #'tests-invalid extensions' }
+{ #category : #'tests - invalid extensions' }
 SlotLayoutExtensionTest >> testPointerCannotExtendByte [
 
 	self shouldnt: [ :builder | 
@@ -117,7 +117,7 @@ SlotLayoutExtensionTest >> testPointerCannotExtendByte [
 			builder layoutClass: FixedLayout ]
 ]
 
-{ #category : #'tests-invalid extensions' }
+{ #category : #'tests - invalid extensions' }
 SlotLayoutExtensionTest >> testPointerCannotExtendWord [
 
 	self shouldnt: [ :builder | 
@@ -126,7 +126,7 @@ SlotLayoutExtensionTest >> testPointerCannotExtendWord [
 			builder layoutClass: FixedLayout ]
 ]
 
-{ #category : #'tests-valid extensions' }
+{ #category : #'tests - valid extensions' }
 SlotLayoutExtensionTest >> testPointerWithVariableExtensionIsNowVariable [
 	"This test case reproduces a real bug."
 
@@ -149,7 +149,7 @@ SlotLayoutExtensionTest >> testPointerWithVariableExtensionIsNowVariable [
 	self assert: subclass isVariable.
 ]
 
-{ #category : #'tests-valid extensions' }
+{ #category : #'tests - valid extensions' }
 SlotLayoutExtensionTest >> testVariableCanExtendPointer [
 
 	self should: [ :builder | 
@@ -158,7 +158,7 @@ SlotLayoutExtensionTest >> testVariableCanExtendPointer [
 			builder layoutClass: VariableLayout ]
 ]
 
-{ #category : #'tests-valid extensions' }
+{ #category : #'tests - valid extensions' }
 SlotLayoutExtensionTest >> testVariableCanExtendVariable [
 
 	self should: [ :builder | 
@@ -167,7 +167,7 @@ SlotLayoutExtensionTest >> testVariableCanExtendVariable [
 			builder layoutClass: VariableLayout ]
 ]
 
-{ #category : #'tests-invalid extensions' }
+{ #category : #'tests - invalid extensions' }
 SlotLayoutExtensionTest >> testVariableCannotExtendByte [
 
 	self shouldnt: [ :builder | 
@@ -176,7 +176,7 @@ SlotLayoutExtensionTest >> testVariableCannotExtendByte [
 			builder layoutClass: VariableLayout ]
 ]
 
-{ #category : #'tests-invalid extensions' }
+{ #category : #'tests - invalid extensions' }
 SlotLayoutExtensionTest >> testVariableCannotExtendWord [
 
 	self shouldnt: [ :builder | 
@@ -185,7 +185,7 @@ SlotLayoutExtensionTest >> testVariableCannotExtendWord [
 			builder layoutClass: VariableLayout ]
 ]
 
-{ #category : #'tests-valid extensions' }
+{ #category : #'tests - valid extensions' }
 SlotLayoutExtensionTest >> testWordCanExtendWord [
 
 	self should: [ :builder | 
@@ -194,7 +194,7 @@ SlotLayoutExtensionTest >> testWordCanExtendWord [
 			builder layoutClass: WordLayout ]
 ]
 
-{ #category : #'tests-invalid extensions' }
+{ #category : #'tests - invalid extensions' }
 SlotLayoutExtensionTest >> testWordCannotExtendByte [
 
 	self shouldnt: [ :builder | 
@@ -203,7 +203,7 @@ SlotLayoutExtensionTest >> testWordCannotExtendByte [
 			builder layoutClass: WordLayout ]
 ]
 
-{ #category : #'tests-invalid extensions' }
+{ #category : #'tests - invalid extensions' }
 SlotLayoutExtensionTest >> testWordCannotExtendPointerWithFields [
 
 	self shouldnt: [ :builder | 

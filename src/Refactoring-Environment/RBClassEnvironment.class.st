@@ -74,7 +74,7 @@ RBClassEnvironment >> basisObjects [
 	^ self classes
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBClassEnvironment >> classNames [
 	^ IdentitySet new
 		addAll: classes;
@@ -102,7 +102,7 @@ RBClassEnvironment >> classes: aCollection [
 	aCollection do: [ :each | self addClass: each ]
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBClassEnvironment >> classesDo: aBlock [ 
 	classes do: [ :each | 
 		| class |

@@ -25,7 +25,7 @@ Class {
 
 { #category : #'instance creation' }
 RBInlineMethodRefactoring class >> inline: anInterval inMethod: aSelector forClass: aClass [ 
-	^self new 
+	^ self new 
 		inline: anInterval
 		inMethod: aSelector
 		forClass: aClass
@@ -33,7 +33,7 @@ RBInlineMethodRefactoring class >> inline: anInterval inMethod: aSelector forCla
 
 { #category : #'instance creation' }
 RBInlineMethodRefactoring class >> model: aRBSmalltalk inline: anInterval inMethod: aSelector forClass: aClass [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		inline: anInterval
 			inMethod: aSelector
@@ -183,7 +183,7 @@ RBInlineMethodRefactoring >> insertInlinedMethod [
 			node := node parent].
 	node parent isReturn 
 		ifTrue: [node := node parent]
-		ifFalse: [self removeReturns].
+		ifFalse: [inlineParseTree := self removeReturnsOf: inlineParseTree].
 	self replaceArguments.
 	self inlineSourceReplacing: node.
 	sourceParseTree removeDeadCode.
@@ -335,15 +335,6 @@ RBInlineMethodRefactoring >> removeImmediateBlocks [
 ]
 
 { #category : #transforming }
-RBInlineMethodRefactoring >> removeReturns [
-	| rewriter |
-	rewriter := self parseTreeRewriter.
-	rewriter replace: '^``@object' with: '``@object'.
-	(rewriter executeTree: inlineParseTree) 
-		ifTrue: [inlineParseTree := rewriter tree]
-]
-
-{ #category : #transforming }
 RBInlineMethodRefactoring >> renameConflictingTemporaries [
 	inlineParseTree allDefinedVariables 
 		do: [:each | self renameConflictingTemporary: each]
@@ -411,7 +402,7 @@ RBInlineMethodRefactoring >> rewriteCascadedMessage [
 				detect: [:i | sourceMessage == (messages at: i)]
 				ifNone: [0].
 	inlineParseTree body addNodesFirst: (messages copyFrom: 1 to: index - 1).
-	self removeReturns.
+	inlineParseTree := self removeReturnsOf: inlineParseTree.
 	inlineParseTree body 
 		addNodes: (messages copyFrom: index + 1 to: messages size).
 	inlineParseTree addReturn

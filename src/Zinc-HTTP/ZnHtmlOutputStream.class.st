@@ -71,7 +71,7 @@ ZnHtmlOutputStream >> close [
 	stream close
 ]
 
-{ #category : #'private html' }
+{ #category : #'private - html' }
 ZnHtmlOutputStream >> closeTag: tag [
 	stream
 		nextPut: $<;
@@ -185,7 +185,7 @@ ZnHtmlOutputStream >> on: writeStream [
 	stream := writeStream
 ]
 
-{ #category : #'private html' }
+{ #category : #'private - html' }
 ZnHtmlOutputStream >> openTag: tag [
 	stream
 		nextPut: $<;
@@ -193,7 +193,7 @@ ZnHtmlOutputStream >> openTag: tag [
 		nextPut: $>
 ]
 
-{ #category : #'private html' }
+{ #category : #'private - html' }
 ZnHtmlOutputStream >> openTag: tag attribute: name value: value [
 	stream
 		nextPut: $<;
@@ -207,7 +207,7 @@ ZnHtmlOutputStream >> openTag: tag attribute: name value: value [
 	stream nextPut: $>
 ]
 
-{ #category : #'private html' }
+{ #category : #'private - html' }
 ZnHtmlOutputStream >> openTag: tag attributes: attributes [
 	stream
 		nextPut: $<;
@@ -235,7 +235,7 @@ ZnHtmlOutputStream >> print: object [
 	object printOn: self
 ]
 
-{ #category : #'private html' }
+{ #category : #'private - html' }
 ZnHtmlOutputStream >> renderAttributes: attributes [
 	attributes pairsDo: [ :name :value | 
 		stream space; nextPutAll: name.

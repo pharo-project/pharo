@@ -20,10 +20,15 @@ GlamourPresentationPresenter class >> defaultSpec [
 	^ SpecLayout composed add: #presentation
 ]
 
-{ #category : #example }
+{ #category : #examples }
 GlamourPresentationPresenter class >> exampleGLMPharoScript [
 	<sampleInstance>
 	^ GlamourPresentationPresenter new openWithSpec.
+]
+
+{ #category : #testing }
+GlamourPresentationPresenter class >> isDeprecated [
+	^ true
 ]
 
 { #category : #accessing }

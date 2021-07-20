@@ -22,6 +22,11 @@ GLMBrickBorder class >> initialize [
 	Left := 4
 ]
 
+{ #category : #testing }
+GLMBrickBorder class >> isDeprecated [
+	^ true
+]
+
 { #category : #color }
 GLMBrickBorder >> color [
 

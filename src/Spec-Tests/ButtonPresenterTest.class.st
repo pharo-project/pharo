@@ -7,12 +7,12 @@ Class {
 	#category : #'Spec-Tests-Core-Widgets'
 }
 
-{ #category : #running }
+{ #category : #accessing }
 ButtonPresenterTest >> classToTest [
 ^ ButtonPresenter
 ]
 
-{ #category : #running }
+{ #category : #accessing }
 ButtonPresenterTest >> morph [
 	^ testedInstance widget widget
 ]

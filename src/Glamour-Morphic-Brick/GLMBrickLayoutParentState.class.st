@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Layouts'
 }
 
+{ #category : #testing }
+GLMBrickLayoutParentState class >> isDeprecated [
+	^ true
+]
+
 { #category : #initialization }
 GLMBrickLayoutParentState >> defaultPercent [
 

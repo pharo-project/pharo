@@ -51,7 +51,7 @@ RBProgramNodeTest >> node [
 	^ node ifNil: [ node := RBProgramNode new ]
 ]
 
-{ #category : #'testing-adding' }
+{ #category : #'tests - adding' }
 RBProgramNodeTest >> testAddNode [
 	| tree treeNode |
 	tree := self parseExpression: '1. 2'.
@@ -65,7 +65,7 @@ RBProgramNodeTest >> testAddNode [
 	self assert: tree statements last equals: treeNode
 ]
 
-{ #category : #'testing-adding' }
+{ #category : #'tests - adding' }
 RBProgramNodeTest >> testAddNodeBefore [
 	| tree treeNode |
 	tree := self parseExpression: '1. 3'.
@@ -83,7 +83,7 @@ RBProgramNodeTest >> testAddNodeBefore [
 	self assert: (tree statements at: 2) equals: treeNode
 ]
 
-{ #category : #'testing-adding' }
+{ #category : #'tests - adding' }
 RBProgramNodeTest >> testAddNodeFirst [
 	| tree treeNode |
 	tree := self parseExpression: '2. 3'.
@@ -97,7 +97,7 @@ RBProgramNodeTest >> testAddNodeFirst [
 	self assert: tree statements first equals: treeNode
 ]
 
-{ #category : #'testing-adding' }
+{ #category : #'tests - adding' }
 RBProgramNodeTest >> testAddNodes [
 	| tree treeNodes |
 	tree := self parseExpression: '1. 2'.
@@ -113,7 +113,7 @@ RBProgramNodeTest >> testAddNodes [
 	self assert: (tree statements at: 4) equals: treeNodes last
 ]
 
-{ #category : #'testing-adding' }
+{ #category : #'tests - adding' }
 RBProgramNodeTest >> testAddNodesBefore [
 	| tree treeNodes |
 	tree := self parseExpression: '1. 4'.
@@ -133,7 +133,7 @@ RBProgramNodeTest >> testAddNodesBefore [
 	self assert: (tree statements at: 3) equals: treeNodes last
 ]
 
-{ #category : #'testing-adding' }
+{ #category : #'tests - adding' }
 RBProgramNodeTest >> testAddNodesFirst [
 	| tree treeNodes |
 	tree := self parseExpression: '3. 4'.
@@ -149,7 +149,7 @@ RBProgramNodeTest >> testAddNodesFirst [
 	self assert: (tree statements at: 2) equals: treeNodes last
 ]
 
-{ #category : #'testing-adding' }
+{ #category : #'tests - adding' }
 RBProgramNodeTest >> testAddReturn [
 	| tree return |
 	tree := self parseExpression: '1. 2'.
@@ -163,7 +163,7 @@ RBProgramNodeTest >> testAddReturn [
 	self assert: (self parseExpression: '3. ^ 4') equals: tree
 ]
 
-{ #category : #'testing-adding' }
+{ #category : #'tests - adding' }
 RBProgramNodeTest >> testAddSelfReturn [
 	| tree return |
 	tree := self parseExpression: '1. 2'.
@@ -177,7 +177,7 @@ RBProgramNodeTest >> testAddSelfReturn [
 	self assert: (self parseExpression: '3. ^ 4') equals: tree
 ]
 
-{ #category : #'testing-adding' }
+{ #category : #'tests - adding' }
 RBProgramNodeTest >> testAddTemporariesNamed [
 	| tree variables |
 	tree := self parseExpression: '| a | a'.
@@ -191,7 +191,7 @@ RBProgramNodeTest >> testAddTemporariesNamed [
 	
 ]
 
-{ #category : #'testing-adding' }
+{ #category : #'tests - adding' }
 RBProgramNodeTest >> testAddTemporaryNamed [
 	| tree variable |
 	tree := self parseExpression: '| a | a'.
@@ -323,7 +323,7 @@ RBProgramNodeTest >> testAllStatementsTwoMessages [
 	self assert: stats size equals: 1.
 ]
 
-{ #category : #'tests-bestNodeFor' }
+{ #category : #'tests - bestNodeFor' }
 RBProgramNodeTest >> testBestNodeFirstTempsAndFirstCommentGivesVariableNode [
 	| ast string start |
 	string := '"First comment"'.
@@ -332,7 +332,7 @@ RBProgramNodeTest >> testBestNodeFirstTempsAndFirstCommentGivesVariableNode [
 	self assert: ast isVariable.
 ]
 
-{ #category : #'tests-bestNodeFor' }
+{ #category : #'tests - bestNodeFor' }
 RBProgramNodeTest >> testBestNodeForCommentInbetweenStatements [
 	| ast string start |
 	string := '"Fourth comment"'.
@@ -342,7 +342,7 @@ RBProgramNodeTest >> testBestNodeForCommentInbetweenStatements [
 	self assert: ast contents equals: 'Fourth comment'.
 ]
 
-{ #category : #'tests-bestNodeFor' }
+{ #category : #'tests - bestNodeFor' }
 RBProgramNodeTest >> testBestNodeForCommentInsideACascadeNodeOnMessageNode [
 	| ast string start |
 	string := '"Seventh comment"'.
@@ -352,7 +352,7 @@ RBProgramNodeTest >> testBestNodeForCommentInsideACascadeNodeOnMessageNode [
 	self assert: ast contents equals: 'Seventh comment'.
 ]
 
-{ #category : #'tests-bestNodeFor' }
+{ #category : #'tests - bestNodeFor' }
 RBProgramNodeTest >> testBestNodeForCommentInsideACascadeNodeOnReceiver [
 	| ast string start |
 	string := '"Sixth comment"'.
@@ -362,7 +362,7 @@ RBProgramNodeTest >> testBestNodeForCommentInsideACascadeNodeOnReceiver [
 	self assert: ast contents equals: 'Sixth comment'.
 ]
 
-{ #category : #'tests-bestNodeFor' }
+{ #category : #'tests - bestNodeFor' }
 RBProgramNodeTest >> testBestNodeForCommentInsideAssignementNode [
 	| ast string start |
 	string := '" Third comment "'.
@@ -372,7 +372,7 @@ RBProgramNodeTest >> testBestNodeForCommentInsideAssignementNode [
 	self assert: ast contents equals: ' Third comment '.
 ]
 
-{ #category : #'tests-bestNodeFor' }
+{ #category : #'tests - bestNodeFor' }
 RBProgramNodeTest >> testBestNodeForCommentInsideMessageNode [
 	| ast string start |
 	string := '"Fifth comment"'.
@@ -382,7 +382,7 @@ RBProgramNodeTest >> testBestNodeForCommentInsideMessageNode [
 	self assert: ast contents equals: 'Fifth comment'.
 ]
 
-{ #category : #'tests-bestNodeFor' }
+{ #category : #'tests - bestNodeFor' }
 RBProgramNodeTest >> testBestNodeForCommentInsideMethodNode [
 	| ast string start |
 	string := '"First comment"'.
@@ -392,7 +392,7 @@ RBProgramNodeTest >> testBestNodeForCommentInsideMethodNode [
 	self assert: ast contents equals: 'First comment'.
 ]
 
-{ #category : #'tests-bestNodeFor' }
+{ #category : #'tests - bestNodeFor' }
 RBProgramNodeTest >> testBestNodeForCommentInsideReturnNode [
 	| ast string start |
 	string := '"return"'.
@@ -402,7 +402,7 @@ RBProgramNodeTest >> testBestNodeForCommentInsideReturnNode [
 	self assert: ast contents equals: 'return'.
 ]
 
-{ #category : #'tests-bestNodeFor' }
+{ #category : #'tests - bestNodeFor' }
 RBProgramNodeTest >> testBestNodeForCommentInsideSequenceNode [
 	| ast string start |
 	string := '"Second comment"'.
@@ -412,7 +412,7 @@ RBProgramNodeTest >> testBestNodeForCommentInsideSequenceNode [
 	self assert: ast contents equals: 'Second comment'.
 ]
 
-{ #category : #'tests-bestNodeFor' }
+{ #category : #'tests - bestNodeFor' }
 RBProgramNodeTest >> testBestNodeInsideAssignementGivesSelectedValue [
 	| ast string start |
 	string := '#node'.
@@ -422,7 +422,7 @@ RBProgramNodeTest >> testBestNodeInsideAssignementGivesSelectedValue [
 	self assert: ast value equals: #node.
 ]
 
-{ #category : #'tests-bestNodeFor' }
+{ #category : #'tests - bestNodeFor' }
 RBProgramNodeTest >> testBestNodeInsideAssignementGivesSelectedVariable [
 	| ast string start |
 	string := 'assignement'.
@@ -432,7 +432,7 @@ RBProgramNodeTest >> testBestNodeInsideAssignementGivesSelectedVariable [
 	self assert: ast name equals: 'assignement'.
 ]
 
-{ #category : #'tests-bestNodeFor' }
+{ #category : #'tests - bestNodeFor' }
 RBProgramNodeTest >> testBestNodeWithMethodSelectorGivesCommentNode [
 	| ast string start |
 	string := '"First comment"'.
@@ -441,7 +441,7 @@ RBProgramNodeTest >> testBestNodeWithMethodSelectorGivesCommentNode [
 	self assert: ast isCommentNode.
 ]
 
-{ #category : #'testing-adding' }
+{ #category : #'tests - adding' }
 RBProgramNodeTest >> testCursorAfterArgumentReturnsVariableNode [
 
 	| sourceCode ast bestNode |
@@ -454,7 +454,7 @@ RBProgramNodeTest >> testCursorAfterArgumentReturnsVariableNode [
 	self assert: bestNode isVariable 
 ]
 
-{ #category : #'testing-adding' }
+{ #category : #'tests - adding' }
 RBProgramNodeTest >> testCursorAfterVariableReturnsVariableNode [
 
 	| sourceCode ast bestNode |
@@ -467,7 +467,7 @@ RBProgramNodeTest >> testCursorAfterVariableReturnsVariableNode [
 	self assert: bestNode isVariable 
 ]
 
-{ #category : #'testing-adding' }
+{ #category : #'tests - adding' }
 RBProgramNodeTest >> testCursorBeforeArgumentNextToSelectorReturnsMethodNode [
 
 	| sourceCode ast bestNode |
@@ -480,7 +480,7 @@ RBProgramNodeTest >> testCursorBeforeArgumentNextToSelectorReturnsMethodNode [
 	self assert: bestNode isMethod 
 ]
 
-{ #category : #'testing-adding' }
+{ #category : #'tests - adding' }
 RBProgramNodeTest >> testCursorBeforeArgumentReturnsVariableNode [
 
 	| sourceCode ast bestNode |
@@ -493,7 +493,7 @@ RBProgramNodeTest >> testCursorBeforeArgumentReturnsVariableNode [
 	self assert: bestNode isVariable 
 ]
 
-{ #category : #'testing-adding' }
+{ #category : #'tests - adding' }
 RBProgramNodeTest >> testCursorBeforeVariableReturnsVariableNode [
 
 	| sourceCode ast bestNode |
@@ -506,7 +506,7 @@ RBProgramNodeTest >> testCursorBeforeVariableReturnsVariableNode [
 	self assert: bestNode isVariable 
 ]
 
-{ #category : #'testing-adding' }
+{ #category : #'tests - adding' }
 RBProgramNodeTest >> testCursorInMiddleOfVariableReturnsVariableNode [
 
 	| sourceCode ast bestNode |
@@ -519,7 +519,7 @@ RBProgramNodeTest >> testCursorInMiddleOfVariableReturnsVariableNode [
 	self assert: bestNode isVariable 
 ]
 
-{ #category : #'testing-properties' }
+{ #category : #'tests - properties' }
 RBProgramNodeTest >> testHasProperty [
 	self deny: (self node hasProperty: #foo).
 	self node propertyAt: #foo put: 123.
@@ -543,27 +543,27 @@ RBProgramNodeTest >> testNumberOfSentMessages [
 		[ :i | self assert: (messages includes: ('send' , i printString) asSymbol) ]
 ]
 
-{ #category : #'testing-properties' }
+{ #category : #'tests - properties' }
 RBProgramNodeTest >> testPropertyAt [
 	self should: [ self node propertyAt: #foo ] raise: Error.
 	self node propertyAt: #foo put: true.
 	self assert: (self node propertyAt: #foo)
 ]
 
-{ #category : #'testing-properties' }
+{ #category : #'tests - properties' }
 RBProgramNodeTest >> testPropertyAtIfAbsent [
 	self assert: (self node propertyAt: #foo ifAbsent: [ true ]).
 	self node propertyAt: #foo put: true.
 	self assert: (self node propertyAt: #foo ifAbsent: [ false ])
 ]
 
-{ #category : #'testing-properties' }
+{ #category : #'tests - properties' }
 RBProgramNodeTest >> testPropertyAtIfAbsentPut [
 	self assert: (self node propertyAt: #foo ifAbsentPut: [ true ]).
 	self assert: (self node propertyAt: #foo ifAbsentPut: [ false ])
 ]
 
-{ #category : #'testing-properties' }
+{ #category : #'tests - properties' }
 RBProgramNodeTest >> testPropertyAtIfPresentIfAbsent [
 	self assert: (self node propertyAt: #foo ifPresent:[ false ] ifAbsent: [ true ]) equals: true.
 	self node propertyAt: #foo put: true.
@@ -571,21 +571,21 @@ RBProgramNodeTest >> testPropertyAtIfPresentIfAbsent [
 	self assert: (self node propertyAt: #toto ifPresent:[ false ] ifAbsent: [ true ])
 ]
 
-{ #category : #'testing-properties' }
+{ #category : #'tests - properties' }
 RBProgramNodeTest >> testRemoveProperty [
 	self should: [ self node removeProperty: #foo ] raise: Error.
 	self node propertyAt: #foo put: true.
 	self assert: (self node removeProperty: #foo)
 ]
 
-{ #category : #'testing-properties' }
+{ #category : #'tests - properties' }
 RBProgramNodeTest >> testRemovePropertyIfAbsent [
 	self assert: (self node removeProperty: #foo ifAbsent: [ true ]).
 	self node propertyAt: #foo put: true.
 	self assert: (self node removeProperty: #foo ifAbsent: [ false ])
 ]
 
-{ #category : #'testing-replacing' }
+{ #category : #'tests - replacing' }
 RBProgramNodeTest >> testReplaceAssignment [
 	| tree expectedTree |
 	tree := self parseMethod: 'run sum := 2 + 2'.
@@ -595,7 +595,7 @@ RBProgramNodeTest >> testReplaceAssignment [
 	self assert: tree equals: expectedTree.
 ]
 
-{ #category : #'testing-replacing' }
+{ #category : #'tests - replacing' }
 RBProgramNodeTest >> testReplaceBlock [
 	| tree expectedTree |
 	tree := self parseMethod: 'run self foo ifNil: [ ^ true ]'.
@@ -605,7 +605,7 @@ RBProgramNodeTest >> testReplaceBlock [
 	self assert: tree  equals: expectedTree
 ]
 
-{ #category : #'testing-replacing' }
+{ #category : #'tests - replacing' }
 RBProgramNodeTest >> testReplaceLiteral [
 	| tree |
 	tree := self parseMethod: 'run "1" 123 "2"'.
@@ -616,7 +616,7 @@ RBProgramNodeTest >> testReplaceLiteral [
 	self assert: tree newSource equals: 'run "1" zork "2"'
 ]
 
-{ #category : #'testing-replacing' }
+{ #category : #'tests - replacing' }
 RBProgramNodeTest >> testReplaceLiteralArray1 [
 	| tree |
 	tree := self parseMethod: 'run "1" #(1 2 3) "2"'.
@@ -627,7 +627,7 @@ RBProgramNodeTest >> testReplaceLiteralArray1 [
 	self assert: tree newSource equals: 'run "1" 123 "2"'
 ]
 
-{ #category : #'testing-replacing' }
+{ #category : #'tests - replacing' }
 RBProgramNodeTest >> testReplaceLiteralArray2 [
 	| tree |
 	tree := self parseMethod: 'run "1" #[1 2 3] "2"'.
@@ -638,7 +638,7 @@ RBProgramNodeTest >> testReplaceLiteralArray2 [
 	self assert: tree newSource equals: 'run "1" 123 "2"'
 ]
 
-{ #category : #'testing-replacing' }
+{ #category : #'tests - replacing' }
 RBProgramNodeTest >> testReplaceMessage [
 	| tree |
 	tree := self parseMethod: 'run "1" self "2" run "3"'.
@@ -646,7 +646,7 @@ RBProgramNodeTest >> testReplaceMessage [
 	self assert: tree newSource equals: 'run "1" self "2" runCase "3"'
 ]
 
-{ #category : #'testing-replacing' }
+{ #category : #'tests - replacing' }
 RBProgramNodeTest >> testReplaceMessageArgument [
 	| tree |
 	tree := self parseMethod: 'foo "1" self "2" foo: "3" foo "4"'.
@@ -660,7 +660,7 @@ RBProgramNodeTest >> testReplaceMessageArgument [
 	self assert: tree newSource equals: 'foo "1" self "2" foo: "3" bar "4"'
 ]
 
-{ #category : #'testing-replacing' }
+{ #category : #'tests - replacing' }
 RBProgramNodeTest >> testReplaceMessageReceiver [
 	| tree |
 	tree := self parseMethod: 'foo "1" self "2" foo: "3" 123 "4"'.
@@ -674,7 +674,7 @@ RBProgramNodeTest >> testReplaceMessageReceiver [
 	self assert: tree newSource equals: 'foo "1" bar "2" foo: "3" 123 "4"'
 ]
 
-{ #category : #'testing-replacing' }
+{ #category : #'tests - replacing' }
 RBProgramNodeTest >> testReplaceMethodBinary [
 	| tree |
 	tree := self parseMethod: '= "1" anObject "2" ^ "3" 4 "5"'.
@@ -694,7 +694,7 @@ RBProgramNodeTest >> testReplaceMethodBinary [
 	self assert: tree newSource equals: 'assert: first description: second "2" ^ "3" 4 "5"'
 ]
 
-{ #category : #'testing-replacing' }
+{ #category : #'tests - replacing' }
 RBProgramNodeTest >> testReplaceMethodKeyword [
 	| tree |
 	tree := self parseMethod: 'deny: "1" anObject "2" ^ "3" 4 "5"'.
@@ -714,7 +714,7 @@ RBProgramNodeTest >> testReplaceMethodKeyword [
 	self assert: tree newSource equals: 'assert: first description: second "2" ^ "3" 4 "5"'
 ]
 
-{ #category : #'testing-replacing' }
+{ #category : #'tests - replacing' }
 RBProgramNodeTest >> testReplaceMethodKeywordLong [
 	| tree |
 	tree := self parseMethod: 'deny: "1" anObject "2" description: "3" anotherObject "4" ^ "5" 6 "7"'.
@@ -734,7 +734,7 @@ RBProgramNodeTest >> testReplaceMethodKeywordLong [
 	self assert: tree newSource equals: 'assert: "1" first "2" description: "3" second "4" ^ "5" 6 "7"'
 ]
 
-{ #category : #'testing-replacing' }
+{ #category : #'tests - replacing' }
 RBProgramNodeTest >> testReplaceMethodUnary [
 	| tree |
 	tree := self parseMethod: 'run "1" ^ "2" 3 "4"'.
@@ -754,7 +754,7 @@ RBProgramNodeTest >> testReplaceMethodUnary [
 	self assert: tree newSource equals: 'assert: first description: second "1" ^ "2" 3 "4"'
 ]
 
-{ #category : #'testing-replacing' }
+{ #category : #'tests - replacing' }
 RBProgramNodeTest >> testReplaceVariable [
 	| tree |
 	tree := self parseMethod: 'run "1" foo "2"'.
@@ -765,7 +765,7 @@ RBProgramNodeTest >> testReplaceVariable [
 	self assert: tree newSource equals: 'run "1" 123 "2"'
 ]
 
-{ #category : #'testing-messages' }
+{ #category : #'tests - messages' }
 RBProgramNodeTest >> testSentMessages [
 	| tree messages |
 	tree := self
@@ -781,7 +781,7 @@ RBProgramNodeTest >> testSentMessages [
 		[ :i | self assert: (messages includes: ('send' , i printString) asSymbol) ]
 ]
 
-{ #category : #'testing-comments' }
+{ #category : #'tests - comments' }
 RBProgramNodeTest >> testSetCommentsToNil [
 
 	self node comments: nil.

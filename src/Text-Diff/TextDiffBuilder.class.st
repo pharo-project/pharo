@@ -168,12 +168,10 @@ TextDiffBuilder >> findMatches [
 	"Filter out all lines that can't have a pair."
 	temp := yLines asSet.
 	xFilteredLines := xLines select: [ :each | temp includes: each ].
-	xFilteredLines size = 0
-		ifTrue: [ ^ self ].
+	xFilteredLines ifEmpty: [ ^ self ].
 	temp := xLines asSet.
 	yFilteredLines := yLines select: [ :each | temp includes: each ].
-	yFilteredLines size = 0
-		ifTrue: [ ^ self ].	"Map all lines to SmallIntegers, because they can be compared faster."
+	yFilteredLines ifEmpty: [ ^ self ].	"Map all lines to SmallIntegers, because they can be compared faster."
 	temp := Dictionary new.
 	xNumbers := xFilteredLines collect: [ :each | temp at: each ifAbsentPut: [ temp size ] ].
 	yNumbers := yFilteredLines collect: [ :each | temp at: each ifAbsentPut: [ temp size ] ].

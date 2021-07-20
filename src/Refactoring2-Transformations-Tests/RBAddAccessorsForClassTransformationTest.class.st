@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddAccessorsForClassTransformationTest >> testRefactoring [
 
 	| refactoring class |
@@ -19,7 +19,7 @@ RBAddAccessorsForClassTransformationTest >> testRefactoring [
 		  equals: (self parseMethod: 'variableName: anObject variableName := anObject')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBAddAccessorsForClassTransformationTest >> testTransform [
 
 	| transformation class |

@@ -28,7 +28,7 @@ FFISelfArgument >> emitArgument: aBuilder context: aContext objectClass: objectC
 		ifAbsent: [ self error: 'No ', aName, ' instVar' ])
 ]
 
-{ #category : #'private emitting code' }
+{ #category : #'private - emitting code' }
 FFISelfArgument >> emitArgumentVariableAccesingPart: aBuilder context: aContext objectClass: objectClass instVarName: aName [
 
 	aBuilder 

@@ -5,7 +5,7 @@ See AbstractWidgetPresenter
 self example
 
 I provide the following variables and their accessors
-- activationAction and desactivationAction are actions to perform when I am activeted / desactivated.
+- activationAction and desactivationAction are actions to perform when I am activated / deactivated.
 - label is the text displayed near the box.
 - state is a boolean representing if I am activated, it is false by default
 
@@ -102,7 +102,7 @@ AbstractFormButtonPresenter >> labelClickable: aBoolean [
 	labelClickableHolder value: aBoolean
 ]
 
-{ #category : #'api-valueHolder' }
+{ #category : #'api - valueHolder' }
 AbstractFormButtonPresenter >> labelHolder [
 
 	^ labelHolder
@@ -127,25 +127,25 @@ AbstractFormButtonPresenter >> state: aBoolean [
 { #category : #api }
 AbstractFormButtonPresenter >> toggleState [
 	"<api: #do>"
-	"Toogle the current state of the checkbox"
+	"Toggle the current state of the checkbox"
 
 	self state: self state not
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 AbstractFormButtonPresenter >> whenActivatedDo: aBlock [
 	"This method is used to propagate the event that I have been activated" 
 	
 	stateHolder whenChangedDo: [:bool | bool ifTrue: aBlock ]
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 AbstractFormButtonPresenter >> whenActivationActionChanged: aBlock [
 	"A block performed when the activation action changed"
 	actionWhenActivatedHolder whenChangedDo: aBlock 
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 AbstractFormButtonPresenter >> whenChangedDo: aBlock [
 	"This method is used to propagate the event that I have changed"
 	
@@ -165,7 +165,7 @@ AbstractFormButtonPresenter >> whenDeactivationActionChanged: aBlock [
 	actionWhenDeactivatedHolder whenChangedDo:  aBlock 
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 AbstractFormButtonPresenter >> whenLabelClickableChanged: aBlock [
 	"A block performed when the label click is activated or descativated"
 	

@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 RBRenameAndDeprecateClassTransformationTest >> testTransform [
 	| transformation class |
 	transformation := (RBRenameAndDeprecateClassTransformation rename: self changeMock name to: #RBRefactoringChangeMock2) transform.

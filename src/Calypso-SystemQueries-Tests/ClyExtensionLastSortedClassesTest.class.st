@@ -6,14 +6,14 @@ Class {
 
 { #category : #running }
 ClyExtensionLastSortedClassesTest >> createQueryResult [
-	^ClyExtensionLastSortedClasses simple
+	^ClyExtensionLastSortedClassResult simple
 ]
 
 { #category : #tests }
 ClyExtensionLastSortedClassesTest >> testComparisonToSimilarResultButWithWithDifferentBaseResult [
 	| result2 |
-	queryResult := ClyExtensionLastSortedClasses simple.
-	result2 := ClyExtensionLastSortedClasses hierarchical.
+	queryResult := ClyExtensionLastSortedClassResult simple.
+	result2 := ClyExtensionLastSortedClassResult hierarchical.
 
 	self deny: queryResult equals: result2
 ]
@@ -21,7 +21,7 @@ ClyExtensionLastSortedClassesTest >> testComparisonToSimilarResultButWithWithDif
 { #category : #tests }
 ClyExtensionLastSortedClassesTest >> testCreationHierarchicalInstance [
 
-	queryResult := ClyExtensionLastSortedClasses hierarchical.
+	queryResult := ClyExtensionLastSortedClassResult hierarchical.
 	
 	self assert: queryResult baseQueryResult class equals: ClyHierarchicallySortedClassesResult 
 ]
@@ -29,7 +29,7 @@ ClyExtensionLastSortedClassesTest >> testCreationHierarchicalInstance [
 { #category : #tests }
 ClyExtensionLastSortedClassesTest >> testCreationSimpleInstance [
 
-	queryResult := ClyExtensionLastSortedClasses simple.
+	queryResult := ClyExtensionLastSortedClassResult simple.
 	
 	self assert: queryResult baseQueryResult class equals: ClySortedQueryResult  
 ]
@@ -37,7 +37,7 @@ ClyExtensionLastSortedClassesTest >> testCreationSimpleInstance [
 { #category : #tests }
 ClyExtensionLastSortedClassesTest >> testFillingHierarchicalInstance [
 	query := ClyAllClassesQuery from: ClyPackageScope of: ClyClass1FromP1Mock package in: environment.
-	queryResult := ClyExtensionLastSortedClasses hierarchical prepareNewFor: query in: environment..
+	queryResult := ClyExtensionLastSortedClassResult hierarchical prepareNewFor: query in: environment..
 	
 	queryResult buildWith: {
 		ClySubclassLOfClass0FromPExtendedByP1Mock. ClySubclassN1OfClass1FromP1Mock.  ClyClass1FromP1Mock}.
@@ -52,7 +52,7 @@ ClyExtensionLastSortedClassesTest >> testFillingHierarchicalInstance [
 { #category : #tests }
 ClyExtensionLastSortedClassesTest >> testFillingSimpleInstance [
 	query := ClyAllClassesQuery from: ClyPackageScope of: ClyClass1FromP1Mock package in: environment.
-	queryResult := ClyExtensionLastSortedClasses simple prepareNewFor: query in: environment.
+	queryResult := ClyExtensionLastSortedClassResult simple prepareNewFor: query in: environment.
 
 	queryResult buildWith: {
 		ClySubclassLOfClass0FromPExtendedByP1Mock. ClySubclassN1OfClass1FromP1Mock.  ClyClass1FromP1Mock}.
@@ -67,7 +67,7 @@ ClyExtensionLastSortedClassesTest >> testFillingSimpleInstance [
 { #category : #tests }
 ClyExtensionLastSortedClassesTest >> testFillingWithExtendedClassSide [
 	query := ClyAllClassesQuery from: ClyPackageScope of: ClyClass1FromP1Mock package in: environment.
-	queryResult := ClyExtensionLastSortedClasses simple prepareNewFor: query in: environment.
+	queryResult := ClyExtensionLastSortedClassResult simple prepareNewFor: query in: environment.
 	
 	queryResult buildWith: {
 		ClySubclassLOfClass0FromPExtendedByP1Mock class. ClyClass2FromP1Mock.  ClyClass1FromP1Mock}.

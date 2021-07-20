@@ -38,7 +38,7 @@ ClySwitchQueryScopeCommand class >> toScope: anEnvironmentScope in: aBrowser [
 		queryScope: anEnvironmentScope 
 ]
 
-{ #category : #'activation-toolbar support' }
+{ #category : #'activation - toolbar support' }
 ClySwitchQueryScopeCommand >> addToolbarItemInto: toolbarMorph using: aCommandActivator [
 	
 	| compoBox |
@@ -64,7 +64,7 @@ ClySwitchQueryScopeCommand >> execute [
 	browser switchScopeTo: queryScope
 ]
 
-{ #category : #'activation-context menu' }
+{ #category : #'activation - context menu' }
 ClySwitchQueryScopeCommand >> fillContextMenu: aMenu using: aCommandActivator [
 	| concreteScopeCommand switchActivator |
 	

@@ -40,7 +40,7 @@ FTColumnResizerMorph >> canResizeColumn [
 
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 FTColumnResizerMorph >> delete [
 	super delete.
 	self release.
@@ -128,7 +128,7 @@ FTColumnResizerMorph >> pressedFillStyle [
 	^ self theme morphTreeSplitterPressedFillStyleFor: self
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 FTColumnResizerMorph >> release [
 	traceMorph := nil.
 	oldColor := nil.

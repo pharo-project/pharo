@@ -109,7 +109,7 @@ TestRunner >> baseClass [
 	^ TestCase
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 TestRunner >> browseClass [
 	| targetClasses |
 	targetClasses := classesSelected asArray.
@@ -290,7 +290,7 @@ TestRunner >> buttonHeight [
 	^ self theme buttonMinHeight + 4
 ]
 
-{ #category : #'accessing-ui' }
+{ #category : #'accessing - ui' }
 TestRunner >> buttons [
 	^ #(( 'Run Selected' #runAll 'Run all selected tests' #hasRunnable )
 		( 'Run Profiled' #runProfiled 'Run tests and profile' #hasRunnable )
@@ -306,12 +306,12 @@ TestRunner >> buttonsFrame [
 		
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 TestRunner >> classAt: anInteger [
 	^ classesSelected includes: (classes at: anInteger ifAbsent: [ ^ false ]).
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 TestRunner >> classAt: anInteger put: aBoolean [
 	classesSelected := classesSelected
 		perform: (aBoolean ifTrue: [ #copyWith: ] ifFalse: [ #copyWithout: ])
@@ -324,7 +324,7 @@ TestRunner >> classForTestSuite [
 	^ TestSuite
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 TestRunner >> classList [
 	| offset |
 	classes isEmpty ifTrue: [ ^ classes ].
@@ -341,7 +341,7 @@ TestRunner >> classList [
 					yourself ] ].
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 TestRunner >> classMenu: aMenu [
 	^ aMenu
 		addTitle: 'Classes';
@@ -368,12 +368,12 @@ TestRunner >> classSearchUpdate: aPattern [
 	self updateClasses.
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 TestRunner >> classSelected [
 	^ classIndex
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 TestRunner >> classSelected: anInteger [
 	classIndex := anInteger.
 	self changed: #classSelected
@@ -439,7 +439,7 @@ TestRunner >> debugSuite: aTestSuite [
 	self executeSuite: aTestSuite as: [ :aSuite | aSuite debug ].
 ]
 
-{ #category : #'accessing-testing' }
+{ #category : #'accessing - testing' }
 TestRunner >> errorList [
 	^ errorList collect: [ :each | each printString ].
 ]
@@ -452,7 +452,7 @@ TestRunner >> errorListFrame [
 		bottomOffset: self buttonHeight negated
 ]
 
-{ #category : #'accessing-menu' }
+{ #category : #'accessing - menu' }
 TestRunner >> errorMenu: aMenu [
 	"Add the browse item only if an item is selected"
 
@@ -461,12 +461,12 @@ TestRunner >> errorMenu: aMenu [
 	^aMenu
 ]
 
-{ #category : #'accessing-testing' }
+{ #category : #'accessing - testing' }
 TestRunner >> errorSelected [
 	^ errorList indexOf: errorSelected.
 ]
 
-{ #category : #'accessing-testing' }
+{ #category : #'accessing - testing' }
 TestRunner >> errorSelected: anInteger [
 	errorSelected := errorList at: anInteger ifAbsent: nil.
 	self changed: #errorSelected.
@@ -513,22 +513,22 @@ TestRunner >> executeSuite: aTestSuite as: aBlock [
 
 ]
 
-{ #category : #'accessing-ui' }
+{ #category : #'accessing - ui' }
 TestRunner >> extent [
 	^ 640 @ 480
 ]
 
-{ #category : #'accessing-testing' }
+{ #category : #'accessing - testing' }
 TestRunner >> failedList [
 	^ failedList collect: [ :each | each printString ].
 ]
 
-{ #category : #'accessing-testing' }
+{ #category : #'accessing - testing' }
 TestRunner >> failedSelected [
 	^ failedList indexOf: failedSelected.
 ]
 
-{ #category : #'accessing-testing' }
+{ #category : #'accessing - testing' }
 TestRunner >> failedSelected: anInteger [
 	failedSelected := failedList at: anInteger ifAbsent: nil.
 	self changed: #failedSelected.
@@ -543,7 +543,7 @@ TestRunner >> failureListFrame [
 		topOffset: self statusHeight
 ]
 
-{ #category : #'accessing-menu' }
+{ #category : #'accessing - menu' }
 TestRunner >> failureMenu: aMenu [
 	"Add the browse item only if an item is selected"
 	
@@ -583,7 +583,7 @@ TestRunner >> fileOutResults [
 		ensure: [stream close].
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 TestRunner >> filterClasses [
 
 	| pattern |
@@ -597,7 +597,7 @@ TestRunner >> filterClasses [
 		changed: #hasRunnable
 ]
 
-{ #category : #'accessing-packages' }
+{ #category : #'accessing - packages' }
 TestRunner >> filterPackages [
 
 	| pattern |
@@ -705,7 +705,7 @@ TestRunner >> initialize [
 	self update; resetResult
 ]
 
-{ #category : #'accessing-ui' }
+{ #category : #'accessing - ui' }
 TestRunner >> label [
 	^ 'Test Runner' 
 ]
@@ -726,12 +726,12 @@ TestRunner >> open [
 
 ]
 
-{ #category : #'accessing-packages' }
+{ #category : #'accessing - packages' }
 TestRunner >> packageAt: anIndex [
 	^ packagesSelected includes: (packages at: anIndex ifAbsent: [ ^ false ]).
 ]
 
-{ #category : #'accessing-packages' }
+{ #category : #'accessing - packages' }
 TestRunner >> packageAt: anInteger put: aBoolean [
 	packagesSelected := packagesSelected
 		perform: (aBoolean ifTrue: [ #copyWith: ] ifFalse: [ #copyWithout: ])
@@ -739,12 +739,12 @@ TestRunner >> packageAt: anInteger put: aBoolean [
 	self changed: #packageSelected; updateClasses.
 ]
 
-{ #category : #'accessing-packages' }
+{ #category : #'accessing - packages' }
 TestRunner >> packageList [
 	^ packages
 ]
 
-{ #category : #'accessing-packages' }
+{ #category : #'accessing - packages' }
 TestRunner >> packageMenu: aMenu [
 	^ aMenu
 		addTitle: 'Packages';
@@ -773,12 +773,12 @@ TestRunner >> packageSearchUpdate: aPattern [
 	self updatePackages.
 ]
 
-{ #category : #'accessing-packages' }
+{ #category : #'accessing - packages' }
 TestRunner >> packageSelected [
 	^ packageIndex 
 ]
 
-{ #category : #'accessing-packages' }
+{ #category : #'accessing - packages' }
 TestRunner >> packageSelected: anInteger [
 	packageIndex := anInteger.
 	self changed: #packageSelected.
@@ -823,12 +823,12 @@ TestRunner >> resetResult [
 	self result: TestAsserter classForTestResult new ; updateResults.
 ]
 
-{ #category : #'accessing-testing' }
+{ #category : #'accessing - testing' }
 TestRunner >> result [
 	^ result
 ]
 
-{ #category : #'accessing-testing' }
+{ #category : #'accessing - testing' }
 TestRunner >> result: aResult [
 	result := aResult
 ]
@@ -904,7 +904,7 @@ TestRunner >> saveResultInHistory [
 	result dispatchResultsIntoHistory
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 TestRunner >> selectAllClasses [
 	"Fixed to update all selections now that the
 	selection invalidation has been optimised."
@@ -916,13 +916,13 @@ TestRunner >> selectAllClasses [
 		changed: #hasRunnable
 ]
 
-{ #category : #'accessing-packages' }
+{ #category : #'accessing - packages' }
 TestRunner >> selectAllPackages [
 	packagesSelected := packages asSet.
 	self changed: #allSelections; changed: #packageSelected; updateClasses
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 TestRunner >> selectAllUnitTests [
 	classesSelected := classes asSet select: [ :eachClass | eachClass isUnitTest ].
 	self
@@ -931,7 +931,7 @@ TestRunner >> selectAllUnitTests [
 		changed: #hasRunnable
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 TestRunner >> selectInverseClasses [
 	"Fixed to update all selections now that the
 	selection invalidation has been optimised."
@@ -945,7 +945,7 @@ TestRunner >> selectInverseClasses [
 		changed: #hasRunnable
 ]
 
-{ #category : #'accessing-packages' }
+{ #category : #'accessing - packages' }
 TestRunner >> selectInversePackages [
 	packagesSelected := packages asSet 
 		removeAll: packagesSelected;
@@ -953,7 +953,7 @@ TestRunner >> selectInversePackages [
 	self changed: #allSelections; changed: #packageSelected; updateClasses
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 TestRunner >> selectNoClasses [
 	"Fixed to update all selections now that the
 	selection invalidation has been optimised."
@@ -965,13 +965,13 @@ TestRunner >> selectNoClasses [
 		changed: #hasRunnable
 ]
 
-{ #category : #'accessing-packages' }
+{ #category : #'accessing - packages' }
 TestRunner >> selectNoPackages [
 	packagesSelected := Set new.
 	self changed: #allSelections; changed: #packageSelected; updateClasses
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 TestRunner >> selectSubclasses [
 	"Fixed to update all selections now that the
 	selection invalidation has been optimised."
@@ -1089,7 +1089,7 @@ TestRunner >> sortClass: aFirstClass before: aSecondClass [
 	^ second includes: aFirstClass.
 ]
 
-{ #category : #'accessing-testing' }
+{ #category : #'accessing - testing' }
 TestRunner >> statusColor [
 	result hasErrors 
 		ifTrue: [ ^ self theme dangerBackgroundColor ].
@@ -1110,7 +1110,7 @@ TestRunner >> statusHeight [
 	^ self theme textFont height * 3
 ]
 
-{ #category : #'accessing-menu' }
+{ #category : #'accessing - menu' }
 TestRunner >> statusMenu: aMenu [
 	^ aMenu 
 		defaultTarget: self;
@@ -1120,7 +1120,7 @@ TestRunner >> statusMenu: aMenu [
 		yourself
 ]
 
-{ #category : #'accessing-testing' }
+{ #category : #'accessing - testing' }
 TestRunner >> statusText [
 	^ result printString.
 ]

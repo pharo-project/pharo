@@ -7,12 +7,12 @@ Class {
 	#category : #'Spec-Tests-Core-Widgets'
 }
 
-{ #category : #running }
+{ #category : #accessing }
 TabManagerPresenterTest >> classToTest [
 	^ TabManagerPresenter
 ]
 
-{ #category : #running }
+{ #category : #initialization }
 TabManagerPresenterTest >> initializeTestedInstance [
 	redTab := self redMorphTab
 ]

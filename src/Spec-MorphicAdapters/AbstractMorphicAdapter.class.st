@@ -1,5 +1,5 @@
 "
-I am an abstract class providing all the properties shared amongs all the morphic specific adapters
+I am an abstract class providing all the properties shared amongst all the morphic specific adapters
 "
 Class {
 	#name : #AbstractMorphicAdapter,
@@ -38,13 +38,13 @@ AbstractMorphicAdapter >> beginsWith: aString fromList: aMorph [
 	^ false
 ]
 
-{ #category : #'protocol-shortcuts' }
+{ #category : #'protocol - shortcuts' }
 AbstractMorphicAdapter >> bindKeyCombination: aShortcut toAction: aBlock [
 
 	self widget ifNotNil: [ :w | w bindKeyCombination: aShortcut toAction: aBlock ]
 ]
 
-{ #category : #'protocol-shortcuts' }
+{ #category : #'protocol - shortcuts' }
 AbstractMorphicAdapter >> bindMenuKeyCombination: aShortcut toAction: aBlock [
 
 	self widget ifNotNil: [ :w | w bindKeyCombination: aShortcut toAction: aBlock ]
@@ -253,13 +253,13 @@ AbstractMorphicAdapter >> listRenderOn: aCanvas atRow: aRow bounds: drawBounds c
 		from: aMorph
 ]
 
-{ #category : #'protocol-shortcuts' }
+{ #category : #'protocol - shortcuts' }
 AbstractMorphicAdapter >> removeKeyCombination: aShortcut [
 
 	self widget ifNotNil: [ :w | w removeKeyCombination: aShortcut ]
 ]
 
-{ #category : #'protocol-shortcuts' }
+{ #category : #'protocol - shortcuts' }
 AbstractMorphicAdapter >> removeMenuKeyCombination: aShortcut [
 
 	self widget ifNotNil: [ :w | w removeKeyCombination: aShortcut ]

@@ -27,12 +27,12 @@ MailAddressToken >> printOn: aStream [
 		nextPut: $].
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 MailAddressToken >> text [
 	^text
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 MailAddressToken >> type [
 	^type
 ]

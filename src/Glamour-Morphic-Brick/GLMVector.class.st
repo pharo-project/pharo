@@ -48,6 +48,11 @@ GLMVector class >> initialize [
 	East := GLMEastDirection uniqueInstance 
 ]
 
+{ #category : #testing }
+GLMVector class >> isDeprecated [
+	^ true
+]
+
 { #category : #'instance creation' }
 GLMVector class >> north: aLength [
 	^ self new

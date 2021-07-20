@@ -34,7 +34,7 @@ SelectEntity class >> defaultSpec [
 
 ]
 
-{ #category : #example }
+{ #category : #examples }
 SelectEntity class >> example [
 	self new
 		selectDialog: [ FastTablePresenter new items: #(Henrik Peter); yourself];
@@ -184,27 +184,27 @@ SelectEntity >> selectEntity: anObject [
 	selectEntity := anObject
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 SelectEntity >> whenDisplaySymbolChanged: aBlock [
 	displaySymbol whenChangedDo: aBlock
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 SelectEntity >> whenEntityChanged: aBlock [
 	entity whenChangedDo: aBlock
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 SelectEntity >> whenGhostTextChanged: aBlock [
 	ghostText whenChangedDo: aBlock
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 SelectEntity >> whenPossibleEntitiesChanged: aBlock [
 	possibleEntities whenChangedDo: aBlock
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 SelectEntity >> whenSelectDialogChanged: aBlock [
 	selectDialog whenChangedDo: aBlock
 ]

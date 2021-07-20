@@ -62,7 +62,7 @@ OCASTTranslatorForValue >> emitWhileTrue: aMessageNode [
 
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 OCASTTranslatorForValue >> visitSequenceNode: aSequenceNode [ 
 	| statements |
 	statements := aSequenceNode statements.

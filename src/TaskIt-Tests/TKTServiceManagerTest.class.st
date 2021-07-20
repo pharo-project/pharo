@@ -4,7 +4,7 @@ Class {
 	#category : #'TaskIt-Tests-Services'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 TKTServiceManagerTest >> testCannotStartTwoServicesWithSameName [
 	| executed service newService |
 	executed := 0.
@@ -39,7 +39,7 @@ TKTServiceManagerTest >> testServiceIsExecutedMultipleTimes [
 	self assert: executed > 1
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 TKTServiceManagerTest >> testStopServiceStopsUnderlyingWorker [
 
 	| executed service |

@@ -140,7 +140,7 @@ MorphTreeResizerMorph >> pressedFillStyle [
 	^ self theme morphTreeSplitterPressedFillStyleFor: self
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 MorphTreeResizerMorph >> release [
 	traceMorph := nil.
 	oldColor := nil.

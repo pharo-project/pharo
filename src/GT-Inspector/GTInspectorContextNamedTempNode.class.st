@@ -23,6 +23,11 @@ GTInspectorContextNamedTempNode class >> hostObject: aContext tempName: aString 
 		yourself
 ]
 
+{ #category : #testing }
+GTInspectorContextNamedTempNode class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GTInspectorContextNamedTempNode >> errorMessage [
 	^ 'error obtaining field value'

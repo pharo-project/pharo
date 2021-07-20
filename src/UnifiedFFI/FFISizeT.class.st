@@ -34,7 +34,7 @@ FFISizeT >> basicHandle: aHandle at: index put: value [
 	^ aHandle platformSizeTAt: index put: value
 ]
 
-{ #category : #'private emitting code' }
+{ #category : #'private - emitting code' }
 FFISizeT >> emitSelector [
 	^ 'platformSizeTAt'
 ]

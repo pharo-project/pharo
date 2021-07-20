@@ -35,7 +35,7 @@ ClyMethodGroupCommand >> methodGroups: anObject [
 	methodGroups := anObject
 ]
 
-{ #category : #'activation-drag and drop' }
+{ #category : #'activation - drag and drop' }
 ClyMethodGroupCommand >> prepareExecutionInDragContext: aToolContext [
 	super prepareExecutionInDragContext: aToolContext.
 	

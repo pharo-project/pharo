@@ -181,7 +181,7 @@ RBMethodNode >> body: stmtsNode [
 	body parent: self
 ]
 
-{ #category : #'private-replacing' }
+{ #category : #'private - replacing' }
 RBMethodNode >> changeSourceSelector: oldSelector keywordsIntervals: oldIntervals arguments: oldArguments [
 	"If this is the same number of arguments, we try a one to one replacement of selector parts and arguments. If this is not the c
 ase try to rewrite the signature as a whole, what unfortunately drops the comments within the signature."
@@ -228,12 +228,12 @@ RBMethodNode >> clearReplacements [
 	replacements := nil
 ]
 
-{ #category : #'accessing compiled method' }
+{ #category : #'accessing - compiled method' }
 RBMethodNode >> compilationContext [
 	^ compilationContext
 ]
 
-{ #category : #'accessing compiled method' }
+{ #category : #'accessing - compiled method' }
 RBMethodNode >> compilationContext: aCompilationContext [
 	compilationContext := aCompilationContext.
 ]
@@ -461,20 +461,20 @@ RBMethodNode >> matchPragmas: matchNodes against: pragmaNodes inContext: aDictio
 			matchNode match: pragmaNode inContext: aDictionary ] ]
 ]
 
-{ #category : #'accessing compiled method' }
+{ #category : #'accessing - compiled method' }
 RBMethodNode >> method [
 	"return the method that I have been compiled for"
 	^self compilationContext ifNotNil: [ :ccntx |
 		 ccntx compiledMethod ifNil: [ccntx getClass >> self selector]]
 ]
 
-{ #category : #'accessing compiled method' }
+{ #category : #'accessing - compiled method' }
 RBMethodNode >> methodClass [
 
 	^ self compilationContext ifNotNil: [ :ctxt | ctxt getClass ]
 ]
 
-{ #category : #'accessing compiled method' }
+{ #category : #'accessing - compiled method' }
 RBMethodNode >> methodClass: aClass [	
 	compilationContext ifNil: [compilationContext := aClass compiler compilationContext].
 	self compilationContext class: aClass

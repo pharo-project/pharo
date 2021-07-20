@@ -266,7 +266,7 @@ ZnSingleThreadedServer >> listenLoop [
 		ifCurtailed: [ self releaseServerSocket ]
 ]
 
-{ #category : #'private logging' }
+{ #category : #'private - logging' }
 ZnSingleThreadedServer >> logConnectionAccepted: socket [
 	logLevel < 3 ifTrue: [ ^ nil ].
 	^ (self newLogEvent: ZnConnectionAcceptedEvent)
@@ -274,7 +274,7 @@ ZnSingleThreadedServer >> logConnectionAccepted: socket [
 		emit
 ]
 
-{ #category : #'private logging' }
+{ #category : #'private - logging' }
 ZnSingleThreadedServer >> logConnectionClosed: socketStream [
 	logLevel < 3 ifTrue: [ ^ nil ].
 	socketStream socket ifNil: [ ^ nil ].
@@ -294,7 +294,7 @@ ZnSingleThreadedServer >> logLevel: integer [
 	logLevel := integer
 ]
 
-{ #category : #'private logging' }
+{ #category : #'private - logging' }
 ZnSingleThreadedServer >> logRequest: request response: response handledStarted: initialMilliseconds [
 	^ logLevel < 3
 		ifTrue: [ Time millisecondsSince: initialMilliseconds ]
@@ -307,7 +307,7 @@ ZnSingleThreadedServer >> logRequest: request response: response handledStarted:
 				duration ]
 ]
 
-{ #category : #'private logging' }
+{ #category : #'private - logging' }
 ZnSingleThreadedServer >> logRequestRead: request started: initialMilliseconds [
 	^ logLevel < 3
 		ifTrue: [ Time millisecondsSince: initialMilliseconds ]
@@ -319,7 +319,7 @@ ZnSingleThreadedServer >> logRequestRead: request started: initialMilliseconds [
 				duration ]
 ]
 
-{ #category : #'private logging' }
+{ #category : #'private - logging' }
 ZnSingleThreadedServer >> logResponseWritten: response started: initialMilliseconds [
 	^ logLevel < 3
 		ifTrue: [ Time millisecondsSince: initialMilliseconds ]
@@ -331,21 +331,21 @@ ZnSingleThreadedServer >> logResponseWritten: response started: initialMilliseco
 				duration ]
 ]
 
-{ #category : #'private logging' }
+{ #category : #'private - logging' }
 ZnSingleThreadedServer >> logServerGeneric: subject [
 	^ (self newLogEvent: ZnServerGenericLogEvent)
 		subject: subject;
 		emit
 ]
 
-{ #category : #'private logging' }
+{ #category : #'private - logging' }
 ZnSingleThreadedServer >> logServerHandlerError: exception [
 	^ (self newLogEvent: ZnServerHandlerErrorEvent)
 		exception: exception;
 		emit
 ]
 
-{ #category : #'private logging' }
+{ #category : #'private - logging' }
 ZnSingleThreadedServer >> logServerReadError: exception [
 	logLevel < 3 ifTrue: [ ^ nil ].
 	^ (self newLogEvent: ZnServerReadErrorEvent)
@@ -353,7 +353,7 @@ ZnSingleThreadedServer >> logServerReadError: exception [
 		emit
 ]
 
-{ #category : #'private logging' }
+{ #category : #'private - logging' }
 ZnSingleThreadedServer >> logServerSocketBound [
 	logLevel < 1 ifTrue: [ ^ nil ].
 	^ (self newLogEvent: ZnServerSocketBoundEvent)
@@ -362,7 +362,7 @@ ZnSingleThreadedServer >> logServerSocketBound [
 		emit
 ]
 
-{ #category : #'private logging' }
+{ #category : #'private - logging' }
 ZnSingleThreadedServer >> logServerSocketReleasedAddress: address port: port [
 	logLevel < 1 ifTrue: [ ^ nil ].
 	^ (self newLogEvent: ZnServerSocketReleasedEvent)
@@ -371,7 +371,7 @@ ZnSingleThreadedServer >> logServerSocketReleasedAddress: address port: port [
 		emit
 ]
 
-{ #category : #'private logging' }
+{ #category : #'private - logging' }
 ZnSingleThreadedServer >> logServerTransactionRequest: request response: response timing: timing [
 	| logEventClass |
 	logLevel < 1 ifTrue: [ ^ nil ].
@@ -385,7 +385,7 @@ ZnSingleThreadedServer >> logServerTransactionRequest: request response: respons
 		emit
 ]
 
-{ #category : #'private logging' }
+{ #category : #'private - logging' }
 ZnSingleThreadedServer >> logServerWriteError: exception [
 	logLevel < 3 ifTrue: [ ^ nil ].
 	^ (self newLogEvent: ZnServerWriteErrorEvent)
@@ -393,7 +393,7 @@ ZnSingleThreadedServer >> logServerWriteError: exception [
 		emit
 ]
 
-{ #category : #'private logging' }
+{ #category : #'private - logging' }
 ZnSingleThreadedServer >> logStarted [
 	logLevel < 1 ifTrue: [ ^ nil ].
 	^ (self newLogEvent: ZnServerStartedEvent)
@@ -401,7 +401,7 @@ ZnSingleThreadedServer >> logStarted [
 		emit
 ]
 
-{ #category : #'private logging' }
+{ #category : #'private - logging' }
 ZnSingleThreadedServer >> logStopped [
 	logLevel < 1 ifTrue: [ ^ nil ].
 	^ (self newLogEvent: ZnServerStoppedEvent)
@@ -432,7 +432,7 @@ ZnSingleThreadedServer >> loggingOn [
 	self logLevel: 3
 ]
 
-{ #category : #'private logging' }
+{ #category : #'private - logging' }
 ZnSingleThreadedServer >> newLogEvent: logEventClass [
 	^ logEventClass new
 		serverId: self route;

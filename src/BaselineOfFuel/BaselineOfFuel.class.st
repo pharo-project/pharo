@@ -56,7 +56,7 @@ BaselineOfFuel >> fuelPlatform: spec [
 		baseline: 'FuelPlatform' 
 		with: [ 
 			spec
-				repository: 'github://theseion/FuelPlatform:master/repository';
+				repository: 'github://theseion/FuelPlatform:stable/repository';
   				loads: 'default' ]
 ]
 

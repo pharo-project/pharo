@@ -46,61 +46,61 @@ CairoFontExtents class >> fieldsDesc [
 	)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoFontExtents >> ascent [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_ASCENT
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoFontExtents >> ascent: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_ASCENT put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoFontExtents >> descent [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_DESCENT
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoFontExtents >> descent: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_DESCENT put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoFontExtents >> height [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_HEIGHT
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoFontExtents >> height: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_HEIGHT put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoFontExtents >> max_x_advance [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_MAX_X_ADVANCE
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoFontExtents >> max_x_advance: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_MAX_X_ADVANCE put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoFontExtents >> max_y_advance [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_MAX_Y_ADVANCE
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoFontExtents >> max_y_advance: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_MAX_Y_ADVANCE put: anObject

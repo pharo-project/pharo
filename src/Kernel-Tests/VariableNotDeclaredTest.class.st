@@ -7,7 +7,7 @@ Class {
 	#category : #'Kernel-Tests-Exceptions'
 }
 
-{ #category : #test }
+{ #category : #tests }
 VariableNotDeclaredTest >> testDescription [
 
 	"Tests that the description of the VariableNotDeclaredTest is not the default of Exception"

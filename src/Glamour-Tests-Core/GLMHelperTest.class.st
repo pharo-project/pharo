@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMHelperTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMHelperTest >> testAsGlamorousMultiValue [
 	self assert: (GLMMultiValue with: #(1 2 3)) equals: #(1 2 3) asGlamorousMultiValue.

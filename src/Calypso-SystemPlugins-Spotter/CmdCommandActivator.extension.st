@@ -19,6 +19,12 @@ CmdCommandActivator >> label [
 ]
 
 { #category : #'*Calypso-SystemPlugins-Spotter' }
+CmdCommandActivator >> matchesText: aString [ 
+
+	^ self label = aString
+]
+
+{ #category : #'*Calypso-SystemPlugins-Spotter' }
 CmdCommandActivator >> spotterPreview [
 
 	^ self spotterPreview: SpPresenterBuilder new

@@ -8,7 +8,12 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Renderer'
 }
 
-{ #category : #'private-shadow' }
+{ #category : #testing }
+GLMBrickRenderer class >> isDeprecated [
+	^ true
+]
+
+{ #category : #'private - shadow' }
 GLMBrickRenderer >> bottomLeftCornerShadowOf: aBrick on: aCanvas [
 	| gradient width origin offset |
 
@@ -26,7 +31,7 @@ GLMBrickRenderer >> bottomLeftCornerShadowOf: aBrick on: aCanvas [
 	aCanvas fillRectangle: (origin extent: width @ width) fillStyle: gradient
 ]
 
-{ #category : #'private-shadow' }
+{ #category : #'private - shadow' }
 GLMBrickRenderer >> bottomRightCornerShadowOf: aBrick on: aCanvas [
 	| gradient width origin offset |
 
@@ -44,7 +49,7 @@ GLMBrickRenderer >> bottomRightCornerShadowOf: aBrick on: aCanvas [
 	aCanvas fillRectangle: (origin extent: width @ width) fillStyle: gradient.
 ]
 
-{ #category : #'private-shadow' }
+{ #category : #'private - shadow' }
 GLMBrickRenderer >> bottomShadowOf: aBrick on: aCanvas [
 	| gradient width origin offset |
 	
@@ -73,7 +78,7 @@ GLMBrickRenderer >> drawingBounds: aBrick [
 		ifFalse: [ aRectangle quickMerge: ((aRectangle expandBy: aBrick shadowWidth) translateBy: anOffset) ]
 ]
 
-{ #category : #'private-shadow' }
+{ #category : #'private - shadow' }
 GLMBrickRenderer >> leftShadowOf: aBrick on: aCanvas [
 	| gradient width origin offset |
 	
@@ -155,7 +160,7 @@ GLMBrickRenderer >> renderShadowOf: aBrick on: aCanvas [
 		color: aBrick shadowColor
 ]
 
-{ #category : #'private-shadow' }
+{ #category : #'private - shadow' }
 GLMBrickRenderer >> rightShadowOf: aBrick on: aCanvas [
 	| gradient width origin |
 
@@ -171,19 +176,19 @@ GLMBrickRenderer >> rightShadowOf: aBrick on: aCanvas [
 	aCanvas fillRectangle: (origin extent: width @ (aBrick height - width)) fillStyle: gradient
 ]
 
-{ #category : #'private-shadow' }
+{ #category : #'private - shadow' }
 GLMBrickRenderer >> shadowGradientFor: aBrick [
 
 	^ GradientFillStyle ramp: { 0.0 -> (aBrick shadowColor) . 1.0 -> (aBrick shadowColor alpha: 0)}
 ]
 
-{ #category : #'private-shadow' }
+{ #category : #'private - shadow' }
 GLMBrickRenderer >> shadowGradientReverseFor: aBrick [
 
 	^ GradientFillStyle ramp: { 0.0 -> (aBrick shadowColor alpha: 0). 1.0 -> (aBrick shadowColor) }
 ]
 
-{ #category : #'private-shadow' }
+{ #category : #'private - shadow' }
 GLMBrickRenderer >> topLeftCornerShadowOf: aBrick on: aCanvas [
 	| gradient width origin offset extent |
 	
@@ -201,7 +206,7 @@ GLMBrickRenderer >> topLeftCornerShadowOf: aBrick on: aCanvas [
 	aCanvas fillRectangle: (origin extent: extent) fillStyle: gradient.
 ]
 
-{ #category : #'private-shadow' }
+{ #category : #'private - shadow' }
 GLMBrickRenderer >> topRightCornerShadowOf: aBrick on: aCanvas [
 	| gradient width origin offset |
 	
@@ -219,7 +224,7 @@ GLMBrickRenderer >> topRightCornerShadowOf: aBrick on: aCanvas [
 	aCanvas fillRectangle: (origin extent: width @ width) fillStyle: gradient.
 ]
 
-{ #category : #'private-shadow' }
+{ #category : #'private - shadow' }
 GLMBrickRenderer >> topShadowOf: aBrick on: aCanvas [
 	| gradient width origin offset |
 

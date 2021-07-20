@@ -11,7 +11,7 @@ OCASTToDoTranslatorTest class >> testParameters [
 			forSelector: #optimization addOptions: { #optionInlineToDo . #optionInlineNone })
 ]
 
-{ #category : #'testing - blocks - optimized' }
+{ #category : #'tests - blocks - optimized' }
 OCASTToDoTranslatorTest >> testToDoExecutesBlock [
 
 
@@ -28,7 +28,7 @@ OCASTToDoTranslatorTest >> testToDoExecutesBlock [
 	self assert: result equals: 15.
 ]
 
-{ #category : #'testing - blocks - optimized' }
+{ #category : #'tests - blocks - optimized' }
 OCASTToDoTranslatorTest >> testToDoReturnsReceiver [
 
 
@@ -42,7 +42,7 @@ OCASTToDoTranslatorTest >> testToDoReturnsReceiver [
 	self assert: result equals: 1.
 ]
 
-{ #category : #'testing - blocks - optimized' }
+{ #category : #'tests - blocks - optimized' }
 OCASTToDoTranslatorTest >> testToDoWithCalculatedArguments [
 
 
@@ -61,7 +61,7 @@ OCASTToDoTranslatorTest >> testToDoWithCalculatedArguments [
 	self assert: result equals: 15.
 ]
 
-{ #category : #'testing - blocks - optimized' }
+{ #category : #'tests - blocks - optimized' }
 OCASTToDoTranslatorTest >> testToDoWithTempInBlock [
 
 	| result |
@@ -81,7 +81,7 @@ OCASTToDoTranslatorTest >> testToDoWithTempInBlock [
 	self assert: result equals: 15.
 ]
 
-{ #category : #'testing - blocks - optimized' }
+{ #category : #'tests - blocks - optimized' }
 OCASTToDoTranslatorTest >> testToDoWithTempOutsideBlock [
 
 	| result |

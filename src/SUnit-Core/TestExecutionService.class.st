@@ -16,7 +16,7 @@ All services must recover own default state in this method.
 For example every service can be enabled or disabled for concrete test: 
 
 	- enable 
-	- disble
+	- disable
 
 During #cleanUpAfterTest I restore the activeness according to my default configuration (class side #isEnabled). Subclasses should do the same with their own configurations.
 

@@ -17,6 +17,11 @@ GTInspectorIndexedNode class >> hostObject: anObject index: index [
 		yourself
 ]
 
+{ #category : #testing }
+GTInspectorIndexedNode class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GTInspectorIndexedNode >> errorMessage [
 	^ 'error obtaining indexed attribute value'

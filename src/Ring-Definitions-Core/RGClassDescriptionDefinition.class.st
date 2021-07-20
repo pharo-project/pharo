@@ -126,7 +126,7 @@ RGClassDescriptionDefinition >> isSameRevisionAs: aRGClassDescriptionDefinition 
 		and:[ self instVarNames sort = aRGClassDescriptionDefinition instVarNames sort ]
 ]
 
-{ #category : #'accessing methods' }
+{ #category : #'accessing - methods' }
 RGClassDescriptionDefinition >> methodsInProtocol: aString [
 	"Retrieves the methods classified in protocol named aString"
 

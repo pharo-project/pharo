@@ -13,6 +13,11 @@ Class {
 	#category : #'Glamour-Core'
 }
 
+{ #category : #testing }
+GLMOriginPortReference class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMOriginPortReference >> beActive [ 
 	 
@@ -47,7 +52,7 @@ GLMOriginPortReference >> transformation: anObject [
 	transformation := anObject
 ]
 
-{ #category : #'accessing-convenience' }
+{ #category : #'accessing - convenience' }
 GLMOriginPortReference >> value [
 
 	^ self transformation

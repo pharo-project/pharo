@@ -48,7 +48,7 @@ Class {
 
 { #category : #'instance creation' }
 RBRemoveSenderRefactoring class >> model: aRBSmalltalk remove: anInterval inMethod: aSelector forClass: aClass [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		remove: anInterval
 			inMethod: aSelector
@@ -58,7 +58,7 @@ RBRemoveSenderRefactoring class >> model: aRBSmalltalk remove: anInterval inMeth
 
 { #category : #'instance creation' }
 RBRemoveSenderRefactoring class >> remove: anInterval inMethod: aSelector forClass: aClass [ 
-	^self new 
+	^ self new 
 		remove: anInterval
 		inMethod: aSelector
 		forClass: aClass
@@ -90,7 +90,9 @@ RBRemoveSenderRefactoring >> inlineParseTree [
 
 { #category : #preconditions }
 RBRemoveSenderRefactoring >> preconditions [
-	^(RBCondition definesSelector: sourceSelector in: class) 
+	^ (RBCondition withBlock: [class ifNil: 
+			[self refactoringError: 'Invalid class name']. true]) &
+	(RBCondition definesSelector: sourceSelector in: class) 
 		& (RBCondition withBlock: 
 					[self findSelectedMessage.
 					"self parseInlineMethod."

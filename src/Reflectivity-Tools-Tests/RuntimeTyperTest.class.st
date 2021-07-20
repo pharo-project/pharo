@@ -44,7 +44,7 @@ Class {
 	#category : #'Reflectivity-Tools-Tests'
 }
 
-{ #category : #example }
+{ #category : #examples }
 RuntimeTyperTest >> examplePlus: arg [
 	<sampleInstance>
 	| result |

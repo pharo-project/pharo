@@ -410,7 +410,7 @@ RubAbstractTextArea >> aboutToBeGrabbedBy: aHand [
 	^ nil
 ]
 
-{ #category : #'accessing editor' }
+{ #category : #'accessing - editor' }
 RubAbstractTextArea >> acceptAllowed [
 
 	^ editingMode acceptAllowed
@@ -432,23 +432,23 @@ RubAbstractTextArea >> acceptDroppingMorph: aMorph event: evt [
 		"Make a TextAnchor and install it in a run."
 ]
 
-{ #category : #'accessing text' }
+{ #category : #'accessing - text' }
 RubAbstractTextArea >> addAttribute: anAttribute [
 	self text addAttribute: anAttribute 
 ]
 
-{ #category : #'accessing cursor' }
+{ #category : #'accessing - cursor' }
 RubAbstractTextArea >> addCursor [
 	self cursor ifNil: [ self addMorph: (cursor := self newCursor) ]
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> addPrimarySelection [
 	self addMorph: self newPrimarySelection.
 
 ]
 
-{ #category : #'accessing segments' }
+{ #category : #'accessing - segments' }
 RubAbstractTextArea >> addSegment: aRubTextSegmentMorph [
 	| seg |
 	seg := aRubTextSegmentMorph inTextArea: self.
@@ -468,7 +468,7 @@ RubAbstractTextArea >> announce: anAnnouncement [
 	self announcer announce: anAnnouncement 
 ]
 
-{ #category : #'accessing text' }
+{ #category : #'accessing - text' }
 RubAbstractTextArea >> appendText: aStringOrText [
 	self
 		handleEdit:
@@ -540,7 +540,7 @@ RubAbstractTextArea >> caseSensitiveFinds [
 	^ self class caseSensitiveFinds
 ]
 
-{ #category : #'accessing decorators' }
+{ #category : #'accessing - decorators' }
 RubAbstractTextArea >> classOfDecoratorNamed: aKey [
 	^ RubParagraphDecorator classOfDecoratorNamed: aKey
 ]
@@ -553,7 +553,7 @@ RubAbstractTextArea >> click: anEvent [
 			self scrollSelectionIntoView: nil ]
 ]
 
-{ #category : #'accessing editor' }
+{ #category : #'accessing - editor' }
 RubAbstractTextArea >> closingDelimiters [
 	^ self editor closingDelimiters
 
@@ -601,13 +601,13 @@ RubAbstractTextArea >> correctFrom: start to: stop with: aString [
 	self editor correctFrom: start to: stop with: aString
 ]
 
-{ #category : #'accessing cursor' }
+{ #category : #'accessing - cursor' }
 RubAbstractTextArea >> cursor [
 	^ cursor
 
 ]
 
-{ #category : #'accessing cursor' }
+{ #category : #'accessing - cursor' }
 RubAbstractTextArea >> cursorClass [
 	^ RubCursor
 ]
@@ -617,7 +617,7 @@ RubAbstractTextArea >> cursorWidth [
 	^ self cursorClass defaultWidth 
 ]
 
-{ #category : #'accessing decorators' }
+{ #category : #'accessing - decorators' }
 RubAbstractTextArea >> decoratorNamed: aKey [
 	^self paragraph decoratorNamed: aKey
 ]
@@ -683,7 +683,7 @@ RubAbstractTextArea >> defaultYellowButtonMenuEnabled [
 	^ self defaultMenuAllowed 
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 RubAbstractTextArea >> delete [
 	self hasFocus
 		ifTrue: [ self currentHand newKeyboardFocus: nil ].
@@ -729,14 +729,14 @@ RubAbstractTextArea >> drawingBounds [
 		ifFalse: [ self innerBounds topLeft extent: self class defaultMaxExtent @ self class defaultMaxExtent ]
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> editPrimarySelectionSeparately [
 	| view |
 	view := self primarySelection readWriteView.
 	(view embeddedInMorphicWindowLabeled: 'Selection editing') openInHand.
 ]
 
-{ #category : #'accessing editing mode' }
+{ #category : #'accessing - editing mode' }
 RubAbstractTextArea >> editingMode [
 	^ editingMode
 		ifNil: [ 
@@ -744,7 +744,7 @@ RubAbstractTextArea >> editingMode [
 			editingMode ]
 ]
 
-{ #category : #'accessing editing mode' }
+{ #category : #'accessing - editing mode' }
 RubAbstractTextArea >> editingMode: anEditingMode [
 	editingMode unplug.
 	editingMode := anEditingMode.
@@ -752,36 +752,36 @@ RubAbstractTextArea >> editingMode: anEditingMode [
  
 ]
 
-{ #category : #'accessing editing state' }
+{ #category : #'accessing - editing state' }
 RubAbstractTextArea >> editingState [
 	^ editingState ifNil: [editingState := self newEditingState]
 ]
 
-{ #category : #'accessing editing state' }
+{ #category : #'accessing - editing state' }
 RubAbstractTextArea >> editingStateClass [
 	^ RubEditingState
 ]
 
-{ #category : #'accessing editor' }
+{ #category : #'accessing - editor' }
 RubAbstractTextArea >> editor [
 	"Return my current editor, or install a new one."
 	^ editor ifNil: [ editor := self newEditor ]
 ]
 
-{ #category : #'accessing editor' }
+{ #category : #'accessing - editor' }
 RubAbstractTextArea >> editorClass [
 	"Answer the class used to create the receiver's editor"
 
 	^ RubTextEditor
 ]
 
-{ #category : #'accessing editing state' }
+{ #category : #'accessing - editing state' }
 RubAbstractTextArea >> emphasisHere [
 	^ self editingState emphasisHere
 
 ]
 
-{ #category : #'accessing editing state' }
+{ #category : #'accessing - editing state' }
 RubAbstractTextArea >> emphasisHere: aListOfAttributes [
 	self editingState emphasisHere: aListOfAttributes
 
@@ -861,14 +861,14 @@ RubAbstractTextArea >> focusChanged [
 
 ]
 
-{ #category : #'accessing text' }
+{ #category : #'accessing - text' }
 RubAbstractTextArea >> font [
 	"Answer the probable font"
 	^ self textStyle fonts at: self textStyle defaultFontIndex
 
 ]
 
-{ #category : #'accessing text' }
+{ #category : #'accessing - text' }
 RubAbstractTextArea >> font: aFont [
 	| newTextStyle |
 	newTextStyle := aFont textStyle copy ifNil: [ TextStyle fontArray: { aFont } ].
@@ -889,7 +889,7 @@ RubAbstractTextArea >> forceCompose [
 	self paragraph forceCompose 
 ]
 
-{ #category : #'accessing cursor' }
+{ #category : #'accessing - cursor' }
 RubAbstractTextArea >> forceCursorVisibleWhile: aBlock [
 	self cursor
 		ifNotNil: [ :cur | 
@@ -996,7 +996,7 @@ RubAbstractTextArea >> handleReturnKey [
 	^ answer accepted
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> handleSelectionChange: aBlock [
 	| prevMarkBlock prevPointBlock |
 	self flag: #pharoFixMe. "hack here because text segments are not well designed regarding text editing".
@@ -1036,13 +1036,13 @@ RubAbstractTextArea >> hasCompletionEngine [
 	
 ]
 
-{ #category : #'accessing decorators' }
+{ #category : #'accessing - decorators' }
 RubAbstractTextArea >> hasDecorator: aDecorator [
 	^ self paragraph hasDecorator: aDecorator
 	
 ]
 
-{ #category : #'accessing decorators' }
+{ #category : #'accessing - decorators' }
 RubAbstractTextArea >> hasDecoratorNamed: aKey [
 	^ self paragraph hasDecoratorNamed: aKey
 	
@@ -1053,17 +1053,17 @@ RubAbstractTextArea >> hasFindReplaceFocus [
 	^ self findReplaceService dialogIsActiveFor: self
 ]
 
-{ #category : #'accessing editing state' }
+{ #category : #'accessing - editing state' }
 RubAbstractTextArea >> hasFocus [
 	^ ( editingState ifNil: [^ false ] ) hasFocus
 ]
 
-{ #category : #'accessing editing state' }
+{ #category : #'accessing - editing state' }
 RubAbstractTextArea >> hasFocus: aBoolean [
 	^ self editingState hasFocus: aBoolean 
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> hasSelection [
 	^ self editor hasSelection 
 ]
@@ -1158,7 +1158,7 @@ RubAbstractTextArea >> lineNumbersTextColor [
 
 ]
 
-{ #category : #'accessing paragraph' }
+{ #category : #'accessing - paragraph' }
 RubAbstractTextArea >> lines [
 	^ self paragraph lines
 ]
@@ -1216,28 +1216,28 @@ RubAbstractTextArea >> markBackgroundColors [
 								to: stop+1) ] ] ] 
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> markBlock [
 	^ self editingState markBlock
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> markBlock: aCharacterBlock [
 	self handleSelectionChange: [ self editingState markBlock:  aCharacterBlock]
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> markBlock: markCharacterBlock pointBlock: pointCharacterBlock [
 	self handleSelectionChange: [ self editingState markBlock: markCharacterBlock pointBlock: pointCharacterBlock ]
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> markIndex [
 	^ self editingState markIndex
 
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> markIndex: markIndex pointIndex: pointIndex [
 	self handleSelectionChange: [ self editingState markIndex: markIndex pointIndex: pointIndex ]
 ]
@@ -1289,7 +1289,7 @@ RubAbstractTextArea >> model: aModel [
 	model := aModel
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> modifySelection: aCharacterBlock [
 	"the aCharacterBlock becomes always the new point block. Whether the old point block or
 	the old mark block becomes the new mark block, depends on the distance. If the new character block
@@ -1378,12 +1378,12 @@ RubAbstractTextArea >> mouseUp: evt [
 	mouseDownPoint := nil
 ]
 
-{ #category : #'accessing cursor' }
+{ #category : #'accessing - cursor' }
 RubAbstractTextArea >> newCursor [
 	^ self cursorClass new
 ]
 
-{ #category : #'accessing editing state' }
+{ #category : #'accessing - editing state' }
 RubAbstractTextArea >> newEditingState [
 	^ self editingStateClass new textArea: self
 ]
@@ -1403,7 +1403,7 @@ RubAbstractTextArea >> newParagraph [
 	^ newParagraph
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> newPrimarySelection [
 	^ RubPrimarySelectionMorph inTextArea: self from: self markIndex to: self pointIndex.
 
@@ -1449,7 +1449,7 @@ RubAbstractTextArea >> openFindDialog [
 		ifFalse: [self flash]
 ]
 
-{ #category : #'accessing editor' }
+{ #category : #'accessing - editor' }
 RubAbstractTextArea >> openingDelimiters [
 	^ self editor openingDelimiters
 
@@ -1498,17 +1498,17 @@ RubAbstractTextArea >> plugFindReplace [
 		when:  RubSelectionChanged send: #whenTextAreaSelectionChanged: to: self findReplaceService
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> pointBlock [
 	^ self editingState pointBlock
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> pointBlock: aCharacterBlock [
 	self handleSelectionChange: [ self editingState pointBlock: aCharacterBlock ]
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> pointIndex [
 	^ self editingState pointIndex
 ]
@@ -1519,18 +1519,18 @@ RubAbstractTextArea >> prepareParagraphToCompose [
 
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> primarySelection [
 	^ self submorphThat: [ :sm | sm isKindOf: RubPrimarySelectionMorph ] ifNone:  [ ]
 
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> primarySelectionBounds [
 	^ self primarySelection bounds
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> primarySelectionColor [
 	^ self primarySelection ifNil: [ Color transparent] ifNotNil: [:ps | ps color ]
 ]
@@ -1570,7 +1570,7 @@ RubAbstractTextArea >> privateSetTextStyle: aTextStyle [
 	textStyle := aTextStyle
 ]
 
-{ #category : #'accessing text' }
+{ #category : #'accessing - text' }
 RubAbstractTextArea >> privateText: stringOrText [
 	"Accept new text contents."
 
@@ -1597,7 +1597,7 @@ RubAbstractTextArea >> readOnly: aBoolean [
 	 readOnly := aBoolean
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> recomputeSelection [
 	"The same characters are selected but their coordinates may have changed.
 	Redetermine the selection according to the start and stop block indices; 
@@ -1617,14 +1617,14 @@ RubAbstractTextArea >> releaseCachedState [
 	self releaseParagraph
 ]
 
-{ #category : #'accessing editing state' }
+{ #category : #'accessing - editing state' }
 RubAbstractTextArea >> releaseEditingState [
 	editingState ifNotNil: [ 
 		editingState unplug.
 		editingState := nil]
 ]
 
-{ #category : #'accessing editor' }
+{ #category : #'accessing - editor' }
 RubAbstractTextArea >> releaseEditor [
 	"Release the editor for my paragraph."
 
@@ -1644,7 +1644,7 @@ RubAbstractTextArea >> releaseParagraph [
 
 ]
 
-{ #category : #'accessing cursor' }
+{ #category : #'accessing - cursor' }
 RubAbstractTextArea >> removeCursor [
 	self cursor ifNotNil: [ :c | 
 		self cursor aboutToBeRemoved.
@@ -1652,7 +1652,7 @@ RubAbstractTextArea >> removeCursor [
 	cursor := nil
 ]
 
-{ #category : #'accessing segments' }
+{ #category : #'accessing - segments' }
 RubAbstractTextArea >> removeSegment: aRubTextSegmentMorph [
 	self announcer unsubscribe: aRubTextSegmentMorph.
 	self segments remove: aRubTextSegmentMorph ifAbsent: [].
@@ -1691,7 +1691,7 @@ RubAbstractTextArea >> resistsRemoval [
 	^ self grabbedAllowed not
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> restoreSelectionIndexesAfter: aBlock [
 	| prevStart prevStop |
 	prevStart := self markIndex min: self pointIndex.
@@ -1718,12 +1718,12 @@ RubAbstractTextArea >> scrollPane: aScrollPane [
 	self color: Color transparent
 ]
 
-{ #category : #'accessing editing state' }
+{ #category : #'accessing - editing state' }
 RubAbstractTextArea >> scrollPivot [
 	^self editingState scrollPivot
 ]
 
-{ #category : #'accessing editing state' }
+{ #category : #'accessing - editing state' }
 RubAbstractTextArea >> scrollPivot: aPoint [
 	^self editingState scrollPivot: aPoint
 ]
@@ -1734,43 +1734,43 @@ RubAbstractTextArea >> scrollSelectionIntoView: evt [
 
 ]
 
-{ #category : #'accessing segments' }
+{ #category : #'accessing - segments' }
 RubAbstractTextArea >> segments [
 	^ segments ifNil: [ segments := OrderedCollection new ]
 
 ]
 
-{ #category : #'accessing segments' }
+{ #category : #'accessing - segments' }
 RubAbstractTextArea >> segmentsAtLine: aLineNumber [
 	^ self segments select: [ :s | s firstLineIndex = aLineNumber ]
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> select [
 	self editor select
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> selectAll [
 	self editor selectAll
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> selectFrom: a to: b [
 	self editor selectFrom: a to: b
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> selectInvisiblyFrom: start to: stop [
 	self editor selectInvisiblyFrom: start to: stop
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> selection [
 	^ self editor selection
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> selectionChanged [
 	"Invalidate all the selection rectangles. 
 	Make sure that any drop shadow is accounted for too."
@@ -1779,12 +1779,12 @@ RubAbstractTextArea >> selectionChanged [
 
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> selectionInterval [
 	^self editor selectionInterval 
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> selectionRects [
 	^ Array
 		streamContents: [ :strm | 
@@ -1792,12 +1792,12 @@ RubAbstractTextArea >> selectionRects [
 			self cursor ifNotNil: [ strm nextPut: self cursor bounds ] ]
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> selectionStart [
 	^ self editingState selectionStart
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> selectionStop [
 	^ self editingState selectionStop
 ]
@@ -1838,29 +1838,29 @@ RubAbstractTextArea >> showOverEditableTextCursor [
 		ifTrue: [ self currentHand showTemporaryCursor: ( self theme overTextCursorFor: self ) ]
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> startIndex [
 	^ self selectionStart stringIndex
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> stopIndex [
 	^ self selectionStop stringIndex
 ]
 
-{ #category : #'accessing text' }
+{ #category : #'accessing - text' }
 RubAbstractTextArea >> string [
 	"obtain a string value from the receiver"
 
 	^ self text string
 ]
 
-{ #category : #'accessing text' }
+{ #category : #'accessing - text' }
 RubAbstractTextArea >> tabWidth [
 	^ self paragraph tabWidth
 ]
 
-{ #category : #'accessing text' }
+{ #category : #'accessing - text' }
 RubAbstractTextArea >> tabWidth: anInteger [
 	self paragraph tabWidth: anInteger
 ]
@@ -1879,7 +1879,7 @@ RubAbstractTextArea >> takesKeyboardFocus [
 	^true
 ]
 
-{ #category : #'accessing text' }
+{ #category : #'accessing - text' }
 RubAbstractTextArea >> text [
 	^ self paragraph text
 ]
@@ -1892,19 +1892,19 @@ RubAbstractTextArea >> text: t textStyle: s color: c textColor: tc [
 
 ]
 
-{ #category : #'accessing text' }
+{ #category : #'accessing - text' }
 RubAbstractTextArea >> textColor [
 	^ textColor ifNil: [ textColor := self defaultTextColor ]
 ]
 
-{ #category : #'accessing text' }
+{ #category : #'accessing - text' }
 RubAbstractTextArea >> textColor: newColor [
 	textColor := newColor.
 	self addAttribute: (TextColor color: newColor).
 	self changed.
 ]
 
-{ #category : #'accessing text' }
+{ #category : #'accessing - text' }
 RubAbstractTextArea >> textFont: aFont [
 	self addAttribute: (TextFontReference toFont: aFont).
 	self paragraph compose.
@@ -1913,12 +1913,12 @@ RubAbstractTextArea >> textFont: aFont [
 
 ]
 
-{ #category : #'accessing text' }
+{ #category : #'accessing - text' }
 RubAbstractTextArea >> textStyle [
 	^textStyle ifNil: [ textStyle := self defaultTextStyle  ]
 ]
 
-{ #category : #'accessing text' }
+{ #category : #'accessing - text' }
 RubAbstractTextArea >> textStyle: aTextStyle [
 	self privateTextStyle: aTextStyle.
 	self addAttribute: (TextFontChange fontNumber: (textStyle defaultFontIndex)).
@@ -1972,7 +1972,7 @@ RubAbstractTextArea >> unplugFindReplace [
 
 ]
 
-{ #category : #'accessing selection' }
+{ #category : #'accessing - selection' }
 RubAbstractTextArea >> unselect [
 	self handleSelectionChange: [ self editingState unselect ]
 ]
@@ -2000,7 +2000,7 @@ RubAbstractTextArea >> updateMarginsWith: aMargin [
 	self handleParagraphChange: [self margins: aMargin ]
 ]
 
-{ #category : #'accessing text' }
+{ #category : #'accessing - text' }
 RubAbstractTextArea >> updateTextWith: aStringOrText [
 	self
 		handleEdit: [ self
@@ -2013,14 +2013,14 @@ RubAbstractTextArea >> updateTextWith: aStringOrText [
 							self deselect ] ] ]
 ]
 
-{ #category : #'accessing text' }
+{ #category : #'accessing - text' }
 RubAbstractTextArea >> userString [
 	"Do I have a text string to be searched on?"
 
 	^ self text string
 ]
 
-{ #category : #'accessing text' }
+{ #category : #'accessing - text' }
 RubAbstractTextArea >> validateTextFrom: aStringOrText [
 	^ self maxLength
 		ifNil: [ aStringOrText ]
@@ -2053,7 +2053,7 @@ RubAbstractTextArea >> whenFindTextChanged: anAnnouncement [
 	self changed
 ]
 
-{ #category : #'accessing decorators' }
+{ #category : #'accessing - decorators' }
 RubAbstractTextArea >> withDecorator: aDecorator [
 	(self hasDecoratorNamed: aDecorator key)
 		ifTrue: [ ^ self ].
@@ -2061,7 +2061,7 @@ RubAbstractTextArea >> withDecorator: aDecorator [
 	self compose
 ]
 
-{ #category : #'accessing decorators' }
+{ #category : #'accessing - decorators' }
 RubAbstractTextArea >> withDecoratorNamed: aKey [
 	(self hasDecoratorNamed: aKey)
 		ifTrue: [ ^ self ].
@@ -2069,27 +2069,27 @@ RubAbstractTextArea >> withDecoratorNamed: aKey [
 		ifNotNil: [ :cls | self withDecorator: cls new ]
 ]
 
-{ #category : #'accessing decorators' }
+{ #category : #'accessing - decorators' }
 RubAbstractTextArea >> withDecoratorsNamed: aCollection [
 	aCollection do: [ :m | self withDecoratorNamed: m ]
 ]
 
-{ #category : #'accessing decorators' }
+{ #category : #'accessing - decorators' }
 RubAbstractTextArea >> withFindReplaceSelection [
 	self withDecoratorNamed: #findReplaceSelection
 ]
 
-{ #category : #'accessing decorators' }
+{ #category : #'accessing - decorators' }
 RubAbstractTextArea >> withOpeningClosingDelimitersHighlight [
 	self withDecoratorNamed: #openingClosingDelimitersHighlight
 ]
 
-{ #category : #'accessing decorators' }
+{ #category : #'accessing - decorators' }
 RubAbstractTextArea >> withoutAnyDecorator [
 	[ self paragraph key notNil ] whileTrue: [ self withoutDecorator: paragraph ]
 ]
 
-{ #category : #'accessing decorators' }
+{ #category : #'accessing - decorators' }
 RubAbstractTextArea >> withoutDecorator: aDecorator [
 	| n p |
 	(self hasDecorator: aDecorator)
@@ -2107,24 +2107,24 @@ RubAbstractTextArea >> withoutDecorator: aDecorator [
 	self changed
 ]
 
-{ #category : #'accessing decorators' }
+{ #category : #'accessing - decorators' }
 RubAbstractTextArea >> withoutDecoratorNamed: aKey [
 	(self decoratorNamed: aKey)
 		ifNotNil: [ :m | self withoutDecorator: m ].
 	self changed
 ]
 
-{ #category : #'accessing decorators' }
+{ #category : #'accessing - decorators' }
 RubAbstractTextArea >> withoutDecoratorsNamed: aCollection [
 	aCollection do: [ :m | self withoutDecoratorNamed: m ]
 ]
 
-{ #category : #'accessing decorators' }
+{ #category : #'accessing - decorators' }
 RubAbstractTextArea >> withoutFindReplaceSelection [
 	self withoutDecoratorNamed: #findReplaceSelection
 ]
 
-{ #category : #'accessing decorators' }
+{ #category : #'accessing - decorators' }
 RubAbstractTextArea >> withoutSecondarySelection [
 	self withoutDecoratorNamed: #secondarySelection
 ]

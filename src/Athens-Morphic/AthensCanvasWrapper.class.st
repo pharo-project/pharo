@@ -42,7 +42,7 @@ AthensCanvasWrapper >> canvas: anAthensCanvas [
 	athensCanvas := anAthensCanvas
 ]
 
-{ #category : #'private clip transform' }
+{ #category : #'private - clip transform' }
 AthensCanvasWrapper >> canvasClipBy: aClipRect during: aBlock [
 	| oldRect |
 	oldRect := self clipRect.
@@ -51,7 +51,7 @@ AthensCanvasWrapper >> canvasClipBy: aClipRect during: aBlock [
 		ensure: [ currentClipRect := oldRect ]
 ]
 
-{ #category : #'canvas drawing-support' }
+{ #category : #'canvas drawing - support' }
 AthensCanvasWrapper >> clipBy: aRectangle during: aBlock [
 	self canvasClipBy: aRectangle during: [ aBlock value: self ]
 ]
@@ -61,7 +61,7 @@ AthensCanvasWrapper >> clipRect [
 	^ self canvas clipRect
 ]
 
-{ #category : #'private clip transform' }
+{ #category : #'private - clip transform' }
 AthensCanvasWrapper >> clipWrapperAndAthensTransformBy: aDisplayTransform clippingTo: aClipRect during: aBlock smoothing: cellSize [
 "the clipTransform methods are just trial and error attemps on getting this right"
 	| rect |
@@ -78,7 +78,7 @@ AthensCanvasWrapper >> clipWrapperAndAthensTransformBy: aDisplayTransform clippi
 					aBlock value: self ] ]	"]"
 ]
 
-{ #category : #'private clip transform' }
+{ #category : #'private - clip transform' }
 AthensCanvasWrapper >> clipWrapperTransformBy: aDisplayTransform clippingTo: aClipRect during: aBlock smoothing: cellSize [
 "the clipTransform methods are just trial and error attemps on getting this right"
 	| rect |
@@ -160,12 +160,12 @@ AthensCanvasWrapper >> depth [
 	^ 32
 ]
 
-{ #category : #'canvas drawing-general' }
+{ #category : #'canvas drawing - general' }
 AthensCanvasWrapper >> draw: anObject [
 	^anObject drawOn: self
 ]
 
-{ #category : #'canvas drawing-images' }
+{ #category : #'canvas drawing - images' }
 AthensCanvasWrapper >> drawImage: aForm at: aPoint [
 	"Draw the given Form, which is assumed to be a Form or ColorForm"
 
@@ -174,7 +174,7 @@ AthensCanvasWrapper >> drawImage: aForm at: aPoint [
 		sourceRect: aForm boundingBox
 ]
 
-{ #category : #'canvas drawing-images' }
+{ #category : #'canvas drawing - images' }
 AthensCanvasWrapper >> drawImage: aForm at: aPoint sourceRect: sourceRect [
 	"Draw the given form."
 
@@ -184,14 +184,14 @@ AthensCanvasWrapper >> drawImage: aForm at: aPoint sourceRect: sourceRect [
 		rule: Form over
 ]
 
-{ #category : #'canvas drawing-general' }
+{ #category : #'canvas drawing - general' }
 AthensCanvasWrapper >> drawMorph: aMorph [
 	(self isVisible: aMorph fullBounds)
 		ifFalse: [ ^ self ].
 	self draw: aMorph
 ]
 
-{ #category : #'canvas drawing-polygons' }
+{ #category : #'canvas drawing - polygons' }
 AthensCanvasWrapper >> drawPolygon: vertices color: aColor borderWidth: aBorderWidth borderColor: aBorderColor [
 	| path |
 	self canvas pathTransform
@@ -204,7 +204,7 @@ AthensCanvasWrapper >> drawPolygon: vertices color: aColor borderWidth: aBorderW
 	self canvas drawShape: path
 ]
 
-{ #category : #'canvas drawing-polygons' }
+{ #category : #'canvas drawing - polygons' }
 AthensCanvasWrapper >> drawPolygon: vertices fillStyle: aFillStyle [
 	| path |
 	self canvas pathTransform
@@ -215,12 +215,12 @@ AthensCanvasWrapper >> drawPolygon: vertices fillStyle: aFillStyle [
 	self canvas drawShape: path
 ]
 
-{ #category : #'canvas drawing-polygons' }
+{ #category : #'canvas drawing - polygons' }
 AthensCanvasWrapper >> drawPolygon: vertices fillStyle: aFillStyle borderWidth: aBorderWidth borderColor: aBorderColor [
 	self drawPolygon: vertices color:  aFillStyle borderWidth:  aBorderWidth borderColor: aBorderColor
 ]
 
-{ #category : #'canvas drawing-text' }
+{ #category : #'canvas drawing - text' }
 AthensCanvasWrapper >> drawString: aString at: aPoint font: aFontOrNil color: aColor [
 	self
 		drawString: aString
@@ -229,7 +229,7 @@ AthensCanvasWrapper >> drawString: aString at: aPoint font: aFontOrNil color: aC
 		color: aColor
 ]
 
-{ #category : #'canvas drawing-text' }
+{ #category : #'canvas drawing - text' }
 AthensCanvasWrapper >> drawString: aString from: firstIndex to: lastIndex in: bounds font: aFontOrNil color: aColor underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc [
 	| font |
 	font := aFontOrNil ifNil: [ TextStyle defaultFont ].
@@ -250,12 +250,12 @@ AthensCanvasWrapper >> drawString: aString from: firstIndex to: lastIndex in: bo
 
 ]
 
-{ #category : #'canvas drawing-text' }
+{ #category : #'canvas drawing - text' }
 AthensCanvasWrapper >> drawString: aString in: bounds [
 	self drawString: aString in: bounds font:nil color: Color black
 ]
 
-{ #category : #'canvas drawing-text' }
+{ #category : #'canvas drawing - text' }
 AthensCanvasWrapper >> drawString: aString in: bounds font: aFontOrNil color: aColor [
 	| font |
 	font := aFontOrNil ifNil: [ TextStyle defaultFont ].
@@ -270,7 +270,7 @@ AthensCanvasWrapper >> drawString: aString in: bounds font: aFontOrNil color: aC
 			self canvas drawString: aString from: 1 to: aString size ] ]
 ]
 
-{ #category : #'canvas drawing-text' }
+{ #category : #'canvas drawing - text' }
 AthensCanvasWrapper >> drawString: s in: boundsRect font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc [
 	^ self
 		drawString: s asString
@@ -290,14 +290,14 @@ AthensCanvasWrapper >> extent [
 	^ self canvas surface extent
 ]
 
-{ #category : #'canvas drawing-ovals' }
+{ #category : #'canvas drawing - ovals' }
 AthensCanvasWrapper >> fillOval: r color: c [
 
 	self fillOval: r color: c borderWidth: 0 borderColor: Color transparent.
 
 ]
 
-{ #category : #'canvas drawing-ovals' }
+{ #category : #'canvas drawing - ovals' }
 AthensCanvasWrapper >> fillOval: aRectangle color: aColor borderWidth: aBorderWidth borderColor: aBorderColor [
 	self
 		fillOval: aRectangle
@@ -306,12 +306,12 @@ AthensCanvasWrapper >> fillOval: aRectangle color: aColor borderWidth: aBorderWi
 		borderColor: aBorderColor
 ]
 
-{ #category : #'canvas drawing-ovals' }
+{ #category : #'canvas drawing - ovals' }
 AthensCanvasWrapper >> fillOval: aRectangle fillStyle: aFillStyle [
 	^self fillOval: aRectangle fillStyle: aFillStyle borderWidth: 0 borderColor: Color transparent
 ]
 
-{ #category : #'canvas drawing-ovals' }
+{ #category : #'canvas drawing - ovals' }
 AthensCanvasWrapper >> fillOval: aRectangle fillStyle: aFillStyle borderWidth: aBorderWidth borderColor: aBorderColor [
 	self canvas setPaint: aFillStyle.
 	self canvas pathTransform
@@ -327,18 +327,18 @@ AthensCanvasWrapper >> fillOval: aRectangle fillStyle: aFillStyle borderWidth: a
 			self canvas draw ]
 ]
 
-{ #category : #'canvas drawing-rectangles' }
+{ #category : #'canvas drawing - rectangles' }
 AthensCanvasWrapper >> fillRectangle: aRectangle color: aColor [
 	self canvas setPaint: aColor.
 	self canvas drawShape: aRectangle
 ]
 
-{ #category : #'canvas drawing-rectangles' }
+{ #category : #'canvas drawing - rectangles' }
 AthensCanvasWrapper >> fillRectangle: aRectangle fillStyle: aFillStyle [
 	self fillRectangle: aRectangle color: aFillStyle
 ]
 
-{ #category : #'canvas drawing-rectangles' }
+{ #category : #'canvas drawing - rectangles' }
 AthensCanvasWrapper >> fillRectangle: aRectangle fillStyle: aFillStyle borderStyle: aBorderStyle [
 	self
 		canvasClipBy: self clipRect
@@ -354,7 +354,7 @@ AthensCanvasWrapper >> finish [
 	self flush
 ]
 
-{ #category : #'canvas drawing-support' }
+{ #category : #'canvas drawing - support' }
 AthensCanvasWrapper >> flush [
 	^ self canvas surface flush.
 ]
@@ -364,7 +364,7 @@ AthensCanvasWrapper >> form [
 	^ self canvas surface asForm
 ]
 
-{ #category : #'canvas drawing-rectangles' }
+{ #category : #'canvas drawing - rectangles' }
 AthensCanvasWrapper >> frameAndFillRectangle: aRectangle fillColor: aFillColor borderWidth: aBorderWidth borderColor: aBorderColor [
 	self
 		canvasClipBy: self clipRect
@@ -375,25 +375,25 @@ AthensCanvasWrapper >> frameAndFillRectangle: aRectangle fillColor: aFillColor b
 			self canvas drawShape: aRectangle ]
 ]
 
-{ #category : #'canvas drawing-rectangles' }
+{ #category : #'canvas drawing - rectangles' }
 AthensCanvasWrapper >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderWidth topLeftColor: topLeftColor bottomRightColor: bottomRightColor [
 	self fillRectangle: r fillStyle: fillColor.
 	topLeftColor = bottomRightColor
 		ifTrue: [ self frameRectangle: r width: borderWidth color: bottomRightColor ]
 ]
 
-{ #category : #'canvas drawing-rectangles' }
+{ #category : #'canvas drawing - rectangles' }
 AthensCanvasWrapper >> frameRectangle: aRectangle color: aColor [
 	self frameRectangle: aRectangle width: 1 color: aColor
 ]
 
-{ #category : #'canvas drawing-rectangles' }
+{ #category : #'canvas drawing - rectangles' }
 AthensCanvasWrapper >> frameRectangle: aRectangle width: aBorderWidth color: aColor [
 	(self canvas setStrokePaint: aColor) width: aBorderWidth.
 	self canvas drawShape: aRectangle
 ]
 
-{ #category : #'canvas drawing-rectangles' }
+{ #category : #'canvas drawing - rectangles' }
 AthensCanvasWrapper >> frameRectangle: aRectangle width: width colors: colors dashes: dashes [
 	| stroke |
 	stroke := self canvas setStrokePaint: colors first.
@@ -407,12 +407,12 @@ AthensCanvasWrapper >> frameRectangle: aRectangle width: width colors: colors da
 			self canvas drawShape: aRectangle ]
 ]
 
-{ #category : #'canvas drawing-general' }
+{ #category : #'canvas drawing - general' }
 AthensCanvasWrapper >> fullDraw: anObject [
 	^anObject fullDrawOn: self
 ]
 
-{ #category : #'canvas drawing-general' }
+{ #category : #'canvas drawing - general' }
 AthensCanvasWrapper >> fullDrawMorph: aMorph [
 	"Hook method for potential other canvases. In the core, this method looks supefluous but PostscriptCanvases and other canvases can specialized it for Morph rendering. Therefore it should not be merged with fullDraw:."
 
@@ -480,12 +480,12 @@ AthensCanvasWrapper >> origin: aPoint [
 	origin := aPoint
 ]
 
-{ #category : #'canvas drawing-images' }
+{ #category : #'canvas drawing - images' }
 AthensCanvasWrapper >> paintImage: aForm at: aPoint [
 	self paintImage: aForm at: aPoint sourceRect: aForm boundingBox
 ]
 
-{ #category : #'canvas drawing-images' }
+{ #category : #'canvas drawing - images' }
 AthensCanvasWrapper >> paintImage: aForm at: aPoint sourceRect: sourceRect [
 	self canvas paintMode over.
 	self imagePaint: aForm at: aPoint sourceRect: sourceRect
@@ -496,12 +496,12 @@ AthensCanvasWrapper >> paragraph: aParagraph bounds: aRectangle color: aColor [
 	aParagraph drawOnAthensCanvas: self canvas bounds: aRectangle color: aColor
 ]
 
-{ #category : #'canvas drawing-general' }
+{ #category : #'canvas drawing - general' }
 AthensCanvasWrapper >> roundCornersOf: aMorph during: aBlock [
 	^ self roundCornersOf: aMorph in: aMorph bounds during: aBlock
 ]
 
-{ #category : #'canvas drawing-general' }
+{ #category : #'canvas drawing - general' }
 AthensCanvasWrapper >> roundCornersOf: aMorph in: bounds during: aBlock [
 	^ aBlock value
 ]
@@ -532,7 +532,7 @@ AthensCanvasWrapper >> stencil: stencilForm at: aPoint sourceRect: sourceRect co
 
 ]
 
-{ #category : #'canvas drawing-support' }
+{ #category : #'canvas drawing - support' }
 AthensCanvasWrapper >> transformBy: aDisplayTransform clippingTo: aClipRect during: aBlock smoothing: cellSize [
 	self canvas
 		transformBy: aDisplayTransform
@@ -541,7 +541,7 @@ AthensCanvasWrapper >> transformBy: aDisplayTransform clippingTo: aClipRect duri
 		during: [ :v | aBlock value: self ]
 ]
 
-{ #category : #'canvas drawing-support' }
+{ #category : #'canvas drawing - support' }
 AthensCanvasWrapper >> translateBy: offset clippingTo: aRect during: aBlock [
 	self
 		canvasClipBy: aRect
@@ -552,17 +552,17 @@ AthensCanvasWrapper >> translateBy: offset clippingTo: aRect during: aBlock [
 					aBlock value: self ] ]
 ]
 
-{ #category : #'canvas drawing-support' }
+{ #category : #'canvas drawing - support' }
 AthensCanvasWrapper >> translateBy: offset during: aBlock [
 	^ self copyOrigin: origin + offset clipRect: self clipRect
 ]
 
-{ #category : #'canvas drawing-images' }
+{ #category : #'canvas drawing - images' }
 AthensCanvasWrapper >> translucentImage: aForm at: aPoint [
 	self translucentImage: aForm at: aPoint sourceRect: aForm boundingBox
 ]
 
-{ #category : #'canvas drawing-images' }
+{ #category : #'canvas drawing - images' }
 AthensCanvasWrapper >> translucentImage: aForm at: aPoint sourceRect: sourceRect [
 	self canvas paintMode over.
 	self imagePaint: aForm at: aPoint sourceRect: sourceRect

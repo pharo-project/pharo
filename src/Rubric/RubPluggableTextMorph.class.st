@@ -37,7 +37,7 @@ RubPluggableTextMorph class >> on: anObject text: getTextSel accept: setTextSel 
 		setSelection: setSelectionSel
 ]
 
-{ #category : #'undo-redo' }
+{ #category : #'undo - redo' }
 RubPluggableTextMorph >> clearUndoManager [
 	self textArea editingState clearUndoManager: nil
 ]
@@ -160,7 +160,7 @@ RubPluggableTextMorph >> promptForCancel [
 						ifNil: [ self basicHasUnacceptedEdits: false ] ] ]
 ]
 
-{ #category : #'accessing scrollbars' }
+{ #category : #'accessing - scrollbars' }
 RubPluggableTextMorph >> registerScrollChanges: aSelector [
 
 	self announcer 
@@ -169,7 +169,7 @@ RubPluggableTextMorph >> registerScrollChanges: aSelector [
 		to: self model
 ]
 
-{ #category : #'accessing scrollbars' }
+{ #category : #'accessing - scrollbars' }
 RubPluggableTextMorph >> scrollerOffsetChanged [
 	super scrollerOffsetChanged.
 	self announcer

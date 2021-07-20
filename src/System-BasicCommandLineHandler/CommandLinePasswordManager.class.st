@@ -48,31 +48,31 @@ CommandLinePasswordManager class >> defaultNumberOfHashIterations [
 	^ 5
 ]
 
-{ #category : #example }
+{ #category : #examples }
 CommandLinePasswordManager class >> exampleEnablePasswordProtection [
 	self protectCommandLinesByPasswordWith: 'PharoPassword'
 ]
 
-{ #category : #example }
+{ #category : #examples }
 CommandLinePasswordManager class >> exampleEnablePasswordProtectionCustomized [
 	self protectCommandLinesByPasswordWith: 'PharoPassword' pepper: 'SomePepper' numberOfHashIterations: 10
 ]
 
-{ #category : #example }
+{ #category : #examples }
 CommandLinePasswordManager class >> exampleRemovePasswordProtection [
 	self removePasswordProtection
 ]
 
 { #category : #public }
 CommandLinePasswordManager class >> protectCommandLinesByPasswordWith: aString [
-	"This method enables the password protection of command line. All command lines returning true to #requireDeploymentPassword ask a password to be executed. This is usefull in deployment mode of private applications."
+	"This method enables the password protection of command line. All command lines returning true to #requireDeploymentPassword ask a password to be executed. This is useful in deployment mode of private applications."
 	
 	self protectCommandLinesByPasswordWith: aString pepper: nil numberOfHashIterations: nil
 ]
 
 { #category : #public }
 CommandLinePasswordManager class >> protectCommandLinesByPasswordWith: aString pepper: anotherString [
-	"This method enables the password protection of command line. All command lines returning true to #requireDeploymentPassword ask a password to be executed. This is usefull in deployment mode of private applications.
+	"This method enables the password protection of command line. All command lines returning true to #requireDeploymentPassword ask a password to be executed. This is useful in deployment mode of private applications.
 		This method accepts a custom pepper for the password hashing. See https://en.wikipedia.org/wiki/Pepper_(cryptography) for more information."
 
 	self protectCommandLinesByPasswordWith: aString pepper: anotherString numberOfHashIterations: nil
@@ -80,7 +80,7 @@ CommandLinePasswordManager class >> protectCommandLinesByPasswordWith: aString p
 
 { #category : #public }
 CommandLinePasswordManager class >> protectCommandLinesByPasswordWith: aString pepper: anotherString numberOfHashIterations: aNumber [
-	"This method enables the password protection of command line. All command lines returning true to #requireDeploymentPassword ask a password to be executed. This is usefull in deployment mode of private applications.
+	"This method enables the password protection of command line. All command lines returning true to #requireDeploymentPassword ask a password to be executed. This is useful in deployment mode of private applications.
 	This method accepts a custom pepper for the password hashing. See https://en.wikipedia.org/wiki/Pepper_(cryptography) for more information.
 	This method also allows to specify a custom number of hash iterations."
 
@@ -155,7 +155,7 @@ CommandLinePasswordManager >> passwordHash: aString [
 
 { #category : #public }
 CommandLinePasswordManager >> protectCommandLinesByPasswordWith: aString pepper: anotherString numberOfHashIterations: aNumber [
-	"This method enables the password protection of command line. All command lines returning true to #requireDeploymentPassword ask a password to be executed. This is usefull in deployment mode of private applications.
+	"This method enables the password protection of command line. All command lines returning true to #requireDeploymentPassword ask a password to be executed. This is useful in deployment mode of private applications.
 	This method accepts a custom pepper for the password hashing. See https://en.wikipedia.org/wiki/Pepper_(cryptography) for more information.
 	This method also allows to specify a custom number of hash iterations."
 	

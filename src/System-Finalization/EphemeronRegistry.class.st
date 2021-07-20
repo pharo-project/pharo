@@ -11,7 +11,7 @@ An ephemeron registry can be simply used by instantiating it and putting objects
 registry := EphemeronRegistry new.
 registry at: objectThatMayBeCollected put: somePropertyThatWouldBeHoldWeaklyDependingOnTheKey.
 
-Notice that the key is the object that is important from the finalization point of view. As soon as the key is only rechable by the ephemeron registry, two things will happen:
+Notice that the key is the object that is important from the finalization point of view. As soon as the key is only reachable by the ephemeron registry, two things will happen:
 
 - The key will be sent #finalize, giving the user the opportunity to override the hook and provide an application specific finalization
 - They registry will forget the ephemeron. If the value of the ephemeron is only referenced by this ephemeron it will then be collected.

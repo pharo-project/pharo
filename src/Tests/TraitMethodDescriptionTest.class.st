@@ -4,7 +4,7 @@ Class {
 	#category : #'Tests-Traits'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 TraitMethodDescriptionTest >> testArgumentNames [
 	self t1 compile: 'zork1: myArgument zork2: mySecondArgument ^true'.
 	self t2 compile: 'zork1: myArgument zork2: somethingElse ^false'.
@@ -16,7 +16,7 @@ TraitMethodDescriptionTest >> testArgumentNames [
 				beginsWith: 'zork1: arg1 zork2: arg2')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitMethodDescriptionTest >> testCategories [
 	self assert: (self t4 organization categoryOfElement: #m21) equals: #cat1.
 	self assert: (self t4 organization categoryOfElement: #m22) equals: #cat2.
@@ -38,7 +38,7 @@ TraitMethodDescriptionTest >> testCategories [
 	self assert: (self t4 organization categories includes: #catA) not
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitMethodDescriptionTest >> testConflictMethodCreation [
 	"Generate conflicting methods between t1 and t2
 	and check the resulting method in Trait t5 (or c2).
@@ -76,7 +76,7 @@ TraitMethodDescriptionTest >> testConflictMethodCreation [
 	self should: [self c2 new zork1: 1 zork2: 2] raise: Error
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 TraitMethodDescriptionTest >> testConflictingCategories [
 	| t7 t8 |
 	self t2 compile: 'm11' classified: #catY.

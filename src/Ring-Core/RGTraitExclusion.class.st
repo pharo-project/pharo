@@ -60,7 +60,7 @@ RGTraitExclusion >> initializeUnresolved [
 	exclusions := self unresolvedValue: self defaultExclusions.
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGTraitExclusion >> isTraitExclusion [
 
 	^ true
@@ -141,7 +141,7 @@ RGTraitExclusion >> traitCompositionString [
 	aStream nextPut: $}].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGTraitExclusion >> traitTransformationString [
 
 	^ String streamContents: [:aStream |	

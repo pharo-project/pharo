@@ -13,7 +13,7 @@ I implement suitable method for commands to request new signature:
 
 	aMessage requestNewSignature
 
-It returnes new message instance.
+It returns new message instance.
 
 Also I provide a method to compute argument permutations comparing to another message: 
 

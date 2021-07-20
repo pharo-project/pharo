@@ -45,7 +45,7 @@ PRReference >> accept: aVisitor [
 	^ aVisitor visitReference: self
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 PRReference >> alias [
 	"Answer the alias of the receiver or an empty string if none."
 
@@ -78,7 +78,7 @@ PRReference >> localFileOrExternalReference [
 	^ self class localFileOrExternalReference: self reference
 ]
 
-{ #category : #'accessing-parameters' }
+{ #category : #'accessing - parameters' }
 PRReference >> parameters [
 	"Answer an array of parameters."
 
@@ -109,7 +109,7 @@ PRReference >> reference: aString [
 	reference := aString
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 PRReference >> text [
 	^ super text ifEmpty: [ self reference ] ifNotEmpty: #yourself
 ]

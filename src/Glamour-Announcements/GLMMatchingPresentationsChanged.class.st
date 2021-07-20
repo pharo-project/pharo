@@ -11,7 +11,12 @@ Class {
 	#category : #'Glamour-Announcements'
 }
 
-{ #category : #'accessing-convenience' }
+{ #category : #testing }
+GLMMatchingPresentationsChanged class >> isDeprecated [
+	^ true
+]
+
+{ #category : #'accessing - convenience' }
 GLMMatchingPresentationsChanged >> matchingPresentations [ 
 	"The presentations that match now."
 	^ self pane matchingPresentations

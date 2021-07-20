@@ -102,7 +102,7 @@ TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock [
 TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock resumable: resumableBoolean [
 	"Checks if aBooleanOrBlock evaluates to true (by sending #value message to it).
 	 The message text of the assertion failure exception thrown in case aBooleanOrBlock
-	 evaluates to false is determinated by the evaluation of aStringOrBlock (again by
+	 evaluates to false is determined by the evaluation of aStringOrBlock (again by
 	 sending #value message to it).
 	 The resumableBoolean flag is used to decide if the assertion failure signalled by
 	 the source code below should be resumable or not.
@@ -226,7 +226,7 @@ TestAsserter >> classForTestSuite [
 
 { #category : #private }
 TestAsserter >> comparingCollectionBetween: left and: right [
-	"Returns a string that shows the size if they are diferent and the aditional items for each left and right"
+	"Returns a string that shows the size if they are different and the additional items for each left and right"
 
 	| additionalLeft additionalRight sortBlock |
 	"use a very slow sort block"

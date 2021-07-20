@@ -59,7 +59,7 @@ SMTPClient class >> deliverMailFrom: fromAddress to: recipientList text: message
 
 ]
 
-{ #category : #example }
+{ #category : #examples }
 SMTPClient class >> example [
 	"SMTPClient example"
 
@@ -72,7 +72,7 @@ Hello from Pharo!
 '	usingServer: 'smtp.concentric.net'
 ]
 
-{ #category : #example }
+{ #category : #examples }
 SMTPClient class >> example2 [
 	"SMTPClient example2"
 
@@ -88,7 +88,7 @@ SMTPClient class >> logFlag [
 	^#smtp
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 SMTPClient >> data: messageData [
 	"send the data of a message"
 	"DATA <CRLF>"
@@ -117,7 +117,7 @@ SMTPClient >> encodeString: aString [
 	^ (aString encodeWith: #null) base64Encoded
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 SMTPClient >> initiateSession [
 	"EHLO <SP> <domain> <CRLF>"
 
@@ -142,7 +142,7 @@ SMTPClient >> localHostName: aString [
  	^self connectionInfo at: #localHostName put: aString
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 SMTPClient >> login [
 	self initiateSession. "send EHLO first"
 	self user ifNil: [^self].
@@ -165,7 +165,7 @@ SMTPClient >> mailFrom: sender to: recipientList text: messageText [
 
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 SMTPClient >> quit [
 	"send a QUIT command.  This is polite to do, and indeed some servers might drop messages that don't have an associated QUIT"
 	"QUIT <CRLF>"
@@ -174,7 +174,7 @@ SMTPClient >> quit [
 	self checkResponse.
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 SMTPClient >> recipient: aRecipient [
 	"specify a recipient for the message.  aRecipient should be a bare email address"
 	"RCPT <SP> TO:<forward-path> <CRLF>"

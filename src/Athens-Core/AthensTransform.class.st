@@ -115,7 +115,7 @@ AthensTransform >> scaleX: fx Y: fy [
 	self subclassResponsibility
 ]
 
-{ #category : #'vector-transform' }
+{ #category : #'vector - transform' }
 AthensTransform >> transform: aPoint [ 
 	self subclassResponsibility
 ]
@@ -130,7 +130,7 @@ AthensTransform >> transformRectangle: aRectangle [
 	}
 ]
 
-{ #category : #'vector-transform' }
+{ #category : #'vector - transform' }
 AthensTransform >> transformX: px Y: py [ 
 	self subclassResponsibility
 ]

@@ -4,7 +4,7 @@ Class {
 	#category : #'Spec-Tests-PolyWidgets-ListAndTree'
 }
 
-{ #category : #running }
+{ #category : #accessing }
 SearchableListTest >> classToTest [
 	^ SearchableList
 ]

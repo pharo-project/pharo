@@ -157,7 +157,7 @@ RBTransformationTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBTransformationTest >> testAPI [
 	"all classes must implement #storeOn: and #transform"
 

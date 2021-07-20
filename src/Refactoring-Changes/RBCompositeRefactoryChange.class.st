@@ -41,22 +41,22 @@ RBCompositeRefactoryChange >> addChange: aRefactoryChange [
 	^ aRefactoryChange
 ]
 
-{ #category : #'refactory-changes' }
+{ #category : #'refactory - changes' }
 RBCompositeRefactoryChange >> addClassVariable: variableName to: aClass [ 
 	^ self addChange: (changeFactory addClassVariable: variableName to: aClass)
 ]
 
-{ #category : #'refactory-changes' }
+{ #category : #'refactory - changes' }
 RBCompositeRefactoryChange >> addInstanceVariable: variableName to: aClass [ 
 	^ self addChange: (changeFactory addInstanceVariable: variableName to: aClass)
 ]
 
-{ #category : #'refactory-changes' }
+{ #category : #'refactory - changes' }
 RBCompositeRefactoryChange >> addPackageNamed: aString [
 	^ self addChange: (changeFactory addPackageNamed: aString)
 ]
 
-{ #category : #'refactory-changes' }
+{ #category : #'refactory - changes' }
 RBCompositeRefactoryChange >> addPool: aPoolVariable to: aClass [ 
 	^ self addChange: (changeFactory addPoolVariable: aPoolVariable to: aClass)
 ]
@@ -84,12 +84,12 @@ RBCompositeRefactoryChange >> changeForMetaclass: aClassName selector: aSelector
 	^ nil
 ]
 
-{ #category : #'private-inspector accessing' }
+{ #category : #'private - inspector accessing' }
 RBCompositeRefactoryChange >> changes [
 	^ changes
 ]
 
-{ #category : #'private-inspector accessing' }
+{ #category : #'private - inspector accessing' }
 RBCompositeRefactoryChange >> changes: aCollection [ 
 	changes := aCollection
 ]
@@ -99,22 +99,22 @@ RBCompositeRefactoryChange >> changesSize [
 	^ changes inject: 0 into: [ :sum :each | sum + each changesSize ]
 ]
 
-{ #category : #'refactory-changes' }
+{ #category : #'refactory - changes' }
 RBCompositeRefactoryChange >> comment: aString in: aClass [ 
 	^ self addChange: (changeFactory comment: aString in: aClass)
 ]
 
-{ #category : #'refactory-changes' }
+{ #category : #'refactory - changes' }
 RBCompositeRefactoryChange >> compile: source in: class [ 
 	^ self addChange: (changeFactory addMethodSource: source in: class)
 ]
 
-{ #category : #'refactory-changes' }
+{ #category : #'refactory - changes' }
 RBCompositeRefactoryChange >> compile: source in: class classified: aProtocol [ 
 	^ self addChange: (changeFactory addMethodSource: source in: class classified: aProtocol)
 ]
 
-{ #category : #'refactory-changes' }
+{ #category : #'refactory - changes' }
 RBCompositeRefactoryChange >> defineClass: aString [ 
 	^ self addChange: (changeFactory addClassDefinition: aString)
 ]
@@ -172,32 +172,32 @@ RBCompositeRefactoryChange >> removeChange: aChange [
 	^ changes remove: aChange ifAbsent: [ nil ]
 ]
 
-{ #category : #'refactory-changes' }
+{ #category : #'refactory - changes' }
 RBCompositeRefactoryChange >> removeClass: aClass [ 
 	^ self addChange: (changeFactory removeClassNamed: aClass name)
 ]
 
-{ #category : #'refactory-changes' }
+{ #category : #'refactory - changes' }
 RBCompositeRefactoryChange >> removeClassNamed: aSymbol [ 
 	^ self addChange: (changeFactory removeClassNamed: aSymbol)
 ]
 
-{ #category : #'refactory-changes' }
+{ #category : #'refactory - changes' }
 RBCompositeRefactoryChange >> removeClassVariable: variableName from: aClass [ 
 	^ self addChange: (changeFactory removeClassVariable: variableName from: aClass)
 ]
 
-{ #category : #'refactory-changes' }
+{ #category : #'refactory - changes' }
 RBCompositeRefactoryChange >> removeInstanceVariable: variableName from: aClass [ 
 	^ self addChange: (changeFactory removeInstanceVariable: variableName from: aClass)
 ]
 
-{ #category : #'refactory-changes' }
+{ #category : #'refactory - changes' }
 RBCompositeRefactoryChange >> removeMethod: aSelector from: aClass [ 
 	^ self addChange: (changeFactory removeMethod: aSelector from: aClass)
 ]
 
-{ #category : #'refactory-changes' }
+{ #category : #'refactory - changes' }
 RBCompositeRefactoryChange >> removePool: aPoolVariable from: aClass [ 
 	^ self addChange: (changeFactory removePoolVariable: aPoolVariable from: aClass)
 ]
@@ -210,17 +210,17 @@ RBCompositeRefactoryChange >> renameChangesForClass: oldClassName to: newClassNa
 		yourself
 ]
 
-{ #category : #'refactory-changes' }
+{ #category : #'refactory - changes' }
 RBCompositeRefactoryChange >> renameClass: class to: newNameLocal [ 
 	^ self addChange: (changeFactory renameClass: class to: newNameLocal)
 ]
 
-{ #category : #'refactory-changes' }
+{ #category : #'refactory - changes' }
 RBCompositeRefactoryChange >> renameClassVariable: oldNameLocal to: newNameLocal in: aClass [
 	^ self addChange: (changeFactory renameClassVariable: oldNameLocal to: newNameLocal in: aClass)
 ]
 
-{ #category : #'refactory-changes' }
+{ #category : #'refactory - changes' }
 RBCompositeRefactoryChange >> renameInstanceVariable: oldNameLocal to: newNameLocal in: aClass [
 	^ self addChange: (changeFactory renameInstanceVariable: oldNameLocal to: newNameLocal in: aClass)
 ]

@@ -24,14 +24,17 @@ Class {
 
 { #category : #copying }
 RBCopyPackageRefactoring class >> copyPackage: aString1 in: aString2 [
-	^ self new copyPackage: aString1 in: aString2; yourself
+	^ self new
+		copyPackage: aString1 in: aString2;
+		yourself
 ]
 
 { #category : #copying }
 RBCopyPackageRefactoring class >> model: aRBSmalltalk copyPackage: aString1 in: aString2 [
 	^ self new 
 		model: aRBSmalltalk;
-		copyPackage: aString1 in: aString2; yourself
+		copyPackage: aString1 in: aString2;
+		yourself
 ]
 
 { #category : #preconditions }

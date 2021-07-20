@@ -8,7 +8,7 @@ Class {
 	#category : #'AST-Core-Parser'
 }
 
-{ #category : #'private-scanning' }
+{ #category : #'private - scanning' }
 RBPatternScanner >> scanPatternVariable [
 	buffer nextPut: currentCharacter.
 	self step.

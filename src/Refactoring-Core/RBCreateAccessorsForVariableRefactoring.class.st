@@ -19,6 +19,28 @@ Class {
 }
 
 { #category : #'instance creation' }
+RBCreateAccessorsForVariableRefactoring class >> classVariable: aVarName class: aClass [
+	^ self variable: aVarName class: aClass classVariable: true
+]
+
+{ #category : #'instance creation' }
+RBCreateAccessorsForVariableRefactoring class >> instanceVariable: aVarName class: aClass [
+	^ self variable: aVarName class: aClass classVariable: false
+]
+
+{ #category : #'instance creation' }
+RBCreateAccessorsForVariableRefactoring class >> model: aRBSmalltalk classVariable: aVarName class: aClass [ 
+
+	^ self model: aRBSmalltalk variable: aVarName class: aClass classVariable: true
+]
+
+{ #category : #'instance creation' }
+RBCreateAccessorsForVariableRefactoring class >> model: aRBSmalltalk instanceVariable: aVarName class: aClass [
+
+	^ self model: aRBSmalltalk variable: aVarName class: aClass classVariable: false
+]
+
+{ #category : #'instance creation' }
 RBCreateAccessorsForVariableRefactoring class >> model: aRBSmalltalk variable: aVarName class: aClass classVariable: aBoolean [ 
 	^(self 
 		model: aRBSmalltalk
@@ -81,14 +103,14 @@ RBCreateAccessorsForVariableRefactoring >> defineSetterMethod [
 	^selector
 ]
 
-{ #category : #'private-accessing' }
+{ #category : #'private - accessing' }
 RBCreateAccessorsForVariableRefactoring >> definingClass [
 	^ classVariable 
 		ifTrue: [ class classSide ]
 		ifFalse: [ class ]
 ]
 
-{ #category : #'private-accessing' }
+{ #category : #'private - accessing' }
 RBCreateAccessorsForVariableRefactoring >> findGetterMethod [
 	| definingClass matcher |
 	definingClass := self definingClass.
@@ -100,7 +122,7 @@ RBCreateAccessorsForVariableRefactoring >> findGetterMethod [
 		ifNone: [ nil ]
 ]
 
-{ #category : #'private-accessing' }
+{ #category : #'private - accessing' }
 RBCreateAccessorsForVariableRefactoring >> findSetterMethod [
 	| definingClass matcher |
 	definingClass := self definingClass.
@@ -114,12 +136,12 @@ RBCreateAccessorsForVariableRefactoring >> findSetterMethod [
 		ifNone: [ nil ]
 ]
 
-{ #category : #'private-accessing' }
+{ #category : #'private - accessing' }
 RBCreateAccessorsForVariableRefactoring >> getterMethod [
 	^getterMethod
 ]
 
-{ #category : #'private-accessing' }
+{ #category : #'private - accessing' }
 RBCreateAccessorsForVariableRefactoring >> methodsReferencingVariable [
 	^classVariable 
 		ifTrue: [self definingClass whichSelectorsReferToClassVariable: variableName]
@@ -135,12 +157,12 @@ RBCreateAccessorsForVariableRefactoring >> needsReturnForSetter [
 	^ needsReturn
 ]
 
-{ #category : #'private-accessing' }
+{ #category : #'private - accessing' }
 RBCreateAccessorsForVariableRefactoring >> possibleGetterSelectors [
 	^self methodsReferencingVariable select: [:each | each numArgs == 0]
 ]
 
-{ #category : #'private-accessing' }
+{ #category : #'private - accessing' }
 RBCreateAccessorsForVariableRefactoring >> possibleSetterSelectors [
 	^self methodsReferencingVariable select: [:each | each numArgs == 1]
 ]
@@ -159,7 +181,7 @@ RBCreateAccessorsForVariableRefactoring >> selector [
 				basedOn: variableName asString. ]
 ]
 
-{ #category : #'private-accessing' }
+{ #category : #'private - accessing' }
 RBCreateAccessorsForVariableRefactoring >> setterMethod [
 	^setterMethod
 ]

@@ -13,7 +13,7 @@ Class {
 	#category : #'Morphic-Base-Basic'
 }
 
-{ #category : #example }
+{ #category : #examples }
 CircleMorph class >> exampleCircleMorph [
 	(CircleMorph new)
 	 extent: 50 @ 50;color: Color blue;

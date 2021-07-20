@@ -8,6 +8,11 @@ Class {
 	#category : #'GT-BytecodeDebugger-Model'
 }
 
+{ #category : #testing }
+GTBytecodeDebuggerSession class >> isDeprecated [
+	^ true
+]
+
 { #category : #'debugging actions' }
 GTBytecodeDebuggerSession >> runToBytecode: aSymbolicBytecode inContext: aContext [ 
 	"Attempt to step over instructions in selectedContext until the 
@@ -28,7 +33,7 @@ GTBytecodeDebuggerSession >> stepToFirstInterestingBytecodeIn: aProcess [
 	^ aProcess suspendedContext
 ]
 
-{ #category : #acessing }
+{ #category : #accessing }
 GTBytecodeDebuggerSession >> symbolicBytecodeForCurrentPCFrom: aContext [
 	| pc |
 	

@@ -13,6 +13,12 @@ Class {
 }
 
 { #category : #testing }
+AbstractCompletionEngine class >> isAbstract [
+
+	^ self == AbstractCompletionEngine
+]
+
+{ #category : #testing }
 AbstractCompletionEngine >> hasCompletionContext [
 
 	self subclassResponsibility

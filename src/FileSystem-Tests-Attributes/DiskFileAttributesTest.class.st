@@ -16,7 +16,7 @@ DiskFileAttributesTest class >> resources [
 	^Array with: DiskFileAttributesTestsResource.
 ]
 
-{ #category : #'private-helpers' }
+{ #category : #'private - helpers' }
 DiskFileAttributesTest >> attributesCollection [
 	"Answer an array of FileAttributes for the test resource file.
 	This is currently a single entry, but leaving the infrastructure in place in case it is extended."
@@ -26,14 +26,14 @@ DiskFileAttributesTest >> attributesCollection [
 	}
 ]
 
-{ #category : #'private-helpers' }
+{ #category : #'private - helpers' }
 DiskFileAttributesTest >> attributesCollectionDo: aBlock [
 	"Evaluate the supplied block for each of the attribute cache modes"
 
 	^self attributesCollection do: aBlock
 ]
 
-{ #category : #'private-helpers' }
+{ #category : #'private - helpers' }
 DiskFileAttributesTest >> collectionAssert: aBlock [
 	"Evaluate the assertion block for each of the FileAttribute cache modes"
 
@@ -41,7 +41,7 @@ DiskFileAttributesTest >> collectionAssert: aBlock [
 		[ :each | self assert: (aBlock value: each) ].
 ]
 
-{ #category : #'private-helpers' }
+{ #category : #'private - helpers' }
 DiskFileAttributesTest >> collectionAssert: aBlock equals: expected [
 	"Evaluate the assertion block for each of the FileAttribute cache modes"
 
@@ -49,7 +49,7 @@ DiskFileAttributesTest >> collectionAssert: aBlock equals: expected [
 		[ :each | self assert: (aBlock value: each) equals: expected ].
 ]
 
-{ #category : #'private-helpers' }
+{ #category : #'private - helpers' }
 DiskFileAttributesTest >> tempFileEntry [
 
 	| file |
@@ -58,7 +58,7 @@ DiskFileAttributesTest >> tempFileEntry [
 	^DiskDirectoryEntry reference: file.
 ]
 
-{ #category : #'private-helpers' }
+{ #category : #'private - helpers' }
 DiskFileAttributesTest >> tempFileResource [
 
 	^DiskFileAttributesTestsResource current

@@ -29,7 +29,7 @@ PickListPresenter class >> defaultSpec [
 		yourself
 ]
 
-{ #category : #example }
+{ #category : #examples }
 PickListPresenter class >> example [
 	<sampleInstance>
 	| example |
@@ -215,19 +215,19 @@ PickListPresenter >> setSelectedIndex: anIndex [
 	listPresenter setSelectedIndex: anIndex
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 PickListPresenter >> whenListChanged: aBlock [
 
 	listPresenter whenListChanged: aBlock
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 PickListPresenter >> whenPickedItemsChanged: aBlock [
 
 	pickedItemsHolder whenChangedDo: aBlock
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 PickListPresenter >> whenSelectedItemChanged: aBlock [
 	| newBlock |
 	
@@ -235,7 +235,7 @@ PickListPresenter >> whenSelectedItemChanged: aBlock [
 	listPresenter whenSelectedItemChanged: newBlock
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 PickListPresenter >> whenSelectionChanged: aBlock [
 
 	"The method should be used only if you are interested in the fact that there was a change, without caring about what has changed
@@ -245,7 +245,7 @@ PickListPresenter >> whenSelectionChanged: aBlock [
 	listPresenter whenSelectionChanged: aBlock.
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 PickListPresenter >> whenSelectionIndexChanged: aBlock [
 
 	listPresenter whenSelectionIndexChanged: aBlock

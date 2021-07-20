@@ -17,6 +17,11 @@ GTSelector class >> gtExampleNew [
 	^ self new name: #new
 ]
 
+{ #category : #testing }
+GTSelector class >> isDeprecated [
+	^ true
+]
+
 { #category : #private }
 GTSelector class >> substring: aString filter: aFilter [
 	| selectors |
@@ -32,7 +37,7 @@ GTSelector class >> substring: aString filter: aFilter [
 				group addMethod: method ] ] ] 
 ]
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 GTSelector >> addMethod: aCompiledMethod [
 	"this is a private method that can be used by the constructor on the class side
 	exclusively within the context of Spotter"

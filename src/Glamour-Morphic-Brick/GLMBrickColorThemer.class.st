@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Theme'
 }
 
+{ #category : #testing }
+GLMBrickColorThemer class >> isDeprecated [
+	^ true
+]
+
 { #category : #'brick-colors' }
 GLMBrickColorThemer >> alizarin [
 

@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring-Tests-Core-Data'
 }
 
-{ #category : #'tests-perform' }
+{ #category : #'tests perform' }
 RBSharedPoolForTestData1 >> msg4 [
 	
 	^ Var1

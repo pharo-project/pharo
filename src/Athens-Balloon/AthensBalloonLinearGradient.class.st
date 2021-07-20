@@ -13,12 +13,11 @@ Class {
 
 { #category : #rendering }
 AthensBalloonLinearGradient >> athensFillPath: aPath on: anAthensCanvas [
+
 	| torigin tcorner |
 
-	"A gradient fill coordinates are first transformed by 
-	paintTransform matrix,
-	then
-	by pathTransform matrix"
+	"A gradient fill coordinates are first transformed by paintTransform matrix, then 
+	 by pathTransform matrix"
 		
 	torigin := anAthensCanvas paintTransform transform: origin.
 	tcorner :=  anAthensCanvas paintTransform transform: corner.
@@ -36,10 +35,8 @@ AthensBalloonLinearGradient >> athensFillRectangle: aRect on: anAthensCanvas [
 	
 	| torigin tcorner |
 
-	"A gradient fill coordinates are first transformed by 
-	paintTransform matrix,
-	then
-	by pathTransform matrix"
+	"A gradient fill coordinates are first transformed by paintTransform matrix, then
+	 by pathTransform matrix"
 		
 	torigin := anAthensCanvas paintTransform transform: origin.
 	tcorner :=  anAthensCanvas paintTransform transform: corner.

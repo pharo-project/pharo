@@ -24,25 +24,25 @@ FTGeneric class >> fieldsDesc [
     void*  finalizer;)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGeneric >> data [
 	"This method was automatically generated"
 	^ExternalData fromHandle: (handle pointerAt: OFFSET_DATA) type: ExternalType void asPointerType
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGeneric >> data: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_DATA put: anObject getHandle.
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGeneric >> finalizer [
 	"This method was automatically generated"
 	^ExternalData fromHandle: (handle pointerAt: OFFSET_FINALIZER) type: ExternalType void asPointerType
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 FTGeneric >> finalizer: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_FINALIZER put: anObject getHandle.

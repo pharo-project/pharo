@@ -97,12 +97,12 @@ RBBlockNode >> arguments: argCollection [
 	arguments do: [:each | each parent: self ]
 ]
 
-{ #category : #'accessing-token' }
+{ #category : #'accessing - token' }
 RBBlockNode >> bar [
 	^ bar
 ]
 
-{ #category : #'accessing-token' }
+{ #category : #'accessing - token' }
 RBBlockNode >> bar: anInteger [
 	bar := anInteger
 ]
@@ -131,12 +131,12 @@ RBBlockNode >> children [
 	^ arguments copyWith: body
 ]
 
-{ #category : #'accessing-token' }
+{ #category : #'accessing - token' }
 RBBlockNode >> colons [
 	^ colons
 ]
 
-{ #category : #'accessing-token' }
+{ #category : #'accessing - token' }
 RBBlockNode >> colons: anArray [ 
 	colons := anArray
 ]
@@ -246,12 +246,12 @@ RBBlockNode >> lastIsReturn [
 	^ false
 ]
 
-{ #category : #'accessing-token' }
+{ #category : #'accessing - token' }
 RBBlockNode >> left [
 	^ left
 ]
 
-{ #category : #'accessing-token' }
+{ #category : #'accessing - token' }
 RBBlockNode >> left: anInteger [
 	left := anInteger
 ]
@@ -306,12 +306,12 @@ RBBlockNode >> replaceNode: aNode withNode: anotherNode [
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])
 ]
 
-{ #category : #'accessing-token' }
+{ #category : #'accessing - token' }
 RBBlockNode >> right [
 	^ right
 ]
 
-{ #category : #'accessing-token' }
+{ #category : #'accessing - token' }
 RBBlockNode >> right: anInteger [
 	right := anInteger
 ]

@@ -37,7 +37,7 @@ Class {
 	#category : #'Rubric-Editing-Core-Support'
 }
 
-{ #category : #example }
+{ #category : #examples }
 RubFloatingEditorBuilder class >> exampleCommandLauncher [
 	<sampleInstance>
 	<example>
@@ -52,7 +52,7 @@ RubFloatingEditorBuilder class >> exampleCommandLauncher [
 		openEditorWithContents: 'self inspect'
 ]
 
-{ #category : #example }
+{ #category : #examples }
 RubFloatingEditorBuilder class >> exampleEditableStringMorph [
 	<example>
 	| pane stringMorph edBuilder |
@@ -170,7 +170,7 @@ RubFloatingEditorBuilder >> font: aFont [
 	font := aFont
 ]
 
-{ #category : #'events-processing' }
+{ #category : #'events - processing' }
 RubFloatingEditorBuilder >> handleListenEvent: anEvent [
 	anEvent isMouse
 		ifFalse: [ ^ self ].

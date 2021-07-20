@@ -224,7 +224,7 @@ ReAbstractRule >> critiqueFor: anEntity [
 		by: self
 ]
 
-{ #category : #'running-helpers' }
+{ #category : #'running - helpers' }
 ReAbstractRule >> critiqueFor: aClass about: aVarName [
 
 	| crit |

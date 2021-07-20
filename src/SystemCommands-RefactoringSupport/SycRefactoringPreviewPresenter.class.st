@@ -131,6 +131,18 @@ SycRefactoringPreviewPresenter >> command: aCommand [
 	command := aCommand
 ]
 
+{ #category : #initialization }
+SycRefactoringPreviewPresenter >> connectPresenters [
+	table bindKeyCombination: Character backspace asShortcut 
+		toAction: [ self toggleSelectionOf: table selectedItem ].
+	
+	{ table . scopeDropList . diffPresenter } do: [ :each | 
+		each bindKeyCombination: Character cr asKeyCombination 
+			toAction: [ self owner triggerOkAction; close ];
+		bindKeyCombination: Character escape asKeyCombination 
+			toAction: [ self owner triggerCancelAction; close ] ]
+]
+
 { #category : #accessing }
 SycRefactoringPreviewPresenter >> existChanges [
 	^ existsChanges ifNil: [ existsChanges := false ]
@@ -166,10 +178,11 @@ SycRefactoringPreviewPresenter >> initializePresenter [
 		whenSelectionChangedDo: [ :selection | 
 			selection selectedItem ifNotNil: [ 
 				self buildDiffFor: selection selectedItem ] ].
+	
 	table
 		whenActivatedDo: [ :selectedElement | 
-			self toggleSelectionOf: selectedElement widget selection selectedItem.
-			self rebuild ].
+			self toggleSelectionOf: selectedElement widget selection selectedItem ].
+	
 	scopeDropList
 		whenSelectedItemChangedDo: [ :scope | self updateChanges ]
 ]
@@ -189,7 +202,6 @@ SycRefactoringPreviewPresenter >> initializeWidgets [
 
 	self
 		selectectAllCheckBox;
-		setShortcuts;
 		setFocus
 ]
 
@@ -234,13 +246,6 @@ SycRefactoringPreviewPresenter >> setFocus [
 		add: diffPresenter
 ]
 
-{ #category : #initialization }
-SycRefactoringPreviewPresenter >> setShortcuts [
-	self
-		bindKeyCombination: PharoShortcuts current acceptShortcut toAction: [ self accept ];
-		bindKeyCombination: Character escape toAction: [ self close ]
-]
-
 { #category : #accessing }
 SycRefactoringPreviewPresenter >> table [
 	^ table
@@ -253,9 +258,10 @@ SycRefactoringPreviewPresenter >> title [
 
 { #category : #private }
 SycRefactoringPreviewPresenter >> toggleSelectionOf: aRefactoring [
-	"it's normal it's impossible that anItem dosn't store in dictionary because at initialize i fill the dictionary and at each scope change"
+	"it's normal it's impossible that anItem doesn't store in dictionary because at initialize I fill the dictionary and at each scope change"
 
-	selectedRefactorings at: aRefactoring put: (selectedRefactorings at: aRefactoring) not
+	selectedRefactorings at: aRefactoring put: (selectedRefactorings at: aRefactoring) not.
+	self rebuild 
 ]
 
 { #category : #update }

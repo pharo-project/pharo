@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Widgets-UI-Popup-Themer'
 }
 
+{ #category : #testing }
+GLMBrickPopupEditShadowThemer class >> isDeprecated [
+	^ true
+]
+
 { #category : #'brick-popup-shadow' }
 GLMBrickPopupEditShadowThemer >> shadowOffset [
 	^ 0.5@0.5

@@ -45,7 +45,7 @@ RBAbstractClassVariableRefactoring >> abstractInstanceReferences [
 		using: replacer
 ]
 
-{ #category : #'private-accessing' }
+{ #category : #'private - accessing' }
 RBAbstractClassVariableRefactoring >> accessorsRefactoring [
 
 	^ accessorsRefactoring
