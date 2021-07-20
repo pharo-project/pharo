@@ -19,7 +19,7 @@ Class {
 
 { #category : #'instance creation' }
 RBClassRefactoring class >> className: aName [
-	^self new className: aName
+	^ self new className: aName
 ]
 
 { #category : #'instance creation' }

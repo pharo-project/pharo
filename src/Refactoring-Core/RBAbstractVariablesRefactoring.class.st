@@ -32,7 +32,7 @@ RBAbstractVariablesRefactoring class >> model: aRBModel abstractVariablesIn: aBR
 
 { #category : #'instance creation' }
 RBAbstractVariablesRefactoring class >> model: aRBSmalltalk abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection ignoring: aVariableName [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		abstractVariablesIn: aBRProgramNode
 			from: fromBehavior

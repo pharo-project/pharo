@@ -269,6 +269,16 @@ RBNamespace >> classNamed: aSymbol [
 	^ class ifNotNil: [ class classSide ]
 ]
 
+{ #category : #converting }
+RBNamespace >> classObjectFor: anObject [
+
+	(anObject isBehavior or: [anObject isTrait])
+		ifTrue: [ ^ self classFor: anObject ].
+	anObject isSymbol
+		ifTrue: [ ^ self classNamed: anObject ].
+	^ anObject
+]
+
 { #category : #changes }
 RBNamespace >> comment: aString in: aClass [
 	^ changes comment: aString in: aClass

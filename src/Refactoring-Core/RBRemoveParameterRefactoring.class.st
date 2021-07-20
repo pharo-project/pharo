@@ -18,7 +18,7 @@ Class {
 
 { #category : #'instance creation' }
 RBRemoveParameterRefactoring class >> model: aRBSmalltalk removeParameter: aString in: aClass selector: aSelector [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		removeParameter: aString
 			in: aClass
@@ -28,7 +28,10 @@ RBRemoveParameterRefactoring class >> model: aRBSmalltalk removeParameter: aStri
 
 { #category : #'instance creation' }
 RBRemoveParameterRefactoring class >> removeParameter: aString in: aClass selector: aSelector [
-	^self new removeParameter: aString in: aClass selector: aSelector
+	^ self new 
+		removeParameter: aString 
+		in: aClass 
+		selector: aSelector
 ]
 
 { #category : #private }

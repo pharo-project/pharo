@@ -21,7 +21,7 @@ Class {
 
 { #category : #'instance creation' }
 RBExpandReferencedPoolsRefactoring class >> forMethod: aParseTree fromClass: aClass toClasses: classCollection [ 
-	^(self new)
+	^ self new
 		forMethod: aParseTree
 			fromClass: aClass
 			toClasses: classCollection;
@@ -30,7 +30,7 @@ RBExpandReferencedPoolsRefactoring class >> forMethod: aParseTree fromClass: aCl
 
 { #category : #'instance creation' }
 RBExpandReferencedPoolsRefactoring class >> model: aRBNamespace forMethod: aParseTree fromClass: aClass toClasses: classCollection [ 
-	^(self new)
+	^ self new
 		model: aRBNamespace;
 		forMethod: aParseTree
 			fromClass: aClass

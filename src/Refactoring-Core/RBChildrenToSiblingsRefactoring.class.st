@@ -32,7 +32,7 @@ Class {
 
 { #category : #'instance creation' }
 RBChildrenToSiblingsRefactoring class >> model: aRBSmalltalk name: aClassName class: aClass subclasses: subclassCollection [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		name: aClassName
 			class: aClass
@@ -42,7 +42,7 @@ RBChildrenToSiblingsRefactoring class >> model: aRBSmalltalk name: aClassName cl
 
 { #category : #'instance creation' }
 RBChildrenToSiblingsRefactoring class >> name: aClassName class: aClass subclasses: subclassCollection [ 
-	^(self new)
+	^ self new
 		name: aClassName
 			class: aClass
 			subclasses: subclassCollection;
