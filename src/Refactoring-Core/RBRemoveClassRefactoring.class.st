@@ -23,12 +23,13 @@ RBRemoveClassRefactoring class >> cannotRemoveTopLevelClassErrorMesssage [
 
 { #category : #'instance creation' }
 RBRemoveClassRefactoring class >> classNames: aClassNameCollection [ 
-	^self new classNames: aClassNameCollection
+	^ self new
+		classNames: aClassNameCollection
 ]
 
 { #category : #'instance creation' }
 RBRemoveClassRefactoring class >> model: aRBSmalltalk classNames: aClassNameCollection [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		classNames: aClassNameCollection;
 		yourself

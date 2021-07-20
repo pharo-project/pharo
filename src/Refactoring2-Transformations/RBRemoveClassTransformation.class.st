@@ -47,7 +47,7 @@ RBRemoveClassTransformation class >> classNames: aCollection [
 { #category : #api }
 RBRemoveClassTransformation class >> model: aRBSmalltalk className: aClassName [
 
-	^ (self new)
+	^ self new
 		model: aRBSmalltalk;
 		className: aClassName;
 		yourself

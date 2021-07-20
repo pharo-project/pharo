@@ -29,14 +29,15 @@ Class {
 
 { #category : #'instance creation' }
 RBAddMethodRefactoring class >> addMethod: aString toClass: aClass inProtocols: protocolList [ 
-	^self new addMethod: aString
+	^ self new 
+		addMethod: aString
 		toClass: aClass
 		inProtocols: protocolList
 ]
 
 { #category : #'instance creation' }
 RBAddMethodRefactoring class >> model: aRBSmalltalk addMethod: aString toClass: aClass inProtocols: protocolList [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		addMethod: aString
 			toClass: aClass

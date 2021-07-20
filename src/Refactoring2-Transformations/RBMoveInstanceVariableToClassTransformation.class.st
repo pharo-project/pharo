@@ -72,7 +72,7 @@ RBMoveInstanceVariableToClassTransformation class >> variable: aVariableName cla
 { #category : #api }
 RBMoveInstanceVariableToClassTransformation class >> variable: aVariableName fromClass: fromClassName toClass: toClassName [
 
-	^ (self new)
+	^ self new
 		variable: aVariableName
 		fromClass: fromClassName
 		toClass: toClassName;

@@ -30,7 +30,7 @@ SycRenameClassCommand >> execute [
 	
 	| refactoring |
 	refactoring := RBRenameClassRefactoring
-		rename: targetClass
+		rename: targetClass name
 		to: newName.
 	refactoring execute
 ]
