@@ -63,7 +63,7 @@ function set_version_snapshot_variables() {
 	# This will answer "Pharo7.0-SNAPSHOT"
 	PHARO_NAME_PREFIX="${BRANCH_NAME}-SNAPSHOT"
 	# This will answer "70"
-	PHARO_SHORT_VERSION="$(echo ${BRANCH_NAME} | cut -c 6- | sed 's/\.//')"
+	PHARO_SHORT_VERSION="$(git describe --long --tags --first-parent | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2 | sed 's/\.//')"
 }
 
 # sets variables when we are in a pull request build
