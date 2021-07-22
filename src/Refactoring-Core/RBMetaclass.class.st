@@ -51,7 +51,8 @@ RBMetaclass >> classSide [
 ]
 
 { #category : #testing }
-RBMetaclass >> directlyDefinesClassVariable: aString [ 
+RBMetaclass >> directlyDefinesClassVariable: aString [
+
 	^ self instanceSide directlyDefinesClassVariable: aString
 ]
 

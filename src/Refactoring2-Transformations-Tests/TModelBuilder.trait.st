@@ -78,7 +78,7 @@ TModelBuilder >> abstractVariableTestData [
 TModelBuilder >> childrenToSiblingTestData [
 	^ Smalltalk compiler evaluate: '
 	| m |
-	(m:= RBNamespace2
+	(m:= RBNamespace
 			onEnvironment: ((RBClassEnvironment onEnvironment: RBBrowserEnvironment new) 
 					classes: (#(#ConcreteSubclass #ConcreteSuperclass #NoMoveSubclass) 
 							inject: OrderedCollection new
@@ -137,7 +137,7 @@ m
 
 { #category : #accessing }
 TModelBuilder >> defaultNamespace [
-	^RBNamespace2
+	^RBNamespace
 ]
 
 { #category : #mocking }
@@ -249,7 +249,7 @@ TModelBuilder >> extractMethodTestData [
 TModelBuilder >> inlineMethodTestData [
 	^ Smalltalk compiler evaluate: '
 		| m |
-		(m := RBNamespace2
+		(m := RBNamespace
 			onEnvironment: ((RBClassEnvironment onEnvironment: RBBrowserEnvironment new) 
 					classes: (#(#RBRenameClassVariableChange #RBVariableCompositeRefactoryChange #RBRenameInstanceVariableChange #RBCompositeRefactoryChange #RBRenameVariableChange #RBRefactoryChange) 
 							inject: OrderedCollection new

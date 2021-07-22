@@ -1,19 +1,17 @@
 Class {
 	#name : #RBMergeInstanceVariableIntoAnotherParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
+	#superclass : #RBWithDifferentConstructorsParametrizedTest,
 	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }
 
 { #category : #tests }
 RBMergeInstanceVariableIntoAnotherParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBMergeInstanceVariableIntoAnother };
+		addCase: { #rbClass -> RBMergeInstanceVariableIntoAnother .
+					  #constructor -> #rename:to:in: };
+		addCase: { #rbClass -> RBMergeInstanceVariableIntoAnotherTransformation .
+					  #constructor -> #renameInstanceVarible:to:in: };
 		yourself
-]
-
-{ #category : #accessing }
-RBMergeInstanceVariableIntoAnotherParametrizedTest >> constructor [ 
-	^ #rename:to:in:
 ]
 
 { #category : #'failure tests' }

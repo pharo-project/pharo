@@ -8,6 +8,7 @@ Class {
 RBExtractToTemporaryParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBExtractToTemporaryRefactoring };
+		addCase: { #rbClass -> RBExtractToTemporaryTransformation };
 		yourself
 ]
 
