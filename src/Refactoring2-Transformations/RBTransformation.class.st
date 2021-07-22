@@ -172,7 +172,7 @@ RBTransformation >> model: aRBNamespace [
 { #category : #initialize }
 RBTransformation >> newModel [
 
-	^ (RBNamespace2
+	^ (RBNamespace
 		onEnvironment: self defaultEnvironment)
 		name: self printString;
 		yourself
@@ -195,6 +195,23 @@ RBTransformation >> options [
 RBTransformation >> options: aDictionary [ 
 
 	options := aDictionary
+]
+
+{ #category : #accessing }
+RBTransformation >> poolVariableNamesFor: aClass [
+	| pools |
+	pools := Set new.
+	aClass withAllSuperclasses do: 
+			[:each | 
+			each allPoolDictionaryNames do: 
+					[:pool |
+					pools addAll: (self poolVariableNamesIn: pool asSymbol) ] ].
+	^pools
+]
+
+{ #category : #accessing }
+RBTransformation >> poolVariableNamesIn: poolName [
+	^(model classNamed: poolName) classPool keys
 ]
 
 { #category : #preconditions }

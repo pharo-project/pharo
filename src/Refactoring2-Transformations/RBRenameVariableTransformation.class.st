@@ -58,6 +58,30 @@ RBRenameVariableTransformation class >> model: aRBModel rename: aVariableName to
 ]
 
 { #category : #api }
+RBRenameVariableTransformation class >> model: aRBModel renameClassVariable: aVariableName to: aNewVariableName in: aClassName [
+
+	^ self new
+		model: aRBModel;
+		rename: aVariableName
+		to: aNewVariableName
+		class: aClassName
+		classVariable: true;
+		yourself
+]
+
+{ #category : #api }
+RBRenameVariableTransformation class >> model: aRBModel renameInstanceVariable: aVariableName to: aNewVariableName in: aClassName [
+
+	^ self new
+		model: aRBModel;
+		rename: aVariableName
+		to: aNewVariableName
+		class: aClassName
+		classVariable: false;
+		yourself
+]
+
+{ #category : #api }
 RBRenameVariableTransformation class >> model: aRBModel variable: aVariableName  class: aClassName classVariable: aBoolean [
 
 	self deprecated: 'Use #model:variable:to:class:classVariable: instead'
@@ -71,6 +95,28 @@ RBRenameVariableTransformation class >> rename: aVariableName to: aNewVariableNa
 		to: aNewVariableName
 		class: aClassName
 		classVariable: aBoolean;
+		yourself
+]
+
+{ #category : #api }
+RBRenameVariableTransformation class >> renameClassVarible: aVariableName to: aNewVariableName in: aClassName [
+
+	^ self new
+		rename: aVariableName
+		to: aNewVariableName
+		class: aClassName
+		classVariable: true;
+		yourself
+]
+
+{ #category : #api }
+RBRenameVariableTransformation class >> renameInstanceVarible: aVariableName to: aNewVariableName in: aClassName [
+
+	^ self new
+		rename: aVariableName
+		to: aNewVariableName
+		class: aClassName
+		classVariable: false;
 		yourself
 ]
 
@@ -99,7 +145,7 @@ RBRenameVariableTransformation >> preconditions [
 RBRenameVariableTransformation >> privateTransform [
 
 	isClassVariable
-		ifTrue: [ self definingClass theNonMetaClass renameClassVariable: variableName
+		ifTrue: [ self definingClass instanceSide renameClassVariable: variableName
 						to: newVariableName around: [ self renameReferences ] ]
 		ifFalse: [ self definingClass renameInstanceVariable: variableName
 						to: newVariableName around: [ self renameReferences ]  ]

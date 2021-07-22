@@ -36,7 +36,7 @@ RBAddInstanceVariableParametrizedTest >> testAddInstanceVariable [
 { #category : #tests }
 RBAddInstanceVariableParametrizedTest >> testAddToModel [
 	| refactoring |
-	model := RBNamespace2 new.
+	model := RBNamespace new.
 	model name: 'Add instance variable'.
 	model defineClass: 'Object subclass: #FOOBAR 
 		instanceVariableNames: ''fdsa'' 	
@@ -82,7 +82,7 @@ RBAddInstanceVariableParametrizedTest >> testModelMetaclassAlreadyExistingName [
 { #category : #'failure tests' }
 RBAddInstanceVariableParametrizedTest >> testNewExistingName [
 	| refactoring |
-	model := RBNamespace2 new.
+	model := RBNamespace new.
 	model name: 'Add instance variable'.
 	model defineClass: 'Object subclass: #FOOBAR 
 		instanceVariableNames: ''asdf'' 	
@@ -99,7 +99,7 @@ RBAddInstanceVariableParametrizedTest >> testNewExistingName [
 { #category : #'failure tests' }
 RBAddInstanceVariableParametrizedTest >> testNewHierarchyExistingName [
 	| refactoring |
-	model := RBNamespace2 new.
+	model := RBNamespace new.
 	model name: 'Add instance variable'.
 	model defineClass: 'Object subclass: #FOOBAR 
 		instanceVariableNames: ''asdf'' 	
