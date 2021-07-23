@@ -71,6 +71,7 @@ BaselineOfPharo >> baseline: spec [
 			spec repository: repository; loads: #('IcebergSupport'). ].
 
 		spec package: 'Deprecated90'.
+		spec package: 'Deprecated10'.
 		
 		spec package: 'FluidClassBuilder'.
 		spec package: 'FluidClassBuilder-Tests' with: [ spec requires: 'FluidClassBuilder' ].
