@@ -17,6 +17,11 @@ LayoutAbstractScope >> allSlotsDo: aBlock [
 	self subclassResponsibility
 ]
 
+{ #category : #accessing }
+LayoutAbstractScope >> allVisibleSlots [
+	^ self subclassResponsibility
+]
+
 { #category : #extending }
 LayoutAbstractScope >> extend [
 	^ self extend: { }
@@ -56,6 +61,11 @@ LayoutAbstractScope >> firstFieldIndex [
 { #category : #flattening }
 LayoutAbstractScope >> flatten [
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+LayoutAbstractScope >> hasBindingThatBeginsWith: arg1 [ 
+	^ self subclassResponsibility
 ]
 
 { #category : #testing }
