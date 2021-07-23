@@ -212,7 +212,7 @@ A new VM with
 		
 You can see the Pharo 10.0 changelog at: 
 
-', (self url: 'https://github.com/pharo-project/pharo-changelogs/blob/master/Pharo10ChangeLogs.md')
+', (self url: 'https://github.com/pharo-project/pharo-changelogs/blob/master/Pharo100ChangeLogs.md')
 
 ]
 
