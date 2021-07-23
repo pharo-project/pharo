@@ -7,6 +7,12 @@ Class {
 	#category : #'Kernel-Layout'
 }
 
+{ #category : #testing }
+LayoutAbstractScope class >> isAbstract [ 
+
+	^ self == LayoutAbstractScope 
+]
+
 { #category : #comparing }
 LayoutAbstractScope >> = other [
 	^ self class = other class

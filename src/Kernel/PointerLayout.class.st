@@ -10,6 +10,12 @@ Class {
 	#category : #'Kernel-Layout'
 }
 
+{ #category : #testing }
+PointerLayout class >> isAbstract [
+
+	^ self == PointerLayout
+]
+
 { #category : #comparing }
 PointerLayout >> = other [
 	^ super = other

@@ -11,6 +11,12 @@ Class {
 	#category : #'Kernel-Layout'
 }
 
+{ #category : #testing }
+AbstractLayout class >> isAbstract [
+
+	^ self == AbstractLayout
+]
+
 { #category : #description }
 AbstractLayout class >> kind [
 	"Return an identifier describing uniquely the layout"

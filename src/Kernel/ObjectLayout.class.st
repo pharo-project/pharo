@@ -12,6 +12,12 @@ ObjectLayout class >> extending: superLayout scope: aScope host: aClass [
 	self subclassResponsibility
 ]
 
+{ #category : #testing }
+ObjectLayout class >> isAbstract [
+
+	^ self == ObjectLayout
+]
+
 { #category : #accessing }
 ObjectLayout class >> layoutForType: typeSymbol [
 	typeSymbol = #compiledMethod 

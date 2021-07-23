@@ -7,6 +7,12 @@ Class {
 	#category : #'Kernel-Layout'
 }
 
+{ #category : #testing }
+BitsLayout class >> isAbstract [
+
+	^ self == BitsLayout
+]
+
 { #category : #accessing }
 BitsLayout >> bytesPerSlot [
 
