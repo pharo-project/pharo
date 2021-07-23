@@ -273,7 +273,8 @@ ReleaseTest >> testNoEquivalentSuperclassMethods [
 			ifNil: [ false ] ]
 		ifNil: [ false ]
 	].
-	self assert: methods size <= 617.
+	self assert: methods size <= 620.
+	ASTCache reset.
 
 
 	"there should be no method left"
