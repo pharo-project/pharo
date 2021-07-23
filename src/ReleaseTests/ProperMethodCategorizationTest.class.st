@@ -129,7 +129,7 @@ ProperMethodCategorizationTest >> testNoUncategorizedMethods [
 		             class protocols includes: #'as yet unclassified' ].
 
 	"we lock in the number of problematic classes, this way it can only improve"
-	self assert: violating size <= 74
+	self assert: violating size <= 57
 ]
 
 { #category : #tests }
@@ -141,7 +141,7 @@ ProperMethodCategorizationTest >> testNoUtilsMethods [
 		             class protocols includes: #'utils' ].
 
 	"we lock in the number of problematic classes, this way it can only improve"
-	self assert: violating size <= 10
+	self assert: violating size <= 7
 ]
 
 { #category : #'tests - object' }
