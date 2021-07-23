@@ -15,8 +15,7 @@ GoferRepositoryError class >> signal: aString repository: aRepository [
 
 	^ self new
 		  repository: aRepository;
-		  signal: aString;
-		  yourself
+		  signal: aString
 ]
 
 { #category : #private }
