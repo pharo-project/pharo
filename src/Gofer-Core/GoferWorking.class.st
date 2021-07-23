@@ -10,8 +10,15 @@ Class {
 	#category : #'Gofer-Core-Operations'
 }
 
+{ #category : #testing }
+GoferWorking class >> isAbstract [
+
+	^ self == GoferWorking
+]
+
 { #category : #private }
 GoferWorking >> addReference: aReference [
+
 	| workingCopy |
 	workingCopy := aReference workingCopyIfAbsent: [ ^ self ].
 	(self workingCopies includes: workingCopy)
@@ -30,6 +37,7 @@ GoferWorking >> initialize [
 
 { #category : #initialization }
 GoferWorking >> initializeOn: aGofer [
+
 	super initializeOn: aGofer.
 	aGofer references 
 		do: [ :each | self addReference: each ]

@@ -9,12 +9,14 @@ Class {
 
 { #category : #running }
 GoferReferenceTest >> setUp [
+
 	super setUp.
 	gofer repository: self monticelloRepository
 ]
 
 { #category : #tests }
 GoferReferenceTest >> testBranchAfterAuthorIsNotABranch [
+
 	| queryReference |
 	queryReference := GoferVersionReference name: 'Seaside-Core-jf.configcleanup.3'.
 	self assert: queryReference packageName equals: 'Seaside-Core'.
@@ -37,6 +39,7 @@ GoferReferenceTest >> testBranchAfterAuthorIsNotABranch [
 
 { #category : #'tests - reference' }
 GoferReferenceTest >> testContraintShouldFindLatestVersion [
+
 	| constraintReference reference |
 	constraintReference := GoferConstraintReference name: 'GoferBar' constraint: [ :ref | true ].
 	self assert: (constraintReference resolveAllWith: gofer) size equals: 4.
@@ -81,6 +84,7 @@ GoferReferenceTest >> testContraintShouldFindLatestVersion [
 
 { #category : #'tests - working' }
 GoferReferenceTest >> testContraintShouldFindWorkingCopy [
+
 	| constraintReference workingCopy |
 	constraintReference := GoferConstraintReference 
 		name: 'Gofer-Core'
@@ -91,6 +95,7 @@ GoferReferenceTest >> testContraintShouldFindWorkingCopy [
 
 { #category : #tests }
 GoferReferenceTest >> testLoadableShouldSortCorrectly [
+
 	| sorted |
 	sorted := self versionReferences
 		collect: [ :each | each resolveWith: gofer ].
@@ -104,6 +109,7 @@ GoferReferenceTest >> testLoadableShouldSortCorrectly [
 
 { #category : #'tests - reference' }
 GoferReferenceTest >> testPackageShouldFindLatestVersion [
+
 	| packageReference reference |
 	packageReference := GoferPackageReference name: 'GoferFoo'.
 	reference := packageReference resolveWith: gofer.
@@ -117,6 +123,7 @@ GoferReferenceTest >> testPackageShouldFindLatestVersion [
 
 { #category : #'tests - working' }
 GoferReferenceTest >> testPackageShouldFindWorkingCopy [
+
 	| packageReference workingCopy |
 	packageReference := GoferPackageReference name: 'Gofer-Core'.
 	workingCopy := packageReference workingCopy.
@@ -125,6 +132,7 @@ GoferReferenceTest >> testPackageShouldFindWorkingCopy [
 
 { #category : #'tests - reference' }
 GoferReferenceTest >> testResolvedShouldFindLatestVersion [
+
 	| versionReference reference |
 	versionReference := GoferResolvedReference name: 'GoferFoo-lr.2' repository: self monticelloRepository.
 	reference := versionReference resolveWith: gofer.
@@ -138,6 +146,7 @@ GoferReferenceTest >> testResolvedShouldFindLatestVersion [
 
 { #category : #'tests - working' }
 GoferReferenceTest >> testResolvedShouldFindWorkingCopy [
+
 	| versionReference workingCopy |
 	versionReference := GoferResolvedReference name: 'Gofer-Core-lr.18' repository: self monticelloRepository.
 	workingCopy := versionReference workingCopy.
@@ -146,6 +155,7 @@ GoferReferenceTest >> testResolvedShouldFindWorkingCopy [
 
 { #category : #'tests - reference' }
 GoferReferenceTest >> testVersionShouldFindLatestVersion [
+
 	| versionReference reference |
 	versionReference := GoferVersionReference name: 'GoferFoo-lr.2'.
 	reference := versionReference resolveWith: gofer.
@@ -162,6 +172,7 @@ GoferReferenceTest >> testVersionShouldFindLatestVersion [
 
 { #category : #'tests - working' }
 GoferReferenceTest >> testVersionShouldFindWorkingCopy [
+
 	| versionReference workingCopy |
 	versionReference := GoferVersionReference name: 'Gofer-Core-lr.18'.
 	workingCopy := versionReference workingCopy.
@@ -171,6 +182,7 @@ GoferReferenceTest >> testVersionShouldFindWorkingCopy [
 
 { #category : #tests }
 GoferReferenceTest >> testVersionShouldParseComplexName [
+
 	| queryReference |
 	queryReference := GoferVersionReference name: 'Seaside2.8b5'.
 	self assert: queryReference packageName equals: 'Seaside2'.

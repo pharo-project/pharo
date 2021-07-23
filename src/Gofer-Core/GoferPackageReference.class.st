@@ -9,10 +9,12 @@ Class {
 
 { #category : #private }
 GoferPackageReference >> matches: aResolvedReference [
+
 	^ self packageName = aResolvedReference packageName
 ]
 
 { #category : #accessing }
 GoferPackageReference >> packageName [
+
 	^ name
 ]
