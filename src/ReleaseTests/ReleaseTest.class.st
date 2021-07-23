@@ -267,6 +267,15 @@ ReleaseTest >> testNoNilAssignmentInInitializeMethod [
 ]
 
 { #category : #'tests - source' }
+ReleaseTest >> testNoNullCharacter [
+	"Check that we do not have NULL in sources - see https://github.com/pharo-project/pharo/issues/9631"
+	
+	| violations |
+	violations := SystemNavigation default allMethods select: [ :m | m sourceCode includes: Character null ].
+	self assert: violations isEmpty description: 'Source corrupted: Methods with Null character found'
+]
+
+{ #category : #'tests - source' }
 ReleaseTest >> testNoPeriodInMethodSignature [
 	| methods |
 	methods := SystemNavigation new allMethods select: [ :method | 
