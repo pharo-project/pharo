@@ -15,9 +15,3 @@ RGWeakLayout >> isWeakLayout [
 
 	^ true
 ]
-
-{ #category : #accessing }
-RGWeakLayout >> layoutName [
-
-	^ #EphemeronLayout
-]

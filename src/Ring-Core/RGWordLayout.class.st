@@ -9,9 +9,3 @@ RGWordLayout >> isWordLayout [
 
 	^ true
 ]
-
-{ #category : #accessing }
-RGWordLayout >> layoutName [
-
-	^ #WordLayout
-]

@@ -9,9 +9,3 @@ RGFixedLayout >> isFixedLayout [
 
 	^ true
 ]
-
-{ #category : #accessing }
-RGFixedLayout >> layoutName [
-
-	^ #FixedLayout
-]
