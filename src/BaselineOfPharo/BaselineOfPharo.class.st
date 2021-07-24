@@ -40,8 +40,8 @@ BaselineOfPharo class >> newToolsVersion [
 BaselineOfPharo class >> specReleaseCommit [
 	"The commit corresponding to current release (to be used on bootstrap process)"
 
-	"v1.0.1"
-	^ 'e0b0cefc64404b4f23c03b6484063534e267f6e8'
+	"v1.0.2"
+	^ '88cc5234fcbcc8a8cc8da085c5e23f74db1c349b'
 ]
 
 { #category : #'repository urls' }
@@ -53,7 +53,7 @@ BaselineOfPharo class >> specRepository [
 { #category : #versions }
 BaselineOfPharo class >> specVersion [
 
-	^ 'v1.0.1'
+	^ 'dev-1.0'
 ]
 
 { #category : #baseline }
