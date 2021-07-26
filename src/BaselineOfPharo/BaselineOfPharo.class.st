@@ -33,7 +33,7 @@ BaselineOfPharo class >> newToolsRepository [
 { #category : #versions }
 BaselineOfPharo class >> newToolsVersion [
 
-	^ 'dev-1.0'
+	^ 'Pharo10'
 ]
 
 { #category : #versions }
@@ -53,7 +53,7 @@ BaselineOfPharo class >> specRepository [
 { #category : #versions }
 BaselineOfPharo class >> specVersion [
 
-	^ 'dev-1.0'
+	^ 'Pharo10'
 ]
 
 { #category : #baseline }
