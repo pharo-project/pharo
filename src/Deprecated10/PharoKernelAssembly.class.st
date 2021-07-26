@@ -4,7 +4,7 @@ I store metadata for this package assembly.
 Class {
 	#name : #PharoKernelAssembly,
 	#superclass : #AssemblyManifest,
-	#category : #'Kernel-Manifest'
+	#category : #'Deprecated10-Assemblies'
 }
 
 { #category : #'meta-data' }
