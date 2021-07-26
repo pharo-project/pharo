@@ -12,9 +12,3 @@ RGDoubleByteLayout >> isByteLayout [
 
 	^ true
 ]
-
-{ #category : #accessing }
-RGDoubleByteLayout >> layoutName [
-
-	^ #DoubleByteLayout
-]

@@ -9,9 +9,3 @@ RGByteLayout >> isByteLayout [
 
 	^ true
 ]
-
-{ #category : #accessing }
-RGByteLayout >> layoutName [
-
-	^ #ByteLayout
-]

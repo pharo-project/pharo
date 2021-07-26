@@ -11,9 +11,3 @@ Class {
 RGDoubleWordLayout >> isWordLayout [
 	^ true
 ]
-
-{ #category : #accessing }
-RGDoubleWordLayout >> layoutName [
-
-	^ #DoubleWordLayout
-]

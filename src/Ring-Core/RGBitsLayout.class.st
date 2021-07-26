@@ -15,9 +15,3 @@ RGBitsLayout >> isVariableLayout [
 
 	^ true
 ]
-
-{ #category : #accessing }
-RGBitsLayout >> layoutName [
-
-	^ #BitsLayout
-]

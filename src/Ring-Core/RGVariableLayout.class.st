@@ -9,9 +9,3 @@ RGVariableLayout >> isVariableLayout [
 
 	^ true
 ]
-
-{ #category : #accessing }
-RGVariableLayout >> layoutName [
-
-	^ #VariableLayout
-]

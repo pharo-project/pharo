@@ -9,9 +9,3 @@ RGEphemeronLayout >> isEphemeronLayout [
 
 	^ true
 ]
-
-{ #category : #accessing }
-RGEphemeronLayout >> layoutName [
-
-	^ #EphemeronLayout
-]
