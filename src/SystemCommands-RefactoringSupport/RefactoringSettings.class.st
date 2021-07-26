@@ -53,7 +53,7 @@ RefactoringSettings class >> refactoringSettingsOn: aBuilder [
 				target: self;
 				description: 'Selection new default scope for refactorings';
 				label: 'Default scope';
-				default: ClySystemEnvironmentScope;
+				default: self scopeList first;
 				domainValues: self domainValues.
 			(aBuilder setting: #undoSize)
 				target: RBRefactoryChangeManager;
