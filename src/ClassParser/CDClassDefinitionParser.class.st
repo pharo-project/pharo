@@ -19,12 +19,6 @@ CDClassDefinitionParser class >> fromASTNode: aNode [
 ]
 
 { #category : #parsing }
-CDClassDefinitionParser class >> parse: aString [ 
-	
-	^ self new parse: aString
-]
-
-{ #category : #parsing }
 CDClassDefinitionParser >> handleClassName: aNode withType: aSymbol [
 	
 	self handleClassName: aNode.
