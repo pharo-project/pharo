@@ -11,6 +11,12 @@ Class {
 	#category : #'Gofer-Core-Operations'
 }
 
+{ #category : #testing }
+GoferOperation class >> isAbstract [
+
+	^ self == GoferOperation
+]
+
 { #category : #'instance creation' }
 GoferOperation class >> new [
 	self error: 'Gofer operations can only work on Gofer instances.'

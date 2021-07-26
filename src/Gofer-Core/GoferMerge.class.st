@@ -9,11 +9,13 @@ Class {
 
 { #category : #private }
 GoferMerge >> defaultModel [
+
 	^ MCVersionMerger new
 ]
 
 { #category : #running }
 GoferMerge >> execute [
+
 	[ self model merge ]
 		on: MCMergeResolutionRequest
 		do: [ :request |  request autoMerge ].

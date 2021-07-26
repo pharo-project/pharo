@@ -12,16 +12,22 @@ Class {
 
 { #category : #'instance creation' }
 GoferConstraintReference class >> name: aString constraint: aBlock [
-	^ self basicNew initializeName: aString constraint: aBlock
+
+	^ self basicNew 
+		initializeName: aString constraint: aBlock;
+		yourself
 ]
 
 { #category : #initialization }
 GoferConstraintReference >> initializeName: aString constraint: aBlock [
+
 	self initializeName: aString.
 	constraintBlock := aBlock
 ]
 
 { #category : #private }
 GoferConstraintReference >> matches: aResolvedReference [
-	^ (super matches: aResolvedReference) and: [ constraintBlock value: aResolvedReference ]
+
+	^ (super matches: aResolvedReference) and: [ 
+		  constraintBlock value: aResolvedReference ]
 ]
