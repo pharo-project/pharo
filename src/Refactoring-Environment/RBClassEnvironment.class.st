@@ -71,7 +71,7 @@ RBClassEnvironment >> asSelectorEnvironment [
 
 { #category : #accessing }
 RBClassEnvironment >> basisObjects [
-	^ self classes
+	^ classes
 ]
 
 { #category : #'accessing - classes' }
@@ -90,11 +90,6 @@ RBClassEnvironment >> classSelectorDictionary [
 			answer
 				at: class put: (self systemDictionary at: class) selectors;
 				yourself ]
-]
-
-{ #category : #accessing }
-RBClassEnvironment >> classes [
-	^ classes
 ]
 
 { #category : #initialization }

@@ -4,9 +4,6 @@ I am a command to add class hierarchy scope to listScopes
 Class {
 	#name : #SycAddHierarchyScopeCommand,
 	#superclass : #SycSingleClassCommand,
-	#instVars : [
-		'class'
-	],
 	#category : #'SystemCommands-ClassCommands-Scope'
 }
 
