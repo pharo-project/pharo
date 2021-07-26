@@ -2,8 +2,8 @@
 I am a command to add packages scope to listScopes
 "
 Class {
-	#name : #ClyAddPackagesScopeCommand,
-	#superclass : #ClyBrowserCommand,
+	#name : #SycAddPackagesScopeCommand,
+	#superclass : #CmdCommand,
 	#instVars : [
 		'packages'
 	],
@@ -11,36 +11,36 @@ Class {
 }
 
 { #category : #accessing }
-ClyAddPackagesScopeCommand >> defaultMenuIconName [
+SycAddPackagesScopeCommand >> defaultMenuIconName [
 	^ #add
 ]
 
 { #category : #accessing }
-ClyAddPackagesScopeCommand >> defaultMenuItemName [
+SycAddPackagesScopeCommand >> defaultMenuItemName [
 	^ 'Add to scope list'
 ]
 
 { #category : #execution }
-ClyAddPackagesScopeCommand >> execute [
+SycAddPackagesScopeCommand >> execute [
 	| scope |
 	scope := RBBrowserEnvironment new forPackages: packages.
 	RefactoringSettings addScope: scope
 ]
 
 { #category : #accessing }
-ClyAddPackagesScopeCommand >> packages [
+SycAddPackagesScopeCommand >> packages [
 
 	^ packages
 ]
 
 { #category : #accessing }
-ClyAddPackagesScopeCommand >> packages: anObject [
+SycAddPackagesScopeCommand >> packages: anObject [
 
 	packages := anObject
 ]
 
 { #category : #execution }
-ClyAddPackagesScopeCommand >> prepareFullExecutionInContext: aBrowserContext [
+SycAddPackagesScopeCommand >> prepareFullExecutionInContext: aBrowserContext [
 
 	super prepareFullExecutionInContext: aBrowserContext.
 	packages := aBrowserContext selectedPackageItems collect: [:e | e actualObject ].

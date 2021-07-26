@@ -12,14 +12,6 @@ SycInlineAllSendersMessageCommand class >> canBeExecutedInContext: aToolContext 
 	^ aToolContext isMethodSelected
 ]
 
-{ #category : #activation }
-SycInlineAllSendersMessageCommand class >> methodContextMenuActivation [
-	<classAnnotation>
-	
-	^ SycMethodMenuActivation
-		byRootGroupItemOrder: 35 for: ClyMethod asCalypsoItemContext
-]
-
 { #category : #execution }
 SycInlineAllSendersMessageCommand >> createRefactoring [
 	| refactoring methodOrigin |

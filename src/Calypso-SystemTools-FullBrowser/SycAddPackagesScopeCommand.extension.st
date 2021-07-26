@@ -1,7 +1,7 @@
-Extension { #name : #ClyAddPackagesScopeCommand }
+Extension { #name : #SycAddPackagesScopeCommand }
 
 { #category : #'*Calypso-SystemTools-FullBrowser' }
-ClyAddPackagesScopeCommand class >> fullBrowserMenuActivation [
+SycAddPackagesScopeCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 
 	^ CmdContextMenuActivation byRootGroupItemFor: ClyFullBrowserPackageContext 

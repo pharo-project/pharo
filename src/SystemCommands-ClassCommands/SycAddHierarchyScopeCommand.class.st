@@ -2,7 +2,7 @@
 I am a command to add class hierarchy scope to listScopes
 "
 Class {
-	#name : #ClyAddHierarchyScopeCommand,
+	#name : #SycAddHierarchyScopeCommand,
 	#superclass : #SycSingleClassCommand,
 	#instVars : [
 		'class'
@@ -11,17 +11,17 @@ Class {
 }
 
 { #category : #accessing }
-ClyAddHierarchyScopeCommand >> defaultMenuIconName [
+SycAddHierarchyScopeCommand >> defaultMenuIconName [
 	^ #add
 ]
 
 { #category : #accessing }
-ClyAddHierarchyScopeCommand >> defaultMenuItemName [
+SycAddHierarchyScopeCommand >> defaultMenuItemName [
 	^ 'Add hierarchy to scope list'
 ]
 
 { #category : #execution }
-ClyAddHierarchyScopeCommand >> execute [
+SycAddHierarchyScopeCommand >> execute [
 	| scope |
 	scope :=  RBBrowserEnvironment new forClassHierarchy: targetClass.
 	RefactoringSettings addScope: scope

@@ -1,7 +1,7 @@
-Extension { #name : #ClyAddClassesScopeCommand }
+Extension { #name : #SycAddClassesScopeCommand }
 
 { #category : #'*Calypso-SystemTools-FullBrowser' }
-ClyAddClassesScopeCommand class >> browserContextMenuActivation [
+SycAddClassesScopeCommand class >> browserContextMenuActivation [
 	<classAnnotation>
 
 	^ CmdContextMenuActivation byRootGroupItemOrder: 1.5 for: ClyClass asCalypsoItemContext

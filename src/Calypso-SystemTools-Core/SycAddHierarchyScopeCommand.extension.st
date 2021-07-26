@@ -1,14 +1,14 @@
-Extension { #name : #ClyAddHierarchyScopeCommand }
+Extension { #name : #SycAddHierarchyScopeCommand }
 
 { #category : #'*Calypso-SystemTools-Core' }
-ClyAddHierarchyScopeCommand class >> browserContextMenuActivation [
+SycAddHierarchyScopeCommand class >> browserContextMenuActivation [
 	<classAnnotation>
 
 	^ CmdContextMenuActivation byRootGroupItemOrder: 1.5 for: ClyClass asCalypsoItemContext
 ]
 
 { #category : #'*Calypso-SystemTools-Core' }
-ClyAddHierarchyScopeCommand class >> sourceCodeMenuActivation [
+SycAddHierarchyScopeCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 
 	^ SycSourceCodeMenuActivation byRootGroupItemOrder: 1.2 for: ClySourceCodeContext
