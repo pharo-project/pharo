@@ -15,13 +15,6 @@ Class {
 	#category : #'SystemCommands-MethodCommands'
 }
 
-{ #category : #activation }
-SycMoveMethodsToClassCommand class >> methodContextMenuActivation [
-	<classAnnotation>
-	
-	^ SycMethodMenuActivation byRootGroupItemOrder: 60 for: ClyMethod asCalypsoItemContext
-]
-
 { #category : #'instance creation' }
 SycMoveMethodsToClassCommand class >> methods: methods class: targetClass [
 	^(self for: methods)

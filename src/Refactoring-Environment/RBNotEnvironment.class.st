@@ -16,6 +16,11 @@ RBNotEnvironment >> definesClass: aClass [
 	^ (environment definesClass: aClass) not
 ]
 
+{ #category : #description }
+RBNotEnvironment >> description [
+	^ '(', environment shortDescription, ') not' 
+]
+
 { #category : #testing }
 RBNotEnvironment >> includesCategory: aCategory [ 
 	^(self classNamesFor: aCategory) isNotEmpty

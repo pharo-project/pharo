@@ -15,27 +15,11 @@ Class {
 	#category : #'SystemCommands-ClassCommands'
 }
 
-{ #category : #activation }
-SycDeprecateClassCommand class >> browserContextMenuActivation [
-	"disabled for now, see https://github.com/pharo-project/pharo/issues/9551"
-	"<classAnnotation>"
-	
-	^CmdContextMenuActivation byRootGroupItemOrder: 1.4 for: ClyClass asCalypsoItemContext  
-]
-
 { #category : #testing }
 SycDeprecateClassCommand class >> canBeExecutedInContext: aToolContext [
 
 	^ (super canBeExecutedInContext: aToolContext) and: [ 
 		  aToolContext lastSelectedClass isDeprecated not ]
-]
-
-{ #category : #activation }
-SycDeprecateClassCommand class >> sourceCodeMenuActivation [
-	"disabled for now, see https://github.com/pharo-project/pharo/issues/9551"
-	"<classAnnotation>"
-	
-	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.3 for: ClySourceCodeContext
 ]
 
 { #category : #converting }
