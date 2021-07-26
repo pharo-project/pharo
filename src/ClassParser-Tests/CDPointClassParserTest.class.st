@@ -54,13 +54,6 @@ CDPointClassParserTest >> superclassName [
 	^ #Object 
 ]
 
-{ #category : #tests }
-CDPointClassParserTest >> testClassDefFromLegacyStringHasSlots [
-	
-	self assert: classDefinition slotNodes first name equals: self firstInstanceVariableName.
-	self assert: classDefinition slotNodes second name equals: self secondInstanceVariableName.
-]
-
 { #category : #helpers }
 CDPointClassParserTest >> testProperties [
 

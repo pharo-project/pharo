@@ -154,16 +154,6 @@ CDBehaviorDefinitionNode >> slots: aCollection [
 	
 ]
 
-{ #category : #testing }
-CDBehaviorDefinitionNode >> tokens [
-	^ tokens
-]
-
-{ #category : #testing }
-CDBehaviorDefinitionNode >> tokens: aCollection [ 
-	tokens := aCollection
-]
-
 { #category : #accessing }
 CDBehaviorDefinitionNode >> traitDefinition [
 
