@@ -6,7 +6,7 @@ Class {
 
 { #category : #testing }
 OCTargetCompilerTest >> expectedFailures [
-	^ #(testModifiedReturnFromClass testRecompiledReturn testRecompiledReturnFromClass)
+	^ #(testModifiedReturnFromClass testRecompiledReturnFromClass)
 ]
 
 { #category : #tests }
