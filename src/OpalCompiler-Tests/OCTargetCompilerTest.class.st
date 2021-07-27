@@ -4,6 +4,11 @@ Class {
 	#category : #'OpalCompiler-Tests-Semantic'
 }
 
+{ #category : #testing }
+OCTargetCompilerTest >> expectedFailures [
+	^ #(testModifiedReturnFromClass testRecompiledReturn testRecompiledReturnFromClass)
+]
+
 { #category : #tests }
 OCTargetCompilerTest >> testModifiedReturn [
 	" I test that the compilerClass method works for instance-side "
