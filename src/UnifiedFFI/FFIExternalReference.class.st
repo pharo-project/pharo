@@ -55,19 +55,6 @@ FFIExternalReference >> printOn: aStream [
 ]
 
 { #category : #'external resource management' }
-FFIExternalReference >> registerAsExternalResource [
-	"Note, subclasses should implement #resourceData
-	and #finalizeResourceData: on class side"
-	self
-		deprecated: 'Use #autoRelease instead.'
-		on: '2016-01-22'
-		in: #Pharo5
-		transformWith: '`@rec registerAsExternalResource' -> '`@rec autoRelease'.
-	 
-	FFIExternalResourceManager addResource: self
-]
-
-{ #category : #'external resource management' }
 FFIExternalReference >> resourceData [
 	^ self getHandle
 ]
