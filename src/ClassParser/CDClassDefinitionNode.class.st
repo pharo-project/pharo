@@ -12,14 +12,6 @@ Class {
 	#category : #'ClassParser-Model'
 }
 
-{ #category : #'instance creation' }
-CDClassDefinitionNode class >> on: aRBMessageNode [ 
-	
-	^ self new
-		originalNode: aRBMessageNode;
-		yourself
-]
-
 { #category : #accessing }
 CDClassDefinitionNode >> binding [ 
 	self trace: '.'.

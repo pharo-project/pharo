@@ -170,7 +170,7 @@ ClyFullBrowserMorph >> allNavigationScopes [
 	^super allNavigationScopes, { 
 		self packageSelection asItemsScope: ClyPackageScope. 
 		classLocalScope asFullHierarchyScope. 
-		classLocalScope }
+		classLocalScope }, RefactoringSettings availableScopes
 ]
 
 { #category : #updating }

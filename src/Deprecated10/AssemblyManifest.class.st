@@ -4,7 +4,7 @@ I store meta-data for a package assembly. I'm the common superclass of all packa
 Class {
 	#name : #AssemblyManifest,
 	#superclass : #Object,
-	#category : #'Kernel-Manifest'
+	#category : #'Deprecated10-Assemblies'
 }
 
 { #category : #accessing }
@@ -15,6 +15,12 @@ AssemblyManifest class >> description [
 { #category : #'compatibility - package manifest' }
 AssemblyManifest class >> ignoredDependencies [
 	^ #()
+]
+
+{ #category : #accessing }
+AssemblyManifest class >> includes: aPackageName [
+	^ (self parts collect: [:each | each key]) 
+		includes: aPackageName
 ]
 
 { #category : #default }

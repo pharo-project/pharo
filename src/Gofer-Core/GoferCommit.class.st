@@ -12,12 +12,14 @@ Class {
 
 { #category : #running }
 GoferCommit >> execute [
+
 	self workingCopies 
 		do: [ :each | self execute: each ]
 ]
 
 { #category : #running }
 GoferCommit >> execute: aWorkingCopy [
+
 	| repositories version |
 	repositories := self gofer repositories
 		reject: [ :repository | (aWorkingCopy changesRelativeToRepository: repository) isEmpty ].
@@ -32,8 +34,9 @@ GoferCommit >> execute: aWorkingCopy [
 		do: [ :repository | repository storeVersion: version ]
 ]
 
-{ #category : #running }
+{ #category : #initialization }
 GoferCommit >> initializeOn: aGofer [
+
 	super initializeOn: aGofer disablePackageCache
 ]
 

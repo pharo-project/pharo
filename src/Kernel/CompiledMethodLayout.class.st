@@ -22,6 +22,11 @@ CompiledMethodLayout class >> kind [
 	^ #compiledMethod 
 ]
 
+{ #category : #extending }
+CompiledMethodLayout >> extend [
+	self error: 'CompiledMethodLayout can not be extendend'
+]
+
 { #category : #format }
 CompiledMethodLayout >> instanceSpecification [
 	 ^ 24

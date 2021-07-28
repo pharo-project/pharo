@@ -64,12 +64,6 @@ RGPointerLayout >> isPointerLayout [
 	^ true
 ]
 
-{ #category : #accessing }
-RGPointerLayout >> layoutName [
-
-	^ #PointerLayout
-]
-
 { #category : #resolving }
 RGPointerLayout >> makeResolved [
 

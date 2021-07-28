@@ -3,7 +3,7 @@ I am the last layout scope in a scope chain.
 "
 Class {
 	#name : #LayoutEmptyScope,
-	#superclass : #LayoutAbstractScope,
+	#superclass : #AbstractLayoutScope,
 	#classInstVars : [
 		'instance'
 	],

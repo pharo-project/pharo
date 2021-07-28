@@ -10,6 +10,12 @@ Class {
 	#category : #'Gofer-Core-Operations'
 }
 
+{ #category : #testing }
+GoferSynchronize class >> isAbstract [
+
+	^ self == GoferSynchronize
+]
+
 { #category : #accessing }
 GoferSynchronize >> cacheRepository [
 	^ MCCacheRepository uniqueInstance

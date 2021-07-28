@@ -13,20 +13,6 @@ SycMoveMethodsToClassSideCommand class >> canBeExecutedInContext: aToolContext [
 		and: [ aToolContext isInstanceSideMethodSelected ]
 ]
 
-{ #category : #activation }
-SycMoveMethodsToClassSideCommand class >> methodContextMenuActivation [
-	<classAnnotation>
-	
-	^ SycMethodMenuActivation byRootGroupItemOrder: 50 for: ClyMethod asCalypsoItemContext
-]
-
-{ #category : #activation }
-SycMoveMethodsToClassSideCommand class >> methodShortcutActivation [
-	<classAnnotation>
-	
-	^CmdShortcutActivation by: $t meta, $c meta for: ClyMethod asCalypsoItemContext
-]
-
 { #category : #accessing }
 SycMoveMethodsToClassSideCommand >> defaultMenuIconName [ 
 	^ #smallRedo

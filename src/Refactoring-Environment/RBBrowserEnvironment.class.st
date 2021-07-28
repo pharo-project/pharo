@@ -27,7 +27,12 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'label',
-		'searchStrings'
+		'searchStrings',
+		'accessGuard',
+		'queryCache',
+		'plugins',
+		'updateStrategy',
+		'updateGuard'
 	],
 	#category : #'Refactoring-Environment'
 }
@@ -35,6 +40,11 @@ Class {
 { #category : #accessing }
 RBBrowserEnvironment class >> default [
 	^ RBBrowserEnvironment new
+]
+
+{ #category : #accessing }
+RBBrowserEnvironment class >> defaultName [
+	^ 'Current image'
 ]
 
 { #category : #environments }
@@ -47,6 +57,11 @@ RBBrowserEnvironment >> & anEnvironment [
 ]
 
 { #category : #accessing }
+RBBrowserEnvironment >> accessGuard [
+	^ accessGuard ifNil: [ accessGuard := Mutex new ]
+]
+
+{ #category : #accessing }
 RBBrowserEnvironment >> addSearchString: aString [
 
 	searchStrings
@@ -55,6 +70,12 @@ RBBrowserEnvironment >> addSearchString: aString [
 			].
 	( searchStrings includes: aString )
 		ifFalse: [ searchStrings add: aString ]
+]
+
+{ #category : #queries }
+RBBrowserEnvironment >> adoptQuery: aQuery [
+	aQuery scope: self.
+	^aQuery
 ]
 
 { #category : #'accessing - classes' }
@@ -114,6 +135,18 @@ RBBrowserEnvironment >> allNonMetaClasses [
 	^ allNonMetaClasses asArray
 ]
 
+{ #category : #announcements }
+RBBrowserEnvironment >> announceChangesOf: aQueryResult [
+
+	self updateStrategy announceChangesOf: aQueryResult
+]
+
+{ #category : #converting }
+RBBrowserEnvironment >> asRBEnvironment [
+ 
+	^ self
+]
+
 { #category : #accessing }
 RBBrowserEnvironment >> asSelectorEnvironment [
 	^(RBClassEnvironment onEnvironment: self classes: self classes) asSelectorEnvironment
@@ -150,6 +183,12 @@ RBBrowserEnvironment >> at: aKey ifAbsent: aBlock [
 
 	association := self associationAt: aKey ifAbsent: [ nil ].
 	^ association ifNil: [ aBlock value ] ifNotNil: [ association value ]
+]
+
+{ #category : #queries }
+RBBrowserEnvironment >> cachedResultOf: aQuery [
+
+	^self queryCache at: aQuery ifAbsent: [ nil ]
 ]
 
 { #category : #accessing }
@@ -227,6 +266,12 @@ RBBrowserEnvironment >> classesDo: aBlock [
 			ifTrue: [aBlock value: each ] ]
 ]
 
+{ #category : #cleaning }
+RBBrowserEnvironment >> cleanGarbageInCache [
+
+	self accessGuard critical: [ self queryCache clyCleanGarbage ]
+]
+
 { #category : #copying }
 RBBrowserEnvironment >> copyEmpty [
 	^ self class new
@@ -237,9 +282,33 @@ RBBrowserEnvironment >> defaultLabel [
 	^ 'Smalltalk'
 ]
 
+{ #category : #accessing }
+RBBrowserEnvironment >> defaultName [
+
+	^ self class defaultName
+]
+
+{ #category : #accessing }
+RBBrowserEnvironment >> defaultPlugins [
+
+	^ OrderedCollection new
+]
+
 { #category : #testing }
 RBBrowserEnvironment >> definesClass: aClass [
 	^ true
+]
+
+{ #category : #description }
+RBBrowserEnvironment >> description [
+
+	^ self defaultName
+]
+
+{ #category : #description }
+RBBrowserEnvironment >> descriptionUntil: aNumber [
+
+	^ self description contractTo: aNumber
 ]
 
 { #category : #private }
@@ -271,6 +340,11 @@ RBBrowserEnvironment >> forClass: aClass selectors: selectorCollection [
 ]
 
 { #category : #environments }
+RBBrowserEnvironment >> forClassHierarchy: aClass [
+	^ RBClassHierarchyEnvironment class: aClass
+]
+
+{ #category : #environments }
 RBBrowserEnvironment >> forClasses: classCollection [ 
 	| classes |
 	classes := OrderedCollection new: classCollection size * 2.
@@ -293,6 +367,23 @@ RBBrowserEnvironment >> forPackages: aCollection [
 { #category : #environments }
 RBBrowserEnvironment >> forPragmas: aKeywordCollection [
 	^ RBPragmaEnvironment onEnvironment: self keywords: aKeywordCollection
+]
+
+{ #category : #announcements }
+RBBrowserEnvironment >> handleSystemChange: aSystemAnnouncement [
+
+	| todoList todoSize anyResult |
+	todoList := 	(queryCache values select: [ :each | each notNil ]) as: IdentitySet.
+	todoSize := 0.
+	[[todoSize = todoList size] whileFalse: [
+		todoSize := todoList size.  
+		todoList asArray do: [ :eachResult |
+			(todoList includes: eachResult) ifTrue: [  
+				eachResult handleSystemChange: aSystemAnnouncement byProcessingList: todoList]]].
+	todoList notEmpty] whileTrue: [ 
+		anyResult := todoList anyOne.
+		anyResult handleSystemChange: aSystemAnnouncement.
+		todoList remove: anyResult]
 ]
 
 { #category : #environments }
@@ -337,6 +428,14 @@ RBBrowserEnvironment >> includesSelector: aSelector in: aClass [
 	^ true
 ]
 
+{ #category : #actions }
+RBBrowserEnvironment >> inspectIn: spec [
+
+	^ (spec instantiate: SpFilteringListPresenter)
+		  items: self basisObjects asArray;
+		  yourself
+]
+
 { #category : #environments }
 RBBrowserEnvironment >> instVarReadersTo: instVarName in: aClass [ 
 	^RBVariableEnvironment 
@@ -367,7 +466,25 @@ RBBrowserEnvironment >> instanceVariablesFor: aClass [
 ]
 
 { #category : #testing }
+RBBrowserEnvironment >> isBasedOnEmptyBasis [
+
+	^false
+]
+
+{ #category : #testing }
+RBBrowserEnvironment >> isBoundToEnvironment [
+
+	^ true
+]
+
+{ #category : #testing }
 RBBrowserEnvironment >> isClassEnvironment [
+	^ false
+]
+
+{ #category : #testing }
+RBBrowserEnvironment >> isCompositeEnvironment [
+
 	^ false
 ]
 
@@ -498,6 +615,23 @@ RBBrowserEnvironment >> packagesWithContributors [
 		as: Set
 ]
 
+{ #category : #accessing }
+RBBrowserEnvironment >> plugins [
+
+	^ plugins ifNil: [ self defaultPlugins ]
+]
+
+{ #category : #actions }
+RBBrowserEnvironment >> pluginsDo: aBlock [
+	^ self plugins do: aBlock
+]
+
+{ #category : #printing }
+RBBrowserEnvironment >> printDescriptionOn: aStream [
+
+	aStream nextPutAll: self description
+]
+
 { #category : #printing }
 RBBrowserEnvironment >> printOn: aStream [
 	aStream nextPutAll: self label
@@ -512,6 +646,29 @@ RBBrowserEnvironment >> problemCount [
 RBBrowserEnvironment >> protocolsFor: aClass [
 	^aClass organization categories 
 		select: [ :each | self includesProtocol: each in: aClass ]
+]
+
+{ #category : #queries }
+RBBrowserEnvironment >> query: aQuery [
+
+	| result |
+	self cleanGarbageInCache.
+	result := self queryCache at: aQuery ifAbsent: [nil]. "cache is weak dict where ifAbsentPut: not works"
+	result ifNil: [  
+		result := aQuery prepareNewResult.
+		aQuery fixStateBeforeExecution.
+		"We should ensure that state of query will not be modified after execution 
+		because it is the key in cache.
+		So aQuery is supposed to become readonly object together with required internal state"
+		self accessGuard critical: [ self queryCache at: aQuery put: result]].	
+	result rebuildIfNeeded.
+	^result
+]
+
+{ #category : #accessing }
+RBBrowserEnvironment >> queryCache [
+
+	^queryCache ifNil: [ queryCache := WeakValueDictionary new ]
 ]
 
 { #category : #environments }
@@ -632,11 +789,23 @@ RBBrowserEnvironment >> selectorsForClass: aClass do: aBlock [
 			(self includesSelector: each in: aClass) ifTrue: [aBlock value: each]]
 ]
 
+{ #category : #description }
+RBBrowserEnvironment >> shortDescription [
+
+	^ self description contractTo: 50
+]
+
 { #category : #printing }
 RBBrowserEnvironment >> storeOn: aStream [ 
 	aStream
 		nextPutAll: self class name;
 		nextPutAll: ' new'
+]
+
+{ #category : #testing }
+RBBrowserEnvironment >> supportsQuery: aQuery [
+
+	^true
 ]
 
 { #category : #private }
@@ -666,6 +835,36 @@ RBBrowserEnvironment >> traitsDo: aBlock [
 	self systemDictionary allTraitsDo: [ :each | 
 		(self includesClass: each)
 			ifTrue: [ aBlock value: each ]  ]
+]
+
+{ #category : #accessing }
+RBBrowserEnvironment >> updateGuard [
+
+	^ updateGuard ifNil: [ updateGuard := Mutex new ]
+]
+
+{ #category : #actions }
+RBBrowserEnvironment >> updateUsing: newUpdateStrategy by: updateBlock [
+	"here is special logic to break current mutex when any error is signalled.
+	Without this logic fixing code inside spawned debugger will lead to deadlock
+	because applying method changes will blocked at this accessGuard.
+	Breaking mutex is done by creating new one which meand that current process
+	is not guarded any more and proceeding execution in debugger can lead to some errors in rare cases. But it is less problem than locked UI"
+	[
+		self updateGuard critical: [ | oldStrategy |
+			oldStrategy := updateStrategy.
+			[
+				updateStrategy := newUpdateStrategy.
+				updateBlock on: Error do: [ :err |
+					updateStrategy := oldStrategy.
+					updateGuard := Mutex new.
+					err pass]
+			] ensure: [ 
+				self updateStrategy == newUpdateStrategy ifTrue: [ 
+					"In case of error another process can set up new strategy. 
+					This condition will avoid possible collision"
+					updateStrategy := oldStrategy ]]]
+	] ensure: [ newUpdateStrategy publishCollectedChanges]
 ]
 
 { #category : #accessing }

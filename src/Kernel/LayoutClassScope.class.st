@@ -3,7 +3,7 @@ I am layout scope for classes.
 "
 Class {
 	#name : #LayoutClassScope,
-	#superclass : #LayoutAbstractScope,
+	#superclass : #AbstractLayoutScope,
 	#type : #variable,
 	#instVars : [
 		'parentScope'

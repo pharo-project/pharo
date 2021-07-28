@@ -8,20 +8,6 @@ Class {
 	#category : #'SystemCommands-MethodCommands'
 }
 
-{ #category : #activation }
-SycOpenMethodMenuCommand class >> methodContextMenuActivation [
-	<classAnnotation>
-	
-	^CmdContextMenuActivation byRootGroupItemOrder: 10100 for: ClyMethod asCalypsoItemContext
-]
-
-{ #category : #activation }
-SycOpenMethodMenuCommand class >> methodEditorShortcutActivation [
-	<classAnnotation>
-	
-	^CmdShortcutActivation by: $t meta for: ClyMethod asCalypsoItemContext
-]
-
 { #category : #execution }
 SycOpenMethodMenuCommand >> activationStrategy [ 
 	^ SycMethodMenuActivation

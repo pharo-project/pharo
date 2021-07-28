@@ -12,14 +12,6 @@ SycRemoveAllSendersCommand class >> canBeExecutedInContext: aToolContext [
 	^ aToolContext isMethodSelected
 ]
 
-{ #category : #activation }
-SycRemoveAllSendersCommand class >> methodContextMenuActivation [
-	<classAnnotation>
-	
-	^ SycMethodMenuActivation
-		byRootGroupItemOrder: 35 for: ClyMethod asCalypsoItemContext
-]
-
 { #category : #execution }
 SycRemoveAllSendersCommand >> createRefactoring [
 	|refactoring options|

@@ -210,9 +210,9 @@ A new VM with
 (self heading: 'New threaded architecture'),
 'Pharo 9 comes also with a new Threaded FFI support. In fact Threaded FFI is not a single architecture but a set of alternatives that can be choosen depending on the constraints of the OS. TFFI offers adaptability to the different constraints imposed by Cocoa or GTK.	
 		
-You can see the Pharo 8.0 changelog at: 
+You can see the Pharo 10.0 changelog at: 
 
-', (self url: 'https://github.com/pharo-project/pharo-changelogs/blob/master/Pharo80ChangeLogs.md')
+', (self url: 'https://github.com/pharo-project/pharo-changelogs/blob/master/Pharo100ChangeLogs.md')
 
 ]
 

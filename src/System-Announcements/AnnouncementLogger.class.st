@@ -1,10 +1,9 @@
 "
-Use me to debug and log to the transcript annoncements.
-
+Use me to debug and log to the Transcript announcements.
 
 AnnouncementLogger new subscribeTo: SystemAnnouncer announcer
 
-To unsubscribe
+to unsubscribe
 
 AnnouncementLogger  allInstancesDo: [:each | SystemAnnouncer announcer unsubscribe: each ]
 "

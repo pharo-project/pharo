@@ -9,6 +9,7 @@ Class {
 
 { #category : #queries }
 GoferLocalChanges >> sourceSnapshotOf: aReference [
+
 	| ancestors reference |
 	ancestors := aReference workingCopy ancestry ancestors.
 	ancestors isEmpty ifTrue: [ ^ MCSnapshot new ].
@@ -18,5 +19,6 @@ GoferLocalChanges >> sourceSnapshotOf: aReference [
 
 { #category : #queries }
 GoferLocalChanges >> targetSnapshotOf: aReference [
+
 	^ aReference workingCopy package snapshot
 ]
