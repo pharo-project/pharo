@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'isClean'
 	],
-	#category : #'Debugging-Core'
+	#category : #'Kernel-Methods'
 }
 
 { #category : #validation }
