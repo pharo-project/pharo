@@ -376,17 +376,6 @@ ExternalAddress >> readArrayOf: aType until: aBlock [
 					address := address + externalType typeSize ] ]
 ]
 
-{ #category : #'*UnifiedFFI-Deprecated50' }
-ExternalAddress >> registerAsExternalResource [
-	self
-		deprecated: 'Use #autoRelease instead.'
-		on: '2016-01-22'
-		in: #Pharo5
-		transformWith: '`@rec registerAsExternalResource' -> '`@rec autoRelease'.
-	  
-	^ self class finalizationRegistry add: self
-]
-
 { #category : #'*UnifiedFFI' }
 ExternalAddress >> replaceFrom: start to: stop with: replacement startingAt: repStart [ 
 	| dstAddress srcAddress repSize |
