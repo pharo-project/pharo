@@ -281,6 +281,11 @@ Context >> activeHome [
 ]
 
 { #category : #accessing }
+Context >> pc: anInteger [ 
+	pc := anInteger
+]
+
+{ #category : #accessing }
 Context >> activeOuterContext [
 	"If executing closure, search senders for the activation in which the receiver's
 	 closure was created (the receiver's outerContext).  If the outerContext is not
