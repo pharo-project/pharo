@@ -32,6 +32,10 @@ OCRequestorScope >> compilationContext: anObject [
 
 { #category : #lookup }
 OCRequestorScope >> lookupVar: name declare: aBoolean [
+
+	"reserved Variables are defined by the instance scope"
+	(ReservedVariable nameIsReserved: name) ifTrue: [ 
+		^ outerScope lookupVar: name declare: aBoolean ].
 	
 	"generated temps (e.g. for limits in to:do: should not create bindings"
 	name first = $0 ifTrue: [ ^ outerScope lookupVar: name declare: aBoolean ].

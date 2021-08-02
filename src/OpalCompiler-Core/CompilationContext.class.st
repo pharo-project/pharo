@@ -33,7 +33,8 @@ Class {
 		'encoderClass',
 		'astTransformPlugins',
 		'requestorScopeClass',
-		'bindings'
+		'bindings',
+		'compiledMethodClass'
 	],
 	#classVars : [
 		'BytecodeBackend',
@@ -413,6 +414,22 @@ CompilationContext >> compiledMethod [
 { #category : #accessing }
 CompilationContext >> compiledMethod: anObject [
 	compiledMethod := anObject
+]
+
+{ #category : #accessing }
+CompilationContext >> compiledMethodClass [
+	"Return the class used to instantiate the compiled method created by the compiler"
+	^ compiledMethodClass ifNil: [ 
+		self productionEnvironment
+			at: #CompiledMethod
+			ifAbsent: [ CompiledMethod ] ]
+]
+
+{ #category : #accessing }
+CompilationContext >> compiledMethodClass: aCompiledMethodClass [
+	"Return the class used to instantiate the compiled method created by the compiler"
+	
+	compiledMethodClass := aCompiledMethodClass
 ]
 
 { #category : #accessing }
