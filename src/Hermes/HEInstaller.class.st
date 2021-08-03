@@ -107,8 +107,8 @@ HEInstaller >> buildTraitCompositionFor: traitComposition [
 	aLiteral := (traitComposition asLiteralIn: environment).
 	aLiteral isArray 
 		ifTrue: [ ^ aLiteral 
-							ifEmpty: [ TaEmptyComposition new ]
-							ifNotEmpty: [ TaSequence withAll: (aLiteral collect: [:each | each asTraitComposition]) ]  ]
+							ifEmpty: [ self emptyTraitCompositionClass new ]
+							ifNotEmpty: [ self traitSequenceClass withAll: (aLiteral collect: [:each | each asTraitComposition]) ]  ]
 		ifFalse: [ ^ aLiteral asTraitComposition ]
 ]
 
@@ -149,6 +149,12 @@ HEInstaller >> doInstallPackage: aHEPackage [
 	"7. After all I validate if there are no new undeclared variables created in the environment.
 	A new undeclared is a sign of an improper modularization."
 	self validateNoNewUndeclared
+]
+
+{ #category : #'creating traits' }
+HEInstaller >> emptyTraitCompositionClass [
+
+	^ Smalltalk at: #TaEmptyComposition ifAbsent: [ self error: 'Trait support has not been loaded' ]
 ]
 
 { #category : #accessing }
@@ -281,6 +287,14 @@ HEInstaller >> shouldBuildMethod: aHEMethod in: aClass [
 			(m isFromTrait and:[aClass isTrait not]) ifTrue:[ ^ true ].  	
 			self error: (self messageMethod: aHEMethod alreadyExistsIn: aClass ) ]
 		ifAbsent: [ ^ true ]
+]
+
+{ #category : #'creating traits' }
+HEInstaller >> traitSequenceClass [
+
+	^ Smalltalk at: #TaSequence ifAbsent: [ self error: 'Trait support has not been loaded' ]
+	
+	
 ]
 
 { #category : #'reporting undeclared' }
