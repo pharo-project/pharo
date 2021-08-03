@@ -10,6 +10,12 @@ RGTraitDescriptionStrategy >> allSharedPoolNames [
 	^#()
 ]
 
+{ #category : #'private - backend access' }
+RGTraitDescriptionStrategy >> bindingOf: varName [
+
+	^ self environment bindingOf: varName
+]
+
 { #category : #variables }
 RGTraitDescriptionStrategy >> initialize [
 

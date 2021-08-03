@@ -676,10 +676,10 @@ RGBehavior >> localSelectors [
 
 { #category : #lookup }
 RGBehavior >> lookupVar: aName [
-	^ self layout 
-		resolveSlot: aName asSymbol 
-		ifFound: [:var | var] 
-		ifNone: [self bindingOf: aName]
+
+	^ self allSlots
+		  detect: [ :slot | slot name == aName ]
+		  ifNone: [ self bindingOf: aName ]
 ]
 
 { #category : #lookup }
