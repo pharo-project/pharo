@@ -12,7 +12,7 @@ TraitsBootstrap class >> fixSourceCodeOfTraits [
 	"This method fix the traits loaded with Hermes"
 
 	| incorrectMethods |
-	incorrectMethods := SystemNavigation new installedMethodsWithIncorrectTrailerKind collect: [ :e | e compiledMethod ].
+	incorrectMethods := SystemNavigation new installedMethodsWithIncorrectTrailerKind.
 	incorrectMethods
 		do: [ :aMethod | 
 			| aClass defining |
