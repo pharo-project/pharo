@@ -13,18 +13,13 @@ SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
 
 mkdir -p "${BOOTSTRAP_CACHE}" #required to generate hermes files
 
-${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh 70 vm $BOOTSTRAPPER_ARCH
-if [ ${BOOTSTRAPPER_ARCH} = 64 ] 
-	then SUFFIX=${BOOTSTRAPPER_ARCH} 
-fi
+${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh 90 vm 64
 
-wget --progress=dot:mega https://github.com/carolahp/PharoBootstrap/releases/download/v1.7.0/bootstrapImage${SUFFIX}.zip
+wget --progress=dot:mega https://github.com/guillep/PharoBootstrap/releases/download/v1.7.5/bootstrapImage.zip
 
-unzip bootstrapImage${SUFFIX}.zip
+unzip bootstrapImage.zip
 
 cd "${BOOTSTRAP_CACHE}"
-#We need the old sources file next to the image because of sources condensation step
-wget --progress=dot:mega http://files.pharo.org/sources/PharoV60.sources
 
 echo "Prepare icons"
 mkdir icon-packs
@@ -39,7 +34,7 @@ then
     # Downloads a SPUR vm for the configured architecture
     mkdir ${BOOTSTRAP_CACHE}/vmtarget
     cd ${BOOTSTRAP_CACHE}/vmtarget
-    ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh 70 vm $BOOTSTRAP_ARCH
+    ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh 90 vm $BOOTSTRAP_ARCH
     cd -
 fi
 echo "Target VM: $(${VM} --version | grep Hash)"
