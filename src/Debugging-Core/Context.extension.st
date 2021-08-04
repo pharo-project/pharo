@@ -360,7 +360,6 @@ Context >> stepToSendOrReturn [
 	[ self isDead or: [ stream willSend or: [ stream willReturn or: [ stream willStore or: [ stream willCreateBlock ] ] ] ] ]
 		whileFalse: [
 			context := stream interpretNextInstructionFor: self.
-			pc ifNotNil: [ pc := stream pc ].
 			context == self ifFalse: [
 				"Caused by mustBeBoolean handling"
 				^context ]]

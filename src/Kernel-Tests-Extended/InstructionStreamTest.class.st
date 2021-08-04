@@ -25,6 +25,12 @@ InstructionStreamTest >> directedSuperSend: aString numArgs: anInteger [
 	operations add: { #directSuperSend:numArgs:. aString. anInteger }
 ]
 
+{ #category : #accessing }
+InstructionStreamTest >> pc: anInteger [ 
+	
+	"Ignore the PC"
+]
+
 { #category : #helpers }
 InstructionStreamTest >> pushConstant: anInteger [ 
 
@@ -130,6 +136,90 @@ InstructionStreamTest >> testSimulatingAMethodWithHaltHasCorrectContext [
 ]
 
 { #category : #'tests - example' }
+InstructionStreamTest >> testStepContextNonTakenConditionalJumpBytecodes [
+
+	| context |
+	"Assume ifTrue: conditional jumps are compiled as jumpIfFalse"
+	context := [ (true ifTrue: [ 1 ] ifFalse: [2]) + 7 ] asContext.
+	
+	6 timesRepeat: [
+		"push true, not jump, push 1, jump to end, push 7, send +"
+		context step ].
+
+	self assert: context top equals: 8
+]
+
+{ #category : #'tests - example' }
+InstructionStreamTest >> testStepContextTakenConditionalJumpBytecodes [
+
+	| context |
+	"Assume ifTrue: conditional jumps are compiled as jumpIfFalse"
+	context := [ false ifTrue: [ 1 ]. 2 ] asContext.
+	
+	3 timesRepeat: [
+		"push false, jump, push 2"
+		context step ].
+
+	self assert: context top equals: 2
+]
+
+{ #category : #'tests - example' }
+InstructionStreamTest >> testStepNonTakenConditionalJumpBytecodes [
+
+	| context stream |
+	"Assume ifTrue: conditional jumps are compiled as jumpIfFalse"
+	context := [ (true ifTrue: [ 1 ] ifFalse: [2]) + 7 ] asContext.
+	stream := InstructionStream on: context method.
+	
+	6 timesRepeat: [
+		"push true, not jump, push 1, jump to end, push 7, send +"
+		stream interpretNextInstructionFor: context ].
+
+	self assert: context top equals: 8
+]
+
+{ #category : #'tests - example' }
+InstructionStreamTest >> testStepSendPopsArgumentsAndPushesResultBytecodes [
+
+	| context stream |
+	context := [ 1 + 2 ] asContext.
+	stream := InstructionStream on: context method.
+	
+	3 timesRepeat: [
+		stream interpretNextInstructionFor: context ].
+
+	self assert: context stackPtr equals: 1 "elements on the stack".
+	self assert: context top equals: 3
+]
+
+{ #category : #'tests - example' }
+InstructionStreamTest >> testStepSingleBytecode [
+
+	| context stream |
+	context := [ 1 ] asContext.
+	stream := InstructionStream on: context method.
+	
+	stream interpretNextInstructionFor: context.
+	
+	self assert: context top equals: 1
+]
+
+{ #category : #'tests - example' }
+InstructionStreamTest >> testStepTakenConditionalJumpBytecodes [
+
+	| context stream |
+	"Assume ifTrue: conditional jumps are compiled as jumpIfFalse"
+	context := [ false ifTrue: [ 1 ]. 2 ] asContext.
+	stream := InstructionStream on: context method.
+	
+	3 timesRepeat: [
+		"push false, jump, push 2"
+		stream interpretNextInstructionFor: context ].
+
+	self assert: context top equals: 2
+]
+
+{ #category : #'tests - example' }
 InstructionStreamTest >> testStepThroughInAMethodWithMNU [
 
 	| initialContext aContext receiver suspendedProcess return |
@@ -183,6 +273,19 @@ InstructionStreamTest >> testStepThroughInAMethodWithoutError [
 	"Suspended process should stop in the exception"	
 	self assert: return method equals: (self classUnderTest >> #callingAMethodWithSuspendAndReturnANumber).
 	self assert: return top equals: 42.
+]
+
+{ #category : #'tests - example' }
+InstructionStreamTest >> testStepTwoBytecodes [
+
+	| context stream |
+	context := [ 1 + 2 ] asContext.
+	stream := InstructionStream on: context method.
+	
+	2 timesRepeat: [
+		stream interpretNextInstructionFor: context ].
+
+	self assert: context top equals: 2
 ]
 
 { #category : #'tests - example' }

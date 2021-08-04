@@ -58,6 +58,7 @@ InstructionStream >> interpretNext2ByteSistaV1Instruction: bytecode for: client 
 	method := self compiledCode.
 	byte := self compiledCode at: pc.
 	pc := pc + 1.
+	client pc: pc.
 	"We do an inline quasi-binary search on bytecode"
 	bytecode < 234 ifTrue: "pushes"
 		[bytecode < 231 ifTrue:
@@ -97,8 +98,8 @@ InstructionStream >> interpretNext2ByteSistaV1Instruction: bytecode for: client 
 		 bytecode = 236 ifTrue:
 			[^client trapIfNotInstanceOf: (method literalAt: (extA bitShift: 8) + byte + 1)].
 		bytecode = 237 ifTrue:
-			[^client jump: (extB bitShift: 8) + byte].
-		 ^client jump: (extB bitShift: 8) + byte if: bytecode = 238].
+			[^client jump: (extB bitShift: 8) + byte withInterpreter: self].
+		 ^client jump: (extB bitShift: 8) + byte if: bytecode = 238 withInterpreter: self].
 	bytecode < 243 ifTrue:
 		[bytecode = 240 ifTrue:
 			[^client popIntoReceiverVariable: (extA bitShift: 8) + byte].
@@ -126,6 +127,7 @@ InstructionStream >> interpretNext3ByteSistaV1Instruction: bytecode for: client 
 	byte2 := method at: pc.
 	byte3 := method at: pc + 1.
 	pc := pc + 2.
+	client pc: pc.
 	"we search the bytecodes by what we expect to be the static frequency."
 	bytecode = 248 ifTrue:
 		[^client callPrimitive: byte2 + (byte3 bitShift: 8)].
@@ -134,7 +136,8 @@ InstructionStream >> interpretNext3ByteSistaV1Instruction: bytecode for: client 
 		 ^client
 			pushClosureCopyNumCopiedValues: ((byte2 bitShift: -3) bitAnd: 7) + (extA // 16 bitShift: 3)
 			numArgs: (byte2 bitAnd: 7) + (extA \\ 16 bitShift: 3)
-			blockSize: byte3 + (extB bitShift: 8)].
+			blockSize: byte3 + (extB bitShift: 8)
+			withInterpreter: self].
 	bytecode = 251 ifTrue:
 		[^client pushRemoteTemp: byte2 inVectorAt: byte3].
 	bytecode = 252 ifTrue:
@@ -185,6 +188,7 @@ InstructionStream >> interpretNextSistaV1InstructionFor: client [
 				[extB := (extB = 0 and: [extByte > 127])
 							ifTrue: [extByte - 256]
 							ifFalse: [(extB bitShift: 8) + extByte]]].
+	client pc: pc.
 	div16 := byte // 16.
 	offset := byte \\ 16.
 	"We do an inline quasi-binary search on each of the possible 16 values of div16"
@@ -251,11 +255,12 @@ InstructionStream >> interpretNextSistaV1InstructionFor: client [
 	div16 < 14 ifTrue:
 		[div16 = 11 ifTrue:
 			[offset < 8 ifTrue:
-				[^client jump: offset + 1].
-			 ^client jump: offset - 7 if: true].
+				[^client jump: offset + 1 withInterpreter: self].
+			 ^client jump: offset - 7 if: true withInterpreter: self].
 		 div16 = 12 ifTrue:
 			[offset < 8 ifTrue:
-				[^client jump: offset + 1 if: false].
+				[
+				^client jump: offset + 1 if: false withInterpreter: self].
 			 ^client popIntoReceiverVariable: offset - 8].
 		 "div16 = 13"
 		 offset < 8 ifTrue:
@@ -280,6 +285,7 @@ InstructionStream >> interpretNextV3PlusClosureInstructionFor: client [
 	type := byte // 16.  
 	offset := byte \\ 16.   
 	pc := pc+1.
+	client pc: pc.
 	"We do an inline binary search on each of the possible 16 values of type:
 	The old, cleaner but slowe code is retained as a comment below"
 	type < 8
@@ -337,16 +343,20 @@ InstructionStream >> interpretNextV3PlusClosureInstructionFor: client [
 										for: client]
 								ifFalse: ["type = 9 (short jumps)"
 									offset < 8
-										ifTrue: [^ client jump: offset + 1].
-									^ client jump: offset - 8 + 1 if: false]]
+										ifTrue: [^ client jump: offset + 1 withInterpreter: self].
+									^ client jump: offset - 8 + 1 if: false withInterpreter: self]]
 						ifFalse: [type < 11
 								ifTrue: ["type = 10 (long jumps)"
 									byte := method at: pc.
 									pc := pc + 1.
 									offset < 8
-										ifTrue: [^ client jump: offset - 4 * 256 + byte].
-									^ client jump: (offset bitAnd: 3)
-											* 256 + byte if: offset < 12]
+										ifTrue: [^ client
+												jump: offset - 4 * 256 + byte
+												withInterpreter: self].
+									^ client
+										jump: (offset bitAnd: 3) * 256 + byte
+										if: offset < 12
+										withInterpreter: self]
 								ifFalse: ["type = 11"
 									^ client
 										send: (Smalltalk specialSelectorAt: offset + 1)
@@ -437,6 +447,7 @@ InstructionStream >> interpretV3PlusClosureExtension: offset in: method for: cli
 	offset <= 6 ifTrue: 
 		["Extended op codes 128-134"
 		byte2 := method at: pc. pc := pc + 1.
+		client pc: pc.
 		offset <= 2 ifTrue:
 			["128-130:  extended pushes and pops"
 			type := byte2 // 64.
@@ -498,6 +509,7 @@ InstructionStream >> interpretV3PlusClosureExtension: offset in: method for: cli
 		pushClosureCopyNumCopiedValues: (byte2 bitShift: -4)
 		numArgs: (byte2 bitAnd: 16rF)
 		blockSize: (byte3 * 256) + byte4
+		withInterpreter: self
 ]
 
 { #category : #scanning }
