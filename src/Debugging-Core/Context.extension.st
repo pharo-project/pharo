@@ -292,6 +292,17 @@ Context class >> simulatePrimitiveNumber: num with: simulator [
 ]
 
 { #category : #'*Debugging-Core' }
+Context >> stepIntoQuickMethod [
+	^self compiledCode stepIntoQuickMethods
+]
+
+{ #category : #'*Debugging-Core' }
+Context >> stepIntoQuickMethod: aBoolean [
+
+	self compiledCode stepIntoQuickMethods: aBoolean
+]
+
+{ #category : #'*Debugging-Core' }
 Context >> stepToHome: aContext [
 	"Resume self until the home of top context is aContext.  Top context may be a block context."
 
@@ -344,10 +355,12 @@ Context >> stepToSendOrReturn [
 	"Simulate the execution of bytecodes until either sending a message or 
 	returning a value to the receiver (that is, until switching contexts)."
 
-	| context |
-	[ self isDead or: [ self willSend or: [  self willReturn or: [ self willStore or: [self willCreateBlock ] ] ] ] ]
+	| stream context |
+	stream := InstructionStream on: method pc: pc.	
+	[ self isDead or: [ stream willSend or: [ stream willReturn or: [ stream willStore or: [ stream willCreateBlock ] ] ] ] ]
 		whileFalse: [
-			context := self step.
+			context := stream interpretNextInstructionFor: self.
+			pc ifNotNil: [ pc := stream pc ].
 			context == self ifFalse: [
 				"Caused by mustBeBoolean handling"
 				^context ]]

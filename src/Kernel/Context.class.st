@@ -1261,6 +1261,19 @@ Context >> outerMostContext [
 		ifNotNil: [ self outerContext ]
 ]
 
+{ #category : #accessing }
+Context >> pc [
+	"Answer the index of the next bytecode."
+
+	^pc
+]
+
+{ #category : #accessing }
+Context >> pc: anInteger [
+
+	pc := anInteger
+]
+
 { #category : #controlling }
 Context >> pop [
 	"Answer the top of the receiver's stack and remove the top of the stack."
@@ -2043,17 +2056,6 @@ Context >> step [
 	result := stream interpretNextInstructionFor: self.
 	pc ifNotNil: [ pc := stream pc ].
 	^ result
-]
-
-{ #category : #'debugger access' }
-Context >> stepIntoQuickMethod [
-	^self compiledCode stepIntoQuickMethods
-]
-
-{ #category : #'debugger access' }
-Context >> stepIntoQuickMethod: aBoolean [
-
-	self compiledCode stepIntoQuickMethods: aBoolean
 ]
 
 { #category : #controlling }
