@@ -394,6 +394,12 @@ IRBytecodeGenerator >> jump: distance if: condition [
 ]
 
 { #category : #instructions }
+IRBytecodeGenerator >> jump: distance if: condition withInterpreter: anInterpreter [
+	
+	^ self jump: distance if: condition
+]
+
+{ #category : #instructions }
 IRBytecodeGenerator >> jumpBackward: distance [
 
 	encoder genJumpLong: distance negated - self encoderClass backJumpBytecodeSize

@@ -1024,15 +1024,7 @@ Context >> jump [
 ]
 
 { #category : #'instruction decoding' }
-Context >> jump: distance [ 
-	"Simulate the action of a 'unconditional jump' bytecode whose offset is 
-	the argument, distance."
-
-	pc := pc + distance
-]
-
-{ #category : #'instruction decoding' }
-Context >> jump: distance if: condition [ 
+Context >> jump: distance if: condition withInterpreter: anInterpreter [
 	"Simulate the action of a 'conditional jump' bytecode whose offset is the 
 	argument, distance, and whose condition is the argument, condition."
 
@@ -1044,7 +1036,16 @@ Context >> jump: distance if: condition [
 			to: bool
 			with: {}
 			super: false].
-	(bool eqv: condition) ifTrue: [self jump: distance]
+	(bool eqv: condition) ifTrue: [self jump: distance withInterpreter: anInterpreter]
+]
+
+{ #category : #'instruction decoding' }
+Context >> jump: distance withInterpreter: anInterpreter [
+	"Simulate the action of a 'unconditional jump' bytecode whose offset is 
+	the argument, distance."
+
+	pc := pc + distance.
+	anInterpreter pc: pc.
 ]
 
 { #category : #'debugger access' }
@@ -1509,7 +1510,7 @@ Context >> pushArgs: arguments from: senderContext [
 ]
 
 { #category : #'instruction decoding' }
-Context >> pushClosureCopyNumCopiedValues: numCopied numArgs: numArgs blockSize: blockSize [
+Context >> pushClosureCopyNumCopiedValues: numCopied numArgs: numArgs blockSize: blockSize withInterpreter: anInterpreter [
 	"Simulate the action of a 'closure copy' bytecode whose result is the
 	 new BlockClosure for the following code"
 	| copiedValues |
@@ -1524,7 +1525,7 @@ Context >> pushClosureCopyNumCopiedValues: numCopied numArgs: numArgs blockSize:
 				startpc: pc
 				numArgs: numArgs
 				copiedValues: copiedValues).
-	self jump: blockSize
+	self jump: blockSize withInterpreter: anInterpreter
 ]
 
 { #category : #'instruction decoding' }
@@ -2054,7 +2055,6 @@ Context >> step [
 	| stream result |
 	stream := InstructionStream on: method pc: pc.
 	result := stream interpretNextInstructionFor: self.
-	pc ifNotNil: [ pc := stream pc ].
 	^ result
 ]
 
