@@ -107,3 +107,18 @@ RBDeprecateMethodTransformation >> preconditions [
 							withBlock: [selector numArgs = newSelector numArgs or: [ newSelector numArgs = 0 ]]
 							errorString: 'The new selectors should have the same number of arguments as the old one, or not have them at all').
 ]
+
+{ #category : #printing }
+RBDeprecateMethodTransformation >> storeOn: aStream [ 
+
+	aStream nextPut: $(.
+	self class storeOn: aStream.
+	aStream nextPutAll: ' deprecateMethod: #';
+		nextPutAll: selector asString;
+		nextPutAll: ' in: '.
+	class storeOn: aStream.
+	aStream
+		nextPutAll: ' using: #';
+		nextPutAll: newSelector asString.
+	aStream nextPut: $)
+]
