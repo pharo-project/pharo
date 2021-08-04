@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #testing }
+GLMGenericAction class >> isDeprecated [
+	^ true
+]
+
+{ #category : #testing }
 GLMGenericAction >> worksWithMorphic [
 	^ true
 ]

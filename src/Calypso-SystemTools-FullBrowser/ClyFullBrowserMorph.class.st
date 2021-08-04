@@ -170,7 +170,7 @@ ClyFullBrowserMorph >> allNavigationScopes [
 	^super allNavigationScopes, { 
 		self packageSelection asItemsScope: ClyPackageScope. 
 		classLocalScope asFullHierarchyScope. 
-		classLocalScope }
+		classLocalScope }, RefactoringSettings availableScopes
 ]
 
 { #category : #updating }
@@ -797,7 +797,7 @@ ClyFullBrowserMorph >> switchToFlatClasses [
 	packageView selection groupItemsByTypeAndDo: [ :typeClass :items | 
 		classQueries addAll: (typeClass prepareClassQueriesFrom: items in: navigationEnvironment)].
 	
-	classView showQueries: classQueries as: ClyExtensionLastSortedClasses hierarchical
+	classView showQueries: classQueries as: ClyExtensionLastSortedClassResult hierarchical
 ]
 
 { #category : #navigation }

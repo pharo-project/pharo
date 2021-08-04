@@ -6,3 +6,9 @@ Class {
 	#superclass : #Object,
 	#category : #'System-Hashing-Checksums'
 }
+
+{ #category : #testing }
+Checksum class >> isAbstract [
+
+	^ self == Checksum
+]

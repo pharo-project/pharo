@@ -112,7 +112,7 @@ Behavior >> recompile: selector from: oldClass [
 
 	| method newMethod |
 	method := oldClass compiledMethodAt: selector.
-	newMethod := self compiler
+	newMethod := oldClass compiler
 				source: (oldClass sourceCodeAt: selector);
 				class: self;
 				failBlock: [^ self];

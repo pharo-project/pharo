@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Widgets-UI-Popup-Themer'
 }
 
+{ #category : #testing }
+GLMBrickPopupEditThemer class >> isDeprecated [
+	^ true
+]
+
 { #category : #'brick-popup' }
 GLMBrickPopupEditThemer >> borderWidth [
 	^ 0

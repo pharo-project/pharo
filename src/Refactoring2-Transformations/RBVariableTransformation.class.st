@@ -11,7 +11,7 @@ Class {
 { #category : #api }
 RBVariableTransformation class >> classVariable: aVariableName class: aClassName [
 
-	^ (self new)
+	^ self new
 		variable: aVariableName
 		class: aClassName
 		classVariable: true;
@@ -21,7 +21,7 @@ RBVariableTransformation class >> classVariable: aVariableName class: aClassName
 { #category : #api }
 RBVariableTransformation class >> instanceVariable: aVariableName class: aClassName [
 
-	^ (self new)
+	^ self new
 		variable: aVariableName
 		class: aClassName
 		classVariable: false;
@@ -31,7 +31,7 @@ RBVariableTransformation class >> instanceVariable: aVariableName class: aClassN
 { #category : #api }
 RBVariableTransformation class >> model: aRBModel classVariable: aVariableName class: aClassName [
 
-	^ (self new)
+	^ self new
 		model: aRBModel;
 		variable: aVariableName
 		class: aClassName
@@ -42,7 +42,7 @@ RBVariableTransformation class >> model: aRBModel classVariable: aVariableName c
 { #category : #api }
 RBVariableTransformation class >> model: aRBModel instanceVariable: aVariableName class: aClassName [
 
-	^ (self new)
+	^ self new
 		model: aRBModel;
 		variable: aVariableName
 		class: aClassName
@@ -53,7 +53,7 @@ RBVariableTransformation class >> model: aRBModel instanceVariable: aVariableNam
 { #category : #api }
 RBVariableTransformation class >> model: aRBModel variable: aVariableName class: aClassName classVariable: aBoolean [
 
-	^ (self new)
+	^ self new
 		model: aRBModel;
 		variable: aVariableName
 		class: aClassName
@@ -64,7 +64,7 @@ RBVariableTransformation class >> model: aRBModel variable: aVariableName class:
 { #category : #api }
 RBVariableTransformation class >> variable: aVariableName class: aClassName classVariable: aBoolean [
 
-	^ (self new)
+	^ self new
 		variable: aVariableName
 		class: aClassName
 		classVariable: aBoolean;

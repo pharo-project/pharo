@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Model'
 }
 
+{ #category : #testing }
+GLMBrickAbstractModel class >> isDeprecated [
+	^ true
+]
+
 { #category : #'adaptor api' }
 GLMBrickAbstractModel >> count [
 

@@ -4,6 +4,11 @@ Class {
 	#category : #'GT-Tests-Spotter-Scripting-Mocks'
 }
 
+{ #category : #testing }
+GTMockSpotter class >> isDeprecated [
+	^ true
+]
+
 { #category : #'accessing - defaults' }
 GTMockSpotter >> defaultPagerModel [
 	^ GLMMockPagerModel new

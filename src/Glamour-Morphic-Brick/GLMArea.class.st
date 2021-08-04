@@ -9,6 +9,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Utils-Geometry'
 }
 
+{ #category : #testing }
+GLMArea class >> isDeprecated [
+	^ true
+]
+
 { #category : #initialization }
 GLMArea class >> origin: aPoint vectors: theVectors [
 	^ self new

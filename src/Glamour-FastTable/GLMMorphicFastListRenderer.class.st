@@ -13,6 +13,11 @@ Class {
 	#category : #'Glamour-FastTable-Morphic-Renderer'
 }
 
+{ #category : #testing }
+GLMMorphicFastListRenderer class >> isDeprecated [
+	^ true
+]
+
 { #category : #initialization }
 GLMMorphicFastListRenderer >> createDataSourceFrom: aPresentation [
 	^ aPresentation allowSeparators

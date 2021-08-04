@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-PagerModel-Announcements'
 }
 
+{ #category : #testing }
+GLMPagerPreviewUpdate class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMPagerPreviewUpdate >> pageIndex [
 	^ pageIndex

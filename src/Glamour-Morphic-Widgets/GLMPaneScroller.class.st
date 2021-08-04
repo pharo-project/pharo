@@ -11,6 +11,11 @@ Class {
 	#category : #'Glamour-Morphic-Widgets'
 }
 
+{ #category : #testing }
+GLMPaneScroller class >> isDeprecated [
+	^ true
+]
+
 { #category : #layout }
 GLMPaneScroller >> adjustPaneHeight [
 	"This gets called after the scrollbar has been shown or hidden, to move the bottom

@@ -15,6 +15,11 @@ GTWhereIsDebugAction class >> gtActionFor: aDebugger [
 			icon: GLMUIThemeExtraIcons glamorousSearch
 ]
 
+{ #category : #testing }
+GTWhereIsDebugAction class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GTWhereIsDebugAction >> defaultOrder [
 

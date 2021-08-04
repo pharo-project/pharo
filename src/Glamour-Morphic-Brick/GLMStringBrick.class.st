@@ -87,6 +87,11 @@ GLMStringBrick class >> example [
 		openInWindow
 ]
 
+{ #category : #testing }
+GLMStringBrick class >> isDeprecated [
+	^ true
+]
+
 { #category : #geometry }
 GLMStringBrick >> approximateHeight [
 

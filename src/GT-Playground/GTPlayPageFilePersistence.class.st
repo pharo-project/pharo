@@ -4,6 +4,11 @@ Class {
 	#category : #'GT-Playground'
 }
 
+{ #category : #testing }
+GTPlayPageFilePersistence class >> isDeprecated [
+	^ true
+]
+
 { #category : #private }
 GTPlayPageFilePersistence >> deleteFromFileSystem [
 

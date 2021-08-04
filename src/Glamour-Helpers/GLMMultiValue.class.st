@@ -9,6 +9,11 @@ Class {
 }
 
 { #category : #testing }
+GLMMultiValue class >> isDeprecated [
+	^ true
+]
+
+{ #category : #testing }
 GLMMultiValue >> asGlamorousArray [ 
 	 
 	^self asArray

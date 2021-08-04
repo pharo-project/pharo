@@ -16,15 +16,6 @@ Unicode class >> isKorean: code [
 ]
 
 { #category : #'*Deprecated90' }
-Unicode class >> isSimplifiedChinese: code [
-
-	^ code > 255 and: [(GB2312 charFromUnicode: code) notNil]
-
-
-
-]
-
-{ #category : #'*Deprecated90' }
 Unicode class >> ucsTable [
 	^ Latin1 ucsTable 
 ]

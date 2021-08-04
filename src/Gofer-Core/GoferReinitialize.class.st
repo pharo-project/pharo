@@ -9,12 +9,14 @@ Class {
 
 { #category : #running }
 GoferReinitialize >> execute [
+
 	self workingCopies
 		do: [ :each | self execute: each ]
 ]
 
 { #category : #running }
 GoferReinitialize >> execute: aWorkingCopy [
+
 	aWorkingCopy packageSet methods do: [ :each |
 		(each methodClass isClassSide and: [ each selector = #initialize ])
 			ifTrue: [ each methodClass instanceSide initialize ] ]

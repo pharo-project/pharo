@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMScriptingTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMScriptingTest >> testActionDefinition [
 	| browser |

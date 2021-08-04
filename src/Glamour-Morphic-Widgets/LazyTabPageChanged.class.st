@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Widgets'
 }
 
+{ #category : #testing }
+LazyTabPageChanged class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 LazyTabPageChanged >> oldPage [
 	^ oldPage

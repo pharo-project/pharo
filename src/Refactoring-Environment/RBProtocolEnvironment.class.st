@@ -22,16 +22,36 @@ RBProtocolEnvironment class >> class: aClass protocols: aCollection [
 		protocols: aCollection
 ]
 
+{ #category : #'accessing - defaults' }
+RBProtocolEnvironment class >> defaultName [
+	^ 'Protocols'
+]
+
 { #category : #'instance creation' }
 RBProtocolEnvironment class >> onEnvironment: anEnvironment class: aClass protocols: aCollection [
 	^(self onEnvironment: anEnvironment)
 		class: aClass protocols: aCollection; yourself
 ]
 
+{ #category : #visiting }
+RBProtocolEnvironment >> acceptVisitor: aEnvVisitor [
+	^ aEnvVisitor visitProtocolEnv: self
+]
+
+{ #category : #adding }
+RBProtocolEnvironment >> addProtocol: aSymbol [
+	protocols add: aSymbol
+]
+
+{ #category : #accessing }
+RBProtocolEnvironment >> basisObjects [
+	^ self protocols
+]
+
 { #category : #initialization }
 RBProtocolEnvironment >> class: aClass protocols: aCollection [
 	class := aClass.
-	protocols := aCollection
+	protocols := aCollection asOrderedCollection
 ]
 
 { #category : #private }
@@ -47,9 +67,20 @@ RBProtocolEnvironment >> defaultLabel [
 	^stream contents
 ]
 
+{ #category : #accessing }
+RBProtocolEnvironment >> definedClass [
+	^ class
+]
+
 { #category : #testing }
 RBProtocolEnvironment >> definesClass: aClass [
 	^ aClass == class and: [super definesClass: aClass]
+]
+
+{ #category : #description }
+RBProtocolEnvironment >> description [
+
+	^ label ifNil: [self defaultName , ' of ', self class name, self descriptionBasis]
 ]
 
 { #category : #testing }
@@ -95,6 +126,24 @@ RBProtocolEnvironment >> packages [
 RBProtocolEnvironment >> postCopy [
 	super postCopy.
 	protocols := protocols copy
+]
+
+{ #category : #printing }
+RBProtocolEnvironment >> printOn: aStream [
+
+	aStream nextPutAll: class name, ' protocols: '.
+	protocols do: [ :cls | aStream nextPutAll: cls, ', ']
+]
+
+{ #category : #accessing }
+RBProtocolEnvironment >> protocols [
+
+	^ protocols
+]
+
+{ #category : #removing }
+RBProtocolEnvironment >> removeProtocol: aSymbol [
+	protocols remove: aSymbol ifAbsent: [  ]
 ]
 
 { #category : #printing }

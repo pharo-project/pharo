@@ -15,20 +15,6 @@ Class {
 	#category : #'SystemCommands-ClassCommands'
 }
 
-{ #category : #activation }
-SycMigrateReferencesOfClassCommand class >> fullBrowserMenuActivation [
-	<classAnnotation>
-	
-	^CmdContextMenuActivation byRootGroupItemOrder: 1.4 for: ClyFullBrowserClassContext 
-]
-
-{ #category : #activation }
-SycMigrateReferencesOfClassCommand class >> sourceCodeMenuActivation [
-	<classAnnotation>
-	
-	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.3 for: ClySourceCodeContext
-]
-
 { #category : #converting }
 SycMigrateReferencesOfClassCommand >> asRefactorings [
 	| refactoring |

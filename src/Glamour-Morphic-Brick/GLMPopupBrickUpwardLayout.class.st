@@ -8,6 +8,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Widgets-UI-Popup'
 }
 
+{ #category : #testing }
+GLMPopupBrickUpwardLayout class >> isDeprecated [
+	^ true
+]
+
 { #category : #building }
 GLMPopupBrickUpwardLayout >> build: aPopup trigger: aTriggerBrick content: aContentBrick [
 

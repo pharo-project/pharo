@@ -170,6 +170,8 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'GeneralTests' with: [ spec repository: repository ].
 		spec baseline: 'Zodiac' with: [ spec repository: repository ].
 		spec baseline: 'SortFunctions' with: [ spec repository: repository ].
+		spec package: 'STON-Extensions'. 
+		
 		spec package: 'BaselineOfPharoBootstrap'.
 		spec package: 'BaselineOfMonticello'.
 		spec package: 'BaselineOfMetacello'.
@@ -190,8 +192,8 @@ BaselineOfIDE >> baseline: spec [
 		self specCode: spec.
 		self newTools: spec.
 					
-		spec baseline: 'Microdown' with: [ spec 
-				repository: self packageRepositoryURL ].
+		"spec baseline: 'Microdown' with: [ spec 
+				repository: self packageRepositoryURL ]."
 	
 		spec 
   			baseline: 'Roassal3' 

@@ -20,7 +20,7 @@ Class {
 
 { #category : #'instance creation' }
 RBPullUpMethodRefactoring class >> model: aRBSmalltalk pullUp: selectorCollection from: aClass [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		pullUp: selectorCollection from: aClass;
 		yourself
@@ -36,12 +36,14 @@ RBPullUpMethodRefactoring class >> model: aRBSmalltalk pullUp: selectorCollectio
 
 { #category : #'instance creation' }
 RBPullUpMethodRefactoring class >> pullUp: selectorCollection from: aClass [ 
-	^self new pullUp: selectorCollection from: aClass
+	^ self new 
+		pullUp: selectorCollection from: aClass
 ]
 
 { #category : #'instance creation' }
 RBPullUpMethodRefactoring class >> pullUp: selectorCollection from: aClass to: aSuperClass [
-	^self new pullUp: selectorCollection from: aClass to: aSuperClass 
+	^ self new 
+		pullUp: selectorCollection from: aClass to: aSuperClass 
 ]
 
 { #category : #preconditions }

@@ -39,7 +39,7 @@ function is_development_build() {
 	# ensure we have BRANCH_NAME variable
 	ensure_branch_name
 	# verify match
-	branchName=$(echo "${BRANCH_NAME}" | grep -E "^Pharo[0-9]+\.[0-9]+\$")
+	branchName=$(echo "${BRANCH_NAME}" | grep -E "^Pharo[0-9]+(\.[0-9]+)?\$")
 	if [ "${branchName}" == "" ]; then
 		echo 0
 	else
@@ -51,9 +51,9 @@ function is_development_build() {
 function set_version_release_variables() {
 	# I'm a release, I have all values needed in a TAG
 	# This will answer "Pharo7.0"
-	PHARO_NAME_PREFIX="Pharo$(git describe --long --tags | cut -d'-' -f 1-2 | cut -c 2-)"
+	PHARO_NAME_PREFIX="Pharo$(git describe --long --tags --first-parent | cut -d'-' -f 1-2 | cut -c 2-)"
 	# This will be "70"
-	PHARO_SHORT_VERSION="$(git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2 | sed 's/\.//')"
+	PHARO_SHORT_VERSION="$(git describe --long --tags --first-parent | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2 | sed 's/\.//')"
 }
 
 # sets variables when we are in a snapshot build
@@ -63,7 +63,7 @@ function set_version_snapshot_variables() {
 	# This will answer "Pharo7.0-SNAPSHOT"
 	PHARO_NAME_PREFIX="${BRANCH_NAME}-SNAPSHOT"
 	# This will answer "70"
-	PHARO_SHORT_VERSION="$(echo ${BRANCH_NAME} | cut -c 6- | sed 's/\.//')"
+	PHARO_SHORT_VERSION="$(git describe --long --tags --first-parent | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2 | sed 's/\.//')"
 }
 
 # sets variables when we are in a pull request build
@@ -71,9 +71,9 @@ function set_version_pull_request_variables() {
 	# I'm not development build, I should be a PR
 	# HACK: Since this is a PR branch, I do not have all information I need. I assume I will have a tag indicating Pharo version.
 	# This will answer "Pharo7.0-PR"
-	PHARO_NAME_PREFIX="Pharo$(git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2)-PR"
+	PHARO_NAME_PREFIX="Pharo$(git describe --long --tags --first-parent | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2)-PR"
 	# This will answer "70"
-	PHARO_SHORT_VERSION="$(git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2 | sed 's/\.//')"
+	PHARO_SHORT_VERSION="$(git describe --long --tags --first-parent | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2 | sed 's/\.//')"
 }
 
 # sets all variables:

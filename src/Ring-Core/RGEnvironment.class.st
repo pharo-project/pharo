@@ -90,8 +90,11 @@ RGEnvironment >> behaviorsDo: aBlock [
 { #category : #binding }
 RGEnvironment >> bindingOf: aSymbol [
 	
-	| behavior result |
-	
+	| behavior result |	
+
+	(ReservedVariable nameIsReserved: aSymbol)
+		ifTrue: [ ^ ReservedVariable lookupDictionary at: aSymbol ].
+
 	self globalVariablesBindings at: aSymbol ifPresent: [ :val | ^ val ].
 	
 	self ask globalVariables detect: [ :each | each name = aSymbol  ] ifFound: [ :found | 

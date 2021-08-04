@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Core'
 }
 
+{ #category : #testing }
+GLMRenderer class >> isDeprecated [
+	^ true
+]
+
 { #category : #rendering }
 GLMRenderer >> doOpen: aUI [ 
 	 

@@ -27,14 +27,6 @@ SycAddMessageArgumentCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isMethodSelected
 ]
 
-{ #category : #activation }
-SycAddMessageArgumentCommand class >> methodContextMenuActivation [
-	<classAnnotation>
-	
-	^ SycMethodMenuActivation
-		byRootGroupItemOrder: 30 for: ClyMethod asCalypsoItemContext
-]
-
 { #category : #requesting }
 SycAddMessageArgumentCommand >> canRemoveArgs [ 
 	^ false

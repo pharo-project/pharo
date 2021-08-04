@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMBundleTransmissionTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMBundleTransmissionTest >> testCopy [
 	| transmission newTransmission | 

@@ -259,11 +259,46 @@ ReleaseTest >> testNoEmptyPackages [
 	self assertEmpty: violating
 ]
 
+{ #category : #'tests - methods' }
+ReleaseTest >> testNoEquivalentSuperclassMethods [
+
+	| methods |
+	"we do not care about methods that are installed from traits"
+	methods := SystemNavigation new allMethods reject: [:method | method isFromTrait].
+	
+	methods := methods select: [:method |
+	method methodClass superclass
+		ifNotNil: [ :superclass | (superclass lookupSelector: method selector)
+			ifNotNil: [ :overridenMethod | method ast = overridenMethod ast ]
+			ifNil: [ false ] ]
+		ifNil: [ false ]
+	].
+	self assert: methods size <= 620.
+	ASTCache reset.
+
+
+	"there should be no method left"
+	"self assert: methods isEmpty description: [ 
+		String streamContents: [ :stream | 
+			stream
+				nextPutAll: 'Found methods that are the same as in a superclass';
+				print: methods ] ]"
+]
+
 { #category : #tests }
 ReleaseTest >> testNoNilAssignmentInInitializeMethod [
 	
 	self assertValidLintRule: ReNoNilAssignationInInitializeRule new
 	
+]
+
+{ #category : #'tests - source' }
+ReleaseTest >> testNoNullCharacter [
+	"Check that we do not have NULL in sources - see https://github.com/pharo-project/pharo/issues/9631"
+	
+	| violations |
+	violations := SystemNavigation default allMethods select: [ :m | m sourceCode includes: Character null ].
+	self assert: violations isEmpty description: 'Source corrupted: Methods with Null character found'
 ]
 
 { #category : #'tests - source' }

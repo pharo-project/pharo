@@ -53,7 +53,8 @@ RBReplaceMethodRefactoring class >> model: aRBSmalltalk replaceMethod: aSelector
 
 { #category : #'instance creation' }
 RBReplaceMethodRefactoring class >> replaceCallMethod: aSelector in: aClass to: newSelector permutation: aMap [ 
-	^self new replaceCallMethod: aSelector
+	^self new 
+		replaceCallMethod: aSelector
 		in: aClass
 		to: newSelector
 		permutation: aMap
@@ -61,7 +62,8 @@ RBReplaceMethodRefactoring class >> replaceCallMethod: aSelector in: aClass to: 
 
 { #category : #'instance creation' }
 RBReplaceMethodRefactoring class >> replaceCallMethod: aSelector in: aClass to: newSelector permutation: aMap inAllClasses: aBoolean [
-	^self new replaceCallMethod: aSelector
+	^self new 
+		replaceCallMethod: aSelector
 		in: aClass
 		to: newSelector
 		permutation: aMap

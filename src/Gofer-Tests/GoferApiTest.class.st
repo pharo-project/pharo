@@ -17,6 +17,7 @@ GoferApiTest >> assert: registry on: serverUrlString hasUser: nameString withPas
 
 { #category : #utilities }
 GoferApiTest >> assert: aGofer repositories: anArray [
+
 	self assert: aGofer repositories size equals: anArray size.
 	aGofer repositories with: anArray
 		do: [ :first :second | 
@@ -25,13 +26,15 @@ GoferApiTest >> assert: aGofer repositories: anArray [
 
 { #category : #'tests - repositories - places' }
 GoferApiTest >> testBlueplane [
+
 	gofer blueplane: 'SIXX'.
 	self assert: gofer repositories: #('http://squeaksource.blueplane.jp/SIXX')
 ]
 
 { #category : #'tests - references' }
 GoferApiTest >> testConstraintReference [
-	|reference|
+
+	| reference |
 	gofer 
 		repository: self monticelloRepository; 
 		package: 'GoferBar' constraint: [ :ref | ref branch = 'branch' ].
@@ -59,6 +62,7 @@ GoferApiTest >> testCustomRepository [
 
 { #category : #'tests - repositories' }
 GoferApiTest >> testDirectoryRepository [
+
 	gofer directory: FileSystem disk workingDirectory fullName.
 
 	self assert: gofer repositories: (Array with: FileSystem disk workingDirectory fullName).
@@ -67,6 +71,7 @@ GoferApiTest >> testDirectoryRepository [
 
 { #category : #'tests - repositories - places' }
 GoferApiTest >> testGemsource [
+
 	gofer gemsource: 'Seaside29'.
 	self assert: gofer repositories: #('http://seaside.gemstone.com/ss/Seaside29')
 ]
@@ -119,6 +124,7 @@ GoferApiTest >> testHttpRepositoryUseStoredCredentials [
 
 { #category : #tests }
 GoferApiTest >> testInitialReferences [
+
 	self assertEmpty: gofer references
 ]
 
@@ -133,6 +139,7 @@ GoferApiTest >> testInitialRepositories [
 
 { #category : #'tests - repositories - options' }
 GoferApiTest >> testPackageCache [
+
 	gofer squeaksource: 'r1'; squeaksource: 'r2'.
 	
 	gofer enablePackageCache.
@@ -144,6 +151,7 @@ GoferApiTest >> testPackageCache [
 
 { #category : #'tests - references' }
 GoferApiTest >> testPackageReference [
+
 	| reference |
 	gofer
 		repository: self monticelloRepository;
@@ -163,12 +171,14 @@ GoferApiTest >> testPackageReference [
 
 { #category : #'tests - repositories - places' }
 GoferApiTest >> testRenggli [
+
 	gofer renggli: 'pier'.
 	self assert: gofer repositories: #('http://source.lukas-renggli.ch/pier')
 ]
 
 { #category : #'tests - repositories - options' }
 GoferApiTest >> testRepositoryErrors [
+
 	gofer
 		url: 'http://google.com/pharo_official_language_for_android';
 		repository: self monticelloRepository.
@@ -181,12 +191,14 @@ GoferApiTest >> testRepositoryErrors [
 
 { #category : #'tests - repositories - places' }
 GoferApiTest >> testSmalltalkhub [
+
 	gofer smalltalkhubUser: 'dh83' project: 'ci'.
 	self assert: gofer repositories: #('http://smalltalkhub.com/mc/dh83/ci/main/')
 ]
 
 { #category : #'tests - repositories' }
 GoferApiTest >> testSubDirectoryRepository [
+
 	testingEnvironment
 		at: #MCSubDirectoryRepository
 		ifPresent: [ :subDirectoryRepositoryClass | |path|
@@ -198,7 +210,8 @@ GoferApiTest >> testSubDirectoryRepository [
 
 { #category : #'tests - references' }
 GoferApiTest >> testVersionReference [
-	|reference|
+
+	| reference |
 	gofer 
 		repository: self monticelloRepository; 
 		version: 'GoferFoo-lr.2'.
@@ -216,6 +229,7 @@ GoferApiTest >> testVersionReference [
 
 { #category : #'tests - repositories - places' }
 GoferApiTest >> testWiresong [
+
 	gofer wiresong: 'ob'.
 	self assert: gofer repositories: #('http://source.wiresong.ca/ob')
 ]

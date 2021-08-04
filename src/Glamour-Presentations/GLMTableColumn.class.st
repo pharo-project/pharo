@@ -22,6 +22,11 @@ Class {
 	#category : #'Glamour-Presentations'
 }
 
+{ #category : #testing }
+GLMTableColumn class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMTableColumn >> computation [
 	^ computation

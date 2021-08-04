@@ -4,6 +4,11 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
+{ #category : #testing }
+GLMExtensionsTest class >> isDeprecated [
+	^ true
+]
+
 { #category : #tests }
 GLMExtensionsTest >> testGlamourValue [
 	"Block closure"

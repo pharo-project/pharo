@@ -7,13 +7,6 @@ Class {
 	#category : #'SystemCommands-MethodCommands'
 }
 
-{ #category : #activation }
-SycPushDownMethodInSomeClassesCommand class >> methodContextMenuActivation [
-	<classAnnotation>
-	
-	^ SycMethodMenuActivation byRootGroupItemOrder: 21 for: ClyMethod asCalypsoItemContext
-]
-
 { #category : #converting }
 SycPushDownMethodInSomeClassesCommand >> asRefactorings [
 	"Return push down method refactoring using method"

@@ -11,6 +11,11 @@ Class {
 	#category : #'GT-Spotter-UI-Widgets'
 }
 
+{ #category : #testing }
+GTLinkLabelMorph class >> isDeprecated [
+	^ true
+]
+
 { #category : #initialization }
 GTLinkLabelMorph >> execute [
 	onClickBlock ifNotNil: [ onClickBlock cull: self ]

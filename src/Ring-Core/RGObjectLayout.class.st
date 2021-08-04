@@ -11,12 +11,6 @@ RGObjectLayout >> isObjectLayout [
 ]
 
 { #category : #accessing }
-RGObjectLayout >> layoutName [
-
-	^ #ObjectLayout
-]
-
-{ #category : #accessing }
 RGObjectLayout >> slots [ 
 
 	"only for API compatibility purposes"

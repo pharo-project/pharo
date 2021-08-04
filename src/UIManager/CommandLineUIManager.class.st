@@ -69,7 +69,7 @@ CommandLineUIManager >> abort: aStringOrText title: aString [
 
 { #category : #private }
 CommandLineUIManager >> activate [
-	NonInteractiveTranscript stderr install
+	NonInteractiveTranscript stdout install
 ]
 
 { #category : #'ui TEasilyThemed' }

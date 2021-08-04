@@ -17,13 +17,6 @@ SycMoveMethodsToPackageDefiningClassCommand class >> canBeExecutedInContext: aTo
 	^aToolContext isExtensionMethodSelected
 ]
 
-{ #category : #activation }
-SycMoveMethodsToPackageDefiningClassCommand class >> methodContextMenuActivation [
-	<classAnnotation>
-	
-	^ SycMethodMenuActivation byRootGroupItemOrder: 80 for: ClyMethod asCalypsoItemContext
-]
-
 { #category : #accessing }
 SycMoveMethodsToPackageDefiningClassCommand >> defaultMenuIconName [ 
 	^ #smallRedo

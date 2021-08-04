@@ -128,6 +128,11 @@ GLMCompositeBrick class >> gtExampleTable [
 				entity: Morph new ]
 ]
 
+{ #category : #testing }
+GLMCompositeBrick class >> isDeprecated [
+	^ true
+]
+
 { #category : #phlow }
 GLMCompositeBrick >> custom: aBrick [
 	self flag: 'for now we only allow one subbrick in the composite.

@@ -76,6 +76,11 @@ GTPlayPage class >> gtExampleEmpty [
 	^ self new
 ]
 
+{ #category : #testing }
+GTPlayPage class >> isDeprecated [
+	^ true
+]
+
 { #category : #'instance creation' }
 GTPlayPage class >> loadFromPublishUrl: aString [
 	^ [ self basicLoadFromPublishUrl: aString ] 

@@ -13,6 +13,11 @@ GLMHorizontalLinearLayout class >> cleanUp [
 	self reset
 ]
 
+{ #category : #testing }
+GLMHorizontalLinearLayout class >> isDeprecated [
+	^ true
+]
+
 { #category : #initialization }
 GLMHorizontalLinearLayout class >> reset [
 	"

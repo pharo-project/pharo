@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-PagerModel-Announcements'
 }
 
+{ #category : #testing }
+GLMPagePushed class >> isDeprecated [
+	^ true
+]
+
 { #category : #accessing }
 GLMPagePushed >> morph [
 	^ morph

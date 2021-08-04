@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Browsers-Other'
 }
 
+{ #category : #testing }
+GLMExpander class >> isDeprecated [
+	^ true
+]
+
 { #category : #events }
 GLMExpander >> addPaneFrom: aPort [ 
 	self panes addLast: (GLMPane in: self).
