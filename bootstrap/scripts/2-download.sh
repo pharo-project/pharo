@@ -40,4 +40,4 @@ then
     ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh 90 vm $BOOTSTRAP_ARCH
     cd -
 fi
-echo "Target VM: $(${VM} --version | grep Hash)"
+echo "Target VM: $(${VM} --version)"
