@@ -21,6 +21,9 @@ unzip bootstrapImage.zip
 
 cd "${BOOTSTRAP_CACHE}"
 
+wget --progress=dot:mega http://files.pharo.org/sources/PharoV60.sources.zip
+unzip PharoV60.sources.zip
+
 echo "Prepare icons"
 mkdir icon-packs
 cd icon-packs
