@@ -609,6 +609,17 @@ ArrayTest >> testCombinations [
 ]
 
 { #category : #tests }
+ArrayTest >> testCombinationsTaken [
+
+	self
+		assertCollection: (#( 1 2 3 ) combinations: 2)
+		hasSameElements: #( #( 1 2 ) #( 1 3 ) #( 2 3 ) ).
+	self
+		assertCollection: ((1 to: 4) combinations: 3)
+		hasSameElements: #( #( 1 2 3 ) #( 1 2 4 ) #( 1 3 4 ) #( 2 3 4 ) )
+]
+
+{ #category : #tests }
 ArrayTest >> testComplexIsSelfEvaluating [
 	| complexArray restoredArray |
 	complexArray := {1 . true . false . nil . #a . 'a' . $a . Float pi . Float halfPi . (4 / 5) . Float infinity negated . (1 @ 2) . (0 @ 0 extent: 1 @ 1).
