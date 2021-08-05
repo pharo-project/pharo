@@ -3,7 +3,7 @@ Organises a set of pages sharing the same space and selected through the use of 
 "
 Class {
 	#name : #TabGroupMorph,
-	#superclass : #ModelMorphic,
+	#superclass : #ModelMorph,
 	#instVars : [
 		'tabSelectorMorph',
 		'contentMorph',

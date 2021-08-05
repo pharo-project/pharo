@@ -3,7 +3,7 @@ Row of tabs for a TabGroupMorph.
 "
 Class {
 	#name : #TabSelectorMorph,
-	#superclass : #ModelMorphic,
+	#superclass : #ModelMorph,
 	#instVars : [
 		'selectedIndex',
 		'visibleTabRange',

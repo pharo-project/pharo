@@ -339,7 +339,7 @@ FTTableMorph >> enableFilterWithAction: aBlock [
 FTTableMorph >> enableFilterWithAction: aBlock named: aString [
 	"Enables filtering and add an Action button. Not compatible with the search. If I am use, the function must be explicit."
 
-	function := FTWithActionFilterFunction table: self action: aBlock named: aString.
+	function := FTActionFilterFunction table: self action: aBlock named: aString.
 	self explicitFunction
 ]
 

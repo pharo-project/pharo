@@ -1,6 +1,6 @@
 Class {
 	#name : #IncrementalSliderMorph,
-	#superclass : #ModelMorphic,
+	#superclass : #ModelMorph,
 	#instVars : [
 		'sliderMorph',
 		'getValueSelector',

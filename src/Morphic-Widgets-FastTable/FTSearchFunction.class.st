@@ -8,7 +8,7 @@ In general, my entry point is through #keyStroke:, because I intend to react to 
 "
 Class {
 	#name : #FTSearchFunction,
-	#superclass : #FTWithFieldFunction,
+	#superclass : #FTFieldFunction,
 	#instVars : [
 		'currentSelIndex',
 		'currentHighlightedIndexes',

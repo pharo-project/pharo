@@ -24,7 +24,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : #FTFunctionWithField,
-	#superclass : #FTWithFieldFunction,
+	#superclass : #FTFieldFunction,
 	#category : #'Morphic-Widgets-FastTable-Functions'
 }
 

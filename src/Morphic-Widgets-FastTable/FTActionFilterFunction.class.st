@@ -25,7 +25,7 @@ The action block can takes 3 parameters:
 - The selected element on the table
 "
 Class {
-	#name : #FTWithActionFilterFunction,
+	#name : #FTActionFilterFunction,
 	#superclass : #FTFilterFunction,
 	#instVars : [
 		'actionButton',
@@ -35,20 +35,20 @@ Class {
 }
 
 { #category : #'instance creation' }
-FTWithActionFilterFunction class >> table: aFTTableMorph action: aBlockClosure named: aString [
+FTActionFilterFunction class >> table: aFTTableMorph action: aBlockClosure named: aString [
 	^ (self table: aFTTableMorph)
 		action: aBlockClosure named: aString;
 		yourself
 ]
 
 { #category : #option }
-FTWithActionFilterFunction >> action: aBlockClosure named: aString [
+FTActionFilterFunction >> action: aBlockClosure named: aString [
 	actionBlock := aBlockClosure.
 	self initializeActionButtonNamed: aString 
 ]
 
 { #category : #accessing }
-FTWithActionFilterFunction >> beExplicit [
+FTActionFilterFunction >> beExplicit [
 	super beExplicit.
 	table addMorph: actionButton.
 	table selectedIndex = 0
@@ -56,7 +56,7 @@ FTWithActionFilterFunction >> beExplicit [
 ]
 
 { #category : #execute }
-FTWithActionFilterFunction >> execute [
+FTActionFilterFunction >> execute [
 	actionBlock
 		cull: table dataSource
 		cull: field getTextFromModel asString
@@ -67,7 +67,7 @@ FTWithActionFilterFunction >> execute [
 ]
 
 { #category : #initialization }
-FTWithActionFilterFunction >> initializeActionButtonNamed: aString [
+FTActionFilterFunction >> initializeActionButtonNamed: aString [
 	actionButton := PluggableButtonMorph
 		newButtonFor: self
 		action: #execute
@@ -76,7 +76,7 @@ FTWithActionFilterFunction >> initializeActionButtonNamed: aString [
 ]
 
 { #category : #private }
-FTWithActionFilterFunction >> resizeButton [
+FTActionFilterFunction >> resizeButton [
 	| topLeft bottomRight |
 	self flag: #pharoTodo.	"Maybe it could be cool to let the user choose if the field need to be at the top or the bottom."
 	bottomRight := (table bounds right - table verticalScrollBarWidth) @ (table bottom - table horizontalScrollBarHeight).
@@ -85,7 +85,7 @@ FTWithActionFilterFunction >> resizeButton [
 ]
 
 { #category : #private }
-FTWithActionFilterFunction >> resizeField [
+FTActionFilterFunction >> resizeField [
 	| topLeft bottomRight |
 	self flag: #pharoTodo.	"Maybe it could be cool to let the user choose if the field need to be at the top or the bottom."
 	topLeft := table bounds left @ (table bounds bottom - self fieldHeigh - table horizontalScrollBarHeight).
@@ -95,13 +95,13 @@ FTWithActionFilterFunction >> resizeField [
 ]
 
 { #category : #private }
-FTWithActionFilterFunction >> resizeWidget [
+FTActionFilterFunction >> resizeWidget [
 	self resizeField.
 	self resizeButton
 ]
 
 { #category : #accessing }
-FTWithActionFilterFunction >> showWidget [
+FTActionFilterFunction >> showWidget [
 	super showWidget.
 	table addMorph: actionButton.
 	table selectedIndex = 0 ifTrue: [ table selectIndex: 1 ]

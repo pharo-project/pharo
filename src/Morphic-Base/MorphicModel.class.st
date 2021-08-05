@@ -7,7 +7,7 @@ In addition for public variables (and this is the default for now), methods are 
 "
 Class {
 	#name : #MorphicModel,
-	#superclass : #ModelMorphic,
+	#superclass : #ModelMorph,
 	#category : #'Morphic-Base-Kernel'
 }
 

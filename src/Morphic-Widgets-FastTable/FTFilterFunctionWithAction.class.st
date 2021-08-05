@@ -26,7 +26,7 @@ The action block can takes 3 parameters:
 "
 Class {
 	#name : #FTFilterFunctionWithAction,
-	#superclass : #FTWithActionFilterFunction,
+	#superclass : #FTActionFilterFunction,
 	#category : #'Morphic-Widgets-FastTable-Functions'
 }
 

@@ -1,6 +1,6 @@
 Class {
 	#name : #SliderMorph,
-	#superclass : #ModelMorphic,
+	#superclass : #ModelMorph,
 	#instVars : [
 		'slider',
 		'value',

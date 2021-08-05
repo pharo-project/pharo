@@ -23,7 +23,7 @@ Internal Representation and Key Implementation Points.
 	field:		I am the field to display at the bottom of the FTTableMorph
 "
 Class {
-	#name : #FTWithFieldFunction,
+	#name : #FTFieldFunction,
 	#superclass : #FTFunction,
 	#instVars : [
 		'field'
@@ -32,12 +32,12 @@ Class {
 }
 
 { #category : #testing }
-FTWithFieldFunction class >> isAbstract [
-	^ self = FTWithFieldFunction
+FTFieldFunction class >> isAbstract [
+	^ self = FTFieldFunction
 ]
 
 { #category : #accessing }
-FTWithFieldFunction >> beExplicit [
+FTFieldFunction >> beExplicit [
 	self initializeMorph.
 	table
 		addMorph: field;
@@ -45,24 +45,24 @@ FTWithFieldFunction >> beExplicit [
 ]
 
 { #category : #protocol }
-FTWithFieldFunction >> disable [
+FTFieldFunction >> disable [
 	field
 		ifNotNil: [ field delete.
 			field := nil ]
 ]
 
 { #category : #accessing }
-FTWithFieldFunction >> fieldHeigh [
+FTFieldFunction >> fieldHeigh [
 	^ StandardFonts defaultFont pixelSize + 10
 ]
 
 { #category : #'widget API' }
-FTWithFieldFunction >> ghostText [
+FTFieldFunction >> ghostText [
 	self subclassResponsibility 
 ]
 
 { #category : #initialization }
-FTWithFieldFunction >> initializeMorph [
+FTFieldFunction >> initializeMorph [
 	field := RubScrolledTextModel new newTextField
 		hResizing: #spaceFill;
 		autoAccept: true;
@@ -72,17 +72,17 @@ FTWithFieldFunction >> initializeMorph [
 ]
 
 { #category : #testing }
-FTWithFieldFunction >> isExplicit [
+FTFieldFunction >> isExplicit [
 	^ field isNotNil
 ]
 
 { #category : #private }
-FTWithFieldFunction >> resizeContainerFrom: topLeftPoint to: bottomLeftPoint [
+FTFieldFunction >> resizeContainerFrom: topLeftPoint to: bottomLeftPoint [
 	^ topLeftPoint corner: bottomLeftPoint x @ (bottomLeftPoint y - self fieldHeigh)
 ]
 
 { #category : #private }
-FTWithFieldFunction >> resizeWidget [
+FTFieldFunction >> resizeWidget [
 	| topLeft bottomRight |
 	self flag: #pharoTodo.	"Maybe it could be cool to let the user choose if the field need to be at the top or the bottom."
 	topLeft := table bounds left @ (table bounds bottom - self fieldHeigh - table horizontalScrollBarHeight ).
@@ -91,7 +91,7 @@ FTWithFieldFunction >> resizeWidget [
 ]
 
 { #category : #accessing }
-FTWithFieldFunction >> showWidget [
+FTFieldFunction >> showWidget [
 	self initializeMorph.
 	table
 		addMorph: field;
@@ -99,7 +99,7 @@ FTWithFieldFunction >> showWidget [
 ]
 
 { #category : #updating }
-FTWithFieldFunction >> textUpdated: anAnnouncement [
+FTFieldFunction >> textUpdated: anAnnouncement [
 	
 	"do nothing by default"
 ]
