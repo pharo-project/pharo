@@ -255,8 +255,8 @@ try{
       for (platf in platforms) {
         // Need to bind the label variable before the closure - can't do 'for (label in labels)'
         def platform = platf
-        // Disabling the test of OSX 32bits
-        if(platf != 'osx' || arch != '32'){
+        // Disabling the test of 32bits
+        if(arch != '32'){
             testers["${platform}-${architecture}"] = {
               node(platform) { stage("Tests-${platform}-${architecture}") {
                 timeout(35) {
