@@ -8,6 +8,7 @@ Class {
 RBDeprecateMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBDeprecateMethodRefactoring };
+		addCase: { #rbClass -> RBDeprecateMethodTransformation };
 		yourself
 ]
 
@@ -20,6 +21,7 @@ RBDeprecateMethodParametrizedTest >> constructor [
 RBDeprecateMethodParametrizedTest >> testDeprecateMethodUsingMethodWithSameNumberOfArgs [
 
 	| refactoring class oldSelector newSelector |
+	
 	oldSelector := #callMethod.
 	newSelector := #callFoo.
 	refactoring := self createRefactoringWithModel: model andArguments:  
@@ -36,6 +38,7 @@ RBDeprecateMethodParametrizedTest >> testDeprecateMethodUsingMethodWithSameNumbe
 RBDeprecateMethodParametrizedTest >> testDeprecateMethodUsingMethodWithoutArgs [
 
 	| refactoring class oldSelector newSelector |
+	
 	oldSelector := ('called:', 'on:') asSymbol.
 	newSelector := 'callFoo' asSymbol.
 	refactoring := self createRefactoringWithModel: model andArguments: 
@@ -45,7 +48,7 @@ RBDeprecateMethodParametrizedTest >> testDeprecateMethodUsingMethodWithoutArgs [
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self
 		assert: ((class parseTreeFor: oldSelector ) statements anySatisfy: 
-			[ :e | e isMessage ifTrue: [ e selector = #deprecated:on:in: ] ]).
+			[ :e | e isMessage and: [ e selector = #deprecated:on:in: ] ]).
 	
 ]
 
