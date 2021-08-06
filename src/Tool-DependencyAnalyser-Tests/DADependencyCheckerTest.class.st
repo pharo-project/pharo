@@ -22,14 +22,14 @@ DADependencyCheckerTest >> testShouldGetDirectDependencies [
 
 { #category : #tests }
 DADependencyCheckerTest >> testShouldGetUnresolvedDependencies [
-	| result |
-	
+
+	| result |	
 	result := (checker unresolvedDependenciesOf: 'Tool-DependencyAnalyser-Tests-Data').
-	
 	self 	
 		assert: result size
 		equals: 2.
-		
-	self assert: ((result at: #collect:as:) includesAll: #(#'GT-Spotter' #'Collections-Abstract')).
+	self flag: #Torevisit.
+	"I do not like to have a dependency on another tools. It would be better to check against a lib in a lower layer."
+	self assert: ((result at: #collect:as:) includesAll: #(#'NewTools-Spotter' #'Collections-Abstract')).
 	
 ]

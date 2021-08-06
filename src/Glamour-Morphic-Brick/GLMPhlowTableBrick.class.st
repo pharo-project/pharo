@@ -8,13 +8,6 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Widgets-Phlow'
 }
 
-{ #category : #examples }
-GLMPhlowTableBrick class >> example [
-	<sampleInstance>
-	
-	^ GLMCompositeBrick gtExampleTable
-]
-
 { #category : #accessing }
 GLMPhlowTableBrick >> addColumn: aColumn [
 
