@@ -180,7 +180,7 @@ ${VM} "${CORE_IMAGE_NAME}.image" "${IMAGE_FLAGS}" save ${MC_BOOTSTRAP_IMAGE_NAME
 ${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${ST_CACHE}/Monticello.st --save --quit
 ${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/02-monticello-bootstrap/01-fixLocalMonticello.st --save --quit
 ${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/02-monticello-bootstrap/02-bootstrapMonticello.st --save --quit
-${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "TraitsBootstrap fixSourceCodeOfTraits "
+#${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "TraitsBootstrap fixSourceCodeOfTraits "
 zip "${MC_BOOTSTRAP_IMAGE_NAME}.zip" ${MC_BOOTSTRAP_IMAGE_NAME}.*
 
 #Bootstrap Monticello Part 2: Networking Packages and Remote Repositories
@@ -220,8 +220,6 @@ env 2>&1 > env.log
 ${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "MCCacheRepository uniqueInstance disable"
 ${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "Metacello new baseline: 'Pharo';repository: 'tonel://${BOOTSTRAP_REPOSITORY}/src';onWarning: [ :e | Error signal: e messageText in: e signalerContext ]; load"
 
-${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "CompilationContext bytecodeBackend: EncoderForSistaV1. CompilationContext optionFullBlockClosure: true. OpalCompiler recompileAll."
-
 #Extending the default number of stack pages.
 #The VM is divorcing all frames to free a stackPage if there is not a free one.
 #We can check the statistics of number of pages free using the "Smalltalk vm parameterAt: 61"
@@ -236,5 +234,9 @@ echo "${PHARO_SHORT_VERSION}" > pharo.version
 # clean bak sources files
 rm -f *.bak
 
+# delete Pharo60 sources files
+rm PharoV60.sources*
+
 PHARO_SOURCES_PREFIX=$(echo "${PHARO_NAME_PREFIX}" | cut -d'-' -f 1 | cut -d'.' -f 1-2)
 zip "${PHARO_IMAGE_NAME}.zip" ${PHARO_IMAGE_NAME}.* ${PHARO_SOURCES_PREFIX}*.sources pharo.version
+

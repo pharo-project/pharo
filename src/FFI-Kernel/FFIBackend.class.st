@@ -40,6 +40,12 @@ FFIBackend class >> isAvailable [
 ]
 
 { #category : #accessing }
+FFIBackend class >> reset [
+
+	Current := nil.
+]
+
+{ #category : #accessing }
 FFIBackend class >> startUp: isImageStarting [
 	
 	isImageStarting ifFalse: [ ^ self ].
