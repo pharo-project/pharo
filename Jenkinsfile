@@ -127,21 +127,10 @@ Build Url: ${env.BUILD_URL}
   }}}
 }
 
-def bootstrapImage(){
+def bootstrapImage(architectures){
    cleanWs()
   def builders = [:]
-  
-  // We run the whole process in 64 bits all the time. 
-  // The 32 bits process is only run when a PR is integrated
-  
-  def architectures
-  
-  if(isDevelopmentBranch()){
-	  architectures = ['32', '64']
-  }else{
-	  architectures = ['64']
-  }
-  
+    
   for (arch in architectures) {
       // Need to bind the label variable before the closure - can't do 'for (label in labels)'
       def architecture = arch
@@ -227,16 +216,7 @@ def launchBenchmark(){
 
 try{
     properties([disableConcurrentBuilds()])
-  
-    node('unix') {
-      timeout(30) {
-        bootstrapImage()
-      }
-    }
-    
 
-    //Testing step
-    def testers = [:]
     // We run the whole process in 64 bits all the time. 
     // The 32 bits process is only run when a PR is integrated
   
@@ -247,6 +227,16 @@ try{
     }else{
   	  architectures = ['64']
     }
+  
+    node('unix') {
+      timeout(30) {
+        bootstrapImage(architectures)
+      }
+    }
+    
+
+    //Testing step
+    def testers = [:]
 
     def platforms = ['unix', 'osx', 'windows']
     for (arch in architectures) {
