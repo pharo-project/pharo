@@ -433,6 +433,11 @@ Collection >> collect: collectBlock thenSelect: selectBlock [
 	^ (self collect: collectBlock) select: selectBlock
 ]
 
+{ #category : #printing }
+Collection >> collectionSizeThreshold [ 
+	^ 3000
+]
+
 { #category : #testing }
 Collection >> contains: aBlock [
 	"For compatibility, please use #anySatisfy: instead!"
@@ -628,7 +633,7 @@ Collection >> displayStringOn: stream [
 		nextPutAll: (' item' asPluralBasedOn: self size);
 		nextPut: $];
 		space.
-	self size <= self gtCollectionSizeThreshold 
+	self size <= self collectionSizeThreshold 
 		ifTrue: [ self printElementsOn: stream ]
 ]
 
