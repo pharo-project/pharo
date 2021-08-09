@@ -719,36 +719,6 @@ Alien >> storeOn: aStream [
 ]
 
 { #category : #accessing }
-Alien >> strcpy [ "^<ByteString>"
-	^self strcpyFrom: 1
-]
-
-{ #category : #accessing }
-Alien >> strcpyFrom: startIndex [ "<Integer> ^<ByteString>"
-	| length string |
-	length := self strlenStartingAt: startIndex.
-	self copyInto: (string := ByteString new: length)
-		from: 1 to: length
-		in: self startingAt: startIndex.
-	^string
-]
-
-{ #category : #accessing }
-Alien >> strcpyUTF8 [ "^<String>"
-	^self strcpyUTF8From: 1
-]
-
-{ #category : #accessing }
-Alien >> strcpyUTF8From: startIndex [ "<Integer> ^<String>"
-	| length bytes |
-	length := self strlenStartingAt: startIndex.
-	self copyInto: (bytes := ByteArray new: length)
-		from: 1 to: length
-		in: self startingAt: startIndex.
-	^bytes utf8ToIso
-]
-
-{ #category : #accessing }
 Alien >> strlen [
 	^self strlenStartingAt: 1
 ]
