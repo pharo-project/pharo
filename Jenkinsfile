@@ -243,7 +243,7 @@ try{
     def architectures
   
     if(isDevelopmentBranch()){
-  	  architectures = ['32', '64']
+  	  architectures = [/*'32',*/ '64']
     }else{
   	  architectures = ['64']
     }
