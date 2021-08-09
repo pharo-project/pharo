@@ -229,7 +229,7 @@ try{
     }
   
     node('unix') {
-      timeout(30) {
+      timeout(60) {
         bootstrapImage(architectures)
       }
     }
