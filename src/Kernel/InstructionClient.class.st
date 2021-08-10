@@ -69,6 +69,19 @@ InstructionClient >> jump: offset if: condition [
 ]
 
 { #category : #'instruction decoding' }
+InstructionClient >> jump: offset if: condition withInterpreter: anInterpreter [
+	
+	^ self jump: offset if: condition
+
+]
+
+{ #category : #'instruction decoding' }
+InstructionClient >> jump: offset withInterpreter: anInterpreter [
+	
+	^ self jump: offset
+]
+
+{ #category : #'instruction decoding' }
 InstructionClient >> methodReturnConstant: value [ 
 	"Return Constant bytecode."
 
@@ -84,6 +97,12 @@ InstructionClient >> methodReturnReceiver [
 InstructionClient >> methodReturnTop [
 	"Return Top Of Stack bytecode."
 
+]
+
+{ #category : #'instruction decoding' }
+InstructionClient >> pc: aPC [
+
+	"Set the pc to the given PC"
 ]
 
 { #category : #'instruction decoding' }
@@ -125,6 +144,12 @@ InstructionClient >> pushActiveProcess [
 InstructionClient >> pushClosureCopyNumCopiedValues: numCopied numArgs: numArgs blockSize: blockSize [
 	"Push Closure bytecode."
 
+]
+
+{ #category : #'instruction decoding' }
+InstructionClient >> pushClosureCopyNumCopiedValues: numCopied numArgs: numArgs blockSize: blockSize withInterpreter: anInterpreter [
+	"Push Closure bytecode."
+	^ self pushClosureCopyNumCopiedValues: numCopied numArgs: numArgs blockSize: blockSize 
 ]
 
 { #category : #'instruction decoding' }

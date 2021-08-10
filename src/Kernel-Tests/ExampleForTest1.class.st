@@ -4,5 +4,20 @@ An example class at level 1 (directly below Object) used for testing class hiera
 Class {
 	#name : #ExampleForTest1,
 	#superclass : #Object,
+	#instVars : [
+		'aSuperclassVariable'
+	],
 	#category : #'Kernel-Tests-Classes'
 }
+
+{ #category : #accessing }
+ExampleForTest1 >> aSuperclassVariable [
+
+	^ aSuperclassVariable
+]
+
+{ #category : #accessing }
+ExampleForTest1 >> aSuperclassVariable: anObject [
+
+	aSuperclassVariable := anObject
+]
