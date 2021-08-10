@@ -9,3 +9,15 @@ Class {
 	],
 	#category : #'Kernel-Tests-Classes'
 }
+
+{ #category : #accessing }
+ExampleForTest11 >> aSubclassVariable [
+
+	^ aSubclassVariable
+]
+
+{ #category : #accessing }
+ExampleForTest11 >> aSubclassVariable: anObject [
+
+	aSubclassVariable := anObject
+]

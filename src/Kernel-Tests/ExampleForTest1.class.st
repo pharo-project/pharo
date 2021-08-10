@@ -9,3 +9,15 @@ Class {
 	],
 	#category : #'Kernel-Tests-Classes'
 }
+
+{ #category : #accessing }
+ExampleForTest1 >> aSuperclassVariable [
+
+	^ aSuperclassVariable
+]
+
+{ #category : #accessing }
+ExampleForTest1 >> aSuperclassVariable: anObject [
+
+	aSuperclassVariable := anObject
+]
