@@ -34,15 +34,15 @@ ClassDescriptionTest >> testDefinesSlotNamed [
 	self assert: (Point definesSlotNamed: #x).
 	self deny: (Point definesSlotNamed: #z).
 	
-	self assert: (Context definesSlotNamed: #stackp).
-	self deny: (Context definesSlotNamed: #sender).
+	self assert: (ExampleForTest11 definesSlotNamed: #aSubclassVariable).
+	self deny: (ExampleForTest11 definesSlotNamed: #aSuperclassVariable).
 	
 ]
 
 { #category : #'tests - slots' }
 ClassDescriptionTest >> testHasSlot [
-	self assert: (Context hasSlot: (Context slotNamed: #sender)).
-	self deny: (Context definesSlot: (Context slotNamed: #sender)).
+	self assert: (ExampleForTest11 hasSlot: (ExampleForTest11 slotNamed: #aSuperclassVariable)).
+	self deny: (ExampleForTest11 definesSlot: (ExampleForTest11 slotNamed: #aSuperclassVariable)).
 ]
 
 { #category : #'tests - slots' }
@@ -81,7 +81,7 @@ ClassDescriptionTest >> testSlotNames [
 
 { #category : #'tests - slots' }
 ClassDescriptionTest >> testSlots [
-	self assert: Context slots size equals: 4
+	self assert: Context slots size equals: 6
 ]
 
 { #category : #tests }

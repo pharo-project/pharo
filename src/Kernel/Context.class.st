@@ -17,8 +17,8 @@ MethodContexts must only be created using the method newForMethod:.  Note that i
 "
 Class {
 	#name : #Context,
-	#type : #variable,
 	#superclass : #Object,
+	#type : #variable,
 	#instVars : [
 		'sender',
 		'pc',
@@ -278,16 +278,6 @@ Context >> activeHome [
 	self sender ifNil: [^nil].
 	methodReturnContext := self methodReturnContext.
 	^self sender findContextSuchThat: [:ctxt | ctxt = methodReturnContext]
-]
-
-{ #category : #accessing }
-Context >> pc: anInteger [ 
-	pc := anInteger
-]
-
-{ #category : #accessing }
-Context >> pc [ 
-	^ pc
 ]
 
 { #category : #accessing }
@@ -1275,15 +1265,12 @@ Context >> outerMostContext [
 ]
 
 { #category : #accessing }
-Context >> pc [
-	"Answer the index of the next bytecode."
-
-	^pc
+Context >> pc [ 
+	^ pc
 ]
 
 { #category : #accessing }
-Context >> pc: anInteger [
-
+Context >> pc: anInteger [ 
 	pc := anInteger
 ]
 

@@ -76,6 +76,12 @@ InstructionClient >> jump: offset if: condition withInterpreter: anInterpreter [
 ]
 
 { #category : #'instruction decoding' }
+InstructionClient >> jump: offset withInterpreter: anInterpreter [
+	
+	^ self jump: offset
+]
+
+{ #category : #'instruction decoding' }
 InstructionClient >> methodReturnConstant: value [ 
 	"Return Constant bytecode."
 

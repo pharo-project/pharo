@@ -45,6 +45,12 @@ Context >> findSimilarSender [
 ]
 
 { #category : #'*Debugging-Core' }
+Context >> instructionStream [
+	
+	^ InstructionStream on: method pc: pc
+]
+
+{ #category : #'*Debugging-Core' }
 Context >> lookupTempVar: aSymbol [
 	| var |
 	var := self lookupVar: aSymbol.
@@ -381,7 +387,7 @@ Context class >> tallyInstructions: aBlock [
 	thisContext sender
 		runSimulated: aBlock
 		contextAtEachStep:
-			[:current | tallies add: current peekByte ].
+			[:current | tallies add: current instructionStream peekByte ].
 	^tallies sortedElements
 ]
 

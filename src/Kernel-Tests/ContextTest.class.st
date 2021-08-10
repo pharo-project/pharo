@@ -344,10 +344,10 @@ ContextTest >> testSteppingAQuickMethod [
 	
 	"We're in the quick method now, it should be steppable"
 	self assert: newContext sender identicalTo: aMethodContext.
-	self deny: newContext willReturn.
+	self deny: newContext instructionStream willReturn.
 	
 	newContext := newContext step.
-	self assert: newContext willReturn.
+	self assert: newContext instructionStream willReturn.
 	
 	newContext := newContext step.
 	self assert: newContext identicalTo: aMethodContext
@@ -369,7 +369,7 @@ ContextTest >> testSteppingReturnSelfMethod [
 	
 	"We're in the quick method now, it should be steppable"
 	self assert: newContext sender identicalTo: aMethodContext.
-	self assert: newContext willReturn.
+	self assert: newContext instructionStream willReturn.
 	
 	newContext := newContext step.
 	self assert: newContext identicalTo: aMethodContext
