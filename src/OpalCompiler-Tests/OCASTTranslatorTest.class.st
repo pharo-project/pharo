@@ -16,9 +16,9 @@ Class {
 OCASTTranslatorTest class >> testParameters [
 
 	^ super testParameters
-		addCase: { #encoder -> EncoderForV3PlusClosures };
 		addCase: { #encoder -> EncoderForSistaV1. #fullblocks -> true };
-		addCase: { #encoder -> EncoderForSistaV1. #fullblocks -> false }
+		yourself
+
 ]
 
 { #category : #accessing }
