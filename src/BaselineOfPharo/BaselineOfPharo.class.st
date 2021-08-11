@@ -40,8 +40,8 @@ BaselineOfPharo class >> newToolsVersion [
 BaselineOfPharo class >> specReleaseCommit [
 	"The commit corresponding to current release (to be used on bootstrap process)"
 
-	"v1.0.2"
-	^ '88cc5234fcbcc8a8cc8da085c5e23f74db1c349b'
+	"Pharo10- fix paginator in presence of fast dragging"
+	^ '8fe65f1d49f090bb739ae6ef5113a05b4e89109f'
 ]
 
 { #category : #'repository urls' }
