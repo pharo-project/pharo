@@ -136,7 +136,10 @@ OSSDL2Driver >> dispatchEvent: mappedEvent [
 OSSDL2Driver >> evaluateUserInterrupt: anSDLEvent [
 
 	anSDLEvent isUserInterrupt
-		ifTrue: [ UserInterruptHandler new handleUserInterrupt ]
+		ifTrue: [ UserInterruptHandler new handleUserInterrupt ].
+		
+	anSDLEvent isUserInterruptKillAll 
+	 	ifTrue: [ UserInterruptHandler new handleUserInterruptKillAll ].
 ]
 
 { #category : #accessing }
