@@ -19,7 +19,7 @@ Archive >> addDirectory: aFileReference [
 { #category : #'archive operations' }
 Archive >> addDirectory: aFileReference as: anotherFileName [
 	| newMember |
-	newMember := self memberClass newFromDirectory: aFileReference.
+	newMember := self memberClass newFromDirectory: aFileReference localName: anotherFileName.
 	self addMember: newMember.
 	newMember localFileName: anotherFileName.
 	^newMember
@@ -54,39 +54,15 @@ Archive >> addString: aString as: aFileName [
 ]
 
 { #category : #'archive operations' }
-Archive >> addTree: aFileNameOrDirectory match: aBlock [ 
-	| nameSize |
-	nameSize := aFileNameOrDirectory isString
-				ifTrue: [aFileNameOrDirectory size]
-				ifFalse: [aFileNameOrDirectory fullName size].
-	^ self
-		addTree: aFileNameOrDirectory
-		removingFirstCharacters: nameSize + 1
-		match: aBlock
-]
-
-{ #category : #'archive operations' }
-Archive >> addTree: aFileNameOrDirectory removingFirstCharacters: n [ 
-	^ self
-		addTree: aFileNameOrDirectory
-		removingFirstCharacters: n
-		match: [:e | true ]
-]
-
-{ #category : #'archive operations' }
-Archive >> addTree: aFileNameOrDirectory removingFirstCharacters: n match: aBlock [
-	| dir relativePath matches |
-	dir := aFileNameOrDirectory asFileReference.
-	relativePath := (dir fullName allButFirst: n) asFileReference.
-	matches := dir entries select: [ :entry | aBlock value: entry ].
+Archive >> addTree: aFileReference relativeTo: relativePath match: aBlock [
+	| matches |
+	matches := aFileReference  entries select: [ :entry | aBlock value: entry ].
 	matches
-		do: [ :e | | newMember |
-			newMember := e isDirectory
-					ifTrue: [ self memberClass newFromDirectory: e fullName ]
-					ifFalse: [ self memberClass newFromFile: e fullName ].
-		newMember localFileName: (relativePath / e name) fullName.
-		self addMember: newMember.
-		e isDirectory ifTrue: [ self addTree: e fullName removingFirstCharacters: n match: aBlock ].
+		do: [ :entry | | newMember archiveFilePath |
+			archiveFilePath := entry asFileReference relativeTo: relativePath.
+			newMember := entry addArchiveMemberAs: archiveFilePath pathString in: self.  			
+			entry isDirectory 
+				ifTrue: [ self addTree: entry asFileReference relativeTo: relativePath match: aBlock ].
 	]
 
 ]

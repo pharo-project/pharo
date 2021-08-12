@@ -40,8 +40,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-ZipArchiveMember class >> newFromDirectory: aFileReference [
-	^ZipDirectoryMember newFromDirectory: aFileReference
+ZipArchiveMember class >> newFromDirectory: aFileReference localName: localName [
+	^ZipDirectoryMember newFromDirectory: aFileReference localName: localName
 ]
 
 { #category : #'instance creation' }

@@ -38,6 +38,11 @@ ZipFileMember >> copyDataTo: aStream [
 	self copyRawDataTo: aStream.
 ]
 
+{ #category : #accessing }
+ZipFileMember >> externalFile: aFileReference [
+	externalFileName := aFileReference
+]
+
 { #category : #initialization }
 ZipFileMember >> initialize [
 	super initialize.
