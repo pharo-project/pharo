@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyGroupedExtendingPackagesTest,
-	#superclass : #ClyQueryResultTestCase,
+	#superclass : #ClyQueryNavigationResultTest,
 	#category : #'Calypso-SystemQueries-Tests-Results'
 }
 

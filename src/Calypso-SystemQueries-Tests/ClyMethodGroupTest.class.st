@@ -1,5 +1,5 @@
 Class {
-	#name : #ClyMethodGroupTestCase,
+	#name : #ClyMethodGroupTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'group'
@@ -8,12 +8,12 @@ Class {
 }
 
 { #category : #running }
-ClyMethodGroupTestCase >> createMethodGroup [
+ClyMethodGroupTest >> createMethodGroup [
 	self subclassResponsibility 
 ]
 
 { #category : #running }
-ClyMethodGroupTestCase >> setUp [
+ClyMethodGroupTest >> setUp [
 	super setUp.
 	group := self createMethodGroup
 ]

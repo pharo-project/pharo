@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyVariableReferencesTest,
-	#superclass : #ClyMethodQueryTestCase,
+	#superclass : #ClyMethodQueryTest,
 	#instVars : [
 		'referencedVar1',
 		'readVar1',

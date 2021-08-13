@@ -1,5 +1,5 @@
 Class {
-	#name : #ClyMethodQueryTestCase,
+	#name : #ClyMethodQueryTest,
 	#superclass : #ClyTypedQueryTest,
 	#instVars : [
 		'foundSelectors'
@@ -8,34 +8,34 @@ Class {
 }
 
 { #category : #testing }
-ClyMethodQueryTestCase class >> isAbstract [
-	^self == ClyMethodQueryTestCase
+ClyMethodQueryTest class >> isAbstract [
+	^self == ClyMethodQueryTest
 ]
 
 { #category : #'methods for tests' }
-ClyMethodQueryTestCase >> clyMessageImplementor1 [
+ClyMethodQueryTest >> clyMessageImplementor1 [
 ]
 
 { #category : #running }
-ClyMethodQueryTestCase >> executeQuery [
+ClyMethodQueryTest >> executeQuery [
 	super executeQuery.
 	foundSelectors := (resultItems collect: [:each | each selector]) sorted asArray.
 ]
 
 { #category : #running }
-ClyMethodQueryTestCase >> setUpEnvironment [
+ClyMethodQueryTest >> setUpEnvironment [
 	super setUpEnvironment.
 	
 	environment system: ClySystemEnvironment currentImage
 ]
 
 { #category : #'methods for tests' }
-ClyMethodQueryTestCase >> superclassSenderOfMessage1 [
+ClyMethodQueryTest >> superclassSenderOfMessage1 [
 	self clyReferencedMessage1
 ]
 
 { #category : #tests }
-ClyMethodQueryTestCase >> testIsEmptyFromEmptyMethodScope [
+ClyMethodQueryTest >> testIsEmptyFromEmptyMethodScope [
 	query scope: (ClyMethodScope emptyIn: environment).
 	self assert: query checkEmptyResult
 ]

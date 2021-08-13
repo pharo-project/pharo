@@ -1,6 +1,6 @@
 Class {
-	#name : #ClyQueryResultTestCase,
-	#superclass : #ClyAbsractNavigationEnvironmentTest,
+	#name : #ClyQueryNavigationResultTest,
+	#superclass : #ClyAbstractNavigationEnvironmentTest,
 	#instVars : [
 		'queryResult',
 		'query'
@@ -9,24 +9,24 @@ Class {
 }
 
 { #category : #testing }
-ClyQueryResultTestCase class >> isAbstract [
-	^self = ClyQueryResultTestCase
+ClyQueryNavigationResultTest class >> isAbstract [
+	^self = ClyQueryNavigationResultTest
 ]
 
 { #category : #running }
-ClyQueryResultTestCase >> createQuery [
+ClyQueryNavigationResultTest >> createQuery [
 
 	^ClyReturningScopeBasisExampleQuery 
 		from: (ClyExampleScope emptyIn: environment)
 ]
 
 { #category : #running }
-ClyQueryResultTestCase >> createQueryResult [
+ClyQueryNavigationResultTest >> createQueryResult [
 	self subclassResponsibility 
 ]
 
 { #category : #running }
-ClyQueryResultTestCase >> setUp [
+ClyQueryNavigationResultTest >> setUp [
 	super setUp.
 	
 	query := self createQuery.
@@ -39,19 +39,19 @@ ClyQueryResultTestCase >> setUp [
 ]
 
 { #category : #tests }
-ClyQueryResultTestCase >> testCheckingForEmpty [
+ClyQueryNavigationResultTest >> testCheckingForEmpty [
 	self
 		assert: queryResult isEmpty;
 		deny: queryResult notEmpty
 ]
 
 { #category : #tests }
-ClyQueryResultTestCase >> testComparisonWithAnotherKindOfResult [
+ClyQueryNavigationResultTest >> testComparisonWithAnotherKindOfResult [
 	self deny: queryResult equals: ClyQueryResult new
 ]
 
 { #category : #tests }
-ClyQueryResultTestCase >> testComparisonWithCopy [
+ClyQueryNavigationResultTest >> testComparisonWithCopy [
 
 	| queryResult2 |
 	queryResult2 := queryResult copy.
@@ -60,13 +60,13 @@ ClyQueryResultTestCase >> testComparisonWithCopy [
 ]
 
 { #category : #tests }
-ClyQueryResultTestCase >> testComparisonWithItself [
+ClyQueryNavigationResultTest >> testComparisonWithItself [
 
 	self assert: queryResult equals: queryResult
 ]
 
 { #category : #tests }
-ClyQueryResultTestCase >> testComparisonWithSimilarResult [
+ClyQueryNavigationResultTest >> testComparisonWithSimilarResult [
 
 	| queryResult2 |
 	queryResult := self createQueryResult.
@@ -77,7 +77,7 @@ ClyQueryResultTestCase >> testComparisonWithSimilarResult [
 ]
 
 { #category : #tests }
-ClyQueryResultTestCase >> testForceLazyRebuild [
+ClyQueryNavigationResultTest >> testForceLazyRebuild [
 	
 	self assert: queryResult items notNil.
 	
@@ -87,7 +87,7 @@ ClyQueryResultTestCase >> testForceLazyRebuild [
 ]
 
 { #category : #tests }
-ClyQueryResultTestCase >> testIsBuiltWhenItemsExist [
+ClyQueryNavigationResultTest >> testIsBuiltWhenItemsExist [
 	
 	queryResult initializeItems.
 	
@@ -95,7 +95,7 @@ ClyQueryResultTestCase >> testIsBuiltWhenItemsExist [
 ]
 
 { #category : #tests }
-ClyQueryResultTestCase >> testItemsChangedNotificationShouldResetItems [
+ClyQueryNavigationResultTest >> testItemsChangedNotificationShouldResetItems [
 	
 	queryResult initializeItems.
 	self assert: queryResult isBuilt.
@@ -107,7 +107,7 @@ ClyQueryResultTestCase >> testItemsChangedNotificationShouldResetItems [
 ]
 
 { #category : #tests }
-ClyQueryResultTestCase >> testNeedsRebuildByDefault [
+ClyQueryNavigationResultTest >> testNeedsRebuildByDefault [
 	
 	queryResult := self createQueryResult.
 	
@@ -115,7 +115,7 @@ ClyQueryResultTestCase >> testNeedsRebuildByDefault [
 ]
 
 { #category : #tests }
-ClyQueryResultTestCase >> testPreparation [
+ClyQueryNavigationResultTest >> testPreparation [
 	| newQuery newResult |
 	newQuery := self createQuery.
 	newResult := queryResult prepareNewFor: newQuery in: environment.

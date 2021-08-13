@@ -1,16 +1,16 @@
 Class {
-	#name : #ClyLocalClassScopeTestCase,
+	#name : #ClyLocalClassScopeTest,
 	#superclass : #ClyAbstractClassScopeTest,
 	#category : #'Calypso-SystemQueries-Tests-Scopes'
 }
 
 { #category : #testing }
-ClyLocalClassScopeTestCase class >> isAbstract [
-	^self = ClyLocalClassScopeTestCase
+ClyLocalClassScopeTest class >> isAbstract [
+	^self = ClyLocalClassScopeTest
 ]
 
 { #category : #tests }
-ClyLocalClassScopeTestCase >> testConvertingToFullHierarchyScope [
+ClyLocalClassScopeTest >> testConvertingToFullHierarchyScope [
 	| convertedScope inheritedScope |
 	scope := self createSampleScope.
 	inheritedScope := scope asInheritedScope.
@@ -26,7 +26,7 @@ ClyLocalClassScopeTestCase >> testConvertingToFullHierarchyScope [
 ]
 
 { #category : #tests }
-ClyLocalClassScopeTestCase >> testConvertingToInheritedScope [
+ClyLocalClassScopeTest >> testConvertingToInheritedScope [
 	| convertedScope |
 	scope := self createSampleScope.
 	
@@ -40,7 +40,7 @@ ClyLocalClassScopeTestCase >> testConvertingToInheritedScope [
 ]
 
 { #category : #tests }
-ClyLocalClassScopeTestCase >> testConvertingToNewMetaLevel [
+ClyLocalClassScopeTest >> testConvertingToNewMetaLevel [
 	| convertedScope |
 	scope := self createSampleScope.
 	
@@ -52,7 +52,7 @@ ClyLocalClassScopeTestCase >> testConvertingToNewMetaLevel [
 ]
 
 { #category : #tests }
-ClyLocalClassScopeTestCase >> testConvertingToScopeIncludedInheritedScope [
+ClyLocalClassScopeTest >> testConvertingToScopeIncludedInheritedScope [
 	| convertedScope inheritedScope |
 	scope := self createSampleScope.
 	inheritedScope := scope asInheritedScope.
@@ -66,7 +66,7 @@ ClyLocalClassScopeTestCase >> testConvertingToScopeIncludedInheritedScope [
 ]
 
 { #category : #tests }
-ClyLocalClassScopeTestCase >> testConvertingToScopeIncludedInheritingScope [
+ClyLocalClassScopeTest >> testConvertingToScopeIncludedInheritingScope [
 	| convertedScope inheritingScope |
 	scope := self createSampleScope.
 	inheritingScope := scope asInheritingScope.
