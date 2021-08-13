@@ -405,6 +405,12 @@ RGClassStrategy >> package: anRGPackage [
 		newPackage: anRGPackage)
 ]
 
+{ #category : #accessing }
+RGClassStrategy >> parent [
+	
+	^ owner
+]
+
 { #category : #'private - backend access' }
 RGClassStrategy >> privAddClassVariable: anRGInstanceVariableDefinition [ 
 

@@ -34,6 +34,10 @@ OCBytecodeGeneratorTest >> testBlockReturnTop [
 { #category : #'tests - execution' }
 OCBytecodeGeneratorTest >> testClosureExample [
 	| cm |
+	
+	self flag:#oldBytecode.
+	self skip.
+	
 	cm := self newBytecodeGen
 		numArgs: 0;
 		numTemps: 0;
@@ -233,6 +237,9 @@ OCBytecodeGeneratorTest >> testPopTop [
 { #category : #'tests - instructions' }
 OCBytecodeGeneratorTest >> testPushClosureCopyNumCopiedValuesNumArgsTo [
 	| cm  |
+
+	self flag:#oldBytecode.
+	self skip.
 	
 	cm := self newBytecodeGen
 		numArgs: 0;

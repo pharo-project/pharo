@@ -127,21 +127,10 @@ Build Url: ${env.BUILD_URL}
   }}}
 }
 
-def bootstrapImage(){
+def bootstrapImage(architectures){
    cleanWs()
   def builders = [:]
-  
-  // We run the whole process in 64 bits all the time. 
-  // The 32 bits process is only run when a PR is integrated
-  
-  def architectures
-  
-  if(isDevelopmentBranch()){
-	  architectures = ['32', '64']
-  }else{
-	  architectures = ['64']
-  }
-  
+    
   for (arch in architectures) {
       // Need to bind the label variable before the closure - can't do 'for (label in labels)'
       def architecture = arch
@@ -192,7 +181,6 @@ def bootstrapImage(){
       }
       }
     }
-  
   }
   parallel builders 
 
@@ -228,26 +216,27 @@ def launchBenchmark(){
 
 try{
     properties([disableConcurrentBuilds()])
-  
-    node('unix') {
-      timeout(30) {
-        bootstrapImage()
-      }
-    }
-    
 
-    //Testing step
-    def testers = [:]
     // We run the whole process in 64 bits all the time. 
     // The 32 bits process is only run when a PR is integrated
   
     def architectures
   
     if(isDevelopmentBranch()){
-  	  architectures = ['32', '64']
+  	  architectures = [/*'32',*/ '64']
     }else{
   	  architectures = ['64']
     }
+  
+    node('unix') {
+      timeout(60) {
+        bootstrapImage(architectures)
+      }
+    }
+    
+
+    //Testing step
+    def testers = [:]
 
     def platforms = ['unix', 'osx', 'windows']
     for (arch in architectures) {
@@ -256,8 +245,8 @@ try{
       for (platf in platforms) {
         // Need to bind the label variable before the closure - can't do 'for (label in labels)'
         def platform = platf
-        // Disabling the test of OSX 32bits
-        if(platf != 'osx' || arch != '32'){
+        // Disabling the test of 32bits
+        if(arch != '32'){
             testers["${platform}-${architecture}"] = {
               node(platform) { stage("Tests-${platform}-${architecture}") {
                 timeout(35) {

@@ -54,6 +54,12 @@ RGSlot >> isSpecial [
 	^ self needsFullDefinition
 ]
 
+{ #category : #testing }
+RGSlot >> isSuperVariable [
+	
+	^ false
+]
+
 { #category : #accessing }
 RGSlot >> name: aString [
 

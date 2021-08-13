@@ -5,7 +5,7 @@ Class {
 		'classDefinition',
 		'bootstrapEnvironment'
 	],
-	#category : 'Pharo30Bootstrap'
+	#category : #Pharo30Bootstrap
 }
 
 { #category : #'instance-creation' }
@@ -55,6 +55,18 @@ PBClassDefinition >> innerBindingOf: aString [
 
 	"If it is a temp or an instance variable"
 	^ nil
+]
+
+{ #category : #lookup }
+PBClassDefinition >> lookupVar: aName declare: aBoolean [
+
+	self allSlots detect: [ :e | e name = aName ] ifFound: [ :e | ^ e ].
+
+	Smalltalk globals reservedVariables at: aName ifPresent: [ :e | ^e ].
+	
+	(self innerBindingOf: aName) ifNotNil: [ :e | ^ e ].
+	
+	^ bootstrapEnvironment bindingOf: aName
 ]
 
 { #category : #accessing }

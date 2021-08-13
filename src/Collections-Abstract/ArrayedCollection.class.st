@@ -123,6 +123,23 @@ ArrayedCollection class >> with: firstObject with: secondObject with: thirdObjec
 ]
 
 { #category : #'instance creation' }
+ArrayedCollection class >> with: anObject withAll: aCollection [
+	"Creates an array with anObject followed by elements contained in aCollection."
+	"(Array with: 1 withAll: #(2 3 4)) >>> #(1 2 3 4)"
+	
+	| newArray |
+	newArray := self new: aCollection size + 1.
+	newArray at: 1 put: anObject.
+	newArray
+		replaceFrom: 2
+		to: newArray size
+		with: aCollection.
+	^newArray
+	
+
+]
+
+{ #category : #'instance creation' }
 ArrayedCollection class >> withAll: aCollection [
 	"Create a new collection containing all the elements from aCollection."
 

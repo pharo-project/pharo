@@ -11,7 +11,7 @@ Class {
 { #category : #accessing }
 OldFFIBackend class >> isAvailable [ 
 
-	^ true
+	^ self new isAvailable
 ]
 
 { #category : #accessing }

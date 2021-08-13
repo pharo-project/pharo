@@ -33,16 +33,9 @@ DebugSessionContexts2Test >> testContextsAfterStepInto [
 	"Checks that after one step into of the debug session, the suspendedContext of its interruptedProcess is at the user's code (not in the debugging machinery) and is the same object as the interruptedContext of the DebugSession."
 
 	| expectedMethod |
-	session stepInto.
 
-	"With fullblocks the method of the suspended context is a compiledBlock, not the method having it"
-	expectedMethod := (self class >> #setUp) encoderClass = EncoderForV3PlusClosures
-		ifTrue: [ self class >> #setUp ]
-		ifFalse: [ 
-			| block |
-			block := (self class >> #setUp) literalAt: 2.
-			block isBlock ifTrue: [ block compiledBlock ] ifFalse: [ block ]
-			 ].
+	session stepInto.
+	expectedMethod := (self class >> #setUp) literalAt: 2.
 
 	self
 		assert: session interruptedProcess suspendedContext method
@@ -59,12 +52,7 @@ DebugSessionContexts2Test >> testInterruptedContext [
 
 	"With fullblocks the method of the suspended context is a compiledBlock, not the method having it"
 	| expectedMethod |
-	expectedMethod := (self class >> #setUp) encoderClass = EncoderForV3PlusClosures
-		ifTrue: [ self class >> #setUp ]
-		ifFalse: [ 
-			| block |
-			block := (self class >> #setUp) literalAt: 2.
-			block isBlock ifTrue: [ block compiledBlock ] ifFalse: [ block ] ].
+	expectedMethod := (self class >> #setUp) literalAt: 2.
 
 	self assert: (session interruptedContext method) equals: expectedMethod.
 ]

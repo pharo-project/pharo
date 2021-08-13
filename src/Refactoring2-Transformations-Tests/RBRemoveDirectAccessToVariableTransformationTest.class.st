@@ -64,20 +64,6 @@ RBRemoveDirectAccessToVariableTransformationTest >> testDoesNotUnderstandAccesso
 ]
 
 { #category : #tests }
-RBRemoveDirectAccessToVariableTransformationTest >> testInheritedName [
-
-	self
-		shouldFail: (RBRemoveDirectAccessToVariableTransformation 
-						instanceVariable: 'name'
-						class: #RBBasicLintRuleTestData)
-						asRefactoring;
-		shouldFail: (RBRemoveDirectAccessToVariableTransformation 
-						classVariable: #DependentsFields
-						class: #RBBasicLintRuleTestData)
-						asRefactoring 
-]
-
-{ #category : #tests }
 RBRemoveDirectAccessToVariableTransformationTest >> testInstanceVariable [
 
 	| class |
@@ -90,29 +76,6 @@ RBRemoveDirectAccessToVariableTransformationTest >> testInstanceVariable [
 	class := model classNamed: #Foo.
 	self assert: (class parseTreeFor: #foo) 
 			equals: (self parseMethod: 'foo ^ self instVarName2: 3')
-]
-
-{ #category : #tests }
-RBRemoveDirectAccessToVariableTransformationTest >> testMetaclassFailure [
-
-	self shouldFail: (RBRemoveDirectAccessToVariableTransformation 
-							classVariable: #RecursiveSelfRule
-							class: RBTransformationRuleTestData class)
-							asRefactoring 
-]
-
-{ #category : #tests }
-RBRemoveDirectAccessToVariableTransformationTest >> testNonExistantName [
-
-	self
-		shouldFail: (RBRemoveDirectAccessToVariableTransformation 
-						instanceVariable: 'foo'
-						class: #RBBasicLintRuleTestData)
-						asRefactoring;
-		shouldFail: (RBRemoveDirectAccessToVariableTransformation 
-						classVariable: #Foo
-						class: #RBBasicLintRuleTestData)
-						asRefactoring 
 ]
 
 { #category : #tests }

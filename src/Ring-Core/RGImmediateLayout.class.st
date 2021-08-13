@@ -9,9 +9,3 @@ RGImmediateLayout >> isImmediateLayout [
 
 	^ true
 ]
-
-{ #category : #accessing }
-RGImmediateLayout >> layoutName [
-
-	^ #ImmediateLayout
-]

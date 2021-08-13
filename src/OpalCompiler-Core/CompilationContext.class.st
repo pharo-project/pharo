@@ -33,7 +33,8 @@ Class {
 		'encoderClass',
 		'astTransformPlugins',
 		'requestorScopeClass',
-		'bindings'
+		'bindings',
+		'compiledMethodClass'
 	],
 	#classVars : [
 		'BytecodeBackend',
@@ -122,7 +123,7 @@ CompilationContext class >> fallBackDefaultOptions [
 CompilationContext class >> initialize [
 	"Note: we don't set-up here DefaultOptions since it requires other class-side methods, and that's messed up."
 	DefaultTransformationPlugins := OrderedCollection new.
-	BytecodeBackend := EncoderForV3PlusClosures.
+	BytecodeBackend := EncoderForSistaV1.
 ]
 
 { #category : #'options - settings API' }
@@ -329,7 +330,7 @@ CompilationContext class >> optionsDescription [
 	(- optionEmbeddSources         'Embedd sources into CompiledMethod instead of storing in .changes')
 	
 	(+ optionReadOnlyLiterals 			'Compiler sets some literals as read-only')
-	(- optionFullBlockClosure 			'Compiler compiles closure creation to use FullBlockClosure instead of BlockClosure')
+	(+ optionFullBlockClosure 			'Compiler compiles closure creation to use FullBlockClosure instead of BlockClosure')
 	(- optionCleanBlockClosure 			'Compiler compiles closure creation to use CleanBlockClosure instead of FullBlockClosure for clean blocks. Experimental')
 	(- optionLongIvarAccessBytecodes 	'Specific inst var accesses to Maybe context objects')
 	(+ optionOptimizeIR 					'Rewrite jumps in bytecode in a slightly more efficient way')
@@ -413,6 +414,22 @@ CompilationContext >> compiledMethod [
 { #category : #accessing }
 CompilationContext >> compiledMethod: anObject [
 	compiledMethod := anObject
+]
+
+{ #category : #accessing }
+CompilationContext >> compiledMethodClass [
+	"Return the class used to instantiate the compiled method created by the compiler"
+	^ compiledMethodClass ifNil: [ 
+		self productionEnvironment
+			at: #CompiledMethod
+			ifAbsent: [ CompiledMethod ] ]
+]
+
+{ #category : #accessing }
+CompilationContext >> compiledMethodClass: aCompiledMethodClass [
+	"Return the class used to instantiate the compiled method created by the compiler"
+	
+	compiledMethodClass := aCompiledMethodClass
 ]
 
 { #category : #accessing }

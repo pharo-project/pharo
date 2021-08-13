@@ -15,25 +15,11 @@ Class {
 	#category : #'SystemCommands-ClassCommands'
 }
 
-{ #category : #activation }
-SycDeprecateClassCommand class >> browserContextMenuActivation [
-	<classAnnotation>
-	
-	^CmdContextMenuActivation byRootGroupItemOrder: 1.4 for: ClyClass asCalypsoItemContext  
-]
-
 { #category : #testing }
 SycDeprecateClassCommand class >> canBeExecutedInContext: aToolContext [
 
 	^ (super canBeExecutedInContext: aToolContext) and: [ 
 		  aToolContext lastSelectedClass isDeprecated not ]
-]
-
-{ #category : #activation }
-SycDeprecateClassCommand class >> sourceCodeMenuActivation [
-	<classAnnotation>
-	
-	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.3 for: ClySourceCodeContext
 ]
 
 { #category : #converting }

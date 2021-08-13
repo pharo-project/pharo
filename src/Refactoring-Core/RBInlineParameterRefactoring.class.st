@@ -48,7 +48,7 @@ Class {
 
 { #category : #'instance creation' }
 RBInlineParameterRefactoring class >> inlineParameter: aString in: aClass selector: aSelector [ 
-	^self new 
+	^ self new 
 		inlineParameter: aString
 		in: aClass
 		selector: aSelector
@@ -56,7 +56,7 @@ RBInlineParameterRefactoring class >> inlineParameter: aString in: aClass select
 
 { #category : #'instance creation' }
 RBInlineParameterRefactoring class >> model: aRBSmalltalk inlineParameter: aString in: aClass selector: aSelector [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		inlineParameter: aString
 			in: aClass

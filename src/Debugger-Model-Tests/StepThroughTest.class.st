@@ -54,9 +54,7 @@ StepThroughTest >> testStepThrough [
 	session stepThrough.
 
 	"With fullblocks the method of the suspended context is a compiledBlock, not the method having it"
-	expectedMethod := (self class >> #stepA1) encoderClass = EncoderForV3PlusClosures
-		ifTrue: [ self class >> #stepA1 ]
-		ifFalse: [ (self class >> #stepA1) literalAt: 1 ].
+	expectedMethod := (self class >> #stepA1) literalAt: 1 .
 
 	"Checking that after the step through, the execution is at the 'self stepA2' node of the stepA1 method"
 	self assert: (session interruptedContext method) equals: expectedMethod.

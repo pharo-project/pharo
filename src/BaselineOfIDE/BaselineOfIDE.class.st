@@ -170,6 +170,8 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'GeneralTests' with: [ spec repository: repository ].
 		spec baseline: 'Zodiac' with: [ spec repository: repository ].
 		spec baseline: 'SortFunctions' with: [ spec repository: repository ].
+		spec package: 'STON-Extensions'. 
+		
 		spec package: 'BaselineOfPharoBootstrap'.
 		spec package: 'BaselineOfMonticello'.
 		spec package: 'BaselineOfMetacello'.
@@ -184,14 +186,12 @@ BaselineOfIDE >> baseline: spec [
 				repository: repository;
 				loads: #( 'FullEnvironment' 'SystemBrowser' 'Tests' ) ].
 		spec baseline: 'Ring' with: [ spec repository: repository ].
-		spec baseline: 'PharoGlamour' with: [ spec repository: repository ].
-		spec baseline: 'PharoGT' with: [ spec repository: repository ].
 		spec baseline: 'HeuristicCompletion' with: [ spec repository: repository ].
 		self specCode: spec.
 		self newTools: spec.
 					
-		spec baseline: 'Microdown' with: [ spec 
-				repository: self packageRepositoryURL ].
+		"spec baseline: 'Microdown' with: [ spec 
+				repository: self packageRepositoryURL ]."
 	
 		spec 
   			baseline: 'Roassal3' 

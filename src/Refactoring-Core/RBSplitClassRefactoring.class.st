@@ -44,7 +44,7 @@ Class {
 
 { #category : #'instance creation' }
 RBSplitClassRefactoring class >> class: class instanceVariables: instVars newClassName: className referenceVariableName: newVariable [ 
-	^(self new)
+	^ self new
 		class: class
 			instanceVariables: instVars
 			newClassName: className
@@ -54,7 +54,7 @@ RBSplitClassRefactoring class >> class: class instanceVariables: instVars newCla
 
 { #category : #'instance creation' }
 RBSplitClassRefactoring class >> model: aRBSmalltalk class: class instanceVariables: instVars newClassName: className referenceVariableName: newVariable [ 
-	^(self new)
+	^ self new 
 		model: aRBSmalltalk;
 		class: class
 			instanceVariables: instVars
@@ -115,7 +115,7 @@ RBSplitClassRefactoring >> addInstanceVariables [
 
 { #category : #initialization }
 RBSplitClassRefactoring >> class: aClass instanceVariables: instVars newClassName: className referenceVariableName: newVariable [ 
-	class := self model classFor: aClass.
+	class := self model classObjectFor: aClass.
 	instanceVariables := instVars.
 	newClassName := className.
 	referenceVariableName := newVariable

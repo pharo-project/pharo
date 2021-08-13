@@ -56,6 +56,61 @@ ZipArchiveTest >> testAddNonExistentFile [
 ]
 
 { #category : #tests }
+ZipArchiveTest >> testAddTreeWhenNoContentInFileShouldSucceed [
+	| zipOutput  extractionDir | 
+	(subdir/'testZipFileInDir') ensureCreateFile. 
+	(subdir/'testZipFileInDir2') ensureCreateFile. 
+	(subdir/'DeeperDirectory') ensureCreateDirectory. 
+	(subdir/'DeeperDirectory'/'testZipFileInDir3')  ensureCreateFile.
+	extractionDir := fs root / 'extracted'.
+	extractionDir ensureCreateDirectory.
+	
+	zipOutput := zip addTree: subdir relativeTo: (subdir parent) match: [ :e | true ].
+	
+	zipOutput extractAllTo: extractionDir.
+	self assert:	 (extractionDir / 'test-zip-dir'/'testZipFileInDir') asFileReference isFile.
+	self assert:	 (extractionDir / 'test-zip-dir'/'testZipFileInDir2') asFileReference isFile.
+	self assert:	 (extractionDir / 'test-zip-dir'/'DeeperDirectory'/'testZipFileInDir3') asFileReference isFile
+]
+
+{ #category : #tests }
+ZipArchiveTest >> testAddTreeWithContentInFileShouldSucceed [
+	| zipOutput  extractionDir fileWithContentToZip fileContent extractedFile | 
+	fileContent := 'some random text '.
+	extractionDir := fs root / 'extracted'.
+	extractionDir ensureCreateDirectory.
+	fileWithContentToZip := subdir / 'fileWithContentToZip'.
+	fileWithContentToZip ensureCreateFile.
+	fileWithContentToZip writeStreamDo: [ :stream | stream nextPutAll: fileContent ].
+	
+	zipOutput := zip addTree: subdir relativeTo: (subdir parent) match: [ :e | true ].
+	
+	zipOutput extractAllTo: extractionDir.
+	extractedFile :=  (extractionDir / (fileWithContentToZip relativeTo: fs root) fullName) asFileReference.
+	self assert:	 extractedFile isFile.
+	self assert:	 (extractedFile readStreamDo: [ :stream | stream contents]) equals: fileContent.
+	
+]
+
+{ #category : #tests }
+ZipArchiveTest >> testAddTreeWithSubDirectoriesShouldSucceed [
+	| zipOutput  extractionDir subSubDir fileInSubSubDIr | 
+	extractionDir := fs root / 'extracted'.
+	extractionDir ensureCreateDirectory.
+	subSubDir := subdir / 'subSubDir'.
+	subSubDir ensureCreateDirectory.
+	fileInSubSubDIr := subdir / 'subSubDir' / 'fileInSubSubDir'.
+	fileInSubSubDIr ensureCreateFile.
+	
+	zipOutput := zip addTree: subdir relativeTo: (subdir parent) match: [ :e | true ].
+	zipOutput extractAllTo: extractionDir.
+	
+	self assert:	 (extractionDir / 'test-zip-dir' / 'subSubDir') asFileReference isDirectory.
+	self assert:	 (extractionDir / 'test-zip-dir' / 'subSubDir' / 'fileInSubSubDir') asFileReference isFile.
+	self deny: (extractionDir / 'subSubDir') asFileReference isDirectory 
+]
+
+{ #category : #tests }
 ZipArchiveTest >> testArchiveWithThousandFilesShouldWork [
 	
 	"Smoke test showing that we can create zip archives with up to 1000 elements.
@@ -80,7 +135,9 @@ ZipArchiveTest >> testArchiveWithThousandFilesShouldWork [
 
 { #category : #tests }
 ZipArchiveTest >> testCanUnzipFromFileName [
-	| nestedFileToZip |
+	| nestedFileToZip subsubdir extracted |
+	subsubdir := subdir /'subsubdir'.
+	subsubdir ensureCreateDirectory .
 	nestedFileToZip := (subdir / '_test-zip-file.txt')
 		writeStreamDo: [ :stream | stream nextPutAll: 'file contents' ];
 		yourself.
@@ -88,13 +145,16 @@ ZipArchiveTest >> testCanUnzipFromFileName [
 	zipFile binaryWriteStreamDo: [ :stream |
 		zip
 			addDirectory: subdir as: subdir basename;
+			addDirectory: subsubdir as: (subsubdir relativeTo: subdir parent) fullName;
 			addFile: nestedFileToZip as: nestedFileToZip basename;
 			writeTo: stream;
 			close. ].
 	
+	extracted := fs root / 'extracted'. 
+	extracted ensureCreateDirectory. 
 	ZipArchive new
 		readFrom: zipFile fullName;
-		extractAllTo: subdir overwrite: true;
+		extractAllTo: extracted overwrite: true;
 		close.
 	zipFile ensureDelete.
 

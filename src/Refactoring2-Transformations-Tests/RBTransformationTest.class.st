@@ -18,7 +18,7 @@ RBTransformationTest >> abstractVariableTestData [
 				sum add: class; add: class class ].
 			sum ].
 	classEnvironment := RBClassEnvironment classes: classes.
-	newModel := RBNamespace2 onEnvironment: classEnvironment not.
+	newModel := RBNamespace onEnvironment: classEnvironment not.
 	newModel name: 'Test'.
 	
 	#('Object subclass: #Foo
@@ -140,7 +140,7 @@ RBTransformationTest >> setUp [
 
 	super setUp.
 	self createMockClass.
-	model := RBNamespace2 new
+	model := RBNamespace new
 ]
 
 { #category : #running }

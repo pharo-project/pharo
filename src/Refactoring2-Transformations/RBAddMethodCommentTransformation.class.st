@@ -22,7 +22,7 @@ Class {
 { #category : #api }
 RBAddMethodCommentTransformation class >> comment: aString inMethod: aSelector inClass: aClassName [
 
-	^ (self new)
+	^ self new
 		comment: aString 
 		inMethod: aSelector
 		inClass: aClassName;
@@ -32,7 +32,7 @@ RBAddMethodCommentTransformation class >> comment: aString inMethod: aSelector i
 { #category : #api }
 RBAddMethodCommentTransformation class >> model: aRBModel comment: aString inMethod: aSelector inClass: aClassName [
 
-	^ (self new)
+	^ self new
 		model: aRBModel;
 		comment: aString 
 		inMethod: aSelector
@@ -53,7 +53,7 @@ RBAddMethodCommentTransformation >> comment: aString inMethod: aSelector inClass
 RBAddMethodCommentTransformation >> preconditions [
 	"no preconditions needed"
 	
-	^ RBCondition empty
+	^ self emptyCondition
 ]
 
 { #category : #executing }

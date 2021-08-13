@@ -2,6 +2,7 @@ Class {
 	#name : #RBCompositeTransformation,
 	#superclass : #RBTransformation,
 	#instVars : [
+		'previousTransformations',
 		'transformations',
 		'delegatesPreconditions'
 	],
@@ -11,7 +12,7 @@ Class {
 { #category : #api }
 RBCompositeTransformation class >> model: aRBModel with: aCollection [
 
-	^ (self new)
+	^ self new
 		model: aRBModel;
 		transformations: aCollection;
 		yourself
@@ -20,7 +21,7 @@ RBCompositeTransformation class >> model: aRBModel with: aCollection [
 { #category : #api }
 RBCompositeTransformation class >> with: aCollection [
 
-	^ (self new)
+	^ self new
 		transformations: aCollection;
 		yourself
 ]
@@ -49,7 +50,12 @@ RBCompositeTransformation >> preconditions [
 	"it delegates the preconditionn checking to each sub-refactoring separately.
 	 additional preconditions are welcomed"
 
-	^ RBCondition empty
+	^ self emptyCondition
+]
+
+{ #category : #accessing }
+RBCompositeTransformation >> previousTransformations [
+	^ previousTransformations ifNil: [ previousTransformations := OrderedCollection new ]
 ]
 
 { #category : #executing }
@@ -57,7 +63,7 @@ RBCompositeTransformation >> privateTransform [
 	"in refactoring mode, the transformation can do its own precondition checking,
 	 therefore not needing checking from its containing transformations"
 
-	self transformations do: [ :transformation |
+	(self previousTransformations, self transformations) do: [ :transformation |
 		transformation
 			copyOptionsFrom: self options;
 			model: self model;

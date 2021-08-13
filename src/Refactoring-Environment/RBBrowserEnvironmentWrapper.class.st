@@ -26,9 +26,40 @@ RBBrowserEnvironmentWrapper class >> onEnvironment: anEnvironment [
 		yourself
 ]
 
+{ #category : #visiting }
+RBBrowserEnvironmentWrapper >> acceptVisitor: aProgramNodeVisitor [
+
+	self subclassResponsibility
+]
+
+{ #category : #accessing }
+RBBrowserEnvironmentWrapper >> basisObjects [
+
+	^ #()
+]
+
 { #category : #testing }
 RBBrowserEnvironmentWrapper >> definesClass: aClass [
 	^ environment definesClass: aClass
+]
+
+{ #category : #description }
+RBBrowserEnvironmentWrapper >> description [
+
+	^ label ifNil: [super description, self descriptionBasis]
+]
+
+{ #category : #description }
+RBBrowserEnvironmentWrapper >> descriptionBasis [
+
+	^ String streamContents: [ :s | | basis |
+		basis := self basisObjects.
+		basis ifEmpty: [ ^ self ]
+			ifNotEmpty: [ s nextPutAll: ': ' ].
+		basis do: [ :each |
+			self printBasisObject: each on: s.
+			s nextPutAll: ', '].
+	s skip: -2]
 ]
 
 { #category : #private }
@@ -64,6 +95,12 @@ RBBrowserEnvironmentWrapper >> includesSelector: aSelector in: aClass [
 ]
 
 { #category : #testing }
+RBBrowserEnvironmentWrapper >> isBoundToEnvironment [
+
+	^ environment notNil
+]
+
+{ #category : #testing }
 RBBrowserEnvironmentWrapper >> isEmpty [
 	self classesDo: [:each | ^false].
 	^true
@@ -88,6 +125,12 @@ RBBrowserEnvironmentWrapper >> packageNames [
 RBBrowserEnvironmentWrapper >> packages [
 
 	^ self subclassResponsibility
+]
+
+{ #category : #printing }
+RBBrowserEnvironmentWrapper >> printBasisObject: anObject on: aStream [
+
+	^ anObject printOn: aStream
 ]
 
 { #category : #private }

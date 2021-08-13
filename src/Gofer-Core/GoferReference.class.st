@@ -10,33 +10,47 @@ Class {
 	#category : #'Gofer-Core-References'
 }
 
+{ #category : #testing }
+GoferReference class >> isAbstract [
+
+	^ self == GoferReference
+]
+
 { #category : #'instance creation' }
 GoferReference class >> name: aString [
-	^ self basicNew initializeName: aString
+
+	^ self basicNew 
+		initializeName: aString;
+		yourself
 ]
 
 { #category : #'instance creation' }
 GoferReference class >> new [
+
 	self error: 'Use #name: to initialize the receiver.'
 ]
 
 { #category : #comparing }
 GoferReference >> = aReference [
+
 	^ self class = aReference class and: [ self name = aReference name ]
 ]
 
 { #category : #comparing }
 GoferReference >> hash [
+
 	^ self name hash
 ]
 
 { #category : #initialization }
 GoferReference >> initializeName: aString [
+
 	name := aString
 ]
 
 { #category : #testing }
 GoferReference >> isConfigurationReference [
+
 	^ false
 ]
 
@@ -63,6 +77,7 @@ GoferReference >> packageName [
 
 { #category : #printing }
 GoferReference >> printOn: aStream [
+
 	super printOn: aStream.
 	aStream nextPutAll: ' name: '; print: self name
 ]

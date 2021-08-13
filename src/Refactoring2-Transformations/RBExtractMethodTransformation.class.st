@@ -105,7 +105,7 @@ RBExtractMethodTransformation >> buildTransformations [
 							model: self model
 							sourceCode: newMethod newSource
 							in: class
-							withProtocol: Protocol unclassified);
+							withProtocols: {Protocol unclassified});
 					add: (RBReplaceSubtreeTransformation
 							model: self model
 							replace: sourceCode

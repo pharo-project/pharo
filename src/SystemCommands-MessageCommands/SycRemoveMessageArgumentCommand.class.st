@@ -21,13 +21,6 @@ SycRemoveMessageArgumentCommand class >> canBeExecutedInContext: aToolContext [
 		and: [ aToolContext lastSelectedMessage argumentNames notEmpty]
 ]
 
-{ #category : #activation }
-SycRemoveMessageArgumentCommand class >> methodContextMenuActivation [
-	<classAnnotation>
-	
-	^ SycMethodMenuActivation byRootGroupItemOrder: 40 for: ClyMethod asCalypsoItemContext
-]
-
 { #category : #accessing }
 SycRemoveMessageArgumentCommand >> argumentName [
 	^ argumentName

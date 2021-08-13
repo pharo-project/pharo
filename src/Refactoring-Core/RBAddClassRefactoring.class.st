@@ -21,7 +21,7 @@ Class {
 
 { #category : #'instance creation' }
 RBAddClassRefactoring class >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
-	^self new
+	^ self new
 		addClass: aName
 		superclass: aClass
 		subclasses: aCollection
@@ -30,7 +30,7 @@ RBAddClassRefactoring class >> addClass: aName superclass: aClass subclasses: aC
 
 { #category : #'instance creation' }
 RBAddClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		addClass: aName
 			superclass: aClass

@@ -13,7 +13,8 @@ Class {
 		'inner',
 		'newMethod',
 		'newClass',
-		'newSelector'
+		'newSelector',
+		'newBlock'
 	],
 	#category : #'Hermes-ClassInstaller'
 }
@@ -33,6 +34,18 @@ HEExtendedEnvironment >> inner [
 { #category : #accessing }
 HEExtendedEnvironment >> inner: anObject [
 	inner := anObject
+]
+
+{ #category : #accessing }
+HEExtendedEnvironment >> newBlock [
+
+	^ newBlock
+]
+
+{ #category : #accessing }
+HEExtendedEnvironment >> newBlock: anObject [
+
+	newBlock := anObject
 ]
 
 { #category : #accessing }

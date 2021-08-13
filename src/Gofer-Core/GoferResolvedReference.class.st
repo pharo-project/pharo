@@ -12,7 +12,10 @@ Class {
 
 { #category : #'instance creation' }
 GoferResolvedReference class >> name: aString repository: aRepository [
-	^ self basicNew initializeName: aString repository: aRepository
+
+	^ self basicNew 
+		initializeName: aString repository: aRepository;
+		yourself
 ]
 
 { #category : #comparing }
@@ -49,6 +52,7 @@ GoferResolvedReference >> initializeName: aString repository: aRepository [
 { #category : #actions }
 GoferResolvedReference >> merge [
 	"Merge-in the changes of this refence"
+	
 	Gofer new
 		repository: self repository;
 		package: package;
