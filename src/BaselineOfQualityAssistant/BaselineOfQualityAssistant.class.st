@@ -12,13 +12,13 @@ BaselineOfQualityAssistant >> baseline: spec [
 			
 		spec 
 			package: 'Tool-CriticBrowser';
-			package: 'Tool-CriticBrowser-Test';
+			package: 'Tool-CriticBrowser-Tests';
 			package: 'Renraku';
 			package: 'Renraku-Tests';
 			package: 'Renraku-Help'.
 		spec 
 			group: 'Core' with: #('Renraku' 'Tool-CriticBrowser');
-			group: 'Tests' with: #('Renraku-Tests' 'Tool-CriticBrowser-Test');
+			group: 'Tests' with: #('Renraku-Tests' 'Tool-CriticBrowser-Tests');
 			group: 'Help' with: #('Renraku-Help');
 			group: 'default' with: #('Core' 'Help' 'Tests') ]
 ]
