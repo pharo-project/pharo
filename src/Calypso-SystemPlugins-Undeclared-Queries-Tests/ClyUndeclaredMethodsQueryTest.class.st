@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyUndeclaredMethodsQueryTest,
-	#superclass : #ClyMethodQueryTestCase,
+	#superclass : #ClyMethodQueryTest,
 	#category : #'Calypso-SystemPlugins-Undeclared-Queries-Tests'
 }
 

@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyClassExternalReferencesQueryTest,
-	#superclass : #ClyMethodQueryTestCase,
+	#superclass : #ClyMethodQueryTest,
 	#category : #'Calypso-SystemQueries-Tests-Queries'
 }
 

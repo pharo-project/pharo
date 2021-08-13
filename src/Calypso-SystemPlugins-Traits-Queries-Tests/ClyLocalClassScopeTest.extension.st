@@ -1,7 +1,7 @@
-Extension { #name : #ClyLocalClassScopeTestCase }
+Extension { #name : #ClyLocalClassScopeTest }
 
 { #category : #'*Calypso-SystemPlugins-Traits-Queries-Tests' }
-ClyLocalClassScopeTestCase >> testConvertingToInheritedScopeShouldAddInheritedTraits [
+ClyLocalClassScopeTest >> testConvertingToInheritedScopeShouldAddInheritedTraits [
 	| convertedScope |
 	scope := self createSampleScope.
 	
@@ -11,7 +11,7 @@ ClyLocalClassScopeTestCase >> testConvertingToInheritedScopeShouldAddInheritedTr
 ]
 
 { #category : #'*Calypso-SystemPlugins-Traits-Queries-Tests' }
-ClyLocalClassScopeTestCase >> testConvertingToInheritingScopeShouldAddTraitUsers [
+ClyLocalClassScopeTest >> testConvertingToInheritingScopeShouldAddTraitUsers [
 	| convertedScope |
 	scope := self createSampleScope.
 	

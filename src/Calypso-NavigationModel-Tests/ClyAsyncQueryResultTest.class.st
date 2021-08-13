@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyAsyncQueryResultTest,
-	#superclass : #ClyQueryResultTestCase,
+	#superclass : #ClyQueryNavigationResultTest,
 	#category : #'Calypso-NavigationModel-Tests'
 }
 

@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyDeprecatedMethodsQueryTest,
-	#superclass : #ClyMethodQueryTestCase,
+	#superclass : #ClyMethodQueryTest,
 	#category : #'Calypso-SystemPlugins-Deprecation-Queries-Tests'
 }
 
