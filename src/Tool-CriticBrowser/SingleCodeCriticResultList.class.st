@@ -69,9 +69,6 @@ e48/+xD8oxcAYPzs4QaS7RR2kbLTTOTQieczfzfTv8QPldGvTGoF6/8AAAAASUVORK5CYII='
 { #category : #'class initialization' }
 SingleCodeCriticResultList class >> initialize [
 	
-	"please use CBSingleCodeCritiqueResultList>>initialize"
-	self deprecated: 'use CBSingleCodeCritiqueResultList>>initialize'.
-	
 	icons := IdentityDictionary new
 ]
 
