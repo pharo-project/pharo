@@ -31,10 +31,10 @@ self
 { #category : #tests }
 CBResetWindowTest >> testOpen [
 
-	| resetWindow |
-	resetWindow := CBResetWindow open.
-	self assert: resetWindow isBuilt.
-	resetWindow close
+	| resetPresenter |
+	resetPresenter := CBResetWindow open.
+	self assert: resetPresenter isBuilt.
+	resetPresenter close
 ]
 
 { #category : #tests }

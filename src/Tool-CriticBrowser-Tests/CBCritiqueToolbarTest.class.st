@@ -10,7 +10,7 @@ Class {
 	#category : #'Tool-CriticBrowser-Tests'
 }
 
-{ #category : #initialization }
+{ #category : #running }
 CBCritiqueToolbarTest >> setUp [
 
 	super setUp.

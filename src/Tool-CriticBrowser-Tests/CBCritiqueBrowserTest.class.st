@@ -17,7 +17,7 @@ CBCritiqueBrowserTest >> classToTest [
 	^ CBCritiqueBrowser
 ]
 
-{ #category : #initialization }
+{ #category : #running }
 CBCritiqueBrowserTest >> setUp [
 
 	super setUp.

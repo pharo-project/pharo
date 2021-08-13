@@ -6,7 +6,6 @@ Class {
 	#superclass : #TestCase,
 	#instVars : [
 		'rulesChooser',
-		'rulesChooserWithItems',
 		'rules',
 		'rulesByGroup'
 	],
