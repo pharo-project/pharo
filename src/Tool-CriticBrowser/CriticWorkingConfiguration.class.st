@@ -20,25 +20,37 @@ Class {
 
 { #category : #'instance creation' }
 CriticWorkingConfiguration class >> current [
-
+	"please use CBCritiqueWorkingConfiguration>>current instead"	
+	self deprecated: 'use CBCritiqueWorkingConfiguration>>current'.
+	
 	^ Current ifNil: [ Current  := self basicNew initialize ].
 ]
 
 { #category : #testing }
 CriticWorkingConfiguration class >> exists [
-
+	"please use CBCritiqueWorkingConfiguration>>exists instead"	
+	self deprecated: 'use CBCritiqueWorkingConfiguration>>exists'.
 	^ Current notNil
 ]
 
 { #category : #'instance creation' }
-CriticWorkingConfiguration class >> new [
+CriticWorkingConfiguration class >> isDeprecated [ 
+	"We do not need this class anymore. Use CBCritiqueWorkingConfiguration instead" 
 
+	^true
+]
+
+{ #category : #'instance creation' }
+CriticWorkingConfiguration class >> new [
+	"please use CBCritiqueWorkingConfiguration>>new instead"	
+	self deprecated: 'use CBCritiqueWorkingConfiguration>>new'. 
 	^ self shouldNotImplement
 ]
 
 { #category : #initialization }
 CriticWorkingConfiguration class >> reset [
-
+	"please use CBCritiqueWorkingConfiguration>>exists reset"	
+	self deprecated: 'use CBCritiqueWorkingConfiguration>>reset'.
 	Current := nil
 ]
 

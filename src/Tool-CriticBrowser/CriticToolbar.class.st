@@ -41,7 +41,8 @@ Class {
 { #category : #specs }
 CriticToolbar class >> defaultSpec [
 <spec>
-
+	"Please do not use this method. We do not use this class anymore"
+	self deprecated: 'Do not use this method'.
 	^SpecLayout composed
 		newRow: [:row |
 			row 
@@ -49,6 +50,13 @@ CriticToolbar class >> defaultSpec [
 				add: #transformModel;
 				add: #falsepositiveModel
 			]  height: 25
+]
+
+{ #category : #specs }
+CriticToolbar class >> isDeprecated [ 
+	"We do not need this class anymore. Use CBCritiqueToolbar instead" 
+
+	^true
 ]
 
 { #category : #private }

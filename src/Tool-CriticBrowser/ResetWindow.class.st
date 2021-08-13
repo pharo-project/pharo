@@ -14,7 +14,9 @@ Class {
 { #category : #specs }
 ResetWindow class >> defaultSpec [
 <spec>
-
+	"Please do not use this method. We do not use this class anymore"
+	self deprecated: 'Do not use this method'.
+	
 	^SpecLayout composed
 		newRow: [:r |
 			r 
@@ -24,7 +26,17 @@ ResetWindow class >> defaultSpec [
 ]
 
 { #category : #specs }
+ResetWindow class >> isDeprecated [ 
+	"We do not need this class anymore. Use CBResetWindow instead" 
+
+	^true
+]
+
+{ #category : #specs }
 ResetWindow class >> title [
+	"We do not need this method anymore."
+	self deprecated: 'This method is not use anymore'.
+	
 	^ 'Critic Browser' 
 ]
 

@@ -9,13 +9,14 @@ Class {
 		'removeTestPackageModel',
 		'testPackage'
 	],
-	#category : #'Tool-CriticBrowser-Parts'
+	#category : #'Tool-CriticBrowser-Applier'
 }
 
 { #category : #specs }
 SelectPackageBrowser class >> defaultSpec [
-
+	"Please do not use this method. We do not use this class anymore"
 		<spec>
+	self deprecated: 'Do not use this method'.
 	
 	^ SpecLayout composed
 		newColumn: [:c |
@@ -38,9 +39,18 @@ SelectPackageBrowser class >> defaultSpec [
 					add: #nextButtonModel ] height: 25]	
 ]
 
+{ #category : #specs }
+SelectPackageBrowser class >> isDeprecated [ 
+	"We do not need this class anymore. Use CBSelectPackage instead" 
+
+	^true
+]
+
 { #category : #'instance creation' }
 SelectPackageBrowser class >> open [
 	<script>
+	"please use CBSelectPackage>>open"
+	self deprecated: 'use CBSelectPackage>>open'.
 	
 	self new items: RPackageOrganizer default packages;
 		openWithSpec 
@@ -48,6 +58,9 @@ SelectPackageBrowser class >> open [
 
 { #category : #specs }
 SelectPackageBrowser class >> title [
+
+	"We do not need this method anymore."
+	self deprecated: 'This method is not use anymore'.
 	^ 'Select packages'
 ]
 

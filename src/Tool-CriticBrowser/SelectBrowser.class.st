@@ -13,13 +13,15 @@ Class {
 		'removeAllButtonModel',
 		'nextButtonModel'
 	],
-	#category : #'Tool-CriticBrowser-Parts'
+	#category : #'Tool-CriticBrowser-Applier'
 }
 
 { #category : #specs }
 SelectBrowser class >> defaultSpec [
 
-		<spec>
+	"Please do not use this method. We do not use this class anymore"
+	<spec>
+	self deprecated: 'Do not use this method'.
 	
 	^ SpecLayout composed
 		newColumn: [:c |
@@ -36,6 +38,13 @@ SelectBrowser class >> defaultSpec [
 					add:#removeButtonModel;
 					add:#removeAllButtonModel;
 					add: #nextButtonModel ] height: 25]	
+]
+
+{ #category : #'as yet unclassified' }
+SelectBrowser class >> isDeprecated [ 
+	"We do not need this class anymore" 
+
+	^true
 ]
 
 { #category : #accessing }

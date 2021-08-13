@@ -1,18 +1,17 @@
 "
-I display code critics, the results obtained when running a lint rule.
+I am a presenter that allows get a list of critiques that broken the selected rules in the selected packages. 
 
-Example: 
+I interact with CBSelectPackage to get the list of selected packages.
+I interact with CBSelectRule to get the list of selected rules.
+I interact with CBritiquesCache to get the critiques saved as 'To-do' and marked as 'false positive'.
 
+You can open me whit:
+`CBCritiqueBrowser open`
 
-| rule env |
-rule :=  RBExcessiveArgumentsRule new.
-env := (RBPackageEnvironment packageName: 'Manifest-Core').
-
-(CriticBrowser openOnRule: rule onEnvironment: env).
 "
 Class {
-	#name : #CriticBrowser,
-	#superclass : #ComposablePresenter,
+	#name : #CBCritiqueBrowser,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'criticModel',
 		'rulesModel',
@@ -23,18 +22,19 @@ Class {
 		'cache',
 		'resetButton',
 		'logButton',
-		'updateButton'
+		'updateButton',
+		'criticsModel',
+		'sourceCodeModel',
+		'toolbarModel'
 	],
 	#category : #'Tool-CriticBrowser-Base'
 }
 
 { #category : #menu }
-CriticBrowser class >> criticsBrowserMenuOn: aBuilder [ 
-	"<worldMenu>"
-	"please use CBCritiqueBrowser>>criticsBrowserMenuOn: @arg"
-	self deprecated: 'use CBCritiqueBrowser>>criticsBrowserMenuOn: @arg'.
+CBCritiqueBrowser class >> criticsBrowserMenuOn: aBuilder [ 
+	<worldMenu>
 	
-	(aBuilder item: 'Critic Browser')
+	(aBuilder item: 'Critique Browser')
 		action: [ self openOnCurrentWorkingConfiguration];
 		order: 2;
 		parent: #Browsing;
@@ -43,97 +43,70 @@ CriticBrowser class >> criticsBrowserMenuOn: aBuilder [
 ]
 
 { #category : #specs }
-CriticBrowser class >> defaultSpec [
-	"Please do not use this method. We do not use this class anymore"
-	<spec>
-	self deprecated: 'Do not use this method'.
-	
-	^ SpecLayout composed 
-		newColumn: [:c |
-			c 
-				newRow: [:r |
-					r 
-						newColumn: [:c1 |
-							c1 add: #rulesModel.
-							c1 newRow: [:c2 |
-								c2 add: #resetButton.
-								c2 add: #updateButton.
-								c2 add: #logButton
-							] height: 25
-						];
-						newColumn: [:c1 |
-							c1 
-								add: #(criticModel textInputFieldModel) height: 20;
-								add: #(criticModel criticsModel);
-								add: #(criticModel toolbarModel) height: 25 ]];
-				addSplitter;
-				add: #(criticModel textModel) ]
+CBCritiqueBrowser class >> defaultSpec [
+
+	^ SpPanedLayout newTopToBottom
+		  add: (SpPanedLayout newLeftToRight
+				   add: (SpBoxLayout newTopToBottom
+						    add: #rulesModel;
+						    add: (SpBoxLayout newLeftToRight
+								     add: #resetButton;
+								     add: #updateButton;
+								     add: #logButton;
+								     yourself)
+						    height: 25;
+						    yourself);
+				   add: (SpBoxLayout newTopToBottom
+						    add: #criticsModel;
+						    add: #toolbarModel
+						    height: 25;
+						    yourself);
+				   yourself);
+		  add: #sourceCodeModel;
+		  yourself
 ]
 
 { #category : #icons }
-CriticBrowser class >> icon [
+CBCritiqueBrowser class >> icon [
+
 	"Answer an icon for the receiver."
-	"please use CBCritiqueBrowser>>icon "
-	
-	self deprecated: 'use CBCritiqueBrowser>>icon'.
+
 	^ self iconNamed: #smallWarningIcon
 ]
 
-{ #category : #menu }
-CriticBrowser class >> isDeprecated [ 
-	"We do not need this class anymore, use CBCritiqueBrowser instead" 
-
-	^true
-]
-
 { #category : #'instance creation' }
-CriticBrowser class >> open [
-	<script>
-	"please use CBCritiqueBrowser>>open"
-	
-	| env rules |
-	self deprecated: 'use CBCritiqueBrowser>>open'.
-	
-	rules :=  RBCompositeLintRule allGoodRules rules.
-	env := RBBrowserEnvironment default.
-	self openOnRule: rules onEnvironment: env
+CBCritiqueBrowser class >> open [
+	<example>
+	^ self new openWithSpec
 ]
 
 { #category : #menu }
-CriticBrowser class >> openOnCurrentWorkingConfiguration [
-	"please use CBCritiqueBrowser>>openOnCurrentWorkingConfiguration"
+CBCritiqueBrowser class >> openOnCurrentWorkingConfiguration [
+
 	<script>
-	self deprecated: 'use CBCritiqueBrowser>>openOnCurrentWorkingConfiguration'.
-	
-	CriticWorkingConfiguration exists
-		ifTrue: [ ResetWindow new openWithSpec ]
-		ifFalse: [ SelectPackageBrowser open]
+	CBCritiqueWorkingConfiguration exists
+		ifTrue: [ CBResetWindow new openWithSpec ]
+		ifFalse: [ CBSelectPackage open ]
 ]
 
 { #category : #'instance creation' }
-CriticBrowser class >> openOnRule: aRule onEnvironment: aEnv [
-	"please use CBCritiqueBrowser>>openOnRule: @arg onEnvironment: @arg"
-	
+CBCritiqueBrowser class >> openOnRule: aRule onEnvironment: aEnv [
+
 	| cbr |
-	self deprecated: 'use CBCritiqueBrowser>>openOnRule: @arg onEnvironment: @arg'.
-	
 	cbr :=  self new rules: aRule;
 		environment: aEnv;
 		removeTestCase: false;
 		yourself.
-
+		
 	cbr openWithSpec.
 	cbr applyRules. 
 	cbr rulesModel changed:  #listElementAt:
 ]
 
 { #category : #'instance creation' }
-CriticBrowser class >> openOnWorkingConfiguration: aWorkingConfiguration [
-	"please use CBCritiqueBrowser>>openOnWorkingConfiguration: @arg"
-	
+CBCritiqueBrowser class >> openOnWorkingConfiguration: aWorkingConfiguration [
+
 	| cbr |
-	self deprecated: 'use CBCritiqueBrowser>>openOnWorkingConfiguration: @arg'.
-	
 	cbr := self new 
 		rules: aWorkingConfiguration rule;
 		environment: aWorkingConfiguration environment;
@@ -146,15 +119,13 @@ CriticBrowser class >> openOnWorkingConfiguration: aWorkingConfiguration [
 ]
 
 { #category : #icons }
-CriticBrowser class >> taskbarIconName [
-	"please use CBCritiqueBrowser>>taskbarIconName"
-	self deprecated: 'use CBCritiqueBrowser>>taskbarIconName'.
-	
+CBCritiqueBrowser class >> taskbarIconName [
+
 	^#smallWarningIcon
 ]
 
-{ #category : #'user interface' }
-CriticBrowser >> addModelItemsToWindowMenu: aMenu [
+{ #category : #window }
+CBCritiqueBrowser >> addModelItemsToWindowMenu: aMenu [
 	"Add model-related items to the window menu"
 
 	aMenu
@@ -164,21 +135,12 @@ CriticBrowser >> addModelItemsToWindowMenu: aMenu [
 ]
 
 { #category : #private }
-CriticBrowser >> addRuleToFalsePositive [
-	rulesModel selectedItem ifNotNil: [ :rule |
-		rule leaves do: [ :r |
-			rbEnvironment packages do: [ :package |
-				cache addFalsePositiveRule: r forPackage: package ]]].
-	
-]
-
-{ #category : #private }
-CriticBrowser >> allRules [
+CBCritiqueBrowser >> allRules [
 	^ rulesModel roots flatCollect: #rules
 ]
 
 { #category : #private }
-CriticBrowser >> applyRules [
+CBCritiqueBrowser >> applyRules [
 	| packageCount nbPackage process rules |
 	rules := self allRules.
 	nbPackage := rbEnvironment packages size.
@@ -201,20 +163,38 @@ CriticBrowser >> applyRules [
 	self setTitle: self defaultTitle.
 	cache packages: rbEnvironment.
 	cache initCache.
-	self updateTree.
-	self registerToAnnouncements ] newProcess.
+	self rules: (self allRules select: [ :r | self hasBrokenRules: r]).
+    self rulesModel refresh.
+    self rebuildLayout.
+	self updateTree. ] newProcess.
 	process name: 'SmallLint'.
 	process resume
 ]
 
 { #category : #private }
-CriticBrowser >> browseRule [
+CBCritiqueBrowser >> browseRule [
 
-	rulesModel selectedItem ifNotNil: [ :item | item content browse ]
+	rulesModel selectedItem ifNotNil: [ :item | ^ item browse ]
+]
+
+{ #category : #private }
+CBCritiqueBrowser >> buildRuleMenu [
+
+	^ SpMenuPresenter new
+		  addGroup: [ :group | 
+			  group addItem: [ :item | 
+					  item
+						  name: 'Browse rule' translated;
+						  action: [ self browseRule ] ].
+			  group addItem: [ :item | 
+				  item
+					  name: 'Reapply this rule' translated;
+					  action: [ self reapplyThisRule ] ] ];
+		  yourself
 ]
 
 { #category : #'system annoucements' }
-CriticBrowser >> classAdded: aClass [
+CBCritiqueBrowser >> classAdded: aClass [
 
 	| rules |
 
@@ -237,7 +217,7 @@ CriticBrowser >> classAdded: aClass [
 ]
 
 { #category : #'system annoucements' }
-CriticBrowser >> classRemoved: aClass [
+CBCritiqueBrowser >> classRemoved: aClass [
 
 	(rbEnvironment definesClass: aClass)
 		ifTrue: [ cache itemRemoved: aClass ].
@@ -246,47 +226,63 @@ CriticBrowser >> classRemoved: aClass [
 ]
 
 { #category : #private }
-CriticBrowser >> colorForRule: aRule [
+CBCritiqueBrowser >> colorForRule: aRule [
+
 	| total |
 	^ (total := cache criticsOf: aRule)
-		ifEmpty: [ self class theme textColor ]
-		ifNotEmpty: [ (cache falsePositiveOf: aRule) = total
-				ifTrue: [ criticModel falsePositiveColor ]
-				ifFalse: [ criticModel defaultColor ]]
+		  ifEmpty: [ criticModel falsePositiveColor ]
+		  ifNotEmpty: [ 
+			  (cache falsePositiveOf: aRule) = total
+				  ifTrue: [ criticModel falsePositiveColor ]
+				  ifFalse: [ self class theme textColor ] ]
+]
+
+{ #category : #initialization }
+CBCritiqueBrowser >> connectPresenters [
+
+	rulesModel whenSelectedItemChangedDo: [ :rule | 
+		(rule isNil or: [ rule isComposite ]) ifFalse: [ 
+			criticModel
+				resetSelection;
+				rule: rule;
+				setTextModelForNil ].
+		self setTitle:
+			(rule ifNil: [ self defaultTitle ] ifNotNil: [ rule name ]) ]
 ]
 
 { #category : #accessing }
-CriticBrowser >> criticModel [
-	^ criticModel
+CBCritiqueBrowser >> criticsModel [
+
+	^ criticModel criticsModel
 ]
 
 { #category : #api }
-CriticBrowser >> defaultTitle [
+CBCritiqueBrowser >> defaultTitle [
 
-	^ 'Critic Browser'
+	^ 'Critique Browser'
 ]
 
 { #category : #accessing }
-CriticBrowser >> environment [
+CBCritiqueBrowser >> environment [
 	^ rbEnvironment
 
 ]
 
 { #category : #accessing }
-CriticBrowser >> environment: aEnv [
+CBCritiqueBrowser >> environment: aEnv [
 	rbEnvironment := aEnv
 
 ]
 
 { #category : #'system annoucements' }
-CriticBrowser >> handleClassAdded: anAnnouncement [
+CBCritiqueBrowser >> handleClassAdded: anAnnouncement [
 
 	self classAdded: anAnnouncement classAdded
 
 ]
 
 { #category : #'system annoucements' }
-CriticBrowser >> handleClassModified: anAnnouncement [
+CBCritiqueBrowser >> handleClassModified: anAnnouncement [
 
 	self
 		classRemoved: anAnnouncement oldClassDefinition;
@@ -295,21 +291,21 @@ CriticBrowser >> handleClassModified: anAnnouncement [
 ]
 
 { #category : #'system annoucements' }
-CriticBrowser >> handleClassRemoved: anAnnouncement [
+CBCritiqueBrowser >> handleClassRemoved: anAnnouncement [
 
 	self classRemoved: anAnnouncement classRemoved
 
 ]
 
 { #category : #'system annoucements' }
-CriticBrowser >> handleMethodAdded: anAnnouncement [
+CBCritiqueBrowser >> handleMethodAdded: anAnnouncement [
 
 	self methodAdded: anAnnouncement methodAdded
 
 ]
 
 { #category : #'system annoucements' }
-CriticBrowser >> handleMethodModified: anAnnouncement [
+CBCritiqueBrowser >> handleMethodModified: anAnnouncement [
 
 	self
 		methodRemoved: anAnnouncement oldMethod;
@@ -319,106 +315,79 @@ CriticBrowser >> handleMethodModified: anAnnouncement [
 ]
 
 { #category : #'system annoucements' }
-CriticBrowser >> handleMethodRemoved: anAnnouncement [
+CBCritiqueBrowser >> handleMethodRemoved: anAnnouncement [
 
 	self methodRemoved: anAnnouncement methodRemoved
 
 ]
 
-{ #category : #api }
-CriticBrowser >> initialExtent [
-
-	^ 760@370
+{ #category : #'system annoucements' }
+CBCritiqueBrowser >> hasBrokenRules: rule [
+    | unclassified falsePositives toDos total |
+    falsePositives := (cache falsePositiveOf: rule) size.
+    toDos := (cache toDosOf: rule) size.
+    total := (cache criticsOf: rule) size.
+    unclassified := total - falsePositives - toDos.
+    ^ unclassified > 0
 ]
 
 { #category : #initialization }
-CriticBrowser >> initialize [
-	
+CBCritiqueBrowser >> initialize [
+
 	super initialize.
-	cache := CriticsCache new.
+	cache := CBCritiquesCache new.
 	checker := ReSmalllintChecker new.
 	cache checker: checker.
 	cache browser: self.
-	criticModel cache: cache
+	criticModel cache: cache.
+	toolbarModel cache: cache
 ]
 
 { #category : #initialization }
-CriticBrowser >> initializePresenter [
-	rulesModel
-		whenSelectedItemChanged: [ :rule | 
-			(rule isNil or: [ rule isComposite ])
-				ifFalse: [ criticModel
-						resetSelection;
-						rule: rule;
-						setTextModelForNil ].
-			self setTitle: (rule ifNil: [ self defaultTitle ] ifNotNil: [ rule name ]) ]
-]
+CBCritiqueBrowser >> initializePresenters [
 
-{ #category : #initialization }
-CriticBrowser >> initializeWidgets [
-	
 	title := self defaultTitle.
-	rulesModel := self newTree.
+	rulesModel := self newTreeTable.
 	resetButton := self newButton.
 	updateButton := self newButton.
 	logButton := self newButton.
-	
+
 	self setLogButton.
 	self setResetButton.
 	self setUpdateButton.
-	 
-	criticModel := SingleCodeCriticResultList new.
-	rulesModel childrenBlock: [ :rule | 
-		rule isComposite 
-			ifTrue: [ rule rules ]
-			ifFalse: [ #() ]]. 
 
-	rulesModel displayBlock: [ :rule | self stringMorphForRule: rule ].
+	criticModel := CBSingleCodeCritiqueResultList new.
+	criticsModel := self criticsModel.
+	sourceCodeModel := self sourceCodeModel.
+	toolbarModel := self toolbarModel.
 	
-	rulesModel menu: [ :aMenu :shifted | self menu: aMenu shifted: shifted ].	
-	
+	self setRulesModel.
+
 	self focusOrder
 		add: rulesModel;
 		add: criticModel
 ]
 
+{ #category : #'user interface' }
+CBCritiqueBrowser >> initializeWindow: aWindowPresenter [
+
+	aWindowPresenter
+		title: self defaultTitle;
+		initialExtent: 760 @ 370
+]
+
 { #category : #accessing }
-CriticBrowser >> logButton [
+CBCritiqueBrowser >> logButton [
 	^ logButton 
 ]
 
 { #category : #private }
-CriticBrowser >> logInManifest [
+CBCritiqueBrowser >> logInManifest [
 	cache logInManifest
 ]
 
-{ #category : #menu }
-CriticBrowser >> menu: aMenu shifted: aBoolean [
-	aMenu
-		addGroup:[ :group | 
-			group addItem: [ :item |
-				item 
-					name: 'Browse rule' translated;
-					action: [ self browseRule ]].
-			group addItem: [ :item |
-				item 
-					name: 'Reapply this rule' translated;
-					action: [ self reapplyThisRule ] ] ];
-		addGroup:[ :group | 
-			group addItem: [ :item |
-				item 
-					name: 'Ban from selected packages' translated;
-					action: [ self addRuleToFalsePositive ]].
-			group addItem: [ :item |
-				item 
-					name: 'Unban from selected packages' translated;
-					action: [ self removeRuleToFalsePositive ] ] ].
-		
-	 ^ aMenu
-]
-
 { #category : #'system annoucements' }
-CriticBrowser >> methodAdded: aMethod [
+CBCritiqueBrowser >> methodAdded: aMethod [
 
 	| rules |
 
@@ -441,7 +410,7 @@ CriticBrowser >> methodAdded: aMethod [
 ]
 
 { #category : #'system annoucements' }
-CriticBrowser >> methodRemoved: aMethod [
+CBCritiqueBrowser >> methodRemoved: aMethod [
 
 	(rbEnvironment includesMethod: aMethod)
 		ifTrue: [ cache itemRemoved: aMethod ].
@@ -450,7 +419,7 @@ CriticBrowser >> methodRemoved: aMethod [
 ]
 
 { #category : #api }
-CriticBrowser >> onWindowClosed [
+CBCritiqueBrowser >> onWindowClosed [
 
 	self unregisterFromAnnouncements.
 
@@ -464,20 +433,21 @@ before closing the Critics Browser ?')
 ]
 
 { #category : #display }
-CriticBrowser >> open [
+CBCritiqueBrowser >> open [
 
 	^ self openWithSpec
 ]
 
 { #category : #private }
-CriticBrowser >> reapplyAllRules [
-	
+CBCritiqueBrowser >> reapplyAllRules [
+
 	cache initialize.
-	self applyRules 
+	checker resetResult.
+	self applyRules
 ]
 
 { #category : #private }
-CriticBrowser >> reapplyRule: aRule [
+CBCritiqueBrowser >> reapplyRule: aRule [
 
 	cache removeRule: aRule.
 	checker resetResult.
@@ -494,11 +464,11 @@ CriticBrowser >> reapplyRule: aRule [
 ]
 
 { #category : #private }
-CriticBrowser >> reapplyThisRule [
+CBCritiqueBrowser >> reapplyThisRule [
 
 	| rule |
 	rulesModel selectedItem ifNil: [ ^ self ].
-	rule := rulesModel selectedItem content.
+	rule := rulesModel selectedItem.
 	rule isComposite 
 		ifTrue: [ rule rules do: [ :each | self reapplyRule: each ] ]
 		ifFalse: [ self reapplyRule: rule ]
@@ -507,7 +477,7 @@ CriticBrowser >> reapplyThisRule [
 ]
 
 { #category : #'system annoucements' }
-CriticBrowser >> registerToAnnouncements [
+CBCritiqueBrowser >> registerToAnnouncements [
 	
 	self unregisterFromAnnouncements.
 	
@@ -521,47 +491,34 @@ CriticBrowser >> registerToAnnouncements [
 	self window window announcer when: WindowClosed send: #onWindowClosed to: self
 ]
 
-{ #category : #private }
-CriticBrowser >> removeRuleToFalsePositive [
-
-	rulesModel selectedItem ifNotNil: [ :rule |
-		rule leaves do: [ :r |
-			rbEnvironment packages do: [ :package |
-				 cache removeFalsePositiveRule: r forPackage: package ]]]
-
-	
-	
-]
-
 { #category : #accessing }
-CriticBrowser >> removeTestCase: aBoolean [
+CBCritiqueBrowser >> removeTestCase: aBoolean [
 	removeTestCase :=  aBoolean
 ]
 
 { #category : #accessing }
-CriticBrowser >> resetButton [
+CBCritiqueBrowser >> resetButton [
 	^ resetButton 
 ]
 
 { #category : #accessing }
-CriticBrowser >> rules: rulesCollection [
+CBCritiqueBrowser >> rules: rulesCollection [
 
-	self rulesModel roots: ((
-		(rulesCollection groupedBy: #group) associations collect: [ :as |
-			CriticBrowserRulesGroup
-				named: as key
-				rules: as value ])
-					sorted: [ :a :b | a name < b name ])
+	self rulesModel roots:
+		(((rulesCollection groupedBy: #group) associations collect: [ :as | 
+			  CBCritiqueBrowserRulesGroup named: as key rules: as value ]) sorted: [ 
+			 :a 
+			 :b | a name < b name ])
 ]
 
 { #category : #accessing }
-CriticBrowser >> rulesModel [
+CBCritiqueBrowser >> rulesModel [
 
 	^ rulesModel
 ]
 
 { #category : #initialization }
-CriticBrowser >> setActionLogButton [
+CBCritiqueBrowser >> setActionLogButton [
 	^ [ (UIManager default
 		confirm:
 			'Do you want to save all false positive and toDo in the Manifests ?
@@ -570,97 +527,119 @@ CriticBrowser >> setActionLogButton [
 ]
 
 { #category : #initialization }
-CriticBrowser >> setActionResetButton [
-	
-	^ [(UIManager default confirm: 'Do you want to delete the current configuration
- and create a new configuration ?')
-		ifTrue: [ self delete. 
-				SelectPackageBrowser open ]]
+CBCritiqueBrowser >> setActionResetButton [
+
+	^ [ 
+	  (UIManager default confirm:
+		   'Do you want to delete the current configuration
+ and create a new configuration ?') ifTrue: [ 
+		  self delete.
+		  CBSelectPackage open ] ]
 ]
 
 { #category : #initialization }
-CriticBrowser >> setActionUpdateButton [
+CBCritiqueBrowser >> setActionUpdateButton [
 	^ [ self reapplyAllRules ]
 ]
 
 { #category : #initialization }
-CriticBrowser >> setLogButton [
+CBCritiqueBrowser >> setLogButton [
 
 	logButton 
 		state: false;
+		icon: (self iconNamed: #smallSave);
 		label: 'Save Critics';
 		action: self setActionLogButton 
 ]
 
 { #category : #initialization }
-CriticBrowser >> setResetButton [
+CBCritiqueBrowser >> setResetButton [
 
 	resetButton 
 		state: false;
+		icon: (self iconNamed: #smallUpdate);
 		label: 'Run new configuration';
 		action: self setActionResetButton
 ]
 
+{ #category : #'system annoucements' }
+CBCritiqueBrowser >> setRulesModel [ 
+rulesModel children: [ :rule | 
+		rule isComposite
+			ifTrue: [ rule rules asArray ]
+			ifFalse: [ #(  ) ] ].
+
+	rulesModel addColumn: ((SpStringTableColumn evaluated: [ :rule | 
+			  self stringMorphForRule: rule ]) title: 'Rules Group').
+	rulesModel contextMenu: self buildRuleMenu.
+]
+
 { #category : #api }
-CriticBrowser >> setTitle: aTitle [
+CBCritiqueBrowser >> setTitle: aTitle [
 
 	title := aTitle.
-	
-	self window updateTitle 
-	
+	self withWindowDo: [ :w | w title: aTitle ]
 ]
 
 { #category : #initialization }
-CriticBrowser >> setUpdateButton [
+CBCritiqueBrowser >> setUpdateButton [
 
 	updateButton 
 		state: false;
+		icon: (self iconNamed: #glamorousRestart);
 		label: 'Update';
 		action: self setActionUpdateButton.
 ]
 
+{ #category : #accessing }
+CBCritiqueBrowser >> sourceCodeModel [
+
+	^ criticModel sourceCodeModel
+]
+
 { #category : #private }
-CriticBrowser >> stringMorphForRule: rule [
+CBCritiqueBrowser >> stringMorphForRule: rule [
+	
+	"set the amount of critiques per rule"
 	| unclassified falsePositives toDos text total |
 	falsePositives := (cache falsePositiveOf: rule) size.
 	toDos := (cache toDosOf: rule) size.
 	total := (cache criticsOf: rule) size.
 	unclassified := total - falsePositives - toDos.
-	text := String
-		streamContents: [ :s | 
-			s
-				<< rule name;
-				<< ' (To sort: ';
-				print: unclassified;
-				<< ', ToDo: ';
-				print: toDos;
-				<< ', Wrong: ';
-				print: falsePositives;
-				<< ')' ].
+	text := String streamContents: [ :s | 
+		        s
+			        << rule name;
+			        << ' (To sort: ';
+			        print: unclassified;
+			        << ', ToDo: ';
+			        print: toDos;
+			        << ', Wrong: ';
+			        print: falsePositives;
+			        << ')' ].
 	^ text asMorph
-		color: (self colorForRule: rule);
-		yourself
-		
+		  color: (self colorForRule: rule);
+		  yourself
 ]
 
-{ #category : #api }
-CriticBrowser >> title [
-	^ title
+{ #category : #accessing }
+CBCritiqueBrowser >> toolbarModel [
+
+	^ criticModel toolbarModel
 ]
 
 { #category : #'system annoucements' }
-CriticBrowser >> unregisterFromAnnouncements [
+CBCritiqueBrowser >> unregisterFromAnnouncements [
 
 	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
 { #category : #accessing }
-CriticBrowser >> updateButton [
+CBCritiqueBrowser >> updateButton [
 	^ updateButton 
 ]
 
 { #category : #thread }
-CriticBrowser >> updateTree [
+CBCritiqueBrowser >> updateTree [
 	criticModel updateList. 
-	rulesModel updateTree
+	rulesModel update
 ]

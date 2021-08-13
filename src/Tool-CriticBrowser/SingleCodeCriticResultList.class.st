@@ -22,6 +22,8 @@ Class {
 { #category : #specs }
 SingleCodeCriticResultList class >> defaultSpec [
 	<spec>
+	"Please do not use this method. We do not use this class anymore"
+	self deprecated: 'Do not use this method'.
 	
 	^ SpecLayout composed
 		newColumn: [:c |
@@ -34,7 +36,9 @@ SingleCodeCriticResultList class >> defaultSpec [
 
 { #category : #icons }
 SingleCodeCriticResultList class >> exclamationIcon [ 
-
+	
+	"please use CBSingleCodeCritiqueResultList>>exclamationIcon"
+	self deprecated: 'use CBSingleCodeCritiqueResultList>>exclamationIcon'.
 	^  icons
 			at: #'exclamationIcon'
 			ifAbsentPut:[ Form fromBinaryStream: self exclamationIconContents base64Decoded readStream ].
@@ -44,6 +48,9 @@ SingleCodeCriticResultList class >> exclamationIcon [
 { #category : #icons }
 SingleCodeCriticResultList class >> exclamationIconContents [
 	"Private - Method generated"
+	"please use CBSingleCodeCritiqueResultList>>exclamationIconContents"
+	self deprecated: 'use CBSingleCodeCritiqueResultList>>exclamationIconContents'.
+	
 	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0
 RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAJPSURBVDjLpZPLS5RhFMYfv9QJ
 lelTQZwRb2OKlKuINuHGLlBEBEOLxAu46oL0F0QQFdWizUCrWnjBaDHgThCMoiKkhUONTqmj
@@ -62,18 +69,33 @@ e48/+xD8oxcAYPzs4QaS7RR2kbLTTOTQieczfzfTv8QPldGvTGoF6/8AAAAASUVORK5CYII='
 { #category : #'class initialization' }
 SingleCodeCriticResultList class >> initialize [
 	
+	"please use CBSingleCodeCritiqueResultList>>initialize"
+	self deprecated: 'use CBSingleCodeCritiqueResultList>>initialize'.
+	
 	icons := IdentityDictionary new
+]
+
+{ #category : #icons }
+SingleCodeCriticResultList class >> isDeprecated [ 
+	"We do not need this class anymore. Use CBSingleCodeCriticResultList instead" 
+
+	^true
 ]
 
 { #category : #specs }
 SingleCodeCriticResultList class >> title [
-
+	
+	"please use CBSingleCodeCritiqueResultList>>title"
+	self deprecated: 'use CBSingleCodeCritiqueResultList>>title'.
 	^ 'Critic Browser'
 ]
 
 { #category : #icons }
 SingleCodeCriticResultList class >> wrenchOrangeIcon [
-
+	
+	"please use CBSingleCodeCritiqueResultList>>wrenchOrangeIcon"
+	self deprecated: 'use CBSingleCodeCritiqueResultList>>wrenchOrangeIcon'.
+	
 	^  icons
 			at: #'wrenchOrangeIcon'
 			ifAbsentPut:[ Form fromBinaryStream: self wrenchOrangeIconContents base64Decoded readStream ].
@@ -83,6 +105,9 @@ SingleCodeCriticResultList class >> wrenchOrangeIcon [
 { #category : #icons }
 SingleCodeCriticResultList class >> wrenchOrangeIconContents [
 	"Private - Method generated"
+	"please use CBSingleCodeCritiqueResultList>>wrenchOrangeIconContents"
+	self deprecated: 'use CBSingleCodeCritiqueResultList>>wrenchOrangeIconContents'.
+	
 	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0
 RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAHaSURBVDjLlZO7a1NRHMfzfzhI
 KQ5OHR1ddRRBLA6lg4iTd5PSas37YR56Y2JiHgg21uoFxSatCVFjbl5iNBBiMmUJgWwZhCB4

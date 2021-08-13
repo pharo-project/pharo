@@ -12,7 +12,16 @@ Class {
 }
 
 { #category : #'instance creation' }
+CriticBrowserRulesGroup class >> isDeprecated [ 
+	"We do not need this class anymore. Use CBCriticBrowserRulesGroup instead" 
+
+	^true
+]
+
+{ #category : #'instance creation' }
 CriticBrowserRulesGroup class >> named: aString rules: aCollection [
+	"please use CBCritiqueBrowserRulesGroup>>named: @arg rules: @arg"	
+	self deprecated: 'use CBCritiqueBrowserRulesGroup>>named: @arg rules: @arg'.
 
 	^ self new
 		name: aString;

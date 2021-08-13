@@ -9,13 +9,15 @@ Class {
 		'removeTestCase',
 		'selectedRules'
 	],
-	#category : #'Tool-CriticBrowser-Parts'
+	#category : #'Tool-CriticBrowser-Applier'
 }
 
 { #category : #'instance creation' }
 SelectRuleBrowser class >> items [
-
+	"please use CBSelectRule>>items instead"
 	| rules rulesByGroup |
+	self deprecated: 'use CBSelectRule>>items'.
+	
 	rules := (ReRuleManager visibleRuleClasses collect: [:aClass | aClass new]) sorted: [ :a :b |
 		a name < b name ].
 	rulesByGroup := ((rules groupedBy: #group) associations collect: [ :as |
@@ -26,7 +28,9 @@ SelectRuleBrowser class >> items [
 
 { #category : #'instance creation' }
 SelectRuleBrowser class >> openWithEnvironment: anEnvironment removeTestCase: aBoolean [
-
+	"please use CBSelectRule>>openWithEnvironment: @arg removeTestCase: @arg"
+	self deprecated: 'use CBSelectRule>>openWithEnvironment: @arg removeTestCase: @arg'.
+	
 	self new
 		items: self items;
 		environment: anEnvironment;
@@ -37,6 +41,9 @@ SelectRuleBrowser class >> openWithEnvironment: anEnvironment removeTestCase: aB
 
 { #category : #specs }
 SelectRuleBrowser class >> title [
+	"We do not need this method anymore."
+	self deprecated: 'This method is not use anymore'.
+	
 	^ 'Select rules'
 ]
 
