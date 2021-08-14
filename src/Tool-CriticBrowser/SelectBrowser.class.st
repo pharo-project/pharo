@@ -4,15 +4,6 @@ A simple selection browser.
 Class {
 	#name : #SelectBrowser,
 	#superclass : #ComposablePresenter,
-	#instVars : [
-		'toSelectModel',
-		'selectedModel',
-		'addButtonModel',
-		'addAllButtonModel',
-		'removeButtonModel',
-		'removeAllButtonModel',
-		'nextButtonModel'
-	],
 	#category : #'Tool-CriticBrowser-Applier'
 }
 
