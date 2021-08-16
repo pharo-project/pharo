@@ -24,13 +24,6 @@ OSPlatform class >> current [
 ]
 
 { #category : #'system attributes' }
-OSPlatform class >> currentPlatformName [
-	"Return the name of the platform we're running on"
-
-	^ Smalltalk vm getSystemAttribute: 1001
-]
-
-{ #category : #'system attributes' }
 OSPlatform class >> currentVersion [
 	"Return the version number string of the platform we're running on"
 
@@ -218,7 +211,7 @@ OSPlatform >> menuShortcutString [
 OSPlatform >> name [
 	"Return the name of the platform we're running on"
 
-	^ self class currentPlatformName
+	^ Smalltalk vm operatingSystemName
 ]
 
 { #category : #compatbility }

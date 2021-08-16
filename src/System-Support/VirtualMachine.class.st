@@ -37,6 +37,12 @@ VirtualMachine >> allocationsBetweenGC: anInteger [
 ]
 
 { #category : #accessing }
+VirtualMachine >> architectureName [
+	
+	^ Smalltalk vm getSystemAttribute: 1003
+]
+
+{ #category : #accessing }
 VirtualMachine >> buildDate [			
 	"Return a String reflecting the build date of the VM"
 	"Smalltalk buildDate"
@@ -617,6 +623,12 @@ VirtualMachine >> oldSpaceEnd [
 
 	^ self parameterAt: 1
 
+]
+
+{ #category : #accessing }
+VirtualMachine >> operatingSystemName [
+	
+	^ Smalltalk vm getSystemAttribute: 1001
 ]
 
 { #category : #accessing }

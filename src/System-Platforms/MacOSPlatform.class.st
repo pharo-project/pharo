@@ -16,7 +16,7 @@ MacOSPlatform class >> isActivePlatform [
 { #category : #testing }
 MacOSPlatform class >> isMacOS [
 
-	^ self currentPlatformName = 'Mac OS'
+	^ Smalltalk vm operatingSystemName = 'Mac OS'
 ]
 
 { #category : #visiting }
