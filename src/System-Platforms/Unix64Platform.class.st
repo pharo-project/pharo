@@ -15,7 +15,7 @@ Class {
 
 { #category : #testing }
 Unix64Platform class >> isActivePlatform [
-	^ (self currentPlatformName = 'unix') and: [ Smalltalk vm wordSize = 8 ]
+	^ (Smalltalk vm operatingSystemName = 'unix') and: [ Smalltalk vm wordSize = 8 ]
 ]
 
 { #category : #visiting }
