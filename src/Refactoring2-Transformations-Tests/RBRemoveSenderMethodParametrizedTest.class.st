@@ -161,17 +161,17 @@ RBRemoveSenderMethodParametrizedTest >> testRemoveSenderIntoCascaded3Message [
 { #category : #tests }
 RBRemoveSenderMethodParametrizedTest >> testRemoveSenderIntoCascadedMessage [
 	| refactoring methodName |
-	methodName := ('called:', 'on:') asSymbol.
+	methodName := ('cascadedMessage:', 'on:') asSymbol.
 	self proceedThroughWarning: 
 		[ refactoring := self createRefactoringWithArguments:  
-			{{(	31 to: 75) . #cr}.
+			{{(	40 to: 84) . #cr}.
 			methodName . 
 			#RBRefactoryTestDataApp}.
 	self setupInlineExpressionFor: refactoring toReturn: false.
 	
 	self executeRefactoring: refactoring ].
 	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: methodName) 
-		equals: (self parseMethod: 'called: anObject on: aBlock 
+		equals: (self parseMethod: 'cascadedMessage: anObject on: aBlock 
 			Transcript show: anObject printString.
 			aBlock value')
 ]

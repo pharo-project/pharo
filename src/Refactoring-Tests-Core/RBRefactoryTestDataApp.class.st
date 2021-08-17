@@ -65,7 +65,7 @@ RBRefactoryTestDataApp >> called: anObject on1: aBlock [
 
 { #category : #inline }
 RBRefactoryTestDataApp >> called: anObject on: aBlock [ 
-	self traceCr: anObject printString .
+	self traceCr: anObject printString.
 	aBlock value
 ]
 
@@ -92,6 +92,14 @@ RBRefactoryTestDataApp >> caller1 [
 { #category : #inline }
 RBRefactoryTestDataApp >> caller2 [
 	^(1 to: 10) inject: 1 into: [:sum :each | sum * (self foo: each)]
+]
+
+{ #category : #inline }
+RBRefactoryTestDataApp >> cascadedMessage: anObject on: aBlock [	
+	Transcript
+		show: anObject printString;
+		cr.
+	aBlock value
 ]
 
 { #category : #lint }

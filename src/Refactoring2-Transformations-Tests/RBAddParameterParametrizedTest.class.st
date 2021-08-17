@@ -39,10 +39,8 @@ RBAddParameterParametrizedTest >> testAddParameterAndRenameParameters [
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self assert: (class parseTreeFor: newSelector) equals: (self parseMethod: 'called: anObject bar: anObject1 on: aBlock1
-							Transcript
-								show: anObject printString;
-								cr.
-								aBlock1 value').
+							self traceCr: anObject printString.
+							aBlock1 value').
 	self assert: (class parseTreeFor: #caller) equals: (self parseMethod: 'caller
 							| anObject |
 							anObject := 5.
@@ -63,9 +61,7 @@ RBAddParameterParametrizedTest >> testAddParameterForTwoArgumentMessage [
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self assert: (class parseTreeFor: newSelector) equals: (self parseMethod: 'called: anObject bar: anObject1 on: aBlock
-							Transcript
-								show: anObject printString;
-								cr.
+								self traceCr: anObject printString.
 								aBlock value').
 	self assert: (class parseTreeFor: #caller) equals: (self parseMethod: 'caller
 							| anObject |
