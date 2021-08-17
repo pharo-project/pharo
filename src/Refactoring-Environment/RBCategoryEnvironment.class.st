@@ -17,19 +17,24 @@ Class {
 	#category : #'Refactoring-Environment'
 }
 
-{ #category : #'instance creation' }
+{ #category : #api }
 RBCategoryEnvironment class >> categories: aCollection [
 	^ self
 		onEnvironment: self default
 		categories: aCollection
 ]
 
-{ #category : #'instance creation' }
+{ #category : #api }
 RBCategoryEnvironment class >> category: aCategory [
 	^ self categories: { aCategory }
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'accessing - defaults' }
+RBCategoryEnvironment class >> defaultName [
+	^ 'Categories'
+]
+
+{ #category : #api }
 RBCategoryEnvironment class >> onEnvironment: anEnvironment categories: aCollection [
 	^(self onEnvironment: anEnvironment)
 		categories: aCollection;
@@ -41,12 +46,18 @@ RBCategoryEnvironment >> addCategory: aSymbol [
 	categories add: aSymbol
 ]
 
+{ #category : #accessing }
+RBCategoryEnvironment >> basisObjects [
+
+	^ self categories
+]
+
 { #category : #initialization }
 RBCategoryEnvironment >> categories: aCollection [
 	categories addAll: aCollection
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBCategoryEnvironment >> classNames [
 	^ self categories 
 		inject: IdentitySet new

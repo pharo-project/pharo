@@ -7,7 +7,7 @@ Class {
 	#category : #'Rubric-Editing-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RubTextBackgroundColorSegmentMorph class >> color: aColor from: start to: stop [ 
 	^ self new
 		color: aColor;

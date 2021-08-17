@@ -30,5 +30,5 @@ ReDeprecateWithFirstCharacterDownshiftedRule >> initialize [
 
 { #category : #accessing }
 ReDeprecateWithFirstCharacterDownshiftedRule >> name [
-	^ 'use uncapitalized instead of withFirstCharacterDownshifted'
+	^ 'Use uncapitalized instead of withFirstCharacterDownshifted'
 ]

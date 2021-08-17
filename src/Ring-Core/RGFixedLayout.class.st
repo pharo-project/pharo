@@ -4,14 +4,8 @@ Class {
 	#category : #'Ring-Core-Kernel'
 }
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGFixedLayout >> isFixedLayout [
 
 	^ true
-]
-
-{ #category : #accessing }
-RGFixedLayout >> layoutName [
-
-	^ #FixedLayout
 ]

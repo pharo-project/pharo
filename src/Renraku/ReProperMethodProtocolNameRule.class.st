@@ -10,11 +10,17 @@ Class {
 	#category : #'Renraku-Rules'
 }
 
-{ #category : #'testing-interest' }
+{ #category : #'testing - interest' }
 ReProperMethodProtocolNameRule class >> checksMethod [
 	"This one is abstract but subclasses should run as rules"
 	
 	^ self name ~= #ReProperMethodProtocolNameRule
+]
+
+{ #category : #testing }
+ReProperMethodProtocolNameRule class >> isAbstract [
+
+	^ self == ReProperMethodProtocolNameRule
 ]
 
 { #category : #'private - utilities' }

@@ -4,20 +4,14 @@ Class {
 	#category : #'Ring-Core-Kernel'
 }
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGBitsLayout >> isBitsLayout [
 
 	^ true
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGBitsLayout >> isVariableLayout [
 
 	^ true
-]
-
-{ #category : #accessing }
-RGBitsLayout >> layoutName [
-
-	^ #BitsLayout
 ]

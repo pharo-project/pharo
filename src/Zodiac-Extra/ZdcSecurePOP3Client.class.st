@@ -22,7 +22,7 @@ ZdcSecurePOP3Client class >> defaultPortForSSL [
 	^ 995
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ZdcSecurePOP3Client class >> retrieveMessagesFromGMailAccount: accountAddress password: password limit: limit [
 	| pop3Client messages messageCount |
 	(pop3Client := self openOnHostNamed: 'smtp.gmail.com' port: self defaultPortForSSL)
@@ -50,12 +50,12 @@ ZdcSecurePOP3Client >> ensureConnection [
 	self login
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ZdcSecurePOP3Client >> fetchNextResponse [
 	self lastResponse: self nextLineFromStream
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ZdcSecurePOP3Client >> getMultilineResponse [
 	"Get a multiple line response to the last command, filtering out LF characters. 
 	A multiple line response ends with a line containing only a single period (.) character."
@@ -78,7 +78,7 @@ ZdcSecurePOP3Client >> logVerbose: aString [
 	"self log: aString; log: Character cr"
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ZdcSecurePOP3Client >> nextLineFromStream [
 	| line |
 	line := lineReader nextLine.
@@ -86,7 +86,7 @@ ZdcSecurePOP3Client >> nextLineFromStream [
 	^ line
 ]
 
-{ #category : #'private protocol' }
+{ #category : #'private - protocol' }
 ZdcSecurePOP3Client >> sendCommand: aString [
 	self logVerbose: aString.
 	self stream 

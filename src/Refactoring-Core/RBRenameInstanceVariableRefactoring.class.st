@@ -17,9 +17,9 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBRenameInstanceVariableRefactoring class >> model: aRBSmalltalk rename: aVarName to: aName in: aClass [ 
-	^(self new)
-		model: aRBSmalltalk;
+RBRenameInstanceVariableRefactoring class >> model: aRBNamespace rename: aVarName to: aName in: aClass [ 
+	^ self new
+		model: aRBNamespace;
 		rename: aVarName
 			to: aName
 			in: aClass;
@@ -27,19 +27,19 @@ RBRenameInstanceVariableRefactoring class >> model: aRBSmalltalk rename: aVarNam
 ]
 
 { #category : #'instance creation' }
-RBRenameInstanceVariableRefactoring class >> model: aRBSmalltalk rename: aVarName to: aName in: aClass renameAccessors: aBoolean [
-	^(self new)
-		model: aRBSmalltalk;
+RBRenameInstanceVariableRefactoring class >> model: aRBNamespace rename: aVarName to: aName in: aClass renameAccessors: aBoolean [
+	^ self new
+		model: aRBNamespace;
 		rename: aVarName
-			to: aName
-			in: aClass
-			renameAccessors: aBoolean;
+		to: aName
+		in: aClass
+		renameAccessors: aBoolean;
 		yourself
 ]
 
 { #category : #'instance creation' }
 RBRenameInstanceVariableRefactoring class >> rename: aVarName to: aName in: aClass [
-	^self new
+	^ self new
 		rename: aVarName
 		to: aName
 		in: aClass
@@ -47,7 +47,7 @@ RBRenameInstanceVariableRefactoring class >> rename: aVarName to: aName in: aCla
 
 { #category : #'instance creation' }
 RBRenameInstanceVariableRefactoring class >> rename: aVarName to: aName in: aClass renameAccessors: aBoolean [
-	^self new
+	^ self new
 		rename: aVarName
 		to: aName
 		in: aClass
@@ -70,12 +70,6 @@ RBRenameInstanceVariableRefactoring >> addNewAccessors [
 { #category : #refactoring }
 RBRenameInstanceVariableRefactoring >> browsedEnvironment [
 	^ browsedEnvironment ifNil: [ browsedEnvironment := RBBrowserEnvironment new ]
-]
-
-{ #category : #refactoring }
-RBRenameInstanceVariableRefactoring >> executeRefactoring: aRefactoring [
-	aRefactoring primitiveExecute.
-	self parserClass parseExpression: aRefactoring storeString
 ]
 
 { #category : #initialization }

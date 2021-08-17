@@ -276,20 +276,35 @@ FLBasicSerializationTest >> testDate [
 
 { #category : #tests }
 FLBasicSerializationTest >> testDateAndTime [
-	
+
 	| initialTime initialDate |
 	initialTime := Time fromSeconds: 76020.
 	initialDate := Date fromSeconds: 3492288000.
-	self assertSerializationEqualityOf: (DateAndTime date: initialDate time: initialTime).
-	
-	initialTime := (Time hour: 24 minute: 60 second: 60).
+	self assertSerializationEqualityOf:
+		(DateAndTime date: initialDate time: initialTime).
+
+	initialTime := Time hour: 0 minute: 0 second: 0.
 	initialDate := Date year: 3050 month: 12 day: 31.
-	self assertSerializationEqualityOf: (DateAndTime date: initialDate time: initialTime).
-	
-	initialTime := (Time hour: 24 minute: 60 second: 60).
+	self assertSerializationEqualityOf:
+		(DateAndTime date: initialDate time: initialTime).
+
+	initialTime := Time hour: 0 minute: 0 second: 0.
 	initialDate := Date year: 1600 month: 12 day: 31.
-	self assertSerializationEqualityOf: (DateAndTime date: initialDate time: initialTime).
+	self assertSerializationEqualityOf:
+		(DateAndTime date: initialDate time: initialTime)
+]
+
+{ #category : #tests }
+FLBasicSerializationTest >> testDateAndTimeOffsetNegative [
+	| edt now |
+	edt := TimeZone timeZones last.
 	
+	DateAndTime localTimeZone: edt.
+	now := DateAndTime now.
+	self assert: now offset equals: -4 hours.
+	self serialize: now.
+
+	self assert: self materialized offset equals: -4 hours
 ]
 
 { #category : #tests }
@@ -324,7 +339,7 @@ FLBasicSerializationTest >> testDateOffsetsChanging [
 	self assert: DateAndTime now offset equals: 1 hour.
 	object := Date fromDays: 37023.
 	self assert: object start offset equals: 0 hours.
-	self serialize:object.
+	self serialize: object.
 	
 	DateAndTime localTimeZone: sast.
 	self assert: DateAndTime now offset equals: 2 hours.
@@ -759,6 +774,22 @@ FLBasicSerializationTest >> testSmallIntegerNegative [
 	self assertSerializationIdentityOf: -42.
 ]
 
+{ #category : #'tests-numbers' }
+FLBasicSerializationTest >> testSmallIntegerSerializationForAllBits [
+	1
+		to: 64
+		do: [ :exp |
+			| integer |
+			integer := 2 raisedTo: exp.
+			integer isLarge ifFalse: [
+				self assertSerializationIdentityOf: integer ].
+			integer := 0 - integer.
+			integer isLarge ifFalse: [
+				self assertSerializationIdentityOf: integer ] ]
+
+
+]
+
 { #category : #'tests-globals' }
 FLBasicSerializationTest >> testSmalltalkGlobals [
 	"Smalltalk globals should be global by default."
@@ -797,14 +828,19 @@ FLBasicSerializationTest >> testSystemDictionary [
 FLBasicSerializationTest >> testTime [
 
 	self assertSerializationEqualityOf: (Time fromSeconds: 84072).
-	self assertSerializationEqualityOf: (Time hour: 24 minute: 60 second: 60).
-	self assertSerializationEqualityOf: (Time hour: 23 minute: 59 second: 59).
-	self assertSerializationEqualityOf: (Time hour: 0 minute: 0 second: 0).
+	self assertSerializationEqualityOf:
+		(Time hour: 0 minute: 0 second: 0).
+	self assertSerializationEqualityOf:
+		(Time hour: 23 minute: 59 second: 59).
+	self assertSerializationEqualityOf:
+		(Time hour: 0 minute: 0 second: 0).
 	self assertSerializationEqualityOf: (Time seconds: 0 nanoSeconds: 5).
-	self assertSerializationEqualityOf: (Time allInstances sort:  [:a :b | a asSeconds > b asSeconds]) first.
-	self assertSerializationEqualityOf: (Time allInstances sort:  [:a :b | a nanoSecond > b nanoSecond]) first
-		
-
+	self assertSerializationEqualityOf:
+		(Time allInstances sort: [ :a :b | a asSeconds > b asSeconds ])
+			first.
+	self assertSerializationEqualityOf:
+		(Time allInstances sort: [ :a :b | a nanoSecond > b nanoSecond ])
+			first
 ]
 
 { #category : #tests }

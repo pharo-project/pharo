@@ -1,7 +1,7 @@
 "
-Metalinks are used to annotate other AST nodes. An annotated AST is expanded, compiled and executed on the fly thanks to the ReflectiveMethod/CompiledMethod Twin. 
+Metalinks are used to annotate AST nodes. An annotated AST is expanded, compiled and executed on the fly thanks to the ReflectiveMethod/CompiledMethod twin. 
 
-For a given node metalinks can be put at different positions:
+For a given node, metalinks can be put at different positions:
 
 - before: The metalink is executed before the execution of the node.  
 - instead: The metalink is executed insted the node.
@@ -10,19 +10,20 @@ For a given node metalinks can be put at different positions:
 
 Not all the nodes provide all the position. For example, literals don't provide onError and onSuccess positions.
 
-metaObject: The target object to call
-selector: send this selector
-arguments
+Public API:
 
-condition:  turn link on/off 
-level: Meta Level at which the link is active
+- metaObject: The target object to call
+- selector: send this selector
+- condition:  turn link on/off 
+- level: Meta Level at which the link is active
+
 ------ Examples -----
 
 MetaLink new 
 	metaObject: Halt;
 	selector: #now.
 	
-MetaObject new 
+MetaLink new 
 	metaObject: [ self halt ];
 	selector: #value.
 "

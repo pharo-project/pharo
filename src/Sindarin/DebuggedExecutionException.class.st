@@ -1,7 +1,7 @@
 Class {
 	#name : #DebuggedExecutionException,
 	#superclass : #Error,
-	#category : #Sindarin
+	#category : #'Sindarin-Exceptions'
 }
 
 { #category : #testing }

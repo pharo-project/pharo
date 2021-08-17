@@ -88,7 +88,7 @@ ZdcSecureSocketStream >> connect [
 	
 ]
 
-{ #category : #'private in' }
+{ #category : #'private - in' }
 ZdcSecureSocketStream >> fillBytes: bytes startingAt: offset count: count [
 	"Ask to read count elements into bytes starting at offset. Do not wait. Return read count.
 	Overwritten: decrypt and if necessary ask the socket for encrypted data using a super call."
@@ -115,14 +115,14 @@ ZdcSecureSocketStream >> fillBytes: bytes startingAt: offset count: count [
 	^ 0
 ]
 
-{ #category : #'private in' }
+{ #category : #'private - in' }
 ZdcSecureSocketStream >> fillEncryptedBytes: bytes startingAt: offset count: count [
 	"Read encrypted bytes from the network. Do not wait."
 	
 	^ super fillBytes: bytes startingAt: offset count: count
 ]
 
-{ #category : #'private out' }
+{ #category : #'private - out' }
 ZdcSecureSocketStream >> flushBytes: bytes startingAt: offset count: count [
 	"Ask to write count bytes starting from offset. Wait. Fail if not successful
 	Overwritten: first encrypt the data, then send it to the socket using a super call."
@@ -141,7 +141,7 @@ ZdcSecureSocketStream >> flushBytes: bytes startingAt: offset count: count [
 		currentOffset := currentOffset + chunkCount ]
 ]
 
-{ #category : #'private out' }
+{ #category : #'private - out' }
 ZdcSecureSocketStream >> flushEncryptedBytes: bytes startingAt: offset count: count [
 	"Write encrypted bytes to the network."
 	
@@ -191,7 +191,7 @@ ZdcSecureSocketStream >> isDataAvailable [
 	^ false
 ]
 
-{ #category : #'private in' }
+{ #category : #'private - in' }
 ZdcSecureSocketStream >> readEncryptedBytes: bytes startingAt: offset count: count [
 	"Read encrypted bytes from the network. Wait if necessary."
 	

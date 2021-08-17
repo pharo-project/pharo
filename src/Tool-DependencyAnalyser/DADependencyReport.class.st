@@ -13,7 +13,7 @@ Class {
 	#category : #'Tool-DependencyAnalyser-Report'
 }
 
-{ #category : #example }
+{ #category : #examples }
 DADependencyReport class >> example [
 	<sampleInstance>
 	^ self new 

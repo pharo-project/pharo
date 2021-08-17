@@ -34,37 +34,37 @@ SDL_SysWMinfo_WaylandInfo >> asPlatformSpecificHandle [
 		yourself
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_WaylandInfo >> display [
 	"This method was automatically generated"
 	^ExternalData fromHandle: (handle pointerAt: OFFSET_DISPLAY) type: ExternalType void asPointerType
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_WaylandInfo >> display: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_DISPLAY put: anObject getHandle.
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_WaylandInfo >> shell_surface [
 	"This method was automatically generated"
 	^ExternalData fromHandle: (handle pointerAt: OFFSET_SHELL_SURFACE) type: ExternalType void asPointerType
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_WaylandInfo >> shell_surface: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_SHELL_SURFACE put: anObject getHandle.
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_WaylandInfo >> surface [
 	"This method was automatically generated"
 	^ExternalData fromHandle: (handle pointerAt: OFFSET_SURFACE) type: ExternalType void asPointerType
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_WaylandInfo >> surface: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_SURFACE put: anObject getHandle.

@@ -135,7 +135,7 @@ SliderPresenter >> label: aString [
 { #category : #api }
 SliderPresenter >> max [
 	"<api: #inspect>"
-	"Return the maximun value"
+	"Return the maximum value"
 	
 	^ max value
 ]
@@ -143,7 +143,7 @@ SliderPresenter >> max [
 { #category : #api }
 SliderPresenter >> max: anObject [
 	"<api: #integer min: 1 max: 100 getter:#max registration: #whenMaxChanged:>"
-	"Set the maximun value"
+	"Set the maximum value"
 
 	max value: anObject
 ]
@@ -167,7 +167,7 @@ SliderPresenter >> min: anObject [
 { #category : #api }
 SliderPresenter >> quantum [
 	"<api: #inspect>"
-	"Return the quantum betwen values"
+	"Return the quantum between values"
 
 	^ quantum value
 ]
@@ -175,7 +175,7 @@ SliderPresenter >> quantum [
 { #category : #api }
 SliderPresenter >> quantum: aNumber [
 	"<api: #integer min: #min max: #max getter:#quantum registration: #whenQuantumChanged:>"
-	"Set the quantum betwen values"
+	"Set the quantum between values"
 
 	quantum value: aNumber
 ]
@@ -205,42 +205,42 @@ SliderPresenter >> value: aNumber [
 	value value: aNumber.
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 SliderPresenter >> whenAbsoluteValueChangedDo: aBlock [
 	"Block performed when the absolute value changed"
 
 	absoluteValue whenChangedDo: aBlock
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 SliderPresenter >> whenLabelChangedDo: aBlock [
 	"Block performed when the label changed"
 
 	labelHolder whenChangedDo: aBlock
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 SliderPresenter >> whenMaxChangedDo: aBlock [ 
 	"Block performed when the maximum value changed"
 
 	max whenChangedDo: aBlock
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 SliderPresenter >> whenMinChangedDo: aBlock [ 
 	"Block performed when the minimum value changed"
 
 	min whenChangedDo: aBlock
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 SliderPresenter >> whenQuantumChangedDo: aBlock [ 
 	"Block performed when the quantum value changed"
 
 	quantum whenChangedDo: aBlock
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 SliderPresenter >> whenValueChangedDo: aBlock [ 
 	"Block performed when the value changed"
 

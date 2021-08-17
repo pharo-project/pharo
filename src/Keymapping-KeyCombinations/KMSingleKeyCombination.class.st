@@ -88,13 +88,13 @@ KMSingleKeyCombination >> name [
 	^ self key name
 ]
 
-{ #category : #'accessing platform' }
+{ #category : #'accessing - platform' }
 KMSingleKeyCombination >> platformCharacter [
 
 	^ key
 ]
 
-{ #category : #'accessing platform' }
+{ #category : #'accessing - platform' }
 KMSingleKeyCombination >> platformModifier [
 
 	^ self modifier

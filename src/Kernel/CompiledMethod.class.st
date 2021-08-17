@@ -132,6 +132,8 @@ CompiledMethod class >> initialize [    "CompiledMethod initialize"
 	"Initialize class variables specifying the size of the temporary frame
 	needed to run instances of me."
 
+	self flag:#oldBytecode.
+
 	SmallFrame := 16.	"Context range for temps+stack"
 	LargeFrame := 56.
 	PrimaryBytecodeSetEncoderClass := EncoderForV3PlusClosures.
@@ -158,7 +160,7 @@ CompiledMethod class >> installSecondaryBytecodeSet: aBytecodeEncoderSubclass [
 	SecondaryBytecodeSetEncoderClass := aBytecodeEncoderSubclass
 ]
 
-{ #category : #'accessing class hierarchy' }
+{ #category : #'accessing - class hierarchy' }
 CompiledMethod class >> methodPropertiesClass [
 	"Answer the class to use to create a method's properties, which can be a poor man's way
 	 to add instance variables to subclassses of CompiledMethod.  Subclasses of CompiledMethod
@@ -323,13 +325,13 @@ CompiledMethod >> argumentNames [
 	^ self propertyAt: #argumentNames ifAbsent: [ super argumentNames ]
 ]
 
-{ #category : #'accessing-pragmas & properties' }
+{ #category : #'accessing - pragmas & properties' }
 CompiledMethod >> cachePragmas [
 
 	self pragmas do: [ :pragma | pragma class addToCache: pragma ]
 ]
 
-{ #category : #'accessing-backward compatible' }
+{ #category : #'accessing - backward compatible' }
 CompiledMethod >> category [
 	"Please favor protocol instead of category. We want to have method protocol and class package and tag = a category"
 	^ self methodClass organization categoryOfElement: self selector
@@ -474,7 +476,7 @@ CompiledMethod >> hasPragma [
 	^ self hasProperties and: [self pragmas isNotEmpty]
 ]
 
-{ #category : #'accessing-pragmas & properties' }
+{ #category : #'accessing - pragmas & properties' }
 CompiledMethod >> hasPragmaNamed: aSymbol [
 	^ self pragmas anySatisfy: [ :pragma | pragma selector = aSymbol ]
 ]
@@ -484,7 +486,7 @@ CompiledMethod >> hasProperties [
 	^ self penultimateLiteral isMethodProperties
 ]
 
-{ #category : #'accessing-pragmas & properties' }
+{ #category : #'accessing - pragmas & properties' }
 CompiledMethod >> hasProperty: aKey [
 
 	| extendedMethodState |
@@ -778,7 +780,7 @@ CompiledMethod >> postCopy [
 
 ]
 
-{ #category : #'accessing-pragmas & properties' }
+{ #category : #'accessing - pragmas & properties' }
 CompiledMethod >> pragmaAt: aKey [
 	"Answer the first pragma with selector aKey, or nil if none."
 	^ self pragmas detect: [ :pragma | pragma selector == aKey ] ifNone: nil
@@ -791,7 +793,7 @@ CompiledMethod >> pragmaRefersToLiteral: literal [
 		  self pragmas anySatisfy: [ :pragma | pragma refersToLiteral: literal ] ]
 ]
 
-{ #category : #'accessing-pragmas & properties' }
+{ #category : #'accessing - pragmas & properties' }
 CompiledMethod >> pragmas [
 	| selectorOrProperties |
 	^(selectorOrProperties := self penultimateLiteral) isMethodProperties
@@ -799,7 +801,7 @@ CompiledMethod >> pragmas [
 		ifFalse: [#()]
 ]
 
-{ #category : #'accessing-pragmas & properties' }
+{ #category : #'accessing - pragmas & properties' }
 CompiledMethod >> pragmasDo: aBlock [
 	| selectorOrProperties |
 	(selectorOrProperties := self penultimateLiteral) isMethodProperties
@@ -882,7 +884,7 @@ CompiledMethod >> properties: aMethodProperties [
 							yourself])
 ]
 
-{ #category : #'accessing-pragmas & properties' }
+{ #category : #'accessing - pragmas & properties' }
 CompiledMethod >> propertyAt: propName [
 	| propertiesOrSelector |
 	^(propertiesOrSelector := self penultimateLiteral) isMethodProperties
@@ -890,7 +892,7 @@ CompiledMethod >> propertyAt: propName [
 		ifFalse: [nil]
 ]
 
-{ #category : #'accessing-pragmas & properties' }
+{ #category : #'accessing - pragmas & properties' }
 CompiledMethod >> propertyAt: propName ifAbsent: aBlock [
 	| propertiesOrSelector |
 	^(propertiesOrSelector := self penultimateLiteral) isMethodProperties
@@ -898,14 +900,14 @@ CompiledMethod >> propertyAt: propName ifAbsent: aBlock [
 		ifFalse: [aBlock value]
 ]
 
-{ #category : #'accessing-pragmas & properties' }
+{ #category : #'accessing - pragmas & properties' }
 CompiledMethod >> propertyAt: aKey ifAbsentPut: aBlock [
 	"Answer the property associated with aKey or, if aKey isn't found store the result of evaluating aBlock as new value."
 	
 	^ self propertyAt: aKey ifAbsent: [ self propertyAt: aKey put: aBlock value ]
 ]
 
-{ #category : #'accessing-pragmas & properties' }
+{ #category : #'accessing - pragmas & properties' }
 CompiledMethod >> propertyAt: propName put: propValue [
 	"Set or add the property with key propName and value propValue.
 	 If the receiver does not yet have a method properties create one and replace
@@ -930,7 +932,7 @@ CompiledMethod >> propertyAt: propName put: propValue [
 	^propValue
 ]
 
-{ #category : #'accessing-pragmas & properties' }
+{ #category : #'accessing - pragmas & properties' }
 CompiledMethod >> propertyKeysAndValuesDo: aBlock [
 	"Enumerate the receiver with all the keys and values."
 
@@ -970,7 +972,7 @@ CompiledMethod >> removeFromSystem [
 	^ self methodClass removeSelector: self selector
 ]
 
-{ #category : #'accessing-pragmas & properties' }
+{ #category : #'accessing - pragmas & properties' }
 CompiledMethod >> removeProperty: propName [
 	"Remove the property propName if it exists.
 	 Do _not_ raise an error if the property is missing."
@@ -983,7 +985,7 @@ CompiledMethod >> removeProperty: propName [
 	^value
 ]
 
-{ #category : #'accessing-pragmas & properties' }
+{ #category : #'accessing - pragmas & properties' }
 CompiledMethod >> removeProperty: propName ifAbsent: aBlock [
 	"Remove the property propName if it exists.
 	 Answer the evaluation of aBlock if the property is missing."
@@ -1101,7 +1103,7 @@ CompiledMethod >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #'accessing-tags' }
+{ #category : #'accessing - tags' }
 CompiledMethod >> tagWith: aSymbol [
 	"Any method could be tagged with multiple symbols for user purpose. 
 	This method should apply new tag. All existing tags should not be changed. 
@@ -1112,7 +1114,7 @@ CompiledMethod >> tagWith: aSymbol [
 	self protocol: aSymbol
 ]
 
-{ #category : #'accessing-tags' }
+{ #category : #'accessing - tags' }
 CompiledMethod >> tags [
 	"Any method could be tagged with multiple symbols for user purpose. 
 	For now we only define API to manage them implemented on top of method protocols.
@@ -1136,7 +1138,7 @@ CompiledMethod >> trailer [
 	^ CompiledMethodTrailer new method: self
 ]
 
-{ #category : #'accessing-tags' }
+{ #category : #'accessing - tags' }
 CompiledMethod >> untagFrom: aSymbol [
 	"Any method could be tagged with multiple symbols for user purpose. 
 	This method should remove given tag from it. All other tags should not be changed. 

@@ -38,7 +38,7 @@ MCRepositoryTest >> assertVersionInfos: aCollection [
 	self assert: repository allVersionInfos asSet equals: aCollection asSet
 ]
 
-{ #category : #'tests-input data' }
+{ #category : #'tests - input data' }
 MCRepositoryTest >> homeDirectoryUrl [
 	^ FileLocator home asFileReference asZnUrl
 ]

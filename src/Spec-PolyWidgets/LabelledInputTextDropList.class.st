@@ -20,7 +20,7 @@ LabelledInputTextDropList class >> defaultSpec [
 	^ super labelLeft 
 ]
 
-{ #category : #example }
+{ #category : #examples }
 LabelledInputTextDropList class >> example [
 	<sampleInstance>
 	| example |
@@ -34,17 +34,17 @@ LabelledInputTextDropList class >> example [
 	^ example
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledInputTextDropList >> acceptOnCR: aBoolean [
 	^ self input acceptOnCR: aBoolean
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledInputTextDropList >> beEncrypted [
 	^ self input beEncrypted
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledInputTextDropList >> displayBlock: aBlock [
 	^ self dropList displayBlock: aBlock
 ]
@@ -54,22 +54,22 @@ LabelledInputTextDropList >> dropList [
 	^  self inputTextDropList dropList
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledInputTextDropList >> emptyList [
 	^ self dropList emptyList
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledInputTextDropList >> encrypted: aBoolean [
 	^ self input encrypted: aBoolean
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledInputTextDropList >> entryCompletion: anEntryCompletion [
 	^ self input entryCompletion: anEntryCompletion
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledInputTextDropList >> ghostText: aText [
 	^ self input ghostText: aText
 ]
@@ -90,54 +90,54 @@ LabelledInputTextDropList >> inputTextDropList [
 	^ subwidget
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledInputTextDropList >> items: aList [
 ^ 	self dropList items: aList
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledInputTextDropList >> listSize [
 	^ self dropList listSize
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledInputTextDropList >> resetSelection [
 	^ self dropList resetSelection
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledInputTextDropList >> selectedItem [
 	^ self dropList selectedItem
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledInputTextDropList >> setIndex: anIndex [
 ^ 	self dropList setIndex: anIndex
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledInputTextDropList >> text [
 	^ self input text
 ]
 
-{ #category : #'api-shortcuts' }
+{ #category : #'api - shortcuts' }
 LabelledInputTextDropList >> text: aText [
 	^ self input text: aText
 ]
 
-{ #category : #'events-shortcuts' }
+{ #category : #'events - shortcuts' }
 LabelledInputTextDropList >> whenSelectedItemChanged: aBlock [
 	self dropList
 		whenSelectedItemChanged: aBlock
 ]
 
-{ #category : #'events-shortcuts' }
+{ #category : #'events - shortcuts' }
 LabelledInputTextDropList >> whenSelectionChanged: aBlock [
 	self dropList
 		whenSelectionChanged: aBlock
 ]
 
-{ #category : #'events-shortcuts' }
+{ #category : #'events - shortcuts' }
 LabelledInputTextDropList >> whenSelectionIndexChanged: aBlock [
 	self dropList
 		whenSelectionIndexChanged: aBlock

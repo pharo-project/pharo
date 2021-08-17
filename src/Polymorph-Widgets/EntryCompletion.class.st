@@ -106,7 +106,7 @@ EntryCompletion >> closeChooser [
 
 ]
 
-{ #category : #'event-handling' }
+{ #category : #'events - handling' }
 EntryCompletion >> closeIfNotNeeded: aMorph [
 
 	(chooser isNotNil and:[ chooser hasKeyboardFocus or: [ aMorph hasKeyboardFocus ] ]) ifFalse: [ self closeChooser ]
@@ -140,13 +140,13 @@ EntryCompletion >> filteredValuesWith: aToken [
 		select: [:v | aToken isNil or: [aToken isEmpty or: [v isNil or: [self filterBlock value: v value: aToken]]]]
 ]
 
-{ #category : #'event-handling' }
+{ #category : #'events - handling' }
 EntryCompletion >> handlesKeyboard: anEvent [
 	^ anEvent keyCharacter = Character arrowDown
 		or: [anEvent keyCharacter = Character escape]
 ]
 
-{ #category : #'event-handling' }
+{ #category : #'events - handling' }
 EntryCompletion >> keystroke: anEvent from: aMorph [
 	(self handlesKeyboard: anEvent)
 		ifFalse: [ ^ false ].
@@ -161,13 +161,13 @@ EntryCompletion >> keystroke: anEvent from: aMorph [
 	^ chooser ifNil: [ false ] ifNotNil: [ chooser keyStroke: anEvent ]
 ]
 
-{ #category : #'event-handling' }
+{ #category : #'events - handling' }
 EntryCompletion >> keystrokeInChooser: anEvent [
 	anEvent keyCharacter = Character escape
 		ifTrue: [ chooser := nil ]
 ]
 
-{ #category : #'event-handling' }
+{ #category : #'events - handling' }
 EntryCompletion >> mouseDownFromTextMorph: anEvent [
 	self closeChooser
 ]

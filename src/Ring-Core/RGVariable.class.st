@@ -82,6 +82,12 @@ RGVariable >> isSpecial [
 ]
 
 { #category : #testing }
+RGVariable >> isSuperVariable [
+	
+	^ false
+]
+
+{ #category : #testing }
 RGVariable >> isTempVariable [
 	^false
 ]

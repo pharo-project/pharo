@@ -25,7 +25,7 @@ SourceFileArrayTest >> ensureChangesFileOpenedInProcess [
 	"self deny: ProcessAndSessionLocalSourcesFileArray value isNil."
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 SourceFileArrayTest >> testAddressRange [
 	"Test source pointer to file position address translation across a wide address range"
 
@@ -38,7 +38,7 @@ SourceFileArrayTest >> testAddressRange [
 		self assert: a equals: e ]
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 SourceFileArrayTest >> testChangesFileAddressRange [
 	"Test file position to source pointer address translation for the changes file"
 
@@ -78,13 +78,13 @@ SourceFileArrayTest >> testChangesFileAddressRange [
 		self assert: (a between: 16r10000000 and: 16r10FFFFFF) ]
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 SourceFileArrayTest >> testChangesFileStream [
 
 	self assert: SourceFiles changesFileStream isNotNil
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 SourceFileArrayTest >> testFileIndexFromSourcePointer [
 	"Test derivation of file index for sources or changes file from source pointers"
 
@@ -125,7 +125,7 @@ SourceFileArrayTest >> testFileIndexFromSourcePointer [
 	self assert: 0 equals: (sf fileIndexFromSourcePointer: 16r0FFFFFF)
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 SourceFileArrayTest >> testFilePositionFromSourcePointer [
 	"Test derivation of file position for sources or changes file from source pointers"
 
@@ -151,7 +151,7 @@ SourceFileArrayTest >> testFilePositionFromSourcePointer [
 	self assert: 16rFFFFFF equals: (sf filePositionFromSourcePointer: 16r0FFFFFF)
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 SourceFileArrayTest >> testForkedRead [
 
 	| originalString remoteString readSemaphore readString testSemaphore |
@@ -180,7 +180,7 @@ SourceFileArrayTest >> testForkedRead [
 	self assert: readString equals: originalString.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 SourceFileArrayTest >> testForkedWrite [
 
 	| originalString remoteString readSemaphore readString testSemaphore |
@@ -210,7 +210,7 @@ SourceFileArrayTest >> testForkedWrite [
 	self assert: readString equals: originalString.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 SourceFileArrayTest >> testProtocol [
 	"Test that we can access protocol correctly"
 
@@ -220,10 +220,10 @@ SourceFileArrayTest >> testProtocol [
 	self assert: (SourceFiles protocolAt: okCm sourcePointer) equals: 'point functions'.
 
 	notOkCm := Behavior >> #superclass.
-	self assert: (SourceFiles protocolAt: notOkCm sourcePointer) equals: 'accessing class hierarchy'
+	self assert: (SourceFiles protocolAt: notOkCm sourcePointer) equals: 'accessing - class hierarchy'
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 SourceFileArrayTest >> testRemoteStringReadsInGivenSourceFileArray [
 	| fs array remoteString readStream |
 	fs := FileSystem memory.
@@ -238,7 +238,7 @@ SourceFileArrayTest >> testRemoteStringReadsInGivenSourceFileArray [
 	self assert: (ChunkReadStream on: readStream) next equals: 'test'
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 SourceFileArrayTest >> testRemoteStringWritesInGivenSourceFileArray [
 	| fs array |
 	fs := FileSystem memory.
@@ -255,7 +255,7 @@ SourceFileArrayTest >> testRemoteStringWritesInGivenSourceFileArray [
 test!'
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 SourceFileArrayTest >> testSourcePointerFromFileIndexAndPosition [
 	"Test valid input ranges"
 
@@ -284,7 +284,7 @@ SourceFileArrayTest >> testSourcePointerFromFileIndexAndPosition [
 	self assert: 16r4FFFFFF equals: (sf sourcePointerFromFileIndex: 2 andPosition: 16r1FFFFFF)
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 SourceFileArrayTest >> testSourcesFileAddressRange [
 	"Test file position to source pointer address translation for the sources file"
 
@@ -325,13 +325,13 @@ SourceFileArrayTest >> testSourcesFileAddressRange [
 		self assert: (a between: 16rF000000 and: 16rFFFFFFF) ]
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 SourceFileArrayTest >> testSourcesFileStream [
 
 	self assert: SourceFiles sourcesFileStream isNotNil
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 SourceFileArrayTest >> testTimeStamp [
 	"Test that we can access timeStamp correctly"
 
@@ -342,7 +342,7 @@ SourceFileArrayTest >> testTimeStamp [
 	
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 SourceFileArrayTest >> testWriteSourceWritesInGivenSourceFileArray [
 	| fs array |
 	fs := FileSystem memory.
@@ -359,7 +359,7 @@ SourceFileArrayTest >> testWriteSourceWritesInGivenSourceFileArray [
 	self assert: (fs / 'changes.chunk') contents equals: 'some preamblesome source!'
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 SourceFileArrayTest >> testWriteSourceWritesInGivenSourceFileArrayWithFlushDefering [
 	| fs array |
 	fs := FileSystem memory.
@@ -382,7 +382,7 @@ SourceFileArrayTest >> testWriteSourceWritesInGivenSourceFileArrayWithFlushDefer
 		equals: 'some preamblesome source!'
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 SourceFileArrayTest >> testWriteToBufferedStream [
 	| fs array |
 	fs := FileSystem memory.
@@ -402,7 +402,7 @@ SourceFileArrayTest >> testWriteToBufferedStream [
 	self assert: (fs / 'changes.chunk') contents equals: 'some preamblesome source!'
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 SourceFileArrayTest >> testWriteToChangesFileInGivenSourceFileArray [
 	| fs array |
 	fs := FileSystem memory.

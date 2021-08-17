@@ -20,6 +20,12 @@ Class {
 	#category : #'Shift-Changes'
 }
 
+{ #category : #testing }
+ShAbstractChange class >> isAbstract [
+
+	^ self == ShAbstractChange
+]
+
 { #category : #comparing }
 ShAbstractChange >> = another [
 	^ self species = another species and: [ builder = another builder ]

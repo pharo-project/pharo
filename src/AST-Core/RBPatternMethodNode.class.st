@@ -40,7 +40,7 @@ RBPatternMethodNode >> copyInContext: aDictionary [
 		yourself
 ]
 
-{ #category : #'testing-matching' }
+{ #category : #'testing - matching' }
 RBPatternMethodNode >> isPatternNode [
 	^true
 ]

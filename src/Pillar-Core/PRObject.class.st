@@ -70,41 +70,41 @@ PRObject >> printOn: aStream [
 	aStream nextPut: $[; print: self identityHash; nextPut: $]
 ]
 
-{ #category : #'accessing-properties' }
+{ #category : #'accessing - properties' }
 PRObject >> properties [
 	"Answer the property dictionary of the receiver."
 
 	^ properties ifNil: [ properties := Dictionary new ]
 ]
 
-{ #category : #'accessing-properties' }
+{ #category : #'accessing - properties' }
 PRObject >> properties: aDictionary [
 	
 	properties := aDictionary
 ]
 
-{ #category : #'accessing-properties' }
+{ #category : #'accessing - properties' }
 PRObject >> propertyAt: aKey [
 	"Answer the value of the property ==aKey==, raises an error if the property doesn't exist."
 
 	^ self propertyAt: aKey ifAbsent: [ self errorPropertyNotFound: aKey ]
 ]
 
-{ #category : #'accessing-properties' }
+{ #category : #'accessing - properties' }
 PRObject >> propertyAt: aKey ifAbsent: aBlock [
 	"Answer the value of the property ==aKey==, or the result of ==aBlock== if the property doesn't exist."
 
 	^ self properties at: aKey ifAbsent: aBlock
 ]
 
-{ #category : #'accessing-properties' }
+{ #category : #'accessing - properties' }
 PRObject >> propertyAt: aKey ifAbsentPut: aBlock [
 	"Answer the value of the property ==aKey==, or if the property doesn't exist adds and answers the result of evaluating ==aBlock==."
 
 	^ self properties at: aKey ifAbsentPut: aBlock
 ]
 
-{ #category : #'accessing-properties' }
+{ #category : #'accessing - properties' }
 PRObject >> propertyAt: aKey put: aValue [
 	"Adds or replaces the property ==aKey== with ==aValue==."
 

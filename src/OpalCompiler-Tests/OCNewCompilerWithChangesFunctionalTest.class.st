@@ -4,10 +4,14 @@ Class {
 	#category : #'OpalCompiler-Tests-Misc'
 }
 
-{ #category : #'test - block returning' }
+{ #category : #'tests - block returning' }
 OCNewCompilerWithChangesFunctionalTest >> testBlockReturning [
 	
 	| aCompiledMethod bytecode expected compiler |
+
+	self flag:#oldBytecode.
+	self skip.
+
 	compiler := OpalCompiler new.
 	compiler compilationContext compilerOptions: #(-optionFullBlockClosure).
 	aCompiledMethod := compiler
@@ -51,6 +55,9 @@ OCNewCompilerWithChangesFunctionalTest >> testBlockReturning [
 OCNewCompilerWithChangesFunctionalTest >> testBlockTemp [
 	
 	| aCompiledMethod bytecode expected compiler|
+
+	self flag:#oldBytecode.
+	self skip.
 
 	compiler := OpalCompiler new.
 	compiler compilationContext compilerOptions: #(-optionFullBlockClosure).
@@ -134,10 +141,14 @@ OCNewCompilerWithChangesFunctionalTest >> testBlockTemp [
 
 ]
 
-{ #category : #'other-tests' }
+{ #category : #'tests - other' }
 OCNewCompilerWithChangesFunctionalTest >> testDifferentBlocksWithSameArgumentName [
 	
 	| aCompiledMethod bytecode expected compiler |
+
+	self flag:#oldBytecode.
+	self skip.
+
 	compiler := OpalCompiler new.
 	compiler compilationContext compilerOptions: #(-optionFullBlockClosure).
 	aCompiledMethod := compiler
@@ -217,6 +228,10 @@ OCNewCompilerWithChangesFunctionalTest >> testDifferentBlocksWithSameArgumentNam
 OCNewCompilerWithChangesFunctionalTest >> testMethodArgument [
 	
 	| aCompiledMethod bytecode expected compiler |
+
+	self flag:#oldBytecode.
+	self skip.
+
 	compiler := OpalCompiler new.
 	compiler compilationContext compilerOptions: #(-optionFullBlockClosure).
 	aCompiledMethod := compiler
@@ -298,6 +313,10 @@ OCNewCompilerWithChangesFunctionalTest >> testMethodArgument [
 OCNewCompilerWithChangesFunctionalTest >> testMethodTemp [
 	
 	| aCompiledMethod bytecode expected |
+
+	self flag:#oldBytecode.
+	self skip.
+
 	aCompiledMethod := OpalCompiler new
 									encoderClass:  EncoderForV3PlusClosures; 
 									source: 'testMethodTemp
@@ -362,10 +381,14 @@ OCNewCompilerWithChangesFunctionalTest >> testMethodTemp [
 
 ]
 
-{ #category : #'other-tests' }
+{ #category : #'tests - other' }
 OCNewCompilerWithChangesFunctionalTest >> testModulePrimitive [
 	
 	| aCompiledMethod bytecode expected |
+
+	self flag:#oldBytecode.
+	self skip.
+
 	aCompiledMethod := OpalCompiler new 
 	encoderClass:  EncoderForV3PlusClosures; 
 	source: 'copyBitsAgain
@@ -396,9 +419,13 @@ OCNewCompilerWithChangesFunctionalTest >> testModulePrimitive [
 
 ]
 
-{ #category : #'test - array compilation' }
+{ #category : #'tests - array compilation' }
 OCNewCompilerWithChangesFunctionalTest >> testMultiElementArray [
 	| aCompiledMethod bytecode expected |
+
+	self flag:#oldBytecode.
+	self skip.
+
 	aCompiledMethod := OpalCompiler new 
 									encoderClass:  EncoderForV3PlusClosures; 
 									source: 'method
@@ -432,6 +459,10 @@ OCNewCompilerWithChangesFunctionalTest >> testMultiElementArray [
 OCNewCompilerWithChangesFunctionalTest >> testOneFloat [
 	
 	| aCompiledMethod bytecode expected |
+
+	self flag:#oldBytecode.
+	self skip.
+
 	aCompiledMethod := OpalCompiler new 
 		encoderClass:  EncoderForV3PlusClosures; 
 	source: 'one
@@ -470,6 +501,10 @@ OCNewCompilerWithChangesFunctionalTest >> testPragma [
 OCNewCompilerWithChangesFunctionalTest >> testReturnBlockInMethod [
 	
 	| aCompiledMethod bytecode expected compiler |
+
+	self flag:#oldBytecode.
+	self skip.
+
 	compiler := OpalCompiler new.
 	compiler compilationContext compilerOptions: #(-optionFullBlockClosure).
 	aCompiledMethod := compiler
@@ -502,6 +537,10 @@ OCNewCompilerWithChangesFunctionalTest >> testReturnBlockInMethod [
 OCNewCompilerWithChangesFunctionalTest >> testSetUp [
 	
 	| aCompiledMethod bytecode expected |
+	
+	self flag:#oldBytecode.
+	self skip.	
+	
 	aCompiledMethod := OpalCompiler new
 									encoderClass:  EncoderForV3PlusClosures; 
 									source: 'setUp
@@ -531,10 +570,14 @@ OCNewCompilerWithChangesFunctionalTest >> testSetUp [
 
 ]
 
-{ #category : #'test - array compilation' }
+{ #category : #'tests - array compilation' }
 OCNewCompilerWithChangesFunctionalTest >> testSimpleArray [
 	
 	| aCompiledMethod bytecode expected |
+	
+	self flag:#oldBytecode.
+	self skip.
+	
 	aCompiledMethod := OpalCompiler new
 									encoderClass:  EncoderForV3PlusClosures; 
 									source: 'method
@@ -557,6 +600,9 @@ OCNewCompilerWithChangesFunctionalTest >> testSimpleArray [
 { #category : #tests }
 OCNewCompilerWithChangesFunctionalTest >> testSteamContentsLimitedToSequenceableCollectionClass [
 	| aCompiledMethod bytecode expected compiler |
+
+	self flag:#oldBytecode.
+	self skip.
 	
 	compiler := OpalCompiler new.
 	compiler compilationContext compilerOptions: #(-optionFullBlockClosure).
@@ -630,6 +676,10 @@ OCNewCompilerWithChangesFunctionalTest >> testSteamContentsLimitedToSequenceable
 OCNewCompilerWithChangesFunctionalTest >> testToDoArgumentNotInlined [
 	
 	| aCompiledMethod bytecode expected compiler |
+
+	self flag:#oldBytecode.
+	self skip.
+
 	compiler := OpalCompiler new.
 	compiler compilationContext compilerOptions: #(-optionFullBlockClosure).
 	aCompiledMethod := compiler
@@ -691,6 +741,10 @@ OCNewCompilerWithChangesFunctionalTest >> testToDoArgumentNotInlined [
 OCNewCompilerWithChangesFunctionalTest >> testToDoInsideTempNotInlined [
 	"Some instructions are the same but we have a different number at he begining, and the storeTemp and popIntoTemp issue"
 	| aCompiledMethod bytecode expected compiler |
+
+	self flag:#oldBytecode.
+	self skip.
+
 	compiler := OpalCompiler new.
 	compiler compilationContext compilerOptions: #(-optionFullBlockClosure).
 	aCompiledMethod := compiler
@@ -762,6 +816,10 @@ OCNewCompilerWithChangesFunctionalTest >> testToDoInsideTempNotInlined [
 OCNewCompilerWithChangesFunctionalTest >> testToDoOutsideTempNotInlined [
 	"there seems to be a better indexzation of the temps we have one more"
 	| aCompiledMethod bytecode expected compiler |
+
+	self flag:#oldBytecode.
+	self skip.
+
 	compiler := OpalCompiler new.
 	compiler compilationContext compilerOptions: #(-optionFullBlockClosure).
 	aCompiledMethod := compiler
@@ -837,6 +895,10 @@ OCNewCompilerWithChangesFunctionalTest >> testToDoOutsideTempNotInlined [
 OCNewCompilerWithChangesFunctionalTest >> testWhileModificationAfterNotInlined [
 	"The bytecodes integers are different in some cases."
 	| aCompiledMethod bytecode expected compiler |
+
+	self flag:#oldBytecode.
+	self skip.
+
 	compiler := OpalCompiler new.
 	compiler compilationContext compilerOptions: #(-optionFullBlockClosure).
 	aCompiledMethod := compiler
@@ -929,6 +991,10 @@ OCNewCompilerWithChangesFunctionalTest >> testWhileModificationAfterNotInlined [
 OCNewCompilerWithChangesFunctionalTest >> testWhileModificationBeforeNotInlined [
 	"The bytecodes integers are different in some cases."
 	| aCompiledMethod bytecode expected compiler |
+
+	self flag:#oldBytecode.
+	self skip.
+
 	compiler := OpalCompiler new.
 	compiler compilationContext compilerOptions: #(-optionFullBlockClosure).
 	aCompiledMethod := compiler
@@ -1019,7 +1085,12 @@ OCNewCompilerWithChangesFunctionalTest >> testWhileModificationBeforeNotInlined 
 { #category : #tests }
 OCNewCompilerWithChangesFunctionalTest >> testWhileWithTempNotInlined [
 	"The bytecodes integers are different in some cases."
+
 	| aCompiledMethod bytecode expected compiler |
+
+	self flag:#oldBytecode.
+	self skip.
+
 	compiler := OpalCompiler new.
 	compiler compilationContext compilerOptions: #(-optionFullBlockClosure).
 	aCompiledMethod := compiler

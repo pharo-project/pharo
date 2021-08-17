@@ -27,7 +27,7 @@ SearchableList class >> defaultSpec [
 		yourself
 ]
 
-{ #category : #example }
+{ #category : #examples }
 SearchableList class >> example [
 	<sampleInstance>
 	"self example"

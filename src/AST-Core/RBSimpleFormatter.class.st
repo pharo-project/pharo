@@ -89,7 +89,7 @@ RBSimpleFormatter >> format: aParseTree [
 	^ codeStream contents
 ]
 
-{ #category : #'private-formatting' }
+{ #category : #'private - formatting' }
 RBSimpleFormatter >> formatArray: anArrayNode [
 	anArrayNode statements
 		do: [ :each | 
@@ -99,7 +99,7 @@ RBSimpleFormatter >> formatArray: anArrayNode [
 				self newLine ]
 ]
 
-{ #category : #'private-formatting' }
+{ #category : #'private - formatting' }
 RBSimpleFormatter >> formatBlock: aBlockNode [
 	self 
 		formatBlockArgumentsFor: aBlockNode;
@@ -110,7 +110,7 @@ RBSimpleFormatter >> formatBlock: aBlockNode [
 
 ]
 
-{ #category : #'private-formatting' }
+{ #category : #'private - formatting' }
 RBSimpleFormatter >> formatBlockArgumentsFor: aBlockNode [
 	aBlockNode arguments isEmpty
 		ifTrue: [ ^ self ].
@@ -124,7 +124,7 @@ RBSimpleFormatter >> formatBlockArgumentsFor: aBlockNode [
 	codeStream nextPutAll: '| '
 ]
 
-{ #category : #'private-formatting' }
+{ #category : #'private - formatting' }
 RBSimpleFormatter >> formatCommentsFor: aNode [
 
 	aNode comments do: [ :each | 
@@ -134,7 +134,7 @@ RBSimpleFormatter >> formatCommentsFor: aNode [
 			]
 ]
 
-{ #category : #'private-formatting' }
+{ #category : #'private - formatting' }
 RBSimpleFormatter >> formatMethodBodyFor: aMethodNode [
 	self
 		indentAround: [ 
@@ -145,7 +145,7 @@ RBSimpleFormatter >> formatMethodBodyFor: aMethodNode [
 				visitNode: aMethodNode body ]
 ]
 
-{ #category : #'private-formatting' }
+{ #category : #'private - formatting' }
 RBSimpleFormatter >> formatMethodCommentFor: aNode [
 
 	aNode comments do: [ :each | 
@@ -155,19 +155,19 @@ RBSimpleFormatter >> formatMethodCommentFor: aNode [
 			]
 ]
 
-{ #category : #'private-formatting' }
+{ #category : #'private - formatting' }
 RBSimpleFormatter >> formatMethodPatternFor: aMethodNode [
 	aMethodNode arguments isEmpty
 		ifTrue: [ codeStream nextPutAll: aMethodNode selector ]
 		ifFalse: [ self privateFormatMethodPatternMonoLineFor: aMethodNode ]
 ]
 
-{ #category : #'private-formatting' }
+{ #category : #'private - formatting' }
 RBSimpleFormatter >> formatPragmasFor: aMethodNode [
 	aMethodNode pragmas do: [:each | self visitNode: each; newLine ]
 ]
 
-{ #category : #'private-formatting' }
+{ #category : #'private - formatting' }
 RBSimpleFormatter >> formatSelectorAndArguments: aMessageNode [
 	
 	self
@@ -179,7 +179,7 @@ RBSimpleFormatter >> formatSelectorAndArguments: aMessageNode [
 				restSeparator: [ self space ] ]
 ]
 
-{ #category : #'private-formatting' }
+{ #category : #'private - formatting' }
 RBSimpleFormatter >> formatSelectorAndArguments: aMessageNode firstSeparator: firstBlock restSeparator: restBlock [
 	aMessageNode isUnary
 		ifTrue: [ 
@@ -196,7 +196,7 @@ RBSimpleFormatter >> formatSelectorAndArguments: aMessageNode firstSeparator: fi
 							self handleLineForArgument: argument ] ] ]
 ]
 
-{ #category : #'private-formatting' }
+{ #category : #'private - formatting' }
 RBSimpleFormatter >> formatSequenceNodeStatementsFor: aSequenceNode [
 	| statements |
 	statements := aSequenceNode statements.
@@ -213,7 +213,7 @@ RBSimpleFormatter >> formatSequenceNodeStatementsFor: aSequenceNode [
 			ifTrue: [  ] ]
 ]
 
-{ #category : #'private-formatting' }
+{ #category : #'private - formatting' }
 RBSimpleFormatter >> formatStatementCommentsFor: aStatementNode [
 
 	aStatementNode statementComments do: [ :each | 

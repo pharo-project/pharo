@@ -18,7 +18,7 @@ Class {
 
 { #category : #'instance creation' }
 RBExtractToTemporaryRefactoring class >> extract: anInterval to: aString from: aSelector in: aClass [ 
-	^self new 
+	^ self new 
 		extract: anInterval
 		to: aString
 		from: aSelector
@@ -27,7 +27,7 @@ RBExtractToTemporaryRefactoring class >> extract: anInterval to: aString from: a
 
 { #category : #'instance creation' }
 RBExtractToTemporaryRefactoring class >> model: aRBSmalltalk extract: anInterval to: aString from: aSelector in: aClass [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
 		extract: anInterval
 			to: aString
@@ -91,7 +91,7 @@ RBExtractToTemporaryRefactoring >> insertTemporary [
 		addTemporaryNamed: newVariableName
 ]
 
-{ #category : #'private-accessing' }
+{ #category : #'private - accessing' }
 RBExtractToTemporaryRefactoring >> parseTree [
 
 	parseTree
@@ -111,7 +111,7 @@ RBExtractToTemporaryRefactoring >> preconditions [
 						true])
 ]
 
-{ #category : #'private-accessing' }
+{ #category : #'private - accessing' }
 RBExtractToTemporaryRefactoring >> selectedSource [
 
 	| source |

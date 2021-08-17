@@ -36,6 +36,22 @@ RBPullUpVariableTransformation >> buildTransformations [
 		yourself
 ]
 
+{ #category : #preconditions }
+RBPullUpVariableTransformation >> preconditions [ 
+	^ isClassVariable 
+		ifTrue: [ (RBCondition isMetaclass: self definingClass) not ] 
+		ifFalse: [ RBCondition withBlock: 
+			[(self definingClass hierarchyDefinesInstanceVariable: variableName) 
+				ifFalse: [self refactoringFailure: 'No subclass defines ' , variableName].
+			(self definingClass subclasses 
+				anySatisfy: [:each | (each directlyDefinesInstanceVariable: variableName) not]) 
+				ifTrue: 
+					[self 
+						refactoringWarning: 'Not all subclasses have an instance variable named.<n> Do you want pull up this variable anyway?' 
+								, variableName , '.'].
+			true] ]
+]
+
 { #category : #printing }
 RBPullUpVariableTransformation >> storeOn: aStream [ 
 

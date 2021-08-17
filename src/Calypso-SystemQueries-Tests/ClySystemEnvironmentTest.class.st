@@ -16,7 +16,7 @@ ClySystemEnvironmentTest >> setUp [
 	dummySystemEnvironment := ClySystemEnvironment new
 ]
 
-{ #category : #test }
+{ #category : #tests }
 ClySystemEnvironmentTest >> testExtractClassNameFrom [
 
 	self
@@ -61,7 +61,7 @@ ClySystemEnvironmentTest >> testExtractClassNameFrom [
 		equals: 'TMyTraits'
 ]
 
-{ #category : #test }
+{ #category : #tests }
 ClySystemEnvironmentTest >> testIsFluidClassDefinition [
 
 	self deny: (dummySystemEnvironment isFluidClassDefinition:
@@ -92,7 +92,7 @@ ClySystemEnvironmentTest >> testIsFluidClassDefinition [
 	package: ''Calypso-SystemQueries-Domain''')
 ]
 
-{ #category : #test }
+{ #category : #tests }
 ClySystemEnvironmentTest >> testIsFluidDefinition [
 
 	self deny: (dummySystemEnvironment isFluidDefinition:
@@ -123,7 +123,7 @@ ClySystemEnvironmentTest >> testIsFluidDefinition [
 	 package: ''Calypso-SystemQueries-Tests-Domain''')
 ]
 
-{ #category : #test }
+{ #category : #tests }
 ClySystemEnvironmentTest >> testIsFluidTraitDefinition [
 
 	self deny: (dummySystemEnvironment isFluidTraitDefinition:
@@ -154,7 +154,7 @@ ClySystemEnvironmentTest >> testIsFluidTraitDefinition [
 	package: ''Calypso-SystemQueries-Domain''')
 ]
 
-{ #category : #test }
+{ #category : #tests }
 ClySystemEnvironmentTest >> testIsOldTraitDefinition [
 
 	self deny: (dummySystemEnvironment isOldTraitDefinition:
@@ -185,7 +185,7 @@ ClySystemEnvironmentTest >> testIsOldTraitDefinition [
 	package: ''Calypso-SystemQueries-Domain''')
 ]
 
-{ #category : #test }
+{ #category : #tests }
 ClySystemEnvironmentTest >> testIsTraitDefinition [
 
 	self deny: (dummySystemEnvironment isTraitDefinition:

@@ -23,7 +23,7 @@ Class {
 	#category : #'Spec-Core-Dynamic-Builder'
 }
 
-{ #category : #example }
+{ #category : #examples }
 DynamicPresentersListBuilder class >> example [
 	| dynamicPresenter |
 	dynamicPresenter := DynamicPresentersListBuilder new
@@ -42,7 +42,7 @@ DynamicPresentersListBuilder class >> example [
 		yourself
 ]
 
-{ #category : #example }
+{ #category : #examples }
 DynamicPresentersListBuilder class >> example2 [
 	| dynamicPresenter |
 	dynamicPresenter := DynamicPresentersListBuilder new

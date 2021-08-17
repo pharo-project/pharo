@@ -38,7 +38,7 @@ RubParagraph >> actionAttributesUnder: aClickPoint event: anEvent do: aBlock [
 			boxes detect: [:each | each containsPoint: aClickPoint] ifFound: [ aBlock cull: attribute cull: boxes ]]
 ]
 
-{ #category : #'accessing composer' }
+{ #category : #'accessing - composer' }
 RubParagraph >> actualWidth [
 	^ self composer actualWidth
 ]
@@ -100,7 +100,7 @@ RubParagraph >> click: anEvent for: model controller: editor [
 	^ action
 ]
 
-{ #category : #'accessing text area' }
+{ #category : #'accessing - text area' }
 RubParagraph >> closingDelimiters [
 	^ textArea closingDelimiters
 
@@ -167,7 +167,7 @@ RubParagraph >> copy [
 	^ self error: 'A ParagraphHandler should never be copied'.
 ]
 
-{ #category : #'accessing text area' }
+{ #category : #'accessing - text area' }
 RubParagraph >> cursorWidth [
 	^ textArea cursorWidth
 
@@ -396,18 +396,18 @@ RubParagraph >> lineIndexOfCharacterIndex: characterIndex [
 
 ]
 
-{ #category : #'accessing composer' }
+{ #category : #'accessing - composer' }
 RubParagraph >> lines [
 	^ self composer lines
 ]
 
-{ #category : #'accessing text area' }
+{ #category : #'accessing - text area' }
 RubParagraph >> margins [
 	^textArea margins.
 
 ]
 
-{ #category : #'accessing composer' }
+{ #category : #'accessing - composer' }
 RubParagraph >> maxRightX [
 	^ self composer maxRightX
 ]
@@ -423,7 +423,7 @@ RubParagraph >> minimumExtent [
 	^ textArea minimumExtent
 ]
 
-{ #category : #'accessing text area' }
+{ #category : #'accessing - text area' }
 RubParagraph >> model [
 	^ textArea model
 ]
@@ -458,7 +458,7 @@ RubParagraph >> moveBy: aPoint [
 
 ]
 
-{ #category : #'accessing composer' }
+{ #category : #'accessing - composer' }
 RubParagraph >> newComposer [
 	^ RubTextComposer new 
 ]
@@ -468,19 +468,19 @@ RubParagraph >> next [
 	^nil
 ]
 
-{ #category : #'accessing composer' }
+{ #category : #'accessing - composer' }
 RubParagraph >> numberOfLines [
 
 	^ self lines size
 ]
 
-{ #category : #'accessing composer' }
+{ #category : #'accessing - composer' }
 RubParagraph >> numberOfPhysicalLines [
 
 	^ self composer numberOfPhysicalLines
 ]
 
-{ #category : #'accessing text area' }
+{ #category : #'accessing - text area' }
 RubParagraph >> openingDelimiters [
 	^ textArea openingDelimiters
 
@@ -491,7 +491,7 @@ RubParagraph >> paragraph [
 	^ self
 ]
 
-{ #category : #'accessing text area' }
+{ #category : #'accessing - text area' }
 RubParagraph >> pointIndex [
 	^ textArea pointIndex
 ]
@@ -535,7 +535,7 @@ RubParagraph >> replaceFrom: start to: stop with: aText displaying: displayBoole
 
 ]
 
-{ #category : #'accessing text area' }
+{ #category : #'accessing - text area' }
 RubParagraph >> scrollPane [
 	^ textArea scrollPane
 ]
@@ -590,12 +590,12 @@ RubParagraph >> selectionRectsFrom: characterBlock1 to: characterBlock2 [
 			strm nextPut: ((self lines at: line2) topLeft corner: cb2 bottomLeft) ]
 ]
 
-{ #category : #'accessing text area' }
+{ #category : #'accessing - text area' }
 RubParagraph >> selectionStart [
 	^ textArea selectionStart
 ]
 
-{ #category : #'accessing text area' }
+{ #category : #'accessing - text area' }
 RubParagraph >> selectionStop [
 	^ textArea selectionStop
 ]
@@ -646,7 +646,7 @@ RubParagraph >> textArea: aClient [
 	textArea := aClient 
 ]
 
-{ #category : #'accessing text area' }
+{ #category : #'accessing - text area' }
 RubParagraph >> textStyle [
 	^ textArea textStyle
 ]
@@ -676,7 +676,7 @@ RubParagraph >> updateClientExtent [
 
 ]
 
-{ #category : #'accessing composer' }
+{ #category : #'accessing - composer' }
 RubParagraph >> uptodateComposer [
 	^ self composer
 		text: self text;
@@ -734,7 +734,7 @@ RubParagraph >> withoutDecorator [
 
 ]
 
-{ #category : #'accessing text area' }
+{ #category : #'accessing - text area' }
 RubParagraph >> wrapped [
 	^ textArea wrapped
 ]

@@ -57,15 +57,3 @@ CDAbstractTraitCompositionNode >> isTraitComposition [
 CDAbstractTraitCompositionNode >> isTraitNode [
 	^false
 ]
-
-{ #category : #selection }
-CDAbstractTraitCompositionNode >> start [
-	
-	^ originalNode start
-]
-
-{ #category : #selection }
-CDAbstractTraitCompositionNode >> stop [
-	
-	^ originalNode stop
-]

@@ -4,14 +4,8 @@ Class {
 	#category : #'Ring-Core-Kernel'
 }
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGVariableLayout >> isVariableLayout [
 
 	^ true
-]
-
-{ #category : #accessing }
-RGVariableLayout >> layoutName [
-
-	^ #VariableLayout
 ]

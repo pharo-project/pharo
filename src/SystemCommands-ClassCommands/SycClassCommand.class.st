@@ -43,7 +43,7 @@ SycClassCommand >> classes: anObject [
 	classes := anObject
 ]
 
-{ #category : #'activation-drag and drop' }
+{ #category : #'activation - drag and drop' }
 SycClassCommand >> prepareExecutionInDragContext: aToolContext [
 	super prepareExecutionInDragContext: aToolContext.
 	

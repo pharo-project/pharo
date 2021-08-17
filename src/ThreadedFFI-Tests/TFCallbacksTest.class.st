@@ -7,7 +7,7 @@ Class {
 	#category : #'ThreadedFFI-Tests'
 }
 
-{ #category : #utils }
+{ #category : #utilities }
 TFCallbacksTest >> callCallback: aCallback [
 	
 	| functionDefinition function |

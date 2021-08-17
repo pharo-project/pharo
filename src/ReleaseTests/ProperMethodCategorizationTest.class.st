@@ -129,7 +129,19 @@ ProperMethodCategorizationTest >> testNoUncategorizedMethods [
 		             class protocols includes: #'as yet unclassified' ].
 
 	"we lock in the number of problematic classes, this way it can only improve"
-	self assert: violating size <= 151
+	self assert: violating size <= 57
+]
+
+{ #category : #tests }
+ProperMethodCategorizationTest >> testNoUtilsMethods [
+	"Check that we have no #'utils' protocols left, the protocol should be 'utilities' "
+
+	| violating |
+	violating := Smalltalk globals allBehaviors select: [ :class | 
+		             class protocols includes: #'utils' ].
+
+	"we lock in the number of problematic classes, this way it can only improve"
+	self assert: violating size <= 7
 ]
 
 { #category : #'tests - object' }

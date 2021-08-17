@@ -1,6 +1,6 @@
 "
 An InputEventSensor is a replacement for the old Morphic EventSensor framework.
-It updates its state when events are received so that all state based users of Sensor (e.g., Sensor keyboard, Sensor leftShiftDown, Sensor mouseButtons) will work exactly as before. The usage of these funtions is discouraged. 
+It updates its state when events are received so that all state based users of Sensor (e.g., Sensor keyboard, Sensor leftShiftDown, Sensor mouseButtons) will work exactly as before. The usage of these functions is discouraged. 
 
 Instance variables:
 	mouseButtons <Integer>	- mouse button state as replacement for primMouseButtons
@@ -127,7 +127,7 @@ InputEventSensor >> blueButtonPressed [
 
 ]
 
-{ #category : #'private events' }
+{ #category : #'private - events' }
 InputEventSensor >> characterForEvent: evtBuf [
 
 	| keycode |
@@ -179,7 +179,7 @@ InputEventSensor >> flushKeyboard [
 		whileTrue: [self keyboard]
 ]
 
-{ #category : #'private events' }
+{ #category : #'private - events' }
 InputEventSensor >> flushNonKbdEvents [
 	eventQueue ifNil: [^ self].
 	eventQueue flushAllSuchThat:
@@ -256,7 +256,7 @@ InputEventSensor >> keyboardPressed [
 	^self peekKeyboardEvent notNil
 ]
 
-{ #category : #'private events' }
+{ #category : #'private - events' }
 InputEventSensor >> mapButtons: buttons modifiers: anInteger [
 	"Map the buttons to yellow or blue based on the given modifiers.
 	 If only the red button is pressed, then map
@@ -273,7 +273,7 @@ InputEventSensor >> mapButtons: buttons modifiers: anInteger [
 	^ buttons
 ]
 
-{ #category : #'private events' }
+{ #category : #'private - events' }
 InputEventSensor >> modifiers [
 	"modifier keys; bitfield with the following entries:
 		1	-	shift key
@@ -290,7 +290,7 @@ InputEventSensor >> modifiers [
 	^modifiers
 ]
 
-{ #category : #'private events' }
+{ #category : #'private - events' }
 InputEventSensor >> mouseButtons [
 	"button state; bitfield with the following entries:
 		1	-	yellow (e.g., right) button
@@ -315,7 +315,7 @@ InputEventSensor >> nextEvent [
 
 ]
 
-{ #category : #'private events' }
+{ #category : #'private - events' }
 InputEventSensor >> nextKeyboardEvent [
 	"Allows for use of old Sensor protocol to get at the keyboard,
 	as when running kbdTest or the InterpreterSimulator in Morphic"
@@ -345,7 +345,7 @@ InputEventSensor >> peekEvent [
 		ifTrue: [ self processEvent: nextEvent ]
 ]
 
-{ #category : #'private events' }
+{ #category : #'private - events' }
 InputEventSensor >> peekKeyboardEvent [
 	"Allows for use of old Sensor protocol to get at the keyboard,
 	as when running kbdTest or the InterpreterSimulator in Morphic"
@@ -371,8 +371,8 @@ InputEventSensor >> primTabletGetParameters: cursorIndex [
 	3. number of tablet units per inch
 	4. number of cursors (pens, pucks, etc; some tablets have more than one)
 	5. this cursor index
-	6. and 7. x scale and x offset for scaling tablet coordintes (e.g., to fit the screen)
-	8. and 9. y scale and y offset for scaling tablet coordintes  (e.g., to fit the screen)
+	6. and 7. x scale and x offset for scaling tablet coordinates (e.g., to fit the screen)
+	8. and 9. y scale and y offset for scaling tablet coordinates  (e.g., to fit the screen)
 	10. number of pressure levels
 	11. presure threshold needed close pen tip switch 
 	12. number of pen tilt angles"
@@ -400,7 +400,7 @@ InputEventSensor >> primTabletRead: cursorIndex [
 
 ]
 
-{ #category : #'private events' }
+{ #category : #'private - events' }
 InputEventSensor >> processEvent: evt [
 	"Process a single event. This method is run at high priority."
 
@@ -421,17 +421,17 @@ InputEventSensor >> processEvent: evt [
 	type = EventTypeKeyboard
 		ifTrue: [ ^ self processKeyboardEvent: evt ].
 
-	"Handle all events other than Keyborad or Mouse."
+	"Handle all events other than Keyboard or Mouse."
 	^ evt
 ]
 
-{ #category : #'private events' }
+{ #category : #'private - events' }
 InputEventSensor >> processKeyboardEvent: evt [
 	modifiers := evt at: KeyboardModifierIndexInEventBuffer.	"Update state for polling calls"
 	^ evt
 ]
 
-{ #category : #'private events' }
+{ #category : #'private - events' }
 InputEventSensor >> processMouseEvent: evt [
 	"Transmogrify the button state according to the platform's button map definition"
 	evt
@@ -452,7 +452,7 @@ InputEventSensor >> processMouseEvent: evt [
 	^ evt
 ]
 
-{ #category : #'private events' }
+{ #category : #'private - events' }
 InputEventSensor >> queueEvent: evt [
 	"Queue the given event in the event queue"
 	eventQueue nextPut: evt
@@ -547,7 +547,7 @@ InputEventSensor >> waitButton [
 { #category : #mouse }
 InputEventSensor >> waitButtonOrKeyboard [
 	"Wait for the user to press either any mouse button or any key. 
-	Answer the current cursor location or nil if a keypress occured."
+	Answer the current cursor location or nil if a keypress occurred."
 
 	| delay |
 	delay := Delay forMilliseconds: 50.

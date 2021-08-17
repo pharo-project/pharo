@@ -7,8 +7,15 @@ Class {
 	#category : #'Gofer-Core-Operations'
 }
 
+{ #category : #testing }
+GoferChanges class >> isAbstract [
+
+	^ self == GoferChanges
+]
+
 { #category : #private }
 GoferChanges >> addReference: aReference [
+
 	super addReference: aReference.
 	self model operations 
 		addAll: (self patchsetOf: aReference) operations
@@ -21,6 +28,7 @@ GoferChanges >> defaultModel [
 
 { #category : #running }
 GoferChanges >> execute [
+
 	^ self model
 ]
 

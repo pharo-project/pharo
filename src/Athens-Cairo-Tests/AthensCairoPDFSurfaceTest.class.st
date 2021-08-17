@@ -4,7 +4,7 @@ Class {
 	#category : #'Athens-Cairo-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : #accessing }
 AthensCairoPDFSurfaceTest >> athensSurfaceClass [
 	^ AthensCairoPDFSurface
 ]

@@ -249,15 +249,15 @@ PRRichTextComposer class >> preferencesSettingsOn: aBuilder [
 		description: 'All settings concerned with the notifications popup look''n feel';
 		with: [
 		(aBuilder setting: #offline)
-			label: 'To set offline mode';
+			label: 'Enable offline mode';
 			target: self;
 			default: false;
 			description: '
-			When oneline is chosen, requests to external images are only performed when they are not in the image cache (since requesting systematically HTTP may lead of latency. Each figure is cached, so the request is at most done one per external references. When the system is online but the request failed we return a placeholder that is not cached.
+			When online is chosen, requests to external images are only performed when they are not in the image cache (since requesting systematically HTTP may lead of latency. Each figure is cached, so the request is at most done one per external references. When the system is online but the request failed we return a placeholder that is not cached.
 			
 			When offline, requests to external images are not performed. The cache can be reset executing PRRichTextComposer resetCache. When the system is off line and an image is requested, a placeholder is computed but not put in the cache. This way when the system is put online the requested elements will be requested and put in the cache (without needing to flush placeholders from the cache).'. 
 			(aBuilder setting: #notRendering)
-				label: 'To set off the rendering in richtext';
+				label: 'Disable richtext rendering';
 				default: false;
 				target: self;
 				description: 'Comments are by default rendered via Pillar in Richtext. When this setting is on, they are rendered as plain text (showing their Microdown definitions).'. 
@@ -503,7 +503,7 @@ PRRichTextComposer >> visitBeginEnvironmentAnnotation: aBeginEnvironmentAnnotati
 	canvas << '>>> Environments not supported in RichText Pillar <<<' asText
 ]
 
-{ #category : #'visiting -  format' }
+{ #category : #'visiting - format' }
 PRRichTextComposer >> visitBoldFormat: anObject [
 	canvas 
 		includeAttribute: TextEmphasis bold 
@@ -653,7 +653,7 @@ PRRichTextComposer >> visitHorizontalRule: anHorizontalLine [
 	canvas newLine.	
 ]
 
-{ #category : #'visiting -  format' }
+{ #category : #'visiting - format' }
 PRRichTextComposer >> visitItalicFormat: anObject [
 	canvas includeAttribute: TextEmphasis italic in: [ self visitFormat: anObject ]
 ]
@@ -697,7 +697,7 @@ PRRichTextComposer >> visitMathInTextAnnotation: aPRMathInTextAnnotation [
 		ifFalse: [ canvas << (PRCodeblockStylerExtensions latexMathStylerFor: aPRMathInTextAnnotation text)]
 ]
 
-{ #category : #'visiting -  format' }
+{ #category : #'visiting - format' }
 PRRichTextComposer >> visitMonospaceFormat: anObject [
 	"Notice - I add a highlight to the backgorund rather than mono-spaced."
 	| backgroundColor sem |
@@ -761,19 +761,19 @@ PRRichTextComposer >> visitPreformatted: aPreformatted [
 	canvas newLine
 ]
 
-{ #category : #'visiting -  format' }
+{ #category : #'visiting - format' }
 PRRichTextComposer >> visitStrikethroughFormat: anObject [
 	canvas includeAttribute: TextEmphasis struckOut in: [ self visitFormat: anObject ]
 ]
 
-{ #category : #'visiting -  format' }
+{ #category : #'visiting - format' }
 PRRichTextComposer >> visitSubscriptFormat: anObject [
 	canvas
 		includeAttribute: self subscriptColor
 		in: [ self visitFormat: anObject ]
 ]
 
-{ #category : #'visiting -  format' }
+{ #category : #'visiting - format' }
 PRRichTextComposer >> visitSuperscriptFormat: anObject [
 	canvas
 		includeAttribute: self superscriptColor
@@ -796,7 +796,7 @@ PRRichTextComposer >> visitText: anObject [
 		" - should not be necessary addAttribute: (TextIndent tabs: canvas nesting)"
 ]
 
-{ #category : #'visiting -  format' }
+{ #category : #'visiting - format' }
 PRRichTextComposer >> visitUnderlineFormat: anObject [
 	canvas includeAttribute: TextEmphasis underlined in: [ self visitFormat: anObject ]
 ]

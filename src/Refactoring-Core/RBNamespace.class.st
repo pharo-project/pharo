@@ -61,7 +61,7 @@ RBNamespace class >> onEnvironment: aBrowserEnvironment [
 		yourself
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> addChangeToClass: aRBClass [
 	^ changedClasses 
 		at: aRBClass name
@@ -70,17 +70,17 @@ RBNamespace >> addChangeToClass: aRBClass [
 				with: aRBClass classSide)
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> addClassVariable: aString to: aRBClass [ 
 	^changes addClassVariable: aString to: aRBClass
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> addInstanceVariable: aString to: aRBClass [ 
 	^changes addInstanceVariable: aString to: aRBClass
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> addPackageNamed: aSymbol [
 	| change pkg |
 	change := changes addPackageNamed: aSymbol.
@@ -91,9 +91,15 @@ RBNamespace >> addPackageNamed: aSymbol [
 	^change
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> addPool: aString to: aRBClass [ 
 	^changes addPool: aString to: aRBClass
+]
+
+{ #category : #adding }
+RBNamespace >> addProtocolNamed: aString in: aClass [
+
+	^ changes addProtocolNamed: aString in: aClass
 ]
 
 { #category : #accessing }
@@ -222,7 +228,7 @@ RBNamespace >> allReferencesToClass: aRBClass inPackages: aColl do: aBlock [
 				do: [:sel | aBlock value: (each classSide methodFor: sel)]]
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> changeClass: aRBClass [ 
 	changedClasses 
 		at: aRBClass name
@@ -237,7 +243,7 @@ RBNamespace >> changes [
 	^changes
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBNamespace >> classFor: aBehavior [
 
 	aBehavior ifNil: [ ^ nil ].
@@ -251,7 +257,7 @@ RBNamespace >> classNameFor: aBehavior [
 	^ aBehavior instanceSide name
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBNamespace >> classNamed: aSymbol [
 	| class classes index |
 	aSymbol ifNil: [ ^ nil ].
@@ -269,12 +275,22 @@ RBNamespace >> classNamed: aSymbol [
 	^ class ifNotNil: [ class classSide ]
 ]
 
+{ #category : #converting }
+RBNamespace >> classObjectFor: anObject [
+
+	(anObject isBehavior or: [anObject isTrait])
+		ifTrue: [ ^ self classFor: anObject ].
+	anObject isSymbol
+		ifTrue: [ ^ self classNamed: anObject ].
+	^ anObject
+]
+
 { #category : #changes }
 RBNamespace >> comment: aString in: aClass [
 	^ changes comment: aString in: aClass
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> compile: aString in: aRBClass classified: aSymbol [ 
 	| change |
 	change := changes 
@@ -285,7 +301,15 @@ RBNamespace >> compile: aString in: aRBClass classified: aSymbol [
 	^change
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #transforming }
+RBNamespace >> convertClasses: classSet select: aBlock using: searchReplacer [
+ 
+	classSet do: [ :aClass | 
+		(aBlock value: aClass) do: [ :selector |
+			aClass convertMethod: selector using: searchReplacer ]]
+]
+
+{ #category : #'accessing - classes' }
 RBNamespace >> createNewClassFor: aBehavior [ 
 	| nonMeta meta className rbType rbMetaType |
 	className := aBehavior instanceSide name.
@@ -303,7 +327,7 @@ RBNamespace >> createNewClassFor: aBehavior [
 	^changedClasses at: className put: (Array with: nonMeta with: meta)
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBNamespace >> createNewPackageFor: aPackage [
 	| package |
 	package := modelFactory rbPackage existingNamed: aPackage model: self.
@@ -360,7 +384,7 @@ RBNamespace >> environment: aBrowserEnvironment [
 	environment := aBrowserEnvironment
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> flushCaches [
 	implementorsCache := IdentityDictionary new.
 	sendersCache := IdentityDictionary new
@@ -431,7 +455,7 @@ RBNamespace >> markPackageAsRemoved: aPackageName [
 		add: aPackageName
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBNamespace >> metaclassNamed: aSymbol [
 
 	| class |
@@ -460,7 +484,7 @@ RBNamespace >> name: aString [
 	^changes name: aString
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBNamespace >> packageNamed: aSymbol [
 	aSymbol ifNil: [ ^ nil ].
 	(self hasPackageRemoved: aSymbol) ifTrue: [ ^ nil ].
@@ -469,7 +493,7 @@ RBNamespace >> packageNamed: aSymbol [
 	^ (self createNewPackageFor: aSymbol) first
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> performChange: aCompositeRefactoryChange around: aBlock [ 
 	| oldChanges |
 	changes addChange: aCompositeRefactoryChange.
@@ -553,7 +577,7 @@ RBNamespace >> removeClass: aRBClass [
 	self removeClassNamed: aRBClass name
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> removeClassKeepingSubclassesNamed: aSymbol [ 
 	removedClasses
 		add: aSymbol;
@@ -577,27 +601,33 @@ RBNamespace >> removeClassNamed: aSymbol [
 	^changes removeClassNamed: aSymbol
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> removeClassVariable: aString from: aRBClass [ 
 	^changes removeClassVariable: aString from: aRBClass
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> removeInstanceVariable: aString from: aRBClass [ 
 	^changes removeInstanceVariable: aString from: aRBClass
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> removeMethod: aSelector from: aRBClass [ 
 	self flushCaches.
 	^changes removeMethod: aSelector from: aRBClass
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> removePackageNamed: aString [
 
 	self flushCaches.
 	^ changes removePackageNamed: aString.
+]
+
+{ #category : #'private - changes' }
+RBNamespace >> removeProtocolNamed: aString in: aClass [
+
+	^ changes removeProtocolNamed: aString in: aClass
 ]
 
 { #category : #changes }
@@ -621,7 +651,7 @@ RBNamespace >> renameClass: aRBClass to: aSymbol around: aBlock [
 	^ change
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> renameClassVariable: oldName to: newName in: aRBClass around: aBlock [ 
 	^self performChange: (changeFactory  
 				renameClassVariable: oldName
@@ -630,7 +660,7 @@ RBNamespace >> renameClassVariable: oldName to: newName in: aRBClass around: aBl
 		around: aBlock
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> renameInstanceVariable: oldName to: newName in: aRBClass around: aBlock [ 
 	^self performChange: (changeFactory 
 				renameInstanceVariable: oldName
@@ -663,7 +693,7 @@ RBNamespace >> reparentClasses: aRBClassCollection to: newClass [
 						to: newClass name)]
 ]
 
-{ #category : #'private-changes' }
+{ #category : #'private - changes' }
 RBNamespace >> replaceClassNameIn: definitionString to: aSymbol [ 
 	| parseTree |
 	parseTree := self parserClass parseExpression: definitionString.
@@ -674,6 +704,15 @@ RBNamespace >> replaceClassNameIn: definitionString to: aSymbol [
 { #category : #accessing }
 RBNamespace >> rootClasses [
 	^ rootClasses ifNil: [ rootClasses := self privateRootClasses]
+]
+
+{ #category : #transforming }
+RBNamespace >> selector: aSelector in: aClass classified: aProtocol [
+
+	^ changes
+		selector: aSelector
+		in: aClass
+		classified: aProtocol
 ]
 
 { #category : #private }
@@ -689,7 +728,7 @@ RBNamespace >> unmarkPackageAsRemoved: newPackageName [
 		remove: newPackageName ifAbsent: [  ]
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBNamespace >> whichCategoryIncludes: aSymbol [
 	^self environment whichCategoryIncludes: aSymbol
 ]

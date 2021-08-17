@@ -99,7 +99,7 @@ RGClassDescriptionStrategy >> instanceVariablesString [
 			separatedBy: [ stream space ] ]
 ]
 
-{ #category : #'testing class hierarchy' }
+{ #category : #'testing - class hierarchy' }
 RGClassDescriptionStrategy >> kindOfSubclass [
 	"Answer a String that is the keyword that describes the receiver's kind of subclass,
 	 either a regular subclass, a variableSubclass, a variableByteSubclass,

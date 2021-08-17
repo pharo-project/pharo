@@ -31,25 +31,25 @@ SDL_SysWMinfo_WindowsInfo >> asPlatformSpecificHandle [
 		yourself
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_WindowsInfo >> hdc [
 	"This method was automatically generated"
 	^ExternalData fromHandle: (handle pointerAt: OFFSET_HDC) type: ExternalType void asPointerType
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_WindowsInfo >> hdc: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_HDC put: anObject getHandle.
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_WindowsInfo >> window [
 	"This method was automatically generated"
 	^ExternalData fromHandle: (handle pointerAt: OFFSET_WINDOW) type: ExternalType void asPointerType
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_WindowsInfo >> window: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_WINDOW put: anObject getHandle.

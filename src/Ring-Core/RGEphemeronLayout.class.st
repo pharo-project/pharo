@@ -4,14 +4,8 @@ Class {
 	#category : #'Ring-Core-Kernel'
 }
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGEphemeronLayout >> isEphemeronLayout [
 
 	^ true
-]
-
-{ #category : #accessing }
-RGEphemeronLayout >> layoutName [
-
-	^ #EphemeronLayout
 ]

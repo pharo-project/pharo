@@ -62,7 +62,7 @@ ExceptionTest >> testCaptureIfSignalledWhenStepping [
 	
 ]
 
-{ #category : #test }
+{ #category : #tests }
 ExceptionTest >> testDefaultAction [
 	"Ensure that the resuming an UnhandledError when the underlying
 	Exception is resumable, results in the resumption value serving
@@ -77,7 +77,7 @@ ExceptionTest >> testDefaultAction [
 	self assert: result equals: expected
 ]
 
-{ #category : #test }
+{ #category : #tests }
 ExceptionTest >> testDefaultDescription [
    "Tests that the description of an Exception, is the defaultDescription"
    |anException|
@@ -86,7 +86,7 @@ ExceptionTest >> testDefaultDescription [
 	
 ]
 
-{ #category : #test }
+{ #category : #tests }
 ExceptionTest >> testDescription [
    |anException|
 	anException := Exception new.
@@ -346,7 +346,7 @@ ExceptionTest >> testResumablePass [
 	self assert: result equals: 4
 ]
 
-{ #category : #test }
+{ #category : #tests }
 ExceptionTest >> testResumeNonresumableUnhandledError [
 
 	"Ensure that the resuming an UnhandledError results in

@@ -5,7 +5,7 @@ STON is more or less a superset of JSON and is backwards compatible with JSON wh
 
   - class information (except for lists (Array) and maps (Dictionary))
   - proper handling of shared and circular references
-  - more Smalltalk like syntax (Symbols with #, single qouted Strings, nil instead of null)
+  - more Smalltalk like syntax (Symbols with #, single quoted Strings, nil instead of null)
   - more defined special types (Date, Time, DataAndTime, ByteArray, Point)
 
 Parsing JSON is done using

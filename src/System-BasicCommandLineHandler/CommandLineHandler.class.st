@@ -13,7 +13,7 @@ A handler may provide a short name with the class-side #commandName method. If t
 	
 For more sophisticated handler selection the CommandLineHandler should implement the #isResponsibleFor: class-side method. An instance of the current command line options is passed to this method which should then return a boolean.
 
-Between all the responsible handlers the one with the highes #priority is chosen. To change the priority overwrite the class-side accessor.
+Between all the responsible handlers the one with the highest #priority is chosen. To change the priority overwrite the class-side accessor.
 
 "
 Class {
@@ -142,12 +142,12 @@ CommandLineHandler >> allHandlers [
 	^ CommandLineHandler allHandlers 
 ]
 
-{ #category : #'accessing arguments' }
+{ #category : #'accessing - arguments' }
 CommandLineHandler >> argumentAt: anInteger [
 	^ self commandLine argumentAt: anInteger
 ]
 
-{ #category : #'accessing arguments' }
+{ #category : #'accessing - arguments' }
 CommandLineHandler >> arguments [
 	^ self commandLine arguments
 ]
@@ -196,7 +196,7 @@ CommandLineHandler >> hasArguments [
 	^ self commandLine hasArguments
 ]
 
-{ #category : #'accessing arguments' }
+{ #category : #'accessing - arguments' }
 CommandLineHandler >> hasOption: aString [
 	^ self commandLine hasOption: aString
 ]
@@ -243,24 +243,24 @@ CommandLineHandler >> name [
 	^ self printString
 ]
 
-{ #category : #'accessing arguments' }
+{ #category : #'accessing - arguments' }
 CommandLineHandler >> optionAt: aString [
 	^ self commandLine optionAt: aString
 ]
 
-{ #category : #'accessing arguments' }
+{ #category : #'accessing - arguments' }
 CommandLineHandler >> optionAt: aString ifAbsent: absentBlock [
 	^ self commandLine 
 		optionAt: aString ifAbsent: absentBlock
 ]
 
-{ #category : #'accessing arguments' }
+{ #category : #'accessing - arguments' }
 CommandLineHandler >> optionAt: aString ifPresent: absentBlock [
 	^ self commandLine 
 		optionAt: aString ifPresent: absentBlock
 ]
 
-{ #category : #'accessing arguments' }
+{ #category : #'accessing - arguments' }
 CommandLineHandler >> optionAt: aString ifPresent: presentBlock ifAbsent: absentBlock [
 	^ self commandLine 
 		optionAt: aString ifPresent: presentBlock ifAbsent: absentBlock

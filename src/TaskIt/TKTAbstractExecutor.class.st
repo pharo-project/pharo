@@ -51,13 +51,13 @@ TKTAbstractExecutor >> isFree [
 	^ busy not
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TKTAbstractExecutor >> noteBusy [
 
 	busy := true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TKTAbstractExecutor >> noteFree [
 
 	busy := false

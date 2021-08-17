@@ -12,12 +12,13 @@ Class {
 
 { #category : #spec }
 EyeTreeInspector class >> inspectorSpec [
+
 	<spec>
 	^ SpPanedLayout newTopToBottom
-		position: 70 percent;
-		add: #tree;
-		add: #text;
-		yourself
+		  positionOfSlider: 70 percent;
+		  add: #tree;
+		  add: #text;
+		  yourself
 ]
 
 { #category : #accessing }
@@ -128,7 +129,7 @@ EyeTreeInspector >> selectedObject [
 	^self selectedElement value
 ]
 
-{ #category : #'private-focus' }
+{ #category : #'private - focus' }
 EyeTreeInspector >> takeKeyboardFocus [
 	^ self tree takeKeyboardFocus
 ]

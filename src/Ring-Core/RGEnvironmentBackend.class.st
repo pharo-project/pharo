@@ -8,12 +8,12 @@ Class {
 	#category : #'Ring-Core-Environment'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 RGEnvironmentBackend class >> for: anRGEnvironment [
 
 	^ self new 
 		environment: anRGEnvironment;
-		yourself.
+		yourself
 ]
 
 { #category : #'trait alias' }
@@ -434,14 +434,14 @@ RGEnvironmentBackend >> definedBehaviorsFor: anRGPackage do: aBlock [
 	^  anRGPackage pvtDefinedBehaviorsDo: aBlock
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RGEnvironmentBackend >> definitionFor: anObject [ 
 
 	^ self definitionFor: anObject ifAbsentRegister: [ anObject ensureRingDefinitionIn: self environment ]
 
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RGEnvironmentBackend >> definitionFor: anObject ifAbsentRegister: aDefinitionOrBlock [
 
 	^ providedDefinitions at: anObject 
@@ -449,13 +449,13 @@ RGEnvironmentBackend >> definitionFor: anObject ifAbsentRegister: aDefinitionOrB
 		ifAbsentPut: [ aDefinitionOrBlock value ].
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RGEnvironmentBackend >> environment [
 		
 	^ environment
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 RGEnvironmentBackend >> environment: anRGEnironment [
 		
 	environment := anRGEnironment
@@ -548,7 +548,7 @@ RGEnvironmentBackend >> localMethodsFor: anRGBehavior do: aBlock [
 	^ anRGBehavior pvtLocalMethodsDo: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #metaclass }
 RGEnvironmentBackend >> metaclassFor: anRGBehavior [
 
 	^  anRGBehavior pvtMetaclass
@@ -731,7 +731,7 @@ RGEnvironmentBackend >> setLayoutFor: anRGBehavior to: anRGLayout [
 	^  anRGBehavior behaviorStrategy pvtLayout: anRGLayout
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #metaclass }
 RGEnvironmentBackend >> setMetaclassFor: anRGBehavior to: anRGMetaclass [
 
 	^  anRGBehavior pvtMetaclass: anRGMetaclass

@@ -100,7 +100,7 @@ SDL_TextInputEvent >> accept: aVisitor [
 	^ aVisitor visitTextInputEvent: self
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 SDL_TextInputEvent >> strlen [
 	| len |
 	len := 0.
@@ -112,7 +112,7 @@ SDL_TextInputEvent >> strlen [
 	^ len
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 SDL_TextInputEvent >> text [
 	| len text |
 	len := self strlen.
@@ -123,421 +123,421 @@ SDL_TextInputEvent >> text [
 	^ text
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text0 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT0
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text0: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT0 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text1 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT1
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text10 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT10
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text10: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT10 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text11 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT11
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text11: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT11 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text12 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT12
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text12: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT12 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text13 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT13
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text13: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT13 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text14 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT14
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text14: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT14 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text15 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT15
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text15: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT15 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text16 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT16
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text16: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT16 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text17 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT17
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text17: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT17 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text18 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT18
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text18: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT18 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text19 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT19
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text19: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT19 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text1: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT1 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text2 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT2
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text20 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT20
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text20: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT20 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text21 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT21
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text21: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT21 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text22 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT22
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text22: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT22 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text23 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT23
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text23: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT23 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text24 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT24
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text24: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT24 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text25 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT25
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text25: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT25 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text26 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT26
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text26: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT26 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text27 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT27
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text27: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT27 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text28 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT28
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text28: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT28 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text29 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT29
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text29: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT29 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text2: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT2 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text3 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT3
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text30 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT30
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text30: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT30 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text31 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT31
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text31: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT31 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text3: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT3 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text4 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT4
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text4: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT4 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text5 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT5
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text5: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT5 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text6 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT6
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text6: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT6 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text7 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT7
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text7: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT7 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text8 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT8
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text8: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT8 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text9 [
 	"This method was automatically generated"
 	^handle unsignedCharAt: OFFSET_TEXT9
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> text9: anObject [
 	"This method was automatically generated"
 	handle unsignedCharAt: OFFSET_TEXT9 put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> timestamp [
 	"This method was automatically generated"
 	^handle unsignedLongAt: OFFSET_TIMESTAMP
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> timestamp: anObject [
 	"This method was automatically generated"
 	handle unsignedLongAt: OFFSET_TIMESTAMP put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> type [
 	"This method was automatically generated"
 	^handle unsignedLongAt: OFFSET_TYPE
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> type: anObject [
 	"This method was automatically generated"
 	handle unsignedLongAt: OFFSET_TYPE put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> windowID [
 	"This method was automatically generated"
 	^handle unsignedLongAt: OFFSET_WINDOWID
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_TextInputEvent >> windowID: anObject [
 	"This method was automatically generated"
 	handle unsignedLongAt: OFFSET_WINDOWID put: anObject

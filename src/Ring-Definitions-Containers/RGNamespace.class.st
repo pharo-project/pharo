@@ -54,20 +54,20 @@ RGNamespace >> addPoolNamed: poolName [
 	self addPool: pool.
 ]
 
-{ #category : #'accessing global variables' }
+{ #category : #'accessing - global variables' }
 RGNamespace >> globalVariableNamed: globalVariableName [
 
 	^self elementNamed: globalVariableName in: self globalVariables
 ]
 
-{ #category : #'accessing global variables' }
+{ #category : #'accessing - global variables' }
 RGNamespace >> globalVariables [
 	"retrieves global variables"
 
 	^self elementsCategorized: #globalVariables
 ]
 
-{ #category : #'accessing global variables' }
+{ #category : #'accessing - global variables' }
 RGNamespace >> globalVariables: aCollection [
 
 	self elementsCategorized: #globalVariables with: aCollection
@@ -111,20 +111,20 @@ RGNamespace >> isNamespace [
 	^true
 ]
 
-{ #category : #'accessing pools' }
+{ #category : #'accessing - pools' }
 RGNamespace >> poolNamed: poolName [
 
 	^self elementNamed: poolName in: self pools
 ]
 
-{ #category : #'accessing pools' }
+{ #category : #'accessing - pools' }
 RGNamespace >> pools [
 	"retrieves the shares pools"
 
 	^self elementsCategorized: #pools
 ]
 
-{ #category : #'accessing pools' }
+{ #category : #'accessing - pools' }
 RGNamespace >> pools: aCollection [
 
 	self elementsCategorized: #pools with: aCollection

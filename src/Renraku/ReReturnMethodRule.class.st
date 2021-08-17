@@ -10,7 +10,7 @@ Class {
 	#category : #'Renraku-Rules'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 ReReturnMethodRule class >> checksMethod [
 	^ true
 ]

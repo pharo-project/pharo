@@ -11,6 +11,12 @@ Class {
 	#category : #'Kernel-Delays'
 }
 
+{ #category : #testing }
+AbstractDelayTicker class >> isAbstract [
+
+	^ self == AbstractDelayTicker
+]
+
 { #category : #'api-system' }
 AbstractDelayTicker >> millisecondsUntilTick: delay [
 	self subclassResponsibility 

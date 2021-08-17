@@ -17,9 +17,11 @@ MethodContexts must only be created using the method newForMethod:.  Note that i
 "
 Class {
 	#name : #Context,
-	#superclass : #InstructionStream,
+	#superclass : #Object,
 	#type : #variable,
 	#instVars : [
+		'sender',
+		'pc',
 		'stackp',
 		'method',
 		'closureOrNil',
@@ -82,6 +84,12 @@ Context class >> carefullyPrint: anObject on: aStream [
 	aStream nextPutAll: ([anObject printString]
 		on: Error
 		do: ['unprintable ' , anObject class name])
+]
+
+{ #category : #compiler }
+Context class >> compiler [
+	"The JIT compiler needs to trap all reads to instance variables of contexts. As this check is costly, it is only done in the long form of the bytecodes, which are not used often. In this hierarchy we force the compiler to alwasy generate long bytecodes"
+	^super compiler options: #(+ optionLongIvarAccessBytecodes)
 ]
 
 { #category : #'special context creation' }
@@ -163,11 +171,6 @@ Context class >> initializeTryNamedPrimitiveTemplateMethod [
 
 
 	
-]
-
-{ #category : #testing }
-Context class >> isContextClass [
-	^true
 ]
 
 { #category : #'instance creation' }
@@ -405,7 +408,7 @@ Context >> bottomContext [
 	^ self findContextSuchThat: [ :context | context sender isNil]
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> canHandleSignal: exception [
 	"Sent to handler (on:do:) contexts only.  If my exception class (first arg) handles exception then return true, otherwise forward this message to the next handler context.  If none left, return false (see nil>>canHandleSignal:)"
 
@@ -414,7 +417,7 @@ Context >> canHandleSignal: exception [
 
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> cannotReturn: result [
 
 	closureOrNil ifNotNil: [ 
@@ -743,7 +746,7 @@ Context >> errorReportOn: stream [
 		aContext := aContext sender ].
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> evaluateSignal: exception [
 	"The following primitive is just a marker used to find the evaluation context. 
 	See MethodContext>>#isHandlerOrSignalingContext. "
@@ -778,7 +781,7 @@ Context >> exceptionHandlerBlock [
 
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> exceptionsToCaptureWhenStepping [
 
 	| exceptionsToCapture exceptionsSet |
@@ -812,7 +815,7 @@ Context >> findContextSuchThat: testBlock [
 	^ nil
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> findNextHandlerContext [
 	"Return the next handler marked context, returning nil if there is none.  
 	Search starts with self and proceeds up to nil."
@@ -827,7 +830,7 @@ Context >> findNextHandlerContext [
 	^searchStartContext nextHandlerContext
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> findNextHandlerOrSignalingContext [
 	"Return the next handler/signaling marked context, answering nil if there is none. 
 	Search starts with self and proceeds up to nil."
@@ -842,7 +845,7 @@ Context >> findNextHandlerOrSignalingContext [
 	^ nil
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> findNextUnwindContextUpTo: aContext [
 	"Return the next unwind marked above the receiver, returning nil if there is none.  Search proceeds up to but not including aContext."
 
@@ -858,32 +861,7 @@ Context >> findNextUnwindContextUpTo: aContext [
 	^nil
 ]
 
-{ #category : #query }
-Context >> findSecondToOldestSimilarSender [
-	"Search the stack for the second-to-oldest occurance of self's method.  Very useful for an infinite recursion.  Gets back to the second call so you can see one complete recursion cycle, and how it was called at the beginning."
-
-	| secondContext context lastContext |
-	secondContext := self.
-	context := self.
-	[	lastContext := context findSimilarSender.
-		lastContext isNil
-	] whileFalse: [
-		secondContext := context.
-		context := lastContext.
-	].
-	^ secondContext
-
-]
-
-{ #category : #query }
-Context >> findSimilarSender [
-	"Return the closest sender with the same method, return nil if none found"
-
-	^ self sender findContextSuchThat: [ :context | 
-		context compiledCode == method ]
-]
-
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> handleSignal: exception [
 	"Sent to handler (on:do:) contexts only.  If my exception class (first arg) handles exception then execute my handle block (second arg), otherwise forward this message to the next handler context.  If none left, execute exception's defaultAction (see nil>>handleSignal:)."
 	<debuggerCompleteToSender>
@@ -1001,13 +979,13 @@ Context >> isFailToken: anObject [
 			and: [ anObject size = 2 and: [(anObject at: 1) == PrimitiveFailToken]]
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> isHandlerContext [
 	"is this context for #on:do:?"
 	^self isHandlerOrSignalingContext and: [ self selector == #on:do: ]
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> isHandlerOrSignalingContext [
 	"Both BlockClosure>>on:do: (handler) and Context>>evaluateSignal: (signaling) 
 	are marked with primitive 199."
@@ -1021,7 +999,7 @@ Context >> isPrimFailToken: anObject [
 		  and: [anObject first == PrimitiveFailToken]]
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> isUnwindContext [
 	"is this context for  method that is marked?"
 	^method primitive = 198
@@ -1048,15 +1026,7 @@ Context >> jump [
 ]
 
 { #category : #'instruction decoding' }
-Context >> jump: distance [ 
-	"Simulate the action of a 'unconditional jump' bytecode whose offset is 
-	the argument, distance."
-
-	pc := pc + distance
-]
-
-{ #category : #'instruction decoding' }
-Context >> jump: distance if: condition [ 
+Context >> jump: distance if: condition withInterpreter: anInterpreter [
 	"Simulate the action of a 'conditional jump' bytecode whose offset is the 
 	argument, distance, and whose condition is the argument, condition."
 
@@ -1068,7 +1038,16 @@ Context >> jump: distance if: condition [
 			to: bool
 			with: {}
 			super: false].
-	(bool eqv: condition) ifTrue: [self jump: distance]
+	(bool eqv: condition) ifTrue: [self jump: distance withInterpreter: anInterpreter]
+]
+
+{ #category : #'instruction decoding' }
+Context >> jump: distance withInterpreter: anInterpreter [
+	"Simulate the action of a 'unconditional jump' bytecode whose offset is 
+	the argument, distance."
+
+	pc := pc + distance.
+	anInterpreter pc: pc.
 ]
 
 { #category : #'debugger access' }
@@ -1129,7 +1108,7 @@ Context >> methodSelector [
 	^ self compiledCode selector
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> nextHandlerContext [
 
 	^ self sender findNextHandlerContext
@@ -1285,6 +1264,16 @@ Context >> outerMostContext [
 		ifNotNil: [ self outerContext ]
 ]
 
+{ #category : #accessing }
+Context >> pc [ 
+	^ pc
+]
+
+{ #category : #accessing }
+Context >> pc: anInteger [ 
+	pc := anInteger
+]
+
 { #category : #controlling }
 Context >> pop [
 	"Answer the top of the receiver's stack and remove the top of the stack."
@@ -1373,7 +1362,7 @@ Context >> printDetails: stream [
 		nextPutAll: 'Receiver: '.
 	errorMessage := '<<error during printing>>'.
 	stream nextPutAll:
-		([ receiver printStringLimitedTo: 90 ] onErrorDo: [ errorMessage ]).
+		([ receiver printStringLimitedTo: 90 ] on: Exception do: [ errorMessage ]).
 
 	stream
 		cr;
@@ -1383,7 +1372,7 @@ Context >> printDetails: stream [
 	string := [ 
 	          (self tempsAndValuesLimitedTo: 80 indent: 2)
 		          padRightTo: 1
-		          with: $x ] onErrorDo: [ errorMessage ].
+		          with: $x ] on: Exception do:  [ errorMessage ].
 	stream nextPutAll: string.
 
 	stream
@@ -1394,10 +1383,10 @@ Context >> printDetails: stream [
 	receiver class allInstVarNames isEmpty
 		ifTrue: [ 
 			stream nextPutAll:
-				([ receiver printStringLimitedTo: 90 ] onErrorDo: [ errorMessage ]) ]
+				([ receiver printStringLimitedTo: 90 ] on: Exception do:  [ errorMessage ]) ]
 		ifFalse: [ 
 			[ receiver longPrintOn: stream limitedTo: 80 indent: 2 ] 
-				onErrorDo: [ stream nextPutAll: errorMessage ] ].
+				on: Exception do:  [ stream nextPutAll: errorMessage ] ].
 	stream cr
 ]
 
@@ -1520,7 +1509,7 @@ Context >> pushArgs: arguments from: senderContext [
 ]
 
 { #category : #'instruction decoding' }
-Context >> pushClosureCopyNumCopiedValues: numCopied numArgs: numArgs blockSize: blockSize [
+Context >> pushClosureCopyNumCopiedValues: numCopied numArgs: numArgs blockSize: blockSize withInterpreter: anInterpreter [
 	"Simulate the action of a 'closure copy' bytecode whose result is the
 	 new BlockClosure for the following code"
 	| copiedValues |
@@ -1535,7 +1524,7 @@ Context >> pushClosureCopyNumCopiedValues: numCopied numArgs: numArgs blockSize:
 				startpc: pc
 				numArgs: numArgs
 				copiedValues: copiedValues).
-	self jump: blockSize
+	self jump: blockSize withInterpreter: anInterpreter
 ]
 
 { #category : #'instruction decoding' }
@@ -1634,7 +1623,7 @@ Context >> receiver [
 	^receiver
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> receiver: anObject [
 
 	receiver := anObject
@@ -1810,15 +1799,6 @@ Context >> runUntilErrorOrReturnFrom: aSender [
 		{topContext. error}
 	].
 
-]
-
-{ #category : #query }
-Context >> secondFromBottom [
-	"Return the second from bottom of my sender chain"
-
-	self sender ifNil: [ ^ nil ].
-	^ self findContextSuchThat: [ :context |
-		context sender sender isNil]
 ]
 
 { #category : #'debugger access' }
@@ -2071,19 +2051,10 @@ Context >> startpc [
 Context >> step [
 	"Simulate the execution of the receiver's next bytecode. Answer the 
 	context that would be the active context after this bytecode."
-
-	^self interpretNextInstructionFor: self
-]
-
-{ #category : #'debugger access' }
-Context >> stepIntoQuickMethod [
-	^self compiledCode stepIntoQuickMethods
-]
-
-{ #category : #'debugger access' }
-Context >> stepIntoQuickMethod: aBoolean [
-
-	self compiledCode stepIntoQuickMethods: aBoolean
+	| stream result |
+	stream := InstructionStream on: method pc: pc.
+	result := stream interpretNextInstructionFor: self.
+	^ result
 ]
 
 { #category : #controlling }
@@ -2143,7 +2114,7 @@ Context >> storeIntoTemporaryVariable: offset [
 	self at: offset + 1 put: self top
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> swapReceiver: newReceiver [
 
 	receiver := newReceiver
@@ -2273,7 +2244,7 @@ Context >> unwindComplete: aBoolean [
 
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> unwindForTermination [
 	"Unwind to execute pending ensure:/ifCurtailed: blocks before terminating active process.
 	It assumes that self belongs to the active process. "
@@ -2289,7 +2260,7 @@ Context >> unwindForTermination [
 	self terminateTo: nil
 ]
 
-{ #category : #'private-exceptions' }
+{ #category : #'private - exceptions' }
 Context >> unwindTo: aContext [
 
 	| context unwindBlock |

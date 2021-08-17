@@ -4,21 +4,21 @@ Class {
 	#category : #'OpalCompiler-Tests-AST'
 }
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTVariableTranslatorTest >> testAssignArgumentVariable [
 	self
 		should: [self compileSource: 'argument: anArgument
 	anArgument := 17'] raise: OCStoreIntoReadOnlyVariableError
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTVariableTranslatorTest >> testAssignClassVariable [
 	self assert: instance iVar equals: nil.
 	self testExample: #exampleClassVariableAssignment.
 	self assert: instance classVariable equals: 1
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTVariableTranslatorTest >> testAssignGlobalVariable [
 	globals add: (GlobalVariable key: #GlobalVariable value: nil).
 	self testSource: 'exampleGlobalVariableAssignment
@@ -26,7 +26,7 @@ OCASTVariableTranslatorTest >> testAssignGlobalVariable [
 	self assert: (globals at: #GlobalVariable) equals: 17
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTVariableTranslatorTest >> testAssignInstanceVariable [
 	self assert: instance iVar equals: nil.
 	self testExample: #exampleInstanceVariableAssignment.
@@ -34,42 +34,42 @@ OCASTVariableTranslatorTest >> testAssignInstanceVariable [
 	
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTVariableTranslatorTest >> testAssignSelfVariable [
 	self
 		should: [self compileSource: 'foo
 	self := 17'] raise: OCStoreIntoReservedVariableError
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTVariableTranslatorTest >> testAssignSuperVariable [
 	self
 		should: [self compileSource: 'foo
 	super := 17'] raise: OCStoreIntoReservedVariableError
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTVariableTranslatorTest >> testAssignTemporaryVariable [
 	self testExample: #exampleTemporaryVariableAssignment.
 	
 	self assert: instance result equals: 17
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTVariableTranslatorTest >> testAssignThisContextVariable [
 	self
 		should: [self compileSource: 'foo
 	thisContext := 17'] raise: OCStoreIntoReservedVariableError
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTVariableTranslatorTest >> testPushArgumentVariable [
 	self testExample: #examplePushArgumentVariable: withArgument: 17.
 	
 	self assert: instance result equals: 17
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTVariableTranslatorTest >> testPushClassVariable [
 	instance classVariable: 17.
 	self testExample: #examplePushClassVariable.
@@ -77,7 +77,7 @@ OCASTVariableTranslatorTest >> testPushClassVariable [
 	self assert: instance result equals: 17
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTVariableTranslatorTest >> testPushGlobalVariable [
 
 	globals add: (GlobalVariable key: #GlobalVariable value: 17).
@@ -87,7 +87,7 @@ OCASTVariableTranslatorTest >> testPushGlobalVariable [
 	self assert: instance result equals: 17
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTVariableTranslatorTest >> testPushInstanceVariable [
 	instance iVar: 17.
 	self testExample: #examplePushInstanceVariable.
@@ -95,7 +95,7 @@ OCASTVariableTranslatorTest >> testPushInstanceVariable [
 	self assert: instance result equals: 17
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTVariableTranslatorTest >> testPushSelf [
 	
 	self assert: instance result equals: nil.
@@ -103,7 +103,7 @@ OCASTVariableTranslatorTest >> testPushSelf [
 	self assert: instance result equals: instance
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTVariableTranslatorTest >> testPushSuper [
 	
 	self assert: instance result equals: nil.
@@ -111,7 +111,7 @@ OCASTVariableTranslatorTest >> testPushSuper [
 	self assert: instance result equals: instance
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTVariableTranslatorTest >> testPushTemporaryVariable [
 	instance iVar: 17.
 	self testExample: #examplePushTemporaryVariable.
@@ -119,7 +119,7 @@ OCASTVariableTranslatorTest >> testPushTemporaryVariable [
 	self assert: instance result equals: 17
 ]
 
-{ #category : #'testing - variables' }
+{ #category : #'tests - variables' }
 OCASTVariableTranslatorTest >> testPushThisContext [
 	method := self compileExample: #exampleThisContext.
 	self executeMethodOnInstance: method.

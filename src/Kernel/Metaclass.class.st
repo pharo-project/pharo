@@ -93,7 +93,7 @@ Metaclass >> classPool [
 	^self instanceSide classPool
 ]
 
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing - parallel hierarchy' }
 Metaclass >> classSide [
 	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
 	"Point classSide >>> Point class"
@@ -102,7 +102,7 @@ Metaclass >> classSide [
 	^ self
 ]
 
-{ #category : #'accessing instances and variables' }
+{ #category : #'accessing - instances and variables' }
 Metaclass >> classVarNames [
 	"Answer the names of the class variables defined in the receiver's instance."
 	
@@ -155,7 +155,7 @@ Metaclass >> hasBindingThatBeginsWith: aString [
 	^self instanceSide hasBindingThatBeginsWith: aString
 ]
 
-{ #category : #'accessing parallel hierarchy - deprecated' }
+{ #category : #'accessing - parallel hierarchy - deprecated' }
 Metaclass >> hasClassSide [
 	^ false
 ]
@@ -166,7 +166,7 @@ Metaclass >> innerBindingOf: varName [
 	^self instanceSide innerBindingOf: varName
 ]
 
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing - parallel hierarchy' }
 Metaclass >> instanceSide [
 	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
 	"Point instanceSide >>> Point"

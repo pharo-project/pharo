@@ -84,7 +84,7 @@ MicCodeBlock >> firstTag [
 	^ firstTag
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 MicCodeBlock >> lineStartMarkup [
 	"a code block is delimited by ``` "
 	

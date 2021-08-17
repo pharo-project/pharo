@@ -90,8 +90,11 @@ RGEnvironment >> behaviorsDo: aBlock [
 { #category : #binding }
 RGEnvironment >> bindingOf: aSymbol [
 	
-	| behavior result |
-	
+	| behavior result |	
+
+	(ReservedVariable nameIsReserved: aSymbol)
+		ifTrue: [ ^ ReservedVariable lookupDictionary at: aSymbol ].
+
 	self globalVariablesBindings at: aSymbol ifPresent: [ :val | ^ val ].
 	
 	self ask globalVariables detect: [ :each | each name = aSymbol  ] ifFound: [ :found | 
@@ -104,7 +107,7 @@ RGEnvironment >> bindingOf: aSymbol [
 	^ result
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #events }
 RGEnvironment >> child: aChildDefinition renamedFrom: oldName to: newName [
 
 	self queryInterface behaviorsDictionary removeKey: oldName ifAbsent: [].
@@ -217,7 +220,7 @@ RGEnvironment >> cleanWithMetaclassNamed: aProposedName [
 	self cleanUnusedUnreferencedPackages.
 ]
 
-{ #category : #'accessing-backend' }
+{ #category : #'accessing - backend' }
 RGEnvironment >> compileANewClassFrom: aString notifying: aMorph startingFrom: aClass [ 
 	| importer |
 	
@@ -228,7 +231,7 @@ RGEnvironment >> compileANewClassFrom: aString notifying: aMorph startingFrom: a
 	^ aClass
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utilities }
 RGEnvironment >> createDefaultEnvironment [
 
 	| protoobject protoobjectClass object objectClass class classClass classDescription classDescriptionClass behavior behaviorClass metaclass metaclassClass kernelPackage |
@@ -328,7 +331,7 @@ RGEnvironment >> definitionFor: anObject [
 	^ self backend definitionFor: anObject.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #cleaning }
 RGEnvironment >> ensureClassNamed: aSymbol [
 
 	self assert: (aSymbol endsWith: ' classTrait') not.
@@ -414,7 +417,7 @@ RGEnvironment >> ensureMetaclass: aProposedName [
 	^ aMetaclass.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #cleaning }
 RGEnvironment >> ensureMetaclassTraitNamed: aSymbol [
 
 	| found newTrait newMetaclassTrait similarMetaclass similarMetaclassName siblingName sibling originalMetaclass  |
@@ -491,7 +494,7 @@ RGEnvironment >> ensureMetaclassTraitNamed: aSymbol [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #cleaning }
 RGEnvironment >> ensurePackageNamed: aSymbol [
 
 	^ self ask packages 
@@ -523,7 +526,7 @@ RGEnvironment >> ensureTrait [
 	^ aTrait.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #cleaning }
 RGEnvironment >> ensureTraitNamed: aSymbol [
 
 	| found siblingName sibling |
@@ -584,14 +587,14 @@ RGEnvironment >> environment [
 	^ self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #cleaning }
 RGEnvironment >> fixProtoObjectClassSuperclass [
 
 	(self ask classNamed: #'ProtoObject class') superclass: (self ask classNamed: #Class).
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #binding }
 RGEnvironment >> globalVariablesBindings [
 
 	^ self propertyNamed: #globalVariablesBindings ifAbsentPut: [ IdentityDictionary new.]
@@ -603,7 +606,7 @@ RGEnvironment >> globalVariablesDo: aBlock [
 	self backend forBehavior globalVariablesFor: self do: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 RGEnvironment >> hasTraits [
 
 	self behaviorsDo: [ :each |
@@ -639,7 +642,7 @@ RGEnvironment >> initializeUnresolved [
 
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGEnvironment >> isEnvironment [
 
 	^ true
@@ -949,7 +952,7 @@ RGEnvironment >> unpackagedPackageOrNil [
 
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 RGEnvironment >> verifyOwnership: anRGObject [
 
 	"ignore unresolved values. TODO: check default values ownership?"

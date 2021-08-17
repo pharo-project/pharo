@@ -4,14 +4,8 @@ Class {
 	#category : #'Ring-Core-Kernel'
 }
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGByteLayout >> isByteLayout [
 
 	^ true
-]
-
-{ #category : #accessing }
-RGByteLayout >> layoutName [
-
-	^ #ByteLayout
 ]

@@ -4,14 +4,8 @@ Class {
 	#category : #'Ring-Core-Kernel'
 }
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGEmptyLayout >> isEmptyLayout [
 
 	^ true
-]
-
-{ #category : #accessing }
-RGEmptyLayout >> layoutName [
-
-	^ #EmptyLayout
 ]

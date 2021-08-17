@@ -15,6 +15,11 @@ Class {
 	#category : #'Refactoring-Environment'
 }
 
+{ #category : #'accessing - defaults' }
+RBPackageEnvironment class >> defaultName [
+	^ 'Packages'
+]
+
 { #category : #'instance creation' }
 RBPackageEnvironment class >> onEnvironment: anEnvironment packageNames: aCollection [
 	^ self 
@@ -54,6 +59,11 @@ RBPackageEnvironment class >> packages: aCollection [
 		packages: aCollection
 ]
 
+{ #category : #visiting }
+RBPackageEnvironment >> acceptVisitor: aEnvVisitor [
+	^ aEnvVisitor visitPackageEnv: self
+]
+
 { #category : #adding }
 RBPackageEnvironment >> addPackage: aSymbol [
 	packages add: aSymbol
@@ -65,6 +75,11 @@ RBPackageEnvironment >> asSelectorEnvironment [
 	result := RBSelectorEnvironment onEnvironment: environment.
 	self classesAndSelectorsDo: [ :class :selector | result addClass: class selector: selector ].
 	^ result
+]
+
+{ #category : #accessing }
+RBPackageEnvironment >> basisObjects [
+	^ self packages
 ]
 
 { #category : #accessing }
@@ -151,8 +166,20 @@ RBPackageEnvironment >> postCopy [
 ]
 
 { #category : #printing }
-RBPackageEnvironment >> printOn: aStream [ 
-	self storeOn: aStream
+RBPackageEnvironment >> printBasisObject: aClass on: aStream [
+
+	^ aStream nextPutAll: aClass name
+]
+
+{ #category : #printing }
+RBPackageEnvironment >> printOn: aStream [
+	aStream nextPutAll: 'Pck: '.
+	packages do: [ :pkg | aStream nextPutAll: pkg packageName, ', ']
+]
+
+{ #category : #removing }
+RBPackageEnvironment >> removePackage: aSymbol [
+	packages remove: aSymbol ifAbsent: []
 ]
 
 { #category : #printing }

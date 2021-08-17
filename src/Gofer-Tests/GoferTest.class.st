@@ -32,11 +32,13 @@ GoferTest class >> resources [
 
 { #category : #accessing }
 GoferTest >> monticelloRepository [
+
 	^ GoferResource current monticelloRepository
 ]
 
 { #category : #running }
 GoferTest >> setUp [
+
 	super setUp.
 	gofer := Gofer new.
 	gofer disablePackageCache
@@ -44,5 +46,6 @@ GoferTest >> setUp [
 
 { #category : #accessing }
 GoferTest >> versionReferences [
+
 	^ GoferResource current versionReferences
 ]

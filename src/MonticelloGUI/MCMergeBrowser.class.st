@@ -11,7 +11,7 @@ Class {
 	#category : #'MonticelloGUI-Tools'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 MCMergeBrowser class >> resolveConflictsInMerger: aMerger [
 	| inst |
 	inst := self new merger: aMerger.

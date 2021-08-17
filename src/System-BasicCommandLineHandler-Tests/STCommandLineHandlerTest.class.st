@@ -15,7 +15,7 @@ STCommandLineHandlerTest >> testCommandLineHandlerCondition [
 	| commandLine reference |
 	
 	commandLine := CommandLineArguments withArguments: {'/non/existing/file.st'}. 
-	"the reponsibility is transfered tot the BasicCodeLoader as soon as there is a .st file in the arguments"
+	"the responsibility is transferred to the BasicCodeLoader as soon as there is a .st file in the arguments"
 	self assert: (STCommandLineHandler isResponsibleFor: commandLine).
 		
 	[ reference := FileSystem disk workingDirectory / 'codeLoad1.st'.

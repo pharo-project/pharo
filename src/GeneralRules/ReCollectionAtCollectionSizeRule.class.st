@@ -27,5 +27,5 @@ ReCollectionAtCollectionSizeRule >> initialize [
 
 { #category : #accessing }
 ReCollectionAtCollectionSizeRule >> name [
-	^ 'uses "collection at: collection size" instead of "collection last"'
+	^ 'Uses "collection at: collection size" instead of "collection last"'
 ]

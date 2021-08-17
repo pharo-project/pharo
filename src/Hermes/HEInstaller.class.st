@@ -102,7 +102,14 @@ HEInstaller >> buildTrait: aTraitDefinition [
 { #category : #'creating traits' }
 HEInstaller >> buildTraitCompositionFor: traitComposition [
 
-	^ (traitComposition asLiteralIn: environment) asTraitComposition
+	| aLiteral |
+	
+	aLiteral := (traitComposition asLiteralIn: environment).
+	aLiteral isArray 
+		ifTrue: [ ^ aLiteral 
+							ifEmpty: [ self emptyTraitCompositionClass new ]
+							ifNotEmpty: [ self traitSequenceClass withAll: (aLiteral collect: [:each | each asTraitComposition]) ]  ]
+		ifFalse: [ ^ aLiteral asTraitComposition ]
 ]
 
 { #category : #accessing }
@@ -144,6 +151,12 @@ HEInstaller >> doInstallPackage: aHEPackage [
 	self validateNoNewUndeclared
 ]
 
+{ #category : #'creating traits' }
+HEInstaller >> emptyTraitCompositionClass [
+
+	^ Smalltalk at: #TaEmptyComposition ifAbsent: [ self error: 'Trait support has not been loaded' ]
+]
+
 { #category : #accessing }
 HEInstaller >> environment [
 	^ environment
@@ -154,7 +167,7 @@ HEInstaller >> environment: anObject [
 	environment := anObject
 ]
 
-{ #category : #'validating existance' }
+{ #category : #'validating existence' }
 HEInstaller >> existingClass: aHEClass [
 	(environment hasClassNamed: aHEClass className) ifTrue:[
 		self error: (self messageExistingClass: aHEClass)
@@ -162,7 +175,7 @@ HEInstaller >> existingClass: aHEClass [
 	^ nil
 ]
 
-{ #category : #'validating existance' }
+{ #category : #'validating existence' }
 HEInstaller >> existingTrait: aHETrait [
 	(environment includesKey: aHETrait traitName) ifTrue:[ 
 		self error: (self messageExistingTrait: aHETrait)
@@ -266,7 +279,7 @@ HEInstaller >> reportNewUndeclareds: newUndeclareds [
 	newUndeclareds ifNotEmpty: [ self error: 'New Undeclared created... check dependencies: ' , newUndeclareds keys printString ]
 ]
 
-{ #category : #'validating existance' }
+{ #category : #'validating existence' }
 HEInstaller >> shouldBuildMethod: aHEMethod in: aClass [
 	aClass
 		compiledMethodAt: aHEMethod name
@@ -274,6 +287,14 @@ HEInstaller >> shouldBuildMethod: aHEMethod in: aClass [
 			(m isFromTrait and:[aClass isTrait not]) ifTrue:[ ^ true ].  	
 			self error: (self messageMethod: aHEMethod alreadyExistsIn: aClass ) ]
 		ifAbsent: [ ^ true ]
+]
+
+{ #category : #'creating traits' }
+HEInstaller >> traitSequenceClass [
+
+	^ Smalltalk at: #TaSequence ifAbsent: [ self error: 'Trait support has not been loaded' ]
+	
+	
 ]
 
 { #category : #'reporting undeclared' }

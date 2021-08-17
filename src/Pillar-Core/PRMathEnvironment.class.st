@@ -13,12 +13,12 @@ Class {
 	#category : #'Pillar-Core-Model'
 }
 
-{ #category : #'accessing-parameters' }
+{ #category : #'accessing - parameters' }
 PRMathEnvironment >> accept: aVisitor [
 	^ aVisitor visitMathEnvironment: self
 ]
 
-{ #category : #'accessing-parameters' }
+{ #category : #'accessing - parameters' }
 PRMathEnvironment >> text [ 
 	^ self children first text
 ]

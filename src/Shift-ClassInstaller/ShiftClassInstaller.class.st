@@ -11,7 +11,7 @@ Smalltalk classInstaller make: [ :aBuilder |
 			slots: #(varA varB);
 			category: 'My-Category' ].
 		
-See that I should never be referenced directly, only through the accesor 
+See that I should never be referenced directly, only through the accessor 
 in Smalltalk or in any class in the system. 
 
 The block passed is used to configure the builder. Check ShiftClassBuilder to see the available messages.
@@ -80,14 +80,14 @@ ShiftClassInstaller >> copyObject: oldObject to: newClass [
 		ifTrue: [ newClass basicNew: oldObject size ]
 		ifFalse: [ newClass basicNew ].
 
-	"first initalize all hidden slots"
+	"first initialize all hidden slots"
 	hiddenSlots := newClass classLayout allSlots reject: [:each | each isVisible].
 	hiddenSlots do: [ :newSlot | 
 			newSlot initialize: newObject.
 			oldObject class slotNamed: newSlot name ifFound: [ :oldSlot | 
 				newSlot write: (oldSlot read: oldObject) to: newObject ]  ].
 
-	"the initalize all visible slots"
+	"the initialize all visible slots"
 	newClass allSlots do: [ :newSlot | oldObject class slotNamed: newSlot name ifFound: [ :oldSlot | 
 			newSlot initialize: newObject.
 		   newSlot write: (oldSlot read: oldObject) to: newObject ] ].

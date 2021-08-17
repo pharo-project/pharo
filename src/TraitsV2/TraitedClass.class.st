@@ -19,7 +19,7 @@ Class {
 	#category : #'TraitsV2-Base'
 }
 
-{ #category : #'accessing method dictionary' }
+{ #category : #'accessing - method dictionary' }
 TraitedClass class >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory [
 
 	super
@@ -31,7 +31,7 @@ TraitedClass class >> addAndClassifySelector: selector withMethod: compiledMetho
 	
 ]
 
-{ #category : #'accessing method dictionary' }
+{ #category : #'accessing - method dictionary' }
 TraitedClass class >> addSelector: selector withMethod: compiledMethod [
 	super addSelector: selector withMethod: compiledMethod.
 	self propagateChangeOf: selector
@@ -80,7 +80,7 @@ TraitedClass class >> traitUsers [
 	^ #()
 ]
 
-{ #category : #'accessing method dictionary' }
+{ #category : #'accessing - method dictionary' }
 TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aCategory [
 	
 	"When a new methods is added, I add it to the localMethodDict and also propagate the changes to my users"
@@ -94,7 +94,7 @@ TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inPr
 	TraitChange addSelector: selector on: self.	
 ]
 
-{ #category : #'accessing method dictionary' }
+{ #category : #'accessing - method dictionary' }
 TraitedClass >> addSelector: selector withMethod: compiledMethod [
 	"When a new selector is installed in a class I insert the selector in the local methodDict and propagate the changes to my users"
 	
@@ -103,7 +103,7 @@ TraitedClass >> addSelector: selector withMethod: compiledMethod [
 	TraitChange addSelector: selector on: self
 ]
 
-{ #category : #'accessing method dictionary' }
+{ #category : #'accessing - method dictionary' }
 TraitedClass >> addSelector: selector withRecompiledMethod: compiledMethod [ 
 	"When a new selector is installed in a class I insert the selector in the local methodDict and propagate the changes to my users"
 
@@ -245,7 +245,7 @@ TraitedClass >> localMethods [
 	^ self localMethodDict values
 ]
 
-{ #category : #'accessing method dictionary' }
+{ #category : #'accessing - method dictionary' }
 TraitedClass >> localSelectors [
 	
 	^ self localMethodDict keys

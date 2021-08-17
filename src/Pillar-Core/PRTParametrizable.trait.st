@@ -6,7 +6,7 @@ Trait {
 	#category : #'Pillar-Core-Roots'
 }
 
-{ #category : #'accessing-parameters' }
+{ #category : #'accessing - parameters' }
 PRTParametrizable >> hasParameter: aKey [
 	self
 		parameters at: aKey
@@ -14,17 +14,17 @@ PRTParametrizable >> hasParameter: aKey [
 	^ true
 ]
 
-{ #category : #'accessing-parameters' }
+{ #category : #'accessing - parameters' }
 PRTParametrizable >> hasParameters [
 	^ self parameters isNotEmpty
 ]
 
-{ #category : #'accessing-parameters' }
+{ #category : #'accessing - parameters' }
 PRTParametrizable >> parameterAt: aKey put: aValue [
 	^ self parameters at: aKey put: aValue
 ]
 
-{ #category : #'accessing-parameters' }
+{ #category : #'accessing - parameters' }
 PRTParametrizable >> parameters [
 	^ self explicitRequirement
 ]

@@ -37,6 +37,12 @@ VirtualMachine >> allocationsBetweenGC: anInteger [
 ]
 
 { #category : #accessing }
+VirtualMachine >> architectureName [
+	
+	^ Smalltalk vm getSystemAttribute: 1003
+]
+
+{ #category : #accessing }
 VirtualMachine >> buildDate [			
 	"Return a String reflecting the build date of the VM"
 	"Smalltalk buildDate"
@@ -52,7 +58,7 @@ VirtualMachine >> cogitClass [
 
 { #category : #accessing }
 VirtualMachine >> command [
-	"return a bash-like lauch command for the vm including all arguments up to the image name "
+	"return a bash-like launch command for the vm including all arguments up to the image name "
 	^ String streamContents: [ :s|
 		s nextPutAll: (self optionAt: 0).
 		Smalltalk commandLine options 
@@ -86,10 +92,52 @@ VirtualMachine >> directory [
 { #category : #modules }
 VirtualMachine >> disableModuleLoading [
 	"Primitive. Disable a new module loading mechanism for the rest of current session.
-	This operation is not reversable.
+	This operation is not reversible.
 	Any subsequent attempts to load either external or internal module(s) will fail"
 
 	<primitive: 'primitiveDisableModuleLoading' module: ''>
+]
+
+{ #category : #attributes }
+VirtualMachine >> doGetSystemAttribute: attributeID [ 
+	"Optional. Answer the string for the system attribute with the given 
+	integer ID. Answer nil if the given attribute is not defined on this 
+	platform. On platforms that support invoking programs from command 
+	lines (e.g., Unix), this mechanism can be used to pass command line 
+	arguments to programs written in Pharo.
+
+	By convention, the first command line argument that is not a VM
+	configuration option is considered a 'document' to be filed in. Such a
+	document can add methods and classes, can contain a serialized object,
+	can include code to be executed, or any combination of these.
+
+	Currently defined attributes include: 
+	-1000   1000th command line argument that specify VM options
+   	...
+	-1              first command line argument that specify VM options
+      0               the full path name for currently executing VM
+                       (or, on some platforms, just the path name of the VM's directory)
+       1               full path name of this image (better use primImageName instead)
+       2               a Pharo document to open, if any
+       3               first command line argument for Pharo programs
+       ...
+       1000    1000th command line argument for Pharo programs
+       1001    this platform's operating system 'Mac OS', 'Win32', 'unix', ...
+       1002    operating system version
+       1003    this platform's processor type
+       1004    vm version
+       1005    window system name
+       1006    vm build id
+       1007    Interpreter class (Cog VM only)
+       1008    Cogit class (Cog VM only)
+       1201    max filename length (Mac OS only)
+       1202    file last error (Mac OS only)
+       10001   hardware details (Win32 only)
+       10002   operating system details (Win32 only)
+       10003   graphics hardware details (Win32 only)"
+
+	<primitive: 149>
+	^ nil
 ]
 
 { #category : #accessing }
@@ -246,8 +294,7 @@ VirtualMachine >> getSystemAttribute: attributeID [
        10002   operating system details (Win32 only)
        10003   graphics hardware details (Win32 only)"
 
-	<primitive: 149>
-	^ nil
+	^ (self doGetSystemAttribute: attributeID) ifNotNil: [ :aValue | aValue asByteArray utf8Decoded ]
 ]
 
 { #category : #testing }
@@ -354,7 +401,7 @@ VirtualMachine >> is64bit [
 
 { #category : #testing }
 VirtualMachine >> isAIOInterrupt [
-	"Answer true, if the vm is capable of being interupted until there is an AIO event. 
+	"Answer true, if the vm is capable of being interrupted until there is an AIO event. 
 	 (This means we are going idle until we have something real to process)"
 
 	^ (self getSystemAttribute: 1010) = 'AIO'
@@ -579,6 +626,12 @@ VirtualMachine >> oldSpaceEnd [
 ]
 
 { #category : #accessing }
+VirtualMachine >> operatingSystemName [
+	
+	^ Smalltalk vm getSystemAttribute: 1001
+]
+
+{ #category : #accessing }
 VirtualMachine >> optionAt: i [
 	"Answer the i-th option of the command line, or nil if not so many options."
 	
@@ -615,7 +668,7 @@ To speed-up execution, the cog uses internally a JIT compiler which translates t
 
 The default size should be between 1Mb and 2Mb for standard applications. If memory is a constraint, it can be lowered down to 750kb, under that you should use the stack VM else the performance starts to drastically decrease.
 
-This setting is useful to tune your application performance. For example, on compilation-intensive benchs, 750kb is the optimal machine code zone size. On large benchmarks, 2 Mb, maybe more, is better, but then one may see machine code garbage collection pauses. On small benchs all the methods fit into this zone so it doesn't really matter.
+This setting is useful to tune your application performance. For example, on compilation-intensive benches, 750kb is the optimal machine code zone size. On large benchmarks, 2 Mb, maybe more, is better, but then one may see machine code garbage collection pauses. On small benches all the methods fit into this zone so it doesn't really matter.
 
 Growing the machine code zone:
 - increase the number of methods that can be present there, hence decreasing machine code zone garbage collection frequency and method jit compilation.

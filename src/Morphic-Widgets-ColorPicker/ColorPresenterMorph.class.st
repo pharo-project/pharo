@@ -3,7 +3,7 @@ Displays a colour with alpha against a white, hatched and black background.
 "
 Class {
 	#name : #ColorPresenterMorph,
-	#superclass : #MorphicModel,
+	#superclass : #ModelMorph,
 	#instVars : [
 		'contentMorph',
 		'labelMorph',
@@ -16,7 +16,7 @@ Class {
 	#category : #'Morphic-Widgets-ColorPicker'
 }
 
-{ #category : #example }
+{ #category : #examples }
 ColorPresenterMorph class >> example [
 	<sampleInstance>
 

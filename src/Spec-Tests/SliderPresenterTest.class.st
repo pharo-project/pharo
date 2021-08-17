@@ -4,12 +4,12 @@ Class {
 	#category : #'Spec-Tests-Core-Widgets'
 }
 
-{ #category : #running }
+{ #category : #accessing }
 SliderPresenterTest >> classToTest [
 	^ SliderPresenter
 ]
 
-{ #category : #running }
+{ #category : #accessing }
 SliderPresenterTest >> initMinMax [
  testedInstance min: 0;
 		max: 100

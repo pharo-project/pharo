@@ -9,12 +9,14 @@ Class {
 	#name : #EDREPLInterface,
 	#superclass : #ReadWriteStream,
 	#instVars : [
-		'debugger'
+		'debugger',
+		'inputBufferStream',
+		'waitSemaphore'
 	],
 	#pools : [
 		'EventSensorConstants'
 	],
-	#category : #'EmergencyDebugger-Core'
+	#category : #'EmergencyDebugger-View'
 }
 
 { #category : #'instance creation' }
@@ -24,70 +26,74 @@ EDREPLInterface class >> forDebugger: aSindarinDebugger [
 		yourself
 ]
 
-{ #category : #utilities }
-EDREPLInterface class >> nextChar [
-	[| evt type | 
-		(Delay forMilliseconds: 20) wait.
-		self sensor nextEvent
-		ifNotNil: [:evtBuf | 
-			type := evtBuf first.
-			type = EventTypeKeyboard
-				ifTrue: [evt := self currentWorld currentHand generateKeyboardEvent: evtBuf.
-					evt isKeystroke
-						ifTrue: [| c |
-							c := evt keyCharacter.
-							(c asciiValue < 128
-									or: [c isSeparator
-											or: [c isSpecial
-													or: [c = Character backspace]]])
-								ifTrue: [self sensor flushKeyboard.
-									^ evt keyCharacter]]]]] repeat
-]
-
-{ #category : #accessing }
-EDREPLInterface class >> sensor [
-	^Sensor
-]
-
 { #category : #accessing }
 EDREPLInterface >> debugger: anObject [
 	debugger := anObject
 ]
 
+{ #category : #private }
+EDREPLInterface >> inputBufferStream [
+
+	^ inputBufferStream ifNil: [ inputBufferStream := String new writeStream ]
+]
+
 { #category : #accessing }
-EDREPLInterface >> nextChar [
-	^ self class nextChar
+EDREPLInterface >> pushChar: aChar [
+
+	self inputBufferStream nextPut: aChar.
+	self waitSemaphore signal
 ]
 
 { #category : #'command line' }
 EDREPLInterface >> readEvalPrint [
-	self sensor flushKeyboard.
+	
 	[ debugger isRunning ]
-		whileTrue: [ debugger eval: self requestLine.
-			self resetREPL ]
+	whileTrue: [ 
+		debugger eval: self requestLine.
+		self resetREPL ].
+	
+	self terminateREPL
 ]
 
 { #category : #'command line' }
 EDREPLInterface >> requestLine [
 	| startPos char contents |
+	
 	startPos := position.
-	self sensor flushKeyboard.
-	[ (char := self nextChar) = Character cr ]
-		whileFalse: [ (debugger performActionForChar: char)
-				ifFalse: [ char = Character backspace
-						ifTrue: [ readLimit := position := position - 1 max: startPos ]
-						ifFalse: [ self nextPut: char ].
-					debugger updatePrompt: self contents ] ].
+	[ 	
+		self waitSemaphore wait.
+		(char := self inputBufferStream peekLast) = Character cr ] 
+	whileFalse: [ 
+		(debugger performActionForChar: char)
+			ifFalse: [ 
+				char = Character backspace
+					ifTrue: [ readLimit := position := position - 1 max: startPos ]
+					ifFalse: [ self nextPut: char ].
+				debugger updatePrompt: self contents ] ].
+	
 	contents := self contents.
-	^ contents copyFrom: startPos + 1 to: contents size
+	^ contents 
+		copyFrom: startPos + 1 
+		to: contents size
 ]
 
 { #category : #private }
 EDREPLInterface >> resetREPL [
-	self on: (String new: 100)
+
+	self on: (String new: 100).
+	inputBufferStream := nil
 ]
 
-{ #category : #accessing }
-EDREPLInterface >> sensor [
-	^self class sensor
+{ #category : #'command line' }
+EDREPLInterface >> terminateREPL [
+
+	self waitSemaphore signal.
+	waitSemaphore := nil
+]
+
+{ #category : #private }
+EDREPLInterface >> waitSemaphore [
+
+	^ waitSemaphore ifNil: [ waitSemaphore := Semaphore new ]
+
 ]

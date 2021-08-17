@@ -76,7 +76,7 @@ RBPatternBlockNode >> createReplacingBlock [
 	^newBlock evaluateForReceiver: self.
 ]
 
-{ #category : #'testing-matching' }
+{ #category : #'testing - matching' }
 RBPatternBlockNode >> isPatternNode [
 	^ true
 ]

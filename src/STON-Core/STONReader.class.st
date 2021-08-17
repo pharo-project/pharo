@@ -71,7 +71,7 @@ STONReader >> consumeWhitespace [
 STONReader >> convertNewLines: boolean [
 	"When true, any newline CR, LF or CRLF read unescaped inside strings or symbols 
 	will be converted to the newline convention chosen, see #newLine:
-	The default is false, not doing any convertions."
+	The default is false, not doing any conversions."
 	
 	convertNewLines := boolean
 ]
@@ -106,12 +106,12 @@ STONReader >> initialize [
 
 { #category : #private }
 STONReader >> isClassChar: char [
-	^ 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_' includes: char
+	^ char isAlphaNumeric or: [ char = $_ ]
 ]
 
 { #category : #private }
 STONReader >> isClassStartChar: char [
-	^ 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' includes: char
+	^ char isLetter and: [ char isUppercase ]
 ]
 
 { #category : #private }

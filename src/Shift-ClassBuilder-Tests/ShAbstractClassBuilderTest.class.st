@@ -106,7 +106,7 @@ ShAbstractClassBuilderTest >> validateSlots: allSlots [
 			self assert: a class equals: b class ]
 ]
 
-{ #category : #'private validating' }
+{ #category : #'private - validating' }
 ShAbstractClassBuilderTest >> validateSuperclass: aSuperclass [
 	self assert: result superclass identicalTo: aSuperclass
 ]

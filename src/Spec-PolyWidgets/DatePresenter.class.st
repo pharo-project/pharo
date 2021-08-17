@@ -24,13 +24,13 @@ Class {
 	#category : #'Spec-PolyWidgets-Widgets'
 }
 
-{ #category : #example }
+{ #category : #examples }
 DatePresenter class >> example [
 	<sampleInstance>
 	^ self new openDialogWithSpec
 ]
 
-{ #category : #example }
+{ #category : #examples }
 DatePresenter class >> exampleModal [
 	<sampleInstance>
 	^ self new openDialogWithSpec modalRelativeTo: self currentWorld
@@ -62,7 +62,7 @@ DatePresenter >> chooseDate [
 		onChoiceSend: #onDateChosen: to: self.
 ]
 
-{ #category : #'accessing-widgets' }
+{ #category : #'accessing - widgets' }
 DatePresenter >> chooseDateButton [
 
 	^ chooseDateButton.
@@ -83,7 +83,7 @@ DatePresenter >> date: aDate [
 	self dateModel text: dateString.
 ]
 
-{ #category : #'accessing-widgets' }
+{ #category : #'accessing - widgets' }
 DatePresenter >> dateModel [
 
 	^ dateModel.
@@ -106,7 +106,7 @@ DatePresenter >> displayBlock [
 { #category : #api }
 DatePresenter >> displayBlock: aBlock [
 	"<api: #block getter:#displayBlock registration: #whenDisplayBlockChanged:>"
-	"Set the one argument block used to transfrom your date into a string"
+	"Set the one argument block used to transform your date into a string"
 	
 	displayBlockHolder value: aBlock
 ]
@@ -148,7 +148,7 @@ DatePresenter >> onDateChosen: aChoseDate [
 	self date: aChoseDate date
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 DatePresenter >> whenDateChanged: aBlock [
 
 	dateModel whenTextChanged: [ :newText :oldText :announcement :anAnnouncer |

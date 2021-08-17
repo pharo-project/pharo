@@ -7,7 +7,7 @@ Class {
 	#category : #'Kernel-Manifest'
 }
 
-{ #category : #'accessing comment' }
+{ #category : #'accessing - comment' }
 PackageManifest class >> classCommentBlank [
 
 	^'No description for this package available. Please add a description for this package here'

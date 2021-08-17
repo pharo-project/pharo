@@ -40,7 +40,7 @@ And to disable it use:
 
 	self executionProcessMonitor allowTestToLeaveProcesses.
 
-3) I can be completelly disabled globaly in settings (System/SUnit) or in test and setUp:
+3) I can be completely disabled globaly in settings (System/SUnit) or in test and setUp:
 
 	self executionProcessMonitor disable 
 	 
@@ -258,7 +258,7 @@ ProcessMonitorTestService >> ensureNoRunningProcesses [
 	"COMMENT FOR DEBUGGER STOPPED HERE:
 	TestLeftRunningProcess notifies that forked processes are still running when test completes.
 	Test failed because test left the system in dirty state.
-	Left runnning processes can affect the result of other tests 
+	Left running processes can affect the result of other tests 
 	and even the general system behavior after test run.
 	This protection can be disabled globaly in settings or in test method and setUp:
 		self executionProcessMonitor allowTestToLeaveProcesses

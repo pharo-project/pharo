@@ -4,32 +4,26 @@ Class {
 	#category : #'Ring-Core-Kernel'
 }
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGCompiledMethodLayout >> isBitsLayout [
 
 	^ true
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGCompiledMethodLayout >> isByteLayout [
 
 	^ true
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGCompiledMethodLayout >> isCompiledMethodLayout [
 
 	^ true
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGCompiledMethodLayout >> isVariableLayout [
 
 	^ true
-]
-
-{ #category : #accessing }
-RGCompiledMethodLayout >> layoutName [
-
-	^ #CompiledMethodLayout
 ]

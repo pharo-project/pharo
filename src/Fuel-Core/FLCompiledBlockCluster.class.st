@@ -11,15 +11,16 @@ Class {
 
 { #category : #'serialize/materialize' }
 FLCompiledBlockCluster >> materializeInstanceWith: aDecoder [
-	| instance size header |
+	| instance size header initialPC |
 	header := self decodeHeaderWith: aDecoder.
 	size := aDecoder nextEncodedUint32.
-	
+
 	instance := CompiledBlock
 		newMethod: size
 		header: header.
-	instance initialPC
-		to: instance endPC
+	initialPC := instance initialPC.
+	initialPC
+		to: initialPC + size - 1
 		do: [ :index |
 			instance
 				at: index

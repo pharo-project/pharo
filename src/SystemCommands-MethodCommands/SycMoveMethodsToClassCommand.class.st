@@ -15,13 +15,6 @@ Class {
 	#category : #'SystemCommands-MethodCommands'
 }
 
-{ #category : #activation }
-SycMoveMethodsToClassCommand class >> methodContextMenuActivation [
-	<classAnnotation>
-	
-	^ SycMethodMenuActivation byRootGroupItemOrder: 60 for: ClyMethod asCalypsoItemContext
-]
-
 { #category : #'instance creation' }
 SycMoveMethodsToClassCommand class >> methods: methods class: targetClass [
 	^(self for: methods)
@@ -41,16 +34,10 @@ SycMoveMethodsToClassCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycMoveMethodsToClassCommand >> execute [
-	self fillProtocols.
 	methods 
 		collect: [ :each | RBMoveMethodToClassRefactoring model: model method: each class: targetClass ]
 		thenDo: [ :each | each execute ].
 	methods do: [ :each | each origin organization removeEmptyCategories ].
-]
-
-{ #category : #accessing }
-SycMoveMethodsToClassCommand >> fillProtocols [
-	methods do: [ :meth |  self tagMethod: meth ]
 ]
 
 { #category : #'drag and drop support' }

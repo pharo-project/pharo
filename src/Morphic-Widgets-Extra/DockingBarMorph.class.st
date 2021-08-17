@@ -32,7 +32,7 @@ Class {
 	#category : #'Morphic-Widgets-Extra'
 }
 
-{ #category : #example }
+{ #category : #examples }
 DockingBarMorph class >> example [
 	"self example"
 	<exampleWidget>
@@ -54,7 +54,7 @@ DockingBarMorph class >> example [
 	openInWorld.
 ]
 
-{ #category : #example }
+{ #category : #examples }
 DockingBarMorph class >> exampleWithMenu [
 	"self exampleWithMenu"
 	<exampleWidget>
@@ -349,7 +349,7 @@ DockingBarMorph >> defaultColor [
 	^ self theme settings derivedMenuColor
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 DockingBarMorph >> delete [
 	activeSubMenu
 		ifNotNil: [activeSubMenu delete].
@@ -617,7 +617,7 @@ DockingBarMorph >> newMenuItem [
 	^ DockingBarMenuItemMorph new
 ]
 
-{ #category : #'submorphs-accessing' }
+{ #category : #'submorphs - accessing' }
 DockingBarMorph >> noteNewOwner: aMorph [ 
 	"I have just been added as a submorph of aMorph"
 	super noteNewOwner: aMorph.

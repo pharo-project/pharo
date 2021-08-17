@@ -51,7 +51,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'System-Clipboard'.
 		
 		spec package: 'EmbeddedFreeType'.
-		spec package: 'EmergencyDebugger'.
 		spec package: 'FileSystem-Zip'.
 		spec package: 'Fonts-Infrastructure'.
 		spec package: 'FreeType'.
@@ -146,7 +145,7 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	ExternalDropHandler resetRegisteredHandlers.
 	Undeclared removeUnreferencedKeys.
 	Smalltalk globals flushClassNameCache.
-	ScrollBar initializeImagesCache.
+	ScrollBarMorph initializeImagesCache.
 
 	3 timesRepeat: [ 
 		Smalltalk garbageCollect.
@@ -352,7 +351,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	Smalltalk cleanOutUndeclared.
 
-	#(#AbstractFont #BalloonMorph #Clipboard #EditorFindReplaceDialogWindow #EmbeddedFreeTypeFontInstaller #FLCompiledMethodCluster #FLLargeIdentityHashedCollection #FLPlatform #FreeTypeFontProvider #GradientFillStyle #IconicButtonMorph #KMLog #LogicalFont #LucidaGrandeRegular #OSEnvironment #ScrollBar #StrikeFont #SystemSettingsPersistence #TabMorph #TaskbarMorph #Text #TextAction #TextConstants #TextEditor #TextStyle) do: [:each |
+	#(#AbstractFont #BalloonMorph #Clipboard #EditorFindReplaceDialogWindow #EmbeddedFreeTypeFontInstaller #FLCompiledMethodCluster #FLLargeIdentityHashedCollection #FLPlatform #FreeTypeFontProvider #GradientFillStyle #IconicButtonMorph #KMLog #LogicalFont #LucidaGrandeRegular #OSEnvironment #ScrollBarMorph #StrikeFont #SystemSettingsPersistence #TabMorph #TaskbarMorph #Text #TextAction #TextConstants #TextEditor #TextStyle) do: [:each |
 		 (Smalltalk globals at: each) initialize. ].
 
 	LogicalFontManager current addFontProvider: FreeTypeFontProvider current.

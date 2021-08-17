@@ -23,6 +23,11 @@ ImmediateLayout class >> kind [
 ]
 
 { #category : #extending }
+ImmediateLayout >> extend [
+	self error: 'ImmediateLayout can not be extendend'
+]
+
+{ #category : #extending }
 ImmediateLayout >> extend: newScope [
 	^ FixedLayout new slotScope: newScope
 ]

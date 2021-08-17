@@ -40,7 +40,7 @@ ListSelectionPresenter class >> defaultSpec [
 		yourself
 ]
 
-{ #category : #example }
+{ #category : #examples }
 ListSelectionPresenter class >> example [
 	<sampleInstance>
 	^ self new openWithSpec

@@ -250,13 +250,13 @@ MicMicrodownTextualBuilder >> paragraph: aBlock [
 	self newLine
 ]
 
-{ #category : #'private utils' }
+{ #category : #'private - utilities' }
 MicMicrodownTextualBuilder >> popPrefix [
 	
 	prefixStack removeLast
 ]
 
-{ #category : #'private utils' }
+{ #category : #'private - utilities' }
 MicMicrodownTextualBuilder >> pushPrefix: aString [ 
 	
 	prefixStack addLast: aString

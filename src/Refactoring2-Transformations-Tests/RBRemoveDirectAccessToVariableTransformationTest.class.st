@@ -11,7 +11,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> setUp [
 	model := self abstractVariableTestData.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveDirectAccessToVariableTransformationTest >> testClassVariable [
 
 	| refactoring class |
@@ -33,7 +33,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testClassVariable [
 				redo := OrderedCollection new')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveDirectAccessToVariableTransformationTest >> testDoesNotDefineVariable [
 
 	self
@@ -48,7 +48,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testDoesNotDefineVariable [
 						asRefactoring 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveDirectAccessToVariableTransformationTest >> testDoesNotUnderstandAccessors [
 
 	self
@@ -63,21 +63,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testDoesNotUnderstandAccesso
 						asRefactoring 
 ]
 
-{ #category : #testing }
-RBRemoveDirectAccessToVariableTransformationTest >> testInheritedName [
-
-	self
-		shouldFail: (RBRemoveDirectAccessToVariableTransformation 
-						instanceVariable: 'name'
-						class: #RBBasicLintRuleTestData)
-						asRefactoring;
-		shouldFail: (RBRemoveDirectAccessToVariableTransformation 
-						classVariable: #DependentsFields
-						class: #RBBasicLintRuleTestData)
-						asRefactoring 
-]
-
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveDirectAccessToVariableTransformationTest >> testInstanceVariable [
 
 	| class |
@@ -92,30 +78,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testInstanceVariable [
 			equals: (self parseMethod: 'foo ^ self instVarName2: 3')
 ]
 
-{ #category : #testing }
-RBRemoveDirectAccessToVariableTransformationTest >> testMetaclassFailure [
-
-	self shouldFail: (RBRemoveDirectAccessToVariableTransformation 
-							classVariable: #RecursiveSelfRule
-							class: RBTransformationRuleTestData class)
-							asRefactoring 
-]
-
-{ #category : #testing }
-RBRemoveDirectAccessToVariableTransformationTest >> testNonExistantName [
-
-	self
-		shouldFail: (RBRemoveDirectAccessToVariableTransformation 
-						instanceVariable: 'foo'
-						class: #RBBasicLintRuleTestData)
-						asRefactoring;
-		shouldFail: (RBRemoveDirectAccessToVariableTransformation 
-						classVariable: #Foo
-						class: #RBBasicLintRuleTestData)
-						asRefactoring 
-]
-
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveDirectAccessToVariableTransformationTest >> testRefactoring [
 
 	| refactoring class |
@@ -147,7 +110,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testRefactoring [
 	sendersCache := IdentityDictionary new')
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveDirectAccessToVariableTransformationTest >> testTransform [
 
 	| transformation class |

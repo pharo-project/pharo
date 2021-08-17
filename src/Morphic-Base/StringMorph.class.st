@@ -428,7 +428,7 @@ StringMorph >> isTranslucentButNotTransparent [
 	^ true
 ]
 
-{ #category : #'private editing' }
+{ #category : #'private - editing' }
 StringMorph >> launchEditor: evt [
 	" Launch an editor to edit my contents "
 	self editorProvider ifNil: [ ^self ].

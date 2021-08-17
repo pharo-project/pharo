@@ -293,7 +293,7 @@ MorphTreeMorph >> addColumnResizers [
 	self columnResizersToFront
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 MorphTreeMorph >> addMorphsAfter: parentMorph fromCollection: aCollection [
 	"Sent when expanding a node in order to add chilldren nodes after the expanded node"
 	| priorMorph morphList  subs |
@@ -332,7 +332,7 @@ MorphTreeMorph >> addMorphsAfter: parentMorph fromCollection: aCollection [
 
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 MorphTreeMorph >> addMorphsTo: morphList from: aCollection withExpandedItems: expandedItems atLevel: newIndent [ 
 	"Sent when building the list (by #buildContents), takes
 	into accound old expanded items: they remain 
@@ -364,13 +364,13 @@ MorphTreeMorph >> addMorphsTo: morphList from: aCollection withExpandedItems: ex
 	^ firstAddition
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 MorphTreeMorph >> addSubmorphsFromNodeList [
 	self addSubmorphsFromNodeList: self currentNodelist previouslyExpanded: #() 
 
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 MorphTreeMorph >> addSubmorphsFromNodeList: aNodeList previouslyExpanded: expandedNodeList [
 	| morphList  |
 	morphList := OrderedCollection new.
@@ -411,7 +411,7 @@ MorphTreeMorph >> adjustSubmorphPositionsOf: aCollection startIdx: anIndex start
 	
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 MorphTreeMorph >> adoptPaneColor: paneColor [
 	"Pass on to the selection, the border"
 	
@@ -539,28 +539,28 @@ MorphTreeMorph >> collapseRequest: anAnnounce [
 
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 MorphTreeMorph >> columnColorForEven: evenColor [ 
 	columnColors at: 2 put: nil.
 	columnColors at: 1 put: evenColor.
 	
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 MorphTreeMorph >> columnColorForEven: evenColor odd: oddColor [
 	columnColors at: 2 put: oddColor.
 	columnColors at: 1 put: evenColor.
 	
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 MorphTreeMorph >> columnColorForOdd: oddColor [ 
 	columnColors at: 1 put: nil.
 	columnColors at: 2 put: oddColor.
 	
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 MorphTreeMorph >> columnColors [ 
 	^ columnColors 
 ]
@@ -1150,7 +1150,7 @@ MorphTreeMorph >> keyDown: event [
 	^ self listManager keyDown: event
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MorphTreeMorph >> keyDownActionSelector: aSelector [
 
 	self listManager keyDownActionSelector: aSelector
@@ -1176,25 +1176,25 @@ MorphTreeMorph >> lastColumnUnbounded [
 	^ unboundLastColumn ifNil: [unboundLastColumn := true]
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 MorphTreeMorph >> lineColor: aColor [
 	lineColorBlock := [:node | aColor]
 
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 MorphTreeMorph >> lineColorBlock [
 	^ lineColorBlock
 
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 MorphTreeMorph >> lineColorBlock: aValuable [
 	lineColorBlock := aValuable
 
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 MorphTreeMorph >> lineColorForNode: aNode [
 	"Answer a good color to use for drawing the lines that connect members of the hierarchy view.
 	Used the cached color, or derive it if necessary by finding the receiver or 
@@ -1524,12 +1524,12 @@ MorphTreeMorph >> potentialDropMorph: aMorph [
 	aMorph highlightForDrop
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 MorphTreeMorph >> preferedPaneColor [
 	^ preferedPaneColor
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 MorphTreeMorph >> preferedPaneColor: aColor [
 	self color: (preferedPaneColor := aColor).
 
@@ -1656,26 +1656,26 @@ MorphTreeMorph >> rootsFrom: aCollectionOfNodes [
 		select: [:each | each indentLevel isZero]
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 MorphTreeMorph >> rowColorForEven: evenColor [ 
 	rowColors at: 1 put: evenColor.
 	
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 MorphTreeMorph >> rowColorForEven: evenColor odd: oddColor [
 	rowColors at: 2 put: oddColor.
 	rowColors at: 1 put: evenColor.
 	
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 MorphTreeMorph >> rowColorForOdd: oddColor [ 
 	rowColors at: 2 put: oddColor.
 	
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 MorphTreeMorph >> rowColors [
 	^ rowColors
 ]

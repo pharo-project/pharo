@@ -15,22 +15,33 @@ Class {
 	#category : #'Refactoring-Environment'
 }
 
-{ #category : #'instance creation' }
+{ #category : #api }
 RBClassEnvironment class >> class: aClass [
 	^ self classes: { aClass }
 ]
 
-{ #category : #'instance creation' }
+{ #category : #api }
 RBClassEnvironment class >> classes: aCollection [
 	^ self
 		onEnvironment: self default
 		classes: aCollection
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'accessing - defaults' }
+RBClassEnvironment class >> defaultName [
+
+	^ 'Classes'
+]
+
+{ #category : #api }
 RBClassEnvironment class >> onEnvironment: anEnvironment classes: aCollection [
 	^(self onEnvironment: anEnvironment)
 		classes: aCollection; yourself
+]
+
+{ #category : #visiting }
+RBClassEnvironment >> acceptVisitor: aEnvVisitor [
+	^ aEnvVisitor visitClassEnv: self
 ]
 
 { #category : #adding }
@@ -58,7 +69,12 @@ RBClassEnvironment >> asSelectorEnvironment [
 		yourself.
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #accessing }
+RBClassEnvironment >> basisObjects [
+	^ classes
+]
+
+{ #category : #'accessing - classes' }
 RBClassEnvironment >> classNames [
 	^ IdentitySet new
 		addAll: classes;
@@ -81,7 +97,7 @@ RBClassEnvironment >> classes: aCollection [
 	aCollection do: [ :each | self addClass: each ]
 ]
 
-{ #category : #'accessing-classes' }
+{ #category : #'accessing - classes' }
 RBClassEnvironment >> classesDo: aBlock [ 
 	classes do: [ :each | 
 		| class |
@@ -171,6 +187,19 @@ RBClassEnvironment >> postCopy [
 	super postCopy.
 	classes := classes copy.
 	metaClasses := metaClasses copy
+]
+
+{ #category : #printing }
+RBClassEnvironment >> printBasisObject: aClass on: aStream [
+
+	^ aStream nextPutAll: aClass
+]
+
+{ #category : #printing }
+RBClassEnvironment >> printOn: aStream [
+
+	aStream nextPutAll: 'Cls: '.
+	classes do: [ :cls | aStream nextPutAll: cls, ', ']
 ]
 
 { #category : #accessing }

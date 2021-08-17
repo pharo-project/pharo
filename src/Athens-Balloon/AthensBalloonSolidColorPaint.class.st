@@ -15,7 +15,7 @@ AthensBalloonSolidColorPaint >> athensFillPath: athensBalloonPath on: anAthensCa
 
 	^ anAthensCanvas surface 
 		fillBezierShape: athensBalloonPath contoursForFilling  
-		color: color.
+		color: color
 		
 ]
 
@@ -24,7 +24,6 @@ AthensBalloonSolidColorPaint >> athensFillRectangle: aRect on: canvas [
 	"This is a terminal method in rendering dispatch scheme
 	canvas->shape->paint. See AthensCanvas>>fillShape: "
 	
-
 	^ canvas surface fillRectangle: aRect color: color
 ]
 
@@ -46,7 +45,7 @@ AthensBalloonSolidColorPaint >> strokePath: aPath on: anAthensCanvas stroke: str
 	 anAthensCanvas surface 
 		strokeBezierShape: aPath contoursForStroke
 		color: color
-		width: strokePaint width.
+		width: strokePaint width
 		
 ]
 
@@ -56,7 +55,7 @@ AthensBalloonSolidColorPaint >> strokePath: aPath on: anAthensCanvas strokeWidth
 	 anAthensCanvas surface 
 		strokeBezierShape: aPath contoursForStroke
 		color: color
-		width: strokeWidth.
+		width: strokeWidth
 		
 ]
 

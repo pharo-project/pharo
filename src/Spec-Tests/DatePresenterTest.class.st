@@ -4,7 +4,7 @@ Class {
 	#category : #'Spec-Tests-PolyWidgets-Widgets'
 }
 
-{ #category : #running }
+{ #category : #accessing }
 DatePresenterTest >> classToTest [
 	^ DatePresenter
 ]

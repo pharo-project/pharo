@@ -33,7 +33,7 @@ RGBWidget class >> defaultSpec [
 		yourself
 ]
 
-{ #category : #example }
+{ #category : #examples }
 RGBWidget class >> example [
 	<sampleInstance>
 	| example |
@@ -79,7 +79,7 @@ RGBWidget >> sliders [
 	^ sliders
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 RGBWidget >> whenExtentForPreviewChanged: aBlock [
  extentForPreview whenChangedDo: aBlock 
 ]

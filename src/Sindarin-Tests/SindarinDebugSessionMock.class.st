@@ -9,7 +9,7 @@ Class {
 		'selector',
 		'receiver'
 	],
-	#category : #'Sindarin-Tests'
+	#category : #'Sindarin-Tests-Mocks'
 }
 
 { #category : #accessing }

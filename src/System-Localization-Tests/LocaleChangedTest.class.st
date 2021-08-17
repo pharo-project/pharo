@@ -7,12 +7,12 @@ Class {
 	#category : #'System-Localization-Tests-Locales'
 }
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 LocaleChangedTest >> englishLocale [
 	^ Locale isoLanguage: 'en'
 ]
 
-{ #category : #'private accessing' }
+{ #category : #'private - accessing' }
 LocaleChangedTest >> germanLocale [
 	^ Locale isoLanguage: 'de'
 ]

@@ -30,37 +30,37 @@ CairoGlyph class >> fieldsDesc [
 	)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoGlyph >> index [
 	"This method was automatically generated"
 	^handle platformUnsignedLongAt: OFFSET_INDEX
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoGlyph >> index: anObject [
 	"This method was automatically generated"
 	^handle platformUnsignedLongAt: OFFSET_INDEX put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoGlyph >> x [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_X
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoGlyph >> x: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_X put: anObject
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoGlyph >> y [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_Y
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 CairoGlyph >> y: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_Y put: anObject

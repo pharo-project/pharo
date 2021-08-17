@@ -229,7 +229,7 @@ TreePresenter >> beCheckList [
 	self isCheckList: true
 ]
 
-{ #category : #'api-compatibility' }
+{ #category : #'api - compatibility' }
 TreePresenter >> childrenBlock [
 	"< api: #inspect>"
 	"Return the block used to retrieve the children of a node.
@@ -240,7 +240,7 @@ TreePresenter >> childrenBlock [
 	^ childrenBlockHolder value
 ]
 
-{ #category : #'api-compatibility' }
+{ #category : #'api - compatibility' }
 TreePresenter >> childrenBlock: aBlock [
 	"< api: #block getter: #childrenBlock registration: #whenChildrenBlockChanged:>"
 	"Set the block used to retrieve the children of a node.
@@ -303,22 +303,22 @@ TreePresenter >> deselectAll [
 	self changed: #deselectAll with: #()
 ]
 
-{ #category : #'api-compatibility' }
+{ #category : #'api - compatibility' }
 TreePresenter >> displayBlock [
 	"< api: #inspect>"
 	"Return the block used to generate the display of the items.
-	The optioanl block arguments are:
+	The optional block arguments are:
 		- the item
 		- the tree"
 
 	^ displayBlock value
 ]
 
-{ #category : #'api-compatibility' }
+{ #category : #'api - compatibility' }
 TreePresenter >> displayBlock: aBlock [
 	"<api: #block getter: #displayBlock registration: #whenDisplayBlockChanged:>"
 	"Set the block used to generate the display of the items.
-	The optioanl block arguments are:
+	The optional block arguments are:
 		- the item
 		- the tree"
 
@@ -375,7 +375,7 @@ TreePresenter >> expandRoots [
 	self changed: #expandRoots with: #()
 ]
 
-{ #category : #'api-filtering' }
+{ #category : #'api - filtering' }
 TreePresenter >> filterWith: aFilter [
 	
 	self selection: nil.
@@ -387,7 +387,7 @@ TreePresenter >> filterWith: aFilter [
 	self expandAll.
 ]
 
-{ #category : #'api-compatibility' }
+{ #category : #'api - compatibility' }
 TreePresenter >> hasChildrenBlock [
 	"<api: #inspect>"
 	"Get the block used to check if a node has children.
@@ -398,7 +398,7 @@ TreePresenter >> hasChildrenBlock [
 	^ hasChildrenBlockHolder value
 ]
 
-{ #category : #'api-compatibility' }
+{ #category : #'api - compatibility' }
 TreePresenter >> hasChildrenBlock: aBlock [
 	"< api: #block getter: #hasChildrenBlock registration: #whenHasChildrenBlockChanged:>"
 	"Set the block used to  check if a node has children.
@@ -799,47 +799,47 @@ TreePresenter >> updateTree [
 	treeUpdated value: nil.
 ]
 
-{ #category : #'api-events-compatibility' }
+{ #category : #'api - events-compatibility' }
 TreePresenter >> whenChildrenBlockChanged: aBlock [
 	"Set a block to perform when a new childrenBlock is set"
 
 	childrenBlockHolder whenChangedDo: aBlock
 ]
 
-{ #category : #'api-events-compatibility' }
+{ #category : #'api - events-compatibility' }
 TreePresenter >> whenDisplayBlockChanged: aBlock [
 	"Set a block to perform when a new displayBlock is set"
 
 	displayBlock whenChangedDo: aBlock
 ]
 
-{ #category : #'api-events-compatibility' }
+{ #category : #'api - events-compatibility' }
 TreePresenter >> whenHasChildrenBlockChanged: aBlock [
 	"Set a block to perform when a new hasChildrenBlock is set"
 
 	hasChildrenBlockHolder whenChangedDo: aBlock
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 TreePresenter >> whenHighlightedItemChanged: aBlock [
 
 	highlightedItem whenChangedDo: aBlock
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 TreePresenter >> whenMenuChanged: aBlock [
 	"Set a block to perform when a new menuBlock is set"
 
 	menuBlockHolder whenChangedDo: aBlock
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 TreePresenter >> whenRootsChanged: aBlock [
 
 	rootsHolder whenChangedDo: aBlock
 ]
 
-{ #category : #'api-events-compatibility' }
+{ #category : #'api - events-compatibility' }
 TreePresenter >> whenSelectedItemChanged: aBlock [
 	"Set a block to perform when a new item is selected"
 
@@ -853,14 +853,14 @@ TreePresenter >> whenSelectedItemChanged: aBlock [
 						ifFalse: [ nil ]) ] ] ]
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 TreePresenter >> whenSelectedItemsChanged: aBlock [
 	"Set a block to perform when a new item is selected"
 
 	selectionHolder whenChangedDo: [ :col | aBlock cull: (col collect: [:e | e content ]) ]
 ]
 
-{ #category : #'api-events' }
+{ #category : #'api - events' }
 TreePresenter >> whenTreeUpdated: aBlock [
 
 	treeUpdated whenChangedDo: aBlock

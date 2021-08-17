@@ -34,8 +34,8 @@ Class {
 	#instVars : [
 		'links',
 		'permalinks',
-		'classes',
-		'permanentTargets'
+		'permanentTargets',
+		'slotSources'
 	],
 	#category : #'Reflectivity-Installer'
 }
@@ -49,8 +49,8 @@ MetaLinkRegistry >> addMetaLink: aLink forObject: anObject [
 MetaLinkRegistry >> canReinstallPermaLink: permalink [
 	^ (self hasPermaLinks: permalink link) not
 		or: [ | slotsOrVarsWithPermalink |
-			slotsOrVarsWithPermalink := self registeredClassesAt: permalink slotOrVarClass.
-			slotsOrVarsWithPermalink noneSatisfy: [ :slotOrVar | permalink slotOrVariable == slotOrVar ] ]
+			slotsOrVarsWithPermalink := self slotSourcesAt: permalink slotOrVarClass.
+			slotsOrVarsWithPermalink flattened noneSatisfy: [ :slotOrVar | permalink slotOrVariable == slotOrVar ] ]
 ]
 
 { #category : #'registry access' }
@@ -68,7 +68,7 @@ MetaLinkRegistry >> hasPermaLinks: aLink [
 MetaLinkRegistry >> initialize [
 	links := WeakKeyDictionary new.
 	permalinks := WeakKeyDictionary new.
-	classes := WeakKeyDictionary new.
+	slotSources := WeakKeyDictionary new.
 	permanentTargets := WeakKeyDictionary new
 ]
 
@@ -101,11 +101,13 @@ MetaLinkRegistry >> permaLinksForClasses: targetClasses [
 
 { #category : #permalinks }
 MetaLinkRegistry >> permaLinksForMethod: method [
+
 	| class targets |
 	class := method methodClass.
-	targets := self registeredClassesAt: class.
-	^ (permanentTargets associationsSelect: [ :assoc | targets includes: assoc key ]) values
-		flattened select: [ :permalink | permalink slotOrVarClass == class ]
+	targets := (self slotSourcesAt: class) flattened.
+	^ (permanentTargets associationsSelect: [ :assoc | 
+		   targets includes: assoc key ]) values flattened select: [ 
+		  :permalink | permalink slotOrVarClass isInClassHierarchyOf: class ]
 ]
 
 { #category : #permalinks }
@@ -117,23 +119,8 @@ MetaLinkRegistry >> registerPermaLink: aPermaLink [
 	registeredLinks := permalinks at: aPermaLink link ifAbsentPut: [ Set new ].
 	registeredLinks add: aPermaLink.
 	
-	registeredSlots := self registeredClassesAt: aPermaLink slotOrVarClass ifAbsentPut: [ Set new ].
+	registeredSlots := self slotSourcesAt: aPermaLink slotOrVarClass ifAbsentPut: [ Set new ].
 	registeredSlots add: aPermaLink slotOrVariable
-]
-
-{ #category : #'registry access' }
-MetaLinkRegistry >> registeredClassesAt: aClass [
-	^ self registeredClassesAt:  aClass ifAbsent: [Set new ]
-]
-
-{ #category : #'registry access' }
-MetaLinkRegistry >> registeredClassesAt: aClass ifAbsent: aBlock [
-	^ classes at: aClass ifAbsent: aBlock
-]
-
-{ #category : #'registry access' }
-MetaLinkRegistry >> registeredClassesAt: aClass ifAbsentPut: aBlock [
-	^ classes at: aClass ifAbsentPut: aBlock
 ]
 
 { #category : #'registry access' }
@@ -158,9 +145,29 @@ MetaLinkRegistry >> removePermaLinkFromPermanentTarget: permaLink [
 
 { #category : #permalinks }
 MetaLinkRegistry >> removePermalinkSlotOrVarFromClassRegistry: permaLink [
-	(self registeredClassesAt: permaLink slotOrVarClass)
-		remove: permaLink slotOrVariable
-		ifAbsent: [  ]
+
+	(self slotSourcesAt: permaLink slotOrVarClass) do: [ :set | 
+		set remove: permaLink slotOrVariable ifAbsent: [  ] ]
+]
+
+{ #category : #'registry access' }
+MetaLinkRegistry >> slotSourcesAt: aClass [
+	^ self slotSourcesAt:  aClass ifAbsent: [Array with: Set new ]
+]
+
+{ #category : #'registry access' }
+MetaLinkRegistry >> slotSourcesAt: aClass ifAbsent: aBlock [
+
+	| registeredClasses |
+	registeredClasses := slotSources keys select: [ :c | 
+		                     c isInClassHierarchyOf: aClass ].
+	registeredClasses isEmpty ifTrue: [ ^ aBlock value ].
+	^ registeredClasses collect: [ :c | slotSources at: c ]
+]
+
+{ #category : #'registry access' }
+MetaLinkRegistry >> slotSourcesAt: aClass ifAbsentPut: aBlock [
+	^ slotSources at: aClass ifAbsentPut: aBlock
 ]
 
 { #category : #'registry access' }

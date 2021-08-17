@@ -5,12 +5,12 @@ Class {
 	#name : #RewriteRuleEditor,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'#searchLabel => SpObservableSlot',
-		'#searchPattern => SpObservableSlot',
-		'#replaceLabel => SpObservableSlot',
-		'#replacePattern => SpObservableSlot',
-		'#helpText => SpObservableSlot',
-		'#replaceButton => SpObservableSlot'
+		'#searchLabel => ObservableSlot',
+		'#searchPattern => ObservableSlot',
+		'#replaceLabel => ObservableSlot',
+		'#replacePattern => ObservableSlot',
+		'#helpText => ObservableSlot',
+		'#replaceButton => ObservableSlot'
 	],
 	#category : #'NautilusRefactoring-Utilities'
 }

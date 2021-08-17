@@ -12,21 +12,21 @@ OCUndeclaredVariableWarning >> declareClassVar [
 
 	self methodClass instanceSide
 		addClassVarNamed: node name asSymbol.
-	^ self lookUpVariable
+	(ReparseAfterSourceEditing new newSource: self requestor text) signal
 ]
 
 { #category : #correcting }
 OCUndeclaredVariableWarning >> declareGlobal [
-
-	Smalltalk at: node name asSymbol put: nil.
-	^self lookUpVariable
+	Smalltalk globals at: node name asSymbol put: nil.
+	(ReparseAfterSourceEditing new newSource: self requestor text) signal.
+	^Smalltalk globals bindingOf: node name asSymbol
 ]
 
 { #category : #correcting }
 OCUndeclaredVariableWarning >> declareInstVar: name [
 	"Declare an instance variable."
 	self methodClass addInstVarNamed: name.
-	^ self lookUpVariable
+	(ReparseAfterSourceEditing new newSource: self requestor text) signal
 ]
 
 { #category : #correcting }
@@ -90,7 +90,7 @@ OCUndeclaredVariableWarning >> defaultAction [
 OCUndeclaredVariableWarning >> defineClass: className [ 
 	"Prompts the user to define a new class."
 	
-	| classSymbol systemCategory classDefinition |
+	| classSymbol systemCategory classDefinition classBinding |
 	classSymbol := className asSymbol.
 	systemCategory := self methodClass category
 		ifNil: [ 'Unknown' ].
@@ -108,8 +108,10 @@ OCUndeclaredVariableWarning >> defineClass: className [
 		source: classDefinition;
 		logged: true;
 		evaluate.
-	^ (node owningScope lookupVar: className)
-		ifNil: [self error: 'should be not happen']
+	classBinding := node owningScope lookupVar: className.
+	"make sure to recompile all methods referencing this class"
+	classBinding usingMethods do: [:method | method recompile].
+	^classBinding 
 ]
 
 { #category : #correcting }
@@ -137,12 +139,6 @@ OCUndeclaredVariableWarning >> defineTrait: traitName [
 		ifNil: [self error: 'should be not happen']
 ]
 
-{ #category : #correcting }
-OCUndeclaredVariableWarning >> lookUpVariable [
-	^ (node owningScope lookupVar: node name)
-		ifNil: [self error: 'should be found']
-]
-
 { #category : #accessing }
 OCUndeclaredVariableWarning >> node: aVariableNode [
 
@@ -153,7 +149,15 @@ OCUndeclaredVariableWarning >> node: aVariableNode [
 
 { #category : #correcting }
 OCUndeclaredVariableWarning >> openMenuIn: aBlock [
-	| alternatives labels actions lines caption choice name interval |
+	| alternatives labels actions lines caption choice name interval requestor |
+	
+	"Turn off suggestions when in RubSmalltalkCommentMode
+ 	This is a workaround, the plan is to not do this as part of the exception"
+ 	requestor := compilationContext requestor.
+ 	((requestor class name = #RubEditingArea) and: [
+ 		requestor editingMode class name = #RubSmalltalkCommentMode])
+ 					ifTrue: [ ^UndeclaredVariable named: node name ].
+	
 	interval := node sourceInterval.
 	name := node name.
 	alternatives := self possibleVariablesFor: name.
@@ -178,8 +182,9 @@ OCUndeclaredVariableWarning >> openMenuIn: aBlock [
 						do: [ self openMenuIn: aBlock ] ].
 			labels add: 'Declare new global'.
 			actions add: [ self declareGlobal ].
-			labels add: 'Declare new class variable'.
-			actions add: [ self declareClassVar ] .
+			compilationContext requestor isForScripting ifFalse: 
+				[labels add: 'Declare new class variable'.
+				actions add: [ self declareClassVar ]].
 			labels add: 'Define new trait'.
 			actions
 				add: [ 

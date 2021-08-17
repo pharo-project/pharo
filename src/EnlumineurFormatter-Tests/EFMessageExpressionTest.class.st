@@ -411,7 +411,7 @@ EFMessageExpressionTest >> simpleConfiguration [
 		indentExtraSpaces: 0
 ]
 
-{ #category : #'test binary' }
+{ #category : #'tests - binary' }
 EFMessageExpressionTest >> testBinaryFormatParameter [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -419,7 +419,7 @@ EFMessageExpressionTest >> testBinaryFormatParameter [
 	self assert: source equals: '1 + 3 factorial'
 ]
 
-{ #category : #'test binary' }
+{ #category : #'tests - binary' }
 EFMessageExpressionTest >> testBinaryFormatReceiver [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -427,7 +427,7 @@ EFMessageExpressionTest >> testBinaryFormatReceiver [
 	self assert: source equals: 'a := ''abc'' + 2'
 ]
 
-{ #category : #'test binary' }
+{ #category : #'tests - binary' }
 EFMessageExpressionTest >> testBinaryMessageComments [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -435,7 +435,7 @@ EFMessageExpressionTest >> testBinaryMessageComments [
 	self assert: source equals: '1 + 1 "aComment"'
 ]
 
-{ #category : #'test binary' }
+{ #category : #'tests - binary' }
 EFMessageExpressionTest >> testBinaryMessageFormatCommentsWithStatement [
 	| source |
 	self flag: #toCheck. "Why would we lose the comment?"
@@ -444,7 +444,7 @@ EFMessageExpressionTest >> testBinaryMessageFormatCommentsWithStatement [
 	self assert: source equals: '1 + 1'
 ]
 
-{ #category : #'test binary' }
+{ #category : #'tests - binary' }
 EFMessageExpressionTest >> testBinaryNoExtraSpacesAfter [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -452,7 +452,7 @@ EFMessageExpressionTest >> testBinaryNoExtraSpacesAfter [
 	self assert: source equals: '1 + 2'
 ]
 
-{ #category : #'test binary' }
+{ #category : #'tests - binary' }
 EFMessageExpressionTest >> testBinaryNoExtraSpacesBefore [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -460,7 +460,7 @@ EFMessageExpressionTest >> testBinaryNoExtraSpacesBefore [
 	self assert: source equals: '1 + 2'
 ]
 
-{ #category : #'test binary' }
+{ #category : #'tests - binary' }
 EFMessageExpressionTest >> testBinaryNoExtraSpacesBetween [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -468,7 +468,7 @@ EFMessageExpressionTest >> testBinaryNoExtraSpacesBetween [
 	self assert: source equals: '1 + 2'
 ]
 
-{ #category : #'test binary' }
+{ #category : #'tests - binary' }
 EFMessageExpressionTest >> testBinaryOneArgumentPerLine [
 	| source |
 	configurationSelector := #oneArgumentPerLineConfiguration.
@@ -480,7 +480,7 @@ EFMessageExpressionTest >> testBinaryOneArgumentPerLine [
 + 2'
 ]
 
-{ #category : #'test binary' }
+{ #category : #'tests - binary' }
 EFMessageExpressionTest >> testBinaryOneArgumentPerLine2 [
 	| source |
 	configurationSelector := #oneArgumentPerLineConfiguration.
@@ -493,7 +493,7 @@ EFMessageExpressionTest >> testBinaryOneArgumentPerLine2 [
 * 3'
 ]
 
-{ #category : #'test block arg' }
+{ #category : #'tests - block arg' }
 EFMessageExpressionTest >> testBlockParameterOnTheMethodLineWhenMultiline [
 	| source |
 	configurationSelector := #keepBlockInMessageConfiguration.
@@ -508,7 +508,7 @@ EFMessageExpressionTest >> testBlockParameterOnTheMethodLineWhenMultiline [
 	Transcript cr ]'
 ]
 
-{ #category : #'test block arg' }
+{ #category : #'tests - block arg' }
 EFMessageExpressionTest >> testBlockParameterWhenTheLineWillBeTooLong [
 	| source |
 	configurationSelector := #blockInMessageTooLongConfiguration.
@@ -520,7 +520,7 @@ EFMessageExpressionTest >> testBlockParameterWhenTheLineWillBeTooLong [
 	i factorial ]'
 ]
 
-{ #category : #'test block arg' }
+{ #category : #'tests - block arg' }
 EFMessageExpressionTest >> testBlockParameterWhenTheLineWillBeTooLong2 [
 	| source |
 	configurationSelector := #blockInMessageTooLongConfiguration.
@@ -533,7 +533,7 @@ EFMessageExpressionTest >> testBlockParameterWhenTheLineWillBeTooLong2 [
 	i factorial ]'
 ]
 
-{ #category : #'test block arg' }
+{ #category : #'tests - block arg' }
 EFMessageExpressionTest >> testBlockParameterWhenTheLineWillNotBeTooLong [
 	| source |
 	configurationSelector := #blockInMessageConfiguration.
@@ -708,7 +708,7 @@ EFMessageExpressionTest >> testKeepBlockInMessageNotMutlilineNewLine [
 	LongLongLongExpression ]'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordComments [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -716,7 +716,7 @@ EFMessageExpressionTest >> testKeywordComments [
 	self assert: source equals: '1 between: 2 "firstComment" and: 3 "secondComment"'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordCommentsFormatCommentsWithStatement [
 	| source |
 	self flag: #toCheck. "why no more comment." 
@@ -725,7 +725,7 @@ EFMessageExpressionTest >> testKeywordCommentsFormatCommentsWithStatement [
 	self assert: source equals: '1 between: 2 and: 3'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordFormatParameter [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -734,7 +734,7 @@ EFMessageExpressionTest >> testKeywordFormatParameter [
 	self assert: source equals: '3 between: 2 factorial and: 4 + 5'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordFormatReceiver [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -742,7 +742,7 @@ EFMessageExpressionTest >> testKeywordFormatReceiver [
 	self assert: source equals: '2 between: 4 - 2 and: 3 factorial'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordFormatReceiver2 [
 	| source |
 	configurationSelector := #parentheseConfiguration.
@@ -750,7 +750,7 @@ EFMessageExpressionTest >> testKeywordFormatReceiver2 [
 	self assert: source equals: '(2 between: 4 - 2 and: 3) factorial'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordFormatReceiver3 [
 	| source |
 	configurationSelector := #parentheseConfiguration.
@@ -758,7 +758,7 @@ EFMessageExpressionTest >> testKeywordFormatReceiver3 [
 	self assert: source equals: '(d at: 2) factorial'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordFormatReceiverAssignment [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -766,7 +766,7 @@ EFMessageExpressionTest >> testKeywordFormatReceiverAssignment [
 	self assert: source equals: 'a := ''abc'' at: 2'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordNoExtraSpacesAfter [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -774,7 +774,7 @@ EFMessageExpressionTest >> testKeywordNoExtraSpacesAfter [
 	self assert: source equals: '2 between: 1 and: 3'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordNoExtraSpacesBefore [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -782,7 +782,7 @@ EFMessageExpressionTest >> testKeywordNoExtraSpacesBefore [
 	self assert: source equals: '2 between: 1 and: 3'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordNoExtraSpacesBetween [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -790,7 +790,7 @@ EFMessageExpressionTest >> testKeywordNoExtraSpacesBetween [
 	self assert: source equals: '2 between: 1 and: 3'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordOnMultipleLine [
 	| source |
 	configurationSelector := #blockAndCascadeInMessageConfiguration.
@@ -803,7 +803,7 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine [
 		cr ]'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordOnMultipleLine10 [
 	| source |
 	configurationSelector := #blockAndCascadeInMessageConfiguration.
@@ -821,7 +821,7 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine10 [
 	bar3: 5'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordOnMultipleLine11 [
 	| source |
 	configurationSelector := #blockAndCascadeInMessageConfiguration.
@@ -835,7 +835,7 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine11 [
 	2 + 2 ]'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordOnMultipleLine12 [
 	| source |
 	configurationSelector := #blockAndCascadeInMessageConfiguration.
@@ -855,7 +855,7 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine12 [
 	bar3: 5'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordOnMultipleLine13 [
 	| source |
 	configurationSelector := #blockAndCascadeInMessageConfiguration.
@@ -869,7 +869,7 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine13 [
 	2 + 2 ]'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordOnMultipleLine14 [
 	| source |
 	configurationSelector := #blockAndCascadeInMessageConfiguration.
@@ -889,7 +889,7 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine14 [
 	bar3: 5'.
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordOnMultipleLine15 [
 	| source |
 	configurationSelector := #blockAndCascadeInMessageConfiguration.
@@ -908,7 +908,7 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine15 [
 		2 ]'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordOnMultipleLine2 [
 	| source |
 	configurationSelector := #ifTrueIfFalseMutlilineMessageConfiguration.
@@ -921,7 +921,7 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine2 [
 		^tmp ]'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordOnMultipleLine3 [
 	| source |
 	configurationSelector := #blockAndCascadeInMessageConfiguration.
@@ -934,7 +934,7 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine3 [
 	ifFalse: [ ^ 0 ]'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordOnMultipleLine4 [
 	| source |
 	configurationSelector := #blockAndCascadeInMessageConfiguration.
@@ -949,7 +949,7 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine4 [
 		^ tmp ]'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordOnMultipleLine5 [
 	| source |
 	configurationSelector := #blockAndCascadeInMessageConfiguration.
@@ -960,7 +960,7 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine5 [
 	^ tmp ]'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordOnMultipleLine6 [
 	| source |
 	configurationSelector := #blockAndCascadeInMessageConfiguration.
@@ -984,7 +984,7 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine6 [
 	bar3: 5'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordOnMultipleLine7 [
 	| source |
 	configurationSelector := #blockAndCascadeInMessageConfiguration.
@@ -1008,7 +1008,7 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine7 [
 		2 + 2 ]'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordOnMultipleLine8 [
 	| source |
 	configurationSelector := #blockAndCascadeInMessageConfiguration.
@@ -1032,7 +1032,7 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine8 [
 		2 + 2 ]'.
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordOnMultipleLine9 [
 	| source |
 	configurationSelector := #blockAndCascadeInMessageConfiguration.
@@ -1058,7 +1058,7 @@ EFMessageExpressionTest >> testKeywordOnMultipleLine9 [
 	bar3: 5'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordOnTheSameLine [
 	| source |
 	configurationSelector := #blockInMessageConfiguration.
@@ -1066,7 +1066,7 @@ EFMessageExpressionTest >> testKeywordOnTheSameLine [
 	self assert: source equals: '1 to: 100 do: [ :i | Transcript show: i ]'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordOnTheSameLine2 [
 	| source |
 	configurationSelector := #blockAndCascadeInMessageConfiguration.
@@ -1074,7 +1074,7 @@ EFMessageExpressionTest >> testKeywordOnTheSameLine2 [
 	self assert: source equals: '1 to: 100 by: 2 do: [ :i | Transcript show: i ]'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordOnTheSameLine3 [
 	| source |
 	configurationSelector := #blockAndCascadeInMessageConfiguration.
@@ -1082,7 +1082,7 @@ EFMessageExpressionTest >> testKeywordOnTheSameLine3 [
 	self assert: source equals: 'aBoolean ifTrue: [ ^ 1 ] ifFalse: [ ^ 0 ]'
 ]
 
-{ #category : #'tests keyword' }
+{ #category : #'tests - keyword' }
 EFMessageExpressionTest >> testKeywordOneArgumentPerLine [
 	| source |
 	configurationSelector := #oneArgumentPerLineConfiguration.
@@ -1305,7 +1305,7 @@ EFMessageExpressionTest >> testTraditionalBinaryPrecedence3 [
 	self assert: source equals: '2 + 3 * 4 + 5 * 2'
 ]
 
-{ #category : #'test unary' }
+{ #category : #'tests - unary' }
 EFMessageExpressionTest >> testUnaryFormatReceiver [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -1313,7 +1313,7 @@ EFMessageExpressionTest >> testUnaryFormatReceiver [
 	self assert: source equals: 'a := 1 factorial'
 ]
 
-{ #category : #'test unary' }
+{ #category : #'tests - unary' }
 EFMessageExpressionTest >> testUnaryFormatReceiver2 [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -1321,7 +1321,7 @@ EFMessageExpressionTest >> testUnaryFormatReceiver2 [
 	self assert: source equals: 'a := 1 factorial foo bar'
 ]
 
-{ #category : #'test unary' }
+{ #category : #'tests - unary' }
 EFMessageExpressionTest >> testUnaryMessageComments [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -1329,7 +1329,7 @@ EFMessageExpressionTest >> testUnaryMessageComments [
 	self assert: source equals: '1 factorial "aComment"'
 ]
 
-{ #category : #'test unary' }
+{ #category : #'tests - unary' }
 EFMessageExpressionTest >> testUnaryMessageFormatCommentsWithStatement [
 	| source |
 	self flag: #toCheck. "why do we lose this comment"
@@ -1338,7 +1338,7 @@ EFMessageExpressionTest >> testUnaryMessageFormatCommentsWithStatement [
 	self assert: source equals: '1 factorial'
 ]
 
-{ #category : #'test unary' }
+{ #category : #'tests - unary' }
 EFMessageExpressionTest >> testUnaryNoExtraSpacesAfter [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -1346,7 +1346,7 @@ EFMessageExpressionTest >> testUnaryNoExtraSpacesAfter [
 	self assert: source equals: 'Transcript cr'
 ]
 
-{ #category : #'test unary' }
+{ #category : #'tests - unary' }
 EFMessageExpressionTest >> testUnaryNoExtraSpacesAfter2 [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -1354,7 +1354,7 @@ EFMessageExpressionTest >> testUnaryNoExtraSpacesAfter2 [
 	self assert: source equals: 'Transcript cr cr cr'
 ]
 
-{ #category : #'test unary' }
+{ #category : #'tests - unary' }
 EFMessageExpressionTest >> testUnaryNoExtraSpacesBefore [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -1362,7 +1362,7 @@ EFMessageExpressionTest >> testUnaryNoExtraSpacesBefore [
 	self assert: source equals: 'Transcript cr'
 ]
 
-{ #category : #'test unary' }
+{ #category : #'tests - unary' }
 EFMessageExpressionTest >> testUnaryNoExtraSpacesBetween [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -1370,7 +1370,7 @@ EFMessageExpressionTest >> testUnaryNoExtraSpacesBetween [
 	self assert: source equals: 'Transcript cr'
 ]
 
-{ #category : #'test unary' }
+{ #category : #'tests - unary' }
 EFMessageExpressionTest >> testUnaryNoExtraSpacesBetween2 [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -1378,7 +1378,7 @@ EFMessageExpressionTest >> testUnaryNoExtraSpacesBetween2 [
 	self assert: source equals: 'Transcript cr cr cr cr'
 ]
 
-{ #category : #'test unary' }
+{ #category : #'tests - unary' }
 EFMessageExpressionTest >> testUnaryTooLongArgument [
 	| source |
 	configurationSelector := #shortMaxLineLengthConfiguration.

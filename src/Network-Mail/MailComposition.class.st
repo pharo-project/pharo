@@ -160,14 +160,14 @@ MailComposition >> menuGet: aMenu shifted: shifted [
 	^aMenu.
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 MailComposition >> messageText [
 	"return the current text"
 	^messageText.
 
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 MailComposition >> messageText: aText [
 	"change the current text"
 	messageText := aText.
@@ -221,12 +221,12 @@ MailComposition >> sendMailMessage: aMailMessage [
 	self messageText: aMailMessage text
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 MailComposition >> smtpServer [
 	^self class smtpServer
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 MailComposition >> submit [
 	| message |
 	"submit the message"
@@ -242,7 +242,7 @@ MailComposition >> submit [
 	morphicWindow ifNotNil: [ morphicWindow delete ]
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 MailComposition >> textModel [
 	^ textModel ifNil: [ textModel := RubScrolledTextModel new interactionModel: self ]
 ]

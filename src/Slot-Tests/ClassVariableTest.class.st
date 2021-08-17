@@ -10,7 +10,7 @@ Class {
 	#category : #'Slot-Tests-VariablesAndSlots'
 }
 
-{ #category : #'tests  - properties' }
+{ #category : #'tests - properties' }
 ClassVariableTest >> testIsReadInMethod [
 
 	DefaultTimeLimit printString. "reading class variable".
@@ -26,7 +26,7 @@ ClassVariableTest >> testIsShadowing [
 
 ]
 
-{ #category : #'tests  - properties' }
+{ #category : #'tests - properties' }
 ClassVariableTest >> testIsWrittenInMethod [
 
 	DefaultTimeLimit := DefaultTimeLimit. "writing class variable".
@@ -34,13 +34,13 @@ ClassVariableTest >> testIsWrittenInMethod [
 	self assert: ((TestCase classVariableNamed: #DefaultTimeLimit) isWrittenIn: self class >> testSelector)
 ]
 
-{ #category : #'tests  - properties' }
+{ #category : #'tests - properties' }
 ClassVariableTest >> testNotReadInMethod [
 
 	self deny: ((TestCase classVariableNamed: #DefaultTimeLimit) isReadIn: self class >> testSelector)
 ]
 
-{ #category : #'tests  - properties' }
+{ #category : #'tests - properties' }
 ClassVariableTest >> testNotWrittenInMethodWhenItIsOnlyRead [
 
 	DefaultTimeLimit printString. "reading class variable".
@@ -48,7 +48,7 @@ ClassVariableTest >> testNotWrittenInMethodWhenItIsOnlyRead [
 	self deny: ((TestCase classVariableNamed: #DefaultTimeLimit) isWrittenIn: self class >> testSelector)
 ]
 
-{ #category : #'tests  - properties' }
+{ #category : #'tests - properties' }
 ClassVariableTest >> testPropertyAtPut [
 
 	| testValue classVariable |
@@ -71,7 +71,7 @@ ClassVariableTest >> testPropertyAtPut [
 	self assert: classVariable properties isNil.
 ]
 
-{ #category : #'tests  - properties' }
+{ #category : #'tests - properties' }
 ClassVariableTest >> testReadingFromContext [
 
 	| classVariable |
@@ -83,7 +83,7 @@ ClassVariableTest >> testReadingFromContext [
 		equals: #testValue
 ]
 
-{ #category : #'tests  - properties' }
+{ #category : #'tests - properties' }
 ClassVariableTest >> testRemoveProperty [
 	| classVariable |
 	classVariable := self class classVariableNamed: #TestVariable.
@@ -104,7 +104,7 @@ ClassVariableTest >> testScope [
 	self assert: (variable scope lookupVar: variable name) equals: variable
 ]
 
-{ #category : #'tests  - properties' }
+{ #category : #'tests - properties' }
 ClassVariableTest >> testWritingToContext [
 
 	| classVariable |

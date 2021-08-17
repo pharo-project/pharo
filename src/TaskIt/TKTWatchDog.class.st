@@ -67,7 +67,7 @@ TKTWatchDog >> name [
 	^ 'WatchDog (' , id asString , ')'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TKTWatchDog >> pharoProcess [
 	^ worker process process
 ]

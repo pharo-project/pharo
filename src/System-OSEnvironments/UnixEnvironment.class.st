@@ -100,7 +100,7 @@ UnixEnvironment >> at: aKey encoding: anEncoding ifPresent: presentBlock ifAbsen
 { #category : #accessing }
 UnixEnvironment >> at: aKey ifAbsent: aBlock [
 	"See super>>at:ifAbsent:.
-	Uses a single encoding determined dinamically"
+	Uses a single encoding determined dynamically"
 
 	^ self at: aKey encoding: self defaultEncoding ifAbsent: aBlock
 ]
@@ -108,7 +108,7 @@ UnixEnvironment >> at: aKey ifAbsent: aBlock [
 { #category : #accessing }
 UnixEnvironment >> at: aKey put: aValue [
 	"See super>>at:put:.
-	Uses a single encoding determined dinamically"
+	Uses a single encoding determined dynamically"
 
 	^ self at: aKey put: aValue encoding: self defaultEncoding
 ]
@@ -267,7 +267,7 @@ UnixEnvironment >> rawRemoveKey: anEncodedKey [
 { #category : #accessing }
 UnixEnvironment >> removeKey: key [
 	"See super>>removeKey:.
-	Uses a single encoding determined dinamically"
+	Uses a single encoding determined dynamically"
 	
 	^ self removeKey: key encoded: self defaultEncoding
 ]

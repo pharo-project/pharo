@@ -217,7 +217,7 @@ IRBytecodeGenerator >> compiledMethodWith: trailer [
 IRBytecodeGenerator >> compiledMethodWith: trailer header: header literals: lits [
 	| cm cmClass|
 	"we look up the class in the productionEnvironment"
-	cmClass := self compilationContext productionEnvironment at: #CompiledMethod ifAbsent: [ CompiledMethod ].
+	cmClass := self compilationContext compiledMethodClass.
 	cm := trailer createMethod: self bytecodes size class: cmClass header: header.
 	(WriteStream with: cm)
 		position: cm initialPC - 1;
@@ -391,6 +391,12 @@ IRBytecodeGenerator >> jump: distance if: condition [
 		ifTrue: [ encoder genBranchPopTrue: distance ]
 		ifFalse: [ encoder genBranchPopFalse: distance ]
 		
+]
+
+{ #category : #instructions }
+IRBytecodeGenerator >> jump: distance if: condition withInterpreter: anInterpreter [
+	
+	^ self jump: distance if: condition
 ]
 
 { #category : #instructions }

@@ -37,7 +37,7 @@ FFIMethodArgument >> emitArgument: aBuilder context: aContext objectClass: objec
 		send: #instVarAt:
 ]
 
-{ #category : #'private emitting code' }
+{ #category : #'private - emitting code' }
 FFIMethodArgument >> emitArgumentVariableAccesingPart: aBuilder context: aContext objectClass: objectClass instVarName: aName [
 	aBuilder 
 		pushTemp: self argName asSymbol;

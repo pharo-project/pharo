@@ -8,12 +8,12 @@ Class {
 	#category : #'Spec-Tests-Core-Widgets'
 }
 
-{ #category : #running }
+{ #category : #accessing }
 RadioButtonGroupPresenterTest >> classToTest [
 	^ RadioButtonGroupPresenter
 ]
 
-{ #category : #running }
+{ #category : #initialization }
 RadioButtonGroupPresenterTest >> initializeTestedInstance [
 	radio1 := RadioButtonPresenter new.
 	radio2 := RadioButtonPresenter new

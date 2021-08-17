@@ -155,7 +155,7 @@ Paragraph >> adjustRightX [
 	container := container withRight: maxRightX
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Paragraph >> adjustedFirstCharacterIndex [
 	"Return the index in the text where this paragraph WOULD begin if nothing had changed, except the size of the text -- ie if there have only been an insertion of deletion in the preceding morphs"
 	offsetToEnd ifNil: [^ -1].
@@ -218,14 +218,14 @@ Paragraph >> buildSelectionBlocksFrom: topLeft to: bottomRight [
 	secondarySelection := nil
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Paragraph >> caretRect [
 	"The rectangle in which the caret was last drawn,
 	 or nil if the last drawing drew a range-selection rather than insertion point."
 	^ caretRect
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Paragraph >> caretWidth [
 	^ TextEditor dumbbellCursor		
 			ifTrue: [ 2 ]		
@@ -328,7 +328,7 @@ Paragraph >> composeLinesFrom: start to: stop delta: delta into: lineColl priorL
 
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Paragraph >> composer [
 	^ composer ifNil: [composer := TextComposer new]
 ]
@@ -478,7 +478,7 @@ Paragraph >> displaySelectionInLine: line on: aCanvas [
 				color: self selectionColor]
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Paragraph >> extent [
 	^ container width @ (lines last bottom - lines first top)
 ]
@@ -529,18 +529,18 @@ Paragraph >> findReplaceSelectionRegex: aRegex [
 
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Paragraph >> firstCharacterIndex [
 	^ firstCharacterIndex
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Paragraph >> focused [
 	^ focused ifNil: [focused := false]
 
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Paragraph >> focused: aBoolean [
 	focused := aBoolean
 ]
@@ -589,7 +589,7 @@ Paragraph >> justified [
 	textStyle justified
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Paragraph >> lastCharacterIndex [
 	^ lines last last
 ]
@@ -635,7 +635,7 @@ Paragraph >> lines [
 	^ lines ifNil: [ ^ Array new ]
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Paragraph >> maxRightX [
 	^ maxRightX
 ]
@@ -696,7 +696,7 @@ Paragraph >> multiComposeLinesFrom: start to: stop delta: delta into: lineColl p
 
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Paragraph >> numberOfLines [
 
 	^lines size
@@ -760,7 +760,7 @@ Paragraph >> rightFlush [
 	textStyle rightFlush
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Paragraph >> secondarySelection [
 	^ secondarySelection
 ]
@@ -845,38 +845,38 @@ Paragraph >> selectionStart: startBlock selectionStop: stopBlock [
 	selectionStop := stopBlock.
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Paragraph >> showCaret [
 	^showCaret ifNil:[true]
 
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Paragraph >> showCaret: aBool [
 	showCaret := aBool
 
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Paragraph >> string [
 	^ text string
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Paragraph >> text [
 	^ text
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Paragraph >> textOwner: ignored [  "See TextOnCurve"
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Paragraph >> textStyle [
 	^ textStyle
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Paragraph >> textStyle: aTextStyle [ 
 	"Set the style by which the receiver should display its text."
 	textStyle := aTextStyle
@@ -890,18 +890,18 @@ Paragraph >> textStyle: ts lines: l text: t [
 	text := t.
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Paragraph >> theme [
 	^ Smalltalk ui theme
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Paragraph >> wantsColumnBreaks [
 
 	^wantsColumnBreaks
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 Paragraph >> wantsColumnBreaks: aBoolean [
 
 	wantsColumnBreaks := aBoolean

@@ -19,7 +19,7 @@ PaginatedMorphTreeMorph >> addNavigationPane: aNavigPane [
 	self changed
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 PaginatedMorphTreeMorph >> adoptPaneColor: paneColor [
 	"Pass on to the selection, the border and on the eventual pager too."
 	
@@ -37,7 +37,7 @@ PaginatedMorphTreeMorph >> buildContents [
 { #category : #'pager managing' }
 PaginatedMorphTreeMorph >> chunkSize: aPageSize [ 
 	self pager
-		ifNil: [aPageSize ifNotNil: [self addNavigationPane: (MorphTreeChunkPager on: self pageSize: aPageSize)]]
+		ifNil: [aPageSize ifNotNil: [self addNavigationPane: (TreeChunkPagerMorph on: self pageSize: aPageSize)]]
 		ifNotNil: [aPageSize 
 			ifNil: [self removePager]
 			ifNotNil: [self pager changePageSize: aPageSize]]
@@ -92,7 +92,7 @@ PaginatedMorphTreeMorph >> innerBounds [
 { #category : #'pager managing' }
 PaginatedMorphTreeMorph >> pageSize: aPageSize [ 
 	self pager
-		ifNil: [aPageSize ifNotNil: [self addNavigationPane: (MorphTreePager on: self pageSize: aPageSize)]]
+		ifNil: [aPageSize ifNotNil: [self addNavigationPane: (TreePagerMorph on: self pageSize: aPageSize)]]
 		ifNotNil: [aPageSize 
 			ifNil: [self removePager]
 			ifNotNil: [self pager changePageSize: aPageSize]]

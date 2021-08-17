@@ -464,7 +464,7 @@ TestCase class >> localCoverageForClass: cls [
 		self methods inject: Set new into: 
 							[:sums :cm | sums union: cm messages].
 					
-	"testedMethods contains all the methods send in test methods, which probably contains methods that have nothign to do with collection"
+	"testedMethods contains all the methods send in test methods, which probably contains methods that have nothing to do with collection"
 	testedMethods := testedMethods reject: [:sel | (definedMethods includes: sel) not].
 
 	untestedMethods := definedMethods select: [:selector | (testedMethods includes: selector) not].
@@ -622,14 +622,14 @@ TestCase class >> testSelectors [
 	^(self selectors select: [ :each | (each beginsWith: 'test') and: [each numArgs isZero]])
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TestCase class >> whichClassIncludesTestSelector: aSymbol [
 	^self whichClassIncludesSelector: aSymbol
 ]
 
 { #category : #dependencies }
 TestCase >> addDependentToHierachy: anObject [ 
-	"an empty method. for Composite compability with TestSuite"
+	"an empty method. for Composite compatibility with TestSuite"
 ]
 
 { #category : #events }
@@ -817,7 +817,7 @@ TestCase >> printTestSelectorOn: aStream [
 
 { #category : #dependencies }
 TestCase >> removeDependentFromHierachy: anObject [ 
-	"an empty method. for Composite compability with TestSuite"
+	"an empty method. for Composite compatibility with TestSuite"
 ]
 
 { #category : #accessing }

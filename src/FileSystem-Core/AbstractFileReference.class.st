@@ -198,7 +198,7 @@ AbstractFileReference >> binaryWriteStreamDo: doBlock ifPresent: presentBlock [
 AbstractFileReference >> canonicalize [
 	"Answer the receiver with references to the current folder (.) and parent folder (..) removed"
 
-	^ self withPath: self resolve path canonicalize
+	^ self withPath: self path canonicalize
 ]
 
 { #category : #accessing }

@@ -3,7 +3,7 @@ Displays a selected item and a drop button. When pressed will popup a list to en
 "
 Class {
 	#name : #DropListMorph,
-	#superclass : #MorphicModel,
+	#superclass : #ModelMorph,
 	#traits : 'TEnableOnHaloMenu',
 	#classTraits : 'TEnableOnHaloMenu classTrait',
 	#instVars : [

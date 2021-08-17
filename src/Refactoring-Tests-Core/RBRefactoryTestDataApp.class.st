@@ -45,12 +45,12 @@ RBRefactoryTestDataApp >> booleanPrecedence [
 	^true & 4 = 45
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBRefactoryTestDataApp >> callFoo [
 	^self testFoo: 5
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBRefactoryTestDataApp >> callMethod [
 	^self renameThisMethod: 5
 ]
@@ -132,12 +132,12 @@ RBRefactoryTestDataApp >> cruft [
 	self halt
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBRefactoryTestDataApp >> demoExampleCall [
 	^ self demoRenameMethod: 1 PermuteArgs: 2
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBRefactoryTestDataApp >> demoMethodWithDuplicates [
 	| a b result1 result2 answer |
 	a := 3.
@@ -148,7 +148,7 @@ RBRefactoryTestDataApp >> demoMethodWithDuplicates [
 	^ answer
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBRefactoryTestDataApp >> demoRenameMethod: arg1 PermuteArgs: arg2 [
 	self do: arg1. 
 	self do: arg2.
@@ -184,7 +184,7 @@ RBRefactoryTestDataApp >> equalsTrue [
 	^true == self
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBRefactoryTestDataApp >> exampleCall [
 	<sampleInstance>
 	^self rename: 1 two: 2
@@ -227,7 +227,7 @@ RBRefactoryTestDataApp >> ifTrueReturns [
 	^false
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBRefactoryTestDataApp >> inlineBar: aSymbol [
 	^aSymbol isSymbol
 ]
@@ -251,7 +251,7 @@ RBRefactoryTestDataApp >> inlineFailed [
 	^q
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBRefactoryTestDataApp >> inlineFoo: aBlock [ 
 	| bar baz asdf |
 	bar := aBlock value: self.
@@ -260,7 +260,7 @@ RBRefactoryTestDataApp >> inlineFoo: aBlock [
 	^asdf
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBRefactoryTestDataApp >> inlineJunk [
 	| asdf |
 	asdf := self inlineFoo: 
@@ -289,7 +289,7 @@ RBRefactoryTestDataApp >> inlineMax [
 	^q
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBRefactoryTestDataApp >> inlineMethod [
 	| temp |
 	temp := self
@@ -299,7 +299,7 @@ RBRefactoryTestDataApp >> inlineMethod [
 	^temp
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBRefactoryTestDataApp >> inlineParameterMethod: aSymbol [
 	^aSymbol isSymbol
 ]
@@ -375,7 +375,7 @@ RBRefactoryTestDataApp >> modifiesCollection [
 	^collection
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBRefactoryTestDataApp >> moveDefinition [
 	| temp |
 	^(self collect: 
@@ -394,7 +394,7 @@ RBRefactoryTestDataApp >> multipleCalls [
 	self caller2
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBRefactoryTestDataApp >> noMoveDefinition [
 	| temp |
 	^(self collect: 
@@ -433,12 +433,12 @@ RBRefactoryTestDataApp >> release [
 	self printString
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBRefactoryTestDataApp >> rename: this two: argumentMethod [
 	^self printString , this , argumentMethod
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBRefactoryTestDataApp >> renameThisMethod: anArg [
 	^self
 ]
@@ -485,22 +485,22 @@ RBRefactoryTestDataApp >> searchingLiteral [
 	^self printString = #a or: [#() = self printString | ( #() == self printString)]
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBRefactoryTestDataApp >> selectorNotReferenced [
 	^self selectorNotReferenced + 4
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBRefactoryTestDataApp >> sendInlineBar [
 	^ self inlineBar: #example1
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBRefactoryTestDataApp >> sendInlineBar2 [
 	^ self inlineBar: 'example2'
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBRefactoryTestDataApp >> sendInlineParameterMethod [
 	^self inlineParameterMethod: #(#asdf)
 ]
@@ -525,7 +525,7 @@ RBRefactoryTestDataApp >> stringConcatenation [
 	^string
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBRefactoryTestDataApp >> symbolReference [
 	^#(#renameThisMethod: #(4 #renameThisMethod:))
 ]
@@ -544,17 +544,17 @@ RBRefactoryTestDataApp >> tempsReadBeforeWritten [
 	^temp
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBRefactoryTestDataApp >> testFoo: anObject [
 	^self class + anObject
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBRefactoryTestDataApp >> testMethod [
 	^self class
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBRefactoryTestDataApp >> testMethod1 [
 	^self testMethod1 
 		, ([:each | each testMethod1] value: #(#(#testMethod1) 2 #testMethod1))

@@ -85,12 +85,12 @@ RBCreateAccessorsWithLazyInitializationForVariableRefactoring >> createGetterAcc
 			getterMethod := self defineGetterMethod ]
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 RBCreateAccessorsWithLazyInitializationForVariableRefactoring >> defaultValue [
 	^ defaultValue ifNil: [ defaultValue := 'nil' ]
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 RBCreateAccessorsWithLazyInitializationForVariableRefactoring >> defaultValue: aString [
 	defaultValue := aString
 ]

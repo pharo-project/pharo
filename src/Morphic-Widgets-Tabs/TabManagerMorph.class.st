@@ -18,12 +18,12 @@ Class {
 	#category : #'Morphic-Widgets-Tabs-Morphs'
 }
 
-{ #category : #'private-contents' }
+{ #category : #'private - contents' }
 TabManagerMorph >> addLastTabContents: aTab among: size delta: delta [
 	| process |
 	
 	process := aTab retrieveMorph: [ :contents | 
-		contents ifNil: [ TabWithNoContents signalTab: aTab ].
+		contents ifNil: [ TabWithNoContentsMorph signalTab: aTab ].
 		contentsWrapper
 			addMorph: contents
 			fullFrame:
@@ -63,14 +63,14 @@ TabManagerMorph >> addMorphs [
 				yourself).
 ]
 
-{ #category : #'private-contents' }
+{ #category : #'private - contents' }
 TabManagerMorph >> addSplitterOn: tabs delta: delta [
 	| leftProcess rightProcess |
 	tabs overlappingPairsWithIndexDo: [ :left :right :index | 
 		leftProcess := left retrieveMorph: [ :leftContents | 
-			leftContents ifNil: [ TabWithNoContents signalTab: left ].
+			leftContents ifNil: [ TabWithNoContentsMorph signalTab: left ].
 			rightProcess := right retrieveMorph: [ :rightContents || splitter |
-				rightContents ifNil: [ TabWithNoContents signalTab: right ].
+				rightContents ifNil: [ TabWithNoContentsMorph signalTab: right ].
 				
 				splitter := ProportionalSplitterMorph new
 					addLeftOrTop: leftContents;
@@ -96,14 +96,14 @@ TabManagerMorph >> addTab: aTab [
 	
 ]
 
-{ #category : #'private-contents' }
+{ #category : #'private - contents' }
 TabManagerMorph >> addTabContents: tab at: index delta: delta [
 	| process |
 	process := tab
 		retrieveMorph:
 			[ :contents | 
 			| leftOffset |
-			contents ifNil: [ TabWithNoContents signalTab: tab ].
+			contents ifNil: [ TabWithNoContentsMorph signalTab: tab ].
 			leftOffset := index = 1
 				ifTrue: [ 0 ]
 				ifFalse: [ 2 ].
@@ -125,13 +125,13 @@ TabManagerMorph >> adoptPaneColor: aColor [
 	self color: aColor
 ]
 
-{ #category : #'private-actions' }
+{ #category : #'private - actions' }
 TabManagerMorph >> barDeleted: aBar [
 
 	self close
 ]
 
-{ #category : #'private-drawing' }
+{ #category : #'private - drawing' }
 TabManagerMorph >> borderColor [
 	^ self theme borderColor
 ]
@@ -160,7 +160,7 @@ TabManagerMorph >> closeAllTabs [
 	toolbar closeAllTabs
 ]
 
-{ #category : #'private-drawing' }
+{ #category : #'private - drawing' }
 TabManagerMorph >> containerColor [
 	^ self theme lightBaseColor
 ]
@@ -172,7 +172,7 @@ TabManagerMorph >> delete [
 	self triggerEvent: #tabManagerDeleted with: self
 ]
 
-{ #category : #'private-actions' }
+{ #category : #'private - actions' }
 TabManagerMorph >> deleteSelectedTabs [
 	toolbar selectedTab 
 		ifNotNil: [ toolbar deleteSelectedTabs ] 
@@ -282,25 +282,25 @@ TabManagerMorph >> registerShortcuts [
 	self bindKeyCombination: $0 meta toAction: [ self selectLastTab ]
 ]
 
-{ #category : #'private-actions' }
+{ #category : #'private - actions' }
 TabManagerMorph >> selectLastTab [
 
 	toolbar selectLastTab
 ]
 
-{ #category : #'private-actions' }
+{ #category : #'private - actions' }
 TabManagerMorph >> selectNext [
 
 	toolbar selectNext
 ]
 
-{ #category : #'private-actions' }
+{ #category : #'private - actions' }
 TabManagerMorph >> selectPrevious [
 
 	toolbar selectPrevious
 ]
 
-{ #category : #'private-actions' }
+{ #category : #'private - actions' }
 TabManagerMorph >> selectTabAt: index [
 
 	toolbar selectTabAt: index ifAbsent: [].
@@ -336,7 +336,7 @@ TabManagerMorph >> setTabContentFrom: aTab [
 	self cleanProcesses.
 
 	process := aTab retrieveMorph: [ :contents |
-		contents ifNil: [ TabWithNoContents signalTab: aTab ].
+		contents ifNil: [ TabWithNoContentsMorph signalTab: aTab ].
 		contentsWrapper addMorph: contents fullFrame: LayoutFrame identity.
 		"contents takeKeyboardFocus" "it should be managed better and not stale focus from another active windows/widgets. It should only forse focus on content when user focused on tabs but it is not clean how to detect it"
 	].
@@ -348,13 +348,13 @@ TabManagerMorph >> setTabs: aBlock [
 	self tabs: aBlock value
 ]
 
-{ #category : #'private-actions' }
+{ #category : #'private - actions' }
 TabManagerMorph >> tabAddedToSelection: aTab [
 
 	self setMultipleContents
 ]
 
-{ #category : #'private-actions' }
+{ #category : #'private - actions' }
 TabManagerMorph >> tabEmptyContents: aTab [
 	"My bar already filtered the tab, so here I am sure the tab is the selected tab"
 	
@@ -362,26 +362,26 @@ TabManagerMorph >> tabEmptyContents: aTab [
 	
 ]
 
-{ #category : #'private-actions' }
+{ #category : #'private - actions' }
 TabManagerMorph >> tabRefreshed: aTab [
 	"Here we know that aTab is the selected tab"
 
 	self setMultipleContents
 ]
 
-{ #category : #'private-actions' }
+{ #category : #'private - actions' }
 TabManagerMorph >> tabRemovedFromSelection: aTab [
 
 	self setMultipleContents
 ]
 
-{ #category : #'private-actions' }
+{ #category : #'private - actions' }
 TabManagerMorph >> tabResetSelection: aTab [
 
 	self setTabContentFrom: aTab
 ]
 
-{ #category : #'private-actions' }
+{ #category : #'private - actions' }
 TabManagerMorph >> tabSelected: aTab [
 
 	self setTabContentFrom: aTab.
@@ -394,7 +394,7 @@ TabManagerMorph >> tabs: aCollection [
 	toolbar tabs: aCollection
 ]
 
-{ #category : #'private-actions' }
+{ #category : #'private - actions' }
 TabManagerMorph >> tabsChanged [
 	"Nothing to do"
 ]

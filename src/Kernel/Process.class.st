@@ -664,14 +664,6 @@ Process >> stepToHome: aContext [
 	^ suspendedContext
 ]
 
-{ #category : #'changing suspended state' }
-Process >> stepToSendOrReturn [
-
-	^Processor activeProcess
-		evaluate: [suspendedContext := suspendedContext stepToSendOrReturn]
-		onBehalfOf: self
-]
-
 { #category : #'changing process state' }
 Process >> suspend [
 	"Primitive. Stop the process that the receiver represents in such a way 

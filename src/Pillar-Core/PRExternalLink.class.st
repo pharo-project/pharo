@@ -51,17 +51,17 @@ PRExternalLink >> url [
 	^ self urlPrefix , self urlEntry , self urlPostfix
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 PRExternalLink >> urlEntry [
 	^ self reference
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 PRExternalLink >> urlPostfix [
 	^ ''
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 PRExternalLink >> urlPrefix [
 	^ ''
 ]

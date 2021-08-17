@@ -20,19 +20,19 @@ Class {
 	#category : #'Ring-Core-Kernel'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'private - accessing' }
 RGBehavior class >> badInstantiationError [
 
 	RGBadInstantiationError signal: 'I cannot be instantiated this way because every RGBehavior must know its proper behavior strategy. Please use a subclass of RGBehaviorFactory or my methods like #newClass'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBehavior class >> named: aString [
 
 	^ self badInstantiationError
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBehavior class >> named: aName behaviorStrategy: anRGBehaviorStrategy [
 
 	| aBehavior |
@@ -47,13 +47,13 @@ RGBehavior class >> named: aName behaviorStrategy: anRGBehaviorStrategy [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBehavior class >> named: aString parent: anRGObject [
 
 	^ self badInstantiationError
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBehavior class >> named: aName parent: anRGObject behaviorStrategy: anRGBehaviorStrategy [
 	
 	| aBehavior |
@@ -93,7 +93,7 @@ RGBehavior class >> newTrait [
 	^ self unnamedWithBehaviorStrategy: RGTrait newStrategy
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBehavior class >> parent: anRGObject behaviorStrategy: anRGBehaviorStrategy [
 	
 	| aBehavior |
@@ -107,7 +107,7 @@ RGBehavior class >> parent: anRGObject behaviorStrategy: anRGBehaviorStrategy [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBehavior class >> unnamedWithBehaviorStrategy: anRGBehaviorStrategy [
 
 	| aBehavior |
@@ -120,7 +120,7 @@ RGBehavior class >> unnamedWithBehaviorStrategy: anRGBehaviorStrategy [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBehavior class >> unresolvedNamed: aName withParent: anRGObject behaviorStrategy: anRGBehaviorStrategy [
 	
 	| aBehavior |
@@ -136,7 +136,7 @@ RGBehavior class >> unresolvedNamed: aName withParent: anRGObject behaviorStrate
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBehavior class >> unresolvedWithBehaviorStrategy: anRGBehaviorStrategy [
 
 	| aBehavior |
@@ -149,7 +149,7 @@ RGBehavior class >> unresolvedWithBehaviorStrategy: anRGBehaviorStrategy [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGBehavior class >> unresolvedWithParent: anRGObject behaviorStrategy: anRGBehaviorStrategy [
 	
 	| aBehavior |
@@ -231,7 +231,7 @@ RGBehavior >> announceDefinitionChangeDuring: aBlock [
 	
 ]
 
-{ #category : #asYetUnclassified }
+{ #category : #accessing }
 RGBehavior >> asYetUnclassifiedProtocolName [
 
 	^ 'as yet unclassified' asSymbol
@@ -508,7 +508,7 @@ RGBehavior >> includesSelector: aString [
 	^ self selectors includes: aString
 ]
 
-{ #category : #'testing class hierarchy' }
+{ #category : #'testing - class hierarchy' }
 RGBehavior >> inheritsFrom: aClass [ 
 	"Answer whether the argument, aClass, is on the receiver's superclass 
 	chain."
@@ -676,10 +676,10 @@ RGBehavior >> localSelectors [
 
 { #category : #lookup }
 RGBehavior >> lookupVar: aName [
-	^ self layout 
-		resolveSlot: aName asSymbol 
-		ifFound: [:var | var] 
-		ifNone: [self bindingOf: aName]
+
+	^ self allSlots
+		  detect: [ :slot | slot name == aName ]
+		  ifNone: [ self bindingOf: aName ]
 ]
 
 { #category : #lookup }
@@ -1093,7 +1093,7 @@ RGBehavior >> slotsNeedFullDefinition [
 	^self slots anySatisfy: [ :each | each needsFullDefinition ]
 ]
 
-{ #category : #'accessing class hierarchy' }
+{ #category : #'accessing - class hierarchy' }
 RGBehavior >> subclasses [
 
 	| result |
@@ -1235,7 +1235,7 @@ RGBehavior >> untagFrom: aSymbol [
 	self backend forPackage untagClass: self from: aSymbol
 ]
 
-{ #category : #asYetUnclassified }
+{ #category : #accessing }
 RGBehavior >> usedTraits [
 
 	^ self traitComposition usedTraits

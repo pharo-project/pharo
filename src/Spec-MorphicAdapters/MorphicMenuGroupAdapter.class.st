@@ -1,6 +1,6 @@
 "
 I am used to compute a MenuGroupPresenter.
-There is not Morphic represenation of a MenuGroup, that is why I do not have a coresponding morph.
+There is not Morphic representation of a MenuGroup, that is why I do not have a coresponding morph.
 "
 Class {
 	#name : #MorphicMenuGroupAdapter,

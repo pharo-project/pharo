@@ -8,13 +8,6 @@ Class {
 	#category : #'SystemCommands-MethodCommands'
 }
 
-{ #category : #activation }
-SycRemoveHierarchyMethodCommand class >> methodContextMenuActivation [
-	<classAnnotation>
-	
-	^ SycMethodMenuActivation byRootGroupItemOrder: 100 for: ClyMethod asCalypsoItemContext
-]
-
 { #category : #converting }
 SycRemoveHierarchyMethodCommand >> asRefactorings [
 	| refactoring |
@@ -32,12 +25,6 @@ SycRemoveHierarchyMethodCommand >> defaultMenuIconName [
 { #category : #accessing }
 SycRemoveHierarchyMethodCommand >> defaultMenuItemName [
 	^'Remove and the ones in subclasses'
-]
-
-{ #category : #execution }
-SycRemoveHierarchyMethodCommand >> execute [
-
-	self executeRefactorings
 ]
 
 { #category : #initialization }

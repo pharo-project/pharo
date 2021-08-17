@@ -326,24 +326,24 @@ RBParseTreeRewriter >> visitArgumentNodes: aNodeCollection [
 	^aNodeCollection collect: [:each | self visitArgumentNode: each]
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 RBParseTreeRewriter >> visitArrayNode: anArrayNode [
 	anArrayNode statements: (anArrayNode statements collect: [:each | self visitNode: each])
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 RBParseTreeRewriter >> visitAssignmentNode: anAssignmentNode [ 
 	anAssignmentNode variable: (self visitNode: anAssignmentNode variable).
 	anAssignmentNode value: (self visitNode: anAssignmentNode value)
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 RBParseTreeRewriter >> visitBlockNode: aBlockNode [ 
 	aBlockNode arguments: (self visitArgumentNodes: aBlockNode arguments).
 	aBlockNode body: (self visitNode: aBlockNode body)
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 RBParseTreeRewriter >> visitCascadeNode: aCascadeNode [
 
 	| newMessages notFound |
@@ -379,35 +379,35 @@ RBParseTreeRewriter >> visitCascadeNode: aCascadeNode [
 	aCascadeNode messages: newMessages
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 RBParseTreeRewriter >> visitLiteralArrayNode: aRBArrayLiteralNode [
 	aRBArrayLiteralNode contents: (aRBArrayLiteralNode contents collect: [ :each | self visitNode: each ])
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 RBParseTreeRewriter >> visitMessageNode: aMessageNode [
 	aMessageNode receiver: (self visitNode: aMessageNode receiver).
 	aMessageNode arguments: (aMessageNode arguments collect: [ :each | self visitNode: each ])
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 RBParseTreeRewriter >> visitMethodNode: aMethodNode [
 	aMethodNode arguments: (self visitArgumentNodes: aMethodNode arguments).
 	aMethodNode pragmas: (aMethodNode pragmas collect: [ :each | self visitNode: each ]).
 	aMethodNode body: (self visitNode: aMethodNode body)
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 RBParseTreeRewriter >> visitPragmaNode: aPragmaNode [
 	aPragmaNode arguments: (aPragmaNode arguments collect: [ :each | self visitNode: each ])
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 RBParseTreeRewriter >> visitReturnNode: aReturnNode [ 
 	aReturnNode value: (self visitNode: aReturnNode value)
 ]
 
-{ #category : #'visitor-double dispatching' }
+{ #category : #'visitor - double dispatching' }
 RBParseTreeRewriter >> visitSequenceNode: aSequenceNode [
 	aSequenceNode temporaries: (self visitTemporaryNodes: aSequenceNode temporaries).
 	aSequenceNode statements: (aSequenceNode statements collect: [ :each | self visitNode: each ])

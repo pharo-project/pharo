@@ -108,7 +108,7 @@ EyePointerExplorer >> tree [
 			addColumn: (SpStringTableColumn evaluated: [ :node | self labelFor: node ]);
 			"menu:          [ :menu |  self inspectionMenu: menu ];"
 			children: [ :node | self childrenFor: node ];
-			whenSelectedItemChanged: [ :item | item ifNotNil: [ self text doItReceiver: item value ] ];	
+			whenSelectedItemChangedDo: [ :item | item ifNotNil: [ self text doItReceiver: item value ] ];	
 			whenBuiltDo: [ self initializeShortcuts ];
 			yourself ]
 ]

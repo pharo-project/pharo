@@ -274,7 +274,7 @@ FFIStructure class >> fromHandle: aHandle [
 
 { #category : #private }
 FFIStructure class >> generatedFieldProtocolName [
-	^ 'accessing structure variables'
+	^ 'accessing - structure variables'
 ]
 
 { #category : #testing }
@@ -375,17 +375,6 @@ FFIStructure class >> structureAlignment [
 { #category : #accessing }
 FFIStructure class >> structureSize [
 	^ self byteSize
-]
-
-{ #category : #accessing }
-FFIStructure >> address [
-	self
-		deprecated: 'Use #getHandle'
-		on: '27 October 2015'
-		in: 'Pharo5'
-		transformWith: '`@rec address' -> '`@rec getHandle'.
-	
-	^ self getHandle
 ]
 
 { #category : #converting }

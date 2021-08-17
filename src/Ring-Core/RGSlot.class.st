@@ -39,7 +39,7 @@ RGSlot >> isInstanceVariable [
 	^ true
 ]
 
-{ #category : #'testing types' }
+{ #category : #'testing - types' }
 RGSlot >> isSlot [
 
 	^ true
@@ -52,6 +52,12 @@ RGSlot >> isSpecial [
 		deprecated: 'Use #needsFullDefinition instead'
 		transformWith: '`@rec isSpecial' -> '`@rec needsFullDefinition'.
 	^ self needsFullDefinition
+]
+
+{ #category : #testing }
+RGSlot >> isSuperVariable [
+	
+	^ false
 ]
 
 { #category : #accessing }

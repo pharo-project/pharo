@@ -7,7 +7,7 @@ Class {
 	#category : #'GeneralRules-Tests-Migrated'
 }
 
-{ #category : #'test-help' }
+{ #category : #sample }
 ReGlobalVariablesUsageRuleTest >> sampleMethod [
 	"Global variable are stored in Smalltalk globals, and one should avoid them when possible. 
 	Examples are Display and Sensor"

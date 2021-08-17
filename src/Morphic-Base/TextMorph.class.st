@@ -111,7 +111,7 @@ TextMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 			]
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 TextMorph >> addMorphFront: aMorph fromWorldPosition: wp [ 
 	"Overridden for more specific re-layout and positioning"
 	aMorph textAnchorType == #document 
@@ -569,7 +569,7 @@ TextMorph >> defaultLineHeight [
 	^ textStyle lineGrid
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 TextMorph >> delete [
 	predecessor ifNotNil: [predecessor setSuccessor: successor].
 	successor ifNotNil: [successor setPredecessor: predecessor.
@@ -861,7 +861,7 @@ TextMorph >> getMenu: shiftKeyState [
 		ifFalse: [editor shiftedYellowButtonMenu]
 ]
 
-{ #category : #'submorphs-add/remove' }
+{ #category : #'submorphs - add/remove' }
 TextMorph >> goBehind [
 	"We need to save the container, as it knows about fill and run-around"
 	| cont |

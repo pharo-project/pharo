@@ -152,7 +152,7 @@ BlockClosureTest >> testHasMethodReturn [
 	self assert: [ #(1) do: [ ^self ] ] hasMethodReturn
 ]
 
-{ #category : #'test -testing' }
+{ #category : #'tests - testing' }
 BlockClosureTest >> testIsClean [
 	| local |
 	local := #testIsClean.

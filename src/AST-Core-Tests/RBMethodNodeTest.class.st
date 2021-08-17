@@ -114,7 +114,7 @@ RBMethodNodeTest >> testCachingMethodArguments [
 	self assert: (ast methodPropertyAt: #argumentNames) equals: #(someArgName someAnotherArgName)
 ]
 
-{ #category : #'testing-comments' }
+{ #category : #'tests - comments' }
 RBMethodNodeTest >> testCommentedMethodHasComments [
 
 	| tree |
@@ -128,7 +128,7 @@ RBMethodNodeTest >> testCommentedMethodHasComments [
 
 ]
 
-{ #category : #'testing-comments' }
+{ #category : #'tests - comments' }
 RBMethodNodeTest >> testCommentsParent [
 	"Test if comment has a parent"
 	self
@@ -144,7 +144,7 @@ RBMethodNodeTest >> testHasArguments [
 	self assert: ast hasArguments
 ]
 
-{ #category : #'testing-comments' }
+{ #category : #'tests - comments' }
 RBMethodNodeTest >> testHasComments [
 
 	| tree |
@@ -188,7 +188,7 @@ RBMethodNodeTest >> testMethodClass [
 	self assert: ast methodClass equals: nil
 ]
 
-{ #category : #'testing-comments' }
+{ #category : #'tests - comments' }
 RBMethodNodeTest >> testMethodWithCommentsAndEmptyStatements [
 
 	| tree |
@@ -393,7 +393,7 @@ RBMethodNodeTest >> testSizeOfSignatureOfUnaryMethod [
 	self assert: tree conceptualSignatureSize equals: 'foo' size
 ]
 
-{ #category : #'testing-comments' }
+{ #category : #'tests - comments' }
 RBMethodNodeTest >> testUncommentMethodDoesNotHaveComments [
 
 	| tree |

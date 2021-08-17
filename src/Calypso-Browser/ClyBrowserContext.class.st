@@ -72,7 +72,7 @@ ClyBrowserContext >> copyForBrowserStateSnapshot [
 		yourself
 ]
 
-{ #category : #'accessing context' }
+{ #category : #'accessing - context' }
 ClyBrowserContext >> currentMetaLevelOf: aClass [
 	"we do not model class side vs instance side"
 	^aClass
@@ -172,6 +172,12 @@ ClyBrowserContext >> selectedItems: anObject [
 { #category : #helpers }
 ClyBrowserContext >> selectedObjects [
 	^self actualSelectionFrom: selectedItems
+]
+
+{ #category : #'tool controlling' }
+ClyBrowserContext >> showMethodTag: aString [
+	"Default is to do nothing"
+	
 ]
 
 { #category : #accessing }

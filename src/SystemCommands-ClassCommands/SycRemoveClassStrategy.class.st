@@ -1,7 +1,7 @@
 "
 I am the abstract strategy used to remove classes from the system.
 
-My concrete subclasses handle the possible actions when a user attemps to remove a class:
+My concrete subclasses handle the possible actions when a user attempts to remove a class:
 	- remove the class
 	- remove the class, keeping the subclasses
 	- Don't remove the class, but browse references/subclasses/users
@@ -16,29 +16,6 @@ Class {
 { #category : #testing }
 SycRemoveClassStrategy class >> canExecuteWithReferences: hasReferences subclasses: hasSubclasses users: hasUsers [
 	self subclassResponsibility 
-]
-
-{ #category : #'instance creation' }
-SycRemoveClassStrategy class >> createForBrowser: aBrowser classes: aCollection [
-
-	| hasReferences hasSubclasses hasUsers |
-	hasReferences := (ClyClassExternalReferencesQuery
-		                  toAny: aCollection
-		                  from: aBrowser systemScope) execute notEmpty.
-	hasSubclasses := ((aCollection flatCollect: [ :each | 
-		                   each subclasses ]) copyWithoutAll: aCollection)
-		                 notEmpty.
-	hasUsers := ((aCollection flatCollect: [ :each | each users ]) 
-		             copyWithoutAll: aCollection) notEmpty.
-
-	hasReferences | hasSubclasses | hasUsers ifFalse: [ 
-		^ { SycSilentlyRemoveClassStrategy new } ].
-
-	^ self
-		  createForBrowser: aBrowser
-		  references: hasReferences
-		  subclasses: hasSubclasses
-		  users: hasUsers
 ]
 
 { #category : #'instance creation' }

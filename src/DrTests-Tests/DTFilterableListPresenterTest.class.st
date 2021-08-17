@@ -19,7 +19,7 @@ DTFilterableListPresenterTest >> setUp [
 							yourself.	
 ]
 
-{ #category : #test }
+{ #category : #tests }
 DTFilterableListPresenterTest >> testFilterStrings [
 	filterableList filterTextInput text: 'foo|bar'.
 	

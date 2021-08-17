@@ -45,12 +45,12 @@ RBDummyRefactoryTestDataApp >> booleanPrecedence [
 	^true & 4 = 45
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBDummyRefactoryTestDataApp >> callFoo [
 	^self testFoo: 5
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBDummyRefactoryTestDataApp >> callMethod [
 	^self renameThisMethod: 5
 ]
@@ -132,12 +132,12 @@ RBDummyRefactoryTestDataApp >> cruft [
 	self halt
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBDummyRefactoryTestDataApp >> demoExampleCall [
 	^ self demoRenameMethod: 1 PermuteArgs: 2
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBDummyRefactoryTestDataApp >> demoMethodWithDuplicates [
 	| a b result1 result2 answer |
 	a := 3.
@@ -184,7 +184,7 @@ RBDummyRefactoryTestDataApp >> equalsTrue [
 	^true == self
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBDummyRefactoryTestDataApp >> exampleCall [
 	^self rename: 1 two: 2
 ]
@@ -245,7 +245,7 @@ RBDummyRefactoryTestDataApp >> inlineFailed [
 	^q
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBDummyRefactoryTestDataApp >> inlineFoo: aBlock [ 
 	| bar baz asdf |
 	bar := aBlock value: self.
@@ -254,7 +254,7 @@ RBDummyRefactoryTestDataApp >> inlineFoo: aBlock [
 	^asdf
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBDummyRefactoryTestDataApp >> inlineJunk [
 	| asdf |
 	asdf := self inlineFoo: 
@@ -283,7 +283,7 @@ RBDummyRefactoryTestDataApp >> inlineMax [
 	^q
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBDummyRefactoryTestDataApp >> inlineMethod [
 	| temp |
 	temp := self
@@ -293,7 +293,7 @@ RBDummyRefactoryTestDataApp >> inlineMethod [
 	^temp
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBDummyRefactoryTestDataApp >> inlineParameterMethod: aSymbol [
 	^aSymbol isSymbol
 ]
@@ -369,7 +369,7 @@ RBDummyRefactoryTestDataApp >> modifiesCollection [
 	^collection
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBDummyRefactoryTestDataApp >> moveDefinition [
 	| temp |
 	^(self collect: 
@@ -388,7 +388,7 @@ RBDummyRefactoryTestDataApp >> multipleCalls [
 	self caller2
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBDummyRefactoryTestDataApp >> noMoveDefinition [
 	| temp |
 	^(self collect: 
@@ -427,12 +427,12 @@ RBDummyRefactoryTestDataApp >> release [
 	self printString
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBDummyRefactoryTestDataApp >> rename: this two: argumentMethod [
 	^self printString , this , argumentMethod
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBDummyRefactoryTestDataApp >> renameThisMethod: anArg [
 	^self
 ]
@@ -458,12 +458,12 @@ RBDummyRefactoryTestDataApp >> searchingLiteral [
 	^self printString = #a or: [#() = self printString | ( #() == self printString)]
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBDummyRefactoryTestDataApp >> selectorNotReferenced [
 	^self selectorNotReferenced + 4
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBDummyRefactoryTestDataApp >> sendInlineParameterMethod [
 	^self inlineParameterMethod: #(#asdf)
 ]
@@ -489,7 +489,7 @@ RBDummyRefactoryTestDataApp >> stringConcatenation [
 	^string
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBDummyRefactoryTestDataApp >> symbolReference [
 	^#(#renameThisMethod: #(4 #renameThisMethod:))
 ]
@@ -508,17 +508,17 @@ RBDummyRefactoryTestDataApp >> tempsReadBeforeWritten [
 	^temp
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBDummyRefactoryTestDataApp >> testFoo: anObject [
 	^self class + anObject
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBDummyRefactoryTestDataApp >> testMethod [
 	^self class
 ]
 
-{ #category : #test }
+{ #category : #tests }
 RBDummyRefactoryTestDataApp >> testMethod1 [
 	^self testMethod1 
 		, ([:each | each testMethod1] value: #(#(#testMethod1) 2 #testMethod1))

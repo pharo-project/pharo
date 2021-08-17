@@ -11,6 +11,11 @@ Class {
 	#category : #'Kernel-Layout'
 }
 
+{ #category : #testing }
+AbstractLayout class >> isAbstract [
+	^self == AbstractLayout
+]
+
 { #category : #description }
 AbstractLayout class >> kind [
 	"Return an identifier describing uniquely the layout"
@@ -52,9 +57,39 @@ AbstractLayout >> definesSlot: aSlot [
 	^self slots identityIncludes: aSlot 
 ]
 
+{ #category : #accessing }
+AbstractLayout >> extend: arg1 [ 
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+AbstractLayout >> extendByte [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+AbstractLayout >> extendDoubleByte [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+AbstractLayout >> extendDoubleWord [
+	^ self subclassResponsibility
+]
+
 { #category : #extending }
 AbstractLayout >> extendImmediate [
 	^ ImmediateLayout new
+]
+
+{ #category : #accessing }
+AbstractLayout >> extendVariable: arg1 [ 
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+AbstractLayout >> extendWord [
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }

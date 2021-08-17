@@ -75,7 +75,7 @@ Class {
 	#category : #'Network-Kernel-Base'
 }
 
-{ #category : #example }
+{ #category : #examples }
 SocketStream class >> finger: userName [
 	"SocketStream finger: 'stp'"
 
@@ -699,7 +699,7 @@ SocketStream >> readInto: aCollection startingAt: startIndex count: anInteger [
 	^amount
 ]
 
-{ #category : #'private-socket' }
+{ #category : #'private - socket' }
 SocketStream >> receiveAvailableData [
 	"Receive available data (as much as fits in the inBuffer)
 	but not waiting for more to arrive.
@@ -711,7 +711,7 @@ SocketStream >> receiveAvailableData [
 	^self adjustInBuffer: recentlyRead
 ]
 
-{ #category : #'private-socket' }
+{ #category : #'private - socket' }
 SocketStream >> receiveData [
 	"Receive data with timeout if it has been set.
 	If shouldSignal is false we use the Socket methods
@@ -760,7 +760,7 @@ SocketStream >> receiveData: nBytes [
 		whileTrue: [self receiveData]
 ]
 
-{ #category : #'private-socket' }
+{ #category : #'private - socket' }
 SocketStream >> receiveDataIfAvailable [
 	"Only used to check that there really is data to read
 	from the socket after it signals dataAvailable.

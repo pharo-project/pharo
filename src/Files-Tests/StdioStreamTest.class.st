@@ -16,7 +16,7 @@ Class {
 	#category : #'Files-Tests-Streams'
 }
 
-{ #category : #'tests-manual' }
+{ #category : #'tests - manual' }
 StdioStreamTest class >> manualStdinTest [
 	"This test can be run headless to manually to check actual stdin.
 	It reads the input and confirms that #atEnd answers as expected and the number of characters read.

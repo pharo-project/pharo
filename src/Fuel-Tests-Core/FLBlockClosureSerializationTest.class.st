@@ -72,7 +72,12 @@ FLBlockClosureSerializationTest >> testBlockClosureMaterializesClassVariablesCor
 	
 	self serialize: closure.
 	
-	self assert: ((self materialized compiledBlock literalAt: 1) isKindOf: ClassVariable)
+	self
+		assert: (self materialized compiledBlock literalAt: 1)
+		equals: (class bindingOf: 'ClassVariableForTesting').
+	self
+		deny: (self materialized compiledBlock literalAt: 1)
+		identicalTo: (class bindingOf: 'ClassVariableForTesting')
 ]
 
 { #category : #'tests-change' }

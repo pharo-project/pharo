@@ -5,26 +5,29 @@ Class {
 		'breakpointsBeforeTest',
 		'testObjectPoint'
 	],
-	#category : #'Sindarin-Tests'
+	#category : #'Sindarin-Tests-Base'
 }
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethod1 [
+
 	| a |
 	a := 1.
 	a := 5.
-	^ Point x: 5 y: '3' asInteger.
+	^ Point x: 5 y: '3' asInteger
 ]
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethod10 [
+
 	| a |
 	a := 5.
-	^ Point x: 5 y: '3' asInteger.
+	^ Point x: 5 y: '3' asInteger
 ]
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethod11 [
+
 	| a |
 	a := 5.
 	self helperMethod12.
@@ -34,140 +37,161 @@ SindarinDebuggerTest >> helperMethod11 [
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethod12 [
+
 	| i |
 	i := 5.
-	[ i=0 ] whileFalse: [ i := i - 1 ].
+	[ i = 0 ] whileFalse: [ i := i - 1 ]
 ]
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethod13 [
+
 	| a |
 	a := 5.
-	^ Point x: 5 y: '3' asInteger.
+	^ Point x: 5 y: '3' asInteger
 ]
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethod14 [
+
 	| a |
 	a := 5.
-	^ Point x: 5 y: '3' asInteger.
+	^ Point x: 5 y: '3' asInteger
 ]
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethod15 [
+
 	| a |
 	a := 5.
-	^ Point x: 5 y: '3' asInteger.
+	^ Point x: 5 y: '3' asInteger
 ]
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethod16 [
-	^ 1+1.
+
+	^ 1 + 1
 ]
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethod17: storeContextBlock [
+
 	storeContextBlock value: thisContext.
-	Point x:5 y: 7.
+	Point x: 5 y: 7
 ]
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethod18: anArg with: anotherArg [
-	Point x: 5 y: 7.
+
+	Point x: 5 y: 7
 ]
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethod19 [
+
 	| a |
 	a := 5.
-	^ Point x: 5 y: '3' asInteger.
+	^ Point x: 5 y: '3' asInteger
 ]
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethod2 [
+
 	| a |
 	a := 5.
-	^ Point x: 5 y: '3' asInteger.
+	^ Point x: 5 y: '3' asInteger
 ]
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethod20 [
+
 	| a |
 	a := 5.
-	^ Point x: 5 y: '3' asInteger.
+	^ Point x: 5 y: '3' asInteger
 ]
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethod21 [
+
 	self helperMethod22
 ]
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethod22 [
+
 	^ Point new
 ]
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethod23 [
+
 	testObjectPoint sign.
-	testObjectPoint extent: (Point x:3 y: 4).
-	Point new.
+	testObjectPoint extent: (Point x: 3 y: 4).
+	Point new
 ]
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethod24 [
+
 	| p |
 	p := Point new.
-	p sign.
+	p sign
 ]
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethod3 [
+
 	| a |
 	a := 5.
-	^ Point x: 5 y: '3' asInteger.
+	^ Point x: 5 y: '3' asInteger
 ]
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethod4 [
+
 	| a |
 	a := 5.
-	^ Point x: 5 y: '3' asInteger.
+	^ Point x: 5 y: '3' asInteger
 ]
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethod5 [
+
 	| a |
 	a := 5.
-	^ Point x: 5 y: '3' asInteger.
+	^ Point x: 5 y: '3' asInteger
 ]
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethod6 [
+
 	| a |
 	a := 5.
-	^ Point x: 5 y: '3' asInteger.
+	^ Point x: 5 y: '3' asInteger
 ]
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethod7 [
+
 	| a |
 	a := 5.
-	^ Point x: 5 y: '3' asInteger.
+	^ Point x: 5 y: '3' asInteger
 ]
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethod8 [
+
 	| a |
 	a := 5.
-	^ Point x: 5 y: '3' asInteger.
+	^ Point x: 5 y: '3' asInteger
 ]
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethod9 [
+
 	| a |
 	a := 5.
-	^ Point x: 5 y: '3' asInteger.
+	^ Point x: 5 y: '3' asInteger
 ]
 
 { #category : #helpers }
@@ -180,24 +204,26 @@ SindarinDebuggerTest >> helperMethodNonLocalReturn [
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethodReturn: bool [
+
 	| a |
 	a := bool.
-	a
-		ifTrue: [ ^ 1 ].
+	a ifTrue: [ ^ 1 ].
 	^ 2
 ]
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethodReturnWithException [
+
 	| a |
 	a := 0.
-	1/0.
-	^a + 1
+	1 / 0.
+	^ a + 1
 ]
 
 { #category : #helpers }
 SindarinDebuggerTest >> helperMethodReturnWithHalt [
 	<haltOrBreakpointForTesting>
+
 	| a |
 	a := 0.
 	self halt.
@@ -223,7 +249,7 @@ SindarinDebuggerTest >> setUp [
 SindarinDebuggerTest >> tearDown [
 
 	VirtualBreakpoint all removeAll.
-	breakpointsBeforeTest do: [ :brkpt | VirtualBreakpoint all add: brkpt ].
+	breakpointsBeforeTest do: [ :breakPoint | VirtualBreakpoint all add: breakPoint ].
 	super tearDown
 ]
 
@@ -669,7 +695,7 @@ SindarinDebuggerTest >> testStepOver [
 	| scdbg |
 	scdbg := SindarinDebugger debug: [ self helperMethod14 ].
 	scdbg step. "Enters the call of helperMethod14. Current node should be: a:=5"
-	scdbg stepOver. "After this, current node shoud be: '3' asInteger"
+	scdbg stepOver. "After this, current node should be: '3' asInteger"
 	scdbg stepOver. "After this, current node should be: Point x:5 y:'3' asInteger"
 	self assert: scdbg node isMessage.
 	self assert: scdbg node selector equals: #x:y:

@@ -39,20 +39,20 @@ SDLOSXPlatform >> initPlatformSpecific [
 	self sendMessage: sel to: cls
 ]
 
-{ #category : #'utils - objectiveC' }
+{ #category : #'utilities - objectiveC' }
 SDLOSXPlatform >> lookupClass: aString [
 
 	^ self ffiCall: #(void* objc_lookUpClass(char *aString))
 ]
 
-{ #category : #'utils - objectiveC' }
+{ #category : #'utilities - objectiveC' }
 SDLOSXPlatform >> lookupSelector: aString [
 
 	^ self ffiCall: #(void* sel_registerName(const char *aString))
 
 ]
 
-{ #category : #'utils - objectiveC' }
+{ #category : #'utilities - objectiveC' }
 SDLOSXPlatform >> nsStringOf: aString [ 
 
 	| class selector encoded param |
@@ -70,7 +70,7 @@ SDLOSXPlatform >> nsStringOf: aString [
 
 ]
 
-{ #category : #'utils - objectiveC' }
+{ #category : #'utilities - objectiveC' }
 SDLOSXPlatform >> release: aObjCObject [ 
 
 	| releaseSelector |
@@ -79,13 +79,13 @@ SDLOSXPlatform >> release: aObjCObject [
 
 ]
 
-{ #category : #'utils - objectiveC' }
+{ #category : #'utilities - objectiveC' }
 SDLOSXPlatform >> sendMessage: sel to: cls [
 
 	^ self ffiCall: #(void* objc_msgSend(void* cls, void* sel))
 ]
 
-{ #category : #'utils - objectiveC' }
+{ #category : #'utilities - objectiveC' }
 SDLOSXPlatform >> sendMessage: sel to: rcv with: aParam [
 
 	^ self ffiCall: #(void* objc_msgSend(void* rcv, void* sel, void* aParam))

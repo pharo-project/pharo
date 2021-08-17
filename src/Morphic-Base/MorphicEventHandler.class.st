@@ -19,7 +19,7 @@ MorphicEventHandler >> addSubscription: aSubscription toEvent: eventName [
 		add: aSubscription.
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 MorphicEventHandler >> allRecipients [
 	^subscriptions collect: [ :each | each recipients ]
 ]
@@ -132,7 +132,7 @@ MorphicEventHandler >> keyUp: event fromMorph: sourceMorph [
 	^self notifyMorphsOfEvent: event ofType: #keyUp from: sourceMorph
 ]
 
-{ #category : #access }
+{ #category : #accessing }
 MorphicEventHandler >> methodRefList [
 	"Return a MethodReference for each message I can send."
 	| list |

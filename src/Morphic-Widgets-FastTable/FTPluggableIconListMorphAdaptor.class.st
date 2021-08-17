@@ -141,7 +141,7 @@ FTPluggableIconListMorphAdaptor >> autoDeselect: aBoolean [
 	self allowsDeselection: aBoolean
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> basicGetListElementSelector: aSelector [
 	self getListElementSelector: aSelector
 ]
@@ -158,22 +158,22 @@ FTPluggableIconListMorphAdaptor >> basicUpdateSelectionIndex [
 		ifFalse: [ self basicSelectIndexes: { rowIndex } ]
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> basicWrapSelector: aSelector [
 	self dataSource wrapSelector: aSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> doubleClickSelector [
 	^ doubleClickSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> doubleClickSelector: aSelector [
 	doubleClickSelector := aSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> dropItemSelector: aSelector [
 	self dataSource dropItemSelector: aSelector
 
@@ -186,57 +186,57 @@ FTPluggableIconListMorphAdaptor >> getCurrentSelectionIndex [
 	^self model perform: self getIndexSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> getIconSelector: aSelector [
 	self dataSource getIconSelector: aSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> getIndexSelector [
 	^ getIndexSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> getIndexSelector: aSelector [
 	getIndexSelector := aSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> getListElementSelector [
 	^ self dataSource getListElementSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> getListElementSelector: aSelector [
 	self dataSource getListElementSelector: aSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> getListSelector [
 	^ self dataSource getListSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> getListSelector: aSelector [
 	self dataSource getListSelector: aSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> getListSizeSelector: aSelector [
 	self dataSource getListSizeSelector: aSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> getMenuSelector: aSelector [
 	self dataSource getMenuSelector: aSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> getSelectionListSelector [
 	^ getSelectionListSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> getSelectionListSelector: aSelector [
 	getSelectionListSelector := aSelector
 ]
@@ -321,22 +321,22 @@ FTPluggableIconListMorphAdaptor >> keyStrokeModifierAction: event [
 
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> keystrokeActionSelector [
 	^ keystrokeActionSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> keystrokeActionSelector: aSelector [
 	keystrokeActionSelector := aSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> keystrokeSelector [
 	^ keystrokeSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> keystrokeSelector: aSelector [
 	keystrokeSelector := aSelector
 ]
@@ -393,12 +393,12 @@ FTPluggableIconListMorphAdaptor >> on: anObject list: getListSel selected: getSe
 
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> resetListSelector [
 	^ resetListSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> resetListSelector: aSelector [
 	resetListSelector := aSelector
 ]
@@ -448,22 +448,22 @@ FTPluggableIconListMorphAdaptor >> selectionChangedUpdateStatus: ann [
 	ann newSelectedIndexes do: [ :each | self model perform: self setSelectionListSelector with: each with: true ]
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> setIndexSelector [
 	^ setIndexSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> setIndexSelector: aSelector [
 	setIndexSelector := aSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> setSelectionListSelector [
 	^ setSelectionListSelector
 ]
 
-{ #category : #'accessing selectors' }
+{ #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> setSelectionListSelector: aSelector [
 	setSelectionListSelector := aSelector
 ]

@@ -7,10 +7,10 @@ Class {
 	#instVars : [
 		'#changes',
 		'#selectedChanges',
-		'#changeTree => SpObservableSlot',
-		'#diffView => SpObservableSlot',
-		'#buttonCancel => SpObservableSlot',
-		'#buttonOk => SpObservableSlot'
+		'#changeTree => ObservableSlot',
+		'#diffView => ObservableSlot',
+		'#buttonCancel => ObservableSlot',
+		'#buttonOk => ObservableSlot'
 	],
 	#category : #'NautilusRefactoring-Utilities'
 }

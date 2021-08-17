@@ -1,7 +1,7 @@
 "
 Usage: printVersion [ --numeric | --release ]
 	--numeric   Print the full version number only (e.g. 12345)
-	--release   Print the major relase number only (e.g. 1.2)
+	--release   Print the major release number only (e.g. 1.2)
 	
 Documentation:
 Prints the version number in an easy to parse format. This can be used in Jenkins with the ""Description Setter"" Plugin. Configure it like this:

@@ -14,7 +14,7 @@ RBPatternParserTest class >> parserClass [
 	^ RBPatternParser
 ]
 
-{ #category : #'tests parsing' }
+{ #category : #'tests - parsing' }
 RBPatternParserTest >> testParseFaultyPatternBlock [
 	| node patternBlockNoArgButBar patternBlockNoArgButColon unfinishedBlock varWithUnfinishedBlock |
 	"parsing pattern block should mark this block as faulty, if it is unfinished no closing brace, or missing parts (colon but no arg, 
@@ -30,7 +30,7 @@ RBPatternParserTest >> testParseFaultyPatternBlock [
 			self assert: node isFaulty]
 ]
 
-{ #category : #'tests parsing' }
+{ #category : #'tests - parsing' }
 RBPatternParserTest >> testPatternBlockNode1 [
 	| searchPattern tree |
 	searchPattern := RBPatternParser
@@ -39,7 +39,7 @@ RBPatternParserTest >> testPatternBlockNode1 [
 	self assert: (searchPattern match: tree inContext: Dictionary new)
 ]
 
-{ #category : #'tests parsing' }
+{ #category : #'tests - parsing' }
 RBPatternParserTest >> testPatternBlockNode2 [
 	| searchPattern tree |
 	searchPattern := RBPatternParser

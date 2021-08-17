@@ -89,25 +89,25 @@ AthensStrokePaint >> asStrokePaintOn: aCanvas [
 	^ self
 ]
 
-{ #category : #'setting cap styles' }
+{ #category : #'setting - cap styles' }
 AthensStrokePaint >> capButt [
 	"Set this paint to use butt cap style"
 	self subclassResponsibility
 ]
 
-{ #category : #'setting cap styles' }
+{ #category : #'setting - cap styles' }
 AthensStrokePaint >> capRound [
 	"Set this paint to use round cap style"
 	self subclassResponsibility
 ]
 
-{ #category : #'setting cap styles' }
+{ #category : #'setting - cap styles' }
 AthensStrokePaint >> capSquare [
 	"Set this paint to use square cap style"
 	self subclassResponsibility
 ]
 
-{ #category : #'setting dashes' }
+{ #category : #'setting - dashes' }
 AthensStrokePaint >> dashes: anAlternateCollectionOfLenghts offset: anOffset [
 	
 	'self dashes: #( "fill" 20  "gap" 10 "fill" 35 "gap" 30) offset: 0. '.
@@ -129,19 +129,19 @@ AthensStrokePaint >> initialize [
 	self setDefaults
 ]
 
-{ #category : #'setting join styles' }
+{ #category : #'setting - join styles' }
 AthensStrokePaint >> joinBevel [
 	"Set receiver to use bevel join style"
 	self subclassResponsibility
 ]
 
-{ #category : #'setting join styles' }
+{ #category : #'setting - join styles' }
 AthensStrokePaint >> joinMiter [
 	"Set receiver to use miter join style"
 	self subclassResponsibility
 ]
 
-{ #category : #'setting join styles' }
+{ #category : #'setting - join styles' }
 AthensStrokePaint >> joinRound [
 	"Set receiver to use round join style"
 	self subclassResponsibility

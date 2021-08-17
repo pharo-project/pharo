@@ -133,7 +133,7 @@ RGBehaviorDefinition >> allInstVarNames [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'accessing methods' }
+{ #category : #'accessing - methods' }
 RGBehaviorDefinition >> allSelectors [
 	"Retrieves all the selectos of the receiver in the chain hierarchy"
 	| class selectors |
@@ -146,7 +146,7 @@ RGBehaviorDefinition >> allSelectors [
 	^selectors
 ]
 
-{ #category : #'accessing class hierarchy' }
+{ #category : #'accessing - class hierarchy' }
 RGBehaviorDefinition >> allSubclasses [
 	"Retrieves all the subclasses of the receiver in the chan hiearchy - value is kept as an annotation"
 	"is a good idea storing this?"
@@ -161,7 +161,7 @@ RGBehaviorDefinition >> allSubclasses [
 			collection ]
 ]
 
-{ #category : #'accessing class hierarchy' }
+{ #category : #'accessing - class hierarchy' }
 RGBehaviorDefinition >> allSubclasses: aCollection [
 	"Stores all the subclasses (direct and indirect) as an annotation"
 	
@@ -169,7 +169,7 @@ RGBehaviorDefinition >> allSubclasses: aCollection [
 		ifAbsentPut:[ aCollection ]
 ]
 
-{ #category : #'accessing class hierarchy' }
+{ #category : #'accessing - class hierarchy' }
 RGBehaviorDefinition >> allSuperclasses [
 	"Answer an OrderedCollection of the receiver's and the receiver's  
 	ancestor's superclasses"
@@ -185,7 +185,7 @@ RGBehaviorDefinition >> allSuperclasses [
 			supers ]
 ]
 
-{ #category : #'accessing class hierarchy' }
+{ #category : #'accessing - class hierarchy' }
 RGBehaviorDefinition >> allSuperclasses: aCollection [
 	"Stores all the superclasses (direct and indirect) as an annotation"
 	
@@ -193,7 +193,7 @@ RGBehaviorDefinition >> allSuperclasses: aCollection [
 		ifAbsentPut:[ aCollection ]
 ]
 
-{ #category : #'accessing class hierarchy' }
+{ #category : #'accessing - class hierarchy' }
 RGBehaviorDefinition >> allSuperclassesDo: aBlock [
 
 	"Evaluate the argument, aBlock, for each of the receiver's superclasses."
@@ -210,7 +210,7 @@ RGBehaviorDefinition >> classSide [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'accessing methods' }
+{ #category : #'accessing - methods' }
 RGBehaviorDefinition >> compiledMethodNamed: selector [
 	"Retrieves the compiled method from aRGMethodDefinition"
 	| method |
@@ -243,7 +243,7 @@ RGBehaviorDefinition >> definitionSource: aString [
 		put: aString
 ]
 
-{ #category : #'accessing methods' }
+{ #category : #'accessing - methods' }
 RGBehaviorDefinition >> extensionMethods [
 
 	^self methods select:[ :each | each isExtension ]
@@ -288,7 +288,7 @@ RGBehaviorDefinition >> hasTraitComposition [
 	^self traitCompositionSource ~= '{}'
 ]
 
-{ #category : #'testing class hierarchy' }
+{ #category : #'testing - class hierarchy' }
 RGBehaviorDefinition >> includesBehavior: aClass [
 	^self == aClass or: [self inheritsFrom: aClass]
 ]
@@ -300,7 +300,7 @@ RGBehaviorDefinition >> includesProtocol: aString [
 	    ^protocols includes: aString
 ]
 
-{ #category : #'accessing methods' }
+{ #category : #'accessing - methods' }
 RGBehaviorDefinition >> includesSelector: selector [
 	"Looks if selector is a key in the methods dictionary"
 	
@@ -351,12 +351,12 @@ RGBehaviorDefinition >> isSameRevisionAs: aRGBehaviorDefinition [
 		and:[ self name == aRGBehaviorDefinition name ]
 ]
 
-{ #category : #'accessing class hierarchy' }
+{ #category : #'accessing - class hierarchy' }
 RGBehaviorDefinition >> methodDict [
 	^ methods
 ]
 
-{ #category : #'accessing methods' }
+{ #category : #'accessing - methods' }
 RGBehaviorDefinition >> methodNamed: selector [
 	"Retrieves aRGMethodDefinition that matches the selector given as argument"
 	"RB defines methodFor:"
@@ -449,7 +449,7 @@ RGBehaviorDefinition >> removeSubclass: aRGBehaviorDefinition [
 	self subclasses remove: aRGBehaviorDefinition ifAbsent: []
 ]
 
-{ #category : #'accessing methods' }
+{ #category : #'accessing - methods' }
 RGBehaviorDefinition >> selectors [
 	"Retrieves the method selectors"
 
@@ -567,14 +567,14 @@ RGBehaviorDefinition >> traits [
 		ifFalse:[ #() ]
 ]
 
-{ #category : #'accessing class hierarchy' }
+{ #category : #'accessing - class hierarchy' }
 RGBehaviorDefinition >> withAllSubclasses [
 	"if allSubclasses is stored should not affect the collection"
 
 	^self allSubclasses, {self}
 ]
 
-{ #category : #'accessing class hierarchy' }
+{ #category : #'accessing - class hierarchy' }
 RGBehaviorDefinition >> withAllSuperclasses [
 	"if allSuperclasses is stored should not affect the collection"
 

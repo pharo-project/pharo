@@ -34,18 +34,18 @@ FLPharoPlatform class >> isResponsibleForCurrentPlatform [
 	^ SystemVersion current version beginsWith: 'Pharo'
 ]
 
-{ #category : #'accessing-system' }
+{ #category : #'accessing - system' }
 FLPharoPlatform >> absolutePathOf: aString [
 	^ aString asFileReference fullName
 ]
 
-{ #category : #'accessing-compiler' }
+{ #category : #'accessing - compiler' }
 FLPharoPlatform >> addAndClassifySelector: aSymbol inClass: aClass withMethod: aCompiledMethod inProtocol: aString [
 
 	aClass addAndClassifySelector: aSymbol withMethod: aCompiledMethod inProtocol: aString
 ]
 
-{ #category : #'accessing-system' }
+{ #category : #'accessing - system' }
 FLPharoPlatform >> imageName [
 	^ Smalltalk image shortImageName
 ]
@@ -60,7 +60,7 @@ FLPharoPlatform >> isSpur [
 	^ true
 ]
 
-{ #category : #'accessing-compiler' }
+{ #category : #'accessing - compiler' }
 FLPharoPlatform >> renamedMethodCopyOf: aMethod selector: aSymbol [
 	| newMethod |
 	newMethod := aMethod ast
@@ -70,12 +70,12 @@ FLPharoPlatform >> renamedMethodCopyOf: aMethod selector: aSymbol [
 	^ newMethod compiledMethod
 ]
 
-{ #category : #'accessing-tests' }
+{ #category : #'accessing - tests' }
 FLPharoPlatform >> setTestTimeLimitFor: aTest to: aDuration [
 	aTest timeLimit: aDuration
 ]
 
-{ #category : #'accessing-system' }
+{ #category : #'accessing - system' }
 FLPharoPlatform >> useAuthor: aString during: aBlock [
 	(Smalltalk at: #Author)
 		useAuthor: aString

@@ -26,14 +26,14 @@ Class {
 	#category : #'STON-Tests-Support'
 }
 
-{ #category : #acccessing }
+{ #category : #accessing }
 STONTestKnownObject class >> addKnownObject: object [
 	^ self knownObjects addIfNotPresent: object
 ]
 
 { #category : #'instance creation' }
 STONTestKnownObject class >> fromId: idString [
-	"Given id, return a matching instance of me, either by returning an existing known instance or by creating a new one (that is automtically added to the known instances)"
+	"Given id, return a matching instance of me, either by returning an existing known instance or by creating a new one (that is automatically added to the known instances)"
 	
 	| uuid |
 	uuid := UUID fromString: idString.
@@ -47,12 +47,12 @@ STONTestKnownObject class >> fromSton: stonReader [
 	^ self fromId: stonReader parseListSingleton
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 STONTestKnownObject class >> knownObjects [
 	^ KnownObjects ifNil: [ KnownObjects := OrderedCollection new ]
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 STONTestKnownObject class >> resetKnownObjects [
 	KnownObjects ifNotNil: [ :collection | collection removeAll ]
 ]

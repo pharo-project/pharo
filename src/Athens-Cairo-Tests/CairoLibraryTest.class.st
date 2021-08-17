@@ -7,7 +7,7 @@ Class {
 	#category : #'Athens-Cairo-Tests-Library'
 }
 
-{ #category : #test }
+{ #category : #tests }
 CairoLibraryTest >> testVersionString [
 
 	self assert:

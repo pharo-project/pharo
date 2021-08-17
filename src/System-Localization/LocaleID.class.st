@@ -16,7 +16,7 @@ LocaleID class >> current [
 	^Locale current localeID
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : #'accessing - defaults' }
 LocaleID class >> default [
 	^ self isoLanguage: 'en'
 ]

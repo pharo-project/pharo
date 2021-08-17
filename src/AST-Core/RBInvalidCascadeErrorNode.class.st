@@ -4,7 +4,7 @@ Class {
 	#category : #'AST-Core-Nodes - ErrorNodes'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RBInvalidCascadeErrorNode >> cascade [
 	
 	^ content first

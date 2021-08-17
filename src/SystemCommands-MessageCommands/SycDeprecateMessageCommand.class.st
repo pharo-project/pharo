@@ -15,7 +15,7 @@ Class {
 	#category : #'SystemCommands-MessageCommands'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 SycDeprecateMessageCommand class >> browserMenuOrder [
 	^ 2.5
 ]
@@ -23,14 +23,6 @@ SycDeprecateMessageCommand class >> browserMenuOrder [
 { #category : #testing }
 SycDeprecateMessageCommand class >> canBeExecutedInContext: aToolContext [
 	^ aToolContext isMethodSelected
-]
-
-{ #category : #activation }
-SycDeprecateMessageCommand class >> methodMenuActivation [
-	<classAnnotation>
-
-	^CmdContextMenuActivation 
-		byRootGroupItemOrder: self browserMenuOrder for: ClyMethod asCalypsoItemContext 
 ]
 
 { #category : #execution }

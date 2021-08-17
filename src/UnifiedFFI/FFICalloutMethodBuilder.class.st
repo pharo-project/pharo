@@ -59,7 +59,7 @@ FFICalloutMethodBuilder >> calloutAPI [
 	^ calloutAPI
 ]
 
-{ #category : #'private factory' }
+{ #category : #'private - factory' }
 FFICalloutMethodBuilder >> createFFICallout [
 	^ FFICallout new
 		sender: self sender;
@@ -67,7 +67,7 @@ FFICalloutMethodBuilder >> createFFICallout [
 		yourself
 ]
 
-{ #category : #'private factory' }
+{ #category : #'private - factory' }
 FFICalloutMethodBuilder >> createFFICalloutLiteralFromSpec: functionSpec [
 	| externalFunction |
 	

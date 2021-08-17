@@ -76,8 +76,15 @@ ShortcutReminder >> backgroundColor: aColor [
 { #category : #'private - utilities' }
 ShortcutReminder >> createKeyTextMorph: aString [
 
+	| font |
+	font := ToggleWithSymbolMenuItemShortcut canBeUsed
+		ifTrue: [ LogicalFont 
+						familyName: 'Lucida Grande' 
+						pointSize: self pointSize * 2 ]
+		ifFalse: [ self keyTextFont ].
+
 	^(self fixKeyText: aString) asStringMorph 
-		font: self keyTextFont emphasis: 2;
+		font: font emphasis: 2;
 		color: textColor;
 		yourself. 
 ]
@@ -185,7 +192,8 @@ ShortcutReminder >> defaultTextColor [
 { #category : #'private - utilities' }
 ShortcutReminder >> fixKeyText: aString [
 
-	^ToggleMenuItemShortcut normalize: aString
+	^ (ToggleMenuItemShortcut owner: nil keyText: aString) text
+
 ]
 
 { #category : #'private - utilities' }

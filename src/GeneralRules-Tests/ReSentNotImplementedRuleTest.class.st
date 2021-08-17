@@ -7,7 +7,7 @@ Class {
 	#category : #'GeneralRules-Tests-Migrated'
 }
 
-{ #category : #'test-help' }
+{ #category : #sample }
 ReSentNotImplementedRuleTest >> sampleMethod [ 
 	"this is a comment, so whatShallIDoNow should not highlight"
 	99 whatShallIDoNow.

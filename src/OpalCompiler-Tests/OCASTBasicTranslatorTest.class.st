@@ -4,19 +4,19 @@ Class {
 	#category : #'OpalCompiler-Tests-AST'
 }
 
-{ #category : #'testing - simple' }
+{ #category : #'tests - simple' }
 OCASTBasicTranslatorTest >> testEmptyMethodReturnsReceiver [
 
 	self assert: (self testExample: #exampleEmptyMethod) equals: instance
 ]
 
-{ #category : #'testing - simple' }
+{ #category : #'tests - simple' }
 OCASTBasicTranslatorTest >> testInitialInstanceIsEmpty [
 
 	self assert: instance result equals: nil
 ]
 
-{ #category : #'testing - errors' }
+{ #category : #'tests - errors' }
 OCASTBasicTranslatorTest >> testSyntaxError [
 	
 	self

@@ -22,7 +22,7 @@ Class {
 	#category : #'Refactoring-Changes'
 }
 
-{ #category : #'change-factory' }
+{ #category : #'change - factory' }
 RBRefactoryChangeManager class >> changeFactory [
 	^ self instance changeFactory
 ]
@@ -63,21 +63,6 @@ RBRefactoryChangeManager class >> nuke [
 { #category : #actions }
 RBRefactoryChangeManager class >> resetCounter [
 	Counter := nil.
-]
-
-{ #category : #settings }
-RBRefactoryChangeManager class >> settingsOn: aBuilder [
-	<systemsettings>
-	(aBuilder group: #refactoring)
-		label: 'Refactoring Engine';
-		parent: #codeBrowsing;
-		description: 'Settings related to the refactoring tools';
-		with: [ 
-					(aBuilder setting: #undoSize)
-						target: self;
-						default: 20;
-						label: 'Undo size';
-						parentName: #refactoring ]
 ]
 
 { #category : #'class initialization' }

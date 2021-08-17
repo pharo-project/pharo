@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveProtocolTransformationTest >> testRefactoring [
 	
 	| refactoring |		
@@ -22,7 +22,7 @@ RBRemoveProtocolTransformationTest >> testRefactoring [
 	self assert: refactoring model changes changes size equals: 1
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 RBRemoveProtocolTransformationTest >> testTransform [
 	
 	| transformation |

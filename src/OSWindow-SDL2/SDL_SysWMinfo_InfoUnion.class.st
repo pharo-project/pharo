@@ -25,109 +25,109 @@ SDL_SysWMinfo_InfoUnion class >> fieldsDesc [
  	)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> android [
 	"This method was automatically generated"
 	^ SDL_SysWMinfo_AndroidInfo fromHandle: (handle referenceStructAt: 1 length: SDL_SysWMinfo_AndroidInfo byteSize)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> android: anObject [
 	"This method was automatically generated"
 	handle structAt: 1 put: anObject getHandle length: 16.
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> cocoa [
 	"This method was automatically generated"
 	^ SDL_SysWMinfo_CocoaInfo fromHandle: (handle referenceStructAt: 1 length: SDL_SysWMinfo_CocoaInfo byteSize)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> cocoa: anObject [
 	"This method was automatically generated"
 	handle structAt: 1 put: anObject getHandle length: 8.
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> dfb [
 	"This method was automatically generated"
 	^ SDL_SysWMinfo_DirectFBInfo fromHandle: (handle referenceStructAt: 1 length: SDL_SysWMinfo_DirectFBInfo byteSize)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> dfb: anObject [
 	"This method was automatically generated"
 	handle structAt: 1 put: anObject getHandle length: 24.
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> mir [
 	"This method was automatically generated"
 	^ SDL_SysWMinfo_MirInfo fromHandle: (handle referenceStructAt: 1 length: SDL_SysWMinfo_MirInfo byteSize)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> mir: anObject [
 	"This method was automatically generated"
 	handle structAt: 1 put: anObject getHandle length: 16.
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> uikit [
 	"This method was automatically generated"
 	^ SDL_SysWMinfo_UIKitInfo fromHandle: (handle referenceStructAt: 1 length: SDL_SysWMinfo_UIKitInfo byteSize)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> uikit: anObject [
 	"This method was automatically generated"
 	handle structAt: 1 put: anObject getHandle length: 24.
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> win [
 	"This method was automatically generated"
 	^ SDL_SysWMinfo_WindowsInfo fromHandle: (handle referenceStructAt: 1 length: SDL_SysWMinfo_WindowsInfo byteSize)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> win: anObject [
 	"This method was automatically generated"
 	handle structAt: 1 put: anObject getHandle length: 16.
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> winrt [
 	"This method was automatically generated"
 	^ SDL_SysWMinfo_WindowsRTInfo fromHandle: (handle referenceStructAt: 1 length: SDL_SysWMinfo_WindowsRTInfo byteSize)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> winrt: anObject [
 	"This method was automatically generated"
 	handle structAt: 1 put: anObject getHandle length: 8.
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> wl [
 	"This method was automatically generated"
 	^ SDL_SysWMinfo_WaylandInfo fromHandle: (handle referenceStructAt: 1 length: SDL_SysWMinfo_WaylandInfo byteSize)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> wl: anObject [
 	"This method was automatically generated"
 	handle structAt: 1 put: anObject getHandle length: 24.
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> x11 [
 	"This method was automatically generated"
 	^ SDL_SysWMinfo_X11Info fromHandle: (handle referenceStructAt: 1 length: SDL_SysWMinfo_X11Info byteSize)
 ]
 
-{ #category : #'accessing structure variables' }
+{ #category : #'accessing - structure variables' }
 SDL_SysWMinfo_InfoUnion >> x11: anObject [
 	"This method was automatically generated"
 	handle structAt: 1 put: anObject getHandle length: 16.

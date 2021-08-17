@@ -1,19 +1,21 @@
 Extension { #name : #Time }
 
 { #category : #'*Kernel-Chronology-Extras' }
-Time class >> benchmarkMillisecondClock [		"Time benchmarkMillisecondClock"
+Time class >> benchmarkMillisecondClock [
 	"Benchmark the time spent in a call to Time>>millisecondClockValue.
 	On the VM level this tests the efficiency of calls to ioMSecs()."
-	"PII/400 Windows 98: 0.725 microseconds per call"
+	<script>
+	
+	"PII/400 Windows 98: 0.725 microseconds per call"	
 	| temp1 temp2 temp3 delayTime nLoops time |
 	delayTime := 5000. "Time to run benchmark is approx. 2*delayTime"
 
 	"Don't run the benchmark if we have an active delay since
 	we will measure the additional penalty in the primitive dispatch
 	mechanism (see #benchmarkPrimitiveResponseDelay)."
-	Delay anyActive ifTrue:[
-		^self notify:'Some delay is currently active.
-Running this benchmark will not give any useful result.'].
+	Delay anyActive ifTrue: [ 
+		^ self notify: 'Some delay is currently active.
+Running this benchmark will not give any useful result.' ].
 
 	"Flush the cache for this benchmark so we will have
 	a clear cache hit for each send to #millisecondClockValue below"
@@ -23,8 +25,8 @@ Running this benchmark will not give any useful result.'].
 	temp3 := self millisecondClockValue + delayTime.
 
 	"Now check how often we can run the following loop in the given time"
-	[temp2 millisecondClockValue < temp3]
-		whileTrue:[temp1 := temp1 + 1].
+	[ temp2 millisecondClockValue < temp3 ] whileTrue: [ 
+		temp1 := temp1 + 1 ].
 
 	nLoops := temp1. "Remember the loops we have run during delayTime"
 
@@ -34,22 +36,22 @@ Running this benchmark will not give any useful result.'].
 
 	"Now measure how much time we spend without sending #millisecondClockValue"
 	time := Time millisecondClockValue.
-	[temp1 < temp3]
-		whileTrue:[temp1 := temp1 + 1].
+	[ temp1 < temp3 ] whileTrue: [ temp1 := temp1 + 1 ].
 	time := Time millisecondsSince: time.
 
 	"And compute the number of microseconds spent per call to #millisecondClockValue"
-	^((delayTime - time * 1000.0 / nLoops) truncateTo: 0.001) printString,
-		' microseconds per call to Time>>millisecondClockValue'
+	^ (delayTime - time * 1000.0 / nLoops truncateTo: 0.001) printString
+	  , ' microseconds per call to Time>>millisecondClockValue'
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
-Time class >> benchmarkPrimitiveResponseDelay [	"Time benchmarkPrimitiveResponseDelay"
+Time class >> benchmarkPrimitiveResponseDelay [	 
 	"Benchmark the overhead for primitive dispatches with an active Delay.
 	On the VM level, this tests the efficiency of ioLowResMSecs."
-
+	<script>
+	
 	"PII/400 Windows98: 0.128 microseconds per prim"
-
+	
 	"ar 9/6/1999: This value is *extremely* important for stuff like sockets etc.
 	I had a bad surprise when Michael pointed this particular problem out:
 	Using the hardcoded clock() call for ioLowResMSecs on Win32 resulted in an overhead
@@ -149,7 +151,11 @@ Time class >> hour: hour minute: minute second: second  nano: nano [
 { #category : #'*Kernel-Chronology-Extras' }
 Time class >> hour: hour minute: minute second: second  nanoSecond: nanoCount [
 	"Answer a Time - only second precision for now"
- 
+	
+	hour >= HoursInDay ifTrue: [ Error new signal: ('An hour must be {1} or less' format: {HoursInDay})].
+	minute >= MinutesInHour ifTrue: [ Error new signal: ('A minute must be {1} or less' format: {MinutesInHour}) ].
+	second > SecondsInMinute ifTrue: [ Error new signal: ('A second must be {1} or less' format: {SecondsInMinute}) ].
+	
  	^ self 
 		seconds: (hour * SecondsInHour) + (minute * SecondsInMinute) + second 
 		nanoSeconds: nanoCount
@@ -199,6 +205,7 @@ Time class >> noon [
 
 { #category : #'*Kernel-Chronology-Extras' }
 Time class >> readFrom: aStream [
+
 	"Read a Time from the stream in the form:
 		<hour>:<minute>:<second>.<nseconds> <am/pm>
 	<minute>, <second> or <am/pm> may be omitted.  e.g. 1:59:30 pm; 8AM; 15:30"
@@ -206,32 +213,38 @@ Time class >> readFrom: aStream [
 	| hour minute second ampm nanos power |
 	hour := Integer readFrom: aStream.
 	minute := second := nanos := 0.
-	(aStream peekFor: $:) 
-		ifTrue: [
-			minute := Integer readFrom: aStream.
-			(aStream peekFor: $:) 
-				ifTrue: [
-					second := Integer readFrom: aStream.
-					(aStream peekFor: $.)
-						ifTrue: [ 
-							power := 1.
-							[ aStream atEnd not and: [ aStream peek isDigit ] ]
-								whileTrue: [  
-									nanos := nanos * 10 + aStream next digitValue.
-									power := power * 10 ].
-							nanos := nanos / power * 1000000000 ] ] ].
+	(aStream peekFor: $:) ifTrue: [ 
+		minute := Integer readFrom: aStream.
+		(aStream peekFor: $:) ifTrue: [ 
+			second := Integer readFrom: aStream.
+			(aStream peekFor: $.) ifTrue: [ 
+				power := 1.
+				[ aStream atEnd not and: [ aStream peek isDigit ] ] whileTrue: [ 
+					nanos := nanos * 10 + aStream next digitValue.
+					power := power * 10 ].
+				nanos := nanos / power * 1000000000 ] ] ].
 	aStream skipSeparators.
-	(aStream atEnd not and: [ 'APap' includes: aStream peek ]) 
-		ifTrue: [
-			ampm := aStream next asLowercase.
-			(ampm = $p and: [ hour < 12 ]) ifTrue: [ hour := hour + 12 ].
-			(ampm = $a and: [ hour = 12 ]) ifTrue: [ hour := 0 ].
-			(aStream peekFor: $m) ifFalse: [ aStream peekFor: $M ] ].
-	^ self 
-		hour: hour 
-		minute: minute 
-		second: second 
-		nanoSecond: nanos
+	aStream atEnd ifFalse: [ 
+		('APap' includes: aStream peek)
+			ifTrue: [ 
+				ampm := aStream next asLowercase.
+				(ampm = $p and: [ hour < 12 ]) ifTrue: [ hour := hour + 12 ].
+				(ampm = $a and: [ hour = 12 ]) ifTrue: [ hour := 0 ].
+				(aStream peekFor: $m) ifFalse: [ aStream peekFor: $M ] ]
+			ifFalse: [ 
+				('Z+-' includes: aStream peek) ifFalse: [ 
+					Error new signal: 'Trailing characters after time' ] ] ].
+
+	aStream skipSeparators.
+	aStream atEnd ifFalse: [  
+	    ('Z+-' includes: aStream peek) ifFalse: [ 
+					Error new signal: 'Trailing characters after time' ]].
+	
+	^ self
+		  hour: hour
+		  minute: minute
+		  second: second
+		  nanoSecond: nanos
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }

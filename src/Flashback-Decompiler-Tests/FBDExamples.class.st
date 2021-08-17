@@ -75,7 +75,7 @@ FBDExamples >> exampleAnd2 [
 	tmp1 and: [ tmp1 not ]
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleAndOr [
 
 	| t1 t2 |
@@ -84,7 +84,7 @@ FBDExamples >> exampleAndOr [
 	t1 and: [ t2. '1' traceCr ] "effect"   
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleAndOr2 [
 	<sampleInstance>
 	
@@ -97,7 +97,7 @@ FBDExamples >> exampleAndOr2 [
 	^ self
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleAndOr3 [
 	<sampleInstance>
 	
@@ -107,7 +107,7 @@ FBDExamples >> exampleAndOr3 [
 	^ t1 and: [ t2 ] "value" 
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleAndOr4 [
 	<sampleInstance>
 	
@@ -119,7 +119,7 @@ FBDExamples >> exampleAndOr4 [
 		ifFalse: [ tmp1 ]
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleAndOr5 [
 	<sampleInstance>
 	
@@ -129,7 +129,7 @@ FBDExamples >> exampleAndOr5 [
 	^ t2 or: [ t1 and: [ t2 ] ]
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleAndOr6 [
 	<sampleInstance>
 	
@@ -139,7 +139,7 @@ FBDExamples >> exampleAndOr6 [
 	^ t1 and: [ t2 or: [ t1 ] ]
 ]
 
-{ #category : #'examples-blocks' }
+{ #category : #'examples - blocks' }
 FBDExamples >> exampleBlockArgument [
 	<sampleInstance>
 	
@@ -152,7 +152,7 @@ FBDExamples >> exampleBlockArgument [
 	^block1 value + block2 value
 ]
 
-{ #category : #'examples-blocks' }
+{ #category : #'examples - blocks' }
 FBDExamples >> exampleBlockExternal [
 	<sampleInstance>
 	
@@ -161,7 +161,7 @@ FBDExamples >> exampleBlockExternal [
 	^[t] value
 ]
 
-{ #category : #'examples-blocks' }
+{ #category : #'examples - blocks' }
 FBDExamples >> exampleBlockExternal2 [
 	<sampleInstance>
 	
@@ -170,7 +170,7 @@ FBDExamples >> exampleBlockExternal2 [
 	^[t1 + t2] value
 ]
 
-{ #category : #'examples-blocks' }
+{ #category : #'examples - blocks' }
 FBDExamples >> exampleBlockExternalArg [
 
 	<sampleInstance>
@@ -179,7 +179,7 @@ FBDExamples >> exampleBlockExternalArg [
 	^[:a | t + a] value: 1
 ]
 
-{ #category : #'examples-blocks' }
+{ #category : #'examples - blocks' }
 FBDExamples >> exampleBlockExternalNested [
 	<sampleInstance>
 	
@@ -188,7 +188,7 @@ FBDExamples >> exampleBlockExternalNested [
 	^[ [s] value + t ] value
 ]
 
-{ #category : #'examples-blocks' }
+{ #category : #'examples - blocks' }
 FBDExamples >> exampleBlockInternal [
 	<sampleInstance>
 	
@@ -212,7 +212,7 @@ FBDExamples >> exampleBlockIntoCascade [
 		yourself
 ]
 
-{ #category : #'examples-blocks' }
+{ #category : #'examples - blocks' }
 FBDExamples >> exampleBlockMethodArgument: arg [
 	<sampleInstance>
 	
@@ -222,7 +222,7 @@ FBDExamples >> exampleBlockMethodArgument: arg [
 	^block value: 2
 ]
 
-{ #category : #'examples-blocks' }
+{ #category : #'examples - blocks' }
 FBDExamples >> exampleBlockNested [
 	<sampleInstance>
 	
@@ -536,12 +536,12 @@ FBDExamples >> exampleCopyingBlock [
 	^ [ t ifTrue: [ 5 + t asBit ]. t ].
 ]
 
-{ #category : #'examples-pragmas' }
+{ #category : #'examples - pragmas' }
 FBDExamples >> exampleDoublePrimitive [
 	<primitive: 1>
 ]
 
-{ #category : #'examples-blocks' }
+{ #category : #'examples - blocks' }
 FBDExamples >> exampleEffectValues [
 
 	#getMe.
@@ -550,7 +550,7 @@ FBDExamples >> exampleEffectValues [
 	
 ]
 
-{ #category : #'examples-simple' }
+{ #category : #'examples - simple' }
 FBDExamples >> exampleEmptyMethod [
 ]
 
@@ -572,7 +572,7 @@ FBDExamples >> exampleIV [
 	
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleIfFalse [
 	<sampleInstance>
 	
@@ -598,7 +598,7 @@ FBDExamples >> exampleIfFalse3 [
 	^ nil
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleIfFalseIfTrue [
 	<sampleInstance>
 	
@@ -702,7 +702,7 @@ FBDExamples >> exampleIfNilNested [
 	^ true ifNil: [ (false ifNil: [ ^ true ]) not ]
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleIfNotNilArg [
 	<sampleInstance>
 	
@@ -716,14 +716,14 @@ FBDExamples >> exampleIfNotNilDup [
 	^ true ifNotNil: [ 5 ]     
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleIfNotNilReturnNil [
 	<sampleInstance>
 	
 	^nil ifNotNil: [ :arg | arg not ]
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleIfTrue [
 
 	[ 1 < 2
@@ -746,7 +746,7 @@ FBDExamples >> exampleIfTrue3 [
 	^ nil
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleIfTrueAssign [
 	<sampleInstance>
 	| a |
@@ -768,7 +768,7 @@ FBDExamples >> exampleIfTrueForEffectNested [
 					^ tmp1 ] ]
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleIfTrueIfFalse [
 	<sampleInstance>
 	
@@ -858,7 +858,7 @@ FBDExamples >> exampleIfTrueWithOr [
 		ifTrue: [ ^ true ]
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleInlineBlockCollectionLR3 [
 	<sampleInstance>
 	
@@ -869,7 +869,7 @@ FBDExamples >> exampleInlineBlockCollectionLR3 [
 
 ]
 
-{ #category : #'examples-blocks' }
+{ #category : #'examples - blocks' }
 FBDExamples >> exampleMethodTempInNestedBlock [
 	<sampleInstance>
 	
@@ -883,7 +883,7 @@ FBDExamples >> exampleMethodTempInNestedBlock [
 	^block value
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleMethodWithOptimizedBlocksA [
 	<sampleInstance>
 	
@@ -897,7 +897,7 @@ FBDExamples >> exampleMethodWithOptimizedBlocksA [
 	^c. "notNil"
 ]
 
-{ #category : #'examples-blocks' }
+{ #category : #'examples - blocks' }
 FBDExamples >> exampleNestedBlockScoping [
 	<sampleInstance>
 
@@ -920,7 +920,7 @@ FBDExamples >> exampleNestedIfNilIfNotNil [
 			ifNil: [ ^ true ] ]
 ]
 
-{ #category : #'examples-simple' }
+{ #category : #'examples - simple' }
 FBDExamples >> exampleNewArray [
 	<sampleInstance>
 
@@ -938,7 +938,7 @@ FBDExamples >> exampleOr [
 	^ t1 or: [ t1 not ]
 ]
 
-{ #category : #'examples-pragmas' }
+{ #category : #'examples - pragmas' }
 FBDExamples >> examplePrimitiveErrorCode [
 	<sampleInstance>
 	<primitive: 60 error: code >
@@ -948,7 +948,7 @@ FBDExamples >> examplePrimitiveErrorCode [
 
 ]
 
-{ #category : #'examples-pragmas' }
+{ #category : #'examples - pragmas' }
 FBDExamples >> examplePrimitiveErrorCodeModule [
 	"Primitive. Attempt to load a module of the given name.
 	Fail if module cannot be found, or cannot be loaded,
@@ -970,7 +970,7 @@ FBDExamples >> examplePrimitiveErrorCodeModule2 [
 	^ self primitiveFailed
 ]
 
-{ #category : #'examples-misc' }
+{ #category : #'examples - misc' }
 FBDExamples >> examplePushArray [
 	<sampleInstance>
 	| t |
@@ -979,7 +979,7 @@ FBDExamples >> examplePushArray [
 	^t
 ]
 
-{ #category : #'examples-misc' }
+{ #category : #'examples - misc' }
 FBDExamples >> examplePushBigArray [
 	<sampleInstance>
 	"This array should have a size more than 127 elements"
@@ -1014,28 +1014,28 @@ FBDExamples >> exampleRepeatValue [
 		ifTrue: [ ^ true ] ] repeat 
 ]
 
-{ #category : #'examples-simple' }
+{ #category : #'examples - simple' }
 FBDExamples >> exampleReturn1 [
 	<sampleInstance>
 	
 	^1
 ]
 
-{ #category : #'examples-simple' }
+{ #category : #'examples - simple' }
 FBDExamples >> exampleReturn1plus2 [
 	<sampleInstance>
 	
 	^1+2
 ]
 
-{ #category : #'examples-simple' }
+{ #category : #'examples - simple' }
 FBDExamples >> exampleReturn42 [
 	<sampleInstance>
 	
 	^42
 ]
 
-{ #category : #'examples-variables' }
+{ #category : #'examples - variables' }
 FBDExamples >> exampleSelf [
 	<sampleInstance>
 	
@@ -1055,77 +1055,77 @@ FBDExamples >> exampleSend2Args [
 	self instVarAt: 1 put: #banana
 ]
 
-{ #category : #'examples-blocks' }
+{ #category : #'examples - blocks' }
 FBDExamples >> exampleSimpleBlock [
 	<sampleInstance>
 	
 	^[1]
 ]
 
-{ #category : #'examples-blocks' }
+{ #category : #'examples - blocks' }
 FBDExamples >> exampleSimpleBlockArgument1 [
 	<sampleInstance>
 	
 	^[:a | a ] value: 1
 ]
 
-{ #category : #'examples-blocks' }
+{ #category : #'examples - blocks' }
 FBDExamples >> exampleSimpleBlockArgument2 [
 	<sampleInstance>
 	
 	^[:a :b | a + b ] value: 1 value: 1
 ]
 
-{ #category : #'examples-blocks' }
+{ #category : #'examples - blocks' }
 FBDExamples >> exampleSimpleBlockArgument3 [
 	<sampleInstance>
 	
 	^[:a :b :c | a + b + c ] value: 1 value: 1 value: 1
 ]
 
-{ #category : #'examples-blocks' }
+{ #category : #'examples - blocks' }
 FBDExamples >> exampleSimpleBlockArgument4 [
 	<sampleInstance>
 	
 	^[:a :b :c :d | a + b + c  + d] value: 1 value: 1 value: 1 value: 1
 ]
 
-{ #category : #'examples-blocks' }
+{ #category : #'examples - blocks' }
 FBDExamples >> exampleSimpleBlockArgument5 [
 	<sampleInstance>
 	
 	^[:a :b :c :d :e| a + b + c  + d + e] valueWithArguments: #(1 1 1 1 1)
 ]
 
-{ #category : #'examples-blocks' }
+{ #category : #'examples - blocks' }
 FBDExamples >> exampleSimpleBlockEmpty [
 	<sampleInstance>
 	
 	^[] value
 ]
 
-{ #category : #'examples-blocks' }
+{ #category : #'examples - blocks' }
 FBDExamples >> exampleSimpleBlockLocal [
 	<sampleInstance>
 	
 	^[ :each | | t |  t:= each. t   ] value: 5
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleSimpleBlockLocalIf [
 	<sampleInstance>
 	
 	^true ifTrue: [ | hallo |  hallo := 1 . hallo]
 ]
 
-{ #category : #'examples-blocks' }
+{ #category : #'examples - blocks' }
 FBDExamples >> exampleSimpleBlockLocalIfNested [
 	<sampleInstance>
 	
 	^true ifTrue: [| hallo | [  hallo := 1 . hallo] value]
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleSimpleBlockLocalWhile [
 	<sampleInstance>
 	
@@ -1134,7 +1134,7 @@ FBDExamples >> exampleSimpleBlockLocalWhile [
 	^[: b | [a] whileTrue: [ | hallo |  a := false. hallo := 1 . hallo]] value: 1
 ]
 
-{ #category : #'examples-blocks' }
+{ #category : #'examples - blocks' }
 FBDExamples >> exampleSimpleBlockNested [
 	<sampleInstance>
 	
@@ -1149,21 +1149,21 @@ FBDExamples >> exampleSimpleBlockNested [
 	^ dict
 ]
 
-{ #category : #'examples-blocks' }
+{ #category : #'examples - blocks' }
 FBDExamples >> exampleSimpleBlockReturn [
 	<sampleInstance>
 	
 	[^1] value
 ]
 
-{ #category : #'examples-blocks' }
+{ #category : #'examples - blocks' }
 FBDExamples >> exampleSimpleBlockiVar [
 	<sampleInstance>
 	
 	^[iVar] value
 ]
 
-{ #category : #'examples-variables' }
+{ #category : #'examples - variables' }
 FBDExamples >> exampleSuper [
 	<sampleInstance>
 	
@@ -1172,7 +1172,7 @@ FBDExamples >> exampleSuper [
 	^super
 ]
 
-{ #category : #'examples-variables' }
+{ #category : #'examples - variables' }
 FBDExamples >> exampleThisContext [
 	<sampleInstance>
 	
@@ -1181,7 +1181,7 @@ FBDExamples >> exampleThisContext [
 	^thisContext
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleTimesRepeatEffect [
 	<sampleInstance>
 	
@@ -1191,7 +1191,7 @@ FBDExamples >> exampleTimesRepeatEffect [
 	^ foo
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleTimesRepeatValue [
 	<sampleInstance>
 	
@@ -1279,7 +1279,7 @@ FBDExamples >> exampleToDo5 [
 	^ tmp1
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleToDoArgument [
 	<sampleInstance>
 	
@@ -1290,7 +1290,7 @@ FBDExamples >> exampleToDoArgument [
 	"#(1 2 3 4 5)"
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleToDoArgumentLimitIsExpression [
 	<sampleInstance>
 	
@@ -1301,7 +1301,7 @@ FBDExamples >> exampleToDoArgumentLimitIsExpression [
 	^sum
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleToDoArgumentNotInlined [
 	<sampleInstance>
 	
@@ -1312,7 +1312,7 @@ FBDExamples >> exampleToDoArgumentNotInlined [
 	^collection "#(1 2 3 4 5)"
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleToDoInsideBlock [
 
 	| tmp1 block |
@@ -1320,7 +1320,7 @@ FBDExamples >> exampleToDoInsideBlock [
 	block := [ (tmp1 at: 1) to: (tmp1 at: 4) do: [ :arg1 | self trace: arg1 ] ]
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleToDoInsideTemp [
 	<sampleInstance>
 	
@@ -1331,7 +1331,7 @@ FBDExamples >> exampleToDoInsideTemp [
 	^collection "#(1 2 3 4 5)"
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleToDoInsideTempNotInlined [
 	<sampleInstance>
 	
@@ -1344,7 +1344,7 @@ FBDExamples >> exampleToDoInsideTempNotInlined [
 	^collection "#(1 2 3 4 5)"
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleToDoOutsideTemp [
 	<sampleInstance>
 	
@@ -1355,7 +1355,7 @@ FBDExamples >> exampleToDoOutsideTemp [
 	^collection "#(5 5 5 5 5)"
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleToDoOutsideTempNotInlined [
 	<sampleInstance>
 	
@@ -1367,7 +1367,7 @@ FBDExamples >> exampleToDoOutsideTempNotInlined [
 	^collection "#(5 5 5 5 5)"
 ]
 
-{ #category : #'examples-misc' }
+{ #category : #'examples - misc' }
 FBDExamples >> exampleToDoValue [
 	<sampleInstance>
 
@@ -1376,7 +1376,7 @@ FBDExamples >> exampleToDoValue [
 
 ]
 
-{ #category : #'examples-misc' }
+{ #category : #'examples - misc' }
 FBDExamples >> exampleToDoValueLimitExpression [
 	<sampleInstance>
 
@@ -1394,7 +1394,7 @@ FBDExamples >> exampleToDoWithMessage [
 	^ 1 yourself to: t size do: [ :index | t at: index put: false ]
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleToDoWithMessage2 [
 
 	| t t1 t2 |
@@ -1420,7 +1420,7 @@ FBDExamples >> exampleWhileFalse2 [
 	[ t := t + 1. 1 + 2. t > 10 ] whileFalse
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleWhileModificationAfterNotInlined [
 	<sampleInstance>
 	
@@ -1433,7 +1433,7 @@ FBDExamples >> exampleWhileModificationAfterNotInlined [
 	^collection "#(5 5 5 5 5)"
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleWhileModificationBefore [
 	<sampleInstance>
 	
@@ -1447,7 +1447,7 @@ FBDExamples >> exampleWhileModificationBefore [
 	"#(5 5 5 5 5)"
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleWhileModificationBeforeNotInlined [
 	<sampleInstance>
 	
@@ -1461,7 +1461,7 @@ FBDExamples >> exampleWhileModificationBeforeNotInlined [
 	"#(5 5 5 5 5)"
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleWhileNoModification [
 	"tempvars aren't modified in the loop, therefore they don't need to be in a indirection vector.
 	  number of temps = declared temps "
@@ -1528,7 +1528,7 @@ FBDExamples >> exampleWhileTrue4 [
 			tmp2 := tmp2 + 1 ]
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleWhileTrueSameJumpTarget [
 
 	| tmp1 tmp2 |
@@ -1542,7 +1542,7 @@ FBDExamples >> exampleWhileTrueSameJumpTarget [
 	tmp2 > 0 ] whileTrue
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleWhileTrueSameJumpTarget2 [
 
 	| tmp1 tmp2 tmp3 tmp4 tmp5 tmp6 |
@@ -1573,7 +1573,7 @@ FBDExamples >> exampleWhileTrueSameJumpTarget2 [
 	tmp1 < 10 ] whileTrue
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleWhileWithTemp [
 	<sampleInstance>
 	
@@ -1586,7 +1586,7 @@ FBDExamples >> exampleWhileWithTemp [
 	^collection "#(1 2 3 4 5)"
 ]
 
-{ #category : #'examples-blocks-optimized' }
+{ #category : #'examples - blocks-optimized' }
 FBDExamples >> exampleWhileWithTempNotInlined [
 	<sampleInstance>
 	
@@ -1617,7 +1617,7 @@ FBDExamples >> exampleWithArgsAndTemps: arg1 and: arg2 [
 	^ { tmp2 . arg2 }
 ]
 
-{ #category : #'examples-variables' }
+{ #category : #'examples - variables' }
 FBDExamples >> exampleiVar [
 	<sampleInstance>
 	

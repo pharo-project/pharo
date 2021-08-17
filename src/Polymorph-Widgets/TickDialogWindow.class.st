@@ -5,7 +5,7 @@ See self example
 "
 Class {
 	#name : #TickDialogWindow,
-	#superclass : #DialogWindow,
+	#superclass : #DialogWindowMorph,
 	#instVars : [
 		'defaultValue',
 		'itemsHeaderName',
@@ -18,7 +18,7 @@ Class {
 	#category : #'Polymorph-Widgets-Windows'
 }
 
-{ #category : #example }
+{ #category : #examples }
 TickDialogWindow class >> example [
 	
 	(self itemsList: Morph methods itemsHeaderName: 'Plop' wrapBlockOrSelector: #selector title: 'Example') choose

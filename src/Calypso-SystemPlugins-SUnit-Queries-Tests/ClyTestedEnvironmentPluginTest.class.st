@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyTestedEnvironmentPluginTest,
-	#superclass : #ClyAbsractNavigationEnvironmentTest,
+	#superclass : #ClyAbstractNavigationEnvironmentTest,
 	#instVars : [
 		'plugin'
 	],

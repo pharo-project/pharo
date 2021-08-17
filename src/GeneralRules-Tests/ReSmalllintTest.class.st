@@ -540,7 +540,7 @@ ReSmalllintTest >> testUncommonMessageSend [
 	self ruleFor: self currentSelector plusSelectors: {#uncommonMessageSend2}
 ]
 
-{ #category : #'test unique identifier' }
+{ #category : #'tests - unique identifier' }
 ReSmalllintTest >> testUniqueIdentifierName [
 
 	| idToRules |

@@ -135,7 +135,7 @@ PRDocumentItem >> stop: anObject [
 	stop := anObject
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : #'accessing - dynamic' }
 PRDocumentItem >> text [
 	"Answer a string representation of the receiver."
 

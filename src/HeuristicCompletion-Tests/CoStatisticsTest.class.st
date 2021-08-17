@@ -7,13 +7,13 @@ Class {
 	#category : #'HeuristicCompletion-Tests-Statistics'
 }
 
-{ #category : #'test-average' }
+{ #category : #'tests - average' }
 CoStatisticsTest >> logAcceptedEvent: anIndex [
 
 	self logAcceptedEvent: anIndex typedToken: 'to'
 ]
 
-{ #category : #'test-average' }
+{ #category : #'tests - average' }
 CoStatisticsTest >> logAcceptedEvent: anIndex typedToken: aToken [
 
 	| entry |
@@ -26,7 +26,7 @@ CoStatisticsTest >> logAcceptedEvent: anIndex typedToken: aToken [
 	statistics logAcceptEvent: entry
 ]
 
-{ #category : #'test-average' }
+{ #category : #'tests - average' }
 CoStatisticsTest >> testAcceptEntryIncrementsAverage [
 	statistics := CoStatistics new.
 	self logAcceptedEvent: 1.
@@ -34,7 +34,7 @@ CoStatisticsTest >> testAcceptEntryIncrementsAverage [
 	self assert: statistics averageTypedCharacters equals: 4
 ]
 
-{ #category : #'test-average' }
+{ #category : #'tests - average' }
 CoStatisticsTest >> testAcceptEntryIncrementsAverageEvenIfAtDifferentIndexes [
 	statistics := CoStatistics new.
 	self logAcceptedEvent: 1.
@@ -42,7 +42,7 @@ CoStatisticsTest >> testAcceptEntryIncrementsAverageEvenIfAtDifferentIndexes [
 	self assert: statistics averageTypedCharacters equals: 4
 ]
 
-{ #category : #'test-entries' }
+{ #category : #'tests - entries' }
 CoStatisticsTest >> testAcceptEntryLogsAllSources [
 
 	statistics := CoStatistics new.
@@ -51,42 +51,42 @@ CoStatisticsTest >> testAcceptEntryLogsAllSources [
 	self assert: (statistics entriesGeneratedBy: 'heuristic') equals: 2
 ]
 
-{ #category : #'test-average' }
+{ #category : #'tests - average' }
 CoStatisticsTest >> testAcceptEntryLogsAverageTypedCharacters [
 	statistics := CoStatistics new.
 	self logAcceptedEvent: 1.
 	self assert: statistics averageTypedCharacters equals: 2
 ]
 
-{ #category : #'test-average' }
+{ #category : #'tests - average' }
 CoStatisticsTest >> testAcceptEntryLogsAverageTypedCharactersAtPosition [
 	statistics := CoStatistics new.
 	self logAcceptedEvent: 1.
 	self assert: (statistics averageTypedCharactersAt: 1) equals: 2
 ]
 
-{ #category : #'test-average' }
+{ #category : #'tests - average' }
 CoStatisticsTest >> testAcceptEntryLogsAverageTypedCharactersDoesNotAffectOtherIndexes [
 	statistics := CoStatistics new.
 	self logAcceptedEvent: 2.
 	self assert: (statistics averageTypedCharactersAt: 1) equals: 0
 ]
 
-{ #category : #'test-entries' }
+{ #category : #'tests - entries' }
 CoStatisticsTest >> testAcceptEntryLogsIt [
 	statistics := CoStatistics new.
 	self logAcceptedEvent: 1.
 	self assert: statistics acceptedEntries notEmpty
 ]
 
-{ #category : #'test-entries' }
+{ #category : #'tests - entries' }
 CoStatisticsTest >> testAcceptEntryLogsItsSize [
 	statistics := CoStatistics new.
 	self logAcceptedEvent: 1.
 	self assert: (statistics entriesAtIndex: 1) size equals: 1
 ]
 
-{ #category : #'test-entries' }
+{ #category : #'tests - entries' }
 CoStatisticsTest >> testAcceptEntryLogsItsSource [
 
 	| entries |
@@ -98,7 +98,7 @@ CoStatisticsTest >> testAcceptEntryLogsItsSource [
 	self assert: entries size equals: 1
 ]
 
-{ #category : #'test-entries' }
+{ #category : #'tests - entries' }
 CoStatisticsTest >> testAcceptEntryLogsItsSourceInSeparateEntries [
 
 	| entries |
@@ -108,7 +108,7 @@ CoStatisticsTest >> testAcceptEntryLogsItsSourceInSeparateEntries [
 	self assert: entries size equals: 0
 ]
 
-{ #category : #'test-entries' }
+{ #category : #'tests - entries' }
 CoStatisticsTest >> testAcceptTwoEntriesAtDifferentIndexLogsSeparateCounts [
 	statistics := CoStatistics new.
 	self logAcceptedEvent: 1.
@@ -117,7 +117,7 @@ CoStatisticsTest >> testAcceptTwoEntriesAtDifferentIndexLogsSeparateCounts [
 	self assert: (statistics entriesAtIndex: 2) size equals: 1
 ]
 
-{ #category : #'test-entries' }
+{ #category : #'tests - entries' }
 CoStatisticsTest >> testAcceptTwoEntriesAtSameIndexLogsCount [
 	statistics := CoStatistics new.
 	self logAcceptedEvent: 1.
@@ -125,7 +125,7 @@ CoStatisticsTest >> testAcceptTwoEntriesAtSameIndexLogsCount [
 	self assert: (statistics entriesAtIndex: 1) size equals: 2
 ]
 
-{ #category : #'test-closing' }
+{ #category : #'tests - closing' }
 CoStatisticsTest >> testCancelCompletionInClassWithDynamicExtentDoesNotLogOtherClass [
 
 	statistics := CoStatistics new.
@@ -133,7 +133,7 @@ CoStatisticsTest >> testCancelCompletionInClassWithDynamicExtentDoesNotLogOtherC
 	self assert: (statistics numberOfCancelsByClass: #Point) equals: 0
 ]
 
-{ #category : #'test-closing' }
+{ #category : #'tests - closing' }
 CoStatisticsTest >> testCancelCompletionInClassWithDynamicExtentLogsIt [
 
 	statistics := CoStatistics new.
@@ -141,7 +141,7 @@ CoStatisticsTest >> testCancelCompletionInClassWithDynamicExtentLogsIt [
 	self assert: statistics numberOfCancels equals: 1
 ]
 
-{ #category : #'test-closing' }
+{ #category : #'tests - closing' }
 CoStatisticsTest >> testCancelCompletionInClassWithDynamicExtentLogsPerClass [
 
 	statistics := CoStatistics new.
@@ -149,7 +149,7 @@ CoStatisticsTest >> testCancelCompletionInClassWithDynamicExtentLogsPerClass [
 	self assert: (statistics numberOfCancelsByClass: #Object) equals: 1
 ]
 
-{ #category : #'tests-heuristicbuilder' }
+{ #category : #'tests - heuristicbuilder' }
 CoStatisticsTest >> testHeuristicBuilderForSingleHeuristicBuildsWrapper [
 
 	| builder heuristic singleHeuristic |
@@ -161,7 +161,7 @@ CoStatisticsTest >> testHeuristicBuilderForSingleHeuristicBuildsWrapper [
 	self assert: heuristic isStatisticsHeuristicWrapper
 ]
 
-{ #category : #'tests-heuristicbuilder' }
+{ #category : #'tests - heuristicbuilder' }
 CoStatisticsTest >> testHeuristicBuilderForSingleHeuristicLastIsNullHeuristic [
 
 	| builder heuristic singleHeuristic |
@@ -173,7 +173,7 @@ CoStatisticsTest >> testHeuristicBuilderForSingleHeuristicLastIsNullHeuristic [
 	self assert: heuristic next isNullHeuristic
 ]
 
-{ #category : #'tests-heuristicbuilder' }
+{ #category : #'tests - heuristicbuilder' }
 CoStatisticsTest >> testHeuristicBuilderForSingleHeuristicWrapsNonWrapper [
 
 	| builder heuristic singleHeuristic |
@@ -185,7 +185,7 @@ CoStatisticsTest >> testHeuristicBuilderForSingleHeuristicWrapsNonWrapper [
 	self assert: heuristic wrapped equals: singleHeuristic
 ]
 
-{ #category : #'tests-heuristicbuilder' }
+{ #category : #'tests - heuristicbuilder' }
 CoStatisticsTest >> testHeuristicBuilderForTwoHeuristicBuildsWrapper [
 	| builder heuristic |
 	builder := CoStatisticsHeuristicBuilder new.
@@ -196,7 +196,7 @@ CoStatisticsTest >> testHeuristicBuilderForTwoHeuristicBuildsWrapper [
 	self assert: heuristic isStatisticsHeuristicWrapper
 ]
 
-{ #category : #'tests-heuristicbuilder' }
+{ #category : #'tests - heuristicbuilder' }
 CoStatisticsTest >> testHeuristicBuilderForTwoHeuristicNextIsWrapper [
 	| builder heuristic |
 	builder := CoStatisticsHeuristicBuilder new.
@@ -207,7 +207,7 @@ CoStatisticsTest >> testHeuristicBuilderForTwoHeuristicNextIsWrapper [
 	self assert: heuristic next isStatisticsHeuristicWrapper
 ]
 
-{ #category : #'tests-heuristicbuilder' }
+{ #category : #'tests - heuristicbuilder' }
 CoStatisticsTest >> testHeuristicBuilderForTwoHeuristicSecondWrapperWrapsNonWrapper [
 	| builder heuristic heuristic2 |
 	builder := CoStatisticsHeuristicBuilder new.
@@ -218,7 +218,7 @@ CoStatisticsTest >> testHeuristicBuilderForTwoHeuristicSecondWrapperWrapsNonWrap
 	self assert: heuristic next wrapped equals: heuristic2
 ]
 
-{ #category : #'tests-heuristicbuilder' }
+{ #category : #'tests - heuristicbuilder' }
 CoStatisticsTest >> testHeuristicBuilderForTwoHeuristicWrapsNonWrapper [
 	| builder heuristic heuristic1 |
 	builder := CoStatisticsHeuristicBuilder new.
@@ -229,7 +229,7 @@ CoStatisticsTest >> testHeuristicBuilderForTwoHeuristicWrapsNonWrapper [
 	self assert: heuristic wrapped equals: heuristic1
 ]
 
-{ #category : #'test-entries' }
+{ #category : #'tests - entries' }
 CoStatisticsTest >> testNewStatisticsHaveNoAcceptedEntries [
 
 	statistics := CoStatistics new.

@@ -7,7 +7,7 @@ Class {
 	#category : #'Monticello-Tests-Base'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 MCTestCase class >> isAbstract [
 	^ self = MCTestCase
 ]
@@ -17,7 +17,7 @@ MCTestCase class >> isUnitTest [
 	^false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MCTestCase class >> resources [
 	^ Array with: MCSnapshotResource
 ]

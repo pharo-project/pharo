@@ -5,7 +5,7 @@ Class {
 		'debugSession',
 		'sindarinSession'
 	],
-	#category : #'Sindarin-Tests'
+	#category : #'Sindarin-Tests-Base'
 }
 
 { #category : #running }
@@ -14,26 +14,35 @@ SindarinDebugSessionTest >> setUp [
 	
 	super setUp.
 	debugSession := DebugSession new.
-	sindarinSession := debugSession asSindarinDebugSession.	
+	sindarinSession := debugSession asSindarinDebugSession
 ]
 
 { #category : #tests }
 SindarinDebugSessionTest >> testDebugSessionAsSindarinDebugSession [
+
 	self assert: sindarinSession debugSession identicalTo: debugSession
 ]
 
 { #category : #tests }
 SindarinDebugSessionTest >> testSindarinSessionAsSindarinDebugSession [
-	self assert: sindarinSession asSindarinDebugSession identicalTo: sindarinSession
+
+	self
+		assert: sindarinSession asSindarinDebugSession
+		identicalTo: sindarinSession
 ]
 
 { #category : #tests }
 SindarinDebugSessionTest >> testSindarinSessionInstantiation [
-	|sessionName process|
+
+	| sessionName process |
 	sessionName := 'TestSDS'.
-	process := [] newProcess.
-	sindarinSession := SindarinDebugSession newWithName: sessionName forProcess: process.
+	process := [  ] newProcess.
+	sindarinSession := SindarinDebugSession
+		                   newWithName: sessionName
+		                   forProcess: process.
 	self assert: sindarinSession debugSession notNil.
 	self assert: sindarinSession debugSession name equals: sessionName.
-	self assert: sindarinSession debugSession process identicalTo: process.
+	self
+		assert: sindarinSession debugSession process
+		identicalTo: process
 ]

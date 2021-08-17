@@ -4,7 +4,7 @@ Class {
 	#category : #'OpalCompiler-Tests-AST'
 }
 
-{ #category : #'tests-readvariables' }
+{ #category : #'tests - readvariables' }
 OCASTBlockTranslatorTest >> testBlockCapturesVariableNotValue [
 	
 	| result |
@@ -19,7 +19,7 @@ OCASTBlockTranslatorTest >> testBlockCapturesVariableNotValue [
 	self assert: result equals: 2
 ]
 
-{ #category : #'tests-writevariables' }
+{ #category : #'tests - writevariables' }
 OCASTBlockTranslatorTest >> testBlockExplicitReturn [
 	
 	| result |
@@ -30,7 +30,7 @@ OCASTBlockTranslatorTest >> testBlockExplicitReturn [
 	self assert: result equals: 5
 ]
 
-{ #category : #'tests-arguments' }
+{ #category : #'tests - arguments' }
 OCASTBlockTranslatorTest >> testBlockWithArgumentReturnsLastExpression [
 	
 	| result |
@@ -40,7 +40,7 @@ OCASTBlockTranslatorTest >> testBlockWithArgumentReturnsLastExpression [
 	self assert: result equals: 7
 ]
 
-{ #category : #'tests-readvariables' }
+{ #category : #'tests - readvariables' }
 OCASTBlockTranslatorTest >> testBlockWithExternalTempReturnsLastExpression [
 	
 	| result |
@@ -52,7 +52,7 @@ OCASTBlockTranslatorTest >> testBlockWithExternalTempReturnsLastExpression [
 	self assert: result equals: 1
 ]
 
-{ #category : #'tests-arguments' }
+{ #category : #'tests - arguments' }
 OCASTBlockTranslatorTest >> testBlockWithFiveArgumentReturnsLastExpression [
 	
 	| result |
@@ -63,7 +63,7 @@ OCASTBlockTranslatorTest >> testBlockWithFiveArgumentReturnsLastExpression [
 	self assert: result equals: 20
 ]
 
-{ #category : #'tests-arguments' }
+{ #category : #'tests - arguments' }
 OCASTBlockTranslatorTest >> testBlockWithFourArgumentReturnsLastExpression [
 	
 	| result |
@@ -73,7 +73,7 @@ OCASTBlockTranslatorTest >> testBlockWithFourArgumentReturnsLastExpression [
 	self assert: result equals: 14
 ]
 
-{ #category : #'tests-readvariables' }
+{ #category : #'tests - readvariables' }
 OCASTBlockTranslatorTest >> testBlockWithInstanceVariableReturnsLastExpression [
 	
 	| result value |
@@ -86,7 +86,7 @@ OCASTBlockTranslatorTest >> testBlockWithInstanceVariableReturnsLastExpression [
 	self assert: result equals: value
 ]
 
-{ #category : #'tests-literals' }
+{ #category : #'tests - literals' }
 OCASTBlockTranslatorTest >> testBlockWithLiteralReturnsLastExpression [
 	
 	| result |
@@ -96,7 +96,7 @@ OCASTBlockTranslatorTest >> testBlockWithLiteralReturnsLastExpression [
 	self assert: result equals: 1
 ]
 
-{ #category : #'tests-readvariables' }
+{ #category : #'tests - readvariables' }
 OCASTBlockTranslatorTest >> testBlockWithTempReturnsLastExpression [
 	
 	| result |
@@ -106,7 +106,7 @@ OCASTBlockTranslatorTest >> testBlockWithTempReturnsLastExpression [
 	self assert: result equals: 1
 ]
 
-{ #category : #'tests-arguments' }
+{ #category : #'tests - arguments' }
 OCASTBlockTranslatorTest >> testBlockWithThreeArgumentReturnsLastExpression [
 	
 	| result |
@@ -116,7 +116,7 @@ OCASTBlockTranslatorTest >> testBlockWithThreeArgumentReturnsLastExpression [
 	self assert: result equals: 9
 ]
 
-{ #category : #'tests-arguments' }
+{ #category : #'tests - arguments' }
 OCASTBlockTranslatorTest >> testBlockWithTwoArgumentReturnsLastExpression [
 	
 	| result |
@@ -126,7 +126,7 @@ OCASTBlockTranslatorTest >> testBlockWithTwoArgumentReturnsLastExpression [
 	self assert: result equals: 5
 ]
 
-{ #category : #'tests-writevariables' }
+{ #category : #'tests - writevariables' }
 OCASTBlockTranslatorTest >> testBlockWritesInstanceVariable [
 	
 	self testSource: 'example
@@ -135,7 +135,7 @@ OCASTBlockTranslatorTest >> testBlockWritesInstanceVariable [
 	self assert: instance iVar equals: 1
 ]
 
-{ #category : #'tests-writevariables' }
+{ #category : #'tests - writevariables' }
 OCASTBlockTranslatorTest >> testBlocksShareOuterVariables [
 	
 	| result |
@@ -153,7 +153,7 @@ OCASTBlockTranslatorTest >> testBlocksShareOuterVariables [
 	self assert: result equals: 5
 ]
 
-{ #category : #'tests-literals' }
+{ #category : #'tests - literals' }
 OCASTBlockTranslatorTest >> testEmptyBlockReturnsNil [
 	
 	| result |
@@ -163,7 +163,7 @@ OCASTBlockTranslatorTest >> testEmptyBlockReturnsNil [
 	self assert: result isNil
 ]
 
-{ #category : #'tests-readvariables' }
+{ #category : #'tests - readvariables' }
 OCASTBlockTranslatorTest >> testNestedBlockWithExternalTempReturnsLastExpression [
 	
 	| result |
@@ -176,7 +176,7 @@ OCASTBlockTranslatorTest >> testNestedBlockWithExternalTempReturnsLastExpression
 	self assert: result equals: 3
 ]
 
-{ #category : #'tests-writevariables' }
+{ #category : #'tests - writevariables' }
 OCASTBlockTranslatorTest >> testOuterBlockTemporaryVariable [
 	
 	| result |
@@ -191,7 +191,7 @@ OCASTBlockTranslatorTest >> testOuterBlockTemporaryVariable [
 	self assert: result equals: 2
 ]
 
-{ #category : #'tests-writevariables' }
+{ #category : #'tests - writevariables' }
 OCASTBlockTranslatorTest >> testWritesTemporaryVariable [
 	
 	| result |

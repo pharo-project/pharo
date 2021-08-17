@@ -1,5 +1,9 @@
 "
 I am the abstract superclass of all classes that represent a group of elements.
+
+To get more information you read the explanation on Pharo by Example book in the next link: [Pharo by Example - Collections](https://github.com/SquareBracketAssociates/UpdatedPharoByExample/blob/pharo5/Collections/Collections.pillar).
+
+Or if you want to read in PDF format, download it from [Pharo by Example](https://github.com/SquareBracketAssociates/PharoByExample80/releases/tag/continuous) and look for Chapter 13: Collections. 
 "
 Class {
 	#name : #Collection,
@@ -429,6 +433,11 @@ Collection >> collect: collectBlock thenSelect: selectBlock [
 	^ (self collect: collectBlock) select: selectBlock
 ]
 
+{ #category : #printing }
+Collection >> collectionSizeThreshold [ 
+	^ 3000
+]
+
 { #category : #testing }
 Collection >> contains: aBlock [
 	"For compatibility, please use #anySatisfy: instead!"
@@ -624,7 +633,7 @@ Collection >> displayStringOn: stream [
 		nextPutAll: (' item' asPluralBasedOn: self size);
 		nextPut: $];
 		space.
-	self size <= self gtCollectionSizeThreshold 
+	self size <= self collectionSizeThreshold 
 		ifTrue: [ self printElementsOn: stream ]
 ]
 

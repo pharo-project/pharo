@@ -25,7 +25,7 @@ FLGlobalCompiledBlockCluster >> materializeInstanceWith: aDecoder [
 		ifAbsent: [ ^ nil ].
 	^ literalIndex > method numLiterals
 		ifTrue: [ nil ]
-		ifFalse: [ method literalsAt: literalIndex ]
+		ifFalse: [ method literalAt: literalIndex ]
 ]
 
 { #category : #'serialize/materialize' }
