@@ -2200,8 +2200,5 @@ Object >> ~~> aValueLinkOrNil [
 	"Note that `value` can be ANY object; on the other hand, `nextLink` should be either another 
 	ValueLink object or nil."
 
-	^ ValueLink basicNew
-		value: self;
-		nextLink: aValueLinkOrNil;
-		yourself
+	^ aValueLinkOrNil asLinkPrepend: self
 ]
