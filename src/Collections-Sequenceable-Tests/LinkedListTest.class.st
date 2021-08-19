@@ -14,6 +14,7 @@ Class {
 		'link2',
 		'link3',
 		'link4',
+		'link5',
 		'nonEmpty',
 		'otherList',
 		'link',
@@ -274,6 +275,7 @@ LinkedListTest >> setUp [
 	link2 := 'test'.
 	link3 := $h.
 	link4 := Set new.
+	link5 := nil.
 	elementNotIn := Link new.
 	collectionWithoutNil := LinkedList new add: link1; add: link2 ; add: link3; yourself.
 	elementIn := 'thisElementIsIncluded'.
@@ -347,7 +349,15 @@ LinkedListTest >> test01add [
 	self assert: list first equals: link1.
 	self assert: list second equals: link2.
 	self assert: list third equals: link3.
-	self assert: list fourth equals: link4
+	self assert: list fourth equals: link4.
+	
+	list add: link5.
+	self assert: list size equals: 5.
+	self assert: list first equals: link1.
+	self assert: list second equals: link2.
+	self assert: list third equals: link3.
+	self assert: list fourth equals: link4.
+	self assert: list fifth equals: link5.
 ]
 
 { #category : #tests }
