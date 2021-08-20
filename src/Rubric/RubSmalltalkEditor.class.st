@@ -244,7 +244,7 @@ RubSmalltalkEditor >> bestNodeInTextAreaOnError: aBlock [
 		onError: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'new selection' }
 RubSmalltalkEditor >> bestNodeInTextAreaWithoutSelection [
 	"Find the best node in the editor text area trimming the selection to prepare for eventual deletion"
 	

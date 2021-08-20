@@ -80,6 +80,7 @@ ReleaseTest >> knownProcesses [
 		CurrentExecutionEnvironment value watchDogProcess.
 		Delay schedulingProcess.
 		TKTWatchDog onDuty pharoProcess.
+		OSSDL2Driver current eventLoopProcess.
 		TFCallbackQueue uniqueInstance callbackProcess } asSet
 ]
 
