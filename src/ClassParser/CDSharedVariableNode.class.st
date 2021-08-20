@@ -30,17 +30,6 @@ CDSharedVariableNode >> isGlobalClassNameBinding [
 	^false
 ]
 
-{ #category : #generated }
-CDSharedVariableNode >> isInstance [
-
-	"To be polymorphic to RB method nodes"
-
-	self
-		deprecated: 'Use #isInstanceVariable instead'
-		transformWith: '`@rec isInstance' -> '`@rec isInstanceVariable'.
-	^ self isInstanceVariable
-]
-
 { #category : #testing }
 CDSharedVariableNode >> isInstanceVariable [
 	"To be polymorphic to RB method nodes"

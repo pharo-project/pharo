@@ -787,10 +787,6 @@ RubAbstractTextArea >> emphasisHere: aListOfAttributes [
 
 ]
 
-{ #category : #'mock for spec' }
-RubAbstractTextArea >> enabled: aBoolean [
-]
-
 { #category : #'event handling' }
 RubAbstractTextArea >> escapePressed [
 	"do nothing. do not simulate a right click

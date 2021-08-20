@@ -47,8 +47,3 @@ ReNoPrintStringInPrintOnRule >> name [
 ReNoPrintStringInPrintOnRule >> rationale [
 	^ 'Use the stream argument to #printOn: e.g.( stream print: anObject ) instead of creating an extra stream by using printString. e.g.( stream nextPutAll: anObject printString ).'
 ]
-
-{ #category : #accessing }
-ReNoPrintStringInPrintOnRule >> severity [
-	^ #warning
-]

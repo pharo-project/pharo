@@ -30,8 +30,3 @@ ReTestClassNotInPackageWithTestEndingNameRule >> name [
 ReTestClassNotInPackageWithTestEndingNameRule >> rationale [
 	^ 'A test class (subclass of TestCase) should be placed in a package with a ''-Tests'' suffix'
 ]
-
-{ #category : #running }
-ReTestClassNotInPackageWithTestEndingNameRule >> severity [
-	^ #warning
-]

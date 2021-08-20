@@ -72,8 +72,3 @@ ReGlobalVariablesUsageRule >> rationale [
 	
 	'
 ]
-
-{ #category : #running }
-ReGlobalVariablesUsageRule >> severity [
-	^ #warning
-]

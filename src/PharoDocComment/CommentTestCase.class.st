@@ -42,11 +42,6 @@ CommentTestCase >> drTestsBrowse [
 ]
 
 { #category : #accessing }
-CommentTestCase >> drTestsName [
-	^ self asString
-]
-
-{ #category : #accessing }
 CommentTestCase >> expectedValue [
 	^ docCommentNode result evaluate
 ]

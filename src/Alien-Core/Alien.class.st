@@ -492,12 +492,6 @@ Alien >> freeAfter: aBlock [
 	^[aBlock value: self] ensure: [self free]
 ]
 
-{ #category : #initialization }
-Alien >> initialize [
-	"Subclasses should redefine this method to perform initializations on instance creation"
-	"Overrides ProtoObjects' method for explicitness."
-]
-
 { #category : #testing }
 Alien >> isPointer [
 	^self sizeField = 0
