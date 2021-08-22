@@ -23,11 +23,6 @@ Class {
 	#category : #'Text-Scanning-Base'
 }
 
-{ #category : #queries }
-BitBltDisplayScanner class >> defaultFont [
-	^ TextStyle defaultFont
-]
-
 { #category : #displaying }
 BitBltDisplayScanner >> displayEmbeddedForm: aForm [
 

@@ -29,9 +29,3 @@ ReUsesWorldGlobalRule >> group [
 ReUsesWorldGlobalRule >> name [
 	^ 'Uses World or ActiveWorld directly'
 ]
-
-{ #category : #accessing }
-ReUsesWorldGlobalRule >> severity [
-
-	^ #warning
-]

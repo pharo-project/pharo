@@ -210,11 +210,6 @@ RubTextScrollPane >> initialize [
 	drawFocusBorder := true
 ]
 
-{ #category : #classification }
-RubTextScrollPane >> isRenderer [
-	^ false
-]
-
 { #category : #'event handling' }
 RubTextScrollPane >> mouseDown: anEvent [ 
 	scroller hasSubmorphs 

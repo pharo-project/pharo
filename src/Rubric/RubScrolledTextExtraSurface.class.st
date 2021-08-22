@@ -10,12 +10,6 @@ RubScrolledTextExtraSurface >> computedHeightFrom: aRectangle [
 ]
 
 { #category : #accessing }
-RubScrolledTextExtraSurface >> computedPositionFrom: aRectangle [
-	^  aRectangle topLeft
-
-]
-
-{ #category : #accessing }
 RubScrolledTextExtraSurface >> computedWidthFrom: aRectangle [
 	^  aRectangle width min: self scrollBounds width
 

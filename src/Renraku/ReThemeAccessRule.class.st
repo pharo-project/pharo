@@ -43,8 +43,3 @@ ReThemeAccessRule >> group [
 ReThemeAccessRule >> name [
 	^ 'Access to UI theme.'
 ]
-
-{ #category : #running }
-ReThemeAccessRule >> severity [
-	^ #warning
-]
