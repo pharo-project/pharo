@@ -79,9 +79,8 @@ Categorizer class >> documentation [
 
 { #category : #'class initialization' }
 Categorizer class >> initialize [
-	"	self  initialize	"
-	
-	Default := 'as yet unclassified' asSymbol.
+		
+	Default := Protocol unclassified.
 	NullCategory := 'no messages' asSymbol.
 ]
 
