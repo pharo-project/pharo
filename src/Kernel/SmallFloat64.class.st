@@ -221,7 +221,7 @@ SmallFloat64 >> identityHash [
 
 { #category : #testing }
 SmallFloat64 >> isImmediateObject [
-	"This is needed for the boostrap"
+	"This is needed for the bootstrap"
 	^ true
 ]
 
