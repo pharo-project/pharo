@@ -117,13 +117,6 @@ MetacelloVersionNumber >> asMetacelloVersionNumber [
 	^self
 ]
 
-{ #category : #printing }
-MetacelloVersionNumber >> asString [
-	"Answer a string that represents the receiver."
-
-	^ self printString
-]
-
 { #category : #private }
 MetacelloVersionNumber >> collapseZeros [
 	"the rule must be that zeros can be collapsed as long as the series of zeros ends in a string term"

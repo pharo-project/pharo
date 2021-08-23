@@ -24,11 +24,6 @@ EpUnknownRefactoring >> asRBRefactoring [
 	^ self shouldNotImplement
 ]
 
-{ #category : #testing }
-EpUnknownRefactoring >> canBuildRBRefactoring [
-	^ false
-]
-
 { #category : #initialization }
 EpUnknownRefactoring >> initializeWith: aRBRefactoring [
 	self initialize.
