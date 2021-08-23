@@ -251,13 +251,7 @@ IRTranslator >> visitPushLiteral: lit [
 	| literal |
 	literal := lit literal.
 	"all objects that are not literals we keep writable"
-	literal isLiteral ifFalse: [ ^ gen pushLiteral: literal ].
-	"For symbol we need to set explicitly to writable or read-only. 
-	 Compilation to read-only then back to writable keep the object 
-	 read-only if we don't set it back to writable."
-	compilationContext optionReadOnlyLiterals
-		ifTrue: [ literal beReadOnlyObject ]
-		ifFalse: [ literal beWritableObject ].
+	literal isLiteral ifTrue: [ literal beReadOnlyObject ].
 	^ gen pushLiteral: literal
 	
 ]
