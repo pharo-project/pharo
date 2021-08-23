@@ -97,13 +97,13 @@ RGTraitV2Strategy >> classSide [
 	^ self owner metaclass
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGTraitV2Strategy >> classTrait [
 
 	^ self backend forBehavior classTraitFor: self owner
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGTraitV2Strategy >> classTrait: anRGMetatraitDefinition [
 
 	self backend forBehavior setClassTraitFor: self owner to: anRGMetatraitDefinition

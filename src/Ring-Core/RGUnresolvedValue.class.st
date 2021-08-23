@@ -27,13 +27,13 @@ RGUnresolvedValue >> default: anObject [
 	default := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 RGUnresolvedValue >> isRGUnresolvedValue [
 
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 RGUnresolvedValue >> isRingFullyResolved [
 
 	^ false
@@ -45,19 +45,19 @@ RGUnresolvedValue >> isRingFullyUnresolved [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 RGUnresolvedValue >> isRingResolved [
 
 	^ false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGUnresolvedValue >> orDefaultForUnresolved [
 
 	^ self default
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGUnresolvedValue >> referencedBehaviors [
 
 	^ #()
