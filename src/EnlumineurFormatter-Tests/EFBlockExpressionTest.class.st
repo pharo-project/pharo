@@ -333,11 +333,6 @@ EFBlockExpressionTest >> openBracket [
 	^ '['
 ]
 
-{ #category : #helpers }
-EFBlockExpressionTest >> parserClass [
-	^ RBParser
-]
-
 { #category : #configurations }
 EFBlockExpressionTest >> periodAtEndConfiguration [
 	"Here we can control explicitely the configuration we want."

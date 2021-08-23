@@ -274,7 +274,7 @@ ReleaseTest >> testNoEquivalentSuperclassMethods [
 			ifNil: [ false ] ]
 		ifNil: [ false ]
 	].
-	self assert: methods size <= 474.
+	self assert: methods size <= 470.
 	ASTCache reset.
 
 
