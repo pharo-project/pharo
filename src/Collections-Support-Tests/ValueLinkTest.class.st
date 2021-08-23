@@ -19,11 +19,20 @@ ValueLinkTest >> testPushingOnValueLink [
 	| link link1 link2 link3 |
 	link := 3 ~~> nil.
 	link1 := 5 ~~> link.
-	link2 := ValueLinkForTesting value: 8.
+	link2 := ValueLinkForTesting new
+		         value: 8;
+		         nextLink: link1;
+		         yourself.
 	link3 := link1 value + link2 value ~~> link2.
 
 	self
-		assert: link1 class equals: ValueLink;
+		assert: link3 value equals: 13;
 		assert: link3 class equals: ValueLinkForTesting;
-		assert: link3 value equals: 13
+		assert: link3 nextLink value equals: 8;
+		assert: link3 nextLink class equals: ValueLinkForTesting;
+		assert: link3 nextLink nextLink value equals: 5;
+		assert: link3 nextLink nextLink class equals: ValueLink;
+		assert: link3 nextLink nextLink nextLink value equals: 3;
+		assert: link3 nextLink nextLink nextLink class equals: ValueLink;
+		assert: link3 nextLink nextLink nextLink nextLink equals: nil
 ]
