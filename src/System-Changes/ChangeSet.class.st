@@ -1111,7 +1111,7 @@ ChangeSet >> methodsWithoutClassifications [
 
 	| slips notClassified |
 
-	notClassified := {'as yet unclassified' asSymbol. #all}.
+	notClassified := {	Protocol unclassified. #all}.
 	slips := OrderedCollection new.
 	self changedClasses do:
 		[:aClass |

@@ -234,7 +234,7 @@ RGBehavior >> announceDefinitionChangeDuring: aBlock [
 { #category : #accessing }
 RGBehavior >> asYetUnclassifiedProtocolName [
 
-	^ 'as yet unclassified' asSymbol
+	^ Protocol unclassified 
 ]
 
 { #category : #testing }

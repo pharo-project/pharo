@@ -16,7 +16,7 @@ Class {
 { #category : #'instance creation' }
 RGObject class >> asYetUnclassifiedProtocolName [
 
-	^ 'as yet unclassified' asSymbol
+	^ Protocol unclassified 
 ]
 
 { #category : #'instance creation' }
