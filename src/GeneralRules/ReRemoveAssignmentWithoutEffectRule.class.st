@@ -31,7 +31,7 @@ ReRemoveAssignmentWithoutEffectRule >> name [
 	^ 'Remove assignment has no effect'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ReRemoveAssignmentWithoutEffectRule >> rationale [ 
 	^ 'Remove assignment has no effect. For example, var := var is unless'
 ]

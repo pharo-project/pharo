@@ -118,7 +118,7 @@ RGReadOnlyImageBackend >> definedBehaviorsFor: anRGPackage do: aBlock [
 			aBlock value: def.]]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGReadOnlyImageBackend >> definitionFor: anObject [ 
 
 	^ self definitionFor: anObject ifAbsentRegister: [ anObject ensureRingDefinitionIn: self environment ]
@@ -281,14 +281,14 @@ RGReadOnlyImageBackend >> packagesFor: anRGEnvironment do: aBlock [
 		aBlock value: def.].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGReadOnlyImageBackend >> realBehaviorFor: anRGBehavior [
 
 	"TODO: should we cache the definition?"
 	^ Smalltalk classOrTraitNamed: anRGBehavior name asSymbol
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGReadOnlyImageBackend >> realMethodFor: anRGMethod [
 
 	"TODO: should we cache the definition?"
@@ -297,7 +297,7 @@ RGReadOnlyImageBackend >> realMethodFor: anRGMethod [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGReadOnlyImageBackend >> realPackageFor: anRGPackage [
 
 	^ RPackageOrganizer default packageNamed: anRGPackage name ifAbsent: [nil].
