@@ -28,11 +28,6 @@ ClyManagedProject class >> checkCalypsoItem: aProject isSameAs: aProject2 [
 		or: [ aProject = aProject2 ]
 ]
 
-{ #category : #sorting }
-ClyManagedProject class >> defaultSortFunctionForCalypso [
-	^ClySortByNameFunction ascending
-]
-
 { #category : #'instance creation' }
 ClyManagedProject class >> for: aProject named: aString managedBy: aPackageManager [
 	^self new 

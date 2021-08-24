@@ -175,11 +175,6 @@ ClyDataSource >> dropElements: aPassenger index: rowIndex [
 	^queryView dropPassenger: aPassenger at: dropTargetItem
 ]
 
-{ #category : #accessing }
-ClyDataSource >> elementAt: rowIndex [
-	self subclassResponsibility 
-]
-
 { #category : #controlling }
 ClyDataSource >> expand: aDataSourceItem [
 	self subclassResponsibility 
