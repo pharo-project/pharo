@@ -248,12 +248,7 @@ IRTranslator >> visitPushInstVar: instVar [
 
 { #category : #visiting }
 IRTranslator >> visitPushLiteral: lit [
-	| literal |
-	literal := lit literal.
-	"all objects that are not literals we keep writable"
-	literal isLiteral ifTrue: [ literal beReadOnlyObject ].
-	^ gen pushLiteral: literal
-	
+	^ gen pushLiteral: lit literal beReadOnlyLiteral
 ]
 
 { #category : #visiting }

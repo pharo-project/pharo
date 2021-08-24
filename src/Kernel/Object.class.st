@@ -460,6 +460,13 @@ Object >> basicSize [
 ]
 
 { #category : #'write barrier' }
+Object >> beReadOnlyLiteral [
+	"This is used by the compiler, it recurses into Arrays (see the override there)"
+	self isLiteral ifFalse: [ ^ self ].
+	self beReadOnlyObject
+]
+
+{ #category : #'write barrier' }
 Object >> beReadOnlyObject [
 	"If the VM supports read-only objects it will not write to read-only objects.
 	 An attempt to write to an instance variable of a read-only object will
