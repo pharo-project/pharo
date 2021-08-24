@@ -16,7 +16,7 @@ WordLayout class >> extending: superLayout scope: aScope host: aClass [
 
 { #category : #description }
 WordLayout class >> kind [ 
-	^ #variableWord
+	^ #words
 ]
 
 { #category : #accessing }
