@@ -64,11 +64,6 @@ ClyItemGroup class >> priority [
 	^1
 ]
 
-{ #category : #accessing }
-ClyItemGroup >> calypsoEnvironmentType [
-	^self class
-]
-
 { #category : #decoration }
 ClyItemGroup >> decorateOwnBrowserItem: myItem [
 ]

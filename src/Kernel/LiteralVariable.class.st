@@ -124,15 +124,6 @@ LiteralVariable >> isAccessedIn: aMethod [
 	^aMethod accessesRef: self
 ]
 
-{ #category : #generated }
-LiteralVariable >> isGlobal [
-
-	self
-		deprecated: 'Use #isGlobalVariable instead'
-		transformWith: '`@rec isGlobal' -> '`@rec isGlobalVariable'.
-	^ self isGlobalVariable
-]
-
 { #category : #testing }
 LiteralVariable >> isGlobalClassNameBinding [
 	^ self value isClassOrTrait
