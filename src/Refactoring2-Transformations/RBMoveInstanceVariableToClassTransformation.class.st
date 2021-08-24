@@ -23,36 +23,6 @@ Class {
 }
 
 { #category : #api }
-RBMoveInstanceVariableToClassTransformation class >> classVariable: aVariableName class: aClassName [
-
-	self deprecated: 'Use #variable:fromClass:toClass: instead'
-]
-
-{ #category : #api }
-RBMoveInstanceVariableToClassTransformation class >> instanceVariable: aVariableName class: aClassName [
-
-	self deprecated: 'Use #variable:fromClass:toClass: instead'
-]
-
-{ #category : #api }
-RBMoveInstanceVariableToClassTransformation class >> model: aRBModel classVariable: aVariableName class: aClassName [
-
-	self deprecated: 'Use #model:variable:fromClass:toClass: instead'
-]
-
-{ #category : #api }
-RBMoveInstanceVariableToClassTransformation class >> model: aRBModel instanceVariable: aVariableName class: aClassName [
-
-	self deprecated: 'Use #model:variable:fromClass:toClass instead'
-]
-
-{ #category : #api }
-RBMoveInstanceVariableToClassTransformation class >> model: aRBModel variable: aVariableName class: aClassName isClassVariable: aBoolean [
-
-	self deprecated: 'Use #model:variable:fromClass:toClass instead'
-]
-
-{ #category : #api }
 RBMoveInstanceVariableToClassTransformation class >> model: aRBModel variable: aVariableName fromClass: fromClassName toClass: toClassName [
 
 	^ self new
@@ -61,12 +31,6 @@ RBMoveInstanceVariableToClassTransformation class >> model: aRBModel variable: a
 		fromClass: fromClassName
 		toClass: toClassName;
 		yourself
-]
-
-{ #category : #api }
-RBMoveInstanceVariableToClassTransformation class >> variable: aVariableName class: aClassName isClassVariable: aBoolean [
-
-	self deprecated: 'Use #model:variable:fromClass:toClass instead'
 ]
 
 { #category : #api }
