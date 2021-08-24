@@ -22,30 +22,6 @@ Class {
 }
 
 { #category : #api }
-RBRenameVariableTransformation class >> classVariable: aVariableName class: aClassName [
-
-	self deprecated: 'use #rename:to:in:classVariable: instead'
-]
-
-{ #category : #api }
-RBRenameVariableTransformation class >> instanceVariable: aVariableName class: aClassName [
-
-	self deprecated: 'Use #rename:to:in:classVariable: instead'
-]
-
-{ #category : #api }
-RBRenameVariableTransformation class >> model: aRBModel classVariable: aVariableName class: aClassName [
-
-	self deprecated: 'Use #model:rename:to:in:classVariable: instead'
-]
-
-{ #category : #api }
-RBRenameVariableTransformation class >> model: aRBModel instanceVariable: aVariableName class: aClassName [
-
-	self deprecated: 'Use #model:rename:to:in:classVariable: instead'
-]
-
-{ #category : #api }
 RBRenameVariableTransformation class >> model: aRBModel rename: aVariableName to: aNewVariableName in: aClassName classVariable: aBoolean [
 
 	^ self new
@@ -82,12 +58,6 @@ RBRenameVariableTransformation class >> model: aRBModel renameInstanceVariable: 
 ]
 
 { #category : #api }
-RBRenameVariableTransformation class >> model: aRBModel variable: aVariableName  class: aClassName classVariable: aBoolean [
-
-	self deprecated: 'Use #model:variable:to:class:classVariable: instead'
-]
-
-{ #category : #api }
 RBRenameVariableTransformation class >> rename: aVariableName to: aNewVariableName in: aClassName classVariable: aBoolean [
 
 	^ self new
@@ -118,12 +88,6 @@ RBRenameVariableTransformation class >> renameInstanceVarible: aVariableName to:
 		class: aClassName
 		classVariable: false;
 		yourself
-]
-
-{ #category : #api }
-RBRenameVariableTransformation class >> variable: aVariableName class: aClassName classVariable: aBoolean [
-
-	self deprecated: 'Use #rename:to:in:classVariable: instead'
 ]
 
 { #category : #preconditions }
