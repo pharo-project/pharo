@@ -53,7 +53,7 @@ UndefinedObject >> asCollectionElement [
 { #category : #dispatched }
 UndefinedObject >> asLinkPrepend: anObject [
 
-	^ anObject asLink
+	^ ValueLink value: anObject
 ]
 
 { #category : #accessing }
