@@ -16,12 +16,6 @@ AbstractLayout class >> isAbstract [
 	^self == AbstractLayout
 ]
 
-{ #category : #description }
-AbstractLayout class >> kind [
-	"Return an identifier describing uniquely the layout"
-	^ self subclassResponsibility
-]
-
 { #category : #comparing }
 AbstractLayout >> = other [
 	^ self class = other class

@@ -14,11 +14,6 @@ DoubleByteLayout class >> extending: superLayout scope: aScope host: aClass [
 		yourself
 ]
 
-{ #category : #description }
-DoubleByteLayout class >> kind [ 
-	^ #variableDoubleByte
-]
-
 { #category : #accessing }
 DoubleByteLayout >> bytesPerSlot [
 

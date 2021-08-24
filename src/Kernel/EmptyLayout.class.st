@@ -15,12 +15,6 @@ EmptyLayout class >> instance [
 	^ instance ifNil: [ instance := self new ]
 ]
 
-{ #category : #description }
-EmptyLayout class >> kind [ 	
-
-	^ #empty
-]
-
 { #category : #extending }
 EmptyLayout >> extend: someSlots [
 	^ FixedLayout new
