@@ -14,7 +14,21 @@ ValueLinkTest >> testNilAsLink [
 ]
 
 { #category : #tests }
-ValueLinkTest >> testPushingOnValueLink [
+ValueLinkTest >> testPushingOnObjects [
+
+	| link o |
+	o := Object new.
+	link := 3 ~~> (#aSymbol ~~> o).
+
+	self
+		assert: link value equals: 3;
+		assert: link nextLink value equals: #aSymbol;
+		assert: link nextLink nextLink value equals: o;
+		assert: link nextLink nextLink nextLink equals: nil
+]
+
+{ #category : #tests }
+ValueLinkTest >> testPushingOnValueLinks [
 
 	| link link1 link2 link3 |
 	link := 3 ~~> nil.
