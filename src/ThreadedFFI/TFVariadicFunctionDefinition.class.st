@@ -34,10 +34,18 @@ TFVariadicFunctionDefinition class >> parameterTypes: someParameters returnType:
 { #category : #private }
 TFVariadicFunctionDefinition >> doValidate: parameterHandlers [
 
-	self
-		primDefineFunctionWith: parameterHandlers
-		returnType: returnType getHandle
-		fixedArgumentsCount: fixedArgumentCount
+	abi
+		ifNil: [ 
+			self
+				primDefineFunctionWith: parameterHandlers
+				returnType: returnType getHandle
+				fixedArgumentsCount: fixedArgumentCount ]
+		ifNotNil: [ 
+			self
+				primDefineFunctionWith: parameterHandlers
+				returnType: returnType getHandle
+				fixedArgumentsCount: fixedArgumentCount
+				abi: abi ]
 ]
 
 { #category : #accessing }
@@ -61,6 +69,15 @@ TFVariadicFunctionDefinition >> initialize [
 
 { #category : #primitives }
 TFVariadicFunctionDefinition >> primDefineFunctionWith: parameterHandlers returnType: returnTypeHandler fixedArgumentsCount: aFixedArgumentCount [
+	
+	<primitive: 'primitiveDefineVariadicFunction' error: ec>
+
+	"If the VM does not have an implementation of this primitive, we try with the non variadic version"
+	^ self primDefineFunctionWith: parameterHandlers returnType: returnTypeHandler
+]
+
+{ #category : #primitives }
+TFVariadicFunctionDefinition >> primDefineFunctionWith: parameterHandlers returnType: returnTypeHandler fixedArgumentsCount: aFixedArgumentCount abi: abiType [
 	
 	<primitive: 'primitiveDefineVariadicFunction' error: ec>
 
