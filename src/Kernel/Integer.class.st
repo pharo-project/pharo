@@ -1539,3 +1539,8 @@ Integer >> timesRepeat: aBlock [
 Integer >> truncated [ 
 	"Refer to the comment in Number|truncated."
 ]
+
+{ #category : #'bit manipulation' }
+Integer >> | anInteger [
+	^self bitOr: anInteger
+]

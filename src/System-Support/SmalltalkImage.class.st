@@ -1248,10 +1248,10 @@ SmalltalkImage >> newSpecialObjectsArray [
 							#'object is pinned' #'primitive write beyond end of object'
 							#'object moved' #'object not pinned' #'callback error'),
 							{PrimitiveError new errorName: #'operating system error'; yourself}.
-	"53 to 55 are for Alien"
-	newArray at: 53 put: (self at: #Alien ifAbsent: []).
-	newArray at: 54 put: #invokeCallbackContext:. "use invokeCallback:stack:registers:jmpbuf: for old Alien callbacks."
-	newArray at: 55 put: (self at: #UnsafeAlien ifAbsent: []).
+
+	newArray at: 53 put: nil.
+	newArray at: 54 put: nil.
+	newArray at: 55 put: nil.
 
 	"Used to be WeakFinalizationList for WeakFinalizationList hasNewFinalization, obsoleted by ephemeron support."
 	newArray at: 56 put: nil.
