@@ -1,8 +1,8 @@
 "
 I am a collection of elements that associate a key object with a value object.
 
-Description
---------------------------
+## Description
+
 
 I  can be viewed from one of two perspectives: a set of associations, or a container of values that are externally named where the name can be any object that responds to #=. The external name is referred to as the key.  I inherit many operations from Set.
 I use the #= method to locate a key. If you want a collection that use the #== method (same pointers) you can use an IdentityDictionary.
@@ -11,24 +11,110 @@ I'm used when we need a collection of objects which I can access with a key. For
 
 Internally I use Associations. The Association class can help to use me. (See examples lower)
 
-Public API and Key Messages
---------------------------
+## Public API and Key Messages
 
-- #at: aKey put: aValue / #at: aKey ifAbsentPut: aValue 		allow to add an element.
-  
-- #at: aKey / #at: aKey ifAbsent: aBlock / #at: aKey ifPresent: aBlock ifAbsent: aBlock 		allow to access my values.
+### Initializing and Adding
 
-- #keysDo: aBlock / #valuesDo: aBlock / #associationsDo: 		allow to iterate on me effectively
+A `Dictionary` can be created with values using the `Dictionary class>>>withAll:` class selector which will add the 
+values of a collection as the values of the `Dictionary` using numeric keys.
 
-Examples 
---------------------------
+```
+d := Dictionary withAll: #(1 2 3 4 5)  ""a Dictionary(1->1, 2->2, 3->3, 4->4, 5->5)""
+```
+
+Alternatively, both the keys and values can be supplied using the `Dictionary class>>>newFromKeys:andValues:` selector,
+which requires two collections of the same length, or the `Dictionary class>>>newFromPairs:` selector, which 
+uses every odd numbered index as a key and even numbered index as a value for the dictionary.
+
+Once a `Dictionary` has been created, the basic method for adding new keys is the `Dictionary>>>at:put:` selector.
+
+```
+d at: 99 put: 89  ""a Dictionary(1->1, 2->2, 3->3, 4->4, 5->5, 99->89)""
+```
+
+### Accessing 
+
+Get the value of a key using the `Dictionary>>>at:` selector.
+
+```
+d := Dictionary withAll: #(5 4 3 2 1)  ""a Dictionary(1->5, 2->4, 3->3, 4->2, 5->1)""
+d at: 1  ""5""
+```
+However accessing a key that does not exist will result in an error. In which case use
+the selectors `at:ifAbsent:`
+
+```
+d at: 100 ifAbsent: [ ""execute code in the block if the key is not found"" ]
+```
+
+A common operation is to add in a value for a key if it is absent using the `at:ifAbsentPut:` selector. Note that unlike the regular `at:put:` selector, this message uses the value of a block. 
+
+```
+d at: 100 ifAbsentPut: [ 100 ]
+```
+
+Alternatively, if you want to change the value of a key use `Dictionary>>>at:update:` selector,
+which uses the value of a block.
+
+```
+d at: 5 update: [ 12 ]
+""a Dictionary(1->5,2->4,3->3,4->2,5->12,100->100)""
+```
+
+### Iterating / Enumerating
+
+It's possible to iterate over all of the values, keys, and associations of a `Dictionary` using 
+the `valuesDo:`, `keysDo`, and `associationsDo:` selectors. These selectors evaluate a block for
+each of the items
+
+```
+""do: is an alias for valuesDo:""
+d valuesDo: [ :eachValue | ""do something with the value"" ].
+d keysDo: [ :eachKey | ""do something with the key"" ].
+d associationsDo: [ :eachAssociation | ""do something with a key-value pair"" ]
+```
+
+The `select:` selector is also implemented to return a subset of the `Dictionary` where the
+block evaluates to true using the value.
+
+```
+d select: [:each | each > 5]  ""a Dictionary(5->12,100->100)""
+``` 
+		
+### Removing
+
+Use the `removeKey:` selector to remove the association from the `Dictionary`, which will cause
+an error if the key is not found. Use the `removeKey:ifAbsent:` selector to control this behavior.
+
+```
+d removeKey: 5.
+d removeKey: 1200.  ""Error""
+d removeKey: 1200 ifAbsent: [ ""do something"" ].
+```
+
+### Testing
+
+Check if a value or key is present in a `Dictionary` using the `includes:` or `includesKey:` selectors.
+
+```
+""Look if 12 is the value of any key in the Dictionary""
+d includes: 12.
+
+""Look if 100 is a key in the Dictionary""
+d includesKey: 100.
+```
+## Examples 
+
 
 To create a dictiony with indexes as key: 
 
+```
 	Dictionary withAll: #(7 3 1 3)   		""returns:  a Dictionary(1->7 2->3 3->1 4->3 ""
+```
 
 To use Objects as key (here symbols): 
 
+```
 	colors := Dictionary new 
 				at: #yellow put: Color yellow; 
 				at: #blue put: Color blue;
@@ -38,23 +124,27 @@ To use Objects as key (here symbols):
 	colors at: #yellow. 	""returns:  Color yellow""
 	colors keys          ""returns: a Set(#blue #yellow #red)""
 	colors values       ""returns:  {Color blue. Color yellow. Color red}"" 
+```
 
 You can also directly use Associations: 
 
+```
 	colors := Dictionary with: #yellow -> Color yellow with: #blue -> Color blue.
 	colors add: #red -> Color red.
 	
 	colors associations  	""returns: {#yellow->Color yellow. #red->Color red. #blue->Color blue}""
-		
+```
+	
 Here some more examples: 
 
+```
 	colors := Dictionary newFrom: { #blue->Color blue . #red->Color red . #yellow->Color yellow }. 
 	colors removeKey: #blue. 
 	colors at: #red ifPresent: [ :color |  color darker] ifAbsent: [ Error signal: 'The red color should be here.' ] .		""return: (Color r: 0.92 g: 0.0 b: 0.0 alpha: 1.0)""
 	colors associations 		 ""{#yellow->Color yellow. #red->Color red}""
- 
-Internal Representation and Key Implementation Points.
---------------------------
+```
+
+## Internal Representation and Key Implementation Points.
 
 I am just a collection of associations. If I need my keys I will just return the keys of my associations. Idem for my values.
 I use the #= method in order to manipulate my keys. I cannot have two associations that are equals with the #= method.
