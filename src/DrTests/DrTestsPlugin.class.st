@@ -132,11 +132,6 @@ DrTestsPlugin >> reRunForConfiguration: aDTpluginConfiguration [
 ]
 
 { #category : #api }
-DrTestsPlugin >> reRunPlugin: aSymbol with: aDTpluginConfiguration [
-	self deprecated: 'Should not be used, meta-programming. Need to be removed.'.
-]
-
-{ #category : #api }
 DrTestsPlugin >> resultButtonHelp [
 	^ self subclassResponsibility
 ]
