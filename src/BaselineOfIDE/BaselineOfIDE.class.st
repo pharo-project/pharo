@@ -218,6 +218,7 @@ BaselineOfIDE >> loadExtraTools [
 	Metacello new
 		baseline: 'NewToolsDocumentationReader';
 		repository: 'github://pharo-spec/NewTools-DocumentationReader:master/src';
+		onConflictUseIncoming;
 		load.
 "
 	Metacello new
