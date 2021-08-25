@@ -1231,8 +1231,8 @@ SmalltalkImage >> newSpecialObjectsArray [
 	newArray at: 44 put: (self at: #ExternalAddress ifAbsent: []).
 	newArray at: 45 put: (self at: #ExternalStructure ifAbsent: []).
 	newArray at: 46 put: (self at: #ExternalData ifAbsent: []).
-	newArray at: 47 put: (self at: #ExternalFunction ifAbsent: []).
-	newArray at: 48 put: (self at: #ExternalLibrary ifAbsent: []).
+	newArray at: 47 put: nil.
+	newArray at: 48 put: nil.
 	newArray at: 49 put: #aboutToReturn:through:.
 	newArray at: 50 put: #run:with:in:.
 	"51 reserved for immutability message"

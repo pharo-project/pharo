@@ -74,7 +74,6 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 
 	"FFI"
 	ExternalObject initialize.
-	ExternalFunction initialize.
 	ExternalType initialize.
 	FFIBackend initialize.
 
