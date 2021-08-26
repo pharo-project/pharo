@@ -134,7 +134,7 @@ MCFileTreeStSnapshotWriter >> writeMethodDefinition: methodDefinition to: method
         visit: [ self writeMethodDefinition: methodDefinition ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #writing }
 MCFileTreeStSnapshotWriter >> writeMethodHolderDefinitions: aCollection extension: extension to: basePath do: aBlock [
   aCollection
     keysAndValuesDo: [ :className :definition | 
