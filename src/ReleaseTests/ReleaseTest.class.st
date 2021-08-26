@@ -15,7 +15,7 @@ ReleaseTest class >> actualProcesses [
 { #category : #accessing }
 ReleaseTest class >> defaultTimeLimit [
 
-	^ 1 minute
+	^ 2 minutes
 ]
 
 { #category : #accessing }
