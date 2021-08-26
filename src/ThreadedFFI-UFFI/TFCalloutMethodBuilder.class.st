@@ -43,6 +43,7 @@ TFCalloutMethodBuilder class >> initializeABIMapping [
 	^ ABI_MAPPING := { 
 		  ({ #Win32. #x86_64. #win64 } -> WIN_X86_64_WIN64).
 		  ({ #Win32. #x86_64. #gnuw64 } -> WIN_X86_64_GNUW64).
+		  ({ #Win32. #x86_64. #cdecl } -> WIN_X86_64_GNUW64).
 
 		  ({ #'Mac OS'. #x86_64. #unix64 } -> DARWIN_X86_64_UNIX64).
 		  ({ #'Mac OS'. #x86_64. #win64 } -> DARWIN_X86_64_WIN64).
@@ -52,6 +53,7 @@ TFCalloutMethodBuilder class >> initializeABIMapping [
 		  ({ #unix. #x86_64. #win64 } -> UNIX_X86_64_WIN64).
 		  ({ #unix. #x86_64. #gnuw64 } -> UNIX_X86_64_GNUW64).
 
+		  ({ #Win32. #i686. #cdecl } -> WIN_X86_32_SYSV).
 		  ({ #Win32. #i686. #sysv } -> WIN_X86_32_SYSV).
 		  ({ #Win32. #i686. #stdcall } -> WIN_X86_32_STDCALL).
 		  ({ #Win32. #i686. #thisCall } -> WIN_X86_32_THISCALL).
@@ -60,6 +62,7 @@ TFCalloutMethodBuilder class >> initializeABIMapping [
 		  ({ #Win32. #i686. #pascal } -> WIN_X86_32_PASCAL).
 		  ({ #Win32. #i686. #register } -> WIN_X86_32_REGISTER).
 
+		  ({ #unix. #i686. #cdecl } -> UNIX_X86_32_SYSV).
 		  ({ #unix. #i686. #sysv } -> UNIX_X86_32_SYSV).
 		  ({ #unix. #i686. #thisCall } -> UNIX_X86_32_THISCALL).
 		  ({ #unix. #i686. #fastCall } -> UNIX_X86_32_FASTCALL).
