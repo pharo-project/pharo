@@ -85,7 +85,7 @@ TFFunctionCallTest >> testCallingFunctionWithW64CallingConvention [
 	| fun returnValue |
 	
 	"This test is only valid in OSX and X86_64, as calling conventions constants are heavily dependant on the OS & Architecture"
-	(OSPlatform current isMacOS and: [ (Smalltalk vm getSystemAttribute: 1003) = 'x86_64']) 
+	(OSPlatform current isMacOS and: [ Smalltalk vm architectureName = 'x86_64']) 
 		ifFalse: [ self skip ].
 
 	fun := TFExternalFunction

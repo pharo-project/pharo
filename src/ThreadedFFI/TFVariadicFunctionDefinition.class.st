@@ -21,12 +21,29 @@ TFVariadicFunctionDefinition class >> parameterTypes: someParameters returnType:
 ]
 
 { #category : #'instance creation' }
+TFVariadicFunctionDefinition class >> parameterTypes: someParameters returnType: returnType abi: abiType [
+
+	^ self error: 'You should use #parameterTypes:returnType:fixedArgumentCount:abi:'
+]
+
+{ #category : #'instance creation' }
 TFVariadicFunctionDefinition class >> parameterTypes: someParameters returnType: returnType fixedArgumentCount: fixedArgumentCount [
+
+	^ self
+		  parameterTypes: someParameters
+		  returnType: returnType
+		  fixedArgumentCount: fixedArgumentCount
+		  abi: nil
+]
+
+{ #category : #'instance creation' }
+TFVariadicFunctionDefinition class >> parameterTypes: someParameters returnType: returnType fixedArgumentCount: fixedArgumentCount abi: abiType [
 
 	^ self new
 		parameterTypes: someParameters;
 		returnType: returnType;
 		fixedArgumentCount: fixedArgumentCount;
+		abi: abiType;
 		autoRelease;
 		yourself
 ]

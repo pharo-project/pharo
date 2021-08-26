@@ -1,3 +1,6 @@
+"
+I represent all possible ABI Types
+"
 Class {
 	#name : #TFAbiTypes,
 	#superclass : #SharedPool,
@@ -26,7 +29,7 @@ Class {
 		'WIN_X86_64_GNUW64',
 		'WIN_X86_64_WIN64'
 	],
-	#category : #ThreadedFFI
+	#category : #'ThreadedFFI-Base'
 }
 
 { #category : #initialization }
