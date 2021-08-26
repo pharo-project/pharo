@@ -90,14 +90,6 @@ DebuggerSettings class >> generalDebuggingSettingsOn: aBuilder [
 						description:
 							'If true, then a message is send to the Transcript for each deprecated method invocation' ].
 
-			(aBuilder setting: #cmdDotEnabled)
-				label: 'Enable cmd-dot interrupt key';
-				target: UserInterruptHandler;
-				default: true;
-				description:
-					'If true, it allows the user to stop currently running process by opening-up a debugger'.
-
-
 			(aBuilder setting: #logDebuggerStackToFile)
 				label: 'Write message to debug log file when fall into debugger';
 				target: DebugSession;

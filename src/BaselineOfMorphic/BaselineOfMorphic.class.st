@@ -48,7 +48,6 @@ BaselineOfMorphic >> baseline: spec [
 			spec repository: repository; loads: #('Core') ].
 
 		spec package: 'System-Localization'.
-		spec package: 'System-Clipboard'.
 		
 		spec package: 'EmbeddedFreeType'.
 		spec package: 'FileSystem-Zip'.

@@ -36,7 +36,6 @@ BaselineOfMorphicCore >> baseline: spec [
 		spec baseline: 'Display' with: [spec repository: repository].
 		spec baseline: 'UnifiedFFI' with: [spec repository: repository].
 
-		spec package: 'System-VMEvents'.
 		spec package: 'System-Object Events'.
 		spec package: 'Collections-DoubleLinkedList'.
 		spec package: 'System-Caching'.
