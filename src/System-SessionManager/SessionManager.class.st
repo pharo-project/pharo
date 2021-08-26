@@ -130,11 +130,9 @@ SessionManager class >> initializedSessionManager [
 		registerSystemClassNamed: #InputEventFetcher atPriority: 40; "System - 40" "WARNING: should not be in the list if InputEventSensor is already there"
 		registerSystemClassNamed: #OSPlatform atPriority: 50; "System - 50"
 
-		registerSystemClassNamed: #Alien atPriority: 60; "System - 60"
 		registerSystemClassNamed: #ExternalObject atPriority: 60; "System - 60"
 		registerSystemClassNamed: #FFIBackend atPriority: 60; "System - 60"
 		registerSystemClassNamed: #FFIMethodRegistry atPriority: 60; "System - 60"
-		registerSystemClassNamed: #FFICallbackThunk atPriority: 60; "System - 60"
 		registerSystemClassNamed: #FileLocator atPriority: 90; "System - 90"
 		
 		registerSystemClassNamed: #Stdio; "System"

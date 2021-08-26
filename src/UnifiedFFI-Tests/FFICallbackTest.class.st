@@ -84,32 +84,6 @@ FFICallbackTest >> testCqsortWithByteArray [
 	self assert: results equals: expected
 ]
 
-{ #category : #tests }
-FFICallbackTest >> testEnumerationReturnValue [
-	| cb returnValue |
-	
-	"This tests is only valid if using the alien callbacks"
-	(FFIBackend current isKindOf: OldFFIBackend) ifFalse: [ ^ self skip].
-	
-	"Issue 19145 - change semantics so that enumerations can be returned
-	from callback without sending #value to it."
-	cb := FFICallback
-				signature:  #( FFITestEnumeration ())
-				block: [ CCC ].
-	"Dummy value of nil is possible since signature has no arguments"
-	returnValue := cb backendCallback valueWithContext: self sp: nil. 
-	self assert: returnValue equals: CCC value.
-	
-	
-	"Confirm backward compatibility okay"
-	cb := FFICallback
-				signature:  #( FFITestEnumeration ())
-				block: [ CCC value ].
-	"Dummy value of nil is possible since signature has no arguments"
-	returnValue := cb backendCallback valueWithContext: self sp: nil. 
-	self assert: returnValue equals: CCC value
-]
-
 { #category : #support }
 FFICallbackTest >> wordResult: anInteger [
 	"For testEnumerationReturnValue, simulate a method invoked 

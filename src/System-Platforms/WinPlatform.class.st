@@ -50,34 +50,6 @@ WinPlatform >> getEnvironmentVariable: lpName into: lpBuffer size: nSize [
 	^ self ffiCall: #(ulong GetEnvironmentVariableW (Win32WideString lpName, Win32WideString  lpBuffer, ulong nSize))
 ]
 
-{ #category : #accessing }
-WinPlatform >> getPwdViaFFI: buffer size: bufferSize [
-	"This method calls the Standard C Library getcwd() function. The name of the argument (arg1) should fit decompiled version. This method is used in getting the current working directory. getcwd is preferred over pwd because getcwd takes care of re-initialization of environment variables, whereas pwd needs implicit re- initialization.
-	
-	This method should be removed, as we should delegate to the VM
-	
-	We use FFI-OldFFIBackend for this because this is required for bootstrapping, and we ensure minimal dependencies."
-	
-	| wideString return |
-	
-	wideString := Win32WideString new: bufferSize.
-	
-	return := (ExternalLibraryFunction 
-			name: '_wgetcwd'
-			module: 'msvcrt.dll'
-			callType: 0
-			returnType: ExternalType char asPointerType
-			argumentTypes: {
-				ExternalType char asPointerType.
-				ExternalType long })
-					invokeWith: wideString getHandle with: bufferSize.
-
-	return ifNil: [ ^ nil ].
-	
-	"The primitive is returning an string that is encoded in UTF8. We need to emulate the same behavior"
-	^ wideString asString utf8Encoded asString
-]
-
 { #category : #testing }
 WinPlatform >> isWindows [
 	^ true

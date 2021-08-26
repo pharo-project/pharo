@@ -139,7 +139,7 @@ SystemDependenciesTest >> knownUFFIDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Refactoring-Critics' #'Refactoring-Environment')
+	^ #(#'Refactoring-Critics' #'Refactoring-Environment' 'Graphics-Primitives')
 ]
 
 { #category : #'known dependencies' }
@@ -210,7 +210,8 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames,
 		{ BaselineOfNewTools name }, (BaselineOfNewTools deepPackagesOfGroupNamed: 'Methods'),
 		{ BaselineOfFuel name }, (BaselineOfFuel packagesOfGroupNamed: #Core),
-		{ BaselineOfFuelPlatform name }, BaselineOfFuelPlatform allPackageNames ).
+		{ BaselineOfFuelPlatform name }, BaselineOfFuelPlatform allPackageNames,
+		BaselineOfThreadedFFI corePackageNames ).
 	
 	self assertCollection: dependencies hasSameElements: self knownBasicToolsDependencies.
 ]
@@ -420,7 +421,8 @@ SystemDependenciesTest >> testExternalMorphicCoreDependencies [
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
-		BaselineOfMorphicCore allPackageNames ).
+		BaselineOfMorphicCore allPackageNames,
+		BaselineOfThreadedFFI corePackageNames ).
 	
 	self assertCollection: dependencies hasSameElements: self knownMorphicCoreDependencies.
 ]
@@ -443,7 +445,8 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel packagesOfGroupNamed: #Core),
-		BaselineOfFuelPlatform allPackageNames ).
+		BaselineOfFuelPlatform allPackageNames,
+		BaselineOfThreadedFFI corePackageNames ).
 	
 	self assertCollection: dependencies hasSameElements: self knownMorphicDependencies.
 ]
@@ -508,6 +511,7 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 		
 		(BaselineOfSpecCore deepPackagesOfGroupNamed: #default),
 		(BaselineOfSpec2 deepPackagesOfGroupNamed: #default),
+		BaselineOfThreadedFFI corePackageNames,
 	
 		"Tests"
 		BaselineOfSUnit defaultPackageNames,
@@ -529,7 +533,8 @@ SystemDependenciesTest >> testExternalUFFIDependencies [
 		self tonelCorePackageNames,
 		BaselineOfTraits corePackages,				
 		BaselineOfSUnit defaultPackageNames,
-		BaselineOfUnifiedFFI allPackageNames).
+		BaselineOfUnifiedFFI allPackageNames,
+		BaselineOfThreadedFFI corePackageNames).
 	
 	self assertCollection: dependencies hasSameElements: self knownUFFIDependencies.
 ]
@@ -559,7 +564,8 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		BaselineOfUI allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel packagesOfGroupNamed: #Core),
-		BaselineOfFuelPlatform allPackageNames )).
+		BaselineOfFuelPlatform allPackageNames,
+		BaselineOfThreadedFFI corePackageNames )).
 	
 	self assertCollection: dependencies hasSameElements: self knownUIDependencies.
 ]
