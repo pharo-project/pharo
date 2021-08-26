@@ -135,7 +135,7 @@ ImageCleaner >> cleanUpMethods [
 ImageCleaner >> cleanUpProcesses [
 	(Process allInstances
 		reject: [ :p | 
-			{InputEventFetcher default fetcherProcess.
+			{
 			Processor activeProcess.
 			WeakArray runningFinalizationProcess.
 			Processor backgroundProcess.

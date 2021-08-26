@@ -249,11 +249,6 @@ ProcessBrowser class >> registerWellKnownProcesses [
 		allowStop: false
 		allowDebug: false.
 	self
-		registerWellKnownProcess: [ InputEventFetcher default fetcherProcess ]
-		label: nil
-		allowStop: false
-		allowDebug: false.
-	self
 		registerWellKnownProcess: [ UIManager default uiProcess ]
 		label: nil
 		allowStop: false

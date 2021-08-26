@@ -11,11 +11,10 @@ BaselineOfOSWindow >> baseline: spec [
 		spec 
 			package: 'OSWindow-Core';
 			package: 'OSWindow-SDL2';
-			package: 'OSWindow-VM';
 			package: 'OSWindow-SDL2-Examples';
 			package: 'OSWindow-Tests'.
 		spec 
-			group: 'Core' with: #('OSWindow-Core' 'OSWindow-SDL2' 'OSWindow-VM' 'OSWindow-SDL2-Examples');
+			group: 'Core' with: #('OSWindow-Core' 'OSWindow-SDL2' 'OSWindow-SDL2-Examples');
 			group: 'Tests' with: #('OSWindow-Tests');
 			group: 'default' with: #('Core' 'Tests') ]
 ]

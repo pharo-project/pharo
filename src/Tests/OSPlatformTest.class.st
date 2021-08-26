@@ -55,5 +55,5 @@ OSPlatformTest >> testStartUpList [
 	
 	| startupList |
 	startupList := (SessionManager default startupList collect: [:each | each handledId]).
-	self should: [ (startupList indexOf: #OSPlatform) < (startupList indexOf: #InputEventSensor) ]
+	self should: [ (startupList indexOf: #Delay) < (startupList indexOf: #GlobalIdentifier) ]
 ]

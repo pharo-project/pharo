@@ -11,17 +11,11 @@ interruptKey
 "
 Class {
 	#name : #UserInterruptHandler,
-	#superclass : #InputEventHandler,
-	#instVars : [
-		'interruptKey'
-	],
+	#superclass : #Object,
 	#classVars : [
 		'CmdDotEnabled'
 	],
-	#pools : [
-		'EventSensorConstants'
-	],
-	#category : #'System-VMEvents-Base'
+	#category : #'OSWindow-SDL2-Base'
 }
 
 { #category : #setting }
@@ -34,30 +28,18 @@ UserInterruptHandler class >> cmdDotEnabled: aBoolean [
 	CmdDotEnabled := aBoolean
 ]
 
-{ #category : #'instance creation' }
-UserInterruptHandler class >> new [
-	^ super new setInterruptKeyValue: $. asciiValue
-]
-
-{ #category : #events }
-UserInterruptHandler >> handleEvent: evt [
-	"Interrupt event... evt is shared, so make a copy of it."
-
-	| buf |
-	buf := evt shallowCopy.
-	(self isKeyboardEvent: evt)
-		ifTrue: [ 
-			| keycode modifiers |
-			"Check if the event is a user interrupt"
-			keycode := buf sixth.
-			modifiers := buf fifth.
-			(keycode = interruptKey and: [ modifiers anyMask: ModifierKeysBitMask ])
-				ifTrue: [ 
-					Display deferUpdates: false.
-					(Smalltalk hasClassNamed: #SoundService)
-						ifTrue: [ (Smalltalk classNamed: #SoundService) default shutDown ].
-					self handleUserInterrupt ].
-			^ self ]
+{ #category : #setting }
+UserInterruptHandler class >> settingsOn: aBuilder [
+	
+	<systemsettings>
+	
+	(aBuilder setting: #cmdDotEnabled)
+		parent: #debugging;
+		label: 'Enable cmd-dot interrupt key';
+		target: UserInterruptHandler;
+		default: true;
+		description:
+			'If true, it allows the user to stop currently running process by opening-up a debugger'
 ]
 
 { #category : #private }
@@ -131,10 +113,4 @@ UserInterruptHandler >> processToInterrupt [
 					ifFalse: [fallback := p]]]
 		startingAt: Processor activePriority. 
 	^fallback
-]
-
-{ #category : #initialization }
-UserInterruptHandler >> setInterruptKeyValue: anInt [
-	interruptKey := anInt
-
 ]

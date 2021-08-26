@@ -11,9 +11,6 @@ Class {
 		'handler',
 		'wasHandled'
 	],
-	#pools : [
-		'EventSensorConstants'
-	],
 	#category : #'Morphic-Core-Events'
 }
 
