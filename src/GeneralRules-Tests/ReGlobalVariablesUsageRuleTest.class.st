@@ -14,8 +14,8 @@ ReGlobalVariablesUsageRuleTest >> sampleMethod [
 	
 	"Note: we compile this method in #setUp and #tearDown to add
 	a global variable that would otherwise be undeclared"
-	Display value.
-	Sensor value
+	Smalltalk value.
+
 ]
 
 { #category : #running }
@@ -29,8 +29,7 @@ ReGlobalVariablesUsageRuleTest >> setUp [
 		
 	self class compile: 'sampleMethod
 	sampleMethod
-		Display value.
-		Sensor value.
+		Smalltalk value.
 		MyGlobal value'
 ]
 

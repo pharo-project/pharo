@@ -127,7 +127,6 @@ SessionManager class >> initializedSessionManager [
 		registerSystemClassNamed: #SmallInteger atPriority: 10; "System - 10"
 		registerSystemClassNamed: #Delay atPriority: 20; "System - 20"
 		registerSystemClassNamed: #ProcessorScheduler atPriority: 30; "System - 30"
-		registerSystemClassNamed: #InputEventFetcher atPriority: 40; "System - 40" "WARNING: should not be in the list if InputEventSensor is already there"
 		registerSystemClassNamed: #OSPlatform atPriority: 50; "System - 50"
 
 		registerSystemClassNamed: #ExternalObject atPriority: 60; "System - 60"
@@ -161,7 +160,6 @@ SessionManager class >> initializedSessionManager [
 		registerSystemClassNamed: #UUIDGenerator; "Network"
 
 		registerGuiClassNamed: #DisplayScreen atPriority: 10; "GUI - 10"
-		registerGuiClassNamed: #InputEventSensor atPriority: 20; "GUI - 20 / Need to create initialize/release methods?"
 		
 		registerGuiClassNamed: #Cursor; "GUI"	
 		registerGuiClassNamed: #Form; "GUI"

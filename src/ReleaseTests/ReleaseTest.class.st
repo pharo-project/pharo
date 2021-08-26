@@ -73,7 +73,6 @@ ReleaseTest >> knownProcesses [
 	^ {
 		Processor activeProcess.	
 		Processor backgroundProcess.
-		InputEventFetcher default fetcherProcess.
 		WeakArray runningFinalizationProcess.
 		SmalltalkImage current lowSpaceWatcherProcess.
 		MorphicUIManager uiProcess.

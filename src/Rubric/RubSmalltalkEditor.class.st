@@ -328,7 +328,7 @@ RubSmalltalkEditor >> classNamesContainingIt [
 	self lineSelectAndEmptyCheck: [^self].
 	self model systemNavigation 
 		browseClassesWithNamesContaining: self selection string
-		caseSensitive: Sensor shiftPressed
+		caseSensitive: World currentHand shiftPressed
 ]
 
 { #category : #'do-its' }
