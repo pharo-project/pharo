@@ -24,7 +24,6 @@ Class {
 		'hasChanged',
 		'savedPatch',
 		'lastEventBuffer',
-		'lastKeyScanCode',
 		'captureBlock',
 		'recentModifiers',
 		'pendingEventQueue',

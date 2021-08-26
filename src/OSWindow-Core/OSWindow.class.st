@@ -49,8 +49,7 @@ Class {
 		'backendWindow'
 	],
 	#classVars : [
-		'TraceEvents',
-		'VMWindow'
+		'TraceEvents'
 	],
 	#category : #'OSWindow-Core-Base'
 }

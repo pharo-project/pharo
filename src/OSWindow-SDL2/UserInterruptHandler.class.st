@@ -12,9 +12,6 @@ interruptKey
 Class {
 	#name : #UserInterruptHandler,
 	#superclass : #Object,
-	#instVars : [
-		'interruptKey'
-	],
 	#classVars : [
 		'CmdDotEnabled'
 	],
