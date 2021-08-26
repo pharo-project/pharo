@@ -106,7 +106,7 @@ d includesKey: 100.
 ## Examples 
 
 
-To create a dictiony with indexes as key: 
+To create a dictionary with indexes as key: 
 
 ```
 	Dictionary withAll: #(7 3 1 3)   		""returns:  a Dictionary(1->7 2->3 3->1 4->3 ""
@@ -218,6 +218,17 @@ Dictionary >> = aDictionary [
 
 { #category : #adding }
 Dictionary >> add: anAssociation [
+
+	"Add anAssociation to the dictionary. If the key is already in the dictionary then the value 
+	will overwrite the one currently present.
+	
+	```
+	d := Dictionary new at: 5 put: 1; yourself.  ""a Dictionary(5->1)""
+	d add: 5-> 12.  ""a Dictionary(5->12)""
+	a add: 4->4. ""a Dictionary(5->12,4->4)""
+	```
+	"
+	
 	| index element |
 	index := self findElementOrNil: anAssociation key.
 	element := array at: index.
@@ -229,10 +240,21 @@ Dictionary >> add: anAssociation [
 
 { #category : #adding }
 Dictionary >> addAll: aKeyedCollection [
-	aKeyedCollection == self ifFalse: [
-		aKeyedCollection keysAndValuesDo: [:key :value |
-			self at: key put: value]].
-	^aKeyedCollection
+
+	"Add all of the keys and values from aKeyedCollection to the dictionary.
+	If the key already exists then the value is overwritten.
+	
+	```
+	d1 := Dictionary new at: 1 put: 2; at: 2 put: 5; yourself.
+	d2 := Dictionary new at: 1 put: 4; at: 100 put 6; yourself.
+	d1 addAll: d2.  ""d1 now a Dictionary(1->4,2->5,100->6)""
+	```
+	"
+
+	aKeyedCollection == self ifFalse: [ 
+		aKeyedCollection keysAndValuesDo: [ :key :value | 
+			self at: key put: value ] ].
+	^ aKeyedCollection
 ]
 
 { #category : #accessing }
@@ -281,14 +303,23 @@ Dictionary >> associations [
 ]
 
 { #category : #enumerating }
-Dictionary >> associationsDo: aBlock [ 
-	"Evaluate aBlock for each of the receiver's elements (key/value 
-	associations)."
+Dictionary >> associationsDo: aBlock [
 
-	tally = 0 ifTrue: [^ self].
-	array do:
-		[:each |
-		each ifNotNil: [aBlock value: each]]
+	"Evaluate aBlock for each of the receiver's elements (key/value 
+	associations). See keysDo: or valuesDo: if you only need to evaluate
+	one or the other. Also see keysAndValuesDo: for a similar 
+	selector where the block accepts a two agruments.
+
+	```
+	d := Dictionary withAll: #(4 5 9 6 76).
+	a := OrderedCollection new.
+	d keysAndValuesDo: [ :assoc | a add: assoc value. a add: assoc key ].
+	a. ""an OrderedCollection(75 5 8 3 3 1 5 4 4 2)""
+	```
+	"
+
+	tally = 0 ifTrue: [ ^ self ].
+	array do: [ :each | each ifNotNil: [ aBlock value: each ] ]
 ]
 
 { #category : #enumerating }
@@ -450,6 +481,9 @@ Dictionary >> bindingOf: varName [
 
 { #category : #enumerating }
 Dictionary >> bindingsDo: aBlock [
+
+	"An alias for associationsDo:"
+
 	self associationsDo: aBlock
 ]
 
@@ -503,7 +537,9 @@ Dictionary >> difference: aCollection [
 { #category : #enumerating }
 Dictionary >> do: aBlock [
 
-	^self valuesDo: aBlock
+	"An alias for valuesDo:. Evaluate aBlock for each of my values."
+
+	^ self valuesDo: aBlock
 ]
 
 { #category : #private }
@@ -554,8 +590,10 @@ Dictionary >> hasBindingThatBeginsWith: aString [
 { #category : #testing }
 Dictionary >> includes: anObject [
 
-	self do: [:each | anObject = each ifTrue: [^true]].
-	^false
+	"Check if anObject is one of the values in the dictionary"
+
+	self do: [ :each | anObject = each ifTrue: [ ^ true ] ].
+	^ false
 ]
 
 { #category : #testing }
@@ -661,8 +699,22 @@ Dictionary >> keys [
 
 { #category : #enumerating }
 Dictionary >> keysAndValuesDo: aBlock [
-	^self associationsDo:[:assoc|
-		aBlock value: assoc key value: assoc value].
+
+	"
+	Evaluate aBlock for each of the receiver's keys and values. The block must accept two 
+	inputs, the first being the key and the second being the value. See keysDo: or valuesDo: 
+	if you only need to evaluate one or the other. Also see associationsDo: for a similar 
+	selector where the block accepts a single agrument.
+	
+	```
+	d := Dictionary withAll: #(4 5 9 6 76).
+	a := OrderedCollection new.
+	d keysAndValuesDo: [ :k :v | a add: v. a add: k ]. ""an OrderedCollection(75 5 8 3 3 1 5 4 4 2)""
+	```
+	"
+
+	^ self associationsDo: [ :assoc | 
+		  aBlock value: assoc key value: assoc value ]
 ]
 
 { #category : #removing }
@@ -680,10 +732,29 @@ Dictionary >> keysAndValuesRemove: keyValueBlock [
 ]
 
 { #category : #enumerating }
-Dictionary >> keysDo: aBlock [ 
-	"Evaluate aBlock for each of the receiver's keys."
+Dictionary >> keysDo: aBlock [
 
-	self associationsDo: [:association | aBlock value: association key]
+	"Evaluate aBlock for each of the receiver's keys.
+
+	
+	Iterating through the keys does not create a new dictionary but you can save the results
+	to another collection 
+	
+	```
+	d := Dictionary withAll: #(4 5 9 6 76).
+	a := OrderedCollection new.
+	d keysDo: [ :each |  a add: each ]. ""an OrderedCollection(5 3 1 4 2)""
+	```
+	
+	It's also possible to modify the dictionary while iterating through the keys
+	
+	```
+	d := Dictionary withAll: #(4 5 9 6 76).
+	d keysDo: [ :each | d at: each put: (d at: each) - 1 ]  ""a Dictionary(1->3 2->4 3->8 4->5 5->75 )""
+	```
+	"
+
+	self associationsDo: [ :association | aBlock value: association key ]
 ]
 
 { #category : #accessing }
@@ -823,15 +894,21 @@ Dictionary >> scanFor: anObject [
 ]
 
 { #category : #enumerating }
-Dictionary >> select: aBlock [ 
-	"Evaluate aBlock with each of my values as the argument. Collect into a new dictionary, only those associations for which aBlock evaluates to true."
+Dictionary >> select: aBlock [
+
+	"Evaluate aBlock with each of my values as the argument. Collect into a new dictionary, only those associations for which aBlock evaluates to true.
+
+	```	
+	d := Dictionary withAll: #(1 2 3 4 5). ""a Dictionary(1->1 2->2 3->3 4->4 5->5 )""
+	d select: [ :each | each even ]. ""a Dictionary(2->2 4->4 )""
+	```
+	"
 
 	| newCollection |
 	newCollection := self copyEmpty.
-	self associationsDo: [ :each |
-		(aBlock value: each value) ifTrue: [
-			newCollection add: each copy ] ].
-	^newCollection
+	self associationsDo: [ :each | 
+		(aBlock value: each value) ifTrue: [ newCollection add: each copy ] ].
+	^ newCollection
 ]
 
 { #category : #printing }
@@ -884,15 +961,33 @@ Dictionary >> values [
 ]
 
 { #category : #enumerating }
-Dictionary >> valuesDo: aBlock [ 
-	"Evaluate aBlock for each of the receiver's values.  Implemented with == checks
-	merely for the sake of maximum efficiency"
+Dictionary >> valuesDo: aBlock [
 
-	tally = 0 ifTrue: [ ^self ].
-	1 to: array size do:
-		[ :eachIndex | 
-			| eachAssociation |
-			eachAssociation := array at: eachIndex.
-			nil == eachAssociation ifFalse: [ aBlock value: eachAssociation value ]
-		]
+	"Evaluate aBlock for each of the receiver's values.  Implemented with == checks
+	merely for the sake of maximum efficiency
+
+	
+	The result of any transformation of each value is not reflected in the dictionary.
+	If you wish to do this use the select: message.
+	
+	```
+	d := Dictionary withAll: #(1 2 3 4 5).
+	d valuesDo: [ :each | each * 7 ].  ""a Dictionary(1->1 2->2 3->3 4->4 5->5 )""
+	```
+	
+	However you can assign results to another collection in the block if you want.
+	(Note that the ordering isn't guarenteed)
+	
+	```
+	a := OrderedCollection new.
+	d valuesDo: [ :each | a add: each * 7 ].  ""an OrderedCollection(35 21 7 28 14)""
+	```
+	"
+
+	tally = 0 ifTrue: [ ^ self ].
+	1 to: array size do: [ :eachIndex | 
+		| eachAssociation |
+		eachAssociation := array at: eachIndex.
+		nil == eachAssociation ifFalse: [ 
+			aBlock value: eachAssociation value ] ]
 ]
