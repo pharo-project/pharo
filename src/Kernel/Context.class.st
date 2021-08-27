@@ -1340,7 +1340,7 @@ Context >> printDebugOn: aStream [
 	aStream 
 		nextPutAll: ' in Block: '.
 	
-	blockSource := closureOrNil printStringLimitedTo: 50.
+	blockSource := [closureOrNil printStringLimitedTo: 50] on:Exception do: ['Cannot print the closure'].
 	blockSourceSize := blockSource size.
 	blockSource := blockSource copyUpTo: Character cr.
 	
@@ -1425,7 +1425,7 @@ Context >> printOn: aStream [
 					(self tempAt: 1) selector printOn: aStream ] ]
 		ifNotNil:
 			[ :outerContext | 
-			closureOrNil printOn: aStream.
+			[closureOrNil printOn: aStream] on:Exception do: [aStream nextPutAll: 'Error printing the compiledBlock'].
 			aStream nextPutAll: ' in '.
 			outerContext printOn: aStream ]
 ]
