@@ -27,7 +27,7 @@ String >> decodeMimeHeader [
 
 	Thanks to Yokokawa-san, it works in m17n package.  Try the following:
 
-	'=?ISO-2022-JP?B?U1dJS0lQT1AvGyRCPUJDKyVpJXMlQRsoQi8=?= =?ISO-2022-JP?B?GyRCJVElRiUjJSobKEIoUGF0aW8p?=' decodeMimeHeader.
+	'=?	?B?U1dJS0lQT1AvGyRCPUJDKyVpJXMlQRsoQi8=?= =?ISO-2022-JP?B?GyRCJVElRiUjJSobKEIoUGF0aW8p?=' decodeMimeHeader.
 "
 	| input |
 	input := self readStream.
@@ -57,7 +57,7 @@ String >> decodeMimeHeader [
 					mimeStream: temp readStream;
 					dataStream: charsetStream;
 					mimeDecode.
-				output nextPutAll: (charsetStream contents convertFromEncoding: charset).
+				output nextPutAll: (charsetStream contents asByteArray decodeWith: charset).
 				]
 			ifFalse: 
 				[ output
