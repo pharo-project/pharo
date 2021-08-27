@@ -34,10 +34,10 @@ Base64MimeConverterTest >> testDecodeMimeHeader [
 	"Test MIME decoding from single-byte encoding to Unicode"
 
 	| mimeHeader expected characters |
-	characters := #[ 16rBE 16rFD 16r5F 16rE1 16r2E 16rC8 ] asString.
+	characters := #[ 16rBE 16rFD 16r5F 16rE1 16r2E 16rC8 ].
 	mimeHeader := '=?ISO-8859-2?Q?=BE=FD=5F=E1=2E=C8?=' decodeMimeHeader.
 
-	expected := characters convertFromEncoding: 'ISO-8859-2'.
+	expected := characters decodeWith: 'latin2'.
 
 	self assert: mimeHeader equals: expected
 ]
