@@ -6,7 +6,7 @@ Class {
 	#category : #'Ring-Tests-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGReadOnlyBackendTest >> backendClass [
 
 	^ RGReadOnlyBackend
