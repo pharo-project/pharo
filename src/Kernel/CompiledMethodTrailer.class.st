@@ -268,8 +268,7 @@ CompiledMethodTrailer >> decodeEmbeddedSourceQCompress [
 	
 	bytes := ByteArray streamContents:
 		[:stream | | nextNibble nibble peek charTable |
-		charTable :=  "Character encoding table must match qCompress:"
-		'ear tonsilcmbdfghjkpquvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345[]()'.
+		charTable := self qCompressCharacterEncodingTable.
 		peek := true.
 		nextNibble := [peek
 						ifTrue: [peek := false. input peek ifNil: [0] ifNotNil: [:b| b // 16]]
@@ -598,7 +597,7 @@ CompiledMethodTrailer >> method: aMethod [
 ]
 
 { #category : #private }
-CompiledMethodTrailer >> qCompress: string [
+CompiledMethodTrailer >> qCompress: utf8string [
 	"A very simple text compression routine designed for method temp names.
 	 Most common 11 chars get values 1-11 packed in one 4-bit nibble;
 	 the next most common get values 12-15 (2 bits) * 16 plus next nibble;
@@ -606,25 +605,23 @@ CompiledMethodTrailer >> qCompress: string [
 
 	Answer the write stream with compressed data inside"
 
-	| utf8str stream oddNibble |
+	| stream oddNibble |
 
-	string isEmpty ifTrue:
+	utf8string isEmpty ifTrue:
 		[^self qCompress: ' '].
-	utf8str := string convertToEncoding: 'utf8'.
 
-	stream := WriteStream on: (ByteArray new: utf8str size).
+	stream := WriteStream on: (ByteArray new: utf8string size).
 	oddNibble := nil.
 
-	utf8str do:	[:char | | ix |
-		ix := 'ear tonsilcmbdfghjkpquvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345[]()'
-			indexOf: char ifAbsent: 0.
-		(ix = 0
+	utf8string do:	[:char | | index |
+		index := self qCompressCharacterEncodingTable indexOf: char ifAbsent: 0.
+		(index = 0
 			ifTrue:
 				[{ 0. char asInteger // 16. char asInteger \\ 16 }]
 			ifFalse:
-				[ix <= 11
-					ifTrue: [{ ix }]
-					ifFalse: [{ ix//16+12. ix\\16 }]])
+				[index <= 11
+					ifTrue: [{ index }]
+					ifFalse: [{ index//16+12. index\\16 }]])
 				do: [:nibble |
 					oddNibble
 						ifNotNil: [stream nextPut: oddNibble*16 + nibble. oddNibble := nil]
@@ -633,6 +630,12 @@ CompiledMethodTrailer >> qCompress: string [
 		[stream nextPut: oddNibble * 16 + 4].
 	^ stream
 
+]
+
+{ #category : #private }
+CompiledMethodTrailer >> qCompressCharacterEncodingTable [
+
+	^ 'ear tonsilcmbdfghjkpquvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345[]()'
 ]
 
 { #category : #accessing }
