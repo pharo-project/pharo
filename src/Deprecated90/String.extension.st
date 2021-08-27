@@ -2,6 +2,11 @@ Extension { #name : #String }
 
 { #category : #'*Deprecated90' }
 String >> convertFromEncoding: encodingName [
+	self 
+        deprecated: 'Use #utf8Decoded or #decodeWith: encoding on a byte array. Using a string is not valid. You should have a byte array as input'
+        on: '2021-08-27'
+        in: #Pharo10.
+
 	^self convertFromWithConverter: (TextConverter newForEncoding: encodingName)
 ]
 
