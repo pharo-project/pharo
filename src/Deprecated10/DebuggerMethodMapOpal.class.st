@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'methodNode'
 	],
-	#category : #'OpalCompiler-Core-FrontEnd'
+	#category : #Deprecated10
 }
 
 { #category : #'instance creation' }
@@ -25,6 +25,7 @@ DebuggerMethodMapOpal class >> forMethod: aMethod [ "<CompiledMethod>"
 ]
 
 { #category : #initialization }
-DebuggerMethodMapOpal >> forMethod: aCompiledMethod [ 
+DebuggerMethodMapOpal >> forMethod: aCompiledMethod [
+	self deprecated: 'please use the reflactive API directly to read variables!'.
 	methodNode := aCompiledMethod ast
 ]
