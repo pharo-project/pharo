@@ -8,7 +8,7 @@ The refactoring transformation will replace the current class and its definition
 Example
 ---------------
 
-	(RBRenameClassRefactoring rename: RBRenameClassRefactoring to: 'RBRenameClassRefactoring2') execute
+	(RBRenameClassRefactoring rename: 'RBRenameClassRefactoring' to: 'RBRenameClassRefactoring2') execute
 "
 Class {
 	#name : #RBRenameClassRefactoring,
