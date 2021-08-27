@@ -261,13 +261,13 @@ CompiledMethodTrailer >> decodeEmbeddedSourceQCompress [
 	Most common 11 chars get values 0-10 packed in one 4-bit nibble;
 	next most common 52 get values 12-15 (2 bits) * 16 plus next nibble;
 	escaped chars get three nibbles"
-	| len str input |
+	| len bytes input |
 	
 	len := self decodeLengthField.
  	input := (ReadStream on: method from: method size - size+1 to: method size - size + len).
 	
-	str := String streamContents:
-		[:strm | | nextNibble nibble peek charTable |
+	bytes := ByteArray streamContents:
+		[:stream | | nextNibble nibble peek charTable |
 		charTable :=  "Character encoding table must match qCompress:"
 		'ear tonsilcmbdfghjkpquvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345[]()'.
 		peek := true.
@@ -277,15 +277,15 @@ CompiledMethodTrailer >> decodeEmbeddedSourceQCompress [
 		[input atEnd] whileFalse:
 			[(nibble := nextNibble value) = 0
 				ifTrue: [input atEnd ifFalse:
-						[strm nextPut: (Character value: nextNibble value * 16 + nextNibble value)]]
+						[stream nextPut: nextNibble value * 16 + nextNibble value]]
 				ifFalse:
 					[nibble <= 11
 						ifTrue:
-							[strm nextPut: (charTable at: nibble)]
+							[stream nextPut: (charTable at: nibble) codePoint]
 						ifFalse:
-							[strm nextPut: (charTable at: (nibble-12) * 16 + nextNibble value)]]]].
+							[stream nextPut: (charTable at: (nibble-12) * 16 + nextNibble value) codePoint]]]].
 			
-	data := str convertFromEncoding: 'utf8'
+	data := bytes utf8Decoded 
 ]
 
 { #category : #decoding }

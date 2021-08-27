@@ -1,20 +1,9 @@
 Extension { #name : #CompiledMethodTrailerTest }
 
 { #category : #'*Kernel-Tests-Extended' }
-CompiledMethodTrailerTest >> testEmbeddingCompressedSourceCode [
+CompiledMethodTrailerTest >> testEmbeddingCompressedSourceCodeWithFullMethod [
 	| trailer newTrailer code |
 	trailer := CompiledMethodTrailer new.
-
-	code := 'foo'.
-	trailer compressSourceCode: code.
-	newTrailer := trailer testEncoding.
-
-	self assert: trailer kind identicalTo: #EmbeddedSourceQCompress.
-	self assert: newTrailer sourceCode equals: code.
-
-	"the last bytecode index must be at 0"
-	self assert: newTrailer endPC equals: 0.
-
 	code := 'testEmbeddingSourceCode
 
 	| trailer newTrailer code |
@@ -33,6 +22,22 @@ CompiledMethodTrailerTest >> testEmbeddingCompressedSourceCode [
 	self assert: newTrailer sourceCode equals: code.
 	"the last bytecode index must be at 0"
 	self assert: newTrailer endPC equals: 0
+]
+
+{ #category : #'*Kernel-Tests-Extended' }
+CompiledMethodTrailerTest >> testEmbeddingCompressedSourceCodeWithSelector [
+	| trailer newTrailer code |
+	trailer := CompiledMethodTrailer new.
+
+	code := 'foo'.
+	trailer compressSourceCode: code.
+	newTrailer := trailer testEncoding.
+
+	self assert: trailer kind identicalTo: #EmbeddedSourceQCompress.
+	self assert: newTrailer sourceCode equals: code.
+
+	"the last bytecode index must be at 0"
+	self assert: newTrailer endPC equals: 0.
 ]
 
 { #category : #'*Kernel-Tests-Extended' }

@@ -16,7 +16,7 @@ CompiledMethodTrailer >> decodeZip [
 	bytes := ByteArray new: len.
 	1 to: len do: [ :i |
 		bytes at: i put: (method at: method size - size + i) ].
-	data := (ZipReadStream on: bytes) contents asString convertFromEncoding: 'utf8'
+	data := (ZipReadStream on: bytes) contents utf8Decoded 
 ]
 
 { #category : #'*Compression-Streams' }
