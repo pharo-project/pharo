@@ -314,6 +314,16 @@ Array >> printOn: aStream [
 	super printOn: aStream
 ]
 
+{ #category : #enumerating }
+Array >> recursiveDo: aBlock [
+
+	"execute the block for my content like do, but then recurse into nested arrays"
+
+	self do: [ :each | 
+		aBlock value: each.
+		each isArray ifTrue: [ each recursiveDo: aBlock ] ]
+]
+
 { #category : #'literal testing' }
 Array >> refersToLiteral: literal [
 	^ (self literalEqual: literal) 

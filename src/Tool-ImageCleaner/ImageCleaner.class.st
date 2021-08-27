@@ -150,8 +150,30 @@ ImageCleaner >> cleanUpProcesses [
 
 { #category : #'literal sharing' }
 ImageCleaner >> createLiteralTable [
+	| allLiterals arrays |
 	literalTable := Dictionary new.
-	self literalsDo: [ :literal : method | literalTable at: literal put: literal]
+	allLiterals := Set new.
+	self literalsDo: [ :literal :method | 
+		allLiterals add: literal.
+		"we add all the contentents of the arrays recursively, too"
+		literal isArray ifTrue: [ 
+			literal recursiveDo: [ :each | 
+				(each isSymbol not and: [ each isImmediateObject not]) 
+					ifTrue: [ allLiterals add: each ] ] ] ].
+		
+
+	"we need to go over all array and unify. as we have all flattend versions already once, we need to do that only for the top level"
+	arrays := allLiterals select: [ :each | each isArray ].
+	arrays do: [ :array |
+			array beWritableObject.
+			array copy do: [ :arrayValue | 
+				(arrayValue  isSymbol not and:  [ arrayValue isImmediateObject not ]) ifTrue:
+				[array
+					at: (array indexOf: arrayValue)
+					put: (allLiterals like: arrayValue)]].
+			array beReadOnlyObject ].
+		
+	allLiterals do: [:each | literalTable at: each put: each]
 ]
 
 { #category : #'literal sharing' }
@@ -215,19 +237,12 @@ ImageCleaner >> removeEmptyPackages [
 { #category : #'literal sharing' }
 ImageCleaner >> shareLiterals [
 	"Experimental Image Shrinker: We go over all methods and replace all the literals that are equal by one copy"
-	"Note: as thse literals can be changed, it is adviced to set #optionReadOnlyLiterals to true and recompile the system before using this in production"
 	self createLiteralTable.
 	self literalsDo: [ :literal :cm |
 			cm literalAt: (cm indexOfLiteral: literal) put: (literalTable at: literal)  ].
 	self detroyLiteralTable
 		
 
-]
-
-{ #category : #'literal sharing' }
-ImageCleaner >> statistics [
-	"run this before and after, this is just there while testing, will be removed"
-	^(CompiledCode allSubInstances flatCollect: #literals) asIdentitySet size
 ]
 
 { #category : #cleaning }
