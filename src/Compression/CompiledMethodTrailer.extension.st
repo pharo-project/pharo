@@ -31,13 +31,12 @@ CompiledMethodTrailer >> encodeEmbeddedSourceZip [
 CompiledMethodTrailer >> encodeUsingZip [
 
 	"data is string, encode it using gzip compression"
-	| utf8str stream length encodedLength |
+	| stream length encodedLength |
 
 	[data isString] assert.
-	utf8str := data convertToEncoding: 'utf8'.
 	
-	stream := ((ZipWriteStream on: (ByteArray new: utf8str size))
-		nextPutAll: utf8str asByteArray;
+	stream := ((ZipWriteStream on: (ByteArray new: data size))
+		nextPutAll: data asByteArray;
 		close;
 		encodedStream).
 		
