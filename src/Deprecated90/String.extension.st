@@ -27,6 +27,11 @@ String >> convertFromWithConverter: converter [
 
 { #category : #'*Deprecated90' }
 String >> convertToEncoding: encodingName [
+	self 
+        deprecated: 'Use #utf8Encoded or #encodeWith: .'
+        on: '2021-08-27'
+        in: #Pharo10.
+
 	^self convertToWithConverter: (TextConverter newForEncoding: encodingName).
 ]
 
