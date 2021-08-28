@@ -15,18 +15,18 @@ Internally I use Associations. The Association class can help to use me. (See ex
 
 ### Initializing and Adding
 
-A `Dictionary` can be created with values using the `Dictionary class>>>withAll:` class selector which will add the 
+A `Dictionary` can be created with values using the `Collection class>>#withAll:` class selector which will add the 
 values of a collection as the values of the `Dictionary` using numeric keys.
 
 ```
 d := Dictionary withAll: #(1 2 3 4 5)  ""a Dictionary(1->1, 2->2, 3->3, 4->4, 5->5)""
 ```
 
-Alternatively, both the keys and values can be supplied using the `Dictionary class>>>newFromKeys:andValues:` selector,
-which requires two collections of the same length, or the `Dictionary class>>>newFromPairs:` selector, which 
+Alternatively, both the keys and values can be supplied using the `Dictionary class>>#newFromKeys:andValues:` selector,
+which requires two collections of the same length, or the `Dictionary class>>#newFromPairs:` selector, which 
 uses every odd numbered index as a key and even numbered index as a value for the dictionary.
 
-Once a `Dictionary` has been created, the basic method for adding new keys is the `Dictionary>>>at:put:` selector.
+Once a `Dictionary` has been created, the basic method for adding new keys is the `Dictionary>>#at:put:` selector.
 
 ```
 d at: 99 put: 89  ""a Dictionary(1->1, 2->2, 3->3, 4->4, 5->5, 99->89)""
@@ -34,26 +34,26 @@ d at: 99 put: 89  ""a Dictionary(1->1, 2->2, 3->3, 4->4, 5->5, 99->89)""
 
 ### Accessing 
 
-Get the value of a key using the `Dictionary>>>at:` selector.
+Get the value of a key using the `Dictionary>>#at:` selector.
 
 ```
 d := Dictionary withAll: #(5 4 3 2 1)  ""a Dictionary(1->5, 2->4, 3->3, 4->2, 5->1)""
 d at: 1  ""5""
 ```
 However accessing a key that does not exist will result in an error. In which case use
-the selectors `at:ifAbsent:`
+the selectors `Dictionary>>#at:ifAbsent:`
 
 ```
 d at: 100 ifAbsent: [ ""execute code in the block if the key is not found"" ]
 ```
 
-A common operation is to add in a value for a key if it is absent using the `at:ifAbsentPut:` selector. Note that unlike the regular `at:put:` selector, this message uses the value of a block. 
+A common operation is to add in a value for a key if it is absent using the `Dictionary>>#at:ifAbsentPut:` selector. Note that unlike the regular `Dictionary>>#at:put:` selector, this message uses the value of a block. 
 
 ```
 d at: 100 ifAbsentPut: [ 100 ]
 ```
 
-Alternatively, if you want to change the value of a key use `Dictionary>>>at:update:` selector,
+Alternatively, if you want to change the value of a key use `Dictionary>>#at:update:` selector,
 which uses the value of a block.
 
 ```
@@ -64,7 +64,7 @@ d at: 5 update: [ 12 ]
 ### Iterating / Enumerating
 
 It's possible to iterate over all of the values, keys, and associations of a `Dictionary` using 
-the `valuesDo:`, `keysDo`, and `associationsDo:` selectors. These selectors evaluate a block for
+the `Dictionary>>#valuesDo:`, `Dictionary>>#keysDo:`, and `Dictionary>>#associationsDo:` selectors. These selectors evaluate a block for
 each of the items
 
 ```
@@ -74,7 +74,7 @@ d keysDo: [ :eachKey | ""do something with the key"" ].
 d associationsDo: [ :eachAssociation | ""do something with a key-value pair"" ]
 ```
 
-The `select:` selector is also implemented to return a subset of the `Dictionary` where the
+The `Dictionary>>#select:` selector is also implemented to return a subset of the `Dictionary` where the
 block evaluates to true using the value.
 
 ```
@@ -83,8 +83,8 @@ d select: [:each | each > 5]  ""a Dictionary(5->12,100->100)""
 		
 ### Removing
 
-Use the `removeKey:` selector to remove the association from the `Dictionary`, which will cause
-an error if the key is not found. Use the `removeKey:ifAbsent:` selector to control this behavior.
+Use the `Dictionary>>#removeKey:` selector to remove the association from the `Dictionary`, which will cause
+an error if the key is not found. Use the `Dictionary>>#removeKey:ifAbsent:` selector to control this behavior.
 
 ```
 d removeKey: 5.
@@ -94,7 +94,7 @@ d removeKey: 1200 ifAbsent: [ ""do something"" ].
 
 ### Testing
 
-Check if a value or key is present in a `Dictionary` using the `includes:` or `includesKey:` selectors.
+Check if a value or key is present in a `Dictionary` using the `Dictionary>>#includes:` or `Dictionary>>#includesKey:` selectors.
 
 ```
 ""Look if 12 is the value of any key in the Dictionary""
