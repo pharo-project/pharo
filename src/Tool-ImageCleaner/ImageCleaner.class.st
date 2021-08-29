@@ -112,6 +112,7 @@ ImageCleaner >> cleanUpForRelease [
 	FreeTypeFontProvider current prepareForRelease.	
 	
 	HashedCollection rehashAll.		
+	self shareLiterals.
 	Author reset
 ]
 
