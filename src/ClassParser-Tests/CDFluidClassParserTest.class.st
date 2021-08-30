@@ -330,7 +330,7 @@ CDFluidClassParserTest >> testVariableWordSubclass [
 		layout: WordLayout;
 		package: #MyPackage'.
 	def := parser parse: defString.
-	self assert: def classKind equals: #variableWord
+	self assert: def classKind equals: #words
 ]
 
 { #category : #'tests - (r) kinds' }
