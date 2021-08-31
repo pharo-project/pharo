@@ -13,11 +13,6 @@ Class {
 	#category : #'System-Platforms-Unix'
 }
 
-{ #category : #testing }
-UnixPlatform class >> isActivePlatform [
-	^ false
-]
-
 { #category : #visiting }
 UnixPlatform >> accept: aVisitor [
 

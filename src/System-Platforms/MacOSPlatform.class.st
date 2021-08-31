@@ -9,11 +9,6 @@ Class {
 }
 
 { #category : #testing }
-MacOSPlatform class >> isActivePlatform [
-	^ false
-]
-
-{ #category : #testing }
 MacOSPlatform class >> isMacOS [
 
 	^ Smalltalk vm operatingSystemName = 'Mac OS'
