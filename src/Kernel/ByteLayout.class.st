@@ -16,7 +16,7 @@ ByteLayout class >> extending: superLayout scope: aScope host: aClass [
 
 { #category : #description }
 ByteLayout class >> kind [ 
-	^ #variableByte
+	^ #bytes
 ]
 
 { #category : #accessing }
@@ -43,9 +43,4 @@ ByteLayout >> isBytes [
 { #category : #accessing }
 ByteLayout >> kindOfSubclass [
 	^' variableByteSubclass: '
-]
-
-{ #category : #accessing }
-ByteLayout >> typeOfClass [
-	^#bytes
 ]

@@ -10,7 +10,7 @@ Class {
 { #category : #fonts }
 GraphicFontSettings class >> displayScaleFactorForStyleNamed: aSymbol [
 
-	^ (#(#(#superTiny 0.6) #(#tiny 0.8) #(#small 1) #(#medium 1.3) #(#large 1.6) #(veryLarge 2) #(huge 2.7)) 
+	^ (#(#(#superTiny 0.6) #(#tiny 0.8) #(#small 1) #(#medium 1.4) #(#large 1.6) #(veryLarge 2) #(huge 2.7))
 		detect: [:info | info first asUppercase = aSymbol asUppercase] ifNone: []) 
 			ifNotNil: [:info | info second]
 

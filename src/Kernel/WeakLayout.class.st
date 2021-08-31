@@ -43,8 +43,3 @@ WeakLayout >> isWeak [
 WeakLayout >> kindOfSubclass [
 	^' weakSubclass: '
 ]
-
-{ #category : #accessing }
-WeakLayout >> typeOfClass [
-	^#weak
-]

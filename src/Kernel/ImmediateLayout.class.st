@@ -18,7 +18,6 @@ ImmediateLayout class >> extending: superLayout scope: aScope host: aClass [
 
 { #category : #description }
 ImmediateLayout class >> kind [ 	
-
 	^ #immediate
 ]
 
@@ -46,9 +45,4 @@ ImmediateLayout >> instanceSpecification [
 { #category : #accessing }
 ImmediateLayout >> kindOfSubclass [
 	^' immediateSubclass: '
-]
-
-{ #category : #accessing }
-ImmediateLayout >> typeOfClass [
-	^#immediate
 ]

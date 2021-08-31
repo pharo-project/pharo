@@ -1672,8 +1672,8 @@ Behavior >> thoroughWhichSelectorsReferTo: literal [
 
 { #category : #accessing }
 Behavior >> typeOfClass [
-	"Answer a symbol uniquely describing the type of the receiver. c.f. kindOfSubclass"
-	^self classLayout typeOfClass
+	"Answer the symbol that Monticello uses internally to encode layouts"
+	^self classLayout class kind
 ]
 
 { #category : #'user interface' }
