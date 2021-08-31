@@ -283,7 +283,8 @@ UndefinedObject >> subclassesDo: aBlock [
 
 { #category : #'class hierarchy' }
 UndefinedObject >> typeOfClass [
-	"Necessary to support disjoint class hierarchies."
+	"Answer the symbol that Monticello uses internally to encode layouts"
+	"Implemented here  to support disjoint class hierarchies"
 	^#normal
 ]
 

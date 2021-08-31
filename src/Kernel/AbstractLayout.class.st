@@ -186,12 +186,6 @@ AbstractLayout >> slots [
 ]
 
 { #category : #accessing }
-AbstractLayout >> typeOfClass [
-	"The type is the class name of the layout. But for ST80 layouts, we define some special symbols to stay backward compatible"
-	^self class name asSymbol
-]
-
-{ #category : #accessing }
 AbstractLayout >> visibleSlots [
 	^self slots select: [:slot | slot isVisible]
 ]
