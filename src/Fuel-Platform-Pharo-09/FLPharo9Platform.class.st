@@ -16,14 +16,6 @@ FLPharo9Platform class >> isResponsibleForCurrentPlatform [
 			and: [ SystemVersion current major = 9 ] ]
 ]
 
-{ #category : #'accessing-compiler' }
-FLPharo9Platform >> addAndClassifySelector: aSymbol inClass: aClass withMethod: aCompiledMethod inProtocol: aString [
-	aClass
-		addAndClassifySelector: aSymbol
-		withMethod: aCompiledMethod
-		inProtocol: aString
-]
-
 { #category : #'accessing-files' }
 FLPharo9Platform >> deleteFileNamed: aFilename [
 	((Smalltalk at: #File) named: aFilename) delete

@@ -13,8 +13,3 @@ TKTUIProcessTaskRunner >> isUIRunner [
 TKTUIProcessTaskRunner >> scheduleTaskExecution: aTaskExecution [
 	WorldState addDeferredUIMessage: [ self executeTask: aTaskExecution ]
 ]
-
-{ #category : #polymorphism }
-TKTUIProcessTaskRunner >> start [
-
-]

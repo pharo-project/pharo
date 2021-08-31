@@ -35,11 +35,6 @@ FixedLayout >> isFixedLayout [
 ]
 
 { #category : #accessing }
-FixedLayout >> kindOfSubclass [
-	^' subclass: '
-]
-
-{ #category : #accessing }
 FixedLayout >> typeOfClass [
 	^#normal
 ]
