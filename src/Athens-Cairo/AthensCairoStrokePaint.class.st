@@ -65,13 +65,6 @@ AthensCairoStrokePaint >> dashes: anAlternateCollectionOfLenghts offset: anOffse
 	dashOffset := anOffset asFloat.
 ]
 
-{ #category : #initialization }
-AthensCairoStrokePaint >> initialize [
-	super initialize.
-
-	self setDefaults
-]
-
 { #category : #'setting - join styles' }
 AthensCairoStrokePaint >> joinBevel [
 	joinStyle := CAIRO_LINE_JOIN_BEVEL
