@@ -1745,11 +1745,11 @@ Form >> pageWarp: otherImage at: topLeft forward: forward [
 	oldPage := self copy: (pageRect translateBy: topLeft).
 	(forward ifTrue: [oldPage] ifFalse: [otherImage])
 		border: pageRect
-		widthRectangle: (Rectangle
+		margins: (Rectangle
 				left: 0
 				right: 2
 				top: 1
-				bottom: 1)
+				bottom: 1) asMargin
 		rule: Form over
 		fillColor: Color black.
 	oldBottom := self copy: ((pageRect bottomLeft + topLeft) extent: (pageRect width@(pageRect height//4))).
