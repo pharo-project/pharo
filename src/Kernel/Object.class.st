@@ -337,6 +337,12 @@ Object >> asLink [
 ]
 
 { #category : #converting }
+Object >> asLinkPrepend: anObject [
+
+	^ self asLink asLinkPrepend: anObject
+]
+
+{ #category : #converting }
 Object >> asOrderedCollection [
 	"Answer an OrderedCollection with the receiver as its only element."
 
@@ -2195,20 +2201,11 @@ Object >> ~= anObject [
 
 { #category : #associating }
 Object >> ~~> aValueLinkOrNil [
-	"Answer a ValueLink between self and aValueLinkOrNil.
-	This message allows the receiver to be inserted in a chain of objects, terminated by nil."
 
-	"Code of ValueLink>>#nextLink: and ValueLink>>#value: are inline here for speed."
+	"Answer a link of the same class of `aValueLinkOrNil`; if that argument is nil,
+	 then the Link hierarchy is used as fallback. Moreover, `aValueLinkOrNil` can be
+	 any object, in that case by dispatching of #asLinkPrepend:, that object is enclosed
+	 in a Link and then used to chain `self`. "
 
-	"(1 ~~> nil) = ValueLink new value: 1"
-	"(1 ~~> 'one') value >>> 1"
-	"(1 ~~> nil) nextLink >>> nil"
-
-	"Note that `value` can be ANY object; on the other hand, `nextLink` should be either another 
-	ValueLink object or nil."
-
-	^ ValueLink basicNew
-		value: self;
-		nextLink: aValueLinkOrNil;
-		yourself
+	^ aValueLinkOrNil asLinkPrepend: self
 ]

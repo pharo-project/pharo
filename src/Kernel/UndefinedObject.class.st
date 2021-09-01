@@ -50,6 +50,12 @@ UndefinedObject >> asCollectionElement [
 	^ CollectionElement withNil
 ]
 
+{ #category : #dispatched }
+UndefinedObject >> asLinkPrepend: anObject [
+
+	^ ValueLink value: anObject
+]
+
 { #category : #accessing }
 UndefinedObject >> at: index put: anObject [ 
 	self shouldNotImplement 
