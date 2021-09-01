@@ -289,11 +289,6 @@ Metaclass >> sharedPoolNames [
 	^#()
 ]
 
-{ #category : #'pool variables' }
-Metaclass >> sharedPools [
-	^OrderedCollection new.
-]
-
 { #category : #initialization }
 Metaclass >> slots: slotCollection [ 
 
