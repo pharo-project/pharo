@@ -246,7 +246,7 @@ RGReadOnlyBackend >> createNewUnresolvedMetaclassMetaclassFor: anRGBehavior [
 	^ unresolvedValue."
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #errors }
 RGReadOnlyBackend >> readOnlyError [
 
 	self error: 'read-only environment'
