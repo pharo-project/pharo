@@ -206,7 +206,7 @@ StrikeFont class >> hostFontFromUser [
 	^ fontNames at: index
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 StrikeFont class >> initialize [
 	SessionManager default registerGuiClassNamed: self name
 ]

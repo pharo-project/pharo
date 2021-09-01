@@ -14,7 +14,7 @@ Class {
 	#category : #'Kernel-Tests-Extended-WriteBarrier'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 WriteBarrierTest class >> initialize [
 	
 	ContextInstance := Context sender: nil receiver: self new method: self >> #alwaysWritableObjects arguments: #()

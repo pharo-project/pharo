@@ -92,20 +92,18 @@ WorldMorph class >> displayScaleFactorSettingsOn: aBuilder [
 	
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #updating }
 WorldMorph class >> doOneCycle [
-	WorldState doDrawCycleWith: [
+
+	WorldState doDrawCycleWith: [ 
 		| extraWorldsToDraw |
-		extraWorldsToDraw := ExtraWorldListMutex critical: [ self extraWorldList ].
-		extraWorldsToDraw do: [:world |
-			world doOneCycle.
-		].
+		extraWorldsToDraw := ExtraWorldListMutex critical: [ 
+			                     self extraWorldList ].
+		extraWorldsToDraw do: [ :world | world doOneCycle ].
 
-		(self currentWorld isNotNil and: [(extraWorldsToDraw includes: self currentWorld) not]) ifTrue: [
-			self currentWorld doOneCycle.
-		]
-	].
-
+		(self currentWorld isNotNil and: [ 
+			 (extraWorldsToDraw includes: self currentWorld) not ]) ifTrue: [ 
+			self currentWorld doOneCycle ] ]
 ]
 
 { #category : #'extra worlds' }
@@ -114,7 +112,7 @@ WorldMorph class >> extraWorldList [
 	^ ExtraWorldList
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 WorldMorph class >> initialize [
 	ExtraWorldListMutex := Semaphore forMutualExclusion.
 ]

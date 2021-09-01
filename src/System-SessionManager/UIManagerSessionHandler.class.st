@@ -14,7 +14,7 @@ Class {
 	#category : #'System-SessionManager-Handlers'
 }
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 UIManagerSessionHandler class >> initialize [
 	"has to be executed at the end of the user category"
 	SessionManager default 

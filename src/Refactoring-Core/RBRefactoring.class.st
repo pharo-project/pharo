@@ -45,12 +45,12 @@ RBRefactoring class >> cleanUp [
 	self initializeRefactoringOptions.
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 RBRefactoring class >> initialize [
 	self initializeRefactoringOptions
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 RBRefactoring class >> initializeRefactoringOptions [
 	RefactoringOptions := IdentityDictionary new.
 	RefactoringOptions

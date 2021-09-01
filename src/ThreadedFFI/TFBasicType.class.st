@@ -111,7 +111,7 @@ TFBasicType class >> float [
 	^ FLOAT
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'class initialization' }
 TFBasicType class >> initialize [ 	
 	
 	Types := self createBasicTypes.

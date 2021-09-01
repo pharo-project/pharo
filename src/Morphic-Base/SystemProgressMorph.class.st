@@ -109,18 +109,18 @@ SystemProgressMorph class >> horizontalPosition: aFloat [
 	self uniqueInstance reposition.
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 SystemProgressMorph class >> initialize [
 	"SystemProgressMorph initialize"
 
 	self reset.
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 SystemProgressMorph class >> reset [
-	"SystemProgressMorph reset"
+	<script>
 	UniqueInstance ifNotNil: [ UniqueInstance delete ].
-	UniqueInstance := nil.
+	UniqueInstance := nil
 ]
 
 { #category : #settings }

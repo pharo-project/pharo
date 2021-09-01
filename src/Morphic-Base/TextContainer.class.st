@@ -19,7 +19,7 @@ Class {
 	#category : #'Morphic-Base-Text Support'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 TextContainer class >> initialize [    "TextContainer initialize"
 	OuterMargin := 2
 ]

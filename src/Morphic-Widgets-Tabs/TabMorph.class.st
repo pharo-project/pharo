@@ -88,7 +88,7 @@ TabMorph class >> defaultHeight [
 	^ 22
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 TabMorph class >> initialize [
 
 	Icons := Dictionary new.

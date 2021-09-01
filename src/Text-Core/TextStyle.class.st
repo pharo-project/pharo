@@ -161,15 +161,15 @@ TextStyle class >> fontSizesFor: aName [
 
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 TextStyle class >> initialize [
-	self initializeStyleDecoder.
+	self initializeStyleDecoder
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 TextStyle class >> initializeStyleDecoder [
 	TextSharedInformation at: #StyleDecoder put: nil.
-	self styleDecoder.
+	self styleDecoder
 ]
 
 { #category : #'textconstants access' }
@@ -256,7 +256,7 @@ TextStyle class >> setDefault: aTextStyle [
 	TextSharedInformation at: #DefaultTextStyle put: aTextStyle.
 ]
 
-{ #category : #initialization }
+{ #category : #'private - accessing' }
 TextStyle class >> styleDecoder [
 	TextSharedInformation at: #StyleDecoder ifPresent: [ :dict | dict ifNotNil: [ ^dict ]].
 	^TextSharedInformation at: #StyleDecoder put: (

@@ -386,10 +386,11 @@ SHRBTextStyler class >> initialTextAttributesForPixelHeight: aNumber [
 	^ d
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 SHRBTextStyler class >> initialize [
+
 	styleTable := nil.
-	textAttributesByPixelHeight := nil.
+	textAttributesByPixelHeight := nil
 ]
 
 { #category : #styles }
