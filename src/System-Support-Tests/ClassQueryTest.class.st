@@ -30,8 +30,8 @@ ClassQueryTest >> testReferencedClasses [
 	
 	| refs |
 	refs := Metaclass referencedClasses.
-	self assert: (refs includes: OrderedCollection).
+	self assert: (refs includesAll: { LiteralVariable. String. RGMetaclass. Class }).
 	
 	refs := self class referencedClasses.
-	self assert: (refs includesAll: { OrderedCollection. Metaclass })
+	self assert: (refs includesAll: { Metaclass. Object. LiteralVariable. String. OrderedCollection. Class. RGMetaclass. ClassQueryTest })
 ]
