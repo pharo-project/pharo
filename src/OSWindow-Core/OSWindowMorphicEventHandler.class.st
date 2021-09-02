@@ -96,17 +96,6 @@ OSWindowMorphicEventHandler >> activeHand [
 	^ self morphicWorld activeHand
 ]
 
-{ #category : #generated }
-OSWindowMorphicEventHandler >> convertButton: osButton [
-
-	self
-		deprecated: 'Use #convertButtonFromEvent: instead'
-		transformWith:
-		'`@rec convertButton: `@arg'
-		-> '`@rec convertButtonFromEvent: `@arg'.
-	^ self convertButtonFromEvent: osButton
-]
-
 { #category : #converting }
 OSWindowMorphicEventHandler >> convertButtonFromEvent: anEvent [
 

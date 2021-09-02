@@ -34,15 +34,3 @@ String >> convertToWithConverter: converter [
 			nextPutAll: self toStream: writeStream;
 			emitSequenceToResetStateIfNeededOn: writeStream]
 ]
-
-{ #category : #'*Deprecated90' }
-String >> leadingCharRunLengthAt: index [
-
-	| leadingChar |
-	leadingChar := (self at: index) leadingChar.
-	index to: self size do: [:i |
-		(self at: i) leadingChar ~= leadingChar ifTrue: [^ i - index].
-	].
-	^ self size - index + 1.
-
-]

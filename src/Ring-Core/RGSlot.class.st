@@ -45,15 +45,6 @@ RGSlot >> isSlot [
 	^ true
 ]
 
-{ #category : #generated }
-RGSlot >> isSpecial [
-
-	self
-		deprecated: 'Use #needsFullDefinition instead'
-		transformWith: '`@rec isSpecial' -> '`@rec needsFullDefinition'.
-	^ self needsFullDefinition
-]
-
 { #category : #testing }
 RGSlot >> isSuperVariable [
 	

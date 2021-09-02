@@ -1308,15 +1308,6 @@ ClassDescription >> whichSelectorsRead: instVarName [
 ]
 
 { #category : #queries }
-ClassDescription >> whichSelectorsStoreInto: instVarName [
-	self
-		deprecated: 'Please use #whichSelectorsWrite: instead'
-		transformWith: '`@receiver whichSelectorsStoreInto: `@statements' 
-						-> '`@receiver whichSelectorsWrite: `@statements'.
-	^self whichSelectorsWrite: instVarName
-]
-
-{ #category : #queries }
 ClassDescription >> whichSelectorsWrite: instVarName [
 	"Answer the selectors whose methods write the argument, instVarName, as a named instance variable"
 

@@ -35,13 +35,6 @@ Character class >> leadingChar: leadChar code: code [
 ]
 
 { #category : #'*Deprecated90' }
-Character >> macRomanToUnicode [
-	"Convert the receiver from MacRoman Unicode."
-
-	^MacRomanTextConverter new unicodeToByte: self
-]
-
-{ #category : #'*Deprecated90' }
 Character >> unicodeToMacRoman [
 	"Convert the receiver from Unicode to MacRoman encoding."
 

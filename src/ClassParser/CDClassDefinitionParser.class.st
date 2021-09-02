@@ -70,16 +70,6 @@ CDClassDefinitionParser >> isInstanceSideDefinition: aRBMessageNode [
 	^ aRBMessageNode receiver isMessage not
 ]
 
-{ #category : #generated }
-CDClassDefinitionParser >> parseClassName: aNode [
-
-	self
-		deprecated: 'Use #handleClassName: instead'
-		transformWith:
-		'`@rec parseClassName: `@arg' -> '`@rec handleClassName: `@arg'.
-	^ self handleClassName: aNode
-]
-
 { #category : #parsing }
 CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [ 
 	
@@ -111,16 +101,6 @@ CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 		classDefinition: self; 
 		unrecognizedPart: aString;
 		signal
-]
-
-{ #category : #generated }
-CDClassDefinitionParser >> parseSuperclassNode: aSuperclassNode [
-
-	self
-		deprecated: 'Use #handleSuperclassNode: instead'
-		transformWith: '`@rec parseSuperclassNode: `@arg'
-			-> '`@rec handleSuperclassNode: `@arg'.
-	^ self handleSuperclassNode: aSuperclassNode
 ]
 
 { #category : #parsing }

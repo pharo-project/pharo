@@ -189,26 +189,6 @@ RubSmalltalkEditor >> bestNodeInString: source at: selectionInterval editingMode
 
 ]
 
-{ #category : #generated }
-RubSmalltalkEditor >> bestNodeInString: source at: selectionInterval edittingMode: aRubEdittingMode shouldFavourExpressions: isFavouringExpressions onError: aBlock [
-
-	"Find the best node in the source text in the identified selection area"
-
-	self
-		deprecated:
-		'Use #bestNodeInString:at:editingMode:shouldFavourExpressions:onError: instead'
-		transformWith:
-			'`@rec bestNodeInString: `@arg1 at: `@arg2 edittingMode: `@arg3 shouldFavourExpressions: `@arg4 onError: `@arg5'
-			->
-			'`@rec bestNodeInString: `@arg1 at: `@arg2 editingMode: `@arg3 shouldFavourExpressions: `@arg4 onError: `@arg5'.
-	^ self
-		  bestNodeInString: source
-		  at: selectionInterval
-		  editingMode: aRubEdittingMode
-		  shouldFavourExpressions: isFavouringExpressions
-		  onError: aBlock
-]
-
 { #category : #'source navigation' }
 RubSmalltalkEditor >> bestNodeInTextArea [
 	"Find the best node in the editor text area at the current pointer location"

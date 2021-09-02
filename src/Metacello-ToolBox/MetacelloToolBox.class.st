@@ -200,32 +200,6 @@ MetacelloToolBox class >> createBaseline: baselineVersionString for: configurati
 	^ toolbox
 ]
 
-{ #category : #deprecated }
-MetacelloToolBox class >> createBaseline: baselineVersionString for: configurationBasename repository: repositoryDescription requiredProjects: projectList packages: packageList dependencies: dependencies groups: groups [
-    "Create a new baseline version based on the specified project structure.
-		repositoryDescription - metacello repository string
-		projectList - collection of project base names (without ConfigurationOf prefix)
-		packageList - collection of package base names
-		dependencies - collection of associations where key is name of package and value is collection of required packages and projects
-		groups - collection of associations where key is the name of the group and value is the collection of group members
-	"
-
-    <apiDocumentation>
-	self
-		deprecated: 'Use createBaseline:for:repository:requiredProjects:packages:repositories:dependencies:groups: instead'
-		transformWith: '`@rec createBaseline: `@arg1 for: `@arg2 repository: `@arg3 requiredProjects: `@arg4 packages: `@arg5 dependencies: `@arg6 groups: `@arg7' -> '`@rec createBaseline: `@arg1 for: `@arg2 repository: `@arg3 requiredProjects: `@arg4 packages: `@arg5 repositories: #() dependencies: `@arg6 groups: `@arg7'.
-	
-	^ self
-		createBaseline: baselineVersionString
-		for: configurationBasename
-		repository: repositoryDescription
-		requiredProjects: projectList
-		packages: packageList
-		repositories: #()
-		dependencies: dependencies
-		groups: groups
-]
-
 { #category : #scripts }
 MetacelloToolBox class >> createBaseline: baselineVersionString for: configurationBasename repository: repositoryDescription requiredProjects: projectList packages: packageList dependencies: dependencies includes: includes files: files repositories: repositories preLoadDoIts: preLoadDoIts postLoadDoIts: postLoadDoIts supplyingAnswers: supplyingAnswers groups: groups [
 	"Create a new baseline version based on the specified project structure.

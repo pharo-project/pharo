@@ -151,17 +151,6 @@ Timespan >> includesAll: aCollection [
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
-Timespan >> includesAllOf: aCollection [ 
-
-	self
-		deprecated: 'Please use #includesAll: instead'
-		transformWith: '`@receiver includesAllOf: `@statements' -> '`@receiver includesAll: `@statements'.
-	
-	^ self includesAll: aCollection
-
-]
-
-{ #category : #'*Kernel-Chronology-Extras' }
 Timespan >> includesAny: aCollection [
 	"Answer whether any element of aCollection is included in the receiver"
 
