@@ -779,20 +779,6 @@ VirtualMachine >> parameterAt: parameterIndex put: newValue [
 ]
 
 { #category : #accessing }
-VirtualMachine >> path [
-	"Answer the path for the directory containing the Smalltalk virtual machine. Return the 	empty string if this primitive is not implemented."
-
-	"Smalltalk vm path"
-	self
-		deprecated: 'Use #directory instead'
-		on: '12 November 2018'
-		in: #Pharo7
-		transformWith: '`@receiver path' 
-						-> '`@receiver directory'.
-	^ self primVmPath
-]
-
-{ #category : #accessing }
 VirtualMachine >> platformSourceVersion [
 	"The use of this primitive not recommended. Not all VMs providing that"
 
@@ -1165,19 +1151,6 @@ VirtualMachine >> versionLabel [
 	<primitive: 'primitiveVMVersion'>
 	self notify: 'This virtual machine does not support the optional primitive #primitiveVMVersion'.
 	^''
-]
-
-{ #category : #accessing }
-VirtualMachine >> vmDirectory [
-
-	self
-		deprecated: 'Use #directory instead'
-		on: '12 November 2018'
-		in: #Pharo7
-		transformWith: '`@receiver vmDirectory' 
-						-> '`@receiver directory'.
-
-	^ self directory
 ]
 
 { #category : #accessing }
