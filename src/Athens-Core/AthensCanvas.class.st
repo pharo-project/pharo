@@ -22,10 +22,10 @@ Class {
 	#category : #'Athens-Core-Base'
 }
 
-{ #category : #private }
+{ #category : #'instance creation' }
 AthensCanvas class >> new [
-	"use #on: instead"
-	self shouldNotImplement
+
+	self error: 'An AthensCanvas are created with on:'
 ]
 
 { #category : #private }
