@@ -105,6 +105,14 @@ ProperMethodCategorizationTest >> testHashMethodNeedsToBeInComparingProtocol [
 
 ]
 
+{ #category : #'tests - object' }
+ProperMethodCategorizationTest >> testNewMethodNeedsToBeInInstanceCreationProtocol [
+	"The #new methods should be in method protocol 'instance creation'"
+	
+	self assureAll: #new areCategorizedIn: #'instance creation' whenSubclassOf: Object class
+
+]
+
 { #category : #tests }
 ProperMethodCategorizationTest >> testNoEmptyProtocols [
 	"Check that we have no protocols left without methods"
