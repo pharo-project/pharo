@@ -262,17 +262,6 @@ RGObject >> hasProperty: propertyName [
 
 ]
 
-{ #category : #properties }
-RGObject >> hasPropertyNamed: propertyName [
-
-	self
-		deprecated: 'Use hasProperty: instead'
-		transformWith: '`@rec hasPropertyNamed: `@arg' -> '`@rec hasProperty: `@arg'.
-
-	^ self hasProperty: propertyName
-
-]
-
 { #category : #resolving }
 RGObject >> hasResolved: propertySymbol [
 
@@ -469,15 +458,6 @@ RGObject >> isVariable [
 	"is the definition a variable class?"
 
 	^ false
-]
-
-{ #category : #'testing - types' }
-RGObject >> isVariableDefinition [
-	self 
-		deprecated: 'Use #isVariable instead.' 
-		transformWith: '`@receiver isVariableDefinition' -> '`@receiver isVariable'.
-	
-	^ self isVariable
 ]
 
 { #category : #resolving }

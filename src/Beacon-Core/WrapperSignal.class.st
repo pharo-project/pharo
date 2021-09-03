@@ -23,14 +23,6 @@ WrapperSignal class >> emit: aTargetObject [
 ]
 
 { #category : #'instance creation' }
-WrapperSignal class >> log: aTargetObject [
-	self 
-		deprecated: 'Should use #emit:' 
-		transformWith: '`@receiver log: `@name' -> '`@receiver emit: `@name'.
-	^ self emit: aTargetObject 
-]
-
-{ #category : #'instance creation' }
 WrapperSignal class >> on: aTargetObject [
 	^ self new 
 		target: aTargetObject 

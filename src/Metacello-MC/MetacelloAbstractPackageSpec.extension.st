@@ -37,17 +37,6 @@ MetacelloAbstractPackageSpec >> packagesNeedSavingVisited: visitedProjects using
 	"noop by default"
 ]
 
-{ #category : #'*metacello-mc-querying' }
-MetacelloAbstractPackageSpec >> repository [
-	self
-		deprecated: 'Use repositories or repositorySpecs'
-		transformWith: '`@rec repository' -> '`@rec repositorySpecs first'.
-
-	^ self repositorySpecs
-		ifEmpty: [ nil ]
-		ifNotEmpty: [ self repositorySpecs first ]
-]
-
 { #category : #'*metacello-mc' }
 MetacelloAbstractPackageSpec >> repositorySpecs [
 
