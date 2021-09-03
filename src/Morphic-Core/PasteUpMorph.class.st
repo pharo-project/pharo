@@ -492,10 +492,8 @@ PasteUpMorph >> flashRects: rectangleList color: aColor [
 	rectangleList do: [:r | | screenRect |
 		screenRect := r translateBy: self viewBox origin.
 		blt destRect: screenRect; copyBits.
-		Display forceToScreen: screenRect; forceDisplayUpdate.
 		(Delay forMilliseconds: 15) wait.
-		blt destRect: screenRect; copyBits.
-		Display forceToScreen: screenRect; forceDisplayUpdate].
+		blt destRect: screenRect; copyBits ].
 
 ]
 

@@ -51,10 +51,8 @@ WorldMorph class >> cursorOwnerWorld [
 
 { #category : #'extra worlds' }
 WorldMorph class >> cursorOwnerWorld: aWorld [
-	CursorOwnerWorld ~~ aWorld ifTrue: [ 
-		CursorOwnerWorld := aWorld.
-		(CursorOwnerWorld currentCursor ifNil: [Cursor normal]) beCursor
-	]
+	
+	CursorOwnerWorld := aWorld.
 
 ]
 
@@ -137,11 +135,6 @@ WorldMorph class >> scaleFactor [
 WorldMorph class >> scaleFactor: aValue [
 	
 	World scaleFactor: aValue
-]
-
-{ #category : #cursor }
-WorldMorph >> activateCursor: aCursor [
-     aCursor beCursor
 ]
 
 { #category : #operations }

@@ -273,12 +273,6 @@ Canvas >> flushDisplay [
 	"Empty hook method."
 ]
 
-{ #category : #other }
-Canvas >> forceToScreen: rect [
-	"Empty hook method"
-
-]
-
 { #category : #accessing }
 Canvas >> form [
 

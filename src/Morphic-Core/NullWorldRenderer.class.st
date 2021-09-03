@@ -67,12 +67,6 @@ NullWorldRenderer >> forceDamageToScreen: allDamage [
 	
 ]
 
-{ #category : #operations }
-NullWorldRenderer >> forceDisplayUpdate [
-
-	" Do Nothing "
-]
-
 { #category : #accessing }
 NullWorldRenderer >> icon: aForm [ 
 

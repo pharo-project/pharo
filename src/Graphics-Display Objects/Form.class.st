@@ -1047,8 +1047,7 @@ Form >> fadeImage: otherImage at: topLeft
 		resultForm copyBits: imageRect from: otherImage at: 0@0
 			clippingBox: imageRect rule: Form under fillColor: maskForm.
 		self copyBits: imageRect from: resultForm at: topLeft
-				clippingBox: self boundingBox rule: Form over fillColor: nil.
-		Display forceDisplayUpdate]
+				clippingBox: self boundingBox rule: Form over fillColor: nil ]
 ]
 
 { #category : #transitions }
@@ -2249,8 +2248,7 @@ Form >> slideImage: otherImage at: topLeft delta: delta [
 	1 to: nSteps do:
 			[:i | self copyBits: bb from: otherImage
 				at: delta*(i-nSteps) + topLeft
-				clippingBox: clipRect rule: Form paint fillColor: nil.
-			Display forceDisplayUpdate]
+				clippingBox: clipRect rule: Form paint fillColor: nil ]
 ]
 
 { #category : #'image manipulation' }
@@ -2466,7 +2464,6 @@ Form >> wipeImage: otherImage at: topLeft clippingBox: clipBox rectForIndex: rec
 			rectOrList asOrderedCollection do: [:r |
 				self copyBits: r from: otherImage at: topLeft + r topLeft
 					clippingBox: clipRect rule: Form over fillColor: nil].
-			Display forceDisplayUpdate.
 			waitTime := 3 - (Time millisecondClockValue - t).
 			waitTime > 0 ifTrue:
 				["(Delay forMilliseconds: waitTime) wait"]].
