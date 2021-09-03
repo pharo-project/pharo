@@ -25,10 +25,6 @@ OSWindowFormRenderer >> drawDuring: aBlock [
 	aBlock value: self getCanvas
 ]
 
-{ #category : #'morphic integration' }
-OSWindowFormRenderer >> forceDisplayUpdate [
-]
-
 { #category : #accessing }
 OSWindowFormRenderer >> form [
 	
