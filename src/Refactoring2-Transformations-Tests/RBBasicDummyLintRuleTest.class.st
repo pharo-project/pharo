@@ -632,11 +632,6 @@ RBBasicDummyLintRuleTest class >> modifiesCollection [
 	^detector
 ]
 
-{ #category : #private }
-RBBasicDummyLintRuleTest class >> new [
-	^super new
-]
-
 { #category : #'unnecessary code' }
 RBBasicDummyLintRuleTest class >> onlyReadOrWritten [
 	| detector |

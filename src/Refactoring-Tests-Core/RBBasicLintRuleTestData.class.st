@@ -94,11 +94,6 @@ RBBasicLintRuleTestData class >> modifiesCollection [
 	^detector
 ]
 
-{ #category : #private }
-RBBasicLintRuleTestData class >> new [
-	^super new
-]
-
 { #category : #miscellaneous }
 RBBasicLintRuleTestData class >> precedence [
 	| detector matcher |
