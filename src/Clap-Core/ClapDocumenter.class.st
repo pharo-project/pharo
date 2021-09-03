@@ -17,10 +17,10 @@ ClapDocumenter class >> explain: aClapParameter [
 	^ self stringFrom: [ :doc | doc explain: aClapParameter ]
 ]
 
-{ #category : #private }
+{ #category : #'instance creation' }
 ClapDocumenter class >> new [
-	"use #on: instead"
-	^ self shouldNotImplement
+
+	^ self error: 'A ClapDocumenter should be created with on:'
 ]
 
 { #category : #'instance creation' }
