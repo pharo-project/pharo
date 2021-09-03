@@ -70,15 +70,6 @@ ClapCommand >> addTo: parentParameter [
 	^ parentParameter addSubcommand: self
 ]
 
-{ #category : #generated }
-ClapCommand >> atName: specName [
-
-	self
-		deprecated: 'Use #at: instead'
-		transformWith: '`@rec atName: `@arg' -> '`@rec at: `@arg'.
-	^ self at: specName
-]
-
 { #category : #'matching - testing' }
 ClapCommand >> canMatchWith: word [
 	^ self hasAlias: word
