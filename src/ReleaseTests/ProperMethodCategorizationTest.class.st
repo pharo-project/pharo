@@ -105,7 +105,7 @@ ProperMethodCategorizationTest >> testHashMethodNeedsToBeInComparingProtocol [
 
 ]
 
-{ #category : #'tests - object' }
+{ #category : #'tests - instance creation' }
 ProperMethodCategorizationTest >> testNewMethodNeedsToBeInInstanceCreationProtocol [
 	"The #new methods should be in method protocol 'instance creation'"
 	
