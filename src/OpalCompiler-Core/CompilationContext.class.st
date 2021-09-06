@@ -521,7 +521,6 @@ CompilationContext >> optionEmbeddSources [
 { #category : #options }
 CompilationContext >> optionFullBlockClosure [
 	^ options includes: #optionFullBlockClosure
-
 ]
 
 { #category : #options }

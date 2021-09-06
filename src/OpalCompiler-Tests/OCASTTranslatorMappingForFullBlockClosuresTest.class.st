@@ -2,7 +2,6 @@ Class {
 	#name : #OCASTTranslatorMappingForFullBlockClosuresTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'ctx',
 		'compiler'
 	],
 	#category : #'OpalCompiler-Tests-AST'
@@ -24,36 +23,18 @@ OCASTTranslatorMappingForFullBlockClosuresTest >> assertMethodReturnValue: metho
 		equals: 42
 ]
 
-{ #category : #support }
-OCASTTranslatorMappingForFullBlockClosuresTest >> compileSourceToMethod: source [
-	| method |
-	method := compiler
-		source: source;
-		compile.
-	method ast compilationContext: ctx.
-	^ method
-]
-
 { #category : #running }
 OCASTTranslatorMappingForFullBlockClosuresTest >> setUp [
 	super setUp.
-	ctx := CompilationContext new
-		encoderClass: EncoderForSistaV1;
-		setOptions: {#optionFullBlockClosure . #optionEmbeddSources} asSet.
 	compiler := OpalCompiler new
-		compilationContext: ctx;
+		options: #(+optionEmbeddSources);
 		yourself
-]
-
-{ #category : #running }
-OCASTTranslatorMappingForFullBlockClosuresTest >> tearDown [
-	super tearDown 
 ]
 
 { #category : #tests }
 OCASTTranslatorMappingForFullBlockClosuresTest >> testBlockWithParametersASTMapping [
 	|method blockNode|
-	method := self compileSourceToMethod: 'm ^[:i :j|i+j] value: 41 value: 1'.
+	method := compiler compile: 'm ^[:i :j|i+j] value: 41 value: 1'.
 	blockNode := method ast statements first value receiver.
 	self assertBlockNodeHasCorrectIR: blockNode.
 	self assertMethodReturnValue: method
@@ -62,7 +43,7 @@ OCASTTranslatorMappingForFullBlockClosuresTest >> testBlockWithParametersASTMapp
 { #category : #tests }
 OCASTTranslatorMappingForFullBlockClosuresTest >> testSimpleBlockASTMapping [
 	|method blockNode|
-	method := self compileSourceToMethod: 'm ^[40 + 2] value'.
+	method := compiler compile: 'm ^[40 + 2] value'.
 	blockNode := method ast statements first value receiver.
 	self assertBlockNodeHasCorrectIR: blockNode.
 	self assertMethodReturnValue: method
