@@ -21,6 +21,11 @@ ImmediateLayout class >> kind [
 	^ #immediate
 ]
 
+{ #category : #description }
+ImmediateLayout class >> subclassDefiningSymbol [
+	^#immediateSubclass:
+]
+
 { #category : #extending }
 ImmediateLayout >> extend [
 	self error: 'ImmediateLayout can not be extendend'
@@ -40,9 +45,4 @@ ImmediateLayout >> initialize [
 { #category : #format }
 ImmediateLayout >> instanceSpecification [
 	^ 7
-]
-
-{ #category : #accessing }
-ImmediateLayout >> kindOfSubclass [
-	^' immediateSubclass: '
 ]

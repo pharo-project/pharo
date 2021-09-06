@@ -24,6 +24,11 @@ WeakLayout class >> kind [
 	^ #weak
 ]
 
+{ #category : #description }
+WeakLayout class >> subclassDefiningSymbol [
+	^#weakSubclass:
+]
+
 { #category : #format }
 WeakLayout >> instanceSpecification [
 	^ 4
@@ -37,9 +42,4 @@ WeakLayout >> isVariable [
 { #category : #testing }
 WeakLayout >> isWeak [
 	^ true
-]
-
-{ #category : #accessing }
-WeakLayout >> kindOfSubclass [
-	^' weakSubclass: '
 ]

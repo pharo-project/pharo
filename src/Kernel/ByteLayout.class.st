@@ -19,6 +19,11 @@ ByteLayout class >> kind [
 	^ #bytes
 ]
 
+{ #category : #description }
+ByteLayout class >> subclassDefiningSymbol [
+	^#variableByteSubclass:
+]
+
 { #category : #accessing }
 ByteLayout >> bytesPerSlot [
 	
@@ -38,9 +43,4 @@ ByteLayout >> instanceSpecification [
 { #category : #testing }
 ByteLayout >> isBytes [
 	^ true
-]
-
-{ #category : #accessing }
-ByteLayout >> kindOfSubclass [
-	^' variableByteSubclass: '
 ]

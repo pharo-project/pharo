@@ -22,6 +22,11 @@ VariableLayout class >> kind [
 	^ #variable
 ]
 
+{ #category : #description }
+VariableLayout class >> subclassDefiningSymbol [
+	^#variableSubclass:
+]
+
 { #category : #format }
 VariableLayout >> instanceSpecification [
 	^ self hasFields
@@ -32,9 +37,4 @@ VariableLayout >> instanceSpecification [
 { #category : #testing }
 VariableLayout >> isVariable [
 	^ true
-]
-
-{ #category : #accessing }
-VariableLayout >> kindOfSubclass [
-	^' variableSubclass: '
 ]
