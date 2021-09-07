@@ -62,8 +62,7 @@ CDFluidClassDefinitionParser >> handleClassAndSuperclassOf: aNode [
 
 { #category : #'handling  nodes' }
 CDFluidClassDefinitionParser >> handleLayout: aNode [
-
-	classDefinition classKind: aNode binding value kind
+	classDefinition classKind: aNode binding value subclassDefiningSymbol
 ]
 
 { #category : #'handling  nodes' }

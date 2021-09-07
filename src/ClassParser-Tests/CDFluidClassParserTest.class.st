@@ -92,7 +92,7 @@ CDFluidClassParserTest >> testEphemeronSubclass [
 		layout: EphemeronLayout;
 		package: #MyPackage'.
 	def := parser parse: defString.
-	self assert: def classKind equals: #ephemeron
+	self assert: def classKind equals: #ephemeronSubclass:
 ]
 
 { #category : #'tests - (r) simple class definition' }
@@ -115,7 +115,7 @@ CDFluidClassParserTest >> testNormalSubclass [
 		layout: FixedLayout;
 		package: #MyPackage'.
 	def := parser parse: defString.
-	self assert: def classKind equals: #normal
+	self assert: def classKind equals: #subclass:
 ]
 
 { #category : #'tests - (r) sharedPools' }
@@ -301,10 +301,10 @@ CDFluidClassParserTest >> testVariableByteSubclass [
 	parser := self classDefinitionParserClass new.
 	
 	defString := 'Object << #MyObject
-		layout: VariableLayout;
+		layout: ByteLayout;
 		package: #MyPackage'.
 	def := parser parse: defString.
-	self assert: def classKind equals: #variable
+	self assert: def classKind equals: #variableByteSubclass:
 ]
 
 { #category : #'tests - (r) kinds' }
@@ -317,7 +317,7 @@ CDFluidClassParserTest >> testVariableSubclass [
 		layout: VariableLayout;
 		package: #MyPackage'.
 	def := parser parse: defString.
-	self assert: def classKind equals: #variable
+	self assert: def classKind equals: #variableSubclass:
 ]
 
 { #category : #'tests - (r) kinds' }
@@ -330,7 +330,7 @@ CDFluidClassParserTest >> testVariableWordSubclass [
 		layout: WordLayout;
 		package: #MyPackage'.
 	def := parser parse: defString.
-	self assert: def classKind equals: #words
+	self assert: def classKind equals: #variableWordSubclass:
 ]
 
 { #category : #'tests - (r) kinds' }
@@ -343,5 +343,5 @@ CDFluidClassParserTest >> testWeakSubclass [
 		layout: WeakLayout;
 		package: #MyPackage'.
 	def := parser parse: defString.
-	self assert: def classKind equals: #weak
+	self assert: def classKind equals: #weakSubclass:
 ]

@@ -20,12 +20,12 @@ EphemeronLayout class >> kind [
 	^ #ephemeron
 ]
 
+{ #category : #description }
+EphemeronLayout class >> subclassDefiningSymbol [
+	^#ephemeronSubclass:
+]
+
 { #category : #format }
 EphemeronLayout >> instanceSpecification [
 	^ 5
-]
-
-{ #category : #accessing }
-EphemeronLayout >> kindOfSubclass [
-	^' ephemeronSubclass: '
 ]

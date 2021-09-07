@@ -22,6 +22,12 @@ CompiledMethodLayout class >> kind [
 	^ #compiledMethod 
 ]
 
+{ #category : #description }
+CompiledMethodLayout class >> subclassDefiningSymbol [
+	"there is no way to define classes of this layoyt, the system shows them as variable classes"
+	^#variableByteSubclass:
+]
+
 { #category : #extending }
 CompiledMethodLayout >> extend [
 	self error: 'CompiledMethodLayout can not be extendend'
@@ -30,10 +36,4 @@ CompiledMethodLayout >> extend [
 { #category : #format }
 CompiledMethodLayout >> instanceSpecification [
 	 ^ 24
-]
-
-{ #category : #accessing }
-CompiledMethodLayout >> kindOfSubclass [
-	"not really true but this is what is shows now"
-	^' variableByteSubclass: '
 ]

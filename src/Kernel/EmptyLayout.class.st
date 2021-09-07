@@ -51,8 +51,3 @@ EmptyLayout >> extendWeak [
 EmptyLayout >> extendWord [
 	^ WordLayout new
 ]
-
-{ #category : #accessing }
-EmptyLayout >> kindOfSubclass [
-	^self shouldNotImplement
-]

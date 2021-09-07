@@ -19,6 +19,11 @@ WordLayout class >> kind [
 	^ #words
 ]
 
+{ #category : #description }
+WordLayout class >> subclassDefiningSymbol [
+	^#variableWordSubclass:
+]
+
 { #category : #accessing }
 WordLayout >> bytesPerSlot [
 	
@@ -38,9 +43,4 @@ WordLayout >> instanceSpecification [
 { #category : #testing }
 WordLayout >> isWords [
 	^ true
-]
-
-{ #category : #accessing }
-WordLayout >> kindOfSubclass [
-	^' variableWordSubclass: '
 ]

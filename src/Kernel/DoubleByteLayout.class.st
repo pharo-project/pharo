@@ -7,11 +7,16 @@ Class {
 	#category : #'Kernel-Layout'
 }
 
-{ #category : #'methodsFor:' }
+{ #category : #'instance creation' }
 DoubleByteLayout class >> extending: superLayout scope: aScope host: aClass [
 	^ superLayout extendDoubleByte
 		host: aClass;
 		yourself
+]
+
+{ #category : #description }
+DoubleByteLayout class >> subclassDefiningSymbol [
+	^#variableDoubleByteSubclass:
 ]
 
 { #category : #accessing }
@@ -33,9 +38,4 @@ DoubleByteLayout >> instanceSpecification [
 { #category : #testing }
 DoubleByteLayout >> isDoubleBytes [
 	^ true
-]
-
-{ #category : #accessing }
-DoubleByteLayout >> kindOfSubclass [
-	^' variableDoubleByteSubclass: '
 ]

@@ -31,6 +31,13 @@ ObjectLayout class >> layoutForType: typeSymbol [
 		ifNone: [ Error signal: 'Invalid layout type: ', typeSymbol asString ]
 ]
 
+{ #category : #description }
+ObjectLayout class >> subclassDefiningSymbol [
+	"As a fallback we just return a standard class creation symbol. This will be called for user 	
+	defined Layouts, for old style class definitions that can not support user defined Layouts"
+	^#subclass:
+]
+
 { #category : #extending }
 ObjectLayout >> extend [
 	"Answer a default extension of me."
@@ -133,4 +140,14 @@ ObjectLayout >> initializeInstance: anInstance [
 { #category : #format }
 ObjectLayout >> instanceSpecification [
 	self subclassResponsibility
+]
+
+{ #category : #'testing - class hierarchy' }
+ObjectLayout >> kindOfSubclass [
+	^' ',self class subclassDefiningSymbol, ' '.
+]
+
+{ #category : #'testing - class hierarchy' }
+ObjectLayout >> subclassDefiningSymbol [
+	^self class subclassDefiningSymbol
 ]
