@@ -91,11 +91,16 @@ EpLogNodeGraphPresenter >> initializeLogNodesTable [
 
 	logNodesTable
 		beMultipleSelection;
-		addColumn:
-			((SpImageTableColumn evaluated: [ :item | hiedraColumnController cellMorphAtValue: item ])
-				width: 50;
-				yourself);
-		addColumn: (SpStringTableColumn evaluated: #yourself)
+		addColumn: ((SpImageTableColumn evaluated: [ :item | hiedraColumnController cellMorphAtValue: item ])
+			width: 50;
+			yourself);
+		addColumn: (SpStringTableColumn 
+			title: 'Modified' 
+			evaluated: [ :item | item modificationTimeString ])
+			beNotExpandable;
+		addColumn: (SpStringTableColumn 
+			title: 'File'
+			evaluated: [ :item | item smallName ])
 ]
 
 { #category : #initialization }

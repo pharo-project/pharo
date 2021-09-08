@@ -21,12 +21,6 @@ EpMonitorLogNode class >> for: anEpMonitor [
 		yourself
 ]
 
-{ #category : #converting }
-EpMonitorLogNode >> asMorph [
-
-	^ EpMorphFactory default emphasizedStringFor: self globalName, ' *'
-]
-
 { #category : #accessing }
 EpMonitorLogNode >> globalName [
 
@@ -58,6 +52,12 @@ EpMonitorLogNode >> log [
 EpMonitorLogNode >> modificationTime [
 
 	^ DateAndTime now
+]
+
+{ #category : #accessing }
+EpMonitorLogNode >> modificationTimeString [
+
+	^ '*'
 ]
 
 { #category : #accessing }
