@@ -20,7 +20,7 @@ WeakLayout class >> extending: superLayout scope: aScope host: aClass [
 ]
 
 { #category : #description }
-WeakLayout class >> kind [ 
+WeakLayout class >> mcTypeSymbol [ 
 	^ #weak
 ]
 

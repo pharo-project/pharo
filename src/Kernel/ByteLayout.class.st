@@ -15,7 +15,7 @@ ByteLayout class >> extending: superLayout scope: aScope host: aClass [
 ]
 
 { #category : #description }
-ByteLayout class >> kind [ 
+ByteLayout class >> mcTypeSymbol [ 
 	^ #bytes
 ]
 

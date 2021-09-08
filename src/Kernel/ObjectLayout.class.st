@@ -17,18 +17,18 @@ ObjectLayout class >> isAbstract [
 	^self == ObjectLayout
 ]
 
-{ #category : #description }
-ObjectLayout class >> kind [
-	"return the symbol that Monticello uses to encode the layout"
-	^self name asSymbol
-]
-
 { #category : #monticello }
 ObjectLayout class >> layoutForType: typeSymbol [
 	"used to get the layout for a Monticello internal layout symbol"
 	^self allSubclasses 
-		detect: [ :class | class kind = typeSymbol ] 
+		detect: [ :class | class mcTypeSymbol = typeSymbol ] 
 		ifNone: [ Error signal: 'Invalid layout type: ', typeSymbol asString ]
+]
+
+{ #category : #monticello }
+ObjectLayout class >> mcTypeSymbol [
+	"return the symbol that Monticello uses to encode the layout"
+	^self name asSymbol
 ]
 
 { #category : #description }

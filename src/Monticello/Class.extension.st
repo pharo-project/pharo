@@ -20,7 +20,7 @@ Class >> asClassDefinition [
 						classVarNames: (self classVariables collect: [:each | each definitionString])
 						poolDictionaryNames: self sharedPoolNames
 						classInstVarNames: (self class localSlots collect: [:each | each definitionString])
-						type: self typeOfClass
+						type: self mcType
 						comment: self organization classComment	asString
 						commentStamp: self organization commentStamp ]
 	
@@ -35,7 +35,7 @@ Class >> asClassDefinition [
 						classVarNames: self classVarNames
 						poolDictionaryNames: self sharedPoolNames
 						classInstVarNames: (self class localSlots collect: [ :each | each name ])
-						type: self typeOfClass
+						type: self mcType
 						comment: self organization classComment	asString
 						commentStamp: self organization commentStamp ]
 	

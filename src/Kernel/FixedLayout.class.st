@@ -18,7 +18,7 @@ FixedLayout class >> extending: superLayout scope: aScope host: aClass [
 ]
 
 { #category : #description }
-FixedLayout class >> kind [ 
+FixedLayout class >> mcTypeSymbol [ 
 	^ #normal
 ]
 

@@ -215,6 +215,13 @@ UndefinedObject >> isNotNil [
 	^false
 ]
 
+{ #category : #'class hierarchy' }
+UndefinedObject >> mcType [
+	"Answer the symbol that Monticello uses internally to encode layouts"
+	"Implemented here  to support disjoint class hierarchies"
+	^#normal
+]
+
 { #category : #testing }
 UndefinedObject >> notNil [ 
 	"Refer to the comment in Object|notNil."
@@ -285,13 +292,6 @@ UndefinedObject >> subclassesDo: aBlock [
 
 	^ Class subclassesDo: [:cl | 
 			cl isMeta ifTrue: [aBlock value: cl soleInstance]].
-]
-
-{ #category : #'class hierarchy' }
-UndefinedObject >> typeOfClass [
-	"Answer the symbol that Monticello uses internally to encode layouts"
-	"Implemented here  to support disjoint class hierarchies"
-	^#normal
 ]
 
 { #category : #copying }
