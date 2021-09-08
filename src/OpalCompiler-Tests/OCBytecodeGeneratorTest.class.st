@@ -32,33 +32,6 @@ OCBytecodeGeneratorTest >> testBlockReturnTop [
 ]
 
 { #category : #'tests - execution' }
-OCBytecodeGeneratorTest >> testClosureExample [
-	| cm |
-	
-	self flag:#oldBytecode.
-	self skip.
-	
-	cm := self newBytecodeGen
-		numArgs: 0;
-		numTemps: 0;
-		pushClosureCopyNumCopiedValues: 0 numArgs: 0 to: #end;
-		pushReceiver;
-		blockReturnTop;
-		label: #end;
-		returnTop;
-		compiledMethod.
-
-
-	cm methodClass: self class.
-	cm selector: #test.
-
-	self assert: (cm isKindOf: CompiledMethod).
-	self assert: ((cm valueWithReceiver: 2 @ 2 arguments: #()) isKindOf: BlockClosure).
-	self assert: (cm valueWithReceiver: 2 @ 2 arguments: #()) value equals: 2 @ 2.
-	^ cm
-]
-
-{ #category : #'tests - execution' }
 OCBytecodeGeneratorTest >> testExample [
 	| cm |
 	cm := self newBytecodeGen
@@ -232,28 +205,6 @@ OCBytecodeGeneratorTest >> testPopTop [
 	self testMethod: cm against: (Smalltalk vm 
 		for32bit: '13 <76> pushConstant: 1\14 <76> pushConstant: 1\15 <87> pop\16 <7C> returnTop' withCRs 
 		for64bit: '25 <76> pushConstant: 1\26 <76> pushConstant: 1\27 <87> pop\28 <7C> returnTop' withCRs)
-]
-
-{ #category : #'tests - instructions' }
-OCBytecodeGeneratorTest >> testPushClosureCopyNumCopiedValuesNumArgsTo [
-	| cm  |
-
-	self flag:#oldBytecode.
-	self skip.
-	
-	cm := self newBytecodeGen
-		numArgs: 0;
-		numTemps: 0;
-		pushClosureCopyNumCopiedValues: 0 numArgs: 0 to: #end;
-		pushReceiver;
-		blockReturnTop;
-		label: #end;
-		returnTop;
-		compiledMethod.
-
-	self testMethod: cm against: (Smalltalk vm 
-		for32bit: '13 <8F 00 00 02> closureNumCopied: 0 numArgs: 0 bytes 17 to 18\17 <70> self\18 <7D> blockReturn\19 <7C> returnTop' withCRs 
-		for64bit: '25 <8F 00 00 02> closureNumCopied: 0 numArgs: 0 bytes 29 to 30\29 <70> self\30 <7D> blockReturn\31 <7C> returnTop' withCRs)  
 ]
 
 { #category : #'tests - instructions' }
