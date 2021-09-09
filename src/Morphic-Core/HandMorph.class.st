@@ -306,7 +306,6 @@ HandMorph >> drawOn: aCanvas [
 	"Draw the hand itself (i.e., the cursor)."
 
 	temporaryCursor 
-		ifNil: [aCanvas paintImage: NormalCursor at: bounds topLeft]
 		ifNotNil: [aCanvas paintImage: temporaryCursor at: bounds topLeft].
 	
 ]
@@ -732,10 +731,7 @@ HandMorph >> needsToBeDrawn [
 		or: [ (submorphs anySatisfy: [ :ea | ea visible ])
 			or: [ (temporaryCursor notNil and: [hardwareCursor isNil])
 				]])
-		ifTrue: [
-			"using the software cursor; hide the hardware one"
-			self currentCursor == Cursor blank ifFalse: [Cursor blank show].
-			^ true].
+		ifTrue: [ ^ true ].
 	"Switch from one hardware cursor to another, if needed."
 	cursor := hardwareCursor ifNil: [Cursor normal].
 	self currentCursor == cursor ifFalse: [cursor show].
