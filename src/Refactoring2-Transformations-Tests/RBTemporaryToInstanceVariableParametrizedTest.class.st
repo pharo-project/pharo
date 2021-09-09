@@ -8,6 +8,7 @@ Class {
 RBTemporaryToInstanceVariableParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBTemporaryToInstanceVariableRefactoring };
+		addCase: { #rbClass -> RBTemporaryToInstanceVariableTransformation };
 		yourself
 ]
 
