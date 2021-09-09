@@ -10,20 +10,11 @@ Class {
 	#instVars : [
 		'refreshDeferrer',
 		'logPresenter',
-		'logNodesPresenter'
+		'logNodesPresenter',
+		'toolbarPresenter'
 	],
 	#category : #'EpiceaBrowsers-UI-Unified'
 }
-
-{ #category : #specs }
-EpUnifiedBrowserPresenter class >> defaultSpec [
-
-	^ SpPanedLayout newLeftToRight
-		  positionOfSlider: 35 percent;
-		  add: #logNodesPresenter;
-		  add: #logPresenter;
-		  yourself
-]
 
 { #category : #'instance creation' }
 EpUnifiedBrowserPresenter class >> open [
@@ -75,12 +66,20 @@ EpUnifiedBrowserPresenter >> initializePresenter [
 
 { #category : #initialization }
 EpUnifiedBrowserPresenter >> initializePresenters [
-	logPresenter := self instantiate: EpLogBrowserPresenter.
 
-	logNodesPresenter := self instantiate: EpLogNodeGraphPresenter.
+	self layout: (SpBoxLayout newTopToBottom
+		add: (toolbarPresenter := self newToolbar) expand: false;
+		add: (SpPanedLayout newLeftToRight
+			positionOfSlider: 35 percent;
+			add: (logNodesPresenter := self instantiate: EpLogNodeGraphPresenter);
+			add: (logPresenter := self instantiate: EpLogBrowserPresenter);
+			yourself);
+		yourself).
+		
 	logNodesPresenter whenSelectionChangedDo: [ :selection |
 		self refreshWithLogSelection: selection ].
 
+	self initializeToolbar.
 	self initializeRefreshOnSessionUpdate.
 	self initializeWorkaroundToRefreshOnMonitorLogAnnouncement
 ]
@@ -88,6 +87,30 @@ EpUnifiedBrowserPresenter >> initializePresenters [
 { #category : #initialization }
 EpUnifiedBrowserPresenter >> initializeRefreshOnSessionUpdate [
 	self updatesAnnouncer weak when: OmSessionStoreUpdated send: #refresh to: self
+]
+
+{ #category : #initialization }
+EpUnifiedBrowserPresenter >> initializeToolbar [
+	
+	toolbarPresenter 
+		add: (self newToolbarButton 
+			icon: (self application iconNamed: #refresh);
+			label: 'Refresh';
+			help: 'Refresh logs from this directory';
+			action: [ self refreshLogs ];
+			yourself);
+		add: (self newToolbarButton 
+			icon: (self application iconNamed: #openIcon);
+			label: 'Directory';
+			help: 'Select directory to browse logs (i.e. files with ombu extension)';
+			action: [ self selectDirectory ];
+			yourself);			
+		add: (self newToolbarButton 
+			icon: (self application iconNamed: #config);
+			label: 'Dashboard';
+			help: 'Open epicea dashboard';
+			action: [ self openDashboard ];
+			yourself)
 ]
 
 { #category : #initialization }
@@ -114,6 +137,12 @@ EpUnifiedBrowserPresenter >> monitorLogAnnouncer [
 	^ EpMonitor current log announcer
 ]
 
+{ #category : #actions }
+EpUnifiedBrowserPresenter >> openDashboard [
+
+	(EpDashboardPresenter newApplication: self application) openWithSpec
+]
+
 { #category : #refreshing }
 EpUnifiedBrowserPresenter >> refresh [
 	logNodesPresenter refresh
@@ -127,6 +156,12 @@ EpUnifiedBrowserPresenter >> refreshIfMonitorLogSelected [
 		ifTrue: [ logPresenter refresh ]
 ]
 
+{ #category : #actions }
+EpUnifiedBrowserPresenter >> refreshLogs [
+
+	logNodesPresenter refresh
+]
+
 { #category : #refreshing }
 EpUnifiedBrowserPresenter >> refreshWithLogSelection: selection [
 
@@ -134,6 +169,12 @@ EpUnifiedBrowserPresenter >> refreshWithLogSelection: selection [
 		theLog: (self freshLogFromSelection: selection);
 		refresh;
 		cleanEntryContent
+]
+
+{ #category : #actions }
+EpUnifiedBrowserPresenter >> selectDirectory [
+
+	logNodesPresenter selectDirectory
 ]
 
 { #category : #initialization }
