@@ -3,7 +3,6 @@ Class {
 	#superclass : #CDNode,
 	#instVars : [
 		'node',
-		'index',
 		'start',
 		'stop',
 		'name',
@@ -49,12 +48,6 @@ CDSlotNode >> asSlot [
 CDSlotNode >> binding [
 	"To be polymorphic to RB method nodes"
 	^self
-]
-
-{ #category : #accessing }
-CDSlotNode >> index: anInteger [ 
-	
-	index := anInteger
 ]
 
 { #category : #accessing }
