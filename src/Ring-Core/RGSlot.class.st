@@ -45,12 +45,6 @@ RGSlot >> isSlot [
 	^ true
 ]
 
-{ #category : #testing }
-RGSlot >> isSuperVariable [
-	
-	^ false
-]
-
 { #category : #accessing }
 RGSlot >> name: aString [
 

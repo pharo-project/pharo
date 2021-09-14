@@ -327,11 +327,6 @@ RubFindReplaceDialogWindow >> newReplacement [
 		ifTrue: [self prevReplacements removeLast]
 ]
 
-{ #category : #action }
-RubFindReplaceDialogWindow >> open [
-	self openInWorld
-]
-
 { #category : #accessing }
 RubFindReplaceDialogWindow >> prevFinds [
 	^ self class finds
