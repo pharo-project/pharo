@@ -254,16 +254,6 @@ CompiledCode >> hasLiteralSuchThat: litBlock [
 	^false
 ]
 
-{ #category : #literals }
-CompiledCode >> hasLiteralThorough: aLiteral [
-	self 
-		deprecated: 'Use #refersToLiteral: instead.' 
-		on: '31 January 2020'
-		in: #Pharo9
-		transformWith: '`@receiver hasLiteralThorough: `@arg' -> '`@receiver refersToLiteral: `@arg'.
-	^ self refersToLiteral: aLiteral
-]
-
 { #category : #accessing }
 CompiledCode >> hasPragmaNamed: arg1 [ 
 	^ self subclassResponsibility
