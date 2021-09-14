@@ -82,11 +82,6 @@ RubAnnotationDisplayer >> computedHeightFrom: aRectangle [
 	^ row ifNil: [0] ifNotNil: [row height]
 ]
 
-{ #category : #geometry }
-RubAnnotationDisplayer >> computedWidthFrom: aRectangle [
-	^ aRectangle width
-]
-
 { #category : #accessing }
 RubAnnotationDisplayer >> editingModeLabel [
 	^ self paragraphProvider editingMode label

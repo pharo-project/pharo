@@ -263,12 +263,6 @@ RGBehaviorStrategy >> instanceVariablesString [
 ]
 
 { #category : #testing }
-RGBehaviorStrategy >> isClass [
-
-	^ false
-]
-
-{ #category : #testing }
 RGBehaviorStrategy >> isClassStrategy [
 
 	^ false

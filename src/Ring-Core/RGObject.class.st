@@ -325,18 +325,6 @@ RGObject >> initializeUnresolved [
 ]
 
 { #category : #'testing - types' }
-RGObject >> isBehavior [
-
-	^ false
-]
-
-{ #category : #'testing - types' }
-RGObject >> isClass [
-
-	^ false
-]
-
-{ #category : #'testing - types' }
 RGObject >> isComment [
 
 	^false

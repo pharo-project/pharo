@@ -4,14 +4,6 @@ Class {
 	#category : #'Ring-Core-Environment'
 }
 
-{ #category : #'instance creation' }
-RGReadOnlyBackend class >> for: anRGEnvironment [
-
-	^ self new 
-		environment: anRGEnvironment;
-		yourself
-]
-
 { #category : #'trait alias' }
 RGReadOnlyBackend >> addAlias: aSymbol to: anRGTraitAlias [
 

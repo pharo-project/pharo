@@ -4,24 +4,10 @@ Class {
 	#category : #'Ring-Core-Environment'
 }
 
-{ #category : #'instance creation' }
-RGReadOnlyImageBackend class >> for: anRGEnvironment [
-
-	^ self new 
-		environment: anRGEnvironment;
-		yourself
-]
-
 { #category : #'trait alias' }
 RGReadOnlyImageBackend >> aliasesFor: anRGTraitAlias do: aBlock [
 
 	^ (anRGTraitAlias propertyNamed: #realObject ifAbsent: [ self error: 'You can use only trait transformations generated directly by this backend' ]) aliases associations do: [:each | aBlock value: each ]
-]
-
-{ #category : #method }
-RGReadOnlyImageBackend >> astFor: anRGMethod [
-
-	^  anRGMethod astFromSource
 ]
 
 { #category : #method }
@@ -116,13 +102,6 @@ RGReadOnlyImageBackend >> definedBehaviorsFor: anRGPackage do: aBlock [
 			cls := Smalltalk classOrTraitNamed: behaviorName.
 			def := self definitionFor: cls ifAbsentRegister: [cls asRingMinimalDefinitionIn: anRGPackage environment].
 			aBlock value: def.]]
-]
-
-{ #category : #accessing }
-RGReadOnlyImageBackend >> definitionFor: anObject [ 
-
-	^ self definitionFor: anObject ifAbsentRegister: [ anObject ensureRingDefinitionIn: self environment ]
-
 ]
 
 { #category : #'trait exclusion' }
@@ -260,12 +239,6 @@ RGReadOnlyImageBackend >> methodPackageFor: anRGMethod [
 	^ (self realMethodFor: anRGMethod) package asRingMinimalDefinitionIn: anRGMethod environment.
 ]
 
-{ #category : #general }
-RGReadOnlyImageBackend >> nameFor: anRGObject [
-
-	^ anRGObject pvtName
-]
-
 { #category : #class }
 RGReadOnlyImageBackend >> packageFor: anRGBehavior [
 
@@ -307,12 +280,6 @@ RGReadOnlyImageBackend >> realPackageFor: anRGPackage [
 RGReadOnlyImageBackend >> resolvedPropertiesFor: anRGObject [
 
 	^ anRGObject pvtResolvableProperties collect: [:each | each key]
-]
-
-{ #category : #class }
-RGReadOnlyImageBackend >> sharedPoolsFor: anRGBehavior do: aBlock [
-
-	^ anRGBehavior behaviorStrategy pvtSharedPoolsDo: aBlock
 ]
 
 { #category : #'pointer layout' }

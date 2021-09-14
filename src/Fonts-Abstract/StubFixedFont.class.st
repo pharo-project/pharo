@@ -29,12 +29,6 @@ StubFixedFont >> baseFont: aFont [
 ]
 
 { #category : #accessing }
-StubFixedFont >> baseKern [
-
-	^ 0
-]
-
-{ #category : #accessing }
 StubFixedFont >> descent [
 
 	^ 4
