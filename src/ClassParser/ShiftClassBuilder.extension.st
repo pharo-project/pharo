@@ -15,19 +15,7 @@ ShiftClassBuilder >> buildFromAST: aCDClassDefinitionNode [
 						inEnv: buildEnvironment) ]
 		ifTrue: [ self superclass: nil ].
 		
-	self layoutClass: FixedLayout.
-	aCDClassDefinitionNode isEphemeron
-		ifTrue: [ self layoutClass: EphemeronLayout ].
-	aCDClassDefinitionNode isWeak
-		ifTrue: [ self layoutClass: WeakLayout ].
-	aCDClassDefinitionNode isImmediate
-		ifTrue: [ self layoutClass: ImmediateLayout ].
-	aCDClassDefinitionNode isVariableClass
-		ifTrue: [ self layoutClass: VariableLayout ].
-	aCDClassDefinitionNode isWords
-		ifTrue: [ self layoutClass: WordLayout ].
-	aCDClassDefinitionNode isBytes
-		ifTrue: [ self layoutClass: ByteLayout ].
+	self layoutClass: aCDClassDefinitionNode layoutClass.
 		
 	self slots: (aCDClassDefinitionNode slots collect: [ :e | e asSlot ]).
 	

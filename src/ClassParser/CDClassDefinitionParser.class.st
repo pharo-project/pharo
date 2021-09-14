@@ -20,9 +20,19 @@ CDClassDefinitionParser class >> fromASTNode: aNode [
 
 { #category : #parsing }
 CDClassDefinitionParser >> handleClassName: aNode withType: aSymbol [
+	| layout |
 	
 	self handleClassName: aNode.
-	classDefinition classKind: aSymbol
+	layout := FixedLayout.
+	aSymbol = #variableWordSubclass: ifTrue: [ layout := WordLayout ].
+	aSymbol = #ephemeronSubclass: ifTrue: [ layout := EphemeronLayout ].
+	aSymbol = #weakSubclass: ifTrue: [ layout := WeakLayout ].
+	aSymbol = #variableByteSubclass: ifTrue: [ layout := ByteLayout  ].
+	aSymbol = #variableSubclass: ifTrue: [ layout := VariableLayout ].
+	aSymbol = #immediateSubclass: ifTrue: [ layout := ImmediateLayout ].
+	aSymbol = #subclass: ifTrue: [ layout := FixedLayout ].
+	
+	classDefinition layoutClass: layout
 ]
 
 { #category : #parsing }
