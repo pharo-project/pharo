@@ -132,19 +132,6 @@ MorphicUIManager >> chooseFrom: labelList values: valueList lines: linesArray ti
 		lines: linesArray
 ]
 
-{ #category : #services }
-MorphicUIManager >> chooseFullFileName: title extensions: exts path: path preview: preview [
-	"Answer the result of a file name chooser dialog with the given title, extensions
-	to show, path and preview type."
-
-	^self theme
-		chooseFullFileNameIn: self modalMorph
-		title: title
-		extensions: exts
-		path: path
-		preview: preview
-]
-
 { #category : #'ui requests' }
 MorphicUIManager >> chooseFullFileNameMatching: patterns label: label [
 	"Let the user choose a file matching the given patterns"
