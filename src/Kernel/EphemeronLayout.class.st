@@ -16,7 +16,7 @@ EphemeronLayout class >> extending: superLayout scope: aScope host: aClass [
 ]
 
 { #category : #description }
-EphemeronLayout class >> kind [ 
+EphemeronLayout class >> mcTypeSymbol [ 
 	^ #ephemeron
 ]
 

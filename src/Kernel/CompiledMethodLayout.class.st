@@ -18,7 +18,7 @@ CompiledMethodLayout class >> extending: superLayout scope: aScope host: aClass 
 ]
 
 { #category : #description }
-CompiledMethodLayout class >> kind [ 
+CompiledMethodLayout class >> mcTypeSymbol [ 
 	^ #compiledMethod 
 ]
 

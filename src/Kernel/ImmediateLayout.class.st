@@ -17,7 +17,7 @@ ImmediateLayout class >> extending: superLayout scope: aScope host: aClass [
 ]
 
 { #category : #description }
-ImmediateLayout class >> kind [ 	
+ImmediateLayout class >> mcTypeSymbol [ 	
 	^ #immediate
 ]
 

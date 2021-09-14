@@ -15,7 +15,7 @@ WordLayout class >> extending: superLayout scope: aScope host: aClass [
 ]
 
 { #category : #description }
-WordLayout class >> kind [ 
+WordLayout class >> mcTypeSymbol [ 
 	^ #words
 ]
 

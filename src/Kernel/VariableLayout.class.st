@@ -18,7 +18,7 @@ VariableLayout class >> extending: superLayout scope: aScope host: aClass [
 ]
 
 { #category : #description }
-VariableLayout class >> kind [ 
+VariableLayout class >> mcTypeSymbol [ 
 	^ #variable
 ]
 
