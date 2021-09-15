@@ -52,18 +52,6 @@ FTSelectionChanged >> newSelectedIndexes: anObject [
 ]
 
 { #category : #accessing }
-FTSelectionChanged >> newSelectedRowIndexes [
-	self deprecated: 'Use #newSelectedIndexes instead' transformWith: '`@receiver newSelectedRowIndexes' -> '`@receiver newSelectedIndexes'.
-	^ self newSelectedIndexes
-]
-
-{ #category : #accessing }
-FTSelectionChanged >> newSelectedRowIndexes: anObject [
-	self deprecated: 'Use #newSelectedIndexes: instead' transformWith: '`@receiver newSelectedRowIndexes: `@statements1' -> '`@receiver newSelectedIndexes: `@statements1'.
-	self newSelectedIndexes: anObject
-]
-
-{ #category : #accessing }
 FTSelectionChanged >> oldSelectedIndexes [
 	^ oldSelectedIndexes
 ]
@@ -71,16 +59,4 @@ FTSelectionChanged >> oldSelectedIndexes [
 { #category : #accessing }
 FTSelectionChanged >> oldSelectedIndexes: anObject [
 	oldSelectedIndexes := anObject
-]
-
-{ #category : #accessing }
-FTSelectionChanged >> oldSelectedRowIndexes [
-	self deprecated: 'Use #oldSelectedIndexes instead' transformWith: '`@receiver oldSelectedRowIndexes' -> '`@receiver oldSelectedIndexes'.
-	^ self oldSelectedIndexes
-]
-
-{ #category : #accessing }
-FTSelectionChanged >> oldSelectedRowIndexes: anObject [
-	self deprecated: 'Use #oldSelectedIndexes: instead' transformWith: '`@receiver oldSelectedRowIndexes: `@statements1' -> '`@receiver oldSelectedIndexes: `@statements1'.
-	self oldSelectedIndexes: anObject
 ]

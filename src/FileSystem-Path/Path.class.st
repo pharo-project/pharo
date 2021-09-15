@@ -78,17 +78,6 @@ Path class >> canonicalizeElements: aCollection [
 ]
 
 { #category : #encodings }
-Path class >> delimeter [
-	self
-		deprecated: 'Should use delimiter instead'
-		on: '10 December 2020'
-		in: #Pharo9
-		transformWith: '`@rec delimeter' -> '`@rec delimiter'.
-
-	^ self delimiter
-]
-
-{ #category : #encodings }
 Path class >> delimiter [
 	"Internal path delimiter"
 
