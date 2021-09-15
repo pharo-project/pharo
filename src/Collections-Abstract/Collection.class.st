@@ -898,16 +898,6 @@ Collection >> includesAll: aCollection [
 ]
 
 { #category : #testing }
-Collection >> includesAllOf: aCollection [ 
-
-	self
-		deprecated: 'Please use #includesAll: instead'
-		transformWith: '`@receiver includesAllOf: `@statements' -> '`@receiver includesAll: `@statements'.
-	
-	^ self includesAll: aCollection
-]
-
-{ #category : #testing }
 Collection >> includesAny: aCollection [ 
 	"Answer whether any element of aCollection is one of the receiver's elements."
 	aCollection do: [:elem | (self includes: elem) ifTrue: [^ true]].
@@ -1341,16 +1331,6 @@ Collection >> withIndexDo: elementAndIndexBlock [
 	| index |
 	index := 0.
 	self do: [:item | elementAndIndexBlock value: item value: (index := index+1)]
-]
-
-{ #category : #deprecated }
-Collection >> write: anObject [
-
-	self
-		deprecated: 'Please use #add: instead'
-		transformWith: '`@receiver write: `@statements1' 
-						-> '`@receiver add: `@statements1'.
-	^ self add: anObject
 ]
 
 { #category : #enumerating }

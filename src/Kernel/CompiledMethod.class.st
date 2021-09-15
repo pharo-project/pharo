@@ -960,6 +960,12 @@ CompiledMethod >> readsField: varIndex [
 	^ super readsField: varIndex 
 ]
 
+{ #category : #evaluating }
+CompiledMethod >> receiver: aReceiver withArguments: anArray executeMethod: anObject [
+	<primitive: 188>
+	self primitiveFailed
+]
+
 { #category : #literals }
 CompiledMethod >> refersToLiteral: aLiteral [
 	"Answer true if any literal in this method is literal, even if embedded in array structure."
@@ -1161,7 +1167,7 @@ CompiledMethod >> usesUndeclareds [
 
 { #category : #evaluating }
 CompiledMethod >> valueWithReceiver: aReceiver arguments: anArray [ 
-	^ aReceiver withArgs: anArray executeMethod: self
+	^self receiver: aReceiver withArguments: anArray executeMethod: self
 ]
 
 { #category : #copying }

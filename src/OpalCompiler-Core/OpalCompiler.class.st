@@ -82,11 +82,6 @@ OpalCompiler class >> createAndEnableOverlay: aBoolean [
 		ifFalse: [ self stopUsingOverlayForDevelopment   ]
 ]
 
-{ #category : #public }
-OpalCompiler class >> debuggerMethodMapForMethod: aMethod [
-	^ DebuggerMethodMapOpal forMethod: aMethod
-]
-
 { #category : #'old - deprecated' }
 OpalCompiler class >> evaluate: textOrString [
 	self
@@ -95,74 +90,6 @@ OpalCompiler class >> evaluate: textOrString [
 	^ self new
 		source: textOrString;
 		evaluate
-]
-
-{ #category : #'old - deprecated' }
-OpalCompiler class >> evaluate: textOrString for: anObject logged: logFlag [
-	self
-		deprecated: 'Please use new compiler API instead'
-		transformWith:
-			'`@receiver evaluate: `@statements1 for: `@statements2 logged: `@statements3 '
-				-> '`@receiver new source: `@statements1; logged: `@statements3; receiver: `@statements2; evaluate.'.
-	^ self new
-		source: textOrString;
-		logged: logFlag;
-		receiver: anObject;
-		evaluate
-]
-
-{ #category : #'old - deprecated' }
-OpalCompiler class >> evaluate: textOrString for: anObject notifying: aController logged: logFlag [
-	self
-		deprecated: 'Please use new compiler API instead'
-		transformWith:
-			'`@receiver evaluate: `@statements1 for: `@statements2 notifying: `@statements3 logged: `@statements4'
-				-> '`@receiver new source: `@statements1; logged: `@statements4; receiver: `@statements2; requestor: `@statements3; evaluate'.
-	^ self new
-		source: textOrString;
-		logged: logFlag;
-		receiver: anObject;
-		requestor: aController;
-		evaluate
-]
-
-{ #category : #'old - deprecated' }
-OpalCompiler class >> evaluate: textOrString logged: logFlag [
-	self
-		deprecated: 'Please use new compiler API instead'
-		transformWith: '`@receiver evaluate: `@statements1 logged: `@statements2 ' -> '`@receiver new source: `@statements1; logged: `@statements2; evaluate.'.
-	^ self new
-		source: textOrString;
-		logged: logFlag;
-		evaluate
-]
-
-{ #category : #'old - deprecated' }
-OpalCompiler class >> evaluate: textOrString notifying: aController logged: logFlag [
-	self
-		deprecated: 'Please use new compiler API instead'
-		transformWith:
-			'`@receiver evaluate: `@statements1 notifying: `@statements2 logged: `@statements3'
-				-> '`@receiver new source: `@statements1; logged: `@statements3; requestor: `@statements2; evaluate'.
-	^ self new
-		source: textOrString;
-		logged: logFlag;
-		requestor: aController;
-		evaluate
-]
-
-{ #category : #'old - deprecated' }
-OpalCompiler class >> format: textOrStream in: aClass notifying: aRequestor [
-	self
-		deprecated: 'Please use new compiler API instead'
-		transformWith:
-			'`@receiver format: `@statements1 in: `@statements2 notifying: `@statements3'
-				-> '`@receiver new source: `@statements1; class: `@statements2; requestor: `@statements3; format'.
-	^ self new
-		source: textOrStream;
-		class: aClass;
-		requestor: aRequestor;
-		format
 ]
 
 { #category : #public }

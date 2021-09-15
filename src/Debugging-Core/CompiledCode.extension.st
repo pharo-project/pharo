@@ -49,11 +49,6 @@ CompiledCode >> bytecodeSizeForPc: pc [
 ]
 
 { #category : #'*Debugging-Core' }
-CompiledCode >> debuggerMap [
-	^self compilerClass debuggerMethodMapForMethod: self.
-]
-
-{ #category : #'*Debugging-Core' }
 CompiledCode >> hasInstVarRef [
 	self localHasInstVarRef ifTrue: [ ^ true ].
 	^ self innerCompiledBlocksAnySatisfy: [ :cb | cb hasInstVarRef ]

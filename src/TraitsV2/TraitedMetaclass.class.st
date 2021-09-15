@@ -81,17 +81,6 @@ TraitedMetaclass >> baseLocalMethods: anObject [
 	baseLocalMethods := anObject
 ]
 
-{ #category : #generated }
-TraitedMetaclass >> definition [
-
-	"Refer to the comment in ClassDescription|definition."
-
-	self
-		deprecated: 'Use #definitionString instead'
-		transformWith: '`@rec definition' -> '`@rec definitionString'.
-	^ self definitionString
-]
-
 { #category : #fileout }
 TraitedMetaclass >> definitionStringFor: aConfiguredPrinter [
 

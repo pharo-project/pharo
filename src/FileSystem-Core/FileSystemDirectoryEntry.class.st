@@ -179,18 +179,6 @@ FileSystemDirectoryEntry >> inode [
 ]
 
 { #category : #testing }
-FileSystemDirectoryEntry >> isBlock [
-
-	^false
-]
-
-{ #category : #testing }
-FileSystemDirectoryEntry >> isCharacter [
-
-	^false
-]
-
-{ #category : #testing }
 FileSystemDirectoryEntry >> isDirectory [
 	"Return whether the receiver is a directory"
 

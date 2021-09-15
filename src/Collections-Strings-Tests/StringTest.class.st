@@ -1425,17 +1425,6 @@ StringTest >> testLastSpacePosition [
 ]
 
 { #category : #tests }
-StringTest >> testLeadingCharRunLengthAt [
-
-	self assert: ('test' leadingCharRunLengthAt: 1) equals: 4.
-	self assert: ('éà ôüÖ ẞ' leadingCharRunLengthAt: 2) equals: 7.
-	self assert: ('123ea slkj jfek' leadingCharRunLengthAt: 1) equals: 15.
-	self assert: ('te€st this string' leadingCharRunLengthAt: 1) equals: 17.
-	self assert: (' ' leadingCharRunLengthAt: 1) equals: 1.
-	self assert: ('te€st this string' leadingCharRunLengthAt: 10) equals: 8
-]
-
-{ #category : #tests }
 StringTest >> testLessThan [
 
 	self assert: ('@' < 'A').

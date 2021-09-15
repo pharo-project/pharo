@@ -40,7 +40,6 @@ EDDebuggingAPI class >> forbiddenProcesses [
 	[ Smalltalk lowSpaceWatcherProcess ].
 	[ WeakArray runningFinalizationProcess ].
 	[ Processor backgroundProcess ].
-	[ InputEventFetcher default fetcherProcess ].
 	[ UIManager default uiProcess ].
 	[ Delay schedulingProcess ]}
 ]

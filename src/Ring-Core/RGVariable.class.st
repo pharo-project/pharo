@@ -71,17 +71,6 @@ RGVariable >> isReservedVariable [
 ]
 
 { #category : #testing }
-RGVariable >> isSpecial [
-	^ self
-		deprecated: 'Please use #needsFullDefinition instead '
-		on: '03/11/2020'
-		in: #Pharo8
-		transformWith: '`@receiver isSpecial' 
-						-> '`@receiver needsFullDefinition'.
-
-]
-
-{ #category : #testing }
 RGVariable >> isSuperVariable [
 	
 	^ false
@@ -100,15 +89,6 @@ RGVariable >> isUninitialized [
 { #category : #testing }
 RGVariable >> isVariable [
 	^true
-]
-
-{ #category : #generated }
-RGVariable >> isVariableDefinition [
-
-	self
-		deprecated: 'Use #isVariable instead'
-		transformWith: '`@rec isVariableDefinition' -> '`@rec isVariable'.
-	^ self isVariable
 ]
 
 { #category : #testing }

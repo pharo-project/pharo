@@ -13,12 +13,6 @@ Class {
 	#category : #'System-Platforms-Windows'
 }
 
-{ #category : #testing }
-WinPlatform class >> isActivePlatform [
-	"Answer whether the receiver is the active platform"
-	^ false
-]
-
 { #category : #visiting }
 WinPlatform >> accept: aVisitor [
 

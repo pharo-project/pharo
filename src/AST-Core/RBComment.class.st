@@ -107,18 +107,6 @@ RBComment >> stop [
 			 ifNotNil: [ stop ].
 ]
 
-{ #category : #initialization }
-RBComment >> with: aString at: startPosition [
-	self
-		deprecated: 'The use of a comment token implies a preexisting stop position. 
-	                  Should use with: from: to:'
-		transformWith: '`@receiver with: `@aString at: `@startPosition'
-			-> '`@receiver with: `@aString from: `@startPosition to: `@startPosition + `@aString size - 1'.
-	
-	^ self with: aString from: startPosition to: startPosition + aString size - 1
-
-]
-
 { #category : #'instance creation' }
 RBComment >> with: aString from: aStartPosition to: aStopPosition [
 	start := aStartPosition.

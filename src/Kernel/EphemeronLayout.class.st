@@ -16,21 +16,16 @@ EphemeronLayout class >> extending: superLayout scope: aScope host: aClass [
 ]
 
 { #category : #description }
-EphemeronLayout class >> kind [ 
+EphemeronLayout class >> mcTypeSymbol [ 
 	^ #ephemeron
+]
+
+{ #category : #description }
+EphemeronLayout class >> subclassDefiningSymbol [
+	^#ephemeronSubclass:
 ]
 
 { #category : #format }
 EphemeronLayout >> instanceSpecification [
 	^ 5
-]
-
-{ #category : #accessing }
-EphemeronLayout >> kindOfSubclass [
-	^' ephemeronSubclass: '
-]
-
-{ #category : #accessing }
-EphemeronLayout >> typeOfClass [
-	^#ephemeron
 ]

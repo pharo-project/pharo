@@ -1172,7 +1172,6 @@ HaloMorph >> prepareToTrackCenterOfRotation: evt with: rotationHandle [
 		rotationHandle setProperty: #dragByCenterOfRotation toValue: true.
 		self startDrag: evt with: rotationHandle
 	].
-	evt hand showTemporaryCursor: Cursor blank
 ]
 
 { #category : #'events - processing' }

@@ -15,8 +15,13 @@ WordLayout class >> extending: superLayout scope: aScope host: aClass [
 ]
 
 { #category : #description }
-WordLayout class >> kind [ 
-	^ #variableWord
+WordLayout class >> mcTypeSymbol [ 
+	^ #words
+]
+
+{ #category : #description }
+WordLayout class >> subclassDefiningSymbol [
+	^#variableWordSubclass:
 ]
 
 { #category : #accessing }
@@ -38,14 +43,4 @@ WordLayout >> instanceSpecification [
 { #category : #testing }
 WordLayout >> isWords [
 	^ true
-]
-
-{ #category : #accessing }
-WordLayout >> kindOfSubclass [
-	^' variableWordSubclass: '
-]
-
-{ #category : #accessing }
-WordLayout >> typeOfClass [
-	^#words
 ]

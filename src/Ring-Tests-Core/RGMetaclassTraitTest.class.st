@@ -6,13 +6,13 @@ Class {
 	#category : #'Ring-Tests-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGMetaclassTraitTest >> behaviorClass [
 
 	^ RGMetaclassTrait
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RGMetaclassTraitTest >> testEnsureProtocol [
 
 	| behavior |

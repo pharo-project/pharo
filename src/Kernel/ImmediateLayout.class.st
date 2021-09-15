@@ -17,9 +17,13 @@ ImmediateLayout class >> extending: superLayout scope: aScope host: aClass [
 ]
 
 { #category : #description }
-ImmediateLayout class >> kind [ 	
-
+ImmediateLayout class >> mcTypeSymbol [ 	
 	^ #immediate
+]
+
+{ #category : #description }
+ImmediateLayout class >> subclassDefiningSymbol [
+	^#immediateSubclass:
 ]
 
 { #category : #extending }
@@ -41,14 +45,4 @@ ImmediateLayout >> initialize [
 { #category : #format }
 ImmediateLayout >> instanceSpecification [
 	^ 7
-]
-
-{ #category : #accessing }
-ImmediateLayout >> kindOfSubclass [
-	^' immediateSubclass: '
-]
-
-{ #category : #accessing }
-ImmediateLayout >> typeOfClass [
-	^#immediate
 ]

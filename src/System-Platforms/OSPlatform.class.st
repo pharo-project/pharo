@@ -54,7 +54,7 @@ OSPlatform class >> initialize [
 	self startUp: true.
 ]
 
-{ #category : #private }
+{ #category : #testing }
 OSPlatform class >> isActivePlatform [
 	"Answer whether the receiver is the active platform"
 	^false

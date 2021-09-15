@@ -15,7 +15,7 @@ ReleaseTest class >> actualProcesses [
 { #category : #accessing }
 ReleaseTest class >> defaultTimeLimit [
 
-	^ 1 minute
+	^ 2 minutes
 ]
 
 { #category : #accessing }
@@ -73,7 +73,6 @@ ReleaseTest >> knownProcesses [
 	^ {
 		Processor activeProcess.	
 		Processor backgroundProcess.
-		InputEventFetcher default fetcherProcess.
 		WeakArray runningFinalizationProcess.
 		SmalltalkImage current lowSpaceWatcherProcess.
 		MorphicUIManager uiProcess.

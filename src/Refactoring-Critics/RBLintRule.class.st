@@ -144,15 +144,6 @@ RBLintRule >> leaves [
 ]
 
 { #category : #accessing }
-RBLintRule >> longDescription [
-	self
-		deprecated: 'Please use #rationale  instead'
-		transformWith: '`@receiver longDescription' -> '`@receiver rationale'.
-
-	^ self rationale
-]
-
-{ #category : #accessing }
 RBLintRule >> name [
 	"Answer a human readable name of the rule."
 

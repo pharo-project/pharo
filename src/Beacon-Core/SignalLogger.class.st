@@ -141,15 +141,6 @@ SignalLogger >> beacon: anAnnouncer [
 	beacon := anAnnouncer
 ]
 
-{ #category : #registering }
-SignalLogger >> handle: aSignal [
-	self 
-		deprecated: 'Should use #nextPut:' 
-		transformWith: '`@receiver nextPut: `@name' -> '`@receiver nextPut: `@name'.
-	self nextPut: aSignal
-	
-]
-
 { #category : #initialize }
 SignalLogger >> initialize [
 	super initialize.

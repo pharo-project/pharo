@@ -326,6 +326,7 @@ LinkedListTest >> tearDown [
 
 { #category : #tests }
 LinkedListTest >> test01add [
+
 	self assertEmpty: list.
 	list add: link1.
 	self assert: list size equals: 1.
@@ -347,7 +348,15 @@ LinkedListTest >> test01add [
 	self assert: list first equals: link1.
 	self assert: list second equals: link2.
 	self assert: list third equals: link3.
-	self assert: list fourth equals: link4
+	self assert: list fourth equals: link4.
+
+	list add: nil.
+	self assert: list size equals: 5.
+	self assert: list first equals: link1.
+	self assert: list second equals: link2.
+	self assert: list third equals: link3.
+	self assert: list fourth equals: link4.
+	self assert: list fifth equals: nil
 ]
 
 { #category : #tests }

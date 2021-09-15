@@ -604,9 +604,9 @@ ArrayTest >> testAtWrap2 [
 
 { #category : #tests }
 ArrayTest >> testBeReadOnlyLiteral [
-	self assert: (Array new) beReadOnlyLiteral isReadOnlyObject.
-	self assert: (Array with: (String new)) beReadOnlyLiteral first isReadOnlyObject.
-	self deny: (Array with: (Object new)) first isReadOnlyObject
+	self assert: Array new beReadOnlyLiteral isReadOnlyObject.
+	self assert: (Array with: String new) beReadOnlyLiteral first isReadOnlyObject.
+	self deny: (Array with: Object new) first isReadOnlyObject
 ]
 
 { #category : #tests }

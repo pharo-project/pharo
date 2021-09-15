@@ -17,15 +17,6 @@ Object >> browseHierarchy [
 ]
 
 { #category : #'*Tool-Base' }
-Object >> explore [
-	self
-		deprecated: 'Please use #inspect instead'
-		transformWith: '`@receiver explore' -> '`@receiver inspect'.
-	
-	^self inspect
-]
-
-{ #category : #'*Tool-Base' }
 Object >> inspect [
 	"Create and schedule an Inspector in which the user can examine the receiver's variables."
 	^ Smalltalk tools inspector inspect: self

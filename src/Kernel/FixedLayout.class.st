@@ -18,7 +18,7 @@ FixedLayout class >> extending: superLayout scope: aScope host: aClass [
 ]
 
 { #category : #description }
-FixedLayout class >> kind [ 
+FixedLayout class >> mcTypeSymbol [ 
 	^ #normal
 ]
 
@@ -32,14 +32,4 @@ FixedLayout >> instanceSpecification [
 { #category : #testing }
 FixedLayout >> isFixedLayout [
 	^true
-]
-
-{ #category : #accessing }
-FixedLayout >> kindOfSubclass [
-	^' subclass: '
-]
-
-{ #category : #accessing }
-FixedLayout >> typeOfClass [
-	^#normal
 ]

@@ -18,8 +18,14 @@ CompiledMethodLayout class >> extending: superLayout scope: aScope host: aClass 
 ]
 
 { #category : #description }
-CompiledMethodLayout class >> kind [ 
+CompiledMethodLayout class >> mcTypeSymbol [ 
 	^ #compiledMethod 
+]
+
+{ #category : #description }
+CompiledMethodLayout class >> subclassDefiningSymbol [
+	"there is no way to define classes of this layoyt, the system shows them as variable classes"
+	^#variableByteSubclass:
 ]
 
 { #category : #extending }
@@ -30,15 +36,4 @@ CompiledMethodLayout >> extend [
 { #category : #format }
 CompiledMethodLayout >> instanceSpecification [
 	 ^ 24
-]
-
-{ #category : #accessing }
-CompiledMethodLayout >> kindOfSubclass [
-	"not really true but this is what is shows now"
-	^' variableByteSubclass: '
-]
-
-{ #category : #accessing }
-CompiledMethodLayout >> typeOfClass [
-	^#compiledMethod
 ]

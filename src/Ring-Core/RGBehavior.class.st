@@ -1245,15 +1245,3 @@ RGBehavior >> usedTraits [
 RGBehavior >> users [
 	^ #()
 ]
-
-{ #category : #generated }
-RGBehavior >> usesSpecialSlot [
-
-	"return true if we define something else than InstanceVariableSlots"
-
-	self
-		deprecated: 'Use #slotsNeedFullDefinition instead'
-		transformWith:
-		'`@rec usesSpecialSlot' -> '`@rec slotsNeedFullDefinition'.
-	^ self slotsNeedFullDefinition
-]

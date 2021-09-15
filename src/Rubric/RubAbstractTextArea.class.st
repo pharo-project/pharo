@@ -1115,8 +1115,7 @@ RubAbstractTextArea >> keyDown: anEvent [
 		ifNotNil: [ :sp | 
 			(sp scrollByKeyboard: anEvent)
 				ifTrue: [ ^ self ] ].
-	anEvent isUserInterrupt
-		ifTrue: [ ^ self ].
+
 	self handleEdit: [ self editor keyDown: anEvent ].
 ]
 

@@ -7,7 +7,7 @@ Class {
 { #category : #execution }
 ClapPharoApplication >> execute [
 	arguments validateAll.
-	arguments at: #helpFlag ifFound: [ :help | help value; exitSuccess ].
+	arguments at: #helpFlag ifPresent: [ :help | help value; exitSuccess ].
 
 	self prepareImage
 ]

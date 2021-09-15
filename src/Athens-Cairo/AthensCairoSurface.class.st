@@ -282,9 +282,6 @@ AthensCairoSurface class >> primFindSurface: id handle: handlePtr [
 		(e.g., the surface has been found), false otherwise."
 
 	<primitive: 'primitiveFindSurface' module: 'SurfacePlugin'>
-
-	"We keep the call to the FFI just in case we are running in an old VM"	
-	^ self ioFindSurface: id handle: handlePtr
 ]
 
 { #category : #private }
@@ -320,10 +317,6 @@ AthensCairoSurface class >> primRegisterSurface: aCairoSurfaceHandle dispatch: s
 	otherwise."
 
 	<primitive: 'primitiveRegisterSurface' module: 'SurfacePlugin'>
-
-	"We keep the call to the FFI just in case we are running in an old VM"	
-
-	^ self ioRegisterSurface: aCairoSurfaceHandle dispatch: sqSurfaceDispatchPtr surfaceId: idHolder
 ]
 
 { #category : #private }
@@ -335,10 +328,6 @@ AthensCairoSurface class >> primUnregisterSurface: aCairoSurfaceId [
 
 "
 	<primitive: 'primitiveUnregisterSurface' module: 'SurfacePlugin'>
-
-	"We keep the call to the FFI just in case we are running in an old VM"	
-
-	^ self ioUnregisterSurface: aCairoSurfaceId
 ]
 
 { #category : #private }

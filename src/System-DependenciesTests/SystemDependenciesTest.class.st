@@ -56,10 +56,10 @@ SystemDependenciesTest >> externalDependendiesOf: packagesCollection [
 
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownBasicToolsDependencies [
-
+ 
 	"ideally this list should be empty"	
 	^ #('AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' 
-	#'Athens-Morphic' #'Refactoring-Critics' #'Reflectivity' #'Reflectivity-Tools' #Shout 'ParametrizedTests' 'HeuristicCompletion-Model' #VariablesLibrary #'Spec2-Common-Widgets')
+	#'Athens-Morphic' #'Refactoring-Critics' #'Reflectivity' #'Reflectivity-Tools' #Shout 'ParametrizedTests' 'HeuristicCompletion-Model' #VariablesLibrary #'Spec2-CommonWidgets')
 ]
 
 { #category : #'known dependencies' }
@@ -83,7 +83,7 @@ SystemDependenciesTest >> knownIDEDependencies [
 
 	"ideally this list should be empty"	
 	
-	^ #('Spec2-Common-Widgets')
+	^ #('Spec2-CommonWidgets')
 ]
 
 { #category : #'known dependencies' }
@@ -99,7 +99,7 @@ SystemDependenciesTest >> knownMorphicCoreDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Keymapping-KeyCombinations' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Clipboard')
+	^ #(#'Keymapping-KeyCombinations' #'Refactoring-Critics' #'Refactoring-Environment')
 ]
 
 { #category : #'known dependencies' }
@@ -148,7 +148,7 @@ SystemDependenciesTest >> knownUIDependencies [
 	"ideally this list should be empty"	
 
 	^ #('AST-Core-Tests'  'Athens-Cairo' 'Athens-Core' 
-	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers' #'HeuristicCompletion-Model' 'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-Common-Widgets') 
+	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers' #'HeuristicCompletion-Model' 'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets') 
 ]
 
 { #category : #utilities }

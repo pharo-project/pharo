@@ -15,8 +15,13 @@ ByteLayout class >> extending: superLayout scope: aScope host: aClass [
 ]
 
 { #category : #description }
-ByteLayout class >> kind [ 
-	^ #variableByte
+ByteLayout class >> mcTypeSymbol [ 
+	^ #bytes
+]
+
+{ #category : #description }
+ByteLayout class >> subclassDefiningSymbol [
+	^#variableByteSubclass:
 ]
 
 { #category : #accessing }
@@ -38,14 +43,4 @@ ByteLayout >> instanceSpecification [
 { #category : #testing }
 ByteLayout >> isBytes [
 	^ true
-]
-
-{ #category : #accessing }
-ByteLayout >> kindOfSubclass [
-	^' variableByteSubclass: '
-]
-
-{ #category : #accessing }
-ByteLayout >> typeOfClass [
-	^#bytes
 ]

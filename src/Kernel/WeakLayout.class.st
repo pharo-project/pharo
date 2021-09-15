@@ -20,8 +20,13 @@ WeakLayout class >> extending: superLayout scope: aScope host: aClass [
 ]
 
 { #category : #description }
-WeakLayout class >> kind [ 
+WeakLayout class >> mcTypeSymbol [ 
 	^ #weak
+]
+
+{ #category : #description }
+WeakLayout class >> subclassDefiningSymbol [
+	^#weakSubclass:
 ]
 
 { #category : #format }
@@ -37,14 +42,4 @@ WeakLayout >> isVariable [
 { #category : #testing }
 WeakLayout >> isWeak [
 	^ true
-]
-
-{ #category : #accessing }
-WeakLayout >> kindOfSubclass [
-	^' weakSubclass: '
-]
-
-{ #category : #accessing }
-WeakLayout >> typeOfClass [
-	^#weak
 ]

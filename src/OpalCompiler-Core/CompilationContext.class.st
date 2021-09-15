@@ -56,9 +56,6 @@ CompilationContext class >> bytecodeBackend [
 
 { #category : #accessing }
 CompilationContext class >> bytecodeBackend: bytecodeSet [
-	((self defaultOptions includes: #optionFullBlockClosure)
-		and: [ bytecodeSet ~= EncoderForSistaV1 ]) ifTrue: [ 
-			^ self notify: 'Operation aborted. Bytecode set incompatible with FullBlockClosure option.' ].
 	BytecodeBackend := bytecodeSet
 ]
 
@@ -521,7 +518,6 @@ CompilationContext >> optionEmbeddSources [
 { #category : #options }
 CompilationContext >> optionFullBlockClosure [
 	^ options includes: #optionFullBlockClosure
-
 ]
 
 { #category : #options }

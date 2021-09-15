@@ -18,8 +18,13 @@ VariableLayout class >> extending: superLayout scope: aScope host: aClass [
 ]
 
 { #category : #description }
-VariableLayout class >> kind [ 
+VariableLayout class >> mcTypeSymbol [ 
 	^ #variable
+]
+
+{ #category : #description }
+VariableLayout class >> subclassDefiningSymbol [
+	^#variableSubclass:
 ]
 
 { #category : #format }
@@ -32,14 +37,4 @@ VariableLayout >> instanceSpecification [
 { #category : #testing }
 VariableLayout >> isVariable [
 	^ true
-]
-
-{ #category : #accessing }
-VariableLayout >> kindOfSubclass [
-	^' variableSubclass: '
-]
-
-{ #category : #accessing }
-VariableLayout >> typeOfClass [
-	^#variable
 ]

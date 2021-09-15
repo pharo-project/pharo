@@ -165,21 +165,6 @@ OCBytecodeDecompilerTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #'tests - blocks' }
-OCBytecodeDecompilerTest >> testBlockWithTemp [
-	| method ir |
-	
-	"This test is only valid if there are no FullBlockClosures"
-	CompilationContext optionFullBlockClosure ifTrue: [ ^ self skip].
-	
-	method := ClassTestCase>>#targetClass.
-	ir := method ir.
-	
-	"the block sequence of the block with the temp should not have
-	a pushNil, as this is inserted later again"
-	self assert: (ir allSequences at: 5) first isPushLiteral not.
-]
-
 { #category : #tests }
 OCBytecodeDecompilerTest >> testBugOffset [
 	| iRMethod aCompiledMethod ir method |
