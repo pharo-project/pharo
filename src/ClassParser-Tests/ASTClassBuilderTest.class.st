@@ -25,7 +25,7 @@ ASTClassBuilderTest >> testBugFailure [
    t := SimpleClass with: 2.
    self assert: s = s equals: 1.
    self assert: s = t equals: 0.
-   self assert: { s. s } = { s. t }
+   self assert: { s. s } = { s. t } "THIS IS THE TEST THAT FAILS"
 ]
 
 { #category : #running }
