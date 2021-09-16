@@ -193,14 +193,6 @@ ClassDescription >> basicOrganization: aClassOrg [
 	organization := aClassOrg
 ]
 
-{ #category : #'accessing - deprecated parallel hierarchy ' }
-ClassDescription >> classClass [
-	"This method is deprecated so consider to migrate."
-	self deprecated:  'Please use #classSide instead' transformWith:  '`@receiver classClass' 
-						-> '`@receiver classSide'.
-	^ self classSide
-]
-
 { #category : #'file in/out' }
 ClassDescription >> classComment: aString [
 	"Store the comment, aString or Text or RemoteString, associated with the class we are orgainzing.  Empty string gets stored only if had a non-empty one before."
