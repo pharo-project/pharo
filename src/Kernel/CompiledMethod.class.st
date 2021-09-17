@@ -548,19 +548,15 @@ CompiledMethod >> isConflict [
 
 { #category : #testing }
 CompiledMethod >> isDeprecated [
-	"Object selectorsInProtocol: #deprecation"
-	self methodClass isDeprecated ifTrue: [ ^ true ].
-
-	(self
-		sendsAnySelectorOf:
-			#(#deprecated: #deprecated:on:in: #deprecated:on:in:transformWith: #deprecated:transformWith:))
-		ifTrue: [ ^ true ].
-	$-
-		split: self protocol asString
-		do: [ :each | 
-			each withBlanksCondensed = 'deprecated'
-				ifTrue: [ ^ true ] ].
-	^ false
+	
+	^ self sendsAnySelectorOf: #(
+			#deprecated: 
+			#deprecated:transformWith:
+			#deprecated:transformWith:when:
+			#deprecated:on:in: 
+			#deprecated:on:in:transformWith:
+			#deprecated:on:in:transformWith:when:)
+	
 ]
 
 { #category : #testing }
