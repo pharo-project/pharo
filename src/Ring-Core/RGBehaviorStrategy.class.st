@@ -313,7 +313,8 @@ RGBehaviorStrategy >> isTraitStrategy [
 
 { #category : #'private - backend access' }
 RGBehaviorStrategy >> kindOfSubclass [
-
+	"Answer a String that is the keyword that describes the receiver's kind of subclass
+	Note: this is for printing the ST80 style class definiton, see #subclassDefiningSymbol"
 	self incompatibleBehaviorType
 ]
 

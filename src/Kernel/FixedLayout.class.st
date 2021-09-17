@@ -17,11 +17,6 @@ FixedLayout class >> extending: superLayout scope: aScope host: aClass [
 		yourself
 ]
 
-{ #category : #description }
-FixedLayout class >> mcTypeSymbol [ 
-	^ #normal
-]
-
 { #category : #format }
 FixedLayout >> instanceSpecification [
 	^ self hasFields

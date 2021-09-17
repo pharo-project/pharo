@@ -215,13 +215,6 @@ UndefinedObject >> isNotNil [
 	^false
 ]
 
-{ #category : #'class hierarchy' }
-UndefinedObject >> mcType [
-	"Answer the symbol that Monticello uses internally to encode layouts"
-	"Implemented here  to support disjoint class hierarchies"
-	^#normal
-]
-
 { #category : #testing }
 UndefinedObject >> notNil [ 
 	"Refer to the comment in Object|notNil."
