@@ -19,12 +19,6 @@ TFTestLibraryUsingSameThreadRunner >> macLibraryName [
 	^ 'libTestLibrary.dylib'
 ]
 
-{ #category : #accessing }
-TFTestLibraryUsingSameThreadRunner >> runner [ 
-	
-	^ TFSameThreadRunner uniqueInstance
-]
-
 { #category : #'accessing - platform' }
 TFTestLibraryUsingSameThreadRunner >> unixModuleName [
 

@@ -18,14 +18,6 @@ FFIExternalString class >> externalTypeAlignment [
 	^ self pointerSize
 ]
 
-{ #category : #'emitting code' }
-FFIExternalString >> basicEmitArgument: aBuilder context: aContext inCallout: aCallout [
-
-	self loader 
-		emitArgument: aBuilder 
-		context: aContext
-]
-
 { #category : #private }
 FFIExternalString >> basicHandle: aHandle at: index [
 	| data |
