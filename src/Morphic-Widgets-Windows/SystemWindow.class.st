@@ -367,13 +367,6 @@ SystemWindow class >> sendTopWindowToBack [
 		ifFound: [ :morph | morph sendToBack ].
 ]
 
-{ #category : #icons }
-SystemWindow class >> taskbarIconName [
-	"Answer the icon for the receiver in a task bar."
-
-	^#smallWindowIcon
-]
-
 { #category : #'menu items - tiling' }
 SystemWindow class >> tilingMenuItemsOn: aBuilder [
 

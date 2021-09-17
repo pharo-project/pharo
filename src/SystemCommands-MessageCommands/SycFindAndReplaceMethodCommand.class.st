@@ -36,11 +36,6 @@ SycFindAndReplaceMethodCommand >> defaultMenuItemName [
 	^'Find and replace'
 ]
 
-{ #category : #testing }
-SycFindAndReplaceMethodCommand >> isComplexRefactoring [
-	^ true
-]
-
 { #category : #execution }
 SycFindAndReplaceMethodCommand >> resultMessageSelector [
 	^ nil

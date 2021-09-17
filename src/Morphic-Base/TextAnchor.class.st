@@ -36,11 +36,6 @@ TextAnchor >> anchoredMorph: aMorph [
 	anchoredMorph := aMorph
 ]
 
-{ #category : #visiting }
-TextAnchor >> emphasizeScanner: scanner [
-	"Do nothing for emphasizing the scanner - if the anchor is valid a #embeddedObject will be encountered by the scanner and do the real thing"
-]
-
 { #category : #comparing }
 TextAnchor >> hash [
 	"#hash is re-implemented because #= is re-implemented"
