@@ -54,7 +54,6 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Rubric-Tests';
 			package: 'ScriptingExtensions-Tests';
 			package: 'STON-Tests';
-			package: 'Spec-Tests';
 			package: 'System-Caching-Tests';
 			package: 'System-Hashing-Tests';
 			package: 'System-History-Tests';
