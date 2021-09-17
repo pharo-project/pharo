@@ -21,3 +21,15 @@ MessageNotUnderstoodTest >> testDescription [
 			messageNotUndestoodDescription := ex description ].
 	self deny: defaultDescription equals: messageNotUndestoodDescription
 ]
+
+{ #category : #tests }
+MessageNotUnderstoodTest >> testMessageText [
+
+	| messageText |
+	[ 1 a ]
+		on: Error
+		do: [ :e | messageText := e messageText ].
+	self
+		assert: messageText
+		equals: 'Message not understood: SmallInteger >> #a'
+]
