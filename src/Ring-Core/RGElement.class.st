@@ -80,9 +80,3 @@ Class {
 	#superclass : #RGObject,
 	#category : #'Ring-Core-Kernel'
 }
-
-{ #category : #accessing }
-RGElement >> package [
-
-	^ self parent package
-]

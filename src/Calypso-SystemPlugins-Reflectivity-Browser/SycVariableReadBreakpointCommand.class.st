@@ -7,15 +7,6 @@ Class {
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-VariableBreakpoints'
 }
 
-{ #category : #activation }
-SycVariableReadBreakpointCommand class >> browserContextMenuActivation [
-	<classAnnotation>
-	^ CmdContextMenuActivation
-		byItemOf: ClyDebuggingMenuGroup
-		order: 99
-		for: ClyClass asCalypsoItemContext
-]
-
 { #category : #execution }
 SycVariableReadBreakpointCommand >> defaultMenuItemName [
 	^'Break on all variable reads'

@@ -482,11 +482,6 @@ RBAbstractClass >> isMeta [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
-RBAbstractClass >> isTrait [
-	^ false
-]
-
 { #category : #'method accessing' }
 RBAbstractClass >> localSelectors [
 	| selectors |

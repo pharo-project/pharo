@@ -15,12 +15,6 @@ NullWorldRenderer class >> isApplicableFor: aWorld [
 	^ true
 ]
 
-{ #category : #accessing }
-NullWorldRenderer class >> priority [ 
-
-	^ 0
-]
-
 { #category : #operations }
 NullWorldRenderer >> activateCursor: aCursor withMask: maskForm [
 

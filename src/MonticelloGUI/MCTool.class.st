@@ -45,13 +45,6 @@ MCTool class >> newRepository [
 	^ index = 0 ifFalse: [(types at: index) morphicConfigure]
 ]
 
-{ #category : #'window color' }
-MCTool class >> theme [
-	"Answer the ui theme that provides controls."
-
-	^ Smalltalk ui theme 
-]
-
 { #category : #'morphic ui' }
 MCTool >> accept [
 	" do nothing by default"
