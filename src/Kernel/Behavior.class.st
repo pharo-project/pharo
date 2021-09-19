@@ -1151,7 +1151,8 @@ Behavior >> isWords [
 
 { #category : #'testing - class hierarchy' }
 Behavior >> kindOfSubclass [
-	"Answer a String that is the keyword that describes the receiver's kind of subclass"
+	"Answer a String that is the keyword that describes the receiver's kind of subclass
+	Note: this is for printing the ST80 style class definiton, see #subclassDefiningSymbol"
 	^ self classLayout kindOfSubclass
 ]
 
@@ -1177,12 +1178,6 @@ Behavior >> lookupSelector: selector [
 				ifPresent: [ :method | ^ method ].
 			lookupClass := lookupClass superclass].
 	^ nil
-]
-
-{ #category : #accessing }
-Behavior >> mcType [
-	"Answer the symbol that Monticello uses internally to encode layouts"
-	^self classLayout class mcTypeSymbol
 ]
 
 { #category : #accessing }
