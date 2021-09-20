@@ -7,6 +7,15 @@ Class {
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-VariableBreakpoints'
 }
 
+{ #category : #activation }
+SycVariableWriteBreakpointCommand class >> browserContextMenuActivation [
+	<classAnnotation>
+	^ CmdContextMenuActivation
+		byItemOf: ClyDebuggingMenuGroup
+		order: 99
+		for: ClyClass asCalypsoItemContext
+]
+
 { #category : #execution }
 SycVariableWriteBreakpointCommand >> defaultMenuItemName [
 	^'Break on all variable writes'
