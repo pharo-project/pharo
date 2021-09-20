@@ -8,7 +8,7 @@ The refactoring transformation will replace the current class and its definition
 Example
 ---------------
 
-	(RBRenameClassRefactoring rename: RBRenameClassRefactoring to: 'RBRenameClassRefactoring2') execute
+	(RBRenameClassRefactoring rename: 'RBRenameClassRefactoring' to: 'RBRenameClassRefactoring2') execute
 "
 Class {
 	#name : #RBRenameClassRefactoring,
@@ -22,15 +22,17 @@ Class {
 
 { #category : #'instance creation' }
 RBRenameClassRefactoring class >> model: aRBSmalltalk rename: aClass to: aNewName [ 
-	^(self new)
+	^ self new
 		model: aRBSmalltalk;
-		className: aClass name newName: aNewName;
+		className: aClass newName: aNewName;
 		yourself
 ]
 
 { #category : #'instance creation' }
-RBRenameClassRefactoring class >> rename: aClass to: aNewName [
-	^self new className: aClass name newName: aNewName
+RBRenameClassRefactoring class >> rename: aClassName to: aNewName [
+	^ self new 
+		className: aClassName 
+		newName: aNewName
 ]
 
 { #category : #initialization }

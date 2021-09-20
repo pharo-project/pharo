@@ -5,13 +5,13 @@ Class {
 		'queue',
 		'logging'
 	],
-	#category : 'Pharo30Bootstrap'
+	#category : #Pharo30Bootstrap
 }
 
 { #category : #'logging-Deprecated' }
 PBBootstrapLogger >> basicLog: anItem [
 
-	FileStream stdout nextPutAll: anItem value asString ;cr.
+	Stdio stdout nextPutAll: anItem value asString ;cr; flush.
 ]
 
 { #category : #'logging-Deprecated' }

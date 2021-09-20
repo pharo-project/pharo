@@ -1,6 +1,6 @@
 Class {
 	#name : #ClySortedQueryResultTest,
-	#superclass : #ClyQueryResultTestCase,
+	#superclass : #ClyQueryNavigationResultTest,
 	#category : #'Calypso-NavigationModel-Tests'
 }
 

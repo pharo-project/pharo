@@ -1,3 +1,6 @@
+"
+An abstract superclass for all font descriptions of embedded free type fonts
+"
 Class {
 	#name : #EmbeddedFreeTypeFontDescription,
 	#superclass : #Object,
@@ -31,7 +34,7 @@ EmbeddedFreeTypeFontDescription class >> installFontsIn: provider [
 
 { #category : #testing }
 EmbeddedFreeTypeFontDescription class >> isAbstract [ 
-	^self name = #EmbeddedFreeTypeFontFontDescription 
+	^self name = #EmbeddedFreeTypeFontDescription 
 	
 ]
 

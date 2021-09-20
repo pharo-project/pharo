@@ -697,14 +697,3 @@ Integer >> sqrtFloor [
 	guessSquared = self ifFalse: [ guess := guess - 1 ].
 	^guess
 ]
-
-{ #category : #'*Math-Operations-Extensions' }
-Integer >> take: aNumberOfTimes [
-	"Return the number of combinations of (self) elements taken aNumberOfTimes at a time"
-
-	self
-		deprecated: 'This method was renamed to #numberOfCombinationsTaken:'
-		transformWith: '`@rec take: `@arg' -> '`@rec numberOfCombinationsTaken: `@arg'.
-		
-	^ self numberOfCombinationsTaken: aNumberOfTimes
-]

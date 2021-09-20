@@ -246,7 +246,12 @@ ProcessMonitorTestServiceTest >> testFailTestWhenBackgroundFailureWasPassedButMa
 
 { #category : #tests }
 ProcessMonitorTestServiceTest >> testFailTestWhenBackgroundProcessWasFailedDuringFinalTryToFinishItAtTestCompletionTime [
-
+	"ProcessMonitor tries to allow the left running processes to terminate during the test completion.
+	Such running processes can fail at this stage and this test is to cover this scenario. 
+	The complex assertion logic here is to reliably simulate this scenario.
+	The error processing envolves many message sends and it increases the chances for the process to be preempted.
+	Therefore a single iteration is not always enough to get the expected corner case. 
+	Thus the function under the test is repeated in the loop"
 	| semaphore processIsDone process |
 	semaphore := Semaphore new.
 	processIsDone := false.
@@ -255,7 +260,12 @@ ProcessMonitorTestServiceTest >> testFailTestWhenBackgroundProcessWasFailedDurin
 	semaphore signal.
 	self deny: processIsDone.
 	
-	self should: [testService handleCompletedTest] raise: TestFailedByForkedProcess.	
+	self should: [
+		[	
+			[testService handleCompletedTest] on: TestLeftRunningProcess do: [ :err | err retry ].
+			self assert: false description: 'should fail with error'.
+		] on: TestFailedByForkedProcess do: [:err | ]
+	] notTakeMoreThan: 2 seconds.	
 	self assert: processIsDone.
 ]
 

@@ -3,16 +3,16 @@ DialogWindow that updates content based upon its model.
 "
 Class {
 	#name : #ModelDependentDialogWindow,
-	#superclass : #DialogWindow,
+	#superclass : #DialogWindowMorph,
 	#category : #'Polymorph-Widgets-Windows'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 ModelDependentDialogWindow >> addInitialPanel [
 	"Don't until the model is set."
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 ModelDependentDialogWindow >> model: anObject [
 	"Set the model and add the panel for it."
 	

@@ -18,8 +18,11 @@ VariableLayout class >> extending: superLayout scope: aScope host: aClass [
 ]
 
 { #category : #description }
-VariableLayout class >> kind [ 
-	^ #variable
+VariableLayout class >> subclassDefiningSymbol [
+	"Answer a keyword that describes the receiver's kind of subclass
+	Note: this is for printing the ST80 style class definiton, usage makes no sense for anything
+	else!"
+	^#variableSubclass:
 ]
 
 { #category : #format }
@@ -32,14 +35,4 @@ VariableLayout >> instanceSpecification [
 { #category : #testing }
 VariableLayout >> isVariable [
 	^ true
-]
-
-{ #category : #accessing }
-VariableLayout >> kindOfSubclass [
-	^' variableSubclass: '
-]
-
-{ #category : #accessing }
-VariableLayout >> typeOfClass [
-	^#variable
 ]

@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyBothMetaLevelClassScopeTest,
-	#superclass : #ClyLocalClassScopeTestCase,
+	#superclass : #ClyLocalClassScopeTest,
 	#category : #'Calypso-SystemQueries-Tests-Scopes'
 }
 

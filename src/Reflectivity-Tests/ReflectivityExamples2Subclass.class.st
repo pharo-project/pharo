@@ -17,7 +17,7 @@ ReflectivityExamples2Subclass >> methodWithOverrides: str1 with: str2 [
 	^(super methodWithOverrides: str1 with: str2), str1, str2
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 ReflectivityExamples2Subclass >> useInstVarInSubclass [
 	^instVar2
 ]

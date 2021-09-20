@@ -25,14 +25,6 @@ SycDeprecateMessageCommand class >> canBeExecutedInContext: aToolContext [
 	^ aToolContext isMethodSelected
 ]
 
-{ #category : #activation }
-SycDeprecateMessageCommand class >> methodMenuActivation [
-	<classAnnotation>
-
-	^CmdContextMenuActivation 
-		byRootGroupItemOrder: self browserMenuOrder for: ClyMethod asCalypsoItemContext 
-]
-
 { #category : #execution }
 SycDeprecateMessageCommand >> createRefactoring [
 

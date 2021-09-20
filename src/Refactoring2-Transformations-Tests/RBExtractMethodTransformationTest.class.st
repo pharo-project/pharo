@@ -193,7 +193,7 @@ RBExtractMethodTransformationTest >> testTransform [
 									Transcript show: temp printString; cr.
 									^temp * temp'
 					in: self changeMock name
-					withProtocol: #accessing)
+					withProtocols: {#accessing})
 					transform.
 	
 	transformation := (RBExtractMethodTransformation 
@@ -256,7 +256,7 @@ RBExtractMethodTransformationTest >> testWithArgument [
 RBExtractMethodTransformationTest >> testWithTemporariesSelected [
 
 	| class refactoring |
-	model := RBNamespace2 new.
+	model := RBNamespace new.
 	class := model classNamed: self class name.
 	class compile: 'foo [| temp | temp := 5. temp * temp] value'
 		classified: #(#accessing).
@@ -280,7 +280,7 @@ RBExtractMethodTransformationTest >> testWithTemporariesSelected [
 RBExtractMethodTransformationTest >> testWithTemporaryAssigned [
 
 	| class method refactoring |
-	model := RBNamespace2 new.
+	model := RBNamespace new.
 	class := model classNamed: self class name.
 	method := 'foo
 			| temp bar |

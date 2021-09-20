@@ -69,20 +69,8 @@ FFICalloutMethodBuilder >> createFFICallout [
 
 { #category : #'private - factory' }
 FFICalloutMethodBuilder >> createFFICalloutLiteralFromSpec: functionSpec [
-	| externalFunction |
-	
-	externalFunction := ExternalLibraryFunction
-		name: functionSpec functionName
-		module: self libraryName
-		callType: self callType
-		returnType: functionSpec returnType externalTypeWithArity
-		argumentTypes: (functionSpec arguments collect: [:each | each externalTypeWithArity]).
-	
-	functionResolutionStrategies
-		detect: [ :each | each isApplicableFor: self requestor ]
-		ifFound: [ :each | each resolve: externalFunction ].
-		
-	^ externalFunction
+
+	^ self subclassResponsibility 
 ]
 
 { #category : #compatibility }

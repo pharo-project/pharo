@@ -77,6 +77,12 @@ TFFIBackend >> loadSymbol: moduleSymbol module: module [
 	^ self primLoadSymbol: moduleSymbol module: encodedString
 ]
 
+{ #category : #callbacks }
+TFFIBackend >> lookupCallbackByAddress: address [ 
+	
+	^ (TFCallbackQueue uniqueInstance lookupCallback: address) frontendCallback
+]
+
 { #category : #accessing }
 TFFIBackend >> on: anObject float32At: offset [
 

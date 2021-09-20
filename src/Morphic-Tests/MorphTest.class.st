@@ -58,7 +58,7 @@ MorphTest >> testExtent [
 	self assert: b2 equals: b1
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'testing - halo' }
 MorphTest >> testHaloIsDisable [
 	| isHaloEnable |
 	isHaloEnable := Morph halosEnabled.

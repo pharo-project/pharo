@@ -10,9 +10,10 @@ Class {
 { #category : #converting }
 DTCommentTestConfiguration >> asTestSuite [
 
-	| suite methods |
+	| suite classes methods |
 	suite := TestSuite named: 'Test Generated From Comments'.
-	methods := self items flatCollect: [ :each | each methods ].
+	classes := self items addAll: (self items collect: [ :each | each class ]).
+	methods := classes flatCollect: [ :each | each methods ].
 	methods do: [ :method | 
 		method pharoDocCommentNodes do: [ :docComment | 
 			suite addTest: (CommentTestCase for: docComment) ] ].

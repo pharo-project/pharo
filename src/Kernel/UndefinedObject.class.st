@@ -50,6 +50,12 @@ UndefinedObject >> asCollectionElement [
 	^ CollectionElement withNil
 ]
 
+{ #category : #dispatched }
+UndefinedObject >> asLinkPrepend: anObject [
+
+	^ ValueLink value: anObject
+]
+
 { #category : #accessing }
 UndefinedObject >> at: index put: anObject [ 
 	self shouldNotImplement 
@@ -279,12 +285,6 @@ UndefinedObject >> subclassesDo: aBlock [
 
 	^ Class subclassesDo: [:cl | 
 			cl isMeta ifTrue: [aBlock value: cl soleInstance]].
-]
-
-{ #category : #'class hierarchy' }
-UndefinedObject >> typeOfClass [
-	"Necessary to support disjoint class hierarchies."
-	^#normal
 ]
 
 { #category : #copying }

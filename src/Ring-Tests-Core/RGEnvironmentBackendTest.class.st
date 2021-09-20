@@ -6,13 +6,7 @@ Class {
 	#category : #'Ring-Tests-Core'
 }
 
-{ #category : #'as yet unclassified' }
-RGEnvironmentBackendTest >> backendClass [
-
-	^ RGEnvironmentBackend
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #utilities }
 RGEnvironmentBackendTest >> checkHierarchyConsistencyOf: anRGClass [
 	self assert: anRGClass ~~ anRGClass superclass.
 	self assert: anRGClass ~~ anRGClass metaclass.

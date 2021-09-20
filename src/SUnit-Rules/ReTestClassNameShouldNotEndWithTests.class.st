@@ -30,8 +30,3 @@ ReTestClassNameShouldNotEndWithTests >> name [
 ReTestClassNameShouldNotEndWithTests >> rationale [
 	^ 'A test class (subclass of TestCase) should have it''s name ending with ''Test'' instead of ''Tests'' '
 ]
-
-{ #category : #running }
-ReTestClassNameShouldNotEndWithTests >> severity [
-	^ #warning
-]

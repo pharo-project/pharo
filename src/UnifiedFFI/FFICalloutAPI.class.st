@@ -57,7 +57,7 @@ FFICalloutAPI class >> new [
 { #category : #private }
 FFICalloutAPI class >> newCallbackBackendFor: aCallback [
 
-	^ FFIAlienCallback fromFrontendCallback: aCallback
+	^ self subclassResponsibility
 ]
 
 { #category : #private }

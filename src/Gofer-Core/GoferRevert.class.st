@@ -9,6 +9,7 @@ Class {
 
 { #category : #running }
 GoferRevert >> execute [
+
 	self workingCopies
 		do: [ :each | each modified: false ].
 	super execute
@@ -16,6 +17,7 @@ GoferRevert >> execute [
 
 { #category : #private }
 GoferRevert >> referenceFor: aReference [
+
 	| ancestors |
 	ancestors := aReference workingCopy ancestry ancestors.
 	ancestors isEmpty ifTrue: [ ^ MCSnapshot new ].

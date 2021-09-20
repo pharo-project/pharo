@@ -136,13 +136,22 @@ OSSDL2Driver >> dispatchEvent: mappedEvent [
 OSSDL2Driver >> evaluateUserInterrupt: anSDLEvent [
 
 	anSDLEvent isUserInterrupt
-		ifTrue: [ UserInterruptHandler new handleUserInterrupt ]
+		ifTrue: [ UserInterruptHandler new handleUserInterrupt ].
+		
+	anSDLEvent isUserInterruptKillAll 
+	 	ifTrue: [ UserInterruptHandler new handleUserInterruptKillAll ].
 ]
 
 { #category : #accessing }
 OSSDL2Driver >> eventFilter [
 
 	^ eventFilter ifNil: [ eventFilter := OSSDLPasteEventFilter new next: self; yourself ]
+]
+
+{ #category : #accessing }
+OSSDL2Driver >> eventLoopProcess [
+	
+	^ EventLoopProcess 
 ]
 
 { #category : #'events-processing' }

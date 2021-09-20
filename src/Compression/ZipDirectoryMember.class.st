@@ -11,8 +11,12 @@ Class {
 }
 
 { #category : #'instance creation' }
-ZipDirectoryMember class >> newFromDirectory: aFileReference [
-	^(self new) localFileNameFrom: aFileReference; yourself
+ZipDirectoryMember class >> newFromDirectory: aFileReference localName: localName [
+
+	^ self new
+		  externalFile: aFileReference;
+		  localFileName: localName;
+		  yourself
 ]
 
 { #category : #private }
@@ -38,15 +42,9 @@ ZipDirectoryMember >> isDirectory [
 
 { #category : #accessing }
 ZipDirectoryMember >> localFileName: aString [
-
-	self localFileNameFrom: aString asFileReference
-]
-
-{ #category : #accessing }
-ZipDirectoryMember >> localFileNameFrom: aFileReference [
-	super localFileName: (aFileReference basename copyWith: $/).
-	aFileReference ifAbsent: [ ^ self ].
-	self modifiedAt: aFileReference entry modificationTime
+	super localFileName: (aString copyWith: $/).
+	externalFileName ifAbsent: [ ^ self ].
+	self modifiedAt: externalFileName entry modificationTime
 ]
 
 { #category : #private }

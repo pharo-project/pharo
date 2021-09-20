@@ -7,7 +7,7 @@ Class {
 	#category : #'Kernel-Layout'
 }
 
-{ #category : #'methodsFor:' }
+{ #category : #'instance creation' }
 DoubleByteLayout class >> extending: superLayout scope: aScope host: aClass [
 	^ superLayout extendDoubleByte
 		host: aClass;
@@ -15,8 +15,11 @@ DoubleByteLayout class >> extending: superLayout scope: aScope host: aClass [
 ]
 
 { #category : #description }
-DoubleByteLayout class >> kind [ 
-	^ #variableDoubleByte
+DoubleByteLayout class >> subclassDefiningSymbol [
+	"Answer a keyword that describes the receiver's kind of subclass
+	Note: this is for printing the ST80 style class definiton, usage makes no sense for anything
+	else!"
+	^#variableDoubleByteSubclass:
 ]
 
 { #category : #accessing }
@@ -38,9 +41,4 @@ DoubleByteLayout >> instanceSpecification [
 { #category : #testing }
 DoubleByteLayout >> isDoubleBytes [
 	^ true
-]
-
-{ #category : #accessing }
-DoubleByteLayout >> kindOfSubclass [
-	^' variableDoubleByteSubclass: '
 ]

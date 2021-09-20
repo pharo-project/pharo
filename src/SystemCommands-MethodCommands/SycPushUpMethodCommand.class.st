@@ -10,20 +10,6 @@ Class {
 	#category : #'SystemCommands-MethodCommands'
 }
 
-{ #category : #activation }
-SycPushUpMethodCommand class >> methodContextMenuActivation [
-	<classAnnotation>
-	
-	^ SycMethodMenuActivation byRootGroupItemOrder: 10 for: ClyMethod asCalypsoItemContext
-]
-
-{ #category : #activation }
-SycPushUpMethodCommand class >> methodShortcutActivation [
-	<classAnnotation>
-	
-	^CmdShortcutActivation by: $p meta, $u meta for: ClyMethod asCalypsoItemContext
-]
-
 { #category : #execution }
 SycPushUpMethodCommand >> asRefactorings [
 	| refactoring |

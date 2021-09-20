@@ -24,14 +24,17 @@ Class {
 
 { #category : #copying }
 RBCopyPackageRefactoring class >> copyPackage: aString1 in: aString2 [
-	^ self new copyPackage: aString1 in: aString2; yourself
+	^ self new
+		copyPackage: aString1 in: aString2;
+		yourself
 ]
 
 { #category : #copying }
 RBCopyPackageRefactoring class >> model: aRBSmalltalk copyPackage: aString1 in: aString2 [
 	^ self new 
 		model: aRBSmalltalk;
-		copyPackage: aString1 in: aString2; yourself
+		copyPackage: aString1 in: aString2;
+		yourself
 ]
 
 { #category : #preconditions }
@@ -86,7 +89,7 @@ RBCopyPackageRefactoring >> preconditions [
 		])
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #renaming }
 RBCopyPackageRefactoring >> renameReferencesOf: aClass1 with: aClass2 [
 	| replacer |
 	replacer := (self parseTreeRewriterClass replaceLiteral: aClass1 name with: aClass2)

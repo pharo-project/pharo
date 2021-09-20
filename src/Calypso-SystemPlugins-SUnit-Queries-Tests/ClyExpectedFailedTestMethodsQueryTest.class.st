@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyExpectedFailedTestMethodsQueryTest,
-	#superclass : #ClyMethodQueryTestCase,
+	#superclass : #ClyMethodQueryTest,
 	#category : #'Calypso-SystemPlugins-SUnit-Queries-Tests'
 }
 

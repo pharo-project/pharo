@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyFlaggingMethodsQueryTest,
-	#superclass : #ClyMethodQueryTestCase,
+	#superclass : #ClyMethodQueryTest,
 	#category : #'Calypso-SystemPlugins-Flags-Queries-Tests'
 }
 

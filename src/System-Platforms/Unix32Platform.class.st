@@ -10,9 +10,9 @@ Class {
 { #category : #testing }
 Unix32Platform class >> isActivePlatform [
 
-	^ (self currentPlatformName = 'unix') 
+	^ (Smalltalk vm operatingSystemName = 'unix') 
 		and: [ Smalltalk vm wordSize = 4 
-			and: [ (Smalltalk vm getSystemAttribute: 1003) ~= 'armv7l' ] ] 
+			and: [ Smalltalk vm architectureName ~= 'armv7l' ] ] 
 ]
 
 { #category : #visiting }

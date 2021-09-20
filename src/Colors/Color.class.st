@@ -104,8 +104,8 @@ Color class >> brown [
 { #category : #'instance creation' }
 Color class >> colorFrom: parm [
 	"Return an instantiated color from parm.  If parm is already a color, return it, else return the result of my performing it if it's a symbol or, if it is a list, it can either be an array of three numbers, which will be interpreted as RGB values, or a list of symbols, the first of which is sent to me and then the others of which are in turn sent to the prior result, thus allowing entries of the form #(blue darker).  Else just return the thing"
-	"Color colorFrom: #(blue darker) >>> (Color r: 0.011 g: 0.23900000000000002 b: 0.795 alpha: 1.0) "
-	"(Color colorFrom: Color blue darker)>>>(Color r: 0.011 g: 0.23900000000000002 b: 0.795 alpha: 1.0)"
+	"Color colorFrom: #(blue darker) >>>  (Color r: 0.0 g: 0.0 b: 0.9198435972629521 alpha: 1.0) "
+	"(Color colorFrom: Color blue darker)>>>( (Color r: 0.0 g: 0.0 b: 0.9198435972629521 alpha: 1.0))"
 	"(Color colorFrom: #blue)>>> (Color blue)"
 	"(Color colorFrom: #(0.0 0.0 1.0)) >>> (Color blue)"
 
@@ -381,7 +381,6 @@ Color class >> h: hue s: saturation v: brightness [
 Color class >> h: hue s: saturation v: brightness alpha: alpha [
 	"Create a color with the given hue, saturation, brightness, and alpha. Hue is given as the angle in degrees of the color on the color circle where red is zero degrees. Saturation and brightness are numbers in [0.0..1.0] where larger values are more saturated or brighter colors. For example, (Color h: 0 s: 1 v: 1 alpha: 1) is pure red."
 	"(Color h: 0 s: 1 v: 1 alpha: 1) >>> Color red "
-	"(Color h: 0 s: 1 v: 1 alpha: 0.5) >>> (Color r: 1.0 g: 0.0 b: 0.0 alpha: 0.498) "
 	^ self basicNew
 		initializeHue: hue saturation: saturation brightness: brightness alpha: alpha ;
 		yourself 
@@ -1071,6 +1070,14 @@ Color >> asNontranslucentColor [
 	"Set the transparency of the receiver to opaque."
 	
 	^ self alpha: 1.0.
+]
+
+{ #category : #conversions }
+Color >> asRGBInteger [
+
+	^	(self red * 255) asInteger + 
+			((self green * 255) asInteger << 8) + 
+				((self blue * 255) asInteger << 16)
 ]
 
 { #category : #transformations }

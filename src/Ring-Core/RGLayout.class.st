@@ -108,6 +108,11 @@ RGLayout >> isWordLayout [
 ]
 
 { #category : #accessing }
+RGLayout >> layoutName [
+	^ (self class name allButFirst: 2) asSymbol
+]
+
+{ #category : #accessing }
 RGLayout >> resolveSlot: aName ifFound: foundBlock ifNone: exceptionBlock [
 	^exceptionBlock value
 ]

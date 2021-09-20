@@ -10,13 +10,6 @@ Class {
 	#category : #'SystemCommands-MessageCommands'
 }
 
-{ #category : #activation }
-SycReplaceMessageCommand class >> methodContextMenuActivation [
-	<classAnnotation>
-	
-	^ SycMethodMenuActivation byRootGroupItemOrder: 1100 for: ClyMethod asCalypsoItemContext
-]
-
 { #category : #execution }
 SycReplaceMessageCommand >> createRefactoring [
 	self flag: 'TODO'."Improve preview to add args when change the sender with empty args"
@@ -38,11 +31,6 @@ SycReplaceMessageCommand >> defaultMenuIconName [
 { #category : #accessing }
 SycReplaceMessageCommand >> defaultMenuItemName [
 	^ 'Replace senders'
-]
-
-{ #category : #testing }
-SycReplaceMessageCommand >> isComplexRefactoring [
-	^true
 ]
 
 { #category : #execution }

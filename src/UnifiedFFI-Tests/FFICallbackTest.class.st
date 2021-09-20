@@ -28,12 +28,7 @@ FFICallbackTest >> runCaseManaged [
 { #category : #tests }
 FFICallbackTest >> testCqsort [
 	| unsorted expected values callback results |
-	
-	self flag: #TODO. "TEMPORAL... I need to see why this is crashing on windows (but callbacks are 
-	working in general)"
-	OSPlatform current isWindows 
-		ifTrue: [ ^ self skip ].
-	
+		
 	unsorted := (10.0 to: 1.0 by: -0.5) asArray.
 	expected := (1.0 to: 10.0 by: 0.5) asArray.
 	
@@ -58,11 +53,6 @@ FFICallbackTest >> testCqsort [
 FFICallbackTest >> testCqsortWithByteArray [
 	| unsorted expected values callback results |
 	
-	self flag: #TODO. "TEMPORAL... I need to see why this is crashing on windows (but callbacks are 
-	working in general)"
-	OSPlatform current isWindows 
-		ifTrue: [ ^ self skip ].
-
 	unsorted := (10.0 to: 1.0 by: -0.5) asArray.
 	expected := (1.0 to: 10.0 by: 0.5) asArray.
 	
@@ -82,32 +72,6 @@ FFICallbackTest >> testCqsortWithByteArray [
 	ensure: [ values free ].
 	
 	self assert: results equals: expected
-]
-
-{ #category : #tests }
-FFICallbackTest >> testEnumerationReturnValue [
-	| cb returnValue |
-	
-	"This tests is only valid if using the alien callbacks"
-	(FFIBackend current isKindOf: OldFFIBackend) ifFalse: [ ^ self skip].
-	
-	"Issue 19145 - change semantics so that enumerations can be returned
-	from callback without sending #value to it."
-	cb := FFICallback
-				signature:  #( FFITestEnumeration ())
-				block: [ CCC ].
-	"Dummy value of nil is possible since signature has no arguments"
-	returnValue := cb backendCallback valueWithContext: self sp: nil. 
-	self assert: returnValue equals: CCC value.
-	
-	
-	"Confirm backward compatibility okay"
-	cb := FFICallback
-				signature:  #( FFITestEnumeration ())
-				block: [ CCC value ].
-	"Dummy value of nil is possible since signature has no arguments"
-	returnValue := cb backendCallback valueWithContext: self sp: nil. 
-	self assert: returnValue equals: CCC value
 ]
 
 { #category : #support }

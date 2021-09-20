@@ -120,17 +120,6 @@ Metaclass >> classVariables [
 		ifNotNil: [ :class | class classVariables ]
 ]
 
-{ #category : #generated }
-Metaclass >> definition [
-
-	"Refer to the comment in ClassDescription|definition."
-
-	self
-		deprecated: 'Use #definitionString instead'
-		transformWith: '`@rec definition' -> '`@rec definitionString'.
-	^ self definitionString
-]
-
 { #category : #fileout }
 Metaclass >> definitionStringFor: aConfiguredPrinter [
 
@@ -287,11 +276,6 @@ Metaclass >> removeSubclass: aClass [
 { #category : #'pool variables' }
 Metaclass >> sharedPoolNames [
 	^#()
-]
-
-{ #category : #'pool variables' }
-Metaclass >> sharedPools [
-	^OrderedCollection new.
 ]
 
 { #category : #initialization }

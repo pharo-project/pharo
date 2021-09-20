@@ -62,26 +62,6 @@ Slot class >> isUsed [
 	^super isUsed or: [self slotUsers isNotEmpty ]
 ]
 
-{ #category : #settings }
-Slot class >> showSlotClassDefinition [
-	self 
-		deprecated: 'Do not use Slot class directly use ClassDefinitionPrinter' 
-		transformWith:
-	'Slot showSlotClassDefinition' -> 'ClassDefinitionPrinter showFluidClassDefinition'.
-	^ ClassDefinitionPrinter showFluidClassDefinition
-
-]
-
-{ #category : #settings }
-Slot class >> showSlotClassDefinition: aBoolean [
-	self 
-		deprecated: 'Do not use Slot class directly use ClassDefinitionPrinter' 
-		transformWith:
-	'Slot showSlotClassDefinition: @val' -> 'ClassDefinitionPrinter showFluidClassDefinition: @val'.
-	ClassDefinitionPrinter showFluidClassDefinition: aBoolean
-
-]
-
 { #category : #testing }
 Slot class >> slotUsers [
 	"all classes or traits that have slots of this kind"

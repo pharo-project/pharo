@@ -361,7 +361,8 @@ ASTClassBuilderTest >> testCreateVariableWordClassWithAll [
 		         build.
 	self assert: class name equals: #TestSubClass.
 	self assert: class instanceVariablesString equals: ''.
-	self assert: class classVarNames equals: #( #classVar #pouet #var )
+	self assert: class classVarNames equals: #( #classVar #pouet #var ).
+	self assert: class classLayout class equals: WordLayout.
 ]
 
 { #category : #running }

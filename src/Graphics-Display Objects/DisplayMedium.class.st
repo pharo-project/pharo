@@ -45,28 +45,6 @@ DisplayMedium >> border: aRectangle width: borderWidth rule: combinationRule fil
 		fillColor: aHalfTone
 ]
 
-{ #category : #bordering }
-DisplayMedium >> border: aRectangle widthRectangle: insets rule: combinationRule fillColor: aHalfTone [
-	"Paint a border whose rectangular area is defined by aRectangle. The 
-	width of each edge of the border is determined by the four coordinates 
-	of insets. Uses aHalfTone and combinationRule for drawing the border."
-
-	| deprecationMessage |
-	deprecationMessage := 'Use #border:margins:rule:fillColor: instead'.
-	insets class = Rectangle
-		ifTrue:
-			[ deprecationMessage := deprecationMessage
-				,
-					'\Change sender to use Margin instead of Rectangle. \ Rectangles are now normalized, and can no longer interchangeably be used as margins'
-						withCRs ].
-	self deprecated: deprecationMessage on: '10 December 2017' in: 'Pharo70'.
-	^ self
-		border: aRectangle
-		margins: insets asMargin
-		rule: combinationRule
-		fillColor: aHalfTone
-]
-
 { #category : #displaying }
 DisplayMedium >> copyBits: sourceRect from: sourceForm at: destOrigin clippingBox: clipRect rule: rule fillColor: aForm [ 
 	"Make up a BitBlt table and copy the bits."

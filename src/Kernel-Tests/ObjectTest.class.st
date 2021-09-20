@@ -28,6 +28,12 @@ ObjectTest >> testAs [
 ]
 
 { #category : #'tests - write barrier' }
+ObjectTest >> testBeReadOnlyLiteral [
+	self assert: String new beReadOnlyLiteral isReadOnlyObject.
+	self deny: Object new beReadOnlyLiteral isReadOnlyObject
+]
+
+{ #category : #'tests - write barrier' }
 ObjectTest >> testBeRecursivelyReadOnlyObject [
 
 	| assoc array |

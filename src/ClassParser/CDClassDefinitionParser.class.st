@@ -19,16 +19,20 @@ CDClassDefinitionParser class >> fromASTNode: aNode [
 ]
 
 { #category : #parsing }
-CDClassDefinitionParser class >> parse: aString [ 
-	
-	^ self new parse: aString
-]
-
-{ #category : #parsing }
 CDClassDefinitionParser >> handleClassName: aNode withType: aSymbol [
+	| layout |
 	
 	self handleClassName: aNode.
-	classDefinition classKind: aSymbol
+	layout := FixedLayout.
+	aSymbol = #variableWordSubclass: ifTrue: [ layout := WordLayout ].
+	aSymbol = #ephemeronSubclass: ifTrue: [ layout := EphemeronLayout ].
+	aSymbol = #weakSubclass: ifTrue: [ layout := WeakLayout ].
+	aSymbol = #variableByteSubclass: ifTrue: [ layout := ByteLayout  ].
+	aSymbol = #variableSubclass: ifTrue: [ layout := VariableLayout ].
+	aSymbol = #immediateSubclass: ifTrue: [ layout := ImmediateLayout ].
+	aSymbol = #subclass: ifTrue: [ layout := FixedLayout ].
+	
+	classDefinition layoutClass: layout
 ]
 
 { #category : #parsing }
@@ -76,16 +80,6 @@ CDClassDefinitionParser >> isInstanceSideDefinition: aRBMessageNode [
 	^ aRBMessageNode receiver isMessage not
 ]
 
-{ #category : #generated }
-CDClassDefinitionParser >> parseClassName: aNode [
-
-	self
-		deprecated: 'Use #handleClassName: instead'
-		transformWith:
-		'`@rec parseClassName: `@arg' -> '`@rec handleClassName: `@arg'.
-	^ self handleClassName: aNode
-]
-
 { #category : #parsing }
 CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [ 
 	
@@ -117,16 +111,6 @@ CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 		classDefinition: self; 
 		unrecognizedPart: aString;
 		signal
-]
-
-{ #category : #generated }
-CDClassDefinitionParser >> parseSuperclassNode: aSuperclassNode [
-
-	self
-		deprecated: 'Use #handleSuperclassNode: instead'
-		transformWith: '`@rec parseSuperclassNode: `@arg'
-			-> '`@rec handleSuperclassNode: `@arg'.
-	^ self handleSuperclassNode: aSuperclassNode
 ]
 
 { #category : #parsing }

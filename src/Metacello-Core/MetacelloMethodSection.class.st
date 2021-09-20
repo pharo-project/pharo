@@ -7,32 +7,6 @@ Class {
 	#category : #'Metacello-Core-Constructors'
 }
 
-{ #category : #accessing }
-MetacelloMethodSection >> attribute [
-	self
-		deprecated: 'Use attributes instead'
-		transformWith: '`@rec attribute' -> '`@rec attributes first'.
-	
-	self attributes size > 1
-		ifTrue: [ self error: 'invalid use of attribute' ].
-
-	^ self attributes 
-		ifEmpty: [ nil ]
-		ifNotEmpty: [ self attributes first ].
-]
-
-{ #category : #accessing }
-MetacelloMethodSection >> attribute: anObject [
-	self
-		deprecated: 'Use attributes: instead'
-		transformWith: '`@rec attribute: `@arg' -> '`@rec attributes: (OrderedCollection with: `@arg)'.
-	
-	self attributes size > 1
-		ifTrue: [ self error: 'invalid use of attribute:' ].
-	
-	attributes := OrderedCollection with: anObject
-]
-
 { #category : #printing }
 MetacelloMethodSection >> attributePrintString [
     | stream |

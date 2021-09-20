@@ -66,8 +66,6 @@ BaselineOfUI >> baseline: spec [
 		spec package: 'WebBrowser-Core'.
 
 		spec package: 'HelpSystem-Core'.
-
-		spec package: 'EyeInspector'.
 	].
 ]
 

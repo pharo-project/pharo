@@ -16,21 +16,14 @@ EphemeronLayout class >> extending: superLayout scope: aScope host: aClass [
 ]
 
 { #category : #description }
-EphemeronLayout class >> kind [ 
-	^ #ephemeron
+EphemeronLayout class >> subclassDefiningSymbol [
+	"Answer a keyword that describes the receiver's kind of subclass
+	Note: this is for printing the ST80 style class definiton, usage makes no sense for anything
+	else!"
+	^#ephemeronSubclass:
 ]
 
 { #category : #format }
 EphemeronLayout >> instanceSpecification [
 	^ 5
-]
-
-{ #category : #accessing }
-EphemeronLayout >> kindOfSubclass [
-	^' ephemeronSubclass: '
-]
-
-{ #category : #accessing }
-EphemeronLayout >> typeOfClass [
-	^#ephemeron
 ]

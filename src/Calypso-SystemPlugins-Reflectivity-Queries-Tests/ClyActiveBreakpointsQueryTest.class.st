@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyActiveBreakpointsQueryTest,
-	#superclass : #ClyMethodQueryTestCase,
+	#superclass : #ClyMethodQueryTest,
 	#instVars : [
 		'installedBreakpoints'
 	],

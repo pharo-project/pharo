@@ -165,15 +165,6 @@ ExternalAddress class >> fromString: aString [
 	^ result
 ]
 
-{ #category : #'*UnifiedFFI-Deprecated50' }
-ExternalAddress >> gcpointer [
-	"Same as #pointer (see its comment for detals), but contents are garbage collected automatically"
-	self deprecated: 'Use "pointer autoRelease" instead.' on: '2016-01-22' in: #Pharo5.  
-	^ (ExternalAddress gcallocate: self size)
-		pointerAt: 1 put: self;
-		yourself
-]
-
 { #category : #'*UnifiedFFI' }
 ExternalAddress >> getHandle [
 	
@@ -374,17 +365,6 @@ ExternalAddress >> readArrayOf: aType until: aBlock [
 					aBlock cull: last cull: count ] ]
 				whileFalse: [ array nextPut: last.
 					address := address + externalType typeSize ] ]
-]
-
-{ #category : #'*UnifiedFFI-Deprecated50' }
-ExternalAddress >> registerAsExternalResource [
-	self
-		deprecated: 'Use #autoRelease instead.'
-		on: '2016-01-22'
-		in: #Pharo5
-		transformWith: '`@rec registerAsExternalResource' -> '`@rec autoRelease'.
-	  
-	^ self class finalizationRegistry add: self
 ]
 
 { #category : #'*UnifiedFFI' }

@@ -26,6 +26,14 @@ ValueLink >> = anotherObject [
 				and: [self nextLink == anotherObject nextLink]]
 ]
 
+{ #category : #dispatched }
+ValueLink >> asLinkPrepend: anObject [
+
+	^ (super asLinkPrepend: anObject)
+		  value: anObject;
+		  yourself
+]
+
 { #category : #comparing }
 ValueLink >> hash [
 	^self value hash bitXor: nextLink identityHash 

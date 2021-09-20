@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyItemGroupProviderTest,
-	#superclass : #ClyAbsractNavigationEnvironmentTest,
+	#superclass : #ClyAbstractNavigationEnvironmentTest,
 	#instVars : [
 		'groupProvider',
 		'builtGroups'

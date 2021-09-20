@@ -7,20 +7,6 @@ Class {
 	#category : #'SystemCommands-ClassCommands'
 }
 
-{ #category : #activation }
-SycAbstractAllInstVarAccessorsCommand class >> browserShortcutActivation [
-	<classAnnotation>
-	
-	^CmdShortcutActivation  by: $a meta, $a meta for: ClyClass asCalypsoItemContext 
-]
-
-{ #category : #activation }
-SycAbstractAllInstVarAccessorsCommand class >> fullBrowserMenuActivation [
-	<classAnnotation>
-	
-	^CmdContextMenuActivation byRootGroupItemOrder: 2.1 for: ClyFullBrowserClassContext 
-]
-
 { #category : #accessing }
 SycAbstractAllInstVarAccessorsCommand >> asRefactorings [
 	| refactorings env |

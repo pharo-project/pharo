@@ -69,7 +69,7 @@ CommandLineUIManager >> abort: aStringOrText title: aString [
 
 { #category : #private }
 CommandLineUIManager >> activate [
-	NonInteractiveTranscript stderr install
+	NonInteractiveTranscript stdout install
 ]
 
 { #category : #'ui TEasilyThemed' }
@@ -188,8 +188,13 @@ CommandLineUIManager >> exitFailure [
 
 { #category : #'handle debug requests' }
 CommandLineUIManager >> handleDebugRequest: aDebugRequest [
-	
-	self unhandledErrorDefaultAction: aDebugRequest exception
+
+	self
+		debugProcess: aDebugRequest process
+		context: aDebugRequest exception signalerContext
+		label: aDebugRequest exception description
+		fullView: false
+		notification: aDebugRequest exception description
 ]
 
 { #category : #'error handling' }

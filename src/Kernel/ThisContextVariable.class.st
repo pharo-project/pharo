@@ -7,6 +7,11 @@ Class {
 	#category : #'Kernel-Variables'
 }
 
+{ #category : #accessing }
+ThisContextVariable class >> variableName [
+	^'thisContext'
+]
+
 { #category : #visiting }
 ThisContextVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitThisContextNode: aNode
@@ -16,13 +21,6 @@ ThisContextVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 ThisContextVariable >> emitValue: methodBuilder [
 
 	methodBuilder pushThisContext
-]
-
-{ #category : #initialization }
-ThisContextVariable >> initialize [
-	super initialize.
-	
-	name := 'thisContext'
 ]
 
 { #category : #testing }

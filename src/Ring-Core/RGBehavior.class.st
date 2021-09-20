@@ -234,7 +234,7 @@ RGBehavior >> announceDefinitionChangeDuring: aBlock [
 { #category : #accessing }
 RGBehavior >> asYetUnclassifiedProtocolName [
 
-	^ 'as yet unclassified' asSymbol
+	^ Protocol unclassified 
 ]
 
 { #category : #testing }
@@ -676,10 +676,10 @@ RGBehavior >> localSelectors [
 
 { #category : #lookup }
 RGBehavior >> lookupVar: aName [
-	^ self layout 
-		resolveSlot: aName asSymbol 
-		ifFound: [:var | var] 
-		ifNone: [self bindingOf: aName]
+
+	^ self allSlots
+		  detect: [ :slot | slot name == aName ]
+		  ifNone: [ self bindingOf: aName ]
 ]
 
 { #category : #lookup }
@@ -1244,16 +1244,4 @@ RGBehavior >> usedTraits [
 { #category : #accessing }
 RGBehavior >> users [
 	^ #()
-]
-
-{ #category : #generated }
-RGBehavior >> usesSpecialSlot [
-
-	"return true if we define something else than InstanceVariableSlots"
-
-	self
-		deprecated: 'Use #slotsNeedFullDefinition instead'
-		transformWith:
-		'`@rec usesSpecialSlot' -> '`@rec slotsNeedFullDefinition'.
-	^ self slotsNeedFullDefinition
 ]

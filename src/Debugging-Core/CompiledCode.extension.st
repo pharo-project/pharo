@@ -42,8 +42,10 @@ CompiledCode >> abstractBytecodeMessagesFrom: startpc to: endpc do: aBlock [
 ]
 
 { #category : #'*Debugging-Core' }
-CompiledCode >> debuggerMap [
-	^self compilerClass debuggerMethodMapForMethod: self.
+CompiledCode >> bytecodeSizeForPc: pc [
+	"Returns the size of the bytecode at the given pc"
+
+	^ self encoderClass bytecodeSize: (self at: pc)
 ]
 
 { #category : #'*Debugging-Core' }
@@ -84,13 +86,12 @@ CompiledCode >> messages [
 
 { #category : #'*Debugging-Core' }
 CompiledCode >> pcPreviousTo: pc [
-	| scanner client prevPc |
+	| scanner prevPc |
 	pc > self endPC ifTrue: [^self endPC].
 	scanner := InstructionStream on: self.
-	client := InstructionClient new.
-	[scanner pc < pc] whileTrue:
-		[prevPc := scanner pc.
-		 scanner interpretNextInstructionFor: client].
+	[scanner pc < pc] whileTrue: [
+		prevPc := scanner pc.
+		scanner advanceToFollowingPc ].
 	^prevPc
 ]
 

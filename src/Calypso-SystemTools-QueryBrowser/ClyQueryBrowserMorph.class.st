@@ -175,7 +175,7 @@ ClyQueryBrowserMorph >> extraScopesOfSelectedItems [
 		self packageScopeOfSelectedItems. 
 		classScope asFullHierarchyScope.
 		classScope
-	}
+	}, RefactoringSettings availableScopes
 ]
 
 { #category : #initialization }

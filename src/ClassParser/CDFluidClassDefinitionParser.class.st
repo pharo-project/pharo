@@ -44,12 +44,6 @@ CDFluidClassDefinitionParser class >> fromASTNode: aNode [
 	^ self new parseRootNode: aNode
 ]
 
-{ #category : #parsing }
-CDFluidClassDefinitionParser class >> parse: aString [ 
-	
-	^ self new parse: aString
-]
-
 { #category : #'handling  nodes' }
 CDFluidClassDefinitionParser >> handleClassAndSuperclassOf: aNode [
 
@@ -68,8 +62,7 @@ CDFluidClassDefinitionParser >> handleClassAndSuperclassOf: aNode [
 
 { #category : #'handling  nodes' }
 CDFluidClassDefinitionParser >> handleLayout: aNode [
-
-	classDefinition classKind: aNode binding value kind
+	classDefinition layoutClass: aNode binding value
 ]
 
 { #category : #'handling  nodes' }

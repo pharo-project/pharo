@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyBrowserQueryCursorTest,
-	#superclass : #ClyAbsractNavigationEnvironmentTest,
+	#superclass : #ClyAbstractNavigationEnvironmentTest,
 	#instVars : [
 		'cursor',
 		'queryResult',

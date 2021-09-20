@@ -17,7 +17,6 @@ DocCommentsReleaseTest class >> buildSuite [
 	design"
 	methods := self environment allMethods reject: [ :method | method methodClass isTestCase ].
 	"for now skip all class side methods to be in sync with DrTests"
-	methods := methods reject: [ :method | method methodClass isClassSide ].
 	methods do: [ :method | 
 		method pharoDocCommentNodes do: [ :docComment | 
 			suite addTest: (CommentTestCase for: docComment) ] ].

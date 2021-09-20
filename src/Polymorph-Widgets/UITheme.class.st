@@ -85,7 +85,7 @@ UITheme class >> current: aUITheme [
 
 	Current := aUITheme.
 	SystemProgressMorph reset. "reset to use new fill styles"
-	ScrollBar initializeImagesCache. "reset to use new arrows"
+	ScrollBarMorph initializeImagesCache. "reset to use new arrows"
 
 	self class environment at: #SHPreferences ifPresent: [ :shPreferences |
 		shPreferences setStyleTable: aUITheme shStyleTable ].
@@ -1081,24 +1081,6 @@ UITheme >> chooseFileIn: aThemedMorph title: title extensions: exts path: path p
 ]
 
 { #category : #services }
-UITheme >> chooseFileNameIn: aThemedMorph title: title extensions: exts path: path preview: preview [
-	"Answer the result of a file name chooser dialog with the given title, extensions
-	path and preview type.
-	Answer nil or a filename."
-	| dialog |
-	self deprecated: 'Use UIManager default chooseExistingFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
-	dialog := FileDialogWindow basicNew
-		basicTheme: aThemedMorph theme;
-		previewType: preview;
-		initialize;
-		title: title;
-		answerFileName.
-	exts ifNotNil: [ dialog validExtensions: exts ].
-	path ifNotNil: [ dialog selectPath: path ].
-	^ dialog openModal answer
-]
-
-{ #category : #services }
 UITheme >> chooseFontIn: aThemedMorph title: aString font: aFont [
 	"Answer the result of a font selector dialog with the given title and initial font."
 
@@ -1124,25 +1106,6 @@ UITheme >> chooseForSaveFileReferenceIn: aThemedMorph title: title extensions: e
 		title: title;
 		fileNameText: pathFileReference basename;
 		answerSaveFile.
-	exts ifNotNil: [ dialog validExtensions: exts ].
-	path ifNotNil: [ dialog selectPath: path ].
-	^ dialog openModal answer
-]
-
-{ #category : #services }
-UITheme >> chooseFullFileNameIn: aThemedMorph title: title extensions: exts path: path preview: preview [
-	"Answer the result of a file name chooser dialog with the given title, extensions
-	path and preview type.
-	Answer nil or a full filename."
-
-	| dialog |
-	self deprecated: 'Use UIManager default chooseExistingFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
-	dialog := FileDialogWindow basicNew
-		basicTheme: aThemedMorph theme;
-		previewType: preview;
-		initialize;
-		title: title;
-		answerPathName.
 	exts ifNotNil: [ dialog validExtensions: exts ].
 	path ifNotNil: [ dialog selectPath: path ].
 	^ dialog openModal answer
@@ -2102,7 +2065,7 @@ UITheme >> dropListButtonLabelFor: aDropList [
 	"Answer the label for the button of the given drop list."
 
 	^AlphaImageMorph new
-		image: (ScrollBar
+		image: (ScrollBarMorph
 			arrowOfDirection: #bottom
 			size: aDropList buttonWidth - 3
 			color: aDropList paneColor darker);
@@ -4160,7 +4123,7 @@ UITheme >> newScrollBarUpButtonFor: aScrollbar [
 UITheme >> newScrollPaneIn: aThemedMorph for: aMorph [
 	"Answer a new GeneralScrollPane with given content morph."
 
-	^GeneralScrollPane new
+	^GeneralScrollPaneMorph new
 		scrollTarget: aMorph;
 		yourself
 ]

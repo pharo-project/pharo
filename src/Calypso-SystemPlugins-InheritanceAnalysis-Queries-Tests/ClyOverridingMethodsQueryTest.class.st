@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyOverridingMethodsQueryTest,
-	#superclass : #ClyMethodQueryTestCase,
+	#superclass : #ClyMethodQueryTest,
 	#category : #'Calypso-SystemPlugins-InheritanceAnalysis-Queries-Tests'
 }
 

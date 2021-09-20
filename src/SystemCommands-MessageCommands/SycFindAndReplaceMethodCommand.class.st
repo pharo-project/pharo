@@ -17,14 +17,6 @@ SycFindAndReplaceMethodCommand class >> defaultMenuIconName [
 	^#smallFindIcon
 ]
 
-{ #category : #accessing }
-SycFindAndReplaceMethodCommand class >> methodContextMenuActivation [
-	<classAnnotation>
-	
-	^ SycMethodMenuActivation
-		byRootGroupItemOrder: 25 for: ClyMethod asCalypsoItemContext
-]
-
 { #category : #execution }
 SycFindAndReplaceMethodCommand >> applyResultInContext: aToolContext [
 ]
@@ -42,11 +34,6 @@ SycFindAndReplaceMethodCommand >> createRefactoring [
 { #category : #execution }
 SycFindAndReplaceMethodCommand >> defaultMenuItemName [
 	^'Find and replace'
-]
-
-{ #category : #testing }
-SycFindAndReplaceMethodCommand >> isComplexRefactoring [
-	^ true
 ]
 
 { #category : #execution }

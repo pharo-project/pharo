@@ -65,21 +65,6 @@ RBRefactoryChangeManager class >> resetCounter [
 	Counter := nil.
 ]
 
-{ #category : #settings }
-RBRefactoryChangeManager class >> settingsOn: aBuilder [
-	<systemsettings>
-	(aBuilder group: #refactoring)
-		label: 'Refactoring Engine';
-		parent: #codeBrowsing;
-		description: 'Settings related to the refactoring tools';
-		with: [ 
-					(aBuilder setting: #undoSize)
-						target: self;
-						default: 20;
-						label: 'Undo size';
-						parentName: #refactoring ]
-]
-
 { #category : #'class initialization' }
 RBRefactoryChangeManager class >> undoSize [
 	^ UndoSize

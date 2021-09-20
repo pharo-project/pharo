@@ -787,10 +787,6 @@ RubAbstractTextArea >> emphasisHere: aListOfAttributes [
 
 ]
 
-{ #category : #'mock for spec' }
-RubAbstractTextArea >> enabled: aBoolean [
-]
-
 { #category : #'event handling' }
 RubAbstractTextArea >> escapePressed [
 	"do nothing. do not simulate a right click
@@ -1119,8 +1115,7 @@ RubAbstractTextArea >> keyDown: anEvent [
 		ifNotNil: [ :sp | 
 			(sp scrollByKeyboard: anEvent)
 				ifTrue: [ ^ self ] ].
-	anEvent isUserInterrupt
-		ifTrue: [ ^ self ].
+
 	self handleEdit: [ self editor keyDown: anEvent ].
 ]
 

@@ -569,6 +569,17 @@ SequenceableCollection >> combinations [
 ]
 
 { #category : #enumerating }
+SequenceableCollection >> combinations: aNumber [
+
+	"Take the items in the receiver, aNumber at a time, return all the combinations"
+
+	^ Array streamContents: [ :stream | 
+		  self
+			  combinations: aNumber
+			  atATimeDo: [ :combination | stream nextPut: combination copy ] ]
+]
+
+{ #category : #enumerating }
 SequenceableCollection >> combinations: kk atATimeDo: aBlock [
 	"Take the items in the receiver, kk at a time, and evaluate the block for each combination.  Hand in an array of elements of self as the block argument.  Each combination only occurs once, and order of the elements does not matter.  There are (self size take: kk) combinations."
 

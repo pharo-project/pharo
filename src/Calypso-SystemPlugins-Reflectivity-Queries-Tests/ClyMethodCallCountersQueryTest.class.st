@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyMethodCallCountersQueryTest,
-	#superclass : #ClyMethodQueryTestCase,
+	#superclass : #ClyMethodQueryTest,
 	#instVars : [
 		'installedCounters'
 	],

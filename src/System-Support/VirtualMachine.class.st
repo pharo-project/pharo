@@ -37,6 +37,12 @@ VirtualMachine >> allocationsBetweenGC: anInteger [
 ]
 
 { #category : #accessing }
+VirtualMachine >> architectureName [
+	
+	^ Smalltalk vm getSystemAttribute: 1003
+]
+
+{ #category : #accessing }
 VirtualMachine >> buildDate [			
 	"Return a String reflecting the build date of the VM"
 	"Smalltalk buildDate"
@@ -90,6 +96,48 @@ VirtualMachine >> disableModuleLoading [
 	Any subsequent attempts to load either external or internal module(s) will fail"
 
 	<primitive: 'primitiveDisableModuleLoading' module: ''>
+]
+
+{ #category : #attributes }
+VirtualMachine >> doGetSystemAttribute: attributeID [ 
+	"Optional. Answer the string for the system attribute with the given 
+	integer ID. Answer nil if the given attribute is not defined on this 
+	platform. On platforms that support invoking programs from command 
+	lines (e.g., Unix), this mechanism can be used to pass command line 
+	arguments to programs written in Pharo.
+
+	By convention, the first command line argument that is not a VM
+	configuration option is considered a 'document' to be filed in. Such a
+	document can add methods and classes, can contain a serialized object,
+	can include code to be executed, or any combination of these.
+
+	Currently defined attributes include: 
+	-1000   1000th command line argument that specify VM options
+   	...
+	-1              first command line argument that specify VM options
+      0               the full path name for currently executing VM
+                       (or, on some platforms, just the path name of the VM's directory)
+       1               full path name of this image (better use primImageName instead)
+       2               a Pharo document to open, if any
+       3               first command line argument for Pharo programs
+       ...
+       1000    1000th command line argument for Pharo programs
+       1001    this platform's operating system 'Mac OS', 'Win32', 'unix', ...
+       1002    operating system version
+       1003    this platform's processor type
+       1004    vm version
+       1005    window system name
+       1006    vm build id
+       1007    Interpreter class (Cog VM only)
+       1008    Cogit class (Cog VM only)
+       1201    max filename length (Mac OS only)
+       1202    file last error (Mac OS only)
+       10001   hardware details (Win32 only)
+       10002   operating system details (Win32 only)
+       10003   graphics hardware details (Win32 only)"
+
+	<primitive: 149>
+	^ nil
 ]
 
 { #category : #accessing }
@@ -246,8 +294,7 @@ VirtualMachine >> getSystemAttribute: attributeID [
        10002   operating system details (Win32 only)
        10003   graphics hardware details (Win32 only)"
 
-	<primitive: 149>
-	^ nil
+	^ (self doGetSystemAttribute: attributeID) ifNotNil: [ :aValue | aValue asByteArray utf8Decoded ]
 ]
 
 { #category : #testing }
@@ -579,6 +626,12 @@ VirtualMachine >> oldSpaceEnd [
 ]
 
 { #category : #accessing }
+VirtualMachine >> operatingSystemName [
+	
+	^ Smalltalk vm getSystemAttribute: 1001
+]
+
+{ #category : #accessing }
 VirtualMachine >> optionAt: i [
 	"Answer the i-th option of the command line, or nil if not so many options."
 	
@@ -723,20 +776,6 @@ VirtualMachine >> parameterAt: parameterIndex put: newValue [
 
 	<primitive: 254>
 	self primitiveFailed
-]
-
-{ #category : #accessing }
-VirtualMachine >> path [
-	"Answer the path for the directory containing the Smalltalk virtual machine. Return the 	empty string if this primitive is not implemented."
-
-	"Smalltalk vm path"
-	self
-		deprecated: 'Use #directory instead'
-		on: '12 November 2018'
-		in: #Pharo7
-		transformWith: '`@receiver path' 
-						-> '`@receiver directory'.
-	^ self primVmPath
 ]
 
 { #category : #accessing }
@@ -1112,19 +1151,6 @@ VirtualMachine >> versionLabel [
 	<primitive: 'primitiveVMVersion'>
 	self notify: 'This virtual machine does not support the optional primitive #primitiveVMVersion'.
 	^''
-]
-
-{ #category : #accessing }
-VirtualMachine >> vmDirectory [
-
-	self
-		deprecated: 'Use #directory instead'
-		on: '12 November 2018'
-		in: #Pharo7
-		transformWith: '`@receiver vmDirectory' 
-						-> '`@receiver directory'.
-
-	^ self directory
 ]
 
 { #category : #accessing }

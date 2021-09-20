@@ -4,6 +4,12 @@ Class {
 	#category : #BaselineOfThreadedFFI
 }
 
+{ #category : #accessing }
+BaselineOfThreadedFFI class >> corePackageNames [
+
+	^ self packagesOfGroupNamed: #Core
+]
+
 { #category : #baseline }
 BaselineOfThreadedFFI >> baseline: spec [
 	<baseline>
@@ -32,5 +38,9 @@ BaselineOfThreadedFFI >> reset [
 
 	Smalltalk globals
 		at: #FFIMethodRegistry 
-		ifPresent: [ :class | class resetAll ]
+		ifPresent: [ :class | class resetAll ].
+		
+	Smalltalk globals
+		at: #FFIBackend 
+		ifPresent: [ :class | class reset ]
 ]

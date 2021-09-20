@@ -36,7 +36,7 @@ RBRemoveTemporaryVariableTransformationTest >> testRefactoring [
 										Transcript show: temp printString; cr.
 										^temp * temp'
 						in: #RBRemoveTemporaryVariableTransformationTest
-						withProtocol: #accessing)
+						withProtocols: {#accessing})
 						asRefactoring transform.
 	
 	refactoring := (RBRemoveTemporaryVariableTransformation 
@@ -65,7 +65,7 @@ RBRemoveTemporaryVariableTransformationTest >> testTransform [
 									Transcript show: temp printString; cr.
 									^temp * temp'
 					in: self changeMock name
-					withProtocol: #accessing)
+					withProtocols: {#accessing})
 					transform.
 	
 	transformation := (RBRemoveTemporaryVariableTransformation 

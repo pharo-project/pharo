@@ -1,6 +1,6 @@
 Class {
 	#name : #ClyMethodWatchQueryTest,
-	#superclass : #ClyMethodQueryTestCase,
+	#superclass : #ClyMethodQueryTest,
 	#instVars : [
 		'installedWatchpoints'
 	],

@@ -7,9 +7,10 @@ Class {
 		'buildNumber',
 		'originRepository',
 		'ringEnvironment',
-		'versionInfo'
+		'versionInfo',
+		'repositoryLocation'
 	],
-	#category : 'Pharo30Bootstrap'
+	#category : #Pharo30Bootstrap
 }
 
 { #category : #'instance creation' }
@@ -33,6 +34,16 @@ PBBootstrap class >> forArchitecture: architecture [
 ]
 
 { #category : #'instance creation' }
+PBBootstrap class >> forArchitecture: architecture buildNumber: buildNumber versionInfo: versionInfo [
+	
+	^ super new
+		architecture: architecture;
+		versionInfo: versionInfo;
+		imageName: 'bootstrap.image';
+		yourself
+]
+
+{ #category : #'instance creation' }
 PBBootstrap class >> fromCommandLine [
 	| options architecture buildNumber versionInfo |
 	options := CommandLineArguments new.
@@ -42,19 +53,15 @@ PBBootstrap class >> fromCommandLine [
 		ifAbsent: [ -1 ].
 	versionInfo := options optionAt: 'VERSION_INFO' ifAbsent: [ self error: 'Must provide VERSION_INFO in the form of a git describe --long' ].
 	
-	('Architecture: ' , architecture) logCr.
-	('BuildNumber: ' , buildNumber) logCr.
-	('VersionInfo: ' , versionInfo) logCr. 
+	('Architecture: ' , architecture) traceCr.
+	('BuildNumber: ' , buildNumber asString) traceCr.
+	('VersionInfo: ' , versionInfo) traceCr. 
 	
 	versionInfo := (PBVersionInfo fromLongGitDescribe: versionInfo)
 		buildNumber: buildNumber;
 		yourself.
 	
-	^ super new
-		architecture: architecture;
-		versionInfo: versionInfo;
-		imageName: 'bootstrap.image';
-		yourself
+	^ self forArchitecture: architecture buildNumber: buildNumber versionInfo: versionInfo
 ]
 
 { #category : #'instance creation' }
@@ -84,16 +91,17 @@ PBBootstrap >> architecture: aString [
 ]
 
 { #category : #bootstrapping }
-PBBootstrap >> bootstrap [ 
+PBBootstrap >> bootstrap [
 
-	PBStepStartedSignal log: 'Starting  Process.'.
+	PBStepStartedSignal emit: 'Starting  Process.'.
 
 	self prepareBootstrap.
-	[self createImage ] on:AssertionFailure do: [ :e | e resume ].
+	[ self createImage ]
+		on: AssertionFailure
+		do: [ :e | e resume ].
 	self initializeImage.
-		
-	PBStepFinishedSignal log: 'Process ended.'
-	
+
+	PBStepFinishedSignal emit: 'Process ended.'
 ]
 
 { #category : #accessing }
@@ -296,10 +304,6 @@ PBBootstrap >> imageName: aString [
 
 { #category : #initialization }
 PBBootstrap >> initialize [
-	"Initialize the logging"
-
-	(CustomStringStreamBeacon with: FileStream stdout)
-		startFor: PBStepStartedSignal , PBStepFinishedSignal
 ]
 
 { #category : #initialization }
@@ -399,14 +403,20 @@ PBBootstrap >> prepareEnvironmentForExport [
 PBBootstrap >> prepareEnvironmentForHermes [
 	ringEnvironment := self originRepository asRing2EnvironmentWith: self allPackagesForHermes.
 	ringEnvironment fixProtoObjectClassSuperclass.
-	ringEnvironment addGlobalsNamed: #(Smalltalk Transcript FileStream MacRomanTextConverter ChangeSet Character SourceFiles Processor Display Sensor UTF8TextConverter SystemOrganization Undeclared TextConstants).
+	ringEnvironment addGlobalsNamed: #(Smalltalk Transcript FileStream MacRomanTextConverter ChangeSet SourceFiles Processor Display Sensor UTF8TextConverter SystemOrganization Undeclared TextConstants).
 	ringEnvironment clean
 ]
 
 { #category : #accessing }
 PBBootstrap >> repositoryLocation [
 
-	^ self class repositoryLocation
+	^ repositoryLocation ifNil: [ self class repositoryLocation ]
+]
+
+{ #category : #accessing }
+PBBootstrap >> repositoryLocation: aFileReference [
+
+	repositoryLocation := aFileReference
 ]
 
 { #category : #'package-names' }

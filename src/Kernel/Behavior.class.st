@@ -1151,7 +1151,8 @@ Behavior >> isWords [
 
 { #category : #'testing - class hierarchy' }
 Behavior >> kindOfSubclass [
-	"Answer a String that is the keyword that describes the receiver's kind of subclass"
+	"Answer a String that is the keyword that describes the receiver's kind of subclass
+	Note: this is for printing the ST80 style class definiton, see #subclassDefiningSymbol"
 	^ self classLayout kindOfSubclass
 ]
 
@@ -1668,12 +1669,6 @@ Behavior >> thoroughWhichMethodsReferTo: literal [
 { #category : #'testing - method dictionary' }
 Behavior >> thoroughWhichSelectorsReferTo: literal [
 	^ (self thoroughWhichMethodsReferTo: literal) collect: [ :method | method selector ]
-]
-
-{ #category : #accessing }
-Behavior >> typeOfClass [
-	"Answer a symbol uniquely describing the type of the receiver. c.f. kindOfSubclass"
-	^self classLayout typeOfClass
 ]
 
 { #category : #'user interface' }

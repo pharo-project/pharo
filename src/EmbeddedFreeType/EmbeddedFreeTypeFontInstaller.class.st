@@ -37,9 +37,10 @@ EmbeddedFreeTypeFontInstaller class >> current [
 
 { #category : #'class initialization' }
 EmbeddedFreeTypeFontInstaller class >> initialize [
-	super initialize.
-	self resetCurrent.
-	self current.
+
+	self
+		resetCurrent;
+		current
 ]
 
 { #category : #'extra fonts registration' }

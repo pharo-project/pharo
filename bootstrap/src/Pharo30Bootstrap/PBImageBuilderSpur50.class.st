@@ -8,7 +8,7 @@ Class {
 		'nextOrdinaryClassIndex',
 		'freeListsOop'
 	],
-	#category : 'Pharo30Bootstrap'
+	#category : #Pharo30Bootstrap
 }
 
 { #category : #examples }
@@ -224,6 +224,8 @@ PBImageBuilderSpur50 >> createVMStubs [
 	objectSpace backend messageClass: (self createStubForClassNamed: #Message).
 	objectSpace backend semaphoreClass: (self createStubForClassNamed: #Semaphore).
 	
+	objectSpace backend compiledBlockClass: (self createStubForClassNamed: #CompiledBlock ).
+
 	"Point is required in the special objects array because it is used to instantiate point objects faster.
 	If we do not put it here, the VM will crash.
 	Lots of tests in kernel use it."
@@ -263,8 +265,6 @@ PBImageBuilderSpur50 >> firstOrdinaryClassIndex [
 PBImageBuilderSpur50 >> flushNewSpace [
 
 	| newHeap |
-	self checkpoint: 'created_vm_objects'.
-	
 	newHeap := espellBackend objectMemory.
 	newHeap initializePostBootstrap.
 	

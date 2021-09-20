@@ -603,9 +603,27 @@ ArrayTest >> testAtWrap2 [
 ]
 
 { #category : #tests }
+ArrayTest >> testBeReadOnlyLiteral [
+	self assert: Array new beReadOnlyLiteral isReadOnlyObject.
+	self assert: (Array with: String new) beReadOnlyLiteral first isReadOnlyObject.
+	self deny: (Array with: Object new) first isReadOnlyObject
+]
+
+{ #category : #tests }
 ArrayTest >> testCombinations [
 	self assert: #(1 2 3) combinations equals: #(#(1) #(2) #(3) #(1 2) #(1 3) #(2 3) #(1 2 3)).
 	self assert: (1 to: 3) combinations equals: #(#(1) #(2) #(3) #(1 2) #(1 3) #(2 3) #(1 2 3))
+]
+
+{ #category : #tests }
+ArrayTest >> testCombinationsTaken [
+
+	self
+		assertCollection: (#( 1 2 3 ) combinations: 2)
+		hasSameElements: #( #( 1 2 ) #( 1 3 ) #( 2 3 ) ).
+	self
+		assertCollection: ((1 to: 4) combinations: 3)
+		hasSameElements: #( #( 1 2 3 ) #( 1 2 4 ) #( 1 3 4 ) #( 2 3 4 ) )
 ]
 
 { #category : #tests }

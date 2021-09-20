@@ -27,9 +27,3 @@ RGCompiledMethodLayout >> isVariableLayout [
 
 	^ true
 ]
-
-{ #category : #accessing }
-RGCompiledMethodLayout >> layoutName [
-
-	^ #CompiledMethodLayout
-]

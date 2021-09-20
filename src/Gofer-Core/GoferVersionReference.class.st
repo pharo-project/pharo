@@ -29,12 +29,14 @@ GoferVersionReference >> branch [
 
 { #category : #initialization }
 GoferVersionReference >> initializeName: aString [
+
 	super initializeName: aString.
 	self parseName: aString
 ]
 
 { #category : #private }
 GoferVersionReference >> matches: aResolvedReference [
+
 	^ self name = aResolvedReference name
 ]
 
@@ -47,6 +49,7 @@ GoferVersionReference >> packageName [
 
 { #category : #initialization }
 GoferVersionReference >> parseName: aString [
+
 	| basicName |
 	basicName := aString last isDigit
 		ifTrue: [ aString ]

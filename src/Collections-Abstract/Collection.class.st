@@ -433,6 +433,11 @@ Collection >> collect: collectBlock thenSelect: selectBlock [
 	^ (self collect: collectBlock) select: selectBlock
 ]
 
+{ #category : #printing }
+Collection >> collectionSizeThreshold [ 
+	^ 3000
+]
+
 { #category : #testing }
 Collection >> contains: aBlock [
 	"For compatibility, please use #anySatisfy: instead!"
@@ -628,7 +633,7 @@ Collection >> displayStringOn: stream [
 		nextPutAll: (' item' asPluralBasedOn: self size);
 		nextPut: $];
 		space.
-	self size <= self gtCollectionSizeThreshold 
+	self size <= self collectionSizeThreshold 
 		ifTrue: [ self printElementsOn: stream ]
 ]
 
@@ -890,16 +895,6 @@ Collection >> includesAll: aCollection [
 	"Answer whether all the elements of aCollection are in the receiver."
 	aCollection do: [:elem | (self includes: elem) ifFalse: [^ false]].
 	^ true
-]
-
-{ #category : #testing }
-Collection >> includesAllOf: aCollection [ 
-
-	self
-		deprecated: 'Please use #includesAll: instead'
-		transformWith: '`@receiver includesAllOf: `@statements' -> '`@receiver includesAll: `@statements'.
-	
-	^ self includesAll: aCollection
 ]
 
 { #category : #testing }
@@ -1336,16 +1331,6 @@ Collection >> withIndexDo: elementAndIndexBlock [
 	| index |
 	index := 0.
 	self do: [:item | elementAndIndexBlock value: item value: (index := index+1)]
-]
-
-{ #category : #deprecated }
-Collection >> write: anObject [
-
-	self
-		deprecated: 'Please use #add: instead'
-		transformWith: '`@receiver write: `@statements1' 
-						-> '`@receiver add: `@statements1'.
-	^ self add: anObject
 ]
 
 { #category : #enumerating }

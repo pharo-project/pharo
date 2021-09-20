@@ -20,6 +20,6 @@ SettingBrowserTest >> testOpening [
 { #category : #tests }
 SettingBrowserTest >> testOpeningOnPackage [
 
-	settingBrowser := SettingBrowser new changePackageSet: { (RPackageOrganizer default packageNamed: 'GT-Playground') }; open.
+	settingBrowser := SettingBrowser new changePackageSet: { (RPackageOrganizer default packageNamed: 'System-Settings-Core') }; open.
 	settingBrowser close
 ]

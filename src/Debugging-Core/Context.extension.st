@@ -20,6 +20,37 @@ Context >> callPrimitive: primNumber [
 ]
 
 { #category : #'*Debugging-Core' }
+Context >> findSecondToOldestSimilarSender [
+	"Search the stack for the second-to-oldest occurance of self's method.  Very useful for an infinite recursion.  Gets back to the second call so you can see one complete recursion cycle, and how it was called at the beginning."
+
+	| secondContext context lastContext |
+	secondContext := self.
+	context := self.
+	[	lastContext := context findSimilarSender.
+		lastContext isNil
+	] whileFalse: [
+		secondContext := context.
+		context := lastContext.
+	].
+	^ secondContext
+
+]
+
+{ #category : #'*Debugging-Core' }
+Context >> findSimilarSender [
+	"Return the closest sender with the same method, return nil if none found"
+
+	^ self sender findContextSuchThat: [ :context | 
+		context compiledCode == method ]
+]
+
+{ #category : #'*Debugging-Core' }
+Context >> instructionStream [
+	
+	^ InstructionStream on: method pc: pc
+]
+
+{ #category : #'*Debugging-Core' }
 Context >> lookupTempVar: aSymbol [
 	| var |
 	var := self lookupVar: aSymbol.
@@ -43,36 +74,6 @@ Context >> methodReturnConstant: value [
 	 argument, value. This corresponds to a source expression like '^0'."
 
 	^self return: value from: self methodReturnContext
-]
-
-{ #category : #'*Debugging-Core' }
-Context >> namedTempAt: index [
-
-	"Answer the value of the temp at index in the receiver's sequence of tempNames."
-
-	"NOTE: this list of temp names is completely virtual! It omits temp vectors but 
-	adds every variable that could be acccessed from a source perspective but might not be.
-	Do *not* use this!"
-
-	self
-		deprecated: 'Please access temps by name using #tempNamed:'
-		transformWith: '`@rec namedTempAt: `@arg' -> '`@rec tempNamed: (`@rec tempNames at: `@arg)'.
-	
-	^ self tempNamed: (self tempNames at: index)
-]
-
-{ #category : #'*Debugging-Core' }
-Context >> namedTempAt: index put: aValue [
-	"Set the value of the temp at index in the receiver's sequence of tempNames"
-	"NOTE: this list of temp names is completely virtual! It omits temp vectors but 
-	adds every variable that could be acccessed from a source perspective but might not be"
-	"Do *not* use this!"
-	self
-		deprecated: 'Please access temps by name using #tempNamed:put:'
-		transformWith: '`@rec namedTempAt: `@arg1 put: `@arg2' ->
-		               '`@rec tempNamed: (`@rec tempNames at: `@arg1) put: `@arg2'.
-	
-	self tempNamed: (self tempNames at: index) put: aValue
 ]
 
 { #category : #'*Debugging-Core' }
@@ -267,6 +268,17 @@ Context class >> simulatePrimitiveNumber: num with: simulator [
 ]
 
 { #category : #'*Debugging-Core' }
+Context >> stepIntoQuickMethod [
+	^self compiledCode stepIntoQuickMethods
+]
+
+{ #category : #'*Debugging-Core' }
+Context >> stepIntoQuickMethod: aBoolean [
+
+	self compiledCode stepIntoQuickMethods: aBoolean
+]
+
+{ #category : #'*Debugging-Core' }
 Context >> stepToHome: aContext [
 	"Resume self until the home of top context is aContext.  Top context may be a block context."
 
@@ -319,10 +331,11 @@ Context >> stepToSendOrReturn [
 	"Simulate the execution of bytecodes until either sending a message or 
 	returning a value to the receiver (that is, until switching contexts)."
 
-	| context |
-	[ self isDead or: [ self willSend or: [  self willReturn or: [ self willStore or: [self willCreateBlock ] ] ] ] ]
+	| stream context |
+	stream := InstructionStream on: method pc: pc.	
+	[ self isDead or: [ stream willSend or: [ stream willReturn or: [ stream willStore or: [ stream willCreateBlock ] ] ] ] ]
 		whileFalse: [
-			context := self step.
+			context := stream interpretNextInstructionFor: self.
 			context == self ifFalse: [
 				"Caused by mustBeBoolean handling"
 				^context ]]
@@ -330,18 +343,22 @@ Context >> stepToSendOrReturn [
 
 { #category : #'*Debugging-Core' }
 Context class >> tallyInstructions: aBlock [
-	"This method uses the simulator to count the number of occurrences of
-	each of the Smalltalk instructions executed during evaluation of aBlock.
-	Results appear in order of the byteCode set."
+	"
+	Count the occurrences of each bytecode during the execution of aBlock.
+	Return a Array of associations using the byte as key and the occurrences as values sorted by the instruction opcode numeric values.
+	
+	This method uses the in-image bytecode interpreter to evaluate and count the instructions.
+	
+	(Context tallyInstructions: [3.14159 printString]) size >>> 122
+	"
+	
 	| tallies |
 	tallies := Bag new.
 	thisContext sender
 		runSimulated: aBlock
 		contextAtEachStep:
-			[:current | tallies add: current nextByte].
+			[:current | tallies add: current instructionStream peekByte ].
 	^tallies sortedElements
-
-	"Context tallyInstructions: [3.14159 printString]"
 ]
 
 { #category : #'*Debugging-Core' }

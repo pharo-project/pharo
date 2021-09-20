@@ -47,12 +47,6 @@ TextConverter class >> defaultConverterClassForEncoding: encodingName [
 
 ]
 
-{ #category : #'instance creation' }
-TextConverter class >> defaultSystemConverter [
-
-	^LanguageEnvironment defaultSystemConverter
-]
-
 { #category : #accessing }
 TextConverter class >> encodingNames [ 
 

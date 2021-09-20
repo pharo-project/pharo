@@ -32,7 +32,12 @@ ReservedVariable class >> lookupDictionary [
 
 { #category : #testing }
 ReservedVariable class >> nameIsReserved: aName [
-	^self subclasses anySatisfy: [ :class | class instance name = aName ]
+	^self subclasses anySatisfy: [ :class | class variableName = aName ]
+]
+
+{ #category : #accessing }
+ReservedVariable class >> variableName [
+	^self subclassResponsibility
 ]
 
 { #category : #converting }
@@ -49,7 +54,8 @@ ReservedVariable >> emitStore: methodBuilder [
 
 { #category : #initialization }
 ReservedVariable >> initialize [
-	environment := Smalltalk globals
+	environment := Smalltalk globals.
+	name := self class variableName
 ]
 
 { #category : #testing }

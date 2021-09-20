@@ -42,6 +42,12 @@ EpLogNode >> modificationTime [
 	^ self subclassResponsibility
 ]
 
+{ #category : #accessing }
+EpLogNode >> modificationTimeString [
+
+	self subclassResponsibility
+]
+
 { #category : #initialization }
 EpLogNode >> populateReferencedNodesWith: nodes [
 
@@ -77,4 +83,10 @@ EpLogNode >> referencedNodes [
 	"Answer the referenced nodes, that were populated previously by #populateReferencedNodesWith:"
 	
 	^ referencedNodes
+]
+
+{ #category : #accessing }
+EpLogNode >> smallName [
+
+	^ self globalName contractTo: 25
 ]

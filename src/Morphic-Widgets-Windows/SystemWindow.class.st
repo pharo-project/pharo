@@ -5,7 +5,7 @@ The attribute onlyActiveOnTop, if set to true (and any call to activate will set
 "
 Class {
 	#name : #SystemWindow,
-	#superclass : #MorphicModel,
+	#superclass : #ModelMorph,
 	#instVars : [
 		'labelString',
 		'stripes',
@@ -365,13 +365,6 @@ SystemWindow class >> sendTopWindowToBack [
 	self currentWorld submorphs 
 		detect: [ :morph | morph isSystemWindow ] 
 		ifFound: [ :morph | morph sendToBack ].
-]
-
-{ #category : #icons }
-SystemWindow class >> taskbarIconName [
-	"Answer the icon for the receiver in a task bar."
-
-	^#smallWindowIcon
 ]
 
 { #category : #'menu items - tiling' }
@@ -1509,18 +1502,6 @@ SystemWindow >> offerWindowMenu [
 	model ifNotNil:
 		[model addModelItemsToWindowMenu: aMenu].
 	aMenu popUpEvent: self currentEvent in: self world
-]
-
-{ #category : #'as yet unclassified' }
-SystemWindow >> openInWorldExtent: extent [
-
-	"This msg and its callees result in the window being activeOnlyOnTop"
-
-	self
-		deprecated: 'Use #extent: instead'
-		transformWith:
-		'`@rec openInWorldExtent: `@arg' -> '`@rec extent: `@arg'.
-	^ self extent: extent
 ]
 
 { #category : #'open/close' }

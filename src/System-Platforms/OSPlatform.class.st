@@ -24,13 +24,6 @@ OSPlatform class >> current [
 ]
 
 { #category : #'system attributes' }
-OSPlatform class >> currentPlatformName [
-	"Return the name of the platform we're running on"
-
-	^ Smalltalk vm getSystemAttribute: 1001
-]
-
-{ #category : #'system attributes' }
 OSPlatform class >> currentVersion [
 	"Return the version number string of the platform we're running on"
 
@@ -61,7 +54,7 @@ OSPlatform class >> initialize [
 	self startUp: true.
 ]
 
-{ #category : #private }
+{ #category : #testing }
 OSPlatform class >> isActivePlatform [
 	"Answer whether the receiver is the active platform"
 	^false
@@ -105,8 +98,7 @@ OSPlatform >> currentWorkingDirectoryPath [
 OSPlatform >> currentWorkingDirectoryPathWithBuffer: aByteArray [
 	<primitive: 'primitiveGetCurrentWorkingDirectory' module: '' error: ec>
 	
-	^ (self getPwdViaFFI: aByteArray size: aByteArray size) 
-		ifNil:[ self error: 'Insufficient buffer size to read current working directory: ' , aByteArray size asString]
+	^ self primitiveFailed 
 ]
 
 { #category : #accessing }
@@ -144,13 +136,6 @@ OSPlatform >> family [
 	This may need to be extended if there are new platforms added or significant differences within a platform family arise (as was the case between MacOS 9 and X)."
 
 	self subclassResponsibility
-]
-
-{ #category : #accessing }
-OSPlatform >> getPwdViaFFI: arg1 size: arg2 [
-	" This is an virtual method. It is implemented in its sub classes"
-	 ^ self subclassResponsibility 
-
 ]
 
 { #category : #testing }
@@ -218,7 +203,7 @@ OSPlatform >> menuShortcutString [
 OSPlatform >> name [
 	"Return the name of the platform we're running on"
 
-	^ self class currentPlatformName
+	^ Smalltalk vm operatingSystemName
 ]
 
 { #category : #compatbility }

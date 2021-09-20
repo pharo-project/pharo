@@ -9,7 +9,7 @@ Class {
 		'slotNodes',
 		'traitDefinition',
 		'className',
-		'classKind'
+		'layoutClass'
 	],
 	#category : #'ClassParser-Model'
 }
@@ -24,17 +24,6 @@ CDBehaviorDefinitionNode >> addSlot: aCDSlotNode [
 { #category : #accessing }
 CDBehaviorDefinitionNode >> classDefinitionNode [
 	^self
-]
-
-{ #category : #testing }
-CDBehaviorDefinitionNode >> classKind [
-
-	^ classKind
-]
-
-{ #category : #accessing }
-CDBehaviorDefinitionNode >> classKind: aString [ 
-	classKind := aString
 ]
 
 { #category : #accessing }
@@ -95,43 +84,54 @@ CDBehaviorDefinitionNode >> initialize [
 { #category : #testing }
 CDBehaviorDefinitionNode >> isBytes [
 	
-	^ classKind = #variableByteSubclass:
+	^ layoutClass = ByteLayout
 ]
 
 { #category : #testing }
 CDBehaviorDefinitionNode >> isEphemeron [
 	
-	^ classKind = #ephemeronSubclass:
+	^ layoutClass = EphemeronLayout
 ]
 
 { #category : #testing }
 CDBehaviorDefinitionNode >> isImmediate [
 	
-	^ classKind = #immediateSubclass:
+	^ layoutClass = ImmediateLayout
 ]
 
 { #category : #testing }
 CDBehaviorDefinitionNode >> isNormal [
 	
-	^ classKind = #subclass:
+	^ layoutClass = FixedLayout
 ]
 
 { #category : #testing }
 CDBehaviorDefinitionNode >> isVariableClass [
 	
-	^ classKind = #variableSubclass:
+	^ layoutClass = VariableLayout
 ]
 
 { #category : #testing }
 CDBehaviorDefinitionNode >> isWeak [
 	
-	^ classKind = #weakSubclass:
+	^ layoutClass = WeakLayout
 ]
 
 { #category : #testing }
 CDBehaviorDefinitionNode >> isWords [
 	
-	^ classKind = #variableWordSubclass:
+	^ layoutClass = WordLayout
+]
+
+{ #category : #testing }
+CDBehaviorDefinitionNode >> layoutClass [
+
+	^ layoutClass
+]
+
+{ #category : #accessing }
+CDBehaviorDefinitionNode >> layoutClass: aClass [ 
+	layoutClass := aClass
 ]
 
 { #category : #accessing }
@@ -152,16 +152,6 @@ CDBehaviorDefinitionNode >> slots: aCollection [
 	slotNodes := aCollection.
 	aCollection do: [ :each | self addChild: each ]
 	
-]
-
-{ #category : #testing }
-CDBehaviorDefinitionNode >> tokens [
-	^ tokens
-]
-
-{ #category : #testing }
-CDBehaviorDefinitionNode >> tokens: aCollection [ 
-	tokens := aCollection
 ]
 
 { #category : #accessing }

@@ -9,9 +9,3 @@ RGEmptyLayout >> isEmptyLayout [
 
 	^ true
 ]
-
-{ #category : #accessing }
-RGEmptyLayout >> layoutName [
-
-	^ #EmptyLayout
-]

@@ -219,7 +219,7 @@ FFIFunctionParserTest >> testParseFunction2 [
 		
 		functionSpec2 := self newParserWithRequestor parseNamedFunction: spec.
 		
-		builder := (FFICalloutMethodBuilder calloutAPI: (FFICalloutAPI inContext: nil))
+		builder := (FFIBackend current calloutAPIClass inContext: nil) newBuilder
 			sender: ctx;
 			yourself.
 			"signature: functionSignature;
@@ -227,8 +227,7 @@ FFIFunctionParserTest >> testParseFunction2 [
 		method1 := builder generateMethodFromSpec: functionSpec1.
 		method2 := builder generateMethodFromSpec: functionSpec2.
 		self assert: method1 bytecode equals: method2 bytecode.
-		self assert: method1 literals allButFirst equals: method2 literals allButFirst.
-		self assert: (method1 literals first analogousCodeTo: method2 literals first) ].
+		self assert: (method1 literals allButFirst: 2) equals: (method1 literals allButFirst: 2)].
 
 ]
 
