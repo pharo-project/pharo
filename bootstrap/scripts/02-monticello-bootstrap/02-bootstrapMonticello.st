@@ -24,5 +24,5 @@ compileMethods
 	].! !
 
 
-(MonticelloBootstrap inDirectory: (CommandLineArguments new optionAt: 'BOOTSTRAP_PACKAGE_CACHE_DIR' ifAbsent: [ 'pharo-local/package-cache' ])) bootstrap.
+(MonticelloBootstrap inDirectory: (CommandLineArguments new optionAt: 'BOOTSTRAP_PACKAGE_CACHE_DIR' ifAbsent: [ MonticelloBootstrap defaultDirectory ])) bootstrap.
 MCCacheRepository reset.
