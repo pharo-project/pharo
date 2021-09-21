@@ -774,6 +774,53 @@ String >> asWideString [
 ]
 
 { #category : #testing }
+String >> beginsWith: prefix [
+	"Answer whether the receiver begins with the given prefix string.
+	The comparison is case-sensitive."
+
+	"IMPLEMENTATION NOTE:
+	following algorithm is optimized in primitive only in case self and prefix are bytes like.
+	Otherwise, if self is wide, then super outperforms,
+	Otherwise, if prefix is wide, primitive is not correct"
+	
+	"('pharo' beginsWith: '') >>> false"
+	"('pharo' beginsWith: 'pharo-project') >>> false"
+	"('pharo' beginsWith: 'phuro') >>> false"
+	"('pharo' beginsWith: 'pha') >>> true"
+	
+	(self class isBytes and: [ prefix class isBytes ]) ifFalse: [^super beginsWith: prefix].
+	
+	self size < prefix size ifTrue: [^ false].
+	^ (self findSubstring: prefix in: self startingAt: 1 
+			  matchTable: CaseSensitiveOrder) = 1
+]
+
+{ #category : #testing }
+String >> beginsWith: prefix caseSensitive: aBoolean [ 
+	"Answer whether the receiver begins with the given prefix string"
+
+	"IMPLEMENTATION NOTE:
+	following algorithm is optimized in primitive only in case self and prefix are bytes like.
+	Otherwise, if self or prefix are wide strings, then slow version with asLowercase convertation,
+	(primitive is not correct for wide strings)"
+	
+	"('pharo' beginsWith: '' caseSensitive: false) >>> false"
+	"('pharo' beginsWith: 'pharo-project' caseSensitive: false) >>> false"
+	"('pharo' beginsWith: 'phuro' caseSensitive: false) >>> false"
+	"('pharo' beginsWith: 'Pha' caseSensitive: false) >>> true"
+
+	aBoolean ifTrue: [ ^self beginsWith: prefix ].
+	self size < prefix size ifTrue: [^ false].
+	(self class isBytes and: [prefix class isBytes]) ifTrue: [
+		"Optimized version based on primitive"
+		^ (self findSubstring: prefix in: self startingAt: 1 matchTable: CaseInsensitiveOrder) = 1 ].
+	prefix withIndexDo: [ :each :index | 
+		(self at: index) asLowercase = each asLowercase ifFalse: [ ^false ]
+	].
+	^true
+]
+
+{ #category : #testing }
 String >> beginsWithEmpty: prefix caseSensitive: aBoolean [ 
 	"Answer whether the receiver begins with the given prefix string. 
 	The comparison is case-sensitive." 
@@ -1058,16 +1105,52 @@ String >> displayStringOn: aStream [
 
 { #category : #testing }
 String >> endsWith: suffix [
-	"Answer whether the tail end of the receiver is the same as suffix.
+	"Answer whether the receiver ends with the given prefix string.
 	The comparison is case-sensitive."
- 
-	"('Elvis' endsWith: 'vis') >>> true"
+
+	"IMPLEMENTATION NOTE:
+	following algorithm is optimized in primitive only in case self and prefix are bytes like.
+	Otherwise, if self is wide, then super outperforms,
+	Otherwise, if prefix is wide, primitive is not correct"
 	
-	| extra |
-	extra := self size - suffix size.
-	^extra < 0 
-		ifTrue: [ false]
-	   ifFalse: [ (self findString: suffix startingAt: extra + 1) > 0 ]
+	"('pharo' endsWith: '') >>> false"
+	"('pharo' endsWith: 'project-pharo') >>> false"
+	"('pharo' endsWith: 'phuro') >>> false"
+	"('pharo' endsWith: 'aro') >>> true"
+	"('pharo' endsWith: 'aRo') >>> false"
+	
+	| requiredStart |
+	(self class isBytes and: [ suffix class isBytes ]) ifFalse: [^super endsWith: suffix].	
+	requiredStart := self size - suffix size + 1.
+	requiredStart <= 0 ifTrue: [  ^false ].
+	
+	^ (self findSubstring: suffix in: self startingAt: requiredStart
+			  matchTable: CaseSensitiveOrder) = requiredStart
+]
+
+{ #category : #testing }
+String >> endsWith: suffix caseSensitive: aBoolean [ 
+	"Answer whether the tail end of the receiver is the same as suffix"
+
+	"IMPLEMENTATION NOTE:
+	following algorithm is optimized in primitive only in case self and suffix are bytes like.
+	Otherwise, if self or suffix are wide strings, then slow version with asLowercase convertation,
+	(primitive is not correct for wide strings)"
+	
+	"('pharo' endsWith: '' caseSensitive: false) >>> false"
+	"('pharo' endsWith: 'project-pharo' caseSensitive: false) >>> false"
+	"('pharo' endsWith: 'phuro' caseSensitive: false) >>> false"
+	"('pharo' endsWith: 'aRo' caseSensitive: false) >>> true"
+	aBoolean ifTrue: [ ^self endsWith: suffix ].
+	self size < suffix size ifTrue: [^ false].
+	(self class isBytes and: [suffix class isBytes]) ifTrue: [
+		"Optimized version based on primitive"
+		^ (self findSubstring: suffix in: self startingAt: self size - suffix size + 1
+				  matchTable: CaseInsensitiveOrder) = (self size - suffix size + 1) ].
+	suffix withIndexDo: [ :each :index | 
+		(self at: self size - suffix size + index) asLowercase = each asLowercase ifFalse: [ ^false ]
+	].
+	^true
 ]
 
 { #category : #testing }

@@ -166,29 +166,6 @@ ByteString >> at: index put: aCharacter [
 
 ]
 
-{ #category : #comparing }
-ByteString >> beginsWith: prefix [
-	"Answer whether the receiver begins with the given prefix string.
-	The comparison is case-sensitive."
-
-	"IMPLEMENTATION NOTE:
-	following algorithm is optimized in primitive only in case self and prefix are bytes like.
-	Otherwise, if self is wide, then super outperforms,
-	Otherwise, if prefix is wide, primitive is not correct"
-	
-	"('pharo' beginsWith: '') >>> false"
-	"('pharo' beginsWith: 'pharo-project') >>> false"
-	"('pharo' beginsWith: 'phuro') >>> false"
-	"('pharo' beginsWith: 'pha') >>> true"
-	
-	prefix class isBytes ifFalse: [^super beginsWith: prefix].
-	
-	self size < prefix size ifTrue: [^ false].
-	^ (self findSubstring: prefix in: self startingAt: 1
-			matchTable: CaseSensitiveOrder) = 1
-
-]
-
 { #category : #accessing }
 ByteString >> byteAt: index [
 	<primitive: 60>
