@@ -1056,12 +1056,6 @@ String >> displayStringOn: aStream [
 	aStream nextPutAll: self
 ]
 
-{ #category : #printing }
-String >> encodeDoublingQuoteOn: aStream [
-	self deprecated: 'Use #storeOn: instead' transformWith: '`@receiver encodeDoublingQuoteOn: `@argument' -> '`@receiver storeOn: `@argument'.
-	self storeOn: aStream
-]
-
 { #category : #testing }
 String >> endsWith: suffix [
 	"Answer whether the tail end of the receiver is the same as suffix.

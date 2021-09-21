@@ -13,9 +13,6 @@ Class {
 		'inputBufferStream',
 		'waitSemaphore'
 	],
-	#pools : [
-		'EventSensorConstants'
-	],
 	#category : #'EmergencyDebugger-View'
 }
 

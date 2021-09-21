@@ -154,12 +154,6 @@ FTTableMorph >> basicHighlightIndexes: anArray [
 ]
 
 { #category : #private }
-FTTableMorph >> basicHighlightRowIndexes: anArray [
-	self deprecated: 'Use #basicHighlightIndexes: instead' transformWith: '`@receiver basicHighlightRowIndexes: `@statements' -> '`@receiver basicHighlightIndexes: `@statements'.
-	^ self basicHighlightIndexes: anArray
-]
-
-{ #category : #private }
 FTTableMorph >> basicMoveShowIndexTo: aNumber [
 
 	showIndex := aNumber
@@ -168,12 +162,6 @@ FTTableMorph >> basicMoveShowIndexTo: aNumber [
 { #category : #private }
 FTTableMorph >> basicSelectIndexes: anArray [
 	selectedIndexes := anArray asArray
-]
-
-{ #category : #private }
-FTTableMorph >> basicSelectRowIndexes: anArray [
-	self deprecated: 'Use #basicSelectIndexes: instead' transformWith: '`@receiver basicSelectRowIndexes: `@statements' -> '`@receiver basicSelectIndexes: `@statements'.
-	self basicSelectIndexes: anArray
 ]
 
 { #category : #accessing }
@@ -466,18 +454,6 @@ FTTableMorph >> highlightIndexes: anArray [
 ]
 
 { #category : #'accessing - selection' }
-FTTableMorph >> highlightRowIndex: aNumber [
-	self deprecated: 'Use #highlightIndex: instead' transformWith: '`@receiver highlightRowIndex: `@statements1' -> '`@receiver highlightIndex: `@statements1'.
-	self highlightIndex: aNumber
-]
-
-{ #category : #'accessing - selection' }
-FTTableMorph >> highlightRowIndexes: anArray [
-	self deprecated: 'Use #highlightIndexes: instead' transformWith: '`@receiver highlightRowIndexes: `@statements1' -> '`@receiver highlightIndexes: `@statements1'.
-	self highlightIndexes: anArray
-]
-
-{ #category : #'accessing - selection' }
 FTTableMorph >> highlightedIndex [
 	^ self highlightedIndexes ifNotEmpty: #first ifEmpty: [ 0 ]
 ]
@@ -485,18 +461,6 @@ FTTableMorph >> highlightedIndex [
 { #category : #'accessing - selection' }
 FTTableMorph >> highlightedIndexes [
 	^ highlightedIndexes
-]
-
-{ #category : #'accessing - selection' }
-FTTableMorph >> highlightedRowIndex [
-	self deprecated: 'Use #highlightedIndex instead' transformWith: '`@receiver highlightedRowIndex' -> '`@receiver highlightedIndex'.
-	^ self highlightedIndex
-]
-
-{ #category : #'accessing - selection' }
-FTTableMorph >> highlightedRowIndexes [
-	self deprecated: 'Use #highlightedIndexes instead' transformWith: '`@receiver highlightedRowIndexes' -> '`@receiver highlightedIndexes'.
-	^ self highlightedIndexes
 ]
 
 { #category : #private }
@@ -643,12 +607,6 @@ FTTableMorph >> isMultipleSelection [
 { #category : #testing }
 FTTableMorph >> isResizable [
 	^ resizable
-]
-
-{ #category : #testing }
-FTTableMorph >> isRowIndexSelected: anIndex [
-	self deprecated: 'Use #isIndexSelected: instead' transformWith: '`@receiver isRowIndexSelected: `@statements1' -> '`@receiver isIndexSelected: `@statements1'.
-	^ self isIndexSelected: anIndex
 ]
 
 { #category : #testing }
@@ -1040,12 +998,6 @@ FTTableMorph >> selectAll [
 ]
 
 { #category : #'accessing - selection' }
-FTTableMorph >> selectAllRowIndexes [
-	self deprecated: 'Use #selectAll instead' transformWith: '`@receiver selectAllRowIndexes' -> '`@receiver selectAll'.
-	^ self selectAll
-]
-
-{ #category : #'accessing - selection' }
 FTTableMorph >> selectFirst [
 	self selectionModeStrategy selectFirst
 ]
@@ -1093,26 +1045,6 @@ FTTableMorph >> selectRowIndex: aNumber [
 	self selectIndex: aNumber
 ]
 
-{ #category : #private }
-FTTableMorph >> selectRowIndex: rowIndex event: event [
-	self deprecated: 'Use #selectIndex:event: instead' transformWith: '`@receiver selectRowIndex: `@statements1 event: `@statements2' -> '`@receiver selectIndex: `@statements1 event: `@statements2'.
-	self selectIndex: rowIndex event: event
-]
-
-{ #category : #'accessing - selection' }
-FTTableMorph >> selectRowIndexes: anArray [
-	self deprecated: 'Use #selectIndexes: instead' transformWith: '`@receiver selectRowIndexes: `@statements1' -> '`@receiver selectIndexes: `@statements1'.
-	self selectIndexes: anArray
-]
-
-{ #category : #'accessing - selection' }
-FTTableMorph >> selectRowIndexes: anArray andMakeVisibleIf: shouldEnsureVisibleSelection [
-	self
-		deprecated: 'Use #selectIndexes:andMakeVisibleIf: instead'
-		transformWith: '`@receiver selectRowIndexes: `@statements1 andMakeVisibleIf: `@statements2' -> '`@receiver selectIndexes: `@statements1 andMakeVisibleIf: `@statements2'.
-	self selectIndexes: anArray andMakeVisibleIf: shouldEnsureVisibleSelection
-]
-
 { #category : #'accessing - selection' }
 FTTableMorph >> selectedIndex [
 	^ self selectedIndexes ifNotEmpty: #first ifEmpty: [ self selectionModeStrategy nullIndex ]
@@ -1121,18 +1053,6 @@ FTTableMorph >> selectedIndex [
 { #category : #'accessing - selection' }
 FTTableMorph >> selectedIndexes [
 	^ selectedIndexes
-]
-
-{ #category : #'accessing - selection' }
-FTTableMorph >> selectedRowIndex [
-	self deprecated: 'Use #selectedIndex instead' transformWith: '`@receiver selectedRowIndex' -> '`@receiver selectedIndex'.
-	^ self selectedIndex
-]
-
-{ #category : #'accessing - selection' }
-FTTableMorph >> selectedRowIndexes [
-	self deprecated: 'Use #selectedIndexes instead' transformWith: '`@receiver selectedRowIndexes' -> '`@receiver selectedIndexes'.
-	^ self selectedIndexes
 ]
 
 { #category : #'accessing - colors' }
@@ -1183,12 +1103,6 @@ FTTableMorph >> showColumnHeaders [
 	showColumnHeaders ifTrue: [ ^ self ].
 	showColumnHeaders := true.
 	self refresh
-]
-
-{ #category : #accessing }
-FTTableMorph >> showFirstRowSelection [
-	self deprecated: 'Use #showFirstSelection instead' transformWith: '`@receiver showFirstRowSelection' -> '`@receiver showFirstSelection'.
-	^ self showFirstSelection
 ]
 
 { #category : #accessing }

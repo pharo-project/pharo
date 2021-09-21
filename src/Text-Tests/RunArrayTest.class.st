@@ -76,6 +76,13 @@ RunArrayTest >> testAtPut2 [
 	self should: [array at: $b put: 5] raise: Error
 ]
 
+{ #category : #tests }
+RunArrayTest >> testFindLast [ 
+
+	self assert: ((RunArray newFrom: #(10 20 30 40 50)) findLast: [ :each | each > 10 ]) equals: 5.
+	self assert: ((RunArray newFrom: #(10 20 30 40 50)) findLast: [ :each | each > 60 ]) equals: 0.
+]
+
 { #category : #'tests - accessing' }
 RunArrayTest >> testFirst [
 	

@@ -633,7 +633,7 @@ Character >> isFormatOther [
 
 { #category : #testing }
 Character >> isImmediateObject [
-	"This is needed for the boostrap"
+	"This is needed for the bootstrap"
 	^ true
 ]
 

@@ -56,9 +56,6 @@ CompilationContext class >> bytecodeBackend [
 
 { #category : #accessing }
 CompilationContext class >> bytecodeBackend: bytecodeSet [
-	((self defaultOptions includes: #optionFullBlockClosure)
-		and: [ bytecodeSet ~= EncoderForSistaV1 ]) ifTrue: [ 
-			^ self notify: 'Operation aborted. Bytecode set incompatible with FullBlockClosure option.' ].
 	BytecodeBackend := bytecodeSet
 ]
 
@@ -290,16 +287,6 @@ CompilationContext class >> optionParseErrorsNonInteractiveOnly: aBoolean [
 ]
 
 { #category : #'options - settings API' }
-CompilationContext class >> optionReadOnlyLiterals [
-	^ self readDefaultOption: #optionReadOnlyLiterals
-]
-
-{ #category : #'options - settings API' }
-CompilationContext class >> optionReadOnlyLiterals: aBoolean [
-	^ self writeDefaultOption: #optionReadOnlyLiterals value: aBoolean
-]
-
-{ #category : #'options - settings API' }
 CompilationContext class >> optionSkipSemanticWarnings [
 	^ self readDefaultOption: #optionSkipSemanticWarnings
 ]
@@ -328,8 +315,6 @@ CompilationContext class >> optionsDescription [
 	(- optionInlineNone 				'To turn off all inlining options. Overrides the others')
 	
 	(- optionEmbeddSources         'Embedd sources into CompiledMethod instead of storing in .changes')
-	
-	(+ optionReadOnlyLiterals 			'Compiler sets some literals as read-only')
 	(+ optionFullBlockClosure 			'Compiler compiles closure creation to use FullBlockClosure instead of BlockClosure')
 	(- optionCleanBlockClosure 			'Compiler compiles closure creation to use CleanBlockClosure instead of FullBlockClosure for clean blocks. Experimental')
 	(- optionLongIvarAccessBytecodes 	'Specific inst var accesses to Maybe context objects')
@@ -533,7 +518,6 @@ CompilationContext >> optionEmbeddSources [
 { #category : #options }
 CompilationContext >> optionFullBlockClosure [
 	^ options includes: #optionFullBlockClosure
-
 ]
 
 { #category : #options }
@@ -610,12 +594,6 @@ CompilationContext >> optionParseErrors [
 { #category : #options }
 CompilationContext >> optionParseErrorsNonInteractiveOnly [
 	^ options includes: #optionParseErrorsNonInteractiveOnly
-]
-
-{ #category : #options }
-CompilationContext >> optionReadOnlyLiterals [
-	^ options includes: #optionReadOnlyLiterals
-
 ]
 
 { #category : #options }

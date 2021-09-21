@@ -82,12 +82,6 @@ BaselineOfParametrizedTests class >> loadDevelopment [
 	^(self project version: #development) load
 ]
 
-{ #category : #accessing }
-BaselineOfParametrizedTests class >> project [
-
-	^self new project
-]
-
 { #category : #'development support' }
 BaselineOfParametrizedTests class >> validate [
 	"Check the configuration for Errors, Critical Warnings, and Warnings (see class comment for MetacelloMCVersionValidator for more information). 
@@ -99,7 +93,7 @@ BaselineOfParametrizedTests class >> validate [
 
 	<apiDocumentation>
 	self ensureMetacello.
-	^ ((self environment at: #MetacelloToolBox) validateConfiguration: self debug: #() recurse: false) explore
+	^ ((self environment at: #MetacelloToolBox) validateConfiguration: self debug: #() recurse: false) inspect
 ]
 
 { #category : #baselines }

@@ -18,10 +18,8 @@ BaselineOfUnifiedFFI >> baseline: spec [
 		spec preLoadDoIt: #'preload:package:'.
 		spec postLoadDoIt: #'postload:package:'.
 		spec 
-			"alien"
-			package: 'Alien-Core';
 			"unified ffi"
-			package: 'UnifiedFFI' with: [ spec requires: #('Alien-Core') ];
+			package: 'UnifiedFFI';
 			package: 'UnifiedFFI-Tests' with: [ spec requires: #('UnifiedFFI') ];
 			package: 'UnifiedFFI-Legacy' with: [ spec requires: #('UnifiedFFI') ];
 			package: 'System-OSEnvironments' with: [ spec requires: #('UnifiedFFI') ].

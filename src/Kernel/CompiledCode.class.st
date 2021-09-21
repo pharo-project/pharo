@@ -184,19 +184,6 @@ CompiledCode >> comment [
 ]
 
 { #category : #'source code management' }
-CompiledCode >> definition [
-
-	"Polymorphic to class definition"
-
-	self
-		deprecated: #definition
-		transformWith:
-		'`@receiver definition' -> '`@receiver definitionString'.
-
-	^ self definitionString
-]
-
-{ #category : #'source code management' }
 CompiledCode >> definitionString [
 
 	"Polymorphic to class definitionString"
@@ -265,16 +252,6 @@ CompiledCode >> hasLiteralSuchThat: litBlock [
 			[^true].
 		lit isEmbeddedBlock ifTrue: [ (lit hasLiteralSuchThat: litBlock) ifTrue: [ ^true ] ]].
 	^false
-]
-
-{ #category : #literals }
-CompiledCode >> hasLiteralThorough: aLiteral [
-	self 
-		deprecated: 'Use #refersToLiteral: instead.' 
-		on: '31 January 2020'
-		in: #Pharo9
-		transformWith: '`@receiver hasLiteralThorough: `@arg' -> '`@receiver refersToLiteral: `@arg'.
-	^ self refersToLiteral: aLiteral
 ]
 
 { #category : #accessing }

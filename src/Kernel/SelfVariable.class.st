@@ -7,6 +7,11 @@ Class {
 	#category : #'Kernel-Variables'
 }
 
+{ #category : #accessing }
+SelfVariable class >> variableName [
+	^'self'
+]
+
 { #category : #visiting }
 SelfVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 
@@ -17,13 +22,6 @@ SelfVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 SelfVariable >> emitValue: methodBuilder [
 
 	methodBuilder pushReceiver
-]
-
-{ #category : #initialization }
-SelfVariable >> initialize [
-	super initialize.
-	
-	name := 'self'
 ]
 
 { #category : #testing }

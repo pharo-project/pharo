@@ -148,6 +148,12 @@ OSSDL2Driver >> eventFilter [
 	^ eventFilter ifNil: [ eventFilter := OSSDLPasteEventFilter new next: self; yourself ]
 ]
 
+{ #category : #accessing }
+OSSDL2Driver >> eventLoopProcess [
+	
+	^ EventLoopProcess 
+]
+
 { #category : #'events-processing' }
 OSSDL2Driver >> eventLoopProcessWithPlugin [
 	| event session semaIndex |

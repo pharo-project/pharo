@@ -41,7 +41,6 @@ ReGlobalVariablesUsageRule >> isKnownGlobal: aString [
 			ActiveWorld
 			Display
 			Processor
-			Sensor
 			Smalltalk
 			SourceFiles
 			SystemOrganization
@@ -71,9 +70,4 @@ ReGlobalVariablesUsageRule >> rationale [
     Testing and Confinement - source that utilizes globals is somewhat more difficult to test because one cannot readily set up a ''clean'' environment between runs. More generally, source that utilizes global services of any sort (e.g. reading and writing files or databases) that aren''t explicitly provided to that source is difficult to test for the same reason. For communicating systems, the ability to test system invariants may require running more than one ''copy'' of a system simultaneously, which is greatly hindered by any use of shared services - including global memory - that are not provided for sharing as part of the test. 
 	
 	'
-]
-
-{ #category : #running }
-ReGlobalVariablesUsageRule >> severity [
-	^ #warning
 ]

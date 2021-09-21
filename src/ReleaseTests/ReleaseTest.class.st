@@ -15,7 +15,7 @@ ReleaseTest class >> actualProcesses [
 { #category : #accessing }
 ReleaseTest class >> defaultTimeLimit [
 
-	^ 1 minute
+	^ 2 minutes
 ]
 
 { #category : #accessing }
@@ -73,13 +73,13 @@ ReleaseTest >> knownProcesses [
 	^ {
 		Processor activeProcess.	
 		Processor backgroundProcess.
-		InputEventFetcher default fetcherProcess.
 		WeakArray runningFinalizationProcess.
 		SmalltalkImage current lowSpaceWatcherProcess.
 		MorphicUIManager uiProcess.
 		CurrentExecutionEnvironment value watchDogProcess.
 		Delay schedulingProcess.
 		TKTWatchDog onDuty pharoProcess.
+		OSSDL2Driver current eventLoopProcess.
 		TFCallbackQueue uniqueInstance callbackProcess } asSet
 ]
 
@@ -273,7 +273,7 @@ ReleaseTest >> testNoEquivalentSuperclassMethods [
 			ifNil: [ false ] ]
 		ifNil: [ false ]
 	].
-	self assert: methods size <= 620.
+	self assert: methods size <= 470.
 	ASTCache reset.
 
 

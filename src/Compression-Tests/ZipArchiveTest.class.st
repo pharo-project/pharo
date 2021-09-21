@@ -14,6 +14,11 @@ Class {
 	#category : #'Compression-Tests-Archives'
 }
 
+{ #category : #accessing }
+ZipArchiveTest class >> defaultTimeLimit [
+	^30 seconds
+]
+
 { #category : #tests }
 ZipArchiveTest >> assertLastModificationTimeFrom: endianStream expected: fileModified [
 	| lastModificationTime |

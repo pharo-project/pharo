@@ -81,13 +81,6 @@ KeyboardEvent >> isMouseMove [
 	^false
 ]
 
-{ #category : #testing }
-KeyboardEvent >> isUserInterrupt [
-
-	^ UserInterruptHandler cmdDotEnabled and: [ self keyCharacter = $. and: [ self commandKeyPressed ] ].
-	
-]
-
 { #category : #keyboard }
 KeyboardEvent >> key [
 	^ key ifNil: [key := Smalltalk os keyForValue: keyValue]

@@ -367,13 +367,6 @@ SystemWindow class >> sendTopWindowToBack [
 		ifFound: [ :morph | morph sendToBack ].
 ]
 
-{ #category : #icons }
-SystemWindow class >> taskbarIconName [
-	"Answer the icon for the receiver in a task bar."
-
-	^#smallWindowIcon
-]
-
 { #category : #'menu items - tiling' }
 SystemWindow class >> tilingMenuItemsOn: aBuilder [
 
@@ -1509,18 +1502,6 @@ SystemWindow >> offerWindowMenu [
 	model ifNotNil:
 		[model addModelItemsToWindowMenu: aMenu].
 	aMenu popUpEvent: self currentEvent in: self world
-]
-
-{ #category : #'as yet unclassified' }
-SystemWindow >> openInWorldExtent: extent [
-
-	"This msg and its callees result in the window being activeOnlyOnTop"
-
-	self
-		deprecated: 'Use #extent: instead'
-		transformWith:
-		'`@rec openInWorldExtent: `@arg' -> '`@rec extent: `@arg'.
-	^ self extent: extent
 ]
 
 { #category : #'open/close' }

@@ -76,15 +76,3 @@ MethodFinderBottomClass >> otherOneArgumentMethod: s [
 
 	^ s, ''
 ]
-
-{ #category : #accessing }
-MethodFinderBottomClass >> topApprovedButBottomDisapprovedMethod [
-
-	^self
-]
-
-{ #category : #accessing }
-MethodFinderBottomClass >> topDisapprovedButBottomApprovedMethod [
-
-	^self
-]

@@ -16,12 +16,6 @@ AbstractLayout class >> isAbstract [
 	^self == AbstractLayout
 ]
 
-{ #category : #description }
-AbstractLayout class >> kind [
-	"Return an identifier describing uniquely the layout"
-	^ self subclassResponsibility
-]
-
 { #category : #comparing }
 AbstractLayout >> = other [
 	^ self class = other class
@@ -166,12 +160,6 @@ AbstractLayout >> isWeak [
 ]
 
 { #category : #accessing }
-AbstractLayout >> kindOfSubclass [
-	"As a fallback we just return a standard class creation substring. This will be called for user 	defined Layouts, for old style class definitions that can not support user defined Layouts"
-	^' subclass: '
-]
-
-{ #category : #accessing }
 AbstractLayout >> resolveSlot: aName [
 	^SlotNotFound signalForName: aName
 ]
@@ -189,12 +177,6 @@ AbstractLayout >> slotScope [
 { #category : #accessing }
 AbstractLayout >> slots [
 	^ {}
-]
-
-{ #category : #accessing }
-AbstractLayout >> typeOfClass [
-	"The type is the class name of the layout. But for ST80 layouts, we define some special symbols to stay backward compatible"
-	^self class name asSymbol
 ]
 
 { #category : #accessing }

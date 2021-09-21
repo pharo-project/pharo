@@ -168,6 +168,13 @@ Array >> atWrap: index put: anObject [
 	^ self at: index - 1 \\ self size + 1 put: anObject
 ]
 
+{ #category : #'write barrier' }
+Array >> beReadOnlyLiteral [
+	self isLiteral ifFalse: [ ^ self ].
+	self beReadOnlyObject.
+	self do: [ :each | each beReadOnlyLiteral ]
+]
+
 { #category : #copying }
 Array >> copyWithDependent: newElement [
 	self size = 0 ifTrue:[^DependentsArray with: newElement].
@@ -305,6 +312,16 @@ Array >> printOn: aStream [
 	self isSelfEvaluating ifTrue: [self printAsSelfEvaluatingFormOn: aStream. ^ self].
 
 	super printOn: aStream
+]
+
+{ #category : #enumerating }
+Array >> recursiveDo: aBlock [
+
+	"execute the block for my content like do, but then recurse into nested arrays"
+
+	self do: [ :each | 
+		aBlock value: each.
+		each isArray ifTrue: [ each recursiveDo: aBlock ] ]
 ]
 
 { #category : #'literal testing' }

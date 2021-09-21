@@ -6,7 +6,7 @@ Class {
 	#category : #'Ring-Tests-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGTraitTest >> behaviorClass [
 
 	^ RGTrait
@@ -20,7 +20,7 @@ RGTraitTest >> testClassSide [
 	self assert: behavior classTrait classSide identicalTo: behavior classTrait
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 RGTraitTest >> testEnsureProtocol [
 
 	| behavior |

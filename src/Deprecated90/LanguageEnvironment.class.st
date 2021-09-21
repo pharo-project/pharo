@@ -43,20 +43,6 @@ LanguageEnvironment class >> clearDefault [
 
 ]
 
-{ #category : #'public query' }
-LanguageEnvironment class >> defaultFileNameConverter [
-	FileNameConverter
-		ifNil: [FileNameConverter := self currentPlatform class fileNameConverterClass new].
-	^ FileNameConverter
-]
-
-{ #category : #'public query' }
-LanguageEnvironment class >> defaultSystemConverter [
-	SystemConverter
-		ifNil: [ SystemConverter := self currentPlatform class systemConverterClass new ].
-	^ SystemConverter
-]
-
 { #category : #accessing }
 LanguageEnvironment class >> digitValueOf: char [
 	"Answer 0-9 if the receiver is $0-$9, 10-35 if it is $A-$Z, and < 0

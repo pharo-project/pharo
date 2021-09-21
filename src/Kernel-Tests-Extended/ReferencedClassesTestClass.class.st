@@ -4,17 +4,17 @@ Class {
 	#category : #'Kernel-Tests-Extended-Classes'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #methods }
 ReferencedClassesTestClass >> methodReferencingDirectly [ 
 	^ Object
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #methods }
 ReferencedClassesTestClass >> methodReferencingInBlock [
 	^ [ OrderedCollection ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #methods }
 ReferencedClassesTestClass >> methodReferencingInNestedBlock [
 	^ [[[ Array ]]]
 ]

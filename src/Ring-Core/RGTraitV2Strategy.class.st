@@ -97,13 +97,13 @@ RGTraitV2Strategy >> classSide [
 	^ self owner metaclass
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGTraitV2Strategy >> classTrait [
 
 	^ self backend forBehavior classTraitFor: self owner
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RGTraitV2Strategy >> classTrait: anRGMetatraitDefinition [
 
 	self backend forBehavior setClassTraitFor: self owner to: anRGMetatraitDefinition
@@ -334,12 +334,6 @@ RGTraitV2Strategy >> innerBindingOf: aSymbol [
 RGTraitV2Strategy >> isClass [
 
 	^ true
-]
-
-{ #category : #testing }
-RGTraitV2Strategy >> isClassStrategy [
-
-	^ false
 ]
 
 { #category : #'default model values' }

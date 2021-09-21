@@ -548,19 +548,15 @@ CompiledMethod >> isConflict [
 
 { #category : #testing }
 CompiledMethod >> isDeprecated [
-	"Object selectorsInProtocol: #deprecation"
-	self methodClass isDeprecated ifTrue: [ ^ true ].
-
-	(self
-		sendsAnySelectorOf:
-			#(#deprecated: #deprecated:on:in: #deprecated:on:in:transformWith: #deprecated:transformWith:))
-		ifTrue: [ ^ true ].
-	$-
-		split: self protocol asString
-		do: [ :each | 
-			each withBlanksCondensed = 'deprecated'
-				ifTrue: [ ^ true ] ].
-	^ false
+	
+	^ self sendsAnySelectorOf: #(
+			#deprecated: 
+			#deprecated:transformWith:
+			#deprecated:transformWith:when:
+			#deprecated:on:in: 
+			#deprecated:on:in:transformWith:
+			#deprecated:on:in:transformWith:when:)
+	
 ]
 
 { #category : #testing }
@@ -960,6 +956,12 @@ CompiledMethod >> readsField: varIndex [
 	^ super readsField: varIndex 
 ]
 
+{ #category : #evaluating }
+CompiledMethod >> receiver: aReceiver withArguments: anArray executeMethod: anObject [
+	<primitive: 188>
+	self primitiveFailed
+]
+
 { #category : #literals }
 CompiledMethod >> refersToLiteral: aLiteral [
 	"Answer true if any literal in this method is literal, even if embedded in array structure."
@@ -1161,7 +1163,7 @@ CompiledMethod >> usesUndeclareds [
 
 { #category : #evaluating }
 CompiledMethod >> valueWithReceiver: aReceiver arguments: anArray [ 
-	^ aReceiver withArgs: anArray executeMethod: self
+	^self receiver: aReceiver withArguments: anArray executeMethod: self
 ]
 
 { #category : #copying }

@@ -12,7 +12,7 @@ Class {
 
 { #category : #factory }
 FFICalloutMethodBuilderTest >> builder [ 
-	^ (FFICalloutAPI inUFFIContext: nil) newBuilder
+	^ (TFCalloutAPI inUFFIContext: nil) newBuilder
 		requestor: FFICalloutMethodBuilderTestRequestor new;
 		yourself
 ]
@@ -25,7 +25,7 @@ FFICalloutMethodBuilderTest >> setUp [
 
 { #category : #tests }
 FFICalloutMethodBuilderTest >> testAllAtomicTypesCall [
-	| result |
+	| result tfFunction |
 	
 	result := self builder build: [ :builder |	
 		builder 
@@ -39,23 +39,24 @@ FFICalloutMethodBuilderTest >> testAllAtomicTypesCall [
 	self assert: result notNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
-	self assert: result literals first name equals: 'method1'.
-	self assert: result literals first argTypes equals: { 
-		ExternalType void. 
-		ExternalType bool. 
-		ExternalType byte. 
-		ExternalType char. 
-		ExternalType double. 
-		ExternalType float.
-		architecture externalLongType.
-		ExternalType signedLongLong. 
-		ExternalType sbyte.
-		"schar and sbyte are the same size, and NB retrieves sbyte instead :("
-		ExternalType sbyte. 
-		ExternalType short. 
-		architecture externalULongType. 
-		ExternalType unsignedLongLong. 
-		ExternalType ushort }
+	
+	tfFunction := result literals second.
+	
+	self assert: tfFunction functionName equals: 'method1'.
+	self assert: tfFunction definition parameterTypes asArray equals: { 
+		TFDerivedType boolean.
+		TFBasicType uint8.
+		TFBasicType schar.
+		TFBasicType double.
+		TFBasicType float.
+		TFBasicType slong. 
+		TFBasicType sint64.
+		TFBasicType sint8.
+		TFBasicType sint8.
+		TFBasicType sint16.
+		TFBasicType ulong.
+		TFBasicType uint64.
+		TFBasicType uint16}
 ]
 
 { #category : #tests }
@@ -75,13 +76,14 @@ FFICalloutMethodBuilderTest >> testCallCreateObject [
 	self assert: result notNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
-	self assert: result literals first name equals: 'method1'.
-	self assert: result literals first argTypes first equals: ExternalType void asPointerType
+	self assert: result literals second functionName equals: 'method1'.
+	self assert: result literals second definition returnType equals: TFBasicType pointer.
+	self assert: result literals second definition parameterTypes first equals: TFBasicType sint32.
 ]
 
 { #category : #tests }
 FFICalloutMethodBuilderTest >> testCallReturningEnumeration [
-	| result |
+	| result tfFunction |
 	
 	result := self builder build: [ :builder |	
 		builder requestor requestor: FFICalloutObjectForTest.
@@ -96,13 +98,16 @@ FFICalloutMethodBuilderTest >> testCallReturningEnumeration [
 	self assert: result notNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
-	self assert: result literals first name equals: 'method1'.
-	self assert: result literals first argTypes first equals: ExternalType ulong
+
+	tfFunction := result literals second.
+
+	self assert: tfFunction functionName equals: 'method1'.
+	self assert: tfFunction definition returnType equals: TFBasicType uint32
 ]
 
 { #category : #tests }
 FFICalloutMethodBuilderTest >> testCallSimple [
-	| result |
+	| result tfFunction |
 	
 	result := self builder build: [ :builder |	
 		builder 
@@ -116,13 +121,16 @@ FFICalloutMethodBuilderTest >> testCallSimple [
 	self assert: result notNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
-	self assert: result literals first name equals: 'method1'.
-	self assert: result literals first argTypes equals: { ExternalType void. ExternalType long }
+	tfFunction := result literals second.
+	
+	self assert: tfFunction functionName equals: 'method1'.
+	self assert: tfFunction definition returnType equals: TFBasicType void.
+	self assert: tfFunction definition parameterTypes asArray equals: { TFBasicType sint32 }
 ]
 
 { #category : #tests }
 FFICalloutMethodBuilderTest >> testCallWithConstant [
-	| result |
+	| result tfFunction |
 	
 	result := self builder build: [ :builder |	
 		builder 
@@ -136,12 +144,17 @@ FFICalloutMethodBuilderTest >> testCallWithConstant [
 	self assert: result notNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
-	self assert: result literals first name equals: 'method1'
+
+	tfFunction := result literals second.
+	
+	self assert: tfFunction functionName equals: 'method1'.
+	self assert: tfFunction definition returnType equals: TFBasicType void.
+	self assert: tfFunction definition parameterTypes asArray equals: { TFBasicType sint32. TFBasicType uint32 }
 ]
 
 { #category : #tests }
 FFICalloutMethodBuilderTest >> testCallWithObject [
-	| result |
+	| result tfFunction |
 	
 	result := self builder build: [ :builder |	
 		builder requestor requestor: FFICalloutObjectForTest.
@@ -156,13 +169,16 @@ FFICalloutMethodBuilderTest >> testCallWithObject [
 	self assert: result notNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
-	self assert: result literals first name equals: 'method1'.
-	self assert: result literals first argTypes last equals: ExternalType long asPointerType
+	tfFunction := result literals second.
+	
+	self assert: tfFunction functionName equals: 'method1'.
+	self assert: tfFunction definition returnType equals: TFBasicType void.
+	self assert: tfFunction definition parameterTypes last equals: TFBasicType pointer
 ]
 
 { #category : #tests }
 FFICalloutMethodBuilderTest >> testCallWithPointer [
-	| result |
+	| result tfFunction |
 	
 	result := self builder build: [ :builder |	
 		builder 
@@ -176,13 +192,17 @@ FFICalloutMethodBuilderTest >> testCallWithPointer [
 	self assert: result notNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
-	self assert: result literals first name equals: 'method1'.
-	self assert: result literals first argTypes last equals: ExternalType long asPointerType 
+
+	tfFunction := result literals second.
+	
+	self assert: tfFunction functionName equals: 'method1'.
+	self assert: tfFunction definition returnType equals: TFBasicType void.
+	self assert: tfFunction definition parameterTypes last equals: TFBasicType pointer
 ]
 
 { #category : #tests }
 FFICalloutMethodBuilderTest >> testCallWithPointerPointer [
-	| result |
+	| result tfFunction |
 	
 	result := self builder build: [ :builder |	
 		builder 
@@ -196,13 +216,18 @@ FFICalloutMethodBuilderTest >> testCallWithPointerPointer [
 	self assert: result notNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
-	self assert: result literals first name equals: 'method1'.
-	self assert: result literals first argTypes last equals: architecture externalLongType asPointerType
+
+	tfFunction := result literals second.
+	
+	self assert: tfFunction functionName equals: 'method1'.
+	self assert: tfFunction definition returnType equals: TFBasicType void.
+	self assert: tfFunction definition parameterTypes last equals: TFBasicType pointer.
+
 ]
 
 { #category : #tests }
 FFICalloutMethodBuilderTest >> testCallWithSelf [
-	| result |
+	| result tfFunction |
 	
 	result := self builder build: [ :builder |	
 		builder requestor requestor: FFICalloutObjectForTest.
@@ -217,6 +242,10 @@ FFICalloutMethodBuilderTest >> testCallWithSelf [
 	self assert: result notNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
-	self assert: result literals first name equals: 'method1'.
-	self assert: result literals first argTypes last equals: ExternalType long asPointerType
+	
+	tfFunction := result literals second.
+	
+	self assert: tfFunction functionName equals: 'method1'.
+	self assert: tfFunction definition returnType equals: TFBasicType void.
+	self assert: tfFunction definition parameterTypes asArray equals: { TFBasicType pointer. TFBasicType pointer }
 ]

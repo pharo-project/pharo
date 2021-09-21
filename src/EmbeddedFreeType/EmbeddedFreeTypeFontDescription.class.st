@@ -1,3 +1,6 @@
+"
+An abstract superclass for all font descriptions of embedded free type fonts
+"
 Class {
 	#name : #EmbeddedFreeTypeFontDescription,
 	#superclass : #Object,

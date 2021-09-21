@@ -81,17 +81,6 @@ TraitedMetaclass >> baseLocalMethods: anObject [
 	baseLocalMethods := anObject
 ]
 
-{ #category : #generated }
-TraitedMetaclass >> definition [
-
-	"Refer to the comment in ClassDescription|definition."
-
-	self
-		deprecated: 'Use #definitionString instead'
-		transformWith: '`@rec definition' -> '`@rec definitionString'.
-	^ self definitionString
-]
-
 { #category : #fileout }
 TraitedMetaclass >> definitionStringFor: aConfiguredPrinter [
 
@@ -191,15 +180,6 @@ TraitedMetaclass >> isLocalAliasSelector: aSymbol [
 	in my trait composition."
 
 	^ self traitComposition isLocalAliasSelector: aSymbol
-]
-
-{ #category : #testing }
-TraitedMetaclass >> isLocalMethodsProtocol: aProtocol [
-	"Checks if the given protocol includes any local defined selector"
-
-	aProtocol methodSelectors ifEmpty: [ ^ true ].
-	^ aProtocol methodSelectors anySatisfy: [ :each | 
-		  self isLocalSelector: each ]
 ]
 
 { #category : #testing }

@@ -33,11 +33,6 @@ SycReplaceMessageCommand >> defaultMenuItemName [
 	^ 'Replace senders'
 ]
 
-{ #category : #testing }
-SycReplaceMessageCommand >> isComplexRefactoring [
-	^true
-]
-
 { #category : #execution }
 SycReplaceMessageCommand >> prepareFullExecutionInContext: aToolContext [
 	

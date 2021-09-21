@@ -473,7 +473,7 @@ SmallInteger >> identityHash [
 
 { #category : #testing }
 SmallInteger >> isImmediateObject [
-	"This is needed for the boostrap"
+	"This is needed for the bootstrap"
 	^ true
 ]
 

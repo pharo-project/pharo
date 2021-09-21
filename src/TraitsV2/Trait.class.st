@@ -227,11 +227,6 @@ Trait >> addUser: aClass [
 	self users add: aClass
 ]
 
-{ #category : #accessing }
-Trait >> asTraitComposition [
-	^ TaCompositionElement for: self.
-]
-
 { #category : #'instance creation' }
 Trait >> basicNew [
 	"Traits should never be instantiated.
@@ -246,15 +241,6 @@ Trait >> basicNew [
 Trait >> classTrait [
 
 	^ self class
-]
-
-{ #category : #generated }
-Trait >> definition [
-
-	self
-		deprecated: 'Use #definitionString instead'
-		transformWith: '`@rec definition' -> '`@rec definitionString'.
-	^ self definitionString
 ]
 
 { #category : #fileout }

@@ -90,6 +90,7 @@ BaselineOfIDE >> additionalInitialization [
 	RubSmalltalkEditor completionEngineClass: CoCompletionEngine.
 	
 	self loadIceberg.	
+	self loadExtraTools.	
 	self makeCalypsoDefaultBrowser.
 ]
 
@@ -196,7 +197,7 @@ BaselineOfIDE >> baseline: spec [
 		spec 
   			baseline: 'Roassal3' 
   			with: [ spec 
-				repository: 'github://ObjectProfile/Roassal3:v0.9.8/src';
+				repository: 'github://ObjectProfile/Roassal3:v0.9.9b/src';
     				loads: #( 'Core' 'Tests') ].
 
 		spec 
@@ -209,6 +210,22 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Kernel-ExtraUtils' 
 		
 	]
+]
+
+{ #category : #actions }
+BaselineOfIDE >> loadExtraTools [
+	
+	Metacello new
+		baseline: 'NewToolsDocumentationReader';
+		repository: 'github://pharo-spec/NewTools-DocumentationReader:master/src';
+		onConflictUseIncoming;
+		load.
+"
+	Metacello new
+ 	 baseline: 'BeautifulComments';
+ 	 repository: 'github://pillar-markup/BeautifulComments:master/src';
+ 	 load.
+"
 ]
 
 { #category : #actions }

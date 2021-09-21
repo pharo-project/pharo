@@ -28,12 +28,6 @@ TFStringType >> allocatedStrings [
 	^ AllocatedStrings ifNil: [ AllocatedStrings := Set new ]
 ]
 
-{ #category : #accessing }
-TFStringType >> basicType [
-	
-	^ TFBasicType pointer
-]
-
 { #category : #writing }
 TFStringType >> callbackReadValue: anExternalAddress [
 

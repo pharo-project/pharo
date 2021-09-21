@@ -50,6 +50,12 @@ NullFFIBackend >> loadSymbol: moduleSymbol module: module [
 	^ self primitiveFailed
 ]
 
+{ #category : #callbacks }
+NullFFIBackend >> lookupCallbackByAddress: address [ 
+	
+	^ self error: 'Null FFI backend does not know about callback in address ' , address printString
+]
+
 { #category : #accessing }
 NullFFIBackend >> on: anObject float32At: offset [
 

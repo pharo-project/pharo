@@ -16,7 +16,7 @@ Class {
 { #category : #'instance creation' }
 RGObject class >> asYetUnclassifiedProtocolName [
 
-	^ 'as yet unclassified' asSymbol
+	^ Protocol unclassified 
 ]
 
 { #category : #'instance creation' }
@@ -262,17 +262,6 @@ RGObject >> hasProperty: propertyName [
 
 ]
 
-{ #category : #properties }
-RGObject >> hasPropertyNamed: propertyName [
-
-	self
-		deprecated: 'Use hasProperty: instead'
-		transformWith: '`@rec hasPropertyNamed: `@arg' -> '`@rec hasProperty: `@arg'.
-
-	^ self hasProperty: propertyName
-
-]
-
 { #category : #resolving }
 RGObject >> hasResolved: propertySymbol [
 
@@ -333,18 +322,6 @@ RGObject >> initializeUnresolved [
 	
 
 
-]
-
-{ #category : #'testing - types' }
-RGObject >> isBehavior [
-
-	^ false
-]
-
-{ #category : #'testing - types' }
-RGObject >> isClass [
-
-	^ false
 ]
 
 { #category : #'testing - types' }
@@ -469,15 +446,6 @@ RGObject >> isVariable [
 	"is the definition a variable class?"
 
 	^ false
-]
-
-{ #category : #'testing - types' }
-RGObject >> isVariableDefinition [
-	self 
-		deprecated: 'Use #isVariable instead.' 
-		transformWith: '`@receiver isVariableDefinition' -> '`@receiver isVariable'.
-	
-	^ self isVariable
 ]
 
 { #category : #resolving }

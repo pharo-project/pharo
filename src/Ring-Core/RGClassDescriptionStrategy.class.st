@@ -101,10 +101,8 @@ RGClassDescriptionStrategy >> instanceVariablesString [
 
 { #category : #'testing - class hierarchy' }
 RGClassDescriptionStrategy >> kindOfSubclass [
-	"Answer a String that is the keyword that describes the receiver's kind of subclass,
-	 either a regular subclass, a variableSubclass, a variableByteSubclass,
-	 a variableWordSubclass, a weakSubclass, an ephemeronSubclass or an immediateSubclass.
-	 c.f. typeOfClass"
+	"Answer a String that is the keyword that describes the receiver's kind of subclass
+	Note: this is for printing the ST80 style class definiton, see #subclassDefiningSymbol"
 	^self owner isVariable
 		ifTrue:
 			[self layout isBitsLayout

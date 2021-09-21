@@ -173,7 +173,7 @@ MetacelloMCProject >> saveProject [
 	^pkgSpec savePackage
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'development support' }
 MetacelloMCProject >> setBaselineRepositoryDescription: aListOrRepositoryDescriptions [
     "noop "
 ]

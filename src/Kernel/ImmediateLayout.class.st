@@ -17,9 +17,11 @@ ImmediateLayout class >> extending: superLayout scope: aScope host: aClass [
 ]
 
 { #category : #description }
-ImmediateLayout class >> kind [ 	
-
-	^ #immediate
+ImmediateLayout class >> subclassDefiningSymbol [
+	"Answer a keyword that describes the receiver's kind of subclass
+	Note: this is for printing the ST80 style class definiton, usage makes no sense for anything
+	else!"
+	^#immediateSubclass:
 ]
 
 { #category : #extending }
@@ -41,14 +43,4 @@ ImmediateLayout >> initialize [
 { #category : #format }
 ImmediateLayout >> instanceSpecification [
 	^ 7
-]
-
-{ #category : #accessing }
-ImmediateLayout >> kindOfSubclass [
-	^' immediateSubclass: '
-]
-
-{ #category : #accessing }
-ImmediateLayout >> typeOfClass [
-	^#immediate
 ]

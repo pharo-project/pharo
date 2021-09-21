@@ -36,11 +36,6 @@ RubWorkspaceBarRuler >> computedHeightFrom: aRectangle [
 	^ row ifNil: [0] ifNotNil: [row height]
 ]
 
-{ #category : #geometry }
-RubWorkspaceBarRuler >> computedWidthFrom: aRectangle [
-	^ aRectangle width
-]
-
 { #category : #'managing editing mode' }
 RubWorkspaceBarRuler >> editingModeLabel [
 	^ self paragraphProvider editingMode label

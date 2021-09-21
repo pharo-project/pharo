@@ -31,7 +31,7 @@ ReShouldSendSuperSetUpAsFirstMessage class >> superSetUpNotCalledFirstIn: aCompi
 			do: [ :node :answer | true ];
 		yourself.
 	^ (searcher
-		executeTree: aCompiledMethod parseTree
+		executeTree: aCompiledMethod ast
 		initialAnswer: false) not
 ]
 

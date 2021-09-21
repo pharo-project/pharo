@@ -44,7 +44,7 @@ RBParseErrorNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitParseErrorNode: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RBParseErrorNode >> arguments [
 	
 	"A parse error node has no arguments"
@@ -97,7 +97,7 @@ RBParseErrorNode >> isParseError [
 	^true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 RBParseErrorNode >> isUnary [
 	
 	^ false
@@ -115,13 +115,13 @@ RBParseErrorNode >> needsParenthesis [
 	^ false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RBParseErrorNode >> selector [
 	"A parse error node has an empty selector"
 	^ #''
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RBParseErrorNode >> selectorParts [
 	
 	^ #()

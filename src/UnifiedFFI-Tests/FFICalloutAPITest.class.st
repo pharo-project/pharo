@@ -271,64 +271,6 @@ FFICalloutAPITest >> testCharPointer [
 	self assert: result equals: 'Hello, World'.
 ]
 
-{ #category : #'tests atomic' }
-FFICalloutAPITest >> testDoubleCall [
-	"Test using generic FFI spec"
-
-	| callback result |
-	
-	(FFIBackend current isKindOf: OldFFIBackend) 
-		ifFalse: [ 
-			"Registering callbacks like functions is from the old backend"
-			^ self skip ].
-	
-	callback := FFICallback 
-		signature: #(double (double x)) 
-		block: [ :x | x abs ].
-	FFICallbackFunctionResolution registerCallback: callback as: #DoubleAbsolute.
-		
-	result := self ffiDoubleAbs: 65.
-	self assert: result equals: 65.0.
-
-	result := self ffiDoubleAbs: $A.
-	self assert: result equals: 65.0.
-
-	result := self ffiDoubleAbs: true.
-	self assert: result equals: 1.0
-
-]
-
-{ #category : #'tests atomic' }
-FFICalloutAPITest >> testFloatCall [
-	"Test using generic FFI spec"
-	| callback result |
-
-	(FFIBackend current isKindOf: OldFFIBackend) 
-		ifFalse: [ 
-			"Registering callbacks like functions is from the old backend"
-			^ self skip ].
-
-	callback := FFICallback 
-		signature: #(float (float x)) 
-		block: [ :x | x abs ].
-	FFICallbackFunctionResolution registerCallback: callback as: #FloatAbsolute.
-
-	result := self ffiFloatAbs: 65.
-	self assert: result equals: 65.0.
-	
-	result := self ffiFloatAbs: 65.0.
-	self assert: result equals: 65.0.
-
-	result := self ffiFloatAbs: $A.
-	self assert: result equals: 65.0.
-
-	result := self ffiFloatAbs: true.
-	self assert: result equals: 1.0
-
-	
-
-]
-
 { #category : #'tests pointer' }
 FFICalloutAPITest >> testForwardedObjects [
 	| result dest |

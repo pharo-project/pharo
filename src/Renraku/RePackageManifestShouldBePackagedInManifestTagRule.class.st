@@ -32,9 +32,3 @@ RePackageManifestShouldBePackagedInManifestTagRule >> name [
 RePackageManifestShouldBePackagedInManifestTagRule >> rationale [
 	^ 'Check if the package manifest is tagged in class category ''Manifest'' to align with other packages and fulfil common expectations.'
 ]
-
-{ #category : #accessing }
-RePackageManifestShouldBePackagedInManifestTagRule >> severity [
-
-	^ #warning 
-]

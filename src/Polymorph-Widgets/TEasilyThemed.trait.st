@@ -159,19 +159,6 @@ TEasilyThemed >> chooseExistingFileReference: title extensions: exts path: path 
 ]
 
 { #category : #services }
-TEasilyThemed >> chooseFileName: title extensions: exts path: path preview: preview [
-	"Answer the result of a file name chooser dialog with the given title, extensions
-	to show, path and preview type."
-	self deprecated: 'Use UIManager default chooseFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
-	^self theme
-		chooseFileNameIn: self
-		title: title
-		extensions: exts
-		path: path
-		preview: preview
-]
-
-{ #category : #services }
 TEasilyThemed >> chooseFont [
 	"Answer the result of a font selector dialog."
 

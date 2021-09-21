@@ -7,6 +7,11 @@ Class {
 	#category : #'Kernel-Variables'
 }
 
+{ #category : #accessing }
+SuperVariable class >> variableName [
+	^'super'
+]
+
 { #category : #visiting }
 SuperVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitSuperNode: aNode
@@ -16,13 +21,6 @@ SuperVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 SuperVariable >> emitValue: methodBuilder [
 	"super references the receiver, send that follows is a super send (the message lookup starts in the superclass)"
 	methodBuilder pushReceiver
-]
-
-{ #category : #initialization }
-SuperVariable >> initialize [
-	super initialize.
-	
-	name := 'super'
 ]
 
 { #category : #testing }

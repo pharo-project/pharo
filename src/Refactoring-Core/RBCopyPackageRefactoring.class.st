@@ -89,7 +89,7 @@ RBCopyPackageRefactoring >> preconditions [
 		])
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #renaming }
 RBCopyPackageRefactoring >> renameReferencesOf: aClass1 with: aClass2 [
 	| replacer |
 	replacer := (self parseTreeRewriterClass replaceLiteral: aClass1 name with: aClass2)

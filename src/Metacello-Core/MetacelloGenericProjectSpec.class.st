@@ -146,17 +146,6 @@ MetacelloGenericProjectSpec >> repositories: aBlock constructor: aVersionConstru
     aVersionConstructor repositoriesForProject: aBlock
 ]
 
-{ #category : #querying }
-MetacelloGenericProjectSpec >> repository [
-	self
-		deprecated: 'Use repositories or repositorySpecs'
-		transformWith: '`@rec repository' -> '`@rec repositorySpecs first'.
-
-	^ self repositorySpecs
-		ifEmpty: [ nil ]
-		ifNotEmpty: [ self repositorySpecs first ]
-]
-
 { #category : #accessing }
 MetacelloGenericProjectSpec >> repository: aStringOrMetacelloRepositorySpec [
     self repositories repository: aStringOrMetacelloRepositorySpec.
