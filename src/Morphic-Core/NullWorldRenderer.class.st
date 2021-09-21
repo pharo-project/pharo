@@ -78,3 +78,9 @@ NullWorldRenderer >> updateDamage: rectangles [
 
 	"Do nothing"
 ]
+
+{ #category : #accessing }
+NullWorldRenderer >> windowTitle: aString [
+
+	"I am a dummy implementation"
+]

@@ -313,6 +313,12 @@ AbstractWorldRenderer >> viewBox [
 ]
 
 { #category : #accessing }
+AbstractWorldRenderer >> windowTitle: aString [
+
+	self subclassResponsibility 
+]
+
+{ #category : #accessing }
 AbstractWorldRenderer >> world [
 	^ world
 ]
