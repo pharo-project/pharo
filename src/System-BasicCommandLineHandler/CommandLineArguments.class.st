@@ -50,12 +50,12 @@ CommandLineArguments >> arguments [
 CommandLineArguments >> commandLineArguments [
 	"self commandLineArguments"
 	
-	| documentPath args |
+	| imagePath args |
 	
 	args := OrderedCollection withAll: Smalltalk arguments.
-	documentPath := Smalltalk vm documentPath.
-	documentPath isEmptyOrNil
-		ifFalse: [ args addFirst: documentPath ].
+	imagePath := Smalltalk vm imagePath.
+	imagePath isEmptyOrNil
+		ifFalse: [ args addFirst: imagePath ].
  	^ args.
 ]
 
@@ -103,12 +103,12 @@ CommandLineArguments >> includesSubCommand: aName [
 { #category : #initialization }
 CommandLineArguments >> initialize [
 	
-	| documentPath  |
+	| imagePath  |
 	
 	arguments := OrderedCollection withAll: Smalltalk arguments.
-	documentPath := Smalltalk vm documentPath.
-	documentPath isEmptyOrNil
-		ifFalse: [ arguments addFirst: documentPath ].
+	imagePath := Smalltalk vm imagePath.
+	imagePath isEmptyOrNil
+		ifFalse: [ arguments addFirst: imagePath ].
 ]
 
 { #category : #initialization }

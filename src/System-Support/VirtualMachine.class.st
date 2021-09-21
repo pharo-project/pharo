@@ -142,10 +142,14 @@ VirtualMachine >> doGetSystemAttribute: attributeID [
 
 { #category : #accessing }
 VirtualMachine >> documentPath [
+
 	"Answer the absolute path of the document passed to the vm or nil if none."
-	"Smalltalk commandLine documentPath"
-	
-	^self getSystemAttribute: 2
+
+	self
+		deprecated: 'Use #imagePath instead'
+		transformWith: '`@receiver documentPath' -> '`@receiver imagePath'.
+
+	^ self imagePath
 ]
 
 { #category : #gc }
