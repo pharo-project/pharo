@@ -285,7 +285,7 @@ CompiledMethodTrailer >> decodeEmbeddedSourceQCompress [
 						ifFalse:
 							[strm nextPut: (charTable at: (nibble-12) * 16 + nextNibble value)]]]].
 			
-	data := str convertFromEncoding: 'utf8'
+	data := str asByteArray utf8Decoded
 ]
 
 { #category : #decoding }
@@ -610,7 +610,7 @@ CompiledMethodTrailer >> qCompress: string [
 
 	string isEmpty ifTrue:
 		[^self qCompress: ' '].
-	utf8str := string convertToEncoding: 'utf8'.
+	utf8str := string utf8Encoded.
 
 	stream := WriteStream on: (ByteArray new: utf8str size).
 	oddNibble := nil.

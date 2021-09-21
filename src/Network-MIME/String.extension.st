@@ -49,7 +49,7 @@ String >> decodeMimeHeader [
 				"Delete spaces if followed by ="
 				input peek = $= ifFalse: [ input position: pos ]. 
 					
-				charsetStream :=  String new writeStream.
+				charsetStream := String new writeStream.
 				mimeDecoder := mimeEncoding = 'B' 
 					ifTrue: [ Base64MimeConverter new ]
 					ifFalse: [ RFC2047MimeConverter new ].
@@ -57,7 +57,7 @@ String >> decodeMimeHeader [
 					mimeStream: temp readStream;
 					dataStream: charsetStream;
 					mimeDecode.
-				output nextPutAll: (charsetStream contents convertFromEncoding: charset).
+				output nextPutAll: (charsetStream contents asByteArray decodeWith: charset).
 				]
 			ifFalse: 
 				[ output
