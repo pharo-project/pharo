@@ -1105,7 +1105,7 @@ String >> displayStringOn: aStream [
 
 { #category : #testing }
 String >> endsWith: suffix [
-	"Answer whether the receiver begins with the given prefix string.
+	"Answer whether the receiver ends with the given prefix string.
 	The comparison is case-sensitive."
 
 	"IMPLEMENTATION NOTE:
