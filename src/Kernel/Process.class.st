@@ -452,8 +452,7 @@ Process >> priority: anInteger [
 	When changing the process priority we need to yield to make it reschedule the processor"
 
 	(anInteger between: Processor lowestPriority and: Processor highestPriority)
-		ifTrue: [ priority := anInteger. 
-			self isActiveProcess ifTrue: [ [self resume] fork. self suspend ] ]
+		ifTrue: [ priority := anInteger. Processor interpriorityYield: self ]
 		ifFalse: [ self error: 'Invalid priority: ' , anInteger printString ]
 ]
 
