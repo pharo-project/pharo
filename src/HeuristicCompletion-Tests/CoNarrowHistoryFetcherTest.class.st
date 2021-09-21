@@ -4,7 +4,7 @@ Class {
 	#category : #'HeuristicCompletion-Tests-Core'
 }
 
-{ #category : #initialization }
+{ #category : #running }
 CoNarrowHistoryFetcherTest >> setUp [
 
 	super setUp.
