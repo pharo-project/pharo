@@ -21,7 +21,7 @@ Class {
 	#category : #'HeuristicCompletion-Model-Statistics'
 }
 
-{ #category : #singleton }
+{ #category : #'class initialization' }
 CoStatistics class >> reset [
 	
 	UniqueInstance := nil

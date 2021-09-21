@@ -36,7 +36,7 @@ Class {
 	#category : #'Beacon-Core-Loggers'
 }
 
-{ #category : #registering }
+{ #category : #'class initialization' }
 MemoryLogger class >> reset [
 	self instance reset
 ]

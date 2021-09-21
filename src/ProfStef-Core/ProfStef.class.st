@@ -209,7 +209,7 @@ ProfStef class >> previous [
 	^ self default previous
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ProfStef class >> reset [
 	<script>
 		

@@ -123,7 +123,7 @@ ReRuleManager class >> removeManagerFor: anRPackage [
 	
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ReRuleManager class >> reset [
 	<script>
 	managers := nil.

@@ -18,7 +18,7 @@ PharoFilesOpener class >> default [
 	^ Default ifNil: [ Default := self new ]
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 PharoFilesOpener class >> reset [
 	Default := nil
 ]

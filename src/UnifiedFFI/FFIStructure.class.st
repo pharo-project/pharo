@@ -328,7 +328,7 @@ FFIStructure class >> removeAllOffsetVariables [
 		thenDo: [ :each | self removeClassVarNamed: each ]
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 FFIStructure class >> reset [
 	"Reset this structure and all its nested structures"
 	self resetStructureIfNotIn: Set new

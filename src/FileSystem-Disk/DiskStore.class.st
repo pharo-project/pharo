@@ -93,7 +93,7 @@ DiskStore class >> readOnlyVariant [
 	^ self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 DiskStore class >> reset [
 	DefaultWorkingDirectory := nil.
 	CurrentFS := nil

@@ -75,7 +75,7 @@ ClySubclassHierarchy class >> methodVisibilityProvider [
 	^ClyMethodVisibilityProviderAnnotation new
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ClySubclassHierarchy class >> reset [
 	<script>
 	hierarchyForMethodVisibility := nil.
