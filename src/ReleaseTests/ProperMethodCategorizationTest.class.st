@@ -49,6 +49,14 @@ ProperMethodCategorizationTest >> explanationFrom: aCol [
 					separatedBy: [ str nextPutAll: ' ,'] ]).
 ]
 
+{ #category : #'tests - instance creation' }
+ProperMethodCategorizationTest >> testBasicNewMethodNeedsToBeInInstanceCreationProtocol [
+	"The #basicNew methods should be in method protocol 'instance creation'"
+	
+	self assureAll: #basicNew areCategorizedIn: #'instance creation' whenSubclassOf: Object class
+
+]
+
 { #category : #'tests - object' }
 ProperMethodCategorizationTest >> testCloneMethodNeedsToBeInCopyingProtocol [
 	"The #clone methods should be in method protocol 'copying'"
