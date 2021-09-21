@@ -122,13 +122,6 @@ PluggableCanvas >> flushDisplay [
 		c flushDisplay ]
 ]
 
-{ #category : #other }
-PluggableCanvas >> forceToScreen: rect [
-
-	self apply: [ :c |
-		c forceToScreen: rect ]
-]
-
 { #category : #'drawing - rectangles' }
 PluggableCanvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderWidth borderColor: borderColor [
 	self apply: [ :c |

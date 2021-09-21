@@ -61,12 +61,6 @@ NullWorldRenderer >> forceDamageToScreen: allDamage [
 	
 ]
 
-{ #category : #operations }
-NullWorldRenderer >> forceDisplayUpdate [
-
-	" Do Nothing "
-]
-
 { #category : #accessing }
 NullWorldRenderer >> icon: aForm [ 
 
@@ -77,4 +71,10 @@ NullWorldRenderer >> icon: aForm [
 NullWorldRenderer >> updateDamage: rectangles [
 
 	"Do nothing"
+]
+
+{ #category : #accessing }
+NullWorldRenderer >> windowTitle: aString [
+
+	"I am a dummy implementation"
 ]

@@ -25,9 +25,3 @@ CursorWithAlpha >> fallback [
 CursorWithAlpha >> fallback: aCursor [
 	fallback := aCursor
 ]
-
-{ #category : #primitives }
-CursorWithAlpha >> primBeCursor [
-	<primitive: 101>
-	self fallback primBeCursor
-]

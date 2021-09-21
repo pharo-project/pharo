@@ -253,6 +253,12 @@ OSWorldRenderer >> windowScaleFactor [
 	^ osWindow ifNil: [ 1 ] ifNotNil: [ osWindow screenScaleFactor max: 1 ]
 ]
 
+{ #category : #accessing }
+OSWorldRenderer >> windowTitle: aString [
+
+	osWindow title: aString
+]
+
 { #category : #initialization }
 OSWorldRenderer >> world: aWorld [
 

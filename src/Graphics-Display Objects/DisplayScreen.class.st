@@ -20,15 +20,14 @@ Class {
 		'DeferringUpdates',
 		'DisplayChangeSignature',
 		'LastScreenModeSelected',
-		'ScreenSave',
-		'Title'
+		'ScreenSave'
 	],
 	#category : #'Graphics-Display Objects-Screen'
 }
 
 { #category : #accessing }
 DisplayScreen class >> actualScreenDepth [
-	<primitive: 'primitiveScreenDepth'>
+
 	^ Display depth
 ]
 
@@ -51,20 +50,10 @@ DisplayScreen class >> boundingBox [
 { #category : #deferring }
 DisplayScreen class >> deferUpdates: aBoolean [
 	| wasDeferred |
-	"Set the deferUpdates flag in the virtual machine. When this flag is true, BitBlt operations on the Display are not automatically propagated to the screen. If this underlying platform does not support deferred updates, this primitive will fail. Answer whether updates were deferred before if the primitive succeeds, nil if it fails."
 
 	wasDeferred := DeferringUpdates == true.
 	DeferringUpdates := aBoolean.
-	^(self primitiveDeferUpdates: aBoolean) ifNotNil: [wasDeferred]
-]
-
-{ #category : #'display box access' }
-DisplayScreen class >> depth: depthInteger width: widthInteger height: heightInteger fullscreen: aBoolean [
-	"Force Pharo's window (if there's one) into a new size and depth."
-	"DisplayScreen depth: 8 width: 1024 height: 768 fullscreen: false"
-
-	<primitive: 92>
-	self primitiveFailed 
+	^ wasDeferred
 ]
 
 { #category : #settings }
@@ -81,29 +70,6 @@ DisplayScreen class >> displaySettingsOn: aBuilder [
 
 ]
 
-{ #category : #'host window access' }
-DisplayScreen class >> hostWindowIcon: aPath [
-	^ self primitiveWindowIcon: self hostWindowIndex path: aPath
-]
-
-{ #category : #'host window access' }
-DisplayScreen class >> hostWindowIndex [
-	^ 1
-]
-
-{ #category : #'host window access' }
-DisplayScreen class >> hostWindowSize: aPoint [ 
-	self primitiveWindowSize: self hostWindowIndex width: aPoint x heigth: aPoint y
-
-]
-
-{ #category : #'host window access' }
-DisplayScreen class >> hostWindowTitle: aString [ 
-	self 
-		primitiveWindowTitle: self hostWindowIndex 
-		string: aString utf8Encoded
-]
-
 { #category : #'initialize-release' }
 DisplayScreen class >> initialize [
 	| display |
@@ -112,61 +78,9 @@ DisplayScreen class >> initialize [
 		setExtent: 0@0
 		depth: 32. 
 	Smalltalk globals at: #Display put: display.
-	display beDisplay.
 	
 	self deferUpdates: false.
-	SessionManager default 
-		registerGuiClassNamed: self name
-		atPriority: 10.
-]
 
-{ #category : #deferring }
-DisplayScreen class >> primitiveDeferUpdates: aBoolean [
-	"Set the deferUpdates flag in the virtual machine. When this flag is true, BitBlt operations on the Display are not automatically propagated to the screen. If this underlying platform does not support deferred updates, this primitive will fail. Answer the receiver if the primitive succeeds, nil if it fails."
-
-	<primitive: 126>
-	^ nil  "answer nil if primitive fails"
-]
-
-{ #category : #'host window access' }
-DisplayScreen class >> primitiveWindowIcon: id path: pathString [
-	<primitive: 'primitiveHostWindowIcon' module: 'HostWindowPlugin' error: ec>
-	(pathString isKindOf: AbstractFileReference) ifTrue: [ ^ self primitiveWindowIcon: id path: pathString fullName ].
-	ec == #'bad argument'
-		ifTrue: [ pathString isString ifFalse: [ ^ self error: 'The path should be a String' ].
-			^ pathString asFileReference
-				ifExists: [ self error: 'File existing but not found by the VM sorry, try another location...'	"Not reproductible in the tests but can happen" ]
-				ifAbsent: [ :file | FileDoesNotExistException signalOnFile: file ] ].
-	self primitiveFailed
-]
-
-{ #category : #'host window access' }
-DisplayScreen class >> primitiveWindowSize: id width: width heigth: height [ 
-	<primitive: 'primitiveHostWindowSizeSet' module: 'HostWindowPlugin'>
-	"ignore failure"
-]
-
-{ #category : #'host window access' }
-DisplayScreen class >> primitiveWindowTitle: id string: titleString [ 
-	<primitive: 'primitiveHostWindowTitle' module:'HostWindowPlugin'>
-	"ignore failure"
-]
-
-{ #category : #'host window access' }
-DisplayScreen class >> refreshHostWindowTitle [
-	Title ifNotNil: [ self hostWindowTitle: Title ]
-]
-
-{ #category : #'host window access' }
-DisplayScreen class >> resetTitle [
-	<script>
-	self hostWindowTitle: 'Pharo Virtual Machine! (', SmalltalkImage current imagePath ,')'
-]
-
-{ #category : #'host window access' }
-DisplayScreen class >> setWindowTitle: aTitle [
-	Title := aTitle.
-	self refreshHostWindowTitle
 ]
 
 { #category : #displaying }
@@ -175,16 +89,6 @@ DisplayScreen >> addExtraRegion: aRectangle for: regionDrawer [
 	extraRegions ifNil:[extraRegions := #()].
 	extraRegions := extraRegions copyWith: (Array with: regionDrawer with: aRectangle).
 
-]
-
-{ #category : #private }
-DisplayScreen >> beDisplay [
-	"Primitive. Tell the interpreter to use the receiver as the current display 
-	image. Fail if the form is too wide to fit on the physical display. 
-	Essential. See Object documentation whatIsAPrimitive."
-
-	<primitive: 102>
-	self primitiveFailed
 ]
 
 { #category : #deferring }
@@ -198,7 +102,6 @@ DisplayScreen >> deferUpdatesIn: aRectangle while: aBlock [
 	(self class deferUpdates: true) ifTrue: [^aBlock value].
 	result := aBlock value.
 	self class deferUpdates: false.
-	self forceToScreen: aRectangle.
 	^result
 ]
 
@@ -236,10 +139,8 @@ DisplayScreen >> flash: aRectangle [
 	"Flash the area of the screen defined by the given rectangle."
 
 	self reverse: aRectangle.
-	self forceDisplayUpdate.
 	(Delay forMilliseconds: 100) wait.
 	self reverse: aRectangle.
-	self forceDisplayUpdate.
 
 ]
 
@@ -248,10 +149,10 @@ DisplayScreen >> flash: aRectangle andWait: msecs [
 	"Flash the area of the screen defined by the given rectangle."
 
 	self reverse: aRectangle.
-	self forceDisplayUpdate.
+
 	(Delay forMilliseconds: msecs) wait.
 	self reverse: aRectangle.
-	self forceDisplayUpdate.
+
 	(Delay forMilliseconds: msecs) wait.
 
 ]
@@ -261,60 +162,11 @@ DisplayScreen >> flashAll: rectangleList andWait: msecs [
 	"Flash the areas of the screen defined by the given rectangles."
 
 	rectangleList do: [:aRectangle | self reverse: aRectangle].
-	self forceDisplayUpdate.
+
 	(Delay forMilliseconds: msecs) wait.
 	rectangleList do: [:aRectangle | self reverse: aRectangle].
-	self forceDisplayUpdate.
+
 	(Delay forMilliseconds: msecs) wait.
-
-]
-
-{ #category : #displaying }
-DisplayScreen >> forceDamageToScreen: allDamage [
-	"Force all the damage rects to the screen."
-	| regions rectList |
-	rectList := allDamage.
-	"Note: Reset extra regions at the beginning to prevent repeated errors"
-	regions := extraRegions.
-	extraRegions := nil.
-	regions ifNotNil:[
-		"exclude extra regions"
-		regions do:[:drawerAndRect| | excluded remaining |
-			excluded := drawerAndRect at: 2.
-			remaining := Array new writeStream.
-			rectList do:[:r|
-				remaining nextPutAll:(r areasOutside: excluded)].
-			rectList := remaining contents].
-	].
-	rectList do:[:r| self forceToScreen: r].
-	regions ifNotNil:[
-		"Have the drawers paint what is needed"
-		regions do:[:drawerAndRect| (drawerAndRect at: 1) forceToScreen].
-	].
-]
-
-{ #category : #other }
-DisplayScreen >> forceDisplayUpdate [
-	"On platforms that buffer screen updates, force the screen to be updated immediately. On other platforms, or if the primitive is not implemented, do nothing."
-
-	<primitive: 231>
-	"do nothing if primitive fails"
-]
-
-{ #category : #other }
-DisplayScreen >> forceToScreen [
-	"Force the entire display area to the screen"
-	^self forceToScreen: self boundingBox
-]
-
-{ #category : #other }
-DisplayScreen >> forceToScreen: aRectangle [
-	"Force the given rectangular section of the Display to be copied to the screen. The primitive call does nothing if the primitive is not implemented. Typically used when the deferUpdates flag in the virtual machine is on; see deferUpdates:."
-
-	self primShowRectLeft: aRectangle left
-		right: aRectangle right
-		top: aRectangle top
-		bottom: aRectangle bottom.
 
 ]
 
@@ -398,37 +250,6 @@ DisplayScreen >> newDepth: pixelSize [
 DisplayScreen >> newDepthNoRestore: pixelSize [
 	
 	UIManager default newDisplayDepthNoRestore: pixelSize
-]
-
-{ #category : #private }
-DisplayScreen >> primRetryShowRectLeft: l right: r top: t bottom: b [
-	"Copy the given rectangular section of the Display to to the screen. This primitive is not implemented on all platforms. Do nothing if it fails. "
-
-	<primitive: 127>
-	"do nothing if primitive fails"
-
-]
-
-{ #category : #private }
-DisplayScreen >> primShowRectLeft: l right: r top: t bottom: b [
-	"Copy the given rectangular section of the Display to to the screen. This primitive is not implemented on all platforms. If this fails, retry integer coordinates."
-
-	<primitive: 127>
-	"if this fails, coerce coordinates to integers and try again"
-	self primRetryShowRectLeft: l truncated
-		right: r rounded
-		top: t truncated
-		bottom: b rounded.
-
-]
-
-{ #category : #other }
-DisplayScreen >> primitiveDeferUpdates: aBoolean [
-	"Set the deferUpdates flag in the virtual machine. When this flag is true, BitBlt operations on the Display are not automatically propagated to the screen. If this underlying platform does not support deferred updates, this primitive will fail. Answer the receiver if the primitive succeeds, nil if it fails."
-
-	<primitive: 126>
-	^ nil  "answer nil if primitive fails"
-
 ]
 
 { #category : #other }

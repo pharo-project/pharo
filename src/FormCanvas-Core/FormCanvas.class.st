@@ -370,16 +370,8 @@ FormCanvas >> flush [
 
 { #category : #other }
 FormCanvas >> flushDisplay [
-	
-	Display
-		deferUpdates: false;
-		forceDisplayUpdate.
-]
 
-{ #category : #other }
-FormCanvas >> forceToScreen: rect [
-	^Display forceToScreen: rect.
-
+	Display deferUpdates: false
 ]
 
 { #category : #accessing }
