@@ -51,8 +51,3 @@ RBClassTransformation >> initialize [
 	super initialize.
 	environment := Smalltalk globals
 ]
-
-{ #category : #executing }
-RBClassTransformation >> parserClass [
-	^ RBParser
-]

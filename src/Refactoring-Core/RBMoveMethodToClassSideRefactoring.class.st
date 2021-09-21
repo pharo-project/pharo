@@ -107,12 +107,6 @@ RBMoveMethodToClassSideRefactoring >> getTempName [
 	^ tempName
 ]
 
-{ #category : #initialization }
-RBMoveMethodToClassSideRefactoring >> method: aMethod class: aClass [
-	method := aMethod.
-	class := self classObjectFor: aClass.
-]
-
 { #category : #accessing }
 RBMoveMethodToClassSideRefactoring >> parseTree [
 

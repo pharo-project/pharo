@@ -214,12 +214,6 @@ Morph >> acceptDroppingMorph: aMorph event: evt [
 		atIndex: (layout indexForInserting: aMorph at: evt position in: self).
 ]
 
-{ #category : #updating }
-Morph >> actAsExecutor [
-	"Prepare the receiver to act as executor for any resources associated with it"
-	self breakDependents
-]
-
 { #category : #'events - accessing' }
 Morph >> actionMap [
 	"Answer an action map"

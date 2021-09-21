@@ -447,11 +447,6 @@ OSSDL2BackendWindow >> resizable [
 	^ sdl2Window getFlags anyMask: SDL_WINDOW_RESIZABLE
 ]
 
-{ #category : #accessing }
-OSSDL2BackendWindow >> resizable: aBoolean [
-	"This is not supported."
-]
-
 { #category : #'window management' }
 OSSDL2BackendWindow >> restore [
 

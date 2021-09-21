@@ -40,11 +40,6 @@ SycExtractSetUpRefactoring >> defaultMenuItemName [
 	^ 'Extract setUp'
 ]
 
-{ #category : #preparation }
-SycExtractSetUpRefactoring >> execute [
-	self executeRefactoring: self asRefactorings
-]
-
 { #category : #executing }
 SycExtractSetUpRefactoring >> executeRefactoring [ 
 	| selectedInterval refactoring |

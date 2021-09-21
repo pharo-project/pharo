@@ -12,11 +12,6 @@ RBMethodNodeTest >> methodWithArg: someArgName and: someAnotherArgName [
 
 ]
 
-{ #category : #helpers }
-RBMethodNodeTest >> parseMethod: aString [
-	^ self parserClass parseMethod: aString
-]
-
 { #category : #tests }
 RBMethodNodeTest >> testAddingMethodProperties [
 

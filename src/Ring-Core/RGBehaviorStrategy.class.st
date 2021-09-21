@@ -300,12 +300,6 @@ RGBehaviorStrategy >> isMetaclassTraitStrategy [
 ]
 
 { #category : #testing }
-RGBehaviorStrategy >> isTrait [
-
-	^false
-]
-
-{ #category : #testing }
 RGBehaviorStrategy >> isTraitStrategy [
 
 	^ false

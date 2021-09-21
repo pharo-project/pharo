@@ -57,11 +57,6 @@ RBPragmaEnvironment >> defaultLabel [
 ]
 
 { #category : #testing }
-RBPragmaEnvironment >> definesClass: aClass [
-	^ environment definesClass: aClass
-]
-
-{ #category : #testing }
 RBPragmaEnvironment >> includesCategory: aCategory [
 	^ (environment includesCategory: aCategory) and: [ (self classNamesFor: aCategory) notEmpty ]
 ]
