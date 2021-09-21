@@ -912,14 +912,6 @@ File class >> open: fileName writable: writableFlag [
 ]
 
 { #category : #'file creation' }
-File class >> openAndTruncateForWriteFileNamed: aName [
-
-	^ (self named: aName)
-		delete;
-		openForWrite
-]
-
-{ #category : #'file creation' }
 File class >> openForReadFileNamed: aName [
 
 	^ (self named: aName)
