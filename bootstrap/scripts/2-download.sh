@@ -15,7 +15,7 @@ mkdir -p "${BOOTSTRAP_CACHE}" #required to generate hermes files
 
 ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh 90 vm 64
 
-wget --progress=dot:mega https://github.com/guillep/PharoBootstrap/releases/download/v1.7.6/bootstrapImage.zip
+wget --progress=dot:mega https://github.com/guillep/PharoBootstrap/releases/download/v1.7.7/bootstrapImage.zip
 
 unzip bootstrapImage.zip
 
