@@ -19,7 +19,7 @@ BaselineOfPharo class >> icebergVersion [
 { #category : #versions }
 BaselineOfPharo class >> newToolsReleaseCommit [
 	"The commit corresponding to current release (to be used on bootstrap process)"
-
+	
 	"v0.6.10"
 	^ '526c39f7511ecf24308b36d044ebb6647ffa226c'
 ]
@@ -41,7 +41,7 @@ BaselineOfPharo class >> specReleaseCommit [
 	"The commit corresponding to current release (to be used on bootstrap process)"
 
 	"v1.0.3"
-	^ '093d57d83f1554b69ca019c21b1f955ec71f8f0d'
+	^ '64d914cd5c621f00b551306ee2fbd1e3540af6a1'
 ]
 
 { #category : #'repository urls' }
