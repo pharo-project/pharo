@@ -357,7 +357,7 @@ MCGitBasedNetworkRepository >> calculateRepositoryDirectory [
 	^ directory
 ]
 
-{ #category : #initialization }
+{ #category : #testing }
 MCGitBasedNetworkRepository >> canUpgradeTo: anMCGitBasedRepository [
   (anMCGitBasedRepository isKindOf: self class)
     ifFalse: [ ^ false ].
@@ -449,7 +449,7 @@ MCGitBasedNetworkRepository >> goferVersionFrom: aVersionReference [
 	^ self localRepository goferVersionFrom: aVersionReference
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #testing }
 MCGitBasedNetworkRepository >> hasNoLoadConflicts: anMCGitBasedRepository [
   (anMCGitBasedRepository isKindOf: self class)
     ifFalse: [ ^ false ].

@@ -31,7 +31,7 @@ Class {
 	#category : #'Monticello-Modeling'
 }
 
-{ #category : #initialization }
+{ #category : #accessing }
 MCMethodDefinition class >> cachedDefinitions [
 	^ Definitions 
 		ifNil: [ Definitions := WeakIdentityKeyDictionary new ]
@@ -69,13 +69,13 @@ MCMethodDefinition class >> cleanUp [
 	self shutDown.
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 MCMethodDefinition class >> flushMethodCache [
 	"We do not named this method flushCache because it would override an important class methods."
 	Definitions := nil.
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 MCMethodDefinition class >> initialize [
 	SessionManager default
 		registerSystemClassNamed: self name

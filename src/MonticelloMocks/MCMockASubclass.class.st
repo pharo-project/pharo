@@ -10,7 +10,7 @@ Class {
 	#category : #MonticelloMocks
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'class initialization' }
 MCMockASubclass class >> initialize [
 
 	InitializationOrder := InitializationOrder
