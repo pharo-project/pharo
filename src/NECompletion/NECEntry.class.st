@@ -93,7 +93,9 @@ NECEntry >> printOn: aStream [
 		nextPutAll: self class name;
 		nextPut: $(;
 		nextPutAll: contents;
-		nextPut: $,;
-		nextPutAll: self hightlightSymbol;
-		nextPut: $)
+		nextPut: $,.
+
+	self hightlightSymbol ifNotNil: [ aStream nextPutAll: self hightlightSymbol ].
+	
+	aStream nextPut: $)
 ]
