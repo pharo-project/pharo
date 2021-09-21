@@ -361,12 +361,6 @@ RGElementDefinition >> setParentInfo: anObject [
 ]
 
 { #category : #deprecated }
-RGElementDefinition >> theNonMetaClassName [
-
-	^self instanceSideParentName 
-]
-
-{ #category : #deprecated }
 RGElementDefinition >> theNonMetaParentName [
 	"Rejects the prefix ' class' or ' classTrait' of the parentName"
 	| index |
