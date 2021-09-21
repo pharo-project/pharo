@@ -2,7 +2,13 @@ Extension { #name : #String }
 
 { #category : #'*Deprecated90' }
 String >> convertFromEncoding: encodingName [
-	^self convertFromWithConverter: (TextConverter newForEncoding: encodingName)
+
+	self 
+        deprecated: 'Use #utf8Decoded or #decodeWith: encoding on a byte array. Using a string is not valid. You should have a byte array as input'
+        on: '2021-08-27'
+        in: #Pharo10.
+
+	^ self asByteArray decodeWith: encodingName
 ]
 
 { #category : #'*Deprecated90' }
@@ -22,7 +28,13 @@ String >> convertFromWithConverter: converter [
 
 { #category : #'*Deprecated90' }
 String >> convertToEncoding: encodingName [
-	^self convertToWithConverter: (TextConverter newForEncoding: encodingName).
+
+	self
+        deprecated: 'Use #utf8Encoded or #encodeWith: .'
+        on: '2021-08-27'
+        in: #Pharo10.
+
+	^ self encodeWith: encodingName
 ]
 
 { #category : #'*Deprecated90' }
