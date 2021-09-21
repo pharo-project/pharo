@@ -176,6 +176,23 @@ ProcessorScheduler >> highestPriority: newHighestPriority [
 	quiescentProcessLists := newProcessLists
 ]
 
+{ #category : #private }
+ProcessorScheduler >> interpriorityYield: modifiedProcess [
+
+	"The original yield only works within processes of the same priority.
+	The primitive does not try to resume a process in a higher priority.
+	By forcing the creation of a new process and suspending this one, 
+	we force the rescheduling of processes. 
+	
+	This message should not be used directly. 
+	The only application so far is when changing the priority of a process.
+	"
+
+	modifiedProcess isActiveProcess ifFalse: [ ^ self ].
+	[ modifiedProcess resume ] fork.
+	modifiedProcess suspend
+]
+
 { #category : #'self evaluating' }
 ProcessorScheduler >> isSelfEvaluating [
 	^self == Processor
