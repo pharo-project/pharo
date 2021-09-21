@@ -67,7 +67,7 @@ Class {
 	#category : #'Tool-ProcessBrowser'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ProcessBrowser class >> cleanUp [
  	"Remove terminated processes from my suspended list"
 	<script>
@@ -139,7 +139,7 @@ ProcessBrowser class >> dumpTallyOnTranscript: tally [
 	Transcript flush.
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ProcessBrowser class >> initialize [
 	SuspendedProcesses ifNil: [ SuspendedProcesses := IdentityDictionary new ].
 	self registerWellKnownProcesses
@@ -222,7 +222,7 @@ ProcessBrowser class >> registerWellKnownProcess: aBlockForProcess label: nickna
 	WellKnownProcesses add: aBlockForProcess->[{nickname . allowStop . allowDebug}]
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 ProcessBrowser class >> registerWellKnownProcesses [
 	"Associate each well-known process with a nickname and two flags: allow-stop, and allow-debug.
 	Additional processes may be added to this list as required"

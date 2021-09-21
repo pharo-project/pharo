@@ -57,7 +57,7 @@ ReImplementedNotSentRule class >> enabled: aBoolean [
 		ifFalse: [ self unsubscribe ]
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ReImplementedNotSentRule class >> initialize [
 	"we do not want to register if the rule is disabled"
 	self enabled ifFalse: [ ^self ].

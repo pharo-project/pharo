@@ -513,7 +513,7 @@ TextConstants class >> at: aSymbol [
 	^ self classPool at: aSymbol ifAbsent: [self TextSharedInformation at: aSymbol]
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 TextConstants class >> initialize [
 
 	TextSharedInformation ifNil: [ TextSharedInformation := Dictionary new].

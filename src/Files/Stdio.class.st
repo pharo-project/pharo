@@ -35,7 +35,7 @@ Class {
 	#category : #'Files-Core'
 }
 
-{ #category : #'system startup' }
+{ #category : #private }
 Stdio class >> cleanStdioHandles [
 
 	Stderr := Stdin := Stdout := nil
@@ -68,7 +68,7 @@ Stdio class >> createWriteStreamBlock: aBlock [
 	self cleanStdioHandles
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 Stdio class >> initialize [
 	SessionManager default
 		registerSystemClassNamed: self name
@@ -91,7 +91,7 @@ Stdio class >> standardIOStreamNamed: moniker forWrite: forWrite [
 	^ StdioStream handle: handle file: (File named: moniker) forWrite: forWrite
 ]
 
-{ #category : #'system startup' }
+{ #category : #'startup - shutdown' }
 Stdio class >> startUp: resuming [
 
 	resuming ifTrue: [ self cleanStdioHandles ].

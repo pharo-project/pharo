@@ -33,13 +33,13 @@ RBTransformation class >> cleanUp [
 	self initializeRefactoringOptions.
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 RBTransformation class >> initialize [
 
 	self initializeRefactoringOptions
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 RBTransformation class >> initializeRefactoringOptions [
 
 	RefactoringOptions := IdentityDictionary new.

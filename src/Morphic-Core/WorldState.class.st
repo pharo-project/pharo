@@ -164,7 +164,7 @@ WorldState class >> helpOn: aBuilder [
 				action: [ Smalltalk aboutThisSystem ] ]
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 WorldState class >> initialize [
 	"WorldState initialize"
 

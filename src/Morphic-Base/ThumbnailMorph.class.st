@@ -32,7 +32,7 @@ ThumbnailMorph class >> example1 [
 	t openInWorld
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ThumbnailMorph class >> initialize [
 	"Initialize the class variables of ThumbnailMorph"
 

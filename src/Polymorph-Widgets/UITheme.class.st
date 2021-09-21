@@ -137,7 +137,7 @@ UITheme class >> defaultSettings: aThemeSettings [
 	defaultSettings := aThemeSettings
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 UITheme class >> initialize [
 	"self initialize"
 	self current class = UITheme
@@ -212,7 +212,7 @@ UITheme class >> resetAllDefaultSettings [
 
 { #category : #'initialize-release' }
 UITheme class >> resetBuilder [
-	"self resetBuilder"
+	<script>
 	
 	Builder := nil
 ]
@@ -224,7 +224,7 @@ UITheme class >> resetDefaultSettings [
 	self defaultSettings: nil
 ]
 
-{ #category : #initialization }
+{ #category : #settings }
 UITheme class >> setPreferredPreferences [ 
 	self subclassResponsibility 
 ]

@@ -32,7 +32,7 @@ Class {
 	#category : #'ThreadedFFI-Base'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 TFAbiTypes class >> initialize [
 
 	"The default ABI is marked with a nil. The primitive will use the correct ABI depending on the platform"

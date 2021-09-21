@@ -156,7 +156,7 @@ String class >> indexOfAscii: anInteger inString: aString startingAt: start [
 
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 String class >> initialize [   
 	
 	self initializeTypeTable.
@@ -171,10 +171,10 @@ String class >> initialize [
 
  	"separators and non-separators"
 	CSSeparators := CharacterSet separators.
-	CSNonSeparators := CSSeparators complement.
+	CSNonSeparators := CSSeparators complement
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 String class >> initializeTypeTable [
 
 	| newTable |
@@ -258,18 +258,18 @@ String class >> new: sizeRequested [
 		ifFalse: [ self basicNew: sizeRequested ]
 ]
 
-{ #category : #initialization }
+{ #category : #'private - accessing' }
 String class >> newAsciiOrder [
 	^ (0 to: 255) as: ByteArray
 ]
 
-{ #category : #initialization }
+{ #category : #'private - accessing' }
 String class >> newCSLineEnders [
 	"CR and LF--characters that terminate a line"
 	^ CharacterSet crlf
 ]
 
-{ #category : #initialization }
+{ #category : #'private - accessing' }
 String class >> newCaseInsensitiveOrder [
 	"map char and char asLower (Lowercase Latin1 stays in the Latin1 range, uppercase not.)"
 	| newCollection |
@@ -282,7 +282,7 @@ String class >> newCaseInsensitiveOrder [
 	^ newCollection 
 ]
 
-{ #category : #initialization }
+{ #category : #'private - accessing' }
 String class >> newCaseSensitiveOrder [
 	"Case-sensitive compare sorts space, digits, letters, all the rest..."
 	
@@ -301,20 +301,20 @@ String class >> newCaseSensitiveOrder [
 	^ newTab 
 ]
 
-{ #category : #initialization }
+{ #category : #'private - accessing' }
 String class >> newLowercasingTable [
 	"a table for translating to lower case"
 	^ String withAll: (Character allByteCharacters collect: [:c | c asLowercase])
 ]
 
-{ #category : #initialization }
+{ #category : #'private - accessing' }
 String class >> newTokenish [
 	"a table for testing tokenish (for fast numArgs)"
 	^ String withAll: (Character allByteCharacters 
 		collect: [:c | c tokenish ifTrue: [ c ] ifFalse: [ $~ ]])
 ]
 
-{ #category : #initialization }
+{ #category : #'private - accessing' }
 String class >> newUppercasingTable [
 	"a table for translating to upper case"
 	^ String withAll: (Character allByteCharacters collect: [:c | c asUppercase])

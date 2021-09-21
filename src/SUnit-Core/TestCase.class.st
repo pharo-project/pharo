@@ -192,7 +192,7 @@ TestCase class >> buildSuiteFromSelectors [
 	^self buildSuiteFromMethods: self allTestSelectors
 ]
 
-{ #category : #'accessing comment' }
+{ #category : #'accessing - comment' }
 TestCase class >> classCommentBlank [
 	^'This class contains tests'
 ]
@@ -303,7 +303,7 @@ TestCase class >> generateLastStoredRunMethod [
 			classified: 'history' ]
 ]
 
-{ #category : #'accessing comment' }
+{ #category : #'accessing - comment' }
 TestCase class >> hasComment [
 	^true
 ]
@@ -368,7 +368,7 @@ TestCase class >> historyAnnouncer [
 	^ HistoryAnnouncer ifNil: [  HistoryAnnouncer := Announcer new ]
 ]
 
-{ #category : #'initialize - event' }
+{ #category : #'class initialization' }
 TestCase class >> initialize [
 	SystemAnnouncer uniqueInstance unsubscribe: self.
 	SystemAnnouncer uniqueInstance weak
@@ -483,7 +483,7 @@ TestCase class >> lookupHierarchyRoot [
 	^TestCase
 ]
 
-{ #category : #'initialize - event' }
+{ #category : #updating }
 TestCase class >> methodChanged: anEvent [
 	"Remove the changed method from the known test results."
 	
