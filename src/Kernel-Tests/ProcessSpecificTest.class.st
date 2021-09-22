@@ -54,8 +54,8 @@ ProcessSpecificTest >> testDynamicVariable [
 
 	"Set a maximum wait timeout so that the test case will complete 
 	 even if the processes fail to signal us."
-	s1 waitTimeoutSeconds: 10.
-	s2 waitTimeoutSeconds: 10.
+	s1 waitTimeoutSeconds: 2.
+	s2 waitTimeoutSeconds: 2.
 	self assert: p1stopped.
 	self assert: p2stopped.
 ]
