@@ -20,19 +20,16 @@ CDClassDefinitionParser class >> fromASTNode: aNode [
 
 { #category : #parsing }
 CDClassDefinitionParser >> handleClassName: aNode withType: aSymbol [
-	| layout |
-	
+	| layoutClass |
 	self handleClassName: aNode.
-	layout := FixedLayout.
-	aSymbol = #variableWordSubclass: ifTrue: [ layout := WordLayout ].
-	aSymbol = #ephemeronSubclass: ifTrue: [ layout := EphemeronLayout ].
-	aSymbol = #weakSubclass: ifTrue: [ layout := WeakLayout ].
-	aSymbol = #variableByteSubclass: ifTrue: [ layout := ByteLayout  ].
-	aSymbol = #variableSubclass: ifTrue: [ layout := VariableLayout ].
-	aSymbol = #immediateSubclass: ifTrue: [ layout := ImmediateLayout ].
-	aSymbol = #subclass: ifTrue: [ layout := FixedLayout ].
+	layoutClass := ObjectLayout layoutForSubclassDefiningSymbol: aSymbol.
 	
-	classDefinition layoutClass: layout
+	"if we get back CompiledMethodLayout or ByteLayout, we need to check the class name"
+	(layoutClass = CompiledMethodLayout or: [ layoutClass = ByteLayout ]) ifTrue: [ 
+		layoutClass := (classDefinition className = 'CompiledMethod') 
+					ifTrue:  [  CompiledMethodLayout ]
+					ifFalse: [  ByteLayout ]].
+	classDefinition layoutClass: (layoutClass)
 ]
 
 { #category : #parsing }
