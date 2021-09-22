@@ -18,6 +18,14 @@ ObjectLayout class >> isAbstract [
 ]
 
 { #category : #monticello }
+ObjectLayout class >> layoutForSubclassDefiningSymbol: aSymbol [
+	"used to get the layout for a subclass definition symbol"
+	^self allSubclasses 
+		detect: [ :class | class isAbstract not and: [class subclassDefiningSymbol == aSymbol ]] 
+		ifNone: [ FixedLayout ]
+]
+
+{ #category : #monticello }
 ObjectLayout class >> layoutForType: typeSymbol [
 	"used to get the layout for a Monticello internal layout symbol"
 	^self allSubclasses 
