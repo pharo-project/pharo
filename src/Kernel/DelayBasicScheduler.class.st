@@ -112,11 +112,6 @@ DelayBasicScheduler >> initializeTicker: aDelayTicker suspendedDelaysHeap: aHeap
 	timingSemaphore := Semaphore new
 ]
 
-{ #category : #deprecated }
-DelayBasicScheduler >> millisecondsUntilResumptionTime: microsecondResumptionTime [
-	^ (microsecondResumptionTime - Time microsecondClockValue) // 1000
-]
-
 { #category : #testing }
 DelayBasicScheduler >> nextWakeUpTime [
 	^ activeDelay 

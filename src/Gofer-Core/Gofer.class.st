@@ -98,6 +98,11 @@ Gofer class >> it [
 { #category : #deprecated }
 Gofer >> addPackage: aPackage [
 
+	self
+		deprecated: 'Use #package: instead'
+		transformWith: '`@receiver addPackage: `@arg' 
+						-> '`@receiver package: `@arg'.
+
 	self package: aPackage
 ]
 
