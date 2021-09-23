@@ -8,6 +8,7 @@ Class {
 RBCopyPackageParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBCopyPackageRefactoring };
+		addCase: { #rbClass -> RBCopyPackageTransformation };
 		yourself
 ]
 
