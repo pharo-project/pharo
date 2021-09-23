@@ -117,12 +117,6 @@ ProfStef class >> goOn: aTutorialClass [
 ]
 
 { #category : #navigating }
-ProfStef class >> goToNextLesson [
-
-  self next
-]
-
-{ #category : #navigating }
 ProfStef class >> last [
 
 	^ self default last
