@@ -134,9 +134,11 @@ ClyFullBrowserMorph class >> settingsDragAndDropDelayOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #dragAndDropDelay)
 		parent: #Calypso;
-		default: 1;
-		label: 'Drag and drop delay before explanding target';
-		description: 'Delay to extend a package/hierarchy [...] for a drag and drop items';
+		default: 1500;
+		label: 'DragAndDrop delay (ms)';
+		description: 'Delay to extend the list of item in the target of a drag and drop. 
+For example drag and drop on a package which contains tag will be extended after dragAndDropDelay miliseconds.
+Expects an integer giving the number of miliseconds';
 		target: ClyDataSourceItem.
 		
 ]
