@@ -17,7 +17,6 @@ Class {
 AlignmentMorph class >> columnPrototype [
 	"Answer a prototypical column"
 	"self columnPrototype openInHand"
-	<exampleWidget>
 	
 	| sampleMorphs aColumn |
 	sampleMorphs := #(red yellow green) collect:
@@ -77,8 +76,7 @@ AlignmentMorph class >> newVariableTransparentSpacer [
 AlignmentMorph class >> rowPrototype [
 	"Answer a prototypical row"
 	"self rowPrototype openInHand"
-	<exampleWidget>
-	
+
 	| sampleMorphs aRow |
 	sampleMorphs := (1 to: (2 + 3 atRandom)) collect:
 		[:integer | EllipseMorph new extent: ((60 + (20 atRandom)) @ (80 + ((20 atRandom)))); color: Color random; setNameTo: ('egg',  integer asString); yourself].

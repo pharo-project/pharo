@@ -14,7 +14,6 @@ DTPassResultType class >> backgroundColor [
 
 { #category : #testing }
 DTPassResultType >> isPass [
-	<generated>
 	^ true
 ]
 

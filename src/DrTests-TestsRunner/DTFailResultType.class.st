@@ -14,7 +14,6 @@ DTFailResultType class >> backgroundColor [
 
 { #category : #testing }
 DTFailResultType >> isFail [
-	<generated>
 	^ true
 ]
 
