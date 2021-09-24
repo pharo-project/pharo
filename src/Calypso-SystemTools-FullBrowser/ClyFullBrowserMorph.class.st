@@ -130,6 +130,18 @@ ClyFullBrowserMorph class >> registerToolsOn: registry [
 ]
 
 { #category : #settings }
+ClyFullBrowserMorph class >> settingsDragAndDropDelayOn: aBuilder [
+	<systemsettings>
+	(aBuilder setting: #dragAndDropDelay)
+		parent: #Calypso;
+		default: 1;
+		label: 'Drag and drop delay before explanding target';
+		description: 'Delay to extend a package/hierarchy [...] for a drag and drop items';
+		target: ClyDataSourceItem.
+		
+]
+
+{ #category : #settings }
 ClyFullBrowserMorph class >> settingsGroupOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #Calypso)
