@@ -200,8 +200,3 @@ RGMetaclassTraitV2Strategy >> storeName [
 
 	^ 'RGMetaclass'
 ]
-
-{ #category : #'private - backend access' }
-RGMetaclassTraitV2Strategy >> theNonMetaClass [
-	^self baseClass
-]
