@@ -351,10 +351,11 @@ ClyDataSource >> isUserFocusingOnItem: aSelectedItem [
 	
 	^ aSelectedItem browserItem = lastSelectedItem browserItem 
 		ifFalse: [
-			lastSelectedItem := aSelectedItem. 
+			lastSelectedItem := aSelectedItem.
+			timeInitialEvent := Time now.
 			false ]
 		ifTrue: [
-			(timeInitialEvent copy addSeconds: aSelectedItem class dragAndDropDelay) < Time now
+			(timeInitialEvent copy addSeconds: aSelectedItem class dragAndDropDelay / 1000) < Time now
 			 ]
 ]
 
