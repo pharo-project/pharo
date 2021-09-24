@@ -30,11 +30,11 @@ String >> convertFromWithConverter: converter [
 String >> convertToEncoding: encodingName [
 
 	self
-        deprecated: 'Use #utf8Encoded or #encodeWith: .'
+        deprecated: 'Use #utf8Encoded or #encodeWith:. Pay attention the new API returns byteArray instead of Strings. Do not use Strings to represent encoded Strings, they should be ByteArrays'
         on: '2021-08-27'
         in: #Pharo10.
 
-	^ self encodeWith: encodingName
+	^ (self encodeWith: encodingName) asString
 ]
 
 { #category : #'*Deprecated90' }
