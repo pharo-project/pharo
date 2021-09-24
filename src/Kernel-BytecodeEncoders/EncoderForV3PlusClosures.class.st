@@ -124,6 +124,12 @@ EncoderForV3PlusClosures class >> instVarWriteScanBlockFor: varIndexCode using: 
 							 and: [scanner thirdByte = varIndexCode]]]]]]
 ]
 
+{ #category : #accessing }
+EncoderForV3PlusClosures class >> instructionSizeAt: pc of: aMethod [
+
+	^self bytecodeSize: (aMethod at: pc)
+]
+
 { #category : #'instruction stream support' }
 EncoderForV3PlusClosures class >> interpretNextInstructionFor: aClient in: anInstructionStream [
 	"Double-dispatch through the encoder to select the correct instruction set decoder."

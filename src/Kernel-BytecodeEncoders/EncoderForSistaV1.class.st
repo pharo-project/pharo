@@ -418,6 +418,20 @@ EncoderForSistaV1 class >> instVarWriteScanBlockFor: varIndexCode using: scanner
 		  and: [scanner secondByte + prevext = varIndexCode]]]
 ]
 
+{ #category : #accessing }
+EncoderForSistaV1 class >> instructionSizeAt: pc of: aMethod [
+
+	| tempPc bytecode accumalatedSize |
+	tempPc := pc.
+	bytecode := aMethod at: tempPc.
+	accumalatedSize := 0.
+	[ self isExtension: bytecode ] whileTrue: [ 
+		accumalatedSize := accumalatedSize + (self bytecodeSize: bytecode).
+		tempPc := tempPc + (self bytecodeSize: bytecode).
+		bytecode := aMethod at: tempPc ].
+	^ accumalatedSize := accumalatedSize + (self bytecodeSize: bytecode)
+]
+
 { #category : #'instruction stream support' }
 EncoderForSistaV1 class >> interpretNextInstructionFor: aClient in: anInstructionStream [
 	"Double-dispatch through the encoder to select the correct instruction set decoder."
