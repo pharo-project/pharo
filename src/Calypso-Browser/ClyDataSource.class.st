@@ -539,12 +539,12 @@ ClyDataSource >> updateItems: dataSourceItems [
 ]
 
 { #category : #'drag and drop' }
-ClyDataSource >> wantsDropElements: aPassanger type: type index: rowIndex [
+ClyDataSource >> wantsDropElements: aPassenger type: type index: rowIndex [
 	| dropTargetItem result |
 	rowIndex = 0 | (rowIndex > self numberOfRows) ifTrue: [ ^false ].
 	self dragTransferType == type ifFalse: [ ^false ].
 	dropTargetItem := self elementAt: rowIndex.		
-	result := queryView wantsDropPassenger: aPassanger at: dropTargetItem.
+	result := queryView wantsDropPassenger: aPassenger at: dropTargetItem.
 	
 	(result and: [ dropTargetItem hasChildren and: [ self isUserFocusingOnItem: dropTargetItem ]])  ifTrue: [ dropTargetItem expand ].
 	^result
