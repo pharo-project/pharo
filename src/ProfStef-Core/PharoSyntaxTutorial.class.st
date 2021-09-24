@@ -160,7 +160,7 @@ Blocks are anonymous methods that can be stored into variables and executed on d
 
 Blocks are delimited by square brackets: []"
 
-[GTPlayground open].
+[StPlayground open].
 
 "does not open a Browser because the block is not executed.
 
@@ -172,7 +172,7 @@ Here is a block that adds 2 to its argument (its argument is named x):"
 
 [:x | x+2] value: 5.
 
-[GTPlayground open] value.
+[StPlayground open] value.
 
 [:x | x+2] value: 10.
 
@@ -257,12 +257,11 @@ lesson:
 Note you can run this tutorial again by evaluating: ''ProfStef go''. 
 ''ProfStef previous'' returns to the previous lesson.
 
-You can also Do it using the keyboard shortcut ''Ctrl + D''
-(this varies according to your operating system/computer: it can be ''Cmd + D'' or ''Alt + D''). 
+You can also Do it using the keyboard shortcut ''Ctrl + D'' (or ''Cmd + D'' on MacOS). 
 
 Try to evaluate these expressions:"
 
-GTPlayground open.
+StPlayground open.
 
 SmalltalkImage current aboutThisSystem.
 
@@ -283,9 +282,9 @@ For example, select the text below, open the menu and click on ''Inspect it'':"
 
 1 / 2.
 
-"You''ve seen the keyboard keys next to the ''Inspect it''? It indicates the Ctrl- (or Cmd- or Alt-) shortcut to execute this command.
+"You''ve seen the keyboard keys next to the ''Inspect it''? It indicates the Ctrl- (or Cmd-) shortcut to execute this command.
 
-Try ''Ctrl + I'' (or ''Cmd + I'' or ''Alt + I'') on the following expressions:"
+Try ''Ctrl + I'' (or ''Cmd + I'') on the following expressions:"
 
 DateAndTime today.
 
@@ -615,9 +614,9 @@ For example, select the text below, open the menu and click on ''Print it'':"
 
 1 + 2.
 
-"You''ve seen the keyboard keys next to the ''Print it''? It indicates the Ctrl- (or Cmd- or Alt-) shortcut to execute this command.
+"You''ve seen the keyboard keys next to the ''Print it''? It indicates the Ctrl- (or Cmd-) shortcut to execute this command.
 
-Try ''Ctrl + P'' (or ''Cmd + P'' or ''Alt + P'') on the following expressions:"
+Try ''Ctrl + P'' (or ''Cmd + P'') on the following expressions:"
 
 Date today.
 
@@ -639,7 +638,7 @@ lesson:
 
 Take a look at method #ifFalse:ifTrue: source code of class True:"
 
-(True>>#ifFalse:ifTrue:) definition.
+(True>>#ifFalse:ifTrue:) sourceCode.
 
 "Or just its comment:"
 
