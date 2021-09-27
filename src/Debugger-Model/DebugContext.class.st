@@ -149,6 +149,12 @@ DebugContext >> receiverClass [
 
 { #category : #'evaluating actions' }
 DebugContext >> recompileCurrentMethodTo: aText notifying: aNotifyer [
+	
+	^ self recompileCurrentMethodTo: aText notifying: aNotifyer acceptFaultyCode: false
+]
+
+{ #category : #'evaluating actions' }
+DebugContext >> recompileCurrentMethodTo: aText notifying: aNotifyer acceptFaultyCode: acceptFaultyCode [
 	| classOrTraitOfMethod selector |
 	
 	selector := self selectedClass compiler parseSelector: aText.
@@ -157,12 +163,24 @@ DebugContext >> recompileCurrentMethodTo: aText notifying: aNotifyer [
 	
 	classOrTraitOfMethod ifNil:[ ^ nil].
 		
-	selector := classOrTraitOfMethod 
+	[selector := classOrTraitOfMethod 
 		compile: aText 
 		classified: self selectedMessageCategoryName 
-		notifying: aNotifyer.
-	^ selector 
-		ifNotNil: [ classOrTraitOfMethod compiledMethodAt: selector ]
+		notifying: aNotifyer.]
+		on: OCUndeclaredVariableWarning do: [ :e | | errorCompilationResult error |
+			acceptFaultyCode
+				ifTrue: [ e resume: e declareUndefined ]
+				ifFalse: [ 
+					errorCompilationResult := ErrorCompilationResult new.
+					error := CompilerError new.
+					error exception: e freeze.
+					errorCompilationResult addError: error.
+					^ errorCompilationResult ] ].
+	
+	^ selector ifNotNil: [ 
+		SuccessCompilationResult new
+			method: (classOrTraitOfMethod compiledMethodAt: selector);
+			yourself ]
 		
 ]
 
