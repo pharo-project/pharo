@@ -421,15 +421,15 @@ EncoderForSistaV1 class >> instVarWriteScanBlockFor: varIndexCode using: scanner
 { #category : #accessing }
 EncoderForSistaV1 class >> instructionSizeAt: pc of: aMethod [
 
-	| tempPc bytecode accumalatedSize |
+	| tempPc bytecode accumulatedSize |
 	tempPc := pc.
 	bytecode := aMethod at: tempPc.
-	accumalatedSize := 0.
+	accumulatedSize := 0.
 	[ self isExtension: bytecode ] whileTrue: [ 
-		accumalatedSize := accumalatedSize + (self bytecodeSize: bytecode).
+		accumulatedSize := accumulatedSize + (self bytecodeSize: bytecode).
 		tempPc := tempPc + (self bytecodeSize: bytecode).
 		bytecode := aMethod at: tempPc ].
-	^ accumalatedSize := accumalatedSize + (self bytecodeSize: bytecode)
+	^ accumulatedSize := accumulatedSize + (self bytecodeSize: bytecode)
 ]
 
 { #category : #'instruction stream support' }
