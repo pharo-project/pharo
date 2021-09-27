@@ -92,6 +92,7 @@ WriteBarrierTest >> testMutateByteArrayUsingByteAtPut [
 { #category : #'tests - object' }
 WriteBarrierTest >> testMutateByteArrayUsingDoubleAtPut [
 	| guineaPig |
+	<expectedFailure>
 	guineaPig := ByteArray new: 8.
 	guineaPig beReadOnlyObject.
 	
