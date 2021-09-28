@@ -76,7 +76,7 @@ This comment has a bang!! Bang!! Bang!!!
 { #category : #data }
 MCStWriterTest >> expectedClassMethodDefinition [
 
-	^ '\s*!MCMockClassA class methodsFor\: ''as yet unclassified'' stamp\: ''[/:\s\w]*''!\s*one\s*\^ 1! !\s*'.
+	^ '\s*!MCMockClassA class methodsFor\: ''accessing'' stamp\: ''[/:\s\w]*''!\s*one\s*\^ 1! !\s*'.
 ]
 
 { #category : #testing }
