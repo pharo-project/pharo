@@ -578,9 +578,3 @@ RGTraitV2Strategy >> storeName [
 
 	^ 'RGClass'
 ]
-
-{ #category : #'accessing - deprecated parallel hierarchy' }
-RGTraitV2Strategy >> theMetaClass [
-
-	^ self owner metaclass
-]

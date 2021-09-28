@@ -521,14 +521,24 @@ RGBehaviorDefinition >> superclassName: aSymbol [
 
 { #category : #'accessing - deprecated parallel hierarchy' }
 RGBehaviorDefinition >> theMetaClass [
-
-	self subclassResponsibility
+	"This method is deprecated so consider to migrate."
+	
+	self
+		deprecated: 'Please use #classSide instead'
+		transformWith: '`@receiver theMetaClass' -> '`@receiver classSide'.
+		
+	^ self classSide
 ]
 
 { #category : #'accessing - deprecated parallel hierarchy' }
 RGBehaviorDefinition >> theNonMetaClass [
-
-	self subclassResponsibility
+	"This method is deprecated so consider to migrate."
+	
+	self
+		deprecated: 'Please use #instanceSide instead'
+		transformWith: '`@receiver theNonMetaClass' -> '`@receiver instanceSide'.
+	
+	^ self instanceSide
 ]
 
 { #category : #annotations }

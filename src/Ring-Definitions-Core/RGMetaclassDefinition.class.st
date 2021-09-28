@@ -103,15 +103,3 @@ RGMetaclassDefinition >> storeOn: aStream [
 	
 
 ]
-
-{ #category : #'accessing - deprecated parallel hierarchy' }
-RGMetaclassDefinition >> theMetaClass [
-
-	^self
-]
-
-{ #category : #'accessing - deprecated parallel hierarchy' }
-RGMetaclassDefinition >> theNonMetaClass [
-
-	^baseClass
-]

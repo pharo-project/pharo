@@ -221,8 +221,3 @@ RGMetaclassStrategy >> storeName [
 
 	^ 'RGMetaclass'
 ]
-
-{ #category : #'private - backend access' }
-RGMetaclassStrategy >> theNonMetaClass [
-	^self baseClass
-]

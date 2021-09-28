@@ -4,6 +4,14 @@ Class {
 	#category : #'Ring-Core-Kernel'
 }
 
+{ #category : #description }
+RGLayout class >> subclassDefiningSymbol [
+	"Answer a keyword that describes the receiver's kind of subclass
+	Note: this is for printing the ST80 style class definiton."
+	
+	^ #subclass:
+]
+
 { #category : #'managing container' }
 RGLayout >> addoptToParentStub [
 
