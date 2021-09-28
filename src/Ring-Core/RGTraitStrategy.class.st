@@ -269,11 +269,6 @@ RGTraitStrategy >> storeName [
 ]
 
 { #category : #accessing }
-RGTraitStrategy >> theMetaClass [
-	^ self classTrait
-]
-
-{ #category : #accessing }
 RGTraitStrategy >> traitTransformationString [
 
 	^ self owner name

@@ -141,11 +141,6 @@ RGMetaclassTraitStrategy >> storeName [
 ]
 
 { #category : #'private - backend access' }
-RGMetaclassTraitStrategy >> theNonMetaClass [
-	^self baseTrait
-]
-
-{ #category : #'private - backend access' }
 RGMetaclassTraitStrategy >> traitTransformationString [		
 		
 	^ self owner name 

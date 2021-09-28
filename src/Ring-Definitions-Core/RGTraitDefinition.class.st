@@ -142,18 +142,6 @@ RGTraitDefinition >> stamp: aString [
 						 stamp: aString ]
 ]
 
-{ #category : #'accessing - deprecated parallel hierarchy' }
-RGTraitDefinition >> theMetaClass [
-
-	^metaClass
-]
-
-{ #category : #'accessing - deprecated parallel hierarchy' }
-RGTraitDefinition >> theNonMetaClass [
-
-	^self
-]
-
 { #category : #behavior }
 RGTraitDefinition >> withMetaclass [
 	"Registers explicitly the metaclass of a trait"
