@@ -36,6 +36,14 @@ LessonView class >> menuOn: aBuilder [
 
 ]
 
+{ #category : #accessing }
+LessonView >> bindings [
+
+	"dynamic variable binding not needed for Lessons"
+
+	^ Dictionary new
+]
+
 { #category : #gui }
 LessonView >> buildText [
 	| scrolledText |
@@ -75,6 +83,7 @@ LessonView >> initialize [
 	window := self buildWindow.
 	shoutMorph := self buildText.
 	window addMorph: shoutMorph frame: (0 @ 0 corner: 1 @ 1).
+	window extent: 600 @ 450.
 ]
 
 { #category : #testing }

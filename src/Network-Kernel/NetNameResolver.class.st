@@ -251,7 +251,6 @@ NetNameResolver class >> localAddressString [
 NetNameResolver class >> localHostAddress [
 	"Return the local address of this host."
 	"NetNameResolver localHostAddress"
-	<todo>
 	"On Mac the primitive is buggy and can return an empty IP address. Use a standard value in that case"
 		
 	| primAddress |

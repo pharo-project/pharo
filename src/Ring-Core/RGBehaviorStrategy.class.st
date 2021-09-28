@@ -309,7 +309,22 @@ RGBehaviorStrategy >> isTraitStrategy [
 RGBehaviorStrategy >> kindOfSubclass [
 	"Answer a String that is the keyword that describes the receiver's kind of subclass
 	Note: this is for printing the ST80 style class definiton, see #subclassDefiningSymbol"
-	self incompatibleBehaviorType
+	
+	^ ' ', self layout class subclassDefiningSymbol, ' '
+]
+
+{ #category : #accessing }
+RGBehaviorStrategy >> layout [
+
+	^ self backend forBehavior layoutFor: self owner
+]
+
+{ #category : #accessing }
+RGBehaviorStrategy >> layout: anRGLayout [
+
+	self owner announceDefinitionChangeDuring: [ 
+		self backend forBehavior setLayoutFor: self owner to: anRGLayout ].
+
 ]
 
 { #category : #'private - backend access' }
@@ -397,14 +412,24 @@ RGBehaviorStrategy >> storeName [
 
 { #category : #'accessing - deprecated parallel hierarchy' }
 RGBehaviorStrategy >> theMetaClass [
-
-	^ self owner
+	"This method is deprecated so consider to migrate."
+	
+	self
+		deprecated: 'Please use #classSide instead'
+		transformWith: '`@receiver theMetaClass' -> '`@receiver classSide'.
+	
+	^ self classSide
 ]
 
 { #category : #'accessing - deprecated parallel hierarchy' }
 RGBehaviorStrategy >> theNonMetaClass [
-
-	^ self owner
+	"This method is deprecated so consider to migrate."
+	
+	self
+		deprecated: 'Please use #instanceSide instead'
+		transformWith: '`@receiver theNonMetaClass' -> '`@receiver instanceSide'.
+	
+	^ self instanceSide
 ]
 
 { #category : #variables }

@@ -65,7 +65,6 @@ HelpBrowser class >> menuCommandOn: aBuilder [
 
 { #category : #ui }
 HelpBrowser class >> menuOn: aBuilder [
-	<HelpBrowserContextMenu>
 	
 	(aBuilder item: #'Do it' translated)
 		keyText: 'd';

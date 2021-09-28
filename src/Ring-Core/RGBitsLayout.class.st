@@ -4,6 +4,14 @@ Class {
 	#category : #'Ring-Core-Kernel'
 }
 
+{ #category : #description }
+RGBitsLayout class >> subclassDefiningSymbol [
+	"Answer a keyword that describes the receiver's kind of subclass
+	Note: this is for printing the ST80 style class definiton."
+	
+	^ #variableWordSubclass:
+]
+
 { #category : #'testing - types' }
 RGBitsLayout >> isBitsLayout [
 
