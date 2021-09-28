@@ -8,8 +8,9 @@ Class {
 	#category : #'Metacello-Platform'
 }
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 MetacelloPharoPlatform class >> initialize [
+
   self select
 
 

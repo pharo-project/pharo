@@ -14,31 +14,31 @@ Class {
 	#category : #MonticelloMocks
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MCMockClassA class >> cVar [
 	^ CVar
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MCMockClassA class >> initializationOrder [
 
 	^ InitializationOrder
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'class initialization' }
 MCMockClassA class >> initialize [
 	CVar := #initialized.
-	InitializationOrder := 1.
+	InitializationOrder := 1
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MCMockClassA class >> one [
 
 	^ 1
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MCMockClassA class >> touchCVar [
 	CVar := #touched
 ]

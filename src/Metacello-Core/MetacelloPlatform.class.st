@@ -18,17 +18,17 @@ MetacelloPlatform class >> current [
 	^ Current
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 MetacelloPlatform class >> initialize [
   "noop ... use #select"
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 MetacelloPlatform class >> select [
   Current := self new
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 MetacelloPlatform class >> unselect [
   MetacelloPlatform current class = self
     ifTrue: [ Current := nil ]

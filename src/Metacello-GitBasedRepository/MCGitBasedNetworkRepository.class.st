@@ -87,7 +87,7 @@ MCGitBasedNetworkRepository class >> downloadCacheKey: projectPath version: vers
   ^ projectPath , ':::' , versionString
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 MCGitBasedNetworkRepository class >> flushDownloadCache [
   "self flushDownloadCache"
 
@@ -99,9 +99,8 @@ MCGitBasedNetworkRepository class >> flushProjectEntry: projectPath version: ver
     self downloadCache removeKey: (self downloadCacheKey: projectPath version: versionString) ifAbsent: [  ]
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 MCGitBasedNetworkRepository class >> initialize [
-  "self initialize"
 
 	(Smalltalk classNamed: #SessionManager)
 		ifNotNil: [ :c | c default perform: #registerNetworkClassNamed: with: self name ]
@@ -277,7 +276,7 @@ MCGitBasedNetworkRepository class >> projectZipUrlFor: projectPath versionString
   self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : #'private - initialization' }
 MCGitBasedNetworkRepository class >> resetCacheDirectoryIfInvalid [
   "Reset if invalid"
 
