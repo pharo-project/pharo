@@ -15,7 +15,7 @@ MCMockASubclass class >> initialize [
 
 	InitializationOrder := InitializationOrder
 		ifNil: [ -100 ] "let the test fail"
-		ifNotNil: [ InitializationOrder + 1 ] 
+		ifNotNil: [ InitializationOrder + 1 ]
 ]
 
 { #category : #'as yet unclassified' }
