@@ -45,13 +45,15 @@ JobProgressBarMorph class >> isInterruptable: anObject [
 
 { #category : #initialization }
 JobProgressBarMorph >> addInterruptionButton [
+
 	self isInterruptable ifFalse: [ ^ self ].
 
-	self addMorphBack: (self iconNamed: #stopIcon) asMorph.
+	self addMorphBack: (self iconNamed: #stopIcon) asMorph
 ]
 
 { #category : #accessing }
 JobProgressBarMorph >> decrement [
+
 	^ progressBar decrement
 ]
 
@@ -62,6 +64,7 @@ JobProgressBarMorph >> increment [
 
 { #category : #initialization }
 JobProgressBarMorph >> initialize [
+
 	super initialize.
 	progressBar := ProgressBarMorph new.
 	progressBar hResizing: #spaceFill.
@@ -80,26 +83,31 @@ JobProgressBarMorph >> initialize [
 ]
 
 { #category : #testing }
-JobProgressBarMorph >> isInterruptable [ 
+JobProgressBarMorph >> isInterruptable [
+
 	^ self class isInterruptable
 ]
 
 { #category : #accessing }
 JobProgressBarMorph >> progress [
+
 	^ progressBar value / 100
 ]
 
 { #category : #accessing }
 JobProgressBarMorph >> progress: aNormalizedNumber [
+
 	^ progressBar value: aNormalizedNumber * 100
 ]
 
 { #category : #evaluating }
 JobProgressBarMorph >> value [
+
 	^ progressBar value
 ]
 
 { #category : #accessing }
 JobProgressBarMorph >> value: aNumber [
+
 	^ progressBar value: aNumber
 ]

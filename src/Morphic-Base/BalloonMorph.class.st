@@ -96,39 +96,44 @@ BalloonMorph class >> getVertices: bounds [
 		with: corners first + (0 - bounds width // 4 @ (bounds height // 2))) , corners
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'class initialization' }
 BalloonMorph class >> initialize [ 
-	"BalloonMorph initialize"
-	self setBalloonColorTo: BalloonMorph defaultBalloonColor.
+ 
+	self setBalloonColorTo: self defaultBalloonColor.
 	self balloonFont: StandardFonts defaultFont
 ]
 
 { #category : #utilities }
-BalloonMorph class >> setBalloonColorTo: aColor [ 
-	aColor ifNotNil: [BalloonColor := aColor]
+BalloonMorph class >> setBalloonColorTo: aColor [
+
+	aColor ifNotNil: [ BalloonColor := aColor ]
 ]
 
 { #category : #'instance creation' }
 BalloonMorph class >> string: str for: morph [
+
 	^ self string: str for: morph corner: #bottomLeft
 ]
 
 { #category : #'instance creation' }
-BalloonMorph class >> string: str for: morph corner: cornerName [ 
+BalloonMorph class >> string: str for: morph corner: cornerName [
 	"Make up and return a balloon for morph. Find the quadrant that 
 	clips the text the least, using cornerName as a tie-breaker. tk 9/12/97"
+
 	| tm vertices |
 	tm := self getTextMorph: str for: morph.
-	tm composeToBounds. 
+	tm composeToBounds.
 	vertices := self getVertices: tm bounds.
 	vertices := self
-				getBestLocation: vertices
-				for: morph
-				corner: cornerName.
-	^ self new color: self balloonColor;
-		 setVertices: vertices;
-		 addMorph: tm;
-		 setTarget: morph
+		            getBestLocation: vertices
+		            for: morph
+		            corner: cornerName.
+	^ (self new)
+		  color: self balloonColor;
+		  setVertices: vertices;
+		  addMorph: tm;
+		  setTarget: morph;
+		  yourself
 ]
 
 { #category : #menus }
@@ -153,58 +158,62 @@ BalloonMorph >> balloonColor: aColor [
 
 { #category : #accessing }
 BalloonMorph >> balloonOwner [
-	^balloonOwner
+
+	^ balloonOwner
 ]
 
 { #category : #initialization }
 BalloonMorph >> defaultBorderColor [
-	"answer the default border color/fill style for the receiver"
-	^ self defaultColor muchDarker"Color black"
+	"Answer the default border color/fill style for the receiver"
+
+	^ self defaultColor muchDarker
 ]
 
 { #category : #initialization }
 BalloonMorph >> defaultBorderWidth [
-	"answer the default border width for the receiver"
+	"Answer the default border width for the receiver"
+	
 	^ 1
 ]
 
 { #category : #initialization }
 BalloonMorph >> defaultColor [
-	"answer the default color/fill style for the receiver"
+	"Answer the default color/fill style for the receiver"
+	
 	^ self balloonColor
 ]
 
 { #category : #initialization }
 BalloonMorph >> initialize [
-	"initialize the state of the receiver"
+	"Initialize the state of the receiver"
 	
 	balloonColor := self class balloonColor.
 	super initialize.
 	self beSmoothCurve.
-	offsetFromTarget := 0@0.
+	offsetFromTarget := 0@0
 ]
 
 { #category : #'wiw support' }
 BalloonMorph >> morphicLayerNumber [
+	"Helpful for insuring some morphs always appear in front of or behind others.
+	smaller numbers are in front. Balloons are very front-like things"
 
-	"helpful for insuring some morphs always appear in front of or behind others.
-	smaller numbers are in front"
-
-	^5		"Balloons are very front-like things"
+	^ 5		 
 ]
 
 { #category : #initialization }
 BalloonMorph >> popUpFor: aMorph hand: aHand [
 	"Pop up the receiver as balloon help for the given hand"
+	
 	balloonOwner := aMorph.
-	self popUpForHand: aHand.
+	self popUpForHand: aHand
 ]
 
 { #category : #initialization }
 BalloonMorph >> popUpForHand: aHand [
 	"Pop up the receiver as balloon help for the given hand"
+	
 	| worldBounds |
-
 	self lock.
 	self fullBounds. "force layout"
 	self setProperty: #morphicLayerNumber toValue: self morphicLayerNumber.
@@ -214,24 +223,26 @@ BalloonMorph >> popUpForHand: aHand [
 	this, flashing happens, believe me!"
 	((worldBounds := aHand world bounds) containsRect: self bounds) ifFalse:
 		[self bounds: (self bounds translatedToBeWithin: worldBounds)].
-	aHand balloonHelp: self.
+	aHand balloonHelp: self
 
 ]
 
 { #category : #private }
 BalloonMorph >> setTarget: aMorph [
-	(target := aMorph) ifNotNil: [offsetFromTarget := self position - target position]
+
+	(target := aMorph) ifNotNil: [ 
+		offsetFromTarget := self position - target position ]
 ]
 
 { #category : #stepping }
 BalloonMorph >> step [
 	"Move with target."
 
-	target ifNotNil: [self position: target position + offsetFromTarget].
-
+	target ifNotNil: [ self position: target position + offsetFromTarget ]
 ]
 
 { #category : #stepping }
 BalloonMorph >> stepTime [
-	^ 0  "every cycle"
+
+	^ 0 "every cycle"
 ]

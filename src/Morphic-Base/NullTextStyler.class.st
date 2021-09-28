@@ -22,7 +22,8 @@ NullTextStyler >> font: aFont [
 
 { #category : #formatting }
 NullTextStyler >> format: aText [
-	^aText
+
+	^ aText
 ]
 
 { #category : #styling }
@@ -36,6 +37,7 @@ NullTextStyler >> styleInBackgroundProcess: aText [
 
 { #category : #private }
 NullTextStyler >> stylingEnabled [
+
 	^ false
 ]
 
