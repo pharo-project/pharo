@@ -37,11 +37,13 @@ ParagraphSelectionBlock >> displayInLine: line on: aCanvas [
 
 { #category : #accessing }
 ParagraphSelectionBlock >> first [
+
 	^ first
 ]
 
 { #category : #initialization }
 ParagraphSelectionBlock >> first: firstCharBlock last: lastCharBlock color: aColor [
+
 	first := firstCharBlock.
 	last := lastCharBlock.
 	color := aColor
@@ -49,5 +51,6 @@ ParagraphSelectionBlock >> first: firstCharBlock last: lastCharBlock color: aCol
 
 { #category : #accessing }
 ParagraphSelectionBlock >> last [
+
 	^ last
 ]
