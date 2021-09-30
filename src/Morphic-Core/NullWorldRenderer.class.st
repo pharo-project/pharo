@@ -10,15 +10,14 @@ Class {
 
 { #category : #accessing }
 NullWorldRenderer class >> isApplicableFor: aWorld [
-
 	"This worldRenderer is always applicable"
+
 	^ true
 ]
 
 { #category : #operations }
 NullWorldRenderer >> activateCursor: aCursor withMask: maskForm [
-
-	"We don't activate nothing"
+	"Nothing to activate here"
 ]
 
 { #category : #accessing }
@@ -32,17 +31,17 @@ NullWorldRenderer >> checkForNewScreenSize [
 
 ]
 
-{ #category : #initialization }
+{ #category : #utilities }
 NullWorldRenderer >> convertWindowMouseEventPosition: aPosition [
 
 	^ aPosition
 ]
 
-{ #category : #activation }
+{ #category : #private }
 NullWorldRenderer >> deactivate [
 ]
 
-{ #category : #activation }
+{ #category : #private }
 NullWorldRenderer >> doActivate [
 ]
 

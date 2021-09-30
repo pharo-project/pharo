@@ -50,7 +50,7 @@ MorphicUIManager class >> uiProcess [
 { #category : #private }
 MorphicUIManager >> activate [
 
-	self currentWorld worldState worldRenderer: (AbstractWorldRenderer detectCorrectOneforWorld: self currentWorld).
+	self currentWorld worldState worldRenderer: (AbstractWorldRenderer detectCorrectOneForWorld: self currentWorld).
 	self currentWorld currentCursor: self currentWorld currentCursor.
 		
 	self currentWorld ifNotNil: [:world | world restoreMorphicDisplay].
