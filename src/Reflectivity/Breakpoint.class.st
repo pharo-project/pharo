@@ -32,61 +32,69 @@ Class {
 	#category : #'Reflectivity-Breakpoints'
 }
 
-{ #category : #all }
+{ #category : #accessing }
 Breakpoint class >> addBreakpoint: aBreakpoint [
+
 	self all add: aBreakpoint.
 	self notifyBreakpointAdded: aBreakpoint
 ]
 
-{ #category : #all }
-Breakpoint class >> all [ 
+{ #category : #accessing }
+Breakpoint class >> all [
+
 	^ AllBreakpoints ifNil: [ AllBreakpoints := OrderedCollection new ]
 ]
 
 { #category : #'API - object-centric' }
 Breakpoint class >> breakOn: aSelector inObject: anObject [
-	|ast|
+
+	| ast |
 	ast := (anObject class lookupSelector: aSelector) ast.
-	^self breakOnAST: ast inObject: anObject
+	^ self breakOnAST: ast inObject: anObject
 ]
 
 { #category : #'API - object-centric' }
 Breakpoint class >> breakOnAST: aNode inObject: anObject [
-	|bp|	
-	bp := self new.
-	bp node: aNode.
-	bp scopeTo: anObject.
-	bp install.
-	^bp
+
+	| breakpoint |
+	breakpoint := self new.
+	breakpoint node: aNode.
+	breakpoint scopeTo: anObject.
+	breakpoint install.
+	^ breakpoint
 ]
 
-{ #category : #all }
+{ #category : #accessing }
 Breakpoint class >> browseAll [
 	<script>
+	
 	| methods |
 	methods := self all flatCollect: [ :breakpoint | breakpoint link methods ].
 	Smalltalk tools messageList browse: methods
 ]
 
-{ #category : #checkCondition }
+{ #category : #testing }
 Breakpoint class >> checkBreakConditionValue: aValue [
+
 	(aValue isKindOf: Boolean) ifTrue: [ ^ aValue ].
 	Error signal: 'Breakpoint condition returned a non boolean value'.
 ]
 
 { #category : #cleanup }
 Breakpoint class >> cleanUp [
+
 	self removeAll
 ]
 
-{ #category : #all }
+{ #category : #'world menu' }
 Breakpoint class >> debugWorldMenuOn: aBuilder [
 	<worldMenu>
+	
 	(aBuilder item: #'Remove all Breakpoints')
 		parent: #Breakpoints;
 		order: 2;
 		help: 'Remove all the breakpoints of the image.';
-		action: [ Breakpoint removeAll ]
+		action: [ self removeAll ]
 ]
 
 { #category : #'system announcements' }
@@ -108,7 +116,7 @@ Breakpoint class >> handleMethodRemoved: anAnnouncement [
 	self removeFromMethod: anAnnouncement method
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 Breakpoint class >> initialize [
 	self registerInterestToSystemAnnouncement 
 ]
@@ -127,6 +135,7 @@ Breakpoint class >> isInstalledIn: aMethod [
 
 { #category : #'observers - experimental' }
 Breakpoint class >> notifyBreakpointAdded: aBreakpoint [
+
 	| announcement |
 	announcement := BreakpointAdded 
 		on: aBreakpoint
@@ -137,6 +146,7 @@ Breakpoint class >> notifyBreakpointAdded: aBreakpoint [
 
 { #category : #'observers - experimental' }
 Breakpoint class >> notifyBreakpointHit: aBreakpoint inContext: aContext node: node [
+
 	| announcement |
 	announcement := BreakpointHit
 		on: aBreakpoint
@@ -146,6 +156,7 @@ Breakpoint class >> notifyBreakpointHit: aBreakpoint inContext: aContext node: n
 
 { #category : #'observers - experimental' }
 Breakpoint class >> notifyBreakpointRemoved: aBreakpoint fromNodes: nodes [
+
 	| announcement |
 	announcement := BreakpointRemoved
 		on: aBreakpoint
@@ -167,20 +178,24 @@ Breakpoint class >> registerInterestToSystemAnnouncement [
 Breakpoint class >> registerObserver: anObject [
 	"Do not use this method, it is there for compatibility with old users.
 	Instead, register your object yourself to 'SystemAnnouncer uniqueInstance' like below, but only for the announcements you need"
-	SystemAnnouncer uniqueInstance when: BreakpointAdded send: #update: to: anObject.
-	SystemAnnouncer uniqueInstance when: BreakpointHit send: #update: to: anObject.
-	SystemAnnouncer uniqueInstance when: BreakpointRemoved send: #update: to: anObject.
+	
+	SystemAnnouncer uniqueInstance 
+		when: BreakpointAdded send: #update: to: anObject;
+		when: BreakpointHit send: #update: to: anObject;
+		when: BreakpointRemoved send: #update: to: anObject
 	
 ]
 
 { #category : #cleanup }
 Breakpoint class >> removeAll [ 
 	<script>
+	
 	self all copy do: #remove
 ]
 
-{ #category : #all }
+{ #category : #accessing }
 Breakpoint class >> removeBreakpoint: aBreakpoint [
+
 	| nodes |
 	nodes := aBreakpoint link nodes copy.
 	self all remove: aBreakpoint.
@@ -189,7 +204,8 @@ Breakpoint class >> removeBreakpoint: aBreakpoint [
 
 { #category : #cleanup }
 Breakpoint class >> removeFrom: aNode [
-	aNode breakpoints do: [:breakpoint| breakpoint remove]
+
+	aNode breakpoints do: [ :breakpoint | breakpoint remove ]
 ]
 
 { #category : #cleanup }
@@ -205,11 +221,13 @@ Breakpoint class >> removeFromMethod: aMethod [
 Breakpoint class >> unregisterObserver: anObject [
 	"Do not use this method, it is there for compatibility with old users.
 	Instead, unsubscribe yourself from 'SystemAnnouncer uniqueInstance' directly (like shown below)"
+	
 	SystemAnnouncer uniqueInstance unsubscribe: anObject
 ]
 
 { #category : #api }
 Breakpoint >> always [
+
 	self link: self breakLink
 
 
@@ -218,6 +236,7 @@ Breakpoint >> always [
 { #category : #api }
 Breakpoint >> breakInContext: aContext node: aNode [
 	 <debuggerCompleteToSender>
+	
 	 self class notifyBreakpointHit: self inContext: aContext node: aNode.
 	 self isEnabled ifFalse: [ ^ self ].
 	 self oneShot ifTrue: [ self disable ].
@@ -236,12 +255,14 @@ Breakpoint >> breakLink [
 ]
 
 { #category : #links }
-Breakpoint >> breakLinkConditional [	
+Breakpoint >> breakLinkConditional [
+
 	^self breakLink condition: condition arguments: #(context)
 ]
 
 { #category : #api }
 Breakpoint >> condition: aCondition [
+
 	condition := aCondition.
 	self link: self breakLinkConditional
 ]
@@ -265,6 +286,7 @@ Breakpoint >> initialize [
 
 { #category : #install }
 Breakpoint >> install [
+
 	self setAsNodeProperty.
 	self isObjectCentric
 		ifTrue: [ self targetInstance link: self link toAST: self node.
@@ -276,71 +298,85 @@ Breakpoint >> install [
 
 { #category : #testing }
 Breakpoint >> isEnabled [
-	^enabled ifNil:[enabled := true]
+
+	^ enabled ifNil: [ enabled := true ]
 ]
 
 { #category : #testing }
 Breakpoint >> isObjectCentric [
-	^self targetInstance notNil
+
+	^ self targetInstance notNil
 ]
 
 { #category : #testing }
 Breakpoint >> isVariableBreakpoint [
-	^false
+
+	^ false
 ]
 
 { #category : #accessing }
 Breakpoint >> level [
-	^level
+
+	^ level
 ]
 
 { #category : #accessing }
 Breakpoint >> level: aLevel [
+
 	level := aLevel
 ]
 
 { #category : #accessing }
 Breakpoint >> link [
-	^link ifNil: [ link := self breakLink ]
+
+	^ link ifNil: [ link := self breakLink ]
 ]
 
 { #category : #accessing }
 Breakpoint >> link: aMetaLink [
+
 	link := aMetaLink
 ]
 
 { #category : #accessing }
-Breakpoint >> node [ 
-	 ^ node
+Breakpoint >> node [
+
+	^ node
 ]
 
 { #category : #accessing }
 Breakpoint >> node: aNode [
+
 	node := aNode
 ]
 
 { #category : #api }
 Breakpoint >> once [
+
 	oneShot := true
 ]
 
 { #category : #accessing }
 Breakpoint >> oneShot [
-	^oneShot ifNil:[oneShot := false]
+
+	^ oneShot ifNil: [ oneShot := false ]
 ]
 
 { #category : #accessing }
 Breakpoint >> options [
-	^options
+
+	^ options
 ]
 
 { #category : #accessing }
 Breakpoint >> options: anArray [
+
 	options := anArray
 ]
 
 { #category : #removing }
 Breakpoint >> remove [
+
 	self removeFromNodeProperty.
 	self class removeBreakpoint: self.
 	link uninstall
@@ -348,37 +384,42 @@ Breakpoint >> remove [
 
 { #category : #removing }
 Breakpoint >> removeFromClass: aClass [
+
 	self class removeBreakpoint: self
 ]
 
 { #category : #removing }
 Breakpoint >> removeFromMethod: aMethod [
+
 	self remove
 ]
 
 { #category : #removing }
 Breakpoint >> removeFromNodeProperty [
+
 	self node removeBreakpoint: self
-	
 ]
 
 { #category : #api }
 Breakpoint >> scopeTo: anInstance [
+
 	self targetInstance: anInstance
 ]
 
 { #category : #install }
 Breakpoint >> setAsNodeProperty [
+
 	self node addBreakpoint: self
-	
 ]
 
 { #category : #accessing }
 Breakpoint >> targetInstance [
-	^targetInstance
+
+	^ targetInstance
 ]
 
 { #category : #accessing }
 Breakpoint >> targetInstance: anObject [
+
 	targetInstance := anObject
 ]
