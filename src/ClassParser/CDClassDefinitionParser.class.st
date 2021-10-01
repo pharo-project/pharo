@@ -83,7 +83,7 @@ CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 	"We could do this with reflection, or with a dictionary and closures.
 	I chose to use a series of if for readability only."
 	
-	(#(variableWordSubclass: ephemeronSubclass: weakSubclass: variableByteSubclass: variableSubclass: immediateSubclass: #subclass:) includes: aString)
+	(ObjectLayout allSubclassDefiningSymbols includes: aString)
 		ifTrue: [ ^ self handleClassName: aNode withType: aString  ].
 	aString =	 #instanceVariableNames:
 		ifTrue: [ ^ self handleInstanceVariablesFromNode: aNode ].
