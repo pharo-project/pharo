@@ -7,6 +7,11 @@ Class {
 	#category : #'Kernel-Layout'
 }
 
+{ #category : #description }
+ObjectLayout class >> allSubclassDefiningSymbols [
+	^self allSubclasses collect: [ :class | class subclassDefiningSymbol ] as: Set
+]
+
 { #category : #'instance creation' }
 ObjectLayout class >> extending: superLayout scope: aScope host: aClass [
 	self subclassResponsibility
