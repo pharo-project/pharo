@@ -35,7 +35,7 @@ def runTests(architecture, prefix=''){
         shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}${prefix}'"
         junit allowEmptyResults: true, testResults: "${env.STAGE_NAME}${prefix}*.xml"
         archiveArtifacts allowEmptyArchive: true, artifacts: "${env.STAGE_NAME}${prefix}*.xml", fingerprint: true
-    }finally{
+    } finally {
         // I am archiving the logs to check for crashes and errors.
         if(fileExists('PharoDebug.log')){
             shell "mv PharoDebug.log PharoDebug-${env.STAGE_NAME}${prefix}.log"
@@ -55,7 +55,7 @@ def runTests(architecture, prefix=''){
 }
 
 def shellOutput(params){
-    return (isWindows())? bat(returnStdout: true, script: params).trim() : sh(returnStdout: true, script: params).trim()
+  return (isWindows())? bat(returnStdout: true, script: params).trim() : sh(returnStdout: true, script: params).trim()
 }
 
 def notifyBuild(status){
@@ -138,33 +138,32 @@ def bootstrapImage(architectures){
       builders[architecture] = {
         dir(architecture) {
 
-        try{
+        try {
           stage ("Fetch Requirements-${architecture}") {  
             checkout scm
             // Stage 1 is to remove any artefacts, not required for Jenkins
             shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/2-download.sh"
           }
 
-        stage ("Bootstrap-${architecture}") {
-      shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/3-prepare.sh"
-            }
-
-    stage ("Full Image-${architecture}") {
-      shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/4-build.sh"
-      stash includes: "bootstrap-cache/*.zip,bootstrap-cache/*.sources,bootstrap/scripts/**", name: "bootstrap${architecture}"
-    }
-
-    if( isDevelopmentBranch() ) {
-      stage("Upload to files.pharo.org-${architecture}") {
-        dir("bootstrap-cache") {
-            shell "BUILD_NUMBER=${env.BUILD_ID} bash ../bootstrap/scripts/prepare_for_upload.sh ${architecture}"
-          sshagent (credentials: ['b5248b59-a193-4457-8459-e28e9eb29ed7']) {
-            shell "bash ../bootstrap/scripts/upload_to_files.pharo.org.sh"
+          stage ("Bootstrap-${architecture}") {
+            shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/3-prepare.sh"
           }
-        }
-      }
-    }
-    
+
+          stage ("Full Image-${architecture}") {
+            shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/4-build.sh"
+            stash includes: "bootstrap-cache/*.zip,bootstrap-cache/*.sources,bootstrap/scripts/**", name: "bootstrap${architecture}"
+          }
+
+          if( isDevelopmentBranch() ) {
+            stage("Upload to files.pharo.org-${architecture}") {
+              dir("bootstrap-cache") {
+                  shell "BUILD_NUMBER=${env.BUILD_ID} bash ../bootstrap/scripts/prepare_for_upload.sh ${architecture}"
+                sshagent (credentials: ['b5248b59-a193-4457-8459-e28e9eb29ed7']) {
+                  shell "bash ../bootstrap/scripts/upload_to_files.pharo.org.sh"
+                }
+              }
+            }
+          }
       } finally {
           shell "ls -la"
           if(fileExists('PharoDebug.log')){
@@ -183,31 +182,27 @@ def bootstrapImage(architectures){
     }
   }
   parallel builders 
-
 }
 
 def launchBenchmark(){
     node('unix'){ 
 		stage('launchBenchmark'){
-			
-		    cleanWs()
-			
+		  cleanWs()
+	
 			projectName = env.JOB_NAME
+		  //We checkout scm to have access to the log information
+		  checkout scm	
 	
-		    //We checkout scm to have access to the log information
-		    checkout scm	
-	
-		    if (env.CHANGE_ID != null){
+		  if (env.CHANGE_ID != null) {
 				//If I am in a PR the head of the repository is a merge of the base commit (the development branch) and the PR commit.
 				//I take the first parent of this commit. It is the commit in the PR 
 				commit = shellOutput('git log HEAD^1 -1 --format="%H"')
 				isPR = true
-			}else{
+			} else {
 				// If it is not a PR the commit to evaluate and put the status in github is the current commit
 				commit = shellOutput('git log -1 --format="%H"')
 				isPR = false
 			}
-	
 	
 			build job: 'pharo-benchmarks', parameters: [text(name: 'originProjectName', value: projectName), booleanParam(name: 'isPR', value: isPR), text(name: 'commit', value: commit)], wait: false
 		}
@@ -215,50 +210,51 @@ def launchBenchmark(){
 }
 
 try{
-    properties([disableConcurrentBuilds()])
+  properties([disableConcurrentBuilds()])
 
-    // We run the whole process in 64 bits all the time. 
-    // The 32 bits process is only run when a PR is integrated
-  
-    def architectures
-  
-    if(isDevelopmentBranch()){
-  	  architectures = [/*'32',*/ '64']
-    }else{
-  	  architectures = ['64']
+  // We run the whole process in 64 bits all the time. 
+  // The 32 bits process is only run when a PR is integrated
+
+  def architectures
+
+  if(isDevelopmentBranch()){
+	  architectures = [/*'32',*/ '64']
+  }else{
+	  architectures = ['64']
+  }
+
+  node('unix') {
+    timeout(60) {
+      bootstrapImage(architectures)
     }
-  
-    node('unix') {
-      timeout(60) {
-        bootstrapImage(architectures)
-      }
-    }
-    
+  }
 
-    //Testing step
-    def testers = [:]
+  //Testing step
+  def testers = [:]
 
-    def platforms = ['unix', 'osx', 'windows']
-    for (arch in architectures) {
+  def platforms = ['unix', 'osx', 'windows']
+  for (arch in architectures) {
+    // Need to bind the label variable before the closure - can't do 'for (label in labels)'
+    def architecture = arch
+    for (platf in platforms) {
       // Need to bind the label variable before the closure - can't do 'for (label in labels)'
-      def architecture = arch
-      for (platf in platforms) {
-        // Need to bind the label variable before the closure - can't do 'for (label in labels)'
-        def platform = platf
-        // Disabling the test of 32bits
-        if(arch != '32'){
-            testers["${platform}-${architecture}"] = {
-              node(platform) { stage("Tests-${platform}-${architecture}") {
-                timeout(35) {
-                  runTests(architecture)
-                  runTests(architecture, "Kernel")
-                }
-              }}
+      def platform = platf
+      // Disabling the test of 32bits
+      if (arch != '32') {
+        testers["${platform}-${architecture}"] = {
+          node(platform) { 
+            stage("Tests-${platform}-${architecture}") {
+              timeout(35) {
+                runTests(architecture)
+                runTests(architecture, "Kernel")
+              }
             }
+          }
         }
       }
     }
-    parallel testers
+  }
+  parallel testers
 
   notifyBuild("SUCCESS")
 
