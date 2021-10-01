@@ -383,6 +383,26 @@ RGMethodDefinitionTest >> testMessagesNonExistingMethodWithSource [
 ]
 
 { #category : #testing }
+RGMethodDefinitionTest >> testMethodClass [
+	| newMethod newClass |
+	
+	"When asking a Ring Method for it's methodClass, we need to not escape the model and return
+	the Ring parent. Use #realClass to escape and get the class in the Smalltalk globals"
+	
+	newClass := RGClassDefinition named: #OrderedCollection.
+	newMethod := (RGMethodDefinition named: #add:)
+		parent: newClass;
+		protocol: 'adding';
+		sourceCode:
+			'add: newObject
+									^self addLast: newObject'.
+
+	self assert: newMethod methodClass equals: newClass.
+	self assert: newMethod realClass equals: OrderedCollection.
+	
+]
+
+{ #category : #testing }
 RGMethodDefinitionTest >> testMethodEquality [
 	| newMethod newClass |
 	self assert: (OrderedCollection >> #size) asRingDefinition equals: (OrderedCollection >> #size) asRingDefinition.
