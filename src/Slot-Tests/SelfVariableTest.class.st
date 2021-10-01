@@ -1,9 +1,6 @@
 Class {
 	#name : #SelfVariableTest,
 	#superclass : #TestCase,
-	#instVars : [
-		'instVarForTest'
-	],
 	#category : #'Slot-Tests-VariablesAndSlots'
 }
 
