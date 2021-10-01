@@ -5,6 +5,14 @@ Class {
 }
 
 { #category : #tests }
+RGMetaclassStrategyTest >> testClassSide [
+
+	| anRGBehavior |
+	anRGBehavior := RGBehavior newMetaclass.
+	self assert: anRGBehavior classSide equals: anRGBehavior
+]
+
+{ #category : #tests }
 RGMetaclassStrategyTest >> testCreationByMethod [
 
 	| anRGBehavior |
@@ -117,13 +125,4 @@ RGMetaclassStrategyTest >> testStoreString [
 
 	anRGBehavior := RGMetaclass named: #SomeMetaclass.
 	self assert: anRGBehavior storeString equals: '(RGMetaclass named: #SomeMetaclass)'.	
-]
-
-{ #category : #tests }
-RGMetaclassStrategyTest >> testTheMetaclass [
-
-	| anRGBehavior |
-	
-	anRGBehavior := RGBehavior newMetaclass.
-	self assert: (anRGBehavior theMetaClass) equals: anRGBehavior.
 ]
