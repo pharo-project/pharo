@@ -284,6 +284,11 @@ CompiledCodeTest >> testReadsSelf [
 	self assert: method readsSelf.
 	method := self class compiler compile: 'method ^thisContext'.
 	self deny: method readsSelf.
+	"take care! FFI methods have a self send, but they do not have self bytecode after the first call
+	Here we test just the case of a FFI method that was not yet called to not make this test depend on FFI
+	calls"
+	method := self class compiler compile: 'status ^ self ffiCall: #(int cairo_scaled_font_status (self))'.
+	self assert: method readsSelf.
 ]
 
 { #category : #'tests - scanning' }
