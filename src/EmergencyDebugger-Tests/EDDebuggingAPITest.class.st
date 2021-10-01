@@ -51,7 +51,7 @@ EDDebuggingAPITest >> testChangeRecordsForMethod [
 	| changes |
 	self prepareMethodVersionTest.
 	changes := debugAPI
-		changeRecordsForMethod: (EDMockObjectForTests >> #mWithVersion) asHistoricalRingDefinition.
+		changeRecordsForMethod: (EDMockObjectForTests >> #mWithVersion).
 	self assert: changes size equals: 2.
 	self assert: changes first sourceCode equals: self sampleMethodSourceCodeVersion2.
 	self assert: changes second sourceCode equals: self sampleMethodSourceCodeVersion1

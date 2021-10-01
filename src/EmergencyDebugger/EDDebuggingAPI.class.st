@@ -63,8 +63,8 @@ EDDebuggingAPI class >> terminateProcesses: processes [
 EDDebuggingAPI >> changeRecordsForMethod: aCompiledMethod [
 	^ SourceFiles
 		changeRecordsFrom: aCompiledMethod sourcePointer
-		className: aCompiledMethod realClass name
-		isMeta: aCompiledMethod realClass isMeta
+		className: aCompiledMethod methodClass name
+		isMeta: aCompiledMethod methodClass isMeta
 ]
 
 { #category : #accessing }
