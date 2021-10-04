@@ -14,6 +14,11 @@ Class {
 	#category : #'ClassParser-Model'
 }
 
+{ #category : #testing }
+CDBehaviorDefinitionNode class >> isAbstract [
+	^ self == CDBehaviorDefinitionNode
+]
+
 { #category : #accessing }
 CDBehaviorDefinitionNode >> addSlot: aCDSlotNode [
 	
@@ -81,49 +86,17 @@ CDBehaviorDefinitionNode >> initialize [
 	slotNodes := OrderedCollection new
 ]
 
-{ #category : #testing }
-CDBehaviorDefinitionNode >> isBytes [
-	
-	^ layoutClass = ByteLayout
+{ #category : #accessing }
+CDBehaviorDefinitionNode >> isClassSideDefinition [
+	^ self subclassResponsibility
 ]
 
-{ #category : #testing }
-CDBehaviorDefinitionNode >> isEphemeron [
-	
-	^ layoutClass = EphemeronLayout
+{ #category : #accessing }
+CDBehaviorDefinitionNode >> isInstanceSideDefinition [
+	^ self subclassResponsibility
 ]
 
-{ #category : #testing }
-CDBehaviorDefinitionNode >> isImmediate [
-	
-	^ layoutClass = ImmediateLayout
-]
-
-{ #category : #testing }
-CDBehaviorDefinitionNode >> isNormal [
-	
-	^ layoutClass = FixedLayout
-]
-
-{ #category : #testing }
-CDBehaviorDefinitionNode >> isVariableClass [
-	
-	^ layoutClass = VariableLayout
-]
-
-{ #category : #testing }
-CDBehaviorDefinitionNode >> isWeak [
-	
-	^ layoutClass = WeakLayout
-]
-
-{ #category : #testing }
-CDBehaviorDefinitionNode >> isWords [
-	
-	^ layoutClass = WordLayout
-]
-
-{ #category : #testing }
+{ #category : #accessing }
 CDBehaviorDefinitionNode >> layoutClass [
 
 	^ layoutClass
@@ -132,6 +105,11 @@ CDBehaviorDefinitionNode >> layoutClass [
 { #category : #accessing }
 CDBehaviorDefinitionNode >> layoutClass: aClass [ 
 	layoutClass := aClass
+]
+
+{ #category : #accessing }
+CDBehaviorDefinitionNode >> selector [
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
