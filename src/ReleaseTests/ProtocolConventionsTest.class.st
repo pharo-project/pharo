@@ -36,11 +36,6 @@ ProtocolConventionsTest >> testFileInOutProtocolIsUsed [
 ]
 
 { #category : #tests }
-ProtocolConventionsTest >> testInstanceCreationProtocolIsUsed [
-	self assertProtocols: #(#'instance-creation') areNotUsedInsteadOf: #'instance creation'
-]
-
-{ #category : #tests }
 ProtocolConventionsTest >> testRemovalProtocolIsUsed [
 	self assertProtocols: #(#remove #removal) areNotUsedInsteadOf: #removing
 ]
