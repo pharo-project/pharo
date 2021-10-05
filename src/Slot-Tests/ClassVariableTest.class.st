@@ -7,6 +7,9 @@ Class {
 	#classVars : [
 		'TestVariable'
 	],
+	#pools : [
+		'TestSharedPool'
+	],
 	#category : #'Slot-Tests-VariablesAndSlots'
 }
 
@@ -16,6 +19,17 @@ ClassVariableTest >> testIsReadInMethod [
 	DefaultTimeLimit printString. "reading class variable".
 	
 	self assert: ((TestCase classVariableNamed: #DefaultTimeLimit) isReadIn: self class >> testSelector)
+]
+
+{ #category : #tests }
+ClassVariableTest >> testIsReferenced [
+	self assert: (SmalltalkImage classVariableNamed: #CompilerClass) isReferenced.
+	TestVariable.
+	self assert: (self class classVariableNamed: #TestVariable) isReferenced.
+	"Check that it works for references to pool vars in the pool defining class"
+	self assert: (TestSharedPool classVariableNamed: #One) isReferenced.
+	ReferencedInTest.
+	self assert: (TestSharedPool classVariableNamed: #ReferencedInTest) isReferenced
 ]
 
 { #category : #tests }
