@@ -1,9 +1,6 @@
 Class {
 	#name : #LiteralVariableTest,
 	#superclass : #TestCase,
-	#classVars : [
-		'TestVariable'
-	],
 	#category : #'Slot-Tests-VariablesAndSlots'
 }
 
