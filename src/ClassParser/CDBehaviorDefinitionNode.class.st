@@ -87,12 +87,12 @@ CDBehaviorDefinitionNode >> initialize [
 ]
 
 { #category : #accessing }
-CDBehaviorDefinitionNode >> isClassSideDefinition [
+CDBehaviorDefinitionNode >> isClassSide [
 	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
-CDBehaviorDefinitionNode >> isInstanceSideDefinition [
+CDBehaviorDefinitionNode >> isInstanceSide [
 	^ self subclassResponsibility
 ]
 
