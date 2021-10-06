@@ -376,8 +376,8 @@ RGBehaviorStrategyUser >> theMetaClass [
 
 { #category : #accessing }
 RGBehaviorStrategyUser >> theNonMetaClass [
-	
-	^ self behaviorStrategy theNonMetaClass
+
+	^ self behaviorStrategy instanceSide
 ]
 
 { #category : #variables }
