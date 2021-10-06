@@ -30,14 +30,6 @@ ObjectLayout class >> layoutForSubclassDefiningSymbol: aSymbol [
 		ifNone: [ FixedLayout ]
 ]
 
-{ #category : #monticello }
-ObjectLayout class >> layoutForType: typeSymbol [
-	"used to get the layout for a Monticello internal layout symbol"
-	^self allSubclasses 
-		detect: [ :class | class mcTypeSymbol = typeSymbol ] 
-		ifNone: [ Error signal: 'Invalid layout type: ', typeSymbol asString ]
-]
-
 { #category : #description }
 ObjectLayout class >> subclassDefiningSymbol [
 	"Answer a keyword that describes the receiver's kind of subclass
