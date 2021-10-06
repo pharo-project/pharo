@@ -113,18 +113,6 @@ ZnHTTPSTest >> testAmazonAWS [
 ]
 
 { #category : #testing }
-ZnHTTPSTest >> testGForceInria [
-	| client |
-	self ensureSocketStreamFactory.
-	self isNativeSSLPluginPresent ifFalse: [ ^ self ].
-	(client := ZnClient new)
-		get: 'http://gforge.inria.fr/frs/?group_id=1299'.
-	self assert: client isSuccess.
-	self assert: (client contents includesSubstring: 'inria').
-	client close
-]
-
-{ #category : #testing }
 ZnHTTPSTest >> testGetPharoVersion [
 	| lastBuildVersion version url versionName |
 	self ensureSocketStreamFactory.
@@ -177,6 +165,18 @@ ZnHTTPSTest >> testGoogleEncrypted [
 	self assert: (client contents includesSubstring: 'Google').    
 	self assert: (client contents includesSubstring: 'Smalltalk').
 	client close
+]
+
+{ #category : #testing }
+ZnHTTPSTest >> testInriaGitlab [
+ 	| client |
+ 	self ensureSocketStreamFactory.
+ 	self isNativeSSLPluginPresent ifFalse: [ ^ self ].
+ 	(client := ZnClient new)
+ 		get: 'https://gitlab.inria.fr/'.
+ 	self assert: client isSuccess.
+ 	self assert: (client contents includesSubstring: 'inria').
+ 	client close
 ]
 
 { #category : #testing }
