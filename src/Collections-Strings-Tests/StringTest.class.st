@@ -577,20 +577,6 @@ StringTest >> testBeginsWithCaseSensitive [
 	self assert: (w1 beginsWith: w2 asUppercase caseSensitive: false).
 ]
 
-{ #category : #tests }
-StringTest >> testBeginsWithEmptyCaseSensitive [
-
-	self deny: ('éèàôüößäóñíá' beginsWithEmpty: 'ß' caseSensitive: true).
-	self assert: ('éèàôüößäóñíá' beginsWithEmpty: 'éèàô' caseSensitive: true).
-	self assert: ('éèàôüö' beginsWithEmpty: '' caseSensitive: true).
-	self deny: ('éèàôüö' beginsWithEmpty: 'ÉÈÀ' caseSensitive: true).
-	self assert: ('ÉÈÀÔÜÖ' beginsWithEmpty: 'ÉÈÀ' caseSensitive: true).
-	self assert: ('123test' beginsWithEmpty: '123' caseSensitive: true).
-	self should: ('aaee' beginsWithEmpty: 'AA' caseSensitive: false).
-	self should: ('???' beginsWithEmpty: '??' caseSensitive: false)
-	"self assert: ('ÉÈÀÔÜÖ' beginsWithEmpty: 'éèà' caseSensitive: false)."
-]
-
 { #category : #'tests - converting' }
 StringTest >> testCapitalized [
 	| uc lc empty |
