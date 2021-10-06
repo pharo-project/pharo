@@ -48,7 +48,7 @@ ReNoUnusedInstanceVariableRule >> group [
 { #category : #accessing }
 ReNoUnusedInstanceVariableRule >> name [
 
-	^ 'Unnecessary instance variable'
+	^ 'Unused instance variable'
 ]
 
 { #category : #accessing }
