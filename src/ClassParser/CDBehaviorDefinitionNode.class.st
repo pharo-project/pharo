@@ -86,12 +86,12 @@ CDBehaviorDefinitionNode >> initialize [
 	slotNodes := OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 CDBehaviorDefinitionNode >> isClassSide [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 CDBehaviorDefinitionNode >> isInstanceSide [
 	^ self subclassResponsibility
 ]
