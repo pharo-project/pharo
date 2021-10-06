@@ -123,7 +123,6 @@ RGMetaclassStrategyTest >> testStoreString [
 RGMetaclassStrategyTest >> testTheMetaclass [
 
 	| anRGBehavior |
-	
 	anRGBehavior := RGBehavior newMetaclass.
-	self assert: (anRGBehavior theMetaClass) equals: anRGBehavior.
+	self assert: anRGBehavior classSide equals: anRGBehavior
 ]
