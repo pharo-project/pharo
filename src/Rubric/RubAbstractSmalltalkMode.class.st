@@ -19,6 +19,11 @@ RubAbstractSmalltalkMode >> isCompletionEnabled [
 ]
 
 { #category : #testing }
+RubAbstractSmalltalkMode >> isForScripting [
+	^ false
+]
+
+{ #category : #testing }
 RubAbstractSmalltalkMode >> isScripting [
 	^ false
 ]
