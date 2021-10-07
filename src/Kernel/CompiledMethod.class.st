@@ -703,12 +703,6 @@ CompiledMethod >> literalsToSkip [
 	^ 2
 ]
 
-{ #category : #scanning }
-CompiledMethod >> localReadsSelf [
-	"methods that are compiled with FFI have a self in the source but not in the bytecode"
-	^self isFFIMethod or: [ super localReadsSelf ]
-]
-
 { #category : #lookup }
 CompiledMethod >> lookupVar: aString [ 
 	^self ast scope lookupVar: aString
