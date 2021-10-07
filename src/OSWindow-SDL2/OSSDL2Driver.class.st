@@ -44,6 +44,14 @@ OSSDL2Driver class >> isVMDisplayUsingSDL2 [
 ]
 
 { #category : #events }
+OSSDL2Driver >> afterMainPharoWindowCreated: osWindow [
+	
+	OSPlatform current sdlPlatform 
+		afterMainPharoWindowCreated: osWindow
+
+]
+
+{ #category : #events }
 OSSDL2Driver >> afterSetWindowTitle: windowTitle onWindow: osWindow [
 	
 	OSPlatform current sdlPlatform 
