@@ -75,8 +75,11 @@ ClassVariable >> isPoolVariable [
 
 { #category : #testing }
 ClassVariable >> isReferenced [
-	"A class variable can only be accessed in the defintionClass and its subclasses (both class and instance side)"
 
+	"For pools, fall back to the slow full search of all methods"
+	self definingClass isPool ifTrue: [ ^ super isReferenced ].
+
+	"A class variable can only be accessed in the defintionClass and its subclasses (both class and instance side)"
 	^ self definingClass withAllSubclasses anySatisfy: [ :behavior | 
 		  (behavior class hasMethodAccessingVariable: self) or: [ behavior hasMethodAccessingVariable: self ] ]
 ]
@@ -100,7 +103,10 @@ ClassVariable >> owningClass: anObject [
 
 { #category : #queries }
 ClassVariable >> usingMethods [
+	
+	"For pools, fall back to the slow full search of all methods"
 	self definingClass isPool ifTrue: [ ^ super usingMethods ].
+	
 	"if we are a class variable, we only need to search the sublasses and metaclasses"
 	^ self definingClass withAllSubclasses flatCollect: [ :class | 
 			(class whichMethodsReferTo: self), (class class whichMethodsReferTo: self) ]
