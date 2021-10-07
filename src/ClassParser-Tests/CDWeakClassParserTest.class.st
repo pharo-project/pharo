@@ -23,5 +23,5 @@ CDWeakClassParserTest >> classDefinitionString [
 { #category : #helpers }
 CDWeakClassParserTest >> testWeakClassIsWeak [
 
-	self assert: classDefinition isWeak
+	self assert: classDefinition layoutClass equals: WeakLayout
 ]

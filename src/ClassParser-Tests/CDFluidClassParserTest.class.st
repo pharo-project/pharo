@@ -17,7 +17,7 @@ CDFluidClassParserTest >> testClassSideDefinitionIsClassSide [
 	def := self classDefinitionParserClass parse: 'Point class
 			slot: {  }'.
 
-	self assert: def isClassSideDefinition 
+	self assert: def isClassSide 
 ]
 
 { #category : #'tests - (r) class side' }
@@ -102,7 +102,7 @@ CDFluidClassParserTest >> testInstanceDefinitionIsInstanceSide [
 	def := self classDefinitionParserClass parse: 'Object << #Point
 			package: ''Kernel-BasicObjects'''.
 
-	self assert: def isInstanceSideDefinition 
+	self assert: def isInstanceSide 
 ]
 
 { #category : #'tests - (r) kinds' }

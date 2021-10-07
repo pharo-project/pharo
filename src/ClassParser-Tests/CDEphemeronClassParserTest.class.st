@@ -23,5 +23,5 @@ CDEphemeronClassParserTest >> classDefinitionString [
 { #category : #helpers }
 CDEphemeronClassParserTest >> testEphemeronClassIsEphemeron [
 
-	self assert: classDefinition isEphemeron
+	self assert: classDefinition layoutClass equals: EphemeronLayout
 ]
