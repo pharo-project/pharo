@@ -66,7 +66,7 @@ OupsDebuggerSystemTest >> testEnsureExceptionIn [
 OupsDebuggerSystemTest >> testHandleDebugRequest [
 	"Tests that a DebuggerSystem tasked to handle a DebugRequest calls the #handleDebugRequest: of its uiManager with that DebugRequest"
 	| debugRequest |
-	debugRequest := OupsDebugRequest basicNew.
+	debugRequest := self createDummyDebugRequest.
 	self assert: debuggerSystem callsToHandleDebugRequest equals: 0.
 	debuggerSystem handleDebugRequest: debugRequest.
 	self assert: debuggerSystem callsToHandleDebugRequest equals: 1.
@@ -78,7 +78,7 @@ OupsDebuggerSystemTest >> testHandleDebugRequest [
 OupsDebuggerSystemTest >> testHandleWarningDebugRequest [
 	"Tests that a DebuggerSystem tasked to handle a WarningDebugRequest calls the #handleWarningDebugRequest: of its uiManager with that DebugRequest"
 	| debugRequest |
-	debugRequest := OupsDebugRequest basicNew.
+	debugRequest := self createDummyDebugRequest.
 	self assert: debuggerSystem callsToHandleDebugRequest equals: 0.
 	debuggerSystem handleWarningDebugRequest: debugRequest.
 	self assert: debuggerSystem callsToHandleDebugRequest equals: 1.
