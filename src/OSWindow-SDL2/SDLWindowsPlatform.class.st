@@ -7,7 +7,7 @@ Class {
 	#category : #'OSWindow-SDL2-Bindings'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #operations }
 SDLWindowsPlatform class >> enableDebugWindowMenu: hwnd [
 
 	self ffiCall: #(int enableDebugWindowMenu(void* hwnd)) module: 'PharoVMCore.dll'
