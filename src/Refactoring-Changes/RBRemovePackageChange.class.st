@@ -7,26 +7,30 @@ Class {
 	#instVars : [
 		'packageName'
 	],
-	#category : #'Refactoring-Changes'
+	#category : #'Refactoring-Changes-Changes-Packages'
 }
 
 { #category : #removing }
 RBRemovePackageChange class >> removePackageNamed: aString [
+
 	^ self new removePackageNamed: aString
 ]
 
 { #category : #converting }
 RBRemovePackageChange >> asUndoOperation [
+
 	^ changeFactory addPackageNamed: packageName
 ]
 
 { #category : #accessing }
 RBRemovePackageChange >> package [
+
 	^ (browserEnvironment packageAt: packageName ifAbsent: [nil]) 
 ]
 
 { #category : #private }
 RBRemovePackageChange >> primitiveExecute [
+
 	| pkg |
 	pkg := self package.
 	pkg ifNotNil: [ pkg removeFromSystem ]
@@ -34,5 +38,6 @@ RBRemovePackageChange >> primitiveExecute [
 
 { #category : #removing }
 RBRemovePackageChange >> removePackageNamed: aString [
+
 	packageName := aString
 ]

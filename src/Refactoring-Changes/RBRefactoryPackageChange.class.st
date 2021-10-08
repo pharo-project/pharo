@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'browserEnvironment'
 	],
-	#category : #'Refactoring-Changes'
+	#category : #'Refactoring-Changes-Changes-Packages'
 }
 
 { #category : #converting }
