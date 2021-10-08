@@ -7,8 +7,17 @@ Subclasses should override #protocolIdiom to return an association of a good pro
 Class {
 	#name : #ReProperMethodProtocolNameRule,
 	#superclass : #ReAbstractRule,
+	#instVars : [
+		'methodProtocolName'
+	],
 	#category : #'Renraku-Rules'
 }
+
+{ #category : #'private - accessing' }
+ReProperMethodProtocolNameRule class >> badMethodProtocolNames [
+
+	^self protocolIdiom value collect: [:each | each asSymbol]
+]
 
 { #category : #'testing - interest' }
 ReProperMethodProtocolNameRule class >> checksMethod [
@@ -17,10 +26,24 @@ ReProperMethodProtocolNameRule class >> checksMethod [
 	^ self name ~= #ReProperMethodProtocolNameRule
 ]
 
+{ #category : #'private - accessing' }
+ReProperMethodProtocolNameRule class >> goodMethodProtocolName [
+
+	^self protocolIdiom key printString
+]
+
 { #category : #testing }
 ReProperMethodProtocolNameRule class >> isAbstract [
 
 	^ self == ReProperMethodProtocolNameRule
+]
+
+{ #category : #idioms }
+ReProperMethodProtocolNameRule class >> protocolIdiom [
+	"Subclasses should override to return an association between a
+	 wished category and an array of category names that are not so good."
+ 
+	^self subclassResponsibility
 ]
 
 { #category : #'private - utilities' }
@@ -31,21 +54,23 @@ ReProperMethodProtocolNameRule class >> use: valid insteadOf: arrayOfInvalid [
 	^valid -> arrayOfInvalid 
 ]
 
-{ #category : #'private - accessing' }
-ReProperMethodProtocolNameRule >> badMethodProtocolNames [
-
-	^self protocolIdiom value collect: [:each | each asSymbol]
-]
-
 { #category : #running }
 ReProperMethodProtocolNameRule >> basicCheck: aMethod [
-	^ self badMethodProtocolNames includes: aMethod category
+	self methodProtocolName: aMethod category.
+	^ self class badMethodProtocolNames includes: aMethod category
 ]
 
-{ #category : #'private - accessing' }
-ReProperMethodProtocolNameRule >> goodMethodProtocolName [
-
-	^self protocolIdiom key printString
+{ #category : #helpers }
+ReProperMethodProtocolNameRule >> critiqueFor: aMethod [
+	| proposedCategory |
+	proposedCategory := self class goodMethodProtocolName.
+		
+	^ (ReRefactoringCritique
+		   withAnchor: (self anchorFor: aMethod)
+		   by: self) refactoring: (RBMethodProtocolTransformation
+			   protocol: { proposedCategory }
+			   inMethod: aMethod selector
+			   inClass: aMethod methodClass name) asRefactoring
 ]
 
 { #category : #accessing }
@@ -55,28 +80,30 @@ ReProperMethodProtocolNameRule >> group [
 ]
 
 { #category : #accessing }
-ReProperMethodProtocolNameRule >> name [
-	
-	^ 'Method categorization: use ', self goodMethodProtocolName, ' as protocol name' 
+ReProperMethodProtocolNameRule >> methodProtocolName [
+
+	^ methodProtocolName
 ]
 
-{ #category : #idioms }
-ReProperMethodProtocolNameRule >> protocolIdiom [
-	"Subclasses should override to return an association between a
-	 wished category and an array of category names that are not so good."
- 
-	^self subclassResponsibility
+{ #category : #accessing }
+ReProperMethodProtocolNameRule >> methodProtocolName: anObject [
+
+	methodProtocolName := anObject
+]
+
+{ #category : #accessing }
+ReProperMethodProtocolNameRule >> name [
+
+	^ 'Method categorization: use ' 
+		  	, self class goodMethodProtocolName
+  	  		, ' as protocol name instead of '''
+	  		, self methodProtocolName asString , ''''
 ]
 
 { #category : #accessing }
 ReProperMethodProtocolNameRule >> rationale [
+
 	^ 'Check if the method protocol name is appropriate and fulfils common expectations.'
-]
-
-{ #category : #accessing }
-ReProperMethodProtocolNameRule >> severity [
-
-	^ #information
 ]
 
 { #category : #'private - utilities' }
