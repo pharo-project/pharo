@@ -16,7 +16,7 @@ Class {
 { #category : #'private - accessing' }
 ReProperMethodProtocolNameRule class >> badMethodProtocolNames [
 
-	^self protocolIdiom value collect: [:each | each asSymbol]
+	^self protocolIdiom value collect: [:each | each asSymbol ]
 ]
 
 { #category : #'testing - interest' }
@@ -29,7 +29,7 @@ ReProperMethodProtocolNameRule class >> checksMethod [
 { #category : #'private - accessing' }
 ReProperMethodProtocolNameRule class >> goodMethodProtocolName [
 
-	^self protocolIdiom key printString
+	^self protocolIdiom key
 ]
 
 { #category : #testing }
@@ -63,7 +63,7 @@ ReProperMethodProtocolNameRule >> basicCheck: aMethod [
 { #category : #helpers }
 ReProperMethodProtocolNameRule >> critiqueFor: aMethod [
 	| proposedCategory |
-	proposedCategory := self class goodMethodProtocolName.
+	proposedCategory := self class goodMethodProtocolName asSymbol.
 		
 	^ (ReRefactoringCritique
 		   withAnchor: (self anchorFor: aMethod)
@@ -94,9 +94,9 @@ ReProperMethodProtocolNameRule >> methodProtocolName: anObject [
 { #category : #accessing }
 ReProperMethodProtocolNameRule >> name [
 
-	^ 'Method categorization: use ' 
+	^ 'Method categorization: use ''' 
 		  	, self class goodMethodProtocolName
-  	  		, ' as protocol name instead of '''
+  	  		, ''' as protocol name instead of '''
 	  		, self methodProtocolName asString , ''''
 ]
 
