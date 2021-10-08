@@ -66,12 +66,11 @@ OupsDebuggerSystemTest >> testEnsureExceptionIn [
 OupsDebuggerSystemTest >> testHandleDebugRequest [
 	"Tests that a DebuggerSystem tasked to handle a DebugRequest calls the #handleDebugRequest: of its uiManager with that DebugRequest"
 	| debugRequest |
-	debuggerSystem customUIManager: OupsDummyUIManager new.
 	debugRequest := OupsDebugRequest basicNew.
-	self assert: debuggerSystem defaultUIManager callsToHandleDebugRequest equals: 0.
+	self assert: debuggerSystem callsToHandleDebugRequest equals: 0.
 	debuggerSystem handleDebugRequest: debugRequest.
-	self assert: debuggerSystem defaultUIManager callsToHandleDebugRequest equals: 1.
-	self assert: debuggerSystem defaultUIManager debugRequestSentToHandleDebugRequest identicalTo: debugRequest
+	self assert: debuggerSystem callsToHandleDebugRequest equals: 1.
+	self assert: debuggerSystem debugRequestSentToHandleDebugRequest identicalTo: debugRequest
 	
 ]
 

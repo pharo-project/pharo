@@ -14,17 +14,6 @@ Class {
 }
 
 { #category : #'handle debug requests' }
-OupsDummyUIManager >> callsToHandleDebugRequest [
-	callsToHandleDebugRequest ifNil: [ callsToHandleDebugRequest := 0 ].
-	^ callsToHandleDebugRequest
-]
-
-{ #category : #'handle debug requests' }
-OupsDummyUIManager >> callsToHandleDebugRequest: aValue [
-	callsToHandleDebugRequest := aValue
-]
-
-{ #category : #'handle debug requests' }
 OupsDummyUIManager >> callsToHandleWarningDebugRequest [
 	callsToHandleWarningDebugRequest ifNil: [ callsToHandleWarningDebugRequest := 0 ].
 	^ callsToHandleWarningDebugRequest
@@ -46,10 +35,9 @@ OupsDummyUIManager >> debugRequestSentToHandleWarningDebugRequest [
 ]
 
 { #category : #'handle debug requests' }
-OupsDummyUIManager >> handleDebugRequest: aDebugRequest [
-	"Increment a counter to measure how many times this method was called"
-	self callsToHandleDebugRequest: self callsToHandleDebugRequest + 1.
-	debugRequestSentToHandleDebugRequest := aDebugRequest
+OupsDummyUIManager >> handleDebugRequest: aDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
+	<debuggerCompleteToSender>
+	anOupsDebuggerSystem openDebuggerOnRequest: aDebugRequest
 ]
 
 { #category : #'handle debug requests' }

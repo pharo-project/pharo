@@ -6,14 +6,32 @@ Class {
 	#superclass : #OupsDebuggerSystem,
 	#instVars : [
 		'newUIProcessSpawned',
-		'customUIManager'
+		'customUIManager',
+		'debugRequestSentToHandleDebugRequest',
+		'callsToHandleDebugRequest'
 	],
 	#category : #'Debugger-Oups-Tests-Utils'
 }
 
+{ #category : #accessing }
+OupsDummyDebuggerSystem >> callsToHandleDebugRequest [
+	^callsToHandleDebugRequest ifNil: [ callsToHandleDebugRequest := 0 ].
+
+]
+
+{ #category : #accessing }
+OupsDummyDebuggerSystem >> callsToHandleDebugRequest: aValue [
+	callsToHandleDebugRequest := aValue
+]
+
 { #category : #'default values' }
 OupsDummyDebuggerSystem >> customUIManager: aUIManager [
 	customUIManager := aUIManager
+]
+
+{ #category : #accessing }
+OupsDummyDebuggerSystem >> debugRequestSentToHandleDebugRequest [
+	^ debugRequestSentToHandleDebugRequest
 ]
 
 { #category : #'default values' }
@@ -31,6 +49,12 @@ OupsDummyDebuggerSystem >> defaultUIManager [
 OupsDummyDebuggerSystem >> newUIProcessSpawned [
 	newUIProcessSpawned ifNil: [ newUIProcessSpawned := false ].
 	^ newUIProcessSpawned
+]
+
+{ #category : #'open debugger' }
+OupsDummyDebuggerSystem >> openDebuggerOnRequest: aDebugRequest [
+	self callsToHandleDebugRequest: self callsToHandleDebugRequest + 1.
+	debugRequestSentToHandleDebugRequest := aDebugRequest
 ]
 
 { #category : #helpers }
