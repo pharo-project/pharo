@@ -117,7 +117,10 @@ Path class >> from: aString delimiter: aDelimiterCharacter [
 	
 	pathClass :=  ((self isAbsolutePath: aString delimiter: aDelimiterCharacter) or: 
 							[self isAbsoluteWindowsPath: aString]) 
-		ifTrue: [ AbsolutePath ]
+		ifTrue: [ 
+			((aString size >= 2) and: [ aString second = aDelimiterCharacter ])
+				ifTrue: [ NetworkPath ]
+				ifFalse: [AbsolutePath] ]
 		ifFalse:[ RelativePath ].
 	
 	^ pathClass withAll: (aDelimiterCharacter split: aString)
@@ -127,7 +130,7 @@ Path class >> from: aString delimiter: aDelimiterCharacter [
 Path class >> isAbsolutePath: aString delimiter: aCharacter [
 	"Answer a boolean indicating whether the supplied path is considered absolute"
 
-	^aString first = aCharacter
+	^ aString first = aCharacter
 ]
 
 { #category : #private }
@@ -137,12 +140,15 @@ Path class >> isAbsoluteUnixPath: aString [
 
 { #category : #private }
 Path class >> isAbsoluteWindowsPath: aString [
-	aString ifEmpty: [ ^ false ].
-	(aString first = $\) ifTrue: [ ^ true ]. "e.g. \file"
-	^ ((aString size > 2) and: [ aString first isLetter ])
-		ifTrue: [ (aString second = $:) and: [aString third = $\] ] "e.g. C:\..."
-		ifFalse: [ false ]
 
+	aString ifEmpty: [ ^ false ].
+	(aString first = $\ and: [ 
+		 aString size = 1 or: [ aString second ~= $\ ] ]) ifTrue: [ ^ true ]. "e.g. \file"
+
+	^ (aString size > 2 and: [ aString first isLetter ])
+		  ifTrue: [ "e.g. C:\..." 
+		  aString second = $: and: [ aString third = $\ ] ]
+		  ifFalse: [ false ]
 ]
 
 { #category : #'instance creation' }
@@ -415,6 +421,12 @@ Path >> isContainedBy: anObject [
 { #category : #testing }
 Path >> isEmpty [
 	^ self size = 0
+]
+
+{ #category : #testing }
+Path >> isNetworkPath [
+
+	^ false
 ]
 
 { #category : #testing }
