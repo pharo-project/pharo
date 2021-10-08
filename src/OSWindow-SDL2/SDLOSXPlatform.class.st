@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #operations }
+SDLOSXPlatform >> afterMainPharoWindowCreated: aOSSDLWindow [
+
+]
+
+{ #category : #operations }
 SDLOSXPlatform >> afterSetWindowTitle: aString onWindow: aOSSDLWindow [
 
 	| aParam cocoaWindow wmInfo selector |
