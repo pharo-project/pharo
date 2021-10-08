@@ -54,7 +54,8 @@ OupsDummyDebuggerSystem >> newUIProcessSpawned [
 { #category : #'open debugger' }
 OupsDummyDebuggerSystem >> openDebuggerOnRequest: aDebugRequest [
 	self callsToHandleDebugRequest: self callsToHandleDebugRequest + 1.
-	debugRequestSentToHandleDebugRequest := aDebugRequest
+	debugRequestSentToHandleDebugRequest := aDebugRequest.
+	self performPreDebugActionsIn: aDebugRequest
 ]
 
 { #category : #helpers }
