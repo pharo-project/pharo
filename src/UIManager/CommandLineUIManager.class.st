@@ -204,7 +204,7 @@ CommandLineUIManager >> handleError: anError log: shouldLog [
 ]
 
 { #category : #'handle debug requests' }
-CommandLineUIManager >> handleWarningDebugRequest: aWarningDebugRequest [
+CommandLineUIManager >> handleWarningDebugRequest: aWarningDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
 	
 	self warningDefaultAction: aWarningDebugRequest exception
 ]

@@ -414,7 +414,7 @@ UIManager >> handleError: anError log: shouldLog [
 ]
 
 { #category : #'debug requests' }
-UIManager >> handleWarningDebugRequest: aWarningDebugRequest [
+UIManager >> handleWarningDebugRequest: aWarningDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
 	"Handle warning notification. Should be overidden by subclass."
 		
 	self subclassResponsibility

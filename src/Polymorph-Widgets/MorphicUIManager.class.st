@@ -371,9 +371,9 @@ MorphicUIManager >> handleError: anError log: shouldLog [
 ]
 
 { #category : #'handle debug requests' }
-MorphicUIManager >> handleWarningDebugRequest: aWarningDebugRequest [
+MorphicUIManager >> handleWarningDebugRequest: aWarningDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
 	<debuggerCompleteToSender>
-	OupsDebuggerSystem new openDebuggerOnRequest: aWarningDebugRequest
+	anOupsDebuggerSystem openDebuggerOnRequest: aWarningDebugRequest
 ]
 
 { #category : #'ui requests' }
