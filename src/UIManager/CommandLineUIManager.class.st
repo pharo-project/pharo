@@ -187,7 +187,7 @@ CommandLineUIManager >> exitFailure [
 ]
 
 { #category : #'handle debug requests' }
-CommandLineUIManager >> handleDebugRequest: aDebugRequest [
+CommandLineUIManager >> handleDebugRequest: aDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
 
 	self
 		debugProcess: aDebugRequest process

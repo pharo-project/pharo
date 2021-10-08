@@ -391,7 +391,7 @@ UIManager >> fontFromUser: priorFont [
 ]
 
 { #category : #'debug requests' }
-UIManager >> handleDebugRequest: aDebugRequest [
+UIManager >> handleDebugRequest: aDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
 	"Provide a default handling for unhandled error. 
 	 We should never reach this code, because it should be overridden by subclasses. 
 	 (but we can't put 'self subclassResponsibility' , because it will cause infinite loop,

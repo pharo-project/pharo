@@ -52,7 +52,7 @@ OupsDebuggerSystem >> handleDebugRequest: aDebugRequest [
 
 	"A DebugRequest has been submitted. Ask what to do to the default UIManager. Typically, the UIManager will call back my #openDebuggerOnRequest: method to open a debugger"
 
-	[ self defaultUIManager handleDebugRequest: aDebugRequest ]
+	[ self defaultUIManager handleDebugRequest: aDebugRequest fromDebuggerSystem: self]
 		on: Error
 		do: [ self signalDebuggerError: aDebugRequest ]
 ]

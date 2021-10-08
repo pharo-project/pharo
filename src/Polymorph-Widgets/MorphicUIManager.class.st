@@ -358,9 +358,9 @@ MorphicUIManager >> fontFromUser: priorFont [
 ]
 
 { #category : #'handle debug requests' }
-MorphicUIManager >> handleDebugRequest: aDebugRequest [
+MorphicUIManager >> handleDebugRequest: aDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
 	<debuggerCompleteToSender>
-	OupsDebuggerSystem new openDebuggerOnRequest: aDebugRequest
+	anOupsDebuggerSystem openDebuggerOnRequest: aDebugRequest
 ]
 
 { #category : #'error handling' }
