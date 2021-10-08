@@ -14,24 +14,8 @@ Class {
 }
 
 { #category : #'handle debug requests' }
-OupsDummyUIManager >> callsToHandleWarningDebugRequest [
-	callsToHandleWarningDebugRequest ifNil: [ callsToHandleWarningDebugRequest := 0 ].
-	^ callsToHandleWarningDebugRequest
-]
-
-{ #category : #'handle debug requests' }
-OupsDummyUIManager >> callsToHandleWarningDebugRequest: aValue [
-	callsToHandleWarningDebugRequest := aValue
-]
-
-{ #category : #'handle debug requests' }
 OupsDummyUIManager >> debugRequestSentToHandleDebugRequest [
 	^ debugRequestSentToHandleDebugRequest
-]
-
-{ #category : #'handle debug requests' }
-OupsDummyUIManager >> debugRequestSentToHandleWarningDebugRequest [
-	^ debugRequestSentToHandleWarningDebugRequest
 ]
 
 { #category : #'handle debug requests' }

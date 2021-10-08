@@ -78,12 +78,11 @@ OupsDebuggerSystemTest >> testHandleDebugRequest [
 OupsDebuggerSystemTest >> testHandleWarningDebugRequest [
 	"Tests that a DebuggerSystem tasked to handle a WarningDebugRequest calls the #handleWarningDebugRequest: of its uiManager with that DebugRequest"
 	| debugRequest |
-	debuggerSystem customUIManager: OupsDummyUIManager new.
 	debugRequest := OupsDebugRequest basicNew.
-	self assert: debuggerSystem defaultUIManager callsToHandleWarningDebugRequest equals: 0.
+	self assert: debuggerSystem callsToHandleDebugRequest equals: 0.
 	debuggerSystem handleWarningDebugRequest: debugRequest.
-	self assert: debuggerSystem defaultUIManager callsToHandleWarningDebugRequest equals: 1.
-	self assert: debuggerSystem defaultUIManager debugRequestSentToHandleWarningDebugRequest identicalTo: debugRequest
+	self assert: debuggerSystem callsToHandleDebugRequest equals: 1.
+	self assert: debuggerSystem debugRequestSentToHandleDebugRequest identicalTo: debugRequest
 	
 ]
 
