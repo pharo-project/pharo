@@ -212,7 +212,16 @@ BehaviorTest >> testMethodsWritingSlot [
 { #category : #tests }
 BehaviorTest >> testNonObsoleteClass [
 	"Does it work on not-obsolete classes?"
-	self assert: Object nonObsoleteClass equals: Object
+	self assert: Object nonObsoleteClass equals: Object.
+	"The case for obsolete classes (obtaining the #originalName) is tested 
+	in ObsoleteTest>>#testClassObsolete"
+]
+
+{ #category : #tests }
+BehaviorTest >> testOriginalName [
+	"Does it work on not-obsolete classes?"
+	self assert: Object originalName equals: #Object.
+	"The case for obsolete classes is tested in ObsoleteTest>>#testClassObsolete"
 ]
 
 { #category : #'tests - properties' }
