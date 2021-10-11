@@ -126,17 +126,12 @@ RGObject >> copyForBehaviorDefinition [
 
 	"returns copy of the behavior model that contains only information related to the behavior 
 	definition"
-	<ignoreForMutations> "removing of ^ can cause infinite loops"
 	^ self shallowCopy copyForBehaviorDefinitionPostCopy
 ]
 
 { #category : #copying }
 RGObject >> copyForBehaviorDefinitionPostCopy [
-
-	<ignoreForMutations>
-
-	super postCopy.
-	
+	super postCopy
 	
 	
 	
@@ -161,14 +156,12 @@ RGObject >> copyWithParent: newParent [
 { #category : #'hierarchy - defaults' }
 RGObject >> defaultClassStub [
 
-	<ignoreForMutations>
 	^ RGClass unresolved
 ]
 
 { #category : #'hierarchy - defaults' }
 RGObject >> defaultCommentStubIn: anRGBehavior [
 
-	<ignoreForMutations>
 	^ RGComment unresolved
 		parent: anRGBehavior;
 		yourself.
@@ -177,21 +170,18 @@ RGObject >> defaultCommentStubIn: anRGBehavior [
 { #category : #'hierarchy - defaults' }
 RGObject >> defaultEnvironmentStub [
 
-	<ignoreForMutations>
 	^ RGEnvironment unresolved
 ]
 
 { #category : #'hierarchy - defaults' }
 RGObject >> defaultFixedLayoutStub [
 
-	<ignoreForMutations>
 	^ RGFixedLayout unresolved
 ]
 
 { #category : #'hierarchy - defaults' }
 RGObject >> defaultFixedLayoutStubIn: anRGBehavior [
 
-	<ignoreForMutations>
 	^ RGFixedLayout unresolved
 		parent: anRGBehavior;
 		yourself.
@@ -200,7 +190,6 @@ RGObject >> defaultFixedLayoutStubIn: anRGBehavior [
 { #category : #'hierarchy - defaults' }
 RGObject >> defaultPackageStubIn: anRGEnvironment [
 
-	<ignoreForMutations>
 	^ RGPackage unresolved
 		parent: anRGEnvironment;
 		yourself.
@@ -220,7 +209,6 @@ RGObject >> defaultTraitCompositionStub [
 
 { #category : #'hierarchy - defaults' }
 RGObject >> defaultTraitCompositionStubIn: anRGBehavior [
-	<ignoreForMutations>
 
 	^ RGTraitComposition unresolved
 		parent: anRGBehavior;
@@ -230,8 +218,6 @@ RGObject >> defaultTraitCompositionStubIn: anRGBehavior [
 { #category : #accessing }
 RGObject >> environment [
 	
-	<ignoreForMutations>
-
 	^ self propertyNamed: #environment ifAbsent: [ self parent environment ].
 ]
 
@@ -490,7 +476,6 @@ RGObject >> package [
 RGObject >> parent [
 	"The parent of a class definition element: method, comment and variable is the class definition. This method retrieves the class that defines such element"
 	
-	<ignoreForMutations>
 	parent ifNil: [ 
 		self parent: self defaultParentStub.
 		self addoptToParentStub ].
@@ -502,7 +487,6 @@ RGObject >> parent [
 RGObject >> parent: anRGBehavior [
 
 	"If possible, do not use this method directly."
-	<ignoreForMutations>
 
 	parent := anRGBehavior.
 	"self addoptToParentStub."

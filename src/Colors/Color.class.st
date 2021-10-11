@@ -77,7 +77,7 @@ Class {
 	#category : #'Colors-Base'
 }
 
-{ #category : #colormaps }
+{ #category : #'private - colormaps' }
 Color class >> aaFontsColormapDepth [
 	"Adjust balance between colored AA text quality (especially if subpixel AA is used) and space / performance.
 	5 is optimal quality. Each colorMap takes 128kB of RAM, and takes several seconds to build.
@@ -86,18 +86,21 @@ Color class >> aaFontsColormapDepth [
 	^ 4
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> black [
+
 	^ ColorRegistry at: #black
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> blue [
+
 	^ ColorRegistry at: #blue
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> brown [
+
 	^ ColorRegistry at: #brown
 ]
 
@@ -193,21 +196,24 @@ Color class >> colorFromPixelValue: p depth: d [
 				g: g
 				b: b
 				range: 7 ].
-	self error: 'unknown pixel depth: ' , d printString
+	self error: 'unknown pixel depth: ', d printString
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> cyan [
+
 	^ ColorRegistry at: #cyan
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> darkGray [
+
 	^ ColorRegistry at: #darkGray
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> defaultColors [
+
 	^{ #black. 0. 0. 0.
 		#veryVeryDarkGray. 0.125. 0.125. 0.125.
 		#veryDarkGray. 0.25. 0.25. 0.25.
@@ -221,8 +227,9 @@ Color class >> defaultColors [
 		
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> defaultColors2 [
+
 	^{	#red. 1.0. 0. 0.
 		#yellow. 1.0. 1.0. 0.
 		#green. 0. 1.0. 0.
@@ -237,8 +244,9 @@ Color class >> defaultColors2 [
 	
 ]
 
-{ #category : #defaults }
-Color class >> defaultColors3 [ 
+{ #category : #'accessing - defaults' }
+Color class >> defaultColors3 [
+
 	^{
 	#lightYellow. 1.0. 1.0. 0.8.
 	#lightGreen. 0.8. 1.0. 0.6.
@@ -256,8 +264,9 @@ Color class >> defaultColors3 [
 	}
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> defaultColors4 [
+
 	^{
 	#paleRed. 1.0. 0.901. 0.901.
 	#palePeach. 1.0. 0.929. 0.835.
@@ -328,8 +337,9 @@ Color class >> fromString: aString [
 				ifFalse: [ self white ] ]
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> gray [
+
 	^ ColorRegistry at: #gray
 ]
 
@@ -341,8 +351,9 @@ Color class >> gray: brightness [
 
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> green [
+
 	^ ColorRegistry at: #green
 ]
 
@@ -361,6 +372,7 @@ Color class >> h: hue s: saturation l: lightness [
 { #category : #'instance creation' }
 Color class >> h: hue s: saturation l: lightness alpha: alpha [
 	"Create a color with the given hue, saturation, lightness, and alpha. Hue is given as the angle in degrees of the color on the color circle where red is zero degrees. Saturation and lightness are numbers in [0.0..1.0] where larger values are more saturated or lighter colors. The difference with brightness in the HSV coordinates is that colors go from black at lightness 0, through vivid hues at lightness 0.5, to white at lightness 1. For example, (Color h: 0 s: 1 l: 0.5) is pure red."
+	
 	^ self basicNew
 		initializeHue: hue
 			saturation: saturation
@@ -374,6 +386,7 @@ Color class >> h: hue s: saturation v: brightness [
 	"Create a color with the given hue, saturation, and brightness. Hue is given as the angle in degrees of the color on the color circle where red is zero degrees. Saturation and brightness are numbers in [0.0..1.0] where larger values are more saturated or brighter colors. For example, (Color h: 0 s: 1 v: 1) is pure red."
 	"Note: By convention, brightness is abbreviated 'v' to to avoid confusion with blue."
 	"(Color h: 0 s: 1 v: 1) >>> (Color r: 1 g: 0 b:0)"
+	
 	^ self h: hue s: saturation v: brightness alpha: 1.0
 ]
 
@@ -381,6 +394,7 @@ Color class >> h: hue s: saturation v: brightness [
 Color class >> h: hue s: saturation v: brightness alpha: alpha [
 	"Create a color with the given hue, saturation, brightness, and alpha. Hue is given as the angle in degrees of the color on the color circle where red is zero degrees. Saturation and brightness are numbers in [0.0..1.0] where larger values are more saturated or brighter colors. For example, (Color h: 0 s: 1 v: 1 alpha: 1) is pure red."
 	"(Color h: 0 s: 1 v: 1 alpha: 1) >>> Color red "
+	
 	^ self basicNew
 		initializeHue: hue saturation: saturation brightness: brightness alpha: alpha ;
 		yourself 
@@ -392,7 +406,7 @@ Color class >> hex: aFloat [
 	"Return an hexadecimal two-digits string between 00 and FF
 	for a float between 0.0 and 1.0"
 
-	" Color hex: 0.2>> '33' "
+	" Color hex: 0.2 >>> '33' "
 
 	| str |
 	str := (aFloat * 255) asInteger printStringHex asLowercase.
@@ -407,11 +421,9 @@ Color class >> indexedColors [
 	^ IndexedColors
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 Color class >> initialize [
-	"self initialize
-	
-	Details: Externally, the red, green, and blue components of color
+	"Details: Externally, the red, green, and blue components of color
 	are floats in the range [0.0..1.0]. Internally, they are represented
 	as integers in the range [0..ComponentMask] packing into a
 	small integer to save space and to allow fast hashing and
@@ -428,14 +440,16 @@ Color class >> initialize [
 	RedShift := 20.
 	GreenShift := 10.
 	BlueShift := 0.
-	self initializeIndexedColors.
-	self initializeColorRegistry.
-	self initializeGrayToIndexMap.
+	
+	self 
+		initializeIndexedColors;
+		initializeColorRegistry;
+		initializeGrayToIndexMap.
 	
 	SessionManager default registerGuiClassNamed: self name
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'private - initialization' }
 Color class >> initializeColorRegistry [ 
 	| values|
 	ColorRegistry := IdentityDictionary new.
@@ -451,7 +465,7 @@ Color class >> initializeColorRegistry [
 	self registerColor: (self r: 0 g: 0 b: 0 alpha: 0.0) named: #transparent. 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'private - initialization' }
 Color class >> initializeGrayToIndexMap [
 	"Build an array of gray values available in the 8-bit colormap. This array is indexed by a gray level between black (1) and white (256) and returns the pixel value for the corresponding gray level."
 	"Note: This method must be called after initializeIndexedColors, since it uses IndexedColors."
@@ -493,7 +507,7 @@ Color class >> initializeGrayToIndexMap [
 				put: indexOfClosest ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'private - initialization' }
 Color class >> initializeIndexedColors [
 	"Build an array of colors corresponding to the fixed colormap used
 	 for display depths of 1, 2, 4, or 8 bits."
@@ -649,53 +663,63 @@ Color class >> initializeIndexedColors [
 	IndexedColors := a
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> lightBlue [
+
 	^ ColorRegistry at: #lightBlue
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> lightBrown [
+
 	^ ColorRegistry at: #lightBrown
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> lightCyan [
-	^  ColorRegistry at: #lightCyan
+
+	^ ColorRegistry at: #lightCyan
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> lightGray [
-	^  ColorRegistry at: #lightGray
+
+	^ ColorRegistry at: #lightGray
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> lightGreen [
+
 	^ ColorRegistry at: #lightGreen
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> lightMagenta [
-	^  ColorRegistry at: #lightMagenta
+
+	^ ColorRegistry at: #lightMagenta
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> lightOrange [
+
 	^ ColorRegistry at: #lightOrange
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> lightRed [
-	^  ColorRegistry at: #lightRed
+
+	^ ColorRegistry at: #lightRed
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> lightYellow [
-	^  ColorRegistry at: #lightYellow
+
+	^ ColorRegistry at: #lightYellow
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> magenta [
+
 	^ ColorRegistry at: #magenta
 ]
 
@@ -712,64 +736,76 @@ Color class >> new [
 	^ self r: 0.0 g: 0.0 b: 0.0
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> orange [
+
 	^ ColorRegistry at: #orange
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> paleBlue [
-	^  ColorRegistry at: #paleBlue 
+
+	^ ColorRegistry at: #paleBlue 
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> paleBuff [
-	^  ColorRegistry at: #paleBuff
+
+	^ ColorRegistry at: #paleBuff
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> paleGreen [
-	^  ColorRegistry at: #paleGreen
+
+	^ ColorRegistry at: #paleGreen
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> paleMagenta [
-	^  ColorRegistry at: #paleMagenta
+
+	^ ColorRegistry at: #paleMagenta
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> paleOrange [
-	^  ColorRegistry at: #paleOrange
+
+	^ ColorRegistry at: #paleOrange
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> palePeach [
-	^  ColorRegistry at: #palePeach 
+
+	^ ColorRegistry at: #palePeach 
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> paleRed [
-	^  ColorRegistry at: #paleRed
+
+	^ ColorRegistry at: #paleRed
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> paleTan [
-	^  ColorRegistry at: #paleTan
+
+	^ ColorRegistry at: #paleTan
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> paleYellow [
-	^  ColorRegistry at: #paleYellow.
+
+	^ ColorRegistry at: #paleYellow
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> pink [
- 	^  ColorRegistry at: #pink.
+
+ 	^ ColorRegistry at: #pink
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> purple [
- 	^  ColorRegistry at: #purple
+
+ 	^ ColorRegistry at: #purple
 ]
 
 { #category : #'instance creation' }
@@ -783,9 +819,10 @@ Color class >> r: r g: g b: b [
 { #category : #'instance creation' }
 Color class >> r: r g: g b: b alpha: alpha [
 	"Return a color with the given r, g, and b components in the range [0.0..1.0]."
+	
 	^ self basicNew
 		initializeRed: r green: g blue: b alpha: alpha ;
-		yourself.
+		yourself
 ]
 
 { #category : #'instance creation' }
@@ -802,12 +839,13 @@ Color class >> r: r g: g b: b range: range [
 		yourself
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> red [
-	^  ColorRegistry at: #red
+
+	^ ColorRegistry at: #red
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'private - initialization' }
 Color class >> registerColor: aColor named: aName [
 	ColorRegistry at: aName put: aColor.
 	
@@ -823,6 +861,7 @@ Color class >> registeredColorNames [
 { #category : #accessing }
 Color class >> registeredNameOf: aColor [
 	"Return the name of a color if it has a name, else #unnamed"
+	
 	| colorName |
 	colorName := #unnamed.
 	ColorRegistry
@@ -839,45 +878,53 @@ Color class >> shutDown [
 	MaskingMap := nil	"Maps all colors except transparent to black for creating a mask"
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> tan [
-	^  ColorRegistry at: #tan
+
+	^ ColorRegistry at: #tan
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> transparent [
-  ^   ColorRegistry at: #transparent 
+
+	^ ColorRegistry at: #transparent 
 ]
 
 { #category : #accessing }
 Color class >> unregisterColorNamed: aName [
 	"Remove the color named aName from the list of named colors."
+	
 	ColorRegistry removeKey: aName ifAbsent: nil
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> veryDarkGray [
+
 	^ ColorRegistry at: #veryDarkGray
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> veryLightGray [
+
 	^ ColorRegistry at: #veryLightGray
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> veryPaleRed [
-	^  ColorRegistry at: #veryPaleRed
+
+	^ ColorRegistry at: #veryPaleRed
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> veryVeryDarkGray [
+
 	^ ColorRegistry at: #veryVeryDarkGray 
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> veryVeryLightGray [
-	^  ColorRegistry at: #veryVeryLightGray
+
+	^ ColorRegistry at: #veryVeryLightGray
 ]
 
 { #category : #examples }
@@ -899,14 +946,16 @@ Color class >> wheel: thisMany saturation: s brightness: v [
 
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> white [
-	^  ColorRegistry at: #white
+
+	^ ColorRegistry at: #white
 ]
 
-{ #category : #defaults }
+{ #category : #'accessing - defaults' }
 Color class >> yellow [
-	 ^  ColorRegistry at: #yellow
+
+	 ^ ColorRegistry at: #yellow
 ]
 
 { #category : #transformations }

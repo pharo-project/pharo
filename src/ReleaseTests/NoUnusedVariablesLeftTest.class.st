@@ -13,6 +13,12 @@ NoUnusedVariablesLeftTest class >> defaultTimeLimit [
 	^ 2 minute
 ]
 
+{ #category : #accessing }
+NoUnusedVariablesLeftTest >> defaultTimeLimit [ 
+
+	^ 30 seconds
+]
+
 { #category : #testing }
 NoUnusedVariablesLeftTest >> testNoUnusedClassVariablesLeft [
 	| variables classes validExceptions remaining |
@@ -25,7 +31,7 @@ NoUnusedVariablesLeftTest >> testNoUnusedClassVariablesLeft [
 	validExceptions := #(OSKeySymbols FooSharedPool SDL2Constants AthensCairoDefinitions BalloonEngineConstants ShTestSharedPool RBLintRuleTestData RBDummyLintRuleTest MCMockClassF Unicode Character STONAlternativeRepresentationTestObject).	
 	
 	remaining := classes asOrderedCollection reject: [ :each  | validExceptions includes: each name].
-	self assert: remaining isEmpty
+	self assert: remaining isEmpty description: ('the following classes have unused class variables and should be cleaned: ', remaining asString)
 ]
 
 { #category : #testing }

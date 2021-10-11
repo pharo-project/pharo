@@ -7,6 +7,11 @@ Class {
 	#category : #'Kernel-Layout'
 }
 
+{ #category : #description }
+ObjectLayout class >> allSubclassDefiningSymbols [
+	^self allSubclasses collect: [ :class | class subclassDefiningSymbol ] as: Set
+]
+
 { #category : #'instance creation' }
 ObjectLayout class >> extending: superLayout scope: aScope host: aClass [
 	self subclassResponsibility
@@ -23,14 +28,6 @@ ObjectLayout class >> layoutForSubclassDefiningSymbol: aSymbol [
 	^self allSubclasses 
 		detect: [ :class | class isAbstract not and: [class subclassDefiningSymbol == aSymbol ]] 
 		ifNone: [ FixedLayout ]
-]
-
-{ #category : #monticello }
-ObjectLayout class >> layoutForType: typeSymbol [
-	"used to get the layout for a Monticello internal layout symbol"
-	^self allSubclasses 
-		detect: [ :class | class mcTypeSymbol = typeSymbol ] 
-		ifNone: [ Error signal: 'Invalid layout type: ', typeSymbol asString ]
 ]
 
 { #category : #description }

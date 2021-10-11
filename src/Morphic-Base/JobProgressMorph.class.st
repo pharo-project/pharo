@@ -28,7 +28,7 @@ JobProgressMorph class >> job: aJob [
 { #category : #API }
 JobProgressMorph >> beComplete [
 
-	self close.
+	self close
 ]
 
 { #category : #updating }
@@ -38,64 +38,65 @@ JobProgressMorph >> changed [
 	msRefreshRate := 60 "roughly 16 times per second".
 	isTimeForRefresh := Time millisecondClockValue - self lastRefresh >= msRefreshRate.
 	(self isInWorld and: [ isTimeForRefresh ]) ifTrue: [ 
-		super changed ].
+		super changed ]
 ]
 
 { #category : #private }
 JobProgressMorph >> close [
 
 	SystemProgressMorph uniqueInstance close: self.
-	self removeDependent: SystemProgressMorph uniqueInstance.
+	self removeDependent: SystemProgressMorph uniqueInstance
 ]
 
 { #category : #API }
 JobProgressMorph >> current [
 
-	^ bar value.
+	^ bar value
 ]
 
 { #category : #API }
 JobProgressMorph >> current: aNumber [
 
 	bar value: aNumber.
-	self changed.
+	self changed
 ]
 
 { #category : #action }
 JobProgressMorph >> debug [
-	job isRunning ifTrue: [ job debug ].
+
+	job isRunning ifTrue: [ job debug ]
 ]
 
 { #category : #API }
 JobProgressMorph >> decrement [
 
-	bar decrement.
+	bar decrement
 ]
 
 { #category : #private }
 JobProgressMorph >> do: aBlock [
 
 	self changed. "We may be in the UI thread, so this will give us a change to dsiplay ourselves before the block starts"
-	^ [ aBlock value: self ] ensure: [ self close ].
+	^ [ aBlock value: self ] ensure: [ self close ]
 ]
 
 { #category : #private }
 JobProgressMorph >> forceRefreshOnNextChange [
 
-	lastRefresh := 0.
+	lastRefresh := 0
 ]
 
 { #category : #API }
 JobProgressMorph >> increment [
 
-	bar increment.
+	bar increment
 ]
 
 { #category : #initialization }
 JobProgressMorph >> initialize [
 
 	super initialize.
-	self addDependent: SystemProgressMorph uniqueInstance.
+	self addDependent: SystemProgressMorph uniqueInstance
 ]
 
 { #category : #private }
@@ -129,13 +130,14 @@ JobProgressMorph >> initializeJob: aJob [
 
 { #category : #accessing }
 JobProgressMorph >> job: aJob [
+
 	job := aJob
 ]
 
 { #category : #API }
 JobProgressMorph >> label [
-	
-	^ self labelMorph contents.
+
+	^ self labelMorph contents
 ]
 
 { #category : #API }
@@ -162,12 +164,13 @@ JobProgressMorph >> label: aString [
 { #category : #private }
 JobProgressMorph >> labelMorph [
 
-	^ labelMorph.
+	^ labelMorph
 ]
 
 { #category : #accessing }
 JobProgressMorph >> lastRefresh [
-	^ lastRefresh ifNil: [  lastRefresh := 0 ]
+
+	^ lastRefresh ifNil: [ lastRefresh := 0 ]
 ]
 
 { #category : #private }
@@ -184,17 +187,17 @@ JobProgressMorph >> progress [
 
 { #category : #API }
 JobProgressMorph >> progress: aNormalizedNumber [
-	bar progress = aNormalizedNumber
-		ifFalse: [ 
-			bar progress: aNormalizedNumber.
-			self changed: #progressValue ].
+
+	bar progress = aNormalizedNumber ifFalse: [ 
+		bar progress: aNormalizedNumber.
+		self changed: #progressValue ]
 ]
 
 { #category : #private }
 JobProgressMorph >> refresh [
 
-	lastRefresh := Time millisecondClockValue.	
-	self width: (labelMorph width) + 25.
+	lastRefresh := Time millisecondClockValue.
+	self width: labelMorph width + 25
 ]
 
 { #category : #private }
@@ -205,21 +208,22 @@ JobProgressMorph >> result [
 
 { #category : #private }
 JobProgressMorph >> result: anObject [
+
 	lock critical: [ 
 		hasResult := true.
-		result := anObject ].
+		result := anObject ]
 ]
 
 { #category : #private }
 JobProgressMorph >> start: aNumber [
 
-	startValue := aNumber.
+	startValue := aNumber
 ]
 
 { #category : #private }
 JobProgressMorph >> startAt: aNumber [
  
-	startValue := aNumber.
+	startValue := aNumber
 ]
 
 { #category : #private }
@@ -227,5 +231,5 @@ JobProgressMorph >> updateLayout [
 
 	labelMorph contents isEmpty
 		ifFalse: [ self addMorphBack: labelMorph].
-	self addMorphBack: bar.
+	self addMorphBack: bar
 ]

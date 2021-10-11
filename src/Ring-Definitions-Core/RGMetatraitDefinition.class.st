@@ -73,15 +73,3 @@ RGMetatraitDefinition >> realClass [
 
 	^baseClass realClass classSide
 ]
-
-{ #category : #'accessing - deprecated parallel hierarchy' }
-RGMetatraitDefinition >> theMetaClass [
-
-	^self
-]
-
-{ #category : #'accessing - deprecated parallel hierarchy' }
-RGMetatraitDefinition >> theNonMetaClass [
-
-	^baseClass
-]

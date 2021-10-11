@@ -23,5 +23,5 @@ CDVariableWordClassParserTest >> classDefinitionString [
 { #category : #helpers }
 CDVariableWordClassParserTest >> testVariableWordClassIsWords [
 
-	self assert: classDefinition isWords
+	self assert: classDefinition layoutClass equals: WordLayout
 ]

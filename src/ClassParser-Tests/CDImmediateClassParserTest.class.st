@@ -23,5 +23,5 @@ CDImmediateClassParserTest >> classDefinitionString [
 { #category : #helpers }
 CDImmediateClassParserTest >> testImmediateClassIsImmediate [
 
-	self assert: classDefinition isImmediate
+	self assert: classDefinition layoutClass equals: ImmediateLayout
 ]

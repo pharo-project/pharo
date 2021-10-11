@@ -14,7 +14,6 @@ DTSkippedResultType class >> backgroundColor [
 
 { #category : #testing }
 DTSkippedResultType >> isSkipped [
-	<generated>
 	^ true
 ]
 

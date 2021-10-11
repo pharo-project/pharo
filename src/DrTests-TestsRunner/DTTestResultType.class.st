@@ -39,25 +39,21 @@ DTTestResultType class >> textColor [
 
 { #category : #testing }
 DTTestResultType >> isError [
-	<generated>
 	^ false
 ]
 
 { #category : #testing }
 DTTestResultType >> isFail [
-	<generated>
 	^ false
 ]
 
 { #category : #testing }
 DTTestResultType >> isPass [
-	<generated>
 	^ false
 ]
 
 { #category : #testing }
 DTTestResultType >> isSkipped [
-	<generated>
 	^ false
 ]
 

@@ -36,6 +36,17 @@ CompiledMethodTrailerTest >> testEmbeddingCompressedSourceCode [
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
+CompiledMethodTrailerTest >> testEmbeddingCompressedSourceCodeWithQCompress [
+	| trailer code |
+	trailer := CompiledMethodTrailer new.
+
+	code := 'foo'.
+	trailer compressSourceCode: code.
+	
+	self assert: (trailer instVarNamed: #encodedData) equals: #[207 102 2 24]
+]
+
+{ #category : #'*Kernel-Tests-Extended' }
 CompiledMethodTrailerTest >> testEmbeddingSourceCode [
 	
 	self testEmbeddingSourceCode: 'testEmbeddingSourceCode

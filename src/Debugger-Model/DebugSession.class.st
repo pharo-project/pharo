@@ -88,14 +88,6 @@ DebugSession >> detectUIProcess [
 
 ]
 
-{ #category : #context }
-DebugSession >> downInContext: aContext [
-	"move down the context stack to the previous (enclosing) context"
-
-	self flag: 'This does not take into account (bypasses) filtering'.
-	^ aContext sender 
-]
-
 { #category : #accessing }
 DebugSession >> errorWasInUIProcess [
 	
@@ -285,11 +277,10 @@ DebugSession >> recompileMethodTo: text inContext: aContext notifying: aNotifyer
 	(recompilationContext := (self createModelForContext: aContext) locateClosureHomeWithContent: text) ifNil: [ ^ false ].
 	canRewind
 		ifFalse: [ (self confirm: 'Can not rewind post mortem context for new method.\ Accept anyway ?' withCRs) or: [ ^ false ] ].
+	
 	newMethod := (self createModelForContext: recompilationContext) recompileCurrentMethodTo: text notifying: aNotifyer.
 	newMethod ifNil: [ ^ false ].
-	newMethod isQuick ifTrue: [
-		recompilationContext := self downInContext: recompilationContext.
-		recompilationContext pc: recompilationContext previousPc ].
+		
 	(self isContextPostMortem: self interruptedContext)
 		ifFalse: [ self rewindContextToMethod: newMethod fromContext: recompilationContext ].
 
@@ -394,9 +385,8 @@ DebugSession >> rewindContextToMethod: aMethod fromContext: aContext [
 		ifFalse: [
 			self inform: 'Method saved, but current context unchanged\because of unwind error. Click OK to see error' withCRs ]
 		ifTrue: [
-			aMethod isQuick ifFalse: [
-				interruptedProcess restartTopWith: aMethod.
-				self stepToFirstInterestingBytecodeIn: interruptedProcess ] ].
+			interruptedProcess restartTopWith: aMethod.
+			self stepToFirstInterestingBytecodeIn: interruptedProcess ].
 	self updateContextTo:  ctxt.
 	
 	"Issue 3015 - Hernan"
@@ -578,6 +568,13 @@ DebugSession >> stepToFirstInterestingBytecodeIn: aProcess [
 	as otherwise one will have to press may time step into without 
 	seeing any visible results."
 	
+	"If we are are stepping into a quick method,
+	make sure that we step correctly over the first primitive bytecode"
+	| suspendedContext |
+	suspendedContext := aProcess suspendedContext.
+	suspendedContext method isQuick
+		ifTrue: [ ^ suspendedContext updatePCForQuickPrimitiveRestart ].
+	
 	^ aProcess stepToSendOrReturn
 ]
 
@@ -607,11 +604,7 @@ DebugSession >> unwindAndRestartToContext: aContext [
 	ctx := interruptedProcess popTo: aContext.
 	ctx == aContext ifTrue: [ "Only restart the process if the stack was unwind"
 		interruptedProcess restartTop.
-
-		aContext method isQuick
-			ifTrue: [ aContext updatePCForQuickPrimitiveRestart ]
-			ifFalse: [ 
-			self stepToFirstInterestingBytecodeIn: interruptedProcess ] ].
+		self stepToFirstInterestingBytecodeIn: interruptedProcess ].
 	self flag: 'Should a warning be displayed if the the unwind failed?'.
 	self updateContextTo: aContext
 ]

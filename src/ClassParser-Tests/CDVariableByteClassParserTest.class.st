@@ -23,5 +23,5 @@ CDVariableByteClassParserTest >> classDefinitionString [
 { #category : #helpers }
 CDVariableByteClassParserTest >> testVariableByteClassIsBytes [
 
-	self assert: (classDefinition isBytes)
+	self assert: classDefinition layoutClass equals: ByteLayout
 ]

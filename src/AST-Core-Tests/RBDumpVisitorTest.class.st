@@ -349,6 +349,5 @@ RBDumpVisitorTest >> testVariableNodeDump [
 
 { #category : #tests }
 RBDumpVisitorTest >> uselessMethod [
-	<useless>
-	
+	"used for test"
 ]
