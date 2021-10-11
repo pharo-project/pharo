@@ -1286,9 +1286,13 @@ Behavior >> obsoleteSubclasses [
 
 { #category : #initialization }
 Behavior >> originalName [
-	^ ((self isObsolete and: [ self name beginsWith: 'AnObsolete' ])
-		ifTrue: [ (self name copyFrom:   'AnObsolete' size + 1 to: self name size ) ]
-		ifFalse:  [ self name ]) asSymbol
+	| obsName |
+	obsName := self name.
+	self isObsolete ifFalse: [ ^obsName asSymbol].
+ 	[obsName beginsWith: 'AnObsolete']
+ 		whileTrue: [obsName := obsName copyFrom: 'AnObsolete' size + 1 to: obsName size].
+	^obsName asSymbol
+
 ]
 
 { #category : #copying }
