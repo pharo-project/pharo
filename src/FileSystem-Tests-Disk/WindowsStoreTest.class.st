@@ -51,7 +51,7 @@ WindowsStoreTest >> testNetworkPathFullName [
 WindowsStoreTest >> testNetworkPathIsAbsolute [
 
 		#( '\\MachineName.x.y.z\directory\file' '\\MachineName.x.y.z\directory' '\\MachineName.x.y.z' )  do: [:each |
-		self assert: (WindowsStore current pathFromString: each) isAbsolute ] 
+		self assert: (WindowsStore new pathFromString: each) isAbsolute ] 
 	
 ]
 

@@ -108,13 +108,9 @@ MCFileTreeRepository class >> urlAsFileReference: aZnUrl [
 			((aZnUrl host = #/) and: [ aZnUrl pathSegments isEmpty ])
 				ifTrue: [ ^ FileSystem root ].
 			aZnUrl pathSegments copyWithFirst: aZnUrl host ]
-		ifNil: [ aZnUrl pathSegments copyWithFirst: FileSystem disk delimiter asString ].
-	^ (String streamContents: 
-			[ :stream | 
-			path 
-				asStringOn: stream 
-				delimiter: FileSystem disk delimiter asString ])
-		asFileReference
+		ifNil: [ aZnUrl pathSegments].
+
+	^ (AbsolutePath withAll: path) asFileReference 
 ]
 
 { #category : #accessing }

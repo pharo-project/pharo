@@ -363,7 +363,7 @@ PathTest >> testMakeRelativeFrom2RelativePaths [
 { #category : #tests }
 PathTest >> testNetworkPathWithParents [
 	| path allPaths |
-	path := NetworkPath withAll: #('machine' 'plonk' 'griffle' 'nurb').
+	path := UNCNetworkPath withAll: #('machine' 'plonk' 'griffle' 'nurb').
 	allPaths := path withParents.
 	
 	self assert: allPaths size equals: 4.
