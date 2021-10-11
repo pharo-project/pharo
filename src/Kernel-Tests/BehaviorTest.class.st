@@ -209,6 +209,12 @@ BehaviorTest >> testMethodsWritingSlot [
 	self assert: numberViaSlot equals: numberViaIVar
 ]
 
+{ #category : #tests }
+BehaviorTest >> testNonObsoleteClass [
+	"Does it work on not-obsolete classes?"
+	self assert: Object nonObsoleteClass equals: Object
+]
+
 { #category : #'tests - properties' }
 BehaviorTest >> testPropertyValueAtPut [
 	| testValue |

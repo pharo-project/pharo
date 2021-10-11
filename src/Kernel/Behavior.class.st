@@ -1268,11 +1268,7 @@ Behavior >> new: sizeRequested [
 Behavior >> nonObsoleteClass [
 	"Attempt to find and return the current version of this obsolete class"
 
-	| obsName |
-	obsName := self name.
-	[obsName beginsWith: 'AnObsolete']
-		whileTrue: [obsName := obsName copyFrom: 'AnObsolete' size + 1 to: obsName size].
-	^ self environment at: obsName asSymbol
+	^ self environment at: self originalName
 ]
 
 { #category : #initialization }
@@ -1286,6 +1282,13 @@ Behavior >> obsoleteSubclasses [
 	| obs |
 	obs := self basicObsoleteSubclasses at: self ifAbsent: [^ #()].
 	^ obs copyWithout: nil
+]
+
+{ #category : #initialization }
+Behavior >> originalName [
+	^ ((self isObsolete and: [ self name beginsWith: 'AnObsolete' ])
+		ifTrue: [ (self name copyFrom:   'AnObsolete' size + 1 to: self name size ) ]
+		ifFalse:  [ self name ]) asSymbol
 ]
 
 { #category : #copying }
