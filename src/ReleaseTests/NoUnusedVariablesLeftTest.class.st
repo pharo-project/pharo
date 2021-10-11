@@ -13,6 +13,12 @@ NoUnusedVariablesLeftTest class >> defaultTimeLimit [
 	^ 2 minute
 ]
 
+{ #category : #accessing }
+NoUnusedVariablesLeftTest >> defaultTimeLimit [ 
+
+	^ 30 seconds
+]
+
 { #category : #testing }
 NoUnusedVariablesLeftTest >> testNoUnusedClassVariablesLeft [
 	| variables classes validExceptions remaining |

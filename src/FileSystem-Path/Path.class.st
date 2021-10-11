@@ -119,7 +119,7 @@ Path class >> from: aString delimiter: aDelimiterCharacter [
 							[self isAbsoluteWindowsPath: aString]) 
 		ifTrue: [ 
 			((aString size >= 2) and: [ aString second = aDelimiterCharacter ])
-				ifTrue: [ NetworkPath ]
+				ifTrue: [ UNCNetworkPath ]
 				ifFalse: [AbsolutePath] ]
 		ifFalse:[ RelativePath ].
 	

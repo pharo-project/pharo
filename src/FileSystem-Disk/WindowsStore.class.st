@@ -237,7 +237,7 @@ WindowsStore >> pathFromString: aString [
 	
 	
 	pathClass := (normalized beginsWith: '\\')
-		ifTrue: [ NetworkPath ]
+		ifTrue: [ UNCNetworkPath ]
 		ifFalse: [  
 			(Path isAbsoluteWindowsPath: normalized)
 				ifTrue: [ (normalized = self delimiter asString) ifTrue: [ pathElements := { ':' } ].

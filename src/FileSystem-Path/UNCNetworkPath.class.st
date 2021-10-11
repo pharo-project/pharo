@@ -7,33 +7,33 @@ This is useful to represent files in SMB shares as used by Windows or Samba.
 A NetworkPath acts as an absolute path but with a different translation to string.
 "
 Class {
-	#name : #NetworkPath,
+	#name : #UNCNetworkPath,
 	#superclass : #Path,
 	#type : #variable,
 	#category : #'FileSystem-Path-Base'
 }
 
 { #category : #testing }
-NetworkPath >> isAbsolute [
+UNCNetworkPath >> isAbsolute [
 	
 	^ true
 ]
 
 { #category : #testing }
-NetworkPath >> isNetworkPath [
+UNCNetworkPath >> isNetworkPath [
 
 	^ true
 ]
 
 { #category : #testing }
-NetworkPath >> isRoot [
+UNCNetworkPath >> isRoot [
 	
 	"A network path is a root if it only has the machine name, it is of the form \\machine"
 	^ self size = 1.
 ]
 
 { #category : #printing }
-NetworkPath >> printOn: aStream [
+UNCNetworkPath >> printOn: aStream [
 	aStream nextPutAll: 'Path ''//'. 
 	
 	self segments do: [ :e | aStream nextPutAll: e ]
@@ -44,7 +44,7 @@ NetworkPath >> printOn: aStream [
 ]
 
 { #category : #printing }
-NetworkPath >> printOn: aStream delimiter: aCharacter [
+UNCNetworkPath >> printOn: aStream delimiter: aCharacter [
 
 	aStream nextPut: aCharacter.
 	aStream nextPut: aCharacter.
@@ -52,7 +52,7 @@ NetworkPath >> printOn: aStream delimiter: aCharacter [
 ]
 
 { #category : #printing }
-NetworkPath >> printPathOn: aStream delimiter: aCharacter [
+UNCNetworkPath >> printPathOn: aStream delimiter: aCharacter [
 	"Print the path elements of the receiver, without the 'Path *' part"
 
 	aStream nextPut: aCharacter.
@@ -62,7 +62,7 @@ NetworkPath >> printPathOn: aStream delimiter: aCharacter [
 ]
 
 { #category : #enumerating }
-NetworkPath >> withParents [
+UNCNetworkPath >> withParents [
 
 	^ super withParents
 ]
