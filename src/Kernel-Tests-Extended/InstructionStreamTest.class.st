@@ -103,7 +103,7 @@ InstructionStreamTest >> testNextPcAnswerNextBytecodePcInCaseOfExtension [
 	ir := (methodToTest ast allChildren select: [ :e | e isMessage ])
 		      anyOne irInstruction.
 	startingPc := ir bytecodeOffset.
-	stream := InstructionStreamFiXPC new
+	stream := InstructionStream new
 		          method: methodToTest
 		          pc: startingPc.
 		
