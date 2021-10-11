@@ -368,22 +368,22 @@ SystemNavigation >> obsoleteClasses [
 		allInstancesDo: [ :m | 
 			| c |
 			c := m soleInstance.
-			(c notNil and: [ 'AnOb*' match: c name asString ])
+			(c notNil and: [ c isObsolete ])
 				ifTrue: [ obs add: c ] ].
 	^ obs asArray	
 		
 "Likely in a ClassDict or Pool...
-(Association allInstances select: [:a | (a value isKindOf: Class) and: ['AnOb*' match: a value name]]) asArray
+(Association allInstances select: [:a | (a value isKindOf: Class) and: [a value isObsolete]]) asArray
 "	
 	
 "Obsolete class refs or super pointer in last lit of a method...
 | n l found |
-Smalltalk browseAllSelect:
+SystemNavigation new browseAllSelect:
 	[:m | found := false.
 	1 to: m numLiterals do:
 		[:i | (((l := m literalAt: i) isMemberOf: Association)
 				and: [(l value isKindOf: Behavior)
-				and: ['AnOb*' match: l value name]])
+				and: [l value isObsolete]])
 			ifTrue: [found := true]].
 	found]
 "
