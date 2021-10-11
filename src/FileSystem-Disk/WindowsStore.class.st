@@ -234,11 +234,17 @@ WindowsStore >> pathFromString: aString [
 	| normalized pathClass pathElements |
 	normalized := aString copy replaceAll: UnixStore delimiter with: self delimiter.
 	pathElements := self delimiter split: normalized.
-	pathClass := (Path isAbsoluteWindowsPath: normalized)
-		ifTrue: [ (normalized = self delimiter asString) ifTrue: [ pathElements := { ':' } ].
-			AbsolutePath ]
-		ifFalse: [ self stripDrive: pathElements.
-			RelativePath ].
+	
+	
+	pathClass := (normalized beginsWith: '\\')
+		ifTrue: [ UNCNetworkPath ]
+		ifFalse: [  
+			(Path isAbsoluteWindowsPath: normalized)
+				ifTrue: [ (normalized = self delimiter asString) ifTrue: [ pathElements := { ':' } ].
+					AbsolutePath ]
+				ifFalse: [ self stripDrive: pathElements.
+					RelativePath ]].
+			
 	^pathClass withAll: pathElements
 ]
 
@@ -253,8 +259,13 @@ WindowsStore >> permissions: aPath [
 { #category : #converting }
 WindowsStore >> printPath: aPath on: aStream [
 	| hasDrive |
+
+	aPath isNetworkPath
+		ifTrue: [ ^ aPath printOn: aStream delimiter: self delimiter ].
+
 	aPath isRoot
 		ifTrue: [ ^ self ].	"effectively Windows root is empty string"
+
 	aPath isWorkingDirectory
 		ifTrue: [ ^ aPath printOn: aStream delimiter: self delimiter ].
 	aPath isRelative
