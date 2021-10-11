@@ -7,6 +7,24 @@ Class {
 	#category : #'OSWindow-SDL2-Bindings'
 }
 
+{ #category :#operations }
+SDLWindowsPlatform class >> enableDebugWindowMenu: hwnd [
+
+	self ffiCall: #(int enableDebugWindowMenu(void* hwnd)) module: 'PharoVMCore.dll'
+]
+
+{ #category : #operations }
+SDLWindowsPlatform >> afterMainPharoWindowCreated: aOSSDLWindow [
+
+	| sdlWindowInfo handle |
+	[	sdlWindowInfo := aOSSDLWindow backendWindow getWMInfo.
+		handle := sdlWindowInfo info win window.
+
+		self class enableDebugWindowMenu: handle ] 
+	onErrorDo: [ 
+		"There was an error installing the support for debug Window, the VM is not new enough." ].
+]
+
 { #category : #operations }
 SDLWindowsPlatform >> afterSetWindowTitle: aString onWindow: aOSSDLWindow [
 ]
