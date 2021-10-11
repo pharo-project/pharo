@@ -110,6 +110,9 @@ MCFileTreeRepository class >> urlAsFileReference: aZnUrl [
 			aZnUrl pathSegments copyWithFirst: aZnUrl host ]
 		ifNil: [ aZnUrl pathSegments].
 
+	(path ifNotEmpty: [ path first = #'.' or: [ path first = #'..' ] ])
+		ifTrue: [ ^ (RelativePath withAll: path) asFileReference ].
+
 	^ (AbsolutePath withAll: path) asFileReference 
 ]
 
