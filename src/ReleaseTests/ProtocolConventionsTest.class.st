@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #asserting }
-ProtocolConventionsTest >> assertProtocols: aCollectionOfSelectors areNotUsedInsteadOf: aProtocolName [
+ProtocolConventionsTest >> assertProtocolName: aProtocolName notAcceptingProtocolNamesLike: aCollectionOfSelectors [
 	| violations |
 	violations := self class environment allClassesAndTraits
 		select: [ :c | (c protocols includesAny: aCollectionOfSelectors) or: [ c class protocols includesAny: aCollectionOfSelectors ] ].
@@ -31,16 +31,25 @@ Some classes are violating this convention:
 ]
 
 { #category : #tests }
-ProtocolConventionsTest >> testFileInOutProtocolIsUsed [
-	self assertProtocols: #(#'filein/out' #'fileIn/Out' #'fileIn/out' #'filein/Out') areNotUsedInsteadOf: #'file in/out'
+ProtocolConventionsTest >> testProperFileInOutProtocolIsUsed [
+
+	self
+		assertProtocolName: #'file in/out'
+		notAcceptingProtocolNamesLike: #( #'filein/out' #'fileIn/Out' #'fileIn/out' #'filein/Out' )
 ]
 
 { #category : #tests }
-ProtocolConventionsTest >> testInstanceCreationProtocolIsUsed [
-	self assertProtocols: #(#'instance-creation') areNotUsedInsteadOf: #'instance creation'
+ProtocolConventionsTest >> testProperInstanceCreationProtocolIsUsed [
+
+	self
+		assertProtocolName: #'instance creation'
+		notAcceptingProtocolNamesLike: #( #'instance-creation' )
 ]
 
 { #category : #tests }
-ProtocolConventionsTest >> testRemovalProtocolIsUsed [
-	self assertProtocols: #(#remove #removal) areNotUsedInsteadOf: #removing
+ProtocolConventionsTest >> testProperRemovalProtocolIsUsed [
+
+	self
+		assertProtocolName: #removing
+		notAcceptingProtocolNamesLike: #( #remove #removal )
 ]
