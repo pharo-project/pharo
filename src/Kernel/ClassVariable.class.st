@@ -100,13 +100,12 @@ ClassVariable >> possiblyUsingClasses [
 
 	| classes |
 	classes := self definingClass withAllSubclasses.
-	
+
 	"For pool variables we need to add the poolUsers and it's subclasses"
-	self definingClass isPool ifTrue: [ 
+	self isPoolVariable ifTrue: [ 
 		classes addAll:
-			(self definingClass poolUsers flatCollect: [ :each | 
-				 each withAllSubclasses ]) ].
-	
+			(self definingClass poolUsers flatCollect: [ :each | each withAllSubclasses ]) ].
+
 	"we can access from both the class and the metaclass"
 	classes addAll: (classes collect: [ :class | class class ]).
 	^ classes

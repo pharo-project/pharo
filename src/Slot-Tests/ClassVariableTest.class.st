@@ -87,10 +87,7 @@ ClassVariableTest >> testPossiblyUsingClasses [
 	self assert: (variable possiblyUsingClasses includes: CharacterScanner class).
 	"and subclasses"
 	self assert: (variable possiblyUsingClasses includes: CompositionScanner).
-	self assert: (variable possiblyUsingClasses includes: CompositionScanner class).
-		
-	
-	
+	self assert: (variable possiblyUsingClasses includes: CompositionScanner class)
 ]
 
 { #category : #'tests - properties' }
@@ -152,7 +149,7 @@ ClassVariableTest >> testScope [
 { #category : #tests }
 ClassVariableTest >> testUsingMethods [
 	| variable |
-	"The semantics of where to search is tested as part of #tesPossiblyUsingClasses"
+	"The semantics of where to search is tested as part of #testPossiblyUsingClasses"
 	
 	variable := CharacterScanner classVariableNamed: #CompositionStopConditions.
 	self assert: (variable usingMethods includes: CompositionScanner>>#setStopConditions).
@@ -161,7 +158,6 @@ ClassVariableTest >> testUsingMethods [
 	self assert: variable isPoolVariable.
 	self assert: (variable usingMethods includes: TextConstants class>>#DefaultMarginTabsArray).
 	self assert: (variable usingMethods includes: TextStyle>>#newFontArray:)
-	
 ]
 
 { #category : #'tests - properties' }
