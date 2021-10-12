@@ -28,6 +28,12 @@ BytecodeEncoder class >> extensionsFor: pc in: aCompiledMethod into: trinaryBloc
 	^self extensionsAt: pc in: aCompiledMethod into: trinaryBlock
 ]
 
+{ #category : #accessing }
+BytecodeEncoder class >> instructionSizeAt: pc of: aMehtod [
+
+	self subclassResponsibility 
+]
+
 { #category : #testing }
 BytecodeEncoder class >> isAbstract [
 
