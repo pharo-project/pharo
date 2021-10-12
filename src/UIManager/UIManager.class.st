@@ -397,7 +397,7 @@ UIManager >> handleDebugRequest: aDebugRequest fromDebuggerSystem: anOupsDebugge
 	 (but we can't put 'self subclassResponsibility' , because it will cause infinite loop,
 	 in case if current ui manager having no override of this method).
 	 This method is only for documentation purposes."
-		
+	self flag: 'Code smell: can someone explain why we have this code if we should never reach it? And if we do, why quitting without any information? Finally, why the self subclassResponsibility produces an infinite loop?'.
 	Smalltalk snapshot: false andQuit: true
 ]
 
