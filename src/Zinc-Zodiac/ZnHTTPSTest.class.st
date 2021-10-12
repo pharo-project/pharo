@@ -13,11 +13,6 @@ Class {
 	#category : #'Zinc-Zodiac'
 }
 
-{ #category : #accessing }
-ZnHTTPSTest class >> defaultTimeLimit [
-	^10 seconds
-]
-
 { #category : #testing }
 ZnHTTPSTest class >> generateTestData: size [
 	"self generateTestData: 1111"

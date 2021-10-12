@@ -14,11 +14,6 @@ Class {
 	#category : #'FileSystem-Tests-Core-Base'
 }
 
-{ #category : #accessing }
-FileSystemTest class >> defaultTimeLimit [
-	^10 seconds
-]
-
 { #category : #testing }
 FileSystemTest class >> isAbstract [
 	^ self name = #FileSystemTest

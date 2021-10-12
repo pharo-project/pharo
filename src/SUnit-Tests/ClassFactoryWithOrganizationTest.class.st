@@ -10,11 +10,6 @@ Class {
 	#category : #'SUnit-Tests-Core'
 }
 
-{ #category : #accessing }
-ClassFactoryWithOrganizationTest class >> defaultTimeLimit [ 
-	^10 seconds
-]
-
 { #category : #testing }
 ClassFactoryWithOrganizationTest >> assertEnvironmentOf: aBehavior [
 	self assert: aBehavior environment equals: self testedEnvironment
