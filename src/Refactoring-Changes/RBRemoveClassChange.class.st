@@ -4,24 +4,27 @@ I am a class refactoring change for removing a class. On execution, my class wil
 Class {
 	#name : #RBRemoveClassChange,
 	#superclass : #RBRefactoryClassChange,
-	#category : #'Refactoring-Changes'
+	#category : #'Refactoring-Changes-Changes-Classes'
 }
 
 { #category : #'instance creation' }
 RBRemoveClassChange class >> remove: aClass [
+
 	^ self new changeClass: aClass
 ]
 
 { #category : #'instance creation' }
 RBRemoveClassChange class >> removeClassName: aSymbol [
-	^ self basicNew onSystemDictionary: self environment; 
-			changeClassName: aSymbol;
-			initialize
-			
+
+	^ self basicNew
+		  onSystemDictionary: self environment;
+		  changeClassName: aSymbol;
+		  initialize
 ]
 
 { #category : #converting }
 RBRemoveClassChange >> asUndoOperation [
+
 	| classChanges |
 	classChanges := changeFactory compositeRefactoryChange.
 	self changeClass withAllSubclasses do: [ :each | 
@@ -37,28 +40,33 @@ RBRemoveClassChange >> asUndoOperation [
 
 { #category : #accessing }
 RBRemoveClassChange >> changeClass: aBehavior [
+
 	super changeClass: aBehavior.
 	isMeta := false
 ]
 
 { #category : #printing }
 RBRemoveClassChange >> changeString [
+
 	^ 'Remove ' , self displayClassName
 ]
 
 { #category : #printing }
-RBRemoveClassChange >> initialize [ 
+RBRemoveClassChange >> initialize [
+
 	super initialize.
 	changeFactory := RBRefactoryChangeManager changeFactory
 ]
 
 { #category : #private }
 RBRemoveClassChange >> primitiveExecute [
+
 	self changeClass removeFromSystem
 ]
 
 { #category : #printing }
-RBRemoveClassChange >> printOn: aStream [ 
+RBRemoveClassChange >> printOn: aStream [
+
 	aStream
 		nextPutAll: self displayClassName;
 		nextPutAll: ' removeFromSystem';

@@ -19,64 +19,75 @@ Class {
 		'Instance',
 		'UndoSize'
 	],
-	#category : #'Refactoring-Changes'
+	#category : #'Refactoring-Changes-Base'
 }
 
 { #category : #'change - factory' }
 RBRefactoryChangeManager class >> changeFactory [
+
 	^ self instance changeFactory
 ]
 
 { #category : #'class initialization' }
 RBRefactoryChangeManager class >> counter [
+
 	^ Counter ifNil: [ Counter := 0 ]
 ]
 
 { #category : #'class initialization' }
 RBRefactoryChangeManager class >> initialize [
+
 	self nuke.
 	UndoSize := 20
 ]
 
 { #category : #'instance creation' }
 RBRefactoryChangeManager class >> instance [
+
 	^ Instance ifNil: [ Instance := self basicNew initialize ]
 ]
 
 { #category : #'instance creation' }
 RBRefactoryChangeManager class >> new [
+
 	^ self shouldNotImplement
 ]
 
 { #category : #actions }
 RBRefactoryChangeManager class >> nextCounter [
+
 	Counter := self counter + 1.
 	^ self counter
 ]
 
 { #category : #public }
 RBRefactoryChangeManager class >> nuke [
+
 	Instance notNil ifTrue: [ Instance release ].
 	Instance := nil
 ]
 
 { #category : #actions }
 RBRefactoryChangeManager class >> resetCounter [
-	Counter := nil.
+
+	Counter := nil
 ]
 
 { #category : #'class initialization' }
 RBRefactoryChangeManager class >> undoSize [
+
 	^ UndoSize
 ]
 
 { #category : #'class initialization' }
-RBRefactoryChangeManager class >> undoSize: anInteger [ 
+RBRefactoryChangeManager class >> undoSize: anInteger [
+
 	UndoSize := anInteger max: 0
 ]
 
 { #category : #public }
 RBRefactoryChangeManager class >> unload [
+
 	self nuke
 ]
 
@@ -95,6 +106,7 @@ RBRefactoryChangeManager >> addUndoPointer: aNumber [
 
 { #category : #'change-factory' }
 RBRefactoryChangeManager >> changeFactory [
+
 	^ changeFactory
 ]
 
@@ -128,6 +140,7 @@ RBRefactoryChangeManager >> connectToChanges [
 
 { #category : #initialization }
 RBRefactoryChangeManager >> disconnectFromChanges [
+
 	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
@@ -151,6 +164,7 @@ RBRefactoryChangeManager >> ignoreChangesWhile: aBlock [
 
 { #category : #initialization }
 RBRefactoryChangeManager >> initialize [
+
 	super initialize.
 	changeFactory := RBRefactoryChangeFactory new.
 	self clearUndoRedoList.
@@ -184,17 +198,20 @@ RBRefactoryChangeManager >> redoOperation [
 
 { #category : #initialization }
 RBRefactoryChangeManager >> release [
+
 	self disconnectFromChanges.
-	super release.	
+	super release
 ]
 
 { #category : #'public access' }
 RBRefactoryChangeManager >> undoChange [
+
 	^ undo pop
 ]
 
 { #category : #'public access' }
 RBRefactoryChangeManager >> undoOperation [
+
 	undo ifEmpty: [ ^ self ].
 	self ignoreChangesWhile: [ 
 		| change |
@@ -204,11 +221,12 @@ RBRefactoryChangeManager >> undoOperation [
 
 { #category : #'public access' }
 RBRefactoryChangeManager >> undoPointers [
+
 	^ undoPointers
 ]
 
 { #category : #updating }
 RBRefactoryChangeManager >> update: anEvent [
-	isPerformingRefactoring
-		ifFalse: [ self clearUndoRedoList ]
+
+	isPerformingRefactoring ifFalse: [ self clearUndoRedoList ]
 ]
