@@ -189,12 +189,9 @@ CommandLineUIManager >> exitFailure [
 { #category : #'handle debug requests' }
 CommandLineUIManager >> handleDebugRequest: aDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
 
-	self
-		debugProcess: aDebugRequest process
-		context: aDebugRequest exception signalerContext
-		label: aDebugRequest exception description
-		fullView: false
-		notification: aDebugRequest exception description
+	anOupsDebuggerSystem
+		logDebugRequest: aDebugRequest
+		withUIManager: self
 ]
 
 { #category : #'error handling' }
@@ -204,9 +201,11 @@ CommandLineUIManager >> handleError: anError log: shouldLog [
 ]
 
 { #category : #'handle debug requests' }
-CommandLineUIManager >> handleWarningDebugRequest: aWarningDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
-	
-	self warningDefaultAction: aWarningDebugRequest exception
+CommandLineUIManager >> handleWarningDebugRequest: aDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
+
+	anOupsDebuggerSystem
+		warningRequest: aDebugRequest
+		withUIManager: self
 ]
 
 { #category : #accessing }

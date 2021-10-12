@@ -45,6 +45,12 @@ OupsDummyDebuggerSystem >> defaultUIManager [
 	^ customUIManager
 ]
 
+{ #category : #'open debugger' }
+OupsDummyDebuggerSystem >> logDebugRequest: aDebugRequest withUIManager: aCommandLineUIManager [
+
+	self openDebuggerOnRequest: aDebugRequest
+]
+
 { #category : #accessing }
 OupsDummyDebuggerSystem >> newUIProcessSpawned [
 	newUIProcessSpawned ifNil: [ newUIProcessSpawned := false ].
@@ -68,4 +74,10 @@ OupsDummyDebuggerSystem >> spawnNewUIProcess [
 OupsDummyDebuggerSystem >> suspendDebuggedProcess: aDebugRequest [
 	"Do not actually suspend the debugged process, in order to prevent the UI process from being suspended (image freeze) if a test goes wrong"
 	^ 1
+]
+
+{ #category : #'open debugger' }
+OupsDummyDebuggerSystem >> warningRequest: aDebugRequest withUIManager: aCommandLineUIManager [
+
+	self openDebuggerOnRequest: aDebugRequest
 ]
