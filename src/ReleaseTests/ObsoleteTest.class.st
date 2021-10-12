@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #accessing }
-ObsoleteTest >> defaultTimeLimit [ 
+ObsoleteTest class >> defaultTimeLimit [ 
 
 	^ 30 seconds
 ]

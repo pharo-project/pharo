@@ -4,11 +4,6 @@ Class {
 	#category : #'Slot-Tests-ClassBuilder'
 }
 
-{ #category : #accessing }
-SlotLayoutEqualityTest class >> defaultTimeLimit [
-	^10 seconds
-]
-
 { #category : #helpers }
 SlotLayoutEqualityTest >> assertClassBuiltWith: blockToBuildAClass isEqualToClassBuiltWith: blockToBuildAnotherClass [
 	
