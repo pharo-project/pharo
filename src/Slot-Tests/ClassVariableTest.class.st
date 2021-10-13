@@ -66,6 +66,34 @@ ClassVariableTest >> testNotWrittenInMethodWhenItIsOnlyRead [
 	self deny: ((TestCase classVariableNamed: #DefaultTimeLimit) isWrittenIn: self class >> testSelector)
 ]
 
+{ #category : #tests }
+ClassVariableTest >> testPossiblyUsingClasses [
+	| variable |
+
+	"this is a normal class var"
+	variable := CharacterScanner classVariableNamed: #CompositionStopConditions.
+
+	"it can be accessed from the class and the meta class"
+	self assert: (variable possiblyUsingClasses includes: CharacterScanner).
+	self assert: (variable possiblyUsingClasses includes: CharacterScanner class).
+	"and subclasses"
+	self assert: (variable possiblyUsingClasses includes: CompositionScanner).
+	self assert: (variable possiblyUsingClasses includes: CompositionScanner class).
+
+	"Pools are more complex"
+	variable := TextConstants classVariableNamed: #Basal.
+	self assert: variable isPoolVariable.
+	"same for pool var: class and meta class of the defining class"
+	self assert: (variable possiblyUsingClasses includes: TextConstants).
+	self assert: (variable possiblyUsingClasses includes: TextConstants class).
+	"but in addition the all the users"
+	self assert: (variable possiblyUsingClasses includes: CharacterScanner).
+	self assert: (variable possiblyUsingClasses includes: CharacterScanner class).
+	"and subclasses"
+	self assert: (variable possiblyUsingClasses includes: CompositionScanner).
+	self assert: (variable possiblyUsingClasses includes: CompositionScanner class)
+]
+
 { #category : #'tests - properties' }
 ClassVariableTest >> testPropertyAtPut [
 
@@ -120,6 +148,20 @@ ClassVariableTest >> testScope [
 	variable := SmalltalkImage classVariableNamed: #CompilerClass.
 	self assert: variable scope equals: SmalltalkImage.
 	self assert: (variable scope lookupVar: variable name) equals: variable
+]
+
+{ #category : #tests }
+ClassVariableTest >> testUsingMethods [
+	| variable |
+	"The semantics of where to search is tested as part of #testPossiblyUsingClasses"
+	
+	variable := CharacterScanner classVariableNamed: #CompositionStopConditions.
+	self assert: (variable usingMethods includes: CompositionScanner>>#setStopConditions).
+	 
+	variable := TextConstants classVariableNamed: #DefaultMarginTabsArray.
+	self assert: variable isPoolVariable.
+	self assert: (variable usingMethods includes: TextConstants class>>#DefaultMarginTabsArray).
+	self assert: (variable usingMethods includes: TextStyle>>#newFontArray:)
 ]
 
 { #category : #'tests - properties' }
