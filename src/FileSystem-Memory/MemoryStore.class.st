@@ -35,7 +35,7 @@ MemoryStore class >> isCaseSensitive [
 	^ true
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 MemoryStore class >> reset [
 	CurrentFS := nil
 ]

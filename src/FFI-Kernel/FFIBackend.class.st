@@ -39,7 +39,7 @@ FFIBackend class >> isAvailable [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #'class initialization' }
 FFIBackend class >> reset [
 
 	Current := nil.

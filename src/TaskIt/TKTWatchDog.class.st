@@ -23,7 +23,7 @@ TKTWatchDog class >> onDuty [
 			onDuty ]
 ]
 
-{ #category : #reseting }
+{ #category : #'class initialization' }
 TKTWatchDog class >> reset [
 	
 	onDuty ifNotNil: [ onDuty stop ].

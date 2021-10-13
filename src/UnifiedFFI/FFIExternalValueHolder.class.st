@@ -68,7 +68,7 @@ FFIExternalValueHolder class >> ofType: aTypeName [
 		type: (FFIExternalType resolveType: aTypeName)
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 FFIExternalValueHolder class >> reset [
 	type := nil
 ]

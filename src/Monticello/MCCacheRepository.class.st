@@ -66,7 +66,7 @@ MCCacheRepository class >> initialize [
 	self resetIfInvalid
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 MCCacheRepository class >> reset [
 
 	default := nil.

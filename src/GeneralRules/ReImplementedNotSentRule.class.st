@@ -79,7 +79,7 @@ ReImplementedNotSentRule class >> methodModified: anAnnouncement [
 	self allMessages addAll: anAnnouncement newMethod messages
 ]
 
-{ #category : #cleanup }
+{ #category : #'class initialization' }
 ReImplementedNotSentRule class >> reset [
 	<script>
 	allMessages := nil
