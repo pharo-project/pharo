@@ -210,9 +210,3 @@ FluidClassBuilder >> traitsToBuild [
 
 	^ traitComposition
 ]
-
-{ #category : #deprecated }
-FluidClassBuilder >> uses: aTraitComposition [
-
-	traitComposition := aTraitComposition
-]
