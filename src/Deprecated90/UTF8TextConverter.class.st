@@ -23,7 +23,7 @@ UTF8TextConverter class >> writeBOMOn: aStream [
 
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 UTF8TextConverter >> errorMalformedInput [
 	^UTF8InvalidText new signal: 'Invalid utf8 input detected'
 ]
@@ -35,7 +35,7 @@ UTF8TextConverter >> leadingChar [
 
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 UTF8TextConverter >> nextFromStream: aStream [
 
 	| character1 value1 character2 value2 unicode character3 value3 character4 value4 |
@@ -75,7 +75,7 @@ UTF8TextConverter >> nextFromStream: aStream [
 	^ Unicode value: unicode
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 UTF8TextConverter >> nextPut: aCharacter toStream: aStream [ 
 	| leadingChar nBytes mask shift ucs2code |
 	aStream isBinary ifTrue: [^aCharacter storeBinaryOn: aStream].

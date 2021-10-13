@@ -79,7 +79,7 @@ PharoDocCommentNode class >> settingsOn: aBuilder [
 		parent: #codeBrowsing
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 PharoDocCommentNode >> asTriplet [
 	"Return the expression, its returned value and its expected result."
 	

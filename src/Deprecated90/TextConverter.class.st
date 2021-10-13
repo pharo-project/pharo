@@ -105,7 +105,7 @@ TextConverter class >> newForEncoding: aString [
 		ifNone: [ nil ]
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 TextConverter >> convertFromSystemString: aString [
 
 	| readStream writeStream |
@@ -118,7 +118,7 @@ TextConverter >> convertFromSystemString: aString [
 
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 TextConverter >> convertToSystemString: aString [
 
 	| writeStream |
@@ -150,7 +150,7 @@ TextConverter >> installLineEndConvention: lineEndStringOrNil [
 		latin1Map at: Character cr asciiValue + 1 put: 1]
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 TextConverter >> next: anInteger putAll: aString startingAt: startIndex toStream: aStream [
 	"Handle fast conversion if ByteString"
              
@@ -179,21 +179,21 @@ TextConverter >> next: anAmount putByteString: aString startingAt: startIndex to
 	aStream basicNext: anAmount - lastIndex + startIndex putAll: aString startingAt: lastIndex.
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 TextConverter >> nextFromStream: aStream [
 
 	self subclassResponsibility.
 
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 TextConverter >> nextPut: aCharacter toStream: aStream [
 
 	self subclassResponsibility.
 
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 TextConverter >> nextPutAll: aString toStream: aStream [
 	"Handle fast conversion if ByteString"
 	

@@ -159,7 +159,7 @@ Month class >> year: year month: month [
 
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 Month >> asMonth [
 
 	^ self 

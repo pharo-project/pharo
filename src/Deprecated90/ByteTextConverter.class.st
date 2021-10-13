@@ -61,7 +61,7 @@ ByteTextConverter class >> unicodeToByteTable [
 	^ unicodeToByte
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 ByteTextConverter >> byteToUnicode: char [
 	"Map from my byte based encoding to unicode.
 	Due to the leading char encoding this is not strictly true, but hopefully at some point we can get rid of the leading char overhead."
@@ -75,7 +75,7 @@ ByteTextConverter >> byteToUnicode: char [
 	^self class byteToUnicodeTable at: (value - 128 + 1)
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 ByteTextConverter >> nextFromStream: aStream [
 	"Read the next byte (we are only dealing with byte based encodings here) character from aStream and return the result converted to unicode."
 
@@ -87,7 +87,7 @@ ByteTextConverter >> nextFromStream: aStream [
 		ifNotNil: [self byteToUnicode: byteOrChar]
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 ByteTextConverter >> nextPut: unicodeCharacter toStream: aStream [
 	"Write the unicode character to aStream."
 
@@ -96,7 +96,7 @@ ByteTextConverter >> nextPut: unicodeCharacter toStream: aStream [
 		ifFalse: [aStream basicNextPut: (self unicodeToByte: unicodeCharacter)]
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 ByteTextConverter >> unicodeToByte: unicodeChar [
 
 	^unicodeChar charCode < 128

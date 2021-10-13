@@ -319,7 +319,7 @@ RGBehavior >> compiler [
 	^ self class compiler
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 RGBehavior >> convertToMetaclassTrait [
 
 	| metaclassTraitStrategy originalName |
@@ -349,7 +349,7 @@ RGBehavior >> convertToMetaclassTrait [
 	
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 RGBehavior >> convertToTrait [
 
 	| traitStrategy originalName |
