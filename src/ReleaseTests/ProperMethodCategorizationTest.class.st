@@ -148,7 +148,7 @@ ProperMethodCategorizationTest >> testNoUtilsMethods [
 		             class protocols includes: #'utils' ].
 
 	"we lock in the number of problematic classes, this way it can only improve"
-	self assert: violating size <= 7
+	self assert: violating size <= 4
 ]
 
 { #category : #'tests - object' }
