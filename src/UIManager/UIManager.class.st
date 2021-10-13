@@ -391,13 +391,13 @@ UIManager >> fontFromUser: priorFont [
 ]
 
 { #category : #'debug requests' }
-UIManager >> handleDebugRequest: aDebugRequest [
+UIManager >> handleDebugRequest: aDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
 	"Provide a default handling for unhandled error. 
 	 We should never reach this code, because it should be overridden by subclasses. 
 	 (but we can't put 'self subclassResponsibility' , because it will cause infinite loop,
 	 in case if current ui manager having no override of this method).
 	 This method is only for documentation purposes."
-		
+	self flag: 'Code smell: can someone explain why we have this code if we should never reach it? And if we do, why quitting without any information? Finally, why the self subclassResponsibility produces an infinite loop?'.
 	Smalltalk snapshot: false andQuit: true
 ]
 
@@ -414,7 +414,7 @@ UIManager >> handleError: anError log: shouldLog [
 ]
 
 { #category : #'debug requests' }
-UIManager >> handleWarningDebugRequest: aWarningDebugRequest [
+UIManager >> handleWarningDebugRequest: aWarningDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
 	"Handle warning notification. Should be overidden by subclass."
 		
 	self subclassResponsibility
