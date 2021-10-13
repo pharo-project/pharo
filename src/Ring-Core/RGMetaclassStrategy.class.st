@@ -52,7 +52,7 @@ RGMetaclassStrategy >> category [
 { #category : #'private - backend access' }
 RGMetaclassStrategy >> classVarNames [
 
-	^ self theNonMetaClass classVarNames
+	^ self instanceSide classVarNames
 ]
 
 { #category : #'private - backend access' }
