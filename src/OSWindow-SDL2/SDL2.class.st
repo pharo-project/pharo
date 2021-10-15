@@ -110,6 +110,12 @@ SDL2 class >> disableScreenSaver [
 	^ self ffiCall: #(void SDL_DisableScreenSaver(void))
 ]
 
+{ #category : #timer }
+SDL2 class >> eventType: type state: state [
+
+	^ self ffiCall: #( Uint8 SDL_EventState(Uint32 type, int state))
+]
+
 { #category : #native }
 SDL2 class >> ffiLibraryName [
 	^ self moduleName
