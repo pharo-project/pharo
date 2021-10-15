@@ -21,6 +21,12 @@ Class {
 	#category : #'OSWindow-SDL2-Base'
 }
 
+{ #category : #accessing }
+OSSDL2Driver class >> allWindows [
+
+	^ WindowMapMutex critical: [ WindowMap values ]
+]
+
 { #category : #testing }
 OSSDL2Driver class >> hasPlugin [
 	<primitive: #primitiveHasDisplayPlugin module: #SDL2DisplayPlugin>

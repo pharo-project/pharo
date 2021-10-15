@@ -628,6 +628,18 @@ OSSDL2BackendWindow >> visitMouseWheelEvent: sdlEvent [
 ]
 
 { #category : #'event handling' }
+OSSDL2BackendWindow >> visitSystemWindowEvent: systemWindowEvent [
+
+	self fetchDPI.
+	(OSWindowResolutionChangeEvent for: osWindow)
+		horizontalDPI: horizontalDPI;
+		verticalDPI: verticalDPI;
+		diagonalDPI: diagonalDPI;
+		screenScaleFactor: screenScaleFactor;
+		deliver
+]
+
+{ #category : #'event handling' }
 OSSDL2BackendWindow >> visitTextInputEvent: event [
 	| osEvent |
 	

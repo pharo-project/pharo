@@ -7,7 +7,7 @@ Class {
 	#category : #'OSWindow-SDL2-Bindings'
 }
 
-{ #category :#operations }
+{ #category : #operations }
 SDLWindowsPlatform class >> enableDebugWindowMenu: hwnd [
 
 	self ffiCall: #(int enableDebugWindowMenu(void* hwnd)) module: 'PharoVMCore.dll'
@@ -23,6 +23,9 @@ SDLWindowsPlatform >> afterMainPharoWindowCreated: aOSSDLWindow [
 		self class enableDebugWindowMenu: handle ] 
 	onErrorDo: [ 
 		"There was an error installing the support for debug Window, the VM is not new enough." ].
+
+	"I want to receive the System Windows events"
+	SDL2 eventType: SDL_SYSWMEVENT state: 1.
 ]
 
 { #category : #operations }
