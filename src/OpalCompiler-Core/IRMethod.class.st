@@ -231,11 +231,6 @@ IRMethod >> irPrimitive: aPrimitiveNode [
 ]
 
 { #category : #testing }
-IRMethod >> isPushClosureCopy [
-	^false.
-]
-
-{ #category : #testing }
 IRMethod >> isSend [
 	^false.
 ]
@@ -293,7 +288,7 @@ IRMethod >> properties: propDict [
 { #category : #optimizing }
 IRMethod >> removeEmptyStart [
 
-	 (startSequence size = 1 and: [ startSequence last isPushClosureCopy not ]) ifTrue: [
+	 (startSequence size = 1) ifTrue: [
         "startSeq is just unconditional jump, forget it"
         startSequence := startSequence last destination].
 

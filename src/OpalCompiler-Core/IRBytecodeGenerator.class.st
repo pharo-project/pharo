@@ -156,15 +156,6 @@ IRBytecodeGenerator >> bytecodes [
 	^ stream contents
 ]
 
-{ #category : #instructions }
-IRBytecodeGenerator >> closureFrom: fromSeqId to: toSeqId copyNumCopiedValues: numCopied numArgs: numArgs2 [
-	| distance from to |
-	from := seqOrder at: fromSeqId.
-	to := seqOrder at: toSeqId ifAbsent: [ ^ self ].	"not done yet"
-	distance := (from + 1 to: to - 1) inject: 0 into: [ :size :i | size + (seqBytes at: (orderSeq at: i)) size ].
-	encoder genPushClosureCopyNumCopiedValues: numCopied numArgs: numArgs2 jumpSize: distance. 
-]
-
 { #category : #accessing }
 IRBytecodeGenerator >> compilationContext [
 	^ compilationContext ifNil: [compilationContext := CompilationContext default]
@@ -526,31 +517,6 @@ IRBytecodeGenerator >> properties: propDict [
 ]
 
 { #category : #instructions }
-IRBytecodeGenerator >> pushClosureCopyNumCopiedValues: numCopied numArgs: numArgs2 to: toSeqId [
-	| blockSeqId |
-	blockSeqId := self newDummySeqId.
-	stack pop: numCopied.
-	stacks at: blockSeqId put: ((IRClosureStackCount new numMethodTempVars:(numberOfTemps)) startAt: (numArgs2+numCopied)).
-	stack push.
-	stacks at: toSeqId put: (stack linkTo: (stacks at: toSeqId ifAbsentPut: [ nil ])).
-	self
-		saveLastJump:
-			(Message
-				selector: #closureFrom:to:copyNumCopiedValues:numArgs:
-				arguments:
-					{currentSeqId.
-					toSeqId.
-					numCopied.
-					numArgs2}).
-	self
-		closureFrom: currentSeqId
-		to: toSeqId
-		copyNumCopiedValues: numCopied
-		numArgs: numArgs2.
-	self label: blockSeqId
-]
-
-{ #category : #instructions }
 IRBytecodeGenerator >> pushConsArray: size [
 	stack push.
 	stack pop: size.
@@ -596,13 +562,6 @@ IRBytecodeGenerator >> pushLiteral: object [
 IRBytecodeGenerator >> pushLiteralVariable: object [ 
 	stack push.
 	encoder genPushLiteralVar: (self literalIndexOf: object).
-]
-
-{ #category : #instructions }
-IRBytecodeGenerator >> pushNClosureTemps: n [
-	n = 0 ifTrue: [ ^ self ].
-	n timesRepeat:[ stack push].
-	encoder genPushNClosureTemps: n.
 ]
 
 { #category : #instructions }
