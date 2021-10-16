@@ -93,11 +93,6 @@ BytecodeEncoder class >> stackDeltaForPrimitive: primitiveIndex in: method [
 ]
 
 { #category : #'bytecode generation' }
-BytecodeEncoder >> genPushNClosureTemps: numTemps [
-	numTemps timesRepeat: [ self genPushSpecialLiteral: nil ]
-]
-
-{ #category : #'bytecode generation' }
 BytecodeEncoder >> genPushSpecialLiteral: aLiteral [
 
 	self subclassResponsibility
@@ -169,13 +164,6 @@ BytecodeEncoder >> sizeOpcodeSelector: genSelector withArguments: args [
 { #category : #'opcode sizing' }
 BytecodeEncoder >> sizePop [
 	^self sizeOpcodeSelector: #genPop withArguments: #()
-]
-
-{ #category : #'opcode sizing' }
-BytecodeEncoder >> sizePushClosureCopyNumCopiedValues: numCopied numArgs: numArgs jumpSize: jumpSize [
-	^self
-		sizeOpcodeSelector: #genPushClosureCopyNumCopiedValues:numArgs:jumpSize:
-		withArguments: {numCopied. numArgs. jumpSize}
 ]
 
 { #category : #'opcode sizing' }

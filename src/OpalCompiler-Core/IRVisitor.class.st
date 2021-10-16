@@ -64,10 +64,6 @@ IRVisitor >> visitPushArray: pushArray [
 ]
 
 { #category : #visiting }
-IRVisitor >> visitPushClosureCopy: pushClosureCopy [
-]
-
-{ #category : #visiting }
 IRVisitor >> visitPushDup: pushDup [
 ]
 
