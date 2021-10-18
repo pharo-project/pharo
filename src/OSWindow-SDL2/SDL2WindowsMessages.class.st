@@ -265,6 +265,22 @@ Class {
 { #category : #initialization }
 SDL2WindowsMessages class >> initialize [
 
+"Spliting the initialization of constants. 
+The Pharo 9 bootstrap is still building the image first in V3 bytecode and the number of literals is limited.
+These methods can be inlined when V3 bytecode is left behind in the bootstrap."
+
+	self initializeVariablesSet1.
+	self initializeVariablesSet2.
+	self initializeVariablesSet3.
+	self initializeVariablesSet4.
+	self initializeVariablesSet5.
+	self initializeVariablesSet6.
+	self initializeVariablesSet7
+]
+
+{ #category : #initialization }
+SDL2WindowsMessages class >> initializeVariablesSet1 [
+
 	WM_NULL := 0.
 	WM_CREATE := 1.
 	WM_DESTROY := 2.
@@ -329,6 +345,11 @@ SDL2WindowsMessages class >> initialize [
 	WM_HELP := 83.
 	WM_USERCHANGED := 84.
 	WM_NOTIFYFORMAT := 85.
+]
+
+{ #category : #initialization }
+SDL2WindowsMessages class >> initializeVariablesSet2 [
+
 	WM_CONTEXTMENU := 123.
 	WM_STYLECHANGING := 124.
 	WM_STYLECHANGED := 125.
@@ -356,6 +377,11 @@ SDL2WindowsMessages class >> initialize [
 	WM_NCXBUTTONDOWN := 171.
 	WM_NCXBUTTONUP := 172.
 	WM_NCXBUTTONDBLCLK := 173.
+]
+
+{ #category : #initialization }
+SDL2WindowsMessages class >> initializeVariablesSet3 [
+
 	WM_INPUT_DEVICE_CHANGE := 254.
 	WM_INPUT := 255.
 	WM_KEYFIRST := 256.
@@ -395,7 +421,12 @@ SDL2WindowsMessages class >> initialize [
 	WM_MENUCOMMAND := 294.
 	WM_CHANGEUISTATE := 295.
 	WM_UPDATEUISTATE := 296.
-	WM_QUERYUISTATE := 297.
+	WM_QUERYUISTATE := 297
+]
+
+{ #category : #initialization }
+SDL2WindowsMessages class >> initializeVariablesSet4 [
+
 	WM_CTLCOLORMSGBOX := 306.
 	WM_CTLCOLOREDIT := 307.
 	WM_CTLCOLORLISTBOX := 308.
@@ -462,7 +493,12 @@ SDL2WindowsMessages class >> initialize [
 	WM_TOUCHHITTESTING := 589.
 	WM_POINTERWHEEL := 590.
 	WM_POINTERHWHEEL := 591.
-	DM_POINTERHITTEST := 592.
+	DM_POINTERHITTEST := 592
+]
+
+{ #category : #initialization }
+SDL2WindowsMessages class >> initializeVariablesSet5 [
+
 	WM_IME_SETCONTEXT := 641.
 	WM_IME_NOTIFY := 642.
 	WM_IME_CONTROL := 643.
@@ -476,7 +512,12 @@ SDL2WindowsMessages class >> initialize [
 	WM_MOUSELEAVE := 675.
 	WM_NCMOUSEHOVER := 672.
 	WM_NCMOUSELEAVE := 674.
-	WM_WTSSESSION_CHANGE := 689.
+	WM_WTSSESSION_CHANGE := 689
+]
+
+{ #category : #initialization }
+SDL2WindowsMessages class >> initializeVariablesSet6 [
+
 	WM_TABLET_FIRST := 704.
 	WM_TABLET_LAST := 735.
 	WM_DPICHANGED := 736.
@@ -505,7 +546,12 @@ SDL2WindowsMessages class >> initialize [
 	WM_THEMECHANGED := 794.
 	WM_CLIPBOARDUPDATE := 797.
 	WM_DWMCOMPOSITIONCHANGED := 798.
-	WM_DWMNCRENDERINGCHANGED := 799.
+	WM_DWMNCRENDERINGCHANGED := 799
+]
+
+{ #category : #initialization }
+SDL2WindowsMessages class >> initializeVariablesSet7 [
+
 	WM_DWMCOLORIZATIONCOLORCHANGED := 800.
 	WM_DWMWINDOWMAXIMIZEDCHANGE := 801.
 	WM_DWMSENDICONICTHUMBNAIL := 803.
