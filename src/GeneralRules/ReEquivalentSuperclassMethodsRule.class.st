@@ -27,7 +27,7 @@ ReEquivalentSuperclassMethodsRule >> basicCheck: aMethod [
 
 	^ aMethod methodClass superclass
 		ifNotNil: [ :superclass | (superclass lookupSelector: aMethod selector)
-			ifNotNil: [ :overridenMethod | aMethod ast = overridenMethod ast ]
+			ifNotNil: [ :overridenMethod | aMethod equivalentTo: overridenMethod ]
 			ifNil: [ false ] ]
 		ifNil: [ false ]
 ]
