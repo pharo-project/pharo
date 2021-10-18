@@ -547,6 +547,16 @@ OSSDL2BackendWindow >> toggleBorderOn [
 	sdl2Window toggleBorder: true
 ]
 
+{ #category : #events }
+OSSDL2BackendWindow >> updateToNewResolution [
+	
+	"Force the regeneration of the renderer because we have a new resolution"
+	renderer destroy.
+	renderer validate.
+	renderer updateAll.
+
+]
+
 { #category : #accessing }
 OSSDL2BackendWindow >> verticalDPI [
 	self fetchDPIAndRaiseEvent.

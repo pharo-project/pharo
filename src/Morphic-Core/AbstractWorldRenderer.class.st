@@ -165,6 +165,12 @@ AbstractWorldRenderer >> actualScreenSize [
 	self subclassResponsibility 
 ]
 
+{ #category : #events }
+AbstractWorldRenderer >> checkForNewScreenSize [
+
+	self subclassResponsibility 
+]
+
 { #category : #initialization }
 AbstractWorldRenderer >> convertWindowMouseEventPosition: aPosition [
 
@@ -292,6 +298,12 @@ AbstractWorldRenderer >> restoreMorphicDisplay [
 AbstractWorldRenderer >> updateDamage: rectangles [
 
 	self subclassResponsibility
+]
+
+{ #category : #events }
+AbstractWorldRenderer >> updateToNewResolution [
+
+	self subclassResponsibility 
 ]
 
 { #category : #activation }

@@ -352,13 +352,5 @@ OSWindowMorphicEventHandler >> visitWindowResizeEvent: anEvent [
 { #category : #visiting }
 OSWindowMorphicEventHandler >> visitWindowResolutionChangeEvent: anEvent [
 	
-	"We need to reset the render if the resolution changes. 
-	If we don't do this the image seems blocked but as it does not refresh the window"
-	
-	morphicWorld worldState worldRenderer window backendWindow renderer destroy.
-	morphicWorld worldState worldRenderer window backendWindow renderer validate.
-	morphicWorld worldState doFullRepaint.
-	morphicWorld worldState worldRenderer window backendWindow renderer updateAll.
-	
-	morphicWorld worldState worldRenderer checkForNewScreenSize.
+	morphicWorld worldState updateToNewResolution: anEvent
 ]
