@@ -112,6 +112,7 @@ ImageCleaner >> cleanUpForRelease [
 	FreeTypeFontProvider current prepareForRelease.	
 	
 	HashedCollection rehashAll.		
+	self shareLiterals.
 	Author reset
 ]
 
@@ -150,7 +151,7 @@ ImageCleaner >> cleanUpProcesses [
 
 { #category : #'literal sharing' }
 ImageCleaner >> createLiteralTable [
-	| allLiterals arrays |
+	| allLiterals |
 	literalTable := Dictionary new.
 	allLiterals := Set new.
 	self literalsDo: [ :literal :method | 
@@ -160,19 +161,7 @@ ImageCleaner >> createLiteralTable [
 			literal recursiveDo: [ :each | 
 				(each isSymbol not and: [ each isImmediateObject not]) 
 					ifTrue: [ allLiterals add: each ] ] ] ].
-		
-
-	"we need to go over all array and unify. as we have all flattend versions already once, we need to do that only for the top level"
-	arrays := allLiterals select: [ :each | each isArray ].
-	arrays do: [ :array |
-			array beWritableObject.
-			array copy do: [ :arrayValue | 
-				(arrayValue  isSymbol not and:  [ arrayValue isImmediateObject not ]) ifTrue:
-				[array
-					at: (array indexOf: arrayValue)
-					put: (allLiterals like: arrayValue)]].
-			array beReadOnlyObject ].
-		
+	"TODO: For now we do not go over nested arrays to use the shared version"
 	allLiterals do: [:each | literalTable at: each put: each]
 ]
 
@@ -236,7 +225,7 @@ ImageCleaner >> removeEmptyPackages [
 
 { #category : #'literal sharing' }
 ImageCleaner >> shareLiterals [
-	"Experimental Image Shrinker: We go over all methods and replace all the literals that are equal by one copy"
+	"We go over all methods and replace all the literals that are equal by one copy"
 	self createLiteralTable.
 	self literalsDo: [ :literal :cm |
 			cm literalAt: (cm indexOfLiteral: literal) put: (literalTable at: literal)  ].
