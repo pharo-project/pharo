@@ -152,13 +152,7 @@ ImageCleaner >> cleanUpProcesses [
 { #category : #'literal sharing' }
 ImageCleaner >> createLiteralTable [
 	literalTable := OCLiteralSet new.
-	self literalsDo: [ :literal :method | 
-		literal ifNotNil: [literalTable add: literal].
-		"we add all the contentents of the arrays recursively, too"
-		literal isArray ifTrue: [ 
-			literal recursiveDo: [ :each | 
-				(each isSymbol not and: [ each isImmediateObject not and: [each isNotNil]]) 
-					ifTrue: [ literalTable add: each ] ] ] ].
+	self literalsDo: [ :literal :method | literalTable add: literal].
 	"TODO: For now we do not go over nested arrays to use the shared version"
 ]
 
@@ -184,7 +178,7 @@ ImageCleaner >> literalsDo: aBlock [
 	CompiledCode allSubInstancesDo: [ :cm | 
 		cm literals do: [ :literal | 
 			"Symbols are already shared, we can skip them here"
-			(literal isLiteral and: [literal isSymbol not and: [literal isImmediateObject not]]) 
+			(literal isLiteral and: [literal isSymbol not and: [literal isImmediateObject not and: [literal isNotNil]]]) 
 				ifTrue: [ aBlock value: literal value: cm ] ] ]
 ]
 
