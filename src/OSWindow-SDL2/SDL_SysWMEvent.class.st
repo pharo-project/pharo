@@ -21,7 +21,7 @@ SDL_SysWMEvent class >> eventType [
 	^ SDL_SYSWMEVENT
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'field description' }
 SDL_SysWMEvent class >> fieldsDesc [
 	"
 		self rebuildFieldAccessors 
