@@ -73,7 +73,11 @@ OSSDL2FormRenderer >> initialize [
 
 { #category : #private }
 OSSDL2FormRenderer >> primitiveUpdateRectangle: rectangle externalForm: externalForm [
-	externalForm copy: rectangle from: form to: rectangle origin rule: Form over
+
+	"We need to do this ugly hack because the Mutex that is used in the renderer is not correctly liberated when there is an exception. Issue #10156. Once it is fixed, we can signal the exception as normal people."
+
+	[externalForm copy: rectangle from: form to: rectangle origin rule: Form over]
+		on:Exception do: [ :e | ('There was an error during copy, we should not throw an exception here:' , e printString) traceCr ]
 
 ]
 

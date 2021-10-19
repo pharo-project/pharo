@@ -351,6 +351,6 @@ OSWindowMorphicEventHandler >> visitWindowResizeEvent: anEvent [
 
 { #category : #visiting }
 OSWindowMorphicEventHandler >> visitWindowResolutionChangeEvent: anEvent [
-	"Resolution (dpi) changed. For now just check for a new size."
-	morphicWorld worldState worldRenderer checkForNewScreenSize.
+	
+	morphicWorld worldState updateToNewResolution: anEvent
 ]

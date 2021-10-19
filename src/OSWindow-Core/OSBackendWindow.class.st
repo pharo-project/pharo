@@ -210,6 +210,10 @@ OSBackendWindow >> title: aTitle [
 	self subclassResponsibility 
 ]
 
+{ #category : #events }
+OSBackendWindow >> updateToNewResolution [
+]
+
 { #category : #accessing }
 OSBackendWindow >> verticalDPI [
 	^ self screenScaleFactorBaseDPI

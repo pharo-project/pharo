@@ -81,6 +81,10 @@ SDL2EventHandler >> visitMouseWheelEvent: mouseMotionEvent [
 ]
 
 { #category : #visitor }
+SDL2EventHandler >> visitSystemWindowEvent: systemWindowEvent [
+]
+
+{ #category : #visitor }
 SDL2EventHandler >> visitTextInputEvent: windowEvent [
 ]
 

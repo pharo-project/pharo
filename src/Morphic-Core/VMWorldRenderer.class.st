@@ -61,7 +61,7 @@ VMWorldRenderer >> canvas: x [
 	canvas := x
 ]
 
-{ #category : #'display box access' }
+{ #category : #events }
 VMWorldRenderer >> checkForNewScreenSize [
 
 	"Check whether the screen size has changed and if so take appropriate actions"
@@ -199,6 +199,12 @@ VMWorldRenderer >> updateDamage: allDamage [
 		updateDamage: allDamage
 		ofWorld: world
 		onRenderer: self.
+]
+
+{ #category : #events }
+VMWorldRenderer >> updateToNewResolution [
+
+	
 ]
 
 { #category : #'display box access' }

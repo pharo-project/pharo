@@ -37,7 +37,7 @@ OSWorldRenderer >> actualScreenSize [
 	^ (self windowExtent / self screenScaleFactor) ceiling max: 1@1
 ]
 
-{ #category : #initialization }
+{ #category : #events }
 OSWorldRenderer >> checkForNewScreenSize [
 
 	(display isNil or: [display extent = self actualScreenSize]) 
@@ -216,6 +216,12 @@ OSWorldRenderer >> updateDamage: allDamage [
 
 	"quickly copy altered rects of canvas to Display:"
 	self osWindowRenderer updateAreas: allDamage immediate: false.
+]
+
+{ #category : #events }
+OSWorldRenderer >> updateToNewResolution [
+
+	self window updateToNewResolution 
 ]
 
 { #category : #activation }

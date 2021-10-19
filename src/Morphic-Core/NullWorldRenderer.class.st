@@ -39,7 +39,7 @@ NullWorldRenderer >> canvas: x [
 	self deprecated: 'Use #invalidate instead'
 ]
 
-{ #category : #'display box access' }
+{ #category : #events }
 NullWorldRenderer >> checkForNewScreenSize [
 
 ]
@@ -89,4 +89,10 @@ NullWorldRenderer >> icon: aForm [
 NullWorldRenderer >> updateDamage: rectangles [
 
 	"Do nothing"
+]
+
+{ #category : #events }
+NullWorldRenderer >> updateToNewResolution [
+
+	
 ]
