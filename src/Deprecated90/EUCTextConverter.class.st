@@ -21,7 +21,7 @@ EUCTextConverter >> leadingChar [
 
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 EUCTextConverter >> nextFromStream: aStream [
 
 	| encodedCharacter character1 character2 offset value1 value2 codePoint |
@@ -40,7 +40,7 @@ EUCTextConverter >> nextFromStream: aStream [
 	^ Character codePoint: codePoint
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 EUCTextConverter >> nextPut: aCharacter toStream: aStream [ 
 	| value leadingChar nonUnicodeChar value1 value2 |
 	aStream isBinary ifTrue: [^aCharacter storeBinaryOn: aStream].

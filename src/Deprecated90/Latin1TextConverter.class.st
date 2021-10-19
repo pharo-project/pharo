@@ -46,13 +46,13 @@ Latin1TextConverter class >> languageEnvironment [
 	^Latin1Environment
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 Latin1TextConverter >> byteToUnicode: char [
 
 	^char
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 Latin1TextConverter >> unicodeToByte: unicodeChar [
 
 	^unicodeChar charCode < 256

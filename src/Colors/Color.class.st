@@ -1084,13 +1084,13 @@ Color >> alphaMixed: proportion with: aColor [
 		alpha: self alpha * frac1 + (aColor alpha * frac2)
 ]
 
-{ #category : #conversions }
+{ #category : #converting }
 Color >> asColor [
 	"Convert the receiver into a color"
 	^self
 ]
 
-{ #category : #conversions }
+{ #category : #converting }
 Color >> asColorref [
 	"Convert the receiver into a colorref, i.e, a number embedding r,g,b on 24 bits"
 	"(Color red asColorref) >>> 255"
@@ -1099,7 +1099,7 @@ Color >> asColorref [
 	^(self red * 255) asInteger + ((self green * 255) asInteger << 8) + ((self blue * 255) asInteger << 16)
 ]
 
-{ #category : #conversions }
+{ #category : #converting }
 Color >> asHexString [
 	"Return a string representing the receiver in HEX (i.e., 6 elements in 16 basis)"
 	"(Color red asHexString) >>> 'FF0000'"
@@ -1114,14 +1114,14 @@ Color >> asHexString [
 	^ s
 ]
 
-{ #category : #conversions }
+{ #category : #converting }
 Color >> asNontranslucentColor [
 	"Set the transparency of the receiver to opaque."
 	
 	^ self alpha: 1.0.
 ]
 
-{ #category : #conversions }
+{ #category : #converting }
 Color >> asRGBInteger [
 
 	^	(self red * 255) asInteger + 
@@ -1153,7 +1153,7 @@ Color >> attemptToMutateError [
 
 ]
 
-{ #category : #conversions }
+{ #category : #converting }
 Color >> basicPixelValueForDepth: d [ 
 	"Returns an integer representing the bits that appear in a single pixel of this color in a Form of the given depth. The depth must be one of 1, 2, 4, 8, 16, or 32. Contrast with pixelWordForDepth: and bitPatternForDepth:, which return either a 32-bit word packed with the given pixel value or a multiple-word Bitmap containing a pattern. The inverse is the class message colorFromPixelValue:depth:"
 	"Details: For depths of 8 or less, the result is a colorMap index. For depths of 16 and 32, it is a direct color value with 5 or 8 bits per color component."
@@ -1238,7 +1238,7 @@ Color >> chroma [
 	^ (self privateMaxComponent - self privateMinComponent) asFloat / ComponentMax
 ]
 
-{ #category : #conversions }
+{ #category : #converting }
 Color >> closestPixelValue1 [
 	"Return the nearest approximation to this color for a monochrome Form."
 
@@ -1251,7 +1251,7 @@ Color >> closestPixelValue1 [
 		ifFalse: [ 1 ]	"black"
 ]
 
-{ #category : #conversions }
+{ #category : #converting }
 Color >> closestPixelValue2 [
 	"Return the nearest approximation to this color for a 2-bit deep Form."
 	"fast special cases"
@@ -1264,7 +1264,7 @@ Color >> closestPixelValue2 [
 	^ 3	"50% gray"
 ]
 
-{ #category : #conversions }
+{ #category : #converting }
 Color >> closestPixelValue4 [
 	"Return the nearest approximation to this color for a 4-bit deep Form."
 	"fast special cases"
@@ -1281,7 +1281,7 @@ Color >> closestPixelValue4 [
 	^ #(1 10 11 12 3 13 14 15 2 ) at: bIndex + 1	"black"	"1/8 gray"	"2/8 gray"	"3/8 gray"	"4/8 gray"	"5/8 gray"	"6/8 gray"	"7/8 gray"	"opaque white"
 ]
 
-{ #category : #conversions }
+{ #category : #converting }
 Color >> closestPixelValue8 [
 	"Return the nearest approximation to this color for an 8-bit deep Form."
 
@@ -1301,7 +1301,7 @@ Color >> colorForInsets [
 	^ self
 ]
 
-{ #category : #conversions }
+{ #category : #converting }
 Color >> contrastingBlackAndWhiteColor [
 	"Answer black or white depending on the luminance."
 
@@ -1311,7 +1311,7 @@ Color >> contrastingBlackAndWhiteColor [
 		ifFalse: [self class white]
 ]
 
-{ #category : #conversions }
+{ #category : #converting }
 Color >> contrastingColorAdjustment [
 	"Answer darker or lighter color depending on the luminance."
 
@@ -1359,7 +1359,7 @@ Color >> diff: theOther [
 		/ 3.0 / ComponentMax
 ]
 
-{ #category : #conversions }
+{ #category : #converting }
 Color >> dominantColor [
 	^ self
 ]
@@ -1451,7 +1451,7 @@ Color >> hue [
 	^ h
 ]
 
-{ #category : #conversions }
+{ #category : #converting }
 Color >> indexInMap: aColorMap [
 	"Return the index corresponding to this color in the given color map. RGB colors are truncated to 3-, 4-, or 5-bits per color component when indexing into such a colorMap.  "
 
