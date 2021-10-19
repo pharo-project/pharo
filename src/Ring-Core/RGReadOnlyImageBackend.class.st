@@ -169,15 +169,6 @@ RGReadOnlyImageBackend >> hasSourceCodeFor: anRGMethod [
 	^ (self realMethodFor: anRGMethod) sourceCode
 ]
 
-{ #category : #initialization }
-RGReadOnlyImageBackend >> initialize [
-
-	super initialize.
-	
-	providedDefinitions := IdentityDictionary new.
-	
-]
-
 { #category : #behavior }
 RGReadOnlyImageBackend >> layoutFor: anRGBehavior [
 
