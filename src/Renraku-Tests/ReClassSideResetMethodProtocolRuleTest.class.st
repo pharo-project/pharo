@@ -19,10 +19,10 @@ ReClassSideResetMethodProtocolRuleTest >> setUp [
 
 { #category : #running }
 ReClassSideResetMethodProtocolRuleTest >> tearDown [
-	super tearDown.
-	
+
 	testClass removeFromSystem.
- 
+	
+	super tearDown
 ]
 
 { #category : #running }
