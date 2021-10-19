@@ -152,7 +152,12 @@ ImageCleaner >> cleanUpProcesses [
 { #category : #'literal sharing' }
 ImageCleaner >> createLiteralTable [
 	literalTable := OCLiteralSet new.
-	self literalsDo: [ :literal :method | literalTable add: literal].
+	self literalsDo: [ :literal :method | literalTable add: literal.
+		"we add all the contentents of the arrays recursively, too"
+		literal isArray ifTrue: [ 
+			literal recursiveDo: [ :each | 
+				(each isSymbol not and: [ each isImmediateObject not and: [each isNotNil]]) 
+					ifTrue: [ literalTable add: each ] ] ] ].
 	"TODO: For now we do not go over nested arrays to use the shared version"
 ]
 
