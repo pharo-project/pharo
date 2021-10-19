@@ -1,3 +1,8 @@
+"
+I'm a domain object used by Equals tests.
+
+I'm a fruit with a maturity stage.
+"
 Class {
 	#name : #EqFruit,
 	#superclass : #Object,
@@ -6,7 +11,7 @@ Class {
 	#instVars : [
 		'stage'
 	],
-	#category : #'Equals-Examples'
+	#category : #'Equals-Tests'
 }
 
 { #category : #comparing }

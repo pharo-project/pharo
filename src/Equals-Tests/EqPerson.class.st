@@ -1,3 +1,8 @@
+"
+I'm a domain object used by Equals tests.
+
+I'm an Person with a name and an age.
+"
 Class {
 	#name : #EqPerson,
 	#superclass : #Object,
@@ -7,7 +12,7 @@ Class {
 		'name',
 		'age'
 	],
-	#category : #'Equals-Examples'
+	#category : #'Equals-Tests'
 }
 
 { #category : #comparing }

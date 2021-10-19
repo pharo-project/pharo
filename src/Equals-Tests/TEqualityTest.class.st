@@ -1,5 +1,5 @@
 Class {
-	#name : #EqualityTest,
+	#name : #TEqualityTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'classFactory'
@@ -8,21 +8,21 @@ Class {
 }
 
 { #category : #'setUp-tearDown' }
-EqualityTest >> setUp [
+TEqualityTest >> setUp [
 	super setUp.
 	classFactory := ClassFactoryForTestCase new.
 
 ]
 
 { #category : #'setUp-tearDown' }
-EqualityTest >> tearDown [
+TEqualityTest >> tearDown [
 	super tearDown.
 	classFactory cleanUp
 
 ]
 
 { #category : #testing }
-EqualityTest >> testSetContainsOnlyOneInstanceOfAClassWithIVs [
+TEqualityTest >> testSetContainsOnlyOneInstanceOfAClassWithIVs [
 	| set object class |
 	class  := classFactory newSubclassOf: ComparableObjectForEqualityTest  instanceVariableNames: 'x y' classVariableNames:  ''.
 	class compile: 'x: newX y: newY
@@ -33,25 +33,29 @@ EqualityTest >> testSetContainsOnlyOneInstanceOfAClassWithIVs [
 			x: newX y: newY;
 			yourself'.
 	set := Set new.
+	
 	10 timesRepeat: [
 		object  := class x: 1 y: 2.
 		set add: object].
-	self assert: set size = 1.
+	
+	self assert: set size equals: 1.
 
 ]
 
 { #category : #testing }
-EqualityTest >> testSetContainsOnlyOneInstanceOfAClassWithNoIVs [
+TEqualityTest >> testSetContainsOnlyOneInstanceOfAClassWithNoIVs [
 	| set |
 	set := Set new.
+	
 	10 timesRepeat: [set add: ComparableObjectForEqualityTest new].
-	self assert: set size = 1.
+	
+	self assert: set size equals: 1.
 	self assert: (set includes: ComparableObjectForEqualityTest new)
 
 ]
 
 { #category : #testing }
-EqualityTest >> testSetContainsTwoInstancesOfTwoDiffrentClassesWithIVs [
+TEqualityTest >> testSetContainsTwoInstancesOfTwoDiffrentClassesWithIVs [
 	| set otherClass yetAnotherClass |
 	otherClass := classFactory newSubclassOf: ComparableObjectForEqualityTest  instanceVariableNames: 'x y' classVariableNames:  ''.
 	yetAnotherClass := classFactory newSubclassOf: ComparableObjectForEqualityTest  instanceVariableNames: 'x y' classVariableNames:  ''.
@@ -64,27 +68,35 @@ EqualityTest >> testSetContainsTwoInstancesOfTwoDiffrentClassesWithIVs [
 				x: newX y: newY;
 				yourself'.
 	].
+
 	set := Set with: (otherClass x: 'abc' y: 123) with: (yetAnotherClass x: 'abc' y: 123).
-	self assert: set size = 2.
+	
+	self assert: set size equals: 2.
 	self assert: (set includes: (otherClass x: 'abc' y: 123)).
 	self assert: (set includes: (yetAnotherClass x: 'abc' y: 123)).
 
 ]
 
 { #category : #testing }
-EqualityTest >> testSetContainsTwoInstancesOfTwoDiffrentClassesWithNoIVs [
+TEqualityTest >> testSetContainsTwoInstancesOfTwoDiffrentClassesWithNoIVs [
+
 	| set otherClass |
-	otherClass := classFactory newSubclassOf: ComparableObjectForEqualityTest  instanceVariableNames: '' classVariableNames:  ''.
-	set := Set with: ComparableObjectForEqualityTest new with: otherClass new.
-	self assert: set size = 2.
+	otherClass := classFactory
+		              newSubclassOf: ComparableObjectForEqualityTest
+		              instanceVariableNames: ''
+		              classVariableNames: ''.
+		
+	set := Set
+		       with: ComparableObjectForEqualityTest new
+		       with: otherClass new.
+		
+	self assert: set size equals: 2.
 	self assert: (set includes: ComparableObjectForEqualityTest new).
-	self assert: (set includes: otherClass new).
-
-
+	self assert: (set includes: otherClass new)
 ]
 
 { #category : #testing }
-EqualityTest >> testTwoInstancesOfTheSameClassWithDifferentIvValuessAreNOTEqual [
+TEqualityTest >> testTwoInstancesOfTheSameClassWithDifferentIvValuessAreNotEqual [
 	| class |
 	class  := classFactory newSubclassOf: ComparableObjectForEqualityTest  instanceVariableNames: 'x y' classVariableNames:  ''.
 	class compile: 'x: newX y: newY
@@ -94,17 +106,22 @@ EqualityTest >> testTwoInstancesOfTheSameClassWithDifferentIvValuessAreNOTEqual 
 		^self new
 			x: newX y: newY;
 			yourself'.
-	self deny: (class x: 1 y: 'abc') = (class x: 1 y: 'zyx').
+			
+	self 
+		deny: (class x: 1 y: 'abc') 
+		equals: (class x: 1 y: 'zyx').
 ]
 
 { #category : #testing }
-EqualityTest >> testTwoInstancesOfTheSameClassWithNoIVsAreEqual [
-	self assert: ComparableObjectForEqualityTest new = ComparableObjectForEqualityTest new
-	
+TEqualityTest >> testTwoInstancesOfTheSameClassWithNoIVsAreEqual [
+
+	self
+		assert: ComparableObjectForEqualityTest new
+		equals: ComparableObjectForEqualityTest new
 ]
 
 { #category : #testing }
-EqualityTest >> testTwoInstancesOfTheSameClassWithSameIvValuessAreEqual [
+TEqualityTest >> testTwoInstancesOfTheSameClassWithSameIvValuessAreEqual [
 	| class |
 	class  := classFactory newSubclassOf: ComparableObjectForEqualityTest  instanceVariableNames: 'x y' classVariableNames:  ''.
 	class compile: 'x: newX y: newY
@@ -114,12 +131,18 @@ EqualityTest >> testTwoInstancesOfTheSameClassWithSameIvValuessAreEqual [
 		^self new
 			x: newX y: newY;
 			yourself'.
-	self assert: (class x: 1 y: 'abc') = (class x: 1 y: 'abc').
+			
+	self 
+		assert: (class x: 1 y: 'abc') 
+		equals: (class x: 1 y: 'abc').
 ]
 
 { #category : #testing }
-EqualityTest >> testTwoInstancesOfTowDifferentClassesWithNoIVsAreNOTEqual [
+TEqualityTest >> testTwoInstancesOfTowDifferentClassesWithNoIVsAreNotEqual [
 	| otherClass |
 	otherClass := classFactory newSubclassOf: ComparableObjectForEqualityTest  instanceVariableNames: '' classVariableNames:  ''.
-	self deny: otherClass new = ComparableObjectForEqualityTest new
+	
+	self 
+		deny: otherClass new 
+		equals: ComparableObjectForEqualityTest new
 ]

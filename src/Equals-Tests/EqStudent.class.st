@@ -1,10 +1,15 @@
+"
+I'm a domain object used by Equals tests.
+
+I'm an Student with a level of study.
+"
 Class {
 	#name : #EqStudent,
 	#superclass : #EqPerson,
 	#instVars : [
 		'level'
 	],
-	#category : #'Equals-Examples'
+	#category : #'Equals-Tests'
 }
 
 { #category : #comparing }

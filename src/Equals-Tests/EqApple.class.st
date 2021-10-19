@@ -1,10 +1,15 @@
+"
+I'm a domain object used by Equals tests.
+
+I'm an apple with a color.
+"
 Class {
 	#name : #EqApple,
 	#superclass : #EqFruit,
 	#instVars : [
 		'color'
 	],
-	#category : #'Equals-Examples'
+	#category : #'Equals-Tests'
 }
 
 { #category : #'instance creation' }
