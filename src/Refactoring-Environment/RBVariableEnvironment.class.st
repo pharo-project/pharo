@@ -192,6 +192,16 @@ RBVariableEnvironment >> classNamesWithVariables [
 ]
 
 { #category : #private }
+RBVariableEnvironment >> classVariables [
+	^classVariables
+]
+
+{ #category : #private }
+RBVariableEnvironment >> classVariables: anObject [
+	classVariables := anObject
+]
+
+{ #category : #private }
 RBVariableEnvironment >> classVariableSelectorsFor: aClass [ 
 	| selectors classVars |
 	selectors := Set new.
@@ -208,16 +218,6 @@ RBVariableEnvironment >> classVariableSelectorsFor: aClass [
 			binding := aClass bindingOf: each.
 			binding ifNotNil: [selectors addAll: (aClass whichSelectorsReferTo: binding)]].
 	^selectors
-]
-
-{ #category : #private }
-RBVariableEnvironment >> classVariables [
-	^classVariables
-]
-
-{ #category : #private }
-RBVariableEnvironment >> classVariables: anObject [
-	classVariables := anObject
 ]
 
 { #category : #accessing }
@@ -344,6 +344,16 @@ RBVariableEnvironment >> instanceVariableReaders: anObject [
 ]
 
 { #category : #private }
+RBVariableEnvironment >> instanceVariables [
+	^instanceVariables
+]
+
+{ #category : #private }
+RBVariableEnvironment >> instanceVariables: anObject [
+	instanceVariables := anObject
+]
+
+{ #category : #private }
 RBVariableEnvironment >> instanceVariableSelectorsFor: aClass [ 
 	| selectors |
 	selectors := Set new.
@@ -362,26 +372,6 @@ RBVariableEnvironment >> instanceVariableSelectorsFor: aClass [
 	^selectors
 ]
 
-{ #category : #private }
-RBVariableEnvironment >> instanceVariableWriters [
-	^instanceVariableWriters
-]
-
-{ #category : #private }
-RBVariableEnvironment >> instanceVariableWriters: anObject [
-	instanceVariableWriters := anObject
-]
-
-{ #category : #private }
-RBVariableEnvironment >> instanceVariables [
-	^instanceVariables
-]
-
-{ #category : #private }
-RBVariableEnvironment >> instanceVariables: anObject [
-	instanceVariables := anObject
-]
-
 { #category : #accessing }
 RBVariableEnvironment >> instanceVariablesFor: aClass [ 
 	| vars name |
@@ -392,6 +382,16 @@ RBVariableEnvironment >> instanceVariablesFor: aClass [
 		addAll: (instanceVariableReaders at: name ifAbsent: [#()]);
 		addAll: (instanceVariableWriters at: name ifAbsent: [#()]).
 	^vars
+]
+
+{ #category : #private }
+RBVariableEnvironment >> instanceVariableWriters [
+	^instanceVariableWriters
+]
+
+{ #category : #private }
+RBVariableEnvironment >> instanceVariableWriters: anObject [
+	instanceVariableWriters := anObject
 ]
 
 { #category : #testing }

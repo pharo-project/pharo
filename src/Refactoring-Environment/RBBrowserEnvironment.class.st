@@ -158,37 +158,6 @@ RBBrowserEnvironment >> categories [
 ]
 
 { #category : #'accessing - classes' }
-RBBrowserEnvironment >> classNames [
-	| names |
-	names := IdentitySet new: 4096.
-	self classesDo: [ :each | names add: each instanceSide name ].
-	^ names
-]
-
-{ #category : #accessing }
-RBBrowserEnvironment >> classNamesFor: aCategoryName [
-	^ (self systemDictionary organization listAtCategoryNamed: aCategoryName) select: [ :each |
-		| class |
-		class := self systemDictionary at: each ifAbsent: [ nil ].
-		class notNil 
-			and: [ (self includesClass: class)
-			or: [ self includesClass: class class ] ] ]
-]
-
-{ #category : #environments }
-RBBrowserEnvironment >> classVarRefsTo: instVarName in: aClass [ 
-	^ RBVariableEnvironment 
-		on: self
-		referencesToClassVariable: instVarName
-		in: aClass
-]
-
-{ #category : #accessing }
-RBBrowserEnvironment >> classVariablesFor: aClass [ 
-	^aClass classVarNames
-]
-
-{ #category : #'accessing - classes' }
 RBBrowserEnvironment >> classes [
 	| classes |
 	classes := IdentitySet new: 4096.
@@ -225,6 +194,37 @@ RBBrowserEnvironment >> classesDo: aBlock [
 	self systemDictionaryClassesDo: [ :each |
 		(self includesClass: each)
 			ifTrue: [aBlock value: each ] ]
+]
+
+{ #category : #'accessing - classes' }
+RBBrowserEnvironment >> classNames [
+	| names |
+	names := IdentitySet new: 4096.
+	self classesDo: [ :each | names add: each instanceSide name ].
+	^ names
+]
+
+{ #category : #accessing }
+RBBrowserEnvironment >> classNamesFor: aCategoryName [
+	^ (self systemDictionary organization listAtCategoryNamed: aCategoryName) select: [ :each |
+		| class |
+		class := self systemDictionary at: each ifAbsent: [ nil ].
+		class notNil 
+			and: [ (self includesClass: class)
+			or: [ self includesClass: class class ] ] ]
+]
+
+{ #category : #accessing }
+RBBrowserEnvironment >> classVariablesFor: aClass [ 
+	^aClass classVarNames
+]
+
+{ #category : #environments }
+RBBrowserEnvironment >> classVarRefsTo: instVarName in: aClass [ 
+	^ RBVariableEnvironment 
+		on: self
+		referencesToClassVariable: instVarName
+		in: aClass
 ]
 
 { #category : #copying }
@@ -337,6 +337,11 @@ RBBrowserEnvironment >> includesSelector: aSelector in: aClass [
 	^ true
 ]
 
+{ #category : #accessing }
+RBBrowserEnvironment >> instanceVariablesFor: aClass [ 
+	^aClass instVarNames
+]
+
 { #category : #environments }
 RBBrowserEnvironment >> instVarReadersTo: instVarName in: aClass [ 
 	^RBVariableEnvironment 
@@ -359,11 +364,6 @@ RBBrowserEnvironment >> instVarWritersTo: instVarName in: aClass [
 		on: self
 		writersOfInstanceVariable: instVarName
 		in: aClass
-]
-
-{ #category : #accessing }
-RBBrowserEnvironment >> instanceVariablesFor: aClass [ 
-	^aClass instVarNames
 ]
 
 { #category : #testing }
@@ -548,17 +548,6 @@ RBBrowserEnvironment >> searchStrings: aCollection [
 	searchStrings := aCollection
 ]
 
-{ #category : #environments }
-RBBrowserEnvironment >> selectMethods: aBlock [ 
-	| env |
-	env := RBSelectorEnvironment onEnvironment: self.
-	self classesAndSelectorsDo: 
-			[:each :sel | 
-			(aBlock value: (each compiledMethodAt: sel)) 
-				ifTrue: [env addClass: each selector: sel]].
-	^env
-]
-
 { #category : #accessing }
 RBBrowserEnvironment >> selectionIntervalFor: aString [ 
 	| interval |
@@ -596,6 +585,17 @@ RBBrowserEnvironment >> selectionParseTreeIntervalFor: aString [
 					matchesArgumentTree: tree do: answerBlock ].
 		matcher executeTree: parseTree ].
 	^ nil
+]
+
+{ #category : #environments }
+RBBrowserEnvironment >> selectMethods: aBlock [ 
+	| env |
+	env := RBSelectorEnvironment onEnvironment: self.
+	self classesAndSelectorsDo: 
+			[:each :sel | 
+			(aBlock value: (each compiledMethodAt: sel)) 
+				ifTrue: [env addClass: each selector: sel]].
+	^env
 ]
 
 { #category : #accessing }

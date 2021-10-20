@@ -162,20 +162,6 @@ RBSelectorEnvironment >> asSelectorEnvironment [
 	^ self
 ]
 
-{ #category : #'accessing - classes' }
-RBSelectorEnvironment >> classNames [
-	^ IdentitySet new
-		addAll: classSelectors keys;
-		addAll: metaClassSelectors keys;
-		yourself
-]
-
-{ #category : #'initialize-release' }
-RBSelectorEnvironment >> classSelectors: classSelectorDictionary metaClassSelectors: metaClassSelectorDictionary [ 
-	classSelectors := classSelectorDictionary.
-	metaClassSelectors := metaClassSelectorDictionary
-]
-
 { #category : #initialization }
 RBSelectorEnvironment >> classes: classArray metaClasses: metaArray [ 
 	"Used to recreate an environment from its storeString"
@@ -200,6 +186,20 @@ RBSelectorEnvironment >> classesDo: aBlock [
 		class := self systemDictionary at: each ifAbsent: [ nil ].
 		(class notNil and: [ environment includesClass: class class ])
 			ifTrue: [ aBlock value: class class ] ]
+]
+
+{ #category : #'accessing - classes' }
+RBSelectorEnvironment >> classNames [
+	^ IdentitySet new
+		addAll: classSelectors keys;
+		addAll: metaClassSelectors keys;
+		yourself
+]
+
+{ #category : #'initialize-release' }
+RBSelectorEnvironment >> classSelectors: classSelectorDictionary metaClassSelectors: metaClassSelectorDictionary [ 
+	classSelectors := classSelectorDictionary.
+	metaClassSelectors := metaClassSelectorDictionary
 ]
 
 { #category : #private }
@@ -310,12 +310,13 @@ RBSelectorEnvironment >> removeClass: aClass [
 ]
 
 { #category : #removing }
-RBSelectorEnvironment >> removeClass: aClass selector: aSelector [ 
-	(aClass isMeta 
-		ifTrue: [metaClassSelectors at: aClass soleInstance name ifAbsent: [^self]]
-		ifFalse: [classSelectors at: aClass name ifAbsent: [^self]]) 
-			remove: aSelector
-			ifAbsent: []
+RBSelectorEnvironment >> removeClass: aClass selector: aSelector [
+	| class |
+	class := aClass isMeta
+				ifTrue: [metaClassSelectors at: aClass soleInstance name ifAbsent: [^self]]
+				ifFalse: [classSelectors at: aClass name ifAbsent: [^self]].
+	class remove: aSelector ifAbsent: [].
+	class ifEmpty: [self removeClass: aClass]
 ]
 
 { #category : #accessing }

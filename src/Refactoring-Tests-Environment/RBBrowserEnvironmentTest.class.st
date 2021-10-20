@@ -41,6 +41,15 @@ RBBrowserEnvironmentTest >> categoriesFor: anEnvironment [
 ]
 
 { #category : #private }
+RBBrowserEnvironmentTest >> classesFor: aBrowserEnvironment [
+	| allClasses |
+	allClasses := aBrowserEnvironment classes asSet.
+	allClasses addAll: aBrowserEnvironment not classes.
+	RBBrowserEnvironment new allClassesDo: [ :each | allClasses remove: each ].
+	self assertEmpty: allClasses
+]
+
+{ #category : #private }
 RBBrowserEnvironmentTest >> classNamesFor: anEnvironment [
 	| classNames allClassNames |
 	classNames := IdentitySet new
@@ -61,15 +70,6 @@ RBBrowserEnvironmentTest >> classVariableReader [
 { #category : #mockup }
 RBBrowserEnvironmentTest >> classVariableWriter [
 	AClassVariable := nil
-]
-
-{ #category : #private }
-RBBrowserEnvironmentTest >> classesFor: aBrowserEnvironment [
-	| allClasses |
-	allClasses := aBrowserEnvironment classes asSet.
-	allClasses addAll: aBrowserEnvironment not classes.
-	RBBrowserEnvironment new allClassesDo: [ :each | allClasses remove: each ].
-	self assertEmpty: allClasses
 ]
 
 { #category : #private }
@@ -415,6 +415,20 @@ RBBrowserEnvironmentTest >> testSelectorEnvironment [
 	self assert: printString isSelectorEnvironment.
 	self assert: printString numberSelectors equals: (printString referencesTo: #printString) numberSelectors.
 	self assert: printString numberClasses equals: (printString referencesTo: #printString) numberClasses
+]
+
+{ #category : #tests }
+RBBrowserEnvironmentTest >> testSelectorEnvironmentRemoveClassSelectorShouldRemoveTheClassIfThereIsNoMoreSelectors [
+	| environment |
+	environment := RBSelectorEnvironment new.
+	environment addClass: Object selector: #printString.
+	self assert: (environment includesClass: Object).
+	self assert: (environment includesSelector: #printString in: Object).
+	self assert: (environment classes includes: Object).
+	environment removeClass: Object selector: #printString.
+	self deny: (environment includesClass: Object).
+	self deny: (environment classes includes: Object).
+	self deny: (environment includesSelector: #printString in: Object)
 ]
 
 { #category : #tests }
