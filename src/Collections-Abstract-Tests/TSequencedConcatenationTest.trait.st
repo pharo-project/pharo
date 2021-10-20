@@ -87,16 +87,6 @@ TSequencedConcatenationTest >> testStreamContents [
 ]
 
 { #category : #'tests - streaming' }
-TSequencedConcatenationTest >> testStreamContentsProtocol [
-	| result |
-	result:= self collectionClass << [ :s|
-		s 
-			nextPutAll: self firstCollection;
-			nextPutAll: self secondCollection ].
-	self assert: result equals: self firstCollection, self secondCollection.
-]
-
-{ #category : #'tests - streaming' }
 TSequencedConcatenationTest >> testStreamContentsSized [
 	| result |
 	result:= self collectionClass new: 1 streamContents: [ :s|

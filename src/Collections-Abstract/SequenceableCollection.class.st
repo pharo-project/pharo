@@ -7,15 +7,6 @@ Class {
 	#category : #'Collections-Abstract-Base'
 }
 
-{ #category : #'stream creation' }
-SequenceableCollection class >> << blockWithArg [
-	"An alias to #streamContents:"
-	
-	"Array << [ :stream | 0 to: 100 by: 25 do: [ :each | stream nextPut: each ] ] >>> #(0 25 50 75 100)"
-	
-	^ self streamContents: blockWithArg
-]
-
 { #category : #testing }
 SequenceableCollection class >> isAbstract [
 
