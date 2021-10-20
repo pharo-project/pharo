@@ -77,3 +77,8 @@ NullWorldRenderer >> windowTitle: aString [
 
 	"I am a dummy implementation"
 ]
+
+{ #category : #events }
+NullWorldRenderer >> updateToNewResolution [
+
+]

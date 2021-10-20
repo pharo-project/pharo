@@ -443,6 +443,12 @@ OSWindow >> toggleBorderOn [
 	self validHandle toggleBorderOn.
 ]
 
+{ #category : #events }
+OSWindow >> updateToNewResolution [
+	
+	self backendWindow updateToNewResolution
+]
+
 { #category : #private }
 OSWindow >> validHandle [
 	self checkIsValid.

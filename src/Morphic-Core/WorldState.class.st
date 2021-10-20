@@ -864,6 +864,19 @@ WorldState >> triggerAlarmsBefore: nowTime [
 	lastAlarmTime := nowTime.
 ]
 
+{ #category : #events }
+WorldState >> updateToNewResolution: originalEvent [
+
+	"We need to reset the render if the resolution changes. 
+	If we don't do this the image seems blocked but as it does not refresh the window"
+
+	self doFullRepaint.
+	
+	self worldRenderer updateToNewResolution.
+	
+	self worldRenderer checkForNewScreenSize.
+]
+
 { #category : #canvas }
 WorldState >> viewBox [
 

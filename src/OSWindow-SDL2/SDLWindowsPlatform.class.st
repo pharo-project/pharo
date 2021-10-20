@@ -23,6 +23,9 @@ SDLWindowsPlatform >> afterMainPharoWindowCreated: aOSSDLWindow [
 		self class enableDebugWindowMenu: handle ] 
 	onErrorDo: [ 
 		"There was an error installing the support for debug Window, the VM is not new enough." ].
+
+	"I want to receive the System Windows events"
+	SDL2 eventType: SDL_SYSWMEVENT state: 1.
 ]
 
 { #category : #operations }

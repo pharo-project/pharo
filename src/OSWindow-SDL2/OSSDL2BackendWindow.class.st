@@ -542,6 +542,16 @@ OSSDL2BackendWindow >> toggleBorderOn [
 	sdl2Window toggleBorder: true
 ]
 
+{ #category : #events }
+OSSDL2BackendWindow >> updateToNewResolution [
+	
+	"Force the regeneration of the renderer because we have a new resolution"
+	renderer destroy.
+	renderer validate.
+	renderer updateAll.
+
+]
+
 { #category : #accessing }
 OSSDL2BackendWindow >> verticalDPI [
 	self fetchDPIAndRaiseEvent.
@@ -620,6 +630,18 @@ OSSDL2BackendWindow >> visitMouseWheelEvent: sdlEvent [
 			
 	self convertButtonState: SDL2 mouseState modState: SDL2 modState modifiers: osEvent modifiers.
 	^ osEvent deliver
+]
+
+{ #category : #'event handling' }
+OSSDL2BackendWindow >> visitSystemWindowEvent: systemWindowEvent [
+
+	self fetchDPI.
+	(OSWindowResolutionChangeEvent for: osWindow)
+		horizontalDPI: horizontalDPI;
+		verticalDPI: verticalDPI;
+		diagonalDPI: diagonalDPI;
+		screenScaleFactor: screenScaleFactor;
+		deliver
 ]
 
 { #category : #'event handling' }

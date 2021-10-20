@@ -11,6 +11,12 @@ Class {
 }
 
 { #category : #'class initialization' }
+SDL_Event class >> eventNameFromType: aType [
+
+	^ EventTypeMap at: aType ifPresent: [ :x | x name ] ifAbsent: [ 'Unknown:' , aType printString ].
+]
+
+{ #category : #'class initialization' }
 SDL_Event class >> initialize [
 	"self initialize"
 
