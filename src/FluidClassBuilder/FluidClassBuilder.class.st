@@ -44,6 +44,19 @@ Class {
 	#category : #'FluidClassBuilder-Base'
 }
 
+{ #category : #copying }
+FluidClassBuilder >> fillFromClass: aClass [ 
+
+	super fillFromClass: aClass.
+	self superclass: aClass superclass.
+	aClass classLayout isFixedLayout 
+		ifFalse: [ self layout: aClass classLayout class ].
+	aClass classVariables ifNotEmpty: [ :x | self sharedVariables: (x collect: [ :e | e key ]) ].
+	aClass sharedPools ifNotEmpty: [ :x | self sharedPools: (x collect: [:each | each name ]) asArray].
+	
+
+]
+
 { #category : #building }
 FluidClassBuilder >> fillShiftClassBuilder [ 
 
@@ -94,6 +107,12 @@ FluidClassBuilder >> sharedVariables: aCollection [
 FluidClassBuilder >> sharedVariablesToBuild [
 
 	^ sharedVariables
+]
+
+{ #category : #'accessing - mandatory' }
+FluidClassBuilder >> superclass: aClass [
+
+	superclassToBuild := aClass
 ]
 
 { #category : #'accessing - mandatory' }

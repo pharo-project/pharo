@@ -216,7 +216,7 @@ FluidClassDefinitionPrinterTest >> testMetaclass [
 FluidClassDefinitionPrinterTest >> testMetaclassClass [
 	
 	self assert: (self forClass: Metaclass class) equals: 
- 'Metaclass class'	
+ 'ClassDescription class << Metaclass class'	
 ]
 
 { #category : #'tests - classes' }
@@ -257,12 +257,12 @@ FluidClassDefinitionPrinterTest >> testProtoObject [
 { #category : #'tests - classes' }
 FluidClassDefinitionPrinterTest >> testProtoObjectClass [
 	
-	self assert: (self forClass: ProtoObject class) equals: 'ProtoObject class'
+	self assert: (self forClass: ProtoObject class) equals: 'Class class << ProtoObject class'
 ]
 
 { #category : #'tests - metaclasses' }
 FluidClassDefinitionPrinterTest >> testSystemAnnouncerClass [
 	
-	self assert: (self forClass: SystemAnnouncer class) equals: 'SystemAnnouncer class
+	self assert: (self forClass: SystemAnnouncer class) equals: 'Announcer class << SystemAnnouncer class
 	slots: { #announcer }'
 ]

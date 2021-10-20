@@ -240,7 +240,15 @@ FluidClassDefinitionPrinter >> metaclassDefinitionString [
 
 	^ String streamContents: [ :strm |
 		forClass superclass 
-			ifNotNil: [ strm nextPutAll: forClass name ]
+			ifNotNil: [ forClass = ProtoObject class
+								ifFalse: [ 
+								strm 
+									nextPutAll: forClass superclass name;
+									nextPutAll: ' << ';
+									nextPutAll: forClass name ]
+								ifTrue: [ strm 
+									nextPutAll: 'Class class << ';
+									nextPutAll: forClass name ] ]
 			ifNil: [ strm nextPutAll: 'ProtoObject ' ].
 		self lastTraitsOn: strm.
 		forClass slots ifNotEmpty: [ self lastSlotsOn: strm ] ]
@@ -411,7 +419,9 @@ FluidClassDefinitionPrinter >> traitedMetaclassDefinitionString [
 
 	^ String streamContents: 
 		[:strm |
-		strm nextPutAll: forClass name.
+		strm 
+			nextPutAll: 'Trait >> ';
+			nextPutAll: forClass name.
 		self lastTraitsOn: strm.
 		forClass slots ifNotEmpty: [ self lastSlotsOn: strm ]]
 ]

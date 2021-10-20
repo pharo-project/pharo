@@ -154,9 +154,7 @@ FluidClassBuilderTest >> testBuilderWithPackage [
 FluidClassBuilderTest >> testBuilderWithSlots [
 
 	builder slots: { #x . #y }.
-	self assert: builder slotsToBuild equals: { #x . #y }
-
-	
+	self assert: builder slotsToBuild equals: {#x => InstanceVariableSlot. #y => InstanceVariableSlot}
 ]
 
 { #category : #'tests - gathering' }
@@ -169,10 +167,78 @@ FluidClassBuilderTest >> testBuilderWithTag [
 ]
 
 { #category : #'tests - class side' }
+FluidClassBuilderTest >> testChevronIsWorkingOnClassSide [
+
+	| instBuilder newClass clasBuilder |
+	instBuilder := (Object << #Point2
+		slots: { #a. #b };
+		layout: WeakLayout;
+		traits: {TViewModelMock };
+		sharedVariables: { #AAA};
+		sharedPools: { #TextConstants};
+		tag: 'boring' ;
+		package: 'Mock').
+		
+	newClass := instBuilder build.
+	
+	clasBuilder := Object class << newClass class.
+		
+	self assert: clasBuilder packageToBuild equals: instBuilder packageToBuild.
+	self assert: clasBuilder superclassToBuild equals: instBuilder superclassToBuild.
+	self assert: clasBuilder layoutToBuild equals: instBuilder layoutToBuild.
+	self assert: clasBuilder sharedVariablesToBuild equals: instBuilder sharedVariablesToBuild.
+	self assert: clasBuilder sharedPoolsToBuild equals: instBuilder sharedPoolsToBuild.
+	
+	self assert: clasBuilder slotsToBuild equals: instBuilder slotsToBuild.
+	self assert: clasBuilder tagToBuild equals: instBuilder tagToBuild.
+	self assert: clasBuilder traitsToBuild equals: instBuilder traitsToBuild.
+	self assert: clasBuilder nameToBuild equals: instBuilder nameToBuild.
+	
+	self assert: clasBuilder classSlotsToBuild equals: instBuilder classSlotsToBuild.
+	self assert: clasBuilder classTraitsToBuild equals: instBuilder classTraitsToBuild.
+
+
+
+
+
+]
+
+{ #category : #'tests - class side' }
+FluidClassBuilderTest >> testChevronIsWorkingOnClassSideOnEmpty [
+
+	| instBuilder newClass clasBuilder |
+	instBuilder := (Object << #Point2
+		package: 'Mock').
+		
+	newClass := instBuilder build.
+	
+	clasBuilder := Object class << newClass class.
+		
+	self assert: clasBuilder packageToBuild equals: instBuilder packageToBuild.
+	self assert: clasBuilder superclassToBuild equals: instBuilder superclassToBuild.
+	self assert: clasBuilder layoutToBuild equals: instBuilder layoutToBuild.
+	self assert: clasBuilder sharedVariablesToBuild equals: instBuilder sharedVariablesToBuild.
+	self assert: clasBuilder sharedPoolsToBuild equals: instBuilder sharedPoolsToBuild.
+	
+	self assert: clasBuilder slotsToBuild equals: instBuilder slotsToBuild.
+	self assert: clasBuilder tagToBuild equals: instBuilder tagToBuild.
+	self assert: clasBuilder traitsToBuild equals: instBuilder traitsToBuild.
+	self assert: clasBuilder nameToBuild equals: instBuilder nameToBuild.
+	
+	self assert: clasBuilder classSlotsToBuild equals: instBuilder classSlotsToBuild.
+	self assert: clasBuilder classTraitsToBuild equals: instBuilder classTraitsToBuild.
+
+
+
+
+
+]
+
+{ #category : #'tests - class side' }
 FluidClassBuilderTest >> testClassSlots [
 
 	builder classSlots: {#string . #runs}.
-	self assert: builder classSlotsToBuild equals: {#string . #runs}
+	self assert: builder classSlotsToBuild  equals: {#string => InstanceVariableSlot. #runs => InstanceVariableSlot}
 ]
 
 { #category : #'tests - class side' }
