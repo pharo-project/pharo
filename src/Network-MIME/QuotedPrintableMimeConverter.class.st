@@ -42,7 +42,7 @@ QuotedPrintableMimeConverter >> initialize [
 	newline := String cr
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 QuotedPrintableMimeConverter >> mimeDecode [
 	| char outChar previousChar |
 	previousChar := nil.
@@ -67,7 +67,7 @@ QuotedPrintableMimeConverter >> mimeDecode [
 				previousChar := outChar ] ]
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 QuotedPrintableMimeConverter >> mimeEncode [
 	| char charValue lineLength |
 	lineLength := 0.

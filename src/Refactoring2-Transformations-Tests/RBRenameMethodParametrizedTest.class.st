@@ -8,6 +8,7 @@ Class {
 RBRenameMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBRenameMethodRefactoring };
+		addCase: { #rbClass -> RBRenameMethodTransformation };
 		yourself
 ]
 

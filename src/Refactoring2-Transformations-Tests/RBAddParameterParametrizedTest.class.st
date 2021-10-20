@@ -8,6 +8,7 @@ Class {
 RBAddParameterParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBAddParameterRefactoring };
+		addCase: { #rbClass -> RBAddParameterTransformation };
 		yourself
 ]
 

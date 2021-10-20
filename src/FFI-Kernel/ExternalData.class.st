@@ -45,7 +45,7 @@ ExternalData class >> new [
 	^self shouldNotImplement
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 ExternalData >> fromCString [
 	"Assume that the receiver represents a C string and convert it to a Smalltalk string. hg 2/25/2000 14:18"
 
@@ -54,7 +54,7 @@ ExternalData >> fromCString [
 	^ handle fromCString
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 ExternalData >> fromCStrings [
 	"Assume that the receiver represents a set of C strings and is teerminated by a empty string and convert it to a Smalltalk ordered collection of strings"
 

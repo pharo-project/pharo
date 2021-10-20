@@ -118,16 +118,6 @@ IRPrinter >> visitPushArray: array [
 ]
 
 { #category : #visiting }
-IRPrinter >> visitPushClosureCopy: closure [
-
-	stream nextPutAll: 'pushClosureCopyCopiedValues: '.
-	stream nextPutAll: closure copiedValues printString .
-	stream nextPutAll: ' args: '.
-	stream nextPutAll: closure arguments printString.
-
-]
-
-{ #category : #visiting }
 IRPrinter >> visitPushDup: dup [
 	
 	stream nextPutAll: 'pushDup'

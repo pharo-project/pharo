@@ -7,7 +7,7 @@ Class {
 	#category : #'HelpSystem-Core-Utilities'
 }
 
-{ #category : #conversion }
+{ #category : #converting }
 WikiStyleHelp class >> asHelpTopic [ 
 	<systemHelp>
 	

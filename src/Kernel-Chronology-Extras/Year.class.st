@@ -56,7 +56,7 @@ Year class >> year: aYear [
 	^ self starting: (DateAndTime year: aYear month: 1 day: 1).
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 Year >> asYear [ 
 
 	^ self 

@@ -11,19 +11,19 @@ Class {
 	#category : #'Athens-Core-Paths'
 }
 
-{ #category : #conversion }
+{ #category : #converting }
 AthensPolygon >> finish [
 	"Finally convert contours to arrays"
 	
 	contours := contours collect: [:ea | ea asArray ]
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 AthensPolygon >> lineTo: aPoint [ 
 	currentContour add: aPoint
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 AthensPolygon >> moveTo: aPoint [ 
 	" create a new contour "
 	
@@ -31,7 +31,7 @@ AthensPolygon >> moveTo: aPoint [
 	currentContour add: aPoint.
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 AthensPolygon >> newContour [
 	contours ifNil: [ contours := OrderedCollection new ].
 	

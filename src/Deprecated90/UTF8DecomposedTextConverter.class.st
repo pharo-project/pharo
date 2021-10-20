@@ -20,7 +20,7 @@ UTF8DecomposedTextConverter class >> encodingNames [
 
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 UTF8DecomposedTextConverter >> nextFromStream: aStream [
 
 	| char resultChar |

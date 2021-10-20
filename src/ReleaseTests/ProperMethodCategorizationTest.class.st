@@ -136,7 +136,7 @@ ProperMethodCategorizationTest >> testNoUncategorizedMethods [
 		             class protocols includes: Protocol unclassified ].
 
 	"we lock in the number of problematic classes, this way it can only improve"
-	self assert: violating size <= 48
+	self assert: violating size <= 33
 ]
 
 { #category : #tests }

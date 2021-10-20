@@ -8,6 +8,7 @@ Class {
 RBRemoveParameterParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBRemoveParameterRefactoring };
+		addCase: { #rbClass -> RBRemoveParameterTransformation};
 		yourself
 ]
 

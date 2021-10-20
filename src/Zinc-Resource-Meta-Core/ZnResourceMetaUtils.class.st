@@ -11,21 +11,21 @@ Class {
 	#category : #'Zinc-Resource-Meta-Core'
 }
 
-{ #category : #conversions }
+{ #category : #converting }
 ZnResourceMetaUtils class >> decodePercent: string [
 	^ ZnPercentEncoder new 
 		decodePlusAsSpace: false; 
 		decode: string
 ]
 
-{ #category : #conversions }
+{ #category : #converting }
 ZnResourceMetaUtils class >> decodePercentForQuery: string [
 	^ ZnPercentEncoder new 
 		decodePlusAsSpace: true; 
 		decode: string
 ]
 
-{ #category : #conversions }
+{ #category : #converting }
 ZnResourceMetaUtils class >> encodePercent: string safeSet: safeSet encoder: encoder [
 	^ ZnPercentEncoder new
 		characterEncoder: encoder;
@@ -33,7 +33,7 @@ ZnResourceMetaUtils class >> encodePercent: string safeSet: safeSet encoder: enc
 		encode: string
 ]
 
-{ #category : #conversions }
+{ #category : #converting }
 ZnResourceMetaUtils class >> parseQueryFrom: stream [
 	| string index fields |
 	fields := ZnMultiValueDictionary new.
@@ -74,12 +74,12 @@ ZnResourceMetaUtils class >> urlPathSafeSet [
 	^ 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~!$&''()*+,;=:@'
 ]
 
-{ #category : #conversions }
+{ #category : #converting }
 ZnResourceMetaUtils class >> writeQueryFields: dictionary on: stream [
 	self writeQueryFields: dictionary withEncoder: ZnCharacterEncoder utf8 on: stream 
 ]
 
-{ #category : #conversions }
+{ #category : #converting }
 ZnResourceMetaUtils class >> writeQueryFields: dictionary withEncoder: encoder on: stream [
 	| first |
 	first := true.
