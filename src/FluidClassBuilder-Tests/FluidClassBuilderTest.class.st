@@ -167,6 +167,7 @@ FluidClassBuilderTest >> testCreateClassWithFullExpandedDefinitionKeepsTheMinimu
 	tag: '''' ;
 	sharedPools: {};
 	package: ''MyPackage'''.
+	builder build.
 	shiftClassBuilder := builder shiftClassBuilder.
 		          
 	self assert: shiftClassBuilder superclass equals: Object.
@@ -216,6 +217,7 @@ FluidClassBuilderTest >> testInstallMinimalMockClass [
 	tag: '''' ;
 	sharedPools: {};
 	package: ''MyPackage'''.
+	builder build.
 	shiftClassBuilder := builder shiftClassBuilder.
 	ShiftClassInstaller new makeWithBuilder: shiftClassBuilder.
 	

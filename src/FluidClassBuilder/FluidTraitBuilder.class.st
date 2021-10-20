@@ -18,7 +18,7 @@ Class {
 { #category : #building }
 FluidTraitBuilder >> build [
 
-	^ shiftClassBuilder build 
+	^ self shiftClassBuilder build 
 
 
 ]
@@ -45,14 +45,14 @@ FluidTraitBuilder >> fillShiftClassBuilder [
 						ifFalse: [ shiftClassBuilder category: packageName, '-', tagToBuild asString ]
 						ifTrue: [ shiftClassBuilder category: packageName ]
 		].
+	^ shiftClassBuilder
 ]
 
 { #category : #building }
 FluidTraitBuilder >> install [
-
 	"Install the trait in the system environment"
 
-	^ ShiftClassInstaller new makeWithBuilder: shiftClassBuilder
+	^ ShiftClassInstaller new makeWithBuilder: self shiftClassBuilder
 ]
 
 { #category : #accessing }
@@ -72,13 +72,13 @@ FluidTraitBuilder >> name: aString [
 FluidTraitBuilder >> package: aString [
 
 	packageName := aString.
-	self fillShiftClassBuilder
+
 ]
 
 { #category : #building }
 FluidTraitBuilder >> shiftClassBuilder [ 
 
-	^ shiftClassBuilder 
+	^ shiftClassBuilder ifNil: [ shiftClassBuilder := self fillShiftClassBuilder ]
 ]
 
 { #category : #API }

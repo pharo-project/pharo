@@ -54,7 +54,7 @@ Class {
 FluidClassBuilder >> build [
 	"Return a class that is not installed in the system."
 	
-	^ shiftClassBuilder build 
+	^ self shiftClassBuilder build 
 
 
 ]
@@ -95,7 +95,8 @@ FluidClassBuilder >> fillShiftClassBuilder [
 	
 	"I could initialize all of them to #() instead of nil but we should check also the parser"
 	
-	layout ifNotNil: [ shiftClassBuilder layoutClass: layout ]
+	layout ifNotNil: [ shiftClassBuilder layoutClass: layout ].
+	^ shiftClassBuilder
 	
 	
 
@@ -104,10 +105,9 @@ FluidClassBuilder >> fillShiftClassBuilder [
 
 { #category : #building }
 FluidClassBuilder >> install [
-
 	"Install the class in the system environment"
-
-	^ ShiftClassInstaller new makeWithBuilder: shiftClassBuilder
+	
+	^ ShiftClassInstaller new makeWithBuilder: self shiftClassBuilder
 ]
 
 { #category : #API }
@@ -124,7 +124,7 @@ FluidClassBuilder >> layoutToBuild [
 FluidClassBuilder >> package: aString [
 	
 	packageName := aString.
-	self fillShiftClassBuilder 
+	
 ]
 
 { #category : #'accessing - mandatory' }
@@ -160,7 +160,7 @@ FluidClassBuilder >> sharedVariablesToBuild [
 { #category : #building }
 FluidClassBuilder >> shiftClassBuilder [ 
 
-	^ shiftClassBuilder 
+	^ shiftClassBuilder ifNil: [ shiftClassBuilder := self fillShiftClassBuilder ]
 ]
 
 { #category : #API }
