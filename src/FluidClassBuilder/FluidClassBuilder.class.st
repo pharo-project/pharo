@@ -47,28 +47,14 @@ Class {
 { #category : #building }
 FluidClassBuilder >> fillShiftClassBuilder [ 
 
-	shiftClassBuilder := ShiftClassBuilder new
-		buildEnvironment: ShSmalltalkGlobalsEnvironment new;
-		name: nameToBuild;
-		superclass: superclassToBuild.
-	(tagToBuild isNil or: [ tagToBuild isEmpty ])
-		ifTrue: [ shiftClassBuilder category: packageName ]
-		ifFalse: [ tagToBuild isEmpty 
-						ifFalse: [ shiftClassBuilder category: packageName, '-',tagToBuild asString ]
-						ifTrue: [ shiftClassBuilder category: packageName ]
-		].
-	slotsToBuild 
-		ifNotNil: [:s | s isEmpty ifFalse: [ shiftClassBuilder slots: slotsToBuild ]].
-	uses 
-		ifNotNil: [ :t | t isEmpty ifFalse: [shiftClassBuilder traitComposition: uses ]].
+	super fillShiftClassBuilder.
+	shiftClassBuilder superclass: superclassToBuild.
 	sharedVariables 
 		ifNotNil: [ :s | s isEmpty ifFalse: [shiftClassBuilder sharedVariables: sharedVariables]].
 	sharedPools 
 		ifNotNil: [ :p | p isEmpty ifFalse: [shiftClassBuilder sharedPoolsCollectionOfSymbols: sharedPools  ]].
-	
-	"I could initialize all of them to #() instead of nil but we should check also the parser"
-	
 	layout ifNotNil: [ shiftClassBuilder layoutClass: layout ].
+
 	^ shiftClassBuilder
 	
 	

@@ -7,7 +7,9 @@ Class {
 		'slotsToBuild',
 		'tagToBuild',
 		'uses',
-		'nameToBuild'
+		'nameToBuild',
+		'classSlotsToBuild',
+		'classTraitsToBuild'
 	],
 	#category : #'FluidClassBuilder-Base'
 }
@@ -19,6 +21,53 @@ FluidBuilder >> build [
 	^ self shiftClassBuilder build 
 
 
+]
+
+{ #category : #'class side' }
+FluidBuilder >> classSlots: aCollection [ 
+	classSlotsToBuild := aCollection
+]
+
+{ #category : #'class side' }
+FluidBuilder >> classSlotsToBuild [
+	^ classSlotsToBuild
+]
+
+{ #category : #'class side' }
+FluidBuilder >> classTraits: aCollection [ 
+	classTraitsToBuild := aCollection
+]
+
+{ #category : #'class side' }
+FluidBuilder >> classTraitsToBuild [
+	^ classTraitsToBuild
+]
+
+{ #category : #building }
+FluidBuilder >> fillShiftClassBuilder [ 
+
+	shiftClassBuilder := ShiftClassBuilder new.
+	shiftClassBuilder	
+		buildEnvironment: ShSmalltalkGlobalsEnvironment new;
+		name: nameToBuild.
+	
+	
+	slotsToBuild ifNotNil: [ shiftClassBuilder slots: slotsToBuild ].	
+	uses ifNotNil: [ 
+		shiftClassBuilder traitComposition: uses asTraitComposition.
+		"shiftClassBuilder classTraitComposition: uses asTraitComposition classComposition" ].
+	
+	(tagToBuild isNil or: [ tagToBuild isEmpty ])
+		ifTrue: [ shiftClassBuilder category: packageName ]
+		ifFalse: [ tagToBuild isEmpty 
+						ifFalse: [ shiftClassBuilder category: packageName, '-', tagToBuild asString ]
+						ifTrue: [ shiftClassBuilder category: packageName ]
+		].
+	
+	classSlotsToBuild 
+		ifNotNil: [:s | s isEmpty ifFalse: [ shiftClassBuilder classSlots: classSlotsToBuild ]].
+	classTraitsToBuild  
+		ifNotNil: [ :t | t isEmpty ifFalse: [shiftClassBuilder classTraitComposition: classTraitsToBuild ]].
 ]
 
 { #category : #building }

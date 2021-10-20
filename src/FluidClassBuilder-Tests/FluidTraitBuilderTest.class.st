@@ -37,6 +37,13 @@ FluidTraitBuilderTest >> testBuildSimplePoint2 [
 
 ]
 
+{ #category : #'class side' }
+FluidTraitBuilderTest >> testClassSlots [
+
+	builder classSlots: {#string . #runs}.
+	self assert: builder classSlotsToBuild equals: {#string . #runs}
+]
+
 { #category : #tests }
 FluidTraitBuilderTest >> testFillShiftClassBuilder [
 

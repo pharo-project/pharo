@@ -32,6 +32,38 @@ FluidClassBuilderTest >> setUp [
 		           package: 'FakedPackage'
 ]
 
+{ #category : #'tests - class side' }
+FluidClassBuilderTest >> testBuildClassSlotsAPI [
+
+	| clas |
+	builder := Object << #Point2.
+	builder slots: { #x }.
+	builder classSlots: {#classX . #classY}.
+	builder package: 'FakedCore'.
+	clas := builder build.
+	
+	self assert: clas superclass equals: Object.
+	self assert: clas name equals: #Point2.
+	self assert: clas slots size equals: 1.
+	self assert: clas class slots size equals: 2.
+	
+]
+
+{ #category : #'tests - class side' }
+FluidClassBuilderTest >> testBuildClassTraitsAPI [
+
+	| clas |
+	builder := Object << #Point2.
+	builder classTraits: { TViewModelMock2 classSide }.
+	builder package: 'FakedCore'.
+	clas := builder build.
+	
+	self assert: clas superclass equals: Object.
+	self assert: clas name equals: #Point2.
+	self assert: clas class traitComposition equals: { TViewModelMock2 classSide } asTraitComposition
+	
+]
+
 { #category : #'tests - gathering' }
 FluidClassBuilderTest >> testBuildLayout [
 
@@ -134,6 +166,20 @@ FluidClassBuilderTest >> testBuilderWithTag [
 	self assert: builder tagToBuild equals: 'Foo'
 
 	
+]
+
+{ #category : #'tests - class side' }
+FluidClassBuilderTest >> testClassSlots [
+
+	builder classSlots: {#string . #runs}.
+	self assert: builder classSlotsToBuild equals: {#string . #runs}
+]
+
+{ #category : #'tests - class side' }
+FluidClassBuilderTest >> testClassTraits [
+
+	builder classTraits: {TViewModel classSide}.
+	self assert: builder classTraitsToBuild equals: {TViewModel classSide}
 ]
 
 { #category : #'tests - mandatory' }
