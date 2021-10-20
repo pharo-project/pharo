@@ -28,7 +28,7 @@ FluidClassBuilderTest >> setUp [
 	super setUp.
 	builder := FluidClassBuilder new
 		           superclassToBuild: Object;
-		           classNameToBuild: #Point33;
+		           nameToBuild: #Point33;
 		           package: 'FakedPackage'
 ]
 
@@ -139,7 +139,7 @@ FluidClassBuilderTest >> testCreateBuilder [
 
 	builder := Object << #Point.
 	self assert: builder superclassToBuild equals: Object.
-	self assert: builder classNameToBuild equals: #Point.
+	self assert: builder nameToBuild equals: #Point.
 	
 ]
 
@@ -148,7 +148,7 @@ FluidClassBuilderTest >> testCreateBuilderWithNil [
 
 	builder := nil << #NewProtoObject.
 	self assert: builder superclassToBuild equals: nil.
-	self assert: builder classNameToBuild equals: #NewProtoObject.
+	self assert: builder nameToBuild equals: #NewProtoObject.
 	
 ]
 

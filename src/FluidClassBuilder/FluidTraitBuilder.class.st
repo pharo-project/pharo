@@ -3,25 +3,9 @@ Similar to class `FluidClassBuilder` but for traits
 "
 Class {
 	#name : #FluidTraitBuilder,
-	#superclass : #Object,
-	#instVars : [
-		'packageName',
-		'slots',
-		'name',
-		'uses',
-		'tagToBuild',
-		'shiftClassBuilder'
-	],
+	#superclass : #FluidBuilder,
 	#category : #'FluidClassBuilder-Base'
 }
-
-{ #category : #building }
-FluidTraitBuilder >> build [
-
-	^ self shiftClassBuilder build 
-
-
-]
 
 { #category : #accessing }
 FluidTraitBuilder >> fillShiftClassBuilder [
@@ -29,12 +13,12 @@ FluidTraitBuilder >> fillShiftClassBuilder [
 	shiftClassBuilder := ShiftClassBuilder new.
 	shiftClassBuilder buildEnvironment: ShSmalltalkGlobalsEnvironment new. 
 	shiftClassBuilder 
-		name: name;
+		name: nameToBuild;
 		beTrait;
 		sharedVariables: '';
 		sharedPools: ''.
 		
-	slots ifNotNil: [ shiftClassBuilder slots: slots ].	
+	slotsToBuild ifNotNil: [ shiftClassBuilder slots: slotsToBuild ].	
 	uses ifNotNil: [ 
 		shiftClassBuilder traitComposition: uses asTraitComposition.
 		shiftClassBuilder classTraitComposition: uses asTraitComposition classComposition ].
@@ -46,61 +30,4 @@ FluidTraitBuilder >> fillShiftClassBuilder [
 						ifTrue: [ shiftClassBuilder category: packageName ]
 		].
 	^ shiftClassBuilder
-]
-
-{ #category : #building }
-FluidTraitBuilder >> install [
-	"Install the trait in the system environment"
-
-	^ ShiftClassInstaller new makeWithBuilder: self shiftClassBuilder
-]
-
-{ #category : #accessing }
-FluidTraitBuilder >> instanceVariables: anArray [
-	"Pay attention this is not part of the fluid interface -- this method should not probably removed."
-	
-	slots := anArray
-]
-
-{ #category : #API }
-FluidTraitBuilder >> name: aString [
-
-	name := aString
-]
-
-{ #category : #API }
-FluidTraitBuilder >> package: aString [
-
-	packageName := aString.
-
-]
-
-{ #category : #building }
-FluidTraitBuilder >> shiftClassBuilder [ 
-
-	^ shiftClassBuilder ifNil: [ shiftClassBuilder := self fillShiftClassBuilder ]
-]
-
-{ #category : #API }
-FluidTraitBuilder >> slots: anArray [
-
-	slots := anArray
-]
-
-{ #category : #accessing }
-FluidTraitBuilder >> tag [
-
-	^ tagToBuild
-]
-
-{ #category : #API }
-FluidTraitBuilder >> tag: anObject [
-
-	tagToBuild := anObject
-]
-
-{ #category : #API }
-FluidTraitBuilder >> trait: anArray [
-	"To replace the uses: which will be deprecated"
-	uses := anArray
 ]

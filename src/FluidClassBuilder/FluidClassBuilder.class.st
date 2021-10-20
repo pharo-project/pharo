@@ -34,49 +34,23 @@ ShiftClassInstaller new makeWithBuilder: (Object << #Point33
 "
 Class {
 	#name : #FluidClassBuilder,
-	#superclass : #Object,
+	#superclass : #FluidBuilder,
 	#instVars : [
 		'superclassToBuild',
-		'classNameToBuild',
-		'slotsToBuild',
-		'tagToBuild',
-		'packageName',
 		'layout',
 		'sharedVariables',
 		'traitComposition',
-		'sharedPools',
-		'shiftClassBuilder'
+		'sharedPools'
 	],
 	#category : #'FluidClassBuilder-Base'
 }
-
-{ #category : #building }
-FluidClassBuilder >> build [
-	"Return a class that is not installed in the system."
-	
-	^ self shiftClassBuilder build 
-
-
-]
-
-{ #category : #'accessing - mandatory' }
-FluidClassBuilder >> classNameToBuild [
-	"mandatory"
-	
-	^ classNameToBuild
-]
-
-{ #category : #'accessing - mandatory' }
-FluidClassBuilder >> classNameToBuild: aSymbol [ 
-	classNameToBuild := aSymbol
-]
 
 { #category : #building }
 FluidClassBuilder >> fillShiftClassBuilder [ 
 
 	shiftClassBuilder := ShiftClassBuilder new
 		buildEnvironment: ShSmalltalkGlobalsEnvironment new;
-		name: classNameToBuild;
+		name: nameToBuild;
 		superclass: superclassToBuild.
 	(tagToBuild isNil or: [ tagToBuild isEmpty ])
 		ifTrue: [ shiftClassBuilder category: packageName ]
@@ -86,8 +60,8 @@ FluidClassBuilder >> fillShiftClassBuilder [
 		].
 	slotsToBuild 
 		ifNotNil: [:s | s isEmpty ifFalse: [ shiftClassBuilder slots: slotsToBuild ]].
-	traitComposition 
-		ifNotNil: [ :t | t isEmpty ifFalse: [shiftClassBuilder traitComposition: traitComposition ]].
+	uses 
+		ifNotNil: [ :t | t isEmpty ifFalse: [shiftClassBuilder traitComposition: uses ]].
 	sharedVariables 
 		ifNotNil: [ :s | s isEmpty ifFalse: [shiftClassBuilder sharedVariables: sharedVariables]].
 	sharedPools 
@@ -103,13 +77,6 @@ FluidClassBuilder >> fillShiftClassBuilder [
 
 ]
 
-{ #category : #building }
-FluidClassBuilder >> install [
-	"Install the class in the system environment"
-	
-	^ ShiftClassInstaller new makeWithBuilder: self shiftClassBuilder
-]
-
 { #category : #API }
 FluidClassBuilder >> layout: aClass [ 
 	layout := aClass
@@ -118,19 +85,6 @@ FluidClassBuilder >> layout: aClass [
 { #category : #accessing }
 FluidClassBuilder >> layoutToBuild [
 	^ layout 
-]
-
-{ #category : #API }
-FluidClassBuilder >> package: aString [
-	
-	packageName := aString.
-	
-]
-
-{ #category : #'accessing - mandatory' }
-FluidClassBuilder >> packageToBuild [
-
-	^ packageName
 ]
 
 { #category : #API }
@@ -157,24 +111,6 @@ FluidClassBuilder >> sharedVariablesToBuild [
 	^ sharedVariables
 ]
 
-{ #category : #building }
-FluidClassBuilder >> shiftClassBuilder [ 
-
-	^ shiftClassBuilder ifNil: [ shiftClassBuilder := self fillShiftClassBuilder ]
-]
-
-{ #category : #API }
-FluidClassBuilder >> slots: aCollection [
-
-	slotsToBuild := aCollection
-]
-
-{ #category : #accessing }
-FluidClassBuilder >> slotsToBuild [
-
-	^ slotsToBuild
-]
-
 { #category : #'accessing - mandatory' }
 FluidClassBuilder >> superclassToBuild [
 
@@ -185,28 +121,4 @@ FluidClassBuilder >> superclassToBuild [
 FluidClassBuilder >> superclassToBuild: aClass [
 
 	superclassToBuild := aClass
-]
-
-{ #category : #API }
-FluidClassBuilder >> tag: aString [
-
-	tagToBuild := aString
-]
-
-{ #category : #accessing }
-FluidClassBuilder >> tagToBuild [
-
-	^ tagToBuild
-]
-
-{ #category : #API }
-FluidClassBuilder >> trait: aTraitComposition [
-
-	traitComposition := aTraitComposition
-]
-
-{ #category : #accessing }
-FluidClassBuilder >> traitsToBuild [
-
-	^ traitComposition
 ]
