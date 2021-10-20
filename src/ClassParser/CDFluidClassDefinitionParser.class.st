@@ -54,13 +54,26 @@ CDFluidClassDefinitionParser >> handleClassAndSuperclassOf: aNode [
 	(self isTraitDefinition: aNode receiver)
 		ifTrue: [ self handleClassName: aNode receiver arguments first. ^ self ].
 	(self isTraitClassSideDefinition: aNode)
-		ifTrue: [ self handleClassName: aNode receiver. ^ self].
+		ifTrue: [ self handleClassName: aNode receiver arguments first receiver. ^ self].
 	
 	(self isInstanceSideDefinition: aNode receiver)
 		ifTrue: [ 
 			self handleSuperclassNode: aNode receiver receiver.
 			self handleClassName: aNode receiver arguments first ]
 		ifFalse: [ self handleMetaclassName: aNode ].
+]
+
+{ #category : #internal }
+CDFluidClassDefinitionParser >> handleClassName: aNode [
+
+	| className classNode |
+	className := (aNode isVariable
+		ifTrue: [ aNode name ]
+		ifFalse: [ aNode value ]) asSymbol.
+	classNode := self classNameNodeClass new
+		originalNode: aNode;
+		className: className.
+	classDefinition className: className astNode: classNode
 ]
 
 { #category : #'handling  nodes' }
@@ -163,9 +176,10 @@ CDFluidClassDefinitionParser >> parseRootNode: expressionTree [
 	searcher := RBParseTreeSearcher new.
 	searcher
 		matches: 'Trait << `#traitSymbol' do: [:aNode :answer | kind := #traitInstance ];
+		matches: 'Trait << `@symb classTrait' do: [:aNode :answer | kind := #traitClass ];
 		matches: '`@tm << `#symb' do: [:aNode :answer | kind := #instance ];
-		matches: '`@tm class << `@symb class' do: [:aNode :answer | kind := #class ];
-		matches: 'Trait << `@symb class' do: [:aNode :answer | kind := #traitClass ].
+		matches: '`@tm class << `@symb class' do: [:aNode :answer | kind := #class ].
+		
 	searcher executeTree: expressionTree.
 	
 	expressionTree extractClassDefinitionFor: self. 

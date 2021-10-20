@@ -346,7 +346,7 @@ CDFluidClassParserTest >> testWeakSubclass [
 	self assert: def layoutClass equals: WeakLayout
 ]
 
-{ #category : #'rb xp' }
+{ #category : #'tests - rb xp' }
 CDFluidClassParserTest >> testWithRB [
 
 	| dict searcher |
@@ -363,7 +363,24 @@ CDFluidClassParserTest >> testWithRB [
 		package: ''''').
 ]
 
-{ #category : #'rb xp' }
+{ #category : #'tests - rb xp' }
+CDFluidClassParserTest >> testWithRB10 [
+
+	| searcher kind|
+	searcher := RBParseTreeSearcher new.
+	searcher
+		matches: 'Trait << `#traitSymbol' do: [:aNode :answer | kind := #traitInstance ];
+		matches: 'Trait << `@symb classTrait' do: [:aNode :answer | kind := #traitClass ];
+		matches: '`@tm << `#symb' do: [:aNode :answer | kind := #instance ];
+		matches: '`@tm class << `@symb class' do: [:aNode :answer | kind := #class ].
+	searcher executeTree: (RBParser parseExpression: '
+		Trait << TViewModelMock3 classTrait
+	') .
+	self assert: kind equals: #traitClass.
+	
+]
+
+{ #category : #'tests - rb xp' }
 CDFluidClassParserTest >> testWithRB3 [
 
 	| searcher coll|
@@ -379,7 +396,7 @@ CDFluidClassParserTest >> testWithRB3 [
 	self assert: coll size equals: 1
 ]
 
-{ #category : #'rb xp' }
+{ #category : #'tests - rb xp' }
 CDFluidClassParserTest >> testWithRB4 [
 
 	| searcher coll|
@@ -396,7 +413,7 @@ CDFluidClassParserTest >> testWithRB4 [
 	self assert: coll size equals: 3
 ]
 
-{ #category : #'rb xp' }
+{ #category : #'tests - rb xp' }
 CDFluidClassParserTest >> testWithRB5 [
 
 	| searcher coll|
@@ -416,7 +433,7 @@ CDFluidClassParserTest >> testWithRB5 [
 	self assert: coll size equals: 1.
 ]
 
-{ #category : #'rb xp' }
+{ #category : #'tests - rb xp' }
 CDFluidClassParserTest >> testWithRB6 [
 
 	| searcher coll|
@@ -436,7 +453,7 @@ CDFluidClassParserTest >> testWithRB6 [
 	self assert: coll size equals: 1.
 ]
 
-{ #category : #'rb xp' }
+{ #category : #'tests - rb xp' }
 CDFluidClassParserTest >> testWithRB7 [
 
 	| searcher coll|
@@ -456,7 +473,7 @@ CDFluidClassParserTest >> testWithRB7 [
 	self assert: coll size equals: 1.
 ]
 
-{ #category : #'rb xp' }
+{ #category : #'tests - rb xp' }
 CDFluidClassParserTest >> testWithRB8 [
 
 	| searcher coll|
@@ -477,7 +494,7 @@ CDFluidClassParserTest >> testWithRB8 [
 	
 ]
 
-{ #category : #'rb xp' }
+{ #category : #'tests - rb xp' }
 CDFluidClassParserTest >> testWithRB9 [
 
 	| searcher coll|

@@ -24,13 +24,18 @@ CDTraitCompositionBuilder >> visitArrayNode: aRBArrayNode [
 	parent := aRBArrayNode parent.
 	parent isMessage ifTrue: [ 
 		argumentName := parent keywords at: (parent arguments indexOf: aRBArrayNode).
-		(argumentName = #uses:) | (argumentName = #trait:) ifTrue: [ 
-			aRBArrayNode statements ifEmpty: [ 
-				^CDTraitCompositionSequenceNode new 
-					sequence: #();
-					originalNode: aRBArrayNode;
-					yourself].
-			self error: 'Is not supported yet']].
+		(argumentName = #uses:) | (argumentName = #traits:) ifTrue: [ 
+			aRBArrayNode statements 
+				ifEmpty: [ 
+					^CDTraitCompositionSequenceNode new 
+						sequence: #();
+						originalNode: aRBArrayNode;
+						yourself]
+				ifNotEmpty: [ :stm | ^ CDTraitCompositionSequenceNode new 
+											sequence: {(self visitMessageNode: stm first)} ;
+											originalNode: aRBArrayNode;
+											yourself
+									]]].
 	
 	^aRBArrayNode statements collect: [ :each | 
 		each isLiteralNode
