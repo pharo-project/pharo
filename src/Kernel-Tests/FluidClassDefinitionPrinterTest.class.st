@@ -137,7 +137,7 @@ FluidClassDefinitionPrinterTest >> testExpandedEmptyLayoutClass [
 	self 
 		assert: (self expandedForClass: EmptyLayout class)  
 		equals: 'EmptyLayout class
-	uses: {};
+	traits: {};
 	slots: { #instance }'
 ]
 
@@ -148,7 +148,7 @@ FluidClassDefinitionPrinterTest >> testExpandedOnClassWithoutTag [
 		assert: (self expandedForClass: EncoderForSistaV1)
 		equals:   'BytecodeEncoder << #EncoderForSistaV1
 	layout: FixedLayout;
-	uses: {};
+	traits: {};
 	slots: {};
 	sharedVariables: {};
 	sharedPools: {};
@@ -163,7 +163,7 @@ FluidClassDefinitionPrinterTest >> testExpandedPoint [
 		assert: (self expandedForClass: Point) 
 		equals: 'Object << #Point
 	layout: FixedLayout;
-	uses: {};
+	traits: {};
 	slots: { #x . #y };
 	sharedVariables: {};
 	sharedPools: {};
@@ -179,7 +179,7 @@ FluidClassDefinitionPrinterTest >> testExpandedTime [
 		assert: (self expandedForClass: Time)  
 		equals: 'Magnitude << #Time
 	layout: FixedLayout;
-	uses: {};
+	traits: {};
 	slots: { #seconds . #nanos };
 	sharedVariables: {};
 	sharedPools: { ChronologyConstants };

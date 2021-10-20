@@ -35,6 +35,9 @@ In addition having a binary message makes () unneccessary.
 Class {
 	#name : #CDFluidClassDefinitionParser,
 	#superclass : #CDAbstractClassDefinitionParser,
+	#instVars : [
+		'kind'
+	],
 	#category : #'ClassParser-Parser'
 }
 
@@ -122,10 +125,11 @@ CDFluidClassDefinitionParser >> handleTag: aNode [
 CDFluidClassDefinitionParser >> isInstanceSideDefinition: aRBMessageNode [
 	"Returns whether the definition is a class or instance side definition. Superclass < #myObject. Trait << are handled prior to this method."
 	
-	^ (aRBMessageNode respondsTo: #receiver) 
+	"^ (aRBMessageNode respondsTo: #receiver) 
 		and: [ aRBMessageNode receiver isMessage not 
 				and: [aRBMessageNode isMessage 
-					and: [ aRBMessageNode selector = #class ]]]
+					and: [ aRBMessageNode selector = #class ]]]"
+	^ kind = #instance
 	
 ]
 
@@ -133,10 +137,11 @@ CDFluidClassDefinitionParser >> isInstanceSideDefinition: aRBMessageNode [
 CDFluidClassDefinitionParser >> isTraitClassSideDefinition: aRBMessageNode [
 	"Based on the message structure, returns whether the definition is a trait definition."
 	
-	^ aRBMessageNode isMessage
+	"^ aRBMessageNode isMessage
 		and: [ aRBMessageNode receiver isVariable 
 					and: [ aRBMessageNode receiver name = 'Trait'
-								and: [ aRBMessageNode arguments first selector = #classTrait ]]]
+								and: [ aRBMessageNode arguments first selector = #classTrait ]]]"
+	^ kind = #traitClass
 	
 ]
 
@@ -144,14 +149,24 @@ CDFluidClassDefinitionParser >> isTraitClassSideDefinition: aRBMessageNode [
 CDFluidClassDefinitionParser >> isTraitDefinition: aRBMessageNode [
 	"Returns whether the definition is a trait definition, i.e., Trait << #Tbehavior."
 
-	^ aRBMessageNode isMessage and: [ 
+	"^ aRBMessageNode isMessage and: [ 
 		(aRBMessageNode receiver respondsTo: #name) 
-			and: [aRBMessageNode receiver name = 'Trait' and: [ aRBMessageNode selector = #<< ]]]
+			and: [aRBMessageNode receiver name = 'Trait' and: [ aRBMessageNode selector = #<< ]]]"
+	^ kind = #traitInstance
 	
 ]
 
 { #category : #'parsing-internal' }
 CDFluidClassDefinitionParser >> parseRootNode: expressionTree [
+	
+	| searcher |
+	searcher := RBParseTreeSearcher new.
+	searcher
+		matches: 'Trait << `#traitSymbol' do: [:aNode :answer | kind := #traitInstance ];
+		matches: '`@tm << `#symb' do: [:aNode :answer | kind := #instance ];
+		matches: '`@tm class << `@symb class' do: [:aNode :answer | kind := #class ];
+		matches: 'Trait << `@symb class' do: [:aNode :answer | kind := #traitClass ].
+	searcher executeTree: expressionTree.
 	
 	expressionTree extractClassDefinitionFor: self. 
 	classDefinition originalNode: expressionTree.

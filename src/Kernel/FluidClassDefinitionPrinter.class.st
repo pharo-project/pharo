@@ -420,7 +420,7 @@ FluidClassDefinitionPrinter >> traitedMetaclassDefinitionString [
 	^ String streamContents: 
 		[:strm |
 		strm 
-			nextPutAll: 'Trait >> ';
+			nextPutAll: 'Trait << ';
 			nextPutAll: forClass name.
 		self lastTraitsOn: strm.
 		forClass slots ifNotEmpty: [ self lastSlotsOn: strm ]]
