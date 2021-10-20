@@ -534,6 +534,11 @@ CompiledMethod >> isBinarySelector [
 ]
 
 { #category : #testing }
+CompiledMethod >> isClassSide [
+	^self methodClass isClassSide 
+]
+
+{ #category : #testing }
 CompiledMethod >> isCompiledMethod [
 
 	^ true
