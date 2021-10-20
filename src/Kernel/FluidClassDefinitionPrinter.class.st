@@ -68,7 +68,7 @@ FluidClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName [
 		^ String streamContents: [ :s |
 						s nextPutAll: 'Object << #MyClass'; crtab.
 						s nextPutAll: 'layout: FixedLayout;'; crtab.
-						s nextPutAll: 'uses: {};'; crtab.
+						s nextPutAll: 'traits: {};'; crtab.
 						s nextPutAll: 'slots: {};'; crtab. 
 						s nextPutAll: 'sharedVariables: {};'; crtab.
 						s nextPutAll: 'sharedPools: {};'; crtab.

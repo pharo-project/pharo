@@ -166,9 +166,7 @@ CDFluidClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 		ifTrue: [ ^ self handleLayout: aNode ].	
 	aString = #tag: 
 		ifTrue: [  ^self handleTag: aNode ].
-	aString =	 #uses:
-		ifTrue: [ ^ self handleTraitUsesFromNode: aNode ].
-	aString =	 #trait:
+	aString =	 #traits:
 		ifTrue: [ ^ self handleTraitUsesFromNode: aNode ].
 	aString =	 #sharedPools:
 		ifTrue: [ ^ self handleSharedPoolsFromNode: aNode ].
@@ -195,7 +193,7 @@ CDFluidClassDefinitionParser >> visitCascadeNode: aRBCascadeNode [
 	"See class comment. Here we handle the cascade version of the class definition."
 	" 
 	Object << #Point
-			uses: TraitX;
+			trait: TraitX;
 			slots: { #foo };
 			package: ''Kernel-BasicObjects'''
 	"
