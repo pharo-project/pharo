@@ -111,7 +111,7 @@ FluidClassDefinitionPrinter >> compactTraitDefinitionTemplateInPackage: aPackage
 	^ String streamContents: [ :s | 
 		  s
 			  nextPutAll: 'Trait << #TMyTrait';  crtab;
-			  nextPutAll: 'uses: {};'; crtab ;
+			  nextPutAll: 'traits: {};'; crtab ;
 			  nextPutAll: 'slots: {};'; crtab ;
 			  nextPutAll: 'package: ''';
 			  nextPutAll: aPackageName;
@@ -126,7 +126,7 @@ FluidClassDefinitionPrinter >> expandedClassDefinitionString [
 		self msgAndClassNameOn: s.
 		self layoutOn: s.
 		s crtab.
-		s nextPutAll: 'uses: '.
+		s nextPutAll: 'traits: '.
 		forClass hasTraitComposition
 			ifTrue: [ s nextPutAll: forClass traitCompositionString ]
 			ifFalse: [ s nextPutAll: '{};' ].
@@ -154,10 +154,10 @@ FluidClassDefinitionPrinter >> expandedMetaclassDefinitionString [
 		forClass hasTraitComposition 
 			ifTrue: [
 				s 
-					nextPutAll: 'uses: ';
+					nextPutAll: 'traits: ';
 					nextPutAll: forClass traitCompositionString;
 					nextPutAll: ';']
-			ifFalse: [ s nextPutAll: 'uses: {};'].
+			ifFalse: [ s nextPutAll: 'traits: {};'].
 		s crtab.
 		s nextPutAll: 'slots: '.
 		self slotDefinitionsOn: s. 
@@ -173,7 +173,7 @@ FluidClassDefinitionPrinter >> expandedTraitDefinitionString [
 		self msgAndClassNameOn: forClass name.
 		
 		s crtab.
-		s nextPutAll: 'uses: '.
+		s nextPutAll: 'traits: '.
 		forClass hasTraitComposition
 			ifTrue: [ s nextPutAll: forClass traitCompositionString ]
 			ifFalse: [ s nextPutAll: '{};' ].
@@ -220,7 +220,7 @@ FluidClassDefinitionPrinter >> lastTraitsOn: strm [
 	forClass hasTraitComposition ifTrue: [
 		strm 
 			crtab; 
-			nextPutAll: 'uses: ';
+			nextPutAll: 'traits: ';
 			nextPutAll: forClass traitCompositionString.
 	forClass slots	ifNotEmpty: [ strm nextPutAll: ';' ] ].
 ]

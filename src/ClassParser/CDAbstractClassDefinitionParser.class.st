@@ -79,15 +79,12 @@ CDAbstractClassDefinitionParser >> handleInstanceVariablesFromNode: aNode [
 
 { #category : #parsing }
 CDAbstractClassDefinitionParser >> handleMetaclassName: aNode [
+	"we are in situation ClassX class << ClassZ class
+				slots: {xxxx} so grab the class"
+				
 	| className classNode node |
-	node := aNode receiver. 
-	(node isKindOf: RBMessageNode)
-		ifTrue: [ "we are in situation ClassX class slots: {xxxx} so grab the class"
-			node := node receiver ].
-		
-	className := (node isVariable
-		ifTrue: [ node name ]
-		ifFalse: [ node value ]) asSymbol.
+	node := aNode receiver arguments first. 
+	className := node receiver binding value class name.
 	classNode := self classNameNodeClass new
 		originalNode: node;
 		className: className.

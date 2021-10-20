@@ -32,6 +32,15 @@ FluidClassBuilderTest >> setUp [
 		           package: 'FakedPackage'
 ]
 
+{ #category : #running }
+FluidClassBuilderTest >> tearDown [
+
+	self class environment 
+		at: #Point2 
+		ifPresent: [ :cl | cl removeFromSystem  ].
+	super tearDown. 
+]
+
 { #category : #'tests - class side' }
 FluidClassBuilderTest >> testBuildClassSlotsAPI [
 
@@ -119,7 +128,7 @@ FluidClassBuilderTest >> testBuilderSharedVariables [
 FluidClassBuilderTest >> testBuilderTraits [
 
 	builder traits: TViewModelMock.
-	self assert: builder traitsToBuild equals: TViewModelMock.
+	self assert: builder traitsToBuild equals: TViewModelMock asTraitComposition.
 	builder fillShiftClassBuilder
 ]
 
@@ -127,7 +136,7 @@ FluidClassBuilderTest >> testBuilderTraits [
 FluidClassBuilderTest >> testBuilderTraitsClass [
 
 	builder traits: TViewModelMock class.
-	self assert: builder traitsToBuild equals: TViewModelMock class.
+	self assert: builder traitsToBuild equals: TViewModelMock class asTraitComposition.
 	builder fillShiftClassBuilder
 ]
 
@@ -179,7 +188,10 @@ FluidClassBuilderTest >> testChevronIsWorkingOnClassSide [
 		tag: 'boring' ;
 		package: 'Mock').
 		
-	newClass := instBuilder build.
+	"Ideally we should not install the class but just build it (sending instBuilder build)
+	the problem is that category and tag are lost by the class builder. 
+	Hence we cannot test for real."
+	newClass := instBuilder install.
 	
 	clasBuilder := Object class << newClass class.
 		
@@ -209,8 +221,11 @@ FluidClassBuilderTest >> testChevronIsWorkingOnClassSideOnEmpty [
 	| instBuilder newClass clasBuilder |
 	instBuilder := (Object << #Point2
 		package: 'Mock').
-		
-	newClass := instBuilder build.
+	
+	"Ideally we should not install the class but just build it (sending instBuilder build)
+	the problem is that category and tag are lost by the class builder. 
+	Hence we cannot test for real."
+	newClass := instBuilder install.
 	
 	clasBuilder := Object class << newClass class.
 		
@@ -245,7 +260,7 @@ FluidClassBuilderTest >> testClassSlots [
 FluidClassBuilderTest >> testClassTraits [
 
 	builder classTraits: {TViewModel classSide}.
-	self assert: builder classTraitsToBuild equals: {TViewModel classSide}
+	self assert: builder classTraitsToBuild equals: {TViewModel classSide} asTraitComposition
 ]
 
 { #category : #'tests - mandatory' }

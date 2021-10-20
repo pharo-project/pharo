@@ -35,7 +35,7 @@ FluidBuilder >> classSlotsToBuild [
 
 { #category : #'class side' }
 FluidBuilder >> classTraits: aCollection [ 
-	classTraitsToBuild := aCollection
+	classTraitsToBuild := aCollection asTraitComposition 
 ]
 
 { #category : #'class side' }
@@ -46,10 +46,14 @@ FluidBuilder >> classTraitsToBuild [
 { #category : #copying }
 FluidBuilder >> fillFromClass: aClass [ 
 	
+	| tag |
 	aClass slots isEmpty ifFalse: [ self slots: aClass slots].	
 	aClass traitComposition isEmpty ifFalse: [ self traits: aClass traitComposition].
 	self package: aClass package name.
-	self tag: (aClass package classTagForClass: aClass).
+
+	tag := (aClass package classTagForClass: aClass).
+	tag ifNotNil: [ :s | 
+		s isRoot ifFalse: [self tag: (aClass package classTagForClass: aClass) name ]].
 	
 	aClass class slots isEmpty ifFalse: [ self classSlots: aClass class slots].
 	aClass class traitComposition isEmpty ifFalse: [self classTraits: aClass class traitComposition].
@@ -161,8 +165,9 @@ FluidBuilder >> trait: aTraitComposition [
 
 { #category : #API }
 FluidBuilder >> traits: anArray [
-	"To replace the uses: which will be deprecated"
-	uses := anArray
+	
+	uses := anArray asTraitComposition.
+	classTraitsToBuild := uses classComposition
 ]
 
 { #category : #accessing }

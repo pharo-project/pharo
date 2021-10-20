@@ -50,8 +50,8 @@ CDFluidClassDefinitionParser >> handleClassAndSuperclassOf: aNode [
 	"Pay attention that is is important to test first traits because we have the same message to create classes and traits, but traits are sent to Trait."
 	(self isTraitDefinition: aNode receiver)
 		ifTrue: [ self handleClassName: aNode receiver arguments first. ^ self ].
-	(self isTraitClassSideDefinition: aNode receiver)
-		ifTrue: [ self handleClassName: aNode receiver receiver. ^ self].
+	(self isTraitClassSideDefinition: aNode)
+		ifTrue: [ self handleClassName: aNode receiver. ^ self].
 	
 	(self isInstanceSideDefinition: aNode receiver)
 		ifTrue: [ 
@@ -122,15 +122,21 @@ CDFluidClassDefinitionParser >> handleTag: aNode [
 CDFluidClassDefinitionParser >> isInstanceSideDefinition: aRBMessageNode [
 	"Returns whether the definition is a class or instance side definition. Superclass < #myObject. Trait << are handled prior to this method."
 	
-	^ aRBMessageNode isMessage and: [ aRBMessageNode selector = #<< ]
+	^ (aRBMessageNode respondsTo: #receiver) 
+		and: [ aRBMessageNode receiver isMessage not 
+				and: [aRBMessageNode isMessage 
+					and: [ aRBMessageNode selector = #class ]]]
 	
 ]
 
 { #category : #testing }
 CDFluidClassDefinitionParser >> isTraitClassSideDefinition: aRBMessageNode [
 	"Based on the message structure, returns whether the definition is a trait definition."
-
-	^ aRBMessageNode isMessage and: [ aRBMessageNode selector = #classTrait ]
+	
+	^ aRBMessageNode isMessage
+		and: [ aRBMessageNode receiver isVariable 
+					and: [ aRBMessageNode receiver name = 'Trait'
+								and: [ aRBMessageNode arguments first selector = #classTrait ]]]
 	
 ]
 
@@ -138,7 +144,9 @@ CDFluidClassDefinitionParser >> isTraitClassSideDefinition: aRBMessageNode [
 CDFluidClassDefinitionParser >> isTraitDefinition: aRBMessageNode [
 	"Returns whether the definition is a trait definition, i.e., Trait << #Tbehavior."
 
-	^ aRBMessageNode isMessage and: [ aRBMessageNode receiver name = 'Trait' and: [ aRBMessageNode selector = #<< ]]
+	^ aRBMessageNode isMessage and: [ 
+		(aRBMessageNode receiver respondsTo: #name) 
+			and: [aRBMessageNode receiver name = 'Trait' and: [ aRBMessageNode selector = #<< ]]]
 	
 ]
 
@@ -181,11 +189,11 @@ CDFluidClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 CDFluidClassDefinitionParser >> setAdequateClassDefinitionFrom: expressionTree [
 	"Set a class, trait, class side trait or metaclass definition as definition object."
 	
-	(self isTraitDefinition: expressionTree)
+	(self isTraitDefinition: expressionTree receiver)
 		ifTrue: [ self beTraitDefinition. ^ self ].
 	(self isTraitClassSideDefinition: expressionTree)	
 		ifTrue: [ self beClassSideTraitDefinition. ^ self ].
-	super setAdequateClassDefinitionFrom: expressionTree
+	super setAdequateClassDefinitionFrom: expressionTree receiver
 ]
 
 { #category : #'parsing-internal' }
