@@ -64,11 +64,6 @@ RBProgramNode >> owningScope [
 ]
 
 { #category : #'*opalcompiler-core' }
-RBProgramNode >> printAsIfCompiledOn: aStream [ 
-	aStream nextPutAll: self formattedCode
-]
-
-{ #category : #'*opalcompiler-core' }
 RBProgramNode >> scope [
 	^ self methodOrBlockNode scope
 ]

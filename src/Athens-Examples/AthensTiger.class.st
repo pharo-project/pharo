@@ -2058,7 +2058,7 @@ AthensTiger >> position: anObject [
 	position := anObject
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 AthensTiger >> readParts [
 
 	| results currentPart commandStream pointStream fillBlocks strokeBlocks capBlocks joinBlocks cmdBlocks |

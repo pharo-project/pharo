@@ -38,7 +38,7 @@ FreeTypeFontFamilyMember >> <= aFreeTypeFontFamilyMember [
 	^self sortValue <= aFreeTypeFontFamilyMember sortValue
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 FreeTypeFontFamilyMember >> asSimulatedBold [
 	^self copy 
 		weightValue: LogicalFont weightBold;
@@ -47,7 +47,7 @@ FreeTypeFontFamilyMember >> asSimulatedBold [
 		yourself
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 FreeTypeFontFamilyMember >> asSimulatedBoldOblique [
 	^self copy 
 		slantValue: LogicalFont slantItalic; "treat italic and oblique the same"
@@ -57,7 +57,7 @@ FreeTypeFontFamilyMember >> asSimulatedBoldOblique [
 		yourself
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 FreeTypeFontFamilyMember >> asSimulatedOblique [
 	^self copy 
 		slantValue: LogicalFont slantItalic;  "treat italic and oblique the same"

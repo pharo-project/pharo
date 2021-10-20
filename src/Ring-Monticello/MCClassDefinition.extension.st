@@ -71,6 +71,8 @@ MCClassDefinition >> ring2LayoutType [
 		#ephemeron -> RGEphemeronLayout.
 		#normal -> RGFixedLayout.
 		#weak -> RGWeakLayout.
+		#DoubleByteLayout -> RGDoubleByteLayout.
+		#DoubleWordLayout -> RGDoubleWordLayout
 	}) at: type.		
 
 ]

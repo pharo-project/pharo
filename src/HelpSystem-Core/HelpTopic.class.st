@@ -106,7 +106,7 @@ HelpTopic >> addSubtopic: aTopic [
 	^aTopic
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 HelpTopic >> asHelpTopic [ 
 	"Converts the receiver to a help topic"
 	

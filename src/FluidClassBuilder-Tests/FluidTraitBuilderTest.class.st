@@ -64,7 +64,7 @@ FluidTraitBuilderTest >> testInstallMinimalMockClass [
 	[ 
 	builder := self class compilerClass new
 		           evaluate: 'Trait << #TMyClass
-	uses: {};
+	trait: {};
 	slots: {};
 	tag: '''' ;
 	package: ''MyPackage'''.

@@ -76,7 +76,7 @@ UTF16TextConverter >> next16BitValue: value toStream: aStream [
 
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 UTF16TextConverter >> nextFromStream: aStream [
 
 	| character1 character2 readBOM charValue |
@@ -105,7 +105,7 @@ UTF16TextConverter >> nextFromStream: aStream [
 
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 UTF16TextConverter >> nextPut: aCharacter toStream: aStream [
 
 	| v low high |
@@ -125,7 +125,7 @@ UTF16TextConverter >> nextPut: aCharacter toStream: aStream [
 	]
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 UTF16TextConverter >> nextPutAll: aString toStream: aStream [
 	
 	self checkBOMOn: aStream.

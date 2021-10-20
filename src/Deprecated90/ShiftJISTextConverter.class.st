@@ -37,7 +37,7 @@ ShiftJISTextConverter >> leadingChar [
 
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 ShiftJISTextConverter >> nextFromStream: aStream [
 
 	| character1 character2 value1 value2 char1Value result |
@@ -69,7 +69,7 @@ ShiftJISTextConverter >> nextFromStream: aStream [
 	^ self toUnicode: result
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 ShiftJISTextConverter >> nextPut: aCharacter toStream: aStream [ 
 	| value leadingChar aChar |
 	aStream isBinary ifTrue: [^aCharacter storeBinaryOn: aStream].

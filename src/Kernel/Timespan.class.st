@@ -92,20 +92,20 @@ Timespan >> asDateAndTime [
 	^ start 
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 Timespan >> asDuration [
 
 	^ self duration
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 Timespan >> asSeconds [
  	"Answer the seconds since the epoch: 1 January 1901"
  
  	^ start asSeconds
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 Timespan >> asTime [
 
 	^ start asTime
