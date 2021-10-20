@@ -39,7 +39,6 @@ Class {
 		'superclassToBuild',
 		'layout',
 		'sharedVariables',
-		'traitComposition',
 		'sharedPools'
 	],
 	#category : #'FluidClassBuilder-Base'
@@ -121,28 +120,4 @@ FluidClassBuilder >> superclassToBuild [
 FluidClassBuilder >> superclassToBuild: aClass [
 
 	superclassToBuild := aClass
-]
-
-{ #category : #API }
-FluidClassBuilder >> trait: aTraitComposition [
-
-	self deprecated:  'Please use #traits: instead' transformWith:  '`@receiver trait: `@arg' 
-						-> '`@receiver traits: `@arg'.
-						
-	^ self traits: aTraitComposition
-]
-
-{ #category : #API }
-FluidClassBuilder >> traits: aTraitComposition [
-
-	traitComposition := aTraitComposition
-]
-
-{ #category : #deprecated }
-FluidClassBuilder >> uses: aTraitComposition [
-
-	self deprecated:  'Please use #traits: instead' transformWith:  '`@receiver trait: `@arg' 
-						-> '`@receiver traits: `@arg'.
-						
-	^ self traits: aTraitComposition
 ]

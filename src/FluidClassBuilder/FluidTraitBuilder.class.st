@@ -31,27 +31,3 @@ FluidTraitBuilder >> fillShiftClassBuilder [
 		].
 	^ shiftClassBuilder
 ]
-
-{ #category : #API }
-FluidTraitBuilder >> trait: aTraitComposition [
-
-	self deprecated:  'Please use #traits: instead' transformWith:  '`@receiver trait: `@arg' 
-						-> '`@receiver traits: `@arg'.
-						
-	^ self traits: aTraitComposition
-]
-
-{ #category : #API }
-FluidTraitBuilder >> traits: anArray [
-	"To replace the uses: which will be deprecated"
-	uses := anArray
-]
-
-{ #category : #deprecated }
-FluidTraitBuilder >> uses: aTraitComposition [
-
-	self deprecated:  'Please use #traits: instead' transformWith:  '`@receiver trait: `@arg' 
-						-> '`@receiver traits: `@arg'.
-						
-	^ self traits: aTraitComposition
-]

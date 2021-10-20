@@ -90,7 +90,16 @@ FluidBuilder >> tagToBuild [
 ]
 
 { #category : #API }
-FluidBuilder >> trait: anArray [
+FluidBuilder >> trait: aTraitComposition [
+
+	self deprecated:  'Please use #traits: instead' transformWith:  '`@receiver trait: `@arg' 
+						-> '`@receiver traits: `@arg'.
+						
+	^ self traits: aTraitComposition
+]
+
+{ #category : #API }
+FluidBuilder >> traits: anArray [
 	"To replace the uses: which will be deprecated"
 	uses := anArray
 ]
@@ -99,4 +108,13 @@ FluidBuilder >> trait: anArray [
 FluidBuilder >> traitsToBuild [
 
 	^ uses
+]
+
+{ #category : #deprecated }
+FluidBuilder >> uses: aTraitComposition [
+
+	self deprecated:  'Please use #traits: instead' transformWith:  '`@receiver trait: `@arg' 
+						-> '`@receiver traits: `@arg'.
+						
+	^ self traits: aTraitComposition
 ]
