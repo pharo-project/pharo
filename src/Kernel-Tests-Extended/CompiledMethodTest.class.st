@@ -457,6 +457,12 @@ CompiledMethodTest >> testIsAbstract [
 ]
 
 { #category : #'tests - testing' }
+CompiledMethodTest >> testIsClassSide [
+	self deny: (Object>>#yourself) isClassSide.
+	self assert: (Object class>>#initialize) isClassSide.
+]
+
+{ #category : #'tests - testing' }
 CompiledMethodTest >> testIsDeprecated [
 	| deprecatedSelectors |
 	deprecatedSelectors := #(deprecatedMethod deprecatedMethod2 deprecatedMethod3 deprecatedMethod4).

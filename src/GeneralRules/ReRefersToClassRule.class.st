@@ -26,7 +26,7 @@ ReRefersToClassRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	
 	"The class method #isAbstract needs to explicitly hardcode class references. 
 	So we do not criticize this."
-	(aMethod methodClass isClassSide and: [ aMethod selector = #isAbstract ]) ifTrue: [ ^ self ].
+	(aMethod isClassSide and: [ aMethod selector = #isAbstract ]) ifTrue: [ ^ self ].
 	
 	class := aMethod methodClass instanceSide.
 	problemLiterals := (aMethod ast allChildren 
