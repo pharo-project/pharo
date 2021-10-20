@@ -23,9 +23,11 @@ Class {
 
 { #category : #validating }
 LiteralVariable class >> checkValidName: aString [
-	self flag: #fixme
-	"aString first canBeGlobalVarInitial
-		ifFalse: [InvalidGlobalName signal: 'Class name does not start with a valid Global Var Initial' for: aString]"
+
+	aString first canBeGlobalVarInitial ifFalse: [ 
+		InvalidGlobalName
+			signal: 'Class name does not start with a valid Global Var Initial'
+			for: aString ]
 ]
 
 { #category : #'gt-inspector-extension' }
