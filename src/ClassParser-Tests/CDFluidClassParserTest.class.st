@@ -27,7 +27,7 @@ CDFluidClassParserTest >> testClassSideWitTraits [
 	parser := self classDefinitionParserClass new.
 	
 	defString := 'AlignmentMorph class
-		uses: TableRotate classTrait;
+		traits: TableRotate classTrait;
 		slots: { #x . #y}'.
 		
 	def := parser parse: defString.
@@ -222,7 +222,7 @@ CDFluidClassParserTest >> testTraitAlias [
 	parser := self classDefinitionParserClass new.
 	
 	defString := 'Object << #MyObject
-		uses: MyTrait @ {#foo -> #bar};
+		traits: MyTrait @ {#foo -> #bar};
 		package: #MyPackage'.
 	
 	def := parser parse: defString.
@@ -254,7 +254,7 @@ CDFluidClassParserTest >> testTraitPlainSimple [
 	parser := self classDefinitionParserClass new.
 	
 	defString := 'Object << #MyObject
-		uses: MyTrait;
+		traits: MyTrait;
 		package: #MyPackage'.
 		
 	def := parser parse: defString.
@@ -267,7 +267,7 @@ CDFluidClassParserTest >> testTraitSequence [
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
 	defString := 'Object << #MyObject
-		uses: MyTrait + (AnotherTrait - {#selector} @ {#selector1 -> #selector});
+		traits: MyTrait + (AnotherTrait - {#selector} @ {#selector1 -> #selector});
 		package: #MyPackage'.
 
 	def := parser parse: defString.
