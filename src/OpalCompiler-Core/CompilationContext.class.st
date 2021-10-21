@@ -144,19 +144,6 @@ CompilationContext class >> optionEmbeddSources: aBoolean [
 ]
 
 { #category : #'options - settings API' }
-CompilationContext class >> optionFullBlockClosure [
-	^ self readDefaultOption: #optionFullBlockClosure
-]
-
-{ #category : #'options - settings API' }
-CompilationContext class >> optionFullBlockClosure: aBoolean [
-	aBoolean ifTrue: [
-		BytecodeBackend = EncoderForSistaV1 ifFalse: [ 
-			^ self notify: 'Operation aborted. FullBlockClosure requires SistaV1 bytecode set.' ] ].
-	^ self writeDefaultOption: #optionFullBlockClosure value: aBoolean
-]
-
-{ #category : #'options - settings API' }
 CompilationContext class >> optionInlineAndOr [
 	^ self readDefaultOption: #optionInlineAndOr
 ]
@@ -315,7 +302,6 @@ CompilationContext class >> optionsDescription [
 	(- optionInlineNone 				'To turn off all inlining options. Overrides the others')
 	
 	(- optionEmbeddSources         'Embedd sources into CompiledMethod instead of storing in .changes')
-	(+ optionFullBlockClosure 			'Compiler compiles closure creation to use FullBlockClosure instead of BlockClosure')
 	(- optionCleanBlockClosure 			'Compiler compiles closure creation to use CleanBlockClosure instead of FullBlockClosure for clean blocks. Experimental')
 	(- optionLongIvarAccessBytecodes 	'Specific inst var accesses to Maybe context objects')
 	(+ optionOptimizeIR 					'Rewrite jumps in bytecode in a slightly more efficient way')
@@ -513,11 +499,6 @@ CompilationContext >> optionCleanBlockClosure [
 CompilationContext >> optionEmbeddSources [
 	^ options includes: #optionEmbeddSources
 
-]
-
-{ #category : #options }
-CompilationContext >> optionFullBlockClosure [
-	^ options includes: #optionFullBlockClosure
 ]
 
 { #category : #options }
