@@ -177,27 +177,46 @@ RubDisplayScanner >> paddedSpace [
 
 { #category : #scanning }
 RubDisplayScanner >> placeEmbeddedObject: anchoredMorph [
-	anchoredMorph relativeTextAnchorPosition ifNotNil:[
-		anchoredMorph position: 
-			anchoredMorph relativeTextAnchorPosition +
-			(anchoredMorph owner bounds origin x @ 0)
-			- (0@morphicOffset y) + (0@lineY).
-		^true
-	].
-	(super placeEmbeddedObject: anchoredMorph) ifFalse: [^ false].
-	anchoredMorph isMorph ifTrue: [
-		anchoredMorph position: ((destX - anchoredMorph width)@lineY) - morphicOffset
-	] ifFalse: [
-		destY := lineY.
-		baselineY := lineY + anchoredMorph height..
-		runX := destX.
-		anchoredMorph 
-			displayOn: bitBlt destForm 
-			at: destX - anchoredMorph width @ destY
-			clippingBox: bitBlt clipRect
-			rule: Form blend
-			fillColor: Color white 
-	].
+	"I am a simplified version of placeEmbeddedObjectOld: as the rendering of morphs did not work"
+
+	| form |
+	form := anchoredMorph asForm. "make morph into form, or keep form"
+	(super placeEmbeddedObject: form) ifFalse: [ ^ false ].
+	destY := lineY.
+	baselineY := lineY + form height.
+	runX := destX.
+	form
+		displayOn: bitBlt destForm
+		at: destX - form width @ destY
+		clippingBox: bitBlt clipRect
+		rule: Form blend
+		fillColor: Color white.
+	^ true
+]
+
+{ #category : #scanning }
+RubDisplayScanner >> placeEmbeddedObjectOld: anchoredMorph [
+	"It seemed like the placement of morphs did not work. I am left here for the case someone will find out how to fix me"
+	anchoredMorph relativeTextAnchorPosition ifNotNil: [ 
+		anchoredMorph position: anchoredMorph relativeTextAnchorPosition
+			+ (anchoredMorph owner bounds origin x @ 0) - (0 @ morphicOffset y)
+			+ (0 @ lineY).
+		^ true ].
+	(super placeEmbeddedObject: anchoredMorph) ifFalse: [ ^ false ].
+	anchoredMorph isMorph
+		ifTrue: [ 
+			anchoredMorph position:
+				destX - anchoredMorph width @ lineY - morphicOffset ]
+		ifFalse: [ 
+			destY := lineY.
+			baselineY := lineY + anchoredMorph height.
+			runX := destX.
+			anchoredMorph
+				displayOn: bitBlt destForm
+				at: destX - anchoredMorph width @ destY
+				clippingBox: bitBlt clipRect
+				rule: Form blend
+				fillColor: Color white ].
 	^ true
 ]
 
