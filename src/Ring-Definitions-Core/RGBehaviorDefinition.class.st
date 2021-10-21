@@ -35,6 +35,12 @@ RGBehaviorDefinition class >> definitionSourceKey [
 	^#definitionSource
 ]
 
+{ #category : #testing }
+RGBehaviorDefinition class >> isAbstract [
+
+	^ self == RGBehaviorDefinition
+]
+
 { #category : #'class-annotations' }
 RGBehaviorDefinition class >> isPoolKey [
 
