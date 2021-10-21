@@ -12,6 +12,12 @@ Class {
 	#category : #'Refactoring-Core-Refactorings'
 }
 
+{ #category : #testing }
+RBMethodRefactoring class >> isAbstract [
+
+	^ self == RBMethodRefactoring
+]
+
 { #category : #private }
 RBMethodRefactoring >> buildSelectorString: aSelector [ 
 	aSelector numArgs = 0 ifTrue: [^aSelector].

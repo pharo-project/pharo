@@ -11,6 +11,12 @@ Class {
 	#category : #'Refactoring-Core-Refactorings'
 }
 
+{ #category : #testing }
+RBVariableRefactoring class >> isAbstract [
+
+	^ self == RBVariableRefactoring
+]
+
 { #category : #'instance creation' }
 RBVariableRefactoring class >> model: aRBSmalltalk variable: aVarName class: aClass [ 
 	^ self new
