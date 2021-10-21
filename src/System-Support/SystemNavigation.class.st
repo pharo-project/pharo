@@ -307,7 +307,7 @@ SystemNavigation >> methodsReferencingObsoleteClasses [
 	"Returns all methods that reference obsolete behaviors"
 	
 	| obsClasses |
-	obsClasses := self obsoleteBehaviors.
+	obsClasses := self obsoleteClasses.
 	
 	^Array streamContents: [ :methods |
 		obsClasses keysAndValuesDo: 
@@ -339,21 +339,6 @@ SystemNavigation >> methodsWithUnboundGlobals [
 			and: [(m methodClass classBindingOf: l key)
 					ifNil: [(Undeclared associationAt: l key ifAbsent: []) ~~ l]
 					ifNotNil: [:b| b ~~ l]]]]]]
-]
-
-{ #category : #'identifying obsoletes' }
-SystemNavigation >> obsoleteBehaviors [
-	"SystemNavigation new obsoleteBehaviors inspect"
-	"Find all obsolete behaviors including meta classes"
-
-	| obs |
-	obs := OrderedCollection new.
-	Smalltalk garbageCollect.
-	self 
-		allObjectsDo: [:cl | 
-			(cl isBehavior	and: [ cl isObsolete])
-				ifTrue: [ obs add: cl]].
-	^ obs asArray
 ]
 
 { #category : #'identifying obsoletes' }
