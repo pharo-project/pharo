@@ -4,7 +4,7 @@ SUnit tests for opening of tools
 Class {
 	#name : #OpenToolTest,
 	#superclass : #AbstractUITestCase,
-	#category : #'Tools-Test-Base'
+	#category : #'Tools-Tests-Base'
 }
 
 { #category : #utilities }
