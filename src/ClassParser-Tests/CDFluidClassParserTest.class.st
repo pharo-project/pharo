@@ -366,7 +366,7 @@ CDFluidClassParserTest >> testWithRB [
 { #category : #'tests - rb xp' }
 CDFluidClassParserTest >> testWithRB10 [
 
-	| searcher kind|
+	| searcher kind |
 	searcher := RBParseTreeSearcher new.
 	searcher
 		matches: 'Trait << `#traitSymbol' do: [:aNode :answer | kind := #traitInstance ];
@@ -377,6 +377,23 @@ CDFluidClassParserTest >> testWithRB10 [
 		Trait << TViewModelMock3 classTrait
 	') .
 	self assert: kind equals: #traitClass.
+	
+]
+
+{ #category : #'tests - rb xp' }
+CDFluidClassParserTest >> testWithRB10WithError [
+
+	| searcher kind |
+	searcher := RBParseTreeSearcher new.
+	searcher
+		matches: 'Trait << `#traitSymbol' do: [:aNode :answer | kind := #traitInstance ];
+		matches: 'Trait << `@symb classTrait' do: [:aNode :answer | kind := #traitClass ];
+		matches: '`@tm << `#symb' do: [:aNode :answer | kind := #instance ];
+		matches: '`@tm class << `@symb class' do: [:aNode :answer | kind := #class ].
+	searcher executeTree: (RBParser parseExpression: '
+		Trait << TViewModelMock3 class
+	') .
+	self assert: kind isNil.
 	
 ]
 
@@ -423,7 +440,7 @@ CDFluidClassParserTest >> testWithRB5 [
 		matches: '`@tm << `#symb' do: [:aNode :answer | coll add: #instance ];
 		matches: '`@tm class << `@symb class' do: [:aNode :answer | coll add: #class ];
 		matches: 'Trait << `#traitSymbol' do: [:aNode :answer | coll add: #traitInstance ];
-		matches: 'Trait << `@symb class' do: [:aNode :answer | coll add: #traitClass ].
+		matches: 'Trait << `@symb classTrait' do: [:aNode :answer | coll add: #traitClass ].
 	searcher executeTree: (RBParser parseExpression: '
 		Object << #Point
 		  slots: { #x . #y };
@@ -443,7 +460,7 @@ CDFluidClassParserTest >> testWithRB6 [
 		matches: '`@tm << `#symb' do: [:aNode :answer | coll add: #instance ];
 		matches: '`@tm class << `@symb class' do: [:aNode :answer | coll add: #class ];
 		matches: 'Trait << `#traitSymbol' do: [:aNode :answer | coll add: #traitInstance ];
-		matches: 'Trait << `@symb class' do: [:aNode :answer | coll add: #traitClass ].
+		matches: 'Trait << `@symb classTrait' do: [:aNode :answer | coll add: #traitClass ].
 	searcher executeTree: (RBParser parseExpression: '
 		Object class << #Point class
 		  slots: { #x . #y };
@@ -463,9 +480,9 @@ CDFluidClassParserTest >> testWithRB7 [
 		matches: '`@tm << `#symb' do: [:aNode :answer | coll add: #instance ];
 		matches: '`@tm class << `@symb class' do: [:aNode :answer | coll add: #class ];
 		matches: 'Trait << `#traitSymbol' do: [:aNode :answer | coll add: #traitInstance ];
-		matches: 'Trait << `@symb class' do: [:aNode :answer | coll add: #traitClass ].
+		matches: 'Trait << `@symb classTrait' do: [:aNode :answer | coll add: #traitClass ].
 	searcher executeTree: (RBParser parseExpression: '
-		Trait << #Point class
+		Trait << #TPoint classTrait
 		  slots: { #x . #y };
 			package: ''Foo''
 	') .
@@ -483,7 +500,7 @@ CDFluidClassParserTest >> testWithRB8 [
 		matches: 'Trait << `#traitSymbol' do: [:aNode :answer | coll add: #traitInstance ];
 		matches: '`@tm << `#symb' do: [:aNode :answer | coll add: #instance ];
 		matches: '`@tm class << `@symb class' do: [:aNode :answer | coll add: #class ];
-		matches: 'Trait << `@symb class' do: [:aNode :answer | coll add: #traitClass ].
+		matches: 'Trait << `@symb classTrait' do: [:aNode :answer | coll add: #traitClass ].
 	searcher executeTree: (RBParser parseExpression: '
 		Trait << #Point
 		  slots: { #x . #y };
@@ -504,7 +521,7 @@ CDFluidClassParserTest >> testWithRB9 [
 		matches: 'Trait << `#traitSymbol' do: [:aNode :answer | coll add: #traitInstance ];
 		matches: '`@tm << `#symb' do: [:aNode :answer | coll add: #instance ];
 		matches: '`@tm class << `@symb class' do: [:aNode :answer | coll add: #class ];
-		matches: 'Trait << `@symb class' do: [:aNode :answer | coll add: #traitClass ].
+		matches: 'Trait << `@symb classTrait' do: [:aNode :answer | coll add: #traitClass ].
 	searcher executeTree: (RBParser parseExpression: '
 		Object << #MyObject
 		sharedVariables: { #A . #B };

@@ -125,7 +125,7 @@ T2FluidClassDefinitionPrinterTest >> testFullTraitTemplate [
 
 	self 
 		assert: (FluidClassDefinitionPrinter new traitDefinitionTemplateInPackage: 'TraitsV2') equals: 'Trait << #TMyTrait
-	trait: TEmpty;
+	traits: {};
 	slots: {};
 	tag: '''' ;
 	package: ''TraitsV2'''

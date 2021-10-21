@@ -400,7 +400,7 @@ FluidClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aPackageName [
 			  nextPutAll: 'Trait << #TMyTrait';
 			  crtab.
 		  s
-			  nextPutAll: 'trait: TEmpty;';
+			  nextPutAll: 'traits: {};';
 			  crtab.
 		  s
 			  nextPutAll: 'slots: {};';
@@ -435,7 +435,7 @@ FluidClassDefinitionPrinter >> traitsOn: strm [
 		"isEmpty traitComposition should probably moved to Trait."
 		strm 
 			crtab; 
-			nextPutAll: 'trait: ';
+			nextPutAll: 'traits: {';
 			nextPutAll: forClass traitCompositionString;
-			nextPutAll: ';' ]
+			nextPutAll: '};' ]
 ]
