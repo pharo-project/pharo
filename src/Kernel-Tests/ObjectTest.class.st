@@ -42,7 +42,7 @@ ObjectTest >> testBeRecursivelyReadOnlyObject [
 	self should: [ assoc key: 2 ] raise: ModificationForbidden.
 	self should: [ assoc value key: 2 ] raise: ModificationForbidden.
 	
-	array := #(1 #(1 2)).
+	array := Array with: 1 with: (Array with:1 with: 2).
 	array beRecursivelyReadOnlyObject.
 	self should: [ array at: 1 put: 2 ] raise: ModificationForbidden.
 	self should: [ array second  at: 1 put: 2 ] raise: ModificationForbidden.
@@ -63,7 +63,7 @@ ObjectTest >> testBeRecursivelyWritableObject [
 	self assert: assoc key equals: 2.
 	self assert: assoc value key equals: 2.
 	
-	array := #(1 #(1 2)).
+	array := Array with: 1 with: (Array with:1 with: 2).
 	array beRecursivelyReadOnlyObject.
 	self should: [ array at: 1 put: 2 ] raise: ModificationForbidden.
 	self should: [ array second  at: 1 put: 2 ] raise: ModificationForbidden.
