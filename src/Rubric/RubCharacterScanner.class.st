@@ -181,13 +181,6 @@ RubCharacterScanner >> initialize [
 	destX := destY := leftMargin := 0.
 ]
 
-{ #category : #'scanner methods' }
-RubCharacterScanner >> isBreakableAt: index in: sourceString in: encodingClass [
-
-	^ encodingClass isBreakableAt: index in: sourceString.
-
-]
-
 { #category : #'text constants' }
 RubCharacterScanner >> justified [
 	^ 3

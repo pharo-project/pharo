@@ -50,11 +50,6 @@ ByteTextConverter class >> initializeTables [
 ]
 
 { #category : #accessing }
-ByteTextConverter class >> languageEnvironment [
-	self subclassResponsibility
-]
-
-{ #category : #accessing }
 ByteTextConverter class >> unicodeToByteTable [
 	"Return the table mapping from unicode to my byte based encoding"
 	
