@@ -37,7 +37,6 @@ Class {
 		'compiledMethodClass'
 	],
 	#classVars : [
-		'BytecodeBackend',
 		'DefaultOptions',
 		'DefaultTransformationPlugins'
 	],
@@ -47,16 +46,6 @@ Class {
 { #category : #adding }
 CompilationContext class >> addDefaultTransformationPlugin: aPlugin [
 	self defaultTransformationPlugins add: aPlugin
-]
-
-{ #category : #accessing }
-CompilationContext class >> bytecodeBackend [
-	^ BytecodeBackend ifNil: [ self initialize. BytecodeBackend ]
-]
-
-{ #category : #accessing }
-CompilationContext class >> bytecodeBackend: bytecodeSet [
-	BytecodeBackend := bytecodeSet
 ]
 
 { #category : #options }
@@ -119,8 +108,7 @@ CompilationContext class >> fallBackDefaultOptions [
 { #category : #'class initialization' }
 CompilationContext class >> initialize [
 	"Note: we don't set-up here DefaultOptions since it requires other class-side methods, and that's messed up."
-	DefaultTransformationPlugins := OrderedCollection new.
-	BytecodeBackend := EncoderForSistaV1.
+	DefaultTransformationPlugins := OrderedCollection new
 ]
 
 { #category : #'options - settings API' }
@@ -420,7 +408,7 @@ CompilationContext >> compilerOptions: anArray [
 
 { #category : #accessing }
 CompilationContext >> encoderClass [
-	^ encoderClass ifNil: [ encoderClass := self class bytecodeBackend ]
+	^ encoderClass ifNil: [ encoderClass := EncoderForSistaV1 ]
 ]
 
 { #category : #accessing }

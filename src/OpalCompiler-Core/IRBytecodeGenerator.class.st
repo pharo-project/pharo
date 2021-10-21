@@ -679,7 +679,7 @@ IRBytecodeGenerator >> send: selector toSuperOf: behavior [
 	stack pop: nArgs.
 	index := self literalIndexOf: selector.
 
-	(encoder class = EncoderForSistaV1 and: [ inBlock ])
+	inBlock
 		ifTrue: [
 			"we need to use a copy of the binding as else 'references to' will find this method" 
 			encoder genPushLiteralVar: (self literalIndexOf: behavior binding copy).
