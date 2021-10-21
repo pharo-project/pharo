@@ -45,15 +45,6 @@ Class {
 	#category : #'Kernel-Methods'
 }
 
-{ #category : #'instance creation' }
-BlockClosure class >> outerContext: aContext startpc: aStartpc numArgs: argCount copiedValues: anArrayOrNil [
-	^(self new: anArrayOrNil basicSize)
-		outerContext: aContext
-		startpc: aStartpc
-		numArgs: argCount
-		copiedValues: anArrayOrNil
-]
-
 { #category : #accessing }
 BlockClosure >> argumentCount [
 	"Answer the number of arguments that must be used to evaluate this block"
