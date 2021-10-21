@@ -21,7 +21,20 @@ CDFluidClassParserTest >> testClassSideDefinitionIsClassSide [
 ]
 
 { #category : #'tests - (r) class side' }
-CDFluidClassParserTest >> testClassSideWitTraits [
+CDFluidClassParserTest >> testClassSideEmpty [
+
+	| parser defString def |
+	parser := self classDefinitionParserClass new.
+	
+	defString := 'Object class << AlignmentMorph class
+		'.		
+	def := parser parse: defString.
+	self assert: def class equals: CDMetaclassDefinitionNode.
+
+]
+
+{ #category : #'tests - (r) class side' }
+CDFluidClassParserTest >> testClassSideWithTraits [
 
 	| parser defString def |
 	parser := self classDefinitionParserClass new.

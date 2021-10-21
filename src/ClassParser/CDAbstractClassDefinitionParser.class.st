@@ -81,14 +81,16 @@ CDAbstractClassDefinitionParser >> handleInstanceVariablesFromNode: aNode [
 CDAbstractClassDefinitionParser >> handleMetaclassName: aNode [
 	"we are in situation ClassX class << ClassZ class
 				slots: {xxxx} so grab the class"
-				
-	| className classNode node |
+	
+	aNode handleMetaclassName: self		
+	"| className classNode node |
 	node := aNode receiver arguments first. 
 	className := node receiver binding value class name.
 	classNode := self classNameNodeClass new
 		originalNode: node;
 		className: className.
 	classDefinition className: node astNode: classNode
+	"
 ]
 
 { #category : #accessing }

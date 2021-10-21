@@ -81,6 +81,30 @@ CDFluidClassDefinitionParser >> handleLayout: aNode [
 	classDefinition layoutClass: aNode binding value
 ]
 
+{ #category : #'metaclass ' }
+CDFluidClassDefinitionParser >> handleMetaclassNameFromCascade: aRBCascadeNode [ 
+
+	| className classNode node |
+	node := aRBCascadeNode receiver arguments first. 
+	className := node receiver binding value class name.
+	classNode := self classNameNodeClass new
+		originalNode: node;
+		className: className.
+	classDefinition className: node astNode: classNode
+]
+
+{ #category : #'metaclass ' }
+CDFluidClassDefinitionParser >> handleMetaclassNameFromMessage: aNode [ 
+
+	| className classNode node |
+	node := aNode arguments first receiver. 
+	className := node binding value class name.
+	classNode := self classNameNodeClass new
+		originalNode: node;
+		className: className.
+	classDefinition className: node astNode: classNode
+]
+
 { #category : #'handling  nodes' }
 CDFluidClassDefinitionParser >> handleSharedPoolsFromNode: aNode [
 	| sharedPoolNodes |

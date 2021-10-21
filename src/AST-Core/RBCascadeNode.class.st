@@ -81,6 +81,11 @@ RBCascadeNode >> equalTo: anObject withMapping: aDictionary [
 	^true
 ]
 
+{ #category : #'fluid parser' }
+RBCascadeNode >> handleMetaclassName: aCDFluidClassDefinitionParser [ 
+	aCDFluidClassDefinitionParser handleMetaclassNameFromCascade: self
+]
+
 { #category : #comparing }
 RBCascadeNode >> hash [
 	^ self hashForCollection: self messages
