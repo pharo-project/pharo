@@ -128,6 +128,21 @@ ProperMethodCategorizationTest >> testNoEmptyProtocols [
 ]
 
 { #category : #tests }
+ProperMethodCategorizationTest >> testNoLeadingOrTrailingSpacesInCategoryNames [
+	"Make sure we have no protocol names with leading or trailing spaces"
+	
+	| violations |
+	violations := OrderedCollection new.
+
+	Object allSubclasses do: [ :each | 
+		each organization allCategories do: [ :cat | 
+			((cat endsWith: ' ') or: [ cat endsWith: ' ' ]) ifTrue: [ 
+				violations add: each -> cat ] ] ].
+	
+	self assert: violations isEmpty
+]
+
+{ #category : #tests }
 ProperMethodCategorizationTest >> testNoUncategorizedMethods [
 	"Check that we have no #'as yet unclassified' protocols left"
 
