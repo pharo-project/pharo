@@ -41,7 +41,7 @@ BlockClosureTest >> testSourceNodeOptimized [
 
 { #category : #'*Kernel-Tests-Extended' }
 BlockClosureTest >> testTallyInstructions [
-	self assert: (Context tallyInstructions: aBlockContext ) size equals: 25
+	self assert: (Context tallyInstructions: aBlockContext ) size equals: 26
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
