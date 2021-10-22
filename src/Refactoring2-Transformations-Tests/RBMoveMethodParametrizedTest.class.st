@@ -53,6 +53,30 @@ RBMoveMethodParametrizedTest >> testMoveMethodIntoArgument [
 ]
 
 { #category : #test }
+RBMoveMethodParametrizedTest >> testMoveMethodIntoClass [
+	| refactoring class |
+	(model classFor: Object) compile: 'aTestMethodName ^ OrderedCollection new addAll: (1 to: 100); yourself' classified: #test.
+	
+	refactoring := self createRefactoringWithArguments:  
+				{ #aTestMethodName . model classFor: Object . 'OrderedCollection'}.
+	
+	self
+		setupMethodNameFor: refactoring
+		toReturn: #oneToOneHundred
+		withArguments: #().
+	refactoring setOption: #variableTypes toUse: [ :ref :initialTypes :selectedTypes | selectedTypes ].
+	self executeRefactoring: refactoring.
+	class := refactoring model classNamed: #Object.
+	self
+		assert: ((model classFor: Object) parseTreeFor: #aTestMethodName)
+		equals: (self parseMethod: 'aTestMethodName ^ OrderedCollection oneToOneHundred ').
+	self
+		assert: ((refactoring model classNamed: #OrderedCollection) classSide parseTreeFor: #oneToOneHundred)
+		equals: (self parseMethod: 'oneToOneHundred ^ self new addAll: (1 to: 100); yourself')
+
+]
+
+{ #category : #test }
 RBMoveMethodParametrizedTest >> testMoveMethodIntoClassVariable [
 	| refactoring class |
 	self proceedThroughWarning: 
