@@ -141,12 +141,6 @@ InstructionClient >> pushActiveProcess [
 ]
 
 { #category : #'instruction decoding' }
-InstructionClient >> pushClosureCopyNumCopiedValues: numCopied numArgs: numArgs blockSize: blockSize [
-	"Push Closure bytecode."
-
-]
-
-{ #category : #'instruction decoding' }
 InstructionClient >> pushClosureTemps: numTemps [
 	"push on stack nil numTemps times for the closure temps"
 ]
