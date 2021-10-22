@@ -24,6 +24,12 @@ RGDefinition class >> fullNameKey [
 	^#fullName
 ]
 
+{ #category : #testing }
+RGDefinition class >> isAbstract [
+
+	^ self == RGDefinition
+]
+
 { #category : #'class initialization' }
 RGDefinition class >> named: aName [
 

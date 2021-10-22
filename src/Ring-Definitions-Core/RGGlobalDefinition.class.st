@@ -8,6 +8,12 @@ Class {
 	#category : #'Ring-Definitions-Core-Base'
 }
 
+{ #category : #testing }
+RGGlobalDefinition class >> isAbstract [
+
+	^ self == RGGlobalDefinition
+]
+
 { #category : #comparing }
 RGGlobalDefinition >> = aRGGlobalDefinition [
 	"This method look for equality of the properties of the receiver"
