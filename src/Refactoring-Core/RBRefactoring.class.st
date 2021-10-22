@@ -154,10 +154,13 @@ RBRefactoring >> checkPreconditions [
 ]
 
 { #category : #private }
-RBRefactoring >> classObjectFor: anObject [ 
-	(anObject isBehavior or: [anObject isTrait]) ifTrue: [^self model classFor: anObject].
-	anObject isSymbol ifTrue: [^self model classNamed: anObject].
-	^anObject
+RBRefactoring >> classObjectFor: anObject [
+
+	(anObject isBehavior or: [ anObject isTrait ]) ifTrue: [ 
+		^ self model classFor: anObject ].
+	anObject isString ifTrue: [ 
+		^ self model classNamed: anObject asSymbol ].
+	^ anObject
 ]
 
 { #category : #support }
