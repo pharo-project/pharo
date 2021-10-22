@@ -88,6 +88,12 @@ RBRefactoring class >> initializeRefactoringOptions [
 		put: [ self error: #searchInWholeHierarchy ]
 ]
 
+{ #category : #testing }
+RBRefactoring class >> isAbstract [
+
+	^ self == RBRefactoring
+]
+
 { #category : #'accessing signal' }
 RBRefactoring class >> preconditionSignal [
 	^ RBRefactoringError , RBRefactoringWarning

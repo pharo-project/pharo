@@ -41,6 +41,12 @@ Class {
 	#category : #'Refactoring-Core-Refactorings'
 }
 
+{ #category : #testing }
+RBRegexRefactoring class >> isAbstract [
+
+	^ self == RBRegexRefactoring
+]
+
 { #category : #private }
 RBRegexRefactoring >> execute: aString [
 	"Perform all searches on aString and return the transformation."
