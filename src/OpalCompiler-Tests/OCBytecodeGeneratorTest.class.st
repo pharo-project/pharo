@@ -10,14 +10,14 @@ OCBytecodeGeneratorTest class >> packageNamesUnderTest [
 ]
 
 { #category : #helper }
-OCBytecodeGeneratorTest >> newBytecodeGen [
+OCBytecodeGeneratorTest >> bytecodeGenerator [
 	^ IRBytecodeGenerator newWithEncoderClass: EncoderForSistaV1
 ]
 
 { #category : #'tests - execution' }
 OCBytecodeGeneratorTest >> testExample [
 	| cm |
-	cm := self newBytecodeGen
+	cm := self bytecodeGenerator
 		numArgs: 1;
 		numTemps: 1;
 		pushTemp: 1;
@@ -42,7 +42,7 @@ OCBytecodeGeneratorTest >> testExample [
 { #category : #'tests - execution' }
 OCBytecodeGeneratorTest >> testExample2 [
 	| cm |
-	cm := self newBytecodeGen
+	cm := self bytecodeGenerator
 		numArgs: 1;
 		numTemps: 1;
 		pushInstVar: 2;
