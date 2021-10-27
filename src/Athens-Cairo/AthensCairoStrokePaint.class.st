@@ -141,7 +141,7 @@ AthensCairoStrokePaint >> setDashesOn: aCanvas [
 	
 	dashLenghts withIndexDo: [:len :i |
 		
-		buf nbFloat64AtOffset: (i-1)*8 put: len asFloat
+		buf doubleAt: (i-1)*8 + 1 put: len asFloat
 		].
 
 	aCanvas
