@@ -1,3 +1,8 @@
+"
+I am an abstract base class for package transformations.
+
+All that I provide is the package name, my subclass transformations are operating on, and a instance creation method for setting the package name and an initial namespace model.
+"
 Class {
 	#name : #RBPackageTransformation,
 	#superclass : #RBCompositeTransformation,
