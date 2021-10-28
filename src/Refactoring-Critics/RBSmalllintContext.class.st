@@ -137,7 +137,7 @@ RBSmalllintContext >> parseTree [
 RBSmalllintContext >> primitiveComputeLiterals [
 	| semaphore |
 	literals := IdentitySet new: 25000.
-	literals addAll: self specialSelectors keys.
+	literals addAll: BytecodeEncoder specialSelectors.
 	selectors := IdentitySet new.
 	RBBrowserEnvironment new
 		classesDo: [ :each | self computeLiteralsForClass: each ].
@@ -230,15 +230,6 @@ RBSmalllintContext >> signalProcesses: aSemaphore [
 { #category : #accessing }
 RBSmalllintContext >> sourceCode [
 	^self selectedClass sourceCodeAt: self selector ifAbsent: [ '' ].
-]
-
-{ #category : #private }
-RBSmalllintContext >> specialSelectors [
-	| answer |
-	answer := IdentityDictionary new.
-	(Smalltalk specialSelectors select: [:sel | sel isSymbol]) do:
-		[:sel | answer at: sel put: nil.].
-	^answer.
 ]
 
 { #category : #accessing }
