@@ -19,31 +19,38 @@ Class {
 
 { #category : #'instance creation' }
 WrapperSignal class >> emit: aTargetObject [
+
 	^ (self on: aTargetObject) emit
 ]
 
 { #category : #'instance creation' }
 WrapperSignal class >> on: aTargetObject [
-	^ self new 
-		target: aTargetObject 
+
+	^ self new
+		  target: aTargetObject;
+		  yourself
 ]
 
 { #category : #accessing }
 WrapperSignal >> name [
+
 	^ 'Wrapper on ', self target class name
 ]
 
 { #category : #printing }
 WrapperSignal >> printOneLineContentsOn: stream [
+
 	self target printOn: stream 
 ]
 
 { #category : #accessing }
 WrapperSignal >> target [
+
 	^ target
 ]
 
 { #category : #accessing }
 WrapperSignal >> target: anObject [
+
 	target := anObject
 ]

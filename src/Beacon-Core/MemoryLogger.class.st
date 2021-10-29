@@ -38,40 +38,46 @@ Class {
 
 { #category : #'class initialization' }
 MemoryLogger class >> reset [
+	<script>
+	
 	self instance reset
 ]
 
 { #category : #saving }
 MemoryLogger class >> startAutoSaving [
 	"Write the default instance to a file every WritePeriod"
-
+	<script>
+	
 	WriteProcess ifNotNil: [ self error: 'Write process already running' ].
 
 	WriteProcess := [ self writeLoop ]
-		forkAt: Processor userInterruptPriority
-		named: self class name, ' auto-save'.
+		                forkAt: Processor userInterruptPriority
+		                named: self class name , ' auto-save'
 ]
 
 { #category : #saving }
 MemoryLogger class >> stopAutoSaving [
 	"Terminate writing the default instance to a file every WritePeriod"
-
-	WriteProcess ifNil: [ ^self ].
+	<script>
+		
+	WriteProcess ifNil: [ ^ self ].
 	WriteProcess terminate.
 	100 milliSeconds wait.
-	WriteProcess isTerminated ifFalse: [ self error: 'Unable to terminate auto-save process' ].
-	WriteProcess := nil.
+	WriteProcess isTerminated ifFalse: [ 
+		self error: 'Unable to terminate auto-save process' ].
+	WriteProcess := nil
 ]
 
 { #category : #accessing }
 MemoryLogger class >> writeFilename [
 
-	^WriteFilename ifNil: [ WriteFilename := String streamContents: [ :stream |
-			stream 
-				<< self name;
-				<< '-';
-				print: LibC uniqueInstance currentProcessId;
-				<< '.stgz' ] ].
+	^ WriteFilename ifNil: [ 
+		  WriteFilename := String streamContents: [ :stream | 
+			                   stream
+				                   << self name;
+				                   << '-';
+				                   print: LibC uniqueInstance currentProcessId;
+				                   << '.stgz' ] ]
 ]
 
 { #category : #accessing }
@@ -91,7 +97,7 @@ MemoryLogger class >> writeLoop [
 { #category : #accessing }
 MemoryLogger class >> writePeriod [
 
-	^WritePeriod ifNil: [ WritePeriod := 60 seconds ]
+	^ WritePeriod ifNil: [ WritePeriod := 60 seconds ]
 ]
 
 { #category : #accessing }
@@ -116,7 +122,7 @@ MemoryLogger >> initialize [
 
 ]
 
-{ #category : #accessing }
+{ #category : #utilities }
 MemoryLogger >> nextPut: aSignal [
 	mutex critical: [
 		recordings add: aSignal ].

@@ -14,7 +14,8 @@ Class {
 	#category : #'Beacon-Core-Loggers'
 }
 
-{ #category : #registering }
+{ #category : #utilities }
 TranscriptLogger >> nextPut: anAnnouncement [
+
 	Transcript crShow: anAnnouncement
 ]
