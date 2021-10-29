@@ -19,7 +19,9 @@ SystemNavigation >> allSentMessagesInClass: aClass do: aBlock [
 			(literal isMemberOf: Array) ifTrue: ["might be performed"
 				literal do: [:x | (x isSymbol) ifTrue: [ x == method selector ifFalse: [ aBlock value: x ]]]]]].
 	"The following may be sent without being in any literal frame"
-	BytecodeEncoder specialSelectors do: [:selector | aBlock value: selector].
+	1
+		to: Smalltalk specialSelectorSize
+		do: [:index | aBlock value: (Smalltalk specialSelectorAt: index)].
 ]
 
 { #category : #'*HeuristicCompletion-Model' }
