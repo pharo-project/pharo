@@ -259,7 +259,7 @@ ExternalAddress >> packToArity: arity [
 	p := MyExternalObjectClass new.
 	self mehod: p.
 	
-	And I expect to have 'p' correctly initialised on return. 
+	And I expect to have 'p' correctly initialized on return. 
 	Well... tha's not so simple :)
 	
 	When compiling #method:, UnifiedFFI needs to first 'pack' the pointer (which means to 
