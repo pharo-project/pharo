@@ -20,11 +20,9 @@ OmStoreFactory class >> current [
 	^ current ifNil: [ current := self new ]
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 OmStoreFactory class >> initialize [
-	"
-	self initialize
-	"
+	
 	SessionManager default registerSystemClassNamed: self name
 ]
 

@@ -25,7 +25,7 @@ Class {
 	#category : #'Morphic-Core-Worlds'
 }
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 PasteUpMorph class >> initialize [
 	ShouldSwapMenuOpenerButtons := false.
 	self shouldShowWorldMenu: true

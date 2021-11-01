@@ -95,11 +95,9 @@ PNGReadWriter class >> debugging: aBoolean [
 	Debugging := aBoolean
 ]
 
-{ #category : #initialize }
+{ #category : #'class initialization' }
 PNGReadWriter class >> initialize [
-	"
-	PNGReadWriter initialize
-	"
+
 	BPP := { 
 		#(1 2 4 8 16 ).
 		#(0 0 0 0 0 ).

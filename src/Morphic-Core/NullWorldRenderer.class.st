@@ -72,13 +72,13 @@ NullWorldRenderer >> updateDamage: rectangles [
 	"Do nothing"
 ]
 
+{ #category : #events }
+NullWorldRenderer >> updateToNewResolution [
+
+]
+
 { #category : #accessing }
 NullWorldRenderer >> windowTitle: aString [
 
 	"I am a dummy implementation"
-]
-
-{ #category : #events }
-NullWorldRenderer >> updateToNewResolution [
-
 ]
