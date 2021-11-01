@@ -77,13 +77,13 @@ SmalltalkImage class >> new [
 	self error: 'Use current'.
 ]
 
-{ #category : #initialization }
+{ #category : #'system startup' }
 SmalltalkImage class >> shutDown: isImageClosing [
 
 	isImageClosing ifTrue: [ SourceFiles close ].
 ]
 
-{ #category : #initialization }
+{ #category : #'system startup' }
 SmalltalkImage class >> startUp: isImageStarting [
 	
 	ChangesLog default

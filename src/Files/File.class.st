@@ -1325,7 +1325,7 @@ File class >> sizeOrNil: id [
 	^ nil
 ]
 
-{ #category : #'class initialization' }
+{ #category : #'system startup' }
 File class >> startUp: isImageStarting [
 	"Update VM constants on startup"
 
