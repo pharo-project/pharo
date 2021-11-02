@@ -308,3 +308,17 @@ BehaviorTest >> testthoroughWhichMethodsReferTo [
 	"and we are false for non existing symbols"
 	self assert: (self class thoroughWhichMethodsReferTo: ('this', 'doesNotExist') asSymbol) isEmpty.
 ]
+
+{ #category : #'tests - queries' }
+BehaviorTest >> testthoroughWhichMethodsReferToSpecialIndex [
+	| array |
+	array := #(thisIsOnlyHereIntestthoroughWhichMethodsReferTo).
+	"normal case"
+	self assert: (Point thoroughWhichMethodsReferTo: #x specialIndex: ( Smalltalk specialSelectorIndexOrNil: #+)) notEmpty.
+	"we understand send bytecodes for special selectors"
+	self assert: (Point thoroughWhichMethodsReferTo: #+ specialIndex: ( Smalltalk specialSelectorIndexOrNil: #+)) notEmpty.
+	"we dive into literal arrays"
+	self assert: (self class thoroughWhichMethodsReferTo: array first specialIndex: nil) notEmpty.
+	"and we are false for non existing symbols"
+	self assert: (self class thoroughWhichMethodsReferTo: ('this', 'doesNotExist') asSymbol specialIndex: nil) isEmpty.
+]
