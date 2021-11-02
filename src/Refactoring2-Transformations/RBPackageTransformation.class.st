@@ -8,8 +8,7 @@ Class {
 	#superclass : #RBCompositeTransformation,
 	#instVars : [
 		'packageName',
-		'newName',
-		'environment'
+		'newName'
 	],
 	#category : #'Refactoring2-Transformations-Model'
 }
