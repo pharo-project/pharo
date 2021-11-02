@@ -35,14 +35,11 @@ OmSessionStore class >> defaultBaseLocator: aFileLocator [
 	defaultBaseLocator := aFileLocator
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 OmSessionStore class >> initialize [
-	"
-	self initialize
-	"
+ 
 	registry := WeakSet new: 5.
-	SessionManager default registerUserClassNamed: self name.
-
+	SessionManager default registerUserClassNamed: self name
 
 ]
 

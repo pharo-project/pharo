@@ -79,7 +79,7 @@ OSWindow class >> finalizeResourceData: windowHandle [
 	windowHandle destroy.
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 OSWindow class >> initialize [ 
 
 	self traceEvents: false
