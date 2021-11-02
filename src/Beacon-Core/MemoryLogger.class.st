@@ -36,6 +36,18 @@ Class {
 	#category : #'Beacon-Core-Loggers'
 }
 
+{ #category : #saving }
+MemoryLogger class >> fromStonFile: aFileReference [
+
+	| logger |
+
+	logger := aFileReference asFileReference binaryReadStreamDo: [ :bstream |
+		STON fromStream: (ZnCharacterReadStream 
+			on: (GZipReadStream on: bstream)
+			encoding: 'utf8') ].
+	^logger
+]
+
 { #category : #'class initialization' }
 MemoryLogger class >> reset [
 	<script>
@@ -147,4 +159,16 @@ MemoryLogger >> reset [
 	affecting the running status of the logger"
 	mutex critical: [
 		recordings := OrderedCollection new ]
+]
+
+{ #category : #'ston persistence' }
+MemoryLogger >> saveStonFile: aFileReference [
+
+	"Save the receiver to the supplied file name"
+
+	| stream |
+	stream := ZnCharacterWriteStream
+		          on: (GZipWriteStream on: aFileReference asFileReference nextVersion binaryWriteStream)
+		          encoding: 'utf8'.
+	[ STON put: self onStreamPretty: stream ] ensure: [ stream close ]
 ]
