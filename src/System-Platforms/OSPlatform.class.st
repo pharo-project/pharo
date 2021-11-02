@@ -216,13 +216,13 @@ OSPlatform >> platformName [
 	^ self name
 ]
 
-{ #category : #initialize }
+{ #category : #'system startup' }
 OSPlatform >> shutDown: quitting [
 	"Pharo is shutting down. If this platform requires specific shutdown code, this is a great place to put it."
 
 ]
 
-{ #category : #initialize }
+{ #category : #'system startup' }
 OSPlatform >> startUp: resuming [
 	"Pharo is starting up. If this platform requires specific initialization, this is a great place to put it."
 
