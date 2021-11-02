@@ -193,18 +193,20 @@ Socket class >> newAcceptCheck [
 
 { #category : #'instance creation' }
 Socket class >> newTCP [
-	"Create a socket and initialise it for TCP"
+	"Create a socket and initialize it for TCP"
+
 	self initializeNetwork.
-	^[ super new initialize: TCPSocketType ]
-		repeatWithGCIf: [ :socket | socket isValid not ]
+	^ [ super new initialize: TCPSocketType ] repeatWithGCIf: [ :socket | 
+		  socket isValid not ]
 ]
 
 { #category : #'instance creation' }
 Socket class >> newUDP [
-	"Create a socket and initialise it for UDP"
+	"Create a socket and initialize it for UDP"
+
 	self initializeNetwork.
-	^[ super new initialize: UDPSocketType ]
-		repeatWithGCIf: [ :socket | socket isValid not ]
+	^ [ super new initialize: UDPSocketType ] repeatWithGCIf: [ :socket | 
+		  socket isValid not ]
 ]
 
 { #category : #utilities }
