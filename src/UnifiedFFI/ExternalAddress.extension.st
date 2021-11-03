@@ -88,6 +88,12 @@ ExternalAddress >> copyFrom: startIndex to: endIndex [
 ]
 
 { #category : #'*UnifiedFFI' }
+ExternalAddress >> copyFromOffset: startZeroBasedOffset to: endZeroBasedOffset [ 
+	^ self copyFrom: startZeroBasedOffset + 1 to: endZeroBasedOffset + 1
+
+]
+
+{ #category : #'*UnifiedFFI' }
 ExternalAddress >> doubleAt: byteIndex [
 	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
 	^ self float64AtOffset: byteIndex - 1
