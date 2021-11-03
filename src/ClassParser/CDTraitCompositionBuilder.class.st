@@ -32,7 +32,7 @@ CDTraitCompositionBuilder >> visitArrayNode: aRBArrayNode [
 						originalNode: aRBArrayNode;
 						yourself]
 				ifNotEmpty: [ :stm | ^ CDTraitCompositionSequenceNode new 
-											sequence: {(self visitMessageNode: stm first)} ;
+											sequence: {stm first acceptVisitor: self} ;
 											originalNode: aRBArrayNode;
 											yourself
 									]]].

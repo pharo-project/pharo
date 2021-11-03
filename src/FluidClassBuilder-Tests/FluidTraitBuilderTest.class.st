@@ -23,7 +23,16 @@ FluidTraitBuilderTest >> setUp [
 	builder := FluidTraitBuilder new
 ]
 
-{ #category : #tests }
+{ #category : #running }
+FluidTraitBuilderTest >> tearDown [
+
+	self class environment 
+		at: #TTestTrait 
+		ifPresent: [ :cl | cl removeFromSystem  ].
+	super tearDown. 
+]
+
+{ #category : #'tests - classBuilder generation' }
 FluidTraitBuilderTest >> testBuildSimplePoint2 [
 
 	| trait |
@@ -44,7 +53,101 @@ FluidTraitBuilderTest >> testClassSlots [
 	self assert: builder classSlotsToBuild equals: {#string => InstanceVariableSlot. #runs => InstanceVariableSlot}
 ]
 
-{ #category : #tests }
+{ #category : #'tests - class creation' }
+FluidTraitBuilderTest >> testCreatingEmptyTraitHasDefaultElements [
+
+	| instBuilder newTrait |
+	instBuilder := (Trait << #TTestTrait
+		package: 'Mock').
+		
+	"Ideally we should not install the class but just build it (sending instBuilder build)
+	the problem is that category and tag are lost by the class builder. 
+	Hence we cannot test for real."
+	newTrait := instBuilder install.
+	
+	self assert: newTrait name equals: #TTestTrait.
+	self assert: newTrait slotNames equals: #().
+	self assert: newTrait traitComposition equals: {} asTraitComposition.
+	self assert: newTrait class traitComposition equals: {} asTraitComposition.
+	self assert: newTrait classVarNames equals: #().
+	self assert: newTrait category equals: 'Mock'.
+	
+
+	
+]
+
+{ #category : #'tests - class creation' }
+FluidTraitBuilderTest >> testCreatingFullTraitHasAllElements [
+
+	| instBuilder newTrait |
+	instBuilder := (Trait << #TTestTrait
+		slots: #(a b c);
+		traits: {TViewModelMock};
+		tag: 'lala';
+		package: 'Mock').
+		
+	"Ideally we should not install the class but just build it (sending instBuilder build)
+	the problem is that category and tag are lost by the class builder. 
+	Hence we cannot test for real."
+	newTrait := instBuilder install.
+	
+	self assert: newTrait name equals: #TTestTrait.
+	self assert: newTrait slotNames equals: #(a b c).
+	self assert: newTrait traitComposition equals: {TViewModelMock} asTraitComposition.
+	self assert: newTrait class traitComposition equals: {TViewModelMock classSide} asTraitComposition.
+	self assert: newTrait classVarNames equals: #().
+	self assert: newTrait category equals: 'Mock-lala'.
+	
+
+	
+]
+
+{ #category : #'tests - class creation' }
+FluidTraitBuilderTest >> testExistingTraitWithClassSlotsArePreservedIfChangingInstanceSide [
+
+	| instBuilder newTrait |
+	instBuilder := (Trait << #TTestTrait
+		classSlots: #(AAA);
+		package: 'Mock').
+		
+	"Ideally we should not install the class but just build it (sending instBuilder build)
+	the problem is that category and tag are lost by the class builder. 
+	Hence we cannot test for real."
+	newTrait := instBuilder install.
+	
+	instBuilder := (Trait << #TTestTrait
+		slots: #(aaa);
+		package: 'Mock').
+
+	newTrait := instBuilder install.
+
+	self assert: newTrait class slotNames equals: #(AAA)	
+]
+
+{ #category : #'tests - class creation' }
+FluidTraitBuilderTest >> testExistingTraitWithSlotsArePreservedIfChangingClassSide [
+
+	| instBuilder newTrait classBuilder |
+	instBuilder := (Trait << #TTestTrait
+		slots: #(aaa);
+		package: 'Mock').
+		
+	"Ideally we should not install the class but just build it (sending instBuilder build)
+	the problem is that category and tag are lost by the class builder. 
+	Hence we cannot test for real."
+	newTrait := instBuilder install.
+	
+	classBuilder := (Trait << newTrait classTrait 
+		slots: #(AAA);
+		package: 'Mock').
+
+	newTrait := classBuilder install.
+
+	self assert: newTrait class slotNames equals: #(AAA)	.
+	self assert: newTrait slotNames equals: #(aaa)		
+]
+
+{ #category : #'tests - classBuilder generation' }
 FluidTraitBuilderTest >> testFillShiftClassBuilder [
 
 	| shift |
@@ -62,7 +165,7 @@ FluidTraitBuilderTest >> testFillShiftClassBuilder [
 	"self assert: clas package packageName equals: 'FakedCore'"
 ]
 
-{ #category : #tests }
+{ #category : #'tests - install' }
 FluidTraitBuilderTest >> testInstallMinimalMockClass [
 
 	| shiftClassBuilder installedClass |
@@ -70,7 +173,7 @@ FluidTraitBuilderTest >> testInstallMinimalMockClass [
 	[ 
 	builder := self class compilerClass new
 		           evaluate: 'Trait << #TMyClass
-	trait: {};
+	traits: {};
 	slots: {};
 	tag: '''' ;
 	package: ''MyPackage'''.
@@ -86,7 +189,7 @@ FluidTraitBuilderTest >> testInstallMinimalMockClass [
 		ensure: [ self removeTestArtifactsFromSystem ]
 ]
 
-{ #category : #tests }
+{ #category : #'tests - install' }
 FluidTraitBuilderTest >> testInstallSimplePoint2 [
 
 	[ | trait |

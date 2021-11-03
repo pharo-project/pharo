@@ -41,13 +41,15 @@ FluidClassBuilderTest >> tearDown [
 	super tearDown. 
 ]
 
-{ #category : #'tests - class side' }
+{ #category : #'tests - hidden protocols' }
 FluidClassBuilderTest >> testBuildClassSlotsAPI [
 
 	| clas |
 	builder := Object << #Point2.
 	builder slots: { #x }.
 	builder classSlots: {#classX . #classY}.
+	"pay attention classSlots: is not to be sent by the user.
+	users should only send slots:"
 	builder package: 'FakedCore'.
 	clas := builder build.
 	
@@ -58,18 +60,20 @@ FluidClassBuilderTest >> testBuildClassSlotsAPI [
 	
 ]
 
-{ #category : #'tests - class side' }
+{ #category : #'tests - hidden protocols' }
 FluidClassBuilderTest >> testBuildClassTraitsAPI [
 
 	| clas |
 	builder := Object << #Point2.
-	builder classTraits: { TViewModelMock2 classSide }.
+	builder classTraits: { TViewModelMock2 classTrait }.
+	"pay attention classTraits: is not to be sent by the user.
+	users should only send traits:"
 	builder package: 'FakedCore'.
 	clas := builder build.
 	
 	self assert: clas superclass equals: Object.
 	self assert: clas name equals: #Point2.
-	self assert: clas class traitComposition equals: { TViewModelMock2 classSide } asTraitComposition
+	self assert: clas class traitComposition equals: { TViewModelMock2 classTrait } asTraitComposition
 	
 ]
 
@@ -84,7 +88,7 @@ FluidClassBuilderTest >> testBuildLayout [
 	
 ]
 
-{ #category : #'tests - build' }
+{ #category : #'tests - classBuilder generation' }
 FluidClassBuilderTest >> testBuildSimplePoint2 [
 
 	| clas |
@@ -154,7 +158,9 @@ FluidClassBuilderTest >> testBuilderTraitsWithComposition [
 FluidClassBuilderTest >> testBuilderWithPackage [
 
 	builder package: 'Kernel-BasicObjects'.
-	self assert: builder packageToBuild equals: 'Kernel-BasicObjects'
+	self 
+		assert: builder packageToBuild 
+		equals: 'Kernel-BasicObjects'
 
 	
 ]
@@ -175,7 +181,7 @@ FluidClassBuilderTest >> testBuilderWithTag [
 	
 ]
 
-{ #category : #'tests - class side' }
+{ #category : #'tests - class creation' }
 FluidClassBuilderTest >> testChevronIsWorkingOnClassSide [
 
 	| instBuilder newClass clasBuilder |
@@ -193,7 +199,8 @@ FluidClassBuilderTest >> testChevronIsWorkingOnClassSide [
 	Hence we cannot test for real."
 	newClass := instBuilder install.
 	
-	clasBuilder := Object class << newClass class.
+	clasBuilder := Object class << newClass class
+		traits: {TViewModelMock classTrait}.
 		
 	self assert: clasBuilder packageToBuild equals: instBuilder packageToBuild.
 	self assert: clasBuilder superclassToBuild equals: instBuilder superclassToBuild.
@@ -203,19 +210,14 @@ FluidClassBuilderTest >> testChevronIsWorkingOnClassSide [
 	
 	self assert: clasBuilder slotsToBuild equals: instBuilder slotsToBuild.
 	self assert: clasBuilder tagToBuild equals: instBuilder tagToBuild.
-	self assert: clasBuilder traitsToBuild equals: instBuilder traitsToBuild.
+	self assert: clasBuilder traitsToBuild name equals: TViewModelMock name.
 	self assert: clasBuilder nameToBuild equals: instBuilder nameToBuild.
 	
 	self assert: clasBuilder classSlotsToBuild equals: instBuilder classSlotsToBuild.
 	self assert: clasBuilder classTraitsToBuild equals: instBuilder classTraitsToBuild.
-
-
-
-
-
 ]
 
-{ #category : #'tests - class side' }
+{ #category : #'tests - class creation' }
 FluidClassBuilderTest >> testChevronIsWorkingOnClassSideOnEmpty [
 
 	| instBuilder newClass clasBuilder |
@@ -249,14 +251,14 @@ FluidClassBuilderTest >> testChevronIsWorkingOnClassSideOnEmpty [
 
 ]
 
-{ #category : #'tests - class side' }
+{ #category : #'tests - class creation' }
 FluidClassBuilderTest >> testClassSlots [
 
 	builder classSlots: {#string . #runs}.
 	self assert: builder classSlotsToBuild  equals: {#string => InstanceVariableSlot. #runs => InstanceVariableSlot}
 ]
 
-{ #category : #'tests - class side' }
+{ #category : #'tests - class creation' }
 FluidClassBuilderTest >> testClassTraits [
 
 	builder classTraits: {TViewModel classSide}.
@@ -309,7 +311,141 @@ FluidClassBuilderTest >> testCreateClassWithFullExpandedDefinitionKeepsTheMinimu
 	self assert: shiftClassBuilder layoutDefinition sharedPools isEmpty.
 ]
 
-{ #category : #'tests - build' }
+{ #category : #'tests - class creation' }
+FluidClassBuilderTest >> testCreatedClassHasAllElements [
+
+	| instBuilder newClass |
+	instBuilder := (Object << #Point2
+		slots: { #a. #b };
+		layout: WeakLayout;
+		traits: {TViewModelMock };
+		sharedVariables: { #AAA};
+		sharedPools: { #TextConstants};
+		tag: 'boring' ;
+		package: 'Mock').
+		
+	"Ideally we should not install the class but just build it (sending instBuilder build)
+	the problem is that category and tag are lost by the class builder. 
+	Hence we cannot test for real."
+	newClass := instBuilder install.
+	
+	self assert: newClass name equals: #Point2.
+	self assert: newClass slots size equals: 2.
+	self assert: newClass slotNames equals: #(a b).
+	self assert: newClass classLayout class equals: WeakLayout.
+	self assert: newClass traitComposition equals: {TViewModelMock} asTraitComposition.
+	self assert: newClass class traitComposition equals: {TViewModelMock classSide} asTraitComposition.
+	self assert: newClass classVarNames equals: #(AAA).
+	self assertCollection: newClass sharedPools hasSameElements: {TextConstants}.
+	self assert: newClass category equals: 'Mock-boring'.
+	
+
+
+
+
+]
+
+{ #category : #'tests - class creation' }
+FluidClassBuilderTest >> testCreatedEmptyClassHasDefaultElements [
+
+	| instBuilder newClass |
+	instBuilder := (Object << #Point2
+		package: 'Mock').
+		
+	"Ideally we should not install the class but just build it (sending instBuilder build)
+	the problem is that category and tag are lost by the class builder. 
+	Hence we cannot test for real."
+	newClass := instBuilder install.
+	
+	self assert: newClass name equals: #Point2.
+	self assert: newClass slotNames equals: #().
+	self assert: newClass classLayout class equals: FixedLayout.
+	self assert: newClass traitComposition equals: {} asTraitComposition.
+	self assert: newClass class traitComposition equals: {} asTraitComposition.	
+	self assert: newClass classVarNames equals: #().
+	self assertCollection: newClass sharedPools hasSameElements: {}.
+	self assert: newClass category equals: 'Mock'.
+	
+
+
+
+
+]
+
+{ #category : #'tests - class creation' }
+FluidClassBuilderTest >> testExistingClassWithClassSlot [
+
+	| instBuilder newClass |
+
+	"We are creating a class with a class slot. This class slot is defined in the class side of the fluid definition.
+	When redefining the instance side, the class slot should not be lost."
+
+	instBuilder := (Object << #Point2
+		slots: { #a. #b };
+		layout: WeakLayout;
+		traits: {TViewModelMock };
+		sharedVariables: { #BBB};
+		classSlots: #(AAA);
+		sharedPools: { #TextConstants};
+		tag: 'boring' ;
+		package: 'Mock').
+		
+	"Ideally we should not install the class but just build it (sending instBuilder build)
+	the problem is that category and tag are lost by the class builder. 
+	Hence we cannot test for real."
+	newClass := instBuilder install.
+	
+	self assert: newClass class slots first name equals: #AAA.
+	
+	instBuilder := (Object << #Point2
+		slots: { #a. #b. #c };
+		layout: WeakLayout;
+		traits: {TViewModelMock };
+		sharedVariables: { #BBB};
+		sharedPools: { #TextConstants};
+		tag: 'boring' ;
+		package: 'Mock').
+	
+	newClass := instBuilder install.
+	
+	self assert: newClass class slots first name equals: #AAA
+
+]
+
+{ #category : #'tests - class creation' }
+FluidClassBuilderTest >> testExistingClassWithClassSlotThenWeRemoveIt [
+
+	| instBuilder newClass classBuilder |
+
+	"We are creating a class with a class slot. This class slot is defined in the class side of the fluid definition.
+	Then we are removing the classSlot, it should remove it"
+
+	instBuilder := (Object << #Point2
+		slots: { #a. #b };
+		layout: WeakLayout;
+		traits: {TViewModelMock };
+		sharedVariables: { #BBB};
+		classSlots: #(AAA);
+		sharedPools: { #TextConstants};
+		tag: 'boring' ;
+		package: 'Mock').
+		
+	"Ideally we should not install the class but just build it (sending instBuilder build)
+	the problem is that category and tag are lost by the class builder. 
+	Hence we cannot test for real."
+	newClass := instBuilder install.
+	
+	self assert: newClass class slots first name equals: #AAA.
+	
+	classBuilder := Object class << newClass class.
+	
+	newClass := classBuilder install.
+	
+	self assert: newClass class slots equals: #()
+
+]
+
+{ #category : #'tests - classBuilder generation' }
 FluidClassBuilderTest >> testFillShiftClassBuilder [
 
 	| shift |
@@ -362,7 +498,7 @@ FluidClassBuilderTest >> testInstallMinimalMockClass [
 		ensure: [ self removeTestArtifactsFromSystem ]
 ]
 
-{ #category : #'tests - build' }
+{ #category : #'tests - classBuilder generation' }
 FluidClassBuilderTest >> testInstallSimplePoint2 [
 
 	[ | pt2Class |

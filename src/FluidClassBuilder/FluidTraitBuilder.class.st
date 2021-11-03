@@ -13,9 +13,8 @@ FluidTraitBuilder >> fillShiftClassBuilder [
 	super fillShiftClassBuilder.
 	shiftClassBuilder 
 		beTrait;
-		sharedVariables: '';
+		sharedVariables: #();
 		sharedPools: ''.
 		
-	shiftClassBuilder classSlots: #().
 	^ shiftClassBuilder
 ]

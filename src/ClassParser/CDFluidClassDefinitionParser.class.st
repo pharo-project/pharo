@@ -36,7 +36,9 @@ Class {
 	#name : #CDFluidClassDefinitionParser,
 	#superclass : #CDAbstractClassDefinitionParser,
 	#instVars : [
-		'kind'
+		'context',
+		'classNameNode',
+		'superclassNode'
 	],
 	#category : #'ClassParser-Parser'
 }
@@ -50,17 +52,9 @@ CDFluidClassDefinitionParser class >> fromASTNode: aNode [
 { #category : #'handling  nodes' }
 CDFluidClassDefinitionParser >> handleClassAndSuperclassOf: aNode [
 
-	"Pay attention that is is important to test first traits because we have the same message to create classes and traits, but traits are sent to Trait."
-	(self isTraitDefinition: aNode receiver)
-		ifTrue: [ self handleClassName: aNode receiver arguments first. ^ self ].
-	(self isTraitClassSideDefinition: aNode)
-		ifTrue: [ self handleClassName: aNode receiver arguments first receiver. ^ self].
-	
-	(self isInstanceSideDefinition: aNode receiver)
-		ifTrue: [ 
-			self handleSuperclassNode: aNode receiver receiver.
-			self handleClassName: aNode receiver arguments first ]
-		ifFalse: [ self handleMetaclassName: aNode ].
+	superclassNode ifNotNil: [ self handleSuperclassNode: superclassNode ].
+	self handleClassName: classNameNode.
+
 ]
 
 { #category : #internal }
@@ -140,16 +134,17 @@ CDFluidClassDefinitionParser >> handleSharedVariableNames: aNode [
 
 { #category : #'handling  nodes' }
 CDFluidClassDefinitionParser >> handleSuperclassNode: aSuperclassNode [
-	| aSuperclassName superclassNode |
+	| aSuperclassName newSuperclassNode |
+
 	aSuperclassName := aSuperclassNode isLiteralNode
 		ifTrue: [ nil ]
 		ifFalse: [ aSuperclassNode binding value asString asSymbol ].
-	superclassNode := self classNameNodeClass new
+	newSuperclassNode := self classNameNodeClass new
 		originalNode: aSuperclassNode;
 		className: aSuperclassName.
 	classDefinition
 		superclassName: aSuperclassName
-		astNode: superclassNode
+		astNode: newSuperclassNode
 ]
 
 { #category : #'handling  nodes' }
@@ -158,55 +153,28 @@ CDFluidClassDefinitionParser >> handleTag: aNode [
 	classDefinition tag: (CDClassTagNode new name: aNode value)
 ]
 
-{ #category : #testing }
-CDFluidClassDefinitionParser >> isInstanceSideDefinition: aRBMessageNode [
-	"Returns whether the definition is a class or instance side definition. Superclass < #myObject. Trait << are handled prior to this method."
-	
-	"^ (aRBMessageNode respondsTo: #receiver) 
-		and: [ aRBMessageNode receiver isMessage not 
-				and: [aRBMessageNode isMessage 
-					and: [ aRBMessageNode selector = #class ]]]"
-	^ kind = #instance
-	
-]
-
-{ #category : #testing }
-CDFluidClassDefinitionParser >> isTraitClassSideDefinition: aRBMessageNode [
-	"Based on the message structure, returns whether the definition is a trait definition."
-	
-	"^ aRBMessageNode isMessage
-		and: [ aRBMessageNode receiver isVariable 
-					and: [ aRBMessageNode receiver name = 'Trait'
-								and: [ aRBMessageNode arguments first selector = #classTrait ]]]"
-	^ kind = #traitClass
-	
-]
-
-{ #category : #testing }
-CDFluidClassDefinitionParser >> isTraitDefinition: aRBMessageNode [
-	"Returns whether the definition is a trait definition, i.e., Trait << #Tbehavior."
-
-	"^ aRBMessageNode isMessage and: [ 
-		(aRBMessageNode receiver respondsTo: #name) 
-			and: [aRBMessageNode receiver name = 'Trait' and: [ aRBMessageNode selector = #<< ]]]"
-	^ kind = #traitInstance
-	
-]
-
 { #category : #'parsing-internal' }
 CDFluidClassDefinitionParser >> parseRootNode: expressionTree [
 	
 	| searcher |
 	searcher := RBParseTreeSearcher new.
 	searcher
-		matches: 'Trait << `#traitSymbol' do: [:aNode :answer | kind := #traitInstance ];
-		matches: 'Trait << `@symb classTrait' do: [:aNode :answer | kind := #traitClass ];
-		matches: '`@tm << `#symb' do: [:aNode :answer | kind := #instance ];
-		matches: '`@tm class << `@symb class' do: [:aNode :answer | kind := #class ].
+		matches: 'Trait << `#name' do: [:aNode :answer | 
+			classNameNode := searcher variableNamed: '`#name'.
+			self beTraitDefinition ];
+		matches: 'Trait << `name classTrait' do: [:aNode :answer | 
+			classNameNode := searcher variableNamed: '`name'.
+			self beClassSideTraitDefinition ];
+		matches: '`superclass << `#name' do: [:aNode :answer | 
+			classNameNode := searcher variableNamed: '`#name'.			
+			superclassNode := searcher variableNamed: '`superclass'.
+			self beClassDefinition ];
+		matches: '`superclass class << `name class' do: [:aNode :answer | 
+			classNameNode := searcher variableNamed: '`name'.			
+			self beMetaclassDefinition ].
 		
 	searcher executeTree: expressionTree.
 	
-	expressionTree extractClassDefinitionFor: self. 
 	classDefinition originalNode: expressionTree.
 	expressionTree acceptVisitor: self.
 	^ classDefinition
@@ -236,17 +204,6 @@ CDFluidClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 		classDefinition: self; 
 		unrecognizedPart: aString;
 		signal
-]
-
-{ #category : #internal }
-CDFluidClassDefinitionParser >> setAdequateClassDefinitionFrom: expressionTree [
-	"Set a class, trait, class side trait or metaclass definition as definition object."
-	
-	(self isTraitDefinition: expressionTree receiver)
-		ifTrue: [ self beTraitDefinition. ^ self ].
-	(self isTraitClassSideDefinition: expressionTree)	
-		ifTrue: [ self beClassSideTraitDefinition. ^ self ].
-	super setAdequateClassDefinitionFrom: expressionTree receiver
 ]
 
 { #category : #'parsing-internal' }

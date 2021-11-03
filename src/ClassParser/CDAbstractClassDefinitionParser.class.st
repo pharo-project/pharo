@@ -190,12 +190,6 @@ CDAbstractClassDefinitionParser >> handleTraitUsesFromNode: aNode [
 	classDefinition traitDefinition: traitComposition.
 ]
 
-{ #category : #testing }
-CDAbstractClassDefinitionParser >> isInstanceSideDefinition: aRBMessageNode [
-	"Based on the Point or Point class structure, returns whether the definition is a class or instance side definition."
-	^ self subclassResponsibility 
-]
-
 { #category : #parsing }
 CDAbstractClassDefinitionParser >> parse: aString [
 	| expressionTree |
@@ -206,25 +200,9 @@ CDAbstractClassDefinitionParser >> parse: aString [
 	^ self parseRootNode: expressionTree
 ]
 
-{ #category : #parsing }
-CDAbstractClassDefinitionParser >> parseRootNode: expressionTree [
-	self setAdequateClassDefinitionFrom: expressionTree.
-	classDefinition originalNode: expressionTree.
-	expressionTree acceptVisitor: self.
-	^ classDefinition
-]
-
 { #category : #hooks }
 CDAbstractClassDefinitionParser >> parserClass [
 	^ RBParser
-]
-
-{ #category : #internal }
-CDAbstractClassDefinitionParser >> setAdequateClassDefinitionFrom: expressionTree [
-	"set a class or metaclass class definition as class definition object."
-	(self isInstanceSideDefinition: expressionTree)
-		ifTrue: [ self beClassDefinition ]
-		ifFalse: [ self beMetaclassDefinition ]
 ]
 
 { #category : #'private - class factory' }

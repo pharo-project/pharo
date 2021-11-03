@@ -78,6 +78,14 @@ CDClassDefinitionParser >> isInstanceSideDefinition: aRBMessageNode [
 ]
 
 { #category : #parsing }
+CDClassDefinitionParser >> parseRootNode: expressionTree [
+	self setAdequateClassDefinitionFrom: expressionTree.
+	classDefinition originalNode: expressionTree.
+	expressionTree acceptVisitor: self.
+	^ classDefinition
+]
+
+{ #category : #parsing }
 CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [ 
 	
 	"We could do this with reflection, or with a dictionary and closures.
@@ -102,6 +110,14 @@ CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 		classDefinition: self; 
 		unrecognizedPart: aString;
 		signal
+]
+
+{ #category : #internal }
+CDClassDefinitionParser >> setAdequateClassDefinitionFrom: expressionTree [
+	"set a class or metaclass class definition as class definition object."
+	(self isInstanceSideDefinition: expressionTree)
+		ifTrue: [ self beClassDefinition ]
+		ifFalse: [ self beMetaclassDefinition ]
 ]
 
 { #category : #parsing }

@@ -8,5 +8,6 @@ This way we can manipulate and test class definition without be forced to get th
 	^ FluidClassBuilder new
 		  superclassToBuild: self;
 		  nameToBuild: aString;
+		  fillClassSideFromEnvironment: self environment;
 		  yourself
 ]

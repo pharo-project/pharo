@@ -45,14 +45,15 @@ Class {
 }
 
 { #category : #copying }
-FluidClassBuilder >> fillFromClass: aClass [ 
+FluidClassBuilder >> fillInstanceSideFromClass: aClass [ 
 
-	super fillFromClass: aClass.
+	super fillInstanceSideFromClass: aClass.
 	self superclass: aClass superclass.
-	aClass classLayout isFixedLayout 
-		ifFalse: [ self layout: aClass classLayout class ].
-	aClass classVariables ifNotEmpty: [ :x | self sharedVariables: (x collect: [ :e | e key ]) ].
-	aClass sharedPools ifNotEmpty: [ :x | self sharedPools: (x collect: [:each | each name ]) asArray].
+
+	self layout: aClass classLayout class.
+		
+	self sharedVariables: (aClass classVariables collect: [ :e | e key ]) .
+	self sharedPools: (aClass sharedPools collect: [:each | each name ]) asArray.
 	
 
 ]
@@ -62,17 +63,24 @@ FluidClassBuilder >> fillShiftClassBuilder [
 
 	super fillShiftClassBuilder.
 	shiftClassBuilder superclass: superclassToBuild.
-	sharedVariables 
-		ifNotNil: [ :s | s isEmpty ifFalse: [shiftClassBuilder sharedVariables: sharedVariables]].
-	sharedPools 
-		ifNotNil: [ :p | p isEmpty ifFalse: [shiftClassBuilder sharedPoolsCollectionOfSymbols: sharedPools  ]].
-	layout ifNotNil: [ shiftClassBuilder layoutClass: layout ].
+	shiftClassBuilder sharedVariables: sharedVariables.
+	shiftClassBuilder sharedPoolsCollectionOfSymbols: sharedPools.
+	shiftClassBuilder layoutClass: layout.
 
 	^ shiftClassBuilder
 	
 	
 
 
+]
+
+{ #category : #initialization }
+FluidClassBuilder >> initialize [
+
+	super initialize.
+	sharedVariables := #().
+	sharedPools := #().
+	layout := FixedLayout
 ]
 
 { #category : #API }

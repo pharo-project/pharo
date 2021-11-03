@@ -15,3 +15,17 @@ Class {
 	#superclass : #FluidClassBuilder,
 	#category : #'FluidClassBuilder-Base'
 }
+
+{ #category : #accessing }
+FluidClassSideClassBuilder >> slots: anArray [
+	"pay attention on the class side we do not have to have classSlots: but slots:"
+	
+	classSlotsToBuild := anArray collect: [ :each | each asSlot ]
+]
+
+{ #category : #accessing }
+FluidClassSideClassBuilder >> traits: aCollection [
+	"pay attention that on class side we want to write traits: and not classTraits:"
+	
+	classTraitsToBuild := aCollection asTraitComposition 
+]

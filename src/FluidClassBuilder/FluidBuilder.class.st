@@ -76,20 +76,27 @@ FluidBuilder >> classTraitsToBuild [
 ]
 
 { #category : #copying }
-FluidBuilder >> fillFromClass: aClass [ 
+FluidBuilder >> fillClassSideFromEnvironment: anEnvironment [ 
+
+	| oldClass |
+	oldClass := anEnvironment at: nameToBuild ifAbsent: [ ^ self ].
+	
+	classSlotsToBuild := oldClass class slots.
+	classTraitsToBuild := oldClass class traitComposition
+]
+
+{ #category : #copying }
+FluidBuilder >> fillInstanceSideFromClass: aClass [ 
 	
 	| tag |
-	aClass slots isEmpty ifFalse: [ self slots: aClass slots].	
-	aClass traitComposition isEmpty ifFalse: [ self traits: aClass traitComposition].
+
+	slotsToBuild := aClass slots.	
+	uses := aClass traitComposition.
 	self package: aClass package name.
 
 	tag := (aClass package classTagForClass: aClass).
 	tag ifNotNil: [ :s | 
-		s isRoot ifFalse: [self tag: (aClass package classTagForClass: aClass) name ]].
-	
-	aClass class slots isEmpty ifFalse: [ self classSlots: aClass class slots].
-	aClass class traitComposition isEmpty ifFalse: [self classTraits: aClass class traitComposition].
-	
+		s isRoot ifFalse: [self tag: (aClass package classTagForClass: aClass) name ]].	
 	
 ]
 
@@ -101,9 +108,8 @@ FluidBuilder >> fillShiftClassBuilder [
 		buildEnvironment: ShSmalltalkGlobalsEnvironment new;
 		name: nameToBuild.
 	
-	slotsToBuild ifNotNil: [ shiftClassBuilder slots: slotsToBuild ].	
-	uses ifNotNil: [ 
-		shiftClassBuilder traitComposition: uses asTraitComposition ].
+	shiftClassBuilder slots: slotsToBuild.	
+	shiftClassBuilder traitComposition: uses asTraitComposition.
 	
 	(tagToBuild isNil or: [ tagToBuild isEmpty ])
 		ifTrue: [ shiftClassBuilder category: packageName ]
@@ -112,10 +118,21 @@ FluidBuilder >> fillShiftClassBuilder [
 						ifTrue: [ shiftClassBuilder category: packageName ]
 		].
 	
-	classSlotsToBuild 
-		ifNotNil: [:s | s isEmpty ifFalse: [ shiftClassBuilder classSlots: classSlotsToBuild ]].
-	classTraitsToBuild  
-		ifNotNil: [ :t | t isEmpty ifFalse: [shiftClassBuilder classTraitComposition: classTraitsToBuild ]].
+	shiftClassBuilder classSlots: classSlotsToBuild.
+	shiftClassBuilder classTraitComposition: classTraitsToBuild.
+]
+
+{ #category : #initialization }
+FluidBuilder >> initialize [
+
+	super initialize.
+	slotsToBuild := #().
+	classSlotsToBuild := #().
+	
+	uses := TaEmptyComposition new.
+	classTraitsToBuild := uses classComposition.
+	
+"	#packageName . #tagToBuild"
 ]
 
 { #category : #building }
