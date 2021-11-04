@@ -68,6 +68,14 @@ SystemNavigation >> allClassesImplementing: aSelector [
 ]
 
 { #category : #query }
+SystemNavigation >> allClassesStartingWith: aString do: aBlock [
+
+	self allClassesDo: [ :e |
+		(e name beginsWith: aString)
+			ifTrue: [ aBlock value: e ] ]
+]
+
+{ #category : #query }
 SystemNavigation >> allExistingProtocolsFor: instanceSide [
 	"Answer all protocols on instance or class side"
 
