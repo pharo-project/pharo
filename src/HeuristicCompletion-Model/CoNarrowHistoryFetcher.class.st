@@ -40,13 +40,13 @@ CoNarrowHistoryFetcher >> initialize [
 ]
 
 { #category : #composing }
-CoNarrowHistoryFetcher >> narrowFilterBlock: aBlock narrowKey: aKey [
+CoNarrowHistoryFetcher >> narrowFilter: aFilter narrowKey: aKey [
 
 	history at: currentKey put: (CoNarrowHistoryItem forFetcher: decoree results: currentResults hasFinished: currentFinished).
 
-	currentResults := currentResults select: aBlock.
+	currentResults := currentResults select: [ :e | aFilter accepts: e ].
 
-	decoree := decoree narrowFilterBlock: aBlock narrowKey: currentKey.
+	decoree := decoree narrowFilter: aFilter narrowKey: currentKey.
 	generator := nil.
 	currentFinished := false.
 	
@@ -65,7 +65,7 @@ CoNarrowHistoryFetcher >> reset [
 ]
 
 { #category : #composing }
-CoNarrowHistoryFetcher >> unnarrowFilterBlock: aBlock narrowKey: aKey [
+CoNarrowHistoryFetcher >> unnarrowFilter: aFilter narrowKey: aKey [
 
 	history at: aKey 
 		ifPresent: [ :historyItem |
@@ -74,7 +74,7 @@ CoNarrowHistoryFetcher >> unnarrowFilterBlock: aBlock narrowKey: aKey [
 			currentFinished := historyItem hasFinished ] 
 		ifAbsent: [ 
 			currentResults := OrderedCollection new.
-			decoree := decoree unnarrowFilterBlock: aBlock narrowKey: aKey.
+			decoree := decoree unnarrowFilter: aFilter narrowKey: aKey.
 			currentFinished := false ].
 	
 	generator := nil.
