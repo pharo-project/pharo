@@ -3,7 +3,7 @@ Class {
 	#superclass : #TestCase,
 	#instVars : [
 		'completionClass',
-		'completionEnvironment'
+		'systemNavigation'
 	],
 	#category : #'HeuristicCompletion-Tests-Core'
 }
@@ -35,12 +35,6 @@ CoBasicCompletionTest >> assertEntry: anEntry equals: expectedEntry [
 CoBasicCompletionTest >> completionClass [
 
 	^ completionClass
-]
-
-{ #category : #tests }
-CoBasicCompletionTest >> completionEnvironment [
-
-	^ completionEnvironment
 ]
 
 { #category : #tests }
@@ -91,7 +85,13 @@ CoBasicCompletionTest >> setUp [
 			yourself)
 		yourself.
 	
-	completionEnvironment := CoMockEnvironment new
+	systemNavigation := CoMockSystemNavigation new
 		globals: {'A' . 'B' . 'C'};
 		yourself
+]
+
+{ #category : #tests }
+CoBasicCompletionTest >> systemNavigation [
+
+	^ systemNavigation
 ]
