@@ -58,6 +58,27 @@ BreakpointTest >> testAddRemoveBreakpoint [
 ]
 
 { #category : #tests }
+BreakpointTest >> testAddRemoveBreakpointKeepTimeStamp [
+	| bp timeStamp |
+	"adding an removing a breakpoint does not change the timestamp of the method"
+	
+	cls compile: 'dummy ^42'.
+	
+	timeStamp := (cls >> #dummy) timeStamp.
+	
+	bp := Breakpoint new.
+	bp	node: (cls >> #dummy) ast.
+	Breakpoint addBreakpoint: bp.
+	
+	self assert: (cls >> #dummy) timeStamp equals: timeStamp.
+	
+	Breakpoint removeBreakpoint: bp.
+	self assertEmpty: Breakpoint all.
+	
+	self assert: (cls >> #dummy) timeStamp equals: timeStamp.
+]
+
+{ #category : #tests }
 BreakpointTest >> testBreakInContextNode [
 
 	|observer breakpoint|
