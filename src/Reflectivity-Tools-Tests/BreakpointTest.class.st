@@ -46,15 +46,22 @@ BreakpointTest >> tearDown [
 
 { #category : #tests }
 BreakpointTest >> testAddRemoveBreakpoint [
-	|bp|
+	| bp method |
 	cls compile: 'dummy ^42'.
+	method := cls >> #dummy.
 	self assertEmpty: Breakpoint all.
 	bp := Breakpoint new.
 	bp	node: (cls >> #dummy) ast.
-	Breakpoint addBreakpoint: bp.
+	bp install.
+	"after the breakpoint is installed, the method is different"
+	self deny: (cls >> #dummy) bytecode equals: method bytecode.
+	
 	self assertCollection: Breakpoint all includesAll: {bp}.
-	Breakpoint removeBreakpoint: bp.
+	bp remove.
 	self assertEmpty: Breakpoint all.
+	
+	"Check that the method is correcty reverted"
+	self assert: (cls >> #dummy) bytecode equals: method bytecode
 ]
 
 { #category : #tests }
@@ -68,11 +75,11 @@ BreakpointTest >> testAddRemoveBreakpointKeepTimeStamp [
 	
 	bp := Breakpoint new.
 	bp	node: (cls >> #dummy) ast.
-	Breakpoint addBreakpoint: bp.
+	bp install.
 	
 	self assert: (cls >> #dummy) timeStamp equals: timeStamp.
 	
-	Breakpoint removeBreakpoint: bp.
+	bp remove.
 	self assertEmpty: Breakpoint all.
 	
 	self assert: (cls >> #dummy) timeStamp equals: timeStamp.
