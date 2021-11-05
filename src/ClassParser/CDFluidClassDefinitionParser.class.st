@@ -36,7 +36,6 @@ Class {
 	#name : #CDFluidClassDefinitionParser,
 	#superclass : #CDAbstractClassDefinitionParser,
 	#instVars : [
-		'context',
 		'classNameNode',
 		'superclassNode'
 	],

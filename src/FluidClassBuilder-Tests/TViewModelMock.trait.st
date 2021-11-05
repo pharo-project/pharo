@@ -8,3 +8,15 @@ Trait {
 	],
 	#category : #'FluidClassBuilder-Tests-Mocks'
 }
+
+{ #category : #accessing }
+TViewModelMock classSide >> a [
+
+	^ a
+]
+
+{ #category : #accessing }
+TViewModelMock classSide >> a: anObject [
+
+	a := anObject
+]
