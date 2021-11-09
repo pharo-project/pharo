@@ -50,8 +50,8 @@ RBMoveMethodToClassSideTransformation >> checkVariableNamed: aString [
 RBMoveMethodToClassSideTransformation >> getNewInstSideSource [
 	| sender |
 	sender := ''.
-	(method argumentNames size > 0) ifTrue: [ 
-		(method selector keywords) with: (method argumentNames )do: [:a :b |
+	method argumentNames isNotEmpty ifTrue: [ 
+		method selector keywords with: (method argumentNames) do: [:a :b |
 		sender := sender, a, ' ', b, ' ']]
 	ifFalse: [ sender := method selector ].
 	^ sender, '
@@ -62,7 +62,7 @@ RBMoveMethodToClassSideTransformation >> getNewInstSideSource [
 RBMoveMethodToClassSideTransformation >> getNewSource [
 
 	| rewriter node temp |
-	temp := self getTempName.
+	temp := self temporaryName.
 	node := RBParser parseMethod: method source.
 	rewriter := RBParseTreeRewriter new replace: 'self' with: temp.
 	(rewriter executeTree: node)
@@ -73,18 +73,6 @@ RBMoveMethodToClassSideTransformation >> getNewSource [
 			node body addTemporaryNamed: temp.
 			^ node newSource ]
 		ifFalse: [ ^ node sourceCode ] 
-]
-
-{ #category : #refactoring }
-RBMoveMethodToClassSideTransformation >> getTempName [
-	| aString counter tempName |
-	counter := 0.
-	aString := class canonicalArgumentName.
-	tempName := aString.
-	[self checkVariableNamed: tempName]
-	whileTrue: [ counter := counter + 1.
-		tempName := aString , counter asString ].
-	^ tempName
 ]
 
 { #category : #refactoring }
@@ -149,4 +137,16 @@ RBMoveMethodToClassSideTransformation >> storeOn: aStream [
 		nextPutAll: class name.
 	aStream
 		nextPutAll: ')'
+]
+
+{ #category : #refactoring }
+RBMoveMethodToClassSideTransformation >> temporaryName [
+	| aString counter tempName |
+	counter := 0.
+	aString := class canonicalArgumentName.
+	tempName := aString.
+	[self checkVariableNamed: tempName]
+	whileTrue: [ counter := counter + 1.
+		tempName := aString , counter asString ].
+	^ tempName
 ]
