@@ -44,8 +44,3 @@ StartupUIManager >> inform: aString [
 StartupUIManager >> sessionManager [
 	^ SessionManager default
 ]
-
-{ #category : #'error handling' }
-StartupUIManager >> uiManager [
-	^ UIManager default
-]

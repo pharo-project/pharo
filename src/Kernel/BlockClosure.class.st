@@ -45,15 +45,6 @@ Class {
 	#category : #'Kernel-Methods'
 }
 
-{ #category : #'instance creation' }
-BlockClosure class >> outerContext: aContext startpc: aStartpc numArgs: argCount copiedValues: anArrayOrNil [
-	^(self new: anArrayOrNil basicSize)
-		outerContext: aContext
-		startpc: aStartpc
-		numArgs: argCount
-		copiedValues: anArrayOrNil
-]
-
 { #category : #accessing }
 BlockClosure >> argumentCount [
 	"Answer the number of arguments that must be used to evaluate this block"
@@ -79,12 +70,12 @@ BlockClosure >> asContext [
 BlockClosure >> asContextWithSender: aContext [
 	"Inner private support method for evaluation.  Do not use unless you know what you're doing."
 
-	^(Context newForMethod: outerContext compiledCode)
+	^(Context newForMethod: self compiledBlock)
 		setSender: aContext
-		receiver: outerContext receiver
-		method: outerContext compiledCode
+		receiver: self receiver
+		method: self compiledBlock
 		closure: self
-		startpc: startpc;
+		startpc: self startpc;
 		privRefresh
 ]
 
@@ -111,18 +102,23 @@ BlockClosure >> assertWithDescription: aStringOrABlock [
 	AssertionFailure signal: value
 ]
 
-{ #category : #scanning }
-BlockClosure >> blockCreationBytecodeMessage [
-	"Answer the abstract bytecode message that created the receiver."
-	^self method encoderClass blockCreationBytecodeMessageAt: startpc method: self method
-
-	"(SortedCollection sortBlock: [:a :b| a compare: b caseSensitive: false]) sortBlock blockCreationBytecodeMessage"
-]
-
 { #category : #private }
 BlockClosure >> clearTemporariesOn: aContext [
+ 
+	(self numArgs + self numCopiedValues + 1) to: self numTemps do: [ :anIndex |  
+		aContext tempAt: anIndex put: nil ]
+]
 
-	" I do nothing in the non-full blocks"
+{ #category : #accessing }
+BlockClosure >> compiledBlock [
+	"To be able to inherit from BlockClosure"
+	^ startpc
+]
+
+{ #category : #accessing }
+BlockClosure >> compiledBlock: aCompiledMethod [
+	"To be able to inherit from BlockClosure"
+	startpc := aCompiledMethod
 ]
 
 { #category : #accessing }
@@ -223,7 +219,7 @@ BlockClosure >> durationToRun [
 
 { #category : #accessing }
 BlockClosure >> endPC [
-	^self blockCreationBytecodeMessage arguments last + startpc - 1
+	^ self compiledBlock endPC
 ]
 
 { #category : #exceptions }
@@ -274,32 +270,20 @@ BlockClosure >> forkAt: priority [
 BlockClosure >> forkAt: priority named: name [
 
 	"Create and schedule a Process running the code in the receiver at the
-
 	given priority and having the given name. Answer the newly created 
-
 	process."
 
-
-
 	| forkedProcess |
-
 	forkedProcess := self newProcess.
-
 	forkedProcess priority: priority.
-
 	forkedProcess name: name.
-
 	^ forkedProcess resume
 ]
 
 { #category : #scheduling }
 BlockClosure >> forkNamed: aString [
 
-	"Create and schedule a Process running the code in the receiver and
-
-	having the given name."
-
-
+	"Create and schedule a Process running the code in the receiver and having the given name."
 
 	^ self newProcess name: aString; resume
 ]
@@ -307,16 +291,13 @@ BlockClosure >> forkNamed: aString [
 { #category : #testing }
 BlockClosure >> hasMethodReturn [
 	"Answer whether the receiver has a method-return ('^') in its code."
-	| scanner endpc |
-	scanner := InstructionStream new method: outerContext compiledCode pc: startpc.
-	endpc := self endPC.
-	scanner scanFor: [:byte | (outerContext compiledCode encoderClass methodReturnBytecodes includes: byte) or: [scanner pc > endpc]].
-	^scanner pc <= endpc
+	self withAllBlocksDo: [ :each | each hasMethodReturn ifTrue: [ ^true ] ].
+	^false
 ]
 
 { #category : #accessing }
 BlockClosure >> home [
-	^outerContext home
+	^ outerContext ifNotNil: [ outerContext home ]
 ]
 
 { #category : #exceptions }
@@ -337,7 +318,7 @@ BlockClosure >> ifCurtailed: aBlock [
 { #category : #private }
 BlockClosure >> initialStackPointer [
 
-	^ self numArgs + self numCopiedValues
+	^ self numTemps
 ]
 
 { #category : #accessing }
@@ -370,8 +351,7 @@ BlockClosure >> isDead [
 
 { #category : #testing }
 BlockClosure >> isFullBlock [
-
-	^ false
+	^ true
 ]
 
 { #category : #private }
@@ -383,7 +363,7 @@ BlockClosure >> isValid [
 
 { #category : #accessing }
 BlockClosure >> method [
-	^outerContext compiledCode
+	^ self compiledBlock
 ]
 
 { #category : #scheduling }
@@ -420,6 +400,11 @@ BlockClosure >> numArgs [
 	^numArgs
 ]
 
+{ #category : #accessing }
+BlockClosure >> numArgs: n [
+	numArgs := n
+]
+
 { #category : #'error handling' }
 BlockClosure >> numArgsError: numArgsForInvocation [
 
@@ -438,18 +423,8 @@ BlockClosure >> numCopiedValues [
 ]
 
 { #category : #accessing }
-BlockClosure >> numLocalTemps [
-	"Answer the number of local temporaries for the receiver"
-	^ self method encoderClass numLocalTempsForBlockAt: startpc in: outerContext compiledCode
-]
-
-{ #category : #accessing }
 BlockClosure >> numTemps [
-	"Answer the number of temporaries for the receiver; this includes
-	 the number of arguments and the number of copied values."
-	^self numCopiedValues
-	 + self numArgs
-	 + self numLocalTemps
+	^ self compiledBlock numTemps
 ]
 
 { #category : #exceptions }
@@ -534,14 +509,9 @@ BlockClosure >> outerContext [
 	^outerContext
 ]
 
-{ #category : #initialization }
-BlockClosure >> outerContext: aContext startpc: aStartpc numArgs: argCount copiedValues: anArrayOrNil [
-	outerContext := aContext.
-	startpc := aStartpc.
-	numArgs := argCount.
-	1 to: self numCopiedValues do:
-		[:i|
-		self at: i put: (anArrayOrNil at: i)]
+{ #category : #accessing }
+BlockClosure >> outerContext: ctxt [
+	outerContext := ctxt
 ]
 
 { #category : #printing }
@@ -582,16 +552,6 @@ BlockClosure >> repeatWithGCIf: testBlock [
 	^ans
 ]
 
-{ #category : #evaluating }
-BlockClosure >> rfvalueNoContextSwitch [
-	"same as valueNoContextSwitch, for recursion stopping metalinks"
-	<primitive: 221>
-	<metaLinkOptions: #( + optionDisabledLink)>
-	numArgs ~= 0 ifTrue:
-		[self numArgsError: 0].
-	self primitiveFailed
-]
-
 { #category : #'debugger access' }
 BlockClosure >> sender [
 	"Answer the context that sent the message that created the receiver."
@@ -602,28 +562,27 @@ BlockClosure >> sender [
 { #category : #evaluating }
 BlockClosure >> simulateValueWithArguments: anArray caller: aContext [
 	"Simulate the valueWithArguments: primitive. Fail if anArray is not an array of the right arity."
-	| newContext sz |
-	newContext := (Context newForMethod: outerContext compiledCode)
+	| newContext |
+	newContext := (Context newForMethod: self compiledBlock)
 						setSender: aContext
-						receiver: outerContext receiver
-						method: outerContext compiledCode
+						receiver: self receiver
+						method: self compiledBlock
 						closure: self
-						startpc: startpc.
+						startpc: self compiledBlock initialPC.
 	((newContext objectClass: anArray) ~~ Array
 	 or: [numArgs ~= anArray size]) ifTrue:
 		[^Context primitiveFailTokenFor: nil].
-	sz := self basicSize.
-	newContext stackp: sz + numArgs.
+	newContext stackp: self compiledBlock numTemps.
 	1 to: numArgs do:
 		[:i| newContext at: i put: (anArray at: i)].
-	1 to: sz do:
+	1 to: self basicSize do:
 		[:i| newContext at: i + numArgs put: (self at: i)].
 	^newContext
 ]
 
 { #category : #accessing }
 BlockClosure >> startpc [
-	^startpc
+	^ self compiledBlock initialPC
 ]
 
 { #category : #accessing }
@@ -640,61 +599,91 @@ BlockClosure >> tempNames [
 { #category : #evaluating }
 BlockClosure >> value [
 	"Activate the receiver, creating a closure activation (MethodContext)
-	 whose closure is the receiver and whose caller is the sender of this message.
-	 Supply the copied values to the activation as its arguments and copied temps.
-	 Primitive. Optional (but you're going to want this for performance)."
-	<primitive: 201>
+	 whose closure is the receiver and whose caller is the sender of this
+	 message. Supply the copied values to the activation as its copied
+	 temps. Primitive. Essential."
+	<primitive: 207>
 	numArgs ~= 0 ifTrue:
 		[self numArgsError: 0].
 	^self primitiveFailed
 ]
 
 { #category : #evaluating }
-BlockClosure >> value: anArg [
+BlockClosure >> value: firstArg [
 	"Activate the receiver, creating a closure activation (MethodContext)
-	 whose closure is the receiver and whose caller is the sender of this message.
-	 Supply the argument and copied values to the activation as its arguments and copied temps.
-	 Primitive. Optional (but you're going to want this for performance)."	 
-	<primitive: 202>
+	 whose closure is the receiver and whose caller is the sender of this
+	 message. Supply the argument and copied values to the activation
+	 as its argument and copied temps. Primitive. Essential."
+	<primitive: 207>
+	| newContext |
 	numArgs ~= 1 ifTrue:
 		[self numArgsError: 1].
-	self primitiveFailed
+	false
+		ifTrue: "Old code to simulate the closure value primitive on VMs that lack it."
+			[newContext := self asContextWithSender: thisContext sender.
+			newContext at: 1 put: firstArg.
+			thisContext privSender: newContext]
+		ifFalse: [self primitiveFailed]
 ]
 
 { #category : #evaluating }
 BlockClosure >> value: firstArg value: secondArg [
 	"Activate the receiver, creating a closure activation (MethodContext)
-	 whose closure is the receiver and whose caller is the sender of this message.
-	 Supply the arguments and copied values to the activation as its arguments and copied temps.
-	 Primitive. Optional (but you're going to want this for performance)."
-	<primitive: 203>
+	 whose closure is the receiver and whose caller is the sender of this
+	 message. Supply the arguments and copied values to the activation
+	 as its arguments and copied temps. Primitive. Essential."
+	<primitive: 207>
+	| newContext |
 	numArgs ~= 2 ifTrue:
 		[self numArgsError: 2].
-	^self primitiveFailed
+	false
+		ifTrue: "Old code to simulate the closure value primitive on VMs that lack it."
+			[newContext := self asContextWithSender: thisContext sender.
+			newContext at: 1 put: firstArg.
+			newContext at: 2 put: secondArg.
+			thisContext privSender: newContext]
+		ifFalse: [self primitiveFailed]
 ]
 
 { #category : #evaluating }
 BlockClosure >> value: firstArg value: secondArg value: thirdArg [
 	"Activate the receiver, creating a closure activation (MethodContext)
-	 whose closure is the receiver and whose caller is the sender of this message.
-	 Supply the arguments and copied values to the activation as its arguments and copied temps.
-	 Primitive. Optional (but you're going to want this for performance)."
-	<primitive: 204>
+	 whose closure is the receiver and whose caller is the sender of this
+	 message. Supply the arguments and copied values to the activation
+	 as its arguments and copied temps. Primitive. Essential."
+	<primitive: 207>
+	| newContext |
 	numArgs ~= 3 ifTrue:
 		[self numArgsError: 3].
-	^self primitiveFailed
+	false
+		ifTrue: "Old code to simulate the closure value primitive on VMs that lack it."
+			[newContext := self asContextWithSender: thisContext sender.
+			newContext at: 1 put: firstArg.
+			newContext at: 2 put: secondArg.
+			newContext at: 3 put: thirdArg.
+			thisContext privSender: newContext]
+		ifFalse: [self primitiveFailed]
 ]
 
 { #category : #evaluating }
 BlockClosure >> value: firstArg value: secondArg value: thirdArg value: fourthArg [
 	"Activate the receiver, creating a closure activation (MethodContext)
-	 whose closure is the receiver and whose caller is the sender of this message.
-	 Supply the arguments and copied values to the activation as its arguments and copied temps.
-	 Primitive. Optional (but you're going to want this for performance)."
-	<primitive: 205>
+	 whose closure is the receiver and whose caller is the sender of this
+	 message. Supply the arguments and copied values to the activation
+	 as its arguments and copied temps. Primitive. Essential."
+	<primitive: 207>
+	| newContext |
 	numArgs ~= 4 ifTrue:
 		[self numArgsError: 4].
-	^self primitiveFailed
+	false
+		ifTrue: "Old code to simulate the closure value primitive on VMs that lack it."
+			[newContext := self asContextWithSender: thisContext sender.
+			newContext at: 1 put: firstArg.
+			newContext at: 2 put: secondArg.
+			newContext at: 3 put: thirdArg.
+			newContext at: 4 put: fourthArg.
+			thisContext privSender: newContext]
+		ifFalse: [self primitiveFailed]
 ]
 
 { #category : #evaluating }
@@ -712,28 +701,11 @@ BlockClosure >> valueAfterWaiting: aDelay [
 ]
 
 { #category : #evaluating }
-BlockClosure >> valueAt: blockPriority [ 
-	"Evaluate the receiver (block), with another priority as the actual one 
-	and restore it afterwards. The caller should be careful with using 
-	higher priorities."
-	| activeProcess result outsidePriority |
-	activeProcess := Processor activeProcess.
-	outsidePriority := activeProcess priority.
-	activeProcess priority: blockPriority.
-	result := self ensure: [activeProcess priority: outsidePriority].
-	"Yield after restoring lower priority to give the preempted processes a  
-	chance to run."
-	blockPriority > outsidePriority
-		ifTrue: [Processor yield].
-	^ result
-]
-
-{ #category : #evaluating }
 BlockClosure >> valueNoContextSwitch [
 	"An exact copy of BlockClosure>>value except that this version will not preempt
 	 the current process on block activation if a higher-priority process is runnable.
 	 Primitive. Essential."
-	<primitive: 221>
+	<primitive: 209>
 	numArgs ~= 0 ifTrue:
 		[self numArgsError: 0].
 	self primitiveFailed
@@ -744,7 +716,7 @@ BlockClosure >> valueNoContextSwitch: anArg [
 	"An exact copy of BlockClosure>>value: except that this version will not preempt
 	 the current process on block activation if a higher-priority process is runnable.
 	 Primitive. Essential."
-	<primitive: 222>
+	<primitive: 209>
 	numArgs ~= 1 ifTrue:
 		[self numArgsError: 1].
 	self primitiveFailed
@@ -835,21 +807,18 @@ BlockClosure >> valueUnpreemptively [
 { #category : #evaluating }
 BlockClosure >> valueWithArguments: anArray [
 	"Activate the receiver, creating a closure activation (MethodContext)
-	 whose closure is the receiver and whose caller is the sender of this message.
-	 Supply the arguments in an anArray and copied values to the activation as its arguments and copied temps.
-	 Primitive. Optional (but you're going to want this for performance)."
-	| newContext ncv |
-	<primitive: 206>
+	 whose closure is the receiver and whose caller is the sender of this
+	 message. Supply the arguments in an anArray and copied values to
+	 the activation as its arguments and copied temps. Primitive. Essential."
+	<primitive: 208>
 	numArgs ~= anArray size ifTrue:
 		[self numArgsError: anArray size].
-	newContext := self asContextWithSender: thisContext sender.
-	ncv := self numCopiedValues.
-	newContext stackp: ncv + numArgs.
-	1 to: numArgs do:
-		[:i| newContext at: i put: (anArray at: i)].
-	1 to: ncv do:
-		[:i| newContext at: i + numArgs put: (self at: i)].
-	thisContext privSender: newContext
+
+	anArray isArray 
+		ifTrue: [self primitiveFailed]
+		ifFalse: [
+			"Retrying with an array as parameter. As the primitive only supports arrays"
+			^ self valueWithArguments: anArray asArray ]
 ]
 
 { #category : #evaluating }
@@ -1009,4 +978,9 @@ BlockClosure >> whileTrue: aBlock [
 
 	self value ifTrue: [ aBlock value. self whileTrue: aBlock ].
 	^ nil
+]
+
+{ #category : #accessing }
+BlockClosure >> withAllBlocksDo: aBlock [
+	self compiledBlock withAllBlocksDo: aBlock
 ]

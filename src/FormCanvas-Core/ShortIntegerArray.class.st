@@ -11,7 +11,7 @@ Class {
 	#category : #'FormCanvas-Core-BalloonEngine'
 }
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 ShortIntegerArray class >> initialize [
 	LastSaveOrder := self new: 2.
 	LastSaveOrder at: 1 put: 42.
@@ -26,7 +26,7 @@ ShortIntegerArray class >> new: n [
 	^super new: n + 1 // 2
 ]
 
-{ #category : #'system startup' }
+{ #category : #'startup - shutdown' }
 ShortIntegerArray class >> startUp [
 	"Check if the word order has changed from the last save"
 	((LastSaveOrder at: 1) = 42 and:[(LastSaveOrder at: 2) = 13]) 
@@ -36,7 +36,7 @@ ShortIntegerArray class >> startUp [
 	^self error:'This must never happen'
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #private }
 ShortIntegerArray class >> swapShortObjects [
 	self allSubInstancesDo:[:inst| inst swapShortObjects]
 ]

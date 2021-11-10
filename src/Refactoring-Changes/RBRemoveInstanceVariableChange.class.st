@@ -4,22 +4,27 @@ I am a refactoring for removing an instance variable. My changes are executed on
 Class {
 	#name : #RBRemoveInstanceVariableChange,
 	#superclass : #RBRefactoryVariableChange,
-	#category : #'Refactoring-Changes'
+	#category : #'Refactoring-Changes-Changes-Variables'
 }
 
 { #category : #converting }
 RBRemoveInstanceVariableChange >> asUndoOperation [
-	^ changeFactory addInstanceVariable: self variable to: self changeClass
+
+	^ changeFactory
+		  addInstanceVariable: self variable
+		  to: self changeClass
 ]
 
 { #category : #printing }
 RBRemoveInstanceVariableChange >> changeString [
-	^ 'Remove instance variable <1s> from <2s>' 
-		expandMacrosWith: self variable
-		with: self displayClassName
+
+	^ 'Remove instance variable <1s> from <2s>'
+		  expandMacrosWith: self variable
+		  with: self displayClassName
 ]
 
 { #category : #private }
 RBRemoveInstanceVariableChange >> changeSymbol [
+
 	^ #removeInstVarNamed:
 ]

@@ -112,6 +112,7 @@ ImageCleaner >> cleanUpForRelease [
 	FreeTypeFontProvider current prepareForRelease.	
 	
 	HashedCollection rehashAll.		
+	self shareLiterals.
 	Author reset
 ]
 
@@ -150,30 +151,25 @@ ImageCleaner >> cleanUpProcesses [
 
 { #category : #'literal sharing' }
 ImageCleaner >> createLiteralTable [
-	| allLiterals arrays |
-	literalTable := Dictionary new.
-	allLiterals := Set new.
-	self literalsDo: [ :literal :method | 
-		allLiterals add: literal.
+	| arrays |
+	literalTable := OCLiteralSet new.
+	self literalsDo: [ :literal :method | literalTable add: literal.
 		"we add all the contentents of the arrays recursively, too"
 		literal isArray ifTrue: [ 
 			literal recursiveDo: [ :each | 
-				(each isSymbol not and: [ each isImmediateObject not]) 
-					ifTrue: [ allLiterals add: each ] ] ] ].
-		
+				(each isSymbol not and: [ each isImmediateObject not and: [each isNotNil]]) 
+					ifTrue: [ literalTable add: each ] ] ] ].
 
-	"we need to go over all array and unify. as we have all flattend versions already once, we need to do that only for the top level"
-	arrays := allLiterals select: [ :each | each isArray ].
+	"we need to go over all array and unify. As we have all flattend arrays in the literalTable, we need to only have to iterate it"
+	arrays := literalTable select: [ :each | each isArray ].
 	arrays do: [ :array |
 			array beWritableObject.
 			array copy do: [ :arrayValue | 
 				(arrayValue  isSymbol not and:  [ arrayValue isImmediateObject not ]) ifTrue:
 				[array
 					at: (array indexOf: arrayValue)
-					put: (allLiterals like: arrayValue)]].
+					put: (literalTable like: arrayValue)]].
 			array beReadOnlyObject ].
-		
-	allLiterals do: [:each | literalTable at: each put: each]
 ]
 
 { #category : #'literal sharing' }
@@ -198,7 +194,7 @@ ImageCleaner >> literalsDo: aBlock [
 	CompiledCode allSubInstancesDo: [ :cm | 
 		cm literals do: [ :literal | 
 			"Symbols are already shared, we can skip them here"
-			(literal isLiteral and: [literal isSymbol not and: [literal isImmediateObject not]]) 
+			(literal isLiteral and: [literal isSymbol not and: [literal isImmediateObject not and: [literal isNotNil]]]) 
 				ifTrue: [ aBlock value: literal value: cm ] ] ]
 ]
 
@@ -236,10 +232,10 @@ ImageCleaner >> removeEmptyPackages [
 
 { #category : #'literal sharing' }
 ImageCleaner >> shareLiterals [
-	"Experimental Image Shrinker: We go over all methods and replace all the literals that are equal by one copy"
+	"We go over all methods and replace all the literals that are equal by one copy"
 	self createLiteralTable.
 	self literalsDo: [ :literal :cm |
-			cm literalAt: (cm indexOfLiteral: literal) put: (literalTable at: literal)  ].
+			cm literalAt: (cm indexOfLiteral: literal) put: (literalTable like: literal)  ].
 	self detroyLiteralTable
 		
 

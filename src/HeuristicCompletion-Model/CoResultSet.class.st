@@ -108,16 +108,23 @@ CoResultSet >> filterWithString: aString [
 
 	"Narrow results"
 
+	aString = completionString ifTrue: [ ^ self ].
+
 	aString size >= completionString size
 		ifTrue: [ "Filter existing results"
 			fetcher := fetcher narrowFilterBlock: [ :e | 
-				 self does: e matches: aString ].
-			results := results select: [ :e | 
-				self does: e matches: aString ] ]
+				           self does: e matches: aString ] narrowKey: aString.
+			results := results select: [ :e | self does: e matches: aString ] ]
 		ifFalse: [ "Smaller filter, reset results and filter"
-			results := OrderedCollection new.
-			fetcher reset.
-			fetcher := fetcher select: [ :e | self does: e matches: aString ] ].
+			fetcher := fetcher
+				         unnarrowFilterBlock: [ :e | 
+				         self does: e matches: aString ]
+				         narrowKey: aString.
+
+			results := OrderedCollection new ].
+		
+	results := OrderedCollection new.	
+		
 	completionString := aString
 ]
 

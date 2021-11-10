@@ -25,12 +25,6 @@ ReNodeBasedRule class >> isVisible [
 	^ self name ~=  #ReNodeBasedRule
 ]
 
-{ #category : #accessing }
-ReNodeBasedRule class >> uniqueIdentifierName [
-
-	^ self name
-]
-
 { #category : #helpers }
 ReNodeBasedRule >> anchorFor: aNode [
 

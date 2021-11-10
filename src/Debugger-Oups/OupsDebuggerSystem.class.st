@@ -52,7 +52,7 @@ OupsDebuggerSystem >> handleDebugRequest: aDebugRequest [
 
 	"A DebugRequest has been submitted. Ask what to do to the default UIManager. Typically, the UIManager will call back my #openDebuggerOnRequest: method to open a debugger"
 
-	[ self defaultUIManager handleDebugRequest: aDebugRequest ]
+	[ self defaultUIManager handleDebugRequest: aDebugRequest fromDebuggerSystem: self]
 		on: Error
 		do: [ self signalDebuggerError: aDebugRequest ]
 ]
@@ -63,9 +63,20 @@ OupsDebuggerSystem >> handleWarningDebugRequest: aWarningDebugRequest [
 	"A WarningDebugRequest has been submitted. Ask what to do to the default UIManager. Typically, the UIManager will call back my #openDebuggerOnRequest: method to open a debugger"
 
 	[ 
-	self defaultUIManager handleWarningDebugRequest: aWarningDebugRequest ]
+	self defaultUIManager handleWarningDebugRequest: aWarningDebugRequest fromDebuggerSystem: self]
 		on: Error
 		do: [ self signalDebuggerError: aWarningDebugRequest ]
+]
+
+{ #category : #'open debugger' }
+OupsDebuggerSystem >> logDebugRequest: aDebugRequest withUIManager: aCommandLineUIManager [
+
+	aCommandLineUIManager
+		debugProcess: aDebugRequest process
+		context: aDebugRequest exception signalerContext
+		label: aDebugRequest exception description
+		fullView: false
+		notification: aDebugRequest exception description
 ]
 
 { #category : #'open debugger' }
@@ -133,4 +144,10 @@ OupsDebuggerSystem >> spawnNewUIProcessIfNecessary: aDebugRequest [
 { #category : #helpers }
 OupsDebuggerSystem >> suspendDebuggedProcess: aDebugRequest [
 	aDebugRequest process suspend
+]
+
+{ #category : #'open debugger' }
+OupsDebuggerSystem >> warningRequest: aDebugRequest withUIManager: aCommandLineUIManager [
+
+	aCommandLineUIManager warningDefaultAction: aDebugRequest exception
 ]

@@ -77,13 +77,13 @@ SmalltalkImage class >> new [
 	self error: 'Use current'.
 ]
 
-{ #category : #initialization }
+{ #category : #'system startup' }
 SmalltalkImage class >> shutDown: isImageClosing [
 
 	isImageClosing ifTrue: [ SourceFiles close ].
 ]
 
-{ #category : #initialization }
+{ #category : #'system startup' }
 SmalltalkImage class >> startUp: isImageStarting [
 	
 	ChangesLog default
@@ -1151,8 +1151,8 @@ SmalltalkImage >> memoryHogs [
 { #category : #miscellaneous }
 SmalltalkImage >> metacelloPlatformAttributes [
     "Returns the tags for the conditional platform loading in Metacello. Pay attention the order is important: from most  to least general." 
-    "For release integrators, we should not have #'pharo1.3x' **and** #'pharo1.4.x'"
-   ^ #(#squeakCommon #pharo #'pharo9.x' #'pharo9.0.x')
+ 
+   ^ #(#squeakCommon #pharo #'pharo9.x' #'pharo9.0.x' #'pharo10.x'  #'pharo10.0.x')
 ]
 
 { #category : #'special objects' }
@@ -1811,12 +1811,11 @@ SmalltalkImage >> specialSelectorAt: anInteger [
 
 { #category : #'special objects' }
 SmalltalkImage >> specialSelectorIndexOrNil: selector [
-	| specialIndex |
 	1 to: Smalltalk specialSelectorSize do:
 		[:index | 
 		(Smalltalk specialSelectorAt: index) == selector
-			ifTrue: [specialIndex := index ]].	
-	^ specialIndex
+			ifTrue: [^index ]].	
+	^ nil
 ]
 
 { #category : #'special objects' }

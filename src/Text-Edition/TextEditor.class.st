@@ -335,7 +335,7 @@ TextEditor class >> initializeBasicShiftCmdKeyShortcuts [
 	cmdMap at: (11 + 1) put: #cursorPageUp:.			"page up key"
 	cmdMap at: (12 + 1) put: #cursorPageDown:.		"page down key"
 	cmdMap at: (13 + 1) put: #crWithIndent:.			"ctrl-Return"
-	cmdMap at: (27 + 1) put: #offerMenuFromEsc:.	"escape key"
+	cmdMap at: (27 + 1) put: #noop:.	"escape key"
 	cmdMap at: (28 + 1) put: #cursorLeft:.			"left arrow key"
 	cmdMap at: (29 + 1) put: #cursorRight:.			"right arrow key"
 	cmdMap at: (30 + 1) put: #cursorUp:.				"up arrow key"
@@ -2287,14 +2287,6 @@ TextEditor >> offerFontMenu: aKeyboardEvent [
 	self closeTypeIn.
 	self offerFontMenu.
 	^ true
-]
-
-{ #category : #deprecated }
-TextEditor >> offerMenuFromEsc: aKeyboardEvent [
-	"The escape key was hit while the receiver has the keyboard focus; take action"
- 	morph activeHand lastEvent shiftPressed 
-		ifFalse: [ self raiseContextMenu: aKeyboardEvent].
-	^ false 	
 ]
 
 { #category : #'typing support' }

@@ -50,7 +50,7 @@ ZipWriteStream class >> extraLengthBits [
 	^ExtraLengthBits
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ZipWriteStream class >> initialize [
 	"ZipWriteStream initialize"
 	VerboseLevel := 0

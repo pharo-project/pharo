@@ -14,7 +14,6 @@ DTErrorResultType class >> backgroundColor [
 
 { #category : #testing }
 DTErrorResultType >> isError [
-	<generated>
 	^ true
 ]
 

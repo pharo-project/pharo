@@ -27,8 +27,14 @@ Class {
 { #category : #'instance creation' }
 MonticelloBootstrap class >> bootstrapDefault [
 
-	(self inDirectory: 'pharo-local/package-cache')
+	(self inDirectory: self defaultDirectory)
 		bootstrap
+]
+
+{ #category : #defaults }
+MonticelloBootstrap class >> defaultDirectory [
+
+	^ FileLocator localDirectory / 'package-cache'
 ]
 
 { #category : #'instance creation' }

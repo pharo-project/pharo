@@ -121,7 +121,7 @@ MCClassDefinitionTest >> testEqualsSensitivity [
 { #category : #tests }
 MCClassDefinitionTest >> testKindOfSubclass [
 	| classes |
-	classes := {self mockClassA. String. Context. WeakArray. Float}.
+	classes := {self mockClassA. String. Context. WeakArray. Float. CompiledMethod. DoubleByteArray . DoubleWordArray }.
 	classes do: [:c | | d |
 		d :=  c asClassDefinition.
 		self assert: d kindOfSubclass equals: c kindOfSubclass.

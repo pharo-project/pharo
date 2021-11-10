@@ -49,14 +49,6 @@ IRInstruction class >> popTop [
 ]
 
 { #category : #'instance creation' }
-IRInstruction class >> pushClosureCopyCopiedValues: copiedValues args: arguments [
-	^IRPushClosureCopy new
-			copiedValues: copiedValues;
-			arguments: arguments;
-			yourself.
-]
-
-{ #category : #'instance creation' }
 IRInstruction class >> pushConsArray: aSize [ 
 	^IRPushArray new
 		size: aSize;
@@ -292,11 +284,6 @@ IRInstruction >> isPop [
 ]
 
 { #category : #testing }
-IRInstruction >> isPushClosureCopy [
-	^false
-]
-
-{ #category : #testing }
 IRInstruction >> isPushLiteral [
 	^false
 ]
@@ -417,5 +404,5 @@ IRInstruction >> successorSequences [
 { #category : #testing }
 IRInstruction >> transitionsToNextSequence [
 	"Does the current instruction intrinsically know how to transition to the next sequence?"
-	^ self isJump or: [self isReturn or: [self isPushClosureCopy ]]
+	^ self isJump or: [self isReturn]
 ]

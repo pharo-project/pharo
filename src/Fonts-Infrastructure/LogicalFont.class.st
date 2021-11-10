@@ -105,7 +105,7 @@ LogicalFont class >> new [
 	^ self all add: super new
 ]
 
-{ #category : #shutdown }
+{ #category : #'system startup' }
 LogicalFont class >> shutDown: quitting [
 
 	self allSubInstances do: [ :i | i clearRealFont ]

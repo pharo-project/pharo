@@ -39,8 +39,6 @@ Class {
 { #category : #examples }
 EntryCompletion class >> exampleTextEntryWithCompletionDialog [
 	"self exampleTextEntryWithCompletionDialog"
-
-	<exampleWidget>
 	<sampleInstance>
 	| applicants entryCompletion |
 	applicants := (Array

@@ -1012,7 +1012,8 @@ Cursor class >> write [
 
 { #category : #primitives }
 Cursor >> activateInCursorOwner: aCursorOwner [
-	^ self beCursor
+
+	^ self subclassResponsibility 
 ]
 
 { #category : #converting }
@@ -1021,16 +1022,6 @@ Cursor >> asCursorForm [
 	form := Form extent: self extent depth: 8.
 	form fillShape: self fillColor: Color black at: offset negated.
 	^ form offset: offset
-]
-
-{ #category : #primitives }
-Cursor >> beCursor [
-	self primitiveBeCursor
-]
-
-{ #category : #primitives }
-Cursor >> beCursorWithMask: maskForm [
-	self primitiveBeCursorWithMask: maskForm
 ]
 
 { #category : #updating }
@@ -1046,31 +1037,6 @@ Cursor >> changed: aParameter [
 { #category : #testing }
 Cursor >> hasMask [
 	^false
-]
-
-{ #category : #primitives }
-Cursor >> primitiveBeCursor [
-	"Primitive. Tell the interpreter to use the receiver as the current cursor 
-	image. Fail if the receiver does not match the size expected by the 
-	hardware. Essential. See Object documentation whatIsAPrimitive."
-
-	<primitive: 101>
-	self primitiveFailed
-]
-
-{ #category : #primitives }
-Cursor >> primitiveBeCursorWithMask: maskForm [
-	"Primitive. Tell the interpreter to use the receiver as the current cursor image with the given mask Form. Both the receiver and the mask should have extent 16@16 and a depth of one. The mask and cursor bits are combined as follow:
-			mask	cursor	effect
-			 0		  0		transparent (underlying pixel shows through)
-			 1		  1		opaque black
-			 1		  0		opaque white
-			 0		  1		invert the underlying pixel"
-"Essential. See Object documentation whatIsAPrimitive."
-
-	<primitive: 101>
-	self primitiveFailed
-
 ]
 
 { #category : #printing }

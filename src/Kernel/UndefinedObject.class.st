@@ -287,13 +287,6 @@ UndefinedObject >> subclassesDo: aBlock [
 			cl isMeta ifTrue: [aBlock value: cl soleInstance]].
 ]
 
-{ #category : #'class hierarchy' }
-UndefinedObject >> typeOfClass [
-	"Answer the symbol that Monticello uses internally to encode layouts"
-	"Implemented here  to support disjoint class hierarchies"
-	^#normal
-]
-
 { #category : #copying }
 UndefinedObject >> veryDeepCopyWith: deepCopier [
 	"Return self.  I can't be copied.  Do not record me."

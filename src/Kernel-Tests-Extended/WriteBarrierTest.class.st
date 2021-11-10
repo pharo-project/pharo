@@ -14,7 +14,7 @@ Class {
 	#category : #'Kernel-Tests-Extended-WriteBarrier'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 WriteBarrierTest class >> initialize [
 	
 	ContextInstance := Context sender: nil receiver: self new method: self >> #alwaysWritableObjects arguments: #()
@@ -91,8 +91,8 @@ WriteBarrierTest >> testMutateByteArrayUsingByteAtPut [
 
 { #category : #'tests - object' }
 WriteBarrierTest >> testMutateByteArrayUsingDoubleAtPut [
-	<expectedFailure>
 	| guineaPig |
+	<expectedFailure>
 	guineaPig := ByteArray new: 8.
 	guineaPig beReadOnlyObject.
 	
@@ -174,14 +174,11 @@ WriteBarrierTest >> testMutateByteStringyUsingByteAtPut [
 { #category : #'tests - object' }
 WriteBarrierTest >> testMutateByteSymbolUsingPrivateAtPut [
 	| guineaPig |
-	[ guineaPig := #hello.
-	guineaPig beReadOnlyObject.
-	
+	guineaPig := #hello.
+	"symbol literals are read-only already, no need to call #beReadOnlyObject"
 	self 
 		should: [ guineaPig privateAt: 1 put: $q  ]
-		raise: ModificationForbidden ]
-	ensure: [  
-		guineaPig beWritableObject ].
+		raise: ModificationForbidden.
 	
 	self assert: guineaPig first equals: $h
 ]
@@ -322,7 +319,7 @@ WriteBarrierTest >> testMutateObjectLastInstVarWithManyVars [
 { #category : #'tests - object' }
 WriteBarrierTest >> testMutateVariableObject [
 	| guineaPigs |
-	guineaPigs := {#[1 2 3] . #(1 2 3)}.
+	guineaPigs := {#[1 2 3] copy . #(1 2 3) copy}.
 	guineaPigs
 		do: [ :guineaPig | 
 			guineaPig beReadOnlyObject.

@@ -29,6 +29,7 @@ MetaLinkIconStyler >> iconLabel: aNode [
 
 { #category : #testing }
 MetaLinkIconStyler >> shouldStyleNode: aNode [
-	 ^ aNode hasLinks and: [ 
-		   aNode links anySatisfy: [ :link | link hasOption: #optionStyler]]
+
+	^ aNode hasMetaLinks and: [ 
+		  aNode links anySatisfy: [ :link | link hasOption: #optionStyler ] ]
 ]

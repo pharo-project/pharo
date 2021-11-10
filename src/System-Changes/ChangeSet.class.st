@@ -30,6 +30,7 @@ Class {
 
 { #category : #enumerating }
 ChangeSet class >> allChangeSetNames [
+
 	^ self allChangeSets collect: [:c | c name]
 ]
 
@@ -44,11 +45,12 @@ ChangeSet class >> allChangeSets [
 ChangeSet class >> allChangeSets: aCollection [
 	"Return the list of all current ChangeSets"
 
-	AllChangeSets := aCollection.
+	AllChangeSets := aCollection
 ]
 
 { #category : #enumerating }
 ChangeSet class >> allChangeSetsWithClass: class selector: selector [
+
 	class ifNil: [^ #()].
 	^ self allChangeSets select: 
 		[:cs | (cs atSelector: selector class: class) ~~ #none]
@@ -65,6 +67,7 @@ ChangeSet class >> assuredChangeSetNamed: aName [
 
 { #category : #enumerating }
 ChangeSet class >> basicNewChangeSet: newName [
+
 	| newSet |
 	newName ifNil: [^ nil].
 	(self named: newName) ifNotNil:
@@ -83,6 +86,7 @@ ChangeSet class >> basicNewNamed: aName [
 
 { #category : #enumerating }
 ChangeSet class >> changeSetsNamedSuchThat: nameBlock [
+
 	"(ChangeSet changeSetsNamedSuchThat:
 		[:name | name first isDigit and: [name initialInteger >= 373]])
 		do: [:cs | AllChangeSets remove: cs wither]"
@@ -107,8 +111,8 @@ ChangeSet class >> cleanUp: aggressive [
 
 	aggressive
 		ifFalse: [ ^ self ].
-	ChangeSet removeChangeSetsNamedSuchThat: [ :each | true ].
-	ChangeSet resetCurrentToNewUnnamedChangeSet
+	self removeChangeSetsNamedSuchThat: [ :each | true ].
+	self resetCurrentToNewUnnamedChangeSet
 ]
 
 { #category : #services }
@@ -120,10 +124,12 @@ ChangeSet class >> countOfChangeSetsWithClass: aClass andSelector: aSelector [
 
 { #category : #'current changeset' }
 ChangeSet class >> current [
-	"return the current changeset assure first that we have a named changeset."
-	
-	(current isNil or: [current isMoribund])
-		ifTrue: [self newChanges: (self assuredChangeSetNamed: 'Unnamed') withOld: current] .
+	"Return the current changeset assure first that we have a named changeset."
+
+	(current isNil or: [ current isMoribund ]) ifTrue: [ 
+		self
+			newChanges: (self assuredChangeSetNamed: 'Unnamed')
+			withOld: current ].
 	^ current
 ]
 
@@ -166,16 +172,20 @@ ChangeSet class >> defaultChangeSetDirectory: dirOrName [
 
 { #category : #settings }
 ChangeSet class >> defaultChangeSetDirectoryName [
-	^ DefaultChangeSetDirectoryName ifNil: [DefaultChangeSetDirectoryName := FileSystem workingDirectory ]
+
+	^ DefaultChangeSetDirectoryName ifNil: [ 
+		  DefaultChangeSetDirectoryName := FileSystem workingDirectory ]
 ]
 
 { #category : #settings }
 ChangeSet class >> defaultChangeSetDirectoryName: aName [
-	DefaultChangeSetDirectoryName  := aName
+
+	DefaultChangeSetDirectoryName := aName
 ]
 
 { #category : #defaults }
 ChangeSet class >> defaultName [
+
 	^ self uniqueNameLike: 'Unnamed'
 ]
 
@@ -221,8 +231,10 @@ ChangeSet class >> fileOutChangeSetsNamed: nameList [
 ]
 
 { #category : #enumerating }
-ChangeSet class >> gatherChangeSets [		"ChangeSet gatherChangeSets"
+ChangeSet class >> gatherChangeSets [		
 	"Collect any change sets created in other projects"
+	<script>
+	
 	| allChangeSets |
 	allChangeSets := AllChangeSets asSet.
 	self allSubInstances do: [:each | | obsolete |
@@ -245,9 +257,8 @@ ChangeSet class >> hasNoDependenciesFor: aTrait in: traits [
 				(aTrait traitComposition allTraits includes: another) not ] ] ]
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ChangeSet class >> initialize [
-	"ChangeSet initialize"
 
 	AllChangeSets ifNil: [ AllChangeSets := OrderedCollection new ].
 	self defaultChangeSetDirectoryName: nil.
@@ -256,6 +267,7 @@ ChangeSet class >> initialize [
 
 { #category : #enumerating }
 ChangeSet class >> mostRecentChangeSetWithChangeForClass: class selector: selector [
+
 	| hits |
 	hits := self allChangeSets select: 
 		[:cs | (cs atSelector: selector class: class) ~~ #none].
@@ -265,11 +277,13 @@ ChangeSet class >> mostRecentChangeSetWithChangeForClass: class selector: select
 
 { #category : #settings }
 ChangeSet class >> mustCheckForSlips [
-	^ MustCheckForSlips ifNil: [MustCheckForSlips := true]
+
+	^ MustCheckForSlips ifNil: [ MustCheckForSlips := true ]
 ]
 
 { #category : #settings }
 ChangeSet class >> mustCheckForSlips: aBoolean [
+
 	MustCheckForSlips := aBoolean
 ]
 
@@ -278,8 +292,8 @@ ChangeSet class >> named: aName [
 	"Return the change set of the given name, or nil if none found."
 
 	^ AllChangeSets
-			detect: [:aChangeSet | aChangeSet name = aName]
-			ifNone: [nil]
+		  detect: [ :aChangeSet | aChangeSet name = aName ]
+		  ifNone: [ nil ]
 ]
 
 { #category : #'instance creation' }
@@ -319,14 +333,12 @@ ChangeSet class >> newChangeSet: aName [
 ]
 
 { #category : #'current changeset' }
-ChangeSet class >> newChanges: aChangeSet [ 
+ChangeSet class >> newChanges: aChangeSet [
 	"Set the system ChangeSet to be the argument, aChangeSet."
-	"pay attention not to use newChanges in current and other methods to avoid infinite cycles."
-	
-	self newChanges: aChangeSet withOld: self current.
-	
 
-	
+	"Pay attention not to use newChanges in current and other methods to avoid infinite cycles."
+
+	self newChanges: aChangeSet withOld: self current
 ]
 
 { #category : #'current changeset' }
@@ -351,15 +363,13 @@ ChangeSet class >> newChanges: aChangeSet withOld: old [
 		when: MethodRemoved send: #methodRemoved: to: aChangeSet;
 		when: MethodRecategorized send: #methodRecategorized: to: aChangeSet;
 		when: DoItChunkImported send: #doItChunkImported: to: aChangeSet.
-		
-	
-	SystemAnnouncer uniqueInstance announce: (CurrentChangeSetChanged new old: old; new: aChangeSet ; yourself).
+			
+	SystemAnnouncer uniqueInstance announce: (CurrentChangeSetChanged new old: old; new: aChangeSet ; yourself)
 	
 ]
 
 { #category : #services }
 ChangeSet class >> newChangesFromStream: aStream named: aName [
-
 	"File in the code from the stream into a new change set whose
 	name is derived from aName. Leave the 'current change set'
 	unchanged. Return the new change set or nil on failure."
@@ -380,13 +390,13 @@ ChangeSet class >> newChangesFromStream: aStream named: aName [
 ChangeSet class >> promoteToTop: aChangeSet [
 	"Make aChangeSet the first in the list from now on"
 
-	AllChangeSets remove: aChangeSet ifAbsent: [^ self].
+	AllChangeSets remove: aChangeSet ifAbsent: [ ^ self ].
 	AllChangeSets add: aChangeSet
 ]
 
 { #category : #defaults }
 ChangeSet class >> promptForDefaultChangeSetDirectoryIfNecessary [
-	"ChangeSet promptForDefaultChangeSetDirectoryIfNecessary"
+	<script>
 	
 	| path |
 	path := UIManager default 
@@ -399,7 +409,8 @@ ChangeSet class >> promptForDefaultChangeSetDirectoryIfNecessary [
 { #category : #'system-events' }
 ChangeSet class >> registerInterestToSystemAnnouncer [
 	<systemEventRegistration>
-	self newChanges: self current.
+	
+	self newChanges: self current
 ]
 
 { #category : #enumerating }
@@ -413,8 +424,9 @@ ChangeSet class >> removeChangeSet: aChangeSet [
 
 { #category : #enumerating }
 ChangeSet class >> removeChangeSetsNamedSuchThat: nameBlock [
-	(self changeSetsNamedSuchThat: nameBlock)
-		do: [:cs | self removeChangeSet: cs]
+
+	(self changeSetsNamedSuchThat: nameBlock) do: [ :cs | 
+		self removeChangeSet: cs ]
 ]
 
 { #category : #services }
@@ -422,8 +434,7 @@ ChangeSet class >> reorderChangeSets [
 	"Change the order of the change sets to something more convenient:
 		First come all numbered updates.
 		Next come all remaining changesets"
-
-	"self reorderChangeSets"
+	<script>
 	
 	| newMid newTail |
 	newMid := OrderedCollection new.
@@ -433,7 +444,7 @@ ChangeSet class >> reorderChangeSets [
 			aChangeSet isNumbered
 						ifTrue: [newMid add: aChangeSet]
 						ifFalse: [newTail add: aChangeSet]].
-	self  allChangeSets: newMid, newTail.
+	self allChangeSets: newMid, newTail.
 	
 ]
 
@@ -446,6 +457,7 @@ ChangeSet class >> resetCurrentToNewUnnamedChangeSet [
 
 { #category : #scanning }
 ChangeSet class >> scanFile: file category: cat class: class meta: meta stamp: stamp [
+
 	| itemPosition method items |
 	items := OrderedCollection new.
 	[itemPosition := file position.
@@ -454,7 +466,7 @@ ChangeSet class >> scanFile: file category: cat class: class meta: meta stamp: s
 	method notEmpty] whileTrue:[
 		items add: (ChangeRecord new file: file position: itemPosition type: #method
 							class: class category: cat meta: meta stamp: stamp)].
-	^items
+	^ items
 ]
 
 { #category : #'file in/out' }
@@ -472,7 +484,8 @@ ChangeSet class >> traitsOrder: aCollection [
 ]
 
 { #category : #defaults }
-ChangeSet class >> uniqueNameLike: aString [ 
+ChangeSet class >> uniqueNameLike: aString [
+
 	| try index |
 	(self named: aString)
 		ifNil: [ ^ aString ].
@@ -489,8 +502,8 @@ ChangeSet >> absorbClass: className from: otherChangeSet [
 	"Absorb into the receiver all the changes found in the class in the other change set.
 	*** Classes renamed in otherChangeSet may have problems"
 
-	(self changeRecorderFor: className) assimilateAllChangesIn: (otherChangeSet changeRecorderFor: className).
-
+	(self changeRecorderFor: className) assimilateAllChangesIn:
+		(otherChangeSet changeRecorderFor: className)
 ]
 
 { #category : #'moving changes' }
@@ -498,10 +511,10 @@ ChangeSet >> absorbMethod: selector class: aClass from: aChangeSet [
 	"Absorb into the receiver all the changes for the method in the class in the other change set."
 
 	| info |
-	info := aChangeSet methodChanges at: aClass name ifAbsent: [Dictionary new].
-	self atSelector: selector class: aClass put: (info at: selector).
-
-
+	info := aChangeSet methodChanges
+		        at: aClass name
+		        ifAbsent: [ Dictionary new ].
+	self atSelector: selector class: aClass put: (info at: selector)
 ]
 
 { #category : #'change logging' }
@@ -563,8 +576,7 @@ Be sure to put any further comments in double-quotes, like this one."
 ChangeSet >> assurePreambleExists [
 	"Make sure there is a StringHolder holding the preamble; if it's found to have reverted to empty contents, put up the template"
 
-	(preamble isEmptyOrNil)
-		ifTrue: [preamble := self preambleTemplate]
+	preamble isEmptyOrNil ifTrue: [ preamble := self preambleTemplate ]
 ]
 
 { #category : #private }
@@ -577,30 +589,31 @@ ChangeSet >> atClass: class add: changeType [
 { #category : #private }
 ChangeSet >> atClass: class includes: changeType [
 
-	^(changeRecords at: class name ifAbsent: [^false])
-		includesChangeType: changeType
+	^ (changeRecords at: class name ifAbsent: [ ^ false ]) 
+		  includesChangeType: changeType
 ]
 
 { #category : #private }
 ChangeSet >> atSelector: selector class: class [
 
-	^ (changeRecords at: class name ifAbsent: [^ #none])
-		atSelector: selector ifAbsent: [^ #none]
+	^ (changeRecords at: class name ifAbsent: [ ^ #none ])
+		  atSelector: selector
+		  ifAbsent: [ ^ #none ]
 ]
 
 { #category : #'method changes' }
 ChangeSet >> atSelector: selector class: class put: changeType [
 
-	(self changeRecorderFor: class) atSelector: selector put: changeType.
-
+	(self changeRecorderFor: class) atSelector: selector put: changeType
 ]
 
 { #category : #accessing }
 ChangeSet >> author [
+
 	| author |
 	self assurePreambleExists.
 	author := self preambleString lineNumber: 3.
-	author := author copyFrom: 8 to: author size. "Strip the 'Author:' prefix. Ugly ugly."	
+	author := author copyFrom: 8 to: author size. "Strip the 'Author:' prefix. Ugly ugly."
 	^ author trimBoth
 ]
 
@@ -617,11 +630,12 @@ ChangeSet >> changeClass: class from: oldClass [
 				really just part of the original add."
 			ifFalse: [self atClass: class add: #change]].
 	self addCoherency: class name.
-	(self changeRecorderFor: class) notePriorDefinition: oldClass.
+	(self changeRecorderFor: class) notePriorDefinition: oldClass
 ]
 
 { #category : #private }
 ChangeSet >> changeRecorderFor: class [
+
 	| cname |
 	cname := class isString
 		ifTrue: [ class ]
@@ -632,7 +646,7 @@ ChangeSet >> changeRecorderFor: class [
 { #category : #'class changes' }
 ChangeSet >> changedClassNames [
 	"Answer a OrderedCollection of the names of changed or edited classes.
-	DOES include removed classes.  Sort alphabetically."
+	Does include removed classes.  Sort alphabetically."
 
 	^ changeRecords keysSortedSafely 
 ]
@@ -692,6 +706,7 @@ ChangeSet >> checkForSlips [
 
 { #category : #'change logging' }
 ChangeSet >> classAdded: anEvent [
+
 	self addClass: anEvent classAdded
 ]
 
@@ -699,50 +714,64 @@ ChangeSet >> classAdded: anEvent [
 ChangeSet >> classChangeAt: className [
 	"Return what we know about class changes to this class."
 
-	^ (changeRecords at: className ifAbsent: [^ Set new])
-		allChangeTypes
+	^ (changeRecords at: className ifAbsent: [ ^ Set new ])
+		  allChangeTypes
 ]
 
 { #category : #'change logging' }
 ChangeSet >> classCommented: anEvent [
+
 	self commentClass: anEvent classCommented
 ]
 
 { #category : #'change logging' }
 ChangeSet >> classModified: anEvent [
-	self changeClass: anEvent newClassDefinition from: anEvent oldClassDefinition
+
+	self
+		changeClass: anEvent newClassDefinition
+		from: anEvent oldClassDefinition
 ]
 
 { #category : #'change logging' }
 ChangeSet >> classRecategorized: anEvent [
-	self changeClass: anEvent classRecategorized from: anEvent classRecategorized
+
+	self
+		changeClass: anEvent classRecategorized
+		from: anEvent classRecategorized
 ]
 
 { #category : #'change logging' }
 ChangeSet >> classRemoved: anEvent [
-	self noteRemovalOf: anEvent classRemoved.
+
+	self noteRemovalOf: anEvent classRemoved
 ]
 
 { #category : #accessing }
 ChangeSet >> classRemoves [
 
-	^ changeRecords keys select:
-		[:className | (changeRecords at: className) isClassRemoval]
+	^ changeRecords keys select: [ :className | 
+		  (changeRecords at: className) isClassRemoval ]
 ]
 
 { #category : #'change logging' }
 ChangeSet >> classRenamed: anEvent [
-	self renameClass: anEvent classRenamed from: anEvent oldName to: anEvent newName
+
+	self
+		renameClass: anEvent classRenamed
+		from: anEvent oldName
+		to: anEvent newName
 ]
 
 { #category : #'change logging' }
 ChangeSet >> classReorganized: anEvent [
+
 	self reorganizeClass: anEvent classReorganized
 ]
 
 { #category : #initialization }
-ChangeSet >> clear [ 
-	"Reset the receiver to be empty.  "
+ChangeSet >> clear [
+
+	"Reset the receiver to be empty."
 
 	changeRecords := Dictionary new.
 	preamble := nil.
@@ -750,40 +779,43 @@ ChangeSet >> clear [
 ]
 
 { #category : #'class changes' }
-ChangeSet >> commentClass: class [ 
+ChangeSet >> commentClass: class [
 	"Include indication that a class comment has been changed."
 
-	class wantsChangeSetLogging ifFalse: [^ self].
+	class wantsChangeSetLogging ifFalse: [ ^ self ].
 	self atClass: class add: #comment
 ]
 
 { #category : #'class changes' }
 ChangeSet >> containsClass: aClass [
+
 	^ self changedClasses includes: aClass
 ]
 
 { #category : #'file in/out' }
 ChangeSet >> defaultChangeSetDirectory [
-	^self class defaultChangeSetDirectory
+
+	^ self class defaultChangeSetDirectory
 ]
 
 { #category : #'change logging' }
 ChangeSet >> doItChunkImported: anAnnouncemnet [
 
-	ChangeSet current = self ifFalse: [ ^ self ].
+	self class current = self ifFalse: [ ^ self ].
 	
 	"Parse preamble and postcript as a do it."
 	
 	((anAnnouncemnet contents beginsWith: '"Change Set:') and: [ self preambleString isNil ])
 		ifTrue: [ self preambleString: anAnnouncemnet contents ].
 	((anAnnouncemnet contents beginsWith: '"Postscript:') and: [ self postscriptString isNil ])
-		ifTrue: [ self postscriptString: anAnnouncemnet contents ].
+		ifTrue: [ self postscriptString: anAnnouncemnet contents ]
 
 ]
 
 { #category : #accessing }
 ChangeSet >> editPostscript [
-	"edit the receiver's postscript, in a separate window.  "
+	"Edit the receiver's postscript, in a separate window."
+	
 	self assurePostscriptExists.
 	UIManager default
 		edit: self postscript 
@@ -793,7 +825,8 @@ ChangeSet >> editPostscript [
 
 { #category : #'moving changes' }
 ChangeSet >> editPreamble [
-	"edit the receiver's preamble, in a separate window.  "
+	"Edit the receiver's preamble, in a separate window."
+	
 	self assurePreambleExists.
 	UIManager default
 		edit: self preamble 
@@ -804,8 +837,8 @@ ChangeSet >> editPreamble [
 { #category : #'moving changes' }
 ChangeSet >> expungeEmptyClassChangeEntries [
 
-	changeRecords keysAndValuesRemove:
-		[:className :classRecord | classRecord hasNoChanges]
+	changeRecords keysAndValuesRemove: [ :className :classRecord | 
+		classRecord hasNoChanges ]
 ]
 
 { #category : #'file in/out' }
@@ -816,7 +849,7 @@ ChangeSet >> fileOut [
 	| fileReference dir |
 	dir := self class promptForDefaultChangeSetDirectoryIfNecessary.
 	fileReference := ( dir / self name , 'cs') nextVersion.
-	self fileOutBody: fileReference.
+	self fileOutBody: fileReference
 ]
 
 { #category : #'file in/out' }
@@ -915,7 +948,7 @@ ChangeSet >> fileOutOn: stream [
 	list reverseDo: [:aClass | self fileOutPSFor: aClass on: stream].
 
 	self classRemoves asSortedCollection do:
-		[:aClassName | stream nextChunkPut: 'Smalltalk removeClassNamed: #', aClassName; cr].
+		[:aClassName | stream nextChunkPut: 'Smalltalk removeClassNamed: #', aClassName; cr]
 ]
 
 { #category : #'file in/out' }
@@ -994,9 +1027,8 @@ ChangeSet >> forgetAllChangesFoundIn: otherChangeSet [
 ChangeSet >> forgetChangesForClass: className in: otherChangeSet [
 	"See forgetAllChangesFoundIn:.  Used in culling changeSets."
 
-	(self changeRecorderFor: className)
-			forgetChangesIn: (otherChangeSet changeRecorderFor: className).
-
+	(self changeRecorderFor: className) forgetChangesIn:
+		(otherChangeSet changeRecorderFor: className)
 ]
 
 { #category : #'method changes' }
@@ -1008,11 +1040,13 @@ ChangeSet >> hasAnyChangeForSelector: aSelector [
 
 { #category : #accessing }
 ChangeSet >> hasPostscript [
+
 	^ postscript notNil
 ]
 
 { #category : #'moving changes' }
 ChangeSet >> hasPreamble [
+
 	^ preamble notNil
 ]
 
@@ -1022,24 +1056,25 @@ ChangeSet >> hasReportableSlip: aMethod [
 	to the attention of the author when filing out. Customize the lists here 
 	to suit your preferences."
 
-	aMethod containsHalt ifTrue: [ ^true ].
+	aMethod containsHalt ifTrue: [ ^ true ].
 	(aMethod sendsSelector: #flag:) ifTrue: [ ^ true ].
-	^aMethod readsRef: (Smalltalk globals associationAt: #Transcript)
+	^ aMethod readsRef: (Smalltalk globals associationAt: #Transcript)
 ]
 
 { #category : #initialization }
-ChangeSet >> initialize [ 
+ChangeSet >> initialize [
+
 	"Initialize the receiver to be empty."
 
 	super initialize.
-	name ifNil: [^ self error: 'All changeSets must be registered, as in ChangeSorter newChangeSet'].
-	self clear.
-
+	name ifNil: [ ^ self error: #'All changeSets must be registered, as in ChangeSorter newChangeSet' ].
+	self clear
 ]
 
 { #category : #testing }
 ChangeSet >> isEmpty [
 	"Answer whether the receiver contains any elements."
+	
 	^ changeRecords isEmptyOrNil 
 ]
 
@@ -1059,7 +1094,12 @@ ChangeSet >> isNumbered [
 
 { #category : #'change logging' }
 ChangeSet >> methodAdded: anEvent [
-	self noteNewMethod: anEvent method forClass: anEvent methodClass selector: anEvent selector priorMethod: nil
+
+	self
+		noteNewMethod: anEvent method
+		forClass: anEvent methodClass
+		selector: anEvent selector
+		priorMethod: nil
 ]
 
 { #category : #accessing }
@@ -1078,12 +1118,13 @@ ChangeSet >> methodChanges [
 ChangeSet >> methodChangesAtClass: className [
 	"Return an old-style dictionary of method change types."
 
-	^(changeRecords at: className ifAbsent: [^ Dictionary new])
-		methodChangeTypes
+	^ (changeRecords at: className ifAbsent: [ ^ Dictionary new ])
+		  methodChangeTypes
 ]
 
 { #category : #'change logging' }
 ChangeSet >> methodModified: anEvent [
+
 	self
 		noteNewMethod: anEvent newMethod
 		forClass: anEvent methodClass
@@ -1093,16 +1134,20 @@ ChangeSet >> methodModified: anEvent [
 
 { #category : #'change logging' }
 ChangeSet >> methodRecategorized: anEvent [
+
 	self reorganizeClass: anEvent methodClass
 ]
 
 { #category : #'change logging' }
 ChangeSet >> methodRemoved: anEvent [
+
 	self
 		removeSelector: anEvent selector
 		class: anEvent methodClass
 		priorMethod: anEvent method
-		lastMethodInfo: {anEvent method sourcePointer. anEvent protocol}
+		lastMethodInfo: { 
+				anEvent method sourcePointer.
+				anEvent protocol }
 ]
 
 { #category : #testing }
@@ -1120,8 +1165,6 @@ ChangeSet >> methodsWithoutClassifications [
 						[(notClassified includes: (aClass organization categoryOfElement: aSelector))
 								ifTrue: [slips add: aClass name , ' ' , aSelector]]]].
 	^ slips
-
-	"Smalltalk browseMessageList: (ChangeSet current methodsWithoutClassifications) name: 'unclassified methods'"
 ]
 
 { #category : #'moving changes' }
@@ -1138,8 +1181,6 @@ ChangeSet >> methodsWithoutComments [
 						[(aClass>>mAssoc key) hasComment
 								ifTrue: [slips add: aClass name , ' ' , mAssoc key]]]]].
 	^ slips
-
-	"Smalltalk browseMessageList: (ChangeSet current methodsWithoutComments) name: 'methods lacking comments'"
 ]
 
 { #category : #accessing }
@@ -1153,6 +1194,7 @@ ChangeSet >> name [
 
 { #category : #accessing }
 ChangeSet >> name: anObject [
+
 	name := anObject
 ]
 
@@ -1170,14 +1212,16 @@ ChangeSet >> noteRemovalOf: class [
 	"The class is about to be removed from the system.
 	Adjust the receiver to reflect that fact."
 
-	class wantsChangeSetLogging ifFalse: [^ self].
+	class wantsChangeSetLogging ifFalse: [ ^ self ].
 	(self changeRecorderFor: class)
-		noteChangeType: #remove fromClass: class.
-	changeRecords removeKey: class class name ifAbsent: [].
+		noteChangeType: #remove
+		fromClass: class.
+	changeRecords removeKey: class class name ifAbsent: [  ]
 ]
 
 { #category : #testing }
 ChangeSet >> okayToRemove [
+
 	^ self okayToRemoveInforming: true
 ]
 
@@ -1187,13 +1231,13 @@ ChangeSet >> okayToRemoveInforming: aBoolean [
 
 	| aName |
 	aName := self name.
-	self == self class current ifTrue:
-		[aBoolean ifTrue: [self inform: 'Cannot remove "', aName, '"
+	self == self class current ifTrue: [ 
+		aBoolean ifTrue: [ 
+			self inform: 'Cannot remove "' , aName , '"
 because it is the 
-current change set.'].
-		^ false].
+current change set.' ].
+		^ false ].
 	^ true
-
 ]
 
 { #category : #private }
@@ -1205,36 +1249,48 @@ ChangeSet >> oldNameFor: class [
 { #category : #'file in/out' }
 ChangeSet >> postscript [
 	"Answer the string representing the postscript.  "
-	^postscript ifNotNil:[postscript isString ifTrue:[postscript] ifFalse:[postscript contents asString]]
+
+	^ postscript ifNotNil: [ 
+		  postscript isString
+			  ifTrue: [ postscript ]
+			  ifFalse: [ postscript contents asString ] ]
 ]
 
 { #category : #'file in/out' }
 ChangeSet >> postscript: aString [
-	"Answer the string representing the postscript.  "
+	"Answer the string representing the postscript."
+	
 	postscript := aString
 ]
 
 { #category : #accessing }
 ChangeSet >> postscriptHasDependents [
-	^false
+
+	^ false
 ]
 
 { #category : #'file in/out' }
 ChangeSet >> postscriptString [
-	"Answer the string representing the postscript.  "
-	^self postscript
+	"Answer the string representing the postscript."
+	
+	^ self postscript
 ]
 
 { #category : #'file in/out' }
 ChangeSet >> postscriptString: aString [
-	"Establish aString as the new contents of the postscript.  "
+	"Establish aString as the new contents of the postscript."
+	
 	self postscript: aString
 ]
 
 { #category : #'file in/out' }
 ChangeSet >> preamble [
 	"Answer the string representing the preamble"
-	^preamble ifNotNil:[preamble isString ifTrue:[preamble] ifFalse:[preamble contents asString]]
+
+	^ preamble ifNotNil: [ 
+		  preamble isString
+			  ifTrue: [ preamble ]
+			  ifFalse: [ preamble contents asString ] ]
 ]
 
 { #category : #'file in/out' }
@@ -1253,26 +1309,28 @@ ChangeSet >> preambleString [
 
 { #category : #'file in/out' }
 ChangeSet >> preambleString: aString [
-	"Establish aString as the new contents of the preamble.  "
-	self preamble: aString.
+	"Establish aString as the new contents of the preamble."
+	
+	self preamble: aString
 ]
 
 { #category : #'file in/out' }
 ChangeSet >> preambleTemplate [
 	"Answer a string that will form the default contents for a change set's preamble.
 	Just a first stab at what the content should be."
-
+	<script: 'ChangeSet current preambleTemplate inspect'>
+	
 	^ String streamContents: [:strm |
 		strm nextPutAll: '"Change Set:'.  "NOTE: fileIn recognizes preambles by this string."
 		strm tab;tab; nextPutAll: self name.
 		strm cr; nextPutAll: 'Date:'; tab; tab; tab; nextPutAll: Date today printString.
 		strm cr; nextPutAll: 'Author:'; tab; tab; tab; nextPutAll:  Author fullName.
 		strm cr; cr; nextPutAll: '<your descriptive text goes here>"']
-"ChangeSet current preambleTemplate"
 ]
 
 { #category : #printing }
 ChangeSet >> printOn: aStream [
+
 	super printOn: aStream.
 	aStream
 		nextPutAll: ' named ';
@@ -1283,8 +1341,9 @@ ChangeSet >> printOn: aStream [
 ChangeSet >> removeClassAndMetaClassChanges: class [
 	"Remove all memory of changes associated with this class and its metaclass."
 
-	changeRecords removeKey: class name ifAbsent: [].
-	changeRecords removeKey: class class name ifAbsent: [].
+	changeRecords 
+		removeKey: class name ifAbsent: [];
+		removeKey: class class name ifAbsent: []
 
 ]
 
@@ -1301,11 +1360,13 @@ ChangeSet >> removeClassChanges: class [
 
 { #category : #accessing }
 ChangeSet >> removePostscript [
+
 	postscript := nil
 ]
 
 { #category : #'moving changes' }
 ChangeSet >> removePreamble [
+
 	preamble := nil
 ]
 
@@ -1345,7 +1406,6 @@ ChangeSet >> renameClass: class from: oldName to: newName [
 	changeRecords at: newName put: recorder.
 	changeRecords removeKey: oldName.
 
-
 	newMetaClassName := newName, ' class'.
 	oldMetaClassName := oldName, ' class'.
 	recorder := changeRecords at: oldMetaClassName ifAbsent: [^ nil].
@@ -1365,7 +1425,8 @@ ChangeSet >> reorganizeClass: class [
 ChangeSet >> selectorsInClass: aClassName [
 	"Used by a ChangeSorter to access the list methods."
 
-	^ (changeRecords at: aClassName ifAbsent: [^#()]) changedSelectors
+	^ (changeRecords at: aClassName ifAbsent: [ ^ #() ])
+		  changedSelectors
 ]
 
 { #category : #'class changes' }

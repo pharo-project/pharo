@@ -67,7 +67,7 @@ UUIDGenerator class >> default [
 	^ Default ifNil: [ Default := self new ]
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 UUIDGenerator class >> initialize [
 	SessionManager default
 		registerNetworkClassNamed: self name

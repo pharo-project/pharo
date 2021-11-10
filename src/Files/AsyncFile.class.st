@@ -20,29 +20,27 @@ Class {
 	#category : #'Files-Core'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 AsyncFile class >> initialize [
-	"AsyncFile initialize"
-
 	"Possible abnormal I/O completion results."
-	Busy := -1.
-	ErrorCode := -2.
 
+	Busy := -1.
+	ErrorCode := -2
 ]
 
 { #category : #'open/close' }
 AsyncFile >> close [
 
-	fileHandle ifNil: [^ self].  "already closed"
+	fileHandle ifNil: [ ^ self ]. "already closed"
 	self primClose: fileHandle.
 	Smalltalk unregisterExternalObject: semaphore.
 	semaphore := nil.
-	fileHandle := nil.
-
+	fileHandle := nil
 ]
 
 { #category : #accessing }
 AsyncFile >> fileHandle [
+
 	^ fileHandle
 ]
 
@@ -55,7 +53,9 @@ AsyncFile >> open: fullFileName forWrite: aBoolean [
 	otherwise:
 		if there is an existing file with this name, then open it read-only
 		else answer nil."
+
 	"Note: if an exisiting file is opened for writing, it is NOT truncated. If truncation is desired, the file should be deleted before being opened as an asynchronous file."
+
 	"Note: On some platforms (e.g., Mac), a file can only have one writer at a time."
 
 	| semaIndex |
@@ -63,12 +63,14 @@ AsyncFile >> open: fullFileName forWrite: aBoolean [
 	writeable := aBoolean.
 	semaphore := Semaphore new.
 	semaIndex := Smalltalk registerExternalObject: semaphore.
-	fileHandle := self primOpen: name asVmPathName forWrite: writeable semaIndex: semaIndex.
-	fileHandle ifNil: [
+	fileHandle := self
+		              primOpen: name asVmPathName
+		              forWrite: writeable
+		              semaIndex: semaIndex.
+	fileHandle ifNil: [ 
 		Smalltalk unregisterExternalObject: semaphore.
 		semaphore := nil.
-		^ nil].
-
+		^ nil ]
 ]
 
 { #category : #primitives }
@@ -76,7 +78,7 @@ AsyncFile >> primClose: fHandle [
 	"Close this file. Do nothing if primitive fails."
 
 	<primitive: 'primitiveAsyncFileClose' module: 'AsynchFilePlugin'>
-
+	
 ]
 
 { #category : #primitives }
@@ -85,7 +87,6 @@ AsyncFile >> primOpen: fileName forWrite: openForWrite semaIndex: semaIndex [
 
 	<primitive: 'primitiveAsyncFileOpen' module: 'AsynchFilePlugin'>
 	^ nil
-
 ]
 
 { #category : #primitives }
@@ -103,7 +104,7 @@ AsyncFile >> primReadResult: fHandle intoBuffer: buffer at: startIndex count: co
 AsyncFile >> primReadStart: fHandle fPosition: fPosition count: count [
 	"Start a read operation of count bytes starting at the given offset in the given file."
 
-	<primitive: 'primitiveAsyncFileReadStart' module: 'AsynchFilePlugin'>
+	<primitive: 'primitiveAsyncFileReadStart' module: 'AsynchFilePlugin'>	
 	self error: 'READ THE COMMENT FOR THIS METHOD.'
 
 "NOTE: This method will fail if there is insufficient C heap to allocate an internal buffer of the required size (the value of count).  If you are trying to read a movie file, then the buffer size will be height*width*2 bytes.  Each image retains a value to be used for this allocation, and it it initially set to 0.  If you are wish to play a 640x480 movie, you need room for a buffer of 640*480*2 = 614400 bytes.  You should execute the following...
@@ -195,6 +196,7 @@ AsyncFile >> test: byteCount fileName: fileName [
 
 { #category : #'write and read' }
 AsyncFile >> waitForCompletion [
+
 	semaphore wait
 ]
 
@@ -216,6 +218,6 @@ AsyncFile >> writeBuffer: buffer atFilePosition: fPosition onCompletionDo: aBloc
 		n = ErrorCode ifTrue: [^ self error: 'asynchronous write operation failed'].
 		n = buffer size ifFalse: [^ self error: 'did not write the entire buffer'].
 		aBlock value.
-	] forkAt: Processor userInterruptPriority.
+	] forkAt: Processor userInterruptPriority
 
 ]

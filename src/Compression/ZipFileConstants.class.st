@@ -78,28 +78,27 @@ Class {
 	#category : #'Compression-Archives'
 }
 
-{ #category : #'pool initialization' }
+{ #category : #'class initialization' }
 ZipFileConstants class >> initialize [
-	"ZipFileConstants initialize"
 	
 	FaMsdos		:= 0.
 	FaUnix 		:= 3.
-	DeflatingCompressionNormal		:= 0.
+	DeflatingCompressionNormal	:= 0.
 	DeflatingCompressionMaximum	:= 2.
 	DeflatingCompressionFast		:= 4.
 	DeflatingCompressionSuperFast	:= 6.
 	CompressionStored				:= 0.
-	CompressionDeflated				:= 8.
+	CompressionDeflated			:= 8.
 	CompressionLevelNone			:= 0.
-	CompressionLevelDefault			:= 6.
+	CompressionLevelDefault		:= 6.
 	IfaTextFile						:= 1.
 	IfaBinaryFile					:= 0.
-	DataDescriptorLength 				:= 12.
+	DataDescriptorLength 			:= 12.
 
 	"Unix permission bits"
-	DefaultDirectoryPermissions		:= 8r040755.
-	DefaultFilePermissions			:= 8r0100666.
-	DirectoryAttrib 					:= 8r040000.
+	DefaultDirectoryPermissions	:= 8r040755.
+	DefaultFilePermissions		:= 8r0100666.
+	DirectoryAttrib 				:= 8r040000.
 	FileAttrib 						:= 8r0100000.
 
 	"0x02014b50 little-endian i.e. #(16r50 16r4B 16r01 16r02) [1]"

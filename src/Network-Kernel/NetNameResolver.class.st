@@ -178,22 +178,20 @@ NetNameResolver class >> findLongestIPv6ZerosIn: aCollection [
 	^ ranges at: firstLargest
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 NetNameResolver class >> initialize [
-	"NetNameResolver initialize"
 	"Note: On the Mac, the name resolver is asynchronous, but can only handle one request at a time. On other platforms, such as Unix, the resolver is synchronous; a call to, say, the name lookup primitive will block all image processes until it returns."
 
 	"Resolver Status Values"
-	ResolverUninitialized := 0.	"network is not initialized"
-	ResolverReady := 1.			"resolver idle, last request succeeded"
-	ResolverBusy := 2.			"lookup in progress"
-	ResolverError := 3.			"resolver idle, last request failed"
+
+	ResolverUninitialized := 0. "network is not initialized"
+	ResolverReady := 1. "resolver idle, last request succeeded"
+	ResolverBusy := 2. "lookup in progress"
+	ResolverError := 3. "resolver idle, last request failed"
 
 	DefaultHostName := ''.
 	HaveNetwork := nil.
 	ResolverMutex := Mutex new
-	
-
 ]
 
 { #category : #'network initialization' }
@@ -251,7 +249,6 @@ NetNameResolver class >> localAddressString [
 NetNameResolver class >> localHostAddress [
 	"Return the local address of this host."
 	"NetNameResolver localHostAddress"
-	<todo>
 	"On Mac the primitive is buggy and can return an empty IP address. Use a standard value in that case"
 		
 	| primAddress |

@@ -66,7 +66,7 @@ GlobalIdentifier class >> new [
 	self shouldNotImplement
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 GlobalIdentifier class >> reset [
 	"self reset"
 	uniqueInstance := nil

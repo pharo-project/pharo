@@ -28,6 +28,12 @@ BytecodeEncoder class >> extensionsFor: pc in: aCompiledMethod into: trinaryBloc
 	^self extensionsAt: pc in: aCompiledMethod into: trinaryBlock
 ]
 
+{ #category : #accessing }
+BytecodeEncoder class >> instructionSizeAt: pc of: aMehtod [
+
+	self subclassResponsibility 
+]
+
 { #category : #testing }
 BytecodeEncoder class >> isAbstract [
 
@@ -84,11 +90,6 @@ BytecodeEncoder class >> stackDeltaForPrimitive: primitiveIndex in: method [
 	"This is the default implementation. Subclasses with inline primitives
 	will need to override."
 	^ 0
-]
-
-{ #category : #'bytecode generation' }
-BytecodeEncoder >> genPushNClosureTemps: numTemps [
-	numTemps timesRepeat: [ self genPushSpecialLiteral: nil ]
 ]
 
 { #category : #'bytecode generation' }
@@ -163,13 +164,6 @@ BytecodeEncoder >> sizeOpcodeSelector: genSelector withArguments: args [
 { #category : #'opcode sizing' }
 BytecodeEncoder >> sizePop [
 	^self sizeOpcodeSelector: #genPop withArguments: #()
-]
-
-{ #category : #'opcode sizing' }
-BytecodeEncoder >> sizePushClosureCopyNumCopiedValues: numCopied numArgs: numArgs jumpSize: jumpSize [
-	^self
-		sizeOpcodeSelector: #genPushClosureCopyNumCopiedValues:numArgs:jumpSize:
-		withArguments: {numCopied. numArgs. jumpSize}
 ]
 
 { #category : #'opcode sizing' }

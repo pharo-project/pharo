@@ -116,3 +116,21 @@ RBParseTreeSearcherTest >> testSearchingComposedSelector2 [
 					initialAnswer: 0)
 		equals: 1
 ]
+
+{ #category : #'tests - add search' }
+RBParseTreeSearcherTest >> testSimpleAddSearch [
+
+	| res |
+	searcher addSearch: '`@Super << `#ASymbol' -> [ :aNode :anAnswer | res := #class ].
+	searcher executeTree: (RBParser parseExpression: ' Object << #Point').
+	self assert: res equals: #class
+]
+
+{ #category : #'tests - add search' }
+RBParseTreeSearcherTest >> testSimpleAddSearches [
+
+	| res |
+	searcher addSearches: { '`@Super << `#ASymbol' -> [ :aNode :anAnswer | res := #class ]}.
+	searcher executeTree: (RBParser parseExpression: ' Object << #Point').
+	self assert: res equals: #class
+]

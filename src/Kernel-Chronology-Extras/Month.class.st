@@ -20,11 +20,6 @@ Month class >> august [
     ^ self month: 8
 ]
 
-{ #category : #'instance creation' }
-Month class >> current [
-	^ self starting: DateAndTime now
-]
-
 { #category : #accessing }
 Month class >> daysInMonth: indexOrName forYear: yearInteger [ 
 
@@ -164,7 +159,7 @@ Month class >> year: year month: month [
 
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 Month >> asMonth [
 
 	^ self 

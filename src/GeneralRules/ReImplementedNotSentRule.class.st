@@ -57,7 +57,7 @@ ReImplementedNotSentRule class >> enabled: aBoolean [
 		ifFalse: [ self unsubscribe ]
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ReImplementedNotSentRule class >> initialize [
 	"we do not want to register if the rule is disabled"
 	self enabled ifFalse: [ ^self ].
@@ -79,7 +79,7 @@ ReImplementedNotSentRule class >> methodModified: anAnnouncement [
 	self allMessages addAll: anAnnouncement newMethod messages
 ]
 
-{ #category : #cleanup }
+{ #category : #'class initialization' }
 ReImplementedNotSentRule class >> reset [
 	<script>
 	allMessages := nil

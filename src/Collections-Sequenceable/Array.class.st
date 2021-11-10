@@ -177,8 +177,9 @@ Array >> beReadOnlyLiteral [
 
 { #category : #copying }
 Array >> copyWithDependent: newElement [
-	self size = 0 ifTrue:[^DependentsArray with: newElement].
-	^self copyWith: newElement
+
+	self isEmpty ifTrue: [ ^ DependentsArray with: newElement ].
+	^ self copyWith: newElement
 ]
 
 { #category : #converting }

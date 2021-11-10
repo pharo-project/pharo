@@ -1273,11 +1273,6 @@ RBBasicDummyLintRuleTest >> initialize [
 ]
 
 { #category : #testing }
-RBBasicDummyLintRuleTest >> isComposite [
-	^false
-]
-
-{ #category : #testing }
 RBBasicDummyLintRuleTest >> isEmpty [
 	^result isEmpty
 ]

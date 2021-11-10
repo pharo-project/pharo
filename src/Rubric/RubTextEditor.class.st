@@ -1663,14 +1663,6 @@ RubTextEditor >> offerFontMenu: aKeyboardEvent [
 	^ true
 ]
 
-{ #category : #deprecated }
-RubTextEditor >> offerMenuFromEsc: aKeyboardEvent [
-	"The escape key was hit while the receiver has the keyboard focus; take action"
- 	textArea activeHand lastEvent shiftPressed 
-		ifFalse: [ self raiseContextMenu: aKeyboardEvent].
-	^ false 	
-]
-
 { #category : #'typing support' }
 RubTextEditor >> openTypeIn [
 	"Set up startOfTyping to keep track of the leftmost backspace.

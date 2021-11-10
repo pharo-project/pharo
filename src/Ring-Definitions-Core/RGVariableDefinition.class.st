@@ -7,6 +7,12 @@ Class {
 	#category : #'Ring-Definitions-Core-Base'
 }
 
+{ #category : #testing }
+RGVariableDefinition class >> isAbstract [
+
+	^ self == RGVariableDefinition
+]
+
 { #category : #comparing }
 RGVariableDefinition >> = aRGVariableDefinition [
 	"This variable look for equality of the key properties of the receiver"

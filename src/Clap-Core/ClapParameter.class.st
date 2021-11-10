@@ -35,15 +35,6 @@ ClapParameter class >> isAbstract [
 	^ self == ClapParameter
 ]
 
-{ #category : #'instance creation' }
-ClapParameter class >> withName: nameOrIdentifier [
-	self
-		deprecated: 'Instanciate with #id: instead (passing a unique identifier), then use #canonicalName: to set the user-facing command name, if necessary.'
-		transformWith: '`@receiver withName: `@arg'
-			-> '`@receiver id: `@arg'.
-	^ self id: nameOrIdentifier
-]
-
 { #category : #activating }
 ClapParameter >> activateWith: arguments [
 	"Convenience method for activating in an interactive context"

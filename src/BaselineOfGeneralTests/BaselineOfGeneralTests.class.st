@@ -54,7 +54,6 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Rubric-Tests';
 			package: 'ScriptingExtensions-Tests';
 			package: 'STON-Tests';
-			package: 'Spec-Tests';
 			package: 'System-Caching-Tests';
 			package: 'System-Hashing-Tests';
 			package: 'System-History-Tests';
@@ -70,7 +69,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Tool-Profilers-Tests';
 			package: 'Tool-Workspace-Tests';
 			package: 'Tools-CodeNavigation-Tests';
-			package: 'Tools-Test';
+			package: 'Tools-Tests';
 			package: 'Zinc-Resource-Meta-FileSystem';
 			package: 'Zinc-Resource-Meta-Tests';
 			package: 'Zinc-HTTP-Examples';

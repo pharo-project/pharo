@@ -133,32 +133,35 @@ Paragraph >> actionAttributesUnder: aClickPoint event: anEvent do: aBlock [
 
 { #category : #private }
 Paragraph >> adjustBottomY [
-	| heights  bottomY verticalSize |
-	heights := lines collect:[:each| each lineHeight ].
+
+	| heights bottomY verticalSize |
+	heights := lines collect: [ :each | each lineHeight ].
 	verticalSize := heights sum.
 	bottomY := container top + verticalSize.
-	container := container withBottom: bottomY.
+	container := container withBottom: bottomY
 ]
 
 { #category : #private }
 Paragraph >> adjustLineIndicesBy: delta [
-	firstCharacterIndex := firstCharacterIndex + delta.
-	lines do: [:line | line slide: delta].
 
+	firstCharacterIndex := firstCharacterIndex + delta.
+	lines do: [ :line | line slide: delta ]
 ]
 
 { #category : #private }
 Paragraph >> adjustRightX [
+
 	| shrink |
 	shrink := container right - maxRightX.
-	lines do: [:line | line paddingWidth: (line paddingWidth - shrink)].
+	lines do: [ :line | line paddingWidth: line paddingWidth - shrink ].
 	container := container withRight: maxRightX
 ]
 
 { #category : #accessing }
 Paragraph >> adjustedFirstCharacterIndex [
 	"Return the index in the text where this paragraph WOULD begin if nothing had changed, except the size of the text -- ie if there have only been an insertion of deletion in the preceding morphs"
-	offsetToEnd ifNil: [^ -1].
+
+	offsetToEnd ifNil: [ ^ -1 ].
 	^ text size - offsetToEnd
 ]
 
@@ -222,14 +225,16 @@ Paragraph >> buildSelectionBlocksFrom: topLeft to: bottomRight [
 Paragraph >> caretRect [
 	"The rectangle in which the caret was last drawn,
 	 or nil if the last drawing drew a range-selection rather than insertion point."
+
 	^ caretRect
 ]
 
 { #category : #accessing }
 Paragraph >> caretWidth [
-	^ TextEditor dumbbellCursor		
-			ifTrue: [ 2 ]		
-			ifFalse: [ 0 ]
+
+	^ TextEditor dumbbellCursor
+		  ifTrue: [ 2 ]
+		  ifFalse: [ 0 ]
 ]
 
 { #category : #alignment }

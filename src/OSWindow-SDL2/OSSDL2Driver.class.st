@@ -21,6 +21,12 @@ Class {
 	#category : #'OSWindow-SDL2-Base'
 }
 
+{ #category : #accessing }
+OSSDL2Driver class >> allWindows [
+
+	^ WindowMapMutex critical: [ WindowMap values ]
+]
+
 { #category : #testing }
 OSSDL2Driver class >> hasPlugin [
 	<primitive: #primitiveHasDisplayPlugin module: #SDL2DisplayPlugin>
@@ -41,6 +47,14 @@ OSSDL2Driver class >> isSupported [
 OSSDL2Driver class >> isVMDisplayUsingSDL2 [
 	<primitive: #primitiveIsVMDisplayUsingSDL2>
 	^ false
+]
+
+{ #category : #events }
+OSSDL2Driver >> afterMainPharoWindowCreated: osWindow [
+	
+	OSPlatform current sdlPlatform 
+		afterMainPharoWindowCreated: osWindow
+
 ]
 
 { #category : #events }

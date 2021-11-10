@@ -117,12 +117,6 @@ ProfStef class >> goOn: aTutorialClass [
 ]
 
 { #category : #navigating }
-ProfStef class >> goToNextLesson [
-
-  self next
-]
-
-{ #category : #navigating }
 ProfStef class >> last [
 
 	^ self default last
@@ -209,7 +203,7 @@ ProfStef class >> previous [
 	^ self default previous
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ProfStef class >> reset [
 	<script>
 		

@@ -336,12 +336,6 @@ RGTraitV2Strategy >> isClass [
 	^ true
 ]
 
-{ #category : #testing }
-RGTraitV2Strategy >> isClassStrategy [
-
-	^ false
-]
-
 { #category : #'default model values' }
 RGTraitV2Strategy >> makeResolved [
 
@@ -583,10 +577,4 @@ RGTraitV2Strategy >> sibling [
 RGTraitV2Strategy >> storeName [
 
 	^ 'RGClass'
-]
-
-{ #category : #'accessing - deprecated parallel hierarchy' }
-RGTraitV2Strategy >> theMetaClass [
-
-	^ self owner metaclass
 ]

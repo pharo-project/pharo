@@ -148,7 +148,7 @@ ThemeIcons class >> named: aString [
 	^ self new name: aString
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'class initialization' }
 ThemeIcons class >> reset [
 	<script>
 	

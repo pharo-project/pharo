@@ -154,7 +154,7 @@ DisplayObject >> follow: locationBlock while: durationBlock bitsBehind: initialB
 
    Display deferUpdates: true.
    self displayOn: Display at: location rule: Form paint.
-   Display deferUpdates: false; forceToScreen: (location extent: self extent).
+   Display deferUpdates: false.
 
    [durationBlock value] whileTrue: [
 		newLoc := locationBlock value.
@@ -170,15 +170,13 @@ DisplayObject >> follow: locationBlock while: durationBlock bitsBehind: initialB
 					self displayOnPort: bufferBlt at: rect2 origin - bothRects origin rule: Form paint.
 					Display deferUpdates: true.
 					Display copy: bothRects from: 0@0 in: buffer rule: Form over.
-					Display deferUpdates: false; forceToScreen: bothRects]
+					Display deferUpdates: false]
 				ifFalse: [  "when no overlap, do the simple thing (both rects might be too big)"
 					Display deferUpdates: true.
 					Display copy: (location extent: save1 extent) from: 0@0 in: save1 rule: Form over.
 					save1Blt copyFrom: rect2 in: Display to: 0@0.
 					self displayOn: Display at: newLoc rule: Form paint.
-					Display deferUpdates: false; 
-						forceToScreen: (location extent: save1 extent); 
-						forceToScreen: (newLoc extent: self extent)].
+					Display deferUpdates: false].
 			location := newLoc.
 			rect1 := rect2]].
 

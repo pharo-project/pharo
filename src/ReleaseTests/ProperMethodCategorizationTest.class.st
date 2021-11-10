@@ -49,6 +49,14 @@ ProperMethodCategorizationTest >> explanationFrom: aCol [
 					separatedBy: [ str nextPutAll: ' ,'] ]).
 ]
 
+{ #category : #'tests - instance creation' }
+ProperMethodCategorizationTest >> testBasicNewMethodNeedsToBeInInstanceCreationProtocol [
+	"The #basicNew methods should be in method protocol 'instance creation'"
+	
+	self assureAll: #basicNew areCategorizedIn: #'instance creation' whenSubclassOf: Object class
+
+]
+
 { #category : #'tests - object' }
 ProperMethodCategorizationTest >> testCloneMethodNeedsToBeInCopyingProtocol [
 	"The #clone methods should be in method protocol 'copying'"
@@ -120,6 +128,21 @@ ProperMethodCategorizationTest >> testNoEmptyProtocols [
 ]
 
 { #category : #tests }
+ProperMethodCategorizationTest >> testNoLeadingOrTrailingSpacesInCategoryNames [
+	"Make sure we have no protocol names with leading or trailing spaces"
+	
+	| violations |
+	violations := OrderedCollection new.
+
+	Object allSubclasses do: [ :each | 
+		each organization allCategories do: [ :cat | 
+			((cat endsWith: ' ') or: [ cat endsWith: ' ' ]) ifTrue: [ 
+				violations add: each -> cat ] ] ].
+	
+	self assert: violations isEmpty
+]
+
+{ #category : #tests }
 ProperMethodCategorizationTest >> testNoUncategorizedMethods [
 	"Check that we have no #'as yet unclassified' protocols left"
 
@@ -128,7 +151,7 @@ ProperMethodCategorizationTest >> testNoUncategorizedMethods [
 		             class protocols includes: Protocol unclassified ].
 
 	"we lock in the number of problematic classes, this way it can only improve"
-	self assert: violating size <= 48
+	self assert: violating size <= 33
 ]
 
 { #category : #tests }

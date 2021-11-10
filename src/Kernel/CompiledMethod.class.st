@@ -132,11 +132,9 @@ CompiledMethod class >> initialize [    "CompiledMethod initialize"
 	"Initialize class variables specifying the size of the temporary frame
 	needed to run instances of me."
 
-	self flag:#oldBytecode.
-
 	SmallFrame := 16.	"Context range for temps+stack"
 	LargeFrame := 56.
-	PrimaryBytecodeSetEncoderClass := EncoderForV3PlusClosures.
+	PrimaryBytecodeSetEncoderClass := nil. "Old encoder was removed"
 	SecondaryBytecodeSetEncoderClass := EncoderForSistaV1
 ]
 
@@ -536,6 +534,11 @@ CompiledMethod >> isBinarySelector [
 ]
 
 { #category : #testing }
+CompiledMethod >> isClassSide [
+	^self methodClass isClassSide 
+]
+
+{ #category : #testing }
 CompiledMethod >> isCompiledMethod [
 
 	^ true
@@ -548,19 +551,15 @@ CompiledMethod >> isConflict [
 
 { #category : #testing }
 CompiledMethod >> isDeprecated [
-	"Object selectorsInProtocol: #deprecation"
-	self methodClass isDeprecated ifTrue: [ ^ true ].
-
-	(self
-		sendsAnySelectorOf:
-			#(#deprecated: #deprecated:on:in: #deprecated:on:in:transformWith: #deprecated:transformWith:))
-		ifTrue: [ ^ true ].
-	$-
-		split: self protocol asString
-		do: [ :each | 
-			each withBlanksCondensed = 'deprecated'
-				ifTrue: [ ^ true ] ].
-	^ false
+	
+	^ self sendsAnySelectorOf: #(
+			#deprecated: 
+			#deprecated:transformWith:
+			#deprecated:transformWith:when:
+			#deprecated:on:in: 
+			#deprecated:on:in:transformWith:
+			#deprecated:on:in:transformWith:when:)
+	
 ]
 
 { #category : #testing }
@@ -705,12 +704,6 @@ CompiledMethod >> linesOfCode [
 CompiledMethod >> literalsToSkip [
 
 	^ 2
-]
-
-{ #category : #scanning }
-CompiledMethod >> localReadsSelf [
-	"methods that are compiled with FFI have a self in the source but not in the bytecode"
-	^self isFFIMethod or: [ super localReadsSelf ]
 ]
 
 { #category : #lookup }

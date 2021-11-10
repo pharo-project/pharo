@@ -61,7 +61,7 @@ ASTCache class >> default: anASTCache [
 	default := anASTCache
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ASTCache class >> reset [
 	<script>
 	self default reset.

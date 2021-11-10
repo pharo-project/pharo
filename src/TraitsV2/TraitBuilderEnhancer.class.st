@@ -159,11 +159,6 @@ TraitBuilderEnhancer >> fillBuilder: aBuilder from: aClass [
 	aBuilder metaclassClass: aClass class class.
 ]
 
-{ #category : #migrating }
-TraitBuilderEnhancer >> hasToSkipSlot: aSlot [
-	^ Class hasSlotNamed: aSlot name
-]
-
 { #category : #initialization }
 TraitBuilderEnhancer >> initializeBuilder: aBuilder [
 	super initializeBuilder: aBuilder.

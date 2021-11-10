@@ -183,15 +183,6 @@ TraitedMetaclass >> isLocalAliasSelector: aSymbol [
 ]
 
 { #category : #testing }
-TraitedMetaclass >> isLocalMethodsProtocol: aProtocol [
-	"Checks if the given protocol includes any local defined selector"
-
-	aProtocol methodSelectors ifEmpty: [ ^ true ].
-	^ aProtocol methodSelectors anySatisfy: [ :each | 
-		  self isLocalSelector: each ]
-]
-
-{ #category : #testing }
 TraitedMetaclass >> isLocalSelector: aSelector [
 	
 	^ localMethods includesKey: aSelector

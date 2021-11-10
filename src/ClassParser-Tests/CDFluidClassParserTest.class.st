@@ -17,7 +17,7 @@ CDFluidClassParserTest >> testClassSideDefinitionIsClassSide [
 	def := self classDefinitionParserClass parse: 'Point class
 			slot: {  }'.
 
-	self assert: def isClassSideDefinition 
+	self assert: def isClassSide 
 ]
 
 { #category : #'tests - (r) class side' }
@@ -27,7 +27,7 @@ CDFluidClassParserTest >> testClassSideWitTraits [
 	parser := self classDefinitionParserClass new.
 	
 	defString := 'AlignmentMorph class
-		uses: TableRotate classTrait;
+		traits: TableRotate classTrait;
 		slots: { #x . #y}'.
 		
 	def := parser parse: defString.
@@ -92,7 +92,7 @@ CDFluidClassParserTest >> testEphemeronSubclass [
 		layout: EphemeronLayout;
 		package: #MyPackage'.
 	def := parser parse: defString.
-	self assert: def classKind equals: #ephemeronSubclass:
+	self assert: def layoutClass equals: EphemeronLayout
 ]
 
 { #category : #'tests - (r) simple class definition' }
@@ -102,7 +102,7 @@ CDFluidClassParserTest >> testInstanceDefinitionIsInstanceSide [
 	def := self classDefinitionParserClass parse: 'Object << #Point
 			package: ''Kernel-BasicObjects'''.
 
-	self assert: def isInstanceSideDefinition 
+	self assert: def isInstanceSide 
 ]
 
 { #category : #'tests - (r) kinds' }
@@ -115,7 +115,7 @@ CDFluidClassParserTest >> testNormalSubclass [
 		layout: FixedLayout;
 		package: #MyPackage'.
 	def := parser parse: defString.
-	self assert: def classKind equals: #subclass:
+	self assert: def layoutClass equals: FixedLayout
 ]
 
 { #category : #'tests - (r) sharedPools' }
@@ -222,7 +222,7 @@ CDFluidClassParserTest >> testTraitAlias [
 	parser := self classDefinitionParserClass new.
 	
 	defString := 'Object << #MyObject
-		uses: MyTrait @ {#foo -> #bar};
+		traits: MyTrait @ {#foo -> #bar};
 		package: #MyPackage'.
 	
 	def := parser parse: defString.
@@ -254,7 +254,7 @@ CDFluidClassParserTest >> testTraitPlainSimple [
 	parser := self classDefinitionParserClass new.
 	
 	defString := 'Object << #MyObject
-		uses: MyTrait;
+		traits: MyTrait;
 		package: #MyPackage'.
 		
 	def := parser parse: defString.
@@ -267,7 +267,7 @@ CDFluidClassParserTest >> testTraitSequence [
 	| parser defString def |
 	parser := self classDefinitionParserClass new.
 	defString := 'Object << #MyObject
-		uses: MyTrait + (AnotherTrait - {#selector} @ {#selector1 -> #selector});
+		traits: MyTrait + (AnotherTrait - {#selector} @ {#selector1 -> #selector});
 		package: #MyPackage'.
 
 	def := parser parse: defString.
@@ -304,7 +304,7 @@ CDFluidClassParserTest >> testVariableByteSubclass [
 		layout: ByteLayout;
 		package: #MyPackage'.
 	def := parser parse: defString.
-	self assert: def classKind equals: #variableByteSubclass:
+	self assert: def layoutClass equals: ByteLayout
 ]
 
 { #category : #'tests - (r) kinds' }
@@ -317,7 +317,7 @@ CDFluidClassParserTest >> testVariableSubclass [
 		layout: VariableLayout;
 		package: #MyPackage'.
 	def := parser parse: defString.
-	self assert: def classKind equals: #variableSubclass:
+	self assert: def layoutClass equals: VariableLayout
 ]
 
 { #category : #'tests - (r) kinds' }
@@ -330,7 +330,7 @@ CDFluidClassParserTest >> testVariableWordSubclass [
 		layout: WordLayout;
 		package: #MyPackage'.
 	def := parser parse: defString.
-	self assert: def classKind equals: #variableWordSubclass:
+	self assert: def layoutClass equals: WordLayout
 ]
 
 { #category : #'tests - (r) kinds' }
@@ -343,5 +343,5 @@ CDFluidClassParserTest >> testWeakSubclass [
 		layout: WeakLayout;
 		package: #MyPackage'.
 	def := parser parse: defString.
-	self assert: def classKind equals: #weakSubclass:
+	self assert: def layoutClass equals: WeakLayout
 ]

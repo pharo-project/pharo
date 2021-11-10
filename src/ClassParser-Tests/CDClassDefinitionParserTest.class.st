@@ -65,13 +65,6 @@ CDClassDefinitionParserTest >> testClassDefFromLegacyStringHasClassNameNode [
 ]
 
 { #category : #tests }
-CDClassDefinitionParserTest >> testClassDefFromLegacyStringHasClassSlots [
-
-	self assert: classDefinition sharedSlotNodes first name equals: self firstClassVariableName.
-	self assert: classDefinition sharedSlotNodes second name equals: self secondClassVariableName.
-]
-
-{ #category : #tests }
 CDClassDefinitionParserTest >> testClassDefFromLegacyStringHasPackageName [
 
 	self assert: classDefinition packageName equals: self packageName

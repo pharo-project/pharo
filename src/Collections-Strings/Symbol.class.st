@@ -38,14 +38,14 @@ Class {
 	#category : #'Collections-Strings-Base'
 }
 
-{ #category : #initialization }
+{ #category : #accessing }
 Symbol class >> allSymbolTablesDo: aBlock [
 
 	NewSymbols do: aBlock.
 	SymbolTable do: aBlock.
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 Symbol class >> allSymbolTablesDo: aBlock after: aSymbol [
 
 	NewSymbols do: aBlock after: aSymbol.
@@ -71,7 +71,7 @@ Symbol class >> cleanUp [
 	self rebuildSelectorTable
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 Symbol class >> compactSymbolTable [
 	"Reduce the size of the symbol table so that it holds all existing symbols + 25% (changed from 1000 since sets like to have 25% free and the extra space would grow back in a hurry)"
 
@@ -118,9 +118,9 @@ Symbol class >> initSelectorTable [
 	^ SelectorTable := WeakSet new
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 Symbol class >> initialize [
-	Symbol rehash.
+	self rehash.
 	OneCharacterSymbols := nil.
 	OneCharacterSymbols := (1 to: 256) collect: [ :i | (i - 1) asCharacter asSymbol].
 
@@ -313,7 +313,7 @@ Symbol class >> selectorsContaining: aString [
 "Symbol selectorsContaining: 'scon'"
 ]
 
-{ #category : #private }
+{ #category : #'system startup' }
 Symbol class >> shutDown: aboutToQuit [
 
 	SymbolTable addAll: NewSymbols.

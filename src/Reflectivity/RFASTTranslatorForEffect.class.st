@@ -110,15 +110,16 @@ RFASTTranslatorForEffect >> visitParseErrorNode: anErrorNode [
 
 { #category : #'visitor - double dispatching' }
 RFASTTranslatorForEffect >> visitSequenceNode: aSequenceNode [
+	
 	self emitPreamble: aSequenceNode.
 	self emitMetaLinkBefore: aSequenceNode.
-	self emitPrepareLinkAfter: aSequenceNode.
+		
+	aSequenceNode hasMetalinkAfter ifTrue: [ ^ self visitSequenceWithAfter: aSequenceNode  ].
 	
 	aSequenceNode hasMetalinkInstead
 		ifTrue: [ self emitMetaLinkInstead: aSequenceNode ]
 		ifFalse: [ aSequenceNode statements do: [:each | self visitNode: each]. ].
-	self emitMetaLinkAfter: aSequenceNode.
-	(aSequenceNode hasMetalinkAfter or: [ aSequenceNode hasMetalinkInstead ]) ifTrue: [aSequenceNode parent isMethod 
+	aSequenceNode hasMetalinkInstead ifTrue: [aSequenceNode parent isMethod 
 			ifTrue: [methodBuilder returnTop]
 			ifFalse: [methodBuilder popTop]]
 ]

@@ -23,7 +23,7 @@ ObjectStringConverter class >> forClass: aClass [
 	^self new objectClass: aClass
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 ObjectStringConverter >> configureForIntegers [
 	"Configure the receiver to match/convert positive or negative integers only."
 
@@ -36,7 +36,7 @@ ObjectStringConverter >> configureForIntegers [
 				ifFalse: [s select: [:c | c isDigit]]]
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 ObjectStringConverter >> configureForPositiveIntegers [
 	"Configure the receiver to match/convert positive integers only."
 
@@ -57,7 +57,7 @@ ObjectStringConverter >> initialize [
 		stringTransformBlock: [:string | string]
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 ObjectStringConverter >> isStringValid: aString [
 	"Answer whether the given string is valid for conversion."
 
@@ -65,14 +65,14 @@ ObjectStringConverter >> isStringValid: aString [
 		[self stringAsObject: aString. true] on: Error do: [false]]
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 ObjectStringConverter >> needsConversion [
 	"Answer whether conversion is required for the receiver's object class."
 
 	^self objectClass notNil and: [(self objectClass includesBehavior: String) not]
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 ObjectStringConverter >> objectAsString: anObject [
 	"Answer the given object in string form."
 
@@ -125,7 +125,7 @@ ObjectStringConverter >> regexString: aString [
 	self regex: aString asRegex
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 ObjectStringConverter >> stringAsObject: aString [
 	"Answer the given string in object form."
 

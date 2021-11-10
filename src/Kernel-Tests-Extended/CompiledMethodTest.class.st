@@ -84,18 +84,6 @@ CompiledMethodTest >> deprecatedMethod4 [
 
 ]
 
-{ #category : #deprecated }
-CompiledMethodTest >> deprecatedMethod5 [
-]
-
-{ #category : #'category - deprecated' }
-CompiledMethodTest >> deprecatedMethod6 [
-]
-
-{ #category : #'deprecated - category' }
-CompiledMethodTest >> deprecatedMethod7 [
-]
-
 { #category : #'examples - linesofcode' }
 CompiledMethodTest >> locComplex [
 
@@ -469,15 +457,19 @@ CompiledMethodTest >> testIsAbstract [
 ]
 
 { #category : #'tests - testing' }
+CompiledMethodTest >> testIsClassSide [
+	self deny: (Object>>#yourself) isClassSide.
+	self assert: (Object class>>#initialize) isClassSide.
+]
+
+{ #category : #'tests - testing' }
 CompiledMethodTest >> testIsDeprecated [
 	| deprecatedSelectors |
-	deprecatedSelectors := #(deprecatedMethod deprecatedMethod2 deprecatedMethod3 deprecatedMethod4 deprecatedMethod5 deprecatedMethod6 deprecatedMethod7).
+	deprecatedSelectors := #(deprecatedMethod deprecatedMethod2 deprecatedMethod3 deprecatedMethod4).
 	self class selectorsDo: [ :each |
 		(deprecatedSelectors includes: each)
 			ifTrue: [ self assert: (self class >> each) isDeprecated ]
-			ifFalse: [ self deny: (self class >> each) isDeprecated ] ].
-
-	DeprecatedClassForTest selectorsDo: [ :each | self assert: (DeprecatedClassForTest >> each) isDeprecated ]
+			ifFalse: [ self deny: (self class >> each) isDeprecated ] ]
 ]
 
 { #category : #'tests - testing' }

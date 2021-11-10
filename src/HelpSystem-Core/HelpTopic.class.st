@@ -106,7 +106,7 @@ HelpTopic >> addSubtopic: aTopic [
 	^aTopic
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 HelpTopic >> asHelpTopic [ 
 	"Converts the receiver to a help topic"
 	
@@ -121,10 +121,11 @@ HelpTopic >> contents [
 ]
 
 { #category : #accessing }
-HelpTopic >> contents: anObject [
+HelpTopic >> contents: aStringOrText [
 	"Sets the receivers contents to the given object" 
-		
-	contents := anObject
+	"Some of the topics has #symbols as the first character on a line in their sample code. 
+	Indent it by one space to avoid issue when generating markdown."
+	contents := aStringOrText copyReplaceAll: (String cr,'#') with: (String cr,' #')
 ]
 
 { #category : #defaults }

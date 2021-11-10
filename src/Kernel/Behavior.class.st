@@ -1151,7 +1151,8 @@ Behavior >> isWords [
 
 { #category : #'testing - class hierarchy' }
 Behavior >> kindOfSubclass [
-	"Answer a String that is the keyword that describes the receiver's kind of subclass"
+	"Answer a String that is the keyword that describes the receiver's kind of subclass
+	Note: this is for printing the ST80 style class definiton, see #subclassDefiningSymbol"
 	^ self classLayout kindOfSubclass
 ]
 
@@ -1267,11 +1268,7 @@ Behavior >> new: sizeRequested [
 Behavior >> nonObsoleteClass [
 	"Attempt to find and return the current version of this obsolete class"
 
-	| obsName |
-	obsName := self name.
-	[obsName beginsWith: 'AnObsolete']
-		whileTrue: [obsName := obsName copyFrom: 'AnObsolete' size + 1 to: obsName size].
-	^ self environment at: obsName asSymbol
+	^ self environment at: self originalName
 ]
 
 { #category : #initialization }
@@ -1285,6 +1282,17 @@ Behavior >> obsoleteSubclasses [
 	| obs |
 	obs := self basicObsoleteSubclasses at: self ifAbsent: [^ #()].
 	^ obs copyWithout: nil
+]
+
+{ #category : #initialization }
+Behavior >> originalName [
+	| obsName |
+	obsName := self name.
+	self isObsolete ifFalse: [ ^obsName asSymbol].
+ 	[obsName beginsWith: 'AnObsolete']
+ 		whileTrue: [obsName := obsName copyFrom: 'AnObsolete' size + 1 to: obsName size].
+	^obsName asSymbol
+
 ]
 
 { #category : #copying }
@@ -1668,12 +1676,6 @@ Behavior >> thoroughWhichMethodsReferTo: literal [
 { #category : #'testing - method dictionary' }
 Behavior >> thoroughWhichSelectorsReferTo: literal [
 	^ (self thoroughWhichMethodsReferTo: literal) collect: [ :method | method selector ]
-]
-
-{ #category : #accessing }
-Behavior >> typeOfClass [
-	"Answer the symbol that Monticello uses internally to encode layouts"
-	^self classLayout class kind
 ]
 
 { #category : #'user interface' }

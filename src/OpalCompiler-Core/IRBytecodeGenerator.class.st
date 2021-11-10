@@ -156,15 +156,6 @@ IRBytecodeGenerator >> bytecodes [
 	^ stream contents
 ]
 
-{ #category : #instructions }
-IRBytecodeGenerator >> closureFrom: fromSeqId to: toSeqId copyNumCopiedValues: numCopied numArgs: numArgs2 [
-	| distance from to |
-	from := seqOrder at: fromSeqId.
-	to := seqOrder at: toSeqId ifAbsent: [ ^ self ].	"not done yet"
-	distance := (from + 1 to: to - 1) inject: 0 into: [ :size :i | size + (seqBytes at: (orderSeq at: i)) size ].
-	encoder genPushClosureCopyNumCopiedValues: numCopied numArgs: numArgs2 jumpSize: distance. 
-]
-
 { #category : #accessing }
 IRBytecodeGenerator >> compilationContext [
 	^ compilationContext ifNil: [compilationContext := CompilationContext default]
@@ -198,7 +189,7 @@ IRBytecodeGenerator >> compiledMethod [
 
 { #category : #results }
 IRBytecodeGenerator >> compiledMethodWith: trailer [
-	| lits header quickPrimitive |
+	| lits quickPrimitive |
 	lits := self literals.
 	quickPrimitive := self quickMethodPrim.
 	(primNumber = 0 and: [quickPrimitive > 0]) ifTrue: [
@@ -208,9 +199,7 @@ IRBytecodeGenerator >> compiledMethodWith: trailer [
 		encoder stream: primitiveBytes.
 		encoder genCallPrimitive: quickPrimitive.
 	].
-	
-	header := Smalltalk vm isSpur ifTrue: [ self spurVMHeader: lits size ] ifFalse: [ self v3VMHeader: lits size ].
-	^ self compiledMethodWith: trailer header: header literals: lits
+	^ self compiledMethodWith: trailer header: (self spurVMHeader: lits size) literals: lits
 ]
 
 { #category : #results }
@@ -526,31 +515,6 @@ IRBytecodeGenerator >> properties: propDict [
 ]
 
 { #category : #instructions }
-IRBytecodeGenerator >> pushClosureCopyNumCopiedValues: numCopied numArgs: numArgs2 to: toSeqId [
-	| blockSeqId |
-	blockSeqId := self newDummySeqId.
-	stack pop: numCopied.
-	stacks at: blockSeqId put: ((IRClosureStackCount new numMethodTempVars:(numberOfTemps)) startAt: (numArgs2+numCopied)).
-	stack push.
-	stacks at: toSeqId put: (stack linkTo: (stacks at: toSeqId ifAbsentPut: [ nil ])).
-	self
-		saveLastJump:
-			(Message
-				selector: #closureFrom:to:copyNumCopiedValues:numArgs:
-				arguments:
-					{currentSeqId.
-					toSeqId.
-					numCopied.
-					numArgs2}).
-	self
-		closureFrom: currentSeqId
-		to: toSeqId
-		copyNumCopiedValues: numCopied
-		numArgs: numArgs2.
-	self label: blockSeqId
-]
-
-{ #category : #instructions }
 IRBytecodeGenerator >> pushConsArray: size [
 	stack push.
 	stack pop: size.
@@ -596,13 +560,6 @@ IRBytecodeGenerator >> pushLiteral: object [
 IRBytecodeGenerator >> pushLiteralVariable: object [ 
 	stack push.
 	encoder genPushLiteralVar: (self literalIndexOf: object).
-]
-
-{ #category : #instructions }
-IRBytecodeGenerator >> pushNClosureTemps: n [
-	n = 0 ifTrue: [ ^ self ].
-	n timesRepeat:[ stack push].
-	encoder genPushNClosureTemps: n.
 ]
 
 { #category : #instructions }
@@ -720,7 +677,7 @@ IRBytecodeGenerator >> send: selector toSuperOf: behavior [
 	stack pop: nArgs.
 	index := self literalIndexOf: selector.
 
-	(encoder class = EncoderForSistaV1 and: [ inBlock ])
+	inBlock
 		ifTrue: [
 			"we need to use a copy of the binding as else 'references to' will find this method" 
 			encoder genPushLiteralVar: (self literalIndexOf: behavior binding copy).
@@ -819,21 +776,4 @@ IRBytecodeGenerator >> updateLiterals: code [
 	"Add back pointer from compiled block to outer code"
 	code literals do: [ :each |
 		each isEmbeddedBlock ifTrue: [ each outerCode: code ] ]
-]
-
-{ #category : #results }
-IRBytecodeGenerator >> v3VMHeader: literalsSize [
-	| header primBits endPrimNumber |
-	self encoderClass name = #EncoderForSistaV1 ifTrue: [ 
-		self error: 'SistaV1 non supported in non spur VM'].
-	endPrimNumber := self endPrimNumber.
-	primBits := endPrimNumber <= 16r1FF
-		ifTrue: [endPrimNumber]
-		ifFalse: ["For now the high bit of primitive no. is in the 29th bit of header"
-				(endPrimNumber bitAnd: 16r1FF) + ((endPrimNumber bitAnd: 16r200) bitShift: 19)].
-	header := (self numArgs bitShift: 24) +
-				(self numTemps bitShift: 18) +
-				(literalsSize bitShift: 9) +
-				primBits.
-	^ header
 ]

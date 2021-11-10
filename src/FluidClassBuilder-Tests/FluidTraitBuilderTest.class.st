@@ -42,18 +42,17 @@ FluidTraitBuilderTest >> testFillShiftClassBuilder [
 
 	| shift |
 	builder := Trait << #TPoint2.
-	builder slots: { #x . #y }.
-	builder trait: {TViewModelMock}.
+	builder slots: { #x. #y }.
+	builder traits: { TViewModelMock }.
 	builder tag: 'Mafia'.
 	builder package: 'FakedCore'.
 	builder fillShiftClassBuilder.
-	shift := builder shiftClassBuilder. 
+	shift := builder shiftClassBuilder.
 	self assert: shift name equals: #TPoint2.
 	self assert: shift slots size equals: 2.
 	self assert: shift category equals: 'FakedCore-Mafia'.
-	self flag: #askPablo.
+	self flag: #askPablo
 	"self assert: clas package packageName equals: 'FakedCore'"
-	
 ]
 
 { #category : #tests }
@@ -64,7 +63,7 @@ FluidTraitBuilderTest >> testInstallMinimalMockClass [
 	[ 
 	builder := self class compilerClass new
 		           evaluate: 'Trait << #TMyClass
-	uses: {};
+	trait: {};
 	slots: {};
 	tag: '''' ;
 	package: ''MyPackage'''.
@@ -114,13 +113,13 @@ FluidTraitBuilderTest >> testTraitNoSlotsNoUse [
 
 { #category : #tests }
 FluidTraitBuilderTest >> testTraitUse [
-	
+
 	| trait |
-	builder := Trait << #TPoint3
-		trait: TViewModelMock;
-		package: 'Fake'.
+	builder := (Trait << #TPoint3)
+		           traits: TViewModelMock;
+		           package: 'Fake'.
 	trait := builder build.
-	
+
 	self assert: trait name equals: #TPoint3.
 	self assert: trait traitComposition innerClass equals: TViewModelMock.
 	self assert: trait package packageName equals: '_UnpackagedPackage'

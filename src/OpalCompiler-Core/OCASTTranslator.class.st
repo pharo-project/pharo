@@ -28,32 +28,30 @@ Class {
 	#category : #'OpalCompiler-Core-Translator'
 }
 
-{ #category : #initialize }
+{ #category : #'class initialization' }
 OCASTTranslator class >> initialize [
-	"OCASTTranslator initialize"
-	
+
 	OptimizedMessages := { 
-	#caseOf: -> #emitCaseOf: .
-	#caseOf:otherwise: -> #emitCaseOfOtherwise: .
-	#ifFalse: -> #emitIfFalse: .
-	#ifFalse:ifTrue: -> #emitIfFalseIfTrue: .
-	#ifNil: -> #emitIfNil: .
-	#ifNil:ifNotNil: -> #emitIfNilIfNotNil: .
-	#ifNotNil: -> #emitIfNotNil: .
-	#ifNotNil:ifNil: -> #emitIfNotNilIfNil: .
-	#ifTrue: -> #emitIfTrue: .
-	#ifTrue:ifFalse: -> #emitIfTrueIfFalse: .
-	#or: -> #emitOr: .
-	#and: -> #emitAnd: .
-	#timesRepeat: -> #emitTimesRepeat: .
-	#repeat -> #emitRepeat: .
-	#to:by:do: -> #emitToByDo: .
-	#to:do: -> #emitToDo: .
-	#whileFalse: -> #emitWhileFalse: .
-	#whileTrue: -> #emitWhileTrue: .
-	#whileFalse -> #emitWhileFalse: .
-	#whileTrue -> #emitWhileTrue:
-	 } asDictionary
+		                     (#caseOf: -> #emitCaseOf:).
+		                     (#caseOf:otherwise: -> #emitCaseOfOtherwise:).
+		                     (#ifFalse: -> #emitIfFalse:).
+		                     (#ifFalse:ifTrue: -> #emitIfFalseIfTrue:).
+		                     (#ifNil: -> #emitIfNil:).
+		                     (#ifNil:ifNotNil: -> #emitIfNilIfNotNil:).
+		                     (#ifNotNil: -> #emitIfNotNil:).
+		                     (#ifNotNil:ifNil: -> #emitIfNotNilIfNil:).
+		                     (#ifTrue: -> #emitIfTrue:).
+		                     (#ifTrue:ifFalse: -> #emitIfTrueIfFalse:).
+		                     (#or: -> #emitOr:).
+		                     (#and: -> #emitAnd:).
+		                     (#timesRepeat: -> #emitTimesRepeat:).
+		                     (#repeat -> #emitRepeat:).
+		                     (#to:by:do: -> #emitToByDo:).
+		                     (#to:do: -> #emitToDo:).
+		                     (#whileFalse: -> #emitWhileFalse:).
+		                     (#whileTrue: -> #emitWhileTrue:).
+		                     (#whileFalse -> #emitWhileFalse:).
+		                     (#whileTrue -> #emitWhileTrue:) } asDictionary
 ]
 
 { #category : #errors }
@@ -501,29 +499,14 @@ OCASTTranslator >> visitAssignmentNode: anAssignmentNode [
 
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitBlockNode: aBlockNode [
+	| compiledBlock |
 	aBlockNode arguments size >15 ifTrue: [self backendError: 'Too many arguments' forNode: aBlockNode ].
-	
 	aBlockNode isInlined ifTrue: [^ self visitInlinedBlockNode: aBlockNode ].
 	
-	self compilationContext optionFullBlockClosure ifTrue: [ ^ self visitFullBlockNode: aBlockNode ].
-		
-	methodBuilder
-			pushClosureCopyCopiedValues: aBlockNode scope inComingCopiedVarNames
-			args: aBlockNode argumentNames
-			jumpTo:  #block.
-	 
-	aBlockNode scope tempVector ifNotEmpty: [
-		methodBuilder 
-			createTempVectorNamed: aBlockNode scope tempVectorName 
-			withVars: aBlockNode scope tempVectorVarNames.
-	].
-	methodBuilder addTemps: aBlockNode scope tempVarNamesWithoutArguments.
-	valueTranslator visitNode: aBlockNode body.
-	methodBuilder addBlockReturnTopIfRequired.
-	self flag: 'why dont we just add a blockReturnTop here... it could be removed or ignored in IRTranslator'.
-	methodBuilder jumpAheadTarget: #block.		
-
-
+	compiledBlock := self compilationContext astTranslatorClass new translateFullBlock: aBlockNode.
+	(self compilationContext optionCleanBlockClosure and: [ aBlockNode isClean ])
+		ifTrue: [ methodBuilder pushLiteral: ((CleanBlockClosure new: 0) numArgs: compiledBlock numArgs; compiledBlock: compiledBlock)]
+		ifFalse: [methodBuilder pushFullClosureCompiledBlock: compiledBlock copiedValues: aBlockNode scope inComingCopiedVarNames  ]
 ]
 
 { #category : #'visitor - double dispatching' }
@@ -536,15 +519,6 @@ OCASTTranslator >> visitCascadeNode: aCascadeNode [
 	].
 	self visitNode: aCascadeNode messages last.
 
-]
-
-{ #category : #'visitor - double dispatching' }
-OCASTTranslator >> visitFullBlockNode: aBlockNode [
-	| compiledBlock |
-	compiledBlock := self compilationContext astTranslatorClass new translateFullBlock: aBlockNode.
-	(self compilationContext optionCleanBlockClosure and: [ aBlockNode isClean ])
-		ifTrue: [ methodBuilder pushLiteral: ((CleanBlockClosure new: 0) numArgs: compiledBlock numArgs; compiledBlock: compiledBlock)]
-		ifFalse: [methodBuilder pushFullClosureCompiledBlock: compiledBlock copiedValues: aBlockNode scope inComingCopiedVarNames  ]
 ]
 
 { #category : #'visitor - double dispatching' }

@@ -12,6 +12,6 @@ ProperClassCategorizationTest >> testProperClassTagCasing [
 	|violations|
 	violations := OrderedCollection new.
 	RPackageOrganizer default packages
-        do: [:each | each classTags do: [:ct | ct name first isLowercase ifTrue: [ violations add: (each -> ct) ] ] ].
+        do: [:package | package classTags do: [:classTag | classTag name first isLowercase ifTrue: [ violations add: (package -> classTag) ] ] ].
 	self assert:  violations isEmpty description: 'Class Tags should be uppercase'
 ]

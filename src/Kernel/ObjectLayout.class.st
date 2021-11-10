@@ -7,6 +7,11 @@ Class {
 	#category : #'Kernel-Layout'
 }
 
+{ #category : #description }
+ObjectLayout class >> allSubclassDefiningSymbols [
+	^self allSubclasses collect: [ :class | class subclassDefiningSymbol ] as: Set
+]
+
 { #category : #'instance creation' }
 ObjectLayout class >> extending: superLayout scope: aScope host: aClass [
 	self subclassResponsibility
@@ -17,22 +22,19 @@ ObjectLayout class >> isAbstract [
 	^self == ObjectLayout
 ]
 
-{ #category : #description }
-ObjectLayout class >> kind [
-	"return the symbol that Monticello uses to encode the layout"
-	^self name asSymbol
-]
-
 { #category : #monticello }
-ObjectLayout class >> layoutForType: typeSymbol [
-	"used to get the layout for a Monticello internal layout symbol"
+ObjectLayout class >> layoutForSubclassDefiningSymbol: aSymbol [
+	"used to get the layout for a subclass definition symbol"
 	^self allSubclasses 
-		detect: [ :class | class kind = typeSymbol ] 
-		ifNone: [ Error signal: 'Invalid layout type: ', typeSymbol asString ]
+		detect: [ :class | class isAbstract not and: [class subclassDefiningSymbol == aSymbol ]] 
+		ifNone: [ FixedLayout ]
 ]
 
 { #category : #description }
 ObjectLayout class >> subclassDefiningSymbol [
+	"Answer a keyword that describes the receiver's kind of subclass
+	Note: this is for printing the ST80 style class definiton, usage makes no sense for anything
+	else!"
 	"As a fallback we just return a standard class creation symbol. This will be called for user 	
 	defined Layouts, for old style class definitions that can not support user defined Layouts"
 	^#subclass:
@@ -144,10 +146,16 @@ ObjectLayout >> instanceSpecification [
 
 { #category : #'testing - class hierarchy' }
 ObjectLayout >> kindOfSubclass [
+	"Answer a String that is the keyword that describes the receiver's kind of subclass
+	Note: this is for printing the ST80 style class definiton, see #subclassDefiningSymbol"
 	^' ',self class subclassDefiningSymbol, ' '.
 ]
 
 { #category : #'testing - class hierarchy' }
 ObjectLayout >> subclassDefiningSymbol [
+	"Answer a keyword that describes the receiver's kind of subclass
+	Note: this is for printing the ST80 style class definiton, usage makes no sense for anything
+	else as CompiledMethodLayout answers the same as ByteLayout and user defined Layouts are not 
+	supported"
 	^self class subclassDefiningSymbol
 ]

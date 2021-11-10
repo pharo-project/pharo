@@ -8,6 +8,7 @@ Class {
 RBRemoveHierarchyMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBRemoveHierarchyMethodRefactoring };
+		addCase: { #rbClass -> RBRemoveHierarchyMethodTransformation };
 		yourself
 ]
 

@@ -78,7 +78,7 @@ Week class >> year: aYear week: weekNumber [
 	^ super starting: aYear asYear firstThursday + (weekNumber * 7 - 10) days duration: 1 week
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 Week >> asWeek [
 
 	^ self 

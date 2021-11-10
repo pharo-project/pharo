@@ -205,22 +205,6 @@ IRTranslator >> visitPushArray: array [
 ]
 
 { #category : #visiting }
-IRTranslator >> visitPushClosureCopy: closure [
-
-	closure copiedValues do: [:name | 	
-		gen pushTemp: (self currentScope indexForVarNamed: name).
-	].
-	gen mapBytesTo: closure.
-	gen pushClosureCopyNumCopiedValues: closure copiedValues size 
-			numArgs: closure arguments size 
-			to: closure destination orderNumber.
-	self pushScope: closure.
-	gen pushNClosureTemps: closure definedTemps size
-
-
-]
-
-{ #category : #visiting }
 IRTranslator >> visitPushDup: dup [
 	
 	gen pushDup
@@ -343,8 +327,6 @@ IRTranslator >> visitSend: send [
 
 { #category : #visiting }
 IRTranslator >> visitSequence: instructionSequence [
-	self currentScope isPushClosureCopy ifTrue: [ 
-		self currentScope destination = instructionSequence ifTrue: [ self popScope ] ].
 	self label: instructionSequence orderNumber.
 	super visitSequence: instructionSequence
 

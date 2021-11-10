@@ -17,7 +17,7 @@ Class {
 	#category : #'Morphic-Widgets-Taskbar'
 }
 
-{ #category : #initializing }
+{ #category : #'class initialization' }
 TaskbarMorph class >> initialize [
 	"Initialize the receiver."
 	self showTaskbarPreferenceChanged
@@ -40,7 +40,7 @@ TaskbarMorph class >> maximumButtonsDefault [
 	^100
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 TaskbarMorph class >> reset [
 	<script>
 	"Remove the taskbar and add a new one." 

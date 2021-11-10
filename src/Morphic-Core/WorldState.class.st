@@ -157,9 +157,6 @@ WorldState class >> helpOn: aBuilder [
 			(aBuilder group: #PharoHelp)
 				order: 2;
 				withSeparatorAfter.
-			(aBuilder group: #SpecHelp)
-				order: 3;
-				withSeparatorAfter.
 			(aBuilder item: #'About...')
 				order: 99;
 				iconName: #smallInfo;
@@ -167,7 +164,7 @@ WorldState class >> helpOn: aBuilder [
 				action: [ Smalltalk aboutThisSystem ] ]
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 WorldState class >> initialize [
 	"WorldState initialize"
 
@@ -865,6 +862,19 @@ WorldState >> triggerAlarmsBefore: nowTime [
 	[pending isEmpty not and:[pending first scheduledTime < nowTime]]
 		whileTrue:[pending removeFirst value: nowTime].
 	lastAlarmTime := nowTime.
+]
+
+{ #category : #events }
+WorldState >> updateToNewResolution: originalEvent [
+
+	"We need to reset the render if the resolution changes. 
+	If we don't do this the image seems blocked but as it does not refresh the window"
+
+	self doFullRepaint.
+	
+	self worldRenderer updateToNewResolution.
+	
+	self worldRenderer checkForNewScreenSize.
 ]
 
 { #category : #canvas }

@@ -68,7 +68,7 @@ FFIExternalValueHolder class >> ofType: aTypeName [
 		type: (FFIExternalType resolveType: aTypeName)
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 FFIExternalValueHolder class >> reset [
 	type := nil
 ]
@@ -95,6 +95,12 @@ FFIExternalValueHolder class >> typeDecl [
 FFIExternalValueHolder >> initialize [
 	data := ByteArray new: self type typeSize.
 	super initialize
+]
+
+{ #category : #converting }
+FFIExternalValueHolder >> tfPointerAddress [
+	
+	^ data tfPointerAddress
 ]
 
 { #category : #accessing }

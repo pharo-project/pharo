@@ -15,7 +15,7 @@ CDTraitParserTest >> testClassSideOfATrait [
 	"MetaclassForTraits allInstances select: [ :each | each hasTraitComposition ]"
 	| def |
 	def := self classDefinitionParserClass parse: 'Trait3 classTrait
-	uses: Trait2 classTrait'.
+	traits: Trait2 classTrait'.
 
 	self assert: def className equals: #Trait3.
 	self assert: def class equals: CDClassSideTraitDefinitionNode.
@@ -98,7 +98,7 @@ CDTraitParserTest >> testWithUses [
 
 	| def |
 	def := self classDefinitionParserClass parse: 'Trait << #TPoint2
-			uses: TViewInModel;
+			traits: TViewInModel;
 			package: ''Kernel-BasicObjects'''.
 	"please rename class name!!! it should be class"
 	self assert: def className equals: #TPoint2.

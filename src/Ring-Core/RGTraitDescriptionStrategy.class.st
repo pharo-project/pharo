@@ -31,6 +31,18 @@ RGTraitDescriptionStrategy >> isTrait [
 	^true
 ]
 
+{ #category : #accessing }
+RGTraitDescriptionStrategy >> layout [
+
+	self incompatibleBehaviorType
+]
+
+{ #category : #accessing }
+RGTraitDescriptionStrategy >> layout: anRGLayout [
+
+	self incompatibleBehaviorType
+]
+
 { #category : #variables }
 RGTraitDescriptionStrategy >> methods [
 

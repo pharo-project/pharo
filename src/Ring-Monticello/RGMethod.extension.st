@@ -4,7 +4,7 @@ Extension { #name : #RGMethod }
 RGMethod >> asMCDefinition [
 
 	^ MCMethodDefinition 
-		className: self parent theNonMetaClass name
+		className: self parent instanceSide name
 		classIsMeta: self parent isMeta
 		selector: self name
 		category: self protocol

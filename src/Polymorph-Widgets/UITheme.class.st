@@ -137,7 +137,7 @@ UITheme class >> defaultSettings: aThemeSettings [
 	defaultSettings := aThemeSettings
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 UITheme class >> initialize [
 	"self initialize"
 	self current class = UITheme
@@ -212,7 +212,7 @@ UITheme class >> resetAllDefaultSettings [
 
 { #category : #'initialize-release' }
 UITheme class >> resetBuilder [
-	"self resetBuilder"
+	<script>
 	
 	Builder := nil
 ]
@@ -224,7 +224,7 @@ UITheme class >> resetDefaultSettings [
 	self defaultSettings: nil
 ]
 
-{ #category : #initialization }
+{ #category : #settings }
 UITheme class >> setPreferredPreferences [ 
 	self subclassResponsibility 
 ]
@@ -1081,24 +1081,6 @@ UITheme >> chooseFileIn: aThemedMorph title: title extensions: exts path: path p
 ]
 
 { #category : #services }
-UITheme >> chooseFileNameIn: aThemedMorph title: title extensions: exts path: path preview: preview [
-	"Answer the result of a file name chooser dialog with the given title, extensions
-	path and preview type.
-	Answer nil or a filename."
-	| dialog |
-	self deprecated: 'Use UIManager default chooseExistingFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
-	dialog := FileDialogWindow basicNew
-		basicTheme: aThemedMorph theme;
-		previewType: preview;
-		initialize;
-		title: title;
-		answerFileName.
-	exts ifNotNil: [ dialog validExtensions: exts ].
-	path ifNotNil: [ dialog selectPath: path ].
-	^ dialog openModal answer
-]
-
-{ #category : #services }
 UITheme >> chooseFontIn: aThemedMorph title: aString font: aFont [
 	"Answer the result of a font selector dialog with the given title and initial font."
 
@@ -1124,25 +1106,6 @@ UITheme >> chooseForSaveFileReferenceIn: aThemedMorph title: title extensions: e
 		title: title;
 		fileNameText: pathFileReference basename;
 		answerSaveFile.
-	exts ifNotNil: [ dialog validExtensions: exts ].
-	path ifNotNil: [ dialog selectPath: path ].
-	^ dialog openModal answer
-]
-
-{ #category : #services }
-UITheme >> chooseFullFileNameIn: aThemedMorph title: title extensions: exts path: path preview: preview [
-	"Answer the result of a file name chooser dialog with the given title, extensions
-	path and preview type.
-	Answer nil or a full filename."
-
-	| dialog |
-	self deprecated: 'Use UIManager default chooseExistingFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
-	dialog := FileDialogWindow basicNew
-		basicTheme: aThemedMorph theme;
-		previewType: preview;
-		initialize;
-		title: title;
-		answerPathName.
 	exts ifNotNil: [ dialog validExtensions: exts ].
 	path ifNotNil: [ dialog selectPath: path ].
 	^ dialog openModal answer

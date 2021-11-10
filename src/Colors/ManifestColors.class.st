@@ -11,3 +11,8 @@ Class {
 ManifestColors class >> manuallyResolvedDependencies [
 	^ #(#'Collections-Streams')
 ]
+
+{ #category : #'code-critics' }
+ManifestColors class >> ruleClassNameInSelectorRuleV1FalsePositive [
+	^ #(#(#(#RGMetaclassDefinition #(#'Color class' #Color)) #'2021-10-04T22:19:47.752887+02:00') )
+]

@@ -101,6 +101,18 @@ RBMoveMethodToClassSideRefactoring >> method: aMethod class: aClass [
 	class := self classObjectFor: aClass.
 ]
 
+ { #category : #transforming }
+RBMoveMethodToClassSideRefactoring >> getTempName [
+	| aString counter tempName |
+	counter := 0.
+	aString := class canonicalArgumentName.
+	tempName := aString.
+	[self checkVariableNamed: tempName]
+	whileTrue: [ counter := counter + 1.
+		tempName := aString , counter asString ].
+	^ tempName
+]
+
 { #category : #accessing }
 RBMoveMethodToClassSideRefactoring >> parseTree [
 

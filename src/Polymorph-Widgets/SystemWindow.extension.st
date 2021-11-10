@@ -519,12 +519,6 @@ SystemWindow >> createMenuBox [
 ]
 
 { #category : #'*Polymorph-Widgets' }
-SystemWindow >> defaultBackgroundColor [
-	"Answer the color to be used as the base window color."
-	^self theme windowColorFor: self
-]
-
-{ #category : #'*Polymorph-Widgets' }
 SystemWindow >> doubleClick: event [
 	"Handle a double click. Maximize/restore the window.
 	Works in title bar area."

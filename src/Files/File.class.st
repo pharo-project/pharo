@@ -912,14 +912,6 @@ File class >> open: fileName writable: writableFlag [
 ]
 
 { #category : #'file creation' }
-File class >> openAndTruncateForWriteFileNamed: aName [
-
-	^ (self named: aName)
-		delete;
-		openForWrite
-]
-
-{ #category : #'file creation' }
 File class >> openForReadFileNamed: aName [
 
 	^ (self named: aName)
@@ -1201,12 +1193,11 @@ File class >> rename: oldFileFullName to: newFileFullName [
 	^nil
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 File class >> reset [
-	"Initialise the receiver for the current platform"
+	"Initialize the receiver for the current platform"
 
 	| masks |
-
 	masks := self primFileMasks.
 	S_IFMT := masks at: 1.
 	S_IFSOCK := masks at: 2.
@@ -1215,8 +1206,7 @@ File class >> reset [
 	S_IFBLK := masks at: 5.
 	S_IFDIR := masks at: 6.
 	S_IFCHR := masks at: 7.
-	S_IFIFO := masks at: 8.
-
+	S_IFIFO := masks at: 8
 ]
 
 { #category : #registry }
@@ -1333,7 +1323,7 @@ File class >> sizeOrNil: id [
 	^ nil
 ]
 
-{ #category : #'class initialization' }
+{ #category : #'system startup' }
 File class >> startUp: isImageStarting [
 	"Update VM constants on startup"
 

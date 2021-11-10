@@ -553,11 +553,6 @@ RBProgramNode >> isHaltNode [
 	^ false
 ]
 
-{ #category : #deprecated }
-RBProgramNode >> isImmediate [
-	^self isImmediateNode
-]
-
 { #category : #testing }
 RBProgramNode >> isImmediateNode [
 	^false

@@ -90,7 +90,7 @@ CoFetcher >> isEmptyCompletionFetcher [
 ]
 
 { #category : #composing }
-CoFetcher >> narrowFilterBlock: aBlockClosure [ 
+CoFetcher >> narrowFilterBlock: aBlockClosure narrowKey: aKey [
 	
 	^ self select: aBlockClosure
 ]
@@ -127,10 +127,26 @@ CoFetcher >> select: aBlockClosure [
 		yourself
 ]
 
+{ #category : #composing }
+CoFetcher >> unnarrowFilterBlock: aBlockClosure narrowKey: aKey [
+
+	self reset.
+	
+	^ self select: aBlockClosure
+]
+
 { #category : #enumerating }
 CoFetcher >> upToEnd [
 	
 	^ self generator upToEnd
+]
+
+{ #category : #composing }
+CoFetcher >> withNarrowHistory [
+
+	^ CoNarrowHistoryFetcher new
+		decoree: self;
+		yourself
 ]
 
 { #category : #composing }

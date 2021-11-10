@@ -448,10 +448,11 @@ Process >> priority [
 
 { #category : #accessing }
 Process >> priority: anInteger [
-	"Set the receiver's priority to anInteger."
+	"Set the receiver's priority to anInteger.
+	When changing the process priority we need to yield to make it reschedule the processor"
 
 	(anInteger between: Processor lowestPriority and: Processor highestPriority)
-		ifTrue: [ priority := anInteger ]
+		ifTrue: [ priority := anInteger. Processor interpriorityYield: self ]
 		ifFalse: [ self error: 'Invalid priority: ' , anInteger printString ]
 ]
 
@@ -532,10 +533,7 @@ Process >> restartTop [
 Process >> restartTopWith: method [
 	"Rollback top context and replace with new method.  Assumes self is suspended"
 
-	method isQuick 
-		ifTrue: [ self popTo: suspendedContext sender ]
-		ifFalse: [ suspendedContext privRefreshWith: method ].
-
+	suspendedContext privRefreshWith: method
 ]
 
 { #category : #'changing process state' }

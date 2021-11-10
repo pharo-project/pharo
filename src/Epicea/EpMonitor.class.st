@@ -75,7 +75,7 @@ EpMonitor class >> newWithLog: aLog [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 EpMonitor class >> reset [
 	"
 	self reset

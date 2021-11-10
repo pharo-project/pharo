@@ -194,7 +194,7 @@ FluidClassDefinitionPrinterTest >> testFullClassTemplate [
 		assert: (FluidClassDefinitionPrinter new classDefinitionTemplateInPackage: 'Kernel') 
 		equals:  'Object << #MyClass
 	layout: FixedLayout;
-	uses: {};
+	traits: {};
 	slots: {};
 	sharedVariables: {};
 	sharedPools: {};

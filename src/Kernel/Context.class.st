@@ -446,24 +446,6 @@ Context >> closure [
 	^closureOrNil
 ]
 
-{ #category : #controlling }
-Context >> closureCopy: numArgs copiedValues: anArray [
-	"Distinguish a block of code from its enclosing method by 
-	creating a BlockClosure for that block. The compiler inserts into all 
-	methods that contain blocks the bytecodes to send the message 
-	closureCopy:copiedValues:. Do not use closureCopy:copiedValues: in code that you write! Only the 
-	compiler can decide to send the message closureCopy:copiedValues:. Fail if numArgs is 
-	not a SmallInteger. Optional. No Lookup. See Object documentation 
-	whatIsAPrimitive."
-
-	<primitive: 200>
-	^BlockClosure 
-		outerContext: self
-		startpc: pc + 2
-		numArgs: numArgs
-		copiedValues: anArray
-]
-
 { #category : #accessing }
 Context >> compiledCode [
 
@@ -502,7 +484,6 @@ Context >> copyTo: aContext [
 
 	| copy |
 	self == aContext ifTrue: [^ nil].
-	self pc. "this is a workaround, see https://github.com/pharo-project/pharo/issues/2949"
 	copy := self copy.
 	self sender ifNotNil: [
 		copy privSender: (self sender copyTo: aContext)].
@@ -664,12 +645,7 @@ Context >> doPrimitive: primitiveIndex method: meth receiver: aReceiver args: ar
 		].
 	"Closure primitives"
 	(primitiveIndex = 200 and: [self == aReceiver]) ifTrue:
-		"ContextPart>>closureCopy:copiedValues:; simulated to get startpc right"
-		[^self push: (BlockClosure
-						outerContext: aReceiver
-						startpc: pc + 2
-						numArgs: arguments first
-						copiedValues: arguments last)].
+		[^self error: 'embedded block not supported'].
 
 	primitiveIndex = 118 ifTrue: "tryPrimitive:withArgs:; avoid recursing in the VM"
 		[(arguments size = 2
@@ -1506,25 +1482,6 @@ Context >> pushArgs: arguments from: senderContext [
 	1 to: closureOrNil numArgs do: [:i |
 		self at: i put: (arguments at: i)].
 	sender := senderContext
-]
-
-{ #category : #'instruction decoding' }
-Context >> pushClosureCopyNumCopiedValues: numCopied numArgs: numArgs blockSize: blockSize withInterpreter: anInterpreter [
-	"Simulate the action of a 'closure copy' bytecode whose result is the
-	 new BlockClosure for the following code"
-	| copiedValues |
-	numCopied > 0
-		ifTrue: [
-			copiedValues := Array new: numCopied.
-			numCopied to: 1 by: -1 do: [ :i |
-				copiedValues at: i put: self pop ]]
-		ifFalse: [ copiedValues := nil ].
-	self push: (BlockClosure
-				outerContext: self
-				startpc: pc
-				numArgs: numArgs
-				copiedValues: copiedValues).
-	self jump: blockSize withInterpreter: anInterpreter
 ]
 
 { #category : #'instruction decoding' }

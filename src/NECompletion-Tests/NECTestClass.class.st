@@ -27,9 +27,9 @@ Class {
 	#category : #'NECompletion-Tests'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 NECTestClass class >> initialize [
-	super initialize.
+
 	ClassVar := 'Any string'
 ]
 

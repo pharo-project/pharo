@@ -32,6 +32,7 @@ Class {
 TextLine class >> start: startInteger stop: stopInteger internalSpaces: spacesInteger paddingWidth: padWidthInteger [
 	"Answer an instance of me with the arguments as the start, stop points, 
 	number of spaces in the line, and width of the padding."
+	
 	| line |
 	line := self new firstIndex: startInteger lastIndex: stopInteger.
 	^ line internalSpaces: spacesInteger paddingWidth: padWidthInteger
@@ -39,33 +40,42 @@ TextLine class >> start: startInteger stop: stopInteger internalSpaces: spacesIn
 
 { #category : #comparing }
 TextLine >> = line [
+
 	^ self species = line species
-		ifTrue: [ ((firstIndex = line first and: [ lastIndex = line last ]) and: [ internalSpaces = line internalSpaces ]) and: [ paddingWidth = line paddingWidth ] ]
-		ifFalse: [ false ]
+		  ifTrue: [ 
+			  ((firstIndex = line first and: [ lastIndex = line last ]) and: [ 
+				   internalSpaces = line internalSpaces ]) and: [ 
+				  paddingWidth = line paddingWidth ] ]
+		  ifFalse: [ false ]
 ]
 
 { #category : #accessing }
 TextLine >> baseline [
+
 	^ baseline
 ]
 
 { #category : #accessing }
 TextLine >> bottom [
+
 	^ bottom
 ]
 
 { #category : #accessing }
 TextLine >> bottomRight [
-	^ right@bottom
+
+	^ right @ bottom
 ]
 
 { #category : #accessing }
 TextLine >> first [
+
 	^ firstIndex
 ]
 
 { #category : #private }
 TextLine >> firstIndex: firstInteger lastIndex: lastInteger [
+
 	firstIndex := firstInteger.
 	lastIndex := lastInteger
 ]
@@ -73,7 +83,8 @@ TextLine >> firstIndex: firstInteger lastIndex: lastInteger [
 { #category : #comparing }
 TextLine >> hash [
 	"#hash is re-implemented because #= is re-implemented"
-	^firstIndex hash bitXor: lastIndex hash
+
+	^ firstIndex hash bitXor: lastIndex hash
 ]
 
 { #category : #accessing }
@@ -125,51 +136,58 @@ TextLine >> justifiedTabDeltaFor: spaceIndex [
 
 { #category : #accessing }
 TextLine >> last [
+
 	^ lastIndex
 ]
 
 { #category : #accessing }
 TextLine >> left [
+
 	^ left
 ]
 
 { #category : #accessing }
 TextLine >> leftMargin [
 	"This has to get fixed -- store during composition"
+
 	^ self left
 ]
 
 { #category : #accessing }
 TextLine >> leftMargin: lm [
+
 	left := lm
 ]
 
 { #category : #accessing }
 TextLine >> leftMarginForAlignment: alignmentCode [
-	alignmentCode = RightFlush ifTrue: [^ self left + paddingWidth].
-	alignmentCode = Centered ifTrue: [^ self left + (paddingWidth//2)].
-	^ self left  "leftFlush and justified"
+
+	alignmentCode = RightFlush ifTrue: [ ^ self left + paddingWidth ].
+	alignmentCode = Centered ifTrue: [ ^ self left + (paddingWidth // 2) ].
+	^ self left "leftFlush and justified"
 ]
 
 { #category : #accessing }
 TextLine >> lineHeight [
+
 	^ bottom - top
 ]
 
 { #category : #private }
 TextLine >> lineHeight: height baseline: ascent [
+
 	bottom := top + height.
 	baseline := ascent
 ]
 
 { #category : #updating }
-TextLine >> moveBy: delta [ 
+TextLine >> moveBy: delta [
 	"Move my rectangle by the given delta"
+
 	left := left + delta x.
 	right := right + delta x.
 	top := top + delta y.
-	bottom := bottom + delta y.
-
+	bottom := bottom + delta y
 ]
 
 { #category : #accessing }
@@ -188,17 +206,24 @@ TextLine >> paddingWidth: padWidthInteger [
 
 { #category : #printing }
 TextLine >> printOn: aStream [
+
 	super printOn: aStream.
-	aStream space; print: firstIndex; nextPutAll: ' to: '; print: lastIndex
+	aStream
+		space;
+		print: firstIndex;
+		nextPutAll: ' to: ';
+		print: lastIndex
 ]
 
 { #category : #accessing }
 TextLine >> rectangle [
+
 	^ self topLeft corner: self bottomRight
 ]
 
 { #category : #accessing }
 TextLine >> rectangle: lineRectangle [
+
 	left := lineRectangle left.
 	right := lineRectangle right.
 	top := lineRectangle top.
@@ -207,17 +232,20 @@ TextLine >> rectangle: lineRectangle [
 
 { #category : #accessing }
 TextLine >> right [
+
 	^ right
 ]
 
 { #category : #accessing }
 TextLine >> rightMargin [
 	"This has to get fixed -- store during composition"
+
 	^ self right
 ]
 
 { #category : #accessing }
 TextLine >> setRight: x [
+
 	right := x
 ]
 
@@ -237,8 +265,7 @@ TextLine >> slideIndexBy: delta andMoveTopTo: newTop [
 	firstIndex := firstIndex + delta.
 	lastIndex := lastIndex + delta.
 	bottom := bottom + (newTop - top).
-	top := newTop.
-
+	top := newTop
 ]
 
 { #category : #accessing }
@@ -250,15 +277,18 @@ TextLine >> stop: stopInteger [
 
 { #category : #accessing }
 TextLine >> top [
+
 	^ top
 ]
 
 { #category : #accessing }
 TextLine >> topLeft [
+
 	^ left @ top
 ]
 
 { #category : #accessing }
 TextLine >> width [
+
 	^ right - left
 ]

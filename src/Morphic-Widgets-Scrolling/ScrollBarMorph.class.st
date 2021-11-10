@@ -119,14 +119,13 @@ ScrollBarMorph class >> cleanUp [
 	self initializeImagesCache
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 ScrollBarMorph class >> initialize [
-	"ScrollBar initialize"
-
+	
 	self initializeImagesCache
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 ScrollBarMorph class >> initializeImagesCache [
 	"initialize the receiver's ImagesCache. 
 	 

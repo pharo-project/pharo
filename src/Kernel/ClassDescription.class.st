@@ -175,7 +175,7 @@ ClassDescription >> authors [
 	^(self methods, self classSide methods) collect: [ :each | each author ] as: Bag
 ]
 
-{ #category : #'accessing - deprecated parallel hierarchy ' }
+{ #category : #'accessing - deprecated parallel hierarchy' }
 ClassDescription >> baseClass [
 	"This method is deprecated so consider to migrate."
 	self deprecated:  'Please use #instanceSide instead' transformWith:  '`@receiver baseClass' 
@@ -191,14 +191,6 @@ ClassDescription >> basicOrganization [
 { #category : #organization }
 ClassDescription >> basicOrganization: aClassOrg [
 	organization := aClassOrg
-]
-
-{ #category : #'accessing - deprecated parallel hierarchy ' }
-ClassDescription >> classClass [
-	"This method is deprecated so consider to migrate."
-	self deprecated:  'Please use #classSide instead' transformWith:  '`@receiver classClass' 
-						-> '`@receiver classSide'.
-	^ self classSide
 ]
 
 { #category : #'file in/out' }
@@ -772,7 +764,7 @@ ClassDescription >> isLocalSelector: aSelector [
 	^ self methodDict includesKey: aSelector
 ]
 
-{ #category : #'accessing - deprecated parallel hierarchy ' }
+{ #category : #'accessing - deprecated parallel hierarchy' }
 ClassDescription >> isMeta [
 	^self isClassSide
 ]
@@ -1225,7 +1217,7 @@ ClassDescription >> tagsForMethods [
 	^ allProtocols select: [ :each | self isLocalMethodsProtocol: each ] thenCollect: #name
 ]
 
-{ #category : #'accessing - deprecated parallel hierarchy ' }
+{ #category : #'accessing - deprecated parallel hierarchy' }
 ClassDescription >> theMetaClass [
 	"This method is deprecated so consider to migrate."
 	self deprecated:  'Please use #classSide instead' transformWith:  '`@receiver theMetaClass' 
@@ -1233,7 +1225,7 @@ ClassDescription >> theMetaClass [
 	^ self classSide
 ]
 
-{ #category : #'accessing - deprecated parallel hierarchy ' }
+{ #category : #'accessing - deprecated parallel hierarchy' }
 ClassDescription >> theNonMetaClass [
 	"This method is deprecated so consider to migrate."
 	self deprecated:  'Please use #instanceSide instead' transformWith:  '`@receiver theNonMetaClass' 

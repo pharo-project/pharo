@@ -21,34 +21,34 @@ Class {
 }
 
 { #category : #comparing }
-TextAnchor >> = other [ 
-	^ (other class == self class) 
-		and: [other anchoredMorph == anchoredMorph]
+TextAnchor >> = other [
+
+	^ other class == self class and: [ 
+		  other anchoredMorph == anchoredMorph ]
 ]
 
 { #category : #accessing }
 TextAnchor >> anchoredMorph [
+
 	^ anchoredMorph
 ]
 
 { #category : #accessing }
-TextAnchor >> anchoredMorph: aMorph [ 
-	anchoredMorph := aMorph
-]
+TextAnchor >> anchoredMorph: aMorph [
 
-{ #category : #visiting }
-TextAnchor >> emphasizeScanner: scanner [
-	"Do nothing for emphasizing the scanner - if the anchor is valid a #embeddedObject will be encountered by the scanner and do the real thing"
+	anchoredMorph := aMorph
 ]
 
 { #category : #comparing }
 TextAnchor >> hash [
 	"#hash is re-implemented because #= is re-implemented"
+	
 	^anchoredMorph identityHash
 ]
 
 { #category : #accessing }
 TextAnchor >> mayBeExtended [
 	"A textAnchor is designed to modify only a single character, and therefore must not be extended by the ParagraphEditor's emphasisHere facility"
+	
 	^ false
 ]

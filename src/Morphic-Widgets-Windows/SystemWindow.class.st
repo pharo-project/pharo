@@ -34,7 +34,7 @@ Class {
 	#category : #'Morphic-Widgets-Windows-Widgets'
 }
 
-{ #category : #initializing }
+{ #category : #accessing }
 SystemWindow class >> borderWidth [
 
 	"Making changes to this for some reason requires repositioning of CornerGripMorphs.
@@ -266,7 +266,7 @@ SystemWindow class >> buildWindowTopEdgeShortcutsOn: aBuilder [
 
 ]
 
-{ #category : #initializing }
+{ #category : #accessing }
 SystemWindow class >> closeBoxImage [
 	"Supplied here because we don't necessarily have ComicBold"
 
@@ -287,7 +287,7 @@ SystemWindow class >> closeTopWindow [
 
 ]
 
-{ #category : #initializing }
+{ #category : #accessing }
 SystemWindow class >> collapseBoxImage [
 	"Supplied here because we don't necessarily have ComicBold"
 
@@ -298,7 +298,7 @@ SystemWindow class >> collapseBoxImage [
 	offset: 0@0)]
 ]
 
-{ #category : #initializing }
+{ #category : #accessing }
 SystemWindow class >> expandBoxImage [
 
 	^ (Form
@@ -324,11 +324,11 @@ SystemWindow class >> icons [
 	^ Smalltalk ui icons.
 ]
 
-{ #category : #initializing }
+{ #category : #'class initialization' }
 SystemWindow class >> initialize [
 
 	CollapseBoxImage := nil.
-	CloseBoxImage := nil.
+	CloseBoxImage := nil
 
 ]
 
@@ -337,7 +337,7 @@ SystemWindow class >> labelled: labelString [
 	^self new setLabel: labelString
 ]
 
-{ #category : #initializing }
+{ #category : #accessing }
 SystemWindow class >> menuBoxImage [
 
 	^ (Form
@@ -365,13 +365,6 @@ SystemWindow class >> sendTopWindowToBack [
 	self currentWorld submorphs 
 		detect: [ :morph | morph isSystemWindow ] 
 		ifFound: [ :morph | morph sendToBack ].
-]
-
-{ #category : #icons }
-SystemWindow class >> taskbarIconName [
-	"Answer the icon for the receiver in a task bar."
-
-	^#smallWindowIcon
 ]
 
 { #category : #'menu items - tiling' }

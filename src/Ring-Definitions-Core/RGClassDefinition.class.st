@@ -341,18 +341,6 @@ RGClassDefinition >> stamp: aString [
 						 stamp: aString ]
 ]
 
-{ #category : #'accessing - deprecated parallel hierarchy ' }
-RGClassDefinition >> theMetaClass [
-	
-	^metaClass
-]
-
-{ #category : #'accessing - deprecated parallel hierarchy ' }
-RGClassDefinition >> theNonMetaClass [
-
-	^self
-]
-
 { #category : #'managing pool users' }
 RGClassDefinition >> users [
 	"If the reciever is a SharedPool then retrieves its users"

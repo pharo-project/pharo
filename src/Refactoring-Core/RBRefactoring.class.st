@@ -45,12 +45,12 @@ RBRefactoring class >> cleanUp [
 	self initializeRefactoringOptions.
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 RBRefactoring class >> initialize [
 	self initializeRefactoringOptions
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 RBRefactoring class >> initializeRefactoringOptions [
 	RefactoringOptions := IdentityDictionary new.
 	RefactoringOptions
@@ -86,6 +86,12 @@ RBRefactoring class >> initializeRefactoringOptions [
 		
 		at: #searchInWholeHierarchy
 		put: [ self error: #searchInWholeHierarchy ]
+]
+
+{ #category : #testing }
+RBRefactoring class >> isAbstract [
+
+	^ self == RBRefactoring
 ]
 
 { #category : #'accessing signal' }
@@ -148,10 +154,13 @@ RBRefactoring >> checkPreconditions [
 ]
 
 { #category : #private }
-RBRefactoring >> classObjectFor: anObject [ 
-	(anObject isBehavior or: [anObject isTrait]) ifTrue: [^self model classFor: anObject].
-	anObject isSymbol ifTrue: [^self model classNamed: anObject].
-	^anObject
+RBRefactoring >> classObjectFor: anObject [
+
+	(anObject isBehavior or: [ anObject isTrait ]) ifTrue: [ 
+		^ self model classFor: anObject ].
+	anObject isString ifTrue: [ 
+		^ self model classNamed: anObject asSymbol ].
+	^ anObject
 ]
 
 { #category : #support }

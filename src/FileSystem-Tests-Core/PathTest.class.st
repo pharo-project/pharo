@@ -361,6 +361,28 @@ PathTest >> testMakeRelativeFrom2RelativePaths [
 ]
 
 { #category : #tests }
+PathTest >> testNetworkPathWithParents [
+	| path allPaths |
+	path := UNCNetworkPath withAll: #('machine' 'plonk' 'griffle' 'nurb').
+	allPaths := path withParents.
+	
+	self assert: allPaths size equals: 4.
+	self assert: allPaths first isRoot.
+	self assert: allPaths second basename equals: 'plonk'.
+	self assert: allPaths second size equals: 2.
+	self assert: (allPaths second isChildOf: allPaths first).
+	self assert: allPaths third basename equals: 'griffle'.
+	self assert: allPaths third size equals: 3.
+	self assert: (allPaths third isChildOf: allPaths second).
+	self assert: allPaths fourth basename equals: 'nurb'.
+	self assert: allPaths fourth size equals: 4.
+	self assert: (allPaths fourth isChildOf: allPaths third).
+	
+	self assert: allPaths fourth equals: path.
+	self assert: allPaths fourth identicalTo: path
+]
+
+{ #category : #tests }
 PathTest >> testParent [
 	| path parent |
 	path := (Path * 'plonk') / 'griffle'.
@@ -422,6 +444,19 @@ PathTest >> testParseBogus [
 	self assert: path size equals: 2.
 	self assert: (path at: 1) equals: 'parent?<>~ \child'.
 	self assert: (path at: 2) equals: 'grandChild'
+	
+
+]
+
+{ #category : #tests }
+PathTest >> testParseNetworkPath [
+
+	| path |
+	path := Path from: '//parent/child/grandChild' delimiter: $/.
+	self assert: path size equals: 3.
+	self assert: (path at: 1) equals: 'parent'.
+	self assert: (path at: 2) equals: 'child'.
+	self assert: (path at: 3) equals: 'grandChild'
 	
 
 ]
@@ -494,6 +529,19 @@ PathTest >> testPrintPathOnDelimiter [
 	"Test an Absolute path"
 	"Use an unusal delimiter to check that the default isn't hardcoded anywhere"
 	pathSrc := '|one|two|three'.
+	path := Path from: pathSrc delimiter: $|.
+	self assert: path isAbsolute.
+	pathString := String streamContents: [ :stream | path printPathOn: stream delimiter: $| ].
+	self assert: pathSrc equals: pathString
+]
+
+{ #category : #tests }
+PathTest >> testPrintPathOnDelimiterOnNetworkDrive [
+
+
+	"Use an unusal delimiter to check that the default isn't hardcoded anywhere"
+	| pathSrc path pathString |
+	pathSrc := '||one|two|three'.
 	path := Path from: pathSrc delimiter: $|.
 	self assert: path isAbsolute.
 	pathString := String streamContents: [ :stream | path printPathOn: stream delimiter: $| ].

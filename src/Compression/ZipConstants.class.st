@@ -105,14 +105,15 @@ Class {
 	#category : #'Compression-Streams'
 }
 
-{ #category : #'pool initialization' }
+{ #category : #'class initialization' }
 ZipConstants class >> initialize [
-	"ZipConstants initialize"
-	self initializeDeflateConstants.
-	self initializeWriteStreamConstants.
+
+	self 
+		initializeDeflateConstants;
+		initializeWriteStreamConstants
 ]
 
-{ #category : #'pool initialization' }
+{ #category : #'private - initialization' }
 ZipConstants class >> initializeDeflateConstants [
 
 	WindowSize := 16r8000.
@@ -124,11 +125,11 @@ ZipConstants class >> initializeDeflateConstants [
 
 	HashBits := 15.
 	HashMask := (1 << HashBits) - 1.
-	HashShift := (HashBits + MinMatch - 1) // MinMatch.
+	HashShift := (HashBits + MinMatch - 1) // MinMatch
 
 ]
 
-{ #category : #'pool initialization' }
+{ #category : #'private - initialization' }
 ZipConstants class >> initializeDistanceCodes [
 	| dist |
 	BaseDistance := WordArray new: MaxDistCodes.
@@ -149,7 +150,7 @@ ZipConstants class >> initializeDistanceCodes [
 
 ]
 
-{ #category : #'pool initialization' }
+{ #category : #'private - initialization' }
 ZipConstants class >> initializeExtraBits [
 	ExtraLengthBits := 
 		WordArray withAll: #(0 0 0 0 0 0 0 0 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 0).
@@ -158,13 +159,13 @@ ZipConstants class >> initializeExtraBits [
 	ExtraBitLengthBits := 
 		WordArray withAll: #(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 3 7).
 	BitLengthOrder :=
-		WordArray withAll: #(16 17 18 0 8 7 9 6 10 5 11 4 12 3 13 2 14 1 15).
+		WordArray withAll: #(16 17 18 0 8 7 9 6 10 5 11 4 12 3 13 2 14 1 15)
 
 ]
 
-{ #category : #'pool initialization' }
+{ #category : #'private - initialization' }
 ZipConstants class >> initializeFixedTrees [
-	"ZipWriteStream initializeFixedTrees"
+ 
 	| counts nodes |
 	FixedLiteralTree := ZipEncoderTree new.
 	FixedLiteralTree maxCode: 287.
@@ -185,10 +186,10 @@ ZipConstants class >> initializeFixedTrees [
 	FixedDistanceTree maxCode: MaxDistCodes.
 	FixedDistanceTree
 		bitLengths: ((WordArray new: MaxDistCodes+1) atAllPut: 5)
-		codes: ((0 to: MaxDistCodes) collect:[:i| FixedDistanceTree reverseBits: i length: 5]).
+		codes: ((0 to: MaxDistCodes) collect:[:i| FixedDistanceTree reverseBits: i length: 5])
 ]
 
-{ #category : #'pool initialization' }
+{ #category : #'private - initialization' }
 ZipConstants class >> initializeLengthCodes [
 	| length |
 	BaseLength := WordArray new: MaxLengthCodes.
@@ -202,7 +203,7 @@ ZipConstants class >> initializeLengthCodes [
 
 ]
 
-{ #category : #'pool initialization' }
+{ #category : #'private - initialization' }
 ZipConstants class >> initializeWriteStreamConstants [
 
 	MaxBits := 15.
@@ -223,9 +224,10 @@ ZipConstants class >> initializeWriteStreamConstants [
 	Repeat3To10 := 17. "Repeat previous bit length 3-10 times (3 bits repeat count)"
 	Repeat11To138 := 18. "Repeat previous bit length 11-138 times (7 bits repeat count)"
 
-	self initializeExtraBits.
-	self initializeLengthCodes.
-	self initializeDistanceCodes.
-	self initializeFixedTrees.
+	self 
+		initializeExtraBits;
+		initializeLengthCodes;
+		initializeDistanceCodes;
+		initializeFixedTrees
 
 ]

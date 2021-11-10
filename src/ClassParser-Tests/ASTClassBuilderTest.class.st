@@ -179,22 +179,6 @@ ASTClassBuilderTest >> testCreateNormalClassWithSharedPools [
 ]
 
 { #category : #tests }
-ASTClassBuilderTest >> testCreateNormalClassWithSlots [
-
-	| ast class |
-	ast := self parserClass parse: 'Class subclass: #TestSubClass
-															slots: {
-																''cat'' => PropertySlot.
-																''env'' => PropertySlot.
-															}.'.
-	class := ShiftClassBuilder new
-		         buildEnvironment: self environment;
-		         buildFromAST: ast;
-		         build.
-	self assert: class instanceVariablesString equals: 'cat env'
-]
-
-{ #category : #tests }
 ASTClassBuilderTest >> testCreateNormalClassWithTrait [
 
 	| ast class |
@@ -361,7 +345,8 @@ ASTClassBuilderTest >> testCreateVariableWordClassWithAll [
 		         build.
 	self assert: class name equals: #TestSubClass.
 	self assert: class instanceVariablesString equals: ''.
-	self assert: class classVarNames equals: #( #classVar #pouet #var )
+	self assert: class classVarNames equals: #( #classVar #pouet #var ).
+	self assert: class classLayout class equals: WordLayout.
 ]
 
 { #category : #running }

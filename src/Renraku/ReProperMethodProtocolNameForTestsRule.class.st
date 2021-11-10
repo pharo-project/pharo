@@ -7,15 +7,15 @@ Class {
 	#category : #'Renraku-Rules'
 }
 
+{ #category : #idioms }
+ReProperMethodProtocolNameForTestsRule class >> protocolIdiom [ 
+
+	^self use: 'tests' insteadOf: #('test')
+]
+
 { #category : #running }
 ReProperMethodProtocolNameForTestsRule >> basicCheck: aMethod [
 	"We only check for SUnit test methods"
 	
-	^ aMethod isTestMethod and: [ self badMethodProtocolNames includes: aMethod category ]
-]
-
-{ #category : #idioms }
-ReProperMethodProtocolNameForTestsRule >> protocolIdiom [ 
-
-	^self use: 'tests' insteadOf: #('test')
+	^ aMethod isTestMethod and: [ self class badMethodProtocolNames includes: aMethod category ]
 ]

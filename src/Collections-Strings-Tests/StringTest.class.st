@@ -554,17 +554,27 @@ StringTest >> testAt [
 ]
 
 { #category : #tests }
-StringTest >> testBeginsWithEmptyCaseSensitive [
+StringTest >> testBeginsWithCaseSensitive [
+	| w1 w2 |
+	self deny: ('abc' beginsWith: '' caseSensitive: true). "consistent to #beginsWith:"
+	self deny: ('abc' beginsWith: '' caseSensitive: false). "consistent to #beginsWith:"
+	self deny: ('abc' beginsWith: 'abcd' caseSensitive: true).
+	self deny: ('abc' beginsWith: 'abcd' caseSensitive: false).
+	self deny: ('abc' beginsWith: 'c' caseSensitive: true).
+	self deny: ('abc' beginsWith: 'c' caseSensitive: false).
+	
+	self assert: ('abc' beginsWith: 'ab' caseSensitive: true).
+	self assert: ('abc' beginsWith: 'ab' caseSensitive: false).
+	self assert: ('abc' beginsWith: 'Ab' caseSensitive: false).
+	self assert: ('abc' beginsWith: 'aB' caseSensitive: false).
+	self deny: ('abc' beginsWith: 'aB' caseSensitive: true).
+	self assert: ('abcd' asWideString beginsWith: 'abC' caseSensitive: false).
 
-	self deny: ('éèàôüößäóñíá' beginsWithEmpty: 'ß' caseSensitive: true).
-	self assert: ('éèàôüößäóñíá' beginsWithEmpty: 'éèàô' caseSensitive: true).
-	self assert: ('éèàôüö' beginsWithEmpty: '' caseSensitive: true).
-	self deny: ('éèàôüö' beginsWithEmpty: 'ÉÈÀ' caseSensitive: true).
-	self assert: ('ÉÈÀÔÜÖ' beginsWithEmpty: 'ÉÈÀ' caseSensitive: true).
-	self assert: ('123test' beginsWithEmpty: '123' caseSensitive: true).
-	self should: ('aaee' beginsWithEmpty: 'AA' caseSensitive: false).
-	self should: ('???' beginsWithEmpty: '??' caseSensitive: false)
-	"self assert: ('ÉÈÀÔÜÖ' beginsWithEmpty: 'éèà' caseSensitive: false)."
+	w1 := WideString with: (Unicode value: 402) with: $a with: (Unicode value: 400) with: $b.
+	w2 := WideString with: (Unicode value: 402).
+	self assert: (w1 beginsWith: w2 caseSensitive: true).
+	self deny: (w1 beginsWith: w2 asUppercase caseSensitive: true).
+	self assert: (w1 beginsWith: w2 asUppercase caseSensitive: false).
 ]
 
 { #category : #'tests - converting' }
@@ -765,6 +775,30 @@ StringTest >> testEndsWithAnyOf [
 	self assert: ('éèàôüößäóñíá' endsWithAnyOf: #('test' 'ÉÈÀ' 'äóñíá')).
 	self assert: ('test' endsWithAnyOf: #('tests' 'tester' 'testing' 't')).
 
+]
+
+{ #category : #tests }
+StringTest >> testEndsWithCaseSensitive [
+	| w1 w2 |
+	self deny: ('abc' endsWith: '' caseSensitive: true). "consistent to #beginsWith:"
+	self deny: ('abc' endsWith: '' caseSensitive: false). "consistent to #beginsWith:"
+	self deny: ('abc' endsWith: 'qabc' caseSensitive: false).
+	self deny: ('abc' endsWith: 'qabc' caseSensitive: true).
+	self deny: ('abc' endsWith: 'a' caseSensitive: true).
+	self deny: ('abc' endsWith: 'a' caseSensitive: false).
+	
+	self assert: ('abc' endsWith: 'bc' caseSensitive: true).
+	self assert: ('abc' endsWith: 'bc' caseSensitive: false).
+	self assert: ('abc' endsWith: 'bC' caseSensitive: false).
+	self assert: ('abc' endsWith: 'Bc' caseSensitive: false). 
+	self deny: ('abc' endsWith: 'Bc' caseSensitive: true).
+	self assert: ('abcd' asWideString endsWith: 'Bcd' caseSensitive: false). 
+
+	w1 := WideString with: (Unicode value: 400) with: $a with: $b with: (Unicode value: 402).
+	w2 := WideString with: (Unicode value: 402).
+	self assert: (w1 endsWith: w2 caseSensitive: true).
+	self deny: (w1 endsWith: w2 asUppercase caseSensitive: true).
+	self assert: (w1 endsWith: w2 asUppercase caseSensitive: false).
 ]
 
 { #category : #tests }

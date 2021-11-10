@@ -36,6 +36,12 @@ SDL_SysWMinfo >> info: anObject [
 	handle structAt: OFFSET_INFO put: anObject getHandle length: SDL_SysWMinfo_InfoUnion byteSize
 ]
 
+{ #category : #testing }
+SDL_SysWMinfo >> isWindows [ 
+
+	^ self subsystem = SDL_SYSWM_WINDOWS
+]
+
 { #category : #'accessing - structure variables' }
 SDL_SysWMinfo >> subsystem [
 	"This method was automatically generated"

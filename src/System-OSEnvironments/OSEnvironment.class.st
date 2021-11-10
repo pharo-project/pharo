@@ -51,7 +51,7 @@ OSEnvironment class >> example [
 	Smalltalk os environment asDictionary inspect
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 OSEnvironment class >> initialize [
 	SessionManager default
 		registerSystemClassNamed: self name

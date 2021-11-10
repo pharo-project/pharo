@@ -59,9 +59,9 @@ ClyInstallMetaLinkPresenterTest >> testInstallSelectedMetalink [
 	presenter := ClyMetaLinkInstallationPresenter onNode: self nodeInRealMethod forInstallation:  true.
 	list := presenter metalinkListPresenter.
 	list clickItem: 1.
-	self deny: self nodeInRealMethod hasLinks.
+	self deny: self nodeInRealMethod hasMetaLinks.
 	presenter installSelectedMetalink.
-	self assert: self nodeInRealMethod hasLinks.
+	self assert: self nodeInRealMethod hasMetaLinks.
 	self assert: self nodeInRealMethod links asArray first identicalTo: list items first 
 ]
 
@@ -71,9 +71,9 @@ ClyInstallMetaLinkPresenterTest >> testInstallSelectedMetalinkActionButton [
 	presenter := ClyMetaLinkInstallationPresenter onNode: self nodeInRealMethod forInstallation:  true.
 	list := presenter metalinkListPresenter.
 	list clickItem: 1.	
-	self deny: self nodeInRealMethod hasLinks.
+	self deny: self nodeInRealMethod hasMetaLinks.
 	presenter toolbarButtons first click.
-	self assert: self nodeInRealMethod hasLinks.
+	self assert: self nodeInRealMethod hasMetaLinks.
 	self assert: self nodeInRealMethod links asArray first identicalTo: list items first 
 ]
 
@@ -124,9 +124,9 @@ ClyInstallMetaLinkPresenterTest >> testUninstallSelectedMetalink [
 	presenter := ClyMetaLinkInstallationPresenter onNode: self nodeInRealMethod forInstallation:  false.
 	list := presenter metalinkListPresenter.
 	list clickItem: 1.
-	self assert: self nodeInRealMethod hasLinks.
+	self assert: self nodeInRealMethod hasMetaLinks.
 	presenter uninstallSelectedMetalink.
-	self deny: self nodeInRealMethod hasLinks
+	self deny: self nodeInRealMethod hasMetaLinks
 ]
 
 { #category : #tests }
@@ -136,7 +136,7 @@ ClyInstallMetaLinkPresenterTest >> testUninstallSelectedMetalinkActionButton [
 	presenter := ClyMetaLinkInstallationPresenter onNode: self nodeInRealMethod forInstallation:  false.
 	list := presenter metalinkListPresenter.
 	list clickItem: 1.	
-	self assert: self nodeInRealMethod hasLinks.
+	self assert: self nodeInRealMethod hasMetaLinks.
 	presenter toolbarButtons first click.
-	self deny: self nodeInRealMethod hasLinks
+	self deny: self nodeInRealMethod hasMetaLinks
 ]

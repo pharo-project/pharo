@@ -7,12 +7,14 @@ Class {
 	#instVars : [
 		'classInstanceVariableNames'
 	],
-	#category : #'Refactoring-Changes'
+	#category : #'Refactoring-Changes-Changes-Classes'
 }
 
 { #category : #private }
 RBAddMetaclassChange class >> definitionPatterns [
-	^ #('`className class instanceVariableNames: `#instanceVariableNames'
+
+	^ #(
+		'`className class instanceVariableNames: `#instanceVariableNames'
 		'`className class uses: `@traitComposition instanceVariableNames: `#instanceVariableNames'
 		'`className class uses: `@traitComposition slots: `#instanceVariableNames'
 		'`className class slots: `#instanceVariableNames'
@@ -22,23 +24,28 @@ RBAddMetaclassChange class >> definitionPatterns [
 
 { #category : #converting }
 RBAddMetaclassChange >> asUndoOperation [
+
 	^ self class definition: self changeClass class oldDefinition
 ]
 
 { #category : #accessing }
 RBAddMetaclassChange >> classInstanceVariableNames [
+
 	^ classInstanceVariableNames
 ]
 
 { #category : #private }
 RBAddMetaclassChange >> definitionClass [
+
 	^ self changeClass
 ]
 
 { #category : #initialization }
 RBAddMetaclassChange >> fillOutDefinition: aDictionary [
+
 	className := (aDictionary at: '`className') asSymbol.
-	classInstanceVariableNames := self namesIn: (aDictionary
-		at: '`#instanceVariableNames'
-		ifAbsent: [ String new ])
+	classInstanceVariableNames := self namesIn:
+		                              (aDictionary
+			                               at: '`#instanceVariableNames'
+			                               ifAbsent: [ String new ])
 ]

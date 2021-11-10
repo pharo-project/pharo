@@ -51,10 +51,8 @@ WorldMorph class >> cursorOwnerWorld [
 
 { #category : #'extra worlds' }
 WorldMorph class >> cursorOwnerWorld: aWorld [
-	CursorOwnerWorld ~~ aWorld ifTrue: [ 
-		CursorOwnerWorld := aWorld.
-		(CursorOwnerWorld currentCursor ifNil: [Cursor normal]) beCursor
-	]
+	
+	CursorOwnerWorld := aWorld.
 
 ]
 
@@ -92,20 +90,18 @@ WorldMorph class >> displayScaleFactorSettingsOn: aBuilder [
 	
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #updating }
 WorldMorph class >> doOneCycle [
-	WorldState doDrawCycleWith: [
+
+	WorldState doDrawCycleWith: [ 
 		| extraWorldsToDraw |
-		extraWorldsToDraw := ExtraWorldListMutex critical: [ self extraWorldList ].
-		extraWorldsToDraw do: [:world |
-			world doOneCycle.
-		].
+		extraWorldsToDraw := ExtraWorldListMutex critical: [ 
+			                     self extraWorldList ].
+		extraWorldsToDraw do: [ :world | world doOneCycle ].
 
-		(self currentWorld isNotNil and: [(extraWorldsToDraw includes: self currentWorld) not]) ifTrue: [
-			self currentWorld doOneCycle.
-		]
-	].
-
+		(self currentWorld isNotNil and: [ 
+			 (extraWorldsToDraw includes: self currentWorld) not ]) ifTrue: [ 
+			self currentWorld doOneCycle ] ]
 ]
 
 { #category : #'extra worlds' }
@@ -114,7 +110,7 @@ WorldMorph class >> extraWorldList [
 	^ ExtraWorldList
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'class initialization' }
 WorldMorph class >> initialize [
 	ExtraWorldListMutex := Semaphore forMutualExclusion.
 ]
@@ -137,11 +133,6 @@ WorldMorph class >> scaleFactor [
 WorldMorph class >> scaleFactor: aValue [
 	
 	World scaleFactor: aValue
-]
-
-{ #category : #cursor }
-WorldMorph >> activateCursor: aCursor [
-     aCursor beCursor
 ]
 
 { #category : #operations }
