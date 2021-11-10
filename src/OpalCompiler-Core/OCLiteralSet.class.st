@@ -33,13 +33,13 @@ OCLiteralSet >> scanFor: anObject [
 
 	"Search from (hash mod size) to the end."
 	start to: finish do:
-		[:index | ((element := array at: index) isNil
+		[:index | ((element := array at: index) == nil
 					or: [element literalEqual: anObject])
 					ifTrue: [^ index ]].
 
 	"Search from 1 to where we started."
 	1 to: start-1 do:
-		[:index | ((element := array at: index) isNil
+		[:index | ((element := array at: index) == nil
 					or: [element literalEqual: anObject])
 					ifTrue: [^ index ]].
 

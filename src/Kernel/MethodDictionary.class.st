@@ -305,12 +305,12 @@ MethodDictionary >> scanFor: anObject [
 
 	"Search from (hash mod size) to the end."
 	start to: finish do:
-		[:index | ((element := self basicAt: index) isNil or: [element == anObject])
+		[:index | ((element := self basicAt: index) == nil or: [element == anObject])
 			ifTrue: [^ index ]].
 
 	"Search from 1 to where we started."
 	1 to: start-1 do:
-		[:index | ((element := self basicAt: index) isNil or: [element == anObject])
+		[:index | ((element := self basicAt: index) == nil or: [element == anObject])
 			ifTrue: [^ index ]].
 
 	^ 0  "No match AND no empty slot"
