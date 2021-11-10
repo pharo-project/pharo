@@ -11,13 +11,6 @@ Class {
 	#category : #'HeuristicCompletion-Model-Fetchers'
 }
 
-{ #category : #enumerating }
-CoGlobalVariableFetcher >> acceptsEntry: anEntry [
-
-	"entries are pre-filtered"
-	^ true
-]
-
 { #category : #accessing }
 CoGlobalVariableFetcher >> astNode [
 	^ astNode
@@ -32,7 +25,7 @@ CoGlobalVariableFetcher >> astNode: anObject [
 CoGlobalVariableFetcher >> entriesDo: aBlock [
 
 	self systemNavigation
-		allClassesStartingWith: filter completionString asLowercase 
+		allClassNamesStartingWith: filter completionString 
 		do: [ :e | aBlock value: (NECGlobalEntry contents: e node: astNode) ]
 ]
 

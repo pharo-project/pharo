@@ -1,3 +1,7 @@
+"
+I am representing the filters with a begins with.
+
+"
 Class {
 	#name : #CoBeginsWithFilter,
 	#superclass : #CoFilter,
@@ -27,4 +31,10 @@ CoBeginsWithFilter >> completionString [
 CoBeginsWithFilter >> completionString: anObject [
 
 	completionString := anObject
+]
+
+{ #category : #testing }
+CoBeginsWithFilter >> isLessNarrowThanNegation: anotherFilter [
+
+	^ false
 ]

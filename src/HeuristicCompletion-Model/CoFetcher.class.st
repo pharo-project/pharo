@@ -84,10 +84,14 @@ CoFetcher >> entriesDo: aBlock [
 ]
 
 { #category : #resetting }
-CoFetcher >> filter: aFilter [
+CoFetcher >> filter: newFilter [
 	
-	filter := aFilter.
-	self reset.
+	(newFilter isMoreNarrowThan: filter)
+		ifFalse: [ self reset ].
+		
+	filter := newFilter.
+
+
 ]
 
 { #category : #private }
@@ -144,7 +148,6 @@ CoFetcher >> reset [
 { #category : #composing }
 CoFetcher >> unnarrowFilter: aFilter narrowKey: aKey [
 
-	self reset.
 	self filter: aFilter
 ]
 

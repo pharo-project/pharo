@@ -21,7 +21,7 @@ CoNarrowHistoryFetcher >> entriesDo: aBlock [
 
 	"If previously I have detected that the decoree has not found entries, we need to avoid getting them again"
 	currentFinished ifTrue: [ ^ self ].
-
+	
 	decoree entriesDo: [ :elem | 
 		currentResults add: elem.
 		aBlock value: elem ].
@@ -47,6 +47,7 @@ CoNarrowHistoryFetcher >> narrowFilter: aFilter narrowKey: aKey [
 	currentResults := currentResults select: [ :e | aFilter accepts: e ].
 
 	decoree := decoree narrowFilter: aFilter narrowKey: currentKey.
+	filter := aFilter.
 	generator := nil.
 	currentFinished := false.
 	
@@ -71,13 +72,15 @@ CoNarrowHistoryFetcher >> unnarrowFilter: aFilter narrowKey: aKey [
 		ifPresent: [ :historyItem |
 			decoree := historyItem fetcher.
 			currentResults := historyItem results.
-			currentFinished := historyItem hasFinished ] 
+			currentFinished := historyItem hasFinished.
+			filter := aFilter.	
+			generator := nil.			
+			 ] 
 		ifAbsent: [ 
-			currentResults := OrderedCollection new.
+			self filter: aFilter.
 			decoree := decoree unnarrowFilter: aFilter narrowKey: aKey.
 			currentFinished := false ].
-	
-	generator := nil.
+
 	currentKey := aKey.
 ]
 

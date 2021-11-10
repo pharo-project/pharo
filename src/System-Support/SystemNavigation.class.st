@@ -38,6 +38,14 @@ SystemNavigation >> allCallsOn: aSymbol [
 ]
 
 { #category : #query }
+SystemNavigation >> allClassNamesStartingWith: aString do: aBlock [
+
+	self allClassesDo: [ :e |
+		(e name beginsWith: aString)
+			ifTrue: [ aBlock value: e name ] ]
+]
+
+{ #category : #query }
 SystemNavigation >> allClasses [
 	"Returns all the classes in the current environment."
 
@@ -65,14 +73,6 @@ SystemNavigation >> allClassesDo: aBlock [
 SystemNavigation >> allClassesImplementing: aSelector [  
 	"Answer all classes that implement the message aSelector."
 	^self allBehaviors select: [:class | class includesSelector: aSelector]
-]
-
-{ #category : #query }
-SystemNavigation >> allClassesStartingWith: aString do: aBlock [
-
-	self allClassesDo: [ :e |
-		(e name beginsWith: aString)
-			ifTrue: [ aBlock value: e ] ]
 ]
 
 { #category : #query }

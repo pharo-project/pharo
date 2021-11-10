@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #accessing }
-CoMockSystemNavigation >> allClassesStartingWith: aString do: aBlock [
+CoMockSystemNavigation >> allClassNamesStartingWith: aString do: aBlock [
 
 	globals do: [ :e |
 		(aString isEmpty or: [ e beginsWith: aString ])

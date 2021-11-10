@@ -1,3 +1,8 @@
+"
+The begins with can be case sensitive or not.
+I am the implementation of insensitive comparison.
+
+"
 Class {
 	#name : #CoCaseInsensitiveBeginsWithFilter,
 	#superclass : #CoBeginsWithFilter,
@@ -17,4 +22,22 @@ CoCaseInsensitiveBeginsWithFilter >> accepts: aCandidate [
 	
 	completionString ifEmpty: [ ^ true ].
 	^ aCandidate contents asLowercase beginsWith: completionString asLowercase
+]
+
+{ #category : #testing }
+CoCaseInsensitiveBeginsWithFilter >> isLessNarrowThanCaseInsensitive: anotherFilter [
+
+	^ anotherFilter completionString beginsWith: self completionString
+]
+
+{ #category : #testing }
+CoCaseInsensitiveBeginsWithFilter >> isLessNarrowThanCaseSensitive: anotherFilter [
+
+	^ false
+]
+
+{ #category : #testing }
+CoCaseInsensitiveBeginsWithFilter >> isMoreNarrowThan: anotherFilter [
+
+	^ anotherFilter isLessNarrowThanCaseInsensitive: self
 ]
