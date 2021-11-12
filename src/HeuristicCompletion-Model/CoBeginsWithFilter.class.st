@@ -17,8 +17,13 @@ CoBeginsWithFilter class >> caseSensitive: aBoolean filterString: aString [
 	aBoolean ifTrue: [ 
 		^ CoCaseSensitiveBeginsWithFilter new
 			completionString: aString;
-			yourself ].
-	self halt
+			yourself ] 
+		ifFalse: [ 
+		^ CoCaseInsensitiveBeginsWithFilter new
+			completionString: aString;
+			yourself	]
+		
+
 ]
 
 { #category : #accessing }

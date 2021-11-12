@@ -8,7 +8,7 @@ Class {
 	#category : #'HeuristicCompletion-Tests-Core'
 }
 
-{ #category : #initialization }
+{ #category : #running }
 CoResultSetResettingTest >> setUp [
 
 	super setUp.
