@@ -4,9 +4,6 @@ I am a command to make a class abstract by adding a method that returns whether 
 Class {
 	#name : #SycCMakeAbstractCommand,
 	#superclass : #SycClassCmCommand,
-	#instVars : [
-		'newClassName'
-	],
 	#category : #'SystemCommands-ClassCommands'
 }
 
