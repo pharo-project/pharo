@@ -117,7 +117,7 @@ CairoFreetypeFontRenderer >> glyphsOf: aString from: start to: end [
 
 	ptr := ExternalAddress new.
 	lenValue := ByteArray new: 4.
-	lenValue nbUInt32AtOffset: 0 put: len.
+	lenValue unsignedLongAt: 1 put: len.
 	
 	"somehow scaled font is buggy and calculated glyphs have wrong extents,
 	setting font size manually and retrieving 'fixed' scaled font solves the problem"
@@ -136,7 +136,7 @@ CairoFreetypeFontRenderer >> glyphsOf: aString from: start to: end [
 		
 	error = CAIRO_STATUS_SUCCESS ifFalse: [  ^ CairoGlyphsArray new: 0 ].
 
-	glyphsSize := lenValue nbUInt32AtOffset: 0.
+	glyphsSize := lenValue unsignedLongAt: 1.
    font getExtentsOfGlyphs: ptr ofLength: glyphsSize into: glyphExtents.
 	advance := glyphExtents width @ glyphExtents height.
 	

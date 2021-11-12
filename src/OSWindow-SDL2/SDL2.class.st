@@ -199,7 +199,7 @@ SDL2 class >> glGetAttribute: attr [
 
 	^ ExternalAddress allocate: 4 bytesDuring: [ :value | 
 		  self glGetAttribute: attr into: value.
-		  value nbUInt32AtOffset: 0 ]
+		  value unsignedLongAt: 1 ]
 ]
 
 { #category : #opengl }

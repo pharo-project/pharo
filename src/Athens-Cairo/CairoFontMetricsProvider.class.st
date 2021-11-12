@@ -108,7 +108,7 @@ CairoFontMetricsProvider >> glyphsOf: aString from: start to: end [
 
 	ptr := ExternalAddress new.
 	lenValue := ByteArray new: 4.
-	lenValue nbUInt32AtOffset: 0 put: len.
+	lenValue unsignedLongAt: 1 put: len.
 		
 	error := self 
 		convertString: utfConverter buffer 
@@ -121,7 +121,7 @@ CairoFontMetricsProvider >> glyphsOf: aString from: start to: end [
 		
 	error = CAIRO_STATUS_SUCCESS ifFalse: [  ^ CairoGlyphsArray new: 0 ].
 
-	glyphsSize := lenValue nbUInt32AtOffset: 0.
+	glyphsSize := lenValue unsignedLongAt: 1.
    cairoFont getExtentsOfGlyphs: ptr ofLength: glyphsSize into: glyphExtents.
 	
 	glyphs := CairoGlyphsArray new: glyphsSize.
