@@ -159,7 +159,11 @@ SystemNavigation >> allPrimitiveMethods [
 SystemNavigation >> allReferencesTo: aLiteral [
 	"Answer all the methods that refer to aLiteral even deeply embedded in literal array."
 
-	^ self allBehaviors flatCollect: [ :class | class thoroughWhichMethodsReferTo: aLiteral]
+
+	| specialIndex |
+	"for speed we check the special selectors here once per class"
+	specialIndex := Smalltalk specialSelectorIndexOrNil: aLiteral.
+	^ self allBehaviors flatCollect: [ :class | class thoroughWhichMethodsReferTo: aLiteral specialIndex: specialIndex ]
 ]
 
 { #category : #query }

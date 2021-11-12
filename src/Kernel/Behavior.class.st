@@ -1674,6 +1674,15 @@ Behavior >> thoroughWhichMethodsReferTo: literal [
 ]
 
 { #category : #'testing - method dictionary' }
+Behavior >> thoroughWhichMethodsReferTo: literal specialIndex: specialIndex [
+	"Answer methods whose methods referes to the argument as a literal. 
+	 Dives into the compact literal notation and embedded literal arrays, 
+    making it slow but thorough "
+
+	^ self methods select: [ :method | method hasSelector: literal specialSelectorIndex: specialIndex ]
+]
+
+{ #category : #'testing - method dictionary' }
 Behavior >> thoroughWhichSelectorsReferTo: literal [
 	^ (self thoroughWhichMethodsReferTo: literal) collect: [ :method | method selector ]
 ]
