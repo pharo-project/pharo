@@ -1,6 +1,6 @@
 Extension { #name : #String }
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 String >> addToMetacelloPackages: aMetacelloPackagesSpec [
 
 	| spec |
@@ -15,23 +15,23 @@ String >> addToMetacelloPackages: aMetacelloPackagesSpec [
 			yourself)
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 String >> asMetacelloSemanticVersionNumber [
     ^ MetacelloSemanticVersionNumber fromString: self
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 String >> asMetacelloVersionNumber [
 
 	^MetacelloVersionNumber fromString: self
 ]
 
-{ #category : #'*metacello-core-scripting' }
+{ #category : #'*Metacello-Core-scripting' }
 String >> execute: projectSpecBlock against: aScriptExecutor [
     aScriptExecutor executeString: self do: projectSpecBlock
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 String >> mergeIntoMetacelloPackages: aMetacelloPackagesSpec [
 
 	| spec |
@@ -46,43 +46,43 @@ String >> mergeIntoMetacelloPackages: aMetacelloPackagesSpec [
 			yourself)
 ]
 
-{ #category : #'*metacello-core-version comparison' }
+{ #category : #'*Metacello-Core-version comparison' }
 String >> metacelloIntegerLessThanSelf: anInteger [
 	"integer version components are always '>' string component"
 
 	^false
 ]
 
-{ #category : #'*metacello-core-version comparison' }
+{ #category : #'*Metacello-Core-version comparison' }
 String >> metacelloSemanticIntegerLessThanSelf: anInteger [
     "integer version components are always '>' string component"
 
     ^ true
 ]
 
-{ #category : #'*metacello-core-version comparison' }
+{ #category : #'*Metacello-Core-version comparison' }
 String >> metacelloSemanticStringLessThanSelf: aString [
     ^ aString < self
 ]
 
-{ #category : #'*metacello-core-version comparison' }
+{ #category : #'*Metacello-Core-version comparison' }
 String >> metacelloSemanticVersionComponentLessThan: aMetacelloVersonComponent [
     ^ aMetacelloVersonComponent metacelloSemanticStringLessThanSelf: self
 ]
 
-{ #category : #'*metacello-core-version comparison' }
+{ #category : #'*Metacello-Core-version comparison' }
 String >> metacelloStringLessThanSelf: aString [
 
 	^aString < self
 ]
 
-{ #category : #'*metacello-core-version comparison' }
+{ #category : #'*Metacello-Core-version comparison' }
 String >> metacelloVersionComponentLessThan: aMetacelloVersonComponent [
 
 	^aMetacelloVersonComponent metacelloStringLessThanSelf: self
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 String >> removeFromMetacelloPackages: aMetacelloPackagesSpec [
 
 	aMetacelloPackagesSpec addMember: 
@@ -91,13 +91,13 @@ String >> removeFromMetacelloPackages: aMetacelloPackagesSpec [
 			yourself)
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 String >> setAuthorInMetacelloConfig: aMetacelloConfig [
 
 	aMetacelloConfig setAuthorWithString: self
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 String >> setAuthorInMetacelloVersion: aMetacelloVersionSpec [
 
 	aMetacelloVersionSpec setAuthor: 
@@ -106,13 +106,13 @@ String >> setAuthorInMetacelloVersion: aMetacelloVersionSpec [
 			yourself)
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 String >> setBlessingInMetacelloConfig: aMetacelloConfig [
 
 	aMetacelloConfig setBlessingWithString: self
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 String >> setBlessingInMetacelloVersion: aMetacelloVersionSpec [
 
 	aMetacelloVersionSpec setBlessing: 
@@ -121,13 +121,13 @@ String >> setBlessingInMetacelloVersion: aMetacelloVersionSpec [
 			yourself)
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 String >> setDescriptionInMetacelloConfig: aMetacelloConfig [
 
 	aMetacelloConfig setDescriptionWithString: self
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 String >> setDescriptionInMetacelloVersion: aMetacelloVersionSpec [
 
 	aMetacelloVersionSpec setDescription: 
@@ -136,58 +136,58 @@ String >> setDescriptionInMetacelloVersion: aMetacelloVersionSpec [
 			yourself)
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 String >> setImportInVersionSpec: aMetacelloVersionSpec [
   aMetacelloVersionSpec setImport: {self}
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 String >> setIncludesInMetacelloPackage: aMetacelloPackageSpec [
 
 	aMetacelloPackageSpec setIncludes: { self }.
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 String >> setLoadsInMetacelloProject: aMetacelloPackageSpec [
 
 	aMetacelloPackageSpec setLoads: { self }.
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 String >> setPackage: aString withInMetacelloConfig: aMetacelloConfig [
 
 	aMetacelloConfig setPackage: aString withString: self
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 String >> setPostLoadDoItInMetacelloSpec: aMetacelloSpec [
     self asSymbol setPostLoadDoItInMetacelloSpec: aMetacelloSpec
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 String >> setPreLoadDoItInMetacelloSpec: aMetacelloSpec [
     self asSymbol setPreLoadDoItInMetacelloSpec: aMetacelloSpec
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 String >> setProject: aString withInMetacelloConfig: aMetacelloConfig [
 
 	aMetacelloConfig setProject: aString withString: self
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 String >> setRequiresInMetacelloPackage: aMetacelloPackageSpec [
 
 	aMetacelloPackageSpec setRequires: { self }.
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 String >> setTimestampInMetacelloConfig: aMetacelloConfig [
 
 	aMetacelloConfig setTimestampWithString: self
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 String >> setTimestampInMetacelloVersion: aMetacelloVersionSpec [
 
 	aMetacelloVersionSpec setTimestamp: 
