@@ -1,6 +1,6 @@
 Extension { #name : #BlockClosure }
 
-{ #category : #'*Metacello-Core-scripting' }
+{ #category : #'*Metacello-Core' }
 BlockClosure >> execute: projectSpecBlock against: aScriptExecutor [
     aScriptExecutor executeBlock: self do: projectSpecBlock
 ]

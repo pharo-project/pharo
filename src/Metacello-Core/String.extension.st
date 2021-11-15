@@ -26,7 +26,7 @@ String >> asMetacelloVersionNumber [
 	^MetacelloVersionNumber fromString: self
 ]
 
-{ #category : #'*Metacello-Core-scripting' }
+{ #category : #'*Metacello-Core' }
 String >> execute: projectSpecBlock against: aScriptExecutor [
     aScriptExecutor executeString: self do: projectSpecBlock
 ]
