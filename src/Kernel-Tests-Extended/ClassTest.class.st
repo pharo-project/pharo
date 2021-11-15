@@ -272,6 +272,13 @@ ClassTest >> testHasBindingThatBeginsWith [
 
 ]
 
+{ #category : #'tests - class variables' }
+ClassTest >> testHasClassVarNamed [
+
+	self assert: (Object hasClassVarNamed: #DependentsFields).
+	self deny: (Object hasClassVarNamed: #CompilerClass)
+]
+
 { #category : #'tests - access' }
 ClassTest >> testHasPoolVarNamed [	
 
