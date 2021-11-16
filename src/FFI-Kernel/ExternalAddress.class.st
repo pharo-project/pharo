@@ -57,7 +57,7 @@ ExternalAddress class >> new: n [
 		ifFalse: [self shouldNotImplement]
 ]
 
-{ #category : #'class initialization' }
+{ #category : #'system startup' }
 ExternalAddress class >> startUp: resuming [
 	"If starting the image afresh all external addresses should be zero.
 	 In addition, if the word size has changed then external addresses shoiuld be resized.

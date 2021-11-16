@@ -232,7 +232,7 @@ Deprecation >> transform [
 	self shouldTransform ifFalse: [ ^ self signal].
 	self rewriterClass ifNil:[ ^ self signal ].
 	aMethod := self contextOfSender compiledCode method.
-	aMethod isDoIt ifTrue:[^ self]. "no need to transform doits"
+	aMethod isDoIt ifTrue:[ ^ self signal ]. "no need to transform doits"
 	node := self contextOfSender sourceNodeExecuted.
 	RecursionStopper during: [
 		rewriteRule := self rewriterClass new 

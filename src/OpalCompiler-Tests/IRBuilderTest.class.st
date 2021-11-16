@@ -459,10 +459,6 @@ IRBuilderTest >> testPushThisProcess [
 		ir.
 
 	aCompiledMethod := iRMethod compiledMethod.
-	
-	"the bc is only created if we use EncoderForSistaV1"
-	(aCompiledMethod encoderClass  = EncoderForSistaV1) ifFalse: [ ^self skip ].
-	
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
 	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: Process.
 	^ iRMethod

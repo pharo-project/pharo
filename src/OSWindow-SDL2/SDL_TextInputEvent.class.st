@@ -106,7 +106,7 @@ SDL_TextInputEvent >> strlen [
 	len := 0.
 	12 to: 12 + 32 - 1 do:
 		[ :i | 
-		(self getHandle nbUInt8AtOffset: i) = 0
+		(self getHandle unsignedByteAt: i + 1) = 0
 			ifTrue: [ ^ len ].
 		len := len + 1 ].
 	^ len
@@ -118,7 +118,7 @@ SDL_TextInputEvent >> text [
 	len := self strlen.
 	text := ByteArray new: len.
 	1 to: len do: [ :i |
-		text at: i put: (self getHandle nbUInt8AtOffset: 12 + i - 1)
+		text at: i put: (self getHandle unsignedByteAt: 12 + i)
 	].
 	^ text
 ]

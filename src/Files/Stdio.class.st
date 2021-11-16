@@ -91,7 +91,7 @@ Stdio class >> standardIOStreamNamed: moniker forWrite: forWrite [
 	^ StdioStream handle: handle file: (File named: moniker) forWrite: forWrite
 ]
 
-{ #category : #'startup - shutdown' }
+{ #category : #'system startup' }
 Stdio class >> startUp: resuming [
 
 	resuming ifTrue: [ self cleanStdioHandles ].

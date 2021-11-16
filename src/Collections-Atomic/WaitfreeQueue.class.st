@@ -56,9 +56,9 @@ WaitfreeQueue class >> new: anInteger [
 
 { #category : #'instance creation' }
 WaitfreeQueue class >> withAll: aCollection [
-	"Answer an instance of the receiver initialised with the supplied collection of items"
+	"Answer an instance of the receiver initialized with the supplied collection of items"
 
-	^self new initializeWithAll: aCollection
+	^ self new initializeWithAll: aCollection
 ]
 
 { #category : #'private - accessing' }
@@ -152,13 +152,13 @@ WaitfreeQueue >> initialize [
 
 { #category : #initialization }
 WaitfreeQueue >> initializeWithAll: aCollection [
-	"Initialise the receiver with the supplied items (AtomicQueueItem).
+	"Initialize the receiver with the supplied items (AtomicQueueItem).
 	This method is not thread safe and should only be used for initialising the queue prior to normal operation (and is normally used only for testing)."
 
 	dummy next: aCollection first.
 	1 to: aCollection size - 1 do: [ :i |
 		(aCollection at: i) next: (aCollection at: i+1) ].
-	tail := aCollection last.
+	tail := aCollection last
 ]
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ SUnit tests for MethodClassifier
 Class {
 	#name : #MethodClassifierTest,
 	#superclass : #TestCase,
-	#category : #'Tools-Test-Base'
+	#category : #'Tools-Tests-Base'
 }
 
 { #category : #tests }

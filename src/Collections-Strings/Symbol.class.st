@@ -313,7 +313,7 @@ Symbol class >> selectorsContaining: aString [
 "Symbol selectorsContaining: 'scon'"
 ]
 
-{ #category : #private }
+{ #category : #'system startup' }
 Symbol class >> shutDown: aboutToQuit [
 
 	SymbolTable addAll: NewSymbols.

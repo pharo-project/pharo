@@ -88,6 +88,12 @@ RBRefactoring class >> initializeRefactoringOptions [
 		put: [ self error: #searchInWholeHierarchy ]
 ]
 
+{ #category : #testing }
+RBRefactoring class >> isAbstract [
+
+	^ self == RBRefactoring
+]
+
 { #category : #'accessing signal' }
 RBRefactoring class >> preconditionSignal [
 	^ RBRefactoringError , RBRefactoringWarning
@@ -148,10 +154,13 @@ RBRefactoring >> checkPreconditions [
 ]
 
 { #category : #private }
-RBRefactoring >> classObjectFor: anObject [ 
-	(anObject isBehavior or: [anObject isTrait]) ifTrue: [^self model classFor: anObject].
-	anObject isSymbol ifTrue: [^self model classNamed: anObject].
-	^anObject
+RBRefactoring >> classObjectFor: anObject [
+
+	(anObject isBehavior or: [ anObject isTrait ]) ifTrue: [ 
+		^ self model classFor: anObject ].
+	anObject isString ifTrue: [ 
+		^ self model classNamed: anObject asSymbol ].
+	^ anObject
 ]
 
 { #category : #support }

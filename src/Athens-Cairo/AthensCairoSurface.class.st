@@ -209,7 +209,7 @@ AthensCairoSurface class >> findSurface: surfaceId [
 	
 	
 	(self primFindSurface: surfaceId handle: buf) ifTrue: [
-		^ buf nbUlongAt: 1
+		^ buf unsignedLongAt: 1
 		].
 	
 	^ nil. 

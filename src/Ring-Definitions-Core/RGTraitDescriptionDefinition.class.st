@@ -10,6 +10,12 @@ Class {
 	#category : #'Ring-Definitions-Core-Base'
 }
 
+{ #category : #testing }
+RGTraitDescriptionDefinition class >> isAbstract [
+
+	^ self == RGTraitDescriptionDefinition
+]
+
 { #category : #'adding/removing users' }
 RGTraitDescriptionDefinition >> addUser: aRGBehavior [
 

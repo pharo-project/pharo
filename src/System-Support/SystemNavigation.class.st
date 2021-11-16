@@ -159,7 +159,11 @@ SystemNavigation >> allPrimitiveMethods [
 SystemNavigation >> allReferencesTo: aLiteral [
 	"Answer all the methods that refer to aLiteral even deeply embedded in literal array."
 
-	^ self allBehaviors flatCollect: [ :class | class thoroughWhichMethodsReferTo: aLiteral]
+
+	| specialIndex |
+	"for speed we check the special selectors here once per class"
+	specialIndex := Smalltalk specialSelectorIndexOrNil: aLiteral.
+	^ self allBehaviors flatCollect: [ :class | class thoroughWhichMethodsReferTo: aLiteral specialIndex: specialIndex ]
 ]
 
 { #category : #query }
@@ -307,7 +311,7 @@ SystemNavigation >> methodsReferencingObsoleteClasses [
 	"Returns all methods that reference obsolete behaviors"
 	
 	| obsClasses |
-	obsClasses := self obsoleteBehaviors.
+	obsClasses := self obsoleteClasses.
 	
 	^Array streamContents: [ :methods |
 		obsClasses keysAndValuesDo: 
@@ -339,21 +343,6 @@ SystemNavigation >> methodsWithUnboundGlobals [
 			and: [(m methodClass classBindingOf: l key)
 					ifNil: [(Undeclared associationAt: l key ifAbsent: []) ~~ l]
 					ifNotNil: [:b| b ~~ l]]]]]]
-]
-
-{ #category : #'identifying obsoletes' }
-SystemNavigation >> obsoleteBehaviors [
-	"SystemNavigation new obsoleteBehaviors inspect"
-	"Find all obsolete behaviors including meta classes"
-
-	| obs |
-	obs := OrderedCollection new.
-	Smalltalk garbageCollect.
-	self 
-		allObjectsDo: [:cl | 
-			(cl isBehavior	and: [ cl isObsolete])
-				ifTrue: [ obs add: cl]].
-	^ obs asArray
 ]
 
 { #category : #'identifying obsoletes' }

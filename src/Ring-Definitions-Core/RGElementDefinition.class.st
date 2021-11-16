@@ -136,6 +136,12 @@ RGElementDefinition class >> classNameKey [
 	^#className
 ]
 
+{ #category : #testing }
+RGElementDefinition class >> isAbstract [
+
+	^ self == RGElementDefinition
+]
+
 { #category : #'elements-annotations' }
 RGElementDefinition class >> isMetaSideKey [
 

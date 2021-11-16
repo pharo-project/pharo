@@ -26,7 +26,7 @@ PharoCommonTools class >> browsingSettingsOn: aBuilder [
 		parent: #codeBrowsing.
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 PharoCommonTools class >> initialize [
 	SessionManager default
 		registerToolClassNamed: self name

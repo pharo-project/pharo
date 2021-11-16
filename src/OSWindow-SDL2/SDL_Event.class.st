@@ -11,6 +11,12 @@ Class {
 }
 
 { #category : #'class initialization' }
+SDL_Event class >> eventNameFromType: aType [
+
+	^ EventTypeMap at: aType ifPresent: [ :x | x name ] ifAbsent: [ 'Unknown:' , aType printString ].
+]
+
+{ #category : #'class initialization' }
 SDL_Event class >> initialize [
 	"self initialize"
 
@@ -44,7 +50,7 @@ SDL_Event >> mapped [
 
 { #category : #accessing }
 SDL_Event >> type [
-	^self getHandle nbUInt32AtOffset: 0
+	^self getHandle unsignedLongAt: 1
 ]
 
 { #category : #accessing }

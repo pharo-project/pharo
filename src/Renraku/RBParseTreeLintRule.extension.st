@@ -1,6 +1,6 @@
 Extension { #name : #RBParseTreeLintRule }
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 RBParseTreeLintRule >> check: aMethod forCritiquesDo: aCriticBlock [
 
 	(self matcher canMatchMethod: aMethod) ifTrue: [
@@ -13,7 +13,7 @@ RBParseTreeLintRule >> check: aMethod forCritiquesDo: aCriticBlock [
 				self critiqueFor: node about: aMethod) ] ].
 ]
 
-{ #category : #'*renraku' }
+{ #category : #'*Renraku' }
 RBParseTreeLintRule >> critiqueFor: aNode about: aMethod [
 	| anchor | 
 

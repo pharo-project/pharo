@@ -149,6 +149,14 @@ Metaclass >> hasClassSide [
 	^ false
 ]
 
+{ #category : #'accessing - instances and variables' }
+Metaclass >> hasClassVarNamed: aString [
+
+	^self instanceSide 
+		ifNil: [ false ]
+		ifNotNil: [ :class | class hasClassVarNamed: aString ]
+]
+
 { #category : #compiling }
 Metaclass >> innerBindingOf: varName [
 

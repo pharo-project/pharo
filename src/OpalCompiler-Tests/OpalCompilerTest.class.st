@@ -100,7 +100,6 @@ OpalCompilerTest >> testCompilerUsingCleanBlockClosureHasBlockAsLiteral [
 
 	| compiler method |
 	compiler := Smalltalk compiler.
-	compiler compilationContext encoderClass: EncoderForSistaV1.
 	compiler compilationContext compilerOptions:
 		#(+ optionCleanBlockClosure ).
 

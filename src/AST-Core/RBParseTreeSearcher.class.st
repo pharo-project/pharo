@@ -135,6 +135,20 @@ RBParseTreeSearcher >> addRules: ruleCollection [
 	ruleCollection do: [:each | self addRule: each]
 ]
 
+{ #category : #search }
+RBParseTreeSearcher >> addSearch: anAssociation [ 
+	"Create a search rule whose pattern is the association key and action is the association value."
+	
+	self matches: anAssociation key do: anAssociation value
+]
+
+{ #category : #search }
+RBParseTreeSearcher >> addSearches: aCollectionOfAssociations [
+	"Defines matching rules based on the list of Association (pattern * action)."
+	
+	aCollectionOfAssociations do: [ :each | self addSearch: each ]
+]
+
 { #category : #accessing }
 RBParseTreeSearcher >> answer [
 	^answer
