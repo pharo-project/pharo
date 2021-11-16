@@ -56,19 +56,6 @@ CDFluidClassDefinitionParser >> handleClassAndSuperclassOf: aNode [
 
 ]
 
-{ #category : #internal }
-CDFluidClassDefinitionParser >> handleClassName: aNode [
-
-	| className classNode |
-	className := (aNode isVariable
-		ifTrue: [ aNode name ]
-		ifFalse: [ aNode value ]) asSymbol.
-	classNode := self classNameNodeClass new
-		originalNode: aNode;
-		className: className.
-	classDefinition className: className astNode: classNode
-]
-
 { #category : #'handling  nodes' }
 CDFluidClassDefinitionParser >> handleLayout: aNode [
 	classDefinition layoutClass: aNode binding value
