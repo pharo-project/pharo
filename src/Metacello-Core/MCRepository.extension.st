@@ -13,7 +13,7 @@ MCRepository class >> findFiletreeAlternateFormat: aRepositorySpec ifFound: aBlo
 	^ repositoryClass ifNotNil: [ aBlock cull: repositoryClass ]
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 MCRepository >> flushForScriptGet [
     "noop"
 ]
@@ -41,21 +41,21 @@ MCRepository class >> newRepositoryFromSpec: aRepositorySpec on: aPlatform [
 		ifNone: [ self error: 'Unknown repository type: ' , aRepositorySpec description ]
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 MCRepository >> repositoryBranchName [
   "extract a branch name from the repository ... if possible"
 
   ^ ''
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 MCRepository >> repositoryDescription [
   "return a description that includes a repositoryVersionString and repositoryBranchName if present"
 
   ^ self description
 ]
 
-{ #category : #'*metacello-core' }
+{ #category : #'*Metacello-Core' }
 MCRepository >> repositoryVersionString [
   "extract a version string from the repository ... if possible"
 
