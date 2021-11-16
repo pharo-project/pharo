@@ -3746,11 +3746,11 @@ Morph >> isSteppingSelector: aSelector [
 		ifNotNil:	[aWorld isStepping: self selector: aSelector]
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 Morph >> isSticky [
 	"answer whether the receiver is Sticky"
-	extension ifNil: [^ false].
-	^ extension sticky
+
+	^ extension ifNil: [ false ] ifNotNil: [ :ext | ext sticky ]
 ]
 
 { #category : #classification }
