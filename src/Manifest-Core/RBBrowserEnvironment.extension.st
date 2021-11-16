@@ -1,6 +1,6 @@
 Extension { #name : #RBBrowserEnvironment }
 
-{ #category : #'*manifest-core' }
+{ #category : #'*Manifest-Core' }
 RBBrowserEnvironment >> isMultiEnvironment [
 	^ false
 ]
