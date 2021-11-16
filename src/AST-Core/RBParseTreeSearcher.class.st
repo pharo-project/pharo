@@ -309,6 +309,12 @@ RBParseTreeSearcher >> recusivelySearchInContext [
 	context := oldContext
 ]
 
+{ #category : #'accessing - context' }
+RBParseTreeSearcher >> variableNamed: aString [ 
+	
+	^ (context associations detect: [ :assoc | assoc key name = aString  ]) value
+]
+
 { #category : #visiting }
 RBParseTreeSearcher >> visitArgumentNode: aNode [
 	| value |

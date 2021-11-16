@@ -137,7 +137,7 @@ FluidClassDefinitionPrinterTest >> testExpandedEmptyLayoutClass [
 	self 
 		assert: (self expandedForClass: EmptyLayout class)  
 		equals: 'EmptyLayout class
-	uses: {};
+	traits: {};
 	slots: { #instance }'
 ]
 
@@ -148,7 +148,7 @@ FluidClassDefinitionPrinterTest >> testExpandedOnClassWithoutTag [
 		assert: (self expandedForClass: EncoderForSistaV1)
 		equals:   'BytecodeEncoder << #EncoderForSistaV1
 	layout: FixedLayout;
-	uses: {};
+	traits: {};
 	slots: {};
 	sharedVariables: {};
 	sharedPools: {};
@@ -163,7 +163,7 @@ FluidClassDefinitionPrinterTest >> testExpandedPoint [
 		assert: (self expandedForClass: Point) 
 		equals: 'Object << #Point
 	layout: FixedLayout;
-	uses: {};
+	traits: {};
 	slots: { #x . #y };
 	sharedVariables: {};
 	sharedPools: {};
@@ -179,7 +179,7 @@ FluidClassDefinitionPrinterTest >> testExpandedTime [
 		assert: (self expandedForClass: Time)  
 		equals: 'Magnitude << #Time
 	layout: FixedLayout;
-	uses: {};
+	traits: {};
 	slots: { #seconds . #nanos };
 	sharedVariables: {};
 	sharedPools: { ChronologyConstants };
@@ -216,7 +216,7 @@ FluidClassDefinitionPrinterTest >> testMetaclass [
 FluidClassDefinitionPrinterTest >> testMetaclassClass [
 	
 	self assert: (self forClass: Metaclass class) equals: 
- 'Metaclass class'	
+ 'ClassDescription class << Metaclass class'	
 ]
 
 { #category : #'tests - classes' }
@@ -257,12 +257,12 @@ FluidClassDefinitionPrinterTest >> testProtoObject [
 { #category : #'tests - classes' }
 FluidClassDefinitionPrinterTest >> testProtoObjectClass [
 	
-	self assert: (self forClass: ProtoObject class) equals: 'ProtoObject class'
+	self assert: (self forClass: ProtoObject class) equals: 'Class class << ProtoObject class'
 ]
 
 { #category : #'tests - metaclasses' }
 FluidClassDefinitionPrinterTest >> testSystemAnnouncerClass [
 	
-	self assert: (self forClass: SystemAnnouncer class) equals: 'SystemAnnouncer class
+	self assert: (self forClass: SystemAnnouncer class) equals: 'Announcer class << SystemAnnouncer class
 	slots: { #announcer }'
 ]
