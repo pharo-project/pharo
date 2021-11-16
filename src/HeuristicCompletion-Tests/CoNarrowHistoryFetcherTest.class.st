@@ -21,17 +21,17 @@ CoNarrowHistoryFetcherTest >> testNarrowingAndUnnarrowingReturnsSameResult [
 	fetcher := (CoCollectionFetcher onCollection: Symbol selectorTable)
 		           withNarrowHistory.
 	fetcher := fetcher
-		           narrowFilterBlock: [ :e | e beginsWith: 'as' ]
+		           narrowFilter: (CoCaseSensitiveBeginsWithFilter filterString: 'as')
 		           narrowKey: 'as'.
 	f1Result := fetcher next: 10.
 
 	fetcher := fetcher
-		           narrowFilterBlock: [ :e | e beginsWith: 'asC' ]
+		           narrowFilter: (CoCaseSensitiveBeginsWithFilter filterString: 'asC')
 		           narrowKey: 'asC'.
 	f2Result := fetcher next: 10.
 
 	fetcher := fetcher
-		      unnarrowFilterBlock: [ :e | e beginsWith: 'as' ]
+		      unnarrowFilter: (CoCaseSensitiveBeginsWithFilter filterString: 'as')
 		      narrowKey: 'as'.
 	f3Result := fetcher next: 10.
 
@@ -47,7 +47,7 @@ CoNarrowHistoryFetcherTest >> testNarrowingReturnsSameElementsThatCallingDirectl
 	fetcher := (CoCollectionFetcher onCollection: Symbol selectorTable)
 		           withNarrowHistory.
 	fetcher := fetcher
-		           narrowFilterBlock: [ :e | e beginsWith: 'asL' ]
+		           narrowFilter: (CoCaseSensitiveBeginsWithFilter filterString: 'asL')
 		           narrowKey: 'as'.
 	originalSearch := fetcher next: 10.
 
@@ -55,11 +55,11 @@ CoNarrowHistoryFetcherTest >> testNarrowingReturnsSameElementsThatCallingDirectl
 	fetcher := (CoCollectionFetcher onCollection: Symbol selectorTable)
 		           withNarrowHistory.
 	fetcher := fetcher
-		           narrowFilterBlock: [ :e | e beginsWith: 'as' ]
+		           narrowFilter: (CoCaseSensitiveBeginsWithFilter filterString: 'as')
 		           narrowKey: 'as'.
 	fetcher next: 10.
 	fetcher := fetcher
-		           narrowFilterBlock: [ :e | e beginsWith: 'asL' ]
+		           narrowFilter: (CoCaseSensitiveBeginsWithFilter filterString: 'asL')
 		           narrowKey: 'asL'.
 
 	narrowedResults := fetcher next: 10.
@@ -75,22 +75,22 @@ CoNarrowHistoryFetcherTest >> testUnnarrowingAndThenNarrowingReturnsSameResult [
 	fetcher := (CoCollectionFetcher onCollection: Symbol selectorTable)
 		           withNarrowHistory.
 	fetcher := fetcher
-		           narrowFilterBlock: [ :e | e beginsWith: 'as' ]
+		           narrowFilter: (CoCaseSensitiveBeginsWithFilter filterString: 'as')
 		           narrowKey: 'as'.
 	fetcher upToEnd.
 
 	fetcher := fetcher
-		           narrowFilterBlock: [ :e | e beginsWith: 'asL' ]
+		           narrowFilter: (CoCaseSensitiveBeginsWithFilter filterString: 'asL')
 		           narrowKey: 'asC'.
 	originalResults := fetcher upToEnd.
 
 	fetcher := fetcher
-		      unnarrowFilterBlock: [ :e | e beginsWith: 'as' ]
+		      unnarrowFilter: (CoCaseSensitiveBeginsWithFilter filterString: 'as')
 		      narrowKey: 'as'.
 	fetcher upToEnd.
 
 	fetcher := fetcher
-		           narrowFilterBlock: [ :e | e beginsWith: 'asL' ]
+		           narrowFilter: (CoCaseSensitiveBeginsWithFilter filterString: 'asL')
 		           narrowKey: 'asC'.
 	newResults := fetcher upToEnd.
 

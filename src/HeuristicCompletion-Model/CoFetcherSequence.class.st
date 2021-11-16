@@ -31,6 +31,13 @@ CoFetcherSequence >> entriesDo: aBlock [
 	subcompletions do: [ :completion | completion entriesDo: aBlock ]
 ]
 
+{ #category : #enumerating }
+CoFetcherSequence >> filter: aFilter [
+
+	super filter: aFilter.
+	subcompletions do: [ :completion | completion filter: aFilter ]
+]
+
 { #category : #initialization }
 CoFetcherSequence >> initialize [
 

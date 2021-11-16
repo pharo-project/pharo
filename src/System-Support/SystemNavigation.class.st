@@ -38,6 +38,14 @@ SystemNavigation >> allCallsOn: aSymbol [
 ]
 
 { #category : #query }
+SystemNavigation >> allClassNamesStartingWith: aString do: aBlock [
+
+	self allClassesDo: [ :e |
+		(e name beginsWith: aString)
+			ifTrue: [ aBlock value: e name ] ]
+]
+
+{ #category : #query }
 SystemNavigation >> allClasses [
 	"Returns all the classes in the current environment."
 

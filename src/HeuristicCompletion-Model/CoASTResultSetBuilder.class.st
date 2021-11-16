@@ -44,8 +44,8 @@ CoASTResultSetBuilder >> configureFetcher: aFetcher forNode: aNode [
 	
 	| completion |
 	completion := CoResultSet fetcher: aFetcher.
-	completion caseSensitive: NECPreferences caseSensitive.
-	completion filterWithString: completionContext completionToken.
+	completion filter: (CoBeginsWithFilter caseSensitive: NECPreferences caseSensitive filterString: completionContext completionToken).
+	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: completionContext completionToken).
 	^ completion
 ]
 
