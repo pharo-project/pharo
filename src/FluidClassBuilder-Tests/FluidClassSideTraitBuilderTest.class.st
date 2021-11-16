@@ -7,7 +7,7 @@ Class {
 	#category : #'FluidClassBuilder-Tests-Base'
 }
 
-{ #category : #initialization }
+{ #category : #running }
 FluidClassSideTraitBuilderTest >> setUp [
 
 	super setUp.

@@ -7,7 +7,7 @@ Class {
 	#category : #'FluidClassBuilder-Tests-Base'
 }
 
-{ #category : #initialization }
+{ #category : #running }
 FluidClassSideClassBuilderTest >> setUp [
 
 	super setUp.
@@ -18,7 +18,7 @@ FluidClassSideClassBuilderTest >> setUp [
 		           package: 'FakedPackage'
 ]
 
-{ #category : #initialization }
+{ #category : #tests }
 FluidClassSideClassBuilderTest >> testBuilderClassName [
 	
 	"Yes a class side builder expects the instance name."
@@ -27,7 +27,7 @@ FluidClassSideClassBuilderTest >> testBuilderClassName [
 
 ]
 
-{ #category : #initialization }
+{ #category : #tests }
 FluidClassSideClassBuilderTest >> testBuilderSuperclass [
 	
 	self assert: builder superclassToBuild equals: Object
@@ -35,7 +35,7 @@ FluidClassSideClassBuilderTest >> testBuilderSuperclass [
 
 ]
 
-{ #category : #initialization }
+{ #category : #tests }
 FluidClassSideClassBuilderTest >> testBuilderWithSlots [
 
 	builder slots: { #metaX . #metaY }.
@@ -45,7 +45,7 @@ FluidClassSideClassBuilderTest >> testBuilderWithSlots [
 	self assert: builder slotsToBuild equals: #().
 ]
 
-{ #category : #initialization }
+{ #category : #tests }
 FluidClassSideClassBuilderTest >> testBuilderWithTraits [
 
 	builder traits: { TViewModelMock classTrait }.

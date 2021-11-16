@@ -38,7 +38,13 @@ FluidClassBuilderTest >> tearDown [
 	self class environment 
 		at: #Point2 
 		ifPresent: [ :cl | cl removeFromSystem  ].
+
+	(RPackageOrganizer default packageNamed: #'Mock' ifAbsent: [ nil ])
+		ifNotNil: [:x | x removeFromSystem ].
+
 	super tearDown. 
+			
+
 ]
 
 { #category : #'tests - hidden protocols' }
@@ -185,6 +191,9 @@ FluidClassBuilderTest >> testBuilderWithTag [
 FluidClassBuilderTest >> testChevronIsWorkingOnClassSide [
 
 	| instBuilder newClass clasBuilder |
+	
+	RPackageOrganizer default registerPackageNamed: #'Mock'. 
+	
 	instBuilder := (Object << #Point2
 		slots: { #a. #b };
 		layout: WeakLayout;

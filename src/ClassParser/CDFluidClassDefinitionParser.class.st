@@ -74,7 +74,7 @@ CDFluidClassDefinitionParser >> handleLayout: aNode [
 	classDefinition layoutClass: aNode binding value
 ]
 
-{ #category : #'metaclass ' }
+{ #category : #metaclass }
 CDFluidClassDefinitionParser >> handleMetaclassNameFromCascade: aRBCascadeNode [ 
 
 	| className classNode node |
@@ -86,7 +86,7 @@ CDFluidClassDefinitionParser >> handleMetaclassNameFromCascade: aRBCascadeNode [
 	classDefinition className: node astNode: classNode
 ]
 
-{ #category : #'metaclass ' }
+{ #category : #metaclass }
 CDFluidClassDefinitionParser >> handleMetaclassNameFromMessage: aNode [ 
 
 	| className classNode node |
