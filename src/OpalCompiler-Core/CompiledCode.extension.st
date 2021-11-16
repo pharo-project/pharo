@@ -5,12 +5,12 @@ CompiledCode >> ast [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 CompiledCode >> compiler [
 	^self methodClass compiler
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 CompiledCode >> compilerClass [
 	^self methodClass 
 		ifNil: [Smalltalk compilerClass] 

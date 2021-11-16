@@ -22,7 +22,7 @@ RBBlockNode >> irInstruction [
 	^ self parent methodOrBlockNode ir firstInstructionMatching: [:instr | instr sourceNode == self ]
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 RBBlockNode >> isClean [
 	"a block is clean if it has no escaping vars, has no non local return and its children are clean"
 	self isInlined ifTrue: [ ^ false ].
@@ -32,7 +32,7 @@ RBBlockNode >> isClean [
 	
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 RBBlockNode >> isInlined [
 	parent isMessage ifFalse: [ ^ false ].
 	parent isInlineAndOr ifTrue: [^ true].
@@ -41,7 +41,7 @@ RBBlockNode >> isInlined [
 	^ self isInlinedLoop
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 RBBlockNode >> isInlinedLoop [
 
 	parent isMessage ifFalse: [ ^ false ].
@@ -54,7 +54,7 @@ RBBlockNode >> isInlinedLoop [
 	^ false
 ]
 
-{ #category : #'*opalcompiler-core' }
+{ #category : #'*OpalCompiler-Core' }
 RBBlockNode >> owningScope [
 
 	^ self scope ifNil: ["inlined" ^ parent owningScope]
