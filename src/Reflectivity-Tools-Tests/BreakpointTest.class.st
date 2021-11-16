@@ -321,3 +321,23 @@ BreakpointTest >> testUninstallFromGarbageCollectedInstance [
 	
 	self shouldnt: [ bp remove ] raise: Error.
 ]
+
+{ #category : #tests }
+BreakpointTest >> testUpdateMethod [
+ 	| bp method |
+ 	"test that, if we install a breakpoint and edit the method, it is removed correctly"
+
+ 	cls compile: 'dummy ^42'.
+ 	method := cls >> #dummy.
+ 	self assertEmpty: Breakpoint all.
+ 	bp := Breakpoint new.
+ 	bp	node: (cls >> #dummy) ast.
+ 	bp install.
+ 	self assertCollection: Breakpoint all includesAll: {bp}.
+ 	"now edit the method"
+ 	cls compile: 'dummy ^nil'.
+ 	"after the new method is installed, the method is different"
+ 	self deny: (cls >> #dummy) bytecode equals: method bytecode.
+ 	"and the breakpoint is not registered anymore"
+ 	self assertEmpty: Breakpoint all
+]
