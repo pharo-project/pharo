@@ -1,11 +1,11 @@
 Extension { #name : #STONZnUrl }
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Core' }
 STONZnUrl class >> fromSton: stonReader [
 	^ ZnUrl fromString: stonReader parseListSingleton 
 ]
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Core' }
 STONZnUrl class >> stonName [
 	^ #URL
 ]

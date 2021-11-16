@@ -1,16 +1,16 @@
 Extension { #name : #Time }
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Core' }
 Time class >> fromSton: stonReader [
 	^ self readFrom: stonReader parseListSingleton readStream
 ]
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Core' }
 Time >> stonContainSubObjects [ 
 	^ false
 ]
 
-{ #category : #'*ston-core' }
+{ #category : #'*STON-Core' }
 Time >> stonOn: stonWriter [
 	"Use an ISO style HH:MM:SS.N representation (with optional nanoseconds)"
 	 
