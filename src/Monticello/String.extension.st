@@ -1,6 +1,6 @@
 Extension { #name : #String }
 
-{ #category : #'*monticello' }
+{ #category : #'*Monticello' }
 String >> extractNumber [
 	^ ('0', self select: [:ea | ea isDigit]) asNumber
 ]
