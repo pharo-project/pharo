@@ -9,12 +9,12 @@ Class {
 	#category : #'STON-Core-Reader'
 }
 
-{ #category : #'*ston-core' }
+{ #category : #'instance creation' }
 STONZnUrl class >> fromSton: stonReader [
 	^ ZnUrl fromString: stonReader parseListSingleton 
 ]
 
-{ #category : #'*ston-core' }
+{ #category : #'accessing' }
 STONZnUrl class >> stonName [
 	^ #URL
 ]
