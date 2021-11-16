@@ -1,13 +1,13 @@
 Extension { #name : #AbsolutePath }
 
-{ #category : #'*zinc-resource-meta-filesystem' }
+{ #category : #'*Zinc-Resource-Meta-FileSystem' }
 AbsolutePath >> asUrl [
 	"Convert the receiver in a file:// ZnUrl"
 
 	^ self asZnUrl
 ]
 
-{ #category : #'*zinc-resource-meta-filesystem' }
+{ #category : #'*Zinc-Resource-Meta-FileSystem' }
 AbsolutePath >> asZnUrl [
 	"Convert the receiver in a file:// ZnUrl"
 
