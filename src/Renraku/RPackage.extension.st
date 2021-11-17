@@ -13,10 +13,9 @@ RPackage >> ban: aCritique [
 ]
 
 { #category : #'*Renraku' }
-RPackage >> banChecksForValidation [sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-"returns ban levels that have to be chacked before validation"
-
-	^ #()
+RPackage >> banChecksForValidation [
+	
+	^ {}
 ]
 
 { #category : #'*Renraku' }
