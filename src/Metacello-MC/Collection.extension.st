@@ -1,42 +1,42 @@
 Extension { #name : #Collection }
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 Collection >> addToMetacelloRepositories: aMetacelloRepositoriesSpec [
 
 	self do: [:each | each addToMetacelloRepositories: aMetacelloRepositoriesSpec ]
 ]
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 Collection >> fetchRequiredForMetacelloMCVersion: aMetacelloMCVersion [
 
 	^aMetacelloMCVersion doFetchRequiredFromArray: self.
 ]
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 Collection >> loadRequiredForMetacelloMCVersion: aMetacelloMCVersion [
 
 	^aMetacelloMCVersion doLoadRequiredFromArray: self.
 ]
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 Collection >> mergeIntoMetacelloRepositories: aMetacelloRepositoriesSpec [
 
 	self do: [:each | each mergeIntoMetacelloRepositories: aMetacelloRepositoriesSpec ]
 ]
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 Collection >> recordRequiredForMetacelloMCVersion: aMetacelloMCVersion [
 
 	^aMetacelloMCVersion doRecordRequiredFromArray: self.
 ]
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 Collection >> removeFromMetacelloRepositories: aMetacelloRepositoriesSpec [
 
 	self do: [:each | each removeFromMetacelloRepositories: aMetacelloRepositoriesSpec ]
 ]
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 Collection >> resolvePackageSpecsNamedForMetacelloMCVersion: aMetacelloMCVersion visited: visited ifAbsent: aBlock [
     ^ aMetacelloMCVersion
         allPackagesForSpecs: (self collect: [ :ea | aMetacelloMCVersion packageNamed: ea ifAbsent: aBlock ])

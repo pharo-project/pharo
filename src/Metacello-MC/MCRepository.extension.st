@@ -1,17 +1,17 @@
 Extension { #name : #MCRepository }
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 MCRepository >> asRepositorySpecFor: aMetacelloMCProject [
 
 	self subclassResponsibility
 ]
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 MCRepository >> metacelloProjectClassFor: aScriptEngine [
     ^ MetacelloMCProject
 ]
 
-{ #category : #'*metacello-mc' }
+{ #category : #'*Metacello-MC' }
 MCRepository >> projectVersion: aString [
     "noop"
 ]
