@@ -59,6 +59,28 @@ RubEditingAreaTest >> setUp [
 	area setTextWith: 'one two three four'.
 ]
 
+{ #category : #tests }
+RubEditingAreaTest >> testEmbeddedAnchorInTextAreDrawn [
+	| circle text renderedText|
+	circle := CircleMorph new extent: 50 @ 50;color: Color blue.
+	
+	self assert: circle owner isNil.
+	self assert: circle position equals: 0@0.
+	"add the circle to a text string"
+	text := ('aaaaa',(String value: 1),'bbbbbbb') asText 
+			addAttribute: (TextAnchor new anchoredMorph: circle).
+	"render the text in a RubEditingArea to place the circle in a layout"
+	renderedText := RubEditingArea new updateTextWith: text.
+	renderedText openInWorld.
+	
+	self assert: circle owner notNil.
+	self deny: circle position equals: 0@0.
+	renderedText owner removeMorph: renderedText
+	
+	
+	
+]
+
 { #category : #'tests - accessing selection' }
 RubEditingAreaTest >> testMarkBlockPointBlock [
 	self setSelectionFrom: 3 to: 6 text: area text.
