@@ -1,11 +1,11 @@
 Extension { #name : #MCRepository }
 
-{ #category : #'*gofer-core-accessing' }
+{ #category : #'*Gofer-Core' }
 MCRepository >> goferPriority [
 	^ 0
 ]
 
-{ #category : #'*gofer-core-accessing' }
+{ #category : #'*Gofer-Core' }
 MCRepository >> goferReferences [
 	^ #()
 ]
