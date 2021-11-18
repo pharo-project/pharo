@@ -1664,7 +1664,8 @@ Context >> resume: value through: firstUnwindContext [
 	| context unwindBlock |
 	self isDead 
 		ifTrue: [ self cannotReturn: value to: self ].
-	context := firstUnwindContext.
+	"note: nil value of firstUnwindContext is sent by #return:from: to invoke fresh search for first unwind context"
+	context := firstUnwindContext ifNil: [thisContext findNextUnwindContextUpTo: self].
 	[ context isNil ] whileFalse: [	
 		context unwindComplete ifNil:[
 			context unwindComplete: true.
@@ -1731,7 +1732,8 @@ Context >> return: value from: aSender [
 		Here we detect this case and lookup the next unwind context after the current ensure section (current unwind)"
 		context := context findNextUnwindContextUpTo: newTop ].
 	context ifNotNil: [
-		^ self send: #aboutToReturn:through: to: self with: {value. context} super: false ].
+			"note: nil is sent to #resume:through via #aboutToReturn:through: to invoke fresh search for next unwind context there"
+		^ self send: #aboutToReturn:through: to: self with: {value. nil} super: false ].
 	self releaseTo: newTop.
 	newTop ifNotNil: [ newTop push: value ].
 	^ newTop
