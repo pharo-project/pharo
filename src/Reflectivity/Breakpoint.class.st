@@ -348,12 +348,14 @@ Breakpoint >> remove [
 
 { #category : #removing }
 Breakpoint >> removeFromClass: aClass [
-	self class removeBreakpoint: self
+	"we just remove this breakpoint from the cache, overridden by VariableBreakpoint to do more"
+ 	self class removeBreakpoint: self
 ]
 
 { #category : #removing }
 Breakpoint >> removeFromMethod: aMethod [
-	self remove
+	"we just remove this breakpoint from the cache, overridden by VariableBreakpoint to do more"
+ 	self class removeBreakpoint: self
 ]
 
 { #category : #removing }
