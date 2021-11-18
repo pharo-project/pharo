@@ -1642,7 +1642,8 @@ Context >> resume: value through: firstUnwindContext [
 	| context unwindBlock |
 	self isDead 
 		ifTrue: [ self cannotReturn: value to: self ].
-	context := firstUnwindContext.
+	context := firstUnwindContext ifNil: [thisContext findNextUnwindContextUpTo: self].
+	"note: nil value of firstUnwindContext is sent by #return:from: to invoke fresh search for first unwind context"
 	[ context isNil ] whileFalse: [	
 		context unwindComplete ifNil:[
 			context unwindComplete: true.
@@ -1697,13 +1698,13 @@ Context >> return: value [
 Context >> return: value from: aSender [ 
 	"For simulation.  Roll back self to aSender and return value from it.  Execute any unwind blocks on the way.  ASSUMES aSender is a sender of self"
 
-	| newTop context |
+	| newTop |
 	aSender isDead ifTrue: [
 		^ self send: #cannotReturn: to: self with: {value} super: false ].
 	newTop := aSender sender.
-	context := self findNextUnwindContextUpTo: newTop.
-	context ifNotNil: [
-		^ self send: #aboutToReturn:through: to: self with: {value. context} super: false] .
+	(self findNextUnwindContextUpTo: newTop) ifNotNil: [
+		^ self send: #aboutToReturn:through: to: self with: {value. nil} super: false]. 
+		"note: nil is sent to #resume:through via #aboutToReturn:through: to invoke fresh search for next unwind context there"
 	self releaseTo: newTop.
 	newTop ifNotNil: [ newTop push: value ].
 	^ newTop
