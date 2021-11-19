@@ -70,7 +70,7 @@ CoStaticBenchmarks >> benchCallsite: aRBMessageNode atPosition: aPosition [
 				yourself);
 			buildCompletion.
 		
-		completion filterWithString: prefix.
+		completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: prefix).
 		candidates := completion first: 10.
 
 		completionIndex := (candidates collect: [:each | each contents]) indexOf: originalSelector.

@@ -40,7 +40,8 @@ Class {
 	#name : #CoFetcher,
 	#superclass : #Object,
 	#instVars : [
-		'generator'
+		'generator',
+		'filter'
 	],
 	#category : #'HeuristicCompletion-Model-Core'
 }
@@ -52,6 +53,12 @@ CoFetcher >> , anotherFetcher [
 		add: self;
 		add: anotherFetcher;
 		yourself
+]
+
+{ #category : #private }
+CoFetcher >> acceptsEntry: entry [
+
+	^ filter accepts: entry
 ]
 
 { #category : #testing }
@@ -76,11 +83,31 @@ CoFetcher >> entriesDo: aBlock [
 	^ self subclassResponsibility
 ]
 
+{ #category : #resetting }
+CoFetcher >> filter: newFilter [
+	
+	(newFilter isMoreNarrowThan: filter)
+		ifFalse: [ self reset ].
+		
+	filter := newFilter.
+
+
+]
+
 { #category : #private }
 CoFetcher >> generator [
 	^ generator ifNil: [ 
 		generator := Generator on: [ :g | 
-			self entriesDo: [ :entry | g yield: entry ] ] ]
+			self entriesDo: [ :entry | 
+				(self acceptsEntry: entry)
+					ifTrue: [ g yield: entry ] ] ] ]
+]
+
+{ #category : #private }
+CoFetcher >> initialize [
+	super initialize.
+	
+	filter := CoFilter empty
 ]
 
 { #category : #testing }
@@ -90,9 +117,9 @@ CoFetcher >> isEmptyCompletionFetcher [
 ]
 
 { #category : #composing }
-CoFetcher >> narrowFilterBlock: aBlockClosure narrowKey: aKey [
+CoFetcher >> narrowFilter: aFilter narrowKey: aKey [
 	
-	^ self select: aBlockClosure
+	self filter: aFilter
 ]
 
 { #category : #fetching }
@@ -119,20 +146,9 @@ CoFetcher >> reset [
 ]
 
 { #category : #composing }
-CoFetcher >> select: aBlockClosure [ 
-	
-	^ CoFilterFetcher new
-		decoree: self;
-		filterBlock: aBlockClosure;
-		yourself
-]
+CoFetcher >> unnarrowFilter: aFilter narrowKey: aKey [
 
-{ #category : #composing }
-CoFetcher >> unnarrowFilterBlock: aBlockClosure narrowKey: aKey [
-
-	self reset.
-	
-	^ self select: aBlockClosure
+	self filter: aFilter
 ]
 
 { #category : #enumerating }
@@ -147,12 +163,6 @@ CoFetcher >> withNarrowHistory [
 	^ CoNarrowHistoryFetcher new
 		decoree: self;
 		yourself
-]
-
-{ #category : #composing }
-CoFetcher >> withoutFilter [
-	
-	^ self
 ]
 
 { #category : #composing }
