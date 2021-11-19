@@ -58,24 +58,6 @@ RBClassEnvironment >> asSelectorEnvironment [
 		yourself.
 ]
 
-{ #category : #'accessing - classes' }
-RBClassEnvironment >> classNames [
-	^ IdentitySet new
-		addAll: classes;
-		addAll: metaClasses;
-		yourself
-]
-
-{ #category : #printing }
-RBClassEnvironment >> classSelectorDictionary [
-	^ classes 
-		inject: (IdentityDictionary new: classes size)
-		into: [ :answer :class |
-			answer
-				at: class put: (self systemDictionary at: class) selectors;
-				yourself ]
-]
-
 { #category : #initialization }
 RBClassEnvironment >> classes: aCollection [ 
 	aCollection do: [ :each | self addClass: each ]
@@ -93,6 +75,24 @@ RBClassEnvironment >> classesDo: aBlock [
 		class := self systemDictionary at: each ifAbsent: [ nil ].
 		(class notNil and: [ environment includesClass: class classSide ])
 			ifTrue: [ aBlock value: class classSide ] ]
+]
+
+{ #category : #'accessing - classes' }
+RBClassEnvironment >> classNames [
+	^ IdentitySet new
+		addAll: classes;
+		addAll: metaClasses;
+		yourself
+]
+
+{ #category : #printing }
+RBClassEnvironment >> classSelectorDictionary [
+	^ classes 
+		inject: (IdentityDictionary new: classes size)
+		into: [ :answer :class |
+			answer
+				at: class put: (self systemDictionary at: class) selectors;
+				yourself ]
 ]
 
 { #category : #private }
