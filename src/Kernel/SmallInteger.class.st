@@ -107,7 +107,16 @@ SmallInteger >> / aNumber [
 
 	<primitive: 10>
 	aNumber = 0 ifTrue: [^(ZeroDivide dividend: self) signal].
-	^super / aNumber
+
+	"This ugly type checking is needed because the implementation in the superclass assumes that the argument is a LargeInteger.
+	So, it is using a primitive message that is only in LargeInteger. 
+	Using the implementation in the superclass when we have a SmallInteger will fail the primitive and use the slow code.
+	At the end it is creating the same Fraction that is done here.
+	These duplication has to be avoided by correctly implementing the decision by using double dispatch."
+
+	^(aNumber isMemberOf: SmallInteger)
+		ifTrue: [(Fraction numerator: self denominator: aNumber) reduced]
+		ifFalse: [super / aNumber]
 ]
 
 { #category : #arithmetic }
