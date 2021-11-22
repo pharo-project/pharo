@@ -155,7 +155,7 @@ RubDisplayScanner >> fillTextBackground [
 ]
 
 { #category : #'multilingual scanning' }
-RubDisplayScanner >> isBreakableAt: index in: sourceString in: encodingClass [
+RubDisplayScanner >> isBreakableAt: index in: sourceString [
 
 	^ false.
 
