@@ -44,8 +44,7 @@ AthensTreeDemo >> buildSubtreeFor: aNodeObject level: aLevel [
 	childs := (nodeChildsBlock value: aNodeObject) collect:  [ :each | self buildSubtreeFor: each level: aLevel+1 ].
 	node children: childs.
 	(self rowAt: aLevel) add: node.
-	^ node	
-
+	^ node
 ]
 
 { #category : #private }

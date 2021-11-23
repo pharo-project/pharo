@@ -18,7 +18,7 @@ Class {
 
 { #category : #visitor }
 AthensPathSegment >> accept: aVisitor [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #visitor }

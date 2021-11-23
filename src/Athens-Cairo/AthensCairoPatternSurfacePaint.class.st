@@ -30,7 +30,6 @@ AthensCairoPatternSurfacePaint class >> primCreateForSurface: anAthensCairoSurfa
 	
 	^ self ffiCall: #(AthensCairoPatternSurfacePaint cairo_pattern_create_for_surface(
 		cairo_surface_t  anAthensCairoSurface ) )
-
 ]
 
 { #category : #drawing }
@@ -61,7 +60,6 @@ AthensCairoPatternSurfacePaint >> extent: aPatternExtent [
 AthensCairoPatternSurfacePaint >> initializeFor: anAthensCairoSurface [ 
 	self initialize.
 	surface := anAthensCairoSurface .
-	
 ]
 
 { #category : #accessing }

@@ -23,7 +23,6 @@ Class {
 AthensPaint >> asStrokePaintOn: aCanvas [
 	"default implementation"
 	^ aCanvas surface createStrokePaintFor: self
-	
 ]
 
 { #category : #rendering }

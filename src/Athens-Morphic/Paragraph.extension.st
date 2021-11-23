@@ -95,7 +95,6 @@ Paragraph >> drawOnAthensCanvas: anAthensCanvas bounds: aRectangle color: aColor
 	self displayExtraSelectionOnAthensCanvas: anAthensCanvas.
 	anAthensCanvas setPaint: aColor.
 	self displayTextOnAthensCanvas: anAthensCanvas in: aRectangle.
-
 ]
 
 { #category : #'*Athens-Morphic' }

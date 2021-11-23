@@ -9,7 +9,4 @@ PluggableSliderMorph >> drawOnAthensCanvas: aCanvas [
 		in: self labelBounds
 		font: self font
 		color: self fontColor.
-		
-	
-
 ]

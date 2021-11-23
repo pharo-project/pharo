@@ -36,13 +36,13 @@ AthensCurveFlattener >> accountForAngleTolerance [
 
 { #category : #'subdivision callbacks' }
 AthensCurveFlattener >> angleTolerance [
-	^ CurveAngleToleranceEpsilon 
+	^ CurveAngleToleranceEpsilon
 ]
 
 { #category : #'subdivision callbacks' }
 AthensCurveFlattener >> curveCollinearityEpsilon [
 
-	^ CurveCollinearityEpsilon 
+	^ CurveCollinearityEpsilon
 ]
 
 { #category : #'path commands' }
@@ -68,8 +68,6 @@ AthensCurveFlattener >> curveVia: via1 and: via2 to: end [
 		
 	curve recursiveSubDiv: self level: 0.
 	self lineTo: endPoint.
-	
-	
 ]
 
 { #category : #'path commands' }
@@ -83,7 +81,6 @@ AthensCurveFlattener >> curveVia: via to: end [
 	endPoint := end.
 
 	self flattenQuadBezier: pt1 x y1: pt1 y x2: pt2 x y2: pt2 y x3: pt3 x y3: pt3 y.
-
 ]
 
 { #category : #accessing }
@@ -93,12 +90,11 @@ AthensCurveFlattener >> defaultTolerance [
 
 { #category : #'subdivision callbacks' }
 AthensCurveFlattener >> distanceToleranceSquared [
-	^ self lengthToleranceSquared 
+	^ self lengthToleranceSquared
 ]
 
 { #category : #helpers }
 AthensCurveFlattener >> flattenCubicBezier: x1 y1: y1 x2: x2 y2: y2 x3: x3 y3: y3 x4: x4 y4: y4 [
-
 ]
 
 { #category : #'public API' }
@@ -108,7 +104,7 @@ AthensCurveFlattener >> flattenPath: aPath transform: aTransformation [
 	An additional argument, transform is an Affine matrix, used to map path geometry to screen,
 	and therefore used to calculate the error tolerance for path subdivisions"
 	
-	^ self flattenPath: aPath transform: aTransformation toleranceMultiplier: 1 
+	^ self flattenPath: aPath transform: aTransformation toleranceMultiplier: 1
 ]
 
 { #category : #'public API' }
@@ -130,8 +126,6 @@ AthensCurveFlattener >> flattenPath: aPath transform: aTransform toleranceMultip
 	transform := aTransform.
 	lengthTolerance := aToleranceMultiplier.
 	lengthToleranceSquared := lengthTolerance squared.
-	
-
 ]
 
 { #category : #helpers }
@@ -181,7 +175,6 @@ AthensCurveFlattener >> flattenQuadBezier: x1 y1: y1 x2: x2 y2: y2 x3: x3 y3: y3
 			x3: x3 
 			y3: y3.
 	]
-
 ]
 
 { #category : #initialization }
@@ -270,7 +263,7 @@ AthensCurveFlattener >> lineTo: aPoint [
 { #category : #'subdivision callbacks' }
 AthensCurveFlattener >> lineToX: trX y: trY [
 
-	^ dest lineTo: (self inverseTransform: trX @ trY) 
+	^ dest lineTo: (self inverseTransform: trX @ trY)
 ]
 
 { #category : #'path commands' }
@@ -289,7 +282,7 @@ AthensCurveFlattener >> overCuspLimit: angleInRadians [
                     {
 	
 	^ angleInRadians > 1.01"
-	^ false. 
+	^ false.
 ]
 
 { #category : #visiting }
@@ -303,13 +296,12 @@ AthensCurveFlattener >> quadricBezierSegment: segment [
 	endPoint := segment endPoint.
 
 	self flattenQuadBezier: pt1 x y1: pt1 y x2: pt2 x y2: pt2 y x3: pt3 x y3: pt3 y.
-
 ]
 
 { #category : #'subdivision callbacks' }
 AthensCurveFlattener >> subdivisionLimit [
 	"max number of recursive subdivisions for single curve"
-	^ SubdivisionLimit 
+	^ SubdivisionLimit
 ]
 
 { #category : #accessing }
@@ -325,8 +317,6 @@ AthensCurveFlattener >> toleranceMultiplier: aToleranceMultiplier [
 	
 	lengthTolerance := aToleranceMultiplier.
 	lengthToleranceSquared := lengthTolerance squared.
-	
-
 ]
 
 { #category : #accessing }
@@ -344,6 +334,4 @@ AthensCurveFlattener >> transform: aTransform [
 	"
 	
 	transform := aTransform.
-	
-
 ]

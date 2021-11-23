@@ -92,7 +92,6 @@ AthensSurfaceExamples class >> drawFontMetrics [
 		can pathTransform translateX: 0 Y: (font getPreciseAscent).
 		can drawString: 'yh'.
 		]]
-
 ]
 
 { #category : #examples }
@@ -136,7 +135,6 @@ AthensSurfaceExamples class >> drawSetFillRule [
 		canvas setStrokePaint: Color blue.
 		canvas drawShape: path.
 	]
-
 ]
 
 { #category : #examples }
@@ -153,7 +151,6 @@ AthensSurfaceExamples class >> example1 [
 			2 timesRepeat: [ can draw. can setPaint: (Color green alpha:0.5)].
 			].
 	].
-
 ]
 
 { #category : #examples }
@@ -190,7 +187,6 @@ AthensSurfaceExamples class >> example10 [
 		can draw ].
 		
 	surf asMorph openInWindow.
-
 ]
 
 { #category : #examples }
@@ -209,7 +205,6 @@ AthensSurfaceExamples class >> example2 [
 					lineTo: 0@100
 			])	
 	]
- 
 ]
 
 { #category : #examples }
@@ -243,8 +238,7 @@ AthensSurfaceExamples class >> example3 [
 		]	
 	].
 
-	surf asMorph openInWindow. 
-
+	surf asMorph openInWindow.
 ]
 
 { #category : #examples }
@@ -277,8 +271,7 @@ AthensSurfaceExamples class >> example3stroke [
 		]	
 	].
 
-	surf asMorph openInWindow. 
-
+	surf asMorph openInWindow.
 ]
 
 { #category : #examples }
@@ -304,8 +297,7 @@ AthensSurfaceExamples class >> example4 [
 		can drawShape: path.
 	].
 
-	surf asMorph openInWindow. 
-
+	surf asMorph openInWindow.
 ]
 
 { #category : #examples }
@@ -338,7 +330,7 @@ AthensSurfaceExamples class >> example5 [
 			])
 	].
 
-	surf asMorph openInWindow. 
+	surf asMorph openInWindow.
 ]
 
 { #category : #examples }
@@ -367,7 +359,6 @@ AthensSurfaceExamples class >> example6 [
 		can drawShape: (0@0 corner: 50@50) ].
 
 		surf asMorph openInWindow
-
 ]
 
 { #category : #examples }
@@ -691,7 +682,6 @@ AthensSurfaceExamples class >> exampleDrawText [
 		can drawString: 'Hello Athens!' ].
 	
 	surf asMorph openInWindow
-
 ]
 
 { #category : #examples }
@@ -803,7 +793,6 @@ AthensSurfaceExamples class >> exampleUseForm [
 	
 	surf := AthensCairoSurface fromForm: form.
 	surf asMorph openInWindow
-
 ]
 
 { #category : #'instance creation' }
@@ -823,7 +812,7 @@ AthensSurfaceExamples class >> openViewOn: aBlock [
 
 	^ AthensSceneView new
 		scene: (self newAsSceneFrom:aBlock);
-		openInWindow 
+		openInWindow
 ]
 
 { #category : #'surface management' }

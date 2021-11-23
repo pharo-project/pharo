@@ -77,7 +77,6 @@ AthensFontDescription >> beOblique [
 AthensFontDescription >> family: aFamilyName [
 	"CSS2 generic family names: serif, sans-serif, cursive, fantasy, monospace"
 	family := aFamilyName.
-	
 ]
 
 { #category : #'cairo - options' }
@@ -92,7 +91,7 @@ AthensFontDescription >> fontGravity [
 
 { #category : #'cairo - options' }
 AthensFontDescription >> fontSize [
-	^ size 
+	^ size
 ]
 
 { #category : #'cairo - options' }
@@ -102,7 +101,7 @@ AthensFontDescription >> fontSize: aPointSize [
 
 { #category : #'cairo - options' }
 AthensFontDescription >> fontSlant [
-	^ options at: #slant 
+	^ options at: #slant
 ]
 
 { #category : #'pango-options' }
@@ -112,18 +111,17 @@ AthensFontDescription >> fontStretch [
 
 { #category : #'pango-options' }
 AthensFontDescription >> fontVariant [
-	^ options at: #variant 
+	^ options at: #variant
 ]
 
 { #category : #'cairo - options' }
 AthensFontDescription >> fontWeight [
-	^ options at: #weight 
+	^ options at: #weight
 ]
 
 { #category : #'pango-options' }
 AthensFontDescription >> gravity: aNumber [
-	options at: #gravity put: aNumber.		
-
+	options at: #gravity put: aNumber.
 ]
 
 { #category : #initialization }
@@ -135,29 +133,24 @@ AthensFontDescription >> initialize [
 		at:#weight put: #normal; 
 		at:#slant put: #normal.
 	size := 14.
-	
 ]
 
 { #category : #'cairo - options' }
 AthensFontDescription >> slant: aNumber [
-	options at: #slant put: aNumber.		
-
+	options at: #slant put: aNumber.
 ]
 
 { #category : #'pango-options' }
 AthensFontDescription >> stretch: aNumber [
-	options at: #stretch put: aNumber.		
-
+	options at: #stretch put: aNumber.
 ]
 
 { #category : #'pango-options' }
 AthensFontDescription >> variant: aNumber [
-	options at: #variant put: aNumber.		
-
+	options at: #variant put: aNumber.
 ]
 
 { #category : #'cairo - options' }
 AthensFontDescription >> weight: aNumber [
-	options at: #weight put: aNumber.		
-
+	options at: #weight put: aNumber.
 ]

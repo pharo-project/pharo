@@ -98,9 +98,6 @@ AthensShadowPaint >> setDefaults [
 		width: 2;
 		offset: 2@2; 
 		blur: 4@4
-	
-	
-	
 ]
 
 { #category : #accessing }

@@ -294,13 +294,11 @@ AthensTiger class >> tigerMaxY [
 { #category : #private }
 AthensTiger class >> tigerMinX [ 
 	^ 0.0
-
 ]
 
 { #category : #private }
 AthensTiger class >> tigerMinY [ 
 	^ 0.0
-
 ]
 
 { #category : #'huge data' }
@@ -2033,7 +2031,6 @@ AthensTiger >> draw [
 			translateBy: position.
 
 		parts do: [ :each | each renderOn: canvas ] ].
-
 ]
 
 { #category : #initialization }

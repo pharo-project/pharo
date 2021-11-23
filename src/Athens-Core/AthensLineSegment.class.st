@@ -38,7 +38,6 @@ AthensLineSegment >> point: anObject [
 { #category : #visitor }
 AthensLineSegment >> sendCommandTo: aBuilder [
 	^ aBuilder lineTo: point
-	
 ]
 
 { #category : #visitor }

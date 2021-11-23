@@ -35,7 +35,6 @@ AthensBalloonImagePaint >> athensFillRectangle: aRect on: anAthensCanvas [
 		prepareForRendering;
 		registerFormFill: form origin: origin direction: rotation normal: normal tileFlag: tileFlag;
 		fillRectangle: aRect
-
 ]
 
 { #category : #accessing }

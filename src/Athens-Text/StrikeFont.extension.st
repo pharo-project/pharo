@@ -15,5 +15,4 @@ StrikeFont >> getPreciseAscent [
 StrikeFont >> glyphRendererOn: anAthensSurface [
 
 	^ anAthensSurface getStrikeFontRendererFor: self
-
 ]

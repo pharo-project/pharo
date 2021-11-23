@@ -49,7 +49,6 @@ AthensBalloonSurface >> clear [
 AthensBalloonSurface >> clearForm [
 
 	form bits: ( Bitmap new: form bits size)
-	
 ]
 
 { #category : #clipping }
@@ -104,8 +103,6 @@ AthensBalloonSurface >> createPath: aPathCreatingBlock [
 	aPathCreatingBlock value: builder.
 
 	^ AthensBalloonPath new convertFromBuilder: builder
-	
-	
 ]
 
 { #category : #paints }
@@ -253,7 +250,7 @@ AthensBalloonSurface >> maskEnabled [
 { #category : #accessing }
 AthensBalloonSurface >> paintTransform [
 
-	^ paintTransform 
+	^ paintTransform
 ]
 
 { #category : #'accessing - matrices' }

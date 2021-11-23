@@ -24,7 +24,6 @@ AthensCanvas >> morphicDrawString: string at: position font: aFont color: aColor
 			setPaint: aColor;
 			drawString: string.
 	]
-
 ]
 
 { #category : #'*Athens-Morphic' }

@@ -24,7 +24,6 @@ AthensBalloonRadialGradient >> athensFillPath: aPath on: anAthensCanvas [
 		prepareForRendering;
 		registerRadialGradient: colorRamp center: c radius: radius;
 		fillBezierShape: aPath contoursForFilling
-
 ]
 
 { #category : #rendering }

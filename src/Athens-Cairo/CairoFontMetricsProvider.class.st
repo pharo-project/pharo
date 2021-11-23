@@ -80,7 +80,7 @@ CairoFontMetricsProvider >> fontAscent [
 
 { #category : #accessing }
 CairoFontMetricsProvider >> fontHeight [
-	^ extents height 
+	^ extents height
 ]
 
 { #category : #private }
@@ -131,7 +131,7 @@ CairoFontMetricsProvider >> glyphsOf: aString from: start to: end [
 		ifTrue: [ self applyKerningOn: glyphs of: aString from: start to: end ].
 	self freeGlyphs: ptr.
 		
-	^ glyphs 
+	^ glyphs
 ]
 
 { #category : #initialization }

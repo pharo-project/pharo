@@ -26,5 +26,4 @@ SimpleTextGlyphInfo >> loadFrom: anFT2Face [
 	face := anFT2Face.
 	anFT2Face fillGlyph: self.
 	format := (EndianDetector isLittleEndian ifTrue: [ format reversed ] ifFalse: [ format ]) asString.
-
 ]

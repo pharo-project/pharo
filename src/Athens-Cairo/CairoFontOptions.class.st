@@ -159,7 +159,6 @@ antialias :
 	the new antialiasing mode"
 	^ self ffiCall: #( 
 	void cairo_font_options_set_antialias (self, uint antialias))
-
 ]
 
 { #category : #defaults }
@@ -178,8 +177,6 @@ CairoFontOptions >> setHintMetrics: hintMetrics [
 
 "
 	^ self ffiCall: #(void cairo_font_options_set_hint_metrics (self,  uint hintMetrics))
-
- 
 ]
 
 { #category : #'hint options' }
@@ -192,8 +189,6 @@ void                cairo_font_options_set_hint_style   (cairo_font_options_t *o
 Sets the hint style for font outlines for the font options object. This controls whether to fit font outlines to the pixel grid, and if so, whether to optimize for fidelity or contrast. See the documentation for cairo_hint_style_t for full details. "
 	^ self ffiCall: #( 
 		void cairo_font_options_set_hint_style (self, uint aStyle))
-
- 
 ]
 
 { #category : #'subpixel order' }
@@ -203,7 +198,6 @@ CairoFontOptions >> setSubpixelOrder: order [
 		cairo_subpixel_order_t subpixel_order)"
 	^ self ffiCall: #(
 		void cairo_font_options_set_subpixel_order (self, uint order))
- 
 ]
 
 { #category : #'subpixel order' }
