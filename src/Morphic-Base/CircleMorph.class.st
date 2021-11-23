@@ -14,17 +14,32 @@ Class {
 }
 
 { #category : #examples }
-CircleMorph class >> exampleCircleMorph [
-	(CircleMorph new)
-	 extent: 50 @ 50;color: Color blue;
-	 openInWorld.
+CircleMorph class >> example [
+
+	CircleMorph new
+		extent: 50 @ 50;
+		position: 100@100;
+		color: Color blue;
+		openInWorld
+]
+
+{ #category : #examples }
+CircleMorph class >> exampleBadExtent [
+	"Note: even when vertical vs. horizontal extent is given different it remains a circle"
+	
+	CircleMorph new
+		extent: 100 @ 50;
+		color: Color red;
+		openInWorld
 ]
 
 { #category : #geometry }
 CircleMorph >> bounds: aRectangle [
+
 	| size |
 	size := aRectangle width min: aRectangle height.
-	super bounds: (Rectangle origin: aRectangle origin extent: size @ size).
+	super bounds:
+		(Rectangle origin: aRectangle origin extent: size @ size)
 ]
 
 { #category : #initialization }
@@ -41,27 +56,30 @@ CircleMorph >> defaultColor [
 
 { #category : #geometry }
 CircleMorph >> extent: aPoint [
+
 	| size oldRotationCenter |
 	oldRotationCenter := self rotationCenter.
 	size := aPoint x min: aPoint y.
 	super extent: size @ size.
-	self rotationCenter: oldRotationCenter.
+	self rotationCenter: oldRotationCenter
 ]
 
 { #category : #initialization }
 CircleMorph >> initialize [
-	super initialize. 
-	referencePosition := self center.
 
+	super initialize.
+	referencePosition := self center
 ]
 
 { #category : #accessing }
 CircleMorph >> originalCenter [
+
 	^ originalCenter
 ]
 
 { #category : #accessing }
 CircleMorph >> originalCenter: anObject [
+
 	originalCenter := anObject
 ]
 
@@ -70,7 +88,6 @@ CircleMorph >> prepareForRotating [
 	"When rotating from a halo, I can do this without a flex shell"
 
 	^ self
-
 ]
 
 { #category : #'rotate scale and flex' }
@@ -83,19 +100,20 @@ CircleMorph >> prepareForScaling [
 
 { #category : #'rotate scale and flex' }
 CircleMorph >> privateMoveBy: delta [
+
 	referencePosition := referencePosition + delta.
 	originalCenter := (originalCenter ifNil: [ self center ]) + delta.
 	super privateMoveBy: delta
 ]
 
-{ #category : #'geometry etoy' }
+{ #category : #geometry }
 CircleMorph >> referencePosition [
 	"Return the current reference position of the receiver"
 
 	^ referencePosition
 ]
 
-{ #category : #'geometry etoy' }
+{ #category : #'rotate scale and flex' }
 CircleMorph >> rotationCenter [
 	"Return the rotation center of the receiver. The rotation center defines the relative offset inside the receiver's bounds for locating the reference position."
 	| refPos |
@@ -103,15 +121,15 @@ CircleMorph >> rotationCenter [
 	^ (refPos - self bounds origin) / self bounds extent asFloatPoint
 ]
 
-{ #category : #'geometry etoy' }
+{ #category : #'rotate scale and flex' }
 CircleMorph >> rotationCenter: aPointOrNil [
 	"Set the new rotation center of the receiver. The rotation center defines the relative offset inside the receiver's bounds for locating the reference position."
 
 	| newRef box |
-	aPointOrNil
-		ifNotNil: [ box := self bounds.
-			newRef := box origin + (aPointOrNil * box extent).
-			self setRotationCenterFrom: newRef ]
+	aPointOrNil ifNotNil: [ 
+		box := self bounds.
+		newRef := box origin + (aPointOrNil * box extent).
+		self setRotationCenterFrom: newRef ]
 ]
 
 { #category : #'rotate scale and flex' }
@@ -149,7 +167,7 @@ CircleMorph >> setRotationCenterFrom: aPoint [
 
 { #category : #geometry }
 CircleMorph >> transformedBy: aTransform [
-	aTransform isIdentity ifTrue:[^self].
-	^self center: (aTransform localPointToGlobal: self center).
 
+	aTransform isIdentity ifTrue: [ ^ self ].
+	^ self center: (aTransform localPointToGlobal: self center)
 ]

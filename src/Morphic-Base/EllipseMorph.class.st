@@ -13,6 +13,16 @@ Class {
 	#category : #'Morphic-Base-Basic'
 }
 
+{ #category : #examples }
+EllipseMorph class >> example [
+
+	EllipseMorph new
+		extent: 90 @ 50;
+		position: 100@100;
+		color: Color green;
+		openInWorld
+]
+
 { #category : #drawing }
 EllipseMorph >> areasRemainingToFill: aRectangle [
 	"Could be improved by quick check of inner rectangle"
