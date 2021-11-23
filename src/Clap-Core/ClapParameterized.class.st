@@ -75,7 +75,6 @@ ClapParameterized >> at: identifierOrSpec ifPresent: presentBlock ifAbsent: abse
 { #category : #testing }
 ClapParameterized >> hasAlias: aString [
 	^ aString = self canonicalName or: [ self aliases includes: aString ]
-	
 ]
 
 { #category : #initialization }

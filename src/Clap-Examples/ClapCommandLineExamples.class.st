@@ -94,13 +94,11 @@ ClapCommandLineExamples >> defaultRecipient [
 	^ self
 		translationFor: self language
 		from: self translatedRecipients
-
 ]
 
 { #category : #running }
 ClapCommandLineExamples >> execute [
 	self sayHello
-
 ]
 
 { #category : #accessing }
@@ -108,7 +106,6 @@ ClapCommandLineExamples >> greeting [
 	^ self
 		translationFor: self language
 		from: self translatedGreetings
-
 ]
 
 { #category : #accessing }
@@ -182,7 +179,6 @@ ClapCommandLineExamples >> voice: aString [
 	self shouting ifTrue: [ ^ aString asUppercase , '!' ].
 	self whispering ifTrue: [ ^ '(' , aString asLowercase , ')' ].
 	^ aString , '.'
-
 ]
 
 { #category : #accessing }
