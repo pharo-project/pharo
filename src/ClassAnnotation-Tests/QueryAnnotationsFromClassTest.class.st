@@ -71,7 +71,6 @@ QueryAnnotationsFromClassTest >> testWhenAnnotationFailsCheckForForbiddenPropert
 	self assert: ann class equals: BrokenClassAnnotation.
 	self assert: ann annotatedClass equals: ClassWithForbiddenAnnotationExample.
 	self assert: ann declarationSelector equals: #failedForbiddenAnnotation
-
 ]
 
 { #category : #tests }
