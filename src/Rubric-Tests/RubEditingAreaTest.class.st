@@ -73,9 +73,9 @@ RubEditingAreaTest >> testEmbeddedAnchorInTextAreDrawn [
 	renderedText := RubEditingArea new updateTextWith: text.
 	renderedText openInWorld.
 	
-	self assert: circle owner notNil.
-	self deny: circle position equals: 0@0.
-	renderedText owner removeMorph: renderedText
+	[	self assert: circle owner notNil.
+		self deny: circle position equals: 0@0]
+	ensure: [renderedText owner removeMorph: renderedText]
 	
 	
 	
