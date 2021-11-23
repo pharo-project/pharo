@@ -23,7 +23,7 @@ WeakSubscriptionBuilder class >> on: announcer [
 
 { #category : #initialization }
 WeakSubscriptionBuilder >> announcer: anAnnouncer [
-	announcer := anAnnouncer 
+	announcer := anAnnouncer
 ]
 
 { #category : #'wrapped protocol' }
