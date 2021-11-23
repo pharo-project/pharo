@@ -146,7 +146,6 @@ RBMethodNode >> allStatements [
 	^ self temporaries asOrderedCollection copy
 			addAll: super allStatements;
 			yourself
-
 ]
 
 { #category : #accessing }
@@ -289,8 +288,7 @@ RBMethodNode >> copyInContext: aDictionary [
 { #category : #accessing }
 RBMethodNode >> decompileString [ 
 
-	^ self formattedCode 
-
+	^ self formattedCode
 ]
 
 { #category : #testing }
@@ -711,7 +709,7 @@ RBMethodNode >> statements [
 
 { #category : #accessing }
 RBMethodNode >> statements: aCollection [
-	self body statements: aCollection 
+	self body statements: aCollection
 ]
 
 { #category : #accessing }

@@ -115,7 +115,6 @@ RBVariableNode >> isArgumentVariable [
 { #category : #testing }
 RBVariableNode >> isClassVariable [
 	^variable isClassVariable
-
 ]
 
 { #category : #testing }
