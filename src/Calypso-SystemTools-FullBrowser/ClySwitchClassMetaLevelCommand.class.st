@@ -24,19 +24,19 @@ ClySwitchClassMetaLevelCommand class >> fullBrowserToolbarActivation [
 	^ClyToolbarActivation 
 		byItemOf: ClyMetaLevelToolbarGroup 
 		order: self toolbarOrder 
-		for: ClyFullBrowserClassContext 
+		for: ClyFullBrowserClassContext
 ]
 
 { #category : #testing }
 ClySwitchClassMetaLevelCommand class >> isAbstract [
-	^self = ClySwitchClassMetaLevelCommand 
+	^self = ClySwitchClassMetaLevelCommand
 ]
 
 { #category : #activation }
 ClySwitchClassMetaLevelCommand class >> toolbarOrder [
 	<classAnnotationDependency>
 	
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -56,5 +56,5 @@ ClySwitchClassMetaLevelCommand >> isAppliedToBrowser [
 
 { #category : #execution }
 ClySwitchClassMetaLevelCommand >> metaLevelScope [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

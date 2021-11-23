@@ -61,5 +61,5 @@ ClyMethodQuery >> retrievesItem: aMethod [
 
 { #category : #testing }
 ClyMethodQuery >> selectsMethod: aMethod [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

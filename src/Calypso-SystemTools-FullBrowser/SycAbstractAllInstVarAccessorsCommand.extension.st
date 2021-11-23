@@ -4,5 +4,5 @@ Extension { #name : #SycAbstractAllInstVarAccessorsCommand }
 SycAbstractAllInstVarAccessorsCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 2.1 for: ClyFullBrowserClassContext 
+	^CmdContextMenuActivation byRootGroupItemOrder: 2.1 for: ClyFullBrowserClassContext
 ]

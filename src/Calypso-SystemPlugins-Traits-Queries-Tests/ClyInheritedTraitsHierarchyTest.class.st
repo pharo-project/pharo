@@ -6,7 +6,7 @@ Class {
 
 { #category : #running }
 ClyInheritedTraitsHierarchyTest >> createQueryResult [
-	^ClyTraitUserHierarchy inverse asQueryResult 
+	^ClyTraitUserHierarchy inverse asQueryResult
 ]
 
 { #category : #tests }

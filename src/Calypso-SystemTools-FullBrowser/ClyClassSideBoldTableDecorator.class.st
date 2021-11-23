@@ -37,5 +37,5 @@ ClyClassSideBoldTableDecorator class >> variableDecorationStrategy [
 { #category : #testing }
 ClyClassSideBoldTableDecorator class >> wantsDecorateTableCellOf: aDataSourceItem [
 
-	^aDataSourceItem browser metaLevelScope = ClyClassSideScope 
+	^aDataSourceItem browser metaLevelScope = ClyClassSideScope
 ]

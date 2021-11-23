@@ -17,7 +17,7 @@ Class {
 
 { #category : #testing }
 ClySwitchTraitHierarchyModeCommand class >> isAbstract [
-	^self = ClySwitchTraitHierarchyModeCommand 
+	^self = ClySwitchTraitHierarchyModeCommand
 ]
 
 { #category : #execution }
@@ -38,10 +38,10 @@ ClySwitchTraitHierarchyModeCommand >> isAppliedToBrowser [
 
 { #category : #execution }
 ClySwitchTraitHierarchyModeCommand >> requiredQueryResult [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #execution }
 ClySwitchTraitHierarchyModeCommand >> traitScopeClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

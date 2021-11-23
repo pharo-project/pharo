@@ -30,7 +30,6 @@ ClyTextMorphToolMorph class >> of: aTextMorph [
 
 { #category : #controlling }
 ClyTextMorphToolMorph >> attachToTextMorph [
-
 ]
 
 { #category : #initialization }
@@ -40,7 +39,6 @@ ClyTextMorphToolMorph >> defaultColor [
 
 { #category : #controlling }
 ClyTextMorphToolMorph >> detachFromTextMorph [
-
 ]
 
 { #category : #initialization }
@@ -56,7 +54,7 @@ ClyTextMorphToolMorph >> initialize [
 ClyTextMorphToolMorph >> outOfWorld: aWorld [
 	super outOfWorld: aWorld.
 	
-	self detachFromTextMorph 
+	self detachFromTextMorph
 ]
 
 { #category : #accessing }
@@ -72,5 +70,5 @@ ClyTextMorphToolMorph >> textMorph [
 { #category : #accessing }
 ClyTextMorphToolMorph >> textMorph: aTextMorph [
 	textMorph := aTextMorph.
-	self attachToTextMorph 
+	self attachToTextMorph
 ]

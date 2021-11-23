@@ -145,8 +145,7 @@ ClyMethodGroup >> hash [
 ]
 
 { #category : #operations }
-ClyMethodGroup >> importMethod: aMethod [ 
-
+ClyMethodGroup >> importMethod: aMethod [
 ]
 
 { #category : #operations }
@@ -174,7 +173,7 @@ ClyMethodGroup >> isAffectedByPackageChange: aPackageAnnouncement [
 
 { #category : #testing }
 ClyMethodGroup >> isEmpty [
-	^methodQuery hasEmptyResult 
+	^methodQuery hasEmptyResult
 ]
 
 { #category : #accessing }

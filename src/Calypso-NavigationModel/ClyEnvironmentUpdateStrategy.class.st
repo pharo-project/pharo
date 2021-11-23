@@ -17,10 +17,10 @@ Class {
 
 { #category : #updating }
 ClyEnvironmentUpdateStrategy >> announceChangesOf: aQueryResult [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #updating }
 ClyEnvironmentUpdateStrategy >> publishCollectedChanges [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

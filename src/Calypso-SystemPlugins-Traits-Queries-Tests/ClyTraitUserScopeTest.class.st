@@ -48,5 +48,4 @@ ClyTraitUserScopeTest >> testMethodsEnumerationWhenBothMetaLevels [
 	self assert: (result includesAll: ClyClassWithTraits classSide localMethods).
 	self deny: (result includesAll: ClyTraitRoot1 localMethods).
 	self deny: (result includesAll: ClyTraitRoot1 classSide localMethods).
-
 ]

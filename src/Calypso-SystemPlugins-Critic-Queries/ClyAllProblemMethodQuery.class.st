@@ -23,7 +23,7 @@ Class {
 { #category : #'instance creation' }
 ClyAllProblemMethodQuery class >> from: aScope withCritiquesFrom: aCritiqueQuery [
 	^(self from: aScope)
-		critiqueQuery: aCritiqueQuery 
+		critiqueQuery: aCritiqueQuery
 ]
 
 { #category : #'instance creation' }
@@ -41,7 +41,7 @@ ClyAllProblemMethodQuery >> = anObject [
 	self == anObject ifTrue: [ ^ true ].
 	super = anObject ifFalse: [ ^ false ].
 		
-	^critiqueQuery = anObject critiqueQuery  
+	^critiqueQuery = anObject critiqueQuery
 ]
 
 { #category : #execution }

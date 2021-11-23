@@ -49,7 +49,7 @@ ClyLocalClassScope class >> metaLevelForHierarchyOf: aClass [
 		ProtoObject class superclass >>> Class
 	This method adds such decision to concrete kind of local scope
 	which allows to use scopes to restrict visibility of class hierarchy"
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'meta level' }
@@ -57,7 +57,7 @@ ClyLocalClassScope class >> metaLevelsOf: aClass do: aBlock [
 	"Subclasses should decide what class meta level is visible. 
 	For example it can be instance side, class side or both"
 	
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #converting }

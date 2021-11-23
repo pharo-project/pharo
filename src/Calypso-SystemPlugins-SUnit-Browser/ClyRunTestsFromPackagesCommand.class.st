@@ -9,12 +9,12 @@ Class {
 
 { #category : #activation }
 ClyRunTestsFromPackagesCommand class >> contextClass [
-	^RPackage asCalypsoItemContext  
+	^RPackage asCalypsoItemContext
 ]
 
 { #category : #activation }
 ClyRunTestsFromPackagesCommand class >> fullBrowserClassGroupTableIconActivation [
 	<classAnnotation>
 	
-	^ClyTableIconCommandActivation for: ClyFullBrowserClassGroupContext 
+	^ClyTableIconCommandActivation for: ClyFullBrowserClassGroupContext
 ]

@@ -24,7 +24,7 @@ SycVariableBreakpointCommand class >> canBeExecutedInContext: aToolContext [
 
 { #category : #testing }
 SycVariableBreakpointCommand class >> isAbstract [
-	^self == SycVariableBreakpointCommand 
+	^self == SycVariableBreakpointCommand
 ]
 
 { #category : #execution }

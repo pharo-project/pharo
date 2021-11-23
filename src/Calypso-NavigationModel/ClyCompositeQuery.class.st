@@ -48,7 +48,7 @@ ClyCompositeQuery class >> with: subqueries [
 { #category : #'instance creation' }
 ClyCompositeQuery class >> with: subqueries as: aQueryResult [
 	^(self with: subqueries)
-		requiredResult: aQueryResult 
+		requiredResult: aQueryResult
 ]
 
 { #category : #comparing }
@@ -148,14 +148,14 @@ ClyCompositeQuery >> subqueries: aCollection [
 	subqueries := aCollection asSet.
 	subscopes := subqueries collect: [:each | each scope].
 	scope := ClyCompositeScope on: subscopes.
-	self requiredResult: subqueries anyOne requiredResult 
+	self requiredResult: subqueries anyOne requiredResult
 ]
 
 { #category : #converting }
 ClyCompositeQuery >> withScope: aTypedScope [
 	| newSubqueries |
 	newSubqueries := subqueries collect: [ :each | each withScope: aTypedScope ].
-	^self withSubqueries: newSubqueries 
+	^self withSubqueries: newSubqueries
 ]
 
 { #category : #converting }

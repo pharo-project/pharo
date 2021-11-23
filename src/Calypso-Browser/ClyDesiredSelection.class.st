@@ -104,5 +104,5 @@ ClyDesiredSelection >> updateItemsWhichBelongsTo: aDataSource [
 	updatedItems := aDataSource itemCursor findItemsWith: (relatedItems collect: [:each | each actualObject]).
 	relatedItems with: updatedItems do: [ :myItem :updatedBrowserItem | 
 		updatedBrowserItem ifNotNil: [ myItem updateItemWith: updatedBrowserItem ]].
-	^false 
+	^false
 ]

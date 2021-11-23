@@ -8,5 +8,5 @@ UITheme >> calypsoFrozenItemColor [
 	
 	^self backgroundColor lightness > 0.3
 		ifTrue: [ Color blue muchDarker]
-		ifFalse: [ Color cyan ] 
+		ifFalse: [ Color cyan ]
 ]

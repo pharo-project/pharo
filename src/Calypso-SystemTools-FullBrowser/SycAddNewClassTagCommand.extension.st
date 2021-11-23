@@ -4,7 +4,7 @@ Extension { #name : #SycAddNewClassTagCommand }
 SycAddNewClassTagCommand class >> fullBrowserClassGroupMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemFor: ClyFullBrowserClassGroupContext 
+	^CmdContextMenuActivation byRootGroupItemFor: ClyFullBrowserClassGroupContext
 ]
 
 { #category : #'*Calypso-SystemTools-FullBrowser' }

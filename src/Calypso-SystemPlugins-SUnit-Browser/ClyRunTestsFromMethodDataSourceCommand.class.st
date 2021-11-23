@@ -20,12 +20,12 @@ Class {
 { #category : #testing }
 ClyRunTestsFromMethodDataSourceCommand class >> canBeExecutedInContext: aBrowserContext [
 
-	^aBrowserContext browser resultView dataSource hasMetaProperty: ClyTestResultProperty 
+	^aBrowserContext browser resultView dataSource hasMetaProperty: ClyTestResultProperty
 ]
 
 { #category : #testing }
 ClyRunTestsFromMethodDataSourceCommand class >> isAbstract [
-	^self = ClyRunTestsFromMethodDataSourceCommand 
+	^self = ClyRunTestsFromMethodDataSourceCommand
 ]
 
 { #category : #activation }
@@ -45,7 +45,7 @@ ClyRunTestsFromMethodDataSourceCommand class >> queryBrowserToolbarActivation [
 { #category : #execution }
 ClyRunTestsFromMethodDataSourceCommand >> buildTestSuite [
 	
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #execution }

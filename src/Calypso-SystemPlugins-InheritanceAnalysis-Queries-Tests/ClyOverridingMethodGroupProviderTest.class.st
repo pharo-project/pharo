@@ -7,12 +7,12 @@ Class {
 { #category : #running }
 ClyOverridingMethodGroupProviderTest >> classSampleWhichHasGroup [
 
-	^ClyClassWhichInheritsAbstractClassMock 
+	^ClyClassWhichInheritsAbstractClassMock
 ]
 
 { #category : #running }
 ClyOverridingMethodGroupProviderTest >> groupProviderClass [
-	^ClyOverridingMethodGroupProvider 
+	^ClyOverridingMethodGroupProvider
 ]
 
 { #category : #running }

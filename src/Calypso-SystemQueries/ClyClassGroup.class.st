@@ -138,7 +138,7 @@ ClyClassGroup >> importClass: aClass [
 { #category : #operations }
 ClyClassGroup >> importClasses: classesCollection [
 
-	classesCollection do: [ :each | self importClass: each ] 
+	classesCollection do: [ :each | self importClass: each ]
 ]
 
 { #category : #initialization }

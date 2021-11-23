@@ -23,12 +23,12 @@ Class {
 { #category : #'instance creation' }
 ClyStatusBarItemMorph class >> for: aBrowserTool [
 	^self new 
-		ownerTool: aBrowserTool 
+		ownerTool: aBrowserTool
 ]
 
 { #category : #building }
 ClyStatusBarItemMorph >> build [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #initialization }

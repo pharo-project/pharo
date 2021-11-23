@@ -47,7 +47,7 @@ ClyMergedHierarchy >> = anObject [
 
 	self == anObject ifTrue: [ ^ true ].
 	super = anObject ifFalse: [ ^ false ].
-	^ mergedParts = anObject mergedParts 
+	^ mergedParts = anObject mergedParts
 ]
 
 { #category : #building }

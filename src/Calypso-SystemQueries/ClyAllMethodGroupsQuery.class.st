@@ -59,7 +59,7 @@ ClyAllMethodGroupsQuery >> checkEmptyResult [
 
 { #category : #execution }
 ClyAllMethodGroupsQuery >> collectMetadataOf: aQueryResult by: anEnvironmentPlugin [
-	anEnvironmentPlugin collectMetadataOfMethodGroups: aQueryResult 
+	anEnvironmentPlugin collectMetadataOfMethodGroups: aQueryResult
 ]
 
 { #category : #printing }

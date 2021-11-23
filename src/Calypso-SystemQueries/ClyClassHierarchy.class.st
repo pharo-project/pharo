@@ -163,7 +163,7 @@ ClyClassHierarchy >> buildFrom: classes [
 
 { #category : #building }
 ClyClassHierarchy >> buildParentMap: aHierarchyMap for: aClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #building }

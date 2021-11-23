@@ -10,7 +10,7 @@ Class {
 
 { #category : #decoration }
 ClyAbstractMethodTableDecorator class >> browserPluginClass [
-	^ClyInheritanceAnalysisBrowserPlugin 
+	^ClyInheritanceAnalysisBrowserPlugin
 ]
 
 { #category : #decoration }

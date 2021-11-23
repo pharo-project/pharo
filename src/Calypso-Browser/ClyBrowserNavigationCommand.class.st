@@ -28,7 +28,7 @@ ClyBrowserNavigationCommand class >> browserTabActivation [
 ClyBrowserNavigationCommand class >> defaultShortcut [
 	<classAnnotationDependency>
 	
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }

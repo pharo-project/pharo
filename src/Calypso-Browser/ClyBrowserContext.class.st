@@ -146,7 +146,6 @@ ClyBrowserContext >> lastSelectedObject [
 { #category : #helpers }
 ClyBrowserContext >> lastSelectedObjectIn: selectedObjects [
 	^selectedObjects first
-	
 ]
 
 { #category : #accessing }
@@ -156,7 +155,7 @@ ClyBrowserContext >> navigationEnvironment [
 
 { #category : #'browser state' }
 ClyBrowserContext >> restoreBrowserState [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -177,7 +176,6 @@ ClyBrowserContext >> selectedObjects [
 { #category : #'tool controlling' }
 ClyBrowserContext >> showMethodTag: aString [
 	"Default is to do nothing"
-	
 ]
 
 { #category : #accessing }

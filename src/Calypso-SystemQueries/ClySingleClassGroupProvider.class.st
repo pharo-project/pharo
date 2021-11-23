@@ -27,10 +27,10 @@ ClySingleClassGroupProvider >> classGroupsIn: aPackageScope do: aBlock [
 
 { #category : #'building groups' }
 ClySingleClassGroupProvider >> createClassGroupFor: aClassQuery from: aPackageScope [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'building groups' }
 ClySingleClassGroupProvider >> createClassQueryFrom: aPackageScope [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

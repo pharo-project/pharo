@@ -37,5 +37,5 @@ ClyAllClassVariablesQuery >> description [
 
 { #category : #testing }
 ClyAllClassVariablesQuery >> retrievesItem: aVariable [
-	^aVariable isKindOf: ClyClassVariable 
+	^aVariable isKindOf: ClyClassVariable
 ]

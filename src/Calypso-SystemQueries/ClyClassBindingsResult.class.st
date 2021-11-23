@@ -21,5 +21,4 @@ ClyClassBindingsResult >> fillWith: classes [
 						key: (each name allButFirst: 'AnObsolete' size) asSymbol 
 						value: each]
 					ifFalse: [ each instanceSide binding ]]]
-
 ]

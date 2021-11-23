@@ -10,7 +10,7 @@ SycRenameMessageCommand class >> methodMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation 
-		byRootGroupItemOrder: self browserMenuOrder for: ClyMethod asCalypsoItemContext 
+		byRootGroupItemOrder: self browserMenuOrder for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #'*Calypso-SystemTools-Core' }

@@ -6,5 +6,4 @@ ClyUndeclaredMethodsQuery >> decorateMethodGroupTableCell: anItemCellMorph of: g
 	
 	anItemCellMorph label color: Color red.
 	anItemCellMorph definitionIcon: #smallDebug
-	
 ]

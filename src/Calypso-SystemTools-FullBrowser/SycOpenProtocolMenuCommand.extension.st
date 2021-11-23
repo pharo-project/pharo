@@ -4,5 +4,5 @@ Extension { #name : #SycOpenProtocolMenuCommand }
 SycOpenProtocolMenuCommand class >> fullBrowserMethodGroupMenuActivation [
 	<classAnnotation>
 
-	^ CmdContextMenuActivation byRootGroupItemOrder: 10002 for: ClyFullBrowserMethodGroupContext 
+	^ CmdContextMenuActivation byRootGroupItemOrder: 10002 for: ClyFullBrowserMethodGroupContext
 ]

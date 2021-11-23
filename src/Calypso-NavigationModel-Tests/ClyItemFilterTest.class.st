@@ -9,5 +9,5 @@ Class {
 
 { #category : #testing }
 ClyItemFilterTest class >> isAbstract [
-	^self = ClyItemFilterTest 
+	^self = ClyItemFilterTest
 ]

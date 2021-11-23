@@ -15,14 +15,14 @@ Class {
 ClyFindMethodInBrowserCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyFullBrowserMethodContext 
+	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyFullBrowserMethodContext
 ]
 
 { #category : #menu }
 ClyFindMethodInBrowserCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 	
-	^CmdShortcutActivation by: $f meta for: ClyFullBrowserMethodContext 
+	^CmdShortcutActivation by: $f meta for: ClyFullBrowserMethodContext
 ]
 
 { #category : #accessing }

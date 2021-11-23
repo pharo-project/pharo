@@ -43,5 +43,5 @@ ClyVariableBreakpointCommand >> execute [
 
 { #category : #execution }
 ClyVariableBreakpointCommand >> installVariableBreakpointOn: aVariableName in: methodOrClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

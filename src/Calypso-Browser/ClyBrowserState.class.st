@@ -68,7 +68,7 @@ ClyBrowserState >> applyTo: aBrowser byUndo: undoExecuting [
 
 { #category : #private }
 ClyBrowserState >> createBrowser [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -108,7 +108,6 @@ ClyBrowserState >> retrieveStateFrom: aBrowser [
 	viewStates := aBrowser navigationViews collect: [ :each | each snapshotState ].
 	selectedTabs := aBrowser tabManager selectedTools 
 		collect: [ :each | each copyForBrowserStateSnapshot ].
-	
 ]
 
 { #category : #accessing }

@@ -30,7 +30,7 @@ ClyAddBreakpointCommand class >> isAbstract [
 
 { #category : #execution }
 ClyAddBreakpointCommand >> applyBreakpointCondition: aBreakpoint [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }

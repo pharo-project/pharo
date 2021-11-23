@@ -27,7 +27,7 @@ ClyExpectedFailedTestMethodsQueryTest >> testFromTwoMethods [
 		ClyTestedClassMockTest >> #testExpectedFailure. 
 		ClyTestedClassMockTest >> #testOne}.
 	
-	self assert: foundSelectors sorted asArray equals: #(testExpectedFailure) 
+	self assert: foundSelectors sorted asArray equals: #(testExpectedFailure)
 ]
 
 { #category : #tests }

@@ -10,7 +10,7 @@ Class {
 
 { #category : #decoration }
 ClyModifiedPackageTableDecorator class >> browserPluginClass [
-	^ClyMonticelloBrowserPlugin 
+	^ClyMonticelloBrowserPlugin
 ]
 
 { #category : #decoration }
@@ -22,7 +22,6 @@ ClyModifiedPackageTableDecorator class >> decorateMainTableCell: anItemCellMorph
 
 { #category : #decoration }
 ClyModifiedPackageTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
-
 ]
 
 { #category : #decoration }

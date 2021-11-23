@@ -10,7 +10,7 @@ Class {
 { #category : #printing }
 ClyMessageImplementorsQuery >> description [
 
-	^'implementors of ', self printSelectors 
+	^'implementors of ', self printSelectors
 ]
 
 { #category : #testing }

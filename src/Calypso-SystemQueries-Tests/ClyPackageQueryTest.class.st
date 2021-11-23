@@ -6,7 +6,7 @@ Class {
 
 { #category : #testing }
 ClyPackageQueryTest class >> isAbstract [
-	^self = ClyPackageQueryTest 
+	^self = ClyPackageQueryTest
 ]
 
 { #category : #tests }

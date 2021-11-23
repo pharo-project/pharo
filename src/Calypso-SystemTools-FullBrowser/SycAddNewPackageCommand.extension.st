@@ -4,12 +4,12 @@ Extension { #name : #SycAddNewPackageCommand }
 SycAddNewPackageCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemFor: ClyFullBrowserPackageContext 
+	^CmdContextMenuActivation byRootGroupItemFor: ClyFullBrowserPackageContext
 ]
 
 { #category : #'*Calypso-SystemTools-FullBrowser' }
 SycAddNewPackageCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 	
-	^CmdShortcutActivation by: $k meta, $p meta for: ClyFullBrowserGlobalContext  
+	^CmdShortcutActivation by: $k meta, $p meta for: ClyFullBrowserGlobalContext
 ]

@@ -57,7 +57,7 @@ ClyClassQuery >> checkEmptyResult [
 
 { #category : #execution }
 ClyClassQuery >> collectMetadataOf: aQueryResult by: anEnvironmentPlugin [
-	anEnvironmentPlugin collectMetadataOfClasses: aQueryResult 
+	anEnvironmentPlugin collectMetadataOfClasses: aQueryResult
 ]
 
 { #category : #'system changes' }
@@ -81,5 +81,5 @@ ClyClassQuery >> retrievesItem: aClass [
 
 { #category : #testing }
 ClyClassQuery >> selectsClass: aClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

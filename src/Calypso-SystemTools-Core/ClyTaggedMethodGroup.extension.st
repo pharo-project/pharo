@@ -10,5 +10,5 @@ ClyTaggedMethodGroup >> decorateTableCell: anItemCellMorph of: groupItem [
 	
 	(#('initial' 'class initial' 'releaz' 'releas' 'finali') 
 		anySatisfy: [ :each | myName beginsWith: each ])
-			ifTrue: [ anItemCellMorph definitionIcon: #protocolProtectedIcon]	
+			ifTrue: [ anItemCellMorph definitionIcon: #protocolProtectedIcon]
 ]

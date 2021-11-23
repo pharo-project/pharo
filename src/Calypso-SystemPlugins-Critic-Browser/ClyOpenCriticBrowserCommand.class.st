@@ -12,7 +12,7 @@ ClyOpenCriticBrowserCommand class >> packageContextMenuActivation [
 	<classAnnotation>
 	
 	^CmdContextMenuActivation 
-		byItemOf: ClyQueryMenuGroup for: RPackage asCalypsoItemContext 
+		byItemOf: ClyQueryMenuGroup for: RPackage asCalypsoItemContext
 ]
 
 { #category : #activation }

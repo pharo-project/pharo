@@ -50,7 +50,7 @@ ClyAccrossWindowNavigationState >> applyTo: aBrowser byUndo: undoExecuting [
 	undoExecuting ifTrue: [ aBrowser close].	
 		
 	self restoreBrowserWindow.
-	window model focusActiveTab 
+	window model focusActiveTab
 ]
 
 { #category : #accessing }

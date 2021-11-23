@@ -12,14 +12,14 @@ Class {
 ClyShowMethodInheritanceCommand class >> browserContextMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyMethod asCalypsoItemContext 
+	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #activation }
 ClyShowMethodInheritanceCommand class >> browserShortcutActivation [
 	<classAnnotation>
 	
-	^CmdShortcutActivation by: $h meta for: ClyMethod asCalypsoItemContext 
+	^CmdShortcutActivation by: $h meta for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #execution }

@@ -16,7 +16,7 @@ Class {
 
 { #category : #testing }
 ClyRemoveDebuggingCommand class >> isAbstract [
-	^self = ClyRemoveDebuggingCommand 
+	^self = ClyRemoveDebuggingCommand
 ]
 
 { #category : #activation }
@@ -28,7 +28,7 @@ ClyRemoveDebuggingCommand class >> methodBrowserTableIconActivation [
 
 { #category : #execution }
 ClyRemoveDebuggingCommand >> debuggingToolClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
