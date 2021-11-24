@@ -401,7 +401,6 @@ InflateStream >> mapValues: values by: valueMap [
 		oldValue 
 			ifNil: [^values]
 			ifNotNil: [values at: i put: (valueMap at: oldValue+1)]].
-
 ]
 
 { #category : #private }

@@ -77,7 +77,6 @@ ZipEncoderTree >> buildHierarchyFrom: aHeap [
 		parent right: right.
 		aHeap add: parent].
 	^aHeap removeFirst
-
 ]
 
 { #category : #encoding }

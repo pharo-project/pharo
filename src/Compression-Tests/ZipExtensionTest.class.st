@@ -27,7 +27,6 @@ ZipExtensionTest >> testBinaryZipped [
 	$ echo -n Pharo | gzip - > /tmp/foo.gz"
 	compressed := #[31 139 8 0 94 254 149 93 0 3 11 200 72 44 202 7 0 144 33 178 137 5 0 0 0].
 	self assert: compressed unzipped asString equals: 'Pharo'
-
 ]
 
 { #category : #tests }

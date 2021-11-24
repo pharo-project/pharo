@@ -24,7 +24,6 @@ CompiledMethodTrailer >> encodeEmbeddedSourceZip [
 
 	"data is string with method's source code, encode it using Zip compression method"
 	self encodeUsingZip
-
 ]
 
 { #category : #'*Compression-Streams' }
@@ -49,5 +48,4 @@ CompiledMethodTrailer >> encodeUsingZip [
 	stream nextPut: (self kindAsByte + encodedLength size - 1).
 	
 	encodedData := stream contents
-	
 ]

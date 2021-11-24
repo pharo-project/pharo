@@ -104,7 +104,6 @@ ZipFileMember >> readFrom: aStream [
 	self readLocalDirectoryFileHeaderFrom: aStream.
 	self endRead.
 	self canonicalizeFileName.
-
 ]
 
 { #category : #'private - reading' }
@@ -176,7 +175,6 @@ ZipFileMember >> skipLocalDirectoryFileHeaderFrom: aStream [
 	aStream next: fileNameLength.
 	aStream next: extraFieldLength.
 	dataOffset := aStream position.
-
 ]
 
 { #category : #initialization }
@@ -203,8 +201,6 @@ ZipFileMember >> uncompressDataTo: aStream [
 	]] on: CRCError do: [ :ex | crcErrorMessage := ex messageText. ex resume ].
 
 	crcErrorMessage ifNotNil: [ self isCorrupt: true. CRCError signal: crcErrorMessage ]
-
-
 ]
 
 { #category : #'private - writing' }
@@ -222,7 +218,6 @@ ZipFileMember >> uncompressDataTo: aStream from: start to: finish [
 		aStream next: chunkSize putAll: buffer startingAt: 1.
 		readDataRemaining := readDataRemaining - chunkSize.
 	].
-
 ]
 
 { #category : #'private - reading' }
