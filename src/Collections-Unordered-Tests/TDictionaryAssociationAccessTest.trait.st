@@ -44,9 +44,7 @@ TDictionaryAssociationAccessTest >> testAssociationAtError [
 	collection := self nonEmpty.
 	nonExistantKey := self keyNotIn .
 
-	self should: [collection associationAt: nonExistantKey] raise: Error. 
-
-
+	self should: [collection associationAt: nonExistantKey] raise: Error.
 ]
 
 { #category : #'tests - dictionary assocition access' }

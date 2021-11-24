@@ -13,7 +13,7 @@ Class {
 { #category : #coverage }
 WeakRegistryTest >> classToBeTested [
 	
-	^ WeakRegistry 
+	^ WeakRegistry
 ]
 
 { #category : #mocketry }

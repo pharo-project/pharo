@@ -104,7 +104,6 @@ WeakSet >> fixCollisionsFrom: start [
 					array 
 						at: newIndex put: element;
 						at: index put: flag ] ] ]
-
 ]
 
 { #category : #private }

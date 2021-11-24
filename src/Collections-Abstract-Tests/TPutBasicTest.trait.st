@@ -55,14 +55,12 @@ TPutBasicTest >> testAtPut [
 	
 	self nonEmpty at: self anIndex put: self aValue.
 	self assert: (self nonEmpty at: self anIndex) = self aValue.
-	
 ]
 
 { #category : #'tests - at put' }
 TPutBasicTest >> testAtPutOutOfBounds [
 	
 	self should: [self empty at: self anIndex put: self aValue] raise: Error
-	
 ]
 
 { #category : #'tests - at put' }

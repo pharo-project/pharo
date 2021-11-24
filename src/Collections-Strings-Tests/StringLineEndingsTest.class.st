@@ -76,9 +76,7 @@ StringLineEndingsTest >> testOriginStringCanBeProducedFromTargetStringAndOrigina
 	
 	| testingSubjectWithTargetLineEndingTransformedWithOriginalLineEnding |
 	testingSubjectWithTargetLineEndingTransformedWithOriginalLineEnding := testingSubjectWithTargetLineEnding withLineEndings: originLineEnding .
-	self assert: testingSubjectWithTargetLineEndingTransformedWithOriginalLineEnding equals: testingSubjectWithOriginLineEnding 
-	
-	
+	self assert: testingSubjectWithTargetLineEndingTransformedWithOriginalLineEnding equals: testingSubjectWithOriginLineEnding
 ]
 
 { #category : #tests }

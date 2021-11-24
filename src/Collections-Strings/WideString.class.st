@@ -18,7 +18,6 @@ WideString class >> from: aString [
 	newString := self new: aString size.
 	1 to: aString size do: [:index | newString basicAt: index put: (aString basicAt: index)].
 	^ newString
-
 ]
 
 { #category : #'instance creation' }
@@ -36,7 +35,6 @@ WideString class >> fromByteArray: aByteArray [
 	].
 
 	^ inst
-
 ]
 
 { #category : #'instance creation' }
@@ -52,7 +50,6 @@ WideString class >> fromString: aString [
 		inst basicAt: pos put: (aString basicAt: pos).
 	].
 	^ inst.
-
 ]
 
 { #category : #converting }
@@ -79,7 +76,6 @@ WideString >> asFourCode [
 	(result bitAnd: 16r40000000) = 0 
 		ifFalse: [ ^ result - 16r80000000 ].
 	^ result
-
 ]
 
 { #category : #converting }
@@ -144,7 +140,6 @@ WideString >> byteAt: index [
 	d := (index + 3) // 4.
 	r := (index - 1) \\ 4 + 1.
 	^ (self wordAt: d) byteAt: ((4 - r) + 1).
-
 ]
 
 { #category : #accessing }
@@ -157,14 +152,12 @@ WideString >> byteAt: index put: aByte [
 	w := w + (aByte<<((4 - r)*8)).
 	self basicAt: d put: w.
 	^ aByte.
-
 ]
 
 { #category : #accessing }
 WideString >> byteSize [
 
 	^ self size * 4.
-
 ]
 
 { #category : #copying }
@@ -174,7 +167,6 @@ WideString >> copyFrom: start to: stop [
 	n := super copyFrom: start to: stop.
 	n isOctetString ifTrue: [^ n asOctetString].
 	^ n.
-
 ]
 
 { #category : #comparing }
@@ -198,19 +190,16 @@ WideString >> replaceFrom: start to: stop with: replacement startingAt: repStart
 	]. 
 
 	^ super replaceFrom: start to: stop with: replacement startingAt: repStart.
-
 ]
 
 { #category : #accessing }
 WideString >> wordAt: index [
 	<primitive: 60>
 	^ (self basicAt: index).
-
 ]
 
 { #category : #accessing }
 WideString >> wordAt: index put: anInteger [
 	<primitive: 61>
 	self basicAt: index put: anInteger.
-
 ]

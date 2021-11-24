@@ -76,7 +76,6 @@ WaitfreeQueue >> findFirst: aBlock [
 
 	
 	^ self nextOrNilSuchThat: aBlock
-	
 ]
 
 { #category : #accessing }
@@ -112,8 +111,6 @@ WaitfreeQueue >> flush: aFlushBlock [
 			].
 		item := item next.
 	] repeat.
-
-	
 ]
 
 { #category : #accessing }
@@ -147,7 +144,6 @@ WaitfreeQueue >> initialize [
 	dummy := AtomicQueueItem new.
 	dummy object: dummy.
 	tail := dummy.
-
 ]
 
 { #category : #initialization }
@@ -229,7 +225,6 @@ WaitfreeQueue >> nextIfNone: aBlock [
 
 	dummy next: item next.
 	^ result
-
 ]
 
 { #category : #accessing }
@@ -291,7 +286,6 @@ WaitfreeQueue >> nextOrNilSuchThat: aBlock [
 
 		item := item next.
 	] repeat.
-
 ]
 
 { #category : #accessing }
@@ -338,7 +332,6 @@ WaitfreeQueue >> peek [
 	].
 	
 	^ result
-
 ]
 
 { #category : #printing }

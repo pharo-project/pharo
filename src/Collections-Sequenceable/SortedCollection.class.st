@@ -89,7 +89,7 @@ SortedCollection >> , otherCollection [
 	| newSortedCollection |
 	newSortedCollection := super , otherCollection.
 	newSortedCollection sortBlock: self sortBlock .
-	^newSortedCollection 
+	^newSortedCollection
 ]
 
 { #category : #comparing }
@@ -257,7 +257,6 @@ SortedCollection >> join: aCollection [
 	"Append the elements of the argument, aSequenceableCollection, separating them by the receiver."
 	"Curiously addAllLast: does not trigger a reSort, so we must do it here."
 	^ (super join: aCollection) reSort; yourself
-
 ]
 
 { #category : #'math functions' }

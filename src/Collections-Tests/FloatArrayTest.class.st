@@ -28,7 +28,7 @@ Class {
 { #category : #requirements }
 FloatArrayTest >> aValue [
 " return a value to put into nonEmpty"
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
@@ -40,7 +40,7 @@ FloatArrayTest >> anIndex [
 { #category : #requirements }
 FloatArrayTest >> anotherElementNotIn [
 " return an element different of 'elementNotIn'  not included in 'nonEmpty' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
@@ -52,13 +52,13 @@ FloatArrayTest >> anotherElementOrAssociationIn [
 { #category : #requirements }
 FloatArrayTest >> anotherElementOrAssociationNotIn [
 	" return an element (or an association for Dictionary )not present  in 'collection' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
 FloatArrayTest >> anotherValue [
 " return a value ( not eual to 'aValue' ) to put into nonEmpty "
-	^ elementInNonEmpty 
+	^ elementInNonEmpty
 ]
 
 { #category : #coverage }
@@ -70,7 +70,7 @@ FloatArrayTest >> classToBeTested [
 { #category : #requirements }
 FloatArrayTest >> collection [
 
-	^ nonEmpty5ElementsNoDuplicate 
+	^ nonEmpty5ElementsNoDuplicate
 ]
 
 { #category : #requirements }
@@ -83,14 +83,14 @@ FloatArrayTest >> collectionClass [
 { #category : #requirements }
 FloatArrayTest >> collectionMoreThan1NoDuplicates [
 	" return a collection of size > 1 without equal elements"
-	^ nonEmpty5ElementsNoDuplicate 
+	^ nonEmpty5ElementsNoDuplicate
 ]
 
 { #category : #requirements }
 FloatArrayTest >> collectionMoreThan5Elements [
 " return a collection including at least 5 elements"
 	
-	^ nonEmpty5ElementsNoDuplicate 
+	^ nonEmpty5ElementsNoDuplicate
 ]
 
 { #category : #requirements }
@@ -115,7 +115,7 @@ FloatArrayTest >> collectionWith2TimeSubcollection [
 { #category : #requirements }
 FloatArrayTest >> collectionWithCopyNonIdentical [
 	" return a collection that include elements for which 'copy' return a different object (this is not the case of SmallInteger)"
-	^ nonEmpty5ElementsNoDuplicate 
+	^ nonEmpty5ElementsNoDuplicate
 ]
 
 { #category : #requirements }
@@ -129,39 +129,39 @@ FloatArrayTest >> collectionWithElementsToRemove [
 FloatArrayTest >> collectionWithNonIdentitySameAtEndAndBegining [
 	" return a collection with elements at end and begining equals only with classic equality (they are not the same object).
 (others elements of the collection are not equal to those elements)"
-	^ collectionWithSameAtEndAndBegining 		
+	^ collectionWithSameAtEndAndBegining
 ]
 
 { #category : #requirements }
 FloatArrayTest >> collectionWithSameAtEndAndBegining [
 " return a collection with elements at end and begining equals .
 (others elements of the collection are not equal to those elements)"
-	^ collectionWithSameAtEndAndBegining 
+	^ collectionWithSameAtEndAndBegining
 ]
 
 { #category : #requirements }
 FloatArrayTest >> collectionWithSortableElements [
 " return a collection elements that can be sorte ( understanding message ' < '  or ' > ')"
-	^ nonEmpty5ElementsNoDuplicate 
+	^ nonEmpty5ElementsNoDuplicate
 ]
 
 { #category : #requirements }
 FloatArrayTest >> collectionWithoutEqualElements [
 
 " return a collection not including equal elements "
-	^ nonEmpty5ElementsNoDuplicate 
+	^ nonEmpty5ElementsNoDuplicate
 ]
 
 { #category : #requirements }
 FloatArrayTest >> collectionWithoutNilElements [
 " return a collection that doesn't includes a nil element  and that doesn't includes equal elements'"
-	^ nonEmpty5ElementsNoDuplicate 
+	^ nonEmpty5ElementsNoDuplicate
 ]
 
 { #category : #requirements }
 FloatArrayTest >> elementInForElementAccessing [
 " return an element inculded in 'moreThan4Elements'"
-	^ elementInNonEmpty 
+	^ elementInNonEmpty
 ]
 
 { #category : #requirements }
@@ -174,43 +174,43 @@ FloatArrayTest >> elementInForIndexAccessing [
 FloatArrayTest >> elementNotIn [
 "return an element not included in 'nonEmpty' "
 
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
 FloatArrayTest >> elementNotInForElementAccessing [
 " return an element not included in 'moreThan4Elements' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
 FloatArrayTest >> elementNotInForIndexAccessing [
 " return an element not included in 'collectionMoreThan1NoDuplicates' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
 FloatArrayTest >> elementToAdd [
 " return an element of type 'nonEmpy' elements'type'  not  yet included in nonEmpty" 
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
 FloatArrayTest >> elementsCopyNonIdenticalWithoutEqualElements [
 	" return a collection that does niot incllude equal elements ( classic equality )
 	all elements included are elements for which copy is not identical to the element  "
-	^ nonEmpty5ElementsNoDuplicate 
+	^ nonEmpty5ElementsNoDuplicate
 ]
 
 { #category : #requirements }
 FloatArrayTest >> empty [
-	^ empty 
+	^ empty
 ]
 
 { #category : #requirements }
 FloatArrayTest >> firstCollection [
 " return a collection that will be the first part of the concatenation"
-	^ nonEmpty5ElementsNoDuplicate 
+	^ nonEmpty5ElementsNoDuplicate
 ]
 
 { #category : #requirements }
@@ -242,51 +242,51 @@ FloatArrayTest >> indexInNonEmpty [
 { #category : #requirements }
 FloatArrayTest >> moreThan3Elements [
 	" return a collection including atLeast 3 elements"
-	^ nonEmpty5ElementsNoDuplicate 
+	^ nonEmpty5ElementsNoDuplicate
 ]
 
 { #category : #requirements }
 FloatArrayTest >> moreThan4Elements [
 
 " return a collection including at leat 4 elements"
-	^ nonEmpty5ElementsNoDuplicate 
+	^ nonEmpty5ElementsNoDuplicate
 ]
 
 { #category : #requirements }
 FloatArrayTest >> newElement [
 "return an element that will be put in the collection in place of another"
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
 FloatArrayTest >> nonEmpty [
 
-	^ nonEmpty5ElementsNoDuplicate 
+	^ nonEmpty5ElementsNoDuplicate
 ]
 
 { #category : #requirements }
 FloatArrayTest >> nonEmpty1Element [
 " return a collection of size 1 including one element"
-	^ nonEmpty1Element 
+	^ nonEmpty1Element
 ]
 
 { #category : #requirements }
 FloatArrayTest >> nonEmptyMoreThan1Element [
 " return a collection that doesn't includes equal elements' and doesn't include nil elements'" 
-	^nonEmpty5ElementsNoDuplicate 
+	^nonEmpty5ElementsNoDuplicate
 ]
 
 { #category : #requirements }
 FloatArrayTest >> oldSubCollection [
 " return a subCollection included in collectionWith1TimeSubcollection .
 ex :   subCollection := #( 2 3 4) and collectionWith1TimeSubcollection := #(1 2 3 4 5)"
-	^ nonEmpty5ElementsNoDuplicate 
+	^ nonEmpty5ElementsNoDuplicate
 ]
 
 { #category : #requirements }
 FloatArrayTest >> replacementCollection [
 " return a collection that will be used to replace 'oldSubcollection' in ' collectionWith1TimeSubcollection'  " 
-	^ collectionWithSameAtEndAndBegining 
+	^ collectionWithSameAtEndAndBegining
 ]
 
 { #category : #requirements }
@@ -303,7 +303,7 @@ FloatArrayTest >> replacementCollectionSameSize [
 { #category : #requirements }
 FloatArrayTest >> secondCollection [
 " return a collection that will be the second part of the concatenation"
-	^ collectionWithEqualElements 
+	^ collectionWithEqualElements
 ]
 
 { #category : #requirements }
@@ -344,14 +344,13 @@ FloatArrayTest >> setUp [
 { #category : #requirements }
 FloatArrayTest >> sizeCollection [
 	"Answers a collection not empty"
-	^ nonEmpty5ElementsNoDuplicate 
+	^ nonEmpty5ElementsNoDuplicate
 ]
 
 { #category : #requirements }
 FloatArrayTest >> sortedInAscendingOrderCollection [
 	"Return a collection sorted in ascending order"
 	^ sortedCollection ifNil: [ sortedCollection := ( FloatArray new: 3)at: 1 put: 1.0 ; at: 2 put: 2.0 ; at: 3 put: 3.0 ; yourself ]
-	
 ]
 
 { #category : #requirements }
@@ -516,10 +515,10 @@ FloatArrayTest >> testSumWithOrderedCollection [
 { #category : #requirements }
 FloatArrayTest >> unsortedCollection [
 " retur a collection that is not yat sorted"
-	^nonEmpty5ElementsNoDuplicate 
+	^nonEmpty5ElementsNoDuplicate
 ]
 
 { #category : #requirements }
 FloatArrayTest >> withEqualElements [
-	^ collectionWithEqualElements 
+	^ collectionWithEqualElements
 ]

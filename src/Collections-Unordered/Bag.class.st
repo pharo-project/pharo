@@ -52,8 +52,6 @@ Bag >> = aBag [
 		(aBag occurrencesOf: assoc key) = assoc value
 			ifFalse: [^false]].
 	^true
-
-
 ]
 
 { #category : #adding }

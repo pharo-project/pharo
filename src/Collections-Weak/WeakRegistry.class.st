@@ -29,7 +29,6 @@ WeakRegistry class >> new [
 	registry := super new.
 	WeakArray addWeakDependent: registry.
 	^registry
-
 ]
 
 { #category : #'instance creation' }
@@ -57,7 +56,6 @@ WeakRegistry >> add: anObject executor: anExecutor [
 		].
 		finItem add: anExecutor ].
 	^ anObject
-
 ]
 
 { #category : #enumerating }
@@ -65,7 +63,6 @@ WeakRegistry >> do: aBlock [
 	^self protected: [
 		valueDictionary keysDo: aBlock
 	]
-
 ]
 
 { #category : #finalization }
@@ -120,7 +117,6 @@ WeakRegistry >> installFinalizer [
 WeakRegistry >> keys [
 
 	^self protected: [ valueDictionary keys ]
-
 ]
 
 { #category : #copying }

@@ -115,7 +115,6 @@ TCopyPartOfSequenceable >> testCopyUpTo [
 	
 	"Verify size"
 	self assert: result size equals: (index-1)
-	
 ]
 
 { #category : #'tests - copying part of sequenceable' }

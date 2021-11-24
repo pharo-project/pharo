@@ -47,7 +47,6 @@ SharedQueue >> findFirst: aBlock [
 			nil ]
 		ifFalse: [
 			items removeAt: index ] ].
-
 ]
 
 { #category : #flushing }
@@ -55,7 +54,6 @@ SharedQueue >> flush [
 	"Remove from the queue all objects"
 	monitor critical: [
 		items := items removeAll].
-
 ]
 
 { #category : #flushing }
@@ -63,7 +61,6 @@ SharedQueue >> flushAllSuchThat: aBlock [
 	"Remove from the queue all objects that satisfy aBlock."
 	monitor critical: [
 		items := items reject: aBlock].
-
 ]
 
 { #category : #initialization }
@@ -71,7 +68,6 @@ SharedQueue >> initialize [
 	super initialize.
 	monitor := Monitor new.
 	items := OrderedCollection new.
-
 ]
 
 { #category : #size }
@@ -84,7 +80,6 @@ SharedQueue >> next [
 	^monitor critical: [
 		monitor waitWhile: [ items isEmpty ].
 		items removeFirst ]
-
 ]
 
 { #category : #accessing }
@@ -114,7 +109,6 @@ SharedQueue >> nextPut: anObject [
 		items addLast: anObject.
 		monitor signal].
 	^ anObject
-
 ]
 
 { #category : #accessing }
@@ -124,7 +118,6 @@ SharedQueue >> peek [
 	no object has been sent, return nil"
 	^monitor critical: [
 		items isEmpty ifTrue: [ nil ] ifFalse: [ items first ] ]
-
 ]
 
 { #category : #copying }

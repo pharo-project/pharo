@@ -40,7 +40,7 @@ CharacterTest >> testCharacterSeparators [
 
 	| result |
 	result := '/' , Character separators.
-	self assert: result size equals: Character separators size + 1 
+	self assert: result size equals: Character separators size + 1
 ]
 
 { #category : #tests }
@@ -59,8 +59,6 @@ CharacterTest >> testDigitValue [
 	
 	'0123456789' with: #(0 1 2 3 4 5 6 7 8 9)
 		do: [:char :value | self assert: char digitValue equals: value].
-		
-	 
 ]
 
 { #category : #tests }

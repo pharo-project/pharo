@@ -15,7 +15,7 @@ WeakIdentityValueDictionaryTest >> canBeUnhealthy [
 { #category : #coverage }
 WeakIdentityValueDictionaryTest >> classToBeTested [
 
-	^ WeakIdentityValueDictionary 
+	^ WeakIdentityValueDictionary
 ]
 
 { #category : #tests }

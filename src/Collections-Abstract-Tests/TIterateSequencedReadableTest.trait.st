@@ -82,7 +82,7 @@ TIterateSequencedReadableTest >> testDetectSequenced [
 	| element result |
 	element := self nonEmptyMoreThan1Element at: 1.
 	result := self nonEmptyMoreThan1Element  detect: [:each | each notNil ].
-	self assert: result equals: element 
+	self assert: result equals: element
 ]
 
 { #category : #'tests - iterate on sequenced reable collections' }
@@ -96,7 +96,7 @@ TIterateSequencedReadableTest >> testFindFirst [
 	element := self nonEmptyMoreThan1Element at: 1.
 	result := self nonEmptyMoreThan1Element findFirst: [:each | each = element].
 	
-	self assert: result equals: 1 
+	self assert: result equals: 1
 ]
 
 { #category : #'tests - iterate on sequenced reable collections' }
@@ -186,9 +186,7 @@ TIterateSequencedReadableTest >> testKeysAndValuesDo [
 		].
 	
 	self assert: indexes size equals: elements size. 
-	self assert: indexes size equals: self nonEmptyMoreThan1Element size 
-	
-	
+	self assert: indexes size equals: self nonEmptyMoreThan1Element size
 ]
 
 { #category : #'tests - iterate on sequenced reable collections' }
@@ -266,9 +264,6 @@ TIterateSequencedReadableTest >> testReverseWithDo [
 		self assert: (firstCollection at: index) equals: a. 
 		self assert: (secondCollection at: index) equals: b.
 			(index := index - 1)]
-	
-	
-	
 ]
 
 { #category : #'tests - iterate on sequenced reable collections' }
@@ -311,8 +306,6 @@ TIterateSequencedReadableTest >> testWithDo [
 		index := index + 1.
 		self assert: (firstCollection at: index) equals:  a. 
 		self assert: (secondCollection at: index) equals: b ]
-	
-	
 ]
 
 { #category : #'tests - iterate on sequenced reable collections' }
@@ -333,7 +326,7 @@ TIterateSequencedReadableTest >> testWithIndexCollect [
 		each ]. 
 	
 	result withIndexDo: [:el :i | self assert: (result at:i) equals: (collection at: i)].
-	self assert: result size equals: collection size 
+	self assert: result size equals: collection size
 ]
 
 { #category : #'tests - iterate on sequenced reable collections' }
@@ -355,5 +348,4 @@ TIterateSequencedReadableTest >> testWithIndexDo [
 	
 	self assert: indexes size equals: elements size. 
 	self assert: indexes size equals: self nonEmptyMoreThan1Element size
-	
 ]
