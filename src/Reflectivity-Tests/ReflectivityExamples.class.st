@@ -103,6 +103,12 @@ ReflectivityExamples >> exampleClassVarRead [
 ]
 
 { #category : #examples }
+ReflectivityExamples >> exampleDynamicArrayArgument [
+
+	^ OrderedCollection new , { self }
+]
+
+{ #category : #examples }
 ReflectivityExamples >> exampleGlobalRead [
 	^GlobalForTesting
 ]
