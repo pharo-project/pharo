@@ -32,13 +32,13 @@ Class {
 
 { #category : #requirements }
 LinkedListTest >> accessCollection [
-	^collectionWithoutEqualElements 
+	^collectionWithoutEqualElements
 ]
 
 { #category : #requirements }
 LinkedListTest >> anotherElementNotIn [
 " return an element included  in 'collection' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
@@ -50,7 +50,7 @@ LinkedListTest >> anotherElementOrAssociationIn [
 { #category : #requirements }
 LinkedListTest >> anotherElementOrAssociationNotIn [
 	" return an element (or an association for Dictionary )not present  in 'collection' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
@@ -74,13 +74,13 @@ LinkedListTest >> collectionMoreThan1NoDuplicates [
 { #category : #requirements }
 LinkedListTest >> collectionNotIncluded [
 " return a collection for wich each element is not included in 'nonEmpty' "
-	^ collectionWithoutNil 
+	^ collectionWithoutNil
 ]
 
 { #category : #requirements }
 LinkedListTest >> collectionWith1TimeSubcollection [
 " return a collection including 'oldSubCollection'  only one time "
-	^ self oldSubCollection 
+	^ self oldSubCollection
 ]
 
 { #category : #requirements }
@@ -98,13 +98,13 @@ LinkedListTest >> collectionWithElement [
 { #category : #requirements }
 LinkedListTest >> collectionWithElementsToRemove [
 " return a collection of elements included in 'nonEmpty'  "
-	^ self nonEmpty 
+	^ self nonEmpty
 ]
 
 { #category : #requirements }
 LinkedListTest >> collectionWithSortableElements [
 	" return a collection only including elements that can be sorted (understanding '<' )"
-	^ collection5Elements 
+	^ collection5Elements
 ]
 
 { #category : #requirements }
@@ -117,7 +117,7 @@ LinkedListTest >> collectionWithoutEqualElements [
 { #category : #requirements }
 LinkedListTest >> collectionWithoutNilElements [
 " return a collection that doesn't includes a nil element "
-	^collectionWithoutNil 
+	^collectionWithoutNil
 ]
 
 { #category : #requirements }
@@ -128,13 +128,13 @@ LinkedListTest >> element [
 { #category : #requirements }
 LinkedListTest >> elementInForElementAccessing [
 " return an element inculded in 'accessCollection '"
-	^ elementIn 
+	^ elementIn
 ]
 
 { #category : #requirements }
 LinkedListTest >> elementInForIndexAccessing [
 " return an element included in 'accessCollection' "
-	^ elementIn 
+	^ elementIn
 ]
 
 { #category : #requirements }
@@ -145,19 +145,19 @@ LinkedListTest >> elementNotIn [
 { #category : #requirements }
 LinkedListTest >> elementNotInForElementAccessing [
 " return an element not included in 'accessCollection' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
 LinkedListTest >> elementNotInForIndexAccessing [
 " return an element not included in 'accessCollection' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
 LinkedListTest >> elementNotInForOccurrences [
 " return an element notIncluded in #collectionWithoutEqualElements"
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
@@ -169,6 +169,53 @@ LinkedListTest >> elementToAdd [
 { #category : #'tests - empty' }
 LinkedListTest >> empty [
 	^ list
+]
+
+{ #category : #'tests - copying with replacement' }
+LinkedListTest >> firstIndexesOf: aSubCollection in: collection [
+" return an OrderedCollection with the first indexes of the occurrences of subCollection in  collection "
+	| tmp result currentIndex |
+	tmp:= collection.
+	result:= OrderedCollection new.
+	currentIndex := 1.
+	
+	[tmp isEmpty ]whileFalse:
+		[
+		(tmp beginsWith: aSubCollection)
+			ifTrue: [ 	
+				result add: currentIndex.
+				1 to: aSubCollection size do: 
+					[:i | 
+					tmp := tmp copyWithoutFirst.
+					currentIndex := currentIndex + 1]
+				]
+			ifFalse: [
+				tmp := tmp copyWithoutFirst.
+				currentIndex := currentIndex +1.
+				]
+		 ].
+	
+	^ result.
+]
+
+{ #category : #'tests - fixture' }
+LinkedListTest >> howMany: aSubCollection in: collection [
+" return an integer representing how many time 'subCollection'  appears in 'collection'  "
+	| tmp nTime |
+	tmp := collection.
+	nTime:= 0.
+	
+	[tmp isEmpty ]whileFalse:
+		[
+		(tmp beginsWith: aSubCollection)
+			ifTrue: [ 	
+				nTime := nTime + 1.
+				1 to: aSubCollection size do: [:i | tmp := tmp copyWithoutFirst.]
+				]
+			ifFalse: [tmp := tmp copyWithoutFirst.]
+		 ].
+	
+	^ nTime.
 ]
 
 { #category : #requirements }
@@ -187,14 +234,14 @@ LinkedListTest >> indexInNonEmpty [
 { #category : #requirements }
 LinkedListTest >> moreThan3Elements [
 	" return a collection including atLeast 3 elements"
-	^ collectionWithoutEqualElements 
+	^ collectionWithoutEqualElements
 ]
 
 { #category : #requirements }
 LinkedListTest >> moreThan4Elements [
 
 " return a collection including at leat 4 elements"
-	^ collectionWithoutEqualElements 
+	^ collectionWithoutEqualElements
 ]
 
 { #category : #accessing }
@@ -205,7 +252,6 @@ LinkedListTest >> n [
 { #category : #accessing }
 LinkedListTest >> n: number [
 	n := number.
-	
 ]
 
 { #category : #accessing }
@@ -226,26 +272,26 @@ LinkedListTest >> nonEmpty [
 { #category : #requirements }
 LinkedListTest >> nonEmpty1Element [
 " return a collection of size 1 including one element"
-	^ nonEmpty1Element 
+	^ nonEmpty1Element
 ]
 
 { #category : #requirements }
 LinkedListTest >> nonEmptyMoreThan1Element [
 " return a collection that don't includes equl elements'" 
-	^collectionWithoutNil 
+	^collectionWithoutNil
 ]
 
 { #category : #requirements }
 LinkedListTest >> nonEmptyWithoutEqualElements [
 " return a collection without equal elements "
-	^ collectionWithoutEqualElements 
+	^ collectionWithoutEqualElements
 ]
 
 { #category : #requirements }
 LinkedListTest >> oldSubCollection [
 " return a subCollection included in collectionWith1TimeSubcollection .
 ex :   subCollection := #( 2 3 4) and collectionWith1TimeSubcollection := #(1 2 3 4 5)"
-	^ self nonEmpty 
+	^ self nonEmpty
 ]
 
 { #category : #requirements }
@@ -256,7 +302,7 @@ LinkedListTest >> otherCollection [
 { #category : #requirements }
 LinkedListTest >> replacementCollection [
 " return a collection that will be used to replace 'oldSubcollection' in ' collectionWith1TimeSubcollection'  " 
-	^ collectionWithoutNil 
+	^ collectionWithoutNil
 ]
 
 { #category : #requirements }
@@ -287,14 +333,12 @@ LinkedListTest >> setUp [
 	 "so that we can recognize this link"
 	"nonEmpty := LinkedList with: link with: Link new."
 	"otherList := LinkedList with: Link new with: Link new."
-
 ]
 
 { #category : #requirements }
 LinkedListTest >> sortedInAscendingOrderCollection [
 	"Return a collection sorted in ascending order"
 	^ sortedCollection
-	
 ]
 
 { #category : #requirements }
@@ -306,7 +350,7 @@ LinkedListTest >> speciesClass [
 { #category : #requirements }
 LinkedListTest >> subCollectionNotIn [
 " return a collection for which at least one element is not included in 'accessCollection' "
-	^ collectionWithoutNil 
+	^ collectionWithoutNil
 ]
 
 { #category : #running }
@@ -785,6 +829,104 @@ LinkedListTest >> testAddAfterLast2 [
 	self assert: (l collect: [ :e | e n ]) asArray equals: #(1 2 3 4)
 ]
 
+{ #category : #'tests - iterating' }
+LinkedListTest >> testAllSatisfyEmpty [
+
+	self assert: ( self empty allSatisfy: [:each | false]).
+]
+
+{ #category : #'tests - iterating' }
+LinkedListTest >> testAnySastify [
+
+	| element |
+	" when all elements satisty the condition, should return true :"
+	self assert: ( self collectionWithoutNilElements anySatisfy: [:each | each notNil ]).
+	
+	" when only one element satisfy the condition, should return true :"
+	element := self collectionWithoutNilElements anyOne.
+	self assert: ( self collectionWithoutNilElements  anySatisfy: [:each | (each = element)  ]   ).
+	
+	" when all elements don't satisty the condition, should return false :"
+	self deny: ( self collectionWithoutNilElements anySatisfy: [:each | (each notNil) not ]).
+]
+
+{ #category : #'tests - as string comma delimiter sequenceable' }
+LinkedListTest >> testAsCommaStringEmpty [
+
+	self assert: self empty asCommaString = ''.
+	self assert: self empty asCommaStringAnd = ''
+]
+
+{ #category : #'tests - comma and delimiter' }
+LinkedListTest >> testAsCommaStringOne [
+	
+	"self assert: self oneItemCol asCommaString = '1'.
+	self assert: self oneItemCol asCommaStringAnd = '1'."
+
+	self assert: self nonEmpty1Element asCommaString = (self nonEmpty1Element first asString).
+	self assert: self nonEmpty1Element asCommaStringAnd = (self nonEmpty1Element first asString)
+]
+
+{ #category : #'tests - converting' }
+LinkedListTest >> testAsIdentitySet [
+	"Test with a collection without equal elements :"
+
+	self 
+		assertSameContents: self collectionWithoutEqualElements
+		whenConvertedTo: IdentitySet
+]
+
+{ #category : #'tests - converting' }
+LinkedListTest >> testAsSet [
+ 	"Test with a collection without equal elements"
+	
+	self assertSameContents: self collectionWithoutEqualElements whenConvertedTo: Set
+]
+
+{ #category : #'tests - comma and delimiter' }
+LinkedListTest >> testAsStringOnDelimiterLastMore [
+
+	| delim multiItemStream result last allElementsAsString |
+	
+	delim := ', '.
+	last := ' and '.
+	result:=''.
+	multiItemStream := ReadWriteStream on:result.
+	self nonEmpty  asStringOn: multiItemStream delimiter: delim last: last.
+	result := multiItemStream contents.
+	allElementsAsString:=(result findBetweenSubstrings: delim ).
+	1 to: allElementsAsString size do:
+		[:i | 
+		i<(allElementsAsString size-1 )
+			ifTrue: [self assert: (allElementsAsString at:i)=((self nonEmpty at:i)asString)].
+		i=(allElementsAsString size-1)
+			ifTrue:[ self deny: (allElementsAsString at:i)=(last)asString].
+		i=(allElementsAsString size)
+			ifTrue: [self assert: (allElementsAsString at:i)=((self nonEmpty at:(i-1))asString)]]
+]
+
+{ #category : #'tests - comma and delimiter' }
+LinkedListTest >> testAsStringOnDelimiterLastOne [
+
+	| delim oneItemStream result |	
+	delim := ', '.
+	result:=''.
+	oneItemStream := ReadWriteStream on: result.
+	self nonEmpty1Element  asStringOn: oneItemStream delimiter: delim last: 'and'.
+	oneItemStream do:[:each | self assert: each = (self nonEmpty1Element first asString)]
+]
+
+{ #category : #'tests - comma and delimiter' }
+LinkedListTest >> testAsStringOnDelimiterOne [
+
+	| delim oneItemStream result |
+	delim := ', '.
+	result := ''.
+	oneItemStream := ReadWriteStream on: result.
+	self nonEmpty1Element  asStringOn: oneItemStream delimiter: delim.
+	oneItemStream do:[:each | self assert: each = (self nonEmpty1Element first asString)]
+]
+
 { #category : #'tests - sequenceable' }
 LinkedListTest >> testAtPut [
 	| ll |
@@ -801,6 +943,172 @@ LinkedListTest >> testAtPutOutsideBounds [
 	self should: [ ll at: 1 put: 1 ] raise: SubscriptOutOfBounds
 ]
 
+{ #category : #'tests - iterating' }
+LinkedListTest >> testBasicCollect [
+
+	| res index |
+	index := 0.
+	res := self collectionWithoutNilElements collect: [ :each | 
+		index := index + 1.
+		each ].
+	
+	res do: [ :each | 
+		self assert: (self collectionWithoutNilElements occurrencesOf: each) = (res occurrencesOf: each)].
+	self assert: index equals: self collectionWithoutNilElements size.
+]
+
+{ #category : #'tests - iterating' }
+LinkedListTest >> testBasicCollectThenDo [
+
+	| result index |
+	index := 0.
+	result := self collectionWithoutNilElements 
+		collect: [ :each | nil ]
+		thenDo: [ :each | 
+			self assert: each isNil.
+			index := index + 1]	.
+			
+	self assert: result equals: self collectionWithoutNilElements.
+	self assert: index equals: self collectionWithoutNilElements size.
+]
+
+{ #category : #'tests - copy' }
+LinkedListTest >> testCopyNonEmptyWithout [
+	
+	| res anElementOfTheCollection |
+	anElementOfTheCollection :=  self nonEmpty anyOne.
+	res := (self nonEmpty copyWithout: anElementOfTheCollection).
+	"here we do not test the size since for a non empty set we would get a problem.
+	Then in addition copy is not about duplicate management. The element should 
+	be in at the end."
+	self deny: (res includes: anElementOfTheCollection).
+	self nonEmpty do:
+		[:each | (each = anElementOfTheCollection) 
+					ifFalse: [self assert: (res includes: each)]]
+]
+
+{ #category : #'tests - copying with replacement' }
+LinkedListTest >> testCopyReplaceAllWith1Occurrence [
+	| result  firstIndexesOfOccurrence index endPartIndexResult endPartIndexCollection |
+	
+	result := self collectionWith1TimeSubcollection  copyReplaceAll: self oldSubCollection with: self replacementCollection .
+	
+	"detecting indexes of olSubCollection"
+	firstIndexesOfOccurrence  := self firstIndexesOf: self oldSubCollection in: self collectionWith1TimeSubcollection .
+	index:= firstIndexesOfOccurrence at: 1.
+	
+	"verify content of 'result' : "
+	"first part of 'result'' : '"
+
+	1 to: (index -1) do: 
+		[
+		:i |  
+		self assert: (self collectionWith1TimeSubcollection  at:i)=(result at: i)
+		].
+
+	" middle part containing replacementCollection : "
+	
+	index to: (index + self replacementCollection size-1) do: 
+		[
+		:i |
+		self assert: ( result at: i )=(self replacementCollection at: ( i - index + 1 ))
+		].
+	
+	" end part :"
+	
+	endPartIndexResult :=  index + self replacementCollection  size .
+	endPartIndexCollection :=   index + self oldSubCollection size  .
+	
+	1 to: (result size - endPartIndexResult - 1 ) do:
+		[ 
+		:i |
+		self assert: (result at: ( endPartIndexResult + i - 1 ) ) = (self collectionWith1TimeSubcollection  at: ( endPartIndexCollection + i - 1 ) ).
+		].
+]
+
+{ #category : #'tests - copying with replacement' }
+LinkedListTest >> testCopyReplaceFromToWith [
+	| result  indexOfSubcollection lastIndexOfOldSubcollection lastIndexOfReplacementCollection |
+	
+	indexOfSubcollection := (self firstIndexesOf: self oldSubCollection  in:  self collectionWith1TimeSubcollection) at: 1. 
+	lastIndexOfOldSubcollection := indexOfSubcollection + self oldSubCollection size -1.
+	lastIndexOfReplacementCollection := indexOfSubcollection + self replacementCollection  size -1.
+	
+	result := self collectionWith1TimeSubcollection  copyReplaceFrom: indexOfSubcollection  to: lastIndexOfOldSubcollection   with: self replacementCollection .
+	
+	"verify content of 'result' : "
+	"first part of 'result'  "
+	
+	1 to: (indexOfSubcollection  - 1) do: 
+		[ 
+		:i | 
+		self assert: (self collectionWith1TimeSubcollection  at:i) = (result at: i)
+		].
+	
+	" middle part containing replacementCollection : "
+	
+	(indexOfSubcollection ) to: ( lastIndexOfReplacementCollection  ) do: 
+		[
+		:i |
+		self assert: (result at: i)=(self replacementCollection at: (i - indexOfSubcollection +1))
+		].
+	
+	" end part :"
+	1 to: (result size - lastIndexOfReplacementCollection   ) do:
+		[ 
+		:i |
+		self assert: (result at: ( lastIndexOfReplacementCollection  + i  ) ) = (self collectionWith1TimeSubcollection  at: ( lastIndexOfOldSubcollection  + i  ) ).
+		].
+]
+
+{ #category : #'tests - copying with replacement' }
+LinkedListTest >> testCopyReplaceFromToWithInsertion [
+	| result  indexOfSubcollection |
+	
+	indexOfSubcollection := (self firstIndexesOf: self oldSubCollection  in:  self collectionWith1TimeSubcollection) at: 1. 
+	
+	result := self collectionWith1TimeSubcollection  copyReplaceFrom: indexOfSubcollection  to: ( indexOfSubcollection - 1 ) with: self replacementCollection .
+	
+	"verify content of 'result' : "
+	"first part of 'result'' : '"
+	
+	1 to: (indexOfSubcollection -1) do: 
+		[
+		:i | 
+		self assert: (self collectionWith1TimeSubcollection  at:i)=(result at: i)
+		].
+	
+	" middle part containing replacementCollection : "
+	indexOfSubcollection  to: (indexOfSubcollection  + self replacementCollection size-1) do: 
+		[
+		:i |
+		self assert: ( result at: i )=(self replacementCollection at: ( i - indexOfSubcollection +1 ))
+		].
+	
+	" end part :"
+	(indexOfSubcollection  + self replacementCollection size) to: (result size) do:
+		[:i|
+		self assert: (result at: i)=(self collectionWith1TimeSubcollection  at: (i-self replacementCollection size))].
+	
+	" verify size: "	
+	self assert: result size=(self collectionWith1TimeSubcollection  size + self replacementCollection size).
+]
+
+{ #category : #'tests - copying part of sequenceable' }
+LinkedListTest >> testCopyUpTo [
+
+	| result index collection |
+	collection := self collectionWithoutEqualElements.
+	index:= self indexInForCollectionWithoutDuplicates.
+	result := collection   copyUpTo: (collection  at:index).
+	
+	"Verify content"
+	result withIndexDo: [:el :i| self assert: (collection at:i) equals: (result at:i)].
+	
+	"Verify size"
+	self assert: result size equals: (index-1)
+]
+
 { #category : #'tests - creating' }
 LinkedListTest >> testCreateAs [
 	"Test that a LinkedList can be created by sending message #as: to another collection.
@@ -812,6 +1120,91 @@ LinkedListTest >> testCreateAs [
 	self assert: aLinkedList size equals: anotherCollection size.
 	aLinkedList with: anotherCollection do: [:nextElementOfLinkedList :nextElementOfAnotherCollection |
 		self assert: nextElementOfLinkedList equals: nextElementOfAnotherCollection]
+]
+
+{ #category : #'tests - iterating' }
+LinkedListTest >> testDetect [
+
+	| res element |
+	element := self collectionWithoutNilElements anyOne .
+	 
+	res := self collectionWithoutNilElements  detect: [:each | each = element].
+	self assert: (res  = element).
+]
+
+{ #category : #'tests - iterating' }
+LinkedListTest >> testDetectIfNone [
+
+	| res element |
+	res := self collectionWithoutNilElements  detect: [:each | each notNil not] ifNone: [100].
+	self assert: res  = 100.
+	
+	element := self collectionWithoutNilElements anyOne.
+	res := self collectionWithoutNilElements  detect: [:each | each = element] ifNone: [100].
+	self assert: res  = element.
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+LinkedListTest >> testDetectSequenced [
+	"Testing that detect keep the first element returning true for sequenceable collections"
+
+	| element result |
+	element := self nonEmptyMoreThan1Element at: 1.
+	result := self nonEmptyMoreThan1Element  detect: [:each | each notNil ].
+	self assert: result equals: element
+]
+
+{ #category : #'tests - iterating' }
+LinkedListTest >> testDo2 [
+	"dc: Bad test, it assumes that a new instance of #speciesClass allows addition with #add:. This is not the case of Interval for which species is Array."
+	"res := self speciesClass new.  
+	self collection do: [:each | res add: each class].
+	self assert: res = self result. "
+	| collection cptElementsViewed cptElementsIn |
+	collection := self collectionWithoutNilElements.
+	cptElementsViewed := 0.
+	cptElementsIn := OrderedCollection new.
+	collection do: 
+		[ :each | 
+		cptElementsViewed := cptElementsViewed + 1.
+		" #do doesn't iterate with the same objects than those in the collection for FloatArray( I don' t know why ) . That's why I use #includes: and not #identityIncludes:  '"
+		(collection includes: each) ifTrue: [
+			" the collection used doesn't include equal elements. Therefore each element viewed should not have been viewed before "
+			( cptElementsIn includes: each ) ifFalse: [ cptElementsIn add: each ] .
+			]. 
+		].
+	self assert: cptElementsViewed = collection size.
+	self assert: cptElementsIn size  = collection size.
+]
+
+{ #category : #'tests - iterating' }
+LinkedListTest >> testDoWithout [
+	
+	| res element collection |
+	collection := self collectionWithoutNilElements .	
+	res := OrderedCollection new.  
+	element := self collectionWithoutNilElements anyOne .
+	collection  do: [:each | res add: each] without: element  .
+	" verifying result :"
+	self assert: res size = (collection  size - (collection  occurrencesOf: element)).
+	res do: [:each | self assert: (collection occurrencesOf: each) = ( res occurrencesOf: each ) ].
+]
+
+{ #category : #'tests - equality' }
+LinkedListTest >> testEqualSignOfIdenticalCollectionObjects [
+	
+	self assert: self empty equals: self empty. 
+	self assert: self nonEmpty equals: self nonEmpty
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+LinkedListTest >> testFindFirst [
+
+	| element result |
+	element := self nonEmptyMoreThan1Element at: 1.
+	result := self nonEmptyMoreThan1Element findFirst: [:each | each = element].
+	
+	self assert: result equals: 1
 ]
 
 { #category : #'tests - includes' }
@@ -827,6 +1220,148 @@ LinkedListTest >> testIdentityIncludes [
 	self deny: (collection identityIncludes: element)
 ]
 
+{ #category : #'tests - includes' }
+LinkedListTest >> testIdentityIncludesNonSpecificComportement [
+	"Test the same comportement than #includes:"
+	
+	| collection |	
+	collection := self nonEmpty.
+	
+	self deny: (collection identityIncludes: self elementNotIn).
+	self assert: (collection identityIncludes: collection anyOne)
+]
+
+{ #category : #'tests - set arithmetic' }
+LinkedListTest >> testIntersectionItself [
+	
+	| result |
+	result := self collectionWithoutEqualElements intersection: self collectionWithoutEqualElements.
+	self assert: result size equals: self collectionWithoutEqualElements size.
+	self collectionWithoutEqualElements do: [ :each|
+		self assert: (result includes: each) ].
+]
+
+{ #category : #'tests - sorting' }
+LinkedListTest >> testIsSortedBy [
+	self assert: (self sortedInAscendingOrderCollection isSortedBy: [:a :b | a<b]).
+	self deny: (self sortedInAscendingOrderCollection isSortedBy: [:a :b | a>b]).
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+LinkedListTest >> testKeysAndValuesDo [
+	"| result |
+	result:= OrderedCollection new.
+	
+	self nonEmptyMoreThan1Element  keysAndValuesDo: 
+		[:i :value|
+		result add: (value+i)].
+	
+	1 to: result size do:
+		[:i|
+		self assert: (result at:i)=((self nonEmptyMoreThan1Element at:i)+i)]"
+	|  indexes elements |
+	indexes := OrderedCollection new.
+	elements := OrderedCollection new.
+	
+	self nonEmptyMoreThan1Element  keysAndValuesDo: 
+		[:i :value|
+		indexes  add: (i).
+		elements add: value].
+	
+	(1 to: self nonEmptyMoreThan1Element size )do:
+		[ :i |
+		self assert: (indexes at: i) equals: i.
+		self assert: (elements at: i) equals: (self nonEmptyMoreThan1Element at: i).	
+		].
+	
+	self assert: indexes size equals: elements size. 
+	self assert: indexes size equals: self nonEmptyMoreThan1Element size
+]
+
+{ #category : #'tests - iterating' }
+LinkedListTest >> testNoneSatisfyEmpty [
+
+	self assert: ( self empty noneSatisfy: [:each | false]).
+]
+
+{ #category : #'tests - iterating' }
+LinkedListTest >> testReject [
+
+	| res element |
+	res := self collectionWithoutNilElements reject: [:each | each notNil not].
+	self assert: res size = self collectionWithoutNilElements size.
+	
+	element := self collectionWithoutNilElements anyOne.
+	res := self collectionWithoutNilElements  reject: [:each | each = element].
+	self assert: res size = (self collectionWithoutNilElements size - 1).
+]
+
+{ #category : #'tests - iterating' }
+LinkedListTest >> testRejectEmpty [
+
+	| res |
+	res := self empty reject: [:each | each odd].
+	self assert: res size = self empty size
+]
+
+{ #category : #'tests - iterating' }
+LinkedListTest >> testRejectNoReject [
+
+	| res |
+	res := self collectionWithoutNilElements  reject: [:each | each notNil not].
+	self assert: res size = self collectionWithoutNilElements size.
+]
+
+{ #category : #'tests - iterating' }
+LinkedListTest >> testRejectThenCollect [
+
+	| result index selectIndex pivot |
+	
+	index := 0.
+	selectIndex := 0.
+	pivot := self collectionWithoutNilElements anyOne.
+	
+	result := self collectionWithoutNilElements 
+		reject: [ :each | 
+			selectIndex := selectIndex + 1.
+			"reject the first element"
+			selectIndex = 1 ]
+		thenCollect: [ :each | 
+			self assert: each notNil.
+			index := index + 1.
+			pivot ].
+			
+	self assert: result ~= self collectionWithoutNilElements.
+	self assert: selectIndex equals: self collectionWithoutNilElements size.
+	self assert: index equals: self collectionWithoutNilElements size - 1.
+	
+	self assert: (self collectionWithoutNilElements occurrencesOf: pivot) equals: 1.
+	"should be > 1 for standard collection and = 1 for those that do not allow exact duplicates"
+	self assert: (result occurrencesOf: pivot) >= 1.
+]
+
+{ #category : #'tests - iterating' }
+LinkedListTest >> testRejectThenDo [
+
+	| result index rejectIndex |
+	
+	index := 0.
+	rejectIndex := 0.
+	
+	result := self collectionWithoutNilElements 
+		reject: [ :each | 
+			rejectIndex := rejectIndex + 1.
+			"reject the first element"
+			rejectIndex = 1 ]
+		thenDo: [ :each | 
+			self assert: each notNil.
+			index := index + 1]	.
+			
+	self assert: result equals: self collectionWithoutNilElements.
+	self assert: rejectIndex equals: self collectionWithoutNilElements size.
+	self assert: index equals: self collectionWithoutNilElements size - 1.
+]
+
 { #category : #tests }
 LinkedListTest >> testRemoveAll [
 	| list2 |
@@ -839,6 +1374,85 @@ LinkedListTest >> testRemoveAll [
 
 	self assert: list size equals: 0.
 	self assert: list2 size = 4 description: 'the copy has not been modified'
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+LinkedListTest >> testReverseWithDo [
+	
+	| firstCollection secondCollection index |
+
+	firstCollection := self nonEmptyMoreThan1Element.
+	secondCollection := firstCollection copy.
+	index := firstCollection size.
+	
+	firstCollection  reverseWith: secondCollection do:
+		[:a :b |
+	
+		self assert: (firstCollection at: index) equals: a. 
+		self assert: (secondCollection at: index) equals: b.
+			(index := index - 1)]
+]
+
+{ #category : #'tests - iterating' }
+LinkedListTest >> testSelect [
+
+	| result element |
+	result := self collectionWithoutNilElements select: [ :each | each notNil].
+	self assert: result size equals: self collectionWithoutNilElements size.
+	
+	element := self collectionWithoutNilElements anyOne.
+	result := self collectionWithoutNilElements select: [ :each | (each = element) not].
+	self assert: result size equals: (self collectionWithoutNilElements size - 1).
+]
+
+{ #category : #'tests - iterating' }
+LinkedListTest >> testSelectThenCollect [
+
+	| result index selectIndex pivot |
+	
+	index := 0.
+	selectIndex := 0.
+	pivot := self collectionWithoutNilElements anyOne.
+	
+	result := self collectionWithoutNilElements 
+		select: [ :each | 
+			selectIndex := selectIndex + 1.
+			"reject the first element"
+			selectIndex > 1 ]
+		thenCollect: [ :each | 
+			self assert: each notNil.
+			index := index + 1.
+			pivot ].
+			
+	self assert: result ~= self collectionWithoutNilElements.
+	self assert: selectIndex equals: self collectionWithoutNilElements size.
+	self assert: index equals: self collectionWithoutNilElements size - 1.
+	
+	self assert: (self collectionWithoutNilElements occurrencesOf: pivot) equals: 1.
+	"should be > 1 for standard collection and = 1 for those that do not allow exact duplicates"
+	self assert: (result occurrencesOf: pivot) >= 1.
+]
+
+{ #category : #'tests - iterating' }
+LinkedListTest >> testSelectThenDo [
+
+	| result index selectIndex |
+	
+	index := 0.
+	selectIndex := 0.
+	
+	result := self collectionWithoutNilElements 
+		select: [ :each | 
+			selectIndex := selectIndex + 1.
+			"reject the first element"
+			selectIndex > 1 ]
+		thenDo: [ :each | 
+			self assert: each notNil.
+			index := index + 1]	.
+			
+	self assert: result equals: self collectionWithoutNilElements.
+	self assert: selectIndex equals: self collectionWithoutNilElements size.
+	self assert: index equals: self collectionWithoutNilElements size - 1.
 ]
 
 { #category : #requirements }
@@ -889,7 +1503,6 @@ LinkedListTest >> testSwapBasic [
 	aList swap: 2 with: 4.
 	self assert: (aList at: 2) equals: 2.
 	self assert: (aList at: 4) equals: 4.
-
 ]
 
 { #category : #'tests - swap' }
@@ -910,6 +1523,86 @@ LinkedListTest >> testTAdd [
 	added := self otherCollection add: self element.
 	self assert: added equals: self element.	"equality or identity ?"
 	self assert: (self otherCollection includes: self element)
+]
+
+{ #category : #'tests - adding' }
+LinkedListTest >> testTAddIfNotPresentWithNewElement [
+
+	| added oldSize collection elem |
+	collection := self otherCollection.
+	oldSize := collection size.
+	elem := self element.
+	self deny: (collection includes: elem ).
+	
+	added := collection  addIfNotPresent: elem .
+	self assert: added == elem . "test for identiy because #add: has not reason to copy its parameter."
+	self assert: collection size equals: (oldSize + 1).
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+LinkedListTest >> testWithDo [
+	
+	| firstCollection secondCollection index |
+
+	firstCollection := self nonEmptyMoreThan1Element.
+	secondCollection := firstCollection copy.
+	index := 0.
+	
+	firstCollection  with: secondCollection do:
+		[:a :b |
+		index := index + 1.
+		self assert: (firstCollection at: index) equals:  a. 
+		self assert: (secondCollection at: index) equals: b ]
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+LinkedListTest >> testWithIndexCollect [
+	
+	| result index collection |
+	index := 0.
+	collection := self nonEmptyMoreThan1Element .
+	result := collection  withIndexCollect: [:each :i | 
+		self assert: i equals: (index := index + 1).	
+		self assert: i equals: (collection  indexOf: each).
+		each ]. 
+	
+	result withIndexDo: [:el :i | self assert: (result at:i) equals: (collection at: i)].
+	self assert: result size equals: collection size
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+LinkedListTest >> testWithIndexDo [
+
+	|  indexes elements |
+	indexes:= OrderedCollection new.
+	elements := OrderedCollection new.
+	
+	self nonEmptyMoreThan1Element withIndexDo: 
+		[:value :i  |
+			indexes  add: (i).
+			elements add: value ].
+	
+	self nonEmptyMoreThan1Element withIndexDo: 
+		[:el :i |
+			self assert: (indexes at: i) equals: i.
+			self assert: (elements at: i) equals: el ].
+	
+	self assert: indexes size equals: elements size. 
+	self assert: indexes size equals: self nonEmptyMoreThan1Element size
+]
+
+{ #category : #'tests - begins ends with' }
+LinkedListTest >> testsBeginsWithEmpty [
+	
+	self deny: (self nonEmpty beginsWith:(self empty)).
+	self deny: (self empty beginsWith:(self nonEmpty))
+]
+
+{ #category : #'tests - begins ends with' }
+LinkedListTest >> testsEndsWithEmpty [
+	
+	self deny: (self nonEmpty endsWith: self empty).
+	self deny: (self empty endsWith: self nonEmpty)
 ]
 
 { #category : #requirements }

@@ -18,7 +18,6 @@ Class {
 AtomicSharedQueue >> initialize [
 	super initialize.
 	availSema := Semaphore new.
-	
 ]
 
 { #category : #accessing }
@@ -43,7 +42,7 @@ AtomicSharedQueue >> signalAddedNewItem [
 { #category : #signaling }
 AtomicSharedQueue >> signalNoMoreItems [
 	"queue is empty, reset sema signals"
-	availSema consumeAllSignals 
+	availSema consumeAllSignals
 ]
 
 { #category : #signaling }

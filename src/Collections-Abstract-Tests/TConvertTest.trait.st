@@ -95,7 +95,6 @@ TConvertTest >> testAsIdentitySet [
 	self 
 		assertSameContents: self collectionWithoutEqualElements
 		whenConvertedTo: IdentitySet
-
 ]
 
 { #category : #'tests - converting' }
@@ -109,5 +108,4 @@ TConvertTest >> testAsSet [
  	"Test with a collection without equal elements"
 	
 	self assertSameContents: self collectionWithoutEqualElements whenConvertedTo: Set
-	
 ]

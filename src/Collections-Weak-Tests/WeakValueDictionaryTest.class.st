@@ -27,7 +27,6 @@ WeakValueDictionaryTest >> dictionaryWithGarbageCollectedValue [
 	dictionary at: self keyWithGarbageCollectedValue put: Object new.
 	Smalltalk garbageCollect.
 	^ dictionary
-
 ]
 
 { #category : #accessing }
@@ -47,7 +46,6 @@ WeakValueDictionaryTest >> testAtGarbageCollectedValueRaisesNotFound [
 	self
 		should: [ self dictionaryWithGarbageCollectedValue at: self keyWithGarbageCollectedValue ]
 		raise: NotFound
-
 ]
 
 { #category : #tests }
@@ -64,7 +62,6 @@ WeakValueDictionaryTest >> testAtIfAbsentPutWithGarbageCollectedValue [
 		equals: 42.
 		
 	self assert: (dictionary includes: 42).
-
 ]
 
 { #category : #tests }
@@ -76,7 +73,6 @@ WeakValueDictionaryTest >> testAtIfAbsentWithGarbageCollectedValue [
 				at: self keyWithGarbageCollectedValue
 				ifAbsent: [ 42 ])
 		equals: 42
-
 ]
 
 { #category : #tests }
@@ -100,7 +96,6 @@ WeakValueDictionaryTest >> testAtIfPresentIfAbsentWithGarbageCollectedValue [
 				ifPresent: [ 41 ]
 				ifAbsent: [ 42 ])
 		equals: 42
-
 ]
 
 { #category : #tests }
@@ -115,7 +110,6 @@ WeakValueDictionaryTest >> testAtIfPresentWithGarbageCollectedValue [
 				at: self keyWithGarbageCollectedValue
 				ifPresent: [ 42 ])
 		equals: nil.
-
 ]
 
 { #category : #tests }
@@ -135,7 +129,6 @@ WeakValueDictionaryTest >> testIncludesKeyAnswerFalseForGarbageCollectedValues [
 WeakValueDictionaryTest >> testKeysAndValuesDoWithGarbageCollectedValue [
 
 	self dictionaryWithGarbageCollectedValue keysAndValuesDo: [:key :value | self fail ]
-
 ]
 
 { #category : #tests }
@@ -174,5 +167,4 @@ WeakValueDictionaryTest >> testSizeWithGarbageCollectedValue [
 	self
 		assert: self dictionaryWithGarbageCollectedValue size
 		equals: 0.
-
 ]

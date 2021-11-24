@@ -99,7 +99,7 @@ MethodDictionaryTest >> nonEmpty [
 
 { #category : #requirements }
 MethodDictionaryTest >> nonEmptyDict [
-	^ nonEmptyDict 
+	^ nonEmptyDict
 ]
 
 { #category : #requirements }
@@ -140,6 +140,18 @@ MethodDictionaryTest >> testAssociationAtNonexistantKeyExecutesFailBlock [
 	result := self class methodDict associationAt: methodSelector ifAbsent: [ error ].
 
 	self assert: result equals: error
+]
+
+{ #category : #'tests - dictionary keys values associations access' }
+MethodDictionaryTest >> testAssociations [
+
+	| collection result  |
+	collection := self nonEmpty .
+	result := collection associations.
+	
+	self assert: result size = collection size.
+	result do: [:assoc | self assert: (assoc value) = (collection at: assoc key) ].
+	"keys do: [ :key | self assert: ( result at: key ) = ( collection at: key )] ."
 ]
 
 { #category : #'tests - others' }
@@ -196,6 +208,17 @@ MethodDictionaryTest >> testGrowPreservesElements [
 
 	self assertPreservesElements: methodDictionary comparedTo: growedMethodDictionary.
 	self assertPreservesElements: growedMethodDictionary comparedTo: methodDictionary.
+]
+
+{ #category : #'tests - includes' }
+MethodDictionaryTest >> testIdentityIncludesNonSpecificComportement [
+	"Test the same comportement than #includes:"
+	
+	| collection |	
+	collection := self nonEmpty.
+	
+	self deny: (collection identityIncludes: self elementNotIn).
+	self assert: (collection identityIncludes: collection anyOne)
 ]
 
 { #category : #'tests - others' }
@@ -306,4 +329,15 @@ MethodDictionaryTest >> testRemoveAllPreservesCapacity [
 	oldSize := dictionary basicSize.
 	dictionary removeAll.
 	self assert: oldSize equals: dictionary basicSize
+]
+
+{ #category : #'tests - dictionary keys values associations access' }
+MethodDictionaryTest >> testValues [
+	
+	| collection result |
+	collection := self nonEmpty .
+	result := collection values.
+	
+	self assert: result size = collection size.
+	result do: [:each | self assert: (collection occurrencesOf:each ) = (result occurrencesOf: each) ].
 ]

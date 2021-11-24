@@ -31,7 +31,7 @@ Class {
 StringTest >> aValue [
 	"Return a value to put into nonEmpty"
 	
-	^ elementInNonEmpty 
+	^ elementInNonEmpty
 ]
 
 { #category : #requirements }
@@ -55,7 +55,7 @@ StringTest >> anotherElementOrAssociationIn [
 { #category : #requirements }
 StringTest >> anotherElementOrAssociationNotIn [
 	" return an element (or an association for Dictionary )not present  in 'collection' "
-	^ notIn 
+	^ notIn
 ]
 
 { #category : #requirements }
@@ -85,21 +85,21 @@ StringTest >> collectionClass [
 { #category : #requirements }
 StringTest >> collectionMoreThan1NoDuplicates [
 	" return a collection of size > 1 without equal elements"
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
 StringTest >> collectionMoreThan5Elements [
 " return a collection including at least 5 elements"
 	
-	^ nonEmpty5ElementsSorted 
+	^ nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> collectionNotIncluded [
 	"Return a collection for wich each element is not included in 'nonEmpty'"
 
-	^ collectionNotIncluded  
+	^ collectionNotIncluded
 ]
 
 { #category : #requirements }
@@ -113,7 +113,7 @@ StringTest >> collectionWith1TimeSubcollection [
 StringTest >> collectionWith2TimeSubcollection [
 	"Return a collection including 'oldSubCollection' two or many time"
 	
-	^ nonEmpty5ElementsSorted, subcollection3ElementsSorted 
+	^ nonEmpty5ElementsSorted, subcollection3ElementsSorted
 ]
 
 { #category : #requirements }
@@ -126,14 +126,14 @@ StringTest >> collectionWithElement [
 StringTest >> collectionWithElementsToRemove [
 	"Return a collection of elements included in 'nonEmpty'"
 
-	^ subcollection3ElementsSorted 
+	^ subcollection3ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> collectionWithEqualElements [
 	"Return a collecition including atLeast two elements equal"
 
-	^ sameAtEndAndBegining 
+	^ sameAtEndAndBegining
 ]
 
 { #category : #requirements }
@@ -141,7 +141,7 @@ StringTest >> collectionWithSameAtEndAndBegining [
 	"Return a collection with elements at end and begining equals
 	 (other elements of the collection are not equal to those elements)"
 
-	^ sameAtEndAndBegining 
+	^ sameAtEndAndBegining
 ]
 
 { #category : #requirements }
@@ -155,7 +155,7 @@ StringTest >> collectionWithSortableElements [
 StringTest >> collectionWithoutEqualElements [
 	"Return a collection not including equal elements"
 	
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
@@ -169,7 +169,7 @@ StringTest >> collectionWithoutNilElements [
 StringTest >> element [
 	"Returns an object that can be added to the collection returned by #collection."
 	
-	^ elementInNonEmpty 
+	^ elementInNonEmpty
 ]
 
 { #category : #requirements }
@@ -183,7 +183,7 @@ StringTest >> elementInForElementAccessing [
 StringTest >> elementInForIncludesTest [
 	"Return an element included in nonEmpty"
 	
-	^ elementInNonEmpty 
+	^ elementInNonEmpty
 ]
 
 { #category : #requirements }
@@ -196,21 +196,21 @@ StringTest >> elementInForIndexAccessing [
 StringTest >> elementNotIn [
 	"Return an element not included in 'nonEmpty'"
 
-	^notIn 
+	^notIn
 ]
 
 { #category : #requirements }
 StringTest >> elementNotInForElementAccessing [
 	"Return an element not included in 'moreThan4Elements'"
 
-	^ notIn 
+	^ notIn
 ]
 
 { #category : #requirements }
 StringTest >> elementNotInForIndexAccessing [
 	"Return an element not included in 'accessCollection'"
 	
-	^ notIn 
+	^ notIn
 ]
 
 { #category : #'tests - includes' }
@@ -254,11 +254,58 @@ StringTest >> firstIndex [
 	^3
 ]
 
+{ #category : #'tests - copying with replacement' }
+StringTest >> firstIndexesOf: aSubCollection in: collection [
+" return an OrderedCollection with the first indexes of the occurrences of subCollection in  collection "
+	| tmp result currentIndex |
+	tmp:= collection.
+	result:= OrderedCollection new.
+	currentIndex := 1.
+	
+	[tmp isEmpty ]whileFalse:
+		[
+		(tmp beginsWith: aSubCollection)
+			ifTrue: [ 	
+				result add: currentIndex.
+				1 to: aSubCollection size do: 
+					[:i | 
+					tmp := tmp copyWithoutFirst.
+					currentIndex := currentIndex + 1]
+				]
+			ifFalse: [
+				tmp := tmp copyWithoutFirst.
+				currentIndex := currentIndex +1.
+				]
+		 ].
+	
+	^ result.
+]
+
+{ #category : #'tests - fixture' }
+StringTest >> howMany: aSubCollection in: collection [
+" return an integer representing how many time 'subCollection'  appears in 'collection'  "
+	| tmp nTime |
+	tmp := collection.
+	nTime:= 0.
+	
+	[tmp isEmpty ]whileFalse:
+		[
+		(tmp beginsWith: aSubCollection)
+			ifTrue: [ 	
+				nTime := nTime + 1.
+				1 to: aSubCollection size do: [:i | tmp := tmp copyWithoutFirst.]
+				]
+			ifFalse: [tmp := tmp copyWithoutFirst.]
+		 ].
+	
+	^ nTime.
+]
+
 { #category : #requirements }
 StringTest >> indexArray [
 	"Return a Collection including indexes between bounds of 'nonEmpty'"
 
-	^ indexInNonEmptyArray 
+	^ indexInNonEmptyArray
 ]
 
 { #category : #requirements }
@@ -300,7 +347,7 @@ StringTest >> moreThan4Elements [
 StringTest >> newElement [
 	"Return an element that will be put in the collection in place of another"
 	
-	^ elementInNonEmpty 
+	^ elementInNonEmpty
 ]
 
 { #category : #requirements }
@@ -312,7 +359,7 @@ StringTest >> nonEmpty [
 StringTest >> nonEmpty1Element [
 	"Return a collection of size 1 including one element"
 	
-	^ nonEmpty1element 
+	^ nonEmpty1element
 ]
 
 { #category : #requirements }
@@ -327,14 +374,14 @@ StringTest >> oldSubCollection [
 	"Return a subCollection included in collectionWith1TimeSubcollection.
 		Example:  subCollection := #( 2 3 4) and collectionWith1TimeSubcollection := #(1 2 3 4 5)"
 		
-	^ subcollection3ElementsSorted  
+	^ subcollection3ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> otherCollection [
 	"Returns a collection that does not include what is returned by #element."
 	
-	^ collectionNotIncluded 
+	^ collectionNotIncluded
 ]
 
 { #category : #requirements }
@@ -347,21 +394,21 @@ StringTest >> replacementCollection [
 StringTest >> replacementCollectionSameSize [
 	"Return a collection of size (secondIndex - firstIndex + 1)"
 	
-	^nonEmpty1element 
+	^nonEmpty1element
 ]
 
 { #category : #requirements }
 StringTest >> secondCollection [
 	"Return a collection that will be the second part of the concatenation"
 	
-	^ nonEmpty1element 
+	^ nonEmpty1element
 ]
 
 { #category : #requirements }
 StringTest >> secondIndex [
 	"Return an index between 'nonEmpty' bounds that is > to 'second index'"
 	
-	^ self firstIndex 
+	^ self firstIndex
 ]
 
 { #category : #running }
@@ -392,15 +439,14 @@ StringTest >> sizeCollection [
 { #category : #requirements }
 StringTest >> sortedInAscendingOrderCollection [
 " return a collection sorted in an acsending order"
-	^nonEmpty5ElementsSorted 
-	
+	^nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> subCollectionNotIn [
 	"Return a collection for which at least one element is not included in 'moreThan4Elements'"
 	
-	^ collectionNotIncluded 
+	^ collectionNotIncluded
 ]
 
 { #category : #tests }
@@ -426,7 +472,23 @@ StringTest >> testAsCamelCase [
 
 	self assert: 'A man, a plan, a canal, panama' asCamelCase equals: 'AMan,APlan,ACanal,Panama'.
 	self assert: 'Here 123should % be 6 the name6 of the method' asCamelCase equals: 'Here123should%Be6TheName6OfTheMethod'.
- 
+]
+
+{ #category : #'tests - as string comma delimiter sequenceable' }
+StringTest >> testAsCommaStringEmpty [
+
+	self assert: self empty asCommaString = ''.
+	self assert: self empty asCommaStringAnd = ''
+]
+
+{ #category : #'tests - comma and delimiter' }
+StringTest >> testAsCommaStringOne [
+	
+	"self assert: self oneItemCol asCommaString = '1'.
+	self assert: self oneItemCol asCommaStringAnd = '1'."
+
+	self assert: self nonEmpty1Element asCommaString = (self nonEmpty1Element first asString).
+	self assert: self nonEmpty1Element asCommaStringAnd = (self nonEmpty1Element first asString)
 ]
 
 { #category : #tests }
@@ -437,7 +499,7 @@ StringTest >> testAsDate [
 	self assert: '1 1 1' asDate asString equals: '1 January 2001'.
 	self assert: '1 J 1' asDate asString equals: '1 January 2001'.
 	self should: [ '' asDate ] raise: Error.
-	self should: [ '1234' asDate ] raise: Error 
+	self should: [ '1234' asDate ] raise: Error
 ]
 
 { #category : #tests }
@@ -447,6 +509,15 @@ StringTest >> testAsHTMLString [
 	self assert: '<!DOCTYPE html>' asHTMLString equals: '&lt;!DOCTYPE html&gt;'. 
 	self assert: 'é è à ô ü ö ß ä ó ñ í á' asHTMLString equals: 'é è à ô ü ö ß ä ó ñ í á'.
 	self assert: '' asHTMLString equals: ''
+]
+
+{ #category : #'tests - converting' }
+StringTest >> testAsIdentitySet [
+	"Test with a collection without equal elements :"
+
+	self 
+		assertSameContents: self collectionWithoutEqualElements
+		whenConvertedTo: IdentitySet
 ]
 
 { #category : #'tests - converting' }
@@ -477,6 +548,13 @@ StringTest >> testAsPluralBasedOn [
 	self assert: ('é è à ô ü ö ß ä ó ñ í á' asPluralBasedOn: 10) equals: 'é è à ô ü ö ß ä ó ñ í ás'.
 	self assert: ('' asPluralBasedOn: 1) equals: ''.
 	self assert: ('%' asPluralBasedOn: 10) equals: '%s'
+]
+
+{ #category : #'tests - converting' }
+StringTest >> testAsSet [
+ 	"Test with a collection without equal elements"
+	
+	self assertSameContents: self collectionWithoutEqualElements whenConvertedTo: Set
 ]
 
 { #category : #tests }
@@ -511,6 +589,20 @@ StringTest >> testAsSmalltalkComment [
 	self assert: 'abc""abc' asComment equals: '"abc""abc"'
 ]
 
+{ #category : #'tests - as sorted collection' }
+StringTest >> testAsSortedCollectionWithSortBlock [
+
+	| result tmp |
+	result := self collectionWithSortableElements  asSortedCollection: [:a :b | a > b ].
+	self assert: (result class includesBehavior: SortedCollection).
+	result do: 
+		[ :each | 
+		self assert: (self collectionWithSortableElements occurrencesOf: each) equals: (result occurrencesOf: each) ].
+	self assert: result size equals: self collectionWithSortableElements  size.
+	tmp:=result at: 1.
+	result do: [:each| self assert: tmp >= each. tmp := each ]
+]
+
 { #category : #tests }
 StringTest >> testAsString [ 
 
@@ -520,6 +612,50 @@ StringTest >> testAsString [
 	self assert: (1 < 3) asString equals: 'true'.
 	self assert: 'é è à ô ü ö ß ä ó ñ í á' asString equals: 'é è à ô ü ö ß ä ó ñ í á'.
 	self assert: '' asString equals: ''
+]
+
+{ #category : #'tests - comma and delimiter' }
+StringTest >> testAsStringOnDelimiterLastMore [
+
+	| delim multiItemStream result last allElementsAsString |
+	
+	delim := ', '.
+	last := ' and '.
+	result:=''.
+	multiItemStream := ReadWriteStream on:result.
+	self nonEmpty  asStringOn: multiItemStream delimiter: delim last: last.
+	result := multiItemStream contents.
+	allElementsAsString:=(result findBetweenSubstrings: delim ).
+	1 to: allElementsAsString size do:
+		[:i | 
+		i<(allElementsAsString size-1 )
+			ifTrue: [self assert: (allElementsAsString at:i)=((self nonEmpty at:i)asString)].
+		i=(allElementsAsString size-1)
+			ifTrue:[ self deny: (allElementsAsString at:i)=(last)asString].
+		i=(allElementsAsString size)
+			ifTrue: [self assert: (allElementsAsString at:i)=((self nonEmpty at:(i-1))asString)]]
+]
+
+{ #category : #'tests - comma and delimiter' }
+StringTest >> testAsStringOnDelimiterLastOne [
+
+	| delim oneItemStream result |	
+	delim := ', '.
+	result:=''.
+	oneItemStream := ReadWriteStream on: result.
+	self nonEmpty1Element  asStringOn: oneItemStream delimiter: delim last: 'and'.
+	oneItemStream do:[:each | self assert: each = (self nonEmpty1Element first asString)]
+]
+
+{ #category : #'tests - comma and delimiter' }
+StringTest >> testAsStringOnDelimiterOne [
+
+	| delim oneItemStream result |
+	delim := ', '.
+	result := ''.
+	oneItemStream := ReadWriteStream on: result.
+	self nonEmpty1Element  asStringOn: oneItemStream delimiter: delim.
+	oneItemStream do:[:each | self assert: each = (self nonEmpty1Element first asString)]
 ]
 
 { #category : #tests }
@@ -537,7 +673,6 @@ StringTest >> testAsTime [
 	self assert: '1:00' asTime asString equals: '1:00 am'.
 	self assert: '1' asTime asString equals: '1:00 am'.
 	self assert: '13' asTime asString equals: '1:00 pm'
-
 ]
 
 { #category : #tests }
@@ -551,6 +686,35 @@ StringTest >> testAsUppercase [
 { #category : #'tests - accessing' }
 StringTest >> testAt [
 	self assert: (string at: 1) equals: $H.
+]
+
+{ #category : #'tests - puting with indexes' }
+StringTest >> testAtAllIndexesPut [
+	
+	self nonEmpty atAllPut: self aValue.
+	self nonEmpty do:[ :each| self assert: each = self aValue].
+]
+
+{ #category : #'tests - puting with indexes' }
+StringTest >> testAtAllPut [
+ 
+	self nonEmpty atAll: self indexArray put: self aValue.
+	
+	self indexArray do:
+		[:i | self assert: (self nonEmpty at: i) equals: self aValue ]
+]
+
+{ #category : #'tests - at put' }
+StringTest >> testAtPut [
+	
+	self nonEmpty at: self anIndex put: self aValue.
+	self assert: (self nonEmpty at: self anIndex) = self aValue.
+]
+
+{ #category : #'tests - at put' }
+StringTest >> testAtPutOutOfBounds [
+	
+	self should: [self empty at: self anIndex put: self aValue] raise: Error
 ]
 
 { #category : #tests }
@@ -675,12 +839,34 @@ StringTest >> testComparingCaseInsensitiveLatin1 [
 	self assert: ('É' compare: 'é' caseSensitive: false) equals: 2.
 	self assert: ('é' compare: 'É' caseSensitive: true) equals: 3.
 	self assert: ('É' compare: 'é' caseSensitive: true) equals: 1
+]
 
+{ #category : #'tests - copy - clone' }
+StringTest >> testCopyCreatesNewObject [
+	 
+	
+	| copy | 
+	copy := self nonEmpty copy.
+	self deny: self nonEmpty == copy.
+]
+
+{ #category : #'tests - copy' }
+StringTest >> testCopyNonEmptyWithout [
+	
+	| res anElementOfTheCollection |
+	anElementOfTheCollection :=  self nonEmpty anyOne.
+	res := (self nonEmpty copyWithout: anElementOfTheCollection).
+	"here we do not test the size since for a non empty set we would get a problem.
+	Then in addition copy is not about duplicate management. The element should 
+	be in at the end."
+	self deny: (res includes: anElementOfTheCollection).
+	self nonEmpty do:
+		[:each | (each = anElementOfTheCollection) 
+					ifFalse: [self assert: (res includes: each)]]
 ]
 
 { #category : #'tests - copy' }
 StringTest >> testCopyNonEmptyWithoutAllNotIncluded [
-	
 ]
 
 { #category : #'tests - copy' }
@@ -700,6 +886,45 @@ StringTest >> testCopyReplaceAllWith [
 	self assert: ('AAAA-' copyReplaceAll: 'AA' with: 'X') equals: 'XX-'
 ]
 
+{ #category : #'tests - copying with replacement' }
+StringTest >> testCopyReplaceAllWith1Occurrence [
+	| result  firstIndexesOfOccurrence index endPartIndexResult endPartIndexCollection |
+	
+	result := self collectionWith1TimeSubcollection  copyReplaceAll: self oldSubCollection with: self replacementCollection .
+	
+	"detecting indexes of olSubCollection"
+	firstIndexesOfOccurrence  := self firstIndexesOf: self oldSubCollection in: self collectionWith1TimeSubcollection .
+	index:= firstIndexesOfOccurrence at: 1.
+	
+	"verify content of 'result' : "
+	"first part of 'result'' : '"
+
+	1 to: (index -1) do: 
+		[
+		:i |  
+		self assert: (self collectionWith1TimeSubcollection  at:i)=(result at: i)
+		].
+
+	" middle part containing replacementCollection : "
+	
+	index to: (index + self replacementCollection size-1) do: 
+		[
+		:i |
+		self assert: ( result at: i )=(self replacementCollection at: ( i - index + 1 ))
+		].
+	
+	" end part :"
+	
+	endPartIndexResult :=  index + self replacementCollection  size .
+	endPartIndexCollection :=   index + self oldSubCollection size  .
+	
+	1 to: (result size - endPartIndexResult - 1 ) do:
+		[ 
+		:i |
+		self assert: (result at: ( endPartIndexResult + i - 1 ) ) = (self collectionWith1TimeSubcollection  at: ( endPartIndexCollection + i - 1 ) ).
+		].
+]
+
 { #category : #'tests - copy' }
 StringTest >> testCopyReplaceAllWithAsTokens [
 
@@ -708,6 +933,107 @@ StringTest >> testCopyReplaceAllWithAsTokens [
 	self assert: ('123 test xyz' copyReplaceAll: 'st' with: 'mper' asTokens: true) equals: '123 test xyz'.
 	self assert: ('éèàôüößäóñíá' copyReplaceAll: 'àôüö' with: 'A' asTokens: false) equals: 'éèAßäóñíá'.
 	self assert: ('éèàôü éèàôüt éèàôü' copyReplaceAll: ' ' with:  'ß' asTokens: false) equals: 'éèàôüßéèàôütßéèàôü'.
+]
+
+{ #category : #'tests - copying with replacement' }
+StringTest >> testCopyReplaceFromToWith [
+	| result  indexOfSubcollection lastIndexOfOldSubcollection lastIndexOfReplacementCollection |
+	
+	indexOfSubcollection := (self firstIndexesOf: self oldSubCollection  in:  self collectionWith1TimeSubcollection) at: 1. 
+	lastIndexOfOldSubcollection := indexOfSubcollection + self oldSubCollection size -1.
+	lastIndexOfReplacementCollection := indexOfSubcollection + self replacementCollection  size -1.
+	
+	result := self collectionWith1TimeSubcollection  copyReplaceFrom: indexOfSubcollection  to: lastIndexOfOldSubcollection   with: self replacementCollection .
+	
+	"verify content of 'result' : "
+	"first part of 'result'  "
+	
+	1 to: (indexOfSubcollection  - 1) do: 
+		[ 
+		:i | 
+		self assert: (self collectionWith1TimeSubcollection  at:i) = (result at: i)
+		].
+	
+	" middle part containing replacementCollection : "
+	
+	(indexOfSubcollection ) to: ( lastIndexOfReplacementCollection  ) do: 
+		[
+		:i |
+		self assert: (result at: i)=(self replacementCollection at: (i - indexOfSubcollection +1))
+		].
+	
+	" end part :"
+	1 to: (result size - lastIndexOfReplacementCollection   ) do:
+		[ 
+		:i |
+		self assert: (result at: ( lastIndexOfReplacementCollection  + i  ) ) = (self collectionWith1TimeSubcollection  at: ( lastIndexOfOldSubcollection  + i  ) ).
+		].
+]
+
+{ #category : #'tests - copying with replacement' }
+StringTest >> testCopyReplaceFromToWithInsertion [
+	| result  indexOfSubcollection |
+	
+	indexOfSubcollection := (self firstIndexesOf: self oldSubCollection  in:  self collectionWith1TimeSubcollection) at: 1. 
+	
+	result := self collectionWith1TimeSubcollection  copyReplaceFrom: indexOfSubcollection  to: ( indexOfSubcollection - 1 ) with: self replacementCollection .
+	
+	"verify content of 'result' : "
+	"first part of 'result'' : '"
+	
+	1 to: (indexOfSubcollection -1) do: 
+		[
+		:i | 
+		self assert: (self collectionWith1TimeSubcollection  at:i)=(result at: i)
+		].
+	
+	" middle part containing replacementCollection : "
+	indexOfSubcollection  to: (indexOfSubcollection  + self replacementCollection size-1) do: 
+		[
+		:i |
+		self assert: ( result at: i )=(self replacementCollection at: ( i - indexOfSubcollection +1 ))
+		].
+	
+	" end part :"
+	(indexOfSubcollection  + self replacementCollection size) to: (result size) do:
+		[:i|
+		self assert: (result at: i)=(self collectionWith1TimeSubcollection  at: (i-self replacementCollection size))].
+	
+	" verify size: "	
+	self assert: result size=(self collectionWith1TimeSubcollection  size + self replacementCollection size).
+]
+
+{ #category : #'tests - copying part of sequenceable' }
+StringTest >> testCopyUpTo [
+
+	| result index collection |
+	collection := self collectionWithoutEqualElements.
+	index:= self indexInForCollectionWithoutDuplicates.
+	result := collection   copyUpTo: (collection  at:index).
+	
+	"Verify content"
+	result withIndexDo: [:el :i| self assert: (collection at:i) equals: (result at:i)].
+	
+	"Verify size"
+	self assert: result size equals: (index-1)
+]
+
+{ #category : #'tests - copying part of sequenceable for multipliness' }
+StringTest >> testCopyUpToLastWithDuplicate [
+
+	| result element  collection |
+	collection := self collectionWithSameAtEndAndBegining.
+	element := collection first.
+	
+	"collectionWithSameAtEndAndBegining first and last elements are equals.
+	'copyUpToLast:' should copy until the last occurrence :"
+	result := collection copyUpToLast: (element ).
+	
+	"Verify content"
+	result withIndexDo: 
+		[:el :i | self assert: (result at: i) equals: (collection at: i) ].
+	
+	self assert: result size equals: (collection size - 1)
 ]
 
 { #category : #'tests - copying' }
@@ -723,7 +1049,6 @@ StringTest >> testCopyUpToSubstring [
 	self assert: ('' copyUpToSubstring: 'abc') equals: ''.
 	self assert: ('abcdef' copyUpToSubstring: 'g') equals: 'abcdef'.
 	self assert: ('abcdef' copyUpToSubstring: 'gh') equals: 'abcdef'.
-
 ]
 
 { #category : #'tests - comparing' }
@@ -737,6 +1062,16 @@ StringTest >> testCorrectAgainst [
 
 	coll := OrderedCollection new.
 	self assert: ('test' correctAgainst: coll) asArray equals: #().
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+StringTest >> testDetectSequenced [
+	"Testing that detect keep the first element returning true for sequenceable collections"
+
+	| element result |
+	element := self nonEmptyMoreThan1Element at: 1.
+	result := self nonEmptyMoreThan1Element  detect: [:each | each notNil ].
+	self assert: result equals: element
 ]
 
 { #category : #'tests - printing' }
@@ -757,7 +1092,6 @@ StringTest >> testEndsWith [
 	self assert: ('test' endsWith: 'st').
 	self deny: ('ÉÈÀÔÜÖẞÄÓÑÍÁ' endsWith: 'íá').
 	self deny: ('test' endsWith: 'tester').
-
 ]
 
 { #category : #'tests - testing' }
@@ -774,7 +1108,6 @@ StringTest >> testEndsWithAnyOf [
 	self deny: ('éèàôüößäóñíá' endsWithAnyOf: #('ia' 'ñí' '' 'áß')).
 	self assert: ('éèàôüößäóñíá' endsWithAnyOf: #('test' 'ÉÈÀ' 'äóñíá')).
 	self assert: ('test' endsWithAnyOf: #('tests' 'tester' 'testing' 't')).
-
 ]
 
 { #category : #tests }
@@ -808,6 +1141,21 @@ StringTest >> testEndsWithDigit [
 	self assert: ('éèàôüößäóñíá9' endsWithDigit).
 	self deny: ('99test' endsWithDigit).
 	self assert: ('  999' endsWithDigit).
+]
+
+{ #category : #'tests - equality' }
+StringTest >> testEqualSignIsTrueForEmptyButNonIdenticalCollections [
+	
+	self assert: self empty equals: self empty copy. 
+	self assert: self empty copy equals: self empty.
+	self assert: self empty copy equals: self empty copy
+]
+
+{ #category : #'tests - equality' }
+StringTest >> testEqualSignOfIdenticalCollectionObjects [
+	
+	self assert: self empty equals: self empty. 
+	self assert: self nonEmpty equals: self nonEmpty
 ]
 
 { #category : #tests }
@@ -903,6 +1251,16 @@ StringTest >> testFindDelimitersStartingAt [
 	self assert: ('éèàôüöß éèàôüöß' findDelimiters: 'ß' startingAt: 2) equals: 7
 ]
 
+{ #category : #'tests - iterate on sequenced reable collections' }
+StringTest >> testFindFirst [
+
+	| element result |
+	element := self nonEmptyMoreThan1Element at: 1.
+	result := self nonEmptyMoreThan1Element findFirst: [:each | each = element].
+	
+	self assert: result equals: 1
+]
+
 { #category : #'tests - indexof' }
 StringTest >> testFindFirstInString [	
 	"These tests are more specific than those in testIndexOf."
@@ -919,7 +1277,6 @@ StringTest >> testFindFirstInString [
 	self assert: (self findFirstInString: 'hello' fromString: 'llo') equals: 3.
 	self assert: (self findFirstInString: 'hello' fromString: 'o') equals: 5.
 	self assert: (self findFirstInString: 'hello' fromString: 'x') equals: 0.
-
 ]
 
 { #category : #tests }
@@ -940,7 +1297,6 @@ StringTest >> testFindSelector [
 	self assert: #isSymbol equals: '#isSymbol' findSelector.
 	self assert: #between:and: equals: '#between:and:' findSelector .
 	self assert:#+ equals: '#+' findSelector
-
 ]
 
 { #category : #tests }
@@ -1236,7 +1592,6 @@ StringTest >> testFindTokensIncludes [
 	self assert: ('test this' findTokens: 's' includes: 'hi') equals: 't thi'.
 	self assert: ('test that' findTokens: 't' includes: 'that') isNil.
 	self assert: ('éèàôüößäóñíá' findTokens: #($ô $ó) includes:'ñí') equals: 'ñíá'
-
 ]
 
 { #category : #tests }
@@ -1246,7 +1601,6 @@ StringTest >> testFindWordStartStartingAt [
 	self assert: ('test this string' findWordStart: 'st' startingAt: 1) equals: 11.
 	self assert: ('test this string' findWordStart: 'st' startingAt: 12) equals: 0.
 	self assert: ('test this string' findWordStart: '' startingAt: 1) equals: 0
-
 ]
 
 { #category : #'tests - formatting' }
@@ -1291,7 +1645,25 @@ StringTest >> testFormatFailures [
 	self
 		should: [ 'This is {1} !' format: Array new ]
 		raise: SubscriptOutOfBounds.
+]
 
+{ #category : #'tests - equality' }
+StringTest >> testHasEqualElementsIsTrueForNonIdenticalButEqualCollections [
+		
+	self assert: (self empty hasEqualElements: self empty copy). 
+	self assert: (self empty copy hasEqualElements: self empty).
+	self assert: (self empty copy hasEqualElements: self empty copy).
+		
+	self assert: (self nonEmpty hasEqualElements: self nonEmpty copy). 
+	self assert: (self nonEmpty copy hasEqualElements: self nonEmpty).
+	self assert: (self nonEmpty copy hasEqualElements: self nonEmpty copy)
+]
+
+{ #category : #'tests - equality' }
+StringTest >> testHasEqualElementsOfIdenticalCollectionObjects [
+	
+	self assert: (self empty hasEqualElements: self empty). 
+	self assert: (self nonEmpty hasEqualElements: self nonEmpty)
 ]
 
 { #category : #tests }
@@ -1301,6 +1673,17 @@ StringTest >> testHasWideCharacterFromTo [
 	self deny: ('test' hasWideCharacterFrom: 1 to: 4).  
 	self assert: ('€₤' hasWideCharacterFrom: 1 to: 2).  
 	self assert: ('test this string €₤' hasWideCharacterFrom: 18 to: 19)
+]
+
+{ #category : #'tests - includes' }
+StringTest >> testIdentityIncludesNonSpecificComportement [
+	"Test the same comportement than #includes:"
+	
+	| collection |	
+	collection := self nonEmpty.
+	
+	self deny: (collection identityIncludes: self elementNotIn).
+	self assert: (collection identityIncludes: collection anyOne)
 ]
 
 { #category : #'tests - includes' }
@@ -1318,8 +1701,7 @@ StringTest >> testIncludesSubstring [
 	self assert: ('éèàôüößäóñíá' includesSubstring: '').
 	self deny: ('éèàôüößäóñíá' includesSubstring: 'a'). 
 	self assert: ('éèàôüößäóñíá' includesSubstring: 'ßä').
-	self deny: ('kjdsnlksjdf' includesSubstring: 'K') 
-
+	self deny: ('kjdsnlksjdf' includesSubstring: 'K')
 ]
 
 { #category : #tests }
@@ -1330,8 +1712,6 @@ StringTest >> testIncludesSubstringCaseSensitive [
 	self deny: ('123éàôüöß' includesSubstring: '' caseSensitive: false). 
 	self assert: ('123éàôüöß' includesSubstring: 'öß' caseSensitive: true).
 	self assert: ('123éàôüöß' includesSubstring: 'ÀÔ' caseSensitive: false)
-
-
 ]
 
 { #category : #tests }
@@ -1342,7 +1722,6 @@ StringTest >> testIndexOf [
 	self assert: ('test this string' indexOf: $t) equals: 1.
 	self assert: ('123éàôüöß' indexOf: $ß) equals: 9.
 	self assert: ('123éàôüöß' indexOf: $E) equals: 0
- 
 ]
 
 { #category : #tests }
@@ -1352,7 +1731,6 @@ StringTest >> testIndexOfFirstUppercaseCharacter [
 	self assert: 'test this string' indexOfFirstUppercaseCharacter equals: 0.
 	self assert: '123éàôüöß' indexOfFirstUppercaseCharacter equals: 0.
 	self assert: '123éàôüÖẞ' indexOfFirstUppercaseCharacter equals: 8
- 
 ]
 
 { #category : #tests }
@@ -1374,6 +1752,16 @@ StringTest >> testInitialIntegerOrNil [
 	self assert: '  89Ten ' initialIntegerOrNil isNil.
 	self assert: '78 92' initialIntegerOrNil equals: 78.
 	self assert: '123éàôüÖẞ' initialIntegerOrNil equals: 123
+]
+
+{ #category : #'tests - set arithmetic' }
+StringTest >> testIntersectionItself [
+	
+	| result |
+	result := self collectionWithoutEqualElements intersection: self collectionWithoutEqualElements.
+	self assert: result size equals: self collectionWithoutEqualElements size.
+	self collectionWithoutEqualElements do: [ :each|
+		self assert: (result includes: each) ].
 ]
 
 { #category : #tests }
@@ -1426,8 +1814,12 @@ StringTest >> testIsPatternVariable [
 	
 	self deny: 'notAPattern:varible:' isPatternVariable.
 	self deny: 'notAPattern' isPatternVariable
-		
+]
 
+{ #category : #'tests - sorting' }
+StringTest >> testIsSortedBy [
+	self assert: (self sortedInAscendingOrderCollection isSortedBy: [:a :b | a<b]).
+	self deny: (self sortedInAscendingOrderCollection isSortedBy: [:a :b | a>b]).
 ]
 
 { #category : #'tests - testing' }
@@ -1444,7 +1836,38 @@ StringTest >> testIsWideString [
 	self assert: ' test ₤' isWideString.
 	self deny: '' isWideString. 
 	self assert: 'éàôüÖẞ' isWideString.
-	self deny: 'éàôüÖ' isWideString 
+	self deny: 'éàôüÖ' isWideString
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+StringTest >> testKeysAndValuesDo [
+	"| result |
+	result:= OrderedCollection new.
+	
+	self nonEmptyMoreThan1Element  keysAndValuesDo: 
+		[:i :value|
+		result add: (value+i)].
+	
+	1 to: result size do:
+		[:i|
+		self assert: (result at:i)=((self nonEmptyMoreThan1Element at:i)+i)]"
+	|  indexes elements |
+	indexes := OrderedCollection new.
+	elements := OrderedCollection new.
+	
+	self nonEmptyMoreThan1Element  keysAndValuesDo: 
+		[:i :value|
+		indexes  add: (i).
+		elements add: value].
+	
+	(1 to: self nonEmptyMoreThan1Element size )do:
+		[ :i |
+		self assert: (indexes at: i) equals: i.
+		self assert: (elements at: i) equals: (self nonEmptyMoreThan1Element at: i).	
+		].
+	
+	self assert: indexes size equals: elements size. 
+	self assert: indexes size equals: self nonEmptyMoreThan1Element size
 ]
 
 { #category : #tests }
@@ -1468,8 +1891,6 @@ StringTest >> testLessThan [
 	self assert: ('' < 'a').
 	self deny: ('à ô ü' < 'à ô ü').
 	self deny: ('aaa' < 'AAA')
-
-
 ]
 
 { #category : #'tests - lines' }
@@ -1568,8 +1989,6 @@ StringTest >> testLinesDo [
 		self deny: (aLine includes: Character lf).
 		lines add: aLine].
 	self assert: lines asArray equals: #('Fred' 'the' 'Bear').
-
-
 ]
 
 { #category : #'tests - line breaking' }
@@ -1689,8 +2108,6 @@ StringTest >> testNumArgs [
 		
 	self assert: 'x::0y:' numArgs = -1
 		description: 'keyword selectors cannot have any key beginning with a digit'.
-	
-	
 ]
 
 { #category : #tests }
@@ -1703,6 +2120,16 @@ StringTest >> testNumericSuffix [
 	self assert: '012éà ôüÖ ẞ123' numericSuffix equals: 123
 ]
 
+{ #category : #'tests - occurrencesOf for multipliness' }
+StringTest >> testOccurrencesOfForMultipliness [
+
+	| collection elem |
+	collection := self collectionWithEqualElements.
+	elem := self elementTwiceInForOccurrences.
+
+	self assert: (collection occurrencesOf: elem ) equals: 2.
+]
+
 { #category : #tests }
 StringTest >> testOccursInWithEmptyCaseSensitive [
 
@@ -1711,7 +2138,14 @@ StringTest >> testOccursInWithEmptyCaseSensitive [
 	self assert: ('abc98def' occursInWithEmpty: 'Abc' caseSensitive: false).
 	self assert: ('012éà ôüÖ ẞ345' occursInWithEmpty: '012' caseSensitive: true).
 	self deny: ('012éàôüÖ ẞ345' occursInWithEmpty: 'ÉÀÔÜÖ' caseSensitive: true)
+]
 
+{ #category : #'tests - creation' }
+StringTest >> testOfSize [
+	
+	| aCol |
+	aCol := self collectionClass ofSize: 3.
+	self assert: aCol size equals: 3.
 ]
 
 { #category : #tests }
@@ -1722,8 +2156,6 @@ StringTest >> testOnlyLetters [
 	self assert: '012éà ôüÖ ẞ345' onlyLetters equals: 'éàôüÖẞ'.
 	self assert: '123 456' onlyLetters equals: ''.
 	self assert: '' onlyLetters equals: ''
-
-
 ]
 
 { #category : #tests }
@@ -1789,6 +2221,23 @@ StringTest >> testRepeat [
 	should: [ '123' repeat: -1 ] raise: Error.
 ]
 
+{ #category : #'tests - iterate on sequenced reable collections' }
+StringTest >> testReverseWithDo [
+	
+	| firstCollection secondCollection index |
+
+	firstCollection := self nonEmptyMoreThan1Element.
+	secondCollection := firstCollection copy.
+	index := firstCollection size.
+	
+	firstCollection  reverseWith: secondCollection do:
+		[:a :b |
+	
+		self assert: (firstCollection at: index) equals: a. 
+		self assert: (secondCollection at: index) equals: b.
+			(index := index - 1)]
+]
+
 { #category : #'tests - converting' }
 StringTest >> testRomanNumber [
 
@@ -1850,6 +2299,17 @@ StringTest >> testSubstrings [
 		(substring, separators, substring, separators) -> {substring. substring}.
 		(separators, substring, separators, substring) -> {substring. substring}}
 		do: [:each | self assert: each key substrings equals: each value].
+]
+
+{ #category : #'tests - puting with indexes' }
+StringTest >> testSwapWith [
+ 
+	| result index |
+	index := self indexArray anyOne.
+	result:= self nonEmpty copy .
+	result swap: index with: 1.
+	self assert: (result at: index) = (self nonEmpty at:1).
+	self assert: (result at: 1) = (self nonEmpty at: index).
 ]
 
 { #category : #tests }
@@ -1947,7 +2407,6 @@ StringTest >> testUpTo [
 	self assert: #copy:from:to: keywords equals: #(copy: from: to:).
 	self assert: #up keywords equals: #(up).
 	self assert: #at: keywords equals: #(at:).
-	
 ]
 
 { #category : #'tests - converting' }
@@ -1964,7 +2423,22 @@ StringTest >> testWithBlanksCondensed [
 		'space followed by tab 	!' 'space followed by tab !'
 	) pairsDo: [ :input :output |
 		self assert: input withBlanksCondensed equals: output ]
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+StringTest >> testWithDo [
 	
+	| firstCollection secondCollection index |
+
+	firstCollection := self nonEmptyMoreThan1Element.
+	secondCollection := firstCollection copy.
+	index := 0.
+	
+	firstCollection  with: secondCollection do:
+		[:a :b |
+		index := index + 1.
+		self assert: (firstCollection at: index) equals:  a. 
+		self assert: (secondCollection at: index) equals: b ]
 ]
 
 { #category : #'tests - converting' }
@@ -1978,6 +2452,42 @@ StringTest >> testWithFirstCharacterDownshifted [
 	"the string gets copied"
 	self deny: lc uncapitalized identicalTo: lc.
 	self deny: empty uncapitalized identicalTo: empty
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+StringTest >> testWithIndexCollect [
+	
+	| result index collection |
+	index := 0.
+	collection := self nonEmptyMoreThan1Element .
+	result := collection  withIndexCollect: [:each :i | 
+		self assert: i equals: (index := index + 1).	
+		self assert: i equals: (collection  indexOf: each).
+		each ]. 
+	
+	result withIndexDo: [:el :i | self assert: (result at:i) equals: (collection at: i)].
+	self assert: result size equals: collection size
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+StringTest >> testWithIndexDo [
+
+	|  indexes elements |
+	indexes:= OrderedCollection new.
+	elements := OrderedCollection new.
+	
+	self nonEmptyMoreThan1Element withIndexDo: 
+		[:value :i  |
+			indexes  add: (i).
+			elements add: value ].
+	
+	self nonEmptyMoreThan1Element withIndexDo: 
+		[:el :i |
+			self assert: (indexes at: i) equals: i.
+			self assert: (elements at: i) equals: el ].
+	
+	self assert: indexes size equals: elements size. 
+	self assert: indexes size equals: self nonEmptyMoreThan1Element size
 ]
 
 { #category : #'tests - internet' }
@@ -2047,7 +2557,6 @@ StringTest >> testWithSeparatorsCompacted [
 		'space followed by tab 	!' 'space followed by tab !'
 	) pairsDo: [ :input :output |
 		self assert: input withSeparatorsCompacted equals: output ]
-	
 ]
 
 { #category : #'tests - internet' }
@@ -2078,6 +2587,19 @@ StringTest >> testWithUnixLineEndings [
 	self assert: (newString at: 4) equals: Character lf.
 ]
 
+{ #category : #'tests - creation' }
+StringTest >> testWithWith [
+	
+	| aCol collection element1 element2 |
+	collection := self collectionMoreThan5Elements asOrderedCollection copyFrom: 1 to: 2.
+	element1 := collection at: 1.
+	element2 := collection at: 2.
+	
+	aCol := self collectionClass with: element1  with: element2 .
+	self assert: (aCol occurrencesOf: element1 ) equals: (collection occurrencesOf: element1).
+	self assert: (aCol occurrencesOf: element2 ) equals: (collection occurrencesOf: element2)
+]
+
 { #category : #'tests - converting' }
 StringTest >> testWithoutLeadingDigits [
 	#( 
@@ -2091,7 +2613,6 @@ StringTest >> testWithoutLeadingDigits [
 		'1 2 3 ' ''
 	) pairsDo: [ :input :output |
 		self assert: input withoutLeadingDigits equals: output ]
-	
 ]
 
 { #category : #'tests - converting' }
@@ -2105,7 +2626,6 @@ StringTest >> testWithoutPeriodSuffix [
 		'.' '.'
 	) pairsDo: [ :input :output |
 		self assert: input withoutPeriodSuffix equals: output ]
-	
 ]
 
 { #category : #'tests - element accessing' }
@@ -2143,7 +2663,6 @@ StringTest >> testWithoutTrailingDigits [
 		'1 2 3 ' ''
 	) pairsDo: [ :input :output |
 		self assert: input withoutTrailingDigits equals: output ]
-	
 ]
 
 { #category : #'tests - copying' }
@@ -2210,13 +2729,27 @@ StringTest >> testindexOfstartingAt [
 	self assert: ('aa aa éé aa aa' indexOf: $z startingAt: 8) equals: 0.
 ]
 
+{ #category : #'tests - begins ends with' }
+StringTest >> testsBeginsWithEmpty [
+	
+	self deny: (self nonEmpty beginsWith:(self empty)).
+	self deny: (self empty beginsWith:(self nonEmpty))
+]
+
+{ #category : #'tests - begins ends with' }
+StringTest >> testsEndsWithEmpty [
+	
+	self deny: (self nonEmpty endsWith: self empty).
+	self deny: (self empty endsWith: self nonEmpty)
+]
+
 { #category : #requirements }
 StringTest >> unsortedCollection [
-	^ unsortedCollection 
+	^ unsortedCollection
 ]
 
 { #category : #requirements }
 StringTest >> withEqualElements [
 	" return a collection  including equal elements (classic equality)"
-	^ sameAtEndAndBegining 	
+	^ sameAtEndAndBegining
 ]

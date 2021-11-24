@@ -216,7 +216,6 @@ HashTableSizes >> limitForExp: exp [
 	| expLimit |
 	expLimit := exp ceiling - (0.5 / self numValuesPerPower).
 	^(2 raisedTo: expLimit) rounded.
-	
 ]
 
 { #category : #private }
@@ -225,7 +224,6 @@ HashTableSizes >> numValuesPerPower [
 	for each power-of-two range."
 	
 	^self class numValuesPerPower
-
 ]
 
 { #category : #private }
@@ -240,6 +238,5 @@ HashTableSizes >> primeAlmostFactorsOf: anInteger [
 						remainder := anInteger \\ i.
 						remainder <= 1 or: [remainder = (i - 1)]])
 			ifTrue: [factors add: i]].
-	^factors asArray	
-
+	^factors asArray
 ]

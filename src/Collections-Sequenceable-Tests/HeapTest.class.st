@@ -36,7 +36,7 @@ Class {
 { #category : #requirements }
 HeapTest >> aValue [
 	" return a value to put into nonEmpty"
-	^ self nonEmpty anyOne 
+	^ self nonEmpty anyOne
 ]
 
 { #category : #requirements }
@@ -59,7 +59,7 @@ HeapTest >> anotherElementOrAssociationIn [
 { #category : #requirements }
 HeapTest >> anotherElementOrAssociationNotIn [
 	" return an element (or an association for Dictionary )not present  in 'collection' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #coverage }
@@ -83,38 +83,38 @@ HeapTest >> collectionClass [
 { #category : #requirements }
 HeapTest >> collectionMoreThan1NoDuplicates [
 	" return a collection of size > 1 without equal elements"
-	^ nonEmpty5ElementsWithoutDuplicate 
+	^ nonEmpty5ElementsWithoutDuplicate
 ]
 
 { #category : #requirements }
 HeapTest >> collectionMoreThan5Elements [
 	" return a collection including at least 5 elements"
 	
-	^nonEmpty5ElementsWithoutDuplicate 
+	^nonEmpty5ElementsWithoutDuplicate
 ]
 
 { #category : #requirements }
 HeapTest >> collectionNotIncluded [
 	" return a collection for wich each element is not included in 'nonEmpty' "
-	^ collectionNotIncluded 
+	^ collectionNotIncluded
 ]
 
 { #category : #requirements }
 HeapTest >> collectionOfSize5 [
 	" return a collection of size 5"
-	^ nonEmpty5ElementsWithoutDuplicate 
+	^ nonEmpty5ElementsWithoutDuplicate
 ]
 
 { #category : #requirements }
 HeapTest >> collectionWith5Elements [
 	" return a collection of size 5 including 5 elements"
-	^ nonEmpty5ElementsWithoutDuplicate 
+	^ nonEmpty5ElementsWithoutDuplicate
 ]
 
 { #category : #requirements }
 HeapTest >> collectionWithCopyNonIdentical [
 	" return a collection that include elements for which 'copy' return a different object (this is not the case of SmallInteger)"
-	^ stringCollection 
+	^ stringCollection
 ]
 
 { #category : #requirements }
@@ -125,47 +125,47 @@ HeapTest >> collectionWithElement [
 { #category : #requirements }
 HeapTest >> collectionWithElementsToRemove [
 	" return a collection of elements included in 'nonEmpty'  "
-	^ self nonEmpty 
+	^ self nonEmpty
 ]
 
 { #category : #requirements }
 HeapTest >> collectionWithEqualElements [
 	" return a collection including atLeast two elements equal"
 
-	^ collectionWithDuplicateElement 
+	^ collectionWithDuplicateElement
 ]
 
 { #category : #requirements }
 HeapTest >> collectionWithNonIdentitySameAtEndAndBegining [
 	" return a collection with elements at end and begining equals only with classic equality (they are not the same object).
 (others elements of the collection are not equal to those elements)"
-	^ sameAtEndAndBegining 
+	^ sameAtEndAndBegining
 ]
 
 { #category : #requirements }
 HeapTest >> collectionWithSameAtEndAndBegining [
 	" return a collection with elements at end and begining equals .
 (others elements of the collection are not equal to those elements)"
-	^ sameAtEndAndBegining 
+	^ sameAtEndAndBegining
 ]
 
 { #category : #requirements }
 HeapTest >> collectionWithSortableElements [
 	" return a collection elements that can be sorte ( understanding message ' < '  or ' > ')"
-	^ nonEmpty5ElementsWithoutDuplicate 
+	^ nonEmpty5ElementsWithoutDuplicate
 ]
 
 { #category : #requirements }
 HeapTest >> collectionWithoutEqualElements [
 
 	" return a collection not including equal elements "
-	^ nonEmpty5ElementsWithoutDuplicate 
+	^ nonEmpty5ElementsWithoutDuplicate
 ]
 
 { #category : #requirements }
 HeapTest >> collectionWithoutNilElements [
 	" return a collection that doesn't includes a nil element  and that doesn't includes equal elements'"
-	^ nonEmpty5ElementsWithoutDuplicate 
+	^ nonEmpty5ElementsWithoutDuplicate
 ]
 
 { #category : #requirements }
@@ -192,19 +192,19 @@ HeapTest >> elementInForOccurrences [
 
 { #category : #requirements }
 HeapTest >> elementNotIn [
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
 HeapTest >> elementNotInForElementAccessing [
 	" return an element not included in 'moreThan4Elements' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
 HeapTest >> elementNotInForIndexAccessing [
 	" return an element not included in 'collectionMoreThan1NoDuplicates' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
@@ -215,7 +215,7 @@ HeapTest >> elementNotInForOccurrences [
 { #category : #requirements }
 HeapTest >> elementToAdd [
 	" return an element of type 'nonEmpy' elements'type'"
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
@@ -226,14 +226,14 @@ HeapTest >> elementTwiceIn [
 { #category : #requirements }
 HeapTest >> elementTwiceInForOccurrences [
 	" return an element included exactly two time in # collectionWithEqualElements"
-^ duplicateElement 
+^ duplicateElement
 ]
 
 { #category : #requirements }
 HeapTest >> elementsCopyNonIdenticalWithoutEqualElements [
 	" return a collection that does niot incllude equal elements ( classic equality )
 	all elements included are elements for which copy is not identical to the element  "
-	^ stringCollection 
+	^ stringCollection
 ]
 
 { #category : #requirements }
@@ -245,8 +245,6 @@ HeapTest >> empty [
 HeapTest >> expectedElementByDetect [
 	"Returns the first even element of #collection"
 	^ expectedElementByDetect.
-	
-	
 ]
 
 { #category : #requirements }
@@ -258,7 +256,7 @@ HeapTest >> expectedSizeAfterReject [
 { #category : #requirements }
 HeapTest >> firstCollection [
 " return a collection that will be the first part of the concatenation"
-	^nonEmpty 
+	^nonEmpty
 ]
 
 { #category : #requirements }
@@ -271,7 +269,7 @@ HeapTest >> firstIndex [
 HeapTest >> indexArray [
 	" return a Collection including indexes between bounds of 'nonEmpty' "
 
-	^ indexArray 
+	^ indexArray
 ]
 
 { #category : #requirements }
@@ -290,26 +288,26 @@ HeapTest >> indexInNonEmpty [
 { #category : #requirements }
 HeapTest >> integerCollectionWithoutEqualElements [
 	" return a collection of integer without equal elements"
-	^ nonEmpty5ElementsWithoutDuplicate 
+	^ nonEmpty5ElementsWithoutDuplicate
 ]
 
 { #category : #requirements }
 HeapTest >> moreThan3Elements [
 	" return a collection including atLeast 3 elements"
-	^ nonEmpty5ElementsWithoutDuplicate 
+	^ nonEmpty5ElementsWithoutDuplicate
 ]
 
 { #category : #requirements }
 HeapTest >> moreThan4Elements [
 
 	" return a collection including at leat 4 elements"
-	^ nonEmpty5ElementsWithoutDuplicate 
+	^ nonEmpty5ElementsWithoutDuplicate
 ]
 
 { #category : #requirements }
 HeapTest >> newElement [
 	"return an element that will be put in the collection in place of another"
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
@@ -320,7 +318,7 @@ HeapTest >> nonEmpty [
 { #category : #requirements }
 HeapTest >> nonEmpty1Element [
 	" return a collection of size 1 including one element"
-	^ nonEmpty1Element 
+	^ nonEmpty1Element
 ]
 
 { #category : #requirements }
@@ -332,7 +330,7 @@ HeapTest >> nonEmptyMoreThan1Element [
 { #category : #requirements }
 HeapTest >> nonEmptyWithoutEqualElements [
 	" return a collection without equal elements "
-	^ nonEmpty5ElementsWithoutDuplicate 
+	^ nonEmpty5ElementsWithoutDuplicate
 ]
 
 { #category : #requirements }
@@ -343,13 +341,13 @@ HeapTest >> otherCollection [
 { #category : #requirements }
 HeapTest >> replacementCollection [
 	" return a collection including elements of type 'collectionOfSize5' elements'type"
-	^ collectionWith4Elements 
+	^ collectionWith4Elements
 ]
 
 { #category : #requirements }
 HeapTest >> replacementCollectionSameSize [
 	" return a collection of size (secondIndex - firstIndex + 1)"
-	^subCollection 
+	^subCollection
 ]
 
 { #category : #requirements }
@@ -360,7 +358,7 @@ HeapTest >> result [
 { #category : #requirements }
 HeapTest >> secondCollection [
 	" return a collection that will be the second part of the concatenation"
-	^ nonEmpty5ElementsWithoutDuplicate 
+	^ nonEmpty5ElementsWithoutDuplicate
 ]
 
 { #category : #requirements }
@@ -421,14 +419,13 @@ HeapTest >> setUp [
 	subCollection := Heap new.
 	duplicateElement := 1.
 	collectionWithDuplicateElement := Heap new add: duplicateElement ; add: duplicateElement ; add:4 ; yourself.
-	self firstIndex to: self secondIndex do: [:each | subCollection add: elementNotIn  ].		
-
+	self firstIndex to: self secondIndex do: [:each | subCollection add: elementNotIn  ].
 ]
 
 { #category : #requirements }
 HeapTest >> sizeCollection [
 	"Answers a collection whose #size is 4"
-	^collectionWith4Elements 
+	^collectionWith4Elements
 ]
 
 { #category : #requirements }
@@ -440,7 +437,7 @@ HeapTest >> speciesClass [
 { #category : #requirements }
 HeapTest >> subCollectionNotIn [
 	" return a collection for which at least one element is not included in 'moreThan4Elements' "
-	^ collectionNotIncluded 
+	^ collectionNotIncluded
 ]
 
 { #category : #'tests - fixture' }
@@ -497,6 +494,51 @@ HeapTest >> testAddNonEmptyGrowsWhenNewElement [
 	self assert: self nonEmpty size > oldSize
 ]
 
+{ #category : #'tests - converting' }
+HeapTest >> testAsIdentitySet [
+	"Test with a collection without equal elements :"
+
+	self 
+		assertSameContents: self collectionWithoutEqualElements
+		whenConvertedTo: IdentitySet
+]
+
+{ #category : #'tests - converting' }
+HeapTest >> testAsSet [
+ 	"Test with a collection without equal elements"
+	
+	self assertSameContents: self collectionWithoutEqualElements whenConvertedTo: Set
+]
+
+{ #category : #'tests - as sorted collection' }
+HeapTest >> testAsSortedCollectionWithSortBlock [
+
+	| result tmp |
+	result := self collectionWithSortableElements  asSortedCollection: [:a :b | a > b ].
+	self assert: (result class includesBehavior: SortedCollection).
+	result do: 
+		[ :each | 
+		self assert: (self collectionWithSortableElements occurrencesOf: each) equals: (result occurrencesOf: each) ].
+	self assert: result size equals: self collectionWithSortableElements  size.
+	tmp:=result at: 1.
+	result do: [:each| self assert: tmp >= each. tmp := each ]
+]
+
+{ #category : #'tests - copy' }
+HeapTest >> testCopyNonEmptyWithout [
+	
+	| res anElementOfTheCollection |
+	anElementOfTheCollection :=  self nonEmpty anyOne.
+	res := (self nonEmpty copyWithout: anElementOfTheCollection).
+	"here we do not test the size since for a non empty set we would get a problem.
+	Then in addition copy is not about duplicate management. The element should 
+	be in at the end."
+	self deny: (res includes: anElementOfTheCollection).
+	self nonEmpty do:
+		[:each | (each = anElementOfTheCollection) 
+					ifFalse: [self assert: (res includes: each)]]
+]
+
 { #category : #'basic tests' }
 HeapTest >> testDo [
 
@@ -538,6 +580,17 @@ HeapTest >> testHeap [
 	self denyEmpty: heap
 ]
 
+{ #category : #'tests - includes' }
+HeapTest >> testIdentityIncludesNonSpecificComportement [
+	"Test the same comportement than #includes:"
+	
+	| collection |	
+	collection := self nonEmpty.
+	
+	self deny: (collection identityIncludes: self elementNotIn).
+	self assert: (collection identityIncludes: collection anyOne)
+]
+
 { #category : #tests }
 HeapTest >> testIfEqualIsTransitive [
 	"This is http://bugs.squeak.org/view.php?id=6943"
@@ -549,6 +602,26 @@ HeapTest >> testIfEqualIsTransitive [
     self
 		assert: (heap1 = anArray) & (heap2 = anArray) ==> (heap1 = heap2)
 		description: 'Heap equality should be transitive'
+]
+
+{ #category : #'tests - set arithmetic' }
+HeapTest >> testIntersectionItself [
+	
+	| result |
+	result := self collectionWithoutEqualElements intersection: self collectionWithoutEqualElements.
+	self assert: result size equals: self collectionWithoutEqualElements size.
+	self collectionWithoutEqualElements do: [ :each|
+		self assert: (result includes: each) ].
+]
+
+{ #category : #'tests - occurrencesOf for multipliness' }
+HeapTest >> testOccurrencesOfForMultipliness [
+
+	| collection elem |
+	collection := self collectionWithEqualElements.
+	elem := self elementTwiceInForOccurrences.
+
+	self assert: (collection occurrencesOf: elem ) equals: 2.
 ]
 
 { #category : #'basic tests' }
@@ -573,7 +646,44 @@ HeapTest >> testSortBlock [
 	
 	heap sortBlock: [ :e1 :e2 | e1 >= e2 ].
 	self assert: heap asArray equals: #(5 3 1)
+]
 
+{ #category : #'tests - adding' }
+HeapTest >> testTAdd [
+	| added collection |
+	collection := self otherCollection.
+	added := collection add: self element.
+	
+	self assert: added == self element.	"test for identiy because #add: has not reason to copy its parameter."
+	self assert: (collection includes: self element)	.
+	self assert: (self collectionWithElement includes: self element).
+]
+
+{ #category : #'tests - adding' }
+HeapTest >> testTAddIfNotPresentWithNewElement [
+
+	| added oldSize collection elem |
+	collection := self otherCollection.
+	oldSize := collection size.
+	elem := self element.
+	self deny: (collection includes: elem ).
+	
+	added := collection  addIfNotPresent: elem .
+	self assert: added == elem . "test for identiy because #add: has not reason to copy its parameter."
+	self assert: collection size equals: (oldSize + 1).
+]
+
+{ #category : #'tests - creation' }
+HeapTest >> testWithWith [
+	
+	| aCol collection element1 element2 |
+	collection := self collectionMoreThan5Elements asOrderedCollection copyFrom: 1 to: 2.
+	element1 := collection at: 1.
+	element2 := collection at: 2.
+	
+	aCol := self collectionClass with: element1  with: element2 .
+	self assert: (aCol occurrencesOf: element1 ) equals: (collection occurrencesOf: element1).
+	self assert: (aCol occurrencesOf: element2 ) equals: (collection occurrencesOf: element2)
 ]
 
 { #category : #parameters }
@@ -585,5 +695,5 @@ HeapTest >> valuePutIn [
 
 { #category : #requirements }
 HeapTest >> withEqualElements [
-	^ sameAtEndAndBegining 
+	^ sameAtEndAndBegining
 ]

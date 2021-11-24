@@ -79,7 +79,6 @@ CollectionArithmeticTest >> testRunningAverage [
 	result := collection runningAverage: 2. 
 
 	self assert: result equals: {1 . (3/2) . 2 . (5/2) . 3}.
-
 ]
 
 { #category : #tests }
@@ -89,7 +88,6 @@ CollectionArithmeticTest >> testRunningAverageSubscriptOutOfBounds [
 
 	self should: [ collection runningAverage: 7 ] raise: SubscriptOutOfBounds.
 	self  should: [ collection runningAverage: -2 ] raise: SubscriptOutOfBounds.
-
 ]
 
 { #category : #tests }
@@ -100,7 +98,6 @@ CollectionArithmeticTest >> testRunningAverageWithFullSubsetSizeIsSameAsAverage 
 	self
 		assert: (collection runningAverage: collection size) 
 		equals: { collection average }.
-
 ]
 
 { #category : #tests }
@@ -111,7 +108,6 @@ CollectionArithmeticTest >> testRunningAverageWithSubsetSize1IsSameAsCollection 
 	self
 		assert: (collection runningAverage: 1) 
 		equals: collection.
-
 ]
 
 { #category : #tests }
@@ -121,7 +117,6 @@ CollectionArithmeticTest >> testRunningMax [
 	result := collection runningMax: 3. 
 
 	self assert: result equals: {2 . 2 . 3 . 3}.
-
 ]
 
 { #category : #tests }
@@ -131,5 +126,4 @@ CollectionArithmeticTest >> testRunningMin [
 	result := collection runningMin: 3. 
 
 	self assert: result equals: {1 . 1 . 2 . 2}.
-
 ]

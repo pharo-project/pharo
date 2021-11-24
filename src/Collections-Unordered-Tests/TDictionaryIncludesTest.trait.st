@@ -49,10 +49,6 @@ TDictionaryIncludesTest >> testIncludesAssociation [
 	self deny: (self nonEmpty includesAssociation: (keyIn-> self valueNotInNonEmpty )).
 	" testing the case where value is included but not corresponding key :"
 	self deny: (self nonEmpty includesAssociation: (self keyNotInNonEmpty -> valueIn  )).
-
-
-
-
 ]
 
 { #category : #'tests - dictionary including' }

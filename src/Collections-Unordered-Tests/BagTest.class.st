@@ -37,7 +37,7 @@ BagTest >> anotherElementOrAssociationIn [
 { #category : #requirements }
 BagTest >> anotherElementOrAssociationNotIn [
 	" return an element (or an association for Dictionary )not present  in 'collection' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #coverage }
@@ -50,7 +50,6 @@ BagTest >> classToBeTested [
 BagTest >> collection [
 
 	^ nonEmpty.
-	
 ]
 
 { #category : #'tests - set arithmetic' }
@@ -62,19 +61,19 @@ BagTest >> collectionClass [
 
 { #category : #requirements }
 BagTest >> collectionInForIncluding [
-	 ^ collectionIn 
+	 ^ collectionIn
 ]
 
 { #category : #requirements }
 BagTest >> collectionMoreThan5Elements [
 " return a collection including at least 5 elements"
 	
-	^ collectionWithoutNilMoreThan5 
+	^ collectionWithoutNilMoreThan5
 ]
 
 { #category : #requirements }
 BagTest >> collectionNotIncluded [
-	^ collectionNotIn 
+	^ collectionNotIn
 ]
 
 { #category : #requirements }
@@ -106,13 +105,13 @@ BagTest >> collectionWithElementsToRemove [
 
 { #category : #requirements }
 BagTest >> collectionWithEqualElements [
-	^ nonEmpty 
+	^ nonEmpty
 ]
 
 { #category : #requirements }
 BagTest >> collectionWithSortableElements [
 " return a collection elements that can be sorte ( understanding message ' < '  or ' > ')"
-	^ nonEmpty 
+	^ nonEmpty
 ]
 
 { #category : #requirements }
@@ -140,7 +139,7 @@ BagTest >> element [
 { #category : #requirements }
 BagTest >> elementInForIncludesTest [
 
-	^ self element 
+	^ self element
 ]
 
 { #category : #requirements }
@@ -152,7 +151,7 @@ BagTest >> elementInForOccurrences [
 { #category : #requirements }
 BagTest >> elementNotIn [
 
-	^elementNotIn 
+	^elementNotIn
 ]
 
 { #category : #'tests - includes' }
@@ -173,22 +172,20 @@ BagTest >> elementTwiceIn [
 { #category : #requirements }
 BagTest >> elementTwiceInForOccurrences [
 " return an element included exactly two time in # collectionWithEqualElements"
-^ self elementTwiceIn 
+^ self elementTwiceIn
 ]
 
 { #category : #requirements }
 BagTest >> elementsCopyNonIdenticalWithoutEqualElements [
 	" return a collection that does niot incllude equal elements ( classic equality )
 	all elements included are elements for which copy is not identical to the element  "
-	^ collectionOfString 
+	^ collectionOfString
 ]
 
 { #category : #setup }
 BagTest >> empty [
 
 	^ empty
-	
-	
 ]
 
 { #category : #setup }
@@ -205,7 +202,7 @@ BagTest >> expectedSizeAfterReject [
 { #category : #requirements }
 BagTest >> firstCollection [
 " return a collection that will be the first part of the concatenation"
-	^ nonEmpty 
+	^ nonEmpty
 ]
 
 { #category : #requirements }
@@ -217,8 +214,6 @@ BagTest >> integerCollectionWithoutEqualElements [
 BagTest >> nonEmpty [
 
 	^ nonEmpty
-	
-	
 ]
 
 { #category : #requirements }
@@ -230,7 +225,7 @@ BagTest >> nonEmpty1Element [
 { #category : #requirements }
 BagTest >> nonEmptyWithoutEqualElements [
 " return a collection without equal elements "
-	^ otherCollectionWithoutEqualElements 
+	^ otherCollectionWithoutEqualElements
 ]
 
 { #category : #requirements }
@@ -242,13 +237,12 @@ BagTest >> otherCollection [
 BagTest >> result [
 
 	^ collectResult.
-	
 ]
 
 { #category : #requirements }
 BagTest >> secondCollection [
 " return a collection that will be the second part of the concatenation"
-	^ collectionWithCharacters 
+	^ collectionWithCharacters
 ]
 
 { #category : #requirements }
@@ -365,6 +359,22 @@ BagTest >> testAsBag [
 	self assert: aBag asBag equals: aBag
 ]
 
+{ #category : #'tests - as string comma delimiter sequenceable' }
+BagTest >> testAsCommaStringEmpty [
+
+	self assert: self empty asCommaString = ''.
+	self assert: self empty asCommaStringAnd = ''.
+]
+
+{ #category : #'tests - as string comma delimiter sequenceable' }
+BagTest >> testAsCommaStringOne [
+	
+	self nonEmpty1Element do: 
+		[:each | 
+		self assert: each asString =self nonEmpty1Element  asCommaString.
+		self assert: each asString=self nonEmpty1Element  asCommaStringAnd.].
+]
+
 { #category : #'basic tests' }
 BagTest >> testAsDictionary [
 	| aBag aDictonary |
@@ -379,6 +389,15 @@ BagTest >> testAsDictionary [
 	self deny: aBag asDictionary identicalTo: aBag valuesAndCounts
 ]
 
+{ #category : #'tests - converting' }
+BagTest >> testAsIdentitySet [
+	"Test with a collection without equal elements :"
+
+	self 
+		assertSameContents: self collectionWithoutEqualElements
+		whenConvertedTo: IdentitySet
+]
+
 { #category : #'basic tests' }
 BagTest >> testAsSet [
 	| aBag aSet |
@@ -388,6 +407,55 @@ BagTest >> testAsSet [
 	aSet := aBag asSet.
 	self assert: aSet size equals: 2.
 	self assert: (aSet occurrencesOf: 'a') equals: 1
+]
+
+{ #category : #'tests - as sorted collection' }
+BagTest >> testAsSortedCollectionWithSortBlock [
+
+	| result tmp |
+	result := self collectionWithSortableElements  asSortedCollection: [:a :b | a > b ].
+	self assert: (result class includesBehavior: SortedCollection).
+	result do: 
+		[ :each | 
+		self assert: (self collectionWithSortableElements occurrencesOf: each) equals: (result occurrencesOf: each) ].
+	self assert: result size equals: self collectionWithSortableElements  size.
+	tmp:=result at: 1.
+	result do: [:each| self assert: tmp >= each. tmp := each ]
+]
+
+{ #category : #'tests - as string comma delimiter sequenceable' }
+BagTest >> testAsStringOnDelimiterEmpty [
+	self assert: (String streamContents: [ :emptyStream | self empty asStringOn: emptyStream delimiter: ', ' ]) equals: ''
+]
+
+{ #category : #'tests - as string comma delimiter sequenceable' }
+BagTest >> testAsStringOnDelimiterLastOne [
+
+	| delim oneItemStream result |
+	
+	delim := ', '.
+	result:=''.
+	oneItemStream := ReadWriteStream on: result.
+	self nonEmpty1Element  asStringOn: oneItemStream delimiter: delim last: 'and'.
+	oneItemStream  do:
+		[:each1 |
+		self nonEmpty1Element do: [:each2 |self assert: each1 = (each2 asString) ]
+		 ].
+]
+
+{ #category : #'tests - as string comma delimiter sequenceable' }
+BagTest >> testAsStringOnDelimiterOne [
+
+	| delim oneItemStream result |
+
+	delim := ', '.
+	result:=''.
+	oneItemStream := ReadWriteStream on: result.
+	self nonEmpty1Element  asStringOn: oneItemStream delimiter: delim.
+	oneItemStream  do:
+		[:each1 |
+		self nonEmpty1Element do: [:each2 |self assert: each1 = (each2 asString) ]
+		 ].
 ]
 
 { #category : #'basic tests' }
@@ -402,9 +470,32 @@ BagTest >> testCopy [
 	self assert: newBag asSet size equals: 2
 ]
 
+{ #category : #'tests - copy - clone' }
+BagTest >> testCopyCreatesNewObject [
+	 
+	
+	| copy | 
+	copy := self nonEmpty copy.
+	self deny: self nonEmpty == copy.
+]
+
+{ #category : #'tests - copy' }
+BagTest >> testCopyNonEmptyWithout [
+	
+	| res anElementOfTheCollection |
+	anElementOfTheCollection :=  self nonEmpty anyOne.
+	res := (self nonEmpty copyWithout: anElementOfTheCollection).
+	"here we do not test the size since for a non empty set we would get a problem.
+	Then in addition copy is not about duplicate management. The element should 
+	be in at the end."
+	self deny: (res includes: anElementOfTheCollection).
+	self nonEmpty do:
+		[:each | (each = anElementOfTheCollection) 
+					ifFalse: [self assert: (res includes: each)]]
+]
+
 { #category : #'tests - copy' }
 BagTest >> testCopyNonEmptyWithoutAllNotIncluded [
-	
 ]
 
 { #category : #tests }
@@ -454,6 +545,13 @@ BagTest >> testEqual [
 	self assert: bag1 equals: bag2
 ]
 
+{ #category : #'tests - equality' }
+BagTest >> testEqualSignOfIdenticalCollectionObjects [
+	
+	self assert: self empty equals: self empty. 
+	self assert: self nonEmpty equals: self nonEmpty
+]
+
 { #category : #tests }
 BagTest >> testFlatCollect [
 	| bag |
@@ -480,11 +578,32 @@ BagTest >> testIdentityIncludes [
 ]
 
 { #category : #'tests - includes' }
+BagTest >> testIdentityIncludesNonSpecificComportement [
+	"Test the same comportement than #includes:"
+	
+	| collection |	
+	collection := self nonEmpty.
+	
+	self deny: (collection identityIncludes: self elementNotIn).
+	self assert: (collection identityIncludes: collection anyOne)
+]
+
+{ #category : #'tests - includes' }
 BagTest >> testIncludesElementIsNotThere [
 	
 	self deny: (self nonEmpty includes: self elementNotInForOccurrences).
 	self assert: (self nonEmpty includes: self nonEmpty anyOne).
 	self deny: (self empty includes: self elementNotInForOccurrences)
+]
+
+{ #category : #'tests - set arithmetic' }
+BagTest >> testIntersectionItself [
+	
+	| result |
+	result := self collectionWithoutEqualElements intersection: self collectionWithoutEqualElements.
+	self assert: result size equals: self collectionWithoutEqualElements size.
+	self collectionWithoutEqualElements do: [ :each|
+		self assert: (result includes: each) ].
 ]
 
 { #category : #'basic tests' }
@@ -503,6 +622,16 @@ BagTest >> testOccurrencesOf [
 	self assert: (aBag occurrencesOf: nil) equals: 0.
 	aBag add: nil.
 	self assert: (aBag occurrencesOf: nil) equals: 1.
+]
+
+{ #category : #'tests - occurrencesOf for multipliness' }
+BagTest >> testOccurrencesOfForMultipliness [
+
+	| collection elem |
+	collection := self collectionWithEqualElements.
+	elem := self elementTwiceInForOccurrences.
+
+	self assert: (collection occurrencesOf: elem ) equals: 2.
 ]
 
 { #category : #tests }
@@ -581,6 +710,44 @@ BagTest >> testSortedElements [
 	self assert: sortedElements first equals: ('1'->10).
 	self assert: sortedElements second equals: ('2'->1).
 	self assert: sortedElements third equals: ('3'->5)
+]
+
+{ #category : #'tests - adding' }
+BagTest >> testTAdd [
+	| added collection |
+	collection := self otherCollection.
+	added := collection add: self element.
+	
+	self assert: added == self element.	"test for identiy because #add: has not reason to copy its parameter."
+	self assert: (collection includes: self element)	.
+	self assert: (self collectionWithElement includes: self element).
+]
+
+{ #category : #'tests - adding' }
+BagTest >> testTAddIfNotPresentWithNewElement [
+
+	| added oldSize collection elem |
+	collection := self otherCollection.
+	oldSize := collection size.
+	elem := self element.
+	self deny: (collection includes: elem ).
+	
+	added := collection  addIfNotPresent: elem .
+	self assert: added == elem . "test for identiy because #add: has not reason to copy its parameter."
+	self assert: collection size equals: (oldSize + 1).
+]
+
+{ #category : #'tests - creation' }
+BagTest >> testWithWith [
+	
+	| aCol collection element1 element2 |
+	collection := self collectionMoreThan5Elements asOrderedCollection copyFrom: 1 to: 2.
+	element1 := collection at: 1.
+	element2 := collection at: 2.
+	
+	aCol := self collectionClass with: element1  with: element2 .
+	self assert: (aCol occurrencesOf: element1 ) equals: (collection occurrencesOf: element1).
+	self assert: (aCol occurrencesOf: element2 ) equals: (collection occurrencesOf: element2)
 ]
 
 { #category : #requirements }

@@ -142,7 +142,6 @@ OrderedCollection class >> ofSize: n [
 	collection := self new: n.
 	collection setContents: (collection collector).
 	^ collection
-
 ]
 
 { #category : #accessing }
@@ -284,7 +283,7 @@ OrderedCollection >> asArray [
 OrderedCollection >> asOrderedCollection [ 
 
 	self species == OrderedCollection ifTrue: [ ^self ].
-	^super asOrderedCollection 
+	^super asOrderedCollection
 ]
 
 { #category : #accessing }
@@ -368,7 +367,6 @@ OrderedCollection >> collect: aBlock from: fromIndex to: toIndex [
 	firstIndex + fromIndex - 1 to: firstIndex + toIndex - 1 do:
 		[:index | result addLast: (aBlock value: (array at: index))].
 	^ result
-
 ]
 
 { #category : #enumerating }
@@ -841,8 +839,6 @@ OrderedCollection >> reversed [
 	self reverseDo:
 		[:elem | newCol addLast: elem].
 	^ newCol
-
-
 ]
 
 { #category : #enumerating }

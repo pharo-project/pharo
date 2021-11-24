@@ -44,7 +44,7 @@ DecoratorStream >> nextPut: anObject [
 	receiver. Answer anObject."
 	
 	decoratedStream nextPut: anObject.
-	^anObject 
+	^anObject
 ]
 
 { #category : #'initialize - release' }

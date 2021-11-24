@@ -34,7 +34,15 @@ StackTest >> setUp [
 	nonEmpty push: -2.
 	nonEmpty push: 3.
 	nonEmpty push: 1.
+]
+
+{ #category : #'tests - copy - clone' }
+StackTest >> testCopyCreatesNewObject [
+	 
 	
+	| copy | 
+	copy := self nonEmpty copy.
+	self deny: self nonEmpty == copy.
 ]
 
 { #category : #tests }

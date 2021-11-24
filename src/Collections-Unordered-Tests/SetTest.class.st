@@ -40,7 +40,7 @@ SetTest >> anotherElementOrAssociationIn [
 { #category : #requirements }
 SetTest >> anotherElementOrAssociationNotIn [
 	" return an element (or an association for Dictionary )not present  in 'collection' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #coverage }
@@ -64,19 +64,19 @@ SetTest >> collectionClass [
 
 { #category : #requirements }
 SetTest >> collectionInForIncluding [
-	^ collectionIncluded 
+	^ collectionIncluded
 ]
 
 { #category : #requirements }
 SetTest >> collectionMoreThan5Elements [
 " return a collection including at least 5 elements"
 	
-	^ collection5Elements 
+	^ collection5Elements
 ]
 
 { #category : #requirements }
 SetTest >> collectionNotIncluded [
-	^ self classToBeTested  with: elementNotIn. 
+	^ self classToBeTested  with: elementNotIn.
 ]
 
 { #category : #requirements }
@@ -92,31 +92,31 @@ SetTest >> collectionWithElement [
 
 { #category : #requirements }
 SetTest >> collectionWithElementsToRemove [
-	^ collectionIncluded 
+	^ collectionIncluded
 ]
 
 { #category : #requirements }
 SetTest >> collectionWithSortableElements [
 " return a collection elements that can be sorte ( understanding message ' < '  or ' > ')"
-	^collectionOfFloat 
+	^collectionOfFloat
 ]
 
 { #category : #requirements }
 SetTest >> collectionWithoutElement [
 	" return a collection that does not include 'element' "
-	^ collectionWith3Elements  
+	^ collectionWith3Elements
 ]
 
 { #category : #requirements }
 SetTest >> collectionWithoutEqualElements [
 " return a collection without equal elements"
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
 SetTest >> collectionWithoutNilElements [
 " return a collection that doesn't includes a nil element  and that doesn't includes equal elements'"
-	^ collectionWith3Elements  
+	^ collectionWith3Elements
 ]
 
 { #category : #requirements }
@@ -132,7 +132,7 @@ SetTest >> elementInForIncludesTest [
 
 { #category : #ambiguous }
 SetTest >> elementNotIn [
-	^elementNotIn 
+	^elementNotIn
 ]
 
 { #category : #'tests - includes' }
@@ -165,13 +165,13 @@ SetTest >> expectedSizeAfterReject [
 { #category : #requirements }
 SetTest >> firstCollection [
 " return a collection that will be the first part of the concatenation"
-	^ nonEmpty1element 
+	^ nonEmpty1element
 ]
 
 { #category : #requirements }
 SetTest >> integerCollectionWithoutEqualElements [
 " return a collection of integer without equal elements"
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #'tests - empty' }
@@ -183,13 +183,13 @@ SetTest >> nonEmpty [
 { #category : #requirements }
 SetTest >> nonEmpty1Element [
 " return a collection of size 1 including one element"
-	^ nonEmpty1element 
+	^ nonEmpty1element
 ]
 
 { #category : #requirements }
 SetTest >> nonEmptyWithoutEqualElements [
 " return a collection without equal elements "
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
@@ -201,14 +201,13 @@ SetTest >> result [
 { #category : #requirements }
 SetTest >> secondCollection [
 " return a collection that will be the second part of the concatenation"
-	^ collectionWith3Elements  
+	^ collectionWith3Elements
 ]
 
 { #category : #'tests - iterate' }
 SetTest >> selectedNumber [
 
 	^ 2
-	
 ]
 
 { #category : #running }
@@ -283,6 +282,31 @@ SetTest >> testAllowInclusionOfNils [
 	self deny: (set includes: nil)
 ]
 
+{ #category : #'tests - as string comma delimiter sequenceable' }
+SetTest >> testAsCommaStringEmpty [
+
+	self assert: self empty asCommaString = ''.
+	self assert: self empty asCommaStringAnd = ''.
+]
+
+{ #category : #'tests - as string comma delimiter sequenceable' }
+SetTest >> testAsCommaStringOne [
+	
+	self nonEmpty1Element do: 
+		[:each | 
+		self assert: each asString =self nonEmpty1Element  asCommaString.
+		self assert: each asString=self nonEmpty1Element  asCommaStringAnd.].
+]
+
+{ #category : #'tests - converting' }
+SetTest >> testAsIdentitySet [
+	"Test with a collection without equal elements :"
+
+	self 
+		assertSameContents: self collectionWithoutEqualElements
+		whenConvertedTo: IdentitySet
+]
+
 { #category : #'tests - some' }
 SetTest >> testAsSet [
 	"could be moved in Array or Collection"
@@ -291,6 +315,55 @@ SetTest >> testAsSet [
 	newFull := #(1 2 3) asSet.
 	newFull add: 4.
 	self assert: newFull equals: full
+]
+
+{ #category : #'tests - as sorted collection' }
+SetTest >> testAsSortedCollectionWithSortBlock [
+
+	| result tmp |
+	result := self collectionWithSortableElements  asSortedCollection: [:a :b | a > b ].
+	self assert: (result class includesBehavior: SortedCollection).
+	result do: 
+		[ :each | 
+		self assert: (self collectionWithSortableElements occurrencesOf: each) equals: (result occurrencesOf: each) ].
+	self assert: result size equals: self collectionWithSortableElements  size.
+	tmp:=result at: 1.
+	result do: [:each| self assert: tmp >= each. tmp := each ]
+]
+
+{ #category : #'tests - as string comma delimiter sequenceable' }
+SetTest >> testAsStringOnDelimiterEmpty [
+	self assert: (String streamContents: [ :emptyStream | self empty asStringOn: emptyStream delimiter: ', ' ]) equals: ''
+]
+
+{ #category : #'tests - as string comma delimiter sequenceable' }
+SetTest >> testAsStringOnDelimiterLastOne [
+
+	| delim oneItemStream result |
+	
+	delim := ', '.
+	result:=''.
+	oneItemStream := ReadWriteStream on: result.
+	self nonEmpty1Element  asStringOn: oneItemStream delimiter: delim last: 'and'.
+	oneItemStream  do:
+		[:each1 |
+		self nonEmpty1Element do: [:each2 |self assert: each1 = (each2 asString) ]
+		 ].
+]
+
+{ #category : #'tests - as string comma delimiter sequenceable' }
+SetTest >> testAsStringOnDelimiterOne [
+
+	| delim oneItemStream result |
+
+	delim := ', '.
+	result:=''.
+	oneItemStream := ReadWriteStream on: result.
+	self nonEmpty1Element  asStringOn: oneItemStream delimiter: delim.
+	oneItemStream  do:
+		[:each1 |
+		self nonEmpty1Element do: [:each2 |self assert: each1 = (each2 asString) ]
+		 ].
 ]
 
 { #category : #'tests - iterating' }
@@ -321,6 +394,18 @@ SetTest >> testCollect2 [
 				yourself)
 ]
 
+{ #category : #'tests - concatenation' }
+SetTest >> testConcatenation [
+
+| collection1 collection2 result |
+collection1 := self firstCollection .
+collection2 := self secondCollection .
+result := collection1 , collection2.
+
+collection1 do:[ :each | self assert: (result includes: each)].
+collection2 do:[ :each | self assert: (result includes: each)].
+]
+
 { #category : #'tests - some' }
 SetTest >> testCopy [
 	| newFull |
@@ -332,9 +417,32 @@ SetTest >> testCopy [
 	self assertEmpty: (newFull select: [ :each | (full includes: each) not ])
 ]
 
+{ #category : #'tests - copy - clone' }
+SetTest >> testCopyCreatesNewObject [
+	 
+	
+	| copy | 
+	copy := self nonEmpty copy.
+	self deny: self nonEmpty == copy.
+]
+
+{ #category : #'tests - copy' }
+SetTest >> testCopyNonEmptyWithout [
+	
+	| res anElementOfTheCollection |
+	anElementOfTheCollection :=  self nonEmpty anyOne.
+	res := (self nonEmpty copyWithout: anElementOfTheCollection).
+	"here we do not test the size since for a non empty set we would get a problem.
+	Then in addition copy is not about duplicate management. The element should 
+	be in at the end."
+	self deny: (res includes: anElementOfTheCollection).
+	self nonEmpty do:
+		[:each | (each = anElementOfTheCollection) 
+					ifFalse: [self assert: (res includes: each)]]
+]
+
 { #category : #'tests - copy' }
 SetTest >> testCopyNonEmptyWithoutAllNotIncluded [
-	
 ]
 
 { #category : #'tests - some' }
@@ -364,6 +472,13 @@ SetTest >> testDoWithoutNoDuplicates [
 	res := self speciesClass new.
 	self collection do: [ :each | res add: each ] without: -2.
 	self assert: res size equals: self doWithoutNumber
+]
+
+{ #category : #'tests - equality' }
+SetTest >> testEqualSignOfIdenticalCollectionObjects [
+	
+	self assert: self empty equals: self empty. 
+	self assert: self nonEmpty equals: self nonEmpty
 ]
 
 { #category : #'tests - enumerating' }
@@ -396,11 +511,21 @@ SetTest >> testIdentityIncludes [
 	self deny: (collection identityIncludes: element)
 ]
 
+{ #category : #'tests - includes' }
+SetTest >> testIdentityIncludesNonSpecificComportement [
+	"Test the same comportement than #includes:"
+	
+	| collection |	
+	collection := self nonEmpty.
+	
+	self deny: (collection identityIncludes: self elementNotIn).
+	self assert: (collection identityIncludes: collection anyOne)
+]
+
 { #category : #'tests - sunit original tests' }
 SetTest >> testIllegal [
 	self should: [empty at: 5] raise: self defaultTestError.
 	self should: [empty at: 5 put: #abc] raise: self defaultTestError.
-			
 ]
 
 { #category : #'tests - sunit original tests' }
@@ -408,7 +533,6 @@ SetTest >> testIncludes [
 	self assert: (full includes: 4).
 	self assert: (full includes: 3).
 	self deny: (full includes: 6).
-			
 ]
 
 { #category : #'tests - includes' }
@@ -438,6 +562,16 @@ SetTest >> testIntersection [
 		add: 7.
 	col := newFull intersection: full.
 	self assert: (full select: [ :each | newFull includes: each ]) equals: col
+]
+
+{ #category : #'tests - set arithmetic' }
+SetTest >> testIntersectionItself [
+	
+	| result |
+	result := self collectionWithoutEqualElements intersection: self collectionWithoutEqualElements.
+	self assert: result size equals: self collectionWithoutEqualElements size.
+	self collectionWithoutEqualElements do: [ :each|
+		self assert: (result includes: each) ].
 ]
 
 { #category : #'tests - integrity' }
@@ -521,9 +655,6 @@ SetTest >> testRemoveIfAbsent [
 		
 	self assert: (full remove: 8 ifAbsent: [true]).
 	self assert: (full remove: 4 ifAbsent: [false]) isNumber.
-	
-	
-	
 ]
 
 { #category : #'tests - integrity' }
@@ -569,4 +700,17 @@ SetTest >> testUnion [
 	newCol := full copy.
 	newCol remove: 9.
 	self assert: (col select: [ :each | (newFull includes: each) not ]) equals: newCol
+]
+
+{ #category : #'tests - creation' }
+SetTest >> testWithWith [
+	
+	| aCol collection element1 element2 |
+	collection := self collectionMoreThan5Elements asOrderedCollection copyFrom: 1 to: 2.
+	element1 := collection at: 1.
+	element2 := collection at: 2.
+	
+	aCol := self collectionClass with: element1  with: element2 .
+	self assert: (aCol occurrencesOf: element1 ) equals: (collection occurrencesOf: element1).
+	self assert: (aCol occurrencesOf: element2 ) equals: (collection occurrencesOf: element2)
 ]

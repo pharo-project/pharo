@@ -34,7 +34,7 @@ Class {
 SortedCollectionTest >> accessCollection [
 	"Return a collection of size 5"
 	
-	^accessCollection 
+	^accessCollection
 ]
 
 { #category : #requirements }
@@ -55,7 +55,7 @@ SortedCollectionTest >> anotherElementOrAssociationIn [
 SortedCollectionTest >> anotherElementOrAssociationNotIn [
 	"Return an element (or an association for Dictionary )not present  in 'collection' "
 
-	^ elementNoteIn 
+	^ elementNoteIn
 ]
 
 { #category : #coverage }
@@ -81,49 +81,49 @@ SortedCollectionTest >> collectionClass [
 SortedCollectionTest >> collectionMoreThan1NoDuplicates [
 	"Return a collection of size 5 without equal elements"
 	
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> collectionMoreThan5Elements [
 	"Return a collection including at least 5 elements"
 	
-	^ nonEmpty5Elements 
+	^ nonEmpty5Elements
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> collectionNotIncluded [
 	"Return a collection for wich each element is not included in 'nonEmpty' "
 	
-	^ collectionNotIncluded 
+	^ collectionNotIncluded
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> collectionOfSize5 [
 	"Return a collection of size 5"
 	
-	^ accessCollection 
+	^ accessCollection
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> collectionWith1TimeSubcollection [
 	"Return a collection including 'oldSubCollection' only one time."
 	
-	^ (SortedCollection new add: elementNoteIn ; yourself) , self oldSubCollection 
+	^ (SortedCollection new add: elementNoteIn ; yourself) , self oldSubCollection
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> collectionWith2TimeSubcollection [
 	"Return a collection including 'oldSubCollection' two or many time."
 	
-	^ (SortedCollection  new add: elementNoteIn ; yourself) , self oldSubCollection , self oldSubCollection  
+	^ (SortedCollection  new add: elementNoteIn ; yourself) , self oldSubCollection , self oldSubCollection
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> collectionWith5Elements [
 	"Return a collection of size 5 including 5 elements"
 	
-	^ accessCollection 
+	^ accessCollection
 ]
 
 { #category : #requirements }
@@ -144,14 +144,14 @@ SortedCollectionTest >> collectionWithElement [
 SortedCollectionTest >> collectionWithElementsToRemove [
 	"Return a collection of elements included in 'nonEmpty'."
 
-	^ collectionIncluded 
+	^ collectionIncluded
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> collectionWithEqualElements [
 	"Return a collection including atLeast two elements equal."
 
-	^ collectionOfFloatWithDuplicate 
+	^ collectionOfFloatWithDuplicate
 ]
 
 { #category : #requirements }
@@ -159,35 +159,35 @@ SortedCollectionTest >> collectionWithNonIdentitySameAtEndAndBegining [
 	"Return a collection with elements at end and begining equals only with classic equality (they are not the same object).
 (others elements of the collection are not equal to those elements)"
 
-	^ stringCollectionSameEndAndBegining 
+	^ stringCollectionSameEndAndBegining
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> collectionWithSameAtEndAndBegining [
 	"Return a collection with elements at end and begining equals (others elements of the collection are not equal to those elements)"
 	
-	^ stringCollectionSameEndAndBegining 
+	^ stringCollectionSameEndAndBegining
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> collectionWithSortableElements [
 	"Return a collection elements that can be sorted ( understanding message ' < '  or ' > ')"
 	
-	^ collectionOfString 
+	^ collectionOfString
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> collectionWithoutEqualElements [
 	"Return a collection not including equal elements."
 	
-	^withoutEqualElements 
+	^withoutEqualElements
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> collectionWithoutNilElements [
 	"Return a collection that doesn't includes a nil element  and that doesn't includes equal elements'"
 	
-	^ collectionWithoutNil  
+	^ collectionWithoutNil
 ]
 
 { #category : #requirements }
@@ -215,7 +215,7 @@ SortedCollectionTest >> elementInForElementAccessing [
 SortedCollectionTest >> elementInForIncludesTest [
 	"Return an element included in nonEmpty."
 	
-	^ nonEmpty anyOne 
+	^ nonEmpty anyOne
 ]
 
 { #category : #requirements }
@@ -229,21 +229,21 @@ SortedCollectionTest >> elementInForIndexAccessing [
 SortedCollectionTest >> elementNotIn [
 	"Return an element not included in 'nonEmpty' "
 
-	^ elementNoteIn 
+	^ elementNoteIn
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> elementNotInForElementAccessing [
 	"Return an element not included in 'accessCollection' "
 	
-	^ elementNoteIn 
+	^ elementNoteIn
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> elementNotInForIndexAccessing [
 	"Return an element not included in 'accessCollection' "
 	
-	^ elementNoteIn  	
+	^ elementNoteIn
 ]
 
 { #category : #requirements }
@@ -263,7 +263,7 @@ SortedCollectionTest >> elementToAdd [
 SortedCollectionTest >> elementTwiceInForOccurrences [
 	"Return an element included exactly two time in # collectionWithEqualElements."
 	
-	^ duplicateFloat 
+	^ duplicateFloat
 ]
 
 { #category : #requirements }
@@ -303,28 +303,28 @@ SortedCollectionTest >> indexInNonEmpty [
 SortedCollectionTest >> integerCollection [
 	"Return a collection only including SmallInteger elements."
 	
-	^ accessCollection 
+	^ accessCollection
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> integerCollectionWithoutEqualElements [
 	"Return a collection of integer without equal elements."
 	
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> moreThan3Elements [
 	"Return a collection including atLeast 3 elements."
 	
-	^ accessCollection 
+	^ accessCollection
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> moreThan4Elements [
 	"Return a collection including at leat 4 elements"
 	
-	^ accessCollection 
+	^ accessCollection
 ]
 
 { #category : #requirements }
@@ -337,7 +337,7 @@ SortedCollectionTest >> nonEmpty [
 SortedCollectionTest >> nonEmpty1Element [
 	"Return a collection of size 1 including one element."
 	
-	^ nonEmpty1Element 
+	^ nonEmpty1Element
 ]
 
 { #category : #requirements }
@@ -351,7 +351,7 @@ SortedCollectionTest >> nonEmptyMoreThan1Element [
 SortedCollectionTest >> nonEmptyWithoutEqualElements [
 	"Return a collection without equal elements."
 	
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
@@ -359,7 +359,7 @@ SortedCollectionTest >> oldSubCollection [
 	"Return a subCollection included in collectionWith1TimeSubcollection.
 	 Example:   subCollection := #( 2 3 4) and collectionWith1TimeSubcollection := #(1 2 3 4 5)"
 
-	^ oldSubcollection 
+	^ oldSubcollection
 ]
 
 { #category : #requirements }
@@ -377,7 +377,7 @@ SortedCollectionTest >> otherCollection [
 SortedCollectionTest >> replacementCollection [
 	"Return a collection that will be used to replace 'oldSubcollection' in ' collectionWith1TimeSubcollection' "
 	 
-	^ collectionWith4Elements  
+	^ collectionWith4Elements
 ]
 
 { #category : #requirements }
@@ -425,7 +425,7 @@ SortedCollectionTest >> setUp [
 { #category : #requirements }
 SortedCollectionTest >> sizeCollection [
 
-	^ collectionWith4Elements 
+	^ collectionWith4Elements
 ]
 
 { #category : #requirements }
@@ -472,7 +472,6 @@ SortedCollectionTest >> testAdd [
 	self assert: (collection at: 5) equals: 5.
 	self assert: collection size equals: 10.
 	collection add: 3
-	
 ]
 
 { #category : #'tests - basic' }
@@ -486,7 +485,6 @@ SortedCollectionTest >> testAddAll [
 	sorted := SortedCollection new.
 	sorted addAll: sorted2.
 	self assert: (sorted hasEqualElements: sorted2)
-	 
 ]
 
 { #category : #'tests - basic' }
@@ -500,7 +498,97 @@ SortedCollectionTest >> testAddAll2 [
 	sorted addAll: sorted2.
 	self assert: sorted size equals: (sorted2 size + 1).
 	sorted2 do: [ :each | self assert: (sorted includes: each)]
-	 
+]
+
+{ #category : #'tests - as string comma delimiter sequenceable' }
+SortedCollectionTest >> testAsCommaStringEmpty [
+
+	self assert: self empty asCommaString = ''.
+	self assert: self empty asCommaStringAnd = ''
+]
+
+{ #category : #'tests - comma and delimiter' }
+SortedCollectionTest >> testAsCommaStringOne [
+	
+	"self assert: self oneItemCol asCommaString = '1'.
+	self assert: self oneItemCol asCommaStringAnd = '1'."
+
+	self assert: self nonEmpty1Element asCommaString = (self nonEmpty1Element first asString).
+	self assert: self nonEmpty1Element asCommaStringAnd = (self nonEmpty1Element first asString)
+]
+
+{ #category : #'tests - converting' }
+SortedCollectionTest >> testAsIdentitySet [
+	"Test with a collection without equal elements :"
+
+	self 
+		assertSameContents: self collectionWithoutEqualElements
+		whenConvertedTo: IdentitySet
+]
+
+{ #category : #'tests - converting' }
+SortedCollectionTest >> testAsSet [
+ 	"Test with a collection without equal elements"
+	
+	self assertSameContents: self collectionWithoutEqualElements whenConvertedTo: Set
+]
+
+{ #category : #'tests - as sorted collection' }
+SortedCollectionTest >> testAsSortedCollectionWithSortBlock [
+
+	| result tmp |
+	result := self collectionWithSortableElements  asSortedCollection: [:a :b | a > b ].
+	self assert: (result class includesBehavior: SortedCollection).
+	result do: 
+		[ :each | 
+		self assert: (self collectionWithSortableElements occurrencesOf: each) equals: (result occurrencesOf: each) ].
+	self assert: result size equals: self collectionWithSortableElements  size.
+	tmp:=result at: 1.
+	result do: [:each| self assert: tmp >= each. tmp := each ]
+]
+
+{ #category : #'tests - comma and delimiter' }
+SortedCollectionTest >> testAsStringOnDelimiterLastMore [
+
+	| delim multiItemStream result last allElementsAsString |
+	
+	delim := ', '.
+	last := ' and '.
+	result:=''.
+	multiItemStream := ReadWriteStream on:result.
+	self nonEmpty  asStringOn: multiItemStream delimiter: delim last: last.
+	result := multiItemStream contents.
+	allElementsAsString:=(result findBetweenSubstrings: delim ).
+	1 to: allElementsAsString size do:
+		[:i | 
+		i<(allElementsAsString size-1 )
+			ifTrue: [self assert: (allElementsAsString at:i)=((self nonEmpty at:i)asString)].
+		i=(allElementsAsString size-1)
+			ifTrue:[ self deny: (allElementsAsString at:i)=(last)asString].
+		i=(allElementsAsString size)
+			ifTrue: [self assert: (allElementsAsString at:i)=((self nonEmpty at:(i-1))asString)]]
+]
+
+{ #category : #'tests - comma and delimiter' }
+SortedCollectionTest >> testAsStringOnDelimiterLastOne [
+
+	| delim oneItemStream result |	
+	delim := ', '.
+	result:=''.
+	oneItemStream := ReadWriteStream on: result.
+	self nonEmpty1Element  asStringOn: oneItemStream delimiter: delim last: 'and'.
+	oneItemStream do:[:each | self assert: each = (self nonEmpty1Element first asString)]
+]
+
+{ #category : #'tests - comma and delimiter' }
+SortedCollectionTest >> testAsStringOnDelimiterOne [
+
+	| delim oneItemStream result |
+	delim := ', '.
+	result := ''.
+	oneItemStream := ReadWriteStream on: result.
+	self nonEmpty1Element  asStringOn: oneItemStream delimiter: delim.
+	oneItemStream do:[:each | self assert: each = (self nonEmpty1Element first asString)]
 ]
 
 { #category : #'tests - basic' }
@@ -518,7 +606,6 @@ SortedCollectionTest >> testCollect [
 	
 	aSortedCollection := (1 to: 5) asSortedCollection.
 	self assert: result equals: (aSortedCollection collect: [:each | each < 4])
-	
 ]
 
 { #category : #tests }
@@ -551,13 +638,70 @@ SortedCollectionTest >> testCopy [
 	self assert: copySorted first equals: 'brochet'
 ]
 
+{ #category : #'tests - copy' }
+SortedCollectionTest >> testCopyNonEmptyWithout [
+	
+	| res anElementOfTheCollection |
+	anElementOfTheCollection :=  self nonEmpty anyOne.
+	res := (self nonEmpty copyWithout: anElementOfTheCollection).
+	"here we do not test the size since for a non empty set we would get a problem.
+	Then in addition copy is not about duplicate management. The element should 
+	be in at the end."
+	self deny: (res includes: anElementOfTheCollection).
+	self nonEmpty do:
+		[:each | (each = anElementOfTheCollection) 
+					ifFalse: [self assert: (res includes: each)]]
+]
+
+{ #category : #'tests - copying part of sequenceable' }
+SortedCollectionTest >> testCopyUpTo [
+
+	| result index collection |
+	collection := self collectionWithoutEqualElements.
+	index:= self indexInForCollectionWithoutDuplicates.
+	result := collection   copyUpTo: (collection  at:index).
+	
+	"Verify content"
+	result withIndexDo: [:el :i| self assert: (collection at:i) equals: (result at:i)].
+	
+	"Verify size"
+	self assert: result size equals: (index-1)
+]
+
+{ #category : #'tests - copying part of sequenceable for multipliness' }
+SortedCollectionTest >> testCopyUpToLastWithDuplicate [
+
+	| result element  collection |
+	collection := self collectionWithSameAtEndAndBegining.
+	element := collection first.
+	
+	"collectionWithSameAtEndAndBegining first and last elements are equals.
+	'copyUpToLast:' should copy until the last occurrence :"
+	result := collection copyUpToLast: (element ).
+	
+	"Verify content"
+	result withIndexDo: 
+		[:el :i | self assert: (result at: i) equals: (collection at: i) ].
+	
+	self assert: result size equals: (collection size - 1)
+]
+
 { #category : #'tests - basic' }
 SortedCollectionTest >> testCreation [
 		
 	| collection |
 	collection := #(10 9 3 6 1 8 7 5 4 2) asSortedCollection.
 	self assert: collection equals: (1 to: 10) asSortedCollection
-	
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+SortedCollectionTest >> testDetectSequenced [
+	"Testing that detect keep the first element returning true for sequenceable collections"
+
+	| element result |
+	element := self nonEmptyMoreThan1Element at: 1.
+	result := self nonEmptyMoreThan1Element  detect: [:each | each notNil ].
+	self assert: result equals: element
 ]
 
 { #category : #'tests - iterate' }
@@ -567,7 +711,21 @@ SortedCollectionTest >> testDo2 [
 	res := self speciesClass sortBlock: [:a :b | a name < b name]..  
 	self collection do: [:each | res add: each class].
 	self assert: res asArray equals: self result asArray
+]
 
+{ #category : #'tests - equality' }
+SortedCollectionTest >> testEqualSignIsTrueForEmptyButNonIdenticalCollections [
+	
+	self assert: self empty equals: self empty copy. 
+	self assert: self empty copy equals: self empty.
+	self assert: self empty copy equals: self empty copy
+]
+
+{ #category : #'tests - equality' }
+SortedCollectionTest >> testEqualSignOfIdenticalCollectionObjects [
+	
+	self assert: self empty equals: self empty. 
+	self assert: self nonEmpty equals: self nonEmpty
 ]
 
 { #category : #'tests - basic' }
@@ -579,6 +737,16 @@ SortedCollectionTest >> testEquals [
 		add: 'truite'; 
 		add: 'brochet'.
 	self assert: aSortedCollection copy equals: aSortedCollection
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+SortedCollectionTest >> testFindFirst [
+
+	| element result |
+	element := self nonEmptyMoreThan1Element at: 1.
+	result := self nonEmptyMoreThan1Element findFirst: [:each | each = element].
+	
+	self assert: result equals: 1
 ]
 
 { #category : #'tests - enumerating' }
@@ -597,8 +765,25 @@ SortedCollectionTest >> testGroupedBySortedCollection [
 	"do we retain the sortblock?"
 	self assert: grouped values first class equals: SortedCollection.
 	self assert: collection sortBlock equals: grouped values first sortBlock.
+]
+
+{ #category : #'tests - equality' }
+SortedCollectionTest >> testHasEqualElementsIsTrueForNonIdenticalButEqualCollections [
+		
+	self assert: (self empty hasEqualElements: self empty copy). 
+	self assert: (self empty copy hasEqualElements: self empty).
+	self assert: (self empty copy hasEqualElements: self empty copy).
+		
+	self assert: (self nonEmpty hasEqualElements: self nonEmpty copy). 
+	self assert: (self nonEmpty copy hasEqualElements: self nonEmpty).
+	self assert: (self nonEmpty copy hasEqualElements: self nonEmpty copy)
+]
+
+{ #category : #'tests - equality' }
+SortedCollectionTest >> testHasEqualElementsOfIdenticalCollectionObjects [
 	
-	
+	self assert: (self empty hasEqualElements: self empty). 
+	self assert: (self nonEmpty hasEqualElements: self nonEmpty)
 ]
 
 { #category : #'tests - includes' }
@@ -612,6 +797,17 @@ SortedCollectionTest >> testIdentityIncludes [
 	collection := self collectionWithCopyNonIdentical.
 	element := collection anyOne copy.	"self assert: (collection includes: element)."
 	self deny: (collection identityIncludes: element)
+]
+
+{ #category : #'tests - includes' }
+SortedCollectionTest >> testIdentityIncludesNonSpecificComportement [
+	"Test the same comportement than #includes:"
+	
+	| collection |	
+	collection := self nonEmpty.
+	
+	self deny: (collection identityIncludes: self elementNotIn).
+	self assert: (collection identityIncludes: collection anyOne)
 ]
 
 { #category : #'tests - index access' }
@@ -732,6 +928,47 @@ SortedCollectionTest >> testIntersection [
 	self assert: intersection asArray equals: { Object . Number }.
 ]
 
+{ #category : #'tests - set arithmetic' }
+SortedCollectionTest >> testIntersectionItself [
+	
+	| result |
+	result := self collectionWithoutEqualElements intersection: self collectionWithoutEqualElements.
+	self assert: result size equals: self collectionWithoutEqualElements size.
+	self collectionWithoutEqualElements do: [ :each|
+		self assert: (result includes: each) ].
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+SortedCollectionTest >> testKeysAndValuesDo [
+	"| result |
+	result:= OrderedCollection new.
+	
+	self nonEmptyMoreThan1Element  keysAndValuesDo: 
+		[:i :value|
+		result add: (value+i)].
+	
+	1 to: result size do:
+		[:i|
+		self assert: (result at:i)=((self nonEmptyMoreThan1Element at:i)+i)]"
+	|  indexes elements |
+	indexes := OrderedCollection new.
+	elements := OrderedCollection new.
+	
+	self nonEmptyMoreThan1Element  keysAndValuesDo: 
+		[:i :value|
+		indexes  add: (i).
+		elements add: value].
+	
+	(1 to: self nonEmptyMoreThan1Element size )do:
+		[ :i |
+		self assert: (indexes at: i) equals: i.
+		self assert: (elements at: i) equals: (self nonEmptyMoreThan1Element at: i).	
+		].
+	
+	self assert: indexes size equals: elements size. 
+	self assert: indexes size equals: self nonEmptyMoreThan1Element size
+]
+
 { #category : #'tests - index access' }
 SortedCollectionTest >> testLastIndexOf [
 	
@@ -768,8 +1005,6 @@ SortedCollectionTest >> testMedianForEvenSizeCollection [
 	|aSortedCollection|
 	aSortedCollection := {1 .2 . 3 . 4 . 5 . 6 } asSortedCollection.
 	self assert: aSortedCollection median equals: 3.5
-	
-	
 ]
 
 { #category : #'tests - basic' }
@@ -786,7 +1021,6 @@ SortedCollectionTest >> testMedianForOddSizeCollection [
 		add: 'carpe'.
 
 	self assert: aSortedCollection median equals: 'porcinet'
-	
 ]
 
 { #category : #'tests - basic' }
@@ -795,6 +1029,24 @@ SortedCollectionTest >> testMedianWithNumbers [
 	| aSortedCollection |
 	aSortedCollection := (1 to: 10) asSortedCollection.
  	self assert: aSortedCollection median equals: 5.5
+]
+
+{ #category : #'tests - occurrencesOf for multipliness' }
+SortedCollectionTest >> testOccurrencesOfForMultipliness [
+
+	| collection elem |
+	collection := self collectionWithEqualElements.
+	elem := self elementTwiceInForOccurrences.
+
+	self assert: (collection occurrencesOf: elem ) equals: 2.
+]
+
+{ #category : #'tests - creation' }
+SortedCollectionTest >> testOfSize [
+	
+	| aCol |
+	aCol := self collectionClass ofSize: 3.
+	self assert: aCol size equals: 3.
 ]
 
 { #category : #'tests - basic' }
@@ -813,6 +1065,23 @@ SortedCollectionTest >> testRemoveAll [
 	
 	c1 add: 13; add: 14.
 	self assert: (c1 first = 14 and: [c1 second = 13]) description: 'the sortBlock has been preserved'
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+SortedCollectionTest >> testReverseWithDo [
+	
+	| firstCollection secondCollection index |
+
+	firstCollection := self nonEmptyMoreThan1Element.
+	secondCollection := firstCollection copy.
+	index := firstCollection size.
+	
+	firstCollection  reverseWith: secondCollection do:
+		[:a :b |
+	
+		self assert: (firstCollection at: index) equals: a. 
+		self assert: (secondCollection at: index) equals: b.
+			(index := index - 1)]
 ]
 
 { #category : #'tests - basic' }
@@ -854,9 +1123,6 @@ SortedCollectionTest >> testSortBlock [
 		add: 'brochet';
 		add: 'tortue'.
 	self assert: aSortedCollection first equals: 'truite'.
-	
-	
-	
 ]
 
 { #category : #'tests - basic' }
@@ -891,6 +1157,110 @@ SortedCollectionTest >> testSpeciesLooseSortBlock [
 
 	" firstThree is now #(1 5 4 3)! "
 	self assert: firstThree asArray equals: #(5 4 3 1) "fails"
+]
+
+{ #category : #'tests - adding' }
+SortedCollectionTest >> testTAdd [
+	| added collection |
+	collection := self otherCollection.
+	added := collection add: self element.
+	
+	self assert: added == self element.	"test for identiy because #add: has not reason to copy its parameter."
+	self assert: (collection includes: self element)	.
+	self assert: (self collectionWithElement includes: self element).
+]
+
+{ #category : #'tests - adding' }
+SortedCollectionTest >> testTAddIfNotPresentWithNewElement [
+
+	| added oldSize collection elem |
+	collection := self otherCollection.
+	oldSize := collection size.
+	elem := self element.
+	self deny: (collection includes: elem ).
+	
+	added := collection  addIfNotPresent: elem .
+	self assert: added == elem . "test for identiy because #add: has not reason to copy its parameter."
+	self assert: collection size equals: (oldSize + 1).
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+SortedCollectionTest >> testWithDo [
+	
+	| firstCollection secondCollection index |
+
+	firstCollection := self nonEmptyMoreThan1Element.
+	secondCollection := firstCollection copy.
+	index := 0.
+	
+	firstCollection  with: secondCollection do:
+		[:a :b |
+		index := index + 1.
+		self assert: (firstCollection at: index) equals:  a. 
+		self assert: (secondCollection at: index) equals: b ]
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+SortedCollectionTest >> testWithIndexCollect [
+	
+	| result index collection |
+	index := 0.
+	collection := self nonEmptyMoreThan1Element .
+	result := collection  withIndexCollect: [:each :i | 
+		self assert: i equals: (index := index + 1).	
+		self assert: i equals: (collection  indexOf: each).
+		each ]. 
+	
+	result withIndexDo: [:el :i | self assert: (result at:i) equals: (collection at: i)].
+	self assert: result size equals: collection size
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+SortedCollectionTest >> testWithIndexDo [
+
+	|  indexes elements |
+	indexes:= OrderedCollection new.
+	elements := OrderedCollection new.
+	
+	self nonEmptyMoreThan1Element withIndexDo: 
+		[:value :i  |
+			indexes  add: (i).
+			elements add: value ].
+	
+	self nonEmptyMoreThan1Element withIndexDo: 
+		[:el :i |
+			self assert: (indexes at: i) equals: i.
+			self assert: (elements at: i) equals: el ].
+	
+	self assert: indexes size equals: elements size. 
+	self assert: indexes size equals: self nonEmptyMoreThan1Element size
+]
+
+{ #category : #'tests - creation' }
+SortedCollectionTest >> testWithWith [
+	
+	| aCol collection element1 element2 |
+	collection := self collectionMoreThan5Elements asOrderedCollection copyFrom: 1 to: 2.
+	element1 := collection at: 1.
+	element2 := collection at: 2.
+	
+	aCol := self collectionClass with: element1  with: element2 .
+	self assert: (aCol occurrencesOf: element1 ) equals: (collection occurrencesOf: element1).
+	self assert: (aCol occurrencesOf: element2 ) equals: (collection occurrencesOf: element2)
+]
+
+{ #category : #'tests - begins ends with' }
+SortedCollectionTest >> testsBeginsWithEmpty [
+	
+	self deny: (self nonEmpty beginsWith:(self empty)).
+	self deny: (self empty beginsWith:(self nonEmpty))
+]
+
+{ #category : #'tests - begins ends with' }
+SortedCollectionTest >> testsEndsWithEmpty [
+	
+	self deny: (self nonEmpty endsWith: self empty).
+	self deny: (self empty endsWith: self nonEmpty)
 ]
 
 { #category : #requirements }

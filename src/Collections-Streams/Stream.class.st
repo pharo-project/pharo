@@ -28,21 +28,19 @@ Stream >> << anObject [
 Stream >> atEnd [
 	"Answer whether the receiver can access any more objects."
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #private }
 Stream >> basicNext [
 
 	^ self next.
-
 ]
 
 { #category : #private }
 Stream >> basicNext: anAmount putAll: aCollection startingAt: startIndex [
 
 	^ self next: anAmount putAll: aCollection startingAt: startIndex.
-
 ]
 
 { #category : #private }
@@ -55,13 +53,12 @@ Stream >> basicNextPut: anObject [
 Stream >> basicNextPutAll: aCollection [ 
 
 	^ self nextPutAll: aCollection.
-
 ]
 
 { #category : #modes }
 Stream >> binary [
 	"do nothing"
-	^self 
+	^self
 ]
 
 { #category : #'open/close' }
@@ -69,7 +66,7 @@ Stream >> close [
 	"Presumably sets the status of the receiver to be closed. This message does 
 	nothing at this level, but is included for FileStream compatibility."
 
-	^self 
+	^self
 ]
 
 { #category : #testing }
@@ -94,7 +91,7 @@ Stream >> do: aBlock [
 
 { #category : #flushing }
 Stream >> flush [
-	"Do nothing by default" 
+	"Do nothing by default"
 ]
 
 { #category : #testing }
@@ -117,7 +114,7 @@ Stream >> localName [
 Stream >> next [
 	"Answer the next object accessible by the receiver."
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -176,7 +173,7 @@ Stream >> nextPut: anObject [
 	"Insert the argument, anObject, as the next object accessible by the 
 	receiver. Answer anObject."
 	
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }

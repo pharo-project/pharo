@@ -65,7 +65,6 @@ ByteArray >> asString [
 ByteArray >> asWideString [
 
 	^ WideString fromByteArray: self.
-
 ]
 
 { #category : #accessing }
@@ -195,7 +194,6 @@ ByteArray >> hexDumpOn: aStream max: maxBytes [
 		aStream cr.
 		self size > maxBytes ifTrue: 
 			[ aStream nextPutAll: '  ... truncated ...'; cr ] ].
-
 ]
 
 { #category : #accessing }
@@ -308,7 +306,6 @@ ByteArray >> replaceFrom: start to: stop with: replacement startingAt: repStart 
 			index := start - 1.
 			[(index := index + 1) <= stop]
 				whileTrue: [self at: index put: (replacement byteAt: repOff + index)]]
-
 ]
 
 { #category : #'platform independent access' }

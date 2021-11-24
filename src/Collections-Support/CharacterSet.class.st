@@ -120,7 +120,6 @@ CharacterSet >> do: aBlock [
 
 	Character allByteCharacters do: [ :c |
 		(self includes: c) ifTrue: [ aBlock value: c ] ]
-
 ]
 
 { #category : #enumerating }

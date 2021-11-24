@@ -43,7 +43,6 @@ TCopySequenceableWithReplacement >> firstIndexesOf: aSubCollection in: collectio
 		 ].
 	
 	^ result.
-	
 ]
 
 { #category : #'tests - fixture' }
@@ -64,7 +63,6 @@ TCopySequenceableWithReplacement >> howMany: aSubCollection in: collection [
 		 ].
 	
 	^ nTime.
-	
 ]
 
 { #category : #requirements }
@@ -125,9 +123,6 @@ TCopySequenceableWithReplacement >> testCopyReplaceAllWith1Occurrence [
 		:i |
 		self assert: (result at: ( endPartIndexResult + i - 1 ) ) = (self collectionWith1TimeSubcollection  at: ( endPartIndexCollection + i - 1 ) ).
 		].
-	
-	
-	
 ]
 
 { #category : #'tests - copying with replacement' }
@@ -195,12 +190,6 @@ TCopySequenceableWithReplacement >> testCopyReplaceFromToWith [
 		:i |
 		self assert: (result at: ( lastIndexOfReplacementCollection  + i  ) ) = (self collectionWith1TimeSubcollection  at: ( lastIndexOfOldSubcollection  + i  ) ).
 		].
-	
-	
-	
-
-	
-	
 ]
 
 { #category : #'tests - copying with replacement' }
@@ -234,10 +223,4 @@ TCopySequenceableWithReplacement >> testCopyReplaceFromToWithInsertion [
 	
 	" verify size: "	
 	self assert: result size=(self collectionWith1TimeSubcollection  size + self replacementCollection size).
-	
-
-	
-
-	
-	
 ]

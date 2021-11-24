@@ -72,7 +72,7 @@ ArrayTest >> anIndex [
 
 { #category : #requirements }
 ArrayTest >> anotherElementNotIn [
-	^ elementNotInForCopy 
+	^ elementNotInForCopy
 ]
 
 { #category : #requirements }
@@ -84,7 +84,7 @@ ArrayTest >> anotherElementOrAssociationIn [
 { #category : #requirements }
 ArrayTest >> anotherElementOrAssociationNotIn [
 	" return an element (or an association for Dictionary )not present  in 'collection' "
-	^ elementNotInForCopy 
+	^ elementNotInForCopy
 ]
 
 { #category : #helpers }
@@ -111,7 +111,7 @@ ArrayTest >> classToBeTested [
 { #category : #initialization }
 ArrayTest >> collection [ 
 
-	^ collectionWith4Elements 
+	^ collectionWith4Elements
 ]
 
 { #category : #'tests - creation' }
@@ -129,14 +129,14 @@ ArrayTest >> collectionInForIncluding [
 { #category : #requirements }
 ArrayTest >> collectionMoreThan1NoDuplicates [
 	" return a collection of size 5 without equal elements"
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
 ArrayTest >> collectionMoreThan5Elements [
 " return a collection including at least 5 elements"
 	
-	^ collection5Elements 
+	^ collection5Elements
 ]
 
 { #category : #requirements }
@@ -161,7 +161,7 @@ ArrayTest >> collectionOfFloat [
 
 { #category : #requirements }
 ArrayTest >> collectionWith1TimeSubcollection [
-	^ (self oldSubCollection copyWithoutFirst),self oldSubCollection,(self oldSubCollection copyWithoutFirst). 
+	^ (self oldSubCollection copyWithoutFirst),self oldSubCollection,(self oldSubCollection copyWithoutFirst).
 ]
 
 { #category : #requirements }
@@ -194,31 +194,31 @@ ArrayTest >> collectionWithEqualElements [
 ArrayTest >> collectionWithNonIdentitySameAtEndAndBegining [
 	" return a collection with elements at end and begining equals only with classic equality (they are not the same object).
 (others elements of the collection are not equal to those elements)"
-	^ stringCollectionWithSameBeginingAnEnd 
+	^ stringCollectionWithSameBeginingAnEnd
 ]
 
 { #category : #requirements }
 ArrayTest >> collectionWithSameAtEndAndBegining [
 " return a collection with elements at end and begining equals .
 (others elements of the collection are not equal to those elements)"
-	^ stringCollectionWithSameBeginingAnEnd 
+	^ stringCollectionWithSameBeginingAnEnd
 ]
 
 { #category : #requirements }
 ArrayTest >> collectionWithSortableElements [
 " return a collection elements that can be sorte ( understanding message ' < '  or ' > ')"
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
 ArrayTest >> collectionWithoutEqualElements [
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
 ArrayTest >> collectionWithoutNilElements [
 " return a collection that doesn't includes a nil element  and that doesn't includes equal elements'"
-	^ collectionWithoutNil  
+	^ collectionWithoutNil
 ]
 
 { #category : #requirements }
@@ -228,7 +228,7 @@ ArrayTest >> elementInCollectionOfFloat [
 
 { #category : #requirements }
 ArrayTest >> elementInForCopy [
-	^ elementInForCopy 
+	^ elementInForCopy
 ]
 
 { #category : #requirements }
@@ -240,12 +240,12 @@ ArrayTest >> elementInForElementAccessing [
 { #category : #requirements }
 ArrayTest >> elementInForIncludesTest [
 
-	^ elementInForCopy 
+	^ elementInForCopy
 ]
 
 { #category : #requirements }
 ArrayTest >> elementInForIndexAccess [
-	^ elementInForCopy 
+	^ elementInForCopy
 ]
 
 { #category : #requirements }
@@ -256,41 +256,41 @@ ArrayTest >> elementInForIndexAccessing [
 
 { #category : #requirements }
 ArrayTest >> elementInForOccurrences [
-	^ elementInForCopy 
+	^ elementInForCopy
 ]
 
 { #category : #requirements }
 ArrayTest >> elementInForReplacement [
-	^ elementInForCopy 
+	^ elementInForCopy
 ]
 
 { #category : #requirements }
 ArrayTest >> elementNotIn [
 "return an element not included in 'nonEmpty' "
 
-	^ elementNotInForCopy 
+	^ elementNotInForCopy
 ]
 
 { #category : #requirements }
 ArrayTest >> elementNotInForCopy [
-	^ elementNotInForCopy 
+	^ elementNotInForCopy
 ]
 
 { #category : #requirements }
 ArrayTest >> elementNotInForElementAccessing [
 " return an element not included in 'accessCollection' "
-	^ elementNotInForCopy 
+	^ elementNotInForCopy
 ]
 
 { #category : #requirements }
 ArrayTest >> elementNotInForIndexAccessing [
 
-	^elementNotInForCopy 
+	^elementNotInForCopy
 ]
 
 { #category : #requirements }
 ArrayTest >> elementNotInForOccurrences [
-	^ elementNotInForCopy 
+	^ elementNotInForCopy
 ]
 
 { #category : #'tests - copying' }
@@ -301,7 +301,7 @@ ArrayTest >> elementToAdd [
 { #category : #requirements }
 ArrayTest >> elementTwiceInForOccurrences [
 " return an element included exactly two time in # collectionWithEqualElements"
-^ duplicateElement 
+^ duplicateElement
 ]
 
 { #category : #requirements }
@@ -323,7 +323,7 @@ ArrayTest >> expectedSizeAfterReject [
 
 { #category : #requirements }
 ArrayTest >> firstCollection [
-	^example1 
+	^example1
 ]
 
 { #category : #requirements }
@@ -334,13 +334,60 @@ ArrayTest >> firstEven [
 
 { #category : #requirements }
 ArrayTest >> firstIndex [
-	^ firstIndex 
+	^ firstIndex
+]
+
+{ #category : #'tests - copying with replacement' }
+ArrayTest >> firstIndexesOf: aSubCollection in: collection [
+" return an OrderedCollection with the first indexes of the occurrences of subCollection in  collection "
+	| tmp result currentIndex |
+	tmp:= collection.
+	result:= OrderedCollection new.
+	currentIndex := 1.
+	
+	[tmp isEmpty ]whileFalse:
+		[
+		(tmp beginsWith: aSubCollection)
+			ifTrue: [ 	
+				result add: currentIndex.
+				1 to: aSubCollection size do: 
+					[:i | 
+					tmp := tmp copyWithoutFirst.
+					currentIndex := currentIndex + 1]
+				]
+			ifFalse: [
+				tmp := tmp copyWithoutFirst.
+				currentIndex := currentIndex +1.
+				]
+		 ].
+	
+	^ result.
 ]
 
 { #category : #requirements }
 ArrayTest >> firstOdd [
 	"Returns the first odd number of #collection"
 	^ 1
+]
+
+{ #category : #'tests - fixture' }
+ArrayTest >> howMany: aSubCollection in: collection [
+" return an integer representing how many time 'subCollection'  appears in 'collection'  "
+	| tmp nTime |
+	tmp := collection.
+	nTime:= 0.
+	
+	[tmp isEmpty ]whileFalse:
+		[
+		(tmp beginsWith: aSubCollection)
+			ifTrue: [ 	
+				nTime := nTime + 1.
+				1 to: aSubCollection size do: [:i | tmp := tmp copyWithoutFirst.]
+				]
+			ifFalse: [tmp := tmp copyWithoutFirst.]
+		 ].
+	
+	^ nTime.
 ]
 
 { #category : #requirements }
@@ -357,7 +404,7 @@ ArrayTest >> indexInForCollectionWithoutDuplicates [
 ArrayTest >> indexInNonEmpty [
 	"Return an index between bounds of 'nonEmpty'"
 	
-	^ 2 
+	^ 2
 ]
 
 { #category : #requirements }
@@ -373,14 +420,14 @@ ArrayTest >> integerCollectionWithoutEqualElements [
 { #category : #requirements }
 ArrayTest >> moreThan3Elements [
 	" return a collection including atLeast 3 elements"
-	^ example1 
+	^ example1
 ]
 
 { #category : #requirements }
 ArrayTest >> moreThan4Elements [
 
 " return a collection including at leat 4 elements"
-	^ example1 
+	^ example1
 ]
 
 { #category : #requirements }
@@ -397,7 +444,7 @@ ArrayTest >> nonEmpty [
 { #category : #requirements }
 ArrayTest >> nonEmpty1Element [
 
-	^ nonEmpty1Element  
+	^ nonEmpty1Element
 ]
 
 { #category : #requirements }
@@ -407,7 +454,7 @@ ArrayTest >> nonEmptyMoreThan1Element [
 
 { #category : #requirements }
 ArrayTest >> oldSubCollection [
-	^oldSubCollection 
+	^oldSubCollection
 ]
 
 { #category : #requirements }
@@ -417,7 +464,7 @@ ArrayTest >> replacementCollection [
 
 { #category : #requirements }
 ArrayTest >> replacementCollectionSameSize [
-	^replacementCollectionSameSize 
+	^replacementCollectionSameSize
 ]
 
 { #category : #initialization }
@@ -428,12 +475,12 @@ ArrayTest >> result [
 
 { #category : #requirements }
 ArrayTest >> secondCollection [
-	^example2 
+	^example2
 ]
 
 { #category : #requirements }
 ArrayTest >> secondIndex [
-	^ secondIndex 
+	^ secondIndex
 ]
 
 { #category : #parameters }
@@ -507,7 +554,6 @@ ArrayTest >> smallerIndex [
 { #category : #requirements }
 ArrayTest >> sortedInAscendingOrderCollection [
 	^sortedInAscendingOrderCollection .
-	
 ]
 
 { #category : #'tests - iterate' }
@@ -519,7 +565,7 @@ ArrayTest >> speciesClass [
 { #category : #requirements }
 ArrayTest >> subCollectionNotIn [
 
-	^subCollectionNotIn 
+	^subCollectionNotIn
 ]
 
 { #category : #'tests - fixture' }
@@ -590,6 +636,126 @@ ArrayTest >> testAsArrayKeepsIdentity [
 	self assert: y identityHash equals: x identityHash
 ]
 
+{ #category : #'tests - as string comma delimiter sequenceable' }
+ArrayTest >> testAsCommaStringEmpty [
+
+	self assert: self empty asCommaString = ''.
+	self assert: self empty asCommaStringAnd = ''
+]
+
+{ #category : #'tests - comma and delimiter' }
+ArrayTest >> testAsCommaStringOne [
+	
+	"self assert: self oneItemCol asCommaString = '1'.
+	self assert: self oneItemCol asCommaStringAnd = '1'."
+
+	self assert: self nonEmpty1Element asCommaString = (self nonEmpty1Element first asString).
+	self assert: self nonEmpty1Element asCommaStringAnd = (self nonEmpty1Element first asString)
+]
+
+{ #category : #'tests - converting' }
+ArrayTest >> testAsIdentitySet [
+	"Test with a collection without equal elements :"
+
+	self 
+		assertSameContents: self collectionWithoutEqualElements
+		whenConvertedTo: IdentitySet
+]
+
+{ #category : #'tests - converting' }
+ArrayTest >> testAsSet [
+ 	"Test with a collection without equal elements"
+	
+	self assertSameContents: self collectionWithoutEqualElements whenConvertedTo: Set
+]
+
+{ #category : #'tests - as sorted collection' }
+ArrayTest >> testAsSortedCollectionWithSortBlock [
+
+	| result tmp |
+	result := self collectionWithSortableElements  asSortedCollection: [:a :b | a > b ].
+	self assert: (result class includesBehavior: SortedCollection).
+	result do: 
+		[ :each | 
+		self assert: (self collectionWithSortableElements occurrencesOf: each) equals: (result occurrencesOf: each) ].
+	self assert: result size equals: self collectionWithSortableElements  size.
+	tmp:=result at: 1.
+	result do: [:each| self assert: tmp >= each. tmp := each ]
+]
+
+{ #category : #'tests - comma and delimiter' }
+ArrayTest >> testAsStringOnDelimiterLastMore [
+
+	| delim multiItemStream result last allElementsAsString |
+	
+	delim := ', '.
+	last := ' and '.
+	result:=''.
+	multiItemStream := ReadWriteStream on:result.
+	self nonEmpty  asStringOn: multiItemStream delimiter: delim last: last.
+	result := multiItemStream contents.
+	allElementsAsString:=(result findBetweenSubstrings: delim ).
+	1 to: allElementsAsString size do:
+		[:i | 
+		i<(allElementsAsString size-1 )
+			ifTrue: [self assert: (allElementsAsString at:i)=((self nonEmpty at:i)asString)].
+		i=(allElementsAsString size-1)
+			ifTrue:[ self deny: (allElementsAsString at:i)=(last)asString].
+		i=(allElementsAsString size)
+			ifTrue: [self assert: (allElementsAsString at:i)=((self nonEmpty at:(i-1))asString)]]
+]
+
+{ #category : #'tests - comma and delimiter' }
+ArrayTest >> testAsStringOnDelimiterLastOne [
+
+	| delim oneItemStream result |	
+	delim := ', '.
+	result:=''.
+	oneItemStream := ReadWriteStream on: result.
+	self nonEmpty1Element  asStringOn: oneItemStream delimiter: delim last: 'and'.
+	oneItemStream do:[:each | self assert: each = (self nonEmpty1Element first asString)]
+]
+
+{ #category : #'tests - comma and delimiter' }
+ArrayTest >> testAsStringOnDelimiterOne [
+
+	| delim oneItemStream result |
+	delim := ', '.
+	result := ''.
+	oneItemStream := ReadWriteStream on: result.
+	self nonEmpty1Element  asStringOn: oneItemStream delimiter: delim.
+	oneItemStream do:[:each | self assert: each = (self nonEmpty1Element first asString)]
+]
+
+{ #category : #'tests - puting with indexes' }
+ArrayTest >> testAtAllIndexesPut [
+	
+	self nonEmpty atAllPut: self aValue.
+	self nonEmpty do:[ :each| self assert: each = self aValue].
+]
+
+{ #category : #'tests - puting with indexes' }
+ArrayTest >> testAtAllPut [
+ 
+	self nonEmpty atAll: self indexArray put: self aValue.
+	
+	self indexArray do:
+		[:i | self assert: (self nonEmpty at: i) equals: self aValue ]
+]
+
+{ #category : #'tests - at put' }
+ArrayTest >> testAtPut [
+	
+	self nonEmpty at: self anIndex put: self aValue.
+	self assert: (self nonEmpty at: self anIndex) = self aValue.
+]
+
+{ #category : #'tests - at put' }
+ArrayTest >> testAtPutOutOfBounds [
+	
+	self should: [self empty at: self anIndex put: self aValue] raise: Error
+]
+
 { #category : #'tests - accessing' }
 ArrayTest >> testAtWrap2 [
 	| tabTest |
@@ -637,9 +803,182 @@ ArrayTest >> testComplexIsSelfEvaluating [
 	self assert: restoredArray equals: complexArray
 ]
 
+{ #category : #'tests - copy - clone' }
+ArrayTest >> testCopyCreatesNewObject [
+	 
+	
+	| copy | 
+	copy := self nonEmpty copy.
+	self deny: self nonEmpty == copy.
+]
+
+{ #category : #'tests - copy' }
+ArrayTest >> testCopyNonEmptyWithout [
+	
+	| res anElementOfTheCollection |
+	anElementOfTheCollection :=  self nonEmpty anyOne.
+	res := (self nonEmpty copyWithout: anElementOfTheCollection).
+	"here we do not test the size since for a non empty set we would get a problem.
+	Then in addition copy is not about duplicate management. The element should 
+	be in at the end."
+	self deny: (res includes: anElementOfTheCollection).
+	self nonEmpty do:
+		[:each | (each = anElementOfTheCollection) 
+					ifFalse: [self assert: (res includes: each)]]
+]
+
 { #category : #'tests - copy' }
 ArrayTest >> testCopyNonEmptyWithoutAllNotIncluded [
+]
+
+{ #category : #'tests - copying with replacement' }
+ArrayTest >> testCopyReplaceAllWith1Occurrence [
+	| result  firstIndexesOfOccurrence index endPartIndexResult endPartIndexCollection |
 	
+	result := self collectionWith1TimeSubcollection  copyReplaceAll: self oldSubCollection with: self replacementCollection .
+	
+	"detecting indexes of olSubCollection"
+	firstIndexesOfOccurrence  := self firstIndexesOf: self oldSubCollection in: self collectionWith1TimeSubcollection .
+	index:= firstIndexesOfOccurrence at: 1.
+	
+	"verify content of 'result' : "
+	"first part of 'result'' : '"
+
+	1 to: (index -1) do: 
+		[
+		:i |  
+		self assert: (self collectionWith1TimeSubcollection  at:i)=(result at: i)
+		].
+
+	" middle part containing replacementCollection : "
+	
+	index to: (index + self replacementCollection size-1) do: 
+		[
+		:i |
+		self assert: ( result at: i )=(self replacementCollection at: ( i - index + 1 ))
+		].
+	
+	" end part :"
+	
+	endPartIndexResult :=  index + self replacementCollection  size .
+	endPartIndexCollection :=   index + self oldSubCollection size  .
+	
+	1 to: (result size - endPartIndexResult - 1 ) do:
+		[ 
+		:i |
+		self assert: (result at: ( endPartIndexResult + i - 1 ) ) = (self collectionWith1TimeSubcollection  at: ( endPartIndexCollection + i - 1 ) ).
+		].
+]
+
+{ #category : #'tests - copying with replacement' }
+ArrayTest >> testCopyReplaceFromToWith [
+	| result  indexOfSubcollection lastIndexOfOldSubcollection lastIndexOfReplacementCollection |
+	
+	indexOfSubcollection := (self firstIndexesOf: self oldSubCollection  in:  self collectionWith1TimeSubcollection) at: 1. 
+	lastIndexOfOldSubcollection := indexOfSubcollection + self oldSubCollection size -1.
+	lastIndexOfReplacementCollection := indexOfSubcollection + self replacementCollection  size -1.
+	
+	result := self collectionWith1TimeSubcollection  copyReplaceFrom: indexOfSubcollection  to: lastIndexOfOldSubcollection   with: self replacementCollection .
+	
+	"verify content of 'result' : "
+	"first part of 'result'  "
+	
+	1 to: (indexOfSubcollection  - 1) do: 
+		[ 
+		:i | 
+		self assert: (self collectionWith1TimeSubcollection  at:i) = (result at: i)
+		].
+	
+	" middle part containing replacementCollection : "
+	
+	(indexOfSubcollection ) to: ( lastIndexOfReplacementCollection  ) do: 
+		[
+		:i |
+		self assert: (result at: i)=(self replacementCollection at: (i - indexOfSubcollection +1))
+		].
+	
+	" end part :"
+	1 to: (result size - lastIndexOfReplacementCollection   ) do:
+		[ 
+		:i |
+		self assert: (result at: ( lastIndexOfReplacementCollection  + i  ) ) = (self collectionWith1TimeSubcollection  at: ( lastIndexOfOldSubcollection  + i  ) ).
+		].
+]
+
+{ #category : #'tests - copying with replacement' }
+ArrayTest >> testCopyReplaceFromToWithInsertion [
+	| result  indexOfSubcollection |
+	
+	indexOfSubcollection := (self firstIndexesOf: self oldSubCollection  in:  self collectionWith1TimeSubcollection) at: 1. 
+	
+	result := self collectionWith1TimeSubcollection  copyReplaceFrom: indexOfSubcollection  to: ( indexOfSubcollection - 1 ) with: self replacementCollection .
+	
+	"verify content of 'result' : "
+	"first part of 'result'' : '"
+	
+	1 to: (indexOfSubcollection -1) do: 
+		[
+		:i | 
+		self assert: (self collectionWith1TimeSubcollection  at:i)=(result at: i)
+		].
+	
+	" middle part containing replacementCollection : "
+	indexOfSubcollection  to: (indexOfSubcollection  + self replacementCollection size-1) do: 
+		[
+		:i |
+		self assert: ( result at: i )=(self replacementCollection at: ( i - indexOfSubcollection +1 ))
+		].
+	
+	" end part :"
+	(indexOfSubcollection  + self replacementCollection size) to: (result size) do:
+		[:i|
+		self assert: (result at: i)=(self collectionWith1TimeSubcollection  at: (i-self replacementCollection size))].
+	
+	" verify size: "	
+	self assert: result size=(self collectionWith1TimeSubcollection  size + self replacementCollection size).
+]
+
+{ #category : #'tests - copying part of sequenceable' }
+ArrayTest >> testCopyUpTo [
+
+	| result index collection |
+	collection := self collectionWithoutEqualElements.
+	index:= self indexInForCollectionWithoutDuplicates.
+	result := collection   copyUpTo: (collection  at:index).
+	
+	"Verify content"
+	result withIndexDo: [:el :i| self assert: (collection at:i) equals: (result at:i)].
+	
+	"Verify size"
+	self assert: result size equals: (index-1)
+]
+
+{ #category : #'tests - copying part of sequenceable for multipliness' }
+ArrayTest >> testCopyUpToLastWithDuplicate [
+
+	| result element  collection |
+	collection := self collectionWithSameAtEndAndBegining.
+	element := collection first.
+	
+	"collectionWithSameAtEndAndBegining first and last elements are equals.
+	'copyUpToLast:' should copy until the last occurrence :"
+	result := collection copyUpToLast: (element ).
+	
+	"Verify content"
+	result withIndexDo: 
+		[:el :i | self assert: (result at: i) equals: (collection at: i) ].
+	
+	self assert: result size equals: (collection size - 1)
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+ArrayTest >> testDetectSequenced [
+	"Testing that detect keep the first element returning true for sequenceable collections"
+
+	| element result |
+	element := self nonEmptyMoreThan1Element at: 1.
+	result := self nonEmptyMoreThan1Element  detect: [:each | each notNil ].
+	self assert: result equals: element
 ]
 
 { #category : #'tests - enumerating' }
@@ -668,6 +1007,21 @@ ArrayTest >> testDo2 [
 	self assert: res asArray equals: self result
 ]
 
+{ #category : #'tests - equality' }
+ArrayTest >> testEqualSignIsTrueForEmptyButNonIdenticalCollections [
+	
+	self assert: self empty equals: self empty copy. 
+	self assert: self empty copy equals: self empty.
+	self assert: self empty copy equals: self empty copy
+]
+
+{ #category : #'tests - equality' }
+ArrayTest >> testEqualSignOfIdenticalCollectionObjects [
+	
+	self assert: self empty equals: self empty. 
+	self assert: self nonEmpty equals: self nonEmpty
+]
+
 { #category : #'tests - find binary' }
 ArrayTest >> testFindBinary [
 	self assert: (#(1 3 5 7 11 15 23) findBinary: [ :arg | 1 - arg ]) equals: 1.
@@ -680,6 +1034,35 @@ ArrayTest >> testFindBinary [
 ArrayTest >> testFindBinaryIfNone [
 	self assert: (#(1 3 5 7 11 15 23) findBinary: [ :arg | 11 - arg ] ifNone: [ #none ]) equals: 11.
 	self should: (#(1 3 5 7 11 15 23) findBinary: [ :arg | 8 - arg ] ifNone: [ #none ]) = #none
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+ArrayTest >> testFindFirst [
+
+	| element result |
+	element := self nonEmptyMoreThan1Element at: 1.
+	result := self nonEmptyMoreThan1Element findFirst: [:each | each = element].
+	
+	self assert: result equals: 1
+]
+
+{ #category : #'tests - equality' }
+ArrayTest >> testHasEqualElementsIsTrueForNonIdenticalButEqualCollections [
+		
+	self assert: (self empty hasEqualElements: self empty copy). 
+	self assert: (self empty copy hasEqualElements: self empty).
+	self assert: (self empty copy hasEqualElements: self empty copy).
+		
+	self assert: (self nonEmpty hasEqualElements: self nonEmpty copy). 
+	self assert: (self nonEmpty copy hasEqualElements: self nonEmpty).
+	self assert: (self nonEmpty copy hasEqualElements: self nonEmpty copy)
+]
+
+{ #category : #'tests - equality' }
+ArrayTest >> testHasEqualElementsOfIdenticalCollectionObjects [
+	
+	self assert: (self empty hasEqualElements: self empty). 
+	self assert: (self nonEmpty hasEqualElements: self nonEmpty)
 ]
 
 { #category : #'tests - includes' }
@@ -695,6 +1078,17 @@ ArrayTest >> testIdentityIncludes [
 	self deny: (collection identityIncludes: element)
 ]
 
+{ #category : #'tests - includes' }
+ArrayTest >> testIdentityIncludesNonSpecificComportement [
+	"Test the same comportement than #includes:"
+	
+	| collection |	
+	collection := self nonEmpty.
+	
+	self deny: (collection identityIncludes: self elementNotIn).
+	self assert: (collection identityIncludes: collection anyOne)
+]
+
 { #category : #'tests - index access' }
 ArrayTest >> testIdentityIndexOf [
 	| collection element |
@@ -702,6 +1096,16 @@ ArrayTest >> testIdentityIndexOf [
 	self deny: self collectionWithCopyNonIdentical anyOne identicalTo: element.
 	collection := self collectionWithCopyNonIdentical copyWith: element.
 	self assert: (collection identityIndexOf: element) equals: collection size
+]
+
+{ #category : #'tests - set arithmetic' }
+ArrayTest >> testIntersectionItself [
+	
+	| result |
+	result := self collectionWithoutEqualElements intersection: self collectionWithoutEqualElements.
+	self assert: result size equals: self collectionWithoutEqualElements size.
+	self collectionWithoutEqualElements do: [ :each|
+		self assert: (result includes: each) ].
 ]
 
 { #category : #tests }
@@ -729,6 +1133,43 @@ ArrayTest >> testIsSelfEvaluating [
 	example1 at: 1 put: Bag new.
 	self deny: example1 isSelfEvaluating.
 	example1 at: 1 put: 1.
+]
+
+{ #category : #'tests - sorting' }
+ArrayTest >> testIsSortedBy [
+	self assert: (self sortedInAscendingOrderCollection isSortedBy: [:a :b | a<b]).
+	self deny: (self sortedInAscendingOrderCollection isSortedBy: [:a :b | a>b]).
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+ArrayTest >> testKeysAndValuesDo [
+	"| result |
+	result:= OrderedCollection new.
+	
+	self nonEmptyMoreThan1Element  keysAndValuesDo: 
+		[:i :value|
+		result add: (value+i)].
+	
+	1 to: result size do:
+		[:i|
+		self assert: (result at:i)=((self nonEmptyMoreThan1Element at:i)+i)]"
+	|  indexes elements |
+	indexes := OrderedCollection new.
+	elements := OrderedCollection new.
+	
+	self nonEmptyMoreThan1Element  keysAndValuesDo: 
+		[:i :value|
+		indexes  add: (i).
+		elements add: value].
+	
+	(1 to: self nonEmptyMoreThan1Element size )do:
+		[ :i |
+		self assert: (indexes at: i) equals: i.
+		self assert: (elements at: i) equals: (self nonEmptyMoreThan1Element at: i).	
+		].
+	
+	self assert: indexes size equals: elements size. 
+	self assert: indexes size equals: self nonEmptyMoreThan1Element size
 ]
 
 { #category : #tests }
@@ -761,12 +1202,30 @@ ArrayTest >> testOccurrencesOfEmpty [
 	self assert: result equals: 0
 ]
 
+{ #category : #'tests - occurrencesOf for multipliness' }
+ArrayTest >> testOccurrencesOfForMultipliness [
+
+	| collection elem |
+	collection := self collectionWithEqualElements.
+	elem := self elementTwiceInForOccurrences.
+
+	self assert: (collection occurrencesOf: elem ) equals: 2.
+]
+
 { #category : #'tests - occurrencesOf' }
 ArrayTest >> testOccurrencesOfNotIn [
 
 	| result |
 	result := self empty occurrencesOf: self elementNotInForOccurrences.
 	self assert: result equals: 0
+]
+
+{ #category : #'tests - creation' }
+ArrayTest >> testOfSize [
+	
+	| aCol |
+	aCol := self collectionClass ofSize: 3.
+	self assert: aCol size equals: 3.
 ]
 
 { #category : #'tests - arithmetic' }
@@ -783,6 +1242,23 @@ ArrayTest >> testPrinting [
 	self assert: nonSEarray2 printString equals: '{#Array->Array}'
 ]
 
+{ #category : #'tests - iterate on sequenced reable collections' }
+ArrayTest >> testReverseWithDo [
+	
+	| firstCollection secondCollection index |
+
+	firstCollection := self nonEmptyMoreThan1Element.
+	secondCollection := firstCollection copy.
+	index := firstCollection size.
+	
+	firstCollection  reverseWith: secondCollection do:
+		[:a :b |
+	
+		self assert: (firstCollection at: index) equals: a. 
+		self assert: (secondCollection at: index) equals: b.
+			(index := index - 1)]
+]
+
 { #category : #'tests - shuffling' }
 ArrayTest >> testShuffleBy [
 
@@ -792,7 +1268,6 @@ ArrayTest >> testShuffleBy [
 	shuffleByResult := #(2 5 4 3 1) copy.
 	
 	self assert: ((base shuffleBy: random) hasEqualElements: shuffleByResult).
-	
 ]
 
 { #category : #'tests - shuffling' }
@@ -802,7 +1277,6 @@ ArrayTest >> testShuffleChangeOrder [
 	array := #( 1 2 3 4 5).
 	shuffled := array copy shuffle.
 	array do: [ :e | self assert: (shuffled includes: e) ]
-	
 ]
 
 { #category : #'tests - shuffling' }
@@ -811,8 +1285,7 @@ ArrayTest >> testShuffleModifyTheReceiver [
 	| array shuffled |
 	array := #( 1 2 3 4 5) copy.
 	shuffled := array shuffle.
-	self assert: array == shuffled. 
-	
+	self assert: array == shuffled.
 ]
 
 { #category : #'tests - arithmetic' }
@@ -821,6 +1294,96 @@ ArrayTest >> testSumNumberItemsWithoutBlock [
 	self assert: #() sumNumbers equals: 0.
 	
 	self assert: #(1 2 3) sumNumbers equals: 6
+]
+
+{ #category : #'tests - puting with indexes' }
+ArrayTest >> testSwapWith [
+ 
+	| result index |
+	index := self indexArray anyOne.
+	result:= self nonEmpty copy .
+	result swap: index with: 1.
+	self assert: (result at: index) = (self nonEmpty at:1).
+	self assert: (result at: 1) = (self nonEmpty at: index).
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+ArrayTest >> testWithDo [
+	
+	| firstCollection secondCollection index |
+
+	firstCollection := self nonEmptyMoreThan1Element.
+	secondCollection := firstCollection copy.
+	index := 0.
+	
+	firstCollection  with: secondCollection do:
+		[:a :b |
+		index := index + 1.
+		self assert: (firstCollection at: index) equals:  a. 
+		self assert: (secondCollection at: index) equals: b ]
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+ArrayTest >> testWithIndexCollect [
+	
+	| result index collection |
+	index := 0.
+	collection := self nonEmptyMoreThan1Element .
+	result := collection  withIndexCollect: [:each :i | 
+		self assert: i equals: (index := index + 1).	
+		self assert: i equals: (collection  indexOf: each).
+		each ]. 
+	
+	result withIndexDo: [:el :i | self assert: (result at:i) equals: (collection at: i)].
+	self assert: result size equals: collection size
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+ArrayTest >> testWithIndexDo [
+
+	|  indexes elements |
+	indexes:= OrderedCollection new.
+	elements := OrderedCollection new.
+	
+	self nonEmptyMoreThan1Element withIndexDo: 
+		[:value :i  |
+			indexes  add: (i).
+			elements add: value ].
+	
+	self nonEmptyMoreThan1Element withIndexDo: 
+		[:el :i |
+			self assert: (indexes at: i) equals: i.
+			self assert: (elements at: i) equals: el ].
+	
+	self assert: indexes size equals: elements size. 
+	self assert: indexes size equals: self nonEmptyMoreThan1Element size
+]
+
+{ #category : #'tests - creation' }
+ArrayTest >> testWithWith [
+	
+	| aCol collection element1 element2 |
+	collection := self collectionMoreThan5Elements asOrderedCollection copyFrom: 1 to: 2.
+	element1 := collection at: 1.
+	element2 := collection at: 2.
+	
+	aCol := self collectionClass with: element1  with: element2 .
+	self assert: (aCol occurrencesOf: element1 ) equals: (collection occurrencesOf: element1).
+	self assert: (aCol occurrencesOf: element2 ) equals: (collection occurrencesOf: element2)
+]
+
+{ #category : #'tests - begins ends with' }
+ArrayTest >> testsBeginsWithEmpty [
+	
+	self deny: (self nonEmpty beginsWith:(self empty)).
+	self deny: (self empty beginsWith:(self nonEmpty))
+]
+
+{ #category : #'tests - begins ends with' }
+ArrayTest >> testsEndsWithEmpty [
+	
+	self deny: (self nonEmpty endsWith: self empty).
+	self deny: (self empty endsWith: self nonEmpty)
 ]
 
 { #category : #requirements }

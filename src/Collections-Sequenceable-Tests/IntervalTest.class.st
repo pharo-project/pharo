@@ -62,7 +62,7 @@ IntervalTest >> collectionInForIncluding [
 { #category : #requirements }
 IntervalTest >> collectionMoreThan1NoDuplicates [
 	" return a collection of size 5 without equal elements"
-	^ nonEmpty 
+	^ nonEmpty
 ]
 
 { #category : #requirements }
@@ -72,12 +72,12 @@ IntervalTest >> collectionNotIncluded [
 
 { #category : #requirements }
 IntervalTest >> collectionOfFloat [
-	^collectionOfFloat 
+	^collectionOfFloat
 ]
 
 { #category : #requirements }
 IntervalTest >> collectionWith1TimeSubcollection [
-	^ collectionWithSubCollection 
+	^ collectionWithSubCollection
 ]
 
 { #category : #requirements }
@@ -95,18 +95,18 @@ IntervalTest >> collectionWithElementsToRemove [
 { #category : #requirements }
 IntervalTest >> collectionWithSortableElements [
 " return a collection elements that can be sorte ( understanding message ' < '  or ' > ')"
-	^ self nonEmpty 
+	^ self nonEmpty
 ]
 
 { #category : #requirements }
 IntervalTest >> collectionWithoutEqualElements [
-	^ nonEmpty 
+	^ nonEmpty
 ]
 
 { #category : #requirements }
 IntervalTest >> collectionWithoutNilElements [
 " return a collection that doesn't includes a nil element  and that doesn't includes equal elements'"
-	^ collectionWithoutNil 
+	^ collectionWithoutNil
 ]
 
 { #category : #requirements }
@@ -129,7 +129,7 @@ IntervalTest >> elementInForElementAccessing [
 { #category : #requirements }
 IntervalTest >> elementInForIncludesTest [
 
-	^ elementIn 
+	^ elementIn
 ]
 
 { #category : #requirements }
@@ -140,7 +140,7 @@ IntervalTest >> elementInForIndexAccess [
 { #category : #requirements }
 IntervalTest >> elementInForIndexAccessing [
 
-	^ elementIn 
+	^ elementIn
 ]
 
 { #category : #requirements }
@@ -151,13 +151,13 @@ IntervalTest >> elementNotIn [
 { #category : #requirements }
 IntervalTest >> elementNotInForElementAccessing [
 " return an element not included in 'accessCollection' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
 IntervalTest >> elementNotInForIndexAccessing [
 
-	^elementNotIn 
+	^elementNotIn
 ]
 
 { #category : #requirements }
@@ -167,14 +167,13 @@ IntervalTest >> elementNotInForOccurrences [
 
 { #category : #requirements }
 IntervalTest >> elementToAdd [
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
 IntervalTest >> empty [
 
 	^ empty
-
 ]
 
 { #category : #requirements }
@@ -194,10 +193,57 @@ IntervalTest >> firstEven [
 	^ -2
 ]
 
+{ #category : #'tests - copying with replacement' }
+IntervalTest >> firstIndexesOf: aSubCollection in: collection [
+" return an OrderedCollection with the first indexes of the occurrences of subCollection in  collection "
+	| tmp result currentIndex |
+	tmp:= collection.
+	result:= OrderedCollection new.
+	currentIndex := 1.
+	
+	[tmp isEmpty ]whileFalse:
+		[
+		(tmp beginsWith: aSubCollection)
+			ifTrue: [ 	
+				result add: currentIndex.
+				1 to: aSubCollection size do: 
+					[:i | 
+					tmp := tmp copyWithoutFirst.
+					currentIndex := currentIndex + 1]
+				]
+			ifFalse: [
+				tmp := tmp copyWithoutFirst.
+				currentIndex := currentIndex +1.
+				]
+		 ].
+	
+	^ result.
+]
+
 { #category : #requirements }
 IntervalTest >> firstOdd [
 	"Returns the first odd number of #collection"
 	^ -5
+]
+
+{ #category : #'tests - fixture' }
+IntervalTest >> howMany: aSubCollection in: collection [
+" return an integer representing how many time 'subCollection'  appears in 'collection'  "
+	| tmp nTime |
+	tmp := collection.
+	nTime:= 0.
+	
+	[tmp isEmpty ]whileFalse:
+		[
+		(tmp beginsWith: aSubCollection)
+			ifTrue: [ 	
+				nTime := nTime + 1.
+				1 to: aSubCollection size do: [:i | tmp := tmp copyWithoutFirst.]
+				]
+			ifFalse: [tmp := tmp copyWithoutFirst.]
+		 ].
+	
+	^ nTime.
 ]
 
 { #category : #requirements }
@@ -214,7 +260,7 @@ IntervalTest >> indexInNonEmpty [
 
 { #category : #requirements }
 IntervalTest >> integerCollection [
-	^ nonEmpty 
+	^ nonEmpty
 ]
 
 { #category : #requirements }
@@ -225,14 +271,14 @@ IntervalTest >> integerCollectionWithoutEqualElements [
 { #category : #requirements }
 IntervalTest >> moreThan3Elements [
 	" return a collection including atLeast 3 elements"
-	^ nonEmpty 
+	^ nonEmpty
 ]
 
 { #category : #requirements }
 IntervalTest >> moreThan4Elements [
 
 " return a collection including at leat 4 elements"
-	^ nonEmpty 
+	^ nonEmpty
 ]
 
 { #category : #requirements }
@@ -244,7 +290,7 @@ IntervalTest >> nonEmpty [
 { #category : #requirements }
 IntervalTest >> nonEmpty1Element [
 
-	^ nonEmpty1Element  
+	^ nonEmpty1Element
 ]
 
 { #category : #requirements }
@@ -254,7 +300,7 @@ IntervalTest >> nonEmptyMoreThan1Element [
 
 { #category : #requirements }
 IntervalTest >> oldSubCollection [
-	^ subCollection 
+	^ subCollection
 ]
 
 { #category : #requirements }
@@ -269,7 +315,7 @@ IntervalTest >> result [
 
 { #category : #requirements }
 IntervalTest >> secondCollection [
-	^anotherCollection 
+	^anotherCollection
 ]
 
 { #category : #running }
@@ -313,7 +359,7 @@ IntervalTest >> speciesClass [
 { #category : #requirements }
 IntervalTest >> subCollectionNotIn [
 
-	^subCollectionNotIn 
+	^subCollectionNotIn
 ]
 
 { #category : #'tests - fixture' }
@@ -353,6 +399,32 @@ IntervalTest >> testAllButLastElements [
 	self assert: abf size + 2 equals: col size
 ]
 
+{ #category : #'tests - as string comma delimiter sequenceable' }
+IntervalTest >> testAsCommaStringEmpty [
+
+	self assert: self empty asCommaString = ''.
+	self assert: self empty asCommaStringAnd = ''
+]
+
+{ #category : #'tests - comma and delimiter' }
+IntervalTest >> testAsCommaStringOne [
+	
+	"self assert: self oneItemCol asCommaString = '1'.
+	self assert: self oneItemCol asCommaStringAnd = '1'."
+
+	self assert: self nonEmpty1Element asCommaString = (self nonEmpty1Element first asString).
+	self assert: self nonEmpty1Element asCommaStringAnd = (self nonEmpty1Element first asString)
+]
+
+{ #category : #'tests - converting' }
+IntervalTest >> testAsIdentitySet [
+	"Test with a collection without equal elements :"
+
+	self 
+		assertSameContents: self collectionWithoutEqualElements
+		whenConvertedTo: IdentitySet
+]
+
 { #category : #tests }
 IntervalTest >> testAsInterval [
 	"This is the same as newFrom:"
@@ -364,7 +436,71 @@ IntervalTest >> testAsInterval [
 	self should: [#(33 5 -22) as: Interval]
 		raise: Error
 		description: 'This is not an arithmetic progression'
+]
 
+{ #category : #'tests - converting' }
+IntervalTest >> testAsSet [
+ 	"Test with a collection without equal elements"
+	
+	self assertSameContents: self collectionWithoutEqualElements whenConvertedTo: Set
+]
+
+{ #category : #'tests - as sorted collection' }
+IntervalTest >> testAsSortedCollectionWithSortBlock [
+
+	| result tmp |
+	result := self collectionWithSortableElements  asSortedCollection: [:a :b | a > b ].
+	self assert: (result class includesBehavior: SortedCollection).
+	result do: 
+		[ :each | 
+		self assert: (self collectionWithSortableElements occurrencesOf: each) equals: (result occurrencesOf: each) ].
+	self assert: result size equals: self collectionWithSortableElements  size.
+	tmp:=result at: 1.
+	result do: [:each| self assert: tmp >= each. tmp := each ]
+]
+
+{ #category : #'tests - comma and delimiter' }
+IntervalTest >> testAsStringOnDelimiterLastMore [
+
+	| delim multiItemStream result last allElementsAsString |
+	
+	delim := ', '.
+	last := ' and '.
+	result:=''.
+	multiItemStream := ReadWriteStream on:result.
+	self nonEmpty  asStringOn: multiItemStream delimiter: delim last: last.
+	result := multiItemStream contents.
+	allElementsAsString:=(result findBetweenSubstrings: delim ).
+	1 to: allElementsAsString size do:
+		[:i | 
+		i<(allElementsAsString size-1 )
+			ifTrue: [self assert: (allElementsAsString at:i)=((self nonEmpty at:i)asString)].
+		i=(allElementsAsString size-1)
+			ifTrue:[ self deny: (allElementsAsString at:i)=(last)asString].
+		i=(allElementsAsString size)
+			ifTrue: [self assert: (allElementsAsString at:i)=((self nonEmpty at:(i-1))asString)]]
+]
+
+{ #category : #'tests - comma and delimiter' }
+IntervalTest >> testAsStringOnDelimiterLastOne [
+
+	| delim oneItemStream result |	
+	delim := ', '.
+	result:=''.
+	oneItemStream := ReadWriteStream on: result.
+	self nonEmpty1Element  asStringOn: oneItemStream delimiter: delim last: 'and'.
+	oneItemStream do:[:each | self assert: each = (self nonEmpty1Element first asString)]
+]
+
+{ #category : #'tests - comma and delimiter' }
+IntervalTest >> testAsStringOnDelimiterOne [
+
+	| delim oneItemStream result |
+	delim := ', '.
+	result := ''.
+	oneItemStream := ReadWriteStream on: result.
+	self nonEmpty1Element  asStringOn: oneItemStream delimiter: delim.
+	oneItemStream do:[:each | self assert: each = (self nonEmpty1Element first asString)]
 ]
 
 { #category : #tests }
@@ -398,6 +534,162 @@ IntervalTest >> testCollectThenSelectLocal [
 	self assert: (vowels hasEqualElements: 'aeiou').
 ]
 
+{ #category : #'tests - copy - clone' }
+IntervalTest >> testCopyCreatesNewObject [
+	 
+	
+	| copy | 
+	copy := self nonEmpty copy.
+	self deny: self nonEmpty == copy.
+]
+
+{ #category : #'tests - copy' }
+IntervalTest >> testCopyNonEmptyWithout [
+	
+	| res anElementOfTheCollection |
+	anElementOfTheCollection :=  self nonEmpty anyOne.
+	res := (self nonEmpty copyWithout: anElementOfTheCollection).
+	"here we do not test the size since for a non empty set we would get a problem.
+	Then in addition copy is not about duplicate management. The element should 
+	be in at the end."
+	self deny: (res includes: anElementOfTheCollection).
+	self nonEmpty do:
+		[:each | (each = anElementOfTheCollection) 
+					ifFalse: [self assert: (res includes: each)]]
+]
+
+{ #category : #'tests - copying with replacement' }
+IntervalTest >> testCopyReplaceAllWith1Occurrence [
+	| result  firstIndexesOfOccurrence index endPartIndexResult endPartIndexCollection |
+	
+	result := self collectionWith1TimeSubcollection  copyReplaceAll: self oldSubCollection with: self replacementCollection .
+	
+	"detecting indexes of olSubCollection"
+	firstIndexesOfOccurrence  := self firstIndexesOf: self oldSubCollection in: self collectionWith1TimeSubcollection .
+	index:= firstIndexesOfOccurrence at: 1.
+	
+	"verify content of 'result' : "
+	"first part of 'result'' : '"
+
+	1 to: (index -1) do: 
+		[
+		:i |  
+		self assert: (self collectionWith1TimeSubcollection  at:i)=(result at: i)
+		].
+
+	" middle part containing replacementCollection : "
+	
+	index to: (index + self replacementCollection size-1) do: 
+		[
+		:i |
+		self assert: ( result at: i )=(self replacementCollection at: ( i - index + 1 ))
+		].
+	
+	" end part :"
+	
+	endPartIndexResult :=  index + self replacementCollection  size .
+	endPartIndexCollection :=   index + self oldSubCollection size  .
+	
+	1 to: (result size - endPartIndexResult - 1 ) do:
+		[ 
+		:i |
+		self assert: (result at: ( endPartIndexResult + i - 1 ) ) = (self collectionWith1TimeSubcollection  at: ( endPartIndexCollection + i - 1 ) ).
+		].
+]
+
+{ #category : #'tests - copying with replacement' }
+IntervalTest >> testCopyReplaceFromToWith [
+	| result  indexOfSubcollection lastIndexOfOldSubcollection lastIndexOfReplacementCollection |
+	
+	indexOfSubcollection := (self firstIndexesOf: self oldSubCollection  in:  self collectionWith1TimeSubcollection) at: 1. 
+	lastIndexOfOldSubcollection := indexOfSubcollection + self oldSubCollection size -1.
+	lastIndexOfReplacementCollection := indexOfSubcollection + self replacementCollection  size -1.
+	
+	result := self collectionWith1TimeSubcollection  copyReplaceFrom: indexOfSubcollection  to: lastIndexOfOldSubcollection   with: self replacementCollection .
+	
+	"verify content of 'result' : "
+	"first part of 'result'  "
+	
+	1 to: (indexOfSubcollection  - 1) do: 
+		[ 
+		:i | 
+		self assert: (self collectionWith1TimeSubcollection  at:i) = (result at: i)
+		].
+	
+	" middle part containing replacementCollection : "
+	
+	(indexOfSubcollection ) to: ( lastIndexOfReplacementCollection  ) do: 
+		[
+		:i |
+		self assert: (result at: i)=(self replacementCollection at: (i - indexOfSubcollection +1))
+		].
+	
+	" end part :"
+	1 to: (result size - lastIndexOfReplacementCollection   ) do:
+		[ 
+		:i |
+		self assert: (result at: ( lastIndexOfReplacementCollection  + i  ) ) = (self collectionWith1TimeSubcollection  at: ( lastIndexOfOldSubcollection  + i  ) ).
+		].
+]
+
+{ #category : #'tests - copying with replacement' }
+IntervalTest >> testCopyReplaceFromToWithInsertion [
+	| result  indexOfSubcollection |
+	
+	indexOfSubcollection := (self firstIndexesOf: self oldSubCollection  in:  self collectionWith1TimeSubcollection) at: 1. 
+	
+	result := self collectionWith1TimeSubcollection  copyReplaceFrom: indexOfSubcollection  to: ( indexOfSubcollection - 1 ) with: self replacementCollection .
+	
+	"verify content of 'result' : "
+	"first part of 'result'' : '"
+	
+	1 to: (indexOfSubcollection -1) do: 
+		[
+		:i | 
+		self assert: (self collectionWith1TimeSubcollection  at:i)=(result at: i)
+		].
+	
+	" middle part containing replacementCollection : "
+	indexOfSubcollection  to: (indexOfSubcollection  + self replacementCollection size-1) do: 
+		[
+		:i |
+		self assert: ( result at: i )=(self replacementCollection at: ( i - indexOfSubcollection +1 ))
+		].
+	
+	" end part :"
+	(indexOfSubcollection  + self replacementCollection size) to: (result size) do:
+		[:i|
+		self assert: (result at: i)=(self collectionWith1TimeSubcollection  at: (i-self replacementCollection size))].
+	
+	" verify size: "	
+	self assert: result size=(self collectionWith1TimeSubcollection  size + self replacementCollection size).
+]
+
+{ #category : #'tests - copying part of sequenceable' }
+IntervalTest >> testCopyUpTo [
+
+	| result index collection |
+	collection := self collectionWithoutEqualElements.
+	index:= self indexInForCollectionWithoutDuplicates.
+	result := collection   copyUpTo: (collection  at:index).
+	
+	"Verify content"
+	result withIndexDo: [:el :i| self assert: (collection at:i) equals: (result at:i)].
+	
+	"Verify size"
+	self assert: result size equals: (index-1)
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+IntervalTest >> testDetectSequenced [
+	"Testing that detect keep the first element returning true for sequenceable collections"
+
+	| element result |
+	element := self nonEmptyMoreThan1Element at: 1.
+	result := self nonEmptyMoreThan1Element  detect: [:each | each notNil ].
+	self assert: result equals: element
+]
+
 { #category : #tests }
 IntervalTest >> testDo [
 	| s i |
@@ -405,6 +697,21 @@ IntervalTest >> testDo [
 	i := (10 to: 20).
 	i do: [ :each | s addLast: each].
 	self assert: (s hasEqualElements: i)
+]
+
+{ #category : #'tests - equality' }
+IntervalTest >> testEqualSignIsTrueForEmptyButNonIdenticalCollections [
+	
+	self assert: self empty equals: self empty copy. 
+	self assert: self empty copy equals: self empty.
+	self assert: self empty copy equals: self empty copy
+]
+
+{ #category : #'tests - equality' }
+IntervalTest >> testEqualSignOfIdenticalCollectionObjects [
+	
+	self assert: self empty equals: self empty. 
+	self assert: self nonEmpty equals: self nonEmpty
 ]
 
 { #category : #tests }
@@ -454,6 +761,35 @@ IntervalTest >> testExtent [
 	self assert: (1 to: -1) extent equals: -2
 ]
 
+{ #category : #'tests - iterate on sequenced reable collections' }
+IntervalTest >> testFindFirst [
+
+	| element result |
+	element := self nonEmptyMoreThan1Element at: 1.
+	result := self nonEmptyMoreThan1Element findFirst: [:each | each = element].
+	
+	self assert: result equals: 1
+]
+
+{ #category : #'tests - equality' }
+IntervalTest >> testHasEqualElementsIsTrueForNonIdenticalButEqualCollections [
+		
+	self assert: (self empty hasEqualElements: self empty copy). 
+	self assert: (self empty copy hasEqualElements: self empty).
+	self assert: (self empty copy hasEqualElements: self empty copy).
+		
+	self assert: (self nonEmpty hasEqualElements: self nonEmpty copy). 
+	self assert: (self nonEmpty copy hasEqualElements: self nonEmpty).
+	self assert: (self nonEmpty copy hasEqualElements: self nonEmpty copy)
+]
+
+{ #category : #'tests - equality' }
+IntervalTest >> testHasEqualElementsOfIdenticalCollectionObjects [
+	
+	self assert: (self empty hasEqualElements: self empty). 
+	self assert: (self nonEmpty hasEqualElements: self nonEmpty)
+]
+
 { #category : #'tests - includes' }
 IntervalTest >> testIdentityIncludes [
 	" test the comportement in presence of elements 'includes' but not 'identityIncludes' "
@@ -465,6 +801,17 @@ IntervalTest >> testIdentityIncludes [
 	collection := self collectionWithCopyNonIdentical.
 	element := collection anyOne copy.	"self assert: (collection includes: element)."
 	self deny: (collection identityIncludes: element)
+]
+
+{ #category : #'tests - includes' }
+IntervalTest >> testIdentityIncludesNonSpecificComportement [
+	"Test the same comportement than #includes:"
+	
+	| collection |	
+	collection := self nonEmpty.
+	
+	self deny: (collection identityIncludes: self elementNotIn).
+	self assert: (collection identityIncludes: collection anyOne)
 ]
 
 { #category : #'tests - includes' }
@@ -533,7 +880,6 @@ IntervalTest >> testInfiniteLoopBug6456 [
 	size := interval size.
 	counter := 0.
 	interval do: [:each | self assert: (counter := counter + 1) <= size]
-
 ]
 
 { #category : #tests }
@@ -574,6 +920,43 @@ IntervalTest >> testIsEvaluating [
 IntervalTest >> testIsInterval [
 	self assert: (1 to: 10) isInterval.
 	self assert: (1 to: 10 by: 2) isInterval
+]
+
+{ #category : #'tests - sorting' }
+IntervalTest >> testIsSortedBy [
+	self assert: (self sortedInAscendingOrderCollection isSortedBy: [:a :b | a<b]).
+	self deny: (self sortedInAscendingOrderCollection isSortedBy: [:a :b | a>b]).
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+IntervalTest >> testKeysAndValuesDo [
+	"| result |
+	result:= OrderedCollection new.
+	
+	self nonEmptyMoreThan1Element  keysAndValuesDo: 
+		[:i :value|
+		result add: (value+i)].
+	
+	1 to: result size do:
+		[:i|
+		self assert: (result at:i)=((self nonEmptyMoreThan1Element at:i)+i)]"
+	|  indexes elements |
+	indexes := OrderedCollection new.
+	elements := OrderedCollection new.
+	
+	self nonEmptyMoreThan1Element  keysAndValuesDo: 
+		[:i :value|
+		indexes  add: (i).
+		elements add: value].
+	
+	(1 to: self nonEmptyMoreThan1Element size )do:
+		[ :i |
+		self assert: (indexes at: i) equals: i.
+		self assert: (elements at: i) equals: (self nonEmptyMoreThan1Element at: i).	
+		].
+	
+	self assert: indexes size equals: elements size. 
+	self assert: indexes size equals: self nonEmptyMoreThan1Element size
 ]
 
 { #category : #tests }
@@ -672,6 +1055,23 @@ IntervalTest >> testReverseUnevenDo [
 		assert: (s hasEqualElements: i)
 ]
 
+{ #category : #'tests - iterate on sequenced reable collections' }
+IntervalTest >> testReverseWithDo [
+	
+	| firstCollection secondCollection index |
+
+	firstCollection := self nonEmptyMoreThan1Element.
+	secondCollection := firstCollection copy.
+	index := firstCollection size.
+	
+	firstCollection  reverseWith: secondCollection do:
+		[:a :b |
+	
+		self assert: (firstCollection at: index) equals: a. 
+		self assert: (secondCollection at: index) equals: b.
+			(index := index - 1)]
+]
+
 { #category : #tests }
 IntervalTest >> testShuffled [
 
@@ -693,6 +1093,72 @@ IntervalTest >> testUnevenDo [
 		do: [:each | s addLast: each].
 	self
 		assert: (s hasEqualElements: i)
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+IntervalTest >> testWithDo [
+	
+	| firstCollection secondCollection index |
+
+	firstCollection := self nonEmptyMoreThan1Element.
+	secondCollection := firstCollection copy.
+	index := 0.
+	
+	firstCollection  with: secondCollection do:
+		[:a :b |
+		index := index + 1.
+		self assert: (firstCollection at: index) equals:  a. 
+		self assert: (secondCollection at: index) equals: b ]
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+IntervalTest >> testWithIndexCollect [
+	
+	| result index collection |
+	index := 0.
+	collection := self nonEmptyMoreThan1Element .
+	result := collection  withIndexCollect: [:each :i | 
+		self assert: i equals: (index := index + 1).	
+		self assert: i equals: (collection  indexOf: each).
+		each ]. 
+	
+	result withIndexDo: [:el :i | self assert: (result at:i) equals: (collection at: i)].
+	self assert: result size equals: collection size
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
+IntervalTest >> testWithIndexDo [
+
+	|  indexes elements |
+	indexes:= OrderedCollection new.
+	elements := OrderedCollection new.
+	
+	self nonEmptyMoreThan1Element withIndexDo: 
+		[:value :i  |
+			indexes  add: (i).
+			elements add: value ].
+	
+	self nonEmptyMoreThan1Element withIndexDo: 
+		[:el :i |
+			self assert: (indexes at: i) equals: i.
+			self assert: (elements at: i) equals: el ].
+	
+	self assert: indexes size equals: elements size. 
+	self assert: indexes size equals: self nonEmptyMoreThan1Element size
+]
+
+{ #category : #'tests - begins ends with' }
+IntervalTest >> testsBeginsWithEmpty [
+	
+	self deny: (self nonEmpty beginsWith:(self empty)).
+	self deny: (self empty beginsWith:(self nonEmpty))
+]
+
+{ #category : #'tests - begins ends with' }
+IntervalTest >> testsEndsWithEmpty [
+	
+	self deny: (self nonEmpty endsWith: self empty).
+	self deny: (self empty endsWith: self nonEmpty)
 ]
 
 { #category : #requirements }
