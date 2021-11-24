@@ -14,7 +14,6 @@ SystemOrganizer >> fileOut [
 		writeSourceCodeFrom: internalStream 
 		baseName: 'SystemOrganization.st' asFileReference nextVersion basenameWithoutExtension 
 		isSt: true
-
 ]
 
 { #category : #'*CodeExport' }
@@ -25,7 +24,7 @@ SystemOrganizer >> fileOutCategory: category [
 	| internalStream |
 	internalStream := (String new: 1000) writeStream.
 	self fileOutCategory: category on: internalStream.
-	^ CodeExporter writeSourceCodeFrom: internalStream baseName: category isSt: true 
+	^ CodeExporter writeSourceCodeFrom: internalStream baseName: category isSt: true
 ]
 
 { #category : #'*CodeExport' }

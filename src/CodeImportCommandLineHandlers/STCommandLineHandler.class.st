@@ -181,7 +181,6 @@ STCommandLineHandler >> installSourceFiles [
 	[ sourceFiles do: [ :reference | 
 		self installSourceFile: reference ]
 	] ensure: [ sourceFiles := nil ].
-	
 ]
 
 { #category : #loading }
@@ -189,7 +188,6 @@ STCommandLineHandler >> loadSourceFiles: anArray [
 	"Load all the source files in the given array."
 
 	sourceFiles := anArray collect: [ :each | File named: each ].
-
 ]
 
 { #category : #activation }
@@ -211,5 +209,4 @@ STCommandLineHandler >> skipShebangFrom: readStream [
 	
 	"here we found the shebang, so skip the first line"
 	^ readStream nextLine.
-	
 ]
