@@ -32,7 +32,6 @@ OupsDebugRequestTest >> testDefaultProcess [
 	| dr |
 	dr := OupsDebugRequest basicNew.
 	self assert: dr process identicalTo: Processor activeProcess
-	
 ]
 
 { #category : #tests }

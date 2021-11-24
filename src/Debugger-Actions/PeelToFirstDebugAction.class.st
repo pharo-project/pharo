@@ -28,7 +28,7 @@ PeelToFirstDebugAction >> defaultOrder [
 { #category : #actions }
 PeelToFirstDebugAction >> executeAction [
 
-	self session peelToFirstLike: self currentContext 
+	self session peelToFirstLike: self currentContext
 ]
 
 { #category : #accessing }

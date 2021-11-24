@@ -63,7 +63,7 @@ DebugAction >> appliesToContext: aContext [
 { #category : #testing }
 DebugAction >> appliesToCurrentContext [
 
-	^ self appliesToContext: self currentContext 
+	^ self appliesToContext: self currentContext
 ]
 
 { #category : #testing }
@@ -139,7 +139,6 @@ DebugAction >> defaultKeyText [
 		in: #Pharo6."
 	
 	^ nil
-	
 ]
 
 { #category : #accessing }
@@ -172,13 +171,12 @@ DebugAction >> execute [
 	self precondition ifTrue: [ 
 		self preAction.
 		self perform: self actionSelector.
-		self postAction ] 
+		self postAction ]
 ]
 
 { #category : #actions }
 DebugAction >> executeAction [
 	"By default do nothing."
-	
 ]
 
 { #category : #initialization }
@@ -214,7 +212,6 @@ DebugAction >> id [
 DebugAction >> interruptedContext [
 	
 	^ self debugger interruptedContext
-	
 ]
 
 { #category : #accessing }
@@ -347,7 +344,6 @@ DebugAction >> precondition [
 DebugAction >> selectedContext [
 	
 	^ self debugger selectedContext
-	
 ]
 
 { #category : #accessing }
