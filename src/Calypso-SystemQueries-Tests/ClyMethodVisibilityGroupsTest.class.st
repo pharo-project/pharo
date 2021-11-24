@@ -12,7 +12,7 @@ ClyMethodVisibilityGroupsTest >> createQuery [
 
 { #category : #running }
 ClyMethodVisibilityGroupsTest >> createQueryResult [
-	^ClyMethodVisibilityGroupsResult withHierarchy: ClySubclassHierarchy new 
+	^ClyMethodVisibilityGroupsResult withHierarchy: ClySubclassHierarchy new
 ]
 
 { #category : #running }

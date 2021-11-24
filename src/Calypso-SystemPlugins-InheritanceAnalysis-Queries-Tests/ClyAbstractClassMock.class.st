@@ -9,12 +9,12 @@ Class {
 
 { #category : #protocol }
 ClyAbstractClassMock >> abstractMethod1 [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #protocol }
 ClyAbstractClassMock >> abstractMethod2 [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #protocol }

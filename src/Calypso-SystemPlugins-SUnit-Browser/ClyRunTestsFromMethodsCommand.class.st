@@ -18,7 +18,7 @@ Class {
 
 { #category : #activation }
 ClyRunTestsFromMethodsCommand class >> contextClass [
-	^ClyMethod asCalypsoItemContext 
+	^ClyMethod asCalypsoItemContext
 ]
 
 { #category : #execution }

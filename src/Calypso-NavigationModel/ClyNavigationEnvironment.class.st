@@ -208,7 +208,7 @@ ClyNavigationEnvironment >> detachFromSystem [
 
 { #category : #accessing }
 ClyNavigationEnvironment >> getPlugin: environmentPluginClass [
-	^plugins detect: [ :each | each class = environmentPluginClass ] 
+	^plugins detect: [ :each | each class = environmentPluginClass ]
 ]
 
 { #category : #accessing }

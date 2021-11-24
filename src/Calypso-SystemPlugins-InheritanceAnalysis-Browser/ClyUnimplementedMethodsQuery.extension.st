@@ -5,7 +5,6 @@ ClyUnimplementedMethodsQuery >> decorateMethodGroupTableCell: anItemCellMorph of
 	super decorateMethodGroupTableCell: anItemCellMorph of: groupItem.
 	
 	anItemCellMorph label color: Color red
-	
 ]
 
 { #category : #'*Calypso-SystemPlugins-InheritanceAnalysis-Browser' }

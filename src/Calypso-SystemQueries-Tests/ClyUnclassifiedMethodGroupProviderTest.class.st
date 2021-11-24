@@ -6,10 +6,10 @@ Class {
 
 { #category : #running }
 ClyUnclassifiedMethodGroupProviderTest >> classSampleWhichHasGroup [
-	^ClySubclassN1OfClass1FromP1Mock 
+	^ClySubclassN1OfClass1FromP1Mock
 ]
 
 { #category : #running }
 ClyUnclassifiedMethodGroupProviderTest >> groupProviderClass [
-	^ClyUnclassifiedMethodGroupProvider 
+	^ClyUnclassifiedMethodGroupProvider
 ]

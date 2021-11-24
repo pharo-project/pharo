@@ -4,12 +4,12 @@ Extension { #name : #SycShowMethodVersionCommand }
 SycShowMethodVersionCommand class >> methodBrowserTabActivation [
 	<classAnnotation>
 	
-	^ClyBrowserTabCommandActivation for: ClyMethod asCalypsoItemContext 
+	^ClyBrowserTabCommandActivation for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : #'*Calypso-SystemTools-Core' }
 SycShowMethodVersionCommand class >> methodMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyMethod asCalypsoItemContext 
+	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyMethod asCalypsoItemContext
 ]

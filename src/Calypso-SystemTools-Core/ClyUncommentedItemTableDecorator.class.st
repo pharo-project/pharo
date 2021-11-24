@@ -20,7 +20,6 @@ ClyUncommentedItemTableDecorator class >> decorateMainTableCell: anItemCellMorph
 
 { #category : #decoration }
 ClyUncommentedItemTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
-	
 ]
 
 { #category : #decoration }

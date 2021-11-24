@@ -29,7 +29,7 @@ Class {
 { #category : #'instance creation' }
 ClyQueryResultBrowserAdapter class >> for: aQueryResult [
 	^self new 
-		actualResult: aQueryResult 
+		actualResult: aQueryResult
 ]
 
 { #category : #accessing }

@@ -10,7 +10,7 @@ Class {
 { #category : #execution }
 ClyRemoveExecutionCounterCommand class >> canBeExecutedInContext: aBrowserContext [
 
-	^aBrowserContext isSelectedItemHasExecutionCounter 
+	^aBrowserContext isSelectedItemHasExecutionCounter
 ]
 
 { #category : #activation }

@@ -9,7 +9,7 @@ Class {
 
 { #category : #'building groups' }
 ClyDeprecatedMethodGroupProvider >> createMethodGroupFor: aMethodQuery from: aClassScope [
-	^ClyMethodGroup named: 'deprecated' priority: -9 on: aMethodQuery 
+	^ClyMethodGroup named: 'deprecated' priority: -9 on: aMethodQuery
 ]
 
 { #category : #'building groups' }

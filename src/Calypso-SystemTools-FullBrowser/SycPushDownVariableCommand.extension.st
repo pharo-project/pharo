@@ -4,5 +4,5 @@ Extension { #name : #SycPushDownVariableCommand }
 SycPushDownVariableCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 2001 for: ClyFullBrowserVariableContext 
+	^CmdContextMenuActivation byRootGroupItemOrder: 2001 for: ClyFullBrowserVariableContext
 ]

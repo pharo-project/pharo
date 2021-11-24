@@ -6,5 +6,4 @@ ClyFailedTestMethodsQuery >> decorateMethodGroupTableCell: anItemCellMorph of: g
 	
 	"we can detect that yellow color is needed but it looks bad"
 	anItemCellMorph label color: Color red
-	
 ]

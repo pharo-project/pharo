@@ -12,7 +12,7 @@ ClySwitchToScopedViewCommand class >> toolbarOrder [
 { #category : #accessing }
 ClySwitchToScopedViewCommand >> defaultMenuItemName [
 	
-	^ 'Scoped View' 
+	^ 'Scoped View'
 ]
 
 { #category : #accessing }

@@ -10,7 +10,7 @@ Class {
 { #category : #'building groups' }
 ClyRequiredMethodGroupProvider >> createMethodGroupFor: aMethodQuery from: aClassScope [
 
-	^ClyMethodGroup named: 'should be implemented' priority: 8.5 on: aMethodQuery 
+	^ClyMethodGroup named: 'should be implemented' priority: 8.5 on: aMethodQuery
 ]
 
 { #category : #'building groups' }

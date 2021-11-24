@@ -36,5 +36,5 @@ ClyToolContextNavigatorMorph >> build [
 
 { #category : #operations }
 ClyToolContextNavigatorMorph >> restoreBrowserState [
-	ownerTool restoreBrowserState 
+	ownerTool restoreBrowserState
 ]

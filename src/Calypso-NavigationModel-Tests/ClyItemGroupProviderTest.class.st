@@ -10,12 +10,12 @@ Class {
 
 { #category : #testing }
 ClyItemGroupProviderTest class >> isAbstract [
-	^self == ClyItemGroupProviderTest 
+	^self == ClyItemGroupProviderTest
 ]
 
 { #category : #running }
 ClyItemGroupProviderTest >> groupProviderClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #running }

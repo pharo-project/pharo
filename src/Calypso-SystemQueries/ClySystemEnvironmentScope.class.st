@@ -65,7 +65,7 @@ ClySystemEnvironmentScope >> processesDo: aBlock [
 { #category : #'accessing - projects' }
 ClySystemEnvironmentScope >> projectQueryFor: aScope [ 
 	
-	^ environment system projectManager projectQueryFor: aScope 
+	^ environment system projectManager projectQueryFor: aScope
 ]
 
 { #category : #queries }

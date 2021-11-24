@@ -82,7 +82,7 @@ ClyTestResultProperty >> allCount: anObject [
 
 { #category : #accessing }
 ClyTestResultProperty >> brokenCount [
-	^failureCount + errorCount 
+	^failureCount + errorCount
 ]
 
 { #category : #presentation }

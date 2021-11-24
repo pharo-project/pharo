@@ -36,6 +36,4 @@ ClyRunTestsForPackageOrClassGroupCommand >> runTestsOf: aClassGroup [
 
 { #category : #initialization }
 ClyRunTestsForPackageOrClassGroupCommand >> setUpIconForMenuItem: aMenuItemMorph [
-
-
 ]

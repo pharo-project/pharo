@@ -55,7 +55,7 @@ Class {
 
 { #category : #decoration }
 ClyTableDecorator class >> browserPluginClass [
-	^ClyStandardBrowserPlugin 
+	^ClyStandardBrowserPlugin
 ]
 
 { #category : #decoration }
@@ -83,7 +83,7 @@ ClyTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceIte
 
 { #category : #testing }
 ClyTableDecorator class >> isAbstract [
-	^self = ClyTableDecorator 
+	^self = ClyTableDecorator
 ]
 
 { #category : #decoration }

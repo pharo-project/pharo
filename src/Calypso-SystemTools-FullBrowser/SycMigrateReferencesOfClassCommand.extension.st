@@ -4,5 +4,5 @@ Extension { #name : #SycMigrateReferencesOfClassCommand }
 SycMigrateReferencesOfClassCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 1.4 for: ClyFullBrowserClassContext 
+	^CmdContextMenuActivation byRootGroupItemOrder: 1.4 for: ClyFullBrowserClassContext
 ]

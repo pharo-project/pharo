@@ -54,7 +54,6 @@ ClyQueryBrowserMorph class >> browseClasses: classes [
 { #category : #opening }
 ClyQueryBrowserMorph class >> browseImplementorsOf: aSymbol [
 	^self openOn: (ClyMessageImplementorsQuery of: aSymbol)
-
 ]
 
 { #category : #opening }
@@ -215,7 +214,7 @@ ClyQueryBrowserMorph >> isClassSelected: aClass [
 { #category : #testing }
 ClyQueryBrowserMorph >> isQueryScopeActive: aScope [
 
-	^self activeScope = aScope 
+	^self activeScope = aScope
 ]
 
 { #category : #accessing }
@@ -306,7 +305,7 @@ ClyQueryBrowserMorph >> queryScopes [
 ClyQueryBrowserMorph >> queryScopes: scopesCollection [
 	queryScopes := (scopesCollection
 		reject: [ :each | each isBasedOnEmptyBasis])
-		as: OrderedCollection 
+		as: OrderedCollection
 ]
 
 { #category : #updating }

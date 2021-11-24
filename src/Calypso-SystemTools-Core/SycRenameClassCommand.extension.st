@@ -4,14 +4,14 @@ Extension { #name : #SycRenameClassCommand }
 SycRenameClassCommand class >> browserContextMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 1 for: ClyClass asCalypsoItemContext  
+	^CmdContextMenuActivation byRootGroupItemOrder: 1 for: ClyClass asCalypsoItemContext
 ]
 
 { #category : #'*Calypso-SystemTools-Core' }
 SycRenameClassCommand class >> browserShortcutActivation [
 	<classAnnotation>
 	
-	^CmdShortcutActivation renamingFor: ClyClass asCalypsoItemContext 
+	^CmdShortcutActivation renamingFor: ClyClass asCalypsoItemContext
 ]
 
 { #category : #'*Calypso-SystemTools-Core' }
@@ -25,5 +25,5 @@ SycRenameClassCommand class >> sourceCodeMenuActivation [
 SycRenameClassCommand class >> sourceCodeShortcutActivation [
 	<classAnnotation>
 	
-	^CmdShortcutActivation renamingFor: ClySourceCodeContext 
+	^CmdShortcutActivation renamingFor: ClySourceCodeContext
 ]

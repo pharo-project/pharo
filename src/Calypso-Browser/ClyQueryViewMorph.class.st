@@ -271,13 +271,13 @@ ClyQueryViewMorph >> defaultColor [
 
 { #category : #testing }
 ClyQueryViewMorph >> definesTree [
-	^treeStructure notEmpty 
+	^treeStructure notEmpty
 ]
 
 { #category : #accessing }
 ClyQueryViewMorph >> displayMainColumnBy: cellAndItemBlock [
 
-	self mainColumn displayBlock: cellAndItemBlock 
+	self mainColumn displayBlock: cellAndItemBlock
 ]
 
 { #category : #'drag and drop support' }
@@ -569,7 +569,7 @@ ClyQueryViewMorph >> neverRestoreSelection [
 
 { #category : #initialization }
 ClyQueryViewMorph >> newSelectionWith: dataSourceItems [
-	^self dataSource newSelectionWith: dataSourceItems 
+	^self dataSource newSelectionWith: dataSourceItems
 ]
 
 { #category : #accessing }
@@ -714,7 +714,7 @@ ClyQueryViewMorph >> showsItemsFromMultipleScope [
 { #category : #testing }
 ClyQueryViewMorph >> showsItemsFromQuery: aTypedQueryClass [
 
-	^self query executesQuery: aTypedQueryClass 
+	^self query executesQuery: aTypedQueryClass
 ]
 
 { #category : #testing }
@@ -747,7 +747,7 @@ ClyQueryViewMorph >> table [
 
 { #category : #controlling }
 ClyQueryViewMorph >> takeKeyboardFocus [
-	table takeKeyboardFocus 
+	table takeKeyboardFocus
 ]
 
 { #category : #accessing }
@@ -843,13 +843,13 @@ ClyQueryViewMorph >> whenDoubleClickDo: aBlock [
 { #category : #'events subscription' }
 ClyQueryViewMorph >> whenEnterKeyPressedDo: aBlock [
 
-	table bindKeyCombination: Character cr asShortcut toAction: aBlock 
+	table bindKeyCombination: Character cr asShortcut toAction: aBlock
 ]
 
 { #category : #'events subscription' }
 ClyQueryViewMorph >> whenEscapeKeyPressedDo: aBlock [
 
-	table bindKeyCombination: Character escape asShortcut toAction: aBlock 
+	table bindKeyCombination: Character escape asShortcut toAction: aBlock
 ]
 
 { #category : #controlling }

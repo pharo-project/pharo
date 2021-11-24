@@ -14,7 +14,7 @@ ClyBothMetaLevelClassScope class >> metaLevelForHierarchyOf: aClass [
 	For example using class side scope you can analyze hierarchy of ProtoObject. 
 	It will gives you only ProtoObject and ProtoObject class despite of
 	ProtoObject class superclass is not nil"
-	^aClass instanceSide 
+	^aClass instanceSide
 ]
 
 { #category : #'meta level' }

@@ -86,7 +86,7 @@ ClyMethodWatchQueryTest >> testFromTwoMethods [
 		self class >> #methodWithWatch. 
 		self class >> #methodWithoutWatch}.
 	
-	self assert: foundSelectors sorted asArray equals: #(#methodWithWatch) 
+	self assert: foundSelectors sorted asArray equals: #(#methodWithWatch)
 ]
 
 { #category : #tests }

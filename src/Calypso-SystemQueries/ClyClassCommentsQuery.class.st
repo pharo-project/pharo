@@ -59,7 +59,7 @@ ClyClassCommentsQuery class >> withString: aString caseSensitive: aBool from: aS
 
 	^self 
 		filteredBy: (ClySubstringPattern with: aString caseSensitive: aBool)
-		from: aScope 
+		from: aScope
 ]
 
 { #category : #'instance creation' }

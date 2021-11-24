@@ -11,7 +11,7 @@ ClyCompositeQueryTest class >> isAbstract [
 
 { #category : #running }
 ClyCompositeQueryTest >> queryClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #running }
@@ -149,7 +149,6 @@ ClyCompositeQueryTest >> testIsExecutedFromMultipleScopeWhenSubqueriesAreFromSco
 	}.
 	
 	self assert: query isExecutedFromMultipleScope.
-	
 ]
 
 { #category : #tests }
@@ -243,5 +242,4 @@ ClyCompositeQueryTest >> testNotExecutedFromSingleScopeWhenSubqueriesAreFromScop
 	}.
 	
 	self deny: query isExecutedFromSingleScope.
-	
 ]

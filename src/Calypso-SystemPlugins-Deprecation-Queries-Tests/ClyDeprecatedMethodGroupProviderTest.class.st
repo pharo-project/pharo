@@ -7,7 +7,7 @@ Class {
 { #category : #running }
 ClyDeprecatedMethodGroupProviderTest >> classSampleWhichHasGroup [
 
-	^ClyClassWithDeprecatedMethods 
+	^ClyClassWithDeprecatedMethods
 ]
 
 { #category : #running }

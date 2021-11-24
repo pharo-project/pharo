@@ -30,7 +30,7 @@ Class {
 { #category : #'instance creation' }
 ClyFilterQuery class >> for: originalQuery filter: aClyItemFilter [
 	^(self with: {originalQuery})
-		itemFilter: aClyItemFilter 
+		itemFilter: aClyItemFilter
 ]
 
 { #category : #comparing }

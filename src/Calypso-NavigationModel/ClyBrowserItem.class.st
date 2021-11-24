@@ -189,13 +189,13 @@ ClyBrowserItem >> depth: anObject [
 { #category : #accessing }
 ClyBrowserItem >> getProperty: propertyClass [ 
 
-	^properties detect: [ :each | each isKindOf: propertyClass ] 
+	^properties detect: [ :each | each isKindOf: propertyClass ]
 ]
 
 { #category : #accessing }
 ClyBrowserItem >> getProperty: propertyClass ifAbsent: absentBlock [
 
-	^properties detect: [ :each | each isKindOf: propertyClass ] ifNone: absentBlock 
+	^properties detect: [ :each | each isKindOf: propertyClass ] ifNone: absentBlock
 ]
 
 { #category : #testing }
@@ -209,7 +209,7 @@ ClyBrowserItem >> hasChildrenWhich: aBlockWithChildType [
 
 	^properties anySatisfy: [ :each | 
 		(each isKindOf: ClyItemChildrenTag) 
-			and: [ aBlockWithChildType value: each childrenType ] ] 
+			and: [ aBlockWithChildType value: each childrenType ] ]
 ]
 
 { #category : #testing }
@@ -243,7 +243,7 @@ ClyBrowserItem >> isEqualTo: anotherBrowserItem [
 { #category : #testing }
 ClyBrowserItem >> isMarkedWith: propertyClass [
 
-	^self hasProperty: propertyClass 
+	^self hasProperty: propertyClass
 ]
 
 { #category : #accessing }
@@ -331,7 +331,6 @@ ClyBrowserItem >> prepareIn: aNavigationEnvironment [
 		self decorateBy: each].
 	
 	isPrepared := true
-	
 ]
 
 { #category : #printing }

@@ -12,7 +12,7 @@ Class {
 { #category : #'instance creation' }
 RGClassDefinitionCompiler class >> on: anRGEnvironment [ 
 	^self new 
-		environment: anRGEnvironment 
+		environment: anRGEnvironment
 ]
 
 { #category : #accessing }

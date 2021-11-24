@@ -89,12 +89,11 @@ ClyAsyncQueryResult >> collectMetadata [
 	metadata := ClyQueryResultMetadata new.
 	environment pluginsDo: [:each | 
 		buildingQuery collectMetadataOf: self by: each	]
-
 ]
 
 { #category : #building }
 ClyAsyncQueryResult >> fillWith: queriedObjects [
-	self shouldNotImplement 
+	self shouldNotImplement
 ]
 
 { #category : #building }

@@ -7,7 +7,7 @@ Class {
 { #category : #running }
 ClyAsyncQueryResultTest >> createQuery [
 
-	^ClyLongExampleQuery from: ClyExampleScope of: String in: environment 
+	^ClyLongExampleQuery from: ClyExampleScope of: String in: environment
 ]
 
 { #category : #running }

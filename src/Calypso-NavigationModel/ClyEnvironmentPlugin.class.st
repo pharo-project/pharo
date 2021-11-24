@@ -94,12 +94,12 @@ ClyEnvironmentPlugin class >> initialize [
 
 { #category : #testing }
 ClyEnvironmentPlugin class >> isAbstract [
-	^self = ClyEnvironmentPlugin 
+	^self = ClyEnvironmentPlugin
 ]
 
 { #category : #testing }
 ClyEnvironmentPlugin class >> isAutoActivated [
-	^isAutoActivated ifNil: [ true ] 
+	^isAutoActivated ifNil: [ true ]
 ]
 
 { #category : #testing }
@@ -112,7 +112,7 @@ ClyEnvironmentPlugin class >> isAutoActivatedOn: aNavigationEnvironment [
 ClyEnvironmentPlugin class >> isRelatedTo: aSystem [
 	"My subclasses should decide what kind of system they are related to"
 	
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #controlling }

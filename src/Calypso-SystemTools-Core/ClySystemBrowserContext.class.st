@@ -111,7 +111,7 @@ ClySystemBrowserContext >> isInstanceSideMethodSelected [
 
 { #category : #'selection-messages' }
 ClySystemBrowserContext >> isMessageSelected [
-	^self isMethodSelected 
+	^self isMethodSelected
 ]
 
 { #category : #'selection-methods' }
@@ -223,12 +223,12 @@ ClySystemBrowserContext >> requestSinglePackage: queryTitle [
 
 { #category : #'selection-classes' }
 ClySystemBrowserContext >> selectedClassItems [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'selection-classes' }
 ClySystemBrowserContext >> selectedClasses [
-	^self actualSelectionFrom: self selectedClassItems 
+	^self actualSelectionFrom: self selectedClassItems
 ]
 
 { #category : #'selection-messages' }
@@ -238,7 +238,7 @@ ClySystemBrowserContext >> selectedMessages [
 
 { #category : #'selection-methods' }
 ClySystemBrowserContext >> selectedMethodItems [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'selection-methods' }
@@ -248,7 +248,7 @@ ClySystemBrowserContext >> selectedMethods [
 
 { #category : #'selection-packages' }
 ClySystemBrowserContext >> selectedPackageItems [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'selection-packages' }

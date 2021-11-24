@@ -6,7 +6,7 @@ Class {
 
 { #category : #running }
 ClyAllBasisCritiquesTest >> createQuery [
-	^ClyAllBasisCritiqueQuery from: self scopeWithCritiques 
+	^ClyAllBasisCritiqueQuery from: self scopeWithCritiques
 ]
 
 { #category : #tests }

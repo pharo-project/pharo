@@ -9,13 +9,13 @@ Class {
 
 { #category : #testing }
 ClyAbstractNavigationEnvironmentTest class >> isAbstract [
-	^self = ClyAbstractNavigationEnvironmentTest 
+	^self = ClyAbstractNavigationEnvironmentTest
 ]
 
 { #category : #running }
 ClyAbstractNavigationEnvironmentTest >> setUp [
 	super setUp.
-	self setUpEnvironment 
+	self setUpEnvironment
 ]
 
 { #category : #running }

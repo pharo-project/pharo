@@ -48,7 +48,7 @@ ClyQueryResultMetadata >> addProperty: aProperty [
 { #category : #accessing }
 ClyQueryResultMetadata >> getProperty: aPropertyClass [ 
 
-	^properties detect: [ :each | each isKindOf: aPropertyClass ] 
+	^properties detect: [ :each | each isKindOf: aPropertyClass ]
 ]
 
 { #category : #testing }

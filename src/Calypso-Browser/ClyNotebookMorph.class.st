@@ -73,7 +73,7 @@ ClyNotebookMorph >> newToolbarMorph [
 		changeTableLayout;
 		listDirection:#leftToRight;
 		cellInset: 4;
-		yourself 
+		yourself
 ]
 
 { #category : #private }

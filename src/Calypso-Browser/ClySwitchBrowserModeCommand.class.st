@@ -15,7 +15,7 @@ Class {
 
 { #category : #testing }
 ClySwitchBrowserModeCommand class >> isAbstract [
-	^self = ClySwitchBrowserModeCommand 
+	^self = ClySwitchBrowserModeCommand
 ]
 
 { #category : #execution }
@@ -32,5 +32,5 @@ ClySwitchBrowserModeCommand >> createToolbarItemFor: aCommandActivator [
 
 { #category : #testing }
 ClySwitchBrowserModeCommand >> isAppliedToBrowser [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

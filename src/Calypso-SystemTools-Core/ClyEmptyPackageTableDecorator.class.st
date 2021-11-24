@@ -16,7 +16,6 @@ ClyEmptyPackageTableDecorator class >> decorateMainTableCell: anItemCellMorph of
 
 { #category : #decoration }
 ClyEmptyPackageTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
-
 ]
 
 { #category : #decoration }

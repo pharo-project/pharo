@@ -111,7 +111,7 @@ ClyClassHierarchyMap >> classes [
 
 { #category : #accessing }
 ClyClassHierarchyMap >> classes: classCollection [
-	classes := classCollection asIdentitySet 
+	classes := classCollection asIdentitySet
 ]
 
 { #category : #accessing }
@@ -154,7 +154,6 @@ ClyClassHierarchyMap >> includesClass: aClass [
 ClyClassHierarchyMap >> initialize [
 	super initialize.
 	parentMap := IdentityDictionary new.
-	
 ]
 
 { #category : #accessing }

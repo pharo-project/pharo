@@ -68,7 +68,7 @@ ClyAsyncQuery >> asyncResult: anObject [
 
 { #category : #execution }
 ClyAsyncQuery >> buildResult: aQueryResult [
-	self shouldNotImplement 
+	self shouldNotImplement
 ]
 
 { #category : #execution }

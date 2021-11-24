@@ -17,5 +17,5 @@ ClyProjectManager >> projectQueryFor: aClySystemEnvironmentScope [
 
 { #category : #'api - queries' }
 ClyProjectManager >> queryClass [
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]

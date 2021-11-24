@@ -24,5 +24,5 @@ ClyCriticBrowserPlugin >> isSlow [
 
 { #category : #accessing }
 ClyCriticBrowserPlugin >> priority [
-	^SmallInteger maxVal 
+	^SmallInteger maxVal
 ]

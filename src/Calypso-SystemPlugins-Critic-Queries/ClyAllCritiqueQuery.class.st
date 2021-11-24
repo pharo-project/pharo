@@ -14,7 +14,7 @@ Class {
 
 { #category : #execution }
 ClyAllCritiqueQuery >> analyzedObjectsDo: aBlock [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #execution }

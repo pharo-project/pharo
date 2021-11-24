@@ -39,12 +39,10 @@ ClyBrowserButtonMorph >> initialize [
 ClyBrowserButtonMorph >> mouseEnter: evt [
 	super mouseEnter: evt.
 	self currentHand showTemporaryCursor: Cursor webLink.
-
 ]
 
 { #category : #installing }
 ClyBrowserButtonMorph >> mouseLeave: evt [
 	super mouseLeave: evt.
 	self currentHand showTemporaryCursor: nil
-
 ]

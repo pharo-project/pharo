@@ -69,7 +69,7 @@ ClyStatusBarMorph >> buildContextBar [
 { #category : #accessing }
 ClyStatusBarMorph >> clear [
 	commandBar removeAllMorphs.
-	contextBar removeAllMorphs 
+	contextBar removeAllMorphs
 ]
 
 { #category : #initialization }

@@ -9,7 +9,7 @@ Object >> adoptForNewCalypsoQuery [
 { #category : #'*Calypso-NavigationModel' }
 Object >> asCalypsoBrowserItem [
 
-	^self calypsoEnvironmentType convertToCalypsoBrowserItem: self 
+	^self calypsoEnvironmentType convertToCalypsoBrowserItem: self
 ]
 
 { #category : #'*Calypso-NavigationModel' }
@@ -62,7 +62,7 @@ Object >> printAsConstantQueryItem [
 { #category : #'*Calypso-NavigationModel' }
 Object >> printSystemPath [
 
-	^self calypsoEnvironmentType printSystemPathTo: self 
+	^self calypsoEnvironmentType printSystemPathTo: self
 ]
 
 { #category : #'*Calypso-NavigationModel' }

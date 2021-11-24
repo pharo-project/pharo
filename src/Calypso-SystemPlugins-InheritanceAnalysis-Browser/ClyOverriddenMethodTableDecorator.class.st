@@ -12,7 +12,7 @@ Class {
 
 { #category : #decoration }
 ClyOverriddenMethodTableDecorator class >> browserPluginClass [
-	^ClyInheritanceAnalysisBrowserPlugin 
+	^ClyInheritanceAnalysisBrowserPlugin
 ]
 
 { #category : #decoration }
@@ -58,7 +58,6 @@ ClyOverriddenMethodTableDecorator class >> decorateTableCell: anItemCellMorph wi
 		button vResizing: #spaceFill.
 		panel addMorph: button].
 	anItemCellMorph definitionMorph: panel
-
 ]
 
 { #category : #decoration }

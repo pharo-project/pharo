@@ -28,7 +28,7 @@ Class {
 { #category : #'instance creation' }
 ClySortedQueryResult class >> using: aSortFunction [ 
 	^self new 
-		sortFunction: aSortFunction 
+		sortFunction: aSortFunction
 ]
 
 { #category : #comparing }
@@ -44,7 +44,7 @@ ClySortedQueryResult >> = anObject [
 
 { #category : #initialization }
 ClySortedQueryResult >> defaultItems [
-	^SortedCollection sortBlock: sortFunction 
+	^SortedCollection sortBlock: sortFunction
 ]
 
 { #category : #building }

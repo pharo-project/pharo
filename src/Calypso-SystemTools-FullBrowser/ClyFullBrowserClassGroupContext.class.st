@@ -16,7 +16,7 @@ ClyFullBrowserClassGroupContext class >> selectionStrategy [
 
 { #category : #testing }
 ClyFullBrowserClassGroupContext >> isClassGroupSelected [
-	^self hasSelectedItems 
+	^self hasSelectedItems
 ]
 
 { #category : #testing }
@@ -42,7 +42,7 @@ ClyFullBrowserClassGroupContext >> lastSelectedClassGroup [
 { #category : #'selection-class groups' }
 ClyFullBrowserClassGroupContext >> lastSelectedClassTag [
 	
-	^self lastSelectedObjectIn: self selectedClassTags 
+	^self lastSelectedObjectIn: self selectedClassTags
 ]
 
 { #category : #'selection-class groups' }

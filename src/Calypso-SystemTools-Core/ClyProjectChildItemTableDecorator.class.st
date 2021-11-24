@@ -13,7 +13,6 @@ ClyProjectChildItemTableDecorator class >> decorateMainTableCell: anItemCellMorp
 
 { #category : #decoration }
 ClyProjectChildItemTableDecorator class >> decorateTableCell: anItemCellMorph of: groupItem [
-
 ]
 
 { #category : #decoration }

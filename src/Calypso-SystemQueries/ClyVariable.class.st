@@ -43,7 +43,7 @@ ClyVariable class >> itemsSortOrderForCalypso [
 
 { #category : #'instance creation' }
 ClyVariable class >> named: aSymbol definedIn: aClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'instance creation' }
@@ -105,7 +105,7 @@ ClyVariable >> definingClass: anObject [
 { #category : #accessing }
 ClyVariable >> detectDefiningClassFrom: anUserClass [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #comparing }
@@ -125,12 +125,12 @@ ClyVariable >> isAccessedIn: aMethod [
 
 { #category : #testing }
 ClyVariable >> isAccessibleFrom: aClass [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
 ClyVariable >> isClassVariable [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -144,7 +144,7 @@ ClyVariable >> isReadIn: aMethod [
 	
 	(self isAccessibleFrom: aMethod origin)	ifFalse: [ ^false ].
 	
-	^actualVariable isReadIn: aMethod 
+	^actualVariable isReadIn: aMethod
 ]
 
 { #category : #testing }
@@ -152,7 +152,7 @@ ClyVariable >> isWrittenIn: aMethod [
 	
 	(self isAccessibleFrom: aMethod origin)	ifFalse: [ ^false ].
 		
-	^actualVariable isWrittenIn: aMethod 
+	^actualVariable isWrittenIn: aMethod
 ]
 
 { #category : #accessing }

@@ -20,14 +20,14 @@ ClyCommitMCPackageCommand class >> canBeExecutedInContext: aToolContext [
 ClyCommitMCPackageCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemOrder: 10000 for: ClyFullBrowserPackageContext 
+	^CmdContextMenuActivation byRootGroupItemOrder: 10000 for: ClyFullBrowserPackageContext
 ]
 
 { #category : #activation }
 ClyCommitMCPackageCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 	
-	^CmdShortcutActivation by: $s meta for: ClyFullBrowserGlobalContext 
+	^CmdShortcutActivation by: $s meta for: ClyFullBrowserGlobalContext
 ]
 
 { #category : #accessing }
