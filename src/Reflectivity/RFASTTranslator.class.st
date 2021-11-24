@@ -258,6 +258,17 @@ RFASTTranslator >> visitMethodNode: aMethodNode [
 ]
 
 { #category : #'visitor - double dispatching' }
+RFASTTranslator >> visitPragmaNode: aPragmaNode [  
+
+	self emitPreamble: aPragmaNode.
+	self emitMetaLinkBefore: aPragmaNode.
+	aPragmaNode hasMetalinkInstead
+		ifTrue: [ self emitMetaLinkInstead: aPragmaNode ]
+		ifFalse: [super visitPragmaNode: aPragmaNode  ].
+	self emitMetaLinkAfterNoEnsure: aPragmaNode
+]
+
+{ #category : #'visitor - double dispatching' }
 RFASTTranslator >> visitReturnNode: aReturnNode [ 
 
 	valueTranslator visitNode: aReturnNode value.

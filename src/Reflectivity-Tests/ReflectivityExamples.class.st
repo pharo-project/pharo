@@ -166,6 +166,12 @@ ReflectivityExamples >> exampleMethodWithMetaLinkOptions [
 ]
 
 { #category : #examples }
+ReflectivityExamples >> examplePragma [
+ 	<tudelu>
+ 	^ 4
+]
+
+{ #category : #examples }
 ReflectivityExamples >> examplePrimitiveMethod [
 	"returns image path"
 	<primitive: 121>

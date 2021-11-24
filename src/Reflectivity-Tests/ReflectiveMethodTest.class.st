@@ -211,6 +211,29 @@ ReflectiveMethodTest >> testSetLinkOnInstanceVariableAndUninstall [
 ]
 
 { #category : #'tests - links' }
+ReflectiveMethodTest >> testSetLinkOnPragma [ 
+
+ 	| link a b |
+ 	link := MetaLink new
+ 		        metaObject: #node;
+ 		        selector: #tagExecuted;
+ 		        yourself.
+ 	(ReflectivityExamples >> #examplePragma) compiledMethod recompile.
+ 	a := ReflectivityExamples new examplePragma. 
+ 	(ReflectivityExamples >> #examplePragma) ast nodesDo: [ :n | 
+ 		n removeProperty: #tagExecuted ifAbsent: [  ].
+ 		n isPragma ifTrue: [ 
+ 			n
+ 				propertyAt: #tagExecuted put: false;
+ 				link: link ] ].
+ 	b := ReflectivityExamples new examplePragma.
+ 	link uninstall.
+ 	self assert: a equals: b.
+ 	(ReflectivityExamples >> #examplePragma) ast nodesDo: [ :n | 
+ 		n isPragma ifTrue: [ self assert: (n propertyAt: #tagExecuted) ] ]
+]
+
+{ #category : #'tests - links' }
 ReflectiveMethodTest >> testSetLinkOnPrimitive [
 	| methodNode link |
 	selector := #examplePrimitiveMethod.
