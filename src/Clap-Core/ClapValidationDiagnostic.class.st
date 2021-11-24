@@ -45,5 +45,4 @@ ClapValidationDiagnostic >> validation: aValidation subject: anExpression [
 	validation := aValidation.
 	subject := anExpression.
 	success := validation matches: subject
-
 ]

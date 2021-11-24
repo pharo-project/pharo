@@ -37,7 +37,6 @@ ClapCodeEvaluator >> execute [
 	
 	self context hasSessionChanged "we might be waking up after a #save:andQuit:"
 		ifFalse: [ self outputStreamDo: [ :out | out print: result; lf ] ]
-
 ]
 
 { #category : #accessing }
