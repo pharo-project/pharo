@@ -51,7 +51,7 @@ CDPointClassParserTest >> secondInstanceVariableName [
 { #category : #tests }
 CDPointClassParserTest >> superclassName [
 	self flag: #Revisit. "because this should be string according to superclasName method."
-	^ #Object 
+	^ #Object
 ]
 
 { #category : #helpers }

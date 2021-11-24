@@ -53,7 +53,6 @@ CDFluidClassDefinitionParser >> handleClassAndSuperclassOf: aNode [
 
 	superclassNode ifNotNil: [ self handleSuperclassNode: superclassNode ].
 	self handleClassName: classNameNode.
-
 ]
 
 { #category : #'handling  nodes' }

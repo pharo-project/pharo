@@ -56,7 +56,7 @@ CDCompiledMethodClassParserTest >> testClassDefFromLegacyStringHasSlots [
 { #category : #helpers }
 CDCompiledMethodClassParserTest >> testCompiledMethodClass [
 
-	self assert: classDefinition layoutClass equals: CompiledMethodLayout 
+	self assert: classDefinition layoutClass equals: CompiledMethodLayout
 ]
 
 { #category : #tests }
