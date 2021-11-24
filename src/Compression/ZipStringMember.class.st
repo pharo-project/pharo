@@ -35,7 +35,6 @@ ZipStringMember >> initialize [
 	super initialize.
 	self contents: ''.
 	compressionMethod := desiredCompressionMethod := CompressionStored.
-
 ]
 
 { #category : #private }

@@ -77,7 +77,6 @@ DeflateStream >> deflateBlock [
 			blockStart := blockPosition].
 		"Make room for more data"
 		self moveContentsToFront].
-
 ]
 
 { #category : #deflating }
@@ -248,7 +247,6 @@ DeflateStream >> initialize [
 DeflateStream >> initializeHashTables [
 	hashHead := WordArray new: 1 << HashBits.
 	hashTail := WordArray new: WindowSize.
-
 ]
 
 { #category : #deflating }
