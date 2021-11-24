@@ -58,7 +58,6 @@ RBArrayErrorNode >> repairCollectionFromStart [
 						 collection removeLast. ].
 	result add: removedStatements.
 	^collection.
-	
 ]
 
 { #category : #testing }
@@ -81,6 +80,4 @@ RBArrayErrorNode >> repairCollectionFromStop [
 						 collection removeFirst. ].
 	result add: removedStatements.
 	^collection.
-	
-	
 ]

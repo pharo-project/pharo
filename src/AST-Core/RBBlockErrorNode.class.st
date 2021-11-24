@@ -52,5 +52,4 @@ RBBlockErrorNode >> repairCollectionFromStart [
 						 collection removeLast. ].
 	result add: removedStatements.
 	^collection.
-	
 ]

@@ -60,8 +60,6 @@ RBFormatterTest >> testFormatPragmaWithLastIsSymbolArgument [
 	tree := self parseMethod: inputSource.
 	outputSource := self formatterClass new format: tree.
 	self shouldnt: [self parseMethod: outputSource] raise: SyntaxErrorNotification
-
-
 ]
 
 { #category : #tests }
@@ -79,7 +77,6 @@ RBFormatterTest >> testParseError [
 	inputSource := ')'.
    errorNode := self parseFaultyExpression: inputSource.
 	self assert: errorNode source equals: errorNode formattedCode
-
 ]
 
 { #category : #tests }
@@ -99,7 +96,6 @@ RBFormatterTest >> testPreserveLiteralArrayFormat [
 	inputSource := '#( #withnumbersign nonumbersign ''string'' )'.
    literalArrayNode := self parseExpression: inputSource.
 	self assert: literalArrayNode source equals: literalArrayNode formattedCode
-
 ]
 
 { #category : #tests }
@@ -111,5 +107,4 @@ RBFormatterTest >> testPreserveLiteralNumberFormat [
 	inputSource := '#( 1 4r33 16r0F 0.02 2e-2 -1 )'.
    numbersNode := self parseExpression: inputSource.
 	self assert: numbersNode source equals: numbersNode formattedCode
-
 ]

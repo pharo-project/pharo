@@ -33,7 +33,6 @@ RBParserTest >> parseError: each [
 	
 	self parseError: each first onError: [ :string :pos | ^ self assert: pos equals: each last ].
 	self assert: false description: 'Parser didn''t fail'
-	
 ]
 
 { #category : #private }
@@ -81,7 +80,6 @@ array would"
 	self deny: arrayNode isArray.
 	self assert: arrayNode isDynamicArray.
 	self deny: nonArrayNode isDynamicArray
-
 ]
 
 { #category : #'tests - Array' }
@@ -136,7 +134,6 @@ RBParserTest >> testBadlyPlacedPragmaRaiseError [
 	
 	self should: [(self parserClass parseMethod: 'foo | token |  token messaged <some: #tag> ^token')]
 		  raise: 	SyntaxErrorNotification.
-	
 ]
 
 { #category : #'tests - Interval' }
@@ -203,7 +200,6 @@ RBParserTest >> testBlockNodeIsUsed [
 	tree := self parserClass parseMethod:
 			'tmp ^[ 3+4 ]'.
 	self assert: tree body statements last isUsed
-	
 ]
 
 { #category : #tests }
@@ -222,7 +218,6 @@ RBParserTest >> testBlockReturnNode [
 	tree := self parserClass parseMethod:
 			'tmp ^ [ 3+4 ]'.
 	self assert: tree lastIsReturn
-	
 ]
 
 { #category : #'tests - parsing' }
@@ -579,9 +574,6 @@ RBParserTest >> testGarbageForgottenDotAfterAssignement [
 	self assert: error isMessage.
 	self assert: error receiver value equals: 2.
 	self assert: error selectorNode equals: (RBSelectorNode value: #temp)
-	
-	
-	
 ]
 
 { #category : #'garbage tests' }
@@ -598,8 +590,6 @@ RBParserTest >> testGarbageTemporaryVariable [
 	tree := self parseFaultyExpression: '| temp'.
 	self assert: tree isFaulty.
 	self assert: tree errorMessage equals: '''|'' expected'.
-	
-	
 ]
 
 { #category : #'garbage tests' }
@@ -608,8 +598,6 @@ RBParserTest >> testGarbageTemporaryVariableHasMissingClosure [
 	tree := self parseFaultyExpression: '| temp'.
 	self assert: tree isFaulty.
 	self assert: tree errorMessage equals: '''|'' expected'.
-	
-	
 ]
 
 { #category : #'garbage tests' }
@@ -623,8 +611,6 @@ RBParserTest >> testGarbageTemporaryVariableIsWrong [
 	errorNode := tree statements first.
 	self assert: errorNode isParseError.
 	self assert: errorNode errorMessage equals: '''|'' expected'.
-	
-	
 ]
 
 { #category : #'tests - Interval' }
@@ -1001,7 +987,6 @@ RBParserTest >> testMethodNodeEndAtTheEndOfTheString [
 	tree := (self parserClass parseMethod: 'foo kung foo. 1+2+3. #''alabama''.  ').
 	self assert: tree source equals: 'foo kung foo. 1+2+3. #''alabama''.  '.
 	self assert: tree stop equals: tree newSource size.
-	
 ]
 
 { #category : #'tests - Intervals' }
@@ -1020,8 +1005,6 @@ RBParserTest >> testMethodNodeStartAtOne [
 	
 	tree := (self parserClass parseMethod: '  foo koong. ^foo').
 	self assert: tree start equals: 1.
-	
-	
 ]
 
 { #category : #tests }
@@ -1113,7 +1096,6 @@ RBParserTest >> testParentOfArgumentNodeIsMethodNode [
 	tree := self parseMethod: 'Selector: argument ^return something.'.
 	self assert: tree arguments first isVariable.
 	self assert: tree arguments first parent equals: tree.
-	
 ]
 
 { #category : #'tests - Parentage' }
@@ -1129,7 +1111,6 @@ RBParserTest >> testParentOfSequenceNodeIsMethodNode [
 	tree := self parseMethod: 'Selector ^return something.'.
 	self assert: tree body isSequence.
 	self assert: tree body parent equals: tree.
-	
 ]
 
 { #category : #'tests - Parentage' }
@@ -1137,7 +1118,6 @@ RBParserTest >> testParentOfStatementsIsSequenceNode [
 	| tree |
 	tree := self parseMethod: 'Selector: argument "comment node" | temporaries | message node. #literalNode . #(literal array node). {array node}. [block node]. cascade node; cascaded. assignement := node. ^return node'.
 	(tree body statements) do: [ :each | self assert: each parent equals: tree body].
-	
 ]
 
 { #category : #tests }
@@ -1221,8 +1201,6 @@ RBParserTest >> testParseFaultyMethod [
 			self assert: node isMethod.
 			self assert: node isFaulty
 	].
-
-	
 ]
 
 { #category : #'tests - parsing faulty' }
@@ -1236,7 +1214,6 @@ RBParserTest >> testParseFaultyMethodExpresionHasErrorNodeAsFinal [
 	self assert: node isFaulty.
 	self assert: node statements size equals: 2.
 	self assert: node statements last isFaulty
-	
 ]
 
 { #category : #'tests - parsing faulty' }
@@ -1250,7 +1227,6 @@ RBParserTest >> testParseFaultyMethodExpressionHasErrorNodeAsFinal [
 	self assert: node isFaulty.
 	self assert: node statements size equals: 2.
 	self assert: node statements last isFaulty
-	
 ]
 
 { #category : #'tests - parsing faulty' }
@@ -1271,9 +1247,6 @@ RBParserTest >> testParseFaultyMethodStop [
 	self assert: node isMethod.
 	self assert: node isFaulty.
 	self assert: node stop equals: 28.
-
-
-	
 ]
 
 { #category : #'tests - parsing faulty' }
@@ -1596,8 +1569,6 @@ RBParserTest >> testPragmaConstantLiteralArgument [
 	self shouldnt:[self parserClass parseMethod: primitiveDeclartion] raise: SyntaxErrorNotification.
 	self shouldnt:[self parserClass 	parseMethod: validPragma] raise: SyntaxErrorNotification.
 	self should:[self parserClass parseMethod: invalidPragma] raise: SyntaxErrorNotification.
-	
-
 ]
 
 { #category : #'error testing' }
@@ -1624,7 +1595,6 @@ RBParserTest >> testPragmaImplicitLiteralArrayIsInvalid [
 	^ self'.
 	"should work"
 	self shouldnt: [self parserClass parseMethod: pragmaWithStringAsArgument] raise: SyntaxErrorNotification.
-
 ]
 
 { #category : #'error testing' }
@@ -1753,7 +1723,6 @@ RBParserTest >> testQueryingPrimitiveErrorVar [
 	self assert: (tree body whoDefines:'copy') equals: tree body.
 	self assert: (tree blockNodes first body whoDefines: 'nothing') equals: tree blockNodes first body.
 	self assert: (tree body whoDefines: 'ec') equals: tree.
-
 ]
 
 { #category : #tests }
@@ -1817,7 +1786,6 @@ RBParserTest >> testSequenceNodeEndAtTheEndOfTheString [
 	tree := (self parserClass parseMethod: 'foo kung foo. 1+2+3. #''alabama''.').
 	self assert: tree source equals: 'foo kung foo. 1+2+3. #''alabama''.'.
 	self assert: tree body stop equals: tree source size.
-	
 ]
 
 { #category : #'tests - Intervals' }
@@ -1839,8 +1807,6 @@ RBParserTest >> testSequenceNodeStartAtFirstTokenAfterTheSelector [
 	"There are 2 spaces before foo."
 	tree := (self parserClass parseMethod: '  foo koong. ^foo').
 	self assert: tree body start equals: 7.
-	
-	
 ]
 
 { #category : #'tests - parsing' }
