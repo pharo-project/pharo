@@ -54,7 +54,7 @@ CDSlotNode >> binding [
 CDSlotNode >> initializationMessage [
 	"Return the message node representing the initialization part of a slot."
 	
-	^ initializationMessage 
+	^ initializationMessage
 ]
 
 { #category : #accessing }

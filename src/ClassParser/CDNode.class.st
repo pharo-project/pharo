@@ -126,7 +126,6 @@ CDNode >> isVariable [
 CDNode >> originalNode [
 
 	^originalNode.
-	
 ]
 
 { #category : #accessing }
@@ -139,7 +138,6 @@ CDNode >> originalNode: aNode [
 CDNode >> originalNodeSource [
 
 	^originalNode source.
-	
 ]
 
 { #category : #accessing }

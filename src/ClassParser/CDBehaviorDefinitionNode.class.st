@@ -129,7 +129,6 @@ CDBehaviorDefinitionNode >> slots: aCollection [
 	
 	slotNodes := aCollection.
 	aCollection do: [ :each | self addChild: each ]
-	
 ]
 
 { #category : #accessing }

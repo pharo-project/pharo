@@ -19,7 +19,7 @@ CDExistingClassDefinitionTest >> className [
 { #category : #helpers }
 CDExistingClassDefinitionTest >> firstInstanceVariableName [
 	
-	^ 'instVar1' 
+	^ 'instVar1'
 ]
 
 { #category : #helpers }
@@ -42,7 +42,7 @@ CDExistingClassDefinitionTest >> testGettingExistingClass [
 	
 	| class |
 	class := classDefinition existingClassIfAbsent: [].
-	self assert: class equals: CDClassWithFullDefinitionExample 
+	self assert: class equals: CDClassWithFullDefinitionExample
 ]
 
 { #category : #helpers }

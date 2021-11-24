@@ -80,7 +80,6 @@ CDClassDefinitionNode >> sharedSlotNodes [
 { #category : #accessing }
 CDClassDefinitionNode >> sharedSlots [
 	^ sharedSlotNodes ifNil:[ sharedSlotNodes := Array new ]
-	
 ]
 
 { #category : #accessing }
@@ -122,7 +121,7 @@ CDClassDefinitionNode >> superclassNameNode: anObject [
 { #category : #accessing }
 CDClassDefinitionNode >> tag [
 
-	^ tag 
+	^ tag
 ]
 
 { #category : #accessing }
