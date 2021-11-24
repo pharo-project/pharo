@@ -20,14 +20,14 @@ Class {
 
 { #category : #testing }
 CmdOpenContextMenuCommand class >> isAbstract [
-	^self = CmdOpenContextMenuCommand 
+	^self = CmdOpenContextMenuCommand
 ]
 
 { #category : #execution }
 CmdOpenContextMenuCommand >> activationStrategy [
 	"Subclasses should return specific kind of activation strategy
 	which will be used to collect context menu commands"
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }

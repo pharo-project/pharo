@@ -16,7 +16,6 @@ CmdSpecDragPassenger class >> from: sourcePresenter on: aDragPassenger with: dra
 		sourcePresenter: sourcePresenter;
 		commandPassenger: aDragPassenger;
 		draggedItems: draggedItems
-
 ]
 
 { #category : #converting }
