@@ -3,7 +3,7 @@ Extension { #name : #ClassDescription }
 { #category : #'*CodeExport' }
 ClassDescription >> fileOutCategory: catName [ 
 
-	self organization fileOutCategory: catName 
+	self organization fileOutCategory: catName
 ]
 
 { #category : #'*CodeExport' }
@@ -103,7 +103,6 @@ ClassDescription >> printCategoryChunk: category on: aFileStream withStamp: chan
 			[strm nextPutAll: ' stamp: '; print: changeStamp].
 		priorMethod ~~ nil ifTrue:
 			[strm nextPutAll: ' prior: '; print: priorMethod sourcePointer]]).
-	
 ]
 
 { #category : #'*CodeExport' }

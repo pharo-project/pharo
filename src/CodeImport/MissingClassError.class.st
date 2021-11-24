@@ -66,12 +66,10 @@ MissingClassError >> isResumable [
 MissingClassError >> superclassName [
 
 	^ superclassName ifNil: [ superclassName := 'Object' ]
-
 ]
 
 { #category : #accessing }
 MissingClassError >> superclassName: aString [
 
 	superclassName := aString
-
 ]
