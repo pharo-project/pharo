@@ -64,8 +64,6 @@ CmUICommandTest >> testIconName [
 	command iconName: #add.
 	
 	self assert: command iconName equals: #add
-	
-	
 ]
 
 { #category : #tests }

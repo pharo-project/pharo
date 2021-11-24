@@ -41,5 +41,5 @@ CmCommandError >> command [
 
 { #category : #accessing }
 CmCommandError >> command: aCmSpecCommand [ 
-	command := aCmSpecCommand 
+	command := aCmSpecCommand
 ]

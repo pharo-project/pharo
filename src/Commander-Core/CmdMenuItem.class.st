@@ -31,33 +31,33 @@ CmdMenuItem >> actualParentGroup [
 
 { #category : #accessing }
 CmdMenuItem >> description [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 CmdMenuItem >> findGroupLike: menuGroupClass ifExists: aBlockClosure [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 CmdMenuItem >> icon [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
 CmdMenuItem >> includesCommand: aCommandClass [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
 CmdMenuItem >> isActive [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
 CmdMenuItem >> isCommandItem [
-	^self subclassResponsibility 
+	^self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -77,17 +77,17 @@ CmdMenuItem >> isLastInMenu [
 
 { #category : #testing }
 CmdMenuItem >> isSimilarTo: aMenuItem [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 CmdMenuItem >> name [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 CmdMenuItem >> order [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -109,5 +109,5 @@ CmdMenuItem >> pathToRoot [
 
 { #category : #updating }
 CmdMenuItem >> synchronizeContentWith: anotherMenuItem [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

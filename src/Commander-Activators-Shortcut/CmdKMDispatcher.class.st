@@ -67,5 +67,5 @@ CmdKMDispatcher >> dispatch: anEventBuffer [
 		executed := shortcut tryExecuteCommandInContext: context byEvents: anEventBuffer.
 		executed ifTrue: [ ^self ] ].
 	
-	super dispatch: anEventBuffer 
+	super dispatch: anEventBuffer
 ]
