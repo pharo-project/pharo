@@ -269,6 +269,7 @@ Process >> doTerminationFromAnotherProcess [
 
 	"Mark the context as terminated"
 	suspendedContext terminateTo: nil.
+	suspendedContext setSender: nil receiver: self method: (Process>>#endProcess) arguments: {}
 ]
 
 { #category : #private }
@@ -305,9 +306,10 @@ Process >> endProcess [
 	thisContext terminateTo: nil.   "set thisContext sender to nil"
 	self suspend.
   
-  "Restart this method.
-  This will terminate and suspend again in case of sending resume to a terminated process"
-	^thisContext restart
+	"Restart this method.
+	This will terminate and suspend again in case of sending resume to a terminated process"
+	"the following line commented out because current debugger step over tests fail with this feature"
+	"^thisContext restart"
 ]
 
 { #category : #private }
