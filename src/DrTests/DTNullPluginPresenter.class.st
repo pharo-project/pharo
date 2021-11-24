@@ -12,5 +12,4 @@ DTNullPluginPresenter class >> defaultSpec [
 
 { #category : #updating }
 DTNullPluginPresenter >> updateUI [
-	
 ]

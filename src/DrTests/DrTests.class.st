@@ -64,7 +64,7 @@ DrTests class >> menuCommandOn: aBuilder [
 		"keyText: 'o, u';" "Note: Removed the shortcut to not clash with SUnitRunner keybinding."
 		help: '(Preview) Let you run and debug SUnit tests.';
 		icon: self taskbarIcon;
-		withSeparatorAfter	
+		withSeparatorAfter
 ]
 
 { #category : #api }
@@ -182,7 +182,7 @@ DrTests >> menuForSelectedResult: menu [
 { #category : #accessing }
 DrTests >> packagesSelected [
 	
-	^ pluginPresenter packagesSelected 
+	^ pluginPresenter packagesSelected
 ]
 
 { #category : #accessing }
@@ -205,7 +205,7 @@ DrTests >> pluginsDropList [
 { #category : #accessing }
 DrTests >> selectedItems [
 	
-	^ pluginPresenter selectedItems 
+	^ pluginPresenter selectedItems
 ]
 
 { #category : #'accessing - model' }
@@ -223,7 +223,7 @@ DrTests >> statusLabel [
 { #category : #'api - locking' }
 DrTests >> subwidgetsToLock [
 
-	^ pluginPresenter subwidgetsToLock 
+	^ pluginPresenter subwidgetsToLock
 ]
 
 { #category : #'private - actions' }
@@ -267,7 +267,6 @@ DrTests >> title [
 DrTests >> updateStatus: aString [
 	self statusLabel
 		label: ('{1}: {2}' format: { self dateAndTimeString . aString }).
-
 ]
 
 { #category : #updating }
@@ -282,7 +281,6 @@ DrTests >> updateUI [
 	super updateUI.
 	
 	pluginPresenter updateUI.
-
 ]
 
 { #category : #updating }

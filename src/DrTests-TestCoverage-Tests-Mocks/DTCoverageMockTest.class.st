@@ -12,8 +12,6 @@ DTCoverageMockTest >> setUp [
 
 	super setUp.
 	mockObj := MockForCoverage new.
-
-	
 ]
 
 { #category : #running }
