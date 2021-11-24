@@ -63,7 +63,6 @@ ConfigurationCommandLineHandler >> activate [
 	self installConfiguration.
 	
 	self postConfiguration.
-		
 ]
 
 { #category : #accessing }
@@ -205,7 +204,7 @@ ConfigurationCommandLineHandler >> loadConfigurationNames [
 			collect: #packageName 
 			thenSelect: [ :name| name beginsWith: 'ConfigurationOf' ].
 	
-	^ references asSet asSortedCollection 
+	^ references asSet asSortedCollection
 ]
 
 { #category : #accessing }
@@ -245,7 +244,6 @@ ConfigurationCommandLineHandler >> noSave [
 { #category : #actions }
 ConfigurationCommandLineHandler >> postConfiguration [
 	Smalltalk snapshot: (self noSave not) andQuit: (self noQuit not).
-
 ]
 
 { #category : #printing }
@@ -261,7 +259,6 @@ ConfigurationCommandLineHandler >> printConfigurations: configurations [
 	configurations do: [ :name | 
 			self << name. 
 			self stdout lf ].
-	
 ]
 
 { #category : #printing }
