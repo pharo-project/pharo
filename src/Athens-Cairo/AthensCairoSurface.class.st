@@ -308,6 +308,7 @@ AthensCairoSurface class >> primRegisterSurface: aCairoSurfaceHandle dispatch: s
 	otherwise."
 
 	<primitive: 'primitiveRegisterSurface' module: 'SurfacePlugin'>
+	^false
 ]
 
 { #category : #private }
