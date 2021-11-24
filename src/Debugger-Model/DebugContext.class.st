@@ -41,7 +41,7 @@ Class {
 
 { #category : #'instance creation' }
 DebugContext class >> forContext: aContext [ 
-	^ self new forContext: aContext 
+	^ self new forContext: aContext
 ]
 
 { #category : #private }
@@ -163,7 +163,6 @@ DebugContext >> recompileCurrentMethodTo: aText notifying: aNotifyer [
 		notifying: aNotifyer.
 	^ selector 
 		ifNotNil: [ classOrTraitOfMethod compiledMethodAt: selector ]
-		
 ]
 
 { #category : #accessing }
@@ -196,5 +195,5 @@ DebugContext >> source [
 
 { #category : #initialization }
 DebugContext >> topContext: aContext [
-	topContext := aContext 
+	topContext := aContext
 ]

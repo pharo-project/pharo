@@ -59,7 +59,7 @@ MessageSendDebugAction >> id [
 { #category : #accessing }
 MessageSendDebugAction >> id: aSymbol [
 	
-	id := aSymbol 
+	id := aSymbol
 ]
 
 { #category : #accessing }

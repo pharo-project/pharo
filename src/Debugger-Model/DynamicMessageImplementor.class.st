@@ -106,7 +106,7 @@ DynamicMessageImplementor >> writeGetterSourceCode [
 		cr;
 		tab;
 		nextPutAll: '^ ';
-		nextPutAll: message selector 
+		nextPutAll: message selector
 ]
 
 { #category : #'evaluating-private' }
@@ -129,7 +129,7 @@ DynamicMessageImplementor >> writeSetterSourceCode [
 		tab;
 		nextPutAll: message selector allButLast;
 		nextPutAll: ' := ';
-		nextPutAll: argumentNames anyOne 
+		nextPutAll: argumentNames anyOne
 ]
 
 { #category : #'evaluating-private' }

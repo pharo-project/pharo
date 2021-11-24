@@ -46,7 +46,6 @@ OupsDebuggerSystemTest >> setUp [
 OupsDebuggerSystemTest >> testAvailableDebuggers [
 	"Tests that DebuggerSystem>>#availableDebuggers returns a list"
 	self assert: debuggerSystem availableDebuggers isSequenceable
-	
 ]
 
 { #category : #tests }
@@ -71,7 +70,6 @@ OupsDebuggerSystemTest >> testHandleDebugRequest [
 	debuggerSystem handleDebugRequest: debugRequest.
 	self assert: debuggerSystem callsToHandleDebugRequest equals: 1.
 	self assert: debuggerSystem debugRequestSentToHandleDebugRequest identicalTo: debugRequest
-	
 ]
 
 { #category : #tests }
@@ -83,7 +81,6 @@ OupsDebuggerSystemTest >> testHandleWarningDebugRequest [
 	debuggerSystem handleWarningDebugRequest: debugRequest.
 	self assert: debuggerSystem callsToHandleDebugRequest equals: 1.
 	self assert: debuggerSystem debugRequestSentToHandleDebugRequest identicalTo: debugRequest
-	
 ]
 
 { #category : #tests }
@@ -91,7 +88,6 @@ OupsDebuggerSystemTest >> testNonUIProcessIsRecognised [
 	"Tests that a DebuggerSystem opening a DebugRequest that is NOT on the ui process does NOT spawn a new UI process"
 	debuggerSystem openDebuggerOnRequest: self createDummyDebugRequestForNotUIProcess.
 	self assert: debuggerSystem newUIProcessSpawned not
-	
 ]
 
 { #category : #tests }
@@ -102,7 +98,6 @@ OupsDebuggerSystemTest >> testPreDebugActionExecuted [
 	self assert: debugRequest dummyPreDebugActionExecutedCount equals: 0.
 	debuggerSystem openDebuggerOnRequest: debugRequest.
 	self assert: debugRequest dummyPreDebugActionExecutedCount equals: 1
-	
 ]
 
 { #category : #tests }

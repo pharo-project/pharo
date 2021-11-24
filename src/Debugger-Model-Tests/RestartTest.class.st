@@ -103,5 +103,4 @@ RestartTest >> testStepRestartAndRestepTopContext [
 	self assert: node selector equals: #+.
 	"Check that the value of the 'a' temporary variable in the stepA2 context is 1 again"
 	self assert: (session interruptedContext tempNamed: #a) equals: 1.
-	
 ]
