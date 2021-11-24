@@ -48,8 +48,6 @@ AnnouncerTest >> testAccessingSubscribers [
 	
 	subscribers := announcer subscriptionsForClass: self class.
 	self assert: subscribers size equals: 0.
-	
-
 ]
 
 { #category : #tests }
@@ -94,8 +92,6 @@ AnnouncerTest >> testAnnouncingReentrant [
 
 	self should: [ announcer announce: Announcement new. ] notTakeMoreThan: 1 second.
 	self assert: ok
-
-
 ]
 
 { #category : #'tests - subscribers' }
@@ -130,8 +126,6 @@ AnnouncerTest >> testPreparationAnnouncementDelivery [
 	self assert: announcement announcingCounter equals: 2.
 	announcement := announcer announce: AnnouncementMockC.
 	self assert: announcement announcingCounter equals: 1
-
-
 ]
 
 { #category : #tests }
@@ -312,7 +306,6 @@ AnnouncerTest >> testSubscribersForClass [
 	self assert: subscribers size equals: 1.
 	subscribers := announcer subscriptionsForClass: self class.
 	self assert: subscribers size equals: 0.
-
 ]
 
 { #category : #tests }
@@ -326,7 +319,7 @@ AnnouncerTest >> testSymbolIdentifier [
 		on: MessageNotUnderstood 
 		do: [ :ex | passed := (ex message selector = #bar). ].
 		
-	self assert: passed 
+	self assert: passed
 ]
 
 { #category : #tests }

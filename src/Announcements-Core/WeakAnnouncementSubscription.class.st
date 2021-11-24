@@ -109,7 +109,6 @@ WeakAnnouncementSubscription >> deliver: anAnnouncement [
 WeakAnnouncementSubscription >> finalize [
 
 	announcer removeSubscription: self.
-	
 ]
 
 { #category : #'error handling' }
@@ -137,7 +136,6 @@ WeakAnnouncementSubscription >> makeStrong [
 		action: action asMessageSend;
 		subscriber: sub;
 		announcementClass: announcementClass)
-
 ]
 
 { #category : #converting }
@@ -185,7 +183,6 @@ WeakAnnouncementSubscription >> subscriber: anObject [
 WeakAnnouncementSubscription >> unregister [
 
 	self subscriber ifNotNil: [:sub |  self weakRegistry remove: sub ]
-		
 ]
 
 { #category : #accessing }

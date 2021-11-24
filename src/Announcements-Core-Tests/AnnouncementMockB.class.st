@@ -13,7 +13,7 @@ Class {
 { #category : #'instance creation' }
 AnnouncementMockB class >> with: anObject [
 	^self new 
-		parameter: anObject 
+		parameter: anObject
 ]
 
 { #category : #accessing }
