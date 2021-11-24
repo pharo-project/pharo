@@ -195,7 +195,7 @@ ClassAnnotationRegistry >> addAnnotation: aClassAnnotation [
 
 	container := annotatedClasses 
 		at: actualAnnotation annotatedClass ifAbsentPut: [ Set new].
-	container add: actualAnnotation	
+	container add: actualAnnotation
 ]
 
 { #category : #queries }
