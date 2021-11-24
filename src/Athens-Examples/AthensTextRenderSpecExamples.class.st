@@ -36,6 +36,4 @@ AthensTextRenderSpecExamples class >> testWindowRender [
 	].
 
 	surf asMorph openInWindow
-
-
 ]

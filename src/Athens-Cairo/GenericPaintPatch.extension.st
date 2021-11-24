@@ -6,5 +6,4 @@ GenericPaintPatch >> addToCairoMeshGradientPaint: meshGradientPaint [
 	[ 
 		buildBlock value: meshGradientPaint
 	] ensure: [ meshGradientPaint endPatch ].
-
 ]

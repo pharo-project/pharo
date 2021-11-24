@@ -45,7 +45,6 @@ AthensBalloonEngine >> drawImage: aForm transform: m [
 	self fillRectangle: rect.
 
 	edgeTransform := tr.
-
 ]
 
 { #category : #private }
@@ -129,7 +128,6 @@ AthensBalloonEngine >> fillRectangle: rect [
 			borderColor: 0.
 
 	self copyBits
-	
 ]
 
 { #category : #private }
@@ -142,7 +140,6 @@ AthensBalloonEngine >> prepareForRendering [
 AthensBalloonEngine >> registerColorFill: aColor [ 
 
 	currentFill := aColor scaledPixelValue32
-
 ]
 
 { #category : #'registering fills' }
@@ -168,8 +165,6 @@ AthensBalloonEngine >> registerFormFill: form origin: orig direction: dir normal
 			along: dir
 			normal: norm
 			xIndex: forms size
-			
-
 ]
 
 { #category : #paints }
@@ -253,7 +248,6 @@ AthensBalloonEngine >> strokeBezierShape: contours width: aWidth [
 	].
 
 	self copyBits
-
 ]
 
 { #category : #drawing }
@@ -267,7 +261,6 @@ AthensBalloonEngine >> strokeRectangle: rect borderWidth: width [
 			borderColor: currentFill.
 
 	self copyBits
-	
 ]
 
 { #category : #drawing }
@@ -281,5 +274,4 @@ AthensBalloonEngine >> strokeRectangle: rect width: aWidth [
 			borderColor: currentFill.
 
 	self copyBits
-	
 ]

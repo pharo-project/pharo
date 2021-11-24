@@ -18,6 +18,5 @@ ImageMorph >> drawOnAthensCanvas: aCanvas [
 		].
 	(style := self borderStyle) ifNotNil: [
 		aCanvas setStrokePaint: style.
-		aCanvas drawShape: bounds]	
-
+		aCanvas drawShape: bounds]
 ]

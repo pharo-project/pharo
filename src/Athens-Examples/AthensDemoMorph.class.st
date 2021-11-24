@@ -34,8 +34,6 @@ AthensDemoMorph class >> roundedRectanglePathOn: aCanvas [
 			cwArcTo: 50@280 angle: 90 degreesToRadians;
 			lineTo: 50@120;
 			cwArcTo: 70@100 angle: 90 degreesToRadians ]
-
-
 ]
 
 { #category : #accessing }
@@ -171,8 +169,7 @@ AthensDemoMorph >> figure10: aCanvas [
 AthensDemoMorph >> figure1: aCanvas [
 	aCanvas
 		setPaint: self carColor;
-		drawShape: (50@100 extent: 300@200) 
-		
+		drawShape: (50@100 extent: 300@200)
 ]
 
 { #category : #figures }
@@ -297,7 +294,6 @@ AthensDemoMorph >> figure7: aCanvas [
 	
 		pt  translateBy: 2@0; rotateByDegrees: 35.
 		self drawCarOn: aCanvas ]
-		
 ]
 
 { #category : #figures }
@@ -315,7 +311,6 @@ AthensDemoMorph >> figure8: aCanvas [
 	
 		pt  translateBy: 2@0; rotateByDegrees: 35.
 		self drawCarOn: aCanvas ]
-		
 ]
 
 { #category : #figures }
@@ -355,8 +350,6 @@ AthensDemoMorph >> figures [
 	figure9:
 	figure10:
 	)
-	
-	
 ]
 
 { #category : #initialization }
@@ -404,7 +397,6 @@ AthensDemoMorph >> render [
 		drawShape: (0@0 corner: self extent).
 		self perform: (self figures at: current)  with: canvas
 	].
-
 ]
 
 { #category : #stepping }

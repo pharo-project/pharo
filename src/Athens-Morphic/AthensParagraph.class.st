@@ -19,7 +19,7 @@ Class {
 { #category : #accessing }
 AthensParagraph >> caretRect [ 
 
-	^ (0@0 corner: 0@0)  
+	^ (0@0 corner: 0@0)
 ]
 
 { #category : #selection }
@@ -129,11 +129,11 @@ AthensParagraph >> selectionStart: startBlock selectionStop: stopBlock [
 ]
 
 { #category : #accessing }
-AthensParagraph >> showCaret [  
+AthensParagraph >> showCaret [
 ]
 
 { #category : #accessing }
-AthensParagraph >> showCaret: abool [  
+AthensParagraph >> showCaret: abool [
 ]
 
 { #category : #accessing }

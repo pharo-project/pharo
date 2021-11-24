@@ -83,7 +83,6 @@ CairoFreetypeFontRenderer >> font: aFreetypeFont [
 	font := CairoScaledFont fromFreetypeFont: aFreetypeFont.
 	fontExtents := font extents.
 	originalFont := aFreetypeFont.
-
 ]
 
 { #category : #'accessing - font metrics' }
@@ -183,9 +182,6 @@ CairoFreetypeFontRenderer >> renderGlyphs: cairoGlyphs [
 
 	canvas showGlyphs: cairoGlyphs getHandle size: cairoGlyphs size.
 	font unlock.
-
-	
-
 ]
 
 { #category : #accessing }

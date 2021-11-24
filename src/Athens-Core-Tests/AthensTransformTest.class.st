@@ -46,7 +46,6 @@ AthensTransformTest >> testInvert [
 	self assert: (transform transform: -3 @ -6) closeTo: -5 @ 0.8.
 	self assert: (transform transform: 1 @ -18) closeTo: -9 @ 0.
 	self assert: (transform transform: -2 @ -3) closeTo: -4 @ 0.6
-
 ]
 
 { #category : #tests }
@@ -65,7 +64,6 @@ AthensTransformTest >> testLoadAffineTransform [
 	self assert: (transform transform: -3 @ -4) closeTo: 21 @ 0.
 	self assert: (transform transform: 1 @ -2) closeTo: 11 @ 12.
 	self assert: (transform transform: -2 @ -5) closeTo: 26 @ 3.
-
 ]
 
 { #category : #tests }
@@ -82,7 +80,6 @@ AthensTransformTest >> testLoadIdentity [
 	self assert: (transform transform: -3 @ -4) equals: -3 @ -4.
 	self assert: (transform transform: 1 @ -2) equals: 1 @ -2.
 	self assert: (transform transform: -2 @ -5) equals: -2 	@ -5.
-
 ]
 
 { #category : #tests }
@@ -112,7 +109,6 @@ AthensTransformTest >> testRestoreAfter [
 	self assert: (transform transform: -3 @ -4) closeTo: 21 @ 0.
 	self assert: (transform transform: 1 @ -2) closeTo: 11 @ 12.
 	self assert: (transform transform: -2 @ -5) closeTo: 26 @ 3.
-
 ]
 
 { #category : #tests }
@@ -143,8 +139,6 @@ AthensTransformTest >> testRotateByDegrees [
 	self assert: (transform transform: -3 @ -4) closeTo: 4 @ -3.
 	self assert: (transform transform: 1 @ -2) closeTo: 2 @ 1.
 	self assert: (transform transform: -2 @ -5) closeTo: 5 @ -2.
-
-
 ]
 
 { #category : #tests }
@@ -175,8 +169,6 @@ AthensTransformTest >> testRotateByRadians [
 	self assert: (transform transform: -3 @ -4) closeTo: 4 @ -3.
 	self assert: (transform transform: 1 @ -2) closeTo: 2 @ 1.
 	self assert: (transform transform: -2 @ -5) closeTo: 5 @ -2.
-
-
 ]
 
 { #category : #tests }
@@ -206,7 +198,6 @@ AthensTransformTest >> testScaleBy [
 	self assert: (transform transform: -3 @ -4) closeTo: 4.5 @ 6.
 	self assert: (transform transform: 1 @ -2) closeTo: -1.5 @ 3.
 	self assert: (transform transform: -2 @ -5) closeTo: 3 @ 7.5.
-
 ]
 
 { #category : #tests }
@@ -236,7 +227,6 @@ AthensTransformTest >> testScaleXY [
 	self assert: (transform transform: -3 @ -4) closeTo: 4.5 @ 6.
 	self assert: (transform transform: 1 @ -2) closeTo: -1.5 @ 3.
 	self assert: (transform transform: -2 @ -5) closeTo: 3 @ 7.5.
-
 ]
 
 { #category : #tests }
@@ -253,7 +243,6 @@ AthensTransformTest >> testTransform [
 	self assert: (transform transform: -3 @ -4) closeTo: 21 @ 0.
 	self assert: (transform transform: 1 @ -2) closeTo: 11 @ 12.
 	self assert: (transform transform: -2 @ -5) closeTo: 26 @ 3.
-
 ]
 
 { #category : #tests }
@@ -287,7 +276,6 @@ AthensTransformTest >> testTransformXY [
 	self assert: (transform transformX: -3 Y: -4) closeTo: 21 @ 0.
 	self assert: (transform transformX: 1 Y: -2) closeTo: 11 @ 12.
 	self assert: (transform transformX: -2 Y: -5) closeTo: 26 @ 3.
-
 ]
 
 { #category : #tests }
@@ -318,7 +306,6 @@ AthensTransformTest >> testTranslate [
 	self assert: (transform transform: -3 @ -4) equals: -2 @ -2.
 	self assert: (transform transform: 1 @ -2) equals: 2 @ 0.
 	self assert: (transform transform: -2 @ -5) equals: -1 	@ -3.
-
 ]
 
 { #category : #tests }
@@ -349,7 +336,6 @@ AthensTransformTest >> testTranslateBy [
 	self assert: (transform transform: -3 @ -4) equals: -2 @ -2.
 	self assert: (transform transform: 1 @ -2) equals: 2 @ 0.
 	self assert: (transform transform: -2 @ -5) equals: -1 	@ -3.
-
 ]
 
 { #category : #tests }
@@ -380,7 +366,6 @@ AthensTransformTest >> testTranslateXY [
 	self assert: (transform transform: -3 @ -4) equals: -2 @ -2.
 	self assert: (transform transform: 1 @ -2) equals: 2 @ 0.
 	self assert: (transform transform: -2 @ -5) equals: -1 	@ -3.
-
 ]
 
 { #category : #tests }

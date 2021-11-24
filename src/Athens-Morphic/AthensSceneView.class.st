@@ -63,7 +63,6 @@ AthensSceneView >> createSurface [
 	surface := (scene respondsTo: #createSurface:) 
 		ifTrue: [ scene createSurface: extent ] 
 		ifFalse: [ AthensCairoSurface extent: extent].
-
 ]
 
 { #category : #drawing }
@@ -113,7 +112,7 @@ AthensSceneView >> inState: stateName [
 AthensSceneView >> inState: stateName do: aBlock [
 
 
-	^ (state at: stateName ifAbsent: nil) ifNotNil: aBlock 
+	^ (state at: stateName ifAbsent: nil) ifNotNil: aBlock
 ]
 
 { #category : #initialization }
@@ -128,15 +127,12 @@ AthensSceneView >> initialize [
 	color := Color transparent.
 	state := Dictionary new.
 	self extent: self minimumExtent.
-	
-
 ]
 
 { #category : #'session management' }
 AthensSceneView >> initializeForNewSession [
 	self createSurface.
 	session := Smalltalk session.
-
 ]
 
 { #category : #accessing }
@@ -154,7 +150,6 @@ AthensSceneView >> layoutChanged [
 		self extent asIntegerPoint ~= surface extent ifTrue: [ 
 			self createSurface ]
 	].
-	
 ]
 
 { #category : #initialization }
@@ -173,8 +168,6 @@ AthensSceneView >> mouseDown: evt [
 	evt redButtonPressed ifTrue: [ 
 		self setState: #panning value: { transform x@transform y. pos }
 		 ].
-	
-
 ]
 
 { #category : #'event handling' }
@@ -201,7 +194,7 @@ AthensSceneView >> mouseMove: evt [
 			x: delta x;
 			y: delta y.
 		self changed.
-	] 
+	]
 ]
 
 { #category : #'event handling' }
@@ -232,7 +225,7 @@ AthensSceneView >> mouseWheel: event [
 		self updateZoom: zoom cursor: event cursorPoint.
 	] ifFalse: [
 		self startZooming: zoom center: center.
-	]  
+	]
 ]
 
 { #category : #drawing }
@@ -294,7 +287,7 @@ AthensSceneView >> setState: stateName value: aValue [
 
 { #category : #drawing }
 AthensSceneView >> showDebugInfo [
-	^ true 
+	^ true
 ]
 
 { #category : #'zoom animation' }
@@ -337,7 +330,6 @@ AthensSceneView >> step [
 		
 	].
 	self changed.
-
 ]
 
 { #category : #stepping }
@@ -380,5 +372,4 @@ AthensSceneView >> updateZoom: zoom cursor: cursorPoint [
 	zoomState at: 2 put: transform copy.
 	zoomState at: 4 put: now.
 	zoomState at: 5 put: now + 250 .
-
 ]

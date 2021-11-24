@@ -89,8 +89,6 @@ AthensCanvasWrapper >> clipWrapperTransformBy: aDisplayTransform clippingTo: aCl
 			self canvas pathTransform rotateByRadians: aDisplayTransform angle negated.
 			self canvas pathTransform scaleBy: aDisplayTransform scale.
 			self clipBy: rect during: [ :c | aBlock value: c ]]
-
-		
 ]
 
 { #category : #'canvas accessing' }
@@ -117,7 +115,6 @@ AthensCanvasWrapper >> copyClipRect: aRectangle [
 "clipBy:during: and I don't know if this properly works with athens canvases because"
 "we can not handle to different clipstates for the same canvas."
 	^ self copyOrigin: origin clipRect: aRectangle
-
 ]
 
 { #category : #'formcanvas copying' }
@@ -246,8 +243,6 @@ AthensCanvasWrapper >> drawString: aString from: firstIndex to: lastIndex in: bo
 				self canvas setPaint: uc.
 				self canvas drawShape:(0@1 extent: advance x @1).
 			]]].
-
-
 ]
 
 { #category : #'canvas drawing - text' }
@@ -294,7 +289,6 @@ AthensCanvasWrapper >> extent [
 AthensCanvasWrapper >> fillOval: r color: c [
 
 	self fillOval: r color: c borderWidth: 0 borderColor: Color transparent.
-
 ]
 
 { #category : #'canvas drawing - ovals' }
@@ -416,7 +410,7 @@ AthensCanvasWrapper >> fullDraw: anObject [
 AthensCanvasWrapper >> fullDrawMorph: aMorph [
 	"Hook method for potential other canvases. In the core, this method looks supefluous but PostscriptCanvases and other canvases can specialized it for Morph rendering. Therefore it should not be merged with fullDraw:."
 
-	self fullDraw: aMorph 
+	self fullDraw: aMorph
 ]
 
 { #category : #private }
@@ -467,7 +461,6 @@ AthensCanvasWrapper >> line: pt1 to: pt2 width: w color: c [
 		
 	(self canvas setStrokePaint: c) width:w.
 	self canvas drawShape: path.
-	
 ]
 
 { #category : #'canvas accessing' }
@@ -514,7 +507,7 @@ AthensCanvasWrapper >> rubParagraph: para bounds: bounds color: c [
 { #category : #'formcanvas copying' }
 AthensCanvasWrapper >> setOrigin: aPoint clipRect: aRectangle [
 	origin := aPoint.
-	currentClipRect := aRectangle 
+	currentClipRect := aRectangle
 ]
 
 { #category : #'canvas drawing' }
@@ -529,7 +522,6 @@ AthensCanvasWrapper >> stencil: stencilForm at: aPoint sourceRect: sourceRect co
 		self canvas draw.
 		mask maskOn: self canvas.
 		].
-
 ]
 
 { #category : #'canvas drawing - support' }
@@ -566,5 +558,4 @@ AthensCanvasWrapper >> translucentImage: aForm at: aPoint [
 AthensCanvasWrapper >> translucentImage: aForm at: aPoint sourceRect: sourceRect [
 	self canvas paintMode over.
 	self imagePaint: aForm at: aPoint sourceRect: sourceRect
-
 ]

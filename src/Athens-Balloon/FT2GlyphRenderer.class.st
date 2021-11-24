@@ -38,7 +38,6 @@ FT2GlyphRenderer class >> forFont: aFont surface: aSurface [
 FT2GlyphRenderer >> clearBitmap [
 	
 	form bits atAllPut: 0
-
 ]
 
 { #category : #accessing }
@@ -88,7 +87,6 @@ FT2GlyphRenderer >> initForFont: aFont surface: aSurface [
 		clipRect: surface clipRect.
 	
 	translation := IntegerArray new: 2
-
 ]
 
 { #category : #private }
@@ -152,8 +150,6 @@ FT2GlyphRenderer >> loadSurfaceTransform [
 		at: 2 put: (m shx * fix) rounded;
 		at: 3 put: (m shy * fix) rounded;
 		at: 4 put: (m sy * fix) rounded
-
-
 ]
 
 { #category : #private }
@@ -169,7 +165,6 @@ FT2GlyphRenderer >> loadUnicode: unicode [
 	face primLoadCharacter: unicode flags: flags.
 
 	self loadSlotInfo
-
 ]
 
 { #category : #private }
@@ -212,8 +207,6 @@ FT2GlyphRenderer >> renderGlyphsIn: text from: start to: stop [
 		penX := penX + slot advanceX.
 		penY := penY - slot advanceY
 	].
-
-
 ]
 
 { #category : #accessing }
@@ -233,7 +226,6 @@ FT2GlyphRenderer >> setColor: color [
 	]
 
 "	colorMap at: 1 put: (Color red  alpha: 0.1) pixelValue32."
-
 ]
 
 { #category : #private }
@@ -255,6 +247,4 @@ FT2GlyphRenderer >> setPosition: aPoint advance: advancePt baseline: baselineOff
 "	2 raisedTo: 6 "
 	penX := (pt x * 64) rounded.
 	penY := (pt y * 64) rounded
-
-
 ]

@@ -29,7 +29,6 @@ AthensWrapMorph >> checkSurface [
 		"recreate a surface if dimensions are changed"	
 		self createSurface
 	 ]
-
 ]
 
 { #category : #'surface management' }
@@ -37,7 +36,6 @@ AthensWrapMorph >> createSurface [
 	| extent |
 	extent := bounds extent asIntegerPoint.
 	surface := AthensCairoSurface extent: extent.
-
 ]
 
 { #category : #drawing }
@@ -84,20 +82,18 @@ AthensWrapMorph >> fullDrawOnAthensCanvas: anAthensCanvas [
 
 	(anAthensCanvas isVisible: self bounds) ifTrue: [ anAthensCanvas draw: self ].
 	
-	submorphs reverseDo: [:m | anAthensCanvas fullDrawMorph: m ] 
-
+	submorphs reverseDo: [:m | anAthensCanvas fullDrawMorph: m ]
 ]
 
 { #category : #'events handling' }
 AthensWrapMorph >> handlesMouseDown: evt [
-	^ true 
+	^ true
 ]
 
 { #category : #'surface management' }
 AthensWrapMorph >> initializeForNewSession [
 	self createSurface.
 	session := Smalltalk session.
-
 ]
 
 { #category : #drawing }
@@ -110,5 +106,4 @@ AthensWrapMorph >> render [
 			self fullDrawOnAthensCanvas: canvas.
 		].
 	].
-
 ]

@@ -55,7 +55,6 @@ AthensCairoSurfaceExamples class >> exampleDrawTextPath [
 	].
 	
 	surf asMorph openInWindow
-
 ]
 
 { #category : #utilities }
@@ -64,7 +63,6 @@ AthensCairoSurfaceExamples class >> exampleExportTigerOn: anAthensSurface [
 		position: 300 @ -200;
 		draw.
 	anAthensSurface finish. "Required to end the file"
-
 ]
 
 { #category : #examples }
@@ -76,7 +74,6 @@ AthensCairoSurfaceExamples class >> exampleExportTigerToPDF [
 		fileName: Time microsecondClockValue asString, '.pdf'.
 
 	self exampleExportTigerOn: surface.
-
 ]
 
 { #category : #examples }
@@ -88,7 +85,6 @@ AthensCairoSurfaceExamples class >> exampleExportTigerToSVG [
 		fileName: Time microsecondClockValue asString, '.svg'.
 
 	self exampleExportTigerOn: surface.
-
 ]
 
 { #category : #examples }

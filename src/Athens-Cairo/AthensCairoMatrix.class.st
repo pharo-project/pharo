@@ -41,7 +41,6 @@ AthensCairoMatrix >> clearTranslation [
 { #category : #copying }
 AthensCairoMatrix >> copy [
 	^ self class new loadAffineTransform: self
-	
 ]
 
 { #category : #private }
@@ -65,7 +64,6 @@ AthensCairoMatrix >> getMatrix [
 AthensCairoMatrix >> initialize [
 	super initialize.
 	self loadIdentity
-	
 ]
 
 { #category : #private }
@@ -78,8 +76,6 @@ AthensCairoMatrix >> initx: x y: y sx: sx sy: sy shx: shx shy: shy [
 			double sy,
 			double x,
 			double y))
-
-
 ]
 
 { #category : #transformations }
@@ -91,8 +87,6 @@ AthensCairoMatrix >> inverseTransform: aPoint [
 { #category : #transformations }
 AthensCairoMatrix >> invert [
 	^self ffiCall: #( cairo_status_t cairo_matrix_invert (AthensCairoMatrix *  self))
-
-
 ]
 
 { #category : #transformations }
@@ -129,7 +123,7 @@ AthensCairoMatrix >> loadAffineTransform: m [
 AthensCairoMatrix >> loadIdentity [
 	"initialize with identity transform"
 	
-	self primLoadIdentity 
+	self primLoadIdentity
 ]
 
 { #category : #transformations }
@@ -142,7 +136,6 @@ AthensCairoMatrix >> multiplyBy: anAthensAffineTransform [
 { #category : #copying }
 AthensCairoMatrix >> postCopy [
 	self setHandle: self getHandle copy.
-	
 ]
 
 { #category : #private }
@@ -157,8 +150,6 @@ AthensCairoMatrix >> primMultiplyBy: m [
 		(AthensCairoMatrix * self,
 		AthensCairoMatrix * m ,
 		AthensCairoMatrix * self ) )
-
-
 ]
 
 { #category : #private }
@@ -166,8 +157,6 @@ AthensCairoMatrix >> primRotateByRadians: angle [
 	^ self ffiCall: #(
 		void cairo_matrix_rotate (AthensCairoMatrix *  self,
                                                          double angle))
-
-
 ]
 
 { #category : #private }
@@ -176,36 +165,26 @@ AthensCairoMatrix >> primScaleX: fx Y: fy [
 		void cairo_matrix_scale (AthensCairoMatrix * self,
                                                          double fx,
                                                          double fy))
-
-
 ]
 
 { #category : #private }
 AthensCairoMatrix >> primSetRotationInRadians: radians [
 	^ self ffiCall: #( void cairo_matrix_init_rotate (AthensCairoMatrix * self, double  radians))
-
-
 ]
 
 { #category : #private }
 AthensCairoMatrix >> primSetScaleX: x Y: y [
 	^ self ffiCall: #( void cairo_matrix_init_scale (AthensCairoMatrix * self, double  x, double  y))
-
-
 ]
 
 { #category : #private }
 AthensCairoMatrix >> primSetTranslateX: x Y: y [
 	^ self ffiCall: #( void cairo_matrix_init_translate (AthensCairoMatrix * self, double  x, double  y))
-
-
 ]
 
 { #category : #private }
 AthensCairoMatrix >> primTransformX: x Y: y [
 	^ self ffiCall: #( void cairo_matrix_transform_point (AthensCairoMatrix *  self, double * x, double * y))
-
-
 ]
 
 { #category : #private }
@@ -214,8 +193,6 @@ AthensCairoMatrix >> primTranslateX: px Y: py [
 		void cairo_matrix_translate (AthensCairoMatrix * self,
                                                          double px,
                                                          double py))
-
-
 ]
 
 { #category : #transformations }
@@ -238,8 +215,6 @@ AthensCairoMatrix >> rotateByDegrees: angle [
 AthensCairoMatrix >> rotateByRadians: angle [
 
 	^ self primRotateByRadians: angle asFloat.
-
-
 ]
 
 { #category : #transformations }
@@ -250,7 +225,6 @@ AthensCairoMatrix >> scaleBy: factor [
 	factor isPoint 
 		ifTrue: [ self scaleX: factor x asFloat Y: factor y asFloat ] 
 		ifFalse: [ self scaleX: factor asFloat Y: factor asFloat ]
-
 ]
 
 { #category : #transformations }
@@ -263,22 +237,18 @@ AthensCairoMatrix >> scaleX: fx Y: fy [
 AthensCairoMatrix >> setRotationInRadians: radians [
 
 	^ self primSetRotationInRadians: radians asFloat
-
 ]
 
 { #category : #transformations }
 AthensCairoMatrix >> setScaleX: x Y: y [
 	
 	^ self primSetScaleX: x asFloat Y: y asFloat
-
-
 ]
 
 { #category : #transformations }
 AthensCairoMatrix >> setTranslateX: x Y: y [
 
 	^ self primSetTranslateX: x asFloat Y: y asFloat
-
 ]
 
 { #category : #'accessing - structure variables' }
@@ -370,8 +340,6 @@ AthensCairoMatrix >> translateBy: aPoint [
 AthensCairoMatrix >> translateX: px Y: py [
 
 	^ self primTranslateX: px asFloat Y: py asFloat.
-
-
 ]
 
 { #category : #'accessing - structure variables' }

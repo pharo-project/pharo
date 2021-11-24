@@ -32,7 +32,6 @@ Please report this on pharo-dev mailing list'.
 	[20 seconds wait.
 	session = Smalltalk session and: [ resourceClass hasSharedResourceData: data ] ] whileTrue.
 	self reallyFinalize] forkAt: Processor userBackgroundPriority.
-	
 ]
 
 { #category : #accessing }

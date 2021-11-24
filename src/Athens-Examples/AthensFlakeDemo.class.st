@@ -22,7 +22,7 @@ AthensFlakeDemo class >> open [
 
 { #category : #accessing }
 AthensFlakeDemo >> circle [
-	^ circle 
+	^ circle
 ]
 
 { #category : #defaults }
@@ -59,8 +59,7 @@ AthensFlakeDemo >> drawCircles: canvas [
 AthensFlakeDemo >> drawOn: aCanvas [
 
 	self render.
-	surface displayOnMorphicCanvas: aCanvas at: bounds origin. 
-
+	surface displayOnMorphicCanvas: aCanvas at: bounds origin.
 ]
 
 { #category : #drawing }
@@ -92,8 +91,6 @@ AthensFlakeDemo >> drawSpike: canvas [
 			
 		self drawCircles: canvas
 	]
-
-
 ]
 
 { #category : #initialization }
@@ -126,8 +123,6 @@ AthensFlakeDemo >> initialize [
 
 	frame := 1.
 	self startStepping.
-	
-
 ]
 
 { #category : #rendering }
@@ -152,7 +147,6 @@ AthensFlakeDemo >> render [
 		].
 		 self drawCircles: canvas
 	].
-
 ]
 
 { #category : #stepping }
