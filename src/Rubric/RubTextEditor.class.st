@@ -1438,6 +1438,12 @@ RubTextEditor >> isTextEditor [
 	^ true 
 ]
 
+{ #category : #private }
+RubTextEditor >> isWordCharacter: aCharacter [
+	"By default, group alphanumeric and non-alphanumeric separately"
+	^ aCharacter isAlphaNumeric
+]
+
 { #category : #'typing support' }
 RubTextEditor >> keyDown: aKeyboardEvent [
 	textArea announce: ((RubKeystroke with: aKeyboardEvent) morph: self).
@@ -1617,10 +1623,10 @@ RubTextEditor >> nextWord: position [
 	string := self string.
 	index := position.
 	position >= string size ifTrue: [ ^ position ].
-	initialIsAlphaNumeric := (string at: index - 1) isAlphaNumeric.
+	initialIsAlphaNumeric := self isWordCharacter: (string at: index - 1).
 
 	[(index <= string size) 
-		and: [(string at: index) isAlphaNumeric = initialIsAlphaNumeric]]
+		and: [ (self isWordCharacter: (string at: index)) = initialIsAlphaNumeric]]
 			whileTrue: [index := index + 1].
 	^ index
 ]
@@ -1765,9 +1771,9 @@ RubTextEditor >> previousWord: position [
 	string := self string.
 	index := position.
 	position <= 1 ifTrue: [ ^ position ].
-	initialIsAlphaNumeric := (string at: index) isAlphaNumeric.
+	initialIsAlphaNumeric := self isWordCharacter: (string at: index).
 	[index := index - 1] doWhileTrue:
-		[(index > 0) and: [(string at: index) isAlphaNumeric = initialIsAlphaNumeric]].
+		[(index > 0) and: [ (self isWordCharacter: (string at: index)) = initialIsAlphaNumeric]].
 	^ index + 1
 ]
 

@@ -818,6 +818,12 @@ RubSmalltalkEditor >> isSmalltalkEditor [
 	^ true 
 ]
 
+{ #category : #private }
+RubSmalltalkEditor >> isWordCharacter: aCharacter [
+	"In smalltalk code, colons make part of selectors too and are part of a word"
+	^ aCharacter isAlphaNumeric or: [aCharacter = $:]
+]
+
 { #category : #'menu messages' }
 RubSmalltalkEditor >> jumpToNextKeywordOfIt [
 	"Jump to the next keyword after the cursor - this is for legacy support"
