@@ -245,7 +245,7 @@ FBDOptimizedMessagesRewriter >> isIfNotNil: msgNode [
 
 { #category : #testing }
 FBDOptimizedMessagesRewriter >> isIfTrue: msgNode [
-	^ msgNode arguments second body statements isEmpty 
+	^ msgNode arguments second body statements isEmpty
 ]
 
 { #category : #testing }
