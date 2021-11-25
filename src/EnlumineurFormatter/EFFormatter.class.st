@@ -49,7 +49,7 @@ Class {
 
 { #category : #private }
 EFFormatter class >> announceASettingChange [
-	SystemAnnouncer uniqueInstance announce: EFSettingChanged 
+	SystemAnnouncer uniqueInstance announce: EFSettingChanged
 ]
 
 { #category : #private }
@@ -59,7 +59,7 @@ EFFormatter class >> defaultPrettyPrintContext [
 
 { #category : #accessing }
 EFFormatter class >> defaultPrettyPrintContext: aContext [ 
-	DefaultPrettyPrintContext := aContext 
+	DefaultPrettyPrintContext := aContext
 ]
 
 { #category : #public }
@@ -951,7 +951,7 @@ EFFormatter >> addNewLinesBeforeStatementStartingAt: anInteger [
 						ifFalse: [ 0 ]).
 	newLines = 0 
 		ifTrue: [ self space ] 
-		ifFalse: [ self newLines: newLines ] 
+		ifFalse: [ self newLines: newLines ]
 ]
 
 { #category : #private }
@@ -984,7 +984,7 @@ EFFormatter >> bracketWith: bracketString around: aBlock [
 		ifTrue: [ ^ aBlock value ].
 	codeStream nextPut: bracketString first.
 	^ aBlock
-		ensure: [ codeStream nextPut: bracketString last ] 
+		ensure: [ codeStream nextPut: bracketString last ]
 ]
 
 { #category : #private }
@@ -993,7 +993,7 @@ EFFormatter >> bracketWith: bracketString around: aBlock indentExtraSpaces: anIn
 		ifTrue: [ ^ aBlock value ].
 	codeStream nextPut: bracketString first.
 	^ [ self indentExtraSpaces: anInteger  around: aBlock ]
-		ensure: [ codeStream nextPut: bracketString last ] 
+		ensure: [ codeStream nextPut: bracketString last ]
 ]
 
 { #category : #private }
@@ -1112,7 +1112,6 @@ EFFormatter >> formatBlock2: aBlockNode [
 													or: [ doesFirstStatementFit ] ])
 		ifTrue: [ self newLine ]
 		ifFalse: [ codeStream nextPutAll: self spacesInsideBlocksString ]
-
 ]
 
 { #category : #'private - formatting' }
@@ -1135,7 +1134,6 @@ EFFormatter >> formatBlock: aBlockNode [
 	(self lineUpBlockBrackets and: [ isMultiline ]) 
 		ifTrue: [ self newLine ] 
 		ifFalse: [ codeStream nextPutAll: self spacesInsideBlocksString ]
-
 ]
 
 { #category : #'private - formatting' }
@@ -1156,7 +1154,6 @@ EFFormatter >> formatBlockArgumentsFor: aBlockNode [
 					[ self spaceAndFormatComments: each ].
 			self space ].
 	codeStream nextPutAll: '| '.
-
 ]
 
 { #category : #'private - formatting' }
@@ -1396,7 +1393,7 @@ EFFormatter >> indentExtraSpaces [
 
 { #category : #accessing }
 EFFormatter >> indentExtraSpaces: anInteger [
-	context indentExtraSpaces: anInteger 
+	context indentExtraSpaces: anInteger
 ]
 
 { #category : #private }
@@ -2025,7 +2022,7 @@ EFFormatter >> spacesInsideParenthesesString [
 
 { #category : #accessing }
 EFFormatter >> useBasicCommentFormat [ 
-	^ context useBasicCommentFormat 
+	^ context useBasicCommentFormat
 ]
 
 { #category : #accessing }
@@ -2054,7 +2051,6 @@ EFFormatter >> visitBlockNode: aBlockNode [
 	self
 		bracketWith: '[]'
 		around: [ self formatBlock: aBlockNode ]
-	
 ]
 
 { #category : #visiting }
