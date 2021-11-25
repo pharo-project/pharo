@@ -40,7 +40,7 @@ ExternalAddress class >> gcallocate: byteSize [
 { #category : #'instance creation' }
 ExternalAddress class >> loadSymbol: moduleSymbol module: module [ 
 
-	^ FFIBackend current loadSymbol: moduleSymbol module: module 
+	^ FFIBackend current loadSymbol: moduleSymbol module: module
 ]
 
 { #category : #'instance creation' }
@@ -168,7 +168,6 @@ ExternalAddress >> fromCString [
 				whileFalse: [
 					aStream nextPut: aByte.
 					index := index + 1]]) utf8Decoded
-
 ]
 
 { #category : #converting }
