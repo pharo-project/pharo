@@ -24,7 +24,6 @@ FileReferenceAttributeTest >> setUp [
 
 	super setUp.
 	primitives := File.
-	
 ]
 
 { #category : #private }
@@ -42,7 +41,6 @@ FileReferenceAttributeTest >> testAccessTime [
 	self assert: resource beforeCreationTime <= accessTime.
 	self assert: resource afterCreationTime >= accessTime.
 	self assert: resource file entry accessTime equals: accessTime.
-
 ]
 
 { #category : #tests }
@@ -54,7 +52,6 @@ FileReferenceAttributeTest >> testChangeTime [
 	self assert: resource beforeCreationTime <= changeTime.
 	self assert: resource afterCreationTime >= changeTime.
 	self assert: resource file entry changeTime equals: changeTime.
-
 ]
 
 { #category : #tests }
@@ -66,7 +63,6 @@ FileReferenceAttributeTest >> testCreationTime [
 	self assert: resource beforeCreationTime <= creationTime.
 	self assert: resource afterCreationTime >= creationTime.
 	self assert: resource file entry creationTime equals: creationTime.
-
 ]
 
 { #category : #tests }
@@ -80,7 +76,6 @@ FileReferenceAttributeTest >> testFileSize [
 
 	self assert: self tempFileResource file size equals: 72.
 	self assert: self tempFileResource file entry size equals: self tempFileResource file size.
-
 ]
 
 { #category : #tests }
@@ -88,7 +83,6 @@ FileReferenceAttributeTest >> testIsBlock [
 
 	self deny: self tempFileResource file isBlock.
 	self assert: self tempFileResource file entry isBlock equals: self tempFileResource file isBlock.
-
 ]
 
 { #category : #tests }
@@ -96,7 +90,6 @@ FileReferenceAttributeTest >> testIsCharacter [
 
 	self deny: self tempFileResource file isCharacter.
 	self assert: self tempFileResource file entry isCharacter equals: self tempFileResource file isCharacter.
-
 ]
 
 { #category : #tests }
@@ -173,7 +166,6 @@ FileReferenceAttributeTest >> testModificationTime [
 	self assert: resource beforeCreationTime <= modificationTime.
 	self assert: resource afterCreationTime >= modificationTime.
 	self assert: resource file entry modificationTime equals: modificationTime.
-
 ]
 
 { #category : #tests }

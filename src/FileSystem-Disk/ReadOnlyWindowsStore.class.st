@@ -26,7 +26,7 @@ ReadOnlyWindowsStore >> basicOpen: aPath writable: aBoolean [
 		ReadOnlyFileException signal: 'Attempt to open file ' , aPath pathString, ' as writable on a read-only file system'.
 		^ self ].
 		
-	^ super basicOpen: aPath writable: aBoolean. 
+	^ super basicOpen: aPath writable: aBoolean.
 ]
 
 { #category : #public }
@@ -34,7 +34,7 @@ ReadOnlyWindowsStore >> createDirectory: path [
 
 	ReadOnlyFileException signal: 'Attempt crate directory ', path pathString, ' on a read-only file system'.
 	
-	^ self 
+	^ self
 ]
 
 { #category : #public }
@@ -42,7 +42,7 @@ ReadOnlyWindowsStore >> delete: path [
 
 	ReadOnlyFileException signal: 'Attempt delete ', path pathString, ' on a read-only file system'.
 	
-	^ self 
+	^ self
 ]
 
 { #category : #public }
@@ -50,7 +50,7 @@ ReadOnlyWindowsStore >> file: path posixPermissions: anInteger [
 
 	ReadOnlyFileException signal: 'Attempt to modify file ', path pathString, ' on a read-only file system'.
 	
-	^ self 
+	^ self
 ]
 
 { #category : #public }
@@ -58,7 +58,7 @@ ReadOnlyWindowsStore >> file: path symlinkUid: uidInteger gid: gidInteger [
 
 	ReadOnlyFileException signal: 'Attempt to modify file ', path pathString, ' on a read-only file system'.
 	
-	^ self 
+	^ self
 ]
 
 { #category : #public }
@@ -66,7 +66,7 @@ ReadOnlyWindowsStore >> file: path uid: uidInteger gid: gidInteger [
 
 	ReadOnlyFileException signal: 'Attempt to modify file ', path pathString, ' on a read-only file system'.
 	
-	^ self 
+	^ self
 ]
 
 { #category : #public }
@@ -91,5 +91,5 @@ ReadOnlyWindowsStore >> rename: sourcePath to: destinationPath [
 
 	ReadOnlyFileException signal: 'Attempt to rename file ', sourcePath pathString, ' on a read-only file system'.
 	
-	^ self 
+	^ self
 ]

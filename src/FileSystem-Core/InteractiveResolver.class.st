@@ -23,8 +23,6 @@ InteractiveResolver >> initialize [
 { #category : #resolving }
 InteractiveResolver >> resolve: origin [
 	^ cache at: origin ifAbsent: [self unknownOrigin: origin]
-	
-
 ]
 
 { #category : #resolving }

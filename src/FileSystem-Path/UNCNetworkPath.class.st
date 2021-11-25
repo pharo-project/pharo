@@ -40,7 +40,6 @@ UNCNetworkPath >> printOn: aStream [
 		separatedBy: [ aStream nextPutAll: '/' ].
 
 	aStream nextPut: $'.
-	
 ]
 
 { #category : #printing }
@@ -58,7 +57,6 @@ UNCNetworkPath >> printPathOn: aStream delimiter: aCharacter [
 	aStream nextPut: aCharacter.
 	aStream nextPut: aCharacter.
 	super printPathOn: aStream delimiter: aCharacter
-
 ]
 
 { #category : #enumerating }

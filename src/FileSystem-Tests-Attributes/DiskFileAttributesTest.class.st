@@ -102,7 +102,6 @@ DiskFileAttributesTest >> testExistsNot [
 	| file |
 	file := '/thisfileshouldnot.exist' asFileReference.
 	self deny: (DiskDirectoryEntry exists: file path in: file fileSystem).
-
 ]
 
 { #category : #tests }
@@ -272,7 +271,6 @@ DiskFileAttributesTest >> testTargetFile [
 	"The temporary file isn't a symbolic link, so the targetFile is not supported"
 	self attributesCollectionDo: [ :each |
 		self should: [ each targetFileReference ] raise: FileAttributeNotSupported ].
-
 ]
 
 { #category : #tests }

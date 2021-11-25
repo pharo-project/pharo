@@ -212,7 +212,6 @@ FileReferenceTest >> testCanonicalization [
 
 	ref := '/a/b/../c' asFileReference canonicalize.
 	self assert: ref path segments equals: #('a' 'c').
-
 ]
 
 { #category : #tests }
@@ -765,7 +764,6 @@ FileReferenceTest >> testNextNameForExtension [
 	self assert: childFiles size equals: 7.
 	self assert: (dir nextNameFor: 'foo.bar' extension: 'ston') equals: 'foo.bar.102.ston' ]
 		ensure: [ (filesystem / 'dir') ensureDeleteAll ].
-
 ]
 
 { #category : #'tests - handy utils' }
@@ -837,7 +835,6 @@ FileReferenceTest >> testNextVersion [
 			stream nextPut: file basename.
 			file := file nextVersion. ] ].
 	self assert: versions equals: #('123.ext' '123.1.ext' '123.2.ext' '123.3.ext' '123.4.ext').
-
 ]
 
 { #category : #tests }
@@ -869,7 +866,6 @@ FileReferenceTest >> testParentResolutionWithPath [
 	absolute := base resolve: relative.
 	self assert: absolute isAbsolute.
 	self assert: absolute path segments equals: #('plonk' 'pinto' '..' 'griffle' 'zonk').
-	
 ]
 
 { #category : #tests }
@@ -880,8 +876,6 @@ FileReferenceTest >> testParentResolutionWithReference [
 	absolute := base resolve: relative.
 	self assert: absolute isAbsolute.
 	self assert: absolute path segments equals: #('plonk' 'pinto' '..' 'griffle' 'zonk').
-	
-	
 ]
 
 { #category : #tests }
@@ -1066,7 +1060,6 @@ FileReferenceTest >> testRootReference [
 	self assert: rootReference isReadable.
 	self assert: rootReference isExecutable.
 	self deny: rootReference isWritable.
-
 ]
 
 { #category : #tests }
@@ -1088,8 +1081,6 @@ FileReferenceTest >> testSimpleResolution [
 	self assert: (absolute path at: 1) equals: 'plonk'.
 	self assert: (absolute path at: 2) equals: 'griffle'.
 	self assert: (absolute path at: 3) equals: 'zonk'.
-	
-	
 ]
 
 { #category : #tests }
@@ -1101,7 +1092,6 @@ FileReferenceTest >> testSlash [
 	self assert: result  isRelative.
 	self assert: (result path at: 1) equals: 'plonk'.
 	self assert: (result path at: 2) equals: 'griffle'.
-
 ]
 
 { #category : #tests }
@@ -1143,7 +1133,7 @@ FileReferenceTest >> testUpToAll [
 		readStreamDo: [ :stream |
 			self assert: (stream upToAll: 'e') equals: 'ß'.
 		] ]
-	ensure: [ filename asFileReference ensureDelete ] 
+	ensure: [ filename asFileReference ensureDelete ]
 ]
 
 { #category : #'tests - handy utils' }
@@ -1194,7 +1184,6 @@ FileReferenceTest >> testVersionNumberForExtension [
 	self assert: childFiles size equals: 7.
 	self assert: (dir versionNumberFor: 'foo.bar' extension: 'ston') equals: 101 ]
 		ensure: [ (filesystem / 'dir') ensureDeleteAll ].
-
 ]
 
 { #category : #tests }
