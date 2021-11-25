@@ -241,9 +241,8 @@ TestExecutionEnvironmentTest >> testIgnoreLongTestWhenItIsSuspendedAsUnderDebug 
 				executionEnvironment maxTimeForTest: 10 milliSeconds.
 				Processor activeProcess suspend "it simulates the under debugger condition"]
 		] on: TestTookTooMuchTime do: [ :err | timeOutSignaled := true ]		
-	] forkAt: Processor activePriority + 1.
-
-	200 milliSeconds wait.
+	] newProcess.
+	testProcess priority: Processor activePriority + 1.
 	testProcess resume.
 	self deny: timeOutSignaled
 ]
