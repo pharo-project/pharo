@@ -1439,9 +1439,9 @@ RubTextEditor >> isTextEditor [
 ]
 
 { #category : #private }
-RubTextEditor >> isWordCharacter: aCharacter [
+RubTextEditor >> isWordCharacterAt: index in: aString [
 	"By default, group alphanumeric and non-alphanumeric separately"
-	^ aCharacter isAlphaNumeric
+	^ (aString at: index) isAlphaNumeric
 ]
 
 { #category : #'typing support' }
@@ -1623,10 +1623,10 @@ RubTextEditor >> nextWord: position [
 	string := self string.
 	index := position.
 	position >= string size ifTrue: [ ^ position ].
-	initialIsAlphaNumeric := self isWordCharacter: (string at: index - 1).
+	initialIsAlphaNumeric := self isWordCharacterAt: index -1 in: string.
 
 	[(index <= string size) 
-		and: [ (self isWordCharacter: (string at: index)) = initialIsAlphaNumeric]]
+		and: [ (self isWordCharacterAt: index in: string) = initialIsAlphaNumeric]]
 			whileTrue: [index := index + 1].
 	^ index
 ]
@@ -1771,9 +1771,9 @@ RubTextEditor >> previousWord: position [
 	string := self string.
 	index := position.
 	position <= 1 ifTrue: [ ^ position ].
-	initialIsAlphaNumeric := self isWordCharacter: (string at: index).
+	initialIsAlphaNumeric := self isWordCharacterAt: index in: string.
 	[index := index - 1] doWhileTrue:
-		[(index > 0) and: [ (self isWordCharacter: (string at: index)) = initialIsAlphaNumeric]].
+		[(index > 0) and: [ (self isWordCharacterAt: index in: string) = initialIsAlphaNumeric]].
 	^ index + 1
 ]
 
