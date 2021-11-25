@@ -76,7 +76,6 @@ EDDebuggingAPI >> changesForMethods [
 EDDebuggingAPI >> closeEmergencySession [
 
 	debugger terminate
-	
 ]
 
 { #category : #'API - Context' }

@@ -92,5 +92,4 @@ EDREPLInterface >> terminateREPL [
 EDREPLInterface >> waitSemaphore [
 
 	^ waitSemaphore ifNil: [ waitSemaphore := Semaphore new ]
-
 ]
