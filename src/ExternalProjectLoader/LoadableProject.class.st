@@ -133,13 +133,13 @@ LoadableProject >> repository [
 { #category : #accessing }
 LoadableProject >> repository: aRepository [
 
-	repository := aRepository 
+	repository := aRepository
 ]
 
 { #category : #accessing }
 LoadableProject >> repositoryWithVersion [
 	
-	^ 'github://' , self repository , ':' , self version 
+	^ 'github://' , self repository , ':' , self version
 ]
 
 { #category : #accessing }
