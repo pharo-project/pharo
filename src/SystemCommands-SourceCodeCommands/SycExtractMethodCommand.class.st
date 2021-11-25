@@ -72,7 +72,7 @@ SycExtractMethodCommand >> setUpOptionToChangeExtractionClass: refactoring [
 SycExtractMethodCommand >> setUpOptionToChangeMethodNameDuring: refactoring [
 
 	| dialog |
-	refactoring setOption: #methodName toUse: [ :methodName | | invalidArgs |
+	refactoring setOption: #methodName toUse: [ :methodName :ref | | invalidArgs |
 		invalidArgs := self computeInvalidArgNamesForSelector: method selector.
 		dialog := SycMethodNameEditorPresenter
 			openOn: methodName

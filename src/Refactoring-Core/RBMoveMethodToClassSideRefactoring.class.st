@@ -95,13 +95,7 @@ RBMoveMethodToClassSideRefactoring >> getNewSource [
 		ifFalse: [ ^ node sourceCode ] 
 ]
 
-{ #category : #initialization }
-RBMoveMethodToClassSideRefactoring >> method: aMethod class: aClass [
-	method := aMethod.
-	class := self classObjectFor: aClass.
-]
-
- { #category : #transforming }
+{ #category : #transforming }
 RBMoveMethodToClassSideRefactoring >> getTempName [
 	| aString counter tempName |
 	counter := 0.
@@ -111,6 +105,12 @@ RBMoveMethodToClassSideRefactoring >> getTempName [
 	whileTrue: [ counter := counter + 1.
 		tempName := aString , counter asString ].
 	^ tempName
+]
+
+{ #category : #initialization }
+RBMoveMethodToClassSideRefactoring >> method: aMethod class: aClass [
+	method := aMethod.
+	class := self classObjectFor: aClass.
 ]
 
 { #category : #accessing }
