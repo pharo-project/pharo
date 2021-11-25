@@ -466,7 +466,6 @@ EFMethodExpressionTest >> testNoNewLinesAfterComment [
 'aMethode
 	"aComment"
 	'
-
 ]
 
 { #category : #tests }
@@ -479,7 +478,6 @@ EFMethodExpressionTest >> testNoNewLinesAfterGluedComment [
 'aMethode
 	"aComment""anotherComment"
 	'
-
 ]
 
 { #category : #tests }
@@ -502,7 +500,6 @@ EFMethodExpressionTest >> testNoNewLinesBetweenTopComments [
 	self assert: source equals:
 'aMethode
 	"aComment"	"anotherComment"	'
-
 ]
 
 { #category : #tests }

@@ -27,7 +27,7 @@ Class {
 
 { #category : #parents }
 CmdMenuGroup class >> parentGroup [
-	^CmdRootMenuGroup 
+	^CmdRootMenuGroup
 ]
 
 { #category : #accessing }
@@ -162,7 +162,7 @@ CmdMenuGroup >> isCommandItem [
 
 { #category : #testing }
 CmdMenuGroup >> isEmpty [
-	^contents isEmpty 
+	^contents isEmpty
 ]
 
 { #category : #testing }
@@ -207,7 +207,7 @@ CmdMenuGroup >> order [
 
 { #category : #accessing }
 CmdMenuGroup >> removeItem: aGroupOrCommand [
-	contents remove: aGroupOrCommand 
+	contents remove: aGroupOrCommand
 ]
 
 { #category : #accessing }

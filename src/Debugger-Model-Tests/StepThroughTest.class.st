@@ -62,7 +62,6 @@ StepThroughTest >> testStepThrough [
 	self assert: node isMessage.
 	self assert: node receiver isSelfVariable.
 	self assert: node selector equals: #stepA2.
-	
 ]
 
 { #category : #tests }

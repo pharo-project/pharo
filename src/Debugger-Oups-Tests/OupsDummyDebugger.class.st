@@ -66,7 +66,7 @@ OupsDummyDebugger >> debugSession: aDebugSession [
 { #category : #'deferred message' }
 OupsDummyDebugger >> defer: aBlock [
 	aBlock value.
-	deferred := true 
+	deferred := true
 ]
 
 { #category : #accessing }
@@ -81,7 +81,7 @@ OupsDummyDebugger >> findContextSuchThat: aBlock [
 
 { #category : #testing }
 OupsDummyDebugger >> handlesContext: aContext [
-	^self isUsable 
+	^self isUsable
 ]
 
 { #category : #accessing }

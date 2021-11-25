@@ -53,7 +53,6 @@ DebuggerModelTest >> testStepInto [
 		stepInto.
 
 	self assert: session interruptedContext printString equals: 'Set class(HashedCollection class)>>new'.
-
 ]
 
 { #category : #tests }
@@ -87,7 +86,7 @@ DebuggerModelTest >> testUnwindAndRestartToContext [
 	"After restarting a context, we step to the first interesting bytecode, that is either a send or a return.
 	In the (Number >> #squared) method, the first send is the third bytecode.
 	So, after restarting, the context's pc should be equal to the initialPC (first bytecode) + 2 (third bytecode = send)"
-	self assert: session interruptedContext pc equals: (Number >> #squared) initialPC + 2 
+	self assert: session interruptedContext pc equals: (Number >> #squared) initialPC + 2
 ]
 
 { #category : #tests }
@@ -108,5 +107,5 @@ DebuggerModelTest >> testUnwindAndRestartToQuickMethodContext [
 	
 	session unwindAndRestartToContext: session interruptedContext.
 	self assert: session interruptedContext method equals: (Symbol >> #asSymbol).
-	self assert: session interruptedContext pc equals: (Symbol >> #asSymbol) endPC 
+	self assert: session interruptedContext pc equals: (Symbol >> #asSymbol) endPC
 ]

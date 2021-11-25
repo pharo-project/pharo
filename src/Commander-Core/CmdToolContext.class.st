@@ -63,7 +63,7 @@ CmdToolContext >> executeCommand: aCommand by: aCommandActivator [
 
 { #category : #testing }
 CmdToolContext >> isSimilarTo: anotherToolContext [
-	^self = anotherToolContext 
+	^self = anotherToolContext
 ]
 
 { #category : #'ui requests' }

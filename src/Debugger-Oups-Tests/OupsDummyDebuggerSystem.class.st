@@ -16,7 +16,6 @@ Class {
 { #category : #accessing }
 OupsDummyDebuggerSystem >> callsToHandleDebugRequest [
 	^callsToHandleDebugRequest ifNil: [ callsToHandleDebugRequest := 0 ].
-
 ]
 
 { #category : #accessing }

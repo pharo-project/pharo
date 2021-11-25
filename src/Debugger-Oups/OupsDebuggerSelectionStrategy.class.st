@@ -86,7 +86,7 @@ OupsDebuggerSelectionStrategy >> nextDebugger [
 
 { #category : #debuggers }
 OupsDebuggerSelectionStrategy >> openDebuggerForSession: aDebugSession [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'error handling' }

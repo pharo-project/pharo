@@ -67,7 +67,7 @@ CompiledCode >> messages [
 	| aSet |
 	aSet := self localMessages.
 	self innerCompiledBlocksDo: [ :cb | aSet := aSet , cb messages ].
-	^ aSet 
+	^ aSet
 ]
 
 { #category : #'*Debugging-Core' }

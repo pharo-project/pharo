@@ -410,7 +410,7 @@ EFBlockExpressionTest >> tabIndentIsnotAffectedConfiguration [
 
 { #category : #tests }
 EFBlockExpressionTest >> testArgumentIsFormated [
-	self validate: ':i|i' isFormattedAs: ' :i | i ' 
+	self validate: ':i|i' isFormattedAs: ' :i | i '
 ]
 
 { #category : #tests }
