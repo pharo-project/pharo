@@ -302,8 +302,12 @@ HDTestReport >> setUp [
 			encoding: 'utf8'.	
 		
 	stream nextPutAll: '<?xml version="1.0" encoding="UTF-8"?>'; lf.
-	stream nextPutAll: '<testsuite name="'; nextPutAll: (self encode: suite name); 
-		nextPutAll: '" tests="'; print: suite tests size; nextPutAll: '">'.
+	stream
+		nextPutAll: '<testsuite ';
+		nextPutAll: 'name="'; nextPutAll: (self encode: suite name); nextPutAll: '" ';
+		nextPutAll: 'tests="'; print: suite tests size; nextPutAll: '" ';
+		nextPutAll: 'timestamp="'; print: Time now; nextPutAll: '" ';
+		nextPutAll: '>'.
 	
 	"Now this is ugly. We want to update the time and the number of failures and errors, but still at the same time stream a valid XML. So remember this position and add some whitespace, that we can fill later."
 	suitePosition := stream wrappedStream position - 1.
