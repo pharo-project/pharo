@@ -49,7 +49,6 @@ FileAttributesPluginPrimsTest >> testPrimCloseDirNil [
 		raise: PrimitiveFailed
 		withExceptionDo: [ :exception | 
 			self assert: exception selector equals: #'bad argument' ].
-
 ]
 
 { #category : #tests }
@@ -61,7 +60,6 @@ FileAttributesPluginPrimsTest >> testPrimCloseDirString [
 		raise: PrimitiveFailed
 		withExceptionDo: [ :exception | 
 			self assert: exception selector equals: #'bad argument' ].
-
 ]
 
 { #category : #tests }
@@ -73,7 +71,6 @@ FileAttributesPluginPrimsTest >> testPrimCloseDirWrongLength [
 		raise: PrimitiveFailed
 		withExceptionDo: [ :exception | 
 			self assert: exception selector equals: #'bad argument' ].
-
 ]
 
 { #category : #tests }
@@ -85,5 +82,4 @@ FileAttributesPluginPrimsTest >> testPrimExistsNil [
 		raise: PrimitiveFailed
 		withExceptionDo: [ :exception | 
 			self assert: exception selector equals: #'bad argument' ].
-
 ]
