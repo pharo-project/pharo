@@ -18,7 +18,6 @@ Class {
 FBDExamples class >> superCallInBlock [
 
 	^ [ super yourself ] value
-
 ]
 
 { #category : #examples }
@@ -35,8 +34,6 @@ FBDExamples >> doubleRemoteAnidatedBlocks [
 	].
 	self assert: val = 9.
 	self assert: last = 10
-
-
 ]
 
 { #category : #'examples - loops' }
@@ -81,7 +78,7 @@ FBDExamples >> exampleAndOr [
 	| t1 t2 |
 	t1 := true.
 	t2 := false.
-	t1 and: [ t2. '1' traceCr ] "effect"   
+	t1 and: [ t2. '1' traceCr ] "effect"
 ]
 
 { #category : #'examples - blocks-optimized' }
@@ -104,7 +101,7 @@ FBDExamples >> exampleAndOr3 [
 	| t1 t2 |
 	t1 := true.
 	t2 := false.  
-	^ t1 and: [ t2 ] "value" 
+	^ t1 and: [ t2 ] "value"
 ]
 
 { #category : #'examples - blocks-optimized' }
@@ -547,7 +544,6 @@ FBDExamples >> exampleEffectValues [
 	#getMe.
 	#( got that ? ).
 	Class.
-	
 ]
 
 { #category : #'examples - simple' }
@@ -569,7 +565,6 @@ FBDExamples >> exampleIV [
 	
 	iVar := 5.
 	^ iVar
-	
 ]
 
 { #category : #'examples - blocks-optimized' }
@@ -648,14 +643,13 @@ FBDExamples >> exampleIfFalseIfTrue6 [
 	| a |
 	a := true.
 	^ a ifFalse: [ ] ifTrue: [ ^1 ]
-	
 ]
 
 { #category : #'examples - branches' }
 FBDExamples >> exampleIfNil [
 	<sampleInstance>
 	
-	true ifNil: [ ^ 5 ]. ^ 6 
+	true ifNil: [ ^ 5 ]. ^ 6
 ]
 
 { #category : #'examples - branches' }
@@ -669,7 +663,7 @@ FBDExamples >> exampleIfNilClosure [
 FBDExamples >> exampleIfNilDup [
 	<sampleInstance>
 	
-	^ true ifNil: [ 1+2. 5 ]   
+	^ true ifNil: [ 1+2. 5 ]
 ]
 
 { #category : #'examples - branches' }
@@ -713,7 +707,7 @@ FBDExamples >> exampleIfNotNilArg [
 FBDExamples >> exampleIfNotNilDup [
 	<sampleInstance>
 	
-	^ true ifNotNil: [ 5 ]     
+	^ true ifNotNil: [ 5 ]
 ]
 
 { #category : #'examples - blocks-optimized' }
@@ -735,7 +729,6 @@ FBDExamples >> exampleIfTrue2 [
 	<sampleInstance>
 	
 	^ 1 < 2 ifTrue: [ ^ 'result' ]
-	  
 ]
 
 { #category : #'examples - branches' }
@@ -751,7 +744,7 @@ FBDExamples >> exampleIfTrueAssign [
 	<sampleInstance>
 	| a |
 	a := 1 <2 ifTrue: [1] ifFalse: [2].
-	^a 
+	^a
 ]
 
 { #category : #'examples - branches' }
@@ -773,7 +766,6 @@ FBDExamples >> exampleIfTrueIfFalse [
 	<sampleInstance>
 	
 	 1 <2 ifTrue: [^'result'] ifFalse: [2].
-	
 ]
 
 { #category : #'examples - branches' }
@@ -866,7 +858,6 @@ FBDExamples >> exampleInlineBlockCollectionLR3 [
 	col := OrderedCollection new.
 	1 to: 11 do: [ :each | | i | i := each. col add: [ i ]. i := i + 1 ].
 	^ (col collect: [ :each | each value ]) asArray "= (2 to: 12) asArray"
-
 ]
 
 { #category : #'examples - blocks' }
@@ -944,8 +935,6 @@ FBDExamples >> examplePrimitiveErrorCode [
 	<primitive: 60 error: code >
 	
 	^ code
-
-
 ]
 
 { #category : #'examples - pragmas' }
@@ -1011,7 +1000,7 @@ FBDExamples >> exampleRepeatValue [
 	^ [ 
 	i := i + 1.
 	i = 10
-		ifTrue: [ ^ true ] ] repeat 
+		ifTrue: [ ^ true ] ] repeat
 ]
 
 { #category : #'examples - simple' }
@@ -1046,7 +1035,7 @@ FBDExamples >> exampleSelf [
 
 { #category : #'examples - simple' }
 FBDExamples >> exampleSend [
-	self basicSize 
+	self basicSize
 ]
 
 { #category : #'examples - simple' }
@@ -1195,7 +1184,7 @@ FBDExamples >> exampleTimesRepeatEffect [
 FBDExamples >> exampleTimesRepeatValue [
 	<sampleInstance>
 	
-	^ 5 timesRepeat: [ 1 + 2 ]   
+	^ 5 timesRepeat: [ 1 + 2 ]
 ]
 
 { #category : #'examples - loops' }
@@ -1372,8 +1361,6 @@ FBDExamples >> exampleToDoValue [
 	<sampleInstance>
 
 	^ 1 to: 2 do: [:each | each]
-	
-
 ]
 
 { #category : #'examples - misc' }
@@ -1381,8 +1368,6 @@ FBDExamples >> exampleToDoValueLimitExpression [
 	<sampleInstance>
 
 	^ 2 to: 3+4 do: [:each | each]
-	
-
 ]
 
 { #category : #'examples - loops' }
@@ -1681,8 +1666,6 @@ FBDExamples >> noRemoteBlockArgument [
 	block := [ :arg | | temp | temp := arg. [ temp ] ].
 	block1 := block value: 1.
 	block2 := block value: 2
-
-
 ]
 
 { #category : #examples }
@@ -1692,9 +1675,6 @@ FBDExamples >> noRemoteBlockTemp [
 	block := [ :arg | [ arg ] ].
 	block1 := block value: 1.
 	block2 := block value: 2
-
-
-
 ]
 
 { #category : #examples }
@@ -1703,8 +1683,6 @@ FBDExamples >> noRemoteReadInBlock [
 	| a |
 	a := 1.
 	[ a ]
-
-
 ]
 
 { #category : #examples }
@@ -1712,7 +1690,6 @@ FBDExamples >> noRemoteReadNestedBlocks [
 
 	 [ |a| a := 1.
        [ a ]]
-
 ]
 
 { #category : #examples }
@@ -1720,7 +1697,6 @@ FBDExamples >> optimizedBlockWriteInBlock [
 
 	| t1 |
 	[ t1 < 5 ] whileTrue: [ t1 := 1 ]
-
 ]
 
 { #category : #examples }
@@ -1728,7 +1704,6 @@ FBDExamples >> optimizedBlockWriteInNestedBlock [
 
 	| t1 |
 	^[ [ t1 < 5 ] whileTrue: [ t1 := 1 ] ]
-
 ]
 
 { #category : #examples }
@@ -1736,7 +1711,6 @@ FBDExamples >> optimizedBlockWriteInNestedBlockCase2 [
 
 	| t1 |
 	(true) ifTrue: [ [ t1 < 5 ] whileTrue: [ t1 := 1 ] ]
-
 ]
 
 { #category : #examples }
@@ -1744,7 +1718,6 @@ FBDExamples >> optimizedBlockWriteInNestedBlockCase3 [
 
 	| t1 |
 	[(true) ifTrue: [ [ t1 < 5 ] whileTrue: [ t1 := 1 ] ] ]
-
 ]
 
 { #category : #examples }
@@ -1752,7 +1725,6 @@ FBDExamples >> optimizedBlockWriteInNestedBlockCase4 [
 
 	| t1 |
 	[(true) whileTrue: [ [ t1 < 5 ] whileTrue: [ t1 := 1 ] ] ]
-
 ]
 
 { #category : #examples }
@@ -1760,7 +1732,6 @@ FBDExamples >> optimizedBlockWriteReadInBlock [
 
 	| t1 |
 	[ t1 < 5 ] whileTrue: [ t1 := 1. [ t1 ] ]
-
 ]
 
 { #category : #examples }
@@ -1773,7 +1744,6 @@ FBDExamples >> optimizedBlockWrittenAfterClosedOverCase1 [
 		[ temp ].
 		temp := index := index + 1].
 	^index
-
 ]
 
 { #category : #examples }
@@ -1785,7 +1755,6 @@ FBDExamples >> optimizedBlockWrittenAfterClosedOverCase2 [
 		| temp |
 		temp := index := index + 1.
 		 [ temp ] ]
-
 ]
 
 { #category : #examples }
@@ -1798,8 +1767,6 @@ FBDExamples >> singleRemoteDifferentBlocksSameArgumentName [
 	c := [:a |
 		z + a].
 	^ (b value: 2) + (c value: 1)
-
-
 ]
 
 { #category : #examples }
@@ -1811,7 +1778,6 @@ FBDExamples >> singleRemoteMethodArgument [
 	temp := 1.
 	block := block value.
 	temp := 2
-
 ]
 
 { #category : #examples }
@@ -1820,7 +1786,6 @@ FBDExamples >> singleRemoteReadNestedBlocks [
 	|a| 
 	[ a := 1.
        [ a ]]
-
 ]
 
 { #category : #examples }
@@ -1842,14 +1807,12 @@ FBDExamples >> singleRemoteTempVarWrittenAfterClosedOver [
 	index := 0.
 	block := [ index ].
 	index := index + 1
-
 ]
 
 { #category : #examples }
 FBDExamples >> superCallInBlock [
 
 	^ [ super yourself ] value
-
 ]
 
 { #category : #examples }
