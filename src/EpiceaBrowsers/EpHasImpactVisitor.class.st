@@ -93,7 +93,6 @@ EpHasImpactVisitor >> visitCategoryRemoval: aChange [
 EpHasImpactVisitor >> visitCategoryRename: aChange [
 
 	^ environment organization includesCategory: aChange oldCategoryName
-
 ]
 
 { #category : #visitor }
@@ -141,7 +140,6 @@ EpHasImpactVisitor >> visitMethodRemoval: aChange [
 				ifAbsent: [ false ] ].
 
 	^ false "No impact if container does not exist"
-
 ]
 
 { #category : #visitor }

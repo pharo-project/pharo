@@ -43,7 +43,6 @@ EpMorphVisitor >> displayCategory: aCategoryName [
 EpMorphVisitor >> displayClass: aClassName protocol: aProtocolName [
 
 	^ (self displayBehavior: aClassName), (self displayOperation: 'protocol'), (self displayString: aProtocolName)
-
 ]
 
 { #category : #private }

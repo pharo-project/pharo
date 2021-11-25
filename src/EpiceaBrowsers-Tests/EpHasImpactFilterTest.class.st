@@ -15,7 +15,6 @@ EpHasImpactFilterTest >> setUp [
 	impactFilter := EpImpactCodeChangeFilter new
 		environment: self class environment;
 		yourself.
-
 ]
 
 { #category : #running }

@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 EpCodeChange >> affectedPackageName [
 
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #testing }

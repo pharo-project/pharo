@@ -37,7 +37,6 @@ EpDisabledIntegrationTest >> testEnable [
 	classFactory newClass.
 
 	self assert: (self countLogEventsWith: EpClassAddition) equals: 1.
-
 ]
 
 { #category : #tests }
@@ -47,7 +46,6 @@ EpDisabledIntegrationTest >> testIsEnabled [
 	self assert: monitor isEnabled.
 	monitor disable.
 	self deny: monitor isEnabled.
-
 ]
 
 { #category : #tests }

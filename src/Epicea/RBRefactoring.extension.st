@@ -16,6 +16,4 @@ RBRefactoring >> propagateTransformation [
 	methods to the class."
 	
 	"The default is to do nothing"
-
-	
 ]

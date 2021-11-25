@@ -21,7 +21,7 @@ EpTraitRemoval class >> trait: aTrait [
 { #category : #visitor }
 EpTraitRemoval >> accept: aVisitor [
 
-	^ aVisitor visitTraitRemoval: self 
+	^ aVisitor visitTraitRemoval: self
 ]
 
 { #category : #accessing }

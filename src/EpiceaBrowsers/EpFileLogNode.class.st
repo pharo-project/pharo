@@ -28,7 +28,7 @@ EpFileLogNode class >> withEntry: aDirectoryEntry [
 
 	^ self basicNew 
 		initializeWithEntry: aDirectoryEntry;
-		yourself 
+		yourself
 ]
 
 { #category : #accessing }

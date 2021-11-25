@@ -88,7 +88,6 @@ EpSettings class >> storeNameStrategySettingsOn: aBuilder [
 		target: self;
 		default: OmRandomSuffixStrategy;
 		domainValues: OmSessionStoreNamingStrategy availableStrategies.
-
 ]
 
 { #category : #accessing }
