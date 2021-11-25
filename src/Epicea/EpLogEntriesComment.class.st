@@ -43,7 +43,6 @@ EpLogEntriesComment >> initializeWithEntryReferences: aCollection oldComment: th
 	self initializeWith: aCollection.
 	oldComment := theOldComment.
 	newComment := theNewComment.
-
 ]
 
 { #category : #testing }

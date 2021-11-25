@@ -27,7 +27,6 @@ EpLostChangesDetector class >> initialize [
 	self initialize
 	"
 	SessionManager default registerToolClassNamed: self name
-
 ]
 
 { #category : #testing }
@@ -66,7 +65,6 @@ EpLostChangesDetector class >> startUp: isImageStarting [
 	SessionManager default addDeferredStartupAction: [
 		(detector hasLostChanges and: [ self confirm: 'It seems your last Pharo session exited without saving some code. Do you want to recover it?' ])
 			ifTrue: [ detector openBrowserIfLostChanges ] ]
-
 ]
 
 { #category : #testing }
@@ -85,7 +83,6 @@ EpLostChangesDetector >> initializeWithLog: aLog [
 		lastSessionFileStore
 			ifNil: [ false ]
 			ifNotNil: [ lastSessionFileStore isOutdated ].
-
 ]
 
 { #category : #accessing }
@@ -116,5 +113,4 @@ EpLostChangesDetector >> openBrowserIfLostChanges [
 	browser refresh.
 	browser withWindowDo: [ :w | w title: 'Epicea - Lost Changes Detected'].
 	browser openWithSpec.
-
 ]

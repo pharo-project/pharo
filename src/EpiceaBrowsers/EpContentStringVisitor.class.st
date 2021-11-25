@@ -24,7 +24,7 @@ EpContentStringVisitor >> printProtocol: protocol sourceCode: sourceCode [
 			nextPutAll: '"protocol: '; 
 			nextPutAll: protocol printString;
 			nextPut: $"; cr; cr;
-			nextPutAll: sourceCode ]	
+			nextPutAll: sourceCode ]
 ]
 
 { #category : #visitor }

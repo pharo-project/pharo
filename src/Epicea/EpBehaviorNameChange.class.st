@@ -23,7 +23,7 @@ EpBehaviorNameChange class >> oldName: anOldName newName: aNewName class: aClass
 { #category : #visitor }
 EpBehaviorNameChange >> accept: aVisitor [
 
-	^ aVisitor visitBehaviorNameChange: self 
+	^ aVisitor visitBehaviorNameChange: self
 ]
 
 { #category : #accessing }
@@ -49,7 +49,6 @@ EpBehaviorNameChange >> initializeOldName: anOldName newName: aNewName class: aB
 	behavior := aBehavior asEpiceaRingDefinition.
 	oldName := anOldName.
 	newName := aNewName.
-	
 ]
 
 { #category : #accessing }

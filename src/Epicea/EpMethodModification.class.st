@@ -23,7 +23,7 @@ EpMethodModification class >> oldMethod: anOldMethod newMethod: aNewMethod [
 { #category : #visitor }
 EpMethodModification >> accept: aVisitor [
 
-	^ aVisitor visitMethodModification: self 
+	^ aVisitor visitMethodModification: self
 ]
 
 { #category : #accessing }

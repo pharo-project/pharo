@@ -18,7 +18,6 @@ EpClassModification class >> oldClass: anOldClass newClass: aNewClass [
 		initializeOldClass: anOldClass
 		newClass: aNewClass;
 		yourself
-
 ]
 
 { #category : #visitor }
