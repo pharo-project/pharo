@@ -59,7 +59,6 @@ FuzzyMatcherTest >> testChangePattern [
 	self 
 		assert: (matcher matches: 'abcdefghijkl');
 		deny: (matcher matches: '')
-	
 ]
 
 { #category : #tests }
@@ -76,8 +75,7 @@ FuzzyMatcherTest >> testClassSideAPI [
 		equals: { #a -> 1 . #acb -> 3 };
 		
 		assert: (FuzzyMatcher allSortedByScoreMatching: #b in: { #aaca .#aAaaB . #Aaab . #baaa . #aaba })
-		equals: #(baaa aaba Aaab aAaaB) 	
-		
+		equals: #(baaa aaba Aaab aAaaB)
 ]
 
 { #category : #tests }
@@ -117,7 +115,6 @@ FuzzyMatcherTest >> testMatching [
 		assert: (matcher matches: 'a');
 		assert: (matcher matches: String cr, String tab, String lf, String space, 'a');
 		assert: (matcher matches: ',;:_-!"#¤%&/?+\()a')
-		
 ]
 
 { #category : #tests }
@@ -195,5 +192,4 @@ FuzzyMatcherTest >> testSortedByScore [
 	output := FuzzyMatcher allSortedByScoreMatching: 'a' in: input.
 	
 	self assertCollection: output asArray equals: #('a' 'ab' 'abc' 'cab' 'cat')
-	
 ]
