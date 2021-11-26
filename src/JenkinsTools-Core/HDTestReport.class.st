@@ -15,7 +15,8 @@ Class {
 		'stageName',
 		'progressFileName',
 		'progressStream',
-		'shouldSerializeError'
+		'shouldSerializeError',
+		'fileName'
 	],
 	#classVars : [
 		'CurrentStageName'
@@ -108,7 +109,7 @@ HDTestReport >> hasFailuresOrErrors [
 HDTestReport >> initialize [
 
 	super initialize.
-	shouldSerializeError := false.
+	shouldSerializeError := true.
 	suiteTime := 0 asDuration.
 	suitePosition := suiteFailures := suiteErrors := 0.
 	progressFileName := 'progress.log'.
@@ -269,9 +270,12 @@ HDTestReport >> serializeError: error of: aTestCase [
 
 	"We got an error from a test, let's serialize it so we can properly debug it later on..."
 
+	| fuelFileName |
+	
 	self shouldSerializeError ifFalse: [ ^ self ].
+	
 	self class environment
-		at: #FuelOutStackDebugAction
+		at: #FLDebuggerStackSerializer
 		ifPresent: [ :fuelOutStackDebugAction | 
 			| context testCaseMethodContext |
 			context := error signalerContext.
@@ -280,15 +284,19 @@ HDTestReport >> serializeError: error of: aTestCase [
 					                         ctx methodSelector == #performTest ] ].
 			context := context copyTo: testCaseMethodContext.
 
-			[ fuelOutStackDebugAction serializeStackFromContext: context sender ]
+			fuelFileName := fileName copyReplaceAll: '.xml' with: ('-' , aTestCase class name asString , '-',  aTestCase selector asString , '.fuel').
+
+			[ fuelOutStackDebugAction 
+					serializeStackFromContext: context sender 
+					toFileNamed: fuelFileName ]
 				on: Error
-				do: [ :err | "simply continue..." ] ]
+				do: [ :err | Stdio stderr << err messageText; crlf; flush ] ]
 ]
 
 { #category : #running }
 HDTestReport >> setUp [
 
-	| aFile fileName |
+	| aFile |
 	self openProgressStream.
 	progressStream nextPutAll: 'running suite: ';
 		nextPutAll: suite name ; crlf; flush.
