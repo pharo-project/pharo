@@ -91,7 +91,6 @@ ByteArray >> float32AtOffset: zeroBasedOffset put: value [
 	<primitive: 628>
 	
 	^ FFIBackend current on: self float32At: zeroBasedOffset + 1 put: value
-
 ]
 
 { #category : #'*FFI-Kernel' }
@@ -99,7 +98,6 @@ ByteArray >> float64AtOffset: zeroBasedOffset [
 	<primitive: 614>
 	
 	^ FFIBackend current on: self float64At: zeroBasedOffset + 1
-
 ]
 
 { #category : #'*FFI-Kernel' }
