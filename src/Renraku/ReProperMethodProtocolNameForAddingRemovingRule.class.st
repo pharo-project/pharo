@@ -2,13 +2,13 @@
 Rule to favour 'adding/removing' method protocol over similar ones (like 'adding-removing' or other)
 "
 Class {
-	#name : #ReProperMethodProtocolNameForAddingRemovinggRule,
+	#name : #ReProperMethodProtocolNameForAddingRemovingRule,
 	#superclass : #ReProperMethodProtocolNameRule,
 	#category : #'Renraku-Rules'
 }
 
 { #category : #idioms }
-ReProperMethodProtocolNameForAddingRemovinggRule class >> protocolIdiom [ 
+ReProperMethodProtocolNameForAddingRemovingRule class >> protocolIdiom [ 
 
 	^self use: 'adding/removing' insteadOf: #('adding-removing')
 ]

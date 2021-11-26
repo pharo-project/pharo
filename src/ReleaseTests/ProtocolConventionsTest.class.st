@@ -78,7 +78,7 @@ ProtocolConventionsTest >> testProperAccessingProtocolIsUsed [
 { #category : #tests }
 ProtocolConventionsTest >> testProperAddingRemovingProtocolIsUsed [
 
-	self checkIdiomForRuleClass: ReProperMethodProtocolNameForAddingRemovinggRule
+	self checkIdiomForRuleClass: ReProperMethodProtocolNameForAddingRemovingRule
 ]
 
 { #category : #tests }
