@@ -27,5 +27,5 @@ CoMockMethod >> methodClass: aCoMockClass [
 { #category : #accessing }
 CoMockMethod >> source: aString [ 
 	
-	ast := RBParser parseMethod: aString 
+	ast := RBParser parseMethod: aString
 ]

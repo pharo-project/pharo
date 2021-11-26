@@ -30,5 +30,5 @@ CoMockFetcherToRecordResets >> reset [
 { #category : #accessing }
 CoMockFetcherToRecordResets >> resetingCount [
 	
-	^ resetingCount 
+	^ resetingCount
 ]

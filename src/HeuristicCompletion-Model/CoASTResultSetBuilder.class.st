@@ -73,7 +73,7 @@ CoASTResultSetBuilder >> parseNode [
 			source: completionContext source;
 			noPattern: completionContext isWorkspace; 
 			options: #(+ optionParseErrors + optionSkipSemanticWarnings);
-			parse) nodeForOffset: completionContext position ] 
+			parse) nodeForOffset: completionContext position ]
 ]
 
 { #category : #visiting }

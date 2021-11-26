@@ -22,8 +22,6 @@ CoBeginsWithFilter class >> caseSensitive: aBoolean filterString: aString [
 		^ CoCaseInsensitiveBeginsWithFilter new
 			completionString: aString;
 			yourself	]
-		
-
 ]
 
 { #category : #accessing }
