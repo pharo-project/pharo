@@ -152,6 +152,32 @@ ReflectiveMethodTest >> testSetLinkOnClassVariableAndUninstall [
 
 ]
 
+{ #category : #'tests - links' }
+ReflectiveMethodTest >> testSetLinkOnDynamicArrayArgument [
+	
+ 	| link |
+ 	link := MetaLink new
+ 		        metaObject: #node;
+ 		        selector: #tagExecuted;
+ 		        yourself.
+ 	(ReflectivityExamples >> #exampleDynamicArrayArgument)
+ 		compiledMethod recompile.
+ 	ReflectivityExamples new exampleDynamicArrayArgument. 
+ 	(ReflectivityExamples >> #exampleDynamicArrayArgument) ast 
+ 		nodesDo: [ :n | 
+ 			n removeProperty: #tagExecuted ifAbsent: [  ].
+ 			n isDynamicArray ifTrue: [ 
+ 				n
+ 					propertyAt: #tagExecuted put: false;
+ 					link: link ] ].
+ 	ReflectivityExamples new exampleDynamicArrayArgument.
+ 	link uninstall.
+ 	(ReflectivityExamples >> #exampleDynamicArrayArgument) ast 
+ 		nodesDo: [ :n | 
+ 			n isDynamicArray ifTrue: [ 
+ 				self assert: (n propertyAt: #tagExecuted) ]]
+]
+
 { #category : #'tests - variables' }
 ReflectiveMethodTest >> testSetLinkOnGlobalVariable [
 	| globalVar link |
