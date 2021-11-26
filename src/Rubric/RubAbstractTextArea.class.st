@@ -702,6 +702,8 @@ RubAbstractTextArea >> doubleClick: anEvent [
 
 { #category : #composing }
 RubAbstractTextArea >> drawEmbeddedMorphs [
+	"Scan through text to find spans of TextBackgroundColor, and mark them using TextBackgroundColorSegmentMorph."
+
 	"Scan through text to find spans containing submorphs (Background color and TextAnchor)"
 
 	self text runs
@@ -714,7 +716,7 @@ RubAbstractTextArea >> drawEmbeddedMorphs [
 								from: start
 								to: stop+1) ].
 					((v isKindOf: TextAnchor) and:[v anchoredMorph isMorph ])
-						ifTrue: [ self addMorphBack: v anchoredMorph  ] ] ] 
+						ifTrue: [ self addMorphBack: v anchoredMorph  ] ] ]
 ]
 
 { #category : #drawing }
@@ -1474,7 +1476,7 @@ RubAbstractTextArea >> paragraphReplacedTextFrom: start to: stop with: aText [
 				ifFalse: [ self updateExtentFromParagraph ] ].
 	self scrollPane ifNotNil: [ :sp | sp textChanged ].
 	self announce: (RubTextChanged from: start to: stop with: aText).
-	self drawEmbeddedMorphs .
+	self drawEmbeddedMorphs.
 
 ]
 
