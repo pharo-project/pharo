@@ -301,7 +301,7 @@ FluidClassBuilderTest >> testCreateClassWithFullExpandedDefinitionKeepsTheMinimu
 	builder := self class compilerClass new
 		           evaluate: 'Object << #MyClass
 	layout: FixedLayout;
-	trait: {};
+	traits: {};
 	slots: {};
 	sharedVariables: {};
 	tag: '''' ;
@@ -485,7 +485,7 @@ FluidClassBuilderTest >> testInstallMinimalMockClass [
 	builder := self class compilerClass new
 		           evaluate: 'Object << #MyClass
 	layout: FixedLayout;
-	trait: {};
+	traits: {};
 	slots: {};
 	sharedVariables: {};
 	tag: '''' ;
