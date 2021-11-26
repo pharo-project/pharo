@@ -58,8 +58,6 @@ FloatArray >> \\= other [
 	1 to: (self size min: other size) do: [:i |
 		self at: i put: (self at: i) \\ (other at: i).
 	].
-
-
 ]
 
 { #category : #'*Collections-arithmetic' }

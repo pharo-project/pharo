@@ -181,7 +181,6 @@ SplitJoinTest >> testJoinUsingLastOnArray [
 		[ 	:testCollection :resultString |
 			self	 assert: ( testCollection joinUsing: ', ' last: ' and ') equals: resultString. 
 		]
-
 ]
 
 { #category : #running }
@@ -201,14 +200,12 @@ SplitJoinTest >> testSplitArrayOnBlock [
 SplitJoinTest >> testSplitArrayOnElement [
 	self assert: ((1 to: 10) asArray splitOn: 4)
 		equals: #(#(1 2 3) #(5 6 7 8 9 10)) asOrderedCollection
-
 ]
 
 { #category : #running }
 SplitJoinTest >> testSplitArrayOnSequence [
 	self assert: ((1 to: 10) asArray splitOn: (4 to: 5))
 		equals: #(#(1 2 3) #(6 7 8 9 10)) asOrderedCollection
-
 ]
 
 { #category : #running }
@@ -222,7 +219,6 @@ SplitJoinTest >> testSplitJoinBoundaryCases [
 	self assert: ('an' join: ('an' split: 'banana')) equals: 'banana'.
 	self assert: ('na' join: ('na' split: 'banana')) equals: 'banana'.
 	self assert: ('ana' join: ('ana' split: 'banana')) equals: 'banana'.
-
 ]
 
 { #category : #running }
@@ -264,29 +260,24 @@ SplitJoinTest >> testSplitJoinStringOnString [
 SplitJoinTest >> testSplitOrderedCollectionOnElement [
 	self assert: (((1 to: 10) asOrderedCollection) splitOn: 4)
 		equals: {(1 to: 3) asOrderedCollection . (5 to: 10) asOrderedCollection} asOrderedCollection.
-
 ]
 
 { #category : #running }
 SplitJoinTest >> testSplitOrderedCollectionOnOrderedCollection [
 	self assert: (((1 to: 10) asOrderedCollection) splitOn: ((4 to: 5) asOrderedCollection))
 		equals: {(1 to: 3) asOrderedCollection . (6 to: 10) asOrderedCollection} asOrderedCollection.
-
 ]
 
 { #category : #running }
 SplitJoinTest >> testSplitSortedCollectionOnElement [
 	self assert: (((1 to: 10) asSortedCollection) splitOn: 4)
 		equals: {(1 to: 3) asSortedCollection . (5 to: 10) asSortedCollection} asOrderedCollection.
-
 ]
 
 { #category : #running }
 SplitJoinTest >> testSplitSortedCollectionOnSortedCollection [
 	self assert: (((1 to: 10) asSortedCollection) splitOn: ((4 to: 5) asSortedCollection))
 		equals: {(1 to: 3) asSortedCollection . (6 to: 10) asSortedCollection} asOrderedCollection.
-
-
 ]
 
 { #category : #running }

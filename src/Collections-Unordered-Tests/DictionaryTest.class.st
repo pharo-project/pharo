@@ -54,7 +54,7 @@ DictionaryTest >> anotherElementOrAssociationIn [
 DictionaryTest >> anotherElementOrAssociationNotIn [
 	" return an element (or an association for Dictionary )not present  in 'collection' "
 	
-	^ associationNotIn 
+	^ associationNotIn
 ]
 
 { #category : #helpers }
@@ -72,7 +72,7 @@ DictionaryTest >> associationWithKeyAlreadyInToAdd [
 { #category : #requirements }
 DictionaryTest >> associationWithKeyNotInToAdd [
 	" return an association that will be used to add to nonEmptyDict"
-	^ associationNotIn 
+	^ associationNotIn
 ]
 
 { #category : #requirements }
@@ -101,7 +101,7 @@ DictionaryTest >> collectionClass [
 { #category : #requirements }
 DictionaryTest >> collectionNotIncluded [
 " return a collection for wich each element is not included in 'nonEmpty' "
-	^collectionNotIncluded 
+	^collectionNotIncluded
 ]
 
 { #category : #requirements }
@@ -113,32 +113,32 @@ DictionaryTest >> collectionWithElement [
 { #category : #requirements }
 DictionaryTest >> collectionWithElementsToRemove [
 " return a collection of elements included in 'nonEmpty'  "
-	^ collectionIncluded  
+	^ collectionIncluded
 ]
 
 { #category : #requirements }
 DictionaryTest >> collectionWithEqualElements [
 " return a collecition including atLeast two elements equal"
 
-^ dictionaryWithDuplicateValues 
+^ dictionaryWithDuplicateValues
 ]
 
 { #category : #requirements }
 DictionaryTest >> collectionWithSortableElements [
 " return a collection elements that can be sorte ( understanding message ' < '  or ' > ')"
-	^ nonEmpty5ElementsNoDuplicates 
+	^ nonEmpty5ElementsNoDuplicates
 ]
 
 { #category : #requirements }
 DictionaryTest >> collectionWithoutEqualElements [
 " return a collection without equal elements"
-	^ nonEmpty5ElementsNoDuplicates 
+	^ nonEmpty5ElementsNoDuplicates
 ]
 
 { #category : #requirements }
 DictionaryTest >> collectionWithoutNilElements [
 " return a collection that doesn't includes a nil element  and that doesn't includes equal elements'"
-	^nonEmpty5ElementsNoDuplicates 
+	^nonEmpty5ElementsNoDuplicates
 ]
 
 { #category : #requirements }
@@ -166,7 +166,7 @@ DictionaryTest >> elementToAdd [
 { #category : #requirements }
 DictionaryTest >> elementTwiceInForOccurrences [
 " return an element included exactly two time in # collectionWithEqualElements"
-^ duplicateValue 
+^ duplicateValue
 ]
 
 { #category : #requirements }
@@ -194,25 +194,25 @@ DictionaryTest >> indexInNonEmpty [
 { #category : #requirements }
 DictionaryTest >> integerCollectionWithoutEqualElements [
 " return a collection of integer without equal elements"
-	^ nonEmpty5ElementsNoDuplicates 
+	^ nonEmpty5ElementsNoDuplicates
 ]
 
 { #category : #requirements }
 DictionaryTest >> keyNotIn [
 " return a key not included in nonEmpty"
-^ keyNotIn 
+^ keyNotIn
 ]
 
 { #category : #requirements }
 DictionaryTest >> keyNotInNonEmpty [
 	" return a key not included in nonEmpty"
-	^ keyNotIn 
+	^ keyNotIn
 ]
 
 { #category : #requirements }
 DictionaryTest >> keyNotInNonEmptyDict [
 " return a key not included in nonEmptyDict"
-	^ keyNotIn 
+	^ keyNotIn
 ]
 
 { #category : #requirements }
@@ -228,36 +228,36 @@ DictionaryTest >> nonEmpty [
 { #category : #requirements }
 DictionaryTest >> nonEmpty1Element [
 " return a collection of size 1 including one element"
-	^ nonEmpty1Element 
+	^ nonEmpty1Element
 ]
 
 { #category : #requirements }
 DictionaryTest >> nonEmptyDict [
-	^ nonEmptyDict 
+	^ nonEmptyDict
 ]
 
 { #category : #requirements }
 DictionaryTest >> nonEmptyDifferentFromNonEmptyDict [
 " return a dictionary for which all keys are not included in nonEmptyDict"
-^ dictionaryNotIncluded 
+^ dictionaryNotIncluded
 ]
 
 { #category : #requirements }
 DictionaryTest >> nonEmptyWithCopyNonIdentical [
 " return a collection including elements for wich copy is not identical to the initial element ( this is not the cas of Integer )"
-^nonEmptyWithString 
+^nonEmptyWithString
 ]
 
 { #category : #requirements }
 DictionaryTest >> nonEmptyWithoutEqualsValues [
 " return a dictionary that doesn't include equal values'"
-^nonEmpty5ElementsNoDuplicates 
+^nonEmpty5ElementsNoDuplicates
 ]
 
 { #category : #requirements }
 DictionaryTest >> otherCollection [
 	"Returns a collection that does not include what is returned by #element."
-	^ nonEmpty5ElementsNoDuplicates 
+	^ nonEmpty5ElementsNoDuplicates
 ]
 
 { #category : #requirements }
@@ -319,8 +319,6 @@ DictionaryTest >> setUp [
 	nonEmptyWithString := Dictionary new add: #A->'foo'; add: #b->'bar' ; yourself.
 	duplicateValue := 2.5.
 	dictionaryWithDuplicateValues := 	Dictionary new add: #A->duplicateValue ; add: #b->3.5 ; add: #C->duplicateValue  ; yourself.
-
-
 ]
 
 { #category : #requirements }
@@ -393,9 +391,6 @@ DictionaryTest >> testAtUpdate [
 	dict at: 2 update: [ :v | v+10 ].
 	self assert: (dict at: 2) equals: 20.
 	self should: [ dict at: 5 update: [ :v | v+1 ] ] raise: KeyNotFound .
-	
-	
-	
 ]
 
 { #category : #tests }
@@ -406,7 +401,6 @@ DictionaryTest >> testAtUpdateInitial [
 	dict at: 2 update: [ :v | v+10 ] initial: [0].
 	self assert: (dict at: 5) equals: 17.
 	self assert: (dict at: 2) equals: 20
-	
 ]
 
 { #category : #tests }
@@ -463,9 +457,7 @@ DictionaryTest >> testFlatCollect [
 
 	| res |
  	res := {#first -> -1. #second -> 5 . #three -> -33} asDictionary flatCollect: [:e | { e abs } ].
- 	self assert: res asSet equals: #(1 5 33) asSet. 
-	
- 
+ 	self assert: res asSet equals: #(1 5 33) asSet.
 ]
 
 { #category : #'tests - flatCollect' }
@@ -473,9 +465,7 @@ DictionaryTest >> testFlatCollect2 [
 
 	| res |
  	res := {#first -> #(-2 3). #second -> #(-4 5)} asDictionary flatCollect: [:e | e collect: [:each | each abs]].
- 	self assert: res asSet equals: #(2 3 4 5) asSet. 
-	
- 
+ 	self assert: res asSet equals: #(2 3 4 5) asSet.
 ]
 
 { #category : #'tests - flatCollect' }
@@ -483,9 +473,7 @@ DictionaryTest >> testFlatCollect3 [
 
 	| res |
  	res := {#first -> #(-2 3). #second -> #(-4 5)} asDictionary flatCollect: [:e | {e collect: [:each | each abs]}].
- 	self assert: res asSet equals: #(#(2 3) #(4 5)) asSet. 
-	
- 
+ 	self assert: res asSet equals: #(#(2 3) #(4 5)) asSet.
 ]
 
 { #category : #'tests - testing' }
@@ -505,7 +493,6 @@ DictionaryTest >> testHasBindingThatBeginsWith [
 DictionaryTest >> testIncludeAssociation [
 	self assert: (nonEmptyDict includesAssociation: #a -> self elementTwiceIn).
 	self assert: (nonEmptyDict includesAssociation: (nonEmptyDict associations first)).
-
 ]
 
 { #category : #'tests - testing' }
@@ -537,10 +524,6 @@ DictionaryTest >> testIncludesAssociationNoValue [
 	dictionary add: association.
 	
 	self assert: (dictionary at: #key) isNil
-
-	
-	
-	
 ]
 
 { #category : #'tests - testing' }
@@ -639,7 +622,7 @@ DictionaryTest >> testNewFromKeysAndValues [
 	values := self nonEmptyDict values.
 	newDict := self classToBeTested newFromKeys: keys andValues: values.
 	self nonEmptyDict keysAndValuesDo: [:k :v|
-		self assert: (newDict at: k) equals: v ]. 
+		self assert: (newDict at: k) equals: v ].
 ]
 
 { #category : #'tests - new' }
@@ -652,7 +635,7 @@ DictionaryTest >> testNewFromKeysAndValues2 [
 		at: #c put: 3; yourself.
 	newDict := self classToBeTested newFromKeys: dict keys andValues: dict values.
 	dict keysAndValuesDo: [:k :v|
-		self assert: (newDict at: k) equals: v ]. 
+		self assert: (newDict at: k) equals: v ].
 ]
 
 { #category : #'tests - new' }
@@ -706,10 +689,7 @@ DictionaryTest >> testOccurrencesOf [
 	self assert: (dict occurrencesOf: 1 ) equals: 2.
 	self supportsNilKey 
 		ifTrue: [ self assert: (dict occurrencesOf: nil ) equals: 2 ]
-		ifFalse: [ self assert: (dict occurrencesOf: nil ) equals: 1 ]	
-	
-	
-	
+		ifFalse: [ self assert: (dict occurrencesOf: nil ) equals: 1 ]
 ]
 
 { #category : #'tests - comparing' }
@@ -773,11 +753,11 @@ DictionaryTest >> testStoreOnWithNegativeInteger [
 { #category : #requirements }
 DictionaryTest >> valueNotIn [
 " return a value not included in nonEmpty "
-^valueNotIn 
+^valueNotIn
 ]
 
 { #category : #requirements }
 DictionaryTest >> valueNotInNonEmpty [
 	" return a value not included in nonEmpty"
-	^ valueNotIn 
+	^ valueNotIn
 ]

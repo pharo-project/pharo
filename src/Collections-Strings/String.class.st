@@ -147,7 +147,6 @@ String class >> cr [
 	"Answer a string containing a single carriage return character."
 
 	^ self with: Character cr
-
 ]
 
 { #category : #'instance creation' }
@@ -155,13 +154,11 @@ String class >> crlf [
 	"Answer a string containing a carriage return and a linefeed."
 
 	^ self with: Character cr with: Character lf
-
 ]
 
 { #category : #'instance creation' }
 String class >> crlfcrlf [
 	^self crlf , self crlf.
-
 ]
 
 { #category : #'instance creation' }
@@ -213,7 +210,6 @@ String class >> findFirstInString: aString inSet: inclusionMap startingAt: start
 String class >> fromByteArray: aByteArray [
 
 	^ aByteArray asString
-
 ]
 
 { #category : #'instance creation' }
@@ -228,8 +224,6 @@ String class >> indexOfAscii: anInteger inString: aString startingAt: start [
 	start to: aString size do: [ :index |
 		(aString basicAt: index) = anInteger ifTrue: [ ^index ] ].
 	^0
-
-
 ]
 
 { #category : #'class initialization' }
@@ -281,7 +275,6 @@ String class >> initializeTypeTable [
 	newTable at: $_ asciiValue put: #xLetter. "by default, do not accept _ as assignement"
 	newTable at: $| asciiValue put: #verticalBar.
 	TypeTable := newTable
-
 ]
 
 { #category : #'instance creation' }
@@ -355,7 +348,7 @@ String class >> newCaseInsensitiveOrder [
             char := v asCharacter.
             lower := char asLowercase.
             newCollection at: lower asciiValue + 1 put: (newCollection at: char asciiValue + 1) ].
-	^ newCollection 
+	^ newCollection
 ]
 
 { #category : #'private - accessing' }
@@ -374,7 +367,7 @@ String class >> newCaseSensitiveOrder [
 		[:i | (newTab  at: i) = 255 ifTrue:
 			[newTab  at: i put: (order := order+1)]].
 	order = 255 ifFalse: [self error: 'order problem'].
-	^ newTab 
+	^ newTab
 ]
 
 { #category : #'private - accessing' }
@@ -423,7 +416,6 @@ String class >> space [
 	"Answer a string containing a single space character."
 
 	^ self with: Character space
-
 ]
 
 { #category : #primitives }
@@ -438,7 +430,6 @@ String class >> stringHash: aString initialHash: speciesHash [
 		hash := (16r260D * low + ((16r260D * (hash // 16384) + (16r0065 * low) bitAnd: 16383) * 16384)) bitAnd: 16r0FFFFFFF.
 	].
 	^ hash
-
 ]
 
 { #category : #'instance creation' }
@@ -446,7 +437,6 @@ String class >> tab [
 	"Answer a string containing a single tab character."
 
 	^ self with: Character tab
-
 ]
 
 { #category : #primitives }
@@ -457,7 +447,6 @@ String class >> translate: aString from: start  to: stop  table: table [
 		(char := aString basicAt: i) < 256 ifTrue: [
 			aString at: i put: (table at: char+1)].
 	]
-
 ]
 
 { #category : #accessing }
@@ -470,7 +459,6 @@ String class >> typeTable [
 String class >> value: anInteger [
 
 	^ self with: (Character value: anInteger)
-
 ]
 
 { #category : #'instance creation' }
@@ -582,7 +570,7 @@ String >> asByteArray [
 	"'a' asByteArray >>> #[97]"
 	"'A' asByteArray >>> #[65]"
 	"'ABA' asByteArray >>> #[65 66 65]"
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #converting }
@@ -633,7 +621,6 @@ String >> asComment [
 
 		str nextPut: $".
 	]
-	
 ]
 
 { #category : #converting }
@@ -655,7 +642,6 @@ String >> asDuration [
  	"Convert from [-]D:HH:MM:SS[.S] format. What is between [] implies optional elements"
  
  	^ Duration fromString: self
- 
 ]
 
 { #category : #converting }
@@ -674,7 +660,6 @@ String >> asFourCode [
 	(result bitAnd: 16r40000000) = 0 
 		ifFalse: [ ^ result - 16r80000000 ].
 	^ result
-
 ]
 
 { #category : #converting }
@@ -683,7 +668,6 @@ String >> asHTMLString [
 	"'<a>' asHTMLString"
 	^ self species new: self size streamContents: [ :s| 
 		self do: [:c | s nextPutAll: c asHTMLString ]]
-
 ]
 
 { #category : #converting }
@@ -703,7 +687,6 @@ String >> asInteger [
 	"'a' asInteger >>> nil"
 	"'1.234' asInteger >>> 1"
 	^self asSignedInteger
-
 ]
 
 { #category : #converting }
@@ -733,7 +716,6 @@ String >> asPluralBasedOn: aNumberOrCollection [
 		[aNumberOrCollection isCollection and: [aNumberOrCollection size = 1]])
 			ifTrue: [self]
 			ifFalse: [self, 's']
-
 ]
 
 { #category : #converting }
@@ -754,7 +736,6 @@ String >> asString [
 	"Answer this string."
 
 	^ self
-
 ]
 
 { #category : #converting }
@@ -792,8 +773,6 @@ String >> asUncommentedCode [
 				]
 		 ]
 	]
-
-
 ]
 
 { #category : #converting }
@@ -840,7 +819,6 @@ String >> asValidSelector [
 		]
 	)
 ) ifEmpty: [ 'v' ]), ((self isNotEmpty and: [ self last = $: ]) ifTrue: [ ':' ] ifFalse: [ #() ]) )asSymbol
-
 ]
 
 { #category : #converting }
@@ -1011,7 +989,6 @@ String >> contractTo: smallSize [
 	^ self copyReplaceFrom: leftSize+1		"First N/2 ... last N/2"
 		to: self size - (smallSize - leftSize - 3)
 		with: '...'
-
 ]
 
 { #category : #copying }
@@ -1062,8 +1039,6 @@ String >> copyReplaceAll: oldSubstring with: newSubstring asTokens: ifTokens [
 					ifTrue: [startSearch := currentIndex + 1]
 					ifFalse: [startSearch := currentIndex + newSubstring size]]].
 	^ aString
-
-
 ]
 
 { #category : #copying }
@@ -1072,7 +1047,6 @@ String >> copyReplaceTokens: oldSubstring with: newSubstring [
 	"('File asFile Files File''s File' copyReplaceTokens: 'File' with: 'Snick') >>> 'Snick asFile Files Snick''s Snick'"
 	
 	^ self copyReplaceAll: oldSubstring with: newSubstring asTokens: true
-	
 ]
 
 { #category : #copying }
@@ -1219,7 +1193,6 @@ String >> endsWithAColon [
 	"'displayStringOn:foo' endsWithAColon >>> false"
 	
 	^ self notEmpty and: [ self last == $: ]
-
 ]
 
 { #category : #testing }
@@ -1424,7 +1397,6 @@ String >> findLastOccurrenceOfString: substring startingAt: start [
 		last := self findString: substring startingAt: last + 1].
 
 	^ now
-
 ]
 
 { #category : #converting }
@@ -1762,9 +1734,7 @@ String >> howManyMatch: string [
 	1 to: shorterLength do: [:index |
 		(self at: index) = (string at: index )
 			ifTrue: [ count := count + 1 ]].
-	^  count 
-	
-	
+	^  count
 ]
 
 { #category : #testing }
@@ -1802,7 +1772,6 @@ String >> indexOf: aCharacter [
 		indexOfAscii: aCharacter asciiValue
 		inString: self
 		startingAt: 1.
-
 ]
 
 { #category : #accessing }
@@ -1926,7 +1895,6 @@ String >> isAllSeparators [
 String >> isAsciiString [
 
 	^ self allSatisfy: [ :each | each asciiValue <= 127 ]
-
 ]
 
 { #category : #testing }
@@ -1988,7 +1956,6 @@ String >> isOctetString [
 		(self at: pos) asInteger >= 256 ifTrue: [^ false].
 	].
 	^ true.
-
 ]
 
 { #category : #testing }
@@ -2069,7 +2036,6 @@ String >> lastSpacePosition [
 	self size to: 1 by: -1 do:
 		[:i | ((self at: i) isSeparator) ifTrue: [^ i]].
 	^ 0
-
 ]
 
 { #category : #accessing }
@@ -2457,7 +2423,6 @@ String >> stemAndNumericSuffix [
 		position := position * 10.
 		stem := stem copyFrom: 1 to: stem size - 1].
 	^ Array with: stem with: suffix
-
 ]
 
 { #category : #printing }
@@ -2483,7 +2448,6 @@ String >> string [
 String >> stringhash [
 
 	^ self hash.
-
 ]
 
 { #category : #converting }
@@ -2592,7 +2556,7 @@ String >> trimBoth: aBlock [
 String >> trimLeft [
 	"Trim separators from the left side of the receiving string."
 	
-	^ self trimLeft: [ :char | char isSeparator ] 
+	^ self trimLeft: [ :char | char isSeparator ]
 ]
 
 { #category : #copying }
@@ -2627,8 +2591,6 @@ String >> trimLineSpaces [
 		self lines 
 			do: [ :line | str nextPutAll: line trimRight]
 			separatedBy: [str cr]]
-		
-
 ]
 
 { #category : #copying }
@@ -2774,7 +2736,6 @@ String >> withLineEndings: lineEndingString [
 			]
 		]
 	]
-
 ]
 
 { #category : #converting }

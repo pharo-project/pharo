@@ -48,6 +48,5 @@ TStructuralEqualityTest >> testEqualSignIsTrueForNonIdenticalButEqualCollections
 TStructuralEqualityTest >> testEqualSignOfIdenticalCollectionObjects [
 	
 	self assert: self empty equals: self empty. 
-	self assert: self nonEmpty equals: self nonEmpty 
-	
+	self assert: self nonEmpty equals: self nonEmpty
 ]

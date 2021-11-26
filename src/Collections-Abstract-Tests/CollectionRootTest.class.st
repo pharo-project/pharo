@@ -113,7 +113,6 @@ CollectionRootTest >> testDetectIfFoundWhenSomethingIsFound [
 	self
 		assert: wasFound;
 		assert: (self collectionWithoutNilElements includes: foundObject)
-
 ]
 
 { #category : #'tests - iterate' }

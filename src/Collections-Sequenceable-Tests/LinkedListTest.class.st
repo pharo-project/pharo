@@ -32,13 +32,13 @@ Class {
 
 { #category : #requirements }
 LinkedListTest >> accessCollection [
-	^collectionWithoutEqualElements 
+	^collectionWithoutEqualElements
 ]
 
 { #category : #requirements }
 LinkedListTest >> anotherElementNotIn [
 " return an element included  in 'collection' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
@@ -50,7 +50,7 @@ LinkedListTest >> anotherElementOrAssociationIn [
 { #category : #requirements }
 LinkedListTest >> anotherElementOrAssociationNotIn [
 	" return an element (or an association for Dictionary )not present  in 'collection' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
@@ -74,13 +74,13 @@ LinkedListTest >> collectionMoreThan1NoDuplicates [
 { #category : #requirements }
 LinkedListTest >> collectionNotIncluded [
 " return a collection for wich each element is not included in 'nonEmpty' "
-	^ collectionWithoutNil 
+	^ collectionWithoutNil
 ]
 
 { #category : #requirements }
 LinkedListTest >> collectionWith1TimeSubcollection [
 " return a collection including 'oldSubCollection'  only one time "
-	^ self oldSubCollection 
+	^ self oldSubCollection
 ]
 
 { #category : #requirements }
@@ -98,13 +98,13 @@ LinkedListTest >> collectionWithElement [
 { #category : #requirements }
 LinkedListTest >> collectionWithElementsToRemove [
 " return a collection of elements included in 'nonEmpty'  "
-	^ self nonEmpty 
+	^ self nonEmpty
 ]
 
 { #category : #requirements }
 LinkedListTest >> collectionWithSortableElements [
 	" return a collection only including elements that can be sorted (understanding '<' )"
-	^ collection5Elements 
+	^ collection5Elements
 ]
 
 { #category : #requirements }
@@ -117,7 +117,7 @@ LinkedListTest >> collectionWithoutEqualElements [
 { #category : #requirements }
 LinkedListTest >> collectionWithoutNilElements [
 " return a collection that doesn't includes a nil element "
-	^collectionWithoutNil 
+	^collectionWithoutNil
 ]
 
 { #category : #requirements }
@@ -128,13 +128,13 @@ LinkedListTest >> element [
 { #category : #requirements }
 LinkedListTest >> elementInForElementAccessing [
 " return an element inculded in 'accessCollection '"
-	^ elementIn 
+	^ elementIn
 ]
 
 { #category : #requirements }
 LinkedListTest >> elementInForIndexAccessing [
 " return an element included in 'accessCollection' "
-	^ elementIn 
+	^ elementIn
 ]
 
 { #category : #requirements }
@@ -145,19 +145,19 @@ LinkedListTest >> elementNotIn [
 { #category : #requirements }
 LinkedListTest >> elementNotInForElementAccessing [
 " return an element not included in 'accessCollection' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
 LinkedListTest >> elementNotInForIndexAccessing [
 " return an element not included in 'accessCollection' "
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
 LinkedListTest >> elementNotInForOccurrences [
 " return an element notIncluded in #collectionWithoutEqualElements"
-	^ elementNotIn 
+	^ elementNotIn
 ]
 
 { #category : #requirements }
@@ -187,14 +187,14 @@ LinkedListTest >> indexInNonEmpty [
 { #category : #requirements }
 LinkedListTest >> moreThan3Elements [
 	" return a collection including atLeast 3 elements"
-	^ collectionWithoutEqualElements 
+	^ collectionWithoutEqualElements
 ]
 
 { #category : #requirements }
 LinkedListTest >> moreThan4Elements [
 
 " return a collection including at leat 4 elements"
-	^ collectionWithoutEqualElements 
+	^ collectionWithoutEqualElements
 ]
 
 { #category : #accessing }
@@ -205,7 +205,6 @@ LinkedListTest >> n [
 { #category : #accessing }
 LinkedListTest >> n: number [
 	n := number.
-	
 ]
 
 { #category : #accessing }
@@ -226,26 +225,26 @@ LinkedListTest >> nonEmpty [
 { #category : #requirements }
 LinkedListTest >> nonEmpty1Element [
 " return a collection of size 1 including one element"
-	^ nonEmpty1Element 
+	^ nonEmpty1Element
 ]
 
 { #category : #requirements }
 LinkedListTest >> nonEmptyMoreThan1Element [
 " return a collection that don't includes equl elements'" 
-	^collectionWithoutNil 
+	^collectionWithoutNil
 ]
 
 { #category : #requirements }
 LinkedListTest >> nonEmptyWithoutEqualElements [
 " return a collection without equal elements "
-	^ collectionWithoutEqualElements 
+	^ collectionWithoutEqualElements
 ]
 
 { #category : #requirements }
 LinkedListTest >> oldSubCollection [
 " return a subCollection included in collectionWith1TimeSubcollection .
 ex :   subCollection := #( 2 3 4) and collectionWith1TimeSubcollection := #(1 2 3 4 5)"
-	^ self nonEmpty 
+	^ self nonEmpty
 ]
 
 { #category : #requirements }
@@ -256,7 +255,7 @@ LinkedListTest >> otherCollection [
 { #category : #requirements }
 LinkedListTest >> replacementCollection [
 " return a collection that will be used to replace 'oldSubcollection' in ' collectionWith1TimeSubcollection'  " 
-	^ collectionWithoutNil 
+	^ collectionWithoutNil
 ]
 
 { #category : #requirements }
@@ -287,14 +286,12 @@ LinkedListTest >> setUp [
 	 "so that we can recognize this link"
 	"nonEmpty := LinkedList with: link with: Link new."
 	"otherList := LinkedList with: Link new with: Link new."
-
 ]
 
 { #category : #requirements }
 LinkedListTest >> sortedInAscendingOrderCollection [
 	"Return a collection sorted in ascending order"
 	^ sortedCollection
-	
 ]
 
 { #category : #requirements }
@@ -306,7 +303,7 @@ LinkedListTest >> speciesClass [
 { #category : #requirements }
 LinkedListTest >> subCollectionNotIn [
 " return a collection for which at least one element is not included in 'accessCollection' "
-	^ collectionWithoutNil 
+	^ collectionWithoutNil
 ]
 
 { #category : #running }
@@ -889,7 +886,6 @@ LinkedListTest >> testSwapBasic [
 	aList swap: 2 with: 4.
 	self assert: (aList at: 2) equals: 2.
 	self assert: (aList at: 4) equals: 4.
-
 ]
 
 { #category : #'tests - swap' }

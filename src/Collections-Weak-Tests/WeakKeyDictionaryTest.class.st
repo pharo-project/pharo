@@ -35,7 +35,6 @@ WeakKeyDictionaryTest class >> timingLarge [
 			Smalltalk garbageCollectMost.
 			dict finalizeValues.
 		]].
-
 ]
 
 { #category : #examples }
@@ -59,7 +58,6 @@ WeakKeyDictionaryTest class >> timingMany [
 			loops timesRepeat:[
 				dicts do: [:d| d finalizeValues].
 			]].
-
 ]
 
 { #category : #coverage }

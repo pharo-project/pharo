@@ -115,7 +115,7 @@ TDictionaryEnumeratingTest >> testReject [
 	collection := self nonEmptyDict .
 	result := collection reject: [ :each | false].
 	
-	self assert: result = collection. 
+	self assert: result = collection.
 ]
 
 { #category : #'tests - dictionnary enumerating' }

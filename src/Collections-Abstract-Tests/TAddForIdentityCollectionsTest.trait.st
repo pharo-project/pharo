@@ -33,6 +33,4 @@ TAddForIdentityCollectionsTest >> testTAddIfNotPresentWithElementCopy [
 	added := collection  addIfNotPresent: elementCopy  .
 	self assert: added == elementCopy . "test for identiy because #add: has not reason to copy its parameter."
 	self assert: (collection  size = (oldSize + 1)).
-
-	
 ]

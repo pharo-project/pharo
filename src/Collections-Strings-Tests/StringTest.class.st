@@ -31,7 +31,7 @@ Class {
 StringTest >> aValue [
 	"Return a value to put into nonEmpty"
 	
-	^ elementInNonEmpty 
+	^ elementInNonEmpty
 ]
 
 { #category : #requirements }
@@ -55,7 +55,7 @@ StringTest >> anotherElementOrAssociationIn [
 { #category : #requirements }
 StringTest >> anotherElementOrAssociationNotIn [
 	" return an element (or an association for Dictionary )not present  in 'collection' "
-	^ notIn 
+	^ notIn
 ]
 
 { #category : #requirements }
@@ -85,21 +85,21 @@ StringTest >> collectionClass [
 { #category : #requirements }
 StringTest >> collectionMoreThan1NoDuplicates [
 	" return a collection of size > 1 without equal elements"
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
 StringTest >> collectionMoreThan5Elements [
 " return a collection including at least 5 elements"
 	
-	^ nonEmpty5ElementsSorted 
+	^ nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> collectionNotIncluded [
 	"Return a collection for wich each element is not included in 'nonEmpty'"
 
-	^ collectionNotIncluded  
+	^ collectionNotIncluded
 ]
 
 { #category : #requirements }
@@ -113,7 +113,7 @@ StringTest >> collectionWith1TimeSubcollection [
 StringTest >> collectionWith2TimeSubcollection [
 	"Return a collection including 'oldSubCollection' two or many time"
 	
-	^ nonEmpty5ElementsSorted, subcollection3ElementsSorted 
+	^ nonEmpty5ElementsSorted, subcollection3ElementsSorted
 ]
 
 { #category : #requirements }
@@ -126,14 +126,14 @@ StringTest >> collectionWithElement [
 StringTest >> collectionWithElementsToRemove [
 	"Return a collection of elements included in 'nonEmpty'"
 
-	^ subcollection3ElementsSorted 
+	^ subcollection3ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> collectionWithEqualElements [
 	"Return a collecition including atLeast two elements equal"
 
-	^ sameAtEndAndBegining 
+	^ sameAtEndAndBegining
 ]
 
 { #category : #requirements }
@@ -141,7 +141,7 @@ StringTest >> collectionWithSameAtEndAndBegining [
 	"Return a collection with elements at end and begining equals
 	 (other elements of the collection are not equal to those elements)"
 
-	^ sameAtEndAndBegining 
+	^ sameAtEndAndBegining
 ]
 
 { #category : #requirements }
@@ -155,7 +155,7 @@ StringTest >> collectionWithSortableElements [
 StringTest >> collectionWithoutEqualElements [
 	"Return a collection not including equal elements"
 	
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
@@ -169,7 +169,7 @@ StringTest >> collectionWithoutNilElements [
 StringTest >> element [
 	"Returns an object that can be added to the collection returned by #collection."
 	
-	^ elementInNonEmpty 
+	^ elementInNonEmpty
 ]
 
 { #category : #requirements }
@@ -183,7 +183,7 @@ StringTest >> elementInForElementAccessing [
 StringTest >> elementInForIncludesTest [
 	"Return an element included in nonEmpty"
 	
-	^ elementInNonEmpty 
+	^ elementInNonEmpty
 ]
 
 { #category : #requirements }
@@ -196,21 +196,21 @@ StringTest >> elementInForIndexAccessing [
 StringTest >> elementNotIn [
 	"Return an element not included in 'nonEmpty'"
 
-	^notIn 
+	^notIn
 ]
 
 { #category : #requirements }
 StringTest >> elementNotInForElementAccessing [
 	"Return an element not included in 'moreThan4Elements'"
 
-	^ notIn 
+	^ notIn
 ]
 
 { #category : #requirements }
 StringTest >> elementNotInForIndexAccessing [
 	"Return an element not included in 'accessCollection'"
 	
-	^ notIn 
+	^ notIn
 ]
 
 { #category : #'tests - includes' }
@@ -258,7 +258,7 @@ StringTest >> firstIndex [
 StringTest >> indexArray [
 	"Return a Collection including indexes between bounds of 'nonEmpty'"
 
-	^ indexInNonEmptyArray 
+	^ indexInNonEmptyArray
 ]
 
 { #category : #requirements }
@@ -300,7 +300,7 @@ StringTest >> moreThan4Elements [
 StringTest >> newElement [
 	"Return an element that will be put in the collection in place of another"
 	
-	^ elementInNonEmpty 
+	^ elementInNonEmpty
 ]
 
 { #category : #requirements }
@@ -312,7 +312,7 @@ StringTest >> nonEmpty [
 StringTest >> nonEmpty1Element [
 	"Return a collection of size 1 including one element"
 	
-	^ nonEmpty1element 
+	^ nonEmpty1element
 ]
 
 { #category : #requirements }
@@ -327,14 +327,14 @@ StringTest >> oldSubCollection [
 	"Return a subCollection included in collectionWith1TimeSubcollection.
 		Example:  subCollection := #( 2 3 4) and collectionWith1TimeSubcollection := #(1 2 3 4 5)"
 		
-	^ subcollection3ElementsSorted  
+	^ subcollection3ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> otherCollection [
 	"Returns a collection that does not include what is returned by #element."
 	
-	^ collectionNotIncluded 
+	^ collectionNotIncluded
 ]
 
 { #category : #requirements }
@@ -347,21 +347,21 @@ StringTest >> replacementCollection [
 StringTest >> replacementCollectionSameSize [
 	"Return a collection of size (secondIndex - firstIndex + 1)"
 	
-	^nonEmpty1element 
+	^nonEmpty1element
 ]
 
 { #category : #requirements }
 StringTest >> secondCollection [
 	"Return a collection that will be the second part of the concatenation"
 	
-	^ nonEmpty1element 
+	^ nonEmpty1element
 ]
 
 { #category : #requirements }
 StringTest >> secondIndex [
 	"Return an index between 'nonEmpty' bounds that is > to 'second index'"
 	
-	^ self firstIndex 
+	^ self firstIndex
 ]
 
 { #category : #running }
@@ -392,15 +392,14 @@ StringTest >> sizeCollection [
 { #category : #requirements }
 StringTest >> sortedInAscendingOrderCollection [
 " return a collection sorted in an acsending order"
-	^nonEmpty5ElementsSorted 
-	
+	^nonEmpty5ElementsSorted
 ]
 
 { #category : #requirements }
 StringTest >> subCollectionNotIn [
 	"Return a collection for which at least one element is not included in 'moreThan4Elements'"
 	
-	^ collectionNotIncluded 
+	^ collectionNotIncluded
 ]
 
 { #category : #tests }
@@ -426,7 +425,6 @@ StringTest >> testAsCamelCase [
 
 	self assert: 'A man, a plan, a canal, panama' asCamelCase equals: 'AMan,APlan,ACanal,Panama'.
 	self assert: 'Here 123should % be 6 the name6 of the method' asCamelCase equals: 'Here123should%Be6TheName6OfTheMethod'.
- 
 ]
 
 { #category : #tests }
@@ -437,7 +435,7 @@ StringTest >> testAsDate [
 	self assert: '1 1 1' asDate asString equals: '1 January 2001'.
 	self assert: '1 J 1' asDate asString equals: '1 January 2001'.
 	self should: [ '' asDate ] raise: Error.
-	self should: [ '1234' asDate ] raise: Error 
+	self should: [ '1234' asDate ] raise: Error
 ]
 
 { #category : #tests }
@@ -537,7 +535,6 @@ StringTest >> testAsTime [
 	self assert: '1:00' asTime asString equals: '1:00 am'.
 	self assert: '1' asTime asString equals: '1:00 am'.
 	self assert: '13' asTime asString equals: '1:00 pm'
-
 ]
 
 { #category : #tests }
@@ -675,12 +672,10 @@ StringTest >> testComparingCaseInsensitiveLatin1 [
 	self assert: ('É' compare: 'é' caseSensitive: false) equals: 2.
 	self assert: ('é' compare: 'É' caseSensitive: true) equals: 3.
 	self assert: ('É' compare: 'é' caseSensitive: true) equals: 1
-
 ]
 
 { #category : #'tests - copy' }
 StringTest >> testCopyNonEmptyWithoutAllNotIncluded [
-	
 ]
 
 { #category : #'tests - copy' }
@@ -723,7 +718,6 @@ StringTest >> testCopyUpToSubstring [
 	self assert: ('' copyUpToSubstring: 'abc') equals: ''.
 	self assert: ('abcdef' copyUpToSubstring: 'g') equals: 'abcdef'.
 	self assert: ('abcdef' copyUpToSubstring: 'gh') equals: 'abcdef'.
-
 ]
 
 { #category : #'tests - comparing' }
@@ -757,7 +751,6 @@ StringTest >> testEndsWith [
 	self assert: ('test' endsWith: 'st').
 	self deny: ('ÉÈÀÔÜÖẞÄÓÑÍÁ' endsWith: 'íá').
 	self deny: ('test' endsWith: 'tester').
-
 ]
 
 { #category : #'tests - testing' }
@@ -774,7 +767,6 @@ StringTest >> testEndsWithAnyOf [
 	self deny: ('éèàôüößäóñíá' endsWithAnyOf: #('ia' 'ñí' '' 'áß')).
 	self assert: ('éèàôüößäóñíá' endsWithAnyOf: #('test' 'ÉÈÀ' 'äóñíá')).
 	self assert: ('test' endsWithAnyOf: #('tests' 'tester' 'testing' 't')).
-
 ]
 
 { #category : #tests }
@@ -919,7 +911,6 @@ StringTest >> testFindFirstInString [
 	self assert: (self findFirstInString: 'hello' fromString: 'llo') equals: 3.
 	self assert: (self findFirstInString: 'hello' fromString: 'o') equals: 5.
 	self assert: (self findFirstInString: 'hello' fromString: 'x') equals: 0.
-
 ]
 
 { #category : #tests }
@@ -940,7 +931,6 @@ StringTest >> testFindSelector [
 	self assert: #isSymbol equals: '#isSymbol' findSelector.
 	self assert: #between:and: equals: '#between:and:' findSelector .
 	self assert:#+ equals: '#+' findSelector
-
 ]
 
 { #category : #tests }
@@ -1236,7 +1226,6 @@ StringTest >> testFindTokensIncludes [
 	self assert: ('test this' findTokens: 's' includes: 'hi') equals: 't thi'.
 	self assert: ('test that' findTokens: 't' includes: 'that') isNil.
 	self assert: ('éèàôüößäóñíá' findTokens: #($ô $ó) includes:'ñí') equals: 'ñíá'
-
 ]
 
 { #category : #tests }
@@ -1246,7 +1235,6 @@ StringTest >> testFindWordStartStartingAt [
 	self assert: ('test this string' findWordStart: 'st' startingAt: 1) equals: 11.
 	self assert: ('test this string' findWordStart: 'st' startingAt: 12) equals: 0.
 	self assert: ('test this string' findWordStart: '' startingAt: 1) equals: 0
-
 ]
 
 { #category : #'tests - formatting' }
@@ -1291,7 +1279,6 @@ StringTest >> testFormatFailures [
 	self
 		should: [ 'This is {1} !' format: Array new ]
 		raise: SubscriptOutOfBounds.
-
 ]
 
 { #category : #tests }
@@ -1318,8 +1305,7 @@ StringTest >> testIncludesSubstring [
 	self assert: ('éèàôüößäóñíá' includesSubstring: '').
 	self deny: ('éèàôüößäóñíá' includesSubstring: 'a'). 
 	self assert: ('éèàôüößäóñíá' includesSubstring: 'ßä').
-	self deny: ('kjdsnlksjdf' includesSubstring: 'K') 
-
+	self deny: ('kjdsnlksjdf' includesSubstring: 'K')
 ]
 
 { #category : #tests }
@@ -1330,8 +1316,6 @@ StringTest >> testIncludesSubstringCaseSensitive [
 	self deny: ('123éàôüöß' includesSubstring: '' caseSensitive: false). 
 	self assert: ('123éàôüöß' includesSubstring: 'öß' caseSensitive: true).
 	self assert: ('123éàôüöß' includesSubstring: 'ÀÔ' caseSensitive: false)
-
-
 ]
 
 { #category : #tests }
@@ -1342,7 +1326,6 @@ StringTest >> testIndexOf [
 	self assert: ('test this string' indexOf: $t) equals: 1.
 	self assert: ('123éàôüöß' indexOf: $ß) equals: 9.
 	self assert: ('123éàôüöß' indexOf: $E) equals: 0
- 
 ]
 
 { #category : #tests }
@@ -1352,7 +1335,6 @@ StringTest >> testIndexOfFirstUppercaseCharacter [
 	self assert: 'test this string' indexOfFirstUppercaseCharacter equals: 0.
 	self assert: '123éàôüöß' indexOfFirstUppercaseCharacter equals: 0.
 	self assert: '123éàôüÖẞ' indexOfFirstUppercaseCharacter equals: 8
- 
 ]
 
 { #category : #tests }
@@ -1426,8 +1408,6 @@ StringTest >> testIsPatternVariable [
 	
 	self deny: 'notAPattern:varible:' isPatternVariable.
 	self deny: 'notAPattern' isPatternVariable
-		
-
 ]
 
 { #category : #'tests - testing' }
@@ -1444,7 +1424,7 @@ StringTest >> testIsWideString [
 	self assert: ' test ₤' isWideString.
 	self deny: '' isWideString. 
 	self assert: 'éàôüÖẞ' isWideString.
-	self deny: 'éàôüÖ' isWideString 
+	self deny: 'éàôüÖ' isWideString
 ]
 
 { #category : #tests }
@@ -1468,8 +1448,6 @@ StringTest >> testLessThan [
 	self assert: ('' < 'a').
 	self deny: ('à ô ü' < 'à ô ü').
 	self deny: ('aaa' < 'AAA')
-
-
 ]
 
 { #category : #'tests - lines' }
@@ -1568,8 +1546,6 @@ StringTest >> testLinesDo [
 		self deny: (aLine includes: Character lf).
 		lines add: aLine].
 	self assert: lines asArray equals: #('Fred' 'the' 'Bear').
-
-
 ]
 
 { #category : #'tests - line breaking' }
@@ -1689,8 +1665,6 @@ StringTest >> testNumArgs [
 		
 	self assert: 'x::0y:' numArgs = -1
 		description: 'keyword selectors cannot have any key beginning with a digit'.
-	
-	
 ]
 
 { #category : #tests }
@@ -1711,7 +1685,6 @@ StringTest >> testOccursInWithEmptyCaseSensitive [
 	self assert: ('abc98def' occursInWithEmpty: 'Abc' caseSensitive: false).
 	self assert: ('012éà ôüÖ ẞ345' occursInWithEmpty: '012' caseSensitive: true).
 	self deny: ('012éàôüÖ ẞ345' occursInWithEmpty: 'ÉÀÔÜÖ' caseSensitive: true)
-
 ]
 
 { #category : #tests }
@@ -1722,8 +1695,6 @@ StringTest >> testOnlyLetters [
 	self assert: '012éà ôüÖ ẞ345' onlyLetters equals: 'éàôüÖẞ'.
 	self assert: '123 456' onlyLetters equals: ''.
 	self assert: '' onlyLetters equals: ''
-
-
 ]
 
 { #category : #tests }
@@ -1947,7 +1918,6 @@ StringTest >> testUpTo [
 	self assert: #copy:from:to: keywords equals: #(copy: from: to:).
 	self assert: #up keywords equals: #(up).
 	self assert: #at: keywords equals: #(at:).
-	
 ]
 
 { #category : #'tests - converting' }
@@ -1964,7 +1934,6 @@ StringTest >> testWithBlanksCondensed [
 		'space followed by tab 	!' 'space followed by tab !'
 	) pairsDo: [ :input :output |
 		self assert: input withBlanksCondensed equals: output ]
-	
 ]
 
 { #category : #'tests - converting' }
@@ -2047,7 +2016,6 @@ StringTest >> testWithSeparatorsCompacted [
 		'space followed by tab 	!' 'space followed by tab !'
 	) pairsDo: [ :input :output |
 		self assert: input withSeparatorsCompacted equals: output ]
-	
 ]
 
 { #category : #'tests - internet' }
@@ -2091,7 +2059,6 @@ StringTest >> testWithoutLeadingDigits [
 		'1 2 3 ' ''
 	) pairsDo: [ :input :output |
 		self assert: input withoutLeadingDigits equals: output ]
-	
 ]
 
 { #category : #'tests - converting' }
@@ -2105,7 +2072,6 @@ StringTest >> testWithoutPeriodSuffix [
 		'.' '.'
 	) pairsDo: [ :input :output |
 		self assert: input withoutPeriodSuffix equals: output ]
-	
 ]
 
 { #category : #'tests - element accessing' }
@@ -2143,7 +2109,6 @@ StringTest >> testWithoutTrailingDigits [
 		'1 2 3 ' ''
 	) pairsDo: [ :input :output |
 		self assert: input withoutTrailingDigits equals: output ]
-	
 ]
 
 { #category : #'tests - copying' }
@@ -2212,11 +2177,11 @@ StringTest >> testindexOfstartingAt [
 
 { #category : #requirements }
 StringTest >> unsortedCollection [
-	^ unsortedCollection 
+	^ unsortedCollection
 ]
 
 { #category : #requirements }
 StringTest >> withEqualElements [
 	" return a collection  including equal elements (classic equality)"
-	^ sameAtEndAndBegining 	
+	^ sameAtEndAndBegining
 ]

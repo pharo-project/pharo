@@ -54,7 +54,6 @@ TIterateTest >> testAllSatisfy [
 TIterateTest >> testAllSatisfyEmpty [
 
 	self assert: ( self empty allSatisfy: [:each | false]).
-	
 ]
 
 { #category : #'tests - iterating' }
@@ -70,7 +69,6 @@ TIterateTest >> testAnySastify [
 	
 	" when all elements don't satisty the condition, should return false :"
 	self deny: ( self collectionWithoutNilElements anySatisfy: [:each | (each notNil) not ]).
-
 ]
 
 { #category : #'tests - iterating' }
@@ -85,7 +83,6 @@ TIterateTest >> testBasicCollect [
 	res do: [ :each | 
 		self assert: (self collectionWithoutNilElements occurrencesOf: each) = (res occurrencesOf: each)].
 	self assert: index equals: self collectionWithoutNilElements size.
-	 
 ]
 
 { #category : #'tests - iterating' }
@@ -108,7 +105,6 @@ TIterateTest >> testBasicCollectThenDo [
 			
 	self assert: result equals: self collectionWithoutNilElements.
 	self assert: index equals: self collectionWithoutNilElements size.
-	 
 ]
 
 { #category : #'tests - iterating' }
@@ -134,9 +130,6 @@ TIterateTest >> testDetect [
 	 
 	res := self collectionWithoutNilElements  detect: [:each | each = element].
 	self assert: (res  = element).
-
-	
-	
 ]
 
 { #category : #'tests - iterating' }
@@ -149,9 +142,6 @@ TIterateTest >> testDetectIfNone [
 	element := self collectionWithoutNilElements anyOne.
 	res := self collectionWithoutNilElements  detect: [:each | each = element] ifNone: [100].
 	self assert: res  = element.
-
-	
-	
 ]
 
 { #category : #'tests - iterating' }
@@ -175,8 +165,6 @@ TIterateTest >> testDo2 [
 		].
 	self assert: cptElementsViewed = collection size.
 	self assert: cptElementsIn size  = collection size.
-	
-	
 ]
 
 { #category : #'tests - iterating' }
@@ -210,7 +198,6 @@ TIterateTest >> testDoWithout [
 	" verifying result :"
 	self assert: res size = (collection  size - (collection  occurrencesOf: element)).
 	res do: [:each | self assert: (collection occurrencesOf: each) = ( res occurrencesOf: each ) ].
-	
 ]
 
 { #category : #'tests - iterating' }
@@ -236,7 +223,6 @@ TIterateTest >> testNoneSatisfy [
 TIterateTest >> testNoneSatisfyEmpty [
 
 	self assert: ( self empty noneSatisfy: [:each | false]).
-	
 ]
 
 { #category : #'tests - iterating' }
@@ -249,9 +235,6 @@ TIterateTest >> testReject [
 	element := self collectionWithoutNilElements anyOne.
 	res := self collectionWithoutNilElements  reject: [:each | each = element].
 	self assert: res size = (self collectionWithoutNilElements size - 1).
-	
-	
-	
 ]
 
 { #category : #'tests - iterating' }
@@ -279,7 +262,6 @@ TIterateTest >> testRejectEmpty [
 	| res |
 	res := self empty reject: [:each | each odd].
 	self assert: res size = self empty size
-	
 ]
 
 { #category : #'tests - iterating' }
@@ -288,7 +270,6 @@ TIterateTest >> testRejectNoReject [
 	| res |
 	res := self collectionWithoutNilElements  reject: [:each | each notNil not].
 	self assert: res size = self collectionWithoutNilElements size.
-	
 ]
 
 { #category : #'tests - iterating' }
@@ -317,7 +298,6 @@ TIterateTest >> testRejectThenCollect [
 	self assert: (self collectionWithoutNilElements occurrencesOf: pivot) equals: 1.
 	"should be > 1 for standard collection and = 1 for those that do not allow exact duplicates"
 	self assert: (result occurrencesOf: pivot) >= 1.
-	 
 ]
 
 { #category : #'tests - iterating' }
@@ -345,7 +325,6 @@ TIterateTest >> testRejectThenDo [
 	self assert: result equals: self collectionWithoutNilElements.
 	self assert: rejectIndex equals: self collectionWithoutNilElements size.
 	self assert: index equals: self collectionWithoutNilElements size - 1.
-	 
 ]
 
 { #category : #'tests - iterating' }
@@ -363,7 +342,6 @@ TIterateTest >> testSelect [
 	element := self collectionWithoutNilElements anyOne.
 	result := self collectionWithoutNilElements select: [ :each | (each = element) not].
 	self assert: result size equals: (self collectionWithoutNilElements size - 1).
-	
 ]
 
 { #category : #'tests - iterating' }
@@ -416,7 +394,6 @@ TIterateTest >> testSelectThenCollect [
 	self assert: (self collectionWithoutNilElements occurrencesOf: pivot) equals: 1.
 	"should be > 1 for standard collection and = 1 for those that do not allow exact duplicates"
 	self assert: (result occurrencesOf: pivot) >= 1.
-	 
 ]
 
 { #category : #'tests - iterating' }
@@ -444,7 +421,6 @@ TIterateTest >> testSelectThenDo [
 	self assert: result equals: self collectionWithoutNilElements.
 	self assert: selectIndex equals: self collectionWithoutNilElements size.
 	self assert: index equals: self collectionWithoutNilElements size - 1.
-	 
 ]
 
 { #category : #'tests - iterating' }

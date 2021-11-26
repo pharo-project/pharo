@@ -11,7 +11,7 @@ Class {
 Stack >> pop [
 	"Returns the first element and remove it from the stack."
 
-	^self removeFirst 
+	^self removeFirst
 ]
 
 { #category : #adding }

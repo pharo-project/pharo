@@ -79,7 +79,7 @@ NullStream >> initialize [
 NullStream >> isBinary [
 	"Return true if the receiver is a binary byte stream"
 
-	^binary 
+	^binary
 ]
 
 { #category : #testing }
@@ -87,7 +87,6 @@ NullStream >> isEmpty [
 	"Answer whether the receiver's contents has no elements."
 
 	^false
-
 ]
 
 { #category : #writing }
