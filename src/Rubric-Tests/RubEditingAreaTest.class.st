@@ -63,7 +63,7 @@ RubEditingAreaTest >> setUp [
 RubEditingAreaTest >> tearDown [
 
 	area delete.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #'tests - accessing selection' }
