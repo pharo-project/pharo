@@ -435,10 +435,30 @@ ClyQueryViewMorph >> hasRealQuery [
 	^self query ~~ ClyUnknownQuery instance
 ]
 
+{ #category : #'drag and drop support' }
+ClyQueryViewMorph >> hasUserBeenFocusingOnItem: aSelectedItem [
+	targetDropItem ifNil: [ ^ false ].
+	hoverOverDropItemStartTime ifNil: [ ^ false].
+	aSelectedItem browserItem = targetDropItem browserItem ifFalse: [ ^ false ].
+	^ (hoverOverDropItemStartTime copy addSeconds: aSelectedItem class dragAndDropDelay / 1000) < Time now
+]
+
 { #category : #controlling }
 ClyQueryViewMorph >> highlightItemsWhich: predicateBlock [
 
 	highlighting selectItemsWhere: predicateBlock
+]
+
+{ #category : #accessing }
+ClyQueryViewMorph >> hoverOverDropItemStartTime [
+
+	^ hoverOverDropItemStartTime
+]
+
+{ #category : #accessing }
+ClyQueryViewMorph >> hoverOverDropItemStartTime: anObject [
+
+	hoverOverDropItemStartTime := anObject
 ]
 
 { #category : #controlling }
@@ -508,23 +528,6 @@ ClyQueryViewMorph >> isFilterChanged [
 	"only way to change data source of table without affecting selection is by using filter 
 	which set up new filtered data source almost on every key stroke"
 	^selection rootDataSource ~~ self dataSource
-]
-
-{ #category : #'drag and drop support' }
-ClyQueryViewMorph >> isUserFocusingOnItem: aSelectedItem [
-	"Current limitation:
-	- You have to move to send another dragAndDrop event so the time can be checked again"
-	(targetDropItem isNil or: [hoverOverDropItemStartTime isNil])  
-		ifTrue: [ ^ self userFocusesOn: aSelectedItem ].
-	
-	aSelectedItem browserItem = targetDropItem browserItem
-		ifFalse: [ ^ self userFocusesOn: aSelectedItem ].
-
-	(hoverOverDropItemStartTime copy addSeconds: aSelectedItem class dragAndDropDelay / 1000) < Time now
-			ifTrue: [ "returns that we do expand and reset the state"
-				self userFocusesOn: nil.
-				^ true ].
-	^ false
 ]
 
 { #category : #accessing }
@@ -696,6 +699,20 @@ ClyQueryViewMorph >> setUpDataSource: aDataSource [
 	self ensureSelectedItemIfNeeded
 ]
 
+{ #category : #'drag and drop support' }
+ClyQueryViewMorph >> shouldExpand: aSelectedItem [
+	"Current limitation:
+	- You have to move to send another dragAndDrop event so the time can be checked again"
+	| newFocus |
+	newFocus := (self hasUserBeenFocusingOnItem: aSelectedItem) 
+		ifTrue:[ nil  ]
+		ifFalse: [ aSelectedItem ].
+	newFocus = targetDropItem ifTrue: [ ^ self ].
+	
+	self userNowFocusesOn: newFocus
+	
+]
+
 { #category : #controlling }
 ClyQueryViewMorph >> showDesiredSelection [
 	
@@ -767,6 +784,18 @@ ClyQueryViewMorph >> table [
 { #category : #controlling }
 ClyQueryViewMorph >> takeKeyboardFocus [
 	table takeKeyboardFocus 
+]
+
+{ #category : #accessing }
+ClyQueryViewMorph >> targetDropItem [
+
+	^ targetDropItem
+]
+
+{ #category : #accessing }
+ClyQueryViewMorph >> targetDropItem: anObject [
+
+	targetDropItem := anObject
 ]
 
 { #category : #accessing }
@@ -846,7 +875,7 @@ ClyQueryViewMorph >> updateSelectionForNewFilter [
 ]
 
 { #category : #'drag and drop support' }
-ClyQueryViewMorph >> userFocusesOn: aSelectedItem [
+ClyQueryViewMorph >> userNowFocusesOn: aSelectedItem [
 	targetDropItem := aSelectedItem.
 	hoverOverDropItemStartTime := Time now.
 	"new focus, we do not expand"
@@ -863,7 +892,7 @@ ClyQueryViewMorph >> wantsDropPassenger: aPassenger at: dropTargetItem [
 	"if we can drag and drop, we always return true.
 	However, the rest is guarded to emable expansion"
 	dropTargetItem hasChildren ifFalse: [ ^ true ].
-	(self isUserFocusingOnItem: dropTargetItem) ifFalse:[ ^ true ].
+	(self shouldExpand: dropTargetItem) ifFalse:[ ^ true ].
 
 	dropTargetItem expand.
 	^ true
