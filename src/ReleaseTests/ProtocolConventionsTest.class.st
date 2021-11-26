@@ -30,26 +30,83 @@ Some classes are violating this convention:
 								separatedBy: [ s cr ] ])} ]
 ]
 
+{ #category : #asserting }
+ProtocolConventionsTest >> assertProtocolName: aProtocolName notAcceptingProtocolNamesLike: aCollectionOfSelectors notMoreViolationsThan: aCount [
+	| violations |
+	violations := self class environment allClassesAndTraits
+		select: [ :c | (c protocols includesAny: aCollectionOfSelectors) or: [ c class protocols includesAny: aCollectionOfSelectors ] ].
+	self
+		assert: violations size <= aCount
+		description: [ 'In the default Pharo images, the protocol #{1} should be used instead of {2}.
+Some classes are violating this convention:
+{3}'
+				format:
+					{aProtocolName . aCollectionOfSelectors asString . (String
+						streamContents: [ :s | 
+							violations
+								do: [ :c | 
+									s
+										<< '- ';
+										print: c ]
+								separatedBy: [ s cr ] ])} ]
+]
+
+{ #category : #utilities }
+ProtocolConventionsTest >> checkIdiomForRuleClass: aRuleClass [
+
+	self checkIdiomForRuleClass: aRuleClass notMoreViolationsThan: 0
+]
+
+{ #category : #utilities }
+ProtocolConventionsTest >> checkIdiomForRuleClass: aRuleClass notMoreViolationsThan: aCount [
+
+	| idiom |
+	idiom := aRuleClass protocolIdiom.
+	
+	self
+		assertProtocolName: idiom key
+		notAcceptingProtocolNamesLike: idiom value
+		notMoreViolationsThan: aCount
+]
+
+{ #category : #tests }
+ProtocolConventionsTest >> testProperAccessingProtocolIsUsed [
+
+	self checkIdiomForRuleClass: ReProperMethodProtocolNameForAccessingRule notMoreViolationsThan: 1
+]
+
+{ #category : #tests }
+ProtocolConventionsTest >> testProperConvertingProtocolIsUsed [
+
+	self checkIdiomForRuleClass: ReProperMethodProtocolNameForConvertingRule notMoreViolationsThan: 29
+]
+
 { #category : #tests }
 ProtocolConventionsTest >> testProperFileInOutProtocolIsUsed [
 
-	self
-		assertProtocolName: #'file in/out'
-		notAcceptingProtocolNamesLike: #( #'filein/out' #'fileIn/Out' #'fileIn/out' #'filein/Out' )
+	self checkIdiomForRuleClass: ReProperMethodProtocolNameForFileInOutRule
 ]
 
 { #category : #tests }
 ProtocolConventionsTest >> testProperInstanceCreationProtocolIsUsed [
 
-	self
-		assertProtocolName: #'instance creation'
-		notAcceptingProtocolNamesLike: #( #'instance-creation' )
+	self checkIdiomForRuleClass: ReProperMethodProtocolNameForInstanceCreationRule
 ]
 
 { #category : #tests }
 ProtocolConventionsTest >> testProperRemovalProtocolIsUsed [
 
-	self
-		assertProtocolName: #removing
-		notAcceptingProtocolNamesLike: #( #remove #removal )
+	self checkIdiomForRuleClass: ReProperMethodProtocolNameForRemovalRule
+]
+
+{ #category : #tests }
+ProtocolConventionsTest >> testProperTestProtocolIsUsed [
+
+	self checkIdiomForRuleClass: ReProperMethodProtocolNameForTestsRule notMoreViolationsThan: 3
+]
+
+{ #category : #tests }
+ProtocolConventionsTest >> testProperUtilitiesProtocolIsUsed [
+
+	self checkIdiomForRuleClass: ReProperMethodProtocolNameForUtilitiesRule notMoreViolationsThan: 8
 ]
