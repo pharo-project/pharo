@@ -12,5 +12,5 @@ AbstractFontFamilyTest >> testIsAbstractClass [
 
 	self 
 		assert: AbstractFontFamily isAbstract;
-		assert: AbstractFontFamily hasSubclasses 
+		assert: AbstractFontFamily hasSubclasses
 ]

@@ -55,7 +55,7 @@ FreeTypeFontSelectorDialogWindow >> matchingFont [
 		ifTrue: [emp := emp + TextEmphasis struckOut emphasisCode].
 	lf := lf emphasis: emp.
 	lf realFont ifNil: [^TextStyle defaultFont].
-	^lf 
+	^lf
 ]
 
 { #category : #'instance creation' }
