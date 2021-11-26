@@ -511,7 +511,7 @@ LogicalFont >> descentKern [
 
 { #category : #'forwarded to realFont' }
 LogicalFont >> displayStrikeoutOn: aGrafPort from: aPoint to: aPoint3 [ 
-	^self realFont displayStrikeoutOn: aGrafPort from: aPoint to: aPoint3 
+	^self realFont displayStrikeoutOn: aGrafPort from: aPoint to: aPoint3
 ]
 
 { #category : #'forwarded to realFont' }
@@ -521,12 +521,12 @@ LogicalFont >> displayString: aString on: aDisplayContext from: startIndex to: s
 
 { #category : #'forwarded to realFont' }
 LogicalFont >> displayString: aWideString on: aGrafPort from: aSmallInteger to: aSmallInteger4 at: aPoint kern: aSmallInteger6 baselineY: aSmallInteger7 [ 
-	^self realFont displayString: aWideString on: aGrafPort from: aSmallInteger to: aSmallInteger4 at: aPoint kern: aSmallInteger6 baselineY: aSmallInteger7 
+	^self realFont displayString: aWideString on: aGrafPort from: aSmallInteger to: aSmallInteger4 at: aPoint kern: aSmallInteger6 baselineY: aSmallInteger7
 ]
 
 { #category : #'forwarded to realFont' }
 LogicalFont >> displayUnderlineOn: aGrafPort from: aPoint to: aPoint3 [ 
-	^self realFont displayUnderlineOn: aGrafPort from: aPoint to: aPoint3 
+	^self realFont displayUnderlineOn: aGrafPort from: aPoint to: aPoint3
 ]
 
 { #category : #emphasis }
@@ -760,7 +760,7 @@ LogicalFont >> kerningLeft: leftChar right: rightChar [
 { #category : #accessing }
 LogicalFont >> lineGrid [
 
-	^realFont lineGrid 
+	^realFont lineGrid
 ]
 
 { #category : #'forwarded to realFont' }
@@ -806,7 +806,7 @@ LogicalFont >> printOn: aStream [
 		nextPutAll: ' stretch: ';
 		print: stretchValue ;
 		nextPutAll: ' slant: ';
-		print: slantValue 
+		print: slantValue
 ]
 
 { #category : #accessing }

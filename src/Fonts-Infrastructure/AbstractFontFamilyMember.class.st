@@ -91,7 +91,7 @@ AbstractFontFamilyMember >> isCloserMatchThan: otherMember toStretch: inputStret
 	vector second < otherVector second ifTrue:[^false].
 	vector third > otherVector third ifTrue:[^true].
 	vector third < otherVector third ifTrue:[^false].
-	^false 
+	^false
 ]
 
 { #category : #testing }

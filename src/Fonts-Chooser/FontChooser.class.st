@@ -166,16 +166,12 @@ FontChooser >> selectedFont [
 		stretchValue: style stretchValue
 		weightValue: style weightValue
 		slantValue: style slantValue
-
-	
 ]
 
 { #category : #selected }
 FontChooser >> selectedFontFamily [
 
 	^ self fontList at: self selectedFontIndex ifAbsent: [nil].
-	
-	
 ]
 
 { #category : #selected }
@@ -215,7 +211,6 @@ FontChooser >> selectedFontIndex: anIndex [
 	self setPointSizeListFrom: member.
 	self announcer announce: #selectedFontStyleIndex.
 	self announcer announce: #selectedFontIndex.
-	
 ]
 
 { #category : #selected }
@@ -257,7 +252,6 @@ FontChooser >> selectedPointSizeIndex: anIndex [
 	anIndex = 0 ifTrue: [^self].
 	pointSize := (self pointSizeList at: anIndex) trimBoth asNumber.
 	self announcer announce: #pointSizeChanged.
-	
 ]
 
 { #category : #selected }
@@ -331,7 +325,6 @@ FontChooser >> unemphasizedSelectedFont [
 	font realFont isTTCFont "true for FreeTypeFont"
 		ifFalse: [font := font textStyle fontOfPointSize: pointSize].
 	^font
-
 ]
 
 { #category : #action }
