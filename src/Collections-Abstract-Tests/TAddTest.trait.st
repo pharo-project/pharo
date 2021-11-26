@@ -43,8 +43,6 @@ TAddTest >> testTAdd [
 	self assert: added == self element.	"test for identiy because #add: has not reason to copy its parameter."
 	self assert: (collection includes: self element)	.
 	self assert: (self collectionWithElement includes: self element).
-	
-	
 ]
 
 { #category : #'tests - adding' }
@@ -85,8 +83,6 @@ TAddTest >> testTAddIfNotPresentWithNewElement [
 	added := collection  addIfNotPresent: elem .
 	self assert: added == elem . "test for identiy because #add: has not reason to copy its parameter."
 	self assert: collection size equals: (oldSize + 1).
-
-	
 ]
 
 { #category : #'tests - adding' }

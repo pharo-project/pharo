@@ -17,5 +17,4 @@ TCopyPreservingIdentityTest >> testCopyReturnsIdentity [
 	| copy | 
 	copy := self nonEmpty copy.
 	self assert: self nonEmpty == copy.
-	
 ]

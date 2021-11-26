@@ -15,7 +15,6 @@ EpApplyVisitor >> visitBehaviorCategoryChange: aChange [
 	self
 		behaviorNamed: aChange behaviorAffectedName
 		ifPresent: [:aClassOrTrait | aClassOrTrait category: aChange newCategory ]
-
 ]
 
 { #category : #visitor }
@@ -142,7 +141,6 @@ EpApplyVisitor >> visitTraitAddition: aChange [
 EpApplyVisitor >> visitTraitModification: aChange [
 
 	self compiler evaluate: aChange newTrait definitionSource
-
 ]
 
 { #category : #visitor }

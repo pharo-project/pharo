@@ -21,7 +21,7 @@ EpClassRemoval class >> class: aClassRemoved [
 { #category : #visitor }
 EpClassRemoval >> accept: aVisitor [
 
-	^ aVisitor visitClassRemoval: self 
+	^ aVisitor visitClassRemoval: self
 ]
 
 { #category : #accessing }
@@ -54,5 +54,4 @@ EpClassRemoval >> initializeClassRemoved: aRemovedClass [
 
 	self initialize.
 	classRemoved := aRemovedClass asEpiceaRingDefinition.
-
 ]

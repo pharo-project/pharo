@@ -12,7 +12,6 @@ EpApplyTest >> applyInputEntry [
 		entries: { inputEntry };
 		errorHandlerBlock: [:error | error signal ];
 		applyCodeChanges
-
 ]
 
 { #category : #tests }
@@ -46,7 +45,6 @@ EpApplyTest >> testCategoryAdditionWithCategoryRemoved [
 	self deny: (organization includesCategory: aCategory).
 	self applyInputEntry.
 	self assert: (organization includesCategory: aCategory).
-
 ]
 
 { #category : #tests }
@@ -64,7 +62,6 @@ EpApplyTest >> testCategoryRemovalWithCategoryAdded [
 	self assert: (organization includesCategory: aCategory).
 	self applyInputEntry.
 	self deny: (organization includesCategory: aCategory).
-
 ]
 
 { #category : #tests }
@@ -85,7 +82,6 @@ EpApplyTest >> testCategoryRename [
 	self applyInputEntry.
 	self deny: (organization includesCategory: aCategory).
 	self assert: (organization includesCategory: anotherCategory).
-
 ]
 
 { #category : #tests }
@@ -117,7 +113,6 @@ EpApplyTest >> testClassAdditionWithClassRemoved [
 	self deny: (self class environment hasClassNamed: className).
 	self applyInputEntry.
 	self assert: (self class environment hasClassNamed: className).
-
 ]
 
 { #category : #tests }
@@ -178,7 +173,6 @@ EpApplyTest >> testClassModificationWithClassRemoved [
 	self applyInputEntry.
 	self assert: (self class environment hasClassNamed: className).
 	self assert: aClass instVarNames equals: #(x).
-
 ]
 
 { #category : #tests }
@@ -197,7 +191,6 @@ EpApplyTest >> testClassRemovalWithClassAdded [
 	self assert: (self class environment hasClassNamed: className).
 	self applyInputEntry.
 	self deny: (self class environment hasClassNamed: className).
-
 ]
 
 { #category : #tests }
@@ -215,7 +208,6 @@ EpApplyTest >> testMethodAdditionWithMethodRemoved [
 	self applyInputEntry.
 	self assert: (aClass includesSelector: #fortyTwo).
 	self assert: (aClass>>#fortyTwo) protocol equals: 'number'.
-
 ]
 
 { #category : #tests }
@@ -231,7 +223,6 @@ EpApplyTest >> testMethodAdditionWithProtocolChanged [
 	self assert: (aClass>>#fortyTwo) protocol equals: 'none'.
 	self applyInputEntry.
 	self assert: (aClass>>#fortyTwo) protocol equals: 'number'.
-
 ]
 
 { #category : #tests }
@@ -247,7 +238,6 @@ EpApplyTest >> testMethodAdditionWithSourceCodeChanged [
 	self assert: (aClass>>#fortyTwo) sourceCode equals: 'fortyTwo ^nil'.
 	self applyInputEntry.
 	self assert: (aClass>>#fortyTwo) sourceCode equals: 'fortyTwo ^42'.
-
 ]
 
 { #category : #tests }
@@ -266,7 +256,6 @@ EpApplyTest >> testMethodModificationWithMethodRemoved [
 	self applyInputEntry.
 	self assert: (aClass includesSelector: #fortyTwo).
 	self assert: (aClass>>#fortyTwo) protocol equals: 'number'.
-
 ]
 
 { #category : #tests }
@@ -284,7 +273,6 @@ EpApplyTest >> testMethodRemovalWithMethodAdded [
 	self assert: (aClass includesSelector: #fortyTwo).
 	self applyInputEntry.
 	self deny: (aClass includesSelector: #fortyTwo).
-
 ]
 
 { #category : #tests }
@@ -300,7 +288,6 @@ EpApplyTest >> testProtocolAddition [
 	self deny: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol').
 	self applyInputEntry.
 	self assert: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol').
-
 ]
 
 { #category : #tests }
@@ -317,7 +304,6 @@ EpApplyTest >> testProtocolRemoval [
 	self assert: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol').
 	self applyInputEntry.
 	self deny: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol').
-
 ]
 
 { #category : #tests }
@@ -333,7 +319,6 @@ EpApplyTest >> testTraitAdditionWithTraitRemoved [
 	self deny: (self class environment includesKey: traitName).
 	self applyInputEntry.
 	self assert: (self class environment includesKey: traitName).
-
 ]
 
 { #category : #tests }
@@ -352,7 +337,6 @@ EpApplyTest >> testTraitModification [
 	self assert: inputEntry content class equals: EpTraitModification.
 	self applyInputEntry.
 	self assert: (self class environment includesKey: traitName).
-
 ]
 
 { #category : #tests }
@@ -371,5 +355,4 @@ EpApplyTest >> testTraitRemovalWithTraitAdded [
 	self assert: (self class environment includesKey: traitName).
 	self applyInputEntry.
 	self deny: (self class environment includesKey: traitName).
-
 ]

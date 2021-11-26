@@ -81,6 +81,12 @@ RFReification >> genForRBArgumentNode [
 ]
 
 { #category : #generate }
+RFReification >> genForRBArrayNode [
+
+	^ self genForRBProgramNode
+]
+
+{ #category : #generate }
 RFReification >> genForRBAssignmentNode [
 	^self genForRBProgramNode
 ]

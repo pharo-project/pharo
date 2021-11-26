@@ -41,5 +41,5 @@ EpLogBrowserOperationVisitor >> compiler [
 EpLogBrowserOperationVisitor >> initializeWith: anEnvironment [
 
 	self initialize.
-	environment := anEnvironment 
+	environment := anEnvironment
 ]

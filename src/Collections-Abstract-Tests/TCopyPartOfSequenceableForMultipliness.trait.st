@@ -73,8 +73,6 @@ TCopyPartOfSequenceableForMultipliness >> testCopyUpToLastWithDuplicate [
 		[:el :i | self assert: (result at: i) equals: (collection at: i) ].
 	
 	self assert: result size equals: (collection size - 1)
-
-
 ]
 
 { #category : #'tests - copying part of sequenceable for multipliness' }

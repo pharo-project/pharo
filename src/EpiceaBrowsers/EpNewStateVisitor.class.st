@@ -11,7 +11,6 @@ Class {
 EpNewStateVisitor >> visitBehaviorCategoryChange: aRecategorizationChange [
 
 	^ aRecategorizationChange newCategory
-	    
 ]
 
 { #category : #visitor }
@@ -24,21 +23,18 @@ EpNewStateVisitor >> visitBehaviorCommentChange: aChange [
 EpNewStateVisitor >> visitBehaviorNameChange: aClassRenameChange [
 
 	^ aClassRenameChange newName
-	    
 ]
 
 { #category : #visitor }
 EpNewStateVisitor >> visitCategoryAddition: aClassCategoryCreatedChange [
 
 	^ aClassCategoryCreatedChange categoryName
-	    
 ]
 
 { #category : #visitor }
 EpNewStateVisitor >> visitCategoryRename: aClassCategoryRenamedChange [
 
 	^ aClassCategoryRenamedChange newCategoryName
-	    
 ]
 
 { #category : #visitor }
@@ -57,7 +53,6 @@ EpNewStateVisitor >> visitClassModification: aModificationClassChange [
 EpNewStateVisitor >> visitExpressionEvaluation: anExpressionEvaluation [
 
 	^ anExpressionEvaluation expression
-	    
 ]
 
 { #category : #visitor }
@@ -77,7 +72,7 @@ EpNewStateVisitor >> visitMethodModification: aMethodModification [
 
 	^ self 
 		printProtocol: aMethodModification newProtocol
-		sourceCode: aMethodModification newSourceCode 
+		sourceCode: aMethodModification newSourceCode
 ]
 
 { #category : #visitor }
@@ -96,12 +91,10 @@ EpNewStateVisitor >> visitRedo: aRedoEvent [
 EpNewStateVisitor >> visitTraitAddition: aTraitCreation [
 
 	^ self stringForBehavior: aTraitCreation traitAdded
-	    
 ]
 
 { #category : #visitor }
 EpNewStateVisitor >> visitTraitModification: aTraitModificationChange [
 
 	^ self stringForBehavior: aTraitModificationChange newTrait
-	    
 ]

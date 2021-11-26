@@ -143,13 +143,11 @@ MemoryFileSystemTest >> testEnsureCreateFileDoesNotOverwriteExistingContent [
 	file ensureCreateFile.
 
 	self assert: file contents equals: 'ok'.
-
 ]
 
 { #category : #tests }
 MemoryFileSystemTest >> testIsMemoryFileSystem [
 	self assert: filesystem isMemoryFileSystem.
-	
 ]
 
 { #category : #tests }

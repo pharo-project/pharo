@@ -34,7 +34,7 @@ Class {
 SortedCollectionTest >> accessCollection [
 	"Return a collection of size 5"
 	
-	^accessCollection 
+	^accessCollection
 ]
 
 { #category : #requirements }
@@ -55,7 +55,7 @@ SortedCollectionTest >> anotherElementOrAssociationIn [
 SortedCollectionTest >> anotherElementOrAssociationNotIn [
 	"Return an element (or an association for Dictionary )not present  in 'collection' "
 
-	^ elementNoteIn 
+	^ elementNoteIn
 ]
 
 { #category : #coverage }
@@ -81,49 +81,49 @@ SortedCollectionTest >> collectionClass [
 SortedCollectionTest >> collectionMoreThan1NoDuplicates [
 	"Return a collection of size 5 without equal elements"
 	
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> collectionMoreThan5Elements [
 	"Return a collection including at least 5 elements"
 	
-	^ nonEmpty5Elements 
+	^ nonEmpty5Elements
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> collectionNotIncluded [
 	"Return a collection for wich each element is not included in 'nonEmpty' "
 	
-	^ collectionNotIncluded 
+	^ collectionNotIncluded
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> collectionOfSize5 [
 	"Return a collection of size 5"
 	
-	^ accessCollection 
+	^ accessCollection
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> collectionWith1TimeSubcollection [
 	"Return a collection including 'oldSubCollection' only one time."
 	
-	^ (SortedCollection new add: elementNoteIn ; yourself) , self oldSubCollection 
+	^ (SortedCollection new add: elementNoteIn ; yourself) , self oldSubCollection
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> collectionWith2TimeSubcollection [
 	"Return a collection including 'oldSubCollection' two or many time."
 	
-	^ (SortedCollection  new add: elementNoteIn ; yourself) , self oldSubCollection , self oldSubCollection  
+	^ (SortedCollection  new add: elementNoteIn ; yourself) , self oldSubCollection , self oldSubCollection
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> collectionWith5Elements [
 	"Return a collection of size 5 including 5 elements"
 	
-	^ accessCollection 
+	^ accessCollection
 ]
 
 { #category : #requirements }
@@ -144,14 +144,14 @@ SortedCollectionTest >> collectionWithElement [
 SortedCollectionTest >> collectionWithElementsToRemove [
 	"Return a collection of elements included in 'nonEmpty'."
 
-	^ collectionIncluded 
+	^ collectionIncluded
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> collectionWithEqualElements [
 	"Return a collection including atLeast two elements equal."
 
-	^ collectionOfFloatWithDuplicate 
+	^ collectionOfFloatWithDuplicate
 ]
 
 { #category : #requirements }
@@ -159,35 +159,35 @@ SortedCollectionTest >> collectionWithNonIdentitySameAtEndAndBegining [
 	"Return a collection with elements at end and begining equals only with classic equality (they are not the same object).
 (others elements of the collection are not equal to those elements)"
 
-	^ stringCollectionSameEndAndBegining 
+	^ stringCollectionSameEndAndBegining
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> collectionWithSameAtEndAndBegining [
 	"Return a collection with elements at end and begining equals (others elements of the collection are not equal to those elements)"
 	
-	^ stringCollectionSameEndAndBegining 
+	^ stringCollectionSameEndAndBegining
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> collectionWithSortableElements [
 	"Return a collection elements that can be sorted ( understanding message ' < '  or ' > ')"
 	
-	^ collectionOfString 
+	^ collectionOfString
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> collectionWithoutEqualElements [
 	"Return a collection not including equal elements."
 	
-	^withoutEqualElements 
+	^withoutEqualElements
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> collectionWithoutNilElements [
 	"Return a collection that doesn't includes a nil element  and that doesn't includes equal elements'"
 	
-	^ collectionWithoutNil  
+	^ collectionWithoutNil
 ]
 
 { #category : #requirements }
@@ -215,7 +215,7 @@ SortedCollectionTest >> elementInForElementAccessing [
 SortedCollectionTest >> elementInForIncludesTest [
 	"Return an element included in nonEmpty."
 	
-	^ nonEmpty anyOne 
+	^ nonEmpty anyOne
 ]
 
 { #category : #requirements }
@@ -229,21 +229,21 @@ SortedCollectionTest >> elementInForIndexAccessing [
 SortedCollectionTest >> elementNotIn [
 	"Return an element not included in 'nonEmpty' "
 
-	^ elementNoteIn 
+	^ elementNoteIn
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> elementNotInForElementAccessing [
 	"Return an element not included in 'accessCollection' "
 	
-	^ elementNoteIn 
+	^ elementNoteIn
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> elementNotInForIndexAccessing [
 	"Return an element not included in 'accessCollection' "
 	
-	^ elementNoteIn  	
+	^ elementNoteIn
 ]
 
 { #category : #requirements }
@@ -263,7 +263,7 @@ SortedCollectionTest >> elementToAdd [
 SortedCollectionTest >> elementTwiceInForOccurrences [
 	"Return an element included exactly two time in # collectionWithEqualElements."
 	
-	^ duplicateFloat 
+	^ duplicateFloat
 ]
 
 { #category : #requirements }
@@ -303,28 +303,28 @@ SortedCollectionTest >> indexInNonEmpty [
 SortedCollectionTest >> integerCollection [
 	"Return a collection only including SmallInteger elements."
 	
-	^ accessCollection 
+	^ accessCollection
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> integerCollectionWithoutEqualElements [
 	"Return a collection of integer without equal elements."
 	
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> moreThan3Elements [
 	"Return a collection including atLeast 3 elements."
 	
-	^ accessCollection 
+	^ accessCollection
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> moreThan4Elements [
 	"Return a collection including at leat 4 elements"
 	
-	^ accessCollection 
+	^ accessCollection
 ]
 
 { #category : #requirements }
@@ -337,7 +337,7 @@ SortedCollectionTest >> nonEmpty [
 SortedCollectionTest >> nonEmpty1Element [
 	"Return a collection of size 1 including one element."
 	
-	^ nonEmpty1Element 
+	^ nonEmpty1Element
 ]
 
 { #category : #requirements }
@@ -351,7 +351,7 @@ SortedCollectionTest >> nonEmptyMoreThan1Element [
 SortedCollectionTest >> nonEmptyWithoutEqualElements [
 	"Return a collection without equal elements."
 	
-	^ withoutEqualElements 
+	^ withoutEqualElements
 ]
 
 { #category : #requirements }
@@ -359,7 +359,7 @@ SortedCollectionTest >> oldSubCollection [
 	"Return a subCollection included in collectionWith1TimeSubcollection.
 	 Example:   subCollection := #( 2 3 4) and collectionWith1TimeSubcollection := #(1 2 3 4 5)"
 
-	^ oldSubcollection 
+	^ oldSubcollection
 ]
 
 { #category : #requirements }
@@ -377,7 +377,7 @@ SortedCollectionTest >> otherCollection [
 SortedCollectionTest >> replacementCollection [
 	"Return a collection that will be used to replace 'oldSubcollection' in ' collectionWith1TimeSubcollection' "
 	 
-	^ collectionWith4Elements  
+	^ collectionWith4Elements
 ]
 
 { #category : #requirements }
@@ -425,7 +425,7 @@ SortedCollectionTest >> setUp [
 { #category : #requirements }
 SortedCollectionTest >> sizeCollection [
 
-	^ collectionWith4Elements 
+	^ collectionWith4Elements
 ]
 
 { #category : #requirements }
@@ -472,7 +472,6 @@ SortedCollectionTest >> testAdd [
 	self assert: (collection at: 5) equals: 5.
 	self assert: collection size equals: 10.
 	collection add: 3
-	
 ]
 
 { #category : #'tests - basic' }
@@ -486,7 +485,6 @@ SortedCollectionTest >> testAddAll [
 	sorted := SortedCollection new.
 	sorted addAll: sorted2.
 	self assert: (sorted hasEqualElements: sorted2)
-	 
 ]
 
 { #category : #'tests - basic' }
@@ -500,7 +498,6 @@ SortedCollectionTest >> testAddAll2 [
 	sorted addAll: sorted2.
 	self assert: sorted size equals: (sorted2 size + 1).
 	sorted2 do: [ :each | self assert: (sorted includes: each)]
-	 
 ]
 
 { #category : #'tests - basic' }
@@ -518,7 +515,6 @@ SortedCollectionTest >> testCollect [
 	
 	aSortedCollection := (1 to: 5) asSortedCollection.
 	self assert: result equals: (aSortedCollection collect: [:each | each < 4])
-	
 ]
 
 { #category : #tests }
@@ -557,7 +553,6 @@ SortedCollectionTest >> testCreation [
 	| collection |
 	collection := #(10 9 3 6 1 8 7 5 4 2) asSortedCollection.
 	self assert: collection equals: (1 to: 10) asSortedCollection
-	
 ]
 
 { #category : #'tests - iterate' }
@@ -567,7 +562,6 @@ SortedCollectionTest >> testDo2 [
 	res := self speciesClass sortBlock: [:a :b | a name < b name]..  
 	self collection do: [:each | res add: each class].
 	self assert: res asArray equals: self result asArray
-
 ]
 
 { #category : #'tests - basic' }
@@ -597,8 +591,6 @@ SortedCollectionTest >> testGroupedBySortedCollection [
 	"do we retain the sortblock?"
 	self assert: grouped values first class equals: SortedCollection.
 	self assert: collection sortBlock equals: grouped values first sortBlock.
-	
-	
 ]
 
 { #category : #'tests - includes' }
@@ -768,8 +760,6 @@ SortedCollectionTest >> testMedianForEvenSizeCollection [
 	|aSortedCollection|
 	aSortedCollection := {1 .2 . 3 . 4 . 5 . 6 } asSortedCollection.
 	self assert: aSortedCollection median equals: 3.5
-	
-	
 ]
 
 { #category : #'tests - basic' }
@@ -786,7 +776,6 @@ SortedCollectionTest >> testMedianForOddSizeCollection [
 		add: 'carpe'.
 
 	self assert: aSortedCollection median equals: 'porcinet'
-	
 ]
 
 { #category : #'tests - basic' }
@@ -854,9 +843,6 @@ SortedCollectionTest >> testSortBlock [
 		add: 'brochet';
 		add: 'tortue'.
 	self assert: aSortedCollection first equals: 'truite'.
-	
-	
-	
 ]
 
 { #category : #'tests - basic' }

@@ -10,7 +10,6 @@ Trait {
 TSortTest >> sortedInAscendingOrderCollection [
 	"Return a collection sorted in ascending order"
 	^ self explicitRequirement
-	
 ]
 
 { #category : #'tests - fixture' }
@@ -41,7 +40,6 @@ TSortTest >> testIsSorted [
 TSortTest >> testIsSortedBy [
 	self assert: (self sortedInAscendingOrderCollection isSortedBy: [:a :b | a<b]).
 	self deny: (self sortedInAscendingOrderCollection isSortedBy: [:a :b | a>b]).
-
 ]
 
 { #category : #'tests - sorting' }

@@ -44,7 +44,6 @@ WideStringTest >> testAtPut [
 	| w1 |
 	w1 := WideString with: (Unicode value: 402) with: $a with: (Unicode value: 400) with: $b.
 	self assert: (w1 at: 2 put: $b) = $b description: 'at:put: should return the put-object'
-
 ]
 
 { #category : #'tests - beginswith' }
@@ -63,7 +62,6 @@ WideStringTest >> testBeginsWith [
 	w1 := WideString with: (Unicode value: 402) with: $a with: (Unicode value: 400) with: $b.
 	w2 := WideString with: (Unicode value: 402).
 	w1 beginsWith: w2.
-
 ]
 
 { #category : #'tests - match' }
@@ -147,8 +145,6 @@ WideStringTest >> testEndsWith [
 	self assert: ('abc' endsWith: 'BC') not.
 	self assert: ('abc' endsWith: 'BC' asWideString) not .
 	self assert: ('ABC' asWideString endsWith: 'bc') not.
-
-
 ]
 
 { #category : #'tests - compare' }
@@ -286,7 +282,6 @@ WideStringTest >> testRelationOrderWithCase [
 	self assert: ('abc' asWideString caseSensitiveLessOrEqual: 'abd').
 	self assert: ('abd' asWideString caseSensitiveLessOrEqual: 'abc') not.
 	self assert: ('abc' caseSensitiveLessOrEqual: 'ABC') not.
-	
 ]
 
 { #category : #'tests - compare' }
@@ -297,7 +292,6 @@ WideStringTest >> testSameAs [
 	self assert: ('aBc' asWideString sameAs: 'abc').
 	self assert: ( #[97 0 0 0] asString sameAs: 'Abcd' asWideString) not.
 	self assert: ('a000' asWideString sameAs:  #[97 0 0 0] asString) not.
-	
 ]
 
 { #category : #'tests - substrings' }

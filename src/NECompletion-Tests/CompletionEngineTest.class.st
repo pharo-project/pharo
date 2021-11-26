@@ -121,6 +121,128 @@ CompletionEngineTest >> tearDown [
 ]
 
 { #category : #'tests - interaction' }
+CompletionEngineTest >> testReplaceKeywordTokenFollowedByAssignmentWithCaretInTheEndOfWordAfterCaretWithFollowingWordsReplacesEntireWord [
+
+	"If the caret is at the end of a word, replace the entire word"
+	
+	| text |
+	text := 'self mEthOdThatDoesNotExist:= something that follows'.
+	
+	"Select just after the colon"
+	self
+		setEditorText: text;
+		selectAt: 'self mEthOdThatDoesNotExist:' size.
+	
+	editor textArea openInWorld.
+	controller openMenu.
+
+	controller context replaceTokenInEditorWith: 'mEthOdThatDoesNotExist:'.
+	
+	self assert: editor text asString equals: 'self mEthOdThatDoesNotExist::= something that follows'
+]
+
+{ #category : #'tests - interaction' }
+CompletionEngineTest >> testReplaceKeywordTokenFollowedByAssignmentWithCaretInTheEndOfWordWithFollowingWordsReplacesEntireWord [
+
+	"If the caret is at the end of a word, replace the entire word"
+	
+	| text |
+	text := 'self mEthOdThatDoesNotExist:= something that follows'.
+	
+	self
+		setEditorText: text;
+		selectAt: 'self mEthOdThatDoesNotExist' size.
+	
+	editor textArea openInWorld.
+	controller openMenu.
+
+	controller context replaceTokenInEditorWith: 'mEthOdThatDoesNotExist'.
+	
+	self assert: editor text asString equals: 'self mEthOdThatDoesNotExist:= something that follows'
+]
+
+{ #category : #'tests - interaction' }
+CompletionEngineTest >> testReplaceKeywordTokenFollowedByAssignmentWithCaretInTheMiddleOfWordWithFollowingWordsReplacesEntireWord [
+
+	"If the caret is at the end of a word, replace the entire word"
+	
+	| text |
+	text := 'self mEthOdThatDoesNotExist:= something that follows'.
+	
+	self
+		setEditorText: text;
+		selectAt: 'self mEthOdThatDoes' size.
+
+	editor textArea openInWorld.
+	controller openMenu.
+
+	controller context replaceTokenInEditorWith: 'mEthOdThatDoesNotExist'.
+	
+	self assert: editor text asString equals: 'self mEthOdThatDoesNotExist:= something that follows'
+]
+
+{ #category : #'tests - interaction' }
+CompletionEngineTest >> testReplaceKeywordTokenWithCaretInTheEndOfWordAfterCaretWithFollowingWordsReplacesEntireWord [
+
+	"If the caret is at the end of a word, replace the entire word"
+	
+	| text |
+	text := 'self mEthOdThatDoesNotExist: something that follows'.
+	
+	"Select just after the colon"
+	self
+		setEditorText: text;
+		selectAt: 'self mEthOdThatDoesNotExist:' size + 1.
+	
+	editor textArea openInWorld.
+	controller openMenu.
+
+	controller context replaceTokenInEditorWith: 'mEthOdThatDoesNotExist:'.
+	
+	self assert: editor text asString equals: 'self mEthOdThatDoesNotExist: something that follows'
+]
+
+{ #category : #'tests - interaction' }
+CompletionEngineTest >> testReplaceKeywordTokenWithCaretInTheEndOfWordWithFollowingWordsReplacesEntireWord [
+
+	"If the caret is at the end of a word, replace the entire word"
+	
+	| text |
+	text := 'self mEthOdThatDoesNotExist: something that follows'.
+	
+	self
+		setEditorText: text;
+		selectAt: 'self mEthOdThatDoesNotExist' size + 1.
+	
+	editor textArea openInWorld.
+	controller openMenu.
+
+	controller context replaceTokenInEditorWith: 'mEthOdThatDoesNotExist:'.
+	
+	self assert: editor text asString equals: 'self mEthOdThatDoesNotExist: something that follows'
+]
+
+{ #category : #'tests - interaction' }
+CompletionEngineTest >> testReplaceKeywordTokenWithCaretInTheMiddleOfWordWithFollowingWordsReplacesEntireWord [
+
+	"If the caret is at the end of a word, replace the entire word"
+	
+	| text |
+	text := 'self mEthOdThatDoesNotExist: something that follows'.
+	
+	self
+		setEditorText: text;
+		selectAt: 'self mEthOdThatDoes' size.
+
+	editor textArea openInWorld.
+	controller openMenu.
+
+	controller context replaceTokenInEditorWith: 'mEthOdThatDoesNotExist:'.
+	
+	self assert: editor text asString equals: 'self mEthOdThatDoesNotExist: something that follows'
+]
+
+{ #category : #'tests - interaction' }
 CompletionEngineTest >> testReplaceTokenAfterMovingCaretToMiddleOfWordWithFollowingWordsReplacesEntireWord [
 
 	"If the caret is at the end of a word, replace the entire word"

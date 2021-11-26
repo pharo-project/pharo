@@ -13,7 +13,7 @@ Class {
 
 { #category : #testing }
 EDTest class >> isAbstract [ 	
-	^self == EDTest 
+	^self == EDTest
 ]
 
 { #category : #running }
@@ -90,7 +90,6 @@ EDTest >> configureDebugSession [
 	session stepOver.
 	session stepOver.
 	session stepInto.
-
 ]
 
 { #category : #'instance creation' }

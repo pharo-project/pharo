@@ -47,7 +47,6 @@ ReadStreamTest >> testBack [
 	stream := 'abc' readStream.
 	stream setToEnd.
 	self assert: stream back equals: $c.
-
 ]
 
 { #category : #tests }
@@ -57,7 +56,6 @@ ReadStreamTest >> testBackOnPosition1 [
 	stream := 'abc' readStream.
 	stream next.
 	self assert: stream back equals: $a.
-
 ]
 
 { #category : #'tests - accessing' }
@@ -94,7 +92,6 @@ ReadStreamTest >> testOldBack [
 	stream := 'abc' readStream.
 	stream setToEnd.
 	self assert: stream oldBack equals: $b.
-
 ]
 
 { #category : #tests }
@@ -114,7 +111,6 @@ ReadStreamTest >> testOldPeekBack [
 	stream := 'abc' readStream.
 	stream setToEnd.
 	self assert: stream oldPeekBack equals: $b.
-
 ]
 
 { #category : #tests }
@@ -124,7 +120,6 @@ ReadStreamTest >> testPeekBack [
 	stream := 'abc' readStream.
 	stream setToEnd.
 	self assert: stream peekBack equals: $c.
-
 ]
 
 { #category : #tests }

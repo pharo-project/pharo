@@ -107,10 +107,6 @@ WriteStreamTest >> testEnsureNoSpace [
 	stream nextPutAll: 'b  '.
 	stream ensureNoSpace.
 	self assert: stream contents equals: ' ab'.
-
-	
-	
-	
 ]
 
 { #category : #tests }
@@ -145,7 +141,7 @@ WriteStreamTest >> testLessThanLessThan [
 { #category : #tests }
 WriteStreamTest >> testNew [
 
-	self should: [self streamClass new] raise: Error. 
+	self should: [self streamClass new] raise: Error.
 ]
 
 { #category : #tests }

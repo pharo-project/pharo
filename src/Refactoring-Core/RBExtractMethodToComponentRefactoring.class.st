@@ -52,7 +52,7 @@ RBExtractMethodToComponentRefactoring >> extractMethod [
 				in: class.
 	refactoring setOption: #methodName
 		toUse: 
-			[:methodName | 
+			[:methodName :ref | 
 			extractedMethodSelector := self 
 						uniqueMethodNameFor: methodName arguments size.
 			methodName

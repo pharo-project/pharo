@@ -39,7 +39,7 @@ EpClassAddition >> behaviorAffectedName [
 { #category : #accessing }
 EpClassAddition >> classAdded [
 
-	^ class 
+	^ class
 ]
 
 { #category : #initialization }

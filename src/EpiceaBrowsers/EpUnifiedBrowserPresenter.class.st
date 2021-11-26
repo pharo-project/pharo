@@ -52,8 +52,6 @@ EpUnifiedBrowserPresenter >> freshLogFromSelection: selection [
 			"Needed to reverse the selected logs to have the expected order (as user)."
 			entries := items reversed flatCollect: [:each | each log entries ].
 			EpLog newWithEntries: entries ].
-
-
 ]
 
 { #category : #initialization }

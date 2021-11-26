@@ -109,7 +109,6 @@ ByteSymbol >> isOctetString [
 	This is different from asking whether the receiver *is* a ByteString 
 	(i.e., #isByteString)"
 	^ true.
-
 ]
 
 { #category : #private }
@@ -128,14 +127,12 @@ ByteSymbol >> privateAt: index put: aCharacter [
 		ifFalse: [self errorNonIntegerIndex].
 	self isReadOnlyObject 
 		ifTrue: [ ^ self modificationForbiddenFor: #privateAt:put: index: index value: aCharacter ].
-
 ]
 
 { #category : #accessing }
 ByteSymbol >> species [
 	"Answer the preferred class for reconstructing the receiver."
 	^ByteString
-
 ]
 
 { #category : #private }

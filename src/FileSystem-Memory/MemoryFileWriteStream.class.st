@@ -52,7 +52,7 @@ MemoryFileWriteStream >> isBinary [
 { #category : #writing }
 MemoryFileWriteStream >> next: anInteger putAll: aCollection startingAt: anInteger3 [ 
 	
-	self stream next: anInteger putAll: aCollection startingAt: anInteger3 
+	self stream next: anInteger putAll: aCollection startingAt: anInteger3
 ]
 
 { #category : #writing }

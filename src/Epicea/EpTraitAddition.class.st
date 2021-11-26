@@ -15,13 +15,13 @@ EpTraitAddition class >> trait: aTrait [
 
 	^ self basicNew
 		initializeWithTrait: aTrait;
-		yourself 
+		yourself
 ]
 
 { #category : #visitor }
 EpTraitAddition >> accept: aVisitor [
 
-	^ aVisitor visitTraitAddition: self 
+	^ aVisitor visitTraitAddition: self
 ]
 
 { #category : #accessing }
@@ -45,5 +45,5 @@ EpTraitAddition >> initializeWithTrait: aTrait [
 { #category : #accessing }
 EpTraitAddition >> traitAdded [
 
-	^ trait 
+	^ trait
 ]

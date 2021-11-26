@@ -82,7 +82,7 @@ FileSystemDirectoryEntry >> changeTime [
 
 { #category : #accessing }
 FileSystemDirectoryEntry >> creation [
-	^ self creationTime 
+	^ self creationTime
 ]
 
 { #category : #accessing }
@@ -169,7 +169,6 @@ FileSystemDirectoryEntry >> initializeWithReference: ref [
 
 	super initialize.	
 	reference := ref.
-
 ]
 
 { #category : #accessing }
@@ -248,7 +247,7 @@ FileSystemDirectoryEntry >> mode [
 
 { #category : #accessing }
 FileSystemDirectoryEntry >> modification [
-	^ self modificationTime 
+	^ self modificationTime
 ]
 
 { #category : #accessing }
@@ -305,7 +304,6 @@ FileSystemDirectoryEntry >> printAttributeNamed: attributeName on: aStream [
 		tab.
 	self printAttribute: attributeName on: aStream.
 	aStream cr.
-
 ]
 
 { #category : #printing }

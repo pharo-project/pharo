@@ -58,7 +58,7 @@ RBRefactoring class >> initializeRefactoringOptions [
 		put: [ :ref :imps | self error: #implementorToInline ];
 		
 		at: #methodName
-		put: [ :methodName | self error: #methodName ];
+		put: [ :methodName :ref | self error: #methodName ];
 		
 		at: #selfArgumentName
 		put: [ :ref | self error: #selfArgumentName ];
@@ -352,7 +352,7 @@ RBRefactoring >> requestImplementorToInline: implementorsCollection [
 
 { #category : #requests }
 RBRefactoring >> requestMethodNameFor: aMethodName [ 
-	^(self options at: #methodName) value: aMethodName
+	^(self options at: #methodName) cull: aMethodName cull: self
 ]
 
 { #category : #requests }

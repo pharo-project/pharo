@@ -76,7 +76,7 @@ FileSystemPermission >> hash [
 { #category : #initialization }
 FileSystemPermission >> initialize: aNumber [
 	posixPermission := aNumber.
-	self initialize.	
+	self initialize.
 ]
 
 { #category : #testing }
@@ -144,5 +144,4 @@ FileSystemPermission >> printOn: aStream [
 		nextPut: (self otherRead ifTrue: [ $r ] ifFalse: [ $- ]);
 		nextPut: (self otherWrite ifTrue: [ $w ] ifFalse: [ $- ]);
 		nextPut: (self otherExecute ifTrue: [ $x ] ifFalse: [ $- ])
-		
 ]

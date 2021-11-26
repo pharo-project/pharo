@@ -29,7 +29,7 @@ ByteSymbolTest >> testAs [
 { #category : #'tests - non-creation' }
 ByteSymbolTest >> testNew [
 	
-	self should: [ByteSymbol new: 5 ] raise: self defaultTestError. 
+	self should: [ByteSymbol new: 5 ] raise: self defaultTestError.
 ]
 
 { #category : #'tests - creation' }

@@ -12,5 +12,4 @@ RGElementDefinition >> asEpiceaRingDefinition [
 RGElementDefinition >> epiceaCleanUp [
 
 	parent := nil.
-
 ]

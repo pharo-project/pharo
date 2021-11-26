@@ -59,7 +59,6 @@ DiskFileAttributesTestsResource >> setUp [
 	afterCreationTime := DateAndTime
 		date: beforeCreationTime asDate
 		time: (Time seconds: afterCreationTime secondsSinceMidnightLocalTime + 1 nanoSeconds: 0).
-
 ]
 
 { #category : #running }
