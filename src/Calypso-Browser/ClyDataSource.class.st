@@ -66,10 +66,7 @@ Class {
 		'parentItem',
 		'lastFilteredDataSource',
 		'queryView',
-		'dirty',
-		'something',
-		'lastSelectedItem',
-		'timeInitialEvent'
+		'dirty'
 	],
 	#classVars : [
 		'UpdateScheduler'
@@ -342,23 +339,6 @@ ClyDataSource >> isSameAs: anotherDataSource [
 	^self isBasedOn: anotherDataSource query
 ]
 
-{ #category : #'drag and drop' }
-ClyDataSource >> isUserFocusingOnItem: aSelectedItem [
-	(lastSelectedItem isNil or: [timeInitialEvent isNil])  ifTrue: [
-		lastSelectedItem := aSelectedItem.
-		timeInitialEvent := Time now.
-		^ false ].
-	
-	^ aSelectedItem browserItem = lastSelectedItem browserItem 
-		ifFalse: [
-			lastSelectedItem := aSelectedItem.
-			timeInitialEvent := Time now.
-			false ]
-		ifTrue: [
-			(timeInitialEvent copy addSeconds: aSelectedItem class dragAndDropDelay / 1000) < Time now
-			 ]
-]
-
 { #category : #accessing }
 ClyDataSource >> itemCursor [
 	dirty ifTrue: [ self runUpdate ].
@@ -540,12 +520,9 @@ ClyDataSource >> updateItems: dataSourceItems [
 
 { #category : #'drag and drop' }
 ClyDataSource >> wantsDropElements: aPassenger type: type index: rowIndex [
-	| dropTargetItem result |
+	| dropTargetItem |
 	rowIndex = 0 | (rowIndex > self numberOfRows) ifTrue: [ ^false ].
 	self dragTransferType == type ifFalse: [ ^false ].
-	dropTargetItem := self elementAt: rowIndex.		
-	result := queryView wantsDropPassenger: aPassenger at: dropTargetItem.
-	
-	(result and: [ dropTargetItem hasChildren and: [ self isUserFocusingOnItem: dropTargetItem ]])  ifTrue: [ dropTargetItem expand ].
-	^result
+	dropTargetItem := self elementAt: rowIndex.
+	^ queryView wantsDropPassenger: aPassenger at: dropTargetItem
 ]

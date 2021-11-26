@@ -114,7 +114,9 @@ Class {
 		'highlighting',
 		'changesWasInitiatedByUser',
 		'navigationSelector',
-		'dataSourceClass'
+		'dataSourceClass',
+		'hoverOverDropItemStartTime',
+		'targetDropItem'
 	],
 	#category : #'Calypso-Browser-Table'
 }
@@ -508,6 +510,27 @@ ClyQueryViewMorph >> isFilterChanged [
 	^selection rootDataSource ~~ self dataSource
 ]
 
+{ #category : #dragAndDrop }
+ClyQueryViewMorph >> isUserFocusingOnItem: aSelectedItem [
+
+	| now |
+	now := Time now.
+	(targetDropItem isNil or: [hoverOverDropItemStartTime isNil])  ifTrue: [
+		targetDropItem := aSelectedItem.
+		hoverOverDropItemStartTime := now.
+		^ false ].
+	
+	^ aSelectedItem browserItem = targetDropItem browserItem 
+		ifFalse: [
+			targetDropItem := aSelectedItem.
+			hoverOverDropItemStartTime := now.
+			false ]
+		ifTrue: [
+			self haltOnce.    
+			(hoverOverDropItemStartTime copy addSeconds: aSelectedItem class dragAndDropDelay / 1000) < now
+			 ]
+]
+
 { #category : #accessing }
 ClyQueryViewMorph >> itemAt: rowIndex [
 	^self dataSource elementAt: rowIndex
@@ -827,11 +850,16 @@ ClyQueryViewMorph >> updateSelectionForNewFilter [
 ]
 
 { #category : #'drag and drop support' }
-ClyQueryViewMorph >> wantsDropPassenger: aPassenger at: aDataSourceItem [
+ClyQueryViewMorph >> wantsDropPassenger: aPassenger at: dropTargetItem [
 	| context |
-	context := self createSelectionContextOf: aDataSourceItem asSelection.
-	
-	^aPassenger canBeDroppedInContext: context
+	 
+	context := self createSelectionContextOf: dropTargetItem asSelection.
+	(aPassenger canBeDroppedInContext: context) ifFalse:[ ^ false ].
+	dropTargetItem hasChildren ifFalse: [ ^ false ].
+	(self isUserFocusingOnItem: dropTargetItem) ifFalse:[ ^ false ].
+
+	dropTargetItem expand.
+	^ true
 ]
 
 { #category : #'events subscription' }
