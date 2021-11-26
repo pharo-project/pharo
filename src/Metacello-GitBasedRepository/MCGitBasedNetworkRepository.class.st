@@ -94,7 +94,7 @@ MCGitBasedNetworkRepository class >> flushDownloadCache [
   repoDownloadCache := nil
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MCGitBasedNetworkRepository class >> flushProjectEntry: projectPath version: versionString [
     self downloadCache removeKey: (self downloadCacheKey: projectPath version: versionString) ifAbsent: [  ]
 ]
@@ -212,7 +212,7 @@ MCGitBasedNetworkRepository class >> parseProjectVersionField: parseBlock desc: 
     value: (desc copyFrom: repoDelim + 1 to: desc size)
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MCGitBasedNetworkRepository class >> projectDirectoryFrom: projectPath version: versionString [
 	| mcPlatform theCacheDirectory projectDirectory downloadCacheKey cachePath pid |
 	downloadCacheKey := self
