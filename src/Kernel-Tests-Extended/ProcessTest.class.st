@@ -525,10 +525,12 @@ ProcessTest >> testTerminationShouldProceedAllEnsureBlocksIfSomeWasFailed [
 			ensure: [ ensureFailure signal ]]
 				ensure: [ ensureCalled := true ].
 		] on: UnwindError do: [ :err | unwindError := err ]
-	] fork.
-	[started] whileFalse: [ Processor yield ].
-	process terminate.	
-	Processor yield.
+	] forkAt: Processor activePriority + 1.
+
+	"We terminate the process in backround using higher priority
+	to ensure that all forked processes during the termination logic will finish before the test continue.
+	The UnwindError during termination is always signalled by fork"
+	[ process terminate ] forkAt: Processor activePriority + 1.
 	self assert: ensureCalled.
 	self assert: unwindError signalerContext sender exception equals: ensureFailure
 ]
