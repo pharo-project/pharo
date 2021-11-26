@@ -8,14 +8,15 @@ Class {
 }
 
 { #category : #executing }
-SycCMakeAbstractCommand >> executeRefactoring [ 
+SycCMakeAbstractCommand >> executeRefactoring [
 
 	| transformation |
-		transformation := (RBAddMethodTransformation 
-		sourceCode: 'isAbstract ^ self == ', targetClass asString
-		in: targetClass classSide
-		withProtocols: #(#testing))
-		execute
+	transformation := (RBAddMethodTransformation
+		                   sourceCode: 'isAbstract
+		
+	^ self == ' , targetClass asString
+		                   in: targetClass classSide
+		                   withProtocols: #( #testing )) execute
 ]
 
 { #category : #accessing }
