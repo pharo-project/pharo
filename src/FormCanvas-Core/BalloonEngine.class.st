@@ -666,7 +666,6 @@ BalloonEngine >> processStopReason: reason edge: edge fill: fill [
 	(self canProceedAfter: reason) ifTrue:[^self]. "Okay."
 
 	^self error:'Unkown stop reason in graphics engine'
-
 ]
 
 { #category : #drawing }

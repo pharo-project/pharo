@@ -61,7 +61,6 @@ FormCanvas class >> defaultTranslucentPatterns [
 FormCanvas class >> extent: aPoint [
 
 	^ self extent: aPoint depth: Display depth
-
 ]
 
 { #category : #'instance creation' }
@@ -83,7 +82,6 @@ FormCanvas class >> extent: extent depth: depth origin: aPoint clipRect: aRectan
 FormCanvas class >> on: aForm [
 
 	^ self new setForm: aForm
-
 ]
 
 { #category : #caching }
@@ -126,7 +124,6 @@ FormCanvas >> contentsOfArea: aRectangle into: aForm [
 { #category : #copying }
 FormCanvas >> copyClipRect: aRectangle [
 	^ self copyOrigin: origin clipRect: (aRectangle translateBy: origin)
-
 ]
 
 { #category : #copying }
@@ -154,7 +151,6 @@ FormCanvas >> copyOrigin: aPoint clipRect: aRectangle [
 FormCanvas >> depth [
 
 	^ form depth
-
 ]
 
 { #category : #'private - balloon engine' }
@@ -305,7 +301,6 @@ FormCanvas >> fillOval: r color: fillColor borderWidth: borderWidth borderColor:
 	fillColor isTransparent ifFalse:
 		[self setFillColor: fillColor.
 		port fillOval: (rect insetBy: borderWidth)].
-
 ]
 
 { #category : #'drawing - ovals' }
@@ -326,7 +321,6 @@ FormCanvas >> fillOval: aRectangle fillStyle: aFillStyle borderWidth: bw borderC
 			color: aFillStyle 
 			borderWidth: bw
 			borderColor: bc
-
 ]
 
 { #category : #'drawing - rectangles' }
@@ -419,7 +413,6 @@ FormCanvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderW
 		port 
 			 frameRectRight: rect width: w;
 			 frameRectBottom: rect height: h].
-
 ]
 
 { #category : #private }
@@ -454,7 +447,6 @@ FormCanvas >> infiniteFillRectangle: aRectangle fillStyle: aFillStyle [
 	^aFillStyle
 		displayOnPort: clippedPort
 		offsetBy: additionalOffset
-
 ]
 
 { #category : #testing }
@@ -465,7 +457,6 @@ FormCanvas >> isVisible: aRectangle [
 	(aRectangle bottom + origin y) < clipRect top	ifTrue: [^ false].
 	(aRectangle top + origin y) > clipRect bottom	ifTrue: [^ false].
 	^ true
-
 ]
 
 { #category : #drawing }
@@ -492,7 +483,6 @@ FormCanvas >> paragraph: para bounds: bounds color: c [
 		foreground: c background: Color transparent
 		ignoreColorChanges: false.
 	para displayOn: (self copyClipRect: bounds) using: scanner at: origin+ bounds topLeft.
-
 ]
 
 { #category : #copying }
@@ -559,7 +549,6 @@ FormCanvas >> resetGrafPort [
 
 	port := GrafPort toForm: form.
 	port clipRect: clipRect.
-
 ]
 
 { #category : #private }
@@ -577,7 +566,6 @@ FormCanvas >> setClearColor: aColor [
 	self depth = 8 ifTrue:[
 		"Use a stipple pattern"
 		port fillColor: (form balancedPatternFor: clearColor)].
-
 ]
 
 { #category : #private }
@@ -612,7 +600,6 @@ FormCanvas >> setFillColor: aColor [
 	patternWord := form pixelWordFor: fillColor.
 	port fillPattern: (screen collect: [:maskWord | maskWord bitAnd: patternWord]).
 	port combinationRule: Form paint.
-
 ]
 
 { #category : #private }
@@ -621,7 +608,6 @@ FormCanvas >> setForm: aForm [
 	self reset.
 	form := aForm.
 	port := GrafPort toForm: form.
-
 ]
 
 { #category : #private }
@@ -630,7 +616,6 @@ FormCanvas >> setOrigin: aPoint clipRect: aRectangle [
 	origin := aPoint.
 	clipRect := aRectangle.
 	port clipRect: aRectangle.
-
 ]
 
 { #category : #private }
@@ -667,7 +652,6 @@ FormCanvas >> setPaintColor: aColor [
 	patternWord := form pixelWordFor: paintColor.
 	port fillPattern: (screen collect: [:maskWord | maskWord bitAnd: patternWord]).
 	port combinationRule: Form paint
-
 ]
 
 { #category : #other }
@@ -737,7 +721,6 @@ FormCanvas >> transformBy: aDisplayTransform clippingTo: aClipRect during: aBloc
 			during:[:offsetCanvas| aBlock value: offsetCanvas].
 		warp sourceForm: subCanvas form; warpBits.
 		warp sourceForm: nil.  subCanvas := nil "release space for next loop"]
-
 ]
 
 { #category : #'drawing - support' }
@@ -755,7 +738,7 @@ FormCanvas >> translateTo: newOrigin clippingTo: aRectangle during: aBlock [
 { #category : #private }
 FormCanvas >> translucentMaskFor: alphaValue depth: d [
 	"Return a pattern representing a mask usable for stipple transparency"
-	^(self translucentPatterns at: d) at: ((alphaValue min: 1.0 max: 0.0) * 4) rounded + 1 
+	^(self translucentPatterns at: d) at: ((alphaValue min: 1.0 max: 0.0) * 4) rounded + 1
 ]
 
 { #category : #private }

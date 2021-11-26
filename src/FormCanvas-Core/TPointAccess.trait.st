@@ -29,7 +29,6 @@ TPointAccess >> bounds [
 		min := min min: pt.
 		max := max max: pt].
 	^min corner: max
-		
 ]
 
 { #category : #accessing }
