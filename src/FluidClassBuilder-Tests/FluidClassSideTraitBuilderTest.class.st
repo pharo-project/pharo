@@ -27,5 +27,4 @@ FluidClassSideTraitBuilderTest >> testSlots [
 	
 	self assert: trait name equals: #TViewModelMock.
 	self assert: trait class slots size equals: 2
-
 ]

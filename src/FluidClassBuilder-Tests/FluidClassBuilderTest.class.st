@@ -19,7 +19,6 @@ FluidClassBuilderTest >> removeTestArtifactsFromSystem [
 	self class environment at: #MyClass 
 		ifPresent: [:p | p removeFromSystem: false ]
 		ifAbsent: [ ].
-	
 ]
 
 { #category : #running }
@@ -42,9 +41,7 @@ FluidClassBuilderTest >> tearDown [
 	(RPackageOrganizer default packageNamed: #'Mock' ifAbsent: [ nil ])
 		ifNotNil: [:x | x removeFromSystem ].
 
-	super tearDown. 
-			
-
+	super tearDown.
 ]
 
 { #category : #'tests - hidden protocols' }
@@ -63,7 +60,6 @@ FluidClassBuilderTest >> testBuildClassSlotsAPI [
 	self assert: clas name equals: #Point2.
 	self assert: clas slots size equals: 1.
 	self assert: clas class slots size equals: 2.
-	
 ]
 
 { #category : #'tests - hidden protocols' }
@@ -80,7 +76,6 @@ FluidClassBuilderTest >> testBuildClassTraitsAPI [
 	self assert: clas superclass equals: Object.
 	self assert: clas name equals: #Point2.
 	self assert: clas class traitComposition equals: { TViewModelMock2 classTrait } asTraitComposition
-	
 ]
 
 { #category : #'tests - gathering' }
@@ -90,8 +85,6 @@ FluidClassBuilderTest >> testBuildLayout [
 		layout: VariableLayout;
 		package: 'Collections-Sequenceable'.
 	self assert: builder layoutToBuild equals: VariableLayout
-
-	
 ]
 
 { #category : #'tests - classBuilder generation' }
@@ -108,7 +101,6 @@ FluidClassBuilderTest >> testBuildSimplePoint2 [
 	self assert: clas slots size equals: 2.
 	self flag: #askPablo.
 	"self assert: clas package packageName equals: 'FakedCore'"
-	
 ]
 
 { #category : #'tests - gathering' }
@@ -119,7 +111,6 @@ FluidClassBuilderTest >> testBuilderSharedPools [
 		sharedPools: 'TextConstants';
 		package: 'Text-Core'.  
 	self assert: builder sharedPoolsToBuild equals: 'TextConstants'
-	
 ]
 
 { #category : #'tests - gathering' }
@@ -131,7 +122,6 @@ FluidClassBuilderTest >> testBuilderSharedVariables [
 		package: 'Collections-Strings'.  
 	self assert: builder sharedVariablesToBuild equals: { #NonAsciiMap }.
 	self assert: builder layoutToBuild equals: ByteLayout
-	
 ]
 
 { #category : #'tests - gathering' }
@@ -167,8 +157,6 @@ FluidClassBuilderTest >> testBuilderWithPackage [
 	self 
 		assert: builder packageToBuild 
 		equals: 'Kernel-BasicObjects'
-
-	
 ]
 
 { #category : #'tests - gathering' }
@@ -183,8 +171,6 @@ FluidClassBuilderTest >> testBuilderWithTag [
 
 	builder tag: 'Foo'.
 	self assert: builder tagToBuild equals: 'Foo'
-
-	
 ]
 
 { #category : #'tests - class creation' }
@@ -253,11 +239,6 @@ FluidClassBuilderTest >> testChevronIsWorkingOnClassSideOnEmpty [
 	
 	self assert: clasBuilder classSlotsToBuild equals: instBuilder classSlotsToBuild.
 	self assert: clasBuilder classTraitsToBuild equals: instBuilder classTraitsToBuild.
-
-
-
-
-
 ]
 
 { #category : #'tests - class creation' }
@@ -280,7 +261,6 @@ FluidClassBuilderTest >> testCreateBuilder [
 	builder := Object << #Point.
 	self assert: builder superclassToBuild equals: Object.
 	self assert: builder nameToBuild equals: #Point.
-	
 ]
 
 { #category : #'tests - mandatory' }
@@ -289,7 +269,6 @@ FluidClassBuilderTest >> testCreateBuilderWithNil [
 	builder := nil << #NewProtoObject.
 	self assert: builder superclassToBuild equals: nil.
 	self assert: builder nameToBuild equals: #NewProtoObject.
-	
 ]
 
 { #category : #'tests - mandatory' }
@@ -347,11 +326,6 @@ FluidClassBuilderTest >> testCreatedClassHasAllElements [
 	self assert: newClass classVarNames equals: #(AAA).
 	self assertCollection: newClass sharedPools hasSameElements: {TextConstants}.
 	self assert: newClass category equals: 'Mock-boring'.
-	
-
-
-
-
 ]
 
 { #category : #'tests - class creation' }
@@ -374,11 +348,6 @@ FluidClassBuilderTest >> testCreatedEmptyClassHasDefaultElements [
 	self assert: newClass classVarNames equals: #().
 	self assertCollection: newClass sharedPools hasSameElements: {}.
 	self assert: newClass category equals: 'Mock'.
-	
-
-
-
-
 ]
 
 { #category : #'tests - class creation' }
@@ -418,7 +387,6 @@ FluidClassBuilderTest >> testExistingClassWithClassSlot [
 	newClass := instBuilder install.
 	
 	self assert: newClass class slots first name equals: #AAA
-
 ]
 
 { #category : #'tests - class creation' }
@@ -451,7 +419,6 @@ FluidClassBuilderTest >> testExistingClassWithClassSlotThenWeRemoveIt [
 	newClass := classBuilder install.
 	
 	self assert: newClass class slots equals: #()
-
 ]
 
 { #category : #'tests - classBuilder generation' }
@@ -473,7 +440,6 @@ FluidClassBuilderTest >> testFillShiftClassBuilder [
 	self assert: shift category equals: 'FakedCore-Mafia'.
 	self flag: #askPablo.
 	"self assert: clas package packageName equals: 'FakedCore'"
-	
 ]
 
 { #category : #'tests - mandatory' }
@@ -523,5 +489,4 @@ FluidClassBuilderTest >> testInstallSimplePoint2 [
 	self assert: pt2Class slots size equals: 2 ] ensure: [  
 			self class environment removeKey: #Point2 ifAbsent: [self fail]. 
 			self assert: (self class environment at: #Point2 ifAbsent: [ true ])]
-	
 ]
