@@ -157,7 +157,6 @@ LzwGifEncoder >> encode: bits [
 	self writeCodeAndCheckCodeSize: eoiCode.
 	self flushBits.
 	codeStream nextPut: 0.
-				
 ]
 
 { #category : #accessing }
@@ -238,7 +237,6 @@ LzwGifEncoder >> nextCodePut: anInteger [
 		ifTrue: [ self nextBytePut: (newInteger bitShift: shiftCount) ]
 		ifFalse: [ bitBuffer := newInteger bitShift: shiftCount ].
 	^ anInteger
-	
 ]
 
 { #category : #'private - encoding' }
@@ -251,7 +249,6 @@ LzwGifEncoder >> readPixelFrom: bits [
 	pixel := bits byteAt: yPos * rowByteSize + xPos + 1.
 	self updatePixelPosition.
 	^ pixel
-	
 ]
 
 { #category : #accessing }

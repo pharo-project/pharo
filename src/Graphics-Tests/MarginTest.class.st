@@ -69,8 +69,6 @@ MarginTest >> testFromPoint [
 		assert: margin bottom 	equals: 1;
 		assert: margin width 		equals: 4;
 		assert: margin height 	equals: 2.
-	
-	
 ]
 
 { #category : #tests }

@@ -67,7 +67,6 @@ DisplayScreen class >> displaySettingsOn: aBuilder [
 		setSelector: #fullscreen:;
 		description: 'On platforms that support it, set fullscreen mode';
 		default: false.
-
 ]
 
 { #category : #'initialize-release' }
@@ -80,7 +79,6 @@ DisplayScreen class >> initialize [
 	Smalltalk globals at: #Display put: display.
 	
 	self deferUpdates: false.
-
 ]
 
 { #category : #displaying }
@@ -88,7 +86,6 @@ DisplayScreen >> addExtraRegion: aRectangle for: regionDrawer [
 	"Register the given rectangle as a region which is drawn by the specified region drawer. The region will be excluded from any updates when #forceDamageToScreen: is called. Note that the rectangle is only valid for a single update cycle; once #forceDamageToScreen: has been called, the region drawer and its region are being removed from the list"
 	extraRegions ifNil:[extraRegions := #()].
 	extraRegions := extraRegions copyWith: (Array with: regionDrawer with: aRectangle).
-
 ]
 
 { #category : #deferring }
@@ -141,7 +138,6 @@ DisplayScreen >> flash: aRectangle [
 	self reverse: aRectangle.
 	(Delay forMilliseconds: 100) wait.
 	self reverse: aRectangle.
-
 ]
 
 { #category : #displaying }
@@ -154,7 +150,6 @@ DisplayScreen >> flash: aRectangle andWait: msecs [
 	self reverse: aRectangle.
 
 	(Delay forMilliseconds: msecs) wait.
-
 ]
 
 { #category : #displaying }
@@ -167,7 +162,6 @@ DisplayScreen >> flashAll: rectangleList andWait: msecs [
 	rectangleList do: [:aRectangle | self reverse: aRectangle].
 
 	(Delay forMilliseconds: msecs) wait.
-
 ]
 
 { #category : #other }
@@ -198,7 +192,6 @@ DisplayScreen >> fullscreenMode: aBoolean [
 
 	<primitive: 233>
 	self primitiveFailed
-
 ]
 
 { #category : #'screen managing' }

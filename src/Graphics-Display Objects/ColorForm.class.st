@@ -32,7 +32,6 @@ ColorForm class >> extent: extentPoint depth: bitsPerPixel [
 	^ bitsPerPixel > 8 
 		ifTrue: [ self basicNew setExtent: extentPoint depth: 8]
 		ifFalse:  [ self basicNew setExtent: extentPoint depth: bitsPerPixel]
-
 ]
 
 { #category : #'instance creation' }
@@ -58,7 +57,6 @@ ColorForm class >> mappingWhiteToTransparentFrom: aFormOrCursor [
 		c = Color white ifTrue: [Color transparent] ifFalse: [c]].
 	f colors: map.
 	^ f
-
 ]
 
 { #category : #copying }
@@ -86,7 +84,6 @@ ColorForm >> clearColormapCache [
 
 	cachedDepth := nil.
 	cachedColormap := nil.
-
 ]
 
 { #category : #'pixel accessing' }
@@ -94,7 +91,6 @@ ColorForm >> colorAt: aPoint [
 	"Return the color of the pixel at aPoint."
 
 	^ self colors at: (self pixelValueAt: aPoint) + 1
-
 ]
 
 { #category : #'pixel accessing' }
@@ -105,7 +101,6 @@ ColorForm >> colorAt: aPoint put: aColor [
 	i := self colors indexOf: aColor
 		ifAbsent: [^ self error: 'trying to use a color that is not in my colormap'].
 	self pixelValueAt: aPoint put: i - 1.
-
 ]
 
 { #category : #'color mapping' }
@@ -150,7 +145,6 @@ ColorForm >> colormapIfNeededForDepth: destDepth [
 
 	cachedDepth := destDepth.
 	^ cachedColormap := newMap.
-
 ]
 
 { #category : #accessing }
@@ -159,7 +153,6 @@ ColorForm >> colors [
 
 	self ensureColorArrayExists.
 	^ colors
-
 ]
 
 { #category : #accessing }
@@ -182,7 +175,6 @@ ColorForm >> colors: colorList [
 	colors := newColors.
 	cachedDepth := nil.
 	cachedColormap := nil.
-
 ]
 
 { #category : #accessing }
@@ -203,7 +195,6 @@ ColorForm >> colorsUsed [
 	self tallyPixelValues doWithIndex: [:count :i |
 		count > 0 ifTrue: [list add: (myColor at: i)]].
 	^ list asArray
-
 ]
 
 { #category : #copying }
@@ -224,7 +215,6 @@ ColorForm >> copy: aRect [
 		colorMap: nil) copyBits.
 	colors ifNotNil: [newForm colors: colors copy].
 	^ newForm
-
 ]
 
 { #category : #copying }
@@ -234,7 +224,6 @@ ColorForm >> deepCopy [
 		bits: bits copy;
 		offset: offset copy;
 		colors: colors
-
 ]
 
 { #category : #private }
@@ -242,7 +231,6 @@ ColorForm >> depth: bitsPerPixel [
 
 	bitsPerPixel > 8 ifTrue: [self error: 'ColorForms only support depths up to 8 bits'].
 	super depth: bitsPerPixel.
-
 ]
 
 { #category : #displaying }
@@ -258,7 +246,6 @@ ColorForm >> ensureColorArrayExists [
 	colors ifNil: [
 		self depth > 8 ifTrue: [^ self error: 'ColorForms only support depths up to 8 bits'].
 		self colors: (Color indexedColors copyFrom: 1 to: (1 bitShift: self depth))].
-
 ]
 
 { #category : #'scaling, rotation' }
@@ -269,7 +256,7 @@ ColorForm >> flipBy: direction centerAt: aPoint [
 	newForm := super flipBy: direction centerAt: aPoint.
 	self colors: oldColors.
 	newForm colors: oldColors.
-	^newForm 
+	^newForm
 ]
 
 { #category : #'file in/out' }
@@ -305,7 +292,6 @@ ColorForm >> isTransparentAt: aPoint [
 	"Return true if the receiver is transparent at the given point."
 
 	^ (self colorAt: aPoint) isTransparent
-
 ]
 
 { #category : #'color manipulation' }
@@ -316,7 +302,6 @@ ColorForm >> mapColor: oldColor to: newColor [
 	1 to: colors size do: [:i | 
 		(colors at: i) = oldColor ifTrue: [colors at: i put: newColor]].
 	self clearColormapCache.
-
 ]
 
 { #category : #displaying }
@@ -343,7 +328,6 @@ ColorForm >> pixelValueAt: aPoint [
 	"Details: To get the raw pixel value, be sure the peeker's colorMap is nil."
 
 	^ (BitBlt bitPeekerFromForm: self) colorMap: nil; pixelAt: aPoint
-
 ]
 
 { #category : #'file in/out' }
@@ -352,8 +336,7 @@ ColorForm >> readAttributesFrom: aBinaryStream [
 	colors := ColorArray new: (2 raisedTo: depth).
 	1 to: colors size do: [:idx | 
 		colors basicAt: idx put: (aBinaryStream nextLittleEndianNumber: 4).
-	]. 
-	
+	].
 ]
 
 { #category : #'color manipulation' }
@@ -364,7 +347,6 @@ ColorForm >> replaceColor: oldColor with: newColor [
 	1 to: colors size do: [:i | 
 		(colors at: i) = oldColor ifTrue: [colors at: i put: newColor]].
 	self clearColormapCache.
-
 ]
 
 { #category : #'color manipulation' }
@@ -376,7 +358,6 @@ ColorForm >> replaceColorAt: aPoint with: newColor [
 	oldIndex := self pixelValueAt: aPoint.
 	colors at: oldIndex+1 put: newColor.
 	self clearColormapCache.
-
 ]
 
 { #category : #'color manipulation' }
@@ -396,7 +377,6 @@ ColorForm >> setColors: colorArray cachedColormap: aBitmap depth: anInteger [
 	colors := colorArray.
 	cachedDepth := anInteger.
 	cachedColormap := aBitmap.
-
 ]
 
 { #category : #private }
@@ -405,7 +385,6 @@ ColorForm >> setExtent: extent depth: bitsPerPixel [
 
 	bitsPerPixel > 8 ifTrue: [self error: 'ColorForms only support depths up to 8 bits'].
 	super setExtent: extent depth: bitsPerPixel.
-
 ]
 
 { #category : #'file in/out' }
@@ -425,7 +404,6 @@ ColorForm >> transparentAllPixelsLike: aPoint [
 	"Make all occurances of the given pixel value transparent.  Very useful when two entries in the colorMap have the same value.  This only changes ONE."
 
 	self replaceColorAt: aPoint with: Color transparent.
-
 ]
 
 { #category : #'color manipulation' }
@@ -433,14 +411,12 @@ ColorForm >> transparentColor: aColor [
 	"Make all occurances of the given color transparent.  Note: for colors like black and white, which have two entries in the colorMap, this changes BOTH of them.  Not always what you want."
 
 	self replaceColor: aColor with: Color transparent.
-
 ]
 
 { #category : #'file in/out' }
 ColorForm >> unhibernate [
 	colors ifNotNil:[colors := colors asArray].
 	^super unhibernate.
-
 ]
 
 { #category : #private }
@@ -452,7 +428,6 @@ ColorForm >> unusedColormapEntry [
 	1 to: tallies size do: [:i |
 		(tallies at: i) = 0 ifTrue: [^ i]].
 	^ 0
-
 ]
 
 { #category : #'file in/out' }
@@ -462,5 +437,5 @@ ColorForm >> writeAttributesOn: file [
 	colorArray := self colors asColorArray.
 	1 to: (2 raisedTo: depth) do: [:idx |
 		file nextLittleEndianNumber: 4 put: (colorArray basicAt: idx).
-	] 
+	]
 ]

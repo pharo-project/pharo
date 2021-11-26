@@ -97,9 +97,6 @@ LzwGifDecoder >> decode [
 		prevCode := currentCode.
 		currentCode := self nextCode ].
 	^ outStream contents.
-
-	
-	
 ]
 
 { #category : #private }
@@ -185,7 +182,6 @@ LzwGifDecoder >> initializeTables [
 	1 to: clearCode do: [ :n |
 		prefixTable at: n put: (n - 1).
 		suffixTable at: n put: (n - 1) ].
-	
 ]
 
 { #category : #accessing }
