@@ -26,7 +26,7 @@ ReThreeElementPointRule >> check: aNode forCritiquesDo: aCriticBlock [
 		ifNone: [ ^self ].
 
 	aCriticBlock cull: (
-		self critiqueFor: parentPoint)		
+		self critiqueFor: parentPoint)
 ]
 
 { #category : #running }

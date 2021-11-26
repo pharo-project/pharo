@@ -40,7 +40,7 @@ ReStringConcatenationRule >> afterCheck: aNode mappings: mappingDict [
 		ifPresent: [ :arg2 |
 			^ self performsConcatenation: arg2 ]).
 		
-	^ false 
+	^ false
 ]
 
 { #category : #accessing }

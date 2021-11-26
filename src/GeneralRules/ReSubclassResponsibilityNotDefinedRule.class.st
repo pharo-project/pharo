@@ -34,7 +34,6 @@ ReSubclassResponsibilityNotDefinedRule >> check: aClass forCritiquesDo: aCriticB
 						selector: selector)
 						beShouldBeImplemented;
 						yourself ] ]) ].
-	
 ]
 
 { #category : #accessing }

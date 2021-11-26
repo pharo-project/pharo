@@ -39,7 +39,6 @@ ReTempVarOverridesInstVarRuleTest >> sampleMethod: dummy1 [
 	| dummy2 |
 	dummy2 := [ :dummy3 | dummy4 := dummy1 + dummy3 ].
 	^ dummy2 value: dummy1.
-	
 ]
 
 { #category : #tests }
