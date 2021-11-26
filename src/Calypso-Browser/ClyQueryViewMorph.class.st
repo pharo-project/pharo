@@ -437,10 +437,13 @@ ClyQueryViewMorph >> hasRealQuery [
 
 { #category : #'drag and drop support' }
 ClyQueryViewMorph >> hasUserBeenFocusingOnItem: aSelectedItem [
+	| now |
 	targetDropItem ifNil: [ ^ false ].
 	hoverOverDropItemStartTime ifNil: [ ^ false].
 	aSelectedItem browserItem = targetDropItem browserItem ifFalse: [ ^ false ].
-	^ (hoverOverDropItemStartTime copy addSeconds: aSelectedItem class dragAndDropDelay / 1000) < Time now
+	now := Time now.
+	 ^ (hoverOverDropItemStartTime copy addSeconds: aSelectedItem class dragAndDropDelay / 1000) < now
+	
 ]
 
 { #category : #controlling }
@@ -704,12 +707,15 @@ ClyQueryViewMorph >> shouldExpand: aSelectedItem [
 	"Current limitation:
 	- You have to move to send another dragAndDrop event so the time can be checked again"
 	| newFocus |
+
 	newFocus := (self hasUserBeenFocusingOnItem: aSelectedItem) 
-		ifTrue:[ nil  ]
+		ifTrue:[ nil ]
 		ifFalse: [ aSelectedItem ].
-	newFocus = targetDropItem ifTrue: [ ^ self ].
 	
-	self userNowFocusesOn: newFocus
+	(newFocus isNotNil and: [ targetDropItem isNotNil and:
+		[newFocus browserItem = targetDropItem browserItem]]) ifTrue: [ ^ false ].
+
+	^ self userNowFocusesOn: newFocus
 	
 ]
 
@@ -879,7 +885,7 @@ ClyQueryViewMorph >> userNowFocusesOn: aSelectedItem [
 	targetDropItem := aSelectedItem.
 	hoverOverDropItemStartTime := Time now.
 	"new focus, we do not expand"
-	^ false
+	^ aSelectedItem isNil
 ]
 
 { #category : #'drag and drop support' }
