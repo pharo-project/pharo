@@ -8,10 +8,10 @@ Class {
 	#category : #'HelpSystem-Core-Utilities'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 HelpExporter class >> export [
 	<script>
-	self new writeAllTopics 
+	self new writeAllTopics
 ]
 
 { #category : #'as yet unclassified' }
@@ -30,9 +30,9 @@ HelpExporter >> rootDirectory [
 	^ root
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 HelpExporter >> systemHelpTopics [
-	^ SystemHelp asHelpTopic 
+	^ SystemHelp asHelpTopic
 ]
 
 { #category : #'as yet unclassified' }
@@ -51,7 +51,7 @@ HelpExporter >> writeStreamFromTopic: topic [
 	fileRef := (self rootDirectory  / fileName, 'md' ) asFileReference.
 	fileRef deleteIfAbsent: [ "ignore" ].
 	aStream :=  fileRef writeStream .
-	^ aStream 
+	^ aStream
 ]
 
 { #category : #'as yet unclassified' }
@@ -62,11 +62,10 @@ HelpExporter >> writeTopic: topic [
 	writeStream flush;close
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 HelpExporter >> writeTopic: topic level: level toStream: stream [ 
 	stream  << ('#' repeat: level) << ' ' << topic title << String cr.
 	topic contents ifNotEmpty: 
 		[ stream << (self demoteContents: topic contents  toLevel: level) << String cr. ].
 	topic subtopics do: [ :t | self writeTopic: t level: level +1 toStream: stream ]
-	
 ]
