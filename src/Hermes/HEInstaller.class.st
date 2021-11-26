@@ -75,7 +75,6 @@ HEInstaller >> build: aHEClass [
 	self processTraitsFrom: aHEClass in: newClass.
 	
 	^newClass.
-
 ]
 
 { #category : #'creating traits' }
@@ -120,7 +119,7 @@ HEInstaller >> classNamed: aSymbol [
 
 { #category : #'reporting undeclared' }
 HEInstaller >> createdUndeclared [
-	^ (Undeclared associations reject: [ :asoc | originalUndeclareds associations includes: asoc]) asDictionary 
+	^ (Undeclared associations reject: [ :asoc | originalUndeclareds associations includes: asoc]) asDictionary
 ]
 
 { #category : #'installing package' }
@@ -241,7 +240,6 @@ HEInstaller >> processTraitsFrom: aHEClass in: newClass [
 
 	newClass setTraitComposition: (self buildTraitCompositionFor: aHEClass traitComposition).
 	newClass class setTraitComposition: (self buildTraitCompositionFor: aHEClass classTraitComposition).
-
 ]
 
 { #category : #'installing methods' }
@@ -293,8 +291,6 @@ HEInstaller >> shouldBuildMethod: aHEMethod in: aClass [
 HEInstaller >> traitSequenceClass [
 
 	^ Smalltalk at: #TaSequence ifAbsent: [ self error: 'Trait support has not been loaded' ]
-	
-	
 ]
 
 { #category : #'reporting undeclared' }
