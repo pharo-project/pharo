@@ -510,25 +510,21 @@ ClyQueryViewMorph >> isFilterChanged [
 	^selection rootDataSource ~~ self dataSource
 ]
 
-{ #category : #dragAndDrop }
+{ #category : #'drag and drop support' }
 ClyQueryViewMorph >> isUserFocusingOnItem: aSelectedItem [
-
-	| now |
-	now := Time now.
-	(targetDropItem isNil or: [hoverOverDropItemStartTime isNil])  ifTrue: [
-		targetDropItem := aSelectedItem.
-		hoverOverDropItemStartTime := now.
-		^ false ].
+	"Current limitation:
+	- You have to move to send another dragAndDrop event so the time can be checked again"
+	(targetDropItem isNil or: [hoverOverDropItemStartTime isNil])  
+		ifTrue: [ ^ self userFocusesOn: aSelectedItem ].
 	
-	^ aSelectedItem browserItem = targetDropItem browserItem 
-		ifFalse: [
-			targetDropItem := aSelectedItem.
-			hoverOverDropItemStartTime := now.
-			false ]
-		ifTrue: [
-			self haltOnce.    
-			(hoverOverDropItemStartTime copy addSeconds: aSelectedItem class dragAndDropDelay / 1000) < now
-			 ]
+	aSelectedItem browserItem = targetDropItem browserItem
+		ifFalse: [ ^ self userFocusesOn: aSelectedItem ].
+
+	(hoverOverDropItemStartTime copy addSeconds: aSelectedItem class dragAndDropDelay / 1000) < Time now
+			ifTrue: [ "returns that we do expand and reset the state"
+				self userFocusesOn: nil.
+				^ true ].
+	^ false
 ]
 
 { #category : #accessing }
@@ -850,13 +846,24 @@ ClyQueryViewMorph >> updateSelectionForNewFilter [
 ]
 
 { #category : #'drag and drop support' }
+ClyQueryViewMorph >> userFocusesOn: aSelectedItem [
+	targetDropItem := aSelectedItem.
+	hoverOverDropItemStartTime := Time now.
+	"new focus, we do not expand"
+	^ false
+]
+
+{ #category : #'drag and drop support' }
 ClyQueryViewMorph >> wantsDropPassenger: aPassenger at: dropTargetItem [
 	| context |
 	 
 	context := self createSelectionContextOf: dropTargetItem asSelection.
 	(aPassenger canBeDroppedInContext: context) ifFalse:[ ^ false ].
-	dropTargetItem hasChildren ifFalse: [ ^ false ].
-	(self isUserFocusingOnItem: dropTargetItem) ifFalse:[ ^ false ].
+	
+	"if we can drag and drop, we always return true.
+	However, the rest is guarded to emable expansion"
+	dropTargetItem hasChildren ifFalse: [ ^ true ].
+	(self isUserFocusingOnItem: dropTargetItem) ifFalse:[ ^ true ].
 
 	dropTargetItem expand.
 	^ true
