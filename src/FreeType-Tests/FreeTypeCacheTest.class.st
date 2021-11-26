@@ -43,7 +43,7 @@ FreeTypeCacheTest >> setUp [
 	fullCache 
 		maximumSize: (10*(fullCache sizeOf: font1YGlyph))..
 	1 to: 10 do:[:i |
-		fullCache atFont: font1 charCode: i type: FreeTypeCacheGlyph put: font1YGlyph]. 
+		fullCache atFont: font1 charCode: i type: FreeTypeCacheGlyph put: font1YGlyph].
 ]
 
 { #category : #tests }
@@ -81,8 +81,6 @@ FreeTypeCacheTest >> testEntriesRemovedFIFO [
 			should: [cache atFont: font1 charCode: 1000-(i-10) type: FreeTypeCacheGlyph]
 			raise: Error].  
 	self validateSizes: cache.
-
-	
 ]
 
 { #category : #tests }
@@ -153,8 +151,6 @@ FreeTypeCacheTest >> testGlyphAccessIsThreadSafe [
 			
 		self assert: (((canvases at:1) form bits = (canvases at:2) form bits) and: [ ((canvases at:2) form bits = (canvases at:3) form bits) ]) 
 	].
-
-
 ]
 
 { #category : #tests }
@@ -201,8 +197,6 @@ FreeTypeCacheTest >> testGlyphAccessIsThreadSafeWhenAskingWidth [
 			
 		self assert: (((canvases at:1) form bits = (canvases at:2) form bits) and: [ ((canvases at:2) form bits = (canvases at:3) form bits) ]) 
 	].
-
-
 ]
 
 { #category : #tests }
@@ -444,7 +438,6 @@ FreeTypeCacheTest >> testRemoveAllForFont [
 	self assert: (fifo detect:[:each | each font = font1] ifNone:[]) isNil.
 	self assert: (fifo detect:[:each | each font = font2] ifNone:[]) notNil.
 	self assert: (fifo detect:[:each | each font = font2] ifNone:[]) notNil.
-	
 ]
 
 { #category : #tests }
@@ -469,7 +462,6 @@ FreeTypeCacheTest >> testRemoveAllForType [
 	self assert: (fifo detect:[:each | each type = 1] ifNone:[]) isNil.
 	self assert: (fifo detect:[:each | each type = 2] ifNone:[]) notNil.
 	self assert: (fifo detect:[:each | each type = 3] ifNone:[]) notNil.
-	
 ]
 
 { #category : #tests }

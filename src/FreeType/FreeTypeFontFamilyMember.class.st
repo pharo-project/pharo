@@ -30,7 +30,6 @@ FreeTypeFontFamilyMember class >> fromFileInfo: aFreeTypeFileInfo [
 		slantName: aFreeTypeFileInfo slant;
 		slantValue: aFreeTypeFileInfo slantValue;
 		yourself
-		
 ]
 
 { #category : #comparing }
@@ -140,7 +139,6 @@ FreeTypeFontFamilyMember >> sortValue [
 	v := v + (normalizedWeight).
 	v := v + (slantValue).
 	^v
-
 ]
 
 { #category : #accessing }

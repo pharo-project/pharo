@@ -81,43 +81,16 @@ FreeTypeFontProvider class >> resetCurrent [
 { #category : #accessing }
 FreeTypeFontProvider >> addFileInfo: aFreeTypeFileInfo [
 	fileInfos add: aFreeTypeFileInfo
-	
-	
-		
-	
-	
-	
-			
-	
-	
 ]
 
 { #category : #accessing }
 FreeTypeFontProvider >> addFileInfo: aFreeTypeFileInfo index: i [
 	fileInfos add: aFreeTypeFileInfo
-	
-	
-		
-	
-	
-	
-			
-	
-	
 ]
 
 { #category : #accessing }
 FreeTypeFontProvider >> addFirstFileInfo: aFreeTypeFileInfo index: i [
 	fileInfos addFirst: aFreeTypeFileInfo
-	
-	
-		
-	
-	
-	
-			
-	
-	
 ]
 
 { #category : #accessing }
@@ -146,10 +119,6 @@ FreeTypeFontProvider >> buildFamilyNamed: aFamilyGroupName [
 	family addMembersFromFileInfos: infos.
 	family addSimulatedMembers.
 	^family
-		
-			
-			
-		
 ]
 
 { #category : #accessing }
@@ -157,39 +126,18 @@ FreeTypeFontProvider >> cacheFileInfo: aFreeTypeFileInfo index: i [
 
 	(fileInfoCache  at:  {aFreeTypeFileInfo fileSize. i} ifAbsentPut:[Set new])
 		add:  aFreeTypeFileInfo
-	
-	
-		
-	
-	
-	
-			
-	
-	
 ]
 
 { #category : #'error handling' }
 FreeTypeFontProvider >> failedToOpen: face from: path index: i [
 	"Transcript cr; show: 'Failed : ', path asString, '[', i asString,']'."
 	"remove all cache entries for path with index >= i"
-	
-	
-	
-			
-	
-	
 ]
 
 { #category : #'error handling' }
 FreeTypeFontProvider >> failedToOpen: face index: i [
 	"Transcript cr; show: 'Failed : ', path asString, '[', i asString,']'."
 	"remove all cache entries for path with index >= i"
-	
-	
-	
-			
-	
-	
 ]
 
 { #category : #'font families' }
@@ -220,7 +168,7 @@ FreeTypeFontProvider >> fileInfosByFamilyAndGroup [
 				and:[ each postscriptName = info postscriptName
 				and:[ each styleName = info styleName ]]]]]
 			ifNone:[ group add: info]].
-	^ answer	
+	^ answer
 ]
 
 { #category : #'font lookup' }
@@ -322,9 +270,6 @@ FreeTypeFontProvider >> guessWindowsFontFolderPath [
 	possibilities := possibilities asSortedCollection: [:a :b | a entry creationTime >= b  entry creationTime].
 	possibilities ifNotEmpty:[ ^ possibilities first fullName ].
 	^nil
-	
-		 	
-			
 ]
 
 { #category : #'file paths' }
@@ -339,13 +284,11 @@ FreeTypeFontProvider >> initialize [
 	fileInfoCache := Dictionary new: 100. "keyed by file size" 
 	families := Dictionary new.
 	fontInstallers := OrderedCollection new.
-	
 ]
 
 { #category : #'loading and updating' }
 FreeTypeFontProvider >> loadFromSystem [
 	self updateFromSystem.
-	
 ]
 
 { #category : #'file paths' }
@@ -399,8 +342,6 @@ FreeTypeFontProvider >> prepareForRelease [
 
 	self initialize.
 	self updateEmbeddedFreeTypeFonts
-
-
 ]
 
 { #category : #'loading and updating' }
@@ -542,15 +483,6 @@ FreeTypeFontProvider >> updateFromFile: aFile [
 			"Transcript show: 'from file : ', info asString."].
 	i := i + 1.
 	i < numFaces "note, we use < rather than <= , because i is zero based"] whileTrue:[].
-	
-	
-		
-	
-	
-	
-			
-	
-	
 ]
 
 { #category : #'loading and updating' }

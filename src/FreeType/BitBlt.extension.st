@@ -51,10 +51,9 @@ BitBlt >> installFreeTypeFont: aFreeTypeFont foregroundColor: foregroundColor ba
 	halftoneForm := nil.
 	sourceX := sourceY := 0.
 	height := aFreeTypeFont height.
-
 ]
 
 { #category : #'*FreeType-Addition' }
 BitBlt >> lastFontForegroundColor [
-	^ nil 
+	^ nil
 ]
