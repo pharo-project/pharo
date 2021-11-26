@@ -29,7 +29,6 @@ GoferUnload >> unload: aWorkingCopy [
 
 	self unloadClasses: aWorkingCopy.
 	self unloadPackage: aWorkingCopy
-
 ]
 
 { #category : #unloading }
