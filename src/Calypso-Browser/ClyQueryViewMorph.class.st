@@ -437,12 +437,10 @@ ClyQueryViewMorph >> hasRealQuery [
 
 { #category : #'drag and drop support' }
 ClyQueryViewMorph >> hasUserBeenFocusingOnItem: aSelectedItem [
-	| now |
 	targetDropItem ifNil: [ ^ false ].
 	hoverOverDropItemStartTime ifNil: [ ^ false].
 	aSelectedItem browserItem = targetDropItem browserItem ifFalse: [ ^ false ].
-	now := Time now.
-	 ^ (hoverOverDropItemStartTime copy addSeconds: aSelectedItem class dragAndDropDelay / 1000) < now
+	 ^ (hoverOverDropItemStartTime copy addSeconds: aSelectedItem class dragAndDropDelay / 1000) < Time now
 	
 ]
 
