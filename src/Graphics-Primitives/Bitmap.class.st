@@ -547,5 +547,4 @@ Bitmap >> writeUncompressedOn: aStream [
 
 	aStream nextInt32Put: self size.
 	aStream nextPutAll: self
-
 ]

@@ -105,8 +105,6 @@ RectangleTest >> testAreasOutside2 [
      1 to: visibleArea size do: [:idx2 |
         self deny: ((rects at: idx) intersects: (visibleArea at: idx2)).
   ]  ].
-
-
 ]
 
 { #category : #'tests - accessing' }
@@ -712,7 +710,6 @@ RectangleTest >> testWithBottomDoesNotProduceInvalidRectangle [
 	rect2 := rect1 withBottom: -10.
 	self assert: rect2 bottom equals: 10.
 	self assert: rect2 height isZero
-	
 ]
 
 { #category : #'tests - rectangle functions' }
@@ -743,7 +740,6 @@ RectangleTest >> testWithLeftDoesNotProduceInvalidRectangle [
 	rect2 := rect1 withLeft: 80.
 	self assert: rect2 left equals: 50.
 	self assert: rect2 width isZero
-	
 ]
 
 { #category : #tests }
@@ -765,7 +761,6 @@ RectangleTest >> testWithRightDoesNotProduceInvalidRectangle [
 	rect2 := rect1 withRight: -10.
 	self assert: rect2 right equals: 0.
 	self assert: rect2 width isZero
-	
 ]
 
 { #category : #'tests - rectangle functions' }
@@ -795,7 +790,6 @@ RectangleTest >> testWithTopDoesNotProduceInvalidRectangle [
 	rect2 := rect1 withTop: 70.
 	self assert: rect2 top equals: 60.
 	self assert: rect2 height isZero
-	
 ]
 
 { #category : #'tests - rectangle functions' }

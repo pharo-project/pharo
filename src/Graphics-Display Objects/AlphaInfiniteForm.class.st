@@ -21,7 +21,6 @@ AlphaInfiniteForm >> computeBoundingBox [
 { #category : #accessing }
 AlphaInfiniteForm >> direction: aPoint [
 	"Ignore"
-
 ]
 
 { #category : #displaying }
@@ -52,7 +51,6 @@ AlphaInfiniteForm >> displayOnPort: aPort offsetBy: offset [
 		[:x | top to: (targetBox bottom - 1) by: patternBox height do:
 			[:y | aPort destOrigin: x@y; copyBits]].
 	aPort colorMap: savedMap.
-
 ]
 
 { #category : #accessing }
