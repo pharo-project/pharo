@@ -189,7 +189,7 @@ DelayBasicScheduler >> schedule: aDelay [
 	aDelay beingWaitedOn ifTrue: [^self error: 'This Delay has already been scheduled.'].
 	
 	"The basic scheduler is highly dependant on semantics of cooperative multitasking and 
-	 bytecode inlining such that interuption *cannot* occur between the following assignment and signal.
+	 bytecode inlining such that interruption *cannot* occur between the following assignment and signal.
 	 The #signal immediately transfers execution to timing-priority #runTimerEventLoop
 	 such that no other thread can overwrite our value until consumed by timing-priority thread.
 	 Subclasses provide addition protections to lessen the importance of these semantics."
@@ -320,7 +320,7 @@ DelayBasicScheduler >> unschedule: aDelay [
 	 For back-half see #unscheduleAtTimingPriority"
 
 	"The basic scheduler is highly dependant on semantics of cooperative multitasking and 
-	 bytecode inlining such that interuption *cannot* occur between the assignment and the signal.
+	 bytecode inlining such that interruption *cannot* occur between the assignment and the signal.
 	 The #signal immediately transfers execution to timing-priority #runTimerEventLoop
 	 such that no other thread can overwrite our value until consumed by timing-priority thread.
 	 Subclasses add protection against this."
