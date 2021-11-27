@@ -13,7 +13,7 @@ CoFilterNarrowingComparisonTest >> testCaseInsensitiveFilterIsNarrowWhenTheInter
 	caseSensitive2 := CoCaseInsensitiveBeginsWithFilter filterString: 'abc'.
 
 	self deny: (caseSensitive isMoreNarrowThan: caseSensitive2).
-	self assert: (caseSensitive2 isMoreNarrowThan: caseSensitive). 
+	self assert: (caseSensitive2 isMoreNarrowThan: caseSensitive).
 ]
 
 { #category : #tests }
@@ -36,7 +36,7 @@ CoFilterNarrowingComparisonTest >> testCaseInsensitiveFilterIsNotNarrowWhenTheIn
 	caseSensitive2 := CoCaseInsensitiveBeginsWithFilter filterString: 'ax'.
 
 	self deny: (caseSensitive isMoreNarrowThan: caseSensitive2).
-	self deny: (caseSensitive2 isMoreNarrowThan: caseSensitive). 
+	self deny: (caseSensitive2 isMoreNarrowThan: caseSensitive).
 ]
 
 { #category : #tests }
@@ -48,7 +48,7 @@ CoFilterNarrowingComparisonTest >> testCaseSensitiveFilterIsNarrowWhenTheInterna
 	caseSensitive2 := CoCaseSensitiveBeginsWithFilter filterString: 'abc'.
 
 	self deny: (caseSensitive isMoreNarrowThan: caseSensitive2).
-	self assert: (caseSensitive2 isMoreNarrowThan: caseSensitive). 
+	self assert: (caseSensitive2 isMoreNarrowThan: caseSensitive).
 ]
 
 { #category : #tests }
@@ -71,7 +71,7 @@ CoFilterNarrowingComparisonTest >> testCaseSensitiveFilterIsNotNarrowWhenTheInte
 	caseSensitive2 := CoCaseSensitiveBeginsWithFilter filterString: 'ax'.
 
 	self deny: (caseSensitive isMoreNarrowThan: caseSensitive2).
-	self deny: (caseSensitive2 isMoreNarrowThan: caseSensitive). 
+	self deny: (caseSensitive2 isMoreNarrowThan: caseSensitive).
 ]
 
 { #category : #tests }
@@ -89,7 +89,7 @@ CoFilterNarrowingComparisonTest >> testNegatedFilterIsNarrowWhenTheInternalAreNa
 	negated2 := caseSensitive2 negated.
 	
 	self deny: (negated isMoreNarrowThan: negated2).
-	self assert: (negated2 isMoreNarrowThan: negated)	
+	self assert: (negated2 isMoreNarrowThan: negated)
 ]
 
 { #category : #tests }
@@ -107,7 +107,7 @@ CoFilterNarrowingComparisonTest >> testNegatedFilterIsNotNarrowThanANegatedWithA
 	negated2 := caseSensitive2 negated.
 	
 	self deny: (negated isMoreNarrowThan: negated2).
-	self deny: (negated2 isMoreNarrowThan: negated)	
+	self deny: (negated2 isMoreNarrowThan: negated)
 ]
 
 { #category : #tests }
