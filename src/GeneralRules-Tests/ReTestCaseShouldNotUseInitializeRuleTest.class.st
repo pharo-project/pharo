@@ -31,7 +31,6 @@ ReTestCaseShouldNotUseInitializeRuleTest >> testRule [
 	critiques := self myCritiquesOnClass: self class.
 	
 	self assert: critiques size equals: 1.
-
 ]
 
 { #category : #tests }
@@ -43,5 +42,4 @@ ReTestCaseShouldNotUseInitializeRuleTest >> testRuleDoesNotAppear [
 	critiques := self myCritiquesOnClass: self class.
 	
 	self assert: critiques size equals: 0.
-
 ]

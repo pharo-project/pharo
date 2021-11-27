@@ -34,8 +34,6 @@ ReTestCaseShouldNotUseInitializeRule >> basicCheck: aClass [
 	expectedVariables := aClass new instanceVariablesToKeep.
 					
 	^ alteredVariables anySatisfy: [ :e | (expectedVariables includes: e name) not ].
-		
-
 ]
 
 { #category : #accessing }

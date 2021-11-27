@@ -31,7 +31,7 @@ ReTemporaryVariableCapitalizationRule >> critiqueFor: aNode [
 				in: aNode methodNode methodClass
 				selector: aNode methodNode selector).
 				
-	^ crit	
+	^ crit
 ]
 
 { #category : #accessing }

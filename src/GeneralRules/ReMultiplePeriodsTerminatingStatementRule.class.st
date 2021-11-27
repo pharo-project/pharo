@@ -54,5 +54,4 @@ ReMultiplePeriodsTerminatingStatementRule >> periodPairs: node critiqueBlock: aC
 				interval: (start to: stop))
 			by: self
 			hint: 'two periods') ] ]
-	
 ]

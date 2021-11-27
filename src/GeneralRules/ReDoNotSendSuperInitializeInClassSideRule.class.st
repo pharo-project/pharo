@@ -34,7 +34,6 @@ ReDoNotSendSuperInitializeInClassSideRule >> afterCheck: aNode mappings: mapping
 				ifTrue: [ ^ true ] ] ].
 		
 	^ false
-	
 ]
 
 { #category : #accessing }
@@ -47,8 +46,7 @@ ReDoNotSendSuperInitializeInClassSideRule >> initialize [
 	super initialize.
 	self 
 		replace: 'super initialize' 
-		with: '' 
-		
+		with: ''
 ]
 
 { #category : #accessing }

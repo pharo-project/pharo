@@ -7,7 +7,7 @@ Class {
 { #category : #testing }
 ReAbstractRuleTestCase class >> isAbstract [ 
 
-	^self == ReAbstractRuleTestCase 
+	^self == ReAbstractRuleTestCase
 ]
 
 { #category : #utilities }
@@ -16,7 +16,7 @@ ReAbstractRuleTestCase >> critiguesFor: ruleClass onMethod: method [
 	critiques := OrderedCollection new.
 	ruleClass new 
 		check: method forCritiquesDo:[:critique | critiques add: critique].
-	^critiques 
+	^critiques
 ]
 
 { #category : #utilities }
@@ -25,7 +25,7 @@ ReAbstractRuleTestCase >> myCritiques [
 	critiques := OrderedCollection new.
 	self subjectUnderTest  new 
 		check: (self class >> #sampleMethod ) forCritiquesDo:[:critique | critiques add: critique].
-	^critiques 
+	^critiques
 ]
 
 { #category : #utilities }
@@ -34,7 +34,7 @@ ReAbstractRuleTestCase >> myCritiquesOnClass: aClass [
 	critiques := OrderedCollection new.
 	self subjectUnderTest new 
 		check: aClass forCritiquesDo:[:critique | critiques add: critique].
-	^critiques 
+	^critiques
 ]
 
 { #category : #utilities }
@@ -43,7 +43,7 @@ ReAbstractRuleTestCase >> myCritiquesOnMethod: method [
 	critiques := OrderedCollection new.
 	self subjectUnderTest  new 
 		check: method forCritiquesDo:[:critique | critiques add: critique].
-	^critiques 
+	^critiques
 ]
 
 { #category : #utilities }
