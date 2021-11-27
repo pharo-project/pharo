@@ -13,7 +13,7 @@ Class {
 { #category : #analyzing }
 FLObjectCluster class >> clusterBucketIn: aClusterization [
 
-	^aClusterization baselevelBucket 
+	^aClusterization baselevelBucket
 ]
 
 { #category : #'instance creation' }
@@ -29,7 +29,6 @@ FLObjectCluster >> clusterMaterializeStepWith: aMaterialization [
 
 	super clusterMaterializeStepWith: aMaterialization.
 	theClass := aMaterialization decoder nextEncodedReference.
-
 ]
 
 { #category : #analyzing }
@@ -61,7 +60,6 @@ FLObjectCluster >> printNameOn: aStream [
 	aStream nextPut: $[.
 	theClass printOn: aStream.
 	aStream nextPut: $].
-	
 ]
 
 { #category : #printing }

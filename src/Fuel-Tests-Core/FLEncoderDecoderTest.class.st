@@ -33,7 +33,6 @@ FLEncoderDecoderTest >> setUp [
 		on: stream
 		migrations: #()
 		globalEnvironment: self class environment
-	
 ]
 
 { #category : #tests }

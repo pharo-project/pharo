@@ -30,7 +30,7 @@ FLSortedCollectionSerializationTest >> classVariableForTesting [
 { #category : #accessing }
 FLSortedCollectionSerializationTest >> classVariableForTesting: anObject [
 	
-	ClassVariableForTesting := anObject 
+	ClassVariableForTesting := anObject
 ]
 
 { #category : #running }
@@ -85,8 +85,6 @@ FLSortedCollectionSerializationTest >> testSortedCollectionWithClassVariableChan
 	ClassVariableForTesting := true.
 	"the class variable ClassVariableForTesting should be true"
 	self assert: (literalHolder literalAt: index) value
-	
-
 ]
 
 { #category : #tests }

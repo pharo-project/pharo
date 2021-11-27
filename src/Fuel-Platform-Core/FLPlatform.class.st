@@ -129,7 +129,7 @@ FLPlatform >> addHacks [
 
 { #category : #'accessing - tests' }
 FLPlatform >> classFactoryForTestCaseClass [
-	^ ClassFactoryForTestCase
+	^ Smalltalk at: #FLClassFactoryForTestCase
 ]
 
 { #category : #'accessing - files' }

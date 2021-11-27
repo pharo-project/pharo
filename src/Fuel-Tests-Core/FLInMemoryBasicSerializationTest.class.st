@@ -14,14 +14,12 @@ Class {
 FLInMemoryBasicSerializationTest >> materialization [
 
 	self error: 'Disabled, instead use #materialized.'
-
 ]
 
 { #category : #running }
 FLInMemoryBasicSerializationTest >> materialized [
 
 	^ FLMaterializer materializeFromByteArray: byteArray.
-
 ]
 
 { #category : #running }

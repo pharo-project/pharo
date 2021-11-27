@@ -46,5 +46,4 @@ FLGlobalCompiledBlockCluster >> serializeInstance: aCompiledBlock with: anEncode
 	anEncoder
 		encodeString: method selector;
 		encodeUint8: literalIndex
-
 ]
