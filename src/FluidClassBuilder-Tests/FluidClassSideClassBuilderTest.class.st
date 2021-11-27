@@ -23,16 +23,12 @@ FluidClassSideClassBuilderTest >> testBuilderClassName [
 	
 	"Yes a class side builder expects the instance name."
 	self assert: builder nameToBuild equals: #'Point33'
-	
-
 ]
 
 { #category : #tests }
 FluidClassSideClassBuilderTest >> testBuilderSuperclass [
 	
 	self assert: builder superclassToBuild equals: Object
-	
-
 ]
 
 { #category : #tests }

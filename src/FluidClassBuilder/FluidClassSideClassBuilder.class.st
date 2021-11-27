@@ -27,5 +27,5 @@ FluidClassSideClassBuilder >> slots: anArray [
 FluidClassSideClassBuilder >> traits: aCollection [
 	"pay attention that on class side we want to write traits: and not classTraits:"
 	
-	classTraitsToBuild := aCollection asTraitComposition 
+	classTraitsToBuild := aCollection asTraitComposition
 ]

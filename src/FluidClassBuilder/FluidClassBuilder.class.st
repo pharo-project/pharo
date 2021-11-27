@@ -54,8 +54,6 @@ FluidClassBuilder >> fillInstanceSideFromClass: aClass [
 		
 	self sharedVariables: (aClass classVariables collect: [ :e | e key ]) .
 	self sharedPools: (aClass sharedPools collect: [:each | each name ]) asArray.
-	
-
 ]
 
 { #category : #building }
@@ -68,10 +66,6 @@ FluidClassBuilder >> fillShiftClassBuilder [
 	shiftClassBuilder layoutClass: layout.
 
 	^ shiftClassBuilder
-	
-	
-
-
 ]
 
 { #category : #initialization }
@@ -90,7 +84,7 @@ FluidClassBuilder >> layout: aClass [
 
 { #category : #accessing }
 FluidClassBuilder >> layoutToBuild [
-	^ layout 
+	^ layout
 ]
 
 { #category : #API }

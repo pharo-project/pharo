@@ -29,7 +29,7 @@ FluidTraitBuilderTest >> tearDown [
 	self class environment 
 		at: #TTestTrait 
 		ifPresent: [ :cl | cl removeFromSystem  ].
-	super tearDown. 
+	super tearDown.
 ]
 
 { #category : #'tests - classBuilder generation' }
@@ -43,7 +43,6 @@ FluidTraitBuilderTest >> testBuildSimplePoint2 [
 	
 	self assert: trait name equals: #TPoint2.
 	self assert: trait slots size equals: 2
-
 ]
 
 { #category : #'class side' }
@@ -71,9 +70,6 @@ FluidTraitBuilderTest >> testCreatingEmptyTraitHasDefaultElements [
 	self assert: newTrait class traitComposition equals: {} asTraitComposition.
 	self assert: newTrait classVarNames equals: #().
 	self assert: newTrait category equals: 'Mock'.
-	
-
-	
 ]
 
 { #category : #'tests - class creation' }
@@ -97,9 +93,6 @@ FluidTraitBuilderTest >> testCreatingFullTraitHasAllElements [
 	self assert: newTrait class traitComposition equals: {TViewModelMock classSide} asTraitComposition.
 	self assert: newTrait classVarNames equals: #().
 	self assert: newTrait category equals: 'Mock-lala'.
-	
-
-	
 ]
 
 { #category : #'tests - class creation' }
@@ -121,7 +114,7 @@ FluidTraitBuilderTest >> testExistingTraitWithClassSlotsArePreservedIfChangingIn
 
 	newTrait := instBuilder install.
 
-	self assert: newTrait class slotNames equals: #(AAA)	
+	self assert: newTrait class slotNames equals: #(AAA)
 ]
 
 { #category : #'tests - class creation' }
@@ -144,7 +137,7 @@ FluidTraitBuilderTest >> testExistingTraitWithSlotsArePreservedIfChangingClassSi
 	newTrait := classBuilder install.
 
 	self assert: newTrait class slotNames equals: #(AAA)	.
-	self assert: newTrait slotNames equals: #(aaa)		
+	self assert: newTrait slotNames equals: #(aaa)
 ]
 
 { #category : #'tests - classBuilder generation' }
@@ -204,7 +197,6 @@ FluidTraitBuilderTest >> testInstallSimplePoint2 [
 	self assert: trait slots size equals: 2 ] ensure: [  
 			self class environment removeKey: #TPoint2 ifAbsent: [self fail]. 
 			self assert: (self class environment at: #TPoint2 ifAbsent: [ true ])]
-
 ]
 
 { #category : #tests }
@@ -217,8 +209,6 @@ FluidTraitBuilderTest >> testTraitNoSlotsNoUse [
 	
 	self assert: trait name equals: #TPoint3.
 	self assert: trait package packageName equals: '_UnpackagedPackage'
-	
-
 ]
 
 { #category : #tests }
