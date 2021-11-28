@@ -140,7 +140,7 @@ ClyQueryViewMorphDragAndDropTest >> testShouldExpandShouldNotExpandIfItemChanged
 ]
 
 { #category : #'tests-expand' }
-ClyQueryViewMorphDragAndDropTest >> testShouldNotExpandAllowToExpandInstantlyLastItem [
+ClyQueryViewMorphDragAndDropTest >> testShouldNotAllowToExpandInstantlyLastItem [
 	| view item initialTime |
 	view := ClyQueryViewMorph new.
 	item := ClyDataSourceItem new.
@@ -153,7 +153,7 @@ ClyQueryViewMorphDragAndDropTest >> testShouldNotExpandAllowToExpandInstantlyLas
 ]
 
 { #category : #'tests-focus' }
-ClyQueryViewMorphDragAndDropTest >> testUserIsNotFocusingOnDifferentItems [
+ClyQueryViewMorphDragAndDropTest >> testUserIstFocusingOnDifferentItems [
 	 
 	| view item1 item2 |
 	view := ClyQueryViewMorph new.
