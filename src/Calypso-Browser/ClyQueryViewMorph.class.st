@@ -121,6 +121,17 @@ Class {
 	#category : #'Calypso-Browser-Table'
 }
 
+{ #category : #accessing }
+ClyQueryViewMorph class >> dragAndDropDelay [
+	"Modified by settings CodeBrowsing/Calypso: ClyFullBrowserMorph >> #settingsDragAndDropDelayOn:"
+	^ DragAndDropDelay 
+]
+
+{ #category : #accessing }
+ClyQueryViewMorph class >> dragAndDropDelay: aNumber [
+	DragAndDropDelay := aNumber
+]
+
 { #category : #'instance creation' }
 ClyQueryViewMorph class >> for: aBrowser [
 	^self new 

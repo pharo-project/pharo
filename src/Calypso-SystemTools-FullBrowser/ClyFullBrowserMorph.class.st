@@ -139,7 +139,7 @@ ClyFullBrowserMorph class >> settingsDragAndDropDelayOn: aBuilder [
 		description: 'Delay to extend the list of item in the target of a drag and drop. 
 For example drag and drop on a package which contains tag will be extended after dragAndDropDelay miliseconds.
 Expects an integer giving the number of miliseconds';
-		target: ClyDataSourceItem.
+		target: ClyQueryViewMorph.
 		
 ]
 

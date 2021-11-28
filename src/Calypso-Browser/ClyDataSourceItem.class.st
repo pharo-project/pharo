@@ -49,22 +49,8 @@ Class {
 		'childrenDataSource',
 		'browserItem'
 	],
-	#classInstVars : [
-		'DragAndDropDelay'
-	],
 	#category : #'Calypso-Browser-DataSource'
 }
-
-{ #category : #initialization }
-ClyDataSourceItem class >> dragAndDropDelay [
-	"Modified by settings CodeBrowsing/Calypso: ClyFullBrowserMorph >> #settingsDragAndDropDelayOn:"
-	^ DragAndDropDelay
-]
-
-{ #category : #initialization }
-ClyDataSourceItem class >> dragAndDropDelay: aNumber [
-	DragAndDropDelay := aNumber
-]
 
 { #category : #'instance creation' }
 ClyDataSourceItem class >> of: aDataSource value: anEnvironmentItem [
