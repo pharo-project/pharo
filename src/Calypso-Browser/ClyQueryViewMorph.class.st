@@ -451,11 +451,15 @@ ClyQueryViewMorph >> hasRealQuery [
 
 { #category : #'drag and drop support' }
 ClyQueryViewMorph >> hasUserBeenFocusingOnItem: aSelectedItem [
+
+	| delay res | 
 	targetDropItem ifNil: [ ^ false ].
 	hoverOverDropItemStartTime ifNil: [ ^ false].
 	aSelectedItem browserItem = targetDropItem browserItem ifFalse: [ ^ false ].
-	 ^ (hoverOverDropItemStartTime copy addSeconds: aSelectedItem class dragAndDropDelay / 1000) < Time now
-	
+	delay := self class dragAndDropDelay.
+
+	 res := (Time microsecondsSince: hoverOverDropItemStartTime) negated.
+	^ res > delay
 ]
 
 { #category : #controlling }
@@ -898,7 +902,7 @@ ClyQueryViewMorph >> updateSelectionForNewFilter [
 { #category : #'drag and drop support' }
 ClyQueryViewMorph >> userNowFocusesOn: aSelectedItem [
 	targetDropItem := aSelectedItem.
-	hoverOverDropItemStartTime := Time now.
+	hoverOverDropItemStartTime := Time microsecondClockValue.
 	"new focus, we do not expand"
 	^ aSelectedItem isNil
 ]
