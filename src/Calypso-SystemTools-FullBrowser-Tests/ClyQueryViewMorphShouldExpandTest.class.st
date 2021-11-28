@@ -2,13 +2,13 @@
 A ClyQueryViewMorphTest is a test class for testing the behavior of ClyQueryViewMorph
 "
 Class {
-	#name : #ClyQueryViewMorphDragAndDropTest,
+	#name : #ClyQueryViewMorphShouldExpandTest,
 	#superclass : #TestCase,
 	#category : #'Calypso-SystemTools-FullBrowser-Tests'
 }
 
 { #category : #'tests-focus' }
-ClyQueryViewMorphDragAndDropTest >> testHasUserBeenFocusingNotLongEnough [
+ClyQueryViewMorphShouldExpandTest >> testHasUserBeenFocusingNotLongEnough [
 	| view item |
 	view := ClyQueryViewMorph new.
 	item := ClyDataSourceItem new.
@@ -17,7 +17,7 @@ ClyQueryViewMorphDragAndDropTest >> testHasUserBeenFocusingNotLongEnough [
 ]
 
 { #category : #'tests-focus' }
-ClyQueryViewMorphDragAndDropTest >> testHasUserBeenFocusingOnSameItem [
+ClyQueryViewMorphShouldExpandTest >> testHasUserBeenFocusingOnSameItem [
 	 
 	| view item |
 	view := ClyQueryViewMorph new.
@@ -28,20 +28,7 @@ ClyQueryViewMorphDragAndDropTest >> testHasUserBeenFocusingOnSameItem [
 ]
 
 { #category : #'tests-expand' }
-ClyQueryViewMorphDragAndDropTest >> testShouldExpandIfUserHasBeenFocusedLongEnough [
-	 
-	| view item |
-	view := ClyQueryViewMorph new.
-	item := ClyDataSourceItem new.
-	view userNowFocusesOn: item.
-	view hoverOverDropItemStartTime: Time microsecondClockValue * 2.
-	view isReadyToExpandForDrop: item.
-	self assert: view targetDropItem isNil
-	
-]
-
-{ #category : #'tests-expand' }
-ClyQueryViewMorphDragAndDropTest >> testShouldExpandShouldChangeTheTargetIfItemChanged [
+ClyQueryViewMorphShouldExpandTest >> testShouldChangeTheTargetIfItemChanged [
 	 
 	| view item1 initialObject item2 |
 	view := ClyQueryViewMorph new.
@@ -54,7 +41,7 @@ ClyQueryViewMorphDragAndDropTest >> testShouldExpandShouldChangeTheTargetIfItemC
 ]
 
 { #category : #'tests-expand' }
-ClyQueryViewMorphDragAndDropTest >> testShouldExpandShouldChangeTheTimeIfDragAndDropIsCompleted [
+ClyQueryViewMorphShouldExpandTest >> testShouldChangeTheTimeIfITHasBeenLongEnough [
 	 
 	| view item initialTime |
 	view := ClyQueryViewMorph new.
@@ -69,7 +56,7 @@ ClyQueryViewMorphDragAndDropTest >> testShouldExpandShouldChangeTheTimeIfDragAnd
 ]
 
 { #category : #'tests-expand' }
-ClyQueryViewMorphDragAndDropTest >> testShouldExpandShouldChangeTheTimeIfItemChanged [
+ClyQueryViewMorphShouldExpandTest >> testShouldChangeTheTimeIfItemChanged [
 	 
 	| view item1 item2 initialTime |
 	view := ClyQueryViewMorph new.
@@ -81,7 +68,7 @@ ClyQueryViewMorphDragAndDropTest >> testShouldExpandShouldChangeTheTimeIfItemCha
 ]
 
 { #category : #'tests-expand' }
-ClyQueryViewMorphDragAndDropTest >> testShouldExpandShouldExpandIfDragAndDropIsCompleted [
+ClyQueryViewMorphShouldExpandTest >> testShouldExpandIfItHasBeenLongEnough [
 	| view item initialTime |
 	view := ClyQueryViewMorph new.
 	item := ClyDataSourceItem new.
@@ -93,54 +80,20 @@ ClyQueryViewMorphDragAndDropTest >> testShouldExpandShouldExpandIfDragAndDropIsC
 ]
 
 { #category : #'tests-expand' }
-ClyQueryViewMorphDragAndDropTest >> testShouldExpandShouldNotChangeTheTargetIfItemDidNotChange [
+ClyQueryViewMorphShouldExpandTest >> testShouldExpandIfUserHasBeenFocusedLongEnough [
 	 
-	| view item1 initialObject |
+	| view item |
 	view := ClyQueryViewMorph new.
-	item1 := ClyDataSourceItem new.
-	view userNowFocusesOn: item1.
-	initialObject := view targetDropItem.
-	view isReadyToExpandForDrop: item1.
-	self assert: initialObject equals: view targetDropItem
+	item := ClyDataSourceItem new.
+	view userNowFocusesOn: item.
+	view hoverOverDropItemStartTime: Time microsecondClockValue * 2.
+	view isReadyToExpandForDrop: item.
+	self assert: view targetDropItem isNil
+	
 ]
 
 { #category : #'tests-expand' }
-ClyQueryViewMorphDragAndDropTest >> testShouldExpandShouldNotChangeTheTimeIfItemDidNotChange [
-	 
-	| view item1 initialTime |
-	view := ClyQueryViewMorph new.
-	item1 := ClyDataSourceItem new.
-	view userNowFocusesOn: item1.
-	initialTime := view hoverOverDropItemStartTime.
-	view isReadyToExpandForDrop: item1.
-	self assert: initialTime equals: view hoverOverDropItemStartTime
-]
-
-{ #category : #'tests-expand' }
-ClyQueryViewMorphDragAndDropTest >> testShouldExpandShouldNotExpandIfDragAndDropIsNotCompleted [
-	 
-	| view item1 initialTime |
-	view := ClyQueryViewMorph new.
-	item1 := ClyDataSourceItem new.
-	view userNowFocusesOn: item1.
-	initialTime := view hoverOverDropItemStartTime.
-	self deny: (view isReadyToExpandForDrop: item1)
-]
-
-{ #category : #'tests-expand' }
-ClyQueryViewMorphDragAndDropTest >> testShouldExpandShouldNotExpandIfItemChanged [
-	 
-	| view item1 initialObject item2 |
-	view := ClyQueryViewMorph new.
-	item1 := ClyDataSourceItem new.
-	item2 := ClyDataSourceItem new browserItem: 1 ; yourself.
-	view userNowFocusesOn: item1.
-	initialObject := view targetDropItem.
-	self deny: (view isReadyToExpandForDrop: item2)
-]
-
-{ #category : #'tests-expand' }
-ClyQueryViewMorphDragAndDropTest >> testShouldNotAllowToExpandInstantlyLastItem [
+ClyQueryViewMorphShouldExpandTest >> testShouldNotAllowToExpandInstantlyLastExpandedItem [
 	| view item initialTime |
 	view := ClyQueryViewMorph new.
 	item := ClyDataSourceItem new.
@@ -152,8 +105,55 @@ ClyQueryViewMorphDragAndDropTest >> testShouldNotAllowToExpandInstantlyLastItem 
 	self deny: (view isReadyToExpandForDrop: item).
 ]
 
+{ #category : #'tests-expand' }
+ClyQueryViewMorphShouldExpandTest >> testShouldNotChangeTheTargetIfItemDidNotChange [
+	 
+	| view item1 initialObject |
+	view := ClyQueryViewMorph new.
+	item1 := ClyDataSourceItem new.
+	view userNowFocusesOn: item1.
+	initialObject := view targetDropItem.
+	view isReadyToExpandForDrop: item1.
+	self assert: initialObject equals: view targetDropItem
+]
+
+{ #category : #'tests-expand' }
+ClyQueryViewMorphShouldExpandTest >> testShouldNotChangeTheTimeIfItemDidNotChange [
+	 
+	| view item1 initialTime |
+	view := ClyQueryViewMorph new.
+	item1 := ClyDataSourceItem new.
+	view userNowFocusesOn: item1.
+	initialTime := view hoverOverDropItemStartTime.
+	view isReadyToExpandForDrop: item1.
+	self assert: initialTime equals: view hoverOverDropItemStartTime
+]
+
+{ #category : #'tests-expand' }
+ClyQueryViewMorphShouldExpandTest >> testShouldNotExpandIfItHasNotBeenLongEnough [
+	 
+	| view item1 initialTime |
+	view := ClyQueryViewMorph new.
+	item1 := ClyDataSourceItem new.
+	view userNowFocusesOn: item1.
+	initialTime := view hoverOverDropItemStartTime.
+	self deny: (view isReadyToExpandForDrop: item1)
+]
+
+{ #category : #'tests-expand' }
+ClyQueryViewMorphShouldExpandTest >> testShouldNotExpandIfItemChanged [
+	 
+	| view item1 initialObject item2 |
+	view := ClyQueryViewMorph new.
+	item1 := ClyDataSourceItem new.
+	item2 := ClyDataSourceItem new browserItem: 1 ; yourself.
+	view userNowFocusesOn: item1.
+	initialObject := view targetDropItem.
+	self deny: (view isReadyToExpandForDrop: item2)
+]
+
 { #category : #'tests-focus' }
-ClyQueryViewMorphDragAndDropTest >> testUserIstFocusingOnDifferentItems [
+ClyQueryViewMorphShouldExpandTest >> testUserIstFocusingOnDifferentItems [
 	 
 	| view item1 item2 |
 	view := ClyQueryViewMorph new.
