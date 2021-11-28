@@ -902,7 +902,7 @@ ClyQueryViewMorph >> userNowFocusesOn: aSelectedItem [
 	targetDropItem := aSelectedItem.
 	hoverOverDropItemStartTime := Time microsecondClockValue.
 	"new focus, we do not expand"
-	^ aSelectedItem isNil
+	^ targetDropItem isNil
 ]
 
 { #category : #'drag and drop support' }
