@@ -23,7 +23,7 @@ ClyQueryViewMorphShouldExpandTest >> testHasUserBeenFocusingOnSameItem [
 	view := ClyQueryViewMorph new.
 	item := ClyDataSourceItem new.
 	view userNowFocusesOn: item.
-	view hoverOverDropItemStartTime: Time microsecondClockValue  * 2.
+	view hoverOverDropItemStartTime: Time microsecondClockValue / 2.
 	self assert: (view hasUserBeenFocusingOnItem: item).
 ]
 
@@ -75,7 +75,7 @@ ClyQueryViewMorphShouldExpandTest >> testShouldExpandIfItHasBeenLongEnough [
 	view userNowFocusesOn: item.
 	
 	initialTime := view hoverOverDropItemStartTime.
-	view hoverOverDropItemStartTime: Time microsecondClockValue * 2.
+	view hoverOverDropItemStartTime: Time microsecondClockValue / 2.
 	self assert: (view isReadyToExpandForDrop: item).
 ]
 
@@ -86,7 +86,7 @@ ClyQueryViewMorphShouldExpandTest >> testShouldExpandIfUserHasBeenFocusedLongEno
 	view := ClyQueryViewMorph new.
 	item := ClyDataSourceItem new.
 	view userNowFocusesOn: item.
-	view hoverOverDropItemStartTime: Time microsecondClockValue * 2.
+	view hoverOverDropItemStartTime: Time microsecondClockValue / 2.
 	view isReadyToExpandForDrop: item.
 	self assert: view targetDropItem isNil
 	
@@ -98,7 +98,7 @@ ClyQueryViewMorphShouldExpandTest >> testShouldNotAllowToExpandInstantlyLastExpa
 	view := ClyQueryViewMorph new.
 	item := ClyDataSourceItem new.
 	view userNowFocusesOn: item.
-	view hoverOverDropItemStartTime: Time microsecondClockValue * 2.
+	view hoverOverDropItemStartTime: Time microsecondClockValue / 2.
 	initialTime := view hoverOverDropItemStartTime.
 	"This checks that we indeed finalized an expand"
 	self assert: (view isReadyToExpandForDrop: item).

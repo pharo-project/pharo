@@ -451,15 +451,13 @@ ClyQueryViewMorph >> hasRealQuery [
 
 { #category : #'drag and drop support' }
 ClyQueryViewMorph >> hasUserBeenFocusingOnItem: aSelectedItem [
-
-	| delay res | 
+	| res |
 	targetDropItem ifNil: [ ^ false ].
 	hoverOverDropItemStartTime ifNil: [ ^ false].
 	aSelectedItem browserItem = targetDropItem browserItem ifFalse: [ ^ false ].
-	delay := self class dragAndDropDelay.
 
-	 res := (Time microsecondsSince: hoverOverDropItemStartTime) negated.
-	^ res > delay
+	res := (Time microsecondsSince: hoverOverDropItemStartTime).
+	^ res > self class dragAndDropDelay
 ]
 
 { #category : #controlling }
