@@ -118,6 +118,9 @@ Class {
 		'hoverOverDropItemStartTime',
 		'targetDropItem'
 	],
+	#classVars : [
+		'DragAndDropDelay'
+	],
 	#category : #'Calypso-Browser-Table'
 }
 
@@ -542,6 +545,26 @@ ClyQueryViewMorph >> isFilterChanged [
 	^selection rootDataSource ~~ self dataSource
 ]
 
+{ #category : #'drag and drop support' }
+ClyQueryViewMorph >> isReadyToExpandForDrop: aSelectedItem [
+	"/!\ Although the selector sounds like a tester, it is modifying the state upon returning true/
+	
+	Current limitation:
+	- You have to move to send another dragAndDrop event so the time can be checked again"
+	| newFocus |
+
+	newFocus := (self hasUserBeenFocusingOnItem: aSelectedItem) 
+		ifTrue:[ nil ]
+		ifFalse: [ aSelectedItem ].
+	
+	"selected focus did not changed, no need to update it nor the time"
+	(newFocus isNotNil and: [ targetDropItem isNotNil and:
+		[newFocus browserItem = targetDropItem browserItem]]) ifTrue: [ ^ false ].
+
+	^ self userNowFocusesOn: newFocus
+	
+]
+
 { #category : #accessing }
 ClyQueryViewMorph >> itemAt: rowIndex [
 	^self dataSource elementAt: rowIndex
@@ -709,23 +732,6 @@ ClyQueryViewMorph >> setUpDataSource: aDataSource [
 	self showDesiredSelection.
 	self refreshAsyncState.
 	self ensureSelectedItemIfNeeded
-]
-
-{ #category : #'drag and drop support' }
-ClyQueryViewMorph >> shouldExpand: aSelectedItem [
-	"Current limitation:
-	- You have to move to send another dragAndDrop event so the time can be checked again"
-	| newFocus |
-
-	newFocus := (self hasUserBeenFocusingOnItem: aSelectedItem) 
-		ifTrue:[ nil ]
-		ifFalse: [ aSelectedItem ].
-	
-	(newFocus isNotNil and: [ targetDropItem isNotNil and:
-		[newFocus browserItem = targetDropItem browserItem]]) ifTrue: [ ^ false ].
-
-	^ self userNowFocusesOn: newFocus
-	
 ]
 
 { #category : #controlling }
@@ -907,7 +913,7 @@ ClyQueryViewMorph >> wantsDropPassenger: aPassenger at: dropTargetItem [
 	"if we can drag and drop, we always return true.
 	However, the rest is guarded to emable expansion"
 	dropTargetItem hasChildren ifFalse: [ ^ true ].
-	(self shouldExpand: dropTargetItem) ifFalse:[ ^ true ].
+	(self isReadyToExpandForDrop: dropTargetItem) ifFalse:[ ^ true ].
 
 	dropTargetItem expand.
 	^ true
