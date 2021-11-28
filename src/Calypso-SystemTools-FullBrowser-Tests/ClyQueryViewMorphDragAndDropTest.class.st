@@ -4,7 +4,7 @@ A ClyQueryViewMorphTest is a test class for testing the behavior of ClyQueryView
 Class {
 	#name : #ClyQueryViewMorphDragAndDropTest,
 	#superclass : #TestCase,
-	#category : #'Calypso-NavigationModel-Tests'
+	#category : #'Calypso-SystemTools-FullBrowser-Tests'
 }
 
 { #category : #'tests-focus' }
