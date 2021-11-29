@@ -65,10 +65,6 @@ RBParseTreeSearcherTest >> testSearchListComplex [
 		matches: '`@receiver assert: `@arg equals: true'
 		do: [ :aNode :answer | dict := searcher context ].
 
-	" 
-		****** Assert ******"
-
-	" Ex1: "
 	searcher executeTree: (self parseExpression: 'self 
 					assert: each isReadOnlyObject equals: true.').
 
@@ -80,9 +76,22 @@ RBParseTreeSearcherTest >> testSearchListComplex [
 	self
 		assert:
 		(dict at: (RBPatternVariableNode named: '`@arg')) formattedCode
-		equals: 'each isReadOnlyObject'.
+		equals: 'each isReadOnlyObject'
+]
 
-	" Ex2: "
+{ #category : #'tests - to de refined' }
+RBParseTreeSearcherTest >> testSearchListComplexMultiArgs [
+
+	"		
+		- Here we looking for multiple lists in one match pattern at the same time. 
+		- Lists can be any receiver or args
+	"
+
+	| dict |
+	searcher
+		matches: '`@receiver assert: `@arg equals: true'
+		do: [ :aNode :answer | dict := searcher context ].
+
 	searcher executeTree: (self parseExpression:
 			 'self assert: reader storedSettings first realValue equals: true.').
 
@@ -94,20 +103,29 @@ RBParseTreeSearcherTest >> testSearchListComplex [
 	self
 		assert:
 		(dict at: (RBPatternVariableNode named: '`@arg')) formattedCode
-		equals: 'reader storedSettings first realValue'.
+		equals: 'reader storedSettings first realValue'
+]
 
-	" ****** Deny ******"
+{ #category : #'tests - to de refined' }
+RBParseTreeSearcherTest >> testSearchListComplexNotMatching [
 
-	"so in below example, there is no match with the suggested pattern.
-	 Which is why, dict is still filled with the Patterns of the previous example "
+	"		
+		- Here we looking for multiple lists in one match pattern at the same time. 
+		- Lists can be any receiver or args
+	"
+
+	| dict |
+	searcher
+		matches: '`@receiver assert: `@arg equals: true'
+		do: [ :aNode :answer | dict := searcher context ].
+
+	"so in below example, there is no match with the suggested pattern. Which is why, dict is nil "
 
 	searcher executeTree:
 		(self parseExpression: 'self assert: token isLiteralToken.').
 
-	self
-		deny:
-		(dict at: (RBPatternVariableNode named: '`@arg')) formattedCode
-		equals: 'token isLiteralToken.'
+	self assert: dict isNil
+	"self deny: dict isNotNil"
 ]
 
 { #category : #'tests - to de refined' }
@@ -122,18 +140,28 @@ RBParseTreeSearcherTest >> testSearchListReceiver [
 	searcher
 		matches: '`@rcv put'
 		do: [ :aNode :answer | dict := searcher context ].
-
-	" ****** Assert ******"
-
-	"Ex 1: "
+ 
 	searcher executeTree: (self parseExpression: 'self put').
 
 	self
 		assert:
 		(dict at: (RBPatternVariableNode named: '`@rcv')) formattedCode
-		equals: 'self'.
+		equals: 'self'
+]
 
-	"Ex 2: "
+{ #category : #'tests - to de refined' }
+RBParseTreeSearcherTest >> testSearchListReceiverMultiRcv [
+
+	"		
+		- A receiver list can be: a simple receiver like self, or a complex receiver like (self newRequestTo: aString) 
+		- So here we are looking for any receiver followed by put.
+	"
+
+	| dict |
+	searcher
+		matches: '`@rcv put'
+		do: [ :aNode :answer | dict := searcher context ].
+ 
 	searcher executeTree:
 		(self parseExpression: '(self newRequestTo: aString) put').
 
@@ -142,24 +170,33 @@ RBParseTreeSearcherTest >> testSearchListReceiver [
 		(dict at: (RBPatternVariableNode named: '`@rcv')) formattedCode
 		equals: '(self newRequestTo: aString)'.
 
-	"Ex 3: "
+	"Ex 2: "
 	searcher executeTree: (self parseExpression: 'self httpClient put').
 
 	self
 		assert:
 		(dict at: (RBPatternVariableNode named: '`@rcv')) formattedCode
-		equals: 'self httpClient'.
+		equals: 'self httpClient'
+]
 
-	" ****** Deny ******"
+{ #category : #'tests - to de refined' }
+RBParseTreeSearcherTest >> testSearchListReceiverNotMatching [
 
-	" The below example is not matching bcz the message is different than put. 
-		Which is why the dict is not filled with patterns of this this example "
+	"		
+		- A receiver list can be: a simple receiver like self, or a complex receiver like (self newRequestTo: aString) 
+		- So here we are looking for any receiver followed by put.
+	"
+
+	| dict |
+	searcher
+		matches: '`@rcv put'
+		do: [ :aNode :answer | dict := searcher context ].
+ 
+	" The below example is not matching bcz the message is different than put. Which is why the dict is still empty "
+
 	searcher executeTree: (self parseExpression: '1 at').
-
-	self
-		deny:
-		(dict at: (RBPatternVariableNode named: '`@rcv')) formattedCode
-		equals: '1'
+	self assert: dict isNil
+	"deny: dict isNotNil."
 ]
 
 { #category : #'tests - to de refined' }
@@ -169,14 +206,12 @@ RBParseTreeSearcherTest >> testSearchListTempVars [
 		- here we are looking for a method that containns a list of temporary vars followed by myVar1 and then a receiver followed by message messageTofind
 	"
 
-	| dict myMessages |
+	| dict |
 	searcher
 		matches: '`sel |`@temps `temp| `rcv messageTofind'
 		do: [ :aNode :answer | dict := searcher context ].
-
-	" ****** Assert ******"
-
-	"Ex 1: The first example is correct, matching with our pattern even if we have multiple variables"
+ 
+	"Ex 1: The below example is correct, matching with our pattern even if we have multiple variables"
 
 	searcher executeTree: (self parseExpression: 'example
 								|aTempVar aTempVar2 aTempVar3 myTempVar|
@@ -201,23 +236,96 @@ RBParseTreeSearcherTest >> testSearchListTempVars [
 	self
 		assert:
 		(dict at: (RBPatternVariableNode named: '`rcv')) formattedCode
-		equals: 'self'.
-	
-	" ****** Deny ******"
+		equals: 'self'
+]
 
-	"The second example is incorrect, NOT matching with our pattern bcz even we have one variable defined, but it is not followed by myMandatoryVar"
+{ #category : #'tests - to de refined' }
+RBParseTreeSearcherTest >> testSearchListTempVarsNotMatching [
+
+	"		
+		- here we are looking for a method that containns a list of temporary vars followed by myVar1 and then a receiver followed by message messageTofind
+	"
+
+	| dict |
+	searcher
+		matches: '`sel |`@temps `temp| `rcv messageTofind'
+		do: [ :aNode :answer | dict := searcher context ].
+ 
+	"The second example is incorrect, NOT matching with our pattern bcz even we have one variable defined, but it is not followed by temp var which name cannot change."
 
 	searcher executeTree: (self parseExpression: 'example2
 							|aTempVar|
 							self messageTofind. ').
 
-	self
-		deny: (dict at: (RBPatternVariableNode named: '`sel')) formattedCode
-		equals: 'example2'
+	self assert: dict isNil "
+	deny: dict isNotNil."
 ]
 
 { #category : #'tests - to de refined' }
-RBParseTreeSearcherTest >> testSearchLiteral [
+RBParseTreeSearcherTest >> testSearchLiteralArray [
+
+	"		
+		- so here we are looking for any literal with message size
+	"
+
+	| dict |
+	searcher
+		matches: '`#lit size'
+		do: [ :aNode :answer | dict := searcher context ]
+		
+	" Litteral can be an array.
+		!!! Not sure why the example is not working, while it is working on the matching window of the rewrite tool !!!" "searcher executeTree: (self parseExpression: '#(1 2 3) size').
+
+	self
+		assert:
+		(dict at: (RBPatternVariableNode named: '`#lit')) formattedCode
+		equals: '#(1 2 3)'." 
+]
+
+{ #category : #'tests - to de refined' }
+RBParseTreeSearcherTest >> testSearchLiteralCollectNotWorking [
+
+	"		
+		- so here we are looking for any literal with message size
+	"
+
+	| dict |
+	searcher
+		matches: '`#lit size'
+		do: [ :aNode :answer | dict := searcher context ].
+ 
+	" Ordered Collection is not a literal."
+	searcher executeTree:
+		(self parseExpression: 'OrderedCollection new size').
+
+	self
+		assert: dict isNil .
+		"deny: dict isNotNil ."
+]
+
+{ #category : #'tests - to de refined' }
+RBParseTreeSearcherTest >> testSearchLiteralNumber [
+
+	"		
+		- so here we are looking for any literal with message size
+	"
+
+	| dict |
+	searcher
+		matches: '`#lit size'
+		do: [ :aNode :answer | dict := searcher context ].
+ 
+	" Litteral can be a number "
+	searcher executeTree: (self parseExpression: '3 size').
+
+	self
+		assert:
+		(dict at: (RBPatternVariableNode named: '`#lit')) formattedCode
+		equals: '3'.
+]
+
+{ #category : #'tests - to de refined' }
+RBParseTreeSearcherTest >> testSearchLiteralString [
 
 	"		
 		- so here we are looking for any literal with message size
@@ -228,45 +336,13 @@ RBParseTreeSearcherTest >> testSearchLiteral [
 		matches: '`#lit size'
 		do: [ :aNode :answer | dict := searcher context ].
 
-	" ****** Assert ******"
-	"- OrderedCollection is not litteral, which is why 3 matches could be found and not 4"
-
-	"Ex1: Litteral can be a number "
-	searcher executeTree: (self parseExpression: '3 size').
-
-	self
-		assert:
-		(dict at: (RBPatternVariableNode named: '`#lit')) formattedCode
-		equals: '3'.
-
-
-	"Ex1: Litteral can be a string "
+	" Litteral can be a string "
 	searcher executeTree: (self parseExpression: ' ''foo'' size').
 
 	self
 		assert:
 		(dict at: (RBPatternVariableNode named: '`#lit')) formattedCode
 		equals: '''foo'''.
-
-	"Ex2: Litteral can be an array.
-		!!! Not sure why the example is not working, while it is working on the matching window of the rewrite tool !!!"
-	"searcher executeTree: (self parseExpression: '#(1 2 3) size').
-
-	self
-		assert:
-		(dict at: (RBPatternVariableNode named: '`#lit')) formattedCode
-		equals: '#(1 2 3)'."
-
-	" ****** Deny ******"
-
-	" Ordered Collection is not a literal."
-	searcher executeTree:
-		(self parseExpression: 'OrderedCollection new size').
-
-	self
-		deny:
-		(dict at: (RBPatternVariableNode named: '`#lit')) formattedCode
-		equals: 'OrderedCollection new'
 ]
 
 { #category : #'tests - to de refined' }
@@ -277,8 +353,7 @@ RBParseTreeSearcherTest >> testSearchRecurseInto [
 	"
 
 	searcher matches: '``@vars + 1' do: [ :aNode :answer | answer + 1 ].
-
-	" ****** Assert ******"
+ 
 	"	
 		- So here: we have 3 message nodes 
 		- The one we are looking recursevily into is the first message node: myNum + 1 which is matching with the original pattern.
@@ -312,6 +387,29 @@ RBParseTreeSearcherTest >> testSearchRecurseInto [
 ]
 
 { #category : #'tests - to de refined' }
+RBParseTreeSearcherTest >> testSearchRecurseIntoNotMatching [
+
+	"		
+		- Here we are testing the recurse into, which looks inside @vars for pattern that matches @vars + 1
+	"
+
+	searcher matches: '``@vars + 1' do: [ :aNode :answer | answer + 1 ].
+ 
+	"Should be equal 3
+		Match 1: (myNum + 1) + 1 
+		Match 2: (myNum + 1)
+		Match 3: (myNum + 1)
+	"
+
+	self
+		deny: (searcher
+				 executeTree:
+				 (self parseExpression: '(myNum + 1) + 1 + 5 + (myNum + 1)')
+				 initialAnswer: 0)
+		equals: 1
+]
+
+{ #category : #'tests - to de refined' }
 RBParseTreeSearcherTest >> testSearchSelectors [
 
 	"		
@@ -322,10 +420,7 @@ RBParseTreeSearcherTest >> testSearchSelectors [
 	searcher
 		matches: '`@rcv at: `@arg `sel: `@arg1'
 		do: [ :aNode :answer | dict := searcher context ].
-
-	" ****** Assert ******"
-
-	searcher executeTree:
+ 	searcher executeTree:
 		(self parseExpression: 'cache at: each ifAbsentPut: [ each ].').
 
 	self
@@ -343,6 +438,21 @@ RBParseTreeSearcherTest >> testSearchSelectors [
 		(dict at: (RBPatternVariableNode named: '`@arg1')) formattedCode
 		equals: '[ each ]'.
 
+	
+]
+
+{ #category : #'tests - to de refined' }
+RBParseTreeSearcherTest >> testSearchSelectorsMultiArgs [
+
+	"		
+		- So here we are looking for an expression that starts with a receiver followed by at: message , then a list of arguments, then another selector that could be any selector ... followed by a second list of args
+	"
+
+	| dict |
+	searcher
+		matches: '`@rcv at: `@arg `sel: `@arg1'
+		do: [ :aNode :answer | dict := searcher context ].
+ 
 	searcher executeTree:
 		(self parseExpression: 'collection at: offset + count put: object.').
 
@@ -360,16 +470,25 @@ RBParseTreeSearcherTest >> testSearchSelectors [
 		assert:
 		(dict at: (RBPatternVariableNode named: '`@arg1')) formattedCode
 		equals: 'object'.
+]
 
-	" ****** Deny ******"
+{ #category : #'tests - to de refined' }
+RBParseTreeSearcherTest >> testSearchSelectorsNotMatching [
 
+	"		
+		- So here we are looking for an expression that starts with a receiver followed by at: message , then a list of arguments, then another selector that could be any selector ... followed by a second list of args
+	"
+
+	| dict |
+	searcher
+		matches: '`@rcv at: `@arg `sel: `@arg1'
+		do: [ :aNode :answer | dict := searcher context ].
+ 
 	searcher executeTree:
 		(self parseExpression: 'self assert: preferences exists.').
 
-	self
-		deny:
-		(dict at: (RBPatternVariableNode named: '`@rcv')) formattedCode
-		equals: 'self'
+	self assert: dict isNil. 
+	"deny: dict isNotNil"
 ]
 
 { #category : #'tests - to de refined' }
@@ -381,9 +500,7 @@ RBParseTreeSearcherTest >> testSearchStatements [
 
 	searcher matches: '`.Statements.' do: [ :aNode :answer | 
 		answer + 1.].
-
-	" ****** Assert ******"
-
+ 
 	self
 		assert: (searcher
 				 executeTree:
