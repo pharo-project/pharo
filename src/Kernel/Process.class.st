@@ -302,7 +302,6 @@ Process >> effectiveProcess: aProcess [
 Process >> endProcess [
 	"When I reach this method, I'm terminated. Suspending or terminating me is harmless."
 
-	<isTerminated>
 	thisContext terminateTo: nil.   "set thisContext sender to nil"
 	self suspend.
   
@@ -373,13 +372,14 @@ Process >> isTerminated [
 	"Answer if the receiver is terminated, i.e. if the receiver is not active and 
 	one of the following conditions is met:
 	(1) the receiver is a defunct process (suspendedContext = nil or pc = nil)
-	(2) the receiver is suspended within a method with isTerminated pragma"
+	(2) the receiver is suspended in the endProcess method (We cannot use pragmas... pragmas require the compiler, it generates an evil dependency.
+	It also is not available in minimal images)"
 
 	self isActiveProcess ifTrue: [ ^ false ].
 	
 	^suspendedContext isNil or: [
 		suspendedContext isDead or: [
-			(suspendedContext method hasPragmaNamed: #isTerminated)]]
+			(suspendedContext method == (self class >> #endProcess))]]
 ]
 
 { #category : #testing }
