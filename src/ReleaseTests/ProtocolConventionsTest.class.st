@@ -108,5 +108,5 @@ ProtocolConventionsTest >> testProperTestProtocolIsUsed [
 { #category : #tests }
 ProtocolConventionsTest >> testProperUtilitiesProtocolIsUsed [
 
-	self checkIdiomForRuleClass: ReProperMethodProtocolNameForUtilitiesRule notMoreViolationsThan: 8
+	self checkIdiomForRuleClass: ReProperMethodProtocolNameForUtilitiesRule notMoreViolationsThan: 5
 ]

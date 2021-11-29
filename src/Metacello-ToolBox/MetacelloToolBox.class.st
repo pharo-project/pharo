@@ -29,7 +29,7 @@ MetacelloToolBox class >> appendDescription: aString to: versionSpec [
 			versionSpec description: strm contents ]
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MetacelloToolBox class >> baseNameOf: configurationClassName [
   "Return the baseName for the given configuration class name."
 
@@ -42,7 +42,7 @@ MetacelloToolBox class >> baseNameOf: configurationClassName [
     ifFalse: [ configurationClassName ]
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MetacelloToolBox class >> baseNameOfConfiguration: aConfigurationClass [
 	"Return the baseName for the given configuration class."
 
@@ -50,7 +50,7 @@ MetacelloToolBox class >> baseNameOfConfiguration: aConfigurationClass [
 	^self baseNameOf: aConfigurationClass name asString
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MetacelloToolBox class >> baselineNameFrom: baseName [
   "Return the fully-qualified baseline class name."
 
@@ -65,7 +65,7 @@ MetacelloToolBox class >> baselineNamed: baseName [
     yourself
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MetacelloToolBox class >> checkForCriticalValidationIssues: configurationBasename [
 	"Validate the named configuration and filter out all non-critical issues."
 	<apiDocumentation>
@@ -125,7 +125,7 @@ MetacelloToolBox class >> compiledMethodForVersion: aMetacelloVersion [
 	^pragma method
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MetacelloToolBox class >> configurationClasses [
     "Return a set of the Metacello configuration classes that have been loaded into the image."
 
@@ -133,7 +133,7 @@ MetacelloToolBox class >> configurationClasses [
     ^ MetacelloProjectRegistration configurationClasses
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MetacelloToolBox class >> configurationNameFrom: baseName [
     "Return the fully-qualified configuration class name."
 
@@ -736,7 +736,7 @@ MetacelloToolBox class >> modifyVersion: sourceVersionString section: sectionAtt
 	^ toolbox
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MetacelloToolBox class >> platformAttributes [
 	"Answer the list of platform attributes for the current platform"
 	<apiDocumentation>
