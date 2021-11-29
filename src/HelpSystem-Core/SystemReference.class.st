@@ -27,18 +27,14 @@ SystemReference class >> all [
 		addMethods: true;
 		subclassesAsSeparateTopic: false;
 		build;
-		topicToBuild 
-	 
-		 
+		topicToBuild
 ]
 
 { #category : #'help topic creation' }
 SystemReference class >> asHelpTopic [ 
 	"HelpBrowser openOn: SystemReference"
 	
-	^self hierarchyFor: ProtoObject 
-	 
-		 
+	^self hierarchyFor: ProtoObject
 ]
 
 { #category : #'help topic creation' }
@@ -51,8 +47,6 @@ SystemReference class >> classAPIHelpBuilderClass [
 { #category : #'help topic creation' }
 SystemReference class >> classAPIHelpBuilderClass: aClass [
 	ClassAPIHelpBuilderClass := aClass
-	 
-		 
 ]
 
 { #category : #'help topic creation' }
@@ -77,9 +71,7 @@ SystemReference class >> hierarchyFor: aClass [
 					build;
 					topicToBuild.
 	root addSubtopic: topic.
-	^root				
-	 
-		 
+	^root
 ]
 
 { #category : #'help topic creation' }
@@ -95,5 +87,5 @@ SystemReference class >> hierarchyWithMethodsFor: aClass [
 					build;
 					topicToBuild.
 	root addSubtopic: topic.
-	^root				
+	^root
 ]
