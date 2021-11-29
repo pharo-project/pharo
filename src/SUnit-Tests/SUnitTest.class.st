@@ -148,6 +148,18 @@ SUnitTest >> longRunningTest [
 	20 milliSeconds wait
 ]
 
+{ #category : #helpers }
+SUnitTest >> newTestCase: myTestSelector [ 
+	| testCase |
+	testCase := self class selector: myTestSelector.	
+	"During the #run the #tearDown logic resets to nil all inst vars of #testCase instance.
+	Here is a hook to collect any required state inside the receiver so that it can be accessed directly from the receiver despite on the reset #testCase.
+	#forkedProcesses variable is used to keep all processes forked during the testCase execution"
+	forkedProcesses := OrderedCollection new.
+	testCase forkedProcesses: forkedProcesses.
+	^testCase
+]
+
 { #category : #private }
 SUnitTest >> noop [
 ]
@@ -196,8 +208,8 @@ SUnitTest >> testChildProcessShouldNotBeStoredStronglyByTestEnvironment [
 SUnitTest >> testDefects [
 	| result suite error failure |
 	suite := self classForTestSuite new.
-	suite addTest: (error := self class selector: #error).
-	suite addTest: (failure := self class selector: #fail).
+	suite addTest: (error := self newTestCase: #error).
+	suite addTest: (failure := self newTestCase: #fail).
 	result := suite run.
 	self assert: result defects asArray equals: (Array with: error with: failure).
 	self
@@ -224,7 +236,7 @@ SUnitTest >> testError [
 
 	| case result |
 
-	case := self class selector: #error.
+	case := self newTestCase: #error.
 	result := case run.
 	self
 		assertForTestResult: result
@@ -233,7 +245,7 @@ SUnitTest >> testError [
 		failed: 0
 		errors: 1.
 
-	case := self class selector: #errorShouldntRaise.
+	case := self newTestCase: #errorShouldntRaise.
 	result := case run.
 	self 
 		assertForTestResult: result
@@ -250,7 +262,7 @@ SUnitTest >> testErrorShouldResetWatchDog [
 	
 	DefaultExecutionEnvironment beActive.
 	TestExecutionEnvironment new beActiveDuring: [ 
-		case := self class selector: #fail.
+		case := self newTestCase: #fail.
 		result := case run.
 		1 seconds wait]. 
 
@@ -284,7 +296,7 @@ SUnitTest >> testExecutionEnvironmentShouldBeInstalled [
 SUnitTest >> testExpectedFailure [
 
 	| case result |
-	case := self class selector: #expectedFailureFails.
+	case := self newTestCase: #expectedFailureFails.
 	self deny: case shouldPass.
 	result := case run.
 	self
@@ -306,7 +318,7 @@ SUnitTest >> testExpectedFailureDetection [
 SUnitTest >> testExpectedFailurePass [
 
 	| case result |
-	case := self class selector: #expectedFailurePasses.
+	case := self newTestCase: #expectedFailurePasses.
 	self deny: case shouldPass.
 	result := case run.
 	self
@@ -323,7 +335,7 @@ SUnitTest >> testFail [
 
 	| case result |
 
-	case := self class selector: #fail.
+	case := self newTestCase: #fail.
 	result := case run.
 
 	self
@@ -339,9 +351,7 @@ SUnitTest >> testFailedChildProcessTest [
 
 	| case result |
 	DefaultExecutionEnvironment beActive.
-	case := self class selector: #failedChildProcessTest.	
-	forkedProcesses := OrderedCollection new.
-	case forkedProcesses: forkedProcesses.
+	case := self newTestCase: #failedChildProcessTest.	
 	result := case run.
 
 	self
@@ -359,12 +369,10 @@ SUnitTest >> testFailedChildProcessTestShouldNotEffectFollowingAnotherTest [
 	| result case1 case2 |
 	DefaultExecutionEnvironment beActive.
 	TestExecutionEnvironment new beActiveDuring: [ 
-		case1 := self class selector: #failedChildProcessTest.	
-		forkedProcesses := OrderedCollection new.
-		case1 forkedProcesses: forkedProcesses.
+		case1 := self newTestCase: #failedChildProcessTest.	
 		result := case1 run.
 		
-		case2 := self class selector: #noop.	
+		case2 := self newTestCase: #noop.	
 		result := case2 run].
 
 	self
@@ -382,12 +390,10 @@ SUnitTest >> testFailedTestWithFailedChildProcessTestShouldNotEffectFollowingAno
 	| result case1 case2 |
 	DefaultExecutionEnvironment beActive.
 	TestExecutionEnvironment new beActiveDuring: [ 
-		case1 := self class selector: #failedTestWithFailedChildProcessTest.	
-		forkedProcesses := OrderedCollection new.
-		case1 forkedProcesses: forkedProcesses.
+		case1 := self newTestCase: #failedTestWithFailedChildProcessTest.	
 		result := case1 run.
 		
-		case2 := self class selector: #noop.	
+		case2 := self newTestCase: #noop.	
 		result := case2 run].
 
 	self
@@ -404,9 +410,9 @@ SUnitTest >> testFileOutResult [
 	| suite result fileout |
 	suite := self classForTestSuite new.
 	suite
-		addTest: (self class selector: #noop);
-		addTest: (self class selector: #fail);
-		addTest: (self class selector: #error).
+		addTest: (self newTestCase: #noop);
+		addTest: (self newTestCase: #fail);
+		addTest: (self newTestCase: #error).
 	result := suite run.
 	fileout := String streamContents: [ :aStream | result fileOutOn: aStream ].
 	self
@@ -426,9 +432,9 @@ SUnitTest >> testGreenTestThenLongRunningTest [
 
 	| case result |
 	DefaultExecutionEnvironment beActive.
-	case := self class selector: #noop.
+	case := self newTestCase: #noop.
 	result := case run.
-	case := self class selector: #longRunningTest.
+	case := self newTestCase: #longRunningTest.
 	result := case run.
 
 	self
@@ -444,10 +450,8 @@ SUnitTest >> testHangedChildProcessTestWhenItIsAllowedToLeaveProcessesAfterTest 
 
 	| case result hangedProcess |
 	
-	case := self class selector: #hangedChildProcessTest.	
+	case := self newTestCase: #hangedChildProcessTest.	
 	case executionProcessMonitor allowTestToLeaveProcesses.
-	forkedProcesses := OrderedCollection new.
-	case forkedProcesses: forkedProcesses.
 	result := case run.
 
 	self
@@ -466,9 +470,7 @@ SUnitTest >> testHangedChildProcessTestWhenLeftProcessIsConsideredAsFailure [
 
 	| case result |
 
-	case := self class selector: #hangedChildProcessTest.	
-	forkedProcesses := OrderedCollection new.
-	case forkedProcesses: forkedProcesses.
+	case := self newTestCase: #hangedChildProcessTest.	
 	case executionProcessMonitor failTestLeavingProcesses.
 	result := case run.
 
@@ -485,10 +487,7 @@ SUnitTest >> testHangedTestDueToFailedChildProcess [
 
 	| case result |
 	DefaultExecutionEnvironment beActive.
-	case := self class selector: #hangedTestDueToFailedChildProcess.	
-	forkedProcesses := OrderedCollection new.
-	case forkedProcesses: forkedProcesses.
-
+	case := self newTestCase: #hangedTestDueToFailedChildProcess.	
 	result := case run.
 
 	self
@@ -516,7 +515,7 @@ SUnitTest >> testIsNotRerunOnDebug [
 
 	| case |
 
-	case := self class selector: #testRanOnlyOnce.
+	case := self newTestCase: #testRanOnlyOnce.
 	case run.
 	case debug
 ]
@@ -526,7 +525,7 @@ SUnitTest >> testLongRunningTest [
 
 	| case result |
 	DefaultExecutionEnvironment beActive.
-	case := self class selector: #longRunningTest.
+	case := self newTestCase: #longRunningTest.
 	result := case run.
 
 	self
@@ -542,9 +541,9 @@ SUnitTest >> testLongRunningTestThenGreenTest [
 
 	| case result |
 	DefaultExecutionEnvironment beActive.
-	case := self class selector: #longRunningTest.
+	case := self newTestCase: #longRunningTest.
 	result := case run.
-	case := self class selector: #noop.
+	case := self newTestCase: #noop.
 	result := case run.
 
 	self
@@ -558,7 +557,7 @@ SUnitTest >> testLongRunningTestThenGreenTest [
 { #category : #testing }
 SUnitTest >> testRaiseDeprecationWarnings [
 	| case result |
-	case := self class selector: #raiseDeprecationWarnings.
+	case := self newTestCase: #raiseDeprecationWarnings.
 	result := case run.
 	self assert: result defects asArray equals: (Array with: case).
 	self
@@ -574,7 +573,7 @@ SUnitTest >> testRan [
 
 	| case |
 
-	case := self class selector: #setRun.
+	case := self newTestCase: #setRun.
 	case resources do: [:each | each availableFor: case].
 	[case setUp.
 	case performTest] ensure: [
@@ -598,7 +597,7 @@ SUnitTest >> testResult [
 
 	| case result |
 
-	case := self class selector: #noop.
+	case := self newTestCase: #noop.
 	result := case run.
 
 	self
@@ -654,9 +653,9 @@ SUnitTest >> testSuite [
 	| suite result |
 	suite := self classForTestSuite new.
 	suite
-		addTest: (self class selector: #noop);
-		addTest: (self class selector: #fail);
-		addTest: (self class selector: #error).
+		addTest: (self newTestCase: #noop);
+		addTest: (self newTestCase: #fail);
+		addTest: (self newTestCase: #error).
 	result := suite run.
 	self
 		assertForTestResult: result
