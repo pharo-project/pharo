@@ -30,7 +30,7 @@ HiNode >> addIncomingLink: aHiLink [
 
 { #category : #accessing }
 HiNode >> addOutgoingLink: aHiLink [ 
-	outgoingLinks add: aHiLink 
+	outgoingLinks add: aHiLink
 ]
 
 { #category : #accessing }
