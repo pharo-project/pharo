@@ -127,18 +127,32 @@ Class {
 { #category : #accessing }
 ClyQueryViewMorph class >> dragAndDropDelay [
 	"Modified by settings CodeBrowsing/Calypso: ClyFullBrowserMorph >> #settingsDragAndDropDelayOn:"
-	^ DragAndDropDelay 
+	^ DragAndDropDelay asMilliSeconds
 ]
 
 { #category : #accessing }
 ClyQueryViewMorph class >> dragAndDropDelay: aNumber [
-	DragAndDropDelay := aNumber
+	DragAndDropDelay := Duration milliSeconds: aNumber
 ]
 
 { #category : #'instance creation' }
 ClyQueryViewMorph class >> for: aBrowser [
 	^self new 
 		browser: aBrowser
+]
+
+{ #category : #settings }
+ClyQueryViewMorph class >> settingsDragAndDropDelayOn: aBuilder [
+	<systemsettings>
+	(aBuilder setting: #dragAndDropDelay)
+		parent: #Calypso;
+		default: 1500;
+		label: 'DragAndDrop delay (ms)';
+		description: 'Delay to extend the list of item in the target of a drag and drop. 
+For example drag and drop on a package which contains tag will be extended after dragAndDropDelay miliseconds.
+Expects an integer giving the number of miliseconds';
+		target: self.
+		
 ]
 
 { #category : #controlling }
@@ -451,13 +465,12 @@ ClyQueryViewMorph >> hasRealQuery [
 
 { #category : #'drag and drop support' }
 ClyQueryViewMorph >> hasUserBeenFocusingOnItem: aSelectedItem [
-	| res |
+
 	targetDropItem ifNil: [ ^ false ].
 	hoverOverDropItemStartTime ifNil: [ ^ false].
 	aSelectedItem browserItem = targetDropItem browserItem ifFalse: [ ^ false ].
 
-	res := (Time microsecondsSince: hoverOverDropItemStartTime).
-	^ res > self class dragAndDropDelay
+	^ self class dragAndDropDelay * 1000 < (Time microsecondsSince: hoverOverDropItemStartTime) 
 ]
 
 { #category : #controlling }
@@ -559,10 +572,6 @@ ClyQueryViewMorph >> isReadyToExpandForDrop: aSelectedItem [
 		ifTrue:[ nil ]
 		ifFalse: [ aSelectedItem ].
 	
-	"selected focus did not changed, no need to update it nor the time"
-	(newFocus isNotNil and: [ targetDropItem isNotNil and:
-		[newFocus browserItem = targetDropItem browserItem]]) ifTrue: [ ^ false ].
-
 	^ self userNowFocusesOn: newFocus
 	
 ]
@@ -899,6 +908,10 @@ ClyQueryViewMorph >> updateSelectionForNewFilter [
 
 { #category : #'drag and drop support' }
 ClyQueryViewMorph >> userNowFocusesOn: aSelectedItem [
+	"if this is true, then we're not ready to expand, and we do not want to update the time."
+	(targetDropItem isNotNil and: [ aSelectedItem isNotNil
+		and: [ targetDropItem browserItem = aSelectedItem browserItem ]]) ifTrue: [ ^ false ].
+	
 	targetDropItem := aSelectedItem.
 	hoverOverDropItemStartTime := Time microsecondClockValue.
 	"new focus, we do not expand"

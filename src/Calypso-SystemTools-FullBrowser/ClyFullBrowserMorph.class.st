@@ -130,20 +130,6 @@ ClyFullBrowserMorph class >> registerToolsOn: registry [
 ]
 
 { #category : #settings }
-ClyFullBrowserMorph class >> settingsDragAndDropDelayOn: aBuilder [
-	<systemsettings>
-	(aBuilder setting: #dragAndDropDelay)
-		parent: #Calypso;
-		default: 1500;
-		label: 'DragAndDrop delay (ms)';
-		description: 'Delay to extend the list of item in the target of a drag and drop. 
-For example drag and drop on a package which contains tag will be extended after dragAndDropDelay miliseconds.
-Expects an integer giving the number of miliseconds';
-		target: ClyQueryViewMorph.
-		
-]
-
-{ #category : #settings }
 ClyFullBrowserMorph class >> settingsGroupOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #Calypso)
