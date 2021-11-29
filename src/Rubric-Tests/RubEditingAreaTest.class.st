@@ -56,10 +56,10 @@ RubEditingAreaTest >> setSelectionFrom: startIndex to: stopIndex text: aText [
 RubEditingAreaTest >> setUp [
 	super setUp.
 	area := RubEditingArea new.
-	area setTextWith: 'one two three four'.
+	area setTextWith: 'one two three four'
 ]
 
-{ #category : #'tests - accessing selection' }
+{ #category : #running }
 RubEditingAreaTest >> tearDown [
 
 	area delete.
