@@ -7,6 +7,15 @@ Class {
 	#category : #'Calypso-SystemTools-FullBrowser-Tests'
 }
 
+{ #category : #'test-init' }
+ClyQueryViewMorphShouldExpandTest >> testFirstDragEventShouldNotBeReadyToExpand [
+
+	| view item1 |
+	view := ClyQueryViewMorph new.
+	item1 := ClyDataSourceItem new.
+	self deny: (view isReadyToExpandForDrop: item1).
+]
+
 { #category : #'tests-focus' }
 ClyQueryViewMorphShouldExpandTest >> testHasUserBeenFocusingNotLongEnough [
 	| view item |
