@@ -127,12 +127,12 @@ Class {
 { #category : #accessing }
 ClyQueryViewMorph class >> dragAndDropDelay [
 	"Modified by settings CodeBrowsing/Calypso: ClyFullBrowserMorph >> #settingsDragAndDropDelayOn:"
-	^ DragAndDropDelay asMilliSeconds
+	^ DragAndDropDelay
 ]
 
 { #category : #accessing }
 ClyQueryViewMorph class >> dragAndDropDelay: aNumber [
-	DragAndDropDelay := Duration milliSeconds: aNumber
+	DragAndDropDelay := aNumber
 ]
 
 { #category : #'instance creation' }
@@ -470,7 +470,7 @@ ClyQueryViewMorph >> hasUserBeenFocusingOnItem: aSelectedItem [
 	hoverOverDropItemStartTime ifNil: [ ^ false].
 	aSelectedItem browserItem = targetDropItem browserItem ifFalse: [ ^ false ].
 
-	^ self class dragAndDropDelay * 1000 < (Time microsecondsSince: hoverOverDropItemStartTime) 
+	^ self class dragAndDropDelay * 1000 < (Time microsecondsSince: hoverOverDropItemStartTime)
 ]
 
 { #category : #controlling }
