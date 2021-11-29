@@ -52,6 +52,11 @@ SycChangeMessageSignatureCommand >> canAddArgs [
 	^ true
 ]
 
+{ #category : #testing }
+SycChangeMessageSignatureCommand >> canEditName [
+	^ true
+]
+
 { #category : #requesting }
 SycChangeMessageSignatureCommand >> canRemoveArgs [
 	^ true
@@ -103,7 +108,8 @@ SycChangeMessageSignatureCommand >> requestNewMessageIn: aToolContext [
 	dialog := SycMethodNameEditorPresenter openOn: methodName withInvalidArgs: invalidArgNames
 		canRenameArgs: self canRenameArgs
 		canRemoveArgs: self canRemoveArgs
-		canAddArgs: self canAddArgs.
+		canAddArgs: self canAddArgs
+		canEditName: self canEditName .
 	dialog cancelled ifTrue: [  CmdCommandAborted signal ].
 	
 	originalMessage selector = methodName selector & (originalMessage argumentNames = methodName arguments)

@@ -27,6 +27,11 @@ SycAddMessageArgumentCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isMethodSelected
 ]
 
+{ #category : #testing }
+SycAddMessageArgumentCommand >> canEditName [
+	^ false
+]
+
 { #category : #requesting }
 SycAddMessageArgumentCommand >> canRemoveArgs [ 
 	^ false
