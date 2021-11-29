@@ -168,6 +168,11 @@ BaselineOfIDE >> baseline: spec [
 			spec
 				repository: repository;
 				loads: #( 'Tests' ) ].
+		spec baseline: 'Keymapping' with: [ 
+			spec 
+				repository: repository;
+				loads: 'tests' ].
+		
 		spec baseline: 'GeneralTests' with: [ spec repository: repository ].
 		spec baseline: 'Zodiac' with: [ spec repository: repository ].
 		spec baseline: 'SortFunctions' with: [ spec repository: repository ].

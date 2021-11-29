@@ -60,9 +60,10 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Graphics-Shapes'.
 		spec package: 'Growl'.
 
-		spec package: 'Keymapping-Core'.
-		spec package: 'Keymapping-KeyCombinations'.
-		spec package: 'Keymapping-Pragmas'.
+		spec baseline: 'Keymapping' with: [ 
+			spec 
+				repository: repository;
+				loads: 'core' ].
 
 		spec package: 'Transcript-Core'.
 
