@@ -925,8 +925,8 @@ ClyQueryViewMorph >> wantsDropPassenger: aPassenger at: dropTargetItem [
 	context := self createSelectionContextOf: dropTargetItem asSelection.
 	(aPassenger canBeDroppedInContext: context) ifFalse:[ ^ false ].
 	
-	"if we can drag and drop, we always return true.
-	However, the rest is guarded to emable expansion"
+	"if we are able to drop, we always return true.
+	However, the rest is guarded to enable expansion"
 	dropTargetItem hasChildren ifFalse: [ ^ true ].
 	(self isReadyToExpandForDrop: dropTargetItem) ifFalse:[ ^ true ].
 
