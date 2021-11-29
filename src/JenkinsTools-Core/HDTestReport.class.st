@@ -118,8 +118,9 @@ HDTestReport >> initialize [
 	suiteTime := 0 asDuration.
 	suitePosition := suiteFailures := suiteErrors := 0.
 	progressFileName := 'progress.log'.
+	stageName := self class currentStageName.
 	nodeName := self calculateNodeName.
-	stageName := self class currentStageName
+	
 ]
 
 { #category : #initialization }
