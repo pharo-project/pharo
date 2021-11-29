@@ -69,6 +69,11 @@ HDTestReport >> calculateNodeName [
 
 	name := Smalltalk os family , bitString , '.'.
 
+	"The Stage name has kernel in the name when running the tests in the small image.
+	We need to keep record of that"
+	(self stageName includesSubstring: 'Kernel')
+		ifTrue: [name := name , '.Kernel' ].
+
 	" If the environment class is not available, because it needs FFI, I use the node name,
 	because for sure I am in the Bootstrap process."
 	environmentClass := Smalltalk at: #OSEnvironment ifAbsent: [ ^ name ].
