@@ -48,7 +48,6 @@ ShortIntegerArray >> at: index [
 	<primitive: 143>
 	index isInteger ifTrue: [self errorSubscriptBounds: index].
 	self errorNonIntegerIndex.
-
 ]
 
 { #category : #accessing }
@@ -75,7 +74,6 @@ ShortIntegerArray >> pvtAt: index [
 	<primitive: 143>
 	index isInteger ifTrue: [self errorSubscriptBounds: index].
 	self errorNonIntegerIndex.
-
 ]
 
 { #category : #private }
@@ -124,7 +122,6 @@ ShortIntegerArray >> swapBytePairsHacky [
 		width: 1.
 	#((0 1) (1 0) (0 1) (2 3)(3 2)(2 3))
 		do: [:array | [:a :b| blt sourceX: a; destX: b; copyBits ] valueWithArguments: array ].
-
 ]
 
 { #category : #private }
