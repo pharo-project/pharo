@@ -106,7 +106,6 @@ FreeTypeSystemSettings class >> ft2LibraryVersion [
 { #category : #settings }
 FreeTypeSystemSettings class >> loadFt2Library [
 	^ LoadFT2Library ifNil: [LoadFT2Library := false]
-
 ]
 
 { #category : #settings }
@@ -120,7 +119,6 @@ FreeTypeSystemSettings class >> loadFt2Library: aBoolean [
 		ifFalse: [
 			StandardFonts setSmallBitmapFonts.
 			FreeTypeFontProvider unload ]
-
 ]
 
 { #category : #settings }
@@ -132,5 +130,4 @@ FreeTypeSystemSettings class >> noFt2Library [
 FreeTypeSystemSettings class >> noFt2Library: aBoolean [ 
 
 	"ignore it for now"
-
 ]

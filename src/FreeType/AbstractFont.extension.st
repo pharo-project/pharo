@@ -50,7 +50,7 @@ AbstractFont >> isSubPixelPositioned [
 	Currently, only FreeTypeFonts are subPixelPositioned, and only when not
 	Hinted"
 	
-	^false 
+	^false
 ]
 
 { #category : #'*FreeType-addition' }
@@ -90,5 +90,4 @@ AbstractFont >> widthAndKernedWidthOfLeft: leftCharacter right: rightCharacterOr
 				at: 1 put: w; 
 				at: 2 put: w+k].
 	^ aTwoElementArray
-	
 ]

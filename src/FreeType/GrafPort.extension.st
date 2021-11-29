@@ -7,5 +7,4 @@ GrafPort >> installFreeTypeFont: aFreeTypeFont foregroundColor: foregroundColor 
 	lastFont := aFreeTypeFont.
 	lastFontForegroundColor := foregroundColor.
 	lastFontBackgroundColor := backgroundColor.
-
 ]

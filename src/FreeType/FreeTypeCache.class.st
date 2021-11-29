@@ -71,7 +71,7 @@ FreeTypeCache class >> startUp: isImageStarting [
 
 	isImageStarting ifFalse: [ ^ self ].
 	self current removeAll.
-	current := nil 
+	current := nil
 ]
 
 { #category : #'add-remove' }
@@ -111,7 +111,6 @@ FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag 
 		fifo addLast: entry.
 		maximumSize ifNotNil:[self shrinkTo: maximumSize].
 		^v ]
-	
 ]
 
 { #category : #'add-remove' }
@@ -142,7 +141,6 @@ FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag 
 		fifo addLast: entry.
 		maximumSize ifNotNil:[self shrinkTo: maximumSize].
 		^anObject]
-	
 ]
 
 { #category : #public }
@@ -177,13 +175,12 @@ FreeTypeCache >> initialize [
 	fontTable := self dictionaryClass new: 100.
 	used := 0.
 	fifo := self fifoClass new
-	
 ]
 
 { #category : #public }
 FreeTypeCache >> maximumSize [
 
-	^ maximumSize 
+	^ maximumSize
 ]
 
 { #category : #public }
@@ -201,7 +198,6 @@ FreeTypeCache >> removeAll [
 	fontTable := self dictionaryClass new: 100.
 	fifo := self fifoClass new.
 	used := 0
-	
 ]
 
 { #category : #'add-remove' }
@@ -217,9 +213,7 @@ FreeTypeCache >> removeAllForFont: aFreeTypeFont [
 		fifo remove: entry.
 		d := (fontTable at: entry font) at: entry charCode.
 		d removeKey: entry type.	
-		used := used - (self sizeOf: entry object) ]. 
-
-	
+		used := used - (self sizeOf: entry object) ].
 ]
 
 { #category : #'add-remove' }
@@ -234,9 +228,7 @@ FreeTypeCache >> removeAllForType: typeFlag [
 		fifo remove: entry.
 		d := (fontTable at: entry font) at: entry charCode.
 		d removeKey: entry type.	
-		used := used - (self sizeOf: entry object) ]. 
-
-	
+		used := used - (self sizeOf: entry object) ].
 ]
 
 { #category : #reporting }
@@ -261,5 +253,4 @@ FreeTypeCache >> sizeOf: anObject [
 	^(anObject isKindOf: Form)
 		ifTrue:[(anObject bitsSize * 4) + 32]
 		ifFalse:[4]
-	
 ]

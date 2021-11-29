@@ -187,7 +187,6 @@ FT2GlyphSlot >> height [
 { #category : #'accessing - convenience' }
 FT2GlyphSlot >> linearAdvance [
 	^"("(linearHorizontalAdvance @ linearVerticalAdvance) "* 2540) rounded"
-
 ]
 
 { #category : #'accessing - fields' }
@@ -233,7 +232,6 @@ FT2GlyphSlot >> outline: anOutline [
 FT2GlyphSlot >> roundedPixelLinearAdvance [
 	"Answer the scaled linearAdvance, rounded to whole pixels"
 	^linearHorizontalAdvance  rounded @ linearVerticalAdvance rounded
-
 ]
 
 { #category : #'accessing - fields' }

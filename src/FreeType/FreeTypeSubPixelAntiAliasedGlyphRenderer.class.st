@@ -14,7 +14,6 @@ Class {
 FreeTypeSubPixelAntiAliasedGlyphRenderer class >> initialize [
 
 	FreeTypeGlyphRenderer current: self new
-
 ]
 
 { #category : #rendering }
