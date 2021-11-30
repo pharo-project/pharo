@@ -228,7 +228,7 @@ Pragma >> key [
 Pragma >> message [
 	"Answer the message of the receiving pragma."
 	
-	^ Message selector: self selector arguments: self arguments. 
+	^ Message selector: self selector arguments: self arguments.
 ]
 
 { #category : #'accessing - method' }

@@ -16,7 +16,6 @@ ClassUsedInInstructionStreamTest >> aMethodSuspendedBeforeTheTerminateOfAnotherP
 	aProcess terminate.
 	
 	expectedValue := 42.
-
 ]
 
 { #category : #examples }

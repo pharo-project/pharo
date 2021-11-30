@@ -14,9 +14,6 @@ Class {
 DurationTest >> classToBeTested [
 
 	^ Duration
-
-
-
 ]
 
 { #category : #coverage }
@@ -26,13 +23,12 @@ DurationTest >> selectorsToBeIgnored [
 	private := #( #printOn: ).
 
 	^ super selectorsToBeIgnored, private
-
 ]
 
 { #category : #running }
 DurationTest >> setUp [
 	super setUp.
-	aDuration := Duration days: 1 hours: 2 minutes: 3 seconds: 4 nanoSeconds: 5 
+	aDuration := Duration days: 1 hours: 2 minutes: 3 seconds: 4 nanoSeconds: 5
 ]
 
 { #category : #tests }
@@ -274,14 +270,13 @@ DurationTest >> testIntegerDivision [
 { #category : #tests }
 DurationTest >> testIsZero [
 	self assert: Duration zero isZero.
-	self assert: (Duration seconds: 0) isZero	
+	self assert: (Duration seconds: 0) isZero
 ]
 
 { #category : #tests }
 DurationTest >> testLessThan [
 	self assert: aDuration  < (aDuration + 1 day ).
 	self deny: aDuration < aDuration.
-	
 ]
 
 { #category : #tests }
@@ -423,7 +418,6 @@ DurationTest >> testNegated [
 DurationTest >> testNegative [
 	self deny: aDuration negative.
 	self assert: aDuration negated negative
-
 ]
 
 { #category : #tests }
@@ -492,7 +486,6 @@ DurationTest >> testPositive [
 	self assert: (Duration nanoSeconds: 0) positive.
 	self assert: aDuration positive.
 	self deny: aDuration negated positive
-
 ]
 
 { #category : #tests }

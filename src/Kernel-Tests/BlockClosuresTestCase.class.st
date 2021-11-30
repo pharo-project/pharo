@@ -46,7 +46,6 @@ The Jensen device was something for clever minds. I remember an artice written b
 BlockClosuresTestCase >> constructCannotReturnBlockInDeadFrame [
 
 	^ [:arg | ^arg].
-
 ]
 
 { #category : #examples }
@@ -58,7 +57,6 @@ BlockClosuresTestCase >> constructFibonacciBlockInDeadFrame [
 		(val <= 2) ifTrue: [1]
 		     ifFalse: [(fib value: (val - 1)) + (fib value: (val - 2))]].
 	^fib
-
 ]
 
 { #category : #examples }
@@ -68,7 +66,6 @@ BlockClosuresTestCase >> constructFibonacciBlockWithBlockArgumentInDeadFrame [
 		(val <= 0) ifTrue: [self error: 'not a natural number'].
 		(val <= 2) ifTrue: [1]
 		    ifFalse: [(blk value: (val - 1) value: blk) + (blk value: (val - 2) value: blk)]].
-
 ]
 
 { #category : #examples }
@@ -80,7 +77,6 @@ BlockClosuresTestCase >> constructSharedClosureEnvironmentInDeadFrame [
 	array at: 1 put: [:arg | result := arg].
 	array at: 2 put: [result].
 	^array
-
 ]
 
 { #category : #examples }
@@ -131,7 +127,6 @@ continuation
     
 To collect all elements of a value with continuation stream,
 use the collector block. "
-
 ]
 
 { #category : #examples }
@@ -244,9 +239,6 @@ BlockClosuresTestCase >> example1: anInteger [
    factorial := [:x | x = 1 ifTrue: [1]
                             ifFalse: [(factorial value: x - 1)* x]].
   ^ factorial value: anInteger
-
-
-  
 ]
 
 { #category : #examples }
@@ -305,7 +297,6 @@ BlockClosuresTestCase >> gpsExample1: aCollection [
                     with: [ aCollection at: i])
       value: (Array with: [:val | s := val]
                     with: [ s])
-
 ]
 
 { #category : #'jensen device examples' }
@@ -342,8 +333,6 @@ BlockClosuresTestCase >> gpsExample2: aCollection [
                   with: [ i])
     value: (Array with: [:val | self error: 'can not assign to constant']
                   with: [ aCollection size])
-
-
 ]
 
 { #category : #examples }
@@ -391,7 +380,6 @@ block :=
          value: streams.
 
   ^result
-
 ]
 
 { #category : #tests }
@@ -402,7 +390,6 @@ BlockClosuresTestCase >> testCannotReturn [
 	self 
 		should: [blk value: 1]
 		raise: Exception
-
 ]
 
 { #category : #tests }

@@ -255,7 +255,6 @@ InstructionStreamTest >> testStepThroughInAMethodWithMNU [
 	
 	"Suspended process should stop in the exception"	
 	self assert: return method equals: (self classUnderTest lookupSelector: #doesNotUnderstand:).
-
 ]
 
 { #category : #'tests - example' }

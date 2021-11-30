@@ -22,7 +22,7 @@ BitsLayout >> bytesPerSlot [
 BitsLayout >> extend [
 	"Answer a default extension of me."
 
-	^ self species new 
+	^ self species new
 ]
 
 { #category : #extending }

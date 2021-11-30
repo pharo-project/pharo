@@ -10,7 +10,7 @@ Class {
 { #category : #coverage }
 WeakMessageSendTest >> classToBeTested [
 	
-	^ WeakMessageSend 
+	^ WeakMessageSend
 ]
 
 { #category : #tests }
@@ -46,7 +46,6 @@ WeakMessageSendTest >> testNoArguments [
 			receiver: true
 			selector: #yourself.
 	self assert: (m value).
-
 ]
 
 { #category : #tests }
@@ -59,7 +58,6 @@ WeakMessageSendTest >> testOneArgument [
 		argument: 1.
 	Smalltalk garbageCollectMost.
 	self assert: m value equals: { 1 }
-
 ]
 
 { #category : #tests }

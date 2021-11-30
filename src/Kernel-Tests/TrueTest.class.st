@@ -34,7 +34,7 @@ TrueTest >> testAsBit [
 { #category : #'tests - controlling' }
 TrueTest >> testIfFalse [
 	
-	self assert: ((true ifFalse: ['alternativeBlock']) isNil). 
+	self assert: ((true ifFalse: ['alternativeBlock']) isNil).
 ]
 
 { #category : #'tests - controlling' }
@@ -55,7 +55,7 @@ TrueTest >> testIfTrueIfFalse [
 { #category : #'tests - instance creation' }
 TrueTest >> testNew [
 
-	self should: [True new] raise: self defaultTestError 
+	self should: [True new] raise: self defaultTestError
 ]
 
 { #category : #'tests - logical operations' }

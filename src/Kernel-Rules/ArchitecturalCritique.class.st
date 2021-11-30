@@ -16,7 +16,6 @@ ArchitecturalCritique >> actions [
 			action: [ :crit :package |
 				self openDependencyAnalyzerOn: package ];
 			yourself)
-				
 ]
 
 { #category : #actions }

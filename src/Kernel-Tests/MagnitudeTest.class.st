@@ -70,7 +70,7 @@ MagnitudeTest >> testMinMax [
 	self assert: (100  min: 20 max: 12) equals: 20.
 	self assert: (42 min: 50 max: 40) equals: 42.
 	self assert: (42 min: 50 max: 45) equals: 45.
-	self assert: (42 min: 40 max: 30) equals: 40	
+	self assert: (42 min: 40 max: 30) equals: 40
 ]
 
 { #category : #tests }

@@ -297,7 +297,6 @@ Integer >> asByteArray [
 	self bytesCount to: 1 by: -1 do: [:digitIndex |
 		stream nextPut: (self byteAt: digitIndex)].
 	^ stream contents
-
 ]
 
 { #category : #'converting - arrays' }
@@ -349,8 +348,6 @@ Integer >> asInteger [
 	"Answer with the receiver itself."
 
 	^self
-
-
 ]
 
 { #category : #'truncation and round off' }
@@ -1130,8 +1127,7 @@ Integer >> numberOfDigits [
 	"Return how many digits are necessary to print this number in base 10.
 	This does not count any place for minus sign, radix prefix or whatever."
 
-	^ self numberOfDigitsInBase: 10 
-
+	^ self numberOfDigitsInBase: 10
 ]
 
 { #category : #printing }
@@ -1187,7 +1183,6 @@ Integer >> print: positiveNumberString on: aStream prefix: prefix length: minimu
 						ifFalse: [aStream nextPutAll: (String new: padLength withAll: Character space); nextPutAll: prefix]]
 		ifFalse: [aStream nextPutAll: prefix].
 	aStream nextPutAll: positiveNumberString
-	
 ]
 
 { #category : #'printing - numerative' }
@@ -1244,7 +1239,6 @@ Integer >> printOn: aStream base: base length: minimum padded: zeroFlag [
 		prefix: prefix 
 		length: minimum 
 		padded: zeroFlag
-
 ]
 
 { #category : #'printing - numerative' }
@@ -1358,7 +1352,6 @@ Integer >> printStringHex [
 { #category : #'printing - numerative' }
 Integer >> printStringLength: minimal [
 	^self printStringLength: minimal padded: false
-
 ]
 
 { #category : #'printing - numerative' }
@@ -1369,7 +1362,6 @@ Integer >> printStringLength: minimal padded: zeroFlag [
 { #category : #'printing - numerative' }
 Integer >> printStringPadded: minimal [
 	^self printStringLength: minimal padded: true
-
 ]
 
 { #category : #printing }
@@ -1494,7 +1486,6 @@ Integer >> storeOn: aStream base: base [
 		ifFalse: [self].
 	base = 10 ifFalse: [aStream nextPutAll: base printString; nextPut: $r].
 	aStream nextPutAll: (integer printStringBase: base).
-
 ]
 
 { #category : #'printing - numerative' }
@@ -1503,7 +1494,6 @@ Integer >> storeOn: aStream base: base length: minimum padded: zeroFlag [
 	prefix := self negative ifTrue: ['-'] ifFalse: [String new].
 	base = 10 ifFalse: [prefix := prefix, base printString, 'r'].
 	self print: (self abs printStringBase: base) on: aStream prefix: prefix length: minimum padded: zeroFlag
-
 ]
 
 { #category : #'printing - numerative' }

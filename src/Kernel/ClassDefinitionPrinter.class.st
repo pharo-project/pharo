@@ -79,7 +79,7 @@ ClassDefinitionPrinter class >> displayEmptySlots: aBoolean [
 
 { #category : #'instance creation' }
 ClassDefinitionPrinter class >> fluid [ 
-	^  FluidClassDefinitionPrinter basicNew initialize 
+	^  FluidClassDefinitionPrinter basicNew initialize
 ]
 
 { #category : #'instance creation' }
@@ -97,7 +97,6 @@ ClassDefinitionPrinter class >> for: aClass [
 	^ instance
 		for: aClass; 
 		yourself
-
 ]
 
 { #category : #'instance creation' }
@@ -111,12 +110,11 @@ ClassDefinitionPrinter class >> new [
 	^ self showFluidClassDefinition
 			ifTrue: [ self fluid ]
 			ifFalse: [ self oldPharo ]
-	
 ]
 
 { #category : #'instance creation' }
 ClassDefinitionPrinter class >> oldPharo [ 
-	^ OldPharoClassDefinitionPrinter basicNew initialize 
+	^ OldPharoClassDefinitionPrinter basicNew initialize
 ]
 
 { #category : #settings }
@@ -164,7 +162,6 @@ ClassDefinitionPrinter class >> showFluidClassDefinition [
 ClassDefinitionPrinter class >> showFluidClassDefinition: aBoolean [
  
 	ShowFluidClassDefinition := aBoolean
-	
 ]
 
 { #category : #configure }

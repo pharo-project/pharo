@@ -18,5 +18,5 @@ VariableNotDeclaredTest >> testDescription [
 	exception:= MyVariableNotDeclaredDummyClassForTest new. 
 	defaultDescription := exception defaultDescription .
 	variableNotDeclaredDescription := exception description .
-	self deny: defaultDescription equals: variableNotDeclaredDescription 
+	self deny: defaultDescription equals: variableNotDeclaredDescription
 ]

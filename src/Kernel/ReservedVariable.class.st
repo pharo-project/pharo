@@ -20,7 +20,7 @@ ReservedVariable class >> instance [
 
 { #category : #testing }
 ReservedVariable class >> isAbstract [ 
-	^self = ReservedVariable  
+	^self = ReservedVariable
 ]
 
 { #category : #compiler }

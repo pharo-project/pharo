@@ -42,14 +42,12 @@ TimeTest >> setUp [
 	DateAndTime localTimeZone: TimeZone default.
 	time := self timeClass fromSeconds: 14567.		"4:02:47 am"
 	aTime := Time readFrom: '12:34:56 pm' readStream
-
 ]
 
 { #category : #running }
 TimeTest >> tearDown [
 	DateAndTime localTimeZone: localTimeZoneToRestore.
-	super tearDown 
-
+	super tearDown
 ]
 
 { #category : #tests }
@@ -191,7 +189,6 @@ TimeTest >> testGeneralInquiries [
 	aDateAndTime := self timeClass dateAndTimeFromSeconds: (2285280000 + 14567).
 	self
 		assert: aDateAndTime equals: {date. time}.
-
 ]
 
 { #category : #tests }
@@ -304,9 +301,6 @@ TimeTest >> testReadFromWithError [
 		
 	#('invalid' '0:invalid' '1 invalid' '1 pm is the afternoon' '1250 Fake St, New York, USA 12345' '13000 AM' '25:69:1239' '1,3,6') do: [ :each | 
 	self should: [self timeClass readFrom: each readStream] raise: Error.]
-
-	
-
 ]
 
 { #category : #'tests - input' }

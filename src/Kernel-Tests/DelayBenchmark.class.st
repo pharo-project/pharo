@@ -106,9 +106,6 @@ DelayBenchmark >> generateDelayProcesses: numberConcurrent priority: priority ma
 					] whileTrue.
  				] newProcess priority: priority
 			]
-
-
-
 ]
 
 { #category : #support }
@@ -130,6 +127,5 @@ DelayBenchmark >> trialConcurrent: numberConcurrentDelays priority: priority max
 	(Delay forSeconds: 1) wait.	 "but give some time for clean exit"	
 	delayProcesses do: [  :process | process terminate ]. "and cleanup any deadlocks."
 	
-	Smalltalk garbageCollect. Smalltalk garbageCollect. Smalltalk garbageCollect. 
-
+	Smalltalk garbageCollect. Smalltalk garbageCollect. Smalltalk garbageCollect.
 ]

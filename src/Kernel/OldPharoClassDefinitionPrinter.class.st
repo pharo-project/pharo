@@ -113,7 +113,7 @@ OldPharoClassDefinitionPrinter >> compactTraitDefinitionTemplateInPackage: aStri
 { #category : #'public API' }
 OldPharoClassDefinitionPrinter >> expandedDefinitionString [
 	"We do not support expanded on old Pharo syntax so we shortcut the double dispatch call."
-	^ self definitionString 
+	^ self definitionString
 ]
 
 { #category : #'low-level elements' }
@@ -191,7 +191,6 @@ OldPharoClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aString [
 	 uses: {}
 	 package: '''.
 			s nextPutAll: aString; nextPut: $' ]
- 
 ]
 
 { #category : #'public API' }

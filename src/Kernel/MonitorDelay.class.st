@@ -30,5 +30,4 @@ MonitorDelay >> timingPrioritySignalExpired [
 
 	beingWaitedOn := false.
 	monitor signalLock: delaySemaphore inQueue: queue.
-
 ]

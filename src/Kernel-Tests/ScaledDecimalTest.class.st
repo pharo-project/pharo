@@ -10,7 +10,7 @@ Class {
 { #category : #coverage }
 ScaledDecimalTest >> classToBeTested [
 	
-	^ ScaledDecimal 
+	^ ScaledDecimal
 ]
 
 { #category : #tests }
@@ -194,7 +194,7 @@ ScaledDecimalTest >> testConvertFromNonDecimalFraction [
 		self assert: sd scale equals: defaultNumberOfDecimals.
 		sd2 := ScaledDecimal readFrom: sd printString.
 		self deny: sd equals: sd2
-		] 
+		]
 ]
 
 { #category : #tests }

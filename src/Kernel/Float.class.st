@@ -183,7 +183,6 @@ Float class >> initialize [
 	NegativeInfinity := 0.0 - Infinity.
 	NaN := Infinity - Infinity.
 	NegativeZero := 1.0 / Infinity negated.
-
 ]
 
 { #category : #constants }
@@ -261,14 +260,12 @@ Float class >> readFrom: aStream ifFail: aBlock [
 Float class >> threePi [
 
 	^ ThreePi
-
 ]
 
 { #category : #constants }
 Float class >> twoPi [
 
 	^ Twopi
-
 ]
 
 { #category : #constants }
@@ -629,7 +626,7 @@ Float >> asFloat [
 
 { #category : #converting }
 Float >> asFraction [
-	^ self asTrueFraction 
+	^ self asTrueFraction
 ]
 
 { #category : #printing }
@@ -789,7 +786,7 @@ exp) ] ].
 
 	"Low cost validation omitted after extensive testing"
 	"(result asFloat = self) ifFalse: [self error: 'asTrueFraction validation failed']."
-	^ result 
+	^ result
 ]
 
 { #category : #accessing }
@@ -816,7 +813,6 @@ Float >> basicAt: index [
 
 	<primitive: 38>
 	^super basicAt: index.
-	
 ]
 
 { #category : #accessing }
@@ -861,7 +857,6 @@ Float >> floorLog: radix [
 
 	(radix = 2 and: [self > 0.0]) ifTrue: [^self exponent].
 	^ (self log: radix) floor
-
 ]
 
 { #category : #comparing }
@@ -871,7 +866,6 @@ Float >> hash [
 	(self isFinite and: [self fractionPart = 0.0]) ifTrue: [^self truncated hash].
 	^ (((self basicAt: 1) bitAnd: 16r00FFFF00) +
 	   ((self basicAt: 2) bitAnd: 16r00FFFF00)) bitShift: -8
-
 ]
 
 { #category : #printing }
@@ -906,7 +900,6 @@ Float >> isInfinite [
 	"Return true if the receiver is positive or negative infinity."
 
 	^ self = Infinity or: [self = NegativeInfinity]
-
 ]
 
 { #category : #testing }

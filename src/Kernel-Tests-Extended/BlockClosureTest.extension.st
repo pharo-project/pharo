@@ -10,7 +10,7 @@ BlockClosureTest >> testBenchFor [
 	"These should pass even on a very slow machine or simulation"
 	minimumIterations := 10.
 	self assert: benchmarkResult iterations > minimumIterations.
-	self assert: benchmarkResult period < (duration / minimumIterations)  
+	self assert: benchmarkResult period < (duration / minimumIterations)
 ]
 
 { #category : #'*Kernel-Tests-Extended' }

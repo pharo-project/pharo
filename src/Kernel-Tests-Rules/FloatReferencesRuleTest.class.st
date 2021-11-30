@@ -17,7 +17,7 @@ FloatReferencesRuleTest >> setUp [
 FloatReferencesRuleTest >> tearDown [
 
 	testClass := nil.
-	super tearDown 
+	super tearDown
 ]
 
 { #category : #tests }
@@ -27,7 +27,6 @@ FloatReferencesRuleTest >> testBasicCheck [
 	testMethod := testClass >> (testClass compile: 'testMethod BoxedFloat64').
 	
 	self assert: (FloatReferencesRule new basicCheck: testMethod ast body statements first )
-	 
 ]
 
 { #category : #tests }
@@ -37,7 +36,6 @@ FloatReferencesRuleTest >> testBasicCheck1 [
 	testMethod := testClass >> (testClass compile: 'testMethod SmallFloat64').  
 	
 	self assert: (FloatReferencesRule new basicCheck: testMethod ast body statements first)
-	 
 ]
 
 { #category : #tests }
@@ -47,5 +45,4 @@ FloatReferencesRuleTest >> testBasicCheck2 [
 	testMethod := testClass >> (testClass compile: 'testMethod').  
 	
 	self deny: (FloatReferencesRule new basicCheck: testMethod ast)
-	 
 ]

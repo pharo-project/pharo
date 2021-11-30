@@ -49,7 +49,6 @@ Slot class >> checkValidName: aSymbol [
 
 	(aSymbol allSatisfy: [ :aCharacter | aCharacter isAlphaNumeric or: [ aCharacter = $_ ] ]) ifFalse: [ 
 		^ InvalidSlotName signalFor: aSymbol ]
-
 ]
 
 { #category : #testing }
@@ -172,8 +171,6 @@ Slot >> hasSameDefinitionAs: otherSlot [
 	(e.g. the index in IndexSlot).
 	This method then is overriden to not take that state into account"
 	^self = otherSlot
-	
-
 ]
 
 { #category : #initialization }
