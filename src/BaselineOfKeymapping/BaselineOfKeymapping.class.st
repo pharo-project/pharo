@@ -8,7 +8,7 @@ Class {
 BaselineOfKeymapping >> baseline: spec [
 	<baseline>
 	
-	spec for: #common with: [ 
+	spec for: #common do: [ 
 		spec 
 			package: 'Keymapping-Core';
 			package: 'Keymapping-KeyCombinations';
