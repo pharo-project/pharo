@@ -25,7 +25,7 @@ RubScrolledTextMorphTest >> tearDown [
 { #category : #tests }
 RubScrolledTextMorphTest >> testEmbeddedAnchorInTextAreDrawnAtRightPosition [
 	| circle longTextWithCircleAtEnd |
-	circle := CircleMorph new extent: 50 @ 50;color: Color blue.
+	circle := CircleMorphCounter new extent: 50 @ 50;color: Color blue.
 	longTextWithCircleAtEnd := ((String loremIpsum: 10000), 
 		(String value: 1)) asText 
 			addAttribute: (TextAnchor new anchoredMorph: circle).
@@ -34,11 +34,10 @@ RubScrolledTextMorphTest >> testEmbeddedAnchorInTextAreDrawnAtRightPosition [
 	self assert: circle position equals: 0@0.
 	morph updateTextWith:  longTextWithCircleAtEnd.
 	morph openInWorld.
+	WorldMorph doOneCycle.
 	
-	self assert: circle owner notNil.
-	self deny: circle position equals: 0@0
-	
-	
+	self assert: circle owner equals: morph textArea.
+	self assert: circle counter equals: 0
 ]
 
 { #category : #tests }
