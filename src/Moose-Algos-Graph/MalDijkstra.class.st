@@ -65,7 +65,7 @@ MalDijkstra >> end: aDijsktraNode [
 { #category : #configuration }
 MalDijkstra >> nodeClass [
 
-	^ MalDijkstraNode 
+	^ MalDijkstraNode
 ]
 
 { #category : #running }
@@ -113,5 +113,4 @@ MalDijkstra >> traverse: node [
 			edge to pathWeight: (edge to pathWeight min: (node pathWeight + edge weight)).
 			edge visited: true.
 			self traverse: edge to ]]
-
 ]

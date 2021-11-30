@@ -19,19 +19,18 @@ MalSccEdgeDecomposition >> bfsPathFrom: startNode to: endNode [
 
 { #category : #configuration }
 MalSccEdgeDecomposition >> edgeClass [
-	^ MalGraphEdge 
+	^ MalGraphEdge
 ]
 
 { #category : #initialization }
 MalSccEdgeDecomposition >> initialize [ 
 	super initialize.
 	bfsp := MalBreadthFirstSearchPath new.
-
 ]
 
 { #category : #configuration }
 MalSccEdgeDecomposition >> nodeClass [
-	^ MalBfsNode 
+	^ MalBfsNode
 ]
 
 { #category : #running }

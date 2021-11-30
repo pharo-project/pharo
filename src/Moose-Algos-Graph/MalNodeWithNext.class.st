@@ -34,5 +34,5 @@ MalNodeWithNext >> nextNodes: aNodeList [
 
 { #category : #accessing }
 MalNodeWithNext >> to: targetNode [
-	self nextNodes add: targetNode 
+	self nextNodes add: targetNode
 ]
