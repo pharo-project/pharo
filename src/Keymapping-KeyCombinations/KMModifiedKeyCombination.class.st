@@ -50,7 +50,7 @@ KMModifiedKeyCombination >> alt [
 { #category : #matching }
 KMModifiedKeyCombination >> beginsWith: aKMShortcut [ 
 
-	^ self = aKMShortcut 
+	^ self = aKMShortcut
 ]
 
 { #category : #accessing }
