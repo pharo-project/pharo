@@ -155,7 +155,7 @@ SUnitTest >> newTestCase: myTestSelector [
 	"During the #run the #tearDown logic resets to nil all inst vars of #testCase instance.
 	Here is a hook to collect any required state inside the receiver so that it can be accessed directly from the receiver despite on the reset #testCase.
 	#forkedProcesses variable is used to keep all processes forked during the testCase execution"
-	forkedProcesses := OrderedCollection new.
+	forkedProcesses ifNil: [ forkedProcesses := OrderedCollection new ].
 	testCase forkedProcesses: forkedProcesses.
 	^testCase
 ]
