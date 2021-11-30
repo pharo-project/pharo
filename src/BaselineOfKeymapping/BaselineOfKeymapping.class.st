@@ -24,10 +24,10 @@ BaselineOfKeymapping >> baseline: spec [
 				'Keymapping-KeyCombinations' 
 				'Keymapping-Pragmas');
 			group: 'ui' with: #(
-				'core' 
+				"'core'" 
 				'Keymapping-Settings'
 				'Keymapping-Tools-Spec');
 			group: 'tests' with: #(
-				'core' 
+				"'core'" 
 				'Keymapping-Tests') ]
 ]
