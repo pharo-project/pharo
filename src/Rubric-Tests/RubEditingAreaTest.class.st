@@ -84,6 +84,23 @@ RubEditingAreaTest >> testEmbeddedAnchorInTextAreDrawn [
 	self deny: circle position equals: 0@0
 ]
 
+{ #category : #tests }
+RubEditingAreaTest >> testEmbeddedAnchorInTextAreDrawnAtRightPosition [
+	| circle longTextWithCircleAtEnd |
+	circle := CircleMorph new extent: 50 @ 50;color: Color blue.
+	longTextWithCircleAtEnd := ((String loremIpsum: 10000), 
+		(String value: 1)) asText 
+			addAttribute: (TextAnchor new anchoredMorph: circle).
+
+	self assert: circle owner isNil.
+	self assert: circle position equals: 0@0.
+	area updateTextWith: longTextWithCircleAtEnd.
+	area openInWorld.
+	
+	self assert: circle owner notNil.
+	self deny: circle position equals: 0@0
+]
+
 { #category : #'tests - accessing selection' }
 RubEditingAreaTest >> testMarkBlockPointBlock [
 	self setSelectionFrom: 3 to: 6 text: area text.

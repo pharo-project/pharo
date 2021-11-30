@@ -1,8 +1,45 @@
 Class {
 	#name : #RubScrolledTextMorphTest,
 	#superclass : #TestCase,
+	#instVars : [
+		'morph'
+	],
 	#category : #'Rubric-Tests-Base'
 }
+
+{ #category : #initialization }
+RubScrolledTextMorphTest >> setUp [
+	super setUp.
+	morph := RubScrolledTextMorph new.
+	morph extent: 400@250.
+	morph setTextWith: 'one two three four'
+]
+
+{ #category : #running }
+RubScrolledTextMorphTest >> tearDown [
+
+	morph delete.
+	super tearDown
+]
+
+{ #category : #tests }
+RubScrolledTextMorphTest >> testEmbeddedAnchorInTextAreDrawnAtRightPosition [
+	| circle longTextWithCircleAtEnd |
+	circle := CircleMorph new extent: 50 @ 50;color: Color blue.
+	longTextWithCircleAtEnd := ((String loremIpsum: 10000), 
+		(String value: 1)) asText 
+			addAttribute: (TextAnchor new anchoredMorph: circle).
+
+	self assert: circle owner isNil.
+	self assert: circle position equals: 0@0.
+	morph updateTextWith:  longTextWithCircleAtEnd.
+	morph openInWorld.
+	
+	self assert: circle owner notNil.
+	self deny: circle position equals: 0@0
+	
+	
+]
 
 { #category : #tests }
 RubScrolledTextMorphTest >> testGhostText [
