@@ -19,8 +19,15 @@ BaselineOfKeymapping >> baseline: spec [
 		
 		spec 
 			group: 'default' with: #('core' 'ui' 'tests'); 
-			group: 'core' with: #('Keymapping-Core');
-			group: 'ui' with: #('core' 'Keymapping-KeyCombinations' 'Keymapping-Pragmas');
-			group: 'tests' with: #('core' 'Keymapping-Tests') ]
-
+			group: 'core' with: #(
+				'Keymapping-Core' 
+				'Keymapping-KeyCombinations' 
+				'Keymapping-Pragmas');
+			group: 'ui' with: #(
+				'core' 
+				'Keymapping-Settings'
+				'Keymapping-Tools-Spec');
+			group: 'tests' with: #(
+				'core' 
+				'Keymapping-Tests') ]
 ]
