@@ -22,7 +22,6 @@ PluggableMenuSpec class >> withModel: aModel [
 { #category : #construction }
 PluggableMenuSpec >> add: aString [
 	^ self add: aString action: nil
-	
 ]
 
 { #category : #construction }
