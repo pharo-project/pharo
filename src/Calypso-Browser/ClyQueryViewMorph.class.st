@@ -126,7 +126,7 @@ Class {
 
 { #category : #accessing }
 ClyQueryViewMorph class >> dragAndDropDelay [
-	"Modified by settings CodeBrowsing/Calypso: ClyFullBrowserMorph >> #settingsDragAndDropDelayOn:"
+	"Modified by settings CodeBrowsing/Calypso: self classSide >> #settingsDragAndDropDelayOn:"
 	^ DragAndDropDelay
 ]
 
