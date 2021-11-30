@@ -39,7 +39,6 @@ ToggleWithSymbolMenuItemShortcut class >> createSymbolTable [
 		#Shift. 	Text string: (Character value: 16r21E7) asString attributes: attributes.
 		"Lucida does not have the enter key"
 		"#Enter. 	Text string: (Character value: 16r23ce) asString attributes: attributes" }.
-
 ]
 
 { #category : #accessing }

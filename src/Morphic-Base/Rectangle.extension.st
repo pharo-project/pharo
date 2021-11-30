@@ -10,7 +10,6 @@ Rectangle >> asLayoutFrame [
 		topFraction: self top;
 		bottomFraction: self bottom;
 		yourself
-		
 ]
 
 { #category : #'*Morphic-Base' }
@@ -120,6 +119,4 @@ Rectangle >> newRectFrom: newRectBlock inWorld: aWorld [
 		newMouseFocus: nil;
 		showTemporaryCursor: nil.
 	^ rect
-	
-
 ]

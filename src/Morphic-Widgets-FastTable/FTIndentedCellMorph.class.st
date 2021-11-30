@@ -38,7 +38,6 @@ FTIndentedCellMorph >> initialize [
 	super initialize.
 	
 	self cellInset: 2.
-	
 ]
 
 { #category : #layout }
@@ -51,5 +50,4 @@ FTIndentedCellMorph >> layoutBounds [
 	^indentation = 0 
 		ifTrue: [ inner ]
 		ifFalse: [ ((indentation@0)+inner origin) corner: inner corner ]
-	
 ]

@@ -14,8 +14,6 @@ Class {
 MorphChanged >> deliverTo: aHandler [
 
 	^ aHandler update: selector
-
-	
 ]
 
 { #category : #accessing }

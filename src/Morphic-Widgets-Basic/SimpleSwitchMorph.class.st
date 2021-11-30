@@ -34,7 +34,6 @@ SimpleSwitchMorph >> initialize [
 	onColor := Color r: 1.0 g: 0.6 b: 0.6.
 	offColor := Color lightGray.
 	color := offColor
-
 ]
 
 { #category : #switching }
@@ -54,7 +53,6 @@ SimpleSwitchMorph >> mouseMove: evt [
 	(self containsPoint: evt cursorPoint)
 		ifTrue: [self setSwitchState: (oldColor = offColor)]
 		ifFalse: [self setSwitchState: (oldColor = onColor)].
-
 ]
 
 { #category : #'event handling' }
@@ -66,21 +64,18 @@ SimpleSwitchMorph >> mouseUp: evt [
 			self doButtonAction]
 		ifFalse: [  "restore old appearance"
 			self setSwitchState: (oldColor = onColor)].
-
 ]
 
 { #category : #switching }
 SimpleSwitchMorph >> offColor: aColor [
 
 	offColor := aColor.
-
 ]
 
 { #category : #switching }
 SimpleSwitchMorph >> onColor: aColor [
 
 	onColor := aColor.
-
 ]
 
 { #category : #switching }
@@ -89,7 +84,6 @@ SimpleSwitchMorph >> setSwitchState: aBoolean [
 	aBoolean
 		ifTrue: [self turnOn]
 		ifFalse: [self turnOff].
-
 ]
 
 { #category : #switching }

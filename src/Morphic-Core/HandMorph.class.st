@@ -44,22 +44,18 @@ Class {
 HandMorph class >> cleanUp [
 	"Called from ImageCleaner>>cleanUpForRelease --> SmalltalkImage>>cleanUp:except:confirming:"
 	self logEventStatsStop.
-
-
 ]
 
 { #category : #accessing }
 HandMorph class >> doubleClickTime [
 
 	^ DoubleClickTime
-
 ]
 
 { #category : #accessing }
 HandMorph class >> doubleClickTime: milliseconds [
 
 	DoubleClickTime := milliseconds.
-
 ]
 
 { #category : #'events - processing' }
@@ -74,7 +70,6 @@ HandMorph class >> initialize [
 	PasteBuffer := nil.
 	DoubleClickTime := 350.
 	NormalCursor := CursorWithMask normal asCursorForm.
-
 ]
 
 { #category : #'events - processing' }
@@ -88,7 +83,7 @@ HandMorph class >> logEventStats: evt [
 { #category : #settings }
 HandMorph class >> logEventStatsEnabled [
 	"self logEventStatsEnabled"
-	^ EventStats isNotNil 
+	^ EventStats isNotNil
 ]
 
 { #category : #settings }
@@ -119,7 +114,6 @@ HandMorph class >> settingsOn: aBuilder [
 		selector: #logEventStatsEnabled;
 		description: 'Enable/disable gathering global statistics of events handled by HandMorphs.
 "HandMorph eventStats inspect"'
-
 ]
 
 { #category : #utilities }
@@ -243,7 +237,6 @@ HandMorph >> captureEventsWhile: aBlock [
 HandMorph >> changed [
 
 	hasChanged := true.
-
 ]
 
 { #category : #accessing }
@@ -259,8 +252,6 @@ HandMorph >> copyToPasteBuffer: aMorph [
 	Cursor wait showWhile:[
 		PasteBuffer := aMorph topRendererOrSelf veryDeepCopy.
 		PasteBuffer privateOwner: nil].
-
-
 ]
 
 { #category : #cursor }
@@ -307,7 +298,6 @@ HandMorph >> drawOn: aCanvas [
 
 	temporaryCursor 
 		ifNotNil: [aCanvas paintImage: temporaryCursor at: bounds topLeft].
-	
 ]
 
 { #category : #'grabbing/dropping' }
@@ -587,7 +577,6 @@ HandMorph >> handleEvent: anEvent [
 	].
 	self showMouseFocusEvent: evt.
 	self mouseOverHandler processMouseOver: lastMouseEvent.
-
 ]
 
 { #category : #drawing }
@@ -595,7 +584,6 @@ HandMorph >> hasChanged [
 	"Return true if this hand has changed, either because it has moved or because some morph it is holding has changed."
 
 	^ hasChanged ifNil: [ true ]
-
 ]
 
 { #category : #initialization }
@@ -623,7 +611,6 @@ HandMorph >> interrupted [
 	"Something went wrong - we're about to bring up a debugger. 
 	Release some stuff that could be problematic."
 	self releaseAllFocus. "or else debugger might not handle clicks"
-
 ]
 
 { #category : #'change reporting' }
@@ -632,7 +619,6 @@ HandMorph >> invalidRect: damageRect from: aMorph [
 	hasChanged := true.
 	aMorph == self ifTrue:[^self].
 	damageRecorder recordInvalidRect: damageRect.
-
 ]
 
 { #category : #classification }
@@ -736,7 +722,6 @@ HandMorph >> needsToBeDrawn [
 	cursor := hardwareCursor ifNil: [Cursor normal].
 	self currentCursor == cursor ifFalse: [cursor show].
 	^ false
-
 ]
 
 { #category : #'focus handling' }
@@ -749,14 +734,12 @@ HandMorph >> newKeyboardFocus: aMorphOrNil [
 	
 	oldFocus ifNotNil: [oldFocus keyboardFocusChange: false].
 	aMorphOrNil ifNotNil: [ aMorphOrNil keyboardFocusChange: true ].
-
 ]
 
 { #category : #'focus handling' }
 HandMorph >> newMouseFocus: aMorphOrNil [
 	"Make the given morph the new mouse focus, canceling the previous mouse focus if any. If the argument is nil, the current mouse focus is cancelled."
 	self mouseFocus: aMorphOrNil.
-
 ]
 
 { #category : #'focus handling' }
@@ -797,7 +780,6 @@ shadowForm displayAt: shadowForm offset negated. Display forceToScreen: (0@0 ext
 	"draw morphs in front of shadows"
 	self drawSubmorphsOn: aCanvas.
 	self drawOn: aCanvas.  "draw the hand itself in front of morphs"
-
 ]
 
 { #category : #'event handling' }
@@ -812,7 +794,6 @@ HandMorph >> objectToPaste [
 	^ Cursor wait showWhile: [PasteBuffer veryDeepCopy]
 
 	"PasteBuffer usableDuplicateIn: self world"
-
 ]
 
 { #category : #'halo handling' }
@@ -836,8 +817,6 @@ HandMorph >> pasteBuffer [
 HandMorph >> pasteBuffer: aMorphOrNil [
 	"Set the contents of the paste buffer."
 	PasteBuffer := aMorphOrNil.
-
-
 ]
 
 { #category : #'private - events' }
@@ -877,7 +856,6 @@ HandMorph >> position: aPoint [
 		self invalidRect: (box merge: (box translateBy: delta)).
 	].
 	self privateFullMoveBy: delta.
-
 ]
 
 { #category : #'private - events' }
@@ -901,7 +879,6 @@ HandMorph >> processEvents [
 	mouseClickState notNil ifTrue: [ 
 		"No mouse events during this cycle. Make sure click states time out accordingly"
 		mouseClickState handleEvent: lastMouseEvent asMouseMove from: self ].
-
 ]
 
 { #category : #'private - events' }
@@ -918,7 +895,6 @@ HandMorph >> queuePendingEvent: aMorphicEvent [
 HandMorph >> releaseAllFocus [
 	mouseFocus := nil.
 	self newKeyboardFocus: nil.
-
 ]
 
 { #category : #caching }
@@ -943,7 +919,6 @@ HandMorph >> releaseHalo: aHalo [
 HandMorph >> releaseKeyboardFocus [
 	"Release the current keyboard focus unconditionally"
 	self newKeyboardFocus: nil.
-
 ]
 
 { #category : #'focus handling' }
@@ -1183,7 +1158,6 @@ HandMorph >> showMouseFocusEvent: evt [
 		| ofs| 
 		ofs := (owner hands indexOf: self) - 1 * 60.
 		self mouseFocus printString displayAt: (0@ofs) + (0@15)].
-		
 ]
 
 { #category : #cursor }
@@ -1191,7 +1165,6 @@ HandMorph >> showTemporaryCursor: cursorOrNil [
 	"Set the temporary cursor to the given Form. If the argument is nil, revert to the normal cursor."
 
 	self showTemporaryCursor: cursorOrNil hotSpotOffset: 0@0
-
 ]
 
 { #category : #cursor }
@@ -1224,7 +1197,6 @@ HandMorph >> targetOffset [
 	"Return the offset of the last mouseDown location relative to the origin of the recipient morph. During menu interactions, this is the absolute location of the mouse down event that invoked the menu."
 
 	^ targetOffset
-
 ]
 
 { #category : #accessing }
@@ -1234,7 +1206,6 @@ HandMorph >> targetPoint [
 	the original distance between hand and target position"
 
 	^ self position - targetOffset
-
 ]
 
 { #category : #cursor }
@@ -1316,7 +1287,6 @@ HandMorph >> visible: aBoolean [
 { #category : #'events - processing' }
 HandMorph >> waitButton [
 	self captureEventsUntil: [:evt | self anyButtonPressed ]
-
 ]
 
 { #category : #'double click support' }
@@ -1332,5 +1302,4 @@ HandMorph >> waitForClicksOrDrag: aMorph event: evt [
 	which is typically done by aMorph in its click:, doubleClick:, or drag: methods."
 	
 	^self waitForClicksOrDrag: aMorph event: evt selectors: #( #click: #doubleClick: #doubleClickTimeout: #startDrag:) threshold: 10
-
 ]

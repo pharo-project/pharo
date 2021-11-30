@@ -33,7 +33,6 @@ FTExamples class >> example2 [
 			first: 10));
 		yourself.
 	list openInWindow
-
 ]
 
 { #category : #examples }
@@ -73,7 +72,6 @@ FTExamples class >> exampleDragAndDrop1 [
 		addMorphBack: list1;
 		addMorphBack: list2;
 		openInWindow
-
 ]
 
 { #category : #examples }
@@ -114,7 +112,6 @@ FTExamples class >> exampleDragAndDrop2 [
 		addMorphBack: list1;
 		addMorphBack: list2;
 		openInWindow
-
 ]
 
 { #category : #examples }
@@ -156,7 +153,6 @@ FTExamples class >> exampleDragAndDrop3 [
 		addMorphBack: list1;
 		addMorphBack: list2;
 		openInWindow
-
 ]
 
 { #category : #examples }
@@ -192,7 +188,6 @@ FTExamples class >> exampleEasyList1 [
 		yourself.
 		
 	^ list openInWindow
-
 ]
 
 { #category : #examples }
@@ -219,7 +214,6 @@ FTExamples class >> exampleEasyList2 [
 		yourself.
 		
 	^ list openInWindow
-
 ]
 
 { #category : #examples }
@@ -247,7 +241,6 @@ FTExamples class >> exampleEasyList3 [
 		yourself.
 		
 	^ list openInWindow
-
 ]
 
 { #category : #examples }
@@ -313,7 +306,6 @@ FTExamples class >> exampleList1 [
 		yourself.
 		
 	^ list openInWindow
-
 ]
 
 { #category : #examples }

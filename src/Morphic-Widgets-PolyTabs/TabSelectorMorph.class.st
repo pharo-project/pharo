@@ -409,7 +409,6 @@ TabSelectorMorph >> removeTabIndex: anInteger [
 	self selectedIndex: 0.
 	self tabs ifNotEmpty: [
 		self selectedIndex: self selectedIndex - 1 \\ self tabs size + 1]
-		
 ]
 
 { #category : #operations }

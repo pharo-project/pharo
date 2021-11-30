@@ -93,7 +93,6 @@ TreeNavigationBarMorph >> asDisabledForm: aForm [
 	(aForm colorsUsed reject: [:c | c = Color transparent])
 		do: [:c | disa replaceColor: c  withColor: (c alphaMixed: 0.4 with: Color white)].
 	^ disa
-
 ]
 
 { #category : #accessing }
@@ -114,7 +113,6 @@ TreeNavigationBarMorph >> basicButton [
 		borderWidth: 1;
 		borderColor: self pagerColor;
 		yourself
-	
 ]
 
 { #category : #accessing }
@@ -135,7 +133,6 @@ TreeNavigationBarMorph >> basicIcon [
 		borderWidth: 1;
 		borderColor: self pagerColor;
 		yourself
-	
 ]
 
 { #category : #accessing }
@@ -162,7 +159,6 @@ TreeNavigationBarMorph >> buttonLabel: aLabel actionSelector: aSelector argument
 					ifFalse: [b lock. self asDisabledForm: aLabel].
 				b labelGraphic: f].
 	^ b
-	
 ]
 
 { #category : #navigation }
@@ -170,7 +166,6 @@ TreeNavigationBarMorph >> changePageSize: aNumberOrNil [
 	aNumberOrNil
 		ifNotNil: [self updateForNewPageSize: aNumberOrNil]
 		ifNil: [treeMorph removePager]
-
 ]
 
 { #category : #accessing }
@@ -180,7 +175,6 @@ TreeNavigationBarMorph >> computedBounds [
 	tbw := treeMorph borderWidth.
 	yGap := self layoutInset asPoint y + self cellInset asPoint y.
 	^ (tb bottomLeft + (tbw @ (self computedHeight + yGap) negated)) corner: (tb bottomRight - ( (tbw * 2) @ yGap )).
-
 ]
 
 { #category : #accessing }
@@ -195,7 +189,6 @@ TreeNavigationBarMorph >> computedHeightFromContents [
 	h := 0.
 	self submorphsDo: [:sm | h := h max: sm height].
 	^ h
-
 ]
 
 { #category : #private }
@@ -232,7 +225,6 @@ TreeNavigationBarMorph >> pageOfNodeIndex: anIndex [
 	^ (anIndex > 0 and: [anIndex <= self nodeList size])
 		ifTrue: [((anIndex - 1) // pageSize) + 1]
 		ifFalse: [nil]
-			
 ]
 
 { #category : #accessing }
@@ -267,7 +259,6 @@ TreeNavigationBarMorph >> pageSearchText: aString [
 			sm complexContents ==  chosenNode
 				ifTrue: [treeMorph listManager setSelectedMorph: sm.
 					^ treeMorph scrollSelectionIntoView]]
-
 ]
 
 { #category : #accessing }
@@ -300,7 +291,6 @@ TreeNavigationBarMorph >> pageSizeFromString: aString [
 				ifFalse: [treeMorph flash.
 					^ false]].
 	^ true
-
 ]
 
 { #category : #accessing }
@@ -315,7 +305,7 @@ TreeNavigationBarMorph >> pagerColor [
 
 { #category : #accessing }
 TreeNavigationBarMorph >> preferedFont [
-	^ self balloonFont 
+	^ self balloonFont
 ]
 
 { #category : #accessing }
@@ -333,13 +323,11 @@ TreeNavigationBarMorph >> textEntryLabel: aLabel get: getSel set: setSel help: h
 		menu: nil;
 		setBalloonText: helpText;
 		yourself
-
 ]
 
 { #category : #accessing }
 TreeNavigationBarMorph >> treeMorph: aTreeMorph [ 
 	treeMorph := aTreeMorph.
-
 ]
 
 { #category : #accessing }
@@ -352,7 +340,6 @@ TreeNavigationBarMorph >> treeMorph: aTreeMorph pageSize: anInteger [
 TreeNavigationBarMorph >> updateContents [
 	self bounds: self computedBounds.
 	self color: treeMorph pagerColor.
-
 ]
 
 { #category : #navigation }
@@ -363,7 +350,6 @@ TreeNavigationBarMorph >> updateForNewPageSize: aPageSize [
 
 { #category : #'user interface' }
 TreeNavigationBarMorph >> vScrollBarValue: scrollValue [
-
 ]
 
 { #category : #accessing }

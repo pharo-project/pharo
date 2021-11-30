@@ -68,7 +68,7 @@ IconicButtonMorph >> buttonSetup [
 { #category : #accessing }
 IconicButtonMorph >> defaultGraphics [
 
-	^  DefaultGraphics 
+	^  DefaultGraphics
 ]
 
 { #category : #geometry }
@@ -122,7 +122,6 @@ IconicButtonMorph >> labelFromString: aString [
 	"Make an iconic label from aString"
 
 	self labelGraphic: (StringMorph contents: aString) imageForm
-
 ]
 
 { #category : #accessing }
@@ -168,7 +167,6 @@ IconicButtonMorph >> mouseLeave: evt [
 	oldBorderStyle ifNil: [^self borderNormal].
 	self borderStyle: oldBorderStyle. 
 	oldBorderStyle := nil.
-		
 ]
 
 { #category : #'mouse events' }

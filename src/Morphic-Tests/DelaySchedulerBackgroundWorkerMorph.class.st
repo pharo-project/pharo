@@ -65,7 +65,7 @@ DelaySchedulerBackgroundWorkerMorph >> initialize [
 
 { #category : #stepping }
 DelaySchedulerBackgroundWorkerMorph >> step [
-    stringMorph contents: work printString 
+    stringMorph contents: work printString
 ]
 
 { #category : #stepping }

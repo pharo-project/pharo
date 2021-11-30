@@ -64,7 +64,6 @@ ThreePhaseButtonMorph >> actWhen: condition [
 ThreePhaseButtonMorph >> actionSelector [
 
 	^ actionSelector
-
 ]
 
 { #category : #accessing }
@@ -76,7 +75,6 @@ ThreePhaseButtonMorph >> actionSelector: aSymbolOrString [
 		ifTrue: [^ actionSelector := nil].
 
 	actionSelector := aSymbolOrString asSymbol.
-
 ]
 
 { #category : #accessing }
@@ -88,7 +86,6 @@ ThreePhaseButtonMorph >> arguments [
 ThreePhaseButtonMorph >> arguments: aCollection [
 
 	arguments := aCollection asArray copy.
-
 ]
 
 { #category : #button }
@@ -138,14 +135,12 @@ ThreePhaseButtonMorph >> extent: aPoint [
 	bounds := bounds topLeft extent: aPoint.
 	self layoutChanged.
 	self changed.
-
 ]
 
 { #category : #'event handling' }
 ThreePhaseButtonMorph >> handlesMouseDown: evt [
 
 	^ true
-
 ]
 
 { #category : #'event handling' }
@@ -205,7 +200,6 @@ ThreePhaseButtonMorph >> mouseMove: evt [
 				super mouseMove: evt]
 				"Allow on:send:to: to set the response to events other than actWhen"
 		ifFalse: [self state: #off].
-
 ]
 
 { #category : #'event handling' }
@@ -226,7 +220,6 @@ ThreePhaseButtonMorph >> mouseUp: evt [
 		self state: #off.
 	].
 	"Allow owner to keep it selected for radio buttons"
-
 ]
 
 { #category : #accessing }
@@ -312,14 +305,12 @@ ThreePhaseButtonMorph >> stepTime [
 ThreePhaseButtonMorph >> target [
 
 	^ target
-
 ]
 
 { #category : #accessing }
 ThreePhaseButtonMorph >> target: anObject [
 
 	target := anObject
-
 ]
 
 { #category : #copying }
@@ -330,7 +321,6 @@ ThreePhaseButtonMorph >> veryDeepFixupWith: deepCopier [
 	target := deepCopier references at: target ifAbsent: [target].
 	arguments := arguments collect: [:each |
 		deepCopier references at: each ifAbsent: [each]].
-
 ]
 
 { #category : #copying }

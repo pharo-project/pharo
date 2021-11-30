@@ -3,7 +3,7 @@ Extension { #name : #StringMorph }
 { #category : #'*Morphic-Base-Widgets' }
 StringMorph >> heightToDisplayInList: aList [
 
-	^ self contents heightToDisplayInList: aList 
+	^ self contents heightToDisplayInList: aList
 ]
 
 { #category : #'*Morphic-Base-MorphTreeWidget' }
@@ -14,11 +14,11 @@ StringMorph >> rowMorphForNode: aNode inColumn: aColumn [
 		ifTrue: [^ super rowMorphForNode: aNode inColumn: aColumn].
 	self layoutInset: aColumn container columnInset @ aColumn container rowInset.
 	self fitContents.
-	^ self 
+	^ self
 ]
 
 { #category : #'*Morphic-Base-Widgets' }
 StringMorph >> widthToDisplayInList: aList [
 
-	^ self contents widthToDisplayInList: aList 
+	^ self contents widthToDisplayInList: aList
 ]

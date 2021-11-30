@@ -67,7 +67,6 @@ ImageMorph class >> initialize [
 		DefaultForm fill:
 			(p corner: DefaultForm extent - p)
 			fillColor: (Color r: d g: 0.5 b: 1.0 - d)].
-
 ]
 
 { #category : #'instance creation' }
@@ -173,7 +172,6 @@ ImageMorph >> extent: aPoint [
 { #category : #accessing }
 ImageMorph >> form [
 	^ image
-
 ]
 
 { #category : #accessing }
@@ -187,7 +185,6 @@ ImageMorph >> form: aForm [
 ImageMorph >> grabFromScreen [
 
 	self form: Form fromUser.
-
 ]
 
 { #category : #accessing }
@@ -209,7 +206,6 @@ ImageMorph >> initialize [
 
 	super initialize.
 	self form: self defaultImage.
-
 ]
 
 { #category : #accessing }
@@ -244,7 +240,6 @@ ImageMorph >> readFromFile [
 		initialAnswer: 'fileName'.
 	fileName isEmptyOrNil ifTrue: [^ self].
 	self form: (Form fromFileNamed: fileName).
-
 ]
 
 { #category : #caching }
@@ -252,7 +247,6 @@ ImageMorph >> releaseCachedState [
 
 	super releaseCachedState.
 	image hibernate.
-
 ]
 
 { #category : #other }

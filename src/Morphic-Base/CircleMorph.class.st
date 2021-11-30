@@ -95,7 +95,6 @@ CircleMorph >> prepareForScaling [
 	"When scaling from a halo, I can do this without a flex shell"
 
 	^ self
-
 ]
 
 { #category : #'rotate scale and flex' }

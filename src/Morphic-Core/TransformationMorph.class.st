@@ -30,7 +30,6 @@ TransformationMorph >> adjustAfter: changeBlock [
 	self chooseSmoothing.
 	self layoutChanged.
 	owner ifNotNil: [owner invalidRect: bounds]
-
 ]
 
 { #category : #initialization }
@@ -43,7 +42,6 @@ TransformationMorph >> asFlexOf: aMorph [
 	aMorph position: (aMorph extent // 2) negated.
 	self position: pos.
 	transform := transform withOffset: aMorph position - pos
-
 ]
 
 { #category : #private }
@@ -119,7 +117,6 @@ TransformationMorph >> grabTransform [
 TransformationMorph >> hasNoScaleOrRotation [
 
 	^ transform isPureTranslation
-
 ]
 
 { #category : #'geometry - etoy' }
@@ -135,14 +132,12 @@ TransformationMorph >> heading [
 TransformationMorph >> isFlexMorph [
 
 	^ true
-
 ]
 
 { #category : #classification }
 TransformationMorph >> isRenderer [
 
 	^ true
-
 ]
 
 { #category : #testing }
@@ -160,12 +155,10 @@ TransformationMorph >> layoutChanged [
 
 { #category : #'rotate scale and flex' }
 TransformationMorph >> prepareForRotating [
-
 ]
 
 { #category : #'rotate scale and flex' }
 TransformationMorph >> prepareForScaling [
-
 ]
 
 { #category : #printing }
@@ -268,7 +261,6 @@ TransformationMorph >> setDirectionFrom: aPoint [
 	delta := (inner transformFromWorld globalPointToLocal: aPoint) - inner referencePosition.
 	degrees := delta degrees + 90.0.
 	self forwardDirection: (degrees \\ 360) rounded.
-
 ]
 
 { #category : #testing }
@@ -279,7 +271,6 @@ TransformationMorph >> stepTime [
 	rendered := self renderedMorph.
 	rendered = self ifTrue: [^super stepTime].	"Hack to avoid infinite recursion"
 	^rendered stepTime.
-	
 ]
 
 { #category : #geometry }

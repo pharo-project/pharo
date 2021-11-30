@@ -298,7 +298,6 @@ FTTableMorph >> drawSubmorphsOn: aCanvas [
 	"1haltOnce."
 	super drawSubmorphsOn: aCanvas.
 	self hasKeyboardFocus ifTrue: [ self drawKeyboardFocusOn: aCanvas ]
-
 ]
 
 { #category : #accessing }
@@ -379,7 +378,6 @@ FTTableMorph >> handleMouseMove: anEvent [
 	(anEvent anyButtonPressed) ifFalse:[^self].
 	anEvent wasHandled: true.
 	self mouseMove: anEvent
-
 ]
 
 { #category : #'event testing' }
@@ -390,7 +388,6 @@ FTTableMorph >> handlesKeyboard: event [
 { #category : #'event testing' }
 FTTableMorph >> handlesMouseDown: event [
 	^ true
-
 ]
 
 { #category : #'event testing' }
@@ -475,7 +472,7 @@ FTTableMorph >> horizontalScrollBarHeight [
 		ifNotNil: [ 
 			self isHorizontalScrollBarVisible ifFalse: [ ^ 0 ].
 			self scrollBarThickness
-			] 
+			]
 ]
 
 { #category : #private }
@@ -577,7 +574,7 @@ FTTableMorph >> intercellSpacing: aNumberOrPoint [
 	"Determines cell spacing 
 		x: space between cells 
 		y: space between rows"
-	intercellSpacing := aNumberOrPoint asPoint 
+	intercellSpacing := aNumberOrPoint asPoint
 ]
 
 { #category : #private }
@@ -745,7 +742,7 @@ FTTableMorph >> mouseDown: event [
 FTTableMorph >> mouseEnterDragging: event [
 	self enabled ifFalse: [ ^ self ].
 	(event hand hasSubmorphs and: [ self dropEnabled ]) 
-		ifFalse: [ "no d&d" ^ super mouseEnterDragging: event ].	
+		ifFalse: [ "no d&d" ^ super mouseEnterDragging: event ].
 ]
 
 { #category : #'event handling' }
@@ -866,7 +863,6 @@ FTTableMorph >> recalculateVerticalScrollBarVisibilityIfHidden: aBlock [
 				ifFalse: [ 
 					self resizeVerticalScrollBar.
 					self addMorph: self verticalScrollBar ] ]
-
 ]
 
 { #category : #updating }
@@ -877,7 +873,6 @@ FTTableMorph >> refresh [
 	self verticalScrollBar changed.
 	horizontalScrollBar ifNotNil: [ self horizontalScrollBar changed ].
 	self container changed
-	
 ]
 
 { #category : #accessing }
@@ -1133,8 +1128,6 @@ FTTableMorph >> showMenuForIndex: aTuple [
 	(menu isNil or: [ menu isInWorld ]) ifTrue: [ ^ self ].
 	
 	menu popUpInWorld: self currentWorld
-
-	
 ]
 
 { #category : #menu }
@@ -1160,7 +1153,7 @@ FTTableMorph >> startDrag: event [
 	transferMorph align: transferMorph draggedMorph topLeft with: event position.
 	transferMorph dragTransferType: self dataSource dragTransferType.
 	
-	event hand grabMorph: transferMorph 
+	event hand grabMorph: transferMorph
 ]
 
 { #category : #'event testing' }
@@ -1179,7 +1172,6 @@ FTTableMorph >> themeChanged [
 FTTableMorph >> update: symbol [
 	symbol == #refresh ifTrue: [ ^ self refresh ].
 	^ super update: symbol
-	
 ]
 
 { #category : #private }

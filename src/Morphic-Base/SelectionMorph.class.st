@@ -32,7 +32,6 @@ Class {
 SelectionMorph >> aboutToBeGrabbedBy: aHand [
 	slippage := 0@0.
 	^ super aboutToBeGrabbedBy: aHand
-
 ]
 
 { #category : #'halo commands' }
@@ -64,7 +63,6 @@ SelectionMorph >> addCustomMenuItems: aMenu hand: aHandMorph [
 				{'Distribute horizontally' . #distributeHorizontally}.
 				}.
 		].
-
 ]
 
 { #category : #'halos and balloon help' }
@@ -96,7 +94,6 @@ SelectionMorph >> addOrRemoveItems: handOrEvent [
 		addMorphBack: ((self class 
 				newBounds: (hand lastEvent cursorPoint extent: 16 @ 16)) 
 					setOtherSelection: self).
-
 ]
 
 { #category : #'halo commands' }
@@ -109,7 +106,6 @@ SelectionMorph >> alignBottomEdges [
 		[:itm | itm bottom: maxBottom].
 
 	self changed
-
 ]
 
 { #category : #'halo commands' }
@@ -124,7 +120,6 @@ SelectionMorph >> alignCentersHorizontally [
 		[:itm | itm center: (itm center x @ leftMost center y)].
 
 	self changed
-
 ]
 
 { #category : #'halo commands' }
@@ -139,7 +134,6 @@ SelectionMorph >> alignCentersVertically [
 		[:itm | itm center: (topMost center x @ itm center y)].
 
 	self changed
-
 ]
 
 { #category : #'halo commands' }
@@ -152,7 +146,6 @@ SelectionMorph >> alignLeftEdges [
 		[:itm | itm left: minLeft].
 
 	self changed
-
 ]
 
 { #category : #'halo commands' }
@@ -165,7 +158,6 @@ SelectionMorph >> alignRightEdges [
 		[:itm | itm right: maxRight].
 
 	self changed
-
 ]
 
 { #category : #'halo commands' }
@@ -178,7 +170,6 @@ SelectionMorph >> alignTopEdges [
 		[:itm | itm top: minTop].
 
 	self changed
-
 ]
 
 { #category : #'halos and balloon help' }
@@ -228,7 +219,6 @@ SelectionMorph >> bounds: newBounds [
 
 	selectedItems := OrderedCollection new.  "Avoid repostioning items during super position:"
 	self position: newBounds topLeft; extent: newBounds extent
-
 ]
 
 { #category : #initialization }
@@ -248,7 +238,6 @@ SelectionMorph >> defaultColor [
 SelectionMorph >> delete [
 	self setProperty: #deleting toValue: true.
 	super delete.
-	
 ]
 
 { #category : #'submorphs - add/remove' }
@@ -284,7 +273,6 @@ SelectionMorph >> distributeHorizontally [
 			currentLeft := currentLeft + each width + space].
 
 	self changed
-
 ]
 
 { #category : #'halo commands' }
@@ -311,7 +299,6 @@ SelectionMorph >> distributeVertically [
 			currentTop := currentTop + each height + space].
 
 	self changed
-
 ]
 
 { #category : #'halo commands' }
@@ -366,7 +353,6 @@ SelectionMorph >> drawOn: aCanvas [
 		at: box topLeft
 		sourceRect: form2 boundingBox
 		color: self borderColor
-
 ]
 
 { #category : #'halo commands' }
@@ -377,7 +363,6 @@ SelectionMorph >> duplicate [
 	selectedItems reverseDo: [:m | (owner ifNil: [self world]) addMorph: m].
 	dupLoc := self position.
 	self activeHand grabMorph: self.
-	
 ]
 
 { #category : #initialization }
@@ -411,7 +396,7 @@ SelectionMorph >> extendByHand: aHand [
 SelectionMorph >> extent: newExtent [
 
 	super extent: newExtent.
-	self selectSubmorphsOf: self pasteUpMorph 
+	self selectSubmorphsOf: self pasteUpMorph
 ]
 
 { #category : #viewer }
@@ -434,8 +419,6 @@ SelectionMorph >> fillStyleForItems: fillStyleCollection [
 { #category : #'submorphs - add/remove' }
 SelectionMorph >> goBehind [
 	"selection morph stays on top"
-
-	
 ]
 
 { #category : #'halos and balloon help' }
@@ -443,7 +426,6 @@ SelectionMorph >> hasHalo: aBool [
 	super hasHalo: aBool.
 	aBool
 		ifFalse: [ (self hasProperty: #deleting) ifFalse: [self delete] ]
-
 ]
 
 { #category : #initialization }
@@ -488,7 +470,6 @@ SelectionMorph >> organizeIntoColumn [
 	"Place my objects in a column-enforcing container"
 
 	((AlignmentMorph inAColumn: (selectedItems asSortedCollection: [:x :y | x top < y top])) setNameTo: 'Column'; color: Color orange muchLighter; enableDragNDrop: true; yourself) openInHand
-
 ]
 
 { #category : #'halo commands' }
@@ -496,7 +477,6 @@ SelectionMorph >> organizeIntoRow [
 	"Place my objects in a row-enforcing container"
 
 	((AlignmentMorph inARow: (selectedItems asSortedCollection: [:x :y | x left < y left])) setNameTo: 'Row'; color: Color orange muchLighter; enableDragNDrop: true; yourself) openInHand
-
 ]
 
 { #category : #private }
@@ -525,7 +505,6 @@ SelectionMorph >> selectSubmorphsOf: aMorph [
 	removals := newItems intersection: itemsAlreadySelected.
 	otherSelection setSelectedItems: (itemsAlreadySelected copyWithoutAll: removals).
 	selectedItems := (newItems copyWithoutAll: removals).
-
 ]
 
 { #category : #private }

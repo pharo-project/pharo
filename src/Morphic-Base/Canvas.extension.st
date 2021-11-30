@@ -9,5 +9,4 @@ Canvas >> asAlphaBlendingCanvas: alpha [
 Canvas >> copyClipRect: newClipRect [
 
 	^ ClippingCanvas canvas: self clipRect: newClipRect
-
 ]

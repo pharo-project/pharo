@@ -13,7 +13,6 @@ NullTextStyler >> classOrMetaClass: aBehavior [
 
 { #category : #accessing }
 NullTextStyler >> environment: anObject [
-
 ]
 
 { #category : #accessing }
@@ -32,7 +31,6 @@ NullTextStyler >> style: aText [
 
 { #category : #styling }
 NullTextStyler >> styleInBackgroundProcess: aText [
-
 ]
 
 { #category : #private }
@@ -43,7 +41,6 @@ NullTextStyler >> stylingEnabled [
 
 { #category : #private }
 NullTextStyler >> stylingEnabled: aBoolean [
-
 ]
 
 { #category : #styling }
@@ -53,11 +50,8 @@ NullTextStyler >> unstyledTextFrom: aText [
 
 { #category : #accessing }
 NullTextStyler >> view: aViewOrMorph [
-
-
 ]
 
 { #category : #accessing }
 NullTextStyler >> workspace: aWorkspace [
-
 ]

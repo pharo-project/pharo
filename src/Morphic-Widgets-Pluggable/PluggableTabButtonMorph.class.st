@@ -49,7 +49,6 @@ PluggableTabButtonMorph >> arcLengths [
 { #category : #'private - access' }
 PluggableTabButtonMorph >> arcLengths: anArrayOfIntegers [
 	arcLengths := anArrayOfIntegers
-
 ]
 
 { #category : #precalculations }
@@ -69,7 +68,6 @@ PluggableTabButtonMorph >> calculateArcLengths [
 { #category : #'private - access' }
 PluggableTabButtonMorph >> cornerRadius [
 	^ 5
-
 ]
 
 { #category : #drawing }
@@ -139,8 +137,6 @@ PluggableTabButtonMorph >> drawTabOn: aCanvas [
 		aCanvas line: (myBounds right - cornerRadius + i - 1) @ (myBounds bottom - 1)
 			to: (myBounds right - cornerRadius + i - 1) @ (myBounds bottom - length - 1)
 			color: myColor]
-	
-
 ]
 
 { #category : #event }
@@ -173,7 +169,6 @@ PluggableTabButtonMorph >> keyDown: event [
 { #category : #accessing }
 PluggableTabButtonMorph >> model [
 	^ model
-
 ]
 
 { #category : #accessing }
@@ -191,13 +186,11 @@ PluggableTabButtonMorph >> outerGap [
 PluggableTabButtonMorph >> step [
 	self subMorph step.
 	self changed.
-
 ]
 
 { #category : #stepping }
 PluggableTabButtonMorph >> stepTime [
 	^ self subMorph stepTime
-
 ]
 
 { #category : #'private - access' }
@@ -209,7 +202,6 @@ PluggableTabButtonMorph >> subMorph [
 { #category : #'private - access' }
 PluggableTabButtonMorph >> subMorph: aMorph [
 	subMorph := aMorph
-
 ]
 
 { #category : #event }
@@ -222,7 +214,6 @@ PluggableTabButtonMorph >> takesKeyboardFocus [
 { #category : #accessing }
 PluggableTabButtonMorph >> textSelector [
 	^ textSelector
-
 ]
 
 { #category : #accessing }

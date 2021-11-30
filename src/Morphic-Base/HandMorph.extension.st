@@ -23,5 +23,4 @@ HandMorph >> waitForClicksOrDrag: aMorph event: evt selectors: clickAndDragSelec
 			drag: clickAndDragSelectors fourth 
 			threshold: threshold 
 			event: evt.
-
 ]

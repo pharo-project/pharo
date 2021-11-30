@@ -72,7 +72,6 @@ LayoutCell >> hSpaceFill [
 { #category : #accessing }
 LayoutCell >> hSpaceFill: aBool [
 	flags := aBool ifTrue:[self flags bitOr: 1] ifFalse:[self flags bitClear: 1].
-
 ]
 
 { #category : #collection }
@@ -128,5 +127,4 @@ LayoutCell >> vSpaceFill [
 { #category : #accessing }
 LayoutCell >> vSpaceFill: aBool [
 	flags := aBool ifTrue:[self flags bitOr: 2] ifFalse:[self flags bitClear: 2].
-
 ]

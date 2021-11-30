@@ -88,7 +88,6 @@ RealEstateAgent class >> initialFrameFor: aView initialExtent: initialExtent wor
 	windows currently on the screen."
 	
 	^self perform: self usedStrategy with: aView with: initialExtent with: aWorld
-	
 ]
 
 { #category : #framing }
@@ -135,7 +134,6 @@ RealEstateAgent class >> screenTopSetback [
 { #category : #settings }
 RealEstateAgent class >> scrollBarSetback [
 	^ 16-3 "width = 16; inset from border by 3"
-
 ]
 
 { #category : #strategy }
@@ -200,7 +198,7 @@ RealEstateAgent class >> standardPositionsInWorld: aWorldOrNil [
 { #category : #accessing }
 RealEstateAgent class >> standardSize [
 
-	^ StandardSize 
+	^ StandardSize
 ]
 
 { #category : #accessing }
@@ -311,5 +309,5 @@ RealEstateAgent class >> windowRowsDesired [
 		ifTrue: [1]
 		ifFalse: [self maximumUsableArea height > 480
 				ifTrue: [2]
-				ifFalse: [1]] 
+				ifFalse: [1]]
 ]

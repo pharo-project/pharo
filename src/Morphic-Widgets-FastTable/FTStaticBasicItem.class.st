@@ -30,8 +30,6 @@ Class {
 { #category : #accessing }
 FTStaticBasicItem >> calculateChildren [
 	"Not for this item."
-
-	
 ]
 
 { #category : #accessing }
@@ -53,6 +51,4 @@ FTStaticBasicItem >> dataSource: anObject [
 { #category : #updating }
 FTStaticBasicItem >> updateData [
 	"Static Item cannot do it."
-
-	
 ]

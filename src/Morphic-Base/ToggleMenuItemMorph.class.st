@@ -15,7 +15,6 @@ Class {
 ToggleMenuItemMorph >> adjacentTo [
 
 	^{self bounds topRight + (5 @ 0). self bounds topLeft + (2@0)}
-	
 ]
 
 { #category : #accessing }
@@ -214,7 +213,6 @@ ToggleMenuItemMorph >> itemShortcut [
 	^ ToggleMenuItemShortcut 
 		owner: self 
 		keyText: self keyText
-		
 ]
 
 { #category : #private }

@@ -10,5 +10,4 @@ DisplayMedium >> border: aRectangle width: borderWidth [
 		border: aRectangle 
 		width: borderWidth 
 		fillColor: Smalltalk ui theme borderColor.
-
 ]

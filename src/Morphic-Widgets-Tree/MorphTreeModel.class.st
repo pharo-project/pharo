@@ -42,7 +42,6 @@ MorphTreeModel class >> exampleCheckList2 [
 		 headerLabel: 'Plop';
 		 beCheckList.
 	^ (model openDialogWindowIn: self currentWorld title: 'All Morph methods')
-
 ]
 
 { #category : #examples }
@@ -103,13 +102,11 @@ MorphTreeModel >> autoMultiSelection [
 { #category : #accessing }
 MorphTreeModel >> autoMultiSelection: aBoolean [
 	autoMultiSelection := aBoolean
-
 ]
 
 { #category : #accessing }
 MorphTreeModel >> beCheckList [
 	self isCheckList: true
-
 ]
 
 { #category : #'expanding-collapsing' }
@@ -127,7 +124,7 @@ MorphTreeModel >> deeplyDetect: aBlock [
 	self rootNodes
 		do: [:sub | (sub deeplyDetect: aBlock)
 				ifNotNil: [:found | ^ found]].
-	^ nil 
+	^ nil
 ]
 
 { #category : #accessing }
@@ -189,7 +186,7 @@ MorphTreeModel >> dialogWindowIn: aWindow title: aTitle selectedtems: aCollectio
 	dialogMorph buildContents; selectedItems: aCollection.
 	dialog minimumExtent: 300 @ 500.
 	dialog beResizeable.
-	^ dialog 
+	^ dialog
 ]
 
 { #category : #accessing }
@@ -217,13 +214,12 @@ MorphTreeModel >> enabled: aBoolean [
 
 { #category : #'expanding-collapsing' }
 MorphTreeModel >> expandAll [
-	self  requestView: MorphTreeChangeRequest expandAll 
+	self  requestView: MorphTreeChangeRequest expandAll
 ]
 
 { #category : #'expanding-collapsing' }
 MorphTreeModel >> expandAllFromNode: aNode [
 	self  requestView: (MorphTreeChangeRequest expandAllFromNode: aNode)
-
 ]
 
 { #category : #'expanding-collapsing' }
@@ -314,7 +310,6 @@ MorphTreeModel >> openDialogWindowIn: aWindow title: aTitle selectedtems: aColle
 	dialog := self dialogWindowIn: aWindow title: aTitle selectedtems: aCollection.
 	dialog openModal.
 	^ dialog cancelled ifFalse: [self selectedItems]
-
 ]
 
 { #category : #accessing }
@@ -324,12 +319,11 @@ MorphTreeModel >> promptForCancel [
 	^(self confirm:
 'Changes have not been saved.
 Is it OK to cancel changes?' translated)
-			
 ]
 
 { #category : #announcing }
 MorphTreeModel >> requestView: anAnnouncement [
-	^ self announcer announce: anAnnouncement 
+	^ self announcer announce: anAnnouncement
 ]
 
 { #category : #accessing }
@@ -341,7 +335,6 @@ MorphTreeModel >> rootItems [
 { #category : #accessing }
 MorphTreeModel >> rootItems: aCollection [
 	rootItems := aCollection.
-
 ]
 
 { #category : #accessing }
@@ -358,7 +351,6 @@ MorphTreeModel >> rootNodeFromItem: anItem [
 MorphTreeModel >> rootNodes [
 	^ (self rootItems ifNil: [^nil])
 		collect: [:ci | self rootNodeFromItem: ci].
-
 ]
 
 { #category : #selecting }
@@ -407,31 +399,27 @@ MorphTreeModel >> selectedNodePath [
 { #category : #selecting }
 MorphTreeModel >> selection [
 	^ selection.
-
 ]
 
 { #category : #selecting }
 MorphTreeModel >> selection: aSelection [
 	self setSelection: aSelection.
 	self  requestView: MorphTreeChangeRequest updateSelectionFromModel
-
 ]
 
 { #category : #selecting }
 MorphTreeModel >> selectionChanged [
 	self requestView: (MorphTreeSelectionChanged new selection: self selection)
-
 ]
 
 { #category : #selecting }
 MorphTreeModel >> setSelection: aSelection [
 	selection := aSelection.
-
 ]
 
 { #category : #accessing }
 MorphTreeModel >> treeMorphClass [
-	^ MorphTreeMorph 
+	^ MorphTreeMorph
 ]
 
 { #category : #updating }

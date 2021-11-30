@@ -29,7 +29,6 @@ HandleMorph >> initialize [
 	
 	super initialize.
 	self extent: 8 @ 8
-	
 ]
 
 { #category : #'dropping/grabbing' }
@@ -74,5 +73,4 @@ HandleMorph >> stepTime [
 	"Update every hundredth of a second."
 	
 	^ 10
-
 ]
