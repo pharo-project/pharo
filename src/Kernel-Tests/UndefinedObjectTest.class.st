@@ -44,9 +44,6 @@ UndefinedObjectTest >> testIfNotNil [
 
 	nil ifNotNil: [
 		self fail: 'should not get here' ].
-
-
-
 ]
 
 { #category : #'tests - testing' }
@@ -54,7 +51,6 @@ UndefinedObjectTest >> testIfNotNilDo [
 
 	nil ifNotNil: [
 		self fail: 'should not get here' ].
-
 ]
 
 { #category : #'tests - testing' }

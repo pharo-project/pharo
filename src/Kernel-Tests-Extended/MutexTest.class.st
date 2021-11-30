@@ -35,7 +35,6 @@ MutexTest >> setUp [
 	
 	forkedProcesses := OrderedCollection new.
 	mutex := Mutex new.
-	
 ]
 
 { #category : #running }
@@ -43,8 +42,6 @@ MutexTest >> tearDown [
 	forkedProcesses do: #terminate.
 	
 	super tearDown.
-	
-	
 ]
 
 { #category : #tests }
@@ -163,7 +160,7 @@ MutexTest >> testTwoCriticalsShouldWaitEachOther [
 	semaphoreToHoldMutex signal.
 	self waitLastProcessTerminate.
 	self assert: lastCriticalExecuted.
-	self assert: firstCriticalExecutedFirst 
+	self assert: firstCriticalExecutedFirst
 ]
 
 { #category : #tests }

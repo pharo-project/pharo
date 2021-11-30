@@ -40,15 +40,12 @@ ClassVariable >> definitionString [
 	^ self needsFullDefinition
 		ifTrue: [ super definitionString ]
 		ifFalse: [ self name printString ]
-
 ]
 
 { #category : #'code generation' }
 ClassVariable >> emitStore: methodBuilder [
 
 	methodBuilder storeIntoLiteralVariable: self.
-
-
 ]
 
 { #category : #'code generation' }
@@ -70,7 +67,7 @@ ClassVariable >> isDefinedByOwningClass [
 
 { #category : #testing }
 ClassVariable >> isPoolVariable [
-	^ self definingClass isPool 
+	^ self definingClass isPool
 ]
 
 { #category : #testing }

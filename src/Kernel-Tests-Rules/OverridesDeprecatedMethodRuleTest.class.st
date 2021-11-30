@@ -28,7 +28,7 @@ OverridesDeprecatedMethodRuleTest >> tearDown [
 
 	testClass := nil.
 	testSubclass := nil.
-	super tearDown 
+	super tearDown
 ]
 
 { #category : #tests }
@@ -38,7 +38,7 @@ OverridesDeprecatedMethodRuleTest >> testBasicCheck [
 	testMethod := testSubclass >> (
 		testSubclass compile: self methodName).
 		
-	self assert: (OverridesDeprecatedMethodRule new check: testMethod) isNotEmpty 
+	self assert: (OverridesDeprecatedMethodRule new check: testMethod) isNotEmpty
 ]
 
 { #category : #tests }

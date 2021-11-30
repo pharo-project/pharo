@@ -6,9 +6,7 @@ Class {
 
 { #category : #helpers }
 LegacyClassDefinitionPrinterTest >> forClass: aClass [
-	^ (ClassDefinitionPrinter legacy for: aClass) definitionString 
-
-
+	^ (ClassDefinitionPrinter legacy for: aClass) definitionString
 ]
 
 { #category : #'tests - classes' }
@@ -83,7 +81,7 @@ LegacyClassDefinitionPrinterTest >> testMetaclassClass [
 	self 
 		assert: (self forClass: Metaclass class) 
 		equals: 'Metaclass class
-	instanceVariableNames: '''''	
+	instanceVariableNames: '''''
 ]
 
 { #category : #'tests - classes' }

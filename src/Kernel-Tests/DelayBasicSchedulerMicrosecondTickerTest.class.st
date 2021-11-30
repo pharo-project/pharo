@@ -79,8 +79,6 @@ DelayBasicSchedulerMicrosecondTickerTest >> testDurationLessThanMaxTicks [
 	scheduler simulate_vmMilliseconds: 100.
 	scheduler schedule: delay.
 	self assert: ticker vmSimNextWakeupMilliseconds equals: 100 + 789
-
-	
 ]
 
 { #category : #tests }
@@ -144,7 +142,6 @@ DelayBasicSchedulerMicrosecondTickerTest >> testHeapBackwards [
 	self assert: suspendedDelaysHeap removeFirstOrNil equals: delay3.
 	self assert: suspendedDelaysHeap removeFirstOrNil equals: delay4.
 	self assert: suspendedDelaysHeap removeFirstOrNil equals: nil.
-
 ]
 
 { #category : #tests }
@@ -164,7 +161,6 @@ DelayBasicSchedulerMicrosecondTickerTest >> testHeapForwards [
 	self assert: suspendedDelaysHeap removeFirstOrNil equals: delay3.
 	self assert: suspendedDelaysHeap removeFirstOrNil equals: delay4.
 	self assert: suspendedDelaysHeap removeFirstOrNil equals: nil.
-
 ]
 
 { #category : #tests }
@@ -177,7 +173,6 @@ DelayBasicSchedulerMicrosecondTickerTest >> testMillisecondsToGo [
 
 	scheduler simulate_vmMilliseconds: 160.
 	self assert: delay millisecondsToGo equals: 40.
-
 ]
 
 { #category : #tests }
@@ -207,7 +202,6 @@ DelayBasicSchedulerMicrosecondTickerTest >> testMultiSchedule [
 		scheduler schedule: anotherDelay.
 		] forkAt: Processor activePriority + 1.
 	self assert: anotherDelay beingWaitedOn.
-	
 ]
 
 { #category : #tests }
@@ -227,7 +221,6 @@ DelayBasicSchedulerMicrosecondTickerTest >> testSimpleOneDelay [
 	
 	scheduler simulate_vmMilliseconds: 12.
 	self assert: delay isExpired
-	
 ]
 
 { #category : #tests }
@@ -258,8 +251,6 @@ DelayBasicSchedulerMicrosecondTickerTest >> testSimpleTwoDelays [
 	
 	scheduler simulate_vmMilliseconds: 14.
 	self assert: delay2 isExpired.
-	
-	
 ]
 
 { #category : #tests }
@@ -296,7 +287,6 @@ DelayBasicSchedulerMicrosecondTickerTest >> testStoppedSchedulerExpiresRemaining
 	scheduler stopTimerEventLoop.
 	self assert: delay2 isExpired.
 	self assert: delay3 isExpired
-
 ]
 
 { #category : #tests }
@@ -324,6 +314,4 @@ DelayBasicSchedulerMicrosecondTickerTest >> testSuspendForSnapshot [
 	self deny: delay isExpired.
 	scheduler simulate_vmMilliseconds: 23.
 	self assert: delay isExpired.
-	
-
 ]

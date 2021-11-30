@@ -128,7 +128,6 @@ Time class >> dateAndTimeFromSeconds: secondCountSinceEpoch [
 { #category : #'*Kernel-Chronology-Extras' }
 Time class >> fromString: aString [
 	^ self readFrom: aString readStream.
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -165,7 +164,6 @@ Time class >> hour: hour minute: minute second: second  nanoSecond: nanoCount [
 Time class >> midnight [
 
 	^ self seconds: 0
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -178,7 +176,6 @@ Time class >> milliseconds: currentTime since: lastTime [
 	^ delta < 0
 		ifTrue: [SmallInteger maxVal + delta]
 		ifFalse: [delta]
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
@@ -200,7 +197,6 @@ Time class >> millisecondsToRun: timedBlock [
 Time class >> noon [
 
 	^ self seconds: (SecondsInDay / 2)
-
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }

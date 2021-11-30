@@ -646,7 +646,7 @@ EncoderForSistaV1 class >> literalIndexOfBytecodeAt: pc in: aCompiledMethod [
 EncoderForSistaV1 class >> literalMethodBytecodes [
 	"#[32 92] means pushConstant: x, returnTop" 
 	
-	^ #[32 92] 
+	^ #[32 92]
 ]
 
 { #category : #'compiled method support' }
@@ -776,7 +776,7 @@ EncoderForSistaV1 class >> numLocalTempsForBlockAt: startpc in: method [
 	"**	250		11111010 	eeiiikkk		jjjjjjjj		Push Closure Num Copied iii (+ExtA//16*8) Num Args kkk (+ ExtA\\16*8) BlockSize jjjjjjjj (+ExtB*256). ee = num extensions"
 	^ BlockLocalTempCounter
 		tempCountForBlockAt: startpc - 3 - (((method at: startpc - 2) >> 6) * 2)
-		in: method 
+		in: method
 ]
 
 { #category : #'compiled method support' }
@@ -868,7 +868,7 @@ EncoderForSistaV1 class >> sendsToSuperFor: compiledMethod [
 
 { #category : #'bytecode decoding' }
 EncoderForSistaV1 class >> specialLiterals [
-	^ #(true false nil 0 1) 
+	^ #(true false nil 0 1)
 ]
 
 { #category : #'bytecode decoding' }
@@ -1236,7 +1236,6 @@ EncoderForSistaV1 >> genPushThisProcess [
 	stream nextPut: 225.
 	stream nextPut: 1.
 	stream nextPut: 82.
-
 ]
 
 { #category : #'bytecode generation' }
@@ -1358,7 +1357,7 @@ EncoderForSistaV1 >> genSignedSingleExtendB: extendedIndex [
 	"225		11100001	sbbbbbbb	Extend B (Ext B = Ext B prev * 256 + Ext B)"
 	stream
 		nextPut: 225;
-		nextPut: (extendedIndex >= 0 ifTrue: [extendedIndex] ifFalse: [extendedIndex + 256]) 
+		nextPut: (extendedIndex >= 0 ifTrue: [extendedIndex] ifFalse: [extendedIndex + 256])
 ]
 
 { #category : #'bytecode generation' }
@@ -1542,5 +1541,5 @@ EncoderForSistaV1 >> sizePushFullClosure: compiledBlockLiteralIndex numCopied: n
 
 { #category : #'special literal encodings' }
 EncoderForSistaV1 >> sizePushFullClosure: compiledBlockLiteralIndex numCopied: numCopied receiverOnStack: rcvrOnStack ignoreOuterContext: ignoreOuterContext [
-	^self sizeOpcodeSelector: #genPushFullClosure:numCopied:receiverOnStack:ignoreOuterContext: withArguments: {compiledBlockLiteralIndex.numCopied.rcvrOnStack.ignoreOuterContext} 
+	^self sizeOpcodeSelector: #genPushFullClosure:numCopied:receiverOnStack:ignoreOuterContext: withArguments: {compiledBlockLiteralIndex.numCopied.rcvrOnStack.ignoreOuterContext}
 ]

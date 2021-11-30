@@ -167,10 +167,6 @@ Context class >> initializeTryNamedPrimitiveTemplateMethod [
 				source: source;
 				compile.
 	TryNamedPrimitiveTemplateMethod := method copyWithSource: source.
-
-
-
-	
 ]
 
 { #category : #'instance creation' }
@@ -207,7 +203,6 @@ Context class >> primitiveFailToken [
 Context class >> primitiveFailTokenFor: errorCode [
 
 	^ { PrimitiveFailToken. errorCode }
-
 ]
 
 { #category : #'instance creation' }
@@ -390,7 +385,6 @@ Context >> blockReturnConstant: value [
 	activation. "
 	self assert: closureOrNil isClosure.
 	^ self return: value from: self
-
 ]
 
 { #category : #'instruction decoding' }
@@ -414,7 +408,6 @@ Context >> canHandleSignal: exception [
 
 	^ (self exceptionClass handles: exception)
 		or: [ self nextHandlerContext canHandleSignal: exception ].
-
 ]
 
 { #category : #'private - exceptions' }
@@ -503,7 +496,6 @@ Context >> cut: aContext [
 			aContext ifNotNil: [
 				self error: 'aContext not a sender' ]]].
 	callee privSender: nil.
-
 ]
 
 { #category : #printing }
@@ -740,21 +732,18 @@ Context >> evaluateSignal: exception [
 Context >> exception [
 	"signaling context (Context>>evaluateSignal:) only. Access the exception argument."
 	^self tempAt: 1
-
 ]
 
 { #category : #'special context access' }
 Context >> exceptionClass [
 	"handlercontext only. access temporaries from BlockClosure>>#on:do:"
 	^self tempAt: 1
-
 ]
 
 { #category : #'special context access' }
 Context >> exceptionHandlerBlock [
 	"handlercontext only. access temporaries from BlockClosure>>#on:do:"
 	^self tempAt: 2
-
 ]
 
 { #category : #'private - exceptions' }
@@ -946,7 +935,7 @@ Context >> isDead [
 { #category : #testing }
 Context >> isExecutingBlock [
 	"for compatibility"
-	^self isBlockContext 
+	^self isBlockContext
 ]
 
 { #category : #private }
@@ -1630,7 +1619,6 @@ Context >> resume: value [
 	"Unwind thisContext to self and resume with value as result of last send.  Execute unwind blocks when unwinding.  ASSUMES self is a sender of thisContext"
 	
 	self resume: value through: (thisContext findNextUnwindContextUpTo: self)
-	
 ]
 
 { #category : #controlling }
@@ -1652,7 +1640,6 @@ Context >> resume: value through: firstUnwindContext [
 		context := context findNextUnwindContextUpTo: self].
 	thisContext terminateTo: self.
 	^value
-
 ]
 
 { #category : #controlling }
@@ -1675,7 +1662,6 @@ Context >> resumeEvaluating: aBlock [
 	].
 	thisContext terminateTo: self.
 	^aBlock value
-
 ]
 
 { #category : #controlling }
@@ -1707,7 +1693,6 @@ Context >> return: value from: aSender [
 	self releaseTo: newTop.
 	newTop ifNotNil: [ newTop push: value ].
 	^ newTop
-
 ]
 
 { #category : #controlling }
@@ -1755,7 +1740,6 @@ Context >> runUntilErrorOrReturnFrom: aSender [
 		aSender terminateTo: context sender.  "remove above ensure and handler contexts"
 		{topContext. error}
 	].
-
 ]
 
 { #category : #'debugger access' }
@@ -1868,8 +1852,6 @@ Context >> setNamedPrimitiveInformationFrom: fromMethod toMethod: toMethod [
 	| spec |	
 	spec := toMethod literalAt: 1.	
 	spec replaceFrom: 1 to: spec size with: (fromMethod literalAt: 1) startingAt: 1.
-	
-
 ]
 
 { #category : #private }
@@ -1930,7 +1912,6 @@ Context >> singleRelease [
 			self at: i put: nil ]].
 	sender := nil.
 	pc := nil.
-
 ]
 
 { #category : #accessing }
@@ -2120,7 +2101,6 @@ Context >> terminate [
 
 	sender := nil.
 	pc := nil.
-
 ]
 
 { #category : #controlling }
@@ -2166,7 +2146,6 @@ Context >> tryNamedPrimitiveIn: aCompiledMethod for: aReceiver withArgs: argumen
 		withoutPrimitiveTryNamedPrimitiveIn: aCompiledMethod
 		for: aReceiver
 		withArgs: arguments
-
 ]
 
 { #category : #private }
@@ -2184,21 +2163,18 @@ Context >> tryPrimitiveFor: aMethod receiver: aReceiver args: arguments [
 Context >> unwindBlock [
 	"unwindContext only. access temporaries from BlockClosure>>#ensure: and BlockClosure>>#ifCurtailed:"
 	^self tempAt: 1
-
 ]
 
 { #category : #'special context access' }
 Context >> unwindComplete [
 	"unwindContext only. access temporaries from BlockClosure>>#ensure: and BlockClosure>>#ifCurtailed:"
 	^self tempAt: 2
-
 ]
 
 { #category : #'special context access' }
 Context >> unwindComplete: aBoolean [
 	"unwindContext only. access temporaries from BlockClosure>>#ensure: and BlockClosure>>#ifCurtailed:"
 	self tempAt: 2 put: aBoolean
-
 ]
 
 { #category : #'private - exceptions' }
@@ -2227,7 +2203,6 @@ Context >> unwindTo: aContext [
 			context unwindComplete: true.
 			unwindBlock := context unwindBlock.
 			unwindBlock value ]].
-
 ]
 
 { #category : #private }

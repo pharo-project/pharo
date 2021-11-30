@@ -9,5 +9,4 @@ DateTest >> testStoring [
 	self	
 		assert: actual equals: expected;
 		assert: (Smalltalk compiler evaluate: expected) equals: june2nd1973. "Evaluating expected to avoid surprises when evaluating"
-
 ]

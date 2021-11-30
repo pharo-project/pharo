@@ -80,7 +80,6 @@ PharoBootstrapRule >> bootstrapPackages [
 	#'PharoBootstrap-Initialization'
 	#'Transcript-NonInteractive'
 	)
-
 ]
 
 { #category : #helpers }

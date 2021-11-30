@@ -12,9 +12,6 @@ SharedPool class >> bindingOf: varName [
 	"Answer the binding of some variable resolved in the scope of the receiver"
 
 	^ (self localBindingOf: varName) ifNil: [ self superclass bindingOf: varName ]
- 
-	
-
 ]
 
 { #category : #'name lookup' }
