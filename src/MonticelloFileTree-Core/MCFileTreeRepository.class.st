@@ -113,7 +113,7 @@ MCFileTreeRepository class >> urlAsFileReference: aZnUrl [
 	(path ifNotEmpty: [ path first = #'.' or: [ path first = #'..' ] ])
 		ifTrue: [ ^ (RelativePath withAll: path) asFileReference ].
 
-	^ (AbsolutePath withAll: path) asFileReference 
+	^ (AbsolutePath withAll: path) asFileReference
 ]
 
 { #category : #accessing }
@@ -403,7 +403,6 @@ MCFileTreeRepository >> writeRepositoryProperties [
                 nextPutAll: ',';
                 lf ] ].
       fileStream nextPutAll: ' }' ]
-
 ]
 
 { #category : #'i/o' }

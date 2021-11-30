@@ -156,7 +156,6 @@ MCConfiguration class >> whatChangedFrom: oldConfig to: newConfig on: aStream [
 	oldDeps do: [:old |
 		self changesIn: old package from: old versionInfo to: nil on: aStream.
 	].
-
 ]
 
 { #category : #faking }
@@ -223,7 +222,6 @@ MCConfiguration >> diffBaseFor: aDependency [
 { #category : #accessing }
 MCConfiguration >> fileName [
 	^ self name, '.', self writerClass extension
-
 ]
 
 { #category : #actions }
@@ -288,7 +286,6 @@ MCConfiguration >> logError: aString [
 		cr; nextPutAll: 'ERROR: ';
 		nextPutAll: aString; cr;
 		flush.
-
 ]
 
 { #category : #logging }
@@ -313,7 +310,6 @@ MCConfiguration >> logWarning: aString [
 		cr; nextPutAll: 'WARNING: ';
 		nextPutAll: aString; cr;
 		flush.
-
 ]
 
 { #category : #actions }
@@ -414,7 +410,6 @@ MCConfiguration >> updateFromImage [
 				dep package workingCopy in: [:wc |
 					MCVersionDependency package: wc package info: wc ancestors first]]
 			ifFalse: [dep]]).
-
 ]
 
 { #category : #updating }
@@ -450,7 +445,6 @@ MCConfiguration >> updateFromRepositories [
 	] displayingProgress: 'downloading new versions'.
 
 	self dependencies: newDeps.
-
 ]
 
 { #category : #actions }
@@ -472,7 +466,6 @@ MCConfiguration >> upgradeByLoading [
 		displayingProgress: 'finding packages'.
 
 	^self loadVersions: versions
-
 ]
 
 { #category : #actions }
@@ -487,7 +480,6 @@ MCConfiguration >> upgradeByMerging [
 	^(versions noneSatisfy: [:ver | self mustMerge: ver])
 		ifTrue: [self loadVersions: versions]
 		ifFalse: [self mergeVersionsSilently: versions].
-
 ]
 
 { #category : #private }
@@ -513,5 +505,5 @@ MCConfiguration >> versionNamed: verName for: aDependency from: repo [
 
 { #category : #accessing }
 MCConfiguration >> writerClass [
-	^ MCMcmWriter 
+	^ MCMcmWriter
 ]

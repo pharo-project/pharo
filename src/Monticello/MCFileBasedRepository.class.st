@@ -104,7 +104,6 @@ MCFileBasedRepository >> basicStoreVersion: aVersion [
 	aVersion isCacheable ifTrue: [
 		cache ifNil: [cache := Dictionary new].
 		cache at: aVersion fileName put: aVersion].
-
 ]
 
 { #category : #accessing }
@@ -146,7 +145,7 @@ MCFileBasedRepository >> closestAncestorVersionFor: anAncestry ifNone: errorBloc
 
 { #category : #accessing }
 MCFileBasedRepository >> filterFileNames: aCollection forVersionNamed: aString [
-	^ aCollection select: [:ea | (self versionNameFromFileName: ea) = aString] 
+	^ aCollection select: [:ea | (self versionNameFromFileName: ea) = aString]
 ]
 
 { #category : #private }
@@ -188,7 +187,6 @@ MCFileBasedRepository >> loadVersionFromFileNamed: aString [
 { #category : #loading }
 MCFileBasedRepository >> loadVersionInfoFromFileNamed: aString [
 	^ self versionReaderForFileNamed: aString do: [:r | r info]
-	
 ]
 
 { #category : #caching }
@@ -266,7 +264,6 @@ MCFileBasedRepository >> storeVersion: aVersion [
 MCFileBasedRepository >> updateCachedVersionFromFileName: aString with: aVersion [
 	self resizeCache: cache.
 	(aVersion notNil and: [aVersion isCacheable]) ifTrue: [cache at: aString put: aVersion].
-
 ]
 
 { #category : #accessing }

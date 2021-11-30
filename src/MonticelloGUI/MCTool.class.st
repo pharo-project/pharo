@@ -53,7 +53,7 @@ MCTool >> accept [
 { #category : #utilities }
 MCTool >> allManagers [
 
-	^ MCWorkingCopy allManagers 
+	^ MCWorkingCopy allManagers
 ]
 
 { #category : #'morphic ui' }

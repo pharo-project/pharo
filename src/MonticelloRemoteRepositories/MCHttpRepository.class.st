@@ -33,7 +33,6 @@ MCHttpRepository class >> basicFromUrl: aZnUrl [
 { #category : #initialization }
 MCHttpRepository class >> clearPasswords [
 	self allSubInstancesDo: [:ea | ea password: ''].
-
 ]
 
 { #category : #'creation template' }
@@ -41,7 +40,6 @@ MCHttpRepository class >> creationTemplate [
 	^self creationTemplateLocation: self baseURL
 		user: ''
 		password: ''
-
 ]
 
 { #category : #'creation template' }
@@ -176,7 +174,6 @@ MCHttpRepository >> displayProgress: label during: workBlock [
 				ex resume.
 			]
 		].
-
 ]
 
 { #category : #printing }
@@ -397,7 +394,6 @@ MCHttpRepository >> versionReaderForFileNamed: aString [
 		super versionReaderForFileNamed: aString do:
 			[:r |
 			r ifNotNil: [readerCache at: aString put: r]]]
-	
 ]
 
 { #category : #actions }

@@ -43,7 +43,6 @@ MCCodeTool >> browseVersions [
 	Smalltalk tools versionBrowser  
 		browseVersionsForClass:  self selectedClassOrMetaClass 
 		selector: self selectedMessageName
-		
 ]
 
 { #category : #menus }
@@ -157,7 +156,6 @@ MCCodeTool >> methodListMenu: aMenu [
 				('Inheritance (i)'						methodHierarchy)
 				('Versions (v)'							browseVersions)) ].
 	^ aMenu
-
 ]
 
 { #category : #subclassresponsibility }

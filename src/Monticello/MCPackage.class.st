@@ -95,7 +95,6 @@ MCPackage >> snapshot [
 		displayingProgress: [ :ea| 'Snapshotting class ', ea asString ].
 		
 	^ MCSnapshot fromDefinitions: definitions
-
 ]
 
 { #category : #printing }

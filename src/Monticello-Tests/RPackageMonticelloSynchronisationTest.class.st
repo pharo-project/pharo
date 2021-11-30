@@ -13,8 +13,6 @@ RPackageMonticelloSynchronisationTest >> testAddMCPackageCreatesAPackage [
 	
 	MCWorkingCopy forPackage: (MCPackage new name: #Zork).
 	self assert: (self organizer includesPackageNamed: #Zork).
-		
-					  
 ]
 
 { #category : #'tests - operations on MCPackages' }
@@ -26,9 +24,6 @@ RPackageMonticelloSynchronisationTest >> testAddMCPackageForCategoryAlreadyExist
 	tmpPackage := self organizer packageNamed: #Zork.
 	MCWorkingCopy forPackage: (MCPackage new name: #Zork).
 	self assert: tmpPackage equals: (self organizer packageNamed: #Zork).
-		
-		
-					  
 ]
 
 { #category : #'tests - operations on MCPackages' }

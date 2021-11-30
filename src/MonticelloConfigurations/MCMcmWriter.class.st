@@ -13,8 +13,6 @@ MCMcmWriter class >> fileOut: aConfiguration on: aStream [
 	inst := self on: aStream.
 	inst writeConfiguration: aConfiguration.
 	inst close.
-	
-
 ]
 
 { #category : #accessing }

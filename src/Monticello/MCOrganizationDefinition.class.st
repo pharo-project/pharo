@@ -66,8 +66,6 @@ MCOrganizationDefinition >> commonPrefix [
 	^(prefix notEmpty and: [ prefix endsWith: '-' ])
 		ifTrue: [ prefix allButLast ]
 		ifFalse: [ prefix ].
-	
-
 ]
 
 { #category : #accessing }

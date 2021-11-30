@@ -79,7 +79,6 @@ MCModification >> printAnnotations: request on: aStream [
 { #category : #accessing }
 MCModification >> summarySuffix [
 	^ modification summarySuffixOver: obsoletion
-
 ]
 
 { #category : #printing }
@@ -99,7 +98,6 @@ MCModification >> summarySuffixOver: previousDefinition [
 	^categoryChanged
 		ifTrue: [ ' (only recategorized)' ]
 		ifFalse: [ ' (only different time stamp)' ]
-
 ]
 
 { #category : #accessing }

@@ -21,7 +21,6 @@ MCFileInTest >> assertFileOutFrom: writerClass canBeFiledInWith: aBlock [
 	self assertSuccessfulLoadWith: aBlock.
 	self mockPackage unload.
 	self assertSuccessfulLoadWith: aBlock.
-
 ]
 
 { #category : #testing }
@@ -76,5 +75,4 @@ MCFileInTest >> testStWriter [
 	self
 		assertFileOutFrom: MCStWriter
 		canBeFiledInWith: [ CodeImporter evaluateReadStream: stream readStream].
-
 ]

@@ -77,7 +77,6 @@ MethodAddition >> notifyObservers [
        			SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: priorCategoryOrNil ] ].
 	"The following code doesn't seem to do anything."
 	myClass instanceSide noteCompilationOfMethod: compiledMethod meta: myClass isClassSide.
-
 ]
 
 { #category : #accessing }
@@ -96,5 +95,4 @@ MethodAddition >> writeSourceToLog [
 		myClass logMethodSource: text forMethod: compiledMethod
 			inCategory: category withStamp: changeStamp
 	].
-
 ]

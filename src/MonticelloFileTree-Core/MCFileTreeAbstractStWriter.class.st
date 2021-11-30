@@ -91,8 +91,6 @@ MCFileTreeAbstractStWriter >> visitClassTraitDefinition: definition [
 { #category : #visiting }
 MCFileTreeAbstractStWriter >> visitMetaclassDefinition: definition [
     "handled by class definition"
-
-
 ]
 
 { #category : #visiting }
@@ -140,7 +138,6 @@ MCFileTreeAbstractStWriter >> writeClassDefinition: definition [
 { #category : #writing }
 MCFileTreeAbstractStWriter >> writeClassTraitDefinition: definition [
     stWriter visitClassTraitDefinition: definition.
-
 ]
 
 { #category : #initialization }

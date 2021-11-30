@@ -33,7 +33,7 @@ MCSnapshotTest >> createSnapshotWithClassWithClassSideTraits [
 				classTraitComposition: (t1 classTrait + t2 classTrait - #m1);
 				package: 'Monticello-Snapshot-Mock'].
 
-	^ (MCWorkingCopy forPackage: (MCPackage new name: 'Monticello-Snapshot-Mock')) snapshot. 
+	^ (MCWorkingCopy forPackage: (MCPackage new name: 'Monticello-Snapshot-Mock')) snapshot.
 ]
 
 { #category : #running }
@@ -63,7 +63,7 @@ MCSnapshotTest >> createSnapshotWithTraitWithClassSideTraits [
 			package:  'Monticello-Snapshot-Mock';
 			beTrait ].					
 
-	^ (MCWorkingCopy forPackage: (MCPackage new name: 'Monticello-Snapshot-Mock')) snapshot. 
+	^ (MCWorkingCopy forPackage: (MCPackage new name: 'Monticello-Snapshot-Mock')) snapshot.
 ]
 
 { #category : #utilities }
@@ -101,8 +101,6 @@ MCSnapshotTest >> testClassWithClassTraitCompositionHasCorrectTraitComposition [
 	def := self lookupClass: #C1 in: definitions.
 	
 	self assert: def classTraitComposition equals: '(T1 classTrait + T2 classTrait) - {#m1}'
-
-
 ]
 
 { #category : #tests }
@@ -113,9 +111,6 @@ MCSnapshotTest >> testClassWithClassTraitCompositionHasTraitComposition [
 	def := self lookupClass: #C1 in: definitions.
 	
 	self assert: def hasClassTraitComposition.
-
-
-
 ]
 
 { #category : #tests }
@@ -125,7 +120,6 @@ MCSnapshotTest >> testCreation [
 	self assert: (d anySatisfy: [:ea | ea isClassDefinition and: [ea className = #MCMockClassA]]).
 	self assert: (d anySatisfy: [:ea | ea isMethodDefinition and: [ea selector = #mockClassExtension]]).
 	self assert: (d allSatisfy: [:ea | ea isClassDefinition not or: [ea category endsWith: 'Mocks']]).
-	
 ]
 
 { #category : #tests }
@@ -136,8 +130,6 @@ MCSnapshotTest >> testTraitWithClassTraitCompositionHasCorrectTraitComposition [
 	def := self lookupTrait: #T3 in: definitions.
 	
 	self assert: def classTraitComposition equals: '(T1 classTrait + T2 classTrait) - {#m1}'
-
-
 ]
 
 { #category : #tests }
@@ -148,7 +140,4 @@ MCSnapshotTest >> testTraitWithClassTraitCompositionHasTraitComposition [
 	def := self lookupTrait: #T3 in: definitions.
 	
 	self assert: def hasClassTraitComposition.
-
-
-
 ]

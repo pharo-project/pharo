@@ -17,8 +17,6 @@ MCMczWriter class >> fileOut: aVersion on: aStream [
 	inst := self on: aStream.
 	inst writeVersion: aVersion.
 	inst flush.
-	
-
 ]
 
 { #category : #accessing }
@@ -30,16 +28,14 @@ MCMczWriter class >> readerClass [
 MCMczWriter >> addString: string at: path [
 	| member |
 	member := zip addString: string as: path.
-	member desiredCompressionMethod: ZipArchive compressionDeflated 
-	
+	member desiredCompressionMethod: ZipArchive compressionDeflated
 ]
 
 { #category : #writing }
 MCMczWriter >> addString: string at: path encodedTo: encodingName [
 	| member |
 	member := zip addString: (string encodeWith: encodingName) as: path.
-	member desiredCompressionMethod: ZipArchive compressionDeflated 
-	
+	member desiredCompressionMethod: ZipArchive compressionDeflated
 ]
 
 { #category : #writing }
@@ -56,7 +52,6 @@ MCMczWriter >> format [
 MCMczWriter >> initialize [
 	super initialize.
 	zip := ZipArchive new.
-
 ]
 
 { #category : #serializing }
@@ -135,7 +130,6 @@ MCMczWriter >> writeVersionInfo: aVersionInfo [
 	| string |
 	string := self serializeVersionInfo: aVersionInfo.
 	self addString: string at: 'version' encodedTo: 'utf8'.
-
 ]
 
 { #category : #accessing }

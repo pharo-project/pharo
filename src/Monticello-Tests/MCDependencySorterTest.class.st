@@ -45,7 +45,7 @@ MCDependencySorterTest >> testCascadingUnresolved [
 		(c () ()))
 	orderAs: #(c)
 	withRequired: #(z)
-	toLoad: #(a b)	
+	toLoad: #(a b)
 ]
 
 { #category : #tests }
@@ -55,7 +55,7 @@ MCDependencySorterTest >> testCycle [
 		(b (y) (x)))
 	orderAs: #()
 	withRequired: #()
-	toLoad: #(a b)	
+	toLoad: #(a b)
 ]
 
 { #category : #tests }
@@ -98,7 +98,6 @@ MCDependencySorterTest >> testSimpleUnresolved [
 	orderAs: #()
 	withRequired: #(z)
 	toLoad: #(a)
-		
 ]
 
 { #category : #tests }
@@ -109,5 +108,5 @@ MCDependencySorterTest >> testUnusedAlternateProvider [
 		(c (x) ()))
 	orderAs: #(c b)
 	withRequired: #(z)
-	toLoad: #(a)	
+	toLoad: #(a)
 ]

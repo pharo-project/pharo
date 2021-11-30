@@ -69,7 +69,6 @@ MCClassDefinition >> accept: aVisitor [
 	aVisitor visitClassDefinition: self.
 	(self hasClassInstanceVariables or: [self hasClassTraitComposition])
 		ifTrue: [aVisitor visitMetaclassDefinition: self].
-
 ]
 
 { #category : #accessing }
@@ -127,7 +126,7 @@ MCClassDefinition >> classTraitComposition [
 
 { #category : #accessing }
 MCClassDefinition >> classTraitCompositionCompiled [
-		^(Smalltalk compiler evaluate: self classTraitCompositionString) asTraitComposition 
+		^(Smalltalk compiler evaluate: self classTraitCompositionString) asTraitComposition
 ]
 
 { #category : #accessing }
@@ -145,7 +144,6 @@ MCClassDefinition >> classVariables [
 	^self needsSlotClassDefinition 
 		ifTrue: [self sortedVariablesOfType: #isClassVariable ]
 		ifFalse: [(self classVariablesString substrings: ' ') collect: [:x | x asSymbol => ClassVariable]].
-
 ]
 
 { #category : #printing }
@@ -214,7 +212,6 @@ MCClassDefinition >> defaultCommentStamp [
 	^ (Smalltalk globals at: name ifPresent: [:c | c organization commentStamp])
 		ifNil: ['']
 	"
-
 ]
 
 { #category : #printing }
@@ -225,7 +222,6 @@ MCClassDefinition >> definitionString [
 { #category : #accessing }
 MCClassDefinition >> description [
 	^ Array with: name
-
 ]
 
 { #category : #testing }
@@ -496,7 +492,6 @@ MCClassDefinition >> sortedVariables [
 MCClassDefinition >> sortedVariablesOfType: aSymbol [
 	"version for complex vars, { definition . definition }"
 	^(((self selectVariables: aSymbol) asSortedCollection collect: [:each | Smalltalk compiler evaluate: each])) asArray.
-		
 ]
 
 { #category : #printing }
@@ -552,7 +547,7 @@ MCClassDefinition >> traitComposition [
 
 { #category : #accessing }
 MCClassDefinition >> traitCompositionCompiled [
-	^(Smalltalk compiler evaluate: self traitCompositionString) asTraitComposition 
+	^(Smalltalk compiler evaluate: self traitCompositionString) asTraitComposition
 ]
 
 { #category : #accessing }

@@ -22,7 +22,7 @@ MCWriter class >> on: aStream [
 
 { #category : #accessing }
 MCWriter class >> readerClass [
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }

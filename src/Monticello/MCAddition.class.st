@@ -57,7 +57,7 @@ MCAddition >> isClassPatch [
 
 { #category : #accessing }
 MCAddition >> targetClass [
-	^definition actualClass 
+	^definition actualClass
 ]
 
 { #category : #accessing }

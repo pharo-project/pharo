@@ -50,5 +50,4 @@ Object >> storeDataOn: aDataStream [
 	(self class isBits) ifFalse: [
 		1 to: cntIndexedVars do:
 			[:i | aDataStream nextPut: (self basicAt: i)]].
-
 ]

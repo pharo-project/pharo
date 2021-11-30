@@ -24,7 +24,6 @@ MCSnapshotBrowser >> allClassNames [
 	^ (items 
 		select: [:ea | (ea isOrganizationDefinition | ea isScriptDefinition) not]
 		thenCollect: [:ea | ea className]) asSet.
-
 ]
 
 { #category : #'morphic ui' }
@@ -61,7 +60,6 @@ MCSnapshotBrowser >> categorySelection: aNumber [
 	self classSelection: 0.
 	self changed: #categorySelection;
 		changed: #classList.
-
 ]
 
 { #category : #text }
@@ -115,7 +113,6 @@ MCSnapshotBrowser >> classSelection: aNumber [
 	self changed: #classSelection; 
 		changed: #protocolList;
 		changed: #methodList.
-
 ]
 
 { #category : #'morphic ui' }
@@ -241,9 +238,7 @@ MCSnapshotBrowser >> methodsForSelectedProtocol [
 	methods := self methodsForSelectedClass asOrderedCollection.
 	(protocolSelection = '-- all --') 
 		ifFalse: [methods removeAllSuchThat: [:ea | ea category ~= protocolSelection]].
-	^ methods 
-	
-								
+	^ methods
 ]
 
 { #category : #accessing }
@@ -329,7 +324,6 @@ MCSnapshotBrowser >> selectedMessageCategoryName [
 { #category : #accessing }
 MCSnapshotBrowser >> selectedMessageName [
 	^methodSelection ifNotNil: [^ methodSelection selector ].
-
 ]
 
 { #category : #switch }
@@ -433,7 +427,7 @@ MCSnapshotBrowser >> visibleProtocols [
 	methods := self methodsForSelectedClass.
 	protocols := (methods collect: [:ea | ea category]) asSet asSortedCollection.
 	protocols add: AllProtocol defaultName.
-	^ protocols 
+	^ protocols
 ]
 
 { #category : #'morphic ui' }
@@ -446,5 +440,5 @@ MCSnapshotBrowser >> widgetSpecs [
 		((listMorph:selection:menu:keystroke:  methodList methodSelection methodListMenu: methodListKey:from:) (0.75 0 1 0.4))
 		((buttonRow) (0.25 0.4 0.5 0.4) (0 -30 0 0))
 		((textMorph: text) (0 0.4 1 1))
-		) 
+		)
 ]

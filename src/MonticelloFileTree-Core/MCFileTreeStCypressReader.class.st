@@ -86,8 +86,6 @@ MCFileTreeStCypressReader >> addClassDefinitionFrom: classPropertiesDict comment
         type: (classPropertiesDict at: 'type' ifAbsent: [ 'normal' ]) asSymbol
         comment: classComment
         commentStamp: (classPropertiesDict at: 'commentStamp' ifAbsent: [ '' ]))
-
-
 ]
 
 { #category : #utilities }
@@ -268,13 +266,11 @@ MCFileTreeStCypressReader >> loadVersionInfo [
     author: ''
     ancestors: #()
     stepChildren: #()
-
 ]
 
 { #category : #utilities }
 MCFileTreeStCypressReader >> methodSelectorFor: source [
     ^ Object compilerClass new parseSelector: source
-
 ]
 
 { #category : #accessing }
@@ -325,7 +321,6 @@ MCFileTreeStCypressReader >> validateExtensionMethodCategory: categoryName for: 
       'Method protocol ' , categoryName printString , ' for the method '
         , selector asString printString , ' in class ' , className printString
         , ' is inconsistent with the package name ' , prefix printString
-
 ]
 
 { #category : #validation }

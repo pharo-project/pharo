@@ -36,5 +36,5 @@ MCWorkingCopyForExtensionsTest >> testAddingExtensionMethodNotMatchingPackage [
 	self deny: (RPackageOrganizer default includesPackageNamed: 'Atestpackage-something-else').
 	self assert: ('ATestPackage' asPackage extendedClasses includes: aClass).
 
-	MCWorkingCopy registry at: (MCPackage named: 'atestpackage-something-else') ifPresent: [ self fail ].	
+	MCWorkingCopy registry at: (MCPackage named: 'atestpackage-something-else') ifPresent: [ self fail ].
 ]

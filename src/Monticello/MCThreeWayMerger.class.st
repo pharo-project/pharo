@@ -22,7 +22,6 @@ MCThreeWayMerger class >> base: aSnapshot patch: aPatch [
 		addBaseSnapshot: aSnapshot;
 		applyPatch: aPatch;
 		yourself
-		
 ]
 
 { #category : #'instance creation' }

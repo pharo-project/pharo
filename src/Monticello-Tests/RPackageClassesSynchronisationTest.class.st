@@ -158,8 +158,7 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassRegisterTheClassMetho
 
 	self deny: (XPackage includesSelector: #method3 ofClass: class ). 
 	self assert: (YPackage includesDefinedSelector: #method3 ofClass: class ). 
-	self deny: (ZPackage includesSelector: #method3 ofClass: class ). 
-
+	self deny: (ZPackage includesSelector: #method3 ofClass: class ).
 ]
 
 { #category : #'tests - recategorizing class' }
@@ -213,7 +212,7 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassUpdateTheOrganizerMap
 	YPackage := self organizer packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	class category: 'YYYYY'.	
-	self assert: (self organizer packageOf: class) equals: YPackage		
+	self assert: (self organizer packageOf: class) equals: YPackage
 ]
 
 { #category : #'tests - recategorizing class' }
@@ -274,7 +273,7 @@ RPackageClassesSynchronisationTest >> testRemoveClassUnregisterTheClassDefinedMe
 	self createMethodNamed: 'stubMethod' inClass: class  inCategory: 'classic category'. 
 	
 	Smalltalk removeClassNamed: 'NewClass'. 
-	self deny: (XPackage includesSelector: #stubMethod ofClass: class). 
+	self deny: (XPackage includesSelector: #stubMethod ofClass: class).
 ]
 
 { #category : #'tests - removing classes' }
@@ -289,7 +288,7 @@ RPackageClassesSynchronisationTest >> testRemoveClassUnregisterTheClassExtension
 	self createMethodNamed: 'stubMethod' inClass: class  inCategory: '*yyyyy'. 
 	
 	Smalltalk removeClassNamed: 'NewClass'. 
-	self deny: (YPackage includesSelector: #stubMethod ofClass: class). 
+	self deny: (YPackage includesSelector: #stubMethod ofClass: class).
 ]
 
 { #category : #'tests - removing classes' }

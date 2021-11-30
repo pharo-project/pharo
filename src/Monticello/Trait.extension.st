@@ -33,9 +33,6 @@ Trait >> asClassDefinition [
 				comment: self organization classComment asString
 				commentStamp: self organization commentStamp
 				]
-		
-	
-		
 ]
 
 { #category : #'*Monticello' }

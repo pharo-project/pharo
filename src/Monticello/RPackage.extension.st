@@ -18,7 +18,6 @@ RPackage >> mcPackage [
 	"Normally the corresponding MCPackage should exist, but in certain cases it could happen that it does not"
 	
 	^ self mcWorkingCopy ifNotNil: [ :workingCopy | workingCopy package ].
-	
 ]
 
 { #category : #'*Monticello-RPackage' }
@@ -27,5 +26,4 @@ RPackage >> mcWorkingCopy [
 	^ MCWorkingCopy allManagers 
 		detect: [ :each | each package name = name ]
 		ifNone: [ nil ].
-	
 ]

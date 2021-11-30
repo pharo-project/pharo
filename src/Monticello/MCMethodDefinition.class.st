@@ -96,7 +96,7 @@ MCMethodDefinition class >> initializersEnabled: aBoolean [
 { #category : #'system startup' }
 MCMethodDefinition class >> shutDown [
 	"Free up all cached monticello method definitions"
-	self flushMethodCache 
+	self flushMethodCache
 ]
 
 { #category : #comparing }
@@ -134,7 +134,6 @@ MCMethodDefinition >> addMethodAdditionTo: aCollection [
 	"This might raise an exception and never return"
 	methodAddition createCompiledMethod.
 	aCollection add: methodAddition.
-
 ]
 
 { #category : #'accessing - backward' }
@@ -207,7 +206,6 @@ source: sourceString [
 	timeStamp := timeString.
 	classIsMeta := metaBoolean.
 	source := sourceString withInternalLineEndings.
-
 ]
 
 { #category : #testing }
@@ -230,13 +228,11 @@ MCMethodDefinition >> isExternalStructureFieldDefinition [
 			and: [
 				(Smalltalk globals at: #ExternalStructure ifPresent: [:externalStructure |
 					self actualClass instanceSide inheritsFrom: externalStructure]) == true]]
-
 ]
 
 { #category : #testing }
 MCMethodDefinition >> isInitializer [
 	^ selector = #initialize and: [classIsMeta]
-	
 ]
 
 { #category : #testing }

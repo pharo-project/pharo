@@ -23,7 +23,6 @@ MCPatch class >> operations: aCollection [
 { #category : #applying }
 MCPatch >> applyTo: anObject [
 	operations do: [:ea | ea applyTo: anObject].
-
 ]
 
 { #category : #accessing }
@@ -50,7 +49,7 @@ MCPatch >> initializeWithBase: baseSnapshot target: targetSnapshot [
 		target
 			definitionLike: b
 			ifPresent: [:t |]
-			ifAbsent: [operations add: (MCRemoval of: b)]]		
+			ifAbsent: [operations add: (MCRemoval of: b)]]
 ]
 
 { #category : #intializing }

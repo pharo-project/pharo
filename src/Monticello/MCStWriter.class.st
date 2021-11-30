@@ -59,7 +59,6 @@ MCStWriter >> visitClassTraitDefinition: definition [
 		cr; tab;
 		nextPutAll: 'uses: ';
 		nextPutAll: (definition classTraitComposition ifNil: ['{}'])]
-
 ]
 
 { #category : #visiting }
@@ -79,13 +78,11 @@ MCStWriter >> visitMethodDefinition: definition [
 { #category : #visiting }
 MCStWriter >> visitOrganizationDefinition: defintion [
 	defintion categories do: [:cat | self writeCategory: cat].
-
 ]
 
 { #category : #visiting }
 MCStWriter >> visitScriptDefinition: definition [
 	self writeScriptDefinition: definition
-
 ]
 
 { #category : #visiting }

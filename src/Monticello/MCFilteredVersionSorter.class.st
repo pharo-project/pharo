@@ -14,7 +14,6 @@ Class {
 MCFilteredVersionSorter >> addVersionInfo: aVersionInfo [
 	(aVersionInfo hasAncestor: target)
 		ifTrue: [super addVersionInfo: aVersionInfo]
-
 ]
 
 { #category : #private }
@@ -27,7 +26,7 @@ MCFilteredVersionSorter >> processVersionInfo: aVersionInfo [
 				[:ea | self processVersionInfo: ea].
 	self popLayer.
 	success ifTrue: [self addToCurrentLayer: aVersionInfo].
-	^ success	
+	^ success
 ]
 
 { #category : #accessing }

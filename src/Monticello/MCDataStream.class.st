@@ -73,7 +73,7 @@ MCDataStream class >> fileNamed: fileName do: aBlock [
 
 { #category : #'initialize-release' }
 MCDataStream class >> initialize [
-	self initializeTypeMap 
+	self initializeTypeMap
 ]
 
 { #category : #'initialize-release' }
@@ -176,7 +176,6 @@ MCDataStream class >> on: aStream [
 	"Open a new DataStream onto a low-level I/O stream."
 
 	^ self basicNew setStream: aStream
-
 ]
 
 { #category : #'instance creation' }
@@ -202,7 +201,7 @@ MCDataStream class >> readOnlyFileNamed: fileName do: aBlock [
 { #category : #'initialize-release' }
 MCDataStream class >> readSelectors [
 	ReadSelectors ifNil: [ self initializeTypeMap ].
-	^ReadSelectors 
+	^ReadSelectors
 ]
 
 { #category : #'initialize-release' }

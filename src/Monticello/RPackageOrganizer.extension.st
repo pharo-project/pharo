@@ -1,15 +1,15 @@
 Extension { #name : #RPackageOrganizer }
 
 { #category : #'*Monticello-RPackage' }
-RPackageOrganizer class >> allManagers [
+RPackageOrganizer >> allManagers [
 
-	^ MCWorkingCopy allManagers
+	^ self class allManagers
 ]
 
 { #category : #'*Monticello-RPackage' }
-RPackageOrganizer >> allManagers [
+RPackageOrganizer class >> allManagers [
 
-	^ self class allManagers 
+	^ MCWorkingCopy allManagers
 ]
 
 { #category : #'*Monticello-RPackage' }
@@ -30,7 +30,6 @@ RPackageOrganizer >> initializeFromMC [
  	self packageClass 
 		withOrganizer: self  
 		do:  [  self basicInitializeFromMC ].
-
 ]
 
 { #category : #'*Monticello-RPackage' }
@@ -55,5 +54,4 @@ RPackageOrganizer >> updateAfterNewMCPackageRegistred: anAnnouncement [
 
 { #category : #'*Monticello-RPackage' }
 RPackageOrganizer >> updateAfterNewMCPackageUnregistred: anAnnouncement [
-
 ]

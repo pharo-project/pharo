@@ -97,7 +97,6 @@ MCDependencySorter >> itemsWithMissingRequirements [
 	items := Set new.
 	required do: [:ea | items addAll: ea].
 	^ items
-
 ]
 
 { #category : #sorting }

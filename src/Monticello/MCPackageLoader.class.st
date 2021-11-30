@@ -95,7 +95,6 @@ MCPackageLoader >> basicLoadDefinitions [
 	methodAdditions do: [ :each | each installMethod ].
 	methodAdditions do: [ :each | each notifyObservers ].
 	additions       do: [ :each | each postloadOver: (self obsoletionFor: each) ] displayingProgress: 'Initializing...'.
-	
 ]
 
 { #category : #private }
@@ -105,7 +104,7 @@ MCPackageLoader >> dependencyWarning [
 		s nextPutAll: 'This package depends on the following classes:'; cr.
 		requirements do: [:ea | s space; space; nextPutAll: ea; cr].
 		s nextPutAll: 'You must resolve these dependencies before you will be able to load these definitions: '; cr.
-		unloadableDefinitions do: [:ea | s space; space; nextPutAll: ea summary; cr]] 
+		unloadableDefinitions do: [:ea | s space; space; nextPutAll: ea summary; cr]]
 ]
 
 { #category : #private }
@@ -113,7 +112,7 @@ MCPackageLoader >> errorDefinitionWarning [
 	^ String streamContents:
 		[:s |
 		s nextPutAll: 'The following definitions had errors while loading.  Press Proceed to try to load them again (they may work on a second pass):'; cr.
-		errorDefinitions do: [:ea | s space; space; nextPutAll: ea summary; cr]] 
+		errorDefinitions do: [:ea | s space; space; nextPutAll: ea summary; cr]]
 ]
 
 { #category : #initialization }
@@ -122,8 +121,7 @@ MCPackageLoader >> initialize [
 	additions := OrderedCollection new.
 	removals := OrderedCollection new.
 	obsoletions := Dictionary new.
-	methodAdditions := OrderedCollection new. 
-
+	methodAdditions := OrderedCollection new.
 ]
 
 { #category : #public }
@@ -131,7 +129,6 @@ MCPackageLoader >> installSnapshot: aSnapshot [
 	| patch |
 	patch := aSnapshot patchRelativeToBase: MCSnapshot empty.
 	patch applyTo: self.
-
 ]
 
 { #category : #public }
@@ -224,7 +221,6 @@ MCPackageLoader >> updatePackage: aPackage withSnapshot: aSnapshot [
 	patch := aSnapshot patchRelativeToBase: packageSnap.
 	patch applyTo: self.
 	packageSnap definitions do: [:ea | self provisions addAll: ea provisions]
-
 ]
 
 { #category : #private }
@@ -235,7 +231,6 @@ MCPackageLoader >> useChangeSetNamed: baseName during: aBlock [
 	newChanges := (ChangeSet named: baseName) ifNil: [ ChangeSet new name: baseName ].
 	ChangeSet newChanges: newChanges.
 	aBlock ensure: [ ChangeSet newChanges: oldChanges ].
-
 ]
 
 { #category : #private }
@@ -262,5 +257,4 @@ MCPackageLoader >> warnAboutDependencies [
 { #category : #private }
 MCPackageLoader >> warnAboutErrors [
 	self notify: self errorDefinitionWarning.
-
 ]

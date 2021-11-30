@@ -71,6 +71,4 @@ MCChangeSelector >> widgetSpecs [
 		((buttonRow: #(('Select All' selectAll 'select all changes') ('Select None' selectNone 'select no changes'))) (0 0.4 1 0.4) (0 0 0 30))
 		((textMorph: text) (0 0.4 1 1) (0 30 0 0))
 		)
-
-	
 ]

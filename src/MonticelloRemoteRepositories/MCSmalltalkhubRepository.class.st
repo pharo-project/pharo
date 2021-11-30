@@ -23,7 +23,6 @@ MCSmalltalkhubRepository class >> creationTemplate [
 		project: ''
 		user: ''
 		password: ''
-
 ]
 
 { #category : #'creation template' }
@@ -116,7 +115,7 @@ MCSmalltalkhubRepository >> loadAllFileNames [
 
 { #category : #accessing }
 MCSmalltalkhubRepository >> location [
-	^ 'http://smalltalkhub.com/mc/', self owner, '/', self project, '/main/' 
+	^ 'http://smalltalkhub.com/mc/', self owner, '/', self project, '/main/'
 ]
 
 { #category : #accessing }

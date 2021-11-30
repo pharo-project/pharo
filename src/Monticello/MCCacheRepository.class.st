@@ -20,7 +20,6 @@ Class {
 { #category : #'accessing settings' }
 MCCacheRepository class >> cacheDirectory [
 	^self uniqueInstance directory asAbsolute
-	
 ]
 
 { #category : #'accessing settings' }
@@ -34,7 +33,7 @@ MCCacheRepository class >> cacheDirectory: directory [
 MCCacheRepository class >> default [
 	"This should be deleted as soon as Metacello is fixed"
 	self flag: #toBeDeleted.			
-	^ self uniqueInstance 
+	^ self uniqueInstance
 ]
 
 { #category : #defaults }
@@ -89,7 +88,6 @@ MCCacheRepository >> basicStoreVersion: aVersion [
 	
 	(aVersion isCacheable and: [(self includesFileNamed: aVersion fileName) not])
 		ifTrue: [super basicStoreVersion: aVersion]
-
 ]
 
 { #category : #accessing }

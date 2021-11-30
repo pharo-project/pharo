@@ -19,7 +19,6 @@ MCTraitDefinition class >> name: classNameString traitComposition: traitComposit
 		classInstVarNames: ''
 		comment: commentString
 		commentStamp: aString5
-
 ]
 
 { #category : #'instance creation api' }
@@ -34,8 +33,6 @@ MCTraitDefinition class >> name: classNameString traitComposition: traitComposit
 		classInstVarNames: civarArray
 		comment: commentString
 		commentStamp: commentStamp
-
-		
 ]
 
 { #category : #comparing }
@@ -55,7 +52,6 @@ MCTraitDefinition >> = aDefinition [
 { #category : #visiting }
 MCTraitDefinition >> accept: aVisitor [
 	^ aVisitor visitTraitDefinition: self
-
 ]
 
 { #category : #printing }
@@ -95,8 +91,6 @@ MCTraitDefinition >> createClass [
 { #category : #testing }
 MCTraitDefinition >> hasClassInstanceVariables [
 	^ false
-
-
 ]
 
 { #category : #comparing }
@@ -106,7 +100,6 @@ MCTraitDefinition >> hash [
 	hash := String stringHash: self traitCompositionString initialHash: hash.
 	hash := String stringHash: (category ifNil: ['']) initialHash: hash.
 	^ hash
-
 ]
 
 { #category : #initializing }
@@ -122,7 +115,6 @@ MCTraitDefinition >> initializeWithName: classNameString
 		comment := commentString withInternalLineEndings.
 		variables := OrderedCollection  new.
 		commentStamp :=  commentStampString ifNil: [self defaultCommentStamp]
-
 ]
 
 { #category : #initializing }
@@ -173,7 +165,6 @@ MCTraitDefinition >> initializeWithName: classNameString
 		commentStamp :=  commentStampString ifNil: [self defaultCommentStamp].
 		variables := OrderedCollection  new.
 		self addVariables: ivarArray ofType: MCInstanceVariableDefinition.
-
 ]
 
 { #category : #initializing }
@@ -224,7 +215,6 @@ MCTraitDefinition >> printDefinitionOn: stream [
 		 tab;
 		 nextPutAll: 'package: ';
 		 store: self category asString
-
 ]
 
 { #category : #comparing }

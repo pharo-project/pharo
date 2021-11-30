@@ -211,7 +211,6 @@ MCPackageManager class >> methodMoved: anEvent [
 { #category : #'system changes' }
 MCPackageManager class >> methodRemoved: anEvent [
 	self managersForClass: anEvent methodClass category: anEvent protocol do:[:mgr| mgr modified: true].
-
 ]
 
 { #category : #'system changes' }
@@ -261,7 +260,6 @@ MCPackageManager >> displayStringOn: stream [
 MCPackageManager >> initialize [
 	super initialize.
 	modified := false.
-
 ]
 
 { #category : #initialization }
@@ -285,7 +283,6 @@ MCPackageManager >> modified: aBoolean [
 		ifFalse: [ 
 			ChangesLog default logChange: '"' , self packageName , '"' ].
 	self announcer announce: (MCPackageModified package: self package)
-	
 ]
 
 { #category : #accessing }

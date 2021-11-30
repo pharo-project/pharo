@@ -107,7 +107,6 @@ MCStReader >> loadDefinitions [
 			definitions addAll: (self methodDefinitionsFor: ringClass classSide) ].
 	filePackage doIts 
 		do: [ :ea | self addDefinitionsFromDoit: ea contents ].
-	
 ]
 
 { #category : #reading }

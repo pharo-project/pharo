@@ -120,7 +120,6 @@ MCFileTreeStSnapshotWriter >> writeDefinitions: aCollection [
             ifFalse: [ 'instance' ])
         , self fileUtils pathNameDelimiter asString.
       self writeMethodDefinition: methodDefinition to: methodPath ]
-
 ]
 
 { #category : #writing }
@@ -166,7 +165,6 @@ MCFileTreeStSnapshotWriter >> writeMethodHolderDefinitions: aCollection extensio
                 writeMethodDefinition: methodDefinition
                 to: instanceMethodPath
                 filename: filename ] ] ]
-
 ]
 
 { #category : #writing }

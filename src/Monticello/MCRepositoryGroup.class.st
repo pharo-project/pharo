@@ -24,8 +24,7 @@ MCRepositoryGroup class >> withRepositories: aCollection [
 	| group |
 	group  := self new.
 	aCollection do: [ :each | group addRepository: each ].
-	^ group 
-		
+	^ group
 ]
 
 { #category : #adding }
@@ -98,7 +97,7 @@ MCRepositoryGroup >> includesVersionNamed: aString [
 			put: (repository includesVersionNamed: aString) ].
 
 	" check if any repository included the given versionName already"
-	^ results anySatisfy: [:result| result = true ]	
+	^ results anySatisfy: [:result| result = true ]
 ]
 
 { #category : #initialization }

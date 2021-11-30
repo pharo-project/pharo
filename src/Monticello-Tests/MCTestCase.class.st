@@ -32,7 +32,6 @@ MCTestCase >> assertSnapshot: actual matches: expected [
 	| diff |
 	diff := actual patchRelativeToBase: expected.
 	self assert: diff isEmpty
-
 ]
 
 { #category : #asserting }
@@ -184,7 +183,6 @@ MCTestCase >> mockVersionInfo: tag [
 		time: Time now
 		author: Author fullName
 		ancestors: #()
-
 ]
 
 { #category : #mocks }
@@ -197,7 +195,6 @@ MCTestCase >> mockVersionInfoWithAncestor: aVersionInfo [
 		time: Time now
 		author: Author fullName
 		ancestors: {aVersionInfo}
-
 ]
 
 { #category : #mocks }

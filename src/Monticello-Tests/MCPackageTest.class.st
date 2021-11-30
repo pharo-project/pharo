@@ -45,5 +45,4 @@ MCPackageTest >> testUnloadWithAdditionalTracking [
 	self assert: (mock subclasses detect: [ :c | c name = #MCMockClassA ] ifNone: [  ]) isNil.
 	SystemAnnouncer uniqueInstance unsubscribe: self.
 	self deny: (SystemAnnouncer uniqueInstance hasSubscriber: self ).
-
 ]

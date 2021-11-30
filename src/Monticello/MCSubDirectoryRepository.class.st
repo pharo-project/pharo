@@ -14,13 +14,12 @@ MCSubDirectoryRepository class >> description [
 
 { #category : #enumeration }
 MCSubDirectoryRepository >> allDirectories [
-	^directory allDirectories 
+	^directory allDirectories
 ]
 
 { #category : #'user interface' }
 MCSubDirectoryRepository >> description [
 	^ (directory / '*') fullName
-
 ]
 
 { #category : #'i/o' }
@@ -88,10 +87,6 @@ MCSubDirectoryRepository >> splitNameVersionExtensionFor: aBaseName [
 	file := aBaseName asFileReference.
 	version := (file extensions at: file extensions size - 1) asNumber.
 	^ { (file base copyUpTo: $.). version. file extension }.
-	
-	
-	
-
 ]
 
 { #category : #'i/o' }

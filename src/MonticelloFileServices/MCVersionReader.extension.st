@@ -7,7 +7,6 @@ MCVersionReader class >> fileReaderServicesForFile: fullName suffix: suffix [
 	^ ((suffix = class extension) or: [ suffix = '*' ])
 		ifTrue: [class services]
 		ifFalse: [Array new: 0]]
-		
 ]
 
 { #category : #'*MonticelloFileServices' }
@@ -17,7 +16,6 @@ MCVersionReader class >> loadVersionStream: stream fromDirectory: directory [
 	version := self versionFromStream: stream.
 	version workingCopy repositoryGroup addRepository: repository.
 	version load.
-
 ]
 
 { #category : #'*MonticelloFileServices' }

@@ -80,7 +80,6 @@ MCMczReader >> extractDefinitionsFrom: member [
 		ifNotNil: [:rc |
 			reader := rc on: (self contentsForMember: member) readStream.
 			definitions addAll: reader definitions]
-
 ]
 
 { #category : #parsing }
@@ -119,14 +118,12 @@ MCMczReader >> loadDefinitions [
 	"otherwise"
 	(self zip membersMatching: 'snapshot/*')
 		do: [:m | self extractDefinitionsFrom: m].
-
 ]
 
 { #category : #loading }
 MCMczReader >> loadDependencies [
 	dependencies := (self zip membersMatching: 'dependencies/*') collect: [:m | self extractDependencyFrom: m].
 	dependencies := dependencies asArray.
-
 ]
 
 { #category : #loading }

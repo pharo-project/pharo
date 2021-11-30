@@ -87,7 +87,7 @@ RPackageTraitSynchronisationTest >> testRemoveMethodComingFromTraitDoesNotRemove
 	
 	class removeSelector: #stubMethod.
 	self assert: (YPackage includesDefinedSelector: #stubMethod ofClass: trait). 
-	self deny: (XPackage includesDefinedSelector: #stubMethod ofClass: class). 
+	self deny: (XPackage includesDefinedSelector: #stubMethod ofClass: class).
 ]
 
 { #category : #'tests - operations on methods' }
@@ -127,7 +127,7 @@ RPackageTraitSynchronisationTest >> testRemoveTraitMethodOverridenByClassDoesRem
 	self createMethodNamed: 'stubMethod' inClass: class  inCategory: 'classic protocol'. 
 	
 	class removeSelector: #stubMethod.
-	self deny: (XPackage includesDefinedSelector: #stubMethod ofClass: class). 
+	self deny: (XPackage includesDefinedSelector: #stubMethod ofClass: class).
 ]
 
 { #category : #'tests - operations on methods' }

@@ -32,7 +32,6 @@ RPackageMCSynchronisationTest >> addXYCategory [
 
 	self addXCategory.
 	self addYCategory.
-			
 ]
 
 { #category : #utilities }
@@ -41,21 +40,18 @@ RPackageMCSynchronisationTest >> addXYZCategory [
 	self addXCategory.
 	self addYCategory.
 	self addZCategory.
-			
 ]
 
 { #category : #utilities }
 RPackageMCSynchronisationTest >> addYCategory [
 
 	testingEnvironment organization addCategory: 'YYYYY'.
-			
 ]
 
 { #category : #utilities }
 RPackageMCSynchronisationTest >> addZCategory [
 
 	testingEnvironment organization addCategory: 'ZZZZZ'.
-			
 ]
 
 { #category : #setup }
@@ -110,7 +106,6 @@ RPackageMCSynchronisationTest >> cleanClassesPackagesAndCategories [
 		mCPackage ifNotNil: [mCPackage unregister].
 		mCPackage := (self allManagers detect: [:each | each packageName = 'Zork'] ifNone: [nil]) .
 		mCPackage ifNotNil: [mCPackage unregister].
-			
 ]
 
 { #category : #private }

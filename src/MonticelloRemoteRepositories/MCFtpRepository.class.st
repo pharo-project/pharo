@@ -30,7 +30,6 @@ MCFtpRepository class >> creationTemplate [
 	directory: ''mc''
 	user: ''blop''
 	password: ''pilou'''
-	
 ]
 
 { #category : #accessing }
@@ -49,7 +48,7 @@ MCFtpRepository class >> host: host directory: directory user: user password: pa
 
 { #category : #accessing }
 MCFtpRepository class >> templateCreationSelector [
-	^ #host:directory:user:password: 
+	^ #host:directory:user:password:
 ]
 
 { #category : #accessing }

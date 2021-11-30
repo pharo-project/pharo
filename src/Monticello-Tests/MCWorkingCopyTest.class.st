@@ -125,7 +125,6 @@ MCWorkingCopyTest >> testAncestorMerge [
 	revC :=  self snapshot.	
 
 	self should: [self basicMerge: revA] raise: MCNoChangesException.
-	
 ]
 
 { #category : #tests }

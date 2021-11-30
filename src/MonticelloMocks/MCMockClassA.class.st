@@ -25,11 +25,10 @@ MCMockClassA class >> initializationOrder [
 	^ InitializationOrder
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MCMockClassA class >> initialize [
 	CVar := #initialized.
 	InitializationOrder := 1.
-
 ]
 
 { #category : #'as yet unclassified' }

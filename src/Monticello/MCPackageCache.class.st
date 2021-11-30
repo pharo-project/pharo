@@ -26,5 +26,5 @@ MCPackageCache >> recordVersionInfo: aVersionInfo forFileNamed: aString [
 
 { #category : #accessing }
 MCPackageCache >> versionInfos [
-	^ sorter sortedVersionInfos 
+	^ sorter sortedVersionInfos
 ]

@@ -227,7 +227,7 @@ RPackageExtensionMethodsSynchronisationTest >> testRemoveAllExtensionMethodsFrom
 	class classSide removeSelector: #stubMethod2.
 	"there should be no differences made between class and metaClass:"
 	self deny: ((self organizer extendingPackagesOf: class) includes: YPackage). 
-	self deny: ((self organizer extendingPackagesOf: class classSide) includes: YPackage). 
+	self deny: ((self organizer extendingPackagesOf: class classSide) includes: YPackage).
 ]
 
 { #category : #'tests - operations on methods' }
@@ -285,5 +285,5 @@ RPackageExtensionMethodsSynchronisationTest >> testRemoveExtensionMethodRemoveMe
 	self createMethodNamed: 'stubMethod' inClass: class  inCategory: '*yyyyy'.
 	
 	class removeSelector: #stubMethod.
-	self deny: (YPackage includesExtensionSelector: #stubMethod ofClass: class). 
+	self deny: (YPackage includesExtensionSelector: #stubMethod ofClass: class).
 ]

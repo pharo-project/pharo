@@ -34,7 +34,7 @@ MCPackageManagerTest >> tearDown [
 	MCPackageManager registry
 		removeKey: mcPackage1 ifAbsent: [ ];
 		removeKey: mcPackage2 ifAbsent: [ ].
-	super tearDown	
+	super tearDown
 ]
 
 { #category : #tests }
@@ -50,8 +50,6 @@ MCPackageManagerTest >> testClassAdded [
 	
 	self assert: package1 mcWorkingCopy modified not.
 	self assert: package2 mcWorkingCopy modified
-	
-
 ]
 
 { #category : #tests }
@@ -70,9 +68,6 @@ MCPackageManagerTest >> testClassRemoved [
 	
 	self assert: package1 mcWorkingCopy modified not.
 	self assert: package2 mcWorkingCopy modified.
-	
-	
-	
 ]
 
 { #category : #tests }

@@ -7,5 +7,4 @@ Set >> comeFullyUpOnReload: smartRefStream [
 	^self 
 		rehash; 
 		yourself
-
 ]

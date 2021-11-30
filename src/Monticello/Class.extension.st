@@ -38,12 +38,6 @@ Class >> asClassDefinition [
 						type: self mcType
 						comment: self organization classComment	asString
 						commentStamp: self organization commentStamp ]
-	
-
-
-
-
-
 ]
 
 { #category : #'*Monticello' }

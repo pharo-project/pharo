@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 MCRemovalPostscriptDefinition class >> scriptSelector [
-	^ #postscriptOfRemoval 
+	^ #postscriptOfRemoval
 ]
 
 { #category : #installing }

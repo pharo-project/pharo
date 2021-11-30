@@ -169,7 +169,6 @@ MCWorkingCopy >> collectDependenciesWithMessage: messageString in: aRepository [
 				info:  (aPackage workingCopy 
 					currentVersionInfoWithMessage: messageString 
 					in: aRepository) ]
-	
 ]
 
 { #category : #accessing }
@@ -216,7 +215,6 @@ MCWorkingCopy >> displayStringOn: stream [
 		ifFalse: [ 
 			ancestry ancestors first displayStringOn: stream.
 			self needsSaving ifTrue: [ stream nextPutAll: ' (modified)' ] ]
-		
 ]
 
 { #category : #private }
@@ -249,7 +247,6 @@ MCWorkingCopy >> loadRemoteDependenciesIn: aRepository [
 			(aPackage workingCopy closestAncestorSnapshotIn: aRepository) definitions.] 
 		withMessage: 'Loading remote dependencies...'.
 	^ dependencies flattened
-
 ]
 
 { #category : #operations }
@@ -310,7 +307,6 @@ MCWorkingCopy >> newVersionIn: aRepository [
 				newVersionWithName: pair first trimBoth 
 				message: pair last 
 				in: aRepository ].
-
 ]
 
 { #category : #operations }
@@ -416,7 +412,6 @@ MCWorkingCopy >> printOn: aStream [
 MCWorkingCopy >> removeRequiredPackage: aPackage [
 
 	requiredPackages remove: aPackage ifAbsent: []
-
 ]
 
 { #category : #repositories }
@@ -526,8 +521,6 @@ MCWorkingCopy >> unload [
 	package packageSet unregister.
 	self unregister.
 	postUnloadAction value.
-	
-
 ]
 
 { #category : #accessing }

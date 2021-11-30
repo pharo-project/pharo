@@ -75,7 +75,6 @@ MCWorkingCopyBrowser class >> repositorySearchList [
 { #category : #settings }
 MCWorkingCopyBrowser class >> repositorySearchMaxSize [
 	^ repositorySearchMaxSize ifNil: [repositorySearchMaxSize := 15]
-
 ]
 
 { #category : #icons }
@@ -93,7 +92,6 @@ MCWorkingCopyBrowser class >> workingCopySearchList [
 { #category : #settings }
 MCWorkingCopyBrowser class >> workingCopySearchMaxSize [
 	^ workingCopySearchMaxSize ifNil: [workingCopySearchMaxSize := 15]
-
 ]
 
 { #category : #actions }
@@ -141,7 +139,6 @@ MCWorkingCopyBrowser >> addRepository [
 	self class newRepository ifNotNil: [:repos | 
 		self addRepository: repos.
 		workingCopy ifNil: [ repos morphicOpen: nil ]].
-
 ]
 
 { #category : #actions }
@@ -300,7 +297,6 @@ MCWorkingCopyBrowser >> changedButtons [
 	self changed: #canSave.
 	self changed: #canBackport.
 	self changed: #hasRepository.
-
 ]
 
 { #category : #actions }
@@ -320,13 +316,12 @@ MCWorkingCopyBrowser >> collectConfigurationMenuSpecs [
 	^ menuSpecs 
 		inject: #()
 		into: [ :all :each | all, (each method valueWithReceiver: self arguments: #()) ]
-	
 ]
 
 { #category : #'morphic ui' }
 MCWorkingCopyBrowser >> currentShowOnlyRepositoriesFromWorkingCopy [
 	^showOnlyRepositoriesFromWorkingCopy ifTrue: [ 2] 
-	ifFalse: [ 1] 
+	ifFalse: [ 1]
 ]
 
 { #category : #'morphic ui' }
@@ -349,7 +344,6 @@ MCWorkingCopyBrowser >> deleteWorkingCopy [
 { #category : #actions }
 MCWorkingCopyBrowser >> dirtyPackages [
 	^ self workingCopies select: [:copy | copy needsSaving].
-
 ]
 
 { #category : #'morphic ui' }
@@ -395,7 +389,6 @@ MCWorkingCopyBrowser >> enterIssueNumber [
 			UIManager default inform: 'You must give us a number'.
 			issue := self enterIssueNumber]].
 	^ issue
-	
 ]
 
 { #category : #'morphic ui' }
@@ -444,7 +437,6 @@ MCWorkingCopyBrowser >> historyMenuSpec [
 	^ #(#('Browse package' #browseWorkingCopy)
 		#('View changes' #viewChanges) 
 		#('View history' #viewHistory))
-
 ]
 
 { #category : #'morphic ui' }
@@ -474,7 +466,6 @@ MCWorkingCopyBrowser >> loadRepositories [
 	CodeImporter evaluateFileNamed: 'MCRepositories.st'.
 	self repositoryListChanged.
 	self changedButtons.
-
 ]
 
 { #category : #actions }
@@ -527,7 +518,6 @@ MCWorkingCopyBrowser >> packageMenuSpec [
 		#('Remove required package' #removeRequiredPackage)
 		#('Clear required packages' #clearRequiredPackages)
 		#('View past comments' #viewPastComments))
-
 ]
 
 { #category : #'morphic ui' }
@@ -579,7 +569,6 @@ MCWorkingCopyBrowser >> removeRepository [
 		self repositorySelection: (1 min: self repositories size)].
 	self repositoryListChanged.
 	self changedButtons.
-
 ]
 
 { #category : #actions }
@@ -652,7 +641,6 @@ MCWorkingCopyBrowser >> repositoryListMenu: aMenu [
 	self repository ifNil: [^ aMenu].
 	self fillMenu: aMenu fromSpecs: self repositoryMenuSpec.
 	^ aMenu
-				
 ]
 
 { #category : #'morphic ui' }
@@ -669,7 +657,6 @@ MCWorkingCopyBrowser >> repositoryMenuSpec [
 		   ('Load repositories' #loadRepositories)	
 		   ('Save repositories' #saveRepositories)
 		   ('Flush cached versions' #flushAllCaches))
-		
 ]
 
 { #category : #'morphic ui' }
@@ -713,7 +700,6 @@ MCWorkingCopyBrowser >> repositorySelection: aNumber [
 		ifFalse: [self repository: (self repositories at: aNumber)].
 	self changed: #repositorySelection.
 	self changedButtons.
-
 ]
 
 { #category : #actions }
@@ -731,7 +717,6 @@ MCWorkingCopyBrowser >> revertPackageMenuSpec [
 			   #('Recompile package' #recompilePackage)
 			   #('Backport package...' #backportChanges)
 			   #('Inspect package' #inspectWorkingCopy))
-
 ]
 
 { #category : #actions }
@@ -755,7 +740,6 @@ MCWorkingCopyBrowser >> setShowOnlyRepositoriesFromWorkingCopy: anIndex [
 	showOnlyRepositoriesFromWorkingCopy  := (anIndex = 2).
 	self repositorySelection: 0.
 	self repositoryListChanged.
-
 ]
 
 { #category : #'morphic ui' }
@@ -766,13 +750,12 @@ MCWorkingCopyBrowser >> showOnlyRepositoriesFromWorkingCopyField [
 		selected: #currentShowOnlyRepositoriesFromWorkingCopy
 		changeSelected: #setShowOnlyRepositoriesFromWorkingCopy:)
 		listPaneColor: Color transparent;
-		yourself			
-
+		yourself
 ]
 
 { #category : #actions }
 MCWorkingCopyBrowser >> storeDependencies: newVersion in: aRepository [
-	aRepository storeDependencies: newVersion 
+	aRepository storeDependencies: newVersion
 ]
 
 { #category : #actions }
@@ -796,7 +779,7 @@ MCWorkingCopyBrowser >> unloadPackageMenuSpec [
 
 { #category : #'morphic ui' }
 MCWorkingCopyBrowser >> unsortedWorkingCopies [
-	^ self allManagers 
+	^ self allManagers
 ]
 
 { #category : #updating }
@@ -875,7 +858,6 @@ MCWorkingCopyBrowser >> workingCopy: wc [
 	workingCopy := wc.
 	self changed: #workingCopySelection; repositoryListChanged.
 	self changedButtons.
-
 ]
 
 { #category : #'morphic ui' }
@@ -893,7 +875,6 @@ MCWorkingCopyBrowser >> workingCopyListChanged [
 	self changed: #workingCopyTree.
 	self changed: #workingCopyTreePath.
 	self changedButtons.
-
 ]
 
 { #category : #'morphic ui' }
@@ -917,7 +898,7 @@ MCWorkingCopyBrowser >> workingCopyListMenu: aMenu [
 			target: self
 			selector: #order:
 			argumentList: {index} ].
-	^ aMenu 
+	^ aMenu
 ]
 
 { #category : #'morphic ui' }
@@ -940,7 +921,7 @@ MCWorkingCopyBrowser >> workingCopySearchAdd: aString [
 			 yourself).
 	self workingCopySearchList size = self workingCopySearchMaxSize
 		ifTrue: [self workingCopySearchList removeLast].
-	self workingCopySearchList addFirst: aString 
+	self workingCopySearchList addFirst: aString
 ]
 
 { #category : #'morphic ui' }
@@ -951,7 +932,6 @@ MCWorkingCopyBrowser >> workingCopySearchField [
 		searchList: self class workingCopySearchList;
 		updateSelector: #workingCopySearchAccept:;
 		yourself
-
 ]
 
 { #category : #'morphic ui' }
@@ -969,7 +949,7 @@ MCWorkingCopyBrowser >> workingCopySelection: aNumber [
 	self workingCopy: 
 		(aNumber = 0 
 			ifTrue: [nil]
-			ifFalse: [self workingCopies at: aNumber]).	
+			ifFalse: [self workingCopies at: aNumber]).
 ]
 
 { #category : #'morphic ui' }

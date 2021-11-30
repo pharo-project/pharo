@@ -40,7 +40,6 @@ MCFileTreeStCypressWriter class >> fileNameForSelector: selector [
                     ifFalse: [ each asString ]) ]
             separatedBy: [ output nextPut: $. ].
           output contents ] ]
-
 ]
 
 { #category : #initialization }
@@ -74,7 +73,6 @@ MCFileTreeStCypressWriter class >> initializeSpecials [
         at: $@ put: 'at'.
     map keys do: [ :key | map at: (map at: key) put: key ].
     ^ map
-
 ]
 
 { #category : #accessing }
@@ -90,7 +88,6 @@ MCFileTreeStCypressWriter class >> specials [
 { #category : #private }
 MCFileTreeStCypressWriter >> fileNameForSelector: selector [
   ^ self class fileNameForSelector: selector
-
 ]
 
 { #category : #private }
@@ -272,7 +269,6 @@ MCFileTreeStCypressWriter >> writeDefinitions: aCollection [
         fileName: 'methodProperties'
         extension: self propertyFileExtension
         visit: [ self writeMethodProperties: classMethodDefinitions ] ]
-
 ]
 
 { #category : #writing }

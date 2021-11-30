@@ -39,7 +39,6 @@ MCStWriterTest >> assertMethodChunkIsWellFormed: chunk [
 		class: UndefinedObject;
 		failBlock: [self assert: false];
 		compile.
-	
 ]
 
 { #category : #data }
@@ -149,7 +148,6 @@ MCMethodDeclaration className: #MCMockClassD selector: #one category: #''as yet 
 	^ 1''!!
 ''
 '
-
 ]
 
 { #category : #running }
@@ -157,7 +155,6 @@ MCStWriterTest >> setUp [
 	super setUp.
 	stream := String new writeStream.
 	writer := MCStWriter on: stream.
-
 ]
 
 { #category : #testing }
@@ -172,7 +169,6 @@ MCStWriterTest >> testClassDefinitionA [
 MCStWriterTest >> testClassDefinitionB [
 	writer visitClassDefinition: (self mockClassB asClassDefinition).
 	self assertContentsOf: stream match: self expectedClassDefinitionB.
-	
 ]
 
 { #category : #testing }
@@ -185,7 +181,7 @@ MCStWriterTest >> testClassMethodDefinition [
 	self assert: stream next isAllSeparators.
 	self assertChunkIsWellFormed: stream next.
 	self assertMethodChunkIsWellFormed: stream next.
-	self assert: stream next isAllSeparators 
+	self assert: stream next isAllSeparators
 ]
 
 { #category : #testing }
@@ -213,7 +209,7 @@ MCStWriterTest >> testMethodDefinition [
 	self assert: stream next isAllSeparators.
 	self assertChunkIsWellFormed: stream next.
 	self assertMethodChunkIsWellFormed: stream next.
-	self assert: stream next isAllSeparators 
+	self assert: stream next isAllSeparators
 ]
 
 { #category : #testing }
@@ -234,7 +230,7 @@ MCStWriterTest >> testMethodDefinitionWithBangs [
 	self assert: stream next isAllSeparators.
 	self assertChunkIsWellFormed: stream next.
 	self assertMethodChunkIsWellFormed: stream next.
-	self assert: stream next isAllSeparators 
+	self assert: stream next isAllSeparators
 ]
 
 { #category : #testing }
@@ -259,7 +255,6 @@ MCStWriterTest >> testNotLoadedClassMethod [
 	methodWriter writeMethodPreamble: definition.
 	self assert: methodStream contents trimBoth
 			equals: '!NotALoadedClass class methodsFor: ''imagine'' stamp: ''nil''!'.
-
 ]
 
 { #category : #testing }

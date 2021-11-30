@@ -45,7 +45,7 @@ MCDoItParser class >> subclassForDoit: aString [
 
 { #category : #actions }
 MCDoItParser >> addDefinitionsTo: aCollection [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }

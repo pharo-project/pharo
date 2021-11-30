@@ -33,7 +33,7 @@ MCPatchBrowser >> changeSetNameForInstall [
 	tokens removeAllFoundIn: { 'changes'. 'between'. 'and' }.
 	(tokens size = 3 and: [ tokens second = '<working' ]) ifTrue: [ ^tokens first, '-to-working' ].
 	tokens size = 2 ifFalse: [ ^'InstalledPatches' ].
-	^'{1}-to-{2}' format: tokens 
+	^'{1}-to-{2}' format: tokens
 ]
 
 { #category : #'morphic ui' }
@@ -145,7 +145,5 @@ MCPatchBrowser >> widgetSpecs [
 	 ^#(
 		((listMorph:selection:menu:keystroke: list selection methodListMenu: methodListKey:from:) (0 0 1 0.4) (0 0 0 0))
 		((textMorph: text) (0 0.4 1 1))
-		) 
-
-	
+		)
 ]

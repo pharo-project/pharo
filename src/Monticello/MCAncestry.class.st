@@ -104,7 +104,6 @@ MCAncestry >> hasAncestor: aVersionInfo alreadySeen: aList [
 	aList add: self.
 
 	^ self = aVersionInfo or: [self ancestors anySatisfy: [:ea | ea hasAncestor: aVersionInfo alreadySeen: aList]]
-
 ]
 
 { #category : #initialization }
@@ -141,7 +140,7 @@ MCAncestry >> topologicalAncestors [
 		[f := frontier frontier.
 		s nextPutAll: f.
 		frontier removeAll: f.
-		f isEmpty] whileFalse] 
+		f isEmpty] whileFalse]
 ]
 
 { #category : #ancestry }

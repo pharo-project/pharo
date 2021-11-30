@@ -17,7 +17,7 @@ MCRepositoryTest class >> isAbstract [
 
 { #category : #actions }
 MCRepositoryTest >> addVersion: aVersion [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #actions }
@@ -59,7 +59,6 @@ MCRepositoryTest >> saveSnapshot: aSnapshot named: aString [
 	version := self versionWithSnapshot: aSnapshot name: aString.
 	repository storeVersion: version.
 	^ version info
-	
 ]
 
 { #category : #building }
@@ -87,43 +86,43 @@ MCRepositoryTest >> testAddAndLoad [
 { #category : #tests }
 MCRepositoryTest >> testCanCreateFileRepositoryFromUrl [
 	repository := MCRepository fromUrl: 'file:///tmp'.
-	self assert: (repository isKindOf: MCFileBasedRepository) 
+	self assert: (repository isKindOf: MCFileBasedRepository)
 ]
 
 { #category : #tests }
 MCRepositoryTest >> testCanCreateFiletreeRepositoryFromUrl [
 	repository := MCRepository fromUrl: (self homeDirectoryUrl scheme: 'filetree') asString.
-	self assert: (repository isKindOf: MCFileTreeRepository) 
+	self assert: (repository isKindOf: MCFileTreeRepository)
 ]
 
 { #category : #tests }
 MCRepositoryTest >> testCanCreateFiletreeRepositoryFromUrlWithRelativePath [
 	repository := MCRepository fromUrl: 'filetree://.' asUrl.
-	self assert: (repository isKindOf: MCFileTreeRepository) 
+	self assert: (repository isKindOf: MCFileTreeRepository)
 ]
 
 { #category : #tests }
 MCRepositoryTest >> testCanCreateFtpRepositoryFromUrl [
 	repository := MCRepository fromUrl: 'ftp://ftp.example.com/examples'.
-	self assert: (repository isKindOf: MCFtpRepository) 
+	self assert: (repository isKindOf: MCFtpRepository)
 ]
 
 { #category : #tests }
 MCRepositoryTest >> testCanCreateGitHubRepositoryFromUrl [
 	repository := MCRepository fromUrl: 'github://dalehenrich/MetacelloRepository:master/monticello/repos/itory/path'.
-	self assert: (repository isKindOf: MCGitHubRepository) 
+	self assert: (repository isKindOf: MCGitHubRepository)
 ]
 
 { #category : #tests }
 MCRepositoryTest >> testCanCreateHttpRepositoryFromUrl [
 	repository := MCRepository fromUrl: 'http://mydomain.com'.
-	self assert: (repository isKindOf: MCHttpRepository) 
+	self assert: (repository isKindOf: MCHttpRepository)
 ]
 
 { #category : #tests }
 MCRepositoryTest >> testCanCreateHttpsRepositoryFromUrl [
 	repository := MCRepository fromUrl: 'https://mydomain.com'.
-	self assert: (repository isKindOf: MCHttpRepository) 
+	self assert: (repository isKindOf: MCHttpRepository)
 ]
 
 { #category : #tests }

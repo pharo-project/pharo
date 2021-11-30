@@ -171,8 +171,6 @@ MCVersion >> loadCompletePackageSnapshot [
 		displayingProgress: [ :item| 'Loading dependencies from: ', item package name ].
 	
 	^ MCSnapshot fromDefinitions: definitions
-	
-	
 ]
 
 { #category : #accessing }
@@ -254,5 +252,5 @@ MCVersion >> workingCopy [
 
 { #category : #accessing }
 MCVersion >> writerClass [
-	^ MCMczWriter 
+	^ MCMczWriter
 ]

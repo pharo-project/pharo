@@ -37,7 +37,6 @@ MCMergingTest >> handleConflict: aConflict [
 			[l > r
 				ifTrue: [aConflict chooseLocal]
 				ifFalse: [aConflict chooseRemote]]
-		
 ]
 
 { #category : #emulating }
@@ -161,7 +160,6 @@ MCMergingTest >> testMultipleConflicts [
 				
 				gives: #(a1 b3 d1)
 				conflicts: #((removed c1) (b2 b3))
-
 ]
 
 { #category : #tests }

@@ -13,7 +13,6 @@ Class {
 { #category : #'instance creation' }
 MCVariableDefinition class >> name: aString [
 	^ self new name: aString
-	
 ]
 
 { #category : #comparing }

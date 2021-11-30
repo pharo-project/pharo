@@ -87,7 +87,7 @@ MCVersionInfo >> hash [
 
 { #category : #pillaging }
 MCVersionInfo >> id [
-	^ id 
+	^ id
 ]
 
 { #category : #initialization }
@@ -148,7 +148,6 @@ MCVersionInfo >> nameWithout: packageName [
 MCVersionInfo >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(; nextPutAll: self name; nextPut: $)
-	
 ]
 
 { #category : #private }

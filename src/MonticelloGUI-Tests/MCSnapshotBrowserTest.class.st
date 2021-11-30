@@ -17,14 +17,14 @@ MCSnapshotBrowserTest >> allCategories [
 MCSnapshotBrowserTest >> allMethods [
 	^ MCSnapshotResource current definitions
 		select: [:def | def isMethodDefinition]
-		thenCollect: [:def | def selector]		
+		thenCollect: [:def | def selector]
 ]
 
 { #category : #private }
 MCSnapshotBrowserTest >> allProtocols [
 	^ MCSnapshotResource current definitions
 		select: [:def | def isMethodDefinition]
-		thenCollect: [:def | def category]		
+		thenCollect: [:def | def category]
 ]
 
 { #category : #morphic }
@@ -54,13 +54,11 @@ MCSnapshotBrowserTest >> assertAListMatches: strings [
 { #category : #asserting }
 MCSnapshotBrowserTest >> assertButtonExists: aString [
 	self buttonMorphs detect: [:m | m label = aString] ifNone: [self assert: false].
-				
 ]
 
 { #category : #asserting }
 MCSnapshotBrowserTest >> assertButtonOn: aString [
 	self assert: (self findButtonWithLabel: aString) getModelState.
-	
 ]
 
 { #category : #asserting }
@@ -150,7 +148,6 @@ MCSnapshotBrowserTest >> denyAListIncludesAnyOf: anArrayOfStrings [
 { #category : #asserting }
 MCSnapshotBrowserTest >> denyButtonOn: aString [
 	self deny: (self findButtonWithLabel: aString) getModelState.
-	
 ]
 
 { #category : #private }
@@ -185,14 +182,12 @@ MCSnapshotBrowserTest >> morphsOfClass: aMorphClass [
 { #category : #private }
 MCSnapshotBrowserTest >> protocolsForClass: aClass [
 	^ aClass organization allCategories
-
 ]
 
 { #category : #selecting }
 MCSnapshotBrowserTest >> selectMockClassA [
 	self clickOnListItem: self mockCategoryName.
 	self clickOnListItem: 'MCMockClassA'.
-	
 ]
 
 { #category : #running }
@@ -217,7 +212,6 @@ MCSnapshotBrowserTest >> testButtonMutex [
 	self assertButtonOn: 'class'.
 	self denyButtonOn: '?'.
 	self denyButtonOn: 'instance'.
-
 ]
 
 { #category : #testing }
@@ -326,7 +320,7 @@ MCSnapshotBrowserTest >> testProtocolSelected [
 	self assertAListMatches: self definedClasses.
 	self assertAListMatches: self classAProtocols.
 	self assertAListMatches: self classABooleanMethods.
-	self assertTextIs: ''.		
+	self assertTextIs: ''.
 ]
 
 { #category : #testing }

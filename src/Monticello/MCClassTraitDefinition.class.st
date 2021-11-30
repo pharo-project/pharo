@@ -41,7 +41,6 @@ MCClassTraitDefinition >> accept: aVisitor [
 { #category : #accessing }
 MCClassTraitDefinition >> baseTrait [
 	^baseTrait
-
 ]
 
 { #category : #accessing }
@@ -60,8 +59,6 @@ MCClassTraitDefinition >> className [
 { #category : #accessing }
 MCClassTraitDefinition >> classTraitComposition [
 	^classTraitComposition
-
-
 ]
 
 { #category : #accessing }
@@ -73,7 +70,6 @@ MCClassTraitDefinition >> classTraitCompositionString [
 MCClassTraitDefinition >> definitionString [
 	^self baseTrait , ' classTrait
 	uses: ' , self classTraitCompositionString.
-
 ]
 
 { #category : #accessing }
@@ -144,5 +140,4 @@ MCClassTraitDefinition >> source [
 { #category : #printing }
 MCClassTraitDefinition >> summary [
 	^self baseTrait , ' classTrait'
-
 ]

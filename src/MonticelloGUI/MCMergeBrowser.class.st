@@ -148,7 +148,7 @@ MCMergeBrowser >> items [
 MCMergeBrowser >> merge [
 	merger isMerged
 		ifFalse: [self inform: 'You must resolve all the conflicts first']
-		ifTrue: [self answer: true] 
+		ifTrue: [self answer: true]
 ]
 
 { #category : #actions }
@@ -183,5 +183,4 @@ MCMergeBrowser >> widgetSpecs [
 		  (Reject chooseLocal 'reject the selected change' selectionIsConflicted))) (0 0.4 1 0.4) (0 0 0 32))
 		((textMorph: text) (0 0.4 1 1) (0 32 0 0))
 		)
-
 ]

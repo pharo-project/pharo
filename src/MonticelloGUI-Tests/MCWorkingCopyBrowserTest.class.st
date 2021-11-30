@@ -34,7 +34,7 @@ MCWorkingCopyBrowserTest >> testRepositories [
 	self assert: browser repositories notNil.
 	self assert: browser repositories notEmpty.
 	self assert: browser repositoryGroup notNil.
-	self assert: browser repositoryGroup repositories size equals: browser repositories size. 
+	self assert: browser repositoryGroup repositories size equals: browser repositories size.
 ]
 
 { #category : #tests }

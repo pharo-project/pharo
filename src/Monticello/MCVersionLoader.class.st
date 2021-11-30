@@ -32,7 +32,6 @@ MCVersionLoader >> addDependency: aDependency [
 MCVersionLoader >> addVersion: aVersion [
 	aVersion dependencies do: [ :ea | self addDependency: ea].
 	versions add: aVersion.
-
 ]
 
 { #category : #private }
@@ -114,14 +113,12 @@ MCVersionLoader >> depAgeIsOk: aDependency [
 
 { #category : #private }
 MCVersionLoader >> ensurePackage: mcPackage [ 
-	RPackageOrganizer default registerPackageNamed: mcPackage name 
-		
+	RPackageOrganizer default registerPackageNamed: mcPackage name
 ]
 
 { #category : #testing }
 MCVersionLoader >> hasLocalModifications [
 	^ self localModifications isEmpty not
-	
 ]
 
 { #category : #testing }
@@ -156,7 +153,6 @@ MCVersionLoader >> loadWithNameLike: aString [
 { #category : #checking }
 MCVersionLoader >> localModifications [
 	^ versions select: [:ea | ea package workingCopy modified].
-	
 ]
 
 { #category : #loading }

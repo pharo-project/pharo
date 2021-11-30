@@ -14,7 +14,6 @@ MCDataStream >> readByteArray [
 	| count |
 	count := byteStream nextNumber: 4.
 	^ byteStream next: count  "assume stream is in binary mode"
-
 ]
 
 { #category : #'*Monticello-OldDataStreamCompatibility' }
@@ -81,7 +80,6 @@ MCDataStream >> readRectangle [
 	(bottom bitAnd: 16r800) ~= 0 ifTrue: [bottom := bottom - 16r1000].	"sign"
 	
     ^ Rectangle left: left right: right top: top bottom: bottom
-
 ]
 
 { #category : #'*Monticello-OldDataStreamCompatibility' }
@@ -133,7 +131,6 @@ MCDataStream >> readStringOld [
 MCDataStream >> readUser [
 	"Reconstruct both the private class and the instance.  Still used??"
 	^ self readInstance.		"Will create new unique class"
-
 ]
 
 { #category : #'*Monticello-OldDataStreamCompatibility' }
@@ -184,7 +181,6 @@ MCDataStream >> writeFloat: aFloat [
 
 	byteStream nextNumber: 4 put: (aFloat at: 1).
 	byteStream nextNumber: 4 put: (aFloat at: 2).
-
 ]
 
 { #category : #'*Monticello-OldDataStreamCompatibility' }

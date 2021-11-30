@@ -7,5 +7,4 @@ MetaclassForTraits >> asMCDefinition [
 		baseTraitName: self instanceSide name
 		classTraitComposition: self traitCompositionString
 		category: self category
-			
 ]

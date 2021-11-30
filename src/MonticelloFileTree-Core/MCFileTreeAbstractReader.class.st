@@ -111,7 +111,6 @@ MCFileTreeAbstractReader >> hasMonticelloMetadata [
 					[ self fileUtils
 						filePathExists: 'package'
 						relativeTo: packageDirectory ] ]
-
 ]
 
 { #category : #utilities }

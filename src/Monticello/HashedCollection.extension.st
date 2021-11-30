@@ -6,5 +6,4 @@ HashedCollection >> comeFullyUpOnReload: smartRefStream [
 
 	self  compact.
 	"^ self"
-
 ]

@@ -175,5 +175,5 @@ MCRepository >> versionWithInfo: aVersionInfo [
 
 { #category : #interface }
 MCRepository >> versionWithInfo: aVersionInfo ifAbsent: aBlock [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

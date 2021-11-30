@@ -20,7 +20,6 @@ MCChangeNotificationTest >> modifiedEventFor: aSelector ofClass: aClass [
 		methodChangedFrom: method
 		to: method
 		oldProtocol: nil
-
 ]
 
 { #category : #running }

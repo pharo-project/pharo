@@ -23,5 +23,4 @@ MCClassTraitParser >> addDefinitionsTo: aCollection [
 		baseTraitName: (tokens at: 1) 
 		classTraitComposition: traitCompositionString.
 	aCollection add: definition
-
 ]

@@ -16,7 +16,7 @@ MCReader class >> canReadFileNamed: fileName [
 	ext := (self extension beginsWith: '.')
 		ifTrue: [ self extension ]
 		ifFalse: [ '.', self extension ].
-	^ (fileName endsWith: ext)	
+	^ (fileName endsWith: ext)
 ]
 
 { #category : #testing }
@@ -54,7 +54,6 @@ MCReader class >> readerClassForFileNamed: fileName [
 MCReader >> stream [
 	stream closed ifTrue: [ stream open ].
 	^ stream
-	
 ]
 
 { #category : #accessing }

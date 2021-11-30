@@ -3,7 +3,6 @@ Extension { #name : #MCRepository }
 { #category : #'*MonticelloGUI' }
 MCRepository class >> fillInTheBlankConfigure [
 	^ self fillInTheBlankConfigure: self creationTemplate
-			
 ]
 
 { #category : #'*MonticelloGUI' }
@@ -28,7 +27,7 @@ MCRepository >> morphicOpen [
 
 { #category : #'*MonticelloGUI' }
 MCRepository >> morphicOpen: aWorkingCopy [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'*MonticelloGUI' }

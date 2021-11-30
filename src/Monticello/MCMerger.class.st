@@ -21,7 +21,6 @@ MCMerger >> applyTo: anObject [
 { #category : #accessing }
 MCMerger >> conflicts [	
 	^ self operations select: #isConflict
-
 ]
 
 { #category : #testing }

@@ -108,13 +108,11 @@ MCDefinition >> isScriptDefinition [
 
 { #category : #installing }
 MCDefinition >> load [
-	
 ]
 
 { #category : #installing }
 MCDefinition >> loadOver: aDefinition [
 	self load
-	
 ]
 
 { #category : #installing }
@@ -151,7 +149,7 @@ MCDefinition >> requirements [
 
 { #category : #comparing }
 MCDefinition >> sortKey [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -161,7 +159,7 @@ MCDefinition >> source [
 
 { #category : #printing }
 MCDefinition >> summary [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #printing }

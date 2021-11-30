@@ -68,7 +68,7 @@ MCPatchOperation >> clearChoice [
 
 { #category : #accessing }
 MCPatchOperation >> definition [
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #initialization }
@@ -125,7 +125,6 @@ MCPatchOperation >> isResolved [
 { #category : #testing }
 MCPatchOperation >> localChosen [
 	^ isApplicable == false
-
 ]
 
 { #category : #testing }

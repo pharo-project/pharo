@@ -72,7 +72,7 @@ MCConfigurationBrowser >> buttonSpecs [
 
 { #category : #testing }
 MCConfigurationBrowser >> canMoveDown [
-	^self index between: 1 and: self maxIndex - 1 
+	^self index between: 1 and: self maxIndex - 1
 ]
 
 { #category : #testing }
@@ -121,7 +121,6 @@ MCConfigurationBrowser >> checkMissing [
 			strm nextPutAll: 'No repository found for'; cr.
 			missing do: [:r | strm nextPutAll: r; cr].
 			strm nextPutAll: 'Do you still want to store?'])]
-	
 ]
 
 { #category : #dependencies }
@@ -136,7 +135,6 @@ MCConfigurationBrowser >> checkModified [
 			strm nextPutAll: 'These packages are modified:'; cr.
 			modified do: [:dep | strm nextPutAll: dep package name; cr].
 			strm nextPutAll: 'Do you still want to store?'])]
-	
 ]
 
 { #category : #repositories }
@@ -150,7 +148,6 @@ MCConfigurationBrowser >> checkRepositories [
 			bad do: [:r | strm nextPutAll: r description; cr].
 			strm nextPutAll: '(only HTTP repositories are supported)']).
 		false].
-
 ]
 
 { #category : #repositories }
@@ -165,7 +162,6 @@ MCConfigurationBrowser >> checkRepositoryTemplates [
 			bad do: [:r | strm nextPutAll: r description; cr].
 			strm nextPutAll: 'Please fill in the details first!']).
 		false].
-
 ]
 
 { #category : #accessing }
@@ -181,14 +177,12 @@ MCConfigurationBrowser >> configuration: aConfiguration [
 { #category : #accessing }
 MCConfigurationBrowser >> dependencies [
 	^self configuration dependencies
-
 ]
 
 { #category : #accessing }
 MCConfigurationBrowser >> dependencies: aCollection [
 	self configuration dependencies: aCollection.
 	self changed: #dependencyList; changed: #description
-
 ]
 
 { #category : #selection }
@@ -216,7 +210,6 @@ MCConfigurationBrowser >> dependencyList [
 					ifFalse: [attr nextPut: TextEmphasis bold]
 					ifTrue: [dep isCurrent ifFalse: [attr nextPut: TextEmphasis italic]].
 			])]
-
 ]
 
 { #category : #'morphic ui' }
@@ -226,7 +219,6 @@ MCConfigurationBrowser >> dependencyMenu: aMenu [
 	self selectedDependency ifNotNil: [
 		self fillMenu: aMenu fromSpecs: #(('Remove dependency...' remove))].
 	^aMenu
-
 ]
 
 { #category : #description }
@@ -237,7 +229,6 @@ MCConfigurationBrowser >> description [
 		ifNotNil: [repo creationTemplate asText]
 		ifNil: [repo asCreationTemplate asText addAttribute: TextColor red]].
 	^ ''
-
 ]
 
 { #category : #description }
@@ -255,8 +246,6 @@ MCConfigurationBrowser >> description: aText [
 					self inform: 'This does not match the previous definition!'
 				]
 	].
-
-
 ]
 
 { #category : #actions }
@@ -312,7 +301,6 @@ MCConfigurationBrowser >> list [
 MCConfigurationBrowser >> load [
 	self configuration load.
 	self changed: #dependencyList; changed: #description
-
 ]
 
 { #category : #actions }
@@ -323,7 +311,6 @@ MCConfigurationBrowser >> loadMenu [
 	menu add: 'update from image' selector: #updateFromImage.
 	menu add: 'update from repositories' selector: #updateFromRepositories.
 	menu popUpInWorld.
-
 ]
 
 { #category : #selection }
@@ -335,7 +322,6 @@ MCConfigurationBrowser >> maxIndex [
 MCConfigurationBrowser >> merge [
 	self configuration merge.
 	self changed: #dependencyList; changed: #description
-
 ]
 
 { #category : #actions }
@@ -354,7 +340,6 @@ MCConfigurationBrowser >> migrate [
 			aRepository storeVersion: eachVersion
 		]
 	]
-
 ]
 
 { #category : #'morphic ui' }
@@ -386,7 +371,6 @@ MCConfigurationBrowser >> pickName [
 { #category : #'morphic ui' }
 MCConfigurationBrowser >> pickRepository [
 	^self pickRepositorySatisfying: [:ea | true]
-
 ]
 
 { #category : #'morphic ui' }
@@ -438,7 +422,6 @@ MCConfigurationBrowser >> repositories [
 { #category : #accessing }
 MCConfigurationBrowser >> repositories: aCollection [
 	^self configuration repositories: aCollection
-
 ]
 
 { #category : #selection }
@@ -458,7 +441,6 @@ MCConfigurationBrowser >> repositoryIndex: anInteger [
 { #category : #repositories }
 MCConfigurationBrowser >> repositoryList [
 	^self repositories collect: [:ea | ea description]
-
 ]
 
 { #category : #'morphic ui' }
@@ -527,14 +509,12 @@ MCConfigurationBrowser >> up [
 MCConfigurationBrowser >> updateFromImage [
 	self configuration updateFromImage.
 	self changed: #dependencyList; changed: #description
-
 ]
 
 { #category : #updating }
 MCConfigurationBrowser >> updateFromRepositories [
 	self configuration updateFromRepositories.
 	self changed: #dependencyList; changed: #description
-
 ]
 
 { #category : #selection }
@@ -557,7 +537,6 @@ MCConfigurationBrowser >> updateMenu [
 MCConfigurationBrowser >> upgrade [
 	self configuration upgrade.
 	self changed: #dependencyList; changed: #description
-
 ]
 
 { #category : #'morphic ui' }

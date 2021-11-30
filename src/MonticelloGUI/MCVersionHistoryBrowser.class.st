@@ -62,7 +62,6 @@ MCVersionHistoryBrowser >> infos [
 { #category : #'morphic ui' }
 MCVersionHistoryBrowser >> initialExtent [
 	^ 440@169.
-	
 ]
 
 { #category : #accessing }

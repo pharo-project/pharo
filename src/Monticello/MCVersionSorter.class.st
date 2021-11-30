@@ -41,7 +41,7 @@ MCVersionSorter >> addToCurrentLayer: aVersionInfo [
 		layer add: aVersionInfo.
 		depths at: aVersionInfo put: depthIndex.
 		^ true].
-	^ false 
+	^ false
 ]
 
 { #category : #adding }
@@ -86,14 +86,12 @@ MCVersionSorter >> processVersionInfo: aVersionInfo [
 		[self pushLayer.
 		(self knownAncestorsOf: aVersionInfo) do: [:ea | self processVersionInfo: ea].
 		self popLayer]
-
 ]
 
 { #category : #private }
 MCVersionSorter >> pushLayer [
 	depthIndex := depthIndex + 1.
 	depthIndex > layers size ifTrue: [layers add: OrderedCollection new].
-	
 ]
 
 { #category : #private }

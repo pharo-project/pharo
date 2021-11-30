@@ -88,7 +88,6 @@ MCFileTreeWriter >> fileUtils [
 
 { #category : #writing }
 MCFileTreeWriter >> flush [
-	
 ]
 
 { #category : #visiting }

@@ -22,6 +22,4 @@ MCOldDataStreamExtensions class >> initialize [
 	MCDataStream registerReaderSelector: #readShortInst atIndex: 16.
 	MCDataStream registerClass: WordArray atIndex: 18  usingReadSelector: #readWordArray usingWriteSelector: #writeBitmap:.	
 	MCDataStream registerReaderSelector: #readMethod atIndex: 21.
-
-	
 ]

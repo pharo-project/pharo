@@ -22,7 +22,6 @@ MCDiffyVersion class >> baseNameFrom: diffName [
 	^(baseId includes: $.)
 		ifTrue: [(verName copyUpToLast: $-), '-', baseId]
 		ifFalse: [(verName copyUpToLast: $.), '.', baseId]
-
 ]
 
 { #category : #'name utilities' }
@@ -30,7 +29,6 @@ MCDiffyVersion class >> canonicalNameFor: aFileName [
 	^(self nameForVer: (self verNameFrom: aFileName)
 		base: (self baseNameFrom: aFileName))
 			, '.', MCMcdReader extension
-
 ]
 
 { #category : #'name utilities' }
@@ -97,7 +95,6 @@ MCDiffyVersion >> initializeWithPackage: aPackage info: aVersionInfo dependencie
 	patch := aPatch.
 	base := baseVersionInfo.
 	super initializeWithPackage: aPackage info: aVersionInfo snapshot: nil dependencies: aCollection.
-
 ]
 
 { #category : #testing }
@@ -122,5 +119,5 @@ MCDiffyVersion >> summary [
 
 { #category : #accessing }
 MCDiffyVersion >> writerClass [
-	^ MCMcdWriter 
+	^ MCMcdWriter
 ]

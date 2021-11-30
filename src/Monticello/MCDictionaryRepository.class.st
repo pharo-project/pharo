@@ -43,7 +43,7 @@ MCDictionaryRepository >> description [
 { #category : #accessing }
 MCDictionaryRepository >> description: aString [
 
-	description := aString 
+	description := aString
 ]
 
 { #category : #accessing }
@@ -79,7 +79,6 @@ MCDictionaryRepository >> initialize [
 
 	super initialize.
 	dict := Dictionary new.
-
 ]
 
 { #category : #accessing }
@@ -88,7 +87,6 @@ MCDictionaryRepository >> sortedVersionInfos [
 	sorter := MCVersionSorter new.
 	self allVersionInfos do: [:ea | sorter addVersionInfo: ea].
 	^ sorter sortedVersionInfos
-
 ]
 
 { #category : #accessing }

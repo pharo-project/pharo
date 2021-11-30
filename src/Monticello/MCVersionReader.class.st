@@ -27,7 +27,6 @@ MCVersionReader class >> loadVersionFile: fileName [
 	version workingCopy repositoryGroup addRepository:
 		(MCDirectoryRepository new directory: fileName asFileReference).
 	version load.
-
 ]
 
 { #category : #'actions - file' }
@@ -89,17 +88,17 @@ MCVersionReader >> info [
 
 { #category : #loading }
 MCVersionReader >> loadDefinitions [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #loading }
 MCVersionReader >> loadDependencies [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #loading }
 MCVersionReader >> loadPackage [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #loading }

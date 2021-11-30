@@ -57,7 +57,7 @@ MCFileRepositoryInspector class >> order: anInteger [
 
 { #category : #accessing }
 MCFileRepositoryInspector class >> packageSearchList [
-	^ packageSearchList ifNil: [ packageSearchList := OrderedCollection new] 
+	^ packageSearchList ifNil: [ packageSearchList := OrderedCollection new]
 ]
 
 { #category : #'instance creation' }
@@ -69,7 +69,7 @@ MCFileRepositoryInspector class >> repository: aFileBasedRepository workingCopy:
 
 { #category : #accessing }
 MCFileRepositoryInspector class >> versionSearchList [
-	^ versionSearchList ifNil: [ versionSearchList := OrderedCollection new ] 
+	^ versionSearchList ifNil: [ versionSearchList := OrderedCollection new ]
 ]
 
 { #category : #'morphic ui' }
@@ -125,7 +125,6 @@ MCFileRepositoryInspector >> merge [
 	super merge.
 	self invalidatePackageAncestryCache.
 	self refresh.
-
 ]
 
 { #category : #'morphic ui' }
@@ -176,7 +175,7 @@ MCFileRepositoryInspector >> packageIcon: aPackage [
 
 { #category : #accessing }
 MCFileRepositoryInspector >> packageList [
-	^ packageList 
+	^ packageList
 ]
 
 { #category : #'morphic ui' }
@@ -328,7 +327,6 @@ MCFileRepositoryInspector >> setRepository: aFileBasedRepository workingCopy: aW
 	
 	[ self refresh.
 	MCWorkingCopy addDependent: self.] fork.
-
 ]
 
 { #category : #'morphic ui' }

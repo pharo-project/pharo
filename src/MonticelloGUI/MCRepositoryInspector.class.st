@@ -76,7 +76,6 @@ MCRepositoryInspector >> refresh [
 	packages := repository packages.
 	self changed: #packageList.
 	self packageSelection: self packageSelection.
-
 ]
 
 { #category : #accessing }
