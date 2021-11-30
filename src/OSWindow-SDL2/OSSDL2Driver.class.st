@@ -28,6 +28,12 @@ OSSDL2Driver class >> allWindows [
 ]
 
 { #category : #testing }
+OSSDL2Driver class >> eventLoopProcess [ 
+
+	^ EventLoopProcess
+]
+
+{ #category : #testing }
 OSSDL2Driver class >> hasPlugin [
 	<primitive: #primitiveHasDisplayPlugin module: #SDL2DisplayPlugin>
 	^ false
@@ -165,7 +171,7 @@ OSSDL2Driver >> eventFilter [
 { #category : #accessing }
 OSSDL2Driver >> eventLoopProcess [
 	
-	^ EventLoopProcess 
+	^ self class eventLoopProcess 
 ]
 
 { #category : #'events-processing' }
