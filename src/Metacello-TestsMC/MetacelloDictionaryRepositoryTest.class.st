@@ -77,7 +77,6 @@ MetacelloDictionaryRepositoryTest >> projectWith: projectAttributes [
 			yourself).
 	project loadType: self loadType.
 	^project
-
 ]
 
 { #category : #running }
@@ -145,7 +144,6 @@ MetacelloDictionaryRepositoryTest >> tearDownPackages: aGoferInstance [
 		ifTrue: [ aGoferInstance package: 'GoferBeau' ].
 	(self hasPackage: 'MetacelloTestConfigurationOfFoo')
 		ifTrue: [ aGoferInstance package: 'MetacelloTestConfigurationOfFoo' ].
-
 ]
 
 { #category : #accessing }

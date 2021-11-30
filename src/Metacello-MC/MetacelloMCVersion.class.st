@@ -170,7 +170,6 @@ MetacelloMCVersion >> executeLoadFromArray: anArray [
 	loader required: anArray.
 	loaderPolicy notNil ifTrue: [ loader loaderPolicy: loaderPolicy ].
 	^loader load
-
 ]
 
 { #category : #actions }

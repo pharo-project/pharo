@@ -108,7 +108,6 @@ MCGitBasedNetworkRepository class >> initialize [
 		ifNil:[ Smalltalk addToStartUpList: self ].
   self flushDownloadCache.
   self resetCacheDirectoryIfInvalid
-
 ]
 
 { #category : #accessing }
