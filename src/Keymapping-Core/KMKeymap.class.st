@@ -161,7 +161,7 @@ KMKeymap >> onMatchWith: anEventBuffer notify: aMatchListener andDo: anAction [
 					ifTrue: [ self notifyCompleteMatchTo: aMatchListener buffer: anEventBuffer ]
 					ifFalse: [ self notifyPartialMatchTo: aMatchListener ].
 					anAction value.
-				] 
+				]
 ]
 
 { #category : #printing }
@@ -172,7 +172,7 @@ KMKeymap >> printOn: aStream [
 		print: self shortcut ;
 		nextPutAll: ' do ' ;
 		print: self action ;
-		cr.    
+		cr.
 ]
 
 { #category : #initialization }
