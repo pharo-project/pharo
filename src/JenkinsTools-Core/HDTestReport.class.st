@@ -129,7 +129,6 @@ HDTestReport >> newLogDuring: aBlock [
 	stream := tempStream := String new writeStream.
 	aBlock ensure: [ stream := currentStream ].
 	^tempStream contents
-	 
 ]
 
 { #category : #initialization }
@@ -178,8 +177,7 @@ HDTestReport >> recordPassOf: aTestCase [
 ]
 
 { #category : #running }
-HDTestReport >> recordSkip: aTestSkip duringTest: aTestCase [ 
-
+HDTestReport >> recordSkip: aTestSkip duringTest: aTestCase [
 ]
 
 { #category : #running }
