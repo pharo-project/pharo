@@ -7,7 +7,7 @@ Class {
 	#category : #'Rubric-Tests-Base'
 }
 
-{ #category : #initialization }
+{ #category : #running }
 RubScrolledTextMorphTest >> setUp [
 	super setUp.
 	morph := RubScrolledTextMorph new.
