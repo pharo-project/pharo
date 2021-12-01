@@ -31,3 +31,13 @@ BaselineOfKeymapping >> baseline: spec [
 				'core' 
 				'Keymapping-Tests') ]
 ]
+
+{ #category : #accessing }
+BaselineOfKeymapping >> project [
+	| aProject |
+	
+	aProject := super project.
+	aProject loadType: #atomic.
+
+	^ aProject
+]
