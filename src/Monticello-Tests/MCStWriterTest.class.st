@@ -116,8 +116,7 @@ MCMethodDeclaration className: #MCMockClassD selector: #one category: #''''as ye
 ''''one
 	^ 1''''!!!!
 ''''
-''
-! !
+''! !
 '
 ]
 
