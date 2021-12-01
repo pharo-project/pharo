@@ -24,13 +24,12 @@ MalBfsNode >> firstDepth: anObject [
 MalBfsNode >> initialize [ 
 
 	nextEdges := OrderedCollection new.
-
 ]
 
 { #category : #accessing }
 MalBfsNode >> nextEdges [
 
-	^ nextEdges 
+	^ nextEdges
 ]
 
 { #category : #setting }

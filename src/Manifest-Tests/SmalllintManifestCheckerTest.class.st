@@ -48,7 +48,7 @@ SmalllintManifestCheckerTest >> setUp [
 SmalllintManifestCheckerTest >> tearDown [
 	
 	self cleaningResources.
-	super tearDown 
+	super tearDown
 ]
 
 { #category : #tests }
@@ -77,8 +77,6 @@ SmalllintManifestCheckerTest >> testIsFalsePositive [
 		run.  	
 	self assert: (checker isFalsePositive:  (MFClassB>>#method3) forRuleId: (ReCodeCruftLeftInMethodsRule uniqueIdentifierName) versionId:  1).
 	self deny: (checker isFalsePositive:  (MFClassA>>#method) forRuleId: (ReCodeCruftLeftInMethodsRule uniqueIdentifierName) versionId:  1).
-
-
 ]
 
 { #category : #tests }
@@ -93,8 +91,6 @@ SmalllintManifestCheckerTest >> testIsToDo [
 	
 	self assert: (checker isToDo:  (MFClassB>>#method3) forRuleId: (ReTemporaryNeitherReadNorWrittenRule uniqueIdentifierName) versionId:  1).
 	self deny: (checker isToDo:  (MFClassB>>#method2) forRuleId: (ReTemporaryNeitherReadNorWrittenRule uniqueIdentifierName) versionId:  1).
-
-
 ]
 
 { #category : #tests }

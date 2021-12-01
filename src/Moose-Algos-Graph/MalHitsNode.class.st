@@ -43,5 +43,4 @@ MalHitsNode >> printOn: aStream [
 	aStream space.
 	self hub printOn: aStream showingDecimalPlaces: 2.
 	aStream nextPutAll: ')'.
-
 ]

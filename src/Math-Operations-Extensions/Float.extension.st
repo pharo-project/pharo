@@ -264,7 +264,6 @@ Float >> round: numberOfWishedDecimal [
    "(10.12345 round: 2) >>> 10.12 "
         
 	^(self asFraction round: numberOfWishedDecimal) asFloat
-
 ]
 
 { #category : #'*Math-Operations-Extensions' }

@@ -71,7 +71,6 @@ MalLongestPath >> isCompleted [
 { #category : #accessing }
 MalLongestPath >> leafNodes [
 	^ leafNodes
-	
 ]
 
 { #category : #accessing }
@@ -86,14 +85,12 @@ MalLongestPath >> nodeClass [
 
 { #category : #accessing }
 MalLongestPath >> rootNodes [
-	^ rootNodes 
-	
+	^ rootNodes
 ]
 
 { #category : #accessing }
 MalLongestPath >> rootNodes: aCollectionOfNodes [
-	rootNodes := aCollectionOfNodes 
-	
+	rootNodes := aCollectionOfNodes
 ]
 
 { #category : #running }
@@ -109,5 +106,4 @@ MalLongestPath >> run [
 { #category : #setting }
 MalLongestPath >> setRanks: collectionOfNodes at: aRank [
 	collectionOfNodes do: [ :aNode | aNode pathWeight: aRank ]
-	
 ]

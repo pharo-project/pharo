@@ -114,7 +114,6 @@ PragmaMenuBuilder >> allMisplacedItems [
 	| misplaced |
 	self collectMisplacedItemsIn: (misplaced := OrderedCollection new).
 	^ misplaced
-
 ]
 
 { #category : #'registrations handling' }
@@ -124,7 +123,6 @@ PragmaMenuBuilder >> arrangeRegistrations [
 			ifNotNil: [:newOwner | item owner removeItem: item.
 				item owner: newOwner.
 				newOwner addItem: item]].
-
 ]
 
 { #category : #'menu building' }
@@ -174,7 +172,6 @@ PragmaMenuBuilder >> initialize [
 	isGroup := true.
 	currentRoot := self.
 	pragmaKeywords := OrderedCollection new.
-	
 ]
 
 { #category : #private }
@@ -263,7 +260,7 @@ PragmaMenuBuilder >> pragmaKeyword: aString [
 { #category : #accessing }
 PragmaMenuBuilder >> pragmaKeywords [
 	"Returns the pragma keyword used to select pragmas (see #pragmaCollector)"
-	^  pragmaKeywords 
+	^  pragmaKeywords
 ]
 
 { #category : #accessing }
