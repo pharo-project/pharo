@@ -32,12 +32,16 @@ RubScrolledTextMorphTest >> testEmbeddedAnchorInTextAreDrawnAtRightPosition [
 
 	self assert: circle owner isNil.
 	self assert: circle position equals: 0@0.
-	morph updateTextWith:  longTextWithCircleAtEnd.
+	morph updateTextWith: longTextWithCircleAtEnd.
 	morph openInWorld.
 	WorldMorph doOneCycle.
 	
-	self assert: circle owner equals: morph textArea.
-	self assert: circle counter equals: 0
+	self assert: circle owner equals: nil.
+	self assert: circle counter equals: 0.
+	
+	morph scrollToEndOfText.
+	WorldMorph doOneCycle.
+	self assert: circle counter > 0
 ]
 
 { #category : #tests }

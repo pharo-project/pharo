@@ -79,8 +79,9 @@ RubEditingAreaTest >> testEmbeddedAnchorInTextAreDrawn [
 	"render the text in a RubEditingArea to place the circle in a layout"
 	area updateTextWith: text.
 	area openInWorld.
+	WorldMorph doOneCycle.
 
-	self assert: circle owner notNil.
+	self assert: (circle hasProperty: #hasBeenPositioned).
 	self deny: circle position equals: 0@0
 ]
 
@@ -98,9 +99,9 @@ RubEditingAreaTest >> testEmbeddedAnchorInTextAreDrawnAtRightPosition [
 	area updateTextWith: longTextWithCircleAtEnd.
 	area openInWorld.
 	WorldMorph doOneCycle.
-	
+
 	self assert: circle counter equals: 1.	
-	self assert: circle position y > 500.
+	self assert: circle position y > 500
 	
 ]
 

@@ -91,6 +91,7 @@ Class {
 		'editingMode',
 		'cursor',
 		'segments',
+		'embeddedMorphs',
 		'getMenuPolicy',
 		'mouseDownPoint',
 		'completionEngine',
@@ -157,6 +158,26 @@ RubAbstractTextArea class >> defaultMaxExtent [
 { #category : #settings }
 RubAbstractTextArea class >> editorFont [
 	^ StandardFonts defaultFont
+]
+
+{ #category : #examples }
+RubAbstractTextArea class >> embeddedMorphExample [
+	"This is a simple example of how to embed morphs into a text. It is also a test to quickly see with ones eyes that the morphs are place right and behaves well under resize of window.
+The example sits in this class because this class is the one which implements the placement of morphs"
+	<example>
+	|txt|
+	txt := (1 to: 10000 by: 500) 
+		inject: '' asText 
+		into:[:sofar :elem| 
+			sofar, 
+			(String loremIpsum), 
+			(((String value: 1) asText) addAttribute: (TextAnchor new anchoredMorph: CircleMorph new ))].
+
+	RubScrolledTextMorph new
+		extent: 500@321;
+		beWrapped;
+		updateTextWith: txt;
+	 	openInWindow
 ]
 
 { #category : #'shortcut examples' }
@@ -442,6 +463,11 @@ RubAbstractTextArea >> addCursor [
 	self cursor ifNil: [ self addMorph: (cursor := self newCursor) ]
 ]
 
+{ #category : #'embedded morphs' }
+RubAbstractTextArea >> addEmbeddedMorph: aMorph [
+	self embeddedMorphs add: aMorph
+]
+
 { #category : #'accessing - selection' }
 RubAbstractTextArea >> addPrimarySelection [
 	self addMorph: self newPrimarySelection.
@@ -716,18 +742,27 @@ RubAbstractTextArea >> drawEmbeddedMorphs [
 								from: start
 								to: stop+1) ].
 					((v isKindOf: TextAnchor) and:[v anchoredMorph isMorph ])
-						ifTrue: [ self addMorphBack: v anchoredMorph  ] ] ]
+						ifTrue: [ self addEmbeddedMorph: v anchoredMorph  ] ] ]
+]
+
+{ #category : #'embedded morphs' }
+RubAbstractTextArea >> drawEmbeddedMorphsOn: aCanvas [
+	"draw only those embedded morphs which has been placed by RubDisplayScanner>>placeEmbeddedObject:"
+	((self embeddedMorphs) 
+		select: [ :morph | morph valueOfProperty: #hasBeenPositioned ifAbsent: [false] ])
+		do: [ :morph | morph fullDrawOn: aCanvas]
 ]
 
 { #category : #drawing }
 RubAbstractTextArea >> drawSubmorphsOn: aCanvas [
 	"Draw the focus here since we are using inset bounds
 	for the focus rectangle."
-
+	self resetEmbeddedMorphs.
 	super drawSubmorphsOn: aCanvas.
 	aCanvas rubParagraph: self paragraph bounds: self drawingBounds color: self textColor.
 	(scrollPane isNil and: [ self readOnly not and: [ self hasKeyboardFocus or: [ self hasFindReplaceFocus ] ] ])
-		ifTrue: [self drawKeyboardFocusOn: aCanvas ]
+		ifTrue: [self drawKeyboardFocusOn: aCanvas ].
+	self drawEmbeddedMorphsOn: aCanvas
 ]
 
 { #category : #drawing }
@@ -792,6 +827,13 @@ RubAbstractTextArea >> editorClass [
 	"Answer the class used to create the receiver's editor"
 
 	^ RubTextEditor
+]
+
+{ #category : #'embedded morphs' }
+RubAbstractTextArea >> embeddedMorphs [
+	"Embedded morphs are kept seperate from other submorphs, to ensure only those placed by
+	RubDisplayScanner>>placeEmbeddedObject: are drawn"
+	^ embeddedMorphs ifNil: [ embeddedMorphs := OrderedCollection new ]
 ]
 
 { #category : #'accessing - editing state' }
@@ -1683,6 +1725,13 @@ RubAbstractTextArea >> replaceFrom: start to: stop with: aText [
 RubAbstractTextArea >> replaceSelectionWith: aText [
 	self
 		handleEdit: [self editor replaceSelectionWith: aText]
+]
+
+{ #category : #'embedded morphs' }
+RubAbstractTextArea >> resetEmbeddedMorphs [
+	"reset the #hasBeenPositioned property to false for all embeddedMorphs. 
+	Those to actually be shown will be marked in RubDisplayScanner>>placeEmbeddedObject:"
+	self embeddedMorphs do: [ :morph | morph setProperty: #hasBeenPositioned toValue: false ]
 ]
 
 { #category : #'dropping/grabbing' }
