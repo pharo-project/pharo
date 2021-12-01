@@ -256,8 +256,6 @@ MCPackageLoader >> validate [
 
 { #category : #private }
 MCPackageLoader >> warnAboutDependencies [ 
-
-	NonInteractiveUIManager new beDefault.
 	self notify: self dependencyWarning
 ]
 
