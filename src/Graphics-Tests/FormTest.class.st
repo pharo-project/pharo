@@ -41,5 +41,4 @@ FormTest >> testIsAllWhite [
 		form fillWhite.
 		self assert: form isAllWhite.
 	].
-
 ]

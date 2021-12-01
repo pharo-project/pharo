@@ -50,9 +50,7 @@ Class {
 FluidBuilder >> build [
 	"Return a class that is not installed in the system."
 	
-	^ self shiftClassBuilder build 
-
-
+	^ self shiftClassBuilder build
 ]
 
 { #category : #'class side' }
@@ -67,7 +65,7 @@ FluidBuilder >> classSlotsToBuild [
 
 { #category : #'class side' }
 FluidBuilder >> classTraits: aCollection [ 
-	classTraitsToBuild := aCollection asTraitComposition 
+	classTraitsToBuild := aCollection asTraitComposition
 ]
 
 { #category : #'class side' }
@@ -96,8 +94,7 @@ FluidBuilder >> fillInstanceSideFromClass: aClass [
 
 	tag := (aClass package classTagForClass: aClass).
 	tag ifNotNil: [ :s | 
-		s isRoot ifFalse: [self tag: (aClass package classTagForClass: aClass) name ]].	
-	
+		s isRoot ifFalse: [self tag: (aClass package classTagForClass: aClass) name ]].
 ]
 
 { #category : #building }
@@ -158,7 +155,6 @@ FluidBuilder >> nameToBuild: aSymbol [
 FluidBuilder >> package: aString [
 
 	packageName := aString.
-
 ]
 
 { #category : #'accessing - mandatory' }

@@ -20,5 +20,5 @@ BooleanTest >> classToBeTested [
 { #category : #'tests - instance creation' }
 BooleanTest >> testNew [
 
-	self should: [Boolean new] raise: self defaultTestError 
+	self should: [Boolean new] raise: self defaultTestError
 ]

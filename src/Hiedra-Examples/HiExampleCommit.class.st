@@ -91,5 +91,4 @@ HiExampleCommit >> printOn: aStream [
 		nextPutAll: ' -> ';
 		print: parentIds asArray;
 		nextPut: $).
-
 ]

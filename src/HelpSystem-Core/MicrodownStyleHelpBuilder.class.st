@@ -28,13 +28,11 @@ MicrodownStyleHelpBuilder class >> help [
 { #category : #'private - accessing' }
 MicrodownStyleHelpBuilder class >> pragmaKeyword [
 	 ^ #microdownStyleHelp:
-
 ]
 
 { #category : #'private - accessing' }
 MicrodownStyleHelpBuilder class >> pragmaKeywords [
 	 ^ #(microdownStyleHelp:)
-
 ]
 
 { #category : #building }
@@ -126,7 +124,6 @@ MicrodownStyleHelpBuilder >> helpTopicFromFormattedString: aString title: aTitle
 		whileFalse: [topic := topicStack pop.
 			topicStack isEmpty ifFalse: [topicStack top addSubtopic: topic]].
 	^ topic
-
 ]
 
 { #category : #'private - accessing' }
@@ -136,5 +133,5 @@ MicrodownStyleHelpBuilder >> sectionStartChar [
 
 { #category : #'private - accessing' }
 MicrodownStyleHelpBuilder >> supportedSyntaxes [
-	^#(microdown) 
+	^#(microdown)
 ]

@@ -29,7 +29,6 @@ ReAssignmentInBlockRule >> initialize [
 			'[| `@temps | `@.Statements. ^`@object] ensure: `@block'
 			'[| `@temps | `@.Statements. `var := `@object] ifCurtailed: `@block'
 			'[| `@temps | `@.Statements. ^`@object] ifCurtailed: `@block' )
-		
 ]
 
 { #category : #accessing }

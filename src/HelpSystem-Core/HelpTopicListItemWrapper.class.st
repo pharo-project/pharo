@@ -32,7 +32,6 @@ HelpTopicListItemWrapper >> contents [
 	^(item subtopics) collect: [ :each | 
 		HelpTopicListItemWrapper with: each
 	].
-
 ]
 
 { #category : #accessing }

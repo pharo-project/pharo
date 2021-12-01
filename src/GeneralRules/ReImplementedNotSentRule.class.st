@@ -35,7 +35,7 @@ ReImplementedNotSentRule class >> allMessages [
 
 { #category : #testing }
 ReImplementedNotSentRule class >> checksMethod [
-	^ true 
+	^ true
 ]
 
 { #category : #cleanup }

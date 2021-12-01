@@ -290,7 +290,7 @@ Process >> effectiveProcess [
 	 correctly maintained when debugging code.  The debugger uses evaluate:onBehalfOf: to assign the
 	 debugged process as the effectiveProcess of the process executing the code, preserving process
 	 identity."
-	^effectiveProcess ifNil: [self] 
+	^effectiveProcess ifNil: [self]
 ]
 
 { #category : #accessing }
@@ -550,9 +550,6 @@ Process >> pvtSignal: anException list: aList [
 					aList add: self]]
 		ifFalse: [self resume]] fork.
 	blocker wait.
-
-
-
 ]
 
 { #category : #'process specific' }
@@ -642,7 +639,6 @@ Process >> signalException: anException [
 	process is resumed, it will signal the exception"
 
 	oldList ifNotNil: [self resume].
-
 ]
 
 { #category : #'changing suspended state' }

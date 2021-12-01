@@ -579,7 +579,7 @@ RubAbstractTextArea >> compose [
 
 	self prepareParagraphToCompose.
 	self paragraph compose.
-	self markBackgroundColors
+	self drawEmbeddedMorphs
 ]
 
 { #category : #composing }
@@ -698,6 +698,25 @@ RubAbstractTextArea >> deselect [
 { #category : #'event handling' }
 RubAbstractTextArea >> doubleClick: anEvent [
 	^ self handleEdit: [ self editor doubleClick: anEvent ]
+]
+
+{ #category : #composing }
+RubAbstractTextArea >> drawEmbeddedMorphs [
+	"Scan through text to find spans of TextBackgroundColor, and mark them using TextBackgroundColorSegmentMorph."
+
+	"Scan through text to find spans containing submorphs (Background color and TextAnchor)"
+
+	self text runs
+		withStartStopAndValueDo: [ :start :stop :value | 
+			value do: [ :v | 
+					(v isKindOf: TextBackgroundColor)
+						ifTrue: [ self addSegment: 
+							(RubTextBackgroundColorSegmentMorph
+								color: v color
+								from: start
+								to: stop+1) ].
+					((v isKindOf: TextAnchor) and:[v anchoredMorph isMorph ])
+						ifTrue: [ self addMorphBack: v anchoredMorph  ] ] ]
 ]
 
 { #category : #drawing }
@@ -1196,21 +1215,6 @@ RubAbstractTextArea >> margins: aMargin [
 	margins := m
 ]
 
-{ #category : #composing }
-RubAbstractTextArea >> markBackgroundColors [
-	"Scan through text to find spans of TextBackgroundColor, and mark them using TextBackgroundColorSegmentMorph."
-
-	self text runs
-		withStartStopAndValueDo: [ :start :stop :value | 
-			value do: [ :v | 
-					(v isKindOf: TextBackgroundColor)
-						ifTrue: [ self addSegment: 
-							(RubTextBackgroundColorSegmentMorph
-								color: v color
-								from: start
-								to: stop+1) ] ] ] 
-]
-
 { #category : #'accessing - selection' }
 RubAbstractTextArea >> markBlock [
 	^ self editingState markBlock
@@ -1472,7 +1476,7 @@ RubAbstractTextArea >> paragraphReplacedTextFrom: start to: stop with: aText [
 				ifFalse: [ self updateExtentFromParagraph ] ].
 	self scrollPane ifNotNil: [ :sp | sp textChanged ].
 	self announce: (RubTextChanged from: start to: stop with: aText).
-	self markBackgroundColors .
+	self drawEmbeddedMorphs.
 
 ]
 

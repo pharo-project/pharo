@@ -28,8 +28,6 @@ ReVariableReferencedOnceRule >> check: aClass forCritiquesDo: aCriticBlock [
 		  (RBReadBeforeWrittenTester
 				  isVariable: slot name
 				  writtenBeforeReadIn: usingMethods first ast) ifTrue: [aCriticBlock cull: (self critiqueFor: aClass about: slot  name)   ]]
-		
-
 ]
 
 { #category : #accessing }

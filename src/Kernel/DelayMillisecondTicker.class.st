@@ -27,8 +27,6 @@ DelayMillisecondTicker >> primSignal: aSemaphore atMilliseconds: aSmallInteger [
 	"Signal the semaphore when the millisecond clock reaches the value of the second argument. Fail if the first argument is neither a Semaphore nor nil. Essential. See Object documentation whatIsAPrimitive."
 	<primitive: 136>
 	^self primitiveFailed
-	
-
 ]
 
 { #category : #'api-system' }
@@ -50,5 +48,4 @@ DelayMillisecondTicker >> waitForUserSignalled: timingSemaphore orExpired: activ
 	self primSignal: timingSemaphore atMilliseconds: nextTick.
 	"WARNING! Stepping <Over> the following line may lock the Image. Use <Proceed>."
 	timingSemaphore wait.
-	
 ]

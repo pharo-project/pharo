@@ -30,7 +30,7 @@ ProcessTest >> testChangingPriorityRespectsTheProcessPreemptionSettings [
 		Processor activeProcess priority: highPriority.
 	]	forkAt: highPriority + 2.
 	
-	self assert: val equals: Smalltalk vm processPreemptionYields	
+	self assert: val equals: Smalltalk vm processPreemptionYields
 ]
 
 { #category : #tests }
@@ -98,7 +98,7 @@ ProcessTest >> testFork [
 	
 	"Forked process has been scheduled"
 	checkAssert wait.
-	self assert: hasBlockRun 
+	self assert: hasBlockRun
 ]
 
 { #category : #tests }
@@ -607,7 +607,6 @@ ProcessTest >> testSchedulingHigherPriorityServedFirst [
 	
 	checkAssert wait.
 	self assert: whichRan=11 description: 'First scheduled but lower priority should run after'.
-
 ]
 
 { #category : #tests }
@@ -669,8 +668,6 @@ ProcessTest >> testTerminateAnswersSelf [
 	process := process terminate.
 	self assert: (process isKindOf: Process).
 	self assert: process isTerminated.
-	
-
 ]
 
 { #category : #'tests - termination' }

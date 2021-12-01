@@ -34,7 +34,6 @@ CustomHelp class >> accept: aSelector title: title contents: text [
 	self class 
 		compile: code
 		classified: ((self class organization categoryOfElement: aSelector) ifNil:['pages']).
-
 ]
 
 { #category : #converting }
@@ -49,7 +48,6 @@ CustomHelp class >> asHelpTopic [
 CustomHelp class >> bold: aString [
 
 	^ self formatter bold: aString
-
 ]
 
 { #category : #accessing }
@@ -75,21 +73,19 @@ CustomHelp class >> builder [
 
 { #category : #defaults }
 CustomHelp class >> defaultFormatter [
-	^ CustomHelpTextFormatter 
+	^ CustomHelpTextFormatter
 ]
 
 { #category : #formatting }
 CustomHelp class >> doItFrom: aString [
 
 	^ self formatter doItFrom: aString
-
 ]
 
 { #category : #formatting }
 CustomHelp class >> doItFrom: aString text: textString [
 
 	^ self formatter doItFrom: aString text: textString
-
 ]
 
 { #category : #formatting }
@@ -126,7 +122,6 @@ To change the topic title, edit the window label.'].
 			|newTitle|
 			newTitle := UIManager default request: 'Save with title ' initialAnswer: topic title.		 
 			newTitle ifNotNil: [ self accept: aSelector title: newTitle contents: text ]].
-
 ]
 
 { #category : #errors }
@@ -143,21 +138,19 @@ CustomHelp class >> formatter [
 
 { #category : #accessing }
 CustomHelp class >> formatter: aFormatter [
-	Formatter := aFormatter 
+	Formatter := aFormatter
 ]
 
 { #category : #formatting }
 CustomHelp class >> heading: aString [
 
 	^ self formatter heading: aString
-
 ]
 
 { #category : #formatting }
 CustomHelp class >> heading: aString withSubtitle: aSubtitleString [
 
 	^ self formatter heading: aString withSubtitle: aSubtitleString
-
 ]
 
 { #category : #accessing }
@@ -235,21 +228,18 @@ CustomHelp class >> pages [
 CustomHelp class >> sourceCode: aSourceCode [
 
 	^ self formatter sourceCode: aSourceCode
-
 ]
 
 { #category : #formatting }
 CustomHelp class >> subheading: aString [
 
 	^ self formatter subheading: aString
-
 ]
 
 { #category : #formatting }
 CustomHelp class >> subsubheading: aString [
 
 	^ self formatter subsubheading: aString
-
 ]
 
 { #category : #accessing }
@@ -262,12 +252,10 @@ CustomHelp class >> systemIcon [
 CustomHelp class >> underlined: aString [
 
 	^ self formatter underlined: aString
-
 ]
 
 { #category : #formatting }
 CustomHelp class >> url: aString [
 
 	^ self formatter url: aString
-
 ]

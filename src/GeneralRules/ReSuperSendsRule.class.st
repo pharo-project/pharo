@@ -32,7 +32,6 @@ ReSuperSendsRule >> initialize [
 	self 
 		replace: 'super `@message: ``@args' 
 		with: 'self `@message: ``@args'
-		
 ]
 
 { #category : #accessing }

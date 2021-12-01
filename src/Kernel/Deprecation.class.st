@@ -150,7 +150,7 @@ Deprecation >> deprecationDate [
 
 { #category : #accessing }
 Deprecation >> explanation: aString [
-	explanationString := aString 
+	explanationString := aString
 ]
 
 { #category : #accessing }

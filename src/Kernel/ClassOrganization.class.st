@@ -41,7 +41,7 @@ ClassOrganization >> addCategory: aProtocolName before: aUselessArgument [
 
 { #category : #accessing }
 ClassOrganization >> allCategories [
-	^ self protocolOrganizer allProtocolsNames 
+	^ self protocolOrganizer allProtocolsNames
 ]
 
 { #category : #'backward compatibility' }
@@ -283,7 +283,7 @@ ClassOrganization >> ownCategories [
 ClassOrganization >> protocolNamed: aString [ 
 	^ self protocolOrganizer 
 		protocolNamed: aString 
-		ifAbsent: [ nil ] 
+		ifAbsent: [ nil ]
 ]
 
 { #category : #private }
@@ -373,7 +373,6 @@ ClassOrganization >> silentlyRenameCategory: oldName toBe: newName [
 	self protocolOrganizer 
 		renameProtocol: oldName
 		into: newName.
-
 ]
 
 { #category : #'backward compatibility' }

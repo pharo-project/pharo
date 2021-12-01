@@ -132,7 +132,6 @@ FloatTest >> testDivide [
 	self should: [ 2.0 / 0.0 ] raise: ZeroDivide.
 	self should: [ 1.2 / Float negativeZero ] raise: ZeroDivide.
 	self should: [ 1.2 / (1.3 - 1.3) ] raise: ZeroDivide
-	
 ]
 
 { #category : #'tests - printing' }
@@ -207,7 +206,6 @@ FloatTest >> testInfinity1 [
 	i2 := 1000000000 exp.
 	self assert: i1 isInfinite & i2 isInfinite & (i1 = i2)
 	"All infinities are equal. (This is a very substantial difference to NaN's, which are never equal."
-
 ]
 
 { #category : #'tests - infinity behavior' }
@@ -245,7 +243,6 @@ FloatTest >> testLiteralEqual [
 	self deny: (0.0 literalEqual: 0.0 negated).
 	self deny: (-0.0 literalEqual: -0.0 negated).
 	self deny: (0.0 literalEqual: -0.0)
-
 ]
 
 { #category : #'tests - characterization' }
@@ -307,7 +304,6 @@ FloatTest >> testNaN3 [
 	identitySet add: (item := Float nan).
 	self assert: (identitySet includes: item)
 	"as a NaN is not equal to itself, it can not be retrieved from a set"
-
 ]
 
 { #category : #'tests - NaN behavior' }
@@ -318,7 +314,6 @@ FloatTest >> testNaN4 [
 	dict at: Float nan put: #NaN.
 	self deny: (dict includes: Float nan)
 	"as a NaN is not equal to itself, it can not be retrieved when it is used as a dictionary key"
-
 ]
 
 { #category : #'tests - NaN behavior' }
@@ -401,8 +396,6 @@ FloatTest >> testPrintPaddedWithTo [
 	self assert: (1.0 printPaddedWith: $0 to: 2.3) equals: '01.000'. "previously failed due to float usage"
 	self assert: (1.0 printPaddedWith: $0 to: 2.4) equals: '01.0000'. "previously failed due to float usage"
 	self assert: (1.0 printPaddedWith: $0 to: 2.5) equals: '01.00000'
-
-
 ]
 
 { #category : #'tests - mathematical functions' }
@@ -420,7 +413,7 @@ FloatTest >> testReadFromManyDigits [
 	s1 := '1' , (String new: 321 withAll: $0) , '.0e-321'.
 	s2 := '0.' , (String new: 320 withAll: $0) , '1e321'.
 	self assert: (Number readFrom: s1) equals: 1.
-	self assert: (Number readFrom: s2) equals: 1 
+	self assert: (Number readFrom: s2) equals: 1
 ]
 
 { #category : #'tests - conversion' }
@@ -552,7 +545,6 @@ FloatTest >> testStringAsNumber [
 	self assert: -1234.56 equals: aFloat.
 	aFloat := '12.3456q2' asNumber.
 	self assert: 1234.56 equals: aFloat
-
 ]
 
 { #category : #'tests - conversion' }
@@ -571,7 +563,6 @@ FloatTest >> testZero1 [
 	self assert: (Float negativeZero at: 1) ~= (0 asFloat at: 1)
 
 	"The negative zero has a bit representation that is different from the bit representation of the positive zero. Nevertheless, both values are defined to be equal."
-
 ]
 
 { #category : #'tests - arithmetic' }

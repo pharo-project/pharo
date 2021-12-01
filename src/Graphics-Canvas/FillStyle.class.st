@@ -9,7 +9,7 @@ Class {
 
 { #category : #converting }
 FillStyle >> asColor [
-	^self subclassResponsibility 
+	^self subclassResponsibility
 ]
 
 { #category : #operating }

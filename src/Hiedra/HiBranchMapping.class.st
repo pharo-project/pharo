@@ -35,7 +35,6 @@ HiBranchMapping >> allLinksWithSameBranchAs: aHiLink [
 	^ Array streamContents: [:stream |
 		branchByLink keysAndValuesDo: [:link :branchNumber |
 			branchNumber = branch ifTrue: [ stream nextPut: link ] ] ].
-
 ]
 
 { #category : #accessing }

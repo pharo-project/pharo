@@ -56,7 +56,7 @@ ExternalData >> fromCString [
 
 { #category : #converting }
 ExternalData >> fromCStrings [
-	"Assume that the receiver represents a set of C strings and is teerminated by a empty string and convert it to a Smalltalk ordered collection of strings"
+	"Assume that the receiver represents a set of C strings and is terminated by a empty string and convert it to a Smalltalk ordered collection of strings"
 
 	| stream index char strings str |
 	type isPointerType ifFalse: [self error: 'External object is not a pointer type.'].
@@ -71,7 +71,7 @@ ExternalData >> fromCStrings [
 			].
 		str := stream contents.
 		strings addLast: str.
-		str size = 0
+		str isEmpty
 	] whileFalse.
 	^strings
 ]

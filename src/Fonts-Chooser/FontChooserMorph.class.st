@@ -56,7 +56,6 @@ FontChooserMorph >> applyButton [
 { #category : #actions }
 FontChooserMorph >> applyButtonClicked [
 	self apply.
-	
 ]
 
 { #category : #'ui elements' }
@@ -74,7 +73,6 @@ FontChooserMorph >> cancelButton [
 FontChooserMorph >> cancelButtonClicked [
 	result :=nil.
 	self delete
-	
 ]
 
 { #category : #'interface building' }
@@ -136,7 +134,6 @@ FontChooserMorph >> createWindow [
 FontChooserMorph >> delete [
 	model := nil.
 	super delete
-	
 ]
 
 { #category : #'ui elements' }
@@ -279,7 +276,6 @@ FontChooserMorph >> newFontSizePanel [
 		clipSubmorphs: true;
 		addMorphBack: self newFontPointSizeLabel;
 		addMorphBack: pointSizeMorph.
-		
 ]
 
 { #category : #'interface building' }

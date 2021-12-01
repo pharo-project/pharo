@@ -16,8 +16,6 @@ WorkspaceVariable >> allowsShadowing [
 WorkspaceVariable >> emitStore: methodBuilder [
 
 	methodBuilder storeIntoLiteralVariable: self.
-
-
 ]
 
 { #category : #'code generation' }

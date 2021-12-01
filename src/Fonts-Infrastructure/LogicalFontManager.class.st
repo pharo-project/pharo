@@ -32,7 +32,6 @@ LogicalFontManager class >> current [
 { #category : #'instance creation' }
 LogicalFontManager class >> defaultCurrent [
 	^self new
-
 ]
 
 { #category : #'class initialization' }
@@ -45,14 +44,12 @@ LogicalFontManager class >> reset [
 LogicalFontManager class >> unload [
 	current ifNotNil: [current initialize].
 	current := nil.
-
 ]
 
 { #category : #accessing }
 LogicalFontManager >> addFontProvider: aFontProvider [
 
 	fontProviders addLast: aFontProvider
-	
 ]
 
 { #category : #'font families' }
@@ -83,7 +80,6 @@ LogicalFontManager >> bestFontFor: aLogicalFont [
 	"look up best font from the receivers fontProviders"
 	
 	^self bestFontFor: aLogicalFont whenFindingAlternativeIgnoreAll: Set new
-
 ]
 
 { #category : #'font lookup' }
@@ -122,14 +118,10 @@ LogicalFontManager >> bestFontFor: aLogicalFont whenFindingAlternativeIgnoreAll:
 				ifFalse:[^font emphasized:  aLogicalFont emphasis]].
 	"There are no non-logical fonts in TextSharedInformation - let it fail by answering nil"
 	^nil
-	
-			
-
 ]
 
 { #category : #initialization }
 LogicalFontManager >> initialize [
 	super initialize.
 	fontProviders := OrderedCollection new: 10
-	
 ]

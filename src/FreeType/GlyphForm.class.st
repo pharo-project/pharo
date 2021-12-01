@@ -52,7 +52,6 @@ GlyphForm >> invertedAndAlphaMultiplied [
 { #category : #accessing }
 GlyphForm >> linearAdvance [
 	^linearAdvance
-
 ]
 
 { #category : #accessing }

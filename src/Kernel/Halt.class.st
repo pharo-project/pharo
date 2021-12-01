@@ -204,9 +204,6 @@ Halt class >> once [
 		self signalIn: senderContext
 		
 	].
-	
-	
-
 ]
 
 { #category : #'once-reset' }

@@ -59,5 +59,4 @@ FreeTypeExternalMemory >> validate [
 	
 	self primCopyToExternalMemory: bytes.
 	self autoRelease
-
 ]

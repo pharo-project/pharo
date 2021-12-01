@@ -57,7 +57,7 @@ GradientFillStyle class >> initPixelRampCache [
 GradientFillStyle class >> initialize [
 	"GradientFillStyle initialize"
 	
-	self initPixelRampCache 
+	self initPixelRampCache
 ]
 
 { #category : #accessing }

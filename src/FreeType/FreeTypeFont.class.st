@@ -75,14 +75,13 @@ FreeTypeFont >> ascent [
 	h := self height.
 	asc + desc < h ifFalse:[^cachedAscent := asc].
 	"height is greater than asc+desc, adjust ascent to include the difference"
-	^cachedAscent := h - desc 
+	^cachedAscent := h - desc
 ]
 
 { #category : #measuring }
 FreeTypeFont >> basicAscent [
 
 	^(self face ascender * self pixelSize // self face unitsPerEm).
-
 ]
 
 { #category : #'glyph lookup' }
@@ -183,8 +182,6 @@ FreeTypeFont >> displayLineGlyphOn: aDisplayContext from: startPoint to: endPoin
 		colorMap: originalColorMap;
 		combinationRule: oldCombinationRule;
 		halftoneForm: oldHalftoneForm.
-	
-	
 ]
 
 { #category : #displaying }
@@ -201,7 +198,6 @@ FreeTypeFont >> displayStrikeoutOn: aDisplayContext from: baselineStartPoint to:
 	s := baselineStartPoint + (0@top).
 	e := baselineEndPoint + (0@bottom).
 	self displayLineGlyphOn: aDisplayContext from: s to: e
-	
 ]
 
 { #category : #displaying }
@@ -279,8 +275,7 @@ FreeTypeFont >> displayString: aString on: aBitBlt from: startIndex to: stopInde
 		floatDestX := floatDestX + (widthAndKernedWidth at: 2) + kernDelta.
 		destX := floatDestX ].
 	aBitBlt colorMap: originalColorMap.
-	^ destX @ destY 
-
+	^ destX @ destY
 ]
 
 { #category : #displaying }
@@ -316,7 +311,7 @@ FreeTypeFont >> face: aFace [
 { #category : #accessing }
 FreeTypeFont >> familyName [ 
 
-	^face familyName 
+	^face familyName
 ]
 
 { #category : #measuring }
@@ -354,7 +349,6 @@ FreeTypeFont >> getLinearWidthOf: aCharacter [
 		glyph := face glyph.
 		la := glyph linearHorizontalAdvance / 2.0].
 	^la
-
 ]
 
 { #category : #measuring }
@@ -388,7 +382,6 @@ FreeTypeFont >> getWidthOf: aCharacter [
 	^self subPixelPositioned
 		ifTrue:[ glyph roundedPixelLinearAdvance x]
 		ifFalse:[ glyph advance x].
-
 ]
 
 { #category : #'glyph lookup' }
@@ -405,7 +398,6 @@ FreeTypeFont >> glyphOf: aCharacter colorValue: aColorValue mono: monoBoolean su
 				mono: monoBoolean 
 				subpixelPosition: sub 
 				font: self]
-
 ]
 
 { #category : #'glyph lookup' }
@@ -503,7 +495,6 @@ FreeTypeFont >> hintedWidthOf: aCharacter [
 		type: FreeTypeCacheWidth
 		ifAbsentPut: [self getWidthOf: aCharacter].
 	^answer
-
 ]
 
 { #category : #initialization }
@@ -518,7 +509,6 @@ FreeTypeFont >> installOn: aBitBlt foregroundColor: foreColor backgroundColor: b
 	| |
 	"fcolor := foreColor pixelValueForDepth: 32."
 	aBitBlt installFreeTypeFont: self foregroundColor: foreColor backgroundColor: backColor.
-
 ]
 
 { #category : #testing }
@@ -529,7 +519,7 @@ FreeTypeFont >> isBold [
 
 { #category : #testing }
 FreeTypeFont >> isFixedWidth [
-	^self face isFixedWidth 
+	^self face isFixedWidth
 ]
 
 { #category : #testing }
@@ -644,7 +634,6 @@ FreeTypeFont >> linearWidthOf: aCharacter [
 		type: FreeTypeCacheLinearWidth
 		ifAbsentPut: [self getLinearWidthOf: aCharacter].
 	^answer
-
 ]
 
 { #category : #accessing }
@@ -674,8 +663,6 @@ FreeTypeFont >> mode41GlyphOf: aCharacter colorValue: aColorValue mono: monoBool
 				mono: monoBoolean 
 				subpixelPosition: sub 
 				font: self]
-
-
 ]
 
 { #category : #accessing }
@@ -815,8 +802,6 @@ FreeTypeFont >> subGlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean
 				mono: monoBoolean 
 				subpixelPosition: sub 
 				font: self]
-
-
 ]
 
 { #category : #testing }
@@ -884,7 +869,6 @@ FreeTypeFont >> widthOf: aCharacter [
 	^self isSubPixelPositioned
 		ifTrue:[self linearWidthOf: aCharacter]
 		ifFalse: [self hintedWidthOf: aCharacter]
-
 ]
 
 { #category : #measuring }
@@ -918,5 +902,5 @@ FreeTypeFont >> widthOfString: aString from: startIndex to: stopIndex [
 					the glyph is not clipped when it is produced. Either make the width accurate,
 					or hold the RSB value separately, or hold an accurate width separately"
 					resultX := resultX "+ 2" + glyph offset x "negated" + (glyph width - (a at: 2)  "glyph linearAdvance x floor")]]].
-	^resultX ceiling 
+	^resultX ceiling
 ]

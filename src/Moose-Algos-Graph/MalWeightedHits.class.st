@@ -25,5 +25,5 @@ MalWeightedHits >> edgeClass [
 { #category : #configuration }
 MalWeightedHits >> nodeClass [
 
-	^ MalWeightedHitsNode 
+	^ MalWeightedHitsNode
 ]

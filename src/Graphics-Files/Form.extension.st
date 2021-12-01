@@ -8,7 +8,6 @@ Form class >> fileReaderServicesForFile: fullName suffix: suffix [
 		includes: suffix)
 		ifTrue: [ self services ]
 		ifFalse: [#()]
-
 ]
 
 { #category : #'*Graphics-Files' }
@@ -164,7 +163,6 @@ Form >> storeResourceOn: aStream [
 		aStream nextNumber: 4 put: (EndianDetector isBigEndian ifTrue:[1] ifFalse: [0])].
 	aStream nextNumber: 4 put: bits size.
 	aStream nextPutAll: bits.
-
 ]
 
 { #category : #'*Graphics-Files' }

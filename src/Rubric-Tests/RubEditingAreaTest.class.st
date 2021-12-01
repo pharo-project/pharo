@@ -56,7 +56,32 @@ RubEditingAreaTest >> setSelectionFrom: startIndex to: stopIndex text: aText [
 RubEditingAreaTest >> setUp [
 	super setUp.
 	area := RubEditingArea new.
-	area setTextWith: 'one two three four'.
+	area setTextWith: 'one two three four'
+]
+
+{ #category : #running }
+RubEditingAreaTest >> tearDown [
+
+	area delete.
+	super tearDown
+]
+
+{ #category : #'tests - accessing selection' }
+RubEditingAreaTest >> testEmbeddedAnchorInTextAreDrawn [
+	| circle text |
+	circle := CircleMorph new extent: 50 @ 50;color: Color blue.
+
+	self assert: circle owner isNil.
+	self assert: circle position equals: 0@0.
+	"add the circle to a text string"
+	text := ('aaaaa',(String value: 1),'bbbbbbb') asText 
+			addAttribute: (TextAnchor new anchoredMorph: circle).
+	"render the text in a RubEditingArea to place the circle in a layout"
+	area updateTextWith: text.
+	area openInWorld.
+
+	self assert: circle owner notNil.
+	self deny: circle position equals: 0@0
 ]
 
 { #category : #'tests - accessing selection' }

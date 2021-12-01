@@ -43,7 +43,6 @@ FreeTypeSettings class >> initialize [
 	SessionManager default 
 		registerGuiClassNamed: self name 
 		atPriority: 10.
-
 ]
 
 { #category : #'system startup' }
@@ -112,7 +111,6 @@ FreeTypeSettings >> bitBltSubPixelAvailable [
 	on: Error do:[:e | ^bitBltSubPixelAvailable := false].
 	#toDo. "need to check that rule 41 has done the right thing, and isn't someone elses new BitBlt rule"
 	^bitBltSubPixelAvailable := true
-	
 ]
 
 { #category : #accessing }
@@ -124,7 +122,7 @@ FreeTypeSettings >> clearBitBltSubPixelAvailable [
 { #category : #accessing }
 FreeTypeSettings >> clearForceNonSubPixelCount [
 	
-	forceNonSubPixelCount := nil. 
+	forceNonSubPixelCount := nil.
 ]
 
 { #category : #accessing }
@@ -151,7 +149,7 @@ FreeTypeSettings >> forceNonSubPixelDuring: aBlock [
 
 { #category : #accessing }
 FreeTypeSettings >> gamma [
-	^gamma ifNil:[gamma := 1.0] 
+	^gamma ifNil:[gamma := 1.0]
 ]
 
 { #category : #accessing }
@@ -181,7 +179,6 @@ FreeTypeSettings >> glyphContrast: aContrastValue [
 			ifTrue: [g := 1.0]
 			ifFalse: [g := ((100 - v) + 50 / 100.0) raisedTo: 2].
 		self setGamma: g].
-
 ]
 
 { #category : #accessing }
@@ -216,7 +213,6 @@ FreeTypeSettings >> hintingSymbol [
 					self hinting 
 						ifTrue: [#Normal]
 						ifFalse: [#None]]]
-
 ]
 
 { #category : #accessing }
@@ -254,7 +250,6 @@ FreeTypeSettings >> lightHinting [
 FreeTypeSettings >> monitorType [
   "#LCD or #CRT"
   ^ self subPixelAntiAliasing ifTrue: [#LCD] ifFalse: [#CRT]
-
 ]
 
 { #category : #accessing }

@@ -16,7 +16,7 @@ Class {
 	#category : #'Metacello-Core-Scripts'
 }
 
-{ #category : #utility }
+{ #category : #utilities }
 MetacelloScriptEngine class >> baseNameOf: className [
   ^ (className beginsWith: 'BaselineOf')
     ifTrue: [ className copyFrom: 'BaselineOf' size + 1 to: className size ]
@@ -26,7 +26,7 @@ MetacelloScriptEngine class >> baseNameOf: className [
         ifFalse: [ className ] ]
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MetacelloScriptEngine class >> baselineNameFrom: baseName [
     "Return the fully-qualified configuration class name."
 
@@ -35,7 +35,7 @@ MetacelloScriptEngine class >> baselineNameFrom: baseName [
         ifFalse: [ 'BaselineOf' , baseName ]
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 MetacelloScriptEngine class >> configurationNameFrom: baseName [
     "Return the fully-qualified configuration class name."
 

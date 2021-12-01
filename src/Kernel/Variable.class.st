@@ -34,8 +34,7 @@ Class {
 }
 
 { #category : #validating }
-Variable class >> checkValidName: aString [ 
-
+Variable class >> checkValidName: aString [
 ]
 
 { #category : #'class initialization' }
@@ -47,7 +46,7 @@ Variable class >> initialize [
 
 { #category : #testing }
 Variable class >> isAbstract [ 
-	^self = Variable 
+	^self = Variable
 ]
 
 { #category : #'instance creation' }
@@ -142,7 +141,6 @@ Variable >> isClassVariable [
 Variable >> isDefinedByBlock [
 	"true if a variable node is defined by a block"
 	^false
-
 ]
 
 { #category : #testing }
@@ -274,7 +272,6 @@ Variable >> needsFullDefinition [
 { #category : #properties }
 Variable >> properties [
 	^ Properties at: self ifAbsent: nil
-		
 ]
 
 { #category : #properties }
@@ -282,7 +279,6 @@ Variable >> propertyAt: propName [
 	^ self
 		propertyAt: propName
 		ifAbsent: [ nil ]
-		
 ]
 
 { #category : #properties }
@@ -291,7 +287,6 @@ Variable >> propertyAt: propName ifAbsent: aBlock [
 	^ self properties
 		at: propName
 		ifAbsent: aBlock
-		
 ]
 
 { #category : #properties }
@@ -310,7 +305,7 @@ Variable >> propertyAt: propName put: propValue [
 
 { #category : #debugging }
 Variable >> readInContext: aContext [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #properties }
@@ -351,5 +346,5 @@ Variable >> usingMethods [
 Variable >> write: aValue inContext: aContext [
 	"write the value in aContext. All #write:inContext: methods need to return the assigned value,
 	as this is the reflective version of assignment which has the assigned value as a value"
-	^self subclassResponsibility 
+	^self subclassResponsibility
 ]

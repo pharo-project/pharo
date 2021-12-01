@@ -24,5 +24,4 @@ ReSelfSentNotImplementedRuleTest >> testRule [
 	
 	self assert: critiques size equals: 4.
 	self assert: (self sourceAtChritique: critiques first) equals: 'self bar'.
-	
 ]

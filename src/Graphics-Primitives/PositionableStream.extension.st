@@ -36,5 +36,4 @@ PositionableStream >> nextWordsInto: aBitmap [
 	aBitmap restoreEndianness.
 
 	^ aBitmap 	"May be WordArray, ColorArray, etc"
-
 ]

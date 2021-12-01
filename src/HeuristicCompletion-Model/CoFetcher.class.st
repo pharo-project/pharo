@@ -90,8 +90,6 @@ CoFetcher >> filter: newFilter [
 		ifFalse: [ self reset ].
 		
 	filter := newFilter.
-
-
 ]
 
 { #category : #private }

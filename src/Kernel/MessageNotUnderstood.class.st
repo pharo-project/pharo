@@ -36,7 +36,7 @@ MessageNotUnderstood >> description [
 MessageNotUnderstood >> initialize [
 
 	super initialize.
-	reachedDefaultHandler := false	
+	reachedDefaultHandler := false
 ]
 
 { #category : #private }

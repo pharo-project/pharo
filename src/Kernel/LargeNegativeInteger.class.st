@@ -135,7 +135,6 @@ LargeNegativeInteger >> sign [
 	"Optimization. Answer -1 since receiver is less than 0."
 
 	^ -1
-
 ]
 
 { #category : #testing }
@@ -143,7 +142,6 @@ LargeNegativeInteger >> signBit [
 	"Optimization."
 
 	^1
-
 ]
 
 { #category : #testing }

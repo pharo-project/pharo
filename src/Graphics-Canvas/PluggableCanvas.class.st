@@ -55,7 +55,6 @@ PluggableCanvas >> drawString: s from: firstIndex to: lastIndex in: boundsRect f
 PluggableCanvas >> extent [
 
 	self apply: [ :c | ^c extent ].
-
 ]
 
 { #category : #'drawing - ovals' }
@@ -107,7 +106,6 @@ PluggableCanvas >> fillRectangle: aRectangle basicFillStyle: aFillStyle [
 			color: aFillStyle
 			borderWidth: 0
 			borderColor: nil ]
-	
 ]
 
 { #category : #initialization }
@@ -150,7 +148,6 @@ PluggableCanvas >> line: pt1 to: pt2 width: w color: c [
 PluggableCanvas >> origin [
 
 	self apply: [ :c | ^c origin ].
-
 ]
 
 { #category : #'drawing - images' }

@@ -67,7 +67,6 @@ Date class >> fromSeconds: seconds [
 Date class >> starting: aDateAndTime [
 
 	^ super starting: (aDateAndTime midnight) duration: (Duration days: 1)
-
 ]
 
 { #category : #'instance creation' }

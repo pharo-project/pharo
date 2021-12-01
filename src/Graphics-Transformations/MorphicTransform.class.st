@@ -22,7 +22,6 @@ MorphicTransform class >> identity [
 MorphicTransform class >> new [
 
 	^ self offset: 0@0
-
 ]
 
 { #category : #'instance creation' }
@@ -129,7 +128,6 @@ MorphicTransform >> isIdentity [
 	"Return true if the receiver is the identity transform; that is, if applying to a point returns the point itself."
 
 	^ self isPureTranslation and: [offset = (0@0)]
-
 ]
 
 { #category : #testing }
@@ -142,7 +140,6 @@ MorphicTransform >> isPureTranslation [
 	"Return true if the receiver specifies no rotation or scaling."
 
 	^ angle = 0.0 and: [scale = 1.0]
-
 ]
 
 { #category : #'transforming points' }
@@ -154,7 +151,6 @@ MorphicTransform >> localPointToGlobal: aPoint [
 { #category : #accessing }
 MorphicTransform >> offset [
 	^ offset
-
 ]
 
 { #category : #printing }

@@ -35,7 +35,7 @@ CoNarrowHistoryFetcherTest >> testNarrowingAndUnnarrowingReturnsSameResult [
 		      narrowKey: 'as'.
 	f3Result := fetcher next: 10.
 
-	self assertCollection: f1Result equals: f3Result 
+	self assertCollection: f1Result equals: f3Result
 ]
 
 { #category : #tests }
@@ -94,5 +94,5 @@ CoNarrowHistoryFetcherTest >> testUnnarrowingAndThenNarrowingReturnsSameResult [
 		           narrowKey: 'asC'.
 	newResults := fetcher upToEnd.
 
-	self assertCollection: originalResults equals: newResults 
+	self assertCollection: originalResults equals: newResults
 ]

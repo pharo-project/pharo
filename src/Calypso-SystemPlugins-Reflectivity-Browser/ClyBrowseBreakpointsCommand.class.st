@@ -32,7 +32,7 @@ ClyBrowseBreakpointsCommand >> defaultMenuIconName [
 { #category : #accessing }
 ClyBrowseBreakpointsCommand >> defaultMenuItemName [
 
-	^'Browse breakpoints'
+	^'Browse Breakpoints'
 ]
 
 { #category : #accessing }

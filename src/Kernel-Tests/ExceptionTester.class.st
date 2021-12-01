@@ -323,7 +323,6 @@ ExceptionTester >> runTest: aSelector [
 	actualResult = expectedResult
 		ifTrue: [self logTestResult: 'succeeded']
 		ifFalse: [self logTestResult: 'failed' ].
-
 ]
 
 { #category : #tests }
@@ -355,7 +354,6 @@ ExceptionTester >> simpleEnsureTest [
 	self doSomethingElse]
 		ensure:
 			[self doYetAnotherThing].
-	
 ]
 
 { #category : #results }
@@ -376,7 +374,6 @@ ExceptionTester >> simpleEnsureTestWithError [
 	self doSomethingElse]
 		ensure:
 			[self doYetAnotherThing].
-	
 ]
 
 { #category : #results }
@@ -397,7 +394,6 @@ ExceptionTester >> simpleEnsureTestWithNotification [
 	self doSomethingElse]
 		ensure:
 			[self doYetAnotherThing].
-	
 ]
 
 { #category : #results }
@@ -418,7 +414,6 @@ ExceptionTester >> simpleEnsureTestWithUparrow [
 	self doSomethingElse]
 		ensure:
 			[self doYetAnotherThing].
-	
 ]
 
 { #category : #results }
@@ -462,7 +457,6 @@ ExceptionTester >> simpleNoTimeoutTest [
 	[ self doSomething ]
 		valueWithin: 1 day onTimeout:
 			[ self doSomethingElse ].
-	
 ]
 
 { #category : #results }
@@ -672,7 +666,6 @@ ExceptionTester >> simpleTimeoutWithZeroDurationTest [
 	[ self doSomething ]
 		valueWithin: 0 seconds onTimeout:
 			[ self doSomethingElse ].
-	
 ]
 
 { #category : #results }

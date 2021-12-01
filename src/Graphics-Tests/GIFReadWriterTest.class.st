@@ -79,7 +79,6 @@ GIFReadWriterTest >> testAnimatedColorsOutIn [
 	self assert: (activeFrame form colorAt: 300@100) equals: Color green.
 	self assert: (activeFrame form colorAt: 100@300) equals: Color black.
 	self assert: (activeFrame form colorAt: 300@300) equals: Color red.
-	
 ]
 
 { #category : #tests }

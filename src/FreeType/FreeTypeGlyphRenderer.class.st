@@ -129,7 +129,6 @@ FreeTypeGlyphRenderer >> glyphOf: aCharacter colorValue: aColorValue mono: monoB
 			form := form asFormOfDepth: 8 ].
 	form := self convert8to32: form colorValue: aColorValue.
 	^form
-	
 ]
 
 { #category : #public }
@@ -218,5 +217,4 @@ FreeTypeGlyphRenderer >> subGlyphOf: aCharacter colorValue: aColorValue mono: mo
 	so answer an ordinary glyph"
 
 	^self mode41GlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub font: aFreeTypeFont
-
 ]

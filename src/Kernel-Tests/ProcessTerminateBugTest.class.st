@@ -24,7 +24,6 @@ ProcessTerminateBugTest >> testSchedulerTermination [
 	Processor yield. "will give process a chance to continue and
 horribly screw up"
 	self assert: gotHere not.
-
 ]
 
 { #category : #tests }
