@@ -73,8 +73,6 @@ FractionTest >> testAsLargerPowerOfTwo [
 	self should: [(Fraction numerator: 1 denominator:(2 raisedTo: 80) negated) asLargerPowerOfTwo] raise: DomainError.
 	self should: [(Fraction numerator: (2 raisedTo: 80) negated denominator: (2 raisedTo: 160)) asLargerPowerOfTwo] raise: DomainError.
 	self should: [(Fraction numerator: (2 raisedTo: 80) denominator: (2 raisedTo: 160) negated) asLargerPowerOfTwo] raise: DomainError
-	
-
 ]
 
 { #category : #'tests - conversions' }
@@ -131,7 +129,6 @@ FractionTest >> testAsSmallerPowerOfTwo [
 	self should: [(Fraction numerator: 1 denominator:(2 raisedTo: 80) negated) asSmallerPowerOfTwo] raise: DomainError.
 	self should: [(Fraction numerator: (2 raisedTo: 80) negated denominator: (2 raisedTo: 160)) asSmallerPowerOfTwo] raise: DomainError.
 	self should: [(Fraction numerator: (2 raisedTo: 80) denominator: (2 raisedTo: 160) negated) asSmallerPowerOfTwo] raise: DomainError
-
 ]
 
 { #category : #'tests - conversions' }

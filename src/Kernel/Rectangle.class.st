@@ -60,7 +60,7 @@ Rectangle class >> left: left right: right top: top bottom: bottom [
 	"Answer an instance of me whose left, right, top, and bottom coordinates 
 	are determined by the arguments."
 
-	^ self basicNew setLeft: left right: right top: top bottom: bottom 
+	^ self basicNew setLeft: left right: right top: top bottom: bottom
 ]
 
 { #category : #'instance creation' }
@@ -361,7 +361,6 @@ Rectangle >> containsRect: aRect [
 	"Answer whether aRect is within the receiver (OK to coincide)."
 
 	^ aRect origin >= origin and: [aRect corner <= corner]
-
 ]
 
 { #category : #accessing }
@@ -380,7 +379,6 @@ Rectangle >> corners [
 		with: self bottomLeft
 		with: self bottomRight
 		with: self topRight
-
 ]
 
 { #category : #fmp }
@@ -694,8 +692,6 @@ Rectangle >> pointAtSideOrCorner: loc [
 					bottomRight bottomCenter bottomLeft leftCenter)
 						at: (#(topLeft top topRight right
 					bottomRight bottom bottomLeft left) indexOf: loc))
-
-	
 ]
 
 { #category : #'rectangle functions' }
@@ -773,7 +769,6 @@ Rectangle >> quickMergePoint: aPoint [
 	^useRcvr
 		ifTrue: [self]
 		ifFalse: [minX@minY corner: maxX@maxY]
-
 ]
 
 { #category : #'rectangle functions' }
@@ -854,7 +849,6 @@ Rectangle >> setLeft: left right: right top: top bottom: bottom [
 
 	origin := (left min: right) @ (top min: bottom).
 	corner := (left max: right) @ (top max: bottom).
-
 ]
 
 { #category : #private }
@@ -862,8 +856,6 @@ Rectangle >> setPoint: pt1 point: pt2 [
 
 	origin := (pt1 x min: pt2 x)@(pt1 y min: pt2 y).
 	corner := (pt1 x max: pt2 x)@(pt1 y max: pt2 y).
-	
-
 ]
 
 { #category : #'rectangle functions' }
@@ -900,7 +892,6 @@ Rectangle >> squishedWithin: aRectangle [
 	^ origin corner: (corner min: aRectangle bottomRight)
 
 "(50 @ 50 corner: 160 @ 100) squishedWithin:  (20 @ 10 corner: 90 @ 85)"
-
 ]
 
 { #category : #printing }
@@ -936,7 +927,6 @@ Rectangle >> topLeft [
 	"Answer the point at the top left corner of the receiver's top horizontal line."
 
 	^origin
-
 ]
 
 { #category : #accessing }
@@ -989,7 +979,6 @@ Rectangle >> truncated [
 		ifTrue: [^ self].
 
 	^ Rectangle origin: origin truncated corner: corner truncated
-
 ]
 
 { #category : #accessing }

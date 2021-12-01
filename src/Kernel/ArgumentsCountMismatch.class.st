@@ -51,5 +51,5 @@ ArgumentsCountMismatch >> messageText [
 { #category : #accessing }
 ArgumentsCountMismatch >> printArgumentsCount: aNumber [
 			
-	^ aNumber printString, ' argument', (aNumber = 1 ifTrue: [''] ifFalse:['s']) 
+	^ aNumber printString, ' argument', (aNumber = 1 ifTrue: [''] ifFalse:['s'])
 ]

@@ -96,7 +96,6 @@ ProcessorScheduler class >> relinquishProcessorForMicroseconds: anInteger [
 
 	<primitive: 230>
 	"don't fail if primitive is not implemented, just do nothing"
-
 ]
 
 { #category : #'background process' }
@@ -110,7 +109,6 @@ ProcessorScheduler class >> startUp [
 	BackgroundProcess priority: SystemRockBottomPriority.
 	BackgroundProcess name: 'Idle Process'.
 	BackgroundProcess resume.
-
 ]
 
 { #category : #accessing }
@@ -261,7 +259,6 @@ ProcessorScheduler >> scanSchedule: aBlock startingAt: topPriority [
 			aBlock value: proc
 		].
 	].
-
 ]
 
 { #category : #'process state change' }
@@ -298,7 +295,6 @@ ProcessorScheduler >> tallyCPUUsageFor: seconds [
 	number of seconds. Answer a Block that will return the tally (a Bag) after the task
 	is complete" 
 	^self tallyCPUUsageFor: seconds every: 10
-
 ]
 
 { #category : #'CPU usage tally' }

@@ -182,7 +182,6 @@ Monitor >> privateCleanup [
 { #category : #private }
 Monitor >> queueDict [
 	^ queueDict ifNil: [queueDict := IdentityDictionary new].
-	
 ]
 
 { #category : #private }

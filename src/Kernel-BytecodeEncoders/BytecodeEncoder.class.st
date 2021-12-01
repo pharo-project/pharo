@@ -31,7 +31,7 @@ BytecodeEncoder class >> extensionsFor: pc in: aCompiledMethod into: trinaryBloc
 { #category : #accessing }
 BytecodeEncoder class >> instructionSizeAt: pc of: aMehtod [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -77,7 +77,7 @@ BytecodeEncoder class >> nonExtensionPcAt: pc in: method [
 { #category : #'bytecode decoding' }
 BytecodeEncoder class >> quickPrimSpecialConstants [
 	"Note: they are different from the encoder special literals."
-	^ #(true false nil -1 0 1 2) 
+	^ #(true false nil -1 0 1 2)
 ]
 
 { #category : #'bytecode decoding' }
@@ -309,7 +309,6 @@ BytecodeEncoder >> sizeStoreTemp: tempIndex [
 { #category : #'opcode sizing' }
 BytecodeEncoder >> sizeTrapIfNotInstanceOf: litIndex [ 
 	^ self sizeOpcodeSelector: #genTrapIfNotInstanceOf: withArguments: {litIndex}
-
 ]
 
 { #category : #accessing }

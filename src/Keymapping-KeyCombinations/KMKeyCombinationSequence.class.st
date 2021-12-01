@@ -56,7 +56,7 @@ KMKeyCombinationSequence >> addShortcut: aShortcut [
 { #category : #matching }
 KMKeyCombinationSequence >> beginsWith: aShortcut [ 
 	
-	^ self sequence first = aShortcut 
+	^ self sequence first = aShortcut
 ]
 
 { #category : #accessing }

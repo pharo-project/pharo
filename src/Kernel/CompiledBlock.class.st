@@ -67,7 +67,6 @@ CompiledBlock >> hash [
 	^hash
 
 	"(CompiledMethod>>#hash) hash"
-
 ]
 
 { #category : #testing }
@@ -140,7 +139,7 @@ CompiledBlock >> printOn: anStream [
 	
 	anStream 
 		nextPutAll: 'a CompiledBlock: ';
-		nextPutAll: self sourceNode sourceCode 
+		nextPutAll: self sourceNode sourceCode
 ]
 
 { #category : #compatibility }

@@ -137,7 +137,6 @@ DeepCopier >> fixDependents [
 				[:newDep| | newModel |
 				newModel := references at: pair key ifAbsent: [pair key].
 				newModel addDependent: newDep]]].
-
 ]
 
 { #category : #initialization }
@@ -145,14 +144,12 @@ DeepCopier >> initialize [
 
 	super initialize.
 	self initialize: 4096.
-
 ]
 
 { #category : #initialization }
 DeepCopier >> initialize: size [
 
 	references := IdentityDictionary new: size.
-	
 ]
 
 { #category : #checking }

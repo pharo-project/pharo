@@ -19,8 +19,7 @@ MalGraphFixture class >> aseCircuitGraph: builder [
 
 	builder nodes: nodes.
 	builder edges: edges from: #first to: #second.
-	^ builder	
-
+	^ builder
 ]
 
 { #category : #fixtures }
@@ -32,8 +31,7 @@ MalGraphFixture class >> aseSccGraph: builder [
 
 	builder nodes: nodes.
 	builder edges: edges from: #first to: #second.
-	^ builder	
-
+	^ builder
 ]
 
 { #category : #fixtures }
@@ -45,8 +43,7 @@ MalGraphFixture class >> aseWeightedCircuitGraph: builder [
 
 	builder nodes: nodes.
 	builder edges: edges from: #first to: #second weight: #third.
-	^ builder	
-
+	^ builder
 ]
 
 { #category : #fixtures }
@@ -87,7 +84,6 @@ MalGraphFixture class >> complexWeightedGraph: builder [
 	builder nodes: nodes.
 	builder edges: edges from: #first to: #second weight: #third.
 	^ builder
-
 ]
 
 { #category : #fixtures }
@@ -164,8 +160,7 @@ MalGraphFixture class >> nestedCycleGraph: builder [
 
 	builder nodes: nodes.
 	builder edges: edges from: #first to: #second.
-	^ builder	
-
+	^ builder
 ]
 
 { #category : #fixtures }
@@ -178,7 +173,6 @@ MalGraphFixture class >> simpleGraph: builder [
 	builder nodes: nodes.
 	builder edges: edges from: #first to: #second.
 	^ builder
-
 ]
 
 { #category : #fixtures }
@@ -191,7 +185,6 @@ MalGraphFixture class >> simpleWeightedGraph: builder [
 	builder nodes: nodes.
 	builder edges: edges from: #first to: #second weight: #third.
 	^ builder
-
 ]
 
 { #category : #fixtures }

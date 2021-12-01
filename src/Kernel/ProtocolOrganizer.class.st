@@ -71,7 +71,7 @@ ProtocolOrganizer >> classify: aSymbol inProtocolNamed: aProtocolName [
 { #category : #private }
 ProtocolOrganizer >> existsProtocolNamed: aProtocolName [
 	
-	^self allProtocols anySatisfy: [ :e | e name = aProtocolName ] 
+	^self allProtocols anySatisfy: [ :e | e name = aProtocolName ]
 ]
 
 { #category : #accessing }
@@ -92,7 +92,7 @@ ProtocolOrganizer >> fromSpec: aSpec [
 { #category : #protocol }
 ProtocolOrganizer >> getProtocolNamed: aByteString ifNone: aBlockClosure [ 
 	
-	^ protocols detect: [:e | e name = aByteString ] ifNone: aBlockClosure 
+	^ protocols detect: [:e | e name = aByteString ] ifNone: aBlockClosure
 ]
 
 { #category : #testing }

@@ -11,8 +11,6 @@ Class {
 DateAndTimeTest >> classToBeTested [
 
 	^ DateAndTime
-
-
 ]
 
 { #category : #helpers }
@@ -29,7 +27,6 @@ DateAndTimeTest >> selectorsToBeIgnored [
 	| private | 
 	private := #( #printOn: ).
 	^ super selectorsToBeIgnored, private
-
 ]
 
 { #category : #'tests - arithmetic' }
@@ -169,7 +166,6 @@ DateAndTimeTest >> testDayOfWeekWithUTC [
 	"Internally, this date gets represented as the julian day 2456384 with seconds 79200 and offset 2 hours"
 	"When asking for the day of week, the offset should be taken into account to return the correct day of week"
 	self assert: date dayOfWeek equals: 3.
-	
 ]
 
 { #category : #'tests - epoch' }
@@ -269,7 +265,6 @@ DateAndTimeTest >> testMonotonicity [
 		assert: (t1 <= t2);
 		assert: (t2 < t3);
 		assert: (t3 <= t4).
-
 ]
 
 { #category : #'tests - under design' }
@@ -433,21 +428,18 @@ DateAndTimeTest >> testReadFromDateOnly [
 	self 
 		assert: '2014-02-19 -05:00' asDateAndTime printString
 		equals:  '2014-02-19T00:00:00-05:00'.
-
 ]
 
 { #category : #'tests - offset' }
 DateAndTimeTest >> testReadFromDefaultOffsetNotSpecified [
 
 	self assert: (DateAndTime readFrom: '2016-07-03T21:16:16.708241' readStream defaultOffset: Duration zero) offset equals: Duration zero.
-
 ]
 
 { #category : #'tests - offset' }
 DateAndTimeTest >> testReadFromDefaultOffsetSpecified [
 
 	self assert: (DateAndTime readFrom: '2016-07-03T21:16:16.708241+02:00' readStream defaultOffset: Duration zero) offset equals: (Duration hours: 2).
-
 ]
 
 { #category : #tests }
@@ -473,7 +465,6 @@ DateAndTimeTest >> testReadFromNoOffset [
 DateAndTimeTest >> testReadFromOffset [
 		
 	self assert: (DateAndTime readFrom: '-1199-01-05T20:33:14.321-05:00' readStream) offset printString equals: '-0:05:00:00'.
-
 ]
 
 { #category : #'tests - under design' }
@@ -494,8 +485,6 @@ DateAndTimeTest >> testReadFromSecond [
 DateAndTimeTest >> testReadFromSpaceBeforeOffset [
 	self assert: '2012-07-26 16:38:48 +0200' asDateAndTime offset equals: 2 hour.
 	self assert: '2012-07-26 16:38:48 +02' asDateAndTime offset equals: 2 hour.
-
-
 ]
 
 { #category : #'tests - offset' }
@@ -504,8 +493,6 @@ DateAndTimeTest >> testReadFromUTCOffset [
 	self assert: (DateAndTime readFrom: '2010-01-05T20:33:14.321+00' readStream) offset isZero.
 	self assert: (DateAndTime readFrom: '2010-01-05T20:33:14.321+0000' readStream) offset isZero.
 	self assert: (DateAndTime readFrom: '2010-01-05T20:33:14.321+00:00' readStream) offset isZero.
-
-
 ]
 
 { #category : #'tests - offset' }
@@ -565,8 +552,6 @@ DateAndTimeTest >> testReflexive [
 			hour: 2 minute: 3 second: 4 nanoSecond: 5 
 			offset: 6 hours.
 	self assert: t equals: t.
-	
-
 ]
 
 { #category : #'tests - epoch' }
@@ -669,7 +654,6 @@ DateAndTimeTest >> testSecondsSinceMidnightLocalTimeNormalization [
 	self assert: dateAndTime secondsSinceMidnightLocalTime equals: (22*3600) + (1*60) + 56.
 	dateAndTime := dateAndTime offset: -1 hours.
 	self assert: dateAndTime secondsSinceMidnightLocalTime equals: (21*3600) + (1*60) + 56.
-
 ]
 
 { #category : #'tests - instance' }
@@ -696,7 +680,6 @@ DateAndTimeTest >> testSubstracting [
 	| t |
 	t := '2004-01-07T11:55:00+00:00' asDateAndTime. 
 	self assert: t - 5 equals: '2004-01-07T11:54:55+00:00' asDateAndTime
-
 ]
 
 { #category : #'tests - arithmetic' }
@@ -787,15 +770,12 @@ DateAndTimeTest >> testTransitive [
 			hour: 2 minute: 3 second: 4 nanoSecond: 5 
 			offset: 6 hours.
 	self assert: ((t1 = t2) & (t2 = t3) ==> (t1 = t3)).
-	
-	
-
 ]
 
 { #category : #'tests - epoch' }
 DateAndTimeTest >> testUnixEpoch [
 
-	self assert: DateAndTime unixEpoch equals: '1 January 1970 00:00+00:00' asDateAndTime.	
+	self assert: DateAndTime unixEpoch equals: '1 January 1970 00:00+00:00' asDateAndTime.
 ]
 
 { #category : #tests }

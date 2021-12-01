@@ -35,7 +35,6 @@ Class {
 Delay class >> anyActive [
 	"Return true if there is any delay currently active"
 		^self scheduler anyActive
-
 ]
 
 { #category : #settings }
@@ -57,15 +56,12 @@ Delay class >> delaySchedulerClass: aSchedulerClass [
 	self scheduler: newScheduler.
 	oldScheduler stopTimerEventLoop.
 	self inform: 'Delay scheduler set to ' , aSchedulerClass printString.
-	
-	
 ]
 
 { #category : #'instance creation' }
 Delay class >> forDuration: aDuration [
  	"Return a new Delay for the given duration."
  	^ self forMilliseconds: aDuration asMilliSeconds
- 
 ]
 
 { #category : #'instance creation' }
@@ -75,14 +71,12 @@ Delay class >> forMilliseconds: aNumber [
 	WARNING: There may be a minimal delay time that depends on the system activity and setting of the idle process. See ProcessorScheduler class >> idleTime "
 
 	^ self new setDelay: aNumber forSemaphore: Semaphore new
-
 ]
 
 { #category : #'instance creation' }
 Delay class >> forSeconds: aNumber [
 	"Return a new Delay for the given number of Seconds"
 	^ self forMilliseconds: aNumber * 1000
-
 ]
 
 { #category : #'initialize-release' }
@@ -94,16 +88,12 @@ Delay class >> initialize [
 	SessionManager default 
 		registerSystemClassNamed: self name 
 		atPriority: 20.
-
 ]
 
 { #category : #testing }
 Delay class >> nextWakeUpTime [
 
 	^ self scheduler nextWakeUpTime.
-
-
-
 ]
 
 { #category : #'timer process' }
@@ -116,35 +106,30 @@ Delay class >> restartTimerEventLoop [
 Delay class >> scheduler [
 
 	^ Scheduler.
-
 ]
 
 { #category : #scheduler }
 Delay class >> scheduler: anObject [
 
 	Scheduler := anObject.
-
 ]
 
 { #category : #'timer process' }
 Delay class >> schedulingProcess [
 
 	^ self scheduler schedulingProcess.
-
 ]
 
 { #category : #snapshotting }
 Delay class >> shutDown [
 
 	self scheduler shutDown.
-
 ]
 
 { #category : #'timer process' }
 Delay class >> startTimerEventLoop [
 
 	self scheduler startTimerEventLoop.
-
 ]
 
 { #category : #snapshotting }
@@ -152,15 +137,12 @@ Delay class >> startUp [
 	"Restart active delay, if any, when resuming a snapshot."
 
 	self scheduler startUp.
-
-
 ]
 
 { #category : #'timer process' }
 Delay class >> stopTimerEventLoop [
 
 	^ self scheduler stopTimerEventLoop.
-
 ]
 
 { #category : #settings }
@@ -175,7 +157,6 @@ Delay class >> systemSettingOn: aBuilder [
 		default: DelaySemaphoreScheduler;
 		description: 'Choose the class to use for Delay scheduling.' , 
 			String crlf, 'You can observe which is running from Tools > Process Browser.'
-	
 ]
 
 { #category : #'instance creation' }
@@ -184,7 +165,6 @@ Delay class >> timeoutSemaphore: aSemaphore afterMSecs: anInteger [
 	"Details: This mechanism is used to provide a timeout when waiting for an external event, such as arrival of data over a network connection, to signal a semaphore. The timeout ensures that the semaphore will be signalled within a reasonable period of time even if the event fails to occur. Typically, the waiting process cancels the timeout request when awoken, then determines if the awaited event has actually occurred."
 
 	^ (self new setDelay: anInteger forSemaphore: aSemaphore) schedule; yourself
-
 ]
 
 { #category : #public }
@@ -203,7 +183,6 @@ Delay >> delaySemaphore [
 Delay >> isExpired [
 
 	^delaySemaphore isSignaled.
-
 ]
 
 { #category : #public }
@@ -236,14 +215,12 @@ Delay >> printOn: aStream [
 Delay >> resumptionTick [
 	"The tick semantics (e.g. millisecond/microsecond) depends on the ticker its derived from."
 	
-	^resumptionTick 
-
+	^resumptionTick
 ]
 
 { #category : #public }
 Delay >> resumptionTickAdjustFrom: oldBaseTick to: newBaseTick [
-	resumptionTick := resumptionTick - oldBaseTick + newBaseTick.  
-
+	resumptionTick := resumptionTick - oldBaseTick + newBaseTick.
 ]
 
 { #category : #private }
@@ -251,7 +228,6 @@ Delay >> schedule [
 	"Schedule this delay."
 	
 	self class scheduler schedule: self.
-
 ]
 
 { #category : #private }
@@ -304,7 +280,6 @@ Delay >> timingPriorityUnschedule [
 { #category : #private }
 Delay >> unschedule [
 	self class scheduler unschedule: self.
-
 ]
 
 { #category : #delaying }
@@ -313,5 +288,4 @@ Delay >> wait [
 
 	self schedule.
 	[delaySemaphore wait] ifCurtailed:[self unschedule].
-
 ]

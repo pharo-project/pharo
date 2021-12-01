@@ -58,7 +58,6 @@ DelayNullScheduler >> schedule: aDelay [
 	 For example,  [1 second asDelay wait] timeToRun  ==> 0:00:00:00.000 instead of 0:00:00:01.000"
 	
 	aDelay delaySemaphore signal.
-
 ]
 
 { #category : #'system-api' }
@@ -76,7 +75,6 @@ DelayNullScheduler >> startUp [
 	Warning signal: 'Delay scheduler is NOT RUNNING!'.
 	
 	"To get delays working again, go to System > Settings > System > Delay scheduler. "
- 
 ]
 
 { #category : #'system-api' }
@@ -86,6 +84,5 @@ DelayNullScheduler >> stopTimerEventLoop [
 
 { #category : #'user-api' }
 DelayNullScheduler >> unschedule: aDelay [
-	"Nothing to do for DelayNullScheduler"		
-
+	"Nothing to do for DelayNullScheduler"
 ]

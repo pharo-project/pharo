@@ -11,8 +11,6 @@ Class {
 CodeSimulationTest >> indexedBasicAt: index [ 
 	<primitive: 60 error: code >
 	^ code
-
-
 ]
 
 { #category : #tests }
@@ -133,5 +131,4 @@ CodeSimulationTest >> testTranscriptPrintingWithOpenedTranscriptExists [
 CodeSimulationTest >> veryBasicAt: index [ 
 	<primitive: 'dooo' module: 'bar' error: code>
 	^ code
-
 ]

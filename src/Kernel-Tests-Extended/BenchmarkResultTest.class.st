@@ -17,7 +17,6 @@ BenchmarkResultTest >> testEmpty [
 	"cover the code at least"
 	self deny: benchmarkResult shortPrintString isEmpty.
 	self deny: benchmarkResult printString isEmpty
-
 ]
 
 { #category : #tests }
@@ -36,8 +35,6 @@ BenchmarkResultTest >> testOne [
 	"cover the code at least"
 	self deny: benchmarkResult shortPrintString isEmpty.
 	self deny: benchmarkResult printString isEmpty
-	
-
 ]
 
 { #category : #tests }
@@ -56,8 +53,6 @@ BenchmarkResultTest >> testOneOverTwo [
 	"cover the code at least"
 	self assert: benchmarkResult shortPrintString equals: '0.500 per second'.
 	self deny: benchmarkResult printString isEmpty
-	
-
 ]
 
 { #category : #tests }
@@ -76,6 +71,4 @@ BenchmarkResultTest >> testSimple [
 	"cover the code at least"
 	self assert: benchmarkResult shortPrintString equals: '25.000 per second'.
 	self deny: benchmarkResult printString isEmpty
-	
-
 ]

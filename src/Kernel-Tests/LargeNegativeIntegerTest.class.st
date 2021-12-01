@@ -21,7 +21,6 @@ LargeNegativeIntegerTest >> testByteAt [
 	1 to: 20 do: [:i | | digit |
 		digit := lni byteAt: i.
 		self assert: i equals: digit]
-
 ]
 
 { #category : #tests }
@@ -49,7 +48,6 @@ LargeNegativeIntegerTest >> testDigitAtPut [
 	lni := LargeNegativeInteger new: 20.
 	1 to: 20 do: [:i | lni byteAt: i put: i].
 	self assert: -114605103402541699037609980192546360895434064385 equals: lni
-
 ]
 
 { #category : #tests }
@@ -58,7 +56,6 @@ LargeNegativeIntegerTest >> testDigitLength [
 	| lni |
 	lni := -114605103402541699037609980192546360895434064385.
 	self assert: 20 equals: lni bytesCount
-
 ]
 
 { #category : #tests }
@@ -114,7 +111,6 @@ LargeNegativeIntegerTest >> testReplaceFromToWithStartingAt [
 		digit := lni20 byteAt: e.
 		replacementDigit := lni7 byteAt: e - 4.
 		self assert: replacementDigit equals: digit]
-
 ]
 
 { #category : #tests }

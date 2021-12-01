@@ -81,11 +81,6 @@ BasicBehaviorClassMetaclassTest >> testMetaclassSuperclassHierarchy [
 				yourself.
 
 	self assert: OrderedCollection class allSuperclasses equals: s
-
-	
-	
-
-	
 ]
 
 { #category : #tests }

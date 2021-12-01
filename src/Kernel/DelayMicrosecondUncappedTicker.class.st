@@ -25,5 +25,4 @@ DelayMicrosecondUncappedTicker >> waitForUserSignalled: timingSemaphore orExpire
 	self primSignal: timingSemaphore atUTCMicroseconds: nextTick.
 	"WARNING! Stepping <Over> the following line may lock the Image. Use <Proceed>."
 	timingSemaphore wait.
-	
 ]
