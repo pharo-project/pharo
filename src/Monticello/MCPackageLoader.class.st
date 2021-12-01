@@ -257,9 +257,7 @@ MCPackageLoader >> validate [
 { #category : #private }
 MCPackageLoader >> warnAboutDependencies [ 
 
-	Transcript show: 'ESTEBAN>>'; cr.
-	Transcript show: UIManager default printString; cr.
-	Transcript show: self dependencyWarning; cr.
+	NonInteractiveUIManager new beDefault.
 	self notify: self dependencyWarning
 ]
 
