@@ -256,6 +256,10 @@ MCPackageLoader >> validate [
 
 { #category : #private }
 MCPackageLoader >> warnAboutDependencies [ 
+
+	'ESTEBAN' crTrace.
+	UIManager default crTrace.
+	self dependencyWarning crTrace.
 	self notify: self dependencyWarning
 ]
 
