@@ -25,7 +25,7 @@ TaskbarItemMorph >> addEmphaseTo: lab [
 	
 	self model isActive ifFalse: [ ^ self ].
 	
-	lab emphasis: 1	
+	lab emphasis: 1
 ]
 
 { #category : #'style - border' }

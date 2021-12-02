@@ -124,7 +124,7 @@ DialogWindowMorph >> defaultButton [
 	^self
 		findDeepSubmorphThat: [:m |
 			(m isKindOf: PluggableButtonMorph) and: [m isDefault]]
-		ifAbsent: [] 
+		ifAbsent: []
 ]
 
 { #category : #'focus handling' }
@@ -174,7 +174,6 @@ DialogWindowMorph >> handlesKeyboard: evt [
 	^evt keyCharacter = Character escape or: [
 		(self defaultButton notNil and: [
 			evt keyCharacter = Character cr])]
-	
 ]
 
 { #category : #theme }

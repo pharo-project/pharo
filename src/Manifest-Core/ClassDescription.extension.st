@@ -15,7 +15,7 @@ ClassDescription >> criticNameOn: aStream [
 		<< self name 
 		<< ' (' 
 		<< self category 
-		<< ')' 
+		<< ')'
 ]
 
 { #category : #'*Manifest-Core' }

@@ -18,7 +18,6 @@ DelayMicrosecondTickerSimulation >> initialize [
 	super initialize.
 	vmSimTheTimerSemaphore := Semaphore new.
 	vmSimNow := 0.
-
 ]
 
 { #category : #'api-system' }
@@ -59,8 +58,7 @@ StackInterpreterPrimitives >> primitiveSignalAtUTCMicroseconds
 			 nextWakeupUsecs := 0.
 			 ^self pop: 2]].
 	self primitiveFailFor: PrimErrBadArgument
-"	
-		
+"
 ]
 
 { #category : #'api-system' }
@@ -85,10 +83,6 @@ StackInterpreter>>checkForEventsMayContextSwitch:
 			  and: [self synchronousSignal: sema]) ifTrue:
 				[switched := true]]].
 "
-	
-
-
-
 ]
 
 { #category : #'api-system' }

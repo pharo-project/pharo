@@ -30,7 +30,7 @@ FTFilter class >> pattern: aString [
 { #category : #matching }
 FTFilter >> matches: aString [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }

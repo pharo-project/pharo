@@ -7,7 +7,7 @@ SettingNodeBuilder >> category: aByteSymbol [
 
 { #category : #'*Keymapping-Settings' }
 SettingNodeBuilder >> do: aBlockClosure [ 
-	node item action: aBlockClosure 
+	node item action: aBlockClosure
 ]
 
 { #category : #'*Keymapping-Settings' }

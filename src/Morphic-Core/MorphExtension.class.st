@@ -111,7 +111,7 @@ MorphExtension >> cornerStyle: anObject [
 { #category : #accessing }
 MorphExtension >> eventHandler [
 	"answer the receiver's eventHandler"
-	^ eventHandler 
+	^ eventHandler
 ]
 
 { #category : #accessing }
@@ -160,8 +160,6 @@ MorphExtension >> initialize [
 	locked := false.
 	visible := true.
 	sticky := false.
-
-
 ]
 
 { #category : #other }
@@ -303,8 +301,7 @@ MorphExtension >> propertyNamesNotCopied [
 	See DeepCopier."
 
 	^ #(connectedConstraints connectionHighlights highlightedTargets)
-	"add yours to this list" 
-
+	"add yours to this list"
 ]
 
 { #category : #'accessing - other properties' }
@@ -396,7 +393,6 @@ MorphExtension >> veryDeepFixupWith: deepCopier [
 		otherProperties at: propertyName ifPresent: [ :property |
 			otherProperties at: propertyName
 				put: (deepCopier references at: property ifAbsent: [ property ])]].
-
 ]
 
 { #category : #'connectors - copying' }
@@ -437,7 +433,6 @@ MorphExtension >> veryDeepInner: deepCopier [
 
 	"And replace the weak ones."
 	namesOfWeaklyCopiedProperties with: weaklyCopiedValues do: [ :name :value | value ifNotNil: [ otherProperties at: name put: value ]].
-
 ]
 
 { #category : #accessing }

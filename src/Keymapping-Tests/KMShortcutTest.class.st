@@ -19,9 +19,6 @@ KMShortcutTest >> testAsString [
 	self assert: $c shift asString equals: 'Shift + C'.
 	self assert: $d alt asString equals: 'Alt + D'.
 	self assert: $e ctrl command asString equals: (KMCtrlModifier new asString ,' + ' , KMCommandModifier new asString,' + E')
-	
-	
-
 ]
 
 { #category : #tests }
@@ -86,7 +83,7 @@ KMShortcutTest >> testCreation [
 { #category : #tests }
 KMShortcutTest >> testEventCodes [
 	self assert: $s meta modifier eventCode 
-		  equals: OSPlatform current defaultModifier eventCode 
+		  equals: OSPlatform current defaultModifier eventCode
 ]
 
 { #category : #tests }

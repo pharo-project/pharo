@@ -243,7 +243,7 @@ FTTreeDataSource >> newDataSourceMatching: aFTFilter [
 
 { #category : #accessing }
 FTTreeDataSource >> numberOfRows [
-	^ self rootItem numberOfVisibleChildren 
+	^ self rootItem numberOfVisibleChildren
 ]
 
 { #category : #accessing }
@@ -253,7 +253,7 @@ FTTreeDataSource >> realElementAt: anIndex [
 
 { #category : #accessing }
 FTTreeDataSource >> rootItem [
-	^ rootItem 
+	^ rootItem
 ]
 
 { #category : #accessing }

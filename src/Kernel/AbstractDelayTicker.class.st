@@ -19,12 +19,12 @@ AbstractDelayTicker class >> isAbstract [
 
 { #category : #'api-system' }
 AbstractDelayTicker >> millisecondsUntilTick: delay [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'api-system' }
 AbstractDelayTicker >> nowTick [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'api-system' }
@@ -51,12 +51,11 @@ AbstractDelayTicker >> saveResumptionTimes: delaysOrNils [
 	oldBaseTick := self nowTick.
 	delaysOrNils do: [ :delay |
 		delay ifNotNil: [delay resumptionTickAdjustFrom: oldBaseTick to: 0 ]].
-
 ]
 
 { #category : #'api-system' }
 AbstractDelayTicker >> tickAfterMilliseconds: milliseconds [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'api-system' }

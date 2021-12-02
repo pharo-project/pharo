@@ -37,7 +37,6 @@ KMCategoryTarget >> completeMatch: aKeymap buffer: aBuffer [
 	KMLog logCompleteMatch: aKeymap.
 	KMBuffer uniqueInstance completeMatch.
 	aKeymap action cull: target value cull: morph cull: aBuffer first.
-
 ]
 
 { #category : #accessing }
@@ -59,13 +58,11 @@ KMCategoryTarget >> nextForKmChain: aKMDispatchChain [
 { #category : #matching }
 KMCategoryTarget >> noMatch [
 	"do nothing"
-	
 ]
 
 { #category : #matching }
 KMCategoryTarget >> partialMatch [
 	"do nothing"
-	
 ]
 
 { #category : #printing }

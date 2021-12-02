@@ -9,7 +9,7 @@ Class {
 
 { #category : #protocol }
 TabEnabledState >> backgroundColor [
-	^ Smalltalk ui theme darkBaseColor 
+	^ Smalltalk ui theme darkBaseColor
 ]
 
 { #category : #protocol }

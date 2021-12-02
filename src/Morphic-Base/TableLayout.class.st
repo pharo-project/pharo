@@ -344,7 +344,6 @@ TableLayout >> computeGlobalCellArrangement: cells in: newBounds horizontal: aBo
 		last nextCell: first.
 		output nextPut: last].
 	^output contents
-
 ]
 
 { #category : #layout }
@@ -567,7 +566,6 @@ TableLayout >> layoutLeftToRight: aMorph in: newBounds [
 		posX := posX + width + inset.
 		cell := cell nextCell.
 	].
-
 ]
 
 { #category : #nil }

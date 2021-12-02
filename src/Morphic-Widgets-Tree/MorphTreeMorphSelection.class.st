@@ -14,13 +14,12 @@ MorphTreeMorphSelection >> addNode: aNode [
 
 { #category : #accessing }
 MorphTreeMorphSelection >> addNodePath: aPath [
-	^ self subclassResponsibility 
-	
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
 MorphTreeMorphSelection >> empty [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -35,7 +34,7 @@ MorphTreeMorphSelection >> lastSelectedNodePath [
 
 { #category : #accessing }
 MorphTreeMorphSelection >> removeNode: aNode [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -46,7 +45,6 @@ MorphTreeMorphSelection >> selectedItemOrItemsOrNil [
 { #category : #accessing }
 MorphTreeMorphSelection >> selectedItems [
 	^ self selectedNodes collect: [:n | n item]
-
 ]
 
 { #category : #accessing }

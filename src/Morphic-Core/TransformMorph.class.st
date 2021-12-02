@@ -92,7 +92,6 @@ TransformMorph >> extent: aPoint [
 	bounds := (bounds topLeft extent: aPoint) rounded.
 	super layoutChanged. "skip submorph bounds recalculation"
 	self changed.
-
 ]
 
 { #category : #layout }
@@ -212,7 +211,6 @@ TransformMorph >> privateFullMoveBy: delta [
 
 	self privateMoveBy: delta.
 	transform :=  (transform asMorphicTransform) withOffset: (transform offset - delta).
-
 ]
 
 { #category : #accessing }
@@ -227,7 +225,6 @@ TransformMorph >> scale: newScale [
 	transform := transform withScale: newScale.
 	self layoutChanged.
 	self changed.
-
 ]
 
 { #category : #accessing }
@@ -240,7 +237,6 @@ TransformMorph >> setOffset: newOffset angle: newAngle scale: newScale [
 { #category : #accessing }
 TransformMorph >> smoothing [
 	^smoothing
-
 ]
 
 { #category : #accessing }
@@ -265,7 +261,6 @@ TransformMorph >> smoothingOn [
 TransformMorph >> submorphBounds [
 	"Answer, in owner coordinates, the bounds of my visible submorphs, or my bounds"
 	^ (self localVisibleSubmorphBounds ifNotNil: [ :box |transform localBoundsToGlobal: box ] ifNil: [ self bounds ]) truncated.
-
 ]
 
 { #category : #accessing }

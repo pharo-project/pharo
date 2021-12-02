@@ -66,7 +66,6 @@ Behavior >> >> selector [
 	selector is not in the dictionary, create an error notification."
 
 	^self compiledMethodAt: selector
-
 ]
 
 { #category : #'obsolete subclasses' }
@@ -211,10 +210,7 @@ Behavior >> allSelectors [
 { #category : #'accessing - method dictionary' }
 Behavior >> allSelectorsAbove [
 
-	^ self allSelectorsAboveUntil: ProtoObject 
-	
-
-
+	^ self allSelectorsAboveUntil: ProtoObject
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -226,9 +222,6 @@ Behavior >> allSelectorsAboveUntil: aRootClass [
 		do: [:aClass | 
 				aClass selectorsDo: [ :sel | coll add: sel ]].
 	^ coll
-	
-
-
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -241,9 +234,6 @@ Behavior >> allSelectorsBelow: topClass [
 				ifTrue: [^ coll ]
 				ifFalse: [aClass selectorsDo: [ :sel | coll add: sel ]]].
 	^ coll
-	
-
-
 ]
 
 { #category : #'accessing - method dictionary' }
@@ -545,7 +535,6 @@ Behavior >> classVarNames [
 { #category : #cleanup }
 Behavior >> cleanUp [
 	"Clean out any caches and other state that should be flushed when trying to get an image into a pristine state. Subclasses may override #cleanUp: to provide different levels of cleanliness"
-
 ]
 
 { #category : #cleanup }
@@ -661,7 +650,6 @@ Behavior >> emptyMethodDictionary [
 { #category : #'accessing - properties' }
 Behavior >> ensureProperties [
 	^ ClassProperties at: self ifAbsentPut: WeakKeyDictionary new
-		
 ]
 
 { #category : #naming }
@@ -675,8 +663,7 @@ Behavior >> findOriginClassOf: aMethod [
 
 	"I return the origin of my given method. In a basic class is always self.
 	Enhanced classes (eg. TraitedClasses) can do something else"
-	^ self	
-
+	^ self
 ]
 
 { #category : #testing }
@@ -686,7 +673,6 @@ Behavior >> findOriginMethodOf: aMethod [
 	can do something difference"
 
 	^ aMethod
-
 ]
 
 { #category : #private }
@@ -868,7 +854,6 @@ Behavior >> initialize [
 	"no longer sending any messages, some of them crash the VM"
 	self methodDict: self emptyMethodDictionary.
 	self setFormat: Object format.
-
 ]
 
 { #category : #initialization }
@@ -1253,7 +1238,6 @@ Behavior >> new [
 	"Answer a new initialized instance of the receiver (which is a class) with no indexable variables. Fail if the class is indexable."
 
 	^ self basicNew initialize
-
 ]
 
 { #category : #'instance creation' }
@@ -1261,7 +1245,7 @@ Behavior >> new: sizeRequested [
 	"Answer an initialized instance of this class with the number of indexable
 	variables specified by the argument, sizeRequested."
 
-	^ (self basicNew: sizeRequested) initialize  
+	^ (self basicNew: sizeRequested) initialize
 ]
 
 { #category : #initialization }
@@ -1292,7 +1276,6 @@ Behavior >> originalName [
  	[obsName beginsWith: 'AnObsolete']
  		whileTrue: [obsName := obsName copyFrom: 'AnObsolete' size + 1 to: obsName size].
 	^obsName asSymbol
-
 ]
 
 { #category : #copying }
@@ -1322,7 +1305,6 @@ Behavior >> printOn: aStream [
 { #category : #'accessing - properties' }
 Behavior >> properties [
 	^ ClassProperties at: self ifAbsent: nil
-		
 ]
 
 { #category : #'accessing - properties' }
@@ -1357,14 +1339,12 @@ Behavior >> realClass [
 Behavior >> removeAllObsoleteSubclasses [
 	"Remove all the obsolete subclasses of the receiver"
 	self basicObsoleteSubclasses removeKey: self ifAbsent: [].
-
 ]
 
 { #category : #'accessing - properties' }
 Behavior >> removePropertiesIfEmpty [
 	^ ClassProperties at: self ifPresent: [ :dict |
 		dict ifEmpty: [ ClassProperties removeKey: self ] ]
-		
 ]
 
 { #category : #'accessing - properties' }
@@ -1402,7 +1382,6 @@ Behavior >> removeSelectorSilently: selector [
 { #category : #cleanup }
 Behavior >> restartMethods [
 	"Clean up. Long running loops or stored closures can lead to methods that are out if sync with the recompiled code. Subclasses should override this method if they need to restart methods"
-
 ]
 
 { #category : #enumerating }
@@ -1474,8 +1453,6 @@ Behavior >> setFormat: aFormatInstanceDescription [
      compact, variable sized"
 
 	format := aFormatInstanceDescription
-
-
 ]
 
 { #category : #testing }
@@ -1492,7 +1469,6 @@ Behavior >> shouldNotBeRedefined [
 { #category : #'system startup' }
 Behavior >> shutDown [
 	"This message is sent on system shutdown to registered classes"
-
 ]
 
 { #category : #'system startup' }
@@ -1585,7 +1561,6 @@ Behavior >> spaceUsed [
 { #category : #'system startup' }
 Behavior >> startUp [
 	"This message is sent to registered classes when the system is coming up."
- 
 ]
 
 { #category : #'system startup' }
@@ -1644,7 +1619,6 @@ Behavior >> superclass: aClass methodDictionary: mDict format: fmt [
 	self basicSuperclass: aClass.
 	self setFormat: fmt.
 	self methodDict: mDict.
-
 ]
 
 { #category : #'testing - method dictionary' }
@@ -1658,7 +1632,6 @@ Behavior >> thoroughHasSelectorReferringTo: literal [
 	specialIndex := Smalltalk specialSelectorIndexOrNil: literal.
 	^self methods anySatisfy: [ :method | 
 		method hasSelector: literal specialSelectorIndex: specialIndex]
-		
 ]
 
 { #category : #'testing - method dictionary' }
@@ -1751,7 +1724,6 @@ Behavior >> withAllSubAndSuperclassesDo: aBlock [
 
 	self withAllSubclassesDo: aBlock.
 	self allSuperclassesDo: aBlock.
-
 ]
 
 { #category : #'accessing - class hierarchy' }
@@ -1793,7 +1765,6 @@ Behavior >> withAllSuperclasses [
 	^self allSuperclasses 
 		addFirst: self; 
 		yourself
-
 ]
 
 { #category : #enumerating }

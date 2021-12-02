@@ -213,7 +213,6 @@ IntegerTest >> testCreationFromBytes1 [
 	builtInteger := Integer byte1: byte1 byte2: byte2 byte3: byte3 byte4: byte4.
 	self assert: builtInteger equals: maxSmallInt.
 	self assert: builtInteger class equals: SmallInteger
-
 ]
 
 { #category : #'tests - instance creation' }
@@ -256,7 +255,6 @@ IntegerTest >> testCreationFromBytes3 [
 	builtInteger := Integer byte1: byte1 byte2: byte2 byte3: byte3 byte4: byte4.
 	self assert: builtInteger equals: (maxSmallInt - 1).
 	self assert: builtInteger class equals: SmallInteger
-
 ]
 
 { #category : #'tests - arithmetic' }
@@ -379,7 +377,6 @@ IntegerTest >> testEven [
 	
 	self deny: (1073741825 even).
 	self assert: (1073741824  even).
-	
 ]
 
 { #category : #'tests - bitLogic' }
@@ -527,7 +524,6 @@ IntegerTest >> testIntegerPadding [
 	self assert: (2047 storeStringBase: 16 length: 7 padded: true) equals: '16r07FF'.
 	self assert: (-2047 storeStringBase: 16 length: 7 padded: true) equals: '-16r7FF'.
 	self assert: (-2047 storeStringBase: 16 length: 19 padded: true) equals: '-16r0000000000007FF'
-
 ]
 
 { #category : #'tests - instance creation' }
@@ -566,14 +562,13 @@ IntegerTest >> testIntegerReadsOkFromString [
 { #category : #'tests - other' }
 IntegerTest >> testIsAbstract [ 
 
-	self assert: Integer isAbstract 
+	self assert: Integer isAbstract
 ]
 
 { #category : #'tests - basic' }
 IntegerTest >> testIsInteger [
 
 	self assert: (0 isInteger).
-	
 ]
 
 { #category : #'tests - basic' }
@@ -808,7 +803,7 @@ IntegerTest >> testNegativeIntegerPrinting [
 
 { #category : #'tests - instance creation' }
 IntegerTest >> testNew [
-	self should: [Integer new] raise: self defaultTestError. 
+	self should: [Integer new] raise: self defaultTestError.
 ]
 
 { #category : #'tests - other' }
@@ -1093,7 +1088,6 @@ IntegerTest >> testReadFromWithError [
 	"Ensure that a string that does not represent an integer raises an error."
 	
 	self should: [Integer readFrom: 'invalid'] raise: Error
-
 ]
 
 { #category : #'tests - arithmetic' }

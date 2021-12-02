@@ -85,7 +85,7 @@ DosTimestamp >> date [
 	month := encodedDate >> 5 & 2r1111. "Middle 4 bits"
 	day := encodedDate & 2r11111. "Low 5 bits"
 	year := self epoch year + yearsSinceDosEpoch.
-	^ Date year: year month: month day: day. 
+	^ Date year: year month: month day: day.
 ]
 
 { #category : #private }

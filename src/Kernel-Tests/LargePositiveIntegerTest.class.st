@@ -82,7 +82,6 @@ LargePositiveIntegerTest >> testDigitAt [
 	1 to: 20 do: [:i | | digit |
 		digit := lpi byteAt: i.
 		self assert: i equals: digit]
-
 ]
 
 { #category : #tests }
@@ -92,7 +91,6 @@ LargePositiveIntegerTest >> testDigitAtPut [
 	lpi := LargePositiveInteger new: 20.
 	1 to: 20 do: [:i | lpi byteAt: i put: i].
 	self assert: 114605103402541699037609980192546360895434064385 equals: lpi
-
 ]
 
 { #category : #tests }
@@ -101,7 +99,6 @@ LargePositiveIntegerTest >> testDigitLength [
 	| lpi |
 	lpi := 114605103402541699037609980192546360895434064385.
 	self assert: 20 equals: lpi bytesCount
-
 ]
 
 { #category : #tests }
@@ -162,7 +159,6 @@ LargePositiveIntegerTest >> testReplaceFromToWithStartingAt [
 		digit := lpi20 byteAt: e.
 		replacementDigit := lpi7 byteAt: e - 4.
 		self assert: replacementDigit equals: digit]
-
 ]
 
 { #category : #tests }

@@ -39,7 +39,7 @@ MonthTest >> setUp [
 MonthTest >> tearDown [
 
 	month := nil.
-	super tearDown.	
+	super tearDown.
 ]
 
 { #category : #tests }

@@ -26,7 +26,6 @@ CollapsedMorph >> beReplacementFor: aMorph [
 	(priorPosition := aMorph valueOfProperty: #collapsedPosition ifAbsent: [nil])
 	ifNotNil:
 		[self position: priorPosition].
-
 ]
 
 { #category : #menu }

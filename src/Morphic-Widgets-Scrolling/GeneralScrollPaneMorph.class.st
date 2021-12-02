@@ -54,7 +54,6 @@ GeneralScrollPaneMorph >> doLayoutIn: layoutBounds [
 	self	updateScrollbars.
 	scrollbarChange ifFalse: [self resizeScroller]. "if there is a scrollbar change then done already"
 	super doLayoutIn: layoutBounds
-
 ]
 
 { #category : #geometry }
@@ -181,7 +180,6 @@ GeneralScrollPaneMorph >> hScrollbarShowing [
 	"Answer whether the horizontal scrollbar is showing."
 	
 	^self hScrollbar owner notNil
-	
 ]
 
 { #category : #scrollbars }
@@ -471,7 +469,6 @@ GeneralScrollPaneMorph >> vLeftoverScrollRange [
 	"Return the entire scrolling range minus the currently viewed area."
 	
 	^self scrollTarget height - self scrollBounds height max: 0
-
 ]
 
 { #category : #scrollbars }
@@ -560,7 +557,6 @@ GeneralScrollPaneMorph >> vScrollbarShowing [
 	"Answer whether the vertical scrollbar is showing."
 	
 	^self vScrollbar owner notNil
-	
 ]
 
 { #category : #scrollbars }

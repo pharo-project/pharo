@@ -14,7 +14,7 @@ Class {
 { #category : #helpers }
 BlockClosureTest >> blockWithNonLocalReturn: resultObject [
 		
-	^[ ^resultObject ] 
+	^[ ^resultObject ]
 ]
 
 { #category : #running }
@@ -176,7 +176,6 @@ BlockClosureTest >> testNew [
 		onErrorDo: [:error | self assert: error description equals: 'Error: Contexts must only be created with newForMethod:'].	
 	[Context basicNew]
 		onErrorDo: [:error | self assert: error description equals: 'Error: Contexts must only be created with newForMethod:'].
-
 ]
 
 { #category : #tests }
@@ -430,7 +429,6 @@ BlockClosureTest >> testSuppressInformUsingStringMatchOptions [
 	self should: [([nil inform: 'Should not see this message or this test failed!'] valueSuppressingMessages: #('not see this message')) isNil].
 	
 	self should: [([nil inform: 'Should not see this message or this test failed!'] valueSuppressingMessages: #('*message*failed#')) isNil].
-
 ]
 
 { #category : #'tests - evaluating' }
@@ -447,7 +445,6 @@ BlockClosureTest >> testValueWithArguments [
 		withExceptionDo: [ :err | 
 			self assert: err expectedArgumentsCount equals: 1.
 			self assert: err calledArgumentsCount equals: 2 ].
-
 ]
 
 { #category : #'tests - evaluating' }
@@ -470,7 +467,6 @@ BlockClosureTest >> testValueWithArgumentsWithOrderedCollection [
 		withExceptionDo: [ :err | 
 			self assert: err expectedArgumentsCount equals: 1.
 			self assert: err calledArgumentsCount equals: 2 ].
-
 ]
 
 { #category : #'tests - evaluating' }

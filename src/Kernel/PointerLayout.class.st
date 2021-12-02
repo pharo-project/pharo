@@ -170,7 +170,6 @@ PointerLayout >> host: aClass [
 
 	super host: aClass.
 	self slots do: [ :aSlot | aSlot owningClass: aClass ]
-	
 ]
 
 { #category : #'instance initialization' }

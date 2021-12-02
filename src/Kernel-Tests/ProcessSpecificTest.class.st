@@ -174,5 +174,4 @@ ProcessSpecificTest >> testLocalVariable [
 	s2 waitTimeoutMSecs: 5000.
 	self assert: p1stopped.
 	self assert: p2stopped.
-
 ]

@@ -22,7 +22,6 @@ TreeChunkPagerMorph >> atBottom [
 TreeChunkPagerMorph >> atBottom: aBoolean [
 	atBottom ~= aBoolean 
 		ifTrue: [atBottom := aBoolean]
-
 ]
 
 { #category : #'initialize - release' }
@@ -106,7 +105,6 @@ TreeChunkPagerMorph >> computedHeightFromContents [
 	h := 0.
 	self submorphsDo: [:sm | h := h max: sm height].
 	^ h max: (self preferedFont height + 8)
-
 ]
 
 { #category : #accessing }
@@ -154,7 +152,7 @@ TreeChunkPagerMorph >> nextPage [
 					b1 := last boundsInWorld bottom.
 					treeMorph scrollBy: 0 @ (b2 - b1)].
 			self buildPanel]
-				ensure: [nextPageAllowed := true]] 
+				ensure: [nextPageAllowed := true]]
 ]
 
 { #category : #navigation }

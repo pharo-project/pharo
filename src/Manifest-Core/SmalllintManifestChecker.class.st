@@ -60,7 +60,6 @@ SmalllintManifestChecker >> initialize [
 
 	super initialize.
 	manifestClassCache := Dictionary new.
-
 ]
 
 { #category : #manifest }
@@ -86,14 +85,12 @@ SmalllintManifestChecker >> isTruePositive: aCritic forRuleId: ruleId versionId:
 	
 	^ (self manifestBuilderOf: aCritic)
 			containsTruePositive: aCritic onRule:  ruleId version: versionId
-
 ]
 
 { #category : #accessing }
 SmalllintManifestChecker >> manifestBuilderOf: aPackage [
 
 	^ aPackage manifestBuilderForRuleChecker: self
-	
 ]
 
 { #category : #accessing }

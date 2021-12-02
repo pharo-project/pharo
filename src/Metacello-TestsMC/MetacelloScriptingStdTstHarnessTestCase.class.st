@@ -56,12 +56,10 @@ MetacelloScriptingStdTstHarnessTestCase >> setUp [
 
 { #category : #running }
 MetacelloScriptingStdTstHarnessTestCase >> setUpRepositories [
-
 ]
 
 { #category : #running }
 MetacelloScriptingStdTstHarnessTestCase >> setUpRepositoryContents [
-
 ]
 
 { #category : #running }
@@ -80,7 +78,6 @@ MetacelloScriptingStdTstHarnessTestCase >> tearDown [
       MetacelloNotification signal: ('leaked package from ' , self printString , ' -> ' , leak printString) ].
   self assert: diff isEmpty.
   super tearDown
-
 ]
 
 { #category : #running }
@@ -102,7 +99,6 @@ MetacelloScriptingStdTstHarnessTestCase >> tearDownPackages [
 
 { #category : #running }
 MetacelloScriptingStdTstHarnessTestCase >> tearDownRepositories [
-
 ]
 
 { #category : #running }

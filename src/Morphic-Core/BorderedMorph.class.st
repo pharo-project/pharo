@@ -49,7 +49,6 @@ BorderedMorph >> addBorderStyleMenuItems: aMenu hand: aHandMorph [
 			ifNotNil:
 				[subMenu add: sym target: self selector: #setBorderStyle: argument: sym]].
 	aMenu add: 'border style' subMenu: subMenu
-
 ]
 
 { #category : #private }
@@ -64,7 +63,7 @@ BorderedMorph >> basicBorderWidth: aNumber [
 
 { #category : #accessing }
 BorderedMorph >> borderColor [
-	^ borderColor 
+	^ borderColor
 ]
 
 { #category : #accessing }
@@ -74,7 +73,6 @@ BorderedMorph >> borderColor: colorOrSymbolOrNil [
 	borderColor = colorOrSymbolOrNil ifFalse: [
 		borderColor := colorOrSymbolOrNil.
 		self changed].
-
 ]
 
 { #category : #accessing }
@@ -198,7 +196,7 @@ BorderedMorph >> initialize [
 	"Initializes the receiver"
 	
 	super initialize.
-	self initializeBorder 
+	self initializeBorder
 ]
 
 { #category : #'private - initialization' }
@@ -216,7 +214,6 @@ BorderedMorph >> isTranslucentButNotTransparent [
 	(color isColor and: [color isTranslucentButNotTransparent]) ifTrue: [^ true].
 	(borderColor isColor and: [borderColor isTranslucentButNotTransparent]) ifTrue: [^ true].
 	^ false
-
 ]
 
 { #category : #accessing }

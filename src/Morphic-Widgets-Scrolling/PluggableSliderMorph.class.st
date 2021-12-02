@@ -88,9 +88,6 @@ PluggableSliderMorph >> drawOn: aCanvas [
 		in: self labelBounds
 		font: self font
 		color: self fontColor.
-		
-	
-
 ]
 
 { #category : #protocol }
@@ -301,7 +298,6 @@ PluggableSliderMorph >> mouseDown: anEvent [
 	slider
 		mouseEnter: anEvent copy;
 		mouseDown: anEvent copy
-
 ]
 
 { #category : #'other events' }

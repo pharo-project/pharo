@@ -108,7 +108,6 @@ SimpleHierarchicalListMorph class >> on: anObject list: getListSel selected: get
 		selected: getSelectionSel
 		changeSelected: setSelectionSel
 		menu: getMenuSel
-
 ]
 
 { #category : #'dropping/grabbing' }
@@ -121,7 +120,6 @@ SimpleHierarchicalListMorph >> acceptDroppingMorph: aMorph event: evt [
 	self resetPotentialDropMorph.
 	evt hand releaseMouseFocus: self.
 	Cursor normal show.
-
 ]
 
 { #category : #private }
@@ -153,8 +151,6 @@ SimpleHierarchicalListMorph >> addMorphsTo: morphList from: aCollection allowSor
 		].
 	].
 	^firstAddition
-	
-
 ]
 
 { #category : #private }
@@ -179,8 +175,6 @@ SimpleHierarchicalListMorph >> addSubmorphsAfter: parentMorph fromCollection: aC
 	].
 	scroller addAllMorphs: morphList after: parentMorph.
 	^morphList
-	
-
 ]
 
 { #category : #actions }
@@ -198,7 +192,6 @@ SimpleHierarchicalListMorph >> adjustSubmorphPositions [
 		changed;
 		layoutChanged;
 		setScrollDeltas.
-
 ]
 
 { #category : #actions }
@@ -336,7 +329,6 @@ SimpleHierarchicalListMorph >> collapseAll: aMorph [
 	allChildren do: [:each | 
 		each isExpanded
 			ifTrue: [self collapseAll: each]].
-
 ]
 
 { #category : #accessing }
@@ -355,7 +347,6 @@ SimpleHierarchicalListMorph >> columns: anArray [
 SimpleHierarchicalListMorph >> currentlyExpanded [
 
 	^(scroller submorphs select: [ :each | each isExpanded]) collect: [ :each | each complexContents]
-	
 ]
 
 { #category : #initialization }
@@ -387,7 +378,6 @@ SimpleHierarchicalListMorph >> drawLinesOn: aCanvas [
 						clippedCanvas isVisible: submorph nextSibling fullBounds])]]) ifTrue:[
 					submorph drawLinesOn: clippedCanvas lineColor: lColor]]]
 		smoothing: scroller smoothing
-
 ]
 
 { #category : #drawing }
@@ -439,7 +429,6 @@ SimpleHierarchicalListMorph >> expandAll: aMorph [
 	allChildren do: [:each | 
 		(each canExpand and: [each isExpanded not])
 			ifTrue: [self expandAll: each]].
-
 ]
 
 { #category : #events }
@@ -486,14 +475,13 @@ SimpleHierarchicalListMorph >> expandedFormForMorph: aMorph [
 SimpleHierarchicalListMorph >> extent: newExtent [
 	bounds extent = newExtent ifTrue: [^ self].
 	super extent: newExtent.
-	self setScrollDeltas 
+	self setScrollDeltas
 ]
 
 { #category : #selection }
 SimpleHierarchicalListMorph >> getCurrentSelectionItem [
 
 	^model perform: (getSelectionSelector ifNil: [^nil])
-	
 ]
 
 { #category : #accessing }
@@ -501,8 +489,6 @@ SimpleHierarchicalListMorph >> getList [
 	"Answer the list to be displayed."
 
 	^(model perform: (getListSelector ifNil: [^#()])) ifNil: [#()]
-
-
 ]
 
 { #category : #accessing }
@@ -521,7 +507,6 @@ SimpleHierarchicalListMorph >> getSelectionIndex [
 SimpleHierarchicalListMorph >> hExtraScrollRange [
 	"Return the amount of extra blank space to include below the bottom of the scroll content."
 	^5
-
 ]
 
 { #category : #'events-processing' }
@@ -537,7 +522,6 @@ SimpleHierarchicalListMorph >> handleMouseMove: anEvent [
 			at: Time millisecondClockValue
 			arguments: {anEvent copy resetHandlerFields}
 			stepTime: 1].
-
 ]
 
 { #category : #'event handling' }
@@ -595,7 +579,6 @@ SimpleHierarchicalListMorph >> insertNewMorphs: morphList [
 	self adjustSubmorphPositions.
 	self selection: self getCurrentSelectionItem.
 	self setScrollDeltas.
-
 ]
 
 { #category : #'event handling' }
@@ -637,14 +620,11 @@ SimpleHierarchicalListMorph >> lineColor [
 	^colored color luminance > 0.5
 		ifTrue: [Color black]
 		ifFalse: [Color white]
-	
-
 ]
 
 { #category : #accessing }
 SimpleHierarchicalListMorph >> lineColor: aColor [
 	^lineColor := aColor
-
 ]
 
 { #category : #initialization }
@@ -674,7 +654,6 @@ SimpleHierarchicalListMorph >> listItemHeight [
 SimpleHierarchicalListMorph >> maximumSelection [
 
 	^ scroller submorphs size
-
 ]
 
 { #category : #selection }
@@ -725,7 +704,6 @@ SimpleHierarchicalListMorph >> mouseDownHighlightColor [
 	^colored color luminance > 0.5
 		ifTrue: [Color black]
 		ifFalse: [Color white]
-
 ]
 
 { #category : #'event handling' }
@@ -759,7 +737,6 @@ SimpleHierarchicalListMorph >> mouseLeaveDragging: anEvent [
 	self resetPotentialDropMorph.
 	anEvent hand releaseMouseFocus: self.
 	"above is ugly but necessary for now"
-
 ]
 
 { #category : #'event handling' }
@@ -814,7 +791,6 @@ SimpleHierarchicalListMorph >> notExpandedFormForMorph: aMorph [
 	^ (self selectedMorph = aMorph and: [self theme selectionColor luminance < 0.6])
 		ifTrue: [self theme whiteTreeUnexpandedForm]
 		ifFalse: [self theme treeUnexpandedForm]
-
 ]
 
 { #category : #private }
@@ -866,7 +842,6 @@ SimpleHierarchicalListMorph >> resetPotentialDropMorph [
 	potentialDropMorph ifNotNil: [
 		potentialDropMorph resetHighlightForDrop.
 		potentialDropMorph := nil]
-
 ]
 
 { #category : #accessing }
@@ -885,9 +860,6 @@ SimpleHierarchicalListMorph >> scrollDeltaHeight [
 SimpleHierarchicalListMorph >> scrollDeltaWidth [
 "A guess -- assume that the width of a char is approx 1/2 the height of the font"
 	^ self scrollDeltaHeight // 2
-
-
-
 ]
 
 { #category : #accessing }
@@ -946,7 +918,7 @@ SimpleHierarchicalListMorph >> selection: item [
 SimpleHierarchicalListMorph >> selectionColor [
 	"Answer the colour to use for selected items."
 
-	^self valueOfProperty: #selectionColor ifAbsent: [] 
+	^self valueOfProperty: #selectionColor ifAbsent: []
 ]
 
 { #category : #accessing }
@@ -1041,8 +1013,6 @@ SimpleHierarchicalListMorph >> setSelectedMorph: aMorph [
 	model 
 		perform: (setSelectionSelector ifNil: [^self]) 
 		with: aMorph complexContents	"leave last wrapper in place"
-
- 
 ]
 
 { #category : #'keyboard navigation' }
@@ -1096,7 +1066,6 @@ SimpleHierarchicalListMorph >> takesKeyboardFocus [
 SimpleHierarchicalListMorph >> toggleExpandedState: aMorph [
 	aMorph toggleExpandedState.
 	self adjustSubmorphPositions.
-
 ]
 
 { #category : #events }
@@ -1114,7 +1083,6 @@ SimpleHierarchicalListMorph >> toggleExpandedState: aMorph event: event [
 		aMorph toggleExpandedState.
 	].
 	self adjustSubmorphPositions.
-	
 ]
 
 { #category : #drawing }
@@ -1167,7 +1135,6 @@ SimpleHierarchicalListMorph >> vUnadjustedScrollRange [
 
 	(scroller submorphs size > 0) ifFalse:[ ^0 ].
 	^scroller submorphs last fullBounds bottom
-
 ]
 
 { #category : #'dropping/grabbing' }

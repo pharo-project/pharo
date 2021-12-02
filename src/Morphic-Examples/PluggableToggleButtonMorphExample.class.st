@@ -12,7 +12,6 @@ PluggableToggleButtonMorphExample class >> exampleToggleButton [
 	<sampleInstance>
 	<example>
 	^ self new buildToggleButton openInWindow
-	
 ]
 
 { #category : #examples }
@@ -20,7 +19,6 @@ PluggableToggleButtonMorphExample class >> exampleToggleButtonNoLabel [
 	<sampleInstance>
 	<example>
 	^ self new buildToggleButtonNoLabel openInWindow
-	
 ]
 
 { #category : #examples }
@@ -28,7 +26,6 @@ PluggableToggleButtonMorphExample class >> exampleToggleButtonWithIcon [
 	<sampleInstance>
 	<example>
 	^ self new buildToggleButtonWithIcon openInWindow
-	
 ]
 
 { #category : #building }
@@ -38,7 +35,7 @@ PluggableToggleButtonMorphExample >> buildToggleButton [
 		getState: nil
 		action:  #toggleAction:
 		label: #label 
-		menu: nil. 	
+		menu: nil.
 ]
 
 { #category : #building }
@@ -49,7 +46,7 @@ PluggableToggleButtonMorphExample >> buildToggleButtonNoLabel [
 		action:  #toggleAction:
 		label: nil 
 		icon: #icon
-		menu: nil. 	
+		menu: nil.
 ]
 
 { #category : #building }
@@ -60,7 +57,7 @@ PluggableToggleButtonMorphExample >> buildToggleButtonWithIcon [
 		action:  #toggleAction:
 		label: #label 
 		icon: #icon
-		menu: nil. 	
+		menu: nil.
 ]
 
 { #category : #actions }

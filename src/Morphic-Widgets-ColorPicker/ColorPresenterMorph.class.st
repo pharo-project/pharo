@@ -148,7 +148,7 @@ ColorPresenterMorph >> newHatchMorph [
 		addMorph: self solidLabelMorph
 		fullFrame: (0.7@0 corner: 1@1) asLayoutFrame;
 		addMorph: self labelMorph
-		fullFrame: (0@0 corner: 1@1) asLayoutFrame 
+		fullFrame: (0@0 corner: 1@1) asLayoutFrame
 ]
 
 { #category : #'instance creation' }

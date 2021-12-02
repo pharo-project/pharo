@@ -24,7 +24,6 @@ Class {
 TimespanTest >> classToBeTested [
 
 	^ Timespan
-
 ]
 
 { #category : #running }
@@ -47,18 +46,13 @@ TimespanTest >> setUp [
 	anOverlappingTimespan := Timespan starting: dec31 duration: aWeek.
 	anIncludedTimespan := Timespan starting: jan01 duration: aDay.
 	aDisjointTimespan := Timespan starting: jan08 duration: aWeek.
-
-
-
-
 ]
 
 { #category : #running }
 TimespanTest >> tearDown [
 	DateAndTime localTimeZone: localTimeZoneToRestore.
 	timespan := nil.
-	super tearDown 
-
+	super tearDown
 ]
 
 { #category : #tests }
@@ -275,14 +269,12 @@ TimespanTest >> testFirstDayOfMonth [
 TimespanTest >> testIncludes [
 	self assert: (aTimespan includes: jan01).
 	self deny: (aTimespan includes: jan08)
-
 ]
 
 { #category : #tests }
 TimespanTest >> testIncludesAll [
 	self assert: (aTimespan includesAll: (Bag with: jan01)).
 	self deny: (aTimespan includesAll: (Bag with: jan01 with: jan08))
-
 ]
 
 { #category : #tests }
@@ -295,7 +287,6 @@ includesAnyOf: aCollection "
 	"aCollection do: [ :elem | (self includes: elem) ifTrue: [^ true]].
 Shouldn't this return false if none are included?
 "
-
 ]
 
 { #category : #tests }
@@ -322,7 +313,6 @@ TimespanTest >> testInclusion [
 { #category : #tests }
 TimespanTest >> testIntersectionWithDisjoint [
 	self assert: (aTimespan intersection: aDisjointTimespan) isNil.
-
 ]
 
 { #category : #tests }
@@ -330,7 +320,6 @@ TimespanTest >> testIntersectionWithIncluded [
 	self
 		assert: (aTimespan intersection: anIncludedTimespan)
 		equals: anIncludedTimespan
-
 ]
 
 { #category : #tests }
@@ -365,7 +354,6 @@ TimespanTest >> testIsLeapYear [
 	"self assert: anOverlappingTimespan isLeapYear."
 	"not sure why this fails"
 	self deny: aTimespan isLeapYear
-
 ]
 
 { #category : #tests }
@@ -377,7 +365,6 @@ TimespanTest >> testJulianDayNumber [
 TimespanTest >> testLessThan [
 	self assert: aTimespan  < aDisjointTimespan.
 	self deny: anIncludedTimespan < aTimespan
-	
 ]
 
 { #category : #tests }
@@ -462,7 +449,6 @@ TimespanTest >> testSubclassArithmetic [
 	self assert: (timespans first intersection: timespans second) equals: timespans second.
 	self assert: (timespans first intersection: timespans fourth) equals: timespans fourth.
 	self assert: (timespans second intersection: timespans fourth) equals: timespans fourth.
-
 ]
 
 { #category : #tests }

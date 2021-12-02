@@ -131,7 +131,6 @@ LargeInteger >> \\ aNumber [
 					ifTrue: [r + aNumber]
 					ifFalse: [r]].
 	^super \\ aNumber
-	
 ]
 
 { #category : #arithmetic }

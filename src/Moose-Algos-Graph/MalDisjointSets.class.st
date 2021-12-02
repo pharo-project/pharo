@@ -11,13 +11,13 @@ Class {
 MalDisjointSets >> components [
 
 	^ (components keys collect: [:parent| 
-		(components at: parent) collect: [:n| n model] ]) asOrderedCollection 
+		(components at: parent) collect: [:n| n model] ]) asOrderedCollection
 ]
 
 { #category : #configuration }
 MalDisjointSets >> nodeClass [
 
-	^ MalDisjointSetsNextNode 
+	^ MalDisjointSetsNextNode
 ]
 
 { #category : #running }

@@ -20,8 +20,6 @@ StopwatchTest class >> isUnitTest [
 StopwatchTest >> classToBeTested [
 
 	^ Stopwatch
-
-
 ]
 
 { #category : #coverage }
@@ -31,7 +29,6 @@ StopwatchTest >> selectorsToBeIgnored [
 	private := #( #printOn: #state: ).
 
 	^ super selectorsToBeIgnored, private
-
 ]
 
 { #category : #running }
@@ -106,7 +103,6 @@ StopwatchTest >> testReActivate [
 	
 	self 
 		assert: (sw isActive).
-
 ]
 
 { #category : #tests }

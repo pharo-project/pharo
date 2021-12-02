@@ -230,7 +230,7 @@ ProcessList >> firstLink [
 	empty."
 
 	self emptyCheck.
-	^firstLink 
+	^firstLink
 ]
 
 { #category : #private }
@@ -484,7 +484,6 @@ ProcessList >> swap: ix1 with: ix2 [
 		link1Next].
 	link1 nextLink: link2Next.
 	link2 nextLink: newLink2Next.
-	
 ]
 
 { #category : #private }
