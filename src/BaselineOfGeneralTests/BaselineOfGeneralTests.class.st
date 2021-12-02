@@ -41,7 +41,6 @@ BaselineOfGeneralTests >> baseline: spec [
 
 			package: 'Graphics-Tests';
 			package: 'HelpSystem-Tests';
-			package: 'Keymapping-Tests';
 
 			package: 'Morphic-Tests';
 			
