@@ -225,9 +225,9 @@ MetacelloPackageSpec >> ensureLoadedForDevelopmentUsing: mcLoader [
 
 { #category : #loading }
 MetacelloPackageSpec >> explicitLoadUsing: mcLoader [
-
 	| wc fetchingSpecLoader |
-	((wc := self workingCopy) ~~ nil and: [ wc needsSaving ]) 
+
+	((wc := self workingCopy) notNil and: [ wc needsSaving ]) 
 		ifTrue: [ 
 			(MetacelloSkipDirtyPackageLoad signal: self)
 				ifTrue:  [
