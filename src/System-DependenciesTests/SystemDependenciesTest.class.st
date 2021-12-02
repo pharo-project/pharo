@@ -443,7 +443,7 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
-		(BaselineOfKeymapping deepPackagesOfGroupNamed: #ui),
+		(BaselineOfKeymapping deepPackagesOfGroupNamed: #morphic),
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
