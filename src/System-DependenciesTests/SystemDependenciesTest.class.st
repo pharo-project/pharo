@@ -199,7 +199,7 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfSUnit name }, BaselineOfSUnit allPackageNames, "ALL"
 		{ BaselineOfDisplay name }, BaselineOfDisplay allPackageNames,
 		{ BaselineOfUnifiedFFI name }, BaselineOfUnifiedFFI allPackageNames,
-		{ BaselineOfKeymapping name }, (BaselineOfKeymapping packagesOfGroupNamed: #core),
+		{ BaselineOfKeymapping name }, (BaselineOfKeymapping deepPackagesOfGroupNamed: #ui),
 		{ BaselineOfMorphicCore name }, BaselineOfMorphicCore allPackageNames,
 		{ BaselineOfMorphic name }, BaselineOfMorphic allPackageNames,
 		{ BaselineOfMenuRegistration name }, BaselineOfMenuRegistration allPackageNames,
@@ -443,7 +443,7 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
-		(BaselineOfKeymapping packagesOfGroupNamed: #core),
+		(BaselineOfKeymapping deepPackagesOfGroupNamed: #ui),
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
@@ -504,7 +504,7 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 
 		"Morphic - for Morphic backend"
 		BaselineOfDisplay allPackageNames,
-		(BaselineOfKeymapping packagesOfGroupNamed: #core),
+		(BaselineOfKeymapping deepPackagesOfGroupNamed: #ui),
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
@@ -558,7 +558,7 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
-		(BaselineOfKeymapping packagesOfGroupNamed: #core),
+		(BaselineOfKeymapping deepPackagesOfGroupNamed: #ui),
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfSpec allPackageNames,
