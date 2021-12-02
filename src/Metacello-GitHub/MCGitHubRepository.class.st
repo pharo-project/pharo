@@ -20,7 +20,6 @@ MCGitHubRepository class >> cacheDirectory [
 
   self resetCacheDirectoryIfInvalid.
   ^ CacheDirectory ifNil: [ self defaultCacheDirectory ].
- 
 ]
 
 { #category : #private }

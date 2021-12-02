@@ -26,7 +26,6 @@ MCRepository class >> isAvailableFor: type [
 { #category : #'*Metacello-Core' }
 MCRepository class >> isFiletreeAlternateFormat: aRepositorySpec [
 	^ false
-	
 ]
 
 { #category : #'*Metacello-Core' }
