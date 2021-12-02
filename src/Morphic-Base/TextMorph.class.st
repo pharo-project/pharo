@@ -117,7 +117,6 @@ TextMorph >> addMorphFront: aMorph fromWorldPosition: wp [
 	aMorph textAnchorType == #document 
 		ifFalse:[^self anchorMorph: aMorph at: wp type: aMorph textAnchorType].
 	self addMorphFront: aMorph.
-
 ]
 
 { #category : #'linked frames' }
@@ -224,7 +223,6 @@ TextMorph >> autoFitString [
 { #category : #containment }
 TextMorph >> avoidsOcclusions [
 	^container notNil and: [ container avoidsOcclusions ]
-
 ]
 
 { #category : #accessing }
@@ -268,14 +266,12 @@ TextMorph >> beAllFont: aFont [
 TextMorph >> blinkStart [
 	"Reset time for blink cursor after which blinking should actually start"
 	^self valueOfProperty: #blinkStart ifAbsent:[Time millisecondClockValue]
-
 ]
 
 { #category : #blinking }
 TextMorph >> blinkStart: msecs [
 	"Reset time for blink cursor after which blinking should actually start"
 	^self setProperty: #blinkStart toValue: msecs
-
 ]
 
 { #category : #'editing helpers' }
@@ -298,7 +294,7 @@ TextMorph >> bounds [
 
 { #category : #testing }
 TextMorph >> canChangeText [
-	^ self enabled 
+	^ self enabled
 ]
 
 { #category : #editing }
@@ -426,8 +422,6 @@ TextMorph >> composeToBounds [
 	self paragraph positionWhenComposed: self position.
 	successor ifNotNil:
 		[successor predecessorChanged].
-
-
 ]
 
 { #category : #private }
@@ -465,7 +459,6 @@ TextMorph >> containsPoint: aPoint [
 		^ super containsPoint: aPoint].
 	"In complex text (non-rect container), test by line bounds"
 	^ self paragraph containsPoint: aPoint
-
 ]
 
 { #category : #accessing }
@@ -538,7 +531,6 @@ TextMorph >> cursor [
 	loc := self valueOfProperty: #textCursorLocation  ifAbsentPut: [1].
 	loc := loc min: text string size.
 	^ loc rounded
-	
 ]
 
 { #category : #accessing }
@@ -546,8 +538,6 @@ TextMorph >> cursorWrapped: aNumber [
 	"Set the cursor as indicated"
 
 	self setProperty: #textCursorLocation toValue: (((aNumber rounded - 1) \\  text string size) + 1)
-
-	
 ]
 
 { #category : #drawing }
@@ -555,7 +545,6 @@ TextMorph >> debugDrawLineRectsOn: aCanvas [
 	"Shows where text line rectangles are"
 	self paragraph lines do:
 		[:line | aCanvas frameRectangle: line rectangle color: Color brown]
-
 ]
 
 { #category : #initialization }
@@ -624,7 +613,7 @@ TextMorph >> editorClass [
 TextMorph >> elementCount [
 	"Answer how many sub-objects are within me"
 
-	^ self text string size 
+	^ self text string size
 ]
 
 { #category : #testing }
@@ -661,7 +650,6 @@ TextMorph >> enterClickableRegion: evt [
 
 { #category : #'event handling' }
 TextMorph >> escapePressed [
-	
 ]
 
 { #category : #geometry }
@@ -681,7 +669,6 @@ TextMorph >> extent: aPoint [
 		ifFalse: [super extent: (aPoint truncated max: self minimumExtent).
 				wrapFlag ifFalse: [^ self].  "no effect on composition"
 				self composeToBounds]
-
 ]
 
 { #category : #'visual properties' }
@@ -789,7 +776,6 @@ TextMorph >> font [
 
 	self textStyle fonts ifEmpty: [^TextStyle defaultFont].
 	^self textStyle defaultFont.
-		
 ]
 
 { #category : #accessing }
@@ -843,7 +829,7 @@ TextMorph >> getFirstCharacter [
 	| aString |
 	^ (aString := text string) isEmpty
 		ifTrue: ['·']
-		ifFalse: [aString first asString] 
+		ifFalse: [aString first asString]
 ]
 
 { #category : #accessing }
@@ -935,7 +921,6 @@ TextMorph >> handleMouseMove: anEvent [
 			at: Time millisecondClockValue
 			arguments: {anEvent copy resetHandlerFields}
 			stepTime: 1].
-
 ]
 
 { #category : #'event handling' }
@@ -962,13 +947,11 @@ TextMorph >> hasFocus [
 { #category : #editing }
 TextMorph >> hasUnacceptedEdits: aBoolean [
 	"Ignored here, but noted in TextMorphForEditView"
-
 ]
 
 { #category : #'event handling' }
 TextMorph >> hideOverEditableTextCursor [  
 	self currentHand showTemporaryCursor: nil
-	
 ]
 
 { #category : #initialization }
@@ -989,7 +972,7 @@ TextMorph >> insertCharacters: aSource [
 	| aLoc |
 	aLoc := self cursor max: 1.
 	paragraph replaceFrom: aLoc to: (aLoc - 1) with: aSource asText displaying: true.
-	self updateFromParagraph  
+	self updateFromParagraph
 ]
 
 { #category : #private }
@@ -1009,7 +992,6 @@ TextMorph >> installEditorToReplace: priorEditor [
 { #category : #accessing }
 TextMorph >> isAutoFit [
 	^ self valueOfProperty: #autoFitContents ifAbsent: [true]
-
 ]
 
 { #category : #'linked frames' }
@@ -1111,7 +1093,6 @@ TextMorph >> lastCharacterIndex [
 TextMorph >> leftFlush [ 
 
 	self changeAlignment: #leftFlush
-
 ]
 
 { #category : #blinking }
@@ -1170,7 +1151,6 @@ TextMorph >> mouseEnter: evt [
 	"Handle a mouseEnter event, meaning the mouse just entered my bounds with no button pressed."
 	super mouseEnter: evt.
 	self showOverEditableTextCursor
-	
 ]
 
 { #category : #'event handling' }
@@ -1178,7 +1158,6 @@ TextMorph >> mouseLeave: evt [
 	"Handle a mouseLeave event, meaning the mouse just left my bounds with no button pressed."
 	super mouseLeave: evt.
 	self hideOverEditableTextCursor
-	
 ]
 
 { #category : #'event handling' }
@@ -1353,7 +1332,6 @@ TextMorph >> predecessor: pred successor: succ [
 	"Private -- for use only in morphic duplication"
 	predecessor := pred.
 	successor := succ.
-
 ]
 
 { #category : #private }
@@ -1419,7 +1397,6 @@ TextMorph >> releaseCachedState [
  
 	super releaseCachedState.
 	self releaseParagraph
-
 ]
 
 { #category : #private }
@@ -1439,7 +1416,6 @@ TextMorph >> releaseParagraph [
 	hand is outside me"
 
 	self releaseParagraphReally.
-
 ]
 
 { #category : #private }
@@ -1480,14 +1456,12 @@ TextMorph >> resetBlinkCursor [
 		para caretRect ifNotNil:[:r| self invalidRect: r].
 		para showCaret: para focused.
 	].
-
 ]
 
 { #category : #alignment }
 TextMorph >> rightFlush [ 
 	
 	self changeAlignment: #rightFlush
-
 ]
 
 { #category : #accessing }
@@ -1558,7 +1532,7 @@ TextMorph >> setCurveBaseline: evt [
 		container baseline: (newPoint - origin) y negated asInteger // 5.
 		self paragraph composeAll].
 	evt hand attachMorph: handle.
-	handle startStepping	
+	handle startStepping
 ]
 
 { #category : #private }
@@ -1586,7 +1560,7 @@ TextMorph >> setFirstCharacter: source [
 								streamContents: [:aStream | 
 									aStream nextPut: aChar.
 									aStream
-										nextPutAll: (chars copyFrom: 2 to: chars size)])]] 
+										nextPutAll: (chars copyFrom: 2 to: chars size)])]]
 ]
 
 { #category : #accessing }
@@ -1616,7 +1590,6 @@ TextMorph >> setSuccessor: newSuccessor [
 
 	successor := newSuccessor.
 	paragraph ifNotNil: [paragraph wantsColumnBreaks: successor notNil].
-
 ]
 
 { #category : #initialization }
@@ -1637,7 +1610,6 @@ TextMorph >> shiftedYellowButtonActivity [
 
 	self editor pluggableYellowButtonActivity: true.
 	self changed.
-
 ]
 
 { #category : #'event handling' }
@@ -1659,7 +1631,6 @@ TextMorph >> startBlinking [
 		at: Time millisecondClockValue 
 		arguments: nil stepTime: 500.
 	self resetBlinkCursor.
-
 ]
 
 { #category : #'linked frames' }
@@ -1672,7 +1643,6 @@ TextMorph >> startingIndex [
 { #category : #blinking }
 TextMorph >> stopBlinking [
 	self stopSteppingSelector: #onBlinkCursor.
-
 ]
 
 { #category : #initialization }
@@ -1758,7 +1728,6 @@ TextMorph >> textColor: aColor [
 	color := aColor.
 	text addAttribute: (TextColor color: aColor).
 	self changed.
-
 ]
 
 { #category : #accessing }
@@ -1829,7 +1798,6 @@ TextMorph >> updateFromParagraph [
 
 			self installEditorToReplace: oldEditor].
 	"self setCompositionWindow."
-
 ]
 
 { #category : #accessing }
@@ -1868,7 +1836,6 @@ TextMorph >> veryDeepInner: deepCopier [
 	successor := successor.
 	backgroundColor := backgroundColor veryDeepCopyWith: deepCopier.
 	margins := margins veryDeepCopyWith: deepCopier.
-
 ]
 
 { #category : #'linked frames' }
@@ -1891,8 +1858,7 @@ TextMorph >> wouldAcceptKeyboardFocusUponTab [
 
 { #category : #accessing }
 TextMorph >> wrapFlag [
-	^ wrapFlag 
-	
+	^ wrapFlag
 ]
 
 { #category : #accessing }

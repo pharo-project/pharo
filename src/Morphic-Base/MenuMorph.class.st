@@ -139,7 +139,6 @@ MenuMorph class >> entitled: aString [
 	"Answer a new instance of me with the given title."
 
 	^ self new addTitle: aString
-
 ]
 
 { #category : #examples }
@@ -162,7 +161,6 @@ MenuMorph class >> example [
 	menu add: 'pears' selector: #pears.
 	menu addLine.
 	^ menu popUpInWorld
-
 ]
 
 { #category : #'instance creation' }
@@ -170,7 +168,6 @@ MenuMorph class >> fromList: anArray [
 	"Construct a menu from an array of descriptions. See #addList comment"
 
 	^ self new addList: anArray.
-
 ]
 
 { #category : #'instance creation' }
@@ -211,7 +208,6 @@ MenuMorph >> activeSubmenu: aSubmenu [
 	activeSubMenu
 		ifNotNil: [activeSubMenu delete].
 	activeSubMenu := aSubmenu.
-	
 ]
 
 { #category : #construction }
@@ -234,7 +230,6 @@ MenuMorph >> add: aLabelString selector: aSymbol [
 		target: defaultTarget
 		selector: aSymbol
 		argumentList: EmptyArray.
-
 ]
 
 { #category : #construction }
@@ -244,7 +239,6 @@ MenuMorph >> add: aLabelString selector: aSymbol argument: arg [
 		target: defaultTarget
 		selector: aSymbol
 		argumentList: (Array with: arg)
-
 ]
 
 { #category : #construction }
@@ -264,7 +258,6 @@ MenuMorph >> add: aLabelString target: anObject selector: aSymbol [
 		target: anObject
 		selector: aSymbol
 		argumentList: EmptyArray.
-
 ]
 
 { #category : #construction }
@@ -275,7 +268,6 @@ MenuMorph >> add: aLabelString target: target selector: aSymbol argument: arg [
 		target: target
 		selector: aSymbol
 		argumentList: (Array with: arg)
-
 ]
 
 { #category : #construction }
@@ -316,7 +308,7 @@ MenuMorph >> addAllFromPragma: aString target: anObject [
 	self addAllFrom: (PragmaMenuBuilder 
 		pragmaKeyword: aString
 		model: anObject)
-		menu 
+		menu
 ]
 
 { #category : #construction }
@@ -358,7 +350,6 @@ MenuMorph >> addItem [
 	sel := UIManager default request: 'Selector?'.
 	sel isEmpty ifFalse: [sel := sel asSymbol].
 	self add: string selector: sel.
-
 ]
 
 { #category : #construction }
@@ -398,7 +389,6 @@ MenuMorph >> addMenuItem: anItem [
 
 	self addMorphBack: anItem.
 	^ anItem
-
 ]
 
 { #category : #utilities }
@@ -414,7 +404,6 @@ MenuMorph >> addTitle [
 	string := UIManager default request: 'Title for this menu?'.
 	string isEmptyOrNil ifTrue: [^ self].
 	self addTitle: string.
-
 ]
 
 { #category : #'construction-title' }
@@ -422,8 +411,6 @@ MenuMorph >> addTitle: aString [
 	"Add a title line at the top of this menu."
 	
 	 self buildTitle: [ :tm | tm title: aString ].
-		
-	
 ]
 
 { #category : #'construction-title' }
@@ -509,21 +496,18 @@ MenuMorph >> addToggle: aString target: anObject selector: aSymbol getStateSelec
 		getStateSelector: stateSymbol;
 		enablementSelector: enableSymbol.
 	^ self addMenuItem: item
-
 ]
 
 { #category : #construction }
 MenuMorph >> addUpdating: aWordingSelector selector: aSymbol [
 
 	self addUpdating: aWordingSelector target: defaultTarget selector: aSymbol argumentList: EmptyArray
-
 ]
 
 { #category : #construction }
 MenuMorph >> addUpdating: aWordingSelector target: aTarget selector: aSymbol [
 
 	self addUpdating: aWordingSelector target: aTarget selector: aSymbol argumentList: EmptyArray
-
 ]
 
 { #category : #construction }
@@ -545,7 +529,6 @@ MenuMorph >> addUpdating: wordingSelector target: target selector: aSymbol argum
 		getStateSelector: wordingSelector
 		enablementSelector: nil
 		argumentList: argList
-
 ]
 
 { #category : #construction }
@@ -641,7 +624,6 @@ MenuMorph >> defaultTarget: anObject [
 	"Set the default target for adding menu items."
 
 	defaultTarget := anObject.
-
 ]
 
 { #category : #initialization }
@@ -660,7 +642,6 @@ MenuMorph >> deleteIfPopUp [
 		popUpOwner isSelected: false.
 		(popUpOwner owner isMenuMorph)
 			ifTrue: [popUpOwner owner deleteIfPopUp]].
-
 ]
 
 { #category : #control }
@@ -703,7 +684,6 @@ MenuMorph >> detachSubMenu: evt [
 		subMenu addTitle: item contents.
 		evt hand attachMorph: subMenu
 	].
-
 ]
 
 { #category : #control }
@@ -747,7 +727,6 @@ MenuMorph >> displayFiltered: evt [
 	    " This method is invoked with evt = nil from MenuMorph >> removeMatchString. The current implementation can't select an item without an event. (Yet :D)"
        (evt notNil and: [ matches size >= 1 ]) 
 		ifTrue: [self selectItem: matches first event: evt]
-
 ]
 
 { #category : #menu }
@@ -773,13 +752,11 @@ MenuMorph >> drawOn: aCanvas [
 				borderWidth: self theme menuBorderWidth
 				borderColor: self theme menuKeyboardFocusColor
 		].
-
 ]
 
 { #category : #accessing }
 MenuMorph >> embeddable [
-	^self valueOfProperty: #embeddable ifAbsent: [ false ]. 
-
+	^self valueOfProperty: #embeddable ifAbsent: [ false ].
 ]
 
 { #category : #accessing }
@@ -838,14 +815,12 @@ MenuMorph >> handlesMouseDown: evt [
 MenuMorph >> hasItems [
 	"Answer if the receiver has menu items"
 	^ submorphs anySatisfy: [:each | each isMenuItemMorph ]
-
 ]
 
 { #category : #testing }
 MenuMorph >> hasSubMenu: aMenuMorph [
 
 	^submorphs anySatisfy: [ :m | m isMenuItemMorph and: (m hasSubMenu: aMenuMorph) ]
-
 ]
 
 { #category : #initialization }
@@ -888,7 +863,6 @@ MenuMorph >> invokeAt: aPoint in: aWorld allowKeyboard: aBoolean [
 	self delete.
 	self restoreFocus: originalFocusHolder in: aWorld.
 	^ selection ifNil: [ selectedItem ifNotNil: [selectedItem target] ]
-
 ]
 
 { #category : #private }
@@ -927,7 +901,6 @@ MenuMorph >> isMenuMorph [
 MenuMorph >> items [
 	"Returns menu items filtering out menu lines"
 	^self menuItems
-
 ]
 
 { #category : #'dropping/grabbing' }
@@ -1056,7 +1029,6 @@ MenuMorph >> layoutItems [
 		item hasSubMenu ifTrue: [item subMenu layoutItems]].
 	maxIconWidth isZero 
 		ifFalse: [self addBlankIconsIfNecessary: (Smalltalk ui icons blankIconOfWidth: maxIconWidth)].
-
 ]
 
 { #category : #events }
@@ -1070,7 +1042,6 @@ MenuMorph >> leftArrowStroked: evt [
 { #category : #accessing }
 MenuMorph >> menuItems [
 	^submorphs select: [ :m | m isMenuItemMorph ]
-
 ]
 
 { #category : #'modal control' }
@@ -1236,7 +1207,6 @@ MenuMorph >> popUpEvent: evt in: aWorld [
 	aHand := evt ifNotNil: [evt hand] ifNil: [ self activeHand ].
 	aPosition := aHand position truncated.
 	^ self popUpAt: aPosition forHand: aHand in: aWorld
-
 ]
 
 { #category : #control }
@@ -1246,7 +1216,6 @@ MenuMorph >> popUpForHand: hand in: aWorld [
 	"Present this menu under control of the given hand."
 	p := hand position truncated.
 	^self popUpAt: p forHand: hand in: aWorld
-
 ]
 
 { #category : #control }
@@ -1260,7 +1229,6 @@ MenuMorph >> popUpInWorld [
 MenuMorph >> popUpInWorld: aWorld [
 	"Present this menu under control of the given hand."
 	^self popUpAt: aWorld primaryHand position forHand: aWorld primaryHand in: aWorld
-
 ]
 
 { #category : #control }
@@ -1274,14 +1242,12 @@ MenuMorph >> popUpNoKeyboard [
 MenuMorph >> popUpOwner [
 	"Return the current pop-up owner that is the menu item that automatically initiated the receiver."
 	^popUpOwner
-
 ]
 
 { #category : #accessing }
 MenuMorph >> popUpOwner: aMenuItemMorph [
 	"Set the current pop-up owner"
 	popUpOwner := aMenuItemMorph.
-
 ]
 
 { #category : #private }
@@ -1327,7 +1293,6 @@ MenuMorph >> removeStayUpItems [
 	self menuItems
 		select: [ :menuItem | menuItem isStayUpItem ]
 		thenDo: [ :each | each delete ].
-
 ]
 
 { #category : #private }
@@ -1387,7 +1352,6 @@ MenuMorph >> setDefaultParameters [
 				shadowOffset: 1 @ 1].
 	self layoutInset: 3.
 	self cellInset: 0@1.
-
 ]
 
 { #category : #menu }
@@ -1417,14 +1381,12 @@ MenuMorph >> setTarget: evt [
 			
 			self updateItemsWithTarget: defaultTarget orWithHand: evt hand 
 		].
-	
 ]
 
 { #category : #accessing }
 MenuMorph >> stayUp [
 
 	^ stayUp
-
 ]
 
 { #category : #accessing }
@@ -1476,7 +1438,6 @@ MenuMorph >> toggleStayUp: evt [
 				ifFalse: [item contents: 'keep this menu up']]].
 	evt hand releaseMouseFocus: self.
 	stayUp ifFalse: [self topRendererOrSelf delete].
-
 ]
 
 { #category : #events }
@@ -1489,7 +1450,6 @@ MenuMorph >> updateColor [
 	"update the title color"
 	
 	titleMorph ifNotNil: [ :tm | tm fillStyle: (self theme menuTitleFillStyleFor: tm )]
-
 ]
 
 { #category : #menu }
@@ -1522,7 +1482,6 @@ MenuMorph >> veryDeepInner: deepCopier [
 	stayUp := stayUp veryDeepCopyWith: deepCopier.
 	popUpOwner := popUpOwner.		"Weakly copied"
 	activeSubMenu := activeSubMenu. "Weakly copied"
-
 ]
 
 { #category : #control }

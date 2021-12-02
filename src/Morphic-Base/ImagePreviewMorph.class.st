@@ -44,7 +44,6 @@ ImagePreviewMorph >> image: form size: imageSize [
 			self textMorph
 				contents: ('{1} x {2} pixels' translated
 							format: {form width asString. form height asString})]
-	
 ]
 
 { #category : #accessing }

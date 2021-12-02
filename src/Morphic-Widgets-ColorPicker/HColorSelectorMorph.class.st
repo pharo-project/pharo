@@ -10,7 +10,6 @@ Class {
 { #category : #accessing }
 HColorSelectorMorph >> color: aColor [
 	"Ignore to preserve fill style."
-	
 ]
 
 { #category : #protocol }

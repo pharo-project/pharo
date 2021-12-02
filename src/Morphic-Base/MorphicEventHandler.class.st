@@ -98,7 +98,6 @@ MorphicEventHandler >> handlesMouseOver: evt [
 	(self existsSubscriptionsFor: #mouseLeave)  ifTrue: [ ^true ].
 	(self existsSubscriptionsFor: #mouseOver) ifTrue: [ ^true ].
 	^false.
-		
 ]
 
 { #category : #testing }
@@ -243,8 +242,6 @@ MorphicEventHandler >> on: eventName send: selector to: recipient withValue: val
 	self
 		addSubscription: (MorphEventSubscription on: eventName send: selector to: recipient withValue: value)
 		toEvent: eventName.
-	
-
 ]
 
 { #category : #events }
@@ -262,6 +259,4 @@ MorphicEventHandler >> veryDeepFixupWith: deepCopier [
 		old := self instVarAt: ii.
 		self instVarAt: ii put: (deepCopier references at: old ifAbsent: [old])
 		].
-
-
 ]

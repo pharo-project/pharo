@@ -55,7 +55,7 @@ FTExampleMethodTableDataSource >> menuColumn: column row: rowIndex [
 	column id = 'Name' ifTrue: [ ^ self nameMenuColumn: column row: rowIndex ].
 	column id = 'Origin' ifTrue: [ ^ self originMenuColumn: column row: rowIndex ].	
 
-	^ nil	
+	^ nil
 ]
 
 { #category : #accessing }

@@ -18,7 +18,6 @@ MouseMoveEvent >> = aMorphicEvent [
 	startPoint = aMorphicEvent startPoint ifFalse: [^ false].
 	buttons = aMorphicEvent buttons ifFalse: [^ false].
 	^ true
-
 ]
 
 { #category : #accessing }
@@ -56,7 +55,6 @@ MouseMoveEvent >> sentTo: anObject [
 	"Dispatch the receiver into anObject"
 	type == #mouseMove ifTrue:[^anObject handleMouseMove: self].
 	^super sentTo: anObject.
-
 ]
 
 { #category : #private }

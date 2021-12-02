@@ -170,13 +170,13 @@ FTBasicTreeListDataSource >> children: aBlock [
 
 	"aBlock -> [ :item | aCollection ]"
 
-	childrenBlock := aBlock 
+	childrenBlock := aBlock
 ]
 
 { #category : #accessing }
 FTBasicTreeListDataSource >> childrenBlock [
 
-	^childrenBlock 
+	^childrenBlock
 ]
 
 { #category : #accessing }
@@ -187,7 +187,6 @@ FTBasicTreeListDataSource >> childrenFor: anItem [
 	children := (childrenBlock value: anItem).
 	
 	^sortingBlock ifNil: [ children ] ifNotNil: [ children sort: sortingBlock ]
-	
 ]
 
 { #category : #private }
@@ -202,7 +201,6 @@ FTBasicTreeListDataSource >> display: aBlock [
 	"aBlock -> [ :item :cell | cell addMorphBack: ... ]"
 
 	displayBlock := aBlock
-	
 ]
 
 { #category : #accessing }

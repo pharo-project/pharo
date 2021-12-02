@@ -20,7 +20,6 @@ PackageTreeExample >> defaultTreeMorph [
 			doubleClickSelector: #doubleClick;
 			nodeStringGetter: #asString;
 			getMenuSelector: #menu:shifted:.
-
 ]
 
 { #category : #'event handling' }
@@ -45,12 +44,11 @@ PackageTreeExample >> menu: menu shifted: b [
 { #category : #showing }
 PackageTreeExample >> open [
 	^ self openDialogWindowIn: self currentWorld title: 'Packages'.
-
 ]
 
 { #category : #accessing }
 PackageTreeExample >> rootItems [
-	^ RPackageOrganizer default packages 
+	^ RPackageOrganizer default packages
 ]
 
 { #category : #accessing }

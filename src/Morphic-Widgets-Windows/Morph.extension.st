@@ -94,14 +94,12 @@ Morph >> nextMorphWantingFocus [
 		whileFalse: [m := m nextMorphInWindow].
 	^m wantsKeyboardFocusNavigation
 		ifTrue: [m]
-	
 ]
 
 { #category : #'*Morphic-Widgets-Windows' }
 Morph >> openInWindow [
 
 	^self openInWindowLabeled: self defaultLabel
-
 ]
 
 { #category : #'*Morphic-Widgets-Windows' }
@@ -140,7 +138,6 @@ Morph >> previousMorphWantingFocus [
 		whileFalse: [m := m previousMorphInWindow ifNil: [^nil]].
 	^m wantsKeyboardFocusNavigation
 		ifTrue: [m]
-	
 ]
 
 { #category : #'*Morphic-Widgets-Windows' }

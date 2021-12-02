@@ -16,7 +16,6 @@ DamageRecorder >> doFullRepaint [
 	"Record that a full redisplay is needed. No further damage rectangles will be recorded until after the next reset."
 
 	^ totalRepaint := true
-
 ]
 
 { #category : #initialization }
@@ -32,8 +31,6 @@ DamageRecorder >> invalidRectsFullBounds: aRectangle [
 	^ totalRepaint
 		ifTrue: [ Array with: aRectangle]
 		ifFalse: [ invalidRects copy]
-
-
 ]
 
 { #category : #recording }
@@ -78,7 +75,6 @@ DamageRecorder >> reset [
 
 	invalidRects := OrderedCollection new: 15.
 	totalRepaint := false
-
 ]
 
 { #category : #testing }

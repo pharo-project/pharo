@@ -20,7 +20,6 @@ Class {
 { #category : #accessing }
 MorphTreeColumn >> asDraggableMorph [
 	^ self thumbnailOfSize: self header fullBounds extent
-	
 ]
 
 { #category : #'column drawing' }
@@ -75,7 +74,6 @@ MorphTreeColumn >> dataBounds [
 { #category : #'column drawing' }
 MorphTreeColumn >> defaultRowMorph [
 	^ Morph new color: Color red; borderWidth: 0; extent: 0@0; yourself
-
 ]
 
 { #category : #'column drawing' }
@@ -142,8 +140,6 @@ MorphTreeColumn >> headerButton [
 MorphTreeColumn >> headerButtonLabel: aLabel font: aFont [
 	self headerButton.
 	self header label: aLabel font: aFont.
-
-
 ]
 
 { #category : #'column drawing' }
@@ -163,7 +159,6 @@ MorphTreeColumn >> headerButtonLabel: aLabel font: aFont target: aReceiver actio
 	self header actionSelector: aSelector.
 	self header target: aReceiver.
 	self header arguments: aCollection
-	
 ]
 
 { #category : #'column drawing' }
@@ -255,7 +250,6 @@ MorphTreeColumn >> rowMorphFor: aNode [
 		ifNotNil: [rowMorph borderWidth: 0]
 		ifNil: [rowMorph := self defaultRowMorph].
 	^ rowMorph rowMorphForNode: aNode inColumn: self
-
 ]
 
 { #category : #'column drawing' }
@@ -276,7 +270,7 @@ MorphTreeColumn >> rowMorphGetterBlock [
 				ifFalse: [[:node :cont| node perform: self rowMorphGetSelector with: self container]]]
 		ifFalse: [self rowMorphGetSelector numArgs = 2
 				ifTrue: [self rowMorphGetSelector]
-				ifFalse: [[:node :cont| self rowMorphGetSelector value: node]]] 
+				ifFalse: [[:node :cont| self rowMorphGetSelector value: node]]]
 ]
 
 { #category : #'column drawing' }

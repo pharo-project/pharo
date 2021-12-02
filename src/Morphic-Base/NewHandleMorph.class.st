@@ -45,14 +45,12 @@ NewHandleMorph >> initialize [
 
 	super initialize.
 	waitingForClickInside := true
-	
 ]
 
 { #category : #'dropping/grabbing' }
 NewHandleMorph >> justDroppedInto: aMorph event: anEvent [
 	"No dropping behavior because stepping will delete me.
 	Moreover it needs to be done that way to evaluate lastPointBlock"
-
 ]
 
 { #category : #'wiw support' }

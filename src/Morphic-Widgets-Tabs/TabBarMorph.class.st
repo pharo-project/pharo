@@ -23,7 +23,6 @@ TabBarMorph >> actionsChanged: aTab [
 
 	self selectedTab = aTab ifFalse: [ ^ self ].
 	self adjustLayout.
-	
 ]
 
 { #category : #private }
@@ -164,7 +163,6 @@ TabBarMorph >> computeLength [
 	length := length max: 33 * self displayScaleFactor.
 
 	^ length
-	
 ]
 
 { #category : #private }
@@ -226,7 +224,6 @@ TabBarMorph >> drawLinesOn: canvas [
 	self selectedTab 
 		ifNotNil: [ self drawWithSelectionOn: canvas ]	
 		ifNil: [ self drawWithoutSelectedOn: canvas ]
-
 ]
 
 { #category : #drawing }
@@ -281,7 +278,6 @@ TabBarMorph >> initialize [
 	
 	self changeProportionalLayout.
 	self addMenuButton.
-	
 ]
 
 { #category : #protocol }

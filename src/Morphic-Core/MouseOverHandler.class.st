@@ -29,14 +29,12 @@ MouseOverHandler >> handleAsMouseLeave: anEvent [
 
 	self keepLeftMorphsOrder.
 	self informMouseLeaveToLeftMorphsUsing: anEvent
-
 ]
 
 { #category : #'event handling - private' }
 MouseOverHandler >> handleAsMouseOver: anEvent [ 
 
 	anEvent hand handleEvent: anEvent asMouseOver.
-
 ]
 
 { #category : #'event handling - private' }
@@ -69,7 +67,6 @@ MouseOverHandler >> initialize [
 	mouseOverMorphs := #().
 	
 	self initializeTrackedMorphs
-	
 ]
 
 { #category : #'event handling - private' }
@@ -86,7 +83,6 @@ MouseOverHandler >> initializeTrackedMorphs [
 	leftMorphs := OrderedCollection new.
 	overMorphs := WriteStream on: #().
 	enteredMorphs := WriteStream on: #().
-	
 ]
 
 { #category : #'event handling - private' }
@@ -102,7 +98,6 @@ MouseOverHandler >> is: anEvent withFocusOver: aMorph [
 MouseOverHandler >> keepLeftMorphsOrder [
 
 	leftMorphs size > 1 ifTrue: [ leftMorphs := mouseOverMorphs intersection: leftMorphs ]
-	
 ]
 
 { #category : #'event handling' }
@@ -111,7 +106,6 @@ MouseOverHandler >> noticeMouseOver: aMorph event: anEvent [
 
 	leftMorphs remove: aMorph ifAbsent: [ enteredMorphs nextPut: aMorph ].
 	overMorphs nextPut: aMorph.
-
 ]
 
 { #category : #'event handling' }
@@ -124,15 +118,13 @@ MouseOverHandler >> processMouseOver: anEvent [
 		self handleAsMouseEnter: anEvent.
 		self rememberOverList ].
 	
-	self initializeTrackedMorphs 
-
+	self initializeTrackedMorphs
 ]
 
 { #category : #'event handling - private' }
 MouseOverHandler >> rememberOverList [
 
 	mouseOverMorphs := overMorphs contents.
-
 ]
 
 { #category : #'event handling - private' }

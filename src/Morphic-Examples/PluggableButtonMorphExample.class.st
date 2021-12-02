@@ -68,7 +68,7 @@ PluggableButtonMorphExample >> buildButton [
 		getState: nil
 		action:  #action 
 		label: #label 
-		menu: nil. 	
+		menu: nil.
 ]
 
 { #category : #building }
@@ -79,7 +79,7 @@ PluggableButtonMorphExample >> buildButtonNoLabel [
 		action:  #action 
 		label: nil 
 		icon: #icon
-		menu: nil. 	
+		menu: nil.
 ]
 
 { #category : #building }
@@ -90,7 +90,7 @@ PluggableButtonMorphExample >> buildButtonWithIcon [
 		action:  #action 
 		label: #label 
 		icon: #icon
-		menu: nil. 	
+		menu: nil.
 ]
 
 { #category : #building }
@@ -102,7 +102,7 @@ PluggableButtonMorphExample >> buildButtonWithIconBottom [
 		label: #label 
 		icon: #icon
 		menu: nil)
-		beIconBottom. 	
+		beIconBottom.
 ]
 
 { #category : #building }
@@ -114,7 +114,7 @@ PluggableButtonMorphExample >> buildButtonWithIconRight [
 		label: #label 
 		icon: #icon
 		menu: nil)
-		beIconRight. 	
+		beIconRight.
 ]
 
 { #category : #building }
@@ -126,7 +126,7 @@ PluggableButtonMorphExample >> buildButtonWithIconTop [
 		label: #label 
 		icon: #icon
 		menu: nil)
-		beIconTop. 	
+		beIconTop.
 ]
 
 { #category : #accessing }

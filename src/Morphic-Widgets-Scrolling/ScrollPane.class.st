@@ -91,7 +91,6 @@ ScrollPane >> alwaysHideHScrollbar [
 ScrollPane >> alwaysShowHScrollBar: bool [
 	self setProperty: #hScrollBarAlways toValue: bool.
 	self hHideOrShowScrollBar.
-
 ]
 
 { #category : #settings }
@@ -106,7 +105,6 @@ ScrollPane >> alwaysShowScrollBars: bool [
 	self 
 		alwaysShowHScrollBar: bool;
 		alwaysShowVScrollBar: bool.
-
 ]
 
 { #category : #'accessing - options' }
@@ -114,7 +112,6 @@ ScrollPane >> alwaysShowVScrollBar: bool [
 
 	self setProperty: #vScrollBarAlways toValue: bool.
 	self vHideOrShowScrollBar.
-
 ]
 
 { #category : #settings }
@@ -137,7 +134,6 @@ ScrollPane >> defaultBorderColor [
 { #category : #initialization }
 ScrollPane >> defaultExtent [
 	^150@120
-
 ]
 
 { #category : #drawing }
@@ -147,7 +143,6 @@ ScrollPane >> drawSubmorphsOn: aCanvas [
 
 	super drawSubmorphsOn: aCanvas.
 	self hasKeyboardFocus ifTrue: [self drawKeyboardFocusOn: aCanvas].
-
 ]
 
 { #category : #geometry }
@@ -185,8 +180,6 @@ ScrollPane >> extent: newExtent [
 	"...then the hScrollBar"
 	((self width ~~ oldW) or: [wasVShowing ~~ self vIsScrollbarShowing]) ifTrue:
 		[self hIsScrollbarShowing ifTrue: [ self hSetScrollDelta ]].
-
-
 ]
 
 { #category : #geometry }
@@ -232,7 +225,6 @@ ScrollPane >> getMenu: shiftKeyState [
 ScrollPane >> hExtraScrollRange [
 	"Return the amount of extra blank space to include below the bottom of the scroll content."
 	^ self scrollDeltaWidth
-
 ]
 
 { #category : #scrolling }
@@ -242,7 +234,6 @@ ScrollPane >> hHideOrShowScrollBar [
 	self hIsScrollbarNeeded
 		ifTrue:[ self hShowScrollBar ]
 		ifFalse: [ self hHideScrollBar ].
-
 ]
 
 { #category : #scrolling }
@@ -251,8 +242,6 @@ ScrollPane >> hHideScrollBar [
 	self removeMorph: hScrollBar.
 	scroller offset: (self hMargin negated@scroller offset y).
 	self resetExtent.
-
-
 ]
 
 { #category : #'geometry testing' }
@@ -260,8 +249,6 @@ ScrollPane >> hIsScrollable [
 
 	"If the contents of the pane are too small to scroll, return false."
 	^ self hLeftoverScrollRange > 0
-	
-
 ]
 
 { #category : #scrolling }
@@ -275,7 +262,6 @@ ScrollPane >> hIsScrollbarNeeded [
 	(self valueOfProperty: #hScrollBarAlways ifAbsent: [false]) ifTrue: [^true].
 
 	^self hIsScrollable
-
 ]
 
 { #category : #'geometry testing' }
@@ -283,14 +269,12 @@ ScrollPane >> hIsScrollbarShowing [
 	"Return true if a horz scroll bar is currently showing"
 
 	^submorphs includes: hScrollBar
-
 ]
 
 { #category : #'geometry testing' }
 ScrollPane >> hIsScrolled [
 	"If the scroller is not set to x = 0, then the pane has been h-scrolled."
 	^scroller offset x > 0
-
 ]
 
 { #category : #geometry }
@@ -301,14 +285,12 @@ ScrollPane >> hLeftoverScrollRange [
 	w :=  bounds width.
 	self vIsScrollbarShowing ifTrue:[ w := w - self scrollBarThickness ].
 	^ (self hTotalScrollRange - w roundTo: self scrollDeltaHeight) max: 0
-
 ]
 
 { #category : #accessing }
 ScrollPane >> hMargin [
 "pixels of whitespace at to the left of the scroller when the hScrollBar offset is 0"
 	^3
-
 ]
 
 { #category : #geometry }
@@ -322,13 +304,11 @@ ScrollPane >> hResizeScrollBar [
 	h := self scrollBarThickness.
 	topLeft := bounds bottomLeft + (borderWidth @ (h + borderWidth) negated).
 	hScrollBar bounds: (topLeft extent: self hScrollBarWidth@ h)
-
 ]
 
 { #category : #'scroll bar events' }
 ScrollPane >> hScrollBarMenuButtonPressed: event [
 	^ self scrollBarMenuButtonPressed: event
-
 ]
 
 { #category : #scrolling }
@@ -366,8 +346,7 @@ ScrollPane >> hScrollBarWidth [
 	self vIsScrollbarNeeded
 		ifTrue: [w := w - self scrollBarThickness ].
 		
-	^w 
-
+	^w
 ]
 
 { #category : #geometry }
@@ -388,7 +367,6 @@ ScrollPane >> hSetScrollDelta [
 			pageDelta: ((self innerBounds width - delta) / range) asFloat.
 	hScrollBar interval: ((self innerBounds width) / self hTotalScrollRange) asFloat.
 	hScrollBar setValue: ((scroller offset x / range) min: 1.0) asFloat.
-
 ]
 
 { #category : #scrolling }
@@ -398,14 +376,12 @@ ScrollPane >> hShowScrollBar [
 	self hResizeScrollBar.
 	self privateAddMorph: hScrollBar atIndex: 1.
 	self resetExtent.
-
 ]
 
 { #category : #geometry }
 ScrollPane >> hTotalScrollRange [
 	"Return the entire scrolling range."
 	^ self hUnadjustedScrollRange + self hExtraScrollRange + self hMargin
-
 ]
 
 { #category : #geometry }
@@ -415,13 +391,11 @@ ScrollPane >> hUnadjustedScrollRange [
 	| submorphBounds |
 	submorphBounds := scroller localSubmorphBounds ifNil: [^ 0].
 	^ submorphBounds right
-
 ]
 
 { #category : #'event handling' }
 ScrollPane >> handlesMouseDown: evt [
 	^ true
-
 ]
 
 { #category : #'event handling' }
@@ -458,7 +432,6 @@ ScrollPane >> hideHScrollBarIndefinitely: bool [
 
 	self setProperty: #noHScrollBarPlease toValue: bool.
 	self hHideOrShowScrollBar.
-
 ]
 
 { #category : #scrolling }
@@ -482,7 +455,6 @@ ScrollPane >> hideOrShowScrollBars [
 	(wasHShowing and: [self hIsScrollbarShowing not]) ifTrue:
 		[(scroller offset x <= 0)
 				ifFalse:[ scroller offset: (self hMargin negated@scroller offset y)]].
-
 ]
 
 { #category : #scrolling }
@@ -490,13 +462,11 @@ ScrollPane >> hideScrollBars [
 	self
 		vHideScrollBar;
 		hHideScrollBar
-
 ]
 
 { #category : #'accessing - options' }
 ScrollPane >> hideScrollBarsIndefinitely [
 	self hideScrollBarsIndefinitely: true
-
 ]
 
 { #category : #'accessing - options' }
@@ -505,7 +475,6 @@ ScrollPane >> hideScrollBarsIndefinitely: bool [
 
 	self hideVScrollBarIndefinitely: bool.
 	self hideHScrollBarIndefinitely: bool.
-
 ]
 
 { #category : #'accessing - options' }
@@ -514,7 +483,6 @@ ScrollPane >> hideVScrollBarIndefinitely: bool [
 
 	self setProperty: #noVScrollBarPlease toValue: bool.
 	self vHideOrShowScrollBar.
-
 ]
 
 { #category : #initialization }
@@ -526,9 +494,6 @@ ScrollPane >> initialize [
 	self initializeScrollBars.
 	self extent: self defaultExtent.
 	self hideOrShowScrollBars.
-
-
-
 ]
 
 { #category : #initialization }
@@ -585,7 +550,6 @@ ScrollPane >> isAutoFit [
 ScrollPane >> isScrolledFromTop [
 	"Have the contents of the pane been scrolled, so that the top of the contents are not visible?"
 	^scroller offset y > 0
-
 ]
 
 { #category : #'event handling' }
@@ -626,7 +590,7 @@ ScrollPane >> layoutProportionallyIn: newBounds [
 	self layoutFrame ifNil:[^self].
 	"before applying the proportional values make sure the receiver's layout is computed"
 	self isAutoFit ifTrue: [self fullBounds].
-	^super layoutProportionallyIn: newBounds 
+	^super layoutProportionallyIn: newBounds
 ]
 
 { #category : #menu }
@@ -656,7 +620,6 @@ ScrollPane >> mouseDown: evt [
 { #category : #'event handling' }
 ScrollPane >> mouseEnter: event [
 	hasFocus := true.
-
 ]
 
 { #category : #'event handling' }
@@ -682,8 +645,7 @@ ScrollPane >> mouseUp: evt [
 
 { #category : #initialization }
 ScrollPane >> newTransformMorph [
-	^TransformMorph new 
-
+	^TransformMorph new
 ]
 
 { #category : #accessing }
@@ -702,7 +664,6 @@ ScrollPane >> resetExtent [
 { #category : #geometry }
 ScrollPane >> resizeScrollBars [
 	self vResizeScrollBar; hResizeScrollBar
-
 ]
 
 { #category : #geometry }
@@ -740,7 +701,6 @@ ScrollPane >> scrollBy: delta [
 	(r := self hLeftoverScrollRange) = 0
 		ifTrue: [hScrollBar value: 0.0]
 		ifFalse: [hScrollBar value: newXoffset asFloat / r]
-
 ]
 
 { #category : #'event handling' }
@@ -762,7 +722,6 @@ ScrollPane >> scrollByKeyboard: event [
 ScrollPane >> scrollDeltaHeight [
 	"Return the increment in pixels which this pane should be scrolled (normally a subclass responsibility)."
 	^ 10
-
 ]
 
 { #category : #geometry }
@@ -770,7 +729,6 @@ ScrollPane >> scrollDeltaWidth [
 	"Return the increment in pixels which this pane should be scrolled (normally a subclass responsibility)."
 	
 	^10
-
 ]
 
 { #category : #scrolling }
@@ -815,7 +773,6 @@ ScrollPane >> setScrollDeltas [
 	
 	self vIsScrollbarShowing ifTrue:[ self vSetScrollDelta ].
 	self hIsScrollbarShowing ifTrue:[ self hSetScrollDelta ].
-
 ]
 
 { #category : #'scroll bar events' }
@@ -838,13 +795,11 @@ ScrollPane >> showHScrollBarOnlyWhenNeeded: bool [
 	self setProperty: #hScrollBarAlways toValue: bool.
 	
 	self hHideOrShowScrollBar.
-
 ]
 
 { #category : #scrolling }
 ScrollPane >> showScrollBars [
 	self  vShowScrollBar; hShowScrollBar
-
 ]
 
 { #category : #'accessing - options' }
@@ -852,7 +807,6 @@ ScrollPane >> showScrollBarsOnlyWhenNeeded: bool [
 
 	self showHScrollBarOnlyWhenNeeded: bool.
 	self showVScrollBarOnlyWhenNeeded: bool.
-
 ]
 
 { #category : #'accessing - options' }
@@ -862,7 +816,6 @@ ScrollPane >> showVScrollBarOnlyWhenNeeded: bool [
 	self setProperty: #noVScrollBarPlease toValue: bool.
 	self setProperty: #vScrollBarAlways toValue: bool.
 	self vHideOrShowScrollBar.
-
 ]
 
 { #category : #'scroll bar events' }
@@ -875,7 +828,6 @@ ScrollPane >> vExtraScrollRange [
 	"Return the amount of extra blank space to include below the bottom of the scroll content."
 	"The classic behavior would be ^bounds height - (bounds height * 3 // 4)"
 	^ self scrollDeltaHeight
-
 ]
 
 { #category : #scrolling }
@@ -884,7 +836,6 @@ ScrollPane >> vHideOrShowScrollBar [
 	self vIsScrollbarNeeded
 		ifTrue:[ self vShowScrollBar ]
 		ifFalse:[ self vHideScrollBar ].
-
 ]
 
 { #category : #scrolling }
@@ -892,8 +843,6 @@ ScrollPane >> vHideScrollBar [
 	self vIsScrollbarShowing ifFalse: [^self].
 	self removeMorph: scrollBar.
 	self resetExtent
-	
-
 ]
 
 { #category : #'geometry testing' }
@@ -904,7 +853,6 @@ ScrollPane >> vIsScrollable [
 	^ self vLeftoverScrollRange > 0
 		"treat a single line as non-scrollable"
 		and: [self vTotalScrollRange > (self scrollDeltaHeight * 3/2)]
-
 ]
 
 { #category : #scrolling }
@@ -918,7 +866,6 @@ ScrollPane >> vIsScrollbarNeeded [
 	(self valueOfProperty: #vScrollBarAlways ifAbsent: [false]) ifTrue: [^true].
 	
 	^self vIsScrollable
-
 ]
 
 { #category : #'geometry testing' }
@@ -926,14 +873,12 @@ ScrollPane >> vIsScrollbarShowing [
 	"Return true if a retractable scroll bar is currently showing"
 
 	^submorphs includes: scrollBar
-
 ]
 
 { #category : #'geometry testing' }
 ScrollPane >> vIsScrolled [
 	"If the scroller is not set to y = 0, then the pane has been scrolled."
 	^scroller offset y > 0
-
 ]
 
 { #category : #geometry }
@@ -941,7 +886,6 @@ ScrollPane >> vLeftoverScrollRange [
 	"Return the entire scrolling range minus the currently viewed area."
 	scroller hasSubmorphs ifFalse:[^0].
 	^ (self vTotalScrollRange -  self vScrollBarHeight roundTo: self scrollDeltaHeight) max: 0
-
 ]
 
 { #category : #geometry }
@@ -960,13 +904,11 @@ ScrollPane >> vScrollBarHeight [
 	self hIsScrollbarNeeded
 		ifTrue:[ h := h - self scrollBarThickness. ].
 	^h
-
 ]
 
 { #category : #'scroll bar events' }
 ScrollPane >> vScrollBarMenuButtonPressed: event [
 	^ self scrollBarMenuButtonPressed: event
-
 ]
 
 { #category : #scrolling }
@@ -986,8 +928,6 @@ ScrollPane >> vScrollBarValue: scrollValue [
 		step: 0@scrollValue;
 		scrollPane: self;
 		yourself)
-
-
 ]
 
 { #category : #geometry }
@@ -1006,7 +946,6 @@ ScrollPane >> vSetScrollDelta [
 			pageDelta: ((self innerBounds height - delta) / range) asFloat.
 	scrollBar interval: ((self innerBounds height) / self vTotalScrollRange) asFloat.
 	scrollBar setValue: (scroller offset y / range min: 1.0) asFloat.
-
 ]
 
 { #category : #scrolling }
@@ -1016,14 +955,12 @@ ScrollPane >> vShowScrollBar [
 	self vResizeScrollBar.
 	self privateAddMorph: scrollBar atIndex: 1.
 	self resetExtent
-
 ]
 
 { #category : #geometry }
 ScrollPane >> vTotalScrollRange [
 	"Return the entire scrolling range."
 	^ self vUnadjustedScrollRange + self vExtraScrollRange
-
 ]
 
 { #category : #geometry }
@@ -1032,7 +969,6 @@ ScrollPane >> vUnadjustedScrollRange [
 	| submorphBounds |
 	submorphBounds := scroller localSubmorphBounds ifNil: [^ 0].
 	^ submorphBounds bottom
-
 ]
 
 { #category : #menu }

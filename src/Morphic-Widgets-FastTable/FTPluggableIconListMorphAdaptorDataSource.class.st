@@ -65,13 +65,12 @@ FTPluggableIconListMorphAdaptorDataSource >> dropElements: aCollection index: ro
 
 { #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> dropItemSelector [
-	^ dropItemSelector 
+	^ dropItemSelector
 ]
 
 { #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> dropItemSelector: aSelector [
 	dropItemSelector := aSelector
-
 ]
 
 { #category : #accessing }
@@ -157,8 +156,7 @@ FTPluggableIconListMorphAdaptorDataSource >> menuColumn: column row: rowIndex [
 	^ self model 
 		perform: self getMenuSelector
 		with: menu
-		with: false 
-
+		with: false
 ]
 
 { #category : #accessing }

@@ -10,11 +10,9 @@ Morph >> changeColor [
 	dialog openModal.
 	dialog cancelled
 		ifFalse: [self fillStyle: dialog selectedColor]
-	
-	
 ]
 
 { #category : #'*Morphic-Widgets-ColorPicker' }
 Morph >> scaledIntoFormOfSize: aSmallInteger [ 
-	^ self imageForm scaledIntoFormOfSize: aSmallInteger 
+	^ self imageForm scaledIntoFormOfSize: aSmallInteger
 ]

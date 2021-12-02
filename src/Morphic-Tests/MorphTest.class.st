@@ -36,7 +36,6 @@ MorphTest >> testBoundingBoxOfSubmorphs [
 	morph addMorph: subMorph.
 	
 	self assert: morph boundingBoxOfSubmorphs equals: subMorph bounds.
-		
 ]
 
 { #category : #'testing - geometry' }

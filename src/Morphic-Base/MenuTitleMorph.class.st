@@ -173,7 +173,7 @@ MenuTitleMorph >> title: aString [
 	
 	pinBox ifNotNil: [ ^self addMorph: titleContainer inFrontOf: pinBox ].
 	
-	self addMorphBack: titleContainer 
+	self addMorphBack: titleContainer
 ]
 
 { #category : #pinning }

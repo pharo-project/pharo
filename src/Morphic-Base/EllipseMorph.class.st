@@ -32,14 +32,12 @@ EllipseMorph >> areasRemainingToFill: aRectangle [
 
 { #category : #geometry }
 EllipseMorph >> bottomLeftCorner [
-	^self intersectionWithLineSegmentFromCenterTo: bounds bottomLeft 
-
+	^self intersectionWithLineSegmentFromCenterTo: bounds bottomLeft
 ]
 
 { #category : #geometry }
 EllipseMorph >> bottomRightCorner [
-	^self intersectionWithLineSegmentFromCenterTo: bounds bottomRight 
-
+	^self intersectionWithLineSegmentFromCenterTo: bounds bottomRight
 ]
 
 { #category : #testing }
@@ -112,7 +110,6 @@ EllipseMorph >> drawOn: aCanvas [
 		fillStyle: self fillStyle 
 		borderWidth: borderWidth  
 		borderColor: borderColor.
-
 ]
 
 { #category : #geometry }
@@ -133,17 +130,14 @@ EllipseMorph >> intersectionWithLineSegmentFromCenterTo: aPoint [
 	dx < 0 ifTrue: [ x := x negated ].
 	y := m * x.
 	^ self center + (x @ y) asIntegerPoint.
-
 ]
 
 { #category : #geometry }
 EllipseMorph >> topLeftCorner [
-	^self intersectionWithLineSegmentFromCenterTo: bounds topLeft 
-
+	^self intersectionWithLineSegmentFromCenterTo: bounds topLeft
 ]
 
 { #category : #geometry }
 EllipseMorph >> topRightCorner [
 	^self intersectionWithLineSegmentFromCenterTo: bounds topRight
-
 ]

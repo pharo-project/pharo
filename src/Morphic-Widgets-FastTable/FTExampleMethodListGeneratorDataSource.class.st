@@ -46,8 +46,6 @@ FTExampleMethodListGeneratorDataSource >> initializeClass: aClass [
 	generator := Generator on: [ :g |
 		(aClass selectors sorted: [ :a :b | a < b ]) 
 			do: [ :each | g yield: (FTExampleMethodModel method: aClass>>each) ] ]
-	
-
 ]
 
 { #category : #accessing }
