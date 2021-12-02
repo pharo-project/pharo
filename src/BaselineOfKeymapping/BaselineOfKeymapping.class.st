@@ -21,10 +21,10 @@ BaselineOfKeymapping >> baseline: spec [
 			group: 'default' with: #('core' 'ui' 'tests'); 
 			group: 'core' with: #(
 				'Keymapping-Core' 
-				'Keymapping-KeyCombinations' 
-				'Keymapping-Pragmas');
+				'Keymapping-KeyCombinations' );
 			group: 'ui' with: #(
 				'core' 
+				'Keymapping-Pragmas'
 				'Keymapping-Settings'
 				'Keymapping-Tools-Spec');
 			group: 'tests' with: #(
