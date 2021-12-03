@@ -16,7 +16,7 @@ BaselineOfFreeType >> baseline: spec [
 
 		spec group: 'core' with: #('FreeType').
 		spec group: 'morphic' with: #('core' 'FreeType-Morphic').
-		spec group: 'test' with: #('core' 'FreeType-Tests') ]
+		spec group: 'tests' with: #('core' 'FreeType-Tests') ]
 ]
 
 { #category : #accessing }
