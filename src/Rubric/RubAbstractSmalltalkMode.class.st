@@ -21,7 +21,7 @@ RubAbstractSmalltalkMode >> isCompletionEnabled [
 { #category : #testing }
 RubAbstractSmalltalkMode >> isForScripting [
 	"needs to be unified is #isScripting"
-	self isScripting
+	^ self isScripting
 ]
 
 { #category : #testing }
