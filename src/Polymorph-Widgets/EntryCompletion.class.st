@@ -101,7 +101,6 @@ EntryCompletion >> closeChooser [
 	chooser 
 		ifNotNil: [chooser close.
 			chooser := nil].
-
 ]
 
 { #category : #'events - handling' }
@@ -200,8 +199,6 @@ EntryCompletion >> openChooserWithAllOrCloseFrom: aFieldMorph [
 { #category : #accessing }
 EntryCompletion >> positionChooser [
 	"Position the chooser to fit on the display."
-
-	
 ]
 
 { #category : #accessing }
@@ -212,7 +209,7 @@ EntryCompletion >> positionChooser: aChooser [
                 ifTrue: [aChooser listMorph
                                         bounds: (aChooser boundsInWorld topLeft - (0 @ aChooser listHeight) extent: aChooser width @ aChooser listHeight)]
                 ifFalse: [aChooser listMorph
-                                        bounds: (aChooser boundsInWorld bottomLeft extent: aChooser width @ aChooser listHeight)] 
+                                        bounds: (aChooser boundsInWorld bottomLeft extent: aChooser width @ aChooser listHeight)]
 ]
 
 { #category : #accessing }

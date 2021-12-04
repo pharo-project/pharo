@@ -173,7 +173,6 @@ PharoLightTheme class >> setPreferredShoutColors [
 			(poolConstant 							(blue muchDarker))
 			(classVar 								(blue muchDarker))
 			(globalVar 								(blue muchDarker)))
-
 ]
 
 { #category : #accessing }

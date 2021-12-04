@@ -24,14 +24,11 @@ TextEntryDialogWindow class >> minimumWidth: anInteger [
 TextEntryDialogWindow >> entryCompletion: anEntryCompletion [
 	anEntryCompletion chooseBlock: [:t | self ok].
 	self textEditorMorph entryCompletion: anEntryCompletion
-
-
 ]
 
 { #category : #api }
 TextEntryDialogWindow >> initialExtent [
 	^ self minimumWidth @ (super initialExtent y)
-
 ]
 
 { #category : #accessing }

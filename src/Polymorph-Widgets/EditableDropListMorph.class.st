@@ -30,7 +30,7 @@ EditableDropListMorph class >> on: anObject list: getListSel selected: getSelect
 		addToList: addToListSel
 		class: aClass
 		getEnabled: getEnabledSel
-		default: '' 
+		default: ''
 ]
 
 { #category : #'instance creation' }
@@ -57,18 +57,17 @@ EditableDropListMorph >> adoptPaneColor: paneColor [
 	"Clear the fill style of the text."
 	
 	super adoptPaneColor: paneColor.
-	self contentMorph fillStyle: Color transparent 
+	self contentMorph fillStyle: Color transparent
 ]
 
 { #category : #'public accessing' }
 EditableDropListMorph >> beReadOnly [ 
-	self contentMorph beReadOnly 
+	self contentMorph beReadOnly
 ]
 
 { #category : #accessing }
 EditableDropListMorph >> content [
 	^ content
-
 ]
 
 { #category : #accessing }
@@ -81,7 +80,7 @@ EditableDropListMorph >> content: anObject [
 
 { #category : #private }
 EditableDropListMorph >> convertTo: aClass [ 
-	self contentMorph convertTo: aClass 
+	self contentMorph convertTo: aClass
 ]
 
 { #category : #accessing }
@@ -101,7 +100,7 @@ EditableDropListMorph >> enabled: aBoolean [
 	super enabled: aBoolean.
 	self
 		contentMorph enabled: aBoolean;
-		fillStyle: Color transparent 
+		fillStyle: Color transparent
 ]
 
 { #category : #accessing }
@@ -129,7 +128,7 @@ EditableDropListMorph >> listHeight [
 EditableDropListMorph >> minHeight [
 	"Answer the minimum height for the drop list."
 	
-	^self theme textFont height 
+	^self theme textFont height
 ]
 
 { #category : #drawing }
