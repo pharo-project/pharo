@@ -9,8 +9,6 @@ Class {
 
 { #category : #operations }
 SDLNullPlatform >> afterMainPharoWindowCreated: aOSSDLWindow [
-
-
 ]
 
 { #category : #operations }

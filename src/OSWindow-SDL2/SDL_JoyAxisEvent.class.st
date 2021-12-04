@@ -20,7 +20,7 @@ Class {
 
 { #category : #'event type' }
 SDL_JoyAxisEvent class >> eventType [
-	^ SDL_JOYAXISMOTION 
+	^ SDL_JOYAXISMOTION
 ]
 
 { #category : #'fields description' }

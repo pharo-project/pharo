@@ -32,7 +32,6 @@ OSNullBackendWindow >> clipboardText [
 
 { #category : #accessing }
 OSNullBackendWindow >> clipboardText: anObject [
-
 ]
 
 { #category : #initialize }

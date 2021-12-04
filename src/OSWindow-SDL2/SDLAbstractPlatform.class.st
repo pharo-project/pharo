@@ -17,7 +17,7 @@ Class {
 { #category : #operations }
 SDLAbstractPlatform >> afterMainPharoWindowCreated: aOSSDLWindow [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #operations }

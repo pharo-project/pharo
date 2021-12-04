@@ -16,7 +16,7 @@ Class {
 { #category : #'class initialization' }
 OSTouchSwipeDetector class >> initialize [
 	super initialize.
-	MinDistToBorder := 0.1 
+	MinDistToBorder := 0.1
 ]
 
 { #category : #accessing }
@@ -115,7 +115,7 @@ OSTouchSwipeDetector >> createEventEnding [
 
 { #category : #abstract }
 OSTouchSwipeDetector >> eventClassAbortGesture [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #abstract }

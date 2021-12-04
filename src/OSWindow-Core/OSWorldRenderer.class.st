@@ -76,7 +76,6 @@ OSWorldRenderer >> deactivate [
 
 	osWindow ifNotNil: [ osWindow destroy. osWindow := nil ].
 	display := nil.
-	
 ]
 
 { #category : #operations }
@@ -159,7 +158,6 @@ OSWorldRenderer >> drawWhileProfilingRenderingTimeDuring: aBlock [
 	] timeToRunWithoutGC.
 	
 	self logRenderingTimeMeasurements: measurements
-
 ]
 
 { #category : #accessing }
@@ -225,7 +223,7 @@ OSWorldRenderer >> updateDamage: allDamage [
 { #category : #events }
 OSWorldRenderer >> updateToNewResolution [
 
-	self window updateToNewResolution 
+	self window updateToNewResolution
 ]
 
 { #category : #activation }
@@ -240,7 +238,7 @@ OSWorldRenderer >> updateWindowTitle [
 { #category : #accessing }
 OSWorldRenderer >> window [
 	
-	^ osWindow 
+	^ osWindow
 ]
 
 { #category : #accessing }

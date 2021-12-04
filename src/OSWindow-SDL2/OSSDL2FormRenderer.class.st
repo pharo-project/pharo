@@ -27,13 +27,11 @@ OSSDL2FormRenderer >> copyAndPresentTextureRectangle: rectangle [
 	sdlRectangle := rectangle asSDLRect.				
 	renderer copy: texture srcRect: sdlRectangle dstRect: sdlRectangle.
 	renderer present
-	
 ]
 
 { #category : #private }
 OSSDL2FormRenderer >> createRenderer [
 	renderer := backendWindow sdl2Window createDefaultRenderer.
-
 ]
 
 { #category : #private }
@@ -48,7 +46,6 @@ OSSDL2FormRenderer >> deferUpdatesWhile: aBlock [
 	deferUpdates := true.
 	aBlock ensure: [ deferUpdates := false. ].
 	self useDeferredUpdates.
-	
 ]
 
 { #category : #deleting }
@@ -61,7 +58,6 @@ OSSDL2FormRenderer >> destroy [
 		texture := nil.
 		renderer := nil.
 	]
-
 ]
 
 { #category : #initialization }
@@ -78,7 +74,6 @@ OSSDL2FormRenderer >> primitiveUpdateRectangle: rectangle externalForm: external
 
 	[externalForm copy: rectangle from: form to: rectangle origin rule: Form over]
 		on:Exception do: [ :e | ('There was an error during copy, we should not throw an exception here:' , e printString) traceCr ]
-
 ]
 
 { #category : #'updating screen' }
@@ -170,7 +165,6 @@ OSSDL2FormRenderer >> useDeferredUpdates [
 			copy: texture;
 			present
 	]
-
 ]
 
 { #category : #private }
