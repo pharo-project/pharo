@@ -16,7 +16,6 @@ OmEntryWriter class >> newForStore: aFileStore [
 	^ self basicNew
 		initializeWithStore: aFileStore;
 		yourself
-
 ]
 
 { #category : #initialization }

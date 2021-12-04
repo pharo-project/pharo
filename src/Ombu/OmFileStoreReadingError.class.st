@@ -10,5 +10,5 @@ Class {
 { #category : #'instance creation' }
 OmFileStoreReadingError class >> readingError: sourceError on: aFileReference position: aFilePosition [
 
-	^ self new messageText: 'Reading entry from ', aFileReference asString, '@', aFilePosition asString, ': ', sourceError messageText 
+	^ self new messageText: 'Reading entry from ', aFileReference asString, '@', aFilePosition asString, ': ', sourceError messageText
 ]

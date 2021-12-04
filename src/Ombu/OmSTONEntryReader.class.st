@@ -37,7 +37,6 @@ OmSTONEntryReader >> entryPositionsReverseDo: aBlock [
 		aBlock value: stream position.
 			
 	] doWhileTrue: true
-
 ]
 
 { #category : #reading }
@@ -97,5 +96,4 @@ OmSTONEntryReader >> stream: aReadStream [
 
 	super stream: aReadStream.
 	self stonReader on: stream.
-
 ]
