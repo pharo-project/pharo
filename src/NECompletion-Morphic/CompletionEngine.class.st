@@ -27,7 +27,7 @@ Class {
 
 { #category : #accessing }
 CompletionEngine class >> contextClass [
-	^ContextClass ifNil: [ CompletionContext ] 
+	^ContextClass ifNil: [ CompletionContext ]
 ]
 
 { #category : #accessing }
@@ -225,7 +225,6 @@ CompletionEngine >> hasCompletionContext [
 { #category : #keyboard }
 CompletionEngine >> invalidateEditorMorph [
 		editor morph invalidRect: editor morph bounds.
-
 ]
 
 { #category : #'menu morph' }
@@ -333,7 +332,6 @@ CompletionEngine >> resetCompletionDelay [
 			UIManager default defer:  [ 
 				editor atCompletionPosition ifTrue: [ self openMenu ]]
 		] fork.
-	
 ]
 
 { #category : #private }
@@ -450,12 +448,12 @@ CompletionEngine >> smartCharacterWithEvent: anEvent [
 
 { #category : #settings }
 CompletionEngine >> smartCharacters [
-	^ NECPreferences smartCharacters 
+	^ NECPreferences smartCharacters
 ]
 
 { #category : #settings }
 CompletionEngine >> smartCharactersMapping [
-	^ NECPreferences smartCharactersMapping 
+	^ NECPreferences smartCharactersMapping
 ]
 
 { #category : #keyboard }
