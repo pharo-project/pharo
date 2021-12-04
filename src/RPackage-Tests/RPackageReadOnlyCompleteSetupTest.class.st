@@ -63,8 +63,6 @@ RPackageReadOnlyCompleteSetupTest >> setUp [
 
 	a2 class compileSilently: 'classSideMethodDefinedInP3 ^ #classSideMethodDefinedInP3'.
 	p3 addMethod: (a2 class>>#classSideMethodDefinedInP3).
-	
-
 ]
 
 { #category : #'tests - tag class' }
@@ -137,7 +135,6 @@ RPackageReadOnlyCompleteSetupTest >> testClassIsExtendedInPackage [
 	self assert: ((testingEnvironment at: #A2DefinedInP2) isExtendedInPackage: p1).
 	self deny: (p1 includesClass: (testingEnvironment at: #A2DefinedInP2)).
 	self assert: (p1 extendsClass: (testingEnvironment at: #A2DefinedInP2)).
-	
 ]
 
 { #category : #'tests - slice' }
@@ -150,7 +147,6 @@ RPackageReadOnlyCompleteSetupTest >> testClassNamesAndExtensionSelectorsDo [
 A2DefinedInP2 methodDefinedInP3
 A2DefinedInP2_class classSideMethodDefinedInP3
 '.
-
 ]
 
 { #category : #'tests - slice' }
@@ -175,7 +171,6 @@ RPackageReadOnlyCompleteSetupTest >> testCompiledMethodIsDefinedInPackage [
 
 	self assert: (((testingEnvironment at: #A1DefinedInP1) >> #methodDefinedInP1) isDefinedInPackage: p1).
 	self deny: (((testingEnvironment at: #A2DefinedInP2) >> #methodDefinedInP1) isDefinedInPackage: p1).
-	
 ]
 
 { #category : #'tests - compiled method' }
@@ -183,7 +178,6 @@ RPackageReadOnlyCompleteSetupTest >> testCompiledMethodIsExtensionInPackage [
 
 	self deny: (((testingEnvironment at: #A1DefinedInP1) >> #methodDefinedInP1) isExtensionInPackage: p1).
 	self assert: (((testingEnvironment at: #A2DefinedInP2) >> #methodDefinedInP1) isExtensionInPackage: p1).
-	
 ]
 
 { #category : #'tests - compiled method' }
@@ -284,8 +278,6 @@ RPackageReadOnlyCompleteSetupTest >> testMetaclassHasExtensions [
 	self assert: (p3 includesExtensionSelector: #methodDefinedInP3 ofClass: a2).
 	self assert: (p3 includesExtensionSelector: #classSideMethodDefinedInP3 ofMetaclassName: a2 name).
 	self assert: (p3 includesExtensionSelector: #classSideMethodDefinedInP3 ofClass: a2 class)
-
-	
 ]
 
 { #category : #'tests - situation' }
@@ -335,13 +327,6 @@ RPackageReadOnlyCompleteSetupTest >> testPackagesOfClass [
 	self assert: (packages includes: p1).
 	self assert: (packages includes: p2).
 	self assert: (packages includes: p3).
-	
-	
-	
-	
-	
-	
-	
 ]
 
 { #category : #'tests - tag class' }
@@ -394,7 +379,7 @@ RPackageReadOnlyCompleteSetupTest >> testSelectors [
 
 	self assert: p3 selectors size equals: 2.
 	self assert: (p3 selectors includes: #methodDefinedInP3).
-	self assert:  (p3 selectors includes: #classSideMethodDefinedInP3)	
+	self assert:  (p3 selectors includes: #classSideMethodDefinedInP3)
 ]
 
 { #category : #'tests - situation' }
@@ -424,5 +409,4 @@ RPackageReadOnlyCompleteSetupTest >> testStartingSituation [
 	
 	self assert: (p1 definesOrExtendsClass: a2).
 	self deny: (p1 includesClass: a2).
-
 ]

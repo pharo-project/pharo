@@ -104,7 +104,6 @@ RPackageTestCase >> initializeAnnouncers [
 RPackageTestCase >> namesOfMockTestPackages [
 	
 	^ #( 'MockPackage-Tests' 'MockPackage-tests' 'MockPackage' 'MockPackage-Tests-Package')
-
 ]
 
 { #category : #accessing }
@@ -116,7 +115,7 @@ RPackageTestCase >> organizer [
 { #category : #accessing }
 RPackageTestCase >> packageClass [ 
 	"returns the system class that represents Packages"
-	^ RPackage 
+	^ RPackage
 ]
 
 { #category : #accessing }
@@ -128,13 +127,11 @@ RPackageTestCase >> packageOrganizerClass [
 { #category : #utilities }
 RPackageTestCase >> removePackage: aName [
 	self packageClass organizer basicUnregisterPackageNamed: aName.
-	
 ]
 
 { #category : #'announcer handling' }
 RPackageTestCase >> restoreAnnouncers [
 	SystemAnnouncer announcer: oldSystemAnnouncer.
-
 ]
 
 { #category : #running }
