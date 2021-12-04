@@ -51,7 +51,7 @@ NetworkIPv6StringTest >> testHeadCompressedZerosToString [
 	expected := '::2001:db8'.
 	result := NetNameResolver stringFromIPv6Address: source.
 	
-	self assert: expected equals: result. 
+	self assert: expected equals: result.
 ]
 
 { #category : #tests }

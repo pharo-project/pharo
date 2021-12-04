@@ -26,7 +26,6 @@ MIMEHeaderValue class >> forField: aFName fromString: aString [
 	^(aFName beginsWith: 'content-') 
 		ifTrue: [ self fromMIMEHeader: aString ]
 		ifFalse: [ self fromTraditionalHeader: aString ]
-
 ]
 
 { #category : #'instance creation' }
@@ -65,7 +64,6 @@ MIMEHeaderValue class >> fromTraditionalHeader: aString [
 	newValue mainValue: aString.
 	newValue parameters: #().
 	^newValue
-
 ]
 
 { #category : #printing }

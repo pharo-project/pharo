@@ -79,7 +79,6 @@ Base64MimeConverter class >> initialize [
 	ToCharTable at: 63 put: $+.
 	FromCharTable at: $/ asciiValue + 1 put: 63.
 	ToCharTable at: 64 put: $/.
-	
 ]
 
 { #category : #encoding }

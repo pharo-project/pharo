@@ -20,7 +20,6 @@ Class {
 ConnectionQueue class >> portNumber: anInteger queueLength: queueLength [
 
 	^ self new initPortNumber: anInteger queueLength: queueLength
-
 ]
 
 { #category : #public }
@@ -43,7 +42,6 @@ ConnectionQueue >> destroy [
 		socket := nil].
 	connections do: [:s | s destroy].
 	connections := OrderedCollection new.
-
 ]
 
 { #category : #public }
@@ -80,7 +78,6 @@ ConnectionQueue >> getConnectionOrNilLenient [
 		].
 		result
 	].
-
 ]
 
 { #category : #private }
@@ -95,7 +92,6 @@ ConnectionQueue >> initPortNumber: anInteger queueLength: queueLength [
 	process := [self listenLoop] newProcess.
 	process priority: Processor highIOPriority.
 	process resume.
-
 ]
 
 { #category : #public }
@@ -137,7 +133,7 @@ ConnectionQueue >> listenLoop [
 			accessSema critical: [connections addLast: newConnection].
 			newConnection := nil.
 			self changed].
-		self pruneStaleConnections]. 
+		self pruneStaleConnections].
 ]
 
 { #category : #private }
@@ -166,7 +162,6 @@ ConnectionQueue >> oldStyleListenLoop [
 								socket isWaitingForConnection
 									ifFalse: [socket destroy. socket := nil]]]].  "broken socket; start over"
 		self pruneStaleConnections].
-
 ]
 
 { #category : #private }
@@ -182,5 +177,4 @@ ConnectionQueue >> pruneStaleConnections [
 				foundStaleConnection := true]].
 		foundStaleConnection ifTrue: [
 			connections := connections select: [:s | s isValid]]].
-
 ]

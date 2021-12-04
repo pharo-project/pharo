@@ -59,7 +59,6 @@ NetworkSystemSettings class >> httpProxyPort: aPortNumber [
 	aPortNumber = HTTPProxyPort ifTrue: [ ^ self ].
 	LastHTTPProxyPort := HTTPProxyPort.
 	HTTPProxyPort := aPortNumber
-
 ]
 
 { #category : #settings }
@@ -78,7 +77,6 @@ NetworkSystemSettings class >> httpProxyServer: aServerName [
 	aServerName = HTTPProxyServer ifTrue: [ ^ self ].
 	LastHTTPProxyServer := HTTPProxyServer.
 	HTTPProxyServer := aServerName ifNotNil: [ aServerName trimBoth ]
-
 ]
 
 { #category : #settings }
@@ -98,19 +96,16 @@ NetworkSystemSettings class >> isHttpProxyException: serverName [
 { #category : #private }
 NetworkSystemSettings class >> lastHTTPProxyPort [
 	^ LastHTTPProxyPort ifNil: [ LastHTTPProxyPort := HTTPProxyPort ]
-
 ]
 
 { #category : #private }
 NetworkSystemSettings class >> lastHTTPProxyServer [
 	^ LastHTTPProxyServer ifNil: [ LastHTTPProxyServer := HTTPProxyServer ]
-
 ]
 
 { #category : #settings }
 NetworkSystemSettings class >> manageHttpProxyExceptions [
 	^ LastHTTPProxyExceptions ifNil:[ LastHTTPProxyExceptions := ''].
-
 ]
 
 { #category : #settings }
@@ -125,7 +120,6 @@ NetworkSystemSettings class >> manageHttpProxyExceptions: aStringWithExceptions 
 		:domain  | 
 		self addHttpProxyException: domain
 	].
-
 ]
 
 { #category : #settings }
@@ -192,7 +186,6 @@ NetworkSystemSettings class >> proxyPassword: aPassword [
 	"Set the HTTP proxy password. Can be empty or nil to reset"
 	
 	ProxyPassword := aPassword ifNotNil: [ aPassword utf8Encoded base64Encoded ]
-
 ]
 
 { #category : #settings }
@@ -209,8 +202,6 @@ NetworkSystemSettings class >> proxyUser: aUser [
 	"Set the HTTP proxy user. Can be empty or nil to reset"
 	
 	ProxyUser := aUser ifNotNil: [ aUser utf8Encoded base64Encoded ]
-
-
 ]
 
 { #category : #settings }

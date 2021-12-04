@@ -69,7 +69,6 @@ TelnetProtocolClient >> lookForCode: code [
 	self
 		lookForCode: code
 		ifDifferent: [:response | (TelnetProtocolError protocolInstance: self) signal: response]
-
 ]
 
 { #category : #'private - protocol' }
@@ -80,7 +79,6 @@ TelnetProtocolClient >> lookForCode: code ifDifferent: handleBlock [
 
 	self responseCode == code
 		ifFalse: [handleBlock value: self lastResponse]
-
 ]
 
 { #category : #accessing }
