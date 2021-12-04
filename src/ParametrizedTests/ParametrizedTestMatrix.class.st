@@ -39,7 +39,7 @@ ParametrizedTestMatrix >> addCase: aCollection [
 		collect: [ :assoc | assoc asTestParameter ]
 		as: Array).
 		
-	^ self 
+	^ self
 ]
 
 { #category : #converting }
