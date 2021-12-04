@@ -17,7 +17,6 @@ OCASTTranslatorTest class >> testParameters [
 	^ super testParameters
 		addCase: { #encoder -> EncoderForSistaV1 };
 		yourself
-
 ]
 
 { #category : #accessing }
@@ -160,7 +159,6 @@ OCASTTranslatorTest >> testExample: aSelector withArgument: anArgument [
 OCASTTranslatorTest >> testExample: aSelector withArguments: arguments [
 
 	^ self testSource: ((OCOpalExamples>> aSelector) sourceCode) withArguments: arguments
-
 ]
 
 { #category : #'tests - primitives' }

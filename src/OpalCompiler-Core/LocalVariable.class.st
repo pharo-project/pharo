@@ -15,7 +15,7 @@ Class {
 
 { #category : #testing }
 LocalVariable class >> isAbstract [ 
-	^ self = LocalVariable  
+	^ self = LocalVariable
 ]
 
 { #category : #comparing }
@@ -25,8 +25,6 @@ LocalVariable >> = aTempVar [
 		and: [aTempVar scope = self scope 
 		and: [aTempVar name = self name
 		and: [aTempVar usage = self usage]]].
-
-	
 ]
 
 { #category : #visiting }
@@ -77,7 +75,7 @@ LocalVariable >> createCopiedVariableFor: aScope [
 { #category : #emitting }
 LocalVariable >> emitStore: methodBuilder [
 
-	methodBuilder storeTemp: name. 
+	methodBuilder storeTemp: name.
 ]
 
 { #category : #emitting }
@@ -147,13 +145,11 @@ LocalVariable >> isEscaping [
 { #category : #escaping }
 LocalVariable >> isEscapingRead [
 	^escaping = #escapingRead
-
 ]
 
 { #category : #escaping }
 LocalVariable >> isEscapingWrite [
 	^escaping = #escapingWrite
-
 ]
 
 { #category : #testing }
@@ -165,7 +161,6 @@ LocalVariable >> isLocalVariable [
 { #category : #'read/write usage' }
 LocalVariable >> isRead [
 	^usage = #read
-
 ]
 
 { #category : #testing }
@@ -181,7 +176,6 @@ LocalVariable >> isRemote [
 { #category : #'read/write usage' }
 LocalVariable >> isRepeatedWrite [
 	^usage = #repeatedWrite
-
 ]
 
 { #category : #testing }

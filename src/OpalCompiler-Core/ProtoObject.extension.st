@@ -29,8 +29,6 @@ ProtoObject >> mustBeBooleanCompileExpression: context andCache: cache [
 	"cache the method we just created"
 	cache at: context compiledCode at: pc put: method.
 	^method
-	
-	
 ]
 
 { #category : #'*OpalCompiler-Core' }

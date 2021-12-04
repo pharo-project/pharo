@@ -18,7 +18,6 @@ OCLiteralList >> addLast: object [
 	equalitySet add: object.
 	super addLast: object.
 	^ object
-
 ]
 
 { #category : #accessing }
@@ -44,5 +43,4 @@ OCLiteralList >> setCollection: anArray [
 
 	super setCollection: anArray.
 	equalitySet := OCLiteralSet new: anArray size.
-
 ]

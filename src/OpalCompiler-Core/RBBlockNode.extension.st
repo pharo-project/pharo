@@ -29,7 +29,6 @@ RBBlockNode >> isClean [
 	self scope hasEscapingVars ifTrue: [ ^ false ].
 	self hasBlockReturn ifTrue: [ ^ false ].
 	^ super isClean
-	
 ]
 
 { #category : #'*OpalCompiler-Core' }

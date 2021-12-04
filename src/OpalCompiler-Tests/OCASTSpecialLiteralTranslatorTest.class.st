@@ -44,5 +44,4 @@ OCASTSpecialLiteralTranslatorTest >> testSpecialLiteralsNotInLiteralFrame [
 	self testExample: #examplePushNonSpecialSmallInteger.
 	self assert: instance result equals: 10.
 	self assert: (method hasLiteral: 10)
-	
 ]

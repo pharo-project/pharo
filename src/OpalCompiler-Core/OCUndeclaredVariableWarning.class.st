@@ -111,7 +111,7 @@ OCUndeclaredVariableWarning >> defineClass: className [
 	classBinding := node owningScope lookupVar: className.
 	"make sure to recompile all methods referencing this class"
 	classBinding usingMethods do: [:method | method recompile].
-	^classBinding 
+	^classBinding
 ]
 
 { #category : #correcting }
@@ -144,7 +144,6 @@ OCUndeclaredVariableWarning >> node: aVariableNode [
 
 	super node: aVariableNode.
 	messageText := 'Undeclared temp: ', aVariableNode name.
-
 ]
 
 { #category : #correcting }
