@@ -29,7 +29,6 @@ TTutorialTest >> testLessonAtReturnsCorrespondingLesson [
 		answer := self testedTutorial lessonAt: index.
 		self assert: (answer isKindOf: Lesson)
 	]
-	
 ]
 
 { #category : #tests }

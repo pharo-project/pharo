@@ -33,7 +33,6 @@ LessonView class >> menuOn: aBuilder [
 		selector: #inspectIt;
 		help: nil;
 		iconName: #smallInspectIt.
-
 ]
 
 { #category : #accessing }
@@ -58,7 +57,6 @@ LessonView >> buildText [
 { #category : #gui }
 LessonView >> buildWindow [
 	^ SystemWindow labelled: 'PrStef lesson'.
-	
 ]
 
 { #category : #gui }
@@ -94,7 +92,6 @@ LessonView >> isOpenInWindow [
 { #category : #gui }
 LessonView >> menu [
 	^ (PragmaMenuBuilder pragmaKeyword: #LessonViewContextMenu model: self) menu.
-
 ]
 
 { #category : #gui }
@@ -128,7 +125,6 @@ LessonView >> showLesson: aLesson withTitle: aString [
 	self window setLabel: aString.
 	self sourceTextModel setText: aLesson lesson.
 	self isOpenInWindow ifFalse: [ self open ]
-	
 ]
 
 { #category : #accessing }
