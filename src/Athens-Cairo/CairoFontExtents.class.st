@@ -29,7 +29,8 @@ Class {
 		'OFFSET_DESCENT',
 		'OFFSET_HEIGHT',
 		'OFFSET_MAX_X_ADVANCE',
-		'OFFSET_MAX_Y_ADVANCE'
+		'OFFSET_MAX_Y_ADVANCE',
+		'OFFSET_WIDTH'
 	],
 	#category : #'Athens-Cairo-Text'
 }
@@ -40,6 +41,7 @@ CairoFontExtents class >> fieldsDesc [
 	^ #(
 	double ascent;
 	double descent;
+	double width;
 	double height;
 	double max_x_advance;
 	double max_y_advance;
@@ -104,4 +106,16 @@ CairoFontExtents >> max_y_advance [
 CairoFontExtents >> max_y_advance: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_MAX_Y_ADVANCE put: anObject
+]
+
+{ #category : #'accessing - structure variables' }
+CairoFontExtents >> width [
+	"This method was automatically generated"
+	^handle doubleAt: OFFSET_WIDTH
+]
+
+{ #category : #'accessing - structure variables' }
+CairoFontExtents >> width: anObject [
+	"This method was automatically generated"
+	handle doubleAt: OFFSET_WIDTH put: anObject
 ]
