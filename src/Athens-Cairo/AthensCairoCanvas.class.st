@@ -433,7 +433,7 @@ void                cairo_text_extents                  (cairo_t *cr,
                                                          const char *utf8,
                                                          cairo_text_extents_t *extents);
 "
-	^ self ffiCall: #( void cairo_text_extents (self, char * utf8String, cairo_text_extents_t * extentsObj) )
+	^ self ffiCall: #( void cairo_text_extents (self, char *utf8String, cairo_text_extents_t *extentsObj) )
 ]
 
 { #category : #drawing }
