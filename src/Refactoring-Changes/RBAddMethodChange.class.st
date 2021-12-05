@@ -126,6 +126,17 @@ RBAddMethodChange >> class: aClass source: aString contoller: aController [
 	controller := aController
 ]
 
+{ #category : #initialization }
+RBAddMethodChange >> class: aClass source: aString controller: aController [
+
+	self changeClass: aClass.
+	source := aString.
+	self protocols: (RBBrowserEnvironment new
+			 whichProtocolIncludes: self selector
+			 in: aClass).
+	controller := aController
+]
+
 { #category : #private }
 RBAddMethodChange >> controller [
 
