@@ -36,9 +36,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			
 			package: 'FileSystem-Tests-Memory';
 			package: 'Fonts-Infrastructure-Tests';
-			package: 'FreeType-Tests';
-			package: 'FreeType-Help';
-
+			
 			package: 'Graphics-Tests';
 			package: 'HelpSystem-Tests';
 
