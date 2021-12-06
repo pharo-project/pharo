@@ -7,11 +7,42 @@ Class {
 	#category : #'Kernel-Tests-Extended-Processes'
 }
 
+{ #category : #tests }
+ProcessTest >> expectedFailures [
+	^#("these two tests fail after fixing the root cause of an unwind error in Process>>terminate"
+		#testIsTerminatingForcedTermination
+		#testTerminationShouldProceedAllEnsureBlocksIfSomeWasFailed
+	)
+]
+
 { #category : #running }
 ProcessTest >> setUp [ 
 	super setUp.
 	
 	self executionProcessMonitor disable
+]
+
+{ #category : #tests }
+ProcessTest >> testActiveProcessFromProcesor [
+	
+	| processFromProcessor activeProcess |
+	activeProcess := [ processFromProcessor := Processor activeProcess ] forkAt: Processor activePriority + 1.
+	
+	self assert: processFromProcessor identicalTo: activeProcess
+]
+
+{ #category : #tests }
+ProcessTest >> testActiveProcessFromProcesorShouldUseInstalledEffectiveProcess [
+	
+	| processFromProcessor activeProcess effectiveProcess |
+	effectiveProcess := [ 10 seconds wait ] forkAt: Processor activePriority + 1.
+	activeProcess := [ processFromProcessor := Processor activeProcess ] newProcess.
+	activeProcess 
+		priority: Processor activePriority + 1;
+		effectiveProcess: effectiveProcess;
+		resume.
+	
+	self assert: processFromProcessor identicalTo: effectiveProcess
 ]
 
 { #category : #tests }
@@ -48,37 +79,6 @@ ProcessTest >> testChangingPriorityYieldsCurrentProcess [
 	] forkAt: highPriority + 2.
 	
 	self assert: val equals: 2
-]
-
-{ #category : #tests }
-ProcessTest >> testActiveProcessFromProcesor [
-	
-	| processFromProcessor activeProcess |
-	activeProcess := [ processFromProcessor := Processor activeProcess ] forkAt: Processor activePriority + 1.
-	
-	self assert: processFromProcessor identicalTo: activeProcess
-]
-
-{ #category : #tests }
-ProcessTest >> testActiveProcessFromProcesorShouldUseInstalledEffectiveProcess [
-	
-	| processFromProcessor activeProcess effectiveProcess |
-	effectiveProcess := [ 10 seconds wait ] forkAt: Processor activePriority + 1.
-	activeProcess := [ processFromProcessor := Processor activeProcess ] newProcess.
-	activeProcess 
-		priority: Processor activePriority + 1;
-		effectiveProcess: effectiveProcess;
-		resume.
-	
-	self assert: processFromProcessor identicalTo: effectiveProcess
-]
-
-{ #category : #tests }
-ProcessTest >> expectedFailures [
-	^#("these two tests fail after fixing the root cause of an unwind error in Process>>terminate"
-		#testIsTerminatingForcedTermination
-		#testTerminationShouldProceedAllEnsureBlocksIfSomeWasFailed
-	)
 ]
 
 { #category : #tests }
