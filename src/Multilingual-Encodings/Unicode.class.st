@@ -381,21 +381,18 @@ F0000..FFFFF; Supplementary Private Use Area-A
 Unicode class >> charFromUnicode: uniCode [
 
 	^ Character value: uniCode
-
 ]
 
 { #category : #'class methods' }
 Unicode class >> compoundTextFinalChar [
 
 	self shouldNotImplement.
-
 ]
 
 { #category : #'class methods' }
 Unicode class >> compoundTextSequence [
 
 	self subclassResponsibility.
-
 ]
 
 { #category : #'class methods' }
@@ -414,15 +411,12 @@ Unicode class >> digitValueOf: char [
 
 	value > (DecimalProperty size - 1) ifTrue: [^ -1].
 	^ (DecimalProperty at: value+1)
-
 ]
 
 { #category : #'class methods' }
 Unicode class >> generalCategory [
 
 	^ GeneralCategory.
-
-
 ]
 
 { #category : #'class methods' }
@@ -495,7 +489,6 @@ Unicode class >> initialize [
 	
 	EncodedCharSet declareEncodedCharSet: self atIndex: 0+1.
 	EncodedCharSet declareEncodedCharSet: self atIndex: 256.
-
 ]
 
 { #category : #'class initialization' }
@@ -529,7 +522,6 @@ Unicode class >> isCasedLetter: char [
 Unicode class >> isCharset [
 
 	^ false.
-
 ]
 
 { #category : #'character classification' }
@@ -637,7 +629,7 @@ Unicode class >> isModifierSymbol: char [
 
 { #category : #'character classification' }
 Unicode class >> isNonCharacter: ch [
-	^ self nonCharacters includes: ch codePoint 
+	^ self nonCharacters includes: ch codePoint
 ]
 
 { #category : #'character classification' }
@@ -716,7 +708,6 @@ Unicode class >> isTitlecaseLetter: char [
 Unicode class >> isTraditionalChinese: code [
 
 	^ false.
-
 ]
 
 { #category : #testing }
@@ -831,7 +822,6 @@ Unicode class >> parseUnicodeDataFrom: stream [
 	].
 	GeneralCategory zapDefaultOnlyEntries.
 	DecimalProperty zapDefaultOnlyEntries.
-
 ]
 
 { #category : #casing }
