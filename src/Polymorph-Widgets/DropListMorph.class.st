@@ -241,7 +241,7 @@ DropListMorph >> focusIndicatorCornerRadius [
 	"Answer the corner radius preferred for the focus indicator
 	for the receiver for themes that support this."
 
-	^self theme dropListFocusIndicatorCornerRadiusFor: self 
+	^self theme dropListFocusIndicatorCornerRadiusFor: self
 ]
 
 { #category : #accessing }
@@ -564,8 +564,6 @@ DropListMorph >> newContentMorph [
 		beReadOnly;
 		lock;
 		yourself
-		
-		
 ]
 
 { #category : #drawing }
@@ -750,8 +748,7 @@ DropListMorph >> themeChanged [
 	self buttonMorph label: self buttonLabel.
 	self updateContentColor: nil.
 	self listMorph themeChanged.
-	super themeChanged.	
-	
+	super themeChanged.
 ]
 
 { #category : #updating }
@@ -767,7 +764,6 @@ DropListMorph >> update: aSymbol [
 	aSymbol == getEnabledSelector ifTrue:
 		[self updateEnabled.
 		^ self].
-
 ]
 
 { #category : #updating }
@@ -792,7 +788,7 @@ DropListMorph >> updateContents [
 	self updateContentMorphWith:
 		(self listSelectionIndex > 0
 			ifTrue: [self listMorph wrapItem: (self list at: self listSelectionIndex) index: self listSelectionIndex ]
-			ifFalse: [ '' ]) 
+			ifFalse: [ '' ])
 ]
 
 { #category : #updating }

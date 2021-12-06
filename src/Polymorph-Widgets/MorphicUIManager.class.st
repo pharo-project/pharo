@@ -317,7 +317,6 @@ MorphicUIManager >> edit: aText label: labelString accept: aBlockOrNil [
 		pane announcer when: RubTextAcceptRequest do: [:aRequest | aBlockOrNil value: aRequest morph text]].	
 	window addMorph: pane frame: (0@0 corner: 1@1); openInWorld.
 	^ window
-		
 ]
 
 { #category : #services }
@@ -423,7 +422,6 @@ Here are some suggestions:
  If you want to investigate further, choose "debug" in this window.  Do not use the debugger "fullStack" command unless you are certain that the stack is not very deep. (Trying to show the full stack will definitely use up all remaining memory if the low-space problem is caused by an infinite recursion!).
 
 '
-
 ]
 
 { #category : #'ui requests' }
@@ -541,7 +539,6 @@ MorphicUIManager >> onPrimitiveError: aString [
 	Stdio stderr << message.
 	"init hands and redisplay" 
 	self currentWorld install
-
 ]
 
 { #category : #accessing }
@@ -558,13 +555,11 @@ MorphicUIManager >> request: queryString initialAnswer: defaultAnswer [
 		request: queryString 
 		initialAnswer: defaultAnswer 
 		title: 'Provide the following information'
-
 ]
 
 { #category : #'ui requests' }
 MorphicUIManager >> request: aStringOrText initialAnswer: defaultAnswer entryCompletion: anEntryCompletion [
 	^ self request: aStringOrText initialAnswer: defaultAnswer title: 'Information Required' translated entryCompletion: anEntryCompletion
-
 ]
 
 { #category : #'ui requests' }
@@ -710,5 +705,5 @@ MorphicUIManager >> warningDefaultAction: anException [
 
 { #category : #'global state' }
 MorphicUIManager >> world [
-	^ self currentWorld 
+	^ self currentWorld
 ]
