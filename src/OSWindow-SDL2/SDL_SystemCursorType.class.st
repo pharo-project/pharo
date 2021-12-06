@@ -129,8 +129,7 @@ SDL_SystemCursorType class >> initialize [
 	
 	self classPool keysDo: [ :e |
 		self class compile: ('{1}
-	^ {1}' format: {e asString}) classified: #accessing	] 
-
+	^ {1}' format: {e asString}) classified: #accessing	]
 ]
 
 { #category : #printing }

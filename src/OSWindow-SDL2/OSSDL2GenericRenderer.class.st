@@ -82,7 +82,7 @@ OSSDL2GenericRenderer >> createStaticTextureFromForm: form [
 	form depth =	 24 ifTrue: [ self halt ]."
 	form depth =	 32 ifTrue: [ ^ self createStaticTextureFromForm32: form ].
 	self flag: 'TODO: Support more depths to optimize the memory usage.'.
-	^ self createStaticTextureFromForm: (form asFormOfDepth: 32) 
+	^ self createStaticTextureFromForm: (form asFormOfDepth: 32)
 ]
 
 { #category : #resources }
@@ -101,7 +101,6 @@ OSSDL2GenericRenderer >> destroy [
 		renderer destroy
 	].
 	renderer := nil.
-
 ]
 
 { #category : #rendering }

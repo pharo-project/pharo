@@ -37,5 +37,4 @@ OSWindowClipboard >> noteRecentClipping: text [
 OSWindowClipboard >> worldRenderer [ 
 
 	^ self currentWorld worldState worldRenderer
-	
 ]

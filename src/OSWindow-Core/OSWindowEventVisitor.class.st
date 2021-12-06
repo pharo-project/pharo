@@ -106,7 +106,6 @@ OSWindowEventVisitor >> visitWindowFocusOutEvent: anEvent [
 
 { #category : #visiting }
 OSWindowEventVisitor >> visitWindowFrameEvent: anEvent [
-
 ]
 
 { #category : #visiting }

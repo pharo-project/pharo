@@ -13,7 +13,7 @@ Class {
 
 { #category : #finalization }
 SDL_Window class >> destroyWindow: handle [
-	self ffiCall: #( void SDL_DestroyWindow ( void *handle ) ) 
+	self ffiCall: #( void SDL_DestroyWindow ( void *handle ) )
 ]
 
 { #category : #finalization }

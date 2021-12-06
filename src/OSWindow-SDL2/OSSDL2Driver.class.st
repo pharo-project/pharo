@@ -60,15 +60,13 @@ OSSDL2Driver >> afterMainPharoWindowCreated: osWindow [
 	
 	OSPlatform current sdlPlatform 
 		afterMainPharoWindowCreated: osWindow
-
 ]
 
 { #category : #events }
 OSSDL2Driver >> afterSetWindowTitle: windowTitle onWindow: osWindow [
 	
 	OSPlatform current sdlPlatform 
-		afterSetWindowTitle: windowTitle onWindow: osWindow.	
-
+		afterSetWindowTitle: windowTitle onWindow: osWindow.
 ]
 
 { #category : #private }
@@ -148,8 +146,6 @@ OSSDL2Driver >> dispatchEvent: mappedEvent [
 		window := WindowMap at: mappedEvent windowID ifAbsent: [ ^ nil ] ].
 
 	^ window handleNewSDLEvent: mappedEvent.
-	
-	
 ]
 
 { #category : #'events-processing' }
@@ -171,7 +167,7 @@ OSSDL2Driver >> eventFilter [
 { #category : #accessing }
 OSSDL2Driver >> eventLoopProcess [
 	
-	^ self class eventLoopProcess 
+	^ self class eventLoopProcess
 ]
 
 { #category : #'events-processing' }
@@ -265,7 +261,6 @@ OSSDL2Driver >> openAddedController: index [
 	| controller |
 	controller := SDL2 gameControllerOpen: index.
 	JoystickMap at: index put: controller.
-	
 ]
 
 { #category : #private }
@@ -273,7 +268,6 @@ OSSDL2Driver >> openAddedJoystick: index [
 	| joystick |
 	joystick := SDL2 joystickOpen: index.
 	JoystickMap at: index put: joystick.
-
 ]
 
 { #category : #'events-processing' }
@@ -392,7 +386,7 @@ OSSDL2Driver >> shutDown [
 
 	WindowMap := nil.
 	JoystickMap := nil.
-	EventLoopProcess ifNotNil: [ EventLoopProcess terminate ].	
+	EventLoopProcess ifNotNil: [ EventLoopProcess terminate ].
 ]
 
 { #category : #'global events' }
@@ -506,7 +500,6 @@ OSSDL2Driver >> visitFingerDownEvent: event [
 			delta: event dx @ event dy;
 			pressure: event pressure;
 			yourself.
-	
 ]
 
 { #category : #'events-processing' }
@@ -519,7 +512,6 @@ OSSDL2Driver >> visitFingerMotionEvent: event [
 			delta: event dx @ event dy;
 			pressure: event pressure;
 			yourself.
-	
 ]
 
 { #category : #'events-processing' }
@@ -532,7 +524,6 @@ OSSDL2Driver >> visitFingerUpEvent: event [
 			delta: event dx @ event dy;
 			pressure: event pressure;
 			yourself.
-	
 ]
 
 { #category : #'global events' }

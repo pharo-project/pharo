@@ -32,7 +32,6 @@ SDL_Event class >> initializeEventTypeMap [
 		| eventType |
 		eventType := cls eventType.
 		eventType ifNotNil: [ EventTypeMap at: eventType put: cls ] ]
-
 ]
 
 { #category : #initialization }
