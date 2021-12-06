@@ -66,7 +66,6 @@ OmStoreFactory >> initialize [
 	super initialize.
 	
 	storeByPath := WeakValueDictionary new.
-
 ]
 
 { #category : #accessing }
@@ -88,7 +87,6 @@ OmStoreFactory >> named: aGlobalName inDirectory: aDirectory [
 			newStore := self newStoreNamed: aGlobalName in: aDirectory.
 			storeByPath at: fileReference fullName put: newStore.
 			newStore ]
-
 ]
 
 { #category : #private }

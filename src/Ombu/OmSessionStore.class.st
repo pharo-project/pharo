@@ -40,7 +40,6 @@ OmSessionStore class >> initialize [
  
 	registry := WeakSet new: 5.
 	SessionManager default registerUserClassNamed: self name
-
 ]
 
 { #category : #'instance creation' }
@@ -60,7 +59,7 @@ OmSessionStore class >> newWithBaseLocator: aBaseDirectory [
 { #category : #initialization }
 OmSessionStore class >> register: aSessionStore [
 
-	registry add: aSessionStore 
+	registry add: aSessionStore
 ]
 
 { #category : #initialization }
@@ -122,7 +121,6 @@ OmSessionStore >> entryFor: aReference ifPresent: presentBlockClosure ifAbsent: 
 OmSessionStore >> existsStoreNamed: aName [
 
 	^ OmFileStore existsStoreNamed: aName inDirectory: self directory
-
 ]
 
 { #category : #refreshing }
@@ -163,7 +161,6 @@ OmSessionStore >> initializeWithBaseLocator: aDirectoryFileLocator [
 	headReference := self store headReference.
 	
 	self class register: self.
-
 ]
 
 { #category : #accessing }
@@ -199,7 +196,6 @@ OmSessionStore >> nextStoreName [
 			currentStore globalName ].
 		
 	^ self storeNameStrategy nextTo: name in: self directory
-
 ]
 
 { #category : #refreshing }
