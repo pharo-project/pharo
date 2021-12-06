@@ -80,7 +80,6 @@ RPackageTraitTest >> setUp [
 
 	a2 class compileSilently: 'classSideMethodDefinedInP3 ^ #classSideMethodDefinedInP3'.
 	p3 addMethod: (a2 class>>#classSideMethodDefinedInP3)."
-	
 ]
 
 { #category : #tests }
