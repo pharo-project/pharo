@@ -36,7 +36,7 @@ HTTPProgress class >> example [
 			do: [ :progress | 
 				bar label: progress printString.
 				progress isEmpty ifFalse: [ bar current: progress percentage ]. 
-				progress resume ] ] 
+				progress resume ] ]
 ]
 
 { #category : #exceptioninstantiator }

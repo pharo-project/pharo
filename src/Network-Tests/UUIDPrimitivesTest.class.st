@@ -32,7 +32,6 @@ UUIDPrimitivesTest >> testCreation [
 	self assert: uuid size equals: 16.
 	self deny: uuid isNilUUID.
 	self assert: uuid asString size equals: 36
-
 ]
 
 { #category : #tests }
@@ -57,7 +56,6 @@ UUIDPrimitivesTest >> testCreationFromString [
 	self assert: uuid asString size equals: 36.
 	self assert: uuid asArray asSet size equals: 1.
 	self assert: (uuid asArray asSet asArray at: 1) equals: 0
-
 ]
 
 { #category : #tests }
@@ -73,8 +71,6 @@ UUIDPrimitivesTest >> testCreationFromString36With0 [
 	| uuid |
 	uuid := UUID fromString36: '0'.
 	self assert: uuid isNilUUID
-	
-
 ]
 
 { #category : #tests }
@@ -112,7 +108,6 @@ UUIDPrimitivesTest >> testCreationNodeBased [
 		[ | uuid |uuid := UUID new.
 		self assert: ((uuid at: 7) bitAnd: 16rF0) equals: 16r10.
 		self assert: ((uuid at: 9) bitAnd: 16rC0) equals: 16r80 ]
-
 ]
 
 { #category : #tests }
@@ -125,7 +120,6 @@ UUIDPrimitivesTest >> testDuplicationsKinda [
 		[ | uuid |uuid := UUID new.
 		self deny: (check includes: uuid).
 		check add: uuid].
-		
 ]
 
 { #category : #tests }

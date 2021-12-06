@@ -44,7 +44,7 @@ UUIDTest >> testNilUUID [
 	self assert: UUID nilUUID isNilUUID.
 	self assert: UUID nilUUID asString equals: nilUUIDRepresentation.
 	self assert: (UUID fromString: nilUUIDRepresentation) equals: UUID nilUUID.
-	self deny: UUID new isNilUUID 
+	self deny: UUID new isNilUUID
 ]
 
 { #category : #testing }
@@ -73,5 +73,5 @@ UUIDTest >> testString36 [
 	self assert: (UUID fromString36: uuid asString36) equals: uuid.
 
 	self assert: UUID nilUUID asString36 equals: 0 asString.
-	self assert: (UUID fromString36: 0 asString) equals: UUID nilUUID 
+	self assert: (UUID fromString36: 0 asString) equals: UUID nilUUID
 ]

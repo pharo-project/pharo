@@ -99,7 +99,6 @@ SocketStream class >> on: socket [
 { #category : #'instance creation' }
 SocketStream class >> openConnectionToHost: hostIP port: portNumber [
 	^ self openConnectionToHost: hostIP port: portNumber timeout: Socket standardTimeout
-
 ]
 
 { #category : #'instance creation' }
@@ -396,7 +395,6 @@ SocketStream >> moveInBufferDown [
 	lastRead := 0.
 	inNextToWrite := sz + 1.
 	^distanceMoved
-
 ]
 
 { #category : #'stream in' }
@@ -626,7 +624,6 @@ SocketStream >> peekFor: aCharacterOrByte [
 		lastRead := lastRead + 1.
 		^true].
 	^false
-
 ]
 
 { #category : #'stream in' }
