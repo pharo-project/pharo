@@ -106,7 +106,6 @@ CompletionContextTest >> testReceiverGlobal [
 	Dictionary n'.
 	context := self createContextFor: text at: text size.
 	self assert: context title equals: 'Dictionary class'.
-
 ]
 
 { #category : #tests }

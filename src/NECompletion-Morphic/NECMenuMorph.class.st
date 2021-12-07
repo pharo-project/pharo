@@ -221,7 +221,6 @@ NECMenuMorph class >> shortcut: aString text: secondString on: aTextStream [
 		withAttributes: self explanationAttributes
 		do: [aTextStream nextPutAll: secondString;
 				 cr].
-
 ]
 
 { #category : #'help text' }
@@ -399,8 +398,7 @@ NECMenuMorph >> drawTopScrollArrowOn: aCanvas [
 				with: (point translateBy: arrowHeight / 2 @ arrowHeight negated).
 	aCanvas 
 		drawPolygon: aPolygon 
-		fillStyle: Color black. 
-	
+		fillStyle: Color black.
 ]
 
 { #category : #actions }
@@ -442,7 +440,7 @@ NECMenuMorph >> handlesMouseDown: anEvent [
 
 { #category : #drawing }
 NECMenuMorph >> hasMessage [
-	^ true 
+	^ true
 ]
 
 { #category : #accessing }
@@ -537,7 +535,7 @@ NECMenuMorph >> moveUp [
 	self selected: self selected - 1.
 	self selected < self firstVisible
 		ifTrue: [firstVisible := firstVisible - 1].
-	self changed. 
+	self changed.
 ]
 
 { #category : #paging }
@@ -554,7 +552,7 @@ NECMenuMorph >> pageCount [
 { #category : #actions }
 NECMenuMorph >> pageDown [
 	self gotoPage: self currentPage + 1.
-	self changed. 
+	self changed.
 ]
 
 { #category : #paging }
@@ -565,7 +563,7 @@ NECMenuMorph >> pageHeight [
 { #category : #actions }
 NECMenuMorph >> pageUp [
 	self gotoPage: self currentPage - 1.
-	self changed. 
+	self changed.
 ]
 
 { #category : #drawing }

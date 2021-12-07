@@ -14,7 +14,6 @@ RBProgramNode >> completionEntries: offset [
 			thenCollect: [ :each | NECGlobalEntry contents: each  node: self ].
 			
 	^ selectors , globals
-
 ]
 
 { #category : #'*NECompletion' }
