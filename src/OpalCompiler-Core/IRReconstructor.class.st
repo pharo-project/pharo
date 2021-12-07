@@ -29,7 +29,7 @@ IRReconstructor >> createTempVectorNamed: name withVars: anArray [
 
 { #category : #accessing }
 IRReconstructor >> currentSequence [
-	^currentSequence 
+	^currentSequence
 ]
 
 { #category : #accessing }
@@ -45,8 +45,7 @@ IRReconstructor >> fixPushNilsForTemps [
 
 	| blocksequence |
 	blocksequence := self currentScope blockSequence sequence.
-	self currentScope definedTemps do: [ :temp | blocksequence removeFirst ]. 
-	
+	self currentScope definedTemps do: [ :temp | blocksequence removeFirst ].
 ]
 
 { #category : #initialization }

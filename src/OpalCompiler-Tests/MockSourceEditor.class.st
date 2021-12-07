@@ -48,7 +48,7 @@ MockSourceEditor >> insertAndSelect: aString at: anInteger [
 		(text copyFrom: anInteger to: text size).
 		
 	selectionStart := anInteger.
-	selectionEnd := anInteger + aString size 
+	selectionEnd := anInteger + aString size
 ]
 
 { #category : #notifications }
@@ -66,7 +66,6 @@ MockSourceEditor >> selectFrom: start to: end [
 
 	selectionStart := start.
 	selectionEnd := end.
-
 ]
 
 { #category : #selection }

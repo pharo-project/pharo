@@ -138,7 +138,6 @@ MethodPragmaTest >> testCompileArray [
 	self assertPragma: 'foo: #( foo: )' givesKeyword: #foo: arguments: #( ( foo: ) ).
 	self assertPragma: 'foo: #( 12 )' givesKeyword: #foo: arguments: #( ( 12 ) ).
 	self assertPragma: 'foo: #( true )' givesKeyword: #foo: arguments: #( ( true ) ).
-	
 ]
 
 { #category : #'tests - compiler' }
@@ -277,8 +276,6 @@ MethodPragmaTest >> testPrimitiveNamed1 [
 
 	self compile: '<primitive: ''primitiveDirectoryLookup'' module: ''FilePlugin''> ^ #lookup' selector: #lookup.
 	self assert: self lookup equals: #lookup.
-	
-
 ]
 
 { #category : #'tests - primitives' }
@@ -287,8 +284,6 @@ MethodPragmaTest >> testPrimitiveNamed2 [
 
 	self compile: '<primitive: ''primitiveDirectoryDelimitor'' module: ''FilePlugin''> ^ #delim' selector: #delim.
 	self assert: self delim equals: File delimiter.
-	
-
 ]
 
 { #category : #'tests - primitives' }
@@ -297,8 +292,6 @@ MethodPragmaTest >> testPrimitiveNamedErrorCode2 [
 
 	self compile: '<primitive: ''primitiveDirectoryLookup'' module: ''FilePlugin'' error: errorCode> ^ errorCode' selector: #lookup.
 	self assert: self lookup equals: nil.
-	
-
 ]
 
 { #category : #'tests - pragma' }

@@ -40,7 +40,6 @@ IRSequence >> absorbJumpToSingleInstr: alreadySeen [
 	].
 
 	seqs do: [:instrs | instrs ifNotNil: [:i | i absorbJumpToSingleInstr: alreadySeen]].
-
 ]
 
 { #category : #visiting }
@@ -167,7 +166,6 @@ IRSequence >> instructionsForDecompiling [
 	irInstructions := OrderedCollection new.
 	self withNonBodySuccessorsDo: [:seq | seq do: [:bc | irInstructions add: bc]].
 	^irInstructions
-	
 ]
 
 { #category : #testing }
@@ -245,7 +243,6 @@ IRSequence >> printOn: stream [
 	stream nextPut: $(.
 	self orderNumber printOn: stream.
 	stream nextPut: $).
-
 ]
 
 { #category : #replacing }
@@ -367,7 +364,6 @@ IRSequence >> withAllSuccessorsDo: block alreadySeen: set [
 	block value: self.
 	self successorSequences do: [:seq |
 		seq ifNotNil: [seq withAllSuccessorsDo: block alreadySeen: set]].
-
 ]
 
 { #category : #'successor sequences' }
@@ -386,5 +382,4 @@ IRSequence >> withNonBodySuccessorsDo: block alreadySeen: set [
 	block value: self.
 	self nonBodySuccessorSequences do: [:seq |
 		seq ifNotNil: [seq withNonBodySuccessorsDo: block alreadySeen: set]].
-
 ]

@@ -18,7 +18,6 @@ IRPrinter >> label: seqNum [
 	stream nextPutAll: 'label: '.
 	seqNum printOn: stream.
 	stream cr.
-
 ]
 
 { #category : #private }
@@ -31,8 +30,6 @@ IRPrinter >> stream: stringWriteStream [
 IRPrinter >> visitBlockReturnTop: blockReturnTop [
 
 	stream nextPutAll: 'blockReturnTop'.
-
-
 ]
 
 { #category : #visiting }
@@ -46,7 +43,6 @@ IRPrinter >> visitJump: jump [
 
 	stream nextPutAll: 'goto: '.
 	jump destination orderNumber printOn: stream.
-
 ]
 
 { #category : #visiting }
@@ -58,14 +54,12 @@ IRPrinter >> visitJumpIf: jumpIf [
 	jumpIf destination orderNumber printOn: stream.
 	stream nextPutAll: ' else: '.
 	jumpIf otherwise orderNumber printOn: stream.
-
 ]
 
 { #category : #visiting }
 IRPrinter >> visitPop: pop [
 
 	stream nextPutAll: 'popTop'
-
 ]
 
 { #category : #visiting }
@@ -73,7 +67,6 @@ IRPrinter >> visitPopIntoInstVar: instVar [
 	
 	stream nextPutAll: 'popIntoInstVar: '.
 	instVar index printOn: stream.
-
 ]
 
 { #category : #visiting }
@@ -100,9 +93,6 @@ IRPrinter >> visitPopIntoTemp: tmp [
 
 	stream nextPutAll: 'popIntoTemp: '.
 	tmp name printOn: stream.
-
-
-
 ]
 
 { #category : #visiting }
@@ -113,17 +103,13 @@ IRPrinter >> visitPushArray: array [
 			stream nextPutAll: 'pushConsArray: ' ]
 		ifFalse: [
 			stream nextPutAll: 'pushNewArray: ' ].
-	array size printOn: stream. 
-
+	array size printOn: stream.
 ]
 
 { #category : #visiting }
 IRPrinter >> visitPushDup: dup [
 	
 	stream nextPutAll: 'pushDup'
-
-
-
 ]
 
 { #category : #visiting }
@@ -133,7 +119,6 @@ IRPrinter >> visitPushFullClosure: fullBlock [
 	stream nextPutAll: fullBlock compiledBlock printString.
 	stream nextPutAll: ' numCopied: '.
 	stream nextPutAll: fullBlock copiedValues size printString.
-
 ]
 
 { #category : #visiting }
@@ -141,7 +126,6 @@ IRPrinter >> visitPushInstVar: instVar [
 	
 	stream nextPutAll: 'pushInstVar: '.
 	instVar index printOn: stream.
-
 ]
 
 { #category : #visiting }
@@ -152,7 +136,6 @@ IRPrinter >> visitPushLiteral: lit [
 	stream nextPutAll: 'pushLiteral: '.
 	object isVariableBinding ifTrue: [^ stream nextPutAll: object key].
 	object printOn: stream.
-
 ]
 
 { #category : #visiting }
@@ -169,9 +152,6 @@ IRPrinter >> visitPushLiteralVariable: var [
 IRPrinter >> visitPushReceiver: receiver [
 
 	stream nextPutAll: 'pushReceiver'
-
-
-
 ]
 
 { #category : #visiting }
@@ -188,31 +168,24 @@ IRPrinter >> visitPushTemp: tmp [
 
 	stream nextPutAll: 'pushTemp: '.
 	tmp name printOn: stream.
-
-
-
 ]
 
 { #category : #visiting }
 IRPrinter >> visitPushThisContext: ctxt [
 
 	stream nextPutAll: 'pushThisContext'
-
 ]
 
 { #category : #visiting }
 IRPrinter >> visitPushThisProcess: pushThisProcess [
 
 	stream nextPutAll: 'pushThisProcess'
-
 ]
 
 { #category : #visiting }
 IRPrinter >> visitReturn: ret [
 	
 	stream nextPutAll: 'returnTop'.
-
-
 ]
 
 { #category : #visiting }
@@ -229,16 +202,12 @@ IRPrinter >> visitReturnLiteral: lit [
 	stream nextPutAll: 'returnLiteral: '.
 	object isVariableBinding ifTrue: [^ stream nextPutAll: object key].
 	object printOn: stream.
-
 ]
 
 { #category : #visiting }
 IRPrinter >> visitReturnReceiver: receiver [
 
 	stream nextPutAll: 'returnReceiver'
-
-
-
 ]
 
 { #category : #visiting }
@@ -251,15 +220,12 @@ IRPrinter >> visitSend: send [
 			send selector printOn: stream.
 			stream nextPutAll: ' toSuperOf: '.
 			behavior printOn: stream ]
-
-
 ]
 
 { #category : #visiting }
 IRPrinter >> visitSequence: instructionSequence [
 	self label: instructionSequence orderNumber.
 	super visitSequence: instructionSequence
-
 ]
 
 { #category : #visiting }
@@ -291,7 +257,6 @@ IRPrinter >> visitStoreTemp: tmp [
 
    	stream nextPutAll: 'storeTemp: '.
 	tmp name printOn: stream.
- 
 ]
 
 { #category : #visiting }
@@ -301,6 +266,4 @@ IRPrinter >> visitTempVector: tempVector [
 	tempVector name printOn: stream.
 	stream nextPutAll: ' withVars: '.
 	stream nextPutAll: tempVector vars printString.
-	
-	
 ]

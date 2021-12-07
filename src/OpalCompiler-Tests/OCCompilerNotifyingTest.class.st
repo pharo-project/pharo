@@ -56,8 +56,6 @@ OCCompilerNotifyingTest >> evaluateSelection [
 		requestor: morph editor;
 		failBlock: [^failure];
 		evaluate
-
-	
 ]
 
 { #category : #private }
@@ -71,7 +69,6 @@ OCCompilerNotifyingTest >> evaluateSelectionNumber: n [
 			start := stop + 1].
 	morph editor selectFrom: start to: stop - 1.
 	^self evaluateSelection
-	
 ]
 
 { #category : #initialization }

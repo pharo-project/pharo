@@ -20,7 +20,6 @@ OCClosureTest >> assertValues: anArray [
 { #category : #tests }
 OCClosureTest >> methodArgument: anObject [
 	^ [ anObject ]
-	
 ]
 
 { #category : #running }

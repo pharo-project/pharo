@@ -33,7 +33,7 @@ OCASTDoubleBranchConditionalTranslatorTest >> testFalseIfFalseIfTrueReturnsFalse
 	^false ifFalse: {argument1} ifTrue: {argument2}'
 		withFirstBlock: '[iVar := ''false'']'
 		withSecondBlock: '[ self error ]'..
-	self assert: result equals: 'false' 
+	self assert: result equals: 'false'
 ]
 
 { #category : #'tests - conditionals' }
@@ -46,7 +46,7 @@ OCASTDoubleBranchConditionalTranslatorTest >> testFalseIfTrueIfFalseEvaluatesFal
 		withFirstBlock: '[ self error ]'
 		withSecondBlock: '[iVar := ''false'']'.
 
-	self assert: instance iVar equals: 'false' 
+	self assert: instance iVar equals: 'false'
 ]
 
 { #category : #'tests - conditionals' }
@@ -72,7 +72,7 @@ OCASTDoubleBranchConditionalTranslatorTest >> testTrueIfFalseIfTrueEvaluatesTrue
 		withFirstBlock: '[ self error ]'
 		withSecondBlock: '[iVar := ''true'']'.
 
-	self assert: instance iVar equals: 'true' 
+	self assert: instance iVar equals: 'true'
 ]
 
 { #category : #'tests - conditionals' }
@@ -84,7 +84,7 @@ OCASTDoubleBranchConditionalTranslatorTest >> testTrueIfFalseIfTrueReturnsTrueBl
 	^true ifFalse: {argument1} ifTrue: {argument2}'
 		withFirstBlock: '[ self error ]'
 		withSecondBlock: '[iVar := ''true'']'.
-	self assert: result equals: 'true' 
+	self assert: result equals: 'true'
 ]
 
 { #category : #'tests - conditionals' }
@@ -97,7 +97,7 @@ OCASTDoubleBranchConditionalTranslatorTest >> testTrueIfTrueIfFalseEvaluatesTrue
 		withFirstBlock: '[iVar := ''true'']'
 		withSecondBlock: '[ self error ]'.
 
-	self assert: instance iVar equals: 'true' 
+	self assert: instance iVar equals: 'true'
 ]
 
 { #category : #'tests - conditionals' }
@@ -110,5 +110,5 @@ OCASTDoubleBranchConditionalTranslatorTest >> testTrueIfTrueIfFalseReturnsTrueBl
 		withFirstBlock: '[iVar := ''true'']'
 		withSecondBlock: '[ self error ]'.
 
-	self assert: result equals: 'true' 
+	self assert: result equals: 'true'
 ]

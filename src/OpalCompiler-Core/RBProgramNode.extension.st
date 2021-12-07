@@ -10,7 +10,6 @@ RBProgramNode >> asDoit [
 		body: self asSequenceNode transformLastToReturn.
 	methodNode source: methodNode formattedCode.
 	^methodNode
-	
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -31,14 +30,13 @@ RBProgramNode >> asDoitForContext: aContext [
 
 { #category : #'*OpalCompiler-Core' }
 RBProgramNode >> asSequenceNode [
-	^RBSequenceNode statements: {self} 
+	^RBSequenceNode statements: {self}
 ]
 
 { #category : #'*OpalCompiler-Core' }
 RBProgramNode >> doSemanticAnalysis [
 	self methodNode ifNil: [ ^self ].
 	^ self methodNode doSemanticAnalysis.
-	
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -60,7 +58,7 @@ RBProgramNode >> isClean [
 { #category : #'*OpalCompiler-Core' }
 RBProgramNode >> owningScope [
 
-	^ parent owningScope 
+	^ parent owningScope
 ]
 
 { #category : #'*OpalCompiler-Core' }
