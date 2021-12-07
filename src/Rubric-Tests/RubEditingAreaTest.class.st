@@ -68,7 +68,7 @@ RubEditingAreaTest >> tearDown [
 
 { #category : #'tests - accessing selection' }
 RubEditingAreaTest >> testEmbeddedAnchorInTextAreDrawn [
-	| circle text |
+	| circle text canvas|
 	circle := CircleMorph new extent: 50 @ 50;color: Color blue.
 
 	self assert: circle owner isNil.
@@ -78,10 +78,30 @@ RubEditingAreaTest >> testEmbeddedAnchorInTextAreDrawn [
 			addAttribute: (TextAnchor new anchoredMorph: circle).
 	"render the text in a RubEditingArea to place the circle in a layout"
 	area updateTextWith: text.
-	area openInWorld.
-
-	self assert: circle owner notNil.
+	canvas := FormCanvas extent: 500@500.
+	canvas fullDrawMorph: area.
+	self assert: (circle hasProperty: #hasBeenPositioned).
 	self deny: circle position equals: 0@0
+]
+
+{ #category : #tests }
+RubEditingAreaTest >> testEmbeddedAnchorInTextAreDrawnAtRightPosition [
+	| circle longTextWithCircleAtEnd canvas|
+	circle := CircleMorphCounter new extent: 50 @ 50;color: Color blue.
+	longTextWithCircleAtEnd := ((String loremIpsum: 10000), 
+		(String value: 1)) asText 
+			addAttribute: (TextAnchor new anchoredMorph: circle).
+
+	self assert: circle owner isNil.
+	self assert: circle position equals: 0@0.
+	self assert: circle counter equals: 0.
+	area updateTextWith: longTextWithCircleAtEnd.
+	canvas := FormCanvas extent: 500@500.
+	canvas fullDrawMorph: area.
+
+	self assert: circle counter equals: 1.	
+	self assert: circle position y > 500
+	
 ]
 
 { #category : #'tests - accessing selection' }
