@@ -96,8 +96,6 @@ NautilusRefactoring >> request: requestString initialAnswer: initialAnswerString
 	answer := UIManager default request: requestString initialAnswer: initialAnswerString.
 	answer isEmptyOrNil ifTrue:  [ RefactoringAborted signal ].
 	^ answer
-	
-
 ]
 
 { #category : #option }
