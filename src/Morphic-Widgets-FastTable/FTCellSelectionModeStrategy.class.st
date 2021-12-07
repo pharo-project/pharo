@@ -47,12 +47,12 @@ FTCellSelectionModeStrategy >> is: anIndex aboveRow: aRowIndex [
 
 { #category : #testing }
 FTCellSelectionModeStrategy >> is: anIndex afterColumn: aColumnIndex [
-	^ anIndex second > aColumnIndex 
+	^ anIndex second > aColumnIndex
 ]
 
 { #category : #testing }
 FTCellSelectionModeStrategy >> is: anIndex beforeColumn: aColumnIndex [
-	^ anIndex second < aColumnIndex 
+	^ anIndex second < aColumnIndex
 ]
 
 { #category : #testing }

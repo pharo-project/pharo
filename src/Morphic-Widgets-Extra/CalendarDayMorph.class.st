@@ -40,7 +40,6 @@ CalendarDayMorph class >> on: aDate for: aCalendarChooserMorph [
 		date: aDate;
 		owner: aCalendarChooserMorph;
 		yourself.
-
 ]
 
 { #category : #accessing }
@@ -65,7 +64,6 @@ CalendarDayMorph >> date [
 CalendarDayMorph >> date: aDate [
 
 	date := aDate.
-
 ]
 
 { #category : #printing }

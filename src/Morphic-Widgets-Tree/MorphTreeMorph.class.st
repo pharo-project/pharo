@@ -245,7 +245,6 @@ Class {
 { #category : #'instance creation' }
 MorphTreeMorph class >> on: anObject [
 	^ self new model: anObject
-
 ]
 
 { #category : #'dropping/grabbing' }
@@ -261,7 +260,6 @@ MorphTreeMorph >> acceptDroppingMorph: aMorph event: evt [
 	self resetPotentialDropMorph.
 	evt hand releaseMouseFocus: self.
 	Cursor normal show.
-
 ]
 
 { #category : #'column handling' }
@@ -279,8 +277,6 @@ MorphTreeMorph >> addColumn: aTreeColumn afterIndex: aPosition [
 	self columnsChanged.
 	self updateColumnMorphs.
 	self updateList
-
-
 ]
 
 { #category : #'column handling' }
@@ -328,8 +324,6 @@ MorphTreeMorph >> addMorphsAfter: parentMorph fromCollection: aCollection [
 	self updateColumnMorphsWidth.
 	morphList do: [ :e | e doLayoutIn: e layoutBounds ].
 	^morphList
-	
-
 ]
 
 { #category : #'submorphs - add/remove' }
@@ -366,8 +360,7 @@ MorphTreeMorph >> addMorphsTo: morphList from: aCollection withExpandedItems: ex
 
 { #category : #'submorphs - add/remove' }
 MorphTreeMorph >> addSubmorphsFromNodeList [
-	self addSubmorphsFromNodeList: self currentNodelist previouslyExpanded: #() 
-
+	self addSubmorphsFromNodeList: self currentNodelist previouslyExpanded: #()
 ]
 
 { #category : #'submorphs - add/remove' }
@@ -383,14 +376,12 @@ MorphTreeMorph >> addSubmorphsFromNodeList: aNodeList previouslyExpanded: expand
 	self listManager updateSelectionFromModel.
 	self roots do: [:r | r updateChildrenRecursively].
 	self updateColumnMorphs
-	
 ]
 
 { #category : #updating }
 MorphTreeMorph >> adjustSubmorphPositions [
 	maxNodeWidth := 0.
-	^ self adjustSubmorphPositionsOf: self allNodeMorphs startIdx: 1 startPos: 0@0 
-
+	^ self adjustSubmorphPositionsOf: self allNodeMorphs startIdx: 1 startPos: 0@0
 ]
 
 { #category : #updating }
@@ -408,7 +399,6 @@ MorphTreeMorph >> adjustSubmorphPositionsOf: aCollection startIdx: anIndex start
 	
 	self setScrollDeltas.
 	^ p
-	
 ]
 
 { #category : #'accessing - colors' }
@@ -418,14 +408,12 @@ MorphTreeMorph >> adoptPaneColor: paneColor [
 	super adoptPaneColor: paneColor.
 	paneColor ifNil: [^self].
 	self color: (self preferedPaneColor ifNil: [ self theme backgroundColor ] ).
-
 ]
 
 { #category : #accessing }
 MorphTreeMorph >> allNodeMorphs [
 	"all list morphs"
 	^ scroller submorphs
-		
 ]
 
 { #category : #'dropping/grabbing' }
@@ -454,7 +442,7 @@ MorphTreeMorph >> autoMultiSelection: aBoolean [
 
 { #category : #selection }
 MorphTreeMorph >> beCheckList [
-	self isCheckList: true. 
+	self isCheckList: true.
 ]
 
 { #category : #selection }
@@ -476,7 +464,6 @@ MorphTreeMorph >> buildContents [
 			nodeList := nil.	
 			^ self emptySelection].
 	self addSubmorphsFromNodeList.
-
 ]
 
 { #category : #updating }
@@ -495,8 +482,6 @@ MorphTreeMorph >> buildTopHeader [
 	topHeader borderWidth: 0.
 	topHeader addAllMorphs: subs.
 	topHeader bounds: (scroller left @ self top corner: scroller right @ (self top + self topHeaderHeight)).
-
-
 ]
 
 { #category : #'announce requests' }
@@ -522,7 +507,6 @@ MorphTreeMorph >> childrenDo: aBlock [
 { #category : #'expanding-collapsing' }
 MorphTreeMorph >> collapseAll [
 	self updateContentsWithPreviouslyExpanded: Array new.
-
 ]
 
 { #category : #'expanding-collapsing' }
@@ -535,34 +519,29 @@ MorphTreeMorph >> collapseRequest: anAnnounce [
 	anAnnounce nodes
 		ifEmpty: [^ self collapseAll]
 		ifNotEmpty: [:nodes | self collapseNodePath: nodes]
-
-
 ]
 
 { #category : #'accessing - colors' }
 MorphTreeMorph >> columnColorForEven: evenColor [ 
 	columnColors at: 2 put: nil.
 	columnColors at: 1 put: evenColor.
-	
 ]
 
 { #category : #'accessing - colors' }
 MorphTreeMorph >> columnColorForEven: evenColor odd: oddColor [
 	columnColors at: 2 put: oddColor.
 	columnColors at: 1 put: evenColor.
-	
 ]
 
 { #category : #'accessing - colors' }
 MorphTreeMorph >> columnColorForOdd: oddColor [ 
 	columnColors at: 1 put: nil.
 	columnColors at: 2 put: oddColor.
-	
 ]
 
 { #category : #'accessing - colors' }
 MorphTreeMorph >> columnColors [ 
-	^ columnColors 
+	^ columnColors
 ]
 
 { #category : #'column handling' }
@@ -581,7 +560,6 @@ MorphTreeMorph >> columnInset [
 MorphTreeMorph >> columnInset: anInteger [
 	"Change the horizontal space between a resizer and a row morph"
 	columnInset := anInteger.
-
 ]
 
 { #category : #'column handling' }
@@ -611,7 +589,6 @@ MorphTreeMorph >> columnResizers [
 MorphTreeMorph >> columnResizersToFront [
 	"Column resizers should always be at top"
 	self columnResizers do: [:cl | cl comeToFront; fillStyle: cl normalFillStyle].
-
 ]
 
 { #category : #'column handling' }
@@ -630,7 +607,6 @@ MorphTreeMorph >> columns: aListOfTreeColumn [
 	aListOfTreeColumn do: [:col | col container: self].
 	self buildTopHeader .
 	self addColumnResizers.
-
 ]
 
 { #category : #'column handling' }
@@ -641,7 +617,6 @@ MorphTreeMorph >> columnsChanged [
 	self removeTopHeader.
 	self buildTopHeader.
 	self addColumnResizers.
-
 ]
 
 { #category : #'events-processing' }
@@ -661,7 +636,6 @@ MorphTreeMorph >> currentNodelist [
 MorphTreeMorph >> currentlyExpanded [
 
 	^ self expandedNodesFrom: (self allNodeMorphs).
-	
 ]
 
 { #category : #selection }
@@ -680,7 +654,6 @@ MorphTreeMorph >> doubleClick: anEvent [
 	targetMorph := self scrollerSubMorphFromPoint: anEvent position.
 	(self listManager doubleClick:  anEvent on: targetMorph)
 		ifFalse: [super doubleClick: anEvent]
-
 ]
 
 { #category : #accessing }
@@ -711,16 +684,12 @@ MorphTreeMorph >> drawLinesOn: aCanvas [
 						clippedCanvas isVisible: submorph nextSibling fullBounds])]]) ifTrue:[
 					submorph drawLinesOn: clippedCanvas]]]
 		smoothing: scroller smoothing
-
 ]
 
 { #category : #drawing }
 MorphTreeMorph >> drawOn: aCanvas [ 
 	super drawOn: aCanvas.
 	self columns do: [:col | col drawColumnOn: aCanvas].
-
-	
-
 ]
 
 { #category : #selection }
@@ -757,7 +726,7 @@ MorphTreeMorph >> enabledFromModel [
 	self model ifNil: [ ^ self ].
 	val := self model enabled.
 	val ~= self enabled
-		ifTrue: [ self enabled: val ] 
+		ifTrue: [ self enabled: val ]
 ]
 
 { #category : #'expanding-collapsing' }
@@ -799,8 +768,6 @@ MorphTreeMorph >> expandAll: aMorph [
 	1 to: subs size do: [:pos | (subs at: pos) index: pos].
 	"set the new morphs widths according to columns width"
 	self innerWidgetChanged.
-
-
 ]
 
 { #category : #'expanding-collapsing' }
@@ -821,16 +788,12 @@ MorphTreeMorph >> expandAll: aMorph except: aBlock [
 MorphTreeMorph >> expandAllFromNode: aNode [
 		self expandAll: ((self nodeMorphOfNode: aNode) ifNil: [^self]).
 		self adjustSubmorphPositions
-
 ]
 
 { #category : #'expanding-collapsing' }
 MorphTreeMorph >> expandAllSilently: aMorph [
 	aMorph isExpanded ifFalse: [aMorph expand].
 	aMorph childrenDo: [:ch | self expandAllSilently: ch].
-	
-
-
 ]
 
 { #category : #'expanding-collapsing' }
@@ -874,7 +837,6 @@ MorphTreeMorph >> expandSilently: aMorph suchThat: aBlock [
 		ifTrue: [
 			aMorph isExpanded ifFalse: [aMorph expand].
 			aMorph childrenDo: [:ch | self expandSilently: ch suchThat: aBlock]].
-
 ]
 
 { #category : #'expanding-collapsing' }
@@ -897,20 +859,17 @@ MorphTreeMorph >> expandedFormForMorph: aMorph [
 MorphTreeMorph >> expandedNodesFrom: aMorpList [
 
 	^ (aMorpList select: [ :each | each isExpanded]) collect: [ :each | each complexContents].
-	
 ]
 
 { #category : #'expanding-collapsing' }
 MorphTreeMorph >> expandedToggleImage [
 	^ expandedToggleImage ifNil: [expandedToggleImage := ImageMorph new form: self expandedForm].
-
 ]
 
 { #category : #geometry }
 MorphTreeMorph >> extent: newExtent [
 	super extent: newExtent.
 	self resizerChanged.
-
 ]
 
 { #category : #accessing }
@@ -950,14 +909,12 @@ MorphTreeMorph >> gapAfterToggle [
 MorphTreeMorph >> gapAfterToggle: anInteger [
 	"set the horizontal space after the toggle"
 	gapAfterToggle := anInteger.
-
 ]
 
 { #category : #accessing }
 MorphTreeMorph >> getList [ 
 	"Answer the full list to be displayed."
 	^ model rootNodes.
-
 ]
 
 { #category : #scrolling }
@@ -988,7 +945,6 @@ MorphTreeMorph >> handleMouseMove: anEvent [
 				at: Time millisecondClockValue + self mouseStillDownThreshold
 				arguments: {anEvent copy resetHandlerFields}
 				stepTime: self mouseStillDownStepRate].
-
 ]
 
 { #category : #'event handling' }
@@ -998,7 +954,7 @@ MorphTreeMorph >> handlesKeyboard: evt [
 
 { #category : #'event handling' }
 MorphTreeMorph >> handlesMouseOver: evt [
-	^ self mouseOverAllowed 
+	^ self mouseOverAllowed
 ]
 
 { #category : #'event handling' }
@@ -1022,7 +978,6 @@ MorphTreeMorph >> hasIconBlock [
 { #category : #accessing }
 MorphTreeMorph >> hasToggleAtRoot [
 	^ hasToggleAtRoot ifNil: [hasToggleAtRoot := self roots anySatisfy: [:s | s hasToggle]]
-
 ]
 
 { #category : #'column handling' }
@@ -1071,7 +1026,6 @@ MorphTreeMorph >> indentGap [
 { #category : #geometry }
 MorphTreeMorph >> indentGap: anInteger [
 	indentGap := anInteger.
-
 ]
 
 { #category : #accessing }
@@ -1091,9 +1045,6 @@ MorphTreeMorph >> initialize [
 		with: self theme backgroundColor 
 		with: self theme backgroundColor.
 	self borderWidth: 0.
-
-	
-
 ]
 
 { #category : #keymapping }
@@ -1116,18 +1067,16 @@ MorphTreeMorph >> innerWidgetChanged [
 	self setScrollDeltas.
 	self updateColumnMorphsWidth.
 	self adjustSubmorphPositions.
-
 ]
 
 { #category : #updating }
 MorphTreeMorph >> insertNewMorphs: morphList [
 	scroller addAllMorphs: morphList.
-
 ]
 
 { #category : #selection }
 MorphTreeMorph >> isCheckList: aBoolean [
-	self listManager isCheckList: aBoolean. 
+	self listManager isCheckList: aBoolean.
 ]
 
 { #category : #selection }
@@ -1179,19 +1128,16 @@ MorphTreeMorph >> lastColumnUnbounded [
 { #category : #'accessing - colors' }
 MorphTreeMorph >> lineColor: aColor [
 	lineColorBlock := [:node | aColor]
-
 ]
 
 { #category : #'accessing - colors' }
 MorphTreeMorph >> lineColorBlock [
 	^ lineColorBlock
-
 ]
 
 { #category : #'accessing - colors' }
 MorphTreeMorph >> lineColorBlock: aValuable [
 	lineColorBlock := aValuable
-
 ]
 
 { #category : #'accessing - colors' }
@@ -1213,13 +1159,11 @@ MorphTreeMorph >> lineColorForNode: aNode [
 				ifNotNil: [colored color luminance > 0.5
 					ifTrue: [Color black]
 					ifFalse: [Color white]]]
-	
-
 ]
 
 { #category : #accessing }
 MorphTreeMorph >> listManager [
-	^ listManager ifNil: [listManager := MorphTreeListManager new client: self] 
+	^ listManager ifNil: [listManager := MorphTreeListManager new client: self]
 ]
 
 { #category : #'column handling' }
@@ -1229,14 +1173,12 @@ MorphTreeMorph >> makeLastColumnBounded [
 		ifFalse: [
 			unboundLastColumn := false.
 			self columnsChanged]
-
 ]
 
 { #category : #'column handling' }
 MorphTreeMorph >> makeLastColumnUnbounded [
 	"Make the last column not horizontally  resizable (no resizer for it)"
 	unboundLastColumn := true
-
 ]
 
 { #category : #geometry }
@@ -1259,7 +1201,6 @@ MorphTreeMorph >> model: aTreeModel [
 	self model ifNotNil: [self model announcer unsubscribe: self].
 	super model: aTreeModel.
 	self registerRequestHandlers
-
 ]
 
 { #category : #'events-processing' }
@@ -1294,8 +1235,6 @@ MorphTreeMorph >> mouseDown: event [
 		threshold: 10.
 
 	self listManager mouseDown: event on: targetMorph
-
-
 ]
 
 { #category : #accessing }
@@ -1313,7 +1252,6 @@ MorphTreeMorph >> mouseDownHighlightColor [
 	^colored color luminance > 0.5
 		ifTrue: [Color black]
 		ifFalse: [Color white]
-
 ]
 
 { #category : #'events-processing' }
@@ -1345,7 +1283,6 @@ MorphTreeMorph >> mouseLeaveDragging: anEvent [
 	self resetPotentialDropMorph.
 	anEvent hand releaseMouseFocus: self.
 	"above is ugly but necessary for now"
-
 ]
 
 { #category : #'events-processing' }
@@ -1416,8 +1353,6 @@ MorphTreeMorph >> mouseUp: event [
 				ifNotNil: [^self]].
 
 	self listManager mouseUp: event on: nodeMorph.
-
-	
 ]
 
 { #category : #selection }
@@ -1427,7 +1362,7 @@ MorphTreeMorph >> multiSelection: aBoolean [
 
 { #category : #scrolling }
 MorphTreeMorph >> newTransformMorph [
-	^ MorphTreeTransformMorph new 
+	^ MorphTreeTransformMorph new
 ]
 
 { #category : #'announce requests' }
@@ -1435,7 +1370,6 @@ MorphTreeMorph >> nodeCollapseRequest: anAnnounce [
 	anAnnounce nodes
 		ifEmpty: [self collapseAll]
 		ifNotEmpty: [:nodes | self collapseNodePath: nodes]
-
 ]
 
 { #category : #'announce requests' }
@@ -1445,25 +1379,21 @@ MorphTreeMorph >> nodeExpandRequest: anAnnounce [
 		ifNotEmpty: [:nodes | anAnnounce recur 
 			ifTrue: [self expandAllFromNode: nodes last]
 			ifFalse: [self expandNodePath: nodes]]
-
 ]
 
 { #category : #accessing }
 MorphTreeMorph >> nodeList [
 	^ nodeList ifNil: [nodeList := self getList]
-
 ]
 
 { #category : #accessing }
 MorphTreeMorph >> nodeList: aCollection [ 
 	nodeList := aCollection.
-
 ]
 
 { #category : #accessing }
 MorphTreeMorph >> nodeListSelector [
 	^ #rootNodes
-
 ]
 
 { #category : #accessing }
@@ -1490,13 +1420,11 @@ MorphTreeMorph >> notExpandedFormForMorph: aMorph [
 	^ (aMorph selected and: [self selectionColor luminance < 0.7])
 		ifTrue: [self theme whiteTreeUnexpandedForm]
 		ifFalse: [self theme treeUnexpandedForm]
-
 ]
 
 { #category : #'expanding-collapsing' }
 MorphTreeMorph >> notExpandedToggleImage [
 	^ notExpandedToggleImage ifNil: [notExpandedToggleImage := ImageMorph new form: self notExpandedForm].
-
 ]
 
 { #category : #updating }
@@ -1532,7 +1460,6 @@ MorphTreeMorph >> preferedPaneColor [
 { #category : #'accessing - colors' }
 MorphTreeMorph >> preferedPaneColor: aColor [
 	self color: (preferedPaneColor := aColor).
-
 ]
 
 { #category : #updating }
@@ -1540,7 +1467,6 @@ MorphTreeMorph >> privateUpdateColumnMorphs [
 	self resetRootInfo.
 	self updateTopHeader.
 	self innerWidgetChanged.
-
 ]
 
 { #category : #'announce requests' }
@@ -1579,11 +1505,6 @@ MorphTreeMorph >> removeColumnAtIndex: aPosition [
 	self columns removeAt: aPosition.
 	self columnsChanged.
 	self updateList.
-
-
-
-
-
 ]
 
 { #category : #'column handling' }
@@ -1604,7 +1525,6 @@ MorphTreeMorph >> removeTopHeader [
 	topHeader 
 		ifNotNil: [self removeMorph: topHeader.
 		topHeader := nil]
-
 ]
 
 { #category : #'dropping/grabbing' }
@@ -1613,7 +1533,6 @@ MorphTreeMorph >> resetPotentialDropMorph [
 	potentialDropMorph ifNotNil: [
 		potentialDropMorph resetHighlightForDrop.
 		potentialDropMorph := nil]
-
 ]
 
 { #category : #updating }
@@ -1639,14 +1558,12 @@ MorphTreeMorph >> resizerWidth [
 { #category : #geometry }
 MorphTreeMorph >> resizerWidth: anInteger [
 	resizerWidth := anInteger.
-
 ]
 
 { #category : #accessing }
 MorphTreeMorph >> roots [
 	"Answer the receiver's roots"
 	^ self rootsFrom: self allNodeMorphs
-
 ]
 
 { #category : #accessing }
@@ -1659,20 +1576,17 @@ MorphTreeMorph >> rootsFrom: aCollectionOfNodes [
 { #category : #'accessing - colors' }
 MorphTreeMorph >> rowColorForEven: evenColor [ 
 	rowColors at: 1 put: evenColor.
-	
 ]
 
 { #category : #'accessing - colors' }
 MorphTreeMorph >> rowColorForEven: evenColor odd: oddColor [
 	rowColors at: 2 put: oddColor.
 	rowColors at: 1 put: evenColor.
-	
 ]
 
 { #category : #'accessing - colors' }
 MorphTreeMorph >> rowColorForOdd: oddColor [ 
 	rowColors at: 2 put: oddColor.
-	
 ]
 
 { #category : #'accessing - colors' }
@@ -1683,13 +1597,11 @@ MorphTreeMorph >> rowColors [
 { #category : #geometry }
 MorphTreeMorph >> rowInset [
 	^ rowInset  ifNil: [rowInset := 0]
-
 ]
 
 { #category : #geometry }
 MorphTreeMorph >> rowInset: anInteger [
 	rowInset := anInteger.
-
 ]
 
 { #category : #'column handling' }
@@ -1701,16 +1613,12 @@ MorphTreeMorph >> rowMorphsWidths [
 	result :=  self headerBounds collect: [:b | b width].
 	result ifNotEmpty: [result at: 1 put: ((result at: 1) - 3 )].
 	^ result
-
 ]
 
 { #category : #scrolling }
 MorphTreeMorph >> scrollDeltaWidth [
 	"A guess -- assume that the width of a char is approx 1/2 the height of the font"
 	^ self scrollDeltaHeight // 2
-
-
-
 ]
 
 { #category : #scrolling }
@@ -1755,12 +1663,11 @@ MorphTreeMorph >> selectAll [
 { #category : #'announce requests' }
 MorphTreeMorph >> selectItems: aNodeItemCollection [
 	self selectedItems: aNodeItemCollection
-
 ]
 
 { #category : #'announce requests' }
 MorphTreeMorph >> selectItemsRequest: anAnnounce [
-	self selectedItems: anAnnounce itemsToSelect 
+	self selectedItems: anAnnounce itemsToSelect
 ]
 
 { #category : #selection }
@@ -1789,7 +1696,6 @@ MorphTreeMorph >> selectedMorphList [
 { #category : #selection }
 MorphTreeMorph >> selectionChanged [
 	self changed
-
 ]
 
 { #category : #selection }
@@ -1833,7 +1739,6 @@ MorphTreeMorph >> selectionColorToUse: aColor [
 	aColor
 		ifNil: [self removeProperty: #selectionColorToUse]
 		ifNotNil: [self setProperty: #selectionColorToUse toValue: aColor].
-
 ]
 
 { #category : #selection }
@@ -1888,7 +1793,6 @@ MorphTreeMorph >> swapColumnAt: oneIndex withColumnAt: anotherIndex [
 	self columnsChanged.
 	self updateList.
 	self columnResizersToFront
-
 ]
 
 { #category : #'events-processing' }
@@ -1923,7 +1827,6 @@ MorphTreeMorph >> toggleExpandedState: aMorph event: event [
 					ifTrue: [each toggleExpandedState]]] 
 		ifFalse: [aMorph toggleExpandedState].
 	self adjustSubmorphPositions.
-	
 ]
 
 { #category : #'expanding-collapsing' }
@@ -1938,7 +1841,7 @@ MorphTreeMorph >> toggleImageWidth [
 
 { #category : #accessing }
 MorphTreeMorph >> topHeader [
-	^ topHeader 
+	^ topHeader
 ]
 
 { #category : #accessing }
@@ -1966,20 +1869,16 @@ MorphTreeMorph >> topHeaderHeight [
 MorphTreeMorph >> treeLineDashes [
 	^ treeLineDashes 
 		ifNil: [treeLineDashes := self theme treeLineDashes]
-	
-
 ]
 
 { #category : #accessing }
 MorphTreeMorph >> treeLineDashes: anArrayOfInteger [
 	treeLineDashes := anArrayOfInteger
-	
-
 ]
 
 { #category : #geometry }
 MorphTreeMorph >> treeLineWidth [
-	^ treeLineWidth ifNil: [treeLineWidth := self  theme treeLineWidth] 
+	^ treeLineWidth ifNil: [treeLineWidth := self  theme treeLineWidth]
 ]
 
 { #category : #geometry }
@@ -1991,13 +1890,12 @@ MorphTreeMorph >> treeLineWidth: anInteger [
 MorphTreeMorph >> update: aSymbol [
 	aSymbol = self nodeListSelector
 		ifTrue: [ ^ self updateList ].
-	super update: aSymbol 
+	super update: aSymbol
 ]
 
 { #category : #updating }
 MorphTreeMorph >> updateColumnMorphs [
 	self privateUpdateColumnMorphs
-
 ]
 
 { #category : #updating }
@@ -2006,7 +1904,6 @@ MorphTreeMorph >> updateColumnMorphsWidth [
 	self columns size > 1 ifFalse: [^ self].
 	rowMorphsWidths := self rowMorphsWidths.
 	self allNodeMorphs do: [:i | i updateColumnMorphsWidthWith: rowMorphsWidths].
-
 ]
 
 { #category : #updating }
@@ -2015,13 +1912,11 @@ MorphTreeMorph >> updateColumnResizersHeight [
 		b :=  col bounds.
 		b := b left @ self top corner: b right @ scroller bottom.
 		col bounds: b].
-
 ]
 
 { #category : #updating }
 MorphTreeMorph >> updateColumnResizersXOffset [
 	self columnResizerFrames with: self columnResizers do: [:frm :resizer | resizer bounds: (frm withBottom: scroller bottom)].
-
 ]
 
 { #category : #updating }
@@ -2063,7 +1958,6 @@ MorphTreeMorph >> updateTopHeader [
 		th width: scroller width.
 		w := self headerBounds.
 		th submorphsDo: [:sm | w ifNotEmpty: [sm bounds: w removeFirst; layoutInset: self columnInset @ 0]]].
-
 ]
 
 { #category : #geometry }
@@ -2071,8 +1965,7 @@ MorphTreeMorph >> vExtraScrollRange [
 	"Return the amount of extra blank space to include below the bottom of the scroll content."
 	"The classic behavior would be ^bounds height - (bounds height * 3 // 4)"
 	"Takes into accound the top header height if present"
-	^ super vExtraScrollRange + self topHeaderHeight 
-
+	^ super vExtraScrollRange + self topHeaderHeight
 ]
 
 { #category : #'dropping/grabbing' }

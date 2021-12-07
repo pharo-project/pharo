@@ -101,7 +101,7 @@ FTFunction >> keyStroke: anEvent [
 
 { #category : #initialization }
 FTFunction >> reset [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #private }
@@ -113,7 +113,7 @@ FTFunction >> resizeContainerFrom: topLefPoint to: bottomRightPoint [
 
 { #category : #private }
 FTFunction >> resizeWidget [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }

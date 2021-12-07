@@ -24,7 +24,6 @@ MetacelloAtomicConfigurationResource >> baseline20Fan: spec [
 		spec 
 			package: 'GoferFan';
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfAtomicFoo }
@@ -41,23 +40,18 @@ MetacelloAtomicConfigurationResource >> baseline20Foo: spec [
 			package: 'GoferBeau';
 			package: 'GoferFaux';
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfAtomicFan }
 MetacelloAtomicConfigurationResource >> baseline20MethodSourceFan [
 
 	^(self class sourceCodeAt: #baseline20Fan:) asString
-
-
 ]
 
 { #category : #ConfigurationOfAtomicFoo }
 MetacelloAtomicConfigurationResource >> baseline20MethodSourceFoo [
 
 	^(self class sourceCodeAt: #baseline20Foo:) asString
-
-
 ]
 
 { #category : #ConfigurationOfAtomicFoo }
@@ -79,15 +73,12 @@ MetacelloAtomicConfigurationResource >> baseline25Foo: spec [
 					loads: 'GoferFan';
 					repository: 'dictionary://Metacello_Configuration_Test_Repository' ];
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfAtomicFoo }
 MetacelloAtomicConfigurationResource >> baseline25MethodSourceFoo [
 
 	^(self class sourceCodeAt: #baseline25Foo:) asString
-
-
 ]
 
 { #category : #ConfigurationOfAtomicFan }
@@ -114,15 +105,12 @@ MetacelloAtomicConfigurationResource >> baseline31Fan: spec [
 					loads: 'GoferFoo';
 					repository: 'dictionary://Metacello_Configuration_Test_Repository' ];
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfAtomicFan }
 MetacelloAtomicConfigurationResource >> baseline31MethodSourceFan [
 
 	^(self class sourceCodeAt: #baseline31Fan:) asString
-
-
 ]
 
 { #category : #ConfigurationOfAtomicFoo }
@@ -142,23 +130,18 @@ MetacelloAtomicConfigurationResource >> baseline60Foo: spec [
 			group: '1' with: #('GoferFoo' 'GoferBar');
 			group: '2' with: #('1' 'GoferFaux');
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfAtomicFoo }
 MetacelloAtomicConfigurationResource >> baseline60MethodSourceFoo [
 
 	^(self class sourceCodeAt: #baseline60Foo:) asString
-
-
 ]
 
 { #category : #'Issue 86' }
 MetacelloAtomicConfigurationResource >> baseline60MethodSourceProjectIssue86 [
 
 	^(self class sourceCodeAt: #baseline60ProjectIssue86:) asString
-
-
 ]
 
 { #category : #'Issue 86' }
@@ -183,7 +166,6 @@ MetacelloAtomicConfigurationResource >> baseline60ProjectIssue86: spec [
 					loads: #('2');
 					repository: 'dictionary://Metacello_Configuration_Test_Repository' ];
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfAtomicFoo }
@@ -203,23 +185,18 @@ MetacelloAtomicConfigurationResource >> baseline61Foo: spec [
 			group: '1' with: #('GoferFoo' 'GoferBar');
 			group: '2' with: #('GoferFoo' 'GoferBeau');
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfAtomicFoo }
 MetacelloAtomicConfigurationResource >> baseline61MethodSourceFoo [
 
 	^(self class sourceCodeAt: #baseline61Foo:) asString
-
-
 ]
 
 { #category : #'Issue 86' }
 MetacelloAtomicConfigurationResource >> baseline61MethodSourceProjectIssue86 [
 
 	^(self class sourceCodeAt: #baseline61ProjectIssue86:) asString
-
-
 ]
 
 { #category : #'Issue 86' }
@@ -244,7 +221,6 @@ MetacelloAtomicConfigurationResource >> baseline61ProjectIssue86: spec [
 					loads: #('2');
 					repository: 'dictionary://Metacello_Configuration_Test_Repository' ];
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfAtomicFoo }
@@ -264,23 +240,18 @@ MetacelloAtomicConfigurationResource >> baseline62Foo: spec [
 			group: '1' with: #('GoferFoo' 'GoferBar');
 			group: '2' with: #('GoferFoo' );
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfAtomicFoo }
 MetacelloAtomicConfigurationResource >> baseline62MethodSourceFoo [
 
 	^(self class sourceCodeAt: #baseline62Foo:) asString
-
-
 ]
 
 { #category : #'Issue 86' }
 MetacelloAtomicConfigurationResource >> baseline62MethodSourceProjectIssue86 [
 
 	^(self class sourceCodeAt: #baseline62ProjectIssue86:) asString
-
-
 ]
 
 { #category : #'Issue 86' }
@@ -305,15 +276,12 @@ MetacelloAtomicConfigurationResource >> baseline62ProjectIssue86: spec [
 					loads: #('2');
 					repository: 'dictionary://Metacello_Configuration_Test_Repository' ];
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfAtomicFoo }
 MetacelloAtomicConfigurationResource >> linearProjectMethodSource [
 
 	^(self class sourceCodeAt: #project) asString copyReplaceAll: 'atomic' with: 'linear'
-
-
 ]
 
 { #category : #accessing }
@@ -332,8 +300,6 @@ MetacelloAtomicConfigurationResource >> postLoad31baseline [
 MetacelloAtomicConfigurationResource >> postLoad31baselineMethodSource [
 
 	^(self class sourceCodeAt: #postLoad31baseline) asString
-
-
 ]
 
 { #category : #ConfigurationOfAtomicFoo }
@@ -350,23 +316,18 @@ MetacelloAtomicConfigurationResource >> project [
 			yourself).
 	project loadType: #atomic.
 	^project
-
 ]
 
 { #category : #ConfigurationOfFoo }
 MetacelloAtomicConfigurationResource >> projectClassMethodSource [
 
 	^(self class class sourceCodeAt: #project) asString
-
-
 ]
 
 { #category : #ConfigurationOfAtomicFoo }
 MetacelloAtomicConfigurationResource >> projectMethodSource [
 
 	^(self class sourceCodeAt: #project) asString
-
-
 ]
 
 { #category : #running }
@@ -761,7 +722,6 @@ MetacelloAtomicConfigurationResource >> setUpMonticelloRepository [
 	"self reset"
 
 	monticelloRepository := MCDictionaryRepository new.
-
 ]
 
 { #category : #ConfigurationOfAtomicFoo }
@@ -778,15 +738,12 @@ MetacelloAtomicConfigurationResource >> version20Foo: spec [
 			package: 'GoferBeau' with: 'GoferBeau-dkh.15';
 			package: 'GoferFaux' with: 'GoferFaux-tg.30';
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfAtomicFoo }
 MetacelloAtomicConfigurationResource >> version20MethodSourceFoo [
 
 	^(self class sourceCodeAt: #version20Foo:) asString
-
-
 ]
 
 { #category : #ConfigurationOfAtomicFoo }
@@ -800,23 +757,18 @@ MetacelloAtomicConfigurationResource >> version50Foo: spec [
 		spec 
 			package: 'GoferUmbrella' with: 'GoferUmbrella-dkh.4';
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfAtomicFoo }
 MetacelloAtomicConfigurationResource >> version50MethodSourceFoo [
 
 	^(self class sourceCodeAt: #version50Foo:) asString
-
-
 ]
 
 { #category : #ConfigurationOfUmbrella }
 MetacelloAtomicConfigurationResource >> version50MethodSourceUmbrella [
 
 	^(self class sourceCodeAt: #version50Umbrella:) asString
-
-
 ]
 
 { #category : #ConfigurationOfUmbrella }
@@ -832,7 +784,6 @@ MetacelloAtomicConfigurationResource >> version50Umbrella: spec [
 					versionString: '5.0';
 					repository: 'dictionary://Metacello_Configuration_Test_Repository' ];
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfAtomicFoo }
@@ -846,23 +797,18 @@ MetacelloAtomicConfigurationResource >> version51Foo: spec [
 		spec 
 			package: 'GoferUmbrella' with: 'GoferUmbrella-lr.5';
 			yourself ].
-
 ]
 
 { #category : #ConfigurationOfAtomicFoo }
 MetacelloAtomicConfigurationResource >> version51MethodSourceFoo [
 
 	^(self class sourceCodeAt: #version51Foo:) asString
-
-
 ]
 
 { #category : #ConfigurationOfUmbrella }
 MetacelloAtomicConfigurationResource >> version51MethodSourceUmbrella [
 
 	^(self class sourceCodeAt: #version51Umbrella:) asString
-
-
 ]
 
 { #category : #ConfigurationOfUmbrella }
@@ -878,5 +824,4 @@ MetacelloAtomicConfigurationResource >> version51Umbrella: spec [
 					versionString: '5.1';
 					repository: 'dictionary://Metacello_Configuration_Test_Repository' ];
 			yourself ].
-
 ]

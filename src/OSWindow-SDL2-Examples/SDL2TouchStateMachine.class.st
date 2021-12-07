@@ -23,7 +23,6 @@ SDL2TouchStateMachine class >> for:	anPosition [
 { #category : #accessing }
 SDL2TouchStateMachine >> add: aPoint [
 	move add: aPoint.
-	
 ]
 
 { #category : #accessing }

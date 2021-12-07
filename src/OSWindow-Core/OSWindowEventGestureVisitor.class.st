@@ -50,7 +50,6 @@ OSWindowEventGestureVisitor >> visitTouchThreeFingersScrollMoveEvent: anEvent [
 
 { #category : #'visiting - three fingers gestures' }
 OSWindowEventGestureVisitor >> visitTouchThreeFingersSwipeAbortEvent: anEvent [
-	
 ]
 
 { #category : #'visiting - three fingers gestures' }
@@ -59,12 +58,10 @@ OSWindowEventGestureVisitor >> visitTouchThreeFingersSwipeBeginEvent: anEvent [
 
 { #category : #'visiting - three fingers gestures' }
 OSWindowEventGestureVisitor >> visitTouchThreeFingersSwipeEndEvent: anEvent [
-	
 ]
 
 { #category : #'visiting - three fingers gestures' }
 OSWindowEventGestureVisitor >> visitTouchThreeFingersSwipeMoveEvent: anEvent [
-	
 ]
 
 { #category : #'visiting - two fingers gestures' }
@@ -81,17 +78,14 @@ OSWindowEventGestureVisitor >> visitTouchTwoFingersPinchMoveEvent: anEvent [
 
 { #category : #'visiting - two fingers gestures' }
 OSWindowEventGestureVisitor >> visitTouchTwoFingersRotationBeginEvent: anEvent [
-	
 ]
 
 { #category : #'visiting - two fingers gestures' }
 OSWindowEventGestureVisitor >> visitTouchTwoFingersRotationEndEvent: anEvent [
-	
 ]
 
 { #category : #'visiting - two fingers gestures' }
 OSWindowEventGestureVisitor >> visitTouchTwoFingersRotationMoveEvent: anEvent [
-	
 ]
 
 { #category : #'visiting - two fingers gestures' }

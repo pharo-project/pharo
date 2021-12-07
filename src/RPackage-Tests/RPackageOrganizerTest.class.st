@@ -25,8 +25,6 @@ RPackageOrganizerTest class >> removeClassNamedIfExists: aClassNameSymbol [
 RPackageOrganizerTest class >> removePackageIfExist: aName [
 
 	self packageOrganizer basicUnregisterPackageNamed: aName asSymbol.
-		
-	
 ]
 
 { #category : #tests }
@@ -47,7 +45,7 @@ RPackageOrganizerTest >> p3Name [
 { #category : #utilities }
 RPackageOrganizerTest >> packageOrganizer [
 
-	^ packageOrganizer 
+	^ packageOrganizer
 ]
 
 { #category : #'tests - extending' }
@@ -64,7 +62,7 @@ RPackageOrganizerTest >> pointRectangleInGraphElement [
 
 { #category : #utilities }
 RPackageOrganizerTest >> quadrangleClass [
-	^ self class environment at: #QuadrangleForTesting 
+	^ self class environment at: #QuadrangleForTesting
 ]
 
 { #category : #running }
@@ -106,9 +104,7 @@ RPackageOrganizerTest >> tearDown [
 				cls removeFromSystem ].
 	"createdPackages do:
 		[:each | self packageOrganizer unregisterPackage: each]"
-	super tearDown 
-	
-
+	super tearDown
 ]
 
 { #category : #tests }
@@ -159,7 +155,6 @@ RPackageOrganizerTest >> testEmpty [
 	
 	self assert: self packageOrganizer packageNames size equals: 1.
 	self assert: (self packageOrganizer packageNames includes: self packageClass defaultPackageName)
-
 ]
 
 { #category : #tests }
@@ -178,7 +173,6 @@ RPackageOrganizerTest >> testExtensionMethodNotExactlyTheName [
 
 	self deny: (packageOrganizer includesPackageNamed: #'p1-something').
 	self assert: (p1 extendedClasses includes: c1)
-
 ]
 
 { #category : #tests }
@@ -228,7 +222,6 @@ RPackageOrganizerTest >> testFullRegistration [
 	
 	self assert: (p1 definesOrExtendsClass: a2).
 	self deny: (p1 includesClass: a2).
-
 ]
 
 { #category : #tests }
@@ -279,7 +272,6 @@ RPackageOrganizerTest >> testFullUnregistration [
 	self deny: (self packageOrganizer includesPackageBackPointerForClass: b1).
 	self deny: (self packageOrganizer includesPackageBackPointerForClass: b2).
 	self deny: (self packageOrganizer includesPackageBackPointerForClass: a3).
-
 ]
 
 { #category : #tests }
@@ -337,8 +329,6 @@ RPackageOrganizerTest >> testRegisteredIsIncludedInPackageNames [
 	self assert: (self packageOrganizer includesPackage: p1). 
 	self assert: (self packageOrganizer includesPackageNamed: p1 name). 
 	{p1 . p2 . p3} do: [:each | self assert:  (self packageOrganizer packageNames includes: each name)]
-
-
 ]
 
 { #category : #tests }
@@ -394,7 +384,7 @@ RPackageOrganizerTest >> testSilentlyRenameCategoryToBe [
 	class organization silentlyRenameCategory: #foo toBe: #bar.
 	
 	self assert: (class organization categories includes: #bar).
-	self deny: (class organization categories includes: #foo).	
+	self deny: (class organization categories includes: #foo).
 ]
 
 { #category : #tests }

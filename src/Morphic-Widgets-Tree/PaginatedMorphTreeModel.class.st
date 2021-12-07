@@ -30,27 +30,24 @@ PaginatedMorphTreeModel class >> example [
 
 { #category : #'pager managing' }
 PaginatedMorphTreeModel >> chunkSize [
-	^ pageSize 
+	^ pageSize
 ]
 
 { #category : #accessing }
 PaginatedMorphTreeModel >> chunkSize: anIntegerOrNil [
 	self setPageSize: anIntegerOrNil.
 	self announce: (MorphTreeChangeRequest chunkSize: anIntegerOrNil)
-
 ]
 
 { #category : #'pager managing' }
 PaginatedMorphTreeModel >> pageSize [
 	^ pageSize
-
 ]
 
 { #category : #accessing }
 PaginatedMorphTreeModel >> pageSize: anIntegerOrNil [
 	self setPageSize: anIntegerOrNil.
 	self announce: (MorphTreeChangeRequest pageSize: anIntegerOrNil)
-
 ]
 
 { #category : #accessing }
@@ -65,16 +62,14 @@ PaginatedMorphTreeModel >> rootNodes [
 				ifNotNil: [computedRootNodes size > self defaultPageSize
 					ifTrue: [self pageSize: self defaultPageSize]]].
 	^ computedRootNodes
-
 ]
 
 { #category : #'pager managing' }
 PaginatedMorphTreeModel >> setPageSize: anIntegerOrNil [
 	pageSize := anIntegerOrNil.
-
 ]
 
 { #category : #accessing }
 PaginatedMorphTreeModel >> treeMorphClass [
-	^ PaginatedMorphTreeMorph 
+	^ PaginatedMorphTreeMorph
 ]

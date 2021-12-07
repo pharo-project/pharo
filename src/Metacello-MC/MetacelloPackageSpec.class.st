@@ -202,7 +202,6 @@ MetacelloPackageSpec >> currentPackageLoaded: loadedBlock notLoaded: notLoadedBl
 				ifTrue: [ ^ loadedBlock value: #() value: self file ].
 			^ loadedBlock value: vis value: self file ].
 	^ notLoadedBlock value
-
 ]
 
 { #category : #gofer }
@@ -456,7 +455,6 @@ MetacelloPackageSpec >> mergeSpec: anotherSpec [
 					ifTrue: [ anotherRepositories ]
 					ifFalse: [ self repositories mergeSpec: anotherRepositories ]) ].
 	^newSpec
-
 ]
 
 { #category : #querying }

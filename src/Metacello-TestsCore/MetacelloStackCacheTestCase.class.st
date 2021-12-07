@@ -13,7 +13,6 @@ MetacelloStackCacheTestCase >> cacheNil [
 		doing: [:cache | | value |
 			cache at: #key put: nil.
 			self cacheNil ]
-
 ]
 
 { #category : #tests }
@@ -30,7 +29,6 @@ MetacelloStackCacheTestCase >> cachedReturnOfValue [
 					value := value + 1.
 					cache at: #x put: value ].
 			self cachedReturnOfValue ]
-
 ]
 
 { #category : #tests }
@@ -49,7 +47,6 @@ MetacelloStackCacheTestCase >> collectionCacheKey [
 					value := value + 1.
 					cache at: #x put: value ].
 			self collectionCacheKey ]
-
 ]
 
 { #category : #tests }
@@ -64,7 +61,6 @@ MetacelloStackCacheTestCase >> directReturnOfValue [
 			value := value + 1.
 			cache at: #x put: value.
 			self directReturnOfValue ]
-
 ]
 
 { #category : #tests }
@@ -154,7 +150,6 @@ MetacelloStackCacheTestCase >> testDefaultDictionary [
 	self assert: (defaultDictionary includesKey: #direct).
 	self assert: (defaultDictionary includesKey: #mixed).
 	self assert: (defaultDictionary includesKey: #mixedStack).
-
 ]
 
 { #category : #tests }

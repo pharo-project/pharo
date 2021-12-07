@@ -68,7 +68,6 @@ FTPluggableIconListMorphAdaptor class >> on: anObject list: getListSel selected:
 		changeSelected: setSelectionSel
 		menu: getMenuSel
 		keystroke: #arrowKey:from:		"default"
-
 ]
 
 { #category : #'instance creation' }
@@ -82,7 +81,6 @@ FTPluggableIconListMorphAdaptor class >> on: anObject list: getListSel selected:
 		changeSelected: setSelectionSel
 		menu: getMenuSel
 		keystroke: keyActionSel
-
 ]
 
 { #category : #'instance creation' }
@@ -133,7 +131,6 @@ FTPluggableIconListMorphAdaptor >> autoDeselect [
 	^ self resetListSelector 
 		ifNotNil: [ true ]
 		ifNil: [ self allowsDeselection ]
-		
 ]
 
 { #category : #accessing }
@@ -176,7 +173,6 @@ FTPluggableIconListMorphAdaptor >> doubleClickSelector: aSelector [
 { #category : #'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> dropItemSelector: aSelector [
 	self dataSource dropItemSelector: aSelector
-
 ]
 
 { #category : #accessing }
@@ -247,7 +243,6 @@ FTPluggableIconListMorphAdaptor >> initialize [
 	self initializeSelections.
 	self hideColumnHeaders.
 	self dataSource: FTPluggableIconListMorphAdaptorDataSource new.
-
 ]
 
 { #category : #initialization }
@@ -256,7 +251,6 @@ FTPluggableIconListMorphAdaptor >> initializeKeyBindings [
 	self 
 		bindKeyCombination: Character space asKeyCombination
 		toAction: [ self interactWithSelection ].
-	
 ]
 
 { #category : #initialization }
@@ -268,7 +262,7 @@ FTPluggableIconListMorphAdaptor >> initializeSelections [
 	self 
 		onAnnouncement: FTStrongSelectionChanged  
 		send: #strongSelectionChanged: 
-		to: self.	
+		to: self.
 ]
 
 { #category : #private }
@@ -317,8 +311,7 @@ FTPluggableIconListMorphAdaptor >> keyStrokeModifierAction: event [
 				with: character
 				with: self ].
 			
-	^self error: 'keystrokeActionSelector must be a 1- or 2-keyword symbol'		
-
+	^self error: 'keystrokeActionSelector must be a 1- or 2-keyword symbol'
 ]
 
 { #category : #'accessing - selectors' }
@@ -390,7 +383,6 @@ FTPluggableIconListMorphAdaptor >> on: anObject list: getListSel selected: getSe
 	self getMenuSelector: getMenuSel.
 	self keystrokeActionSelector: keyActionSel.
 	self basicWrapSelector: wrapSel
-
 ]
 
 { #category : #'accessing - selectors' }

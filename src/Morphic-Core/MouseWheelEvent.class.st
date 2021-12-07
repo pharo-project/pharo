@@ -87,7 +87,6 @@ MouseWheelEvent >> sentTo: anObject [
 	
 	type == #mouseWheel ifTrue:[^anObject handleMouseWheel: self].
 	^super sentTo: anObject.
-
 ]
 
 { #category : #accessing }

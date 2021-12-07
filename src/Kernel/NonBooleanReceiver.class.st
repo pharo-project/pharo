@@ -20,8 +20,23 @@ Class {
 	#instVars : [
 		'object'
 	],
+	#classVars : [
+		'MustBeBooleanHandler'
+	],
 	#category : #'Kernel-Exceptions'
 }
+
+{ #category : #'must-be-boolean-mop' }
+NonBooleanReceiver class >> mustBeBooleanHandler [
+
+	^ MustBeBooleanHandler
+]
+
+{ #category : #'must-be-boolean-mop' }
+NonBooleanReceiver class >> mustBeBooleanHandler: aHandler [
+
+	MustBeBooleanHandler := aHandler
+]
 
 { #category : #signaledexception }
 NonBooleanReceiver >> isResumable [

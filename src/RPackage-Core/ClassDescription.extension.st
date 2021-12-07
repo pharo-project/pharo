@@ -44,7 +44,7 @@ ClassDescription >> isExtendedInPackage: aPackage [
 
 { #category : #'*RPackage-Core' }
 ClassDescription >> package [
-	^ RPackage organizer packageOf: self.	
+	^ RPackage organizer packageOf: self.
 ]
 
 { #category : #'*RPackage-Core' }
@@ -56,7 +56,7 @@ ClassDescription >> packageFromOrganizer: anOrganizer [
 { #category : #'*RPackage-Core' }
 ClassDescription >> packageOrganizer [
 	"Returns the organizer of this class"
-	^ RPackage organizer 
+	^ RPackage organizer
 ]
 
 { #category : #'*RPackage-Core' }

@@ -309,7 +309,7 @@ Context >> stepToHome: aContext [
 				  error } ].
 
 		home == ctxt home ] whileFalse: [ 
-			home isDead ifTrue: [ 
+			(home isDead or: [ ctxt isDead ]) ifTrue: [ 
 				^ { 
 					  ctxt.
 					  nil } ] ].

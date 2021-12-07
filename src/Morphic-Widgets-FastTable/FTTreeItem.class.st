@@ -72,8 +72,7 @@ FTTreeItem >> collapseAll [
 
 { #category : #accessing }
 FTTreeItem >> data: aData [
-	self subclassResponsibility 
-
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -103,7 +102,7 @@ FTTreeItem >> hasChildren [
 
 { #category : #updating }
 FTTreeItem >> isExpanded [
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }

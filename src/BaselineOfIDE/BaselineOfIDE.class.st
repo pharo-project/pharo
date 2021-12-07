@@ -169,6 +169,8 @@ BaselineOfIDE >> baseline: spec [
 				repository: repository;
 				loads: #( 'Tests' ) ].
 		spec baseline: 'GeneralTests' with: [ spec repository: repository ].
+		spec baseline: 'FreeType' with: [ spec repository: repository; loads: 'tests' ].
+		spec baseline: 'Keymapping' with: [ spec repository: repository; loads: 'tests' ].
 		spec baseline: 'Zodiac' with: [ spec repository: repository ].
 		spec baseline: 'SortFunctions' with: [ spec repository: repository ].
 		spec package: 'STON-Extensions'. 

@@ -110,7 +110,6 @@ NetNameResolver class >> addressFromString: addressString [
 			((delimiter = $.) or: [(delimiter = $,) or: [delimiter = $ ]])
 				ifFalse: [^ nil]]].
 	^ newAddr
-
 ]
 
 { #category : #private }
@@ -222,8 +221,6 @@ NetNameResolver class >> initializeNetwork [
 		successful := (self primInitializeNetwork: semaIndex) notNil.
 		HaveNetwork := nil.].	
 	^successful or: [NoNetworkError signal: 'failed network initialization']
-	
-
 ]
 
 { #category : #testing }
@@ -242,7 +239,6 @@ NetNameResolver class >> localAddressString [
 	"NetNameResolver localAddressString"
 
 	^ NetNameResolver stringFromAddress: NetNameResolver localHostAddress
-
 ]
 
 { #category : #lookups }
@@ -304,7 +300,6 @@ NetNameResolver class >> nameForAddress: hostAddress timeout: secs [
 						ifFalse: [nil]]
 				ifFalse: [nil]].
 	^result
-
 ]
 
 { #category : #primitives }
@@ -313,7 +308,6 @@ NetNameResolver class >> primAbortLookup [
 
 	<primitive: 'primitiveResolverAbortLookup' module: 'SocketPlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -322,7 +316,6 @@ NetNameResolver class >> primAddressLookupResult [
 
 	<primitive: 'primitiveResolverAddressLookupResult' module: 'SocketPlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -423,7 +416,6 @@ NetNameResolver class >> primInitializeNetwork: resolverSemaIndex [
 
 	<primitive: 'primitiveInitializeNetwork' module: 'SocketPlugin'>
 	^ nil  "return nil if primitive fails"
-
 ]
 
 { #category : #primitives }
@@ -432,7 +424,6 @@ NetNameResolver class >> primLocalAddress [
 
 	<primitive: 'primitiveResolverLocalAddress' module: 'SocketPlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -441,7 +432,6 @@ NetNameResolver class >> primNameLookupResult [
 
 	<primitive: 'primitiveResolverNameLookupResult' module: 'SocketPlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -450,7 +440,6 @@ NetNameResolver class >> primNameResolverError [
 
 	<primitive: 'primitiveResolverError' module: 'SocketPlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -459,7 +448,6 @@ NetNameResolver class >> primNameResolverStatus [
 
 	<primitive: 'primitiveResolverStatus' module: 'SocketPlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -468,7 +456,6 @@ NetNameResolver class >> primStartLookupOfAddress: hostAddr [
 
 	<primitive: 'primitiveResolverStartAddressLookup' module: 'SocketPlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #primitives }
@@ -477,7 +464,6 @@ NetNameResolver class >> primStartLookupOfName: hostName [
 
 	<primitive: 'primitiveResolverStartNameLookup' module: 'SocketPlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #lookups }
@@ -486,7 +472,6 @@ NetNameResolver class >> promptUserForHostAddress [
 	"NetNameResolver promptUserForHostAddress"
 
 	^ NetNameResolver promptUserForHostAddressDefault: ''
-
 ]
 
 { #category : #lookups }
@@ -517,8 +502,6 @@ NetNameResolver class >> putIPv6HexIntegers: aCollection on: aWriteStream [
 		do: [ :integer |
 			aWriteStream nextPutAll: (integer printStringBase: 16) asLowercase ]
 		separatedBy: [ aWriteStream nextPut: $: ]
-	
-	
 ]
 
 { #category : #private }
@@ -539,13 +522,11 @@ JMM - 000503 fixed didn't work correctly"
 		value := (value * 10) + digit].
 	(digitSeen not or: [value > 255]) ifTrue: [^ nil].
 	^ value
-
 ]
 
 { #category : #lookups }
 NetNameResolver class >> resolverError [
 	^self primNameResolverError
-
 ]
 
 { #category : #private }
@@ -558,7 +539,6 @@ NetNameResolver class >> resolverMutex [
 { #category : #lookups }
 NetNameResolver class >> resolverStatus [
 	^self primNameResolverStatus
-
 ]
 
 { #category : #private }
@@ -603,7 +583,6 @@ NetNameResolver class >> stringFromAddress: addr [
 	1 to: 3 do: [ :i | (addr at: i) printOn: s. s nextPut: $.].
 	(addr at: 4) printOn: s.
 	^ s contents
-
 ]
 
 { #category : #'address string utils' }
@@ -665,9 +644,6 @@ NetNameResolver class >> stringFromIPv6Address: aByteArray [
 		putIPv6HexIntegers: (integerCollection copyFrom: (indices second + 1) to: integerCollection size)
 		on: writeStream.
 	^ writeStream contents
-	
-	
-	
 ]
 
 { #category : #private }
@@ -706,5 +682,4 @@ NetNameResolver class >> waitForResolverReadyUntil: deadline [
 	status = ResolverUninitialized ifTrue: [^ false].
 	status := self waitForResolverNonBusyUntil: deadline.
 	^ status ~= ResolverBusy
-
 ]

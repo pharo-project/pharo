@@ -22,7 +22,7 @@ OSEvent class >> for: aWindow [
 
 { #category : #visitor }
 OSEvent >> accept: aVisitor [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'default actions' }
@@ -55,7 +55,6 @@ OSEvent >> printOn: aStream [
 			nextPutAll:  ' (WindowId='; 
 			print: window windowId;  
 			nextPut:  $) ]
-
 ]
 
 { #category : #'default actions' }

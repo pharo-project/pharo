@@ -143,9 +143,6 @@ OSWindowMorphicEventHandler >> dispatchMorphicEvent: anEvent [
 			morphicWorld activeHand handleEvent: anEvent
 		]
 	].
-	
-	
-	
 ]
 
 { #category : #events }
@@ -158,7 +155,6 @@ OSWindowMorphicEventHandler >> handleEvent: anEvent [
 	morphicEvent isMorphicEvent ifFalse: [ ^ self ].
 		
 	self dispatchMorphicEvent: morphicEvent
-	
 ]
 
 { #category : #visiting }
@@ -312,7 +308,6 @@ OSWindowMorphicEventHandler >> visitWindowCloseEvent: anEvent [
 	anEvent suppressDefaultAction.
 	
 	morphicWorld worldState worldRenderer handleOSWindowCloseEvent: anEvent
-
 ]
 
 { #category : #visiting }

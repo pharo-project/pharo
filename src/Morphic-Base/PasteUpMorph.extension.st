@@ -7,7 +7,6 @@ PasteUpMorph >> dragThroughOnDesktop: evt [
 	selection := SelectionMorph newBounds: (evt cursorPoint extent: 8@8).
 	self addMorph: selection.
 	^ selection extendByHand: evt hand
-
 ]
 
 { #category : #'*Morphic-Base' }

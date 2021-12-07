@@ -117,30 +117,27 @@ PragmaCollector >> classRemovedEventOccurs: anEvent [
 		ifTrue: [^ self noMoreNotifications].
 	"remove all handler which are from the removed class"
 	(self pragmasOfClass: anEvent classRemoved class)
-		do: [:handler | self removePragma: handler] 
+		do: [:handler | self removePragma: handler]
 ]
 
 { #category : #enumerating }
 PragmaCollector >> collect: aBlock [
 	^ self collected collect: aBlock
-	
 ]
 
 { #category : #accessing }
 PragmaCollector >> collected [
-	^ collected ifNil: [collected := OrderedCollection new] 
+	^ collected ifNil: [collected := OrderedCollection new]
 ]
 
 { #category : #enumerating }
 PragmaCollector >> detect: aBlock [
 	^ self collected detect: aBlock ifNone:[]
-	
 ]
 
 { #category : #enumerating }
 PragmaCollector >> do: aBlock [
 	self collected do: aBlock
-	
 ]
 
 { #category : #accessing }
@@ -271,7 +268,7 @@ PragmaCollector >> pragmasOfClass: aClass [
 
 { #category : #enumerating }
 PragmaCollector >> reject: aBlock [
-	^ self collected reject: aBlock 
+	^ self collected reject: aBlock
 ]
 
 { #category : #'dependents access' }
@@ -314,7 +311,6 @@ PragmaCollector >> reset [
 { #category : #enumerating }
 PragmaCollector >> select: aBlock [
 	^ self collected select: aBlock
-	
 ]
 
 { #category : #accessing }
@@ -331,8 +327,6 @@ PragmaCollector >> selectors: anArray [
 PragmaCollector >> unsubscribe: anObject [
 	"see Announcements packages"
 	self announcer unsubscribe: anObject
-
-
 ]
 
 { #category : #updating }
@@ -353,7 +347,6 @@ PragmaCollector >> whenChangedSend: aSelector to: anObject [
 	"record a change listener"
 	
 	self when: PragmaAnnouncement send: aSelector to: anObject
-
 ]
 
 { #category : #subscription }

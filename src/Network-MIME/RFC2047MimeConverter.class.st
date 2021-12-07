@@ -17,7 +17,6 @@ RFC2047MimeConverter >> encodeChar: aChar to: aStream [
 	aStream nextPut: $=;
 		nextPut: (Character digitValue: aChar asciiValue // 16);
 		nextPut: (Character digitValue: aChar asciiValue \\ 16)
-
 ]
 
 { #category : #'private - encoding' }

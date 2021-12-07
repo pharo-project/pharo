@@ -6,21 +6,8 @@ Boolean redefines #new so no instances of Boolean can be created. It also redefi
 Class {
 	#name : #Boolean,
 	#superclass : #Object,
-	#classVars : [
-		'DeOptimizeMustBeBoolean'
-	],
 	#category : #'Kernel-Objects'
 }
-
-{ #category : #deoptimize }
-Boolean class >> mustBeBooleanDeOptimize [
-		^DeOptimizeMustBeBoolean ifNil: [ ^true ].
-]
-
-{ #category : #deoptimize }
-Boolean class >> mustBeBooleanDeOptimize: aBoolean [
-		DeOptimizeMustBeBoolean := aBoolean
-]
 
 { #category : #'instance creation' }
 Boolean class >> new [

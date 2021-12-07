@@ -23,7 +23,6 @@ ExternalDropHandler class >> chooseServiceFrom: aCollection [
 	aCollection size = 1 ifTrue: [^ aCollection anyOne].
 	^ UIManager default chooseFrom: (aCollection collect: [:each | 
 			each label]) values: aCollection.
-
 ]
 
 { #category : #cleanup }
@@ -47,8 +46,6 @@ ExternalDropHandler class >> initialize [
 	"ExternalDropHandler initialize"
 
 	self resetRegisteredHandlers.
-
-	
 ]
 
 { #category : #accessing }
@@ -105,7 +102,7 @@ ExternalDropHandler class >> resetRegisteredHandlers [
 
 { #category : #'instance creation' }
 ExternalDropHandler class >> type: aType extension: anExtension action: anAction [ 
-	^self new type: aType extension: anExtension action: anAction 
+	^self new type: aType extension: anExtension action: anAction
 ]
 
 { #category : #private }
@@ -125,7 +122,6 @@ ExternalDropHandler >> handle: dropStream in: pasteUp dropEvent: anEvent [
 	^action cull: dropStream 
 			cull: pasteUp 
 			cull: anEvent
-	
 ]
 
 { #category : #testing }

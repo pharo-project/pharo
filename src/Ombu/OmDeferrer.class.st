@@ -20,7 +20,6 @@ OmDeferrer class >> initialize [
 	self initialize
 	"
 	SessionManager default registerUserClassNamed: self name
-
 ]
 
 { #category : #'instance creation' }

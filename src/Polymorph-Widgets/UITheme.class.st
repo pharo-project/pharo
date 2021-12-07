@@ -34,17 +34,17 @@ UITheme class >> allThemeClasses [
 
 { #category : #accessing }
 UITheme class >> baseColor [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 UITheme class >> basePassiveBackgroundColor [ 
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
 UITheme class >> baseSelectionColor [ 
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #query }
@@ -118,7 +118,7 @@ UITheme class >> currentSettings [
 
 { #category : #accessing }
 UITheme class >> darkBaseColor [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -161,12 +161,12 @@ UITheme class >> isCurrent [
 
 { #category : #accessing }
 UITheme class >> lightBaseColor [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 UITheme class >> lightSelectionColor [ 
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -226,12 +226,12 @@ UITheme class >> resetDefaultSettings [
 
 { #category : #settings }
 UITheme class >> setPreferredPreferences [ 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 UITheme class >> standardThemeClass [
-	^ PharoLightTheme 
+	^ PharoLightTheme
 ]
 
 { #category : #accessing }
@@ -243,7 +243,7 @@ UITheme class >> themeName [
 
 { #category : #accessing }
 UITheme class >> veryLightSelectionColor [ 
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #services }
@@ -695,7 +695,6 @@ UITheme >> buttonSelectedFillStyleFor: aButton [
 	"Return the normal button fillStyle for the given button."
 	
 	^ SolidFillStyle color: (self lightSelectionColorFor: aButton)
-	
 ]
 
 { #category : #'fill-styles' }
@@ -1252,12 +1251,11 @@ UITheme >> configureSystemWindow: aWindow [
 	aWindow color: Color lightGray lighter lighter lighter.	
 	self
 		configureWindowBorderFor: aWindow;
-		configureWindowDropShadowFor: aWindow.	
-
+		configureWindowDropShadowFor: aWindow.
 ]
 
 { #category : #configure }
-UITheme >> configureTextMorph: textMorph [ 
+UITheme >> configureTextMorph: textMorph [
 ]
 
 { #category : #'*Polymorph-Widgets-Themes' }
@@ -1739,7 +1737,7 @@ UITheme >> defaultMenuColor [
 	"Answer the default color to use for a menu
 	in the absence of an override in settings."
 
-	^ self settings fallbackMenuColor 
+	^ self settings fallbackMenuColor
 ]
 
 { #category : #defaults }
@@ -1857,7 +1855,7 @@ UITheme >> diffJoinColor [
 { #category : #'basic-colors-diffs' }
 UITheme >> diffMapColor [
 	"Answer the color used for the mapping bar on the left side."
-	^ self backgroundColor 
+	^ self backgroundColor
 ]
 
 { #category : #'basic-colors-diffs' }
@@ -2020,7 +2018,6 @@ UITheme >> drawWindowDiffuseDropShadowFor: aSystemWindow on: aCanvas [
 		fillStyle: ((GradientFillStyle colors: gc)
 					origin: r topRight;
 					direction: o negated@0)
-
 ]
 
 { #category : #'border-styles' }
@@ -2123,7 +2120,6 @@ UITheme >> dropListInsetFor: aDropList [
 	"Answer the inset to use for drop-list layout."
 	
 	^ Margin left: 6 top: 0 right: 0 bottom: 0
-	
 ]
 
 { #category : #'border-styles' }
@@ -2160,7 +2156,6 @@ UITheme >> dropListNormalListFillStyleFor: aDropList [
 UITheme >> editableDropListMargins [
 	"Answer the text margins for an editable drop list for this theme."
 	^ Margin left: 0 top: 3 right: 2 bottom: 1
-	
 ]
 
 { #category : #'accessing - colors' }
@@ -2386,7 +2381,6 @@ UITheme >> initializeForms [
 		at: #windowMaximizePassive put: self newWindowInactiveControlForm;
 		at: #windowMenuPassive put: self newWindowMenuPassiveForm;
 		at: #windowMenuOver put: self newWindowMenuOverForm
-
 ]
 
 { #category : #'label-styles' }
@@ -2398,7 +2392,6 @@ UITheme >> labelDisabledColorFor: aLabel [
 		ifNotNil: [aLabel owner color isTransparent
 					ifTrue: [aLabel owner paneColor muchDarker]
 					ifFalse: [aLabel owner color muchDarker]].
-			
 ]
 
 { #category : #defaults }
@@ -2749,7 +2742,7 @@ UITheme >> morphTreeColumnBorderStyleFor: aMorph [
 
 { #category : #'fill-styles' }
 UITheme >> morphTreeColumnFillStyleFor: aMorph [
-	^ self buttonNormalFillStyleFor: aMorph 
+	^ self buttonNormalFillStyleFor: aMorph
 ]
 
 { #category : #'fill-styles' }
@@ -2961,7 +2954,6 @@ UITheme >> newAutoAcceptTextEntryIn: aThemedMorph for: aModel  get: getSel set: 
 		setBalloonText: helpText;
 		entryCompletion: anEntryCompletion.
 	^pt
-
 ]
 
 { #category : #'morph creation' }
@@ -2978,7 +2970,7 @@ UITheme >> newAutoAcceptTextEntryIn: aThemedMorph for: aModel get: getSel set: s
 		class: aClass
 		getEnabled: enabledSel
 		help: helpText
-		entryCompletion: nil 
+		entryCompletion: nil
 ]
 
 { #category : #'morph creation' }
@@ -3505,7 +3497,6 @@ UITheme >> newColumnIn: aThemedMorph for: controls [
 		cellPositioning: #leftCenter.
 	controls do: [:m | answer addMorphBack: m].
 	^answer
-			
 ]
 
 { #category : #'morph creation' }
@@ -3605,7 +3596,6 @@ UITheme >> newFocusIndicatorMorphFor: aMorph [
 UITheme >> newFontSelector [
 	"Answer a new font selector dialog"
 		^FreeTypeFontSelectorDialogWindow new
-	
 ]
 
 { #category : #'morph creation' }
@@ -3616,7 +3606,7 @@ UITheme >> newFuzzyLabelIn: aThemedMorph for: aModel label: aString offset: offs
 		offset: offset;
 		alpha: alpha;
 		model: aModel;
-		getEnabledSelector: enabledSel	
+		getEnabledSelector: enabledSel
 ]
 
 { #category : #'morph creation' }
@@ -3955,7 +3945,6 @@ UITheme >> newMorphListIn: aThemedMorph for: aModel list: listSelector getSelect
 		vResizing: #spaceFill;
 		getEnabledSelector: enabledSel;
 		setBalloonText: helpText
-		
 ]
 
 { #category : #'morph creation' }
@@ -4094,7 +4083,6 @@ UITheme >> newRowIn: aThemedMorph for: controls [
 		cellPositioning: #center.
 	controls do: [:m | answer addMorphBack: m].
 	^answer
-			
 ]
 
 { #category : #'morph creation' }
@@ -4235,7 +4223,6 @@ UITheme >> newStackIn: aThemedMorph for: controls [
 		layoutPolicy: StackLayout new.
 	controls do: [:m | answer addMorphBack: m].
 	^answer
-			
 ]
 
 { #category : #'morph creation' }
@@ -4322,7 +4309,6 @@ UITheme >> newTaskbarThumbnailIn: aThemedMorph for: aWindow [
 		borderStyle: (self taskbarThumbnailNormalBorderStyleFor: aWindow);
 		cornerStyle: (self taskbarThumbnailCornerStyleFor: answer).
 	^answer
-			
 ]
 
 { #category : #'morph creation' }
@@ -4508,7 +4494,6 @@ UITheme >> newTreeIn: aThemedMorph for: aModel list: listSelector selected: getS
 		vResizing: #spaceFill;
 		autoDeselect: false;
 		yourself
-		
 ]
 
 { #category : #initialization }
@@ -4777,7 +4762,7 @@ UITheme >> progressBarProgressFillStyleFor: aProgressBar [
 { #category : #'fill-styles' }
 UITheme >> progressFillStyleFor: aProgress [
 	"Return the progress fillStyle for the given progress morph."
-	^ self windowActiveFillStyleFor: aProgress  
+	^ self windowActiveFillStyleFor: aProgress
 ]
 
 { #category : #services }
@@ -5188,7 +5173,7 @@ UITheme >> scrollbarPressedButtonFillStyleFor: aScrollbar [
 UITheme >> scrollbarPressedFillStyleFor: aScrollbar [
 	"Return the pressed scrollbar fillStyle for the given scrollbar."
 	
-	^self scrollbarNormalFillStyleFor: aScrollbar 
+	^self scrollbarNormalFillStyleFor: aScrollbar
 ]
 
 { #category : #'border-styles-scrollbars' }
@@ -5272,7 +5257,6 @@ UITheme >> selectedFillStyleFor: aMorph height: anInteger [
 	
 
 	^ SolidFillStyle color: (self lightSelectionColorFor:  aMorph)
-
 ]
 
 { #category : #'accessing - colors' }
@@ -5286,8 +5270,6 @@ UITheme >> selectedItemListTextColor [
 UITheme >> selectionBarColor [
 
 	^ self settings selectionBarColor
-
-
 ]
 
 { #category : #'accessing - colors' }
@@ -5348,7 +5330,6 @@ UITheme >> shStyleTable [
 	^ (self class environment classNamed: #SHRBTextStyler)
 		ifNotNil: [ :aClass | aClass perform: self shStyleTableName ]
 		ifNil: [ #() ]
-
 ]
 
 { #category : #accessing }
@@ -5471,7 +5452,6 @@ UITheme >> tabGroupCornerStyleIn: aThemedMorph [
 UITheme >> tabLabelInsetFor: aButton [
 	"Answer the inset to use for a tab label."
 	^ Margin left: 8 top: 2 right: 8 bottom: 2
-
 ]
 
 { #category : #'border-styles' }
@@ -5484,7 +5464,7 @@ UITheme >> tabLabelNormalBorderStyleFor: aTabLabel [
 
 { #category : #'fill-styles-buttons' }
 UITheme >> tabLabelNormalFillStyleFor: aTabLabel [
-	^ self buttonNormalFillStyleFor: aTabLabel 
+	^ self buttonNormalFillStyleFor: aTabLabel
 ]
 
 { #category : #'border-styles' }
@@ -5496,7 +5476,7 @@ UITheme >> tabLabelSelectedBorderStyleFor: aTabLabel [
 
 { #category : #'fill-styles-buttons' }
 UITheme >> tabLabelSelectedFillStyleFor: aTabLabel [
-	^ self buttonSelectedFillStyleFor: aTabLabel 
+	^ self buttonSelectedFillStyleFor: aTabLabel
 ]
 
 { #category : #'border-styles' }
@@ -5563,7 +5543,7 @@ UITheme >> taskbarButtonLabelColorFor: aButton [
 
 { #category : #'fill-styles-taskbar' }
 UITheme >> taskbarFillStyleFor: aTaskbar [
-	^ SolidFillStyle color: Color transparent 
+	^ SolidFillStyle color: Color transparent
 ]
 
 { #category : #'border-styles-taskbar' }
@@ -6178,7 +6158,6 @@ UITheme >> windowEdgePressedFillStyleFor: anEdgeGrip [
 { #category : #'fill-styles' }
 UITheme >> windowExtentChangedFor: aWindow [
 	"Update any extent related visuals."
-
 ]
 
 { #category : #'border-styles' }
@@ -6398,7 +6377,7 @@ UITheme >> worldMainDockingBarBorderStyleFor: aDockingBar [
 UITheme >> worldMainDockingBarColorFor: aDockingBar [
 	"Answer the base colour to use for a world main docking bar in this theme."
 
-	^self settings derivedMenuColor 
+	^self settings derivedMenuColor
 ]
 
 { #category : #'fill-styles' }

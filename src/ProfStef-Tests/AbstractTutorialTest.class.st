@@ -35,7 +35,6 @@ AbstractTutorialTest >> testTutorialRaisesShouldBeImplemented [
 				assert:  ShouldBeImplemented 
 				equals: anException class
 		].
-	
 ]
 
 { #category : #tests }

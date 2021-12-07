@@ -57,7 +57,6 @@ SocketAddress class >> zero [
 
 { #category : #converting }
 SocketAddress >> asSocketAddress [
-
 ]
 
 { #category : #printing }

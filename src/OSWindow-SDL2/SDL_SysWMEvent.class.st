@@ -52,7 +52,7 @@ SDL_SysWMEvent >> eventType [
 { #category : #testing }
 SDL_SysWMEvent >> isWindows [
 	
-	^ self msg isWindows 
+	^ self msg isWindows
 ]
 
 { #category : #'accessing - structure variables' }

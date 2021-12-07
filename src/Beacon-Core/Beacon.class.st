@@ -12,7 +12,7 @@ Class {
 		'announcer'
 	],
 	#classVars : [
-		'instance'
+		'Instance'
 	],
 	#category : #'Beacon-Core-Beacon'
 }
@@ -27,7 +27,7 @@ Beacon class >> announce: anAnnouncement [
 { #category : #accessing }
 Beacon class >> instance [
 
-	^ instance ifNil: [ instance := self new ]
+	^ Instance ifNil: [ Instance := self new ]
 ]
 
 { #category : #accessing }
@@ -52,9 +52,9 @@ Beacon class >> reset [
 { #category : #'private - initialization' }
 Beacon class >> resetInstance [
 
-	instance ifNotNil: [ 
-		instance announcer subscriptions reset ].
-	instance := nil
+	Instance ifNotNil: [ 
+		Instance announcer subscriptions reset ].
+	Instance := nil
 ]
 
 { #category : #private }

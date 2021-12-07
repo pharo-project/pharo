@@ -60,7 +60,6 @@ RPackageTag >> categoryName [
 	"Answer this tag as a SystemCategory. 
     That would be RPackage, '-', RPackageTag, unless tag is root (same name as RPackage)"
 	^ self toCategoryName: self name
-
 ]
 
 { #category : #accessing }
@@ -107,7 +106,7 @@ RPackageTag >> includesClass: aClass [
 RPackageTag >> includesMethodCategory: aProtocol ofClass: aClass [ 
 	^ self package 
 		includesMethodCategory: aProtocol 
-		ofClass: aClass 
+		ofClass: aClass
 ]
 
 { #category : #testing }

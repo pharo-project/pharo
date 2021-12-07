@@ -300,7 +300,7 @@ Paragraph >> composeAll [
 		delta: 0
 		into: OrderedCollection new
 		priorLines: Array new
-		atY: container top 
+		atY: container top
 ]
 
 { #category : #composition }
@@ -330,7 +330,6 @@ Paragraph >> composeLinesFrom: start to: stop delta: delta into: lineColl priorL
 		wantsColumnBreaks: wantsColumnBreaks == true.
 	lines := newResult first asArray.
 	^ maxRightX := newResult second.
-
 ]
 
 { #category : #accessing }
@@ -397,7 +396,6 @@ Paragraph >> displayOn: aCanvas using: displayScanner at: somePosition [
 			self displaySelectionInLine: line on: aCanvas.
 			line first <= line last ifTrue:
 				[leftInRun := displayScanner displayLine: line offset: offset leftInRun: leftInRun]].
-
 ]
 
 { #category : #display }
@@ -427,7 +425,6 @@ Paragraph >> displaySelectionBlock: aSelBlock inLine: line on: aCanvas [
 				or: [(selRange rangeIncludes: startIdx + 1) or: [selRange rangeIncludes: stopIdx - 1]]])
 				ifTrue: [^ self]]. "regular selection and this selection block overlap"
 	aSelBlock displayInLine: line on: aCanvas
-
 ]
 
 { #category : #display }
@@ -500,7 +497,6 @@ Paragraph >> extraSelectionRects [
 		extraSelectionBlocks 
 			ifNotNil: [:blocks | 
 				blocks do: [:selBlock | strm nextPutAll: (self selectionRectsFrom: selBlock first to: selBlock last)]]]
-
 ]
 
 { #category : #private }
@@ -525,13 +521,11 @@ Paragraph >> fastFindFirstLineSuchThat: lineBlock [
 { #category : #selection }
 Paragraph >> findReplaceSelectionColor [
 	^  self theme currentSettings findReplaceSelectionColor
-
 ]
 
 { #category : #selection }
 Paragraph >> findReplaceSelectionRegex: aRegex [
 	findReplaceSelectionRegex := aRegex.
-
 ]
 
 { #category : #accessing }
@@ -542,7 +536,6 @@ Paragraph >> firstCharacterIndex [
 { #category : #accessing }
 Paragraph >> focused [
 	^ focused ifNil: [focused := false]
-
 ]
 
 { #category : #accessing }
@@ -554,7 +547,6 @@ Paragraph >> focused: aBoolean [
 Paragraph >> hasExtraSelection [
 	"Return true if I've some findReplace or secondary selection"
 	^ extraSelectionBlocks isEmptyOrNil not
-
 ]
 
 { #category : #private }
@@ -572,7 +564,6 @@ Paragraph >> indentationOfLineIndex: lineIndex ifBlank: aBlock [
 	last := (lines at: arrayIndex) last.
 	
 	^(text string copyFrom: first to: last) indentationIfBlank: aBlock.
-
 ]
 
 { #category : #initialization }
@@ -631,8 +622,7 @@ Paragraph >> lineIndexOfCharacterIndex: characterIndex [
 	"Answer the line index for a given characterIndex."
 	"apparently the selector changed with NewParagraph"
 
-	^self lineIndexForCharacter: characterIndex 
-
+	^self lineIndexForCharacter: characterIndex
 ]
 
 { #category : #private }
@@ -697,8 +687,6 @@ Paragraph >> multiComposeLinesFrom: start to: stop delta: delta into: lineColl p
 	lines := newResult first asArray.
 	"maxRightX printString displayAt: 0@0."
 	^ maxRightX := newResult second.
-
-
 ]
 
 { #category : #accessing }
@@ -773,13 +761,11 @@ Paragraph >> secondarySelection [
 { #category : #selection }
 Paragraph >> secondarySelection: aSubstring [
 	secondarySelection := aSubstring.
-
 ]
 
 { #category : #selection }
 Paragraph >> secondarySelectionColor [
 	^  self theme secondarySelectionColor
-
 ]
 
 { #category : #selection }
@@ -792,7 +778,6 @@ Paragraph >> selectionColor [
 	^ self focused 
 		ifTrue: [ self theme selectionColor]
 		ifFalse: [ self theme unfocusedSelectionColor ].
-
 ]
 
 { #category : #selection }
@@ -853,13 +838,11 @@ Paragraph >> selectionStart: startBlock selectionStop: stopBlock [
 { #category : #accessing }
 Paragraph >> showCaret [
 	^showCaret ifNil:[true]
-
 ]
 
 { #category : #accessing }
 Paragraph >> showCaret: aBool [
 	showCaret := aBool
-
 ]
 
 { #category : #accessing }

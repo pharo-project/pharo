@@ -136,7 +136,6 @@ FilteredMorphTreeModel >> initialize [
 FilteredMorphTreeModel >> pattern [
 	" the pattern to use to filter the list"
 	^ self ensureSafePattern: patternModel getText asString trimBoth
-
 ]
 
 { #category : #accessing }
@@ -169,5 +168,5 @@ FilteredMorphTreeModel >> whenPatternChanged: anAnnouncement [
 { #category : #'accessing - pattern' }
 FilteredMorphTreeModel >> whenReturnInFilter: anAnnouncement [ 
 	"needed if auto-accept is false"
-	patternModel acceptEditsInView  
+	patternModel acceptEditsInView
 ]

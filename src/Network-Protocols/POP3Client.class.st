@@ -122,7 +122,6 @@ POP3Client >> getMultilineResponse [
 		done := (chunk = '.') ].
 
 	^ response contents
-
 ]
 
 { #category : #'private - protocol' }

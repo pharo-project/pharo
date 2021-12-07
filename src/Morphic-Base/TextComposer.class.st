@@ -65,7 +65,6 @@ TextComposer >> addNullLineWithIndex: index andRectangle: r [
 			rectangle: r;
 			lineHeight: defaultLineHeight baseline: theTextStyle baseline
 	)
-
 ]
 
 { #category : #testing }
@@ -132,7 +131,6 @@ TextComposer >> composeAllRectangles: rectangles [
 	currCharIndex > theText size ifTrue: [
 		^nil		"we are finished composing"
 	].
-	
 ]
 
 { #category : #composition }
@@ -218,7 +216,6 @@ TextComposer >> fixupLastLineIfCR [
 	(theText size > 0 and: [ CharacterSet crlf includes: theText last ]) ifFalse: [ ^ self ].
 	
 	self addNullLineForIndex: theText size + 1.
-
 ]
 
 { #category : #protocol }
@@ -278,5 +275,4 @@ TextComposer >> slideOneLineDown [
 			].
 		].
 	].
-
 ]

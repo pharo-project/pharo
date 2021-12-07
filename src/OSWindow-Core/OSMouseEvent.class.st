@@ -39,7 +39,7 @@ OSMouseEvent >> initialize [
 
 { #category : #accessing }
 OSMouseEvent >> modifiers [
-	^ modifiers 
+	^ modifiers
 ]
 
 { #category : #accessing }

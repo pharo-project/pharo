@@ -19,7 +19,6 @@ MimeConverter class >> forEncoding: encodingString [
 		{ ['base64'] -> [Base64MimeConverter].
 		  ['quoted-printable'] -> [QuotedPrintableMimeConverter]}
 		otherwise: [].
-
 ]
 
 { #category : #convenience }

@@ -4,5 +4,4 @@ Extension { #name : #OrderedDictionary }
 OrderedDictionary >> asValueHolder [
 
 	^ DictionaryValueHolder value: self
-
 ]

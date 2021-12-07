@@ -46,8 +46,6 @@ RPackageCompleteSetupButForModificationTest >> setUp [
 
 	a2 class compileSilently: 'classSideMethodDefinedInP3 ^ #classSideMethodDefinedInP3'.
 	p3 addMethod: (a2 class>>#classSideMethodDefinedInP3)
-
-
 ]
 
 { #category : #'test - addition' }
@@ -60,7 +58,6 @@ RPackageCompleteSetupButForModificationTest >> testAddMethod [
 	self assert: (p1 includesSelector: #zork ofClass: a1).
 	
 	self assert: (p3 includesSelector: #classSideMethodDefinedInP3 ofClass: a2 class)
-	
 ]
 
 { #category : #'test - addition' }
@@ -82,8 +79,6 @@ RPackageCompleteSetupButForModificationTest >> testBasicRemoveClass [
 	self assert: p1 definedClasses size equals: (size - 2).
 	self deny: (p1 includesClass: b1).
 	self deny: (p1 includesClass: b1 class)
-
-
 ]
 
 { #category : #'test - starting situation' }
@@ -120,7 +115,6 @@ RPackageCompleteSetupButForModificationTest >> testRemoveMethod [
 
 	p1 removeMethod: a1 >> #methodDefinedInP1.
 	self deny: (p1 includesSelector: #methodDefinedInP1 ofClass: a1).
-	
 ]
 
 { #category : #'test - addition' }

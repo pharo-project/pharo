@@ -11,7 +11,7 @@ Class {
 { #category : #'class initialization' }
 SDL2ScanCodeConstants class >> initialize [
 
-	self initializeScanCodes 
+	self initializeScanCodes
 ]
 
 { #category : #'private - initialization' }

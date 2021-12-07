@@ -48,7 +48,6 @@ QuotedPrintableMimeConverterTest >> testDecodeCustomNewline [
 	self 
 		assert: output contents
 		equals: 'foo', String lf, 'bar'
-	
 ]
 
 { #category : #testing }

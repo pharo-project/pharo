@@ -19,10 +19,12 @@ TestAnnouncement class >> with: aTestCase [
 
 { #category : #accessing }
 TestAnnouncement >> test [
-	^test
+
+	^ test
 ]
 
 { #category : #accessing }
 TestAnnouncement >> test: aTest [
+
 	test := aTest
 ]

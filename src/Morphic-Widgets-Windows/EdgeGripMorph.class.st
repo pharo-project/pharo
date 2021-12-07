@@ -77,7 +77,6 @@ EdgeGripMorph >> extent: aPoint [
 					self adoptPaneColor: self paneColor]]
 		ifFalse: [self extent x ~= ext x ifTrue: [
 					self adoptPaneColor: self paneColor]]
-	
 ]
 
 { #category : #accessing }
@@ -97,8 +96,6 @@ EdgeGripMorph >> fitTargetBoundsInOwner: aRect [
 		ifTrue: [self edgeName = #top
 				ifTrue: [self target bounds: (aRect left @ (aRect top + (ownerMinExt y - targetOwner height)) extent: aRect width @ (aRect height - (ownerMinExt y - targetOwner height)))]
 				ifFalse: [self target bounds: (aRect origin extent: aRect width @ (aRect height - (ownerMinExt y - targetOwner height)))]]
-		
-	
 ]
 
 { #category : #accessing }
@@ -164,7 +161,6 @@ EdgeGripMorph >> mouseDown: anEvent [
 	lastMouse := {cp. cp - self position. cp - self targetPoint}.
 	self eventHandler
 		ifNotNil: [self eventHandler mouseDown: anEvent fromMorph: self]
-
 ]
 
 { #category : #'event handling' }

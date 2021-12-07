@@ -22,12 +22,12 @@ OSTouchStateGestureDetector >> createEventBeginning [
 
 { #category : #factory }
 OSTouchStateGestureDetector >> createEventDuringMove [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #factory }
 OSTouchStateGestureDetector >> createEventEnding [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #preconditions }

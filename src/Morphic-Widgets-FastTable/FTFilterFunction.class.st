@@ -67,7 +67,7 @@ FTFilterFunction >> ghostText [
 { #category : #initialization }
 FTFilterFunction >> initialize [
 	super initialize.
-	filterClass := FTRegexFilter 
+	filterClass := FTRegexFilter
 ]
 
 { #category : #initialization }

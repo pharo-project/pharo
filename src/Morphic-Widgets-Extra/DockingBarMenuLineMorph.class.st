@@ -15,7 +15,6 @@ DockingBarMenuLineMorph >> minHeight [
 	^owner isVertical
 				ifTrue: [ self theme menuBorderWidth ]
 				ifFalse: [10]
-	
 ]
 
 { #category : #layout }

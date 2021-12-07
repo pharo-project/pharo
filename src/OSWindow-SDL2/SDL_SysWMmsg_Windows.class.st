@@ -83,7 +83,6 @@ SDL_SysWMmsg_Windows >> printOn: aStream [
 		print: self wParam;
 		nextPutAll: ' lParam: ';
 		print: self lParam
-		
 ]
 
 { #category : #'accessing - structure variables' }

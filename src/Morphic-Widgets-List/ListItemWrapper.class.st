@@ -112,7 +112,6 @@ ListItemWrapper >> sendSettingMessageTo: aModel [
 	aModel 
 		perform: (self settingSelector ifNil: [^self])
 		with: self withoutListWrapper
-
 ]
 
 { #category : #accessing }

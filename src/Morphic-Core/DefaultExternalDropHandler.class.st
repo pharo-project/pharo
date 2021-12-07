@@ -27,7 +27,6 @@ DefaultExternalDropHandler >> chooseServiceFrom: aCollection [
 	aCollection size = 1
 		ifTrue: [^ aCollection anyOne].
 	^ UIManager default chooseFrom: (aCollection collect: [:each | each label]) values: aCollection.
-
 ]
 
 { #category : #private }

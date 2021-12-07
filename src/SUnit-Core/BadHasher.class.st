@@ -31,6 +31,7 @@ BadHasher class >> randomValue [
 
 { #category : #comparing }
 BadHasher >> hash [
-	"answer with a different hash some of the time"
+	"Answer with a different hash some of the time"
+
 	self class randomValue
 ]

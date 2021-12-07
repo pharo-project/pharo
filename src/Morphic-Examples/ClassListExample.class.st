@@ -37,7 +37,6 @@ ClassListExample >> menu: menu shifted: b [
 { #category : #'instance creation' }
 ClassListExample >> open [
 	^ self openOn: Object
-
 ]
 
 { #category : #'instance creation' }

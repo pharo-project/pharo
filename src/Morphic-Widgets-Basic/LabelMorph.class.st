@@ -106,12 +106,6 @@ LabelMorph >> drawOn: aCanvas [
 			font: self fontToUse
 			color: self theme lightBackgroundColor.
 	].
-
-
-
-
-		
-
 ]
 
 { #category : #protocol }

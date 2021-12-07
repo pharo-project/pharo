@@ -95,7 +95,7 @@ PluggableDialogWindow >> newButtons [
 PluggableDialogWindow >> newContentMorph [
 	"Answer the plugged content."
 	
-	^self contentMorph  
+	^self contentMorph
 ]
 
 { #category : #accessing }

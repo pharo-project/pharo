@@ -18,7 +18,6 @@ ClassTreeNodeExample >> browseItem [
 { #category : #menu }
 ClassTreeNodeExample >> childrenItems [
 	^ (self item subclasses asArray sort: [:a :b | a name < b name]) asOrderedCollection
-
 ]
 
 { #category : #menu }
@@ -76,7 +75,6 @@ ClassTreeNodeExample >> keyStroke: anEvent from: aTreeMorph [
 	c = $I
 		ifTrue: [self exploreItem. ^ true].
 	^ false
-
 ]
 
 { #category : #accessing }
@@ -93,5 +91,4 @@ ClassTreeNodeExample >> menu: menu shifted: b [
 		add: 'Explore (I)'
 		target: self
 		selector: #exploreItem.
-
 ]

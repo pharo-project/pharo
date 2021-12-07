@@ -51,8 +51,6 @@ OSWindowRenderThreadOperation >> failed [
 OSWindowRenderThreadOperation >> initWithOperation: anOperation [
 	semaphore := Semaphore new.
 	operation := anOperation.
-	
-	
 ]
 
 { #category : #initialize }
@@ -60,8 +58,6 @@ OSWindowRenderThreadOperation >> initWithOperation: anOperation blocking: isBloc
 	semaphore := Semaphore new.
 	operation := anOperation.
 	blocking := isBlocking
-	
-	
 ]
 
 { #category : #waiting }

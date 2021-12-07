@@ -27,7 +27,6 @@ PopupChoiceOrRequestDialogWindow >> filter: aString [
 	super filter: aString.
 	(self choiceMenus ifNil: [^self]) do: [:embeddedMenu |
 		embeddedMenu selectItem: nil event: nil]. "clear selection in other menus"
-
 ]
 
 { #category : #accessing }
