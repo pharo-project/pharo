@@ -87,6 +87,7 @@ RubEditingAreaTest >> testEmbeddedAnchorInTextAreDrawn [
 { #category : #tests }
 RubEditingAreaTest >> testEmbeddedAnchorInTextAreDrawnAtRightPosition [
 	| circle longTextWithCircleAtEnd canvas|
+	(Smalltalk globals includesKey: #FormCanvas) ifFalse: [^self].
 	circle := CircleMorphCounter new extent: 50 @ 50;color: Color blue.
 	longTextWithCircleAtEnd := ((String loremIpsum: 10000), 
 		(String value: 1)) asText 
