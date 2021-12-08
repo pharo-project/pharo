@@ -26,7 +26,6 @@ OCAbstractMethodScope >> addCopyingTempToAllScopesUpToDefTemp: aVar [
 	(self copiedVarNames includes: aVar name) ifFalse: [self addCopyingTemp: aVar].
 	self = aVar scope ifTrue: [^ self].
 	^ self outerScope addCopyingTempToAllScopesUpToDefTemp: aVar.
-				
 ]
 
 { #category : #'temp vars' }
@@ -149,7 +148,6 @@ OCAbstractMethodScope >> lookupVar: name declare: aBoolean [
 	tempVars at: name ifPresent: [:v | ^ v].
 	name = self tempVectorName ifTrue: [ ^ self tempVectorVar ].
 	^self outerScope lookupVar: name declare: aBoolean
-	
 ]
 
 { #category : #scope }
@@ -170,7 +168,7 @@ OCAbstractMethodScope >> moveEscapingWritesToTempVector [
 OCAbstractMethodScope >> moveToVectorTemp: aTempVar [
 
 	self addVectorTemp: aTempVar.
-	self removeTemp: aTempVar.	
+	self removeTemp: aTempVar.
 ]
 
 { #category : #scope }
@@ -219,7 +217,6 @@ OCAbstractMethodScope >> printOn: stream [
 	super printOn: stream.
 	stream space.
 	self scopeLevel printOn: stream.
-
 ]
 
 { #category : #'temp vars' }
@@ -267,7 +264,7 @@ OCAbstractMethodScope >> tempVars [
 
 { #category : #'temp vars - vector' }
 OCAbstractMethodScope >> tempVector [
-	^ tempVector 
+	^ tempVector
 ]
 
 { #category : #'temp vars - vector' }

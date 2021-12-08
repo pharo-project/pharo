@@ -25,5 +25,4 @@ OCTargetCompilerParser >> parsePrimitiveValueLiteral [
 		start: token start
 		stop: token stop
 		source: token source
-	
 ]

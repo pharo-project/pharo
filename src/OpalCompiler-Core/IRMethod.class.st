@@ -48,14 +48,12 @@ IRMethod >> addInstructionsAfter: aCollection [
 	returningSeqs := self allSequences select: [:each | each last isReturn].
 	lastInstr := returningSeqs last last.
 	lastInstr addInstructionsBefore: aCollection.
-	
 ]
 
 { #category : #inlining }
 IRMethod >> addInstructionsBefore: aCollection [
 
 	(self startSequence nextSequence first) addInstructionsBefore: aCollection.
-	
 ]
 
 { #category : #accessing }
@@ -150,7 +148,6 @@ IRMethod >> firstInstructionMatching: aBlock [
 IRMethod >> forceLongForm [
 	compilationContext ifNil: [ ^ false ].
 	^compilationContext optionLongIvarAccessBytecodes
-		
 ]
 
 { #category : #translating }
@@ -291,7 +288,6 @@ IRMethod >> removeEmptyStart [
 	 (startSequence size = 1) ifTrue: [
         "startSeq is just unconditional jump, forget it"
         startSequence := startSequence last destination].
-
 ]
 
 { #category : #accessing }

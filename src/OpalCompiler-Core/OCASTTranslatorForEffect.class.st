@@ -21,7 +21,6 @@ OCASTTranslatorForEffect >> emitIfFalse: aMessageNode [
 	methodBuilder jumpAheadTo: #else if: true.
 		self visitInlinedBlockNode: aMessageNode arguments first.
 	methodBuilder jumpAheadTarget: #else.
-
 ]
 
 { #category : #'inline messages' }
@@ -35,7 +34,6 @@ OCASTTranslatorForEffect >> emitIfNotNil: aMessageNode [
 	methodBuilder jumpAheadTo: #end if: true.
 	self visitInlinedBlockNode: args first.
 	methodBuilder jumpAheadTarget: #end.
-	
 ]
 
 { #category : #'inline messages' }
@@ -52,7 +50,6 @@ OCASTTranslatorForEffect >> emitMessageNode: aMessageNode [
 
 	super emitMessageNode: aMessageNode.
 	methodBuilder popTop.
-
 ]
 
 { #category : #'inline messages' }
@@ -68,14 +65,13 @@ OCASTTranslatorForEffect >> visitArrayNode: anArrayNode [
 
 	super visitArrayNode: anArrayNode.
 	methodBuilder popTop.
-
 ]
 
 { #category : #'visitor - double dispatching' }
 OCASTTranslatorForEffect >> visitAssignmentNode: anAssignmentNode [ 
 
 	super visitAssignmentNode: anAssignmentNode .
-	methodBuilder popTop. 
+	methodBuilder popTop.
 ]
 
 { #category : #'visitor - double dispatching' }
@@ -105,7 +101,6 @@ OCASTTranslatorForEffect >> visitParseErrorNode: anErrorNode [
 
 	super visitParseErrorNode: anErrorNode.
 	methodBuilder popTop.
-
 ]
 
 { #category : #'visitor - double dispatching' }

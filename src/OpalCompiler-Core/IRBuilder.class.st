@@ -106,7 +106,6 @@ IRBuilder >> addTemp: tempKey [
 { #category : #initialize }
 IRBuilder >> addTemps: newKeys [
 	newKeys do: [ :key | self addTemp: key ]
-
 ]
 
 { #category : #initialize }
@@ -138,7 +137,7 @@ IRBuilder >> cacheIndex: tempKey [
 
 { #category : #accessing }
 IRBuilder >> compilationContext [
-	^ir compilationContext 
+	^ir compilationContext
 ]
 
 { #category : #initialize }
@@ -180,7 +179,6 @@ IRBuilder >> initialize [
 			destination: currentSequence;
 			bytecodeIndex: sourceMapByteIndex;
 			yourself).
-
 ]
 
 { #category : #results }
@@ -204,7 +202,6 @@ IRBuilder >> jumpAheadTarget: labelSymbol [
 	jumpInstr := (jumpAheadStacks at: labelSymbol ifAbsent: [
 			self error: 'Missing jumpAheadTo: ', labelSymbol printString]) removeLast.
 	jumpInstr destination: currentSequence.
-
 ]
 
 { #category : #instructions }
@@ -216,7 +213,6 @@ IRBuilder >> jumpAheadTo: labelSymbol [
 	(jumpAheadStacks at: labelSymbol ifAbsentPut: [OrderedCollection new])
 		addLast: (self add: IRJump new).
 	self startNewSequence.
-
 ]
 
 { #category : #instructions }
@@ -229,7 +225,6 @@ IRBuilder >> jumpAheadTo: labelSymbol if: boolean [
 		addLast: (instr := self add: (IRJumpIf new boolean: boolean)).
 	self startNewSequence.
 	instr otherwise: currentSequence.
-
 ]
 
 { #category : #instructions }
@@ -239,7 +234,6 @@ IRBuilder >> jumpBackTarget: labelSymbol [
 	self startNewSequence.
 	(jumpBackTargetStacks at: labelSymbol ifAbsentPut: [OrderedCollection new])
 		addLast: currentSequence.
-
 ]
 
 { #category : #instructions }
@@ -252,7 +246,6 @@ IRBuilder >> jumpBackTo: labelSymbol [
 	self add: jump.
 	self startNewSequence.
 	jump successor: currentSequence.
-	
 ]
 
 { #category : #mapping }
@@ -380,7 +373,6 @@ IRBuilder >> returnTop [
 
 	self add: IRInstruction returnTop.
 	self startNewSequence.
-
 ]
 
 { #category : #instructions }
@@ -420,7 +412,6 @@ IRBuilder >> startNewSequence [
 	currentSequence last transitionsToNextSequence
 		ifFalse: [ self add: (IRJump new destination: newSequence)].
 	currentSequence := newSequence.
-
 ]
 
 { #category : #instructions }

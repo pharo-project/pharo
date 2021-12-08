@@ -32,7 +32,6 @@ IRPushArray >> cons: aBool [
 IRPushArray >> initialize [
 	size := 0.
 	cons := false.
-	
 ]
 
 { #category : #accessing }

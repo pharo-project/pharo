@@ -77,7 +77,7 @@ OCASTTranslator >> classForValue [
 
 { #category : #accessing }
 OCASTTranslator >> compilationContext [
-	^methodBuilder compilationContext 
+	^methodBuilder compilationContext
 ]
 
 { #category : #'inline messages factored' }
@@ -200,7 +200,6 @@ OCASTTranslator >> emitIfNil: aMessageNode [
 	self isValueTranslator ifTrue: [ methodBuilder popTop ].
 	self visitInlinedBlockNode: aMessageNode arguments first.
 	methodBuilder jumpAheadTarget: #else.
-
 ]
 
 { #category : #'inline messages factored' }
@@ -257,7 +256,6 @@ OCASTTranslator >> emitMessageNode: aMessageNode [
 	aMessageNode isSuperSend
 		ifTrue: [methodBuilder send: aMessageNode selector toSuperOf: self compilationContext getClass]
 		ifFalse: [methodBuilder send: aMessageNode selector].
-
 ]
 
 { #category : #'inline messages' }
@@ -407,7 +405,6 @@ OCASTTranslator >> initialize [
 	valueTranslator := self classForValue basicNew.
 	effectTranslator setFromSimilar: self.
 	valueTranslator setFromSimilar: self.
-
 ]
 
 { #category : #accessing }
@@ -494,7 +491,6 @@ OCASTTranslator >> visitAssignmentNode: anAssignmentNode [
 
 	valueTranslator visitNode: anAssignmentNode value.
 	anAssignmentNode variable variable emitStore: methodBuilder
-
 ]
 
 { #category : #'visitor - double dispatching' }
@@ -518,7 +514,6 @@ OCASTTranslator >> visitCascadeNode: aCascadeNode [
 		effectTranslator visitNode: node.
 	].
 	self visitNode: aCascadeNode messages last.
-
 ]
 
 { #category : #'visitor - double dispatching' }
@@ -563,21 +558,18 @@ OCASTTranslator >> visitLargeArrayNode: aRBArrayNode [
 		methodBuilder popTop.
 		].
 	methodBuilder send: #braceArray.
-				
 ]
 
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitLiteralArrayNode: aRBLiteralArrayNode [ 
 	 
 	methodBuilder pushLiteral: aRBLiteralArrayNode value.
-
 ]
 
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitLiteralNode: aLiteralNode [
 
 	methodBuilder pushLiteral: aLiteralNode value.
-
 ]
 
 { #category : #'visitor - double dispatching' }
@@ -617,7 +609,6 @@ OCASTTranslator >> visitNode: aNode [
 	methodBuilder mapToNode: aNode.
 	super visitNode: aNode.
 	methodBuilder popMap.
-
 ]
 
 { #category : #'visitor - double dispatching' }
@@ -646,8 +637,6 @@ OCASTTranslator >> visitReturnNode: aReturnNode [
 
 	valueTranslator visitNode: aReturnNode value.
 	methodBuilder returnTop.
-		
-
 ]
 
 { #category : #'visitor - double dispatching' }
@@ -659,6 +648,4 @@ OCASTTranslator >> visitSequenceNode: aSequenceNode [
 { #category : #'visitor - double dispatching' }
 OCASTTranslator >> visitVariableNode: aVariableNode [
 	aVariableNode variable emitValue: methodBuilder
-	
-	
 ]

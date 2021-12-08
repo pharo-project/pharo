@@ -25,5 +25,4 @@ IRPushReceiver >> isSelf [
 { #category : #accessing }
 IRPushReceiver >> quickRetNode [
 	^ IRReturnReceiver new
-	
 ]

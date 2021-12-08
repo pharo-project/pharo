@@ -13,7 +13,7 @@ Class {
 
 { #category : #accessing }
 OCSemanticWarning >> compilationContext [
-	^ compilationContext 
+	^ compilationContext
 ]
 
 { #category : #accessing }
@@ -59,7 +59,7 @@ OCSemanticWarning >> methodNode [
 
 { #category : #accessing }
 OCSemanticWarning >> node [
-	^node 
+	^node
 ]
 
 { #category : #accessing }
