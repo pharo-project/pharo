@@ -80,17 +80,17 @@ Behavior >> addObsoleteSubclass: aClass [
 	self basicObsoleteSubclasses at: self put: obs.
 ]
 
-{ #category : #'adding/removing methods' }
+{ #category : #'adding-removing methods' }
 Behavior >> addSelector: selector withMethod: compiledMethod [ 
 	^ self addSelectorSilently: selector withMethod: compiledMethod
 ]
 
-{ #category : #'adding/removing methods' }
+{ #category : #'adding-removing methods' }
 Behavior >> addSelector: selector withRecompiledMethod: compiledMethod [ 
 	^ self addSelectorSilently: selector withMethod: compiledMethod
 ]
 
-{ #category : #'adding/removing methods' }
+{ #category : #'adding-removing methods' }
 Behavior >> addSelectorSilently: selector withMethod: compiledMethod [
 	"Add the message selector with the corresponding compiled method to the 
 	receiver's method dictionary.
@@ -101,7 +101,7 @@ Behavior >> addSelectorSilently: selector withMethod: compiledMethod [
 	compiledMethod selector: selector
 ]
 
-{ #category : #'adding/removing methods' }
+{ #category : #'adding-removing methods' }
 Behavior >> adoptInstance: anInstance [
 	"Change the class of anInstance to me.
 	Primitive (found in Cog and new VMs)  follows the same rules as primitiveChangeClassTo:, but returns the 	class rather than the modified instance"
@@ -1372,7 +1372,7 @@ Behavior >> removeSelector: aSelector [
 	self methodDict removeKey: aSelector ifAbsent: []
 ]
 
-{ #category : #'adding/removing methods' }
+{ #category : #'adding-removing methods' }
 Behavior >> removeSelectorSilently: selector [ 
 	"Remove selector without sending system change notifications"
 
