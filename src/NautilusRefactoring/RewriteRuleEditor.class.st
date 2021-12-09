@@ -29,7 +29,7 @@ RewriteRuleEditor class >> defaultSpec [
 			add: #helpText expand: true fill: true padding: 18;
 			addLast: #replaceButton)
 			expand: false fill: false padding: 0;
-		yourself	
+		yourself
 ]
 
 { #category : #'world menu' }
@@ -51,7 +51,6 @@ RewriteRuleEditor class >> open [
 { #category : #initialization }
 RewriteRuleEditor >> connectPresenters [
 	replaceButton action: [ self runReplace ].
-
 ]
 
 { #category : #initialization }
@@ -90,7 +89,6 @@ RewriteRuleEditor >> initializeWindow: aWindowPresenter [
 		title: self windowTitle;
 		initialExtent: (50@18) * (fontWidth @ rowHeight);
 		whenOpenedDo: [ helpText color: self theme baseColor]
-
 ]
 
 { #category : #actions }

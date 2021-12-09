@@ -21,7 +21,6 @@ ValueWithinFixTest >> testValueWithinNonLocalReturnFixReal [
 		deltaTime := Time millisecondClockValue - startTime.
 		self deny: deltaTime < 90.
 	].
-
 ]
 
 { #category : #tests }
@@ -54,7 +53,6 @@ ValueWithinFixTest >> testValueWithinTimingNestedInner [
 		] valueWithin: 500 milliSeconds onTimeout: []
 	] durationToRun.
 	self assert: time < 500 milliSeconds.
-
 ]
 
 { #category : #tests }
@@ -70,7 +68,6 @@ ValueWithinFixTest >> testValueWithinTimingNestedOuter [
 	] durationToRun.
 	self assert: time > 100 milliSeconds.
 	self assert: time < 5000 milliSeconds.
-	
 ]
 
 { #category : #tests }
@@ -83,12 +80,10 @@ ValueWithinFixTest >> testValueWithinTimingRepeat [
 				valueWithin: 100 milliSeconds onTimeout: []]
 	] durationToRun.
 	self assert: time < 500 milliSeconds.
-
 ]
 
 { #category : #tests }
 ValueWithinFixTest >> valueWithinNonLocalReturn [
 	"Do a non-local return from a valueWithin: block"
 	[^self] valueWithin: 20 milliSeconds onTimeout:[].
-
 ]

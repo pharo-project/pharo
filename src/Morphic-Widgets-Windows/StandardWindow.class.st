@@ -81,7 +81,6 @@ StandardWindow >> flash [
 		self removeProperty: #activeModalFlash
 	
 	] fork.
-
 ]
 
 { #category : #initialization }
@@ -203,7 +202,6 @@ StandardWindow >> title [
 StandardWindow >> title: aString [
 	
 	self setLabel: aString
-	
 ]
 
 { #category : #'morphic ui' }
@@ -225,7 +223,6 @@ StandardWindow >> withText: aStringOrText label: title [
 				yourself)
 		fullFrame: LayoutFrame identity.						
 	self themeChanged.
-
 ]
 
 { #category : #'event handling' }

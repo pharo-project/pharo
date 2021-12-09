@@ -51,7 +51,6 @@ SimpleButtonMorph class >> newWithLabel: labelString [
 	^(self new) 
 		label: labelString;
 		yourself
-
 ]
 
 { #category : #'submorphs - add/remove' }
@@ -74,7 +73,6 @@ SimpleButtonMorph >> actWhen: condition [
 SimpleButtonMorph >> actionSelector [
 
 	^ actionSelector
-
 ]
 
 { #category : #accessing }
@@ -86,7 +84,6 @@ SimpleButtonMorph >> actionSelector: aSymbolOrString [
 		ifTrue: [^ actionSelector := nil].
 
 	actionSelector := aSymbolOrString asSymbol.
-
 ]
 
 { #category : #menu }
@@ -98,7 +95,6 @@ SimpleButtonMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 	aCustomMenu add: 'change arguments' selector: #setArguments.
 	aCustomMenu add: 'change when to act' selector: #setActWhen.
 	self addTargetingMenuItems: aCustomMenu hand: aHandMorph.
-
 ]
 
 { #category : #menu }
@@ -119,27 +115,23 @@ SimpleButtonMorph >> addTargetingMenuItems: aCustomMenu hand: aHandMorph [
 SimpleButtonMorph >> arguments [
 
 	^ arguments
-
 ]
 
 { #category : #accessing }
 SimpleButtonMorph >> arguments: aCollection [
 
 	arguments := aCollection asArray copy.
-
 ]
 
 { #category : #menu }
 SimpleButtonMorph >> clearTarget [
 
 	target := nil.
-
 ]
 
 { #category : #initialization }
 SimpleButtonMorph >> defaultLabel [
 	^ 'Flash'.
-
 ]
 
 { #category : #button }
@@ -174,7 +166,6 @@ SimpleButtonMorph >> fitContents [
 { #category : #'event handling' }
 SimpleButtonMorph >> handlesMouseDown: evt [
 	^  true
-
 ]
 
 { #category : #'event handling' }
@@ -232,7 +223,6 @@ SimpleButtonMorph >> label: aString font: aFont [
 	label position: self center - (label extent // 2).
 	self addMorph: label.
 	label lock
-
 ]
 
 { #category : #accessing }
@@ -242,7 +232,6 @@ SimpleButtonMorph >> labelString: aString [
 		ifNotNil:
 			[label contents: aString.
 			self fitContents]
-
 ]
 
 { #category : #'event handling' }
@@ -288,8 +277,6 @@ SimpleButtonMorph >> mouseUp: evt [
 				ifTrue: [ actWhen == #buttonUp 
 							ifTrue: [self doButtonAction]  ]
 				ifFalse: [ self mouseLeave: evt "This is a balk. Note that we have left." ]]
-		
-
 ]
 
 { #category : #menu }
@@ -312,7 +299,6 @@ SimpleButtonMorph >> setActionSelector [
 the target when this button is pressed' translated
 		initialAnswer: actionSelector.
 	newSel isEmptyOrNil ifFalse: [self actionSelector: newSel].
-
 ]
 
 { #category : #menu }
@@ -334,7 +320,6 @@ when this button is pressed separated by periods' translated
 { #category : #initialization }
 SimpleButtonMorph >> setDefaultLabel [
 	self label: self defaultLabel
-
 ]
 
 { #category : #menu }
@@ -345,7 +330,6 @@ SimpleButtonMorph >> setLabel [
 		request: 'Please enter a new label for this button' translated
 		initialAnswer: self label.
 	newLabel isEmptyOrNil ifFalse: [self labelString: newLabel].
-
 ]
 
 { #category : #menu }
@@ -360,14 +344,12 @@ SimpleButtonMorph >> setTarget: evt [
 SimpleButtonMorph >> target [
 
 	^ target
-
 ]
 
 { #category : #accessing }
 SimpleButtonMorph >> target: anObject [
 
 	target := anObject
-
 ]
 
 { #category : #theme }
@@ -397,7 +379,6 @@ SimpleButtonMorph >> updateVisualState: evt [
 			((self containsPoint: evt cursorPoint)
 				ifTrue: [oldColor mixed: 0.5 with: Color white]
 				ifFalse: [oldColor])]
-
 ]
 
 { #category : #copying }
@@ -408,7 +389,6 @@ SimpleButtonMorph >> veryDeepFixupWith: deepCopier [
 	target := deepCopier references at: target ifAbsent: [target].
 	arguments := arguments collect: [:each |
 		deepCopier references at: each ifAbsent: [each]].
-
 ]
 
 { #category : #copying }

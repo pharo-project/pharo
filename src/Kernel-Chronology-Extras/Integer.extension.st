@@ -3,7 +3,7 @@ Extension { #name : #Integer }
 { #category : #'*Kernel-Chronology-Extras' }
 Integer >> asYear [
 
- 	^ Year year: self  
+ 	^ Year year: self
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }

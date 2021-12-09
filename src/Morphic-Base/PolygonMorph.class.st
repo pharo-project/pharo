@@ -207,7 +207,6 @@ PolygonMorph class >> fromHandFreehand: hand [
 		ifFalse: [ true ]
 	].
 	^ (poly setVertices: (poly vertices copyWith: p1)) delete
-
 ]
 
 { #category : #'instance creation' }
@@ -490,7 +489,6 @@ PolygonMorph >> bounds: newBounds [
 	Always change extent first then position"
 	
 	self extent: newBounds extent; position: newBounds topLeft
-
 ]
 
 { #category : #'cubic support' }
@@ -580,9 +578,7 @@ PolygonMorph >> closedCubicSlopesOf: knots [
 	(1 to: n1 - 2)
 		reverseDo: [:k | D at: k put: (y at: k)
 					- ((v at: k + 1) * (D at: k + 1)) - ((w at: k + 1) * (D at: n1))].
-	^ D 
-
-
+	^ D
 ]
 
 { #category : #geometry }
@@ -625,7 +621,7 @@ PolygonMorph >> coefficients [
 	curveState ifNotNil: [^ curveState at: 1].
 	^ self vertices size < 1 
 		ifTrue: [ self  ]
-		ifFalse: [ self coefficientsForMoreThanThreePoints ].  
+		ifFalse: [ self coefficientsForMoreThanThreePoints ].
 ]
 
 { #category : #smoothing }
@@ -704,7 +700,6 @@ PolygonMorph >> computeBounds [
 	].
 	self layoutChanged.
 	self changed.
-
 ]
 
 { #category : #smoothing }
@@ -822,7 +817,6 @@ PolygonMorph >> dashedBorder [
 		starting offset.
 		amount to add to offset at each step }
 	Starting offset is usually = 0, but changing it moves the dashes along the curve."
-
 ]
 
 { #category : #dashes }
@@ -870,7 +864,6 @@ PolygonMorph >> deleteVertexAt: anIndex [
 						copyReplaceFrom: anIndex
 						to: anIndex
 						with: #()).
-						
 ]
 
 { #category : #smoothing }
@@ -1120,7 +1113,6 @@ PolygonMorph >> drawOn: aCanvas [
 		[aCanvas drawPolygon: self getVertices fillStyle: self fillStyle ].
 	array := self drawArrowsOn: aCanvas.
 	self drawClippedBorderOn: aCanvas usingEnds: array.
-
 ]
 
 { #category : #drawing }
@@ -1280,7 +1272,6 @@ PolygonMorph >> handleColorAt: vertIndex [
       "This is a backstop for MixedCurveMorph"
 
 	^ Color yellow
-
 ]
 
 { #category : #'event handling' }
@@ -1350,7 +1341,6 @@ PolygonMorph >> intersectionsWith: aRectangle [
 	].
 
 	^retval
-
 ]
 
 { #category : #geometry }
@@ -1869,7 +1859,6 @@ PolygonMorph >> prepareForRotating [
 	"When rotating from a halo, I can do this without a flex shell"
 
 	^ self
-
 ]
 
 { #category : #'rotate scale and flex' }
@@ -1877,7 +1866,6 @@ PolygonMorph >> prepareForScaling [
 	"When scaling from a halo, I can do this without a flex shell"
 
 	^ self
-
 ]
 
 { #category : #private }
@@ -1912,7 +1900,6 @@ PolygonMorph >> reduceVertices [
 PolygonMorph >> referencePosition [ 
 	"Return the current reference position of the receiver"
 	^ self valueOfProperty: #referencePosition ifAbsent: [super referencePosition]
-
 ]
 
 { #category : #caching }
@@ -1925,7 +1912,6 @@ PolygonMorph >> releaseCachedState [
 	curveState := nil.
 	(self hasProperty: #flex) ifTrue:
 		[self removeProperty: #flex].
-
 ]
 
 { #category : #menu }
@@ -1945,8 +1931,7 @@ PolygonMorph >> removeVertex: aVert [
 		[1] -> [ newVertices := { newVertices first . newVertices first } ].
 		[0] -> [ newVertices := { aVert . aVert } ]
 	} otherwise: [].
-	self setVertices: newVertices 
-
+	self setVertices: newVertices
 ]
 
 { #category : #geometry }
@@ -1986,8 +1971,6 @@ PolygonMorph >> rotationDegrees: degrees [
 			withAngle: (degrees - self forwardDirection) degreesToRadians.
 	self setVertices: (vertices collect: [:v | (flex transform: v) - flex offset]).
 	self forwardDirection: degrees.
-
-
 ]
 
 { #category : #geometry }
@@ -2079,7 +2062,6 @@ by which the dashes will move in each step of animation]' translated
 		[^ self stopStepping; dashedBorder: newSpec].
 	(newSpec size = 5 and: [newSpec fourth isNumber and: [newSpec fifth isNumber]]) ifTrue:
 		[^ self dashedBorder: newSpec; startStepping].
-
 ]
 
 { #category : #menu }
@@ -2131,8 +2113,6 @@ PolygonMorph >> straighten [
 PolygonMorph >> toggleHandles [
 
 	handles ifNil: [self addHandles] ifNotNil: [self removeHandles].
-
-
 ]
 
 { #category : #accessing }
@@ -2180,7 +2160,6 @@ PolygonMorph >> transformVerticesFrom: oldOwner to: newOwner [
 	newVertices := vertices collect: [ :ea | newTransform globalPointToLocal:
 		(oldTransform localPointToGlobal: ea) ].
 	self setVertices: newVertices.
-
 ]
 
 { #category : #geometry }

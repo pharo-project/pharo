@@ -25,7 +25,7 @@ NECTestSuperClass >> initialize [
 
 { #category : #tests }
 NECTestSuperClass >> testIt: aString [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #utilities }

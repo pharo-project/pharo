@@ -23,5 +23,4 @@ OSWindowGenericRendererDrawingExample >> redraw [
 		clear;
 		color: Color blue;
 		drawRectangle: (x @ y extent: 20 @ 20)
-	
 ]

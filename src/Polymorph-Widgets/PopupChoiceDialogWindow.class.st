@@ -42,7 +42,6 @@ PopupChoiceDialogWindow class >> taskbarIconName [
 { #category : #actions }
 PopupChoiceDialogWindow >> activate: evt [
 	"Backstop."
-	
 ]
 
 { #category : #accessing }
@@ -63,7 +62,7 @@ PopupChoiceDialogWindow >> choice: anObject [
 PopupChoiceDialogWindow >> choiceMenus [
 	"Answer the value of choiceMenus"
 
-	^ choiceMenus ifNil: [#()] 
+	^ choiceMenus ifNil: [#()]
 ]
 
 { #category : #accessing }
@@ -254,7 +253,6 @@ PopupChoiceDialogWindow >> newChoiceButtonFor: index [
 		enablementSelector: nil)
 		cornerStyle: #square;
 		hResizing: #spaceFill
-		
 ]
 
 { #category : #actions }
@@ -318,8 +316,7 @@ PopupChoiceDialogWindow >> newFilterEntry [
 		help: 'Filters the options according to a matching substring' translated.
 	entry acceptOnCR: false.
 	entry crAction: (MessageSend receiver: self selector: #ok).
-	^entry 
-
+	^entry
 ]
 
 { #category : #actions }

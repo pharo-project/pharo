@@ -407,7 +407,6 @@ MetacelloScriptEngine >> lookupProjectSpecFor: aProjectSpec [
 		ifPresent: [ :existing :new | self resolvePresentProject: existing new: new ].
   
 	^ registration projectSpec
-
 ]
 
 { #category : #accessing }

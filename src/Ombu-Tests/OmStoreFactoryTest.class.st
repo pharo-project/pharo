@@ -38,5 +38,4 @@ OmStoreFactoryTest >> testStoreNamed [
 	"tearDown in test"
 	store flush.
 	store ensureDeleteFile.
-
 ]

@@ -23,7 +23,7 @@ Object >> dragTransferTypeForMorph: dragSource [
 
 { #category : #'*Morphic-Widgets-Basic' }
 Object >> wantsDroppedMorph: aMorph event: anEvent inMorph: destinationLM [ 
-	^false 
+	^false
 ]
 
 { #category : #'*Morphic-Widgets-Basic' }

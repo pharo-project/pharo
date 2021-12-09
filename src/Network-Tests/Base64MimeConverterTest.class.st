@@ -26,7 +26,6 @@ Base64MimeConverterTest >> testBase64Encoded [
 	| encoded |
 	encoded := (Base64MimeConverter mimeEncode: message) contents.
 	self assert: encoded equals: 'Hi There!' asByteArray base64Encoded
-	
 ]
 
 { #category : #tests }

@@ -40,7 +40,7 @@ RBBrowserSourceRefactoringHelp class >> extractMethodToComponentRefactoring [
 RBBrowserSourceRefactoringHelp class >> extractToTemporaryRefactoring [
 	^HelpTopic
 		title: 'Extract to temporary'
-		contents: RBExtractToTemporaryRefactoring comment
+		contents: RBExtractToTemporaryTransformation comment
 
 ]
 

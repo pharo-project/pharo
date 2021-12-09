@@ -38,7 +38,6 @@ PluggableTreeMorph >> acceptDroppingMorph: aMorph event: evt [
 		
 	evt hand releaseMouseFocus: self.
 	Cursor normal show.
-
 ]
 
 { #category : #'node access' }
@@ -206,8 +205,6 @@ PluggableTreeMorph >> selectPath: path in: listItem [
 		].
 	].
 	^self setSelectedMorph: nil
-
-
 ]
 
 { #category : #selection }

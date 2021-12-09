@@ -50,10 +50,6 @@ MouseClickState >> checkTimeoutFrom: aHand [
 	self doubleClickTimeout.
 	
 	clickState == #firstClickTimedOut ifTrue:[ self click ]
-	
-
-
-
 ]
 
 { #category : #'event handling' }
@@ -74,7 +70,7 @@ MouseClickState >> client: aMorph click: aClickSelector dblClick: aDblClickSelec
 	firstClickDown := firstClickEvent.
 	firstClickTime := firstClickEvent timeStamp.
 	clickState := #firstClickDown.
-	localStamp := Time millisecondClockValue. 
+	localStamp := Time millisecondClockValue.
 ]
 
 { #category : #'event handling' }
@@ -182,12 +178,10 @@ MouseClickState >> handleEvent: evt from: aHand [
 	].
 
 	^true
-
 ]
 
 { #category : #printing }
 MouseClickState >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $[; print: clickState; nextPut: $]
-
 ]

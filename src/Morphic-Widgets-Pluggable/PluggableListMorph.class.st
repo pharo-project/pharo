@@ -99,7 +99,6 @@ PluggableListMorph class >> on: anObject list: getListSel selected: getSelection
 		changeSelected: setSelectionSel
 		menu: getMenuSel
 		keystroke: #arrowKey:from:		"default"
-
 ]
 
 { #category : #'instance creation' }
@@ -113,7 +112,6 @@ PluggableListMorph class >> on: anObject list: getListSel selected: getSelection
 		changeSelected: setSelectionSel
 		menu: getMenuSel
 		keystroke: keyActionSel
-
 ]
 
 { #category : #'drag and drop' }
@@ -137,8 +135,6 @@ PluggableListMorph >> acceptDroppingMorph: aMorph event: evt [
 	self resetPotentialDropRow.
 	evt hand releaseMouseFocus: self.
 	Cursor normal show.
-
-
 ]
 
 { #category : #menus }
@@ -215,7 +211,7 @@ PluggableListMorph >> backgroundColorFor: aRow [
 { #category : #'background coloring' }
 PluggableListMorph >> backgroundColoringBlockOrSelector [
 
-	^ backgroundColoringBlockOrSelector 
+	^ backgroundColoringBlockOrSelector
 ]
 
 { #category : #'background coloring' }
@@ -228,7 +224,6 @@ PluggableListMorph >> backgroundColoringBlockOrSelector: aSelector [
 PluggableListMorph >> basicGetListElementSelector: aSymbol [
 	"specify a selector that can be used to obtain a single element in the underlying list"
 	getListElementSelector := aSymbol.
-
 ]
 
 { #category : #'event handling' }
@@ -341,7 +336,6 @@ PluggableListMorph >> deriveHScrollRange [
 										with: list first 
 										with: list last .
 		].
-
 ]
 
 { #category : #selection }
@@ -425,8 +419,7 @@ PluggableListMorph >> extent: newExtent [
 	
 	"Change listMorph's bounds to the new width. It is either the size
 	of the widest list item, or the size of self, whatever is bigger"
-	self listMorph width: ((self width max: listMorph hUnadjustedScrollRange) + 20). 
-
+	self listMorph width: ((self width max: listMorph hUnadjustedScrollRange) + 20).
 ]
 
 { #category : #geometry }
@@ -449,13 +442,11 @@ PluggableListMorph >> focusBounds [
 PluggableListMorph >> font [
 
 	^ self listMorph font
-
 ]
 
 { #category : #initialization }
 PluggableListMorph >> font: aFontOrNil [
 	self listMorph font: aFontOrNil.
-
 ]
 
 { #category : #'model access' }
@@ -568,8 +559,7 @@ PluggableListMorph >> getSelectionListSelector: getListSel [
 { #category : #scrolling }
 PluggableListMorph >> hExtraScrollRange [
 	"Return the amount of extra blank space to include to the right of the scroll content."
-	^5 
-
+	^5
 ]
 
 { #category : #scrolling }
@@ -610,7 +600,6 @@ PluggableListMorph >> handleMouseMove: anEvent [
 			at: Time millisecondClockValue
 			arguments: {anEvent copy resetHandlerFields}
 			stepTime: 1].
-
 ]
 
 { #category : #events }
@@ -762,7 +751,6 @@ PluggableListMorph >> listForSearching [
 				ifNil: [ #() ]
 				ifNotNil: [ 
 					(1 to: self getListSize) collect: [:index | self getListItem: index ]]]
-			
 ]
 
 { #category : #initialization }
@@ -1131,7 +1119,6 @@ PluggableListMorph >> on: anObject list: listSel primarySelection: getSelectionS
 	self on: anObject list: listSel selected: getSelectionSel changeSelected: setSelectionSel menu: getMenuSel keystroke: keyActionSel.
 	self beMultipleSelection.
 	^ self
-
 ]
 
 { #category : #initialization }
@@ -1167,7 +1154,6 @@ PluggableListMorph >> potentialDropItem [
 PluggableListMorph >> potentialDropRow [
 	"return the row of the item that the most recent drop hovered over, or 0 if there is no potential drop target"
 	^potentialDropRow ifNil: [ 0 ].
-
 ]
 
 { #category : #'scroll cache' }
@@ -1175,7 +1161,6 @@ PluggableListMorph >> resetHScrollRange [
 
 	hScrollRangeCache := nil.
 	self deriveHScrollRange.
-
 ]
 
 { #category : #'scroll cache' }
@@ -1193,8 +1178,6 @@ PluggableListMorph >> resetHScrollRangeIfNecessary [
 		(hScrollRangeCache fifth == list last)
 	]])
 		ifFalse:[self deriveHScrollRange].
-
-
 ]
 
 { #category : #selection }
@@ -1257,8 +1240,6 @@ PluggableListMorph >> scrollDeltaHeight [
 PluggableListMorph >> scrollDeltaWidth [
 "A guess -- assume that the width of a char is approx 1/2 the height of the font"
 	^ self scrollDeltaHeight // 2
-
-
 ]
 
 { #category : #selection }
@@ -1341,7 +1322,7 @@ PluggableListMorph >> selection: item [
 PluggableListMorph >> selectionColor [
 	"Answer the colour to use for selected items."
 
-	^ selectionColor ifNil: [self theme selectionColor] 
+	^ selectionColor ifNil: [self theme selectionColor]
 ]
 
 { #category : #accessing }
@@ -1564,7 +1545,7 @@ PluggableListMorph >> startDrag: evt [
 	[evt hand grabMorph: transferMorph ] 
 		ensure: [
 			Cursor normal show.
-			evt hand releaseMouseFocus: self] 
+			evt hand releaseMouseFocus: self]
 ]
 
 { #category : #'drag and drop' }
@@ -1602,7 +1583,6 @@ PluggableListMorph >> textColor [
 	^ self 
 		valueOfProperty: #textColor 
 		ifAbsent: [ self theme textColor ]
-
 ]
 
 { #category : #initialization }
@@ -1616,14 +1596,12 @@ PluggableListMorph >> textColor: aColor [
 PluggableListMorph >> textHighlightColor [
 	"Answer my default text highlight color."
 	^self valueOfProperty: #textHighlightColor ifAbsent: [ Color red ].
-
 ]
 
 { #category : #initialization }
 PluggableListMorph >> textHighlightColor: aColor [
 	"Set my default text highlight color."
 	self setProperty: #textHighlightColor toValue: aColor.
-
 ]
 
 { #category : #updating }
@@ -1635,7 +1613,7 @@ PluggableListMorph >> themeChanged [
 		self selectionColor: self theme selectionColor
 	].
 
-	super themeChanged 
+	super themeChanged
 ]
 
 { #category : #drawing }
@@ -1688,7 +1666,6 @@ PluggableListMorph >> updateList [
 	].
 	
 	self searchedElement: nil.
-
 ]
 
 { #category : #'debug and other' }
@@ -1707,7 +1684,6 @@ PluggableListMorph >> vExtraScrollRange [
 	"Return the amount of extra blank space to include below the bottom of the scroll content."
 
 	^8
-
 ]
 
 { #category : #scrolling }
@@ -1715,7 +1691,6 @@ PluggableListMorph >> vUnadjustedScrollRange [
 	"Return the height extent of the receiver's submorphs."
 	(scroller submorphs size > 0) ifFalse:[ ^0 ].
 	^(scroller submorphs last fullBounds bottom)
-
 ]
 
 { #category : #updating }

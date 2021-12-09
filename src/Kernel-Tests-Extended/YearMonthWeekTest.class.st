@@ -26,7 +26,7 @@ YearMonthWeekTest >> setUp [
 YearMonthWeekTest >> tearDown [
 	Week startDay: restoredStartDay.
 	DateAndTime localTimeZone: restoredTimeZone.
-	super tearDown 
+	super tearDown
 ]
 
 { #category : #tests }

@@ -573,7 +573,6 @@ SDL2Constants class >> initializeAudio [
 	SDL_AUDIO_ALLOW_CHANNELS_CHANGE     := 16r00000004.
 	SDL_AUDIO_ALLOW_SAMPLES_CHANGE      := 16r00000008.
 	SDL_AUDIO_ALLOW_ANY_CHANGE         := (SDL_AUDIO_ALLOW_FREQUENCY_CHANGE|SDL_AUDIO_ALLOW_FORMAT_CHANGE|SDL_AUDIO_ALLOW_CHANNELS_CHANGE|SDL_AUDIO_ALLOW_SAMPLES_CHANGE).
-
 ]
 
 { #category : #'class initialization' }
@@ -663,7 +662,6 @@ SDL2Constants class >> initializeEvent [
      *  This last event is only for bounding internal arrays
      */"
     SDL_LASTEVENT    := 16rFFFF
-
 ]
 
 { #category : #'class initialization' }
@@ -694,7 +692,6 @@ SDL2Constants class >> initializeGameController [
 	SDL_CONTROLLER_BUTTON_DPAD_LEFT := 13.
 	SDL_CONTROLLER_BUTTON_DPAD_RIGHT := 14.
 	SDL_CONTROLLER_BUTTON_MAX := 15.
-	
 ]
 
 { #category : #'class initialization' }
@@ -979,7 +976,6 @@ SDL2Constants class >> initializeMouse [
 	SDL_BUTTON_RMASK	:= self SDL_BUTTON: SDL_BUTTON_RIGHT.
 	SDL_BUTTON_X1MASK	:= self SDL_BUTTON: SDL_BUTTON_X1.
 	SDL_BUTTON_X2MASK  := self SDL_BUTTON: SDL_BUTTON_X2.
-
 ]
 
 { #category : #'class initialization' }
@@ -1107,8 +1103,6 @@ SDL2Constants class >> initializeRenderer [
 	SDL_BLENDFACTOR_ONE_MINUS_DST_COLOR := 16r8. "1-dstR. 1-dstG. 1-dstB. 1-dstA"
 	SDL_BLENDFACTOR_DST_ALPHA           := 16r9. "dstA. dstA. dstA. dstA"
 	SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA := 16rA. "1-dstA. 1-dstA. 1-dstA. 1-dstA"
-
-
 ]
 
 { #category : #'class initialization' }
@@ -1119,7 +1113,6 @@ SDL2Constants class >> initializeTexture [
       SDL_TEXTUREACCESS_STATIC := 0.
       SDL_TEXTUREACCESS_STREAMING := 1.
       SDL_TEXTUREACCESS_TARGET := 2.
-
 ]
 
 { #category : #'class initialization' }

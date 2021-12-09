@@ -35,7 +35,6 @@ Schedule >> between: aStart and: anEnd do: aBlock [
 		i := i + 1.
 		i > schedule size ifTrue: [i := 1]]
 .
-
 ]
 
 { #category : #enumerating }
@@ -63,25 +62,23 @@ Schedule >> includes: aDateAndTime [
 	dt := aDateAndTime asDateAndTime.
 	self scheduleDo: [ :e | e = dt ifTrue: [^true] ].
 	^ false.
-
 ]
 
 { #category : #enumerating }
 Schedule >> schedule [
-	^ schedule 
+	^ schedule
 ]
 
 { #category : #enumerating }
 Schedule >> schedule: anArrayOfDurations [
 
 	schedule := anArrayOfDurations
-
 ]
 
 { #category : #enumerating }
 Schedule >> scheduleDo: aBlock [
 
-	self between: (self start) and: (self end) do: aBlock. 
+	self between: (self start) and: (self end) do: aBlock.
 ]
 
 { #category : #private }

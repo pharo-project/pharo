@@ -124,7 +124,6 @@ OverflowRowMorph >> fitBaseMorphs [
 	self
 		removeAllMorphs;
 		addAllMorphs: proposed submorphs
-	
 ]
 
 { #category : #showing }

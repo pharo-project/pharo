@@ -120,8 +120,7 @@ OSSDL2BackendWindow >> convertCursor: aCursor [
 			result at: lineResultPosition + i put: (bits byteAt: lineBitmapPosition + i)]].
 	
 
-	^ result 
-	
+	^ result
 ]
 
 { #category : #cursor }
@@ -148,7 +147,6 @@ OSSDL2BackendWindow >> convertCursor: cursor withMask: mask andScale: scale [
 				             h: extent y
 				             hotX: offset x negated
 				             hotY: offset y negated ].
-	
 ]
 
 { #category : #'event handling' }
@@ -306,7 +304,6 @@ OSSDL2BackendWindow >> initWithHandle: aHandle attributes: attributes [
 OSSDL2BackendWindow >> initialize [
 	super initialize.
 	self class initializeSlots: self
-
 ]
 
 { #category : #'text input' }
@@ -545,7 +542,6 @@ OSSDL2BackendWindow >> updateToNewResolution [
 	renderer destroy.
 	renderer validate.
 	renderer updateAll.
-
 ]
 
 { #category : #accessing }

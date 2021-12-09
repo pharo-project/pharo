@@ -59,5 +59,5 @@ IRJump >> successor: succ [
 { #category : #accessing }
 IRJump >> successorSequences [
 
-	^ {destination. successor} 
+	^ {destination. successor}
 ]

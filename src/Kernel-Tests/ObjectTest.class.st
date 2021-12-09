@@ -46,7 +46,6 @@ ObjectTest >> testBeRecursivelyReadOnlyObject [
 	array beRecursivelyReadOnlyObject.
 	self should: [ array at: 1 put: 2 ] raise: ModificationForbidden.
 	self should: [ array second  at: 1 put: 2 ] raise: ModificationForbidden.
-
 ]
 
 { #category : #'tests - write barrier' }
@@ -142,7 +141,6 @@ ObjectTest >> testCaseOf [
 			[#case1]->[ 1 ].
  			[#case2]->[ 2 ] }
 		] raise: Error
-
 ]
 
 { #category : #tests }

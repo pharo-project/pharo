@@ -25,7 +25,6 @@ SimpleBorderStyle >> baseColor: aColor [
 	baseColor := cc.
 	self releaseCachedState.
 	self color: cc.
-
 ]
 
 { #category : #accessing }
@@ -76,7 +75,6 @@ SimpleBorderStyle >> initialize [
 	super initialize.
 	width := 1.
 	color := Color transparent
-	
 ]
 
 { #category : #accessing }

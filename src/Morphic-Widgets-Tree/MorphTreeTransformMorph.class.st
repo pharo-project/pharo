@@ -18,7 +18,6 @@ MorphTreeTransformMorph >> bottomVisibleRowForCanvas: aCanvas [
      "return the bottom visible row in aCanvas's clip rectangle"
 	
 	^ self rowAtLocation: (aCanvas clipRect  bottomRight).
-
 ]
 
 { #category : #drawing }
@@ -26,7 +25,6 @@ MorphTreeTransformMorph >> bottomVisibleRowForCanvas: aCanvas startingAt: aPos [
      "return the bottom visible row in aCanvas's clip rectangle"
 	
 	^ self rowAtLocation: (aCanvas clipRect  bottomRight)  startingAt: aPos
-
 ]
 
 { #category : #drawing }
@@ -81,7 +79,6 @@ MorphTreeTransformMorph >> drawSubmorphsOn: aCanvas [
 		smoothing: smoothing.
 	owner withTreeLines ifTrue: [owner drawLinesOn: aCanvas].
 	owner enabled ifFalse: [ aCanvas fillRectangle: owner innerBounds fillStyle: (owner paneColor alpha: 0.2) ]
-
 ]
 
 { #category : #geometry }
@@ -106,8 +103,7 @@ MorphTreeTransformMorph >> localSubmorphBounds [
 	localBounds ifNil: [ 
 		self hasSubmorphs ifFalse: [^ nil].
 		localBounds :=  self firstSubmorph fullBounds topLeft corner: owner maxNodeWidth @ (self lastSubmorph fullBounds bottom + owner extraScrollRange)].
-	^ localBounds 
-
+	^ localBounds
 ]
 
 { #category : #private }
@@ -123,12 +119,10 @@ MorphTreeTransformMorph >> privateAddAllMorphs: aCollection atIndex: index [
 		m fullBounds. 
 		m privateOwner: self].
 	self layoutChanged.
-
 ]
 
 { #category : #'change reporting' }
 MorphTreeTransformMorph >> privateInvalidateMorph: aMorph [
-
 ]
 
 { #category : #drawing }
@@ -158,7 +152,6 @@ MorphTreeTransformMorph >> submorphBounds [
 	"Private. Compute the actual full bounds of the receiver, optimized for speed"
 	self hasSubmorphs ifFalse: [^ nil].
 	^ self firstSubmorph topLeft corner: owner scroller bounds bottomLeft + (0@ owner extraScrollRange)
-
 ]
 
 { #category : #drawing }
@@ -166,7 +159,6 @@ MorphTreeTransformMorph >> topVisibleRowForCanvas: aCanvas [
      "return the top visible row in aCanvas's clip rectangle"
 
         ^ self rowAtLocation: (aCanvas clipRect topLeft).
-
 ]
 
 { #category : #drawing }
@@ -174,7 +166,6 @@ MorphTreeTransformMorph >> topVisibleRowForCanvas: aCanvas startingAt: aPos [
      "return the top visible row in aCanvas's clip rectangle"
 
         ^ self rowAtLocation: (aCanvas clipRect topLeft) startingAt: aPos.
-
 ]
 
 { #category : #testing }

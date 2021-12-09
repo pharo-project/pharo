@@ -128,7 +128,6 @@ UUIDGenerator >> initialize [
 	lock := Mutex new.
 	node := self computeNodeIdentifier.
 	counter := self nextRandom16
-	
 ]
 
 { #category : #accessing }
@@ -168,7 +167,7 @@ UUIDGenerator >> placeFields: uuid [
 			uint16: self nextCounter16;
 			uint16: self nextRandom16;
 			nextPutAll: node.
-		self setVariantAndVersion: uuid ] 
+		self setVariantAndVersion: uuid ]
 ]
 
 { #category : #accessing }

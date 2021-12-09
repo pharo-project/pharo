@@ -25,7 +25,7 @@ RPackageObsoleteTest >> testAnnouncementClassRemovedIsRaisedOnRemoveFromSystem [
 	self deny: notRun.
 	foo removeFromSystem.
 	self assert: notRun ]
-ensure: [ SystemAnnouncer uniqueInstance unsubscribe: self ]. 
+ensure: [ SystemAnnouncer uniqueInstance unsubscribe: self ].
 ]
 
 { #category : #tests }
@@ -59,6 +59,4 @@ RPackageObsoleteTest >> testMethodPackageOfRemovedClass [
 	method := foo>>#bar.
 	foo removeFromSystem.
 	self deny: (pack includesClassNamed: #FooForTest2 )
-	
-	
 ]

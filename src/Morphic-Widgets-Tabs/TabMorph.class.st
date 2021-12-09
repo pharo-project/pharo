@@ -387,7 +387,6 @@ TabMorph >> addLabel [
 			leftOffset: self labelRightOffset;
 			topOffset: (label height negated - self labelBottomOffset) + 2;
 			yourself)
-			
 ]
 
 { #category : #private }

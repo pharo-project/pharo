@@ -36,7 +36,6 @@ MorphicEventDispatcher >> dispatchDefault: anEvent with: aMorph [
 	inside ifFalse:[inside := aMorph containsPoint: anEvent position event: anEvent].
 	inside ifTrue:[^aMorph handleEvent: anEvent].
 	^#rejected
-
 ]
 
 { #category : #dispatching }
@@ -127,7 +126,6 @@ MorphicEventDispatcher >> dispatchWindowEvent: anEvent with: aMorph [
 	aMorph isWorldMorph ifFalse: [^#rejected].
 	anEvent wasHandled ifTrue:[^self].
 	^aMorph handleEvent: anEvent
-
 ]
 
 { #category : #'dispatching-callback' }
@@ -150,7 +148,7 @@ MorphicEventDispatcher >> handleKeyDown: anEvent [
 { #category : #'dispatching-callback' }
 MorphicEventDispatcher >> handleKeyUp: anEvent [ 
 
-	^ self dispatchDefault: anEvent with: morph	
+	^ self dispatchDefault: anEvent with: morph
 ]
 
 { #category : #'dispatching-callback' }
@@ -188,13 +186,12 @@ MorphicEventDispatcher >> handleMouseOver: anEvent [
 
 { #category : #'dispatching-callback' }
 MorphicEventDispatcher >> handleMouseUp: anEvent [ 
-	^ self dispatchDefault: anEvent with: morph	
+	^ self dispatchDefault: anEvent with: morph
 ]
 
 { #category : #'dispatching-callback' }
 MorphicEventDispatcher >> handleMouseWheel: anEvent [ 
 	^ self dispatchDefault: anEvent with: morph
-	
 ]
 
 { #category : #'dispatching-callback' }

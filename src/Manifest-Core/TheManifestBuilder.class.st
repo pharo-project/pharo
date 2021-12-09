@@ -44,7 +44,6 @@ TheManifestBuilder class >> falsePositiveMiddleTag [
 TheManifestBuilder class >> hasManifestFor: aItem [
 
 	^  (self new manifestOf: aItem) isNil not
-		
 ]
 
 { #category : #'instance creation' }
@@ -52,7 +51,6 @@ TheManifestBuilder class >> hasPackageNamed: aPackageName [
 
 	^ self allManifestClasses 
 		anySatisfy: [:each | each category = aPackageName  ]
-	
 ]
 
 { #category : #'accessing - manifest' }
@@ -89,8 +87,7 @@ TheManifestBuilder class >> of: aItem [
 	mb := self new. 
 	(mb manifestOf: aItem) 
 			ifNil: [mb createManifestOf: aItem].	
-	^ mb	
-
+	^ mb
 ]
 
 { #category : #'instance creation' }
@@ -161,7 +158,6 @@ TheManifestBuilder >> addAllFalsePositive: fp of: ruleId version: versionId [
 	fp do: [:each |
 		 (self containsToDo: each onRule: ruleId version: versionId)
 		ifTrue: [ self removeToDo: each of:  ruleId version: versionId ]]
-	
 ]
 
 { #category : #private }
@@ -185,7 +181,7 @@ TheManifestBuilder >> addAllToDo: aSet of: ruleId version: versionId [
 
 	| selector |
 	selector := self selectorToDoOf: ruleId version: versionId. 
-	self addAllItem: aSet selector: selector. 
+	self addAllItem: aSet selector: selector.
 ]
 
 { #category : #'adding/removing' }
@@ -195,7 +191,7 @@ TheManifestBuilder >> addFalsePositive: fp of: ruleId version: versionId [
 	selector := self selectorFalsePositiveOf: ruleId version: versionId. 
 	self addItem: fp selector: selector.	
 	(self containsToDo: fp onRule: ruleId version: versionId)
-		ifTrue: [self removeToDo: fp of:  ruleId version: versionId]. 
+		ifTrue: [self removeToDo: fp of:  ruleId version: versionId].
 ]
 
 { #category : #private }
@@ -212,8 +208,6 @@ TheManifestBuilder >> addRejectClass: aClass [
 		ifTrue: [ ^ self ].
 	falsePositives add: {aClass asRingDefinition arrayStringForManifest. DateAndTime current asString}.
 	self compileSelector:  (self class rejectClassesTag) returnValue: (self buildArrayString: falsePositives)
-	
-	
 ]
 
 { #category : #'adding/removing' }
@@ -224,7 +218,6 @@ TheManifestBuilder >> addRejectRule: ruleId [
 	nfp add: ruleId.
 	nfp := nfp asArray.
 	self compileSelector: (self class rejectRulesTag) returnValue: nfp asString
-
 ]
 
 { #category : #'adding/removing' }
@@ -247,14 +240,11 @@ TheManifestBuilder >> addTruePositive: fp of: ruleId version: versionId [
 		ifTrue: [ self removeToDo: fp of:  ruleId version: versionId ]. 
 	(self containsFalsePositive: fp onRule: ruleId version: versionId)
 		ifTrue: [ self removeFalsePositive: fp of:  ruleId version: versionId ]
-
-	
-	
 ]
 
 { #category : #accessing }
 TheManifestBuilder >> browsedEnvironment [
-	^manifestClass environment 
+	^manifestClass environment
 ]
 
 { #category : #private }
@@ -279,11 +269,6 @@ TheManifestBuilder >> cleanUp [
 	self manifest class methodsDo: [ :method |
 		(method selector asString beginsWith: tagfp)
 				ifTrue: [self removeObsoleteFalsePositiveOf: method] ]
-	
-	
-
-
-
 ]
 
 { #category : #private }
@@ -313,7 +298,7 @@ TheManifestBuilder >> compileSelector: selector returnValue: aLiteral classified
 TheManifestBuilder >> containsFalsePositive: aItem onRule: ruleId version: versionId [
 
 	^  (self hasFalsePositiveOf: ruleId version: versionId) 
-			and: [ (self falsePositiveOf: ruleId version: versionId) anySatisfy: [ :fp | fp = aItem ]] 
+			and: [ (self falsePositiveOf: ruleId version: versionId) anySatisfy: [ :fp | fp = aItem ]]
 ]
 
 { #category : #manifest }
@@ -333,14 +318,14 @@ TheManifestBuilder >> containsToDo: aItem onRule: ruleId version: versionId [
 
 	^  (self hasToDoOf: ruleId version: versionId) 
 		and: [(self toDoOf: ruleId version: versionId) 
-			anySatisfy: [ :fp| fp = aItem ]] 
+			anySatisfy: [ :fp| fp = aItem ]]
 ]
 
 { #category : #manifest }
 TheManifestBuilder >> containsTruePositive: aItem onRule: ruleId version: versionId [
 
 	^  (self hasTruePositiveOf: ruleId version: versionId) 
-		and: [(self truePositiveOf: ruleId version: versionId) anySatisfy: [ :fp| fp = aItem ]] 
+		and: [(self truePositiveOf: ruleId version: versionId) anySatisfy: [ :fp| fp = aItem ]]
 ]
 
 { #category : #manifest }
@@ -370,8 +355,6 @@ TheManifestBuilder >> dateOf: ringobject forSelector: aSelector [
 
 	critics := self manifest perform: aSelector.
 	^ ((critics detect: [:each | ((self definitionClassFor: each first first) manifestReadOn: (each first at: 2)) = ringobject ]) at: 2) asDateAndTime
-		
-		
 ]
 
 { #category : #manifest }
@@ -381,8 +364,6 @@ TheManifestBuilder >> dateOfFalsePositive: aItem onRule: ruleId version: version
 		ifFalse: [^ self].
 		
 	^ self dateOf: ( aItem asRingDefinition) forSelector:  (self selectorFalsePositiveOf: ruleId version: versionId)
-		
-		
 ]
 
 { #category : #manifest }
@@ -391,8 +372,6 @@ TheManifestBuilder >> dateOfToDo: aItem onRule: ruleId version: versionId [
 	 (self hasToDoOf: ruleId version: versionId)
 		ifFalse: [^ self].
 	^ self dateOf: ( aItem asRingDefinition) forSelector:  (self selectorToDoOf: ruleId version: versionId)
-		
-		
 ]
 
 { #category : #manifest }
@@ -401,8 +380,6 @@ TheManifestBuilder >> dateOfTruePositive: aItem onRule: ruleId version: versionI
 	(self hasTruePositiveOf: ruleId version: versionId)
 		ifFalse: [^ self].
 	^ self dateOf: ( aItem asRingDefinition) forSelector:  (self selectorTruePositiveOf: ruleId version: versionId)
-		
-		
 ]
 
 { #category : #private }
@@ -432,14 +409,12 @@ TheManifestBuilder >> hasFalsePositiveOf: ruleId version: versionId [
 
 { #category : #manifest }
 TheManifestBuilder >> hasToDoOf: ruleId version: versionId [
-	^ self manifest respondsTo: (self selectorToDoOf: ruleId version: versionId)  
-	
+	^ self manifest respondsTo: (self selectorToDoOf: ruleId version: versionId)
 ]
 
 { #category : #manifest }
 TheManifestBuilder >> hasTruePositiveOf: ruleId version: versionId [
-	^ self manifest respondsTo: (self selectorTruePositiveOf: ruleId version: versionId)  
-	
+	^ self manifest respondsTo: (self selectorTruePositiveOf: ruleId version: versionId)
 ]
 
 { #category : #comparing }
@@ -451,21 +426,18 @@ TheManifestBuilder >> hash [
 TheManifestBuilder >> installFalsePositiveOf: ruleId version: versionId [
 
 	self compileSelector: (self selectorFalsePositiveOf: ruleId version: versionId) returnValue: '#()'
-
 ]
 
 { #category : #manifest }
 TheManifestBuilder >> installToDoOf: ruleId version: versionId [
 
 	self compileSelector: (self selectorToDoOf: ruleId version: versionId) returnValue: '#()'
-
 ]
 
 { #category : #manifest }
 TheManifestBuilder >> installTruePositiveOf: ruleId version: versionId [
 	
 	self compileSelector: (self selectorTruePositiveOf: ruleId version: versionId) returnValue: '#()'
-
 ]
 
 { #category : #manifest }
@@ -484,8 +456,6 @@ TheManifestBuilder >> manifest [
 { #category : #accessing }
 TheManifestBuilder >> manifestClass: aClass [
 	 manifestClass := aClass
-		
-
 ]
 
 { #category : #accessing }
@@ -509,14 +479,11 @@ TheManifestBuilder >> printOn: aStream [
 { #category : #manifest }
 TheManifestBuilder >> rejectClasses [
 	^ self unwrap: (self manifest rejectClasses)
-
 ]
 
 { #category : #manifest }
 TheManifestBuilder >> rejectRules [
 	^ self manifest rejectRules
-	
-
 ]
 
 { #category : #'adding/removing' }
@@ -525,7 +492,6 @@ TheManifestBuilder >> removeAllFalsePositive: aSet of: ruleId version: versionId
 	| selector |
 	selector := self selectorFalsePositiveOf:ruleId version: versionId. 
 	self removeAllItem: aSet selector: selector.
-	
 ]
 
 { #category : #private }
@@ -553,7 +519,6 @@ TheManifestBuilder >> removeAllToDo: fp of: ruleId version: versionId [
 	| selector |
 	selector := self selectorToDoOf: ruleId version: versionId. 
 	self removeAllItem: fp selector: selector.
-	
 ]
 
 { #category : #'adding/removing' }
@@ -562,8 +527,6 @@ TheManifestBuilder >> removeFalsePositive: fp of: ruleId version: versionId [
 	| selector |
 	selector := self selectorFalsePositiveOf: ruleId version: versionId. 
 	self removeItem: fp selector: selector.
-	
-	
 ]
 
 { #category : #private }
@@ -586,7 +549,6 @@ TheManifestBuilder >> removeObsoleteFalsePositiveOf: aMethod [
 	set := set select: [ :each | ((self definitionClassFor: each first first) manifestReadOn:  (each first at: 2)) isDefined ].
 	arrayString := self buildArrayString: set.
 	self compileSelector: aMethod selector returnValue: arrayString
-	
 ]
 
 { #category : #'adding/removing' }
@@ -597,7 +559,6 @@ TheManifestBuilder >> removeRejectClass: aClass [
 	classes := classes reject: [ :each | 
 			((self definitionClassFor: each first first) manifestReadOn:  (each first at: 2)) =  aClass asRingDefinition ].	
 	self compileSelector: (self class rejectClassesTag) returnValue:  (self buildArrayString: classes)
-	
 ]
 
 { #category : #'adding/removing' }
@@ -608,8 +569,6 @@ TheManifestBuilder >> removeRejectRule: ruleId [
 	nfp remove: ruleId ifAbsent: [^ self].
 	nfp := nfp asArray.
 	self compileSelector: (self class rejectRulesTag) returnValue:   nfp asString
-
-	
 ]
 
 { #category : #'adding/removing' }
@@ -618,19 +577,18 @@ TheManifestBuilder >> removeToDo: fp of: ruleId version: versionId [
 	| selector |
 	selector := self selectorToDoOf:ruleId version: versionId. 
 	self removeItem: fp selector: selector.
-	
 ]
 
 { #category : #'adding/removing' }
 TheManifestBuilder >> resetFalsePositiveOf: ruleId version: versionId [
  
-	self  installFalsePositiveOf: ruleId version: versionId. 
+	self  installFalsePositiveOf: ruleId version: versionId.
 ]
 
 { #category : #'adding/removing' }
 TheManifestBuilder >> resetToDoOf: ruleId version: versionId [
  	
-	self installToDoOf: ruleId version: versionId. 
+	self installToDoOf: ruleId version: versionId.
 ]
 
 { #category : #private }

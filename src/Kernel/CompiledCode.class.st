@@ -90,7 +90,6 @@ CompiledCode >> accessesRef: literalVariable [
 { #category : #scanning }
 CompiledCode >> accessesSlot: aSlot [
 	^aSlot isAccessedIn: self
-	
 ]
 
 { #category : #accessing }
@@ -227,7 +226,6 @@ CompiledCode >> frameSize [
 	(self header noMask: 16r20000)
 		ifTrue: [^ SmallFrame]
 		ifFalse: [^ LargeFrame]
-
 ]
 
 { #category : #literals }
@@ -305,7 +303,6 @@ CompiledCode >> hash [
 	^hash
 
 	"(CompiledMethod>>#hash) hash"
-
 ]
 
 { #category : #literals }
@@ -519,8 +516,7 @@ CompiledCode >> localSendsAnySelectorOf: aCollection [
 			ifTrue: [ ^ self messages includesAny: aCollection ]
 	].
 
-	^ false 
-
+	^ false
 ]
 
 { #category : #scanning }
@@ -552,7 +548,6 @@ CompiledCode >> longPrintOn: aStream [
 		self printPrimitiveOn: aStream.
 	].
 	self symbolicBytecodes do: [ :each | each printOn: aStream ] separatedBy: [ aStream cr ]
-
 ]
 
 { #category : #accessing }
@@ -782,7 +777,6 @@ CompiledCode >> sendsAnySelectorOf: aCollection [
 	
 	(self localSendsAnySelectorOf: aCollection) ifTrue: [ ^ true ].
 	^ self innerCompiledBlocksAnySatisfy: [ :cb | cb sendsAnySelectorOf: aCollection ]
-
 ]
 
 { #category : #literals }
@@ -841,7 +835,7 @@ CompiledCode >> sourceNodeForPC: arg1 [
 
 { #category : #'source code management' }
 CompiledCode >> sourcePointer [
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #'source code management' }
@@ -906,7 +900,6 @@ CompiledCode >> withAllBlocksDo: aBlock [
 	
 	aBlock value: self.
 	self allBlocksDo: aBlock
-	
 ]
 
 { #category : #accessing }

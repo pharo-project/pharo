@@ -20,7 +20,6 @@ OCASTSemanticCleaner class >> clean: aMethodNode [
 OCASTSemanticCleaner >> visitBlockNode: aBlockNode [
 	aBlockNode removeProperty: #scope ifAbsent: [ ].
 	super visitBlockNode: aBlockNode.
-	
 ]
 
 { #category : #visiting }

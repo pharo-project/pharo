@@ -131,7 +131,7 @@ ProfStef class >> menuCommandOn: aBuilder [
 		order: 3;
 		action: [ self openPharoZenWorkspace ];
 		icon: ((self iconNamed: #pharoIcon) scaledToSize: 16@16);
-		help: 'Pharo values.' 
+		help: 'Pharo values.'
 ]
 
 { #category : #navigating }

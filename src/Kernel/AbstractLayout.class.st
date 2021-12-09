@@ -48,7 +48,7 @@ AbstractLayout >> checkSanity [
 
 { #category : #api }
 AbstractLayout >> definesSlot: aSlot [ 
-	^self slots identityIncludes: aSlot 
+	^self slots identityIncludes: aSlot
 ]
 
 { #category : #accessing }
@@ -104,7 +104,7 @@ AbstractLayout >> hasFields [
 
 { #category : #api }
 AbstractLayout >> hasSlot: aSlot [
-	^ self allSlots identityIncludes: aSlot 
+	^ self allSlots identityIncludes: aSlot
 ]
 
 { #category : #api }

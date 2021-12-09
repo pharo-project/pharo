@@ -297,7 +297,7 @@ CompilationContext class >> optionsDescription [
 	(- optionParseErrorsNonInteractiveOnly 	'Parse syntactically wrong code in non-interactive mode only')
 	(- optionSkipSemanticWarnings 		'Do not warn about semantic problems (e.g. undeclared vars). Used for syntax highlight parsing')
 		
-	) 
+	)
 ]
 
 { #category : #'options - settings API' }
@@ -480,79 +480,66 @@ CompilationContext >> noPattern: anObject [
 { #category : #options }
 CompilationContext >> optionCleanBlockClosure [
 	^ options includes: #optionCleanBlockClosure
-
 ]
 
 { #category : #options }
 CompilationContext >> optionEmbeddSources [
 	^ options includes: #optionEmbeddSources
-
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineAndOr [
 	^ options includes: #optionInlineAndOr
-
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineCase [
 	^ options includes: #optionInlineCase
-
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineIf [
 	^ options includes: #optionInlineIf
-
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineIfNil [
 	^ options includes: #optionInlineIfNil
-
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineNone [
 	^ options includes: #optionInlineNone
-
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineRepeat [
 	^ options includes: #optionInlineRepeat
-
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineTimesRepeat [
 	^ options includes: #optionInlineTimesRepeat
-
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineToDo [
 	^ options includes: #optionInlineToDo
-
 ]
 
 { #category : #options }
 CompilationContext >> optionInlineWhile [
 	^ options includes: #optionInlineWhile
-
 ]
 
 { #category : #options }
 CompilationContext >> optionLongIvarAccessBytecodes [
 	^ options includes: #optionLongIvarAccessBytecodes
-
 ]
 
 { #category : #options }
 CompilationContext >> optionOptimizeIR [
 	^ options includes: #optionOptimizeIR
-
 ]
 
 { #category : #options }

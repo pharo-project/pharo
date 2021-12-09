@@ -12,7 +12,6 @@ DelayTest >> testSemaphoreNoTimeout [
 		self deny: process isTerminated.
 	] ensure: [sem signal].
 	self assert: process isTerminated.
-
 ]
 
 { #category : #'*Kernel-Tests-Extended' }

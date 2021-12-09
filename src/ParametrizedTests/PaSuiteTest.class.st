@@ -25,7 +25,6 @@ PaSuiteTest >> testCasesHasTheCorrectTests [
 	self 
 		assertCollection: (suite tests collect: [ :each | {each option1. each option2} ])
 		hasSameElements: { { 'a'. 1 }. { 'b'. 2 }. { 'c'. 3 } }
-
 ]
 
 { #category : #tests }
@@ -78,7 +77,6 @@ PaSuiteTest >> testMatrix3ExampleHasTheCorrectTests [
 			{ 'c'. 1. 'y'}. { 'c'. 2. 'y'}. { 'c'. 3. 'y'}.
 			{ 'c'. 1. 'z'}. { 'c'. 2. 'z'}. { 'c'. 3. 'z'}.
 		}
-	
 ]
 
 { #category : #tests }
@@ -101,7 +99,6 @@ PaSuiteTest >> testMatrixExampleHasTheCorrectTests [
 			{ 'a'. 1}. { 'a'. 2}. { 'a'. 3}.
 			{ 'b'. 1}. { 'b'. 2}. { 'b'. 3}.
 			{ 'c'. 1}. { 'c'. 2}. { 'c'. 3}.}
-	
 ]
 
 { #category : #tests }

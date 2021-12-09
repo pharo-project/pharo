@@ -76,6 +76,5 @@ TutorialPlayer >> tutorialPosition [
 { #category : #accessing }
 TutorialPlayer >> tutorialPosition: aTutorialPosition [ 
 
-	tutorialPosition := aTutorialPosition 
-	
+	tutorialPosition := aTutorialPosition
 ]

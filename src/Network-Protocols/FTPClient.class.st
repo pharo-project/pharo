@@ -69,7 +69,6 @@ FTPClient class >> rawResponseCodes [
 	452 'Requested action not taken. Insufficient storage space in system.'
 	552 'Requested file action aborted. Exceeded storage allocation (for current directory or dataset).'
 	553 'Requested action not taken. File name not allowed.')
-
 ]
 
 { #category : #protocol }
@@ -94,7 +93,6 @@ FTPClient >> binary [
 FTPClient >> changeDirectoryTo: newDirName [
 	self sendCommand: 'CWD ' , newDirName.
 	self checkResponse.
-
 ]
 
 { #category : #private }
@@ -103,7 +101,6 @@ FTPClient >> closeDataSocket [
 		ifNotNil: [
 			self dataSocket closeAndDestroy.
 			self dataSocket: nil]
-
 ]
 
 { #category : #private }
@@ -120,14 +117,12 @@ FTPClient >> dataSocket: aSocket [
 FTPClient >> deleteDirectory: dirName [
 	self sendCommand: 'RMD ' , dirName.
 	self checkResponse.
-
 ]
 
 { #category : #protocol }
 FTPClient >> deleteFileNamed: fileName [
 	self sendCommand: 'DELE ' , fileName.
 	self checkResponse.
-
 ]
 
 { #category : #'private - protocol' }
@@ -157,7 +152,6 @@ FTPClient >> getData [
 	self getDataInto: dataStream.
 	self closeDataSocket.
 	^dataStream contents
-
 ]
 
 { #category : #'private - protocol' }
@@ -184,7 +178,6 @@ FTPClient >> getDirectory [
 	self checkResponse.
 	self checkResponse.
 	^dirList
-
 ]
 
 { #category : #protocol }
@@ -196,7 +189,6 @@ FTPClient >> getFileList [
 	self checkResponse.
 	self checkResponse.
 	^dirList
-
 ]
 
 { #category : #protocol }
@@ -212,7 +204,6 @@ FTPClient >> getFileNamed: remoteFileName [
 	data := self getData.
 	self checkResponse.
 	^data
-
 ]
 
 { #category : #protocol }
@@ -242,7 +233,6 @@ FTPClient >> getPartial: limit fileNamed: remoteFileName into: dataStream [
 	data := self get: limit dataInto: dataStream.
 	self abortDataConnection.
 	^data
-
 ]
 
 { #category : #private }
@@ -264,8 +254,6 @@ FTPClient >> login [
 		do: [false]) == false
 		] whileTrue: [
 			(LoginFailedException protocolInstance: self) signal: self lastResponse]
-
-
 ]
 
 { #category : #protocol }
@@ -305,7 +293,6 @@ FTPClient >> lookForCode: code ifDifferent: handleBlock [
 FTPClient >> makeDirectory: newDirName [
 	self sendCommand: 'MKD ' , newDirName.
 	self checkResponse.
-
 ]
 
 { #category : #protocol }
@@ -364,7 +351,6 @@ FTPClient >> putFileStreamContents: fileStream as: fileNameOnServer [
 
 	self checkResponse.
 	self checkResponse.
-
 ]
 
 { #category : #protocol }
@@ -386,7 +372,6 @@ FTPClient >> quit [
 FTPClient >> removeFileNamed: remoteFileName [
 	self sendCommand: 'DELE ', remoteFileName.
 	self checkResponse.
-
 ]
 
 { #category : #protocol }

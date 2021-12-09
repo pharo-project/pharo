@@ -63,7 +63,6 @@ NECPreferences class >> captureNavigationKeys: aBoolean [
 { #category : #accessing }
 NECPreferences class >> caseSensitive [
 	^ caseSensitive
-
 ]
 
 { #category : #accessing }
@@ -104,7 +103,6 @@ NECPreferences class >> defaultUseEnterToAccept [
 { #category : #accessing }
 NECPreferences class >> enabled [
 	^ enabled
-
 ]
 
 { #category : #accessing }

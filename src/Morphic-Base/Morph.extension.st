@@ -145,7 +145,6 @@ Morph >> borderWidth: aNumber [
 	style style = #none
 		ifTrue: [ self borderStyle: (SimpleBorderStyle width: aNumber color: Color transparent) ]
 		ifFalse: [ style width: aNumber. self changed ].
-
 ]
 
 { #category : #'*Morphic-Base' }
@@ -155,7 +154,6 @@ Morph >> changeCellInset: evt [
 		self cellInset: (newPoint - evt cursorPoint) asIntegerPoint // 5].
 	evt hand attachMorph: handle.
 	handle startStepping.
-
 ]
 
 { #category : #'*Morphic-Base' }
@@ -165,7 +163,6 @@ Morph >> changeLayoutInset: evt [
 		self layoutInset: (newPoint - evt cursorPoint) asIntegerPoint // 5].
 	evt hand attachMorph: handle.
 	handle startStepping.
-
 ]
 
 { #category : #'*Morphic-Base' }
@@ -175,7 +172,6 @@ Morph >> changeMaxCellSize: evt [
 		self maxCellSize: (newPoint - evt cursorPoint) asIntegerPoint].
 	evt hand attachMorph: handle.
 	handle startStepping.
-
 ]
 
 { #category : #'*Morphic-Base' }
@@ -185,7 +181,6 @@ Morph >> changeMinCellSize: evt [
 		self minCellSize: (newPoint - evt cursorPoint) asIntegerPoint].
 	evt hand attachMorph: handle.
 	handle startStepping.
-
 ]
 
 { #category : #'*Morphic-Base' }
@@ -221,7 +216,6 @@ Morph >> defaultBalloonFont [
 { #category : #'*Morphic-Base' }
 Morph >> defaultBitmapFillForm [
 	^ImageMorph defaultForm.
-
 ]
 
 { #category : #'*Morphic-Base' }
@@ -250,8 +244,7 @@ Morph >> detachKeymapCategory: aCategoryName targetting: anObject [
 
 { #category : #'*Morphic-Base-keymapping' }
 Morph >> dispatchKeystrokeForEvent: evt [ 
-	self kmDispatcher dispatchKeystroke: evt 
-
+	self kmDispatcher dispatchKeystroke: evt
 ]
 
 { #category : #'*Morphic-Base' }
@@ -263,19 +256,18 @@ Morph >> exportAs: anExtension using: aWriter [
 		extensions: { anExtension }
 		path: (self externalName, '.' , anExtension).
 	reference ifNotNil: [ aWriter putForm: self imageForm onFileNamed: reference ]
-	
 ]
 
 { #category : #'*Morphic-Base' }
 Morph >> exportAsBMP [
 	
-	self exportAs: 'bmp' using: BMPReadWriter 
+	self exportAs: 'bmp' using: BMPReadWriter
 ]
 
 { #category : #'*Morphic-Base' }
 Morph >> exportAsGIF [
 	
-	self exportAs: 'gif' using: GIFReadWriter. 
+	self exportAs: 'gif' using: GIFReadWriter.
 ]
 
 { #category : #'*Morphic-Base' }
@@ -283,14 +275,12 @@ Morph >> exportAsJPEG [
 	"Export the receiver's image as a JPEG"
 	
 	self exportAs: 'jpeg' using: PluginBasedJPEGReadWriter
-
 ]
 
 { #category : #'*Morphic-Base' }
 Morph >> exportAsPNG [
 
 	self exportAs: 'png' using: PNGReadWriter
-	
 ]
 
 { #category : #'*Morphic-Base' }
@@ -361,8 +351,6 @@ Morph >> justDroppedInto: aMorph event: anEvent [
 		ifTrue: [aMorph == self world 
 			ifTrue: [self goHome].
 			self removeProperty: #beFullyVisibleAfterDrop].
-
-
 ]
 
 { #category : #'*Morphic-Base-keymapping' }
@@ -386,7 +374,7 @@ Morph >> newTransformationMorph [
 { #category : #'*Morphic-Base-keymapping' }
 Morph >> on: aShortcut do: anAction [
 	
-	^ self bindKeyCombination: aShortcut toAction: anAction 
+	^ self bindKeyCombination: aShortcut toAction: anAction
 ]
 
 { #category : #'*Morphic-Base' }
@@ -401,7 +389,6 @@ Morph >> on: eventName send: selector to: recipient withValue: value [
 
 	self eventHandler ifNil: [self eventHandler: MorphicEventHandler new].
 	self eventHandler on: eventName send: selector to: recipient withValue: value
-
 ]
 
 { #category : #'*Morphic-Base-keymapping' }
@@ -443,7 +430,6 @@ Morph >> rowMorphForNode: aNode inColumn: aColumn [
 		].
 
 	^ rm
-
 ]
 
 { #category : #'*Morphic-Base' }
@@ -466,7 +452,6 @@ Morph >> setShadowOffset: evt [
 		[:newPoint | self shadowPoint: newPoint].
 	evt hand attachMorph: handle.
 	handle startStepping.
-
 ]
 
 { #category : #'*Morphic-Base' }

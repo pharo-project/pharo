@@ -146,7 +146,7 @@ MorphTreeNodeModel >> printOn: aStream [
 
 { #category : #accessing }
 MorphTreeNodeModel >> rowMorphForColumn: aTreeColumn [
-	^ self item ifNotNil: [:i | self asString asMorph] 
+	^ self item ifNotNil: [:i | self asString asMorph]
 ]
 
 { #category : #protocol }

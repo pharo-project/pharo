@@ -43,7 +43,7 @@ OmStore >> entriesCount [
 OmStore >> entriesDo: aBlockClosure [ 
 	"Evaluate aBlockClosure with every entries this store contains"
 
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -54,7 +54,6 @@ OmStore >> entryFor: aReference [
 		entryFor: aReference
 		ifPresent: [ :anEntry | ^ anEntry ] 
 		ifAbsent: [ NotFound signalFor: aReference ]
-
 ]
 
 { #category : #accessing }
@@ -103,7 +102,7 @@ OmStore >> lowLevelFileStoreIfNone: aBlock [
 OmStore >> newEntry: anEntry [
 	"Persist a new entry"
 	
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -137,5 +136,5 @@ OmStore >> selfReferenceKey [
 OmStore >> writingFileReference [
 	"Answer the file reference where the method #newEntry: would persist a new entry."
 	
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

@@ -50,7 +50,6 @@ OpalCompiler class >> compilerClasses [
 	"Compiler and AST:
 	self package definedClasses, RBProgramNode package definedClasses, {TRBProgramNodeVisitor}
 	"
-	
 ]
 
 { #category : #options }
@@ -65,7 +64,7 @@ OpalCompiler class >> compilerSettingsOn: aBuilder [
 						target: self;
 						default: false;
 						description: 'Create a overlay environment for the OpalCompiler package and sets this copy as the global compiler. After this all classes in the package OpalCompiler are not used anymore outside of tests.  Simplifies changing the compiler'.
-				CompilationContext compilerSettingsOn: aBuilder]	
+				CompilationContext compilerSettingsOn: aBuilder]
 ]
 
 { #category : #overlay }
@@ -153,9 +152,6 @@ OpalCompiler class >> recompileAll [
 	"Recompile all classes and traits in the system."
 
 	Smalltalk image recompile
-
-
-
 ]
 
 { #category : #public }
@@ -210,7 +206,7 @@ OpalCompiler >> callPlugins [
 	| plugins  |
 	plugins := compilationContext astTransformPlugins ifEmpty: [ ^self ].
 	plugins sort: [:a :b | a priority > b priority]. "priority 0 is sorted last"
-	plugins do: [ :each | ast := each transform: ast]. 
+	plugins do: [ :each | ast := each transform: ast].
 ]
 
 { #category : #accessing }
@@ -317,8 +313,6 @@ OpalCompiler >> decompileMethod: aCompiledMethod [
 			on: Error 
 			do: [ RBMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'Decompilation failed'.  ] ]
 		ifAbsent: [ RBMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'No decompiler available'. ]
-
-
 ]
 
 { #category : #private }
@@ -330,13 +324,13 @@ OpalCompiler >> doSemanticAnalysis [
 
 { #category : #plugins }
 OpalCompiler >> encoderClass: aClass [ 
-	self compilationContext encoderClass: aClass 
+	self compilationContext encoderClass: aClass
 ]
 
 { #category : #accessing }
 OpalCompiler >> environment: anEnvironment [
 	"Set the environment (dictionary of class, traits and globals) used during the compilation"
-	self compilationContext environment: anEnvironment 
+	self compilationContext environment: anEnvironment
 ]
 
 { #category : #'public access' }
@@ -438,7 +432,6 @@ OpalCompiler >> noPattern: aBoolean [
 	self compilationContext noPattern: aBoolean.
 	"when we compile an expression, embedd sources, as the resulting method will never be installed"
 	compilationContext parseOptions: #(+ #optionEmbeddSources).
-	
 ]
 
 { #category : #'public access' }

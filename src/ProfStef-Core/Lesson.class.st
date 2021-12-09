@@ -34,7 +34,7 @@ Lesson >> printOn: aStream [
 	aStream 
 		nextPutAll: '(';
 		nextPutAll: self title;
-		nextPutAll: ')'.    
+		nextPutAll: ')'.
 ]
 
 { #category : #accessing }

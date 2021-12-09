@@ -247,7 +247,6 @@ OSWindow >> initWithAttributes: attributes eventHandler: anEventHandle [
 	eventHandler := anEventHandle.
 	self createWindow.
 	self initialize
-
 ]
 
 { #category : #private }

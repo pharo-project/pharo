@@ -36,7 +36,7 @@ Text >> treeRenderOn: aCanvas bounds: drawBounds color: drawColor font: aFont fr
 		strikethrough: ((self emphasisAt: 1)
 				bitAnd: 16)
 				> 0
-		strikethroughColor: drawColor 
+		strikethroughColor: drawColor
 ]
 
 { #category : #'*Polymorph-Widgets' }

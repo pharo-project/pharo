@@ -24,13 +24,11 @@ LazyMorphTreeMorph >> adjustSubmorphPositionsFrom: start to: stop [
 		h := each height.
 		each bounds: (p extent: each width@h).
 		p := p + (0@h)].
-
 ]
 
 { #category : #'initialize - release' }
 LazyMorphTreeMorph >> buildRowMorphsFrom: aNodeMorph [
 	self buildRowMorphsFrom: aNodeMorph increment: self lazyIncrement.
-
 ]
 
 { #category : #'initialize - release' }
@@ -55,7 +53,6 @@ LazyMorphTreeMorph >> buildRowMorphsFromIndex: startIndex to: stopIndex [
 	self adjustSubmorphPositionsFrom: startIndex to: stopIndex.
 	self setScrollDeltas.
 	startIndex to: stopIndex do: [:pos | (subs at: pos) drawable: true].
-
 ]
 
 { #category : #'lazy tree' }
@@ -66,10 +63,10 @@ LazyMorphTreeMorph >> indentingItemClass [
 
 { #category : #'initialize - release' }
 LazyMorphTreeMorph >> lazyIncrement [
-	^ lazyIncrement ifNil: [ lazyIncrement := 20 ] 
+	^ lazyIncrement ifNil: [ lazyIncrement := 20 ]
 ]
 
 { #category : #'initialize - release' }
 LazyMorphTreeMorph >> lazyIncrement: anInteger [
-	lazyIncrement := anInteger 
+	lazyIncrement := anInteger
 ]

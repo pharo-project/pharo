@@ -142,13 +142,11 @@ MailMessage class >> omittedHeaderFields [
 			'list-unsubscribe'
 			'list-archive'
 		)
-
 ]
 
 { #category : #multipart }
 MailMessage >> addAlternativePart: newPart [
 	self makeMultipart: 'alternative' with: newPart.
-
 ]
 
 { #category : #multipart }
@@ -159,7 +157,6 @@ MailMessage >> addAlternativePart: bodyString contentType: aContentTypeString [
 	newPart setField: 'content-type' toString: aContentTypeString.
 	newPart body: (MIMEDocument contentType: aContentTypeString  content: bodyString).
 	self addAlternativePart: newPart.
-
 ]
 
 { #category : #multipart }
@@ -190,7 +187,6 @@ MailMessage >> addAttachmentFrom: aStream withName: aName [
 { #category : #multipart }
 MailMessage >> addMixedPart: newPart [
 	self makeMultipart: 'mixed' with: newPart.
-
 ]
 
 { #category : #multipart }
@@ -201,7 +197,6 @@ MailMessage >> addMixedPart: bodyString contentType: aContentTypeString [
 	newPart setField: 'content-type' toString: aContentTypeString.
 	newPart body: (MIMEDocument contentType: aContentTypeString  content: bodyString).
 	self addMixedPart: newPart.
-
 ]
 
 { #category : #'printing/formatting' }
@@ -466,7 +461,6 @@ MailMessage >> fieldsNamed: aString  separatedBy: separationString [
 		matchingFields
 			do: [ :field | str nextPutAll: field mainValue ]
 			separatedBy: [ str nextPutAll: separationString ]].
-
 ]
 
 { #category : #'printing/formatting' }
@@ -872,7 +866,6 @@ MailMessage >> time [
 	| dateField |
 	dateField := (self fieldNamed: 'date' ifAbsent: [ ^0 ]) mainValue.
 	^ [self timeFrom: dateField] onErrorDo: [Date today asSeconds].
-
 ]
 
 { #category : #parsing }
@@ -929,7 +922,6 @@ MailMessage >> viewBody [
 	UIManager default  
 		longMessage: self bodyTextFormatted
 		title: (self name ifNil: ['(a message part)'])
-
 ]
 
 { #category : #'printing/formatting' }

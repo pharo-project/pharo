@@ -35,7 +35,6 @@ DelayWaitTimeout >> timingPrioritySignalExpired [
 		expired := true.
 		process suspend; resume.
 		].
-
 ]
 
 { #category : #waiting }
@@ -50,7 +49,6 @@ DelayWaitTimeout >> wait [
 		ifTrue:[delaySemaphore wait]
 		ifFalse:[expired := true]] ensure:[self unschedule].
 	^self isExpired
-
 ]
 
 { #category : #waiting }

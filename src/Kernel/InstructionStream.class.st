@@ -26,7 +26,6 @@ InstructionStream class >> initialize [
 		(Array with: true with: false with: nil)
 			, (Array with: -1 with: 0 with: 1 with: 2)	
 	"InstructionStream initialize."
-
 ]
 
 { #category : #'instance creation' }
@@ -279,7 +278,6 @@ InstructionStream >> interpretSistaV1ExtendedPush: extB for: client [
 	extB = 1
 		ifTrue: [^ client pushActiveProcess].
 	self error: 'undefined extended push'
-
 ]
 
 { #category : #interpreting }

@@ -106,7 +106,7 @@ OSSDLPasteEventFilter >> dispatchEvent: aSDLEvent [
 	
 	self flushEvents.
 	self currentState: 1.
-	^ next dispatchEvent: aSDLEvent		
+	^ next dispatchEvent: aSDLEvent
 ]
 
 { #category : #'last events' }
@@ -122,7 +122,6 @@ OSSDLPasteEventFilter >> isKeyDownV: aSDLEvent [
 	^ aSDLEvent isKeyDownEvent 
 		and: [ aSDLEvent keysym scancode = 25 "SDL_SCANCODE_V" 
 			and: [aSDLEvent keysym sym = SDLK_v]]
-		
 ]
 
 { #category : #'events-processing' }
@@ -131,7 +130,6 @@ OSSDLPasteEventFilter >> isKeyUpV: aSDLEvent [
 	^ aSDLEvent isKeyUpEvent 
 		and: [ aSDLEvent keysym scancode = 25 "SDL_SCANCODE_V" 
 			and: [aSDLEvent keysym sym = SDLK_v]]
-		
 ]
 
 { #category : #'last events' }

@@ -61,7 +61,6 @@ RPackageSet class >> named: aString [
 				cachePackageAt: aString 
 				ifAbsentPut: [ self basicNamed: aString ] ]
 		ifFalse: [ self basicNamed: aString ].
-
 ]
 
 { #category : #private }
@@ -149,7 +148,6 @@ RPackageSet >> initialize: aString [
 	packages := (RPackage organizer packageNamed: aString ifAbsent: [  nil ])
 		ifNotNil: [ :package | { package }  ]
 		ifNil: [ {} ]
-
 ]
 
 { #category : #'system compatibility' }

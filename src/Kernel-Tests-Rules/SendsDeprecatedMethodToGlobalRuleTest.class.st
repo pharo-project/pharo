@@ -28,7 +28,7 @@ SendsDeprecatedMethodToGlobalRuleTest >> globalName [
 { #category : #properties }
 SendsDeprecatedMethodToGlobalRuleTest >> nonDeprecatedMethodName [
 
-	^ 'not', self deprecatedMethodName 
+	^ 'not', self deprecatedMethodName
 ]
 
 { #category : #running }
@@ -42,7 +42,6 @@ SendsDeprecatedMethodToGlobalRuleTest >> setUp [
 	deprClass compile: self nonDeprecatedMethodName.
 	
 	testClass := Object newAnonymousSubclass.
-	
 ]
 
 { #category : #running }
@@ -51,7 +50,7 @@ SendsDeprecatedMethodToGlobalRuleTest >> tearDown [
 	testingEnvironment removeKey: self globalName ifAbsent: [ ].
 	globalName := nil.
 	testClass := nil.
-	super tearDown 
+	super tearDown
 ]
 
 { #category : #tests }

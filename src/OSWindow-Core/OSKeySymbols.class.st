@@ -422,7 +422,6 @@ OSKeySymbols class >> initialize [
 		OSKeySymbolValueToKeyboardKeyMap at: symbolValue put: keyboardKey.
 		OSKeySymbolNameToValueMap at: symbolName put: symbolValue.
 	].
-
 ]
 
 { #category : #accessing }

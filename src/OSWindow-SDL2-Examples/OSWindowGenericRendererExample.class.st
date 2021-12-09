@@ -61,7 +61,6 @@ OSWindowGenericRendererExample >> open [
 	self initializeWithRenderer.
 	
 	window eventHandler: (self createEventHandler).
-
 ]
 
 { #category : #'instance creation' }

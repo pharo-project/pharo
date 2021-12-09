@@ -95,8 +95,6 @@ IRBytecodeDecompiler >> jump: dist [
 	to the newSeq"
 	irBuilder currentSequence = seq ifTrue: [irBuilder currentSequence: newSeq].
 	irBuilder jumpBackTo: index.
-
-
 ]
 
 { #category : #'instruction decoding' }
@@ -155,7 +153,6 @@ IRBytecodeDecompiler >> popIntoReceiverVariable: offset [
 IRBytecodeDecompiler >> popIntoRemoteTemp: remoteTempIndex inVectorAt: tempVectorIndex [
 	self storeIntoRemoteTemp: remoteTempIndex inVectorAt: tempVectorIndex.
 	self doPop.
-	
 ]
 
 { #category : #'instruction decoding' }
@@ -204,7 +201,6 @@ IRBytecodeDecompiler >> pushActiveContext [
 { #category : #'instruction decoding' }
 IRBytecodeDecompiler >> pushConsArrayWithElements: numElements [ 
 	irBuilder pushConsArray: numElements
-
 ]
 
 { #category : #'instruction decoding' }
@@ -241,7 +237,6 @@ IRBytecodeDecompiler >> pushReceiver [
 { #category : #'instruction decoding' }
 IRBytecodeDecompiler >> pushReceiverVariable: offset [
 	irBuilder pushInstVar: offset + 1.
-
 ]
 
 { #category : #'instruction decoding' }
@@ -301,7 +296,6 @@ IRBytecodeDecompiler >> storeIntoLiteralVariable: value [
 { #category : #'instruction decoding' }
 IRBytecodeDecompiler >> storeIntoReceiverVariable: offset [
 	irBuilder storeInstVar: offset + 1.
-
 ]
 
 { #category : #'instruction decoding' }
@@ -310,7 +304,6 @@ IRBytecodeDecompiler >> storeIntoRemoteTemp: remoteIndex inVectorAt: tempIndex [
 	remoteArray := self scope tempAt: tempIndex.
 	remoteTempName := self scope tempAt: remoteIndex inRemote: remoteArray.	
 	irBuilder storeRemoteTemp: remoteTempName inVector: remoteArray.
-	
 ]
 
 { #category : #'instruction decoding' }

@@ -18,7 +18,6 @@ Class {
 { #category : #'smtp server' }
 MailComposition class >> isSmtpServerSet [
 	^ SmtpServer notNil and: [SmtpServer notEmpty]
-
 ]
 
 { #category : #'instance creation' }
@@ -35,7 +34,6 @@ MailComposition class >> setSmtpServer [
 	SmtpServer := UIManager default
 		request: 'What is your mail server for outgoing mail?'
 		initialAnswer: SmtpServer.
-
 ]
 
 { #category : #'smtp server' }
@@ -164,7 +162,6 @@ MailComposition >> menuGet: aMenu shifted: shifted [
 MailComposition >> messageText [
 	"return the current text"
 	^messageText.
-
 ]
 
 { #category : #accessing }
@@ -178,7 +175,7 @@ MailComposition >> messageText: aText [
 { #category : #interface }
 MailComposition >> open [
 	"open an interface"
-	self openInMorphic 
+	self openInMorphic
 ]
 
 { #category : #interface }

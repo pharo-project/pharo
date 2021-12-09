@@ -51,7 +51,6 @@ OCASTTranslatorForValue >> emitWhileFalse: aMessageNode [
 
 	super emitWhileFalse: aMessageNode.
 	methodBuilder pushLiteral: nil.
-
 ]
 
 { #category : #'inline messages' }
@@ -59,7 +58,6 @@ OCASTTranslatorForValue >> emitWhileTrue: aMessageNode [
 
 	super emitWhileTrue: aMessageNode.
 	methodBuilder pushLiteral: nil.
-
 ]
 
 { #category : #'visitor - double dispatching' }

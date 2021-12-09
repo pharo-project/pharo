@@ -21,20 +21,21 @@ HashAndEqualsTestCase class >> isAbstract [
 { #category : #running }
 HashAndEqualsTestCase >> setUp [
 	"Subclasses will add their prototypes into this collection"
+
 	super setUp.
-	prototypes := OrderedCollection new 
+	prototypes := OrderedCollection new
 ]
 
 { #category : #tests }
 HashAndEqualsTestCase >> testEquality [
 	"Check that prototypes report equality correctly"
-	
+
 	prototypes do: [:p | self assert: (EqualityTester with: p) result ]
 ]
 
 { #category : #tests }
 HashAndEqualsTestCase >> testHash [
 	"Check prototypes with equality method hash correctly"
-	
-	prototypes do: [:p | self assert: (HashTester with: p) result]
+
+	prototypes do: [:p | self assert: (HashTester with: p) result ]
 ]

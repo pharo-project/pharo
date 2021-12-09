@@ -50,7 +50,6 @@ IRBuilderTest >> testDup [
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
   	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #() ).
 	^iRMethod
-	
 ]
 
 { #category : #tests }
@@ -108,7 +107,6 @@ IRBuilderTest >> testJumpAheadToIf [
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
  	self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) isNil).
 	^iRMethod.
-	
 ]
 
 { #category : #tests }
@@ -130,7 +128,6 @@ IRBuilderTest >> testJumpBackTo [
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
 	self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) isNil).
 	^iRMethod.
-	
 ]
 
 { #category : #tests }
@@ -160,8 +157,6 @@ IRBuilderTest >> testLiteralBoolean [
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
 	self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() )).
 	^iRMethod.
-
-	
 ]
 
 { #category : #tests }
@@ -191,8 +186,6 @@ IRBuilderTest >> testLiteralFloat [
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
  	self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) closeTo: 2.0).
 	^iRMethod
-
-	
 ]
 
 { #category : #tests }
@@ -223,7 +216,6 @@ IRBuilderTest >> testLiteralNil [
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
      self assert: ((aCompiledMethod valueWithReceiver: 4 arguments: #() ) isNil).
 	^iRMethod
-	
 ]
 
 { #category : #tests }
@@ -318,7 +310,6 @@ IRBuilderTest >> testPopTop [
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
 	self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) isNil).
 	^iRMethod
-	
 ]
 
 { #category : #tests }
@@ -374,7 +365,6 @@ IRBuilderTest >> testPushNewArray [
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
 	self assert: ((aCompiledMethod valueWithReceiver: receiver arguments: #()) first isNil).
 	^iRMethod
-
 ]
 
 { #category : #tests }
@@ -430,7 +420,6 @@ IRBuilderTest >> testPushTempTemp [
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
      self assert: ((aCompiledMethod valueWithReceiver: 5 arguments: #() ) isNil).
 	^iRMethod
-	
 ]
 
 { #category : #tests }
@@ -491,7 +480,6 @@ IRBuilderTest >> testReturnTop [
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
 	self deny: (aCompiledMethod valueWithReceiver: nil arguments: #()).
 	^iRMethod
-	
 ]
 
 { #category : #tests }
@@ -510,7 +498,6 @@ IRBuilderTest >> testSendSuper [
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
      self should: [(aCompiledMethod valueWithReceiver: (self class new) arguments: #())] raise: Error.
 	^iRMethod
-	
 ]
 
 { #category : #tests }

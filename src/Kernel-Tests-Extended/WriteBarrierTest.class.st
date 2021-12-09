@@ -219,7 +219,7 @@ WriteBarrierTest >> testMutateObjectClass [
 			modification object beWritableObject.
 			modification retryModification  ].
 	
-	self assert: guineaPig class equals: WriteBarrierAnotherStub 
+	self assert: guineaPig class equals: WriteBarrierAnotherStub
 ]
 
 { #category : #'tests - object' }
@@ -453,7 +453,6 @@ WriteBarrierTest >> testSetIsReadOnlyFailure [
 			testObject: each 
 			initialState: false 
 			tuples: #( (true false false) (false false false) ) ]
-	
 ]
 
 { #category : #'tests - proxy' }
@@ -463,7 +462,6 @@ WriteBarrierTest >> testSetIsReadOnlyFailureProxy [
 			testProxyObject: each 
 			initialState: false 
 			tuples: #( (true false false) (false false false) ) ]
-	
 ]
 
 { #category : #'tests - object' }
@@ -473,7 +471,6 @@ WriteBarrierTest >> testSetIsReadOnlyImmediate [
 			testObject: each 
 			initialState: true 
 			tuples: #( (true true true) (false true true) ) ]
-	
 ]
 
 { #category : #'tests - proxy' }
@@ -483,7 +480,6 @@ WriteBarrierTest >> testSetIsReadOnlyImmediateProxy [
 			testProxyObject: each 
 			initialState: true 
 			tuples: #( (true true true) (false true true) ) ]
-	
 ]
 
 { #category : #'tests - object' }
@@ -493,7 +489,6 @@ WriteBarrierTest >> testSetIsReadOnlySuccess [
 			testObject: each 
 			initialState: false 
 			tuples: #( (true false true) (false true false) ) ]
-	
 ]
 
 { #category : #'tests - proxy' }
@@ -503,5 +498,4 @@ WriteBarrierTest >> testSetIsReadOnlySuccessProxy [
 			testProxyObject: each 
 			initialState: false 
 			tuples: #( (true false true) (false true false) ) ]
-	
 ]

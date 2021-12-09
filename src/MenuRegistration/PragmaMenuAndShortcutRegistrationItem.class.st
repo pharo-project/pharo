@@ -76,7 +76,7 @@ PragmaMenuAndShortcutRegistrationItem >> default [
 { #category : #protocol }
 PragmaMenuAndShortcutRegistrationItem >> default: aKMModifiedShortcut [ 
 
-	default := aKMModifiedShortcut 
+	default := aKMModifiedShortcut
 ]
 
 { #category : #accessing }
@@ -124,7 +124,7 @@ PragmaMenuAndShortcutRegistrationItem >> help [
 { #category : #'menu protocol' }
 PragmaMenuAndShortcutRegistrationItem >> help: aString [ 
 	
-	help := aString 
+	help := aString
 ]
 
 { #category : #accessing }
@@ -208,7 +208,7 @@ PragmaMenuAndShortcutRegistrationItem >> parent [
 { #category : #'menu protocol' }
 PragmaMenuAndShortcutRegistrationItem >> parent: aSymbol [ 
 	
-	parent := aSymbol 
+	parent := aSymbol
 ]
 
 { #category : #accessing }
@@ -226,7 +226,7 @@ PragmaMenuAndShortcutRegistrationItem >> platform: aSymbol [
 { #category : #'menu protocol' }
 PragmaMenuAndShortcutRegistrationItem >> precondition: aBlock [
 	
-	precondition := aBlock 
+	precondition := aBlock
 ]
 
 { #category : #accessing }
@@ -238,7 +238,7 @@ PragmaMenuAndShortcutRegistrationItem >> selector [
 { #category : #'menu protocol' }
 PragmaMenuAndShortcutRegistrationItem >> selector: aSymbol [ 
 	
-	selector := aSymbol 
+	selector := aSymbol
 ]
 
 { #category : #accessing }
@@ -274,7 +274,7 @@ PragmaMenuAndShortcutRegistrationItem >> target [
 { #category : #'menu protocol' }
 PragmaMenuAndShortcutRegistrationItem >> target: aSymbol [ 
 	
-	target := aSymbol 
+	target := aSymbol
 ]
 
 { #category : #accessing }

@@ -16,7 +16,6 @@ MethodMapTest >> compileAndRunExample: aSelector [
 MethodMapTest >> compileMethod: aMethod [
 
 	^aMethod parseTree generate: aMethod trailer.
-	
 ]
 
 { #category : #'tests - ast mapping' }
@@ -26,9 +25,7 @@ MethodMapTest >> deadContext [
 
 { #category : #'tests - ast mapping' }
 MethodMapTest >> inlinedBlockSourceNode [
-	1 to: 1 do: [ :i | ^ thisContext sourceNode ]. 
-
-
+	1 to: 1 do: [ :i | ^ thisContext sourceNode ].
 ]
 
 { #category : #helpers }
@@ -52,8 +49,6 @@ MethodMapTest >> testBlockSourceNode [
 	| sourceNode |
 	sourceNode := [ 1 + 2 ] sourceNode.
 	self assert: sourceNode equals: (self parseExpression: '[ 1 + 2 ]').
-
-
 ]
 
 { #category : #'tests - ast mapping' }
@@ -61,7 +56,6 @@ MethodMapTest >> testBlockWithArgAndEnclosedBlockSourceNode [
 	| sourceNode |
 	sourceNode := [ :arg |  [ arg ] ] sourceNode.
 	self assert: sourceNode equals: (self parseExpression: '[ :arg | [ arg ] ]').
-
 ]
 
 { #category : #'tests - ast mapping' }
@@ -69,7 +63,6 @@ MethodMapTest >> testBlockWithEnclosedBlockSourceNode [
 	| sourceNode |
 	sourceNode := [ [ ] ] sourceNode.
 	self assert: sourceNode equals: (self parseExpression: '[ [ ] ]').
-
 ]
 
 { #category : #'tests - ast mapping' }
@@ -77,7 +70,6 @@ MethodMapTest >> testBlockWithTempsSourceNode [
 	| sourceNode |
 	sourceNode := [ | t1 t2 | ] sourceNode.
 	self assert: sourceNode equals: (self parseExpression: '[ | t1 t2 | ]').
-
 ]
 
 { #category : #'tests - temp access' }
@@ -91,7 +83,6 @@ MethodMapTest >> testDeadContextSourceNode [
 	deadContext := self deadContext.
 	self assert: deadContext isDead. 
 	self assert: deadContext sourceNode equals: (self class>>#deadContext) ast
-
 ]
 
 { #category : #'tests - temp access' }
@@ -176,13 +167,11 @@ MethodMapTest >> testMethodSourceNodeAtInitialPC [
 	actual := method sourceNodeForPC: method initialPC.
 	
 	self assert: actual equals: method ast sendNodes first receiver receiver
-
 ]
 
 { #category : #'tests - ast mapping' }
 MethodMapTest >> testMethodSourceNodeAtPC [
 	self assert: (((Object>>#halt) sourceNodeForPC:  (Smalltalk vm for32bit: 22 for64bit: 42)) isKindOf: RBMessageNode).
-
 ]
 
 { #category : #'tests - ast mapping' }
@@ -193,7 +182,6 @@ MethodMapTest >> testPrimitiveMethodSourceNodeAtInitialPC [
 	actual := method sourceNodeForPC: method initialPC.
 	
 	self assert: actual equals: method ast
-
 ]
 
 { #category : #'tests - temp access' }
@@ -215,9 +203,6 @@ MethodMapTest >> testThisContextSourceNode [
 	self assert: (thisContext sourceNode isKindOf: RBMethodNode).
 	self assert: ([thisContext sourceNode] value isKindOf: RBBlockNode).
 	self assert: ([true ifTrue: [thisContext sourceNode]]value isKindOf: RBBlockNode).
-
-
-
 ]
 
 { #category : #'tests - ast mapping' }

@@ -92,7 +92,6 @@ MulticolumnLazyListMorph >> hUnadjustedScrollRange [
 	(itemsToCheck < listItems size) ifTrue:[maxWidth := maxWidth*2].
 
 	^maxWidth + 150
-
 ]
 
 { #category : #'list access' }
@@ -146,5 +145,4 @@ MulticolumnLazyListMorph >> widthToDisplayItem: item [
 	
 	widths := item collect: [ :each | each widthToDisplayInList: self ].
 	^widths sum + ((listSource gapSize + 4) * (widths size - 1))   "add in space between the columns"
-
 ]

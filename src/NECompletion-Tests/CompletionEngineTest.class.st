@@ -76,7 +76,7 @@ CompletionEngineTest >> newCompletionEngine [
 
 { #category : #'tests - keyboard' }
 CompletionEngineTest >> selectAll [
-	editor selectAll 
+	editor selectAll
 ]
 
 { #category : #'tests - keyboard' }
@@ -97,8 +97,7 @@ CompletionEngineTest >> selectedClassOrMetaClass [
 
 { #category : #'tests - keyboard' }
 CompletionEngineTest >> setEditorText: aString [
-	editor selectAll; addString:  aString 
-	
+	editor selectAll; addString:  aString
 ]
 
 { #category : #running }
@@ -349,7 +348,6 @@ CompletionEngineTest >> testSmartBackspaceOutsideSmartCharacters [
 	self
 		assert: controller smartBackspace not
 		description: 'smartbackspace ignored if after smart character'
-		
 ]
 
 { #category : #'tests - keyboard' }
@@ -362,7 +360,6 @@ CompletionEngineTest >> testSmartBackspaceWithSelection [
 	self
 		assert: controller smartBackspace not
 		description: 'No smartbackspace if no selection and not a smart character'.
-		
 ]
 
 { #category : #'tests - keyboard' }
@@ -387,7 +384,6 @@ CompletionEngineTest >> testSmartCharacterPairForIfAbsent [
 		self assert: (controller smartCharacterPairFor: pairs last ifAbsent: [ nil ]) equals: pairs first -> pairs last].
 	
 	self assert: (controller smartCharacterPairFor: $% ifAbsent: [ nil ]) equals: nil.
-		
 ]
 
 { #category : #'tests - keyboard' }
@@ -436,7 +432,6 @@ CompletionEngineTest >> testSmartCharacterWithEventSelfClosing [
 		
 	controller smartCharacterWithEvent: (self keyboardEventFor: $<).
 	self assert: editor text equals: ' '.
-	
 ]
 
 { #category : #'tests - keyboard' }
@@ -454,7 +449,6 @@ CompletionEngineTest >> testSmartCharactersShouldClose [
 	"Some smart characters shouldn't auto close, ohers not"
 	self assert: (controller smartCharacterShouldClose: $() equals: true.
 	self assert: (controller smartCharacterShouldClose: $<) equals: false.
-	
 ]
 
 { #category : #'tests - keyboard' }

@@ -20,7 +20,6 @@ FTDisplayColumn class >> column: aColumn width: aWidth [
 		column: aColumn;
 		width: aWidth;
 		yourself
-		
 ]
 
 { #category : #accessing }

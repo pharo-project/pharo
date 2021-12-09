@@ -42,7 +42,7 @@ NECDetailMorph >> contentBounds [
 
 { #category : #drawing }
 NECDetailMorph >> defaultColor [
-	^ NECMenuMorph backgroundColor. 
+	^ NECMenuMorph backgroundColor.
 ]
 
 { #category : #accessing }
@@ -169,7 +169,7 @@ NECDetailMorph >> position: aPoint menuWidth: anInteger [
 
 { #category : #private }
 NECDetailMorph >> positionOnLeft: anInteger [ 
-	^ arrowPosition x - self class width - anInteger 
+	^ arrowPosition x - self class width - anInteger
 ]
 
 { #category : #drawing }

@@ -73,7 +73,7 @@ FluidClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName [
 						s nextPutAll: 'sharedVariables: {};'; crtab.
 						s nextPutAll: 'sharedPools: {};'; crtab.
 						s nextPutAll: 'tag: '''' ;';crtab.
-						s nextPutAll: 'package: ''', aPackageName, '''' ] 
+						s nextPutAll: 'package: ''', aPackageName, '''' ]
 ]
 
 { #category : #'elementary operations' }
@@ -102,7 +102,7 @@ FluidClassDefinitionPrinter >> compactClassDefinitionTemplateInPackage: aPackage
 			s nextPutAll: 'Object << #MyClass'; crtab.
 			s nextPutAll: 'slots: {};'; crtab. 
 			s nextPutAll: 'sharedVariables: {};'; crtab.
-			s nextPutAll: 'package: ''', aPackageName, '''' ] 
+			s nextPutAll: 'package: ''', aPackageName, '''' ]
 ]
 
 { #category : #template }
@@ -379,7 +379,6 @@ FluidClassDefinitionPrinter >> slotsOn: s [
 	s nextPutAll: 'slots: '.
 	self slotDefinitionsOn: s.
 	s nextPutAll: ';'.
-
 ]
 
 { #category : #'expanded double dispatch API' }
@@ -404,7 +403,7 @@ FluidClassDefinitionPrinter >> testClassDefinitionTemplateInPackage: aPackageNam
 						s nextPutAll: 'TestCase << #MyTest'; crtab.
 						s nextPutAll: 'slots: {};'; crtab. 
 						s nextPutAll: 'tag: '''' ;';crtab.
-						s nextPutAll: 'package: ''', aPackageName, '''' ] 
+						s nextPutAll: 'package: ''', aPackageName, '''' ]
 ]
 
 { #category : #'definition double dispatch API' }

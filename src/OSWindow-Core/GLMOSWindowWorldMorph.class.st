@@ -19,7 +19,7 @@ Class {
 { #category : #callbacks }
 GLMOSWindowWorldMorph >> actOnWindowRequest: ann [
 
-	ann action value: self	
+	ann action value: self
 ]
 
 { #category : #'submorphs - add/remove' }
@@ -34,7 +34,6 @@ GLMOSWindowWorldMorph >> initialize [
 	
 	self layoutPolicy: ProportionalLayout new.
 	self clipSubmorphs: true.
-
 ]
 
 { #category : #accessing }

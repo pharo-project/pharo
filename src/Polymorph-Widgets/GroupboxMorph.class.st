@@ -205,7 +205,6 @@ GroupboxMorph >> replaceContentMorph: aMorph [
 		addMorphBack: aMorph.
 	self adoptPaneColor: super paneColorOrNil.
 	^aMorph
-		
 ]
 
 { #category : #accessing }
@@ -231,5 +230,4 @@ GroupboxMorph >> update: aSymbol [
 	super update: aSymbol.
 	aSymbol = self getContentSelector ifTrue: [
 		self contentFromModel ifNotNil: [:c | self replaceContentMorph: c]]
-		
 ]

@@ -285,5 +285,4 @@ TransferMorph >> updateCopyIcon [
 	copyIcon := ImageMorph new form: CopyPlusIcon.
 	copyIcon setProperty: #tmCopyIcon toValue: true.
 	^ self addMorphFront: copyIcon.
-
 ]

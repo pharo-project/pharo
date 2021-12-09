@@ -14,17 +14,14 @@ Class {
 DelayMutexScheduler >> initializeTicker: aDelayTicker suspendedDelaysHeap: aHeap [
 	super initializeTicker: aDelayTicker suspendedDelaysHeap: aHeap.
 	accessProtect := Semaphore forMutualExclusion.
-
 ]
 
 { #category : #initialization }
 DelayMutexScheduler >> schedule: aDelay [
 	accessProtect critical: [ super schedule: aDelay].
-	
 ]
 
 { #category : #initialization }
 DelayMutexScheduler >> unschedule: aDelay [
 	accessProtect critical: [ super unschedule: aDelay].
-	
 ]

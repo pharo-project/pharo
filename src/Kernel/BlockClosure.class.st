@@ -50,8 +50,6 @@ BlockClosure >> argumentCount [
 	"Answer the number of arguments that must be used to evaluate this block"
 
 	^numArgs
-	
-
 ]
 
 { #category : #accessing }
@@ -90,7 +88,6 @@ BlockClosure >> asMinimalRepresentation [
 BlockClosure >> assert [
 
 	self value ifFalse: [AssertionFailure signal: 'Assertion failed']
-
 ]
 
 { #category : #exceptions }
@@ -145,7 +142,6 @@ BlockClosure >> cull: anArg [
 	^numArgs = 0 
 		ifTrue: [self value]
 		ifFalse: [self value: anArg]
-	
 ]
 
 { #category : #evaluating }
@@ -158,7 +154,6 @@ BlockClosure >> cull: firstArg cull: secondArg [
 	^numArgs < 2 
 		ifTrue: [self cull: firstArg]
 		ifFalse: [self value: firstArg value: secondArg]
-	
 ]
 
 { #category : #evaluating }
@@ -166,7 +161,6 @@ BlockClosure >> cull: firstArg cull: secondArg cull: thirdArg [
 	^numArgs < 3 
 		ifTrue: [self cull: firstArg cull: secondArg]
 		ifFalse: [self value: firstArg value: secondArg value: thirdArg]
-	
 ]
 
 { #category : #evaluating }
@@ -176,12 +170,11 @@ BlockClosure >> cull: firstArg cull: secondArg cull: thirdArg cull: fourthArg [
 	^numArgs < 4 
 		ifTrue: [self cull: firstArg cull: secondArg cull: thirdArg]
 		ifFalse: [self value: firstArg value: secondArg value: thirdArg value: fourthArg]
-	
 ]
 
 { #category : #printing }
 BlockClosure >> doPrintOn: aStream [
-	aStream nextPutAll: self sourceNode sourceCode 
+	aStream nextPutAll: self sourceNode sourceCode
 ]
 
 { #category : #controlling }
@@ -211,10 +204,6 @@ BlockClosure >> durationToRun [
 	"Answer the duration taken to execute this block."
 
 	^ self timeToRun
-
-
-
-
 ]
 
 { #category : #accessing }
@@ -254,7 +243,6 @@ BlockClosure >> forkAndWait [
 	semaphore := Semaphore new.
 	[self ensure: [semaphore signal]] fork.
 	semaphore wait.
-
 ]
 
 { #category : #scheduling }
@@ -376,7 +364,8 @@ BlockClosure >> newProcess [
 	^Process
 		forContext: 
 			[self value.
-			Processor terminateActive] asContext
+			"IMPORTANT: Do not step over next line of code. See method comments for details"
+			Processor terminateRealActive] asContext
 		priority: Processor activePriority
 ]
 
@@ -389,7 +378,8 @@ BlockClosure >> newProcessWith: anArray [
 	^Process
 		forContext: 
 			[self valueWithArguments: anArray.
-			Processor terminateActive] asContext
+			"IMPORTANT: Do not step over next line of code. See method comments for details"
+			Processor terminateRealActive] asContext
 		priority: Processor activePriority
 ]
 
@@ -408,7 +398,7 @@ BlockClosure >> numArgs: n [
 { #category : #'error handling' }
 BlockClosure >> numArgsError: numArgsForInvocation [
 
-	ArgumentsCountMismatch signalExpectedArgumentsCount: numArgs calledArgumentsCount: numArgsForInvocation 
+	ArgumentsCountMismatch signalExpectedArgumentsCount: numArgs calledArgumentsCount: numArgsForInvocation
 ]
 
 { #category : #accessing }
@@ -466,7 +456,7 @@ BlockClosure >> on: exception fork: handlerAction [
 				and handling another exception in new thread. In this case, just pass it through handler." 
 					  ^ handlerAction cull: ex ] ].
 
-			  bottom := [ Processor terminateActive ] asContext.
+			  bottom := [ Processor terminateRealActive ] asContext.
 			  onDoCtx privSender: bottom.
 
 			  handler := [ handlerAction cull: ex ] asContext.
@@ -477,6 +467,40 @@ BlockClosure >> on: exception fork: handlerAction [
 			  "cut the stack of current process"
 			  thisContext privSender: thisCtx.
 			  nil ]
+]
+
+{ #category : #exceptions }
+BlockClosure >> on: exception fork: handlerAction return: answerAction [
+	"This is the same as #on:fork: but instead just fork and letting the flow continues, in 
+	 case of an error it also evaluates answerAction and returns its result."
+		
+	^ self on: exception do: [:ex |
+		| onDoCtx handler bottom thisCtx |
+		
+		onDoCtx := thisContext.
+		thisCtx := onDoCtx home.
+
+		"find the context on stack for which this method's is sender"
+
+		[ onDoCtx sender == thisCtx] whileFalse: [ 
+			onDoCtx := onDoCtx sender.
+			onDoCtx ifNil: [ 
+				"Can't find our home context. seems like we're already forked
+				and handling another exception in new thread. In this case, just pass it through handler."
+				^ handlerAction cull: ex ] ].
+
+		bottom := [ Processor terminateRealActive ] asContext.
+		onDoCtx privSender: bottom.
+
+		handler := [ handlerAction cull: ex ] asContext.
+		handler privSender: thisContext sender.
+
+		(Process forContext: handler priority: Processor activePriority) resume.
+
+		"cut the stack of current process"
+		thisContext privSender: thisCtx.
+		answerAction cull: exception ]
+
 ]
 
 { #category : #exceptions }
@@ -587,13 +611,12 @@ BlockClosure >> startpc [
 
 { #category : #accessing }
 BlockClosure >> startpcOrOuterCode [
-	^ startpc 
+	^ startpc
 ]
 
 { #category : #accessing }
 BlockClosure >> tempNames [
 	^ self sourceNode temporaryNames
-
 ]
 
 { #category : #evaluating }
@@ -951,14 +974,12 @@ BlockClosure >> whileFalse: aBlock [
 BlockClosure >> whileNil: aBlock [ 
 	"Unlike #whileTrue/False: this is not compiled inline."
 	^ [self value isNil] whileTrue: [aBlock value]
-	
 ]
 
 { #category : #controlling }
 BlockClosure >> whileNotNil: aBlock [ 
 	"Unlike #whileTrue/False: this is not compiled inline."
 	^ [self value notNil] whileTrue: [aBlock value]
-	
 ]
 
 { #category : #controlling }

@@ -31,7 +31,6 @@ OCASTVariableTranslatorTest >> testAssignInstanceVariable [
 	self assert: instance iVar equals: nil.
 	self testExample: #exampleInstanceVariableAssignment.
 	self assert: instance iVar equals: 1
-	
 ]
 
 { #category : #'tests - variables' }
@@ -125,5 +124,5 @@ OCASTVariableTranslatorTest >> testPushThisContext [
 	self executeMethodOnInstance: method.
 
 	self assert: instance result isContext.
-	self assert: instance result method equals: method.	
+	self assert: instance result method equals: method.
 ]

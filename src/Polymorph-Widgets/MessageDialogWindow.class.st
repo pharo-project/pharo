@@ -125,7 +125,6 @@ MessageDialogWindow >> text: aStringOrText [
 		addAttribute: TextAlignment centered;
 		addAttribute: (TextColor color: self textMorph textColor).
 	self textMorph newContents: t
-
 ]
 
 { #category : #accessing }
@@ -169,5 +168,4 @@ MessageDialogWindow >> themeChanged [
 
 	super themeChanged.
 	self iconMorph image: self icon
-
 ]

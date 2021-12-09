@@ -25,7 +25,6 @@ BehaviorWithCompilerTest >> newClass2 [
 			name: 'MySubclass';
 			superclass: c1;
 			package: self class category ]
-
 ]
 
 { #category : #running }

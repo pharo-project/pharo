@@ -98,7 +98,6 @@ StringMorph class >> exampleManyStringMorphs [
 { #category : #editing }
 StringMorph >> acceptContents [
 	"The message is sent when the user hits enter or Cmd-S. Accept the current contents and end editing. This default implementation does nothing."
-
 ]
 
 { #category : #editing }
@@ -114,7 +113,6 @@ StringMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 	super addCustomMenuItems: aCustomMenu hand: aHandMorph.
 	aCustomMenu add: 'change font' selector: #changeFont.
 	aCustomMenu add: 'change emphasis' selector: #changeEmphasis.
-
 ]
 
 { #category : #accessing }
@@ -137,7 +135,7 @@ StringMorph >> backgroundColor [
 { #category : #accessing }
 StringMorph >> backgroundColor: aColor [
 
-	backgroundColor := aColor 
+	backgroundColor := aColor
 ]
 
 { #category : #'halos and balloon help' }
@@ -167,7 +165,6 @@ StringMorph >> changeEmphasis [
 				chooseFrom: (self emphasisChoices collect: [:t | t translated]) 
 				values: self emphasisChoices.
 	reply ifNotNil: [ self emphasis: (TextEmphasis perform: reply) emphasisCode ].
-
 ]
 
 { #category : #accessing }
@@ -193,7 +190,7 @@ StringMorph >> contentsClipped: aString [
 { #category : #accessing }
 StringMorph >> contrastingBackgroundColor [
 	"sets the backgroundColor to either black or white, which ever makes the string simplest to read"
-	backgroundColor := self color contrastingBlackAndWhiteColor 
+	backgroundColor := self color contrastingBlackAndWhiteColor
 ]
 
 { #category : #initialization }
@@ -365,7 +362,7 @@ StringMorph >> hasFocus [
 { #category : #'*Morphic-Base-Widgets' }
 StringMorph >> heightToDisplayInList: aList [
 
-	^ self contents heightToDisplayInList: aList 
+	^ self contents heightToDisplayInList: aList
 ]
 
 { #category : #drawing }
@@ -419,7 +416,6 @@ StringMorph >> isEditable: evt [
 	As normal if StringMorph class>> editableStringMorph  returns false."
 	
 	^(self isEditable and: [evt shiftPressed])
-
 ]
 
 { #category : #accessing }
@@ -473,7 +469,6 @@ StringMorph >> mouseDown: evt [
 	(self isEditable: evt)
 		ifTrue: [self launchEditor: evt]
 		ifFalse: [super mouseDown: evt].
-
 ]
 
 { #category : #accessing }
@@ -488,7 +483,6 @@ StringMorph >> printOn: aStream [
 
 	super printOn: aStream.
 	aStream print: contents.
-
 ]
 
 { #category : #private }
@@ -516,7 +510,7 @@ StringMorph >> rowMorphForNode: aNode inColumn: aColumn [
 		ifTrue: [^ super rowMorphForNode: aNode inColumn: aColumn].
 	self layoutInset: aColumn container columnInset @ aColumn container rowInset.
 	self fitContents.
-	^ self 
+	^ self
 ]
 
 { #category : #accessing }
@@ -529,7 +523,7 @@ StringMorph >> setWidth: width [
 { #category : #accessing }
 StringMorph >> strikethroughColor [
 
-	^ self stringColor 
+	^ self stringColor
 ]
 
 { #category : #accessing }
@@ -558,7 +552,7 @@ StringMorph >> themeChanged [
 { #category : #accessing }
 StringMorph >> underlineColor [
 
-	^ self stringColor 
+	^ self stringColor
 ]
 
 { #category : #accessing }
@@ -577,13 +571,12 @@ StringMorph >> valueFromContents [
 { #category : #editing }
 StringMorph >> wantsKeyboardFocusOnShiftClick [
 	^ owner topRendererOrSelf wantsKeyboardFocusFor: self
-
 ]
 
 { #category : #'*Morphic-Base-Widgets' }
 StringMorph >> widthToDisplayInList: aList [
 
-	^ self contents widthToDisplayInList: aList 
+	^ self contents widthToDisplayInList: aList
 ]
 
 { #category : #'event handling' }

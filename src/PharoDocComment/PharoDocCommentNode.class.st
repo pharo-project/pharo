@@ -26,7 +26,7 @@ Class {
 
 { #category : #settings }
 PharoDocCommentNode class >> docCommentEnabled [
-	^ DocCommentEnabled  ifNil: [ DocCommentEnabled  := true ] 
+	^ DocCommentEnabled  ifNil: [ DocCommentEnabled  := true ]
 ]
 
 { #category : #settings }

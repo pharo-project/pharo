@@ -99,7 +99,6 @@ GroupWindowMorph >> handleDropMorph: anEvent [
 	anEvent wasHandled: true.
 	self acceptDroppingMorph: aMorph event: anEvent.
 	aMorph justDroppedInto: self event: anEvent
-
 ]
 
 { #category : #initialization }
@@ -114,7 +113,6 @@ GroupWindowMorph >> initialize [
 		dropEnabled: true;
 		addMorph: self tabGroup fullFrame: LayoutFrame identity.
 	self tabGroup color: Color transparent.
-	
 ]
 
 { #category : #testing }
@@ -162,7 +160,7 @@ GroupWindowMorph >> okToChange [
 
 { #category : #windows }
 GroupWindowMorph >> onWindowLabelChanged: ann [
-	self tabGroup relabelPage: ann window with: (self tabLabelFor: ann window)  
+	self tabGroup relabelPage: ann window with: (self tabLabelFor: ann window)
 ]
 
 { #category : #windows }
