@@ -247,3 +247,9 @@ FreeTypeCache >> shrinkTo: newSize [
 	
 	used > newSize ifTrue:[self removeAll]
 ]
+
+{ #category : #'private - accessing' }
+FreeTypeCache >> sizeOf: anObject [
+
+	^ anObject ftSize
+]
