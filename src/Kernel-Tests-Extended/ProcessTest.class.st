@@ -9,8 +9,7 @@ Class {
 
 { #category : #tests }
 ProcessTest >> expectedFailures [
-	^#("these two tests fail after fixing the root cause of an unwind error in Process>>terminate"
-		#testIsTerminatingForcedTermination
+	^#("this test fail after fixing the root cause of an unwind error in Process>>terminate and should probably be removed"
 		#testTerminationShouldProceedAllEnsureBlocksIfSomeWasFailed
 	)
 ]
