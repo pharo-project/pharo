@@ -7,13 +7,6 @@ Class {
 	#category : #'Kernel-Tests-Extended-Processes'
 }
 
-{ #category : #tests }
-ProcessTest >> expectedFailures [
-	^#("this test fail after fixing the root cause of an unwind error in Process>>terminate and should probably be removed"
-		#testTerminationShouldProceedAllEnsureBlocksIfSomeWasFailed
-	)
-]
-
 { #category : #running }
 ProcessTest >> setUp [ 
 	super setUp.
@@ -705,7 +698,9 @@ ProcessTest >> testTerminateInTerminate [
 
 { #category : #'tests - termination' }
 ProcessTest >> testTerminationShouldProceedAllEnsureBlocksIfSomeWasFailed [
-
+"
+	<expectedFailure>
+		
 	| ensureCalled process ensureFailure started unwindError |
 	ensureFailure := Error new messageText: 'signalled inside ensure'.
 	ensureCalled := false.
@@ -718,12 +713,13 @@ ProcessTest >> testTerminationShouldProceedAllEnsureBlocksIfSomeWasFailed [
 		] on: UnwindError do: [ :err | unwindError := err ]
 	] forkAt: Processor activePriority + 1.
 
-	"We terminate the process in backround using higher priority
+	""We terminate the process in backround using higher priority
 	to ensure that all forked processes during the termination logic will finish before the test continue.
-	The UnwindError during termination is always signalled by fork"
+	The UnwindError during termination is always signalled by fork""
 	[ process terminate ] forkAt: Processor activePriority + 1.
 	self assert: ensureCalled.
 	self assert: unwindError signalerContext sender exception equals: ensureFailure
+"
 ]
 
 { #category : #'tests - termination' }
