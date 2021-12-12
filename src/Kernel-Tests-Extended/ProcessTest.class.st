@@ -562,6 +562,20 @@ ProcessTest >> testNormalProcessWithArgsCompletionWithLeftEffectiveProcess [
 	effectiveProcess terminate
 ]
 
+{ #category : #'tests - termination' }
+ProcessTest >> testProcessFaithfulTermination [
+	"When terminating a process, unwind blocks should be evaluated as if they were executed by the process being terminated."
+
+	| process |
+	[[process := Processor activeProcess.
+		Processor activeProcess suspend] ensure: [
+		self assert: process = Processor activeProcess]
+	] fork.
+	Processor yield.
+	process terminate.
+	self assert: process isTerminated
+]
+
 { #category : #tests }
 ProcessTest >> testRealActiveProcessFromProcesor [
 	
@@ -667,6 +681,26 @@ ProcessTest >> testTerminateAnswersSelf [
 	process := process terminate.
 	self assert: (process isKindOf: Process).
 	self assert: process isTerminated.
+]
+
+{ #category : #'tests - termination' }
+ProcessTest >> testTerminateInTerminate [
+	"Terminating a terminator process should unwind both the terminator and its terminatee process"
+	
+	| terminator terminatee unwound |
+	unwound := false.
+	terminatee := [[Processor activeProcess suspend] ensure: [unwound := true]] fork.
+	Processor yield.
+	terminator := [terminatee terminate] newProcess.
+	self assert: terminatee isSuspended.
+	self assert: terminator isSuspended.
+	"run terminator and stop inside #terminate, e.g. before executing #suspend in #terminate"
+	[(InstructionStream on: terminator suspendedContext method pc: terminator suspendedContext pc) selectorToSendOrSelf = #isUnwindContext]
+		whileFalse: [terminator step].
+	self assert: terminator isSuspended.
+	terminator terminate.
+	self assert: terminator isTerminated. 
+	self assert: unwound
 ]
 
 { #category : #'tests - termination' }
