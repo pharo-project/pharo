@@ -1772,6 +1772,31 @@ Context >> runUntilErrorOrReturnFrom: aSender [
 	].
 ]
 
+{ #category : #private }
+Context >> runUnwindTo: aContext onBehalfOf: aProcess [
+	"Run self on behalf of aProcess on aProcess's (i.e. self's) stack until aContext returns. Avoid a context that cannot return. Note: self must be a stack top context. Note: to avoid infinite recursion of MNU error: e.g. a wrapper around the message sentTo: receiver in #doesNotUnderstand: must be implemented.
+	This method is meant to be used exclusively by Process>>#terminate."
+
+	Processor activeProcess
+		evaluate: [ 
+			| here unwindBottom newTop |
+			here := thisContext.
+			"Avoid a context that cannot return (see Note 1 below)"
+			unwindBottom := (self findContextSuchThat: [:ctx | ctx selector = #cannotReturn:]) ifNil: [aContext].
+			newTop := aContext sender.
+			"Insert ensure context under unwindBottom in self's stack (see Note 2 below)"
+			unwindBottom insertSender: (Context contextEnsure: [here jump]).
+			self jump.  "Control jumps to self (see Note 2 below)"
+			"Control resumes here once the above inserted ensure block is executed"
+			^newTop ]  "Return the new top context (see Note 3 below)"
+		onBehalfOf: aProcess
+
+	"Note 1: returning from #cannotReturn's sender would crash the VM so we install a guard ensure context right above it and after returning to #terminate the unwind will continue safely. Try running and debugging this example (avoid Proceeding the BCR error though; it would indeed crash the image):
+	[[[] ensure: [^2]] ensure: [^42]] fork"
+	"Note 2: self is run by jumping directly to it (the active process abandons thisContext and executes self on aProcess's stack; self is its top context). However, before jumping to self we insert an ensure block under unwindBottom context that jumps back to thisContext when evaluated. The inserted guard ensure context is removed once control jumps back to thisContext."
+	"Note 3: it doesn't matter newTop is not a proper stack top context because #terminate will use it only as a starting point in the search for the next unwind context and the computation will never return here. Cf. the pattern in #runUntilErrorOrReturnFrom:: removing the inserted ensure context by stepping until popped when executing non-local returns is not applicable here and would fail the tests testTerminationDuringNestedUnwindWithReturn1 and 2."
+]
+
 { #category : #'debugger access' }
 Context >> selector [
 	"Answer the selector of the method that created the receiver."
