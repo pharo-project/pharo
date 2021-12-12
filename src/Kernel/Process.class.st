@@ -213,63 +213,46 @@ Process >> debugWithTitle: title [
 
 { #category : #private }
 Process >> doTerminationFromAnotherProcess [ 
-	
-  "Stop this process forever from another process.  
+	"Stop this process forever from another process.
 	Unwind to execute pending ensure:/ifCurtailed: blocks before terminating.
-	It assumes that self is not the active process
-	and the termination is requested from another process"
+	It assumes that self is not the active process and the termination is requested from another process"	
+		
+	| ctxt oldList outerMost top newTop |
 
-	| ctxt oldList outerMost unwindBlock |
+	[ ] ensure: [ "Execute termination as an ensure block to ensure it completes even if terminated by another process before the termination is finished; see testTerminateInTerminate."
+		self isTerminating ifTrue: [ ProcessAlreadyTerminating signal. ^self ].
+		terminating := true.
+		"Always suspend the process first so it doesn't accidentally get woken up"
+		oldList := self suspend.
+		suspendedContext ifNil: [^self].
+		"Figure out if we are terminating the process while waiting inside special object like in Semaphore>>critical:. So if waiting object is interesting on this situation we will ask it to handle it. In case of Semaphore>>critical, Semaphore will pop the suspendedContext so that we leave the ensure: block inside Semaphore>>critical: without signaling the semaphore.
+		This methods allow to not be restricted only on Semaphore case."
+		suspendedContext := oldList handleProcessTerminationOfWaitingContext: suspendedContext.
 
-	self isTerminating ifTrue: [ ProcessAlreadyTerminating signal. ^self ].
-	terminating := true.
-
-	"Always suspend the process first so it doesn't accidentally get woken up"
-	oldList := self suspend.
-	suspendedContext ifNil: [^self].
-
-	"Figure out if we are terminating the process while waiting inside special object like
-	in Semaphore>>critical:. So if waiting object is interesting on this situation we will ask it to handle it. In case of Semaphore>>critical, Semaphore will pop the suspendedContext so that we leave the ensure: block inside	Semaphore>>critical: without signaling the semaphore.
-	This methods allow to not be restricted only on Semaphore case."
-	suspendedContext := oldList handleProcessTerminationOfWaitingContext: suspendedContext.
-
-	"If terminating a process halfways through an unwind, try to complete that unwind block first;
-	if there are multiple such nested unwind blocks, try to complete the outer-most one; the inner
-	blocks will be completed in the process."
-	ctxt := suspendedContext.
-	[(ctxt := ctxt findNextUnwindContextUpTo: nil) isNil] whileFalse: 
-		"Contexts under evaluation have already set their complete (tempAt: 2) to true."
-		[ctxt unwindComplete ifNotNil: [outerMost := ctxt]].
-	outerMost ifNotNil: [
-		"This is the outer-most unwind context currently under evaluation;
-		let's find an inner context executing outerMost's argument block (tempAt: 1)"
-		(suspendedContext findContextSuchThat: [:ctx | 
-			ctx closure == outerMost unwindBlock]) ifNotNil: [:inner | 
-				"Let's finish the unfinished unwind context only (i.e. up to inner) and return here"
-				outerMost := (suspendedContext runUntilErrorOrReturnFrom: inner) first.
-				"Update the receiver's suspendedContext (the previous step reset its sender to nil);
-				return, if the execution stack reached its bottom (e.g. in case of non-local returns)."
-				(suspendedContext := outerMost sender) ifNil: [^self]]]. 
-
-	"Now all unwind blocks caught halfway through have been completed; 
-	let's execute the ones still pending. Note: #findNextUnwindContextUpTo: starts
-	searching from the receiver's sender but the receiver itself may be an unwind context."
-	ctxt := suspendedContext.
-	ctxt isUnwindContext ifFalse: [ctxt := ctxt findNextUnwindContextUpTo: nil].
-	[ctxt isNil] whileFalse: [
-		ctxt unwindComplete ifNil: [
-			ctxt unwindComplete: true.
-			unwindBlock := ctxt unwindBlock.
-			"Create a context for the unwind block and execute it on the unwind block's stack. 
-			Note: using #value instead of #runUntilErrorOrReturnFrom: would lead to executing 
-			the unwind on the wrong stack preventing the correct execution of non-local returns."
-			suspendedContext := unwindBlock asContextWithSender: ctxt.
-			suspendedContext runUntilErrorOrReturnFrom: suspendedContext].
-		ctxt := ctxt findNextUnwindContextUpTo: nil].
-
-	"Mark the context as terminated"
-	suspendedContext terminateTo: nil.
-	suspendedContext setSender: nil receiver: self method: (Process>>#endProcess) arguments: {}
+		top := suspendedContext.
+		suspendedContext := nil.  "Disable terminating process while running its stack in active process below.
+		If terminating a process halfways through an unwind, try to complete that unwind block first; if there are multiple such nested unwind blocks, try to complete the outer-most one; nested unwind blocks will be completed in the process; see testTerminationDuringUnwind, testNestedUnwind.
+		Note: Halfway-through blocks have already set the complete variable (unwindComplete) in their defining #ensure:/#ifCurtailed contexts from nil to true; we'll search for the bottom-most one.
+		Note: #findNextUnwindContextUpTo: starts searching from the receiver's sender but the receiver 	itself may be an unwind context (see testTerminateEnsureAsTopContext)."
+		ctxt := top.
+		ctxt isUnwindContext ifFalse: [ctxt := ctxt findNextUnwindContextUpTo: nil].
+		[ctxt isNil] whileFalse: [
+			ctxt unwindComplete ifNotNil: [
+				outerMost := ctxt].
+			ctxt := ctxt findNextUnwindContextUpTo: nil].
+		outerMost ifNotNil: [newTop := top runUnwindTo: outerMost onBehalfOf: self].
+		"By now no halfway-through unwind blocks are on the stack. Create a new top context for each pending unwind block (unwindBlock) and execute it on the unwind block's stack on behalf of self, i.e. the process being terminated, to preserve process identity; see testProcessFaithfulTermination. Cf. the unwind pattern in #resume:through:: using #value instead of #runUnwindTo:onBehalfOf: would lead to an incorrect evaluation of non-local returns on the wrong stack (active process's).
+		Note: newTop sender points to the former outerMost sender, i.e. the next unexplored context."
+		ctxt := newTop ifNil: [top] ifNotNil: [newTop sender].
+		ctxt isUnwindContext ifFalse: [ctxt := ctxt findNextUnwindContextUpTo: nil].
+		[ctxt isNil] whileFalse: [
+			ctxt unwindComplete ifNil: [
+				ctxt unwindComplete: true.
+				newTop := ctxt unwindBlock asContextWithSender: ctxt.
+				newTop runUnwindTo: newTop onBehalfOf: self].
+			ctxt := ctxt findNextUnwindContextUpTo: nil].
+		suspendedContext := top setSender: nil receiver: self method: (Process>>#endProcess) arguments: {}
+	]
 ]
 
 { #category : #private }
