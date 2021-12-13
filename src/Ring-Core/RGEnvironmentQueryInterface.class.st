@@ -22,7 +22,7 @@ RGEnvironmentQueryInterface >> allClasses [
 	^ self behaviors select: [ :each | each isClass ] 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #classes }
 RGEnvironmentQueryInterface >> allClassesAndTraits [
 
 	^ self behaviors select: [ :each | each isClass or: [ each isTrait and: [ each isMetaclassTrait not ] ] ]
@@ -35,7 +35,7 @@ RGEnvironmentQueryInterface >> behaviorNamed: aSymbol [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #classes }
 RGEnvironmentQueryInterface >> behaviorNamed: aSymbol ifAbsent: aBlock [
 
 	| found siblingName | 
@@ -68,13 +68,13 @@ RGEnvironmentQueryInterface >> behaviorNamed: aSymbol ifAbsent: aBlock [
 	^ aBlock value.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #classes }
 RGEnvironmentQueryInterface >> behaviorNamedExactlyAs: aSymbol [ 
 
 	^ self behaviorNamedExactlyAs: aSymbol ifAbsent: [nil]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #classes }
 RGEnvironmentQueryInterface >> behaviorNamedExactlyAs: aSymbol ifAbsent: aBlock [
 
 	^ self behaviorsDictionary at: aSymbol asSymbol ifAbsent: aBlock
@@ -86,7 +86,7 @@ RGEnvironmentQueryInterface >> behaviorNamedExactlyAs: aSymbol ifAbsent: aBlock 
 	"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #classes }
 RGEnvironmentQueryInterface >> behaviors [
 	"Retrieves the traits defined in the receiver"
 
@@ -108,19 +108,19 @@ RGEnvironmentQueryInterface >> behaviorsDictionary [
 		]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #classes }
 RGEnvironmentQueryInterface >> behaviorsDo: aBlock [
 
 	self environment behaviorsDo: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #classes }
 RGEnvironmentQueryInterface >> classNamed: aSymbol [
 
 	^ self behaviorNamed: aSymbol
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #classes }
 RGEnvironmentQueryInterface >> classOrTraitNamed: aSymbol [
 	
 	^ self behaviorNamed: aSymbol
@@ -136,7 +136,7 @@ RGEnvironmentQueryInterface >> environment: anObject [
 	environment := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #globals }
 RGEnvironmentQueryInterface >> globalVariables [
 	"Retrieves the traits defined in the receiver"
 
@@ -147,13 +147,13 @@ RGEnvironmentQueryInterface >> globalVariables [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #globals }
 RGEnvironmentQueryInterface >> globalVariablesDo: aBlock [
 
 	self environment globalVariablesDo: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 RGEnvironmentQueryInterface >> includesClassNamed: aSymbol [ 
 
 	self globalVariablesDo: [ :var |
@@ -177,7 +177,7 @@ RGEnvironmentQueryInterface >> invalidateName: aSymbol [
 	behaviorsDictionary removeKey: aSymbol
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #packages }
 RGEnvironmentQueryInterface >> packageNamed: aString [
 	
 	self packagesDo: [:each |
@@ -186,7 +186,7 @@ RGEnvironmentQueryInterface >> packageNamed: aString [
 	^ nil
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #packages }
 RGEnvironmentQueryInterface >> packages [
 	"Retrieves the traits defined in the receiver"
 
@@ -197,7 +197,7 @@ RGEnvironmentQueryInterface >> packages [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #packages }
 RGEnvironmentQueryInterface >> packagesDo: aBlock [
 
 	self environment packagesDo: aBlock
@@ -221,7 +221,7 @@ RGEnvironmentQueryInterface >> resetBehaviorsDictionary [
 	behaviorsDictionary := IdentityDictionary new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #classes }
 RGEnvironmentQueryInterface >> traitNamed: traitName [
 	"Retrieves an RGTrait object. The traitName could be theMetaClass name"
 	| trait |

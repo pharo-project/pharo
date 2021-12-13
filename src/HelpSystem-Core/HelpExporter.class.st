@@ -14,14 +14,14 @@ HelpExporter class >> export [
 	self new writeAllTopics
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 HelpExporter >> demoteContents: contents toLevel: level [
 	^ ((contents copyReplaceAll: (String cr,'### ') with: (String cr, ('#' repeat: 3+level),' '))
 		copyReplaceAll: (String cr,'## ') with: (String cr, ('#' repeat: 2+level),' '))
 		copyReplaceAll: (String cr,'# ') with: (String cr, ('#' repeat: 1+level),' ')
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 HelpExporter >> rootDirectory [
 	"return a path to the root directory to store microdown files"
 	| root |
@@ -35,7 +35,7 @@ HelpExporter >> systemHelpTopics [
 	^ SystemHelp asHelpTopic
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #writing }
 HelpExporter >> writeAllTopics [
 	|topics|
 	CustomHelp formatter: CustomHelpMicrodownFormatter new.
@@ -54,7 +54,7 @@ HelpExporter >> writeStreamFromTopic: topic [
 	^ aStream
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #writing }
 HelpExporter >> writeTopic: topic [
 	| writeStream |
 	writeStream := (self writeStreamFromTopic: topic).
@@ -62,7 +62,7 @@ HelpExporter >> writeTopic: topic [
 	writeStream flush;close
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 HelpExporter >> writeTopic: topic level: level toStream: stream [ 
 	stream  << ('#' repeat: level) << ' ' << topic title << String cr.
 	topic contents ifNotEmpty: 
