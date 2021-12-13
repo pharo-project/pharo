@@ -139,7 +139,7 @@ SystemDependenciesTest >> knownUFFIDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Refactoring-Critics' #'Refactoring-Environment' 'Graphics-Primitives')
+	^ #(#'Refactoring-Critics' #'Refactoring-Environment')
 ]
 
 { #category : #'known dependencies' }
