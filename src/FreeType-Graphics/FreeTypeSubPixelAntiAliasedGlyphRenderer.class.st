@@ -7,7 +7,7 @@ Class {
 	#pools : [
 		'FT2Constants'
 	],
-	#category : #'FreeType-GlyphRendering'
+	#category : #'FreeType-Graphics-GlyphRendering'
 }
 
 { #category : #'class initialization' }

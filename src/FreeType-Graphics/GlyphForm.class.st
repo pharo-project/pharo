@@ -8,7 +8,7 @@ Class {
 		'advance',
 		'linearAdvance'
 	],
-	#category : #'FreeType-Fonts'
+	#category : #'FreeType-Graphics-Fonts'
 }
 
 { #category : #accessing }

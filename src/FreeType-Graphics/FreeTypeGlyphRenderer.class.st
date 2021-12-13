@@ -11,7 +11,7 @@ Class {
 	#classInstVars : [
 		'current'
 	],
-	#category : #'FreeType-GlyphRendering'
+	#category : #'FreeType-Graphics-GlyphRendering'
 }
 
 { #category : #'instance creation' }
