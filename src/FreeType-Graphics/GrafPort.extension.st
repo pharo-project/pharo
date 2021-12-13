@@ -1,6 +1,6 @@
 Extension { #name : #GrafPort }
 
-{ #category : #'*FreeType-addition' }
+{ #category : #'*FreeType-Graphics' }
 GrafPort >> installFreeTypeFont: aFreeTypeFont foregroundColor: foregroundColor backgroundColor: backgroundColor [
 
 	super installFreeTypeFont: aFreeTypeFont foregroundColor: foregroundColor backgroundColor: backgroundColor.
