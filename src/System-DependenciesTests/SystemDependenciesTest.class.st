@@ -191,7 +191,7 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 	| dependencies | 
 	
 	self longTestCase.
-	
+
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
@@ -199,7 +199,7 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfSUnit name }, BaselineOfSUnit allPackageNames, "ALL"
 		{ BaselineOfDisplay name }, BaselineOfDisplay allPackageNames,
 		{ BaselineOfUnifiedFFI name }, BaselineOfUnifiedFFI allPackageNames,
-		{ BaselineOfKeymapping name }, (BaselineOfFreeType deepPackagesOfGroupNamed: #core),
+		{ BaselineOfFreeType name }, (BaselineOfFreeType deepPackagesOfGroupNamed: #ui),
 		{ BaselineOfKeymapping name }, (BaselineOfKeymapping deepPackagesOfGroupNamed: #ui),
 		{ BaselineOfMorphicCore name }, BaselineOfMorphicCore allPackageNames,
 		{ BaselineOfMorphic name }, BaselineOfMorphic allPackageNames,
@@ -313,7 +313,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfHeuristicCompletion.
 	 } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
 
-	packages := packages ,  { BaselineOfFreeType name }, (self packagesOfGroupNamed: 'core' on: BaselineOfFreeType ).
+	packages := packages ,  { BaselineOfFreeType name }, (self packagesOfGroupNamed: 'ui' on: BaselineOfFreeType ).
 	packages := packages ,  { BaselineOfKeymapping name }, (self packagesOfGroupNamed: 'ui' on: BaselineOfKeymapping ).
 	packages := packages ,  { BaselineOfSpecCore name }, (self packagesOfGroupNamed: 'default' on: BaselineOfSpecCore ).
 	packages := packages ,  { BaselineOfSpec2 name }, (self packagesOfGroupNamed: 'default' on: BaselineOfSpec2 ).
@@ -446,7 +446,7 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
 		(BaselineOfKeymapping deepPackagesOfGroupNamed: #morphic),
-		(BaselineOfFreeType deepPackagesOfGroupNamed: #core),
+		(BaselineOfFreeType deepPackagesOfGroupNamed: #ui),
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
@@ -508,7 +508,7 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 		"Morphic - for Morphic backend"
 		BaselineOfDisplay allPackageNames,
 		(BaselineOfKeymapping deepPackagesOfGroupNamed: #ui),
-		(BaselineOfFreeType deepPackagesOfGroupNamed: #morphic),
+		(BaselineOfFreeType deepPackagesOfGroupNamed: #ui),
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
@@ -563,7 +563,7 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
 		(BaselineOfKeymapping deepPackagesOfGroupNamed: #ui),
-		(BaselineOfFreeType deepPackagesOfGroupNamed: #morphic),
+		(BaselineOfFreeType deepPackagesOfGroupNamed: #ui),
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfSpec allPackageNames,

@@ -55,7 +55,7 @@ BaselineOfMorphic >> baseline: spec [
 		spec baseline: 'FreeType' with: [ 
 			spec 
 				repository: repository; 
-				loads: 'morphic' ].
+				loads: 'ui' ].
 
 		spec package: 'Graphics-Files'.
 		spec package: 'Graphics-Fonts'.
