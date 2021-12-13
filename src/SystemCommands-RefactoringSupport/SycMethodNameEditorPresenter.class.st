@@ -94,16 +94,6 @@ SycMethodNameEditorPresenter class >> example2 [
 		canAddArgs: true
 ]
 
-{ #category : #'instance creation' }
-SycMethodNameEditorPresenter class >> newApplication: anApplication model: aModel [
-
-	^ self basicNew
-		application: anApplication;
-		setModelBeforeInitialization: aModel;
-		initialize;
-		yourself
-]
-
 { #category : #specs }
 SycMethodNameEditorPresenter class >> openOn: aMethod [
 	"I take a RBMethodName as parameter and open the refactoring UI in a modal to rename it."

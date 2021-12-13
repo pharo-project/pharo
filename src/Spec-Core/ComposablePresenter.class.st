@@ -129,11 +129,6 @@ ComposablePresenter class >> defaultSpec [
 ]
 
 { #category : #defaults }
-ComposablePresenter class >> iconNamed: aSymbol [
-	^ Smalltalk ui icons iconNamed: aSymbol
-]
-
-{ #category : #defaults }
 ComposablePresenter class >> inputTextHeight [
 
 	^ self defaultFont height + 12
