@@ -118,14 +118,16 @@ AthensCairoText >> initialize [
 
 { #category : #drawing }
 AthensCairoText >> loadOn: aCanvas [
-	fontFamily notNil ifTrue:[
-		self
+	
+	fontFamily ifNotNil:[
+		self 
 			primSelectFont:  fontFamily
-				slant:  fontSlant
-				weight:  fontWeight 
-				on: aCanvas] .
-	fontSize notNil ifTrue:[		
-		self primSetFontSize:  (TextStyle pointsToPixels: fontSize) on: aCanvas ]
+			slant:  fontSlant
+			weight:  fontWeight 
+			on: aCanvas ].
+	
+	fontSize ifNotNil: [
+		self primSetFontSize: (CairoScaledFont pointsToPixels: fontSize) on: aCanvas ]
 ]
 
 { #category : #private }
