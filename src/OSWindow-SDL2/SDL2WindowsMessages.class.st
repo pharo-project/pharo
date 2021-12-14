@@ -567,7 +567,7 @@ SDL2WindowsMessages class >> initializeVariablesSet7 [
 	WM_USER := 1024
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #querying }
 SDL2WindowsMessages class >> translateId: aNumber [
 
 	^ self classPool associations
