@@ -248,15 +248,24 @@ BaselineOfIDE >> loadIceberg [
 		pharoPluginClass
 			addProjectNamed: 'pharo-spec2' 
 			commit: (Smalltalk classNamed: #BaselineOfPharo) specReleaseCommit 
-			baselines: #(BaselineOfSpec2) ].
+			baselines: #(BaselineOfSpec2).
+		"Register baselines"
+		Metacello new baseline: 'Spec2'; register.
+		Metacello new baseline: 'SpecCore'; register ].
 		
 	(Smalltalk classNamed: #BaselineOfNewTools) ifNotNil: [ :aClass | 
 		pharoPluginClass 
 			addProjectNamed: 'pharo-newtools' 
 			commit: (Smalltalk classNamed: #BaselineOfPharo) newToolsReleaseCommit 
-			baselines: #(BaselineOfNewTools) ].
+			baselines: #(BaselineOfNewTools).
+		"Register baselines"
+		Metacello new baseline: 'NewTools'; register ].
 		
-	pharoPluginClass addIcebergProjectToIceberg
+	pharoPluginClass addIcebergProjectToIceberg.
+	"Register baselines"
+	Metacello new baseline: 'Tonel'; register.
+	Metacello new baseline: 'LibGit'; register.
+	Metacello new baseline: 'Iceberg'; register.	
 ]
 
 { #category : #actions }
