@@ -137,14 +137,6 @@ FFICallout >> beStrict: aBoolean [
 ]
 
 { #category : #accessing }
-FFICallout >> callType: aCallType [
-	aCallType == #cdecl ifTrue: [ ^ self cdecl ].
-	aCallType == #stdcall ifTrue: [ ^ self stdcall ].
-	
-	self error: 'unknown call type'
-]
-
-{ #category : #accessing }
 FFICallout >> fnSpec [
 	^ fnSpec
 ]
