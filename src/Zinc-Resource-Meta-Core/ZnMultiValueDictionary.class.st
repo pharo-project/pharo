@@ -13,7 +13,7 @@ Part of Zinc HTTP Components.
 "
 Class {
 	#name : #ZnMultiValueDictionary,
-	#superclass : #Dictionary,
+	#superclass : #OrderedDictionary,
 	#instVars : [
 		'limit'
 	],
