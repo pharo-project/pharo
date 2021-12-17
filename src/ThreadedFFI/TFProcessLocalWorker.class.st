@@ -19,7 +19,7 @@ Then you can execute a function like this:
 worker := TFWorker named: 'QUEUE'.
 [
 	TFProcessLocalWorker worker: worker.
-	channel readLineFromStdoutInSeparatedWorker.
+	channel readLineFromSocketInSeparatedWorker.
 ]
 
 "
