@@ -70,6 +70,15 @@ MonthTest >> testIndexOfMonth [
 ]
 
 { #category : #tests }
+MonthTest >> testIndexOfMonthWithStrings [
+	| m |
+	m := #(#January #February #March #April #May #June #July #August #September #October #November #December) collect: [ :aMonth | aMonth asString ].
+
+	m withIndexDo: [ :item :index | 
+		self assert: (Month indexOfMonth: item) equals: index ].
+]
+
+{ #category : #tests }
 MonthTest >> testInquiries [
 	self
 		assert: month index equals: 7;

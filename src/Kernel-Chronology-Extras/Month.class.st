@@ -46,7 +46,7 @@ Month class >> february [
 { #category : #accessing }
 Month class >> indexOfMonth: aMonthName [ 
 
-	1 to: 12 do: [ :i |  (aMonthName, '*' match: (MonthNames at: i)) ifTrue: [^i] ].
+	1 to: 12 do: [ :i | ((MonthNames at: i) beginsWith: aMonthName) ifTrue: [^i] ].
  	self error: aMonthName , ' is not a recognized month name'.
 ]
 
