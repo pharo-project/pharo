@@ -70,9 +70,27 @@ MonthTest >> testIndexOfMonth [
 ]
 
 { #category : #tests }
+MonthTest >> testIndexOfMonthCaseInsensitive [
+	self assert: (Month indexOfMonth: 'january') equals: 1.
+	self assert: (Month indexOfMonth: #january) equals: 1.
+	self assert: (Month indexOfMonth: 'jAnUaRy') equals: 1.
+	self assert: (Month indexOfMonth: #jAnUaRy) equals: 1.
+
+]
+
+{ #category : #tests }
+MonthTest >> testIndexOfMonthIncompleteMonths [
+	| m |
+	m := #(Jan Feb Mar Apr May Jun Jul Aug Sept Oct Nov Dec).
+
+	m withIndexDo: [ :item :index | self assert: (Month indexOfMonth: item) equals: index ].
+]
+
+{ #category : #tests }
 MonthTest >> testIndexOfMonthWithStrings [
 	| m |
-	m := #(#January #February #March #April #May #June #July #August #September #October #November #December) collect: [ :aMonth | aMonth asString ].
+	m := #(#January #February #March #April #May #June #July #August #September #October #November #December) 
+		collect: [ :aMonth | aMonth asString ].
 
 	m withIndexDo: [ :item :index | 
 		self assert: (Month indexOfMonth: item) equals: index ].
