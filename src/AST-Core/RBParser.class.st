@@ -54,14 +54,11 @@ RBParser class >> parseExpression: aString [
 
 { #category : #parsing }
 RBParser class >> parseExpression: aString onError: aBlock [
-	| node |
-	node := self new
-		        errorBlock: aBlock;
-		        initializeParserWith: aString;
-		        parseExpression.
-	^ (node statements size == 1 and: [ node temporaries isEmpty ])
-		  ifTrue: [ node statements first ]
-		  ifFalse: [ node ]
+
+	^self new
+        errorBlock: aBlock;
+        initializeParserWith: aString;
+        parseExpression
 ]
 
 { #category : #parsing }
@@ -552,14 +549,16 @@ RBParser >> parseErrorNode: aMessageString [
 
 { #category : #parsing }
 RBParser >> parseExpression [
-	"Parse and return an AST corresponding to the expression passed as argument."
+	"Parse and return an AST corresponding to the expression passed as a #source"
 	| node |
 	node := self parseStatements: false.
 	(self methodNodeClass selector: #noMethod body: node) source: source.	"Make the sequence node have a method node as its parent"
 	self atEnd ifFalse: [ ^ self parseIncompleteExpression: node ].
 	(node statements isEmpty and: [currentToken comments notNil]) 
 			ifTrue: [self extractCommentsFrom: currentToken. self addCommentsTo: node.].
-	^node
+	^(node statements size == 1 and: [ node temporaries isEmpty ])
+		  ifTrue: [ node statements first ]
+		  ifFalse: [ node ]
 ]
 
 { #category : #'private - parsing' }
