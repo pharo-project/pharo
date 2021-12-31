@@ -31,7 +31,6 @@ Class {
 	],
 	#classInstVars : [
 		'worker',
-		'defaultWorker'
 	],
 	#category : #'ThreadedFFI-Worker'
 }
