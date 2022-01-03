@@ -30,7 +30,7 @@ Class {
 		'defaultWorker'
 	],
 	#classInstVars : [
-		'worker',
+		'worker'
 	],
 	#category : #'ThreadedFFI-Worker'
 }
