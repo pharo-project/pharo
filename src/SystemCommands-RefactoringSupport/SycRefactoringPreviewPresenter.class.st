@@ -218,8 +218,14 @@ SycRefactoringPreviewPresenter >> pickedChanges [
 
 { #category : #update }
 SycRefactoringPreviewPresenter >> rebuild [
+
+	| indx |
 	self needRebuild: false.
-	self buildWithSpec
+	indx := table adapter widget showIndex.
+	self buildWithSpec.
+	table adapter widget showIndex: indx.
+	table refresh.
+	
 ]
 
 { #category : #accessing }

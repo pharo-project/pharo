@@ -1111,6 +1111,11 @@ FTTableMorph >> showIndex [
 	^ showIndex
 ]
 
+{ #category : #private }
+FTTableMorph >> showIndex: anInteger [
+	showIndex := anInteger
+]
+
 { #category : #menu }
 FTTableMorph >> showMenuForIndex: aTuple [
 	| menu rowIndex columnIndex |
