@@ -47,7 +47,7 @@ if [ -z ${BOOTSTRAP_VMTARGET+x} ]
 then
     VM="${BOOTSTRAP_CACHE}/vmtarget/pharo --headless"
 else
-    VM="${BOOTSTRAP_VMTARGET}/pharo --headless"
+    VM="${BOOTSTRAP_VMTARGET} --headless"
 fi
 
 # Flags to run the image
