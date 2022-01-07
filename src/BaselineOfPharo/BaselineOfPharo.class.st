@@ -11,12 +11,7 @@ Class {
 BaselineOfPharo class >> declareExternalProjects [
 
 	^ { 
-	PharoExternalProject 
-		newName: 'Iceberg' 
-			owner: 'pharo-vcs' 
-			project: 'iceberg' 
-			version: 'dev-2.0' 
-			sourceDir: nil.
+	PharoExternalProject newName: 'Iceberg' owner: 'pharo-vcs' project: 'iceberg' version: 'dev-2.0' sourceDir: nil.
 	PharoExternalProject newName: 'Spec2' owner: 'pharo-spec' project:'Spec' version: 'Pharo10'.
 	PharoExternalProject newName: 'NewTools' owner: 'pharo-spec' project: 'NewTools' version: 'Pharo10'.	
 	 }
