@@ -12,44 +12,58 @@ SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
 . ${SCRIPTS}/envvars.sh
 
 mkdir -p "${BOOTSTRAP_CACHE}" #required to generate hermes files
+mkdir -p "${BOOTSTRAP_DOWNLOADS}"
+
+##
+# Download section
+##
+
+function download_to {
+	wget --progress=dot:mega "$1" -O "$2"
+}
 
 if [ ! -e "${BOOTSTRAP_VMTARGET}" ]; then
     # Downloads a SPUR vm for the configured architecture
-    mkdir ${BOOTSTRAP_CACHE}/vmtarget
-    cd ${BOOTSTRAP_CACHE}/vmtarget
+    mkdir ${BOOTSTRAP_DOWNLOADS}/vmtarget
+    cd ${BOOTSTRAP_DOWNLOADS}/vmtarget
     ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh 90 vm $BOOTSTRAP_ARCH
     cd -
     echo "Target VM: $(${VM} --version)"
 fi
 
-# Asuming if there is already a Pharo.image, we have the bootstrap
-if [ ! -e "./Pharo.image" ]; then
-	if [ ! -e "./bootstrapImage.zip" ]; then
-		wget --progress=dot:mega https://github.com/guillep/PharoBootstrap/releases/download/v1.7.6/bootstrapImage.zip
-	fi 
-	unzip -u bootstrapImage.zip
-	touch Pharo.image
+if [ ! -e "${BOOTSTRAP_DOWNLOADS}/bootstrapImage.zip" ]; then
+	download_to https://github.com/guillep/PharoBootstrap/releases/download/v1.7.6/bootstrapImage.zip ${BOOTSTRAP_DOWNLOADS}/bootstrapImage.zip
+fi 
+
+# checking for PharoV60.sources
+if [ ! -e "${BOOTSTRAP_DOWNLOADS}/PharoV60.sources.zip" ]; then
+	download_to http://files.pharo.org/sources/PharoV60.sources.zip ${BOOTSTRAP_DOWNLOADS}/PharoV60.sources.zip
 fi
 
-######################################################
-## Cached resources
-
-cd "${BOOTSTRAP_CACHE}"
-pushd "${BOOTSTRAP_CACHE}"
-
-if [ ! -e "./PharoV60.sources.zip" ]; then
-	wget --progress=dot:mega http://files.pharo.org/sources/PharoV60.sources.zip
-fi
-unzip -u PharoV60.sources.zip
-
+# checking for icons
 # update the commit hash as soon as you need a new version of the icons to be loaded
-if [ ! -e "./icon-packs/idea11.zip" ]; then
-	echo "Prepare icons"
-	mkdir icon-packs
-	cd icon-packs
-	wget --progress=dot:mega https://github.com/pharo-project/pharo-icon-packs/archive/v1.0.2-idea11.zip -O idea11.zip
-	cd -
+if [ ! -e "${BOOTSTRAP_DOWNLOADS}/idea11.zip" ]; then
+	download_to https://github.com/pharo-project/pharo-icon-packs/archive/v1.0.2-idea11.zip ${BOOTSTRAP_DOWNLOADS}/idea11.zip
 fi
 
-popd
+##
+# Preparation section (unziping/copying files to appropriate place)
+##
+
+# bootstrap image
+if [ ! -e "./Pharo.image" ]; then
+	unzip -u ${BOOTSTRAP_DOWNLOADS}/bootstrapImage.zip -d .
+fi
+
+# PharoV6 sources
+if [ ! -e "${BOOTSTRAP_CACHE}/PharoV60.sources" ]; then
+	unzip -u ${BOOTSTRAP_DOWNLOADS}/PharoV60.sources.zip -d ${BOOTSTRAP_CACHE}
+fi
+
+# Icons
+if [ ! -e ${BOOTSTRAP_CACHE}/icon-packs/idea11.zip ]; then
+	mkdir -p ${BOOTSTRAP_CACHE}/icon-packs
+	cp ${BOOTSTRAP_DOWNLOADS}/idea11.zip ${BOOTSTRAP_CACHE}/icon-packs/idea11.zip
+fi
+
 

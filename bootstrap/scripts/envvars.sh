@@ -42,6 +42,13 @@ then
 fi
 export BOOTSTRAP_CACHE
 
+# This is the place where we put files we need to download. i.e. 
+if [ -z ${BOOTSTRAP_DOWNLOADS+x} ]
+then
+  BOOTSTRAP_DOWNLOADS=${ROOT_DIR}/bootstrap-downloads
+fi
+export BOOTSTRAP_DOWNLOADS
+
 # This is the VM used to bootstrap, i.e. the target VM
 if [ -z ${BOOTSTRAP_VMTARGET+x} ]
 then
