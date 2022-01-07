@@ -52,7 +52,7 @@ export BOOTSTRAP_DOWNLOADS
 # This is the VM used to bootstrap, i.e. the target VM
 if [ -z ${BOOTSTRAP_VMTARGET+x} ]
 then
-    VM="${BOOTSTRAP_CACHE}/vmtarget/pharo --headless"
+    VM="${BOOTSTRAP_DOWNLOADS}/vmtarget/pharo --headless"
 else
     VM="${BOOTSTRAP_VMTARGET} --headless"
 fi
