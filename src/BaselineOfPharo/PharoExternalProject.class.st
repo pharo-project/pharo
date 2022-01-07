@@ -87,7 +87,7 @@ PharoExternalProject >> project [
 { #category : #accessing }
 PharoExternalProject >> repository [
 
-	^ 'github://{1}{2}:{3}{4}' format: { 
+	^ 'github://{1}/{2}:{3}{4}' format: { 
 		self owner.
 		self project.
 		self version.
