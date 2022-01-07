@@ -1,13 +1,45 @@
 Class {
 	#name : #BaselineOfPharo,
 	#superclass : #BaselineOf,
+	#classVars : [
+		'ExternalProjects'
+	],
 	#category : #BaselineOfPharo
 }
+
+{ #category : #'external projects' }
+BaselineOfPharo class >> declareExternalProjects [
+
+	^ { 
+	PharoExternalProject 
+		newName: 'Iceberg' 
+			owner: 'pharo-vcs' 
+			project: 'iceberg' 
+			version: 'dev-2.0' 
+			sourceDir: nil.
+	PharoExternalProject newName: 'Spec2' owner: 'pharo-spec' project:'Spec' version: 'Pharo10'.
+	PharoExternalProject newName: 'NewTools' owner: 'pharo-spec' project: 'NewTools' version: 'Pharo10'.	
+	 }
+]
+
+{ #category : #'external projects' }
+BaselineOfPharo class >> externalProjectNamed: aName [
+
+	^ self externalProjects 
+		detect: [ :each | each name = aName ]
+]
+
+{ #category : #'external projects' }
+BaselineOfPharo class >> externalProjects [
+
+	^ ExternalProjects ifNil: [ 
+		ExternalProjects := self declareExternalProjects ]
+]
 
 { #category : #'repository urls' }
 BaselineOfPharo class >> icebergRepository [
 
-	^ 'github://pharo-vcs/iceberg:{1}' format: { self icebergVersion }
+	^ (self externalProjectNamed: 'Iceberg') repository
 ]
 
 { #category : #versions }
@@ -16,18 +48,10 @@ BaselineOfPharo class >> icebergVersion [
 	^ 'dev-2.0'
 ]
 
-{ #category : #versions }
-BaselineOfPharo class >> newToolsReleaseCommit [
-	"The commit corresponding to current release (to be used on bootstrap process)"
-
-	"Pharo10"
-	^ '0a30d62222168b54ba9c12608bd10a7c1cfed6a1'
-]
-
 { #category : #'repository urls' }
 BaselineOfPharo class >> newToolsRepository [
 
-	^ 'github://pharo-spec/NewTools:{1}/src' format: { self newToolsVersion }
+	^ (self externalProjectNamed: 'NewTools') repository
 ]
 
 { #category : #versions }
@@ -36,18 +60,10 @@ BaselineOfPharo class >> newToolsVersion [
 	^ 'Pharo10'
 ]
 
-{ #category : #versions }
-BaselineOfPharo class >> specReleaseCommit [
-	"The commit corresponding to current release (to be used on bootstrap process)"
-
-	"Pharo10- fix paginator in presence of fast dragging"
-	^ '8fe65f1d49f090bb739ae6ef5113a05b4e89109f'
-]
-
 { #category : #'repository urls' }
 BaselineOfPharo class >> specRepository [
 
-	^ 'github://pharo-spec/Spec:{1}/src' format: { self specVersion }
+	^ (self externalProjectNamed: 'Spec2') repository
 ]
 
 { #category : #versions }
